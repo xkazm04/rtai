@@ -5,7 +5,7 @@ figure leans off the point the rig stands on. The figure fills FILL of the cell'
 standing strip's 1.7 m). Blue is toned to the same kind's armed walk (street_tone), a riot or SWAT
 sheet's orange arm band is greyed (street_armband, colour law). Deterministic.
 
-    PYTHONDONTWRITEBYTECODE=1 python tools/art/street_hit.py [--lib=<library>/keyed/street]
+    PYTHONDONTWRITEBYTECODE=1 python tools/art/street_hit.py [--lib=<library>/keyed/street] [--only=char|<kind>]
 """
 
 import subprocess
@@ -78,7 +78,8 @@ FLAILS = "burn/1b"
 # n15 combat: the drawn charred man standing (assets it272, cop patrol only, B; smoke stripped) for a fire death,
 # <kind>_char_hit.png on the same layout, each facing at its burn/1 cell's scale like FLAILS (the burning man
 # turns to char without a size pop). KillCharFx draws it in place of the char-shaded card.
-CHARS = {"cop_patrol": "char/1"}
+# assets it359 (A, no smoke): the thug, the hooded pedestrian and the riot cop, the flamethrower's most frequent kills.
+CHARS = {k: "char/1" for k in ("cop_patrol", "thug", "ped_hood", "cop_riot")}
 
 
 def foot_x(alpha: np.ndarray) -> float:
@@ -163,6 +164,8 @@ def build(lib: Path, name: str, spec: tuple, tmp: Path, site: str = "1") -> None
     for col in range(5):
         if site in (FLAILS, CHARS.get(name)):  # frame 1's own height-fill scale for this facing
             k = CELL_H * FILL / cropped(lib / f"{name}_hit_70_cells/{BURNS[name]}_{col + 1}.png").height
+            if site == CHARS.get(name):  # a char cell taller than its burn cell stays inside the cell (the thug's col 4)
+                k = min(k, CELL_H * FOOT_Y / cropped(paths[col]).height)
         cell(paths[col], sheet, col, k, boot=site not in (FLAILS, CHARS.get(name)))
     here = tmp / file
     sheet.save(here)
@@ -179,11 +182,20 @@ def build(lib: Path, name: str, spec: tuple, tmp: Path, site: str = "1") -> None
 
 def main() -> None:
     lib = LIB
+    only = ""  # --only=char packs just the CHARS sheets (a full re-pack drifts some burn grids by a few px)
     for arg in sys.argv[1:]:
         if arg.startswith("--lib="):
             lib = Path(arg[6:])
+        elif arg.startswith("--only="):
+            only = arg[7:]
     with tempfile.TemporaryDirectory() as t:
         for name, spec in SHEETS.items():
+            if only == "char":
+                if name in CHARS:
+                    build(lib, name, spec, Path(t), CHARS[name])
+                continue
+            if only and only != name:  # --only=<kind>: that kind's sheets alone
+                continue
             build(lib, name, spec, Path(t))
             for site in SITES.get(name, []) + ([BURNS[name], FLAILS] if name in BURNS else []) + ([CHARS[name]] if name in CHARS else []):
                 build(lib, name, spec, Path(t), site)

@@ -28,6 +28,17 @@ func test_the_char_grid_has_five_whole_facings() -> void:
 	assert_true(StreetWalkerHit.FILL.has(KillCharCells.FILL_OF[ROW]), "sized as the burning man")
 
 
+func test_every_char_grid_is_sized_as_its_burning_man() -> void:
+	for row: String in KillCharCells.GRIDS:
+		var tex: Texture2D = load(KillCharCells.GRIDS[row]) as Texture2D
+		assert_not_null(tex, row)
+		if tex != null:
+			assert_eq(tex.get_width() % RigHeadCard.FRAMES, 0, row + ": five facings")
+		assert_true(KillCharCells.FILL_OF.has(row), row + ": has a burn FILL")
+		var fill: String = KillCharCells.FILL_OF.get(row, "")
+		assert_true(StreetWalkerHit.FILL.has(fill), row + ": " + fill)
+
+
 func test_an_untagged_body_keeps_its_char_print() -> void:
 	assert_null(KillCharCells.swap(_group(false, 2)), "no drawn cell for this kind")
 	assert_null(KillCharCells.swap(null))

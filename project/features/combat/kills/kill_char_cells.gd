@@ -1,8 +1,9 @@
 class_name KillCharCells
 extends RefCounted
 ## n15 combat (brief item 2, n11 REPORT "a fire death is still brutality's charred silhouette"):
-## a burn kill of a kind with the asset lane's drawn charred man (it272, the patrol cop only, B:
-## charcoal body, ember cracks, the cap a dull blue; tools/art/street_hit.py CHARS) stands as that
+## a burn kill of a kind with the asset lane's drawn charred man (it272 the patrol cop, B;
+## it359 the thug, the hooded pedestrian and the riot cop, A, no smoke: charcoal bodies, ember
+## cracks; tools/art/street_hit.py CHARS) stands as that
 ## drawing instead of its card under KillCharFx's char print. KillStyles tags the body group with
 ## the victim's card row when the parts are cut, and swaps its whole-figure card after the char
 ## print: the drawn cell for the card's facing, upright, sized as StreetWalkerCards sizes the
@@ -12,10 +13,16 @@ extends RefCounted
 
 const GRIDS: Dictionary[String, String] = {
 	"cop/head_cap": "res://features/characters/art/view/p70/cop_patrol_char_hit.png",
+	"cop/head_helmet": "res://features/characters/art/view/p70/cop_riot_char_hit.png",
+	"thug": "res://features/characters/art/view/p70/thug_char_hit.png",
+	"ped/head_hood": "res://features/characters/art/view/p70/ped_hood_char_hit.png",
 }
 ## The burning figure's FILL (StreetWalkerHit.FILL) per grid: the char cells share its scale.
 const FILL_OF: Dictionary[String, String] = {
 	"cop/head_cap": "cop_patrol_burn_hit.png",
+	"cop/head_helmet": "cop_riot_burn_hit.png",
+	"thug": "thug_burn_hit.png",
+	"ped/head_hood": "ped_hood_burn_hit.png",
 }
 const META: StringName = &"kill_char_row"
 const CARD: StringName = &"head_card"

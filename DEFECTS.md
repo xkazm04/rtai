@@ -4,7 +4,7 @@ Ranked within each film; newest film first.
 
 ## Flamethrower lone kill, cop/head_cap, combo 64 px/m t542-620 (session 4)
 1. The burned cop stood as a black char-shaded silhouette of his burning pose -> fixed 8eb67bc62 (drawn charred cells, it272, patrol cop only).
-2. Other kinds keep the black silhouette -> open (REQUEST assets in JOURNAL: thug, hood, riot cop).
+2. Other kinds keep the black silhouette -> fixed for the thug, hood and riot cop (session 5 commit, it359); the other burnable kinds (swat, ped_cap, ped_punk, ped_jogger) still open.
 
 ## Machine pistol lone kill, rounds in the ground, combo 48 px/m t352-363 (session 4)
 1. A round that stopped in the ground drew four faint grey dots that drifted off: no read of a hit -> fixed 19e7768ff (drawn concrete dust, it317).
