@@ -580,3 +580,10 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   deleted after, status clean). `tools/lint/uid_files.test.mjs` 2/2. AGENTS lint row names it.
 - 02:35 uid-files over the other tips (`git ls-tree -r <rev> project` into `uidCheck`): n15-hero 4a6238732 ok,
   n15-combat 11a460e80 ok, main 5c5c03611 ok. The new check does not turn a merge red tonight.
+- 02:43 MILESTONE reel gate on d2226608d (same gate run): `top: OK; code 0`, `tilt70: OK; code 0`, `combo: OK; code 0`
+  (combo 328 s); `gate: FAIL` only for the INVALID kinds above.
+- 02:52 MILESTONE gate on 6f7422812 (`node tools/gate/run.mjs --rev=HEAD --timeout=40`, log
+  gtai-n15/flake/gate_s4_head2.log): `gate: PASS` - `lint: all 17 checks pass over 1430 GDScript files`, `unit-tests:
+  2532 passed, 0 failed, 2 skipped`, `scenario-tests: 55 passed`, parity bit for bit (planted caught at 629), selftest
+  look 11/11 worst 0.00, `release-compile: 668 loaded, 0 failed`. Both my gate snapshots removed
+  (`removeSnapshot`; `git worktree list` holds neither).

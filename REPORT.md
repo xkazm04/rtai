@@ -73,10 +73,15 @@ crowd: look goldens re-blessed with a decisions line). t-4 and t-5 move nothing 
   after a code path changed (new porcelain line, or size/mtime of a path dirty at the start) is failed with
   `INVALID: the tree changed while <kind> ran (<n> code path(s): ...)` and a pointer to `tools/gate/run.mjs`.
 
+Gates on 6f7422812 (`node tools/gate/run.mjs --rev=HEAD`, session 4, after the c-2 mask and native rebuild #4): PASS -
+lint 17/17, unit 2532/0, scenarios 55, parity bit for bit (planted caught at 629), selftest look 11/11 + block 5/5
+worst 0.00, release-compile 668/0. Reel gate on d2226608d (same code and frames; only the dev script's `.uid`, a Node
+tool and docs came after): top, tilt70, combo OK (combo 328 s). Commits after 6f7422812 are docs only.
+
 Gates on c3f80513d (`node tools/gate/run.mjs --rev=HEAD`, after the flake fix): PASS - lint 16/16, unit 2531/0,
 scenarios 55 (rig_stress clean; its p50 budget CONTENDED, not judged), parity exact, selftest look 11/11 + block 5/5
 worst 0.00, release-compile 668/0. Commits after it are docs/JOURNAL/REPORT only. The reel gate has not run since
-ad2f0a5c1: c3f80513d changes headless loading only (real renderers unchanged), but the final commit still owes it.
+ad2f0a5c1 at that time (since run on d2226608d, above).
 
 Gates on 52dc72d4 (`node tools/gate/run.mjs`): PASS - lint 16/16, unit 2530/0, scenarios 55, parity exact,
 selftest look 11/11 worst 0.00, release-compile 667/0. Reel gate on ad2f0a5c1: top, tilt70, combo OK (280-286 s each).
