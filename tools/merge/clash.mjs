@@ -7,10 +7,18 @@
 // Siblings: every branch checked out in a worktree of this repo that shares the current branch's
 // prefix up to its first "-" (n15-tools -> n15-hero, n15-combat); GTAI_MERGE_LANES=<a,b> names them
 // instead, GTAI_MERGE_LANES=off skips the check. Writes git objects only (no ref, index or worktree).
-//   node tools/merge/clash.mjs        (also run by tools/gate/precommit.mjs)
+//   node tools/merge/clash.mjs [--repo=<worktree>]   (also run by tools/gate/precommit.mjs)
+// --repo checks another worktree's staged index with this copy of the tool (a lane without it yet),
+// on a temp COPY of that index: write-tree may rewrite an index (its cache-tree), and that file is theirs.
+import { spawnSync } from 'node:child_process';
+import { copyFileSync, mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { isAbsolute, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT } from '../lib/repo.mjs';
 import { autoResolved, gitIn, mergeTree } from './preview.mjs';
+
+const ID = ['-c', 'user.name=merge-clash', '-c', 'user.email=merge-clash@example.invalid'];
 
 /** The sibling lanes of `branch` among the worktrees' branches, or the env's list. */
 export function siblings(git, branch, env = process.env) {
@@ -63,11 +71,37 @@ export function lines(r) {
   return out;
 }
 
-export function main({ git = gitIn(ROOT), err = console.error, env = process.env } = {}) {
-  for (const l of lines(newClashes(git, env))) err(l);
-  return 0;
+/** A git runner on `repo` whose index is a temp copy of the repo's: {git, done}. GIT_* of the caller
+ *  (a hook's GIT_DIR) are dropped, so it is the repo's own index and objects. */
+export function copiedIndex(repo, baseEnv = process.env) {
+  const clean = Object.fromEntries(Object.entries(baseEnv).filter(([k]) => !/^GIT_(DIR|WORK_TREE|INDEX_FILE|OBJECT_DIRECTORY|COMMON_DIR|PREFIX)$/i.test(k)));
+  const where = spawnSync('git', ['-C', repo, 'rev-parse', '--git-path', 'index'], { encoding: 'utf8', windowsHide: true, env: clean });
+  if (where.status !== 0) throw new Error(`not a git worktree: ${repo}`);
+  const rel = where.stdout.trim();
+  const dir = mkdtempSync(join(tmpdir(), 'gtai-clash-'));
+  const index = join(dir, 'index');
+  copyFileSync(isAbsolute(rel) ? rel : join(repo, rel), index);
+  const env = { ...clean, GIT_INDEX_FILE: index };
+  const git = (args) => {
+    const r = spawnSync('git', ['-C', repo, ...ID, ...args], { encoding: 'utf8', windowsHide: true, env });
+    return { status: r.status, stdout: r.stdout ?? '', stderr: r.stderr ?? '' };
+  };
+  return { git, done: () => rmSync(dir, { recursive: true, force: true }) };
+}
+
+export function main(argv = [], { git, err = console.error, env = process.env } = {}) {
+  const repo = argv.find((a) => a.startsWith('--repo='))?.slice('--repo='.length);
+  const bad = argv.find((a) => !/^--repo=.+$/.test(a));
+  if (bad) { err(`merge-clash: bad argument ${bad}\nusage: node tools/merge/clash.mjs [--repo=<worktree>]`); return 2; }
+  if (git || !repo) { for (const l of lines(newClashes(git ?? gitIn(ROOT), env))) err(l); return 0; }
+  let copy;
+  try {
+    copy = copiedIndex(repo, env);
+    for (const l of lines(newClashes(copy.git, env))) err(l);
+    return 0;
+  } catch (e) { err(`merge-clash: ${e.message}`); return 2; } finally { copy?.done(); }
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  process.exit(main());
+  process.exit(main(process.argv.slice(2)));
 }

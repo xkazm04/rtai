@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
-import { lines, newClashes, siblings } from './clash.mjs';
+import { lines, main, newClashes, siblings } from './clash.mjs';
 import { clashCheck } from '../gate/precommit.mjs';
 
 /** Main + three worktrees (n9-a, n9-b, x9-c) in a throwaway repo with an empty git config and no
@@ -104,5 +104,20 @@ test('the pre-commit hook runs it through its own git runner, and a fake git can
     assert.match(clashCheck(a, git, {})[0], /WARNING .*code\.gd conflict with n9-b/);
     assert.deepEqual(clashCheck(a, () => ({ status: 0, stdout: 'a.gd\0' }), {}), []);
     assert.deepEqual(clashCheck(a, () => null, {}), []);
+  } finally { f.done(); }
+});
+
+test('--repo checks another worktree on a COPY of its index: their index file is not rewritten', () => {
+  const f = fleet();
+  try {
+    const a = f.wt['n9-a'];
+    f.put(a, 'code.gd', 'one\nTWO-a\nthree\nfour\nfive\nsix\nseven\neight\n');
+    const indexPath = f.ok(f.gitAt(a), 'rev-parse', '--path-format=absolute', '--git-path', 'index');
+    const before = readFileSync(indexPath);
+    const out = [];
+    assert.equal(main([`--repo=${a}`], { err: (l) => out.push(l), env: f.env }), 0);
+    assert.match(out[0], /WARNING .*code\.gd conflict with n9-b/);
+    assert.ok(readFileSync(indexPath).equals(before), 'their index bytes changed');
+    assert.equal(main(['--nope'], { err: () => {}, env: f.env }), 2);
   } finally { f.done(); }
 });

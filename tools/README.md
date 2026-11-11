@@ -232,7 +232,9 @@ merge-clash: no new code conflict with n15-combat, n15-hero (2 known, unchanged)
 It never blocks (the other lane's lines are not yours to refuse). Siblings are the branches checked out
 in this repo's worktrees that share your branch's prefix up to its first `-` (`n15-tools` ->
 `n15-hero`, `n15-combat`); `GTAI_MERGE_LANES=<a,b>` names them, `GTAI_MERGE_LANES=off` skips the
-check. It writes git objects only: no ref, index or worktree. By hand: `node tools/merge/clash.mjs`.
+check. It writes git objects only: no ref, index or worktree. By hand: `node tools/merge/clash.mjs`; from a
+lane that does not have it yet: `node <n15-tools>/tools/merge/clash.mjs --repo=.` (on a temp copy of your index:
+`git write-tree` rewrites an index's cache-tree, and the planted test showed it).
 
 ## tools/gate/quick.mjs: the lint rules you keep tripping, on your changed files, before the commit
 
