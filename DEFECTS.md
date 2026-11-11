@@ -1,5 +1,18 @@
 # DEFECTS (n16 kills-polish, newest first; n15 combat's list below): found -> fixed (commit) / open
 
+## Drawn death art in game, electro / plasma rifle / chainsaw chapters, 64 and 32 px/m (iteration 3, 13:55-14:35)
+1. Electro: every kind flashed one plain skeleton -> fixed b037d283f (A3 per kind). At 32 px/m on dark asphalt the drawn
+   set (ink silhouette, frame 1) is darker and busier than the plain cream sticker -> open, owner Call.
+2. Plasma hole: the procedural rings read as a bullseye, not a hole -> fixed 0dce9f3b6 (A4 drawn ring). The impact pop at
+   32 px/m is weaker than the old cream bloom -> open, owner Call (not tried: a short bloom under the drawn ring).
+3. Chainsaw: the grind threw only red dots and sparks -> fixed af3f9af1c (A5 drawn chunks). First try at 0.36 m: the meat
+   sank into the blood pool at 64 px/m -> 0.46 m, thrown 1.3-2.6 m (same commit).
+4. Ray gun (ranking #3, rank64 film t50-89): the "falling cop" is the HAT piece: GibCut.cut(whole) copies every sprite
+   under the head into the hat, and the whole-figure walker card hangs under the head, so the kicked, spinning "cap"
+   was the whole man, unclipped, over his own dissolving body -> fixed (commit after 49c7c0be9; the figure stays in the
+   BODY only; test test_gib_cut_figure_hat; `evidence/n16-kills-polish/ray_gun_no_figure_hat_ab_64ppm_t50-89.png`).
+5. Ray gun, after 4: the disc mask holds only the legs from t50 (head and torso clipped at once) -> open (NEXT 1).
+
 ## Reel gate, top pass, rocket chapter (gate d3e25fc4a, iteration 2)
 1. SCRIPT ERROR `has_meta on a null value`: GibCardPieces.dress_rig asked a top-view rig (no head card) for its card row
    -> fixed 9d3d821f6 (no head card = the rig's own parts; test). Reel gate re-run owed.

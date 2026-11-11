@@ -190,3 +190,29 @@ NEXT (iteration 3):
 - MILESTONE af3f9af1c chainsaw chunks, A5: row key `saw_chunks` 8 (schema), `KillSawChunks` throws meat, bone chips,
   a rib and a tooth on 18-tick arcs; they lie on the street 1.3-2.6 m off. First try 0.36 m cells sank into the blood
   pool at 64 px/m -> 0.46 m, thrown farther; reads at 64 and 32 (`--saw-chunks=off` = before).
+- 14:37 GATES started on 49c7c0be9 (`node tools/gate/run.mjs --rev=49c7c0be9 --reels`, log build/gate_49c7.log).
+- 14:45 FOUND (code read while the gate ran, matches the rank64 ray gun film t50-89): the ray gun's "cop falls back over
+  as a plain death" is the HAT piece. GibCut.cut(whole) copies every sprite under rig.head into the hat, and the
+  whole-figure walker card hangs under rig.head (RigHeadCard), so the kicked, spinning "cap" was the whole man drawn
+  unclipped over his own dissolving body. Fix in the work tree: `figure` (the card while StreetWalkerCards.hides_parts)
+  stays in the BODY only; test test_gib_cut_figure_hat.gd (written, not yet run: Godot busy with the gate).
+- GATES on 49c7c0be9 (14:37-14:49): PASS lint 19/19, unit 2671/0/2, scenarios 55, parity bit-exact (mutation at 629),
+  selftest look goldens 11/11 worst 0.00, export-audit 686/0. Reels running from 14:49 (build/gate/49c7c0be9423/reels.log).
+- GATES on 49c7c0be9: REELS PASS (top, tilt70, combo all OK; 14:49-15:11): the whole gate is green on 49c7c0be9.
+- 15:13 ray gun hat fix verified: test_gib_cut_figure_hat 2/2, film rg64_b vs rank64_ray_gun (1b823dbf7, same chapter
+  and ticks; `evidence/n16-kills-polish/ray_gun_no_figure_hat_ab_64ppm_t50-89.png`): the spinning whole cop is gone.
+  It EXPOSES the next defect: the dissolve's disc mask (BODY_R_M 0.62, centred on the body group) holds only his legs
+  from t50, his head and torso clipped at once, so the dissolve still does not read as a man being eaten.
+
+NEXT (iteration 4):
+1. Ray gun mask: lift the disc to the drawn figure's middle and make it an ellipse that holds the whole 1.7 m card
+   (rows: `dissolve_up_m` ~0.45, ry ~0.95 m, rx 0.62); the rings, motes and glow follow the same centre/ellipse
+   (KillDissolveFx._rings/_motes use d.root.position). Film chapter:ray_gun 64/32 --on=kill:1+60, before = af3f9af1c.
+   Then re-score ray_gun in KILLS.md and add DEFECTS #4's fix commit.
+2. The gate is green on 49c7c0be9; the ray-gun commit after it touches GibCut (whole cuts: ray gun only): run unit +
+   reels again on the final tip before the freeze.
+3. Owner Calls to write in REPORT: X-ray per kind at 32 px/m (darker than the plain sticker), plasma ring impact pop
+   (bloom gone), saw chunk size 0.46 m, plus iteration 2's (hot face, topple 80, cut_up_m 0.8, upright X-ray, bone gib).
+4. A3 p55 X-ray sets when delivered (KillXray.ART by view); jogger/elder/etc map to ped_generic today.
+5. Owed: the ghosts' four films (tonnage, dent, kerf, ohm), burn_char's flame column, p55 peek card still, fight_gate
+   under the bench lock (new preloads: 8 X-ray strips ~244x120, plasma 384x128, chunks 480x48).
