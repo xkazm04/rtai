@@ -1,0 +1,8 @@
+row 0: spark 537 px, root 16 px at cell (101,165) = feet (-52,-60)
+row 1: spark 500 px, root 11 px at cell (175,181) = feet (+22,-44)
+row 2: spark 551 px, root 20 px at cell (230,164) = feet (+77,-61)
+row 3: spark 526 px, root 14 px at cell (232,117) = feet (+79,-108)
+row 4: spark 407 px, root 13 px at cell (225,95) = feet (+72,-130)
+row 0: spark 395 px, root 23 px at cell (129,170) = feet (-22,-44)
+1 no root
+row 2: spark 481 px, root 23 px at cell (69,109) = feet (-82,-105)
