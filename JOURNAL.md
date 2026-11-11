@@ -503,3 +503,21 @@ are current to session 6; Calls (a)-(c) stand).
 - Mutation `mutate.mjs --file=features/characters/rig_depth_box.gd --max=8`: 25 % (half() untested) -> tests added in
   `f128a280e` -> 100 % (8/8). Checkout clean after.
 - 05:11 GATES started on `f128a280e` (`node tools/gate/run.mjs --rev=HEAD --reels`, log build/gate/s7_gate2.log).
+- GATES on `f128a280e` (05:11-05:34, build/gate/f128a280e879/gate.json): PASS lint 16/16, unit 2540/0/2, scenarios 55,
+  parity bit-exact (mutation at 629), look goldens 11/11 worst 0.00, block 5/5 worst 0.69 (= baseline), export-audit
+  674, reels top / tilt70 / combo OK. This is the LAST code commit; later commits are JOURNAL/docs/evidence only.
+- City 32 px/m whole fight re-filmed on the final tree (build/film/s7city32, same shot and stills as s6city32):
+  `evidence/n15-combat/city_depth_fight_32ppm_t600-700.png`: at t650 Rivet now draws over the cop behind him at the
+  game camera; t600 / t700 unchanged. (Before = the session-6 film of an earlier build, same seed: not same-build.)
+- Masters frames.json: + the depth fix, the swat empty hands, the shadow push; dropped char_cells_cop (covered by the
+  other char sets), city_target_rings, impact_dust (still in evidence/); 15 entries, none missing or unreferenced.
+- 05:38 session 7 ends. Godot: none of mine running (every film, mutation and gate exited with its verdict line).
+
+NEXT (session 8): (1) `f128a280e` is the last code commit and PASSES every gate with reels; if code lands, re-run
+`node tools/gate/run.mjs --rev=HEAD --reels` on the final commit. (2) The t339 burst dot: with the shadow now riding the
+card's push, the dot sits on bare floor beside him; try GunFxFollow.body_off = RigCarry.metres + card_push / PX_PER_M
+(session 6 tried the push alone: t339 better, a new dot by his boots at t344, because the push drops to zero at the
+death while the burst still follows); film machine_pistol cop/head_cap 64 px/m t336-345 before `--impact-follow=off`.
+(3) DEFECTS: the round through a fresh corpse (minor), the cops at the wall's foot (owner line written: nav +
+occlusion). (4) Asset replies (n15-combat.md) for anything new. (5) REPORT final pass by 07:40 (rows current to
+session 7; Calls (a)-(c) stand; update the gate line to the final commit).

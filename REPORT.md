@@ -30,14 +30,14 @@ Every change has a before flag on the same build and a same-tick before/after fi
 | 5 the melee smear: one crescent, no white hexagon ring | `9f966271e` | `--melee-smear=n7` | `evidence/n15-combat/melee_smear_span_ab_baton_left_32ppm_t58-96.png` |
 | 5 the city street fight draws no range-target rings | `54297457d` | `--target-rings=on` | `evidence/n15-combat/city_target_rings_ab_32ppm_t200_600.png` |
 | 5 a body hit's ink burst on the body's front, riding the knock-back and the death's carry (no floor dots short of him) | `273bb2232`, `2f1ac74c8` | `--impact-follow=off` | `evidence/n15-combat/body_burst_on_body_ab_64_32ppm_t336-345.png` |
-| 5 at contact Rivet draws over a cop standing behind him (the depth sort's box as tall as each drawn card, Rivet's x1.5 wide: `RigDepthBox`) | `ac7991f58` | (HEAD sorter) | `evidence/n15-combat/city_depth_rivet_over_cop_behind_ab_64ppm_t634-660.png` |
+| 5 at contact Rivet draws over a cop standing behind him (the depth sort's box as tall as each drawn card, Rivet's x1.5 wide: `RigDepthBox`) | `ac7991f58` | (HEAD sorter) | `evidence/n15-combat/city_depth_rivet_over_cop_behind_ab_64ppm_t634-660.png`, 32 px/m `city_depth_fight_32ppm_t600-700.png` |
 | 5 a thrown-back street man stands on his shadow (the contact shadow rides the hit card's push) | `b9544422e` | `--shadow-push=off` | `evidence/n15-combat/hit_shadow_rides_push_ab_64ppm_x2_t338-344.png`, `hit_shadow_rides_push_ab_32ppm_x3_t337-342.png` |
 
-Gates: full run with reels on `2f1ac74c8` (session 6, 03:56-04:19, the last code commit; later commits are docs):
-PASS lint 16/16, unit 2535/0/2, scenarios 55, parity bit-exact (mutation at 629), look goldens 11/11 worst 0.00, block
-goldens 5/5 worst 0.69 (= this worktree's session-1 baseline), export-audit 673, reels top / tilt70 / combo OK. Also
-PASS with reels on `7778d347a` (03:13-03:36), confirming the top-reel fix `f7baf2dbc`. TO DO: re-run on the final
-commit if any code lands after `2f1ac74c8`.
+Gates: full run with reels on `f128a280e` (session 7, 05:11-05:34, the last code commit; later commits are docs):
+PASS lint 16/16, unit 2540/0/2, scenarios 55, parity bit-exact (mutation at 629), look goldens 11/11 worst 0.00, block
+goldens 5/5 worst 0.69 (= this worktree's session-1 baseline), export-audit 674, reels top / tilt70 / combo OK. Also
+PASS with reels on `ac7991f58` (04:39-05:02). Mutation: `rig_depth_box.gd` 100 % (8/8), `gun_fx_follow.gd` 60 % (6/10,
+session 6). TO DO: re-run on the final commit if any code lands after `f128a280e`.
 
 ## What does not work, or is not shown
 
