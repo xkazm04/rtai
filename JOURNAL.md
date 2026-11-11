@@ -401,3 +401,18 @@ changed at 5cda754c0 (selftest passed on it at 00:35, unit/scenarios/reels not r
 - 00:59 TO hero and combat (replaces the 00:55 line): `git cherry-pick 39431687d c5ac2442a 3fc7109a9 112b0a12e`
   (all Node tools; `git merge-tree` against both tips at 00:59: clean in that order). A commit of PNGs + features/
   .gd lints in ~5 s; one that stages project/dev/ or project/data/ also runs the tool tests (~35 s more).
+- 01:01 MILESTONE hero FRICTION (c) PROVEN on a real run: scratch detached worktree at 3fc7109a9 (wt_init from this
+  tree; removed after), `node tools/evidence/run.mjs --no-parity --no-bench --no-selftest --no-release`, a comment
+  edit to project/dev/ghost-forms/forms_lineup.gd 25 s in (during lint, 00:53:02). Result, exit 1:
+  `FAIL lint: lint: all 16 checks pass over 1428 GDScript files; INVALID: the tree changed while lint ran (1 code
+  path(s): project/dev/ghost-forms/forms_lineup.gd) ... use tools/gate/run.mjs (a snapshot)`, and the same INVALID on
+  unit-tests (2530 passed) and scenario-tests. Before this change lint and unit would have read PASS. Log
+  gtai-n15/flake/evid_poison.log. (Unit's older applyChurn also calls the edit "import churn": wording only.)
+- 01:02 FINDING (flake, not fixed): the same run's `scenario_rig_stress` FAILED on `Parameter "t" is null`
+  (dummy `texture_2d_initialize`), GDScript frame `rig_head_card.gd:154 _build` <- `step` <- `cut_rig.drive`, in the
+  ungated COMBO pass, with ~7 Godot processes of other lanes running. Fifth sighting (n11 hero it11 + it16 under
+  `RivetFrames._set_strip`/`place`; world 11-08; d5-combat 11-03): always a texture `load()` on a cache miss, always
+  on a busy machine, always passes alone. The null image means the .ctex read failed inside Godot; the cause
+  (a file lock by another process? an engine race?) is not found tonight. Log gtai-n15/flake/evid_poison_scenarios.log
+  (lines 420-443). NEXT candidate for item 6: reproduce with a loop of rig_stress under load + Process Monitor on
+  .godot/imported/*.ctex opens.
