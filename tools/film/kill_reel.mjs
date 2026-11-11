@@ -121,7 +121,9 @@ export function parseArgv(argv) {
 export async function main(argv, { out = console.log, err = console.error, runner, resolveSide } = {}) {
   const parsed = parseArgv(argv);
   if (parsed.error) { err(`${parsed.error}\n${USAGE}`); return EXIT.usage; }
-  const reel = reelPlan(parsed.flags, parsed.extra);
+  // `all` reads the filmed tree's own table (a kill lane runs this from its worktree with rows this tree lacks).
+  const here = existsSync(join(process.cwd(), 'project', 'project.godot')) ? process.cwd() : undefined;
+  const reel = reelPlan(parsed.flags, parsed.extra, here);
   if (reel.error) { err(`kill_reel: ${reel.error}\n${USAGE}`); return EXIT.usage; }
   const sides = [];
   for (const [name, rev] of [...(reel.before ? [['before', reel.before]] : []), ['after', reel.rev]]) {
