@@ -7,7 +7,7 @@ extends Node2D
 ## the sim tick, so a replay draws the same frames. No RNG: shapes come from a hash of the serial
 ## and the tick.
 
-const STYLES: Array[StringName] = [&"snap", &"stitch", &"pin"]
+const STYLES: Array[StringName] = [&"snap", &"stitch", &"pin", &"shred"]
 ## Body metas set at the cut: the feet (body-local px) and the standing height (px).
 const FEET: StringName = &"kill_feet"
 const HEIGHT: StringName = &"kill_height"
@@ -44,6 +44,7 @@ var kills: SignatureKills = null
 var ppm: float = 32.0
 var reduced_motion: bool = false
 var _deaths: Array[Death] = []
+var _shred: KillShredArt = KillShredArt.new()
 
 
 static func owns(style: StringName) -> bool:
@@ -56,24 +57,13 @@ func bind(p_kills: SignatureKills, p_ppm: float, p_reduced_motion: bool) -> void
 	reduced_motion = p_reduced_motion
 
 
-## The kept BODY group wrapped in a root whose one child is the lay node the track bends.
-static func wrap_body(body: Node2D) -> Node2D:
-	var root: Node2D = Node2D.new()
-	if not String(body.name).is_empty():
-		root.name = body.name
-	var lay: Node2D = Node2D.new()
-	lay.name = "lay"
-	root.add_child(lay)
-	body.position = Vector2.ZERO
-	lay.add_child(body)
-	return root
-
-
 ## KillStyles.parts' share: the body copy, with the victim's drawn fall grid where he has one
 ## (KillFallCells, facing the row's fall), wrapped for the track.
 func parts(
 	rig: CutRig, serial: int, row: SignatureKill, groups: Array[Node2D], dir: Vector2
 ) -> void:
+	if row.style == &"shred" and not row.whole_body():
+		_shred.keep(serial, groups)
 	var body: Node2D = groups[SignatureKill.BODY]
 	if not row.whole_body() or body == null:
 		return
@@ -90,11 +80,13 @@ func parts(
 	if rig != null:  # the drawn feet (KillFallCells.feet_of); his drawn height is the art's
 		body.set_meta(FEET, KillFallCells.feet_of(rig, body))
 		body.set_meta(HEIGHT, KillFallCells.height_px(rig, ppm))
-	groups[SignatureKill.BODY] = wrap_body(body)
+	groups[SignatureKill.BODY] = KillTrack.wrap_body(body)
 
 
 ## KillStyles.take's share: the placed body (a wrapped root) starts its track.
 func add(serial: int, root: Node2D, row: SignatureKill, at: Vector2, dir: Vector2) -> void:
+	if row.style == &"shred" and not row.whole_body():
+		_shred.add(serial, row, dir, kills.tick)
 	if root == null or root.get_child_count() == 0:
 		return
 	var d: Death = Death.new()
@@ -115,6 +107,8 @@ func add(serial: int, root: Node2D, row: SignatureKill, at: Vector2, dir: Vector
 	if row.style == &"pin":
 		d.wall_m = KillPinArt.wall_behind(kills, at, d.dir, d.extra.num("wall_m", 1.4))
 	_deaths.append(d)
+	if row.style == &"shred":
+		_shred.add_death(d)
 
 
 ## The side a sideways fall takes (alternating kill by kill).
@@ -124,10 +118,12 @@ static func _side(serial: int) -> float:
 
 func forget(serial: int) -> void:
 	_deaths = _deaths.filter(func(d: Death) -> bool: return d.serial != serial)
+	_shred.forget(serial)
 
 
 ## After KillView placed the bodies: each figure laid by its track at its age.
 func pose() -> void:
+	_shred.pose(kills.tick, ppm, reduced_motion)
 	for d: Death in _deaths:
 		var age: int = kills.tick - d.born
 		var p: Vector3 = KillTrack.sample(d.extra.track, age)
@@ -180,6 +176,7 @@ static func _show_cells(d: Death, on: bool) -> void:
 
 
 func _draw() -> void:
+	_shred.draw(self, kills.tick)
 	for d: Death in _deaths:
 		var age: int = kills.tick - d.born
 		KillLooseArt.draw(self, d, age)

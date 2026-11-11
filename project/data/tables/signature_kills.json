@@ -782,6 +782,149 @@
         0
       ],
       "weapon": "gloria"
+    },
+    {
+      "blot_m": 0.35,
+      "bounce": 0.1,
+      "cone_deg": 16,
+      "doc": "Gatling (lane kills-new, n16): the shred. No hit-stop (the stream never stops). t0-24 the stream holds him upright, shaken back hard every 1-2 ticks (the pose track: leans of 2-12 deg away from the gun), and every 3 ticks a torn scrap of cloth or flesh with a cream bone fleck leaves his figure (hip to neck) with a red spurt and flies up to 1.4 m along the stream to lie on the street (KillShredArt, 8 scraps). From t24 what is left drops: his own drawn fall grid (KillFallCells) over 12 ticks, falling back along the stream. Aftermath: the body among the scattered scraps, a wide spray behind. Alternative (one data change): pieces = the six rig parts + grind_ticks 24 holds the parts and KillShredArt shakes them and drops them in a heap at his feet (wants kills-polish's drawn gib pieces, GibCardPieces.dress_rig, on a card victim). Placeholder until the drawn shred cells land (JOURNAL REQUEST assets).",
+      "fall": "back",
+      "flash_ticks": 0,
+      "fx": {
+        "cells_at": 24,
+        "cells_ticks": 12,
+        "scrap_every": 3,
+        "scrap_m": 1.4,
+        "scrap_size_m": 0.16,
+        "scraps": 8
+      },
+      "ground_drag": 9,
+      "hitstop_ticks": 0,
+      "id": "gatling_shred",
+      "launch_mps": [
+        0.1,
+        0.2
+      ],
+      "pieces": [
+        "body"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "spray": 28,
+      "spray_cone_deg": 50,
+      "style": "shred",
+      "track": [
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          9,
+          1,
+          0
+        ],
+        [
+          3,
+          3,
+          1,
+          0
+        ],
+        [
+          4,
+          10,
+          1,
+          0
+        ],
+        [
+          6,
+          2,
+          1,
+          0
+        ],
+        [
+          7,
+          11,
+          1,
+          0
+        ],
+        [
+          9,
+          4,
+          1,
+          0
+        ],
+        [
+          10,
+          9,
+          1,
+          0
+        ],
+        [
+          12,
+          2,
+          1,
+          0
+        ],
+        [
+          13,
+          12,
+          1,
+          0
+        ],
+        [
+          15,
+          3,
+          1,
+          0
+        ],
+        [
+          16,
+          10,
+          1,
+          0
+        ],
+        [
+          18,
+          4,
+          1,
+          0
+        ],
+        [
+          19,
+          12,
+          1,
+          0
+        ],
+        [
+          21,
+          3,
+          1,
+          0
+        ],
+        [
+          22,
+          10,
+          1,
+          0
+        ],
+        [
+          24,
+          6,
+          0.95,
+          0
+        ]
+      ],
+      "up_mps": [
+        0,
+        0
+      ],
+      "weapon": "gatling"
     }
   ],
   "leftover_budget": 12,

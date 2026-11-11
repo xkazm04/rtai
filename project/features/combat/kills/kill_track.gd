@@ -102,3 +102,16 @@ static func _rect_in(root: Node2D, s: Sprite2D) -> Rect2:
 		xf = (n as Node2D).transform * xf
 		n = n.get_parent()
 	return xf * s.get_rect()
+
+
+## The kept BODY group wrapped in a root whose one child is the lay node the track bends.
+static func wrap_body(body: Node2D) -> Node2D:
+	var root: Node2D = Node2D.new()
+	if not String(body.name).is_empty():
+		root.name = body.name
+	var bend: Node2D = Node2D.new()
+	bend.name = "lay"
+	root.add_child(bend)
+	body.position = Vector2.ZERO
+	bend.add_child(body)
+	return root

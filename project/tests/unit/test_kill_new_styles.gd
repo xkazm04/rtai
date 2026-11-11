@@ -8,6 +8,7 @@ const NEW: Dictionary[StringName, StringName] = {
 	&"pistol": &"snap",
 	&"machine_pistol": &"stitch",
 	&"gloria": &"pin",
+	&"gatling": &"shred",
 }
 
 
@@ -102,7 +103,7 @@ func _posed(age: int) -> Transform2D:
 	var k: SignatureKills = _kills()
 	var fx: KillNewStyles = KillNewStyles.new()
 	fx.bind(k, 32.0, false)
-	var body: Node2D = KillNewStyles.wrap_body(GibBlob.new())
+	var body: Node2D = KillTrack.wrap_body(GibBlob.new())
 	var row: SignatureKill = k.table.for_weapon(&"pistol")
 	fx.add(0, body, row, Vector2.ZERO, Vector2.RIGHT)
 	k.tick = age
