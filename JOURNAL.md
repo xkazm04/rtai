@@ -648,3 +648,28 @@ claw_throw p55. (4) the molotov in a city street fight at 32 px/m. (5) REPORT fi
   SHORT (the turned version spans the same 1.3-3 m, only mirrored). FIX for iteration 21 (data first): push the
   landing out by the body length on own cells (e.g. slide_m 3 -> 4.2, or a fx `cells_slide_m` read in
   KillThrowArt.slide + the pose slide), film dir 0 at 32 again. This is item (0) of NEXT, before the gates.
+
+## Iteration 21 (17:19-18:49)
+- 17:19 read JOURNAL (NEXT item 0: the claw lands short at dir 0), git log, asset replies.
+- SHARED FILE NOTE: `kill_new_styles.gd` (mine, kills-new) one line: the slide reads
+  `KillDeathCells.slide_m_of(d)` instead of `d.extra.slide_m` (any style; only fx `cells_slide_m` changes it).
+- 17:24 MILESTONE `76ae91d45` fx `cells_slide_m` (KillDeathCells.slide_m_of): with own drawn cells the claw throws him
+  4.2 m (the fall-grid placeholder keeps slide_m 3). DECISION kills-new/claw-cells-slide: the drawn lying cell is
+  scaled and centred to the grid corpse (asset note), so it hangs back toward the shooter off the feet anchor; at
+  slide_m 3 his boots landed ~1 m from Rivet at dir 0. Rejected: re-anchoring the lying frames in the packer (changes
+  every death's packed art, not only the claw). Unit 39/39 (throw art, death cells, new styles, signature kills).
+- 17:30 packed p55 gatling_shred (+ scraps) and baton_overload for patrol / riot / SWAT (`kill_cells_pack.py --art=p55`),
+  looked at riot baton p55 and patrol gatling p55 boards: usable (riot baton redraw at the grid's camera). Grids p55
+  + scraps p55 in the rows; suit keeps p70. 9 provenance lines.
+FRICTION: this branch's `tools/film/film.mjs` has no `kill:` shot (the tools lane's has); the claw films use
+  `../n16-tools/tools/film/film.mjs` as in iteration 20 (cost one failed queue).
+- REQUEST assets: claw_throw p55 cells for patrol cop, riot cop and SWAT (the p70 round 20261111-1635's four beats and
+  layout, cut to each kind's p55 long_fall grid). Lying frames 3-4 at the grid corpse's full length (the p70 SWAT and suit
+  ones came ~80-85% long). Thanks for the p55 gatling and baton: packed and wired (17:30).
+- 17:35 films of the claw at 32 px/m dirs 0/135/225 on `76ae91d45` (n16-tools film.mjs): PASS 3/3. Judged
+  (`evidence/n16-kills-new/claw_throw_cells_slide_ab_32ppm_dirs0-135-225_t127-187.png`, slide 3 rows from the
+  `8a15e9314` films): dir 0 now lands ~1.5 m out at +20 and lies out on the crosswalk by +60 (was boots at Rivet's
+  feet); 135 and 225 thrown further, still in frame. KEPT. Clip `claw_throw_cells_slide42_32ppm_dir0.mp4`. Masters: on
+  top, dropped the turn/no-turn still (15 entries).
+- 17:36 `b967042e3` p55 cells; `e19d02c1f` its test did not parse (Variant into a String arg): I committed without
+  `tools/gate/quick.mjs` and the run's triage named it. Lesson: quick.mjs before EVERY commit, even test-only ones.
