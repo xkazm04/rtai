@@ -450,3 +450,8 @@ scout's tick): run `kill_reel --weapons=katana --dirs=90 --ppm=32,64 --out=build
 and kill ticks equal. (3) Codex adversarial tests for the scout (filmJob scout path, filmTicks, olderTreeHint,
 tableRows own-row) under id n16t-break-reel-scout. (4) REPORT.md at 19:40: fill Next steps and final ledger; the
 draft is current to 16:12. No project/ commit since caccc825d: the gate PASS stands unless one lands.
+- 16:14 PROOF NEXT (2) done in s4: `kill_reel.mjs --out=build/kreel/s5two --weapons=katana --dirs=90 --ppm=32,64` ->
+  PASS, exit 0, 16:13:42-16:14:37 (55 s for both films: scout + 32 px/m beat film + 64 px/m beat film reusing the
+  scout's tick): kill 68 at both zooms (= main's s3 tick), aftermath 3.2 / 3.1 %. Looked at katana_64.png: every
+  beat cell present (flash at 68, streak +1/+2, the halves and blood +20..+150). Remaining NEXT: (1), (3), (4).
+- 16:15 session 4 end: tree clean, no Godot of mine running (every reel and the gate exited).
