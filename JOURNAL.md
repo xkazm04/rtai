@@ -389,3 +389,12 @@ changed at 5cda754c0 (selftest passed on it at 00:35, unit/scenarios/reels not r
 - 00:55 CORRECTION to the 00:54 TO hero: `git cherry-pick c5ac2442a` alone CONFLICTS in tools/lint/lint.mjs on
   n15-hero (it builds on item 5's lint change). Use `git cherry-pick 39431687d c5ac2442a 3fc7109a9` (checked with
   `git merge-tree` against the n15-hero and n15-combat tips at 00:55: all three apply clean, in that order, on both).
+- 00:57 hole found in my own 00:50 change, closed (112b0a12e): the `join(ROOT, ...)` literal rule missed real-tree
+  reads that go through tool code. An fs trace of lint's tool-test run (`node --import ./tools/lint/fs_trace.mjs
+  --test <the four globs>`, now committed; 470/470 pass under it) listed project/project.godot,
+  data/tables/view.json, dev/frames/film_probe.gd, dev/showcase/reel_chapters.gd (film, feel_chapter, native_side)
+  besides factory's city_spawn_plan.gd. Now any staged project/dev/, project/data/ or project.godot path runs the
+  tool tests (`scope.mjs INPUT_PREFIXES`; test with the traced list). So the 00:50 4.3 s proof on a dev/ file would
+  now run tool tests. Re-proven on a features/ commit (scratch worktree, removed): body_plan.gd comment + baton.png
+  -> `gdformat + gdlint over 1 of 1428 .gd; tool-tests skipped` `lint: all 15 checks pass over 1 staged of 1428
+  GDScript files` real 4.6 s. That is the shape of hero's strip commits (PNG + art .gd/.json under features/).
