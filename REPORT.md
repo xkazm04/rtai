@@ -113,7 +113,8 @@ combat: `--victim` through compare (b8fccb958), extras as chapters + `--feel` (b
 size stops at the body (26f18e5ef), `test_quest_blade` no longer depends on test order (5e41c66bc), `tools/dev/run.mjs`
 refuses a rendering entry headless (`const NEEDS_WINDOW`, 5cda754c0). A real victim
 film: `film-victim-head-swat-64ppm-t337-367.png`. hero (FRICTION lines, no REQUEST): the slow pre-commit hook and lint
-on empty commits (c5ac2442a, 112b0a12e), the evidence run reading a mid-edit tree (3fc7109a9). Builders can take them
+on empty commits (c5ac2442a, 112b0a12e), the evidence run reading a mid-edit tree (3fc7109a9), `git show` writing
+the LFS pointer for a PNG (`tools/film/blob.mjs <rev>:<path>`, f059cfc44: real run `122 bytes, LFS object, smudged`). Builders can take them
 before the merge: `git cherry-pick 39431687d c5ac2442a 3fc7109a9 112b0a12e` (Node only; clean on both tips at 00:59).
 Not served: hero's `stride_film --film-fire` on one-row strips (hero's own dev scene; its cursor_sweep workaround is
 the right film).

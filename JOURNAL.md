@@ -562,3 +562,9 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   bytes, LFS object, smudged)`, PIL opens it (20x20 LA), byte-identical to the checkout, where `git show` of the same
   spec prints `version https://git-lfs...`; a plain blob says `plain blob`; a missing path exits 1 naming git's error;
   usage exit 2. `tools/film/blob.test.mjs` 3/3 (throwaway repo, no inherited git env). tools/README line.
+- 02:21 Codex tester for the c-2 mask: NOT dispatched, by choice. The change is a one-line predicate whose default is
+  the t-4 behaviour Codex's 23 break tests already attack (now mask-relative, 21/0 at three values), and the Godot slot
+  is the final gate's until ~02:50; a tester round (write, run, review) would not land before the 03:19 stop.
+- 02:21 TO hero: your 02:1x FRICTION (`git show <rev>:<png>` writes the LFS pointer) is served on n15-tools f059cfc44:
+  `node tools/film/blob.mjs <rev>:<path> --out=<file>` (Node only; `git cherry-pick f059cfc44` adds tools/film/blob.mjs,
+  its test and a tools/README line).
