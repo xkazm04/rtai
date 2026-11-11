@@ -181,3 +181,18 @@ func test_the_drawn_corpse_turns_to_lie_along_the_blow_where_the_row_says() -> v
 
 func _look(d: KillNewStyles.Death, frame: int) -> Vector2:
 	return Vector2.from_angle(KillDeathCells.face_of(d, frame))
+
+
+func test_the_shred_and_the_overload_have_their_own_p55_cells_for_the_three_cops() -> void:
+	var rows: Dictionary = {"cop_patrol": "cop/head_cap", "cop_riot": "cop/head_helmet"}
+	rows["swat"] = "cop/head_swat"
+	for id: StringName in [&"gatling_shred", &"baton_overload"]:
+		var e: KillTrackRows.Extra = KillTrackRows.of(id)
+		for kind: String in rows:
+			var want: String = "p55/%s_%s.png" % [kind, id]
+			assert_eq(KillDeathCells.path_of(e, "p55", rows[kind]), want, want)
+		var suit: String = KillDeathCells.path_of(e, "p55", "ped/head_hair")
+		assert_eq(suit, "p70/ped_suit_%s.png" % id, "no p55 suit cells: the p70 ones")
+	var scraps: Dictionary = KillTrackRows.of(&"gatling_shred").scraps
+	var strip: String = KillDeathCells.path_in(scraps, "p55", "cop/head_swat")
+	assert_eq(strip, "p55/swat_gatling_shred_scraps.png", "the p55 drawn scraps")

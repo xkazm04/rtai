@@ -839,6 +839,11 @@
           24
         ],
         "grids": {
+          "p55": {
+            "cop/head_cap": "cop_patrol_gatling_shred.png",
+            "cop/head_helmet": "cop_riot_gatling_shred.png",
+            "cop/head_swat": "swat_gatling_shred.png"
+          },
           "p70": {
             "cop/head_cap": "cop_patrol_gatling_shred.png",
             "cop/head_helmet": "cop_riot_gatling_shred.png",
@@ -847,6 +852,11 @@
           }
         },
         "scraps": {
+          "p55": {
+            "cop/head_cap": "cop_patrol_gatling_shred_scraps.png",
+            "cop/head_helmet": "cop_riot_gatling_shred_scraps.png",
+            "cop/head_swat": "swat_gatling_shred_scraps.png"
+          },
           "p70": {
             "cop/head_cap": "cop_patrol_gatling_shred_scraps.png",
             "cop/head_helmet": "cop_riot_gatling_shred_scraps.png",
@@ -1009,6 +1019,11 @@
           45
         ],
         "grids": {
+          "p55": {
+            "cop/head_cap": "cop_patrol_baton_overload.png",
+            "cop/head_helmet": "cop_riot_baton_overload.png",
+            "cop/head_swat": "swat_baton_overload.png"
+          },
           "p70": {
             "cop/head_cap": "cop_patrol_baton_overload.png",
             "cop/head_helmet": "cop_riot_baton_overload.png",
