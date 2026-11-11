@@ -758,12 +758,13 @@
           "p70": {
             "cop/head_cap": "cop_patrol_nail_pin.png",
             "cop/head_helmet": "cop_riot_nail_pin.png",
-            "cop/head_swat": "swat_nail_pin.png"
+            "cop/head_swat": "swat_nail_pin.png",
+            "ped/head_hair": "ped_suit_nail_pin.png"
           }
         }
       },
       "cone_deg": 10,
-      "doc": "Gloria, the nail gun (lane kills-new, n16): pinned. On the hit (gib hold 2) the nails streak in along the shot (KillPinArt); with a wall within 1.4 m behind him (the stage's push_out, probed along the shot) he is slammed back onto it over 6 ticks and hangs there by both sleeves, feet 0.12 m off the street, writhing (dying out over 80 ticks from t10); on the open street a nail through the boot holds him down. The patrol cop, riot cop and SWAT play their own drawn cells (KillDeathCells, 5 facings x 3 frames, facing the shooter; KillPinArt.frame picks the frame, cells.at = pinned, writhe, on the street): on the wall frame 1 (pinned through both sleeves, arms out, head slumped, blood from the sleeves) and frame 2 (the knees jerked up) on the writhe's peaks, no lean (he is nailed); on the street frame 1 as the nails hit, then from t8 frame 3, on his back with both hands at the nailed boot and the cap or helmet beside him, rocking at half the writhe (fx cells_lean). The drawing carries the driven nails. Any other kind: the coded nail stubs stay with the body; on the wall his standing copy writhes 12 deg, on the street he falls back (his own drawn fall grid, t2-16), a nail through the foot and one through the far sleeve. Aftermath: the pinned body and the nails.",
+      "doc": "Gloria, the nail gun (lane kills-new, n16): pinned. On the hit (gib hold 2) the nails streak in along the shot (KillPinArt); with a wall within 1.4 m behind him (the stage's push_out, probed along the shot) he is slammed back onto it over 6 ticks and hangs there by both sleeves, feet 0.12 m off the street, writhing (dying out over 80 ticks from t10); on the open street a nail through the boot holds him down. The patrol cop, riot cop, SWAT and suit ped play their own drawn cells (KillDeathCells, 5 facings x 3 frames, facing the shooter; KillPinArt.frame picks the frame, cells.at = pinned, writhe, on the street): on the wall frame 1 (pinned through both sleeves, arms out, head slumped, blood from the sleeves) and frame 2 (the knees jerked up) on the writhe's peaks, no lean (he is nailed); on the street frame 1 as the nails hit, then from t8 frame 3, on his back with both hands at the nailed boot and the cap or helmet beside him, rocking at half the writhe (fx cells_lean). The drawing carries the driven nails. Any other kind: the coded nail stubs stay with the body; on the wall his standing copy writhes 12 deg, on the street he falls back (his own drawn fall grid, t2-16), a nail through the foot and one through the far sleeve. Aftermath: the pinned body and the nails.",
       "fall": "back",
       "flash_ticks": 0,
       "fx": {
