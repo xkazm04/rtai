@@ -373,3 +373,14 @@ at 19:40: the draft is in the tree; fill Next steps, the gate verdicts, final Co
   clean tree prints nothing. The per-film "moved" line is unit-proven; a real reel proof follows when Godot is free.
 - SERVED (kills-new FRICTION 15:15): a live-tree reel now names its uncommitted project/ paths before it films and
   names the film where the tree moved; to keep editing while it runs: commit, then `--rev=HEAD`.
+- 15:22 Codex n16t-break-live-tree (gpt-5.6-sol, 1 round, 196 s): 8 adversarial tests, 1 kept red: CRLF porcelain
+  output corrupts every path (live_tree.mjs:19 split on '\n'). Accepted. Review found a second, real defect the tests
+  did not: git C-quotes non-ASCII paths as octal UTF-8 bytes (`?? "project/\303\274.gd"`, checked on a throwaway
+  repo), which the parser left escaped, so the file stat-ed as `gone`; and a quoted rename `"a b" -> "c d"`. Fixed:
+  `unquote` (C escapes, octal bytes -> UTF-8) + `porcelainPath` (new name of a rename) + split /\r?\n/; my first-author
+  test on a real repo (a space folder, `ü.gd`, a rename to `new name.gd`: every path stat-ed where it lies). 7c0e91fcd:
+  live_tree 13/13, film tests 254/0, full lint 19/19. Ledger recorded (`dispatch.ts record ... accepted`), discarded.
+- 15:25 queued (scratch-tools/after_gate_gore.sh, log scratch-tools/reel_s4gore_new.log): when the reel gate exits,
+  `kill_reel --weapons=all --quick --gore-check --rev=8f7fe6e6e` run FROM the kills-new worktree (their tip, their DLLs
+  in the snapshot; out in this tree build/kreel/s4gore_new): 17 films, every kills-new death under `--gore=reduced`
+  (the brief's "every death drops whole" over the whole table, not 2 weapons).
