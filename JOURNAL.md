@@ -656,3 +656,10 @@ film with later kills could prove the recycle. Logs go to C:\Users\kazda\kiro\gt
   Test (standMask clip/null cases, masked vs plain curve), film tests 282/0, lint 19/19.
 - 18:01 sweep: the other kit tools the lanes run by path from their own trees (film.mjs, compare.mjs, kill_reel.mjs per
   their journals) already take the caller's tree (`filmedRoot`); the gate was the only one on the kit's ROOT.
+- 18:07 FYI kills-polish (their 17:5x note: "commit the new test .gd with its .uid BEFORE any other commit, the
+  whole-tree uid-files check would fail on it"): not at commit time. The hook counts untracked files as drift
+  (tools/gate/staged_tree.mjs:41 `ls-files --others`), so it lints the index export, where an untracked .gd does not
+  exist. Only a lint of the working tree (quick.mjs, `node tools/lint/lint.mjs`, the gate on a dirty tree's HEAD is
+  fine: it snapshots the commit) sees it. Your order is still the safe habit.
+- 18:03 reel running: `kill_reel --weapons=all --quick --after=600 --rev=b9dba1da8 --native=donor` (kills-new's gated
+  commit), the aftermath lifetime of every death; ~2 min a film.
