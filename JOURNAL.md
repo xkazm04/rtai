@@ -685,3 +685,19 @@ FRICTION: `../n16-tools/tools/gate/run.mjs` writes its results to ITS tree (`n16
   git-ignored), not to mine, though its header says "build/gate/<sha>/ in your tree". REQUEST tools: resolve the
   results dir from the cwd's worktree, or say where it wrote on the last line. Read-only from my side.
 - 17:45 docs/decisions.md: DECISION kills-new/claw-cells-slide.
+- 17:56 GATE evidence on `b9dba1da8` (snapshot; the commits after it are evidence/docs/JOURNAL only): lint 19/19, unit
+  2684/0/2, scenarios 55/55, parity bit for bit 1200 steps (planted fault at 629), look goldens 11/11 worst 0.00,
+  release-compile 698/0. Reels running (n16-tools/build/gate/b9dba1da8ac6/reels.log).
+- Judged the SWAT claw frame-1 bolt on the packed sheet: ~10 px of the p70 cell high for 4 ticks, ~3 screen px at
+  32: left as drawn (REPORT "does not work yet").
+- 18:11 GATE reels on `b9dba1da8`: tilt70 OK, combo OK, **top FAIL**: 9 x `SCRIPT ERROR: Cannot call method 'has_meta'
+  on a null value` at street_walker_cards.gd:110 `row_of` <- kill_loose_art.gd:23 `attach` <- kill_new_styles.gd:73
+  (every new-style kill under the top view: no head card). The earlier gates ran combo-only reels, so it slipped since
+  `e4fcf6448`. FIX `b07ca1b3f`: KillLooseArt.attach returns when rig.head_card is null (my file; the shared
+  street_walker_cards.gd untouched). New unit test_kill_loose_art: FAILS without the guard (same has_meta error),
+  passes with it; 23/23 over loose art, death cells, new styles.
+- 18:18 GATE reels top on `b07ca1b3f` (live tree, `run_reels.mjs --views=top`): OK, 0 SCRIPT ERROR, 339 s
+  (log C:/Users/kazda/kiro/gtai-n16/scratch-kills-new-reels/1-top.log). So on b07ca1b3f: top OK; tilt70 + combo OK on
+  b9dba1da8 (the fix only acts with no head card, which tilt70/combo always draw).
+- 18:19 molotov in a city street fight at 32 px/m (`film.mjs weapon:molotov`, before `040ffb67a` = burn_char, after
+  `a63a1b4ee`) started (build/molotov_city.log).
