@@ -43,15 +43,14 @@ Branch `n15-hero`, cut from main `5c5c03611`. Every claim cites a still in this 
    `evidence/s15/ghost_lunge_tonnage_windup_before_after_32ppm.png`.
    At 32 px/m tick by tick: `evidence/s15/ghost_lunge_kerf_dent_ticks_before_after_32ppm_x2.png`.
    Ohm's bolt now leaves from his drawn fingertips (`GhostHand`, `--ghost-ohm-hand=sim` = before):
-   `evidence/s15/ohm_bolt_hand_8dir_before_after_64ppm.png`.
+   `evidence/s15/ohm_bolt_hand_8dir_before_after_64ppm.png`, at p55 `evidence/s15/ohm_bolt_hand_p55_8dir_before_after_64ppm.png`.
    Run16 since: Dent's 3/4 away row (all five right rows on 16) and Kerf's 3/4 toward-left row:
    `evidence/s15/dent_run16_away_before_after_64ppm.png`, `evidence/s15/kerf_run16_left34_before_after_64ppm.png`.
 
 ## What does not work / not done
 
 - Tonnage's lean is barely visible at 32 px/m (3 deg); his slam's landing with the lean is not filmed.
-- Ohm's bolt leaves from his drawn fingertips at p70 only (`GhostHand`); at p55 and on the drawn left rows
-  the hand spot is not measured (p55 keeps the rig's electrodes, left octants mirror the right row).
+- Ohm's hand spot on the drawn left rows is the right row mirrored (within 3 px at p70; p55 left not checked).
 - Kerf and Ohm have no anticipation: their sim strikes are instant by design (registry
   `realtime-combat-semantics`); a sim wind-up was rejected.
 - Run16: Kerf's 3/4 away-left and Dent's two 3/4 left rows still show each run8 frame twice (art running).
@@ -82,5 +81,5 @@ Branch `n15-hero`, cut from main `5c5c03611`. Every claim cites a still in this 
 ## Next steps
 
 1. Wire the remaining run16 left rows (Kerf 3/4 away-left, Dent both 3/4 left) as they arrive.
-2. Combat feel to 3: the owner judges GhostLunge in motion; Ohm's hand spot at p55 and on the drawn left rows.
+2. Combat feel to 3: the owner judges GhostLunge in motion; Kerf's blade and Dent's fist as GhostHand rows if an effect should leave from them.
 3. Planted feet: a world-space frame-diff measure of the stance foot for Ohm and Tonnage's walk clips.

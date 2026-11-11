@@ -13,6 +13,8 @@ extends RefCounted
 const CELLS: Dictionary[String, Array] = {
 	"ohm/p70":
 	[Vector2(-52, -60), Vector2(22, -44), Vector2(77, -61), Vector2(79, -108), Vector2(72, -130)],
+	"ohm/p55":
+	[Vector2(-44, -59), Vector2(14, -63), Vector2(71, -61), Vector2(80, -105), Vector2(44, -152)],
 }
 
 static var enabled: bool = true
