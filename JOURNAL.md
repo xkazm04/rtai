@@ -1067,3 +1067,5 @@ Write times from `date` (session 7 needed one correction).
   8f8a3dd1b` and the Godot command lines under gtai-gate-8f8a3dd1b*); when it ends, remove its snapshot
   (`git worktree remove --force %TEMP%/gtai-gate-8f8a3dd1b...` + its .gtai-snapshot file) and write the result into
   REPORT "Gates on this branch". Then the morning integration if time is left.
+- 06:23 `node tools/evidence/cites.mjs REPORT.md` -> `cites: 58 paths, 57 ok, 1 unchecked` (the 1 is the quoted
+  message `INVALID: the tree changed ...` at :113, not a path). Gate on 8f8a3dd1b: 0 kinds done so far.
