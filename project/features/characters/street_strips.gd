@@ -6,7 +6,9 @@ extends RefCounted
 ## its row's fall grid on a worker thread when the card is first stepped (prefetch_fall), and the
 ## view's walk grids once per art, so the death finds the strip decoded. get_tex() returns the same
 ## Texture2D as a plain load() did (it waits for an in-flight request, or loads in place): only WHEN
-## the decode runs moves, never a pixel. `-- --strip-prefetch=off` = load on first use (the before).
+## the decode runs moves, never a pixel. `-- --strip-prefetch=off` = load on first use (the before);
+## headless never asks a worker and loads on first use (TextureThreads: the dummy renderer is not
+## thread-safe).
 
 const PREF: StringName = &"street_fall_pref"
 
@@ -42,6 +44,8 @@ static func known(path: String) -> bool:
 ## Starts a worker-thread decode of `path` unless it is loaded, asked for, or prefetch is off.
 static func prefetch(path: String) -> void:
 	if path.is_empty() or _tex.has(path) or _asked.has(path) or not enabled():
+		return
+	if not TextureThreads.allowed():  # headless: the dummy renderer is not thread-safe
 		return
 	if ResourceLoader.load_threaded_request(path, "Texture2D") == OK:
 		_asked[path] = true

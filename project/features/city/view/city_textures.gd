@@ -40,7 +40,7 @@ func _init(texture_table: Dictionary) -> void:
 		names.append(str(row.get("name", "")))
 		var art: Variant = row.get("art")
 		var path: String = art if art is String else ""
-		if path != "" and ResourceLoader.load_threaded_request(path, "Texture2D", false) != OK:
+		if path != "" and TextureThreads.allowed() and _request(path) != OK:
 			failures.append("%s: load request refused" % path)
 			path = ""
 		paths.append(path)
@@ -65,10 +65,17 @@ func _init(texture_table: Dictionary) -> void:
 func _collect(path: String) -> Texture2D:
 	if path == "":
 		return null
-	var tex: Texture2D = ResourceLoader.load_threaded_get(path)
+	# Headless (TextureThreads): loaded here, on this thread; else collected from its loader thread.
+	var tex: Texture2D = (
+		ResourceLoader.load_threaded_get(path) if TextureThreads.allowed() else load(path)
+	)
 	if tex == null:
 		failures.append("%s: did not load" % path)
 	return tex
+
+
+static func _request(path: String) -> Error:
+	return ResourceLoader.load_threaded_request(path, "Texture2D", false)
 
 
 static func _flat(c: Color) -> Texture2D:
