@@ -124,3 +124,15 @@ test('--gore-check passes --gore=reduced to every film and refuses a second --go
   assert.match(reelPlan({ out: 'o', weapons: 'katana', 'gore-check': true }, ['--gore=full']).error, /passes --gore=reduced itself/);
   assert.equal(reelPlan({ out: 'o', weapons: 'katana' }, []).goreCheck, false);
 });
+
+test('measured beats: what stays on the street, and the first beat the window stops changing', async () => {
+  const { measureBeats } = await import('./kill_reel_lib.mjs');
+  const { diffImages } = await import('./png.mjs');
+  const img = (v) => ({ width: 4, height: 4, channels: 3, data: Buffer.from(v) });
+  const plain = Array(48).fill(100);
+  const marked = plain.map((x, i) => (i < 12 ? 200 : x)); // the top row (a quarter) stained
+  const frames = new Map([[60, img(plain)], [63, img(plain.map(() => 250))], [65, img(marked)], [213, img(marked)]]);
+  const m = measureBeats(frames, [60, 63, 65, 213], 63, [0, 0, 4, 4], diffImages);
+  assert.deepEqual(m, { aftermath_share: 0.25, settled_by: 65, settled_after_ticks: 2 });
+  assert.equal(measureBeats(new Map([[60, img(plain)]]), [60, 213], 63, [0, 0, 4, 4], diffImages), null);
+});

@@ -13,8 +13,8 @@ import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { EXIT, filmOne, pinRev, plan } from './film.mjs';
-import { goreWhole, killWindow, pickBeats, reelPlan, sheetOf, tableRows, victimAt } from './kill_reel_lib.mjs';
-import { readPng } from './png.mjs';
+import { goreWhole, killWindow, measureBeats, pickBeats, reelPlan, sheetOf, tableRows, victimAt } from './kill_reel_lib.mjs';
+import { diffImages, readPng } from './png.mjs';
 import { encodePng, label } from './sheet.mjs';
 import { spawnSync } from 'node:child_process';
 
@@ -51,6 +51,8 @@ async function filmJob(job, side, reel, runner, known) {
   const beats = pickBeats(k, reel.after).filter((t) => saved.has(t));
   const box = killWindow(r.probe, k, job.ppm);
   const clip = reel.clips ? encodeClip(job, saved, k, box) : null;
+  const frames = new Map(beats.map((t) => [t, readPng(join(job.dir, `t${t}.png`))]));
+  const measured = measureBeats(frames, beats, k, box, diffImages);
   if (!reel.keepFrames) {
     for (const name of readdirSync(job.dir)) {
       const t = /^t(\d+)\.png$/.exec(name);
@@ -59,7 +61,7 @@ async function filmJob(job, side, reel, runner, known) {
   }
   const gore = reel.goreCheck ? goreWhole(r.probe, k) : null;
   const outcome = !gore ? r.outcome : /not drawn whole/.test(gore) ? 'fail' : (r.outcome === 'pass' ? 'unverifiable' : r.outcome);
-  return { outcome, reasons: gore ? [...r.reasons, `gore check: ${gore}`] : r.reasons, kill: k, beats, box, clip, died: victimAt(r.probe, k),
+  return { outcome, reasons: gore ? [...r.reasons, `gore check: ${gore}`] : r.reasons, kill: k, beats, box, clip, measured, died: victimAt(r.probe, k),
     ...(reel.goreCheck ? { whole: gore === null } : {}) };
 }
 
@@ -154,7 +156,8 @@ export async function main(argv, { out = console.log, err = console.error, runne
     if (!kills.has(key) && Number.isInteger(film.kill)) kills.set(key, film.kill);
     rows.push({ job, film });
     out(`kill_reel: ${job.side} ${job.weapon} ${job.victim || 'guard'} dir ${job.dir_deg} ${job.ppm} px/m: ${film.outcome.toUpperCase()}`
-      + `${film.kill !== undefined ? ` kill at ${film.kill}` : ''}${film.reasons.length ? `: ${film.reasons.join('; ')}` : ''}`);
+      + `${film.kill !== undefined ? ` kill at ${film.kill}` : ''}${film.measured ? `, settled by +${film.measured.settled_after_ticks ?? '?'}, aftermath ${(film.measured.aftermath_share * 100).toFixed(1)} % of the window` : ''}`
+      + `${film.reasons.length ? `: ${film.reasons.join('; ')}` : ''}`);
   }
   const sheets = [];
   for (const weapon of reel.weapons) {

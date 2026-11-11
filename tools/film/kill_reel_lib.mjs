@@ -120,3 +120,23 @@ export function goreWhole(probe, kill, settle = 20) {
   if (!after) return `no numbers for the victim ${settle} ticks after the kill`;
   return after.draw?.[0] > 0 ? null : `the victim (id ${died.id}) is not drawn whole ${settle} ticks after the kill (draw ${after.draw?.join('x')}): a signature death under --gore=reduced`;
 }
+
+/** The `box` part of a decoded PNG, as an image diffImages takes. */
+export function cropImage(img, [x0, y0, w, h]) {
+  const data = Buffer.alloc(w * h * img.channels);
+  for (let y = 0; y < h; y++) img.data.copy(data, y * w * img.channels, ((y0 + y) * img.width + x0) * img.channels, ((y0 + y) * img.width + x0 + w) * img.channels);
+  return { width: w, height: h, channels: img.channels, data };
+}
+
+/** The measured side of the beat readout, from a film's beat frames inside the kill window: `aftermath_share`,
+ *  the share of the window still differing from the trigger frame at the last beat (what stays on the street),
+ *  and `settled_by`, the first beat after the kill from which the window differs from the last beat by under
+ *  `still` (the motion is over by then; coarse: beats only). `frames` maps tick -> decoded image. */
+export function measureBeats(frames, beats, kill, box, diff, { tolerance = 12, still = 0.01 } = {}) {
+  const last = beats.at(-1);
+  if (!frames.has(60) || !frames.has(last) || last <= kill) return null;
+  const crop = (t) => cropImage(frames.get(t), box);
+  const end = crop(last);
+  const settled = beats.filter((t) => t > kill && frames.has(t)).find((t) => diff(crop(t), end, tolerance).fraction < still) ?? null;
+  return { aftermath_share: Number(diff(crop(60), end, tolerance).fraction.toFixed(4)), settled_by: settled, settled_after_ticks: settled === null ? null : settled - kill };
+}
