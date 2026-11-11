@@ -154,7 +154,9 @@ and `aftermath X %` (the share of the window at kill+after that still differs fr
 on the street). Example (n16): rocket dir 90 6.3 % at both zooms, settled only by +150; katana 1.7 %, by +80.
 The aftermath LIFETIME (n16 s6): `--after` takes up to 1200 ticks without `--clips` (a clip stays inside the lab
 shot's 230), the sheet adds +150 / +300 / +600 columns as they fit, and each line and `reel.md` give the curve,
-`+20 4.8 / +80 2.1 / +300 2.1 / +600 0.9 %, stays past +600` (or `gone by +N`, under 0.5 % of the window). The data
+`+20 4.8 / +80 2.1 / +300 2.1 / +600 0.9 %, 0.9 % still at +600` (or `gone by +N`, under 0.5 % of the window: rare,
+since the trigger frame holds the victim standing, so his absence and a dropped weapon stay in the share; read the
+steps: rocket `--after=1000` 5.9 -> 5.5 at +600 = the gibs gone, -> 1.6 at +1000 = scorch and spray gone). The data
 line names the street's clock from `corpse_decay.json`: bodies and their pieces gone by linger + fade (6 + 1.2 s),
 stains by 12 + 4 s. Example: `--weapons=claw_shock,rocket_launcher --after=600`: the thrown cop lies at +300 and is
 gone at +600, the rocket's gibs likewise, its scorch and spray stay. A film run with the feel off (film's

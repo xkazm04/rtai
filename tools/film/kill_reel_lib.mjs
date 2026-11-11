@@ -259,12 +259,14 @@ export function stopText(m, unit = ' frames') {
   return `${m?.hitstop_frames ?? '?'}${unit}`;
 }
 
-/** `+20 9.1 / +80 4.0 / +600 3.0 %, gone by +300` or `..., stays past +600`: the measured aftermath lifetime. */
+/** `+20 9.1 / +300 0.4 %, gone by +300` or `..., 3.0 % still at +600`: the measured aftermath lifetime. Read the
+ *  steps: the trigger frame holds the victim standing, so his absence (~1 % of a 32 px/m window) and a dropped weapon
+ *  never leave the share; n16 s6 rocket: 5.9 -> 5.5 at +600 (gibs gone), -> 1.6 at +1000 (scorch and spray gone). */
 export function curveText(m) {
   const curve = m?.aftermath_curve ?? [];
   if (!curve.length) return '-';
   const gone = m.aftermath_gone_after;
-  return `${curve.map(([t, v]) => `+${t} ${(v * 100).toFixed(1)}`).join(' / ')} %, ${gone === null || gone === undefined ? `stays past +${curve.at(-1)[0]}` : `gone by +${gone}`}`;
+  return `${curve.map(([t, v]) => `+${t} ${(v * 100).toFixed(1)}`).join(' / ')} %, ${gone === null || gone === undefined ? `${(curve.at(-1)[1] * 100).toFixed(1)} % still at +${curve.at(-1)[0]}` : `gone by +${gone}`}`;
 }
 
 /** reel.md: one table row per film, the measured beats beside the row's data, for a REPORT or a JOURNAL. */

@@ -315,7 +315,7 @@ test('the charged claw (PlayerShock.WEAPON, no table lists it) is a lab weapon: 
 test('the curve reads as a lifetime: gone by a beat, or stays past the last one', async () => {
   const { curveText } = await import('./kill_reel_lib.mjs');
   assert.equal(curveText({ aftermath_curve: [[20, 0.091], [300, 0.004]], aftermath_gone_after: 300 }), '+20 9.1 / +300 0.4 %, gone by +300');
-  assert.equal(curveText({ aftermath_curve: [[20, 0.091], [600, 0.03]], aftermath_gone_after: null }), '+20 9.1 / +600 3.0 %, stays past +600');
+  assert.equal(curveText({ aftermath_curve: [[20, 0.091], [600, 0.03]], aftermath_gone_after: null }), '+20 9.1 / +600 3.0 %, 3.0 % still at +600');
   assert.equal(curveText({}), '-', 'an old reel.json without a curve');
   assert.equal(curveText(undefined), '-');
 });
