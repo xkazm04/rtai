@@ -8,8 +8,8 @@ extends RefCounted
 const BLOOD: Color = Color("#A30509")
 const BLOOD_DARK: Color = Color("#540005")
 const SOOT: Color = Color(0.09, 0.075, 0.105, 0.55)
-## The plasma sword's scorch line's width at its middle (metres).
-const LINE_W_M: float = 0.16
+## The plasma sword's scorch line's width at its middle (metres; 0.16 read as a crack, ps64_s).
+const LINE_W_M: float = 0.26
 ## A drag smear thins from the landing over this much slide (metres).
 const SMEAR_TAPER_M: float = 1.6
 ## The blot's outline points, how far it runs out along the blow (of its radius), its fingers.
