@@ -11,6 +11,7 @@ Run these from the root of your worktree. Exit codes are shared: `0` pass, `1` f
 |---|---|
 | film or still a named shot (arena, street, quest 1, a chapter, a weapon) | `node tools/film/film.mjs <shot>` |
 | film every signature death: weapons x victim kinds x directions, 32 and 64 px/m, a sheet per weapon | `node tools/film/kill_reel.mjs --out=<dir> --weapons=all` |
+| how long each death's aftermath stays on the street (body ~7 s, stains ~16 s): a measured curve per film | `node tools/film/kill_reel.mjs --out=<dir> --weapons=all --quick --after=600` |
 | show before and after at the same tick | `node tools/film/compare.mjs <shot> --a=<commit> --b=<commit>` |
 | the old bytes of a file at a commit (LFS assets smudged, not the pointer `git show` writes) | `node tools/film/blob.mjs <rev>:<path> [--out=<file>]` |
 | one sheet of a film's stills, labelled | `node tools/film/sheet.mjs <film dir> --out=<file.png>` |
@@ -18,7 +19,7 @@ Run these from the root of your worktree. Exit codes are shared: `0` pass, `1` f
 | catch the lint you keep tripping, before the commit | `node tools/gate/quick.mjs` |
 | commit a journal without waiting for lint | (automatic: the hook skips lint when only inert paths are staged) |
 | check one script or scene parses, in seconds | `node tools/godot/check.mjs <res://path>` |
-| run every gate while you keep editing | `node tools/gate/run.mjs` |
+| run every gate while you keep editing (results in the tree you run it from) | `node tools/gate/run.mjs` |
 | gate mid-session with one reel view (~5 min of reels, not ~23; the final commit needs plain `--reels`) | `node tools/gate/run.mjs --rev=<sha> --reels=combo` |
 | run a dev scene with its flags checked (its own KNOWN_FLAGS, else every flag literal in the project) | `node tools/dev/run.mjs <entry>` |
 | make a new worktree able to run the game | `node tools/dev/wt_init.mjs <worktree>` |
