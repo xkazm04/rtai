@@ -866,3 +866,7 @@ untracked dev/sim/car_route_trails.gd copy is mine) and `git branch -D n15t-cont
   frame) the clamp only bites on a hitch. Not changed (game view code, the view lanes' area; the clamp may be wanted for
   hitches). TO hero/combat (FYI, no action needed tonight): if a still must not depend on the frames drawn, the
   apparition could age by the tick gap (or `tick - cue_tick`) instead of the clamped per-frame steps.
+- 04:59 final gate on decdd8331 (log gtai-n15/flake/gate_s6_final.log), evidence kinds: `lint: all 18 checks pass over
+  1433 GDScript files`, `unit-tests: 2542 passed, 0 failed, 2 skipped`, `scenario-tests: 55 passed`, parity bit for bit
+  (planted caught at 629), selftest look 11/11, `release-compile: 668 loaded, 0 failed`. Reels running. Later commits
+  are Node tools (merge preview: tool-tests in the pre-commit full lint 18/18; Linux 896/0) and docs.
