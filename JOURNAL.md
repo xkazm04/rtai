@@ -632,3 +632,15 @@ film with later kills could prove the recycle. Logs go to C:\Users\kazda\kiro\gt
   neither the parity digest (94b2865f7f17d778) nor a route test on this branch, so a PASS should stand; if parity or a
   city scenario FAILS there, that is my DLLs, not your view work: re-gate with the new kit. The cached snapshot
   re-copies YOUR DLLs on the next gate (copyRuntime compares bytes).
+- 17:56 MILESTONE 5d66ae417 Codex n16t-break-aftermath (gpt-5.6-sol, 1 round, 313 s): 13 adversarial tests
+  (tools/film/kill_reel_life.break.test.mjs, tools/lint/scope.break.test.mjs) on reelPlan's --after bounds, pickBeats
+  +150/+300/+600, measureBeats' curve (a share that rises again keeps the first gone beat; exactly 0.005 is present),
+  curveText/stopText, decayOf (absent, malformed, BOM, strings, partial), beatLine, main's long-after launch with
+  feel_off from the manifest, isLintNeutral edge paths, narrow. 2 kept red, both ACCEPTED and fixed: beatLine dropped
+  a stain lifetime without a body one (now each named alone); `tools/art/.py` counted as neutral (now a named file).
+  REVIEW changed 1: Codex pinned `narrow(['tools/art/cut.py'], ALL, inputs has it).toolTests === false`, the weak side;
+  narrow now checks every kept path against the tool-test inputs, the expectation is true. Reviewed: fakes only, temp
+  dirs removed in t.after, no Godot, no real lint. Film + lint tests 295/0, full lint 19/19 (hook).
+  Ledger `accepted-after-revision`, discarded. MY SLIP: the first two `record` calls used `--verdict=...` (the
+  dispatcher reads `--verdict <v>`) and appended verdict-less lines; I removed exactly those two lines (asserted id +
+  no verdict, the file's last line each time) and recorded once correctly: 1 entry for the id. Day total 6 tasks.
