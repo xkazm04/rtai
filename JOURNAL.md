@@ -378,3 +378,56 @@ rivet-motion melee line's metal dummies with a gun (combat_reel `melee_line` bea
 a death. (4) Gib pieces for the thug and hood (it363, drawn, unpacked): need a shot where they are CARDS (city crowd +
 rocket). (5) Masters: the gib frame shows the untoned pieces (fine; the toned A/B is in evidence/). (6) REPORT: the
 final gate line.
+
+## Session 6 (03:12-04:42)
+- Read: JOURNAL, git log -30, replies n15-combat.md (it363 offers: char cells for ped_cap / jogger / punk / swat; gib
+  pieces for thug / hood / riot / patrol v2). No new REQUEST to combat in the other lanes' journals checked last session.
+- 03:13 GATES started on `7778d347a` (`node tools/gate/run.mjs --rev=HEAD --reels`, build/gate/7778d347ad77/): proves
+  the reel fix f7baf2dbc on the full set. Non-Godot work while it holds my Godot slot:
+- WIP (uncommitted until filmed): street_hit.py CHARS += ped_cap, ped_jogger, ped_punk, swat (it363; packed with
+  `--only=char`, the four shipped char sheets re-packed byte-identical: git shows no change); KillCharCells GRIDS /
+  FILL_OF for the four rows, so every kind with a burning figure (StreetWalkerHit.BURN_GRIDS) ends as a drawn char
+  cell; test_every_burning_kind_has_a_drawn_char_cell. Sheet check (burn row over char row, each kind):
+  build/scratch/s6/char4_sheets.png: same scale and stance as the burn cells, no smoke, no red; swat holds his carbine.
+- WIP: DEFECTS c-2 #3 (the body burst left on the floor 0.5 m short of the knocked-back card): HitLink's knock-back
+  moves the sim Fighter.pos, and a death's slide is the view's rig carry (HumanReact.last_carry, session 4's reading),
+  so GunFxRounds._impact records [victim, where his body was drawn] per body-hit impact (new GunFxFollow, held by
+  GunFx.follow; body_off = RigCarry.hook(rigs), wired in ArenaRigs next to ShieldSparks) and GunFxArt draws the burst
+  at follow.drawn_at (= stop point + how far his drawn body moved since). `--impact-follow=off` = the before.
+  test_gun_fx_impact_follow (5). Debt: gun_fx.gd / arena_rigs.gd held at their baselines (comments tightened).
+- Finding: GunFx.shield_test is never wired in the game (only tests set it): a riot shield's round is thrown as
+  white sparks by ShieldSparks (blood fx), never as a GunFx METAL impact. So the metal-spark cells have no shield case.
+- Metal sparks: DECISION combat/metal-sparks-later: not shipped tonight. Two films found no METAL impact in the shots
+  that exist; making one needs a new shot or a sim-side reading of what a round hit, which is more than the gain.
+  Files stay in build/scratch/metal_wip/ (git-ignored); the n11 shapes keep drawing METAL.
+- Registry (realtime-combat-semantics, "information is partial and late": state that changes outcomes must be
+  perceivable inside the reaction budget, not in a log): applied to impact-follow. The hit mark is the player's proof
+  of which body took the round, so it is drawn on the body that took it, not on a floor point the body has left.
+- GATES on `7778d347a` (03:13-03:36, build/gate/7778d347ad77/gate.json): PASS lint 16/16, unit 2527/0/2 (FLAKY 1:
+  test_character_rigs `test_a_fresh_corpse_keeps_its_rig_for_the_hold_then_drops`, also logged flaky at 02:14 on
+  88077fb80, not mine), scenarios 55, parity bit-exact (mutation at 629), look goldens 11/11 worst 0.00, block 5/5 worst
+  0.69 (= baseline), export-audit 672, reels top / tilt70 / combo OK (281 s each). The reel fix f7baf2dbc holds.
+- MILESTONE `c11391625` item 2 charred cells for swat, ped_cap, ped_punk, ped_jogger (it363): film weapon:flamethrower
+  --victim=<kind> --on=kill:1+80 64 px/m, before `--char-cells=off`, same build:
+  `evidence/n15-combat/char_cells_swat_cap_punk_jogger_ab_64ppm_t542-620.png`; 32 px/m punk
+  `char_cells_punk_32ppm_t542-620.png` (reads: mohawk, dark plated body). Each drawing stands where the black print
+  stood, same size, crumble unchanged. Provenance 4 lines, all 8 char sha256 checked by script. DECISION
+  combat/char-cells-all. Unit test_kill_char_cells 6/6 (every BURN_GRIDS row has a char grid).
+- FRICTION (mine): 1) `LaunchArgs.value()` returns "" for any flag not in its KNOWN_FLAGS list, so a dev before-flag
+  read through it never fires (my first impact before/after was byte-identical); dev arena flags go through
+  `ArenaArgs.parse().text()`. 2) I edited gun_fx_follow.gd while a film queue ran: a local `off` shadowed the new
+  static `off()` (warning = error) and 4 queued films died in 4 s with SCRIPT ERROR. Parse-check before queueing.
+- Finding (impact): the floor dot was not mainly the knock-back. A round is "on a body" when its last step passes
+  within radius + 0.3 m (0.75 m) of the centre, and the burst was drawn at that step's closest point, short of him.
+- MILESTONE `273bb2232` item 5 / DEFECTS c-2 #3: a body hit's burst on the body's front (GunFxFollow.on_body,
+  FRONT_M 0.15) riding the knock-back and the death carry (RigCarry.hook wired in ArenaRigs). Film weapon:machine_pistol
+  --victim=cop/head_cap 64 + 32 px/m t336-345, before `--impact-follow=off`, same build:
+  `evidence/n15-combat/body_burst_on_body_ab_64_32ppm_t336-345.png`: the floor dots at t337-338, t341-344 gone; a dot
+  at t339-340 stays near his old spot (the thrown-back cell draws him ~0.5 m on; the drawing's offset, not the sim).
+  DECISION combat/impact-follow. Unit 50/0 on the touched suites. Mutation (`mutate.mjs --file=features/combat/
+  weapons/gun_fx_follow.gd --max=10`): 60 % (6/10); survivors: the `_off` cache (equivalent without the flag), the
+  FRONT_M literal, and the age boundary at :40 -> test added in `2f1ac74c8`. Checkout clean after.
+- 03:56 GATES started on `2f1ac74c8` (`node tools/gate/run.mjs --rev=HEAD --reels`, log build/gate/s6_gate2.log).
+- Masters (gtai-masters/n15/combat/frames.json): added the 4-kind charred cells and the body burst at the top; dropped
+  body_ink_disc (superseded by the burst on the body) and the p55 baton re-cut (still in evidence/); 15 entries, none
+  unreferenced or missing (checked by script).

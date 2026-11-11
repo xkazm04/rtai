@@ -1,4 +1,4 @@
-# REPORT: night n15, lane combat (DRAFT, updated 02:40 by session 5; the last session finishes it)
+# REPORT: night n15, lane combat (DRAFT, updated 04:00 by session 6; the last session finishes it)
 
 Branch `n15-combat`, worktree `C:\Users\kazda\kiro\gtai-wt\n15-combat`, cut from main `5c5c03611`.
 Every change has a before flag on the same build and a same-tick before/after film under `evidence/n15-combat/`
@@ -14,6 +14,7 @@ Every change has a before flag on the same build and a same-tick before/after fi
 | 2 quest 1's contractor thrown back by a blow (it321 stagger v2) | `302a0d670` | `--quest-hit=off` | `evidence/n15-combat/contractor_hit_stagger_ab_48ppm_x2_t13708-13726.png` |
 | 2 ... and he staggers holding his long dock carbine (it359 v3, hat-registered at v2's scale) | `51034570a` | (the v2 grid) | `evidence/n15-combat/contractor_hit_v3_carbine_ab_48ppm_x3_t13710-13722.png` |
 | 2 a fire death stands as the drawn charred figure: patrol cop (it272), thug, hooded ped, riot cop (it359) | `8eb67bc62`, `63811e09c` | `--char-cells=off` | `evidence/n15-combat/char_cells_cop_ab_64ppm_x2_t542-620.png`, `char_cells_thug_hood_riot_ab_64ppm_t542-620.png` |
+| 2 ... and swat, capped ped, punk, jogger (it363): every kind with a burning figure ends drawn | `c11391625` | `--char-cells=off` | `evidence/n15-combat/char_cells_swat_cap_punk_jogger_ab_64ppm_t542-620.png`, `char_cells_punk_32ppm_t542-620.png` |
 | 3 p55 baton strike re-cut at the facings' size | `42c826289` | (re-cut) | `evidence/n15-combat/baton_p55_strike_recut_ab_32ppm_x2_t54-70.png` |
 | 3 the baton's drawn left strike (it334) | `a76c26f9a`, `6486e5e59` | `--rivet-left-strike=off` | `evidence/n15-combat/baton_left_strike_ab_p70_32ppm_t52-110.png` |
 | 3 katana / plasma sword / chainsaw turned left: drawn left set (it338/342/346) | `15c8abbcc` | `--rivet-blade-left=off` | `evidence/n15-combat/katana_left_set_ab_64ppm_t56-76.png`, `boss_katana_left_set_p55_ab_64ppm_t306-326.png` |
@@ -27,6 +28,7 @@ Every change has a before flag on the same build and a same-tick before/after fi
 | 4 vehicle shadows judged (no defect) | | | `evidence/n15-combat/vehicle_shadows_combo_64_32ppm.png` |
 | 5 the melee smear: one crescent, no white hexagon ring | `9f966271e` | `--melee-smear=n7` | `evidence/n15-combat/melee_smear_span_ab_baton_left_32ppm_t58-96.png` |
 | 5 the city street fight draws no range-target rings | `54297457d` | `--target-rings=on` | `evidence/n15-combat/city_target_rings_ab_32ppm_t200_600.png` |
+| 5 a body hit's ink burst on the body's front, riding the knock-back and the death's carry (no floor dots short of him) | `273bb2232`, `2f1ac74c8` | `--impact-follow=off` | `evidence/n15-combat/body_burst_on_body_ab_64_32ppm_t336-345.png` |
 
 Gates: full run on `65acf2e8e` (02:35-03:00): PASS lint 16/16, unit 2526/0/2, scenarios 55, parity bit-exact (mutation
 at 629), look goldens 11/11 worst 0.00, block goldens worst 0.69 (= this worktree's session-1 baseline), export-audit
@@ -37,16 +39,20 @@ full gate with reels on the final commit.
 ## What does not work, or is not shown
 
 - The p55 katana's RIGHT wind-up and strike cells draw larger than his facing (~1.2-1.4x); n13/n14 kept as built.
-- The body-hit burst stays at the world point while the dying body is carried ~0.5 m (view-only rig carry).
+- The body-hit burst (fixed in large part, `273bb2232`): at t339-340 one dot still shows near the cop's old spot while
+  the thrown-back cell draws him ~0.5 m on (the drawing's own offset); on the body the burst draws under his card.
 - Metal impacts keep the cream strokes. The it317 sparks are packed (pulled half way to cream) but NOT shipped: no round
-  on metal was filmed (a round on a metal dummy is a BODY hit; a riot cop's rounds hit his body, not the shield).
+  on metal was filmed (a round on a metal dummy is a BODY hit; `GunFx.shield_test` is wired only in tests, so a round
+  on a riot shield is ShieldSparks' white sparks, never a GunFx METAL). DECISION combat/metal-sparks-later.
   Rivet's plating keeps the strokes on purpose.
 - The contractor's living hold (20 ticks) is not filmed (every Dock 9 hit in t13600-13838 was a kill).
-- Charred cells: the patrol, thug, hood and riot cop stand drawn; swat, ped_cap, ped_punk, ped_jogger keep the char
-  print (no drawn cells); the lying char cells (`char_lying/`) are not wired. Not wired either: the worker and gang
+- Charred cells: all 8 burnable kinds stand drawn; the lying char cells (`char_lying/`) are not wired. The charred
+  SWAT man holds a charred carbine while his dropped carbine lies at his feet (two guns). Not wired either: the worker and gang
   burn cells, the contractor's flinch/burn cells, the cultist (no fighter in the game).
 - Drawn gib pieces for the thug and the hooded ped (it363 A) are not shipped: in the lone rocket shot they are rigs, not
   cards, so the card cut never reaches them. On a contractor's death the dropped carbine lies beside the one he holds.
+- Casings: drawn per round by weapon-art (`WeaponCasings`); the asset lane's casing-litter decals (it313/it317
+  `residue_casings_70`, an n12 battle-residue offer) are not wired.
 - The flame jet's floor fire stacks into a column of starbursts (the sim's patches; colour is the owner's look-3 ink).
 - Perf: `tools/perf/fight_gate.mjs` 01:15 (bench.lock held, 4 rounds, befores = every tonight flag off): city block fight
   p50 -0.46 [-1.88,+1.93] ms, p99 -0.58 [-2.87,+3.31]; Gatling horde p50 -0.20 [-0.72,+0.68], p99 +0.71 [-0.38,+2.57]:
