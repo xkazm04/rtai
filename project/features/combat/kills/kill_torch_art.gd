@@ -25,13 +25,21 @@ static func draw(ci: KillNewStyles, d: KillNewStyles.Death, age: int) -> void:
 	for t: int in n:
 		var u: float = (float(t) + 0.5) / float(n)
 		var at: Vector2 = d.feet_px.lerp(d.head_px, 0.15 + 0.75 * u)
-		if lying:  # along the body on the street, from the knees to the shoulders
-			at = d.feet_px + d.fall * d.height * (0.2 + 0.7 * u)
+		if lying:  # along the drawn body on the street, from the feet past its middle
+			at = d.feet_px.lerp(_middle(d), 0.3 + 1.2 * u)
 		var flick: float = (
 			1.0 if ci.reduced_motion else 0.7 + 0.5 * KillNewStyles.h(d.serial + t, age)
 		)
 		var tall: float = ci.ppm * d.extra.num("flame_m", 0.32) * k * flick
 		_tongue(ci, at, tall, (KillNewStyles.h(d.serial, t + 600) - 0.5) * 0.5)
+
+
+## Layer px of the lying body's middle: the drawn cell's alpha centroid (KillCellBody), else
+## along the fall.
+static func _middle(d: KillNewStyles.Death) -> Vector2:
+	if d.cells == null or not d.cells.visible:
+		return d.feet_px + d.fall * d.height * 0.45
+	return d.xf * (d.cells.transform * KillCellBody.centroid(d.cells))
 
 
 ## One flame tongue rising `tall` px off `at`, leaning `lean` rad.
