@@ -735,3 +735,7 @@ CONTENDED. (4) If code changes, full gate + reels again (`node tools/gate/run.mj
 then `removeSnapshot`. (5) REPORT final at 07:40 (Calls c-1, c-2 with the tier A panel; merge notes: tools first,
 rebuild DLLs). (6) End of night: `git worktree remove --force C:/Users/kazda/kiro/gtai-n15/scratch-tools-before` (its
 untracked dev/sim/car_route_trails.gd copy is mine) and `git branch -D n15t-control-sim-hash`.
+- 04:25 NEXT (2) done early: merge preview on hero 1ef3aac21 + combat 7b12b6386 (after tools 27756d838+): +hero conflicts
+  JOURNAL.md, tools/debt/baseline.json (morning.mjs handles both); +combat the same two code files as before
+  (cast_flags.gd, rivet_res.gd) + docs + baseline. `resolve_hero_x_combat.py` still resolves both; output passes
+  gdformat --check and gdlint. Unchanged since 03:17: REPORT merge notes stand.
