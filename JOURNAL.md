@@ -474,3 +474,7 @@ changed at 5cda754c0 (selftest passed on it at 00:35, unit/scenarios/reels not r
   scoped hook caught my unformatted test in 2.8 s. DECISION render/texture-threads in docs/decisions.md.
 - 01:27 full gate on HEAD started (`node tools/gate/run.mjs --rev=HEAD --timeout=40`, log
   gtai-n15/flake/gate_s3_head.log).
+- 01:29 TO hero and combat: the scenario_rig_stress `Parameter "t" is null` flake (it hit hero in n11 twice and the
+  integrated gates tonight) is FIXED at its cause on n15-tools c3f80513d (headless never decodes textures on a
+  loader thread; real renderers unchanged, so no frame or golden moves). `git cherry-pick c3f80513d` applies clean
+  on both your tips (merge-tree, 01:29); it adds project/core/render/texture_threads.gd (+.uid).
