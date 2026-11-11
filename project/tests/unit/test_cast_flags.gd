@@ -35,3 +35,40 @@ func test_rivet_height_scales_his_drawn_height_at_every_art_key() -> void:
 	CastFlags._read = false
 	CastFlags.apply(PackedStringArray(["--rivet-height=9"]))
 	assert_almost_eq(RivetFrames.height_k * RivetFrames.HEIGHT_M, 2.5, 0.0001, "clamped")
+
+
+func test_every_walk_before_reaches_its_switch() -> void:
+	# n15 tools: c8d71e34a moved these into _walk(), but apply() routed only --rivet-walk=,
+	# --rivet-swipe and --rivet-bob there: --rivet-walk-armed=off, --rivet-stride=off did nothing.
+	var befores: PackedStringArray = [
+		"--rivet-walk=bob",
+		"--rivet-walk=4",
+		"--rivet-walk=walk8",
+		"--rivet-walk-armed=off",
+		"--rivet-stride=off",
+		"--rivet-swipe=off",
+		"--rivet-bob=drawn",
+	]
+	CastFlags._read = false
+	CastFlags.apply(befores)
+	var got: Array = [
+		RivetWalk.enabled,
+		RivetWalk.frames,
+		RivetWalk.run,
+		RivetWalk.armed,
+		RivetStride.enabled,
+		RivetSwipe.enabled,
+		RivetBob.enabled,
+	]
+	_restore_walk()
+	assert_eq(got, [false, 4, false, false, false, false, false])
+
+
+func _restore_walk() -> void:
+	RivetWalk.enabled = true
+	RivetWalk.frames = 8
+	RivetWalk.run = true
+	RivetWalk.armed = true
+	RivetStride.enabled = true
+	RivetSwipe.enabled = true
+	RivetBob.enabled = true
