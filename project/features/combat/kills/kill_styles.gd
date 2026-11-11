@@ -82,7 +82,7 @@ func parts(
 			groups[SignatureKill.BODY], _kills, _ppm, row.hole_up_m
 		)
 	elif row.style == &"dissolve" and rig != null:
-		groups[SignatureKill.BODY] = KillDissolveFx.wrap(groups[SignatureKill.BODY])
+		groups[SignatureKill.BODY] = KillDissolveMask.wrap(groups[SignatureKill.BODY], _ppm)
 	elif row.style == &"shock" and rig != null and groups[SignatureKill.BODY] != null:
 		var plank: Node2D = KillSprawlCut.cut(rig)
 		groups[SignatureKill.BODY] = KillShockFx.wrap(groups[SignatureKill.BODY], plank)
