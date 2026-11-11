@@ -688,3 +688,18 @@ plain `--reels` (~35 min). Logs go to C:\Users\kazda\kiro\gtai-n16\scratch-tools
   (hand cannon, katana, chainsaw, homing), scorch (rocket, molotov, nuke), a dark mark (flamethrower); the electro gun's
   dropped gun only, inside his spot. Matches. Evidence: evidence/n16-tools/reel_s6all_lifetime.md + the sheet at half
   size (full size in masters, frames.json top, 15, dropped the guard-vs-thug frame). REPORT findings updated.
+- 18:20 Node tooling (lib, lint, tests, debt, evidence, dev, selftest, film, gate, merge): 939/0. `git diff --stat
+  caccc825d HEAD -- project native` empty: no project/ or native/ commit since the full-reel gate PASS. Tree clean, no
+  Godot of mine running. Decisions lines this session: tools/lint-neutral-scope, tools/kill-reel-aftermath-life,
+  tools/kill-reel-stand-mask, tools/kill-reel-gone-holds. REPORT: new Call (five deaths leave a clean street after
+  ~7 s), cites 7/7 ok.
+- SERVED (both kill lanes): the lifetime of every death on kills-new b9dba1da8 is in
+  evidence/n16-tools/reel_s6all_lifetime.md; re-measure your own deaths with `node ../n16-tools/tools/film/kill_reel.mjs
+  --out=<dir> --weapons=<w> --quick --after=600 --rev=<sha>` (line ends `gone by +N` or `still there at +N`).
+
+NEXT (session 7; supersedes the NEXT above): (1) both kill journals for REQUEST tools / FRICTION first. (2) REPORT.md
+final at 19:40: drop DRAFT from the header, check each item's proof line, final Codex ledger (6 tasks), merge notes
+(tools first: native changed for c-2), `node tools/evidence/cites.mjs REPORT.md` clean. (3) If a project/ commit lands
+here, the FULL gate with plain `--reels` (~35 min, start before 18:55). (4) Weakest remaining: `gone by` ignores marks
+inside the victim's standing spot (a victim-free twin film would fix it); the KillMarks 12-kill ring is unfilmed.
+Logs: C:\Users\kazda\kiro\gtai-n16\scratch-tools\logs\.
