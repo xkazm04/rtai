@@ -70,8 +70,12 @@ PASS with reels on `f128a280e` and `ac7991f58` (session 7). Mutation: `rig_depth
   every tonight flag off): city block fight p50 +0.02 [-0.13,+0.11] ms, p99 -0.07 [-1.58,+0.65], cpu: all WASH against
   the A/A floor. Gatling horde p50, p99 and cpu WASH; the WORST frame is ~0.4 ms higher with tonight's work on
   (before - now -0.38 [-0.63,-0.02], 4/4 rounds; A/A worst [-0.32,+0.16]), both arms ~16 ms. 0 frames over 25 ms; 6 of
-  24 runs CONTENDED (`build/perf/fight-gate/2026-11-11T05-08-07-904Z/gate.json`). Not measured: the load-time cost of
-  the warmed strips (these scenes do not draw them).
+  24 runs CONTENDED (`build/perf/fight-gate/2026-11-11T05-08-07-904Z/gate.json`). A horde-only bisect by flag group
+  (06:18, bench.lock held, 19 of 20 runs CONTENDED, `build/perf/fight-gate/2026-11-11T05-18-13-409Z/gate.json`) shows
+  the same ~0.4 ms worst-frame gap between the A/A twins themselves (A/A worst -0.44 [-2.18,-0.19]): the worst frame is
+  noise at this size, not a cost. No group is costlier with tonight's work on (fx, gib, rest: WASH, except the rest
+  group's BEFORE reading higher on p50 +0.17 and cpu +0.56 under 4.9 busy cores). Not measured: the load-time cost of the
+  warmed strips (these scenes do not draw them).
 
 ## Calls for the owner
 
@@ -110,5 +114,4 @@ PASS with reels on `f128a280e` and `ac7991f58` (session 7). Mutation: `rig_depth
    packed it317 sparks.
 5. The contractor: film his living hold (20 ticks); hold his dropped carbine back until his death cell lands (needs the
    drop's tick; `fx_ground.gd` is a file hero may touch).
-6. The horde's worst frame is ~0.4 ms higher with tonight's work on (both ~16 ms): bisect it by flag with
-   `fight_gate.mjs --scenes=horde` on a quiet machine.
+6. Perf on a quiet machine: tonight's two fight_gate runs were 6/24 and 19/20 CONTENDED; all WASH within their A/A.

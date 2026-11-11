@@ -580,3 +580,9 @@ NEXT (session 9 / REPORT phase): (1) `61a2d3baa` is the last code commit and PAS
   vs ~75 px in the left strike (t62-66) at 64 px/m, ~6 %, reads as the crouch:
   `evidence/n15-combat/plasma_sword_left_strike_size_64ppm_t52-66.png` (build/film/plasma_sword64_after, session 3's
   film of 15c8abbcc). Kept. NEXT (4) above is done.
+- PERF bisect (06:18-06:23, bench.lock held, deleted after; `fight_gate.mjs --scenes=horde --no-export`, arms now / fx
+  (impact-follow, shadow-push, burst-push, body-ink off) / gib (gib-card, gib-pieces, char-cells off) / rest (blade-left,
+  left-strike, target-rings, quest-hit, melee-smear, dropped-gun), 4 rounds, log build/perf/s8_fg_bisect.log): 19 of 20
+  runs CONTENDED. The A/A twins' own worst differs by -0.44 [-2.18,-0.19] ms, so the first run's horde worst +0.4 ms is
+  noise. fx, gib: all WASH; rest - now p50 +0.17 [+0.06,+0.28], cpu +0.56 HIGHER (the BEFORE slower, under 4.9 busy
+  cores). Verdict: no measurable cost of tonight's work in the horde. REPORT perf line + next step 6 rewritten.
