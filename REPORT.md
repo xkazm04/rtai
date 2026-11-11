@@ -1,6 +1,6 @@
 # REPORT: night n15, lane hero (Rivet and the four ghosts)
 
-FINAL, 07:35 (it17, after freeze). Last full gate: `node tools/gate/run.mjs --rev=HEAD --reels` on 5f9b18955 PASS (lint 16/16, unit 2528/0, scenarios 55/55, parity bit-exact, look goldens 11/11, release-compile 674/0, reels exit 0); later commits (to 736dbfcb9 and this REPORT) are docs/evidence only (`git diff --stat 5f9b18955 HEAD`: JOURNAL, LEVEL, REPORT, evidence/s15). No golden moved or re-blessed; no replay or parity re-bless.
+FINAL, 07:35 (it17, after freeze); corrected 07:42 (it25: the Tonnage walk16 delivery). Last full gate: `node tools/gate/run.mjs --rev=HEAD --reels` on 5f9b18955 PASS (lint 16/16, unit 2528/0, scenarios 55/55, parity bit-exact, look goldens 11/11, release-compile 674/0, reels exit 0); later commits (to 736dbfcb9 and this REPORT) are docs/evidence only (`git diff --stat 5f9b18955 HEAD`: JOURNAL, LEVEL, REPORT, evidence/s15). No golden moved or re-blessed; no replay or parity re-bless.
 Branch `n15-hero`, cut from main `5c5c03611`. Every claim cites a still in this branch's `evidence/`
 (the best 15 are copied to `gtai-masters/n15/hero/` with `frames.json`). Record: `JOURNAL.md`, `LEVEL.md`.
 
@@ -68,7 +68,7 @@ Branch `n15-hero`, cut from main `5c5c03611`. Every claim cites a still in this 
 - Ohm's hand spot on the drawn left rows is the right row mirrored (within 3 px at p70; p55 left not checked).
 - Kerf and Ohm have no anticipation: their sim strikes are instant by design (registry
   `realtime-combat-semantics`); a sim wind-up was rejected.
-- Tonnage's walk: two held frames ride 11-16 px over the ground at 32 px/m (table steps 1 and 5); needs two redrawn frames (REQUEST in JOURNAL it16).
+- Tonnage's walk: two held frames ride 11-16 px over the ground at 32 px/m (table steps 1 and 5). The two redrawn frames (REQUEST it16) were DELIVERED at 06:01 (`gtai-assets/replies/n15-hero.md` "06:01 it379") but I missed the reply until the it25 REPORT check, so they are not wired or measured. Lost: about 90 min in which they could have shipped.
 - `scenario_rig_stress`: the n11 intermittent `Parameter "t" is null` fired once (03:25 on dcc583214),
   3/3 alone ok, green on every later full run.
 - The clips are short (a form lasts a few seconds in the film rigs), not the 10-40 s rule.
@@ -95,7 +95,9 @@ Branch `n15-hero`, cut from main `5c5c03611`. Every claim cites a still in this 
 
 ## Next steps
 
-1. Tonnage's walk16 frames 2 and 6 redrawn (REQUEST it16), then re-run `hold_ride.py` (bar: worst hold under 9 px@32).
+1. Tonnage's walk16 frames 2 and 6: delivered 06:01, ready-placed in the sheet's 163 x 230 cell at
+   `gtai-art/library/keyed/ghosts/tonnage_walk16_70_cells_req221/placed_163x230/3_{3,7}.png` (paste over row 3, columns 2 and 6).
+   Swap them, judge them in game, re-run `hold_ride.py build/film/gait32_tonnage 2 48 0,45 70,150,190,222` (bar: worst hold under 9 px@32).
 2. Combat feel to 3: the owner judges GhostLunge in motion; Kerf's blade and Dent's fist as GhostHand rows if an effect should leave from them.
 3. Planted feet: Dent is done in all 8 octants (worst 5.3 px@32). Kerf: film his other 5 octants on leg 2
    (`--film-turn=<deg>`) and check `RUN_TABLES` against `feet_track.py` with a dark threshold of 90 (his blades are not dark).
@@ -104,4 +106,4 @@ Branch `n15-hero`, cut from main `5c5c03611`. Every claim cites a still in this 
 5. Asset-lane offers delivered after 06:30, not taken (freeze): Ohm's cast WIND-UP at p70 and p55 (LEVEL combat feel
    level 4; Dent's R2 cell is 4 px over the act cell, so pad), Ohm's walk legs on the left profile, a drawn HIT FROM BEHIND for
    Dent and Ohm (right facings only; the asset lane's own board says it reads as a forward lurch at 30 px, so judge it in game
-   against `GhostRecoil.BY_BLOW` first). All in `gtai-assets/replies/n15-hero.md` 06:37-07:18.
+   against `GhostRecoil.BY_BLOW` first). All in `gtai-assets/replies/n15-hero.md` 06:37-07:33 (07:33: Dent R1 redrawn, the hit-from-behind set also at p55, 10/10 A by the asset lane, not seen in game). Also two Kerf run16 alternates (4_8 at 05:39, 4_10 at 06:05) for row 4's weak slots, not taken.
