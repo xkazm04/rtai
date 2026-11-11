@@ -1180,7 +1180,7 @@
         "arc_ticks": 4,
         "cells_at": 14,
         "cells_ticks": 10,
-        "cells_turn_from": 2,
+        "cells_turn_from": -1,
         "fall_at": 8,
         "land_at": 20,
         "lift_from": 4,
