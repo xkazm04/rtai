@@ -21,10 +21,11 @@ import { spawnSync } from 'node:child_process';
 const USAGE = 'usage: node tools/film/kill_reel.mjs --out=<dir> [--weapons=all|<id,id>] [--victims=<kind,...>] [--dirs=<deg,...>] '
   + '[--ppm=32,64] [--after=150] [--rev=<commit>] [--before=<commit>] [--native=donor] [--clips] [--keep-frames] [--timeout=<s>] [--dry-run] [-- flags]';
 const WORST = ['pass', 'unverifiable', 'fail'];
-/** n16 session 1, seen in build/kreel/t2 (t60 at 64 px/m): with --victim=thug the lab guard still STANDS as the
- *  riot cop at the combo zooms (the whole-figure walker card ignores StreetCrowdCards.victim), while its gib
- *  pieces follow the row. film.mjs's check reads only the log line, so it cannot see this. */
-export const VICTIM_GAP = 'kill_reel: WARNING --victims: the living card is not checked (a lab guard stood as the riot cop with --victim=thug); judge the kind from the trigger frame';
+/** n16 session 1 (build/kreel/t2 t60, build/film/victim_proof): the lab guard is drawn by no rig the probe finds
+ *  (`FilmCard.rig` -> null, draw -1), and at the combo zooms it stood as the riot cop with --victim=thug. Film now
+ *  judges the drawn row, so a lab film with a victim kind is UNVERIFIABLE until the probe finds the lab's rig;
+ *  the `weapon:` shot's victim is seen (film.mjs weapon:pistol --victim=thug PASS on the drawn row). */
+export const VICTIM_GAP = 'kill_reel: WARNING --victims: the drawn card of the lab guard is not visible to the probe yet, so these films come out UNVERIFIABLE; film one kind with film.mjs weapon:<gun> --victim=<kind>';
 
 /** Plans one film of the reel through film.mjs: {shot, opts} or {error}. With the kill tick `known` from
  *  this combo's first zoom (the zoom is view only, so the sim kills on the same tick) and no clip wanted,

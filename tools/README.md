@@ -144,7 +144,7 @@ to 150 s for the rocket beside other lanes); later zooms reuse that kill tick an
 (the zoom is view only; a kill on another tick at another zoom is **unverifiable**). Unpicked frames are deleted
 unless `--keep-frames`. A tree older than n16 has no `--sig-dir` or lab `--victim`: film refuses the flag
 (nothing launched); cherry-pick the n16-tools kill-reel commit or film `--dirs=0` without `--victims`.
-Known: at `--dirs=0` the guard stands into the city pit's knot of cops east of Rivet's start, and a rocket takes
+Known: a lab film with `--victims` is UNVERIFIABLE (film judges the drawn card row and the probe cannot see the lab guard's rig yet; the `weapon:` shot's victim is seen). At `--dirs=0` the guard stands into the city pit's knot of cops east of Rivet's start, and a rocket takes
 them too; 90, 180 and 270 film the guard alone.
 
 ## tools/film/sheet.mjs: one labelled contact sheet of a film's stills
