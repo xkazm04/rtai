@@ -744,3 +744,6 @@ NEXT addendum, item (3) is now concrete: after the gate verdict, if time before 
 - 18:42 FINAL GATE reels on `ab925914e`: top OK (314 s, the view that failed at 18:11); tilt70 and combo still running
   at session end (expected ~18:53). Iteration 22: read the EXIT line of C:/Users/kazda/kiro/gtai-n16/scratch-kills-new-gate-final.log
   first (item 1 of NEXT), then put the reel verdict into REPORT's Gates line.
+- 18:48 FINAL GATE PASS on `ab925914e` (EXIT 0): reels top 314 s, tilt70 329 s, combo 296 s, 0 SCRIPT ERROR in all
+  three; with the evidence at 18:32 every gate is green. NEXT item (1) is DONE: start iteration 22 at item (3), the
+  claw p55 wiring (a project/ change after it needs at least unit + the reels again before the freeze).
