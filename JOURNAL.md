@@ -276,3 +276,7 @@ NEXT (iteration 4):
   kill t116): the p55 set reads as the p55 cop (face under the cap, legs to the feet) but stood ~80% of the 2.0 m p55
   card -> KillXray.view_scale() (2.0/1.7 at p55; uncommitted, unit queued)
   (`evidence/n16-kills-polish/electro_xray_p55_set_ab_tilt64ppm_x2_t119-146.png`).
+- MILESTONE 16748e860 p55 X-ray scale: film x55_c (tilt 64, electro, kill t116) vs x55_b: the skeleton now stands as
+  tall as the living p55 cop (`evidence/n16-kills-polish/electro_xray_p55_scale_ab_tilt64ppm_x2_t119-146.png`).
+- 16:15 evidence/frames.json and gtai-masters/n16/kills-polish/frames.json: 15 entries, the six it4 sheets first
+  (masters files not referenced removed; all still in the lane's evidence/ and git).
