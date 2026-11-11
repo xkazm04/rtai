@@ -41,15 +41,20 @@ Branch `n15-hero`, cut from main `5c5c03611`. Every claim cites a still in this 
    `evidence/s15/ghost_lunge_ohm_ticks_before_after_64ppm.png` (+ clip `_clip_64ppm.gif`),
    `evidence/s15/ghost_lunge_{ohm,kerf,dent}_8dir_before_after_64ppm.png`,
    `evidence/s15/ghost_lunge_tonnage_windup_before_after_32ppm.png`.
+   At 32 px/m tick by tick: `evidence/s15/ghost_lunge_kerf_dent_ticks_before_after_32ppm_x2.png`.
+   Ohm's bolt now leaves from his drawn fingertips (`GhostHand`, `--ghost-ohm-hand=sim` = before):
+   `evidence/s15/ohm_bolt_hand_8dir_before_after_64ppm.png`.
+   Run16 since: Dent's 3/4 away row (all five right rows on 16) and Kerf's 3/4 toward-left row:
+   `evidence/s15/dent_run16_away_before_after_64ppm.png`, `evidence/s15/kerf_run16_left34_before_after_64ppm.png`.
 
 ## What does not work / not done
 
 - Tonnage's lean is barely visible at 32 px/m (3 deg); his slam's landing with the lean is not filmed.
-- Ohm's bolt leaves from the sim's hand point (`OhmStage.HANDS_M`), not his drawn hand: visible at 64 px/m,
-  before and after GhostLunge.
+- Ohm's bolt leaves from his drawn fingertips at p70 only (`GhostHand`); at p55 and on the drawn left rows
+  the hand spot is not measured (p55 keeps the rig's electrodes, left octants mirror the right row).
 - Kerf and Ohm have no anticipation: their sim strikes are instant by design (registry
   `realtime-combat-semantics`); a sim wind-up was rejected.
-- Run16: the 3/4 left rows of Dent and Kerf (except Kerf's toward-left) still show each run8 frame twice.
+- Run16: Kerf's 3/4 away-left and Dent's two 3/4 left rows still show each run8 frame twice (art running).
 - `scenario_rig_stress`: the n11 intermittent `Parameter "t" is null` fired once (03:25 on dcc583214),
   3/3 alone ok, green on every later full run.
 - The clips are short (a form lasts a few seconds in the film rigs), not the 10-40 s rule.
@@ -77,5 +82,5 @@ Branch `n15-hero`, cut from main `5c5c03611`. Every claim cites a still in this 
 ## Next steps
 
 1. Wire the remaining run16 left rows (Kerf 3/4 away-left, Dent both 3/4 left) as they arrive.
-2. Combat feel to 3: judge GhostLunge in motion at 32 px/m with a long clip; anchor Ohm's bolt to the drawn hand.
+2. Combat feel to 3: the owner judges GhostLunge in motion; Ohm's hand spot at p55 and on the drawn left rows.
 3. Planted feet: a world-space frame-diff measure of the stance foot for Ohm and Tonnage's walk clips.
