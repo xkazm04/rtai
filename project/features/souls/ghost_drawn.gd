@@ -9,13 +9,10 @@ const ART_DIR: String = "res://features/souls/art/view/"
 const COLS: int = 8
 const ROWS: int = 5
 const PAD_PX: float = 2.0
-## The standing cell (a passing frame, most upright) and the walk's speed floor (m/s).
-const STAND_COL: int = 2
-const WALK_FROM_MPS: float = 0.4
-## The cadence's cap (cycles a second): past it the feet slide rather than churn.
-const MAX_CYCLES_S: float = 3.0
-## The run grid (`<name>_run8.png`, optional) takes over above this speed, with its own cap.
-const RUN_FROM_MPS: float = 5.0
+const STAND_COL: int = 2  # the standing cell (a passing frame, most upright)
+const WALK_FROM_MPS: float = 0.4  # the walk's speed floor (m/s)
+const MAX_CYCLES_S: float = 3.0  # the cadence's cap (cycles/s): past it the feet slide
+const RUN_FROM_MPS: float = 5.0  # the run grid (optional) takes over above this, with its own cap
 const MAX_RUN_CYCLES_S: float = 3.5
 const BACKPEDAL_DOT: float = -0.25
 ## A pitch's drawn stride against the p70 cycle ("<name>/<art>"), measured off its stance foot.
@@ -43,10 +40,8 @@ var card_name: String = ""
 var height_m: float = 1.75
 ## One drawn stride cycle's ground in cell px (the stance foot's travel over a cycle, measured).
 var cycle_cell: float = 150.0
-## The run grid's stride cycle in cell px (0 = this ghost has no run grid).
-var run_cell: float = 0.0
-## The figure's median height in the grid, cell px (ghost_pack prints it).
-var fig_px: float = 180.0
+var run_cell: float = 0.0  # the run grid's stride cycle in cell px (0 = no run grid)
+var fig_px: float = 180.0  # the figure's median height in the grid, cell px (ghost_pack prints it)
 ## True while something else carries the form (Dent braced on a car roof): stands, feet still.
 var still: bool = false
 var blow: Vector2 = Vector2.ZERO  # the last hit's line (GhostActs, Fighter.hurt_dir; ZERO = none)
@@ -71,6 +66,7 @@ var _fed: bool = false
 var _act_from: int = -1
 var _hurt: int = -1
 var _tick: int = 0
+var _lunge: GhostLunge = GhostLunge.new()  # the strike's lean and the wind-up's (n15 combat feel)
 
 
 func _init(
@@ -101,7 +97,11 @@ func step(
 	var sheet: GhostSheet = _act if act >= 0 else (_run if _running and _run != null else _walk)
 	sheet.show(_spr, o, act if act >= 0 else walk)
 	var hurt: int = _tick - _hurt if act == HIT_COL else -1
-	_spr.global_rotation = GhostRecoil.tilt(hurt, _look, GhostRecoil.lean_of(card_name), blow)
+	var since: int = _tick - _act_from if _act_from >= 0 else -1
+	var tilt: float = GhostRecoil.tilt(hurt, _look, GhostRecoil.lean_of(card_name), blow)
+	_spr.global_rotation = tilt + _lunge.lean(_tick, since, _windup, _look, card_name)
+	var reach: Vector2 = GhostLunge.reach(since, _look, card_name) * SimConst.PX_PER_M * size_k
+	_spr.global_position = host.global_position + reach
 	_spr.global_scale = Vector2(s, s / vm.ground_k())
 	return true
 

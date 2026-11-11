@@ -54,12 +54,14 @@ static func apply(args: PackedStringArray = OS.get_cmdline_user_args()) -> void:
 
 
 ## n10: --ghost-voice=facing (the voice at his facing's own left, on his head); n15:
-## --ghost-soul-line=off (the drawn ghosts without the teal line).
+## --ghost-soul-line=off (the drawn ghosts without the teal line), --ghost-lunge=off.
 static func _ghost(arg: String) -> void:
 	if arg == "--ghost-voice=facing":
 		GhostApparition.clear_figure = false
 	elif arg == "--ghost-soul-line=off":
 		GhostSoulLine.enabled = false
+	elif arg == "--ghost-lunge=off":  # n15: the drawn ghosts strike upright (before)
+		GhostLunge.enabled = false
 
 
 ## --rivet-walk=<mode>; n11: --rivet-swipe=off (one drawn strike cell), --rivet-bob=drawn (no damp).

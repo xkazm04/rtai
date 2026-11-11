@@ -1,0 +1,8 @@
+col 0: 13.1 % changed
+col 1: 15.9 % changed
+col 2: 12.0 % changed
+col 3: 15.0 % changed
+col 4: 12.6 % changed
+col 5: 11.4 % changed
+col 6: 10.9 % changed
+col 7: 11.4 % changed
