@@ -125,7 +125,7 @@ n16t-break-reel-scout (743 s, 9 tests, 1 kept red: rejected as a defect, tick 60
 and my task text was looser than the design; the test exempts it, and 7f9e92c81 makes a kill at or before tick 60
 unverifiable in code; accepted after revision), n16t-break-gate-timing (485 s, 13 tests, 2 kept red, both accepted and
 fixed in run.mjs), n16t-break-aftermath (313 s, 13 tests, 2 kept red, both accepted and fixed: a stain lifetime alone
-was dropped, `tools/art/.py` read as neutral; review flipped one expectation that pinned the weak side; accepted after
+was dropped, a nameless tools/art .py read as neutral; review flipped one expectation that pinned the weak side; accepted after
 revision). Total 6 tasks, 1 round each.
 
 ## Calls for the owner
