@@ -9,7 +9,7 @@ Gates (session 4, 03b46390d, `evidence/run.mjs --no-bench --no-release`): lint 1
 
 Gates (session 2): `node tools/evidence/run.mjs --no-bench --no-release` on 8a47c51db: lint 19/19, unit 2786
 passed 0 failed, scenarios 55/55, parity bit-exact, look goldens 11/11 and block goldens 5/5 (worst 0.00). Reel gate
-on 48c91e944: top, tilt70, combo OK. Planted faults: `rivet_thrust.gd` 75 % (6/8), `rivet_no_flash.gd` 77.8 % (7/9), `rivet_gun_diag.gd` 80 % (8/10); every survivor equivalent on today's data. Bench not run (CONTENDED machine; render-only lane).
+on 690bfa2a6 (session 4): top, tilt70, combo OK. Planted faults: `rivet_thrust.gd` 75 % (6/8), `rivet_no_flash.gd` 77.8 % (7/9), `rivet_gun_diag.gd` 80 % (8/10); every survivor equivalent on today's data. Bench not run (CONTENDED machine; render-only lane).
 
 ## What works, with evidence
 
