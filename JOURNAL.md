@@ -1013,3 +1013,7 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
 - 05:53 Linux again on 9b7b14088 (every code commit of session 7; `evidence/linux_s7.sh`, WSL -d Ubuntu, git 2.43.0,
   Node v24.14.0, fresh `--no-local` clone, hooks off for the clone only): dev + film + merge + gate + lint tool tests
   -> tests 593, pass 591, fail 0, skipped 2; `clones left: 0`. Gate on 257b2e58c: scenarios 55/55 at 05:53.
+- 06:04 gate on 257b2e58c, evidence kinds (build/gate/257b2e58c574/evidence.log): `lint: all 18 checks pass over
+  1433 GDScript files` (the snapshot predates flag-routes), `unit-tests: 2543 passed, 0 failed, 2 skipped` (+1: the
+  walk befores test), `scenario-tests: 55 passed`, parity bit for bit (planted caught at 629), selftest look goldens
+  11/11, `release-compile: 668 loaded, 0 failed`. Reels running (top done, tilt70 at chapter 19).
