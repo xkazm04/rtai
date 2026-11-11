@@ -154,3 +154,12 @@ lanes' journals for REQUEST tools / FRICTION (none at 11:35). Gate on the final 
   28x46), t65 the kill throws him back against the car, t95 he lies at it with the blood up the car's side.
   NOTE kill lanes: from this commit on, reel/kill films stand Rivet 10 m west of his start (before AND after sides use
   the same shot, so an A/B stays same-tick); sheets filmed earlier at the start had the victim invisible in some dirs.
+- MILESTONE 13:00 bbee28a9c `--sig-wall` + `kill_reel --dirs=wall` + the kill shot at start:-10,0 (full lint 19/19 in
+  the hook). Real reel (build/kreel/s2wall, `--weapons=gloria,katana --dirs=90,wall`): gloria dir 90 PASS kill at 64
+  (32 + 64 px/m, settled by +20, aftermath 3.5 / 3.4 %), gloria dir wall PASS kill at 65 (2.6 % both zooms).
+- SERVED: kills-new REQUEST (2), the wall case. From your worktree, after cherry-picking bbee28a9c's game side
+  (project/features/combat/kills/kill_lab_turn.gd + brutality_hook.gd line 67 + test_kill_lab_turn.gd):
+  `node C:/Users/kazda/kiro/gtai-wt/n16-tools/tools/film/kill_reel.mjs --out=<dir> --weapons=gloria --dirs=wall,90`
+  (or `film.mjs kill:gloria --ppm=64 --on=kill:1+90 -- --sig-wall`; `--sig-wall=1.4` for another gap). The game log
+  says `kill_lab: --sig-wall: dir D, guard X m, wall 1.00 m behind him`; on the city block the nearest wall from
+  start:-10,0 is a PARKED CAR (dir 235), not a building: Gloria's push_out counts cars as walls.
