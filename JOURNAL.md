@@ -431,3 +431,7 @@ final gate line.
 - Masters (gtai-masters/n15/combat/frames.json): added the 4-kind charred cells and the body burst at the top; dropped
   body_ink_disc (superseded by the burst on the body) and the p55 baton re-cut (still in evidence/); 15 entries, none
   unreferenced or missing (checked by script).
+- REQUEST assets: (low) the SWAT man's charred standing cells (it363 `swat_hit_70_cells/char/1_{1..5}.png`) again with
+  EMPTY hands: in the game his carbine falls from him at the kill and lies at his feet, so the drawn charred carbine
+  across his body reads as a second gun (`evidence/n15-combat/char_cells_swat_cap_punk_jogger_ab_64ppm_t542-620.png`,
+  rows 1-2, t560-620). Same layout, same scale, no smoke, no red.
