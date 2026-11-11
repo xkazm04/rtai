@@ -113,3 +113,35 @@ func test_own_cells_keep_the_lean_only_where_the_row_says() -> void:
 	assert_eq(KillDeathCells.lean_of(d), 1.0, "the stitch jerks its drawn frames (cells_lean 1)")
 	d.extra = KillTrackRows.of(&"pistol_snap")
 	assert_eq(KillDeathCells.lean_of(d), 0.0, "the pistol's drawing holds the pose")
+
+
+func test_own_cells_look_at_the_shooter() -> void:
+	var d: KillNewStyles.Death = KillNewStyles.Death.new()
+	d.extra = KillTrackRows.of(&"smg_stitch")
+	d.dir = Vector2.RIGHT
+	var look: Vector2 = Vector2.from_angle(KillDeathCells.face_of(d))
+	assert_almost_eq(look, Vector2.LEFT, Vector2.ONE * 0.0001, "back up the shot")
+	var own: Sprite2D = autofree(Sprite2D.new())
+	own.set_meta(KillDeathCells.META, true)
+	d.cells = own
+	d.fall = Vector2.DOWN
+	look = Vector2.from_angle(KillStitchArt.facing(d, 0))
+	assert_almost_eq(look, Vector2.LEFT, Vector2.ONE * 0.0001, "the stitch starts at the shooter")
+
+
+func test_the_pin_hangs_writhes_or_lies_by_its_case() -> void:
+	var d: KillNewStyles.Death = KillNewStyles.Death.new()
+	d.extra = KillTrackRows.of(&"nail_pin")
+	var own: Sprite2D = autofree(Sprite2D.new())
+	own.set_meta(KillDeathCells.META, true)
+	d.cells = own
+	d.wall_m = -1.0
+	assert_eq(KillPinArt.frame(d, 0), 0, "the street: arms flung as the nails hit")
+	assert_eq(KillPinArt.frame(d, 200), 2, "then on his back at the nailed boot")
+	d.wall_m = 1.0
+	var seen: Dictionary = {}
+	for age: int in 120:
+		seen[KillPinArt.frame(d, age)] = true
+	assert_eq(seen.keys().size(), 2, "the wall: pinned, and the knees jerked up on the writhe")
+	assert_eq(KillPinArt.frame(d, 400), 0, "then he hangs")
+	assert_eq(KillPinArt.writhe(d, 30), 0.0, "nailed to the wall his drawn frames do not lean")

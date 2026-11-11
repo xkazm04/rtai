@@ -13,12 +13,13 @@ const SPURT_TICKS: int = 6
 const SPURT_M: float = 0.45
 
 
-## The facing (world rad, the way his drawn fall grid falls) this tick: under the blow through the
-## stitch, then one whole turn over `whirl_ticks` from `whirl_from` (row fx) onto the fall side.
+## The facing (world rad, the way his drawn grid looks) this tick: through the stitch his own drawn
+## cells face the shooter (KillDeathCells.FACE), a fall grid falls along the blow; then one whole
+## turn over `whirl_ticks` from `whirl_from` (row fx) onto the fall side.
 static func facing(d: KillNewStyles.Death, age: int) -> float:
 	var from: float = d.extra.num("whirl_from", 10.0)
 	var ticks: float = maxf(1.0, d.extra.num("whirl_ticks", 8.0))
-	var a0: float = d.dir.angle()
+	var a0: float = KillDeathCells.face_of(d) if KillDeathCells.owns(d.cells) else d.dir.angle()
 	var a1: float = d.fall.angle()
 	var turn: float = wrapf(a1 - a0, 0.0, TAU) + TAU  # one whole turn and on to the fall side
 	var u: float = clampf((float(age) - from) / ticks, 0.0, 1.0)

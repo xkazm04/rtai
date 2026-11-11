@@ -15,6 +15,8 @@ const STREAK_M: float = 0.9
 const PROBE_STEP_M: float = 0.15
 ## The length of a driven nail's shank left showing (m), its head at the end.
 const SHANK_M: float = 0.16
+## Share of the writhe's swing above which his drawn knees jerk up (frame 1 on the wall).
+const WRITHE_PEAK: float = 0.3
 
 
 ## Metres to the first wall behind `at` along `dir` within `reach_m` (-1: none, or no stage walls).
@@ -31,8 +33,26 @@ static func wall_behind(kills: SignatureKills, at: Vector2, dir: Vector2, reach_
 	return -1.0
 
 
-## The writhe added to the track's lean this tick (degrees), from `settle` on, dying out.
+## The writhe added to the track's lean this tick (degrees), from `settle` on, dying out. Nailed
+## to a wall in his own drawn cells he does not lean: the drawn frames writhe (frame()).
 static func writhe(d: KillNewStyles.Death, age: int) -> float:
+	if d.wall_m >= 0.0 and KillDeathCells.owns(d.cells):
+		return 0.0
+	return _writhe(d, age)
+
+
+## His own drawn frame this tick: on the wall frame 0 (pinned) and frame 1 (the knees jerked up)
+## on the writhe's peaks, dying out; on the street frame 0 as the nails hit, then from the row's
+## third start tick (`cells.at`) frame 2, on his back at the nailed boot.
+static func frame(d: KillNewStyles.Death, age: int) -> int:
+	if d.wall_m >= 0.0:
+		var amp: float = d.extra.num("writhe_deg", 6.0)
+		return 1 if _writhe(d, age) > amp * WRITHE_PEAK else 0
+	var lie: int = d.extra.cells_at[2] if d.extra.cells_at.size() > 2 else 8
+	return 2 if age >= lie else 0
+
+
+static func _writhe(d: KillNewStyles.Death, age: int) -> float:
 	var from: float = d.extra.num("settle", 10.0)
 	var ticks: float = maxf(1.0, d.extra.num("writhe_ticks", 80.0))
 	var t: float = float(age) - from
@@ -54,13 +74,14 @@ static func shift(d: KillNewStyles.Death, age: int, ppm: float) -> Vector2:
 
 static func draw(ci: KillNewStyles, d: KillNewStyles.Death, age: int) -> void:
 	var a: int = age - d.row.hitstop_ticks
+	var own: bool = KillDeathCells.owns(d.cells)  # his own drawn cells carry the driven nails
 	for p: Vector2 in _nails(d, ci.ppm):
 		if a >= 0 and a < STREAK_TICKS:  # the nail flying in along the shot
 			var k: float = float(a + 1) / float(STREAK_TICKS)
 			var tail: Vector2 = p - d.dir * STREAK_M * ci.ppm * (1.0 - k * 0.6)
 			ci.draw_line(tail, p, SHANK, maxf(2.0, 0.05 * ci.ppm))
 			ci.draw_line(tail, p, HEAD, maxf(1.0, 0.025 * ci.ppm))
-		if age >= d.row.hitstop_ticks:  # driven in at a slant: the shank shows toward the gun
+		if age >= d.row.hitstop_ticks and not own:  # driven in at a slant: the shank shows
 			var stub: Vector2 = p - d.dir * SHANK_M * ci.ppm
 			ci.draw_line(p, stub, SHANK, maxf(2.5, 0.05 * ci.ppm))
 			ci.draw_line(p, stub, HEAD, maxf(1.0, 0.02 * ci.ppm))

@@ -4,8 +4,10 @@ extends RefCounted
 ## street kind as a grid of the kind's fall grid's 5 facings across and the death's frames down
 ## (tools/art/kill_cells_pack.py, the feet at the cell centre, the fall grid's px per metre). The
 ## row's `cells` names the grid per view art and card row and each frame's start tick; a victim
-## with one draws it from the first tick in place of his fall grid (KillFallCells), faced the
-## row's fall, and the pose track keeps only the slide. A kind with none keeps the fall grid.
+## with one draws it from the first tick in place of his fall grid (KillFallCells), facing the
+## shooter (the drawing carries which way he falls; the grids' columns are the long fall's, whose
+## figure looks the way its angle points), and the pose track keeps only the slide (fx
+## `cells_lean`). A kind with none keeps the fall grid.
 
 const META: StringName = &"kill_death_cells"
 
@@ -48,3 +50,23 @@ static func owns(cells: Sprite2D) -> bool:
 ## row's fx `cells_lean` (default 0: the drawing holds the pose) for its own cells.
 static func lean_of(d: KillNewStyles.Death) -> float:
 	return d.extra.num("cells_lean", 0.0) if owns(d.cells) else 1.0
+
+
+## The way his own drawn cells look (world rad): at the shooter, back up the shot.
+static func face_of(d: KillNewStyles.Death) -> float:
+	return (-d.dir).angle()
+
+
+## Shows his own drawn frame this tick (the start ticks; the pin's by its case) facing the shooter
+## (the stitch: then its whirl), the copy of his standing card hidden. True once a frame shows.
+static func step(d: KillNewStyles.Death, age: int) -> bool:
+	var f: int = frame_at(d.extra, age)
+	if d.row.style == &"pin":
+		f = KillPinArt.frame(d, age)
+	KillNewStyles.show_cells(d, f >= 0)
+	d.cells.frame_coords = Vector2i(d.cells.frame_coords.x, maxi(f, 0))
+	var look: float = face_of(d)
+	if d.row.style == &"stitch":  # at the shooter, then the drawn spin turned a full circle
+		look = KillStitchArt.facing(d, age)
+	KillFallCells.face(d.cells, look)
+	return f >= 0

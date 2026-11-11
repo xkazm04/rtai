@@ -5,7 +5,7 @@ The asset lane draws each n16 death per street kind as cells
 long fall grid order: front, 3/4 front, side, 3/4 away, away; each cell at the fall grid's px per
 metre, the figure's feet registered to the cell's bottom-centre line of the grid). This writes
 `project/features/characters/art/view/p70/<kind>_<death>.png`: 5 columns x N rows, every cell
-shifted so the upright frame's feet (frame 2, the buckle: the lowest opaque row of each column)
+shifted so the upright frame's feet (frame 2, the buckle, or UPRIGHT_BY_DEATH's: the lowest opaque row of each column)
 sit on the cell centre, as the fall grids draw them (KillFallCells: `centered`). The away column's
 corpse (the last frame) is the 3/4-away one when BACK_FROM_AWAY names the kind, as the long fall
 grids do (a face-down corpse seen from behind reads as a person standing). Deterministic.
@@ -31,6 +31,8 @@ COLS = 5
 BACK_FROM_AWAY = {"pistol_snap": ("cop_patrol",)}
 ALPHA_MIN = 40
 UPRIGHT_FRAME = 2
+# death -> its upright frame when not frame 2 (nail_pin: frame 2 hangs with the knees drawn up)
+UPRIGHT_BY_DEATH = {"nail_pin": 1}
 # kind -> its row of the loose headgear cells (cop_headgear_tumble_70_cells/<row>_<frame>.png)
 HEADGEAR = {"cop_patrol": 1, "cop_riot": 2, "swat": 3}
 
@@ -55,16 +57,17 @@ def pack(kind: str, death: str, lib: Path, art: str = "p70") -> Path | None:
         return None
     first = Image.open(src / "1_1.png")
     w, h = first.size
+    up = UPRIGHT_BY_DEATH.get(death, UPRIGHT_FRAME)
     out = Image.new("RGBA", (w * COLS, h * n), (0, 0, 0, 0))
     for c in range(1, COLS + 1):
-        dy = h // 2 - feet_y(Image.open(src / f"{UPRIGHT_FRAME}_{c}.png").convert("RGBA"))
+        dy = h // 2 - feet_y(Image.open(src / f"{up}_{c}.png").convert("RGBA"))
         for f in range(1, n + 1):
             col = c
             if f == n and c == COLS and kind in BACK_FROM_AWAY.get(death, ()):
                 col = COLS - 1
             cell = Image.open(src / f"{f}_{col}.png").convert("RGBA")
             if f == n and col != c:  # the 3/4-away corpse keeps its own column's registration
-                dy_c = h // 2 - feet_y(Image.open(src / f"{UPRIGHT_FRAME}_{col}.png").convert("RGBA"))
+                dy_c = h // 2 - feet_y(Image.open(src / f"{up}_{col}.png").convert("RGBA"))
             else:
                 dy_c = dy
             slot = Image.new("RGBA", (w, h), (0, 0, 0, 0))

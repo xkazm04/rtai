@@ -149,20 +149,17 @@ func pose() -> void:
 ## from `fall_at` (default cells_at) over `cells_ticks`, and a style may turn its facing (the
 ## stitch's whirl). The copy of his standing card hides.
 func _drawn(d: Death, age: int) -> bool:
-	if d.cells == null or d.wall_m >= 0.0:
+	if d.cells == null:
 		return false
 	if KillDeathCells.owns(d.cells):  # the death's own drawn frames, from their start ticks
-		var f: int = KillDeathCells.frame_at(d.extra, age)
-		_show_cells(d, f >= 0)
-		d.cells.frame_coords = Vector2i(d.cells.frame_coords.x, maxi(f, 0))
-		if d.row.style == &"stitch":  # under the blow, then the drawn spin turned a full circle
-			KillFallCells.face(d.cells, KillStitchArt.facing(d, age))
-		return f >= 0
+		return KillDeathCells.step(d, age)
+	if d.wall_m >= 0.0:
+		return false
 	if not d.extra.fx.has("cells_at"):
 		return false
 	var at: int = roundi(d.extra.num("cells_at", 0.0))
 	var on: bool = age >= at
-	_show_cells(d, on)
+	show_cells(d, on)
 	if not on:
 		return false
 	var from: float = d.extra.num("fall_at", float(at))
@@ -174,7 +171,7 @@ func _drawn(d: Death, age: int) -> bool:
 
 
 ## The grid shows and the copy of his standing card hides (`on`), or the other way round.
-static func _show_cells(d: Death, on: bool) -> void:
+static func show_cells(d: Death, on: bool) -> void:
 	for ch: Node in d.body.get_children():
 		(ch as CanvasItem).visible = on == (ch == d.cells)
 
