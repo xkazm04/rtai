@@ -5,17 +5,21 @@ extends RefCounted
 ## pickup) draws the pickup's WeaponShowcase drawing (the arsenal's art stand-in: assault-rifle ->
 ## machine_pistol, the gun Rivet then holds), keyed by the view's art like every floor pickup,
 ## stood up for the camera and never spun. One rule for its direction: it lies along the shot, the
-## muzzle pointing the way the round flew on screen (mirrored, never turned), SIDE_M off the shot
-## line on the camera's side (GroundRifle's spot back toward the shooter lay under the pistol
-## snap's corpse, which falls head toward Rivet: film drop_068c_d0). Before, the sheet picked one
-## of 8 headings from a hash of the drop's position. Straight down (no form), `--showcase=off` or ON
+## muzzle pointing the way the round flew on screen (mirrored, never turned), PAST_M beyond his
+## feet on the side away from his body (StreetDeadRests; an own-cell death publishes none and the
+## pistol snap falls toward the shooter: -shot). GroundRifle's spot back toward the shooter lay
+## under the snap's corpse (film drop_068c_d0), a spot across the shot under a diagonal one (film
+## drop_4394_swat32). Before: the sheet at one of 8 headings hashed from the position.
+## Straight down (no form), `--showcase=off` or ON
 ## false = GroundRifle's sheet (the before).
 const ON: bool = true
 const PICKUP: StringName = &"assault-rifle"
 ## A shot within this of straight up or down the screen keeps the muzzle to +x (no flicker).
 const VERTICAL_X: float = 0.05
-## How far (m) off the shot line through where he fell the gun lies: clear of a body along it.
-const SIDE_M: float = 0.6
+## How far (m) past his feet, away from his body, the gun's middle lies.
+const PAST_M: float = 0.75
+## A published rest whose feet lie within this (m) of the drop is his.
+const MATCH_M: float = 1.5
 
 static var _showcase: WeaponShowcase = null
 static var _art: StringName = &""
@@ -51,13 +55,27 @@ static func draw(ci: CanvasItem, at: Vector2, shot: Vector2, length_m: float) ->
 	return true
 
 
-## Where the gun lies for a drop at `at` (m): SIDE_M across the shot, on the side nearer the camera
-## (screen down; a shot straight down the screen: to the right).
+## Where the gun lies for a drop at `at` (m) after a shot along `shot`: past his feet, away
+## from his body.
 static func lies_at(at: Vector2, shot: Vector2) -> Vector2:
-	var side: Vector2 = shot.normalized().orthogonal()
-	if side.y < 0.0 or (is_zero_approx(side.y) and side.x < 0.0):
-		side = -side
-	return at + side * SIDE_M
+	var body: Vector2 = body_dir(at)
+	if body == Vector2.ZERO:
+		body = -shot.normalized()
+	return at - body * PAST_M
+
+
+## The way the body lying at a drop `at` (m) reaches from its feet (unit; ZERO: no published rest
+## within MATCH_M).
+static func body_dir(at: Vector2) -> Vector2:
+	var best: float = MATCH_M
+	var dir: Vector2 = Vector2.ZERO
+	for r: Vector4 in StreetDeadRests.all.values():
+		var feet: Vector2 = Vector2(r.x, r.y) / Ink.PX_PER_M
+		var chest: Vector2 = Vector2(r.z, r.w) / Ink.PX_PER_M
+		if feet.distance_to(at) < best and chest != feet:
+			best = feet.distance_to(at)
+			dir = (chest - feet).normalized()
+	return dir
 
 
 ## +1 when the muzzle (+x in the drawing) points right on screen, -1 when the drawing is mirrored.

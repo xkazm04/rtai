@@ -32,17 +32,20 @@ func test_a_drop_without_a_drawing_is_left_to_the_sheet() -> void:
 	ViewMode._shared = was
 
 
-func test_it_lies_beside_the_shot_line_on_the_cameras_side() -> void:
+func test_it_lies_past_his_feet_away_from_his_body() -> void:
+	StreetDeadRests.reset()
 	var at: Vector2 = Vector2(10.0, 10.0)
+	var k: float = Ink.PX_PER_M
+	StreetDeadRests.all[7] = Vector4(10.0 * k, 10.0 * k, 10.0 * k, 9.0 * k)  # chest up the screen
 	var lies: Vector2 = GroundDropShowcase.lies_at(at, Vector2.RIGHT)
-	assert_almost_eq(
-		lies, at + Vector2(0.0, GroundDropShowcase.SIDE_M), Vector2.ONE * 1e-4, "shot east"
-	)
-	lies = GroundDropShowcase.lies_at(at, Vector2.LEFT)
-	assert_almost_eq(
-		lies, at + Vector2(0.0, GroundDropShowcase.SIDE_M), Vector2.ONE * 1e-4, "shot west"
-	)
-	lies = GroundDropShowcase.lies_at(at, Vector2.DOWN)
-	assert_almost_eq(
-		lies, at + Vector2(GroundDropShowcase.SIDE_M, 0.0), Vector2.ONE * 1e-4, "shot south"
-	)
+	var want: Vector2 = at + Vector2(0.0, GroundDropShowcase.PAST_M)
+	assert_almost_eq(lies, want, Vector2.ONE * 1e-4, "below his feet, whatever the shot")
+	StreetDeadRests.reset()
+
+
+func test_with_no_rest_it_lies_past_his_feet_along_the_shot() -> void:
+	StreetDeadRests.reset()
+	var at: Vector2 = Vector2(10.0, 10.0)
+	var lies: Vector2 = GroundDropShowcase.lies_at(at, Vector2.LEFT)
+	var want: Vector2 = at + Vector2(-GroundDropShowcase.PAST_M, 0.0)
+	assert_almost_eq(lies, want, Vector2.ONE * 1e-4, "the snap falls toward the shooter")
