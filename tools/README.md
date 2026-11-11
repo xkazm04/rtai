@@ -389,7 +389,14 @@ no log lands in your tree. Results are in `build/gate/<sha>/` (`gate.json` plus 
 `--reels` adds the reel gate, `--bench` the bench, `--no-parity` and `--no-selftest` skip those;
 `--clean` removes the snapshot afterwards.
 
-**Refuses:** a revision git does not know, an unknown flag.
+The gate holds the lane's one Godot for 30-40 min with reels (n16: evidence ~9 min, reels top 319 s, tilt70 745 s,
+combo 310 s; both kill lanes' FRICTION). Since n16 s5 `gate.json` keeps `timing` (`evidence_s`, `reels` per view, s)
+and `reels` (`all`, the views run, or `none`), and the next gate prints the newest one first: `gate: the last gate
+here (<sha>) took evidence 9.0 min + reels 22.9 min (top 319 s, tilt70 745 s, combo 310 s)`. `--reels=combo` (any of
+`top,tilt70,combo`) runs only those views, a mid-session check of the view you changed, and says `PASS reels (combo
+only: not the full reel gate)`: the final commit still needs plain `--reels`.
+
+**Refuses:** a revision git does not know, an unknown flag, a `--reels` view that is not top, tilt70 or combo.
 **Unverifiable:** a kind wrote no result, or wrote a result naming another commit.
 A wall-clock scenario can go red because other lanes are filming; read the failing line first.
 
