@@ -163,3 +163,13 @@ lanes' journals for REQUEST tools / FRICTION (none at 11:35). Gate on the final 
   (or `film.mjs kill:gloria --ppm=64 --on=kill:1+90 -- --sig-wall`; `--sig-wall=1.4` for another gap). The game log
   says `kill_lab: --sig-wall: dir D, guard X m, wall 1.00 m behind him`; on the city block the nearest wall from
   start:-10,0 is a PARKED CAR (dir 235), not a building: Gloria's push_out counts cars as walls.
+- 13:05 188ef2658 Codex n16t-break-film-root (gpt-5.6-sol, 1 round, 119 s): 10 adversarial node tests for filmedRoot /
+  resolveSide / copyRuntime / plan. Review changed: Codex pinned "a cwd BELOW a game tree films the kit" as the
+  promise; that is a weakness (a lane in its project/ dir would film my tree), so filmedRoot now walks the cwd's
+  ancestors and the test asserts the lane's tree; kill_reel's after side reads filmedRoot() too. Ledger:
+  accepted-after-revision; discarded. Proof: from n16-kills-new/project, `kill_reel --before=d6a4fb1a8 --dry-run` plans.
+- 13:08 PROOF `--gore-check` on a real run: `kill_reel.mjs --out=build/kreel/s2gore --weapons=katana,rocket_launcher
+  --dirs=90 --ppm=32 --victims=thug --gore-check` -> PASS 2/2, reel.json `whole: true` for both (probe: victim id 1
+  row thug, drawn 44x41 at kill, 40x55 at kill+20). Control without --gore=reduced (s2wall katana d90): victim draw -1
+  at kill+20, which goreWhole FAILs: the check discriminates. And `--victims=thug` now PASSes the drawn-row check (was
+  UNVERIFIABLE in s1: the guard had no rig), so the reel's victim WARNING is gone (README updated).

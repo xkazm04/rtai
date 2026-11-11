@@ -26,7 +26,6 @@ const WORST = ['pass', 'unverifiable', 'fail'];
  *  (`FilmCard.rig` -> null, draw -1), and at the combo zooms it stood as the riot cop with --victim=thug. Film now
  *  judges the drawn row, so a lab film with a victim kind is UNVERIFIABLE until the probe finds the lab's rig;
  *  the `weapon:` shot's victim is seen (film.mjs weapon:pistol --victim=thug PASS on the drawn row). */
-export const VICTIM_GAP = 'kill_reel: WARNING --victims: the drawn card of the lab guard is not visible to the probe yet, so these films come out UNVERIFIABLE; film one kind with film.mjs weapon:<gun> --victim=<kind>';
 
 /** Plans one film of the reel through film.mjs: {shot, opts} or {error}. With the kill tick `known` from
  *  this combo's first zoom (the zoom is view only, so the sim kills on the same tick) and no clip wanted,
@@ -147,7 +146,6 @@ export async function main(argv, { out = console.log, err = console.error, runne
     if (bad) { err(`kill_reel: ${job.weapon}: ${bad}\n${USAGE}`); return EXIT.usage; }
   }
   out(`kill_reel: ${jobs.length} film(s): ${reel.weapons.join(' ')} x victims [${reel.victims.join(' ') || 'guard'}] x dirs [${reel.dirs.join(' ')}] x ppm [${reel.ppm.join(' ')}] x ${sides.map((s) => s.name).join('/')}`);
-  if (reel.victims.length) out(VICTIM_GAP);
   if (reel.dryRun) { out('kill_reel: dry run, nothing launched'); return EXIT.pass; }
   mkdirSync(reel.out, { recursive: true });
   const rows = [];
