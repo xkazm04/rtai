@@ -1052,3 +1052,9 @@ covers all game code; after it only Node lint/tools (pre-commit full lint 19/19,
 `git branch -D n15t-control-sim-hash`, `git worktree remove --force %TEMP%/gtai-mutate-6bd4df1a`. NOT mine (leave):
 gtai-film-5c5c036112cb (main, 22:04, no lane journal names it), every gtai-gate-*/gtai-mutate-* on hero/combat commits.
 Write times from `date` (session 7 needed one correction).
+- 06:17-06:22 mutate on the game file I changed: `node tools/mutate/mutate.mjs --file=features/characters/cast_flags.gd
+  --max=10 --tests=test_cast_flags` -> 60 % (6/10; survivors :30 the tan clamp's 0.0, :47 knock, :49 reload, :50
+  windup: flags no test applied; the walk lines :61, :71 killed). ba8436000 `test_every_other_before_reaches_its_switch`
+  (gun-grey, three flame modes, knock, reload, windup, ghost voice, tan -3 -> clamped 0) -> test_cast_flags 5/0 -> same
+  sample 100 % (10/10). `evidence/mutate_cast_flags_s7_{before,after}.log`. Checkout clean after both (`git status
+  --short` empty); mutate's own worktree gtai-mutate-6bd4df1a reused (already on the end-of-night list).
