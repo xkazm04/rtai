@@ -19,6 +19,7 @@ Run these from the root of your worktree. Exit codes are shared: `0` pass, `1` f
 | commit a journal without waiting for lint | (automatic: the hook skips lint when only inert paths are staged) |
 | check one script or scene parses, in seconds | `node tools/godot/check.mjs <res://path>` |
 | run every gate while you keep editing | `node tools/gate/run.mjs` |
+| gate mid-session with one reel view (~5 min of reels, not ~23; the final commit needs plain `--reels`) | `node tools/gate/run.mjs --rev=<sha> --reels=combo` |
 | run a dev scene with its flags checked (its own KNOWN_FLAGS, else every flag literal in the project) | `node tools/dev/run.mjs <entry>` |
 | make a new worktree able to run the game | `node tools/dev/wt_init.mjs <worktree>` |
 | have Codex write tests for an untested module | `node tools/codex/factory.mjs pick`, then `run --stems=<stem>` |
