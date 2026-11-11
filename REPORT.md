@@ -77,6 +77,11 @@ Commits after 52dc72d4 are Node tools, their tests and docs (linted by the hook)
 
 ## Codex (n15)
 
+Totals: 3 tasks dispatched (all testers, `n15t-break-spawn-plan`, `-car-route`, `-hash-window`; meter 36 % at dispatch),
+0 executor tasks, 23 tests landed, 0 defects found, all three discarded; ledger rows this night: 1 overrule with its
+written reason (t-2, city_spawn_plan) and 1 control (sim_hash, the fourth paired module). No Codex run for the c-2 mask
+(02:21 JOURNAL: one-line predicate, the break tests now follow it, no slot to run a round before the stop).
+
 - Testers for t-1/t-4/t-5 (n15t-break-spawn-plan, -car-route, -hash-window): 23 tests, 0 defects found, all
   landed (4576f2b08); with the old rules planted by hand 5 fail (t-4/t-5) and 4 fail (t-1). Review split two
   files under the size cap. Codex caught a wording error in my brief (TURN_LEAD is before the lane).
