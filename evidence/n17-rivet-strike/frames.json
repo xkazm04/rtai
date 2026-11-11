@@ -1,5 +1,32 @@
 [
   {
+    "file": "thrust_katana_t82_92_64.png",
+    "title": "Katana thrust: the 2.5 m lunge drawn as a lunge, blade level through contact",
+    "source": "film.mjs chapter:katana_thrust --ppm=64 --stills=80-94 (f6d9588a5), before = -- --rivet-thrust=off; cyan = his ground line",
+    "branch": "n17-rivet-strike",
+    "ppm": 64,
+    "before": "top: the dash on the wind-up cell (t84, t86), the slash cell at contact (t88)",
+    "note": "after: thrust cell t83-91 (lunge 4 + contact 5 ticks), recovery on the strike cell t92"
+  },
+  {
+    "file": "thrust_katana_cam_t80_90_32.png",
+    "title": "Katana thrust toward the camera, on his boots",
+    "source": "film.mjs chapter:katana_thrust_cam --ppm=32 (c959761a0), before = --rivet-thrust=off; crops x2, cyan = ground line",
+    "branch": "n17-rivet-strike",
+    "ppm": 32,
+    "before": "top: the camera wind-up cell held through the lunge, then the slash cell",
+    "note": "after: the drawn thrust t81-89, the blade toward the viewer, boots on the line (CAM_FEET 79)"
+  },
+  {
+    "file": "thrust_katana_t82_92_32.png",
+    "title": "Katana thrust at 32 px/m",
+    "source": "film.mjs chapter:katana_thrust --ppm=32 (f6d9588a5), crops x2",
+    "branch": "n17-rivet-strike",
+    "ppm": 32,
+    "before": "top: --rivet-thrust=off",
+    "note": "reads at play zoom: front foot forward, back foot pushing"
+  },
+  {
     "file": "noflash_pistol_t333_338_64.png",
     "title": "Pistol round: the painted flash lasts the flare's 3 ticks, then the recoil pose holds clean",
     "source": "film.mjs weapon:pistol --ppm=64 --stills=331-342 (e9c893e67), before = -- --rivet-noflash=off (crops x2)",
@@ -72,15 +99,6 @@
     "note": "long name steps down to fit"
   },
   {
-    "file": "hud_slot_1920x1080_gloria.png",
-    "title": "HUD weapon slot at 1920x1080",
-    "source": "dialogue_board.gd --slots --size=1920x1080",
-    "branch": "n17-rivet-strike",
-    "ppm": 48,
-    "before": "left: --hud-weapon=off",
-    "note": ""
-  },
-  {
     "file": "katana_lean_strike_t64_64.png",
     "title": "Katana strike leans in about his feet",
     "source": "compare.mjs chapter:katana --a=3abb72f83 --b=415dc9ad1 --at=64 --ppm=64",
@@ -88,15 +106,6 @@
     "ppm": 64,
     "before": "left: upright",
     "note": "RivetLean 9 deg in"
-  },
-  {
-    "file": "katana_lean_windup_t61_64.png",
-    "title": "Katana wind-up leans back off the cop",
-    "source": "same, t61",
-    "branch": "n17-rivet-strike",
-    "ppm": 64,
-    "before": "left: upright",
-    "note": "5 deg back"
   },
   {
     "file": "baton_left_lean_t64_64.png",
@@ -124,14 +133,5 @@
     "ppm": 32,
     "before": "left",
     "note": ""
-  },
-  {
-    "file": "strike_cells_p55_ruler.png",
-    "title": "p55 strike cells on a ruler (camera cells float 18-46 px)",
-    "source": "art/view/p55/rivet_eq_<blade>.png cells 5,6",
-    "branch": "n17-rivet-strike",
-    "ppm": 0,
-    "before": "",
-    "note": "side cells already on their boots"
   }
 ]

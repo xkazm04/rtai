@@ -39,3 +39,6 @@ NEXT (session 2, in order): the in-game armed HUD still; item 4 per gun (film ea
 - MILESTONE e9c893e67 DEFECTS #9 fixed: RivetNoFlash (texture-only swap to `rivet_eq_<gun>_noflash.png` past the flare's muzzle_ticks), tools/art/rivet_fire_noflash.py builds the 16 strips; provenance lines added. Film: painted flash t333-335 (was t333-338).
 - FRICTION: rivet_frames.gd sits at the 200-line soft cap (debt ratchet); cast_flags.apply at 40 lines: the n17 befores now route through `CastFlags.N17_RIVET` (flag-routes lint still green; unit test covers the routing).
 - FOUND (open) DEFECTS #15: firing toward the camera with his back turned shows one tick of his front (t61-63).
+- MILESTONE f6d9588a5 + c959761a0 DEFECTS #5 fixed: RivetThrust draws the asset lane's katana thrust cells over the lunge + contact (t83-91 in chapter:katana_thrust, new dev extra with an armored cop). Films at 64 and 32 px/m side, 32 px/m camera (the director's camera puts him at the top edge at 64: `--lock` has no effect on a reel chapter).
+- FEEDBACK for assets (it454 katana thrust): the camera cell's "boot row 250 (p70) / 134 (p55)" is the blade's tip; the planted boot is at 176 / 124. Seated on the boot (CAM_FEET).
+- FRICTION: dev_loc ratchet: +11 for the two dev chapters, accepted with a reason (`debt.mjs --update --accept-regression`).

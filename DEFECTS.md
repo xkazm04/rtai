@@ -24,7 +24,10 @@
    `chapter:katana_cam` t66 at 64 px/m: before, only the blade on screen, Rivet off frame above. -> fixed 7b1f03b7c.
 7. **p55 (boss view) camera strike cells** float too (boots 18-46 strip px up; the side cells stand on their boots). -> fixed (RivetCellFeet p55 rows, band + ruler reads +-6 px); not yet filmed in a boss arena: open.
 5. **During a lunge the drawn figure holds one strike cell** (no stride), so a 2.5 m dash is a whole-figure
-   slide. -> open: REQUEST assets for a thrust-lunge cell (front foot forward, back foot pushing) per facing.
+   slide. -> fixed f6d9588a5 + c959761a0 (RivetThrust: the asset lane's thrust cells, it454, from the lunge's first tick
+   through contact; `chapter:katana_thrust` / `_cam` at 64 and 32 px/m; the cam cell seated on its planted boot, the
+   delivery's boot row was the blade tip). The view's clip runs 1 tick ahead of the probe's position (strike_sync):
+   the cell shows one tick before the body moves and leaves one tick before the contact ends (16 ms, kept).
 
 ## Ranged
 
