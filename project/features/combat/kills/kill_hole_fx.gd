@@ -42,7 +42,7 @@ const ART: Texture2D = preload("res://features/combat/weapons/art/gore/plasma_ho
 const ART_HOLE_PX: float = 35.0
 const ART_DY_PX: float = 2.5
 ## n16 it4: a cream bloom under the drawn ring for BLOOM_TICKS (its pop at 32 px/m; owner Call).
-const BLOOM_TICKS: int = 16
+const BLOOM_TICKS: int = 20
 
 const OLD_LOOK_TICKS: int = 8
 const OLD_FALL_M: float = 0.45
@@ -146,7 +146,7 @@ func _draw() -> void:
 	if kills != null:
 		_smoke(age)
 	if not plain():
-		_bloom(1.0 - float(age) / BLOOM_TICKS)
+		_bloom(1.6 * (1.0 - float(age) / BLOOM_TICKS))  # held near full for 8 ticks
 		_ring_art(k)
 		return
 	var glow: Color = HOT.lerp(COOL, k)
@@ -157,10 +157,10 @@ func _draw() -> void:
 	draw_arc(Vector2.ZERO, radius_px * 0.82, 0.0, TAU, 24, Color(EMBER, 0.9 - 0.45 * k), 1.5, true)
 
 
-## The cream heat bloom round the hole at strength `a` (<= 0: none).
+## The cream heat bloom round the hole at strength `a` (<= 0: none; capped at 1.5).
 func _bloom(a: float) -> void:
 	if a > 0.0:
-		var halo: Color = Color(HOT, 0.55 * minf(a, 1.0))
+		var halo: Color = Color(HOT, 0.55 * minf(a, 1.5))
 		draw_arc(Vector2.ZERO, radius_px * 1.55, 0.0, TAU, 24, halo, radius_px * 0.7, true)
 
 
