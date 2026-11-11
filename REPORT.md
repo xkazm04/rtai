@@ -61,6 +61,11 @@ crowd: look goldens re-blessed with a decisions line). t-4 and t-5 move nothing 
   after a code path changed (new porcelain line, or size/mtime of a path dirty at the start) is failed with
   `INVALID: the tree changed while <kind> ran (<n> code path(s): ...)` and a pointer to `tools/gate/run.mjs`.
 
+Gates on c3f80513d (`node tools/gate/run.mjs --rev=HEAD`, after the flake fix): PASS - lint 16/16, unit 2531/0,
+scenarios 55 (rig_stress clean; its p50 budget CONTENDED, not judged), parity exact, selftest look 11/11 + block 5/5
+worst 0.00, release-compile 668/0. Commits after it are docs/JOURNAL/REPORT only. The reel gate has not run since
+ad2f0a5c1: c3f80513d changes headless loading only (real renderers unchanged), but the final commit still owes it.
+
 Gates on 52dc72d4 (`node tools/gate/run.mjs`): PASS - lint 16/16, unit 2530/0, scenarios 55, parity exact,
 selftest look 11/11 worst 0.00, release-compile 667/0. Reel gate on ad2f0a5c1: top, tilt70, combo OK (280-286 s each).
 Commits after 52dc72d4 are Node tools, their tests and docs (linted by the hook); the final commit gets a full gate + reels.
@@ -113,7 +118,8 @@ the right film).
 
 ## Not done yet
 
-- t-5 cost under the bench lock (CONTENDED only). The `bake` and `export` morning steps were not run for real.
+- t-5 cost under the bench lock (CONTENDED only). The `export` morning step was never run for real (bake: green 01:13).
+- The reel gate on the final commit.
 
 ## Merge notes (draft)
 

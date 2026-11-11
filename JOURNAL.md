@@ -483,3 +483,23 @@ changed at 5cda754c0 (selftest passed on it at 00:35, unit/scenarios/reels not r
   (docs/day|night/*, grep test_noir_shadows); it builds CityTextures, whose loader-thread requests now load in place
   headless (c3f80513d). Not yet proven by absence (a flake needs many quiet runs); morning.mjs's red-gates advice
   still names it as a known flake: drop that after a few clean nights, not tonight.
+- 01:48 MILESTONE gate on c3f80513d (the flake fix; `node tools/gate/run.mjs --rev=HEAD --timeout=40`, log
+  gtai-n15/flake/gate_s3_head.log): `gate: PASS` - lint 16/16, `unit-tests: 2531 passed, 0 failed, 2 skipped`,
+  `scenario-tests: 55 ran, CONTENDED: rig_stress.rigMsP50 1.036 > 1.000 (4 other runs); budget not judged` (no
+  texture error), parity bit for bit (planted caught at 629), selftest look 11/11 + block 5/5 worst 0.00, world lock
+  0.00 %, `release-compile: 668 loaded, 0 failed`. Removed my gate snapshots (c3f80513d, eb65c8b05, 1af97f018); the
+  3 left in the worktree list are n15-combat's (54297457d, 5bdad7a0c, 896c5c30d: `git branch --contains`): not mine.
+- 01:49 scratch-integ2 (branch n15t-scratch-integ2) is KEPT for the next session: it holds the hero x combat
+  resolution (686fcb828), combat's newer tip, and n15-tools merged again at 71f0d5b1c (with the flake fix).
+
+NEXT (session 4): (1) Read hero/combat JOURNALs for REQUEST tools / FRICTION (served up to 01:29; cherry-pick lists
+in the 00:59 and 01:29 entries). (2) On gtai-n15/scratch-integ2 run the last two morning steps for real:
+`node tools/merge/morning.mjs --worktree=C:/Users/kazda/kiro/gtai-n15/scratch-integ2 --lanes=n15-tools,n15-hero,
+n15-combat --date=2026-11-11 --steps=gates,export --resume --timeout=40 --debt-reason="n15 scratch integration"`
+(APPDATA tools; ~15 min): proves the integrated scenarios green with the fix and the export step (never run for
+real). If --resume refuses because merge state says gates is next, that is what is wanted. Then `git worktree remove
+--force C:/Users/kazda/kiro/gtai-n15/scratch-integ2` and `git branch -D n15t-scratch-integ2`. (3) Reel gate on the
+final commit (`node tools/reel/run_reels.mjs`; c3f80513d touched project/). (4) t-5 cost under the bench lock only if
+nothing heavy runs (else CONTENDED stays). (5) REPORT final: Calls (c-1, c-2), merge notes (order tools -> hero ->
+combat, the conflict recipe, the flake fix). (6) End of night: `git worktree remove --force
+C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-sim-hash`.
