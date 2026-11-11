@@ -586,3 +586,5 @@ NEXT (session 9 / REPORT phase): (1) `61a2d3baa` is the last code commit and PAS
   runs CONTENDED. The A/A twins' own worst differs by -0.44 [-2.18,-0.19] ms, so the first run's horde worst +0.4 ms is
   noise. fx, gib: all WASH; rest - now p50 +0.17 [+0.06,+0.28], cpu +0.56 HIGHER (the BEFORE slower, under 4.9 busy
   cores). Verdict: no measurable cost of tonight's work in the horde. REPORT perf line + next step 6 rewritten.
+- 06:25 session 8 ends (for real). Godot: none of mine running (every run exited with its verdict line); bench.lock
+  deleted. `61a2d3baa` stays the last code commit, gate PASS with reels. NEXT as written above (items 1-3; 4 done).

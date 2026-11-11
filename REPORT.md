@@ -1,4 +1,4 @@
-# REPORT: night n15, lane combat (updated 06:10 by session 8)
+# REPORT: night n15, lane combat (updated 06:25 by session 8)
 
 Branch `n15-combat`, worktree `C:\Users\kazda\kiro\gtai-wt\n15-combat`, cut from main `5c5c03611`.
 Every change has a before flag on the same build and a same-tick before/after film under `evidence/n15-combat/`
