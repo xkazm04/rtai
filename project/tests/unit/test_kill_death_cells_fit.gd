@@ -21,8 +21,13 @@ func test_the_cops_snap_frame_stands_at_the_walk_size_on_his_boot() -> void:
 		assert_lt(k0, 1.0, file + ": drawn smaller than as delivered")
 		if file.ends_with("_pistol_snap.png"):
 			assert_eq(k0, k1, file + ": the buckle at the snap's size, no pop at t8")
-		for k: float in ks.slice(0, ks.size() - 1):
-			assert_between(k, 0.75, 0.96, file + ": every standing row drawn down to the walk")
+		var lying: bool = false  # the lying rows (a trailing run of 1.0: the claw throw has two)
+		for k: float in ks:
+			lying = lying or k == 1.0
+			if lying:
+				assert_eq(k, 1.0, file + ": once lying, every later row as drawn")
+			else:
+				assert_between(k, 0.75, 0.96, file + ": every standing row drawn down to the walk")
 		assert_eq(k_last, 1.0, file + ": the corpse keeps its length")
 		var lifts: Array = KillDeathCells.FIT_LIFT[file]
 		var lift: float = lifts[0]

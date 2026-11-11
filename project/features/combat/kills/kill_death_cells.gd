@@ -39,6 +39,15 @@ const FIT_K: Dictionary[String, Array] = {
 	"p70/cop_riot_baton_overload.png": [0.95, 0.95, 0.95, 1.0],
 	"p70/swat_baton_overload.png": [0.87, 0.87, 0.87, 1.0],
 	"p70/ped_suit_baton_overload.png": [0.94, 0.94, 0.94, 1.0],
+	# the nail pin's two standing rows (film o_gloria t63 -> t64: cap ~30 -> ~36 px) and the claw
+	# throw's (o_claw_shock t126 -> t127: ~1.1 x; its flung arms over-read by area); lying as drawn
+	"p70/cop_patrol_nail_pin.png": [0.87, 0.87, 1.0],
+	"p70/cop_riot_nail_pin.png": [0.93, 0.93, 1.0],
+	"p70/swat_nail_pin.png": [0.85, 0.85, 1.0],
+	"p70/ped_suit_nail_pin.png": [0.94, 0.94, 1.0],
+	"p70/cop_patrol_claw_throw.png": [0.92, 0.92, 1.0, 1.0],
+	"p70/cop_riot_claw_throw.png": [0.95, 0.95, 1.0, 1.0],
+	"p70/swat_claw_throw.png": [0.92, 0.92, 1.0, 1.0],
 }
 const FIT_LIFT: Dictionary[String, Array] = {
 	"p70/cop_patrol_pistol_snap.png": [21, 15, 5, 10, 22],
@@ -56,6 +65,13 @@ const FIT_LIFT: Dictionary[String, Array] = {
 	"p70/cop_riot_baton_overload.png": [0, 0, 0, 0, 0],
 	"p70/swat_baton_overload.png": [0, 0, 0, 0, 0],
 	"p70/ped_suit_baton_overload.png": [0, 0, 0, 0, 0],
+	"p70/cop_patrol_nail_pin.png": [0, 0, 0, 0, 0],
+	"p70/cop_riot_nail_pin.png": [0, 0, 0, 0, 0],
+	"p70/swat_nail_pin.png": [0, 0, 0, 0, 0],
+	"p70/ped_suit_nail_pin.png": [0, 0, 0, 0, 0],
+	"p70/cop_patrol_claw_throw.png": [0, 0, 0, 0, 0],
+	"p70/cop_riot_claw_throw.png": [0, 0, 0, 0, 0],
+	"p70/swat_claw_throw.png": [0, 0, 0, 0, 0],
 }
 const BASE: StringName = &"kill_death_cells_base"
 
