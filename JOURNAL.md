@@ -443,3 +443,9 @@ NEXT (iteration 9, from 18:22; freeze 19:30, REPORT 19:40):
   (build/gate/05715ef5f249/gate.json). After it: bbf62f6f3 (split half shadows) + docs.
 - 18:14 test_kill_split_shadow 3/3 PASS, committed with its .uid; `run_unit.mjs --changed` on the tip (full suite: the
   schema changed) 2687 passed / 0 failed. bbf62f6f3 is tested but still UNFILMED: NEXT 2's film is the first job.
+- MILESTONE 18:13 film ps64_u (42cf70c8a) vs ps64_t (934a815c6), plasma sword 64 px/m t90-200: the disc beside the top
+  half is gone, each half's shadow lies under it (`plasma_sword_half_shadow_ab_64ppm_x15_t90-200.png`). DEFECTS 10 fixed.
+
+NEXT (iteration 9), updated 18:14: NEXT 1 and 2 above are DONE (gate PASS on 05715ef5f incl. reels; bbf62f6f3 tested
+and filmed). Start with NEXT 3: the final gate on the tip (code after 05715ef5f: bbf62f6f3 only), then NEXT 4 (REPORT
+final, add this sheet to frames.json) and NEXT 5 while it runs or after.

@@ -23,7 +23,9 @@
    position = the half root's origin, but KillSplitFx.cut draws the half at `o` (the body's centre) clipped to one side
    of the cut line lifted `cut_up_m` 0.8 m, and KillSplitHalves.Topple lays it down: the top half lies ~1 m from its
    own shadow. Fix idea: a `shadow_at` meta on each half root (line + side * ~0.35 m) read by KillView._draw through
-   the node's transform; katana / chainsaw / Kerf share it -> open. `evidence/n16-kills-polish/plasma_sword_scorch_line_wider_ab_64ppm_x15_t70-200.png` (t90-200, right).
+   the node's transform; katana / chainsaw / Kerf share it -> fixed bbf62f6f3 (test 42cf70c8a); film ps64_u vs ps64_t
+   same ticks: the disc is gone, each half's shadow lies under it
+   (`evidence/n16-kills-polish/plasma_sword_half_shadow_ab_64ppm_x15_t90-200.png`). `evidence/n16-kills-polish/plasma_sword_scorch_line_wider_ab_64ppm_x15_t70-200.png` (t90-200, right).
 11. Plasma sword scorch line 0.16 m read as a crack -> 7998ee3fa (0.26 m), same sheet: wider; it lies mostly under
    Rivet's feet and the dropped rifle at this chapter's angle.
 5. Burn (hooded ped, 64 px/m, film bc64_hood_w): he only faded to a ghost over the ash heap -> fixed b3b03286c (A8 drawn

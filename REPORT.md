@@ -37,7 +37,8 @@ Item 3, deaths raised (one commit each; asset lane A1-A5 and A3 p55 wired):
 
 Item 5 (defect loop): a card victim's empty cap group cast a dark shadow disc that hung on the street (ray gun, hand
 cannon) -> bd9af660f (`ray_gun_cap_shadow_ab_64ppm_x2_t150-199.png`). A blade half's shadow lay ~1 m from the
-toppled top half -> bbf62f6f3 (LINT ONLY at 17:50: film and test owed).
+toppled top half -> bbf62f6f3 (test 42cf70c8a; `plasma_sword_half_shadow_ab_64ppm_x15_t90-200.png`).
+Gate: whole gate PASS on 05715ef5f incl. reels (18:10); after it only bbf62f6f3 + its test + docs.
 
 ## What does not work / not done
 
