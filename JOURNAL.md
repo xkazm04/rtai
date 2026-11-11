@@ -271,3 +271,13 @@ REQUEST tools (open, served on n15-tools, not merged here): none new.
   Sizing for the swap: StreetWalkerCards.place draws a hit grid at s = HEIGHT_BY_ART * PX_PER_M * k * FILL / tex_h with
   offset (-cell.x/2, -cell.y*FOOT_Y); use FILL["cop_patrol_burn_hit.png"] (1.14). GibCut copies the card with
   `transform = xf` (rig-relative), so the swap must rebuild the copy's scale from that, not keep the old card's.
+- REQUEST assets: drawn gib pieces for the patrol cop (`cop_patrol`, 70 walk camera, keyed): head with cap, torso,
+  two arms, two legs, each a separate sprite with a torn (not straight) edge and no blood beyond the edge, one set.
+  Why: the rocket gib now flies in six pieces cut straight across the drawn card (`GibCardCut`, commit 324927f99),
+  which reads as paper cut-outs (`evidence/n15-combat/rocket_gib_card_pieces_ab_48ppm_x1.5_t347-372.png`).
+- REQUEST assets: charred standing cells like `cop_patrol_hit_70_cells/char/` (it272, B) for `thug`, `ped_hood` and
+  `cop_riot` (the kinds the flamethrower most often kills in the reel), same layout `{1,2}_{c}.png`, no smoke (it keyed
+  to teal last time). Why: a fire death is brutality's char shader over the card; only the patrol cop has drawn cells.
+- REQUEST assets: the contractor's hit stagger (`contractor_hit_70_cells/v2/1_{1..5}.png`) with the long dock carbine
+  his card holds, not the short gun: in quest 1 his carbine drops beside him as the stagger draws a short gun
+  (`evidence/n15-combat/contractor_hit_stagger_ab_48ppm_x2_t13708-13726.png`, t13716). Low priority.
