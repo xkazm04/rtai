@@ -21,8 +21,9 @@ const GRIDS: Dictionary[String, String] = {
 ## tools/art/gib_pieces.py: CELL and TORSO_PX (64: drawn at about the card's own downscale).
 const CELL: float = 96.0
 const TORSO_PX: float = 64.0
-## n16: a rig victim's drawn torso height (m; the card's torso band of a 1.75 m man, 0.32 of it).
-const RIG_TORSO_M: float = 0.56
+## n16: a rig victim's drawn torso height (m): 0.7 (a 1.75 m man's torso band is ~0.56; at 0.56 the
+## pieces read too small at 32 px/m on the smoke ring, DEFECTS n16 rocket #2).
+const RIG_TORSO_M: float = 0.7
 
 static var _cut: int = -1
 
