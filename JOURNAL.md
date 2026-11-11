@@ -645,19 +645,22 @@ dev/sim/car_route_trails.gd there is mine) and `git branch -D n15t-control-sim-h
 
 - 03:09 read JOURNAL, git log, hero + combat JOURNALs: no new REQUEST tools / FRICTION for me since 02:21 (hero's
   new FRICTIONs are their own sheet tools; combat's LFS FRICTION = blob.mjs, served f059cfc44).
-- 03:12-03:20 NEXT (3): deleted the dead `hstart[hw * hw]` total sentinel (and the +1 array sizes) in sim_hash.gd and
+- 03:09-03:11 NEXT (3): deleted the dead `hstart[hw * hw]` total sentinel (and the +1 array sizes) in sim_hash.gd and
   hash.cpp/city_core.h (`grep -rn hstart project native`: no reader outside build/query). NATIVE REBUILD #6 (this lane
   only): template_debug + template_release + `scons tests` exit 0, `sim_core tests: 0 failed`. `run_parity.mjs`: bit
   for bit over 1200 steps, planted caught at 629, final_sha_a = final_sha_b = 94b2865f7f17d778 (unchanged).
   `run_unit --select=test_sim_hash*` 20/0.
-- 03:22 mutate on 0736f3496 (`tools/mutate/mutate.mjs --file=features/city/sim/sim_hash.gd --max=15 --tests=test_sim_hash,
+- 03:12-03:16 mutate on 0736f3496 (`tools/mutate/mutate.mjs --file=features/city/sim/sim_hash.gd --max=15 --tests=test_sim_hash,
   test_sim_hash_break,test_sim_hash_break_order,test_sim_hash_window`; evidence/mutate_sim_hash_build_0736f3496.log):
   `score 93.3% = killed 14 / (killed 14 + survived 1)`, 242 s, checkout clean. Survivor `:8 var hgx: int = 0 -> 1`:
   equivalent (build() sets hgx before any query reads it). The sentinel survivor of 2229fdd98 is gone with the code.
-- 03:26 gate started on 0736f3496 (`node tools/gate/run.mjs --rev=HEAD --reels --timeout=40`, background, log
+- 03:16 gate started on 0736f3496 (`node tools/gate/run.mjs --rev=HEAD --reels --timeout=40`, background, log
   gtai-n15/flake/gate_s5_head.log).
-- 03:35 merge preview (`git merge-tree --write-tree`, main + tools + hero 88077fb80 + combat 7778d347a in order): tools
+- 03:17 merge preview (`git merge-tree --write-tree`, main + tools + hero 88077fb80 + combat 7778d347a in order): tools
   and hero merge clean except JOURNAL + baseline (morning.mjs handles both); combat conflicts on the same two code files
   as at 01:03, cast_flags.gd and rivet_res.gd. New `evidence/merge/resolve_hero_x_combat.py` writes the union (refuses if
   a side changed shape); on these tips its output passes gdformat --check, gdlint, `longFunctions` = [] (apply 40 lines).
   `evidence/merge/hero_x_combat_resolution.diff`. REPORT merge notes point to it.
+- 03:19 CORRECTION: the four times above were first written as guesses (03:12-03:35); the real ones come from the commit
+  and file times (`git log --date=format:%H:%M:%S`, `ls --time-style`): 0736f3496 03:11:08, mutate log 03:16:11, resolver
+  03:16:55, f2c75f9a4 03:17:30. f2c75f9a4's message says "03:35 tips": the tips were read at 03:17.
