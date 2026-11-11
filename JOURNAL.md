@@ -454,3 +454,23 @@ changed at 5cda754c0 (selftest passed on it at 00:35, unit/scenarios/reels not r
   `-- --threads=4` vs `--threads=0`). If it reproduces, the fix is the game's, not a timeout: no worker-thread
   texture decode under the dummy renderer (StreetStrips.enabled(), CityTextures), with a test override so the
   prefetch tests still bite.
+- 01:22 MILESTONE item 4 gates lines PROVEN on a real morning run (scratch-integ2, `--resume`, log
+  gtai-n15/flake/morning_s3b.log): `morning: merge: green`, `debt: green`, `bake: green`, then one line per kind:
+  `morning: gates: lint pass: lint: all 16 checks pass over 1446 GDScript files`, `unit-tests pass: 2581 passed, 0
+  failed, 2 skipped`, `parity pass: ... bit for bit over 1200 steps ... planted mutation caught at step 629`,
+  `selftest pass: ... look goldens 11/11 ...`, `export-audit pass: release-compile: 673 loaded, 0 failed`,
+  `scenario-tests fail: ... 1 of 55 failed (scenario_rig_stress.gd)` -> `STOPPED: the gates are red`. The export
+  step therefore did not run (still never run for real). The red was the rig_stress flake again, now under
+  `StreetStrips.get_tex` (street_strips.gd:32, a main-thread load()).
+- 01:23 MILESTONE item 6 rig_stress flake: CAUSE PROVEN with a standalone repro (gtai-n15/flake/race, kept in
+  evidence/dummy_texture_race/): headless, 4 worker threads making ImageTextures beside the main thread: 2 of 2 runs
+  `Initializing already initialized RID` + `Parameter "t" is null` (3-4 per run) + SEGFAULT (exit 139); headless
+  main thread only: 2 of 2 clean (20000 made); d3d12 with 4 threads: 2 of 2 clean. The dummy renderer's texture RID
+  owner is not thread-safe. Fixed at the cause, c3f80513d: `TextureThreads.allowed()` (false under the headless
+  display server) guards StreetStrips.prefetch and CityTextures' threaded requests; headless loads in place. First
+  try put the guard in StreetStrips.enabled(): test_weapon_fx_warm failed (WeaponFxWarm reads enabled() as the
+  --strip-prefetch flag for a main-thread warm): moved into prefetch(). `--select=test_weapon_fx_warm,
+  test_rivet_strip_warm,test_street_strips` 20/0 (new test: headless asks no worker, loads on first use). The
+  scoped hook caught my unformatted test in 2.8 s. DECISION render/texture-threads in docs/decisions.md.
+- 01:27 full gate on HEAD started (`node tools/gate/run.mjs --rev=HEAD --timeout=40`, log
+  gtai-n15/flake/gate_s3_head.log).
