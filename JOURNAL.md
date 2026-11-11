@@ -563,3 +563,15 @@ session 7; Calls (a)-(c) stand; update the gate line to the final commit).
 - 32 px/m pair of 61a2d3baa (same shot, stills 336-344, before --burst-push=off, same build):
   `evidence/n15-combat/burst_rides_push_ab_32ppm_x3_t338-344.png`: t339 the dot moves from bare floor onto his shadow's
   edge; t344 unchanged.
+- `cites.mjs REPORT.md --tracked`: 38 paths, 37 ok, 1 pattern. REPORT "Next steps" written out (was a pointer here).
+- Not done this session (time: a fix + film + 21 min gate did not fit before 07:06): the plasma sword's left strike size
+  (minor, tools/art/rivet_windup_cells.json k), Call (c)'s strike hold.
+- 06:20 session 8 ends. Godot: none of mine running (gate, mutation, fight_gate and both films exited with their
+  verdict lines). bench.lock deleted after the perf run.
+
+NEXT (session 9 / REPORT phase): (1) `61a2d3baa` is the last code commit and PASSES every gate with reels
+(build/gate/61a2d3baac58/gate.json); later commits are JOURNAL/REPORT/evidence only. If code lands, re-run
+`node tools/gate/run.mjs --rev=HEAD --reels` (~21 min). (2) REPORT is final-shaped (rows, gate line, perf line, Calls
+(a)-(d), merge notes with shared files, next steps): drop the "(updated ...)" note at 07:40 and re-run
+`node tools/evidence/cites.mjs REPORT.md --tracked`. (3) Asset replies (n15-combat.md): nothing new since it371 04:23.
+(4) If time: the plasma sword's left strike size (film blade:plasma_sword_left 64 px/m before/after).

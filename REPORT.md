@@ -100,4 +100,15 @@ PASS with reels on `f128a280e` and `ac7991f58` (session 7). Mutation: `rig_depth
 
 ## Next steps
 
-See the last NEXT line in `JOURNAL.md`.
+1. The owner's Calls (a)-(d) above; each alternative is one flag or data value.
+2. The t339 body-burst dot: the burst is a floor print at his feet front, and the thrown-back figure leans back off it.
+   Lift a body hit's burst to the drawn body's height (an FX layer over the rigs for body hits), or let the hit cell
+   carry its own drawn wound.
+3. The cops at the sidewalk wall: nav (they never path round its end) and occlusion (the cap should hide a body behind
+   it). Not this lane.
+4. Metal impacts: wire `GunFx.shield_test` (or a metal prop target) so a round on metal can be filmed, then judge the
+   packed it317 sparks.
+5. The contractor: film his living hold (20 ticks); hold his dropped carbine back until his death cell lands (needs the
+   drop's tick; `fx_ground.gd` is a file hero may touch).
+6. The horde's worst frame is ~0.4 ms higher with tonight's work on (both ~16 ms): bisect it by flag with
+   `fight_gate.mjs --scenes=horde` on a quiet machine.
