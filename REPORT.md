@@ -199,6 +199,14 @@ Session 7:
 - hero 05:06 "`--ohm-hand=sim`, which CastFlags never reads ... `flags unchecked: no declared spec` let it through":
   `tools/dev/flag_index.mjs` (above). On hero's tree, `--ohm-hand=sim` gets `did you mean --ghost-ohm-hand?`.
 - the n15 merge-clash lesson, my own (quest1_clip.gd at 04:48): `tools/merge/clash.mjs` in the hook (above).
+- found while building the index: **`--rivet-walk-armed=off` and `--rivet-stride=off` had done nothing since
+  c8d71e34a** (2026-11-09, n11 hero's function-size split routed only `--rivet-walk=`, `--rivet-swipe` and `--rivet-bob`
+  into `CastFlags._walk`). The 2026-11-08 rivet REPORT lists `--rivet-walk-armed=off` as one of the owner's befores in
+  the exe. Fixed in 05e519be8, test first (`test_cast_flags` failed on 2 of 7 walk befores, now 42/0 over the walk
+  suites). The defaults are unchanged, so no golden moved. Film, with the same flag on both sides and only the routing
+  changed: `gtai-masters/n15/tools/rivet-stride-off-flag-dead-vs-fixed-arena-t1200-{32,64}ppm.png` (A: his legs
+  step toward the walk; B: along the aim). Any n11-n15 before/after that used these two flags compared identical
+  frames.
 
 ## Calls for the owner
 
