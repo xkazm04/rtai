@@ -147,7 +147,7 @@ static func draw(rig: CutRig, card: Sprite2D, k: float) -> void:
 	card.flip_h = f.y == 1
 	var ks: float = s * sink_of(rig)
 	card.global_rotation = 0.0
-	card.global_scale = Vector2(ks, ks)
+	card.global_scale = Vector2(ks, ks) * StreetFallFit.k(card)  # n17: buckle/mid-fall at the walk
 	card.global_position = rig.global_position
 	if living:  # n17: a knockdown lies as its own grid's frame, never the plan-view dead
 		StreetDeadPlan.drop(card)

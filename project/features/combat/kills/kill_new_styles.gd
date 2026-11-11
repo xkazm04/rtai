@@ -164,7 +164,7 @@ func _drawn(d: Death, age: int) -> bool:
 		return false
 	var from: float = d.extra.num("fall_at", float(at))
 	var u: float = maxf(0.0, float(age) - from) / maxf(1.0, d.extra.num("cells_ticks", 20))
-	d.cells.frame_coords = Vector2i(d.cells.frame_coords.x, KillFallCells.row_at(d.cells, u))
+	KillFallCells.step(d.cells, u)
 	if d.row.style == &"stitch":
 		KillFallCells.face(d.cells, KillStitchArt.facing(d, age))
 	return true

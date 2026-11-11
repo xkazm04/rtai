@@ -61,6 +61,13 @@ static func row_at(cells: Sprite2D, u: float) -> int:
 	return StreetWalkerFall.fall_frame(clampf(u, 0.0, 1.0), cells.vframes)
 
 
+## Shows the row for the fall's progress `u` at its size step (StreetFallFit: n17, the buckle and
+## mid-fall at the walk's size, as a dying card draws them).
+static func step(cells: Sprite2D, u: float) -> void:
+	cells.frame_coords = Vector2i(cells.frame_coords.x, row_at(cells, u))
+	StreetFallFit.fit(cells)
+
+
 ## StreetWalkerFall.draw's size: the art's standing height at the still strip's px per metre,
 ## times the person's crowd scale.
 static func _scale(rig: CutRig, path: String) -> float:
