@@ -191,7 +191,7 @@ func _scrap(ci: KillNewStyles, s: Shred, n: int, a: int) -> void:
 		@warning_ignore("return_value_discarded")
 		pts.append(at + Vector2.from_angle(ang) * rr)
 	var flesh: bool = n % 3 == 1
-	ci.draw_colored_polygon(pts, FLESH if flesh else CLOTH)
+	KillPoly.fill(ci, pts, FLESH if flesh else CLOTH)  # a fan: tiny scraps never triangulate
 	ci.draw_polyline(pts + PackedVector2Array([pts[0]]), Ink.INK, maxf(1.0, ppm * 0.015))
 	if flesh:
 		ci.draw_circle(at, size * 0.28, BONE)

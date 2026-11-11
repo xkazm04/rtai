@@ -65,9 +65,9 @@ static func _tongue(ci: KillNewStyles, at: Vector2, tall: float, lean: float) ->
 			at + side
 		]
 	)
-	ci.draw_colored_polygon(outer, FLAME)
+	KillPoly.fill(ci, outer, FLAME)
 	ci.draw_polyline(outer + PackedVector2Array([outer[0]]), Ink.INK, maxf(1.0, ci.ppm * 0.015))
 	var core: PackedVector2Array = PackedVector2Array(
 		[at - side * 0.45, at + up * tall * 0.55, at + side * 0.45]
 	)
-	ci.draw_colored_polygon(core, CORE)
+	KillPoly.fill(ci, core, CORE)
