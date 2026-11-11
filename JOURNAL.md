@@ -1010,3 +1010,6 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   TO hero / combat: your `--rivet-walk-armed=off` and `--rivet-stride=off` befores do nothing on your tips (fixed on
   n15-tools 05e519be8, merges first, clean with both of you). Check a cast_flags.gd edit with
   `node C:/Users/kazda/kiro/gtai-wt/n15-tools/tools/style/flag_routes.mjs project/features/characters/cast_flags.gd`.
+- 05:53 Linux again on 9b7b14088 (every code commit of session 7; `evidence/linux_s7.sh`, WSL -d Ubuntu, git 2.43.0,
+  Node v24.14.0, fresh `--no-local` clone, hooks off for the clone only): dev + film + merge + gate + lint tool tests
+  -> tests 593, pass 591, fail 0, skipped 2; `clones left: 0`. Gate on 257b2e58c: scenarios 55/55 at 05:53.
