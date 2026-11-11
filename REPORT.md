@@ -23,6 +23,13 @@ crowd: look goldens re-blessed with a decisions line). t-4 and t-5 move nothing 
 
 ## Tools changed
 
+- `tools/style/uid_files.mjs`, lint check `uid-files` (eacf0de3f; lint is now 17 checks): every own `.gd` in the index has
+  its `.uid` there. My own 6b9d2a900 shipped a dev script without its `.uid`; Godot wrote it inside the gate's snapshot
+  and every kind failed INVALID. Example: over `git ls-tree 6b9d2a900` -> `FAIL project/dev/sim/car_route_trails.gd:
+  its .uid is not in the index`.
+- `tools/film/blob.mjs` (f059cfc44, hero's FRICTION): `node tools/film/blob.mjs <rev>:<path> --out=<file>` writes the
+  real bytes of an LFS asset at a commit (`122 bytes, LFS object, smudged`), where `git show` writes the pointer.
+
 - `project/dev/sim/car_route_trails.gd` (6b9d2a900, AGENTS.md line): the reference sim's real car code on a hand-made map
   (roads ending at a plaza, a kerb, void), trails at 4 px/m, each U-turn boxed, `.png` + `.json`. Run it in two worktrees
   for a routing before/after. Example: `--out=.../before` on d720e22da -> U-turns `tile_ahead` 7, 0, 7 / 7, 4, 0 / 0, 0, 0.
