@@ -946,3 +946,9 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   hooks off for the clone; script gtai-n15/flake/linux_s7.sh): `node --test 'tools/dev/*' 'tools/film/*' 'tools/merge/*'
   'tools/gate/*'` -> tests 556, pass 554, fail 0, skipped 2; clone removed (`clones left: 0`). REPORT updated
   (tools changed, served, next steps).
+- 05:31 6d77d2204 `tools/gate/quick.mjs` first prints the merge-clash line for the WORKING TREE (`worktreeLines`: a temp
+  copy of the index takes `git add -u`, so unstaged edits count; never changes quick's exit; `--no-clash`). Real
+  run: an unstaged edit of combat's `--rivet-windup=off` line in my cast_flags.gd -> `merge-clash: WARNING your
+  changes make project/features/characters/cast_flags.gd conflict with n15-combat ...`, `quick: ok, 1 file(s), 1.3 s`,
+  exit 0; file restored (`git status` shows only the tool files). Test 7/7 (index bytes asserted equal); planted
+  "no add -u" -> 1 fails, restored.
