@@ -75,3 +75,26 @@ NEXT (session 3, in order): (1) [done 22:11, see the REELS line below]; (2) [don
 
 NEXT (session 4, in order): (1) wire the asset lane's next diagonal fire deliveries (machine_pistol, plasma_rifle, gatling at p70, then p55, then the other four): per gun copy `rivet_eq_<gun>_diag{,_noflash}.png` (+ .import with compress/mode=2 like the eq strip), add to RivetRes.X15 if its eq strip is there, measure DEG (flash root -> tip against the twin, the biggest hot blob: scratch-rs/diagmuz.py logic), HELMET_X (helmet run under the top plate, check at 2x), FOOT_PX (boot rows from the delivery, verified), pin the muzzle row in rivet_muzzle.py DIAG_PINNED + rivet_muzzle.json (110 space = strip / res), provenance lines; film arena --lock=off at the shot ticks (find them by diffing --rivet-gun-diag=off frames); (2) #15 kill-lab back/front flip; (3) item 3 per blade at 32/64 (plasma sword, chainsaw, baton, claw: wind-up, contact, recovery, smear vs drawn arc) and file DEFECTS; (4) #13 handover pose pop: needs an in-between pose (REQUEST assets) rather than code; (5) item 6 arena loop over every weapon; (6) before the freeze: full `evidence/run.mjs --no-bench --no-release` + reels on the final commit, REPORT final (Calls with 32/64 stills).
 - Session 3 ends 23:2x.
+
+- MEASURED (for session 4) every delivered diagonal fire strip with `python -I tools/art/rivet_gun_diag_measure.py <dir> <guns> [--res=]` (it458/it462, not the it463 tall/v2 offers). root110 below is at --res=1.5 for p70 and 1.0 for p55: re-run p55 with --res=1.5 for the guns whose p55 eq strip is in RivetRes.X15 (pistol, machine_pistol). CHECK AT 2x before wiring: p70 hand_cannon cell 0 (58 deg, boot 154), p70 electro_gun cells 1/3 (-8 / 178 deg: the lime sparks), any helm far off the cell centre.
+```
+p70
+pistol: cell 283x180 deg [31, -29, 148, -149] helm [140.5, 93.5, 140.5, 191.0] boot [177, 179, 177, 179] root110 [[159, 101], [127, 36], [27, 101], [59, 38]]
+machine_pistol: cell 254x175 deg [40, -31, 139, -149] helm [127.5, 89.5, 126.5, 163.5] boot [172, 172, 172, 172] root110 [[121, 98], [117, 15], [26, 98], [51, 15]]
+plasma_rifle: cell 343x224 deg [37, -37, 146, -143] helm [170.5, 157.0, 170.0, 183.0] boot [221, 221, 221, 221] root110 [[171, 133], [149, 57], [55, 133], [78, 57]]
+gatling: cell 299x187 deg [35, -26, 149, -155] helm [139.0, 109.0, 159.5, 189.0] boot [184, 184, 184, 184] root110 [[149, 112], [131, 39], [51, 112], [66, 39]]
+hand_cannon: cell 285x180 deg [58, -3, 149, -177] helm [141.0, 94.5, 142.0, 188.5] boot [154, 177, 178, 177] root110 [[107, 89], [123, 48], [47, 109], [68, 46]]
+gloria: cell 322x216 deg [28, -31, 146, -152] helm [160.0, 149.0, 160.0, 172.0] boot [213, 213, 213, 213] root110 [[149, 135], [138, 55], [60, 131], [77, 57]]
+electro_gun: cell 225x183 deg [39, -8, 138, 178] helm [112.5, 78.0, 111.5, 147.5] boot [182, 180, 182, 180] root110 [[119, 102], [103, 37], [29, 105], [45, 36]]
+rocket_launcher: cell 260x170 deg [43, -23, 133, -162] helm [129.0, 109.5, 129.5, 148.0] boot [167, 167, 167, 167] root110 [[125, 95], [102, 31], [45, 94], [69, 31]]
+p55
+pistol: cell 196x171 deg [37, -42, 145, -138] helm [97.5, 65.0, 95.5, 127.5] boot [168, 168, 168, 168] root110 [[157, 119], [140, 38], [28, 119], [55, 36]]
+machine_pistol: cell 202x170 deg [39, -40, 137, -145] helm [100.0, 65.5, 101.5, 115.5] boot [167, 167, 168, 167] root110 [[163, 115], [147, 21], [32, 115], [56, 22]]
+plasma_rifle: cell 267x172 deg [38, -35, 144, -145] helm [133.5, 116.5, 132.0, 150.5] boot [169, 170, 169, 171] root110 [[200, 134], [174, 30], [66, 135], [94, 31]]
+gatling: cell 268x171 deg [27, -28, 147, -155] helm [121.0, 97.0, 146.5, 170.5] boot [168, 168, 168, 168] root110 [[195, 130], [169, 50], [70, 126], [95, 49]]
+hand_cannon: cell 230x171 deg [37, -43, 154, -140] helm [112.5, 78.5, 116.0, 149.0] boot [168, 168, 168, 170] root110 [[176, 129], [157, 51], [42, 135], [72, 51]]
+gloria: cell 226x171 deg [30, -24, 135, -142] helm [108.5, 106.5, 111.5, 120.5] boot [168, 168, 168, 168] root110 [[170, 131], [144, 49], [59, 133], [83, 49]]
+electro_gun: cell 194x170 deg [45, -34, 137, -130] helm [90.5, 95.0, 103.0, 98.5] boot [168, 167, 167, 167] root110 [[159, 129], [132, 39], [40, 118], [55, 49]]
+rocket_launcher: cell 170x170 deg [29, -49, 153, -135] helm [76.0, 71.5, 93.0, 96.5] boot [167, 167, 167, 167] root110 [[126, 117], [117, 51], [44, 118], [52, 50]]
+```
+- Asset lane offers it463 (23:13-23:23): gloria/gatling/electro_gun v2-v3 diagonals and TALL p70 sets (cell height +60 so the down-aim flash is not clipped; "your diag loader must read the cell height from the file"): RivetStrips/RivetFrames take the cell size from the texture (hframes 4, vframes 1), so a taller strip only needs its FOOT_PX pad (+60) and a re-measure. Decide per gun in session 4.
