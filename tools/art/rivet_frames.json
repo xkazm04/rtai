@@ -357,11 +357,13 @@
    "rivet_reload_plasma_rifle": {
     "act_k": 0.823,
     "counts": "5,3",
-    "sheet": "rivet_reload_twohand_70_claw.png"
+    "sheet": "rivet_reload_twohand_70_claw.png",
+    "fig_h": 165
    },
    "rivet_reload_plasma_rifle_left": {
     "counts": "3",
-    "sheet": "rivet_reload_twohand_70_left_claw.png"
+    "sheet": "rivet_reload_twohand_70_left_claw.png",
+    "fig_h": 165
    }
   }
  }
