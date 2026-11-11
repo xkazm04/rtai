@@ -1,4 +1,4 @@
-# n16 lane tools: REPORT (DRAFT, updated 16:55 in session 5; the 19:40 session finalises it)
+# n16 lane tools: REPORT (DRAFT, updated 17:50 in session 6; the 19:40 session finalises it)
 
 Branch `n16-tools` from main `5843f5a28`. Memory: `JOURNAL.md`. Evidence: `gtai-masters/n16/tools/frames.json`
 (15 entries) and `evidence/n16-tools/`.
@@ -17,8 +17,15 @@ One command films every signature death in the KillLab on the city block, for we
   s4, over BOTH kill lanes' whole tables (run from each lane's worktree on its committed tip): kills-new 8f7fe6e6e
   17/17 `whole: true` (evidence/n16-tools/reel_s4gore_new.md), kills-polish a56501ee5 12/12 (`--dirs=0`: that tree
   has no kill-lab turn; reel_s4gore_polish.md). Sheets looked at: gatling, katana, chainsaw, rocket lie whole.
-- Beat readout: per film `hit-stop N frames` (measured from the probe rows' frame gaps), window still, settled,
-  aftermath share; per weapon the row's timings and the aftermath lifetime (KillMarks ring of 12 kills).
+- Beat readout: per film `hit-stop N frames` (measured from the probe rows' frame gaps; `off` when the film ran with
+  the feel off), window still, settled, aftermath share and curve; per weapon the row's timings and the street clock
+  (corpse_decay.json: bodies 7.2 s, stains 16 s; the KillMarks ring of 12 kills sooner).
+- s6: the aftermath LIFETIME is measured (416cbe69d, 822d5bdc5): `--after` up to 1200 ticks without `--clips`, beats
+  +150/+300/+600, a curve per film. Proof on kills-new 76ae91d45 (`--weapons=claw_shock,rocket_launcher --after=600`,
+  PASS): claw +20 4.8 / +300 2.1 / +600 0.9 %: the thrown cop lies at +300 and is gone at +600; rocket gibs gone by
+  +600, scorch and spray stay; `--after=1000` rocket 1.6 %: scorch and spray gone, the dropped rifle stays. The old data
+  line ("until 12 later kills, no timer") was wrong on the street. `--feel=on`: freezes 6 (claw), 8 (rocket) frames.
+  (evidence/n16-tools/kill-reel-aftermath-life-*.png, reel_s6feel.md, reel_s6long.md)
 - s3: `--quick` (32 px/m, dir 90), sheet cells labelled (weapon/film, offset, `KILL HS6`), `--clips --feel=on` cut
   from the game's movie so the hit-stop PLAYS (calibrated: movie index = probe frame), the all-weapon overview
   `reel_<ppm>.png` + `reel.md`, `--resheet` (no Godot), the death judged on screen (`--subject=kill`), a far victim
@@ -56,7 +63,8 @@ the reel now stamps the tree and names the film where it moved); s4 kills-new RE
 a7369529f); s5 kills-new FRICTION 15:30 (Gatling film timeouts, b74d9d007 + 3ca83cd2a), kills-new REQUEST 16:28
 (`kill:claw_shock`, 8784c592b), kills-polish FRICTION 14:20 (a commit's lint read an unstaged schema edit: reproduced, the
 hook IS right when its index export works; it now retries a failed export once and the tree fallback names the unstaged
-paths it reads, 826b4035a). Each with a SERVED line in JOURNAL.
+paths it reads, 826b4035a); s6 kills-polish FRICTION :361 (an art commit staging provenance or tools/art waited ~2 min
+for the full lint: those paths are lint-neutral now, 106 s -> 3 s, ed4a13db0). Each with a SERVED line in JOURNAL.
 
 ### 6. Pre-commit hook (`tools/gate/precommit.mjs`)
 826b4035a: a failed index export is retried once; the tree fallback ends `it reads your unstaged <paths>: a failure
@@ -71,7 +79,16 @@ the lane's one Godot for 30-40 min.) Proof: the gate on 09b23b523 with `--reels=
 the next gate's ETA reads `took evidence 16.1 min + reels 5.0 min (combo 301 s)`. Codex n16t-break-gate-timing:
 13 tests, 2 fixes (the last `--reels` form wins; decimal seconds).
 
+### 8. Lint-neutral paths in the pre-commit scope (`tools/lint/scope.mjs`, ed4a13db0)
+A project/ commit that also stages `steam/ai-provenance/**`, top-level `tools/art/*.py` or root `KILLS.md` /
+`DEFECTS.md` keeps the scoped lint (no tool code reads them; a guard test fails if one starts: planted, caught).
+Proof: `node tools/lint/lint.mjs --scope=<kill_lab.gd + .uid + provenance + gib_pieces.py + KILLS.md>` -> `scoped to
+the commit (2 staged path(s), all under project/ + 3 lint-neutral ...)`, 18/18 in 3 s; the full lint it replaces 106 s.
+
 ## Findings for the kill lanes
+- Measured on the street (s6): a body and its pieces are gone ~7 s after the kill, the scorch and spray ~16 s
+  (corpse_decay.json), the dropped rifle stays past 16.7 s. A death's aftermath that should outlive that needs a
+  corpse_decay change, not a signature row.
 - A signature row's `hitstop_ticks` does NOT freeze the screen: SignatureKills.hold makes the pieces wait. The freeze
   is hit_feel.json's `kill_hitstop` (camera.json `kill`, 6) or the class's bigger stop (blast = `boss_hit` 8).
 - Default reels have the feel OFF (locked camera); judge pacing on `--feel=on` reels and their clips.
@@ -115,8 +132,9 @@ picked the game side of afe581336, bbee28a9c and 0b5c55fc7 with identical conten
 ## Next steps
 - Kill lanes: drop the `-- --sig-gun=claw_shock` workaround (`--weapons=claw_shock` films it on its own row); use
   `gate --reels=<view>` mid-session and plain `--reels` on the final commit; read the ETA line before starting a gate.
-- The reel's aftermath LIFETIME is read from data (the KillMarks ring of 12 kills, no timer), not measured: a long
-  film (`--after=600`) with 12 later kills would prove the recycle on screen.
+- The aftermath curve diffs against the trigger frame, which holds the victim standing, so `gone by` is rarely
+  reached; a victim-free reference (the lab run without its guard, same seed) would let it say when the street is clean.
+- The KillMarks ring (12 later kills recycle the marks) is still not filmed: it needs a lab with many kills.
 - A kill earlier than the lab's trigger tick (60) would make the trigger column a post-kill frame (no lab kill does:
   63+); if a lab ever kills sooner, pickBeats should take kill-8 instead of 60.
 - The pre-commit export failure that made kills-polish's 14:20 commit lint the tree was not reproduced (only the
