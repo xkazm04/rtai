@@ -806,3 +806,18 @@ untracked dev/sim/car_route_trails.gd copy is mine) and `git branch -D n15t-cont
 - 04:44 quest1 proof started: `bash evidence/quest1_lead/run.sh cab8a0d4a` (4 films via `film.mjs quest1 --rev=`, arms
   jump = `-- --still-lead=0` and lead = default, each with `--stills=13600,13708` and `--stills=13708`; then
   `evidence/quest1_lead/diff.mjs` compares t13708 within each arm). Log gtai-n15/logs/quest1_lead.log.
+- 04:43-04:45 quest1 proof (`bash evidence/quest1_lead/run.sh cab8a0d4a`, 4 x `film: PASS`, about 15 s each):
+  `jump: t13708 from --stills=13600,13708 vs --stills=13708: 64306 of 1024000 px differ (6.28 %)` (combat's defect
+  REPRODUCED; their 250k was another res/zoom), `lead: ... 10947 of 1024000 px differ (1.07 %)`. Then lead 600 (two more
+  films, `-- --still-lead=600`): 10357 px: no better, so 120 stays.
+  CORRECTION of my 04:39 cause (SEEN the jump pair, then the lead pair): the BACKGROUNDS ALIGN, the camera was not what
+  differed. What hung on the stills list is view state that only moves on drawn frames: Rivet's rig pose (firing vs
+  walking, his gun drawn at his feet), the dialogue portrait's fade (half in vs full), blood pools, ped poses. The lead
+  makes those current; what stays (~1 %) is the teal soul companion beside Rivet (shown in one list, not the other) and
+  some blood: things a drawn frame creates when it sees an event, which no lead washes out. So: REDUCED (6.3 % -> 1.1 %),
+  NOT REMOVED. Combat's rule stands: an A/B pair uses one --stills list (compare.mjs already passes one to both sides).
+  The comments said "camera": corrected in 20c1dafb1 (same line count). Sheet (SEEN):
+  `gtai-masters/n15/tools/quest1-still-lead-t13708-jump-vs-lead-32ppm.png` (frames.json now 10). Snapshot gtai-film-
+  cab8a0d4a kept for now (removed at the end).
+- 04:46 final gate started on 20c1dafb1 (every code change of session 6: launch-flags, film --rev, run_reels default,
+  quest1 still lead): `node tools/gate/run.mjs --rev=HEAD --reels --timeout=40`, log gtai-n15/flake/gate_s6_final.log.

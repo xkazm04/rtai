@@ -1,4 +1,4 @@
-# REPORT n15-tools (session 5, 04:02; later sessions extend it)
+# REPORT n15-tools (session 6, 04:45; later sessions extend it)
 
 Branch `n15-tools` from main `5c5c03611`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n15\tools\` (`frames.json`),
 `evidence/` in this tree, JOURNAL.md for every command and its output.
@@ -29,6 +29,12 @@ crowd: look goldens re-blessed with a decisions line). t-4 and t-5 move nothing 
   missing one is "" on every run and `has()` false, which gave combat a byte-identical before/after. Example, planted in
   `boot/arena_args.gd`: `project/boot/arena_args.gd:30: LaunchArgs.value("--impact-follow") reads a flag not in
   KNOWN_FLAGS`; the repo, hero and combat tips are clean.
+- `tools/film/film.mjs --rev=<commit> [--native=donor]` (3f5f17ccc): films a commit in compare's snapshot, so a queue
+  of films runs one commit while the tree is edited. A live-tree film prints its uncommitted `project/` paths. The side
+  resolver moved to `tools/film/side.mjs`, because a dynamic import of compare from film deadlocked. Example: `film.mjs
+  arena --rev=HEAD --stills=300` -> `film: --rev=HEAD films snapshot 0e67967e ...`, `film: PASS`.
+- `node tools/reel/run_reels.mjs` with no args (2f051cd65): the reel gate into `build/reels` (it was exit 2).
+- `dev/frames/quest1_clip.gd --still-lead=<ticks>` (cab8a0d4a; default 120, 0 = the old jump): see Served.
 - `res://dev/sim/car_route_trails.gd --tier=a` (6254f741e): the hand-made car map in tier A (cells filled from each tile's
   kind, hash built each tick, `dead_at_tick` per car). Example: `bash evidence/c2_tier_a/run.sh` -> 4 runs exit 0, tier B
   default == `evidence/t4_trails/after.json` exactly, mask 1 tier A car 0 `dead_at_tick 3022`.
@@ -155,6 +161,22 @@ the LFS pointer for a PNG (`tools/film/blob.mjs <rev>:<path>`, f059cfc44: real r
 before the merge: `git cherry-pick 39431687d c5ac2442a 3fc7109a9 112b0a12e` (Node only; clean on both tips at 00:59).
 Not served: hero's `stride_film --film-fire` on one-row strips (hero's own dev scene; its cursor_sweep workaround is
 the right film).
+
+Session 6 (from FRICTION lines, no REQUEST open):
+- combat "a dev flag read through `LaunchArgs.value()` that is not in KNOWN_FLAGS is always empty": lint `launch-flags`
+  (88b42ec2d), above.
+- combat "I edited a .gd while a film queue ran; 4 queued films died with SCRIPT ERROR": `film.mjs --rev=<commit>`
+  (3f5f17ccc) films that commit in compare's snapshot. Proven with a parse error planted in the live tree:
+  `--rev=HEAD` PASS (t300 checked by eye), the live-tree run FAIL, naming the uncommitted path first.
+- combat "two quest1 films of one build differ by ~250k px at t13708 when `--stills` starts elsewhere": reproduced
+  (64306 of 1024000 px at 1280x800, 32 px/m). The camera lines up in both frames. What differs is view state that
+  moves only on drawn frames (Rivet's rig pose, the portrait fade, blood, ped poses), and the recorder drew nothing
+  between stills. Now the 120 ticks before each still are drawn (cab8a0d4a, 20c1dafb1; dev recorder only;
+  `--still-lead=0` = the old way): 10947 px (1.1 %). A 600-tick lead gives 10357, no better: what remains (the soul
+  companion, some blood) is created only when a drawn frame sees the event. **Reduced, not removed:** an A/B pair still
+  uses one `--stills` list, which compare.mjs does. `gtai-masters/n15/tools/quest1-still-lead-t13708-jump-vs-lead-32ppm.png`.
+- hero "`node tools/reel/run_reels.mjs` with no args exits 2": the bare command is now the reel gate (`build/reels`,
+  2f051cd65), as the night brief names it.
 
 ## Calls for the owner
 
