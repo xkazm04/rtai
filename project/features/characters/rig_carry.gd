@@ -52,3 +52,18 @@ static func metres(actor_id: int, rigs: CharacterRigs) -> Vector2:
 ## metres() over `rigs` as a Callable(actor_id) -> Vector2 (GunFxFollow.body_off).
 static func hook(rigs: CharacterRigs) -> Callable:
 	return func(actor_id: int) -> Vector2: return metres(actor_id, rigs)
+
+
+## The living hit card's push of actor `actor_id` off his point, in metres
+## (RigCastShadows.card_push).
+static func push_metres(actor_id: int, rigs: CharacterRigs) -> Vector2:
+	var rig: CutRig = rigs.rig_for(actor_id) if rigs != null else null
+	if rig == null:
+		return Vector2.ZERO
+	return RigCastShadows.card_push(rig) / SimConst.PX_PER_M
+
+
+## n15: a body hit's burst rides the drawn body: the death's slide and the living card's push.
+static func wire(follow: GunFxFollow, rigs: CharacterRigs) -> void:
+	follow.body_off = hook(rigs)
+	follow.body_push = func(actor_id: int) -> Vector2: return push_metres(actor_id, rigs)

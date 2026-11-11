@@ -8,15 +8,22 @@ extends RefCounted
 ## the burst stays (per body-hit impact this keeps [the victim, where his body was drawn then] and
 ## draws the burst at that offset from him now). Render only: no sim state is read back.
 ## `--impact-follow=off` = the before (the closest point, the world point).
+## n15 s8: a living hit also pushes the drawn street card off his point (StreetWalkerHit.shove,
+## body_push); the burst is recorded on his body WITHOUT that push and drawn with the push of the
+## moment, so a later round of a burst lands on the pushed card and returns to the body when the
+## push ends (at his death). `--burst-push=off` = the before (no push: the dot beside the card).
 
 ## A body hit's burst this far in front of the body's centre, toward the shooter (metres).
 const FRONT_M: float = 0.15
 
 static var _off: int = -1
+static var _push_off: int = -1
 
 ## The view's slide of a fighter's drawn body off its sim point (metres), Callable(id: int) ->
 ## Vector2: a death's rig carry (RigCarry.hook, wired by ArenaRigs). Unset = none.
 var body_off: Callable = Callable()
+## The living hit card's push off his point (metres), Callable(id: int) -> Vector2 (RigCarry.wire).
+var body_push: Callable = Callable()
 var _on: Dictionary[Vector4, Array] = {}
 
 
@@ -63,4 +70,16 @@ func drawn_at(im: Vector4) -> Vector2:
 		return at
 	var f: Fighter = on[0]
 	var then: Vector2 = on[1]
-	return at + body_at(f) - then
+	return at + body_at(f) + push_of(f) - then
+
+
+## The living hit card's push of `f` now (metres); zero unset or with `--burst-push=off`.
+func push_of(f: Fighter) -> Vector2:
+	if not body_push.is_valid():
+		return Vector2.ZERO
+	if _push_off < 0:
+		_push_off = 1 if ArenaArgs.parse().text("--burst-push") == "off" else 0
+	if _push_off == 1:
+		return Vector2.ZERO
+	var push: Vector2 = body_push.call(f.id)
+	return push

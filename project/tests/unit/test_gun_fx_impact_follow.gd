@@ -34,6 +34,26 @@ func test_a_body_burst_rides_the_deaths_view_slide() -> void:
 	assert_almost_eq(fx.follow.drawn_at(im).y, 2.5, 0.001, "drawn on the carried body")
 
 
+func test_a_later_round_lands_on_the_pushed_card_and_returns_at_the_death() -> void:
+	var fx: GunFx = GunFx.new()
+	var push: Array[Vector2] = [Vector2(0.4, 0.0)]  # the first round's card push, still on
+	fx.follow.body_push = func(_id: int) -> Vector2: return push[0]
+	var h: Fighter = Fighter.new()
+	h.pos = Vector2(4.0, 2.0)
+	var im: Vector4 = _hit(fx, Vector2(3.85, 2.0), h)
+	assert_almost_eq(fx.follow.drawn_at(im).x, 4.25, 0.001, "on the pushed card, not beside it")
+	push[0] = Vector2.ZERO  # he dies: the death pose is drawn on his point
+	assert_almost_eq(fx.follow.drawn_at(im).x, 3.85, 0.001, "back on the body, not left behind")
+
+
+func test_no_rigs_no_push() -> void:
+	assert_eq(RigCarry.push_metres(7, null), Vector2.ZERO)
+	var follow: GunFxFollow = GunFxFollow.new()
+	RigCarry.wire(follow, null)
+	assert_true(follow.body_off.is_valid() and follow.body_push.is_valid(), "both hooks wired")
+	assert_eq(follow.push_of(Fighter.new()), Vector2.ZERO)
+
+
 func test_a_ground_hit_stays_where_it_stopped() -> void:
 	var fx: GunFx = GunFx.new()
 	var im: Vector4 = _hit(fx, Vector2(1.0, 1.0), null)

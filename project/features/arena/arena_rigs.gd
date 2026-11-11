@@ -73,7 +73,7 @@ func attach(p_stage: CollectCallStage, view: CollectCallView, ctx: WorldContext)
 	view.cast_view.visible = arena_stage == null
 	react = ReactLink.make(p_stage.arena)
 	ShieldSparks.wire(react, p_stage.arena, func() -> CombatBlood: return view.blood)
-	view.fx_view.gun_fx().follow.body_off = RigCarry.hook(rigs)  # n15: a body hit's burst rides
+	RigCarry.wire(view.fx_view.gun_fx().follow, rigs)  # n15: a body hit's burst rides the body
 	if arena_stage == null:
 		return true
 	_add_robots(layer, p_stage.arena, view.blood)
