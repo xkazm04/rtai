@@ -3,7 +3,7 @@
 // because compare imports film (a dynamic import of compare from film's top-level await deadlocks).
 import { spawnSync } from 'node:child_process';
 import { copyFileSync, existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { basename, join, resolve } from 'node:path';
+import { basename, dirname, join, resolve } from 'node:path';
 import { ROOT } from '../lib/repo.mjs';
 import { ensureSnapshot, revParse } from '../lib/snapshot.mjs';
 
@@ -45,8 +45,18 @@ export function nativeRefusal(value, sha, differs, native) {
     + 'as that side, or pass --native=donor when the change under test is not in the sim.';
 }
 
+/** The tree a film is OF: the game tree the caller stands in (cwd or an ancestor of it), else this
+ *  kit's own. A kill lane runs this kit by its path from its own worktree; comparing a commit's native/
+ *  against the kit's HEAD (or giving its snapshot the kit's DLLs) refused their own commits (n16). */
+export function filmedRoot(cwd = process.cwd()) {
+  for (let dir = resolve(cwd); ; dir = dirname(dir)) {
+    if (existsSync(join(dir, 'project', 'project.godot'))) return dir;
+    if (dirname(dir) === dir) return ROOT;
+  }
+}
+
 /** Resolves a side to a runnable tree: {tree, label, snapshot, injected} or {error}. */
-export function resolveSide(value, { root = ROOT, ensure = ensureSnapshot, native, differs = nativeDiffers, rev = revParse } = {}) {
+export function resolveSide(value, { root = filmedRoot(), ensure = ensureSnapshot, native, differs = nativeDiffers, rev = revParse } = {}) {
   const dir = resolve(value);
   if (existsSync(join(dir, 'project', 'project.godot'))) return { tree: dir, label: basename(dir), snapshot: false, injected: false };
   const sha = rev(root, value);

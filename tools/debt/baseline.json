@@ -44,7 +44,8 @@
         "2026-11-10: n15 hero: stride_film --film-blow=<deg> films the ghost recoil along the blow (+5 dev lines) (dev_loc 21426 -> 21431)",
         "2026-11-10: n15 combat: the blade boss bot (n14 owner call), new dev code project/dev/bosses (dev_loc 21426 -> 21481)",
         "2026-11-10: n15 item 2: quest1_clip --quest-hit=off (the before of the contractor stagger), dev_loc +2 (dev_loc 21481 -> 21483)",
-        "2026-11-11: n15 merge: combat's quest1_clip flag (+2) meets tools' still-lead change in the same file (dev_loc 21698 -> 21700)"
+        "2026-11-11: n15 merge: combat's quest1_clip flag (+2) meets tools' still-lead change in the same file (dev_loc 21698 -> 21700)",
+        "2026-11-11: n16 tools: FilmProbe pins the film cursor (CURSOR_OFF + doc, +2 dev lines): films read the desk mouse, so Rivet's aim differed run to run (s3ab) (dev_loc 21700 -> 21702)"
       ],
       "files": {
         "project/dev/arena": 711,
@@ -54,7 +55,7 @@
         "project/dev/bosses": 55,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
-        "project/dev/frames": 1077,
+        "project/dev/frames": 1079,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
         "project/dev/gunplay": 674,
@@ -78,7 +79,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 21700
+      "total": 21702
     },
     "direct_cmdline_reads": {
       "accepted": [

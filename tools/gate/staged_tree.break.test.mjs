@@ -241,7 +241,8 @@ for (const mode of ['clean', 'drift', 'unknown', 'export throws']) {
       },
       remover: (dir) => removed.push(dir),
     });
-    assert.equal(exports, ['clean', 'unknown'].includes(mode) ? 0 : 1);
+    // n16 s5: a failed export is tried once more before the tree is linted (precommit.mjs lintTarget)
+    assert.equal(exports, { clean: 0, unknown: 0, drift: 1, 'export throws': 2 }[mode]);
     assert.equal(t.dir, mode === 'drift' ? snapshot : cwd);
     if (mode === 'clean') assert.equal(t.line, null);
     else if (mode === 'drift') assert.ok(t.line.includes(snapshot));

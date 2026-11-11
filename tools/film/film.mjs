@@ -13,12 +13,11 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, s
 import { spawnSync, execFileSync } from 'node:child_process';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { ROOT } from '../lib/repo.mjs';
 import { importErrors, staleAssets, touchStale } from '../lib/asset_cache.mjs';
 import { describe, runGodot, SCRIPT_ERROR } from '../lib/godot.mjs';
 import { verdict } from '../lib/dev_verdict.mjs';
-import { autoLock, checkFlags, checkId, checkVictim, godotArgs, parseOn, parseShot, parseStills, shotLabel, triggeredTicks, victimSaid } from './shots.mjs';
-import { resolveSide as sideOf } from './side.mjs';
+import { autoLock, checkFlags, checkId, checkVictim, godotArgs, parseOn, parseShot, parseStills, shotLabel, triggeredTicks, victimDrawn, victimSaid } from './shots.mjs';
+import { filmedRoot, resolveSide as sideOf } from './side.mjs';
 import { subjectRow } from './subject.mjs';
 
 /** A file this run wrote may carry an mtime up to a clock tick before `startedAt`: Linux stamps files from
@@ -53,7 +52,7 @@ export function plan(flags, shotText, extra) {
   if (!flags.out) return { error: 'film: --out=<dir> is required' };
   const shot = parseShot(shotText);
   if (shot.error) return { error: `film: ${shot.error}` };
-  const tree = resolve(flags.tree ?? ROOT);
+  const tree = resolve(flags.tree ?? filmedRoot());
   if (!existsSync(join(tree, 'project', 'project.godot'))) return { error: `film: ${tree} has no project/project.godot` };
   const stills = parseStills(flags.stills);
   if (stills.error) return { error: `film: ${stills.error}` };
@@ -83,7 +82,7 @@ export function plan(flags, shotText, extra) {
   if (!shot.shot.script && !existsSync(join(tree, 'project/dev/frames/film_probe.gd'))) {
     return { error: `film: ${tree} has no dev/frames/film_probe.gd (older than the kit): film a commit with tools/film/compare.mjs, which injects it` };
   }
-  if (flags.subject !== undefined && !/^(rivet|hostile|dead|id:\d+)$/.test(flags.subject)) return { error: `film: --subject must be rivet, hostile, dead or id:<n>, got ${flags.subject}` };
+  if (flags.subject !== undefined && !/^(rivet|hostile|dead|kill|id:\d+)$/.test(flags.subject)) return { error: `film: --subject must be rivet, hostile, dead, kill or id:<n>, got ${flags.subject}` };
   for (const key of ['timeout', 'ppm']) {
     if (flags[key] !== undefined && !(Number(flags[key]) > 0)) return { error: `film: --${key} must be a positive number, got ${flags[key]}` };
   }
@@ -148,7 +147,7 @@ export function judge(res, opts, startedAt) {
   for (const t of wanted) {
     const png = join(opts.dir, `t${t}.png`);
     if (!seen.has(t) || !existsSync(png) || statSync(png).mtimeMs + FRESH_SLACK_MS < startedAt) { reasons.push(`no still at tick ${t}`); continue; }
-    const who = subjectRow(probe.rows.find((r) => r.tick === t), opts.subject);
+    const who = subjectRow(probe.rows.find((r) => r.tick === t), opts.subject, { probe, ppm: Number(opts.ppm), view: probe.view });
     if (!who) reasons.push(`no ${opts.subject} in the numbers at tick ${t}`);
     else if (!who.on_screen) reasons.push(`${opts.subject} is off screen at tick ${t} (${(who.screen ?? []).map((n) => Math.round(n)).join(', ')})`);
   }
@@ -156,6 +155,7 @@ export function judge(res, opts, startedAt) {
     const said = victimSaid(res.out);
     if (said === null) reasons.push(`the run never said its victim (no "gunplay: lone victim <kind>" line), so ${opts.victim} is not seen`);
     else if (said !== opts.victim) reasons.push(`the run's victim was ${said}, not the asked ${opts.victim}`);
+    else if (probe.events?.kill?.length) { const drawn = victimDrawn(probe, opts.victim); if (drawn) reasons.push(drawn); }
   }
   return { outcome: reasons.length ? 'unverifiable' : 'pass', reasons, probe, stills: wanted };
 }
@@ -191,7 +191,7 @@ export async function filmOne({ shot, opts }, { runner = runGodot } = {}) {
   }
   const manifest = { schema: 'gtai.film/1', shot: opts.label, outcome: judged.outcome, reasons: judged.reasons, ...gitHead(opts.tree),
     tree: opts.tree, ticks: opts.ticks, stills: judged.stills ?? opts.stills, on: opts.onText, victim: opts.victim ?? null, events: judged.probe?.events ?? null, view: opts.view, ppm: opts.ppm, lock: opts.lock, seed: opts.seed,
-    res: opts.res, mp4, ran: describe(res), args };
+    res: opts.res, mp4, ran: describe(res), timeout_s: opts.timeoutMs / 1000, args };
   writeFileSync(join(opts.dir, 'film.json'), `${JSON.stringify(manifest, null, 1)}\n`);
   return { ...judged, mp4, manifest };
 }

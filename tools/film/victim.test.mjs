@@ -54,7 +54,7 @@ test('an unknown kind, another shot, a tree without the table and a tree without
   const noTable = tree({ table: null });
   try {
     assert.match(planIn(root, 'weapon:pistol', [], 'cop/head_swot').error, /unknown victim cop\/head_swot .*did you mean cop\/head_swat\?/);
-    assert.match(planIn(root, 'arena').error, /--victim is for the weapon shot only, not arena/);
+    assert.match(planIn(root, 'arena').error, /--victim is for the weapon and kill shots only, not arena/);
     assert.match(planIn(noTable, 'weapon:pistol').error, /no project\/features\/characters\/street_dead_plan.gd CLASS_OF table/);
     assert.match(planIn(noHook, 'weapon:pistol').error, /no script in .* reads --victim: .*gunplay_hook\.gd lone\(\).*lone victim <kind>/);
     assert.match(planIn(root, 'weapon:pistol', ['--victim=thug'], undefined).error, /give --victim=<kind> before the --/);
@@ -94,4 +94,16 @@ test('compare passes --victim to both sides, and refuses it after the -- like fi
   for (const name of ['A', 'B']) assert.equal(filmFlags(parsed, { name, tree: '.' }, '340').victim, 'cop/head_swat');
   const none = parseArgv(['weapon:pistol', '--a=HEAD~1', '--b=HEAD', '--at=340', '--out=build/x']);
   assert.equal('victim' in filmFlags(none, { name: 'A', tree: '.' }, '340'), false, 'no victim, no flag');
+});
+
+test('the victim is judged by the card row it was DRAWN as the tick before it died, not by the log line (n16)', async () => {
+  const { victimDrawn } = await import('./shots.mjs');
+  const rows = (row) => ({ events: { kill: [63] }, rows: [
+    { tick: 62, fighters: [{ id: 0, role: 'rivet', alive: true, row: '' }, { id: 1, role: 'hostile', alive: true, row }, { id: 2, role: 'hostile', alive: true, row: 'thug' }] },
+    { tick: 63, fighters: [{ id: 1, role: 'hostile', alive: false, row }, { id: 2, role: 'hostile', alive: true, row: 'thug' }] }] });
+  assert.equal(victimDrawn(rows('thug'), 'thug'), null);
+  assert.equal(victimDrawn(rows('cop/head_helmet'), 'thug'), 'the victim (id 1) was drawn as cop/head_helmet, not the asked thug');
+  assert.match(victimDrawn(rows(''), 'thug'), /had no card/);
+  assert.match(victimDrawn(rows(undefined), 'thug'), /records no card rows/);
+  assert.match(victimDrawn({ events: { kill: [] }, rows: [] }, 'thug'), /no kill/);
 });

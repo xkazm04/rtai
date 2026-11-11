@@ -1,0 +1,1728 @@
+{
+ "schema": "gtai.kill-reel/1",
+ "outcome": "unverifiable",
+ "argv": [
+  "--out=build/kreel/s3all",
+  "--weapons=all",
+  "--quick",
+  "--feel=on"
+ ],
+ "sides": [
+  {
+   "name": "after",
+   "tree": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools"
+  }
+ ],
+ "table": {
+  "rocket_launcher": {
+   "id": "rocket_gib",
+   "style": "gib",
+   "hitstop_ticks": 0,
+   "grind_ticks": 0,
+   "stand_ticks": 0,
+   "crumble_ticks": 0,
+   "flash_ticks": 3,
+   "held_ticks": 0,
+   "leftover_kills": 12
+  },
+  "hand_cannon": {
+   "id": "hand_cannon_blowback",
+   "style": "blowback",
+   "hitstop_ticks": 3,
+   "grind_ticks": 0,
+   "stand_ticks": 0,
+   "crumble_ticks": 0,
+   "flash_ticks": 2,
+   "held_ticks": 3,
+   "leftover_kills": 12
+  },
+  "flamethrower": {
+   "id": "burn_char",
+   "style": "burn",
+   "hitstop_ticks": 2,
+   "grind_ticks": 0,
+   "stand_ticks": 55,
+   "crumble_ticks": 75,
+   "flash_ticks": 2,
+   "held_ticks": 57,
+   "leftover_kills": 12
+  },
+  "molotov": {
+   "id": "burn_char",
+   "style": "burn",
+   "hitstop_ticks": 2,
+   "grind_ticks": 0,
+   "stand_ticks": 55,
+   "crumble_ticks": 75,
+   "flash_ticks": 2,
+   "held_ticks": 57,
+   "leftover_kills": 12
+  },
+  "electro_gun": {
+   "id": "electro_shock",
+   "style": "shock",
+   "hitstop_ticks": 3,
+   "grind_ticks": 0,
+   "stand_ticks": 42,
+   "crumble_ticks": 0,
+   "flash_ticks": 2,
+   "held_ticks": 45,
+   "leftover_kills": 12
+  },
+  "katana": {
+   "id": "katana_split",
+   "style": "split",
+   "hitstop_ticks": 6,
+   "grind_ticks": 0,
+   "stand_ticks": 0,
+   "crumble_ticks": 0,
+   "flash_ticks": 2,
+   "held_ticks": 6,
+   "leftover_kills": 12
+  },
+  "plasma_rifle": {
+   "id": "plasma_hole",
+   "style": "hole",
+   "hitstop_ticks": 3,
+   "grind_ticks": 0,
+   "stand_ticks": 0,
+   "crumble_ticks": 0,
+   "flash_ticks": 2,
+   "held_ticks": 3,
+   "leftover_kills": 12
+  },
+  "plasma_sword": {
+   "id": "plasma_sword_split",
+   "style": "split",
+   "hitstop_ticks": 6,
+   "grind_ticks": 0,
+   "stand_ticks": 0,
+   "crumble_ticks": 0,
+   "flash_ticks": 2,
+   "held_ticks": 6,
+   "leftover_kills": 12
+  },
+  "chainsaw": {
+   "id": "chainsaw_grind",
+   "style": "split",
+   "hitstop_ticks": 2,
+   "grind_ticks": 54,
+   "stand_ticks": 0,
+   "crumble_ticks": 0,
+   "flash_ticks": 0,
+   "held_ticks": 56,
+   "leftover_kills": 12
+  },
+  "ray_gun": {
+   "id": "ray_gun_dissolve",
+   "style": "dissolve",
+   "hitstop_ticks": 3,
+   "grind_ticks": 0,
+   "stand_ticks": 30,
+   "crumble_ticks": 80,
+   "flash_ticks": 2,
+   "held_ticks": 33,
+   "leftover_kills": 12
+  },
+  "homing_shard": {
+   "id": "homing_shard_burst",
+   "style": "burst",
+   "hitstop_ticks": 3,
+   "grind_ticks": 36,
+   "stand_ticks": 0,
+   "crumble_ticks": 0,
+   "flash_ticks": 2,
+   "held_ticks": 39,
+   "leftover_kills": 12
+  },
+  "mini_nuke": {
+   "id": "mini_nuke_vaporise",
+   "style": "vaporise",
+   "hitstop_ticks": 2,
+   "grind_ticks": 0,
+   "stand_ticks": 0,
+   "crumble_ticks": 0,
+   "flash_ticks": 0,
+   "held_ticks": 2,
+   "leftover_kills": 12
+  }
+ },
+ "sheets": [
+  {
+   "file": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\rocket_launcher_32.png",
+   "weapon": "rocket_launcher",
+   "ppm": 32,
+   "rows": [
+    {
+     "side": "after",
+     "victim": "guard",
+     "dir_deg": 90,
+     "kill": 68,
+     "beats": [
+      60,
+      66,
+      68,
+      69,
+      70,
+      72,
+      74,
+      78,
+      88,
+      108,
+      148,
+      218
+     ],
+     "outcome": "pass"
+    }
+   ]
+  },
+  {
+   "file": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\hand_cannon_32.png",
+   "weapon": "hand_cannon",
+   "ppm": 32,
+   "rows": [
+    {
+     "side": "after",
+     "victim": "guard",
+     "dir_deg": 90,
+     "kill": 63,
+     "beats": [
+      60,
+      61,
+      63,
+      64,
+      65,
+      67,
+      69,
+      73,
+      83,
+      103,
+      143,
+      213
+     ],
+     "outcome": "pass"
+    }
+   ]
+  },
+  {
+   "file": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\flamethrower_32.png",
+   "weapon": "flamethrower",
+   "ppm": 32,
+   "rows": [
+    {
+     "side": "after",
+     "victim": "guard",
+     "dir_deg": 90,
+     "kill": 237,
+     "beats": [
+      60,
+      237,
+      238,
+      239,
+      241,
+      243,
+      247,
+      257,
+      277,
+      317,
+      387
+     ],
+     "outcome": "pass"
+    }
+   ]
+  },
+  {
+   "file": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\molotov_32.png",
+   "weapon": "molotov",
+   "ppm": 32,
+   "rows": [
+    {
+     "side": "after",
+     "victim": "guard",
+     "dir_deg": 90,
+     "kill": 182,
+     "beats": [
+      60,
+      182,
+      183,
+      184,
+      186,
+      188,
+      192,
+      202,
+      222,
+      262,
+      332
+     ],
+     "outcome": "pass"
+    }
+   ]
+  },
+  {
+   "file": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\electro_gun_32.png",
+   "weapon": "electro_gun",
+   "ppm": 32,
+   "rows": [
+    {
+     "side": "after",
+     "victim": "guard",
+     "dir_deg": 90,
+     "kill": 129,
+     "beats": [
+      60,
+      129,
+      130,
+      131,
+      133,
+      135,
+      139,
+      149,
+      169,
+      209,
+      279
+     ],
+     "outcome": "pass"
+    }
+   ]
+  },
+  {
+   "file": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\katana_32.png",
+   "weapon": "katana",
+   "ppm": 32,
+   "rows": [
+    {
+     "side": "after",
+     "victim": "guard",
+     "dir_deg": 90,
+     "kill": 68,
+     "beats": [
+      60,
+      66,
+      68,
+      69,
+      70,
+      72,
+      74,
+      78,
+      88,
+      108,
+      148,
+      218
+     ],
+     "outcome": "pass"
+    }
+   ]
+  },
+  {
+   "file": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\plasma_rifle_32.png",
+   "weapon": "plasma_rifle",
+   "ppm": 32,
+   "rows": [
+    {
+     "side": "after",
+     "victim": "guard",
+     "dir_deg": 90,
+     "kill": 65,
+     "beats": [
+      60,
+      63,
+      65,
+      66,
+      67,
+      69,
+      71,
+      75,
+      85,
+      105,
+      145,
+      215
+     ],
+     "outcome": "pass"
+    }
+   ]
+  },
+  {
+   "file": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\plasma_sword_32.png",
+   "weapon": "plasma_sword",
+   "ppm": 32,
+   "rows": [
+    {
+     "side": "after",
+     "victim": "guard",
+     "dir_deg": 90,
+     "kill": 68,
+     "beats": [
+      60,
+      66,
+      68,
+      69,
+      70,
+      72,
+      74,
+      78,
+      88,
+      108,
+      148,
+      218
+     ],
+     "outcome": "pass"
+    }
+   ]
+  },
+  {
+   "file": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\chainsaw_32.png",
+   "weapon": "chainsaw",
+   "ppm": 32,
+   "rows": [
+    {
+     "side": "after",
+     "victim": "guard",
+     "dir_deg": 90,
+     "kill": 68,
+     "beats": [
+      60,
+      66,
+      68,
+      69,
+      70,
+      72,
+      74,
+      78,
+      88,
+      108,
+      148,
+      218
+     ],
+     "outcome": "pass"
+    }
+   ]
+  },
+  {
+   "file": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\ray_gun_32.png",
+   "weapon": "ray_gun",
+   "ppm": 32,
+   "rows": [
+    {
+     "side": "after",
+     "victim": "guard",
+     "dir_deg": 90,
+     "kill": 63,
+     "beats": [
+      60,
+      61,
+      63,
+      64,
+      65,
+      67,
+      69,
+      73,
+      83,
+      103,
+      143,
+      213
+     ],
+     "outcome": "pass"
+    }
+   ]
+  },
+  {
+   "file": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\homing_shard_32.png",
+   "weapon": "homing_shard",
+   "ppm": 32,
+   "rows": [
+    {
+     "side": "after",
+     "victim": "guard",
+     "dir_deg": 90,
+     "kill": 69,
+     "beats": [
+      60,
+      67,
+      69,
+      70,
+      71,
+      73,
+      75,
+      79,
+      89,
+      109,
+      149,
+      219
+     ],
+     "outcome": "pass"
+    }
+   ]
+  },
+  {
+   "file": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\mini_nuke_32.png",
+   "weapon": "mini_nuke",
+   "ppm": 32,
+   "rows": [
+    {
+     "side": "after",
+     "victim": "guard",
+     "dir_deg": 90,
+     "kill": 127,
+     "beats": [
+      60,
+      127,
+      128,
+      129,
+      131,
+      133,
+      137,
+      147,
+      167,
+      207,
+      277
+     ],
+     "outcome": "unverifiable"
+    }
+   ]
+  }
+ ],
+ "films": [
+  {
+   "weapon": "rocket_launcher",
+   "victim": "",
+   "dir_deg": 90,
+   "ppm": 32,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\rocket_launcher\\after_guard_d90_32",
+   "outcome": "pass",
+   "reasons": [],
+   "kill": 68,
+   "beats": [
+    60,
+    66,
+    68,
+    69,
+    70,
+    72,
+    74,
+    78,
+    88,
+    108,
+    148,
+    218
+   ],
+   "box": [
+    449,
+    244,
+    384,
+    288
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.0485,
+    "settled_by": 108,
+    "settled_after_ticks": 40,
+    "held_ticks": 0,
+    "hitstop_frames": 8
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     513.599975585938,
+     527
+    ],
+    "screen": [
+     633.19921875,
+     445.1064453125
+    ]
+   },
+   "shifts": {
+    "60": [
+     -1,
+     15
+    ],
+    "66": [
+     -1,
+     16
+    ],
+    "68": [
+     0,
+     0
+    ],
+    "69": [
+     -9,
+     17
+    ],
+    "70": [
+     6,
+     0
+    ],
+    "72": [
+     -8,
+     10
+    ],
+    "74": [
+     7,
+     19
+    ],
+    "78": [
+     0,
+     13
+    ],
+    "88": [
+     -1,
+     16
+    ],
+    "108": [
+     -1,
+     15
+    ],
+    "148": [
+     -1,
+     15
+    ],
+    "218": [
+     -1,
+     15
+    ]
+   }
+  },
+  {
+   "weapon": "hand_cannon",
+   "victim": "",
+   "dir_deg": 90,
+   "ppm": 32,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\hand_cannon\\after_guard_d90_32",
+   "outcome": "pass",
+   "reasons": [],
+   "kill": 63,
+   "beats": [
+    60,
+    61,
+    63,
+    64,
+    65,
+    67,
+    69,
+    73,
+    83,
+    103,
+    143,
+    213
+   ],
+   "box": [
+    449,
+    249,
+    384,
+    288
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.0196,
+    "settled_by": 143,
+    "settled_after_ticks": 80,
+    "held_ticks": 0,
+    "hitstop_frames": 6
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     513.599975585938,
+     527
+    ],
+    "screen": [
+     633.19921875,
+     446.0458984375
+    ]
+   },
+   "shifts": {
+    "60": [
+     -1,
+     9
+    ],
+    "61": [
+     -1,
+     11
+    ],
+    "63": [
+     0,
+     0
+    ],
+    "64": [
+     -2,
+     6
+    ],
+    "65": [
+     3,
+     5
+    ],
+    "67": [
+     2,
+     8
+    ],
+    "69": [
+     0,
+     9
+    ],
+    "73": [
+     -1,
+     9
+    ],
+    "83": [
+     -1,
+     9
+    ],
+    "103": [
+     -1,
+     9
+    ],
+    "143": [
+     -1,
+     9
+    ],
+    "213": [
+     -1,
+     9
+    ]
+   }
+  },
+  {
+   "weapon": "flamethrower",
+   "victim": "",
+   "dir_deg": 90,
+   "ppm": 32,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\flamethrower\\after_guard_d90_32",
+   "outcome": "pass",
+   "reasons": [],
+   "kill": 237,
+   "beats": [
+    60,
+    237,
+    238,
+    239,
+    241,
+    243,
+    247,
+    257,
+    277,
+    317,
+    387
+   ],
+   "box": [
+    471,
+    277,
+    384,
+    288
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.022,
+    "settled_by": 387,
+    "settled_after_ticks": 150,
+    "held_ticks": 0,
+    "hitstop_frames": 6
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     515.086059570313,
+     528.108215332031
+    ],
+    "screen": [
+     680.173828125,
+     482.822265625
+    ]
+   },
+   "shifts": {
+    "60": [
+     0,
+     0
+    ],
+    "237": [
+     0,
+     0
+    ],
+    "238": [
+     0,
+     0
+    ],
+    "239": [
+     0,
+     0
+    ],
+    "241": [
+     0,
+     0
+    ],
+    "243": [
+     0,
+     0
+    ],
+    "247": [
+     0,
+     0
+    ],
+    "257": [
+     0,
+     0
+    ],
+    "277": [
+     0,
+     0
+    ],
+    "317": [
+     0,
+     0
+    ],
+    "387": [
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "weapon": "molotov",
+   "victim": "",
+   "dir_deg": 90,
+   "ppm": 32,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\molotov\\after_guard_d90_32",
+   "outcome": "pass",
+   "reasons": [],
+   "kill": 182,
+   "beats": [
+    60,
+    182,
+    183,
+    184,
+    186,
+    188,
+    192,
+    202,
+    222,
+    262,
+    332
+   ],
+   "box": [
+    419,
+    250,
+    384,
+    288
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.1204,
+    "settled_by": 332,
+    "settled_after_ticks": 150,
+    "held_ticks": 0,
+    "hitstop_frames": 6
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     511.821838378906,
+     526.414611816406
+    ],
+    "screen": [
+     579.16015625,
+     427.494140625
+    ]
+   },
+   "shifts": {
+    "60": [
+     0,
+     0
+    ],
+    "182": [
+     0,
+     0
+    ],
+    "183": [
+     0,
+     0
+    ],
+    "184": [
+     0,
+     0
+    ],
+    "186": [
+     0,
+     0
+    ],
+    "188": [
+     0,
+     0
+    ],
+    "192": [
+     0,
+     0
+    ],
+    "202": [
+     0,
+     0
+    ],
+    "222": [
+     0,
+     0
+    ],
+    "262": [
+     0,
+     0
+    ],
+    "332": [
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "weapon": "electro_gun",
+   "victim": "",
+   "dir_deg": 90,
+   "ppm": 32,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\electro_gun\\after_guard_d90_32",
+   "outcome": "pass",
+   "reasons": [],
+   "kill": 129,
+   "beats": [
+    60,
+    129,
+    130,
+    131,
+    133,
+    135,
+    139,
+    149,
+    169,
+    209,
+    279
+   ],
+   "box": [
+    449,
+    244,
+    384,
+    288
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.0179,
+    "settled_by": 209,
+    "settled_after_ticks": 80,
+    "held_ticks": 0,
+    "hitstop_frames": 8
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     513.599975585938,
+     527
+    ],
+    "screen": [
+     654.55078125,
+     446.330078125
+    ]
+   },
+   "shifts": {
+    "60": [
+     -1,
+     15
+    ],
+    "129": [
+     0,
+     0
+    ],
+    "130": [
+     -9,
+     17
+    ],
+    "131": [
+     6,
+     0
+    ],
+    "133": [
+     -8,
+     10
+    ],
+    "135": [
+     7,
+     19
+    ],
+    "139": [
+     0,
+     13
+    ],
+    "149": [
+     -1,
+     16
+    ],
+    "169": [
+     -1,
+     15
+    ],
+    "209": [
+     -1,
+     15
+    ],
+    "279": [
+     -1,
+     15
+    ]
+   }
+  },
+  {
+   "weapon": "katana",
+   "victim": "",
+   "dir_deg": 90,
+   "ppm": 32,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\katana\\after_guard_d90_32",
+   "outcome": "pass",
+   "reasons": [],
+   "kill": 68,
+   "beats": [
+    60,
+    66,
+    68,
+    69,
+    70,
+    72,
+    74,
+    78,
+    88,
+    108,
+    148,
+    218
+   ],
+   "box": [
+    439,
+    326,
+    384,
+    288
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.0316,
+    "settled_by": 148,
+    "settled_after_ticks": 80,
+    "held_ticks": 0,
+    "hitstop_frames": 6
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     513.599975585938,
+     527
+    ],
+    "screen": [
+     627.201171875,
+     488.3291015625
+    ]
+   },
+   "shifts": {
+    "60": [
+     6,
+     -48
+    ],
+    "66": [
+     2,
+     -13
+    ],
+    "68": [
+     0,
+     0
+    ],
+    "69": [
+     -2,
+     9
+    ],
+    "70": [
+     -2,
+     10
+    ],
+    "72": [
+     -2,
+     11
+    ],
+    "74": [
+     -2,
+     12
+    ],
+    "78": [
+     -1,
+     7
+    ],
+    "88": [
+     2,
+     -14
+    ],
+    "108": [
+     6,
+     -48
+    ],
+    "148": [
+     6,
+     -48
+    ],
+    "218": [
+     6,
+     -48
+    ]
+   }
+  },
+  {
+   "weapon": "plasma_rifle",
+   "victim": "",
+   "dir_deg": 90,
+   "ppm": 32,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\plasma_rifle\\after_guard_d90_32",
+   "outcome": "pass",
+   "reasons": [],
+   "kill": 65,
+   "beats": [
+    60,
+    63,
+    65,
+    66,
+    67,
+    69,
+    71,
+    75,
+    85,
+    105,
+    145,
+    215
+   ],
+   "box": [
+    449,
+    255,
+    384,
+    288
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.0465,
+    "settled_by": 215,
+    "settled_after_ticks": 150,
+    "held_ticks": 0,
+    "hitstop_frames": 6
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     513.599975585938,
+     527
+    ],
+    "screen": [
+     633.19921875,
+     445.1064453125
+    ]
+   },
+   "shifts": {
+    "60": [
+     -1,
+     4
+    ],
+    "63": [
+     -1,
+     4
+    ],
+    "65": [
+     0,
+     0
+    ],
+    "66": [
+     0,
+     2
+    ],
+    "67": [
+     0,
+     3
+    ],
+    "69": [
+     -1,
+     4
+    ],
+    "71": [
+     -1,
+     4
+    ],
+    "75": [
+     -1,
+     4
+    ],
+    "85": [
+     -1,
+     4
+    ],
+    "105": [
+     -1,
+     4
+    ],
+    "145": [
+     -1,
+     4
+    ],
+    "215": [
+     -1,
+     4
+    ]
+   }
+  },
+  {
+   "weapon": "plasma_sword",
+   "victim": "",
+   "dir_deg": 90,
+   "ppm": 32,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\plasma_sword\\after_guard_d90_32",
+   "outcome": "pass",
+   "reasons": [],
+   "kill": 68,
+   "beats": [
+    60,
+    66,
+    68,
+    69,
+    70,
+    72,
+    74,
+    78,
+    88,
+    108,
+    148,
+    218
+   ],
+   "box": [
+    439,
+    326,
+    384,
+    288
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.021,
+    "settled_by": 148,
+    "settled_after_ticks": 80,
+    "held_ticks": 0,
+    "hitstop_frames": 6
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     513.599975585938,
+     527
+    ],
+    "screen": [
+     627.201171875,
+     488.3291015625
+    ]
+   },
+   "shifts": {
+    "60": [
+     6,
+     -48
+    ],
+    "66": [
+     2,
+     -13
+    ],
+    "68": [
+     0,
+     0
+    ],
+    "69": [
+     -2,
+     9
+    ],
+    "70": [
+     -2,
+     10
+    ],
+    "72": [
+     -2,
+     11
+    ],
+    "74": [
+     -2,
+     12
+    ],
+    "78": [
+     -1,
+     7
+    ],
+    "88": [
+     2,
+     -14
+    ],
+    "108": [
+     6,
+     -48
+    ],
+    "148": [
+     6,
+     -48
+    ],
+    "218": [
+     6,
+     -48
+    ]
+   }
+  },
+  {
+   "weapon": "chainsaw",
+   "victim": "",
+   "dir_deg": 90,
+   "ppm": 32,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\chainsaw\\after_guard_d90_32",
+   "outcome": "pass",
+   "reasons": [],
+   "kill": 68,
+   "beats": [
+    60,
+    66,
+    68,
+    69,
+    70,
+    72,
+    74,
+    78,
+    88,
+    108,
+    148,
+    218
+   ],
+   "box": [
+    438,
+    329,
+    384,
+    288
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.0346,
+    "settled_by": 218,
+    "settled_after_ticks": 150,
+    "held_ticks": 0,
+    "hitstop_frames": 6
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     513.599975585938,
+     527
+    ],
+    "screen": [
+     627.201171875,
+     488.3291015625
+    ]
+   },
+   "shifts": {
+    "60": [
+     7,
+     -51
+    ],
+    "66": [
+     3,
+     -16
+    ],
+    "68": [
+     0,
+     0
+    ],
+    "69": [
+     -1,
+     8
+    ],
+    "70": [
+     -1,
+     9
+    ],
+    "72": [
+     -1,
+     9
+    ],
+    "74": [
+     -1,
+     9
+    ],
+    "78": [
+     -1,
+     9
+    ],
+    "88": [
+     -1,
+     9
+    ],
+    "108": [
+     -1,
+     9
+    ],
+    "148": [
+     5,
+     -37
+    ],
+    "218": [
+     7,
+     -51
+    ]
+   }
+  },
+  {
+   "weapon": "ray_gun",
+   "victim": "",
+   "dir_deg": 90,
+   "ppm": 32,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\ray_gun\\after_guard_d90_32",
+   "outcome": "pass",
+   "reasons": [],
+   "kill": 63,
+   "beats": [
+    60,
+    61,
+    63,
+    64,
+    65,
+    67,
+    69,
+    73,
+    83,
+    103,
+    143,
+    213
+   ],
+   "box": [
+    449,
+    258,
+    384,
+    288
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.0212,
+    "settled_by": 143,
+    "settled_after_ticks": 80,
+    "held_ticks": 0,
+    "hitstop_frames": 6
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     513.599975585938,
+     527
+    ],
+    "screen": [
+     633.19921875,
+     445.1064453125
+    ]
+   },
+   "shifts": {
+    "60": [
+     -1,
+     1
+    ],
+    "61": [
+     -1,
+     1
+    ],
+    "63": [
+     0,
+     0
+    ],
+    "64": [
+     0,
+     0
+    ],
+    "65": [
+     0,
+     0
+    ],
+    "67": [
+     -1,
+     1
+    ],
+    "69": [
+     -1,
+     1
+    ],
+    "73": [
+     -1,
+     1
+    ],
+    "83": [
+     -1,
+     1
+    ],
+    "103": [
+     -1,
+     1
+    ],
+    "143": [
+     -1,
+     1
+    ],
+    "213": [
+     -1,
+     1
+    ]
+   }
+  },
+  {
+   "weapon": "homing_shard",
+   "victim": "",
+   "dir_deg": 90,
+   "ppm": 32,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\homing_shard\\after_guard_d90_32",
+   "outcome": "pass",
+   "reasons": [],
+   "kill": 69,
+   "beats": [
+    60,
+    67,
+    69,
+    70,
+    71,
+    73,
+    75,
+    79,
+    89,
+    109,
+    149,
+    219
+   ],
+   "box": [
+    448,
+    255,
+    384,
+    288
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.0684,
+    "settled_by": 219,
+    "settled_after_ticks": 150,
+    "held_ticks": 0,
+    "hitstop_frames": 6
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     513.599975585938,
+     527
+    ],
+    "screen": [
+     633.19921875,
+     445.1064453125
+    ]
+   },
+   "shifts": {
+    "60": [
+     0,
+     4
+    ],
+    "67": [
+     0,
+     4
+    ],
+    "69": [
+     0,
+     0
+    ],
+    "70": [
+     0,
+     2
+    ],
+    "71": [
+     0,
+     3
+    ],
+    "73": [
+     0,
+     4
+    ],
+    "75": [
+     0,
+     4
+    ],
+    "79": [
+     0,
+     4
+    ],
+    "89": [
+     0,
+     4
+    ],
+    "109": [
+     0,
+     4
+    ],
+    "149": [
+     0,
+     4
+    ],
+    "219": [
+     0,
+     4
+    ]
+   }
+  },
+  {
+   "weapon": "mini_nuke",
+   "victim": "",
+   "dir_deg": 90,
+   "ppm": 32,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s3all\\mini_nuke\\after_guard_d90_32",
+   "outcome": "unverifiable",
+   "reasons": [
+    "rivet is off screen at tick 127 (659, -10)",
+    "rivet is off screen at tick 129 (662, -9)",
+    "rivet is off screen at tick 130 (671, -10)",
+    "rivet is off screen at tick 132 (649, -19)",
+    "rivet is off screen at tick 133 (666, -10)",
+    "rivet is off screen at tick 134 (668, -7)",
+    "rivet is off screen at tick 135 (652, -24)",
+    "rivet is off screen at tick 136 (654, -7)",
+    "rivet is off screen at tick 137 (668, -15)",
+    "rivet is off screen at tick 138 (664, -23)",
+    "rivet is off screen at tick 139 (651, -8)",
+    "rivet is off screen at tick 140 (658, -22)",
+    "rivet is off screen at tick 141 (668, -19)",
+    "rivet is off screen at tick 142 (660, -11)",
+    "rivet is off screen at tick 143 (652, -25)",
+    "rivet is off screen at tick 144 (661, -15)",
+    "rivet is off screen at tick 145 (667, -15)",
+    "rivet is off screen at tick 146 (657, -24)",
+    "rivet is off screen at tick 147 (654, -13)",
+    "rivet is off screen at tick 148 (663, -19)",
+    "rivet is off screen at tick 149 (664, -22)",
+    "rivet is off screen at tick 150 (656, -13)",
+    "rivet is off screen at tick 151 (657, -21)",
+    "rivet is off screen at tick 152 (664, -19)",
+    "rivet is off screen at tick 153 (661, -15)",
+    "rivet is off screen at tick 154 (657, -21)",
+    "rivet is off screen at tick 155 (659, -17)",
+    "rivet is off screen at tick 156 (663, -17)",
+    "rivet is off screen at tick 157 (660, -20)",
+    "rivet is off screen at tick 158 (658, -16)",
+    "rivet is off screen at tick 159 (660, -18)",
+    "rivet is off screen at tick 160 (661, -19)",
+    "rivet is off screen at tick 161 (660, -17)",
+    "rivet is off screen at tick 162 (660, -18)",
+    "rivet is off screen at tick 163 (660, -18)",
+    "rivet is off screen at tick 164 (660, -18)",
+    "rivet is off screen at tick 165 (660, -18)",
+    "rivet is off screen at tick 166 (660, -18)",
+    "rivet is off screen at tick 167 (660, -18)",
+    "rivet is off screen at tick 168 (660, -18)",
+    "rivet is off screen at tick 169 (660, -18)",
+    "rivet is off screen at tick 170 (660, -18)",
+    "rivet is off screen at tick 171 (660, -18)",
+    "rivet is off screen at tick 172 (660, -18)",
+    "rivet is off screen at tick 173 (660, -18)",
+    "rivet is off screen at tick 174 (660, -18)",
+    "rivet is off screen at tick 175 (660, -18)",
+    "rivet is off screen at tick 176 (660, -18)",
+    "rivet is off screen at tick 177 (660, -18)",
+    "rivet is off screen at tick 178 (660, -18)",
+    "rivet is off screen at tick 179 (660, -18)",
+    "rivet is off screen at tick 180 (660, -18)",
+    "rivet is off screen at tick 181 (660, -18)",
+    "rivet is off screen at tick 182 (660, -18)",
+    "rivet is off screen at tick 183 (660, -18)",
+    "rivet is off screen at tick 184 (660, -18)",
+    "rivet is off screen at tick 185 (660, -18)",
+    "rivet is off screen at tick 186 (660, -18)",
+    "rivet is off screen at tick 187 (660, -18)",
+    "rivet is off screen at tick 188 (660, -13)",
+    "rivet is off screen at tick 189 (659, -2)"
+   ],
+   "kill": 127,
+   "beats": [
+    60,
+    127,
+    128,
+    129,
+    131,
+    133,
+    137,
+    147,
+    167,
+    207,
+    277
+   ],
+   "box": [
+    461,
+    0,
+    384,
+    288
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.5201,
+    "settled_by": 277,
+    "settled_after_ticks": 150,
+    "held_ticks": 0,
+    "hitstop_frames": 8
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     513.599975585938,
+     533
+    ],
+    "screen": [
+     8863.798828125,
+     8281.2021484375
+    ]
+   },
+   "shifts": {
+    "60": [
+     -13,
+     273
+    ],
+    "127": [
+     0,
+     0
+    ],
+    "128": [
+     -13,
+     21
+    ],
+    "129": [
+     3,
+     1
+    ],
+    "131": [
+     -5,
+     13
+    ],
+    "133": [
+     7,
+     0
+    ],
+    "137": [
+     9,
+     -6
+    ],
+    "147": [
+     -5,
+     -4
+    ],
+    "167": [
+     1,
+     -8
+    ],
+    "207": [
+     -7,
+     146
+    ],
+    "277": [
+     -12,
+     266
+    ]
+   }
+  }
+ ]
+}

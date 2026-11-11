@@ -10,6 +10,8 @@ Run these from the root of your worktree. Exit codes are shared: `0` pass, `1` f
 | When you want to | Run |
 |---|---|
 | film or still a named shot (arena, street, quest 1, a chapter, a weapon) | `node tools/film/film.mjs <shot>` |
+| film every signature death: weapons x victim kinds x directions, 32 and 64 px/m, a sheet per weapon | `node tools/film/kill_reel.mjs --out=<dir> --weapons=all` |
+| how long each death's aftermath stays on the street (body ~7 s, stains ~16 s): a measured curve per film | `node tools/film/kill_reel.mjs --out=<dir> --weapons=all --quick --after=600` |
 | show before and after at the same tick | `node tools/film/compare.mjs <shot> --a=<commit> --b=<commit>` |
 | the old bytes of a file at a commit (LFS assets smudged, not the pointer `git show` writes) | `node tools/film/blob.mjs <rev>:<path> [--out=<file>]` |
 | one sheet of a film's stills, labelled | `node tools/film/sheet.mjs <film dir> --out=<file.png>` |
@@ -17,7 +19,8 @@ Run these from the root of your worktree. Exit codes are shared: `0` pass, `1` f
 | catch the lint you keep tripping, before the commit | `node tools/gate/quick.mjs` |
 | commit a journal without waiting for lint | (automatic: the hook skips lint when only inert paths are staged) |
 | check one script or scene parses, in seconds | `node tools/godot/check.mjs <res://path>` |
-| run every gate while you keep editing | `node tools/gate/run.mjs` |
+| run every gate while you keep editing (results in the tree you run it from) | `node tools/gate/run.mjs` |
+| gate mid-session with one reel view (~5 min of reels, not ~23; the final commit needs plain `--reels`) | `node tools/gate/run.mjs --rev=<sha> --reels=combo` |
 | run a dev scene with its flags checked (its own KNOWN_FLAGS, else every flag literal in the project) | `node tools/dev/run.mjs <entry>` |
 | make a new worktree able to run the game | `node tools/dev/wt_init.mjs <worktree>` |
 | have Codex write tests for an untested module | `node tools/codex/factory.mjs pick`, then `run --stems=<stem>` |
@@ -106,6 +109,10 @@ Give it before the `--`: the game reads the FIRST `--feel=`, so a trailing one i
 node tools/film/film.mjs chapter:electro_baton_left --feel=on --stills=60-70 --out=build/film/baton
 ```
 
+`--subject=kill` (film and compare, kills-new n16 REQUEST): the first kill's victim. A signature death hides his
+rig, so `dead` read him off screen (or picked an older body); `kill` places him from the sim (Rivet's screen
+point + the metres between them at `--ppm`) once his card is gone.
+
 To compare the frame something happened on, learn the tick once with `--on`, then compare it:
 `node tools/film/compare.mjs ... --at=333`. The tick is the same on both sides as long as the change
 under test is visual, because the sim is deterministic; if the shot moved, the verdict's numbers show
@@ -117,6 +124,111 @@ a different subject position.
 asked for, a subject (`--subject=rivet|hostile|dead|id:<n>`) off screen at a still, or an `--on` event
 that never happened (`--on fire:3 never happened: 1 fire event(s) in 900 ticks`).
 Quest 1 has no numbers and no locked camera; a still that exists is all it can claim.
+
+## tools/film/kill_reel.mjs: every signature death, one command (n16)
+
+```
+export APPDATA=<your lane's appdata>
+node tools/film/kill_reel.mjs --out=build/kreel/now --weapons=katana,rocket_launcher --victims=thug,cop/head_swat --dirs=90,270
+node tools/film/kill_reel.mjs --out=build/kreel/ab --weapons=katana --dirs=90 --before=main --rev=HEAD
+```
+
+Each film is film.mjs's new `kill:<weapon>` shot: the KillLab on the city block (`--arena=city --sig-lab
+--sig-gun=<id> --sig-solo=start:-10,0`: Rivet 10 m west of his start, where the station dummies no longer take
+every full rig, so the guard is drawn in every direction), one guard 3 m from Rivet, turned `--sig-dir=<deg>` (0 east,
+90 south: screen down), or with `--dirs=wall` stood where a wall (the stage's push_out: a building or a parked car) is
+1 m behind him along the shot (`--sig-wall[=<m>]`, KillLabTurn; Gloria's pin case; the log says `--sig-wall: dir D,
+guard X m`), and drawn as `--victim=<kind>` (StreetDeadPlan.CLASS_OF rows). Same seed, same tick at every zoom. Out:
+`<weapon>_<ppm>.png`, one row per film (`before` above `after` when `--before` is given), columns = the lab's
+trigger tick 60, kill-2, the kill, +1 +2 +4 +6 +10 +20 +40 +80 and +`--after` (default 150), each cell a 12 x 9 m
+window between Rivet and the victim (each cell is labelled with its tick; `reel.json` `sheets[].rows` says which
+film each row is, and `table` holds each weapon's signature_kills row: style, hitstop_ticks, grind_ticks,
+flash_ticks). `--clips` adds `clip.mp4` per film (60 fps, cropped, trigger window to kill+after). `--weapons=all`
+= every weapon Rivet can carry into the lab that has a signature row (burn films with the flamethrower and the
+molotov; the ghost rows are not lab weapons; since n16 s5 Rivet's charged claw `claw_shock`, `PlayerShock.WEAPON`
+read from the filmed tree, which no weapon table lists: `kill:claw_shock` films it). Extra game flags go after `--` (`-- --gore=reduced`); the reel
+refuses `--sig-dir`, `--victim`, `--seed`, `--ppm` there, since it sets them.
+
+Each film line also gives the measured side of the beats, from its beat frames inside the kill window:
+`settled by +N` (the first beat after which the window stops changing; walking people count, so an upper bound)
+and `aftermath X %` (the share of the window at kill+after that still differs from the trigger frame: what stays
+on the street). Example (n16): rocket dir 90 6.3 % at both zooms, settled only by +150; katana 1.7 %, by +80.
+The aftermath LIFETIME (n16 s6): `--after` takes up to 1200 ticks without `--clips` (a clip stays inside the lab
+shot's 230), the sheet adds +150 / +300 / +600 columns as they fit, and each line and `reel.md` give the curve,
+`+20 4.7 / +80 1.4 / +300 1.4 / +600 1.0 %, gone by +600 (outside his standing spot)` or `still there at +600`. The
+curve is the whole window's share; `gone by +N` is the first beat from which, leaving out where the victim STOOD at the
+trigger frame (`standMask`: his tick-60 card from the probe, padded by a quarter of its width; `aftermath_mask` in
+reel.json), the window stays under 0.5 % to the last beat. Not counted: anything left inside that spot (a gun dropped
+where he stood). n16 s6 `--weapons=all --quick --after=600` on b9dba1da8: electro gun, claw, plasma rifle, plasma
+sword and ray gun gone by +600; every death with blood or scorch still there (stains last 16 s); rocket `--after=1000`
+gone by +1000. The data
+line names the street's clock from `corpse_decay.json`: bodies and their pieces gone by linger + fade (6 + 1.2 s),
+stains by 12 + 4 s. Example: `--weapons=claw_shock,rocket_launcher --after=600`: the thrown cop lies at +300 and is
+gone at +600, the rocket's gibs likewise, its scorch and spray stay. A film run with the feel off (film's
+`--feel=auto` under the lab's lock) reads `hit-stop off (... --feel=on measures it)`, never `0 frames`.
+`hit-stop N frames` (measured): frames the game drew while the sim HELD a tick (SimClock.hold, FeelCam's hit-stop),
+from the tick before the kill to +12, read from the gaps in the probe rows' process `frame`. No still or clip shows these
+frames (a still is saved per tick): the sheet prints it on the kill cell (`HS6`) and a `--clips --feel=on` clip plays it. `window still N ticks`:
+the ticks after the kill that the drawn kill window does not change (a held pose). The reel's camera is locked, and
+a locked film runs `--feel=off`, so a DEFAULT REEL HAS NO HIT-STOP AND NO CAMERA PUNCH: pass `--feel=on` to judge
+the pacing. Proof (n16 s2, katana dir 90, 32 px/m): `--feel=on` hit-stop 6 frames (hit_feel.json `kill_hitstop` = camera.json `kill`, 6 ticks),
+default 0.
+
+The signature row's `hitstop_ticks` is NOT the screen freeze: SignatureKills.hold makes the death's pieces (gibs,
+halves, marks) wait that many sim ticks. The freeze is FeelCam's: a lethal hit takes hit_feel.json `kill_hitstop`
+(camera.json `kill`, 6 ticks) or its class's bigger stop (the rocket measured 8 frames with a row hit-stop of 0). To
+change how long the screen holds on a kill, change hit_feel.json, not the signature row.
+
+`--quick` (n16 s3, the builders' inner loop): 32 px/m only and dir 90 unless `--ppm`/`--dirs` name others, so one
+film per weapon (`kill_reel.mjs --out=build/kreel/q --weapons=katana,rocket_launcher --quick --feel=on`: 2 films,
+about 5 min beside the other lanes). Sheet cells are labelled with the tick and its offset from the kill; the first
+cell of a row names the film (`60 -8 AFTER GUARD D90 32`), and the kill cell carries the measured hit-stop
+(`68 KILL HS6`) since no still can show it (tools/film/font.mjs: a 5x7 font, digits, capitals, `+ - . : / _`).
+`--clips --feel=on` cuts each clip from film's `--write-movie` (every frame drawn, a held tick's too) at the probe
+rows' process frames (`movieSpan`), so the clip plays the hit-stop and the camera punch at the game's timing, from
+kill-30 to kill+after; without `--feel=on` the clip is the per-tick stills as before (no freeze to show).
+
+With more than one weapon the reel also writes `reel_<ppm>.png`, the OVERVIEW: one row per film, every weapon,
+the first cell naming it (`-8 ROCKET_LAUNCHER GUARD D90 32`), and `reel.md`, a table per film (outcome, kill tick,
+measured freeze frames, the row's pieces wait, settled, aftermath, whole) to paste into a REPORT.
+`--resheet=<reel dir>` rebuilds a reel's sheets, overview and reel.md from its reel.json and kept beat frames, with
+no Godot (a reel filmed by an older kit, or after a label change). The reel judges the DEATH on screen
+(`--subject=kill`), not Rivet: with `--feel=on` the mini nuke's camera drift (BlastLead, ~270 px toward the blast at
+32 px/m) takes Rivet, who stands still, off the top of the frame. Each cell is anchored to the street: the window
+moves by the probe's camera shift from the kill tick (`anchorShifts`, `boxAt`, kept in reel.json `shifts`), so a
+kick, a shake or the drift no longer slides the street out of it (the clip keeps the screen, punch included). When Rivet and the victim are
+too far apart to share the 12 x 9 m window with 2 m to spare (the nuke kills ~25 m off), the window centres on the
+victim. Proof (n16 s3): `build/kreel/s3all` (`--weapons=all --quick --feel=on`, 12 films, ~25 min beside the
+other lanes): 11 PASS, the nuke UNVERIFIABLE (Rivet off screen; before the subject fix) -> s3nuke.
+
+A reel with no `--rev` films the LIVE tree, and each film's Godot loads project/ as it stands when that film
+starts (a reel is 2.5 min a film): an edit, a commit or a new class not yet imported part-way lands in the films
+after it (kills-new FRICTION 15:15: `after gatling dir 0 64` died on a SCRIPT ERROR mid-edit). Since n16 s4 the reel
+stamps the live tree (HEAD + every uncommitted project/ path with its size and mtime, tools/film/live_tree.mjs)
+before it starts and before each film: uncommitted paths at the start print one line naming them; a film whose tree
+moved prints `the live tree moved since the reel began (HEAD a -> b; N project/ path(s) changed (...))` and its
+reel.json film gets `tree_moved`; a failing film on such a tree says commit and re-run `--rev=HEAD`. To keep
+editing while a reel runs, commit and pass `--rev=HEAD` (a snapshot, it cannot move).
+
+`--gore-check` films every death with `--gore=reduced` and judges each from the probe: the victim must still be
+drawn as one lying card 20 ticks after the kill (a signature death hides the body: FAIL, naming it); a victim
+without a card the tick before is UNVERIFIABLE. Each film in `reel.json` gets `whole: true|false`.
+
+Cost (n16 s4): writing PNGs is most of a film (s3all: ~165 stills took 58-68 s of Godot per film, 12-still films
+15-21 s). Without `--clips` the first zoom of each combo now runs a SCOUT first (stills 60 and the kill frame only,
+same flags, seed and camera lock) to learn the kill tick, then films only the beats and the hold run kill..kill+12
+(`filmTicks`, ~20 PNGs); later zooms reuse that tick (the zoom is view only). A film whose kill comes on another tick
+than its scout or first zoom is **unverifiable** (the reason names which). `--clips` keeps the full window (about 170
+PNGs: the clip needs every tick) and never scouts. Each film's timeout, unless `--timeout=<s>` is given, is
+120 s + 2.5 s per still it saves, at least 300 s (n16 s5, kills-new FRICTION 15:30: a `--before --clips` Gatling
+film writing a still every ~1.2 s beside a gate died at the flat 300 s on t239 of its ~245; a full window now gets
+540 s, a scout or beat film keeps 300). Unpicked frames are deleted
+unless `--keep-frames`. A tree older than n16 has no `--sig-dir` or lab `--victim`: film refuses the flag
+(nothing launched); cherry-pick the n16-tools kill-reel commit or film `--dirs=0` without `--victims`.
+Since bbee28a9c Rivet stands 10 m west of the station dummies, so the lab guard holds a full rig in every direction
+and `--victims` is judged on the drawn card row like the `weapon:` shot (s2gore: katana and rocket as `thug`, PASS).
+`--gore-check` proof (build/kreel/s2gore, katana + rocket dir 90, `--gore=reduced`): both `whole: true`; the control
+without it (s2wall katana) has the victim undrawn at kill+20, which the check would FAIL.
 
 ## tools/film/sheet.mjs: one labelled contact sheet of a film's stills
 
@@ -288,11 +400,18 @@ node tools/gate/run.mjs --rev=HEAD
 
 A detached checkout of that commit goes in the temp dir with the DLLs, the baked city and the import
 cache copied in, and that commit's own `tools/evidence/run.mjs` runs there. You can keep editing and
-no log lands in your tree. Results are in `build/gate/<sha>/` (`gate.json` plus one file per kind).
+no log lands in your tree. Results are in `build/gate/<sha>/` (`gate.json` plus one file per kind) of the game tree you run it FROM (cwd or an ancestor; n16 s6: `node ../n16-tools/tools/gate/run.mjs` from a lane writes into the lane), and the snapshot takes that tree's DLLs; gating a commit whose `native/` differs from that tree's HEAD prints `gate: WARNING native/ at <sha> differs ...` (parity and the sim scenarios then run your DLLs).
 `--reels` adds the reel gate, `--bench` the bench, `--no-parity` and `--no-selftest` skip those;
 `--clean` removes the snapshot afterwards.
 
-**Refuses:** a revision git does not know, an unknown flag.
+The gate holds the lane's one Godot for 30-40 min with reels (n16: evidence ~9 min, reels top 319 s, tilt70 745 s,
+combo 310 s; both kill lanes' FRICTION). Since n16 s5 `gate.json` keeps `timing` (`evidence_s`, `reels` per view, s)
+and `reels` (`all`, the views run, or `none`), and the next gate prints the newest one first: `gate: the last gate
+here (<sha>) took evidence 9.0 min + reels 22.9 min (top 319 s, tilt70 745 s, combo 310 s)`. `--reels=combo` (any of
+`top,tilt70,combo`) runs only those views, a mid-session check of the view you changed, and says `PASS reels (combo
+only: not the full reel gate)`: the final commit still needs plain `--reels`.
+
+**Refuses:** a revision git does not know, an unknown flag, a `--reels` view that is not top, tilt70 or combo.
 **Unverifiable:** a kind wrote no result, or wrote a result naming another commit.
 A wall-clock scenario can go red because other lanes are filming; read the failing line first.
 

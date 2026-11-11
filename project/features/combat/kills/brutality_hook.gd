@@ -55,6 +55,7 @@ func open_lab(stage: ArenaStage, weapon: StringName = &"") -> void:
 	_lab.spread = row != null and row.style == &"dissolve"
 	_lab.pack = row != null and row.style == &"vaporise"
 	_lab.claw = PlayerShock.shipped() if weapon == PlayerShock.WEAPON else null
+	GunplayHook.victim(ArenaArgs.parse().text("--victim"))  # the lab guard drawn as that row
 	var solo: String = ArenaArgs.parse().text("--sig-solo")
 	if solo.begins_with("start"):  # Rivet's start (+ start:dx,dy), the city block's frame
 		var d: PackedStringArray = (solo.trim_prefix("start").trim_prefix(":") + ",").split(",")
@@ -63,6 +64,7 @@ func open_lab(stage: ArenaStage, weapon: StringName = &"") -> void:
 		var xy: PackedStringArray = solo.split(",")
 		_lab.solo = Vector2(xy[0].to_float(), xy[1].to_float())
 	_lab.setup(stage)
+	KillLabTurn.from_args(_lab, _push_out)  # the kill reel's turns (--sig-dir, --sig-wall)
 
 
 func step(stage: ArenaStage, tick: int) -> void:

@@ -279,18 +279,22 @@ test('timeout must kill a grandchild behind a non-Node shell before any post-tim
   const pidFile = f.pidFile();
   const lateFile = join(f.dir, 'late');
   // 2 s meant, plus the parent's and the grandchild's cold node starts (n15 item 6); the grandchild's
-  // late write comes the limit plus 1 s (the tree kill's own time) after its own start, so after the kill.
-  const limit = budgetMs(2000, 2);
+  // late write comes the limit plus the tree kill's own time after its own start, so after the kill. The
+  // kill spawns taskkill, a cold start of its own: 1 s on a quiet machine was too little beside a running
+  // gate (n16 kills-polish FRICTION 12:03), so that window is budgeted like the starts.
+  const start = nodeStartMs();
+  const limit = budgetMs(2000, 2, start);
+  const kill = budgetMs(1000, 1, start);
   const started = performance.now();
   const r = defaultRun(process.cwd(), f.dir, limit / 60000)('shell-tree', process.execPath,
-    ['-e', treeSource(pidFile, lateFile, limit + 1000)]);
-  assert.ok(performance.now() - started < limit + 5000, 'guard must finish before the 2 minute outer backstop');
+    ['-e', treeSource(pidFile, lateFile, limit + kill)]);
+  assert.ok(performance.now() - started < limit + 4000 + kill, 'guard must finish before the 2 minute outer backstop');
   assert.equal(r.status, -1);
   assert.ok(existsSync(pidFile), `grandchild must actually have started: ${r.out}`);
   const pid = Number(readFileSync(pidFile, 'utf8'));
-  await waitFor(() => !alive(pid), `grandchild ${pid} must be dead after timeout`);
+  await waitFor(() => !alive(pid), `grandchild ${pid} must be dead after timeout`, 3000 + kill);
   await delay(1400);
-  assert.equal(existsSync(lateFile), false, 'grandchild executed code after the guard timeout');
+  assert.equal(existsSync(lateFile), false, `grandchild executed code after the guard timeout (kill window ${Math.round(kill)} ms)`);
   assert.equal(readFileSync(r.log, 'utf8'), r.out, 'log changed after guard returned');
   assert.match(r.out, /parent-started/);
   assert.match(r.out, /morning: shell-tree: timed out after .* min \(the process tree was killed\)/);

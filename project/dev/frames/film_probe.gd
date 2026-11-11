@@ -14,11 +14,13 @@ extends Node
 ## Rows: tick, frame (the movie frame), cam (camera world px), then one row per fighter with
 ## pos (m), screen (px), on_screen, draw (px, the opaque size of the drawn card), feet_y (px, the
 ## drawn card's lowest opaque row on screen, -1 = no card), head_y (its top opaque row), facing_off
-## (deg, drawn against sim).
+## (deg, drawn against sim), row (the drawn card row, "" = none: film.mjs checks --victim on it).
 
 const SCHEMA: String = "gtai.film-probe/1"
 const PRIORITY: int = 60
 const NO_DRAW: float = -1.0
+## A film aims at the view's centre + this, never the desk's mouse (n16 s3: it moved Rivet's aim).
+const CURSOR_OFF: Vector2 = Vector2(0.0, -280.0)
 
 var game: ArenaGame = null
 var out_dir: String = ""
@@ -50,13 +52,10 @@ static func attach(parent: ArenaGame, args: ArenaArgs) -> void:
 		p.window = Vector2i(span.get_slice("-", 0).to_int(), span.get_slice("-", 1).to_int())
 	p.trigger = FilmTrigger.parse(args.text("--film-on"))
 	var cam: String = args.text("--cam-lock")
-	if cam == "trigger":
-		p.lock_on_trigger = true
-	elif cam == "spawn":
-		p.lock_at = 0
-	elif cam.begins_with("at:"):
-		p.lock_at = cam.trim_prefix("at:").to_int()
-	elif cam.contains(","):
+	p.lock_on_trigger = cam == "trigger"
+	var at: int = cam.trim_prefix("at:").to_int() if cam.begins_with("at:") else -1
+	p.lock_at = 0 if cam == "spawn" else at
+	if cam.contains(","):
 		p.lock = Vector2(cam.get_slice(",", 0).to_float(), cam.get_slice(",", 1).to_float())
 	parent.add_child(p)
 
@@ -71,6 +70,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if game == null or game.session == null:
 		return
+	game.session.live.cursor_px = func() -> Vector2: return _view / 2.0 + CURSOR_OFF
 	var tick: int = game.session.tick()
 	var fresh: bool = tick != _last_tick
 	if fresh:
@@ -129,6 +129,7 @@ func _row(tick: int) -> Dictionary:
 
 func _fighter(f: Fighter, role: String) -> Dictionary:
 	var sprite: Sprite2D = FilmCard.drawn(game, f)
+	var rig: CutRig = FilmCard.rig(game, f)
 	var size: Vector2 = Vector2(NO_DRAW, NO_DRAW)
 	var feet: float = NO_DRAW
 	var head: float = NO_DRAW
@@ -151,6 +152,7 @@ func _fighter(f: Fighter, role: String) -> Dictionary:
 		"feet_y": feet,
 		"head_y": head,
 		"facing_off": _facing_off(f),
+		"row": StreetWalkerCards.row_of(rig) if rig != null and rig.head_card != null else "",
 	}
 
 

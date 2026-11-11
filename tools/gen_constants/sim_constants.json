@@ -808,10 +808,10 @@
           "value": 16.0
         },
         {
-          "doc": "U-turn tiles, bit per T_*: 1 void (t-4), 241 any non-road",
+          "doc": "U-turn tile bits: 1 void, 241 non-road, 65 void+building (c-2)",
           "name": "CAR_DEAD_END_TILES",
           "type": "int",
-          "value": 1
+          "value": 65
         }
       ],
       "doc": "t-4 car routing distances (n15): sim_car_route.gd and car_route.cpp",

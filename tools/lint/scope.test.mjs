@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import test from 'node:test';
 import { ROOT } from '../lib/repo.mjs';
-import { narrow, readScope, toolTestInputs } from './scope.mjs';
+import { isLintNeutral, narrow, readScope, toolTestInputs } from './scope.mjs';
 import { scopeOf } from './lint.mjs';
 
 const ALL = ['project/a.gd', 'project/b/c.gd', 'tools/canary.gd'];
@@ -57,4 +57,34 @@ test('every real-tree file the traced tool tests read runs the tool tests (fs_tr
     'project/dev/showcase/reel_chapters.gd'];
   for (const p of traced) assert.equal(narrow([p], ALL).toolTests, true, p);
   assert.equal(narrow(['project/features/characters/art/x.png', 'project/features/a.gd'], ALL).toolTests, false);
+});
+
+test('provenance, tools/art python and the KILLS/DEFECTS notes ride along with a scoped commit (n16 FRICTION)', () => {
+  const s = narrow(['project/b/c.gd', 'project/art/x.png', 'steam/ai-provenance/2026-11.jsonl', 'tools/art/gib_pieces.py',
+    'KILLS.md', 'DEFECTS.md', 'JOURNAL.md'], ALL);
+  assert.deepEqual(s.gd, ['project/b/c.gd']);
+  assert.equal(s.toolTests, false);
+  assert.match(s.line, /2 staged path\(s\), all under project\/ \+ 4 lint-neutral/);
+  const only = narrow(['steam/ai-provenance/2026-11.jsonl', 'tools/art/x.py'], ALL);
+  assert.deepEqual(only.gd, [], 'a provenance + art-script commit lints no .gd and runs every whole-tree check');
+  for (const p of ['tools/art/canon_json.mjs', 'tools/art/fx_colour.json', 'tools/art/sub/x.py', 'steam/manifest.json',
+    'steam/achievements/achievements.json', 'tools/x.py', 'AGENTS.md', 'KILLS.md.bak']) {
+    assert.equal(isLintNeutral(p), false, p);
+    assert.equal(narrow(['project/a.gd', p], ALL), null, p);
+  }
+});
+
+test('guard: no tool code reads a lint-neutral path (else it must leave the neutral list)', () => {
+  const hits = [];
+  const walkMjs = (dir) => {
+    for (const e of readdirSync(join(ROOT, dir), { withFileTypes: true })) {
+      const rel = `${dir}/${e.name}`;
+      if (e.isDirectory()) { if (!['node_modules', 'fixtures'].includes(e.name)) walkMjs(rel); continue; }
+      if (!e.name.endsWith('.mjs') || rel.startsWith('tools/art/') || rel.startsWith('tools/lint/scope')) continue;
+      const src = readFileSync(join(ROOT, rel), 'utf8');
+      for (const needle of ['ai-provenance', 'KILLS.md', 'DEFECTS.md', 'tools/art', "'art'"]) if (src.includes(needle)) hits.push(`${rel}: ${needle}`);
+    }
+  };
+  walkMjs('tools');
+  assert.deepEqual(hits, []);
 });

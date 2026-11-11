@@ -4,7 +4,8 @@
 // editing. Used by the film compare and the gate snapshot. The ONLY removal is `git worktree remove`
 // on an exact path that sits in the temp dir and carries this module's marker.
 import { execFileSync } from 'node:child_process';
-import { cpSync, existsSync, mkdirSync, readdirSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, relative, resolve } from 'node:path';
 
@@ -27,7 +28,16 @@ export function assertRemovable(path, base = tmpdir()) {
   if (!existsSync(markerOf(path))) throw new Error(`snapshot refuses ${path}: no marker`);
 }
 
-const RUNTIME = ['project/native/bin', 'project/data/generated/city', 'project/.godot'];
+const NATIVE = 'project/native/bin';
+const RUNTIME = [NATIVE, 'project/data/generated/city', 'project/.godot'];
+
+/** True when every file in `from` has the same bytes in `to`. The snapshot dir is keyed by commit
+ *  and shared by every lane, so a cached snapshot may hold DLLs another lane's donor gave it: those are
+ *  copied again from this caller's donor (n16; a DLL a running Godot holds makes the copy throw). */
+export function sameFiles(from, to) {
+  const digest = (f) => createHash('sha1').update(readFileSync(f)).digest('hex');
+  return readdirSync(from).every((n) => existsSync(join(to, n)) && digest(join(from, n)) === digest(join(to, n)));
+}
 
 /** The worktrees git lists for `root`, `root` first: where a git-ignored dir may be found. */
 export function donorsOf(root) {
@@ -42,8 +52,8 @@ export function copyRuntime(donors, path) {
   const list = Array.isArray(donors) ? donors : [donors];
   for (const rel of RUNTIME) {
     const to = join(path, rel);
-    if (existsSync(to)) continue;
     const from = list.map((d) => join(d, rel)).find((p) => existsSync(p));
+    if (existsSync(to) && !(rel === NATIVE && from && !sameFiles(from, to))) continue;
     if (!from) continue;
     cpSync(from, to, { recursive: true });
     copied.push(rel);

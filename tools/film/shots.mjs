@@ -19,6 +19,12 @@ export const SHOTS = {
     flags: (id) => [...REEL, '--reel=director', `--chapter=${id}`] },
   weapon: { doc: 'one lone kill with a table weapon: weapon:<id>', ticks: 900, needs: 'weapon',
     travels: true, flags: (id) => ['--arena=city', `--weapon=${id}`, '--bot=gunplay', '--lone', '--reach=6'] },
+  // The kill lab (KillLab via BrutalityHook) on the city block: one guard 3 m from Rivet, turned
+  // --sig-dir degrees, killed by the weapon's signature death (n16 tools: tools/film/kill_reel.mjs).
+  // Rivet stands 10 m west of his start: at the start the 19 station dummies and the street cops take
+  // all 16 full rigs (RigSelect), and a lab guard ranked past them was drawn by nothing (n16 s2).
+  kill: { doc: 'one signature kill in the kill lab on the city block: kill:<weapon> (gun, blade or claw_shock)', ticks: 420, needs: 'sigweapon',
+    flags: (id) => ['--arena=city', '--sig-lab', `--sig-gun=${id}`, '--sig-solo=start:-10,0'] },
   // Quest 1 runs through its own recorder: --stills (even ticks) only, no numbers, no locked camera.
   quest1: { doc: 'quest 1 through its scripted pad: --stills required (even ticks)', ticks: 0, script: 'res://dev/frames/quest1_clip.gd',
     flags: () => ['--rigs'] },
@@ -26,8 +32,18 @@ export const SHOTS = {
 
 const read = (tree, rel) => JSON.parse(readFileSync(join(tree, 'project', rel), 'utf8'));
 
+/** Lab weapons no table lists (kills-new REQUEST 16:28): Rivet's charged bare claw, `PlayerShock.WEAPON`
+ *  (`--sig-gun=claw_shock`), read from the filmed tree's player_shock.gd; [] when that tree has none. */
+export function labWeapons(tree) {
+  const file = join(tree, 'project/features/player/player_shock.gd');
+  if (!existsSync(file)) return [];
+  const m = /^const WEAPON: StringName = &"(\w+)"/m.exec(readFileSync(file, 'utf8'));
+  return m ? [m[1]] : [];
+}
+
 const ids = {
   weapon: (tree) => read(tree, 'data/tables/weapons.json').weapons.map((w) => w.id),
+  sigweapon: (tree) => [...ids.weapon(tree), ...Object.keys(read(tree, 'data/tables/melee_weapons.json').weapons), ...labWeapons(tree)],
   view: (tree) => read(tree, 'data/tables/view.json').views.map((v) => v.id),
   chapter: (tree) => {
     const file = join(tree, 'project/dev/showcase/reel_chapters.gd');
@@ -191,7 +207,7 @@ export function victimKinds(tree) {
 
 /** null, or why `--victim=<kind>` cannot be filmed with this shot in this tree. */
 export function checkVictim(kind, shot, tree) {
-  if (shot.name !== 'weapon') return `--victim is for the weapon shot only, not ${shot.name}`;
+  if (shot.name !== 'weapon' && shot.name !== 'kill') return `--victim is for the weapon and kill shots only, not ${shot.name}`;
   const known = victimKinds(tree);
   if (!known.length) return `${tree} has no ${DEAD_PLAN} CLASS_OF table to check --victim=${kind} against`;
   if (known.includes(kind)) {
@@ -206,4 +222,20 @@ export function checkVictim(kind, shot, tree) {
 export function victimSaid(out) {
   const m = /\bgunplay: lone victim (\S+)/.exec(String(out ?? ''));
   return m ? m[1] : null;
+}
+
+/** Why the victim drawn in a film is not `kind` (null = it is): the card row the probe saw on the first
+ *  hostile to die, the tick before it died. The log line only says the game was asked (n16: a lab guard
+ *  asked for `thug` stood as the riot cop), so the drawn row decides. */
+export function victimDrawn(probe, kind) {
+  const kill = probe?.events?.kill?.[0];
+  if (!Number.isInteger(kill)) return `no kill, so the drawn victim is not seen (asked ${kind})`;
+  const at = (t) => probe.rows?.find((r) => r.tick === t)?.fighters ?? [];
+  const alive = new Map(at(kill - 1).filter((f) => f.role === 'hostile' && f.alive).map((f) => [f.id, f]));
+  const died = at(kill).find((f) => f.role === 'hostile' && !f.alive && alive.has(f.id));
+  if (!died) return `no hostile died on tick ${kill} in the numbers (asked ${kind})`;
+  const row = alive.get(died.id).row;
+  if (row === undefined) return `this probe records no card rows, so the drawn victim is not seen (asked ${kind})`;
+  if (row === '') return `the victim (id ${died.id}) had no card the tick before it died (asked ${kind})`;
+  return row === kind ? null : `the victim (id ${died.id}) was drawn as ${row}, not the asked ${kind}`;
 }
