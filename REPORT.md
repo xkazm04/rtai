@@ -88,6 +88,13 @@ PASS with reels on `f128a280e` and `ac7991f58` (session 7). Mutation: `rig_depth
   `SCALE_FROM`/`PAD_BELOW` (contractor v3). New packer `tools/art/gib_pieces.py`.
 - Debt baseline raised twice with `--accept-regression` (blade boss bot dev_loc +55; quest1_clip flag +2).
 - n15-tools serves this lane's REQUESTs on its own branch (compare --victim, extras chapters, --feel, test_quest_blade).
+- Files this branch shares with the other lanes (`git diff --name-only 5c5c03611..n15-<lane>`, compared 06:12):
+  with hero `project/boot/collect_call/view/cast_view.gd`, `project/features/characters/cast_flags.gd`,
+  `project/features/characters/rivet_res.gd`, `tools/art/rivet_frames.json`; with tools `cast_flags.gd`,
+  `project/dev/frames/quest1_clip.gd`; with both `docs/decisions.md` (append-only: keep every line),
+  `tools/debt/baseline.json` (take either side, re-run `node tools/debt/debt.mjs --update`), and with hero
+  `steam/ai-provenance/2026-11.jsonl` (union). `cast_flags.gd` is the flag list: union the flags.
+  Tonight's late files (rig_carry, arena_rigs, gun_fx_follow, rig_cast_shadows, rig_depth_sort/box) are this lane's only.
 
 ## Next steps
 
