@@ -1,3 +1,5 @@
+# n15 hero it16. Only leg 2 shows the ghost: by leg 3 the form has expired and Rivet runs
+# (checked on the first/last frames of every leg), so the leg-3 rows measure RIVET, not the ghost.
 == run32_dent_right leg 2
 ground px/tick mean 5.16; pose changes 45 in 48 ticks
 ride mean 0.2, max 5.0 crop px
