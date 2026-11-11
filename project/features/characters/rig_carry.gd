@@ -6,13 +6,25 @@ extends RefCounted
 ## (a child of the rig) hopped back by the whole slide and forward again. The host keeps the slide
 ## on a tick with no pose and replaces it on a second pose in one frame. View only.
 
+## n17 npc-react (brief item 4, the hit lands when the cell changes): a rig past the full-rate
+## ranks posed a new reaction on its next due tick, 1-3 ticks after the hit (film w_katana_32_0:
+## hit on tick 68, first reaction frame t71, both before and after the class cells). A reaction that
+## has not run yet now poses on the hit's own tick, one tick's step. False = the before.
+const HIT_NOW: bool = true
+
 
 ## One pose step of `rig`; a second one in the same frame replaces the first's slide.
 static func pose(rig: CutRig, posed: Dictionary[int, bool], every: int) -> void:
 	if posed.has(rig.actor_id):
 		undo(rig)
-	rig.drive(SimClock.TICK_DT * every)
+	rig.drive(SimClock.TICK_DT * (1 if hit_now(rig) else every))
 	posed[rig.actor_id] = true
+
+
+## True when `rig` holds a reaction (a wound or a death) that no pose step has run yet: it poses
+## now, whatever its rank's rate (CharacterRigs.step_ticks).
+static func hit_now(rig: CutRig) -> bool:
+	return HIT_NOW and rig.react != null and rig.react.active() and rig.react.t == 0.0
 
 
 ## After the frame's pose steps. `new_rigs` (d9-rivet, a card view): a rig acquired on a frame that

@@ -57,3 +57,15 @@ func test_quarter_rate_tracks_a_full_rate_twin() -> void:
 	gut.p("quarter vs full: facing %.3f rad, foot %.1f px" % [worst_face, worst_foot])
 	assert_lt(worst_face, 0.35, "the turn lags by less than 20 degrees")
 	assert_lt(worst_foot, 0.5 * PX, "planted feet stay within half a metre")
+
+
+func test_a_new_reaction_poses_on_the_hit_tick_at_any_rate() -> void:
+	# n17 npc-react (brief item 4): a half- or quarter-rate rig drew its wound 1-3 ticks late.
+	var rig: CutRig = _ped()
+	assert_false(RigCarry.hit_now(rig), "no reaction")
+	HumanReact.on(rig).play(rig, &"flinch", Vector2.LEFT, ReactTable.shipped())
+	assert_true(RigCarry.hit_now(rig), "a hit nothing posed yet")
+	var posed: Dictionary[int, bool] = {}
+	RigCarry.pose(rig, posed, QUARTER)
+	assert_almost_eq(rig.react.t, SimClock.TICK_DT, 1e-6, "one tick's step, not the rank's four")
+	assert_false(RigCarry.hit_now(rig), "posed: back on its rank's rate")
