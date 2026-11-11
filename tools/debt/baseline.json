@@ -58,7 +58,7 @@
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 255,
-        "project/dev/rivet_motion": 1969,
+        "project/dev/rivet_motion": 1966,
         "project/dev/save_crash_loop.gd": 14,
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/save_cross.gd": 18,
@@ -69,7 +69,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 21431
+      "total": 21428
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -287,7 +287,7 @@
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 262,
-        "project/boot/collect_call/view/cast_view.gd": 231,
+        "project/boot/collect_call/view/cast_view.gd": 230,
         "project/boot/collect_call/view/collect_call_view.gd": 237,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
