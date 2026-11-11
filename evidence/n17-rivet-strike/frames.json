@@ -1,5 +1,32 @@
 [
   {
+    "file": "gun_diag_p70_rifles_64.png",
+    "title": "Plasma rifle, gloria, hand cannon shot up-right: the drawn diagonal fire cells (64 px/m)",
+    "source": "film.mjs weapon:<gun> --ppm=64 --lock=off --stills=330-344 (fc0fa83ad), before = -- --rivet-gun-diag=off",
+    "branch": "n17-rivet-strike",
+    "ppm": 64,
+    "before": "columns 1 and 3",
+    "note": "Same ticks t333 (shot) and t335. Before: the side fire cell, arm level at 0 deg while the round leaves ~35 deg up-right. After: the gun raised along the round, the flash on its muzzle, boots on his line; the plasma comet's tail at the drawn muzzle at t335."
+  },
+  {
+    "file": "gun_diag_p70_launchers_64.png",
+    "title": "Electro gun, rocket launcher, machine pistol: the drawn diagonal fire cells (64 px/m)",
+    "source": "film.mjs weapon:<gun> --ppm=64 --lock=off --stills=330-344 (fc0fa83ad), before = -- --rivet-gun-diag=off",
+    "branch": "n17-rivet-strike",
+    "ppm": 64,
+    "before": "columns 1 and 3",
+    "note": "After: the electro arc leaves the drawn claw tip, the rocket leaves the drawn tube on its line, the machine pistol on its TALL cut (the down-aimed flash no longer clipped). Rows measured at 2x: helmet dome centre, boot row, barrel axis."
+  },
+  {
+    "file": "gun_diag_p55_64.png",
+    "title": "p55 (boss pitch): pistol, gloria, rocket launcher, electro gun diagonal fire cells",
+    "source": "film.mjs weapon:<gun> --view=tilt --ppm=64 --lock=off --stills=333,335 (9cefa9505), before = -- --rivet-gun-diag=off",
+    "branch": "n17-rivet-strike",
+    "ppm": 64,
+    "before": "columns 1 and 3",
+    "note": "The 55-degree art: before the side fire cell's level arm, after the gun along the round. Open (#19): the rocket's drawn back-blast exists only on the side cell."
+  },
+  {
     "file": "hud_slot_ingame_q1_t700_1920x1080.png",
     "title": "HUD weapon slot in game: quest 1, katana drawn, 1920x1080",
     "source": "film.mjs quest1 --stills=700 --res=1920x1080 -- --quest-blade=katana --blade=600-900 (HEAD 0d3505090+), before = --hud-weapon=off",
@@ -16,15 +43,6 @@
     "ppm": 48,
     "before": "left",
     "note": "The Deck row of the HUD scale table: the slot clears the subtitle box and the cop."
-  },
-  {
-    "file": "gun_diag_machine_pistol_64.png",
-    "title": "Machine pistol burst up-right: the drawn diagonal fire cell (64 px/m)",
-    "source": "film.mjs weapon:machine_pistol --ppm=64 --lock=off --stills=333-669 (7b4d3201b), before = -- --rivet-gun-diag=off; cyan = ground line",
-    "branch": "n17-rivet-strike",
-    "ppm": 64,
-    "before": "top row",
-    "note": "t333-341: before, the side cell's arm level while the burst's tracers leave ~30 deg up; after, the gun raised along the burst, flash on its muzzle, flashless between rounds. t669 (down-left) is a near tie between the side and the diagonal."
   },
   {
     "file": "gun_diag_pistol_64.png",
@@ -97,24 +115,6 @@
     "ppm": 64,
     "before": "top: the painted flash on the gun t333-t338 (6 ticks; 109 hot px at t336)",
     "note": "after: t333-335 flash (gun_fx pistol muzzle_ticks 3), t336-338 the flashless cell (asset lane it454)"
-  },
-  {
-    "file": "camfire_pistol_t60_63_64.png",
-    "title": "Firing toward the camera he stays on his boots",
-    "source": "film.mjs kill:pistol --ppm=64 -- --sig-dir=90 (9bac727e5), before = --rivet-cell-feet=off; cyan = his ground line",
-    "branch": "n17-rivet-strike",
-    "ppm": 64,
-    "before": "top t62: the figure jumps ~44 px up for the shot tick (the painted flash on the foot line)",
-    "note": "after: the drawn crouch on his boots. t61/t63 show his back: DEFECTS #15 (open)"
-  },
-  {
-    "file": "katana_cam_cell_feet_t66_64.png",
-    "title": "Katana camera strike stands on his ground point",
-    "source": "tools/film/compare.mjs chapter:katana_cam --a=415dc9ad1 --b=7b1f03b7c --at=66 --ppm=64",
-    "branch": "n17-rivet-strike",
-    "ppm": 64,
-    "before": "left: the cell seated on the blade tip, Rivet drawn a body height above his spot (off frame)",
-    "note": "RivetCellFeet: p70 katana cell 6 boots 120 strip px over the pad"
   },
   {
     "file": "katana_lean_strike_t64_32.png",

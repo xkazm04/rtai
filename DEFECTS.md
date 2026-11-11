@@ -55,8 +55,10 @@
    level at 0 deg, the round and the flash star leaving up-right (aim -19 deg), the star drawn off the gun. -> fixed
    67f4343a6 (RivetGunDiag + the asset lane's it458 pistol diagonal cells: gun at -25 deg, star on the muzzle,
    seated on his helmet; figure 150 px tall against the walk's 160, the side fire cell's 117); the p70 machine pistol
-   7b4d3201b (weapon:machine_pistol t333-341). Open: the other 6 guns at p70 and all 8 at p55 (delivered by the asset
-   lane, it462; measured, JOURNAL session 3).
+   7b4d3201b (weapon:machine_pistol t333-341); the other 6 p70 guns on the asset lane's TALL cuts fc0fa83ad
+   (`gun_diag_p70_rifles_64.png`, `_launchers_64.png`, `_gatling_64.png`) and all 8 at p55 9cefa9505
+   (`gun_diag_p55_64.png`, --view=tilt). Rows at 2x: helmet = the dome's run centre (the tool's widest run took a
+   raised gun or hose on 9 of 16 strips), angle = the barrel's axis by eye where the flash fans off it.
 12. **No visible recoil kick** on the pistol fire cells t333-338 (the arm and body hold one pose). -> fixed 8a47c51db
     (RivetLean kick: 3 deg per unit of the rig's recoil about his feet; hand cannon 4.8 deg, figure top ~13 px at 64 px/m;
     `kick_hand_cannon_64.png` / `_32.png`). The camera/back octants show no tilt (cannot read there): open, minor.
@@ -89,3 +91,7 @@
     (strike, walk row 2) read widest. The pistol's strips agree too (~85-90). What the films show at the handovers
     (#13, the katana camera recovery -> walk ~8 px at 32 px/m) is pose height (a crouch against an upright walk), not a
     smaller drawing. -> no scale fix; the handover pop stays under #13 (open: would need an in-between pose).
+
+19. **The p55 rocket launcher's diagonal cells draw no back-blast** (weapon:rocket_launcher --view=tilt t333 at 64 px/m):
+    the side fire cell draws the exhaust behind him, the drawn diagonals only the muzzle flame. A lost beat, not a
+    misplaced one. -> open (minor; REQUEST assets if the owner wants it).
