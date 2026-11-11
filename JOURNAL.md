@@ -890,3 +890,29 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   n15-hero,n15-combat`): tools clean; hero docs + baseline only; combat STOP on cast_flags.gd, rivet_res.gd (the known
   pair), exit 1. `resolve_hero_x_combat.py` on both conflicted files from `git merge-tree --write-tree n15-hero
   n15-combat`: exit 0 each, output gdformat --check + gdlint clean. REPORT merge notes stand.
+
+## Session 7 (iteration 13, BUILD, from 05:13)
+- 05:13 read hero/combat JOURNALs: no new REQUEST tools. Hero FRICTION 05:06 (their :205): `--ohm-hand=sim` ran
+  "flags unchecked: no declared spec" (CastFlags reads `--ghost-ohm-hand=sim`), a 0.0 % before/after. Served first.
+- 05:17 MILESTONE ea02a8898 `tools/dev/flag_index.mjs` (built by me: a one-file Node tool against a FRICTION, faster
+  than a dispatcher round trip): an entry with no declared KNOWN_FLAGS is now checked against every `"--x"`,
+  `"--x="`, `"--x=<v>"` literal in our GDScript (comments, tests/unit|integration and addons excluded). A name nothing
+  reads is refused; a name read only as exact values (`arg == "--x=sim"`) must carry one of them; a family prefix
+  (`"--ghost-"`) never makes a longer name known. Did-you-mean: nearest literal (a neighbour swap = 1 edit, so
+  `--bto` -> `--bot`), else the one known name ending in the passed one (`--ohm-hand` -> `--ghost-ohm-hand`).
+  `--any-flag` (runner option) launches unchecked. Real runs on this tree:
+  `node tools/dev/run.mjs cursor_sweep --dry-run -- --rigs --rivet-windup=of` -> `run: unknown flag
+  --rivet-windup=of ... (did you mean --rivet-windup=off?)`, `refused before launch`, exit 2, nothing spawned;
+  `... --rivet-windup=off` -> dry run ok; `node tools/dev/run.mjs arena --timeout=120 --quit-after=120 --bot=pit`
+  (headless, real Godot) -> `ok exit 0; SCRIPT ERROR 0; unknown arg 0; flags checked against the project's flag
+  literals (no declared spec): 1`. Hero's tree: `unreadFlags(['--ohm-hand=sim'])` -> suggestion `--ghost-ohm-hand`.
+  False-refusal probe: every flag after `tools/dev/run.mjs` in hero (11 files) and combat evidence/JOURNAL against
+  their own project trees: 0 refusals, except combat's `--lock=at:<x,y>` (a flag they ASKED for, which does not exist:
+  correct). No GDScript builds a flag name at run time (`grep '"--" +|"--%'` over three trees: none).
+  Tests: flag_index 6 + entries/run updated (+2); planted faults (4, by hand: drop `e.any`, drop `closest`, `"--x="`
+  not a prefix read, index unit tests) -> each 1-6 fail, restored. Pre-commit full lint 18/18 with tool-tests.
+- 05:20 89925653b `tools/film` checkFlags (names only, comments stripped) now uses the same index, so a wrong value of
+  an exact read is refused there too; `stripComment` added to the index (film's break test "a comment alone cannot
+  prove a flag" holds). film + dev tests 313/0; film calls after ` -- ` in three lanes' journals/evidence: 0 refusals.
+  TO hero: `node tools/dev/run.mjs <entry> -- --ohm-hand=sim` now exits 2 with "did you mean --ghost-ohm-hand?"
+  (on your tree after the merge; cherry-pick ea02a8898 89925653b, Node only).
