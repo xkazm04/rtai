@@ -618,3 +618,14 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before` (holds an untracked copy of d
   (median -4.0 on 48 us; A/A median -2.1), GDScript ref median -0.27 ms on 4.20; B faster 6/6 in both. The wider
   window now costs nothing measurable. DECISION sim/hash-build in docs/decisions.md. Not yet: mutate of sim_hash.gd,
   full gate on this commit (next session).
+- 03:01-03:07 mutate on the O(actors) build (`tools/mutate/mutate.mjs --file=features/city/sim/sim_hash.gd --max=15
+  --tests=test_sim_hash,test_sim_hash_break,test_sim_hash_break_order,test_sim_hash_window`, on 2229fdd98; log
+  evidence/mutate_sim_hash_build_2229fdd98.log): `score 86.7% = killed 13 / (killed 13 + survived 2)`, 329 s,
+  checkout clean after. Survivors, both judged equivalent: `:9 var hgx: int = 0 -> 1` (build() reassigns hgx before
+  any query); `:41 hstart[hw * hw] = s -> hstart[hw / hw]` (the sentinel is a DEAD STORE nothing reads; writing the
+  total into cell 1's start moves cell 1's items past the others in hitems, and fill and query read the same start, so
+  results are equal unless all 512 slots are tier A in the window). Planted by hand against a new test: still 3/3, so
+  not killable short of a full CAP. Next: delete the dead sentinel in both sims (and the +1 array size).
+- 03:08 new test `test_the_window_corners_and_a_rebuild_keep_every_actor_in_its_cell` (window cell 1, the last cell,
+  a move then rebuild leaves the old cell empty). Planted by hand: the touched-cell clear removed -> 12 of 20
+  sim_hash tests fail (incl. this one's file), restored after (`git status`: only the test file).

@@ -42,3 +42,23 @@ func test_the_window_covers_the_keep_radius_with_a_cell_to_spare() -> void:
 	var keep_cells: int = ceili(RB * KEEP / SimConst.HC)
 	assert_gt(half_cells, keep_cells, "left/top: the camera cell less the keep radius stays in")
 	assert_gt(SimConst.HW - half_cells, keep_cells + 1, "right/bottom: plus the camera's own cell")
+
+
+## The O(actors) build (n15): window cell 1 and the last cell hold their actors, and a rebuild
+## after a move leaves nothing behind in the cell the actor left.
+func test_the_window_corners_and_a_rebuild_keep_every_actor_in_its_cell() -> void:
+	_h.build(CAM.x, CAM.y)
+	var hc: float = SimConst.HC
+	var last: int = SimConst.HW - 1
+	var cell1: Vector2 = Vector2((_h.hgx + 1) * hc + 0.5, _h.hgy * hc + 0.5)
+	var far: Vector2 = Vector2((_h.hgx + last) * hc + 0.5, (_h.hgy + last) * hc + 0.5)
+	_place(0, cell1)
+	_place(1, far)
+	_place(2, CAM)
+	_h.build(CAM.x, CAM.y)
+	assert_eq(_h.query(cell1.x, cell1.y, 0), [0] as Array[int])
+	assert_eq(_h.query(far.x, far.y, 0), [1] as Array[int])
+	_place(0, CAM)
+	_h.build(CAM.x, CAM.y)
+	assert_eq(_h.query(cell1.x, cell1.y, 0), [] as Array[int], "the cell it left is empty")
+	assert_eq(_h.query(CAM.x, CAM.y, 0), [0, 2] as Array[int])

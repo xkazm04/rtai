@@ -1,0 +1,35 @@
+mutate: worktree C:\Users\kazda\AppData\Local\Temp\gtai-mutate-6bd4df1a at 2229fdd9 (created)
+mutate: 15/94 mutant(s); baseline run of test_sim_hash, test_sim_hash_break, test_sim_hash_break_order, test_sim_hash_window
+mutate: baseline green in 112.8 s; per-mutant timeout 300 s
+mutate: [1/15] features/city/sim/sim_hash.gd:7 literal  1 -> 0  killed  (13.5 s)
+mutate: [2/15] features/city/sim/sim_hash.gd:9 literal  0 -> 1  survived  (12.3 s)
+mutate: [3/15] features/city/sim/sim_hash.gd:25 literal  1 -> 0  killed  (13.7 s)
+mutate: [4/15] features/city/sim/sim_hash.gd:33 delete  _touched.append(c) -> pass  killed  (14.9 s)
+mutate: [5/15] features/city/sim/sim_hash.gd:41 arith  * -> /  survived  (13.5 s)
+mutate: [6/15] features/city/sim/sim_hash.gd:46 arith  += -> -=  killed  (15.4 s)
+mutate: [7/15] features/city/sim/sim_hash.gd:56 boundary  >= -> >  killed  (12.6 s)
+mutate: [8/15] features/city/sim/sim_hash.gd:61 arith  + -> -  killed  (14.2 s)
+mutate: [9/15] features/city/sim/sim_hash.gd:69 cmp_flip  == -> !=  killed  (14.3 s)
+mutate: [10/15] features/city/sim/sim_hash.gd:69 boolean  or -> and  killed  (13.9 s)
+mutate: [11/15] features/city/sim/sim_hash.gd:71 arith  / -> *  killed  (14.0 s)
+mutate: [12/15] features/city/sim/sim_hash.gd:73 boundary  < -> <=  killed  (12.9 s)
+mutate: [13/15] features/city/sim/sim_hash.gd:73 boolean  or -> and  killed  (13.5 s)
+mutate: [14/15] features/city/sim/sim_hash.gd:74 literal  1 -> 0  killed  (14.1 s)
+mutate: [15/15] features/city/sim/sim_hash.gd:75 arith  * -> /  killed  (14.7 s)
+mutate features/city/sim/sim_hash.gd: 15 mutant(s) (sampled from 94), tests: test_sim_hash, test_sim_hash_break, test_sim_hash_break_order, test_sim_hash_window
+  features/city/sim/sim_hash.gd:9 literal  0 -> 1  survived
+  features/city/sim/sim_hash.gd:41 arith  * -> /  survived
+  features/city/sim/sim_hash.gd:7 literal  1 -> 0  killed
+  features/city/sim/sim_hash.gd:25 literal  1 -> 0  killed
+  features/city/sim/sim_hash.gd:33 delete  _touched.append(c) -> pass  killed
+  features/city/sim/sim_hash.gd:46 arith  += -> -=  killed
+  features/city/sim/sim_hash.gd:56 boundary  >= -> >  killed
+  features/city/sim/sim_hash.gd:61 arith  + -> -  killed
+  features/city/sim/sim_hash.gd:69 cmp_flip  == -> !=  killed
+  features/city/sim/sim_hash.gd:69 boolean  or -> and  killed
+  features/city/sim/sim_hash.gd:71 arith  / -> *  killed
+  features/city/sim/sim_hash.gd:73 boundary  < -> <=  killed
+  features/city/sim/sim_hash.gd:73 boolean  or -> and  killed
+  features/city/sim/sim_hash.gd:74 literal  1 -> 0  killed
+  features/city/sim/sim_hash.gd:75 arith  * -> /  killed
+score 86.7% = killed 13 / (killed 13 + survived 2); timeout 0, invalid 0; 329 s
