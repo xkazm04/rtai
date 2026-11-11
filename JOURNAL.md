@@ -599,3 +599,7 @@ NEXT (session 9 / REPORT phase): (1) `61a2d3baa` is the last code commit and PAS
 - Godot: none running (`tasklist` finds no Godot*). bench.lock not held by me.
 NEXT (morning / Director): merge `n15-combat` per REPORT "Merge notes" (shared files listed there); the owner's Calls
 (a)-(d) are in REPORT with their side-by-side stills. Lane next steps: REPORT "Next steps".
+- 07:32 (iteration 16 re-entry, STABILIZE) re-checked: tree clean; `git diff --stat 61a2d3baa..HEAD -- project tools native`
+  empty (no code after the gated commit; build/gate/61a2d3baac58/gate.json outcome pass); `cites.mjs REPORT.md --tracked`
+  38 paths, 37 ok, 1 pattern; no Godot of mine running; bench.lock absent; replies n15-combat.md unchanged since 04:22.
+  Nothing to fix. NEXT unchanged (morning / Director: merge per REPORT "Merge notes"; Calls (a)-(d)).
