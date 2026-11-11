@@ -136,6 +136,11 @@ was dropped, a nameless tools/art .py read as neutral; review flipped one expect
 revision). Total 6 tasks, 1 round each.
 
 ## Calls for the owner
+- Five deaths leave a clean street ~7 s after the kill (claw, plasma rifle, plasma sword, ray gun, electro gun: no
+  stain outlives the body's corpse_decay 7.2 s), while blood and scorch deaths leave a mark for ~16 s
+  (evidence/n16-tools/kill-reel-lifetime-all-b9dba1da8-32ppm-after600-half.png, +600 column). Recommended: give each a
+  small lasting print (scorch ring, ash, char), as data in its signature_kills row; alternative: keep them clean. Kill
+  lanes' build; the reel measures it (`--after=600`).
 - The kill reel's default is feel OFF (stable sheets, clean A/B); pacing is judged with `--feel=on`. Alternative:
   feel on by default. (decisions: tools/kill-reel-feel)
 - The kill shot stands Rivet 10 m west of his city start (station dummies took every full rig at the start).
