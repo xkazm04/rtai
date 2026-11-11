@@ -647,6 +647,11 @@
           18
         ],
         "grids": {
+          "p55": {
+            "cop/head_cap": "cop_patrol_smg_stitch.png",
+            "cop/head_helmet": "cop_riot_smg_stitch.png",
+            "cop/head_swat": "swat_smg_stitch.png"
+          },
           "p70": {
             "cop/head_cap": "cop_patrol_smg_stitch.png",
             "cop/head_helmet": "cop_riot_smg_stitch.png",
@@ -755,6 +760,11 @@
           8
         ],
         "grids": {
+          "p55": {
+            "cop/head_cap": "cop_patrol_nail_pin.png",
+            "cop/head_helmet": "cop_riot_nail_pin.png",
+            "cop/head_swat": "swat_nail_pin.png"
+          },
           "p70": {
             "cop/head_cap": "cop_patrol_nail_pin.png",
             "cop/head_helmet": "cop_riot_nail_pin.png",

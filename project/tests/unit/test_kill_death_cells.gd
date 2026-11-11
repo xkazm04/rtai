@@ -97,7 +97,12 @@ func test_the_stitch_plays_five_drawn_frames_for_the_four_street_kinds() -> void
 	var e: KillTrackRows.Extra = KillTrackRows.of(&"smg_stitch")
 	assert_eq(KillDeathCells.path_of(e, "p70", "cop/head_cap"), "p70/cop_patrol_smg_stitch.png")
 	assert_eq(KillDeathCells.path_of(e, "p70", "ped/head_hair"), "p70/ped_suit_smg_stitch.png")
-	assert_eq(KillDeathCells.path_of(e, "p55", "cop/head_swat"), "p70/swat_smg_stitch.png")
+	assert_eq(KillDeathCells.path_of(e, "p55", "cop/head_swat"), "p55/swat_smg_stitch.png")
+	assert_eq(
+		KillDeathCells.path_of(e, "p55", "ped/head_hair"),
+		"p70/ped_suit_smg_stitch.png",
+		"no p55 suit cells: the p70 ones"
+	)
 	assert_eq(e.cells_at.size(), 5, "hip, belly, chest, the spin, on his side")
 	var spin: int = roundi(e.num("whirl_from", 0.0))
 	assert_eq(KillDeathCells.frame_at(e, spin), 3, "the drawn spin starts with the whirl")
