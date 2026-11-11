@@ -713,3 +713,25 @@ dev/sim/car_route_trails.gd there is mine) and `git branch -D n15t-control-sim-h
   test_sim_hash_window,test_sim_hash_build_break,test_sim_hash_build_break_moves`;
   evidence/mutate_sim_hash_build_4af7cf1fa.log): `score 100.0% = killed 15 / (killed 15 + survived 0)`, 310 s,
   checkout clean (was 14/15 on 0736f3496, 13/15 on 2229fdd98).
+- 04:08 gate on 27756d838 (log gtai-n15/flake/gate_s5_final.log), evidence kinds: `lint: all 17 checks pass over 1433
+  GDScript files`, `unit-tests: 2542 passed, 0 failed, 2 skipped`, `scenario-tests: 55 passed`, parity bit for bit
+  (planted caught at 629), selftest look 11/11 + block 5/5, `release-compile: 668 loaded, 0 failed`. Reels running.
+- 04:10 read hero + combat JOURNALs. TO hero (your 03:13 FRICTION "the evidence gates read the live tree"): n15-hero
+  ALREADY has the snapshot runner (`git show n15-hero:tools/gate/run.mjs`: `--rev`, snapshot): run
+  `node tools/gate/run.mjs --rev=HEAD --reels --timeout=40` instead of `node tools/evidence/run.mjs`; it checks out the
+  commit in the temp dir with DLLs/baked city/.godot copied in, so you may edit while it runs; results land in
+  build/gate/<sha>/. The INVALID you saw was 3fc7109a9's tree-changed guard doing its job on a live-tree run.
+  Combat's new FRICTIONs are their own (LaunchArgs KNOWN_FLAGS, an edit during a film queue): nothing for tools.
+- 04:22 MILESTONE gate on 27756d838 (= every code change of session 5): `top: OK; code 0`, `tilt70: OK; code 0`,
+  `combo: OK; code 0`, `PASS reels: exit 0`, `gate: PASS` (build/gate/27756d838873/gate.json). Snapshot removed
+  (`removeSnapshot`; `git worktree list | grep -c 27756d838` -> 0). Later commits are JOURNAL/REPORT only (inert).
+
+NEXT (session 6): (1) Read hero/combat JOURNALs for REQUEST tools / FRICTION (served to 04:10: hero's live-tree gate
+FRICTION -> their own tools/gate/run.mjs --rev=HEAD). (2) Re-run the merge preview on the then tips (`git merge-tree
+--write-tree` main + n15-tools + n15-hero + n15-combat in order) and `python evidence/merge/resolve_hero_x_combat.py` on
+cast_flags.gd / rivet_res.gd; refresh REPORT merge notes if the conflict set changed. (3) Weakest left: t-5 cost on a
+quiet machine (only if the bench lock is free and no other Godot runs: `tasklist | grep -c Godot`); else keep
+CONTENDED. (4) If code changes, full gate + reels again (`node tools/gate/run.mjs --rev=HEAD --reels --timeout=40`),
+then `removeSnapshot`. (5) REPORT final at 07:40 (Calls c-1, c-2 with the tier A panel; merge notes: tools first,
+rebuild DLLs). (6) End of night: `git worktree remove --force C:/Users/kazda/kiro/gtai-n15/scratch-tools-before` (its
+untracked dev/sim/car_route_trails.gd copy is mine) and `git branch -D n15t-control-sim-hash`.
