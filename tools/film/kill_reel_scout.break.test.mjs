@@ -141,14 +141,15 @@ test('main scouts exactly once per side weapon victim direction combo across two
 
 test('main marks a changed first beat unverifiable and the second zoom reuses that first zoom kill', async (t) => {
   const out = temp(t);
-  const fake = filmRunner((_launch, index) => ({ kill: [10, 11, 11][index] }));
+  // review (n16 s5): lab ticks (70/71), since a kill at or before the trigger tick 60 is now refused on its own
+  const fake = filmRunner((_launch, index) => ({ kill: [70, 71, 71][index] }));
   const code = await main([`--out=${out}`, '--weapons=katana', '--dirs=0', '--ppm=32,64', '--after=1'],
     { ...quiet, runner: fake.runner, state: stableState });
   assert.equal(code, 3);
   assert.equal(fake.launches.length, 3);
   assert.equal(arg(fake.launches[0].args, '--film-on'), 'kill:1');
-  assert.ok(ticksOf(arg(fake.launches[1].args, '--film-stills')).includes(10), 'first beat uses scout tick');
-  assert.ok(ticksOf(arg(fake.launches[2].args, '--film-stills')).includes(11), 'second zoom uses first zoom tick');
+  assert.ok(ticksOf(arg(fake.launches[1].args, '--film-stills')).includes(70), 'first beat uses scout tick');
+  assert.ok(ticksOf(arg(fake.launches[2].args, '--film-stills')).includes(71), 'second zoom uses first zoom tick');
   const reel = JSON.parse(readFileSync(join(out, 'reel.json'), 'utf8'));
   assert.match(reel.films[0].reasons.join(' '), /in its scout run/);
 });
@@ -181,4 +182,14 @@ test('main with clips never scouts and passes its explicit timeout to the full-w
   assert.equal(isScout(fake.launches[0]), false);
   assert.equal(arg(fake.launches[0].args, '--film-on'), 'kill:1+1');
   assert.equal(ticksOf(arg(fake.launches[0].args, '--film-stills')).length, 17);
+});
+
+test('a kill at or before the lab trigger tick is unverifiable, never judged against a dead reference frame (review)', async (t) => {
+  const out = temp(t);
+  const fake = filmRunner(() => ({ kill: 40 }));
+  const code = await main([`--out=${out}`, '--weapons=katana', '--dirs=0', '--ppm=32', '--after=1'],
+    { ...quiet, runner: fake.runner, state: stableState });
+  assert.equal(code, 3);
+  const reel = JSON.parse(readFileSync(join(out, 'reel.json'), 'utf8'));
+  assert.match(reel.films[0].reasons.join(' '), /the kill came at 40, not after the lab's trigger tick 60/);
 });

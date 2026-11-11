@@ -36,6 +36,10 @@ export function filmTicks(kill, after) {
   return [...new Set([...pickBeats(kill, after), ...run])].sort((a, b) => a - b);
 }
 
+/** The lab's trigger tick: pickBeats' first column and the aftermath diff's before-death reference (lab kills come at
+ *  63 or later; n16 s5 review of n16t-break-reel-scout: a kill at or before it would make that frame a dead one). */
+export const TRIGGER_TICK = 60;
+
 /** n16 s5 (kills-new FRICTION 15:30): a --before Gatling clip film timed out at 305 s twice at t239 of its ~245, still
  *  writing a still every ~1.2 s beside a gate (boot + 46 stills took 134 s). A fixed 300 s fits a beat film (~20
  *  stills), not a full window (~168). Without --timeout a film gets 120 s + 2.5 s per still it saves, never under 300. */
@@ -87,6 +91,7 @@ async function filmJob(job, side, reel, runner, known) {
   const r = await filmOne(planned, { runner });
   const k = r.probe?.events?.kill?.[0];
   if (r.outcome === 'fail' || !Number.isInteger(k)) return { outcome: r.outcome === 'pass' ? 'unverifiable' : r.outcome, reasons: r.reasons.length ? r.reasons : ['no kill'] };
+  if (k <= TRIGGER_TICK) return { outcome: 'unverifiable', kill: k, reasons: [`the kill came at ${k}, not after the lab's trigger tick ${TRIGGER_TICK}: the sheet's reference column and the aftermath diff would show the dead`] };
   if (known !== undefined && k !== known) return { outcome: 'unverifiable', kill: k, reasons: [`the kill came at ${k} at ${job.ppm} px/m but at ${known} ${firstSeen}: the view moved the sim`] };
   const saved = new Set(r.stills ?? []);
   const beats = pickBeats(k, reel.after).filter((t) => saved.has(t));
