@@ -93,3 +93,7 @@ lanes' journals for REQUEST tools / FRICTION (none at 11:35). Gate on the final 
   hides his rig. Unit 2/2 (`tools/film/subject.test.mjs`); film suite 203/0. Run from your worktree:
   `node C:/Users/kazda/kiro/gtai-wt/n16-tools/tools/film/compare.mjs weapon:gloria --a=<sha> --b=<sha> --subject=kill`.
   Their (2) (a weapon shot with a wall ~1 m behind the lone victim, `--victim-wall`) is open: NEXT.
+- 12:12 gate on bc7878960 (snapshot `%TEMP%/gtai-gate-bc7878960400`, copied the rebuilt DLLs): lint 19/19,
+  unit 2642 tests / 0 failures (2640 passing, 2 skipped); scenarios in progress (11/55 ok at 12:08). The later
+  commits (c6191736b gore-check, dfccc7f0d subject=kill) touch tools/ only; their node suites pass (film 203/0) and
+  the hook's full lint passed on each. Final verdict: the log named above.
