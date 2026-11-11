@@ -182,3 +182,13 @@ lanes' journals for REQUEST tools / FRICTION (none at 11:35). Gate on the final 
   dummy knot stood south of Rivet; the spot fix cured it, no code).
 - SERVED: kills-new REQUEST (3): cherry-pick the gatling commit (kill_lab.gd + test_kill_lab_held.gd + .uid), and run
   the reel as before; the pistol dir 90 needs only this tools tree (the shot spot is tool side).
+- 13:08 06af9e9db the beat readout's measured hold + `kill_reel --feel=on|off|auto`. FOUND while building it: the reel
+  locks the camera, and film's `--feel=auto` turns the hit feel OFF under a lock (FeelCam's hit-stop freeze, kick and
+  shake), so NO reel film so far showed the owner's "hit-stop plus camera punch". `--feel=on` films them. measureHold
+  counts the ticks from the kill that the kill window holds still (< 0.2 % per frame), first zoom only. Real frames
+  (gat2, wall2, pis90, wall1: standard deaths in this tree, feel off): held 0 each. NOT yet proven on a signature row
+  with --feel=on (katana, hit-stop 6): Godot is held by the gate. First thing next session:
+  `kill_reel --out=build/kreel/s3feel --weapons=katana --dirs=90 --ppm=32 --feel=on` vs the same with --feel=off.
+- Kill lanes, NOTE: judge pacing (hit-stop, punch) only on a `--feel=on` reel; default reels have the feel off.
+- 13:06 GATE started on 0b5c55fc7 (`node tools/gate/run.mjs --rev=0b5c55fc7 --reels`, log
+  C:/Users/kazda/kiro/gtai-n16/scratch-tools/gate_s2.log, ends with `gate exit N`). Later commits are tools/docs only.
