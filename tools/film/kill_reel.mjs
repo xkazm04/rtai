@@ -29,11 +29,20 @@ const USAGE = 'usage: node tools/film/kill_reel.mjs --out=<dir> [--weapons=all|<
  *  judges the drawn row, so a lab film with a victim kind is UNVERIFIABLE until the probe finds the lab's rig;
  *  the `weapon:` shot's victim is seen (film.mjs weapon:pistol --victim=thug PASS on the drawn row). */
 
-/** Plans one film of the reel through film.mjs: {shot, opts} or {error}. With the kill tick `known` from
- *  this combo's first zoom (the zoom is view only, so the sim kills on the same tick) and no clip wanted,
- *  the film saves the beat frames only: a full window is ~170 PNGs, about a minute of a busy machine. */
-export function planFilm(job, side, reel, known = undefined) {
-  const window = known === undefined || reel.clips ? { stills: '54-70', on: `kill:1+${reel.after}` } : { stills: pickBeats(known, reel.after).join(',') };
+/** The ticks a film with a known kill saves: the beats and the hold run (kill..kill+12, for the measured hold). */
+export function filmTicks(kill, after) {
+  const run = Array.from({ length: 13 }, (_, i) => kill + i).filter((t) => t <= kill + after);
+  return [...new Set([...pickBeats(kill, after), ...run])].sort((a, b) => a - b);
+}
+
+/** Plans one film of the reel through film.mjs: {shot, opts} or {error}. With the kill tick `known` (from
+ *  this combo's first zoom or its scout run: the zoom is view only and the seed fixed, so the sim kills on the
+ *  same tick) and no clip wanted, the film saves filmTicks only: a full window is ~165 PNGs, and writing them
+ *  was ~45 of a film's ~65 s (n16 s4: 12-still films ran 15-21 s). A `scout` run saves tick 60 and the kill
+ *  frame only, to learn the tick. A clip keeps the full window. */
+export function planFilm(job, side, reel, known = undefined, scout = false) {
+  const full = { stills: '54-70', on: `kill:1+${reel.after}` };
+  const window = reel.clips ? full : scout ? { stills: '60', on: 'kill:1' } : known === undefined ? full : { stills: filmTicks(known, reel.after).join(',') };
   const flags = { out: job.dir, ppm: String(job.ppm), ...window, view: 'combo', lock: 'auto',
     seed: '20261109', res: '1280x800', feel: reel.feel ?? 'auto', subject: 'kill', timeout: String(reel.timeout), tree: side.tree };
   if (job.victim) flags.victim = job.victim;
@@ -45,12 +54,20 @@ export function planFilm(job, side, reel, known = undefined) {
 
 /** Films a job, picks the beat frames, crops them about the kill; the rest of the frames go unless kept. */
 async function filmJob(job, side, reel, runner, known) {
+  const firstSeen = known !== undefined ? 'at the first zoom' : 'in its scout run';
+  if (known === undefined && !reel.clips) {
+    const scouted = planFilm(job, side, reel, undefined, true);
+    if (scouted.error) return { outcome: 'fail', reasons: [scouted.error] };
+    const s = await filmOne(scouted, { runner });
+    known = s.probe?.events?.kill?.[0];
+    if (s.outcome === 'fail' || !Number.isInteger(known)) return { outcome: s.outcome === 'pass' ? 'unverifiable' : s.outcome, reasons: s.reasons.length ? s.reasons.map((r) => `scout: ${r}`) : ['scout: no kill'] };
+  }
   const planned = planFilm(job, side, reel, known);
   if (planned.error) return { outcome: 'fail', reasons: [planned.error] };
   const r = await filmOne(planned, { runner });
   const k = r.probe?.events?.kill?.[0];
   if (r.outcome === 'fail' || !Number.isInteger(k)) return { outcome: r.outcome === 'pass' ? 'unverifiable' : r.outcome, reasons: r.reasons.length ? r.reasons : ['no kill'] };
-  if (known !== undefined && k !== known) return { outcome: 'unverifiable', kill: k, reasons: [`the kill came at ${k} at ${job.ppm} px/m but at ${known} at the first zoom: the zoom moved the sim`] };
+  if (known !== undefined && k !== known) return { outcome: 'unverifiable', kill: k, reasons: [`the kill came at ${k} at ${job.ppm} px/m but at ${known} ${firstSeen}: the view moved the sim`] };
   const saved = new Set(r.stills ?? []);
   const beats = pickBeats(k, reel.after).filter((t) => saved.has(t));
   const box = killWindow(r.probe, k, job.ppm);

@@ -3,7 +3,7 @@ import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
-import { main, planFilm } from './kill_reel.mjs';
+import { filmTicks, main, planFilm } from './kill_reel.mjs';
 import { MOVIE_FRAME_OF_PROCESS_1, anchorShifts, boxAt, cellLabel, killWindow, movieSpan, pickBeats, reelPlan, reelWeapons, tableRows, victimAt } from './kill_reel_lib.mjs';
 
 function tree() {
@@ -77,7 +77,7 @@ test('the kill window is 12 x 9 m at the zoom, centred between Rivet and the vic
   assert.deepEqual(killWindow(probe, 63, 96), [128, 0, 1152, 800]);
 });
 
-test('a later zoom with a known kill tick saves the beat frames only; a clip run keeps the full window', () => {
+test('a later zoom with a known kill tick saves the beat frames and the hold run only; a scout saves 60 and the kill; a clip run keeps the full window', () => {
   const side = { tree: process.cwd() };
   const reel = { after: 150, timeout: 300, extra: [], clips: false };
   const job = { weapon: 'katana', victim: 'thug', dir_deg: 90, ppm: 64, dir: join(tmpdir(), 'kr') };
@@ -86,7 +86,16 @@ test('a later zoom with a known kill tick saves the beat frames only; a clip run
   assert.ok(first.opts.extra.includes('--sig-dir=90') && first.opts.extra.includes('--victim=thug'));
   const later = planFilm(job, side, reel, 63);
   assert.deepEqual(later.opts.on, []);
-  assert.deepEqual(later.opts.stills, pickBeats(63, 150));
+  assert.deepEqual(later.opts.stills, filmTicks(63, 150));
+  assert.deepEqual(filmTicks(63, 150), [60, 61, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 83, 103, 143, 213]);
+  assert.ok(pickBeats(63, 150).every((t) => filmTicks(63, 150).includes(t)), 'every beat is still filmed');
+  assert.deepEqual(filmTicks(63, 4), [60, 61, 63, 64, 65, 66, 67], 'nothing past --after');
+  const scout = planFilm(job, side, reel, undefined, true);
+  assert.deepEqual([scout.opts.stills, scout.opts.on], [[60], [{ kind: 'kill', nth: 1, after: 0 }]]);
+  assert.equal(scout.opts.lock, later.opts.lock, 'the scout and the film share the camera lock, so the pinned aim (and the sim) match');
+  assert.deepEqual(scout.opts.extra, later.opts.extra);
+  assert.equal(scout.opts.ticks, later.opts.ticks);
+  assert.deepEqual(planFilm(job, side, { ...reel, clips: true }, undefined, true).opts.on, first.opts.on, 'a clip run never scouts');
   assert.deepEqual(planFilm(job, side, { ...reel, clips: true }, 63).opts.on, first.opts.on);
   assert.equal(planFilm(job, side, { ...reel, feel: 'on' }).opts.feel, 'on', '--feel=on: the hit-stop and punch are filmed');
   assert.equal(first.opts.feel, 'auto');
