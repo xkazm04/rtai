@@ -1,4 +1,4 @@
-# REPORT n15-tools (session 6, 04:45; later sessions extend it)
+# REPORT n15-tools (session 7, 05:30; later sessions extend it)
 
 Branch `n15-tools` from main `5c5c03611`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n15\tools\` (`frames.json`),
 `evidence/` in this tree, JOURNAL.md for every command and its output.
@@ -38,6 +38,19 @@ crowd: look goldens re-blessed with a decisions line). t-4 and t-5 move nothing 
   worktree (merge-tree in lane order; it writes git objects only). Each conflict is sorted into what morning resolves
   (JOURNAL, REPORT, baseline) and the code it stops on, and lane pairs with code clashes are listed. Example:
   `--lanes=20c1dafb1,n15-combat` -> `STOP on project/dev/frames/quest1_clip.gd` (my own clash, fixed in decdd8331).
+- `tools/merge/clash.mjs`, run by the pre-commit hook on every commit (392d0ec85, 6a36a3f74; session 7): it warns, and
+  never blocks, when the staged commit makes a NEW code conflict with a sibling lane (worktree branches with the same
+  `n15-` prefix; `GTAI_MERGE_LANES=<a,b>|off`). It runs merge-tree twice per lane, about 0.4 s, and writes objects only.
+  Example (a temp index staging an edit of combat's `--rivet-windup=off` line): `merge-clash: WARNING this commit makes
+  project/features/characters/cast_flags.gd conflict with n15-combat ...`. A lane without it runs
+  `node <n15-tools>/tools/merge/clash.mjs --repo=.` on a temp copy of its own index.
+- `tools/dev/flag_index.mjs` (ea02a8898, 89925653b; session 7, hero FRICTION: `--ohm-hand=sim` launched unchecked,
+  giving a 0.0 % before/after): `dev/run.mjs` checks an entry with no declared KNOWN_FLAGS against every flag literal
+  in our GDScript (name read; for exact reads such as `arg == "--x=sim"`, the value too). `film.mjs` uses the same
+  index after its `--`. Example: `node tools/dev/run.mjs cursor_sweep --dry-run -- --rigs --rivet-windup=of` -> `run:
+  unknown flag --rivet-windup=of ... (did you mean --rivet-windup=off?)`, exit 2, nothing spawned. `--any-flag`
+  skips the check. The lanes' recorded runs give 0 false refusals. Linux (WSL Ubuntu, Node 24, clone of ddbf98840):
+  dev + film + merge + gate tests 556, pass 554, fail 0, skipped 2.
 - `dev/frames/quest1_clip.gd --still-lead=<ticks>` (cab8a0d4a; default 120, 0 = the old jump): see Served.
 - `res://dev/sim/car_route_trails.gd --tier=a` (6254f741e): the hand-made car map in tier A (cells filled from each tile's
   kind, hash built each tick, `dead_at_tick` per car). Example: `bash evidence/c2_tier_a/run.sh` -> 4 runs exit 0, tier B
@@ -182,6 +195,11 @@ Session 6 (from FRICTION lines, no REQUEST open):
 - hero "`node tools/reel/run_reels.mjs` with no args exits 2": the bare command is now the reel gate (`build/reels`,
   2f051cd65), as the night brief names it.
 
+Session 7:
+- hero 05:06 "`--ohm-hand=sim`, which CastFlags never reads ... `flags unchecked: no declared spec` let it through":
+  `tools/dev/flag_index.mjs` (above). On hero's tree, `--ohm-hand=sim` gets `did you mean --ghost-ohm-hand?`.
+- the n15 merge-clash lesson, my own (quest1_clip.gd at 04:48): `tools/merge/clash.mjs` in the hook (above).
+
 ## Calls for the owner
 
 - **c-1 Codex as a first-author test writer.** The fourth paired module, sim_hash: Claude's review of Codex's tests cost
@@ -229,8 +247,7 @@ pre-commit lint, tool tests included; Linux 896/0 on c1e7fb183) and docs.
 - c-2: if the owner picks 65 (or 241), change the one value, regenerate (`node tools/gen_constants/gen.mjs`), `just
   native`; the route tests follow the value (21/0 at 1, 241 and 65); parity's final digest does not move.
 - Drop `test_noir_shadows` from `morning.mjs`'s known-flake advice after a few clean nights (same race as rig_stress).
-- Hook `tools/merge/preview.mjs` into the builders' loop. A lane could run it before committing a shared file:
-  tonight it would have caught my quest1_clip.gd clash with combat at commit time rather than at 04:48.
+- Done in session 7: the merge check is in the hook (`tools/merge/clash.mjs`). Next, show its warning in `tools/gate/quick.mjs` too.
 - End of night: remove this lane's leftovers: `gtai-n15/scratch-tools-before` (worktree), branch
   `n15t-control-sim-hash`, and the mutate worktree `%TEMP%/gtai-mutate-6bd4df1a` (`git worktree remove --force`).
 
