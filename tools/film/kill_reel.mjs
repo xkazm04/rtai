@@ -15,6 +15,7 @@ import { pathToFileURL } from 'node:url';
 import { EXIT, filmOne, pinRev, plan } from './film.mjs';
 import { goreWhole, killWindow, measureBeats, pickBeats, reelPlan, sheetOf, tableRows, victimAt } from './kill_reel_lib.mjs';
 import { diffImages, readPng } from './png.mjs';
+import { filmedRoot } from './side.mjs';
 import { encodePng, label } from './sheet.mjs';
 import { spawnSync } from 'node:child_process';
 
@@ -129,7 +130,7 @@ export async function main(argv, { out = console.log, err = console.error, runne
   const parsed = parseArgv(argv);
   if (parsed.error) { err(`${parsed.error}\n${USAGE}`); return EXIT.usage; }
   // `all` reads the filmed tree's own table (a kill lane runs this from its worktree with rows this tree lacks).
-  const here = existsSync(join(process.cwd(), 'project', 'project.godot')) ? process.cwd() : undefined;
+  const here = filmedRoot();
   const reel = reelPlan(parsed.flags, parsed.extra, here);
   if (reel.error) { err(`kill_reel: ${reel.error}\n${USAGE}`); return EXIT.usage; }
   const sides = [];
@@ -138,7 +139,7 @@ export async function main(argv, { out = console.log, err = console.error, runne
     const pinned = pinRev(f, resolveSide);
     if (pinned.error) { err(`${pinned.error}\n${USAGE}`); return EXIT.usage; }
     if (pinned.line) out(pinned.line.replace(/^film:/, `kill_reel: ${name}`));
-    sides.push({ name, tree: resolve(f.tree ?? process.cwd()) });
+    sides.push({ name, tree: resolve(f.tree ?? here) });
   }
   const jobs = reel.jobs.flatMap((j) => sides.map((s) => ({ ...j, side: s.name, dir: join(reel.out, j.weapon, `${s.name}_${j.victim || 'guard'}_d${j.dir_deg}_${j.ppm}`) })));
   for (const job of jobs) {
