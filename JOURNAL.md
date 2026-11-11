@@ -192,3 +192,15 @@ lanes' journals for REQUEST tools / FRICTION (none at 11:35). Gate on the final 
 - Kill lanes, NOTE: judge pacing (hit-stop, punch) only on a `--feel=on` reel; default reels have the feel off.
 - 13:06 GATE started on 0b5c55fc7 (`node tools/gate/run.mjs --rev=0b5c55fc7 --reels`, log
   C:/Users/kazda/kiro/gtai-n16/scratch-tools/gate_s2.log, ends with `gate exit N`). Later commits are tools/docs only.
+- 13:14 3d40b2ca2 beat line gains the aftermath lifetime from data: KillMarks is a ring of `leftover_budget` (12) kill
+  marks, so a death's scorch and spray stay until 12 later kills recycle them (no timer). Real table: `katana:
+  katana_split (split) hit-stop 6, held 6 (grind 0, stand 0), crumble 0, flash 2 ticks; its scorch and spray stay until
+  12 later kills recycle them`.
+- 13:15 looked: `--victims=thug` at the new spot DRAWS a different figure (build/kreel/thug_vs_guard_t60.png: the
+  default guard is the capped patrol cop; thug = grey hood/torso, pistol raised), not only the probe row. Session 1's
+  "thug stands as riot cop" was most likely a station dummy beside an undrawn guard.
+- 13:16 GATE evidence stage PASS on 0b5c55fc7 (the last commit touching project/; later ones are tools/docs/evidence):
+  lint 19/19, unit 2645 passed / 0 failed / 2 skipped, scenarios 55, parity bit for bit 1200 steps (planted fault at
+  629; final_sha_a/b 94b2865f7f17d778, unchanged from n15: c-2 moved no digest), selftest look goldens 11/11 worst 0.00,
+  release-compile 683/0. Reel stage running: `build/gate/0b5c55fc7cfd/reels.log`; verdict = `gate exit N` at the end of
+  C:/Users/kazda/kiro/gtai-n16/scratch-tools/gate_s2.log.
