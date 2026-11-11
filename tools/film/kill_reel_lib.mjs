@@ -28,14 +28,16 @@ export function reelWeapons(tree = ROOT) {
  *  `held_ticks` is the beat the body holds before it leaves: hit-stop + grind + stand (a burning or
  *  dissolving man standing), `crumble_ticks` the fall after it. The measured side is the reel's films. */
 export function tableRows(tree, weapons) {
-  const kills = table(tree, 'data/tables/signature_kills.json').kills;
+  const t = table(tree, 'data/tables/signature_kills.json');
+  const kills = t.kills;
   const out = {};
   for (const w of weapons) {
     const row = kills.find((k) => rowWeapons(k).includes(w));
     const n = (key) => row?.[key] ?? 0;
     out[w] = row ? { id: row.id, style: row.style, hitstop_ticks: n('hitstop_ticks'), grind_ticks: n('grind_ticks'),
       stand_ticks: n('stand_ticks'), crumble_ticks: n('crumble_ticks'), flash_ticks: n('flash_ticks'),
-      held_ticks: n('hitstop_ticks') + n('grind_ticks') + n('stand_ticks') } : {};
+      held_ticks: n('hitstop_ticks') + n('grind_ticks') + n('stand_ticks'),
+      ...(t.leftover_budget ? { leftover_kills: t.leftover_budget } : {}) } : {};
   }
   return out;
 }

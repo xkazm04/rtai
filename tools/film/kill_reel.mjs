@@ -113,7 +113,8 @@ function writeSheet(file, rows) {
 /** One weapon's beat timings from its table row (the data side of the readout). */
 export function beatLine(weapon, row) {
   if (!row?.id) return `${weapon}: no signature row (the standard death)`;
-  return `${weapon}: ${row.id} (${row.style}) hit-stop ${row.hitstop_ticks}, held ${row.held_ticks} (grind ${row.grind_ticks}, stand ${row.stand_ticks}), crumble ${row.crumble_ticks}, flash ${row.flash_ticks} ticks`;
+  return `${weapon}: ${row.id} (${row.style}) hit-stop ${row.hitstop_ticks}, held ${row.held_ticks} (grind ${row.grind_ticks}, stand ${row.stand_ticks}), crumble ${row.crumble_ticks}, flash ${row.flash_ticks} ticks`
+    + (row.leftover_kills ? `; its scorch and spray stay until ${row.leftover_kills} later kills recycle them (leftover_budget ring, no timer)` : '');
 }
 
 export function parseArgv(argv) {

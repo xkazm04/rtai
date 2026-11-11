@@ -108,6 +108,8 @@ test('the beat line names the row and its timings, or says the weapon has the st
   assert.equal(beatLine('pistol', {}), 'pistol: no signature row (the standard death)');
   assert.equal(beatLine('chainsaw', { id: 'chainsaw_grind', style: 'split', hitstop_ticks: 2, held_ticks: 56, grind_ticks: 54, stand_ticks: 0, crumble_ticks: 0, flash_ticks: 0 }),
     'chainsaw: chainsaw_grind (split) hit-stop 2, held 56 (grind 54, stand 0), crumble 0, flash 0 ticks');
+  assert.match(beatLine('katana', { id: 'k', style: 'split', hitstop_ticks: 6, held_ticks: 6, grind_ticks: 0, stand_ticks: 0, crumble_ticks: 0, flash_ticks: 2, leftover_kills: 12 }),
+    /scorch and spray stay until 12 later kills recycle them/);
 });
 
 test('gore check: whole when the victim still lies drawn as a card after the kill; a consumed body is named', async () => {
