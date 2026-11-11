@@ -4,6 +4,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, wri
 import { basename, dirname, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { deflateSync } from 'node:zlib';
+import { drawText } from './font.mjs';
 import { readPng } from './png.mjs';
 
 export const EXIT = { pass: 0, fail: 1, usage: 2, unverifiable: 3 };
@@ -11,18 +12,6 @@ export const GUTTER = 4;
 export const LABEL_H = 18;
 export const MAX_SIDE = 16384;
 const USAGE = 'usage: node tools/film/sheet.mjs <film-dir> --out=<file.png> [--ticks=<a,b,c-d>] [--cols=<n>] [--crop=<x,y,w,h>] [--shrink=<n>]';
-const DIGITS = [
-  '01110/10001/10011/10101/11001/10001/01110',
-  '00100/01100/00100/00100/00100/00100/01110',
-  '01110/10001/00001/00010/00100/01000/11111',
-  '11110/00001/00001/01110/00001/00001/11110',
-  '00010/00110/01010/10010/11111/00010/00010',
-  '11111/10000/10000/11110/00001/00001/11110',
-  '01110/10000/10000/11110/10001/10001/01110',
-  '11111/00001/00010/00100/01000/01000/01000',
-  '01110/10001/10001/01110/10001/10001/01110',
-  '01110/10001/10001/01111/00001/00001/01110',
-].map((digit) => digit.split('/'));
 
 /** Validated options, with tick ranges kept compact even for very large ticks. */
 export function parseArgv(argv) {
@@ -98,19 +87,9 @@ export function encodePng(width, height, pixels) {
     chunk('IDAT', deflateSync(raw)), chunk('IEND', Buffer.alloc(0))]);
 }
 
-export function label(pixels, width, left, top, cellW, tick) {
-  for (const [i, digit] of [...String(tick)].entries()) {
-    const glyph = DIGITS[Number(digit)];
-    for (let y = 0; y < 14; y++) {
-      for (let x = 0; x < 10; x++) {
-        const dx = 2 + i * 12 + x;
-        if (dx < cellW && glyph[y >> 1][x >> 1] === '1') {
-          pixels.fill(255, ((top + 2 + y) * width + left + dx) * 3,
-            ((top + 2 + y) * width + left + dx) * 3 + 3);
-        }
-      }
-    }
-  }
+/** A cell's label strip: its tick, or any text the 5x7 font draws (tools/film/font.mjs). */
+export function label(pixels, width, left, top, cellW, text) {
+  drawText(pixels, width, left, top, cellW, text);
 }
 
 function render(frames, flags, crop) {

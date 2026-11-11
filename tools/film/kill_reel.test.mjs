@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import { main, planFilm } from './kill_reel.mjs';
-import { killWindow, pickBeats, reelPlan, reelWeapons, tableRows, victimAt } from './kill_reel_lib.mjs';
+import { MOVIE_FRAME_OF_PROCESS_1, cellLabel, killWindow, movieSpan, pickBeats, reelPlan, reelWeapons, tableRows, victimAt } from './kill_reel_lib.mjs';
 
 function tree() {
   const root = mkdtempSync(join(tmpdir(), 'kill-reel-'));
@@ -164,4 +164,31 @@ test('the measured hold counts the still frames after the kill, and needs consec
   const moving = new Map([[63, img(100)], [64, img(140)], [65, img(180)]]);
   assert.equal(measureHold(moving, 63, [0, 0, 4, 4], diffImages), 0);
   assert.equal(measureHold(new Map([[63, img(100)], [65, img(100)]]), 63, [0, 0, 4, 4], diffImages), null, 'beats only');
+});
+
+test('--quick films play zoom and one side-on direction; named --dirs/--ppm still win', () => {
+  const q = reelPlan({ out: 'x', weapons: 'katana', quick: true }, []);
+  assert.deepEqual([q.dirs, q.ppm, q.jobs.length], [[90], [32], 1]);
+  const named = reelPlan({ out: 'x', weapons: 'katana', quick: true, dirs: '0,wall', ppm: '64' }, []);
+  assert.deepEqual([named.dirs, named.ppm], [[0, 'wall'], [64]]);
+  assert.deepEqual(reelPlan({ out: 'x', weapons: 'katana' }, []).ppm, [32, 64], 'without --quick: both zooms');
+  assert.match(reelPlan({ out: 'x', weapons: 'katana', quick: '1' }, []).error, /--quick takes no value/);
+});
+
+test('sheet labels: the tick and its offset; the first cell names the film; the kill cell the measured hit-stop', () => {
+  const job = { side: 'after', victim: '', dir_deg: 90, ppm: 32 };
+  assert.equal(cellLabel(job, { kill: 70 }, 60, 0), '60 -10 after guard d90 32');
+  assert.equal(cellLabel(job, { kill: 70, measured: { hitstop_frames: 6 } }, 70, 2), '70 kill hs6');
+  assert.equal(cellLabel(job, { kill: 70, measured: { hitstop_frames: 0 } }, 70, 2), '70 kill', 'no hold: nothing claimed');
+  assert.equal(cellLabel({ ...job, victim: 'thug', dir_deg: 'wall' }, { kill: 70 }, 74, 0), '74 +4 after thug dwall 32');
+});
+
+test('the movie span keeps every frame of a held tick, so the clip plays the hit-stop at its real length', () => {
+  const at = (f) => f - 1 + MOVIE_FRAME_OF_PROCESS_1;
+  // tick 70 is held 6 frames (rows 70 at frame 120, 71 at frame 127).
+  const probe = { rows: [[68, 118], [69, 119], [70, 120], [71, 127], [72, 128]].map(([tick, frame]) => ({ tick, frame })) };
+  assert.deepEqual(movieSpan(probe, 68, 71), [at(118), at(127)], 'tick 71 has no next row: its own frame ends the span');
+  assert.deepEqual(movieSpan(probe, 69, 70), [at(119), at(126)], 'the held tick ends on its last frame, not its first');
+  assert.equal(movieSpan(probe, 60, 70), null, 'no row at the start: unmeasured');
+  assert.equal(movieSpan({ rows: [{ tick: 68 }, { tick: 70 }] }, 68, 70), null, 'rows without frames (an old probe)');
 });

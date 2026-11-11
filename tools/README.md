@@ -152,11 +152,20 @@ and `aftermath X %` (the share of the window at kill+after that still differs fr
 on the street). Example (n16): rocket dir 90 6.3 % at both zooms, settled only by +150; katana 1.7 %, by +80.
 `hit-stop N frames` (measured): frames the game drew while the sim HELD a tick (SimClock.hold, FeelCam's hit-stop),
 from the tick before the kill to +12, read from the gaps in the probe rows' process `frame`. No still or clip shows these
-frames (a still is saved per tick), so the sheet never shows the freeze: read this number. `window still N ticks`:
+frames (a still is saved per tick): the sheet prints it on the kill cell (`HS6`) and a `--clips --feel=on` clip plays it. `window still N ticks`:
 the ticks after the kill that the drawn kill window does not change (a held pose). The reel's camera is locked, and
 a locked film runs `--feel=off`, so a DEFAULT REEL HAS NO HIT-STOP AND NO CAMERA PUNCH: pass `--feel=on` to judge
 the pacing. Proof (n16 s2, katana dir 90, 32 px/m): `--feel=on` hit-stop 6 frames (= the row's hitstop_ticks 6),
 default 0.
+
+`--quick` (n16 s3, the builders' inner loop): 32 px/m only and dir 90 unless `--ppm`/`--dirs` name others, so one
+film per weapon (`kill_reel.mjs --out=build/kreel/q --weapons=katana,rocket_launcher --quick --feel=on`: 2 films,
+about 5 min beside the other lanes). Sheet cells are labelled with the tick and its offset from the kill; the first
+cell of a row names the film (`60 -8 AFTER GUARD D90 32`), and the kill cell carries the measured hit-stop
+(`68 KILL HS6`) since no still can show it (tools/film/font.mjs: a 5x7 font, digits, capitals, `+ - . : / _`).
+`--clips --feel=on` cuts each clip from film's `--write-movie` (every frame drawn, a held tick's too) at the probe
+rows' process frames (`movieSpan`), so the clip plays the hit-stop and the camera punch at the game's timing, from
+kill-30 to kill+after; without `--feel=on` the clip is the per-tick stills as before (no freeze to show).
 
 `--gore-check` films every death with `--gore=reduced` and judges each from the probe: the victim must still be
 drawn as one lying card 20 ticks after the kill (a signature death hides the body: FAIL, naming it); a victim

@@ -4,7 +4,8 @@
 // contact sheet per weapon and zoom, optional clips, and a before/after mode against a commit.
 //   node tools/film/kill_reel.mjs --out=<dir> [--weapons=all|<id,id>] [--victims=<kind,kind>] [--dirs=0,90,180,270]
 //     [--ppm=32,64] [--after=150] [--rev=<commit>] [--before=<commit>] [--native=donor] [--clips] [--keep-frames]
-//     [--timeout=<s>] [--dry-run] [-- <extra game flags, e.g. --gore=reduced>]
+//     [--gore-check] [--feel=on|off|auto] [--quick] [--timeout=<s>] [--dry-run] [-- <extra game flags>]
+// --quick: 32 px/m only, dir 90 unless --dirs/--ppm name others (the inner loop: one film per weapon).
 // Each film is tools/film/film.mjs's `kill:<weapon>` shot (KillLab via BrutalityHook, `--sig-solo=start`),
 // with `--sig-dir=<deg>` turning the guard about Rivet (0 east, 90 south) and `--victim=<kind>` drawing it as
 // that card row. Stills: the lab's trigger window (ticks 54-70) and the first kill plus --after ticks.
@@ -13,14 +14,14 @@ import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { EXIT, filmOne, pinRev, plan } from './film.mjs';
-import { goreWhole, killWindow, measureBeats, measureHold, measureStop, pickBeats, reelPlan, sheetOf, tableRows, victimAt } from './kill_reel_lib.mjs';
+import { cellLabel, goreWhole, killWindow, measureBeats, measureHold, measureStop, movieSpan, pickBeats, reelPlan, sheetOf, tableRows, victimAt } from './kill_reel_lib.mjs';
 import { diffImages, readPng } from './png.mjs';
 import { filmedRoot } from './side.mjs';
 import { encodePng, label } from './sheet.mjs';
 import { spawnSync } from 'node:child_process';
 
 const USAGE = 'usage: node tools/film/kill_reel.mjs --out=<dir> [--weapons=all|<id,id>] [--victims=<kind,...>] [--dirs=<deg|wall,...>] '
-  + '[--ppm=32,64] [--after=150] [--rev=<commit>] [--before=<commit>] [--native=donor] [--clips] [--keep-frames] [--gore-check] [--feel=on|off|auto] [--timeout=<s>] [--dry-run] [-- flags]';
+  + '[--ppm=32,64] [--after=150] [--rev=<commit>] [--before=<commit>] [--native=donor] [--clips] [--keep-frames] [--gore-check] [--feel=on|off|auto] [--quick] [--timeout=<s>] [--dry-run] [-- flags]';
 const WORST = ['pass', 'unverifiable', 'fail'];
 /** n16 session 1 (build/kreel/t2 t60, build/film/victim_proof): the lab guard is drawn by no rig the probe finds
  *  (`FilmCard.rig` -> null, draw -1), and at the combo zooms it stood as the riot cop with --victim=thug. Film now
@@ -35,6 +36,7 @@ export function planFilm(job, side, reel, known = undefined) {
   const flags = { out: job.dir, ppm: String(job.ppm), ...window, view: 'combo', lock: 'auto',
     seed: '20261109', res: '1280x800', feel: reel.feel ?? 'auto', subject: 'rivet', timeout: String(reel.timeout), tree: side.tree };
   if (job.victim) flags.victim = job.victim;
+  if (reel.clips && reel.feel === 'on') flags.movie = true;
   const turn = job.dir_deg === 'wall' ? ['--sig-wall'] : job.dir_deg ? [`--sig-dir=${job.dir_deg}`] : [];
   const extra = [...turn, ...reel.extra];
   return plan(flags, `kill:${job.weapon}`, extra);
@@ -51,7 +53,8 @@ async function filmJob(job, side, reel, runner, known) {
   const saved = new Set(r.stills ?? []);
   const beats = pickBeats(k, reel.after).filter((t) => saved.has(t));
   const box = killWindow(r.probe, k, job.ppm);
-  const clip = reel.clips ? encodeClip(job, saved, k, box) : null;
+  const span = r.mp4 ? movieSpan(r.probe, Math.max(0, k - 30), k + reel.after) : null;
+  const clip = !reel.clips ? null : span ? cutMovie(job, r.mp4, span, box, reel.keepFrames) : encodeClip(job, saved, k, box);
   const frames = new Map(beats.map((t) => [t, readPng(join(job.dir, `t${t}.png`))]));
   const measured = measureBeats(frames, beats, k, box, diffImages);
   const run = Array.from({ length: 13 }, (_, i) => k + i).filter((t) => saved.has(t));
@@ -82,6 +85,17 @@ function encodeClip(job, saved, k, box) {
   return r.status === 0 ? mp4 : null;
 }
 
+/** With the hit feel on, the clip is cut from film's --write-movie (every frame drawn, a held tick's too) at the
+ *  probe's frame numbers, so the hit-stop and the camera punch play at the game's real timing; the stills hold one
+ *  frame per tick and cannot show a freeze. The whole-film movie goes unless --keep-frames. */
+function cutMovie(job, movie, [first, last], box, keep) {
+  const mp4 = join(job.dir, 'clip.mp4');
+  const r = spawnSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', movie, '-vf', `select='between(n,${first},${last})',setpts=N/60/TB,crop=${box[2]}:${box[3]}:${box[0]}:${box[1]}`,
+    '-r', '60', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '18', mp4], { windowsHide: true });
+  if (!keep) rmSync(movie, { force: true });
+  return r.status === 0 ? mp4 : null;
+}
+
 /** One sheet: a row per film (beats left to right), every cell the kill window at that film's zoom. */
 function writeSheet(file, rows) {
   const live = rows.filter((row) => row.film?.box);
@@ -99,7 +113,7 @@ function writeSheet(file, rows) {
       const png = join(row.job.dir, `t${tick}.png`);
       if (!existsSync(png)) return;
       const img = readPng(png);
-      label(pixels, width, left, top, cw, tick);
+      label(pixels, width, left, top, cw, cellLabel(row.job, row.film, tick, ci));
       const [x0, y0, w, h] = row.film.box;
       for (let y = 0; y < h; y++) {
         const src = ((y0 + y) * img.width + x0) * img.channels;

@@ -46,14 +46,16 @@ const list = (text, fallback) => (text === undefined || text === true ? fallback
 
 /** Everything the reel needs before a launch, or {error}. Pure apart from reading `tree`'s tables for `all`. */
 export function reelPlan(flags, extra, tree = ROOT) {
-  const known = new Set(['out', 'weapons', 'victims', 'dirs', 'ppm', 'after', 'rev', 'before', 'native', 'clips', 'keep-frames', 'timeout', 'dry-run', 'gore-check', 'feel']);
+  const known = new Set(['out', 'weapons', 'victims', 'dirs', 'ppm', 'after', 'rev', 'before', 'native', 'clips', 'keep-frames', 'timeout', 'dry-run', 'gore-check', 'feel', 'quick']);
   const stray = Object.keys(flags).find((k) => !known.has(k));
   if (stray) return { error: `unknown option --${stray}` };
   if (!flags.out || flags.out === true) return { error: '--out=<dir> is required' };
-  for (const k of ['clips', 'keep-frames', 'dry-run', 'gore-check']) if (flags[k] !== undefined && flags[k] !== true) return { error: `--${k} takes no value` };
+  for (const k of ['clips', 'keep-frames', 'dry-run', 'gore-check', 'quick']) if (flags[k] !== undefined && flags[k] !== true) return { error: `--${k} takes no value` };
   const weapons = flags.weapons === undefined || flags.weapons === 'all' ? reelWeapons(tree) : list(flags.weapons, []);
-  const dirs = list(flags.dirs, ['0']).map((d) => (d === 'wall' ? d : Number(d)));
-  const ppm = list(flags.ppm, ['32', '64']).map(Number);
+  // --quick, the builders' inner loop: one zoom (play zoom) and one side-on direction unless named.
+  const quick = flags.quick === true;
+  const dirs = list(flags.dirs, [quick ? '90' : '0']).map((d) => (d === 'wall' ? d : Number(d)));
+  const ppm = list(flags.ppm, quick ? ['32'] : ['32', '64']).map(Number);
   const after = Number(flags.after ?? 150);
   if (!weapons.length) return { error: '--weapons names no weapon' };
   if (dirs.some((d) => d !== 'wall' && (!Number.isInteger(d) || d < 0 || d >= 360))) return { error: `--dirs takes whole degrees 0-359 (0 east, 90 south) or wall, got ${flags.dirs}` };
@@ -169,4 +171,32 @@ export function measureHold(frames, kill, box, diff, { tolerance = 12, still = 0
     held += 1;
   }
   return held;
+}
+
+/** A sheet cell's label: every cell its tick and its offset from the kill; the first cell also names the film
+ *  (side, victim, direction, zoom), and the kill cell the measured hit-stop (frames drawn while the sim held a
+ *  tick: no still can show those, so the sheet says it). */
+export function cellLabel(job, film, tick, column) {
+  const off = tick - film.kill;
+  const stop = film.measured?.hitstop_frames;
+  const tag = off === 0 ? `kill${stop ? ` hs${stop}` : ''}` : off > 0 ? `+${off}` : `${off}`;
+  const name = column === 0 ? ` ${job.side} ${job.victim || 'guard'} d${job.dir_deg} ${job.ppm}` : '';
+  return `${tick} ${tag}${name}`;
+}
+
+/** The movie frame (0-based) that shows process frame 1: Godot's --write-movie writes one frame per drawn frame,
+ *  and the probe row's `frame` (Engine.get_process_frames) IS its movie index. Calibrated n16 s3 on a katana film
+ *  (build/kreel/s3movie, 420 movie frames, rows tick 1 frame 0 .. tick 414 frame 419): against the lossless stills
+ *  of 7 ticks, index = frame matched at 3.0-3.8 % pixels off (x264 loss), index = frame - 1 or + 1 at 18-44 %. */
+export const MOVIE_FRAME_OF_PROCESS_1 = 1;
+
+/** The movie frames [first, last] (0-based) drawn from tick `from` up to the last frame of tick `to`, from the probe
+ *  rows' process `frame`: a held tick (hit-stop) keeps all its frames, so a clip cut here runs at the game's real
+ *  timing. null when the rows lack a frame there. */
+export function movieSpan(probe, from, to) {
+  const frame = new Map((probe?.rows ?? []).filter((r) => Number.isInteger(r.frame)).map((r) => [r.tick, r.frame]));
+  if (!frame.has(from) || !frame.has(to)) return null;
+  const last = frame.has(to + 1) ? frame.get(to + 1) - 1 : frame.get(to);
+  const at = (f) => f - 1 + MOVIE_FRAME_OF_PROCESS_1;
+  return [at(frame.get(from)), at(last)];
 }
