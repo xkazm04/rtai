@@ -43,6 +43,8 @@ static func attach(
 	c.visible = false
 	body.add_child(c)
 	body.set_meta(META, c)
+	@warning_ignore("return_value_discarded")
+	KillCellShadow.attach(rig, c)  # the walk's contact shadow while the drawn figure stands
 	return c
 
 

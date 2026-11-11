@@ -153,10 +153,7 @@ static func step(d: KillNewStyles.Death, age: int) -> bool:
 ## Draws frame `f` of a FIT grid at its row's size step, the first row lifted onto the point;
 ## any other grid as drawn.
 static func fit(cells: Sprite2D, f: int) -> void:
-	var key: String = ""
-	if cells.texture != null:
-		var path: String = cells.texture.resource_path
-		key = path.get_base_dir().get_file() + "/" + path.get_file()
+	var key: String = key_of(cells)
 	if not FIT_ON or not FIT_K.has(key):
 		return
 	if not cells.has_meta(BASE):
@@ -168,3 +165,11 @@ static func fit(cells: Sprite2D, f: int) -> void:
 	var lifts: Array = FIT_LIFT[key]
 	var lift: float = lifts[cells.frame_coords.x]
 	cells.offset = Vector2(0.0, -lift) if f == 0 else Vector2.ZERO
+
+
+## A grid's FIT key, "<art>/<file>" of its texture ("" = none).
+static func key_of(cells: Sprite2D) -> String:
+	if cells == null or cells.texture == null:
+		return ""
+	var path: String = cells.texture.resource_path
+	return path.get_base_dir().get_file() + "/" + path.get_file()
