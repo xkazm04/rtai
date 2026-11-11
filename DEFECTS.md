@@ -45,5 +45,7 @@
     aims?). -> open: measure aim vs facing per shot over a street fight.
 12. **No visible recoil kick** on the pistol fire cells t333-338 (the arm and body hold one pose). -> open.
 13. **Size pop at the fire cell -> armed walk handover** (weapon:pistol t339 at 64 px/m, after 6822e1036): the camera
-    fire cell's figure is ~10 % smaller than the armed walk grid's next to it. -> open (item 5: measure every
-    strip's figure height against the walk grid, as RivetFrames.FIG_PX assumes one median).
+    fire cell's helmet draws ~6 % narrower than the armed walk grid's next frame (165 vs 175 px in the x2 crop).
+    In the strips (both RivetRes 1.5) the fire cell is not the smaller one: helmet width 45 px under the crown, eq
+    cam fire cell 93 px vs walk rows 79-99 (camera row 88); figure height 151-175 vs 156-184. So the pop comes from
+    the placement (the walk grid's RivetBob.stretch / lift, or the row shown), not the drawing. -> open (item 5).
