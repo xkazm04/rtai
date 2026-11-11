@@ -51,7 +51,7 @@ SITES = {"cop_patrol": ["shoulder", "gut"]}
 # asset lane's it450 hit-class cells (<class>_<col>.png beside shoulder_*), packed as <kind>_<class>_hit.png
 # at ONE scale per kind, the sibling shoulder cells' (the lane drew them at it: a crouched heavy fitted to
 # the cell's height would draw ~1.1 x), the boot registered on the centre line. `--only=classes` packs these.
-CLASSES = {"cop_patrol": ["jab", "heavy", "shock"], "cop_riot": ["jab", "heavy"], "swat": ["jab", "heavy"]}
+CLASSES = {k: ["jab", "heavy", "shock"] for k in ("cop_patrol", "cop_riot", "swat")}
 CLASS_SCALE_FROM = "shoulder"
 # kind -> a size step on that scale: the SWAT's class cells were drawn ~8 % taller than his shoulder cells (jab
 # 187-204 px, heavy 190-201 against 180-185, the it450 reply) and overflowed the cell; 0.9 stands them at the walk.

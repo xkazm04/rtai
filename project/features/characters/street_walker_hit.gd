@@ -117,6 +117,9 @@ static func grid_of(rig: CutRig, row: String) -> String:
 		return GRIDS[row] if open else ""
 	if r.kind == &"burn" and BURN_ON and BURN_GRIDS.has(row):
 		return flail_frame(BURN_GRIDS[row], r.t)
+	var cls: String = StreetHitClass.grid(r, row)
+	if cls != "":
+		return cls
 	if not HOLD_S.has(r.kind) or r.t >= float(HOLD_S[r.kind]):
 		return ""
 	var sites: Dictionary = SITE_GRIDS.get(row, {}) if SITES else {}
@@ -156,7 +159,8 @@ static func flail(rig: CutRig) -> float:
 static func fill_of(path: String) -> float:
 	if not FILL_ON or not is_grid(path):
 		return 1.0
-	return FILL.get(path.get_file().replace("_flail_burn", "_burn"), 1.0)
+	var file: String = path.get_file().replace("_flail_burn", "_burn")
+	return FILL.get(file, StreetHitClass.FILL.get(file, 1.0))
 
 
 ## Faces the drawn cell by the blow: the figure faces the shooter and arches away from the shot.

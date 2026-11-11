@@ -43,6 +43,8 @@ var head_s: float = 1.0
 var tint: float = 0.0
 ## Wounded (0 = whole, 1 = badly hurt): between families the body limps on the gait phase.
 var limp: float = 0.0
+## n17: the drawn class of the wounding blow (StreetHitClass: jab, heavy, shock; &"" = none).
+var blow: StringName = &""
 
 
 ## The rig's reaction slot (made on first use).
@@ -58,6 +60,7 @@ func play(rig: CutRig, p_kind: StringName, world_dir: Vector2, table: ReactTable
 	if dying:
 		return
 	kind = p_kind
+	blow = &""
 	dying = p_kind.begins_with("death_")
 	t = 0.0
 	length = maxf(table.length(p_kind), 0.05)

@@ -78,8 +78,7 @@ static func make(arena: CombatArena, p_pipe: DeathPipe = null) -> ReactLink:
 	return link
 
 
-## The damage class a weapon id hits with (weapons.json hit_class; `burn` for fire, `melee` for
-## MELEE_IDS, else light).
+## A weapon's damage class (weapons.json hit_class, `burn` fire, `melee` MELEE_IDS, else light).
 func hit_class_of(weapon: StringName) -> StringName:
 	if weapon == &"burn":
 		return &"burn"
@@ -115,6 +114,7 @@ func apply(rigs: CharacterRigs) -> void:
 		elif _held.get(id, &"") != &"knockdown":
 			_ghost_blow = pipe.table.ghost_wound(weapon) != &""
 			_wound(rig, id, hit_class, dir, cover)
+			r.blow = StreetHitClass.blow_of(hit_class, weapon, r.kind)  # n17: the drawn class
 			_ghost_blow = false
 			_heavy(rig, id, dir, weapon)
 	_pending.clear()
