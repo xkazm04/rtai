@@ -55,7 +55,9 @@ CLASSES = {"cop_patrol": ["jab", "heavy", "shock"], "cop_riot": ["jab", "heavy"]
 CLASS_SCALE_FROM = "shoulder"
 # kind -> a size step on that scale: the SWAT's class cells were drawn ~8 % taller than his shoulder cells (jab
 # 187-204 px, heavy 190-201 against 180-185, the it450 reply) and overflowed the cell; 0.9 stands them at the walk.
-CLASS_K = {"swat": 0.9}
+# The riot jab's raised baton overflowed the cell top by up to 9 px at 1.0. Left at 0.96: a hanging baton or muzzle
+# clipped 5-9 px at the cell floor (riot jab col 0, SWAT jab col 3) and two riot heavies pushed in from the edge.
+CLASS_K = {"swat": 0.9, "cop_riot": 0.96}
 # n11 it33: the asset lane's drawn burning man (<kind>_hit_70_cells/burn/1_<col>.png, arms flailing,
 # flames up his sides), packed as <kind>_burn_hit.png on the same layout for a LIVING burn.
 # n11 it34: the asset lane's burn cells for six more kinds (06:17-06:37 offers; suit, shopper and
