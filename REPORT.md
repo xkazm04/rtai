@@ -34,6 +34,10 @@ crowd: look goldens re-blessed with a decisions line). t-4 and t-5 move nothing 
   resolver moved to `tools/film/side.mjs`, because a dynamic import of compare from film deadlocked. Example: `film.mjs
   arena --rev=HEAD --stills=300` -> `film: --rev=HEAD films snapshot 0e67967e ...`, `film: PASS`.
 - `node tools/reel/run_reels.mjs` with no args (2f051cd65): the reel gate into `build/reels` (it was exit 2).
+- `tools/merge/preview.mjs --lanes=<a,b,c> [--base=main]` (7bda4d18c): what the morning merge will meet, with no
+  worktree (merge-tree in lane order; it writes git objects only). Each conflict is sorted into what morning resolves
+  (JOURNAL, REPORT, baseline) and the code it stops on, and lane pairs with code clashes are listed. Example:
+  `--lanes=20c1dafb1,n15-combat` -> `STOP on project/dev/frames/quest1_clip.gd` (my own clash, fixed in decdd8331).
 - `dev/frames/quest1_clip.gd --still-lead=<ticks>` (cab8a0d4a; default 120, 0 = the old jump): see Served.
 - `res://dev/sim/car_route_trails.gd --tier=a` (6254f741e): the hand-made car map in tier A (cells filled from each tile's
   kind, hash built each tick, `dead_at_tick` per car). Example: `bash evidence/c2_tier_a/run.sh` -> 4 runs exit 0, tier B
@@ -215,6 +219,9 @@ Session 6 (from FRICTION lines, no REQUEST open):
 
 ## Merge notes (draft)
 
+- First run `node tools/merge/preview.mjs --lanes=n15-tools,n15-hero,n15-combat`. At 04:50 it said: tools clean;
+  hero only JOURNAL, REPORT and baseline (morning resolves them); combat STOP on `cast_flags.gd` and `rivet_res.gd`
+  (the hero x combat pair below).
 - quest1 stills: after this merges, `dev/frames/quest1_clip_rec.gd` draws 120 ticks before each still. A compare
   of a commit from before the merge against one after it runs each side's own recorder, which mixes the old jump with
   the lead. Film both sides with `-- --still-lead=0`, or compare two post-merge commits. Arena, city and weapon
