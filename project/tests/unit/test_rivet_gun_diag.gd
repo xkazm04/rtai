@@ -63,6 +63,8 @@ func test_the_strip_has_the_pistols_cells_its_pad_and_a_muzzle_per_cell() -> voi
 	assert_eq(tex.get_height(), eq.get_height())
 	assert_true(RivetGunDiag.owns(DIAG))
 	assert_false(RivetGunDiag.owns(RivetStrips.DIR + "p70/rivet_eq_flamethrower_diag.png"))
+	assert_false(RivetGunDiag.owns(EQ), "the equipped strip is not a diagonal")
+	assert_false(RivetGunDiag.owns(DIAG.trim_suffix(".png") + RivetNoFlash.SUFFIX), "the twin")
 	assert_eq(RivetStrips.foot_px(DIAG), RivetGunDiag.FOOT_PX["p70"])
 	var w: float = tex.get_width() / float(RivetStrips.DIAG_CELLS) / RivetRes.of(DIAG)
 	for c: int in RivetStrips.DIAG_CELLS:
