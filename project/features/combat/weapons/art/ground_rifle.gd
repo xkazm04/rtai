@@ -9,8 +9,7 @@ const HEADINGS: int = 8
 ## The drawn gun's butt-to-muzzle px in the heading-0 cell (the sheet's one scale).
 const DRAWN_LEN_PX: float = 256.0
 
-## The gun's length on the ground (m): a pickup reads larger than life, as PickupsView's do.
-const LENGTH_M: float = 1.05
+const LENGTH_M: float = 1.05  # on the ground (m): a pickup reads larger than life
 ## It lies this far to the side of where its owner fell (m): beside the body, not under the boots.
 const BESIDE_M: float = 0.55
 ## it19: the body falls away from the shot and lies from its feet along that line, so a gun beside
@@ -19,12 +18,9 @@ const BESIDE_M: float = 0.55
 const AWAY: bool = true
 const TOWARD_M: float = 0.5
 const SIDE_M: float = 0.25
-## Drops remembered at most (a cleared memory only re-reads the side from where Rivet is).
-const MEMO: int = 64
-## it20: a drop shows LAND_TICKS after first drawn, as its owner lands (chest down, +8). 0 = now.
-const LAND_TICKS: int = 8
-## Past this far from Rivet (m) a drop is off screen at every play zoom: not drawn.
-const DRAW_M: float = 24.0
+const MEMO: int = 64  # drops remembered (a cleared memory re-reads the side from Rivet)
+const LAND_TICKS: int = 8  # it20: shown this long after first drawn, as its owner lands
+const DRAW_M: float = 24.0  # past this far from Rivet (m) a drop is off screen: not drawn
 const INK_PX: float = 1.6
 const STEEL: Color = Color(0.33, 0.32, 0.34)
 const FURNITURE: Color = Color(0.46, 0.39, 0.3)
@@ -68,10 +64,14 @@ static var _seen: Dictionary[Vector2, int] = {}
 static func draw(ci: CanvasItem, at: Vector2, focus: Vector2, tick: int = -1) -> void:
 	if not visible_from(at, focus) or (tick >= 0 and not landed(at, tick)):
 		return
-	if DRAWN and sheet() != null:
-		_draw_cell(ci, at, lies_at_from(at, focus), ViewMode.shared().ground_k())
+	var lies: Vector2 = lies_at_from(at, focus)
+	var shot: Vector2 = _away.get(at, Vector2.RIGHT)
+	if GroundDropShowcase.draw(ci, lies, shot, LENGTH_M):  # n17: the pickup's showcase drawing
 		return
-	var xf: Transform2D = Transform2D(turn(at), Ink.px(lies_at_from(at, focus)))
+	if DRAWN and sheet() != null:
+		_draw_cell(ci, at, lies, ViewMode.shared().ground_k())
+		return
+	var xf: Transform2D = Transform2D(turn(at), Ink.px(lies))
 	ci.draw_set_transform_matrix(Transform2D(0.0, SHADOW_OFF) * xf)
 	ci.draw_mesh(mesh(), null, Transform2D.IDENTITY, Color(0.0, 0.0, 0.0, SHADOW.a))
 	ci.draw_set_transform_matrix(xf)
