@@ -241,7 +241,7 @@ func _dev_rigs() -> void:
 	var cast: ArenaRigs = ArenaRigs.new()
 	add_child(cast)
 	var ok: bool = cast.attach(session.stage, view, session.world.context())
-	Log.info("quest1", "cast rigs: %s" % ok)
+	HideTuck.attach(cast, session.stage, ok)  # logs; n15: hide spots
 	StoryForms.follow(self, view, session.stage, cast.ghost_view)
 
 

@@ -82,14 +82,13 @@ func _draw() -> void:
 
 
 func _rivet(r: Fighter) -> void:
-	if fighters_on_rigs:  # the rigs draw Rivet; the guards came through _draw (QuestGuardCast)
-		if stage.hidden_in == "":
-			_hauler_marks()
-		return
 	var at: Vector2 = r.pos
-	if stage.hidden_in != "":
+	if stage.hidden_in != "":  # tucked in a hide spot: the peek (under the rigs too: HideTuck)
 		var peek: String = _lod_art("rivet_peek")
 		_sprite(peek, at + Vector2(0.0, -0.75), _size(StringName(peek)), Vector2.UP)
+		return
+	if fighters_on_rigs:  # the rigs draw Rivet; the guards came through _draw (QuestGuardCast)
+		_hauler_marks()
 		return
 	_impact(r, Ink.VERMILION)  # Rivet struck is danger: the star's rim goes vermilion
 	_hauler_marks()
