@@ -20,7 +20,7 @@ Status: iteration 4 (15:23-): ray gun raised (ellipse mask, no figure in the hat
 | 5 | plasma_hole | M | - / bolt, hole at the chest, a 20-tick cream bloom under the drawn ring (n16 it4, ab2de6592 + 6c52eaa7d) / the drawn charred ring (A4: torn cloth, cauterised flesh, rib ends, spine) white-hot -> amber -> char, ink-grey smoke / lies with the street showing through the hole | 3 -> 4 | 3 | 3 | 3 | 12 -> 13 | ph32/ph64 c vs e it4: the bloom pops t55-66 at both zooms |
 | 6 | chainsaw_grind | M | wind-up / bite at the waist: cop held, blood spurts, cream sparks AND 8 drawn chunks thrown out (A5: meat, bone chips, a rib, a tooth) k+0..k+54 / torso off the legs, halves topple, cut faces / halves + chunks lying 1.3-2.6 m off + smears + pool | 4 | 4 | 3 -> 4 | 4 -> 5 | 15 -> 17 | sc64/sc32 it3: chunks read at both zooms past the pool |
 | 7 | hand_cannon_blowback | M | - / blown back in one piece, a big red exit fan / 3-tick stop / body tumbles ~3 m off, big pool + drops stay | 4 | 2 | 3 | 4 | 13 | rank64 1b823dbf7: reads, but it is a plain knock-back: nothing torn, no hole |
-| 8 | plasma_sword_split | M | as katana, hot cauterised edge, no blood; halves topple | 2 -> 4 | 3 | 1 -> 2 | 1 -> 2 | 7 -> 11 | rank64 + ps64_c it2: a cream-edged head-and-shoulder half falls one way, the legs the other. Aftermath: the two halves only (no blood by design) |
+| 8 | plasma_sword_split | M | as katana, hot cauterised edge (A2 hot face), no blood; halves topple / a scorch line 1.4 m burned along the cut stays on the street (c43cae42d, UNFILMED) | 2 -> 4 | 3 | 1 -> 2 | 1 -> 2 (3?) | 7 -> 11 (12?) | rank64 + ps64_c it2. it4: scorch line committed lint-only; film ps64/ps32 next |
 | 9 | ray_gun_dissolve | M | - / k+0 burst, the whole cop lit inside a cream glow ellipse (n16 it4: KillDissolveMask fits the drawn figure, 999ec13db; the spinning "cap" that was the whole man is gone, 06deed4b5) / k+33 the hot ring eats him inward, echo rings, motes falling / dust pile with the empty uniform and the cap | 2 -> 4 | 4 | 2 -> 3 | 3 | 11 -> 14 | rg64/rg32 b vs c it4: the man is eaten whole at both zooms (was: legs only in a disc, the cop falling away as the hat). A7 (drawn skull in the ash) requested |
 | 10 | homing_shard_burst | M | shards stick / frozen 36 ticks, ink rings pulse per shard / burst into a red mist and pool at k+40 | 3 | 4 | 3 | 3 | 13 | rank64 1b823dbf7: the frozen beat reads (rings), the victim is small inside them at 64 |
 | 11 | mini_nuke_vaporise | L | - / full-screen cream-and-vermilion flash k+0..k+10 / grey wash / charcoal shadows of the squad stay | 4 | 4 | 2 | 5 | 15 | rank64 1b823dbf7: the shadows of the vaporised squad are the strongest aftermath of all |
@@ -50,3 +50,28 @@ Work order at 15:55 (iteration 4, after the ray gun): plasma_sword (11: aftermat
 the bloom under the drawn ring being filmed), burn_char (13, H: the embers and smoke sat on the card's feet, fixed in the
 tree, filming; the stand still reads as a dark cop, not a burning man), hand_cannon (13: A6 exit wound requested),
 rocket_gib (14: bone at 32 px/m), ray_gun (14: A7 skull in the ash requested), the ghosts' four (owed films).
+
+## Aftermath: what stays on the street and for how long (item 4; iteration 4, from data and code, NOT yet film-measured)
+
+The corpse-decay table (`project/data/tables/corpse_decay.json`) sets two ledgers on the 60 Hz tick:
+**bodies** (halves, gib pieces, the plasma topple, the dust pile, the char silhouette) lie `linger_s` 6 s, then ink out
+and sink over `fade_s` 1.2 s (7.2 s in all; cap 16, the oldest fade early past 12); **stains** (spray, scorch, the
+plasma sword's scorch line, the ash heap, drag smears, pools) linger 12 s then fade over 4 s (16 s; cap 16), and the
+kill table keeps at most `leftover_budget` 12 kill prints.
+
+| Row | Body leftovers (7.2 s) | Stains (16 s) | Held beat before the aftermath | Second look? |
+|---|---|---|---|---|
+| rocket_gib | 6 drawn torn pieces with bone | red fan + ink splat, scorch 1.3 m | none (hit-stop 0) | yes at 64; bone lost at 32 |
+| katana_split | 2 halves (drawn cut faces, toppled 80 deg) | spray 16 drops, smears | 6-tick hit-stop | yes |
+| electro_shock | the stiff body after the X-ray strobe | scorch | ~40 ticks convulsing | weak: no mark of the shock but the body |
+| burn_char | char man stands 55 + crumbles 75 ticks (2.2 s), then gone | ash heap 0.62 m over a soot scorch 0.75 m | 55-tick smouldering stand | heap yes; A8 collapse would add a skull |
+| plasma_hole | holed body (ring cools 150 ticks, smoke 300) | none | 3-tick look, 12-tick topple | yes (the street through the ring) |
+| chainsaw_grind | 2 halves + 8 drawn chunks (as long as the kill) | spray, smears, pool | grind | strongest |
+| hand_cannon_blowback | the whole body ~3 m off | big pool + drops | 3-tick stop | pool yes; A6 exit wound requested |
+| plasma_sword_split | 2 halves, hot cut faces | scorch line 1.4 m along the cut (c43cae42d, unfilmed) | 6-tick hit-stop | was halves only; line pending film |
+| ray_gun_dissolve | dust pile + empty uniform + cap | none | 30-tick glowing stand, ring eats | pile yes; A7 skull in the ash requested |
+| homing_shard_burst | none (red mist) | mist, pool | 36-tick frozen | pool only |
+| mini_nuke_vaporise | charcoal shadows (body ledger: 7.2 s) | scorch | flash | the strongest image, but a body: gone at 7.2 s while the stains stay 16 s (open: a shadow belongs on the stain ledger?) |
+
+Open from this read: the nuke's shadows and the char heap's skull (A8) should outlive the 7.2 s body ledger; the
+electro kill leaves no stain of its own. Measure on film next (stills at kill + 6, 8, 12 and 17 s in one run).
