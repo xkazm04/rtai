@@ -73,6 +73,15 @@ func _ell(d: Dissolve) -> Rect2:
 	return KillDissolveMask.ell_of(d.root, BODY_R_M * ppm)
 
 
+## n16: what is left of a kill's `piece` (1 .. 0 as the rings eat the body; 1 for any other piece
+## or kill): its shadow shrinks with it (the eaten man's shadow hung on the street, rg64_w/d).
+func left(serial: int, piece: int) -> float:
+	for d: Dissolve in _all:
+		if d.serial == serial and piece == SignatureKill.BODY:
+			return 1.0 - _eat(d)
+	return 1.0
+
+
 ## 0 while the body stands glowing, rising to 1 as the rings eat it.
 func _eat(d: Dissolve) -> float:
 	var t0: int = d.born + d.row.hitstop_ticks + d.row.stand_ticks

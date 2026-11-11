@@ -114,8 +114,8 @@ func _draw() -> void:
 	var g: GibSim = kills.gibs
 	for i: int in GibSim.CAPACITY:
 		if g.live(i) and _holders.has(g.kill_of[i]):
-			var r: float = 0.22 * ppm / (1.0 + g.z[i] * 0.6)
-			draw_circle(g.pos[i] * ppm, r * body_sink(g.kill_of[i]), SOOT)
+			var r: float = 0.22 * ppm / (1.0 + g.z[i] * 0.6) * body_sink(g.kill_of[i])
+			draw_circle(g.pos[i] * ppm, r * styles.dissolve_fx.left(g.kill_of[i], g.piece[i]), SOOT)
 	for m: KillMarks.Mark in kills.marks.marks:
 		var age: int = kills.tick - m.tick
 		var soot: int = 2 if m.flash_scale >= 1.0 else 0

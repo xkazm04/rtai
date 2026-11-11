@@ -43,3 +43,21 @@ func test_it_draws_both_ways_without_errors() -> void:
 	await wait_physics_frames(2)
 	for c: Canvas in drawn:
 		assert_true(is_instance_valid(c))
+
+
+func test_the_eaten_body_takes_its_shadow_with_it() -> void:
+	var table: SignatureKillTable = SignatureKillTable.load_table()
+	table.gore_full = SignatureKillTable.gore_from_args("full")
+	var kills: SignatureKills = SignatureKills.new(table, RngRegistry.new(3).stream(&"brutality"))
+	var fx: KillDissolveFx = KillDissolveFx.new()
+	fx.kills = kills
+	var row: SignatureKill = table.for_weapon(&"ray_gun")
+	var body: Node2D = Node2D.new()
+	fx.add(9, body, row, Vector2.ZERO, Vector2.RIGHT)
+	assert_eq(fx.left(9, SignatureKill.BODY), 1.0, "standing")
+	kills.tick = row.hitstop_ticks + row.stand_ticks + row.crumble_ticks + 1
+	assert_eq(fx.left(9, SignatureKill.BODY), 0.0, "eaten: no shadow")
+	assert_eq(fx.left(9, SignatureKill.HAT), 1.0, "the cap keeps its shadow")
+	assert_eq(fx.left(8, SignatureKill.BODY), 1.0, "another kill")
+	body.free()
+	fx.free()
