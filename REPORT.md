@@ -201,6 +201,13 @@ Session 6 (from FRICTION lines, no REQUEST open):
   eastbound cars cross the plaza and end pinned on the building, one is killed after 20 s stuck; at 65 they U-turn
   inside the plaza and nobody dies (`gtai-masters/n15/tools/c2-tier-a-mask-241-1-65-4ppm.png`, `evidence/c2_tier_a/`).
 
+## Gates on this branch
+
+Final gate on decdd8331 (all of session 6's code; `node tools/gate/run.mjs --rev=HEAD --reels --timeout=40`):
+lint 18/18, unit 2542/0 (2 skipped), scenarios 55, parity exact (planted fault caught at step 629), selftest look 11/11, release-compile
+668/0, reels top/tilt70/combo OK: `gate: PASS`. After it come only Node tools (merge preview, which passes the full
+pre-commit lint, tool tests included; Linux 896/0 on c1e7fb183) and docs.
+
 ## Not done yet
 
 - The exported exe's two boot ERROR lines (a headless shader `custom_samplers` condition, `N resources still in use at

@@ -870,3 +870,18 @@ untracked dev/sim/car_route_trails.gd copy is mine) and `git branch -D n15t-cont
   1433 GDScript files`, `unit-tests: 2542 passed, 0 failed, 2 skipped`, `scenario-tests: 55 passed`, parity bit for bit
   (planted caught at 629), selftest look 11/11, `release-compile: 668 loaded, 0 failed`. Reels running. Later commits
   are Node tools (merge preview: tool-tests in the pre-commit full lint 18/18; Linux 896/0) and docs.
+- 05:11 MILESTONE final gate on decdd8331 (every code change of session 6): `top: OK; code 0`, `tilt70: OK; code 0`,
+  `combo: OK; code 0`, `PASS reels: exit 0`, `gate: PASS` (build/gate/decdd8331c9c/gate.json). Snapshot removed
+  (`git worktree list | grep -c decdd8331c9c` -> 0). Later commits: tools/merge/preview.mjs (+test, morning.mjs
+  `export const DOCS`, README), docs only; each passed the pre-commit full lint 18/18 with tool-tests.
+
+NEXT (session 7): (1) Read hero/combat JOURNALs for REQUEST tools / FRICTION (served to 04:55: launch-flags, film
+--rev, quest1 still lead, run_reels default, cherry-pick 5e41c66bc for test_quest_blade). (2) `node
+tools/merge/preview.mjs --lanes=n15-tools,n15-hero,n15-combat` on the then tips; if a NEW code clash shows, check it
+(and `python evidence/merge/resolve_hero_x_combat.py` for cast_flags.gd / rivet_res.gd); refresh REPORT merge notes.
+(3) Weakest left: t-5 cost on a quiet machine (only under bench.lock with no other Godot: `tasklist | grep -ci
+godot`); else keep CONTENDED. (4) If code changes, full gate + reels (`node tools/gate/run.mjs --rev=HEAD --reels
+--timeout=40`), then removeSnapshot. (5) REPORT final by 07:40. (6) End of night: `git worktree remove --force
+C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-sim-hash`, my mutate worktree
+`%TEMP%/gtai-mutate-6bd4df1a` (`git worktree remove --force`). Write JOURNAL times from `date` at that moment
+(session 6 needed three corrections).
