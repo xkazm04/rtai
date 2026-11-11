@@ -1093,3 +1093,11 @@ combat's `--select` InputMap FRICTION first.
   No code change past freeze.
 NEXT: unchanged from session 8: Director merges n15-tools first (rebuild DLLs debug+release, --import), then hero,
 then combat with `evidence/merge/resolve_hero_x_combat.py` (REPORT "Merge notes").
+
+## Session 10 (iteration 16, REPORT, 07:40 -> 07:43)
+- 07:40 tree clean on c01560e09. `cites.mjs REPORT.md` -> 58 paths, 57 ok, 1 unchecked (the quoted message at :113).
+  Lane tips moved since the 07:33 preview (hero 48fadb3c1 -> 53f03658d, combat 7c84042c3 -> 3c527f55b);
+  `git diff --stat` on each = `JOURNAL.md | 4 ++++` only, so preview + resolver result stand. REPORT header and
+  Merge notes note the re-check. No code change.
+NEXT: unchanged: Director merges n15-tools first (rebuild DLLs debug+release, --import), then hero, then combat with
+`evidence/merge/resolve_hero_x_combat.py` (REPORT "Merge notes").

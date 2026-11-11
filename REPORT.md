@@ -1,4 +1,4 @@
-# REPORT n15-tools (final, 07:32; sessions 1-8)
+# REPORT n15-tools (final, 07:32; sessions 1-8; re-checked 07:41, iteration 16)
 
 Branch `n15-tools` from main `5c5c03611`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n15\tools\` (`frames.json`),
 `evidence/` in this tree, JOURNAL.md for every command and its output.
@@ -282,6 +282,8 @@ caught at step 629), selftest look goldens 11/11 + block 5/5 (worst 0.00), relea
   `rivet_res.gd`), nothing new. `python evidence/merge/resolve_hero_x_combat.py` on both conflicted files of
   `main + n15-tools + n15-hero` x `n15-combat` exits 0, and `node tools/style/flag_routes.mjs <resolved cast_flags.gd>`
   -> `0 unrouted flag(s)`. Resolve those two with the resolver, commit, `morning.mjs --resume`.
+- 07:41 re-check: tips moved to hero 53f03658d, combat 3c527f55b, but `git diff --stat 48fadb3c1 n15-hero` and
+  `git diff --stat 7c84042c3 n15-combat` each show only `JOURNAL.md | 4 ++++`, so the 07:33 preview and resolver result stand.
 
 - First run `node tools/merge/preview.mjs --lanes=n15-tools,n15-hero,n15-combat`. At 04:50 it said: tools clean;
   hero only JOURNAL, REPORT and baseline (morning resolves them); combat STOP on `cast_flags.gd` and `rivet_res.gd`
