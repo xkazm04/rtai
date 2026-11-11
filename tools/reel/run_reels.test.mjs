@@ -80,3 +80,15 @@ test('the line sink writes every line to the log as it arrives and counts finish
   sink('[INFO] showcase: director chapter rocket: 1/4 down');
   assert.deepEqual(seen, ['run_reels: top chapter 1 pistol 3/3 down', 'run_reels: top chapter 2 rocket 1/4 down']);
 });
+
+test('parseMain: the bare command is the reel gate (build/reels, 3 views, 19); bad args still refused', async () => {
+  const { DEFAULT_OUT, parseMain } = await import('./run_reels.mjs');
+  const bare = parseMain([]);
+  assert.deepEqual(bare, { views: ['top', 'tilt70', 'combo'], expect: 19, out: DEFAULT_OUT, defaulted: true });
+  assert.equal(path.relative(path.resolve(import.meta.dirname, '../..'), DEFAULT_OUT), path.join('build', 'reels'));
+  assert.deepEqual(parseMain(['--out=x', '--views=top', '--expect=3']), { views: ['top'], expect: 3, out: 'x', defaulted: false });
+  assert.match(parseMain(['--out=a', '--out=b']).error, /invalid argument --out=b/);
+  assert.match(parseMain(['--loadout=pistol']).error, /invalid argument/);
+  assert.match(parseMain(['--expect=-1']).error, /nonnegative/);
+  assert.match(parseMain(['--views=top;rm']).error, /view names/);
+});
