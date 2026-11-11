@@ -32,7 +32,7 @@ func bind(kills: SignatureKills, ppm: float, reduced_motion: bool) -> void:
 		fx.set(&"kills", kills)
 		fx.set(&"ppm", ppm)
 		fx.set(&"reduced_motion", reduced_motion)
-	char_fx.z_index = 4
+	char_fx.z_index = 40  # n16: the embers on the burnt man, over his parts (they reach +30)
 	add_child(char_fx)
 	shock_fx.z_index = 40  # the X-ray over the living rigs crowding the victim (parts reach +30)
 	add_child(shock_fx)
