@@ -851,3 +851,8 @@ untracked dev/sim/car_route_trails.gd copy is mine) and `git branch -D n15t-cont
   1 fails, restored. Pre-commit full lint 18/18 incl. tool-tests.
 - 04:52 CORRECTION: the 04:52 and 04:53-04:58 times above were guesses; from git they are 04:48 (aa9d6acdd 04:49:02)
   and 04:49-04:51 (7bda4d18c 04:50:48). The final gate on decdd8331 is at scenarios 11/55 at 04:51.
+- 04:55 item 6 / CI on a REAL Linux clone (WSL `-d Ubuntu`, Node v24.14.0, `git clone --no-local --branch n15-tools`
+  at c1e7fb183, hooks off for the clone only): the Node tool list (AGENTS globs + film, merge, codex, gate, reel)
+  `tests 896, pass 894, fail 0, skipped 2`, so tonight's new tests (launch_flags, film_rev, run_reels parseMain,
+  merge preview) pass on Linux too. My first try ran in the default distro (NVIDIA-Workbench: no ~/node24, nothing
+  ran); its stray clone removed. Ubuntu clone removed (`ls ~ | grep -c n15t_clone` -> 0).
