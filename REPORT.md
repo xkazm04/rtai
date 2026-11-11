@@ -5,6 +5,10 @@ behind its own before flag (CastFlags). No sim change: the replay and parity gol
 Evidence: `evidence/n17-rivet-strike/` (same files and `frames.json` as `gtai-masters/n17/rivet-strike/`).
 Defect log: `DEFECTS.md`.
 
+Gates (session 2): `node tools/evidence/run.mjs --no-bench --no-release` on 8a47c51db: lint 19/19, unit 2786
+passed 0 failed, scenarios 55/55, parity bit-exact, look goldens 11/11 and block goldens 5/5 (worst 0.00). Reel gate
+on 48c91e944: top, tilt70, combo OK. Bench not run (CONTENDED machine; render-only lane).
+
 ## What works, with evidence
 
 | Item | Commit | Before flag | Measured before -> after | Evidence |
