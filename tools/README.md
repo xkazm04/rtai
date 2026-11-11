@@ -43,6 +43,13 @@ It always passes the scene, the bot, the loadout, a fixed seed and a fixed 60 Hz
 every fighter), `film.json` and `film.log`. An mp4 only comes when you give `--movie` or ask for no
 stills, because `--write-movie` is slow (about 1.5 fps with other lanes running).
 
+**Queue films while you edit: `--rev=<commit>`.** A film reads the tree as it stands when Godot loads
+each script, so an edit during a queue breaks the films after it (n15 combat: 4 films died with SCRIPT
+ERROR). `--rev=HEAD` films that commit in compare's snapshot (`%TEMP%/gtai-film-<sha>`, probe injected,
+kept for the next film of it; `--native=donor` as in compare). A live-tree film with uncommitted
+`project/` paths prints them before it runs. Example (a parse error planted in the live tree):
+`film.mjs arena --rev=HEAD --stills=300` PASS, `film.mjs arena --stills=300` FAIL with the warning.
+
 The camera: `--lock=auto` (the default) holds it at Rivet's spawn, except on the street shots, where
 it follows him and freezes at your first still. `--lock=at:<tick>`, `--lock=<x,y>` and `--lock=off`
 are there when you need them. A locked camera also turns the hit-feel shake off, so a frame

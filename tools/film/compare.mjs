@@ -11,13 +11,16 @@
 // snapshot is kept for the next compare of that commit and named at the end; --clean removes it.
 // Exit: 0 pass, 1 fail, 2 usage, 3 unverifiable.
 import { spawnSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { basename, join, resolve } from 'node:path';
+import { copyFileSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT } from '../lib/repo.mjs';
-import { ensureSnapshot, removeSnapshot, revParse } from '../lib/snapshot.mjs';
+import { removeSnapshot } from '../lib/snapshot.mjs';
+import { resolveSide } from './side.mjs';
 import { EXIT, filmOne, plan } from './film.mjs';
 import { subjectRow } from './subject.mjs';
+// film.mjs --rev resolves a commit the same way; it lives in side.mjs because compare imports film.
+export { nativeDiffers, nativeRefusal, resolveSide } from './side.mjs';
 
 export { subjectRow };
 import { diffImages, readPng } from './png.mjs';
@@ -31,10 +34,6 @@ const DEFAULTS = { view: 'combo', ppm: '48', lock: 'auto', seed: '20261109', res
 export const IDENTICAL_FRACTION = 0.00005;
 /** Rivet further apart than this (m) at a tick: the two sides are no longer the same moment. */
 export const TIMELINE_DELTA_M = 0.05;
-const PROBE = 'project/dev/frames/film_probe.gd';
-const PROBE_FILES = [PROBE, 'project/dev/frames/film_card.gd', 'project/dev/frames/film_trigger.gd'];
-const INJECTED = '.gtai-film-injected';
-const HOOK = /^(\s*)FightFrames\.attach\(self, args, session\.world\).*$/m;
 
 /** {shotText, flags, extra} or {error}. */
 export function parseArgv(argv) {
@@ -75,51 +74,6 @@ export function judgeTick({ diff, subjectA, subjectB, subject }) {
 
 /** A worse outcome always wins: fail, then unverifiable, then pass. */
 export const worst = (list) => (list.includes('fail') ? 'fail' : list.includes('unverifiable') ? 'unverifiable' : 'pass');
-
-/** Puts this kit's probe in a snapshot older than the kit (a throwaway tree). Every run copies it
- *  again, because a cached snapshot must not film with last week's probe. */
-function injectProbe(path) {
-  const mark = join(path, INJECTED);
-  if (PROBE_FILES.every((rel) => existsSync(join(path, rel))) && !existsSync(mark)) return false;
-  const game = join(path, 'project/dev/arena/arena_game.gd');
-  const text = readFileSync(game, 'utf8');
-  if (!text.includes('FilmProbe.attach')) {
-    if (!HOOK.test(text)) throw new Error(`compare: ${game} has no FightFrames.attach line to hook the probe on`);
-    writeFileSync(game, text.replace(HOOK, (line, indent) => `${line}\n${indent}FilmProbe.attach(self, args)`));
-  }
-  for (const rel of PROBE_FILES) copyFileSync(join(ROOT, rel), join(path, rel));
-  writeFileSync(mark, 'probe injected by tools/film/compare.mjs\n');
-  return true;
-}
-
-/** True when `native/` at `sha` is not `native/` at the root's HEAD (git diff exits 1). */
-export function nativeDiffers(root, sha) {
-  const r = spawnSync('git', ['-C', root, 'diff', '--quiet', sha, 'HEAD', '--', 'native'], { encoding: 'utf8', windowsHide: true });
-  return r.status === 1;
-}
-
-/** A commit side runs in a snapshot that gets the DLLs of THIS tree (built from its HEAD's native/), so
- *  when the sim's C++ differs at that commit the side is not that commit's sim: refused, unless the change
- *  under test is view-only and the caller says so with --native=donor (n15 t-4 film: the before would
- *  have run the after's car routing). The fix is a worktree at the commit with its own DLLs as the side. */
-export function nativeRefusal(value, sha, differs, native) {
-  if (!differs || native === 'donor') return null;
-  return `compare: native/ at ${value} (${sha.slice(0, 8)}) differs from this tree's HEAD, but its snapshot would run this tree's DLLs, `
-    + `so it would not be ${value}'s sim. Film a worktree at ${value} that has its own DLLs (tools/dev/wt_init.mjs, then just native) `
-    + 'as that side, or pass --native=donor when the change under test is not in the sim.';
-}
-
-/** Resolves a side to a runnable tree: {tree, label, snapshot, injected} or {error}. */
-export function resolveSide(value, { root = ROOT, ensure = ensureSnapshot, native, differs = nativeDiffers, rev = revParse } = {}) {
-  const dir = resolve(value);
-  if (existsSync(join(dir, 'project', 'project.godot'))) return { tree: dir, label: basename(dir), snapshot: false, injected: false };
-  const sha = rev(root, value);
-  if (!sha) return { error: `compare: ${value} is neither a worktree nor a commit git knows` };
-  const refusal = nativeRefusal(value, sha, differs(root, sha), native);
-  if (refusal) return { error: refusal };
-  const snap = ensure({ root, rev: value, kind: 'film' });
-  return { tree: snap.path, label: sha.slice(0, 8), snapshot: true, injected: injectProbe(snap.path) };
-}
 
 const escape = (s) => String(s).replace(/[':\\%]/g, ' ');
 const text = (s, y, colour) => `drawtext=fontfile=arialbd.ttf:text='${escape(s)}':x=12:y=${y}:fontsize=20:fontcolor=${colour}:box=1:boxcolor=black@0.7:boxborderw=6`;
