@@ -66,7 +66,7 @@ static func draw(ci: CanvasItem, at: Vector2, focus: Vector2, tick: int = -1) ->
 		return
 	var lies: Vector2 = lies_at_from(at, focus)
 	var shot: Vector2 = _away.get(at, Vector2.RIGHT)
-	if GroundDropShowcase.draw(ci, lies, shot, LENGTH_M):  # n17: the pickup's showcase drawing
+	if GroundDropShowcase.draw(ci, at, shot, LENGTH_M):  # n17: the pickup's showcase drawing
 		return
 	if DRAWN and sheet() != null:
 		_draw_cell(ci, at, lies, ViewMode.shared().ground_k())

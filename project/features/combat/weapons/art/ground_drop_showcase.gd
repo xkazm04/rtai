@@ -5,14 +5,17 @@ extends RefCounted
 ## pickup) draws the pickup's WeaponShowcase drawing (the arsenal's art stand-in: assault-rifle ->
 ## machine_pistol, the gun Rivet then holds), keyed by the view's art like every floor pickup,
 ## stood up for the camera and never spun. One rule for its direction: it lies along the shot, the
-## muzzle pointing the way the round flew on screen (mirrored, never turned), where GroundRifle
-## places it (back toward the shooter, to one side). Before, the lying-rifle sheet picked one of 8
-## headings from a hash of the drop's position. Straight down (no form), `--showcase=off` or ON
+## muzzle pointing the way the round flew on screen (mirrored, never turned), SIDE_M off the shot
+## line on the camera's side (GroundRifle's spot back toward the shooter lay under the pistol
+## snap's corpse, which falls head toward Rivet: film drop_068c_d0). Before, the sheet picked one
+## of 8 headings from a hash of the drop's position. Straight down (no form), `--showcase=off` or ON
 ## false = GroundRifle's sheet (the before).
 const ON: bool = true
 const PICKUP: StringName = &"assault-rifle"
 ## A shot within this of straight up or down the screen keeps the muzzle to +x (no flicker).
 const VERTICAL_X: float = 0.05
+## How far (m) off the shot line through where he fell the gun lies: clear of a body along it.
+const SIDE_M: float = 0.6
 
 static var _showcase: WeaponShowcase = null
 static var _art: StringName = &""
@@ -29,22 +32,32 @@ static func texture() -> Texture2D:
 	return _showcase.texture(_art, form)
 
 
-## True when the drawing was drawn at `lies` (m), its muzzle along `shot` (the shot's ground
-## direction, from the shooter), `length_m` long; false = no drawing (the caller's sheet).
-static func draw(ci: CanvasItem, lies: Vector2, shot: Vector2, length_m: float) -> bool:
+## True when the drawing was drawn beside the drop at `at` (m), its muzzle along `shot` (the
+## shot's ground direction, from the shooter), `length_m` long; false = none (the caller's sheet).
+static func draw(ci: CanvasItem, at: Vector2, shot: Vector2, length_m: float) -> bool:
 	var tex: Texture2D = texture()
 	if tex == null:
 		return false
+	var lies: Vector2 = lies_at(at, shot)
 	var gk: float = maxf(ViewMode.shared().ground_k(), 0.1)
 	var k: float = length_m * Ink.PX_PER_M / float(tex.get_width())
 	var size: Vector2 = Vector2(tex.get_width() * k, tex.get_height() * k / gk)
-	var at: Vector2 = Ink.px(lies)
-	ci.draw_set_transform(at + GroundRifle.SHADOW_OFF, 0.0, Vector2(sign_x(shot), 1.0))
+	var px: Vector2 = Ink.px(lies)
+	ci.draw_set_transform(px + GroundRifle.SHADOW_OFF, 0.0, Vector2(sign_x(shot), 1.0))
 	ci.draw_texture_rect(tex, Rect2(-size * 0.5, size), false, Color(0, 0, 0, GroundRifle.SHADOW.a))
-	ci.draw_set_transform(at, 0.0, Vector2(sign_x(shot), 1.0))
+	ci.draw_set_transform(px, 0.0, Vector2(sign_x(shot), 1.0))
 	ci.draw_texture_rect(tex, Rect2(-size * 0.5, size), false)
 	ci.draw_set_transform_matrix(Transform2D.IDENTITY)
 	return true
+
+
+## Where the gun lies for a drop at `at` (m): SIDE_M across the shot, on the side nearer the camera
+## (screen down; a shot straight down the screen: to the right).
+static func lies_at(at: Vector2, shot: Vector2) -> Vector2:
+	var side: Vector2 = shot.normalized().orthogonal()
+	if side.y < 0.0 or (is_zero_approx(side.y) and side.x < 0.0):
+		side = -side
+	return at + side * SIDE_M
 
 
 ## +1 when the muzzle (+x in the drawing) points right on screen, -1 when the drawing is mirrored.

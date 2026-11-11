@@ -30,3 +30,19 @@ func test_a_drop_without_a_drawing_is_left_to_the_sheet() -> void:
 	var ci: Node2D = autofree(Node2D.new())
 	assert_false(GroundDropShowcase.draw(ci, Vector2.ZERO, Vector2.RIGHT, 1.0))
 	ViewMode._shared = was
+
+
+func test_it_lies_beside_the_shot_line_on_the_cameras_side() -> void:
+	var at: Vector2 = Vector2(10.0, 10.0)
+	var lies: Vector2 = GroundDropShowcase.lies_at(at, Vector2.RIGHT)
+	assert_almost_eq(
+		lies, at + Vector2(0.0, GroundDropShowcase.SIDE_M), Vector2.ONE * 1e-4, "shot east"
+	)
+	lies = GroundDropShowcase.lies_at(at, Vector2.LEFT)
+	assert_almost_eq(
+		lies, at + Vector2(0.0, GroundDropShowcase.SIDE_M), Vector2.ONE * 1e-4, "shot west"
+	)
+	lies = GroundDropShowcase.lies_at(at, Vector2.DOWN)
+	assert_almost_eq(
+		lies, at + Vector2(GroundDropShowcase.SIDE_M, 0.0), Vector2.ONE * 1e-4, "shot south"
+	)
