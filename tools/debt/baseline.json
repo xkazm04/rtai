@@ -339,7 +339,7 @@
         "project/features/combat/hit_feel/hit_feel.gd": 220,
         "project/features/combat/kills/kill_char_fx.gd": 203,
         "project/features/combat/kills/kill_lab.gd": 213,
-        "project/features/combat/kills/kill_split_fx.gd": 225,
+        "project/features/combat/kills/kill_split_fx.gd": 201,
         "project/features/combat/kills/kill_view.gd": 286,
         "project/features/combat/react/crowd_react.gd": 235,
         "project/features/combat/react/react_link.gd": 288,
