@@ -400,3 +400,25 @@ lying cell ~0.4 m off: shift frame 3 per column so its body centre sits on the s
 (5) item 6: molotov vs flamethrower; the claw finisher (announce the kills-polish row edit first). (6) gates on the
 last code commit (`d1ab2f3c3`): full unit (2666/0/2 on 953d2972e), scenarios, `tools/evidence/run.mjs` (parity + look
 goldens), the reel gate `node tools/reel/run_reels.mjs`; REPORT.md is drafted (finalise by 19:40 with the Calls).
+- 14:36 GATE scenarios on `d1ab2f3c3`: 55/55 passed (`node tools/tests/run_scenarios.mjs`).
+- 14:38 MILESTONE `26b2bc2a6` nail_pin suit ped cells (nail_pin complete at p70 for all four kinds; grid looked at:
+  pinned, a real writhe with the head thrown aside, on his back at the nailed shoe).
+- 14:40 MILESTONE `b083b6d5a` baton_overload drawn cells for patrol, riot AND SWAT (SWAT landed meanwhile): cells.at
+  [0,20,40,45] (locked + veins; brighter + arcs + steam; sagging + smoke; on his back smoking in a grey soot ring);
+  KillCookArt's coded glow/veins/eyes step aside on own cells, steam and smoke stay. Unit 34/34. Kill reel dir 0 at
+  32 + 64 PASS (kill 68): `evidence/n16-kills-new/baton_overload_cells_{64,32}ppm_dir0_t69-218.png` (crop centred on
+  the standing spot; the camera drifts, so the corpse is cut at the left in the later tiles) and
+  `baton_overload_cells_64ppm_dir0_corpse_t108-218.png`, clips `_cells_reel_{32,64}ppm_dir0.mp4`. Judged: the drawn
+  veins of light, the arcs and steam at +20 and the sag at +40 read far better than the placeholder's chest flare,
+  at 32 px/m too. DEFECT: the corpse frame lies head TOWARD Rivet (the long fall's corpse direction, faced at the
+  shooter), not knocked back along the blow; the soot ring is faint on asphalt. Fix next: face the last frame along
+  +dir (a per-row fx, e.g. `cells_turn_at`), then judge again.
+- Asset status now: gatling_shred p70 patrol/riot/SWAT DELIVERED (frames 1-3 + 6 scrap cells `4_{1..6}.png`: the pack
+  must skip row 4, frames_of() would count it); the suit's gatling redraw and the suit's baton follow.
+
+NEXT (iteration 13, replaces the list above): (1) wire gatling_shred cells (patrol, riot, SWAT): teach
+`kill_cells_pack.py` a `--frames=3` (row 4 is the scraps), pack the scraps as KillShredArt's drawn scraps (0.15-0.3 m),
+cells.at e.g. [0,12,24]; judge vs the shred placeholder at the same ticks (the sideways jump goes with it). (2) the
+baton corpse faced back along the blow (above). (3) gates on the final code commit: full unit, scenarios (55/55 on
+d1ab2f3c3), `tools/evidence/run.mjs`, `tools/reel/run_reels.mjs`. (4) the pin/stitch corpse offset; item 6 (molotov
+vs flamethrower, the claw). REPORT.md is drafted: update its table (nail_pin suit, baton cells) and Calls by 19:40.
