@@ -10,20 +10,20 @@ extends RefCounted
 ## `cells_lean`). A kind with none keeps the fall grid.
 
 const META: StringName = &"kill_death_cells"
-## n17 npc-react (owner: "policemen are changing sizes on hit"): a grid whose first frame was
-## drawn larger than the walk and hanging below the feet (the cops' pistol snap, t0-8: 1.99-2.45 m
-## tall, boots 0.12-0.32 m under the point, film b_patrol64 t62 -> t63) draws that frame at FIT_K
-## of its scale, lifted FIT_LIFT texture px per facing column so the boot stands on the point
-## (measured in JOURNAL n17 20:20). Keyed "<art>/<file>": the p55 sheets stand on the point at
-## 2.00-2.34 m (walk 1.95) and are not fitted. FIT_ON false = every frame as drawn (the before).
+## n17 npc-react (owner: "policemen are changing sizes on hit"): the cops' pistol snap was drawn
+## ~1.2-1.3 x the walk through its standing frames (film b_patrol64 t62 -> t63; its first frame
+## also 0.12-0.32 m under the point). Each frame row draws at FIT_K[row] of its scale (the head
+## thrown back and the buckle at the walk's size, the pitch forward halfway, the corpse as drawn:
+## bodies keep their length), scaled about the feet, and the first row is lifted FIT_LIFT texture
+## px per facing column so the boot stands on the point (JOURNAL n17 20:20-20:45). Keyed
+## "<art>/<file>": the p55 snaps stand on the point already. FIT_ON false = as drawn (the before).
 const FIT_ON: bool = true
-const FIT_ROWS: int = 1
-const FIT_K: Dictionary[String, float] = {
-	"p70/cop_patrol_pistol_snap.png": 0.85,
-	"p70/cop_riot_pistol_snap.png": 0.8,
-	"p70/swat_pistol_snap.png": 0.8,
+const FIT_K: Dictionary[String, Array] = {
+	"p70/cop_patrol_pistol_snap.png": [0.85, 0.85, 0.92, 1.0],
+	"p70/cop_riot_pistol_snap.png": [0.8, 0.8, 0.9, 1.0],
+	"p70/swat_pistol_snap.png": [0.8, 0.8, 0.9, 1.0],
 }
-const FIT_LIFT: Dictionary[String, PackedInt32Array] = {
+const FIT_LIFT: Dictionary[String, Array] = {
 	"p70/cop_patrol_pistol_snap.png": [21, 15, 5, 10, 22],
 	"p70/cop_riot_pistol_snap.png": [57, 25, 24, 15, 57],
 	"p70/swat_pistol_snap.png": [17, 11, 5, 15, 18],
@@ -105,8 +105,8 @@ static func step(d: KillNewStyles.Death, age: int) -> bool:
 	return f >= 0
 
 
-## Stands frame `f` of a FIT grid at the walk's size on the point (scaled about the feet); any
-## other frame or grid as drawn.
+## Draws frame `f` of a FIT grid at its row's size step, the first row lifted onto the point;
+## any other grid as drawn.
 static func fit(cells: Sprite2D, f: int) -> void:
 	var key: String = ""
 	if cells.texture != null:
@@ -116,8 +116,10 @@ static func fit(cells: Sprite2D, f: int) -> void:
 		return
 	if not cells.has_meta(BASE):
 		cells.set_meta(BASE, cells.scale)
-	var on: bool = f >= 0 and f < FIT_ROWS
+	var ks: Array = FIT_K[key]
+	var k: float = ks[clampi(f, 0, ks.size() - 1)]
 	var base: Vector2 = cells.get_meta(BASE)
-	cells.scale = base * (FIT_K[key] if on else 1.0)
-	var lift: float = FIT_LIFT[key][cells.frame_coords.x]
-	cells.offset = Vector2(0.0, -lift) if on else Vector2.ZERO
+	cells.scale = base * (k if f >= 0 else 1.0)
+	var lifts: Array = FIT_LIFT[key]
+	var lift: float = lifts[cells.frame_coords.x]
+	cells.offset = Vector2(0.0, -lift) if f == 0 else Vector2.ZERO
