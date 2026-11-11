@@ -457,3 +457,11 @@ final, add this sheet to frames.json) and NEXT 5 while it runs or after.
 - REPORT.md final (gate state, Calls incl. the KILLS ranking, next steps).
 
 NEXT: full gate on 338603083+ incl. reels (`node tools/gate/run.mjs --rev=<tip> --reels`); then REPORT next steps 2-4.
+
+## Iteration 16 (STABILIZE, 19:32-19:40)
+- 19:34 tree clean on 0b0bbb627; lint on the tip: 19/19 PASS over 1490 GDScript files. No code change since the
+  last full gate except docs/evidence; REPORT.md, KILLS.md, DEFECTS.md final; gtai-masters/n16/kills-polish holds
+  15 png + frames.json. No full gate started: it would not finish before 19:40 (unit ~13 min + reels ~15 min).
+
+NEXT: full gate on 0b0bbb627 incl. reels (`node tools/gate/run.mjs --rev=0b0bbb627 --reels`) before the merge;
+then REPORT next steps 2-4.
