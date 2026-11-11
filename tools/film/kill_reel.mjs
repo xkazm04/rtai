@@ -13,14 +13,14 @@ import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { EXIT, filmOne, pinRev, plan } from './film.mjs';
-import { goreWhole, killWindow, measureBeats, pickBeats, reelPlan, sheetOf, tableRows, victimAt } from './kill_reel_lib.mjs';
+import { goreWhole, killWindow, measureBeats, measureHold, pickBeats, reelPlan, sheetOf, tableRows, victimAt } from './kill_reel_lib.mjs';
 import { diffImages, readPng } from './png.mjs';
 import { filmedRoot } from './side.mjs';
 import { encodePng, label } from './sheet.mjs';
 import { spawnSync } from 'node:child_process';
 
 const USAGE = 'usage: node tools/film/kill_reel.mjs --out=<dir> [--weapons=all|<id,id>] [--victims=<kind,...>] [--dirs=<deg|wall,...>] '
-  + '[--ppm=32,64] [--after=150] [--rev=<commit>] [--before=<commit>] [--native=donor] [--clips] [--keep-frames] [--gore-check] [--timeout=<s>] [--dry-run] [-- flags]';
+  + '[--ppm=32,64] [--after=150] [--rev=<commit>] [--before=<commit>] [--native=donor] [--clips] [--keep-frames] [--gore-check] [--feel=on|off|auto] [--timeout=<s>] [--dry-run] [-- flags]';
 const WORST = ['pass', 'unverifiable', 'fail'];
 /** n16 session 1 (build/kreel/t2 t60, build/film/victim_proof): the lab guard is drawn by no rig the probe finds
  *  (`FilmCard.rig` -> null, draw -1), and at the combo zooms it stood as the riot cop with --victim=thug. Film now
@@ -33,7 +33,7 @@ const WORST = ['pass', 'unverifiable', 'fail'];
 export function planFilm(job, side, reel, known = undefined) {
   const window = known === undefined || reel.clips ? { stills: '54-70', on: `kill:1+${reel.after}` } : { stills: pickBeats(known, reel.after).join(',') };
   const flags = { out: job.dir, ppm: String(job.ppm), ...window, view: 'combo', lock: 'auto',
-    seed: '20261109', res: '1280x800', feel: 'auto', subject: 'rivet', timeout: String(reel.timeout), tree: side.tree };
+    seed: '20261109', res: '1280x800', feel: reel.feel ?? 'auto', subject: 'rivet', timeout: String(reel.timeout), tree: side.tree };
   if (job.victim) flags.victim = job.victim;
   const turn = job.dir_deg === 'wall' ? ['--sig-wall'] : job.dir_deg ? [`--sig-dir=${job.dir_deg}`] : [];
   const extra = [...turn, ...reel.extra];
@@ -54,6 +54,9 @@ async function filmJob(job, side, reel, runner, known) {
   const clip = reel.clips ? encodeClip(job, saved, k, box) : null;
   const frames = new Map(beats.map((t) => [t, readPng(join(job.dir, `t${t}.png`))]));
   const measured = measureBeats(frames, beats, k, box, diffImages);
+  const run = Array.from({ length: 13 }, (_, i) => k + i).filter((t) => saved.has(t));
+  const held = measureHold(new Map(run.map((t) => [t, frames.get(t) ?? readPng(join(job.dir, `t${t}.png`))])), k, box, diffImages);
+  if (measured && held !== null) measured.held_ticks = held;
   if (!reel.keepFrames) {
     for (const name of readdirSync(job.dir)) {
       const t = /^t(\d+)\.png$/.exec(name);
@@ -156,7 +159,7 @@ export async function main(argv, { out = console.log, err = console.error, runne
     if (!kills.has(key) && Number.isInteger(film.kill)) kills.set(key, film.kill);
     rows.push({ job, film });
     out(`kill_reel: ${job.side} ${job.weapon} ${job.victim || 'guard'} dir ${job.dir_deg} ${job.ppm} px/m: ${film.outcome.toUpperCase()}`
-      + `${film.kill !== undefined ? ` kill at ${film.kill}` : ''}${film.measured ? `, settled by +${film.measured.settled_after_ticks ?? '?'}, aftermath ${(film.measured.aftermath_share * 100).toFixed(1)} % of the window` : ''}`
+      + `${film.kill !== undefined ? ` kill at ${film.kill}` : ''}${film.measured ? `, held ${film.measured.held_ticks ?? '?'} (measured), settled by +${film.measured.settled_after_ticks ?? '?'}, aftermath ${(film.measured.aftermath_share * 100).toFixed(1)} % of the window` : ''}`
       + `${film.reasons.length ? `: ${film.reasons.join('; ')}` : ''}`);
   }
   const sheets = [];

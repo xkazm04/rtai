@@ -44,7 +44,7 @@ const list = (text, fallback) => (text === undefined || text === true ? fallback
 
 /** Everything the reel needs before a launch, or {error}. Pure apart from reading `tree`'s tables for `all`. */
 export function reelPlan(flags, extra, tree = ROOT) {
-  const known = new Set(['out', 'weapons', 'victims', 'dirs', 'ppm', 'after', 'rev', 'before', 'native', 'clips', 'keep-frames', 'timeout', 'dry-run', 'gore-check']);
+  const known = new Set(['out', 'weapons', 'victims', 'dirs', 'ppm', 'after', 'rev', 'before', 'native', 'clips', 'keep-frames', 'timeout', 'dry-run', 'gore-check', 'feel']);
   const stray = Object.keys(flags).find((k) => !known.has(k));
   if (stray) return { error: `unknown option --${stray}` };
   if (!flags.out || flags.out === true) return { error: '--out=<dir> is required' };
@@ -61,10 +61,11 @@ export function reelPlan(flags, extra, tree = ROOT) {
   if (flags.native !== undefined && !flags.rev && !flags.before) return { error: '--native=donor goes with --rev or --before' };
   if (extra.some((a) => /^--(sig-dir|sig-wall|sig-gun|sig-solo|victim|seed|ppm)(=|$)/.test(a))) return { error: 'the reel sets --sig-dir, --sig-wall, --sig-gun, --sig-solo, --victim, --seed and --ppm itself: use --dirs, --weapons, --victims, --ppm' };
   if (flags['gore-check'] && extra.some((a) => a.startsWith('--gore='))) return { error: '--gore-check passes --gore=reduced itself' };
+  if (flags.feel !== undefined && !['on', 'off', 'auto'].includes(flags.feel)) return { error: `--feel takes on, off or auto, got ${flags.feel}` };
   const victims = list(flags.victims, ['']);
   const jobs = weapons.flatMap((weapon) => victims.flatMap((victim) => dirs.flatMap((dir_deg) => ppm.map((p) => ({ weapon, victim, dir_deg, ppm: p })))));
   const gore = flags['gore-check'] === true;
-  return { out: resolve(flags.out), weapons, victims: victims.filter(Boolean), dirs, ppm, after, jobs, goreCheck: gore,
+  return { out: resolve(flags.out), weapons, victims: victims.filter(Boolean), dirs, ppm, after, jobs, goreCheck: gore, feel: flags.feel ?? 'auto',
     extra: gore ? [...extra, '--gore=reduced'] : extra,
     rev: flags.rev ?? null, before: flags.before ?? null, native: flags.native ?? null, clips: flags.clips === true,
     keepFrames: flags['keep-frames'] === true, dryRun: flags['dry-run'] === true, timeout: Number(flags.timeout ?? 300) };
@@ -139,4 +140,19 @@ export function measureBeats(frames, beats, kill, box, diff, { tolerance = 12, s
   const end = crop(last);
   const settled = beats.filter((t) => t > kill && frames.has(t)).find((t) => diff(crop(t), end, tolerance).fraction < still) ?? null;
   return { aftermath_share: Number(diff(crop(60), end, tolerance).fraction.toFixed(4)), settled_by: settled, settled_after_ticks: settled === null ? null : settled - kill };
+}
+
+/** The measured held beat: ticks from the kill on that the kill window holds still (each frame differs from the one
+ *  before by under `still`), counted over consecutive frames `frames` (tick -> image) from the kill tick; null when
+ *  the frames are not consecutive there (a later zoom saves beats only). Beside the table's hit-stop + held ticks:
+ *  a freeze reads as hold; a window that never stops moving reads 0. */
+export function measureHold(frames, kill, box, diff, { tolerance = 12, still = 0.002, max = 12 } = {}) {
+  if (!frames.has(kill) || !frames.has(kill + 1)) return null;
+  const crop = (t) => cropImage(frames.get(t), box);
+  let held = 0;
+  for (let t = kill + 1; t <= kill + max && frames.has(t); t++) {
+    if (diff(crop(t - 1), crop(t), tolerance).fraction >= still) break;
+    held += 1;
+  }
+  return held;
 }

@@ -45,6 +45,7 @@ test('the plan is weapons x victims x dirs x zooms, and refuses what the reel se
     assert.match(reelPlan({ out: 'o' }, ['--sig-dir=90'], root).error, /use --dirs/);
     assert.deepEqual(reelPlan({ out: 'o', weapons: 'katana', dirs: '90,wall' }, [], root).jobs.map((j) => j.dir_deg), [90, 90, 'wall', 'wall']);
     assert.match(reelPlan({ out: 'o' }, ['--sig-wall'], root).error, /use --dirs/);
+    assert.match(reelPlan({ out: 'o', feel: 'loud' }, [], root).error, /--feel/);
     assert.match(reelPlan({ out: 'o', bogus: true }, [], root).error, /unknown option --bogus/);
     assert.match(reelPlan({}, [], root).error, /--out/);
     assert.match(reelPlan({ out: 'o', native: 'donor' }, [], root).error, /--native/);
@@ -87,6 +88,8 @@ test('a later zoom with a known kill tick saves the beat frames only; a clip run
   assert.deepEqual(later.opts.on, []);
   assert.deepEqual(later.opts.stills, pickBeats(63, 150));
   assert.deepEqual(planFilm(job, side, { ...reel, clips: true }, 63).opts.on, first.opts.on);
+  assert.equal(planFilm(job, side, { ...reel, feel: 'on' }).opts.feel, 'on', '--feel=on: the hit-stop and punch are filmed');
+  assert.equal(first.opts.feel, 'auto');
   const wall = planFilm({ ...job, dir_deg: 'wall' }, side, reel);
   assert.ok(wall.opts.extra.includes('--sig-wall') && !wall.opts.extra.some((a) => a.startsWith('--sig-dir')), 'dir wall: the lab finds the wall');
 });
@@ -139,4 +142,15 @@ test('measured beats: what stays on the street, and the first beat the window st
   const m = measureBeats(frames, [60, 63, 65, 213], 63, [0, 0, 4, 4], diffImages);
   assert.deepEqual(m, { aftermath_share: 0.25, settled_by: 65, settled_after_ticks: 2 });
   assert.equal(measureBeats(new Map([[60, img(plain)]]), [60, 213], 63, [0, 0, 4, 4], diffImages), null);
+});
+
+test('the measured hold counts the still frames after the kill, and needs consecutive frames', async () => {
+  const { measureHold } = await import('./kill_reel_lib.mjs');
+  const { diffImages } = await import('./png.mjs');
+  const img = (v) => ({ width: 4, height: 4, channels: 3, data: Buffer.from(Array(48).fill(v)) });
+  const frozen = new Map([[63, img(100)], [64, img(100)], [65, img(100)], [66, img(100)], [67, img(200)], [68, img(200)]]);
+  assert.equal(measureHold(frozen, 63, [0, 0, 4, 4], diffImages), 3, '64 65 66 hold, 67 moves');
+  const moving = new Map([[63, img(100)], [64, img(140)], [65, img(180)]]);
+  assert.equal(measureHold(moving, 63, [0, 0, 4, 4], diffImages), 0);
+  assert.equal(measureHold(new Map([[63, img(100)], [65, img(100)]]), 63, [0, 0, 4, 4], diffImages), null, 'beats only');
 });
