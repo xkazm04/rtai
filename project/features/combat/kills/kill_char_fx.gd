@@ -14,8 +14,8 @@ const SMOKE: Color = Color(0.09, 0.075, 0.105, 0.62)
 const FLAKES: int = 34
 const WISPS: int = 6
 const SMOKE_TAIL: int = 150
-## n16: the embers' spread over the figure's box and where the smoke rises (KillFigure.at).
-const EMBER_SPREAD: Vector2 = Vector2(0.5, 0.7)
+## n16: the embers' spread on the figure's box (a cell is ~2x the man's width); the smoke's source.
+const EMBER_SPREAD: Vector2 = Vector2(0.2, 0.5)
 const SMOKE_FROM: Vector2 = Vector2(0.0, -0.45)
 const FLAKE_LIFE: float = 70.0
 ## A vaporised body's shadow: the char print burnt into the street, the paving showing through.
