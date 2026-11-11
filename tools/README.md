@@ -143,7 +143,8 @@ window between Rivet and the victim (each cell is labelled with its tick; `reel.
 film each row is, and `table` holds each weapon's signature_kills row: style, hitstop_ticks, grind_ticks,
 flash_ticks). `--clips` adds `clip.mp4` per film (60 fps, cropped, trigger window to kill+after). `--weapons=all`
 = every weapon Rivet can carry into the lab that has a signature row (burn films with the flamethrower and the
-molotov; the ghost rows are not lab weapons). Extra game flags go after `--` (`-- --gore=reduced`); the reel
+molotov; the ghost rows are not lab weapons; since n16 s5 Rivet's charged claw `claw_shock`, `PlayerShock.WEAPON`
+read from the filmed tree, which no weapon table lists: `kill:claw_shock` films it). Extra game flags go after `--` (`-- --gore=reduced`); the reel
 refuses `--sig-dir`, `--victim`, `--seed`, `--ppm` there, since it sets them.
 
 Each film line also gives the measured side of the beats, from its beat frames inside the kill window:

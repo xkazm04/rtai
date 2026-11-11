@@ -508,3 +508,17 @@ draft is current to 16:12. No project/ commit since caccc825d: the gate PASS sta
   test's "export called once" now says twice when it throws), lint 19/19.
 - SERVED (kills-polish FRICTION 14:20): 826b4035a. If a commit's lint ever reads your work tree again, the hook line
   now names the unstaged paths it read, and a one-off export failure is retried first.
+- 16:47 kills-new REQUEST 16:28: `kill:claw_shock` refused (`unknown sigweapon claw_shock`: shots.mjs listed weapons.json
+  + melee only); their workaround `--weapons=electro_gun -- --sig-gun=claw_shock` named electro_shock on the row line.
+- MILESTONE 8784c592b: `labWeapons(tree)` reads `PlayerShock.WEAPON` (`const WEAPON: StringName = &"claw_shock"` in the
+  filmed tree's player_shock.gd); film's `kill:` ids and the reel's `all` take it, the row line its own row. Test (no
+  player_shock.gd -> unknown; with it known; `all` films it once a row names it; tableRows -> claw_throw); film tests
+  267/0, lint 19/19. On this tree / kills-polish's, `all` now adds claw_shock (electro_shock's also_weapons there).
+- PROOF from the kills-new worktree: `node ../n16-tools/tools/film/kill_reel.mjs --out=<n16-tools>/build/kreel/s5claw
+  --weapons=claw_shock --dirs=0 --ppm=32,64 --rev=9ac925431` -> PASS, exit 0, 16:48:55-16:50:07 (72 s, scout + 2
+  films), kill 127 at both zooms, row line `claw_shock: claw_throw (throw) row hit-stop 4`. Looked at claw_shock_64.png:
+  the charge crackle at -2 and the kill, thrown east along the blow, on his back by +20, skid line to +150.
+  Evidence: evidence/n16-tools/kill-reel-claw-shock-kills-new-9ac925431-64ppm.png + reel_s5claw.md; masters frames.json
+  on top (rocket d90 dropped, 15 entries, no unreferenced file).
+- SERVED (kills-new REQUEST 16:28): 8784c592b. `kill_reel.mjs --weapons=claw_shock` (or `all`) films the charged claw
+  on its own claw_throw row; drop the `-- --sig-gun=claw_shock` workaround.
