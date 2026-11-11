@@ -68,3 +68,19 @@ func test_the_before_flag_routes_through_cast_flags() -> void:
 	assert_false(RivetFireTurn.enabled)
 	RivetFireTurn.enabled = true
 	CastFlags._read = was
+
+
+func test_publish_gives_the_rounds_age_and_none_once_the_trigger_cools() -> void:
+	var rig: CutRig = autofree(CutRig.new())
+	var t: Trigger = Trigger.new(WeaponTable.shipped().weapon(&"pistol"))
+	t.cooldown = t.spec.interval_ticks  # the round's own tick
+	assert_eq(RivetNoFlash.publish(rig, t), 0)
+	var age: int = rig.get_meta(RivetNoFlash.AGE)
+	assert_eq(age, 0)
+	t.cooldown = t.spec.interval_ticks - 2
+	assert_eq(RivetNoFlash.publish(rig, t), 2)
+	t.cooldown = 0
+	assert_eq(RivetNoFlash.publish(rig, t), RivetNoFlash.NONE, "cooled: no round up")
+	age = rig.get_meta(RivetNoFlash.AGE)
+	assert_eq(age, -1)
+	assert_eq(RivetNoFlash.publish(rig, null), RivetNoFlash.NONE, "no gun")
