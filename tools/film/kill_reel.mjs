@@ -16,7 +16,7 @@ import { mkdirSync, readdirSync, rmSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { EXIT, filmOne, pinRev, plan } from './film.mjs';
-import { anchorShifts, boxAt, goreWhole, killWindow, measureBeats, measureHold, measureStop, movieSpan, pickBeats, reelPlan, tableRows, victimAt } from './kill_reel_lib.mjs';
+import { anchorShifts, boxAt, curveText, stopText, goreWhole, killWindow, measureBeats, measureHold, measureStop, movieSpan, pickBeats, reelPlan, tableRows, victimAt } from './kill_reel_lib.mjs';
 import { beatLine, cutMovie, encodeClip, finish, resheet } from './kill_reel_out.mjs';
 import { diffImages, readPng } from './png.mjs';
 import { filmedRoot } from './side.mjs';
@@ -106,6 +106,7 @@ async function filmJob(job, side, reel, runner, known) {
   const held = measureHold(new Map(run.map((t) => [t, frames.get(t) ?? readPng(join(job.dir, `t${t}.png`))])), k, at, diffImages);
   if (measured && held !== null) measured.held_ticks = held;
   if (measured && measureStop(r.probe, k) !== null) measured.hitstop_frames = measureStop(r.probe, k);
+  if (measured && (r.manifest?.args ?? []).includes('--feel=off')) measured.feel_off = true;
   if (!reel.keepFrames) {
     for (const name of readdirSync(job.dir)) {
       const t = /^t(\d+)\.png$/.exec(name);
@@ -165,7 +166,9 @@ export async function main(argv, { out = console.log, err = console.error, runne
   }
   const jobs = reel.jobs.flatMap((j) => sides.map((s) => ({ ...j, side: s.name, dir: join(reel.out, j.weapon, `${s.name}_${j.victim || 'guard'}_d${j.dir_deg}_${j.ppm}`) })));
   for (const job of jobs) {
-    const bad = planFilm(job, sides.find((s) => s.name === job.side), reel).error;
+    // The plans the reel launches: a clip's full window, else the scout and a beat film (any kill after the trigger).
+    const side = sides.find((s) => s.name === job.side);
+    const bad = (reel.clips ? [planFilm(job, side, reel)] : [planFilm(job, side, reel, undefined, true), planFilm(job, side, reel, TRIGGER_TICK + 1)]).find((p) => p.error)?.error;
     if (bad) { err(`kill_reel: ${job.weapon}: ${bad}${olderTreeHint(bad)}\n${USAGE}`); return EXIT.usage; }
   }
   out(`kill_reel: ${jobs.length} film(s): ${reel.weapons.join(' ')} x victims [${reel.victims.join(' ') || 'guard'}] x dirs [${reel.dirs.join(' ')}] x ppm [${reel.ppm.join(' ')}] x ${sides.map((s) => s.name).join('/')}`);
@@ -189,7 +192,7 @@ export async function main(argv, { out = console.log, err = console.error, runne
     if (!kills.has(key) && Number.isInteger(film.kill)) kills.set(key, film.kill);
     rows.push({ job, film });
     out(`kill_reel: ${job.side} ${job.weapon} ${job.victim || 'guard'} dir ${job.dir_deg} ${job.ppm} px/m: ${film.outcome.toUpperCase()}`
-      + `${film.kill !== undefined ? ` kill at ${film.kill}` : ''}${film.measured ? `, hit-stop ${film.measured.hitstop_frames ?? '?'} frames + window still ${film.measured.held_ticks ?? '?'} ticks (measured), settled by +${film.measured.settled_after_ticks ?? '?'}, aftermath ${(film.measured.aftermath_share * 100).toFixed(1)} % of the window` : ''}`
+      + `${film.kill !== undefined ? ` kill at ${film.kill}` : ''}${film.measured ? `, hit-stop ${stopText(film.measured)} + window still ${film.measured.held_ticks ?? '?'} ticks (measured), settled by +${film.measured.settled_after_ticks ?? '?'}, aftermath ${(film.measured.aftermath_share * 100).toFixed(1)} % of the window (${curveText(film.measured)})` : ''}`
       + `${film.reasons.length ? `: ${film.reasons.join('; ')}` : ''}`);
   }
   return EXIT[finish(reel, rows, tableRows(sides.at(-1).tree, reel.weapons), { argv, sides }, out)];

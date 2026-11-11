@@ -70,7 +70,8 @@ export function writeSheet(file, rows) {
 export function beatLine(weapon, row) {
   if (!row?.id) return `${weapon}: no signature row (the standard death)`;
   return `${weapon}: ${row.id} (${row.style}) row hit-stop ${row.hitstop_ticks} (the pieces wait; the screen freeze is hit_feel.json's, measured per film), held ${row.held_ticks} (grind ${row.grind_ticks}, stand ${row.stand_ticks}), crumble ${row.crumble_ticks}, flash ${row.flash_ticks} ticks`
-    + (row.leftover_kills ? `; its scorch and spray stay until ${row.leftover_kills} later kills recycle them (leftover_budget ring, no timer)` : '');
+    + (row.body_gone_s ? `; the body and its pieces are gone by ${row.body_gone_s} s, the scorch and spray by ${row.stain_gone_s ?? '?'} s (corpse_decay.json linger + fade)` : '')
+    + (row.leftover_kills ? `${row.body_gone_s ? ', the marks sooner if' : '; its scorch and spray stay until'} ${row.leftover_kills} later kills recycle them (leftover_budget ring)` : '');
 }
 
 /** Sheets per weapon and zoom, the overview per zoom (more than one weapon), the beat lines, reel.json and reel.md;

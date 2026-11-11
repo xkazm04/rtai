@@ -41,7 +41,9 @@ test('the plan is weapons x victims x dirs x zooms, and refuses what the reel se
     assert.deepEqual(p.jobs[0], { weapon: 'katana', victim: 'thug', dir_deg: 0, ppm: 32 });
     assert.match(reelPlan({ out: 'o', dirs: '360' }, [], root).error, /--dirs/);
     assert.match(reelPlan({ out: 'o', ppm: '32,x' }, [], root).error, /--ppm/);
-    assert.match(reelPlan({ out: 'o', after: '999' }, [], root).error, /--after/);
+    assert.match(reelPlan({ out: 'o', after: '1201' }, [], root).error, /--after takes 1-1200 ticks/);
+    assert.equal(reelPlan({ out: 'o', after: '999' }, [], root).after, 999, 'a long aftermath without clips');
+    assert.match(reelPlan({ out: 'o', after: '231', clips: true }, [], root).error, /1-230 ticks with --clips .*up to 1200 without/);
     assert.match(reelPlan({ out: 'o' }, ['--sig-dir=90'], root).error, /use --dirs/);
     assert.deepEqual(reelPlan({ out: 'o', weapons: 'katana', dirs: '90,wall' }, [], root).jobs.map((j) => j.dir_deg), [90, 90, 'wall', 'wall']);
     assert.match(reelPlan({ out: 'o' }, ['--sig-wall'], root).error, /use --dirs/);
@@ -136,6 +138,21 @@ test('the beat line names the row and its timings, or says the weapon has the st
     /scorch and spray stay until 12 later kills recycle them/);
 });
 
+test('the data line names the street clock: corpse_decay linger + fade for the body and the stains (n16 s6)', async (t) => {
+  const { decayOf } = await import('./kill_reel_lib.mjs');
+  const { beatLine } = await import('./kill_reel.mjs');
+  const { ROOT } = await import('../lib/repo.mjs');
+  const row = { id: 'rocket_gib', style: 'gib', hitstop_ticks: 0, held_ticks: 0, grind_ticks: 0, stand_ticks: 0, crumble_ticks: 0, flash_ticks: 3, leftover_kills: 12, body_gone_s: 7.2, stain_gone_s: 16 };
+  assert.match(beatLine('rocket_launcher', row), /the body and its pieces are gone by 7\.2 s, the scorch and spray by 16 s \(corpse_decay\.json linger \+ fade\), the marks sooner if 12 later kills recycle them/);
+  const root = mkdtempSync(join(tmpdir(), 'reel-decay-'));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  assert.deepEqual(decayOf(root), {}, 'no table: nothing claimed');
+  mkdirSync(join(root, 'project/data/tables'), { recursive: true });
+  writeFileSync(join(root, 'project/data/tables/corpse_decay.json'), JSON.stringify({ bodies: { linger_s: 6, fade_s: 1.2 }, stains: { linger_s: 12, fade_s: 4 } }));
+  assert.deepEqual(decayOf(root), { body_gone_s: 7.2, stain_gone_s: 16 });
+  assert.deepEqual(decayOf(ROOT), { body_gone_s: 7.2, stain_gone_s: 16 }, 'the real table');
+});
+
 test('gore check: whole when the victim still lies drawn as a card after the kill; a consumed body is named', async () => {
   const { goreWhole } = await import('./kill_reel_lib.mjs');
   const film = (after) => ({ rows: [
@@ -158,6 +175,20 @@ test('--gore-check passes --gore=reduced to every film and refuses a second --go
   assert.equal(reelPlan({ out: 'o', weapons: 'katana' }, []).goreCheck, false);
 });
 
+test('the aftermath curve: what fades by which beat after the kill, and a long --after films +300 and +600', async () => {
+  const { measureBeats } = await import('./kill_reel_lib.mjs');
+  const { diffImages } = await import('./png.mjs');
+  const img = (rows) => ({ width: 4, height: 4, channels: 3, data: Buffer.from(Array(48).fill(100).map((x, i) => (i < 12 * rows ? 200 : x))) });
+  const beats = pickBeats(63, 600);
+  assert.deepEqual(beats.filter((t) => t > 143), [213, 363, 663], '+150, +300, +600');
+  const frames = new Map([[60, img(0)], [83, img(2)], [143, img(1)], [213, img(1)], [363, img(0)], [663, img(0)]]);
+  const m = measureBeats(frames, beats, 63, [0, 0, 4, 4], diffImages);
+  assert.deepEqual(m.aftermath_curve, [[20, 0.5], [80, 0.25], [150, 0.25], [300, 0], [600, 0]], 'beats not filmed are skipped');
+  assert.equal(m.aftermath_gone_after, 300);
+  assert.equal(m.aftermath_share, 0);
+  assert.deepEqual(pickBeats(63, 150), [60, 61, 63, 64, 65, 67, 69, 73, 83, 103, 143, 213], 'the default sheet keeps its columns');
+});
+
 test('measured beats: what stays on the street, and the first beat the window stops changing', async () => {
   const { measureBeats } = await import('./kill_reel_lib.mjs');
   const { diffImages } = await import('./png.mjs');
@@ -166,7 +197,7 @@ test('measured beats: what stays on the street, and the first beat the window st
   const marked = plain.map((x, i) => (i < 12 ? 200 : x)); // the top row (a quarter) stained
   const frames = new Map([[60, img(plain)], [63, img(plain.map(() => 250))], [65, img(marked)], [213, img(marked)]]);
   const m = measureBeats(frames, [60, 63, 65, 213], 63, [0, 0, 4, 4], diffImages);
-  assert.deepEqual(m, { aftermath_share: 0.25, settled_by: 65, settled_after_ticks: 2 });
+  assert.deepEqual(m, { aftermath_share: 0.25, settled_by: 65, settled_after_ticks: 2, aftermath_curve: [[150, 0.25]], aftermath_gone_after: null });
   assert.equal(measureBeats(new Map([[60, img(plain)]]), [60, 213], 63, [0, 0, 4, 4], diffImages), null);
 });
 
@@ -279,4 +310,22 @@ test('the charged claw (PlayerShock.WEAPON, no table lists it) is a lab weapon: 
     assert.ok(reelWeapons(root).includes('claw_shock'));
     assert.equal(tableRows(root, ['claw_shock']).claw_shock.id, 'claw_throw');
   } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test('the curve reads as a lifetime: gone by a beat, or stays past the last one', async () => {
+  const { curveText } = await import('./kill_reel_lib.mjs');
+  assert.equal(curveText({ aftermath_curve: [[20, 0.091], [300, 0.004]], aftermath_gone_after: 300 }), '+20 9.1 / +300 0.4 %, gone by +300');
+  assert.equal(curveText({ aftermath_curve: [[20, 0.091], [600, 0.03]], aftermath_gone_after: null }), '+20 9.1 / +600 3.0 %, stays past +600');
+  assert.equal(curveText({}), '-', 'an old reel.json without a curve');
+  assert.equal(curveText(undefined), '-');
+});
+
+test('a film with the feel off reads its freeze as off, not as 0 frames (n16 s6)', async () => {
+  const { reelMarkdown, stopText } = await import('./kill_reel_lib.mjs');
+  assert.equal(stopText({ hitstop_frames: 0, feel_off: true }), 'off (feel off under the lock: --feel=on measures it)');
+  assert.equal(stopText({ hitstop_frames: 6 }), '6 frames');
+  assert.equal(stopText({}), '? frames');
+  const job = { weapon: 'katana', side: 'after', victim: '', dir_deg: 0, ppm: 32 };
+  const md = reelMarkdown([{ job, film: { outcome: 'pass', kill: 68, measured: { hitstop_frames: 0, feel_off: true } } }], {}, 'x');
+  assert.match(md, /\| 68 \| off \(feel off\) \|/);
 });

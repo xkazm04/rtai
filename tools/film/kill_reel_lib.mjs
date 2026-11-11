@@ -11,6 +11,12 @@ export const BURN_WEAPONS = ['flamethrower', 'molotov'];
 export const WINDOW_M = [12, 9];
 export const VIEW = [1280, 800];
 export const MAX_AFTER = 230;
+/** Without --clips the film saves listed stills and runs past its last one (film.mjs: ticks >= last still + 120), so
+ *  the aftermath can be filmed for 20 s: what fades (smoke, flashes) and what stays (body, marks) is measured, not
+ *  read off the table (n16 s6). A clip films the whole window inside the lab shot's 420 ticks: MAX_AFTER. */
+export const MAX_AFTER_LONG = 1200;
+/** Below this share of the kill window differing from the trigger frame, the aftermath is gone (measureBeats). */
+export const GONE_SHARE = 0.005;
 /** Metres of the kill window kept free about Rivet and the victim before the window gives Rivet up (killWindow). */
 export const FIT_MARGIN_M = 2;
 
@@ -25,6 +31,18 @@ export function reelWeapons(tree = ROOT) {
     ...Object.keys(table(tree, 'data/tables/melee_weapons.json').weapons), ...labWeapons(tree)]);
   const rows = table(tree, 'data/tables/signature_kills.json').kills;
   return [...new Set(rows.flatMap(rowWeapons).filter((w) => armed.has(w)))];
+}
+
+/** The street's clock on what a death leaves (corpse_decay.json, CorpseDecayHook on the arena, pit and city block):
+ *  body leftovers (the corpse, gibs, halves) lie linger_s then fade_s, the stains (scorch, spray, pools) likewise.
+ *  {} when the tree has no such table. n16 s6: a --after=600 reel showed the claw's body and the rocket's gibs gone by
+ *  +600 and the stains still there, where the readout had said only the leftover_budget ring removes them. */
+export function decayOf(tree) {
+  let d;
+  try { d = table(tree, 'data/tables/corpse_decay.json'); } catch { return {}; }
+  const s = (g) => (Number.isFinite(g?.linger_s) && Number.isFinite(g?.fade_s) ? Number((g.linger_s + g.fade_s).toFixed(2)) : undefined);
+  const out = { body_gone_s: s(d.bodies), stain_gone_s: s(d.stains) };
+  return Object.fromEntries(Object.entries(out).filter(([, v]) => v !== undefined));
 }
 
 /** The beat timings a weapon's death takes from its signature_kills row ({} = no row: the standard death).
@@ -42,7 +60,7 @@ export function tableRows(tree, weapons) {
     out[w] = row ? { id: row.id, style: row.style, hitstop_ticks: n('hitstop_ticks'), grind_ticks: n('grind_ticks'),
       stand_ticks: n('stand_ticks'), crumble_ticks: n('crumble_ticks'), flash_ticks: n('flash_ticks'),
       held_ticks: n('hitstop_ticks') + n('grind_ticks') + n('stand_ticks'),
-      ...(t.leftover_budget ? { leftover_kills: t.leftover_budget } : {}) } : {};
+      ...(t.leftover_budget ? { leftover_kills: t.leftover_budget } : {}), ...decayOf(tree) } : {};
   }
   return out;
 }
@@ -65,7 +83,8 @@ export function reelPlan(flags, extra, tree = ROOT) {
   if (!weapons.length) return { error: '--weapons names no weapon' };
   if (dirs.some((d) => d !== 'wall' && (!Number.isInteger(d) || d < 0 || d >= 360))) return { error: `--dirs takes whole degrees 0-359 (0 east, 90 south) or wall, got ${flags.dirs}` };
   if (ppm.some((p) => !Number.isInteger(p) || p < 8 || p > 96)) return { error: `--ppm takes whole px/m 8-96, got ${flags.ppm}` };
-  if (!Number.isInteger(after) || after < 1 || after > MAX_AFTER) return { error: `--after takes 1-${MAX_AFTER} ticks, got ${flags.after}` };
+  const most = flags.clips === true ? MAX_AFTER : MAX_AFTER_LONG;
+  if (!Number.isInteger(after) || after < 1 || after > most) return { error: `--after takes 1-${most} ticks${flags.clips === true ? ` with --clips (a clip films the lab shot's whole window; up to ${MAX_AFTER_LONG} without)` : ''}, got ${flags.after}` };
   for (const k of ['rev', 'before', 'native', 'timeout']) if (flags[k] === true) return { error: `--${k} needs a value` };
   if (flags.native !== undefined && !flags.rev && !flags.before) return { error: '--native=donor goes with --rev or --before' };
   if (extra.some((a) => /^--(sig-dir|sig-wall|sig-gun|sig-solo|victim|seed|ppm)(=|$)/.test(a))) return { error: 'the reel sets --sig-dir, --sig-wall, --sig-gun, --sig-solo, --victim, --seed and --ppm itself: use --dirs, --weapons, --victims, --ppm' };
@@ -82,7 +101,7 @@ export function reelPlan(flags, extra, tree = ROOT) {
 
 /** The sheet's columns: the lab's trigger tick, the kill and its first frames, then the held beat and the aftermath. */
 export function pickBeats(kill, after) {
-  const offsets = [-2, 0, 1, 2, 4, 6, 10, 20, 40, 80, after];
+  const offsets = [-2, 0, 1, 2, 4, 6, 10, 20, 40, 80, 150, 300, 600, after];
   return [...new Set([60, ...offsets.filter((o) => o <= after).map((o) => kill + o)])].filter((t) => t >= 0).sort((a, b) => a - b);
 }
 
@@ -160,14 +179,21 @@ export function cropImage(img, [x0, y0, w, h]) {
 /** The measured side of the beat readout, from a film's beat frames inside the kill window: `aftermath_share`,
  *  the share of the window still differing from the trigger frame at the last beat (what stays on the street),
  *  and `settled_by`, the first beat after the kill from which the window differs from the last beat by under
- *  `still` (the motion is over by then; coarse: beats only). `frames` maps tick -> decoded image. */
+ *  `still` (the motion is over by then; coarse: beats only). `aftermath_curve` is [ticks after the kill, share] at
+ *  every beat from +20 on (what fades and what stays: a long --after films +150/+300/+600), and `aftermath_gone_after`
+ *  the first of those under GONE_SHARE, or null: still on the street at the last beat. `frames` maps tick -> image. */
 export function measureBeats(frames, beats, kill, box, diff, { tolerance = 12, still = 0.01 } = {}) {
   const last = beats.at(-1);
   if (!frames.has(60) || !frames.has(last) || last <= kill) return null;
   const crop = (t) => cropImage(frames.get(t), typeof box === 'function' ? box(t) : box);
   const end = crop(last);
   const settled = beats.filter((t) => t > kill && frames.has(t)).find((t) => diff(crop(t), end, tolerance).fraction < still) ?? null;
-  return { aftermath_share: Number(diff(crop(60), end, tolerance).fraction.toFixed(4)), settled_by: settled, settled_after_ticks: settled === null ? null : settled - kill };
+  const start = crop(60);
+  const share = (img) => Number(diff(start, img, tolerance).fraction.toFixed(4));
+  const curve = beats.filter((t) => t >= kill + 20 && frames.has(t)).map((t) => [t - kill, t === last ? share(end) : share(crop(t))]);
+  const gone = curve.find(([, v]) => v < GONE_SHARE)?.[0] ?? null;
+  return { aftermath_share: share(end), settled_by: settled, settled_after_ticks: settled === null ? null : settled - kill,
+    aftermath_curve: curve, aftermath_gone_after: gone };
 }
 
 /** The measured hit-stop: frames the game drew while the sim held a tick (SimClock.hold, FeelCam's hit-stop) from
@@ -225,18 +251,34 @@ export function movieSpan(probe, from, to) {
   return [at(frame.get(from)), at(last)];
 }
 
+/** The measured freeze: `N frames`, or `off` when the film ran with --feel=off (film's --feel=auto turns the hit feel
+ *  off under a camera lock, so the lab's default reel draws no freeze to measure: `--feel=on` does; n16 s6, a reel
+ *  line read `hit-stop 0 frames` for a death whose feel freezes 6). */
+export function stopText(m, unit = ' frames') {
+  if (m?.feel_off) return 'off (feel off under the lock: --feel=on measures it)';
+  return `${m?.hitstop_frames ?? '?'}${unit}`;
+}
+
+/** `+20 9.1 / +80 4.0 / +600 3.0 %, gone by +300` or `..., stays past +600`: the measured aftermath lifetime. */
+export function curveText(m) {
+  const curve = m?.aftermath_curve ?? [];
+  if (!curve.length) return '-';
+  const gone = m.aftermath_gone_after;
+  return `${curve.map(([t, v]) => `+${t} ${(v * 100).toFixed(1)}`).join(' / ')} %, ${gone === null || gone === undefined ? `stays past +${curve.at(-1)[0]}` : `gone by +${gone}`}`;
+}
+
 /** reel.md: one table row per film, the measured beats beside the row's data, for a REPORT or a JOURNAL. */
 export function reelMarkdown(rows, table, cmd) {
   const cell = (v) => (v === undefined || v === null ? '-' : String(v));
   const lines = [`# kill reel`, '', `\`${cmd}\``, '',
-    '| weapon | side | victim | dir | px/m | outcome | kill | freeze (frames, measured) | pieces wait (row ticks) | settled | aftermath | whole |',
-    '|---|---|---|---|---|---|---|---|---|---|---|---|'];
+    '| weapon | side | victim | dir | px/m | outcome | kill | freeze (frames, measured) | pieces wait (row ticks) | settled | aftermath | aftermath curve (measured) | whole |',
+    '|---|---|---|---|---|---|---|---|---|---|---|---|---|'];
   for (const { job, film } of rows) {
     const m = film.measured ?? {};
     const row = table[job.weapon] ?? {};
-    lines.push(`| ${job.weapon} | ${job.side} | ${job.victim || 'guard'} | ${job.dir_deg} | ${job.ppm} | ${film.outcome.toUpperCase()} | ${cell(film.kill)} | ${cell(m.hitstop_frames)} | `
+    lines.push(`| ${job.weapon} | ${job.side} | ${job.victim || 'guard'} | ${job.dir_deg} | ${job.ppm} | ${film.outcome.toUpperCase()} | ${cell(film.kill)} | ${m.feel_off ? 'off (feel off)' : cell(m.hitstop_frames)} | `
       + `${row.id ? `${row.hitstop_ticks} (${row.id})` : 'standard death'} | ${m.settled_after_ticks === undefined || m.settled_after_ticks === null ? '-' : `+${m.settled_after_ticks}`} | `
-      + `${m.aftermath_share === undefined ? '-' : `${(m.aftermath_share * 100).toFixed(1)} %`} | ${film.whole === undefined ? '-' : film.whole ? 'yes' : 'NO'} |`);
+      + `${m.aftermath_share === undefined ? '-' : `${(m.aftermath_share * 100).toFixed(1)} %`} | ${curveText(m)} | ${film.whole === undefined ? '-' : film.whole ? 'yes' : 'NO'} |`);
   }
   return `${lines.join('\n')}\n`;
 }

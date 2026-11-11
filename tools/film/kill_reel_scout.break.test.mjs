@@ -193,3 +193,17 @@ test('a kill at or before the lab trigger tick is unverifiable, never judged aga
   const reel = JSON.parse(readFileSync(join(out, 'reel.json'), 'utf8'));
   assert.match(reel.films[0].reasons.join(' '), /the kill came at 40, not after the lab's trigger tick 60/);
 });
+
+test('a long --after (no clips) passes the pre-launch check and films +300 and +600 after the scout (n16 s6)', async (t) => {
+  const out = temp(t);
+  const fake = filmRunner(() => ({ kill: 70 }));
+  const code = await main([`--out=${out}`, '--weapons=katana', '--dirs=0', '--ppm=32', '--after=600'],
+    { ...quiet, runner: fake.runner, state: stableState });
+  assert.notEqual(code, 2, 'not refused as usage');
+  assert.equal(fake.launches.length, 2);
+  assert.ok(isScout(fake.launches[0]));
+  const stills = ticksOf(arg(fake.launches[1].args, '--film-stills'));
+  for (const tick of [220, 370, 670]) assert.ok(stills.includes(tick), `beat ${tick}`);
+  const clips = await main([`--out=${out}`, '--weapons=katana', '--ppm=32', '--after=600', '--clips'], { ...quiet, runner: fake.runner, state: stableState });
+  assert.equal(clips, 2, 'a clip still stops at the lab window');
+});
