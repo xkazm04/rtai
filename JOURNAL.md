@@ -723,3 +723,14 @@ NEXT (iteration 22: freeze 19:30, REPORT 19:40):
     p55 grids, unit, film under --view=tilt; the suit molotov kneel (frames 1-2). Only if before the freeze with gates.
 (4) REPORT final by 19:40: drop "(DRAFT ...)" from the title, Gates line, Calls (one line per death; the claw rifle
     distance Call now 4.2 m on cells), Next steps (art owed: claw p55 x3, molotov suit p70 frames 1-2 + p55 x4).
+- 18:27 the asset lane DELIVERED claw_throw p55 for patrol, riot, SWAT (it438, 18:01; lying frames re-cut to the grid
+  corpse's full length). PACKED (`kill_cells_pack.py --death=claw_throw --art=p55`) -> UNTRACKED
+  `project/features/characters/art/view/p55/{cop_patrol,cop_riot,swat}_claw_throw.png` (sha256 16c9f06b..., fb1c3f17...,
+  8d538a23...). Looked at the riot board: four clean beats, full-length corpse. NOT wired: Godot is held by the final
+  gate, so no import (.import), no unit, no film this session.
+NEXT addendum, item (3) is now concrete: after the gate verdict, if time before 19:30: add the claw row's
+  `cells.grids.p55` (cop/head_cap, cop/head_helmet, cop/head_swat), 3 provenance lines (it438, a/b grades in the reply
+  18:01), a unit assert in test_kill_throw_art (p55 paths), run unit (it imports the PNGs; commit the .import files),
+  film `kill:claw_shock --view=tilt --ppm=32 --victim=cop/head_cap` before/after. The p55 lying cells are full length,
+  so check the 4.2 m slide does not overshoot under the 55 view. If there is no time: DELETE the three untracked PNGs
+  and list claw p55 under Next steps as delivered, packed by the tool, not wired.
