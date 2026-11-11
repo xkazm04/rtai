@@ -72,6 +72,11 @@
             "minimum": 0,
             "type": "integer"
           },
+          "hole_up_m": {
+            "maximum": 2,
+            "minimum": 0,
+            "type": "number"
+          },
           "id": {
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"

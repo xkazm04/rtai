@@ -35,7 +35,10 @@ const KICK_STRETCH: float = 0.14
 const SMOKE_TICKS: int = 300
 const SMOKE_PUFFS: int = 5
 const SMOKE_CYCLE: int = 48
-const SMOKE: Color = Color(0.84, 0.8, 0.74, 0.9)
+## n16 kills-polish: a warm ink-grey smoke, smaller (SMOKE_R): the n12 cream puffs (0.84, 0.8, 0.74,
+## 0.9), up to 0.49 m across the chest, washed the standing victim pale (rank film, 64 and 32 px/m).
+const SMOKE: Color = Color(0.36, 0.32, 0.3, 0.6)
+const SMOKE_R: Vector2 = Vector2(0.45, 0.8)
 
 ## The night's throw (the A/B's before, with no smoke).
 const OLD_LOOK_TICKS: int = 8
@@ -52,7 +55,11 @@ var radius_px: float = 4.0
 
 ## The body group with a hole punched through its centre (the group's origin is the centroid);
 ## its one child is the lay node Topple bends, holding the clipped body and the ring.
-static func punch(body: Node2D, p_kills: SignatureKills, view_ppm: float) -> Node2D:
+## `up_m` (the row's hole_up_m) lifts the hole and its ring above the body group's centre (the
+## card's or parts' mean origin, about the hips) to the chest.
+static func punch(
+	body: Node2D, p_kills: SignatureKills, view_ppm: float, up_m: float = 0.0
+) -> Node2D:
 	var root: Node2D = Node2D.new()
 	root.name = body.name
 	var lay: Node2D = Node2D.new()  # the fall's lay-out (Topple), under KillView's placement
@@ -61,6 +68,7 @@ static func punch(body: Node2D, p_kills: SignatureKills, view_ppm: float) -> Nod
 	mask.texture = _mask_texture()
 	mask.scale = Vector2.ONE * MASK_M * view_ppm / MASK_PX
 	mask.clip_children = CanvasItem.CLIP_CHILDREN_ONLY
+	mask.position = Vector2(0.0, -up_m * view_ppm)
 	lay.add_child(mask)
 	body.position = Vector2.ZERO
 	body.transform = mask.transform.affine_inverse()
@@ -71,6 +79,7 @@ static func punch(body: Node2D, p_kills: SignatureKills, view_ppm: float) -> Nod
 	ring.tick0 = p_kills.tick
 	ring.radius_px = HOLE_M * view_ppm
 	ring.z_index = 30
+	ring.position = mask.position
 	lay.add_child(ring)
 	return root
 
@@ -153,6 +162,6 @@ func _smoke(age: int) -> void:
 		var sway: float = sin(float(age) * 0.07 + float(i) * 2.1) * radius_px * 0.5
 		var at: Vector2 = Vector2(sway, -p * radius_px * 5.0)
 		var a: float = SMOKE.a * (1.0 - p) * fade
-		var r: float = radius_px * (0.6 + 1.3 * p)
+		var r: float = radius_px * (SMOKE_R.x + SMOKE_R.y * p)
 		draw_circle(at, r, Color(SMOKE, a))
 		draw_arc(at, r, 0.0, TAU, 16, Color(INK, a * 0.8), 1.5, true)

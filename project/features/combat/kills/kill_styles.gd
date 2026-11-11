@@ -80,7 +80,9 @@ func parts(
 	if row.style == &"split":
 		split_fx.add(serial, at, dir, row, groups)
 	elif row.style == &"hole" and rig != null:
-		groups[SignatureKill.BODY] = KillHoleFx.punch(groups[SignatureKill.BODY], _kills, _ppm)
+		groups[SignatureKill.BODY] = KillHoleFx.punch(
+			groups[SignatureKill.BODY], _kills, _ppm, row.hole_up_m
+		)
 	elif row.style == &"dissolve" and rig != null:
 		groups[SignatureKill.BODY] = KillDissolveFx.wrap(groups[SignatureKill.BODY])
 	elif row.style == &"shock" and rig != null and groups[SignatureKill.BODY] != null:

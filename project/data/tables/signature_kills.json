@@ -193,10 +193,11 @@
     {
       "bounce": 0.1,
       "cone_deg": 8,
-      "doc": "Plasma rifle: the bolt burns a clean round hole through the torso (the street shows through it), its edge glowing hot cream inside an ink rim and cooling to a charred brown over 1.5 s; the victim drops back along the shot, cauterised: no blood. The bolt flies on (gunplay's projectile).",
+      "doc": "Plasma rifle: the bolt burns a clean round hole through the torso (the street shows through it), its edge glowing hot cream inside an ink rim and cooling to a charred brown over 1.5 s; the victim drops back along the shot, cauterised: no blood. The bolt flies on (gunplay's projectile). n16 kills-polish: the hole sits hole_up_m 0.4 m above the body's centre (it was at the hips), and the wound smoke is a smaller ink-grey (the cream puffs washed the standing victim pale).",
       "flash_ticks": 2,
       "ground_drag": 6,
       "hitstop_ticks": 3,
+      "hole_up_m": 0.4,
       "id": "plasma_hole",
       "launch_mps": [
         1.4,
