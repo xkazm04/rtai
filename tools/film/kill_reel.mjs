@@ -95,6 +95,16 @@ async function filmJob(job, side, reel, runner, known) {
 
 export { beatLine };
 
+/** What to do when a tree older than the kill-lab turn refuses a reel flag (n16 s4: kills-polish's tree has no
+ *  --sig-dir; the reel refused, nothing launched). */
+export function olderTreeHint(error) {
+  const flag = /reads (--sig-dir|--sig-wall|--victim)\b/.exec(error)?.[1];
+  if (!flag) return '';
+  const what = flag === '--victim' ? 'victim' : 'turn';
+  const fix = flag === '--victim' ? 'drop --victims (the lab guard is drawn as himself)' : "film --dirs=0 (the lab's own facing, no turn flag)";
+  return `; this tree predates the kill-lab ${what} (tools lane bbee28a9c/afe581336): ${fix}, or cherry-pick that commit's game side`;
+}
+
 export function parseArgv(argv) {
   const dash = argv.indexOf('--');
   const extra = dash >= 0 ? argv.slice(dash + 1) : [];
@@ -131,7 +141,7 @@ export async function main(argv, { out = console.log, err = console.error, runne
   const jobs = reel.jobs.flatMap((j) => sides.map((s) => ({ ...j, side: s.name, dir: join(reel.out, j.weapon, `${s.name}_${j.victim || 'guard'}_d${j.dir_deg}_${j.ppm}`) })));
   for (const job of jobs) {
     const bad = planFilm(job, sides.find((s) => s.name === job.side), reel).error;
-    if (bad) { err(`kill_reel: ${job.weapon}: ${bad}\n${USAGE}`); return EXIT.usage; }
+    if (bad) { err(`kill_reel: ${job.weapon}: ${bad}${olderTreeHint(bad)}\n${USAGE}`); return EXIT.usage; }
   }
   out(`kill_reel: ${jobs.length} film(s): ${reel.weapons.join(' ')} x victims [${reel.victims.join(' ') || 'guard'}] x dirs [${reel.dirs.join(' ')}] x ppm [${reel.ppm.join(' ')}] x ${sides.map((s) => s.name).join('/')}`);
   const live = sides.find((s) => s.live);

@@ -222,3 +222,12 @@ test('the window follows the street when the view moves: the nuke drift (s3nuke 
   assert.deepEqual(boxAt([448, 100, 384, 288], [-10, 20]), [438, 120, 384, 288]);
   assert.deepEqual(boxAt([448, 100, 384, 288], undefined), [448, 100, 384, 288], 'an older reel.json without shifts: fixed on screen');
 });
+
+test('a tree older than the kill-lab turn: the refusal says film --dirs=0 (or drop --victims)', async () => {
+  const { olderTreeHint } = await import('./kill_reel.mjs');
+  assert.match(olderTreeHint('film: no script in C:/t reads --sig-dir'), /predates the kill-lab turn .*film --dirs=0/);
+  assert.match(olderTreeHint('film: no script in C:/t reads --sig-wall'), /--dirs=0/);
+  assert.match(olderTreeHint('film: no script in C:/t reads --victim'), /drop --victims/);
+  assert.equal(olderTreeHint('film: no script in C:/t reads --sig-dirt'), '');
+  assert.equal(olderTreeHint('film: something else'), '');
+});
