@@ -685,24 +685,31 @@ dev/sim/car_route_trails.gd there is mine) and `git branch -D n15t-control-sim-h
 - 03:46 MILESTONE gate on 0736f3496 (the hash-sentinel delete): `PASS reels: exit 0`, `gate: PASS` (build/gate/
   0736f3496b5e/gate.json); my snapshot removed (`removeSnapshot`; the 6 gtai-gate-* left in `git worktree list` are
   other lanes', e.g. 7778d347a = combat's tip: not touched).
-- 03:47 Codex tester run by me: `run_unit --select=test_sim_hash_build_break,test_sim_hash_build_break_moves --no-rerun`
+- 03:46 Codex tester run by me: `run_unit --select=test_sim_hash_build_break,test_sim_hash_build_break_moves --no-rerun`
   -> `9 passed, 0 failed`. Bite check (planted by hand, `git checkout --` after, status clean): (a) the touched-cell
   clear removed -> `7 failing (2 passed, 7 failed)`; (b) `_touched.sort()` removed -> 9/9 PASS. (b) is no gap in the
   tests: query walks cells row-major and reads each cell's own start, so the touched list's order never shows; nothing
   else reads hitems (`grep -rn "hitems" project native`). So the sort is dead work in both sims: removing it next.
   Thrown away: nothing. No defect found.
-- 03:50 c-2 in TIER A (`bash evidence/c2_tier_a/run.sh`, all exit 0, constants restored): tier B default re-run ==
+- 03:47 c-2 in TIER A (`bash evidence/c2_tier_a/run.sh`, all exit 0, constants restored): tier B default re-run ==
   evidence/t4_trails/after.json (`cars equal: True`). Tier A, U-turns (tick, tile ahead) per car:
   241: car0 (1417 plaza, 2484 void, 3573 plaza), car1 (945 plaza, 2132 kerb, 2973 void), car2 3 x void.
   1 (shipped): car0 NONE, dead_at_tick 3022 (stuck 20 s against the block at the plaza's far edge); car1 NONE, alive,
   sitting behind it; car2 3 x void. 65: car0 (1657 block, 2918 void), car1 (1185 block, 2480 block), car2 (2 void,
   3592 block); nobody dies. SEEN the 3 panels + a crop of mask 1's plaza (both eastbound trails end at the block edge).
   Masters `c2-tier-a-mask-241-1-65-4ppm.png` (frames.json now 9). This strengthens c-2's recommendation (65).
-- 03:52-03:58 the dead sort removed in both sims (`_touched.sort()`, `std::sort` + `<algorithm>`; comments say "first
+- 03:50-03:53 the dead sort removed in both sims (`_touched.sort()`, `std::sort` + `<algorithm>`; comments say "first
   met first"). NATIVE REBUILD #7 (this lane only; once more after a comment-only edit so the DLLs match the source):
   debug + release + `scons tests` exit 0, `sim_core tests: 0 failed`. `run_parity.mjs` (both builds): bit for bit,
   planted caught at 629, final_sha_a 94b2865f7f17d778 (unchanged). `run_unit --select=` the six sim_hash files 29/0.
   DECISION sim/hash-build-order in docs/decisions.md. Codex dispatcher ledger: `record n15t-break-hash-build --verdict
   accepted-after-revision` (144 s, 5593 tokens out), then `discard`.
-- 03:58 TO hero and combat: n15-tools changed the sim again (hash build, native rebuild #7); parity's final digest is
+- 03:54 TO hero and combat: n15-tools changed the sim again (hash build, native rebuild #7); parity's final digest is
   unchanged and nothing you film reads it: keep your DLLs.
+  (times 03:46-03:54 checked against `git log --date=format:%H:%M:%S`: 6254f741e 03:49:13, d195c73df 03:50:31,
+  4af7cf1fa 03:53:03.)
+- 03:54-03:59 mutate on 4af7cf1fa with all six sim_hash test files (`tools/mutate/mutate.mjs
+  --file=features/city/sim/sim_hash.gd --max=15 --tests=test_sim_hash,test_sim_hash_break,test_sim_hash_break_order,
+  test_sim_hash_window,test_sim_hash_build_break,test_sim_hash_build_break_moves`;
+  evidence/mutate_sim_hash_build_4af7cf1fa.log): `score 100.0% = killed 15 / (killed 15 + survived 0)`, 310 s,
+  checkout clean (was 14/15 on 0736f3496, 13/15 on 2229fdd98).
