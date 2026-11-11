@@ -19,8 +19,11 @@
 9. Ray gun at 32 px/m: the drawn grey heap is quieter than the old cream smear and the skull is a few px (film
    rg32_t/w, `ray_gun_drawn_remains_ab_32ppm_x3_t110-199.png`) -> open, owner Call (WIDE_M 1.7 -> 2.0, or a cream rim).
 10. Plasma sword: a dark shadow disc hangs beside the top half from t90 to t200+, in c43cae42d and 934a815c6 alike (not
-   the empty-cap case bd9af660f fixed; likely a half's flying shadow at its group origin, not under the drawn half)
-   -> open. `evidence/n16-kills-polish/plasma_sword_scorch_line_wider_ab_64ppm_x15_t70-200.png` (t90-200, right).
+   the empty-cap case bd9af660f fixed). Diagnosis (code, unfilmed): KillView._draw puts each part's shadow at its GibSim
+   position = the half root's origin, but KillSplitFx.cut draws the half at `o` (the body's centre) clipped to one side
+   of the cut line lifted `cut_up_m` 0.8 m, and KillSplitHalves.Topple lays it down: the top half lies ~1 m from its
+   own shadow. Fix idea: a `shadow_at` meta on each half root (line + side * ~0.35 m) read by KillView._draw through
+   the node's transform; katana / chainsaw / Kerf share it -> open. `evidence/n16-kills-polish/plasma_sword_scorch_line_wider_ab_64ppm_x15_t70-200.png` (t90-200, right).
 11. Plasma sword scorch line 0.16 m read as a crack -> 7998ee3fa (0.26 m), same sheet: wider; it lies mostly under
    Rivet's feet and the dropped rifle at this chapter's angle.
 5. Burn (hooded ped, 64 px/m, film bc64_hood_w): he only faded to a ghost over the ash heap -> fixed b3b03286c (A8 drawn

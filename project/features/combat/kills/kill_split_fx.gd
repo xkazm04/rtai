@@ -50,8 +50,7 @@ var _topples: Dictionary[int, KillSplitHalves.Topple] = {}
 
 ## The two halves of `rig` cut along `cut` (unit, world): groups by SignatureKill.PIECE_IDS,
 ## only HALF_A and HALF_B filled, each centred where its piece starts (SignatureKills offsets).
-## The edges by the row (KillCutEdge.along). The line runs row.cut_up_m above the body's ground
-## point (n16 kills-polish: through the drawn torso, shoulder to hip).
+## Edges by the row (KillCutEdge.along); the line row.cut_up_m above the ground point (the torso).
 static func cut(
 	rig: CutRig, cut_dir: Vector2, view_ppm: float, row: SignatureKill
 ) -> Array[Node2D]:
@@ -77,6 +76,7 @@ static func cut(
 		flatten(body)
 		mask.add_child(body)
 		root.add_child(KillCutEdge.along(line, cut_dir, EDGE_M * view_ppm, side, row))
+		root.set_meta(KillSplitHalves.SHADOW, line + side * KillSplitHalves.SHADOW_IN_M * view_ppm)
 		out[p] = root
 	return out
 

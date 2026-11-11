@@ -8,6 +8,10 @@ extends RefCounted
 
 ## The fall's length (ticks); it eases in (slow, then fast), as a body tips over.
 const TOPPLE_TICKS: int = 16
+## A half root's meta: its drawn centre in its own px (KillSplitFx.cut), where its shadow lies.
+const SHADOW: StringName = &"split_shadow_at"
+## How far from the cut line into its side a half's shadow sits (m).
+const SHADOW_IN_M: float = 0.35
 
 static var _white: ImageTexture = null
 
@@ -32,6 +36,17 @@ class Topple:
 			if absf(gap.x) > absf(gap.y):
 				away = signf(gap.x) * (1.0 if i == 0 else -1.0)
 			halves[i].rotation += away * rad * k * k
+
+
+## n16 kills-polish (DEFECTS 10): where a part's flying shadow goes, in its parent's space: a blade
+## half's drawn centre (its root's `SHADOW` meta, set by KillSplitFx.cut) through the root's
+## transform, so it follows the topple; any other part: its origin. The top half lay ~1 m from its
+## shadow (the root's origin is the body's ground point; the half is drawn above the lifted cut).
+static func shadow_at(part: Node2D) -> Vector2:
+	if not part.has_meta(SHADOW):
+		return part.position
+	var local: Vector2 = part.get_meta(SHADOW)
+	return part.transform * local
 
 
 ## The topple for `parts`' two halves from tick `start`; null when `deg` is 0 or a half is gone.

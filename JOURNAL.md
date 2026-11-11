@@ -406,3 +406,8 @@ still reads as a crack, then evidence + KILLS (plasma_sword After 1 -> 2/3) + DE
   ps64_t (0.26 m line) vs ps64_s: wider, reads as a burn, partly under Rivet and the rifle
   (`plasma_sword_scorch_line_wider_ab_64ppm_x15_t70-200.png`). FOUND: a dark disc beside the plasma sword's top half
   t90-200+ in both revs (not the empty cap) -> DEFECTS 10, open.
+- 17:42 GATES started on 05715ef5f (`node tools/gate/run.mjs --rev=05715ef5f --reels`, log build/gate_0571.log):
+  covers A6/A6b, A7, A8 (8 kinds), the shadow fixes, the wider scorch line, wound_m 0.2. Watch: a look golden or reel
+  chapter with a burn kill (the collapse cells now replace the fade) or a ray gun kill (drawn remains).
+- DEFECTS 10 diagnosed in code (the split halves' shadows sit at the half roots' origins, ~1 m off the drawn top half),
+  not fixed: no Godot free to verify while the gate runs.
