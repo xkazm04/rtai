@@ -885,3 +885,8 @@ godot`); else keep CONTENDED. (4) If code changes, full gate + reels (`node tool
 C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-sim-hash`, my mutate worktree
 `%TEMP%/gtai-mutate-6bd4df1a` (`git worktree remove --force`). Write JOURNAL times from `date` at that moment
 (session 6 needed three corrections).
+- 05:12 machine not quiet for t-5 (bench.lock absent but another lane's run_scenarios Godot at 688 MB, CPU 71 %): stays
+  CONTENDED. Merge preview on hero e13b81f0d + combat f128a280e (`node tools/merge/preview.mjs --lanes=n15-tools,
+  n15-hero,n15-combat`): tools clean; hero docs + baseline only; combat STOP on cast_flags.gd, rivet_res.gd (the known
+  pair), exit 1. `resolve_hero_x_combat.py` on both conflicted files from `git merge-tree --write-tree n15-hero
+  n15-combat`: exit 0 each, output gdformat --check + gdlint clean. REPORT merge notes stand.
