@@ -26,7 +26,8 @@ const N17_RIVET: PackedStringArray = [
 	"--rivet-fire-turn",
 	"--rivet-noflash",
 	"--rivet-thrust",
-	"--rivet-kick"
+	"--rivet-kick",
+	"--rivet-thrust-recover"
 ]
 
 static var _read: bool = false
@@ -128,5 +129,7 @@ static func _walk(arg: String) -> void:
 			RivetThrust.enabled = false
 		"--rivet-kick=off":  # n17 rivet-strike: no recoil kick on the drawn figure (before)
 			RivetLean.kick = false
+		"--rivet-thrust-recover=off":  # n17 rivet-strike: the slash cell after a thrust (before)
+			RivetThrust.recover = false
 		_:
 			pass

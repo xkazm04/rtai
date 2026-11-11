@@ -7,6 +7,7 @@ const DT: float = SimClock.TICK_DT
 
 func after_each() -> void:
 	RivetThrust.enabled = true
+	RivetThrust.recover = true
 
 
 func _rig(tick_in: int, ph_ticks: Vector3) -> CutRig:
@@ -92,3 +93,48 @@ func test_place_takes_the_facings_cell_unmirrored_on_its_boots() -> void:
 		var h: float = card.texture.get_height()
 		var foot: float = RivetThrust.CAM_FEET["p70"] if o == 2 else RivetStrips.foot_px(path)
 		assert_almost_eq(card.offset.y, foot - h, 0.01, "octant %d on its boots" % o)
+
+
+func test_past_the_contact_the_recovery_strip_is_drawn_through_the_hold() -> void:
+	var ph: Vector3 = Vector3(7, 5, 22)
+	var on: Array[int] = []
+	for tick_in: int in 40:
+		if RivetThrust.recovering(_rig(tick_in, ph), &"katana"):
+			on.append(tick_in)
+	assert_eq(on[0], 12, "from the first tick past the contact")
+	assert_eq(on.size(), 28, "every later tick: the clip clears strike_t itself at its end")
+	assert_false(RivetThrust.recovering(_rig(14, Vector3(5, 3, 9)), &"katana"), "a slash")
+	assert_false(RivetThrust.recovering(_rig(-1, ph), &"katana"), "no strike")
+
+
+func test_the_recovery_path_and_its_before() -> void:
+	var eq: String = RivetStrips.DIR + "p70/rivet_eq_katana.png"
+	var rig: CutRig = _rig(14, Vector3(7, 5, 22))
+	var want: String = eq.trim_suffix(".png") + RivetThrust.RECOVER_FILE
+	assert_eq(RivetThrust.path_or(rig, "p70", &"katana", eq), want)
+	var card: Sprite2D = autoqfree(Sprite2D.new())
+	card.set_meta(RivetFrames.ON, want)
+	assert_true(RivetThrust.shows(card))
+	var was: bool = CastFlags._read
+	CastFlags._read = false
+	CastFlags.apply(PackedStringArray(["--rivet-thrust-recover=off"]))
+	CastFlags._read = was
+	assert_false(RivetThrust.recover)
+	assert_eq(RivetThrust.path_or(rig, "p70", &"katana", eq), eq, "off: the strike cell")
+
+
+func test_the_recovery_strip_matches_and_its_camera_cell_stands_on_its_boots() -> void:
+	for art: String in ["p70", "p55"]:
+		var path: String = RivetStrips.DIR + art + "/rivet_eq_katana_thrust_recover.png"
+		var th: Texture2D = load(RivetStrips.DIR + art + "/rivet_eq_katana_thrust.png") as Texture2D
+		var rec: Texture2D = load(path) as Texture2D
+		assert_eq(rec.get_size(), th.get_size(), art)
+		var rig: CutRig = autoqfree(CutRig.new())
+		rig.face_to = PI * 0.5
+		var card: Sprite2D = autoqfree(Sprite2D.new())
+		card.texture = rec
+		card.set_meta(RivetFrames.ON, path)
+		RivetThrust.place(rig, card, 1.0, 100.0)
+		assert_eq(card.frame, RivetThrust.CAM, art)
+		var foot: float = RivetThrust.RECOVER_CAM_FEET[art]
+		assert_almost_eq(card.offset.y, foot - rec.get_height(), 0.01, art + " on its boots")

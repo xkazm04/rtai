@@ -65,6 +65,7 @@ const X15: PackedStringArray = [
 	"p70/rivet_eq_katana_left_windup.png",
 	"p70/rivet_eq_katana_left_strike.png",
 	"p70/rivet_eq_katana_thrust.png",  # n17: the asset lane drew it on the x1.5 strip's cells
+	"p70/rivet_eq_katana_thrust_recover.png",
 	"p70/rivet_eq_chainsaw_left.png",
 	"p70/rivet_eq_chainsaw_left_windup.png",
 	"p70/rivet_eq_chainsaw_left_strike.png",

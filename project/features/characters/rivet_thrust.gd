@@ -10,8 +10,13 @@ extends RefCounted
 ## blade strike is drawn (RivetSwipe.blade_drawn): elsewhere the facing and the game arc stand.
 ## The drawn pose carries its own lean (no RivetLean on it). `--rivet-thrust=off` (CastFlags) =
 ## before. Render only: the hit is matched to the strike clip by its wind-up and active ticks.
+## Past the contact (the recovery and the strike hold) a weapon with a drawn recovery strip
+## (RECOVER_FILE, the asset lane's it458 cells in the same order: the blade drawn back level toward
+## the guard, both feet planted, no arc) draws it instead of the slash strike cell, whose swing arc
+## read wrong after a straight thrust. `--rivet-thrust-recover=off` (CastFlags) = the strike cell.
 
 const FILE: String = "_thrust.png"
+const RECOVER_FILE: String = "_thrust_recover.png"
 const CELLS: int = 3
 const SIDE: int = 0
 const CAM: int = 1
@@ -20,8 +25,12 @@ const LEFT: int = 2
 ## toward the viewer, below the boots (read at 2x/4x with a 10 px ruler: the planted boot's bottom
 ## at row 176 of 256 at p70, 124 of 141 at p55; it454's 250/134 were the blade's tip).
 const CAM_FEET: Dictionary[String, float] = {"p70": 79.0, "p55": 16.0}
+## The recovery's camera cell, read the same way (its blade tip touches the cell floor): p70 both
+## boots at row 188 of 256; p55 the front boot 135, the back 114 of 141, seated between them.
+const RECOVER_CAM_FEET: Dictionary[String, float] = {"p70": 67.0, "p55": 16.0}
 
 static var enabled: bool = true
+static var recover: bool = true
 static var _hits: Dictionary[StringName, Array] = {}
 
 
@@ -31,9 +40,12 @@ static func path_or(rig: CutRig, art: String, weapon: StringName, path: String) 
 	if not enabled or weapon == &"" or not RivetSwipe.blade_drawn(RivetFrames.oct_of(rig)):
 		return path
 	var eq: String = RivetStrips.DIR + art + "/rivet_eq_" + String(weapon)
-	if path != eq + ".png" and path != eq + "_left.png" or not thrusting(rig, weapon):
+	if path != eq + ".png" and path != eq + "_left.png":
 		return path
-	return eq + FILE if RivetStrips.has_file(eq + FILE) else path
+	var file: String = (
+		FILE if thrusting(rig, weapon) else (RECOVER_FILE if recovering(rig, weapon) else "")
+	)
+	return eq + file if file != "" and RivetStrips.has_file(eq + file) else path
 
 
 ## True from the lunge's first tick to the end of the contact (the active ticks).
@@ -45,6 +57,15 @@ static func thrusting(rig: CutRig, weapon: StringName) -> bool:
 		return false
 	var half: float = SimClock.TICK_DT * 0.5
 	return t >= ph.x - lunge * SimClock.TICK_DT - half and t < ph.x + ph.y - half
+
+
+## True past a lunging hit's contact while its clip runs (the recovery and the strike hold).
+static func recovering(rig: CutRig, weapon: StringName) -> bool:
+	var ph: Vector3 = rig.clips.strike_ph
+	var t: float = rig.clips.strike_t
+	if not recover or t < 0.0 or lunge_ticks(weapon, ph) <= 0:
+		return false
+	return t >= ph.x + ph.y - SimClock.TICK_DT * 0.5
 
 
 ## The lunge_ticks of `weapon`'s hit whose wind-up and active seconds are `ph`'s, 0 when none.
@@ -62,9 +83,10 @@ static func lunge_ticks(weapon: StringName, ph: Vector3) -> int:
 	return 0
 
 
-## True when `card` shows a thrust strip.
+## True when `card` shows a thrust or thrust recovery strip.
 static func shows(card: Sprite2D) -> bool:
-	return card != null and str(card.get_meta(RivetFrames.ON, "")).ends_with(FILE)
+	var on: String = str(card.get_meta(RivetFrames.ON, "")) if card != null else ""
+	return on.ends_with(FILE) or on.ends_with(RECOVER_FILE)
 
 
 ## Poses the thrust cell for the facing (RivetStrike.placed): on his ground point, upright.
@@ -78,7 +100,10 @@ static func place(rig: CutRig, card: Sprite2D, s: float, h_px: float) -> void:
 	card.flip_h = false
 	var size: Vector2 = card.texture.get_size() / Vector2(CELLS, 1)
 	var art: String = path.get_base_dir().get_file()
-	var foot: float = CAM_FEET.get(art, 0.0) if cell == CAM else RivetStrips.foot_px(path)
+	var cam: Dictionary[String, float] = (
+		RECOVER_CAM_FEET if path.ends_with(RECOVER_FILE) else CAM_FEET
+	)
+	var foot: float = cam.get(art, 0.0) if cell == CAM else RivetStrips.foot_px(path)
 	card.offset = Vector2(-size.x * 0.5, foot - size.y)
 	card.global_rotation = 0.0
 	card.global_scale = Vector2(s, s) / RivetRes.of(path)
