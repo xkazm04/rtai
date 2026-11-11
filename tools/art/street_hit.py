@@ -57,6 +57,8 @@ CLASSES.update({k: ["jab", "heavy"] for k in ("thug", "ped_suit", "ped_hood", "p
 # assets it458 (n17 21:50-22:17): shock for those seven, jab and heavy for the hat, elder and shopper.
 CLASSES.update({k: ["jab", "heavy", "shock"] for k in ("thug", "ped_suit", "ped_hood", "ped_cap", "ped_worker", "ped_jogger", "ped_punk")})
 CLASSES.update({k: ["jab", "heavy"] for k in ("ped_hat", "ped_elder", "ped_shopper")})
+# assets it463 (n17 23:24-23:26): shock for the hat, elder and shopper (all ten peds and the thug now).
+CLASSES.update({k: ["jab", "heavy", "shock"] for k in ("ped_hat", "ped_elder", "ped_shopper")})
 CLASS_SCALE_FROM = "shoulder"
 # kind -> a size step on that scale: the SWAT's class cells were drawn ~8 % taller than his shoulder cells (jab
 # 187-204 px, heavy 190-201 against 180-185, the it450 reply) and overflowed the cell; 0.9 stands them at the walk.

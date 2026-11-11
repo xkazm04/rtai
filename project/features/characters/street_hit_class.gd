@@ -26,7 +26,7 @@ const FAMILIES: Array[StringName] = [&"flinch", &"stagger", &"spin", &"fold", &"
 ## 3-4 jabs a second), a heavy blow as a stagger's, a shock through half the stun's convulsion.
 const HOLD_S: Dictionary[StringName, float] = {&"jab": 0.2, &"heavy": 0.34, &"shock": 0.5}
 ## card row -> class -> grid (street_hit.py --only=classes); a row or class absent = no cell (the
-## hat, elder and shopper have no shock drawn: their stun keeps the shoved walk, as before).
+## stun keeps the shoved walk, as before).
 const GRIDS: Dictionary[String, Dictionary] = {
 	"cop/head_cap":
 	{
@@ -92,16 +92,19 @@ const GRIDS: Dictionary[String, Dictionary] = {
 	{
 		&"jab": "p70/ped_hat_jab_hit.png",
 		&"heavy": "p70/ped_hat_heavy_hit.png",
+		&"shock": "p70/ped_hat_shock_hit.png",
 	},
 	"ped/head_bald":
 	{
 		&"jab": "p70/ped_elder_jab_hit.png",
 		&"heavy": "p70/ped_elder_heavy_hit.png",
+		&"shock": "p70/ped_elder_shock_hit.png",
 	},
 	"ped/head_shopper":
 	{
 		&"jab": "p70/ped_shopper_jab_hit.png",
 		&"heavy": "p70/ped_shopper_heavy_hit.png",
+		&"shock": "p70/ped_shopper_shock_hit.png",
 	},
 }
 ## The class grids' draw scale (StreetWalkerHit.fill_of), ONE per kind so jab, heavy and shock
@@ -150,6 +153,10 @@ const FILL: Dictionary[String, float] = {
 	"ped_elder_heavy_hit.png": 1.06,
 	"ped_shopper_jab_hit.png": 1.16,
 	"ped_shopper_heavy_hit.png": 1.16,
+	# assets it463: the hat, elder and shopper shock at the kind's one FILL
+	"ped_hat_shock_hit.png": 1.05,
+	"ped_elder_shock_hit.png": 1.06,
+	"ped_shopper_shock_hit.png": 1.13,  # her raised bag and arcs stand 5 % over at 1.16
 }
 ## --hit-class=off read once: -1 unread, 1 off.
 static var _off: int = -1
