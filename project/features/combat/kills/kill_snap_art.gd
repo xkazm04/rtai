@@ -19,12 +19,13 @@ static func draw(ci: KillNewStyles, d: KillNewStyles.Death, age: int) -> void:
 	var drops: int = roundi(d.extra.num("drops", 7))
 	var from: Vector2 = d.head_px
 	var fade: float = 1.0 - k * k
-	var mist: Color = Color(BLOOD, 0.45 * fade)
+	var mist: Color = Color(BLOOD, 0.6 * fade)
 	ci.draw_circle(from + d.dir * reach * 0.35 * k, reach * (0.22 + 0.3 * k), mist)
 	for n: int in drops:
 		var spread: float = (KillNewStyles.h(d.serial, n) - 0.5) * 0.7
 		var run: float = reach * (0.25 + 0.75 * KillNewStyles.h(d.serial, n + 40)) * k
 		var at: Vector2 = from + d.dir.rotated(spread) * run
-		var r: float = ci.ppm * (0.035 + 0.04 * KillNewStyles.h(d.serial, n + 80)) * (1.2 - 0.4 * k)
+		var r: float = maxf(1.5, ci.ppm * (0.05 + 0.05 * KillNewStyles.h(d.serial, n + 80)))
+		r *= 1.2 - 0.4 * k
 		ci.draw_circle(at, r + 1.0, BLOOD_DARK)
 		ci.draw_circle(at, r, BLOOD)

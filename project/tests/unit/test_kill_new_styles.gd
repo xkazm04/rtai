@@ -6,6 +6,7 @@ extends GutTest
 ## weapon -> the n16 style its kill takes.
 const NEW: Dictionary[StringName, StringName] = {
 	&"pistol": &"snap",
+	&"machine_pistol": &"stitch",
 }
 
 

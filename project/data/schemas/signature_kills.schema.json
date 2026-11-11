@@ -169,7 +169,8 @@
               "burst",
               "crush",
               "vaporise",
-              "snap"
+              "snap",
+              "stitch"
             ]
           },
           "track": {

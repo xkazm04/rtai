@@ -28,11 +28,9 @@ static func attach(rig: CutRig, body: Node2D, toward: Vector2) -> Sprite2D:
 	c.hframes = RigHeadCard.FRAMES
 	c.vframes = StreetFallBetween.rows_of(path)
 	c.centered = true  # the fall grids draw the feet at the cell centre
-	var oct: Vector2i = RigHeadCard.frame_of(toward.angle())
-	c.frame_coords = Vector2i(oct.x, 0)
-	c.flip_h = oct.y == 1
+	face(c, toward.angle())
 	c.scale = Vector2.ONE * _scale(rig, path)
-	c.position = -body.position  # the rig's origin is the feet
+	c.position = feet_of(rig, body)
 	c.material = rig.head_card.material
 	c.z_index = rig.head_card.z_index
 	c.visible = false
@@ -61,3 +59,30 @@ static func _scale(rig: CutRig, path: String) -> float:
 	var h: float = StreetWalkerCards.HEIGHT_BY_ART.get(art, StreetWalkerCards.HEIGHT_M)
 	var k: float = 1.0 + StreetCrowdCards.SCALE_VAR * StreetCrowdCards.vary(rig.actor_id, 3)
 	return h * CharacterRigs.PX_PER_M * k / StreetWalkerFall.STILL_PX
+
+
+## The victim's standing height on the street (px at `ppm`): the view art's figure height times
+## his crowd scale (StreetWalkerCards), the length a card victim's drawn figure stands.
+static func height_px(rig: CutRig, ppm: float) -> float:
+	var art: String = ViewMode.shared().art
+	var h: float = StreetWalkerCards.HEIGHT_BY_ART.get(art, StreetWalkerCards.HEIGHT_M)
+	var k: float = 1.0 + StreetCrowdCards.SCALE_VAR * StreetCrowdCards.vary(rig.actor_id, 3)
+	return h * ppm * k
+
+
+## The drawn figure's feet in `body` (the BODY group at its centroid, before the wrap): the copy
+## of his street card stands on its own origin, which a living hit shoves off the rig's
+## (StreetWalkerHit.shove); no card copy = the rig's origin.
+static func feet_of(rig: CutRig, body: Node2D) -> Vector2:
+	if rig != null and rig.head_card != null:
+		for ch: Node in body.get_children():
+			if ch is Sprite2D and ch.name == rig.head_card.name:
+				return (ch as Sprite2D).position
+	return -body.position
+
+
+## Turns the grid to the facing whose fall points along `angle` (world rad), as a dying card does.
+static func face(cells: Sprite2D, angle: float) -> void:
+	var oct: Vector2i = RigHeadCard.frame_of(angle)
+	cells.frame_coords = Vector2i(oct.x, cells.frame_coords.y)
+	cells.flip_h = oct.y == 1

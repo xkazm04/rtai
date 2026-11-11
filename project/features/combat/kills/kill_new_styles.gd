@@ -3,10 +3,14 @@ extends Node2D
 ## The n16 deaths (lane kills-new: one death per weapon that had none), render only. KillStyles
 ## hands every row whose style is in STYLES here: the body copy is wrapped in a lay node and laid
 ## through the row's pose track each frame (KillTrack), and each style's overlay class draws over
-## it (KillSnapArt: the pistol's exit mist ...). Ages count the sim tick, so a replay draws the same
-## frames. No RNG: shapes come from a hash of the serial and the tick.
+## it (KillSnapArt: the pistol's exit mist; KillStitchArt: the machine pistol's spurts). Ages count
+## the sim tick, so a replay draws the same frames. No RNG: shapes come from a hash of the serial
+## and the tick.
 
-const STYLES: Array[StringName] = [&"snap"]
+const STYLES: Array[StringName] = [&"snap", &"stitch"]
+## Body metas set at the cut: the feet (body-local px) and the standing height (px).
+const FEET: StringName = &"kill_feet"
+const HEIGHT: StringName = &"kill_height"
 
 
 class Death:
@@ -78,6 +82,9 @@ func parts(
 	if cells != null and hat != null:  # on a card the "cap" copy is the whole drawn figure
 		hat.free()
 		groups[SignatureKill.HAT] = null
+	if rig != null:  # the drawn feet (KillFallCells.feet_of); his drawn height is the art's
+		body.set_meta(FEET, KillFallCells.feet_of(rig, body))
+		body.set_meta(HEIGHT, KillFallCells.height_px(rig, ppm))
 	groups[SignatureKill.BODY] = wrap_body(body)
 
 
@@ -97,8 +104,8 @@ func add(serial: int, root: Node2D, row: SignatureKill, dir: Vector2) -> void:
 	d.body = d.lay.get_child(0) as Node2D if d.lay.get_child_count() > 0 else null
 	d.cells = KillFallCells.of(d.body)
 	var m: Array = KillTrack.measure(d.lay, ppm)
-	d.feet = d.cells.position if d.cells != null else m[0]
-	d.height = m[1]
+	d.feet = d.body.get_meta(FEET, m[0]) if d.body != null else m[0]
+	d.height = d.body.get_meta(HEIGHT, m[1]) if d.body != null else m[1]
 	_deaths.append(d)
 
 
@@ -118,8 +125,8 @@ func pose() -> void:
 		var p: Vector3 = KillTrack.sample(d.extra.track, age)
 		var b: Transform2D = KillTrack.basis(d.dir, d.fall, p, d.extra.lie_len)
 		var slide: Vector2 = d.dir * d.extra.slide_m * ppm * clampf(p.z, 0.0, 1.0)
-		if _drawn(d, age):  # the drawn fall takes over: the cells draw the lean and the lie
-			b = Transform2D.IDENTITY
+		if _drawn(d, age):  # the drawn fall takes over the lie: the track keeps only its lean
+			b = KillTrack.basis(d.dir, d.fall, Vector3(p.x, 1.0, 0.0), 1.0)
 		KillTrack.lay(d.lay, d.feet, b, slide)
 		d.xf = d.root.transform * d.lay.transform
 		d.feet_px = d.xf * d.feet
@@ -127,8 +134,9 @@ func pose() -> void:
 	queue_redraw()
 
 
-## True once the victim's drawn fall grid shows (from the row's `cells_at` tick, stepped over
-## `cells_ticks`); the copy of his standing card hides.
+## True once the victim's drawn fall grid shows (from the row's `cells_at` tick); its rows step
+## from `fall_at` (default cells_at) over `cells_ticks`, and a style may turn its facing (the
+## stitch's whirl). The copy of his standing card hides.
 func _drawn(d: Death, age: int) -> bool:
 	if d.cells == null or not d.extra.fx.has("cells_at"):
 		return false
@@ -136,11 +144,14 @@ func _drawn(d: Death, age: int) -> bool:
 	var on: bool = age >= at
 	for ch: Node in d.body.get_children():
 		(ch as CanvasItem).visible = on == (ch == d.cells)
-	if on:
-		var ticks: float = maxf(1.0, d.extra.num("cells_ticks", 20))
-		var u: float = float(age - at) / ticks
-		d.cells.frame_coords = Vector2i(d.cells.frame_coords.x, KillFallCells.row_at(d.cells, u))
-	return on
+	if not on:
+		return false
+	var from: float = d.extra.num("fall_at", float(at))
+	var u: float = maxf(0.0, float(age) - from) / maxf(1.0, d.extra.num("cells_ticks", 20))
+	d.cells.frame_coords = Vector2i(d.cells.frame_coords.x, KillFallCells.row_at(d.cells, u))
+	if d.row.style == &"stitch":
+		KillFallCells.face(d.cells, KillStitchArt.facing(d, age))
+	return true
 
 
 func _draw() -> void:
@@ -148,6 +159,8 @@ func _draw() -> void:
 		var age: int = kills.tick - d.born
 		if d.row.style == &"snap":
 			KillSnapArt.draw(self, d, age)
+		elif d.row.style == &"stitch":
+			KillStitchArt.draw(self, d, age)
 
 
 ## A stable 0..1 hash of a kill serial and a number (no dice).

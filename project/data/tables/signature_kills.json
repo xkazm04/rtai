@@ -600,6 +600,97 @@
         0
       ],
       "weapon": "pistol"
+    },
+    {
+      "bounce": 0.1,
+      "cone_deg": 16,
+      "doc": "Machine pistol (lane kills-new, n16): the stitch. Four rounds walk up the body from the hip to the neck, 3 ticks apart (t1-10): each one an ink hole on him, a red spurt out of his back along the shot (KillStitchArt) and a jerk of the figure (the pose track, alternating 6-9 deg); on the last he whirls once (t10-18: his drawn facings turn a full circle onto the fall side), then drops sideways across the shot (t18-32). The figure is his own drawn fall grid from the hit (KillFallCells: the buckle frame under the blow, then mid-fall and lying, faced across the shot). Aftermath: the body across the shot, a narrow dotted spray along it, the four holes on him. Placeholder until the drawn stitch cells land (JOURNAL REQUEST assets).",
+      "fall": "side",
+      "flash_ticks": 0,
+      "fx": {
+        "cells_at": 0,
+        "cells_ticks": 14,
+        "fall_at": 18,
+        "from_h": 0.35,
+        "gap": 3,
+        "spurts": 4,
+        "to_h": 0.7,
+        "whirl_from": 10,
+        "whirl_ticks": 8
+      },
+      "ground_drag": 9,
+      "hitstop_ticks": 1,
+      "id": "smg_stitch",
+      "launch_mps": [
+        0.1,
+        0.2
+      ],
+      "pieces": [
+        "body"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "spray": 12,
+      "spray_cone_deg": 12,
+      "style": "stitch",
+      "track": [
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          8,
+          1,
+          0
+        ],
+        [
+          3,
+          2,
+          1,
+          0
+        ],
+        [
+          4,
+          -6,
+          1,
+          0
+        ],
+        [
+          6,
+          0,
+          1,
+          0
+        ],
+        [
+          7,
+          9,
+          1,
+          0
+        ],
+        [
+          9,
+          2,
+          1,
+          0
+        ],
+        [
+          10,
+          0,
+          1,
+          0
+        ]
+      ],
+      "up_mps": [
+        0,
+        0
+      ],
+      "weapon": "machine_pistol"
     }
   ],
   "leftover_budget": 12,
