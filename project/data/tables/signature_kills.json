@@ -1155,8 +1155,24 @@
     {
       "blot_m": 0,
       "bounce": 0.1,
+      "cells": {
+        "at": [
+          0,
+          4,
+          20,
+          40
+        ],
+        "grids": {
+          "p70": {
+            "cop/head_cap": "cop_patrol_claw_throw.png",
+            "cop/head_helmet": "cop_riot_claw_throw.png",
+            "cop/head_swat": "swat_claw_throw.png",
+            "ped/head_hair": "ped_suit_claw_throw.png"
+          }
+        }
+      },
       "cone_deg": 16,
-      "doc": "Rivet's charged bare claw (lane kills-new, n16; until now it borrowed the electro gun's X-ray shock through that row's also_weapons): the throw. The baton cooks him from inside and the electro gun strobes his skeleton; the claw is Rivet's own body, so it throws him. Hit-stop 4 (the full charge lands). t0-4 a cream arc jumps from the claw into his chest (KillThrowArt) and the pose track lifts him onto his toes, leaning back; t4-20 the discharge throws him back along the blow, lofted 0.4 m in a low hop, his standing figure tipped back up to 54 deg in the air (the track's tip), his own drawn fall grid (KillFallCells) shown from t14 with its rows stepping from t8 over 10 ticks (fx fall_at: it enters half fallen; from t8 it showed a hunched buckle mid-flight, from t14 with no fall_at an upright pop); he lands at t20 2.4 m out and skids on to 3 m by t32 (slide_m by the track's tip share). A cream spark crawls over him every 4 ticks to t60 (none under --reduced-motion), an ink skid line stays from where he landed to his boots, smoke rises off him for 160 ticks. No blood. Reads at 32 px/m as a body flung across the street. Placeholder until drawn throw cells land (JOURNAL REQUEST assets claw_throw).",
+      "doc": "Rivet's charged bare claw (lane kills-new, n16; until now it borrowed the electro gun's X-ray shock through that row's also_weapons): the throw. The baton cooks him from inside and the electro gun strobes his skeleton; the claw is Rivet's own body, so it throws him. Hit-stop 4 (the full charge lands). t0-4 a cream arc jumps from the claw into his chest (KillThrowArt) and the pose track lifts him onto his toes, leaning back; t4-20 the discharge throws him back along the blow, lofted 0.4 m in a low hop, his standing figure tipped back up to 54 deg in the air (the track's tip), his own drawn fall grid (KillFallCells) shown from t14 with its rows stepping from t8 over 10 ticks (fx fall_at: it enters half fallen; from t8 it showed a hunched buckle mid-flight, from t14 with no fall_at an upright pop); he lands at t20 2.4 m out and skids on to 3 m by t32 (slide_m by the track's tip share). A cream spark crawls over him every 4 ticks to t60 (none under --reduced-motion), an ink skid line stays from where he landed to his boots, smoke rises off him for 160 ticks. No blood. Reads at 32 px/m as a body flung across the street. The patrol cop, riot cop, SWAT and suit ped play their own drawn cells (KillDeathCells, 5 facings x 4 frames, carried by the same slide and hop): t0 struck stiff with the bolt in his chest, t4 flung curled, t20 landed on his back, t40 still with smoke off three claw gouges, the lying frames turned along the blow (fx cells_turn_from 2). Kinds without cells keep the fall-grid placeholder.",
       "fall": "back",
       "flash_ticks": 0,
       "fx": {
@@ -1164,6 +1180,7 @@
         "arc_ticks": 4,
         "cells_at": 14,
         "cells_ticks": 10,
+        "cells_turn_from": 2,
         "fall_at": 8,
         "land_at": 20,
         "lift_from": 4,
