@@ -511,3 +511,24 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
 - 01:50 started NEXT (2): `node tools/merge/morning.mjs --worktree=C:/Users/kazda/kiro/gtai-n15/scratch-integ2
   --lanes=n15-tools,n15-hero,n15-combat --date=2026-11-11 --steps=gates,export --resume --timeout=40
   --debt-reason="n15 scratch integration"` (APPDATA tools; log gtai-n15/flake/morning_s4.log).
+- 01:58 MILESTONE integrated gates GREEN with the flake fix (scratch-integ2 = n15-tools 71f0d5b1c + hero + combat +
+  the hero x combat resolution; log gtai-n15/flake/morning_s4.log): `morning: gates: scenario-tests pass:
+  scenario-tests: 55 passed (headless)` (the step that stopped at 01:22 on rig_stress), `unit-tests pass: 2582 passed,
+  0 failed, 2 skipped`, lint 16/16 over 1447 files, parity bit for bit (planted caught at 629), selftest look 11/11,
+  `export-audit pass: release-compile: 674 loaded, 0 failed`, `morning: gates: green`. Export step started (first real run).
+- 01:59 MILESTONE item 4 DONE for real, every step: `morning: export: green`, `morning: DONE at 71f0d5b1 on
+  n15t-scratch-integ2. Nothing was pushed; main was not touched.`, exit 0 (export log: `[ DONE ] savepack`;
+  build/export/windows/RTAI.exe 649691976 B + gtai_sim.windows.template_release.x86_64.dll). Boot smoke of that exe
+  (`RTAI.exe --headless --fixed-fps 60 --quit-after 300`): exit 0; 2 engine ERROR lines (a headless shader
+  `custom_samplers` condition, `101 resources still in use at exit`), not compared against a main export. Log kept:
+  evidence/morning_s4_gates_export.log. Scratch worktree removed (`git worktree remove --force` deregistered it but
+  hit Permission denied: my shell's cwd was inside; dir removed after) and `git branch -D n15t-scratch-integ2`.
+- 02:08 t-4 on a HAND-MADE map (c-2 said "invisible in the shipped city"): new dev tool
+  `project/dev/sim/car_route_trails.gd` drives the real reference-sim car code (CitySimCars, tier B, 3 cars x 60 s) on
+  a map whose roads end at a plaza (E), a kerb (N) and void (W, S); run in this tree and in scratch-tools-before
+  (d720e22da, the old rule). U-turns (evidence/t4_trails/{before,after}.json): BEFORE 3 at the plaza (tile 7), 1 at
+  the kerb (4), 5 at void; AFTER 7, all at void. SEEN (`gtai-masters/n15/tools/t4-hand-map-trails-before-after-4ppm.png`):
+  after t-4 the east car drives across the whole plaza and into the building block behind it, the north car through
+  the kerb into the block, both turning 18 m before the void. That is the comment's rule taken literally, and it is
+  wrong for a dead-end street on a hand-made map. The owner should judge it: c-2 rewritten. Building the alternative as
+  one data value next (a tile mask in sim_constants.json car_route; default = t-4 as built, so nothing moves).

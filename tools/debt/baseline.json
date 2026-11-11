@@ -37,7 +37,8 @@
         "2026-11-10: n11 merge: n11-hero dev films and ghost tooling on top of n12+tools (dev_loc 20809 -> 21227)",
         "2026-11-10: n11 merge: n11-combat dev films and body probes on top of n12+tools+hero (dev_loc 21227 -> 21419)",
         "2026-11-10: n14 windup-more: dev film chapters (<blade>_left / _cam: the cop behind or below Rivet) for the wind-up before/after films (dev_loc 21419 -> 21426)",
-        "2026-11-10: n15 tools: the selftest scenes declare NEEDS_WINDOW (+1 dev line) so tools/dev/run.mjs refuses them headless (combat FRICTION) (dev_loc 21426 -> 21427)"
+        "2026-11-10: n15 tools: the selftest scenes declare NEEDS_WINDOW (+1 dev line) so tools/dev/run.mjs refuses them headless (combat FRICTION) (dev_loc 21426 -> 21427)",
+        "2026-11-11: n15 tools: dev/sim/car_route_trails.gd, the t-4 evidence tool for a hand-made map (Call c-2); a -s SceneTree script reads its own two flags like dev/bake_city.gd (dev_loc 21427 -> 21594)"
       ],
       "files": {
         "project/dev/arena": 711,
@@ -66,10 +67,11 @@
         "project/dev/selftest": 1454,
         "project/dev/servo": 434,
         "project/dev/showcase": 6725,
+        "project/dev/sim": 167,
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 21427
+      "total": 21594
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -81,7 +83,8 @@
         "2026-11-08: n9 world item 3: dev/showcase/car_knock_clip (the car knock-down's filmed evidence on the real city, bodies_clip's pattern) (direct_cmdline_reads 157 -> 158)",
         "2026-11-08: n9 world item 4 evidence clip dev/showcase/dead_wall_clip (dev-only, the car_knock_clip pattern: one cmdline read, ~190 dev lines) (direct_cmdline_reads 158 -> 159)",
         "2026-11-08: n9 merge: the combined growth of the four lanes (world, rivet, perf, handheld), each individually under its own baseline (direct_cmdline_reads 159 -> 160)",
-        "2026-11-08: block70 test branch: the dev still scene for the true-70 city block (direct_cmdline_reads 160 -> 161)"
+        "2026-11-08: block70 test branch: the dev still scene for the true-70 city block (direct_cmdline_reads 160 -> 161)",
+        "2026-11-11: n15 tools: dev/sim/car_route_trails.gd, the t-4 evidence tool for a hand-made map (Call c-2); a -s SceneTree script reads its own two flags like dev/bake_city.gd (direct_cmdline_reads 161 -> 162)"
       ],
       "files": {
         "project/core/render/view_mode.gd": 1,
@@ -173,6 +176,7 @@
         "project/dev/showcase/save_notice_frame.gd": 1,
         "project/dev/showcase/street_crowd.gd": 1,
         "project/dev/showcase/vehicle_frame.gd": 1,
+        "project/dev/sim/car_route_trails.gd": 1,
         "project/dev/weapon_art/electro_cells.gd": 1,
         "project/dev/weapon_art/swat_lineup.gd": 1,
         "project/dev/weapon_art/weapon_lineup.gd": 1,
@@ -229,7 +233,7 @@
         "project/tests/run_scenarios.gd": 1,
         "project/tests/unit/test_launch_args.gd": 1
       },
-      "total": 161
+      "total": 162
     },
     "files_near_cap": {
       "accepted": [

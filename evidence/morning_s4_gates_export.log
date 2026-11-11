@@ -1,0 +1,14 @@
+morning: gates: running
+morning: gates: log C:\Users\kazda\kiro\gtai-n15\scratch-integ2\build\merge\logs\gates.log (tail it; limit 90 min)
+morning: gates: export-audit pass: release-compile: 674 loaded, 0 failed
+morning: gates: lint pass: lint: all 16 checks pass over 1447 GDScript files
+morning: gates: parity pass: parity: native == GDScript reference bit for bit over 1200 steps (40 snapshot checks, 3502 floats); planted mutation caught at step 629
+morning: gates: scenario-tests pass: scenario-tests: 55 passed (headless)
+morning: gates: selftest pass: selftest: D4 city frames rendered (32 px/m ok, 100 actors, 128 colours; 48 px/m ok, 85 actors, 120 colours); 86 art textures, 0 placeholders, prewarm 11 ms; look goldens 11/11 within mean 4 (worst ...
+morning: gates: unit-tests pass: unit-tests: 2582 passed, 0 failed, 2 skipped (GUT, headless)
+morning: gates: green
+morning: export: running
+morning: export: log C:\Users\kazda\kiro\gtai-n15\scratch-integ2\build\merge\logs\export.log (tail it; limit 40 min)
+morning: export: green
+morning: DONE at 71f0d5b1 on n15t-scratch-integ2. Nothing was pushed; main was not touched. The owner's verdicts and the push are yours.
+exit 0
