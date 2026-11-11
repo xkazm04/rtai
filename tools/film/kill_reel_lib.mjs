@@ -1,0 +1,106 @@
+// The kill reel's pure parts (tools/film/kill_reel.mjs): the plan of films, the beat frames, the
+// crop about a kill, and the signature_kills rows each weapon's death is drawn from.
+import { readFileSync } from 'node:fs';
+import { join, resolve } from 'node:path';
+import { ROOT } from '../lib/repo.mjs';
+
+/** The burn death is the fire's, not a gun's: these weapons set a man ablaze. */
+export const BURN_WEAPONS = ['flamethrower', 'molotov'];
+/** Kill window size in metres (wide enough for a gib's flight, the nuke pack and Rivet). */
+export const WINDOW_M = [12, 9];
+export const VIEW = [1280, 800];
+export const MAX_AFTER = 230;
+
+const table = (tree, rel) => JSON.parse(readFileSync(join(tree, 'project', rel), 'utf8'));
+
+/** The weapons a signature row is drawn for: its `weapon`, its `also_weapons`, and the fire weapons for `burn`. */
+const rowWeapons = (row) => [row.weapon, ...(row.also_weapons ?? []), ...(row.weapon === 'burn' ? BURN_WEAPONS : [])];
+
+/** The weapons Rivet can carry into the lab that have a signature death in `tree`. */
+export function reelWeapons(tree = ROOT) {
+  const armed = new Set([...table(tree, 'data/tables/weapons.json').weapons.map((w) => w.id),
+    ...Object.keys(table(tree, 'data/tables/melee_weapons.json').weapons)]);
+  const rows = table(tree, 'data/tables/signature_kills.json').kills;
+  return [...new Set(rows.flatMap(rowWeapons).filter((w) => armed.has(w)))];
+}
+
+/** The beat timings a weapon's death takes from its signature_kills row ({} = no row: the standard death).
+ *  `held_ticks` is the beat the body holds before it leaves: hit-stop + grind + stand (a burning or
+ *  dissolving man standing), `crumble_ticks` the fall after it. The measured side is the reel's films. */
+export function tableRows(tree, weapons) {
+  const kills = table(tree, 'data/tables/signature_kills.json').kills;
+  const out = {};
+  for (const w of weapons) {
+    const row = kills.find((k) => rowWeapons(k).includes(w));
+    const n = (key) => row?.[key] ?? 0;
+    out[w] = row ? { id: row.id, style: row.style, hitstop_ticks: n('hitstop_ticks'), grind_ticks: n('grind_ticks'),
+      stand_ticks: n('stand_ticks'), crumble_ticks: n('crumble_ticks'), flash_ticks: n('flash_ticks'),
+      held_ticks: n('hitstop_ticks') + n('grind_ticks') + n('stand_ticks') } : {};
+  }
+  return out;
+}
+
+const list = (text, fallback) => (text === undefined || text === true ? fallback : String(text).split(',').map((s) => s.trim()).filter(Boolean));
+
+/** Everything the reel needs before a launch, or {error}. Pure apart from reading `tree`'s tables for `all`. */
+export function reelPlan(flags, extra, tree = ROOT) {
+  const known = new Set(['out', 'weapons', 'victims', 'dirs', 'ppm', 'after', 'rev', 'before', 'native', 'clips', 'keep-frames', 'timeout', 'dry-run']);
+  const stray = Object.keys(flags).find((k) => !known.has(k));
+  if (stray) return { error: `unknown option --${stray}` };
+  if (!flags.out || flags.out === true) return { error: '--out=<dir> is required' };
+  for (const k of ['clips', 'keep-frames', 'dry-run']) if (flags[k] !== undefined && flags[k] !== true) return { error: `--${k} takes no value` };
+  const weapons = flags.weapons === undefined || flags.weapons === 'all' ? reelWeapons(tree) : list(flags.weapons, []);
+  const dirs = list(flags.dirs, ['0']).map(Number);
+  const ppm = list(flags.ppm, ['32', '64']).map(Number);
+  const after = Number(flags.after ?? 150);
+  if (!weapons.length) return { error: '--weapons names no weapon' };
+  if (dirs.some((d) => !Number.isInteger(d) || d < 0 || d >= 360)) return { error: `--dirs takes whole degrees 0-359 (0 east, 90 south), got ${flags.dirs}` };
+  if (ppm.some((p) => !Number.isInteger(p) || p < 8 || p > 96)) return { error: `--ppm takes whole px/m 8-96, got ${flags.ppm}` };
+  if (!Number.isInteger(after) || after < 1 || after > MAX_AFTER) return { error: `--after takes 1-${MAX_AFTER} ticks, got ${flags.after}` };
+  for (const k of ['rev', 'before', 'native', 'timeout']) if (flags[k] === true) return { error: `--${k} needs a value` };
+  if (flags.native !== undefined && !flags.rev && !flags.before) return { error: '--native=donor goes with --rev or --before' };
+  if (extra.some((a) => /^--(sig-dir|sig-gun|sig-solo|victim|seed|ppm)=/.test(a))) return { error: 'the reel sets --sig-dir, --sig-gun, --sig-solo, --victim, --seed and --ppm itself: use --dirs, --weapons, --victims, --ppm' };
+  const victims = list(flags.victims, ['']);
+  const jobs = weapons.flatMap((weapon) => victims.flatMap((victim) => dirs.flatMap((dir_deg) => ppm.map((p) => ({ weapon, victim, dir_deg, ppm: p })))));
+  return { out: resolve(flags.out), weapons, victims: victims.filter(Boolean), dirs, ppm, after, jobs, extra,
+    rev: flags.rev ?? null, before: flags.before ?? null, native: flags.native ?? null, clips: flags.clips === true,
+    keepFrames: flags['keep-frames'] === true, dryRun: flags['dry-run'] === true, timeout: Number(flags.timeout ?? 300) };
+}
+
+/** The sheet's columns: the lab's trigger tick, the kill and its first frames, then the held beat and the aftermath. */
+export function pickBeats(kill, after) {
+  const offsets = [-2, 0, 1, 2, 4, 6, 10, 20, 40, 80, after];
+  return [...new Set([60, ...offsets.filter((o) => o <= after).map((o) => kill + o)])].filter((t) => t >= 0).sort((a, b) => a - b);
+}
+
+/** The hostile that died at `kill` (alive the tick before, dead on it), or null. */
+export function victimAt(probe, kill) {
+  const at = (t) => probe?.rows?.find((r) => r.tick === t)?.fighters ?? [];
+  const before = new Map(at(kill - 1).filter((f) => f.role === 'hostile' && f.alive).map((f) => [f.id, f]));
+  const died = at(kill).find((f) => f.role === 'hostile' && !f.alive && before.has(f.id));
+  return died ? { id: died.id, pos: died.pos, screen: before.get(died.id).screen } : null;
+}
+
+/** The crop [x, y, w, h] (even sizes, inside the view) centred between Rivet and his victim at the kill.
+ *  The victim is placed from the sim: Rivet's screen point plus the metres between them at `ppm`, because
+ *  the probe has no screen point for a guard whose card it cannot see (a turned guard read 9010, 8368). */
+export function killWindow(probe, kill, ppm, view = VIEW) {
+  const r = probe?.rows?.find((row) => row.tick === kill)?.fighters?.find((f) => f.role === 'rivet');
+  const rivet = r?.screen ?? [view[0] / 2, view[1] / 2];
+  const died = victimAt(probe, kill);
+  const victim = died?.pos && r?.pos ? [rivet[0] + (died.pos[0] - r.pos[0]) * ppm, rivet[1] + (died.pos[1] - r.pos[1]) * ppm] : rivet;
+  const w = Math.min(view[0], 2 * Math.round((WINDOW_M[0] * ppm) / 2));
+  const h = Math.min(view[1], 2 * Math.round((WINDOW_M[1] * ppm) / 2));
+  const cx = (rivet[0] + victim[0]) / 2;
+  const cy = (rivet[1] + victim[1]) / 2;
+  const x = Math.max(0, Math.min(view[0] - w, Math.round(cx - w / 2)));
+  const y = Math.max(0, Math.min(view[1] - h, Math.round(cy - h / 2)));
+  return [x, y, w, h];
+}
+
+/** What a sheet's rows are, top to bottom (the PNG labels each cell with its tick only). */
+export function sheetOf(file, rows, weapon, ppm) {
+  const mine = rows.filter((r) => r.job.weapon === weapon && r.job.ppm === ppm && r.film?.box);
+  return { file, weapon, ppm, rows: mine.map(({ job, film }) => ({ side: job.side, victim: job.victim || 'guard', dir_deg: job.dir_deg,
+    kill: film.kill, beats: film.beats, outcome: film.outcome })) };
+}

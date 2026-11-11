@@ -10,6 +10,7 @@ Run these from the root of your worktree. Exit codes are shared: `0` pass, `1` f
 | When you want to | Run |
 |---|---|
 | film or still a named shot (arena, street, quest 1, a chapter, a weapon) | `node tools/film/film.mjs <shot>` |
+| film every signature death: weapons x victim kinds x directions, 32 and 64 px/m, a sheet per weapon | `node tools/film/kill_reel.mjs --out=<dir> --weapons=all` |
 | show before and after at the same tick | `node tools/film/compare.mjs <shot> --a=<commit> --b=<commit>` |
 | the old bytes of a file at a commit (LFS assets smudged, not the pointer `git show` writes) | `node tools/film/blob.mjs <rev>:<path> [--out=<file>]` |
 | one sheet of a film's stills, labelled | `node tools/film/sheet.mjs <film dir> --out=<file.png>` |
@@ -117,6 +118,34 @@ a different subject position.
 asked for, a subject (`--subject=rivet|hostile|dead|id:<n>`) off screen at a still, or an `--on` event
 that never happened (`--on fire:3 never happened: 1 fire event(s) in 900 ticks`).
 Quest 1 has no numbers and no locked camera; a still that exists is all it can claim.
+
+## tools/film/kill_reel.mjs: every signature death, one command (n16)
+
+```
+export APPDATA=<your lane's appdata>
+node tools/film/kill_reel.mjs --out=build/kreel/now --weapons=katana,rocket_launcher --victims=thug,cop/head_swat --dirs=90,270
+node tools/film/kill_reel.mjs --out=build/kreel/ab --weapons=katana --dirs=90 --before=main --rev=HEAD
+```
+
+Each film is film.mjs's new `kill:<weapon>` shot: the KillLab on the city block (`--arena=city --sig-lab
+--sig-gun=<id> --sig-solo=start`), one guard 3 m from Rivet, turned `--sig-dir=<deg>` (0 east, 90 south: screen
+down) and drawn as `--victim=<kind>` (StreetDeadPlan.CLASS_OF rows). Same seed, same tick at every zoom. Out:
+`<weapon>_<ppm>.png`, one row per film (`before` above `after` when `--before` is given), columns = the lab's
+trigger tick 60, kill-2, the kill, +1 +2 +4 +6 +10 +20 +40 +80 and +`--after` (default 150), each cell a 12 x 9 m
+window between Rivet and the victim (each cell is labelled with its tick; `reel.json` `sheets[].rows` says which
+film each row is, and `table` holds each weapon's signature_kills row: style, hitstop_ticks, grind_ticks,
+flash_ticks). `--clips` adds `clip.mp4` per film (60 fps, cropped, trigger window to kill+after). `--weapons=all`
+= every weapon Rivet can carry into the lab that has a signature row (burn films with the flamethrower and the
+molotov; the ghost rows are not lab weapons). Extra game flags go after `--` (`-- --gore=reduced`); the reel
+refuses `--sig-dir`, `--victim`, `--seed`, `--ppm` there, since it sets them.
+
+Cost: the first zoom of each combo saves the trigger window and kill+after (about 170 PNGs, 80 s for a blade, up
+to 150 s for the rocket beside other lanes); later zooms reuse that kill tick and save the 12 beat frames only
+(the zoom is view only; a kill on another tick at another zoom is **unverifiable**). Unpicked frames are deleted
+unless `--keep-frames`. A tree older than n16 has no `--sig-dir` or lab `--victim`: film refuses the flag
+(nothing launched); cherry-pick the n16-tools kill-reel commit or film `--dirs=0` without `--victims`.
+Known: at `--dirs=0` the guard stands into the city pit's knot of cops east of Rivet's start, and a rocket takes
+them too; 90, 180 and 270 film the guard alone.
 
 ## tools/film/sheet.mjs: one labelled contact sheet of a film's stills
 

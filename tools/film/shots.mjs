@@ -19,6 +19,10 @@ export const SHOTS = {
     flags: (id) => [...REEL, '--reel=director', `--chapter=${id}`] },
   weapon: { doc: 'one lone kill with a table weapon: weapon:<id>', ticks: 900, needs: 'weapon',
     travels: true, flags: (id) => ['--arena=city', `--weapon=${id}`, '--bot=gunplay', '--lone', '--reach=6'] },
+  // The kill lab (KillLab via BrutalityHook) on the city block: one guard 3 m from Rivet's start, turned
+  // --sig-dir degrees, killed by the weapon's signature death (n16 tools: tools/film/kill_reel.mjs).
+  kill: { doc: 'one signature kill in the kill lab on the city block: kill:<weapon> (gun or blade)', ticks: 420, needs: 'sigweapon',
+    flags: (id) => ['--arena=city', '--sig-lab', `--sig-gun=${id}`, '--sig-solo=start'] },
   // Quest 1 runs through its own recorder: --stills (even ticks) only, no numbers, no locked camera.
   quest1: { doc: 'quest 1 through its scripted pad: --stills required (even ticks)', ticks: 0, script: 'res://dev/frames/quest1_clip.gd',
     flags: () => ['--rigs'] },
@@ -28,6 +32,7 @@ const read = (tree, rel) => JSON.parse(readFileSync(join(tree, 'project', rel), 
 
 const ids = {
   weapon: (tree) => read(tree, 'data/tables/weapons.json').weapons.map((w) => w.id),
+  sigweapon: (tree) => [...ids.weapon(tree), ...Object.keys(read(tree, 'data/tables/melee_weapons.json').weapons)],
   view: (tree) => read(tree, 'data/tables/view.json').views.map((v) => v.id),
   chapter: (tree) => {
     const file = join(tree, 'project/dev/showcase/reel_chapters.gd');
@@ -191,7 +196,7 @@ export function victimKinds(tree) {
 
 /** null, or why `--victim=<kind>` cannot be filmed with this shot in this tree. */
 export function checkVictim(kind, shot, tree) {
-  if (shot.name !== 'weapon') return `--victim is for the weapon shot only, not ${shot.name}`;
+  if (shot.name !== 'weapon' && shot.name !== 'kill') return `--victim is for the weapon and kill shots only, not ${shot.name}`;
   const known = victimKinds(tree);
   if (!known.length) return `${tree} has no ${DEAD_PLAN} CLASS_OF table to check --victim=${kind} against`;
   if (known.includes(kind)) {

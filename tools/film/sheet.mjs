@@ -85,7 +85,7 @@ function chunk(type, body) {
   return result;
 }
 
-function encodePng(width, height, pixels) {
+export function encodePng(width, height, pixels) {
   const header = Buffer.alloc(13);
   header.writeUInt32BE(width);
   header.writeUInt32BE(height, 4);
@@ -98,7 +98,7 @@ function encodePng(width, height, pixels) {
     chunk('IDAT', deflateSync(raw)), chunk('IEND', Buffer.alloc(0))]);
 }
 
-function label(pixels, width, left, top, cellW, tick) {
+export function label(pixels, width, left, top, cellW, tick) {
   for (const [i, digit] of [...String(tick)].entries()) {
     const glyph = DIGITS[Number(digit)];
     for (let y = 0; y < 14; y++) {

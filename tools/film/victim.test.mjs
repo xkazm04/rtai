@@ -54,7 +54,7 @@ test('an unknown kind, another shot, a tree without the table and a tree without
   const noTable = tree({ table: null });
   try {
     assert.match(planIn(root, 'weapon:pistol', [], 'cop/head_swot').error, /unknown victim cop\/head_swot .*did you mean cop\/head_swat\?/);
-    assert.match(planIn(root, 'arena').error, /--victim is for the weapon shot only, not arena/);
+    assert.match(planIn(root, 'arena').error, /--victim is for the weapon and kill shots only, not arena/);
     assert.match(planIn(noTable, 'weapon:pistol').error, /no project\/features\/characters\/street_dead_plan.gd CLASS_OF table/);
     assert.match(planIn(noHook, 'weapon:pistol').error, /no script in .* reads --victim: .*gunplay_hook\.gd lone\(\).*lone victim <kind>/);
     assert.match(planIn(root, 'weapon:pistol', ['--victim=thug'], undefined).error, /give --victim=<kind> before the --/);
