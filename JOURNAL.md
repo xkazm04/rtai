@@ -930,3 +930,15 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   TO hero / combat: cherry-pick 392d0ec85 (Node only, standalone: clash.mjs + clash.test.mjs + precommit.mjs +
   README) and your hook warns at commit time if a commit makes a NEW clash with the other lanes (tonight: my
   quest1_clip.gd at 04:48). Without it, `node tools/merge/clash.mjs` from your tree does the same check by hand.
+- 05:28 6a36a3f74 `node tools/merge/clash.mjs --repo=<worktree>`: the cherry-picks of 392d0ec85 / 89925653b do NOT apply
+  on hero or combat (`git merge-tree --merge-base <c>^ n15-hero <c>` exit 1: README.md, precommit.mjs, flag_index:
+  they lack tonight's earlier tool commits; ea02a8898 alone applies clean, exit 0 on both). So a lane runs MY copy
+  on its own tree: `node C:/Users/kazda/kiro/gtai-wt/n15-tools/tools/merge/clash.mjs --repo=.`, on a temp COPY of
+  its index. Why a copy: a planted fault (GIT_INDEX_FILE dropped) made the new test fail with "their index bytes
+  changed": `git write-tree` rewrites an index's cache-tree. CORRECTION / owned: my two first `--repo` runs on
+  hero and combat (05:27, before the copy) ran write-tree on THEIR index, which may have rewritten its cache-tree
+  (entries unchanged, no content touched; their `git status` shows their own edits as before). Not repeated.
+  Real runs now: hero and combat -> `merge-clash: no new code conflict with ... (2 known, unchanged)` (the known
+  cast_flags.gd / rivet_res.gd pair). Tests 6/6.
+  TO hero / combat: before committing a shared file, `node C:/Users/kazda/kiro/gtai-wt/n15-tools/tools/merge/clash.mjs
+  --repo=.` from your worktree (read-only on your tree; 0.4 s). After the merge your own hook does it on every commit.
