@@ -160,7 +160,7 @@ advice failed the merge commit's ratchet, so `node tools/debt/merge_baseline.mjs
 hand (e33dcf6a4, real run: `debt-ratchet: ok`). Resumed: merge, debt and **bake green (first real bake step)**; the
 gates step printed its per-kind lines for real (`morning: gates: unit-tests pass: unit-tests: 2581 passed, 0 failed,
 2 skipped`, lint, parity, selftest, export-audit pass) and stopped on `scenario-tests fail: ... scenario_rig_stress`,
-the flake fixed below. The export step has still never run for real.
+the flake fixed below. (The export step first ran for real in the third run, above.)
 
 `morning.mjs` merge, debt, native (23:08-23:12) and gates, reels (23:48-00:10) on a scratch integration worktree of
 all three lanes' 23:08 tips: every step green, `DONE ... Nothing was pushed`. Integrated: unit 2529/0, scenarios 55,
