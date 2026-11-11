@@ -1,0 +1,198 @@
+{
+ "schema": "gtai.kill-reel/1",
+ "outcome": "pass",
+ "argv": [
+  "--out=build/kreel/s2gore",
+  "--weapons=katana,rocket_launcher",
+  "--dirs=90",
+  "--ppm=32",
+  "--victims=thug",
+  "--gore-check"
+ ],
+ "sides": [
+  {
+   "name": "after",
+   "tree": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools"
+  }
+ ],
+ "table": {
+  "katana": {
+   "id": "katana_split",
+   "style": "split",
+   "hitstop_ticks": 6,
+   "grind_ticks": 0,
+   "stand_ticks": 0,
+   "crumble_ticks": 0,
+   "flash_ticks": 2,
+   "held_ticks": 6
+  },
+  "rocket_launcher": {
+   "id": "rocket_gib",
+   "style": "gib",
+   "hitstop_ticks": 0,
+   "grind_ticks": 0,
+   "stand_ticks": 0,
+   "crumble_ticks": 0,
+   "flash_ticks": 3,
+   "held_ticks": 0
+  }
+ },
+ "sheets": [
+  {
+   "file": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s2gore\\katana_32.png",
+   "weapon": "katana",
+   "ppm": 32,
+   "rows": [
+    {
+     "side": "after",
+     "victim": "thug",
+     "dir_deg": 90,
+     "kill": 68,
+     "beats": [
+      60,
+      66,
+      68,
+      69,
+      70,
+      72,
+      74,
+      78,
+      88,
+      108,
+      148,
+      218
+     ],
+     "outcome": "pass"
+    }
+   ]
+  },
+  {
+   "file": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s2gore\\rocket_launcher_32.png",
+   "weapon": "rocket_launcher",
+   "ppm": 32,
+   "rows": [
+    {
+     "side": "after",
+     "victim": "thug",
+     "dir_deg": 90,
+     "kill": 68,
+     "beats": [
+      60,
+      66,
+      68,
+      69,
+      70,
+      72,
+      74,
+      78,
+      88,
+      108,
+      148,
+      218
+     ],
+     "outcome": "pass"
+    }
+   ]
+  }
+ ],
+ "films": [
+  {
+   "weapon": "katana",
+   "victim": "thug",
+   "dir_deg": 90,
+   "ppm": 32,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s2gore\\katana\\after_thug_d90_32",
+   "outcome": "pass",
+   "reasons": [],
+   "kill": 68,
+   "beats": [
+    60,
+    66,
+    68,
+    69,
+    70,
+    72,
+    74,
+    78,
+    88,
+    108,
+    148,
+    218
+   ],
+   "box": [
+    438,
+    330,
+    384,
+    288
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.0358,
+    "settled_by": 108,
+    "settled_after_ticks": 40
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     513.599975585938,
+     527
+    ],
+    "screen": [
+     627.19921875,
+     474.9951171875
+    ]
+   },
+   "whole": true
+  },
+  {
+   "weapon": "rocket_launcher",
+   "victim": "thug",
+   "dir_deg": 90,
+   "ppm": 32,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s2gore\\rocket_launcher\\after_thug_d90_32",
+   "outcome": "pass",
+   "reasons": [],
+   "kill": 68,
+   "beats": [
+    60,
+    66,
+    68,
+    69,
+    70,
+    72,
+    74,
+    78,
+    88,
+    108,
+    148,
+    218
+   ],
+   "box": [
+    448,
+    259,
+    384,
+    288
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.0493,
+    "settled_by": 148,
+    "settled_after_ticks": 80
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     513.599975585938,
+     527
+    ],
+    "screen": [
+     633.19921875,
+     431.7705078125
+    ]
+   },
+   "whole": true
+  }
+ ]
+}

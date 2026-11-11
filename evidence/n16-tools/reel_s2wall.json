@@ -1,0 +1,613 @@
+{
+ "schema": "gtai.kill-reel/1",
+ "outcome": "pass",
+ "argv": [
+  "--out=build/kreel/s2wall",
+  "--weapons=gloria,katana",
+  "--dirs=90,wall",
+  "--ppm=32,64"
+ ],
+ "sides": [
+  {
+   "name": "after",
+   "tree": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools"
+  }
+ ],
+ "table": {
+  "gloria": {},
+  "katana": {
+   "id": "katana_split",
+   "style": "split",
+   "hitstop_ticks": 6,
+   "grind_ticks": 0,
+   "stand_ticks": 0,
+   "crumble_ticks": 0,
+   "flash_ticks": 2,
+   "held_ticks": 6
+  }
+ },
+ "sheets": [
+  {
+   "file": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s2wall\\gloria_32.png",
+   "weapon": "gloria",
+   "ppm": 32,
+   "rows": [
+    {
+     "side": "after",
+     "victim": "guard",
+     "dir_deg": 90,
+     "kill": 64,
+     "beats": [
+      60,
+      62,
+      64,
+      65,
+      66,
+      68,
+      70,
+      74,
+      84,
+      104,
+      144,
+      214
+     ],
+     "outcome": "pass"
+    },
+    {
+     "side": "after",
+     "victim": "guard",
+     "dir_deg": "wall",
+     "kill": 65,
+     "beats": [
+      60,
+      63,
+      65,
+      66,
+      67,
+      69,
+      71,
+      75,
+      85,
+      105,
+      145,
+      215
+     ],
+     "outcome": "pass"
+    }
+   ]
+  },
+  {
+   "file": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s2wall\\gloria_64.png",
+   "weapon": "gloria",
+   "ppm": 64,
+   "rows": [
+    {
+     "side": "after",
+     "victim": "guard",
+     "dir_deg": 90,
+     "kill": 64,
+     "beats": [
+      60,
+      62,
+      64,
+      65,
+      66,
+      68,
+      70,
+      74,
+      84,
+      104,
+      144,
+      214
+     ],
+     "outcome": "pass"
+    },
+    {
+     "side": "after",
+     "victim": "guard",
+     "dir_deg": "wall",
+     "kill": 65,
+     "beats": [
+      60,
+      63,
+      65,
+      66,
+      67,
+      69,
+      71,
+      75,
+      85,
+      105,
+      145,
+      215
+     ],
+     "outcome": "pass"
+    }
+   ]
+  },
+  {
+   "file": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s2wall\\katana_32.png",
+   "weapon": "katana",
+   "ppm": 32,
+   "rows": [
+    {
+     "side": "after",
+     "victim": "guard",
+     "dir_deg": 90,
+     "kill": 68,
+     "beats": [
+      60,
+      66,
+      68,
+      69,
+      70,
+      72,
+      74,
+      78,
+      88,
+      108,
+      148,
+      218
+     ],
+     "outcome": "pass"
+    },
+    {
+     "side": "after",
+     "victim": "guard",
+     "dir_deg": "wall",
+     "kill": 68,
+     "beats": [
+      60,
+      66,
+      68,
+      69,
+      70,
+      72,
+      74,
+      78,
+      88,
+      108,
+      148,
+      218
+     ],
+     "outcome": "pass"
+    }
+   ]
+  },
+  {
+   "file": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s2wall\\katana_64.png",
+   "weapon": "katana",
+   "ppm": 64,
+   "rows": [
+    {
+     "side": "after",
+     "victim": "guard",
+     "dir_deg": 90,
+     "kill": 68,
+     "beats": [
+      60,
+      66,
+      68,
+      69,
+      70,
+      72,
+      74,
+      78,
+      88,
+      108,
+      148,
+      218
+     ],
+     "outcome": "pass"
+    },
+    {
+     "side": "after",
+     "victim": "guard",
+     "dir_deg": "wall",
+     "kill": 68,
+     "beats": [
+      60,
+      66,
+      68,
+      69,
+      70,
+      72,
+      74,
+      78,
+      88,
+      108,
+      148,
+      218
+     ],
+     "outcome": "pass"
+    }
+   ]
+  }
+ ],
+ "films": [
+  {
+   "weapon": "gloria",
+   "victim": "",
+   "dir_deg": 90,
+   "ppm": 32,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s2wall\\gloria\\after_guard_d90_32",
+   "outcome": "pass",
+   "reasons": [],
+   "kill": 64,
+   "beats": [
+    60,
+    62,
+    64,
+    65,
+    66,
+    68,
+    70,
+    74,
+    84,
+    104,
+    144,
+    214
+   ],
+   "box": [
+    448,
+    259,
+    384,
+    288
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.0354,
+    "settled_by": 84,
+    "settled_after_ticks": 20
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     513.599975585938,
+     527
+    ],
+    "screen": [
+     633.19921875,
+     445.1064453125
+    ]
+   }
+  },
+  {
+   "weapon": "gloria",
+   "victim": "",
+   "dir_deg": 90,
+   "ppm": 64,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s2wall\\gloria\\after_guard_d90_64",
+   "outcome": "pass",
+   "reasons": [],
+   "kill": 64,
+   "beats": [
+    60,
+    62,
+    64,
+    65,
+    66,
+    68,
+    70,
+    74,
+    84,
+    104,
+    144,
+    214
+   ],
+   "box": [
+    256,
+    118,
+    768,
+    576
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.0344,
+    "settled_by": 84,
+    "settled_after_ticks": 20
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     513.599975585938,
+     527
+    ],
+    "screen": [
+     627.3984375,
+     490.2109375
+    ]
+   }
+  },
+  {
+   "weapon": "gloria",
+   "victim": "",
+   "dir_deg": "wall",
+   "ppm": 32,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s2wall\\gloria\\after_guard_dwall_32",
+   "outcome": "pass",
+   "reasons": [],
+   "kill": 65,
+   "beats": [
+    60,
+    63,
+    65,
+    66,
+    67,
+    69,
+    71,
+    75,
+    85,
+    105,
+    145,
+    215
+   ],
+   "box": [
+    448,
+    253,
+    384,
+    288
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.0264,
+    "settled_by": 85,
+    "settled_after_ticks": 20
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     511.734375,
+     520.764343261719
+    ],
+    "screen": [
+     603.5,
+     351.564453125
+    ]
+   }
+  },
+  {
+   "weapon": "gloria",
+   "victim": "",
+   "dir_deg": "wall",
+   "ppm": 64,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s2wall\\gloria\\after_guard_dwall_64",
+   "outcome": "pass",
+   "reasons": [],
+   "kill": 65,
+   "beats": [
+    60,
+    63,
+    65,
+    66,
+    67,
+    69,
+    71,
+    75,
+    85,
+    105,
+    145,
+    215
+   ],
+   "box": [
+    256,
+    106,
+    768,
+    576
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.0259,
+    "settled_by": 85,
+    "settled_after_ticks": 20
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     511.734375,
+     520.764343261719
+    ],
+    "screen": [
+     567,
+     303.130859375
+    ]
+   }
+  },
+  {
+   "weapon": "katana",
+   "victim": "",
+   "dir_deg": 90,
+   "ppm": 32,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s2wall\\katana\\after_guard_d90_32",
+   "outcome": "pass",
+   "reasons": [],
+   "kill": 68,
+   "beats": [
+    60,
+    66,
+    68,
+    69,
+    70,
+    72,
+    74,
+    78,
+    88,
+    108,
+    148,
+    218
+   ],
+   "box": [
+    438,
+    330,
+    384,
+    288
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.0316,
+    "settled_by": 148,
+    "settled_after_ticks": 80
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     513.599975585938,
+     527
+    ],
+    "screen": [
+     627.201171875,
+     488.3291015625
+    ]
+   }
+  },
+  {
+   "weapon": "katana",
+   "victim": "",
+   "dir_deg": 90,
+   "ppm": 64,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s2wall\\katana\\after_guard_d90_64",
+   "outcome": "pass",
+   "reasons": [],
+   "kill": 68,
+   "beats": [
+    60,
+    66,
+    68,
+    69,
+    70,
+    72,
+    74,
+    78,
+    88,
+    108,
+    148,
+    218
+   ],
+   "box": [
+    235,
+    224,
+    768,
+    576
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.0314,
+    "settled_by": 148,
+    "settled_after_ticks": 80
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     513.599975585938,
+     527
+    ],
+    "screen": [
+     615.40234375,
+     576.66015625
+    ]
+   }
+  },
+  {
+   "weapon": "katana",
+   "victim": "",
+   "dir_deg": "wall",
+   "ppm": 32,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s2wall\\katana\\after_guard_dwall_32",
+   "outcome": "pass",
+   "reasons": [],
+   "kill": 68,
+   "beats": [
+    60,
+    66,
+    68,
+    69,
+    70,
+    72,
+    74,
+    78,
+    88,
+    108,
+    148,
+    218
+   ],
+   "box": [
+    382,
+    166,
+    384,
+    288
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.0469,
+    "settled_by": 218,
+    "settled_after_ticks": 150
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     511.734375,
+     520.764343261719
+    ],
+    "screen": [
+     565.501953125,
+     299.8837890625
+    ]
+   }
+  },
+  {
+   "weapon": "katana",
+   "victim": "",
+   "dir_deg": "wall",
+   "ppm": 64,
+   "side": "after",
+   "dir": "C:\\Users\\kazda\\kiro\\gtai-wt\\n16-tools\\build\\kreel\\s2wall\\katana\\after_guard_dwall_64",
+   "outcome": "pass",
+   "reasons": [],
+   "kill": 68,
+   "beats": [
+    60,
+    66,
+    68,
+    69,
+    70,
+    72,
+    74,
+    78,
+    88,
+    108,
+    148,
+    218
+   ],
+   "box": [
+    125,
+    0,
+    768,
+    576
+   ],
+   "clip": null,
+   "measured": {
+    "aftermath_share": 0.03,
+    "settled_by": 148,
+    "settled_after_ticks": 80
+   },
+   "died": {
+    "id": 1,
+    "pos": [
+     511.734375,
+     520.764343261719
+    ],
+    "screen": [
+     490,
+     198.82421875
+    ]
+   }
+  }
+ ]
+}
