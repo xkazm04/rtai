@@ -114,3 +114,20 @@ NEXT (iteration 2):
 - FRICTION 12:03 a commit with root KILLS.md/DEFECTS.md ran full lint and `tools/merge/step_guard.break.test.mjs:277`
   (a timeout test) failed while the gates loaded the machine; it passed on the retry a minute later (flaky under load,
   not my change; the tools lane may want it: REQUEST tools: step_guard timeout test flakes under a running gate).
+
+## Iteration 2 (2026-11-11 12:30, BUILD)
+
+- 12:30 read JOURNAL, git log, the asset replies (it410 p70 bone for all 13 kinds 11:41; it414 p55 bone for the 7
+  priority kinds 12:22; A2 cut faces running in round 20261111-1230). The reel gate on bb9314a83 never finished (the
+  session stopped mid combo pass, no verdict line): re-run on the final commit.
+- MILESTONE fdb3a0d2d bone gib for patrol, riot, SWAT, hood, cap, suit, worker (it410, drop-ins; old/new board judged).
+  Film rocket --victim=cop/head_cap 64/32: bone reads at 64, NOT at 32 (pieces too small over the smoke).
+- MILESTONE 455148cb5 electro X-ray upright on the body's feet (KillXray.mid; `--shock-xray=lie` = before). Reads as
+  his X-ray at 64 and 32. Ohm's shock shares it.
+- MILESTONE 7d3ba705a FOUND filming the ranking: every blade split (katana, plasma sword, chainsaw, Kerf) cut through the
+  body's GROUND POINT, so in the upright view one "half" was the whole cop, standing and aiming as he slid off, and the
+  other his feet. Row key `cut_up_m` (schema) 0.8: real head-and-shoulder and legs halves. Films katana 64/32, plasma
+  sword 64, chainsaw 64 before/after. Open: the halves slide upright (no topple).
+- Scored on films: hand cannon 13, homing shard 13, mini nuke 15, plasma sword 7 -> 10, katana 10 -> 13 (KILLS.md).
+- Registry rules applied: motion-quality-gating (judge on game frames at play zoom, before/after same tick; the 32 px/m
+  bone result recorded as a miss, not claimed); combat-pacing (no new holds: all three changes are view placement only).

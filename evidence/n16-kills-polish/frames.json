@@ -1,83 +1,137 @@
 [
-  {
-    "file": "plasma_hole_chest_smoke_ab_64ppm_t55-95.png",
-    "title": "Plasma hole at the chest, ink-grey wound smoke",
-    "source": "film.mjs chapter:plasma_rifle --ppm=64 --on=kill:1+40; before rev 1b823dbf7, after bb9314a83",
-    "branch": "n16-kills-polish",
-    "ppm": 64,
-    "before": "top row: hole at the hips, cream smoke washing the cop pale",
-    "note": "weakest death in the ranking (7/20); commit bb9314a83"
-  },
-  {
-    "file": "plasma_hole_chest_smoke_ab_32ppm_x2_t55-95.png",
-    "title": "Plasma hole fix at play zoom (x2)",
-    "source": "same, --ppm=32",
-    "branch": "n16-kills-polish",
-    "ppm": 32,
-    "before": "top row",
-    "note": "the cop stays solid navy; the hole's cream halo is still large (next)"
-  },
-  {
-    "file": "boss_katana_strike_hold_ab_64ppm_t305-310.png",
-    "title": "Blade strike holds through the gap between swings",
-    "source": "film.mjs arena --view=tilt --ppm=64 --lock=off -- --bot=boss --boss=king --boss-blade=katana; before --rivet-strike-hold=off (rev 917d75a5e)",
-    "branch": "n16-kills-polish",
-    "ppm": 64,
-    "before": "top row: two upright back-turned frames t307-308",
-    "note": "owner n15 verdict (c); commit e4d81df1b"
-  },
-  {
-    "file": "katana_streak_ab_64ppm_t61-68.png",
-    "title": "Katana slash streak shorter and thinner",
-    "source": "film.mjs chapter:katana_left --ppm=64 --on=kill:1+10; before rev 5843f5a28 (main), after 917d75a5e",
-    "branch": "n16-kills-polish",
-    "ppm": 64,
-    "before": "top row: 1.7 m x 0.11 m white stick",
-    "note": "owner n15 verdict; streak_m 1 / streak_w_m 0.06; commit de9f68f8a"
-  },
-  {
-    "file": "rocket_gib_thug_drawn_pieces_ab_64ppm_t347-371.png",
-    "title": "Rocket gib: the thug flies his drawn pieces as a rig",
-    "source": "film.mjs weapon:rocket_launcher --victim=thug --ppm=64 --rev=917d75a5e; before --gib-pieces=cut",
-    "branch": "n16-kills-polish",
-    "ppm": 64,
-    "before": "top row: blue cop-suit rig parts under a box head",
-    "note": "owner n15 verdict; commit 917d75a5e"
-  },
-  {
-    "file": "rocket_gib_ped_head_hood_drawn_pieces_ab_64ppm_t347-371.png",
-    "title": "Rocket gib: the hooded ped flies his drawn pieces as a rig",
-    "source": "film.mjs weapon:rocket_launcher --victim=ped/head_hood --ppm=64 --rev=917d75a5e; before --gib-pieces=cut",
-    "branch": "n16-kills-polish",
-    "ppm": 64,
-    "before": "top row: blue rig parts",
-    "note": "owner n15 verdict; commit 917d75a5e"
-  },
-  {
-    "file": "rocket_gib_thug_torso_056_vs_070_32ppm_x2_t349-371.png",
-    "title": "Rig gib pieces at 0.7 m torso vs 0.56 at play zoom",
-    "source": "film.mjs weapon:rocket_launcher --victim=thug --ppm=32, revs 917d75a5e vs 1b823dbf7",
-    "branch": "n16-kills-polish",
-    "ppm": 32,
-    "before": "top row: 0.56 m",
-    "note": "a little bigger; grey metal on grey smoke still weak (DEFECTS #2 open)"
-  },
-  {
-    "file": "rocket_gib_thug_drawn_pieces_ab_32ppm_x2_t349-371.png",
-    "title": "Rocket gib thug at play zoom (x2)",
-    "source": "film.mjs weapon:rocket_launcher --victim=thug --ppm=32 --rev=917d75a5e; before --gib-pieces=cut",
-    "branch": "n16-kills-polish",
-    "ppm": 32,
-    "before": "top row",
-    "note": "pieces small and grey on the smoke: DEFECTS open #2"
-  },
-  {
-    "file": "katana_streak_ab_32ppm_x2_t63-70.png",
-    "title": "Katana slash streak at play zoom (x2)",
-    "source": "film.mjs chapter:katana --ppm=32 --on=kill:1+10; before 5843f5a28, after 917d75a5e",
-    "branch": "n16-kills-polish",
-    "ppm": 32,
-    "before": "top row",
-    "note": "crop shows the streak; the cop is at the right edge"
-  }
+ {
+  "file": "katana_cut_up_ab_64ppm_x13_t70-130.png",
+  "title": "Katana split: real halves (cut through the torso, not the feet)",
+  "source": "film.mjs chapter:katana --ppm=64 --stills=58-130; before rev 455148cb5, after 7d3ba705a",
+  "branch": "n16-kills-polish",
+  "ppm": 64,
+  "before": "top row: the whole cop stands and aims as one 'half' slides off; red edge bars at his feet",
+  "note": "commit 7d3ba705a, row cut_up_m 0.8; the halves still slide upright (open)"
+ },
+ {
+  "file": "katana_cut_up_ab_32ppm_x15_t63-130.png",
+  "title": "Katana split at play zoom (x1.5)",
+  "source": "same, --ppm=32 --stills=60-130",
+  "branch": "n16-kills-polish",
+  "ppm": 32,
+  "before": "top row",
+  "note": "head-and-shoulder half right, legs half left"
+ },
+ {
+  "file": "electro_xray_upright_ab_64ppm_x08_t116-136.png",
+  "title": "Electro X-ray stands on his feet",
+  "source": "film.mjs chapter:electro_gun --ppm=64 --on=kill:1+40 --rev=455148cb5; before with -- --shock-xray=lie",
+  "branch": "n16-kills-polish",
+  "ppm": 64,
+  "before": "top row: the skeleton lies sideways where he stood",
+  "note": "commit 455148cb5"
+ },
+ {
+  "file": "electro_xray_upright_ab_32ppm_x15_t116-136.png",
+  "title": "Electro X-ray upright at play zoom (x1.5)",
+  "source": "same, --ppm=32",
+  "branch": "n16-kills-polish",
+  "ppm": 32,
+  "before": "top row",
+  "note": "reads as his X-ray at 32 px/m"
+ },
+ {
+  "file": "chainsaw_cut_up_ab_64ppm_t86-174.png",
+  "title": "Chainsaw: torso off the legs after the grind",
+  "source": "film.mjs chapter:chainsaw --ppm=64 --on=kill:1+90; before 455148cb5, after 7d3ba705a",
+  "branch": "n16-kills-polish",
+  "ppm": 64,
+  "before": "top row: the whole cop stands back up after the grind",
+  "note": "commit 7d3ba705a"
+ },
+ {
+  "file": "plasma_sword_cut_up_ab_64ppm_t63-102.png",
+  "title": "Plasma sword: a cream-edged half, not two sticks",
+  "source": "film.mjs chapter:plasma_sword --ppm=64; before rank64 1b823dbf7, after 7d3ba705a",
+  "branch": "n16-kills-polish",
+  "ppm": 64,
+  "before": "top row: the cop slides off whole, two cream sticks remain",
+  "note": "commit 7d3ba705a"
+ },
+ {
+  "file": "rocket_gib_bone_patrol_ab_64ppm_x2_t360-371.png",
+  "title": "Rocket gib pieces with bone (patrol cop)",
+  "source": "film.mjs weapon:rocket_launcher --victim=cop/head_cap --ppm=64; before a8aa5c394, after fdb3a0d2d",
+  "branch": "n16-kills-polish",
+  "ppm": 64,
+  "before": "top row: sooty torn ends",
+  "note": "bone, rib top and spine stub read at 64 px/m"
+ },
+ {
+  "file": "rocket_gib_bone_patrol_ab_32ppm_x2_t352-371.png",
+  "title": "Rocket gib with bone at play zoom (x2)",
+  "source": "same, --ppm=32",
+  "branch": "n16-kills-polish",
+  "ppm": 32,
+  "before": "top row",
+  "note": "honest: the bone does not read at 32 px/m"
+ },
+ {
+  "file": "plasma_hole_chest_smoke_ab_64ppm_t55-95.png",
+  "title": "Plasma hole at the chest, ink-grey wound smoke",
+  "source": "film.mjs chapter:plasma_rifle --ppm=64 --on=kill:1+40; before rev 1b823dbf7, after bb9314a83",
+  "branch": "n16-kills-polish",
+  "ppm": 64,
+  "before": "top row: hole at the hips, cream smoke washing the cop pale",
+  "note": "weakest death in the ranking (7/20); commit bb9314a83"
+ },
+ {
+  "file": "plasma_hole_chest_smoke_ab_32ppm_x2_t55-95.png",
+  "title": "Plasma hole fix at play zoom (x2)",
+  "source": "same, --ppm=32",
+  "branch": "n16-kills-polish",
+  "ppm": 32,
+  "before": "top row",
+  "note": "the cop stays solid navy; the hole's cream halo is still large (next)"
+ },
+ {
+  "file": "boss_katana_strike_hold_ab_64ppm_t305-310.png",
+  "title": "Blade strike holds through the gap between swings",
+  "source": "film.mjs arena --view=tilt --ppm=64 --lock=off -- --bot=boss --boss=king --boss-blade=katana; before --rivet-strike-hold=off (rev 917d75a5e)",
+  "branch": "n16-kills-polish",
+  "ppm": 64,
+  "before": "top row: two upright back-turned frames t307-308",
+  "note": "owner n15 verdict (c); commit e4d81df1b"
+ },
+ {
+  "file": "katana_streak_ab_64ppm_t61-68.png",
+  "title": "Katana slash streak shorter and thinner",
+  "source": "film.mjs chapter:katana_left --ppm=64 --on=kill:1+10; before rev 5843f5a28 (main), after 917d75a5e",
+  "branch": "n16-kills-polish",
+  "ppm": 64,
+  "before": "top row: 1.7 m x 0.11 m white stick",
+  "note": "owner n15 verdict; streak_m 1 / streak_w_m 0.06; commit de9f68f8a"
+ },
+ {
+  "file": "rocket_gib_thug_drawn_pieces_ab_64ppm_t347-371.png",
+  "title": "Rocket gib: the thug flies his drawn pieces as a rig",
+  "source": "film.mjs weapon:rocket_launcher --victim=thug --ppm=64 --rev=917d75a5e; before --gib-pieces=cut",
+  "branch": "n16-kills-polish",
+  "ppm": 64,
+  "before": "top row: blue cop-suit rig parts under a box head",
+  "note": "owner n15 verdict; commit 917d75a5e"
+ },
+ {
+  "file": "rocket_gib_ped_head_hood_drawn_pieces_ab_64ppm_t347-371.png",
+  "title": "Rocket gib: the hooded ped flies his drawn pieces as a rig",
+  "source": "film.mjs weapon:rocket_launcher --victim=ped/head_hood --ppm=64 --rev=917d75a5e; before --gib-pieces=cut",
+  "branch": "n16-kills-polish",
+  "ppm": 64,
+  "before": "top row: blue rig parts",
+  "note": "owner n15 verdict; commit 917d75a5e"
+ },
+ {
+  "file": "rocket_gib_thug_torso_056_vs_070_32ppm_x2_t349-371.png",
+  "title": "Rig gib pieces at 0.7 m torso vs 0.56 at play zoom",
+  "source": "film.mjs weapon:rocket_launcher --victim=thug --ppm=32, revs 917d75a5e vs 1b823dbf7",
+  "branch": "n16-kills-polish",
+  "ppm": 32,
+  "before": "top row: 0.56 m",
+  "note": "a little bigger; grey metal on grey smoke still weak (DEFECTS #2 open)"
+ }
 ]

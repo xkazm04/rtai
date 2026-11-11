@@ -1,10 +1,22 @@
 # DEFECTS (n16 kills-polish, newest first; n15 combat's list below): found -> fixed (commit) / open
 
+## Blade kills, katana / plasma sword / chainsaw chapters, combo 64 and 32 px/m (iteration 2, 13:00)
+1. The split's "halves" were the whole cop, standing and aiming as he slid off (t64-t130), plus his feet: the cut ran
+   through the body's ground point, below the drawn figure -> fixed 7d3ba705a (row cut_up_m 0.8,
+   `evidence/n16-kills-polish/katana_cut_up_ab_*`, `plasma_sword_cut_up_*`, `chainsaw_cut_up_*`).
+2. The halves slide off upright (a head-and-shoulder half floats standing) -> open (topple them as they part).
+3. The plasma sword leaves nothing on the street (no blood by design, the halves only) -> open (char on the halves' edges?).
+
+## Rocket lone kill, patrol cop, bone pieces, combo 64 and 32 px/m t350-371 (iteration 2)
+1. The torn ends were sooty cloth (no bone) -> fixed fdb3a0d2d (it410 bone sets, 7 kinds; 4 more in 76f023a08).
+2. At 32 px/m the bone does not read: the pieces are ~10-15 px and fly over the smoke ring -> open.
+
 ## Ranking films, chapters at 32 and 64 px/m, rev 1b823dbf7 (iteration 1, 11:40-11:47)
 1. Plasma hole: the hole at the hips and cream smoke washing the standing cop pale -> fixed bb9314a83 (hole_up_m 0.4,
    ink-grey smoke). The hole's cream halo (1.55 x radius, alpha 0.55) is still large at 32 px/m -> open.
 2. Electro shock: the X-ray skeleton is drawn LYING (turned along the shot, `KillShockFx._draw` rotation dir + 90 deg)
-   beside the standing, convulsing card: reads as a sticker, not his X-ray -> open (upright on the body's feet; A3 art).
+   beside the standing, convulsing card: reads as a sticker, not his X-ray -> fixed 455148cb5 (upright on the body's
+   feet, `evidence/n16-kills-polish/electro_xray_upright_ab_*`; Ohm's shock too); per-kind skeletons (A3) -> open.
 3. Ray gun: at k+10..k+30 the cop falls back over as a plain death while a grey disc stays; the dissolve does not read
    -> open.
 4. Flamethrower: the jet's floor-fire column covers the death beat (k+0..k+10) -> open (n15 #1 of the flame jet).
