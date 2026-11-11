@@ -416,3 +416,26 @@ changed at 5cda754c0 (selftest passed on it at 00:35, unit/scenarios/reels not r
   (a file lock by another process? an engine race?) is not found tonight. Log gtai-n15/flake/evid_poison_scenarios.log
   (lines 420-443). NEXT candidate for item 6: reproduce with a loop of rig_stress under load + Process Monitor on
   .godot/imported/*.ctex opens.
+- 01:03 item 4, a fresh REAL morning run (scratch worktree gtai-n15/scratch-integ2, new branch n15t-scratch-integ2 at
+  main 5c5c03611, wt_init from this tree; `morning.mjs --lanes=n15-tools,n15-hero,n15-combat --date=2026-11-11
+  --steps=merge,debt,bake,gates,export --timeout=40`; log gtai-n15/flake/morning_s3.log). Two firsts:
+  (1) the baseline auto-resolve FIRED for real: `morning: tools/debt/baseline.json conflicted merging n15-hero: took
+  the looser of both sides per metric and file ...`, merge committed, hero's JOURNAL moved.
+  (2) MERGE NOTE FOUND: `STOPPED: merging n15-combat conflicted on 3 file(s): project/features/characters/
+  cast_flags.gd, project/features/characters/rivet_res.gd, tools/debt/baseline.json`. hero and combat both edited
+  cast_flags.gd (hero: `--ghost-` -> `_ghost()` with --ghost-soul-line=off; combat: WINDUP_FLAGS -> `_windup()` with
+  --rivet-left-strike/--rivet-blade-left) and rivet_res.gd X15 (hero: 37 p70/p55 strips; combat: 6 blade left sets).
+  Both are unions; resolved in the scratch (keep both dispatch branches + both helper funcs; keep both X15 lists),
+  gdformat/gdlint clean, `tools/godot/check.mjs` ok on both.
+- 01:08 the baseline beside a code conflict: the stop's advice ("take either side, then --update") FAILED the merge
+  commit (`FAIL debt-ratchet`: the side taken did not cover the other side's growth; --update only tightens). Fixed
+  e33dcf6a4: `node tools/debt/merge_baseline.mjs` (inside a conflicted merge) writes and stages the looser of both
+  sides, the same merge the auto-resolve does; the stop's advice names it, plus `--accept-regression` if the merged
+  tree is worse than both. Real run: `merge_baseline: tools/debt/baseline.json = the looser of both sides per metric
+  and file, staged (6 metrics)`, then `debt-ratchet: ok`, merge commit `lint: all 16 checks pass over 1444 GDScript
+  files`. Test with a real throwaway repo (code + baseline conflict); merge tests 91/91. tools/debt/README + AGENTS
+  line updated. I did NOT make the morning merge resolve the baseline when code also conflicts: its break tests
+  require "touch nothing when a code file conflicts" (tried it, reverted).
+- 01:10 resumed (`--resume`, log gtai-n15/flake/morning_s3b.log): `merge: green` (combat had a newer tip: merged
+  again clean), `debt: green`, `bake: green` (FIRST real bake step: `ok exit 0; SCRIPT ERROR 0` via tools/dev/run.mjs
+  `res://dev/bake_city.gd`, chunks matched the hash list), gates running.
