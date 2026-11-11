@@ -231,3 +231,18 @@ test('a tree older than the kill-lab turn: the refusal says film --dirs=0 (or dr
   assert.equal(olderTreeHint('film: no script in C:/t reads --sig-dirt'), '');
   assert.equal(olderTreeHint('film: something else'), '');
 });
+
+test("a fire weapon with its own row takes it over the burn row listed first (kills-new REQUEST: molotov_torch, not burn_char)", () => {
+  const root = tree();
+  try {
+    writeFileSync(join(root, 'project/data/tables/weapons.json'), JSON.stringify({ weapons: [{ id: 'flamethrower' }, { id: 'molotov' }] }));
+    writeFileSync(join(root, 'project/data/tables/signature_kills.json'), JSON.stringify({ kills: [
+      { id: 'burn_char', weapon: 'burn', style: 'burn', stand_ticks: 55 },
+      { id: 'molotov_torch', weapon: 'molotov', style: 'torch' },
+    ] }));
+    const rows = tableRows(root, ['molotov', 'flamethrower']);
+    assert.equal(rows.molotov.id, 'molotov_torch');
+    assert.equal(rows.flamethrower.id, 'burn_char', 'no row of its own: the burn fallback');
+    assert.deepEqual(reelWeapons(root), ['flamethrower', 'molotov'], 'each fire weapon filmed once');
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});

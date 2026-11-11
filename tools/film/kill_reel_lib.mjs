@@ -34,7 +34,9 @@ export function tableRows(tree, weapons) {
   const kills = t.kills;
   const out = {};
   for (const w of weapons) {
-    const row = kills.find((k) => rowWeapons(k).includes(w));
+    // A weapon's own row first, then the `burn` row for a fire weapon with none (SignatureKills' fallback; kills-new
+    // KillFireSource names the fire that killed: molotov -> molotov_torch, flamethrower -> burn_char).
+    const row = kills.find((k) => [k.weapon, ...(k.also_weapons ?? [])].includes(w)) ?? kills.find((k) => rowWeapons(k).includes(w));
     const n = (key) => row?.[key] ?? 0;
     out[w] = row ? { id: row.id, style: row.style, hitstop_ticks: n('hitstop_ticks'), grind_ticks: n('grind_ticks'),
       stand_ticks: n('stand_ticks'), crumble_ticks: n('crumble_ticks'), flash_ticks: n('flash_ticks'),
