@@ -229,3 +229,6 @@ freeze is SEEN. (3) kill reel throughput: `--weapons=all` films ~13 weapons x di
 `--quick` (32 px/m only, dirs 90) for builders' inner loop. (4) Gloria's pin counts cars as walls (Call for owner
 candidate, still at kill-lanes' side). (5) REPORT.md at 19:40 (Calls: kill shot spot moved, reels have the feel off
 by default). (6) the s1 frames.json entry "thug stands as riot cop" is superseded: retire it at REPORT time.
+- 13:46 evidence: gtai-masters/n16/tools/frames.json 12 entries (retired the s1 "thug stands as riot cop" still and its
+  file; the s1 dir-90 sheets are marked as filmed before the spot fix; added guard-vs-thug t60). In-tree copies under
+  evidence/n16-tools/ (+ reel_s3stop_on/off.json, the hit-stop proof).
