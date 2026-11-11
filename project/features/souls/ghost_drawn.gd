@@ -1,10 +1,9 @@
 class_name GhostDrawn
 extends RefCounted
-## n11 hero: a ghost form as one drawn figure under a tilt, in Rivet's strip format: an 8-frame walk
-## grid (5 facings, the left three mirrored or drawn: GhostSheet; `<name>_walk8.png`,
-## tools/art/ghost_pack.py), stepped
-## by the ground walked so a planted foot stays put, feet on the rig's point, the rig's limbs and
-## card hidden. Without the art it builds nothing and the form keeps its card. Render only.
+## n11 hero: a ghost form as one drawn figure under a tilt, in Rivet's strip format: a walk grid
+## (5 facings, the left three drawn or mirrored: GhostSheet; tools/art/ghost_pack.py) stepped by
+## the ground walked so a planted foot stays put, feet on the rig's point, its limbs and card
+## hidden. Without the art it builds nothing and the form keeps its card. Render only.
 
 const ART_DIR: String = "res://features/souls/art/view/"
 const COLS: int = 8
@@ -21,8 +20,7 @@ const MAX_RUN_CYCLES_S: float = 3.5
 const BACKPEDAL_DOT: float = -0.25
 ## A pitch's drawn stride against the p70 cycle ("<name>/<art>"), measured off its stance foot.
 const STRIDE_K: Dictionary[String, float] = {"dent/p55": 0.8, "tonnage/p55": 0.95}
-## Frames without ground walked before the figure stands.
-const STILL_FRAMES: int = 3
+const STILL_FRAMES: int = 3  # frames without ground walked before the figure stands
 const OCT_HOLD_RAD: float = deg_to_rad(4.0)
 ## The act grid (`<name>_act.png`): 4 columns, the phases: wind-up (only a form whose sim has one,
 ## Tonnage's slam), cut, follow-through, hit; ticks each phase shows for.
@@ -56,6 +54,7 @@ var jab: bool = false  # the strike or wind-up shown is Dent's arm jab (GhostAct
 var _spr: Sprite2D = null
 var _art: String = "?"
 var _steps: PackedFloat32Array = PackedFloat32Array()  # measured stride per frame; empty = even
+var _run_steps: PackedFloat32Array = PackedFloat32Array()  # GhostStride.run_table_of
 var _phase: float = 0.0
 var _last: Vector2 = Vector2.INF
 var _col: int = STAND_COL
@@ -107,7 +106,7 @@ func step(
 	return true
 
 
-## A sheet of this ghost under an art key: "walk8", "act" or "run8".
+## A sheet of this ghost under an art key: "walk8", "act", "run8" or "run16".
 static func path_of(art: String, name: String, sheet: String = "walk8") -> String:
 	return ART_DIR.path_join(art).path_join("%s_%s.png" % [name, sheet])
 
@@ -173,7 +172,7 @@ func _column(host: Node2D, s: float, row: int) -> int:
 	var look: float = host.global_rotation if is_nan(_look) else _look
 	var back: bool = moved.normalized().dot(Vector2.from_angle(look)) < BACKPEDAL_DOT
 	_phase = fposmod(_phase + px / cycle * (-1.0 if back else 1.0), 1.0)
-	_col = GhostStride.col_of(_phase, PackedFloat32Array() if _running else _steps)
+	_col = GhostStride.col_of(_phase, _run_steps if _running else _steps)
 	return _col
 
 
@@ -183,13 +182,15 @@ func _rebuild(host: Node2D, parts: Array[Sprite2D], vm: ViewMode) -> void:
 		_spr = null
 	_art = vm.art
 	_steps = GhostStride.table_of(card_name, _art)
+	_run_steps = GhostStride.run_table_of(card_name, _art)
 	var path: String = path_of(_art, card_name)
 	if vm.cards and _art != "" and ResourceLoader.exists(path):
 		_spr = Sprite2D.new()
 		_spr.name = &"ghost_drawn"
 		_walk = GhostSheet.of(path, GhostStride.cols_of(_steps))
 		_act = GhostSheet.act_of(path_of(_art, card_name, "act"), card_name + "/" + _art)
-		_run = GhostSheet.of(path_of(_art, card_name, "run8"), COLS)
+		var rc: int = GhostStride.cols_of(_run_steps)
+		_run = GhostSheet.of(path_of(_art, card_name, "run%d" % rc), rc)
 		_spr.centered = false
 		_walk.show(_spr, 2, STAND_COL)
 		_spr.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR

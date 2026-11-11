@@ -1,11 +1,9 @@
 class_name StrideFilm
 extends ArenaGame
-## n11 hero (dev scene `dev/rivet_motion/stride_film.tscn`): one gait, filmed tick by tick on a
-## ground line, so a bounce or a floating foot can be judged frame to frame. Four legs (walk right,
-## walk toward the camera, sprint right, sprint toward); each films FRAMES consecutive ticks with
-## the cursor ahead of him. The crops centre on his feet (the rig's point), so a planted foot sits
-## on one row. `-- --rigs --ppm=64 --start=pad --film-out=<abs prefix> [--film-from=<tick in leg>]`
-## Writes `<out>.png` (one row per leg) and `<out>_<leg>_<f>.png` for a clip.
+## n11 hero (dev scene `dev/rivet_motion/stride_film.tscn`): one gait filmed tick by tick on a
+## ground line (legs: walk right, walk toward, sprint right, sprint toward; FRAMES ticks each, the
+## cursor ahead), crops centred on the rig's point so a planted foot sits on one row.
+## `-- --rigs --ppm=64 --start=pad --film-out=<abs prefix>`: `<out>.png` + `<out>_<leg>_<f>.png`.
 
 const FRAMES: int = 16
 const LEG_TICKS: int = 130
@@ -14,12 +12,11 @@ const CROP_PX: int = 260
 const FEET_PX: int = 215
 const EVERY: Array[int] = [4, 4, 2, 2]
 const DIRS: Array[Vector2] = [Vector2.RIGHT, Vector2.DOWN, Vector2.RIGHT, Vector2.DOWN]
-## `--film-diag`: every leg turned 45 deg up the screen (right -> up-right, toward -> down-right),
-## so the 3/4 away and 3/4 toward rows are filmed. `--film-turn=<deg>` (n15) any turn: 135 films the
-## left diagonals (right -> down-left, toward -> up-left), 180 the left profile and away.
-## `--film-attack`: a melee press every ATTACK_EVERY ticks, to see a form's drawn strike.
-## `--film-fire`: the fire press with it (Dent's seize). `--film-hurt`: a hit every HURT_EVERY.
-## `--film-blow=<deg>` (n15): each such hit travels along that screen angle (0 = to the right).
+## `--film-diag`: legs turned 45 deg up the screen (3/4 rows); `--film-turn=<deg>` (n15) any turn
+## (135 the left diagonals, 180 the left profile and away). `--film-attack`: a melee press every
+## ATTACK_EVERY ticks; `--film-fire` the fire press too (Dent's seize); `--film-hurt`: a hit every
+## HURT_EVERY, `--film-blow=<deg>` (n15) along that screen angle. n15 it14: `--film-every=<ticks>`
+## for the sprint legs (default 2), `--film-leg=<n>` the first leg (2: sprint while a form lasts).
 const ATTACK_EVERY: int = 24
 const HURT_EVERY: int = 32
 
@@ -32,6 +29,7 @@ var _hurt: bool = false
 var _blow: Vector2 = Vector2.ZERO
 var _crop: int = CROP_PX
 var _feet: int = FEET_PX
+var _every: int = 0
 
 
 func _ready() -> void:
@@ -47,6 +45,8 @@ func _ready() -> void:
 		_blow = Vector2.from_angle(deg_to_rad(args.number("--film-blow", 0.0)))
 	_crop = maxi(CROP_PX, args.number("--film-crop", CROP_PX) as int)
 	_feet = _crop * FEET_PX / CROP_PX
+	_every = args.number("--film-every", 0.0) as int
+	_bot.leg = args.number("--film-leg", 0.0) as int
 	var form: StringName = StringName(args.text("--film-form"))
 	if form != &"":
 		var order: Array[StringName] = session.stage.pilot.ghosts.forms.table.order
@@ -69,7 +69,7 @@ func on_frame() -> void:
 		session.stage.arena.rivet.hurt_tick = tick
 		session.stage.arena.rivet.hurt_dir = _blow
 	var f: int = _bot.in_leg - FILM_FROM
-	var e: int = EVERY[_bot.leg]
+	var e: int = _every if _every > 0 and _bot.leg >= 2 else EVERY[_bot.leg]
 	if f >= 0 and f < FRAMES * e and f % e == 0:
 		_pending += 1
 		_grab.call_deferred(Vector2i(f / e, _bot.leg))
