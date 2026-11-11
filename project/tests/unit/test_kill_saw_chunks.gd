@@ -20,4 +20,3 @@ func test_the_sheet_holds_every_thrown_cell() -> void:
 
 func test_chunks_are_on_by_default() -> void:
 	assert_false(KillSawChunks.off())
-

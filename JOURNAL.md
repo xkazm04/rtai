@@ -169,3 +169,24 @@ NEXT (iteration 3):
 8. Perf: fight_gate under the bench lock (new preloaded cut faces, 3 x 256x32; gib sheets load on first use).
 9. Owner Calls to write in REPORT: plasma sword hot face (charred vs glowing), split topple 80 deg, cut_up_m 0.8,
    upright X-ray, bone gib.
+
+## Iteration 3 (2026-11-11 13:52, BUILD)
+
+- 13:52 read JOURNAL, git log, the asset replies: A3 X-ray p70 complete for 8 kinds (13:23-13:52), A4 plasma hole (13:19),
+  A5 saw chunks (13:23) all delivered and unwired. No Godot of mine running (checked by command line: the others are
+  third-life and kills-new). Plan: wire A3, A4, A5 (one commit each, films before/after by flag on the same build), then
+  the gate on the tip (the reel top pass failed on d3e25fc4a; 9d3d821f6 fixes it).
+- Registry rules applied (motion-quality-gating): before/after on game frames at the same ticks, 64 and 32 px/m; the
+  32 px/m read judged separately and written down where it is weaker (X-ray on dark asphalt, plasma impact bloom).
+- MILESTONE b037d283f electro X-ray per kind (A3, `KillXray.ART`, 8 sets, frame 1 held, the inverse on alternate strobe
+  pulses; `--xray-art=plain` = before). 64: the cop's own skeleton with cap and belt, hood/worker/SWAT each their own. 32:
+  reads as the cop's (the cap), busier and darker than the plain sticker on dark asphalt (owner Call).
+- MILESTONE 0dce9f3b6 plasma hole drawn ring (A4, cross-fade hot -> amber -> char over 150 ticks; `--hole-art=plain`).
+  The hole now reads as a hole (the street through a torn charred ring with rib ends and spine), not a bullseye; the
+  impact bloom at 32 px/m is weaker than the procedural cream bloom (owner Call; not tried: a short bloom under it).
+- FRICTION 14:20 the plasma commit's full lint failed json-canonical on my NEXT item's unstaged schema edit: the
+  pre-commit lint's json check read the work tree, not the staged snapshot (it said "linting the staged snapshot" on the
+  retry, so this may be the first-run path). Canonicalised with tools/art/canon_json.mjs and re-committed.
+- MILESTONE af3f9af1c chainsaw chunks, A5: row key `saw_chunks` 8 (schema), `KillSawChunks` throws meat, bone chips,
+  a rib and a tooth on 18-tick arcs; they lie on the street 1.3-2.6 m off. First try 0.36 m cells sank into the blood
+  pool at 64 px/m -> 0.46 m, thrown farther; reads at 64 and 32 (`--saw-chunks=off` = before).
