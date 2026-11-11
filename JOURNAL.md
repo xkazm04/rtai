@@ -745,7 +745,7 @@ untracked dev/sim/car_route_trails.gd copy is mine) and `git branch -D n15t-cont
 - 04:23 read JOURNAL, git log, hero + combat JOURNALs. No new REQUEST tools. Combat's FRICTION (their JOURNAL :416)
   "LaunchArgs.value() returns "" for any flag not in its KNOWN_FLAGS list, so a dev before-flag read through it never
   fires (my first impact before/after was byte-identical)": servable as a tool, not only "their own".
-- 04:33 SERVED combat, 88b42ec2d: lint check `launch-flags` (`tools/style/launch_flags.mjs`): parses KNOWN_FLAGS out
+- 04:26 SERVED combat, 88b42ec2d: lint check `launch-flags` (`tools/style/launch_flags.mjs`): parses KNOWN_FLAGS out
   of project/boot/launch_args.gd and names every `LaunchArgs.value|has("--x")` (or a same-file `const NAME = "--x"`)
   outside tests/ whose flag is not listed, as `file:line`. Real run, planted: appended `const PLANT_FLAG: String =
   "--impact-follow"` + `LaunchArgs.value(PLANT_FLAG)` to boot/arena_args.gd -> `false ['project/boot/arena_args.gd:30:
@@ -753,9 +753,9 @@ untracked dev/sim/car_route_trails.gd copy is mine) and `git branch -D n15t-cont
   `node tools/lint/lint.mjs` -> `ok   launch-flags`, `lint: all 18 checks pass over 1433 GDScript files` (54 s).
   `git grep` of LaunchArgs reads on n15-hero and n15-combat tips: every flag is in KNOWN_FLAGS (no merge break).
   `node --test tools/lint/launch_flags.test.mjs` 5/5. AGENTS.md lint row names it.
-- 04:34 machine: bench.lock absent but 2 Godot processes run (`tasklist | grep -i godot`: PIDs 21592, 58828 at 832 MB,
+- 04:26 machine: bench.lock absent but 2 Godot processes run (`tasklist | grep -i godot`: PIDs 21592, 58828 at 832 MB,
   not mine): t-5 cost stays CONTENDED (no quiet machine).
-- 04:29-04:33 the exe's two boot ERROR lines (open since 01:59, REPORT next step): scratch worktree at main 5c5c03611
+- 04:27-04:30 the exe's two boot ERROR lines (open since 01:59, REPORT next step): scratch worktree at main 5c5c03611
   (`git worktree add --detach gtai-n15/scratch-main-export`, `wt_init --donor=int-day` = main-built DLLs: "ready"),
   `node tools/export/export_checked.mjs` exit 0 (31 s, `[ DONE ] savepack`, RTAI.exe 631173224 B); then the same on this
   tree at 88b42ec2d. Boot smoke of each (`RTAI.exe --headless --fixed-fps 60 --quit-after 300`): exit 0 both; diff of the
@@ -763,7 +763,7 @@ untracked dev/sim/car_route_trails.gd copy is mine) and `git branch -D n15t-cont
   "!actions.custom_samplers.has(...)"` and `ERROR: N resources still in use at exit` (main 100, here 102; ObjectDB
   leaked 662 vs 630). So both ERRORs are OLD, not from n15. Logs `evidence/exe_boot/`. Scratch worktree removed
   (`git worktree list | grep -c scratch-main` -> 0), my build/export/windows deleted.
-- 04:36-04:50 SERVED combat's second FRICTION (their :416 "I edited gun_fx_follow.gd while a film queue ran ... 4 queued
+- 04:30-04:35 SERVED combat's second FRICTION (their :416 "I edited gun_fx_follow.gd while a film queue ran ... 4 queued
   films died in 4 s with SCRIPT ERROR"), 3f5f17ccc: `film.mjs --rev=<commit> [--native=donor]` films that commit in
   compare's snapshot (probe injected, native guard), and a live-tree film prints its uncommitted project/ paths (and a
   `--rev=HEAD` hint after a FAIL). The side resolver moved out of compare.mjs into `tools/film/side.mjs` (re-exported):
@@ -775,3 +775,5 @@ untracked dev/sim/car_route_trails.gd copy is mine) and `git branch -D n15t-cont
   (first res://boot/arena_args.gd:29)`, then the hint (5.7 s). Plant reverted (`git checkout --`), snapshot removed
   (removeSnapshot), scratch films deleted. Tests: film 192/0 (4 new in film_rev.test.mjs); pre-commit lint 18/18.
   TO combat: commit, then queue `node tools/film/film.mjs <shot> --rev=HEAD ...`; edit freely while it runs.
+- 04:36 CORRECTION: the session-6 times above were first written as guesses; fixed from `git log --date=format:%H:%M:%S`
+  (88b42ec2d 04:26:29, 0e67967ef 04:30:29, 3f5f17ccc 04:34:37).
