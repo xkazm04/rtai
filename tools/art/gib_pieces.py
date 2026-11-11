@@ -50,10 +50,11 @@ KINDS = {
     "ped_hat_gib_bone_70_cells": "ped_hat_gib.png",
     "ped_punk_gib_bone_70_cells": "ped_punk_gib.png",
     "ped_shopper_gib_bone_70_cells": "ped_shopper_gib.png",
+    "ped_jogger_gib_bone_70_cells": "ped_jogger_gib.png",
 }
-# out file -> a factor on the kind's one scale (it410: the shopper's torso is drawn short; at 1.0 her head and limbs
-# came out 1.25x too big).
-SCALE = {"ped_shopper_gib.png": 0.8}
+# out file -> a factor on the kind's one scale (it410: the shopper's and the jogger's torsos are drawn short; at 1.0
+# the heads and limbs came out 1.25x too big).
+SCALE = {"ped_shopper_gib.png": 0.8, "ped_jogger_gib.png": 0.8}
 
 
 def cropped(path: Path) -> Image.Image:
