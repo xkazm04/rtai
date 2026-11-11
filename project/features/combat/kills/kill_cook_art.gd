@@ -38,7 +38,7 @@ static func draw(ci: KillNewStyles, d: KillNewStyles.Death, age: int) -> void:
 				_eyes(ci, d, k)
 		_steam(ci, d, age - roundi(from))
 	elif age >= roundi(to):
-		_smoke(ci, d, age - roundi(to))
+		smoke(ci, d, age - roundi(to))
 
 
 static func _at(d: KillNewStyles.Death, up: float, side: float, ppm: float) -> Vector2:
@@ -86,7 +86,7 @@ static func _steam(ci: KillNewStyles, d: KillNewStyles.Death, a: int) -> void:
 
 
 ## Smoke off the body where it lies, rising and thinning over `smoke_ticks`.
-static func _smoke(ci: KillNewStyles, d: KillNewStyles.Death, a: int) -> void:
+static func smoke(ci: KillNewStyles, d: KillNewStyles.Death, a: int) -> void:
 	var ticks: float = d.extra.num("smoke_ticks", 200.0)
 	if float(a) >= ticks:
 		return

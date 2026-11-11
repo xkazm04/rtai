@@ -7,7 +7,7 @@ extends Node2D
 ## the sim tick, so a replay draws the same frames. No RNG: shapes come from a hash of the serial
 ## and the tick.
 
-const STYLES: Array[StringName] = [&"snap", &"stitch", &"pin", &"shred", &"cook"]
+const STYLES: Array[StringName] = [&"snap", &"stitch", &"pin", &"shred", &"cook", &"torch"]
 ## Body metas set at the cut: the feet (body-local px) and the standing height (px).
 const FEET: StringName = &"kill_feet"
 const HEIGHT: StringName = &"kill_height"
@@ -189,6 +189,8 @@ func _draw() -> void:
 			KillPinArt.draw(self, d, age)
 		elif d.row.style == &"cook":
 			KillCookArt.draw(self, d, age)
+		elif d.row.style == &"torch":
+			KillTorchArt.draw(self, d, age)
 
 
 ## A stable 0..1 hash of a kill serial and a number (no dice).

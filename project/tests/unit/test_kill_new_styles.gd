@@ -10,6 +10,7 @@ const NEW: Dictionary[StringName, StringName] = {
 	&"gloria": &"pin",
 	&"gatling": &"shred",
 	&"electro_baton": &"cook",
+	&"molotov": &"torch",
 }
 
 
