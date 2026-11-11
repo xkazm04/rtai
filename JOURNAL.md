@@ -970,3 +970,22 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   px/m with the spawn lock had him off screen: UNVERIFIABLE, as compare should say.) DECISION characters/walk-befores.
   TO hero: your befores `--rivet-walk-armed=off` / `--rivet-stride=off` did nothing until 05e519be8; any n11-n15
   before/after that used them compared the same frames. The fix merges first (tools), clean against your tip.
+- 05:41-05:46 MILESTONE t-5 cost on a QUIET machine (the item's weakest point all night). `gtai-n15/flake/t5_quiet.sh`
+  (copied to evidence/) waited for no Godot over 200 MB and no bench.lock (checked twice, 20 s apart), created
+  bench.lock noclobber at 05:41:56, ran `evidence/t5_aab.sh 6` (A = scratch-tools-before d720e22da: HW 80 and the old
+  O(HW^2) build; A2 = A again; B = this tree at 257b2e58c: HW 132 and the O(actors) build; one parity run of 1200 steps
+  per arm, order rotated), and deleted the lock at the end (`ls bench.lock` -> no such file). `evidence/t5_quiet_s7.tsv`,
+  summary `node evidence/t5_summary.mjs evidence/t5_quiet_s7.tsv`:
+  GDScript ref step B-A -0.195 -0.284 -0.401 -0.239 -0.005 -0.106 ms, median -0.217 ms on 4.53 ms (-4.8 %), B faster
+  in 6/6; A2-A median +0.016, max |0.442|. Native step B-A -5.6 -5.6 -0.3 -3.8 -1.7 -0.3 us, median -2.8 us on 43.0 us
+  (-6.5 %), 6/6; A2-A median -0.9, max |3.0|. Other Godot processes at each run start: 0 for rounds 1-2 (6 runs,
+  QUIET), 2 for rounds 3-6 (one other lane's run: those 4 rounds are CONTENDED). The quiet rounds alone: ref -0.195,
+  -0.284 ms, native -5.6, -5.6 us. Reading: the wider window costs nothing net: with the O(actors) build, B is faster
+  than the old HW 80 build in every round, as the contended 02:55 run said (-4.0 us / -0.27 ms). Size soft (the A/A
+  spread overlaps the smaller rounds), sign 6/6 (p = 0.031). Final digest 94b2865f7f17d778 on every B run.
+  OWNED: two watchers ran at once (TaskStop on the first did not stop its bash; found by command line, killed PID 73320,
+  the one that had NOT taken the lock); the lock-holder ran to the end. The 05:42 TaskStop of the second one also left
+  its run going, which is what produced these numbers (it had already taken the lock at 05:41:56).
+- 05:47 final gate started on 257b2e58c (`node tools/gate/run.mjs --rev=HEAD --reels --timeout=40`, log
+  gtai-n15/flake/gate_s7_final.log): code since the 05:11 PASS = flag index, film checkFlags, merge-clash, quick, the
+  walk befores (cast_flags.gd + test).
