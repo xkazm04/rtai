@@ -54,6 +54,13 @@ Branch `n15-hero`, cut from main `5c5c03611`. Every claim cites a still in this 
    (the ground held still, one row a tick) and `evidence/s15/tools/hold_ride.py` (how far each held frame rides
    over the ground). Ohm and Tonnage reach 3 (Tonnage on the edge: mean ride 8.3 px@32, his stance foot keeps its ground place
    over 30 ticks, `evidence/s15/tonnage_feet_track_32ppm.txt`); his worst hold rides 16.1 px (two long steps in his walk16, art requested). `evidence/s15/ghost_feet_32ppm_tonnage_ohm.png`.
+   Dent and Kerf sprints measured the same way (`evidence/s15/dent_kerf_run_hold_ride_32ppm.txt`): the pose changes
+   on most ticks, the worst hold 5 px (Dent) and 9 px (Kerf) on the straight legs; one long hold on each toward-diagonal
+   leg is not explained yet, so both stay 2.
+7. **Rivet's reload strips at x1.5, both pitches** (it16, one weapon per commit): pistol, plasma_rifle, gatling, each
+   + its drawn left strip, cut at 1.5 x each row's own fig_h after reproducing the 110 cut byte for byte.
+   `evidence/s16/rivet_x15_reload_p70_before_after_64ppm.png`, `evidence/s16/rivet_x15_reload_p55_before_after_64ppm.png`,
+   zoom `evidence/s16/rivet_x15_reload_p70_zoom_x2_64ppm.png`. Still 110: the base strip, knock, plasma sword, electro baton.
 
 ## What does not work / not done
 
