@@ -133,6 +133,16 @@
             "minimum": 0,
             "type": "integer"
           },
+          "streak_m": {
+            "maximum": 4,
+            "minimum": 0,
+            "type": "number"
+          },
+          "streak_w_m": {
+            "maximum": 0.5,
+            "minimum": 0,
+            "type": "number"
+          },
           "style": {
             "enum": [
               "gib",

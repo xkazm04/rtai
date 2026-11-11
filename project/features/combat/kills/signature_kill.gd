@@ -51,6 +51,9 @@ var hat_kick_mps: float = 0.0
 ## A split's cut edge: raw (red), hot (cream, cauterised) or soul (teal-white, Kerf's beam);
 ## empty = by the row's spray (none = hot).
 var edge: StringName = &""
+## The split style's slash streak along the cut: length and width (m) at the kill tick.
+var streak_m: float = KillSlashStreak.LENGTH_M
+var streak_w_m: float = KillSlashStreak.WIDTH_M
 
 
 static func from_dict(t: DataTable, d: Dictionary) -> SignatureKill:
@@ -82,6 +85,8 @@ static func from_dict(t: DataTable, d: Dictionary) -> SignatureKill:
 	k.split_follow = _num(t, d, "split_follow", GibSim.SPLIT_FOLLOW)
 	k.hat_kick_mps = _num(t, d, "hat_kick_mps", 0.0)
 	k.edge = StringName(str(d.get("edge", "")))
+	k.streak_m = _num(t, d, "streak_m", KillSlashStreak.LENGTH_M)
+	k.streak_w_m = _num(t, d, "streak_w_m", KillSlashStreak.WIDTH_M)
 	return k
 
 

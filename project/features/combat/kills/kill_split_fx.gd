@@ -10,7 +10,6 @@ extends Node2D
 ## the saw's bite, then the halves fall apart; the halves part on a cream release burst (SawMarks).
 
 const STREAK_TICKS: int = 12
-const STREAK_M: float = 1.7
 const EDGE_M: float = 0.34
 const INK: Color = Color(0.07, 0.06, 0.07)
 const CREAM: Color = Color(0.96, 0.92, 0.8)
@@ -42,6 +41,8 @@ var reduced_motion: bool = false
 var saw: SawMarks = null
 ## serial -> Vector4(at.x, at.y, cut angle, kill tick), metres.
 var _streaks: Dictionary[int, Vector4] = {}
+## serial -> the streak's (length, width) in metres, from its row (KillSlashStreak).
+var _streak_size: Dictionary[int, Vector2] = {}
 ## serial -> the chainsaw's release burst (at, cut angle, the tick the halves part).
 var _releases: Dictionary[int, Vector4] = {}
 var _grinds: Dictionary[int, Grind] = {}
@@ -121,6 +122,7 @@ func add(
 ) -> void:
 	if row.grind_ticks <= 0:
 		_streaks[serial] = Vector4(at.x, at.y, cut_dir.angle(), kills.tick)
+		_streak_size[serial] = Vector2(row.streak_m, row.streak_w_m)
 		return
 	var g: Grind = Grind.new()
 	for p: int in [SignatureKill.HALF_A, SignatureKill.HALF_B]:
@@ -140,6 +142,8 @@ func add(
 func forget(serial: int) -> void:
 	@warning_ignore("return_value_discarded")
 	_streaks.erase(serial)
+	@warning_ignore("return_value_discarded")
+	_streak_size.erase(serial)
 	@warning_ignore("return_value_discarded")
 	_grinds.erase(serial)
 	@warning_ignore("return_value_discarded")
@@ -169,28 +173,13 @@ func _draw() -> void:
 	for serial: int in _grinds.keys():
 		_draw_grind(serial, _grinds[serial])
 	for serial: int in _streaks.keys():
-		_draw_streak(_streaks[serial], STREAK_M)
+		KillSlashStreak.draw(self, _streaks[serial], _streak_size[serial], kills.tick, ppm)
 	for serial: int in _releases.keys():
 		var r: Vector4 = _releases[serial]
 		var age: int = kills.tick - int(r.w)
 		if age >= 0 and age < STREAK_TICKS:
 			var t: float = float(age) / float(STREAK_TICKS)
 			SawMarks.burst(self, Vector2(r.x, r.y) * ppm, saw.release_m * 0.5 * ppm, r.z, t)
-
-
-## A cream slash edged in ink along a cut (s: at, angle, tick), thinning over STREAK_TICKS.
-func _draw_streak(s: Vector4, length_m: float) -> void:
-	var age: int = kills.tick - int(s.w)
-	if age < 0 or age > STREAK_TICKS:
-		return
-	var k: float = 1.0 - float(age) / float(STREAK_TICKS)
-	var c: Vector2 = Vector2.from_angle(s.z)
-	var mid: Vector2 = Vector2(s.x, s.y) * ppm
-	var half: float = length_m * 0.5 * ppm
-	var lead: Vector2 = c * half * (0.6 + 0.4 * (1.0 - k))  # the streak runs on with the blade
-	var w: float = 0.11 * ppm * k
-	draw_line(mid - c * half, mid + lead, INK, w + 3.0, true)
-	draw_line(mid - c * half * 0.8, mid + lead * 0.95, CREAM, w, true)
 
 
 ## The saw's bite: blood drops spurting out of the cut (each born on a tick, flying
