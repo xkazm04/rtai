@@ -587,3 +587,19 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   2532 passed, 0 failed, 2 skipped`, `scenario-tests: 55 passed`, parity bit for bit (planted caught at 629), selftest
   look 11/11 worst 0.00, `release-compile: 668 loaded, 0 failed`. Both my gate snapshots removed
   (`removeSnapshot`; `git worktree list` holds neither).
+- 02:56 `node tools/evidence/cites.mjs REPORT.md`: 35 paths, 34 ok, 1 UNCHECKED (the word INVALID in a quoted message).
+  Masters `gtai-masters/n15/tools/frames.json` 8 entries, every file referenced (plus the ledger); scratch trail renders
+  in gtai-n15/flake/trails deleted (the JSONs and scripts are in evidence/t4_trails/).
+
+NEXT (session 5): (1) Read hero/combat JOURNALs for REQUEST tools / FRICTION (served up to 02:21: hero's LFS FRICTION
+-> blob.mjs f059cfc44). (2) Weakest item = t-5's cost (+9 us native, +0.63 ms ref per step, all from
+`CitySimHash.build` walking HW*HW = 17424 cells). Make build O(actors) in BOTH sims with byte-identical hcount/hstart/
+hidx for every occupied cell (count live actors per cell keeping a touched-cell list, zero last step's touched cells,
+assign starts over the touched cells in ascending cell index, fill); query only reads occupied cells' starts. Prove:
+parity bit for bit + final_sha_a 94b2865f7f17d778 unchanged, `test_sim_hash*` green, `evidence/t5_aab.sh 6` again
+(A = scratch-tools-before HW 80, B = new build): the B-A delta should fall toward 0. Native rebuild #5 = say so in
+JOURNAL. Mutate sim_hash.gd after (`tools/mutate/mutate.mjs --file=features/city/sim/sim_hash.gd`, commit first).
+(3) Full gate + reels on the final commit (`node tools/gate/run.mjs --rev=HEAD --reels --timeout=40`), remove the
+snapshot after (`removeSnapshot`). (4) REPORT final at 07:40. (5) End of night: `git worktree remove --force
+C:/Users/kazda/kiro/gtai-n15/scratch-tools-before` (holds an untracked copy of dev/sim/car_route_trails.gd: mine) and
+`git branch -D n15t-control-sim-hash`.
