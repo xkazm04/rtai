@@ -39,6 +39,14 @@ func test_every_char_grid_is_sized_as_its_burning_man() -> void:
 		assert_true(StreetWalkerHit.FILL.has(fill), row + ": " + fill)
 
 
+func test_every_burning_kind_has_a_drawn_char_cell() -> void:
+	# it363: the cap, jogger, punk and SWAT sets closed the list (no burn kill falls back to the print)
+	for row: String in StreetWalkerHit.BURN_GRIDS:
+		assert_true(KillCharCells.GRIDS.has(row), row + ": a drawn char cell")
+		var fill: String = KillCharCells.FILL_OF.get(row, "")
+		assert_eq(fill, StreetWalkerHit.BURN_GRIDS[row].get_file(), row)
+
+
 func test_a_rig_without_a_head_card_is_not_tagged() -> void:
 	# the top view's reel (gate 65acf2e8e): a burn kill of a rig with no card crashed in row_of
 	var rig: CutRig = autofree(CutRig.new())

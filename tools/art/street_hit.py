@@ -85,7 +85,8 @@ FLAILS = "burn/1b"
 # <kind>_char_hit.png on the same layout, each facing at its burn/1 cell's scale like FLAILS (the burning man
 # turns to char without a size pop). KillCharFx draws it in place of the char-shaded card.
 # assets it359 (A, no smoke): the thug, the hooded pedestrian and the riot cop, the flamethrower's most frequent kills.
-CHARS = {k: "char/1" for k in ("cop_patrol", "thug", "ped_hood", "cop_riot")}
+# assets it363 (A; ped_cap B, its strap letters erased): the capped and jogging pedestrians, the punk and the SWAT man.
+CHARS = {k: "char/1" for k in ("cop_patrol", "thug", "ped_hood", "cop_riot", "ped_cap", "ped_jogger", "ped_punk", "swat")}
 
 
 def foot_x(alpha: np.ndarray) -> float:
