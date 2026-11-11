@@ -352,3 +352,24 @@ at 19:40: the draft is in the tree; fill Next steps, the gate verdicts, final Co
   failed / 2 skipped, scenarios 55, parity bit for bit 1200 steps (planted fault at 629), selftest look goldens 11/11
   worst 0.00, release-compile 683/0. The REEL gate on caccc825d is still owed (NEXT 0). Session 3 end: tree clean, no
   Godot of mine running (gate and reels exited).
+
+## Session 4 (iteration 4, 2026-11-11 15:10, BUILD; stop 16:40)
+- 15:10 read JOURNAL, git log, sibling journals. kills-new FRICTION 15:15: "the kill reel's after side films the live
+  tree: uncommitted code (a new class not yet imported) broke 'after gatling dir 0 64' with SCRIPT ERROR". No new
+  `REQUEST tools:` in either lane; kills-polish gate on 49c7c0be9 PASS (their reels running).
+- 15:12 REEL gate started on caccc825d (`node tools/gate/run.mjs --rev=caccc825d --reels`, log
+  C:/Users/kazda/kiro/gtai-n16/scratch-tools/gate_s4_reels.log, ends `gate exit N`).
+- MILESTONE 469298728 (serves kills-new FRICTION 15:15): the reel stamps the live tree (tools/film/live_tree.mjs: HEAD +
+  every uncommitted project/ path, untracked files included, with size and mtime) before it starts and before each
+  film. Uncommitted paths at the start print one line naming them and the fix (`--rev=HEAD`); a film whose tree moved
+  prints `the live tree moved since the reel began (HEAD a -> b; N project/ path(s) changed (...))` and its reel.json
+  film gets `tree_moved`; a failing film on such a tree says commit and re-run `--rev=HEAD`. A `--rev` side is never
+  asked (a snapshot cannot move). Tests: live_tree.test.mjs 4 (a throwaway git repo, no inherited config: edit, new
+  untracked class in a new folder, deletion, a commit mid-reel, the dry-run line once, --rev side unasked); film tests
+  245/0; full lint 19/19. PROOF (real tree): an untracked project/dev/zz_live_tree_proof.txt, then
+  `kill_reel.mjs --out=build/kreel/s4dry --weapons=katana,rocket_launcher --quick --dry-run` printed
+  `kill_reel: the after side is this live tree with 1 uncommitted project/ path(s) (project/dev/zz_live_tree_proof.txt);
+  each of the 2 film(s) loads project/ as it stands at its start ... commit and pass --rev=HEAD`; file removed, the
+  clean tree prints nothing. The per-film "moved" line is unit-proven; a real reel proof follows when Godot is free.
+- SERVED (kills-new FRICTION 15:15): a live-tree reel now names its uncommitted project/ paths before it films and
+  names the film where the tree moved; to keep editing while it runs: commit, then `--rev=HEAD`.
