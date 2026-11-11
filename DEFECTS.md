@@ -12,6 +12,7 @@ Ranked within each film; newest film first.
 
 ## Machine pistol lone kill, cop/head_cap, combo 64 and 32 px/m t336-345 (session 6)
 1. Ink dots on the floor 0.5-0.75 m short of the cop at t337-338 and t341-344 -> fixed 273bb2232 (see c-2 #3).
+2. At t339 one dot stays on the floor beside the thrown-back card -> fixed in part 61a2d3baa (session 8: the burst rides the card's push; it moves ~0.2 m onto his shadow's edge, `evidence/n15-combat/burst_rides_push_ab_64ppm_x2_t338-344.png`); still a floor print at his feet front while the drawn figure leans back off it -> open, minor.
 
 ## Flamethrower lone kill, cop/head_cap, combo 64 px/m t542-620 (session 4)
 1. The burned cop stood as a black char-shaded silhouette of his burning pose -> fixed 8eb67bc62 (drawn charred cells, it272, patrol cop only).
@@ -52,7 +53,7 @@ Ranked within each film; newest film first.
 
 ## Blades turned left, director chapters <blade>_left, combo 64 px/m (session 3)
 1. Turned left, the katana, plasma sword and chainsaw drew the mirrored right strip: through the wind-up he turned his back and the hose arm away from the cop, then swung a large mirrored arc -> fixed 15c8abbcc (drawn left set).
-2. At t62 (katana and plasma sword, before and after alike) a long thin white stick runs from the cop down-left to the floor -> open (likely the cut cop's dropped baton or a cut streak; look at the kill's FX at t62).
+2. At t62 (katana and plasma sword, before and after alike) a long thin white stick runs from the cop down-left to the floor -> open, diagnosed (session 8, build/film/kl64_after t58-69): it is KillSplitFx's designed slash streak (`_draw_streak`: a cream bar edged in ink, STREAK_M 1.7 m along the cut line, ~10 px wide at 64 px/m, thinning over STREAK_TICKS 12). The cut line runs diagonally down-right while Rivet's drawn left swing sweeps level, so the streak reads as a stick through the cop, not as the blade's path. A look call (lane brutality's split style): align the cut to the drawn swing, or shorten/thin the streak (STREAK_M, the width 0.11 m are one value each).
 3. The plasma sword's left strike at 64 px/m is a little smaller than its left facing (k shared with the raised wind-up) -> open, minor.
 
 ## Boss fight, King + katana, p55 left swings, before --rivet-blade-left=off, 64 px/m t306-326 (session 3, after the gate)

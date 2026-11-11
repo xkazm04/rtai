@@ -1,4 +1,4 @@
-# REPORT: night n15, lane combat (DRAFT, updated 05:15 by session 7; the last session finishes it)
+# REPORT: night n15, lane combat (updated 06:10 by session 8)
 
 Branch `n15-combat`, worktree `C:\Users\kazda\kiro\gtai-wt\n15-combat`, cut from main `5c5c03611`.
 Every change has a before flag on the same build and a same-tick before/after film under `evidence/n15-combat/`
@@ -32,6 +32,7 @@ Every change has a before flag on the same build and a same-tick before/after fi
 | 5 a body hit's ink burst on the body's front, riding the knock-back and the death's carry (no floor dots short of him) | `273bb2232`, `2f1ac74c8` | `--impact-follow=off` | `evidence/n15-combat/body_burst_on_body_ab_64_32ppm_t336-345.png` |
 | 5 at contact Rivet draws over a cop standing behind him (the depth sort's box as tall as each drawn card, Rivet's x1.5 wide: `RigDepthBox`) | `ac7991f58` | (HEAD sorter) | `evidence/n15-combat/city_depth_rivet_over_cop_behind_ab_64ppm_t634-660.png`, 32 px/m `city_depth_fight_32ppm_t600-700.png` |
 | 5 a thrown-back street man stands on his shadow (the contact shadow rides the hit card's push) | `b9544422e` | `--shadow-push=off` | `evidence/n15-combat/hit_shadow_rides_push_ab_64ppm_x2_t338-344.png`, `hit_shadow_rides_push_ab_32ppm_x3_t337-342.png` |
+| 5 a later round's body burst rides the pushed hit card and returns to the body at the death (t339 dot ~0.2 m closer, no new dot at t344) | `61a2d3baa` | `--burst-push=off` | `evidence/n15-combat/burst_rides_push_ab_64ppm_x2_t338-344.png` |
 
 Gates: full run with reels on `f128a280e` (session 7, 05:11-05:34, the last code commit; later commits are docs):
 PASS lint 16/16, unit 2540/0/2, scenarios 55, parity bit-exact (mutation at 629), look goldens 11/11 worst 0.00, block
@@ -42,9 +43,9 @@ session 6). TO DO: re-run on the final commit if any code lands after `f128a280e
 ## What does not work, or is not shown
 
 - The p55 katana's RIGHT wind-up and strike cells draw larger than his facing (~1.2-1.4x); n13/n14 kept as built.
-- The body-hit burst (fixed in large part, `273bb2232`): at t339-340 one dot still shows near the cop's old spot while
-  the thrown-back cell draws him ~0.5 m on (the card's push, StreetWalkerHit.shove; his shadow now rides it, `b9544422e`); on the body the burst draws
-  under his card.
+- The body-hit burst (fixed in large part, `273bb2232`, `61a2d3baa`): at t339 one dot still shows on the floor at
+  the edge of the thrown-back cop's shadow. The burst is a floor print at his feet front and the drawn figure leans
+  back off it; on the body the burst draws under his card.
 - Metal impacts keep the cream strokes. The it317 sparks are packed (pulled half way to cream) but NOT shipped: no round
   on metal was filmed (a round on a metal dummy is a BODY hit; `GunFx.shield_test` is wired only in tests, so a round
   on a riot shield is ShieldSparks' white sparks, never a GunFx METAL). DECISION combat/metal-sparks-later.
@@ -61,6 +62,9 @@ session 6). TO DO: re-run on the final commit if any code lands after `f128a280e
   Their feet are at its north foot: pressed against the wall, their way to Rivet blocked (sim/AI path, not this lane),
   and the wall's cap does not hide them, so they read as standing on it (`evidence/n15-combat/city_fight_cops_on_wall_32ppm_t650.png`).
 - A later round of a burst flies on through a fresh corpse; its ink tail crosses the falling body for 2 ticks (open, minor).
+- Blade kills (katana, plasma sword): KillSplitFx's slash streak (a 1.7 m cream bar along the cut, 12 ticks) runs
+  diagonally through the cop while Rivet's drawn swing sweeps level, so it reads as a white stick (t61-69,
+  `evidence/n15-combat/katana_slash_streak_64ppm_t58-69.png`, an earlier build's film): Call (d).
 - The flame jet's floor fire stacks into a column of starbursts (the sim's patches; colour is the owner's look-3 ink).
 - Perf: `tools/perf/fight_gate.mjs` 01:15 (bench.lock held, 4 rounds, befores = every tonight flag off): city block fight
   p50 -0.46 [-1.88,+1.93] ms, p99 -0.58 [-2.87,+3.31]; Gatling horde p50 -0.20 [-0.72,+0.68], p99 +0.71 [-0.38,+2.57]:
@@ -74,6 +78,9 @@ session 6). TO DO: re-run on the final commit if any code lands after `f128a280e
     `evidence/n15-combat/rocket_gib_drawn_pieces_ab_48ppm_x2_t349-368.png`. More kinds are drawn (thug, hood) and a riot
     shield piece is offered.
 (c) The one upright frame between two blade swings (t308): hold the strike's recovery through short gaps?
+(d) The blade kill's slash streak (lane brutality's split style): it crosses the cop diagonally while the drawn swing is
+    level, a white stick for 9 ticks. Align the cut to the drawn swing, shorten/thin it (`KillSplitFx.STREAK_M` 1.7,
+    width 0.11 m), or keep? `evidence/n15-combat/katana_slash_streak_64ppm_t58-69.png`.
 
 ## Merge notes
 
