@@ -4,6 +4,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { didYouMean } from '../dev/entries.mjs';
+import { projectIndex, unreadFlags } from '../dev/flag_index.mjs';
 import { walk } from '../lib/repo.mjs';
 import { stripComment } from '../style/check_gd.mjs';
 
@@ -76,15 +77,12 @@ export function knownFlags(tree) {
   return flags;
 }
 
-/** One line per flag no script in the tree reads (empty = all known). */
+/** One line per flag no script in the tree reads, or a value no exact read accepts (empty = all
+ *  known): the dev runner's index (tools/dev/flag_index.mjs). */
 export function checkFlags(extra, tree) {
-  const given = extra.filter((a) => a.startsWith('--')).map((a) => a.split('=')[0]);
-  if (!given.length) return [];
-  const known = [...knownFlags(tree)];
-  return given.filter((f) => !known.includes(f)).map((f) => {
-    const near = didYouMean(f, known);
-    return `no script in ${tree} reads ${f}${near ? `: did you mean ${near}?` : ''}`;
-  });
+  if (!extra.some((a) => a.startsWith('--'))) return [];
+  return unreadFlags(extra, projectIndex(join(tree, 'project'))).map((p) =>
+    `no script in ${tree} reads ${p.flag}${p.suggestion ? `: did you mean ${p.suggestion}?` : ''}`);
 }
 
 /** {name, arg, shot} from `chapter:pistol`, or {error}. */

@@ -416,7 +416,8 @@ somewhere (`"--x"`, `"--x="` or `"--x=<v>"`), and when it is only read as exact 
 does not make a longer name known. The suggestion is the nearest literal (a swap of two letters is
 one edit) or the one known name that ends in the passed one (`--ohm-hand` -> `--ghost-ohm-hand`).
 `--any-flag` skips the check (a flag built at run time; none existed on 2026-11-11) and the verdict
-says `flags unchecked: no declared spec`.
+says `flags unchecked: no declared spec`. `tools/film/film.mjs` checks the game flags after its `--`
+with the same index (it used to check names only, so a wrong value of an exact read passed).
 
 ## A dev run draws the current pixels at a fixed step (`tools/dev/run.mjs`)
 

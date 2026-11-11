@@ -7,18 +7,20 @@
 //   value known <- the name has a bare or prefix literal (any value), or the passed "--name=<v>" is
 //                  itself a literal (an exact read: `arg == "--ghost-ohm-hand=sim"`).
 // A literal ending in "-" ("--ghost-") is a family prefix: it never makes a longer name known, so a
-// typo inside a family is still caught. Read statically, nothing is run.
+// typo inside a family is still caught. A literal in a comment proves nothing. Read statically,
+// nothing is run. tools/film checks its game flags (after its --) with the same index.
 import { readFileSync } from 'node:fs';
 import { PROJECT, walk } from '../lib/repo.mjs';
+import { stripComment } from '../style/check_gd.mjs';
 import { didYouMean } from './entries.mjs';
 
 const LITERAL = /"(--[A-Za-z0-9][A-Za-z0-9_-]*)(=[^"\\]*)?"/g;
 
-/** Map name -> {any: bool, values: Set} from GDScript source texts. */
+/** Map name -> {any: bool, values: Set} from GDScript source texts (comments do not count). */
 export function indexTexts(texts) {
   const names = new Map();
   for (const text of texts) {
-    for (const m of text.matchAll(LITERAL)) {
+    for (const m of text.split('\n').map(stripComment).join('\n').matchAll(LITERAL)) {
       const e = names.get(m[1]) ?? { any: false, values: new Set() };
       if (m[2] === undefined || m[2] === '=') e.any = true;
       else e.values.add(m[2].slice(1));
