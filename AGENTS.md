@@ -61,7 +61,7 @@ a miss of the two wall-clock budgets (city_chase nav 2 ms, rig_stress p50 1 ms) 
 summary saying CONTENDED. `GTAI_BUDGET_SCALE=0.001` (test only) forces the miss. `tools/bench/run.mjs` queues FIFO
 behind other runs and `bench.lock` with an ETA (`--wait=<min>`, default 20, then it runs flagged CONTENDED).
 
-Debt ratchet: `node tools/debt/debt.mjs --check` (lint check `debt-ratchet`) fails when a debt metric is worse than `tools/debt/baseline.json`; it names metric, file and old -> new, so shrink or remove what it names. When it prints `tighten:`, run `node tools/debt/debt.mjs --update` and commit the baseline (it only ever tightens; a deliberate rise needs `--accept-regression="reason"`). After a baseline merge conflict take either side and re-run `--update`. Details: `tools/debt/README.md`.
+Debt ratchet: `node tools/debt/debt.mjs --check` (lint check `debt-ratchet`) fails when a debt metric is worse than `tools/debt/baseline.json`; it names metric, file and old -> new, so shrink or remove what it names. When it prints `tighten:`, run `node tools/debt/debt.mjs --update` and commit the baseline (it only ever tightens; a deliberate rise needs `--accept-regression="reason"`). After a baseline merge conflict run `node tools/debt/merge_baseline.mjs` (the looser of both sides, staged), commit, then `--update`. Details: `tools/debt/README.md`.
 
 ## Folder map (STANDARDS section 2)
 

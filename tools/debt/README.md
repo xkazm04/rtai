@@ -48,8 +48,12 @@ lines, so two branches that tightened different files merge cleanly (one entry p
   commit the baseline with your change. It can only tighten.
 - A deliberate increase (rare): `--update --accept-regression="reason"`. The reason is stored with
   the date under `accepted` for that metric, so the debt stays visible in review.
-- Merge conflict in `baseline.json`: take either side, then run `--update`. It rewrites the baseline
-  to the merged tree and can only tighten; if it refuses, the merged tree is worse than the side you
-  took for the files it names, so fix those (or take the other side). Never hand-edit numbers upward.
+- Merge conflict in `baseline.json`: `node tools/debt/merge_baseline.mjs` (inside the conflicted merge)
+  writes the looser of both sides per metric and file, with both sides' accepted reasons, and stages it
+  (the morning merge does the same by itself when nothing else conflicts). Each side's numbers were
+  accepted on its branch, so this raises nothing past one branch. If the commit's ratchet still fails,
+  the merged tree measures worse than both sides for the files it names (two lanes grew one file): fix
+  those, or record it with `--accept-regression="<why>"`. Then `--update` tightens. Never hand-edit
+  numbers upward. (Taking one side, the old advice, fails the merge commit whenever the other side grew.)
 - A baseline TIGHTER than your tree (another branch tightened, you re-added debt) fails on your
   branch: that is a correct regression, not noise.

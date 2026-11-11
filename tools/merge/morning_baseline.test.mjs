@@ -8,7 +8,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
 import { canonicalJson } from '../lib/canonical_json.mjs';
-import { mergeBaselines } from '../debt/merge_baseline.mjs';
+import { mergeBaselines, resolveConflict } from '../debt/merge_baseline.mjs';
 import { BASELINE, STEP_RUNNERS, git } from './morning.mjs';
 
 const base = (devLoc, unused, accepted = {}) => ({
@@ -75,4 +75,31 @@ test('mergeBaselines never goes looser than the looser side, and refuses two sch
   assert.equal(m.metrics.unused_class_names.total, 2);
   assert.deepEqual(mergeBaselines(a, a), a, 'one side merged with itself is itself');
   assert.throws(() => mergeBaselines(a, { ...b, schema: 'other/1' }), /schemas differ/);
+});
+
+test('beside a code conflict the stop names merge_baseline.mjs, and it stages the looser baseline by hand (real git)', () => {
+  const r = repo();
+  try {
+    r.sh('init', '-q', '-b', 'integ');
+    r.put(BASELINE, canonicalJson(base({ 'project/dev/a': 10 }, {})));
+    r.put('project/a.gd', 'var a: int = 0\n');
+    r.sh('commit', '-q', '-m', 'base');
+    r.sh('checkout', '-q', '-b', 'lane-x');
+    r.put(BASELINE, canonicalJson(base({ 'project/dev/a': 12 }, {})));
+    r.put('project/a.gd', 'var a: int = 1\n');
+    r.sh('commit', '-q', '-m', 'lane-x');
+    r.sh('checkout', '-q', 'integ');
+    r.put(BASELINE, canonicalJson(base({ 'project/dev/a': 10, 'project/dev/b': 5 }, {})));
+    r.put('project/a.gd', 'var a: int = 2\n');
+    r.sh('commit', '-q', '-m', 'integ');
+    const res = STEP_RUNNERS.merge({ git: r.g, cwd: r.wt, lanes: ['lane-x'], date: '2026-11-11', out: () => {}, done: [], mark: () => {} });
+    assert.equal(res.ok, false);
+    assert.ok(res.advice.some((l) => /baseline\.json: node tools\/debt\/merge_baseline\.mjs/.test(l)), res.advice.join('\n'));
+    const gitEnv = (cmd, args, o) => spawnSync(cmd, args, { ...o, env: { ...o.env, ...Object.fromEntries(Object.entries(process.env).filter(([k]) => !/^GIT_/i.test(k))) } });
+    assert.match(resolveConflict(r.wt, gitEnv), /looser of both sides per metric and file, staged \(2 metrics\)/);
+    assert.deepEqual(JSON.parse(readFileSync(join(r.wt, BASELINE), 'utf8')).metrics.dev_loc.files, { 'project/dev/a': 12, 'project/dev/b': 5 });
+    assert.match(r.sh('status', '--porcelain', BASELINE), /^M {2}tools\/debt\/baseline\.json$/, 'staged, no longer unmerged');
+    assert.match(r.sh('status', '--porcelain', 'project/a.gd'), /^UU /, 'the code conflict is left to the person');
+    assert.throws(() => resolveConflict(r.wt, gitEnv), /not in conflict here/);
+  } finally { r.done(); }
 });

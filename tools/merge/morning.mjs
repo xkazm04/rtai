@@ -75,7 +75,7 @@ export const laneDocsDir = (date, lane) => `docs/day/${date}/${lane.replace(/^n\
 /** A readable "what to do" for a stopped merge. */
 export function conflictAdvice(lane, files) {
   const hints = files.map((f) => {
-    if (f === 'tools/debt/baseline.json') return `  ${f}: take either side, then node tools/debt/debt.mjs --update (tools/debt/README.md)`;
+    if (f === 'tools/debt/baseline.json') return `  ${f}: node tools/debt/merge_baseline.mjs (the looser of both sides, staged); if the commit's debt ratchet still fails, node tools/debt/debt.mjs --accept-regression="<why>"`;
     if (/decisions\.md$/.test(f)) return `  ${f}: union-merged by .gitattributes; if it still conflicts, keep both sides`;
     if (/\.uid$/.test(f)) return `  ${f}: keep either side, one id per file`;
     return `  ${f}`;
