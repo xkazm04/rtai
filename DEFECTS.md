@@ -47,7 +47,9 @@
     -29 deg on screen toward the cop (942,224) from (638,395); probe facing_off 2.6 deg says the rig's facing is the
     sim's, so the shot's aim and Rivet's facing differ by ~30 deg at the fire tick (the bot turns him after it
     aims?). -> open: measure aim vs facing per shot over a street fight.
-12. **No visible recoil kick** on the pistol fire cells t333-338 (the arm and body hold one pose). -> open.
+12. **No visible recoil kick** on the pistol fire cells t333-338 (the arm and body hold one pose). -> fixed 8a47c51db
+    (RivetLean kick: 3 deg per unit of the rig's recoil about his feet; hand cannon 4.8 deg, figure top ~13 px at 64 px/m;
+    `kick_hand_cannon_64.png` / `_32.png`). The camera/back octants show no tilt (cannot read there): open, minor.
 13. **Size pop at the fire cell -> armed walk handover** (weapon:pistol t339 at 64 px/m, after 6822e1036): the camera
     fire cell's helmet draws ~6 % narrower than the armed walk grid's next frame (165 vs 175 px in the x2 crop).
     In the strips (both RivetRes 1.5) the fire cell is not the smaller one: helmet width 45 px under the crown, eq

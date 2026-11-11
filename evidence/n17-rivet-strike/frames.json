@@ -1,5 +1,23 @@
 [
   {
+    "file": "kick_hand_cannon_64.png",
+    "title": "Hand cannon round: his body kicks back about his feet and settles",
+    "source": "film.mjs weapon:hand_cannon --ppm=64 --stills=332-338 (8a47c51db), before = -- --rivet-kick=off; crops x2",
+    "branch": "n17-rivet-strike",
+    "ppm": 64,
+    "before": "top: one held fire pose t333-336",
+    "note": "after: 4.8 deg back on the round (rig_kick 1.6 x KICK_DEG 3), the flash on the tipped barrel, back upright as the recoil decays"
+  },
+  {
+    "file": "kick_hand_cannon_32.png",
+    "title": "Hand cannon kick at 32 px/m",
+    "source": "film.mjs weapon:hand_cannon --ppm=32 --stills=332-336 (8a47c51db); crops x3",
+    "branch": "n17-rivet-strike",
+    "ppm": 32,
+    "before": "top: --rivet-kick=off",
+    "note": "reads at play zoom as a barrel climb"
+  },
+  {
     "file": "thrust_katana_t82_92_64.png",
     "title": "Katana thrust: the 2.5 m lunge drawn as a lunge, blade level through contact",
     "source": "film.mjs chapter:katana_thrust --ppm=64 --stills=80-94 (f6d9588a5), before = -- --rivet-thrust=off; cyan = his ground line",
@@ -97,24 +115,6 @@
     "ppm": 48,
     "before": "left: ticket top right",
     "note": "long name steps down to fit"
-  },
-  {
-    "file": "katana_lean_strike_t64_64.png",
-    "title": "Katana strike leans in about his feet",
-    "source": "compare.mjs chapter:katana --a=3abb72f83 --b=415dc9ad1 --at=64 --ppm=64",
-    "branch": "n17-rivet-strike",
-    "ppm": 64,
-    "before": "left: upright",
-    "note": "RivetLean 9 deg in"
-  },
-  {
-    "file": "baton_left_lean_t64_64.png",
-    "title": "Baton facing left leans into the cop",
-    "source": "compare.mjs chapter:electro_baton_left --a=3abb72f83 --b=415dc9ad1 --at=64 --ppm=64",
-    "branch": "n17-rivet-strike",
-    "ppm": 64,
-    "before": "left: upright",
-    "note": "7 deg in"
   },
   {
     "file": "katana_lean_strike_t64_32.png",
