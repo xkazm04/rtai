@@ -23,7 +23,7 @@ const RUN_ROWS_OFF: Dictionary[String, Array] = {}
 ## n15 it14: run grids drawn on 16 columns (`<name>_run16.png`, "<name>/<art>"): the asset lane's
 ## halfway frames on the profile row, each run8 frame twice on the rest; even timing. No entry:
 ## the 8-column `<name>_run8.png` (the before).
-const RUN_COLS: Dictionary[String, int] = {"kerf/p70": 16}
+const RUN_COLS: Dictionary[String, int] = {"dent/p70": 16, "kerf/p70": 16}
 
 
 ## True when `name`'s run grid under `art` may show on the drawn row `row` (`off_rows`: the table).
