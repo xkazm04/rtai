@@ -1,7 +1,7 @@
-# n16 lane tools: REPORT (DRAFT, updated 15:55 in session 4; the 19:40 session finalises it)
+# n16 lane tools: REPORT (DRAFT, updated 16:55 in session 5; the 19:40 session finalises it)
 
 Branch `n16-tools` from main `5843f5a28`. Memory: `JOURNAL.md`. Evidence: `gtai-masters/n16/tools/frames.json`
-(14 entries) and `evidence/n16-tools/`.
+(15 entries) and `evidence/n16-tools/`.
 
 ## What works, with its proof
 
@@ -27,6 +27,12 @@ One command films every signature death in the KillLab on the city block, for we
   ~45 s of a ~65 s film) (7a16ac85d); a live-tree reel names its uncommitted project/ paths and any film whose tree
   moved mid-reel (469298728, 7c0e91fcd; kills-new FRICTION 15:15); a tree older than the kill-lab turn is told to
   film `--dirs=0` (613b488e0). Scout timing: 17 films in 12.7 min (s3: 12 films ~25 min). Decision tools/kill-reel-scout.
+- s5: a film is timed by the stills it saves (120 s + 2.5 s a still, at least 300; b74d9d007) and film.json records
+  `timeout_s` (3ca83cd2a): kills-new's `--before --clips` Gatling films died at the flat 300 s on t239 of ~245 while a
+  gate ran (their polygon-error flood was one line a frame, not the cause). Proof: the same film at 590902959,
+  `timeout_s: 540`, PASS in 46 s. `kill:claw_shock` (Rivet's charged claw, `PlayerShock.WEAPON`, which no weapon table
+  lists) is a lab weapon and `all` films it (8784c592b). Proof on kills-new 9ac925431: PASS at 32 and 64, kill 127, row
+  `claw_throw` (evidence/n16-tools/kill-reel-claw-shock-kills-new-9ac925431-64ppm.png).
 - Full coverage proof (s3all, `--weapons=all --quick --feel=on`): all 12 signature weapons kill in the lab (11 PASS,
   the nuke then UNVERIFIABLE on Rivet off screen; after the subject + window fix s3nuke / s3anchor PASS).
 
@@ -46,7 +52,16 @@ Done in n15 (6d77d2204); seen working all day (`merge-clash: no new code conflic
 ### 5. Builders served
 kills-new REQUEST 1 (`--subject=kill`), 2 (`--sig-wall`), 3 (the Gatling never spun up in the lab: kill_lab holds a
 spun gun, 0b5c55fc7); kills-polish's step_guard flake (8cb956f7e); kills-new FRICTION 15:15 (a live-tree reel broke on a half-edited tree:
-the reel now stamps the tree and names the film where it moved). Each with a SERVED line in JOURNAL.
+the reel now stamps the tree and names the film where it moved); s4 kills-new REQUEST (molotov row via KillFireSource,
+a7369529f); s5 kills-new FRICTION 15:30 (Gatling film timeouts, b74d9d007 + 3ca83cd2a), kills-new REQUEST 16:28
+(`kill:claw_shock`, 8784c592b), kills-polish FRICTION 14:20 (a commit's lint read an unstaged schema edit: reproduced, the
+hook IS right when its index export works; it now retries a failed export once and the tree fallback names the unstaged
+paths it reads, 826b4035a). Each with a SERVED line in JOURNAL.
+
+### 6. Pre-commit hook (`tools/gate/precommit.mjs`)
+826b4035a: a failed index export is retried once; the tree fallback ends `it reads your unstaged <paths>: a failure
+there is not in the commit`. Proof: real git, TMP pointed at a missing dir, the line named
+`project/data/tables/signature_kills.json`; with TMP intact the same setup linted a 5530-file export, 19/19.
 
 ## Findings for the kill lanes
 - A signature row's `hitstop_ticks` does NOT freeze the screen: SignatureKills.hold makes the pieces wait. The freeze
@@ -65,10 +80,12 @@ bit, look goldens 11/11, release-compile 683/0, reels top/tilt70/combo OK). Ever
 (lint 19/19 incl. tool-tests in each commit's hook).
 
 ## Codex ledger
-3 tasks, both gpt-5.6-sol, 1 round each, discarded after landing: n16t-break-film-root (119 s, 10 tests, accepted
+4 tasks, all gpt-5.6-sol, 1 round each, discarded after landing: n16t-break-film-root (119 s, 10 tests, accepted
 after revision: the cwd-below-a-tree promise was a weakness, fixed), n16t-break-reel-movie (188 s, 10 tests, 3 kept
 red, all 3 accepted and fixed in code), n16t-break-live-tree (196 s, 8 tests, 1 kept red: CRLF porcelain, accepted and
-fixed; review found a second real defect the tests missed, C-quoted non-ASCII paths, fixed with a first-author test).
+fixed; review found a second real defect the tests missed, C-quoted non-ASCII paths, fixed with a first-author test),
+n16t-break-reel-scout (743 s, 9 tests, 1 kept red: rejected as a defect, tick 60 is the lab's trigger column by design
+and my task text was looser than the design; the test exempts it; accepted after revision).
 
 ## Calls for the owner
 - The kill reel's default is feel OFF (stable sheets, clean A/B); pacing is judged with `--feel=on`. Alternative:
