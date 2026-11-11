@@ -125,10 +125,13 @@ function writeSheet(file, rows) {
   return file;
 }
 
-/** One weapon's beat timings from its table row (the data side of the readout). */
+/** One weapon's beat timings from its table row (the data side of the readout). The row's hitstop_ticks is NOT the
+ *  screen freeze: SignatureKills.hold makes the pieces (gibs, halves, marks) wait that many sim ticks, while the
+ *  freeze is FeelCam's (hit_feel.json kill_hitstop `kill` = camera.json 6 ticks, or a class's bigger stop: the
+ *  rocket's 8), which each film measures as `hit-stop N frames`. */
 export function beatLine(weapon, row) {
   if (!row?.id) return `${weapon}: no signature row (the standard death)`;
-  return `${weapon}: ${row.id} (${row.style}) hit-stop ${row.hitstop_ticks}, held ${row.held_ticks} (grind ${row.grind_ticks}, stand ${row.stand_ticks}), crumble ${row.crumble_ticks}, flash ${row.flash_ticks} ticks`
+  return `${weapon}: ${row.id} (${row.style}) row hit-stop ${row.hitstop_ticks} (the pieces wait; the screen freeze is hit_feel.json's, measured per film), held ${row.held_ticks} (grind ${row.grind_ticks}, stand ${row.stand_ticks}), crumble ${row.crumble_ticks}, flash ${row.flash_ticks} ticks`
     + (row.leftover_kills ? `; its scorch and spray stay until ${row.leftover_kills} later kills recycle them (leftover_budget ring, no timer)` : '');
 }
 

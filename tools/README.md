@@ -155,8 +155,13 @@ from the tick before the kill to +12, read from the gaps in the probe rows' proc
 frames (a still is saved per tick): the sheet prints it on the kill cell (`HS6`) and a `--clips --feel=on` clip plays it. `window still N ticks`:
 the ticks after the kill that the drawn kill window does not change (a held pose). The reel's camera is locked, and
 a locked film runs `--feel=off`, so a DEFAULT REEL HAS NO HIT-STOP AND NO CAMERA PUNCH: pass `--feel=on` to judge
-the pacing. Proof (n16 s2, katana dir 90, 32 px/m): `--feel=on` hit-stop 6 frames (= the row's hitstop_ticks 6),
+the pacing. Proof (n16 s2, katana dir 90, 32 px/m): `--feel=on` hit-stop 6 frames (hit_feel.json `kill_hitstop` = camera.json `kill`, 6 ticks),
 default 0.
+
+The signature row's `hitstop_ticks` is NOT the screen freeze: SignatureKills.hold makes the death's pieces (gibs,
+halves, marks) wait that many sim ticks. The freeze is FeelCam's: a lethal hit takes hit_feel.json `kill_hitstop`
+(camera.json `kill`, 6 ticks) or its class's bigger stop (the rocket measured 8 frames with a row hit-stop of 0). To
+change how long the screen holds on a kill, change hit_feel.json, not the signature row.
 
 `--quick` (n16 s3, the builders' inner loop): 32 px/m only and dir 90 unless `--ppm`/`--dirs` name others, so one
 film per weapon (`kill_reel.mjs --out=build/kreel/q --weapons=katana,rocket_launcher --quick --feel=on`: 2 films,
