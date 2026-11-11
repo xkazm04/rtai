@@ -7,7 +7,7 @@ extends Node2D
 ## the sim tick, so a replay draws the same frames. No RNG: shapes come from a hash of the serial
 ## and the tick.
 
-const STYLES: Array[StringName] = [&"snap", &"stitch", &"pin", &"shred"]
+const STYLES: Array[StringName] = [&"snap", &"stitch", &"pin", &"shred", &"cook"]
 ## Body metas set at the cut: the feet (body-local px) and the standing height (px).
 const FEET: StringName = &"kill_feet"
 const HEIGHT: StringName = &"kill_height"
@@ -129,6 +129,8 @@ func pose() -> void:
 		var p: Vector3 = KillTrack.sample(d.extra.track, age)
 		if d.row.style == &"pin":
 			p.x += KillPinArt.writhe(d, age)
+		elif d.row.style == &"cook":
+			p.x += KillCookArt.tremble(d, age, reduced_motion)
 		var b: Transform2D = KillTrack.basis(d.dir, d.fall, p, d.extra.lie_len)
 		var slide: Vector2 = d.dir * d.extra.slide_m * ppm * clampf(p.z, 0.0, 1.0)
 		if d.row.style == &"pin":
@@ -186,6 +188,8 @@ func _draw() -> void:
 			KillStitchArt.draw(self, d, age)
 		elif d.row.style == &"pin":
 			KillPinArt.draw(self, d, age)
+		elif d.row.style == &"cook":
+			KillCookArt.draw(self, d, age)
 
 
 ## A stable 0..1 hash of a kill serial and a number (no dice).

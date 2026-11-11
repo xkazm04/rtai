@@ -27,6 +27,7 @@ const KILLS: Dictionary[StringName, StringName] = {
 	&"machine_pistol": &"stitch",  # n16 kills-new: rounds walk up him, he whirls and drops
 	&"gloria": &"pin",  # n16 kills-new: nailed to the wall behind him, or to the street
 	&"gatling": &"shred",  # n16 kills-new: held up by the stream, torn, dropped in a heap
+	&"electro_baton": &"cook",  # n16 kills-new: cooked from inside, eyes out, falls smoking
 }
 
 
