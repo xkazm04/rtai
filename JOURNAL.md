@@ -673,3 +673,11 @@ FRICTION: this branch's `tools/film/film.mjs` has no `kill:` shot (the tools lan
   top, dropped the turn/no-turn still (15 entries).
 - 17:36 `b967042e3` p55 cells; `e19d02c1f` its test did not parse (Variant into a String arg): I committed without
   `tools/gate/quick.mjs` and the run's triage named it. Lesson: quick.mjs before EVERY commit, even test-only ones.
+- 17:50 p55 films under `--view=tilt` (55 deg, art p55) at 32 px/m, patrol cop victim, before `76ae91d45` (p70 cells
+  under the 55 view) vs after `e19d02c1f`: film says UNVERIFIABLE only because the kill-lab probe records no card rows
+  (victim checked by eye: a patrol cop, cap). Judged: baton (`evidence/n16-kills-new/baton_overload_p55_ab_32ppm_tilt_t68-188.png`)
+  the p55 corpse lies full length with smoke where the p70 one lay short: better. Gatling
+  (`gatling_shred_p55_ab_32ppm_tilt_t95-155.png`) close to p70, the sag and heap sit a little better. KEPT both.
+  Clips `{baton_overload,gatling_shred}_p55_after_32ppm_tilt.mp4`. Masters: baton p55 on top, dropped pin 64 dir 135.
+- 17:51 GATE started: `node ../n16-tools/tools/gate/run.mjs --rev=b9dba1da8 --reels` (evidence + every reel view;
+  log C:/Users/kazda/kiro/gtai-n16/scratch-kills-new-gate.log). Holds this lane's Godot ~40 min.
