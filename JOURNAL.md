@@ -167,3 +167,26 @@ path; glow/steam/eyes, no X-ray); (d) check `gtai-assets/replies/n16-kills-new.m
 of the fall grid (KillFallCells is the slot); (e) the kill reel when the tools lane delivers it; (f) copy the best
 frames to `gtai-masters/n16/kills-new/` with `frames.json`; (g) full gates on the last code commit (lint, unit,
 scenarios, evidence run with parity + look goldens, reels).
+- 12:14 read the replies: asset lane it410/it414 DELIVERED pistol_snap p70 for all four kinds:
+  `gtai-art/library/keyed/street/{cop_patrol,cop_riot,swat,ped_suit}_pistol_snap_70_cells/{frame 1..4}_{column 1..5}.png`
+  (frame 1 snap + cap flying, 2 buckle, 3 pitch forward, 4 face-down corpse; columns = the kind's long_fall grid
+  order; cells = the kind's grid cell (738x482 patrol/riot, 806x482 SWAT, 542x470 suit), registered to the grid's
+  bottom-centre; patrol frames 1-2 sit ~20 px low). Loose headgear `cop_headgear_tumble_70_cells/{1 cap,2 riot,3 swat}_{1,2}.png`
+  (~0.3 m). Grades: patrol 1-2 B / 3-4 B (4_5 = 4_1 turned); riot 1-2 A / 3-4 B (frame 3 a stoop); SWAT 1-2 A /
+  3-4 B; suit 1-2 A / 3-4 B (no briefcase). p55 follows. They asked: keep the thin blood strand head -> cap? (keep:
+  red = blood, it reads the exit.)
+- tools lane: the kill reel is ready (`node C:/Users/kazda/kiro/gtai-wt/n16-tools/tools/film/kill_reel.mjs --out=<dir>
+  --weapons=all --dirs=90,270 [--before=<sha> --rev=<sha>] [--ppm=32,64]`); `--dirs`/`--victims` need cherry-pick
+  `afe581336` (brutality_hook.gd +2 lines, kill_lab_turn.gd). `--subject=kill` for film/compare served in `dfccc7f0d`
+  (run their copy of compare.mjs). `--victim-wall` still open.
+- kills-polish NOTE (11:45): `GibCut.cut(rig, false)` now dresses a rig victim's six groups with its kind's DRAWN gib
+  pieces (`GibCardPieces.dress_rig`) - the Gatling shred gets drawn pieces (with bone) for free.
+
+NEXT (iteration 5, in this order): (1) WIRE the drawn pistol cells: pack each kind's 4x5 cells into one grid PNG under
+`project/features/characters/art/view/p70/<kind>_pistol_snap.png` (follow `tools/art/street_fall.py`'s packing; LFS,
+`.import`, a provenance line per PNG in `steam/ai-provenance/2026-11.jsonl`), point KillFallCells at a per-row grid
+table (`fx` cannot hold strings: add a `cells` key or a `KillFallCells.GRIDS[row id][art][row]` dict) so pistol_snap
+plays frames 1-4 from t0 (snap 0-2, held 2-8, buckle 8-14, pitch 14-21, corpse 21+) with the cap cell thrown as the
+HAT piece; judge against the placeholder at the same ticks (compare `--a=027571cc9 --b=HEAD --subject=kill`);
+(2) cherry-pick afe581336 and film every new death with the kill reel at 32 + 64 px/m, 3+ directions;
+(3) the Gatling shred; (4) the electro baton overload; (5) then the items in the earlier NEXT list.
