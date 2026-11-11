@@ -25,15 +25,25 @@ PIECES = 6
 BANDS = {"cop_riot_gib.png"}
 # out file -> the armed walk whose uniform blue the pieces take (street_tone, as the hit sheets): drawn lighter than
 # the card's navy, the pieces read as another man's uniform in flight (filmed at 48 px/m, session 5).
-TONES = {"cop_patrol_gib.png": "cop_patrol_armed_walk.png", "cop_riot_gib.png": "cop_riot_armed_walk.png"}
+TONES = {
+    "cop_patrol_gib.png": "cop_patrol_armed_walk.png",
+    "cop_riot_gib.png": "cop_riot_armed_walk.png",
+    "swat_gib.png": "swat_armed_walk.png",
+}
 # library folder (under LIB) -> out file. The patrol takes v2 (head seen from above, the card's slate blue).
 KINDS = {
     "cop_patrol_gib_70_cells/v2": "cop_patrol_gib.png",
     "cop_riot_gib_70_cells": "cop_riot_gib.png",
+    # n16 kills-polish (owner n15 verdict): the thug and the hooded pedestrian (it363 A) fly their drawn pieces
+    # whether they die as rigs (GibCardPieces.dress_rig) or as cards; the cap, suit, worker and SWAT sets of the
+    # same delivery with them.
+    "thug_gib_70_cells": "thug_gib.png",
+    "ped_hood_gib_70_cells": "ped_hood_gib.png",
+    "ped_cap_gib_70_cells": "ped_cap_gib.png",
+    "ped_suit_gib_70_cells": "ped_suit_gib.png",
+    "ped_worker_gib_70_cells": "ped_worker_gib.png",
+    "swat_gib_70_cells": "swat_gib.png",
 }
-# Drawn too (it363 A), NOT packed: in the lone rocket shot the thug and the hooded pedestrian are rigs, not cards, so
-# GibCardCut never cuts them and their pieces were never seen. Add them here (and to GibCardPieces.GRIDS) once filmed:
-# "thug_gib_70_cells": "thug_gib.png", "ped_hood_gib_70_cells": "ped_hood_gib.png".
 
 
 def cropped(path: Path) -> Image.Image:

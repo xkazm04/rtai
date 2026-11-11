@@ -45,6 +45,9 @@ static func cut(rig: CutRig, whole: bool = false) -> Array[Node2D]:
 		for ch: Node in groups[i].get_children():
 			(ch as Node2D).position -= c
 		groups[i].position = c
+	if not whole and not GibCardCut.cuts(rig, rig.head_card):
+		@warning_ignore("return_value_discarded")
+		GibCardPieces.dress_rig(rig, groups)  # n16: a rig victim flies its drawn pieces
 	return groups
 
 
