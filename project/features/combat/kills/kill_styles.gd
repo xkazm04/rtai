@@ -75,6 +75,11 @@ func parts(
 	var groups: Array[Node2D] = (
 		KillSplitFx.cut(rig, dir, _ppm, row) if split else GibCut.parts(rig, row.whole_body(), _ppm)
 	)
+	if row.style == &"blowback":  # n16: the hand cannon's drawn exit wound (A6)
+		var w: KillExitWound = KillExitWound.attach(groups[SignatureKill.BODY], rig, row, dir, _ppm)
+		if w != null:
+			w.kills = _kills
+			w.tick0 = _kills.tick
 	if row.style == &"split":
 		split_fx.add(serial, at, dir, row, groups)
 	elif row.style == &"hole" and rig != null:

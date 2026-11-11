@@ -37,7 +37,7 @@
     {
       "bounce": 0.25,
       "cone_deg": 8,
-      "doc": "Hand cannon: the victim is blown off their feet in one piece, flies back along the shot, lands and slides on a long blood smear while the cap spins off; an exit spray fans out behind the body. No scorch.",
+      "doc": "Hand cannon: the victim is blown off their feet in one piece, flies back along the shot, lands and slides on a long blood smear while the cap spins off; an exit spray fans out behind the body. No scorch. n16 kills-polish: the round leaves a drawn exit wound in the chest (torn cloth flaps, meat, rib arcs, the spine's knuckles; asset lane A6), wound_m wide, that tumbles with the body and dries on it (KillExitWound).",
       "flash_ticks": 2,
       "ground_drag": 5,
       "hitstop_ticks": 3,
@@ -62,7 +62,8 @@
         2.2,
         2.8
       ],
-      "weapon": "hand_cannon"
+      "weapon": "hand_cannon",
+      "wound_m": 0.34
     },
     {
       "ash_m": 0.62,

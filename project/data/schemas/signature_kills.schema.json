@@ -194,6 +194,11 @@
           "weapon": {
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
+          },
+          "wound_m": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
           }
         },
         "required": [
