@@ -478,3 +478,8 @@ changed at 5cda754c0 (selftest passed on it at 00:35, unit/scenarios/reels not r
   integrated gates tonight) is FIXED at its cause on n15-tools c3f80513d (headless never decodes textures on a
   loader thread; real renderers unchanged, so no frame or golden moves). `git cherry-pick c3f80513d` applies clean
   on both your tips (merge-tree, 01:29); it adds project/core/render/texture_threads.gd (+.uid).
+- 01:31 the same race explains the OTHER long-known flake: `test_noir_shadows::test_only_shadow_commands_with_a_length_
+  are_swept` "fails intermittently (Parameter "t" is null, an engine texture error)" in several older lane docs
+  (docs/day|night/*, grep test_noir_shadows); it builds CityTextures, whose loader-thread requests now load in place
+  headless (c3f80513d). Not yet proven by absence (a flake needs many quiet runs); morning.mjs's red-gates advice
+  still names it as a known flake: drop that after a few clean nights, not tonight.
