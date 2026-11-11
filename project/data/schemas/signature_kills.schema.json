@@ -21,10 +21,63 @@
             "minimum": 0,
             "type": "number"
           },
+          "blot_m": {
+            "maximum": 2,
+            "minimum": 0,
+            "type": "number"
+          },
           "bounce": {
             "maximum": 1,
             "minimum": 0,
             "type": "number"
+          },
+          "cells": {
+            "additionalProperties": false,
+            "properties": {
+              "at": {
+                "items": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "minItems": 1,
+                "type": "array"
+              },
+              "grids": {
+                "additionalProperties": {
+                  "additionalProperties": {
+                    "pattern": "^[a-z0-9_]+[.]png$",
+                    "type": "string"
+                  },
+                  "type": "object"
+                },
+                "type": "object"
+              },
+              "loose": {
+                "additionalProperties": {
+                  "additionalProperties": {
+                    "pattern": "^[a-z0-9_]+[.]png$",
+                    "type": "string"
+                  },
+                  "type": "object"
+                },
+                "type": "object"
+              },
+              "scraps": {
+                "additionalProperties": {
+                  "additionalProperties": {
+                    "pattern": "^[a-z0-9_]+[.]png$",
+                    "type": "string"
+                  },
+                  "type": "object"
+                },
+                "type": "object"
+              }
+            },
+            "required": [
+              "at",
+              "grids"
+            ],
+            "type": "object"
           },
           "cone_deg": {
             "maximum": 360,
@@ -52,9 +105,23 @@
             ],
             "type": "string"
           },
+          "fall": {
+            "enum": [
+              "forward",
+              "back",
+              "side"
+            ],
+            "type": "string"
+          },
           "flash_ticks": {
             "minimum": 0,
             "type": "integer"
+          },
+          "fx": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object"
           },
           "grind_ticks": {
             "minimum": 0,
@@ -85,6 +152,11 @@
             "minItems": 2,
             "type": "array"
           },
+          "lie_len": {
+            "maximum": 3,
+            "minimum": 0.2,
+            "type": "number"
+          },
           "pieces": {
             "items": {
               "enum": [
@@ -103,6 +175,11 @@
             "type": "array"
           },
           "scorch_radius_m": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "slide_m": {
+            "maximum": 5,
             "minimum": 0,
             "type": "number"
           },
@@ -144,8 +221,26 @@
               "dissolve",
               "burst",
               "crush",
-              "vaporise"
+              "vaporise",
+              "snap",
+              "stitch",
+              "pin",
+              "shred",
+              "cook",
+              "torch",
+              "throw"
             ]
+          },
+          "track": {
+            "items": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 4,
+              "minItems": 4,
+              "type": "array"
+            },
+            "type": "array"
           },
           "up_mps": {
             "items": {

@@ -48,6 +48,9 @@ var split_follow: float = GibSim.SPLIT_FOLLOW
 ## Extra speed (m/s) for the hat alone, thrown off to one side of the shot (alternating kill by
 ## kill): the ray gun knocks the cap off the dust heap onto the bare street.
 var hat_kick_mps: float = 0.0
+## The splat blot's radius (m) the spray leaves where the body was (0 = none; n16 kills-new:
+## the pistol's is small, the machine pistol leaves only its dotted line).
+var blot_m: float = 0.5
 ## A split's cut edge: raw (red), hot (cream, cauterised) or soul (teal-white, Kerf's beam);
 ## empty = by the row's spray (none = hot).
 var edge: StringName = &""
@@ -81,6 +84,7 @@ static func from_dict(t: DataTable, d: Dictionary) -> SignatureKill:
 	k.grind_ticks = roundi(_num(t, d, "grind_ticks", 0.0))
 	k.split_follow = _num(t, d, "split_follow", GibSim.SPLIT_FOLLOW)
 	k.hat_kick_mps = _num(t, d, "hat_kick_mps", 0.0)
+	k.blot_m = _num(t, d, "blot_m", 0.5)
 	k.edge = StringName(str(d.get("edge", "")))
 	return k
 

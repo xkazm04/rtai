@@ -21,6 +21,8 @@ class Mark:
 	var ash_from: int = 0
 	## Ticks after the kill before the spray prints (a burst sprays at the pop, not the hit).
 	var spray_from: int = 0
+	## The splat blot's radius (m; 0 = none) where the body was (view only, not in the hash).
+	var blot_m: float = 0.5
 
 
 const WALL_STEP_M: float = 0.15
@@ -46,6 +48,7 @@ func leave(
 	m.flash_scale = 1.0 if row.style == &"gib" else 0.55  # the big star and soot: blasts only
 	m.tick = tick
 	m.ash_m = row.ash_m
+	m.blot_m = row.blot_m
 	m.ash_from = row.hitstop_ticks + row.stand_ticks
 	m.spray_from = row.hitstop_ticks + row.grind_ticks if row.style == &"burst" else 0
 	var cone: float = row.spray_cone_deg if row.spray_cone_deg > 0.0 else row.cone_deg

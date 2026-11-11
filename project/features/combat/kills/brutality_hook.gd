@@ -1,12 +1,10 @@
 class_name BrutalityHook
 extends ArenaHook
-## The brutality lane in the arena (station `brutality_pit`, arena_stations/brutality.json): it
-## feeds CombatArena.struck lethal hits into SignatureKills, steps the gibs on the 60 Hz tick from
-## the `brutality` RNG stream, folds them into the replay hash and draws them with KillView on the
-## print stage's actor layer. Arena args (after --): --sig-gun=<weapon id> hands Rivet that
-## weapons.json gun (the rocket launcher, until the arsenal lane's weapon wheel lands);
-## --sig-lab lines guards up in front of him (KillLab, a framed capture); --gore=reduced turns
-## every signature kill into the standard death.
+## The brutality lane in the arena (station `brutality_pit`): it feeds CombatArena's lethal hits
+## (a fire death named by KillFireSource) into SignatureKills, steps the gibs on the 60 Hz tick
+## from the `brutality` RNG stream, folds them into the replay hash and draws them with KillView.
+## Args (after --): --sig-gun=<weapon id> hands Rivet that gun; --sig-lab lines guards up in front
+## of him (KillLab); --gore=reduced turns every signature kill into the standard death.
 
 const PART_RADIUS_M: float = 0.2
 
@@ -16,6 +14,7 @@ var _stage: ArenaStage = null
 var _rigs: RigHost = null
 var _game: Node = null
 var _lab: KillLab = null
+var _fire: KillFireSource = null
 
 
 func setup(stage: ArenaStage, ctx: WorldContext) -> void:
@@ -29,6 +28,7 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	kills.push_out = _push_out
 	@warning_ignore("return_value_discarded")
 	stage.arena.kill_landed.connect(_on_kill_landed)
+	_fire = KillFireSource.watch(stage.arena)
 	var gun: String = ArenaArgs.parse().text("--sig-gun")
 	if not gun.is_empty():
 		arm(stage, ctx, StringName(gun))
@@ -163,7 +163,7 @@ func _veto_bloods(root: Node) -> void:
 func _on_kill_landed(
 	victim: Fighter, weapon: StringName, dir: Vector2, _at: Vector2, kind: StringName
 ) -> void:
-	var e: KillEvent = KillEvent.of_fighter(victim, dir, weapon)
+	var e: KillEvent = KillEvent.of_fighter(victim, dir, _fire.weapon_of(victim.id, weapon))
 	e.damage_type = kind
 	if kills.on_kill(e):
 		_hide(victim.id)

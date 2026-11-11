@@ -96,9 +96,6 @@
       "weapon": "burn"
     },
     {
-      "also_weapons": [
-        "claw_shock"
-      ],
       "bounce": 0.1,
       "cone_deg": 10,
       "doc": "Electro gun: the bolt locks the victim in a stiff convulsion while an X-ray flash strobes his skeleton (weapon-art's sticker) inside cream arcs, then he drops stiff along the shot, scorched, smoke rising from the collar. No blood. Under --reduced-motion no strobe and no shake.",
@@ -530,6 +527,739 @@
         0.5
       ],
       "weapon": "kerf_slice"
+    },
+    {
+      "blot_m": 0.2,
+      "bounce": 0.1,
+      "cells": {
+        "at": [
+          0,
+          8,
+          14,
+          21
+        ],
+        "grids": {
+          "p55": {
+            "cop/head_cap": "cop_patrol_pistol_snap.png",
+            "cop/head_helmet": "cop_riot_pistol_snap.png",
+            "cop/head_swat": "swat_pistol_snap.png"
+          },
+          "p70": {
+            "cop/head_cap": "cop_patrol_pistol_snap.png",
+            "cop/head_helmet": "cop_riot_pistol_snap.png",
+            "cop/head_swat": "swat_pistol_snap.png",
+            "ped/head_hair": "ped_suit_pistol_snap.png"
+          }
+        },
+        "loose": {
+          "p70": {
+            "cop/head_cap": "cop_patrol_headgear_tumble.png",
+            "cop/head_helmet": "cop_riot_headgear_tumble.png",
+            "cop/head_swat": "swat_headgear_tumble.png"
+          }
+        }
+      },
+      "cone_deg": 16,
+      "doc": "Pistol (lane kills-new, n16; the most used gun, so short and clean). The patrol cop, riot cop, SWAT and suit ped play their own drawn cells (cells: KillDeathCells, 5 facings x 4 frames, faced toward the shooter): t0-8 the head thrown back, the exit spray and the cap/helmet flying off (from t8 the drawn loose cap or helmet, KillLooseArt, arcs 1.1 m back along the shot over 12 ticks, tumbling, and stays on the street); t8-14 the knees buckle, blood running from the head; t14-21 he pitches forward, arms limp; from t21 he lies face down, head toward Rivet, the back-of-head wound up (the corpse). KillSnapArt adds the red jet and mist out of the back of the head (t2-9). Any other kind: the head snaps back 22 deg (t0-2), hangs (t2-8), buckles (t8-14), then from t14 his own drawn fall grid (KillFallCells) plays over 18 ticks facing the shooter; a parts rig lays the body copy by the pose track (t14-26). Aftermath: the face-down body, the exit fan on the street behind where he stood.",
+      "fall": "forward",
+      "flash_ticks": 0,
+      "fx": {
+        "cells_at": 14,
+        "cells_ticks": 18,
+        "drops": 9,
+        "loose_at": 8,
+        "loose_hop_m": 0.4,
+        "loose_m": 1.1,
+        "loose_size_m": 0.3,
+        "loose_ticks": 12,
+        "mist_m": 0.8,
+        "mist_ticks": 7
+      },
+      "ground_drag": 9,
+      "hitstop_ticks": 2,
+      "id": "pistol_snap",
+      "launch_mps": [
+        0.1,
+        0.2
+      ],
+      "lie_len": 1,
+      "pieces": [
+        "body"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "spray": 8,
+      "spray_cone_deg": 24,
+      "style": "snap",
+      "track": [
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          2,
+          22,
+          1,
+          0
+        ],
+        [
+          8,
+          20,
+          1,
+          0
+        ],
+        [
+          14,
+          0,
+          0.84,
+          0
+        ],
+        [
+          26,
+          0,
+          0.9,
+          1
+        ]
+      ],
+      "up_mps": [
+        0,
+        0
+      ],
+      "weapon": "pistol"
+    },
+    {
+      "blot_m": 0,
+      "bounce": 0.1,
+      "cells": {
+        "at": [
+          0,
+          4,
+          7,
+          10,
+          18
+        ],
+        "grids": {
+          "p55": {
+            "cop/head_cap": "cop_patrol_smg_stitch.png",
+            "cop/head_helmet": "cop_riot_smg_stitch.png",
+            "cop/head_swat": "swat_smg_stitch.png"
+          },
+          "p70": {
+            "cop/head_cap": "cop_patrol_smg_stitch.png",
+            "cop/head_helmet": "cop_riot_smg_stitch.png",
+            "cop/head_swat": "swat_smg_stitch.png",
+            "ped/head_hair": "ped_suit_smg_stitch.png"
+          }
+        }
+      },
+      "cone_deg": 16,
+      "doc": "Machine pistol (lane kills-new, n16): the stitch. Four rounds walk up the body from the hip to the neck, 3 ticks apart (t1-10): each one a red spurt out of his back along the shot (KillStitchArt) and a jerk of the figure (the pose track, alternating 6-9 deg, kept on the drawn frames: fx cells_lean). The patrol cop, riot cop, SWAT and suit ped play their own drawn cells (KillDeathCells, 5 facings x 5 frames, faced under the blow): t0 one wound at the hip, t4 two, t7 three up to the chest and the cap or helmet tipping off, t10-18 the spin (the drawn edge-on frame turned a full circle through his facings onto the fall side), from t18 on his side, curled, across the shot. Any other kind: the ink holes ride him, and his own drawn fall grid (KillFallCells) whirls from t10 and drops sideways across the shot (t18-32). Aftermath: the body across the shot, a narrow dotted spray along it.",
+      "fall": "side",
+      "flash_ticks": 0,
+      "fx": {
+        "cells_at": 0,
+        "cells_lean": 1,
+        "cells_ticks": 14,
+        "fall_at": 18,
+        "from_h": 0.35,
+        "gap": 3,
+        "spurts": 4,
+        "to_h": 0.7,
+        "whirl_from": 10,
+        "whirl_ticks": 8
+      },
+      "ground_drag": 9,
+      "hitstop_ticks": 1,
+      "id": "smg_stitch",
+      "launch_mps": [
+        0.1,
+        0.2
+      ],
+      "pieces": [
+        "body"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "spray": 12,
+      "spray_cone_deg": 12,
+      "style": "stitch",
+      "track": [
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          8,
+          1,
+          0
+        ],
+        [
+          3,
+          2,
+          1,
+          0
+        ],
+        [
+          4,
+          -6,
+          1,
+          0
+        ],
+        [
+          6,
+          0,
+          1,
+          0
+        ],
+        [
+          7,
+          9,
+          1,
+          0
+        ],
+        [
+          9,
+          2,
+          1,
+          0
+        ],
+        [
+          10,
+          0,
+          1,
+          0
+        ]
+      ],
+      "up_mps": [
+        0,
+        0
+      ],
+      "weapon": "machine_pistol"
+    },
+    {
+      "blot_m": 0.15,
+      "bounce": 0.1,
+      "cells": {
+        "at": [
+          0,
+          10,
+          8
+        ],
+        "grids": {
+          "p55": {
+            "cop/head_cap": "cop_patrol_nail_pin.png",
+            "cop/head_helmet": "cop_riot_nail_pin.png",
+            "cop/head_swat": "swat_nail_pin.png"
+          },
+          "p70": {
+            "cop/head_cap": "cop_patrol_nail_pin.png",
+            "cop/head_helmet": "cop_riot_nail_pin.png",
+            "cop/head_swat": "swat_nail_pin.png",
+            "ped/head_hair": "ped_suit_nail_pin.png"
+          }
+        }
+      },
+      "cone_deg": 10,
+      "doc": "Gloria, the nail gun (lane kills-new, n16): pinned. On the hit (gib hold 2) the nails streak in along the shot (KillPinArt); with a wall within 1.4 m behind him (the stage's push_out, probed along the shot) he is slammed back onto it over 6 ticks and hangs there by both sleeves, feet 0.12 m off the street, writhing (dying out over 80 ticks from t10); on the open street a nail through the boot holds him down. The patrol cop, riot cop, SWAT and suit ped play their own drawn cells (KillDeathCells, 5 facings x 3 frames, facing the shooter; KillPinArt.frame picks the frame, cells.at = pinned, writhe, on the street): on the wall frame 1 (pinned through both sleeves, arms out, head slumped, blood from the sleeves) and frame 2 (the knees jerked up) on the writhe's peaks, no lean (he is nailed); on the street frame 1 as the nails hit, then from t8 frame 3, on his back with both hands at the nailed boot and the cap or helmet beside him, rocking at half the writhe (fx cells_lean). The drawing carries the driven nails. Any other kind: the coded nail stubs stay with the body; on the wall his standing copy writhes 12 deg, on the street he falls back (his own drawn fall grid, t2-16), a nail through the foot and one through the far sleeve. Aftermath: the pinned body and the nails.",
+      "fall": "back",
+      "flash_ticks": 0,
+      "fx": {
+        "cells_at": 2,
+        "cells_lean": 0.5,
+        "cells_ticks": 14,
+        "lift_m": 0.12,
+        "settle": 10,
+        "slide_ticks": 6,
+        "wall_m": 1.4,
+        "writhe_deg": 12,
+        "writhe_ticks": 80
+      },
+      "ground_drag": 9,
+      "hitstop_ticks": 2,
+      "id": "nail_pin",
+      "launch_mps": [
+        0.1,
+        0.2
+      ],
+      "pieces": [
+        "body"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "spray": 6,
+      "spray_cone_deg": 16,
+      "style": "pin",
+      "track": [
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          2,
+          10,
+          1,
+          0
+        ],
+        [
+          8,
+          0,
+          0.97,
+          0
+        ]
+      ],
+      "up_mps": [
+        0,
+        0
+      ],
+      "weapon": "gloria"
+    },
+    {
+      "blot_m": 0.35,
+      "bounce": 0.1,
+      "cells": {
+        "at": [
+          0,
+          12,
+          24
+        ],
+        "grids": {
+          "p55": {
+            "cop/head_cap": "cop_patrol_gatling_shred.png",
+            "cop/head_helmet": "cop_riot_gatling_shred.png",
+            "cop/head_swat": "swat_gatling_shred.png"
+          },
+          "p70": {
+            "cop/head_cap": "cop_patrol_gatling_shred.png",
+            "cop/head_helmet": "cop_riot_gatling_shred.png",
+            "cop/head_swat": "swat_gatling_shred.png",
+            "ped/head_hair": "ped_suit_gatling_shred.png"
+          }
+        },
+        "scraps": {
+          "p55": {
+            "cop/head_cap": "cop_patrol_gatling_shred_scraps.png",
+            "cop/head_helmet": "cop_riot_gatling_shred_scraps.png",
+            "cop/head_swat": "swat_gatling_shred_scraps.png"
+          },
+          "p70": {
+            "cop/head_cap": "cop_patrol_gatling_shred_scraps.png",
+            "cop/head_helmet": "cop_riot_gatling_shred_scraps.png",
+            "cop/head_swat": "swat_gatling_shred_scraps.png",
+            "ped/head_hair": "ped_suit_gatling_shred_scraps.png"
+          }
+        }
+      },
+      "cone_deg": 16,
+      "doc": "Gatling (lane kills-new, n16): the shred. No hit-stop (the stream never stops). t0-24 the stream holds him upright, shaken back hard every 1-2 ticks (the pose track: leans of 2-12 deg away from the gun), and every 3 ticks a torn scrap of cloth or flesh with a cream bone fleck leaves his figure (hip to neck) with a red spurt and flies up to 1.4 m along the stream to lie on the street (KillShredArt, 8 scraps). From t24 what is left drops: his own drawn fall grid (KillFallCells) over 12 ticks, falling back along the stream. (fx cells_at 0 + fall_at 24 = the buckle frame from the hit: no jump at the drop, but a jump and a hunched figure at the kill; rejected by film 13:05.) Aftermath: the body among the scattered scraps, a wide spray behind. Alternative (one data change): pieces = the six rig parts + grind_ticks 24 holds the parts and KillShredArt shakes them and drops them in a heap at his feet (wants kills-polish's drawn gib pieces, GibCardPieces.dress_rig, on a card victim). The patrol cop, riot cop, SWAT and suit ped play their own drawn cells (KillDeathCells, 5 facings x 3 frames, facing the shooter; the stream still shakes them at 0.6 of the track, fx cells_lean): t0 shaken back upright, arms flung, ragged red holes, spray leaving behind him; t12 sagging or kneeling, the shirt torn open over cream ribs, shoulder-bone knobs, the cap or helmet knocked off beside him; from t24 the heap on his back, ribs, a spine stub and a torn-off arm, turned to lie along the stream (fx cells_turn_from 2). Their scraps are the drawn ones (cells.scraps: cloth, a pocket, flesh, flesh with bone, a belt or strap piece, a sleeve end; scrap_cell_m 0.25 across), spinning as they fly.",
+      "fall": "back",
+      "flash_ticks": 0,
+      "fx": {
+        "cells_at": 24,
+        "cells_lean": 0.6,
+        "cells_ticks": 12,
+        "cells_turn_from": 2,
+        "scrap_cell_m": 0.25,
+        "scrap_every": 3,
+        "scrap_m": 1.4,
+        "scrap_size_m": 0.16,
+        "scraps": 8
+      },
+      "ground_drag": 9,
+      "hitstop_ticks": 0,
+      "id": "gatling_shred",
+      "launch_mps": [
+        0.1,
+        0.2
+      ],
+      "pieces": [
+        "body"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "spray": 28,
+      "spray_cone_deg": 50,
+      "style": "shred",
+      "track": [
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          9,
+          1,
+          0
+        ],
+        [
+          3,
+          3,
+          1,
+          0
+        ],
+        [
+          4,
+          10,
+          1,
+          0
+        ],
+        [
+          6,
+          2,
+          1,
+          0
+        ],
+        [
+          7,
+          11,
+          1,
+          0
+        ],
+        [
+          9,
+          4,
+          1,
+          0
+        ],
+        [
+          10,
+          9,
+          1,
+          0
+        ],
+        [
+          12,
+          2,
+          1,
+          0
+        ],
+        [
+          13,
+          12,
+          1,
+          0
+        ],
+        [
+          15,
+          3,
+          1,
+          0
+        ],
+        [
+          16,
+          10,
+          1,
+          0
+        ],
+        [
+          18,
+          4,
+          1,
+          0
+        ],
+        [
+          19,
+          12,
+          1,
+          0
+        ],
+        [
+          21,
+          3,
+          1,
+          0
+        ],
+        [
+          22,
+          10,
+          1,
+          0
+        ],
+        [
+          24,
+          6,
+          0.95,
+          0
+        ]
+      ],
+      "up_mps": [
+        0,
+        0
+      ],
+      "weapon": "gatling"
+    },
+    {
+      "blot_m": 0,
+      "bounce": 0.1,
+      "cells": {
+        "at": [
+          0,
+          20,
+          40,
+          45
+        ],
+        "grids": {
+          "p55": {
+            "cop/head_cap": "cop_patrol_baton_overload.png",
+            "cop/head_helmet": "cop_riot_baton_overload.png",
+            "cop/head_swat": "swat_baton_overload.png"
+          },
+          "p70": {
+            "cop/head_cap": "cop_patrol_baton_overload.png",
+            "cop/head_helmet": "cop_riot_baton_overload.png",
+            "cop/head_swat": "swat_baton_overload.png",
+            "ped/head_hair": "ped_suit_baton_overload.png"
+          }
+        }
+      },
+      "cone_deg": 16,
+      "doc": "Electro baton (lane kills-new, n16): the overload. Unlike the electro gun's X-ray strobe: no skeleton, no strobe, no arcs; the current cooks him from inside. Hit-stop 3 (the heavy blow). t3-45 he stands locked with a fine tremble (1.5 deg every tick; none under --reduced-motion) while cream veins of light spread from his chest into his limbs, brighter each tick, a cream glow builds under the skin, steam puffs rise off his collar and shoulders every 6 ticks, and his eyes burn as two cream points that go out at t40 (KillCookArt). From t45 his own drawn fall grid (KillFallCells) drops him back along the blow over 10 ticks, and smoke rises off the body for 200 ticks. No blood (spray 0, no blot). The patrol cop, riot cop, SWAT and suit ped play their own drawn cells (KillDeathCells, facing the shooter, 5 facings x 4 frames): t0 locked rigid, cream veins of light; t20 brighter, arcs and steam; t40 sagging, head lolling, smoke; from t45 on his back, smoking, in a grey soot ring, turned to lie along the blow (fx cells_turn_from 3). The drawing carries the glow, veins and eyes; the coded steam and smoke stay.",
+      "fall": "back",
+      "flash_ticks": 0,
+      "fx": {
+        "cells_at": 45,
+        "cells_ticks": 10,
+        "cells_turn_from": 3,
+        "cook_from": 3,
+        "cook_to": 45,
+        "eyes_out": 40,
+        "smoke_ticks": 200,
+        "tremble_deg": 1.5
+      },
+      "ground_drag": 9,
+      "hitstop_ticks": 3,
+      "id": "baton_overload",
+      "launch_mps": [
+        0.1,
+        0.2
+      ],
+      "pieces": [
+        "body"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "spray": 0,
+      "spray_cone_deg": 0,
+      "style": "cook",
+      "track": [
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          45,
+          0,
+          1,
+          0
+        ]
+      ],
+      "up_mps": [
+        0,
+        0
+      ],
+      "weapon": "electro_baton"
+    },
+    {
+      "blot_m": 0,
+      "bounce": 0.1,
+      "cells": {
+        "at": [
+          0,
+          8,
+          16,
+          150
+        ],
+        "grids": {
+          "p70": {
+            "cop/head_cap": "cop_patrol_molotov_torch.png",
+            "cop/head_helmet": "cop_riot_molotov_torch.png",
+            "cop/head_swat": "swat_molotov_torch.png"
+          }
+        }
+      },
+      "cone_deg": 16,
+      "doc": "Molotov (lane kills-new, n16): the torch. The flamethrower keeps burn_char (he stops and chars where he stands, then crumbles); the molotov's spirit soaked into his clothes keeps burning ON him. The sim names every fire death `burn`; KillFireSource (view side, CombatArena.struck) names the fire weapon that last hit him, and a burn death with no fire hit on record walked into a ground fire, the molotov's. No hit-stop (the fire killed him, not a blow). t0-6 he drops to his knees mid-run (the pose track's squash), t6-16 he sags forward, from t16 his own drawn fall grid (KillFallCells) folds him face down along his run over 10 ticks; amber flame tongues with a cream core lick up his figure and then along the drawn body (KillTorchArt, 6 tongues, 0.5 m) until t180, shrinking from t120; then smoke rises off him for 200 ticks. No blood. The patrol cop, riot cop and SWAT play their own drawn cells (KillDeathCells, 5 facings x 4 frames, turned along the run by fx cells_turn_from 0): t0 on his knees, arms flailing, flames on the shoulders and back; t8 hunched, beating at the flames; t16 face down, burning along the back and legs; t150 the same pose charred to ink, smouldering, the bottle neck and glass beside him. On them the coded tongues flicker over the drawn flames once he lies (fx cells_flame_m 0.3 m; the drawing does not flicker); none over the drawn kneel (fx cells_kneel_flame_m, default 0: filmed at 64 px/m a tongue there read as a cream spike through him). The suit ped keeps the placeholder (his kneeling frames were refused by the image filter).",
+      "fall": "back",
+      "flash_ticks": 0,
+      "fx": {
+        "burn_to": 180,
+        "cells_at": 16,
+        "cells_flame_m": 0.3,
+        "cells_ticks": 10,
+        "cells_turn_from": 0,
+        "fade_from": 120,
+        "flame_m": 0.5,
+        "smoke_ticks": 200,
+        "tongues": 6
+      },
+      "ground_drag": 9,
+      "hitstop_ticks": 0,
+      "id": "molotov_torch",
+      "launch_mps": [
+        0.1,
+        0.2
+      ],
+      "pieces": [
+        "body"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "spray": 0,
+      "spray_cone_deg": 0,
+      "style": "torch",
+      "track": [
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          6,
+          0,
+          0.72,
+          0
+        ],
+        [
+          12,
+          8,
+          0.68,
+          0
+        ],
+        [
+          16,
+          8,
+          0.68,
+          0
+        ]
+      ],
+      "up_mps": [
+        0,
+        0
+      ],
+      "weapon": "molotov"
+    },
+    {
+      "blot_m": 0,
+      "bounce": 0.1,
+      "cells": {
+        "at": [
+          0,
+          4,
+          20,
+          40
+        ],
+        "grids": {
+          "p70": {
+            "cop/head_cap": "cop_patrol_claw_throw.png",
+            "cop/head_helmet": "cop_riot_claw_throw.png",
+            "cop/head_swat": "swat_claw_throw.png",
+            "ped/head_hair": "ped_suit_claw_throw.png"
+          }
+        }
+      },
+      "cone_deg": 16,
+      "doc": "Rivet's charged bare claw (lane kills-new, n16; until now it borrowed the electro gun's X-ray shock through that row's also_weapons): the throw. The baton cooks him from inside and the electro gun strobes his skeleton; the claw is Rivet's own body, so it throws him. Hit-stop 4 (the full charge lands). t0-4 a cream arc jumps from the claw into his chest (KillThrowArt) and the pose track lifts him onto his toes, leaning back; t4-20 the discharge throws him back along the blow, lofted 0.4 m in a low hop, his standing figure tipped back up to 54 deg in the air (the track's tip), his own drawn fall grid (KillFallCells) shown from t14 with its rows stepping from t8 over 10 ticks (fx fall_at: it enters half fallen; from t8 it showed a hunched buckle mid-flight, from t14 with no fall_at an upright pop); he lands at t20 2.4 m out and skids on to 3 m by t32 (slide_m by the track's tip share). A cream spark crawls over him every 4 ticks to t60 (none under --reduced-motion), an ink skid line stays from where he landed to his boots, smoke rises off him for 160 ticks. No blood. Reads at 32 px/m as a body flung across the street. The patrol cop, riot cop, SWAT and suit ped play their own drawn cells (KillDeathCells, 5 facings x 4 frames, carried by the same slide and hop): t0 struck stiff with the bolt in his chest, t4 flung curled, t20 landed on his back, t40 still with smoke off three claw gouges, every frame facing the shooter, so he lies on his back with his head away from Rivet (filmed at 64 px/m: fx cells_turn_from 2 laid him head toward Rivet, which does not read as thrown back). Their drawn corpse hangs back off its anchor toward the shooter, so at slide_m 3 his boots landed 1 m from Rivet (filmed at 32 px/m, dir 0): own cells slide fx cells_slide_m 4.2 instead (KillDeathCells.slide_m_of). Kinds without cells keep the fall-grid placeholder.",
+      "fall": "back",
+      "flash_ticks": 0,
+      "fx": {
+        "arc_m": 0.7,
+        "arc_ticks": 4,
+        "cells_at": 14,
+        "cells_slide_m": 4.2,
+        "cells_ticks": 10,
+        "fall_at": 8,
+        "land_at": 20,
+        "lift_from": 4,
+        "lift_m": 0.4,
+        "smoke_ticks": 160,
+        "spark_every": 4,
+        "spark_to": 60
+      },
+      "ground_drag": 9,
+      "hitstop_ticks": 4,
+      "id": "claw_throw",
+      "launch_mps": [
+        0.1,
+        0.2
+      ],
+      "pieces": [
+        "body"
+      ],
+      "scorch_radius_m": 0,
+      "slide_m": 3,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "spray": 0,
+      "spray_cone_deg": 0,
+      "style": "throw",
+      "track": [
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          4,
+          14,
+          1.05,
+          0.04
+        ],
+        [
+          14,
+          10,
+          1,
+          0.6
+        ],
+        [
+          20,
+          0,
+          1,
+          0.8
+        ],
+        [
+          32,
+          0,
+          1,
+          1
+        ]
+      ],
+      "up_mps": [
+        0,
+        0
+      ],
+      "weapon": "claw_shock"
     }
   ],
   "leftover_budget": 12,
