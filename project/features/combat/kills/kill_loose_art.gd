@@ -18,8 +18,8 @@ const START_HEIGHT: float = 1.1
 ## Gives the body copy its loose headgear texture and the death's drawn scraps (the victim's card
 ## row in the view art; row `cells.loose` and `cells.scraps`).
 static func attach(rig: CutRig, body: Node2D, extra: KillTrackRows.Extra) -> void:
-	if rig == null or body == null or extra == null:
-		return
+	if rig == null or body == null or extra == null or rig.head_card == null:
+		return  # no head card (the top view): no card row, so no drawn loose art
 	var row: String = StreetWalkerCards.row_of(rig)
 	_attach(body, extra.loose, row, META)
 	_attach(body, extra.scraps, row, SCRAPS)
