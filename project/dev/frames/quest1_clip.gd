@@ -18,8 +18,8 @@ extends SceneTree
 ##   swings at the bot's target, puts it away at <to>)
 ##   [--view=<id>] (n8-view: the view row ViewMode.shared reads, e.g. tilt70; default top)
 ##   [--rivet-walk=bob] [--rivet-height=<m>] (d9-rivet: CastFlags, the walk's before, his size)
-##   [--still-lead=<ticks>] (n15 tools: steps drawn before each still, so the camera leads
-##   as in play; default 120; 0 = the old jump, whose camera hung on the previous still)
+##   [--still-lead=<ticks>] (n15 tools: steps drawn before each still, so the view is current;
+##   default 120; 0 = the old jump: 6.3 % of t13708 hung on the stills list, now 1.1 %)
 
 const KNOWN_FLAGS: PackedStringArray = [
 	"--out",

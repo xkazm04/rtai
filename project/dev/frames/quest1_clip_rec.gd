@@ -13,8 +13,8 @@ var px_per_m: float = 32.0
 var every: int = 2
 ## Stills mode: only these ticks (even) are saved, as still_<tick>_<ppm>.png; no clip.
 var stills: Array[int] = []
-## n15: steps drawn before each still, so the look-ahead (CameraRig.follow, per drawn frame) is
-## the walk's, not the whole gap since the previous still (0 = that old jump: --still-lead=0).
+## n15: steps drawn before each still: view state that moves only on drawn frames (rig pose, card
+## fades, look-ahead) is then current, not left at the previous still (0 = the old jump).
 var still_lead: int = 120
 ## Where the game writes its beat checkpoints ("" = none); with press_continue the run presses
 ## Continue on the title and saves continue_f1 .. continue_f6 (the first frames after it).
