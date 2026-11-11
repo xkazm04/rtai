@@ -54,6 +54,15 @@ and reels were NOT re-run on the tip (no time before freeze); the change cannot 
   chunks, cut faces).
 - Aftermath durations are derived from the decay table, not measured on film (KILLS.md, "Aftermath").
 
+## What blocked me, and for how long
+
+- Nothing blocked the lane outright. Time losses (JOURNAL FRICTION lines):
+  - 11:05-11:22 (17 min): a first before/after chained `HEAD~1/HEAD` while I committed mid-run; re-filmed on explicit SHAs.
+  - The gate takes about 40 min with reels, and the lane gets one Godot process. Each gate stopped filming for that long; I stopped one at 13:12.
+    Because of this, the tip has no full gate: the last full PASS is 05715ef5f.
+  - Pre-commit full lint takes about 2 min on any commit that stages a path outside project/ (provenance, tools/art).
+  - Asset waits: the A8c back facings for the burn collapse have not landed (requested, open).
+
 ## Calls for the owner
 
 One line per changed death; each with its 64 and 32 px/m before/after (sheets in `evidence/n16-kills-polish/`):
@@ -88,7 +97,13 @@ ohm 12?, kerf 11?). Weakest now: plasma_sword_split (no blood by design; scorch 
 
 ## Next steps
 
-1. Full gate on the tip 338603083 incl. reels (`node tools/gate/run.mjs --rev=338603083 --reels`).
+1. Full gate on the tip incl. reels (`node tools/gate/run.mjs --rev=<tip> --reels`). Code is unchanged from 338603083
+   to the tip (`git diff --stat 338603083 HEAD -- project tools` is empty); docs/evidence only since.
 2. Hand cannon: the thrown body lies down on landing (swap to the kind's fall cell's last frame, as KillCharCells.swap).
 3. Burn collapse back facings when A8c lands; rocket bone at 32 px/m; film the ghosts' four.
 4. `tools/perf/fight_gate.mjs` under the bench lock for the new preloads; a quest 1 p55 peek still.
+
+## Path check (19:44)
+
+Every `.png` cited above exists under `evidence/n16-kills-polish/` (a brace-expansion loop over REPORT.md found 0 MISSING).
+`node tools/evidence/cites.mjs REPORT.md`: 4 paths, 4 ok. `build/gate/05715ef5f249/gate.json` is present (git-ignored).

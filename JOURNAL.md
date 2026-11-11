@@ -465,3 +465,11 @@ NEXT: full gate on 338603083+ incl. reels (`node tools/gate/run.mjs --rev=<tip> 
 
 NEXT: full gate on 0b0bbb627 incl. reels (`node tools/gate/run.mjs --rev=0b0bbb627 --reels`) before the merge;
 then REPORT next steps 2-4.
+
+## Iteration 17 (REPORT, 19:40-19:50)
+- 19:44 REPORT.md checked: all cited PNGs exist (brace-expanded loop, 0 MISSING), cites.mjs 4/4 ok, gate.json present.
+  Added "What blocked me" (from FRICTION lines). Next step 1 now says the code has not changed since 338603083.
+  No code change and no Godot run.
+
+NEXT: full gate on the tip incl. reels (`node tools/gate/run.mjs --rev=<tip> --reels`) before the merge; then REPORT
+next steps 2-4 (hand cannon body lies down, A8c back facings, ghosts filmed, fight_gate under the bench lock).
