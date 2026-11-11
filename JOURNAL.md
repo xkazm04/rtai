@@ -551,3 +551,15 @@ session 7; Calls (a)-(c) stand; update the gate line to the final commit).
   set; file deleted); 15 entries, none missing, none unreferenced (checked by script).
 - 06:08 bench.lock taken (noclobber; tools lane's t-5 lock of 05:41 was gone). PERF fight_gate started: arms now vs
   before = every tonight flag off, 4 rounds, log build/perf/s8_fg.log. Other lanes' Godot running: CONTENDED expected.
+- PERF fight_gate (06:08-06:14, bench.lock held by this lane, deleted after; export from the worktree at 346aabd9e = the
+  code of 61a2d3baa; arms now vs before = every tonight flag off: --rivet-blade-left=off --rivet-left-strike=off
+  --gib-card=whole --gib-pieces=cut --target-rings=on --body-ink=n7 --quest-hit=off --char-cells=off
+  --impact-follow=off --shadow-push=off --burst-push=off --melee-smear=n7 --dropped-gun=pale; 4 rounds;
+  build/perf/fight-gate/2026-11-11T05-08-07-904Z/gate.json, log build/perf/s8_fg.log). city (reel ch 18): before - now
+  p50 +0.02 [-0.13,+0.11] ms, p99 -0.07 [-1.58,+0.65], worst -0.12, cpu +0.31 s: all WASH; A/A p50 +0.03
+  [-0.20,+0.19]. horde (Gatling): p50 +0.02 [-0.12,+0.21], p99 +0.61 [-0.05,+3.28], cpu +0.05: WASH; worst -0.38
+  [-0.63,-0.02] 4/4 LOWER (now's worst frame ~0.4 ms higher than before, both ~16 ms; A/A worst [-0.32,+0.16]).
+  0 frames over 25 ms in any arm; 6 of 24 runs CONTENDED (other lanes' reel and rivet_tour ran).
+- 32 px/m pair of 61a2d3baa (same shot, stills 336-344, before --burst-push=off, same build):
+  `evidence/n15-combat/burst_rides_push_ab_32ppm_x3_t338-344.png`: t339 the dot moves from bare floor onto his shadow's
+  edge; t344 unchanged.

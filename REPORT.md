@@ -32,7 +32,7 @@ Every change has a before flag on the same build and a same-tick before/after fi
 | 5 a body hit's ink burst on the body's front, riding the knock-back and the death's carry (no floor dots short of him) | `273bb2232`, `2f1ac74c8` | `--impact-follow=off` | `evidence/n15-combat/body_burst_on_body_ab_64_32ppm_t336-345.png` |
 | 5 at contact Rivet draws over a cop standing behind him (the depth sort's box as tall as each drawn card, Rivet's x1.5 wide: `RigDepthBox`) | `ac7991f58` | (HEAD sorter) | `evidence/n15-combat/city_depth_rivet_over_cop_behind_ab_64ppm_t634-660.png`, 32 px/m `city_depth_fight_32ppm_t600-700.png` |
 | 5 a thrown-back street man stands on his shadow (the contact shadow rides the hit card's push) | `b9544422e` | `--shadow-push=off` | `evidence/n15-combat/hit_shadow_rides_push_ab_64ppm_x2_t338-344.png`, `hit_shadow_rides_push_ab_32ppm_x3_t337-342.png` |
-| 5 a later round's body burst rides the pushed hit card and returns to the body at the death (t339 dot ~0.2 m closer, no new dot at t344) | `61a2d3baa` | `--burst-push=off` | `evidence/n15-combat/burst_rides_push_ab_64ppm_x2_t338-344.png` |
+| 5 a later round's body burst rides the pushed hit card and returns to the body at the death (t339 dot ~0.2 m closer, no new dot at t344) | `61a2d3baa` | `--burst-push=off` | `evidence/n15-combat/burst_rides_push_ab_64ppm_x2_t338-344.png`, `burst_rides_push_ab_32ppm_x3_t338-344.png` |
 
 Gates: full run with reels on `61a2d3baa` (session 8, 05:58-06:04, the last code commit; later commits are docs):
 PASS lint 16/16, unit 2542/0/2, scenarios 55, parity bit-exact (mutation at 629), look goldens 11/11 worst 0.00, block
@@ -66,10 +66,12 @@ PASS with reels on `f128a280e` and `ac7991f58` (session 7). Mutation: `rig_depth
   diagonally through the cop while Rivet's drawn swing sweeps level, so it reads as a white stick (t61-69,
   `evidence/n15-combat/katana_slash_streak_64ppm_t58-69.png`, an earlier build's film): Call (d).
 - The flame jet's floor fire stacks into a column of starbursts (the sim's patches; colour is the owner's look-3 ink).
-- Perf: `tools/perf/fight_gate.mjs` 01:15 (bench.lock held, 4 rounds, befores = every tonight flag off): city block fight
-  p50 -0.46 [-1.88,+1.93] ms, p99 -0.58 [-2.87,+3.31]; Gatling horde p50 -0.20 [-0.72,+0.68], p99 +0.71 [-0.38,+2.57]:
-  all WASH against the A/A floor; 0 frames over 25 ms; 21 of 24 runs CONTENDED. Not re-run after session 5's art
-  (char cells x3, gib pieces, contractor v3: load-time textures, drawn only at a kill).
+- Perf: `tools/perf/fight_gate.mjs` 06:08 (session 8, bench.lock held, 4 rounds, the code of `61a2d3baa`, befores =
+  every tonight flag off): city block fight p50 +0.02 [-0.13,+0.11] ms, p99 -0.07 [-1.58,+0.65], cpu: all WASH against
+  the A/A floor. Gatling horde p50, p99 and cpu WASH; the WORST frame is ~0.4 ms higher with tonight's work on
+  (before - now -0.38 [-0.63,-0.02], 4/4 rounds; A/A worst [-0.32,+0.16]), both arms ~16 ms. 0 frames over 25 ms; 6 of
+  24 runs CONTENDED (`build/perf/fight-gate/2026-11-11T05-08-07-904Z/gate.json`). Not measured: the load-time cost of
+  the warmed strips (these scenes do not draw them).
 
 ## Calls for the owner
 
