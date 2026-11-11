@@ -34,9 +34,9 @@ func test_digit_metrics_match_the_strip() -> void:
 
 
 func test_cash_is_grouped_in_thousands() -> void:
-	assert_eq(HudView.thousands(0), "0")
-	assert_eq(HudView.thousands(1500), "1,500")
-	assert_eq(HudView.thousands(1234567), "1,234,567")
+	assert_eq(HudCash.thousands(0), "0")
+	assert_eq(HudCash.thousands(1500), "1,500")
+	assert_eq(HudCash.thousands(1234567), "1,234,567")
 
 
 func test_state_silent_hides_the_subtitle() -> void:

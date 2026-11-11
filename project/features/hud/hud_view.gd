@@ -32,6 +32,8 @@ var dialogue: HudDialogue = HudDialogue.new()
 ## n8-hud: the top corners as their own canvas items (HudSee turns a covered one see-through).
 var _left: HudCorner = HudCorner.new()
 var _right: HudCorner = HudCorner.new()
+## n17 rivet-strike: the bottom-right weapon slot (HudWeaponSlot), see-through like the corners.
+var _slot: HudCorner = HudCorner.new()
 
 
 func _ready() -> void:
@@ -42,7 +44,9 @@ func _ready() -> void:
 	_left.paint = _top_left
 	_right.paint = _top_right
 	add_child(_left)
+	_slot.paint = _bottom_right
 	add_child(_right)
+	add_child(_slot)
 	add_child(dialogue)
 
 
@@ -50,6 +54,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	_left.fade(state.clear_px, SimClock.TICK_DT)
 	_right.fade(state.clear_px, SimClock.TICK_DT)
+	_slot.fade(state.clear_px, SimClock.TICK_DT)
 	queue_redraw()
 
 
@@ -110,7 +115,7 @@ func _top_right(ci: CanvasItem) -> void:
 	if art == null:
 		return
 	var screen: Vector2 = get_viewport_rect().size
-	var sum: String = "$%s" % thousands(state.cash)
+	var sum: String = "$%s" % HudCash.thousands(state.cash)
 	var label: String = state.unarmed_label if state.weapon == "" else ""
 	var w: float = HudCash.width(art, sum, label)
 	var box: Rect2 = Rect2(screen.x - MARGIN - w, MARGIN - 8, w, 104)
@@ -119,13 +124,23 @@ func _top_right(ci: CanvasItem) -> void:
 	HudCash.ink_digits(ci, art, box.position + Vector2(112, 50), sum, 32.0)
 	if state.weapon == "":
 		_say(ci, box.position + Vector2(112, 76), state.unarmed_label, 22)
-	else:
+	elif not HudWeaponSlot.on():
 		var tw: float = HudTicket.width(
 			art, HudTicket.words_w(art, state, WEAPON_SIZE), state.weapon_icon
 		)
 		var ticket: Rect2 = Rect2(screen.x - MARGIN - tw, MARGIN + 104, tw, HudTicket.H)
 		_right.rect = box.merge(ticket)
 		_ammo_ticket(ci, ticket)
+
+
+## n17 rivet-strike: the weapon slot in the bottom-right corner (above a subtitle that is up).
+func _bottom_right(ci: CanvasItem) -> void:
+	_slot.rect = Rect2()
+	if art == null or state.weapon == "" or not HudWeaponSlot.on():
+		return
+	var box: Rect2 = HudWeaponSlot.box_of(get_viewport_rect().size, dialogue.showing())
+	HudWeaponSlot.draw(ci, art, state, box)
+	_slot.rect = paper_of(box)
 
 
 ## The ammo ticket: the bullet stub left of x 120 (authored px), text from x 135; a count only when
@@ -135,22 +150,12 @@ func _ammo_ticket(ci: CanvasItem, r: Rect2) -> void:
 	var at: Vector2 = r.position + Vector2(HudTicket.text_x(art), r.size.y * 0.5)
 	_say(ci, at, state.weapon.to_upper(), WEAPON_SIZE)
 	if state.weapon_icon != null and HudTicket.ON_TICKET:
-		_icon(ci, state.weapon_icon, HudTicket.icon_rect(r, state.weapon_icon))
+		HudTicket.draw_icon(ci, state.weapon_icon, HudTicket.icon_rect(r, state.weapon_icon))
 	elif state.weapon_icon != null:
 		var box: Rect2 = Rect2(r.position.x - ICON_W, r.position.y + 14.0, ICON_W - 8.0, 96.0)
-		_icon(ci, state.weapon_icon, box)
+		HudTicket.draw_icon(ci, state.weapon_icon, box)
 	if state.ammo >= 0:
 		HudCash.ink_digits(ci, art, at + Vector2(0.0, 40.0), "x%d" % state.ammo, 30.0)
-
-
-## n8-hud: the weapon's icon left of the ticket, fitted into `box` (aspect kept, right-aligned).
-func _icon(ci: CanvasItem, t: Texture2D, box: Rect2) -> void:
-	var k: float = minf(box.size.x / t.get_width(), box.size.y / t.get_height())
-	var sz: Vector2 = Vector2(t.get_width(), t.get_height()) * k
-	var at: Vector2 = Vector2(box.end.x - sz.x, box.position.y + (box.size.y - sz.y) * 0.5)
-	if ICON_SHADOW != Vector2.ZERO:
-		ci.draw_texture_rect(t, Rect2(at + ICON_SHADOW, sz), false, Color(INK, ICON_SHADOW_A))
-	ci.draw_texture_rect(t, Rect2(at, sz), false)
 
 
 func _panel(ci: CanvasItem, r: Rect2) -> void:
@@ -184,14 +189,3 @@ static func nine(
 
 func _say(ci: CanvasItem, at: Vector2, words: String, size: int) -> void:
 	ci.draw_string(ThemeDB.fallback_font, at, words, HORIZONTAL_ALIGNMENT_LEFT, -1, size, INK)
-
-
-## 1500 -> "1,500" (the sign is dropped: the HUD shows cash, never debt).
-static func thousands(n: int) -> String:
-	var digits: String = str(absi(n))
-	var out: String = ""
-	for i: int in digits.length():
-		if i > 0 and (digits.length() - i) % 3 == 0:
-			out += ","
-		out += digits[i]
-	return out

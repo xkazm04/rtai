@@ -66,3 +66,15 @@ static func ink_digits(
 		var pos: Vector2 = Vector2(x - (cell.x - adv) * 0.5 * s, at.y - art.baseline_px * s)
 		ci.draw_texture_rect_region(strip, Rect2(pos, cell * s), src)
 		x += adv * s
+
+
+## n17 rivet-strike: moved here from HudView (its line budget).
+## 1500 -> "1,500" (the sign is dropped: the HUD shows cash, never debt).
+static func thousands(n: int) -> String:
+	var digits: String = str(absi(n))
+	var out: String = ""
+	for i: int in digits.length():
+		if i > 0 and (digits.length() - i) % 3 == 0:
+			out += ","
+		out += digits[i]
+	return out

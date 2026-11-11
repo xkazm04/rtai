@@ -28,7 +28,7 @@ func fill(state: HudState, stage: CollectCallStage, system: QuestSystem) -> void
 	if weapon != "":
 		var key: StringName = StringName("WEAPON__%s" % QuestText.symbol(weapon))
 		state.weapon = _text.resolve(key, weapon)
-	state.ammo = stage.arena.rifle_ammo if weapon == "assault-rifle" else -1
+	state.ammo = ammo_of(stage.arena, StringName(weapon))
 	var line: PackedStringArray = runner.lines.subtitle(_text)
 	var current: QuestLine = runner.lines.current
 	var who: PackedStringArray = ["", ""]
@@ -54,6 +54,17 @@ func face(state: HudState, speaker: String, line_id: String) -> void:
 	state.portrait = _faces.face(speaker, line_id)
 	state.portrait_device = _faces.is_device(speaker)
 	state.portrait_key = speaker
+
+
+## The magazine count of `weapon` in Rivet's hand, -1 when it has none: the rifle's rounds, else
+## (n17 rivet-strike) the gun hand's trigger when it holds `weapon` and the weapon has a magazine.
+static func ammo_of(arena: CombatArena, weapon: StringName) -> int:
+	if weapon == &"assault-rifle":
+		return arena.rifle_ammo
+	var gun: GunHand = arena.gun
+	if gun == null or gun.trigger == null or gun.trigger.spec.id != weapon:
+		return -1
+	return gun.trigger.ammo if gun.trigger.spec.magazine > 0 else -1
 
 
 ## n8-hud: the HUD icon of weapon `id`: the showcase's flat icon cut, else the shipped icon part,

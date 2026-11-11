@@ -24,6 +24,8 @@ const SETTLE: int = 30
 var out_dir: String = "user://"
 var size_px: Vector2i = Vector2i(1920, 1080)
 var ground_png: String = ""
+## n17 rivet-strike: only the weapon-slot stills (HudWeaponSlot), see _slots.
+var slots_only: bool = false
 var _hud: HudView = HudView.new()
 var _feed: HudFeed = HudFeed.new()
 
@@ -49,6 +51,10 @@ func _ready() -> void:
 
 
 func _run(out: String, px: Vector2i) -> void:
+	if slots_only:
+		await _slots(out, px)
+		get_tree().quit(0)
+		return
 	var q: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(QUEST))
 	var names: Dictionary = {}
 	for c: Dictionary in q["characters"]:
@@ -115,3 +121,29 @@ func _tickets(out: String, px: Vector2i) -> void:
 		var crop: Image = img.get_region(Rect2i(px.x - w, 0, w, px.y * 3 / 8))
 		@warning_ignore("return_value_discarded")
 		crop.save_png("%s/ticket_%s.png" % [out, id])
+
+
+## n17 rivet-strike: the whole screen per weapon (name, showcase icon, a count where it has a
+## magazine), cash and beat up, then once more with a line up (the slot above the subtitle).
+## Writes <out>/slot_<w>x<h>_<id>.png and slot_<w>x<h>_<id>_line.png.
+func _slots(out: String, px: Vector2i) -> void:
+	var s: HudState = _hud.state
+	s.head = "4/6  Get Gloria back"
+	s.heat = 1
+	s.cash = 12450
+	var ammo: Dictionary[StringName, int] = {&"gloria": 12, &"gatling": 120, &"pistol": 7}
+	for id: StringName in [&"gloria", &"katana", &"gatling", &"rocket_launcher", &"pistol"]:
+		s.weapon = String(id).replace("_", " ").capitalize()
+		s.weapon_icon = _feed.icon_of(id)
+		s.ammo = ammo.get(id, -1)
+		for line: bool in [false, true]:
+			s.silent()
+			if line:
+				s.say("Brass Halloran", "Bring her back. If you lose Gloria, I lose you.")
+				_feed.face(s, "gunsmith", "brass-gloria")
+			for i: int in SETTLE:
+				await get_tree().process_frame
+			var img: Image = get_tree().root.get_texture().get_image()
+			var tag: String = "_line" if line else ""
+			@warning_ignore("return_value_discarded")
+			img.save_png("%s/slot_%dx%d_%s%s.png" % [out, px.x, px.y, id, tag])

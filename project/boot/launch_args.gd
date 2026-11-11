@@ -79,6 +79,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--shot-lift",
 	# n8-hud: --showcase=off keeps the shipped pickup parts under a tilt (the before)
 	"--showcase",
+	"--hud-weapon",  # n17 rivet-strike: off = the weapon on the top-right ammo ticket, no slot
 	# n8-hud: --pickup-hover=off lays a floor gun's showcase drawing on its disc (no hover)
 	"--pickup-hover",
 	# n8-hud: --pickup-crate=on|off lays a floor gun's showcase drawing in an open crate (else hover)
@@ -95,8 +96,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--rivet-stride",
 	# n9-rivet: --rivet-knock=off keeps the death sprawl while a car's knock lies him down
 	"--rivet-knock",
-	# n10-rivet: --ghost-voice=facing keeps a speaking ghost at his facing's own left (on his head)
-	"--ghost-voice",
+	"--ghost-voice",  # n10-rivet: facing = a speaking ghost at his facing's own left (his head)
 	# n9-rivet: --rivet-flame=cone brings back d9's flamer (the drawn flame on 3 octants only);
 	# --rivet-flame=side fires the side cell on the diagonals too (no drawn diagonal flame);
 	# --rivet-flame=all draws the fire cell at any aim (it9: the side flame under an up jet)

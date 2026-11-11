@@ -82,3 +82,15 @@ static func icon_rect(box: Rect2, icon: Texture2D) -> Rect2:
 		box.end.x - RIGHT_PAD - sz.x, box.position.y + (box.size.y - sz.y) * 0.5
 	)
 	return Rect2(at, sz)
+
+
+## n8-hud: the weapon's icon left of the ticket, fitted into `box` (aspect kept, right-aligned);
+## n17 rivet-strike: moved here from HudView (its line budget).
+static func draw_icon(ci: CanvasItem, t: Texture2D, box: Rect2) -> void:
+	var k: float = minf(box.size.x / t.get_width(), box.size.y / t.get_height())
+	var sz: Vector2 = Vector2(t.get_width(), t.get_height()) * k
+	var at: Vector2 = Vector2(box.end.x - sz.x, box.position.y + (box.size.y - sz.y) * 0.5)
+	if HudView.ICON_SHADOW != Vector2.ZERO:
+		var ink: Color = Color(HudView.INK, HudView.ICON_SHADOW_A)
+		ci.draw_texture_rect(t, Rect2(at + HudView.ICON_SHADOW, sz), false, ink)
+	ci.draw_texture_rect(t, Rect2(at, sz), false)
