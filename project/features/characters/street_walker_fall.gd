@@ -112,9 +112,9 @@ static func table() -> Dictionary[String, Dictionary]:
 	return LONG_FALLS if LONG else FALLS
 
 
-## Dying or dead.
+## Dying or dead, or knocked down and not up yet (n17: StreetKnockdown).
 static func down(rig: CutRig) -> bool:
-	return rig.dead or (rig.react != null and rig.react.dying)
+	return rig.dead or (rig.react != null and rig.react.dying) or StreetKnockdown.down(rig)
 
 
 ## The fall frame for a death progress (the last frame once the family is over), of `rows`.
@@ -141,12 +141,17 @@ static func draw(rig: CutRig, card: Sprite2D, k: float) -> void:
 		card.set_meta(OCT, RigHeadCard.frame_of(blow.angle()))
 	var f: Vector2i = card.get_meta(OCT)
 	var p: float = r.progress() if r != null and r.dying else 1.0
+	var living: bool = StreetKnockdown.down(rig)
+	p = StreetKnockdown.fall_progress(r.progress()) if living else p
 	card.frame_coords = Vector2i(f.x, fall_frame(p, card.vframes))
 	card.flip_h = f.y == 1
 	var ks: float = s * sink_of(rig)
 	card.global_rotation = 0.0
 	card.global_scale = Vector2(ks, ks)
 	card.global_position = rig.global_position
+	if living:  # n17: a knockdown lies as its own grid's frame, never the plan-view dead
+		StreetDeadPlan.drop(card)
+		return
 	StreetDeadPlan.draw(rig, card, StreetWalkerCards.row_of(rig), ks, p)  # n9: the plan-view dead
 
 
