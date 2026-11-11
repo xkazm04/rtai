@@ -30,19 +30,21 @@ TONES = {
     "cop_riot_gib.png": "cop_riot_armed_walk.png",
     "swat_gib.png": "swat_armed_walk.png",
 }
-# library folder (under LIB) -> out file. The patrol takes v2 (head seen from above, the card's slate blue).
+# library folder (under LIB) -> out file. n16 kills-polish item 3 (gore level: drawn bone): every human kind takes the
+# asset lane's it410 set WITH BONE (copy by example of the no-gore sets: same pieces, places and sizes; the patrol's
+# from its v2). The thug is a robot and keeps its it363 set.
 KINDS = {
-    "cop_patrol_gib_70_cells/v2": "cop_patrol_gib.png",
-    "cop_riot_gib_70_cells": "cop_riot_gib.png",
+    "cop_patrol_gib_bone_70_cells": "cop_patrol_gib.png",
+    "cop_riot_gib_bone_70_cells": "cop_riot_gib.png",
     # n16 kills-polish (owner n15 verdict): the thug and the hooded pedestrian (it363 A) fly their drawn pieces
     # whether they die as rigs (GibCardPieces.dress_rig) or as cards; the cap, suit, worker and SWAT sets of the
     # same delivery with them.
     "thug_gib_70_cells": "thug_gib.png",
-    "ped_hood_gib_70_cells": "ped_hood_gib.png",
-    "ped_cap_gib_70_cells": "ped_cap_gib.png",
-    "ped_suit_gib_70_cells": "ped_suit_gib.png",
-    "ped_worker_gib_70_cells": "ped_worker_gib.png",
-    "swat_gib_70_cells": "swat_gib.png",
+    "ped_hood_gib_bone_70_cells": "ped_hood_gib.png",
+    "ped_cap_gib_bone_70_cells": "ped_cap_gib.png",
+    "ped_suit_gib_bone_70_cells": "ped_suit_gib.png",
+    "ped_worker_gib_bone_70_cells": "ped_worker_gib.png",
+    "swat_gib_bone_70_cells": "swat_gib.png",
     # n16 kills-polish item 3 (gore level: drawn bone): the asset lane's it410 pieces WITH BONE (A; shopper B).
     "ped_elder_gib_bone_70_cells": "ped_elder_gib.png",
     "ped_hat_gib_bone_70_cells": "ped_hat_gib.png",
