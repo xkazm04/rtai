@@ -530,3 +530,13 @@ molotov now takes a new row and brutality_hook changed), `tools/evidence/run.mjs
   widen them (data first), then film at 32 in a street fight. Masters: the fix still on top (15 entries; the
   stitch A/B t348 dropped from masters, kept in evidence/).
 NEXT addendum: item (1) above is DONE except the flame size; start at (2).
+- 15:56 GATE scenarios 55/55 on `c9d7a73c4` (brutality_hook + the molotov row included).
+- 15:58 MILESTONE `b9338f64b` molotov flame_m 0.32 -> 0.5 (data). Reel dir 0 at 32 + 64 (`--rev=b9338f64b`) PASS,
+  judged (`evidence/n16-kills-new/molotov_torch_flame05_{32,64}ppm_dir0_t182-332.png`, clips): at 32 the tongues
+  now read along the burning body (+20..+80) and die out by +150; at 64 they read as rigid cream cones, not flames
+  (placeholder quality: the drawn torch cells are the real fix). Masters: this on top (fix-64 entry superseded).
+- Tools lane: a `--gore-check` reel of every kills-new death on `8f7fe6e6e` started 15:49 in THEIR tree
+  (build/kreel/s4gore_new); read its verdict next session. The reel's summary line names `burn_char` for the
+  molotov (its row lookup does not know KillFireSource): REQUEST tools: kill_reel's row line should resolve a
+  burn death through KillFireSource (the film itself shows the torch).
+NEXT (iteration 17): start at (2) of the iteration-17 list above; the flame size is done.

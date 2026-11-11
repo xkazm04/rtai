@@ -14,7 +14,7 @@ and `gtai-masters/n16/kills-new/frames.json`. The journal is `JOURNAL.md`.
 | Electro baton | `baton_overload` (cook) | locked and buzzing, cream veins and a glow under the skin, steam, the eyes go out, falls back smoking | p70 patrol/riot/SWAT/suit (`b083b6d5a`, `590902959`); the corpse turned along the blow (`040ffb67a`) | `baton_overload_cells_{64,32}ppm_dir0_t69-218.png`, before/after `baton_overload_ab_{64,32}ppm_dir0_t66-218.png`, `baton_overload_reel_{32,64}ppm_dirs0-225.png` |
 | Molotov | `molotov_torch` (torch) | split from the flamethrower (which keeps `burn_char`): he drops to his knees mid-run, folds face down along the run, and amber flames keep licking over him to t180, smoke after | none yet (placeholder: pose track + fall grid + coded flames; cells requested) | `molotov_torch_ab_{32,64}ppm_dir0_t182-332.png`, clips `molotov_torch_{before,after}_{32,64}ppm_dir0.mp4` |
 
-Gates (last measured): full unit 2666/0/2 on `953d2972e`; scenarios 55/55 on `d1ab2f3c3`; lint 19/19 at every commit; scenarios 54/55 + the
+Gates (last measured): scenarios 55/55 on `c9d7a73c4` (15:56); unit --changed 2655/0/2 on the molotov work; full unit 2666/0/2 on `953d2972e`; lint 19/19 at every commit; scenarios 54/55 + the
 brutality_kills re-run ok at 13:11 (before the cells). Still to run on the final commit: scenarios, evidence (parity +
 look goldens), the reel gate.
 
@@ -25,7 +25,8 @@ look goldens), the reel gate.
   grid's corpse).
 - Molotov: in the kill lab he dies inside the molotov's own fire patch, whose flames swamp the coded tongues at
   32 px/m; a street-fight film (he runs out of the patch first) is owed. The lying tongues follow the drawn corpse since
-  `c9d7a73c4` (`molotov_torch_fix_64ppm_dir0_t182-332.png`) but read as small spikes (flame_m 0.32 wants ~0.5).
+  `c9d7a73c4` (`molotov_torch_fix_64ppm_dir0_t182-332.png`) and are 0.5 m since `b9338f64b`
+  (`molotov_torch_flame05_{32,64}ppm_dir0_t182-332.png`): they read at 32 now but look like rigid cones, not flames.
 - KillShredArt's coded scraps (kinds without drawn scraps) flood `Invalid polygon data, triangulation failed`.
 - Column 1 of the patrol stitch frame 3 shows a doubled cap for one beat (asset fault, known).
 
