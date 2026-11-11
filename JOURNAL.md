@@ -329,3 +329,5 @@ NEXT (iteration 5):
 NEXT (iteration 5), updated 16:47: as the NEXT above, with item 2 = finish the plasma sword A/B (ps64_r if
 `build/films_it4h.log` ends with `done`, else re-film `--rev=16748e860`), film 32 px/m too, widen the line if it
 still reads as a crack, then evidence + KILLS (plasma_sword After 1 -> 2/3) + DEFECTS line.
+- 16:49 ps64_r done: same-tick A/B `evidence/n16-kills-polish/plasma_sword_scorch_line_ab_64ppm_x11_t70-200.png`
+  (16748e860 vs c43cae42d): the line stays through t200, thin. KILLS plasma_sword 11 -> 12. Next: 32 px/m, width.
