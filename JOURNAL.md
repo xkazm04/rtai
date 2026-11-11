@@ -432,3 +432,7 @@ NEXT (iteration 9, from 18:22; freeze 19:30, REPORT 19:40):
    KillCharCells.swap does: StreetWalkerFall.FALLS, StreetFallBetween.rows_of, fall cells offset 0.5); A8c back
    facings when the asset lane delivers (`street/<kind>_char_collapse_70_cells/3_*`, `4_*`); perf fight_gate under the
    bench lock (owed all day).
+- 17:55 NEXT 2's test is WRITTEN, untracked: `project/tests/unit/test_kill_split_shadow.gd` (3 tests, gdformat/gdlint
+  clean). It has no .uid yet: run `node tools/godot/check.mjs res://tests/unit/test_kill_split_shadow.gd` (imports),
+  then `run_unit.mjs --select=test_kill_split_shadow`, then commit it with its .uid BEFORE any other commit (the
+  whole-tree uid-files lint check would fail on it).
