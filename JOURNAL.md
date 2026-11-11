@@ -656,10 +656,23 @@ film with later kills could prove the recycle. Logs go to C:\Users\kazda\kiro\gt
   Test (standMask clip/null cases, masked vs plain curve), film tests 282/0, lint 19/19.
 - 18:01 sweep: the other kit tools the lanes run by path from their own trees (film.mjs, compare.mjs, kill_reel.mjs per
   their journals) already take the caller's tree (`filmedRoot`); the gate was the only one on the kit's ROOT.
-- 18:07 FYI kills-polish (their 17:5x note: "commit the new test .gd with its .uid BEFORE any other commit, the
+- 18:05 FYI kills-polish (their 17:5x note: "commit the new test .gd with its .uid BEFORE any other commit, the
   whole-tree uid-files check would fail on it"): not at commit time. The hook counts untracked files as drift
   (tools/gate/staged_tree.mjs:41 `ls-files --others`), so it lints the index export, where an untracked .gd does not
   exist. Only a lint of the working tree (quick.mjs, `node tools/lint/lint.mjs`, the gate on a dirty tree's HEAD is
   fine: it snapshots the commit) sees it. Your order is still the safe habit.
 - 18:03 reel running: `kill_reel --weapons=all --quick --after=600 --rev=b9dba1da8 --native=donor` (kills-new's gated
   commit), the aftermath lifetime of every death; ~2 min a film.
+- Item status s6: (1) kill reel: + measured aftermath lifetime (long --after, curve, stand mask, `gone by`), the data
+  line reads corpse_decay, feel-off reads `off`; Codex adversarial tests (6th task). (2)(3)(4) done (s1-s2).
+  (5) served: kills-polish FRICTION :361 (lint-neutral scope, ed4a13db0: cherry-pick it), kills-new REQUEST 17:4x (gate
+  from the caller's tree, c47f8bc2f). No project/ or native/ commit this session: caccc825d's full-reel gate PASS and
+  09b23b523's stand (`git diff --stat caccc825d HEAD -- project native` empty at 17:42 and still).
+
+NEXT (session 7, the 19:30 freeze / 19:40 REPORT): (1) read both kill journals for REQUEST tools / FRICTION first.
+(2) the all-deaths lifetime reel `build/kreel/s6all` (started 18:03 on b9dba1da8): if it finished, look at
+reel_32.png and reel.md, copy the overview + reel.md to evidence/n16-tools/ (name ...-lifetime-all-b9dba1da8-32ppm),
+put the per-death `gone by` table in REPORT "Findings for the kill lanes", masters frames.json (keep 15). If it did not
+finish, its log is gtai-n16\scratch-tools\logs\reel_s6all.log. (3) REPORT.md final at 19:40: header (drop DRAFT),
+Next steps; `node tools/evidence/cites.mjs REPORT.md` clean. (4) If any project/ commit lands here, the FULL gate with
+plain `--reels` (~35 min). Logs go to C:\Users\kazda\kiro\gtai-n16\scratch-tools\logs\.
