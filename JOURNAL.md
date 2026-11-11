@@ -551,11 +551,11 @@ draft is current to 16:12. No project/ commit since caccc825d: the gate PASS sta
 - SERVED (kills-new, kills-polish FRICTION "the gate holds our Godot 40 min"): 09b23b523 + 8e144eafa. `node
   tools/gate/run.mjs --rev=<sha> --reels=combo` (or the view you changed) mid-session, about 5 min of reels instead of
   ~23; the gate prints the last run's timings first. The final commit still needs plain `--reels`.
-- 17:22 decisions lines tools/gate-partial-reels, tools/reel-film-timeout (e44f8dffe); REPORT cites 6/6 ok.
-- 17:23 my scratch logs moved OUT of the worktree (rule: no logs in the tree; they also made every commit export the
+- 17:17 decisions lines tools/gate-partial-reels, tools/reel-film-timeout (e44f8dffe); REPORT cites 6/6 ok.
+- 17:17 my scratch logs moved OUT of the worktree (rule: no logs in the tree; they also made every commit export the
   index as drift): the `scratch-tools/<x>.log` paths above now live in C:\Users\kazda\kiro\gtai-n16\scratch-tools\logs\.
   From now on lane logs go there. Tree clean.
-- 17:24 Node tooling (lib, lint, tests, debt, evidence, dev, selftest, film, gate): 813/0.
+- 17:18 Node tooling (lib, lint, tests, debt, evidence, dev, selftest, film, gate): 813/0.
 - Codex ledger this session: 2 tasks (n16t-break-reel-scout 743 s, 9 tests, accepted after revision;
   n16t-break-gate-timing 485 s, 13 tests, 2 defects accepted and fixed). Day total 5.
 - Item status s5: (1) kill reel: + film timeout by stills (+ timeout_s), + kill:claw_shock, + trigger-tick guard, Codex
