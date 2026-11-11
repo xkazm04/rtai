@@ -551,3 +551,21 @@ draft is current to 16:12. No project/ commit since caccc825d: the gate PASS sta
 - SERVED (kills-new, kills-polish FRICTION "the gate holds our Godot 40 min"): 09b23b523 + 8e144eafa. `node
   tools/gate/run.mjs --rev=<sha> --reels=combo` (or the view you changed) mid-session, about 5 min of reels instead of
   ~23; the gate prints the last run's timings first. The final commit still needs plain `--reels`.
+- 17:22 decisions lines tools/gate-partial-reels, tools/reel-film-timeout (e44f8dffe); REPORT cites 6/6 ok.
+- 17:23 my scratch logs moved OUT of the worktree (rule: no logs in the tree; they also made every commit export the
+  index as drift): the `scratch-tools/<x>.log` paths above now live in C:\Users\kazda\kiro\gtai-n16\scratch-tools\logs\.
+  From now on lane logs go there. Tree clean.
+- 17:24 Node tooling (lib, lint, tests, debt, evidence, dev, selftest, film, gate): 813/0.
+- Codex ledger this session: 2 tasks (n16t-break-reel-scout 743 s, 9 tests, accepted after revision;
+  n16t-break-gate-timing 485 s, 13 tests, 2 defects accepted and fixed). Day total 5.
+- Item status s5: (1) kill reel: + film timeout by stills (+ timeout_s), + kill:claw_shock, + trigger-tick guard, Codex
+  scout tests. (2)(3)(4) done (s1-s2). (5) served: kills-new FRICTION 15:30 (timeouts), kills-new REQUEST 16:28
+  (claw_shock), kills-polish FRICTION 14:20 (pre-commit fallback), both lanes' gate-length FRICTION (gate timing +
+  `--reels=<views>`). Gate PASS on 09b23b523 (combo reels); full 3-view reels PASS stands on caccc825d (same project/).
+
+NEXT: (1) read the sibling journals for REQUEST tools / FRICTION first. (2) If any project/ commit lands on this
+branch, re-run the FULL gate with plain `--reels` (`node tools/gate/run.mjs --rev=<sha> --reels`, ~35 min: start it
+early); otherwise caccc825d's full-reel PASS + 09b23b523's PASS stand. (3) REPORT.md at 19:40: finalise (Next steps
+list already drafted; add the last session's work, final Codex ledger; check `node tools/evidence/cites.mjs REPORT.md`).
+(4) Weakest remaining: the reel's aftermath LIFETIME is from data (KillMarks ring), not measured; a `--after=600`
+film with later kills could prove the recycle. Logs go to C:\Users\kazda\kiro\gtai-n16\scratch-tools\logs\.
