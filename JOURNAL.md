@@ -1017,3 +1017,8 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   1433 GDScript files` (the snapshot predates flag-routes), `unit-tests: 2543 passed, 0 failed, 2 skipped` (+1: the
   walk befores test), `scenario-tests: 55 passed`, parity bit for bit (planted caught at 629), selftest look goldens
   11/11, `release-compile: 668 loaded, 0 failed`. Reels running (top done, tilt70 at chapter 19).
+- 06:15 MILESTONE gate on 257b2e58c (all of session 7's game code: the walk befores fix; plus the flag index,
+  merge-clash, quick): `top: OK; code 0`, `tilt70: OK; code 0`, `combo: OK; code 0`, `PASS reels: exit 0`, `gate:
+  PASS` (build/gate/257b2e58c574/gate.json). Snapshot removed (`git worktree list | grep -c 257b2e58c574` -> 0); my
+  film snapshot gtai-film-badcb64857c6 (23:45, on n15-tools only) removed too. After 257b2e58c: lint flag-routes +
+  its CLI (Node; pre-commit full lint 19/19; Linux 593/591/0 on 9b7b14088) and docs.

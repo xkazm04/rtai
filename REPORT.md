@@ -233,10 +233,11 @@ Session 7:
 
 ## Gates on this branch
 
-Final gate on decdd8331 (all of session 6's code; `node tools/gate/run.mjs --rev=HEAD --reels --timeout=40`):
-lint 18/18, unit 2542/0 (2 skipped), scenarios 55, parity exact (planted fault caught at step 629), selftest look 11/11, release-compile
-668/0, reels top/tilt70/combo OK: `gate: PASS`. After it come only Node tools (merge preview, which passes the full
-pre-commit lint, tool tests included; Linux 896/0 on c1e7fb183) and docs.
+Final gate on 257b2e58c, which holds all of session 7's game code (the walk befores) and its tools (`node
+tools/gate/run.mjs --rev=HEAD --reels --timeout=40`). Results: lint 18/18, unit 2543/0 (2 skipped), scenarios 55, parity exact
+(the planted fault caught at step 629), selftest look 11/11, release-compile 668/0, reels top/tilt70/combo OK: `gate: PASS`. After it
+came only the lint check `flag-routes` and its CLI (Node: the pre-commit full lint passes 19/19; Linux dev + film +
+merge + gate + lint tests 593/591/0 on 9b7b14088) and docs. Session 6's final gate (decdd8331) also passed.
 
 ## Not done yet
 
