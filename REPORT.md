@@ -1,4 +1,4 @@
-# n16 lane tools: REPORT (DRAFT written 14:40 in session 3; the 19:40 session updates it)
+# n16 lane tools: REPORT (DRAFT, updated 15:55 in session 4; the 19:40 session finalises it)
 
 Branch `n16-tools` from main `5843f5a28`. Memory: `JOURNAL.md`. Evidence: `gtai-masters/n16/tools/frames.json`
 (14 entries) and `evidence/n16-tools/`.
@@ -20,6 +20,9 @@ One command films every signature death in the KillLab on the city block, for we
   from the game's movie so the hit-stop PLAYS (calibrated: movie index = probe frame), the all-weapon overview
   `reel_<ppm>.png` + `reel.md`, `--resheet` (no Godot), the death judged on screen (`--subject=kill`), a far victim
   gets the window, and every cell is anchored to the street by the probe's camera shift.
+- s4: the reel SCOUTS the kill tick, then films only the beats + the hold run (~20 PNGs, not ~165; PNG writes were
+  ~45 s of a ~65 s film) (7a16ac85d); a live-tree reel names its uncommitted project/ paths and any film whose tree
+  moved mid-reel (469298728, 7c0e91fcd; kills-new FRICTION 15:15).
 - Full coverage proof (s3all, `--weapons=all --quick --feel=on`): all 12 signature weapons kill in the lab (11 PASS,
   the nuke then UNVERIFIABLE on Rivet off screen; after the subject + window fix s3nuke / s3anchor PASS).
 
@@ -38,7 +41,8 @@ Done in n15 (6d77d2204); seen working all day (`merge-clash: no new code conflic
 
 ### 5. Builders served
 kills-new REQUEST 1 (`--subject=kill`), 2 (`--sig-wall`), 3 (the Gatling never spun up in the lab: kill_lab holds a
-spun gun, 0b5c55fc7); kills-polish's step_guard flake (8cb956f7e). Each with a SERVED line in JOURNAL.
+spun gun, 0b5c55fc7); kills-polish's step_guard flake (8cb956f7e); kills-new FRICTION 15:15 (a live-tree reel broke on a half-edited tree:
+the reel now stamps the tree and names the film where it moved). Each with a SERVED line in JOURNAL.
 
 ## Findings for the kill lanes
 - A signature row's `hitstop_ticks` does NOT freeze the screen: SignatureKills.hold makes the pieces wait. The freeze
@@ -50,15 +54,17 @@ spun gun, 0b5c55fc7); kills-polish's step_guard flake (8cb956f7e). Each with a S
   difference is Rivet's aim or pose. (The `settled` +80/+150 and aftermath 5.8/3.2 % run-to-run spreads came from it.)
 
 ## Gates
-caccc825d touches `project/dev/frames/film_probe.gd` (dev only, no gate uses it): the full gate must be re-run on it
-or the final project/ commit. Before that: gate PASS on 0b5c55fc7 (lint 19/19, unit 2645/0/2, scenarios 55, parity bit for
+FULL GATE WITH REELS PASS on caccc825d, the last project/ commit (s4, `gate exit 0`, build/gate/caccc825d4a8/gate.json):
+lint, unit 2645/0/2, scenarios 55, parity bit for bit 1200 steps (planted fault at 629), look goldens 11/11 worst
+0.00, release-compile 683/0, reels exit 0. Every later commit is tools/docs/evidence/JOURNAL. Before that: gate PASS on 0b5c55fc7 (lint 19/19, unit 2645/0/2, scenarios 55, parity bit for
 bit, look goldens 11/11, release-compile 683/0, reels top/tilt70/combo OK). Every later commit is tools/docs/evidence
 (lint 19/19 incl. tool-tests in each commit's hook).
 
 ## Codex ledger
-2 tasks, both gpt-5.6-sol, 1 round each, discarded after landing: n16t-break-film-root (119 s, 10 tests, accepted
+3 tasks, both gpt-5.6-sol, 1 round each, discarded after landing: n16t-break-film-root (119 s, 10 tests, accepted
 after revision: the cwd-below-a-tree promise was a weakness, fixed), n16t-break-reel-movie (188 s, 10 tests, 3 kept
-red, all 3 accepted and fixed in code).
+red, all 3 accepted and fixed in code), n16t-break-live-tree (196 s, 8 tests, 1 kept red: CRLF porcelain, accepted and
+fixed; review found a second real defect the tests missed, C-quoted non-ASCII paths, fixed with a first-author test).
 
 ## Calls for the owner
 - The kill reel's default is feel OFF (stable sheets, clean A/B); pacing is judged with `--feel=on`. Alternative:
