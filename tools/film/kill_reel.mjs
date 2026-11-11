@@ -13,7 +13,7 @@ import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { EXIT, filmOne, pinRev, plan } from './film.mjs';
-import { goreWhole, killWindow, measureBeats, measureHold, pickBeats, reelPlan, sheetOf, tableRows, victimAt } from './kill_reel_lib.mjs';
+import { goreWhole, killWindow, measureBeats, measureHold, measureStop, pickBeats, reelPlan, sheetOf, tableRows, victimAt } from './kill_reel_lib.mjs';
 import { diffImages, readPng } from './png.mjs';
 import { filmedRoot } from './side.mjs';
 import { encodePng, label } from './sheet.mjs';
@@ -57,6 +57,7 @@ async function filmJob(job, side, reel, runner, known) {
   const run = Array.from({ length: 13 }, (_, i) => k + i).filter((t) => saved.has(t));
   const held = measureHold(new Map(run.map((t) => [t, frames.get(t) ?? readPng(join(job.dir, `t${t}.png`))])), k, box, diffImages);
   if (measured && held !== null) measured.held_ticks = held;
+  if (measured && measureStop(r.probe, k) !== null) measured.hitstop_frames = measureStop(r.probe, k);
   if (!reel.keepFrames) {
     for (const name of readdirSync(job.dir)) {
       const t = /^t(\d+)\.png$/.exec(name);
@@ -160,7 +161,7 @@ export async function main(argv, { out = console.log, err = console.error, runne
     if (!kills.has(key) && Number.isInteger(film.kill)) kills.set(key, film.kill);
     rows.push({ job, film });
     out(`kill_reel: ${job.side} ${job.weapon} ${job.victim || 'guard'} dir ${job.dir_deg} ${job.ppm} px/m: ${film.outcome.toUpperCase()}`
-      + `${film.kill !== undefined ? ` kill at ${film.kill}` : ''}${film.measured ? `, held ${film.measured.held_ticks ?? '?'} (measured), settled by +${film.measured.settled_after_ticks ?? '?'}, aftermath ${(film.measured.aftermath_share * 100).toFixed(1)} % of the window` : ''}`
+      + `${film.kill !== undefined ? ` kill at ${film.kill}` : ''}${film.measured ? `, hit-stop ${film.measured.hitstop_frames ?? '?'} frames + window still ${film.measured.held_ticks ?? '?'} ticks (measured), settled by +${film.measured.settled_after_ticks ?? '?'}, aftermath ${(film.measured.aftermath_share * 100).toFixed(1)} % of the window` : ''}`
       + `${film.reasons.length ? `: ${film.reasons.join('; ')}` : ''}`);
   }
   const sheets = [];

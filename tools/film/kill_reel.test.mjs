@@ -146,6 +146,15 @@ test('measured beats: what stays on the street, and the first beat the window st
   assert.equal(measureBeats(new Map([[60, img(plain)]]), [60, 213], 63, [0, 0, 4, 4], diffImages), null);
 });
 
+test('the measured hit-stop sums the frames the sim held around the kill, from the probe', async () => {
+  const { measureStop } = await import('./kill_reel_lib.mjs');
+  const rows = (frames) => ({ rows: Object.entries(frames).map(([tick, frame]) => ({ tick: Number(tick), frame })) });
+  // s3stop_on (katana --feel=on): tick 70 held for 6 frames, the next row 7 frames on
+  assert.equal(measureStop(rows({ 66: 100, 67: 101, 68: 102, 69: 103, 70: 104, 71: 111, 72: 112 }), 68), 6);
+  assert.equal(measureStop(rows({ 67: 101, 68: 102, 69: 103, 70: 104, 71: 105, 90: 200, 91: 210 }), 68), 0, 'feel off; a hold past +12 is not this kill');
+  assert.equal(measureStop(rows({ 60: 1 }), 68), null, 'no rows at the kill: unmeasured, not zero');
+});
+
 test('the measured hold counts the still frames after the kill, and needs consecutive frames', async () => {
   const { measureHold } = await import('./kill_reel_lib.mjs');
   const { diffImages } = await import('./png.mjs');

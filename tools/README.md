@@ -150,11 +150,13 @@ Each film line also gives the measured side of the beats, from its beat frames i
 `settled by +N` (the first beat after which the window stops changing; walking people count, so an upper bound)
 and `aftermath X %` (the share of the window at kill+after that still differs from the trigger frame: what stays
 on the street). Example (n16): rocket dir 90 6.3 % at both zooms, settled only by +150; katana 1.7 %, by +80.
-`held N (measured)`: the ticks from the kill that the kill window holds still (each frame within 0.2 % of the one
-before), set beside the table's hit-stop and held ticks; measured on the first zoom (later zooms save beats only).
-The reel's camera is locked, and a locked film runs `--feel=off` (a shake would move the frame), so the HIT-STOP
-FREEZE AND THE CAMERA PUNCH ARE NOT IN A DEFAULT REEL: pass `--feel=on` to judge the pacing (owner: hit-stop plus a
-small punch per kill). The standard deaths read `held 0`.
+`hit-stop N frames` (measured): frames the game drew while the sim HELD a tick (SimClock.hold, FeelCam's hit-stop),
+from the tick before the kill to +12, read from the gaps in the probe rows' process `frame`. No still or clip shows these
+frames (a still is saved per tick), so the sheet never shows the freeze: read this number. `window still N ticks`:
+the ticks after the kill that the drawn kill window does not change (a held pose). The reel's camera is locked, and
+a locked film runs `--feel=off`, so a DEFAULT REEL HAS NO HIT-STOP AND NO CAMERA PUNCH: pass `--feel=on` to judge
+the pacing. Proof (n16 s2, katana dir 90, 32 px/m): `--feel=on` hit-stop 6 frames (= the row's hitstop_ticks 6),
+default 0.
 
 `--gore-check` films every death with `--gore=reduced` and judges each from the probe: the victim must still be
 drawn as one lying card 20 ticks after the kill (a signature death hides the body: FAIL, naming it); a victim

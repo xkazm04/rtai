@@ -144,6 +144,18 @@ export function measureBeats(frames, beats, kill, box, diff, { tolerance = 12, s
   return { aftermath_share: Number(diff(crop(60), end, tolerance).fraction.toFixed(4)), settled_by: settled, settled_after_ticks: settled === null ? null : settled - kill };
 }
 
+/** The measured hit-stop: frames the game drew while the sim held a tick (SimClock.hold, FeelCam's hit-stop) from
+ *  the tick before the kill to `span` after it: each probe row records its process `frame`, so a tick held for N
+ *  frames shows as a gap of N + 1 to the next row. No still shows these frames (a still is saved per tick). null
+ *  when the rows there carry no frame. Only a `--feel=on` film holds. */
+export function measureStop(probe, kill, span = 12) {
+  const frame = new Map((probe?.rows ?? []).filter((r) => Number.isInteger(r.frame)).map((r) => [r.tick, r.frame]));
+  if (!frame.has(kill) || !frame.has(kill + 1)) return null;
+  let held = 0;
+  for (let t = kill - 1; t <= kill + span; t++) if (frame.has(t) && frame.has(t + 1)) held += frame.get(t + 1) - frame.get(t) - 1;
+  return held;
+}
+
 /** The measured held beat: ticks from the kill on that the kill window holds still (each frame differs from the one
  *  before by under `still`), counted over consecutive frames `frames` (tick -> image) from the kill tick; null when
  *  the frames are not consecutive there (a later zoom saves beats only). Beside the table's hit-stop + held ticks:
