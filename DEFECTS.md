@@ -34,7 +34,8 @@
 9. **One pistol round shows 8 ticks of flash** (t333-340, 133 ms): the drawn fire cell carries a painted flash and is
    held FIRE_TICKS 7 (+ the latch tick), while the ink flare holds muzzle_ticks 3. A shot's flash should read 1-3
    frames; the cell's pose (the recoil) may hold longer. -> open: REQUEST assets (flashless fire cells), then show the
-   painted cell for muzzle_ticks and the flashless one for the rest of the latch.
+   painted cell for muzzle_ticks and the flashless one for the rest of the latch. -> fixed e9c893e67 (RivetNoFlash +
+   the asset lane's flashless cells, it454; film t333-335 painted, t336-338 the pose clean; `--rivet-noflash=off` = before).
 10. **The fire latch survives a facing change**: after the kill (t337) Rivet turns to the camera octant at t339 and
     the camera fire cell shows a flash with no shot (t339-340): the recoil's decaying kick (> FIRE_RECOIL ~11 ticks)
     and the FIRE_TICKS latch both held across the turn. -> fixed 6ae388e38 + 6822e1036 (RivetFireTurn: the latch holds in
@@ -49,3 +50,12 @@
     In the strips (both RivetRes 1.5) the fire cell is not the smaller one: helmet width 45 px under the crown, eq
     cam fire cell 93 px vs walk rows 79-99 (camera row 88); figure height 151-175 vs 156-184. So the pop comes from
     the placement (the walk grid's RivetBob.stretch / lift, or the row shown), not the drawing. -> open (item 5).
+14. **A gun's camera fire cell floats** (`kill:pistol -- --sig-dir=90` at 64 px/m, fire t62): the strip was cut with the
+    painted flash (hanging down the cell toward the viewer) on the foot line, so for the shot tick his boots stood
+    35-58 strip px above it (p70 pistol 38, plasma 66, gloria 60, gatling 43; p55 gatling 24): the figure's top rose
+    44 px at 64 px/m on the shot. -> fixed 9bac727e5 (RivetCellFeet rows for 7 p70 and 3 p55 guns, boots read off the
+    flashless cells at 2x; after: the drawn crouch, top 8 px lower, boots on the line).
+15. **Back -> front -> back flip on a shot toward the camera** (same film, t61-63): he stands showing his back (facing
+    up the screen), the shot tick draws the camera fire cell (his front), the next tick his back again: one tick of
+    front. The aim is down, his facing up (kill lab: Rivet does not turn to the guard). -> open: check in a street
+    fight whether the bot's facing lags the aim there too (relates to #11).

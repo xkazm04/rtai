@@ -1,5 +1,23 @@
 [
   {
+    "file": "noflash_pistol_t333_338_64.png",
+    "title": "Pistol round: the painted flash lasts the flare's 3 ticks, then the recoil pose holds clean",
+    "source": "film.mjs weapon:pistol --ppm=64 --stills=331-342 (e9c893e67), before = -- --rivet-noflash=off (crops x2)",
+    "branch": "n17-rivet-strike",
+    "ppm": 64,
+    "before": "top: the painted flash on the gun t333-t338 (6 ticks; 109 hot px at t336)",
+    "note": "after: t333-335 flash (gun_fx pistol muzzle_ticks 3), t336-338 the flashless cell (asset lane it454)"
+  },
+  {
+    "file": "camfire_pistol_t60_63_64.png",
+    "title": "Firing toward the camera he stays on his boots",
+    "source": "film.mjs kill:pistol --ppm=64 -- --sig-dir=90 (9bac727e5), before = --rivet-cell-feet=off; cyan = his ground line",
+    "branch": "n17-rivet-strike",
+    "ppm": 64,
+    "before": "top t62: the figure jumps ~44 px up for the shot tick (the painted flash on the foot line)",
+    "note": "after: the drawn crouch on his boots. t61/t63 show his back: DEFECTS #15 (open)"
+  },
+  {
     "file": "katana_cam_cell_feet_t66_64.png",
     "title": "Katana camera strike stands on his ground point",
     "source": "tools/film/compare.mjs chapter:katana_cam --a=415dc9ad1 --b=7b1f03b7c --at=66 --ppm=64",
@@ -115,23 +133,5 @@
     "ppm": 0,
     "before": "",
     "note": "side cells already on their boots"
-  },
-  {
-    "file": "pistol_flash_strip_t331_342_64.png",
-    "title": "DEFECT: one pistol round, 8 ticks of drawn flash (t333-340), carried into the camera cell",
-    "source": "film.mjs weapon:pistol --ppm=64 --stills=331-342 (HEAD da3c12437)",
-    "branch": "n17-rivet-strike",
-    "ppm": 64,
-    "before": "",
-    "note": "open: the fire cell's painted flash holds FIRE_TICKS 7; REQUEST assets flashless fire cells"
-  },
-  {
-    "file": "pistol_fire_t333_336_64.png",
-    "title": "DEFECT: arm drawn at 0 deg, the round leaves at -29 deg on screen",
-    "source": "film.mjs weapon:pistol --ppm=64 --on=fire:1+3",
-    "branch": "n17-rivet-strike",
-    "ppm": 64,
-    "before": "",
-    "note": "flash and tail do leave the drawn muzzle"
   }
 ]

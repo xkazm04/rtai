@@ -30,3 +30,12 @@ NEXT: (1) wire the flashless fire cells when the asset lane delivers (#9: painte
 - Possible Call: show the bare claw in the slot when unarmed (a claw icon + "UNARMED") instead of hiding it. Today: hidden, so one corner stays clear.
 
 NEXT (session 2, in order): the in-game armed HUD still; item 4 per gun (film each with `--ppm=64 --on=fire:1+3`, log aim-vs-arm #11 and recoil #12); wire the flashless fire cells when assets land (#9); item 5 handover pop (#13, placement: RivetBob.stretch / lift / row); p55 boss-arena film of the camera strike cells; the arena loop over every weapon (item 6); the reel gate before the freeze. Owner Calls to write up in REPORT: claw lunge_ticks (replay re-bless), lean degrees, the unarmed slot.
+
+## Session 2 (iteration 5, 2026-11-11 21:07-), BUILD
+
+- Read: JOURNAL, git log, asset replies (it454: flashless fire cells for 8 guns x 2 pitches; katana thrust cells side/cam/left at p70 + p55, p70 re-cut to grade A).
+- Registry applied: motion-quality-gating (a pop is measured in px per tick: the figure top on the shot tick), sprite-and-atlas-production (cells seated on the drawn boots, not the canvas's lowest pixel).
+- FOUND + FIXED DEFECTS #14 9bac727e5: a gun's camera fire cell was seated on its painted flash, so he rose up to 44 px at 64 px/m on the shot (kill:pistol --sig-dir=90 t62). RivetCellFeet rows, boots read at 2x off the flashless cells.
+- MILESTONE e9c893e67 DEFECTS #9 fixed: RivetNoFlash (texture-only swap to `rivet_eq_<gun>_noflash.png` past the flare's muzzle_ticks), tools/art/rivet_fire_noflash.py builds the 16 strips; provenance lines added. Film: painted flash t333-335 (was t333-338).
+- FRICTION: rivet_frames.gd sits at the 200-line soft cap (debt ratchet); cast_flags.apply at 40 lines: the n17 befores now route through `CastFlags.N17_RIVET` (flag-routes lint still green; unit test covers the routing).
+- FOUND (open) DEFECTS #15: firing toward the camera with his back turned shows one tick of his front (t61-63).
