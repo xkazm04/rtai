@@ -79,6 +79,11 @@ crowd: look goldens re-blessed with a decisions line). t-4 and t-5 move nothing 
   after a code path changed (new porcelain line, or size/mtime of a path dirty at the start) is failed with
   `INVALID: the tree changed while <kind> ran (<n> code path(s): ...)` and a pointer to `tools/gate/run.mjs`.
 
+Gates on 27756d838 (`node tools/gate/run.mjs --rev=HEAD --reels --timeout=40`, session 5, after native rebuild #7: the
+hash build without its sentinel and sort, the Codex hash-build tests, `--tier=a`): PASS - lint 17/17 over 1433 files, unit
+2542/0, scenarios 55, parity bit for bit (planted caught at 629), look 11/11 + block 5/5 worst 0.00, release-compile 668/0,
+reels top/tilt70/combo OK (`build/gate/27756d838873/gate.json`, git-ignored; JOURNAL 04:22).
+
 Gates on 6f7422812 (`node tools/gate/run.mjs --rev=HEAD`, session 4, after the c-2 mask and native rebuild #4): PASS -
 lint 17/17, unit 2532/0, scenarios 55, parity bit for bit (planted caught at 629), selftest look 11/11 + block 5/5
 worst 0.00, release-compile 668/0. Reel gate on d2226608d (same code and frames; only the dev script's `.uid`, a Node
