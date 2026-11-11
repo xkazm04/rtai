@@ -28,6 +28,11 @@ const FIT_K: Dictionary[String, Array] = {
 	"p70/cop_riot_smg_stitch.png": [0.95, 0.93, 0.9, 0.93, 1.0],
 	"p70/swat_smg_stitch.png": [0.86, 0.82, 0.8, 0.87, 1.0],
 	"p70/ped_suit_smg_stitch.png": [0.92, 0.88, 0.88, 0.95, 1.0],
+	# the gatling shred's first rows 1.11-1.25 x (film o_gatling t95: head ~35 vs ~30 px)
+	"p70/cop_patrol_gatling_shred.png": [0.84, 0.8, 1.0],
+	"p70/cop_riot_gatling_shred.png": [0.92, 0.88, 1.0],
+	"p70/swat_gatling_shred.png": [0.84, 0.8, 1.0],
+	"p70/ped_suit_gatling_shred.png": [0.88, 0.84, 1.0],
 }
 const FIT_LIFT: Dictionary[String, Array] = {
 	"p70/cop_patrol_pistol_snap.png": [21, 15, 5, 10, 22],
@@ -37,6 +42,10 @@ const FIT_LIFT: Dictionary[String, Array] = {
 	"p70/cop_riot_smg_stitch.png": [0, 0, 0, 0, 0],
 	"p70/swat_smg_stitch.png": [0, 0, 0, 0, 0],
 	"p70/ped_suit_smg_stitch.png": [0, 0, 0, 0, 0],
+	"p70/cop_patrol_gatling_shred.png": [0, 0, 0, 0, 0],
+	"p70/cop_riot_gatling_shred.png": [0, 0, 0, 0, 0],
+	"p70/swat_gatling_shred.png": [0, 0, 0, 0, 0],
+	"p70/ped_suit_gatling_shred.png": [0, 0, 0, 0, 0],
 }
 const BASE: StringName = &"kill_death_cells_base"
 
