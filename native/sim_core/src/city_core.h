@@ -126,7 +126,7 @@ private:
 
 	std::vector<uint8_t> tiles_, cells_;
 	std::vector<int32_t> owner_;
-	int32_t hcount_[HW * HW + 1], hstart_[HW * HW + 1], hitems_[CAP];
+	int32_t hcount_[HW * HW], hstart_[HW * HW], hitems_[CAP];
 	int32_t htouched_[CAP];  // cells occupied at the last build_hash, ascending
 	int htouched_n_ = -1;  // -1: hcount_ never cleared yet
 	int hgx_ = 0, hgy_ = 0;

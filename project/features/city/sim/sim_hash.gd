@@ -3,8 +3,8 @@ extends RefCounted
 ## Spatial hash over tier-A actors: HC-metre cells in an HW x HW window centred on the camera,
 ## rebuilt every step (counting sort, so a query returns ids in a fixed order).
 
-var hcount: PackedInt32Array = SimArrays.i32(SimConst.HW * SimConst.HW + 1, 0)
-var hstart: PackedInt32Array = SimArrays.i32(SimConst.HW * SimConst.HW + 1, 0)
+var hcount: PackedInt32Array = SimArrays.i32(SimConst.HW * SimConst.HW, 0)
+var hstart: PackedInt32Array = SimArrays.i32(SimConst.HW * SimConst.HW, 0)
 var hitems: PackedInt32Array = SimArrays.i32(SimConst.CAP, 0)
 var hgx: int = 0
 var hgy: int = 0
@@ -18,7 +18,8 @@ func _init(state: CitySimState) -> void:
 
 ## O(actors), not O(HW^2) (t-5 widened the window): clears only the cells the last build filled,
 ## counts, then gives starts to the occupied cells in ascending order, so hitems keeps the counting
-## sort's order (cell, then id). An empty cell's start is never read: query loops over its 0 count.
+## sort's order (cell, then id). An empty cell's start is never read: query loops over its 0 count,
+## and no total sentinel is kept (nothing read it).
 func build(camx: float, camy: float) -> void:
 	var hw: int = SimConst.HW
 	hgx = floori(camx / SimConst.HC) - (hw >> 1)
@@ -38,7 +39,6 @@ func build(camx: float, camy: float) -> void:
 		hstart[c] = s
 		s += hcount[c]
 		hcount[c] = 0
-	hstart[hw * hw] = s
 	for i: int in SimConst.CAP:
 		var c: int = _cell_of(i)
 		if c >= 0:

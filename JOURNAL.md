@@ -640,3 +640,13 @@ sim_hash.gd + hash.cpp/city_core.h if nothing reads it (`grep -rn "hstart" proje
 parity, mutate again. (4) REPORT final at 07:40 (Calls c-1, c-2; merge notes: tools first, rebuild DLLs). (5) End of
 night: `git worktree remove --force C:/Users/kazda/kiro/gtai-n15/scratch-tools-before` (an untracked copy of
 dev/sim/car_route_trails.gd there is mine) and `git branch -D n15t-control-sim-hash`.
+
+## Session 5 (03:09-04:39)
+
+- 03:09 read JOURNAL, git log, hero + combat JOURNALs: no new REQUEST tools / FRICTION for me since 02:21 (hero's
+  new FRICTIONs are their own sheet tools; combat's LFS FRICTION = blob.mjs, served f059cfc44).
+- 03:12-03:20 NEXT (3): deleted the dead `hstart[hw * hw]` total sentinel (and the +1 array sizes) in sim_hash.gd and
+  hash.cpp/city_core.h (`grep -rn hstart project native`: no reader outside build/query). NATIVE REBUILD #6 (this lane
+  only): template_debug + template_release + `scons tests` exit 0, `sim_core tests: 0 failed`. `run_parity.mjs`: bit
+  for bit over 1200 steps, planted caught at 629, final_sha_a = final_sha_b = 94b2865f7f17d778 (unchanged).
+  `run_unit --select=test_sim_hash*` 20/0.

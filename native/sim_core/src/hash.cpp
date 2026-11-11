@@ -11,7 +11,6 @@ namespace gtai::sim {
 void CityCore::build_hash(double camx, double camy) {
 	hgx_ = floori(camx / HC) - HW / 2;
 	hgy_ = floori(camy / HC) - HW / 2;
-	const int n = HW * HW;
 	// O(actors), not O(HW^2): clear only the cells the last build filled, count, then give starts to
 	// the occupied cells in ascending order. hitems_ comes out in the counting sort's order (cell,
 	// then id); an empty cell's start is never read (query loops over its zero count).
@@ -34,7 +33,6 @@ void CityCore::build_hash(double camx, double camy) {
 		s += hcount_[c];
 		hcount_[c] = 0;
 	}
-	hstart_[n] = s;
 	for (int i = 0; i < CAP; i++) {
 		if (alive_[i] == 0 || tier_[i] != 0) continue;
 		int gx = floori(px_[i] / HC) - hgx_, gy = floori(py_[i] / HC) - hgy_;
