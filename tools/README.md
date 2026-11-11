@@ -11,6 +11,7 @@ Run these from the root of your worktree. Exit codes are shared: `0` pass, `1` f
 |---|---|
 | film or still a named shot (arena, street, quest 1, a chapter, a weapon) | `node tools/film/film.mjs <shot>` |
 | show before and after at the same tick | `node tools/film/compare.mjs <shot> --a=<commit> --b=<commit>` |
+| the old bytes of a file at a commit (LFS assets smudged, not the pointer `git show` writes) | `node tools/film/blob.mjs <rev>:<path> [--out=<file>]` |
 | one sheet of a film's stills, labelled | `node tools/film/sheet.mjs <film dir> --out=<file.png>` |
 | read head, feet, facing or body size per tick | `node tools/film/numbers.mjs <film dir>` |
 | catch the lint you keep tripping, before the commit | `node tools/gate/quick.mjs` |

@@ -556,3 +556,9 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   The A/A spread (max |0.41| ms, |9.2| us) overlaps B-A's smallest round, so the size is soft; the sign is not.
   Cause, read: `CitySimHash.build` walks all HW*HW cells for its prefix sums every step (6400 -> 17424). B-A also
   holds t-4 (route code, same tile reads). Native +9 us/step is 0.05 % of a 16.7 ms frame.
+- 02:28 SERVED hero FRICTION (n15-hero JOURNAL "`git show <rev>:<png> > file` writes the LFS pointer"): new
+  `node tools/film/blob.mjs <rev>:<path> [--out=<file>]` reads the blob and runs a pointer through `git lfs smudge`.
+  Real run: `blob.mjs HEAD~5:project/addons/gut/gui/arrow.png --out=build/blob_proof/arrow.png` -> `wrote ... (122
+  bytes, LFS object, smudged)`, PIL opens it (20x20 LA), byte-identical to the checkout, where `git show` of the same
+  spec prints `version https://git-lfs...`; a plain blob says `plain blob`; a missing path exits 1 naming git's error;
+  usage exit 2. `tools/film/blob.test.mjs` 3/3 (throwaway repo, no inherited git env). tools/README line.
