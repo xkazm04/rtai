@@ -53,3 +53,19 @@ test('--resheet takes nothing else, and a dir without a reel is a usage error', 
     rmSync(root, { recursive: true, force: true });
   }
 });
+
+test('resheet anchors an older reel (no shifts in reel.json) from each film kept probe.json', () => {
+  const root = mkdtempSync(join(tmpdir(), 'kreel-resheet-'));
+  try {
+    fakeReel(root);
+    const dir = join(root, 'katana', 'after_guard_d90_32');
+    // the view moved 2 px right at 69 (canvas origin -2): the shift is recorded for the sheet and the beats
+    writeFileSync(join(dir, 'probe.json'), JSON.stringify({ rows: [{ tick: 60, cam: [0, 0] }, { tick: 68, cam: [0, 0] }, { tick: 69, cam: [-2, 0] }] }));
+    assert.equal(resheet(root, () => {}), 'pass');
+    const films = JSON.parse(readFileSync(join(root, 'reel.json'), 'utf8')).films;
+    assert.deepEqual(films[0].shifts, { 60: [0, 0], 68: [0, 0], 69: [-2, 0] });
+    assert.equal(films[1].shifts, undefined, 'no probe kept: fixed on screen');
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});

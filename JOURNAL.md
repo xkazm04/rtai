@@ -303,3 +303,7 @@ by default). (6) the s1 frames.json entry "thug stands as riot cop" is supersede
   street by the probe camera shift from the kill tick (`anchorShifts`/`boxAt`, reel.json `shifts`), also used by the
   measured beats; the clip keeps the screen (punch included). Unit 240/0. Proof run: build/kreel/s3anchor (nuke +
   rocket, --quick --feel=on).
+- 14:36 `--resheet` computes the street anchor from each film's kept probe.json when an older reel.json has no
+  `shifts`. PROOF: `kill_reel.mjs --resheet=build/kreel/s3all` -> shifts per film (katana/plasma sword/chainsaw kick
+  the view 48-51 px on the kill tick, rocket/electro 15, nuke 273); overview looked at: the blade rows no longer
+  jump at the kill. Unit 241/0. Masters overview replaced with the anchored one.

@@ -4,7 +4,7 @@
 import { existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { boxAt, cellLabel, reelMarkdown, sheetOf } from './kill_reel_lib.mjs';
+import { anchorShifts, boxAt, cellLabel, reelMarkdown, sheetOf } from './kill_reel_lib.mjs';
 import { readPng } from './png.mjs';
 import { encodePng, label } from './sheet.mjs';
 
@@ -109,6 +109,12 @@ export function resheet(dir, out) {
   if (reel.schema !== 'gtai.kill-reel/1' || !Array.isArray(reel.films)) return { error: `${file} is not a gtai.kill-reel/1 reel` };
   const rows = reel.films.map((f) => ({ job: Object.fromEntries(JOB_KEYS.map((k) => [k, f[k]])),
     film: Object.fromEntries(Object.entries(f).filter(([k]) => !JOB_KEYS.includes(k))) }));
+  for (const { job, film } of rows) {  // a reel filmed before the street anchor: its shifts from the kept probe
+    const probe = join(job.dir ?? '', 'probe.json');
+    if (!film.shifts && Number.isInteger(film.kill) && Array.isArray(film.beats) && existsSync(probe)) {
+      film.shifts = anchorShifts(JSON.parse(readFileSync(probe, 'utf8')), film.kill, film.beats);
+    }
+  }
   const plan = { out: dir, weapons: [...new Set(rows.map((r) => r.job.weapon))], ppm: [...new Set(rows.map((r) => r.job.ppm))] };
   return finish(plan, rows, reel.table ?? {}, { argv: reel.argv ?? [], sides: reel.sides ?? [] }, out);
 }
