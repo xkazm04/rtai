@@ -345,3 +345,6 @@ lanes in their terms (JOURNAL NOTE is there): pre-caccc825d before/afters may di
 optional: the reel's per-film time (~2.5 min at 32 px/m quick); a world-anchored crop for the clip too (the clip
 keeps the screen on purpose: punch); flamethrower/electro read weakly at 32 px/m (kill lanes' call). (4) REPORT.md
 at 19:40: the draft is in the tree; fill Next steps, the gate verdicts, final Codex ledger.
+- 15:00 GATE on caccc825d so far (snapshot build/evidence): lint 19/19, unit 2647 tests / 0 failures; scenarios
+  running. Verdict: `gate exit N` at the end of gtai-n16/scratch-tools/gate_s3.log (if this session stops first,
+  read it next session; results also in build/gate/caccc825d4a8/).
