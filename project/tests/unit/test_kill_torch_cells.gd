@@ -37,6 +37,7 @@ func test_the_tongues_burn_lower_over_the_drawn_flames() -> void:
 	d.cells = own
 	assert_gt(KillTorchArt.flame_m_of(d), 0.0, "they still flicker over the drawing")
 	assert_lt(KillTorchArt.flame_m_of(d), full, "lower than the placeholder's")
+	assert_eq(KillTorchArt.flame_m_of(d, false), 0.0, "none over the drawn kneel (no spike)")
 
 
 func test_the_p55_stitch_and_pin_cells_name_the_three_cops() -> void:
