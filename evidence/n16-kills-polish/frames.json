@@ -63,6 +63,15 @@
     "note": "Call: the grey heap is quieter than the cream smear at 32"
   },
   {
+    "file": "plasma_sword_half_shadow_ab_64ppm_x15_t90-200.png",
+    "title": "Plasma sword: each half casts its shadow under itself",
+    "source": "film.mjs chapter:plasma_sword --ppm=64 --stills=70,90,120,150,200; before 934a815c6 (ps64_t), after 42cf70c8a (ps64_u)",
+    "branch": "n16-kills-polish",
+    "ppm": 64,
+    "before": "top row: a shadow disc ~1 m beside the toppled top half",
+    "note": "DEFECTS 10 fixed (bbf62f6f3, test 42cf70c8a); same fix covers the katana and chainsaw halves"
+  },
+  {
     "file": "ray_gun_cap_shadow_ab_64ppm_x2_t150-199.png",
     "title": "Ray gun: no shadow disc hanging over the remains",
     "source": "film.mjs chapter:ray_gun --ppm=64; before b3b03286c, after 934a815c6",
@@ -124,14 +133,5 @@
     "ppm": 32,
     "before": "top row: the drawn ring alone (no pop)",
     "note": "owner Call answered: the impact pop at play zoom"
-  },
-  {
-    "file": "electro_xray_p55_set_ab_tilt64ppm_x2_t119-146.png",
-    "title": "Electro X-ray in the p55 view: the p55 drawn set",
-    "source": "film.mjs chapter:electro_gun --view=tilt --ppm=64 --on=kill:1+30; before a56501ee5, after 4329ed869",
-    "branch": "n16-kills-polish",
-    "ppm": 64,
-    "before": "top row: the p70 set (squat, face hidden)",
-    "note": "16748e860 then scales it to the 2.0 m p55 card"
   }
 ]

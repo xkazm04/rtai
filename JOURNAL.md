@@ -449,3 +449,11 @@ NEXT (iteration 9, from 18:22; freeze 19:30, REPORT 19:40):
 NEXT (iteration 9), updated 18:14: NEXT 1 and 2 above are DONE (gate PASS on 05715ef5f incl. reels; bbf62f6f3 tested
 and filmed). Start with NEXT 3: the final gate on the tip (code after 05715ef5f: bbf62f6f3 only), then NEXT 4 (REPORT
 final, add this sheet to frames.json) and NEXT 5 while it runs or after.
+
+## Iteration 15 (STABILIZE, 19:30-19:40)
+- 19:31 lint on the tip 338603083: 19/19 PASS. No time for a full gate before 19:40 (13 min + reels 15 min); last full
+  gate PASS on 05715ef5f incl. reels, after it only view-only bbf62f6f3 + test (unit 2687/0 at 18:14) + docs.
+- frames.json: half shadow sheet added (15 entries, oldest dropped), mirrored to gtai-masters/n16/kills-polish (15 png + json).
+- REPORT.md final (gate state, Calls incl. the KILLS ranking, next steps).
+
+NEXT: full gate on 338603083+ incl. reels (`node tools/gate/run.mjs --rev=<tip> --reels`); then REPORT next steps 2-4.

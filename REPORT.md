@@ -1,4 +1,4 @@
-# REPORT: n16 kills-polish (DRAFT, iteration 8, 17:50; final at 19:40)
+# REPORT: n16 kills-polish (final, 19:40)
 
 Branch `n16-kills-polish`, cut from main `5843f5a28`. Lane brief: make the 13 existing signature deaths brutal and
 beautiful (owner 2026-11-11: inventive, readable at 32 px/m, drawn innards/bone/skulls in riso ink-and-cream, hit-stop
@@ -38,7 +38,11 @@ Item 3, deaths raised (one commit each; asset lane A1-A5 and A3 p55 wired):
 Item 5 (defect loop): a card victim's empty cap group cast a dark shadow disc that hung on the street (ray gun, hand
 cannon) -> bd9af660f (`ray_gun_cap_shadow_ab_64ppm_x2_t150-199.png`). A blade half's shadow lay ~1 m from the
 toppled top half -> bbf62f6f3 (test 42cf70c8a; `plasma_sword_half_shadow_ab_64ppm_x15_t90-200.png`).
-Gate: whole gate PASS on 05715ef5f incl. reels (18:10); after it only bbf62f6f3 + its test + docs.
+Gate: whole gate PASS on 05715ef5f incl. reels (18:10; `build/gate/05715ef5f249/gate.json`): lint 19/19, unit
+2700/0/2, scenarios 55, parity bit-exact (planted mutation caught), look goldens 11/11 worst 0.00, export-audit 690/0,
+reels top/tilt70/combo. After it only bbf62f6f3 (view-only shadow anchor) + its test + docs: on the tip 338603083
+lint 19/19 PASS (19:31) and the full unit suite 2687/0 (`run_unit.mjs --changed`, 18:14). Scenarios, parity, goldens
+and reels were NOT re-run on the tip (no time before freeze); the change cannot move sim or parity (view only).
 
 ## What does not work / not done
 
@@ -52,7 +56,7 @@ Gate: whole gate PASS on 05715ef5f incl. reels (18:10); after it only bbf62f6f3 
 
 ## Calls for the owner
 
-One line per changed death; each with its 64 and 32 px/m before/after (TO FINISH at 19:40):
+One line per changed death; each with its 64 and 32 px/m before/after (sheets in `evidence/n16-kills-polish/`):
 - Ray gun: the man is eaten whole by the ring (was legs in a disc + a spinning cop): `ray_gun_ellipse_mask_ab_{64ppm_t82-109,32ppm_x2_t50-109}.png`.
 - Burn: smouldering on his shoulders (was a hot scrap at his feet): `burn_embers_on_figure_ab_{64ppm_x2_t150-250,32ppm_x2_t150-285}.png`.
 - Plasma hole: drawn ring + bloom (Call: the drawn ring vs the old procedural bullseye): `plasma_hole_bloom_ab_{64ppm_t55-70,32ppm_x2_t55-80}.png`.
@@ -67,14 +71,24 @@ One line per changed death; each with its 64 and 32 px/m before/after (TO FINISH
 - Hand cannon exit wound (A6b, 0.2 m on the chest): `hand_cannon_exit_wound_a6b_ab_{64ppm_x2_t51-90,32ppm_x3_t51-72}.png`.
 - Ray gun drawn remains with the skull (A7; Call: at 32 px/m the grey heap is quieter than the old cream smear):
   `ray_gun_drawn_remains_ab_{64ppm_x2,32ppm_x3}_t110-199.png`.
+- Blade half shadows under the halves (defect fix, no Call): `plasma_sword_half_shadow_ab_64ppm_x15_t90-200.png`.
+
+KILLS.md ranking (total of read / inventive / brutal / aftermath, 4 x 5; before -> after n16):
+burn_char 13 -> 17 (riot/hood), chainsaw_grind 15 -> 17, ray_gun_dissolve 11 -> 17, hand_cannon_blowback 13 -> 15,
+mini_nuke_vaporise 15, rocket_gib 14 (bone lost at 32), katana_split 10 -> 14, electro_shock 12 -> 14,
+plasma_hole 12 -> 13, homing_shard_burst 13, plasma_sword_split 7 -> 12; ghosts unfilmed (tonnage 15?, dent 13?,
+ohm 12?, kerf 11?). Weakest now: plasma_sword_split (no blood by design; scorch line only) and the ghosts.
 
 ## Merge notes
 
 - Shared files: `signature_kills.json` + schema (new keys: streak_m, streak_w_m, hole_up_m, cut_up_m,
   split_topple_deg, saw_chunks, scorch_line_m, wound_m; `wound_m` sorts after `weapon`, off kills-new's hunks); kills-new adds rows to the same table (merge by row id).
 - `steam/ai-provenance/2026-11.jsonl` gains lines for every new PNG.
-- No sim, replay or parity change (all view); look goldens unchanged as of the gate on 49c7c0be9.
+- No sim, replay or parity change (all view); look goldens unchanged as of the gate on 05715ef5f (11/11, worst 0.00).
 
 ## Next steps
 
-See JOURNAL `NEXT:`.
+1. Full gate on the tip 338603083 incl. reels (`node tools/gate/run.mjs --rev=338603083 --reels`).
+2. Hand cannon: the thrown body lies down on landing (swap to the kind's fall cell's last frame, as KillCharCells.swap).
+3. Burn collapse back facings when A8c lands; rocket bone at 32 px/m; film the ghosts' four.
+4. `tools/perf/fight_gate.mjs` under the bench lock for the new preloads; a quest 1 p55 peek still.
