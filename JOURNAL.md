@@ -612,3 +612,23 @@ film with later kills could prove the recycle. Logs go to C:\Users\kazda\kiro\gt
 - SERVED (both kill lanes, the brief's "aftermath lifetime" readout): `node <n16-tools>/tools/film/kill_reel.mjs
   --weapons=<w> --after=600 --rev=<sha> [--native=donor]` films the aftermath to 10 s (up to 1200 ticks); read the
   curve's steps (body gone at 7.2 s, stains at 16 s). Add `--feel=on` to measure the freeze (default reads `off`).
+- 17:50 kills-new REQUEST tools (their JOURNAL, 17:41 gate): "`../n16-tools/tools/gate/run.mjs` writes its results to
+  ITS tree (n16-tools/build/gate/b9dba1da8ac6/), though its header says your tree". FOUND worse: the snapshot's
+  runtime donor was the kit's tree too (`ensureSnapshot({root: ROOT})`, donorsOf(ROOT) first): their running gate's
+  snapshot holds MY c-2 DLLs (sha1 debug b2dc0392 / release d72cacc1 = n16-tools; theirs 3faf6079 / 53cb138e).
+- MILESTONE c47f8bc2f: tools/gate/run.mjs works from the caller's game tree (`filmedRoot()`, film's own rule): rev,
+  dirty check, snapshot donor, results and ETA; the header says `gate: <sha> from <tree>`; `nativeLine` warns when the
+  gated commit's native/ differs from that tree's HEAD. Tests run_here 3/0, gate 161/0, lint 19/19.
+  PROOF (real, front half, no Godot reached): a throwaway worktree at 76ae91d45, `node <n16-tools>/tools/gate/run.mjs
+  --rev=HEAD` -> `gate: 76ae91d4 from ...\tmp.ruHluwe0hv\lane`, log `...\lane\build\gate\76ae91d45104\evidence.log`,
+  nothing under n16-tools/build/gate; `--rev=<my HEAD 6146b0fd>` from the same tree -> `gate: WARNING native/ at
+  6146b0fd differs from ...lane's HEAD: the snapshot runs that tree's DLLs ...`. Both stopped by PID tree (92396,
+  95752) in their evidence step's git status; both lane gates (43276, 45828) checked alive after; my 2 gate snapshots
+  and the throwaway tree removed by exact path.
+- SERVED (kills-new REQUEST 17:4x): c47f8bc2f. From your tree `node ../n16-tools/tools/gate/run.mjs --rev=<sha>` now
+  writes `build/gate/<sha>/` in YOUR tree and its snapshot takes YOUR DLLs. NOTE for your RUNNING gate on b9dba1da8
+  (started 17:41 with the old kit): results are in n16-tools/build/gate/b9dba1da8ac6/ (read them there), and it ran
+  the tools lane's c-2 DLLs (CAR_DEAD_END_TILES 65 in native, your GDScript reference has the old value). c-2 moved
+  neither the parity digest (94b2865f7f17d778) nor a route test on this branch, so a PASS should stand; if parity or a
+  city scenario FAILS there, that is my DLLs, not your view work: re-gate with the new kit. The cached snapshot
+  re-copies YOUR DLLs on the next gate (copyRuntime compares bytes).
