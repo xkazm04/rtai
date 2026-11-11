@@ -72,3 +72,44 @@ func _restore_walk() -> void:
 	RivetStride.enabled = true
 	RivetSwipe.enabled = true
 	RivetBob.enabled = true
+
+
+func test_every_other_before_reaches_its_switch() -> void:
+	# n15 tools: mutate on cast_flags.gd left these lines unkilled (60 %): no test applied them.
+	var befores: PackedStringArray = [
+		"--gun-grey",
+		"--rivet-flame=cone",
+		"--rivet-flame=side",
+		"--rivet-flame=all",
+		"--rivet-knock=off",
+		"--rivet-reload=off",
+		"--rivet-windup=off",
+		"--ghost-voice=facing",
+		"--rivet-tan=-3",
+	]
+	CastFlags._read = false
+	CastFlags.apply(befores)
+	var got: Array = [
+		PartMaterials.gun_tan,
+		RivetStrips.cone == RivetStrips.CONE_D9,
+		RivetStrips.diag,
+		RivetStrips.flame_all,
+		RivetKnock.enabled,
+		RivetReload.enabled,
+		RivetWindup.enabled,
+		GhostApparition.clear_figure,
+		PartMaterials.core_tan,
+	]
+	_restore_others()
+	assert_eq(got, [0.0, true, false, true, false, false, false, false, 0.0])
+
+
+func _restore_others() -> void:
+	PartMaterials.gun_tan = PartMaterials.GUN_TAN
+	RivetStrips.cone = []
+	RivetStrips.diag = true
+	RivetStrips.flame_all = false
+	RivetKnock.enabled = true
+	RivetReload.enabled = true
+	RivetWindup.enabled = true
+	GhostApparition.clear_figure = true
