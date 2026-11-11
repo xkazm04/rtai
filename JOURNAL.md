@@ -456,3 +456,13 @@ likely nav: one line to the owner in REPORT, no sim edit. (3) The t339-340 burst
 (JOURNAL 04:20); an alternative is to skip the burst while the thrown-back cell plays (the hit reads by the cell and
 the blood). (4) Asset replies: swat char cells with empty hands (REQUEST 04:10). (5) REPORT: final pass by 07:40 (rows
 are current to session 6; Calls (a)-(c) stand).
+
+## Session 7 (04:23-05:53)
+- Read: JOURNAL, git log, replies n15-combat.md: it371 04:23 DELIVERED my session-6 REQUEST (swat char cells with
+  empty hands, `swat_hit_70_cells/char_v2/`, A).
+- MILESTONE `406fb812e` item 2: the SWAT char sheet re-packed from char_v2 (street_hit.py CHARS["swat"] =
+  "char_v2/1", file name unchanged; sheet check build/scratch/s7/swat_char_v1_v2.png: same scale, hands empty). Film
+  weapon:flamethrower --victim=cop/head_swat --on=kill:1+80 64 px/m, before = the it363 sheet swapped back in on the
+  same build: `evidence/n15-combat/swat_char_empty_hands_ab_64ppm_t545-620.png` + x3 crop t565-620. The dropped
+  carbine at his feet is the only gun. Provenance line replaced (sha256 ed3cbdc8...). DECISION
+  combat/swat-char-empty-hands. Lint 16/16.
