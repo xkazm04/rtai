@@ -14,18 +14,19 @@ const META: StringName = &"kill_death_cells"
 ## drawn larger than the walk and hanging below the feet (the cops' pistol snap, t0-8: 1.99-2.45 m
 ## tall, boots 0.12-0.32 m under the point, film b_patrol64 t62 -> t63) draws that frame at FIT_K
 ## of its scale, lifted FIT_LIFT texture px per facing column so the boot stands on the point
-## (measured in JOURNAL n17 20:20). FIT_ON false = every frame as drawn (the before).
+## (measured in JOURNAL n17 20:20). Keyed "<art>/<file>": the p55 sheets stand on the point at
+## 2.00-2.34 m (walk 1.95) and are not fitted. FIT_ON false = every frame as drawn (the before).
 const FIT_ON: bool = true
 const FIT_ROWS: int = 1
 const FIT_K: Dictionary[String, float] = {
-	"cop_patrol_pistol_snap.png": 0.85,
-	"cop_riot_pistol_snap.png": 0.8,
-	"swat_pistol_snap.png": 0.8,
+	"p70/cop_patrol_pistol_snap.png": 0.85,
+	"p70/cop_riot_pistol_snap.png": 0.8,
+	"p70/swat_pistol_snap.png": 0.8,
 }
 const FIT_LIFT: Dictionary[String, PackedInt32Array] = {
-	"cop_patrol_pistol_snap.png": [21, 15, 5, 10, 22],
-	"cop_riot_pistol_snap.png": [57, 25, 24, 15, 57],
-	"swat_pistol_snap.png": [17, 11, 5, 15, 18],
+	"p70/cop_patrol_pistol_snap.png": [21, 15, 5, 10, 22],
+	"p70/cop_riot_pistol_snap.png": [57, 25, 24, 15, 57],
+	"p70/swat_pistol_snap.png": [17, 11, 5, 15, 18],
 }
 const BASE: StringName = &"kill_death_cells_base"
 
@@ -107,7 +108,10 @@ static func step(d: KillNewStyles.Death, age: int) -> bool:
 ## Stands frame `f` of a FIT grid at the walk's size on the point (scaled about the feet); any
 ## other frame or grid as drawn.
 static func fit(cells: Sprite2D, f: int) -> void:
-	var key: String = cells.texture.resource_path.get_file() if cells.texture != null else ""
+	var key: String = ""
+	if cells.texture != null:
+		var path: String = cells.texture.resource_path
+		key = path.get_base_dir().get_file() + "/" + path.get_file()
 	if not FIT_ON or not FIT_K.has(key):
 		return
 	if not cells.has_meta(BASE):
