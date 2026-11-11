@@ -789,3 +789,20 @@ untracked dev/sim/car_route_trails.gd copy is mine) and `git branch -D n15t-cont
   build/reels; duplicates, `--loadout`, `--expect=-1`, bad view names still exit 2). `node tools/reel/run_reels.mjs
   --loadout=pistol` -> `invalid argument`, exit 2. Reel tests 39/0. Gate and morning pass --out: unchanged. Real bare run:
   after the gate (one Godot per lane).
+- 04:39-04:42 combat's session-4 FRICTION (quest1 films ~250k px apart at t13708 when --stills starts at 13600 vs
+  13708; at 00:54 I only noted compare.mjs is safe) ROOT-CAUSED by reading code: in stills mode
+  `dev/frames/quest1_clip_rec.gd` steps the sim with no frame drawn between stills (world process off from the Start
+  press), and `CameraRig.follow` (core/render/camera_rig.gd:146) turns the focus move since the last DRAWN tick into a
+  velocity, `step` eases `_look_m` toward it (look_ease 0.06, at most 8 steps a frame). So a still's look-ahead = the walk
+  averaged over the gap since the PREVIOUS still (or since the start): another stills list, another camera. Fix
+  (cab8a0d4a, dev recorder only): the `still_lead` = 120 ticks before each still are drawn one frame per step (60 frames
+  at every=2), so the look-ahead converges on the real walk (0.94^118 = 0.07 % of any history left); `--still-lead=0`
+  = the old jump (quest1_clip.gd KNOWN_FLAGS). gdformat/gdlint clean; debt-ratchet FAILED the first commit
+  (`dev_loc: 21623 -> 21644`): comment trimmed, then `debt.mjs --update --accept-regression="..."` (+18, reason stored).
+- 04:43 STOPPED my gate on e0dc8173 (stale: 2f051cd65 + cab8a0d4a landed after it; it was at scenarios 43/55, all ok):
+  found by command line (node 94356 -> evidence 84396 -> Godot 45860 in gtai-gate-e0dc817315e6; the two other
+  gate/run.mjs trees are hero's and another lane's: not touched), `taskkill /F /T /PID 94356`, snapshot removed
+  (removeSnapshot; `git worktree list | grep -c e0dc817` -> 0). The final gate runs on HEAD after the quest1 proof.
+- 04:44 quest1 proof started: `bash evidence/quest1_lead/run.sh cab8a0d4a` (4 films via `film.mjs quest1 --rev=`, arms
+  jump = `-- --still-lead=0` and lead = default, each with `--stills=13600,13708` and `--stills=13708`; then
+  `evidence/quest1_lead/diff.mjs` compares t13708 within each arm). Log gtai-n15/logs/quest1_lead.log.
