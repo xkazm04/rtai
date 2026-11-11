@@ -87,10 +87,8 @@ export function encodePng(width, height, pixels) {
     chunk('IDAT', deflateSync(raw)), chunk('IEND', Buffer.alloc(0))]);
 }
 
-/** A cell's label strip: its tick, or any text the 5x7 font draws (tools/film/font.mjs). */
-export function label(pixels, width, left, top, cellW, text) {
-  drawText(pixels, width, left, top, cellW, text);
-}
+/** A cell's label strip: its tick, or any text the 5x7 font draws (tools/film/font.mjs); the characters drawn whole. */
+export const label = drawText;
 
 function render(frames, flags, crop) {
   const cellW = Math.ceil(crop[2] / flags.shrink);

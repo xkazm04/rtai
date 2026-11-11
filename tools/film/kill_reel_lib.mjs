@@ -179,7 +179,7 @@ export function measureHold(frames, kill, box, diff, { tolerance = 12, still = 0
 export function cellLabel(job, film, tick, column) {
   const off = tick - film.kill;
   const stop = film.measured?.hitstop_frames;
-  const tag = off === 0 ? `kill${stop ? ` hs${stop}` : ''}` : off > 0 ? `+${off}` : `${off}`;
+  const tag = off === 0 ? `kill${Number.isInteger(stop) && stop > 0 ? ` hs${stop}` : ''}` : off > 0 ? `+${off}` : `${off}`;
   const name = column === 0 ? ` ${job.side} ${job.victim || 'guard'} d${job.dir_deg} ${job.ppm}` : '';
   return `${tick} ${tag}${name}`;
 }
@@ -195,7 +195,7 @@ export const MOVIE_FRAME_OF_PROCESS_1 = 1;
  *  timing. null when the rows lack a frame there. */
 export function movieSpan(probe, from, to) {
   const frame = new Map((probe?.rows ?? []).filter((r) => Number.isInteger(r.frame)).map((r) => [r.tick, r.frame]));
-  if (!frame.has(from) || !frame.has(to)) return null;
+  if (from > to || !frame.has(from) || !frame.has(to)) return null;
   const last = frame.has(to + 1) ? frame.get(to + 1) - 1 : frame.get(to);
   const at = (f) => f - 1 + MOVIE_FRAME_OF_PROCESS_1;
   return [at(frame.get(from)), at(last)];
