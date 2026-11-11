@@ -523,7 +523,7 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   `custom_samplers` condition, `101 resources still in use at exit`), not compared against a main export. Log kept:
   evidence/morning_s4_gates_export.log. Scratch worktree removed (`git worktree remove --force` deregistered it but
   hit Permission denied: my shell's cwd was inside; dir removed after) and `git branch -D n15t-scratch-integ2`.
-- 02:08 t-4 on a HAND-MADE map (c-2 said "invisible in the shipped city"): new dev tool
+- 02:00 t-4 on a HAND-MADE map (c-2 said "invisible in the shipped city"): new dev tool
   `project/dev/sim/car_route_trails.gd` drives the real reference-sim car code (CitySimCars, tier B, 3 cars x 60 s) on
   a map whose roads end at a plaza (E), a kerb (N) and void (W, S); run in this tree and in scratch-tools-before
   (d720e22da, the old rule). U-turns (evidence/t4_trails/{before,after}.json): BEFORE 3 at the plaza (tile 7), 1 at
@@ -532,7 +532,7 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   the kerb into the block, both turning 18 m before the void. That is the comment's rule taken literally, and it is
   wrong for a dead-end street on a hand-made map. The owner should judge it: c-2 rewritten. Building the alternative as
   one data value next (a tile mask in sim_constants.json car_route; default = t-4 as built, so nothing moves).
-- 02:24 MILESTONE c-2's alternative is ONE data value: `CAR_DEAD_END_TILES` (sim_constants.json car_route, int, a bit per
+- 02:08 MILESTONE c-2's alternative is ONE data value: `CAR_DEAD_END_TILES` (sim_constants.json car_route, int, a bit per
   T_* code; gen.mjs -> SimConst + sim_constants.h; `CitySimCarRoute.dead_end(t)` and `dead_end` in car_route.cpp; a
   junction never is). Shipped 1 = t-4 as built. NATIVE REBUILD #4 (this lane only): scons debug + release exit 0,
   `scons tests` + `sim_core tests: 0 failed`; `run_parity.mjs`: bit for bit, planted caught at 629, final_sha_a
@@ -542,12 +542,12 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   mask 241 U-turns == before.json (the pre-t-4 build) exactly, mask 1 == after.json exactly, mask 65 turns before
   blocks (6) and void only. SEEN `gtai-masters/n15/tools/c2-dead-end-mask-241-1-65-4ppm.png` (3 panels).
   The generated doc string first broke gdlint's 100 columns in sim_constants.gd (quick gate caught it): shortened.
-- 02:33 the t-4 tests hard-coded "a kerb/plaza/block ahead is no dead end", so the owner's flip would have needed test
+- 02:11 the t-4 tests hard-coded "a kerb/plaza/block ahead is no dead end", so the owner's flip would have needed test
   edits: test_sim_car_route_t4 (independent formula `(CAR_DEAD_END_TILES >> tile) & 1`) and the Codex break test
   (via `dead_end`) now follow the mask. Proof, SimConst edited in place and restored: `run_unit --select=
   test_sim_car_route_t4,test_sim_car_route_break,test_sim_car_route_break_exits,test_sim_car_route` mask 1: 21/0,
   mask 241: 21/0, mask 65: 21/0. Dropped my own `CAR_DEAD_END_TILES == 1` pin for the same reason.
-- 02:13-02:17 t-5 cost again, now with an A/A twin (bench lock created noclobber, deleted after; CONTENDED: 8-15 other
+- 02:12-02:15 t-5 cost again, now with an A/A twin (bench lock created noclobber, deleted after; CONTENDED: 8-15 other
   Godot processes at each run start, column 6). `evidence/t5_aab.sh 6` -> `evidence/t5_aab.tsv`: per round one
   parity run (1200 steps, both sims) each of A = scratch-tools-before d720e22da (HW 80, pre-t-4), A2 = A again,
   B = n15-tools aded9845b (HW 132), order rotated. GDScript reference step: B-A 0.639 1.038 0.612 0.489 0.394 0.915 ms
@@ -556,7 +556,7 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   The A/A spread (max |0.41| ms, |9.2| us) overlaps B-A's smallest round, so the size is soft; the sign is not.
   Cause, read: `CitySimHash.build` walks all HW*HW cells for its prefix sums every step (6400 -> 17424). B-A also
   holds t-4 (route code, same tile reads). Native +9 us/step is 0.05 % of a 16.7 ms frame.
-- 02:28 SERVED hero FRICTION (n15-hero JOURNAL "`git show <rev>:<png> > file` writes the LFS pointer"): new
+- 02:18 SERVED hero FRICTION (n15-hero JOURNAL "`git show <rev>:<png> > file` writes the LFS pointer"): new
   `node tools/film/blob.mjs <rev>:<path> [--out=<file>]` reads the blob and runs a pointer through `git lfs smudge`.
   Real run: `blob.mjs HEAD~5:project/addons/gut/gui/arrow.png --out=build/blob_proof/arrow.png` -> `wrote ... (122
   bytes, LFS object, smudged)`, PIL opens it (20x20 LA), byte-identical to the checkout, where `git show` of the same

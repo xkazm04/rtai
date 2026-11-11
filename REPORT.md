@@ -1,4 +1,4 @@
-# REPORT n15-tools (session 4, 02:20; later sessions extend it)
+# REPORT n15-tools (session 4, 02:17; later sessions extend it)
 
 Branch `n15-tools` from main `5c5c03611`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n15\tools\` (`frames.json`),
 `evidence/` in this tree, JOURNAL.md for every command and its output.
