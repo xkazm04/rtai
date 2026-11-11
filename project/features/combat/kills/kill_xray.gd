@@ -103,4 +103,13 @@ static func rect(tex: Texture2D, feet: Vector2, height_m: float, ppm: float) -> 
 static func draw(ci: CanvasItem, tex: Texture2D, feet: Vector2, frame: int, ppm: float) -> void:
 	var cw: float = tex.get_width() * 0.5
 	var src: Rect2 = Rect2(cw * frame, 0.0, cw, tex.get_height())
-	ci.draw_texture_rect_region(tex, rect(tex, feet, KillShockFx.XRAY_M, ppm), src)
+	ci.draw_texture_rect_region(tex, rect(tex, feet, KillShockFx.XRAY_M * view_scale(), ppm), src)
+
+
+## The X-ray's height over XRAY_M in the shared view: the view's card height over the p70 one
+## (n16 it4: the p55 cards stand 2.0 m, so a 1.6 m skeleton looked shrunken in the man's place).
+static func view_scale() -> float:
+	var h: float = StreetWalkerCards.HEIGHT_BY_ART.get(
+		ViewMode.shared().art, StreetWalkerCards.HEIGHT_M
+	)
+	return h / StreetWalkerCards.HEIGHT_M

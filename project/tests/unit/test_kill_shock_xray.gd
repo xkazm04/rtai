@@ -78,3 +78,15 @@ func test_the_p55_view_flashes_the_p55_set_of_every_kind() -> void:
 	view.art = was
 	assert_eq(p55, KillXray.ART_55["swat"])
 	assert_eq(p70, KillXray.ART["swat"])
+
+
+func test_the_skeleton_stands_as_tall_as_the_views_cards() -> void:
+	var view: ViewMode = ViewMode.shared()
+	var was: String = view.art
+	view.art = "p70"
+	var p70: float = KillXray.view_scale()
+	view.art = "p55"
+	var p55: float = KillXray.view_scale()
+	view.art = was
+	assert_almost_eq(p70, 1.0, 0.001)
+	assert_almost_eq(p55, 2.0 / 1.7, 0.001)
