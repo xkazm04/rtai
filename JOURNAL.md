@@ -204,3 +204,5 @@ lanes' journals for REQUEST tools / FRICTION (none at 11:35). Gate on the final 
   629; final_sha_a/b 94b2865f7f17d778, unchanged from n15: c-2 moved no digest), selftest look goldens 11/11 worst 0.00,
   release-compile 683/0. Reel stage running: `build/gate/0b5c55fc7cfd/reels.log`; verdict = `gate exit N` at the end of
   C:/Users/kazda/kiro/gtai-n16/scratch-tools/gate_s2.log.
+- 13:31 GATE PASS on 0b5c55fc7 including the REEL gate (`gate exit 0`; reels top / tilt70 / combo OK, ~5 min each;
+  build/gate/0b5c55fc7cfd/gate.json). All gates green on the last project/ commit of this branch.
