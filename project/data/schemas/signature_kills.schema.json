@@ -51,6 +51,16 @@
                   "type": "object"
                 },
                 "type": "object"
+              },
+              "loose": {
+                "additionalProperties": {
+                  "additionalProperties": {
+                    "pattern": "^[a-z0-9_]+[.]png$",
+                    "type": "string"
+                  },
+                  "type": "object"
+                },
+                "type": "object"
               }
             },
             "required": [

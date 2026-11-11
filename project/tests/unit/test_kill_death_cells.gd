@@ -56,3 +56,37 @@ func test_every_named_grid_exists_with_a_row_per_frame() -> void:
 				assert_almost_eq(cell.x, roundf(cell.x), 0.001, "%s: 5 whole columns" % path)
 				named += 1
 	assert_gte(named, 4, "the pistol's four kinds at least")
+
+
+func test_the_pistol_throws_the_drawn_cap_or_helmet_of_the_three_cops() -> void:
+	var e: KillTrackRows.Extra = KillTrackRows.of(&"pistol_snap")
+	assert_eq(
+		KillDeathCells.path_in(e.loose, "p70", "cop/head_cap"), "p70/cop_patrol_headgear_tumble.png"
+	)
+	assert_eq(
+		KillDeathCells.path_in(e.loose, "p70", "cop/head_swat"), "p70/swat_headgear_tumble.png"
+	)
+	assert_eq(
+		KillDeathCells.path_in(e.loose, "p70", "ped/head_hair"), "", "a bare head throws none"
+	)
+	for art: Variant in e.loose:
+		var rows: Dictionary = e.loose[art]
+		for card_row: Variant in rows:
+			var path: String = StreetWalkerCards.DIR + str(art) + "/" + str(rows[card_row])
+			assert_true(ResourceLoader.exists(path), "%s exists" % path)
+
+
+func test_the_loose_cap_arcs_from_over_his_head_to_the_street_behind_him() -> void:
+	var d: KillNewStyles.Death = KillNewStyles.Death.new()
+	d.extra = KillTrackRows.of(&"pistol_snap")
+	d.dir = Vector2.RIGHT
+	d.feet_px = Vector2(100.0, 200.0)
+	d.height = 64.0
+	var at: int = roundi(d.extra.num("loose_at", 0.0))
+	var lands: int = at + roundi(d.extra.num("loose_ticks", 0.0))
+	var start: Vector2 = KillLooseArt.where(d, at, 32.0)
+	assert_lt(start.y, d.feet_px.y - d.height, "it leaves from above his head")
+	var rest: Vector2 = KillLooseArt.where(d, lands, 32.0)
+	assert_almost_eq(rest.y, d.feet_px.y, 0.01, "it lands on the street")
+	assert_almost_eq(rest.x, d.feet_px.x + d.extra.num("loose_m", 0.0) * 32.0, 0.01, "behind him")
+	assert_eq(KillLooseArt.where(d, lands + 300, 32.0), rest, "and stays there")

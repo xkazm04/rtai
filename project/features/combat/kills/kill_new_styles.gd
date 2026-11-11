@@ -36,6 +36,8 @@ class Death:
 	var feet_px: Vector2 = Vector2.ZERO
 	## Metres to the wall behind him the pin carries him onto (-1: none; KillPinArt).
 	var wall_m: float = -1.0
+	## The loose headgear's tumble cells (KillLooseArt; null: none).
+	var loose: Texture2D = null
 
 
 var kills: SignatureKills = null
@@ -80,6 +82,7 @@ func parts(
 	var cells: Sprite2D = KillFallCells.attach(
 		rig, body, KillTrack.fall_vec(d, extra.fall, _side(serial)), extra
 	)
+	KillLooseArt.attach(rig, body, extra)
 	var hat: Node2D = groups[SignatureKill.HAT]
 	if cells != null and hat != null:  # on a card the "cap" copy is the whole drawn figure
 		hat.free()
@@ -105,6 +108,7 @@ func add(serial: int, root: Node2D, row: SignatureKill, at: Vector2, dir: Vector
 	d.fall = KillTrack.fall_vec(d.dir, d.extra.fall, _side(serial))
 	d.body = d.lay.get_child(0) as Node2D if d.lay.get_child_count() > 0 else null
 	d.cells = KillFallCells.of(d.body)
+	d.loose = KillLooseArt.of(d.body)
 	var m: Array = KillTrack.measure(d.lay, ppm)
 	d.feet = d.body.get_meta(FEET, m[0]) if d.body != null else m[0]
 	d.height = d.body.get_meta(HEIGHT, m[1]) if d.body != null else m[1]
@@ -178,6 +182,7 @@ static func _show_cells(d: Death, on: bool) -> void:
 func _draw() -> void:
 	for d: Death in _deaths:
 		var age: int = kills.tick - d.born
+		KillLooseArt.draw(self, d, age)
 		if d.row.style == &"snap":
 			KillSnapArt.draw(self, d, age)
 		elif d.row.style == &"stitch":

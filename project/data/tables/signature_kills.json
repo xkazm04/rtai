@@ -548,16 +548,28 @@
             "cop/head_swat": "swat_pistol_snap.png",
             "ped/head_hair": "ped_suit_pistol_snap.png"
           }
+        },
+        "loose": {
+          "p70": {
+            "cop/head_cap": "cop_patrol_headgear_tumble.png",
+            "cop/head_helmet": "cop_riot_headgear_tumble.png",
+            "cop/head_swat": "swat_headgear_tumble.png"
+          }
         }
       },
       "cone_deg": 16,
-      "doc": "Pistol (lane kills-new, n16; the most used gun, so short and clean). The patrol cop, riot cop, SWAT and suit ped play their own drawn cells (cells: KillDeathCells, 5 facings x 4 frames, faced toward the shooter): t0-8 the head thrown back, the exit spray and the cap/helmet flying off; t8-14 the knees buckle, blood running from the head; t14-21 he pitches forward, arms limp; from t21 he lies face down, head toward Rivet, the back-of-head wound up (the corpse). KillSnapArt adds the red jet and mist out of the back of the head (t2-9). Any other kind: the head snaps back 22 deg (t0-2), hangs (t2-8), buckles (t8-14), then from t14 his own drawn fall grid (KillFallCells) plays over 18 ticks facing the shooter; a parts rig lays the body copy by the pose track (t14-26). Aftermath: the face-down body, the exit fan on the street behind where he stood.",
+      "doc": "Pistol (lane kills-new, n16; the most used gun, so short and clean). The patrol cop, riot cop, SWAT and suit ped play their own drawn cells (cells: KillDeathCells, 5 facings x 4 frames, faced toward the shooter): t0-8 the head thrown back, the exit spray and the cap/helmet flying off (from t8 the drawn loose cap or helmet, KillLooseArt, arcs 1.1 m back along the shot over 12 ticks, tumbling, and stays on the street); t8-14 the knees buckle, blood running from the head; t14-21 he pitches forward, arms limp; from t21 he lies face down, head toward Rivet, the back-of-head wound up (the corpse). KillSnapArt adds the red jet and mist out of the back of the head (t2-9). Any other kind: the head snaps back 22 deg (t0-2), hangs (t2-8), buckles (t8-14), then from t14 his own drawn fall grid (KillFallCells) plays over 18 ticks facing the shooter; a parts rig lays the body copy by the pose track (t14-26). Aftermath: the face-down body, the exit fan on the street behind where he stood.",
       "fall": "forward",
       "flash_ticks": 0,
       "fx": {
         "cells_at": 14,
         "cells_ticks": 18,
         "drops": 9,
+        "loose_at": 8,
+        "loose_hop_m": 0.4,
+        "loose_m": 1.1,
+        "loose_size_m": 0.3,
+        "loose_ticks": 12,
         "mist_m": 0.8,
         "mist_ticks": 7
       },

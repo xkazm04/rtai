@@ -11,6 +11,7 @@ corpse (the last frame) is the 3/4-away one when BACK_FROM_AWAY names the kind, 
 grids do (a face-down corpse seen from behind reads as a person standing). Deterministic.
 
     PYTHONDONTWRITEBYTECODE=1 python tools/art/kill_cells_pack.py --death=pistol_snap [--lib=<dir>]
+    PYTHONDONTWRITEBYTECODE=1 python tools/art/kill_cells_pack.py --headgear  (<kind>_headgear_tumble.png)
 """
 
 import argparse
@@ -29,6 +30,8 @@ COLS = 5
 BACK_FROM_AWAY = {"pistol_snap": ("cop_patrol",)}
 ALPHA_MIN = 40
 UPRIGHT_FRAME = 2
+# kind -> its row of the loose headgear cells (cop_headgear_tumble_70_cells/<row>_<frame>.png)
+HEADGEAR = {"cop_patrol": 1, "cop_riot": 2, "swat": 3}
 
 
 def feet_y(cell: Image.Image) -> int:
@@ -71,13 +74,32 @@ def pack(kind: str, death: str, lib: Path) -> Path | None:
     return dst
 
 
+def pack_headgear(kind: str, lib: Path) -> Path | None:
+    """The kind's loose cap or helmet: its 2 tumble frames across, each centred in a square cell."""
+    if kind not in HEADGEAR:
+        return None
+    src = lib / "cop_headgear_tumble_70_cells"
+    cells = [Image.open(src / f"{HEADGEAR[kind]}_{f}.png").convert("RGBA") for f in (1, 2)]
+    side = max(max(c.size) for c in cells)
+    out = Image.new("RGBA", (side * 2, side), (0, 0, 0, 0))
+    for i, c in enumerate(cells):
+        out.alpha_composite(c, (i * side + (side - c.width) // 2, (side - c.height) // 2))
+    dst = P70 / f"{kind}_headgear_tumble.png"
+    out.save(dst, optimize=True)
+    return dst
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--death", required=True)
+    ap.add_argument("--death", default="pistol_snap")
     ap.add_argument("--lib", default=str(LIB))
+    ap.add_argument("--headgear", action="store_true", help="pack the loose headgear cells instead")
     args = ap.parse_args()
     for kind in KINDS:
-        dst = pack(kind, args.death, Path(args.lib))
+        if args.headgear:
+            dst = pack_headgear(kind, Path(args.lib))
+        else:
+            dst = pack(kind, args.death, Path(args.lib))
         if dst is None:
             print(f"{kind}: no cells")
             continue

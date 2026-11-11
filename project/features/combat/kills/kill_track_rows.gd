@@ -21,6 +21,8 @@ class Extra:
 	## grid file (KillDeathCells). Empty = the victim's fall grid plays (KillFallCells).
 	var cells_at: PackedInt32Array = PackedInt32Array()
 	var grids: Dictionary = {}
+	## art -> card row -> the loose headgear's tumble cells (KillLooseArt).
+	var loose: Dictionary = {}
 
 	## The style value `key` (row fx), or `fallback`.
 	func num(key: String, fallback: float) -> float:
@@ -77,6 +79,9 @@ static func _cells(e: Extra, v: Variant) -> void:
 	var g: Variant = c.get("grids", {})
 	if g is Dictionary:
 		e.grids = g
+	var l: Variant = c.get("loose", {})
+	if l is Dictionary:
+		e.loose = l
 
 
 static func _f(v: Variant) -> float:

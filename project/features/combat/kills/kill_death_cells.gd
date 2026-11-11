@@ -15,8 +15,13 @@ const META: StringName = &"kill_death_cells"
 static func path_of(extra: KillTrackRows.Extra, art: String, card_row: String) -> String:
 	if extra.cells_at.is_empty():
 		return ""
+	return path_in(extra.grids, art, card_row)
+
+
+## The file `table` (art -> card row -> file) names for a card row, as "<art>/<file>" ("" = none).
+static func path_in(table: Dictionary, art: String, card_row: String) -> String:
 	for a: String in [art, StreetWalkerFall.FALLBACK]:
-		var v: Variant = extra.grids.get(a, {})
+		var v: Variant = table.get(a, {})
 		if not v is Dictionary:
 			continue
 		var rows: Dictionary = v
