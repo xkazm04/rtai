@@ -21,6 +21,7 @@ const GRIDS: Dictionary[String, String] = {
 	"ped/head_hat": "res://features/characters/art/view/p70/ped_hat_gib.png",
 	"ped/head_punk": "res://features/characters/art/view/p70/ped_punk_gib.png",
 	"ped/head_shopper": "res://features/characters/art/view/p70/ped_shopper_gib.png",
+	"ped/head_jogger": "res://features/characters/art/view/p70/ped_jogger_gib.png",
 }
 ## tools/art/gib_pieces.py: CELL and TORSO_PX (64: drawn at about the card's own downscale).
 const CELL: float = 96.0
@@ -67,8 +68,10 @@ static func dress(row: String, pieces: Array, cell_h: float) -> bool:
 ## victim gibbed as a rig (its parts drawn, no whole-figure card, so GibCardCut never cut it)
 ## swaps each of GibCut's six part groups for its drawn piece, centred where the group was, the
 ## torso RIG_TORSO_M tall, on the group's top z. False (the rig's own parts fly) when the kind has
-## no drawn pieces or `--gib-pieces=cut`.
+## no drawn pieces, `--gib-pieces=cut`, or no head card (the top view: its parts fly, as before).
 static func dress_rig(rig: CutRig, groups: Array[Node2D]) -> bool:
+	if rig.head_card == null:
+		return false
 	var tex: Texture2D = grid_of(StreetWalkerCards.row_of(rig))
 	if tex == null:
 		return false

@@ -43,3 +43,9 @@ func test_a_kind_without_pieces_keeps_its_rig_parts() -> void:
 	assert_false(GibCardPieces.dress_rig(_rig("ped/head_none"), groups))
 	assert_eq(groups[1].get_child_count(), 2)
 	assert_eq(groups[1].get_child(0).name, "part0")
+
+
+func test_a_rig_without_a_head_card_keeps_its_rig_parts() -> void:
+	var rig: CutRig = autofree(CutRig.new())  # the top view: no head card (reel gate, top pass)
+	var groups: Array[Node2D] = _groups()
+	assert_false(GibCardPieces.dress_rig(rig, groups))
