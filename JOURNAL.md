@@ -521,3 +521,16 @@ death while the burst still follows); film machine_pistol cop/head_cap 64 px/m t
 (3) DEFECTS: the round through a fresh corpse (minor), the cops at the wall's foot (owner line written: nav +
 occlusion). (4) Asset replies (n15-combat.md) for anything new. (5) REPORT final pass by 07:40 (rows current to
 session 7; Calls (a)-(c) stand; update the gate line to the final commit).
+
+## Session 8 (05:36-07:06)
+- Read: JOURNAL, git log, replies n15-combat.md (nothing new since it371 04:23), DEFECTS, REPORT open rows.
+- Finding (t339 dot): session 6's try kept the push in BOTH the recorded body point and the draw, so a later round
+  recorded while he was already pushed was drawn at the round's point minus that push once he died (the t344 boots dot).
+  Fix: record the body point without the push, draw with the push of the moment (GunFxFollow.body_push).
+- MILESTONE `61a2d3baa` item 5: the body burst rides the living hit card's push (RigCarry.wire sets body_off and
+  body_push; arena_rigs.gd held at 294 lines). Film weapon:machine_pistol --victim=cop/head_cap 64 px/m t334-346,
+  before `--burst-push=off`, same build: `evidence/n15-combat/burst_rides_push_ab_64ppm_x2_t338-344.png`: t339's dot
+  moves ~0.2 m onto his shadow's edge; no new dot at t344. Still a floor dot at his feet front: the burst is a floor
+  print and the thrown-back figure leans back off it (the root, left open). DECISION combat/burst-push. Unit 18/0 on
+  the touched suites (+2 tests). Lint 16/16.
+- 05:58 GATES started on `61a2d3baa` (`node tools/gate/run.mjs --rev=HEAD --reels`, log build/gate/s8_gate1.log).
