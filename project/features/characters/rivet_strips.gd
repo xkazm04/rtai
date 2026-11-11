@@ -151,8 +151,7 @@ static func hides_held(rig: CutRig) -> bool:
 
 ## True while a shot or a strike latches the fire cell (the recoil, the FIRE latch, a strike).
 static func fire_latched(rig: CutRig) -> bool:
-	var fired: bool = absf(rig.clips.recoil) > RivetFrames.FIRE_RECOIL
-	return fired or RivetFireTurn.held(rig) or rig.clips.strike_t >= 0.0  # n17: not across a turn
+	return RivetFireTurn.latched(rig) or rig.clips.strike_t >= 0.0  # n17: not across a turn
 
 
 ## Whether the rig's equipped strip draws its fire cell this frame (`firing`: a shot or a strike
