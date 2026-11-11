@@ -968,7 +968,7 @@
       "blot_m": 0,
       "bounce": 0.1,
       "cone_deg": 16,
-      "doc": "Electro baton (lane kills-new, n16): the overload. Unlike the electro gun's X-ray strobe: no skeleton, no strobe, no arcs; the current cooks him from inside. Hit-stop 3 (the heavy blow). t3-45 he stands locked with a fine tremble (1.5 deg every tick; none under --reduced-motion) while cream veins of light spread from his chest into his limbs, brighter each tick, a cream glow builds under the skin, steam puffs rise off his collar and shoulders every 6 ticks, and his eyes burn as two cream points that go out at t40 (KillCookArt). From t45 his own drawn fall grid (KillFallCells) drops him back along the blow over 10 ticks, and smoke rises off the body for 200 ticks. No blood (spray 0, no blot); the current earths through his boots: a 0.3 m ink scorch where he stood (scorch_radius_m), the aftermath beside the body. Placeholder until the drawn overload cells land (JOURNAL REQUEST assets).",
+      "doc": "Electro baton (lane kills-new, n16): the overload. Unlike the electro gun's X-ray strobe: no skeleton, no strobe, no arcs; the current cooks him from inside. Hit-stop 3 (the heavy blow). t3-45 he stands locked with a fine tremble (1.5 deg every tick; none under --reduced-motion) while cream veins of light spread from his chest into his limbs, brighter each tick, a cream glow builds under the skin, steam puffs rise off his collar and shoulders every 6 ticks, and his eyes burn as two cream points that go out at t40 (KillCookArt). From t45 his own drawn fall grid (KillFallCells) drops him back along the blow over 10 ticks, and smoke rises off the body for 200 ticks. No blood (spray 0, no blot). Placeholder until the drawn overload cells land (JOURNAL REQUEST assets).",
       "fall": "back",
       "flash_ticks": 0,
       "fx": {
@@ -990,7 +990,7 @@
       "pieces": [
         "body"
       ],
-      "scorch_radius_m": 0.3,
+      "scorch_radius_m": 0,
       "spin_dps": [
         0,
         0
