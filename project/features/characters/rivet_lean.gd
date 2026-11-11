@@ -10,7 +10,16 @@ extends RefCounted
 ## `--rivet-lean=off` (CastFlags) = before (every strike upright).
 
 static var enabled: bool = true
+## n17: a strike cell stands planted (no walk bob or sway on it); false = the before (it bobbed
+## 1.4 world px with the gait while he moved: 2.8 px at 64 px/m). `--rivet-lean=off` clears both.
+static var plant: bool = true
 static var _by: Dictionary[StringName, Vector2] = {}
+
+
+## True while `rig` plays a strike clip and strikes stand planted: RivetFrames drops the walk's
+## bob and sway on the strike cells (the strike's weight is the lean, not the gait).
+static func held(rig: CutRig) -> bool:
+	return plant and enabled and rig.clips.strike_t >= 0.0
 
 
 ## The lean (radians, + = clockwise on screen) of `rig` this frame; 0 outside a weapon strike.

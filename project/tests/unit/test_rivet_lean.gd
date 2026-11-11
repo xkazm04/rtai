@@ -32,3 +32,14 @@ func test_blades_lean_the_claw_and_guns_do_not() -> void:
 		assert_gt(l.x, 0.0, "%s winds back" % id)
 	assert_eq(RivetLean.of(&""), Vector2.ZERO, "the claw strikes upright")
 	assert_eq(RivetLean.of(&"pistol"), Vector2.ZERO, "a gun has no lean")
+
+
+func test_a_strike_stands_planted_only_while_it_plays() -> void:
+	var rig: CutRig = autofree(CutRig.new())
+	rig.clips.strike_t = -1.0
+	assert_false(RivetLean.held(rig), "no strike: the gait bobs")
+	rig.clips.strike_t = 0.05
+	assert_true(RivetLean.held(rig), "a strike cell stands planted")
+	RivetLean.enabled = false
+	assert_false(RivetLean.held(rig), "off = the before")
+	RivetLean.enabled = true

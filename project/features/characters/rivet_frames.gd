@@ -135,7 +135,7 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	RivetCellFeet.show(card, c.x)  # n17: a strike cell on its own boot line
 	card.flip_h = c.y == 1
 	var walk: float = clampf(rig.speed_now / WALK_SPEED, 0.0, 1.0)
-	walk = walk if c.x != Cell.ROLL and c.x != Cell.DEATH and not drawn_walk else 0.0
+	walk = 0.0 if c.x in [Cell.ROLL, Cell.DEATH] or drawn_walk or RivetLean.held(rig) else walk
 	var stride: float = sin(TAU * rig.phase)
 	card.global_rotation = stride * SWAY * walk + _roll_spin(rig, c.x) + RivetLean.rad(rig)
 	card.global_scale = Vector2(s, s * RivetBob.stretch(card)) / RivetWalk.res_of(card)
