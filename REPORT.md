@@ -182,5 +182,8 @@ the right film).
   combat routes `WINDUP_FLAGS` to `_windup()` with `--rivet-left-strike=off`/`--rivet-blade-left=off`: keep both
   `elif` branches and both helper functions) and `rivet_res.gd` `X15` (hero's 37 p70/p55 strips + combat's 6 blade
   left sets: keep both lists). The resolution that passed gdformat, gdlint, a Godot parse check and lint 16/16:
-  `evidence/merge_hero_x_combat_686fcb828.diff`. The baseline conflict beside them: `node tools/debt/merge_baseline.mjs`
+  `evidence/merge_hero_x_combat_686fcb828.diff`. Re-checked at 03:35 on the then tips (hero 88077fb80, combat 7778d347a,
+  `git merge-tree` in order): the same two conflicts, nothing new. `python evidence/merge/resolve_hero_x_combat.py
+  <conflicted file> <out>` writes the union (it refuses if a side changed shape); its output on those tips passed
+  gdformat, gdlint and the 40-line function check (`evidence/merge/hero_x_combat_resolution.diff`). The baseline conflict beside them: `node tools/debt/merge_baseline.mjs`
   (then commit), not "take either side", which fails the merge commit's ratchet.

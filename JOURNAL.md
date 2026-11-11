@@ -650,3 +650,14 @@ dev/sim/car_route_trails.gd there is mine) and `git branch -D n15t-control-sim-h
   only): template_debug + template_release + `scons tests` exit 0, `sim_core tests: 0 failed`. `run_parity.mjs`: bit
   for bit over 1200 steps, planted caught at 629, final_sha_a = final_sha_b = 94b2865f7f17d778 (unchanged).
   `run_unit --select=test_sim_hash*` 20/0.
+- 03:22 mutate on 0736f3496 (`tools/mutate/mutate.mjs --file=features/city/sim/sim_hash.gd --max=15 --tests=test_sim_hash,
+  test_sim_hash_break,test_sim_hash_break_order,test_sim_hash_window`; evidence/mutate_sim_hash_build_0736f3496.log):
+  `score 93.3% = killed 14 / (killed 14 + survived 1)`, 242 s, checkout clean. Survivor `:8 var hgx: int = 0 -> 1`:
+  equivalent (build() sets hgx before any query reads it). The sentinel survivor of 2229fdd98 is gone with the code.
+- 03:26 gate started on 0736f3496 (`node tools/gate/run.mjs --rev=HEAD --reels --timeout=40`, background, log
+  gtai-n15/flake/gate_s5_head.log).
+- 03:35 merge preview (`git merge-tree --write-tree`, main + tools + hero 88077fb80 + combat 7778d347a in order): tools
+  and hero merge clean except JOURNAL + baseline (morning.mjs handles both); combat conflicts on the same two code files
+  as at 01:03, cast_flags.gd and rivet_res.gd. New `evidence/merge/resolve_hero_x_combat.py` writes the union (refuses if
+  a side changed shape); on these tips its output passes gdformat --check, gdlint, `longFunctions` = [] (apply 40 lines).
+  `evidence/merge/hero_x_combat_resolution.diff`. REPORT merge notes point to it.
