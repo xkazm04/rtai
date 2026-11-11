@@ -175,7 +175,8 @@
               "crush",
               "vaporise",
               "snap",
-              "stitch"
+              "stitch",
+              "pin"
             ]
           },
           "track": {

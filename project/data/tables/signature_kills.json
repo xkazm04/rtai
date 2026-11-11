@@ -693,6 +693,67 @@
         0
       ],
       "weapon": "machine_pistol"
+    },
+    {
+      "blot_m": 0.15,
+      "bounce": 0.1,
+      "cone_deg": 10,
+      "doc": "Gloria, the nail gun (lane kills-new, n16): pinned. On the hit (gib hold 2) the nails streak in along the shot (KillPinArt); with a wall within 1.4 m behind him (the stage's push_out, probed along the shot) he is slammed back onto it over 6 ticks and hangs there by both sleeves, feet 0.12 m off the street, writhing (12 deg, dying out over 80 ticks from t10); on the open street he falls back (his own drawn fall grid, t2-16) and a nail through the foot and one through the far sleeve hold him to the street while he writhes. The drawn nails stay with the body. Aftermath: the pinned body and the nails. Placeholder until the drawn pin cells land (JOURNAL REQUEST assets).",
+      "fall": "back",
+      "flash_ticks": 0,
+      "fx": {
+        "cells_at": 2,
+        "cells_ticks": 14,
+        "lift_m": 0.12,
+        "settle": 10,
+        "slide_ticks": 6,
+        "wall_m": 1.4,
+        "writhe_deg": 12,
+        "writhe_ticks": 80
+      },
+      "ground_drag": 9,
+      "hitstop_ticks": 2,
+      "id": "nail_pin",
+      "launch_mps": [
+        0.1,
+        0.2
+      ],
+      "pieces": [
+        "body"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "spray": 6,
+      "spray_cone_deg": 16,
+      "style": "pin",
+      "track": [
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          2,
+          10,
+          1,
+          0
+        ],
+        [
+          8,
+          0,
+          0.97,
+          0
+        ]
+      ],
+      "up_mps": [
+        0,
+        0
+      ],
+      "weapon": "gloria"
     }
   ],
   "leftover_budget": 12,

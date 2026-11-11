@@ -7,6 +7,7 @@ extends GutTest
 const NEW: Dictionary[StringName, StringName] = {
 	&"pistol": &"snap",
 	&"machine_pistol": &"stitch",
+	&"gloria": &"pin",
 }
 
 
@@ -103,7 +104,7 @@ func _posed(age: int) -> Transform2D:
 	fx.bind(k, 32.0, false)
 	var body: Node2D = KillNewStyles.wrap_body(GibBlob.new())
 	var row: SignatureKill = k.table.for_weapon(&"pistol")
-	fx.add(0, body, row, Vector2.RIGHT)
+	fx.add(0, body, row, Vector2.ZERO, Vector2.RIGHT)
 	k.tick = age
 	fx.pose()
 	var out: Transform2D = (body.get_child(0) as Node2D).transform

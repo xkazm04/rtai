@@ -7,7 +7,7 @@ extends Node2D
 ## the sim tick, so a replay draws the same frames. No RNG: shapes come from a hash of the serial
 ## and the tick.
 
-const STYLES: Array[StringName] = [&"snap", &"stitch"]
+const STYLES: Array[StringName] = [&"snap", &"stitch", &"pin"]
 ## Body metas set at the cut: the feet (body-local px) and the standing height (px).
 const FEET: StringName = &"kill_feet"
 const HEIGHT: StringName = &"kill_height"
@@ -34,6 +34,8 @@ class Death:
 	## Layer px this frame: the head (the track's pose applied), for the overlays.
 	var head_px: Vector2 = Vector2.ZERO
 	var feet_px: Vector2 = Vector2.ZERO
+	## Metres to the wall behind him the pin carries him onto (-1: none; KillPinArt).
+	var wall_m: float = -1.0
 
 
 var kills: SignatureKills = null
@@ -89,7 +91,7 @@ func parts(
 
 
 ## KillStyles.take's share: the placed body (a wrapped root) starts its track.
-func add(serial: int, root: Node2D, row: SignatureKill, dir: Vector2) -> void:
+func add(serial: int, root: Node2D, row: SignatureKill, at: Vector2, dir: Vector2) -> void:
 	if root == null or root.get_child_count() == 0:
 		return
 	var d: Death = Death.new()
@@ -106,6 +108,8 @@ func add(serial: int, root: Node2D, row: SignatureKill, dir: Vector2) -> void:
 	var m: Array = KillTrack.measure(d.lay, ppm)
 	d.feet = d.body.get_meta(FEET, m[0]) if d.body != null else m[0]
 	d.height = d.body.get_meta(HEIGHT, m[1]) if d.body != null else m[1]
+	if row.style == &"pin":
+		d.wall_m = KillPinArt.wall_behind(kills, at, d.dir, d.extra.num("wall_m", 1.4))
 	_deaths.append(d)
 
 
@@ -123,8 +127,12 @@ func pose() -> void:
 	for d: Death in _deaths:
 		var age: int = kills.tick - d.born
 		var p: Vector3 = KillTrack.sample(d.extra.track, age)
+		if d.row.style == &"pin":
+			p.x += KillPinArt.writhe(d, age)
 		var b: Transform2D = KillTrack.basis(d.dir, d.fall, p, d.extra.lie_len)
 		var slide: Vector2 = d.dir * d.extra.slide_m * ppm * clampf(p.z, 0.0, 1.0)
+		if d.row.style == &"pin":
+			slide += KillPinArt.shift(d, age, ppm)
 		if _drawn(d, age):  # the drawn fall takes over the lie: the track keeps only its lean
 			b = KillTrack.basis(d.dir, d.fall, Vector3(p.x, 1.0, 0.0), 1.0)
 		KillTrack.lay(d.lay, d.feet, b, slide)
@@ -138,7 +146,7 @@ func pose() -> void:
 ## from `fall_at` (default cells_at) over `cells_ticks`, and a style may turn its facing (the
 ## stitch's whirl). The copy of his standing card hides.
 func _drawn(d: Death, age: int) -> bool:
-	if d.cells == null or not d.extra.fx.has("cells_at"):
+	if d.cells == null or d.wall_m >= 0.0 or not d.extra.fx.has("cells_at"):
 		return false
 	var at: int = roundi(d.extra.num("cells_at", 0.0))
 	var on: bool = age >= at
@@ -161,6 +169,8 @@ func _draw() -> void:
 			KillSnapArt.draw(self, d, age)
 		elif d.row.style == &"stitch":
 			KillStitchArt.draw(self, d, age)
+		elif d.row.style == &"pin":
+			KillPinArt.draw(self, d, age)
 
 
 ## A stable 0..1 hash of a kill serial and a number (no dice).

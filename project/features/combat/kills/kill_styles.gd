@@ -111,7 +111,7 @@ func take(serial: int, body: Node2D, row: SignatureKill, at: Vector2, dir: Vecto
 	elif row.style == &"crush":
 		crush_fx.add(serial, body)
 	elif KillNewStyles.owns(row.style):
-		new_fx.add(serial, body, row, dir)
+		new_fx.add(serial, body, row, at, dir)
 	elif row.style == &"dissolve" and body != null:
 		dissolve_fx.add(serial, body, row, at, dir)
 	elif row.style == &"hole" and body != null:
