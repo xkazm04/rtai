@@ -115,8 +115,9 @@ func test_a_flame_burst_off_its_drawn_flame_keeps_the_facing_cell() -> void:
 			RivetStrips.fires_drawn(&"pistol", 2, deg_to_rad(100.0), art), "a gun at the camera"
 		)
 		assert_true(RivetStrips.fires_drawn(&"pistol", 4, deg_to_rad(-150.0), art), "a gun left")
-		var drawn: bool = RivetGunDiag.draws(art, &"pistol")  # n17: p70's drawn diagonal at -150
-		assert_eq(RivetStrips.fires_drawn(&"pistol", 5, deg_to_rad(-130.0), art), drawn, art)
+		assert_false(
+			RivetStrips.fires_drawn(&"pistol", 5, deg_to_rad(-130.0), art), "away diagonal"
+		)
 	RivetStrips.flame_all = true
 	assert_true(RivetStrips.fires_drawn(&"flamethrower", 6, deg_to_rad(-85.0), "p55"), "=all")
 	assert_true(RivetStrips.fires_drawn(&"pistol", 6, deg_to_rad(-85.0), "p55"), "=all: a gun")

@@ -6,7 +6,9 @@ extends RefCounted
 ## away right, toward left, away left; the gun in his right hand in all four) the diagonal octants
 ## fire them (RivetStrips.diag_or, as the flamer's), and a shot counts as drawn when it is aimed
 ## within GUN_TOL of the drawn gun's screen angle (DEG, measured: the flash's biggest hot blob, from
-## its root nearest the body to its far tip, against the flashless twin). The flashless twin
+## its root nearest the body to its far tip, against the flashless twin), when the aim lies within
+## FIT_TOL of it: nearer the side or the camera the facing cells stand (RivetFireCam's choice). The
+## flashless twin
 ## (RivetNoFlash) holds the pose past the flare. `--rivet-gun-diag=off` (CastFlags) = before (the
 ## side fire cell on the diagonals). Render only.
 
@@ -23,6 +25,9 @@ const HELMET_X: Dictionary[String, PackedFloat32Array] = {
 }
 ## The boots' pad above the cell bottom (strip px): cells 0/2 at row 177, 1/3 at 179 of 180.
 const FOOT_PX: Dictionary[String, float] = {"p70": 1.0}
+
+## Half an octant: within it the diagonal is the drawn gun nearest the aim.
+const FIT_TOL: float = PI / 8.0
 
 static var enabled: bool = true
 
@@ -54,6 +59,12 @@ static func seat(card: Sprite2D, cell: int) -> void:
 	var xs: PackedFloat32Array = HELMET_X.get(on.get_base_dir().get_file() + "/" + gun, [])
 	if cell >= 0 and cell < xs.size():
 		card.offset.x = -xs[cell]
+
+
+## True when `rig`'s aim (none: the facing's) lies within FIT_TOL of the drawn diagonal gun at `o`.
+static func fits(rig: CutRig, weapon: StringName, o: int, art: String) -> bool:
+	var aim: float = RivetStrips.aim_of(rig)
+	return is_nan(aim) or absf(angle_difference(aim, gun_rad(weapon, o, art))) <= FIT_TOL
 
 
 ## True for a gun's diagonal strip while `--rivet-gun-diag=off` holds it off.

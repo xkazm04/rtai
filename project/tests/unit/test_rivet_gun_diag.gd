@@ -40,10 +40,11 @@ func test_the_shot_counts_as_drawn_against_the_drawn_guns_angle() -> void:
 	assert_almost_eq(rad_to_deg(RivetGunDiag.gun_rad(&"pistol", 1, "p70")), 32.0, 0.01)
 	assert_almost_eq(rad_to_deg(RivetGunDiag.gun_rad(&"pistol", 0, "p70")), 0.0, 0.01, "side")
 	assert_almost_eq(rad_to_deg(RivetGunDiag.gun_rad(&"pistol", 3, "p55")), 180.0, 0.01, "p55")
-	assert_true(RivetStrips.fires_drawn(&"pistol", 1, deg_to_rad(70.0), "p70"), "38 deg off")
-	assert_false(RivetStrips.fires_drawn(&"pistol", 7, deg_to_rad(40.0), "p70"), "65 deg off")
-	RivetGunDiag.enabled = false
-	assert_true(RivetStrips.fires_drawn(&"pistol", 7, deg_to_rad(40.0), "p70"), "before: side")
+	assert_true(RivetGunDiag.fits(_rig(1, 50.0), &"pistol", 1, "p70"), "18 deg off")
+	assert_false(RivetGunDiag.fits(_rig(1, 60.0), &"pistol", 1, "p70"), "28 deg: the camera's")
+	assert_false(RivetGunDiag.fits(_rig(1, 5.0), &"pistol", 1, "p70"), "27 deg: the side's")
+	assert_true(RivetGunDiag.fits(_rig(7, -40.0), &"pistol", 7, "p70"), "away right")
+	assert_eq(RivetStrips.diag_or(_rig(1, 60.0), "p70", &"pistol", EQ), EQ, "a steep shot")
 
 
 func test_off_keeps_the_side_fire_cell_on_the_diagonals() -> void:

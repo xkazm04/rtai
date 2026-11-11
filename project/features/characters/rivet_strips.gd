@@ -98,6 +98,8 @@ static func diag_or(rig: CutRig, art: String, weapon: StringName, path: String) 
 	var d: String = DIR + art + "/rivet_eq_" + String(weapon) + DIAG
 	if not fire_latched(rig) or not has_file(d) or RivetGunDiag.off(d):
 		return path
+	if RivetGunDiag.owns(d):  # n17: a gun's drawn diagonal, while the aim lies nearest it
+		return d if RivetGunDiag.fits(rig, weapon, o, art) else path
 	return d if draws_fire(rig, weapon, o, true) else path
 
 
@@ -183,8 +185,8 @@ static func fires_drawn(
 		if deg.is_empty():
 			if RivetFireCam.covers(weapon, o, aim, art, slack):
 				return true
-			var gun: float = RivetGunDiag.gun_rad(weapon, o, art)  # n17: a drawn diagonal's gun
-			return absf(angle_difference(aim, gun)) <= GUN_TOL + slack
+			var gun: float = 90.0 if o == 2 else 180.0 * RivetFrames.LEFT[o]
+			return absf(angle_difference(aim, deg_to_rad(gun))) <= GUN_TOL + slack
 		var drawn: float = deg[o] if diag or DIAG_CELL[o] < 0 else 180.0 * RivetFrames.LEFT[o]
 		return absf(angle_difference(aim, deg_to_rad(drawn))) <= FLAME_TOL + slack
 	var off: float = 0.0 if is_nan(aim) else absf(angle_difference(aim, o * PI * 0.25))
