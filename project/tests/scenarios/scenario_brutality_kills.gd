@@ -22,7 +22,7 @@ const KILLS: Dictionary[StringName, StringName] = {
 	&"ray_gun": &"dissolve",
 	&"homing_shard": &"burst",
 	&"mini_nuke": &"vaporise",
-	&"claw_shock": &"shock",  # Rivet's full-charge claw shock: the one-shot electro kill
+	&"claw_shock": &"throw",  # n16 kills-new: Rivet's full-charge claw throws him down the street
 	&"pistol": &"snap",  # n16 kills-new: the head snaps back, he folds onto his face
 	&"machine_pistol": &"stitch",  # n16 kills-new: rounds walk up him, he whirls and drops
 	&"gloria": &"pin",  # n16 kills-new: nailed to the wall behind him, or to the street

@@ -11,6 +11,7 @@ const NEW: Dictionary[StringName, StringName] = {
 	&"gatling": &"shred",
 	&"electro_baton": &"cook",
 	&"molotov": &"torch",
+	&"claw_shock": &"throw",
 }
 
 

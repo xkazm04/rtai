@@ -1,13 +1,11 @@
 class_name KillNewStyles
 extends Node2D
-## The n16 deaths (lane kills-new: one death per weapon that had none), render only. KillStyles
-## hands every row whose style is in STYLES here: the body copy is wrapped in a lay node and laid
-## through the row's pose track each frame (KillTrack), and each style's overlay class draws over
-## it (KillSnapArt: the pistol's exit mist; KillStitchArt: the machine pistol's spurts). Ages count
-## the sim tick, so a replay draws the same frames. No RNG: shapes come from a hash of the serial
-## and the tick.
+## The n16 deaths (lane kills-new), render only: a STYLES row's body is laid by its pose track
+## (KillTrack), its Kill<Style>Art draws over it. Ages count sim ticks; no RNG (KillNewStyles.h).
 
-const STYLES: Array[StringName] = [&"snap", &"stitch", &"pin", &"shred", &"cook", &"torch"]
+const STYLES: Array[StringName] = [
+	&"snap", &"stitch", &"pin", &"shred", &"cook", &"torch", &"throw"
+]
 ## Body metas set at the cut: the feet (body-local px) and the standing height (px).
 const FEET: StringName = &"kill_feet"
 const HEIGHT: StringName = &"kill_height"
@@ -135,6 +133,8 @@ func pose() -> void:
 		var slide: Vector2 = d.dir * d.extra.slide_m * ppm * clampf(p.z, 0.0, 1.0)
 		if d.row.style == &"pin":
 			slide += KillPinArt.shift(d, age, ppm)
+		elif d.row.style == &"throw":  # the claw's hop off the street
+			slide += KillThrowArt.lift(d, age, ppm)
 		if _drawn(d, age):  # the drawn fall takes over the lie: the track keeps only its lean
 			var lean: float = p.x * KillDeathCells.lean_of(d)  # own cells: drawn, unless fx cells_lean
 			b = KillTrack.basis(d.dir, d.fall, Vector3(lean, 1.0, 0.0), 1.0)
@@ -191,6 +191,8 @@ func _draw() -> void:
 			KillCookArt.draw(self, d, age)
 		elif d.row.style == &"torch":
 			KillTorchArt.draw(self, d, age)
+		elif d.row.style == &"throw":
+			KillThrowArt.draw(self, d, age)
 
 
 ## A stable 0..1 hash of a kill serial and a number (no dice).

@@ -172,11 +172,12 @@ func test_spray_stops_at_a_wall() -> void:
 	assert_gt(past, 0, "planted: with no wall the spray crosses x 1 m")
 
 
-func test_the_charged_claw_shock_takes_the_electro_kill() -> void:
+func test_the_charged_claw_shock_takes_its_own_throw() -> void:
 	var table: SignatureKillTable = SignatureKillTable.load_table()
 	var row: SignatureKill = table.for_weapon(&"claw_shock")
 	assert_not_null(row)
-	assert_eq(row.id, &"electro_shock")
+	assert_eq(row.id, &"claw_throw", "n16 kills-new: the claw no longer borrows the X-ray shock")
+	assert_eq(table.for_weapon(&"electro_gun").id, &"electro_shock", "the electro gun keeps it")
 
 
 func test_shard_pop_sets_only_the_shard_freeze() -> void:

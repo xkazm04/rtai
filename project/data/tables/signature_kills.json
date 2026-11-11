@@ -96,9 +96,6 @@
       "weapon": "burn"
     },
     {
-      "also_weapons": [
-        "claw_shock"
-      ],
       "bounce": 0.1,
       "cone_deg": 10,
       "doc": "Electro gun: the bolt locks the victim in a stiff convulsion while an X-ray flash strobes his skeleton (weapon-art's sticker) inside cream arcs, then he drops stiff along the shot, scorched, smoke rising from the collar. No blood. Under --reduced-motion no strobe and no shake.",
@@ -1154,6 +1151,82 @@
         0
       ],
       "weapon": "molotov"
+    },
+    {
+      "blot_m": 0,
+      "bounce": 0.1,
+      "cone_deg": 16,
+      "doc": "Rivet's charged bare claw (lane kills-new, n16; until now it borrowed the electro gun's X-ray shock through that row's also_weapons): the throw. The baton cooks him from inside and the electro gun strobes his skeleton; the claw is Rivet's own body, so it throws him. Hit-stop 4 (the full charge lands). t0-4 a cream arc jumps from the claw into his chest (KillThrowArt) and the pose track lifts him onto his toes, leaning back; t4-20 the discharge throws him back along the blow, lofted 0.4 m in a low hop, his own drawn fall grid (KillFallCells) laying him on his back from t8 over 12 ticks; he lands at t20 2.4 m out and skids on to 3 m by t32 (slide_m by the track's tip share). A cream spark crawls over him every 4 ticks to t60 (none under --reduced-motion), an ink skid line stays from where he landed to his boots, smoke rises off him for 160 ticks. No blood. Reads at 32 px/m as a body flung across the street. Placeholder until drawn throw cells land (JOURNAL REQUEST assets claw_throw).",
+      "fall": "back",
+      "flash_ticks": 0,
+      "fx": {
+        "arc_m": 0.7,
+        "arc_ticks": 4,
+        "cells_at": 8,
+        "cells_ticks": 12,
+        "land_at": 20,
+        "lift_from": 4,
+        "lift_m": 0.4,
+        "smoke_ticks": 160,
+        "spark_every": 4,
+        "spark_to": 60
+      },
+      "ground_drag": 9,
+      "hitstop_ticks": 4,
+      "id": "claw_throw",
+      "launch_mps": [
+        0.1,
+        0.2
+      ],
+      "pieces": [
+        "body"
+      ],
+      "scorch_radius_m": 0,
+      "slide_m": 3,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "spray": 0,
+      "spray_cone_deg": 0,
+      "style": "throw",
+      "track": [
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          4,
+          14,
+          1.05,
+          0.04
+        ],
+        [
+          8,
+          24,
+          1,
+          0.2
+        ],
+        [
+          20,
+          0,
+          1,
+          0.8
+        ],
+        [
+          32,
+          0,
+          1,
+          1
+        ]
+      ],
+      "up_mps": [
+        0,
+        0
+      ],
+      "weapon": "claw_shock"
     }
   ],
   "leftover_budget": 12,
