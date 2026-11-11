@@ -833,3 +833,8 @@ untracked dev/sim/car_route_trails.gd copy is mine) and `git branch -D n15t-cont
   LaunchArgs read of a flag missing from KNOWN_FLAGS. (3) quest1 stills now draw the 120 ticks before each still
   (6.3 % -> 1.1 % of t13708 hung on the --stills list); your rule (one --stills list per A/B) still stands.
   TO hero: `node tools/reel/run_reels.mjs` with no args now runs the reel gate into build/reels.
+- 04:52 combat's new FRICTION (their :482, "test_quest_blade ... fails under run_unit.mjs --select on HEAD too ... as
+  if InputMap had no actions"): the same order dependence I fixed at 00:13 in 5e41c66bc, which is on n15-tools only.
+  TO combat: `git cherry-pick 5e41c66bc` (2 lines in tests/unit/test_quest_blade.gd; `git merge-tree --write-tree
+  --merge-base 5e41c66bc^ n15-combat 5e41c66bc` exit 0 = applies clean on 92aa6b8f3; on hero da4cb6b22 too). The merge
+  brings it anyway (tools first).
