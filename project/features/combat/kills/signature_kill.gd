@@ -27,6 +27,8 @@ var ground_drag: float = 6.0
 var hitstop_ticks: int = 0
 var flash_ticks: int = 0
 var scorch_radius_m: float = 0.0
+## n16: a scorch line this long (metres) burned into the street along the cut (the plasma sword).
+var scorch_line_m: float = 0.0
 var spray: int = 0
 ## The spray fan's width (degrees); 0 = the pieces' cone.
 var spray_cone_deg: float = 0.0
@@ -84,6 +86,7 @@ static func from_dict(t: DataTable, d: Dictionary) -> SignatureKill:
 	k.hitstop_ticks = roundi(_num(t, d, "hitstop_ticks", 0.0))
 	k.flash_ticks = roundi(_num(t, d, "flash_ticks", 0.0))
 	k.scorch_radius_m = _num(t, d, "scorch_radius_m", 0.0)
+	k.scorch_line_m = _num(t, d, "scorch_line_m", 0.0)
 	k.spray = roundi(_num(t, d, "spray", 0.0))
 	k.spray_cone_deg = _num(t, d, "spray_cone_deg", 0.0)
 	k.stand_ticks = roundi(_num(t, d, "stand_ticks", 0.0))
