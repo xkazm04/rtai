@@ -52,8 +52,8 @@ Branch `n15-hero`, cut from main `5c5c03611`. Every claim cites a still in this 
    `evidence/s15/dent_run16_left_rows_before_after_64ppm.png`, `evidence/s15/dent_run16_alts_before_after_64ppm.png`.
 6. **Planted feet looked at at the play zoom with a measure, not by eye** (it16): `evidence/s15/tools/feet_trace.py`
    (the ground held still, one row a tick) and `evidence/s15/tools/hold_ride.py` (how far each held frame rides
-   over the ground). Ohm reaches 3; Tonnage's mean ride is 8.3 px@32 but his worst hold rides 16.1 px (two long
-   steps in his walk16, art requested). `evidence/s15/ghost_feet_32ppm_tonnage_ohm.png`.
+   over the ground). Ohm and Tonnage reach 3 (Tonnage on the edge: mean ride 8.3 px@32, his stance foot keeps its ground place
+   over 30 ticks, `evidence/s15/tonnage_feet_track_32ppm.txt`); his worst hold rides 16.1 px (two long steps in his walk16, art requested). `evidence/s15/ghost_feet_32ppm_tonnage_ohm.png`.
 
 ## What does not work / not done
 
