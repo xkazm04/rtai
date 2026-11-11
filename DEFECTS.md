@@ -4,11 +4,11 @@ Ranked within each film; newest film first.
 
 ## City street fight (`film.mjs city --ppm=32 --ticks=1200`, stills every 50), combo 32 px/m t100-1150 (session 6, build/film/s6city32)
 1. Four riot/patrol cops stand clumped, cards overlapping, on top of the sidewalk wall from t250 to t1150 and never come down to the fight -> open (likely their path blocked at the wall edge, sim/nav, not this lane's render; not looked into; still `evidence/n15-combat/city_fight_cops_on_wall_32ppm_t650.png`).
-2. At t650 a cop's card draws over Rivet's head where they meet (depth order at contact) -> open, judge on a clip.
+2. At t650 a cop's card draws over Rivet's head where they meet (depth order at contact) -> fixed ac7991f58 (session 7: filmed 64 px/m t634-660, the cop stood 1.75 m NORTH of Rivet, behind him, but RigDepthSort's one 0.9 x 1.8 m box called it no overlap; now each box is as tall as the drawn card and Rivet's x1.5 wide, `evidence/n15-combat/city_depth_rivet_over_cop_behind_ab_64ppm_t634-660.png`).
 
 ## Flamethrower lone kills, swat / ped_cap / ped_punk / ped_jogger, combo 64 px/m t542-620 (session 6)
 1. Each burned man stood as the black char print -> fixed c11391625 (it363 drawn char cells).
-2. The charred SWAT man holds his charred carbine while the dropped carbine lies at his feet -> open, minor (listed under session 4's flamethrower film #3).
+2. The charred SWAT man holds his charred carbine while the dropped carbine lies at his feet -> fixed 406fb812e (it371 char_v2, empty hands).
 
 ## Machine pistol lone kill, cop/head_cap, combo 64 and 32 px/m t336-345 (session 6)
 1. Ink dots on the floor 0.5-0.75 m short of the cop at t337-338 and t341-344 -> fixed 273bb2232 (see c-2 #3).
@@ -16,7 +16,7 @@ Ranked within each film; newest film first.
 ## Flamethrower lone kill, cop/head_cap, combo 64 px/m t542-620 (session 4)
 1. The burned cop stood as a black char-shaded silhouette of his burning pose -> fixed 8eb67bc62 (drawn charred cells, it272, patrol cop only).
 2. Other kinds keep the black silhouette -> fixed for the thug, hood and riot cop (63811e09c, it359) and for swat, ped_cap, ped_punk and ped_jogger (c11391625, it363): every kind with a burning figure now ends drawn.
-3. The charred SWAT man holds his charred carbine while his dropped carbine lies at his feet (two guns, t560-620; the patrol's drawn char cell holds nothing) -> open, minor (as the contractor's two carbines).
+3. The charred SWAT man holds his charred carbine while his dropped carbine lies at his feet (two guns, t560-620; the patrol's drawn char cell holds nothing) -> fixed 406fb812e (it371 char_v2, empty hands; `evidence/n15-combat/swat_char_empty_hands_ab_64ppm_t545-620.png`).
 
 ## Machine pistol lone kill, rounds in the ground, combo 48 px/m t352-363 (session 4)
 1. A round that stopped in the ground drew four faint grey dots that drifted off: no read of a hit -> fixed 19e7768ff (drawn concrete dust, it317).

@@ -466,3 +466,23 @@ are current to session 6; Calls (a)-(c) stand).
   same build: `evidence/n15-combat/swat_char_empty_hands_ab_64ppm_t545-620.png` + x3 crop t565-620. The dropped
   carbine at his feet is the only gun. Provenance line replaced (sha256 ed3cbdc8...). DECISION
   combat/swat-char-empty-hands. Lint 16/16.
+- DEFECTS city #2 (a cop's card over Rivet at contact): filmed `city` 64 px/m t630-670 (build/film/s7city64): the cop
+  stands 1.75 m NORTH of Rivet (behind him) yet draws over his head and gun at t642-654. Cause: RigDepthSort's overlap
+  test used one 0.9 x 1.8 m box for every rig; Rivet's drawn figure (x1.5, the owner's visual-only size) is ~2x a cop's
+  height on screen at combo (125 vs 55-60 px at 64 px/m), so the pair read "no overlap", both took level 0, and the
+  parts interleaved. Fix: `RigDepthBox` (new): each rig's box is at least as tall as its drawn card above its foot (the
+  NEAR body's height decides a pair), Rivet's (card meta RivetFrames.ON) x1.5 wide. `BodyPlan.kind` was rejected as
+  the Rivet test: thugs and the King keep the RIVET kind. rig_depth_sort.gd held at its 200-line baseline (199): the
+  unused `_foot` removed, the box sizing in rig_depth_box.gd.
+- MILESTONE `ac7991f58` item 5 DEFECTS city #2: film city 64 px/m t634-660, before = HEAD's sorter swapped back on the
+  same build: `evidence/n15-combat/city_depth_rivet_over_cop_behind_ab_64ppm_t634-660.png`: Rivet and his pistol now
+  draw over the cop behind him (t634-638 the cop's hands no longer cover Rivet's gun). Unit test_rig_depth_sort 7/7
+  (+2: a tall near body overlaps; card_tall). DECISION combat/depth-drawn-box. Registry measured-draw-order applied: the
+  draw order is decided from what is drawn (the card), not an assumed man.
+- FRICTION: `test_quest_blade` `test_dock_hint_names_the_blade_key_only_with_a_blade` fails under
+  `run_unit.mjs --select` on HEAD too (with my files set aside): [fire], [melee], [slot2] stay unresolved, as if
+  InputMap had no actions in that run. It passed in the 04:19 gate. Not mine; the full gate decides.
+- 04:52 GATES started on `ac7991f58` (`node tools/gate/run.mjs --rev=HEAD --reels`, log build/gate/s7_gate1.log).
+- DEFECTS session 1 #3 (dark streak across the victim t345-348) looked at in build/film/s6if64_a: a later round of
+  the burst flies on through the fresh corpse (the sim lets rounds pass a dead body), its ink tail across his falling
+  body for 2 ticks (t346-347). Minor; left open (a view-only cut at the corpse would orphan the round's later impact).
