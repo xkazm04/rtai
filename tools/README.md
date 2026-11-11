@@ -177,7 +177,10 @@ the first cell naming it (`-8 ROCKET_LAUNCHER GUARD D90 32`), and `reel.md`, a t
 measured freeze frames, the row's pieces wait, settled, aftermath, whole) to paste into a REPORT.
 `--resheet=<reel dir>` rebuilds a reel's sheets, overview and reel.md from its reel.json and kept beat frames, with
 no Godot (a reel filmed by an older kit, or after a label change). The reel judges the DEATH on screen
-(`--subject=kill`), not Rivet: the mini nuke throws Rivet out of the locked frame. When Rivet and the victim are
+(`--subject=kill`), not Rivet: with `--feel=on` the mini nuke's camera drift (BlastLead, ~270 px toward the blast at
+32 px/m) takes Rivet, who stands still, off the top of the frame. Each cell is anchored to the street: the window
+moves by the probe's camera shift from the kill tick (`anchorShifts`, `boxAt`, kept in reel.json `shifts`), so a
+kick, a shake or the drift no longer slides the street out of it (the clip keeps the screen, punch included). When Rivet and the victim are
 too far apart to share the 12 x 9 m window with 2 m to spare (the nuke kills ~25 m off), the window centres on the
 victim. Proof (n16 s3): `build/kreel/s3all` (`--weapons=all --quick --feel=on`, 12 films, ~25 min beside the
 other lanes): 11 PASS, the nuke UNVERIFIABLE (Rivet off screen; before the subject fix) -> s3nuke.

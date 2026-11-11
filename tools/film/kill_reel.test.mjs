@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import { main, planFilm } from './kill_reel.mjs';
-import { MOVIE_FRAME_OF_PROCESS_1, cellLabel, killWindow, movieSpan, pickBeats, reelPlan, reelWeapons, tableRows, victimAt } from './kill_reel_lib.mjs';
+import { MOVIE_FRAME_OF_PROCESS_1, anchorShifts, boxAt, cellLabel, killWindow, movieSpan, pickBeats, reelPlan, reelWeapons, tableRows, victimAt } from './kill_reel_lib.mjs';
 
 function tree() {
   const root = mkdtempSync(join(tmpdir(), 'kill-reel-'));
@@ -202,4 +202,14 @@ test('a victim too far to share the window with Rivet (the mini nuke, ~25 m) get
   assert.deepEqual(killWindow(far(20), 63, 32), [448, 512, 384, 288]);
   // 6 m south: 192 px apart fits 288 - 2 m (64 px) of margin: between the two as before.
   assert.deepEqual(killWindow(far(6), 63, 32), [448, 52, 384, 288]);
+});
+
+test('the window follows the street when the view moves: the nuke drift (s3nuke probe numbers) shifts every cell', () => {
+  // s3nuke mini_nuke: the canvas origin y at 60, 127 (the kill), 207; Rivet stood still at 264 -> -10 -> 136 on screen.
+  const probe = { rows: [[60, -15493], [127, -15766], [207, -15621]].map(([tick, y]) => ({ tick, cam: [-15802, y] })).concat([{ tick: 300 }]) };
+  assert.deepEqual(anchorShifts(probe, 127, [60, 127, 207, 300]), { 60: [0, 273], 127: [0, 0], 207: [0, 145] }, 'no cam at 300: no entry');
+  assert.deepEqual(anchorShifts({ rows: [{ tick: 60, cam: [0, 0] }] }, 127, [60]), {}, 'no cam at the kill: nothing anchored');
+  assert.deepEqual(boxAt([448, 400, 384, 288], [0, 273]), [448, 512, 384, 288], 'kept inside the 1280 x 800 view');
+  assert.deepEqual(boxAt([448, 100, 384, 288], [-10, 20]), [438, 120, 384, 288]);
+  assert.deepEqual(boxAt([448, 100, 384, 288], undefined), [448, 100, 384, 288], 'an older reel.json without shifts: fixed on screen');
 });

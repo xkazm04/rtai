@@ -4,7 +4,7 @@
 import { existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { cellLabel, reelMarkdown, sheetOf } from './kill_reel_lib.mjs';
+import { boxAt, cellLabel, reelMarkdown, sheetOf } from './kill_reel_lib.mjs';
 import { readPng } from './png.mjs';
 import { encodePng, label } from './sheet.mjs';
 
@@ -33,7 +33,8 @@ export function cutMovie(job, movie, [first, last], box, keep) {
   return r.status === 0 ? mp4 : null;
 }
 
-/** One sheet: a row per film (beats left to right), every cell the kill window at that film's zoom. */
+/** One sheet: a row per film (beats left to right), every cell the kill window at that film's zoom, anchored to the
+ *  street by the film's camera shifts (a reel.json without shifts: fixed on screen, as filmed before n16 s3). */
 export function writeSheet(file, rows) {
   const live = rows.filter((row) => row.film?.box);
   if (!live.length) return null;
@@ -51,7 +52,7 @@ export function writeSheet(file, rows) {
       if (!existsSync(png)) return;
       const img = readPng(png);
       label(pixels, width, left, top, cw, cellLabel(row.job, row.film, tick, ci));
-      const [x0, y0, w, h] = row.film.box;
+      const [x0, y0, w, h] = boxAt(row.film.box, row.film.shifts?.[tick]);
       for (let y = 0; y < h; y++) {
         const src = ((y0 + y) * img.width + x0) * img.channels;
         for (let x = 0; x < w; x++) img.data.copy(pixels, ((top + lh + y) * width + left + x) * 3, src + x * img.channels, src + x * img.channels + 3);

@@ -15,7 +15,7 @@ import { mkdirSync, readdirSync, rmSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { EXIT, filmOne, pinRev, plan } from './film.mjs';
-import { goreWhole, killWindow, measureBeats, measureHold, measureStop, movieSpan, pickBeats, reelPlan, tableRows, victimAt } from './kill_reel_lib.mjs';
+import { anchorShifts, boxAt, goreWhole, killWindow, measureBeats, measureHold, measureStop, movieSpan, pickBeats, reelPlan, tableRows, victimAt } from './kill_reel_lib.mjs';
 import { beatLine, cutMovie, encodeClip, finish, resheet } from './kill_reel_out.mjs';
 import { diffImages, readPng } from './png.mjs';
 import { filmedRoot } from './side.mjs';
@@ -56,9 +56,11 @@ async function filmJob(job, side, reel, runner, known) {
   const span = r.mp4 ? movieSpan(r.probe, Math.max(0, k - 30), k + reel.after) : null;
   const clip = !reel.clips ? null : span ? cutMovie(job, r.mp4, span, box, reel.keepFrames) : encodeClip(job, saved, k, box);
   const frames = new Map(beats.map((t) => [t, readPng(join(job.dir, `t${t}.png`))]));
-  const measured = measureBeats(frames, beats, k, box, diffImages);
+  const shifts = anchorShifts(r.probe, k, [...saved]);
+  const at = (t) => boxAt(box, shifts[t]);
+  const measured = measureBeats(frames, beats, k, at, diffImages);
   const run = Array.from({ length: 13 }, (_, i) => k + i).filter((t) => saved.has(t));
-  const held = measureHold(new Map(run.map((t) => [t, frames.get(t) ?? readPng(join(job.dir, `t${t}.png`))])), k, box, diffImages);
+  const held = measureHold(new Map(run.map((t) => [t, frames.get(t) ?? readPng(join(job.dir, `t${t}.png`))])), k, at, diffImages);
   if (measured && held !== null) measured.held_ticks = held;
   if (measured && measureStop(r.probe, k) !== null) measured.hitstop_frames = measureStop(r.probe, k);
   if (!reel.keepFrames) {
@@ -69,7 +71,7 @@ async function filmJob(job, side, reel, runner, known) {
   }
   const gore = reel.goreCheck ? goreWhole(r.probe, k) : null;
   const outcome = !gore ? r.outcome : /not drawn whole/.test(gore) ? 'fail' : (r.outcome === 'pass' ? 'unverifiable' : r.outcome);
-  return { outcome, reasons: gore ? [...r.reasons, `gore check: ${gore}`] : r.reasons, kill: k, beats, box, clip, measured, died: victimAt(r.probe, k),
+  return { outcome, reasons: gore ? [...r.reasons, `gore check: ${gore}`] : r.reasons, kill: k, beats, box, shifts: Object.fromEntries(beats.filter((t) => shifts[t]).map((t) => [t, shifts[t]])), clip, measured, died: victimAt(r.probe, k),
     ...(reel.goreCheck ? { whole: gore === null } : {}) };
 }
 

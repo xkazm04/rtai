@@ -111,6 +111,22 @@ export function killWindow(probe, kill, ppm, view = VIEW) {
   return [x, y, w, h];
 }
 
+/** The screen shift [dx, dy] (px) of the world between the kill tick and each of `ticks`, from the probe rows' `cam`
+ *  (the canvas origin): the hit feel moves the view (a kick, a shake, the nuke's BlastLead drifts it ~270 px toward
+ *  the blast at 32 px/m), so a window fixed on screen loses the street. Ticks without a cam get no entry. */
+export function anchorShifts(probe, kill, ticks) {
+  const cam = new Map((probe?.rows ?? []).filter((r) => Array.isArray(r.cam)).map((r) => [r.tick, r.cam]));
+  const at = cam.get(kill);
+  if (!at) return {};
+  return Object.fromEntries(ticks.filter((t) => cam.has(t)).map((t) => [t, [Math.round(cam.get(t)[0] - at[0]), Math.round(cam.get(t)[1] - at[1])]]));
+}
+
+/** `box` moved by `shift` (anchorShifts) so it holds the same street as at the kill, kept inside the view. */
+export function boxAt([x, y, w, h], shift, view = VIEW) {
+  const [dx, dy] = shift ?? [0, 0];
+  return [Math.max(0, Math.min(view[0] - w, x + dx)), Math.max(0, Math.min(view[1] - h, y + dy)), w, h];
+}
+
 /** What a sheet's rows are, top to bottom (the PNG labels each cell with its tick only). */
 export function sheetOf(file, rows, weapon, ppm) {
   const mine = rows.filter((r) => r.job.weapon === weapon && r.job.ppm === ppm && r.film?.box);
@@ -145,7 +161,7 @@ export function cropImage(img, [x0, y0, w, h]) {
 export function measureBeats(frames, beats, kill, box, diff, { tolerance = 12, still = 0.01 } = {}) {
   const last = beats.at(-1);
   if (!frames.has(60) || !frames.has(last) || last <= kill) return null;
-  const crop = (t) => cropImage(frames.get(t), box);
+  const crop = (t) => cropImage(frames.get(t), typeof box === 'function' ? box(t) : box);
   const end = crop(last);
   const settled = beats.filter((t) => t > kill && frames.has(t)).find((t) => diff(crop(t), end, tolerance).fraction < still) ?? null;
   return { aftermath_share: Number(diff(crop(60), end, tolerance).fraction.toFixed(4)), settled_by: settled, settled_after_ticks: settled === null ? null : settled - kill };
@@ -169,7 +185,7 @@ export function measureStop(probe, kill, span = 12) {
  *  a freeze reads as hold; a window that never stops moving reads 0. */
 export function measureHold(frames, kill, box, diff, { tolerance = 12, still = 0.002, max = 12 } = {}) {
   if (!frames.has(kill) || !frames.has(kill + 1)) return null;
-  const crop = (t) => cropImage(frames.get(t), box);
+  const crop = (t) => cropImage(frames.get(t), typeof box === 'function' ? box(t) : box);
   let held = 0;
   for (let t = kill + 1; t <= kill + max && frames.has(t); t++) {
     if (diff(crop(t - 1), crop(t), tolerance).fraction >= still) break;

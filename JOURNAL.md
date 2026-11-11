@@ -296,3 +296,10 @@ by default). (6) the s1 frames.json entry "thug stands as riot cop" is supersede
 - SERVED (kill lanes): one image of every death: `kill_reel.mjs --out=<dir> --weapons=all --quick --feel=on` writes
   `reel_32.png` (a row per weapon) + `reel.md` (paste into REPORT); `--resheet=<dir>` relabels an older reel with no
   Godot. Today's overview of this tree: gtai-masters/n16/tools/kill-reel-overview-all-weapons-quick-feel-on-32ppm.png.
+- 14:28 CORRECTION of 14:19/14:20: the mini nuke does NOT throw Rivet. In the s3nuke probe Rivet's world pos stays
+  (514, 524) while the canvas origin y goes -15493 (t60) -> -15766 (kill 127) -> -15621 (t207): the camera drifts
+  ~273 px toward the blast (FeelCam BlastLead, feel on) and Rivet's screen y 264 -> -10 matches. a2288fc70's message
+  says "throws"; README and the decisions line are corrected. Built from it: every sheet cell is anchored to the
+  street by the probe camera shift from the kill tick (`anchorShifts`/`boxAt`, reel.json `shifts`), also used by the
+  measured beats; the clip keeps the screen (punch included). Unit 240/0. Proof run: build/kreel/s3anchor (nuke +
+  rocket, --quick --feel=on).
