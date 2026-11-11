@@ -221,3 +221,15 @@ test_quest_blade registers its own input actions (fails under --select).
   (restored with git checkout). The packer is not byte-stable against the committed burn sheets.
 - FRICTION: two quest1 films of the same build differ by ~250k px at t13708 when the stills list starts at a different
   tick (13600 vs 13708): the camera's state depends on the first still. A/B pairs must use the same --stills list.
+- MILESTONE `19e7768ff` item 4 impacts by surface: a round in the ground draws the it317 drawn concrete dust
+  (`GunFxImpactCells`, `tools/art/impact_cells.py`), chips back toward the shooter. Film weapon:machine_pistol 48 px/m
+  t352-363, before `--impact-fx=shapes`: `evidence/n15-combat/impact_dust_drawn_ab_48ppm_x3_t352-363.png`.
+  Tried and NOT shipped: the metal-spark cell on Rivet's plating (city t363 at 3 m debug size: the FX layer is under the
+  rigs, the cell hid under him; only its rim showed). Metal (crates): no round on metal filmed, so not taken yet.
+  DECISION combat/impact-dust-drawn. Casings: GunFx already drops shells (not changed tonight).
+- 01:08 masters frames.json: the contractor stagger and the impact dust added at the top; dropped the p55 baton left
+  strike and the c-2 suit (still in evidence/). 15 entries, none unreferenced, none missing (checked by script).
+- Item 5 body burst (DEFECTS c-2 #3) scoped, not fixed: the drift is the death's view-only rig carry
+  (HumanReact.slide / last_carry), not the sim; GunFx.shield_test shows the wiring path (a Callable on GunFx set by
+  ReactLink), but react_link.gd is at 288 lines and GunFx has no fighter id per impact. Fix path: impact_who +
+  GunFx.body_off Callable(id) -> rig carry, drawn in GunFxArt.draw_over.

@@ -2,6 +2,21 @@
 
 Ranked within each film; newest film first.
 
+## Machine pistol lone kill, rounds in the ground, combo 48 px/m t352-363 (session 4)
+1. A round that stopped in the ground drew four faint grey dots that drifted off: no read of a hit -> fixed 19e7768ff (drawn concrete dust, it317).
+2. Metal impacts (crates) still draw the cream strokes: no round on metal filmed -> open (the it317 metal-spark cell is ready in the library).
+
+## City street fight, a cop's round on Rivet, combo 48 px/m t363 (session 4)
+1. A drawn impact cell on Rivet's plating hides under his rig (the FX print lies under the rigs; only its dark rim shows round his hip) -> kept the cream strokes (not shipped).
+
+## Quest 1 Dock 9, combo 48 px/m t13600-13838 (session 4)
+1. A shot contractor stood on as his standing card, then popped to the lying pose -> fixed 302a0d670 (drawn stagger, it321).
+2. The stagger cell holds a short gun while his dropped carbine lies beside him (the it321 cells are drawn with a pistol-length gun) -> open, minor.
+3. Every hit in the window was a kill: the living hold (20 ticks) is not filmed -> open.
+
+## Sustained flame jet (session 4 reading of the session-3 film)
+- The red starburst column's colour is the owner's look-3 pick (fx_colour_dir "", the ink fire cell, measured ~224,64,32 in the frame), not a drift; the column's SHAPE (patches stacked in a line) stays open.
+
 ## City street fight (`film.mjs city`), combo 32 px/m, t100-1150 (session 3)
 1. Rows of ink range-target rings on the road, empty where a target was down: the largest marks on the asphalt, they read as debug -> fixed 54297457d (no target rings in the city).
 2. The riot squad (4-5 cops with shields) stands pinned against the sidewalk barrier from t400 to t1000 and never comes round it -> open (nav/AI, not the view).
@@ -26,7 +41,7 @@ Ranked within each film; newest film first.
 
 ## Boss fight, King + katana, p55 left swings, before --rivet-blade-left=off, 64 px/m t306-326 (session 3, after the gate)
 1. Swinging left at King, the mirror swapped his arms and drew the wind-up and strike about 1.4x his facing -> fixed 15c8abbcc (drawn p55 left set, at the facing's size; `evidence/n15-combat/boss_katana_left_set_p55_ab_64ppm_t306-326.png`).
-2. The p55 katana's RIGHT wind-up and strike cells draw about 1.4x his facing (the size pop the baton had before 42c826289) -> open (re-cut the p55 katana's act_k / wind-up sheet_k as the baton's).
+2. The p55 katana's RIGHT wind-up and strike cells draw about 1.4x his facing (the size pop the baton had before 42c826289) -> open, owner Call (session 4: the strip cells measure ~1.1-1.3x by eye, n13/n14 kept as built).
 3. The drawn left strike's swing reads smaller than the mirrored one (it is at his size, the mirror was oversized) -> judge with 2.
 
 ## Boss fight, King + katana (blade boss bot), tilt p55 64 px/m (session 3)
