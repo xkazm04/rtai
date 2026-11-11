@@ -763,3 +763,15 @@ untracked dev/sim/car_route_trails.gd copy is mine) and `git branch -D n15t-cont
   "!actions.custom_samplers.has(...)"` and `ERROR: N resources still in use at exit` (main 100, here 102; ObjectDB
   leaked 662 vs 630). So both ERRORs are OLD, not from n15. Logs `evidence/exe_boot/`. Scratch worktree removed
   (`git worktree list | grep -c scratch-main` -> 0), my build/export/windows deleted.
+- 04:36-04:50 SERVED combat's second FRICTION (their :416 "I edited gun_fx_follow.gd while a film queue ran ... 4 queued
+  films died in 4 s with SCRIPT ERROR"), 3f5f17ccc: `film.mjs --rev=<commit> [--native=donor]` films that commit in
+  compare's snapshot (probe injected, native guard), and a live-tree film prints its uncommitted project/ paths (and a
+  `--rev=HEAD` hint after a FAIL). The side resolver moved out of compare.mjs into `tools/film/side.mjs` (re-exported):
+  my first cut imported compare dynamically and DEADLOCKED (`Warning: Detected unsettled top-level await`, exit in
+  62 ms: film is the entry and compare imports film). Real runs with a parse error planted in boot/arena_args.gd
+  (`var _plant_broken: int = "not an int"`): `film.mjs arena --rev=HEAD --stills=300 --ppm=32` -> `film: --rev=HEAD
+  films snapshot 0e67967e ...`, `film: PASS` (50 s; t300 SEEN: Rivet, cops, the weapon wall); the same film on the
+  live tree -> `film: 1 uncommitted project/ path(s) (project/boot/arena_args.gd) ...`, `film: FAIL: ... SCRIPT ERROR 9
+  (first res://boot/arena_args.gd:29)`, then the hint (5.7 s). Plant reverted (`git checkout --`), snapshot removed
+  (removeSnapshot), scratch films deleted. Tests: film 192/0 (4 new in film_rev.test.mjs); pre-commit lint 18/18.
+  TO combat: commit, then queue `node tools/film/film.mjs <shot> --rev=HEAD ...`; edit freely while it runs.
