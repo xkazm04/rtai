@@ -36,9 +36,14 @@
    frames; the cell's pose (the recoil) may hold longer. -> open: REQUEST assets (flashless fire cells), then show the
    painted cell for muzzle_ticks and the flashless one for the rest of the latch.
 10. **The fire latch survives a facing change**: after the kill (t337) Rivet turns to the camera octant at t339 and
-    the camera fire cell shows a flash with no shot (t339-340). -> open (drop the latch when the octant changes).
+    the camera fire cell shows a flash with no shot (t339-340): the recoil's decaying kick (> FIRE_RECOIL ~11 ticks)
+    and the FIRE_TICKS latch both held across the turn. -> fixed 6ae388e38 + 6822e1036 (RivetFireTurn: the latch holds in
+    the octant the round left in; only the kick's rise re-seats it). Film t339-340 differ, t336/t342 identical.
 11. **Arm vs round direction**: at t333 the drawn arm points 0 deg (screen right, side cell) while the round leaves at
     -29 deg on screen toward the cop (942,224) from (638,395); probe facing_off 2.6 deg says the rig's facing is the
     sim's, so the shot's aim and Rivet's facing differ by ~30 deg at the fire tick (the bot turns him after it
     aims?). -> open: measure aim vs facing per shot over a street fight.
 12. **No visible recoil kick** on the pistol fire cells t333-338 (the arm and body hold one pose). -> open.
+13. **Size pop at the fire cell -> armed walk handover** (weapon:pistol t339 at 64 px/m, after 6822e1036): the camera
+    fire cell's figure is ~10 % smaller than the armed walk grid's next to it. -> open (item 5: measure every
+    strip's figure height against the walk grid, as RivetFrames.FIG_PX assumes one median).
