@@ -36,3 +36,8 @@ bone (A1: 4 kinds packed 11:40, 7 more coming), chainsaw chunks (A5).
 Work order at 13:20 (iteration 2): plasma_sword_split (10: the halves stand upright; no aftermath; A2 hot cut face), plasma_hole
 (9: cream halo, A4 insides), ray_gun_dissolve (11), electro_shock (12: A3 per kind), katana (13: topple the halves, A2), burn_char
 (13, H: the flame column hides the death), hand_cannon (13: nothing torn). Kerf and Ohm inherit the split lift and the upright X-ray.
+
+Work order at 13:25 (iteration 2, after the blade work): plasma_hole (9: the cream halo at 32 px/m, A4 insides when drawn),
+ray_gun_dissolve (11: the dissolve does not read at k+10..k+30), electro_shock (12: A3 per-kind skeletons), plasma_sword
+(11: aftermath; the hot face's glow is an owner Call), burn_char (13, H: the flame column hides the death beat),
+hand_cannon (13: nothing torn: a drawn exit wound?), rocket_gib (14: the bone at 32 px/m), the ghosts' four (owed films).

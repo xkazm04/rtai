@@ -1,5 +1,9 @@
 # DEFECTS (n16 kills-polish, newest first; n15 combat's list below): found -> fixed (commit) / open
 
+## Reel gate, top pass, rocket chapter (gate d3e25fc4a, iteration 2)
+1. SCRIPT ERROR `has_meta on a null value`: GibCardPieces.dress_rig asked a top-view rig (no head card) for its card row
+   -> fixed 9d3d821f6 (no head card = the rig's own parts; test). Reel gate re-run owed.
+
 ## Blade kills, katana / plasma sword / chainsaw chapters, combo 64 and 32 px/m (iteration 2, 13:00)
 1. The split's "halves" were the whole cop, standing and aiming as he slid off (t64-t130), plus his feet: the cut ran
    through the body's ground point, below the drawn figure -> fixed 7d3ba705a (row cut_up_m 0.8,
@@ -23,7 +27,8 @@
    beside the standing, convulsing card: reads as a sticker, not his X-ray -> fixed 455148cb5 (upright on the body's
    feet, `evidence/n16-kills-polish/electro_xray_upright_ab_*`; Ohm's shock too); per-kind skeletons (A3) -> open.
 3. Ray gun: at k+10..k+30 the cop falls back over as a plain death while a grey disc stays; the dissolve does not read
-   -> open.
+   -> open. Hypothesis (iteration 2, code read, not filmed): as the blades' cut was, KillDissolveFx's disc mask and
+   rings centre on the body's ground point with BODY_R_M 0.62, so the upright figure is not wrapped by the eating disc.
 4. Flamethrower: the jet's floor-fire column covers the death beat (k+0..k+10) -> open (n15 #1 of the flame jet).
 
 ## Rocket lone kill, thug / hooded ped as rigs, combo 64 and 32 px/m t347-371 (iteration 1)

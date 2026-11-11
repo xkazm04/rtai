@@ -143,3 +143,29 @@ NEXT (iteration 2):
 - MILESTONE 0dcdf95c1 stacked halves (the saw's level cut) fall along the blow, off Rivet.
 - MILESTONE 794f27f80 A2 drawn cut faces on the blade halves (KillCutEdge.FACES; `--cut-face=line` = before). Films
   katana 64/32, chainsaw 64, plasma sword 64. Owner Call: the hot face is a charred crust, less glow than the cream bar.
+- 13:20 GATES started on d3e25fc4a (`node tools/gate/run.mjs --rev=d3e25fc4a --reels`, log build/gate_d3e2.log).
+- 13:25 jogger bone gib packed (it410 retry, maroon track jacket = the card's; torso x0.8 as the shopper):
+  `ped/head_jogger` in GibCardPieces.GRIDS. Uncommitted until the gate frees Godot for its .import.
+- GATES on d3e25fc4a (13:20-13:46, build/gate/d3e25fc4a0a7/): PASS lint 19/19, unit 2662/0/2, scenarios 55, parity
+  bit-exact (mutation at 629), selftest look goldens 11/11 worst 0.00, block 5/5, export-audit 685/0. REELS FAIL: the top
+  pass threw `has_meta on a null value` (StreetWalkerCards.row_of via GibCardPieces.dress_rig, 917d75a5e: a top-view rig
+  has no head card) at the rocket chapter; tilt70 and combo OK. -> fixed 9d3d821f6 (no head card = the rig's own parts,
+  test added). The reel gate must be re-run on the next tip (the top pass at least).
+- MILESTONE d99019902 jogger bone gib (it410 retry, torso x0.8; ped/head_jogger).
+- FRICTION: one Godot per lane meant the gate (40 min with reels) blocked filming; I stopped a gate at 13:12 to keep
+  working. Lesson: start the gate only when the session's last Godot work is done.
+
+NEXT (iteration 3):
+1. Re-run the reel gate on the tip (`node tools/reel/run_reels.mjs`, or tools/gate/run.mjs --reels): the top pass
+   failed on d3e25fc4a and 9d3d821f6 fixes it; everything else passed on d3e25fc4a. The jogger (d99019902) is
+   unfilmed: film rocket --victim=ped/head_jogger 64.
+3. Ray gun dissolve (DEFECTS ranking #3): film chapter:ray_gun 64 --on=kill:1+80 and check where root.position sits
+   (feet or hips) vs the drawn figure; likely the blades' bug (mask/rings on the ground point, BODY_R_M 0.62 too small for
+   a 1.7 m upright figure): lift the disc to mid-body as a row key (`dissolve_up_m`?) and make it an ellipse.
+4. Plasma hole: the cream halo at 32 px/m; A4 drawn insides when delivered.
+5. A3 per-kind X-ray skeletons when delivered (KillShockFx XRAY_TEX by row key -> per kind).
+6. The bone gib at 32 px/m does not read (pieces ~10-15 px over the smoke): try the pieces over the smoke z, or larger.
+7. Owed films: the ghosts' four (tonnage, dent, kerf, ohm), burn_char's flame column; the p55 peek card still.
+8. Perf: fight_gate under the bench lock (new preloaded cut faces, 3 x 256x32; gib sheets load on first use).
+9. Owner Calls to write in REPORT: plasma sword hot face (charred vs glowing), split topple 80 deg, cut_up_m 0.8,
+   upright X-ray, bone gib.
