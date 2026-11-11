@@ -47,10 +47,13 @@ static func scuff(ci: CanvasItem, at: Vector2, dir: Vector2, age: int, seed_tick
 
 
 ## The moment a round stops: dust kicked back along the shot on the ground, cream sparks on
-## metal and on Rivet's plating, a small ink burst on a body.
+## metal and on Rivet's plating, a small ink burst on a body (n15: the drawn dust and sparks,
+## GunFxImpactCells, over these shapes).
 static func impact(
 	ci: CanvasItem, fx: GunFx, at: Vector2, dir: Vector2, kind: int, age: int
 ) -> void:
+	if GunFxImpactCells.draw(ci, at, dir, kind, age):  # n15: the drawn dust and sparks
+		return
 	var k: float = float(age) / float(GunFx.IMPACT_TICKS)
 	if kind == GunFx.Hit.GROUND:
 		var dust: Color = fx.color("dust")
