@@ -210,12 +210,19 @@ Session 6 (from FRICTION lines, no REQUEST open):
   headless shader path; out of this lane's list).
 
 - t-5 cost on a quiet machine (every number tonight is CONTENDED; the sign is 6/6, the size soft).
+- quest1 stills still depend on the `--stills` list for about 1.1 % of a frame (the soul companion, some blood): view
+  state that a drawn frame creates when it sees an event. Removing that means the view being a pure function of the
+  sim at a tick, which is game-side work. Until then, an A/B pair uses one stills list.
 
 ## Next steps
 
 - c-2: if the owner picks 65 (or 241), change the one value, regenerate (`node tools/gen_constants/gen.mjs`), `just
   native`; the route tests follow the value (21/0 at 1, 241 and 65); parity's final digest does not move.
 - Drop `test_noir_shadows` from `morning.mjs`'s known-flake advice after a few clean nights (same race as rig_stress).
+- Hook `tools/merge/preview.mjs` into the builders' loop. A lane could run it before committing a shared file:
+  tonight it would have caught my quest1_clip.gd clash with combat at commit time rather than at 04:48.
+- End of night: remove this lane's leftovers: `gtai-n15/scratch-tools-before` (worktree), branch
+  `n15t-control-sim-hash`, and the mutate worktree `%TEMP%/gtai-mutate-6bd4df1a` (`git worktree remove --force`).
 
 ## Merge notes (draft)
 
