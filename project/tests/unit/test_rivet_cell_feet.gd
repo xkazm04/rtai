@@ -42,8 +42,8 @@ func test_listed_cells_sit_above_the_pad_inside_the_cell() -> void:
 		var tex: Texture2D = load(RivetStrips.DIR + key.get_slice(":", 0)) as Texture2D
 		assert_not_null(tex, key)
 		var cell: int = key.get_slice(":", 1).to_int()
-		if key.contains(RivetWindup.FILE):  # a wind-up cell, seated on the walk's boot line
-			assert_eq(cell, 0, "%s: the side wind-up" % key)
+		if key.contains(RivetWindup.FILE) or key.contains("_left_strike"):
+			assert_eq(cell, 0, "%s: a wind-up / left strike cell, on the walk's line" % key)
 			assert_between(RivetCellFeet.FEET[key], -8.0, 8.0, key)
 			continue
 		assert_between(cell, 5, 6, "%s: a strike cell" % key)

@@ -37,10 +37,17 @@ const FEET: Dictionary[String, float] = {
 	"p55/rivet_eq_gatling.png:6": 24.0,
 	"p55/rivet_eq_plasma_rifle.png:6": 10.0,
 	"p55/rivet_eq_gloria.png:6": 11.0,
-	# n17 item 3: the plasma sword's side wind-up stood 7 px under its armed walk's boot line at
-	# 64 px/m (walk -9, wind-up -2 px from his ground point, lean off; the drawn boots on the pad):
-	# a wind-up cell is seated on the WALK's boot line, which the plasma walk grid draws higher.
+	# n17 item 3 (DEFECTS #20): the wind-up and left strike cells stood under their armed walk's
+	# boot line at 64 px/m (the lowest rust pixel from his ground point, +-60 px: plasma walk -9,
+	# wind-up -5): each such cell 0 is seated on the WALK's boot line, which the walk grids draw
+	# higher than the cells' own drawn boots (about 1.33 screen px per strip px, 0.89 on x1.5 cells).
 	"p70/rivet_eq_plasma_sword_windup.png:0": -1.0,
+	"p70/rivet_eq_electro_baton_windup.png:0": -3.0,  # 7 px under the walk's line
+	"p70/rivet_eq_chainsaw_windup.png:0": -2.5,  # 4 px (x1.5 cells)
+	"p70/rivet_eq_plasma_sword_left_windup.png:0": -1.0,  # 4 px
+	"p70/rivet_eq_plasma_sword_left_strike.png:0": 0.0,  # 3 px
+	"p70/rivet_eq_electro_baton_left_windup.png:0": -2.0,  # 5 px
+	"p70/rivet_eq_electro_baton_left_strike.png:0": -3.0,  # 7 px
 }
 
 static var enabled: bool = true

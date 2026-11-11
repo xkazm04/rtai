@@ -103,3 +103,9 @@
     32 px/m -5 (`plasma_windup_feet_64_32.png`, before = HEAD). Same read: katana walk -4 / wind-up -2..-3 (1-2 px,
     kept), the strike cells' contact lands on the kill tick for plasma (t62), katana (t63), baton (t69), claw (t75).
     The strike cell's own 3 px rise at 64 px/m is the lean's 9 deg pivot (lean off: on the line), part of #4.
+    Same read over the other blades (+-60 px window: a +-30 px one missed the wide wind-up stances; checked at 4x):
+    baton wind-up 7 px under its walk (-5 vs -12), chainsaw wind-up 4 (-3 vs -7), plasma left wind-up 4 and left
+    strike 3 (-5 / -6 vs -9), baton left wind-up 5 and left strike 7 (-3 / -1 vs -8): -> fixed (RivetCellFeet cell-0
+    rows on each): all within 1 px of the walk at 64 px/m (`windup_feet_blades_64.png`); baton left strike at 32 px/m
+    3 px low -> on the line (`baton_left_strike_feet_32_x6.png`, read at 6x; the tool's 32 px/m walk read caught the
+    baton tip). Katana left (-5/-6 vs -4/-5) and chainsaw left (-3/-4 vs -4/-5) kept.
