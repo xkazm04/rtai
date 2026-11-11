@@ -23,6 +23,9 @@ TORSO_PX = 64
 PIECES = 6
 # The riot's orange arm bands are greyed (street_armband, colour law).
 BANDS = {"cop_riot_gib.png"}
+# out file -> the armed walk whose uniform blue the pieces take (street_tone, as the hit sheets): drawn lighter than
+# the card's navy, the pieces read as another man's uniform in flight (filmed at 48 px/m, session 5).
+TONES = {"cop_patrol_gib.png": "cop_patrol_armed_walk.png", "cop_riot_gib.png": "cop_riot_armed_walk.png"}
 # library folder (under LIB) -> out file. The patrol takes v2 (head seen from above, the card's slate blue).
 KINDS = {
     "cop_patrol_gib_70_cells/v2": "cop_patrol_gib.png",
@@ -48,6 +51,9 @@ def build(lib: Path, folder: str, out: str) -> None:
             print(f"WARNING {folder} piece {i + 1}: {im.size} is larger than the {CELL} cell")
         sheet.alpha_composite(im, (CELL * i + (CELL - im.width) // 2, (CELL - im.height) // 2))
     sheet.save(P70 / out, optimize=True)
+    if out in TONES:
+        tone = Path(__file__).parent / "street_tone.py"
+        subprocess.run([sys.executable, "-I", str(tone), str(P70 / out), str(P70 / TONES[out]), str(P70 / out)], check=True)
     if out in BANDS:
         band = Path(__file__).parent / "street_armband.py"
         subprocess.run([sys.executable, "-I", str(band), str(P70 / out), str(P70 / out)], check=True)
