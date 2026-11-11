@@ -952,3 +952,21 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   changes make project/features/characters/cast_flags.gd conflict with n15-combat ...`, `quick: ok, 1 file(s), 1.3 s`,
   exit 0; file restored (`git status` shows only the tool files). Test 7/7 (index bytes asserted equal); planted
   "no add -u" -> 1 fails, restored.
+- 05:33-05:42 FOUND reading cast_flags.gd for the flag index: `--rivet-walk-armed=off` and `--rivet-stride=off` are DEAD
+  on main (and on hero / combat): `_walk()` matches them, but `apply()` routes only `--rivet-walk=`, `--rivet-swipe`,
+  `--rivet-bob` to `_walk` (c8d71e34a, 2026-11-09 20:50, n11 hero's function-size split). No other reader
+  (`grep '"--rivet-stride\|"--rivet-walk-armed'` over three trees: launch_args KNOWN_FLAGS and cast_flags only). The
+  2026-11-08 rivet REPORT lists `--rivet-walk-armed=off` among the owner's befores in the exe. Test first:
+  `test_every_walk_before_reaches_its_switch` (all 7 walk befores through apply) -> `run_unit --select=test_cast_flags`
+  FAIL `[false, 4, false, true, true, false, false] != [false, 4, false, false, false, false, false]` (armed, stride).
+  Fix 05e519be8: route `--rivet-walk*` and `--rivet-stride` (not `--rivet-s`: it would swallow later flags) -> 42/0 on
+  test_cast_flags, test_rivet_stride, test_rivet_walk, test_rivet_swipe, test_rivet_bob; check.mjs ok. My own
+  quick.mjs before the commit: `merge-clash: no new code conflict with n15-combat, n15-hero` (hero and combat both
+  edit this file). Film (compare, same flag on both sides, only the routing differs): `compare.mjs arena
+  --a=05e519be8^ --b=05e519be8 --at=600,900,1200,1500 --ppm=32 --lock=off -- --rivet-stride=off` -> t600/t1200/t1500
+  PASS (differ), t900 identical (no off-aim walk there); 64 px/m t1200/t1500 PASS. SEEN: A his legs step toward the
+  walk (stride still on), B along the aim. Masters `rivet-stride-off-flag-dead-vs-fixed-arena-t1200-{32,64}ppm.png`
+  (frames.json 12, every file present). Snapshots removed (--clean); scratch composites deleted. (The first try at 64
+  px/m with the spawn lock had him off screen: UNVERIFIABLE, as compare should say.) DECISION characters/walk-befores.
+  TO hero: your befores `--rivet-walk-armed=off` / `--rivet-stride=off` did nothing until 05e519be8; any n11-n15
+  before/after that used them compared the same frames. The fix merges first (tools), clean against your tip.
