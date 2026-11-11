@@ -133,6 +133,11 @@ func _pile(d: Dissolve, e: float) -> void:
 	if g <= 0.0:
 		return
 	var glow: float = clampf(1.6 - e * 0.6 - float(kills.tick - d.born) / 900.0, 0.25, 1.0)
+	if not KillRemainsArt.plain():  # n16: the drawn ash heap with the skull (A7)
+		var kind: String = str(d.root.get_meta(KillXray.KIND, ""))
+		var k: Vector3 = Vector3(g, ppm, glow)
+		KillRemainsArt.draw(self, d.at * ppm, d.dir, k, KillRemainsArt.set_of(kind))
+		return
 	KillDustPile.draw(self, d.serial, d.at * ppm, d.dir, g, ppm, glow)
 
 

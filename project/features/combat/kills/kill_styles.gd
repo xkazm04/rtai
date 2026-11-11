@@ -88,6 +88,7 @@ func parts(
 		)
 	elif row.style == &"dissolve" and rig != null:
 		groups[SignatureKill.BODY] = KillDissolveMask.wrap(groups[SignatureKill.BODY], _ppm)
+		KillXray.tag(groups[SignatureKill.BODY], rig)  # n16: the remains' cloth colour (A7)
 	elif row.style == &"shock" and rig != null and groups[SignatureKill.BODY] != null:
 		var plank: Node2D = KillSprawlCut.cut(rig)
 		groups[SignatureKill.BODY] = KillShockFx.wrap(groups[SignatureKill.BODY], plank)
