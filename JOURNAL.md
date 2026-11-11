@@ -411,3 +411,24 @@ still reads as a crack, then evidence + KILLS (plasma_sword After 1 -> 2/3) + DE
   chapter with a burn kill (the collapse cells now replace the fade) or a ray gun kill (drawn remains).
 - DEFECTS 10 diagnosed in code (the split halves' shadows sit at the half roots' origins, ~1 m off the drawn top half),
   not fixed: no Godot free to verify while the gate runs.
+- 17:50 bbf62f6f3 (blade half shadows, lint only) and REPORT/KILLS (2b8d9b900) committed while the gate runs.
+
+NEXT (iteration 9, from 18:22; freeze 19:30, REPORT 19:40):
+1. Read the gate on 05715ef5f: build/gate/05715ef5f249/evidence.log, reels.log, gate.json (`node tools/gate/run.mjs
+   --rev=05715ef5f --reels`, started 17:42). If a look golden or reel moved (burn collapse cells replace the fade; ray
+   remains; the empty cap's shadow gone; exit wound), name the item, show the frame, re-bless ONLY it with a dated
+   decisions line. If red for another reason, fix first.
+2. bbf62f6f3 is LINT ONLY: write `project/tests/unit/test_kill_split_shadow.gd` (KillSplitHalves.shadow_at: no meta ->
+   part.position; meta + a rotated/positioned part -> part.transform * meta; KillSplitFx.cut sets the meta on both
+   halves), import for its .uid, run it; film `chapter:plasma_sword --rev=<tip> --ppm=64 --stills=70,90,120,150,200`
+   (out ps64_u) vs build/film/ps64_t and `chapter:katana` same; judge: the disc beside the top half gone, a shadow
+   under the lying top half. If it looks wrong, revert bbf62f6f3 (git revert, not reset).
+3. Then the FINAL gate on the tip (start by ~18:45 at the latest; 40 min incl. reels).
+4. While it runs (no Godot): REPORT.md final at 19:40 (draft is current to 17:50; add the gate result, Calls with
+   the it8 sheets: burn collapse patrol/hood 64 + riot 32, hand cannon A6b 64/32, ray remains 64/32 (Call: grey heap
+   quiet at 32), scorch line wider; KILLS ranking table copy).
+5. Open, if time (one per commit, each with a same-tick film): rocket bone at 32 px/m; the hand cannon's body never
+   lies (swap the thrown card to the kind's `<kind>_fall.png` / `_long_fall.png` last frame on landing, as
+   KillCharCells.swap does: StreetWalkerFall.FALLS, StreetFallBetween.rows_of, fall cells offset 0.5); A8c back
+   facings when the asset lane delivers (`street/<kind>_char_collapse_70_cells/3_*`, `4_*`); perf fight_gate under the
+   bench lock (owed all day).
