@@ -534,3 +534,20 @@ session 7; Calls (a)-(c) stand; update the gate line to the final commit).
   print and the thrown-back figure leans back off it (the root, left open). DECISION combat/burst-push. Unit 18/0 on
   the touched suites (+2 tests). Lint 16/16.
 - 05:58 GATES started on `61a2d3baa` (`node tools/gate/run.mjs --rev=HEAD --reels`, log build/gate/s8_gate1.log).
+- DEFECTS blade t62 white stick DIAGNOSED (build/film/kl64_after t58-69): KillSplitFx's designed slash streak (a cream
+  bar edged in ink, STREAK_M 1.7 m along the cut, 12 ticks). The cut is the blow rotated by the row's cut_deg 55
+  (SignatureKills.on_kill, which also orients the gibs and the ground mark), so it crosses the cop diagonally while
+  Rivet's drawn left swing sweeps level: it reads as a stick. Lane brutality's look: Call (d) in REPORT, no code.
+  Still `evidence/n15-combat/katana_slash_streak_64ppm_t58-69.png` (an earlier build's film, not same-build).
+- Call (c) (the upright frame between blade swings) left as a Call: a one-tick blip at 60 Hz, and the latch lives in
+  rivet_strips.gd at its 200-line ratchet.
+- GATES on `61a2d3baa` (05:58-06:04, build/gate/61a2d3baac58/gate.json): PASS lint 16/16, unit 2542/0/2, scenarios 55,
+  parity bit-exact (mutation at 629), look goldens 11/11 worst 0.00, block 5/5 worst 0.69 (= baseline), export-audit
+  674, reels top / tilt70 / combo OK. This is the LAST code commit unless a later line says otherwise.
+- Mutation `mutate.mjs --file=features/combat/weapons/gun_fx_follow.gd --max=12`: 66.7 % (8/12); the 4 survivors are
+  the flag caches (`_off`/`_push_off` init, the `< 0` test, the parse's `1 if`): equivalent without the flag. Every
+  mutant in the push path killed. Checkout clean after.
+- Masters frames.json: + burst_rides_push (beside body_burst), - chainsaw_left_set (katana_left_set covers the left
+  set; file deleted); 15 entries, none missing, none unreferenced (checked by script).
+- 06:08 bench.lock taken (noclobber; tools lane's t-5 lock of 05:41 was gone). PERF fight_gate started: arms now vs
+  before = every tonight flag off, 4 rounds, log build/perf/s8_fg.log. Other lanes' Godot running: CONTENDED expected.

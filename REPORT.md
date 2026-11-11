@@ -34,11 +34,11 @@ Every change has a before flag on the same build and a same-tick before/after fi
 | 5 a thrown-back street man stands on his shadow (the contact shadow rides the hit card's push) | `b9544422e` | `--shadow-push=off` | `evidence/n15-combat/hit_shadow_rides_push_ab_64ppm_x2_t338-344.png`, `hit_shadow_rides_push_ab_32ppm_x3_t337-342.png` |
 | 5 a later round's body burst rides the pushed hit card and returns to the body at the death (t339 dot ~0.2 m closer, no new dot at t344) | `61a2d3baa` | `--burst-push=off` | `evidence/n15-combat/burst_rides_push_ab_64ppm_x2_t338-344.png` |
 
-Gates: full run with reels on `f128a280e` (session 7, 05:11-05:34, the last code commit; later commits are docs):
-PASS lint 16/16, unit 2540/0/2, scenarios 55, parity bit-exact (mutation at 629), look goldens 11/11 worst 0.00, block
+Gates: full run with reels on `61a2d3baa` (session 8, 05:58-06:04, the last code commit; later commits are docs):
+PASS lint 16/16, unit 2542/0/2, scenarios 55, parity bit-exact (mutation at 629), look goldens 11/11 worst 0.00, block
 goldens 5/5 worst 0.69 (= this worktree's session-1 baseline), export-audit 674, reels top / tilt70 / combo OK. Also
-PASS with reels on `ac7991f58` (04:39-05:02). Mutation: `rig_depth_box.gd` 100 % (8/8), `gun_fx_follow.gd` 60 % (6/10,
-session 6). TO DO: re-run on the final commit if any code lands after `f128a280e`.
+PASS with reels on `f128a280e` and `ac7991f58` (session 7). Mutation: `rig_depth_box.gd` 100 % (8/8),
+`gun_fx_follow.gd` 66.7 % (8/12, session 8; the 4 survivors are its two flag caches, equivalent without the flag).
 
 ## What does not work, or is not shown
 
