@@ -1,5 +1,5 @@
 {
-  "doc": "Rivet's melee weapons as timing data (rivet-motion, 2026-11-03 eve; the owner's first set, 20:00). Each weapon is a combo in the rivet_melee.json claw shape (ticks are 60 Hz; windup -> active -> recovery, cancel_ticks into the recovery a buffered press chains, combo_window_ticks after a hit a press continues) plus per-hit stun_ticks, chain_hops (arcs to metal targets within the weapon's chain_radius_m) and lunge_m (Rivet travels this far over the hit's windup and active ticks). lunge_ticks (optional, n17 rivet-strike): the lunge travels over only that many ticks just before the contact tick (the first active tick), so the body has arrived when the hit lands and the feet stay planted through the wind-up before it; absent = the before (spread over windup + active). move_mult scales Rivet's top speed while a hit plays. grind_ticks and grind_min_ticks (optional, the chainsaw): the hit's last active tick holds for grind_min_ticks and on while the attack is held, landing again every grind_ticks. Evening: electro_baton and katana; night (rivet-arsenal): chainsaw and plasma_sword. Placeholder numbers until the owner judges a clip in the D5 look.",
+  "doc": "Rivet's melee weapons as timing data (rivet-motion, 2026-11-03 eve; the owner's first set, 20:00). Each weapon is a combo in the rivet_melee.json claw shape (ticks are 60 Hz; windup -> active -> recovery, cancel_ticks into the recovery a buffered press chains, combo_window_ticks after a hit a press continues) plus per-hit stun_ticks, chain_hops (arcs to metal targets within the weapon's chain_radius_m) and lunge_m (Rivet travels this far over the hit's windup and active ticks). lunge_ticks (optional, n17 rivet-strike): the lunge travels over only that many ticks just before the contact tick (the first active tick), so the body has arrived when the hit lands and the feet stay planted through the wind-up before it; absent = the before (spread over windup + active). move_mult scales Rivet's top speed while a hit plays. grind_ticks and grind_min_ticks (optional, the chainsaw): the hit's last active tick holds for grind_min_ticks and on while the attack is held, landing again every grind_ticks. Evening: electro_baton and katana; night (rivet-arsenal): chainsaw and plasma_sword. Placeholder numbers until the owner judges a clip in the D5 look. lean_back_deg and lean_in_deg (optional, n17 rivet-strike, RivetLean): the drawn figure leans back off the target through the view's wind-up and into the strike about his feet (toward his facing's screen side), easing upright over the recovery; absent = upright (the claw).",
   "schema": "gtai.melee-weapons/1",
   "weapons": {
     "chainsaw": {
@@ -41,6 +41,8 @@
           "windup_ticks": 10
         }
       ],
+      "lean_back_deg": 3,
+      "lean_in_deg": 6,
       "length_m": 0.9,
       "move_mult": 0.55
     },
@@ -94,6 +96,8 @@
           "windup_ticks": 8
         }
       ],
+      "lean_back_deg": 4,
+      "lean_in_deg": 7,
       "length_m": 0.7,
       "move_mult": 0.85
     },
@@ -148,6 +152,8 @@
           "windup_ticks": 7
         }
       ],
+      "lean_back_deg": 5,
+      "lean_in_deg": 9,
       "length_m": 1,
       "move_mult": 0.7
     },
@@ -202,6 +208,8 @@
           "windup_ticks": 6
         }
       ],
+      "lean_back_deg": 5,
+      "lean_in_deg": 9,
       "length_m": 1.1,
       "move_mult": 0.8
     }

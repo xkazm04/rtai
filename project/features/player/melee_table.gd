@@ -25,6 +25,10 @@ var grip: StringName = &"none"
 ## The plasma sword's timed deflect: hostile rounds within this of Rivet, in front, during a hit's
 ## active ticks go back at their shooter (0 = none).
 var deflect_m: float = 0.0
+## n17 rivet-strike (RivetLean): the drawn figure's lean back through the wind-up and into the
+## strike, in degrees about his feet; 0 = upright.
+var lean_back_deg: float = 0.0
+var lean_in_deg: float = 0.0
 var errors: Array[String] = []
 
 
@@ -63,6 +67,9 @@ static func weapon_from(t: DataTable, weapon_id: StringName) -> MeleeTable:
 	m.grip = StringName(t.text(row, "grip"))
 	if row.has("deflect_m"):
 		m.deflect_m = t.num(row, "deflect_m")
+	if row.has("lean_in_deg"):
+		m.lean_back_deg = t.num(row, "lean_back_deg")
+		m.lean_in_deg = t.num(row, "lean_in_deg")
 	m.errors = t.errors()
 	if m.hits.is_empty():
 		m.errors.append("melee_weapons.json: %s.hits is empty" % weapon_id)

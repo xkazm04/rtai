@@ -134,6 +134,16 @@
           "minItems": 1,
           "type": "array"
         },
+        "lean_back_deg": {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        },
+        "lean_in_deg": {
+          "maximum": 25,
+          "minimum": 0,
+          "type": "number"
+        },
         "length_m": {
           "maximum": 3,
           "minimum": 0.1,

@@ -137,7 +137,7 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	var walk: float = clampf(rig.speed_now / WALK_SPEED, 0.0, 1.0)
 	walk = walk if c.x != Cell.ROLL and c.x != Cell.DEATH and not drawn_walk else 0.0
 	var stride: float = sin(TAU * rig.phase)
-	card.global_rotation = stride * SWAY * walk + _roll_spin(rig, c.x)
+	card.global_rotation = stride * SWAY * walk + _roll_spin(rig, c.x) + RivetLean.rad(rig)
 	card.global_scale = Vector2(s, s * RivetBob.stretch(card)) / RivetWalk.res_of(card)
 	var k: float = ROLL_SHADOW if c.x == Cell.ROLL else RigTilt.hip_h(rig) / rig.plan.hip_z
 	rig.set_meta(

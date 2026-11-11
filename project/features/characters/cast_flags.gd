@@ -49,6 +49,7 @@ static func apply(args: PackedStringArray = OS.get_cmdline_user_args()) -> void:
 			or arg.begins_with("--rivet-swipe")
 			or arg.begins_with("--rivet-stride")
 			or arg.begins_with("--rivet-bob")
+			or arg.begins_with("--rivet-lean")
 		):
 			_walk(arg)
 		elif arg == "--rivet-knock=off":
@@ -87,7 +88,8 @@ static func _windup(arg: String) -> void:
 		RivetWindup.left_strike = false
 
 
-## --rivet-walk=<mode>; n11: --rivet-swipe=off (one drawn strike cell), --rivet-bob=drawn (no damp).
+## --rivet-walk=<mode>; n11: --rivet-swipe=off (one drawn strike cell), --rivet-bob=drawn (no damp);
+## n17: --rivet-lean=off.
 static func _walk(arg: String) -> void:
 	match arg:
 		"--rivet-walk=bob":
@@ -104,5 +106,7 @@ static func _walk(arg: String) -> void:
 			RivetSwipe.enabled = false
 		"--rivet-bob=drawn":
 			RivetBob.enabled = false
+		"--rivet-lean=off":  # n17 rivet-strike: the weapon strikes upright (before)
+			RivetLean.enabled = false
 		_:
 			pass
