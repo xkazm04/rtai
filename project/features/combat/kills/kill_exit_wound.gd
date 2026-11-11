@@ -9,10 +9,11 @@ extends Node2D
 ## before.
 
 const ART: Texture2D = preload("res://features/combat/weapons/art/gore/exit_wound.png")
-## The hole's width in the packed cell (tools/art/exit_wound_cells.py) and its centre's offset
-## from the cell's centre (the tongue runs out to +x, so the hole sits left of centre).
+## The hole's width in the packed cell (tools/art/exit_wound_cells.py, set 2: A6b, the redraw with
+## the spine broken and the ribs fanned; set 1's even spine row read as teeth) and its centre's
+## offset from the cell's centre (the tongue runs out to +x, so the hole sits left of centre).
 const ART_HOLE_PX: float = 32.5
-const ART_HOLE_AT: Vector2 = Vector2(-7.0, -4.0)
+const ART_HOLE_AT: Vector2 = Vector2(-3.0, -2.5)
 const FRESH: int = 0
 const DRIED: int = 1
 const FRESH_COP: int = 2
