@@ -81,10 +81,15 @@
   (`rig_for` -> null). If so, a signature death of an atlas victim may lose its rig-based look: worth a film with
   the knot cleared (e.g. a dev `--sig-alone` that empties the pit) before telling the kill lanes.
 
-NEXT: (1) read the gate verdict (`C:/Users/kazda/kiro/gtai-n16/scratch-tools/gate_s1.log`, snapshot
+NEXT: (0) prove --subject=kill on a real compare, then build kills-new REQUEST (2) `--victim-wall`. (1) read the gate verdict (`C:/Users/kazda/kiro/gtai-n16/scratch-tools/gate_s1.log`, snapshot
 build/gate/bc7878960400); fix anything red first. (2) prove `kill_reel --gore-check` on a real run (katana +
 rocket, dirs 0,90) and record whole/not per death. (3) the lab guard's missing rig: test the LOD-0 hypothesis, then
 either clear the pit knot in the lab (`--sig-alone`) or make the probe find atlas-drawn guards, so `--victims`
 and the gore check see the victim. (4) beat readout, measured side: hit-stop/held/aftermath from frames (the
 first tick the kill window stops changing, and how long marks stay) beside the table values. (5) read the kill
 lanes' journals for REQUEST tools / FRICTION (none at 11:35). Gate on the final commit before 19:30.
+- 12:08 SERVED (pending a real-run proof): kills-new REQUEST tools (1) (their JOURNAL :149): `--subject=kill` for
+  film.mjs and compare.mjs (dfccc7f0d): the first kill's victim, placed from the sim once the signature death
+  hides his rig. Unit 2/2 (`tools/film/subject.test.mjs`); film suite 203/0. Run from your worktree:
+  `node C:/Users/kazda/kiro/gtai-wt/n16-tools/tools/film/compare.mjs weapon:gloria --a=<sha> --b=<sha> --subject=kill`.
+  Their (2) (a weapon shot with a wall ~1 m behind the lone victim, `--victim-wall`) is open: NEXT.
