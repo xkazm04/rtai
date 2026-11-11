@@ -443,3 +443,14 @@ changed at 5cda754c0 (selftest passed on it at 00:35, unit/scenarios/reels not r
   project/features/characters/cast_flags.gd (both added a flag dispatcher) and rivet_res.gd (both appended to X15).
   Both are unions; the Director's recipe and a tested resolution are in REPORT merge notes and
   evidence/merge_hero_x_combat_686fcb828.diff. Adding more to either file tonight grows the conflict, not its kind.
+- 01:16 rig_stress flake, HYPOTHESIS (to test): in Godot's dummy renderer (headless) `texture_2d_initialize` reads
+  `DummyTexture *t = texture_owner.get_or_null(p_texture); ERR_FAIL_NULL(t)`: the null `t` is the texture looked up
+  by RID, not the image. The dummy owner is not thread-safe (the RD renderers' is), and the game creates textures on
+  worker threads (`StreetStrips.prefetch`/`prefetch_fall` since d9 perf L3, `CityTextures` via
+  `load_threaded_request`) while the main thread `load()`s others (rig_head_card._build, RivetFrames._set_strip). A
+  race there loses a RID: exactly the five sightings (headless only, a texture load, more on a busy machine, passes
+  alone). Repro written (not run yet: the Godot slot is the morning gates'): gtai-n15/flake/race/ (standalone
+  project; `race.gd` makes ImageTextures on N worker threads while the main thread makes 20000;
+  `-- --threads=4` vs `--threads=0`). If it reproduces, the fix is the game's, not a timeout: no worker-thread
+  texture decode under the dummy renderer (StreetStrips.enabled(), CityTextures), with a test override so the
+  prefetch tests still bite.
