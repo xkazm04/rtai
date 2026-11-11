@@ -1069,3 +1069,19 @@ Write times from `date` (session 7 needed one correction).
   REPORT "Gates on this branch". Then the morning integration if time is left.
 - 06:23 `node tools/evidence/cites.mjs REPORT.md` -> `cites: 58 paths, 57 ok, 1 unchecked` (the 1 is the quoted
   message `INVALID: the tree changed ...` at :113, not a path). Gate on 8f8a3dd1b: 0 kinds done so far.
+
+## Session 8 (iteration 14, STABILIZE, 07:30 -> 07:40)
+- 07:30 the detached FINAL GATE on 8f8a3dd1b PASSED: `gate_s8_final.log` ends `gate exit 0 at 06:45:04` (lint 19/19,
+  unit 2544/0/2 skipped, scenarios 55, parity exact (fault at 629), look 11/11 + block 5/5 worst 0.00, release-compile
+  668/0, reels exit 0). `git diff --stat 8f8a3dd1b HEAD` = JOURNAL.md, tools/README.md only. Snapshot removed
+  (`git worktree remove --force .../gtai-gate-8f8a3dd1bf54` + its .gtai-snapshot).
+- 07:30 end-of-night cleanup, mine only: removed worktrees scratch-tools-before and gtai-mutate-6bd4df1a, deleted branch
+  n15t-control-sim-hash (was f4d4acab5). Left: every gtai-gate-* on hero commits (0ba2e9a8e, 5f9b18955 checked: `git
+  branch --contains` -> n15-hero) and gtai-film-5c5c036112cb.
+- 07:31 hero/combat JOURNALs: no new REQUEST tools since 06:16. combat :482 FRICTION (04:38, `test_quest_blade` red
+  under `--select`, green in full/gate) -> REPORT Next steps, not reproduced (past freeze).
+- 07:33 preview on final tips (hero 48fadb3c1, combat 7c84042c3): same two code conflicts; resolver exit 0 on both,
+  flag_routes 0 unrouted. REPORT final (header, Gates, Merge notes, Next steps).
+NEXT: night over. Director: merge n15-tools first (rebuild DLLs debug+release, --import), then hero, then combat with
+`evidence/merge/resolve_hero_x_combat.py` on cast_flags.gd + rivet_res.gd (REPORT "Merge notes"). Next tools lane:
+combat's `--select` InputMap FRICTION first.

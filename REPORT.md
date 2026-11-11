@@ -1,4 +1,4 @@
-# REPORT n15-tools (session 7, 05:30; later sessions extend it)
+# REPORT n15-tools (final, 07:32; sessions 1-8)
 
 Branch `n15-tools` from main `5c5c03611`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n15\tools\` (`frames.json`),
 `evidence/` in this tree, JOURNAL.md for every command and its output.
@@ -239,11 +239,12 @@ Session 7:
 
 ## Gates on this branch
 
-Final gate on 257b2e58c, which holds all of session 7's game code (the walk befores) and its tools (`node
-tools/gate/run.mjs --rev=HEAD --reels --timeout=40`). Results: lint 18/18, unit 2543/0 (2 skipped), scenarios 55, parity exact
-(the planted fault caught at step 629), selftest look 11/11, release-compile 668/0, reels top/tilt70/combo OK: `gate: PASS`. After it
-came only the lint check `flag-routes` and its CLI (Node: the pre-commit full lint passes 19/19; Linux dev + film +
-merge + gate + lint tests 593/591/0 on 9b7b14088) and docs. Session 6's final gate (decdd8331) also passed.
+Final gate on 8f8a3dd1b, which holds every code commit on this branch (after it: JOURNAL.md, REPORT.md and two
+tools/README.md lookup rows only; `git diff --stat 8f8a3dd1b HEAD`). Command `node tools/gate/run.mjs --rev=8f8a3dd1b
+--reels --timeout=40` (log `C:/Users/kazda/kiro/gtai-n15/flake/gate_s8_final.log`, ends `gate exit 0 at 06:45:04`):
+lint 19/19 over 1433 files, unit 2544/0 (2 skipped), scenarios 55, parity bit-exact over 1200 steps (planted fault
+caught at step 629), selftest look goldens 11/11 + block 5/5 (worst 0.00), release-compile 668/0, reels exit 0:
+`gate: PASS`. Its snapshot worktree is removed. Earlier final gates (257b2e58c, decdd8331) also passed.
 
 ## Not done yet
 
@@ -263,6 +264,10 @@ merge + gate + lint tests 593/591/0 on 9b7b14088) and docs. Session 6's final ga
 
 ## Next steps
 
+- combat's FRICTION (their JOURNAL :482): `test_quest_blade` fails under `run_unit.mjs --select` (InputMap
+  actions unresolved) yet passes in the full run and the gate. Likely a `--select` run that skips the InputMap
+  setup a full run gets from another file; not reproduced tonight, first tools item for the next lane.
+
 - c-2: if the owner picks 65 (or 241), change the one value, regenerate (`node tools/gen_constants/gen.mjs`), `just
   native`; the route tests follow the value (21/0 at 1, 241 and 65); parity's final digest does not move.
 - Drop `test_noir_shadows` from `morning.mjs`'s known-flake advice after a few clean nights (same race as rig_stress).
@@ -270,7 +275,13 @@ merge + gate + lint tests 593/591/0 on 9b7b14088) and docs. Session 6's final ga
 - End of night: remove this lane's leftovers: `gtai-n15/scratch-tools-before` (worktree), branch
   `n15t-control-sim-hash`, and the mutate worktree `%TEMP%/gtai-mutate-6bd4df1a` (`git worktree remove --force`).
 
-## Merge notes (draft)
+## Merge notes
+
+- 07:33, final tips (hero 48fadb3c1, combat 7c84042c3): `node tools/merge/preview.mjs --lanes=n15-tools,n15-hero,n15-combat`
+  -> tools clean, hero only JOURNAL/REPORT/baseline, combat STOP on the same two files (`cast_flags.gd`,
+  `rivet_res.gd`), nothing new. `python evidence/merge/resolve_hero_x_combat.py` on both conflicted files of
+  `main + n15-tools + n15-hero` x `n15-combat` exits 0, and `node tools/style/flag_routes.mjs <resolved cast_flags.gd>`
+  -> `0 unrouted flag(s)`. Resolve those two with the resolver, commit, `morning.mjs --resume`.
 
 - First run `node tools/merge/preview.mjs --lanes=n15-tools,n15-hero,n15-combat`. At 04:50 it said: tools clean;
   hero only JOURNAL, REPORT and baseline (morning resolves them); combat STOP on `cast_flags.gd` and `rivet_res.gd`
