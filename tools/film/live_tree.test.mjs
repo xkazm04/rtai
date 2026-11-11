@@ -5,7 +5,7 @@ import { mkdirSync, mkdtempSync, rmSync, utimesSync, writeFileSync } from 'node:
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { withoutGitEnv } from '../lint/lint.mjs';
-import { dirtyStartLine, movedLine, treeMoves, treeState } from './live_tree.mjs';
+import { dirtyStartLine, movedLine, porcelainPath, treeMoves, treeState, unquote } from './live_tree.mjs';
 import { main } from './kill_reel.mjs';
 import { filmedRoot } from './side.mjs';
 
@@ -78,4 +78,20 @@ test('a dry run of a live-tree reel warns once about uncommitted project/ paths;
   assert.ok(pinned.some((l) => /1 film\(s\)/.test(l)));
   assert.ok(!asked.some((a) => a.startsWith('rev:')), 'a commit side is a snapshot: its tree cannot move');
   assert.ok(!pinned.some((l) => /uncommitted/.test(l)));
+});
+
+test('git C-quotes a space, a quote and non-ASCII (octal UTF-8 bytes): each path is the real file, renames give the new name', (t) => {
+  const { repo, git } = throwaway(t);
+  mkdirSync(join(repo, 'project', 'a b'), { recursive: true });
+  writeFileSync(join(repo, 'project', 'a b', 'c d.gd'), 'x\n');
+  writeFileSync(join(repo, 'project', 'ü.gd'), 'y\n');
+  git(repo, 'mv', 'project/core/a.gd', 'project/core/new name.gd');
+  const s = treeState(repo, { git });
+  assert.deepEqual(Object.keys(s.paths).sort(), ['project/a b/c d.gd', 'project/core/new name.gd', 'project/ü.gd']);
+  assert.ok(Object.values(s.paths).every((v) => v !== 'gone'), 'every one is stat-ed where it lies');
+  assert.equal(unquote(String.raw`"project/\303\274.gd"`), 'project/ü.gd');
+  assert.equal(unquote(String.raw`"a\"b\\c\td"`), 'a"b\\c\td');
+  assert.equal(porcelainPath('R  "old x.gd" -> "new -> y.gd"'), 'new -> y.gd');
+  assert.equal(porcelainPath('R  old.gd -> new.gd'), 'new.gd');
+  assert.equal(porcelainPath('?? plain.gd'), 'plain.gd');
 });
