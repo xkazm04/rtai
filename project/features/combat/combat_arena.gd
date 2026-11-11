@@ -187,8 +187,7 @@ func damage(
 		_drop(victim)
 	elif victim.kind != Fighter.Kind.RIVET:
 		wounded.emit(victim, weapon)
-	victim.hp = maxf(victim.hp - amount, 0.0)
-	victim.hurt_tick = tick
+	victim.take(amount, tick, hit_dir)
 
 
 func write_state(out: StreamPeerBuffer) -> void:

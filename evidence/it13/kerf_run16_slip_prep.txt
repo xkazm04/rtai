@@ -1,0 +1,19 @@
+# n15 hero it13 PREP: Kerf run16 (profile row from kerf_run16_70_cells, other rows = each run8 frame twice), packed to build/k16/kerf_run16.png, cell 147x213 fig_h 165 (= the shipped run8, which repacks pixel-exactly from kerf_run8_70_cells). Not wired.
+kerf_run16: cycle 400 cell px = 4.16 m, 2.88 cycles/s at 12.0 m/s, 46.1 frames/s; timing even
+  f1->f2: contact  130.0 ->  117.0, dwell  25.0/ 25.0: centre drift  +12.0 cell =  +4.0 px@32  +8.0 px@64
+  f2->f3: contact  117.0 ->   81.0, dwell  25.0/ 25.0: centre drift  -11.0 cell =  -3.7 px@32  -7.3 px@64
+  f3->f4: contact   81.0 ->   46.5, dwell  25.0/ 25.0: centre drift   -9.5 cell =  -3.2 px@32  -6.3 px@64
+  f4->f5: contact   46.5 ->   29.0, dwell  25.0/ 25.0: centre drift   +7.5 cell =  +2.5 px@32  +5.0 px@64
+  f5->f6: contact   29.0 ->   32.0, dwell  25.0/ 25.0: centre drift  +28.0 cell =  +9.3 px@32 +18.6 px@64
+  f6->f7: no stance pair (switch or flight)
+  f7->f8: contact   40.5 ->   18.5, dwell  25.0/ 25.0: centre drift   +3.0 cell =  +1.0 px@32  +2.0 px@64
+  f8->f9: no stance pair (switch or flight)
+  f9->f10: contact  128.5 ->  107.0, dwell  25.0/ 25.0: centre drift   +3.5 cell =  +1.2 px@32  +2.3 px@64
+  f10->f11: contact  107.0 ->   77.0, dwell  25.0/ 25.0: centre drift   -5.0 cell =  -1.7 px@32  -3.3 px@64
+  f11->f12: contact   77.0 ->   48.0, dwell  25.0/ 25.0: centre drift   -4.0 cell =  -1.3 px@32  -2.7 px@64
+  f12->f13: contact   48.0 ->   28.5, dwell  25.0/ 25.0: centre drift   +5.5 cell =  +1.8 px@32  +3.7 px@64
+  f13->f14: contact   28.5 ->   31.0, dwell  25.0/ 25.0: centre drift  +27.5 cell =  +9.2 px@32 +18.3 px@64
+  f14->f15: no stance pair (switch or flight)
+  f15->f16: contact   37.0 ->   32.5, dwell  25.0/ 25.0: centre drift  +20.5 cell =  +6.8 px@32 +13.7 px@64
+  f16->f1: contact   32.5 ->   16.0, dwell  25.0/ 25.0: centre drift   +8.5 cell =  +2.8 px@32  +5.7 px@64
+  mean |drift| 11.2 cell = 3.7 px@32, worst 9.3 px@32; sawtooth (mean dwell) 8.3 px@32 / 16.6 px@64

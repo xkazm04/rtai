@@ -166,7 +166,7 @@ func _process(_delta: float) -> void:
 	appear.step(at, r.facing.angle(), steps, arena.tick)
 	_hide_rivet(is_big or is_dent or is_kerf or is_ohm, r.id)
 	var drawn: Array[GhostDrawn] = [_tonnage.drawn, _dent.drawn, _kerf.drawn, _ohm.drawn]
-	GhostActs.feed(drawn, pilot, r.hurt_tick, arena.tick)
+	GhostActs.feed(drawn, pilot, r, arena.tick)
 
 
 ## Kerf's hover rig or Ohm's cane rig at Rivet's pose (snaps with Kerf's blink: no tween),

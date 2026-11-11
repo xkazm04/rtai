@@ -1,0 +1,71 @@
+# n15 hero it13: planted feet, world space, computed from the shipped sheets + GhostStride/GhostDrawn timing (evidence/it13/tools/ghost_slip.py)
+dent_run: cycle 330 cell px = 3.37 m, 2.08 cycles/s at 7.0 m/s, 16.6 frames/s; timing even
+  f1->f2: contact  110.5 ->   83.0, dwell  41.2/ 41.2: centre drift  +13.8 cell =  +4.5 px@32  +9.0 px@64
+  f2->f3: contact   83.0 ->   22.5, dwell  41.2/ 41.2: centre drift  -19.2 cell =  -6.3 px@32 -12.6 px@64
+  f3->f4: no stance pair (switch or flight)
+  f4->f5: no stance pair (switch or flight)
+  f5->f6: contact   98.5 ->   84.5, dwell  41.2/ 41.2: centre drift  +27.2 cell =  +8.9 px@32 +17.8 px@64
+  f6->f7: contact   84.5 ->   22.5, dwell  41.2/ 41.2: centre drift  -20.8 cell =  -6.8 px@32 -13.5 px@64
+  f7->f8: no stance pair (switch or flight)
+  f8->f1: no stance pair (switch or flight)
+  mean |drift| 20.2 cell = 6.6 px@32, worst 8.9 px@32; sawtooth (mean dwell) 13.5 px@32 / 26.9 px@64
+dent_run_with_table: cycle 330 cell px = 3.37 m, 2.08 cycles/s at 7.0 m/s, 16.6 frames/s; timing 20,70,41.5,41.5,8,70,41.5,41.5
+  f1->f2: contact  110.5 ->   83.0, dwell  30.4/ 44.5: centre drift   +9.9 cell =  +3.2 px@32  +6.5 px@64
+  f2->f3: contact   83.0 ->   22.5, dwell  44.5/ 55.1: centre drift  -10.7 cell =  -3.5 px@32  -7.0 px@64
+  f3->f4: no stance pair (switch or flight)
+  f4->f5: no stance pair (switch or flight)
+  f5->f6: contact   98.5 ->   84.5, dwell  24.5/ 38.5: centre drift  +17.5 cell =  +5.7 px@32 +11.4 px@64
+  f6->f7: contact   84.5 ->   22.5, dwell  38.5/ 55.1: centre drift  -15.2 cell =  -5.0 px@32  -9.9 px@64
+  f7->f8: no stance pair (switch or flight)
+  f8->f1: no stance pair (switch or flight)
+  mean |drift| 13.3 cell = 4.4 px@32, worst 5.7 px@32; sawtooth (mean dwell) 13.5 px@32 / 26.9 px@64
+kerf_run: cycle 400 cell px = 4.16 m, 2.88 cycles/s at 12.0 m/s, 23.1 frames/s; timing even
+  f1->f2: contact  130.0 ->   81.0, dwell  50.0/ 50.0: centre drift   +1.0 cell =  +0.3 px@32  +0.7 px@64
+  f2->f3: contact   81.0 ->   29.0, dwell  50.0/ 50.0: centre drift   -2.0 cell =  -0.7 px@32  -1.3 px@64
+  f3->f4: no stance pair (switch or flight)
+  f4->f5: no stance pair (switch or flight)
+  f5->f6: contact  128.5 ->   77.0, dwell  50.0/ 50.0: centre drift   -1.5 cell =  -0.5 px@32  -1.0 px@64
+  f6->f7: contact   77.0 ->   28.5, dwell  50.0/ 50.0: centre drift   +1.5 cell =  +0.5 px@32  +1.0 px@64
+  f7->f8: no stance pair (switch or flight)
+  f8->f1: contact   36.0 ->   16.0, dwell  50.0/ 50.0: centre drift  +30.0 cell = +10.0 px@32 +20.0 px@64
+  mean |drift| 7.2 cell = 2.4 px@32, worst 10.0 px@32; sawtooth (mean dwell) 16.6 px@32 / 33.3 px@64
+ohm_walk_even: cycle 126 cell px = 1.08 m, 4.15 cycles/s at 4.5 m/s, 33.2 frames/s; timing even
+  f1->f2: no stance pair (switch or flight)
+  f2->f3: contact  133.0 ->   86.0, dwell  15.8/ 15.8: centre drift  -31.2 cell =  -8.6 px@32 -17.2 px@64
+  f3->f4: contact   86.0 ->   79.5, dwell  15.8/ 15.8: centre drift   +9.2 cell =  +2.5 px@32  +5.1 px@64
+  f4->f5: no stance pair (switch or flight)
+  f5->f6: contact  125.5 ->   96.5, dwell  15.8/ 15.8: centre drift  -13.2 cell =  -3.7 px@32  -7.3 px@64
+  f6->f7: contact   96.5 ->   84.0, dwell  15.8/ 15.8: centre drift   +3.2 cell =  +0.9 px@32  +1.8 px@64
+  f7->f8: contact   84.0 ->   77.0, dwell  15.8/ 15.8: centre drift   +8.8 cell =  +2.4 px@32  +4.8 px@64
+  f8->f1: no stance pair (switch or flight)
+  mean |drift| 13.2 cell = 3.6 px@32, worst 8.6 px@32; sawtooth (mean dwell) 4.3 px@32 / 8.7 px@64
+ohm_walk: cycle 126 cell px = 1.08 m, 4.15 cycles/s at 4.5 m/s, 33.2 frames/s; timing 0.0,47.7,6.8,17.2,29.0,12.5,7.0,17.2
+  f1->f2: no stance pair (switch or flight)
+  f2->f3: contact  133.0 ->   86.0, dwell  21.9/ 25.0: centre drift  -23.6 cell =  -6.5 px@32 -13.0 px@64
+  f3->f4: contact   86.0 ->   79.5, dwell  25.0/ 11.0: centre drift  +11.5 cell =  +3.2 px@32  +6.3 px@64
+  f4->f5: no stance pair (switch or flight)
+  f5->f6: contact  125.5 ->   96.5, dwell  21.2/ 19.0: centre drift   -8.9 cell =  -2.5 px@32  -4.9 px@64
+  f6->f7: contact   96.5 ->   84.0, dwell  19.0/  8.9: centre drift   +1.5 cell =  +0.4 px@32  +0.8 px@64
+  f7->f8: contact   84.0 ->   77.0, dwell   8.9/ 11.1: centre drift   +3.0 cell =  +0.8 px@32  +1.7 px@64
+  f8->f1: no stance pair (switch or flight)
+  mean |drift| 9.7 cell = 2.7 px@32, worst 6.5 px@32; sawtooth (mean dwell) 4.3 px@32 / 8.7 px@64
+tonnage_walk16: cycle 235 cell px = 4.07 m, 1.03 cycles/s at 4.2 m/s, 16.5 frames/s; timing 11.0,35.0,10.5,3.5,13.5,43.5,23.9,5.5,14.5,10.0,15.0,17.5,25.9,3.5,0.0,3.0
+  f1->f2: contact  135.5 ->  124.5, dwell   6.7/ 22.1: centre drift   +3.4 cell =  +1.9 px@32  +3.8 px@64
+  f2->f3: contact  124.5 ->   90.5, dwell  22.1/ 21.9: centre drift  -12.0 cell =  -6.7 px@32 -13.3 px@64
+  f3->f4: contact   90.5 ->   79.5, dwell  21.9/  6.7: centre drift   +3.3 cell =  +1.8 px@32  +3.7 px@64
+  f4->f5: contact   79.5 ->   75.5, dwell   6.7/  8.2: centre drift   +3.5 cell =  +1.9 px@32  +3.8 px@64
+  f5->f6: contact   75.5 ->   62.0, dwell   8.2/ 27.4: centre drift   +4.3 cell =  +2.4 px@32  +4.8 px@64
+  f6->f7: contact   62.0 ->   18.5, dwell  27.4/ 32.4: centre drift  -13.6 cell =  -7.5 px@32 -15.1 px@64
+  f7->f8: no stance pair (switch or flight)
+  f8->f9: contact  140.0 ->  134.5, dwell  14.1/  9.6: centre drift   +6.4 cell =  +3.5 px@32  +7.1 px@64
+  f9->f10: contact  134.5 ->  121.0, dwell   9.6/ 11.8: centre drift   -2.8 cell =  -1.6 px@32  -3.1 px@64
+  f10->f11: contact  121.0 ->  110.5, dwell  11.8/ 12.0: centre drift   +1.4 cell =  +0.8 px@32  +1.6 px@64
+  f11->f12: contact  110.5 ->   96.0, dwell  12.0/ 15.6: centre drift   -0.7 cell =  -0.4 px@32  -0.7 px@64
+  f12->f13: contact   96.0 ->   78.0, dwell  15.6/ 20.9: centre drift   +0.2 cell =  +0.1 px@32  +0.3 px@64
+  f13->f14: no stance pair (switch or flight)
+  f14->f15: contact  140.0 ->  135.0, dwell  14.1/  5.7: centre drift   +4.9 cell =  +2.7 px@32  +5.4 px@64
+  f15->f16: contact  135.0 ->  138.5, dwell   5.7/  5.7: centre drift   +9.2 cell =  +5.1 px@32 +10.2 px@64
+  f16->f1: contact  138.5 ->  135.5, dwell   5.7/  6.7: centre drift   +3.2 cell =  +1.8 px@32  +3.5 px@64
+  mean |drift| 4.9 cell = 2.7 px@32, worst 7.5 px@32; sawtooth (mean dwell) 8.1 px@32 / 16.3 px@64
+# Note: Kerf's f8->f1 pair (36 -> 16, +30 cell) pairs the trailing toe of a flight frame with the next landing's back toe (both 5-6 px wide toe tips, see build/rt/runs_profile.png): not a planted foot. His four stance pairs (f1-f3, f5-f7) drift 0.3-0.7 px@32.
+# Speeds: Dent 7 m/s (run grid above 5), Kerf 12 (run), Ohm 4.5 and Tonnage 4.2 (walk; no run grid). Cell -> metre: height_m / fig_px of each GhostDrawn.new.

@@ -1,0 +1,10 @@
+kerf: cycle 400 cell px = 4.16 m, 2.88 cycles/s at 12.0 m/s, 23.1 frames/s; timing even
+  f1->f2: contact  130.0 ->   81.0, dwell  50.0/ 50.0: centre drift   +1.0 cell =  +0.3 px@32  +0.7 px@64
+  f2->f3: contact   81.0 ->   29.0, dwell  50.0/ 50.0: centre drift   -2.0 cell =  -0.7 px@32  -1.3 px@64
+  f3->f4: no stance pair (switch or flight)
+  f4->f5: no stance pair (switch or flight)
+  f5->f6: contact  128.5 ->   77.0, dwell  50.0/ 50.0: centre drift   -1.5 cell =  -0.5 px@32  -1.0 px@64
+  f6->f7: contact   77.0 ->   28.5, dwell  50.0/ 50.0: centre drift   +1.5 cell =  +0.5 px@32  +1.0 px@64
+  f7->f8: no stance pair (switch or flight)
+  f8->f1: contact   36.0 ->   16.0, dwell  50.0/ 50.0: centre drift  +30.0 cell = +10.0 px@32 +20.0 px@64
+  mean |drift| 7.2 cell = 2.4 px@32, worst 10.0 px@32; sawtooth (mean dwell) 16.6 px@32 / 33.3 px@64

@@ -19,6 +19,9 @@ var burst_gap: int = 0
 ## Hits land only while exposed (the boss is in cover outside his vent window).
 var exposed: bool = true
 var hurt_tick: int = -1000000
+## n15 hero: the line the last blow travelled (CombatArena.hit_dir at the hit; ZERO = unknown).
+## Read by views only (the ghost recoil leans along it); not hashed.
+var hurt_dir: Vector2 = Vector2.ZERO
 ## Lane gunplay (GuardTell): ticks of the readable tell left before a burst; 0 = none.
 var tell_left: int = 0
 ## Lane ghost-powers: the share of every hit this fighter takes (Tonnage's plates: 0.3; 1 = none).
@@ -45,6 +48,13 @@ static func make(p_kind: Kind, p_id: int, at: Vector2, hp_max: float) -> Fighter
 
 func alive() -> bool:
 	return hp > 0.0
+
+
+## Takes `amount` of hp on `tick`, the blow travelling along `dir` (CombatArena.damage).
+func take(amount: float, tick: int, dir: Vector2) -> void:
+	hp = maxf(hp - amount, 0.0)
+	hurt_tick = tick
+	hurt_dir = dir
 
 
 func write_state(out: StreamPeerBuffer) -> void:

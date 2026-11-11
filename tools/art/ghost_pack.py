@@ -1,6 +1,7 @@
 """n11 hero: pack a ghost's drawn cells into one grid for GhostDrawn.
 
-usage: py -3 -I tools/art/ghost_pack.py <cells dir> <out.png> [--match=<walk fig_h>] [--despeck=<px>]
+usage: py -3 -I tools/art/ghost_pack.py <cells dir>[+<cells dir>@<col>...] <out.png> [--match=<walk fig_h>]
+       [--k=<scale>] [--despeck=<px>]
 
 Cells are `{row}_{col}.png` (1-indexed, tight, transparent), rows = toward, 3/4 toward right, right
 profile, 3/4 away right, away; columns = the cycle, or the act phases (wind-up, cut, follow-through,
@@ -9,7 +10,10 @@ sheet is an act sheet: an arm flung out moves a tight crop, so a cell centres on
 instead of its box, and the whole sheet is scaled so the wind-up column's median height equals the
 walk grid's (its figure carries no arc there). Prints the cell size and the median figure height.
 --despeck clears alpha islands under that many px (stray marks a cut left beside the figure) and
-prints what it cleared, so a wisp the size of a speck shows in the log. Deterministic.
+prints what it cleared, so a wisp the size of a speck shows in the log. --k forces the act scale
+(n15: a `_left` sheet takes its right sheet's printed k, so both draw one figure size). `+dir@col`
+adds a second cells dir whose column 1 lands at column col (n15: Dent's jab cells as act columns
+5-7). Deterministic.
 """
 
 import statistics
@@ -63,20 +67,27 @@ def despeck(im: Image.Image, min_px: int) -> tuple[Image.Image, list[int]]:
 
 
 def main() -> None:
-    src, out = Path(sys.argv[1]), Path(sys.argv[2])
+    srcs, out = sys.argv[1].split("+"), Path(sys.argv[2])
     match = next((float(a.split("=")[1]) for a in sys.argv[3:] if a.startswith("--match=")), 0.0)
+    force = next((float(a.split("=")[1]) for a in sys.argv[3:] if a.startswith("--k=")), 0.0)
     speck = next((int(a.split("=")[1]) for a in sys.argv[3:] if a.startswith("--despeck=")), 0)
     cells = {}
-    for f in sorted(src.glob("*.png")):
+    files = []
+    for spec in srcs:
+        d, _, at = spec.partition("@")
+        files += [(f, int(at or 1) - 1) for f in sorted(Path(d).glob("*.png"))]
+    for f, shift in files:
         r, c = (int(x) for x in f.stem.split("_"))
+        c += shift
         cells[(r, c)] = Image.open(f).convert("RGBA")
         if speck:
             cells[(r, c)], gone = despeck(cells[(r, c)], speck)
             if gone:
                 print(f"despeck {f.stem}: {gone}")
     rows, cols = max(k[0] for k in cells), max(k[1] for k in cells)
-    if match:
-        k = match / statistics.median(i.height for (r, c), i in cells.items() if c == 1)
+    if match or force:
+        k = force or match / statistics.median(i.height for (r, c), i in cells.items() if c == 1)
+        print(f"k {k!r}")
         cells = {
             key: i.resize((max(1, round(i.width * k)), max(1, round(i.height * k))), Image.LANCZOS)
             for key, i in cells.items()

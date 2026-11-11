@@ -93,6 +93,14 @@
       ]
     },
     {
+      "art": "res://features/quest/art/collect_call/rivet_hide_p55.png",
+      "id": "rivet_hide_p55"
+    },
+    {
+      "art": "res://features/quest/art/collect_call/rivet_hide_p55.png",
+      "id": "rivet_hide_p70"
+    },
+    {
       "art": "res://features/quest/art/collect_call/cast_rivet_lod.png",
       "id": "rivet_lod",
       "size_m": [

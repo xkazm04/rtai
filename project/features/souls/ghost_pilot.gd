@@ -17,6 +17,8 @@ var hauler: HaulerStage
 var dent: DentStage
 var kerf: KerfStage
 var ohm: OhmStage
+## n15 hero h-4: Dent's arm jab, a melee press with no car seized (ghost_attacks.json dent.jab).
+var jab: DentJab = DentJab.new()
 var transforms: int = 0
 
 
@@ -61,8 +63,13 @@ func drive(
 	var tonnage: bool = settled_in(HaulerStage.GHOST)
 	move_by = hauler.drive(stage, false, press and tonnage, move_by)
 	var in_dent: bool = settled_in(DentStage.GHOST)
+	# read before the drive: the press that blows a seized car is not also a jab
+	var hands_free: bool = in_dent and dent.car == null
 	var seize: bool = in_dent and c.was_pressed(actions, &"fire")
 	dent.drive(stage, seize, press and in_dent, stage.arena.rivet.facing, c.aim_m)
+	if not in_dent or dent.car != null:
+		jab.cancel()
+	jab.step(stage, press and hands_free, stage.arena.rivet.facing)
 	if in_dent:
 		stage.intent.fire_at = Vector2.INF  # Dent's hands are on the car, not on the gun
 	if dent.riding():
@@ -99,3 +106,4 @@ func write_state(out: StreamPeerBuffer) -> void:
 	dent.write_state(out)
 	kerf.write_state(out)
 	ohm.write_state(out)
+	jab.write_state(out)

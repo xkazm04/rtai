@@ -1,0 +1,44 @@
+# n15 hero it16. Only leg 2 shows the ghost: by leg 3 the form has expired and Rivet runs
+# (checked on the first/last frames of every leg), so the leg-3 rows measure RIVET, not the ghost.
+== run32_dent_right leg 2
+ground px/tick mean 5.16; pose changes 45 in 48 ticks
+ride mean 0.2, max 5.0 crop px
+== run32_dent_right leg 3
+ground px/tick mean 4.08; pose changes 47 in 48 ticks
+ride mean 0.0, max 0.0 crop px
+== run32_dent_diag leg 2
+ground px/tick mean 5.30; pose changes 47 in 48 ticks
+ride mean 0.0, max 0.0 crop px
+== run32_dent_diag leg 3
+ground px/tick mean 4.25; pose changes 43 in 48 ticks
+ride mean 0.4, max 13.3 crop px
+== run32_dent_turn180 leg 2
+ground px/tick mean 5.16; pose changes 46 in 48 ticks
+ride mean 0.1, max 5.1 crop px
+== run32_dent_turn180 leg 3
+ground px/tick mean 5.07; pose changes 47 in 48 ticks
+ride mean 0.0, max 0.0 crop px
+== run32_kerf_right leg 2
+ground px/tick mean 8.83; pose changes 39 in 48 ticks
+ride mean 1.8, max 9.0 crop px
+== run32_kerf_right leg 3
+ground px/tick mean 3.95; pose changes 44 in 48 ticks
+ride mean 0.3, max 12.1 crop px
+== run32_kerf_diag leg 2
+ground px/tick mean 8.85; pose changes 41 in 48 ticks
+ride mean 1.3, max 9.2 crop px
+== run32_kerf_diag leg 3
+ground px/tick mean 4.59; pose changes 37 in 48 ticks
+ride mean 1.3, max 35.0 crop px
+== run32_kerf_turn180 leg 2
+ground px/tick mean 8.82; pose changes 39 in 48 ticks
+ride mean 1.8, max 9.0 crop px
+== run32_kerf_turn180 leg 3
+ground px/tick mean 5.09; pose changes 47 in 48 ticks
+ride mean 0.0, max 0.0 crop px
+# n15 hero it16 06:51: Dent's sprint, leg 2 (the ghost on screen at ticks 0 and 47, checked), the 5 octants not in run32_films.sh
+dent turn 45 leg 2: ground px/tick mean 4.52; pose changes 47 in 48 ticks ride mean 0.0, max 0.0 crop px 
+dent turn 90 leg 2: ground px/tick mean 4.43; pose changes 47 in 48 ticks ride mean 0.0, max 0.0 crop px 
+dent turn 135 leg 2: ground px/tick mean 4.62; pose changes 46 in 48 ticks ride mean 0.1, max 5.2 crop px 
+dent turn -90 leg 2: ground px/tick mean 5.25; pose changes 46 in 48 ticks ride mean 0.1, max 5.3 crop px 
+dent turn -135 leg 2: ground px/tick mean 5.24; pose changes 47 in 48 ticks ride mean 0.0, max 0.0 crop px 

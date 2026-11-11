@@ -40,7 +40,8 @@
         "2026-11-10: n15 tools: the selftest scenes declare NEEDS_WINDOW (+1 dev line) so tools/dev/run.mjs refuses them headless (combat FRICTION) (dev_loc 21426 -> 21427)",
         "2026-11-11: n15 tools: dev/sim/car_route_trails.gd, the t-4 evidence tool for a hand-made map (Call c-2); a -s SceneTree script reads its own two flags like dev/bake_city.gd (dev_loc 21427 -> 21594)",
         "2026-11-11: n15 tools c-2: car_route_trails --tier=a, the owner's Call c-2 evidence in tier A (hull vs cells, stuck death), dev-only (dev_loc 21594 -> 21623)",
-        "2026-11-11: n15 tools: quest1 stills draw the 120 ticks before each still (dev/frames/quest1_clip_rec.gd, --still-lead), so a still's camera no longer depends on the --stills list (combat FRICTION, ~250k px at t13708) (dev_loc 21623 -> 21641)"
+        "2026-11-11: n15 tools: quest1 stills draw the 120 ticks before each still (dev/frames/quest1_clip_rec.gd, --still-lead), so a still's camera no longer depends on the --stills list (combat FRICTION, ~250k px at t13708) (dev_loc 21623 -> 21641)",
+        "2026-11-10: n15 hero: stride_film --film-blow=<deg> films the ghost recoil along the blow (+5 dev lines) (dev_loc 21426 -> 21431)"
       ],
       "files": {
         "project/dev/arena": 711,
@@ -61,7 +62,7 @@
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 255,
-        "project/dev/rivet_motion": 1964,
+        "project/dev/rivet_motion": 1966,
         "project/dev/save_crash_loop.gd": 14,
         "project/dev/save_crash_writer.gd": 18,
         "project/dev/save_cross.gd": 18,
@@ -73,7 +74,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 21641
+      "total": 21643
     },
     "direct_cmdline_reads": {
       "accepted": [

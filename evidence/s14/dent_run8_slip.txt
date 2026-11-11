@@ -1,0 +1,10 @@
+dent: cycle 330 cell px = 3.37 m, 2.08 cycles/s at 7.0 m/s, 16.6 frames/s; timing even
+  f1->f2: contact  110.5 ->   83.0, dwell  41.2/ 41.2: centre drift  +13.8 cell =  +4.5 px@32  +9.0 px@64
+  f2->f3: contact   83.0 ->   22.5, dwell  41.2/ 41.2: centre drift  -19.2 cell =  -6.3 px@32 -12.6 px@64
+  f3->f4: no stance pair (switch or flight)
+  f4->f5: no stance pair (switch or flight)
+  f5->f6: contact   98.5 ->   84.5, dwell  41.2/ 41.2: centre drift  +27.2 cell =  +8.9 px@32 +17.8 px@64
+  f6->f7: contact   84.5 ->   22.5, dwell  41.2/ 41.2: centre drift  -20.8 cell =  -6.8 px@32 -13.5 px@64
+  f7->f8: no stance pair (switch or flight)
+  f8->f1: no stance pair (switch or flight)
+  mean |drift| 20.2 cell = 6.6 px@32, worst 8.9 px@32; sawtooth (mean dwell) 13.5 px@32 / 26.9 px@64

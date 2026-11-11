@@ -1,27 +1,23 @@
 class_name GhostDrawn
 extends RefCounted
-## n11 hero: a ghost form as one drawn figure under a tilt, in Rivet's strip format: an 8-frame walk
-## grid (5 facings, the left three mirrored; `<name>_walk8.png`, tools/art/ghost_pack.py), stepped
-## by the ground walked so a planted foot stays put, feet on the rig's point, the rig's limbs and
-## card hidden. Without the art it builds nothing and the form keeps its card. Render only.
+## n11 hero: a ghost form as one drawn figure under a tilt, in Rivet's strip format: a walk grid
+## (5 facings, the left three drawn or mirrored: GhostSheet; tools/art/ghost_pack.py) stepped by
+## the ground walked so a planted foot stays put, feet on the rig's point, its limbs and card
+## hidden. Without the art it builds nothing and the form keeps its card. Render only.
 
 const ART_DIR: String = "res://features/souls/art/view/"
 const COLS: int = 8
 const ROWS: int = 5
 const PAD_PX: float = 2.0
-## The standing cell (a passing frame, most upright) and the walk's speed floor (m/s).
-const STAND_COL: int = 2
-const WALK_FROM_MPS: float = 0.4
-## The cadence's cap (cycles a second): past it the feet slide rather than churn.
-const MAX_CYCLES_S: float = 3.0
-## The run grid (`<name>_run8.png`, optional) takes over above this speed, with its own cap.
-const RUN_FROM_MPS: float = 5.0
+const STAND_COL: int = 2  # the standing cell (a passing frame, most upright)
+const WALK_FROM_MPS: float = 0.4  # the walk's speed floor (m/s)
+const MAX_CYCLES_S: float = 3.0  # the cadence's cap (cycles/s): past it the feet slide
+const RUN_FROM_MPS: float = 5.0  # the run grid (optional) takes over above this, with its own cap
 const MAX_RUN_CYCLES_S: float = 3.5
 const BACKPEDAL_DOT: float = -0.25
 ## A pitch's drawn stride against the p70 cycle ("<name>/<art>"), measured off its stance foot.
 const STRIDE_K: Dictionary[String, float] = {"dent/p55": 0.8, "tonnage/p55": 0.95}
-## Frames without ground walked before the figure stands.
-const STILL_FRAMES: int = 3
+const STILL_FRAMES: int = 3  # frames without ground walked before the figure stands
 const OCT_HOLD_RAD: float = deg_to_rad(4.0)
 ## The act grid (`<name>_act.png`): 4 columns, the phases: wind-up (only a form whose sim has one,
 ## Tonnage's slam), cut, follow-through, hit; ticks each phase shows for.
@@ -30,6 +26,12 @@ const WINDUP_COL: int = 0
 const CUT_COL: int = 1
 const FOLLOW_COL: int = 2
 const HIT_COL: int = 3
+## n15 h-4: Dent's arm jab draws in act columns 4-6 (wind-up, jab, recoil) where his act sheet
+## has them (JAB_COLS columns); a sheet without them plays the jab on the act phases. The left
+## sheets in JAB_LEFT_COLS draw it too; an absent key mirrors the right jab in the left octants.
+const JAB_SHIFT: int = 4
+const JAB_COLS: Dictionary[String, int] = {"dent/p70": 7, "dent/p55": 7}
+const JAB_LEFT_COLS: Dictionary[String, int] = {"dent/p70": 7, "dent/p55": 7}
 const CUT_TICKS: int = 5
 const FOLLOW_TICKS: int = 10
 const HIT_TICKS: int = 10
@@ -38,32 +40,32 @@ var card_name: String = ""
 var height_m: float = 1.75
 ## One drawn stride cycle's ground in cell px (the stance foot's travel over a cycle, measured).
 var cycle_cell: float = 150.0
-## The run grid's stride cycle in cell px (0 = this ghost has no run grid).
-var run_cell: float = 0.0
-## The figure's median height in the grid, cell px (ghost_pack prints it).
-var fig_px: float = 180.0
-## True while something else carries the form (Dent braced on a car roof): stands, feet still.
-var still: bool = false
+var run_cell: float = 0.0  # the run grid's stride cycle in cell px (0 = no run grid)
+var fig_px: float = 180.0  # the figure's median height in the grid, cell px (ghost_pack prints it)
+var still: bool = false  # something else carries the form (Dent on a car roof): stands still
+var blow: Vector2 = Vector2.ZERO  # the last hit's line (GhostActs, Fighter.hurt_dir; ZERO = none)
+var jab: bool = false  # the strike or wind-up shown is Dent's arm jab (GhostActs)
 var _spr: Sprite2D = null
 var _art: String = "?"
-## This art's measured per-frame stride (GhostStride.TABLES), empty = even frames.
-var _steps: PackedFloat32Array = PackedFloat32Array()
+var _steps: PackedFloat32Array = PackedFloat32Array()  # measured stride per frame; empty = even
+var _run_steps: PackedFloat32Array = PackedFloat32Array()  # GhostStride.run_table_of
 var _phase: float = 0.0
 var _last: Vector2 = Vector2.INF
 var _col: int = STAND_COL
 var _still: int = 0
 var _oct: int = -1
 var _look: float = NAN
-var _walk_tex: Texture2D = null
-var _run_tex: Texture2D = null
+var _walk: GhostSheet = null
+var _run: GhostSheet = null
 var _running: bool = false
 var _windup: bool = false
-var _act_tex: Texture2D = null
+var _act: GhostSheet = null
 var _seq: int = 0
 var _fed: bool = false
 var _act_from: int = -1
 var _hurt: int = -1
 var _tick: int = 0
+var _lunge: GhostLunge = GhostLunge.new()  # the strike's lean and the wind-up's (n15 combat feel)
 
 
 func _init(
@@ -90,20 +92,21 @@ func step(
 	_look = host.global_rotation if is_nan(look) else look
 	var o: int = octant(_look)
 	var walk: int = _column(host, s, RigHeadCard.OCT_FRAME[o])
-	var act: int = act_col() if _act_tex != null else -1
-	var run: bool = _running and _run_tex != null
-	var tex: Texture2D = _act_tex if act >= 0 else (_run_tex if run else _walk_tex)
-	var cols: int = ACT_COLS if act >= 0 else (COLS if run else GhostStride.cols_of(_steps))
-	_show(tex, cols)
-	_spr.frame = RigHeadCard.OCT_FRAME[o] * cols + (act if act >= 0 else walk)
-	_spr.flip_h = RigHeadCard.OCT_FLIP[o] == 1
+	var act: int = jab_col(act_col(), jab, _act.cols) if _act != null else -1
+	var sheet: GhostSheet = _act if act >= 0 else (_run if _running and _run != null else _walk)
+	sheet.show(_spr, o, act if act >= 0 else walk)
 	var hurt: int = _tick - _hurt if act == HIT_COL else -1
-	_spr.global_rotation = GhostRecoil.tilt(hurt, _look, GhostRecoil.lean_of(card_name))
+	var since: int = _tick - _act_from if _act_from >= 0 else -1
+	var tilt: float = GhostRecoil.tilt(hurt, _look, GhostRecoil.lean_of(card_name), blow)
+	_spr.global_rotation = tilt + _lunge.lean(_tick, since, _windup, _look, card_name)
+	var reach: Vector2 = GhostLunge.reach(since, _look, card_name) * SimConst.PX_PER_M * size_k
+	_spr.global_position = host.global_position + reach
 	_spr.global_scale = Vector2(s, s / vm.ground_k())
+	GhostHand.note(card_name, _art, _spr, o, act >= 0 and act != HIT_COL)
 	return true
 
 
-## A sheet of this ghost under an art key: "walk8", "act" or "run8".
+## A sheet of this ghost under an art key: "walk8", "act", "run8" or "run16".
 static func path_of(art: String, name: String, sheet: String = "walk8") -> String:
 	return ART_DIR.path_join(art).path_join("%s_%s.png" % [name, sheet])
 
@@ -130,6 +133,13 @@ func act_col() -> int:
 	return HIT_COL if _hurt >= 0 and _tick - _hurt < HIT_TICKS else -1
 
 
+## The act column on a sheet of `cols` columns: Dent's jab moves a wind-up, cut or follow-through
+## to its drawn jab cells where the sheet has them; a hit stays the hit.
+static func jab_col(act: int, p_jab: bool, cols: int) -> int:
+	var shift: bool = p_jab and act >= 0 and act != HIT_COL and cols > JAB_SHIFT
+	return act + JAB_SHIFT if shift else act
+
+
 ## The drawn octant of `look`, held OCT_HOLD_RAD past the boundary (as Rivet's RivetStride.oct_of).
 func octant(look: float) -> int:
 	if _oct >= 0 and absf(angle_difference(look, _oct * PI * 0.25)) <= PI / 8.0 + OCT_HOLD_RAD:
@@ -153,7 +163,7 @@ func _column(host: Node2D, s: float, row: int) -> int:
 			_running = false
 		return _col
 	_still = 0
-	var fast: bool = speed > RUN_FROM_MPS * SimConst.PX_PER_M and _run_tex != null
+	var fast: bool = speed > RUN_FROM_MPS * SimConst.PX_PER_M and _run != null
 	_running = fast and run_cell > 0.0 and GhostStride.runs(card_name, _art, row)
 	var k: float = STRIDE_K.get(card_name + "/" + _art, 1.0)
 	var cell: float = (run_cell if _running else cycle_cell) * k
@@ -162,19 +172,8 @@ func _column(host: Node2D, s: float, row: int) -> int:
 	var look: float = host.global_rotation if is_nan(_look) else _look
 	var back: bool = moved.normalized().dot(Vector2.from_angle(look)) < BACKPEDAL_DOT
 	_phase = fposmod(_phase + px / cycle * (-1.0 if back else 1.0), 1.0)
-	_col = GhostStride.col_of(_phase, PackedFloat32Array() if _running else _steps)
+	_col = GhostStride.col_of(_phase, _run_steps if _running else _steps)
 	return _col
-
-
-func _show(tex: Texture2D, cols: int) -> void:
-	if _spr.texture == tex:
-		return
-	_spr.frame = 0  # the grids differ in size: never out of range mid-swap
-	_spr.texture = tex
-	_spr.hframes = cols
-	_spr.vframes = ROWS
-	var cell: Vector2 = tex.get_size() / Vector2(cols, ROWS)
-	_spr.offset = Vector2(-cell.x * 0.5, PAD_PX - cell.y)
 
 
 func _rebuild(host: Node2D, parts: Array[Sprite2D], vm: ViewMode) -> void:
@@ -183,18 +182,19 @@ func _rebuild(host: Node2D, parts: Array[Sprite2D], vm: ViewMode) -> void:
 		_spr = null
 	_art = vm.art
 	_steps = GhostStride.table_of(card_name, _art)
+	_run_steps = GhostStride.run_table_of(card_name, _art)
 	var path: String = path_of(_art, card_name)
 	if vm.cards and _art != "" and ResourceLoader.exists(path):
 		_spr = Sprite2D.new()
 		_spr.name = &"ghost_drawn"
-		_walk_tex = load(path) as Texture2D
-		var act: String = path_of(_art, card_name, "act")
-		_act_tex = load(act) as Texture2D if ResourceLoader.exists(act) else null
-		var run: String = path_of(_art, card_name, "run8")
-		_run_tex = load(run) as Texture2D if ResourceLoader.exists(run) else null
+		_walk = GhostSheet.of(path, GhostStride.cols_of(_steps))
+		_act = GhostSheet.act_of(path_of(_art, card_name, "act"), card_name + "/" + _art)
+		var rc: int = GhostStride.cols_of(_run_steps)
+		_run = GhostSheet.of(path_of(_art, card_name, "run%d" % rc), rc)
 		_spr.centered = false
-		_show(_walk_tex, GhostStride.cols_of(_steps))
+		_walk.show(_spr, 2, STAND_COL)
 		_spr.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		GhostSoulLine.attach(_spr)
 		host.add_child(_spr)
 	for p: Sprite2D in parts:
 		p.visible = _spr == null
