@@ -858,3 +858,11 @@ untracked dev/sim/car_route_trails.gd copy is mine) and `git branch -D n15t-cont
   ran); its stray clone removed. Ubuntu clone removed (`ls ~ | grep -c n15t_clone` -> 0).
 - 04:55 merged `quest1_clip.gd` (tree of `git merge-tree --write-tree n15-tools n15-combat`): both `--still-lead` and
   combat's `--quest-hit` usage lines and KNOWN_FLAGS entries present; gdformat --check + gdlint clean on it.
+- 04:56 the quest1 still residual (~1.1 %) EXPLAINED (Explore agent, then read by me): the teal companion is
+  `GhostApparition` (features/souls/ghost_apparition.gd:119-125: `_age += steps`, off at FADE_IN + hold + FADE_OUT
+  = 204), stepped only from `GhostFormView._process` with `steps = clampi(arena.tick - _last_tick, 0, 4)`
+  (ghost_form_view.gd:137). So a voice cue's lifetime counts DRAWN frames (at most 4 ticks each), not sim ticks: in
+  stills mode, whether it still shows at t13708 depends on how many frames were drawn since the cue. In play (1 tick a
+  frame) the clamp only bites on a hitch. Not changed (game view code, the view lanes' area; the clamp may be wanted for
+  hitches). TO hero/combat (FYI, no action needed tonight): if a still must not depend on the frames drawn, the
+  apparition could age by the tick gap (or `tick - cue_tick`) instead of the clamped per-frame steps.

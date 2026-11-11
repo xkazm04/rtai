@@ -212,7 +212,10 @@ Session 6 (from FRICTION lines, no REQUEST open):
 - t-5 cost on a quiet machine (every number tonight is CONTENDED; the sign is 6/6, the size soft).
 - quest1 stills still depend on the `--stills` list for about 1.1 % of a frame (the soul companion, some blood): view
   state that a drawn frame creates when it sees an event. Removing that means the view being a pure function of the
-  sim at a tick, which is game-side work. Until then, an A/B pair uses one stills list.
+  sim at a tick, which is game-side work. Until then, an A/B pair uses one stills list. The companion part is
+  `GhostFormView._process` (`project/features/souls/ghost_form_view.gd:137`): it ages the apparition by at most 4 ticks
+  per drawn frame, so its 204-tick life counts frames, not ticks. That is the view lanes' code, and in play it only
+  matters during a hitch, so it was left unchanged.
 
 ## Next steps
 
