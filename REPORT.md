@@ -14,6 +14,9 @@ One command films every signature death in the KillLab on the city block, for we
   dummies so every direction draws the guard.
 - `--gore-check` (c6191736b): every death filmed with `--gore=reduced` must lie as one drawn card at kill+20.
   Proof s2gore: katana + rocket `whole: true`; the control without it is undrawn at kill+20 (FAIL), so it discriminates.
+  s4, over BOTH kill lanes' whole tables (run from each lane's worktree on its committed tip): kills-new 8f7fe6e6e
+  17/17 `whole: true` (evidence/n16-tools/reel_s4gore_new.md), kills-polish a56501ee5 12/12 (`--dirs=0`: that tree
+  has no kill-lab turn; reel_s4gore_polish.md). Sheets looked at: gatling, katana, chainsaw, rocket lie whole.
 - Beat readout: per film `hit-stop N frames` (measured from the probe rows' frame gaps), window still, settled,
   aftermath share; per weapon the row's timings and the aftermath lifetime (KillMarks ring of 12 kills).
 - s3: `--quick` (32 px/m, dir 90), sheet cells labelled (weapon/film, offset, `KILL HS6`), `--clips --feel=on` cut
@@ -22,7 +25,8 @@ One command films every signature death in the KillLab on the city block, for we
   gets the window, and every cell is anchored to the street by the probe's camera shift.
 - s4: the reel SCOUTS the kill tick, then films only the beats + the hold run (~20 PNGs, not ~165; PNG writes were
   ~45 s of a ~65 s film) (7a16ac85d); a live-tree reel names its uncommitted project/ paths and any film whose tree
-  moved mid-reel (469298728, 7c0e91fcd; kills-new FRICTION 15:15).
+  moved mid-reel (469298728, 7c0e91fcd; kills-new FRICTION 15:15); a tree older than the kill-lab turn is told to
+  film `--dirs=0` (613b488e0). Scout timing: 17 films in 12.7 min (s3: 12 films ~25 min). Decision tools/kill-reel-scout.
 - Full coverage proof (s3all, `--weapons=all --quick --feel=on`): all 12 signature weapons kill in the lab (11 PASS,
   the nuke then UNVERIFIABLE on Rivet off screen; after the subject + window fix s3nuke / s3anchor PASS).
 
