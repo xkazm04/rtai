@@ -755,3 +755,11 @@ untracked dev/sim/car_route_trails.gd copy is mine) and `git branch -D n15t-cont
   `node --test tools/lint/launch_flags.test.mjs` 5/5. AGENTS.md lint row names it.
 - 04:34 machine: bench.lock absent but 2 Godot processes run (`tasklist | grep -i godot`: PIDs 21592, 58828 at 832 MB,
   not mine): t-5 cost stays CONTENDED (no quiet machine).
+- 04:29-04:33 the exe's two boot ERROR lines (open since 01:59, REPORT next step): scratch worktree at main 5c5c03611
+  (`git worktree add --detach gtai-n15/scratch-main-export`, `wt_init --donor=int-day` = main-built DLLs: "ready"),
+  `node tools/export/export_checked.mjs` exit 0 (31 s, `[ DONE ] savepack`, RTAI.exe 631173224 B); then the same on this
+  tree at 88b42ec2d. Boot smoke of each (`RTAI.exe --headless --fixed-fps 60 --quit-after 300`): exit 0 both; diff of the
+  two 20-line logs (counts masked) = one line, `prewarmed 41 rigs in 24.3 ms` vs `24.4 ms`. Both have `ERROR: Condition
+  "!actions.custom_samplers.has(...)"` and `ERROR: N resources still in use at exit` (main 100, here 102; ObjectDB
+  leaked 662 vs 630). So both ERRORs are OLD, not from n15. Logs `evidence/exe_boot/`. Scratch worktree removed
+  (`git worktree list | grep -c scratch-main` -> 0), my build/export/windows deleted.

@@ -24,6 +24,11 @@ crowd: look goldens re-blessed with a decisions line). t-4 and t-5 move nothing 
 
 ## Tools changed
 
+- `tools/style/launch_flags.mjs`, lint check `launch-flags` (88b42ec2d; lint is now 18 checks; combat's FRICTION): every
+  `LaunchArgs.value/has("--x")` (or a same-file `const NAME = "--x"`) outside tests names a flag in `KNOWN_FLAGS`; a
+  missing one is "" on every run and `has()` false, which gave combat a byte-identical before/after. Example, planted in
+  `boot/arena_args.gd`: `project/boot/arena_args.gd:30: LaunchArgs.value("--impact-follow") reads a flag not in
+  KNOWN_FLAGS`; the repo, hero and combat tips are clean.
 - `res://dev/sim/car_route_trails.gd --tier=a` (6254f741e): the hand-made car map in tier A (cells filled from each tile's
   kind, hash built each tick, `dead_at_tick` per car). Example: `bash evidence/c2_tier_a/run.sh` -> 4 runs exit 0, tier B
   default == `evidence/t4_trails/after.json` exactly, mask 1 tier A car 0 `dead_at_tick 3022`.
@@ -172,6 +177,12 @@ the right film).
 
 ## Not done yet
 
+- The exported exe's two boot ERROR lines (a headless shader `custom_samplers` condition, `N resources still in use at
+  exit`) are OLD: a release export of main 5c5c03611 and one of n15-tools 88b42ec2d, same boot smoke (`RTAI.exe
+  --headless --fixed-fps 60 --quit-after 300`, exit 0 both), give the same 20 log lines apart from one timing and the
+  leak counts (main 100 resources / 662 ObjectDB, this branch 102 / 630): `evidence/exe_boot/`. Not fixed (engine-side
+  headless shader path; out of this lane's list).
+
 - t-5 cost on a quiet machine (every number tonight is CONTENDED; the sign is 6/6, the size soft).
 
 ## Next steps
@@ -179,7 +190,6 @@ the right film).
 - c-2: if the owner picks 65 (or 241), change the one value, regenerate (`node tools/gen_constants/gen.mjs`), `just
   native`; the route tests follow the value (21/0 at 1, 241 and 65); parity's final digest does not move.
 - Drop `test_noir_shadows` from `morning.mjs`'s known-flake advice after a few clean nights (same race as rig_stress).
-- The exe's two boot ERROR lines: compare with a main export before calling them old.
 
 ## Merge notes (draft)
 
