@@ -81,6 +81,12 @@ the lane's one Godot for 30-40 min.) Proof: the gate on 09b23b523 with `--reels=
 `"timing":{"evidence_s":964,"reels":{"combo":301}}`, said `PASS reels (combo only: not the full reel gate)`, and
 the next gate's ETA reads `took evidence 16.1 min + reels 5.0 min (combo 301 s)`. Codex n16t-break-gate-timing:
 13 tests, 2 fixes (the last `--reels` form wins; decimal seconds).
+s6 (c47f8bc2f, kills-new REQUEST 17:4x): the gate works from the CALLER's game tree: results, ETA, dirty check and the
+snapshot's DLL donor. Before, `node ../n16-tools/tools/gate/run.mjs` from a lane wrote into n16-tools/build/gate AND
+gave the snapshot the tools lane's c-2 DLLs (kills-new's 17:41 gate on b9dba1da8 ran them: sha1 b2dc0392 vs their
+3faf6079). A gated commit whose native/ differs from that tree's HEAD now prints `gate: WARNING native/ ...`. Proof:
+front half from a throwaway worktree at 76ae91d45, results under it, none in the kit; the warning for a differing
+commit; both stopped before Godot.
 
 ### 8. Lint-neutral paths in the pre-commit scope (`tools/lint/scope.mjs`, ed4a13db0)
 A project/ commit that also stages `steam/ai-provenance/**`, top-level `tools/art/*.py` or root `KILLS.md` /
@@ -111,14 +117,16 @@ bit, look goldens 11/11, release-compile 683/0, reels top/tilt70/combo OK). Ever
 (lint 19/19 incl. tool-tests in each commit's hook).
 
 ## Codex ledger
-5 tasks, all gpt-5.6-sol, 1 round each, discarded after landing: n16t-break-film-root (119 s, 10 tests, accepted
+6 tasks, all gpt-5.6-sol, 1 round each, discarded after landing: n16t-break-film-root (119 s, 10 tests, accepted
 after revision: the cwd-below-a-tree promise was a weakness, fixed), n16t-break-reel-movie (188 s, 10 tests, 3 kept
 red, all 3 accepted and fixed in code), n16t-break-live-tree (196 s, 8 tests, 1 kept red: CRLF porcelain, accepted and
 fixed; review found a second real defect the tests missed, C-quoted non-ASCII paths, fixed with a first-author test),
 n16t-break-reel-scout (743 s, 9 tests, 1 kept red: rejected as a defect, tick 60 is the lab's trigger column by design
 and my task text was looser than the design; the test exempts it, and 7f9e92c81 makes a kill at or before tick 60
 unverifiable in code; accepted after revision), n16t-break-gate-timing (485 s, 13 tests, 2 kept red, both accepted and
-fixed in run.mjs).
+fixed in run.mjs), n16t-break-aftermath (313 s, 13 tests, 2 kept red, both accepted and fixed: a stain lifetime alone
+was dropped, `tools/art/.py` read as neutral; review flipped one expectation that pinned the weak side; accepted after
+revision). Total 6 tasks, 1 round each.
 
 ## Calls for the owner
 - The kill reel's default is feel OFF (stable sheets, clean A/B); pacing is judged with `--feel=on`. Alternative:
