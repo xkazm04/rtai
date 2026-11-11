@@ -105,3 +105,16 @@ func test_headless_asks_no_worker_and_loads_on_first_use() -> void:
 	var path: String = DIR + "rivet_eq_molotov_left.png"
 	assert_false(StreetStrips.known(path), "no worker decode under the dummy renderer")
 	assert_not_null(StreetStrips.get_tex(path), "loaded in place on first use")
+
+
+func test_the_n17_twins_and_thrust_cells_are_warmed() -> void:
+	var weapons: Array[StringName] = [&"pistol", &"katana"]
+	var paths: PackedStringArray = RivetStripWarm.paths("p70", weapons)
+	for file: String in [
+		"rivet_eq_pistol_noflash.png",
+		"rivet_eq_pistol_diag.png",
+		"rivet_eq_pistol_diag_noflash.png",
+		"rivet_eq_katana_thrust.png",
+		"rivet_eq_katana_thrust_recover.png",
+	]:
+		assert_true(paths.has(DIR + file), file)

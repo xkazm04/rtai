@@ -45,6 +45,7 @@ static var enabled: bool = true
 ## Shows `cell` of `card`'s strip and seats it on its own foot line (the strip's pad elsewhere).
 static func show(card: Sprite2D, cell: int) -> void:
 	card.frame = cell
+	RivetGunDiag.seat(card, cell)  # n17: a gun's diagonal cell on his helmet, not its canvas
 	var path: String = str(card.get_meta(RivetFrames.ON, ""))
 	if card.texture == null or not FEET.has(_key(path, 5)) and not FEET.has(_key(path, 6)):
 		return

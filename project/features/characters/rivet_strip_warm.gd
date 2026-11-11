@@ -20,6 +20,10 @@ const WEAPON_FILES: PackedStringArray = [
 	"rivet_eq_%s" + RivetWindup.FILE,
 	"rivet_eq_%s" + RivetWindup.LEFT_FILE,
 	"rivet_eq_%s" + RivetWindup.LEFT_STRIKE_FILE,
+	"rivet_eq_%s" + RivetNoFlash.SUFFIX,  # n17: the flashless fire cells, the thrust's cells
+	"rivet_eq_%s_diag" + RivetNoFlash.SUFFIX,
+	"rivet_eq_%s" + RivetThrust.FILE,
+	"rivet_eq_%s" + RivetThrust.RECOVER_FILE,
 	RivetReload.PREFIX + "%s.png",
 	RivetReload.PREFIX + "%s_left.png",
 	RivetWalk.ARMED + "%s.png",

@@ -96,7 +96,7 @@ static func diag_or(rig: CutRig, art: String, weapon: StringName, path: String) 
 	if not diag or weapon == &"" or cone.has(weapon) or DIAG_CELL[o] < 0:
 		return path
 	var d: String = DIR + art + "/rivet_eq_" + String(weapon) + DIAG
-	if not fire_latched(rig) or not has_file(d):
+	if not fire_latched(rig) or not has_file(d) or RivetGunDiag.off(d):
 		return path
 	return d if draws_fire(rig, weapon, o, true) else path
 
@@ -117,8 +117,9 @@ static func cells_of(path: String, left: bool) -> int:
 
 static func foot_px(path: String) -> float:
 	var art: String = path.get_base_dir().get_file()
-	if path.ends_with(DIAG):
-		return DIAG_FOOT_PX.get(art, 0.0)
+	if path.ends_with(DIAG):  # n17: a gun's drawn diagonal (RivetGunDiag) has its own pad
+		var flame: float = DIAG_FOOT_PX.get(art, 0.0)
+		return RivetGunDiag.foot_or(path, art, flame)
 	var res: float = RivetRes.of(path)
 	return FOOT_PX.get(art + "/" + path.get_file(), RivetFrames.PAD_PX / res) * res
 
@@ -180,10 +181,10 @@ static func fires_drawn(
 		if flame_all or is_nan(aim):
 			return true
 		if deg.is_empty():
-			var gun: float = 90.0 if o == 2 else 180.0 * RivetFrames.LEFT[o]
 			if RivetFireCam.covers(weapon, o, aim, art, slack):
 				return true
-			return absf(angle_difference(aim, deg_to_rad(gun))) <= GUN_TOL + slack
+			var gun: float = RivetGunDiag.gun_rad(weapon, o, art)  # n17: a drawn diagonal's gun
+			return absf(angle_difference(aim, gun)) <= GUN_TOL + slack
 		var drawn: float = deg[o] if diag or DIAG_CELL[o] < 0 else 180.0 * RivetFrames.LEFT[o]
 		return absf(angle_difference(aim, deg_to_rad(drawn))) <= FLAME_TOL + slack
 	var off: float = 0.0 if is_nan(aim) else absf(angle_difference(aim, o * PI * 0.25))

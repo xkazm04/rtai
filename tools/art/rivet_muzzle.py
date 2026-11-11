@@ -78,6 +78,12 @@ STRIKE_TIP = ("electro_baton",)
 ## claw), so the near cable spike is the leftmost px of the arm band: the bell mouth, read by eye
 ## on a x5 zoom of the cut cell (d9 it16). Re-read it when the strip is re-cut from another sheet.
 LEFT_PINNED = {("p55", "rivet_eq_homing_shard_left", 2): [43, 78]}
+# n17 rivet-strike: a gun's drawn diagonal fire strip (RivetGunDiag, x1.5 cells): its gun's light
+# tan reads as flash core, so the flash root is pinned in 110 space (strip px / 1.5), read as the
+# biggest hot blob that differs from the flashless twin, its pixel nearest the body centre.
+DIAG_PINNED = {
+    ("p70", "rivet_eq_pistol_diag"): {"0": [160, 101], "1": [127, 35], "2": [27, 100], "3": [59, 37]}
+}
 
 
 def flash_core(rgba):
@@ -205,6 +211,9 @@ def measure_diag(out_dir, art):
     rows = {}
     for path in sorted(glob.glob(f"{out_dir}/{art}/rivet_eq_*_diag.png")):
         name = os.path.basename(path)[:-4]
+        if (art, name) in DIAG_PINNED:
+            rows[name] = {"cells": DIAG_PINNED[(art, name)]}
+            continue
         im = np.asarray(Image.open(path).convert("RGBA"))
         w = im.shape[1] // DIAG_CELLS
         cells = {}
