@@ -106,3 +106,7 @@ lanes' journals for REQUEST tools / FRICTION (none at 11:35). Gate on the final 
   window (proved on t2/t3 frames: rocket dir 90 6.34 % / 6.36 % at 32 / 64 px/m, settled only by +150; katana dir 90
   1.71 %, by +80; dir 180 2.84 %, by +80). The table side (hit-stop, held, crumble) prints per weapon. Gate:
   scenarios 55/55 ok; parity, look goldens, reels still running.
+- 12:16 gate on bc7878960 so far: lint 19/19, unit 2642 / 0 failures, scenarios 55/55, parity final_sha
+  94b2865f7f17d778 both sides (snapshot `build/evidence/parity-result.json`), look goldens 12/12 `ok: true`, selftest
+  frames ok. Reels still running at 12:16: the verdict is the last lines of
+  `C:/Users/kazda/kiro/gtai-n16/scratch-tools/gate_s1.log` (`gate exit N`). Session 1 ends here.
