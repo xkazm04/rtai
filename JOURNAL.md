@@ -701,3 +701,8 @@ FRICTION: `../n16-tools/tools/gate/run.mjs` writes its results to ITS tree (`n16
   b9dba1da8 (the fix only acts with no head card, which tilt70/combo always draw).
 - 18:19 molotov in a city street fight at 32 px/m (`film.mjs weapon:molotov`, before `040ffb67a` = burn_char, after
   `a63a1b4ee`) started (build/molotov_city.log).
+- 18:24 molotov city films PASS both (kill at 505, a riot cop, well out of the fire patch). Judged
+  (`evidence/n16-kills-new/molotov_torch_city_ab_32ppm_t505-655.png`, clips `molotov_torch_city_{before,after}_32ppm.mp4`):
+  before = burn_char's dark standing figure crumbling to ash; after = kneeling burning, face down along the run with the
+  flames on him, charred with the bottle neck by +150. The owed street-fight film: DONE. Masters: on top (dropped the
+  lab burn_char A/B at 32).
