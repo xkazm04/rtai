@@ -4,6 +4,8 @@ extends SceneTree
 ## Needs a window (the headless display has no renderer); dev-only, never shipped.
 ## Usage: godot --path project --resolution 1920x1080 -s res://dev/frames/quest1_clip.gd
 ##   -- --out=<abs dir> [--ppm=32] [--stills=<tick,tick,...>] (stills only: no clip, no title)
+##   [--still-lead=<ticks>] (n15 tools: steps drawn before each still, so the view is current;
+##   default 120; 0 = the old jump: 6.3 % of t13708 hung on the stills list, now 1.1 %)
 ##   [--save=<abs file>] (the game writes its beat checkpoints there) [--view=<id>] (n8 street)
 ##   [--continue] (with --save: press Continue on the title, save the first frames, quit)
 ##   [--rigs] (rivet-arsenal: the quest drawn on the cast rigs, Quest1Game._dev_rigs)
@@ -18,13 +20,12 @@ extends SceneTree
 ##   swings at the bot's target, puts it away at <to>)
 ##   [--view=<id>] (n8-view: the view row ViewMode.shared reads, e.g. tilt70; default top)
 ##   [--rivet-walk=bob] [--rivet-height=<m>] (d9-rivet: CastFlags, the walk's before, his size)
-##   [--still-lead=<ticks>] (n15 tools: steps drawn before each still, so the view is current;
-##   default 120; 0 = the old jump: 6.3 % of t13708 hung on the stills list, now 1.1 %)
 
 const KNOWN_FLAGS: PackedStringArray = [
 	"--out",
 	"--ppm",
 	"--stills",
+	"--still-lead",
 	"--save",
 	"--continue",
 	"--rigs",
@@ -39,7 +40,6 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--rivet-walk",
 	"--rivet-height",
 	"--ghost-voice",
-	"--still-lead",
 ]
 const RECORDER: String = "res://dev/frames/quest1_clip_rec.gd"
 const COUNTER: String = "res://tests/support/error_counter.gd"
