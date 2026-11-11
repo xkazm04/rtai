@@ -588,3 +588,14 @@ NEXT (session 9 / REPORT phase): (1) `61a2d3baa` is the last code commit and PAS
   cores). Verdict: no measurable cost of tonight's work in the horde. REPORT perf line + next step 6 rewritten.
 - 06:25 session 8 ends (for real). Godot: none of mine running (every run exited with its verdict line); bench.lock
   deleted. `61a2d3baa` stays the last code commit, gate PASS with reels. NEXT as written above (items 1-3; 4 done).
+
+## Session 9 (07:30, STABILIZE past freeze, REPORT phase)
+- 07:30 read JOURNAL NEXT. No code this session: `61a2d3baa` stays the last code commit (gate PASS with reels,
+  build/gate/61a2d3baac58/gate.json); everything after it is JOURNAL/REPORT/evidence.
+- Asset replies `n15-combat.md`: last modified 04:22 (it371), nothing new. Other lanes' journals: no open REQUEST to combat.
+- REPORT header set final (dropped the "(updated ...)" note). `cites.mjs REPORT.md --tracked`: 38 paths, 37 ok, 1 pattern.
+- `git log --format=%ae 5c5c03611..HEAD | sort | uniq -c`: 79 commits, one author (the owner's git identity).
+- gtai-masters/n15/combat/frames.json: 15 entries, every file present, no unreferenced file.
+- Godot: none running (`tasklist` finds no Godot*). bench.lock not held by me.
+NEXT (morning / Director): merge `n15-combat` per REPORT "Merge notes" (shared files listed there); the owner's Calls
+(a)-(d) are in REPORT with their side-by-side stills. Lane next steps: REPORT "Next steps".
