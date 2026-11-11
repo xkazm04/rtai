@@ -300,7 +300,7 @@ NEXT (iteration 5):
 1. Read the gate result on be2e71080 (build/gate/be2e71080275/evidence.log, reels.log). If a look golden moved (the
    burn overlay is now z 40 over the body; the X-ray scale at p55), name the item, show the frame, re-bless only it
    with a dated decisions line.
-2. Godot import, then `node tools/tests/run_unit.mjs --select=test_kill_scorch_line`; commit the test + .uid. Film
+2. (test done: 78dd90f40, 3/3.) Film
    plasma_sword 64/32 (`film.mjs chapter:plasma_sword --rev=c43cae42d`, before `--rev=be2e71080`) with stills to
    kill+120; judge the scorch line under the toppled halves; tune `scorch_line_m` in data if it reads as a
    stripe, not a burn.
@@ -319,3 +319,5 @@ NEXT (iteration 5):
   ps64_s (c43cae42d) and ps64_r (16748e860, before) chapter:plasma_sword 64 px/m stills 62-200.
 - GATES on be2e71080: REELS PASS (top 319 s, tilt70 745 s, combo 310 s; build/gate/be2e71080275/gate.json): the
   whole gate is green on be2e71080 (16:10-16:42). The tip adds only c43cae42d (scorch line, lint-only) and docs.
+- 16:43 test_kill_scorch_line 3/3 PASS, committed with its .uid (78dd90f40). The plasma sword films ps64_s/ps64_r
+  are running (may be cut by the stop: NEXT 2 re-films them; check build/films_it4h.log for `done`).
