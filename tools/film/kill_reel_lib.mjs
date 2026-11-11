@@ -10,6 +10,8 @@ export const BURN_WEAPONS = ['flamethrower', 'molotov'];
 export const WINDOW_M = [12, 9];
 export const VIEW = [1280, 800];
 export const MAX_AFTER = 230;
+/** Metres of the kill window kept free about Rivet and the victim before the window gives Rivet up (killWindow). */
+export const FIT_MARGIN_M = 2;
 
 const table = (tree, rel) => JSON.parse(readFileSync(join(tree, 'project', rel), 'utf8'));
 
@@ -89,7 +91,8 @@ export function victimAt(probe, kill) {
   return died ? { id: died.id, pos: died.pos, screen: before.get(died.id).screen } : null;
 }
 
-/** The crop [x, y, w, h] (even sizes, inside the view) centred between Rivet and his victim at the kill.
+/** The crop [x, y, w, h] (even sizes, inside the view) centred between Rivet and his victim at the kill, or on the
+ *  victim when the two are too far apart to share it with FIT_MARGIN_M to spare (the mini nuke kills ~25 m off).
  *  The victim is placed from the sim: Rivet's screen point plus the metres between them at `ppm`, because
  *  the probe has no screen point for a guard whose card it cannot see (a turned guard read 9010, 8368). */
 export function killWindow(probe, kill, ppm, view = VIEW) {
@@ -99,8 +102,10 @@ export function killWindow(probe, kill, ppm, view = VIEW) {
   const victim = died?.pos && r?.pos ? [rivet[0] + (died.pos[0] - r.pos[0]) * ppm, rivet[1] + (died.pos[1] - r.pos[1]) * ppm] : rivet;
   const w = Math.min(view[0], 2 * Math.round((WINDOW_M[0] * ppm) / 2));
   const h = Math.min(view[1], 2 * Math.round((WINDOW_M[1] * ppm) / 2));
-  const cx = (rivet[0] + victim[0]) / 2;
-  const cy = (rivet[1] + victim[1]) / 2;
+  const margin = FIT_MARGIN_M * ppm;
+  const apart = Math.abs(rivet[0] - victim[0]) > w - margin || Math.abs(rivet[1] - victim[1]) > h - margin;
+  const cx = apart ? victim[0] : (rivet[0] + victim[0]) / 2;
+  const cy = apart ? victim[1] : (rivet[1] + victim[1]) / 2;
   const x = Math.max(0, Math.min(view[0] - w, Math.round(cx - w / 2)));
   const y = Math.max(0, Math.min(view[1] - h, Math.round(cy - h / 2)));
   return [x, y, w, h];
@@ -173,15 +178,15 @@ export function measureHold(frames, kill, box, diff, { tolerance = 12, still = 0
   return held;
 }
 
-/** A sheet cell's label: every cell its tick and its offset from the kill; the first cell also names the film
- *  (side, victim, direction, zoom), and the kill cell the measured hit-stop (frames drawn while the sim held a
- *  tick: no still can show those, so the sheet says it). */
+/** A sheet cell's label: every cell its tick and its offset from the kill; the first cell (the trigger frame) its
+ *  offset and the film instead (weapon, `before` on a before row, victim, direction, zoom: it fits a 32 px/m cell),
+ *  and the kill cell the measured hit-stop (frames drawn while the sim held a tick: no still can show those). */
 export function cellLabel(job, film, tick, column) {
   const off = tick - film.kill;
   const stop = film.measured?.hitstop_frames;
   const tag = off === 0 ? `kill${Number.isInteger(stop) && stop > 0 ? ` hs${stop}` : ''}` : off > 0 ? `+${off}` : `${off}`;
-  const name = column === 0 ? ` ${job.side} ${job.victim || 'guard'} d${job.dir_deg} ${job.ppm}` : '';
-  return `${tick} ${tag}${name}`;
+  if (column === 0) return `${tag} ${job.weapon}${job.side === 'before' ? ' before' : ''} ${job.victim || 'guard'} d${job.dir_deg} ${job.ppm}`;
+  return `${tick} ${tag}`;
 }
 
 /** The movie frame (0-based) that shows process frame 1: Godot's --write-movie writes one frame per drawn frame,
@@ -199,4 +204,20 @@ export function movieSpan(probe, from, to) {
   const last = frame.has(to + 1) ? frame.get(to + 1) - 1 : frame.get(to);
   const at = (f) => f - 1 + MOVIE_FRAME_OF_PROCESS_1;
   return [at(frame.get(from)), at(last)];
+}
+
+/** reel.md: one table row per film, the measured beats beside the row's data, for a REPORT or a JOURNAL. */
+export function reelMarkdown(rows, table, cmd) {
+  const cell = (v) => (v === undefined || v === null ? '-' : String(v));
+  const lines = [`# kill reel`, '', `\`${cmd}\``, '',
+    '| weapon | side | victim | dir | px/m | outcome | kill | freeze (frames, measured) | pieces wait (row ticks) | settled | aftermath | whole |',
+    '|---|---|---|---|---|---|---|---|---|---|---|---|'];
+  for (const { job, film } of rows) {
+    const m = film.measured ?? {};
+    const row = table[job.weapon] ?? {};
+    lines.push(`| ${job.weapon} | ${job.side} | ${job.victim || 'guard'} | ${job.dir_deg} | ${job.ppm} | ${film.outcome.toUpperCase()} | ${cell(film.kill)} | ${cell(m.hitstop_frames)} | `
+      + `${row.id ? `${row.hitstop_ticks} (${row.id})` : 'standard death'} | ${m.settled_after_ticks === undefined || m.settled_after_ticks === null ? '-' : `+${m.settled_after_ticks}`} | `
+      + `${m.aftermath_share === undefined ? '-' : `${(m.aftermath_share * 100).toFixed(1)} %`} | ${film.whole === undefined ? '-' : film.whole ? 'yes' : 'NO'} |`);
+  }
+  return `${lines.join('\n')}\n`;
 }

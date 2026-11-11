@@ -5,24 +5,24 @@
 //   node tools/film/kill_reel.mjs --out=<dir> [--weapons=all|<id,id>] [--victims=<kind,kind>] [--dirs=0,90,180,270]
 //     [--ppm=32,64] [--after=150] [--rev=<commit>] [--before=<commit>] [--native=donor] [--clips] [--keep-frames]
 //     [--gore-check] [--feel=on|off|auto] [--quick] [--timeout=<s>] [--dry-run] [-- <extra game flags>]
+// --resheet=<reel dir>: rebuild that reel's sheets, overview and reel.md from its reel.json (no Godot).
 // --quick: 32 px/m only, dir 90 unless --dirs/--ppm name others (the inner loop: one film per weapon).
 // Each film is tools/film/film.mjs's `kill:<weapon>` shot (KillLab via BrutalityHook, `--sig-solo=start`),
 // with `--sig-dir=<deg>` turning the guard about Rivet (0 east, 90 south) and `--victim=<kind>` drawing it as
 // that card row. Stills: the lab's trigger window (ticks 54-70) and the first kill plus --after ticks.
 // Exit: 0 every film passed, 1 a film failed, 2 usage (nothing launched), 3 a film was unverifiable.
-import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readdirSync, rmSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { EXIT, filmOne, pinRev, plan } from './film.mjs';
-import { cellLabel, goreWhole, killWindow, measureBeats, measureHold, measureStop, movieSpan, pickBeats, reelPlan, sheetOf, tableRows, victimAt } from './kill_reel_lib.mjs';
+import { goreWhole, killWindow, measureBeats, measureHold, measureStop, movieSpan, pickBeats, reelPlan, tableRows, victimAt } from './kill_reel_lib.mjs';
+import { beatLine, cutMovie, encodeClip, finish, resheet } from './kill_reel_out.mjs';
 import { diffImages, readPng } from './png.mjs';
 import { filmedRoot } from './side.mjs';
-import { encodePng, label } from './sheet.mjs';
-import { spawnSync } from 'node:child_process';
 
 const USAGE = 'usage: node tools/film/kill_reel.mjs --out=<dir> [--weapons=all|<id,id>] [--victims=<kind,...>] [--dirs=<deg|wall,...>] '
-  + '[--ppm=32,64] [--after=150] [--rev=<commit>] [--before=<commit>] [--native=donor] [--clips] [--keep-frames] [--gore-check] [--feel=on|off|auto] [--quick] [--timeout=<s>] [--dry-run] [-- flags]';
-const WORST = ['pass', 'unverifiable', 'fail'];
+  + '[--ppm=32,64] [--after=150] [--rev=<commit>] [--before=<commit>] [--native=donor] [--clips] [--keep-frames] [--gore-check] [--feel=on|off|auto] [--quick] [--timeout=<s>] [--dry-run] [-- flags]\n'
+  + '   or: node tools/film/kill_reel.mjs --resheet=<reel dir>';
 /** n16 session 1 (build/kreel/t2 t60, build/film/victim_proof): the lab guard is drawn by no rig the probe finds
  *  (`FilmCard.rig` -> null, draw -1), and at the combo zooms it stood as the riot cop with --victim=thug. Film now
  *  judges the drawn row, so a lab film with a victim kind is UNVERIFIABLE until the probe finds the lab's rig;
@@ -34,7 +34,7 @@ const WORST = ['pass', 'unverifiable', 'fail'];
 export function planFilm(job, side, reel, known = undefined) {
   const window = known === undefined || reel.clips ? { stills: '54-70', on: `kill:1+${reel.after}` } : { stills: pickBeats(known, reel.after).join(',') };
   const flags = { out: job.dir, ppm: String(job.ppm), ...window, view: 'combo', lock: 'auto',
-    seed: '20261109', res: '1280x800', feel: reel.feel ?? 'auto', subject: 'rivet', timeout: String(reel.timeout), tree: side.tree };
+    seed: '20261109', res: '1280x800', feel: reel.feel ?? 'auto', subject: 'kill', timeout: String(reel.timeout), tree: side.tree };
   if (job.victim) flags.victim = job.victim;
   if (reel.clips && reel.feel === 'on') flags.movie = true;
   const turn = job.dir_deg === 'wall' ? ['--sig-wall'] : job.dir_deg ? [`--sig-dir=${job.dir_deg}`] : [];
@@ -73,67 +73,7 @@ async function filmJob(job, side, reel, runner, known) {
     ...(reel.goreCheck ? { whole: gore === null } : {}) };
 }
 
-/** An mp4 of the contiguous saved run up to the kill's last frame, cropped to the kill window, at 60 fps. */
-function encodeClip(job, saved, k, box) {
-  let from = k;
-  while (saved.has(from - 1)) from -= 1;
-  let to = k;
-  while (saved.has(to + 1)) to += 1;
-  const mp4 = join(job.dir, 'clip.mp4');
-  const r = spawnSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', '60', '-start_number', String(from), '-i', join(job.dir, 't%d.png'),
-    '-frames:v', String(to - from + 1), '-vf', `crop=${box[2]}:${box[3]}:${box[0]}:${box[1]}`, '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '18', mp4], { windowsHide: true });
-  return r.status === 0 ? mp4 : null;
-}
-
-/** With the hit feel on, the clip is cut from film's --write-movie (every frame drawn, a held tick's too) at the
- *  probe's frame numbers, so the hit-stop and the camera punch play at the game's real timing; the stills hold one
- *  frame per tick and cannot show a freeze. The whole-film movie goes unless --keep-frames. */
-function cutMovie(job, movie, [first, last], box, keep) {
-  const mp4 = join(job.dir, 'clip.mp4');
-  const r = spawnSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', movie, '-vf', `select='between(n,${first},${last})',setpts=N/60/TB,crop=${box[2]}:${box[3]}:${box[0]}:${box[1]}`,
-    '-r', '60', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '18', mp4], { windowsHide: true });
-  if (!keep) rmSync(movie, { force: true });
-  return r.status === 0 ? mp4 : null;
-}
-
-/** One sheet: a row per film (beats left to right), every cell the kill window at that film's zoom. */
-function writeSheet(file, rows) {
-  const live = rows.filter((row) => row.film?.box);
-  if (!live.length) return null;
-  const [cw, ch] = [Math.max(...live.map((r) => r.film.box[2])), Math.max(...live.map((r) => r.film.box[3]))];
-  const cols = Math.max(...live.map((r) => r.film.beats.length));
-  const [g, lh] = [4, 18];
-  const width = cols * (cw + g) + g;
-  const height = live.length * (ch + lh + g) + g;
-  const pixels = Buffer.alloc(width * height * 3, 0x18);
-  live.forEach((row, ri) => {
-    const top = g + ri * (ch + lh + g);
-    row.film.beats.forEach((tick, ci) => {
-      const left = g + ci * (cw + g);
-      const png = join(row.job.dir, `t${tick}.png`);
-      if (!existsSync(png)) return;
-      const img = readPng(png);
-      label(pixels, width, left, top, cw, cellLabel(row.job, row.film, tick, ci));
-      const [x0, y0, w, h] = row.film.box;
-      for (let y = 0; y < h; y++) {
-        const src = ((y0 + y) * img.width + x0) * img.channels;
-        for (let x = 0; x < w; x++) img.data.copy(pixels, ((top + lh + y) * width + left + x) * 3, src + x * img.channels, src + x * img.channels + 3);
-      }
-    });
-  });
-  writeFileSync(file, encodePng(width, height, pixels));
-  return file;
-}
-
-/** One weapon's beat timings from its table row (the data side of the readout). The row's hitstop_ticks is NOT the
- *  screen freeze: SignatureKills.hold makes the pieces (gibs, halves, marks) wait that many sim ticks, while the
- *  freeze is FeelCam's (hit_feel.json kill_hitstop `kill` = camera.json 6 ticks, or a class's bigger stop: the
- *  rocket's 8), which each film measures as `hit-stop N frames`. */
-export function beatLine(weapon, row) {
-  if (!row?.id) return `${weapon}: no signature row (the standard death)`;
-  return `${weapon}: ${row.id} (${row.style}) row hit-stop ${row.hitstop_ticks} (the pieces wait; the screen freeze is hit_feel.json's, measured per film), held ${row.held_ticks} (grind ${row.grind_ticks}, stand ${row.stand_ticks}), crumble ${row.crumble_ticks}, flash ${row.flash_ticks} ticks`
-    + (row.leftover_kills ? `; its scorch and spray stay until ${row.leftover_kills} later kills recycle them (leftover_budget ring, no timer)` : '');
-}
+export { beatLine };
 
 export function parseArgv(argv) {
   const dash = argv.indexOf('--');
@@ -150,6 +90,12 @@ export function parseArgv(argv) {
 export async function main(argv, { out = console.log, err = console.error, runner, resolveSide } = {}) {
   const parsed = parseArgv(argv);
   if (parsed.error) { err(`${parsed.error}\n${USAGE}`); return EXIT.usage; }
+  if (parsed.flags.resheet !== undefined) {
+    const lone = parsed.flags.resheet !== true && Object.keys(parsed.flags).length === 1 && !parsed.extra.length;
+    const done = lone ? resheet(resolve(parsed.flags.resheet), out) : { error: '--resheet=<reel dir> takes nothing else' };
+    if (done.error) { err(`kill_reel: ${done.error}\n${USAGE}`); return EXIT.usage; }
+    return EXIT[done];
+  }
   // `all` reads the filmed tree's own table (a kill lane runs this from its worktree with rows this tree lacks).
   const here = filmedRoot();
   const reel = reelPlan(parsed.flags, parsed.extra, here);
@@ -181,20 +127,7 @@ export async function main(argv, { out = console.log, err = console.error, runne
       + `${film.kill !== undefined ? ` kill at ${film.kill}` : ''}${film.measured ? `, hit-stop ${film.measured.hitstop_frames ?? '?'} frames + window still ${film.measured.held_ticks ?? '?'} ticks (measured), settled by +${film.measured.settled_after_ticks ?? '?'}, aftermath ${(film.measured.aftermath_share * 100).toFixed(1)} % of the window` : ''}`
       + `${film.reasons.length ? `: ${film.reasons.join('; ')}` : ''}`);
   }
-  const sheets = [];
-  for (const weapon of reel.weapons) {
-    for (const ppm of reel.ppm) {
-      const file = writeSheet(join(reel.out, `${weapon}_${ppm}.png`), rows.filter((r) => r.job.weapon === weapon && r.job.ppm === ppm));
-      if (file) { sheets.push(sheetOf(file, rows, weapon, ppm)); out(`kill_reel: sheet ${file}`); }
-    }
-  }
-  const outcome = rows.map((r) => r.film.outcome).reduce((a, b) => (WORST.indexOf(b) > WORST.indexOf(a) ? b : a), 'pass');
-  const table = tableRows(sides.at(-1).tree, reel.weapons);
-  for (const w of reel.weapons) out(`kill_reel: ${beatLine(w, table[w])}`);
-  writeFileSync(join(reel.out, 'reel.json'), `${JSON.stringify({ schema: 'gtai.kill-reel/1', outcome, argv, sides, table, sheets,
-    films: rows.map(({ job, film }) => ({ ...job, ...film })) }, null, 1)}\n`);
-  out(`kill_reel: ${outcome.toUpperCase()}; ${join(reel.out, 'reel.json')}`);
-  return EXIT[outcome];
+  return EXIT[finish(reel, rows, tableRows(sides.at(-1).tree, reel.weapons), { argv, sides }, out)];
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

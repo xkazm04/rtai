@@ -176,11 +176,13 @@ test('--quick films play zoom and one side-on direction; named --dirs/--ppm stil
 });
 
 test('sheet labels: the tick and its offset; the first cell names the film; the kill cell the measured hit-stop', () => {
-  const job = { side: 'after', victim: '', dir_deg: 90, ppm: 32 };
-  assert.equal(cellLabel(job, { kill: 70 }, 60, 0), '60 -10 after guard d90 32');
+  const job = { weapon: 'rocket_launcher', side: 'after', victim: '', dir_deg: 90, ppm: 32 };
+  assert.equal(cellLabel(job, { kill: 70 }, 60, 0), '-10 rocket_launcher guard d90 32');
+  assert.ok(cellLabel(job, { kill: 70 }, 60, 0).length * 12 <= 384, 'the longest lab weapon fits a 32 px/m cell (12 m; the last glyph ends 2 px short of its advance)');
+  assert.equal(cellLabel({ ...job, side: 'before' }, { kill: 70 }, 60, 0), '-10 rocket_launcher before guard d90 32');
   assert.equal(cellLabel(job, { kill: 70, measured: { hitstop_frames: 6 } }, 70, 2), '70 kill hs6');
   assert.equal(cellLabel(job, { kill: 70, measured: { hitstop_frames: 0 } }, 70, 2), '70 kill', 'no hold: nothing claimed');
-  assert.equal(cellLabel({ ...job, victim: 'thug', dir_deg: 'wall' }, { kill: 70 }, 74, 0), '74 +4 after thug dwall 32');
+  assert.equal(cellLabel({ ...job, victim: 'thug', dir_deg: 'wall' }, { kill: 70 }, 74, 0), '+4 rocket_launcher thug dwall 32');
 });
 
 test('the movie span keeps every frame of a held tick, so the clip plays the hit-stop at its real length', () => {
@@ -191,4 +193,13 @@ test('the movie span keeps every frame of a held tick, so the clip plays the hit
   assert.deepEqual(movieSpan(probe, 69, 70), [at(119), at(126)], 'the held tick ends on its last frame, not its first');
   assert.equal(movieSpan(probe, 60, 70), null, 'no row at the start: unmeasured');
   assert.equal(movieSpan({ rows: [{ tick: 68 }, { tick: 70 }] }, 68, 70), null, 'rows without frames (an old probe)');
+});
+
+test('a victim too far to share the window with Rivet (the mini nuke, ~25 m) gets the window to himself', () => {
+  const far = (dy) => ({ rows: [62, 63].map((tick) => ({ tick, fighters: [{ role: 'rivet', alive: true, pos: [10, 10], screen: [640, 100] },
+    { id: 7, role: 'hostile', alive: tick === 62, pos: [10, 10 + dy], screen: [0, 0] }] })) });
+  // 20 m south at 32 px/m: 640 px apart, the window is 288 px tall: centred on him (y 740), kept inside the view.
+  assert.deepEqual(killWindow(far(20), 63, 32), [448, 512, 384, 288]);
+  // 6 m south: 192 px apart fits 288 - 2 m (64 px) of margin: between the two as before.
+  assert.deepEqual(killWindow(far(6), 63, 32), [448, 52, 384, 288]);
 });

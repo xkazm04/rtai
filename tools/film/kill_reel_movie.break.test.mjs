@@ -31,9 +31,9 @@ test('quick with any value other than true is an error naming --quick; normal de
 });
 
 test('cell labels handle a kill at tick zero, negative offsets, wall direction, and an empty victim', () => {
-  const job = { side: 'before', victim: '', dir_deg: 'wall', ppm: 32 };
+  const job = { weapon: 'katana', side: 'before', victim: '', dir_deg: 'wall', ppm: 32 };
   const film = { kill: 0 };
-  assert.equal(cellLabel(job, film, -3, 0), '-3 -3 before guard dwall 32');
+  assert.equal(cellLabel(job, film, -3, 0), '-3 katana before guard dwall 32');
   assert.equal(cellLabel(job, film, 0, 1), '0 kill');
   assert.equal(cellLabel(job, film, 4, 2), '4 +4');
 });

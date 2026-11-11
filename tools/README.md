@@ -172,6 +172,16 @@ cell of a row names the film (`60 -8 AFTER GUARD D90 32`), and the kill cell car
 rows' process frames (`movieSpan`), so the clip plays the hit-stop and the camera punch at the game's timing, from
 kill-30 to kill+after; without `--feel=on` the clip is the per-tick stills as before (no freeze to show).
 
+With more than one weapon the reel also writes `reel_<ppm>.png`, the OVERVIEW: one row per film, every weapon,
+the first cell naming it (`-8 ROCKET_LAUNCHER GUARD D90 32`), and `reel.md`, a table per film (outcome, kill tick,
+measured freeze frames, the row's pieces wait, settled, aftermath, whole) to paste into a REPORT.
+`--resheet=<reel dir>` rebuilds a reel's sheets, overview and reel.md from its reel.json and kept beat frames, with
+no Godot (a reel filmed by an older kit, or after a label change). The reel judges the DEATH on screen
+(`--subject=kill`), not Rivet: the mini nuke throws Rivet out of the locked frame. When Rivet and the victim are
+too far apart to share the 12 x 9 m window with 2 m to spare (the nuke kills ~25 m off), the window centres on the
+victim. Proof (n16 s3): `build/kreel/s3all` (`--weapons=all --quick --feel=on`, 12 films, ~25 min beside the
+other lanes): 11 PASS, the nuke UNVERIFIABLE (Rivet off screen; before the subject fix) -> s3nuke.
+
 `--gore-check` films every death with `--gore=reduced` and judges each from the probe: the victim must still be
 drawn as one lying card 20 ticks after the kill (a signature death hides the body: FAIL, naming it); a victim
 without a card the tick before is UNVERIFIABLE. Each film in `reel.json` gets `whole: true|false`.
