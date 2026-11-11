@@ -994,3 +994,12 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   evidence/merge/resolve_hero_x_combat.py` on both conflicted files -> exit 0 each; output gdformat --check + gdlint
   clean; the merged apply() keeps my `--rivet-walk`/`--rivet-stride` routing, combat's `arg in WINDUP_FLAGS` and
   hero's `begins_with("--ghost-")`. REPORT merge notes stand.
+- 05:49 MILESTONE f29db6c9b lint check `flag-routes` (`tools/style/flag_routes.mjs`, lint 19 checks): for each
+  `func _name(<v>: String)`, every `"--..."` in its body must pass the guard above some `_name(<v>)` call in the same
+  file (or-joined begins_with / == / `in CONST`; anything else is not judged). Real runs (`unroutedFlags` on each
+  file): main's cast_flags.gd -> 2 issues (`:65 "--rivet-walk-armed=off" is matched in _walk() but no caller routes
+  it there (guard: ...)`, `:67 "--rivet-stride=off"`); hero's and combat's tips -> the same 2 (their trees predate
+  05e519be8; hero's `_ghost` and combat's `_windup` judged clean); this HEAD and the whole tree -> 0 (99 ms). Tests
+  4/4; planted 3 (no multi-line `):` guard, `in CONST` always true, tests/ not skipped) -> 2/1/1 fail, restored.
+  Pre-commit full lint `all 19 checks pass`. The 05:47 gate runs 257b2e58c (before this lint-only commit): lint for
+  f29db6c9b is the pre-commit full lint above.
