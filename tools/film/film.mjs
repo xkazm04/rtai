@@ -191,7 +191,7 @@ export async function filmOne({ shot, opts }, { runner = runGodot } = {}) {
   }
   const manifest = { schema: 'gtai.film/1', shot: opts.label, outcome: judged.outcome, reasons: judged.reasons, ...gitHead(opts.tree),
     tree: opts.tree, ticks: opts.ticks, stills: judged.stills ?? opts.stills, on: opts.onText, victim: opts.victim ?? null, events: judged.probe?.events ?? null, view: opts.view, ppm: opts.ppm, lock: opts.lock, seed: opts.seed,
-    res: opts.res, mp4, ran: describe(res), args };
+    res: opts.res, mp4, ran: describe(res), timeout_s: opts.timeoutMs / 1000, args };
   writeFileSync(join(opts.dir, 'film.json'), `${JSON.stringify(manifest, null, 1)}\n`);
   return { ...judged, mp4, manifest };
 }

@@ -349,6 +349,7 @@ test('a film stops at its first SCRIPT ERROR unless --keep-going; the verdict is
     const r = await filmOne(plan(p.flags, p.shotText, p.extra), { runner });
     assert.equal(r.outcome, 'fail');
     assert.match(r.reasons[0], /^FAIL stopped at the first script error/);
+    assert.equal(r.manifest.timeout_s, 900, 'film.json says the timeout the film was given (n16 s5)');
   }
   assert.equal(seen[0].stopOn, SCRIPT_ERROR);
   assert.equal(seen[1].stopOn, null);
