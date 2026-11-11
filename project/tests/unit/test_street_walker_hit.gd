@@ -137,10 +137,11 @@ func test_every_street_kind_that_dies_is_drawn_thrown_back_by_the_round() -> voi
 func test_every_thrown_cell_draws_at_the_walking_figures_scale() -> void:
 	# n11 it21: the cell fitted to its height drew the head and torso at ~0.65 x the walker's.
 	# n15 c-2: the walk-camera redraws already stand squat (thug 1.02): the floor is 1.0, not 1.1.
+	# n17: fitted to the walk's height (the punk walks 1.50 m: 0.95); over 1.2 drew them giants.
 	for row: String in StreetWalkerHit.GRIDS:
 		var path: String = StreetWalkerCards.DIR + StreetWalkerHit.GRIDS[row]
 		var fill: float = StreetWalkerHit.fill_of(path)
-		assert_between(fill, 1.0, 1.5, "%s drawn up to the walker's scale" % path)
+		assert_between(fill, 0.9, 1.2, "%s drawn at the walker's scale" % path)
 	for row: String in StreetWalkerHit.SITE_GRIDS:
 		for site: String in StreetWalkerHit.SITE_GRIDS[row].values():
 			var drawn: float = StreetWalkerHit.fill_of(StreetWalkerCards.DIR + site)
@@ -161,3 +162,29 @@ func test_a_thrown_card_is_placed_at_its_fill_about_the_planted_boot() -> void:
 	card.set_meta(StreetWalkerCards.ON, StreetWalkerCards.DIR + "p70/cop_riot_card.png")
 	StreetWalkerCards.place(rig, card)
 	assert_almost_eq(drawn / card.global_scale.x, StreetWalkerHit.FILL["cop_riot_hit.png"], 0.001)
+
+
+func test_a_cops_thrown_cell_stands_at_his_walk_height() -> void:
+	# n17 (owner: "policemen are changing sizes on hit"): film b_patrol64 t62 -> t63, 1.16-1.23 x.
+	var walks: Dictionary = StreetCopWalk.WALKS["p70"]
+	for row: String in walks:
+		var walk: String = StreetWalkerCards.DIR + "p70/" + str(walks[row])
+		var hit: String = StreetWalkerCards.DIR + StreetWalkerHit.GRIDS[row]
+		var w: float = _mean_h(walk, 4, StreetCopWalk.fill_of(walk))
+		var h: float = _mean_h(hit, 1, StreetWalkerHit.fill_of(hit))
+		assert_almost_eq(h / w, 1.0, 0.05, "%s: hit %.2f m, walk %.2f m" % [row, h, w])
+
+
+## The mean opaque figure height (m) of a 5-facing grid's cells, drawn at `fill` x HEIGHT_M.
+func _mean_h(path: String, rows: int, fill: float) -> float:
+	var img: Image = (load(path) as Texture2D).get_image()
+	if img.is_compressed():
+		assert_eq(img.decompress(), OK, path)
+	var cw: int = img.get_width() / RigHeadCard.FRAMES
+	var ch: int = img.get_height() / rows
+	var sum: float = 0.0
+	for r: int in rows:
+		for c: int in RigHeadCard.FRAMES:
+			var used: Rect2i = img.get_region(Rect2i(c * cw, r * ch, cw, ch)).get_used_rect()
+			sum += used.size.y * StreetWalkerCards.HEIGHT_M * fill / ch
+	return sum / (rows * RigHeadCard.FRAMES)

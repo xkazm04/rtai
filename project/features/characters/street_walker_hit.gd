@@ -70,9 +70,14 @@ const DEATH_KINDS: Array[StringName] = [&"death_bullet", &"death_blast", &"death
 ## n15: the SWAT (v4) and elder (v3) grids are re-measured after their redraw (1.31, 1.17 before);
 ## c-2, the walk-camera redraws of nine more kinds, re-measured too (before: patrol 1.37, cap 1.39,
 ## hat 1.34, hood 1.35, jogger 1.29, punk 1.25, shopper 1.33, suit 1.40, thug 1.17).
+## n17 npc-react (owner: "policemen are changing sizes on hit"): the thrown-back grids now stand at
+## the kind's walk height (tools/art/street_hit_size.py: mean figure height of the 5 hit cells = the
+## mean of the 20 walk cells). The thickness match drew them 1.05-1.23 x taller (patrol 1.21, riot
+## 1.20, SWAT 1.36, cap 1.27, elder 1.20, hat 1.26, hood 1.25, jogger 1.19, punk 1.05, shopper 1.11,
+## suit 1.15, worker 1.19 before). Burn grids and the thug already stand at it and keep theirs.
 const FILL_ON: bool = true
 const FILL: Dictionary[String, float] = {
-	"cop_patrol_hit.png": 1.21,
+	"cop_patrol_hit.png": 1.04,
 	"cop_patrol_burn_hit.png": 1.14,
 	# it34: the kind's hit FILL x the patrol cop's measured burn/hit ratio (0.83), not per kind.
 	"cop_riot_burn_hit.png": 1.00,
@@ -82,17 +87,17 @@ const FILL: Dictionary[String, float] = {
 	"ped_cap_burn_hit.png": 1.16,
 	"ped_punk_burn_hit.png": 1.04,
 	"ped_jogger_burn_hit.png": 1.07,
-	"cop_riot_hit.png": 1.20,
-	"ped_cap_hit.png": 1.27,
-	"ped_elder_hit.png": 1.20,
-	"ped_hat_hit.png": 1.26,
-	"ped_hood_hit.png": 1.25,
-	"ped_jogger_hit.png": 1.19,
-	"ped_punk_hit.png": 1.05,
-	"ped_shopper_hit.png": 1.11,
-	"ped_suit_hit.png": 1.15,
-	"ped_worker_hit.png": 1.19,
-	"swat_hit.png": 1.36,
+	"cop_riot_hit.png": 1.03,
+	"ped_cap_hit.png": 1.05,
+	"ped_elder_hit.png": 1.10,
+	"ped_hat_hit.png": 1.08,
+	"ped_hood_hit.png": 1.05,
+	"ped_jogger_hit.png": 1.10,
+	"ped_punk_hit.png": 0.95,
+	"ped_shopper_hit.png": 1.06,
+	"ped_suit_hit.png": 1.10,
+	"ped_worker_hit.png": 1.02,
+	"swat_hit.png": 1.11,
 	"thug_hit.png": 1.02,
 }
 ## The card's tip at the family's peak (rad, away from the blow on screen).
