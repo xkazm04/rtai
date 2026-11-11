@@ -1,6 +1,6 @@
 # REPORT: night n15, lane hero (Rivet and the four ghosts)
 
-DRAFT, current at 06:45 (it16). Last full gate: `node tools/gate/run.mjs --rev=HEAD --reels` on 5f9b18955 PASS (lint 16/16, unit 2528/0, scenarios 55/55, parity bit-exact, look goldens 11/11, release-compile 674/0, reels exit 0); later commits are docs/evidence only. No golden moved.
+FINAL, 07:35 (it17, after freeze). Last full gate: `node tools/gate/run.mjs --rev=HEAD --reels` on 5f9b18955 PASS (lint 16/16, unit 2528/0, scenarios 55/55, parity bit-exact, look goldens 11/11, release-compile 674/0, reels exit 0); later commits (to 736dbfcb9 and this REPORT) are docs/evidence only (`git diff --stat 5f9b18955 HEAD`: JOURNAL, LEVEL, REPORT, evidence/s15). No golden moved or re-blessed; no replay or parity re-bless.
 Branch `n15-hero`, cut from main `5c5c03611`. Every claim cites a still in this branch's `evidence/`
 (the best 15 are copied to `gtai-masters/n15/hero/` with `frames.json`). Record: `JOURNAL.md`, `LEVEL.md`.
 
@@ -97,4 +97,11 @@ Branch `n15-hero`, cut from main `5c5c03611`. Every claim cites a still in this 
 
 1. Tonnage's walk16 frames 2 and 6 redrawn (REQUEST it16), then re-run `hold_ride.py` (bar: worst hold under 9 px@32).
 2. Combat feel to 3: the owner judges GhostLunge in motion; Kerf's blade and Dent's fist as GhostHand rows if an effect should leave from them.
-3. Planted feet: `feet_trace.py` / `hold_ride.py` on Dent's and Kerf's sprints at 32 px/m in every octant.
+3. Planted feet: Dent is done in all 8 octants (worst 5.3 px@32). Kerf: film his other 5 octants on leg 2
+   (`--film-turn=<deg>`) and check `RUN_TABLES` against `feet_track.py` with a dark threshold of 90 (his blades are not dark).
+4. Rivet x1.5: the knock grid (`tools/art/rivet_knock.py` has a fixed FIG_H 110: add `--fig_h`, reproduce at 110 byte for
+   byte first), then the base `rivet_frames` strip (many readers), plasma sword, electro baton.
+5. Asset-lane offers delivered after 06:30, not taken (freeze): Ohm's cast WIND-UP at p70 and p55 (LEVEL combat feel
+   level 4; Dent's R2 cell is 4 px over the act cell, so pad), Ohm's walk legs on the left profile, a drawn HIT FROM BEHIND for
+   Dent and Ohm (right facings only; the asset lane's own board says it reads as a forward lurch at 30 px, so judge it in game
+   against `GhostRecoil.BY_BLOW` first). All in `gtai-assets/replies/n15-hero.md` 06:37-07:18.

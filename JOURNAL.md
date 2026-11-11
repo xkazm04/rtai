@@ -236,3 +236,9 @@ NEXT (it17, read first):
 3. Planted feet level 4 for Dent: `run32_films.sh` covers 3 octants on leg 2 only (leg 3 = Rivet, the form expires); film the other 5 with `--film-turn=<deg>` legs 2 only. Kerf: drift 3.0 (on the bar) - a 17th frame is not possible; check his RUN_TABLES against `feet_track.py` (his blades' tips are not dark: use `<dark>`=90).
 - MEASURE 06:51 Dent's other 5 octants at 32 px/m (leg 2, ghost on screen first and last tick): worst hold 0-5.3 px, pose changes 46-47 of 48: **Dent planted feet 4 on the worst-hold bar** (all 8 octants < 9 px@32; `evidence/s15/dent_kerf_run_hold_ride_32ppm.txt`). NEXT 3's Dent half is DONE.
 4. Tonnage walk16 frames 2 and 6 (REQUEST 05:45): when they land, `double_sheet`-style swap of those two cells, re-measure `hold_ride.py build/film/gait32_tonnage 2 48 0,45 70,150,190,222` (bar: worst < 9).
+
+## it17 (07:30-07:40, session 23, STABILIZE after freeze)
+- READ: HEAD 736dbfcb9; `git diff --stat 5f9b18955 HEAD` = JOURNAL, LEVEL, REPORT, evidence/s15 only, so the 06:24-06:45 full gate PASS on 5f9b18955 still covers every code and asset path. Tree clean. Replies 06:37-07:18: Ohm cast wind-up p70/p55, Ohm left walk legs, hit-from-behind Dent/Ohm (offers, not asked); NOT taken (freeze), listed in REPORT Next steps 5.
+- REPORT.md FINAL (07:35): header, Next steps 3-5 (Kerf feet octants, Rivet knock/base x1.5, the untaken offers). `node tools/evidence/cites.mjs REPORT.md`: 55 paths, 48 ok, 7 pattern, 0 missing. Masters `gtai-masters/n15/hero/frames.json` 15 entries, 15 files, all present.
+- No Godot run this session (no code change; the gate on 5f9b18955 stands).
+NEXT (morning / next night): REPORT.md Next steps 1-5 in order; first Tonnage walk16 frames 2 and 6 when the asset lane delivers, then Kerf's feet in the other 5 octants, then Rivet's knock grid at x1.5.
