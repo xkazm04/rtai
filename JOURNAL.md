@@ -314,3 +314,6 @@ NEXT (iteration 5):
 - GATES on be2e71080: PASS lint 19/19, unit 2682/0/2, scenarios 55, parity bit-exact (mutation at 629), selftest look
   goldens 11/11 worst 0.00 (no golden moved: the burn z and the p55 X-ray scale touch none), export-audit 688/0. Reels
   running (build/gate/be2e71080275/reels.log). Not covered: c43cae42d (scorch line), committed after.
+- 16:37 reels on be2e71080: top OK (319 s), tilt70 all chapters down, combo running. Queued behind the gate (may be cut
+  by the session stop; re-run if `build/films_it4h.log` has no `done`): --import, unit test_kill_scorch_line, film
+  ps64_s (c43cae42d) and ps64_r (16748e860, before) chapter:plasma_sword 64 px/m stills 62-200.
