@@ -36,3 +36,9 @@ ride mean 1.8, max 9.0 crop px
 == run32_kerf_turn180 leg 3
 ground px/tick mean 5.09; pose changes 47 in 48 ticks
 ride mean 0.0, max 0.0 crop px
+# n15 hero it16 06:51: Dent's sprint, leg 2 (the ghost on screen at ticks 0 and 47, checked), the 5 octants not in run32_films.sh
+dent turn 45 leg 2: ground px/tick mean 4.52; pose changes 47 in 48 ticks ride mean 0.0, max 0.0 crop px 
+dent turn 90 leg 2: ground px/tick mean 4.43; pose changes 47 in 48 ticks ride mean 0.0, max 0.0 crop px 
+dent turn 135 leg 2: ground px/tick mean 4.62; pose changes 46 in 48 ticks ride mean 0.1, max 5.2 crop px 
+dent turn -90 leg 2: ground px/tick mean 5.25; pose changes 46 in 48 ticks ride mean 0.1, max 5.3 crop px 
+dent turn -135 leg 2: ground px/tick mean 5.24; pose changes 47 in 48 ticks ride mean 0.0, max 0.0 crop px 

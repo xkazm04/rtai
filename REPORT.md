@@ -55,7 +55,7 @@ Branch `n15-hero`, cut from main `5c5c03611`. Every claim cites a still in this 
    over the ground). Ohm and Tonnage reach 3 (Tonnage on the edge: mean ride 8.3 px@32, his stance foot keeps its ground place
    over 30 ticks, `evidence/s15/tonnage_feet_track_32ppm.txt`); his worst hold rides 16.1 px (two long steps in his walk16, art requested). `evidence/s15/ghost_feet_32ppm_tonnage_ohm.png`.
    Dent and Kerf sprints measured the same way (`evidence/s15/dent_kerf_run_hold_ride_32ppm.txt`): the pose changes
-   on most ticks, the worst hold 5 px (Dent: reaches 3) and 9 px (Kerf: drift 3.0, stays 2) in the three octants filmed
+   on most ticks, the worst hold 5 px (Dent: 5.3 px at worst in all eight octants, level 4 on the worst-hold bar) and 9 px (Kerf: drift 3.0, stays 2) in the three octants filmed
    (the long holds first seen were Rivet, after the form expired in the film rig).
 7. **Rivet's reload strips at x1.5, both pitches** (it16, one weapon per commit): pistol, plasma_rifle, gatling, each
    + its drawn left strip, cut at 1.5 x each row's own fig_h after reproducing the 110 cut byte for byte.
