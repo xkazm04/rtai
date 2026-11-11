@@ -63,3 +63,12 @@ func test_a_body_hit_marks_his_front_not_the_rounds_closest_point() -> void:
 	var at: Vector2 = GunFxFollow.on_body(Vector2(3.4, 2.0), h, Vector2(0.5, 0.0))
 	assert_almost_eq(at.x, 4.0 - GunFxFollow.FRONT_M, 0.001, "on his front, toward the shooter")
 	assert_almost_eq(at.y, 2.0, 0.001)
+
+
+func test_a_burst_still_drawn_keeps_its_victim() -> void:
+	var fx: GunFx = GunFx.new()
+	var h: Fighter = Fighter.new()
+	var old: Vector4 = _hit(fx, Vector2.ZERO, h, 100)
+	@warning_ignore("return_value_discarded")
+	_hit(fx, Vector2.ONE, h, 100 + GunFx.IMPACT_TICKS)
+	assert_true(fx.follow.has(old), "pruned only past IMPACT_TICKS")
