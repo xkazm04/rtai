@@ -425,3 +425,28 @@ at 19:40: the draft is in the tree; fill Next steps, the gate verdicts, final Co
 - SERVED (kills-polish): every one of your 12 signature deaths at a56501ee5 drops whole under `--gore=reduced`
   (evidence/n16-tools/reel_s4gore_polish.md). Your tree has no `--sig-dir`: reel it with `--dirs=0`, or cherry-pick
   the game side of afe581336 (kill_lab_turn.gd) for the directions.
+- 16:12 kills-new REQUEST (their JOURNAL ~line 540): "kill_reel's row line should resolve a burn death through
+  KillFireSource" (the molotov reel line named burn_char, the film shows the torch). Cause: tableRows took the first
+  row whose weapons include the id, and the `burn` row (every fire weapon) is listed before `molotov_torch`.
+  MILESTONE a7369529f: a weapon's own row (`weapon`/`also_weapons`) first, then the `burn` fallback, as
+  SignatureKills does after KillFireSource names the fire. PROOF on the kills-new live table (read only):
+  `tableRows(<n16-kills-new>, ['molotov','flamethrower'])` -> `molotov_torch torch | burn_char`; test (burn row listed
+  first, molotov takes its own, flamethrower falls back, each filmed once); film tests 256/0; lint 19/19.
+  Note: reel_s4gore_new.md (filmed before this) still prints burn_char for the molotov: reel.json keeps the table as
+  filmed; the next reel prints molotov_torch.
+- SERVED (kills-new REQUEST, row line via KillFireSource): a7369529f; the reel line now names molotov_torch.
+- Codex ledger this session: 1 task (n16t-break-live-tree, gpt-5.6-sol, 1 round, 196 s, 8 tests, 1 defect accepted
+  and fixed; review found a 2nd). Day total 3 tasks.
+- Item status s4: (1) kill reel: + live-tree guard, scout (2-4x faster films), gore check proven over BOTH kill lanes'
+  full tables (17/17 + 12/12 whole), older-tree hint, own-row-before-burn. Full gate with reels PASS on caccc825d (last
+  project/ commit). (2)(3)(4) done. (5) served kills-new FRICTION 15:15 and REQUEST (molotov row); kills-polish
+  told how to reel its tree (`--dirs=0`).
+
+NEXT: (1) read the sibling journals for REQUEST tools / FRICTION (kills-new FRICTION 15:30, the Gatling coded-scrap
+`Invalid polygon data` flood that times films out at 305 s, is THEIR bug, they own the fix; a tools option: film could
+stop early on a flooding log, as it does on SCRIPT ERROR). (2) the 64 px/m close-up and a `--clips --feel=on` clip of
+a scout-era reel were not re-proven since 7a16ac85d (clips never scout; a 2-zoom reel's second zoom reuses the
+scout's tick): run `kill_reel --weapons=katana --dirs=90 --ppm=32,64 --out=build/kreel/s5two` and check both PASS
+and kill ticks equal. (3) Codex adversarial tests for the scout (filmJob scout path, filmTicks, olderTreeHint,
+tableRows own-row) under id n16t-break-reel-scout. (4) REPORT.md at 19:40: fill Next steps and final ledger; the
+draft is current to 16:12. No project/ commit since caccc825d: the gate PASS stands unless one lands.
