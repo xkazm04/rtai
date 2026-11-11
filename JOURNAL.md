@@ -916,7 +916,7 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   prove a flag" holds). film + dev tests 313/0; film calls after ` -- ` in three lanes' journals/evidence: 0 refusals.
   TO hero: `node tools/dev/run.mjs <entry> -- --ohm-hand=sim` now exits 2 with "did you mean --ghost-ohm-hand?"
   (on your tree after the merge; cherry-pick ea02a8898 89925653b, Node only).
-- 05:33 MILESTONE 392d0ec85 (REPORT next step "preview in the builders' loop", built by me): `tools/merge/clash.mjs`,
+- 05:24 MILESTONE 392d0ec85 (REPORT next step "preview in the builders' loop", built by me): `tools/merge/clash.mjs`,
   run by the pre-commit hook on EVERY commit (inert too: docs/decisions.md stops morning as well): the staged index
   becomes a dangling commit on HEAD; each sibling lane (worktree branches with the same `n15-` prefix;
   `GTAI_MERGE_LANES=<a,b>|off`) is merge-tree'd with HEAD and with it; a code conflict only the commit has is a
@@ -927,6 +927,6 @@ C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-
   Its own commit's hook printed `merge-clash: no new code conflict with n15-combat, n15-hero` before lint 18/18.
   Tests 5/5 (throwaway repo with 3 worktrees, empty global config, no GIT_* vars; HEAD/index/status asserted
   untouched); planted 4 (no `had` filter, no autoResolved filter, no prefix filter, no `off`) -> 1-2 fail each, restored.
-  TO hero / combat: cherry-pick 392d0ec85 (Node only; it needs ea02a8898's neighbours? no: clash.mjs + precommit.mjs +
+  TO hero / combat: cherry-pick 392d0ec85 (Node only, standalone: clash.mjs + clash.test.mjs + precommit.mjs +
   README) and your hook warns at commit time if a commit makes a NEW clash with the other lanes (tonight: my
   quest1_clip.gd at 04:48). Without it, `node tools/merge/clash.mjs` from your tree does the same check by hand.
