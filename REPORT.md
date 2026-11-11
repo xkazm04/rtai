@@ -215,6 +215,8 @@ Session 7:
   changed: `gtai-masters/n15/tools/rivet-stride-off-flag-dead-vs-fixed-arena-t1200-{32,64}ppm.png` (A: his legs
   step toward the walk; B: along the aim). Any n11-n15 before/after that used these two flags compared identical
   frames.
+  Mutation on `cast_flags.gd` with `test_cast_flags`: 60 % (the survivors were flags that no test applied). A second test
+  now applies every other before: 100 % on the same 10-of-37 sample (`evidence/mutate_cast_flags_s7_{before,after}.log`).
 
 ## Calls for the owner
 

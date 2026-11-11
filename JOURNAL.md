@@ -1058,3 +1058,5 @@ Write times from `date` (session 7 needed one correction).
   (gun-grey, three flame modes, knock, reload, windup, ghost voice, tan -3 -> clamped 0) -> test_cast_flags 5/0 -> same
   sample 100 % (10/10). `evidence/mutate_cast_flags_s7_{before,after}.log`. Checkout clean after both (`git status
   --short` empty); mutate's own worktree gtai-mutate-6bd4df1a reused (already on the end-of-night list).
+- NEXT amended (06:23): a test landed after 9b7b14088 (test_cast_flags +1), so session 8 runs the FINAL GATE on HEAD
+  first (item 3's first branch), and the morning integration only if time is left before 07:30.
