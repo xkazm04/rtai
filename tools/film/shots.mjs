@@ -19,10 +19,12 @@ export const SHOTS = {
     flags: (id) => [...REEL, '--reel=director', `--chapter=${id}`] },
   weapon: { doc: 'one lone kill with a table weapon: weapon:<id>', ticks: 900, needs: 'weapon',
     travels: true, flags: (id) => ['--arena=city', `--weapon=${id}`, '--bot=gunplay', '--lone', '--reach=6'] },
-  // The kill lab (KillLab via BrutalityHook) on the city block: one guard 3 m from Rivet's start, turned
+  // The kill lab (KillLab via BrutalityHook) on the city block: one guard 3 m from Rivet, turned
   // --sig-dir degrees, killed by the weapon's signature death (n16 tools: tools/film/kill_reel.mjs).
+  // Rivet stands 10 m west of his start: at the start the 19 station dummies and the street cops take
+  // all 16 full rigs (RigSelect), and a lab guard ranked past them was drawn by nothing (n16 s2).
   kill: { doc: 'one signature kill in the kill lab on the city block: kill:<weapon> (gun or blade)', ticks: 420, needs: 'sigweapon',
-    flags: (id) => ['--arena=city', '--sig-lab', `--sig-gun=${id}`, '--sig-solo=start'] },
+    flags: (id) => ['--arena=city', '--sig-lab', `--sig-gun=${id}`, '--sig-solo=start:-10,0'] },
   // Quest 1 runs through its own recorder: --stills (even ticks) only, no numbers, no locked camera.
   quest1: { doc: 'quest 1 through its scripted pad: --stills required (even ticks)', ticks: 0, script: 'res://dev/frames/quest1_clip.gd',
     flags: () => ['--rigs'] },

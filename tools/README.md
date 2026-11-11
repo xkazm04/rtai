@@ -132,8 +132,11 @@ node tools/film/kill_reel.mjs --out=build/kreel/ab --weapons=katana --dirs=90 --
 ```
 
 Each film is film.mjs's new `kill:<weapon>` shot: the KillLab on the city block (`--arena=city --sig-lab
---sig-gun=<id> --sig-solo=start`), one guard 3 m from Rivet, turned `--sig-dir=<deg>` (0 east, 90 south: screen
-down) and drawn as `--victim=<kind>` (StreetDeadPlan.CLASS_OF rows). Same seed, same tick at every zoom. Out:
+--sig-gun=<id> --sig-solo=start:-10,0`: Rivet 10 m west of his start, where the station dummies no longer take
+every full rig, so the guard is drawn in every direction), one guard 3 m from Rivet, turned `--sig-dir=<deg>` (0 east,
+90 south: screen down), or with `--dirs=wall` stood where a wall (the stage's push_out: a building or a parked car) is
+1 m behind him along the shot (`--sig-wall[=<m>]`, KillLabTurn; Gloria's pin case; the log says `--sig-wall: dir D,
+guard X m`), and drawn as `--victim=<kind>` (StreetDeadPlan.CLASS_OF rows). Same seed, same tick at every zoom. Out:
 `<weapon>_<ppm>.png`, one row per film (`before` above `after` when `--before` is given), columns = the lab's
 trigger tick 60, kill-2, the kill, +1 +2 +4 +6 +10 +20 +40 +80 and +`--after` (default 150), each cell a 12 x 9 m
 window between Rivet and the victim (each cell is labelled with its tick; `reel.json` `sheets[].rows` says which

@@ -18,7 +18,7 @@ import { diffImages, readPng } from './png.mjs';
 import { encodePng, label } from './sheet.mjs';
 import { spawnSync } from 'node:child_process';
 
-const USAGE = 'usage: node tools/film/kill_reel.mjs --out=<dir> [--weapons=all|<id,id>] [--victims=<kind,...>] [--dirs=<deg,...>] '
+const USAGE = 'usage: node tools/film/kill_reel.mjs --out=<dir> [--weapons=all|<id,id>] [--victims=<kind,...>] [--dirs=<deg|wall,...>] '
   + '[--ppm=32,64] [--after=150] [--rev=<commit>] [--before=<commit>] [--native=donor] [--clips] [--keep-frames] [--gore-check] [--timeout=<s>] [--dry-run] [-- flags]';
 const WORST = ['pass', 'unverifiable', 'fail'];
 /** n16 session 1 (build/kreel/t2 t60, build/film/victim_proof): the lab guard is drawn by no rig the probe finds
@@ -35,7 +35,8 @@ export function planFilm(job, side, reel, known = undefined) {
   const flags = { out: job.dir, ppm: String(job.ppm), ...window, view: 'combo', lock: 'auto',
     seed: '20261109', res: '1280x800', feel: 'auto', subject: 'rivet', timeout: String(reel.timeout), tree: side.tree };
   if (job.victim) flags.victim = job.victim;
-  const extra = [...(job.dir_deg ? [`--sig-dir=${job.dir_deg}`] : []), ...reel.extra];
+  const turn = job.dir_deg === 'wall' ? ['--sig-wall'] : job.dir_deg ? [`--sig-dir=${job.dir_deg}`] : [];
+  const extra = [...turn, ...reel.extra];
   return plan(flags, `kill:${job.weapon}`, extra);
 }
 

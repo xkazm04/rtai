@@ -136,3 +136,21 @@ lanes' journals for REQUEST tools / FRICTION (none at 11:35). Gate on the final 
   refusal); from n16-tools `--before=5843f5a28` still refuses (my native differs from main: correct).
 - SERVED: kills-new, `--before=<your sha>` on the kill reel now works from your worktree (beba004e8, tools only, no
   pick needed: you run the kit by its path). The before commit needs the lab turn for non-zero dirs (yours from 64be75e2a on).
+- 12:40 8cb956f7e kills-polish REQUEST (step_guard timeout test flakes beside a gate, their JOURNAL :114): the
+  grandchild's late write came 1 s after the timeout, and the kill itself spawns taskkill (a cold start, seconds under
+  load). That window is now `budgetMs(1000, 1)` from the same measured start as the limit (death wait too). Could not
+  reproduce on this machine (4/4 pass before and 2/2 after, without loading the box: kill lanes come first); the
+  failing assertion in their run was not logged, so this is the likeliest cause, not a proven one.
+- 12:55 kills-new REQUEST (2) `--victim-wall`: built as the lab's `--sig-wall[=<gap m>]` (KillLabTurn.wall: the solo
+  guard stands gap m short of the first push_out wall along the shot, the direction whose guard is nearest SOLO_OFF's
+  3 m) and `kill_reel --dirs=wall`. Unit test_kill_lab_turn 5/5 (3 new, first author).
+  FOUND by looking at the first real run (build/film/wall1, Rivet at start): `--sig-wall: dir 85, guard 5.60 m`, the
+  kill lands (fire 61, kill 67, blood at the barrier) but NO guard is drawn at his spot at t60 (probe id 1 draw -1,
+  row ""). The probe rows at t60: 19 station dummies (ids 1000-1018, hp 1e6) and street cops (3000+) stand around
+  Rivet's start, so RigSelect's 16 nearest are all theirs and the lab guard (an arena fighter, no crowd atlas
+  fallback on the city) is drawn by NOTHING. That is session 1's "no rig" hypothesis, confirmed. It also explains
+  s1's dir-90 crop defect. Fix: the `kill:` shot stands Rivet at `--sig-solo=start:-10,0` (west of the knot). PROOF
+  build/film/wall2: `--sig-wall: dir 235, guard 3.95 m, wall 1.00 m behind him` (a parked car), guard drawn (rig, draw
+  28x46), t65 the kill throws him back against the car, t95 he lies at it with the blood up the car's side.
+  NOTE kill lanes: from this commit on, reel/kill films stand Rivet 10 m west of his start (before AND after sides use
+  the same shot, so an A/B stays same-tick); sheets filmed earlier at the start had the victim invisible in some dirs.

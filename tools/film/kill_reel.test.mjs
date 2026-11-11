@@ -43,6 +43,8 @@ test('the plan is weapons x victims x dirs x zooms, and refuses what the reel se
     assert.match(reelPlan({ out: 'o', ppm: '32,x' }, [], root).error, /--ppm/);
     assert.match(reelPlan({ out: 'o', after: '999' }, [], root).error, /--after/);
     assert.match(reelPlan({ out: 'o' }, ['--sig-dir=90'], root).error, /use --dirs/);
+    assert.deepEqual(reelPlan({ out: 'o', weapons: 'katana', dirs: '90,wall' }, [], root).jobs.map((j) => j.dir_deg), [90, 90, 'wall', 'wall']);
+    assert.match(reelPlan({ out: 'o' }, ['--sig-wall'], root).error, /use --dirs/);
     assert.match(reelPlan({ out: 'o', bogus: true }, [], root).error, /unknown option --bogus/);
     assert.match(reelPlan({}, [], root).error, /--out/);
     assert.match(reelPlan({ out: 'o', native: 'donor' }, [], root).error, /--native/);
@@ -85,6 +87,8 @@ test('a later zoom with a known kill tick saves the beat frames only; a clip run
   assert.deepEqual(later.opts.on, []);
   assert.deepEqual(later.opts.stills, pickBeats(63, 150));
   assert.deepEqual(planFilm(job, side, { ...reel, clips: true }, 63).opts.on, first.opts.on);
+  const wall = planFilm({ ...job, dir_deg: 'wall' }, side, reel);
+  assert.ok(wall.opts.extra.includes('--sig-wall') && !wall.opts.extra.some((a) => a.startsWith('--sig-dir')), 'dir wall: the lab finds the wall');
 });
 
 test('a dry run plans every film against the tree and launches nothing; a bad weapon is usage', async () => {

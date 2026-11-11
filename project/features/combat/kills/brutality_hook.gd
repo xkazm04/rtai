@@ -64,7 +64,7 @@ func open_lab(stage: ArenaStage, weapon: StringName = &"") -> void:
 		var xy: PackedStringArray = solo.split(",")
 		_lab.solo = Vector2(xy[0].to_float(), xy[1].to_float())
 	_lab.setup(stage)
-	KillLabTurn.apply(_lab, ArenaArgs.parse().number("--sig-dir", 0.0))  # the kill reel's turns
+	KillLabTurn.from_args(_lab, _push_out)  # the kill reel's turns (--sig-dir, --sig-wall)
 
 
 func step(stage: ArenaStage, tick: int) -> void:
