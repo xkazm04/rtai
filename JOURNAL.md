@@ -503,3 +503,11 @@ final commit (`node tools/reel/run_reels.mjs`; c3f80513d touched project/). (4) 
 nothing heavy runs (else CONTENDED stays). (5) REPORT final: Calls (c-1, c-2), merge notes (order tools -> hero ->
 combat, the conflict recipe, the flake fix). (6) End of night: `git worktree remove --force
 C:/Users/kazda/kiro/gtai-n15/scratch-tools-before`, `git branch -D n15t-control-sim-hash`.
+
+## Session 4 (iteration 7, 01:49 - 03:19), BUILD
+
+- 01:50 read JOURNAL, git log, hero/combat journals: no new `REQUEST tools` or FRICTION since 01:29 (hero 00:59 FRICTION
+  = evidence/run.mjs on the live tree, already served by 3fc7109a9 + `tools/gate/run.mjs`; combat "none new").
+- 01:50 started NEXT (2): `node tools/merge/morning.mjs --worktree=C:/Users/kazda/kiro/gtai-n15/scratch-integ2
+  --lanes=n15-tools,n15-hero,n15-combat --date=2026-11-11 --steps=gates,export --resume --timeout=40
+  --debt-reason="n15 scratch integration"` (APPDATA tools; log gtai-n15/flake/morning_s4.log).
