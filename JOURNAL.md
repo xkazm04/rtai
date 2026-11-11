@@ -327,3 +327,9 @@ by default). (6) the s1 frames.json entry "thug stands as riot cop" is supersede
   s3pin4 facing equal 414/414 (and equal to s3pin1), frames 0.00 % at t60/68/218, aftermath 3.2 % both.
 - DECISION tools/film-cursor: films pin the cursor (line in docs/decisions.md; rejected: a flag, parking the desk
   cursor). REPORT draft updated (finding for the kill lanes, gate note).
+- Evidence: masters frames.json 14 entries (added the desk-mouse A/A diff at t218 on top; retired rocket d90 64 px/m
+  and deleted its file); in-tree copy evidence/n16-tools/film-desk-mouse-aa-katana-t218-before-after-diff.png.
+- Codex ledger this session: 1 task (n16t-break-reel-movie, gpt-5.6-sol, 1 round, 188 s, 10 tests, 3 defects
+  accepted and fixed in code). Day total 2 tasks.
+- 14:50 GATE started on caccc825d (`node tools/gate/run.mjs --rev=caccc825d`, no reels; log
+  C:/Users/kazda/kiro/gtai-n16/scratch-tools/gate_s3.log, ends with `gate exit N`).
