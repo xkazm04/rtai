@@ -18,8 +18,8 @@ const DRIED: int = 1
 const FRESH_COP: int = 2
 const DRY_TICKS: int = 240
 ## Where on the figure (KillFigure: y -1 .. 1 over the card's cell, which is about twice the man's
-## height): the chest (at -0.4 it sat on the face and read as a grinning mouth, film hc64_b).
-const CHEST: Vector2 = Vector2(0.0, -0.22)
+## height): the chest (-0.4 sat on his face as a grinning mouth, -0.22 on his neck: films hc64_b/c).
+const CHEST: Vector2 = Vector2(0.0, -0.13)
 ## The p55 view: the drawing squashed (asset lane: the p55 cells are the p70 ones at 0.8 high).
 const P55_SQUASH: float = 0.8
 
