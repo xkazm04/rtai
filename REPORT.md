@@ -55,9 +55,9 @@ commit if any code lands after `2f1ac74c8`.
   cards, so the card cut never reaches them. On a contractor's death the dropped carbine lies beside the one he holds.
 - Casings: drawn per round by weapon-art (`WeaponCasings`); the asset lane's casing-litter decals (it313/it317
   `residue_casings_70`, an n12 battle-residue offer) are not wired.
-- City street fight (32 px/m, `film.mjs city`): four cops stand clumped on top of the sidewalk wall from t250 to t1150
-  and never come down to the fight (likely their path blocked at the wall edge: sim/nav, not this lane; not looked
-  into; `evidence/n15-combat/city_fight_cops_on_wall_32ppm_t650.png`).
+- City street fight (32 px/m, `film.mjs city`): four cops seem to stand on top of the sidewalk wall from t250 to t1150.
+  Their feet are at its north foot: pressed against the wall, their way to Rivet blocked (sim/AI path, not this lane),
+  and the wall's cap does not hide them, so they read as standing on it (`evidence/n15-combat/city_fight_cops_on_wall_32ppm_t650.png`).
 - A later round of a burst flies on through a fresh corpse; its ink tail crosses the falling body for 2 ticks (open, minor).
 - The flame jet's floor fire stacks into a column of starbursts (the sim's patches; colour is the owner's look-3 ink).
 - Perf: `tools/perf/fight_gate.mjs` 01:15 (bench.lock held, 4 rounds, befores = every tonight flag off): city block fight

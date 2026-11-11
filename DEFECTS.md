@@ -3,7 +3,7 @@
 Ranked within each film; newest film first.
 
 ## City street fight (`film.mjs city --ppm=32 --ticks=1200`, stills every 50), combo 32 px/m t100-1150 (session 6, build/film/s6city32)
-1. Four riot/patrol cops stand clumped, cards overlapping, on top of the sidewalk wall from t250 to t1150 and never come down to the fight -> open (likely their path blocked at the wall edge, sim/nav, not this lane's render; not looked into; still `evidence/n15-combat/city_fight_cops_on_wall_32ppm_t650.png`).
+1. Four riot/patrol cops stand clumped, cards overlapping, on top of the sidewalk wall from t250 to t1150 and never come down to the fight -> open. Session 7 reading of the still: their feet are at the wall's NORTH foot (the road side), not on it: they are pressed against the wall, their way to Rivet (south) blocked (sim/AI path, not this lane), and the wall's cap does not hide them (their cards draw over the prop), so they read as standing on top. Two owners: nav (they never path round the wall's end) and occlusion (a body behind a waist-high wall). Still `evidence/n15-combat/city_fight_cops_on_wall_32ppm_t650.png`.
 2. At t650 a cop's card draws over Rivet's head where they meet (depth order at contact) -> fixed ac7991f58 (session 7: filmed 64 px/m t634-660, the cop stood 1.75 m NORTH of Rivet, behind him, but RigDepthSort's one 0.9 x 1.8 m box called it no overlap; now each box is as tall as the drawn card and Rivet's x1.5 wide, `evidence/n15-combat/city_depth_rivet_over_cop_behind_ab_64ppm_t634-660.png`).
 
 ## Flamethrower lone kills, swat / ped_cap / ped_punk / ped_jogger, combo 64 px/m t542-620 (session 6)
