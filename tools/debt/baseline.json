@@ -38,7 +38,8 @@
         "2026-11-10: n11 merge: n11-combat dev films and body probes on top of n12+tools+hero (dev_loc 21227 -> 21419)",
         "2026-11-10: n14 windup-more: dev film chapters (<blade>_left / _cam: the cop behind or below Rivet) for the wind-up before/after films (dev_loc 21419 -> 21426)",
         "2026-11-10: n15 tools: the selftest scenes declare NEEDS_WINDOW (+1 dev line) so tools/dev/run.mjs refuses them headless (combat FRICTION) (dev_loc 21426 -> 21427)",
-        "2026-11-11: n15 tools: dev/sim/car_route_trails.gd, the t-4 evidence tool for a hand-made map (Call c-2); a -s SceneTree script reads its own two flags like dev/bake_city.gd (dev_loc 21427 -> 21594)"
+        "2026-11-11: n15 tools: dev/sim/car_route_trails.gd, the t-4 evidence tool for a hand-made map (Call c-2); a -s SceneTree script reads its own two flags like dev/bake_city.gd (dev_loc 21427 -> 21594)",
+        "2026-11-11: n15 tools c-2: car_route_trails --tier=a, the owner's Call c-2 evidence in tier A (hull vs cells, stuck death), dev-only (dev_loc 21594 -> 21623)"
       ],
       "files": {
         "project/dev/arena": 711,
@@ -67,11 +68,11 @@
         "project/dev/selftest": 1454,
         "project/dev/servo": 434,
         "project/dev/showcase": 6725,
-        "project/dev/sim": 167,
+        "project/dev/sim": 196,
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 21594
+      "total": 21623
     },
     "direct_cmdline_reads": {
       "accepted": [

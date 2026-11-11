@@ -664,3 +664,37 @@ dev/sim/car_route_trails.gd there is mine) and `git branch -D n15t-control-sim-h
 - 03:19 CORRECTION: the four times above were first written as guesses (03:12-03:35); the real ones come from the commit
   and file times (`git log --date=format:%H:%M:%S`, `ls --time-style`): 0736f3496 03:11:08, mutate log 03:16:11, resolver
   03:16:55, f2c75f9a4 03:17:30. f2c75f9a4's message says "03:35 tips": the tips were read at 03:17.
+- 03:18-03:21 Codex TESTER for the O(actors) hash build: `npx tsx scripts/codex/dispatch.ts run
+  gtai-n15/codex/n15t-break-hash-build.json` (base f2c75f9a4; laws as n15t-break-hash-window: never launch Godot, never
+  change game code). `status: done`, 9 tests, 240 lines, openQuestions none. REVIEW (every line read): an independent
+  oracle (alive/tier/px/py + SimConst, sorted cell row, column, id) AND a fresh-hash comparison on every query; attacks
+  vacated cells, death/revival, tier 0<->1/2, camera jumps of 4 x HW cells (same index, other place), 512 cells; no
+  randomness (patterned ids), so no RNG law issue. What review changed: (1) split into two files + a support class
+  `project/tests/support/sim_hash_oracle.gd` (SimHashOracle: place/point/origin/build/expected/check(t, ...)), because
+  240 lines would raise the debt ratchet's files_past_soft_cap; test bodies unchanged except `_x(` -> `_o.x(` (my first
+  plain replace mangled two test NAMES, `each_build` -> `each_o.build`; redone with word-boundary regex, diffed against
+  Codex's original). (2) the doc lines. Not yet run (Godot slot = the gate).
+- 03:19 dev tool: `res://dev/sim/car_route_trails.gd --tier=a` (c-2's unfilmed half): cars spawn tier A, the map's 1 m
+  cells are filled from each tile's kind (road/junction lane, kerb/plaza walk, block building, void void), the hash is
+  built each tick around the map centre, and each row records `dead_at_tick` (a tier A car stuck 20 s dies). Default
+  (tier B) unchanged. Not yet run (Godot slot).
+- 03:25 gate on 0736f3496 (log gtai-n15/flake/gate_s5_head.log), evidence kinds: `lint: all 17 checks pass over 1430
+  GDScript files`, `unit-tests: 2533 passed, 0 failed, 2 skipped`, `scenario-tests: 55 passed`, parity bit for bit
+  (planted caught at 629), selftest look 11/11 + block 5/5 worst 0.00, `release-compile: 668 loaded, 0 failed`. Reels
+  running.
+- 03:46 MILESTONE gate on 0736f3496 (the hash-sentinel delete): `PASS reels: exit 0`, `gate: PASS` (build/gate/
+  0736f3496b5e/gate.json); my snapshot removed (`removeSnapshot`; the 6 gtai-gate-* left in `git worktree list` are
+  other lanes', e.g. 7778d347a = combat's tip: not touched).
+- 03:47 Codex tester run by me: `run_unit --select=test_sim_hash_build_break,test_sim_hash_build_break_moves --no-rerun`
+  -> `9 passed, 0 failed`. Bite check (planted by hand, `git checkout --` after, status clean): (a) the touched-cell
+  clear removed -> `7 failing (2 passed, 7 failed)`; (b) `_touched.sort()` removed -> 9/9 PASS. (b) is no gap in the
+  tests: query walks cells row-major and reads each cell's own start, so the touched list's order never shows; nothing
+  else reads hitems (`grep -rn "hitems" project native`). So the sort is dead work in both sims: removing it next.
+  Thrown away: nothing. No defect found.
+- 03:50 c-2 in TIER A (`bash evidence/c2_tier_a/run.sh`, all exit 0, constants restored): tier B default re-run ==
+  evidence/t4_trails/after.json (`cars equal: True`). Tier A, U-turns (tick, tile ahead) per car:
+  241: car0 (1417 plaza, 2484 void, 3573 plaza), car1 (945 plaza, 2132 kerb, 2973 void), car2 3 x void.
+  1 (shipped): car0 NONE, dead_at_tick 3022 (stuck 20 s against the block at the plaza's far edge); car1 NONE, alive,
+  sitting behind it; car2 3 x void. 65: car0 (1657 block, 2918 void), car1 (1185 block, 2480 block), car2 (2 void,
+  3592 block); nobody dies. SEEN the 3 panels + a crop of mask 1's plaza (both eastbound trails end at the block edge).
+  Masters `c2-tier-a-mask-241-1-65-4ppm.png` (frames.json now 9). This strengthens c-2's recommendation (65).

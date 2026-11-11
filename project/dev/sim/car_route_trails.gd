@@ -6,9 +6,10 @@ extends SceneTree
 ## JSON summary (<out>.json: U-turns per car with where). Same script runs on any tree that has
 ## the CitySimCars API, so a before/after pair is this file run in two worktrees.
 ## Usage: godot --headless --path project -s res://dev/sim/car_route_trails.gd -- --out=<abs path
-## without extension> [--seconds=60]
+## without extension> [--seconds=60] [--tier=a]. --tier=a (c-2): tier A cars, so the hull meets
+## solid 1 m cells (filled from each tile's kind) and a car stuck 20 s dies; tier B default.
 
-const KNOWN_FLAGS: Array[String] = ["--out", "--seconds"]
+const KNOWN_FLAGS: Array[String] = ["--out", "--seconds", "--tier"]
 const ORIGIN: Vector2i = Vector2i(96, 96)  # first tile drawn
 const SIZE: Vector2i = Vector2i(40, 28)  # tiles drawn
 const PX_PER_TILE: int = 32  # 4 px/m
@@ -24,12 +25,16 @@ const TILE_RGB: Dictionary = {
 	6: Color(0.33, 0.29, 0.25),
 	7: Color(0.72, 0.64, 0.46),
 }
+## The 1 m cell code a tile's cells get under --tier=a (kerb and plaza walkable, a block solid).
+const TILE_CELL: Dictionary = {0: 0, 1: 1, 2: 1, 3: 1, 4: 3, 5: 3, 6: 4, 7: 3}
 const CAR_RGB: Array[Color] = [
 	Color(1.0, 0.85, 0.1), Color(0.95, 0.95, 0.95), Color(0.75, 0.4, 1.0)
 ]
 
 var _s: CitySimState
 var _cars: CitySimCars
+var _hash: CitySimHash
+var _tier_a: bool = false
 
 
 func _initialize() -> void:
@@ -41,7 +46,11 @@ func _initialize() -> void:
 	_s = CitySimState.new()
 	_s.init(7)
 	_build_map()
-	_cars = CitySimCars.new(_s, CitySimHash.new(_s), CitySimFlow.new(_s))
+	_tier_a = str(opts.get("--tier", "b")) == "a"
+	if _tier_a:
+		_fill_cells()
+	_hash = CitySimHash.new(_s)
+	_cars = CitySimCars.new(_s, _hash, CitySimFlow.new(_s))
 	var spawned: Array[int] = [
 		_spawn(Vector2(100 * 8 + 4, ROAD_ROW * 8 + 4), 0),
 		_spawn(Vector2(ROAD_COL * 8 + 4, 117 * 8 + 4), 3),
@@ -53,7 +62,9 @@ func _initialize() -> void:
 	var err: Error = img.save_png(out + ".png")
 	var f: FileAccess = FileAccess.open(out + ".json", FileAccess.WRITE)
 	var stored: bool = f.store_string(
-		JSON.stringify({"cars": summary, "hw": SimConst.HW}, "  ", false)
+		JSON.stringify(
+			{"cars": summary, "tier_a": _tier_a, "mask": SimConst.CAR_DEAD_END_TILES}, " "
+		)
 	)
 	f.close()
 	printerr("car_route_trails: wrote %s.png and .json (png %d, json %s)" % [out, err, stored])
@@ -93,6 +104,17 @@ func _build_map() -> void:
 	_put_tile(ROAD_COL, 120, SimConst.T_VOID)
 
 
+func _fill_cells() -> void:
+	for ty: int in SIZE.y:
+		for tx: int in SIZE.x:
+			var t: int = _s.tiles[(ORIGIN.y + ty) * SimConst.TW + ORIGIN.x + tx]
+			var code: int = TILE_CELL.get(t, 0)
+			for cy: int in 8:
+				var row: int = ((ORIGIN.y + ty) * 8 + cy) * SimConst.W + (ORIGIN.x + tx) * 8
+				for cx: int in 8:
+					_s.cells[row + cx] = code
+
+
 func _spawn(at: Vector2, direction: int) -> int:
 	var spec: PackedFloat64Array = PackedFloat64Array()
 	var grown: int = spec.resize(SimConst.SP_LEN)
@@ -106,7 +128,10 @@ func _spawn(at: Vector2, direction: int) -> int:
 	spec[SimConst.SP_LANE] = centre + CitySimState.LANE_OFF[direction]
 	spec[SimConst.SP_DIR] = direction
 	assert(grown == OK)
-	return _s.spawn(spec)
+	var i: int = _s.spawn(spec)
+	if _tier_a:
+		_s.tier[i] = 0
+	return i
 
 
 func _draw_tiles() -> Image:
@@ -130,10 +155,14 @@ func _run(spawned: Array[int], ticks: int, img: Image) -> Array:
 	var rows: Array = []
 	for i: int in spawned:
 		rows.append({"car": i, "start_dir": _s.dir[i], "uturns": [], "alive_at_end": true})
+	var cam: Vector2 = Vector2(ORIGIN + SIZE / 2) * 8.0
 	for t: int in ticks:
+		_hash.build(cam.x, cam.y)
 		for n: int in spawned.size():
 			var i: int = spawned[n]
 			if _s.alive[i] == 0:
+				if rows[n]["alive_at_end"]:
+					rows[n]["dead_at_tick"] = t
 				rows[n]["alive_at_end"] = false
 				continue
 			var before: int = _s.dir[i]
