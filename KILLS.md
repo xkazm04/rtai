@@ -8,7 +8,7 @@ Scores 1-5 per axis: **Read** (at 32 px/m in a crowd), **Invent** (inventive, ou
 **After** (what stays on the street). **Seen** = how often a player meets it (H/M/L: H = a reel/arena main weapon).
 Work order = weakest total among the most seen first.
 
-Status: iteration 3 (13:52-15:20): electro (A3 per kind), plasma hole (A4) and chainsaw (A5 chunks) raised on films. Iteration 2 (12:30-14:00): rocket, katana, plasma sword, chainsaw, electro, hand cannon, homing shard and mini nuke scored on films; iteration 1 draft for the rest. Beat sheets are from the rows (`signature_kills.json` docs) and the FX code; the
+Status: iteration 4 (15:23-): ray gun raised (ellipse mask, no figure in the hat). Iteration 3 (13:52-15:20): electro (A3 per kind), plasma hole (A4) and chainsaw (A5 chunks) raised on films. Iteration 2 (12:30-14:00): rocket, katana, plasma sword, chainsaw, electro, hand cannon, homing shard and mini nuke scored on films; iteration 1 draft for the rest. Beat sheets are from the rows (`signature_kills.json` docs) and the FX code; the
 "film" column says which are confirmed on a film of this branch. Scores marked `?` are provisional until filmed.
 
 | # | Row | Seen | Beat sheet (anticipation / impact / held beat / aftermath) | Read | Invent | Brutal | After | Total | Film |
@@ -21,7 +21,7 @@ Status: iteration 3 (13:52-15:20): electro (A3 per kind), plasma hole (A4) and c
 | 6 | chainsaw_grind | M | wind-up / bite at the waist: cop held, blood spurts, cream sparks AND 8 drawn chunks thrown out (A5: meat, bone chips, a rib, a tooth) k+0..k+54 / torso off the legs, halves topple, cut faces / halves + chunks lying 1.3-2.6 m off + smears + pool | 4 | 4 | 3 -> 4 | 4 -> 5 | 15 -> 17 | sc64/sc32 it3: chunks read at both zooms past the pool |
 | 7 | hand_cannon_blowback | M | - / blown back in one piece, a big red exit fan / 3-tick stop / body tumbles ~3 m off, big pool + drops stay | 4 | 2 | 3 | 4 | 13 | rank64 1b823dbf7: reads, but it is a plain knock-back: nothing torn, no hole |
 | 8 | plasma_sword_split | M | as katana, hot cauterised edge, no blood; halves topple | 2 -> 4 | 3 | 1 -> 2 | 1 -> 2 | 7 -> 11 | rank64 + ps64_c it2: a cream-edged head-and-shoulder half falls one way, the legs the other. Aftermath: the two halves only (no blood by design) |
-| 9 | ray_gun_dissolve | M | - / k+0 burst, a cream disc on the chest / k+10 the cop falls back over (reads as a plain death) while a grey disc stays / k+40 dust ring | 2 | 4 | 2 | 3 | 11 | rank64 1b823dbf7: the dissolve does not read at k+10..k+30 |
+| 9 | ray_gun_dissolve | M | - / k+0 burst, the whole cop lit inside a cream glow ellipse (n16 it4: KillDissolveMask fits the drawn figure, 999ec13db; the spinning "cap" that was the whole man is gone, 06deed4b5) / k+33 the hot ring eats him inward, echo rings, motes falling / dust pile with the empty uniform and the cap | 2 -> 4 | 4 | 2 -> 3 | 3 | 11 -> 14 | rg64/rg32 b vs c it4: the man is eaten whole at both zooms (was: legs only in a disc, the cop falling away as the hat). A7 (drawn skull in the ash) requested |
 | 10 | homing_shard_burst | M | shards stick / frozen 36 ticks, ink rings pulse per shard / burst into a red mist and pool at k+40 | 3 | 4 | 3 | 3 | 13 | rank64 1b823dbf7: the frozen beat reads (rings), the victim is small inside them at 64 |
 | 11 | mini_nuke_vaporise | L | - / full-screen cream-and-vermilion flash k+0..k+10 / grey wash / charcoal shadows of the squad stay | 4 | 4 | 2 | 5 | 15 | rank64 1b823dbf7: the shadows of the vaporised squad are the strongest aftermath of all |
 | 12 | tonnage_crush / tonnage_ram | M (ghost) | slam / pressed wide and dark, red splat / - / flat body | 4? | 4? | 3? | 4? | 15? | owed |
@@ -45,3 +45,8 @@ hand_cannon (13: nothing torn: a drawn exit wound?), rocket_gib (14: the bone at
 Work order at 14:40 (iteration 3, after A3/A4/A5): ray_gun_dissolve (11: the dissolve does not read at k+10..k+30; the
 weakest now), plasma_sword (11: aftermath), plasma_hole (12: impact pop at 32), burn_char (13, H: the flame column hides
 the death beat), hand_cannon (13: nothing torn), rocket_gib (14: bone at 32 px/m), the ghosts' four (owed films).
+
+Work order at 15:55 (iteration 4, after the ray gun): plasma_sword (11: aftermath), plasma_hole (12: impact pop at 32,
+the bloom under the drawn ring being filmed), burn_char (13, H: the embers and smoke sat on the card's feet, fixed in the
+tree, filming; the stand still reads as a dark cop, not a burning man), hand_cannon (13: A6 exit wound requested),
+rocket_gib (14: bone at 32 px/m), ray_gun (14: A7 skull in the ash requested), the ghosts' four (owed films).

@@ -9,9 +9,11 @@
    sank into the blood pool at 64 px/m -> 0.46 m, thrown 1.3-2.6 m (same commit).
 4. Ray gun (ranking #3, rank64 film t50-89): the "falling cop" is the HAT piece: GibCut.cut(whole) copies every sprite
    under the head into the hat, and the whole-figure walker card hangs under the head, so the kicked, spinning "cap"
-   was the whole man, unclipped, over his own dissolving body -> fixed (commit after 49c7c0be9; the figure stays in the
+   was the whole man, unclipped, over his own dissolving body -> fixed 06deed4b5 ( the figure stays in the
    BODY only; test test_gib_cut_figure_hat; `evidence/n16-kills-polish/ray_gun_no_figure_hat_ab_64ppm_t50-89.png`).
-5. Ray gun, after 4: the disc mask holds only the legs from t50 (head and torso clipped at once) -> open (NEXT 1).
+5. Ray gun, after 4: the disc mask holds only the legs from t50 (head and torso clipped at once) -> fixed 999ec13db
+   (KillDissolveMask: an ellipse fitted to the drawn figure; the whole cop glows, then the ring eats him inward;
+   `evidence/n16-kills-polish/ray_gun_ellipse_mask_ab_64ppm_t{50-89,82-109}.png`).
 
 ## Reel gate, top pass, rocket chapter (gate d3e25fc4a, iteration 2)
 1. SCRIPT ERROR `has_meta on a null value`: GibCardPieces.dress_rig asked a top-view rig (no head card) for its card row
