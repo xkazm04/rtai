@@ -588,3 +588,27 @@ film with later kills could prove the recycle. Logs go to C:\Users\kazda\kiro\gt
 - SERVED (kills-polish FRICTION :361): ed4a13db0. Touches only tools/lint/scope{,.test}.mjs: `git cherry-pick
   ed4a13db0` in your lane and an art commit (PNG + provenance + tools/art script) lints in seconds; until then it
   still runs the full lint (your hook runs your tree's scope.mjs).
+- 17:27-17:40 weakest item (s5 NEXT 4): the aftermath LIFETIME was the table's, not measured.
+  MILESTONE 416cbe69d + 822d5bdc5: `--after` up to 1200 ticks without `--clips` (film.mjs runs a film past its last
+  still, so only a clip is bound by the lab shot's 420 ticks: clips keep 230), beats +150/+300/+600 when they fit
+  (the default sheet keeps its 12 columns), per film an `aftermath_curve` + `aftermath_gone_after` in reel.json, the
+  curve on the film line and in reel.md. The data line now reads corpse_decay.json (`decayOf`: bodies 6+1.2 = 7.2 s,
+  stains 12+4 = 16 s); it said "until 12 later kills recycle them (no timer)": WRONG on the street. A feel-off film
+  (film's --feel=auto under the lab lock: every default reel) read `hit-stop 0 frames`: now `off (... --feel=on
+  measures it)`. FOUND+FIXED: the pre-launch check planned a clip window even for scouted reels, so `--after>230`
+  was refused at once; it now checks the scout + beat plans (break test; planted the old check: caught).
+  Film tests 273/0, lint 19/19 (commit hook).
+- PROOF (real runs on kills-new 76ae91d45, --native=donor: my native has c-2):
+  `--weapons=claw_shock,rocket_launcher --dirs=0 --ppm=32 --after=600` 17:30:35-17:32:07 PASS: claw curve
+  +20 4.8 / +80 2.1 / +300 2.1 / +600 0.9 %; rocket +20 28.3 / +40 5.8 / ... / +600 5.5 %. LOOKED (t427, t727, crops
+  t368/t668): the thrown cop lies on the crosswalk at +300 and is GONE at +600 (his skid line stays); the rocket's
+  gib pieces (head, hand) lie at +300 and are gone at +600, scorch and spray stay. Same with `--feel=on`: freezes
+  measured 6 (claw) and 8 (rocket) frames, curves identical. `--weapons=rocket_launcher --after=1000` PASS:
+  +1000 1.6 %: scorch and spray gone; what is left = the guard's absence from the trigger frame + his dropped rifle
+  (still on the crosswalk at 16.7 s: outlives the stain clock; a pickup? the kill lanes' call, not a tools defect).
+  Evidence: evidence/n16-tools/kill-reel-aftermath-life-{claw-rocket-...-after600,rocket-...-after1000}.png,
+  kill-reel-rocket-t60-vs-t1068-what-stays-32ppm.png, reel_s6feel.md, reel_s6long.md; masters frames.json on top (15,
+  dropped the katana d90 and the old before-guard frame; no unreferenced file). Decisions lines ec3c2479c.
+- SERVED (both kill lanes, the brief's "aftermath lifetime" readout): `node <n16-tools>/tools/film/kill_reel.mjs
+  --weapons=<w> --after=600 --rev=<sha> [--native=donor]` films the aftermath to 10 s (up to 1200 ticks); read the
+  curve's steps (body gone at 7.2 s, stains at 16 s). Add `--feel=on` to measure the freeze (default reads `off`).
