@@ -486,3 +486,25 @@ draft is current to 16:12. No project/ commit since caccc825d: the gate PASS sta
 - SERVED (kills-new FRICTION 15:30): a `--clips`/`--before` reel film is no longer killed at a flat 300 s; it gets
   120 s + 2.5 s a still (540 s for a full window), and film.json says what it got. Your Gatling timeouts were the
   timeout under contention (t239 of 245), not the polygon flood (one error a frame; 314-error films pass in 45 s).
+- 16:35 MILESTONE 19df35c79 Codex n16t-break-reel-scout (gpt-5.6-sol, 1 round, 743 s, 10261 tokens out): 9 adversarial
+  tests (filmTicks, planFilm scout/known/clips, stillCount/filmTimeout incl. --timeout=0, olderTreeHint near-miss flags,
+  tableRows own/also_weapons over an earlier burn row, main scouting exactly once per combo over 2 victims x 2 dirs x
+  2 zooms = 12 launches / 4 scouts, a scout timeout or empty kill never launching the beat film, clips never scouting).
+  1 kept red: `filmTicks(0, 1)` holds tick 60 past kill+after. REVIEW: not a defect: 60 is pickBeats' fixed trigger
+  column (the reference frame before the kill; lab kills come at 63+), my task text ("never past kill+after") was
+  looser than the design; the test now exempts 60 (commented). Codex also pinned that a first zoom whose beat film
+  disagrees with its scout hands ITS tick to the later zooms (the mismatch is already UNVERIFIABLE on that film): kept.
+  Film tests 266/0, lint 19/19. Ledger `accepted-after-revision`, discarded. Day total 4 tasks.
+- 16:37 kills-polish FRICTION 14:20 (unserved till now): "the plasma commit's full lint failed json-canonical on my
+  NEXT item's unstaged schema edit". Their log: 0dce9f3b6 (plasma, 14:30) did not stage the schema, af3f9af1c did, so
+  it really was unstaged drift. REPRODUCED their case here (font.mjs staged, signature_kills.json unstaged and not
+  canonical, `node tools/gate/precommit.mjs`): the hook named the drift, linted a 5530-file export of the index, 19/19,
+  exit 0. So the hook is right when the export works; the only tree-linting path is the fallback when the export
+  throws (their first try; the retry worked), and that line did not name the unstaged paths.
+- MILESTONE 826b4035a: the hook retries a failed export once, then the fallback line ends `it reads your unstaged
+  <paths>: a failure there is not in the commit`. PROOF (real git, TMP pointed at a missing dir so mkdtemp fails both
+  tries): `pre-commit: no staged snapshot (ENOENT ... mkdtemp ...): linting the WORKING TREE, ...; it reads your unstaged
+  project/data/tables/signature_kills.json, ...`; tree restored, no lint process left. Tests gate 143/0 (the n15 break
+  test's "export called once" now says twice when it throws), lint 19/19.
+- SERVED (kills-polish FRICTION 14:20): 826b4035a. If a commit's lint ever reads your work tree again, the hook line
+  now names the unstaged paths it read, and a one-off export failure is retried first.
