@@ -43,9 +43,12 @@ func test_it_lies_past_his_feet_away_from_his_body() -> void:
 	StreetDeadRests.reset()
 
 
-func test_with_no_rest_it_lies_past_his_feet_along_the_shot() -> void:
+func test_with_no_rest_it_lies_across_the_shot_on_the_cameras_side() -> void:
 	StreetDeadRests.reset()
 	var at: Vector2 = Vector2(10.0, 10.0)
-	var lies: Vector2 = GroundDropShowcase.lies_at(at, Vector2.LEFT)
-	var want: Vector2 = at + Vector2(-GroundDropShowcase.PAST_M, 0.0)
-	assert_almost_eq(lies, want, Vector2.ONE * 1e-4, "the snap falls toward the shooter")
+	var e: Vector2 = Vector2.ONE * 1e-4
+	var down: Vector2 = at + Vector2(0.0, GroundDropShowcase.SIDE_M)
+	assert_almost_eq(GroundDropShowcase.lies_at(at, Vector2.LEFT), down, e, "shot west: below")
+	assert_almost_eq(GroundDropShowcase.lies_at(at, Vector2.RIGHT), down, e, "shot east: below")
+	var right: Vector2 = at + Vector2(GroundDropShowcase.SIDE_M, 0.0)
+	assert_almost_eq(GroundDropShowcase.lies_at(at, Vector2.DOWN), right, e, "shot south: right")

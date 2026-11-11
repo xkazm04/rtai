@@ -6,8 +6,9 @@ extends RefCounted
 ## machine_pistol, the gun Rivet then holds), keyed by the view's art like every floor pickup,
 ## stood up for the camera and never spun. One rule for its direction: it lies along the shot, the
 ## muzzle pointing the way the round flew on screen (mirrored, never turned), PAST_M beyond his
-## feet on the side away from his body (StreetDeadRests; an own-cell death publishes none and the
-## pistol snap falls toward the shooter: -shot). GroundRifle's spot back toward the shooter lay
+## feet on the side away from his body (StreetDeadRests); with no rest (gibbed, an own-cell death)
+## SIDE_M across the shot on the camera side (along it lay in the gib's spray, film
+## dra_rocket_launcher t218). GroundRifle's spot back toward the shooter lay
 ## under the snap's corpse (film drop_068c_d0), a spot across the shot under a diagonal one (film
 ## drop_4394_swat32). Before: the sheet at one of 8 headings hashed from the position.
 ## Straight down (no form), `--showcase=off` or ON
@@ -18,6 +19,8 @@ const PICKUP: StringName = &"assault-rifle"
 const VERTICAL_X: float = 0.05
 ## How far (m) past his feet, away from his body, the gun's middle lies.
 const PAST_M: float = 0.75
+## With no rest: how far (m) across the shot line, on the camera's side, the gun lies.
+const SIDE_M: float = 0.6
 ## A published rest whose feet lie within this (m) of the drop is his.
 const MATCH_M: float = 1.5
 
@@ -56,12 +59,15 @@ static func draw(ci: CanvasItem, at: Vector2, shot: Vector2, length_m: float) ->
 
 
 ## Where the gun lies for a drop at `at` (m) after a shot along `shot`: past his feet, away
-## from his body.
+## from his body; no body: across the shot, screen down (straight down the screen: to the right).
 static func lies_at(at: Vector2, shot: Vector2) -> Vector2:
 	var body: Vector2 = body_dir(at)
-	if body == Vector2.ZERO:
-		body = -shot.normalized()
-	return at - body * PAST_M
+	if body != Vector2.ZERO:
+		return at - body * PAST_M
+	var side: Vector2 = shot.normalized().orthogonal()
+	if side.y < 0.0 or (is_zero_approx(side.y) and side.x < 0.0):
+		side = -side
+	return at + side * SIDE_M
 
 
 ## The way the body lying at a drop `at` (m) reaches from its feet (unit; ZERO: no published rest
