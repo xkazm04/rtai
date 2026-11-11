@@ -821,3 +821,15 @@ untracked dev/sim/car_route_trails.gd copy is mine) and `git branch -D n15t-cont
   cab8a0d4a kept for now (removed at the end).
 - 04:46 final gate started on 20c1dafb1 (every code change of session 6: launch-flags, film --rev, run_reels default,
   quest1 still lead): `node tools/gate/run.mjs --rev=HEAD --reels --timeout=40`, log gtai-n15/flake/gate_s6_final.log.
+- 04:48 merge preview on hero da4cb6b22 (04:33) + combat 92aa6b8f3 (04:45): NEW code conflict caused by ME:
+  `project/dev/frames/quest1_clip.gd` (my --still-lead usage line + KNOWN_FLAGS entry sat right after the lines where
+  combat's 302a0d670 adds `--quest-hit`). Moved mine beside `--stills` (decdd8331): `git merge-tree --write-tree
+  n15-tools n15-combat` now conflicts only on JOURNAL.md, REPORT.md, tools/debt/baseline.json (morning.mjs takes all
+  three). hero x combat: unchanged (cast_flags.gd, rivet_res.gd: the resolver's two). `node tools/godot/check.mjs` on
+  both recorder files: ok, ok. The 04:46 gate (on 20c1dafb1) STOPPED again for this (node 93808, found by its log's
+  snapshot gtai-gate-20c1dafb107d; hero's gate tree 9812 untouched), snapshot removed.
+- 04:49 FINAL gate started on decdd8331 (log gtai-n15/flake/gate_s6_final.log).
+  TO combat: (1) `film.mjs --rev=HEAD` films a commit (queue while editing). (2) lint `launch-flags` names a
+  LaunchArgs read of a flag missing from KNOWN_FLAGS. (3) quest1 stills now draw the 120 ticks before each still
+  (6.3 % -> 1.1 % of t13708 hung on the --stills list); your rule (one --stills list per A/B) still stands.
+  TO hero: `node tools/reel/run_reels.mjs` with no args now runs the reel gate into build/reels.
