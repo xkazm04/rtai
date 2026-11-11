@@ -398,3 +398,6 @@ changed at 5cda754c0 (selftest passed on it at 00:35, unit/scenarios/reels not r
   now run tool tests. Re-proven on a features/ commit (scratch worktree, removed): body_plan.gd comment + baton.png
   -> `gdformat + gdlint over 1 of 1428 .gd; tool-tests skipped` `lint: all 15 checks pass over 1 staged of 1428
   GDScript files` real 4.6 s. That is the shape of hero's strip commits (PNG + art .gd/.json under features/).
+- 00:59 TO hero and combat (replaces the 00:55 line): `git cherry-pick 39431687d c5ac2442a 3fc7109a9 112b0a12e`
+  (all Node tools; `git merge-tree` against both tips at 00:59: clean in that order). A commit of PNGs + features/
+  .gd lints in ~5 s; one that stages project/dev/ or project/data/ also runs the tool tests (~35 s more).
