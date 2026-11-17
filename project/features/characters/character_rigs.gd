@@ -92,7 +92,7 @@ func step_ticks(steps: int) -> void:
 		ticks_stepped += 1
 		for actor: int in _by_actor:
 			var every: int = rate_of(_rank[actor], zoom)
-			if (ticks_stepped + actor) % every == 0:
+			if (ticks_stepped + actor) % every == 0 or RigCarry.hit_now(_by_actor[actor]):
 				RigCarry.pose(_by_actor[actor], _posed, every)
 	RigCarry.finish(_by_actor, _posed, ViewMode.shared().cards)
 	last_us = Time.get_ticks_usec() - t0

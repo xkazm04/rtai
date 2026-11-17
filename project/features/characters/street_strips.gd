@@ -68,6 +68,9 @@ static func prefetch_fall(rig: CutRig, art: String, row: String) -> void:
 		for key: String in StreetWalkerHit.SITE_GRIDS:
 			for site: String in StreetWalkerHit.SITE_GRIDS[key].values():
 				prefetch(StreetWalkerCards.DIR + site)
+		for key: String in StreetHitClass.GRIDS:
+			for cls: String in StreetHitClass.GRIDS[key].values():
+				prefetch(StreetWalkerCards.DIR + cls)
 	var grid: String = StreetWalkerFall.path_of(art, row)
 	if not grid.is_empty():
 		prefetch(StreetWalkerCards.DIR + grid)

@@ -31,6 +31,9 @@ const GUN_ON_FLOOR: bool = true
 ## blob in the offline sims and on film; lying near flat its L (barrel, grip) reads.
 const CELL_SPAN_M: float = 0.48
 const CELL_TILT_K: float = 0.5
+## n17: landed, it lies flat, muzzle the way the round flew (GroundDropShowcase's rule; a stunned
+## cop faces his shooter: -facing). false = the folded, tilted rest angle above (the before).
+const LAND_FLAT: bool = true
 const CELL_INK_PX: float = 1.5
 const CELL_WEAPON: StringName = &"pistol"
 const CELL_PART: String = "dropped_cop"
@@ -110,7 +113,7 @@ func _toss(c: Vector2, ppm: float, facing: float, id: int) -> Array:
 	var fwd: Vector2 = Vector2.from_angle(facing)
 	var side: Vector2 = fwd.orthogonal() * (1.0 if id % 2 == 0 else -1.0)
 	var to: Vector2 = c + (fwd * TOSS_AHEAD_M + side * TOSS_SIDE_M) * ppm
-	return [c + fwd * 0.2 * ppm, to, arena.tick, facing + 0.9 * float(id % 3 - 1), ppm]
+	return [c + fwd * 0.2 * ppm, to, arena.tick, facing + 0.9 * float(id % 3 - 1), ppm, facing]
 
 
 func _lay(d: Array, id: int) -> void:
@@ -142,7 +145,11 @@ func _gun(ci: CanvasItem, d: Array, id: int) -> void:
 	var ang: float = rest + (1.0 - k) * TOSS_SPIN * TOSS_TICKS
 	var ink: float = decay.ink_of(id) if decay != null else 0.0
 	if cell != null:
-		_cell(ci, at, ang, ppm, ink)
+		var lie: Vector2 = lie_of(ang)
+		if LAND_FLAT and k >= 1.0 and d.size() > 5:
+			var facing: float = d[5]
+			lie = landed_lie(facing)
+		_cell(ci, at, lie, ppm, ink)
 		return
 	var fwd: Vector2 = Vector2.from_angle(ang)
 	var nrm: Vector2 = fwd.orthogonal()
@@ -174,13 +181,17 @@ static func lie_of(ang: float) -> Vector2:
 	return Vector2(wrapf(a - PI, -PI, PI) * CELL_TILT_K, -1.0)
 
 
-## n13: the pickup cell lying at `at`, turned to `ang`, CELL_SPAN_M across its longer side, inside
-## an ink outline of CELL_INK_PX world px (the pickups' edge, PickupLook), inking out with the body.
-func _cell(ci: CanvasItem, at: Vector2, ang: float, ppm: float, ink: float) -> void:
+## n17: how a landed cell lies for the cop's facing (rad): flat, muzzle along the shot (-facing).
+static func landed_lie(facing: float) -> Vector2:
+	return Vector2(0.0, GroundDropShowcase.sign_x(-Vector2.from_angle(facing)))
+
+
+## n13: the pickup cell at `at` lying as `lie` (lie_of / landed_lie), CELL_SPAN_M across its longer
+## side, inside an ink outline of CELL_INK_PX world px (PickupLook's edge), inking out with him.
+func _cell(ci: CanvasItem, at: Vector2, lie: Vector2, ppm: float, ink: float) -> void:
 	var size: Vector2 = cell.get_size()
 	var k: float = CELL_SPAN_M * ppm / maxf(size.x, size.y)
 	var reach: float = CELL_INK_PX / k
-	var lie: Vector2 = lie_of(ang)
 	ci.draw_set_transform(at, lie.x, Vector2(k * lie.y, k))
 	for i: int in PickupLook.OUTLINE_DIRS:
 		var off: Vector2 = Vector2.from_angle(TAU * i / PickupLook.OUTLINE_DIRS) * reach

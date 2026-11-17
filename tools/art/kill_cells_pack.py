@@ -32,6 +32,12 @@ COLS = 5
 # kind -> the kinds whose delivered away corpse reads standing (use the 3/4-away corpse)
 BACK_FROM_AWAY = {"pistol_snap": ("cop_patrol",)}
 ALPHA_MIN = 40
+# n17 npc-react: death -> kinds whose delivered columns drift sideways (the riot snap's figures sit on a
+# 684 px stride in 738 px cells: feet 27-244 px left of centre, the death drawn up to 2.2 m beside the
+# man, film 87be_cop_head_helmet64 t63). Their columns are also shifted so the upright frame's feet
+# sit on the cell's centre line in x (every frame of a column by the same dx, so the drawn motion keeps).
+REGISTER_X = {"pistol_snap": ("cop_riot",)}
+FEET_BAND = 8
 UPRIGHT_FRAME = 2
 # death -> its upright frame when not frame 2 (nail_pin: frame 2 hangs with the knees drawn up)
 UPRIGHT_BY_DEATH = {"nail_pin": 1, "gatling_shred": 1}
@@ -47,6 +53,16 @@ def feet_y(cell: Image.Image) -> int:
     a = np.asarray(cell.getchannel("A")) > ALPHA_MIN
     rows = np.nonzero(a.any(axis=1))[0]
     return int(rows[-1]) if rows.size else cell.height // 2
+
+
+def feet_x(cell: Image.Image) -> int:
+    """The mean column of the opaque pixels within FEET_BAND rows of the lowest one."""
+    a = np.asarray(cell.getchannel("A")) > ALPHA_MIN
+    rows = np.nonzero(a.any(axis=1))[0]
+    if not rows.size:
+        return cell.width // 2
+    cols = np.nonzero(a[max(0, rows[-1] - FEET_BAND) : rows[-1] + 1])[1]
+    return int(round(float(cols.mean())))
 
 
 def frames_of(src: Path) -> int:
@@ -65,19 +81,25 @@ def pack(kind: str, death: str, lib: Path, art: str = "p70") -> Path | None:
     w, h = first.size
     up = UPRIGHT_BY_DEATH.get(death, UPRIGHT_FRAME)
     out = Image.new("RGBA", (w * COLS, h * n), (0, 0, 0, 0))
+    reg_x = kind in REGISTER_X.get(death, ())
     for c in range(1, COLS + 1):
-        dy = h // 2 - feet_y(Image.open(src / f"{up}_{c}.png").convert("RGBA"))
+        upright = Image.open(src / f"{up}_{c}.png").convert("RGBA")
+        dy = h // 2 - feet_y(upright)
+        dx = w // 2 - feet_x(upright) if reg_x else 0
         for f in range(1, n + 1):
             col = c
             if f == n and c == COLS and kind in BACK_FROM_AWAY.get(death, ()):
                 col = COLS - 1
             cell = Image.open(src / f"{f}_{col}.png").convert("RGBA")
+            dx_c = dx
             if f == n and col != c:  # the 3/4-away corpse keeps its own column's registration
-                dy_c = h // 2 - feet_y(Image.open(src / f"{up}_{col}.png").convert("RGBA"))
+                own = Image.open(src / f"{up}_{col}.png").convert("RGBA")
+                dy_c = h // 2 - feet_y(own)
+                dx_c = w // 2 - feet_x(own) if reg_x else 0
             else:
                 dy_c = dy
             slot = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-            slot.paste(cell, (0, dy_c))  # clipped to its own cell
+            slot.paste(cell, (dx_c, dy_c))  # clipped to its own cell
             out.alpha_composite(slot, ((c - 1) * w, (f - 1) * h))
     dst = VIEW / art / f"{kind}_{death}.png"
     out.save(dst, optimize=True)

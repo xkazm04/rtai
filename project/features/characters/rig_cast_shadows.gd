@@ -32,6 +32,10 @@ const CONTACT_POINTS: int = 20
 ## The soft edge: nested ellipses (radius share, alpha), printed over one another.
 const CONTACT_RINGS: Array[Vector2] = [Vector2(1.0, 0.22), Vector2(0.78, 0.24), Vector2(0.55, 0.3)]
 
+## n17 npc-react (DEFECTS 23): a dying street card still standing (its thrown-back hit cell, a fall
+## grid row before the lying one) keeps the contact ellipse; false = none from the kill tick.
+const STANDS_DYING: bool = true
+
 ## `--shadow-push=off` = the before (n15: the shadow stays on the feet, the hit card pushed off).
 static var _push_off: int = -1
 
@@ -61,7 +65,7 @@ func _draw() -> void:
 		var feet: Vector2 = to_local(rig.global_position + card_push(rig))
 		if not contact:
 			draw_colored_polygon(figure(feet, view.cast_dir(), hip * view.cast_k), SHADOW)
-		elif not rig.dead:  # a body has its own contact shadow on the card (StreetDeadRest)
+		elif not rig.dead or STANDS_DYING and stands_dying(rig):  # a body: its own (StreetDeadRest)
 			_contact(feet + view.cast_dir() * hip * CONTACT_SLIDE_HIPS, hip)
 
 
@@ -166,3 +170,15 @@ static func card_push(rig: CutRig) -> Vector2:
 		_push_off = 1 if ArenaArgs.parse().text("--shadow-push") == "off" else 0
 	var w: Vector3 = StreetWalkerHit.shove(rig) if _push_off == 0 else Vector3.ZERO
 	return Vector2(w.x, w.y)
+
+
+## True while a dead rig's drawn street card still stands: a hit grid, or a fall grid before its
+## last (lying) row. Any other dead rig lies (or draws no card).
+static func stands_dying(rig: CutRig) -> bool:
+	var c: Sprite2D = rig.head_card
+	if c == null or not c.visible:
+		return false
+	var on: String = str(c.get_meta(StreetWalkerCards.ON, ""))
+	if StreetWalkerHit.is_grid(on):
+		return true
+	return on.ends_with("_fall.png") and c.frame_coords.y < c.vframes - 1

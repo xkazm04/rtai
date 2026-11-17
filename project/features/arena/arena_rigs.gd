@@ -63,7 +63,7 @@ func attach(p_stage: CollectCallStage, view: CollectCallView, ctx: WorldContext)
 	stage = p_stage
 	var arena_stage: ArenaStage = p_stage as ArenaStage  # null in quest 1 (no plan, no targets)
 	plan = arena_stage.plan if arena_stage != null else null
-	process_priority = -1  # the feed is filled before CharacterRigs poses this frame
+	RigTickOrder.place(self)  # the World ticks, then the feed fills, then CharacterRigs poses
 	rigs.z_index = RenderLayers.z(&"actors")
 	layer.add_child(rigs)
 	RigDepthSort.attach(layer)  # view lab: tilt only, bodies drawn far to near

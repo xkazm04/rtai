@@ -55,3 +55,12 @@ func test_every_lie_is_within_the_tilt_cap() -> void:
 	for i: int in 64:
 		var lie: Vector2 = ShockArcsView.lie_of(TAU * i / 64.0 - PI)
 		assert_lte(absf(lie.x), PI * 0.5 * ShockArcsView.CELL_TILT_K + 1e-5)
+
+
+func test_a_landed_pistol_lies_flat_muzzle_along_the_shot() -> void:
+	# n17: the stunned cop faces his shooter; the round flew the other way (-facing).
+	assert_eq(
+		ShockArcsView.landed_lie(PI), Vector2(0.0, 1.0), "facing left: shot right, muzzle right"
+	)
+	assert_eq(ShockArcsView.landed_lie(0.0), Vector2(0.0, -1.0), "facing right: mirrored")
+	assert_eq(ShockArcsView.landed_lie(PI * 0.5).x, 0.0, "never tilted")
