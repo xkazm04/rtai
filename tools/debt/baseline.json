@@ -334,7 +334,6 @@
         "project/features/bosses/servo/servo_rig.gd": 287,
         "project/features/bosses/servo/servo_swarm.gd": 208,
         "project/features/characters/cut_rig.gd": 263,
-        "project/features/city/gen/tile_painter.gd": 243,
         "project/features/city/sim/sim_people.gd": 205,
         "project/features/city/view/city_view.gd": 259,
         "project/features/combat/ai/enemy_pit.gd": 244,
@@ -368,7 +367,7 @@
         "project/tests/unit/test_gun_fx.gd": 213,
         "project/tests/unit/test_weapon_art.gd": 223
       },
-      "total": 66
+      "total": 65
     },
     "lane_named_dev_dirs": {
       "files": {

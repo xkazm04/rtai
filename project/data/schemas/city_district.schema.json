@@ -1,5 +1,5 @@
 {
-  "$id": "gtai.city-district/1",
+  "$id": "gtai.city-district/2",
   "additionalProperties": false,
   "properties": {
     "chunks": {
@@ -20,12 +20,189 @@
       "type": "string"
     },
     "schema": {
-      "const": "gtai.city-district/1"
+      "const": "gtai.city-district/2"
     },
     "seed": {
       "maximum": 4294967295,
       "minimum": 0,
       "type": "integer"
+    },
+    "zone_map": {
+      "additionalProperties": false,
+      "properties": {
+        "default": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "rects": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "chunks": {
+                "items": {
+                  "maximum": 16,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "maxItems": 4,
+                "minItems": 4,
+                "type": "array"
+              },
+              "zone": {
+                "pattern": "^[a-z][a-z0-9_]*$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "zone",
+              "chunks"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "default",
+        "rects"
+      ],
+      "type": "object"
+    },
+    "zones": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "big_roofs": {
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "big_share": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "car_lane": {
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "density_min": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "density_span": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "empty_share": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "generic_roofs": {
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "landmark_roofs": {
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "landmark_share": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "long_roofs": {
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "long_share": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "ped_corner": {
+            "maximum": 255,
+            "minimum": 0,
+            "type": "number"
+          },
+          "ped_kerb": {
+            "maximum": 255,
+            "minimum": 0,
+            "type": "number"
+          },
+          "ped_plaza": {
+            "maximum": 255,
+            "minimum": 0,
+            "type": "number"
+          },
+          "plaza_prop_share": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "plaza_props": {
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "plaza_share": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "street_keep_x": {
+            "maximum": 4,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "water_tiles": {
+            "maximum": 5,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
     }
   },
   "required": [
@@ -34,7 +211,9 @@
     "seed",
     "chunks",
     "name_key",
-    "doc"
+    "doc",
+    "zones",
+    "zone_map"
   ],
   "type": "object"
 }

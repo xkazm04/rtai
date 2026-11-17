@@ -21,6 +21,8 @@ var seed_value: int = 1
 var district_id: String = ""
 var sizes: Array[Vector2] = []
 var solid: Array[bool] = []
+## Which zone row paints each chunk (city_district.json zones + zone_map); one `mixed` by default.
+var zones: CityZones = CityZones.new()
 var _tiles: TilePainter = null
 
 
@@ -46,6 +48,7 @@ static func from_tables(district_path: String, textures_path: String) -> CityGen
 	var p_seed: float = district.get("seed", 1.0)
 	var gen: CityGen = CityGen.new(int(p_seed), textures)
 	gen.district_id = str(district.get("id", ""))
+	gen.zones = CityZones.from_district(district)
 	return gen
 
 
@@ -65,7 +68,8 @@ func rnd(a: int, b: int, c: int, salt: int) -> float:
 
 func gen_chunk(cx: int, cy: int) -> CityChunk:
 	var b: ChunkBuild = ChunkBuild.new(cx, cy)
-	b.district = 0.45 + 0.55 * rnd(cx >> 2, cy >> 2, 0, 11)
+	var zone: CityZone = zones.of_chunk(cx, cy)
+	b.district = zone.density_min + zone.density_span * rnd(cx >> 2, cy >> 2, 0, 11)
 	var n: int = SimConst.CHUNK_TILES
 	for ly: int in n:
 		for lx: int in n:

@@ -1,8 +1,69 @@
 {
   "chunks": 16,
-  "doc": "The authored district the city chunks are baked from (AST-12). The generator is procedural: this row is its whole input besides the texture table. Changing seed or chunks re-bakes every chunk and the golden hash list.",
+  "doc": "The authored district the city chunks are baked from (AST-12). The generator is procedural: this row is its whole input besides the texture table. Changing seed, chunks, a zone row or the zone map re-bakes every chunk and the golden hash list. zones: one row per zone, the layout rules the generator paints that zone's chunks with (CityZone: block shares, roof sets as city_textures ids, plaza props, spawn densities, street_keep_x, water_tiles); a key a row leaves out takes the n14 city's value. zone_map: every chunk takes `default`, then each rect [x, y, w, h] in chunks paints its zone over it (later rects win). The zone of a chunk is read through CityGen.zones / CitySystem, never a parallel table.",
   "id": "district_01",
   "name_key": "DISTRICT_01_NAME",
-  "schema": "gtai.city-district/1",
-  "seed": 1
+  "schema": "gtai.city-district/2",
+  "seed": 1,
+  "zone_map": {
+    "default": "mixed",
+    "rects": []
+  },
+  "zones": [
+    {
+      "big_roofs": [
+        78,
+        79,
+        80
+      ],
+      "big_share": 0.35,
+      "car_lane": 200,
+      "density_min": 0.45,
+      "density_span": 0.55,
+      "empty_share": 0.45,
+      "generic_roofs": [
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71
+      ],
+      "id": "mixed",
+      "landmark_roofs": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "landmark_share": 0.3,
+      "long_roofs": [
+        22,
+        23,
+        81
+      ],
+      "long_share": 0.3,
+      "ped_corner": 90,
+      "ped_kerb": 140,
+      "ped_plaza": 255,
+      "plaza_prop_share": 0.6,
+      "plaza_props": [
+        28,
+        33,
+        26,
+        28,
+        32,
+        29,
+        33
+      ],
+      "plaza_share": 0.12,
+      "street_keep_x": 1,
+      "water_tiles": 0
+    }
+  ]
 }
