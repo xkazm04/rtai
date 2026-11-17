@@ -79,3 +79,28 @@ FRICTION: a `-s` dev script cannot load the arena (its code names autoloads Even
 time), so a headless sim-cop counter in the arena fight needs a scene entry; dropped tonight.
 REQUEST tools: film_probe.gd could log the city sim's cops (slot, pos, mode) per tick next to the
 Fighters, so "cops that reach Rivet" in an arena-city film is a number, not an eye count.
+
+Gates on d66a666c1 (code = 39c831f52, items 1+2): lint 19/19 (at commit), full unit 2848 passed /
+0 failed / 2 skipped, scenarios 55/55 (city_chase within budget this time), parity bit-exact +
+mutation caught, native core tests 0 failed. Not run this session: evidence run.mjs (look goldens),
+reel gate, debt standalone (debt-ratchet passed inside lint), bench.
+Scratch films deleted; kept pair in gtai-masters/n18/police. Before-tree worktree
+`C:\Users\kazda\kiro\gtai-n18\police-before` (detached at 36dd26ba6, own DLLs) KEPT for later
+before/after films; remove with `git worktree remove` at the end of the night.
+
+NEXT (session 2): item 3 (heat 1 investigate), per the design above:
+1. heat.json + schema: `investigate_cops` (3), `search_s` (8), later `cars_*`, `roadblock_*`
+   (schema gtai.heat/1 has additionalProperties false: add the keys to the schema; HeatMeter reads
+   only its own keys).
+2. Sim (native people.cpp/flow.cpp + reference sim_people.gd/sim_flow.gd, together): when
+   heat_level_ >= 0, a cop not engaged walks like a ped (ped_walk path) and does not fire; engaged
+   cops (a flags bit, set by a deterministic nearest-N pick to heat_x/y when the level rises or the
+   point moves) pursue the step's target. CityHeat passes target = Rivet when seen, else last_seen
+   -> CitySystem needs a separate pursuit target from focus (police own the call site; city_system
+   step uses `target` for both the body and police: add a `police_target` used only in sim.step's
+   tgx/tgy, default = target). heat_level -1 path must stay byte-identical (parity, replay).
+3. Test first (fails before): CityWallMap-style open map, 6 cops, heat 1 at a point 30 m away:
+   exactly investigate_cops reach it within N ticks, the rest keep walking; search_s later they
+   disengage. Then parity, then a 32 px/m clip of the sandbox (film has no sandbox shot: check
+   tools/film/shots.mjs, else REQUEST tools / a dev scene).
+4. NEED director (unchanged): combat AI pit-guard nav (`enemy_motor.gd`) for the n15 frame.
