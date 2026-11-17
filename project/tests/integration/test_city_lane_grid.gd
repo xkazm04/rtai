@@ -11,10 +11,12 @@ const TEXTURES: String = "res://data/tables/city_textures.json"  # CitySystem.TE
 const NT: int = SimConst.CHUNK_TILES * SimConst.CITY_CHUNKS
 
 var _tiles: PackedByteArray = PackedByteArray()
+var _gen: CityGen = null
 
 
 func before_all() -> void:
 	var gen: CityGen = CityGen.from_tables(DISTRICT, TEXTURES)
+	_gen = gen
 	@warning_ignore("return_value_discarded")
 	_tiles.resize(NT * NT)
 	var n: int = SimConst.CHUNK_TILES
@@ -71,5 +73,17 @@ func test_every_junction_exit_is_its_own_road_or_the_edge() -> void:
 				)
 				if t != SimConst.T_VOID and t != CitySimCarRoute.road_of(dir) and bad.size() < 5:
 					bad.append("junction %d,%d exit %d is %d" % [tx, ty, dir, t])
-	assert_eq(junctions, (NT / CityGen.PERIOD) * (NT / CityGen.PERIOD))
+	assert_eq(junctions, _lattice_junctions(), "a junction on every street-lattice point kept")
 	assert_eq(bad, [] as Array[String], "no exit onto a sideways road")
+
+
+## The street lattice's points whose north-south line its zone keeps (n18: the docks drop every
+## other one, CityZone.street_keep_x; 1024 - 3 x 32 = 928 in the shipped table).
+func _lattice_junctions() -> int:
+	var count: int = 0
+	for j: int in NT / CityGen.PERIOD:
+		for i: int in NT / CityGen.PERIOD:
+			var t: Vector2i = Vector2i(i, j) * CityGen.PERIOD
+			if not DockPainter.dropped(_gen.zones.of_tile(t), t):
+				count += 1
+	return count

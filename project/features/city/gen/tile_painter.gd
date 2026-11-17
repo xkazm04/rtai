@@ -23,19 +23,43 @@ const CORNER_ROT: Array[float] = [0.0, 90.0, 270.0, 180.0]
 
 var _kerb: KerbDresser = KerbDresser.new()
 var _blocks: BlockPainter = BlockPainter.new()
+var _docks: DockPainter = DockPainter.new()
 
 
 func paint(g: CityGen, b: ChunkBuild, ti: int, tj: int) -> int:
+	var t: Vector2i = Vector2i(ti, tj)
 	var mx: int = ti % PERIOD
 	var my: int = tj % PERIOD
+	var zone: CityZone = g.zones.of_tile(t)
+	if zone.street_keep_x > 1:
+		return _docks_tile(g, b, zone, t)
 	if mx <= 2 and my <= 2:
-		return _junction(g, b, Vector2i(ti, tj))
+		return _junction(g, b, t)
 	if mx <= 2 or my <= 2:
-		return _street(g, b, Vector2i(ti, tj), my <= 2)
-	var zone: CityZone = g.zones.of_tile(Vector2i(ti, tj))
+		return _street(g, b, t, my <= 2)
 	if g.rnd(floori(float(ti) / PERIOD), floori(float(tj) / PERIOD), 0, 5) < zone.plaza_share:
-		return _plaza(g, b, Vector2i(ti, tj))
-	return _blocks.paint(g, b, Vector2i(ti, tj))
+		return _plaza(g, b, t)
+	return _blocks.paint(g, b, t)
+
+
+## A docks tile (DockPainter): water and quay first (between the piers: every road still ends only
+## at the city edge, test_city_lane_grid), then the kept streets, a dropped street line as block
+## (its east-west crossings as plain street), the long blocks' yards and warehouses.
+func _docks_tile(g: CityGen, b: ChunkBuild, zone: CityZone, t: Vector2i) -> int:
+	var wx: int = DockPainter.water_x(zone)
+	var my: int = posmod(t.y, PERIOD)
+	if wx >= 0 and t.x >= wx - 1 and my > 2:  # the east-west streets run on as piers to the edge
+		return _docks.quay(g, b, _kerb, t, t.x < wx)
+	if DockPainter.dropped(zone, t):
+		if my <= 2:
+			return _street(g, b, t, true)
+	elif posmod(t.x, PERIOD) <= 2 and my <= 2:
+		return _junction(g, b, t)
+	elif posmod(t.x, PERIOD) <= 2 or my <= 2:
+		return _street(g, b, t, my <= 2)
+	if DockPainter.is_yard(g, zone, t):
+		return _plaza(g, b, t)
+	return _docks.block(g, b, zone, t)
 
 
 static func origin(t: Vector2i) -> Vector2:
