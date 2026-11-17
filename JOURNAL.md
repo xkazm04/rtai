@@ -136,3 +136,17 @@ Open Calls so far: Dock 9 into the docks by default?; docks on the east edge vs 
   55/55, parity bit-exact (1200 steps, planted caught at 629), selftest look goldens 11/11 + block goldens 5/5
   (the zones sit outside the selftest junction's sim radius, as designed). Reel gate NOT run yet.
 NEXT: start at item 1 of the NEXT list above (quay edge); session 1 ended 00:46 with a clean tree.
+## Session 2 (2026-11-18 00:46 -> )
+- 00:50 MILESTONE item 3, commit 72a67c265: dock + glass facade styles (REQUEST 4 B, REQUEST 7 v2 A) by_name on the
+  dock roofs (86-88) and tower roofs (89-90); storeys rows take their own `bays` (4). Before/after combo 48 px/m:
+  `evidence/n18-districts/ab_facade_{dock_dock9,glass_tower}_v16_combo_*.jpg`. Looked: dock wall reads as roller
+  doors (only the ground row shows at 8.5 m x height_k 0.5), the tower wall reads as glass with lit panes.
+  Probe for texture positions: `%TEMP%/n18d/find_tex.gd` (-s script outside the tree: `Log` is not loaded there, printerr).
+- 00:54 MILESTONE commit 82557533a, generator v17: BUG found by looking: CityZone.from_row skipped `water_ground`,
+  so the docks water drew id 72 (asphalt box) since v15; the "water reads as asphalt" note of session 1 was my
+  bug, not the art. Fixed (reads CityZone.LISTS whole) + 2 tests that fail on v16; water turns 0/180 only.
+  Evidence `evidence/n18-districts/ab_water_v16_v17_combo_{32,48}ppm.jpg`: now ink ripple strokes, one heading.
+REQUEST assets: 9 WITHDRAWN (to the asset lane): the water a/b you delivered was never drawn (my loader bug, fixed
+in 82557533a). In game at 32 px/m it now reads as dark water with warm ripple glints; no redraw needed. If you have
+time, the plain-water tile drawn by example from the quay tiles' water (your it470 note) is still welcome, so
+the open water and the quay edge water match.
