@@ -6,11 +6,10 @@ extends RefCounted
 ## roofs in rows, one container-yard row per block (or a whole yard block under the zone's
 ## plaza_share), a shed at the long block's east end; along the city's east edge a quay apron
 ## and water_tiles of water. Today's art recombined until the asset lane's docks set lands
-## (JOURNAL REQUEST assets 1-5): the water draws the plain asphalt box (72) as a placeholder.
+## (JOURNAL REQUEST assets 1-5); the water draws the zone's water_ground, checkered, turned.
 
 const PERIOD: int = CityGen.PERIOD
 const T_PAVING: int = 13
-const T_WATER: int = 72
 const T_BOLLARD: int = 37
 const SHED_U: int = 12
 const BOLLARD_V_M: Array[float] = [1.5, 4.0, 6.5]
@@ -68,7 +67,10 @@ func block(g: CityGen, b: ChunkBuild, zone: CityZone, t: Vector2i) -> int:
 func quay(g: CityGen, b: ChunkBuild, kerb: KerbDresser, t: Vector2i, apron: bool) -> int:
 	var o: Vector2 = TilePainter.origin(t)
 	if not apron:
-		b.add(ChunkBuild.L_GROUND, T_WATER, o + Vector2(4.0, 4.0), 0.0)
+		var water: Array[int] = g.zones.of_tile(t).water_ground
+		var turn_w: float = deg_to_rad(90.0 * int(g.rnd(t.x, t.y, 0, 27) * 4.0))
+		var tex: int = water[posmod(t.x + t.y, water.size())]
+		b.add(ChunkBuild.L_GROUND, tex, o + Vector2(4.0, 4.0), turn_w)
 		b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_BUILD)
 		return SimConst.T_BLOCK
 	var turn: float = deg_to_rad(90.0 * int(g.rnd(t.x, t.y, 0, 26) * 4.0))

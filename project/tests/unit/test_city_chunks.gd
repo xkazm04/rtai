@@ -15,8 +15,10 @@ func before_all() -> void:
 func test_tables_load() -> void:
 	assert_not_null(_gen)
 	assert_eq(_gen.district_id, "district_01")
-	var why: String = "ids 72-85: box, zebra, eraser, story paint, 2x2, long roof, 12 m kerb"
-	assert_eq(_gen.sizes.size(), 86, why)
+	var why: String = "ids 72-85: box, zebra, eraser, story paint, 2x2, long roof, 12 m kerb;"
+	why += " 86-92 (n18):"
+	why += " dock warehouse a/b, dock shed, downtown tower a/b, dock water a/b"
+	assert_eq(_gen.sizes.size(), 93, why)
 
 
 func test_generation_is_deterministic() -> void:

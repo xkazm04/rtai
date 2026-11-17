@@ -190,6 +190,15 @@
             "minimum": 1,
             "type": "integer"
           },
+          "water_ground": {
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
           "water_tiles": {
             "maximum": 5,
             "minimum": 0,

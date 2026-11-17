@@ -947,6 +947,83 @@
         8
       ],
       "solid": false
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_dock_warehouse.png",
+      "class": "building",
+      "id": 86,
+      "name": "roof_dock_warehouse",
+      "size_m": [
+        16.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_dock_warehouse_b.png",
+      "class": "building",
+      "id": 87,
+      "name": "roof_dock_warehouse_b",
+      "size_m": [
+        16.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_dock_shed.png",
+      "class": "building",
+      "id": 88,
+      "name": "roof_dock_shed",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_down_tower.png",
+      "class": "building",
+      "id": 89,
+      "name": "roof_down_tower",
+      "size_m": [
+        16.4,
+        16.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_down_tower_b.png",
+      "class": "building",
+      "id": 90,
+      "name": "roof_down_tower_b",
+      "size_m": [
+        16.4,
+        16.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/ground/dock_water.png",
+      "class": "ground",
+      "id": 91,
+      "name": "dock_water",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/d5/ground/dock_water_b.png",
+      "class": "ground",
+      "id": 92,
+      "name": "dock_water_b",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
     }
   ]
 }

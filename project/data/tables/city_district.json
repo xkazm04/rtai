@@ -95,8 +95,8 @@
       "doc": "The supply chain on the east edge (follow-the-money): long warehouse blocks over every other north-south street (street_keep_x 2), one container-yard row per block and whole yard blocks on plaza_share, a quay apron and 3 tiles of water at the city's edge, few people. Roofs today's art recombined: the warehouse and T1 long roofs, sawtooth / solar / tank sheds, the LOCAL 9 UNION hall now and then.",
       "empty_share": 0,
       "generic_roofs": [
+        88,
         67,
-        68,
         70
       ],
       "id": "docks",
@@ -105,8 +105,8 @@
       ],
       "landmark_share": 0.08,
       "long_roofs": [
-        23,
-        81
+        86,
+        87
       ],
       "long_share": 1,
       "ped_corner": 30,
@@ -122,10 +122,16 @@
       ],
       "plaza_share": 0.2,
       "street_keep_x": 2,
+      "water_ground": [
+        91,
+        92
+      ],
       "water_tiles": 3
     },
     {
       "big_roofs": [
+        89,
+        90,
         78,
         79
       ],

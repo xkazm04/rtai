@@ -39,6 +39,26 @@
       "height_m": 8.5,
       "style": "shop"
     },
+    "roof_dock_shed": {
+      "height_m": 7,
+      "style": "shop"
+    },
+    "roof_dock_warehouse": {
+      "height_m": 8.5,
+      "style": "shop"
+    },
+    "roof_dock_warehouse_b": {
+      "height_m": 8.5,
+      "style": "shop"
+    },
+    "roof_down_tower": {
+      "height_m": 24,
+      "style": "tall"
+    },
+    "roof_down_tower_b": {
+      "height_m": 21,
+      "style": "tall"
+    },
     "roof_sawtooth": {
       "height_m": 8.5,
       "style": "shop"

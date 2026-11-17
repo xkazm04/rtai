@@ -18,6 +18,10 @@ const FLOATS: Array[String] = [
 	"density_span",
 ]
 
+const LISTS: Array[String] = [
+	"landmark_roofs", "generic_roofs", "big_roofs", "long_roofs", "plaza_props", "water_ground"
+]
+
 var id: StringName = &"mixed"
 ## Block-level shares (a seeded draw per block or tile, under the share = yes).
 var plaza_share: float = 0.12
@@ -45,8 +49,10 @@ var density_span: float = 0.55
 ## Keep every n-th north-south street line (1 = all). 2 merges each pair of blocks across the
 ## dropped line into one long block (the docks' warehouse rows).
 var street_keep_x: int = 1
-## Tiles of quay apron + water at the city's east edge (0 = none; the docks).
+## Tiles of quay apron + water at the city's east edge (0 = none; the docks), and the water's
+## ground art (city_textures ids, checkered by tile; 72, the plain asphalt box, until art lands).
 var water_tiles: int = 0
+var water_ground: Array[int] = [72]
 
 
 static func from_row(row: Dictionary) -> CityZone:
