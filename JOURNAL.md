@@ -58,3 +58,24 @@ drain one level per drain_ticks unseen; struck survivor is no kill; native == re
 reset). Before: CityHeat/set_heat did not exist (the file fails to compile). Parity bit-exact,
 city_replay + replay_60s identical with heat in the state hash.
 MILESTONE item 2 (sim input + sandbox source). No clip yet: nothing reads the level until item 3.
+
+### Item 1 film (00:25-00:41)
+Before tree: `C:\Users\kazda\kiro\gtai-n18\police-before` (git worktree --detach at 36dd26ba6,
+tools/dev/wt_init.mjs from this tree, then its own `scons` DLLs: film.mjs refuses --rev when native
+differs). `film.mjs city --ppm=32 --stills=250,450,650,850,1150`, before (--tree=police-before) and
+after (this tree at 39c831f52): both PASS, t650 IDENTICAL.
+FINDING: the four cops at the wall's north foot in the n15 street fight are NOT city-sim cops. The
+film's probe.json at t650 names them hostiles 3001-3004 (cop/head_cap, helmet, helmet, swat) at
+y 530.3 with Rivet at 527.5,535.0: arena pit guards (Fighters), moved by the combat enemy AI
+(`features/combat/ai/enemy_motor.gd` arrive(): a straight steer, no path round walls). The scout's
+hypothesis (sim_people.gd) was a real defect too, proven by the unit repro (never -> tick 617/615),
+but it is not the n15 frame. Count of cops reaching Rivet in the film: unchanged (0 of those 4
+before and after, by eye at t650; no per-tick number: the probe logs only Fighters).
+NEED director: `features/combat/ai/enemy_motor.gd` (no lane owns combat AI tonight): pit guards
+need the same rule (straight only with sight on the arena/city solid cells, else a path round the
+wall's end); the n15 defect stays OPEN there. Evidence filed: gtai-masters/n18/police/frames.json
+(2 entries, the pair + probe).
+FRICTION: a `-s` dev script cannot load the arena (its code names autoloads Events/Log at compile
+time), so a headless sim-cop counter in the arena fight needs a scene entry; dropped tonight.
+REQUEST tools: film_probe.gd could log the city sim's cops (slot, pos, mode) per tick next to the
+Fighters, so "cops that reach Rivet" in an arena-city film is a number, not an eye count.
