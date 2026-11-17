@@ -43,6 +43,8 @@ void CityCore::init(int64_t seed) {
 	ff_ox_ = ff_oy_ = ff_tx_ = ff_ty_ = 0;
 	map_version_ = ff_map_version_ = 0;
 	ff_ticks_ = 0;
+	heat_level_ = -1;
+	heat_x_ = heat_y_ = 0.0;
 	std::memset(ff_stats_, 0, sizeof(ff_stats_));
 }
 

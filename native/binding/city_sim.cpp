@@ -81,6 +81,10 @@ void CitySim::scare(double x, double y) { core_->scare(x, y); }
 
 void CitySim::set_car_state(int i, int state) { core_->set_car_state(i, state); }
 
+void CitySim::set_heat(int level, double x, double y) { core_->set_heat(level, x, y); }
+
+int CitySim::heat_level() const { return core_->heat_level(); }
+
 void CitySim::set_obstacles(const PackedFloat64Array &xy) {
 	core_->set_obstacles(xy.ptr(), (int)(xy.size() / 2));
 }
@@ -251,6 +255,8 @@ void CitySim::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("scare", "x", "y"), &CitySim::scare);
 	ClassDB::bind_method(D_METHOD("set_car_state", "i", "state"), &CitySim::set_car_state);
 	ClassDB::bind_method(D_METHOD("set_obstacles", "xy"), &CitySim::set_obstacles);
+	ClassDB::bind_method(D_METHOD("set_heat", "level", "x", "y"), &CitySim::set_heat);
+	ClassDB::bind_method(D_METHOD("heat_level"), &CitySim::heat_level);
 	ClassDB::bind_method(D_METHOD("fire", "x", "y", "vx", "vy", "ttl"), &CitySim::fire);
 	ClassDB::bind_method(D_METHOD("step", "dt", "camx", "camy", "tgx", "tgy"), &CitySim::step);
 	ClassDB::bind_method(D_METHOD("get_counters"), &CitySim::get_counters);

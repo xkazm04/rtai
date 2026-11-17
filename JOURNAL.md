@@ -27,3 +27,34 @@ planted mutation caught at step 629. city_sim_ref.gd hit the 200-line cap: tier 
 `sim_tier.gd` (CitySimTier, no behaviour change, parity same).
 MILESTONE item 1 code + tests.
 FRICTION: Windows python text-mode writes CRLF; use newline='' (gate quick catches it).
+
+### Item 2: heat as a sim input (in progress)
+DECISION police/heat-input: the command is `CitySimBackend.set_heat(level, x, y)` (native
+CityCore::set_heat + binding, reference CitySimFlow.set_heat), a sim input set before step() and
+kept, like set_obstacles. Level -1 is the default and means "pre-n18 police" (every cop pursues
+the step's target, as today), so every boot that never calls set_heat (quest 1, arena city, the
+n15 street fight, parity, replay) is unchanged until it opts in. It needs no tape entry of its own:
+CityHeat derives it each tick from replayed state and events (SIM-05 holds by construction) and
+writes level + last-seen into the World state hash (write_state).
+Sandbox source: `features/police/city_heat.gd` (CityHeat, a WorldSystem after CitySystem and
+VehicleService): seen = a live sim cop within heat.json sight_m with CitySimBackend.sight to Rivet
+(the item 1 sense); violence = pedestrian_struck(killed) or actor_killed by RIVET_ACTOR_ID; a tick
+with violence while seen raises one level; HeatMeter drains unseen as on quest 1.
+Cost note for item 7: cop_sees() scans sim.snapshot() each tick (GDScript); if it shows in the
+bench, move "seen" into the native cop step (a counter) instead.
+
+Item 3 design (next): the sim treats heat >= 0 as "living police". Heat 0: cops walk their
+sidewalk like peds (ped_walk), no pursuit, no fire. Heat >= 1: the N cops nearest the last-seen
+point (heat.json `investigate_cops`) are engaged (a flags bit), path on the flow field to the
+step's target, which CityHeat passes as Rivet when seen, else the last-seen point; they search
+`search_s` there (t1 timer) and drop back to walking. Seen again: re-engage (last-seen moves).
+Gates on 1106c8b1b (item 1): full unit 2842 passed / 0 failed; scenarios 54/55, city_chase missed
+the 2 ms nav budget on one 3.8 ms flow-field spike (last build 150 us; flow_build is untouched by
+item 1) and passed when re-run alone at 00:18 -> CONTENDED noise, not the change.
+Item 2 landed: set_heat on both backends + CityHeat on the sandbox boot (`boot/world.gd`, one
+line). Tests `tests/unit/test_city_heat.gd` 6 pass (cop sees at 3 m, not beyond sight_m, not
+through the wall; witnessed kill -> heat 1 + last-seen + sim heat_level 1; unwitnessed kill -> 0;
+drain one level per drain_ticks unseen; struck survivor is no kill; native == reference clamp and
+reset). Before: CityHeat/set_heat did not exist (the file fails to compile). Parity bit-exact,
+city_replay + replay_60s identical with heat in the state hash.
+MILESTONE item 2 (sim input + sandbox source). No clip yet: nothing reads the level until item 3.

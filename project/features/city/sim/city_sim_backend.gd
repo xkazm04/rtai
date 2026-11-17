@@ -27,6 +27,11 @@ extends RefCounted
 ## Sim input: points outside the sim (service cars' hull circles, x y pairs, at most
 ## SimConst.OBST_MAX) that traffic brakes for like a car ahead; kept until the next call.
 @abstract func set_obstacles(xy: PackedFloat64Array) -> void
+## n18 police: the wanted level (0-3; -1 = pre-n18 police, the default) and the point a cop last
+## saw Rivet. A sim input set before step() and kept until the next call.
+@abstract func set_heat(level: int, x: float, y: float) -> void
+## The level set_heat() last stored (clamped to -1..3).
+@abstract func heat_level() -> int
 ## One fixed tick (SIM-01): dt is SimClock.TICK_DT; cam is the bubble centre; tg the pursuit target.
 @abstract func step(dt: float, camx: float, camy: float, tgx: float, tgy: float) -> void
 @abstract func get_counters() -> PackedInt32Array

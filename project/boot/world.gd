@@ -58,6 +58,7 @@ func _register_features(with_views: bool) -> void:
 	var vworld: CityVehicleWorld = CityVehicleWorld.new(city)
 	vworld.yield_to_rivet = LaunchArgs.has("--traffic-yields")  # d9 seams: Call 4 (dev, filming)
 	vehicles.world = vworld
+	add_system(CityHeat.new(city))  # n18 police: heat in the city, after city and vehicles
 	if with_views and DisplayServer.get_name() != "headless":
 		var view: CityView = CityView.new()
 		if LaunchArgs.has("--look"):

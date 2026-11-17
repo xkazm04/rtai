@@ -78,6 +78,16 @@ public:
 		for (int k = 0; k < obst_n_ * 2; k++) obst_[k] = xy[k];
 	}
 
+	// Heat (n18 police): the game's wanted level and the point a cop last saw Rivet, a sim input
+	// set before step() and kept until the next call. -1 (the default, every boot that never
+	// calls it) keeps the pre-n18 police: every cop pursues the step's target.
+	void set_heat(int level, double x, double y) {
+		heat_level_ = level < -1 ? -1 : (level > 3 ? 3 : level);
+		heat_x_ = x;
+		heat_y_ = y;
+	}
+	int heat_level() const { return heat_level_; }
+
 	// step.cpp
 	void step(double dt, double camx, double camy, double tgx, double tgy);
 
@@ -148,6 +158,8 @@ private:
 	uint32_t map_version_ = 0, ff_map_version_ = 0;
 	int64_t ff_ticks_ = 0;
 	int32_t ff_stats_[FS_LEN] = {};
+	int heat_level_ = -1;
+	double heat_x_ = 0.0, heat_y_ = 0.0;
 
 	double cx_ = 0.0, cy_ = 0.0;  // contact scratch position (crowd / solid)
 	double body_[BD_LEN] = {}, bx_ = 0.0, by_ = 0.0;  // the player body (body.cpp)

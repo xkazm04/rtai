@@ -13,6 +13,10 @@ const NY: Array[int] = [0, 1, 0, -1, 1, 1, -1, -1]
 var dx: float = 0.0
 var dy: float = 0.0
 var stats: PackedInt32Array = SimArrays.i32(SimConst.FS_LEN, 0)
+## n18 police heat (CityCore::set_heat): -1 = pre-n18 police; the point a cop last saw Rivet.
+var heat_level: int = -1
+var heat_x: float = 0.0
+var heat_y: float = 0.0
 var _s: CitySimState
 var _dist: PackedInt32Array = SimArrays.i32(SimConst.FF_W * SimConst.FF_W, SimConst.FF_UNREACHED)
 var _queue: PackedInt32Array = SimArrays.i32(SimConst.FF_W * SimConst.FF_W, 0)
@@ -39,6 +43,15 @@ func reset() -> void:
 	_map_version = 0
 	_ticks = 0
 	stats.fill(0)
+	heat_level = -1
+	heat_x = 0.0
+	heat_y = 0.0
+
+
+func set_heat(level: int, x: float, y: float) -> void:
+	heat_level = clampi(level, -1, 3)
+	heat_x = x
+	heat_y = y
 
 
 func update(tgx: float, tgy: float) -> void:

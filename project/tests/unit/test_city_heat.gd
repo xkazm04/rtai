@@ -1,0 +1,79 @@
+extends GutTest
+## n18 police item 2: heat in the streamed city (CityHeat). A sim cop sees Rivet within sight_m
+## with a clear line on the cell map; a kill while seen raises heat; unseen, heat drains and a kill
+## does not raise it. Map: CityWallMap (wall x 300..302).
+
+const COP: Vector2 = Vector2(296.5, 290.5)
+
+var _bus: EventBus
+var _city: CitySystem
+var _heat: CityHeat
+
+
+func before_each() -> void:
+	_bus = autofree(EventBus.new())
+	_city = CitySystem.new(false)
+	_city.sim = CityWallMap.walled(true)
+	assert_gte(CityWallMap.spawn_cop(_city.sim, COP), 0)
+	_city.sim.step(SimClock.TICK_DT, COP.x, COP.y, COP.x, COP.y)
+	_heat = CityHeat.new(_city)
+	var ctx: WorldContext = WorldContext.new(_bus, null, null, null)
+	_heat.setup(ctx)
+
+
+func test_a_cop_sees_near_and_in_the_clear_only() -> void:
+	var r: float = _heat.meter.sight_m
+	assert_true(CityHeat.cop_sees(_city.sim, COP + Vector2(0, 3), r), "3 m, open sidewalk")
+	assert_false(CityHeat.cop_sees(_city.sim, COP + Vector2(0, r + 2.0), r), "beyond sight_m")
+	assert_false(CityHeat.cop_sees(_city.sim, Vector2(304.5, 290.5), r), "8 m, wall between")
+
+
+func test_a_kill_in_sight_raises_heat_and_marks_the_last_seen_point() -> void:
+	_city.target = COP + Vector2(0, 4)
+	_bus.pedestrian_struck.emit(3, true)
+	_heat.step(0, TickInput.new())
+	assert_eq(_heat.meter.level, 1, "a witnessed kill: heat 1")
+	assert_true(_heat.ever_seen)
+	assert_eq(_heat.last_seen, _city.target)
+	assert_eq(_city.sim.heat_level(), 1, "the level went into the sim (set_heat)")
+
+
+func test_a_kill_behind_the_wall_raises_nothing_and_heat_drains_unseen() -> void:
+	_city.target = Vector2(304.5, 290.5)
+	_bus.pedestrian_struck.emit(3, true)
+	_heat.step(0, TickInput.new())
+	assert_eq(_heat.meter.level, 0, "nobody saw it")
+	_heat.meter.set_level(2)
+	for t: int in _heat.meter.drain_ticks:
+		_heat.step(t, TickInput.new())
+	assert_eq(_heat.meter.level, 1, "a level drains per drain_s_per_level out of sight")
+	assert_false(_heat.ever_seen)
+
+
+func test_a_struck_survivor_is_not_a_kill() -> void:
+	_city.target = COP + Vector2(0, 4)
+	_bus.pedestrian_struck.emit(3, false)
+	_heat.step(0, TickInput.new())
+	assert_eq(_heat.meter.level, 0)
+
+
+func test_set_heat_is_clamped_and_reset_by_init() -> void:
+	var sim: CitySimRef = CityWallMap.walled(true)
+	assert_eq(sim.heat_level(), -1, "default: the pre-n18 police")
+	sim.set_heat(7, 1.0, 2.0)
+	assert_eq(sim.heat_level(), 3)
+	sim.init(7)
+	assert_eq(sim.heat_level(), -1)
+
+
+func test_the_native_backend_takes_the_same_heat_command() -> void:
+	if not CitySimNative.available():
+		pending("no native library in this build")
+		return
+	var sim: CitySimBackend = CitySimNative.new()
+	sim.init(7)
+	assert_eq(sim.heat_level(), -1, "default: the pre-n18 police")
+	sim.set_heat(7, 1.0, 2.0)
+	assert_eq(sim.heat_level(), 3, "clamped as the reference clamps")
+	sim.init(7)
+	assert_eq(sim.heat_level(), -1, "init resets it")

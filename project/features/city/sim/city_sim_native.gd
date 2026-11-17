@@ -97,6 +97,15 @@ func set_obstacles(xy: PackedFloat64Array) -> void:
 	_call(&"set_obstacles", [xy])
 
 
+func set_heat(level: int, x: float, y: float) -> void:
+	_call(&"set_heat", [level, x, y])
+
+
+func heat_level() -> int:
+	var h: Variant = _call(&"heat_level", [])
+	return h if h is int else -1
+
+
 func set_car_state(i: int, state: int) -> void:
 	_call(&"set_car_state", [i, state])
 
