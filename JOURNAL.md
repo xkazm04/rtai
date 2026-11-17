@@ -129,5 +129,6 @@ NEXT (session 2, in order):
    at 20 m/s ~ 37 s), 32 px/m, encode with ffmpeg; 48 px/m stills per zone.
 7. Before REPORT: mutate tools on dock_painter.gd / city_places.gd (`tools/mutate/mutate.mjs`), full gates
    (lint, unit, scenarios, evidence/run.mjs parity + look goldens, reel gate).
+Gates on b42df1da4 (00:38): full lint 19/19, full unit 2851 passed / 0 failed, scenarios 55/55 (on 5c9a0bd45, code-identical). NOT yet run: evidence/run.mjs (parity + look goldens), reel gate.
 Open Calls so far: Dock 9 into the docks by default?; docks on the east edge vs another edge; downtown size
 (25 chunks) and landmark density; the tower roofs' orange hazard stripes vs the colour law; water v2 (REQUEST 9).
