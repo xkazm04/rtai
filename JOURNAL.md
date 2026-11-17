@@ -132,3 +132,7 @@ NEXT (session 2, in order):
 Gates on b42df1da4 (00:38): full lint 19/19, full unit 2851 passed / 0 failed, scenarios 55/55 (on 5c9a0bd45, code-identical). NOT yet run: evidence/run.mjs (parity + look goldens), reel gate.
 Open Calls so far: Dock 9 into the docks by default?; docks on the east edge vs another edge; downtown size
 (25 chunks) and landmark density; the tower roofs' orange hazard stripes vs the colour law; water v2 (REQUEST 9).
+- 00:45 `tools/evidence/run.mjs --no-bench --no-release` on 9b2a6f996: PASS lint 19/19, unit 2851/0, scenarios
+  55/55, parity bit-exact (1200 steps, planted caught at 629), selftest look goldens 11/11 + block goldens 5/5
+  (the zones sit outside the selftest junction's sim radius, as designed). Reel gate NOT run yet.
+NEXT: start at item 1 of the NEXT list above (quay edge); session 1 ended 00:46 with a clean tree.
