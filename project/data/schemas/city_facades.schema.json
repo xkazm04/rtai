@@ -166,6 +166,11 @@
                   "minimum": 0,
                   "type": "number"
                 },
+                "bays": {
+                  "description": "the storey sheet's own bay count (else the style's bays)",
+                  "minimum": 1,
+                  "type": "integer"
+                },
                 "ground_h": {
                   "minimum": 0,
                   "type": "number"

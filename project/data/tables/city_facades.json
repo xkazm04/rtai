@@ -41,23 +41,23 @@
     },
     "roof_dock_shed": {
       "height_m": 7,
-      "style": "shop"
+      "style": "dock"
     },
     "roof_dock_warehouse": {
       "height_m": 8.5,
-      "style": "shop"
+      "style": "dock"
     },
     "roof_dock_warehouse_b": {
       "height_m": 8.5,
-      "style": "shop"
+      "style": "dock"
     },
     "roof_down_tower": {
       "height_m": 24,
-      "style": "tall"
+      "style": "glass"
     },
     "roof_down_tower_b": {
       "height_m": 21,
-      "style": "tall"
+      "style": "glass"
     },
     "roof_sawtooth": {
       "height_m": 8.5,
@@ -182,6 +182,34 @@
   },
   "schema": "gtai.city-facades/1",
   "styles": {
+    "dock": {
+      "art": "res://features/city/art/view/<art>/facade_shop.png",
+      "bay_m": 4.1,
+      "bays": 3,
+      "storeys": {
+        "p70": {
+          "art": "res://features/city/art/view/p70/facade_dock_storeys.png",
+          "bay_m": 4.1,
+          "bays": 4,
+          "ground_h": 124,
+          "upper_h": 80
+        }
+      }
+    },
+    "glass": {
+      "art": "res://features/city/art/view/<art>/facade_tall.png",
+      "bay_m": 4.2,
+      "bays": 3,
+      "storeys": {
+        "p70": {
+          "art": "res://features/city/art/view/p70/facade_glass_storeys.png",
+          "bay_m": 3.6,
+          "bays": 4,
+          "ground_h": 128,
+          "upper_h": 72
+        }
+      }
+    },
     "shop": {
       "art": "res://features/city/art/view/<art>/facade_shop.png",
       "bay_m": 4.1,

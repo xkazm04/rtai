@@ -28,7 +28,8 @@ func add_style(row: Dictionary, art: String, fallback: Dictionary) -> void:
 		var upper_h: float = rows["upper_h"]
 		var ground_h: float = rows["ground_h"]
 		var sheet: Texture2D = load(str(rows["art"]))
-		storeys = FacadeStoreys.new(sheet, bays, upper_h, ground_h)
+		var sheet_bays: int = rows.get("bays", bays)
+		storeys = FacadeStoreys.new(sheet, sheet_bays, upper_h, ground_h)
 	_strips.append(PropCards.art_texture(str(row["art"]), art, fallback))
 	_bays.append(bays)
 	_bay_px.append(bay_m * SimConst.PX_PER_M)
