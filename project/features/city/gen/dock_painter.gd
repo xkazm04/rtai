@@ -68,7 +68,7 @@ func quay(g: CityGen, b: ChunkBuild, kerb: KerbDresser, t: Vector2i, apron: bool
 	var o: Vector2 = TilePainter.origin(t)
 	if not apron:
 		var water: Array[int] = g.zones.of_tile(t).water_ground
-		var turn_w: float = deg_to_rad(90.0 * int(g.rnd(t.x, t.y, 0, 27) * 4.0))
+		var turn_w: float = PI * int(g.rnd(t.x, t.y, 0, 27) * 2.0)  # 0 / 180: ripples keep one heading
 		var tex: int = water[posmod(t.x + t.y, water.size())]
 		b.add(ChunkBuild.L_GROUND, tex, o + Vector2(4.0, 4.0), turn_w)
 		b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_BUILD)

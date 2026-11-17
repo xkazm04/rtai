@@ -66,9 +66,7 @@ static func from_row(row: Dictionary) -> CityZone:
 		if row.has(key):
 			var f: float = row[key]
 			z.set(key, int(f))
-	for key: String in [
-		"landmark_roofs", "generic_roofs", "big_roofs", "long_roofs", "plaza_props"
-	]:
+	for key: String in LISTS:
 		if row.has(key):
 			var values: Array = row[key]
 			z.set(key, ints(values))

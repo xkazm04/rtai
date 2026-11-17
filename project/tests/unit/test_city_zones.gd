@@ -56,3 +56,24 @@ func test_the_shipped_table_reaches_the_generator() -> void:
 	assert_not_null(gen)
 	assert_gt(gen.zones.rows.size(), 0)
 	assert_ne(gen.zones.index_of(&"mixed"), -1)
+
+
+func test_every_list_key_a_row_names_reaches_its_zone() -> void:
+	var row: Dictionary = {"id": "x"}
+	var i: int = 0
+	for key: String in CityZone.LISTS:
+		row[key] = [100.0 + i, 101.0 + i]
+		i += 2
+	var z: CityZone = CityZone.from_row(row)
+	i = 0
+	for key: String in CityZone.LISTS:
+		var got: Array[int] = z.get(key)
+		assert_eq(got, [100 + i, 101 + i] as Array[int], key)
+		i += 2
+
+
+func test_the_docks_water_draws_its_own_art() -> void:
+	var gen: CityGen = CityGen.from_tables(DISTRICT, "res://data/tables/city_textures.json")
+	var docks: CityZone = gen.zones.rows[gen.zones.index_of(&"docks")]
+	assert_false(docks.water_ground.has(72), "72 is the plain asphalt box, not water")
+	assert_gt(docks.water_ground.size(), 0)
