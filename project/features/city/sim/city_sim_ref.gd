@@ -89,7 +89,7 @@ func set_car_state(i: int, state: int) -> void:
 func step(dt: float, camx: float, camy: float, tgx: float, tgy: float) -> void:
 	_s.time += dt
 	_body.clear_step()
-	_tier(dt, camx, camy)
+	CitySimTier.tier(_s, dt, camx, camy)
 	_h.build(camx, camy)
 	_flow.update(tgx, tgy)
 	for i: int in SimConst.CAP:
@@ -155,33 +155,8 @@ func flow_dist(x: float, y: float) -> int:
 	return _flow.dist(x, y)
 
 
-## Despawns dead bodies after 8 s (or at once in tier B) and re-tiers everyone by distance.
-func _tier(dt: float, camx: float, camy: float) -> void:
-	var ra2: float = _s.ra * _s.ra
-	var rb2: float = _s.rb * _s.rb
-	for i: int in SimConst.CAP:
-		if _s.alive[i] == 0:
-			continue
-		var k: int = _s.kind[i]
-		if (k == SimConst.K_PED or k == SimConst.K_COP) and _s.mode[i] == SimConst.M_DEAD:
-			_s.t2[i] += dt
-			if _s.t2[i] > 8.0 or _s.tier[i] == 1:
-				_s.kill(i)
-				continue
-		var ddx: float = _s.px[i] - camx
-		var ddy: float = _s.py[i] - camy
-		var d2: float = ddx * ddx + ddy * ddy
-		if (_s.flags[i] & SimConst.F_PROMOTED) != 0:
-			if d2 > rb2 * 2.56:
-				_s.kill(i)
-				continue
-			_s.tier[i] = 0
-		elif d2 < ra2:
-			_s.tier[i] = 0
-		elif d2 < rb2:
-			_s.tier[i] = 1
-		else:
-			_s.kill(i)
+func sight(x0: float, y0: float, x1: float, y1: float) -> bool:
+	return _flow.sight(x0, y0, x1, y1)
 
 
 func _count() -> void:

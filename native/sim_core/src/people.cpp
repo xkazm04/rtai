@@ -153,10 +153,12 @@ void CityCore::cop(int i, double dt, double tgx, double tgy) {
 		dx = ax / d;
 		dy = ay / d;
 	}
-	// move along the flow field (WLD-09); aim and shoot straight at the target
+	// move along the flow field (WLD-09); aim and shoot straight at the target. Straight steer
+	// and the 7 m stand-off only near and in sight on the cell map (n18: no pressing into walls).
 	double mx = dx, my = dy;
-	if (d > FF_NEAR_M) flow_dir(x, y, mx, my);
-	double spd = d > 7.0 ? 3.4 : 0.0;
+	bool see = d <= FF_NEAR_M && sight(x, y, tgx, tgy);
+	if (!see) flow_dir(x, y, mx, my);
+	double spd = (d > 7.0 || !see) ? 3.4 : 0.0;
 	t2_[i] -= dt;
 	t1_[i] -= dt;
 	if (d < 20.0 && t2_[i] <= 0.0) {

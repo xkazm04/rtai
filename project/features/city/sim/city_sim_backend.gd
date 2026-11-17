@@ -50,3 +50,5 @@ extends RefCounted
 @abstract func flow_stats() -> PackedInt32Array
 ## Flow-field distance in cells from (x, y) to the pursuit target, or -1.
 @abstract func flow_dist(x: float, y: float) -> int
+## Line of sight on the 1 m cell map: every cell strictly between the two points' cells walkable.
+@abstract func sight(x0: float, y0: float, x1: float, y1: float) -> bool

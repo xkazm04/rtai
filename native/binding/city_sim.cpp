@@ -232,6 +232,10 @@ PackedInt32Array CitySim::flow_stats() const {
 
 int CitySim::flow_dist(double x, double y) const { return core_->flow_dist(x, y); }
 
+bool CitySim::sight(double x0, double y0, double x1, double y1) const {
+	return core_->sight(x0, y0, x1, y1);
+}
+
 void CitySim::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("init", "seed"), &CitySim::init);
 	ClassDB::bind_method(D_METHOD("set_radii", "ra", "rb", "riot"), &CitySim::set_radii);
@@ -264,4 +268,5 @@ void CitySim::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_person_px", "px"), &CitySim::set_person_px);
 	ClassDB::bind_method(D_METHOD("get_variants"), &CitySim::get_variants);
 	ClassDB::bind_method(D_METHOD("flow_dist", "x", "y"), &CitySim::flow_dist);
+	ClassDB::bind_method(D_METHOD("sight", "x0", "y0", "x1", "y1"), &CitySim::sight);
 }

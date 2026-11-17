@@ -148,3 +148,37 @@ func _police_alive() -> bool:
 		if _s.alive[i] != 0 and (k == SimConst.K_COP or k == SimConst.K_PCAR):
 			return true
 	return false
+
+
+## Line of sight on the 1 m cell map (n18 police item 1), op for op flow.cpp sight(): an integer
+## walk over the cells between (x0, y0)'s cell and (x1, y1)'s (between cell centres; a corner
+## crossing checks both side cells). True when every cell strictly between the ends is walkable.
+func sight(x0: float, y0: float, x1: float, y1: float) -> bool:
+	var cx: int = floori(x0)
+	var cy: int = floori(y0)
+	var ex: int = floori(x1)
+	var ey: int = floori(y1)
+	var nx: int = absi(ex - cx)
+	var ny: int = absi(ey - cy)
+	var sx: int = 1 if ex > cx else -1
+	var sy: int = 1 if ey > cy else -1
+	var ix: int = 0
+	var iy: int = 0
+	while ix < nx or iy < ny:
+		var dec: int = (1 + 2 * ix) * ny - (1 + 2 * iy) * nx
+		if dec == 0:
+			if not _walkable(cx + sx, cy) or not _walkable(cx, cy + sy):
+				return false
+			cx += sx
+			cy += sy
+			ix += 1
+			iy += 1
+		elif dec < 0:
+			cx += sx
+			ix += 1
+		else:
+			cy += sy
+			iy += 1
+		if (ix < nx or iy < ny) and not _walkable(cx, cy):
+			return false
+	return true

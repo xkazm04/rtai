@@ -147,6 +147,11 @@ func flow_dist(x: float, y: float) -> int:
 	return d if d is int else -1
 
 
+func sight(x0: float, y0: float, x1: float, y1: float) -> bool:
+	var s: Variant = _call(&"sight", [x0, y0, x1, y1])
+	return s if s is bool else false
+
+
 func set_rig_slots(slots: PackedInt32Array) -> void:
 	_call(&"set_rig_slots", [slots])
 

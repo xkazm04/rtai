@@ -56,6 +56,7 @@ public:
 	PackedByteArray get_variants() const;
 	PackedInt32Array flow_stats() const;
 	int flow_dist(double x, double y) const;
+	bool sight(double x0, double y0, double x1, double y1) const;
 
 protected:
 	static void _bind_methods();

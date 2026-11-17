@@ -63,13 +63,14 @@ func cop(i: int, dt: float, tgx: float, tgy: float) -> void:
 	if d > 0.001:
 		_dx = ax / d
 		_dy = ay / d
-	# move along the flow field (WLD-09); aim and shoot straight at the target
+	# flow field (WLD-09) unless near and in sight on the cell map (n18); aim and shoot straight
 	var mx: float = _dx
 	var my: float = _dy
-	if d > SimConst.FF_NEAR_M and _flow.dir(x, y):
+	var see: bool = d <= SimConst.FF_NEAR_M and _flow.sight(x, y, tgx, tgy)
+	if not see and _flow.dir(x, y):
 		mx = _flow.dx
 		my = _flow.dy
-	_spd = 3.4 if d > 7.0 else 0.0
+	_spd = 3.4 if (d > 7.0 or not see) else 0.0
 	_s.t2[i] -= dt
 	_s.t1[i] -= dt
 	if d < 20.0 and _s.t2[i] <= 0.0:
@@ -96,9 +97,8 @@ func _flee(i: int, x: float, y: float, dt: float) -> void:
 	_spd = 4.5
 	if _s.cell_at(x + _dx, y + _dy) >= 4 or _s.cell_at(x + _dx, y + _dy) == 0:
 		var nx: float = -_dy
-		var ny: float = _dx
+		_dy = _dx
 		_dx = nx
-		_dy = ny
 	if _s.t1[i] > 0.0:
 		return
 	if (_s.flags[i] & SimConst.F_RIOTER) != 0:

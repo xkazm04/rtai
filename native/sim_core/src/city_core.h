@@ -108,6 +108,8 @@ public:
 	// flow.cpp: the police flow field (WLD-09). Distance in cells to the target, or -1.
 	int flow_dist(double x, double y) const;
 	bool flow_dir(double x, double y, double &dx, double &dy) const;
+	// flow.cpp: line of sight on the cell map (every cell strictly between the ends walkable).
+	bool sight(double x0, double y0, double x1, double y1) const;
 	const int32_t *flow_stats() const { return ff_stats_; }
 	const int32_t *counters() const { return counters_; }
 
