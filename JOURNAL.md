@@ -516,3 +516,11 @@ NEXT (session 6, freeze 07:30, REPORT 07:40):
 
 NEXT: lane done for n18. Morning: Director merges, re-blesses parity/replay once, runs the heat 3
 bench quiet under the lock; finding (c) probe and quest 1 car ladder are the open items (REPORT Next steps).
+
+## Session 7 (STABILIZE, 07:31-07:40)
+- 07:32 Re-checked: `git diff --stat cd92fabc0 HEAD` = JOURNAL.md + REPORT.md only, so the cd92fabc0
+  evidence gate PASS (and the 0e5d8cdad reel PASS) still covers the final code. cites REPORT.md 6/6 ok;
+  frames.json 15 entries, 0 missing; no Godot process running, no bench.lock. No code change.
+
+NEXT: lane done for n18 (unchanged from session 6). Morning: Director merges, re-blesses parity/replay
+once, runs the heat 3 bench quiet under the lock; open items are in REPORT `## Next steps`.
