@@ -12,10 +12,11 @@ func test_second_city_cell_push_would_leave_rivet_in_the_first() -> void:
 	stage.setup(World.build_context(events, data, 19))
 	stage.cells = StageCells.shipped()
 	stage.pilot = StagePilot.new(PlayerActions.shipped())
-	stage.pilot.motion.vault.enabled = true
+	var vault: PlayerVault = stage.pilot.motion.vault
+	vault.enabled = true
 	var body: Fighter = stage.arena.rivet
 	body.pos = START
-	var probe: VaultProbe = stage.pilot.motion.vault.probe
+	var probe: VaultProbe = vault.probe
 	probe.city = VaultCity.new(stage.cells)
 	assert_true(probe.clear_at(START, body.radius_m))
 	assert_true(stage.cells.solid(23, 39))
