@@ -80,7 +80,7 @@ func reserve(i: int) -> bool:
 		_s.owner[jt] = i + 1
 		_s.res[i] = jt
 		return false
-	return true
+	return _s.heat < 0 or not CitySimPolice.pursuer(_s, i)  # n18: a dispatched car does not queue
 
 
 func _pick(i: int, icx: float, icy: float, tgx: float, tgy: float) -> int:

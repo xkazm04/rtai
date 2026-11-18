@@ -190,3 +190,10 @@ func car_unload(i: int, x: float, y: float, hv: PackedFloat64Array) -> void:
 		spec.append_array(PackedFloat64Array([SimConst.ART_COP, fl, 3.4, 0.0, 0.0]))
 		@warning_ignore("return_value_discarded")
 		_s.spawn(spec)
+
+
+## n18: under heat an idle police car (not dispatched, not parked) is traffic: stuck, it despawns
+## like traffic though the spawner promoted it (CityCore::car's idle_p; a jam must clear).
+static func idle_car(s: CitySimState, i: int) -> bool:
+	var busy: int = SimConst.F_ENGAGED | SimConst.F_PARKED
+	return s.heat >= 0 and s.kind[i] == SimConst.K_PCAR and (s.flags[i] & busy) == 0

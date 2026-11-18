@@ -195,5 +195,5 @@ func _finish(i: int, dt: float, waiting: bool) -> void:
 	_police.car_unload(i, _x, _y, PackedFloat64Array([_hx, _hy, _vv]))
 	var stuck: float = _s.stuck[i]
 	if (stuck > 8.0 and _s.tier[i] == 1) or stuck > 20.0:
-		if (_s.flags[i] & SimConst.F_PROMOTED) == 0:
+		if (_s.flags[i] & SimConst.F_PROMOTED) == 0 or CitySimPolice.idle_car(_s, i):
 			_s.kill(i)

@@ -37,7 +37,9 @@ void CityCore::car(int i, double dt, double tgx, double tgy) {
 	phase_[i] += c.vv * dt;
 	if (heat_level_ >= 0 && kind_[i] == K_PCAR) car_unload(c);
 	if ((stuck_[i] > 8.0 && tier_[i] == 1) || stuck_[i] > 20.0) {
-		if ((flags_[i] & F_PROMOTED) == 0) kill(i);
+		// n18: under heat an idle police car is traffic; promoted or not, a jam must clear
+		bool idle_p = heat_level_ >= 0 && kind_[i] == K_PCAR && (flags_[i] & (F_ENGAGED | F_PARKED)) == 0;
+		if ((flags_[i] & F_PROMOTED) == 0 || idle_p) kill(i);
 	}
 }
 
@@ -164,7 +166,7 @@ void CityCore::car_reserve(Car &c) {
 	if (o == 0 || o == i + 1 || alive_[o - 1] == 0 || res_[o - 1] != jt) {
 		owner_[jt] = i + 1;
 		res_[i] = jt;
-	} else {
+	} else if (heat_level_ < 0 || !c.is_p) {  // n18: a dispatched car (siren) does not queue
 		c.waiting = true;
 	}
 }
