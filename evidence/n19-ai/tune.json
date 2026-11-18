@@ -1134,5 +1134,282 @@
       "damage_taken_hp": 3.599999999999966,
       "deaths": 0
     }
-  ]
+  ],
+  "scenario_telemetry_changes": {
+    "arena-city-telemetry": {},
+    "arena-course-telemetry": {},
+    "arena-pit-telemetry": {
+      "corpse_decay.bodies_now": {
+        "before": 5,
+        "after": 4
+      },
+      "corpse_decay.bodies_peak": {
+        "before": 5,
+        "after": 4
+      },
+      "corpse_decay.peak_dead_listed": {
+        "before": 5,
+        "after": 4
+      },
+      "corpse_decay.pruned": {
+        "before": 0,
+        "after": 1
+      },
+      "damage_taken": {
+        "before": 0.0,
+        "after": 1.79999999999998
+      },
+      "dodges": {
+        "before": 1,
+        "after": 4
+      },
+      "hit_rate": {
+        "before": 1.0,
+        "after": 0.833333333333333
+      },
+      "pit_done_s": {
+        "before": 11.6833333333333,
+        "after": 12.9333333333333
+      },
+      "shots": {
+        "before": 5,
+        "after": 6
+      },
+      "shots_stopped_by_cover": {
+        "before": 0,
+        "after": 3
+      },
+      "ticks": {
+        "before": 701,
+        "after": 776
+      },
+      "turn_rate_peak_dps": {
+        "before": 720.0002249415,
+        "after": 720.000173715082
+      }
+    },
+    "arena-range-telemetry": {},
+    "arena-squad": {
+      "live.cover": {
+        "before": 0.510187963986732,
+        "after": 0.522378307742568
+      },
+      "live.flank_ticks": {
+        "before": 180,
+        "after": 24
+      },
+      "live.flankers": {
+        "before": 2,
+        "after": 4
+      },
+      "live.ticks": {
+        "before": 3071,
+        "after": 2927
+      },
+      "no_separation.cover": {
+        "before": 0.47634703196347,
+        "after": 0.492746023422479
+      },
+      "no_separation.crowded": {
+        "before": 0.0767123287671233,
+        "after": 0.0982345743751092
+      },
+      "no_separation.flank_ticks": {
+        "before": 96,
+        "after": 0
+      },
+      "no_separation.flankers": {
+        "before": 2,
+        "after": 3
+      },
+      "no_separation.ticks": {
+        "before": 2976,
+        "after": 2748
+      }
+    },
+    "arena-stations": {},
+    "enemy-pit": {},
+    "enemy-waves": {},
+    "quest1-dent-lock": {},
+    "quest1-dent": {},
+    "quest1-input": {
+      "log": {
+        "before": "C:/Users/kazda/kiro/gtai-n19/appdata/ai/RTAI Uprising/test_tmp/41163ef3/3160/quest1/input-run.replay.json",
+        "after": "C:/Users/kazda/kiro/gtai-n19/appdata/ai/RTAI Uprising/test_tmp/41163ef3/37536/quest1/input-run.replay.json"
+      }
+    },
+    "quest1-kerf": {},
+    "quest1-ohm": {},
+    "quest1-tonnage": {}
+  },
+  "additional_arena_replays": {
+    "squad_default": {
+      "brutality_kills": "ok",
+      "city_scare": "ok",
+      "corpse_horde": "ok",
+      "ghost_attacks": "FAIL",
+      "react_line": "ok",
+      "rivet_chainsaw": "FAIL",
+      "rivet_city_fight": "FAIL",
+      "rivet_city_melee": "ok",
+      "rivet_claw": "FAIL",
+      "rivet_deflect": "ok",
+      "rivet_katana": "FAIL",
+      "rivet_pickup": "ok",
+      "rivet_switch": "ok",
+      "rivet_throw": "ok",
+      "showcase_director": "FAIL",
+      "showcase_reel": "ok"
+    },
+    "guard_default_control": {
+      "ghost_attacks": "ok",
+      "rivet_chainsaw": "ok",
+      "rivet_city_fight": "ok",
+      "rivet_claw": "ok",
+      "rivet_katana": "ok",
+      "showcase_director": "ok"
+    },
+    "controlled_measurements": {
+      "ghost_attacks": {
+        "metric": "Tonnage slams",
+        "guard": 2,
+        "squad": 1
+      },
+      "rivet_chainsaw": {
+        "metric": "Cops killed",
+        "guard": 3,
+        "squad": 0
+      },
+      "rivet_city_fight": {
+        "metric": "Highest wave reached with close-in and flank disabled",
+        "guard": "below 3",
+        "squad": 4
+      },
+      "rivet_claw": {
+        "metric": "Claw hits",
+        "guard": 10,
+        "squad": 0
+      },
+      "rivet_katana": {
+        "metric": "Cops killed",
+        "guard": 4,
+        "squad": 0
+      },
+      "showcase_director": {
+        "metric": "Electro-chain victims killed",
+        "guard": 4,
+        "squad": 3
+      }
+    }
+  },
+  "candidate_default_digests": [
+    {
+      "seed": 20261103,
+      "encounter": "city",
+      "digest": "441587c384b7d113f28ec1c249b153267bf5bbc2605e465fa82673e9cd23ac4a"
+    },
+    {
+      "seed": 20261104,
+      "encounter": "city",
+      "digest": "03b7bd02dcaf63116a5d2402ee4334c3caddd81c6c4867afac40878c9688555d"
+    },
+    {
+      "seed": 20261105,
+      "encounter": "city",
+      "digest": "67237c5dbfbcf926521f17f7d876ffeecd3937a228e3c3872f2029a8540e2031"
+    },
+    {
+      "seed": 20261106,
+      "encounter": "city",
+      "digest": "c90cefe035b6067477030f48b30583f07341d539f92dadd99419dc2c9ef9196d"
+    },
+    {
+      "seed": 20261107,
+      "encounter": "city",
+      "digest": "4ca4c3afd29bb0bdb5a24037817c8d197c4e3802b2913c486285def0d7d9fc6e"
+    },
+    {
+      "seed": 20261103,
+      "encounter": "pit",
+      "digest": "bd45d9a652be4d9c615ccf8a74c664da955fd6f7aa6597d51838df539f7886d0"
+    },
+    {
+      "seed": 20261104,
+      "encounter": "pit",
+      "digest": "2b42d743e19ee82179b51e57be6aad9d481b4196eefcb4f7b7264190a2f2d04e"
+    },
+    {
+      "seed": 20261105,
+      "encounter": "pit",
+      "digest": "7e0c7754df8e4e67d18b5c6658008f37fd754922f3547dd9f67c8e6966e89835"
+    },
+    {
+      "seed": 20261106,
+      "encounter": "pit",
+      "digest": "a3fa848dfeae734f9258eb6454a6c28c1d4ca90318c854a0d71149624b4764e1"
+    },
+    {
+      "seed": 20261107,
+      "encounter": "pit",
+      "digest": "8a22f8626db3c27558f404fef8ae2b0965b5b22d7ec85c2c9cf50afc8e68c77b"
+    },
+    {
+      "seed": 20261103,
+      "encounter": "quest1",
+      "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f"
+    },
+    {
+      "seed": 20261104,
+      "encounter": "quest1",
+      "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6"
+    },
+    {
+      "seed": 20261105,
+      "encounter": "quest1",
+      "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082"
+    },
+    {
+      "seed": 20261106,
+      "encounter": "quest1",
+      "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334"
+    },
+    {
+      "seed": 20261107,
+      "encounter": "quest1",
+      "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3"
+    }
+  ],
+  "rollout": {
+    "default_brain": "guard",
+    "candidate_brain": "squad",
+    "reason": "Six additional authored station or bot checks failed under the squad default and passed with guard on identical tuned data.",
+    "gfx_reference_changes": [],
+    "named_scenarios_and_protected_checks_passed": 20,
+    "candidate_unit": {
+      "passed": 2967,
+      "failed": 0,
+      "skipped": 2
+    },
+    "retained_unit": {
+      "passed": 2966,
+      "failed": 0,
+      "skipped": 2,
+      "passed_on_rerun": [
+        "test_audio_driving.gd::test_the_radio_action_changes_the_station_only_while_driving"
+      ]
+    },
+    "retained_scenarios_passed": 16,
+    "retained_unflagged_digests_matching_a1": 15
+  },
+  "mutation": {
+    "commit": "8054148b2",
+    "file": "features/combat/squad/squad_mind.gd",
+    "sampled": 20,
+    "available": 173,
+    "killed": 11,
+    "survived": 9,
+    "timeout": 0,
+    "invalid": 0,
+    "seconds": 547
+  }
 }
