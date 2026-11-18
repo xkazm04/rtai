@@ -1,12 +1,13 @@
 extends GutTest
 
 var probe: VaultProbe
-var p: Vector2 = Vector2(0.0, -1.15)
+var p: Vector2
 var r: float = 0.6
 var box: Rect2 = Rect2(-2.5, -0.4, 5.0, 0.8)
 
 
 func before_each() -> void:
+	p = Vector2(0.0, -1.15)
 	var table: DataTable = DataTable.open(PlayerMotion.TABLE, PlayerMotion.SCHEMA)
 	probe = VaultProbe.new(table, table.object(table.raw, "vault"))
 	probe.boxes[box] = "cover_low"
