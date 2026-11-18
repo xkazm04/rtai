@@ -223,3 +223,23 @@ NEXT (session 3):
 4. Not run this session: evidence run.mjs (look goldens), reel gate, bench. Run them on the next
    commit before the REPORT.
 5. Before-tree worktree `C:\Users\kazda\kiro\gtai-n18\police-before` still KEPT (36dd26ba6).
+
+### Item 4 continued (c19685d17, 02:00)
+Owner trace done (see NEXT 1 above, now ACTED ON): under heat a dispatched car brakes like traffic
+and, stuck city.bail_s 4 s, parks and its crew walks (test red before: no crew in 10 s, stopped
+car rammed along; after: crew out at tick 478). DECISION police/heat-ladder-2-bail.
+Heat 2 re-film (c19685d17): cops 16 -> 19 (crews out ~60 m off), max 4 foot cops within 4 m of A,
+0 cars at A, claims cancelled ~t1600 (the 10 s search started by the foot cops), so crews never
+reach A. Filed as item4_heat2_living_c19685d17 (labelled not-yet-working).
+Gates on c19685d17: lint 19/19, full unit 2865 passed / 0 failed / 2 skipped, native core 0 failed;
+parity + scenarios: see the line below.
+
+NEXT (session 3, replaces the list above where it differs):
+1. Heat 2: the search clock must also wait while a crew cop (F_CREW, engaged) is still farther than
+   arrive_m from the point (like the en-route car rule); test on CityRoadMap (blocker + bail, foot
+   cop already at the point, search_s 2: claims must hold until the crew arrives). Re-film heat 2;
+   the number to show: crew within 4 m of A. Then (ii) of the old NEXT 1 (does the pile-up form at
+   heat -1 on the same seed?).
+2. Item 5 (heat 3 squads + roadblock), item 6 (quest 1), item 7 (cost) as planned above.
+3. Not run yet: evidence run.mjs (look goldens), reel gate, bench.
+

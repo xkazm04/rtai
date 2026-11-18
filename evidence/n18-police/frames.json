@@ -1,5 +1,14 @@
 [
  {
+  "file": "item4_heat2_living_c19685d17_32ppm.mp4",
+  "title": "Heat 2 clip at c19685d17: cars bail out of traffic, crews come on foot (search ends before they arrive)",
+  "source": "heat_clip.tscn --level=2 --police=living --seconds=30",
+  "branch": "n18-police c19685d17",
+  "ppm": 32,
+  "before": "item4_heat2_living_20609876f_32ppm.mp4",
+  "note": "timeline: 4 foot cops within 4 m of A (max), cops in the bubble 16 -> 19 (crews out after bail_s, ~60 m off), 0 cars stopped at A (they park where traffic holds them, as designed), claims cancelled at ~t1600 after the 10 s search started by the foot cops, so the crews never reach A. Next: the search should wait for crews still walking in. Not yet the heat 2 clip the brief asks for."
+ },
+ {
   "file": "item3_heat1_pair_t808_32ppm.png",
   "title": "Heat 1 in the sandbox city, t808 (10.5 s after the raise): BEFORE pre-n18 sim police | AFTER living police",
   "source": "godot --rendering-driver d3d12 --path project --fixed-fps 60 --resolution 1280x720 res://dev/sim/heat_clip.tscn -- --level=1 --police=living|pre --seconds=30 (frames f_00202), hstack",
