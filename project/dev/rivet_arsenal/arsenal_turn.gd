@@ -9,30 +9,33 @@ func _initialize() -> void:
 
 
 func _start() -> void:
-	var args: ArenaArgs = ArenaArgs.parse()
+	@warning_ignore("unsafe_cast")
+	var script_dir: String = (get_script() as Script).resource_path.get_base_dir()
+	var recorder: Node = (load(script_dir.path_join("arsenal_turn_rec.gd")) as GDScript).new()
+	var error: String = configure(ArenaArgs.parse(), recorder)
+	if not error.is_empty():
+		recorder.free()
+		root.get_node("Log").call("error", "turn", error)
+		quit(2)
+		return
+	root.add_child(recorder)
+
+
+static func configure(args: ArenaArgs, recorder: Node) -> String:
 	for flag: String in args.values:
 		if not KNOWN_FLAGS.has(flag):
-			_fail("unknown argument " + flag)
-			return
+			return "unknown argument " + flag
 	var pitch: String = args.text("--pitch", "p55")
 	var ppm: String = args.text("--ppm", "64")
 	var dest: String = args.text("--out")
 	if not VIEWS.has(pitch) or ppm not in ["32", "64"] or dest.is_empty():
-		_fail("expected --pitch=p55|p70|top --ppm=32|64 --out=<directory>")
-		return
+		return "expected --pitch=p55|p70|top --ppm=32|64 --out=<directory>"
+	if args.text("--weapon").is_empty():
+		return "expected --weapon=<arsenal id>"
 	if DirAccess.make_dir_recursive_absolute(dest) != OK:
-		_fail("cannot create " + dest)
-		return
-	@warning_ignore("unsafe_cast")
-	var script_dir: String = (get_script() as Script).resource_path.get_base_dir()
-	var recorder: Node = (load(script_dir.path_join("arsenal_turn_rec.gd")) as GDScript).new()
+		return "cannot create " + dest
 	recorder.set("weapon", StringName(args.text("--weapon")))
 	recorder.set("out_dir", dest)
 	recorder.set("view_id", VIEWS[pitch])
 	recorder.set("clip", ppm == "32")
-	root.add_child(recorder)
-
-
-func _fail(message: String) -> void:
-	root.get_node("Log").call("error", "turn", message)
-	quit(2)
+	return ""
