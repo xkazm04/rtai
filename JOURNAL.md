@@ -567,3 +567,11 @@ Session 6 ended ~07:06 with a clean tree; HEAD = this commit (code = 99f8b3071, 
   (salts, offsets, cut list, decal ranges). Clean after. Full unit on HEAD running.
 - 07:09 full unit on 771ae3ba9: 2900 passed / 0 failed / 2 skipped.
 Session 6 ended ~07:10 with a clean tree; final code = 771ae3ba9 (v33; gate PASS with reels on 4c4afb209 + full unit 2900/0).
+
+## Session 7 (iteration 7, STABILIZE, 07:30-07:40)
+- 07:30 tree clean, HEAD 82b3a05b0. No new features (past freeze).
+- 07:3x full lint on 82b3a05b0: 19/19 over 1573 GDScript files. cites REPORT.md: 14 paths, 13 ok, 1 pattern, 0 missing.
+- REPORT gates line updated with the full-lint number. Nothing else changed; evidence in masters (15 frames) still matches
+  the v33 build (771ae3ba9 adds only a unit test).
+NEXT: morning merge per REPORT `## Merge notes` (re-bless golden hash list after merge; police reads zone `car_art`).
+Session 7 ended ~07:35 with a clean tree.
