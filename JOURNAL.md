@@ -361,3 +361,37 @@ native core tests 0 failed (eaf66ffb8 build). Earlier on 739a90264: unit 2874/0,
 with rig_stress p50 CONTENDED (8 other runs). Reel gate: started 03:05 (result line below if it lands).
 Reel gate on b1418a966 (03:04-03:19): top OK 315 s, tilt70 OK 299 s, combo OK 297 s (exit 0).
 Still not run on this branch: tools/evidence/run.mjs (look goldens): session 4 NEXT 1.
+
+## Session 4 (iteration 4, BUILD, 03:20-04:50)
+Read: JOURNAL NEXT, git log -30, districts JOURNAL (no NEED police since the car_mix line, which I
+answered in session 3; their row has not landed), no bench.lock present at 03:20.
+- 03:21 gate (snapshot, `tools/gate/run.mjs --rev=HEAD`, evidence incl. look goldens) on 5a6139fbc
+  started; unit 2878 / 0 failed.
+- Item 7 cheap win (in the tree): `CitySimBackend.cop_sees(x, y, r)` (native flow.cpp + binding,
+  reference CitySimFlow.cop_sees, op for op): CityHeat no longer copies the whole snapshot per tick
+  to ask whether a cop sees Rivet. Test test_city_cop_sees: native == reference == the old snapshot
+  walk (kept as the oracle) at every 20th tick of a heat 1 run, 8x6 points x 3 radii.
+- Finding (c) traced (code, not yet by eye): every city foot cop carries art variant 7 (ART_COP,
+  the spawner's since before n18, and CityPatrol/crews since n18). The full rig path falls back to
+  a cop look on a kind mismatch (character_rigs.gd:194-196), but the LOD-1 baked crowd path
+  (character_rigs.gd:135 `CrowdAtlas.cell_for(feed.look_of(i), ..)`, atlas_look(7) = row 7) does
+  not: a far cop prints the overalls-bald ped. Pre-n18 (main's spawner already passes 7). The file
+  is characters/ (no lane owns it tonight): NEED director, the one-line fix is the same fallback
+  at :135 (`look_of` -> crowd_index_for when RigVariant.crowd(look).kind != the row's kind).
+- 03:3x MILESTONE item 7 cheap win committed 05f0642c8: CityHeat us/tick at heat 3, 400 peds,
+  interleaved A/B, 2 rounds each (before = the gate snapshot of 5a6139fbc, after = the tree; both
+  CONTENDED: districts' gates running): mean 75.6/77.8 -> 52.4/57.8, p50 69/68 -> 48/49; sim
+  step unchanged (34-40 us). The rest of CityHeat's ~50 us is GDScript->native call overhead
+  (patrol counters, dispatch, roadblock, set_heat): not chased (< 0.4 % of the 16.7 ms tick).
+  Files evidence/n18-police/cost/s4_{before,after}_r{1,2}_400.json.
+- Gate on 5a6139fbc (snapshot, evidence incl. look goldens): PASS lint 19/19, unit 2876/0 (2 skip),
+  scenarios 55/55, parity bit-exact (planted caught 629), selftest look goldens 11/11 (worst
+  0.31), block goldens 5/5, export-audit 729/0 (`build/gate/5a6139fbcf6d/gate.json`).
+- Finding (b) CLOSED (not a sim death): heat_clip numbers now carry bodies (sim M_DEAD), bodies
+  within 4 m of a police car, and M_DOWN people. Heat 3 living at 05f0642c8, 40 s: at most 1 body
+  in the whole run (t568-1448), 0 beside a police car, 0 down; at t2176 and t2400 (the frames with
+  the lying peds beside the south police car and a riot cop lying by the circle) sim dead 0, down
+  0. The lying figures are rig reaction poses (react_pose.gd families cower/cover/trip on the cast
+  rigs, n17 npc-react's), drawn while the sim says alive. Pre-n18 police arm, same seed: up to 6
+  bodies, up to 3 within 4 m of a police car (the pre-n18 pursuit drives through people).
+  evidence/n18-police/s4/heat3_bodies.json.

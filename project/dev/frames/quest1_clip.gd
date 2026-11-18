@@ -44,6 +44,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--ghost-voice",
 	"--quest-hit",
 	"--hud-weapon",
+	"--sim-police",
 ]
 const RECORDER: String = "res://dev/frames/quest1_clip_rec.gd"
 const COUNTER: String = "res://tests/support/error_counter.gd"
