@@ -129,3 +129,28 @@ func test_a_car_stuck_in_traffic_parks_and_its_crew_goes_on_foot() -> void:
 	assert_gt(out_tick, 0, "bailed out inside 10 s")
 	assert_lt(CityWallMap.pos(sim, car).x, 300.0, "parked behind the stopped car")
 	assert_almost_eq(CityWallMap.pos(sim, blocker).x, 300.0, 0.5, "the stopped car was not rammed")
+
+
+## The search at the point also waits for a bailed-out crew still walking there (session-3 heat 2
+## clip: the foot cops at A searched search_s while the crews walked from ~60 m, the search ended
+## and released the crews, so none reached A). Before: the crew was released 2 s after the foot
+## cop's search began and never got within 4 m.
+func test_the_search_waits_for_a_crew_walking_to_the_point() -> void:
+	var sim: CitySimRef = CitySimRef.new()
+	CityRoadMap.paint(sim)
+	var tune: PackedFloat64Array = TUNE.duplicate()
+	tune[SimConst.PT_SEARCH_S] = 2.0
+	sim.set_police(tune)
+	assert_gte(CityWallMap.spawn_cop(sim, POINT), 0)
+	var block: Array = [SimConst.K_CAR, 300.0, CityRoadMap.LANE_E, 1.0, 0.0, 0, 0, 0.0]
+	assert_gte(sim.spawn(PackedFloat64Array(block + [CityRoadMap.LANE_E, 0])), 0)
+	assert_gte(CityRoadMap.dispatch_car(sim, 262.0), 0)
+	sim.set_heat(2, POINT.x, POINT.y)
+	var all_tick: int = -1
+	for t: int in 1500:
+		_step(sim, RIVET)
+		if _cops_near(sim, 4.0) == 3:
+			all_tick = t + 1
+			break
+	gut.p("bailed crew: foot cop + 2 crew within 4 m of the point at tick %d" % all_tick)
+	assert_gt(all_tick, 0, "the crew reached the point before the search ended")

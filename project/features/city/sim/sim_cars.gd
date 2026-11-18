@@ -40,7 +40,7 @@ func car(i: int, dt: float, tgx: float, tgy: float) -> void:
 	if _s.ndir[i] >= 0 and _s.tier[i] == 0 and _s.res[i] < 0:
 		waiting = _r.reserve(i)
 	_steer(i, x, y, _pass.lane_line(i, x, y, _r), dt)
-	var vdes: float = _police.car_speed(i, x, y, _desired_speed(i, x, y, waiting))
+	var vdes: float = _police.cars.car_speed(i, x, y, _desired_speed(i, x, y, waiting))
 	_vv = _accelerate(_s.v[i], vdes, dt)
 	_x = x + _hx * _vv * dt
 	_y = y + _hy * _vv * dt
@@ -81,7 +81,7 @@ func _desired_speed(i: int, x: float, y: float, waiting: bool) -> float:
 		var along2: float = x * _r.ddx + y * _r.ddy
 		var dist: float = (_s.jx[i] * _r.ddx + _s.jy[i] * _r.ddy) - along2 - 14.0
 		vdes = minf(vdes, maxf(0.0, dist))
-	if _s.tier[i] != 0 or (CitySimPolice.pursuer(_s, i) and _s.heat < 0):
+	if _s.tier[i] != 0 or (CitySimPoliceCars.pursuer(_s, i) and _s.heat < 0):
 		return vdes
 	for j: int in _h.query(x + _hx * 7.0, y + _hy * 7.0, 1):
 		if j == i:
@@ -192,8 +192,8 @@ func _finish(i: int, dt: float, waiting: bool) -> void:
 	_s.hy[i] = _hy
 	_s.v[i] = _vv
 	_s.phase[i] += _vv * dt
-	_police.car_unload(i, _x, _y, PackedFloat64Array([_hx, _hy, _vv]))
+	_police.cars.car_unload(i, _x, _y, PackedFloat64Array([_hx, _hy, _vv]))
 	var stuck: float = _s.stuck[i]
 	if (stuck > 8.0 and _s.tier[i] == 1) or stuck > 20.0:
-		if (_s.flags[i] & SimConst.F_PROMOTED) == 0 or CitySimPolice.idle_car(_s, i):
+		if (_s.flags[i] & SimConst.F_PROMOTED) == 0 or CitySimPoliceCars.idle_car(_s, i):
 			_s.kill(i)

@@ -2,7 +2,8 @@
 // here. Heat 0: every cop walks his sidewalk like a pedestrian, holding fire. Heat 1-3: the
 // pol_[PT_FOOT<level>] cops nearest the last-seen point are engaged (F_ENGAGED, nearest first,
 // lowest slot on a tie): they path to the point on the flow field, steer at Rivet and fire only
-// with him in sight, and search pol_[PT_SEARCH_S] once one is within PT_ARRIVE_M of it; then all
+// with him in sight, and search pol_[PT_SEARCH_S] once one is within PT_ARRIVE_M of it (the clock
+// waits while a dispatched car drives or a crew cop walks there); then all
 // go back to walking until the point moves to another cell or the level rises.
 // Heat 2 (the game dispatches police cars, F_ENGAGED): a dispatched car routes to the point with
 // the police turn rule, stops within PT_CAR_STOP_M of it and parks (F_PARKED); its PT_CREW cops
@@ -30,7 +31,7 @@ void CityCore::police_pass(double dt) {
 	pol_level_ = heat_level_;
 	int want = (heat_level_ == 0 || pol_done_) ? 0 : (int)pol_[PT_FOOT0 + heat_level_];
 	double a2 = pol_[PT_ARRIVE_M] * pol_[PT_ARRIVE_M];
-	bool arrived = false, enroute = false;  // the search waits for dispatched cars en route
+	bool arrived = false, enroute = false;  // the search waits for cars en route and crews walking
 	for (int i = 0; i < CAP; i++) {
 		if (alive_[i] == 0 || (flags_[i] & F_ENGAGED) == 0) continue;
 		if (kind_[i] == K_PCAR) enroute = true;
@@ -40,7 +41,11 @@ void CityCore::police_pass(double dt) {
 			continue;
 		}
 		double ax = px_[i] - heat_x_, ay = py_[i] - heat_y_;
-		if (ax * ax + ay * ay <= a2) arrived = true;
+		if (ax * ax + ay * ay <= a2) {
+			arrived = true;
+		} else if ((flags_[i] & F_CREW) != 0) {
+			enroute = true;
+		}
 	}
 	if (arrived && !enroute && !pol_done_) {
 		pol_search_ += dt;

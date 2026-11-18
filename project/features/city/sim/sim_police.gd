@@ -2,11 +2,11 @@ class_name CitySimPolice
 extends RefCounted
 ## n18 living police of the reference sim, op for op native/sim_core/src/police.cpp (parity).
 ## level -1 (the default) never comes here: every cop pursues the step's target as before n18.
-## Heat 0: every cop walks his sidewalk like a pedestrian, holding fire. Heat 1-3: the
-## tune[PT_FOOT<level>] cops nearest the last-seen point are engaged (F_ENGAGED, nearest first,
-## lowest slot on a tie): they path to the point on the flow field, steer at Rivet and fire only
-## with him in sight, and search tune[PT_SEARCH_S] once one is within PT_ARRIVE_M of it; then all
-## go back to walking until the point moves to another cell or the level rises.
+## Heat 0: every cop walks his sidewalk, holding fire. Heat 1-3: the tune[PT_FOOT<level>] cops
+## nearest the last-seen point are engaged (F_ENGAGED, nearest first, lowest slot on a tie): they
+## path to the point on the flow field, steer at and fire on Rivet only in sight, and search
+## tune[PT_SEARCH_S] once one is within PT_ARRIVE_M of it (waiting while a dispatched car drives
+## or a crew cop walks there); then all walk again until the point moves or the level rises.
 
 ## The wanted level (set_heat, clamped -1..3) and the point a cop last saw Rivet.
 var level: int = -1
@@ -14,6 +14,8 @@ var heat_x: float = 0.0
 var heat_y: float = 0.0
 ## The ladder's tune (SimConst.PT_LEN, data/tables/heat.json `city`); kept across reset().
 var tune: PackedFloat64Array = [0.0, 3.0, 4.0, 6.0, 10.0, 3.0, 1.4, 2.0, 12.0, 4.0]
+## The police car rules (heat 2-3: dispatch stop, unload, bail; CitySimPoliceCars).
+var cars: CitySimPoliceCars
 var _s: CitySimState
 var _flow: CitySimFlow
 var _cx: int = 0
@@ -26,6 +28,7 @@ var _done: bool = false
 func _init(state: CitySimState, flow: CitySimFlow) -> void:
 	_s = state
 	_flow = flow
+	cars = CitySimPoliceCars.new(state, self)
 
 
 func reset() -> void:
@@ -65,7 +68,7 @@ func pass_step(dt: float) -> void:
 	var want: int = 0 if (level == 0 or _done) else int(tune[SimConst.PT_FOOT0 + level])
 	var a2: float = tune[SimConst.PT_ARRIVE_M] * tune[SimConst.PT_ARRIVE_M]
 	var arrived: bool = false
-	var enroute: bool = false  # the search waits for dispatched cars en route
+	var enroute: bool = false  # the search waits for dispatched cars en route and crews walking
 	for i: int in SimConst.CAP:
 		if _s.alive[i] == 0 or not _engaged(i):
 			continue
@@ -80,6 +83,8 @@ func pass_step(dt: float) -> void:
 		var ay: float = _s.py[i] - heat_y
 		if ax * ax + ay * ay <= a2:
 			arrived = true
+		elif (_s.flags[i] & SimConst.F_CREW) != 0:
+			enroute = true
 	if arrived and not enroute and not _done:
 		_search += dt
 		if _search >= tune[SimConst.PT_SEARCH_S]:
@@ -140,60 +145,3 @@ func _release() -> void:
 			_s.flags[i] = _s.flags[i] & ~(SimConst.F_ENGAGED | SimConst.F_CREW)
 		elif _s.kind[i] == SimConst.K_PCAR:
 			_s.flags[i] = _s.flags[i] & ~(SimConst.F_ENGAGED | SimConst.F_PARKED)
-
-
-## A police car pursues (the turn rule, no yielding): every one before n18, a dispatched one under
-## heat (CityCore::car's is_p).
-static func pursuer(s: CitySimState, i: int) -> bool:
-	if s.kind[i] != SimConst.K_PCAR:
-		return false
-	return s.heat < 0 or (s.flags[i] & SimConst.F_ENGAGED) != 0
-
-
-## Heat 2 (CityCore::car_police_speed): a dispatched car stops within PT_CAR_STOP_M of the point.
-func car_speed(i: int, x: float, y: float, vdes: float) -> float:
-	if _s.heat < 0 or _s.kind[i] != SimConst.K_PCAR:
-		return vdes
-	if (_s.flags[i] & SimConst.F_PARKED) != 0:
-		return 0.0
-	if not _engaged(i):
-		return vdes
-	var ax: float = x - heat_x
-	var ay: float = y - heat_y
-	var r: float = tune[SimConst.PT_CAR_STOP_M]
-	return 0.0 if ax * ax + ay * ay <= r * r else vdes
-
-
-## Heat 2 (CityCore::car_unload): stopped there, the car parks and its crew gets out on the side
-## facing the point. hv: the car's heading x, y and speed after its step.
-func car_unload(i: int, x: float, y: float, hv: PackedFloat64Array) -> void:
-	if _s.heat < 0 or _s.kind[i] != SimConst.K_PCAR or not _engaged(i) or hv[2] >= 0.5:
-		return
-	var ax: float = x - heat_x
-	var ay: float = y - heat_y
-	var r: float = tune[SimConst.PT_CAR_STOP_M]
-	if ax * ax + ay * ay > r * r and _s.stuck[i] <= tune[SimConst.PT_BAIL_S]:
-		return
-	_s.flags[i] = (_s.flags[i] & ~SimConst.F_ENGAGED) | SimConst.F_PARKED
-	var n: int = int(tune[SimConst.PT_CREW])
-	var sx: float = -hv[1]
-	var sy: float = hv[0]
-	if sx * (heat_x - x) + sy * (heat_y - y) < 0.0:
-		sx = -sx
-		sy = -sy
-	var fl: int = SimConst.F_PROMOTED | SimConst.F_ENGAGED | SimConst.F_CREW
-	for k: int in n:
-		var along: float = float(k) * 1.4 - 0.7 * float(n - 1)
-		var spec: PackedFloat64Array = PackedFloat64Array(
-			[SimConst.K_COP, x + sx * 2.0 + hv[0] * along, y + sy * 2.0 + hv[1] * along, sx, sy]
-		)
-		spec.append_array(PackedFloat64Array([SimConst.ART_COP, fl, 3.4, 0.0, 0.0]))
-		@warning_ignore("return_value_discarded")
-		_s.spawn(spec)
-
-
-## n18: under heat an idle police car (not dispatched, not parked) is traffic: stuck, it despawns
-## like traffic though the spawner promoted it (CityCore::car's idle_p; a jam must clear).
-static func idle_car(s: CitySimState, i: int) -> bool:
-	var busy: int = SimConst.F_ENGAGED | SimConst.F_PARKED
-	return s.heat >= 0 and s.kind[i] == SimConst.K_PCAR and (s.flags[i] & busy) == 0
