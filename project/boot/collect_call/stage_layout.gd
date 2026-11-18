@@ -50,11 +50,14 @@ var on_city: bool = false
 ## Parked cars for the ghost powers on the city (collect_call_city.json ghost_cars, world metres;
 ## empty on the invented arena): Dent seizes them, so his form has a car in quest 1.
 var ghost_cars: PackedVector2Array = PackedVector2Array()
+## Dock 9 on the city's dock block (--quest1-places, StageDockPlace); null = on the street.
+var dock: StageDockPlace = null
 var _errors: Array[String] = []
 
 
-## The stage; `city` lays it on the generated city (collect_call_city.json).
-static func shipped(city: bool = false) -> StageLayout:
+## The stage; `city` lays it on the generated city (collect_call_city.json). `dock_place`: 1 puts
+## Dock 9 on the city's dock_9 place, 0 keeps it on the street, -1 reads --quest1-places.
+static func shipped(city: bool = false, dock_place: int = -1) -> StageLayout:
 	var s: StageLayout = StageLayout.new()
 	s.places = QuestPlaces.from_json_text(FileAccess.get_file_as_string(PLACES))
 	var c: DataTable = DataTable.open(CITY, CITY_SCHEMA)
@@ -62,6 +65,9 @@ static func shipped(city: bool = false) -> StageLayout:
 		s.on_city = true
 		s.origin = c.vec(c.raw, "origin")
 		s.squash = c.vec(c.raw, "squash")
+		var on: bool = dock_place == 1 or (dock_place < 0 and LaunchArgs.has(StageDockPlace.FLAG))
+		if on:
+			s.dock = StageDockPlace.shipped(c.object(c.raw, "dock_place"), s.squash)
 		s._map_places()
 		for at: Variant in c.array(c.raw, "ghost_cars"):
 			@warning_ignore("return_value_discarded")
@@ -99,10 +105,16 @@ func w(p: Vector2) -> Vector2:
 	return origin + p * squash
 
 
+## A named stage point in world metres: Dock 9's own points follow the dock place when it is on.
+func w_of(id: String, p: Vector2) -> Vector2:
+	return dock.w(p) if dock != null and dock.has(id) else w(p)
+
+
 func _map_places() -> void:
-	for m: QuestPlaces.Marker in places.markers.values():
-		m.at = w(m.at)
-		m.phone = w(m.phone)
+	for id: String in places.markers:
+		var m: QuestPlaces.Marker = places.markers[id]
+		m.at = w_of(id, m.at)
+		m.phone = w_of(id, m.phone)
 	for a: QuestPlaces.Actor in places.actors.values():
 		a.at = w(a.at)
 
@@ -124,7 +136,7 @@ func _read(t: DataTable, raw: Dictionary) -> void:
 		whisper_cues[t.text(c, "beat")] = CombatTuning.ticks(t.num(c, "after_s"))
 	var points: Dictionary = t.object(raw, "spawn_points")
 	for id: String in points:
-		spawn_points[id] = w(t.vec(points, id))
+		spawn_points[id] = w_of(id, t.vec(points, id))
 	waves = WaveDirector.new(t, t.array(raw, "waves"), t.object(raw, "dock"))
 	_read_crates(t, raw)
 	tape_bill = t.integer(raw, "tape_bill")
@@ -136,7 +148,7 @@ func _read(t: DataTable, raw: Dictionary) -> void:
 
 func _read_crates(t: DataTable, raw: Dictionary) -> void:
 	var c: Dictionary = t.object(raw, "crates")
-	crates_at = w(t.vec(c, "at"))
+	crates_at = w_of("crates", t.vec(c, "at"))
 	crates_count = t.integer(c, "count")
 	crates_label = t.text(c, "label")
 	torch_reach_m = t.num(c, "torch_reach_m")
@@ -146,7 +158,8 @@ func _read_crates(t: DataTable, raw: Dictionary) -> void:
 	var post: Vector2 = t.vec(t.object(raw, "spawn_points"), METAL_ANCHOR)
 	var out: Array[Vector2] = []
 	for i: int in points.size():
-		out.append(w(post) + t.vec({"p": points[i]}, "p") - post)
+		var off: Vector2 = t.vec({"p": points[i]}, "p") - post
+		out.append(w_of(METAL_ANCHOR, post) + (dock.turn(off) if dock != null else off))
 	metal = PackedVector2Array(out)
 
 
