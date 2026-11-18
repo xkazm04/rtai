@@ -232,7 +232,7 @@ Heat 2 re-film (c19685d17): cops 16 -> 19 (crews out ~60 m off), max 4 foot cops
 0 cars at A, claims cancelled ~t1600 (the 10 s search started by the foot cops), so crews never
 reach A. Filed as item4_heat2_living_c19685d17 (labelled not-yet-working).
 Gates on c19685d17: lint 19/19, full unit 2865 passed / 0 failed / 2 skipped, native core 0 failed;
-parity + scenarios: see the line below.
+parity bit-exact (1200 steps, mutation caught at 629), scenarios 55/55 (02:04, none CONTENDED).
 
 NEXT (session 3, replaces the list above where it differs):
 1. Heat 2: the search clock must also wait while a crew cop (F_CREW, engaged) is still farther than
