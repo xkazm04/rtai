@@ -1,8 +1,10 @@
 extends Scenario
 ## City production fight, measured at the same pre-ballistics point as the five-seed probe.
-## Stop on the last kill of wave five: no partial wave can hide a stranded guard.
+## Stop on the last kill of wave five. Use the probe?s five seeds for flank opportunities:
+## an underfilled ranged group can give every living flanker a shooting token.
 
 const WAVES: int = 5
+const SEEDS: int = 5
 const LIMIT: int = 90 * SimClock.TICK_RATE
 const CITY_COVER: float = 0.4419
 const CROWD_LIMIT: float = 0.02
@@ -13,18 +15,22 @@ func run(_tree: SceneTree) -> String:
 	if not contract.is_empty():
 		return contract
 	var live: Dictionary = _fight(false)
+	var complete: bool = live.cleared == WAVES and live.spawned == WAVES and live.replayed
+	var flank_ticks: Array[int] = [live.flank_ticks]
+	for i: int in range(1, SEEDS):
+		var other: Dictionary = _fight(false, ArenaSession.MASTER_SEED + i)
+		complete = complete and other.cleared == WAVES and other.spawned == WAVES and other.replayed
+		flank_ticks.append(other.flank_ticks)
 	var bad: Dictionary = _fight(true)
 	@warning_ignore("return_value_discarded")
-	write_evidence("arena-squad.json", {"live": live, "no_separation": bad})
-	if not live.replayed:
-		return "city squad replay diverged"
-	if live.cleared != WAVES or live.spawned != WAVES:
-		return "city squad unfinished: %s" % live
+	write_evidence("arena-squad.json", {"live": live, "no_separation": bad, "flanks": flank_ticks})
+	if not complete:
+		return "one or more city squads failed to clear five waves and replay"
 	if (
 		live.crowded >= CROWD_LIMIT
 		or live.cover <= CITY_COVER
 		or live.flankers < 1
-		or live.flank_ticks <= 0
+		or flank_ticks.max() <= 0
 	):
 		return "city squad positioning: %s" % live
 	if bad.crowded < CROWD_LIMIT:
@@ -32,13 +38,13 @@ func run(_tree: SceneTree) -> String:
 	return ""
 
 
-func _open(brain: String = "mixed") -> ArenaSession:
+func _open(brain: String = "mixed", seed: int = ArenaSession.MASTER_SEED) -> ArenaSession:
 	var options: ArenaArgs = ArenaArgs.parse(["--arena=city", "--enemy-brain=" + brain])
-	return ArenaSession.open_with_args(Events, Data, ArenaSession.MASTER_SEED, null, options)
+	return ArenaSession.open_with_args(Events, Data, seed, null, options)
 
 
-func _fight(plant: bool) -> Dictionary:
-	var s: ArenaSession = _open()
+func _fight(plant: bool, seed: int = ArenaSession.MASTER_SEED) -> Dictionary:
+	var s: ArenaSession = _open("mixed", seed)
 	var arena: FightProbeArena = FightProbeArena.attach(s.stage.arena)
 	arena.squad_ai.plant_no_separation = plant
 	arena.squad = s.stage.pit.standing
@@ -64,7 +70,7 @@ func _fight(plant: bool) -> Dictionary:
 	arena.sampled = Callable()
 	_close(s)
 	if not plant:
-		var again: ArenaSession = _open()
+		var again: ArenaSession = _open("mixed", seed)
 		result.replayed = again.world.verify_replay(log) == ""
 		_close(again)
 	return result
@@ -93,7 +99,7 @@ func _row_contract() -> String:
 	patrol.production_weapon = &"gloria"
 	patrol.peek_ticks = 20
 	arena.rivet.pos = Vector2(8, 0)
-	var h: Fighter = arena.spawn_guard(Vector2.ZERO, patrol.id)
+	var h: Fighter = squad.spawn_member(arena, Vector2.ZERO, patrol.id)
 	h.pos = Vector2(-5, 0)
 	h.cooldown = 0
 	squad.pit.roster.max_shooters = 0

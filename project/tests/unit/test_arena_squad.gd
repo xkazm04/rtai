@@ -14,7 +14,7 @@ func _arena(boxes: Array[Rect2] = []) -> CombatArena:
 
 
 func _spawn(arena: CombatArena, at: Vector2, id: StringName = &"") -> Fighter:
-	var g: Fighter = arena.spawn_guard(at, id)
+	var g: Fighter = arena.squad_ai.spawn_member(arena, at, id)
 	g.pos = at
 	g.cooldown = 0
 	return g
@@ -76,7 +76,7 @@ func test_default_stage_uses_guard_approach() -> void:
 	var session: ArenaSession = ArenaSession.open(Events, Data)
 	var arena: CombatArena = session.stage.arena
 	assert_null(arena.squad_ai)
-	var g: Fighter = _spawn(arena, arena.rivet.pos + Vector2(0, -18))
+	var g: Fighter = arena.spawn_guard(arena.rivet.pos + Vector2(0, -18))
 	g.pursuit = null
 	var at: Vector2 = g.pos
 	arena.step(1)
@@ -94,7 +94,6 @@ func test_panic_ends_and_the_next_wave_starts_with_full_morale() -> void:
 	var wave: Array[Fighter] = []
 	for i: int in 6:
 		wave.append(_spawn(arena, Vector2(24, i)))
-	arena.squad_ai.begin_wave(wave)
 	var survivor: Fighter = wave.back()
 	for h: Fighter in wave:
 		if h != survivor:
@@ -106,8 +105,8 @@ func test_panic_ends_and_the_next_wave_starts_with_full_morale() -> void:
 		arena.step(tick)
 	assert_true(arena.guard_map.region().has_point(e.pos))
 	assert_ne(e.state, EnemyAgent.State.PANIC)
+	arena.squad_ai.clear_wave()
 	var next: Fighter = _spawn(arena, Vector2(12, 0))
-	arena.squad_ai.begin_wave([next])
 	arena.step(200)
 	assert_false(arena.squad_ai.minds[next.id].agent.broke)
 

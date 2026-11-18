@@ -63,6 +63,11 @@ func melee() -> bool:
 	return arch.weapon.melee
 
 
+## Current firing opportunity, shared by squad trigger and cover-peek timing.
+func has_shot_at(target: Vector2) -> bool:
+	return sees and pos.distance_to(target) <= arch.attack_m
+
+
 func radius() -> float:
 	return 0.5 if arch.body == &"robot" else 0.35
 

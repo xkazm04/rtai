@@ -53,7 +53,7 @@ func velocity(pit: EnemyPit, map: GuardRouteMap, fallen: float) -> Vector2:
 			return _walk()
 		motion = S.ENGAGE
 		_destination = Vector2.INF
-	_update_peek(pit.tick)
+	_update_peek(pit.tick, pit.rivet_pos)
 	if plan_pending or (pit.tick + e.id - _plan_offset) % PLAN_TICKS == 0:
 		var overdue: bool = plan_pending
 		_plan(pit, map)
@@ -71,8 +71,9 @@ func velocity(pit: EnemyPit, map: GuardRouteMap, fallen: float) -> Vector2:
 	return _walk()
 
 
-## Count exposed ticks only after a cover holder has sight. Release its token on retreat.
-func _update_peek(tick: int) -> void:
+## Count the peek while the holder can engage. Distant sight alone can spend the entire peek
+## walking into range, leaving the guard cycling between the same cover and approach.
+func _update_peek(tick: int, target: Vector2) -> void:
 	if tick < _return_until:
 		if agent.pos.distance_to(_hide) < 0.45:
 			_return_until = mini(_return_until, tick + PLAN_TICKS)
@@ -82,7 +83,7 @@ func _update_peek(tick: int) -> void:
 		return
 	if _peek < 0 and motion == S.COVER:
 		_peek = agent.arch.peek_ticks
-	if _peek < 0 or not agent.sees:
+	if _peek < 0 or not agent.has_shot_at(target):
 		return
 	_peek -= 1
 	if _peek <= 0:

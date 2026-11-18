@@ -75,6 +75,8 @@ func _holding_cover(disable_close_in: bool) -> Dictionary:
 	var bus: EventBus = EventBus.new()
 	var data: DataStore = DataStore.new()
 	var s: ArenaSession = _open(bus, data)
+	# This pair needs stationary defenders under either default. The live fight above keeps its AI.
+	s.stage.arena.squad_ai = null
 	s.stage.arena.guard_map = null
 	for guard: Fighter in s.stage.arena.hostiles:
 		guard.pursuit = null

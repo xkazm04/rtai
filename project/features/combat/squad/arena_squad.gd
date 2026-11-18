@@ -1,8 +1,8 @@
 class_name ArenaSquad
 extends RefCounted
-## Mirrors only active combatants. Token assignment and all motor neighbours use fighter ID
-## order. Each hostile checks sight at most twice and scans the living neighbours once per tick.
-## Planning slots are shared across living guards. GuardBrain owns every real projectile.
+## Mirrors the living members of the current pit or street wave in fighter ID order. Each hostile
+## checks sight at most twice and scans its living neighbours once per tick. The wave shares its
+## planning slots. GuardBrain owns every real projectile.
 
 const ROUTES_PER_TICK: int = 2
 
@@ -10,8 +10,7 @@ var pit: EnemyPit
 var minds: Dictionary[int, SquadMind] = {}
 var plant_no_separation: bool = false
 var _map: GuardRouteMap
-var _wave: Array[Fighter] = []
-var _wave_ids: Dictionary[int, bool] = {}
+var _wave: Dictionary[Fighter, bool] = {}
 var _fallen: float = 0.0
 
 
@@ -21,8 +20,10 @@ func _init(map: GuardRouteMap) -> void:
 	pit.bounds = map.region().grow(-GuardRouteMap.WALL_MARGIN_M)
 
 
-## Apply combat stats once, at spawn, before views or shots can observe this fighter.
-func equip(h: Fighter, id: StringName, tuning: CombatTuning) -> void:
+## Only the encounter spawner enrolls guards. Station spawns retain their own guard behaviour.
+func spawn_member(arena: CombatArena, at: Vector2, id: StringName = &"") -> Fighter:
+	var h: Fighter = arena.spawn_guard(at)
+	_wave[h] = true
 	var a: EnemyRoster.Archetype = pit.roster.archetype(id)
 	h.archetype = a.id
 	h.machine = a.body == &"robot"
@@ -30,16 +31,22 @@ func equip(h: Fighter, id: StringName, tuning: CombatTuning) -> void:
 		h.max_hp = a.hp
 		h.hp = a.hp
 	h.weapon = &"" if a.weapon.melee else a.production_weapon
-	h.cooldown = mini(h.cooldown, tuning.weapon(a.production_weapon).cooldown_ticks)
+	h.cooldown = mini(h.cooldown, arena.tuning.weapon(a.production_weapon).cooldown_ticks)
+	return h
 
 
-func begin_wave(standing: Array[Fighter]) -> void:
-	_wave = standing.duplicate()
-	_wave_ids.clear()
-	for h: Fighter in _wave:
-		_wave_ids[h.id] = true
+func clear_wave() -> void:
+	_wave.clear()
+	minds.clear()
+	pit.agents.clear()
 
 
+func owns(h: Fighter) -> bool:
+	return _wave.has(h)
+
+
+## Wave members step in ID order before station navigation can spend their route budget.
+## Everyone outside the wave keeps the arena's original step order.
 func assign(arena: CombatArena) -> Array[Fighter]:
 	pit.tick = arena.tick
 	pit.rivet_pos = arena.rivet.pos
@@ -48,13 +55,14 @@ func assign(arena: CombatArena) -> Array[Fighter]:
 	var shooters: Array[EnemyAgent] = []
 	var active: Dictionary[int, SquadMind] = {}
 	var ordered: Array[Fighter] = []
+	var others: Array[Fighter] = []
 	for h: Fighter in arena.hostiles:
-		if h.alive():
+		if owns(h) and h.alive() and not h.brain_owned and h.kind == Fighter.Kind.GUARD:
 			ordered.append(h)
+		else:
+			others.append(h)
 	ordered.sort_custom(func(a: Fighter, b: Fighter) -> bool: return a.id < b.id)
 	for h: Fighter in ordered:
-		if h.brain_owned or h.kind != Fighter.Kind.GUARD:
-			continue
 		var mind: SquadMind = minds.get(h.id)
 		if mind == null:
 			mind = SquadMind.new(h, pit.roster.archetype(h.archetype))
@@ -67,7 +75,6 @@ func assign(arena: CombatArena) -> Array[Fighter]:
 			continue
 		mind.agent.pos = h.pos
 		pit.agents.append(mind.agent)
-		# Sparring partners with their trigger pinned by a station still steer and separate.
 		if mind.available(h, arena):
 			shooters.append(mind.agent)
 		else:
@@ -76,6 +83,7 @@ func assign(arena: CombatArena) -> Array[Fighter]:
 	_schedule()
 	EnemySquad.assign(shooters, pit.rivet_pos, pit.roster)
 	_update_morale()
+	ordered.append_array(others)
 	return ordered
 
 
@@ -103,7 +111,7 @@ func step(h: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
 	var e: EnemyAgent = mind.agent
 	e.pos = h.pos
 	e.sees = _map.sight_line(e.pos, pit.rivet_pos)
-	var desired: Vector2 = mind.velocity(pit, _map, _fallen if _wave_ids.has(h.id) else 0.0)
+	var desired: Vector2 = mind.velocity(pit, _map, _fallen)
 	if h.swing_left > 0:
 		desired = Vector2.ZERO
 	if not plant_no_separation:
@@ -120,7 +128,7 @@ func step(h: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
 
 func _ranged(mind: SquadMind, h: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
 	var e: EnemyAgent = mind.agent
-	var ready: bool = e.token and e.sees and h.pos.distance_to(pit.rivet_pos) <= e.arch.attack_m
+	var ready: bool = e.token and e.has_shot_at(pit.rivet_pos)
 	if not ready or not _map.sight_line(h.pos, pit.rivet_pos):
 		if h.burst_left > 0:
 			mind.paused_rounds = h.burst_left

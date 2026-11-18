@@ -109,27 +109,33 @@ func reset(arena: CombatArena) -> void:
 	for f: Fighter in standing:
 		arena.hostiles.erase(f)
 	standing.clear()
+	if arena.squad_ai != null:
+		arena.squad_ai.clear_wave()
 	wave = 0
 	_due_tick = -1
 
 
 func _spawn_wave(arena: CombatArena) -> void:
 	wave += 1
+	if arena.squad_ai != null:
+		arena.squad_ai.clear_wave()
 	var n: int = mini(first_wave + grow * (wave - 1), max_wave)
 	for i: int in n:
 		var armored: bool = riot_hp > 0.0 and i == 0 and wave >= 2
-		var id: StringName = &""
-		if arena.squad_ai != null and not squad_mix.is_empty():
-			id = squad_mix[(wave - 1 + i) % squad_mix.size()]
 		var at: Vector2 = points[(wave + i) % points.size()]
-		var g: Fighter = arena.spawn_guard(at, &"riot_cop" if armored and mixed else id)
+		var g: Fighter
+		if arena.squad_ai == null:
+			g = arena.spawn_guard(at)
+		else:
+			var id: StringName = &""
+			if not squad_mix.is_empty():
+				id = squad_mix[(wave - 1 + i) % squad_mix.size()]
+			g = arena.squad_ai.spawn_member(arena, at, &"riot_cop" if armored and mixed else id)
 		if armored:
 			g.max_hp *= riot_hp
 			g.hp = g.max_hp
 			riot[g.id] = true
 		standing.append(g)
-	if arena.squad_ai != null:
-		arena.squad_ai.begin_wave(standing)
 	arena.announce_wave(&"arena_pit", wave)
 	_due_tick = -1
 	Log.info("arena", "pit wave %d: %d guards" % [wave, n])

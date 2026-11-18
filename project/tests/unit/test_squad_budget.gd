@@ -16,9 +16,11 @@ func test_sparse_ids_that_share_a_slot_spread_their_cover_searches() -> void:
 	var arena: CombatArena = _arena()
 	arena.squad_ai.pit.roster.max_shooters = 0
 	for i: int in range(3 * SquadMind.PLAN_TICKS + 1):
-		var h: Fighter = arena.spawn_guard(Vector2(-4, 0), &"patrol_cop")
-		if i % SquadMind.PLAN_TICKS != 0:
-			h.hp = 0
+		if i % SquadMind.PLAN_TICKS == 0:
+			@warning_ignore("return_value_discarded")
+			arena.squad_ai.spawn_member(arena, Vector2(-4, 0), &"patrol_cop")
+		else:
+			arena.spawn_guard(Vector2.ZERO).hp = 0
 	var map: GuardRouteMap = arena.guard_map
 	for tick: int in range(SquadMind.PLAN_TICKS + 4):
 		var before: int = map.cover_searches
@@ -30,7 +32,7 @@ func test_sparse_ids_that_share_a_slot_spread_their_cover_searches() -> void:
 func test_blocked_routes_queue_by_id_and_drop_dead_requests() -> void:
 	var arena: CombatArena = _arena()
 	for i: int in 7:
-		var h: Fighter = arena.spawn_guard(Vector2.ZERO)
+		var h: Fighter = arena.squad_ai.spawn_member(arena, Vector2.ZERO)
 		h.pos = Vector2(-4, -9 + 3 * i)
 	# Simultaneous blocked goals, as when a wave breaks morale together.
 	var squad: ArenaSquad = arena.squad_ai
@@ -56,7 +58,7 @@ func test_blocked_routes_queue_by_id_and_drop_dead_requests() -> void:
 
 func test_queued_cover_request_keeps_the_previous_motion() -> void:
 	var arena: CombatArena = _arena()
-	var h: Fighter = arena.spawn_guard(Vector2(-4, 0), &"patrol_cop")
+	var h: Fighter = arena.squad_ai.spawn_member(arena, Vector2(-4, 0), &"patrol_cop")
 	var squad: ArenaSquad = arena.squad_ai
 	squad.pit.roster.max_shooters = 0
 	@warning_ignore("return_value_discarded")
@@ -90,7 +92,7 @@ func test_each_hostile_checks_sight_at_most_twice_even_when_firing_or_swinging()
 	var arena: CombatArena = _arena()
 	var rng: RandomNumberGenerator = RngRegistry.new(11).stream(&"combat")
 	for id: StringName in [&"contractor", &"riot_cop"]:
-		var h: Fighter = arena.spawn_guard(arena.rivet.pos, id)
+		var h: Fighter = arena.squad_ai.spawn_member(arena, arena.rivet.pos, id)
 		h.pos = arena.rivet.pos + Vector2.RIGHT
 	var peak: int = 0
 	for tick: int in 160:
@@ -103,3 +105,50 @@ func test_each_hostile_checks_sight_at_most_twice_even_when_firing_or_swinging()
 			assert_between(checks, 1, 2)
 			peak = maxi(peak, checks)
 	assert_eq(peak, 2)
+
+
+func test_only_wave_members_plan_and_station_guards_keep_their_approach() -> void:
+	var arena: CombatArena = _arena()
+	var control: CombatArena = _arena()
+	control.squad_ai = null
+	var station: Fighter = arena.spawn_guard(Vector2(25, 0))
+	var reference: Fighter = control.spawn_guard(Vector2(25, 0))
+	var wave: Fighter = arena.squad_ai.spawn_member(arena, Vector2(11, 0), &"robot_thug")
+	for tick: int in 20:
+		control.step(tick)
+		arena.step(tick)
+		assert_eq(station.pos, reference.pos)
+		assert_eq(station.facing, reference.facing)
+		assert_eq(station.cooldown, reference.cooldown)
+	assert_eq(station.archetype, &"")
+	assert_false(arena.squad_ai.owns(station))
+	assert_false(arena.squad_ai.minds.has(station.id))
+	assert_true(arena.squad_ai.owns(wave))
+	assert_eq(arena.squad_ai.pit.agents.size(), 1)
+	assert_eq(arena.squad_ai.pit.agents[0].id, wave.id)
+	arena.squad_ai.clear_wave()
+	assert_false(arena.squad_ai.owns(wave))
+
+
+func test_a_cover_holder_spends_its_peek_only_in_firing_range() -> void:
+	var arena: CombatArena = _arena()
+	var squad: ArenaSquad = arena.squad_ai
+	var h: Fighter = squad.spawn_member(arena, Vector2.ZERO, &"patrol_cop")
+	@warning_ignore("return_value_discarded")
+	squad.assign(arena)
+	var mind: SquadMind = squad.minds[h.id]
+	var e: EnemyAgent = mind.agent
+	mind.motion = EnemyAgent.State.COVER
+	e.arch.peek_ticks = 2
+	e.pos = Vector2.ZERO
+	e.sees = true
+	e.token = true
+	for tick: int in 3:
+		mind._update_peek(tick, Vector2.RIGHT * (e.arch.attack_m + 1.0))
+		assert_true(e.token)
+	mind._update_peek(3, Vector2.RIGHT * e.arch.attack_m)
+	assert_true(e.token)
+	mind._update_peek(4, Vector2.RIGHT * e.arch.attack_m)
+	assert_false(e.token)
+	arena.tick = 5
+	assert_false(mind.available(h, arena), "the holder must return to cover before its next peek")
