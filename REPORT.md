@@ -1,4 +1,4 @@
-# REPORT - night n18, lane districts (DRAFT, session 2; final at 07:40)
+# REPORT - night n18, lane districts (DRAFT, session 3; final at 07:40)
 
 Branch `n18-districts` (worktree `C:\Users\kazda\kiro\gtai-wt\n18-districts`), cut from `int-n17` at `36dd26ba6`.
 Evidence: `evidence/n18-districts/` (in the branch) and `C:\Users\kazda\kiro\gtai-masters\n18\districts\frames.json`.
@@ -9,10 +9,10 @@ Evidence: `evidence/n18-districts/` (in the branch) and `C:\Users\kazda\kiro\gta
 |---|---|---|
 | 1 zones as data | layout consts -> `city_district.json` zone rows (`gtai.city-district/2`), zone map of chunk rects; step one byte-identical at v14 (`bake --check`), planted share change caught | commits 634b2f552, 6ca059905; `evidence/n18-districts/zone_map_v15.{png,json}` |
 | 2 zone layouts + lint | docks east band (48 chunks, 18.75 %): long warehouse blocks over dropped streets, yard rows, quay + water; downtown centre (25 chunks): denser towers, plazas, crowds; mixed elsewhere. test_city_zone_lint: roads one network, sidewalks + zebras one network, every zone has road and sidewalk | e8ecb61c9 |
-| 3 art | v16 warehouse/shed/tower roofs + water; dock + glass facades (+ brick dock and stone office alternates); v17 water bug fix; v18 quay edge autotile; v19 container yards; v20 downtown plazas (one fountain per plaza), cold store, sawtooth, square tall roofs | `evidence/n18-districts/ab_*` |
+| 3 art | v16 warehouse/shed/tower roofs + water; dock + glass facades (+ brick dock and stone office alternates); v17 water bug fix; v18 quay edge autotile; v19 container yards; v20 downtown plazas (one fountain per plaza), cold store, sawtooth, square tall roofs; v21 one lettered name a block; v22 it471 roofs (clocktower, terrace, billboard tall roof, bank dome + crown 2x2, shed b, warehouse c kept upright by `upright_roofs`), sculpture v3 | `evidence/n18-districts/ab_*` (v22: `ab_it471_roofs_*_v21_v22_combo.jpg`) |
 | 4 places | `data/tables/places.json` + CityPlaces.place(id) -> {zone, block, chunk, cell, door, facing}; test_city_places | ca6b1fcc2 |
-| 5 Dock 9 | `--quest1-places`: Dock 9's own stage points sit before the dock_9 door; off by default; scenarios flag off 55/55 | b0314350c; `evidence/n18-districts/quest1_places_on_scenarios.txt` |
-| 6 film | docks -> downtown drive, 32 px/m | (session 2, see masters) |
+| 5 Dock 9 | `--quest1-places`: Dock 9's own stage points sit before the dock_9 door; off by default; scenarios flag off 55/55. Flag ON: quest1_input pays (921 s, 0 deaths, replay identical) after the bot fix (BotRoute A* walk + `StageLayout.w_dock`) | b0314350c, 0511d8629; `evidence/n18-districts/quest1_places_on_scenarios_v2.txt` |
+| 6 film | docks -> downtown drive, 37 s at 32 px/m, along the north sidewalk (pass 2, v22); one 48 px/m still per zone | `evidence/n18-districts/drive2_docks_downtown_v22_combo_32ppm.mp4`, `zones_v22_combo_48ppm.jpg`; masters frames.json (15) |
 
 Generator numbers (v21, `evidence/n18-districts/zone_map_v21.{png,json}`): docks 48 chunks (18.75 %), 3832 block
 tiles + 2408 plaza/yard/quay tiles; downtown 25 chunks (9.77 %), 2000 block + 500 plaza tiles; mixed 183 chunks
@@ -23,17 +23,23 @@ look goldens 11/11, block goldens 5/5). Reel gate PASS on a9d327061 (3/3 views, 
 survivors are look-only, pinned by the golden hash list; the one real gap (:126) got a test (bc29c8a7e).
 
 ## What does not work
-- `--quest1-places` ON: quest1_input fails "not paid: state active at beat b4-dock, tick 90000" (Dock 9 is ~1.6 km east
-  of Harbor Road; the input bot never finishes the dock fight there). 8/9 quest scenarios pass with it on.
+- `--quest1-places` ON: quest1_input FAILED in session 2 ("not paid ... b4-dock, tick 90000"). Cause: the dev bot held the fight
+  at the street mapping and walked straight into buildings. Fixed in 0511d8629 (dev bot only): it now pays. What the flag still
+  costs a player: the walk Harbor Road -> Dock 9 takes 348 s on foot and the walk back 343 s (quest 921 s vs 317 s).
+- Docks yards put walkers right against a warehouse's north wall, so the rigs' "behind a roof" ink silhouettes
+  (CityOcclusion, n8 design) show often there as black wedges on the roof edge (`zones_v22_combo_48ppm.jpg`, yard panel).
+  Not changed.
 
 ## Calls for the owner
-- Dock 9 into the docks by default? (today: behind `--quest1-places`; the walk from Harbor Road is ~1.6 km)
+- Dock 9 into the docks by default? (today: behind `--quest1-places`). Recommendation: not yet. It plays (quest1_input pays with
+  the flag on), but the walk Harbor Road -> Dock 9 is 348 s each way on foot, and the quest has no car leg yet.
 - Docks on the east edge (vs another edge); downtown size (25 chunks) and landmark density (0.35).
 - The 2x2 tower roofs' orange hazard stripes vs the colour law (the asset lane's `_ochre` twins are ready).
 - Each zone's look, before/after stills: see masters frames.json.
 
 ## Merge notes
-- Re-blessed: `project/data/generated/city_chunks.sha256` (GENERATOR_VERSION 14 -> 21). No replay or parity digest moved.
+- Re-blessed: `project/data/generated/city_chunks.sha256` (GENERATOR_VERSION 14 -> 22). No replay or parity digest moved.
+- `tools/debt/baseline.json`: dev_loc 21992 -> 22089 accepted (dev/bots BotRoute; reason stored).
 - Shared files touched: `project/boot/launch_args.gd` (one flag line `--quest1-places`; the `--perf-hud` comment moved
   onto its flag's line to keep 200 lines).
 
