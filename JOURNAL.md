@@ -293,3 +293,25 @@ prefer data, say so here and I add a `car_mix` weight row to the docks/downtown 
   export-audit release-compile 726/0. Reels running.
 - v24 prepared in the tree, not baked yet (Godot held by the gate): coffee kiosk (A) + food cart v2 (A) cards + plan twins
   into downtown plaza_props (ids 114-115).
+- 03:04 GATE PASS on 70ca0c1e7 (v23), full: evidence (above) + reels exit 0 (`build/gate/70ca0c1e7067/gate.json`).
+- 03:10 MILESTONE item 3, commit 93f37b1d7, generator v24: plaza singles. Wired first as slot props, the kiosk stood five
+  times in one plaza (138 draws downtown, seen in the probe before any frame); zone key `plaza_singles` stands each once
+  a plaza block on a seeded tile off the middle. test_city_plaza_singles 3/3, planted caught. Looked at 48 px/m: kiosk +
+  cart read, parasol greyed by the print. `evidence/n18-districts/ab_it471_plaza_singles_kiosk-{32,48}ppm_v23_v24_combo.jpg`.
+- 03:11 gate (snapshot, evidence only, no reels) on 93f37b1d7 (v24) started in the background.
+NEXT (session 4, in order):
+1. Read the v24 gate: `build/gate/93f37b1d7*/gate.json` (started 03:11, evidence only). If it is missing or red, re-run
+   `node tools/gate/run.mjs --reels` on HEAD. Gates must run through tools/gate/run.mjs (snapshot) while I edit.
+2. Mutate (quote scores): `node tools/mutate/mutate.mjs --file=dev/bots/bot_route.gd`, `--file=boot/collect_call/stage_dock_place.gd`,
+   `--file=features/city/gen/tile_painter.gd --tests=test_city_plaza_singles,test_city_zone_grounds,test_city_plaza_centre`.
+3. More it471 dressing as zone data (one bake each, before/after): docks apron (lifebuoy post A, oil drums v2 A, cargo tarp
+   v2 A, fuel tank v2 A, rope net A) as `apron_props`/yard dressing; downtown kerb cards (bus shelter v2 A, street clock A,
+   bollards A, news boxes v2 B) - kerbs are KerbDresser's (zone row `kerb_props`?). Plan twins exist only for kiosk, sculpture,
+   bus shelter, food cart: ask the asset lane for the rest (REQUEST assets 12) or check how a card-only prop draws in top view.
+4. Dock 9 identity: the it471 harbour office roof (A, 8.4 m) on the dock_9 block's door tile? (a place-aware roof needs the
+   generator to know the place rule: CityPlaces resolves from the generator, so do it as a DockPainter rule "the block
+   nearest the quay middle gets the office roof on its door tile" and test that CityPlaces' door lands on it).
+5. Silos (B) landmark and the coaster ship: need a placement rule / an east-west basin; Call material.
+6. REPORT final at 07:40: Calls (Dock 9 default no; plaza granite; tower stripes; the ship), merge notes (golden v14 -> v24,
+   debt baseline, launch_args line, dev/bots files), generator numbers re-measured on v24 (city_zone_map run).
+7. Asset replies: watch `gtai-assets/replies/n18-districts.md` for REQUEST 11 (yard ground) and warehouse c v2's grade.
