@@ -562,3 +562,8 @@ REQUEST tools: kill_reel scout/life tests should pass `staleAssets` a fixture pr
 - 07:05 REPORT final (cites: 0 missing). Masters 15.
 NEXT (morning / next night): see REPORT `## Next steps`. Police: read zone `car_art` in city_spawner.gd (NEED police above).
 Session 6 ended ~07:06 with a clean tree; HEAD = this commit (code = 99f8b3071, v33, gate PASS on 4c4afb209).
+- 07:07 MILESTONE commit 771ae3ba9: test_city_kerb_parked (2/2). Mutate kerb_dresser.gd (tests kerb_parked, kerb_props,
+  dock_dressing): 2/10 = 20 % (was 0/10): both parked-car faults at :63 killed; survivors :43 :47 :62 :66 :86 :104 :111 :117
+  (salts, offsets, cut list, decal ranges). Clean after. Full unit on HEAD running.
+- 07:09 full unit on 771ae3ba9: 2900 passed / 0 failed / 2 skipped.
+Session 6 ended ~07:10 with a clean tree; final code = 771ae3ba9 (v33; gate PASS with reels on 4c4afb209 + full unit 2900/0).
