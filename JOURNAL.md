@@ -37,3 +37,7 @@ NEXT:
 3. Read ai/anim journals for replies to the 00:30 NEEDs; 3C lands only when ai patches prop_lying.gd (re-frame then, same seed 5 tick 900).
 4. Item 6: heat-3 bench under C:/Users/kazda/kiro/gtai-n19/bench.lock in a gap with no Astra running; also the rig bench for 3A's cost (CONTENDED so far: 50 p50/p99 0.513/0.978 -> 0.495/0.812 ms; 200 0.485/1.416 -> 0.483/1.124).
 5. `node tools/gate/run.mjs --rev=HEAD` once between calls.
+- 00:51 MILESTONE session 3 start. Lock pid 60008 dead (gen call killed ~00:48-00:51 mid-mutate, last.txt empty, out.txt 0 bytes). Its commits 08db28411 (zebra guard, 0/3712 hits), 6ead32adc (docks 3 m loading apron), 77ad43790 (v34 re-bake, 46 docks chunks moved, 0 downtown/mixed, digests unchanged) are in. No new NEED gfx (ai queued a8-prop-lying for our 3C NEED).
+- 00:52 ASTRA gen 26 accepted (killed before its report; mutate score missing -> brief 07). LOOKED gen/yard_compare_tilt70_64ppm_t150.png: before, the walker's legs ink a black wedge over the warehouse roof edge; after, the walker turns 3 m short on the apron, roof edge clean. Reads in 10 s. Weak: the apron has no drawn art (an invisible stop line); no clip yet.
+- 00:53 DECISION stale lock removed by hand (process gone, verified by tasklist + CIM query).
+- 00:54 ASTRA RUNNING polish since 00:54 (NEW session; brief evidence/briefs/n19-gfx-07-polish.md; out evidence/briefs/n19-gfx-07-polish.out.txt)
