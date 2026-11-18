@@ -1,4 +1,6 @@
 extends SceneTree
+## Dev-only city baker. With no flags, it writes chunks to res://data/generated/city/c_XX_YY.bin
+## and the golden hash list to res://data/generated/city_chunks.sha256.
 ## Usage: godot --headless --path project -s res://dev/bake_city.gd [-- --check [--fail-fast]]
 ## With --check, verify both bakes and the golden list. Add --fail-fast to report drift per chunk.
 
