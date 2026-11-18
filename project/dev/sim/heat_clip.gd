@@ -10,9 +10,18 @@ extends Node
 ##     --position 0,1440 res://dev/sim/heat_clip.tscn -- --out=<abs dir> [--level=1]
 ##     [--police=living|pre] (pre: the pre-n18 sim police, set_heat -1, the same patrol)
 ##     [--heat-at=180] [--seconds=30] [--every=4] [--zoom=1] (1 = 32 px/m)
+##     [--watch=a|block] (block: the camera moves to the heat 3 roadblock once it stands)
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--out", "--level", "--police", "--heat-at", "--seconds", "--every", "--zoom", "--view"
+	"--out",
+	"--level",
+	"--police",
+	"--heat-at",
+	"--seconds",
+	"--every",
+	"--zoom",
+	"--view",
+	"--watch"
 ]
 const MASTER_SEED: int = 18
 ## A: a sandbox street west of the start; B: where Rivet goes once heat is up.
@@ -33,6 +42,7 @@ var _view: CityView = null
 var _label: Label = null
 var _rows: Array[Dictionary] = []
 var _raised: bool = false
+var _watch_block: bool = false
 
 
 func _ready() -> void:
@@ -75,12 +85,23 @@ func _record(world: World) -> void:
 			_raise()
 		if tick >= total:
 			break
+		if _watch_block and _heat.roadblock.placed > 0:
+			_city.focus = _heat.roadblock.at
 		if tick % _every != 0:
 			continue
 		var row: Dictionary = _sample(tick)
 		_label.text = (
-			"t%d  heat %d  engaged %d  near A %d  cars at A %d  (%s)"
-			% [tick, row["level"], row["engaged"], row["near"], row["cars_stopped"], _arm()]
+			"t%d  heat %d  engaged %d  near A %d (squad %d)  block %d, queued %d  (%s)"
+			% [
+				tick,
+				row["level"],
+				row["engaged"],
+				row["near"],
+				row["squad_near"],
+				row["block"],
+				row["queued"],
+				_arm()
+			]
 		)
 		var img: Image = get_viewport().get_texture().get_image()
 		if img != null and img.save_png(_out.path_join("f_%05d.png" % saved)) == OK:
@@ -124,6 +145,7 @@ func _sample(tick: int) -> Dictionary:
 		"cars_stopped": cars,
 		"cops": cops,
 	}
+	row.merge(HeatClipCount.heat3(_city.sim, _heat.roadblock, snap, A))
 	_rows.append(row)
 	return row
 
@@ -165,6 +187,8 @@ func _parse_args() -> bool:
 				_every = maxi(1, v.to_int())
 			"--zoom":
 				_zoom = v.to_float()
+			"--watch":
+				_watch_block = v == "block"
 			"--view":
 				pass  # ViewMode.shared() reads it
 			_:

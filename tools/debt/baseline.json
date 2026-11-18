@@ -50,7 +50,8 @@
         "2026-11-11: n17 rivet-strike: dev chapters katana_thrust/_cam (an armored cop so the katana's whole combo and its drawn thrust are filmed) (dev_loc 21741 -> 21752)",
         "2026-11-11: n17 rivet-strike: quest1_clip --hud-weapon=off, the HUD slot's before filmable in game (+2 dev lines) (dev_loc 21752 -> 21754)",
         "2026-11-18: n18 police: dev/sim/heat_clip.gd + heat_clip_mark.gd, the heat ladder's 32 px/m clip scene (items 3-5 evidence; no film shot covers the sandbox city) (dev_loc 21754 -> 21939)",
-        "2026-11-18: n18 police: heat_clip.gd counts police cars stopped at A (the heat 2 clip's number) (dev_loc 21939 -> 21947)"
+        "2026-11-18: n18 police: heat_clip.gd counts police cars stopped at A (the heat 2 clip's number) (dev_loc 21939 -> 21947)",
+        "2026-11-18: n18 police item 5: heat_clip --watch=block and HeatClipCount (the heat 3 clip's numbers); dev-only evidence tooling (dev_loc 21947 -> 22006)"
       ],
       "files": {
         "project/dev/arena": 711,
@@ -80,11 +81,11 @@
         "project/dev/selftest": 1454,
         "project/dev/servo": 434,
         "project/dev/showcase": 6775,
-        "project/dev/sim": 389,
+        "project/dev/sim": 448,
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 21947
+      "total": 22006
     },
     "direct_cmdline_reads": {
       "accepted": [
