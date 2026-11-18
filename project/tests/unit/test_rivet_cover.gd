@@ -120,6 +120,31 @@ func test_both_sides_shoot_past_the_end_and_mid_face_fire_is_refused() -> void:
 	assert_eq(stage.dodges.blocked, 1)
 
 
+func test_proving_block_station_offers_cover_on_clear_city_ground() -> void:
+	var plan: ArenaPlan = ArenaPlan.shipped(stage.plan.city_base)
+	stage = ArenaStage.new(plan, stage.stations)
+	stage.cells = StageCells.shipped()
+	stage.setup(World.build_context(Events, Data, 1903))
+	stage.pilot = StagePilot.new(actions)
+	body = stage.arena.rivet
+	var cover: PlayerCover = _enable()
+	for box: Rect2 in stage.walls.boxes:
+		var face: Vector2 = Vector2(box.get_center().x, box.position.y)
+		var foot: Vector2 = face + Vector2.UP * body.radius_m
+		var start: Vector2 = foot + Vector2.UP * 0.25
+		if stage.collide_preview(start) != start or stage.collide_preview(foot) != foot:
+			continue
+		body.pos = start
+		_tick(Vector2.ZERO, &"cover")
+		for i: int in cover.snap_ticks - 1:
+			_tick(Vector2.ZERO)
+		assert_eq(cover.phase, PlayerCover.Phase.IN)
+		assert_eq(body.pos, foot)
+		assert_true(stage.walls.blocks(box.get_center(), body.pos))
+		return
+	fail_test("expected a reachable station on the proving block")
+
+
 func test_city_prop_reports_its_face_but_cannot_start_cover() -> void:
 	var cover: PlayerCover = _enable()
 	stage.cells = StageCells.shipped()
