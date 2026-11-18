@@ -12,6 +12,10 @@ const SPACING_GAP_M: float = 1.5
 var agent: EnemyAgent
 ## Rounds remaining when a token, range or sight interrupted the production trigger.
 var paused_rounds: int = 0
+var cover_ceiling: int = 0
+var plan_pending: bool = false
+var route_pending: bool = false
+var search_ceiling: int = 0
 var motion: EnemyAgent.State = S.ENGAGE
 ## The hiding spot a token holder left, retained through its timed peek and return.
 var _hide: Vector2 = Vector2.INF
@@ -22,6 +26,7 @@ var _route: PackedVector2Array = PackedVector2Array()
 var _next: int = 0
 var _destination: Vector2 = Vector2.INF
 var _strafe: bool = false
+var _plan_offset: int = 0
 
 
 func _init(h: Fighter, arch: EnemyRoster.Archetype) -> void:
@@ -49,8 +54,12 @@ func velocity(pit: EnemyPit, map: GuardRouteMap, fallen: float) -> Vector2:
 		motion = S.ENGAGE
 		_destination = Vector2.INF
 	_update_peek(pit.tick)
-	if (pit.tick + e.id) % PLAN_TICKS == 0:
+	if plan_pending or (pit.tick + e.id - _plan_offset) % PLAN_TICKS == 0:
+		var overdue: bool = plan_pending
 		_plan(pit, map)
+		# Keep a granted slot so the same pair does not collide every twelve ticks.
+		if overdue and not plan_pending:
+			_plan_offset = (pit.tick + e.id) % PLAN_TICKS
 	e.state = motion
 	if _strafe:
 		var ring: float = (
@@ -85,16 +94,20 @@ func _update_peek(tick: int) -> void:
 func _plan(pit: EnemyPit, map: GuardRouteMap) -> void:
 	var e: EnemyAgent = agent
 	var target: Vector2 = pit.rivet_pos
+	var slot: int = (pit.tick + e.id) / PLAN_TICKS
+	var draw: float = float(hash(Vector2i(e.id, slot)) & 0xffff) / 65536.0
+	var blind_limit: float = BLIND_LIMIT * lerpf(1.0, 0.25, e.arch.aggression)
+	var seek_cover: bool = not e.token and _blind <= blind_limit and draw < e.arch.cover_bias
+	plan_pending = pit.tick >= _return_until and seek_cover and map.cover_searches >= cover_ceiling
+	if plan_pending:
+		return
 	_strafe = false
 	motion = S.ENGAGE
 	if pit.tick < _return_until:
 		motion = S.COVER
 		_set_goal(_hide, map)
 		return
-	var slot: int = (pit.tick + e.id) / PLAN_TICKS
-	var draw: float = float(hash(Vector2i(e.id, slot)) & 0xffff) / 65536.0
-	var blind_limit: float = BLIND_LIMIT * lerpf(1.0, 0.25, e.arch.aggression)
-	if not e.token and _blind <= blind_limit and draw < e.arch.cover_bias:
+	if seek_cover:
 		var boxes: Array[Rect2] = map.boxes_near(e.pos, COVER_RADIUS_M)
 		var spot: Vector2 = EnemySenses.best_cover(e, target, boxes, pit.claims(e))
 		if spot != Vector2.INF:
@@ -114,22 +127,33 @@ func _plan(pit: EnemyPit, map: GuardRouteMap) -> void:
 	elif e.sees:
 		_strafe = true
 		_destination = Vector2.INF
+		route_pending = false
 	else:
-		_set_goal(target, map)
+		_set_goal(target, map, true)
 
 
-func _set_goal(goal: Vector2, map: GuardRouteMap) -> void:
+func _set_goal(goal: Vector2, map: GuardRouteMap, known_blocked: bool = false) -> void:
 	agent.goal = goal.clamp(map.region().position, map.region().end)
 	if agent.goal.floor() == _destination.floor():
 		return
 	_destination = agent.goal
-	_next = 0
-	_route.clear()
-	if not map.clear_line(agent.pos, agent.goal):
+	route_pending = (
+		(known_blocked and agent.goal == goal) or not map.clear_line(agent.pos, agent.goal)
+	)
+	if not route_pending:
+		_route.clear()
+	retry_route(map)
+
+
+func retry_route(map: GuardRouteMap) -> void:
+	if route_pending and map.searches < search_ceiling:
+		_next = 0
 		_route = map.route(agent.pos, agent.goal)
+		route_pending = false
 
 
 func _walk() -> Vector2:
+	# A queued route keeps its last bends, then steers directly until its search slot.
 	if _next < _route.size() and agent.pos.distance_to(_route[_next]) < 0.4:
 		_next += 1
 	if _next < _route.size():
@@ -163,7 +187,7 @@ func swing(h: Fighter, arena: CombatArena, map: GuardRouteMap) -> void:
 	e.cooldown = e.arch.weapon.cooldown_ticks
 	e.token = false
 	if to.length() <= reach and e.aim.dot(to.normalized()) >= EnemyPit.MELEE_ARC_COS:
-		if map.clear_line(h.pos, arena.rivet.pos):
+		if map.sight_line(h.pos, arena.rivet.pos):
 			arena.hit_dir = e.aim
 			arena.hit_at = arena.rivet.pos
 			arena.damage(arena.rivet, e.arch.production_damage, h.id, e.arch.weapon.id, &"melee")

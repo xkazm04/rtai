@@ -2,7 +2,9 @@ class_name ArenaSquad
 extends RefCounted
 ## Mirrors only active combatants. Token assignment and all motor neighbours use fighter ID
 ## order. Each hostile checks sight at most twice and scans the living neighbours once per tick.
-## The staggered goal-search budget is in SquadMind. GuardBrain owns every real projectile.
+## Planning slots are shared across living guards. GuardBrain owns every real projectile.
+
+const ROUTES_PER_TICK: int = 2
 
 var pit: EnemyPit
 var minds: Dictionary[int, SquadMind] = {}
@@ -71,9 +73,22 @@ func assign(arena: CombatArena) -> Array[Fighter]:
 		else:
 			mind.agent.token = false
 	minds = active
+	_schedule()
 	EnemySquad.assign(shooters, pit.rivet_pos, pit.roster)
 	_update_morale()
 	return ordered
+
+
+## Agents are already sorted by id. Drain last tick's requests before admitting new ones.
+func _schedule() -> void:
+	var slots: int = ceili(float(pit.agents.size()) / SquadMind.PLAN_TICKS)
+	var cover_ceiling: int = _map.cover_searches + slots
+	var route_ceiling: int = _map.searches + ROUTES_PER_TICK
+	for e: EnemyAgent in pit.agents:
+		var mind: SquadMind = minds[e.id]
+		mind.cover_ceiling = cover_ceiling
+		mind.search_ceiling = route_ceiling
+		mind.retry_route(_map)
 
 
 func _update_morale() -> void:
@@ -87,7 +102,7 @@ func step(h: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
 	var mind: SquadMind = minds[h.id]
 	var e: EnemyAgent = mind.agent
 	e.pos = h.pos
-	e.sees = _map.clear_line(e.pos, pit.rivet_pos)
+	e.sees = _map.sight_line(e.pos, pit.rivet_pos)
 	var desired: Vector2 = mind.velocity(pit, _map, _fallen if _wave_ids.has(h.id) else 0.0)
 	if h.swing_left > 0:
 		desired = Vector2.ZERO
@@ -106,7 +121,7 @@ func step(h: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
 func _ranged(mind: SquadMind, h: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
 	var e: EnemyAgent = mind.agent
 	var ready: bool = e.token and e.sees and h.pos.distance_to(pit.rivet_pos) <= e.arch.attack_m
-	if not ready or not _map.clear_line(h.pos, pit.rivet_pos):
+	if not ready or not _map.sight_line(h.pos, pit.rivet_pos):
 		if h.burst_left > 0:
 			mind.paused_rounds = h.burst_left
 		h.burst_left = 0

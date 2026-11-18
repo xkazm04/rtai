@@ -10,6 +10,8 @@ var sampled: Callable
 var hostile_us: int
 var stepped: int
 var costs: Array[int] = []
+var sight_total: int = 0
+var peak_sight: int
 var assignment_us: int
 var assignment_ticks: int
 var rounds: int
@@ -40,9 +42,10 @@ static func attach(arena: CombatArena) -> FightProbeArena:
 func step(p_tick: int) -> void:
 	hostile_us = 0
 	stepped = 0
+	peak_sight = 0
 	fired.clear()
 	states.clear()
-	if squad_ai != null:
+	if squad_ai != null and rivet.alive():
 		_started_us = Time.get_ticks_usec()
 	super.step(p_tick)
 
@@ -59,9 +62,18 @@ func _step_hostile(h: Fighter) -> void:
 	var before: Vector2 = h.pos
 	var count: int = shots.size()
 	var telling: bool = guard_tell != null and (h.tell_left > 0 or h.burst_left > 0)
+	var sights: int = guard_map.sight_checks if squad_ai != null else 0
+	var pursuit: GuardPursuit = h.pursuit if squad_ai == null else null
+	var age: int = pursuit._ticks if pursuit != null else -1
 	var start: int = Time.get_ticks_usec()
 	super._step_hostile(h)
 	var elapsed: int = Time.get_ticks_usec() - start
+	var checks: int = guard_map.sight_checks - sights if squad_ai != null else 0
+	if pursuit != null and pursuit._ticks != age:
+		# GuardPursuit.advance performs one target LOS on first advance or a refresh slot.
+		checks = int(age == 0 or (age + h.id) % GuardPursuit.CHECK_TICKS == 0)
+	peak_sight = maxi(peak_sight, checks)
+	sight_total += checks
 	hostile_us += elapsed
 	costs.append(elapsed)
 	stepped += 1
@@ -88,6 +100,10 @@ func _state(h: Fighter, before: Vector2, telling: bool) -> String:
 
 func _step_shots() -> void:
 	# All guards have stepped, including anyone whose new round hits or dies on this same tick.
+	if _started_us >= 0:
+		assignment_us += Time.get_ticks_usec() - _started_us
+		assignment_ticks += 1
+		_started_us = -1
 	if sampled.is_valid():
 		sampled.call()
 	super._step_shots()

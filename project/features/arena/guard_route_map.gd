@@ -8,6 +8,8 @@ const WALL_MARGIN_M: float = 0.01
 const SECTOR_M: float = 8.0
 
 var searches: int = 0
+var cover_searches: int = 0
+var sight_checks: int = 0
 var _grid: AStarGrid2D = AStarGrid2D.new()
 var _sectors: Dictionary[Vector2i, Array] = {}
 var _raw_sectors: Dictionary[Vector2i, Array] = {}
@@ -70,6 +72,7 @@ func _index_raw(box: Rect2) -> void:
 
 ## Raw cover faces within r metres. A building crossing sectors appears only once.
 func boxes_near(p: Vector2, r: float) -> Array[Rect2]:
+	cover_searches += 1
 	var lo: Vector2i = Vector2i(((p - Vector2.ONE * r) / SECTOR_M).floor())
 	var hi: Vector2i = Vector2i(((p + Vector2.ONE * r) / SECTOR_M).floor())
 	var found: Dictionary[Rect2, bool] = {}
@@ -99,6 +102,12 @@ func _add_box(box: Rect2) -> void:
 			if not _sectors.has(key):
 				_sectors[key] = []
 			_sectors[key].append(slab)
+
+
+## Perception and attack confirmation. Navigation also uses clear_line for body clearance.
+func sight_line(a: Vector2, b: Vector2) -> bool:
+	sight_checks += 1
+	return clear_line(a, b)
 
 
 func clear_line(a: Vector2, b: Vector2) -> bool:
