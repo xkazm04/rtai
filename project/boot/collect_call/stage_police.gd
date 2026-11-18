@@ -27,3 +27,15 @@ static func seen(stage: CollectCallStage) -> bool:
 		if h.alive() and h.pos.distance_to(at) <= sight * 2.0:
 			return true
 	return false
+
+
+## The stage's heat this tick: a kill witnessed while hostiles live raises it one level; the
+## stage's sighting steps the meter and goes to the city's sim police (n18 item 6, city_heat).
+static func step_heat(stage: CollectCallStage) -> void:
+	var witnessed: bool = stage.arena.kills_now > 0 and stage.arena.hostiles_alive() > 0
+	var saw: bool = seen(stage)
+	stage.heat.step(saw)
+	if stage.city_heat != null:
+		stage.city_heat.stage_seen = saw
+	if witnessed:
+		stage.heat.raise_by(1)

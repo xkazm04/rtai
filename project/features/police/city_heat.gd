@@ -23,6 +23,11 @@ var seen: bool = false
 ## Where a cop last saw Rivet (the investigate point); valid once `ever_seen`.
 var last_seen: Vector2 = Vector2.ZERO
 var ever_seen: bool = false
+## Quest 1 (item 6): the stage's own HeatMeter (stepped and raised by the stage) sets the level and
+## this only forwards it to the sim; null = the city's own meter (the sandbox).
+var quest_meter: HeatMeter = null
+## Quest 1: the stage saw Rivet this tick (its patrols and fighters), set by the stage.
+var stage_seen: bool = false
 var _violence: int = 0
 
 
@@ -30,16 +35,35 @@ func _init(p_city: CitySystem) -> void:
 	city = p_city
 
 
+## Quest 1's mount (the slice boot): sim police answer the stage's heat. Null when heat.json
+## city.quest1 is false (the quest's sim keeps its pre-n18 police). Register after the city.
+static func mount_quest(world: World, p_city: CitySystem, stage_meter: HeatMeter) -> CityHeat:
+	if not CityHeatTune.load_table().quest1:
+		return null
+	var h: CityHeat = CityHeat.new(p_city)
+	h.quest_meter = stage_meter
+	world.add_system(h)
+	return h
+
+
 func setup(ctx: WorldContext) -> void:
-	meter = HeatMeter.new(ctx.events)
 	tune = CityHeatTune.load_table()
-	meter.drain_ticks = tune.drain_ticks
+	meter = quest_meter if quest_meter != null else HeatMeter.new(ctx.events)
 	city.sim.set_police(tune.sim_tune)
-	patrol = CityPatrol.new(ctx.rng.stream(CityPatrol.STREAM), tune.patrol_cops)
+	var cops: int = tune.patrol_cops
+	if quest_meter != null:
+		cops = tune.quest1_patrol_cops
+		last_seen = city.target  # the quest opens on an alarm where Rivet stands
+		ever_seen = true
+	else:
+		meter.drain_ticks = tune.drain_ticks
+	patrol = CityPatrol.new(ctx.rng.stream(CityPatrol.STREAM), cops)
 	dispatch = CityDispatch.new(ctx.rng.stream(CityDispatch.STREAM))
 	dispatch.cars = tune.cars
 	dispatch.delay_ticks = tune.car_delay_ticks
 	dispatch.ring_m = tune.car_ring_m
+	if quest_meter != null:
+		dispatch.cars = tune.quest1_cars
 	roadblock = CityRoadblock.new()
 	roadblock.cars = tune.roadblock_cars
 	roadblock.delay_ticks = tune.roadblock_delay_ticks
@@ -52,14 +76,15 @@ func setup(ctx: WorldContext) -> void:
 
 
 func step(tick: int, _input: TickInput) -> void:
-	seen = cop_sees(city.sim, city.target, meter.sight_m)
+	seen = cop_sees(city.sim, city.target, meter.sight_m) or stage_seen
 	if seen:
 		last_seen = city.target
 		ever_seen = true
-	if _violence > 0 and seen:
-		meter.raise_by(1)
+	if quest_meter == null:
+		if _violence > 0 and seen:
+			meter.raise_by(1)
+		meter.step(seen)
 	_violence = 0
-	meter.step(seen)
 	city.sim.set_heat(meter.level if tune.living else -1, last_seen.x, last_seen.y)
 	@warning_ignore("return_value_discarded")
 	patrol.tick(city.sim, city.focus)

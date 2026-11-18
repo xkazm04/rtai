@@ -116,6 +116,7 @@ func _add_city() -> void:
 	city.target = city.focus
 	world.add_system(CityScare.new(stage, city))  # lane human-reactions: the street hears the fight
 	world.add_system(city)
+	stage.city_heat = CityHeat.mount_quest(world, city, stage.heat)  # n18 police item 6
 	if not stage.layout.ghost_cars.is_empty():  # after the stage, so a seized car moves this tick
 		@warning_ignore("return_value_discarded")
 		ArenaCars.attach_at(world, stage, stage.layout.ghost_cars)

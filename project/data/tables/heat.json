@@ -15,7 +15,7 @@
       3
     ],
     "crew": 2,
-    "doc": "n18 living police in the streamed city (CityHeat, the sim's set_police): drain_s_per_level replaces the quest's for the city; foot_cops[level] = cops engaged at heat 0..3 (nearest the last-seen point first); they search search_s once one is within arrive_m of it, then walk again; a free cop walks at walk_mps; patrol_cops foot cops are kept on the bubble's sidewalks (CityPatrol); cars[level] police cars are dispatched car_delay_s after the level rises (spawned on a road car_ring_m from the last-seen point), stop within car_stop_m of it and let crew foot cops out (a car stuck in traffic bail_s parks where it is and its crew walks on); at heat 3 a dispatched car brings a squad of `squad` cops instead (art looks squad_looks in turn: riot 6, SWAT 8), and roadblock_cars[level] cruisers park roadblock_delay_s after the rise across the road roadblock_past_m past the first junction roadblock_ahead_m ahead of Rivet's heading (CityRoadblock; traffic brakes for them; lifted with the claims); living_police false = the pre-n18 sim police (every cop pursues Rivet).",
+    "doc": "n18 living police in the streamed city (CityHeat, the sim's set_police): drain_s_per_level replaces the quest's for the city; foot_cops[level] = cops engaged at heat 0..3 (nearest the last-seen point first); they search search_s once one is within arrive_m of it, then walk again; a free cop walks at walk_mps; patrol_cops foot cops are kept on the bubble's sidewalks (CityPatrol); cars[level] police cars are dispatched car_delay_s after the level rises (spawned on a road car_ring_m from the last-seen point), stop within car_stop_m of it and let crew foot cops out (a car stuck in traffic bail_s parks where it is and its crew walks on); at heat 3 a dispatched car brings a squad of `squad` cops instead (art looks squad_looks in turn: riot 6, SWAT 8), and roadblock_cars[level] cruisers park roadblock_delay_s after the rise across the road roadblock_past_m past the first junction roadblock_ahead_m ahead of Rivet's heading (CityRoadblock; traffic brakes for them; lifted with the claims); quest1 true = quest 1's stage heat (its own meter and drain) drives the slice city's sim police the same way, with quest1_patrol_cops foot cops kept there and quest1_cars[level] cars dispatched (none: with the city's 2/3 cars and their squads the quest1_input bot never finishes the heat 3 hot walk) and the last-seen point starting where Rivet starts; living_police false = the pre-n18 sim police (every cop pursues Rivet).",
     "drain_s_per_level": 25,
     "foot_cops": [
       0,
@@ -25,6 +25,14 @@
     ],
     "living_police": true,
     "patrol_cops": 16,
+    "quest1": true,
+    "quest1_cars": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "quest1_patrol_cops": 6,
     "roadblock_ahead_m": [
       25,
       90

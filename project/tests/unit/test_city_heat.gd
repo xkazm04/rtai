@@ -104,3 +104,31 @@ func test_the_patrol_fills_the_bubble_with_foot_cops_on_sidewalks() -> void:
 	var snap: PackedFloat64Array = sim.snapshot()
 	for r: int in range(0, snap.size(), SimConst.SNAP_STRIDE):
 		assert_eq(sim.cell_at(snap[r + 4], snap[r + 5]), SimConst.C_WALK, "on a sidewalk")
+
+
+## n18 item 6: on quest 1 the stage's own meter drives the sim (CityHeat.quest_meter): the level
+## follows the stage's, the last-seen point starts where Rivet starts and moves when the stage
+## sees him, and the city's own kill rule and drain do not touch the stage's meter.
+func test_quest_mode_forwards_the_stage_meter_to_the_sim() -> void:
+	var stage_meter: HeatMeter = HeatMeter.new(_bus)
+	stage_meter.set_level(2)
+	_city.target = Vector2(280.5, 280.5)
+	var q: CityHeat = CityHeat.new(_city)
+	q.quest_meter = stage_meter
+	q.setup(WorldContext.new(_bus, null, null, RngRegistry.new(1)))
+	q.patrol.want = 0
+	assert_eq(q.last_seen, Vector2(280.5, 280.5), "the alarm point: where Rivet starts")
+	_city.target = Vector2(304.5, 290.5)  # behind the wall: no sim cop sees him
+	q.stage_seen = true  # a stage patrol does
+	_bus.pedestrian_struck.emit(3, true)
+	q.step(0, TickInput.new())
+	assert_eq(_city.sim.heat_level(), 2, "the sim answers the stage's level")
+	assert_eq(q.last_seen, Vector2(304.5, 290.5), "the stage's sighting moves the point")
+	assert_eq(stage_meter.level, 2, "the city's kill rule leaves the stage's meter alone")
+	q.stage_seen = false
+	for t: int in _heat.meter.drain_ticks + 1:
+		q.step(t + 1, TickInput.new())
+	assert_eq(stage_meter.level, 2, "the city's drain leaves it alone too (the stage steps it)")
+	stage_meter.set_level(0)
+	q.step(9999, TickInput.new())
+	assert_eq(_city.sim.heat_level(), 0)

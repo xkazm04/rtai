@@ -306,7 +306,7 @@
         "2026-11-10: n11 merge: n11-combat dev films and body probes on top of n12+tools+hero (files_past_soft_cap 66 -> 66)"
       ],
       "files": {
-        "project/boot/collect_call/collect_call_stage.gd": 262,
+        "project/boot/collect_call/collect_call_stage.gd": 261,
         "project/boot/collect_call/view/cast_view.gd": 230,
         "project/boot/collect_call/view/collect_call_view.gd": 237,
         "project/boot/collect_call/view/fx_view.gd": 271,

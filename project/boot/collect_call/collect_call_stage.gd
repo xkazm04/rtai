@@ -46,6 +46,8 @@ var last_line: String = ""
 ## on the invented arena).
 var cells: StageCells = null
 var follow: CitySystem = null
+## n18 police: the city's sim police answering this stage's heat (null: not connected).
+var city_heat: CityHeat = null
 ## The ghost powers' cars (ArenaCars: the arena's powers pad, quest 1's parked ghost_cars), or
 ## null when the stage has none (the invented quest arena).
 var vehicles: VehicleService = null
@@ -109,10 +111,7 @@ func step(p_tick: int, tick_input: TickInput) -> void:
 	_encounters()
 	_spawns()
 	StagePolice.step_patrols(self)
-	var witnessed: bool = arena.kills_now > 0 and arena.hostiles_alive() > 0
-	heat.step(StagePolice.seen(self))
-	if witnessed:
-		heat.raise_by(1)
+	StagePolice.step_heat(self)
 	router.step(heat.level)
 	_emit_events()
 	_respawn()

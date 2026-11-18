@@ -67,6 +67,22 @@
           "minimum": 0,
           "type": "integer"
         },
+        "quest1": {
+          "type": "boolean"
+        },
+        "quest1_cars": {
+          "items": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array"
+        },
+        "quest1_patrol_cops": {
+          "minimum": 0,
+          "type": "integer"
+        },
         "roadblock_ahead_m": {
           "items": {
             "exclusiveMinimum": 0,
@@ -129,6 +145,9 @@
         "foot_cops",
         "living_police",
         "patrol_cops",
+        "quest1",
+        "quest1_cars",
+        "quest1_patrol_cops",
         "roadblock_ahead_m",
         "roadblock_cars",
         "roadblock_delay_s",
