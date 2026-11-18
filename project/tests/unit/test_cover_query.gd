@@ -1,0 +1,37 @@
+extends GutTest
+
+const BOX: Rect2 = Rect2(-2, -1, 4, 2)
+
+
+func test_each_face_offers_an_outward_ground_point_and_two_peeks() -> void:
+	var solids: Dictionary[Rect2, String] = {BOX: "cover_low"}
+	for n: Vector2 in [Vector2.UP, Vector2.DOWN, Vector2.RIGHT, Vector2.LEFT]:
+		var face: Vector2 = BOX.get_center() + n * BOX.size * 0.5
+		var spots: Array[CoverQuery.CoverSpot] = CoverQuery.near(face + n, 1.0, solids, 0.5, 0.8)
+		assert_eq(spots.size(), 1)
+		var spot: CoverQuery.CoverSpot = spots[0]
+		assert_eq(spot.at, face + n * 0.5)
+		assert_eq(spot.normal, n)
+		assert_eq(spot.tangent.dot(n), 0.0)
+		assert_true(spot.low and spot.protects_shots)
+		assert_true(CoverQuery.protects(spot, face - n * 5.0))
+		assert_false(CoverQuery.protects(spot, face + n * 5.0))
+		var span: float = BOX.size.dot(spot.tangent.abs()) + 1.6
+		assert_almost_eq((spot.edge_b - spot.edge_a).dot(spot.tangent), span, 0.00001)
+
+
+func test_distance_then_geometry_break_ties_regardless_of_dictionary_order() -> void:
+	var a: Rect2 = Rect2(-4, -1, 2, 2)
+	var b: Rect2 = Rect2(2, -1, 2, 2)
+	var c: Rect2 = Rect2(-1, 3, 2, 1)
+	var first: Dictionary[Rect2, String] = {a: "cover_high", c: "bench", b: "wall_high"}
+	var reverse: Dictionary[Rect2, String] = {b: "wall_high", c: "bench", a: "cover_high"}
+	for solids: Dictionary[Rect2, String] in [first, reverse]:
+		var spots: Array[CoverQuery.CoverSpot] = CoverQuery.near(Vector2.ZERO, 3.0, solids)
+		assert_eq(spots.size(), 3)
+		assert_eq(spots[0].box, a)
+		assert_eq(spots[1].box, b)
+		assert_eq(spots[2].box, c)
+		assert_false(spots[0].low)
+		assert_false(spots[2].protects_shots)
+		assert_false(CoverQuery.protects(spots[2], Vector2(0, 6)))
