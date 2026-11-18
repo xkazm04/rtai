@@ -191,8 +191,18 @@ NEXT (session 3):
    GUT test, deleted): dispatched car 416 at (284.4,202) heading W pushes a STOPPED traffic car 2.2 m
    ahead (v 0, flags 0) at 0.9 m/s from t600 to t1350: that car queues for the junction west of it
    (x 264-271, y 200-207) whose reservation never frees; car 417 got through at t1050 and reached
-   (242,270) by t1350. So the pursuer is not the blocker: a reservation held upstream is. Next: print
-   owner[jt] for that junction and the owner's state (stuck? waiting? promoted?). Then: prove the jam's cause with a headless trace (copy the session-2
+   (242,270) by t1350. So the pursuer is not the blocker: a reservation held upstream is.
+   Owner trace (same run, junction tile (33,25), jt 6433): the owner is traffic car 117 (flags 0,
+   not promoted) at (266,192) heading S to turn W, v 0, inside a pile of 9 traffic cars all at v 0
+   within 7 m (x 263-270, y 189-198) from t300 on; its stuck timer reaches 14.7 s at t1100, so only
+   the 20 s stuck despawn frees the junction (~t1500). ORDINARY TRAFFIC GRIDLOCK, not a police rule.
+   Plan: (i) a dispatched car stuck en route (v < 0.5 for heat.json city.bail_s, e.g. 4 s; stuck_
+   counts since pursuers never `wait` under heat) parks where it is and its crew bails out on foot
+   (car_unload's condition: within car_stop_m OR stuck_ > bail_s), test on CityRoadMap with a
+   stopped traffic car ahead; (ii) check whether the pile-up also forms with heat -1 (pre-n18) on
+   the same seed: if yes it is a traffic defect for the Director (car_hit/car_route are police-owned
+   sim files, so I may fix it, but it moves the parity golden: decision line + re-bless).
+   Then: prove the rest of the jam's cause with a headless trace (copy the session-2
    pattern: a throwaway GUT test building World + CitySystem(native) + CityHeat, force heat 2 at
    CitySystem.START, print K_PCAR slot/pos/v/dir and res_/owner per 120 ticks; delete it after).
    Suspects, in order: (a) engaged cops searching IN the junction (traffic brakes for people ahead
