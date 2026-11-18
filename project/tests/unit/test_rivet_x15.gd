@@ -20,8 +20,48 @@ func test_a_card_on_an_x15_strip_divides_its_scale_by_res() -> void:
 	card.vframes = 1
 	card.set_meta(RivetFrames.ON, PISTOL)
 	assert_eq(RivetWalk.res_of(card), RivetWalk.RES)
-	card.set_meta(RivetFrames.ON, RivetStrips.DIR + "p70/" + RivetStrips.BASE)
+	card.set_meta(RivetFrames.ON, RivetStrips.DIR + "p55/rivet_eq_katana.png")
 	assert_eq(RivetWalk.res_of(card), 1.0, "a strip outside X15 stays 1:1")
+
+
+func test_base_strip_preserves_cell_size_and_boot_anchor_at_both_pitches() -> void:
+	var was: ViewMode = ViewMode._shared
+	for view: String in ["tilt70", "tilt"]:
+		ViewMode._shared = ViewMode.of(view)
+		var art: String = ViewMode.shared().art
+		var rig: CutRig = add_child_autofree(CutRig.new())
+		rig.plan = RivetPlan.build()
+		rig.body = Node2D.new()
+		rig.head = Node2D.new()
+		rig.add_child(rig.body)
+		rig.add_child(rig.head)
+		var card: Sprite2D = Sprite2D.new()
+		rig.head.add_child(card)
+		rig.head_card = card
+		RivetFrames.step(rig)
+		var path: String = str(card.get_meta(RivetFrames.ON))
+		assert_eq(path, RivetStrips.DIR + art + "/" + RivetStrips.BASE)
+		var cell: Vector2 = card.texture.get_size() / Vector2(card.hframes, card.vframes)
+		var old: Vector2 = Vector2(164, 124) if art == "p70" else Vector2(101, 117)
+		assert_almost_eq(cell, old * 1.5, Vector2.ONE * 0.51)
+		var metres: float = 1.65 if art == "p70" else 1.95
+		var old_scale: float = metres * PlayerScale.k() * CharacterRigs.PX_PER_M / 110.0
+		assert_almost_eq(card.global_scale * cell, old * old_scale, Vector2.ONE * 0.5)
+		assert_eq(card.offset.y + cell.y, RivetFrames.PAD_PX)
+	ViewMode._shared = was
+
+
+func test_base_profile_boot_rows_allow_for_gpu_block_padding() -> void:
+	# D3D12 pads the old 117 px p55 strip to 120. Its on-screen boot sat 4 px higher
+	# than the uncompressed canvas predicted at 64 px/m (the same-tick city film).
+	for art: String in ["p70", "p55"]:
+		var rel: String = RivetStrips.DIR + art + "/" + RivetStrips.BASE
+		var path: String = ProjectSettings.globalize_path(rel)
+		var img: Image = Image.load_from_file(path)
+		@warning_ignore("integer_division")
+		var w: int = img.get_width() / RivetFrames.BASE_CELLS
+		var cell: Image = img.get_region(Rect2i(w * 2, 0, w, img.get_height()))
+		assert_eq(cell.get_height() - cell.get_used_rect().end.y, 0 if art == "p70" else 6)
 
 
 func test_the_katana_strip_is_its_110_cut_times_res() -> void:

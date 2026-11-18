@@ -166,6 +166,8 @@
    },
    "rivet_frames": {
     "act_k": 0.97,
+    "fig_h": 165,
+    "layout_h": 110,
     "counts": "5,6",
     "left": "rivet_55_left.png",
     "sheet": "rivet_55_v2.png"
@@ -368,6 +370,8 @@
    },
    "rivet_frames": {
     "act_k": 0.97,
+    "fig_h": 165,
+    "layout_h": 110,
     "counts": "5,6",
     "left": "rivet_70_left_v4.png",
     "sheet": "rivet_70_v3.png"
