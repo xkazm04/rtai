@@ -143,6 +143,11 @@
       "additionalProperties": {
         "additionalProperties": false,
         "properties": {
+          "alt": {
+            "description": "a style about half the buildings of this style draw instead (FacadeStrips.style_at)",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
           "art": {
             "pattern": "^res://",
             "type": "string"
