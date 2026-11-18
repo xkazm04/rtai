@@ -5,11 +5,11 @@ extends Node
 ## Usage: godot --rendering-driver d3d12 --path project res://dev/view/zone_frame.tscn --
 ##   --out=<dir> [--at=<name>:<x>,<y>;...] [--place=<id>,...] [--zooms=1,1.5]
 ##   [--drive=<x0>,<y0>,<x1>,<y1>,<mps>] (one PNG every 2nd frame at the first zoom, 30 fps)
-##   [--settle=<frames>] [--look=<id>]; --view=<id> is read by ViewMode.
+##   [--settle=<frames>] [--start-tick=<world tick after settling>] [--look=<id>]
 
 const MASTER_SEED: int = 91
 const KNOWN: PackedStringArray = [
-	"--out", "--at", "--place", "--zooms", "--drive", "--settle", "--look", "--view"
+	"--out", "--at", "--place", "--zooms", "--drive", "--settle", "--start-tick", "--look", "--view"
 ]
 
 var _out: String = "user://zone_frame"
@@ -18,6 +18,7 @@ var _view: CityView = null
 var _shots: Array[Array] = []
 var _zooms: Array[float] = [1.0, 1.5]
 var _settle: int = 60
+var _start_tick: int = -1
 var _look: StringName = &""
 var _drive: PackedFloat32Array = PackedFloat32Array()
 
@@ -74,6 +75,7 @@ func _parse() -> Dictionary:
 		args[key] = arg.substr(key.length() + 1)
 	_out = str(args.get("--out", _out))
 	_settle = str(args.get("--settle", "60")).to_int()
+	_start_tick = str(args.get("--start-tick", "-1")).to_int()
 	_look = StringName(str(args.get("--look", "")))
 	if args.has("--zooms"):
 		_zooms.clear()
@@ -129,11 +131,18 @@ func _drive_clip() -> bool:
 	for f: int in _settle:
 		await get_tree().process_frame
 	var ok: bool = true
+	if _start_tick >= 0 and _view.clock.tick() > _start_tick:
+		Log.error("zone_frame", "warm-up passed the requested start tick %d" % _start_tick)
+		return false
+	while _view.clock.tick() < _start_tick:
+		await get_tree().process_frame
 	for f: int in frames:
 		_focus(a.lerp(b, float(f) / frames))
 		await get_tree().process_frame
 		if f % 2 == 0:
 			ok = await _save("drive-%05d" % floori(f * 0.5)) and ok
+			if f == 0 or f == frames - 2:
+				Log.info("zone_frame", "drive frame %d world tick %d" % [f, _view.clock.tick()])
 	return ok
 
 

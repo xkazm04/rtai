@@ -1,0 +1,136 @@
+{
+  "schema": "gtai.zone-traffic-film/1",
+  "master_dir": "C:/Users/kazda/kiro/gtai-masters/n19/gfx/zones",
+  "scene": "res://dev/view/zone_frame.tscn",
+  "master_seed": 91,
+  "ppm": 32,
+  "window_px": [
+    1280,
+    800
+  ],
+  "sim_hz": 60,
+  "clip_fps": 30,
+  "clip_seconds": 10,
+  "requested_start_tick": 240,
+  "comparison_tick": 418,
+  "drive": {
+    "docks": [
+      1932,
+      1036,
+      1812,
+      1036,
+      12
+    ],
+    "downtown": [
+      1164,
+      1036,
+      1044,
+      1036,
+      12
+    ]
+  },
+  "shots": {
+    "before-docks-top": {
+      "movie": "before-docks-top/traffic.mp4",
+      "still": "before-docks-top/drive-00088.png",
+      "world_ticks": [
+        242,
+        840
+      ]
+    },
+    "after-docks-top": {
+      "movie": "after-docks-top/traffic.mp4",
+      "still": "after-docks-top/drive-00088.png",
+      "world_ticks": [
+        242,
+        840
+      ]
+    },
+    "before-docks-tilt70": {
+      "movie": "before-docks-tilt70/traffic.mp4",
+      "still": "before-docks-tilt70/drive-00088.png",
+      "world_ticks": [
+        242,
+        840
+      ]
+    },
+    "after-docks-tilt70": {
+      "movie": "after-docks-tilt70/traffic.mp4",
+      "still": "after-docks-tilt70/drive-00088.png",
+      "world_ticks": [
+        242,
+        840
+      ]
+    },
+    "before-downtown-top": {
+      "movie": "before-downtown-top/traffic.mp4",
+      "still": "before-downtown-top/drive-00088.png",
+      "world_ticks": [
+        242,
+        840
+      ]
+    },
+    "after-downtown-top": {
+      "movie": "after-downtown-top/traffic.mp4",
+      "still": "after-downtown-top/drive-00088.png",
+      "world_ticks": [
+        242,
+        840
+      ]
+    },
+    "before-downtown-tilt70": {
+      "movie": "before-downtown-tilt70/traffic.mp4",
+      "still": "before-downtown-tilt70/drive-00088.png",
+      "world_ticks": [
+        242,
+        840
+      ]
+    },
+    "after-downtown-tilt70": {
+      "movie": "after-downtown-tilt70/traffic.mp4",
+      "still": "after-downtown-tilt70/drive-00088.png",
+      "world_ticks": [
+        242,
+        840
+      ]
+    }
+  },
+  "sheets": [
+    {
+      "file": "districts-top.png",
+      "left": "after-docks-top",
+      "right": "after-downtown-top",
+      "changed_pixels": 780650
+    },
+    {
+      "file": "docks-top-before-after.png",
+      "left": "before-docks-top",
+      "right": "after-docks-top",
+      "changed_pixels": 12438
+    },
+    {
+      "file": "downtown-top-before-after.png",
+      "left": "before-downtown-top",
+      "right": "after-downtown-top",
+      "changed_pixels": 17418
+    },
+    {
+      "file": "districts-tilt70.png",
+      "left": "after-docks-tilt70",
+      "right": "after-downtown-tilt70",
+      "changed_pixels": 808550
+    },
+    {
+      "file": "docks-tilt70-before-after.png",
+      "left": "before-docks-tilt70",
+      "right": "after-docks-tilt70",
+      "changed_pixels": 11587
+    },
+    {
+      "file": "downtown-tilt70-before-after.png",
+      "left": "before-downtown-tilt70",
+      "right": "after-downtown-tilt70",
+      "changed_pixels": 16221
+    }
+  ]
+}

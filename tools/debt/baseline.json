@@ -59,7 +59,8 @@
         "2026-11-17: n18 districts: dev/view/city_zone_map.gd, the headless plan of the generated city per zone (cells, zone tint, numbers JSON); a -s script has no LaunchArgs autoload, so it reads OS args as dev/bake_city.gd does (dev_loc 21754 -> 21849)",
         "2026-11-17: n18 districts: dev/view/zone_frame.gd, zone stills + a straight drive clip through the generated city (the evidence of items 3 and 6); its flags are its own (KNOWN), not game flags, so it reads OS args as dev/showcase/city_frame.gd does (dev_loc 21849 -> 21992)",
         "2026-11-18: n18 districts item 5: dev/bots BotRoute (+route use in CollectCallBot) so the quest bot can walk to Dock 9 on the city's dock place under --quest1-places; dev only, not shipped (dev_loc 21992 -> 22089)",
-        "2026-11-18: The 80-line headless arena cost scene measures 400 mobile guard approaches, including cold path searches and the open-street control. (dev_loc 22644 -> 22724)"
+        "2026-11-18: The 80-line headless arena cost scene measures 400 mobile guard approaches, including cold path searches and the open-street control. (dev_loc 22644 -> 22724)",
+        "2026-11-18: n19 gfx: fixed-seed traffic census over every chunk and synchronized world ticks for district film comparisons (dev_loc 22724 -> 22800)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -89,11 +90,11 @@
         "project/dev/selftest": 1454,
         "project/dev/servo": 434,
         "project/dev/showcase": 6775,
-        "project/dev/sim": 725,
-        "project/dev/view": 433,
+        "project/dev/sim": 792,
+        "project/dev/view": 442,
         "project/dev/weapon_art": 506
       },
-      "total": 22724
+      "total": 22800
     },
     "direct_cmdline_reads": {
       "accepted": [
