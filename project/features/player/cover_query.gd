@@ -1,9 +1,6 @@
 class_name CoverQuery
 extends RefCounted
-## Enemy and player API. solids maps world Rect2 to station kind (VaultProbe.boxes), or city
-## bounds to texture name (VaultCity.collect). Only station solids stop shots. near returns
-## faces on the asker's side, within radius_m of the standing point. By default an enemy uses
-## combat.json's human radius and leans one body radius. Pass fighter-specific sizes as needed.
+## Station and city face queries for enemies and Rivet. The API holds no player state.
 
 
 class CoverSpot:
@@ -15,6 +12,7 @@ class CoverSpot:
 	var low: bool
 	var edge_a: Vector2
 	var edge_b: Vector2
+	## True for the station solid kinds whose boxes stop ordinary shots in ArenaDodges.cull.
 	var protects_shots: bool
 	var distance_sq: float
 
@@ -31,6 +29,13 @@ class CoverSpot:
 static var _human_radius: float = -1.0
 
 
+## Finds outward faces whose standing point is within radius_m of point, both in world metres.
+## solids maps world boxes (Rect2) to station kinds (VaultProbe.boxes) or city kinds
+## (VaultCity.collect).
+## body_radius offsets the fighter from the face, and peek_m extends each end along its tangent.
+## Both are metres. Negative defaults use the combat table's human radius and one body radius
+## respectively. City faces are returned with protects_shots false.
+## Results sort by increasing squared distance, then box position, box size and normal (x then y).
 static func near(
 	point: Vector2,
 	radius_m: float,
@@ -64,6 +69,8 @@ static func near(
 	return spots
 
 
+## Tests the segment from threat (world metres) to spot.at against the selected box. True only
+## when the station stops ordinary shots under ArenaDodges.cull and ArenaWalls.blocks crosses it.
 static func protects(spot: CoverSpot, threat: Vector2) -> bool:
 	if not spot.protects_shots:
 		return false
