@@ -395,3 +395,26 @@ answered in session 3; their row has not landed), no bench.lock present at 03:20
   rigs, n17 npc-react's), drawn while the sim says alive. Pre-n18 police arm, same seed: up to 6
   bodies, up to 3 within 4 m of a police car (the pre-n18 pursuit drives through people).
   evidence/n18-police/s4/heat3_bodies.json.
+- 03:46 Item 6 clip for the Call: quest1_clip.gd --ticks=120-1320 --ppm=32, flag off vs
+  --sim-police (119 s each), hstack -> gtai-masters/n18/police/
+  item6_quest1_simpolice_off_on_t120-1320_32ppm.mp4 (+ t1200 still), frames.json updated (15).
+  Numbers from the HUD crops: the hide clears (HUD 2/6) at clip frame 318 off / 300 on (t756 /
+  t720). Seen: the flag-off arm has the blue stage patrol by the dumpster at t720 and the
+  left-corner bodies at t1200 (finding a); the --sim-police arm has neither.
+- Finding (a) probe prepared: quest1_clip_rec.gd logs every 60 ticks "sim dead / killed, stage
+  dead" (dev, render-free), to run once the gate frees Godot.
+- 03:49 gate (snapshot) on a65570c92 started (native changed: cop_sees).
+- REPORT.md updated (rows 6b/7, findings b closed / c NEED director, Calls 4-5, merge notes).
+- Finding (c) re-checked: both LOD-1 paths would print atlas row 7 (overalls) for a variant 7 cop
+  (character_rigs.gd:135 and native render.cpp frame_of `vr = variant_ < CLIP_VARIANTS ? ..`), but
+  in the heat 3 frames (f_00272/f_00300, ~27 people on screen) every cop I can see draws blue.
+  Either the full-rig selection takes every cop first or the trace misses a step. Unconfirmed;
+  REPORT says so. A test would live in characters/ (not mine): NEED director.
+- Finding (a) CLOSED (not a death): quest1_clip_rec's new probe line, flag off (city.quest1 true,
+  the arm with the left-corner figures), t60-1320 every 60 ticks: sim dead 0, sim killed 0, stage
+  hostiles dead 0 (evidence/n18-police/s4/quest1_flag_off_deaths_t60-1320.txt). The lying cop +
+  ped at t1200 are rig reaction poses, as in (b). So the sim police kill nobody in quest 1's
+  opening with the hide rule in place.
+- Bench (item 7): the first try (--wait=10) sat 21 min in the queue behind districts' reel gate
+  (its quiet wait restarts with each reel view) and was stopped at 04:19, lock released; re-run
+  04:21 with --wait=0 under gtai-n18/bench.lock (CONTENDED by construction: 8 other Godot runs).

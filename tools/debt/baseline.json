@@ -53,7 +53,8 @@
         "2026-11-18: n18 police: heat_clip.gd counts police cars stopped at A (the heat 2 clip's number) (dev_loc 21939 -> 21947)",
         "2026-11-18: n18 police item 5: heat_clip --watch=block and HeatClipCount (the heat 3 clip's numbers); dev-only evidence tooling (dev_loc 21947 -> 22006)",
         "2026-11-18: n18 police item 6/7: --sim-police in LaunchArgs.KNOWN_FLAGS (the brief names the flag there; launch_args.gd 200 -> 201) and dev/sim/heat_cost.gd (the heat 3 cost probe) (dev_loc 22006 -> 22133)",
-        "2026-11-18: n18 police: dev evidence tooling (heat_clip body counts, quest1_clip --sim-police) (dev_loc 22133 -> 22165)"
+        "2026-11-18: n18 police: dev evidence tooling (heat_clip body counts, quest1_clip --sim-police) (dev_loc 22133 -> 22165)",
+        "2026-11-18: n18 police: quest1_clip_rec death probe line (dev evidence) (dev_loc 22165 -> 22170)"
       ],
       "files": {
         "project/dev/arena": 711,
@@ -63,7 +64,7 @@
         "project/dev/bosses": 55,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
-        "project/dev/frames": 1082,
+        "project/dev/frames": 1087,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
         "project/dev/gunplay": 674,
@@ -87,7 +88,7 @@
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 22165
+      "total": 22170
     },
     "direct_cmdline_reads": {
       "accepted": [
