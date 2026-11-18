@@ -67,6 +67,8 @@ func test_every_land_neighbour_case_has_quay_art() -> void:
 		assert_eq(case[0], land, "tile %s land sides" % t)
 		if land != 0:
 			assert_gte(case[1], 0, "tile %s (sides %d) has no quay art" % [t, land])
+		else:
+			assert_eq(case[1], -1, "open water %s draws no quay edge" % t)
 		seen[land] = true
 	for want: int in [0, DockPainter.EDGE_N, DockPainter.EDGE_S, DockPainter.EDGE_W]:
 		assert_true(seen.has(want), "case %d never occurs" % want)
