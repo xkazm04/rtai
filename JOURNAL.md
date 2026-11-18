@@ -358,3 +358,10 @@ greys it to near-invisible at 32 px/m.
 - v28 prepared (not baked: Godot held by the gate): Dock 9's harbour office roof (it471 A) on the quay-end shed of dock_9's
   block (zone key `office_roof`, `DockDresser.shed_or_office`; `CityPlaces.nearest_block` made static so the generator reuses
   the place rule without reading places.json). test_dock_office written.
+- 03:50 the bow-north tug (it473, A) fits a basin (14 m in the 30 m of open water between the pier aprons; the 42 m coaster
+  does not) and would draw flat in the water (a prop with no card row draws its plan: chunk_lift.gd:131-135). Not taken
+  tonight: its stern carries orange/black hazard stripes, the same colour-law question as the rope net and the 2x2 tower
+  roofs (an owner Call); consistent with those, I wait for the ochre twins below.
+REQUEST assets 14 (to the asset lane, from districts, order after 13): ochre-stripe twins (the hazard stripes in your
+yellow-ochre, like the `_ochre` tower roof twins) of `prop_dock_tug_plan_70_north` and `prop_dock_rope_net_70` (+ its plan
+twin); and the oil drums v2 card + plan with the rust-red drums turned grey-green/ochre (red is blood only). Names `_ochre`.
