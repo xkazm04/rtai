@@ -1111,6 +1111,11 @@
           150
         ],
         "grids": {
+          "p55": {
+            "cop/head_cap": "cop_patrol_molotov_torch.png",
+            "cop/head_helmet": "cop_riot_molotov_torch.png",
+            "cop/head_swat": "swat_molotov_torch.png"
+          },
           "p70": {
             "cop/head_cap": "cop_patrol_molotov_torch.png",
             "cop/head_helmet": "cop_riot_molotov_torch.png",
