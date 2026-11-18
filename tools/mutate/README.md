@@ -65,9 +65,19 @@ Combined runs share the sum of those budgets. `--timeout=N` sets the whole mutan
 Explicit oracle reports give mean seconds per mutant excluding setup, and kills by oracle and cause.
 JSON records the requested `oracles` in order and the last `oracle` reached by each mutant.
 
-On this machine the four-mutant sample above averaged **7.69 s/mutant**. All four differed in
-`c_00_00.bin`. The clean bake took 13.5 s after a one-time 182.3 s import. A surviving mutant
-pays for both full bakes. Focused unit tests have measured about 6.5 s/mutant.
+**Field notes: bake-check** (all runs CONTENDED, about 15 lanes on one machine). The full
+`kerb_dresser.gd` run scored **93.0% = 238 / (238 + 18)** across 261 mutants, with 0 timeouts
+and 5 invalid. It took 3013 s wall, averaging 11.41 s/mutant excluding setup. The earlier
+mapped unit tests killed 0/10.
+
+| Result | Observation |
+|---|---|
+| 238 kills | All 234 golden kills first differed in `c_00_00.bin` (one Godot start and one chunk, 6–17 s). Four mutants crashed at `:121` or `:122` by indexing `LANE_PAINT` out of range. |
+| Districts hand plants | Both changed `c_00_00.bin`: `:63` `true -> false` (parked car shadow) and `:104` `0.12 -> 1.12`. |
+| 18 survivors | The clean baseline took 21.3 s. Each survivor ran both full bakes (16–42 s). Fifteen `g.rnd()` changes (`<` to `<=` or `>=` to `>`) are effectively equivalent because a draw almost never equals the bound. At `:131`, dividing `LANE_M` by `side` equals multiplying by it (`side` is ±1). Two remain unexplained, `:101` `1 -> 0` and `:133` `0.0 -> 1.0`. The district may never reach those branches. |
+| 5 invalid | Deleting a call at `:55`, `:68`, `:95`, `:133` or `:159` left an unused local. Warnings-as-errors made each a parse error. |
+| Timeout floor | Deleting `busy.append` at `:56` timed out at 63 s with the old 2× budget and 60 s floor. The 3× budget with a 120 s floor let the oracle kill it in 16.5 s under contention. |
+| Negative controls | All four passed with `--oracle=bake-check --timeout=60`. The hang timed out in 61.0 s, the crash was killed (`crash`) in 7.4 s, the parse error was invalid in 2.6 s, and the clean file survived in 17.2 s. |
 
 ## Negative controls
 
