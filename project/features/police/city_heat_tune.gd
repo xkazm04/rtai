@@ -12,6 +12,8 @@ var patrol_cops: int = 0
 ## Quest 1 (the slice boot): its stage heat drives the sim police; the patrol it keeps there.
 var quest1: bool = false
 var quest1_patrol_cops: int = 0
+## Quest 1 under --sim-police: the city patrol replacing the stage's scripted patrols.
+var quest1_sim_police_cops: int = 0
 var quest1_cars: PackedInt32Array = PackedInt32Array([0, 0, 0, 0])
 ## Heat 2 dispatch: cars per level, the delay (ticks) and the spawn ring round the point (m).
 var cars: PackedInt32Array = PackedInt32Array([0, 0, 0, 0])
@@ -55,6 +57,7 @@ static func load_table(path: String = HeatMeter.TABLE) -> CityHeatTune:
 	out.patrol_cops = t.integer(c, "patrol_cops") if out.living else 0
 	out.quest1 = out.living and c.get("quest1", false) == true
 	out.quest1_patrol_cops = t.integer(c, "quest1_patrol_cops") if out.quest1 else 0
+	out.quest1_sim_police_cops = t.integer(c, "quest1_sim_police_cops") if out.quest1 else 0
 	var q: Array = t.array(c, "quest1_cars")
 	for k: int in mini(4, q.size()):
 		out.quest1_cars[k] = t.integer({"n": q[k]}, "n")

@@ -83,6 +83,10 @@
           "minimum": 0,
           "type": "integer"
         },
+        "quest1_sim_police_cops": {
+          "minimum": 0,
+          "type": "integer"
+        },
         "roadblock_ahead_m": {
           "items": {
             "exclusiveMinimum": 0,
@@ -148,6 +152,7 @@
         "quest1",
         "quest1_cars",
         "quest1_patrol_cops",
+        "quest1_sim_police_cops",
         "roadblock_ahead_m",
         "roadblock_cars",
         "roadblock_delay_s",

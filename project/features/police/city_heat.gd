@@ -28,6 +28,8 @@ var ever_seen: bool = false
 var quest_meter: HeatMeter = null
 ## Quest 1: the stage saw Rivet this tick (its patrols and fighters), set by the stage.
 var stage_seen: bool = false
+## Wall time this system's steps took, us (item 7's cost probe, dev/sim/heat_cost.gd).
+var cost_us: int = 0
 var _violence: int = 0
 
 
@@ -76,6 +78,12 @@ func setup(ctx: WorldContext) -> void:
 
 
 func step(tick: int, _input: TickInput) -> void:
+	var t0: int = Time.get_ticks_usec()
+	_step(tick)
+	cost_us += Time.get_ticks_usec() - t0
+
+
+func _step(tick: int) -> void:
 	seen = cop_sees(city.sim, city.target, meter.sight_m) or stage_seen
 	if seen:
 		last_seen = city.target
