@@ -7,6 +7,8 @@ extends RefCounted
 ## the mean so a near-still pair of frames still shows. No table: the even cycle.
 
 const MIN_SHARE: float = 0.4
+## Maximum walk step as a multiple of its table's mean. Unlisted walks use their drawn steps.
+const MAX_STEP_SHARE: Dictionary[String, float] = {"tonnage/p70": 1.25, "tonnage/p55": 1.0}
 ## Each drawn walk's measured stride, "<name>/<art>": the profile row's stance travel a frame
 ## (contact centres, tools foot_travel.py; a foot switch takes the mean). No entry: the even cycle.
 const TABLES: Dictionary[String, Array] = {
@@ -74,8 +76,34 @@ static func runs(name: String, art: String, row: int, off_rows: Dictionary = RUN
 
 ## The table of `name`'s walk under the art key `art`, empty for the even cycle.
 static func table_of(name: String, art: String) -> PackedFloat32Array:
-	var row: Array = TABLES.get(name + "/" + art, [])
-	return PackedFloat32Array(row)
+	var key: String = name + "/" + art
+	var row: Array = TABLES.get(key, [])
+	var max_share: float = MAX_STEP_SHARE.get(key, 0.0)
+	return capped_steps(PackedFloat32Array(row), max_share)
+
+
+## Keep the cycle total. Allocate the largest steps first so the remaining steps share
+## the excess in their original proportions. If only zero weights remain, split it evenly.
+static func capped_steps(steps: PackedFloat32Array, max_share: float) -> PackedFloat32Array:
+	if steps.is_empty() or max_share <= 0.0 or is_inf(max_share):
+		return steps
+	var remaining: float = 0.0
+	var order: Array[int] = []
+	for i: int in steps.size():
+		order.append(i)
+		remaining += steps[i]
+	var limit: float = maxf(1.0, max_share) * remaining / steps.size()
+	var weight: float = remaining
+	order.sort_custom(func(a: int, b: int) -> bool: return steps[a] > steps[b])
+	var out: PackedFloat32Array = steps.duplicate()
+	for rank: int in order.size():
+		var i: int = order[rank]
+		var fraction: float = steps[i] / weight if weight > 0.0 else 1.0 / (order.size() - rank)
+		var share: float = minf(limit, remaining * fraction)
+		out[i] = share
+		remaining -= share
+		weight -= steps[i]
+	return out
 
 
 ## The step table of `name`'s run grid under `art` (16 steps for a run16), empty for a run8.
