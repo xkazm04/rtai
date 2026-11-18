@@ -93,3 +93,45 @@ func test_the_car_ladder_is_bit_exact_native_vs_reference() -> void:
 		cops_max = maxi(cops_max, ref.get_counters()[SimConst.CN_COPS])
 	gut.p("car ladder parity: 1200 ticks bit for bit, up to %d cops (4 foot + crews)" % cops_max)
 	assert_eq(cops_max, 8, "both dispatched cars unloaded their crews")
+
+
+## Heat 3 on CityRoadMap.paint_cross: a dispatched car unloads a riot / SWAT squad, a roadblock of
+## two parked cruisers stands past the junction, a westbound car brakes behind it; then heat 0
+## lifts it all. Bit for bit, every tick, the art variants too.
+func test_the_heat_3_squad_and_roadblock_are_bit_exact_native_vs_reference() -> void:
+	if not CitySimNative.available():
+		pending("no native library in this build")
+		return
+	var ref: CitySimBackend = CitySimRef.new()
+	var nat: CitySimBackend = CitySimNative.new()
+	var tune: PackedFloat64Array = [
+		0.0, 3.0, 4.0, 6.0, 10.0, 3.0, 1.4, 2.0, 12.0, 4.0, 4.0, 6.0, 8.0
+	]
+	for sim: CitySimBackend in [ref, nat]:
+		CityRoadMap.paint_cross(sim)
+		sim.set_police(tune)
+		sim.set_heat(3, 340.5, 317.5)
+		assert_gte(CityRoadMap.dispatch_car(sim, 262.0), 0)
+		var rb: CityRoadblock = CityRoadblock.new()
+		rb.delay_ticks = 0
+		rb.ahead_m = Vector2(10.0, 90.0)
+		@warning_ignore("return_value_discarded")
+		rb.step(sim, 0, 3, Vector2(250.0, 322.0))
+		@warning_ignore("return_value_discarded")
+		rb.step(sim, 1, 3, Vector2(254.0, 322.0))
+		assert_eq(rb.placed, 2)
+		var car: Array = [SimConst.K_CAR, 330.0, CityRoadMap.LANE_W, -1.0, 0.0, 0, 0, 12.0]
+		assert_gte(sim.spawn(PackedFloat64Array(car + [CityRoadMap.LANE_W, 2])), 0)
+	var cops_max: int = 0
+	for t: int in 1200:
+		if t == 900:
+			for sim: CitySimBackend in [ref, nat]:
+				sim.set_heat(0, 340.5, 317.5)
+		for sim: CitySimBackend in [ref, nat]:
+			sim.step(SimClock.TICK_DT, 320.0, 320.0, 270.5, 290.5)
+		if ref.snapshot() != nat.snapshot() or ref.get_variants() != nat.get_variants():
+			fail_test("heat 3 ladder diverged at tick %d" % t)
+			return
+		cops_max = maxi(cops_max, ref.get_counters()[SimConst.CN_COPS])
+	gut.p("heat 3 parity: 1200 ticks bit for bit, up to %d cops (the squad)" % cops_max)
+	assert_eq(cops_max, 4, "the dispatched car unloaded a squad of 4")

@@ -36,7 +36,8 @@ func car_speed(i: int, x: float, y: float, vdes: float) -> float:
 
 
 ## Heat 2 (CityCore::car_unload): stopped there, the car parks and its crew gets out on the side
-## facing the point. hv: the car's heading x, y and speed after its step.
+## facing the point (heat 3: PT_SQUAD cops, looks PT_SQUAD_V0 / V1 in turn). hv: the car's
+## heading x, y and speed after its step.
 func car_unload(i: int, x: float, y: float, hv: PackedFloat64Array) -> void:
 	if _s.heat < 0 or _s.kind[i] != SimConst.K_PCAR or hv[2] >= 0.5 or not _engaged(i):
 		return
@@ -46,7 +47,8 @@ func car_unload(i: int, x: float, y: float, hv: PackedFloat64Array) -> void:
 	if ax * ax + ay * ay > r * r and _s.stuck[i] <= _p.tune[SimConst.PT_BAIL_S]:
 		return
 	_s.flags[i] = (_s.flags[i] & ~SimConst.F_ENGAGED) | SimConst.F_PARKED
-	var n: int = int(_p.tune[SimConst.PT_CREW])
+	var squad: bool = _s.heat >= 3  # heat 3: a riot / SWAT squad (the look alternates)
+	var n: int = int(_p.tune[SimConst.PT_SQUAD if squad else SimConst.PT_CREW])
 	var sx: float = -hv[1]
 	var sy: float = hv[0]
 	if sx * (_p.heat_x - x) + sy * (_p.heat_y - y) < 0.0:
@@ -58,7 +60,8 @@ func car_unload(i: int, x: float, y: float, hv: PackedFloat64Array) -> void:
 		var spec: PackedFloat64Array = PackedFloat64Array(
 			[SimConst.K_COP, x + sx * 2.0 + hv[0] * along, y + sy * 2.0 + hv[1] * along, sx, sy]
 		)
-		spec.append_array(PackedFloat64Array([SimConst.ART_COP, fl, 3.4, 0.0, 0.0]))
+		var look: float = _p.tune[SimConst.PT_SQUAD_V0 + k % 2] if squad else SimConst.ART_COP
+		spec.append_array(PackedFloat64Array([look, fl, 3.4, 0.0, 0.0]))
 		@warning_ignore("return_value_discarded")
 		_s.spawn(spec)
 

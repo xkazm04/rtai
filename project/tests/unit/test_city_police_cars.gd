@@ -154,3 +154,29 @@ func test_the_search_waits_for_a_crew_walking_to_the_point() -> void:
 			break
 	gut.p("bailed crew: foot cop + 2 crew within 4 m of the point at tick %d" % all_tick)
 	assert_gt(all_tick, 0, "the crew reached the point before the search ended")
+
+
+## Heat 3 (item 5): a dispatched car brings a squad of PT_SQUAD cops whose looks alternate
+## PT_SQUAD_V0 / V1 (riot 6, SWAT 8). Before: PT_CREW (2) patrol-look cops at every level.
+func test_at_heat_3_a_car_brings_a_riot_and_swat_squad() -> void:
+	var sim: CitySimRef = CitySimRef.new()
+	CityRoadMap.paint(sim)
+	var tune: PackedFloat64Array = TUNE.duplicate()
+	tune.append_array(PackedFloat64Array([4.0, 4.0, 6.0, 8.0]))
+	sim.set_police(tune)
+	assert_gte(CityRoadMap.dispatch_car(sim, 262.0), 0)
+	sim.set_heat(3, POINT.x, POINT.y)
+	for t: int in 600:
+		_step(sim, RIVET)
+		if CityRoadMap.count(sim, SimConst.K_COP) > 0:
+			break
+	assert_eq(CityRoadMap.count(sim, SimConst.K_COP), 4, "a squad of 4")
+	var looks: Dictionary[int, int] = {}
+	var v: PackedByteArray = sim.get_variants()
+	var snap: PackedFloat64Array = sim.snapshot()
+	for r: int in range(0, snap.size() - SimConst.SNAP_STRIDE + 1, SimConst.SNAP_STRIDE):
+		if snap[r] < SimConst.SNAP_PROJ_BASE and int(snap[r + 1]) == SimConst.K_COP:
+			var look: int = v[int(snap[r])]
+			looks[look] = looks.get(look, 0) + 1
+	gut.p("heat 3 squad looks: %s" % looks)
+	assert_eq([looks.get(6, 0), looks.get(8, 0)], [2, 2], "two riot, two SWAT")

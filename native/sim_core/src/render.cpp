@@ -41,7 +41,8 @@ int CityCore::frame_of(int i, int &cell) const {
 	else if (v_[i] < 0.2) cl = 0;
 	else if (m == M_FLEE || m == M_RIOT || k == K_COP || v_[i] > 3.0) cl = 2;
 	const int32_t *cp = clips_.data();
-	int b = (variant_[i] * CLIPS + cl) * 3;
+	int vr = variant_[i] < CLIP_VARIANTS ? variant_[i] : 5;  // a look past the table (SWAT 8): patrol
+	int b = (vr * CLIPS + cl) * 3;
 	int cnt = cp[b + 1];
 	if (cl == 4) f = std::min((int)(t2_[i] * cp[b + 2]), cnt - 1);
 	else if (cl == 3) f = cnt - 1;

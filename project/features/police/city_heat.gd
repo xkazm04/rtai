@@ -16,6 +16,8 @@ var tune: CityHeatTune = null
 var patrol: CityPatrol = null
 ## Heat 2-3: police cars sent to the last-seen point.
 var dispatch: CityDispatch = null
+## Heat 3: cruisers parked across the road ahead of Rivet.
+var roadblock: CityRoadblock = null
 ## A sim cop sees Rivet this tick.
 var seen: bool = false
 ## Where a cop last saw Rivet (the investigate point); valid once `ever_seen`.
@@ -38,6 +40,11 @@ func setup(ctx: WorldContext) -> void:
 	dispatch.cars = tune.cars
 	dispatch.delay_ticks = tune.car_delay_ticks
 	dispatch.ring_m = tune.car_ring_m
+	roadblock = CityRoadblock.new()
+	roadblock.cars = tune.roadblock_cars
+	roadblock.delay_ticks = tune.roadblock_delay_ticks
+	roadblock.ahead_m = tune.roadblock_ahead_m
+	roadblock.past_m = tune.roadblock_past_m
 	@warning_ignore("return_value_discarded")
 	ctx.events.pedestrian_struck.connect(_on_struck)
 	@warning_ignore("return_value_discarded")
@@ -59,6 +66,8 @@ func step(tick: int, _input: TickInput) -> void:
 	var lv: int = meter.level if tune.living else 0
 	@warning_ignore("return_value_discarded")
 	dispatch.step(city.sim, tick, lv, last_seen, city.focus)
+	@warning_ignore("return_value_discarded")
+	roadblock.step(city.sim, tick, lv, city.target)
 
 
 ## Violence from outside the sim's own events (a shot Rivet fired, later sources).
@@ -87,6 +96,7 @@ static func cop_sees(sim: CitySimBackend, at: Vector2, r: float) -> bool:
 func write_state(out: StreamPeerBuffer) -> void:
 	meter.write_state(out)
 	dispatch.write_state(out)
+	roadblock.write_state(out)
 	out.put_8(1 if ever_seen else 0)
 	out.put_double(last_seen.x)
 	out.put_double(last_seen.y)

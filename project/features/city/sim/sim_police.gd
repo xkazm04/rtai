@@ -13,7 +13,7 @@ var level: int = -1
 var heat_x: float = 0.0
 var heat_y: float = 0.0
 ## The ladder's tune (SimConst.PT_LEN, data/tables/heat.json `city`); kept across reset().
-var tune: PackedFloat64Array = [0.0, 3.0, 4.0, 6.0, 10.0, 3.0, 1.4, 2.0, 12.0, 4.0]
+var tune: PackedFloat64Array = [0.0, 3.0, 4.0, 6.0, 10.0, 3.0, 1.4, 2.0, 12.0, 4.0, 4.0, 6.0, 8.0]
 ## The police car rules (heat 2-3: dispatch stop, unload, bail; CitySimPoliceCars).
 var cars: CitySimPoliceCars
 var _s: CitySimState

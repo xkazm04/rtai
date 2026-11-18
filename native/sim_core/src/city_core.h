@@ -164,7 +164,7 @@ private:
 	int heat_level_ = -1;
 	double heat_x_ = 0.0, heat_y_ = 0.0;
 	// n18 living police (police.cpp): the ladder's tune and the search at the last-seen point
-	double pol_[PT_LEN] = {0.0, 3.0, 4.0, 6.0, 10.0, 3.0, 1.4, 2.0, 12.0, 4.0};
+	double pol_[PT_LEN] = {0.0, 3.0, 4.0, 6.0, 10.0, 3.0, 1.4, 2.0, 12.0, 4.0, 4.0, 6.0, 8.0};
 	int pol_cx_ = 0, pol_cy_ = 0, pol_level_ = -1;
 	double pol_search_ = 0.0;
 	bool pol_done_ = false;

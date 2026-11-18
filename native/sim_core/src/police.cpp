@@ -181,14 +181,15 @@ double CityCore::car_police_speed(const Car &c, double vdes) const {
 // Stopped there (under 0.5 m/s), or stuck en route longer than PT_BAIL_S (it follows traffic
 // under heat): the car parks and its crew gets out 2 m to the side facing the
 // point (the flow field does not see cars: a crew on the far side pressed into its own car),
-// 1.4 m apart along it, facing out.
+// 1.4 m apart along it, facing out. At heat 3 PT_SQUAD cops, looks PT_SQUAD_V0 / V1 in turn.
 void CityCore::car_unload(const Car &c) {
 	int i = c.i;
 	if ((flags_[i] & F_ENGAGED) == 0 || c.vv >= 0.5) return;
 	double ax = c.x - heat_x_, ay = c.y - heat_y_, r = pol_[PT_CAR_STOP_M];
 	if (ax * ax + ay * ay > r * r && stuck_[i] <= pol_[PT_BAIL_S]) return;  // or bail out, stuck
 	flags_[i] = (uint8_t)((flags_[i] & ~F_ENGAGED) | F_PARKED);
-	int n = (int)pol_[PT_CREW];
+	bool squad = heat_level_ >= 3;  // heat 3: a riot / SWAT squad (the look alternates)
+	int n = (int)pol_[squad ? PT_SQUAD : PT_CREW];
 	double sx = -c.hhy, sy = c.hhx;
 	if (sx * (heat_x_ - c.x) + sy * (heat_y_ - c.y) < 0.0) {
 		sx = -sx;
@@ -197,7 +198,8 @@ void CityCore::car_unload(const Car &c) {
 	for (int k = 0; k < n; k++) {
 		double along = (double)k * 1.4 - 0.7 * (double)(n - 1);
 		double spec[SP_LEN] = {(double)K_COP, c.x + sx * 2.0 + c.hhx * along,
-			c.y + sy * 2.0 + c.hhy * along, sx, sy, (double)ART_COP,
+			c.y + sy * 2.0 + c.hhy * along, sx, sy,
+			squad ? pol_[PT_SQUAD_V0 + k % 2] : (double)ART_COP,
 			(double)(F_PROMOTED | F_ENGAGED | F_CREW), 3.4, 0.0, 0.0};
 		spawn(spec);
 	}
