@@ -31,9 +31,10 @@ func test_hud_icon_falls_back_to_the_shipped_icon() -> void:
 	assert_null(feed.icon_of(&""), "unarmed: no icon")
 
 
-func test_all_seventeen_weapons_have_every_form() -> void:
+func test_all_eighteen_weapons_have_every_form() -> void:
 	var s: WeaponShowcase = WeaponShowcase.new()
 	var ids: Array[StringName] = [
+		&"assault_rifle",
 		&"pistol",
 		&"machine_pistol",
 		&"hand_cannon",

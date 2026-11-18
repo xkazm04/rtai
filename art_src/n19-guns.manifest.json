@@ -1,0 +1,47 @@
+{
+ "_doc": "Package 3a contractor rifle. Own reference derivatives and raw and keyed masters outside git. Recipes in tools/art/assault_rifle_parts.py and assault_rifle_strips.py.",
+ "masters": {
+  "contractor_prop": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/contractor_prop.png",
+   "layout_template": "project/features/combat/weapons/art/ground_rifle_70.png",
+   "model": "source derivative",
+   "prompt_ref": "tools/art/assault_rifle_parts.py",
+   "prompt_sha256": "7510544ad797114656076cf842abee5be09398a2cf949fc372087530e3006b9e",
+   "references": [
+    "project/features/combat/weapons/art/ground_rifle_70.png"
+   ],
+   "seed": null,
+   "sha256": "6626d0f64eb13c5701ed424acf27d23ee36fa4a459d9b91c68346d1d2a010066",
+   "tool": "Pillow"
+  },
+  "held_key": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/held_key.png",
+   "layout_template": "masters:n19/guns/masters/held_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/held.txt",
+   "prompt_sha256": "d188ef295c5ee58b6012e5ea389fc5c582d90d00f940611649352c1d3faadee8",
+   "references": [
+    "masters:n19/guns/masters/held_raw.png"
+   ],
+   "seed": null,
+   "sha256": "f988986acca45572f0158cce8ebdcd484874747be13858d6fdacbe52b5f3ec03",
+   "tool": "Pillow"
+  },
+  "held_raw": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/held_raw.png",
+   "layout_template": "masters:n19/guns/masters/contractor_prop.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/held.txt",
+   "prompt_sha256": "d188ef295c5ee58b6012e5ea389fc5c582d90d00f940611649352c1d3faadee8",
+   "references": [
+    "masters:n19/guns/masters/contractor_prop.png"
+   ],
+   "seed": null,
+   "sha256": "0233e134895541e8e686505f9c3adcfd93c78a0c01d90d2c32ac3594e5b2d9f2",
+   "tool": "image_gen"
+  }
+ }
+}
