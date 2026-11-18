@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Real mutation testing for one GDScript file: "do my tests bite on this file?"
 //   node tools/mutate/mutate.mjs --file=<project-relative .gd> [--max=N] [--ops=a,b] [--tests=<basenames>]
-//                                [--timeout=<s per mutant>] [--worktree=<path>] [--remove-worktree] [--json]
+//                                [--oracle=tests,bake-check] [--timeout=<s>] [--worktree=<path>] [--remove-worktree] [--json]
 // All mutation happens in a dedicated git worktree OUTSIDE the repo (see worktree.mjs and the README);
 // the main checkout is only read, and --json writes build/mutate/<slug>.json in it. Exit 0 for every
 // completed run (it is a measurement), 2 for usage or infrastructure errors.
@@ -9,21 +9,20 @@ import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from '
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { canonicalJson } from '../lib/canonical_json.mjs';
-import { resolveGodot, runProcess } from '../lib/godot.mjs';
+import { resolveGodot } from '../lib/godot.mjs';
 import { ROOT } from '../lib/repo.mjs';
 import { OPS, applyMutant, generateMutants, sampleMutants } from './operators.mjs';
-import { buildJson, classifyRun, formatReport, mutantLine } from './report.mjs';
+import { baseline, judgeMutant, ORACLES, oracleRunners } from './oracles.mjs';
+import { buildJson, formatReport, mutantLine } from './report.mjs';
 import { acquireLock, ensureWorktree, removeWorktree, restoreFile, slugOf, stemOf, writeSidecar }
   from './worktree.mjs';
 
 export class UsageError extends Error {}
 
-const FLAGS = ['--keep-worktree', '--remove-worktree', '--json'];
-const BASELINE_TIMEOUT_MS = 15 * 60 * 1000;
-
 /** argv -> options; unknown or malformed args throw UsageError. */
 export function parseArgs(argv) {
-  const o = { file: null, max: 0, ops: OPS, tests: [], timeoutS: 0, worktree: null, json: false, remove: false };
+  const o = { file: null, max: 0, ops: OPS, tests: [], oracles: ['tests'], explicit: false,
+    timeoutS: 0, worktree: null, json: false, remove: false };
   const unknown = [];
   for (const a of argv) {
     const k = a.split('=')[0];
@@ -31,6 +30,13 @@ export function parseArgs(argv) {
     if (k === '--file' && v) o.file = v.replace(/\\/g, '/');
     else if (k === '--max' && /^\d+$/.test(v) && Number(v) > 0) o.max = Number(v);
     else if (k === '--ops' && v) o.ops = v.split(',').filter(Boolean);
+    else if (k === '--oracle' && v) {
+      o.oracles = v.split(',');
+      if (o.oracles.some((name) => !ORACLES.includes(name))) {
+        throw new UsageError(`invalid --oracle=${v}; known: ${ORACLES.join(',')}`);
+      }
+      o.explicit = true;
+    }
     else if (k === '--tests' && v) o.tests = v.split(',').filter(Boolean).map((t) => t.replace(/\.gd$/, '').split('/').pop());
     else if (k === '--timeout' && /^\d+$/.test(v) && Number(v) > 0) o.timeoutS = Number(v);
     else if (k === '--worktree' && v) o.worktree = v;
@@ -72,21 +78,18 @@ async function pickTests(o, wt) {
   return fast.map(stemOf);
 }
 
-const runTests = (wt, tests, timeoutMs, env) => runProcess(process.execPath,
-  [join(wt, 'tools', 'tests', 'run_unit.mjs'), `--select=${tests.join(',')}`, '--no-rerun'], { cwd: wt, timeoutMs, env });
-
 /** Runs every mutant; the file is restored (and byte-verified) after each one. */
-async function mutateLoop({ file, wt, target, original, mutants, tests, timeoutMs, env }) {
+async function mutateLoop({ file, target, original, mutants, names, runners, timeoutMs, oracles }) {
   const results = [];
   const source = original.toString('utf8');
   for (const [i, m] of mutants.entries()) {
     writeFileSync(target, Buffer.from(applyMutant(source, m), 'utf8'));
-    let r;
-    try { r = await runTests(wt, tests, timeoutMs, env); } finally { restoreFile(target, original); }
-    const c = classifyRun(r);
-    if (c.infra) throw new Error(`infrastructure failure on mutant ${m.id} (line ${m.line}): ${c.infra}`);
-    results.push({ ...m, ...c, ms: r.durationMs });
-    note(`[${i + 1}/${mutants.length}] ${mutantLine(file, { ...m, ...c })}  (${(r.durationMs / 1000).toFixed(1)} s)`);
+    let decision;
+    try { decision = await judgeMutant(names, runners, timeoutMs); } finally { restoreFile(target, original); }
+    if (decision.infra) throw new Error(`infrastructure failure on mutant ${m.id} (line ${m.line}): ${decision.infra}`);
+    const result = { ...m, ...decision };
+    results.push(result);
+    note(`[${i + 1}/${mutants.length}] ${mutantLine(file, result, oracles)}  (${(result.ms / 1000).toFixed(1)} s)`);
   }
   return results;
 }
@@ -118,27 +121,24 @@ export async function main(argv) {
     const all = generateMutants(original.toString('utf8'), { ops: o.ops });
     if (!all.length) throw new UsageError(`${o.file}: no mutants for ops ${o.ops.join(',')}`);
     const mutants = sampleMutants(all, o.max, o.file);
-    const tests = await pickTests(o, wt);
+    const tests = o.oracles.includes('tests') ? await pickTests(o, wt) : [];
     const env = { ...process.env, GODOT_BIN: g.bin };
-    note(`${mutants.length}/${all.length} mutant(s); baseline run of ${tests.join(', ')}`);
-    const base = await runTests(wt, tests, BASELINE_TIMEOUT_MS, env);
-    if (base.status !== 0 || base.timedOut) {
-      throw new Error(`baseline red: the mapped tests fail on the unmutated file (exit ${base.status}${base.timedOut ? ', timeout' : ''}); `
-        + `nothing mutated.\n${base.out.trim().split('\n').slice(-12).join('\n')}`);
-    }
-    const imp = /class cache stale[\s\S]*?--import (?:done|FAILED[^\n]*?) in ([\d.]+) s/.exec(base.out);
-    const timeoutMs = (o.timeoutS || Math.min(300, Math.max(90, Math.ceil(base.durationMs / 1000) * 3))) * 1000;
+    const oracles = o.explicit ? o.oracles : undefined;
+    note(`${mutants.length}/${all.length} mutant(s); baseline run of ${(oracles ?? tests).join(', ')}`);
+    const runners = oracleRunners(wt, tests, env, o.explicit);
+    const base = await baseline({ names: o.oracles, runners, wt, timeoutS: o.timeoutS, explicit: o.explicit, note });
+    const { timeoutMs } = base;
     note(`baseline green in ${(base.durationMs / 1000).toFixed(1)} s; per-mutant timeout ${timeoutMs / 1000} s`);
     sidecar = writeSidecar(target, original);
-    const results = await mutateLoop({ file: o.file, wt, target, original, mutants, tests, timeoutMs, env });
+    const results = await mutateLoop({ file: o.file, target, original, mutants, names: o.oracles, runners, timeoutMs, oracles });
     const totalMs = Date.now() - t0;
-    console.log(formatReport({ file: o.file, results, totalMs, tests, sampled: mutants.length < all.length ? all.length : 0 }));
+    console.log(formatReport({ file: o.file, results, totalMs, tests, oracles, sampled: mutants.length < all.length ? all.length : 0 }));
     if (o.json) {
       const dir = join(ROOT, 'build', 'mutate');
       mkdirSync(dir, { recursive: true });
       const out = join(dir, `${slugOf(o.file)}.json`);
-      writeFileSync(out, canonicalJson(buildJson({ file: o.file, head: wtInfo.head, tests, results, totalMs,
-        baselineMs: base.durationMs, firstImportMs: imp ? Math.round(Number(imp[1]) * 1000) : null,
+      writeFileSync(out, canonicalJson(buildJson({ file: o.file, head: wtInfo.head, tests, oracles, results, totalMs,
+        baselineMs: base.durationMs, firstImportMs: base.firstImportMs,
         total: all.length, max: o.max })));
       note(`wrote build/mutate/${slugOf(o.file)}.json`);
     }

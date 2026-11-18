@@ -31,29 +31,48 @@ export function tally(results) {
 const pct = (s) => (s === null ? 'n/a' : `${(s * 100).toFixed(1)}%`);
 
 /** `file:line op  before -> after  verdict` for one mutant. */
-export const mutantLine = (file, m) => `${file}:${m.line} ${m.op}  ${m.before.trim()} -> ${m.after === '' ? '(removed)' : m.after}  ${m.verdict}`;
+export function mutantLine(file, m, oracles) {
+  const line = `${file}:${m.line} ${m.op}  ${m.before.trim()} -> ${m.after === '' ? '(removed)' : m.after}  ${m.verdict}`;
+  if (!oracles) return line;
+  if (m.verdict === 'survived') return `${line} [${oracles.join(', ')}]`;
+  const reason = m.via === 'tests' ? m.detail : [m.via, m.detail].filter(Boolean).join(' ');
+  return `${line} [${m.oracle}: ${reason}]`;
+}
+
+function oracleStats(oracles, results) {
+  const kills = results.filter((m) => m.verdict === 'killed');
+  const total = results.reduce((sum, m) => sum + m.ms, 0);
+  const mean = results.length ? total / results.length / 1000 : 0;
+  const counts = Array.from(new Set(oracles), (name) => `${name} ${kills.filter((m) => m.oracle === name).length}`);
+  const via = new Map();
+  for (const m of kills) via.set(m.via, (via.get(m.via) ?? 0) + 1);
+  const causes = Array.from(via, ([name, count]) => `${name} ${count}`);
+  return `; ${mean.toFixed(2)} s/mutant; kills by oracle: ${counts.join(', ')}; by via: ${causes.join(', ') || 'none'}`;
+}
 
 /** Text report: survivors first, then timeouts, invalid, killed; then the score line. */
-export function formatReport({ file, results, totalMs, tests, sampled }) {
+export function formatReport({ file, results, totalMs, tests, sampled, oracles }) {
   const counts = tally(results);
   const order = ['survived', 'timeout', 'invalid', 'killed'];
-  const lines = [`mutate ${file}: ${results.length} mutant(s)${sampled ? ` (sampled from ${sampled})` : ''}, tests: ${tests.join(', ')}`];
+  const scope = [oracles && `oracles: ${oracles.join(', ')}`, (!oracles || tests.length) && `tests: ${tests.join(', ')}`];
+  const lines = [`mutate ${file}: ${results.length} mutant(s)${sampled ? ` (sampled from ${sampled})` : ''}, ${scope.filter(Boolean).join(', ')}`];
   for (const v of order) {
-    for (const m of results.filter((r) => r.verdict === v)) lines.push(`  ${mutantLine(file, m)}`);
+    for (const m of results.filter((r) => r.verdict === v)) lines.push(`  ${mutantLine(file, m, oracles)}`);
   }
   lines.push(`score ${pct(scoreOf(counts))} = killed ${counts.killed} / (killed ${counts.killed} + survived ${counts.survived});`
-    + ` timeout ${counts.timeout}, invalid ${counts.invalid}; ${(totalMs / 1000).toFixed(0)} s`);
+    + ` timeout ${counts.timeout}, invalid ${counts.invalid}; ${(totalMs / 1000).toFixed(0)} s`
+    + (oracles ? oracleStats(oracles, results) : ''));
   return lines.join('\n');
 }
 
 /** The --json document (canonical-JSON'd by the caller). */
-export function buildJson({ file, head, tests, results, totalMs, baselineMs, firstImportMs, total, max }) {
+export function buildJson({ file, head, tests, oracles, results, totalMs, baselineMs, firstImportMs, total, max }) {
   const counts = tally(results);
   return {
     schema: 'gtai.mutate/1', file, head, tests, counts, score: scoreOf(counts),
     mutants_total: total, max: max ?? null, baseline_ms: baselineMs, first_import_ms: firstImportMs ?? null,
-    total_ms: totalMs,
+    total_ms: totalMs, ...(oracles && { oracles }),
     mutants: results.map((m) => ({ id: m.id, line: m.line, col: m.col, op: m.op, before: m.before, after: m.after,
-      verdict: m.verdict, via: m.via, ms: m.ms })),
+      verdict: m.verdict, via: m.via, ms: m.ms, ...(oracles && { oracle: m.oracle }), ...(oracles && m.detail && { detail: m.detail }) })),
   };
 }
