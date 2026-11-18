@@ -1,0 +1,53 @@
+Kerf's planted feet at 32 px/m, p70 run16
+
+Eight stride_film runs, leg 2, 48 consecutive ticks per direction (245 through
+292). Kerf is on screen in the same octant on the first and last tick and on
+every tick between. All distances below are native screen pixels.
+
+ turn  facing         ground/tick   changes   mean ride   worst ride   worst identical art
+    0  right                 8.83        40         1.6        8.978                 9.007
+   45  toward right          8.12        47         0.0        0.000                 8.870
+   90  toward                7.78        47         0.0        0.000                16.713
+  135  toward left           8.32        46         0.2        7.992                 8.949
+  180  left                  8.82        41         1.3        8.980                10.012
+ -135  away left             8.82        39         1.8        9.355                 9.415
+  -90  away                  8.65        28         5.8       18.084                25.310
+  -45  away right            8.84        45         0.4        8.953                 9.442
+
+Ground/tick, changes, mean ride and worst ride use the n15 detector. Its
+fixed figure box includes moving scenery, particularly when running toward
+camera. A zero means that box changed on every tick. For the last column,
+group consecutive ticks whose displayed atlas cells have identical RGBA bytes
+and sum the same ground shifts within each group. This includes the final hold.
+Neither measurement tracks an individual foot across changes of drawing.
+
+The strict worst-hold target is below 9 px. Straight away is worst by both
+methods. The n15 detector finds 18.084 px at frames 6-8. The sprite trace finds
+25.310 px at frames 28-31 (ticks 273-276). Row 5 columns 3, 3, 4, 4 display one
+drawing for all four ticks. Row 1 has a similar three-tick hold running toward.
+
+Row 4 alternate trial
+Repacked the shipped right atlas from run8 and the keyed run16 sources using
+evidence/s14/tools/double_sheet.py. All 80 cells matched. Substituting only
+4_8.png and 4_10.png preserved all 78 other cells. Refilmed all eight octants.
+Six of 384 crops displayed an alternate. All other 378 matched pixel for
+pixel. Every table entry above was identical between shipped art and trial.
+The row 4 maximum by the n15 method was at C12, outside the changed slots.
+The longest identical-art ride on that row was at C8 on frames 13-14. Both
+ticks still select C8, so the new pose rides the same 9.442 px. At both zooms
+the trial tucks the front foot at C8 and extends it at C10. Retained the
+shipped atlas. The delivered alternates cover neither of the row 5 cells.
+
+Capture and measurement
+  stride_film with a logging-only _grab override (capture/n19_stride_probe.gd)
+  --rigs --ppm=32 --start=pad --film-form=kerf --film-turn=<turn>
+  --film-leg=2 --film-every=1 --film-frames=48 --film-out=<prefix>
+  --fixed-fps 60 --rendering-driver d3d12 --position 0,1440
+  python evidence/s15/tools/hold_ride.py <prefix> 2 48 0,45 70,150,190,222
+
+Master directory: C:/Users/kazda/kiro/gtai-masters/n19/anim/ghost-cells/
+  kerf_run_baseline_8dir_32ppm.png, kerf_run_trial_8dir_32ppm.png
+  kerf_away_hold_32ppm.png, kerf_row4_alternates_{32,64}ppm.png
+  raw/c/kerf_{baseline,trial}_pose_trace.tsv (tick, sheet, cell, ground shift)
+  raw/c/kerf_{baseline,trial}_hold_trace.txt and 768 original 32 px/m crops
+  capture/kerf_run16_alt.py (verified baseline and trial repack)
