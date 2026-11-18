@@ -1486,6 +1486,28 @@
         4
       ],
       "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_nav_buoys.png",
+      "class": "prop",
+      "id": 135,
+      "name": "dock_nav_buoys",
+      "size_m": [
+        2.2,
+        2.25
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_scrap_skip.png",
+      "class": "prop",
+      "id": 136,
+      "name": "dock_scrap_skip",
+      "size_m": [
+        2,
+        2.64
+      ],
+      "solid": true
     }
   ]
 }

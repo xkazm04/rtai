@@ -187,6 +187,10 @@
       "art": "res://features/city/art/view/<art>/prop_dock_lifebuoy.png",
       "cell_w_m": 0.76
     },
+    "dock_nav_buoys": {
+      "art": "res://features/city/art/view/<art>/prop_dock_nav_buoys.png",
+      "cell_w_m": 2.5
+    },
     "dock_oil_drums": {
       "art": "res://features/city/art/view/<art>/prop_dock_oil_drums.png",
       "cell_w_m": 2.21
@@ -198,6 +202,10 @@
     "dock_rope_net": {
       "art": "res://features/city/art/view/<art>/prop_dock_rope_net.png",
       "cell_w_m": 1.75
+    },
+    "dock_scrap_skip": {
+      "art": "res://features/city/art/view/<art>/prop_dock_scrap_skip.png",
+      "cell_w_m": 3.39
     },
     "down_bollards": {
       "art": "res://features/city/art/view/<art>/prop_down_bollards.png",
