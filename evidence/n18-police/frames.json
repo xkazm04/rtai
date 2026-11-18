@@ -1,5 +1,23 @@
 [
  {
+  "file": "item4_heat2_living_e7cb74202_32ppm_t2244.png",
+  "title": "Heat 2 in the sandbox city, t2244: the dispatched cars' crews reached A on foot (7 cops in the ring)",
+  "source": "godot --rendering-driver d3d12 --path project --fixed-fps 60 --resolution 1280x720 res://dev/sim/heat_clip.tscn -- --level=2 --police=living --seconds=40 (frame f_00561)",
+  "branch": "n18-police e7cb74202",
+  "ppm": 32,
+  "before": "item4_heat2_living_c19685d17_32ppm.mp4 (same run at c19685d17: crews released ~60 m off, max 4 within 4 m of A)",
+  "note": "Heat 2 raised at t180 at A (witnessed kill), Rivet moved 60 m off. Both cars bail out of junction traffic ~t900-960 (bail_s 4 s) 60-70 m from A, 2 crew each out; the search now waits while a crew cop walks in; all 4 crew within 4 m of A by t2244 (near A 7 = 3 foot + 4 crew; before: max 4, crew 0). Level 2 -> 1 at t1680 (25 s drain). Cars at A 0: they park where traffic held them, by design (bail)."
+ },
+ {
+  "file": "item4_heat2_living_e7cb74202_32ppm.mp4",
+  "title": "Heat 2 clip, 43 s at 15 fps (every 4th tick): cars dispatched, bail out of traffic, crews walk to A",
+  "source": "same run as the still, ffmpeg of the PNG sequence",
+  "branch": "n18-police e7cb74202",
+  "ppm": 32,
+  "before": "item4_heat2_living_c19685d17_32ppm.mp4",
+  "note": "item4_heat2_living_e7cb74202_timeline.json: heat, engaged, near A and every cop position per sample."
+ },
+ {
   "file": "item4_heat2_living_c19685d17_32ppm.mp4",
   "title": "Heat 2 clip at c19685d17: cars bail out of traffic, crews come on foot (search ends before they arrive)",
   "source": "heat_clip.tscn --level=2 --police=living --seconds=30",

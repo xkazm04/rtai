@@ -243,3 +243,17 @@ NEXT (session 3, replaces the list above where it differs):
 2. Item 5 (heat 3 squads + roadblock), item 6 (quest 1), item 7 (cost) as planned above.
 3. Not run yet: evidence run.mjs (look goldens), reel gate, bench.
 
+
+## Session 3 (2026-11-18 02:04-03:34)
+
+### MILESTONE item 4 heat 2 works (e7cb74202)
+The search clock at the last-seen point also waits while an engaged crew cop (F_CREW) is farther
+than arrive_m (native + reference; car rules split to `sim_police_cars.gd` / CitySimPoliceCars:
+sim_police.gd hit the 200-line ratchet). Test `test_the_search_waits_for_a_crew_walking_to_the_point`
+(CityRoadMap, foot cop at the point, a stopped car ahead of the dispatched car, search_s 2): before
+-1 (crew released 2 s after the foot cop's search began, never within 4 m), after: foot cop + 2 crew
+within 4 m at tick 1212. Parity bit-exact (1200 steps, mutation caught at 629), native core 0 failed.
+Heat 2 re-film (heat_clip --level=2 --seconds=40, e7cb74202): both cars bail out ~t900-960 60-70 m
+from A, all 4 crew within 4 m of A by t2244 (near A 7 = 3 foot + 4 crew; c19685d17: max 4, crew 0).
+Known: a crew stuck forever would hold the search until the heat drains (bounded by drain_s).
+Evidence: gtai-masters/n18/police item4_heat2_living_e7cb74202_32ppm{.mp4,_t2244.png}, timeline.
