@@ -1,0 +1,561 @@
+{
+  "production_before": "97d8f3498189",
+  "production_after": "0ecb743fb630",
+  "view": "combo",
+  "weapon": "electro_gun",
+  "impact_tick": 30,
+  "sim_hz": 60,
+  "subject_ids": {
+    "hat": 1,
+    "elder": 2,
+    "shopper": 4,
+    "worker": 3
+  },
+  "starting_frame_identical": {
+    "32": true,
+    "64": true
+  },
+  "before": {
+    "hat": {
+      "shock_drawn_first_90_ticks": 46,
+      "spans": [
+        {
+          "first_tick": 0,
+          "last_tick": 29,
+          "strip": "ped_hat_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 30,
+          "last_tick": 59,
+          "strip": "ped_hat_shock_hit.png",
+          "cell_row": 0
+        },
+        {
+          "first_tick": 60,
+          "last_tick": 80,
+          "strip": "ped_hat_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 81,
+          "last_tick": 88,
+          "strip": "ped_hat_shock_hit.png",
+          "cell_row": 0
+        },
+        {
+          "first_tick": 89,
+          "last_tick": 109,
+          "strip": "ped_hat_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 110,
+          "last_tick": 117,
+          "strip": "ped_hat_shock_hit.png",
+          "cell_row": 0
+        },
+        {
+          "first_tick": 118,
+          "last_tick": 139,
+          "strip": "ped_hat_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 140,
+          "last_tick": 168,
+          "strip": "ped_hat_shock_hit.png",
+          "cell_row": 0
+        }
+      ],
+      "peak_card_offset_world_px_first_90_ticks": 35.08,
+      "peak_card_offset_world_px_release_ticks_123_139": 22.18,
+      "distinct_card_offsets_first_90_ticks": 65
+    },
+    "elder": {
+      "shock_drawn_first_90_ticks": 46,
+      "spans": [
+        {
+          "first_tick": 0,
+          "last_tick": 29,
+          "strip": "ped_elder_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 30,
+          "last_tick": 59,
+          "strip": "ped_elder_shock_hit.png",
+          "cell_row": 0
+        },
+        {
+          "first_tick": 60,
+          "last_tick": 80,
+          "strip": "ped_elder_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 81,
+          "last_tick": 88,
+          "strip": "ped_elder_shock_hit.png",
+          "cell_row": 0
+        },
+        {
+          "first_tick": 89,
+          "last_tick": 109,
+          "strip": "ped_elder_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 110,
+          "last_tick": 117,
+          "strip": "ped_elder_shock_hit.png",
+          "cell_row": 0
+        },
+        {
+          "first_tick": 118,
+          "last_tick": 139,
+          "strip": "ped_elder_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 140,
+          "last_tick": 168,
+          "strip": "ped_elder_shock_hit.png",
+          "cell_row": 0
+        }
+      ],
+      "peak_card_offset_world_px_first_90_ticks": 35.39,
+      "peak_card_offset_world_px_release_ticks_123_139": 34.35,
+      "distinct_card_offsets_first_90_ticks": 66
+    },
+    "shopper": {
+      "shock_drawn_first_90_ticks": 46,
+      "spans": [
+        {
+          "first_tick": 0,
+          "last_tick": 29,
+          "strip": "ped_shopper_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 30,
+          "last_tick": 59,
+          "strip": "ped_shopper_shock_hit.png",
+          "cell_row": 0
+        },
+        {
+          "first_tick": 60,
+          "last_tick": 80,
+          "strip": "ped_shopper_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 81,
+          "last_tick": 88,
+          "strip": "ped_shopper_shock_hit.png",
+          "cell_row": 0
+        },
+        {
+          "first_tick": 89,
+          "last_tick": 109,
+          "strip": "ped_shopper_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 110,
+          "last_tick": 117,
+          "strip": "ped_shopper_shock_hit.png",
+          "cell_row": 0
+        },
+        {
+          "first_tick": 118,
+          "last_tick": 139,
+          "strip": "ped_shopper_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 140,
+          "last_tick": 168,
+          "strip": "ped_shopper_shock_hit.png",
+          "cell_row": 0
+        }
+      ],
+      "peak_card_offset_world_px_first_90_ticks": 34.57,
+      "peak_card_offset_world_px_release_ticks_123_139": 22.03,
+      "distinct_card_offsets_first_90_ticks": 66
+    },
+    "worker": {
+      "shock_drawn_first_90_ticks": 46,
+      "spans": [
+        {
+          "first_tick": 0,
+          "last_tick": 29,
+          "strip": "ped_worker_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 30,
+          "last_tick": 59,
+          "strip": "ped_worker_shock_hit.png",
+          "cell_row": 0
+        },
+        {
+          "first_tick": 60,
+          "last_tick": 80,
+          "strip": "ped_worker_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 81,
+          "last_tick": 88,
+          "strip": "ped_worker_shock_hit.png",
+          "cell_row": 0
+        },
+        {
+          "first_tick": 89,
+          "last_tick": 109,
+          "strip": "ped_worker_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 110,
+          "last_tick": 117,
+          "strip": "ped_worker_shock_hit.png",
+          "cell_row": 0
+        },
+        {
+          "first_tick": 118,
+          "last_tick": 139,
+          "strip": "ped_worker_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 140,
+          "last_tick": 168,
+          "strip": "ped_worker_shock_hit.png",
+          "cell_row": 0
+        }
+      ],
+      "peak_card_offset_world_px_first_90_ticks": 39.0,
+      "peak_card_offset_world_px_release_ticks_123_139": 27.96,
+      "distinct_card_offsets_first_90_ticks": 64
+    }
+  },
+  "after": {
+    "hat": {
+      "shock_drawn_first_90_ticks": 90,
+      "spans": [
+        {
+          "first_tick": 0,
+          "last_tick": 29,
+          "strip": "ped_hat_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 30,
+          "last_tick": 122,
+          "strip": "ped_hat_shock_hit.png",
+          "cell_row": 0
+        },
+        {
+          "first_tick": 123,
+          "last_tick": 127,
+          "strip": "ped_hat_between_fall.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 128,
+          "last_tick": 132,
+          "strip": "ped_hat_between_fall.png",
+          "cell_row": 2
+        },
+        {
+          "first_tick": 133,
+          "last_tick": 137,
+          "strip": "ped_hat_between_fall.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 138,
+          "last_tick": 139,
+          "strip": "ped_hat_between_fall.png",
+          "cell_row": 0
+        },
+        {
+          "first_tick": 140,
+          "last_tick": 168,
+          "strip": "ped_hat_walk.png",
+          "cell_row": 1
+        }
+      ],
+      "peak_card_offset_world_px_first_90_ticks": 9.73,
+      "peak_card_offset_world_px_release_ticks_123_139": 0.0,
+      "distinct_card_offsets_first_90_ticks": 35
+    },
+    "elder": {
+      "shock_drawn_first_90_ticks": 90,
+      "spans": [
+        {
+          "first_tick": 0,
+          "last_tick": 29,
+          "strip": "ped_elder_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 30,
+          "last_tick": 122,
+          "strip": "ped_elder_shock_hit.png",
+          "cell_row": 0
+        },
+        {
+          "first_tick": 123,
+          "last_tick": 127,
+          "strip": "ped_elder_between_fall.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 128,
+          "last_tick": 132,
+          "strip": "ped_elder_between_fall.png",
+          "cell_row": 2
+        },
+        {
+          "first_tick": 133,
+          "last_tick": 137,
+          "strip": "ped_elder_between_fall.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 138,
+          "last_tick": 139,
+          "strip": "ped_elder_between_fall.png",
+          "cell_row": 0
+        },
+        {
+          "first_tick": 140,
+          "last_tick": 168,
+          "strip": "ped_elder_walk.png",
+          "cell_row": 1
+        }
+      ],
+      "peak_card_offset_world_px_first_90_ticks": 12.33,
+      "peak_card_offset_world_px_release_ticks_123_139": 0.0,
+      "distinct_card_offsets_first_90_ticks": 35
+    },
+    "shopper": {
+      "shock_drawn_first_90_ticks": 90,
+      "spans": [
+        {
+          "first_tick": 0,
+          "last_tick": 29,
+          "strip": "ped_shopper_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 30,
+          "last_tick": 122,
+          "strip": "ped_shopper_shock_hit.png",
+          "cell_row": 0
+        },
+        {
+          "first_tick": 123,
+          "last_tick": 127,
+          "strip": "ped_shopper_between_fall.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 128,
+          "last_tick": 132,
+          "strip": "ped_shopper_between_fall.png",
+          "cell_row": 2
+        },
+        {
+          "first_tick": 133,
+          "last_tick": 137,
+          "strip": "ped_shopper_between_fall.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 138,
+          "last_tick": 139,
+          "strip": "ped_shopper_between_fall.png",
+          "cell_row": 0
+        },
+        {
+          "first_tick": 140,
+          "last_tick": 168,
+          "strip": "ped_shopper_walk.png",
+          "cell_row": 1
+        }
+      ],
+      "peak_card_offset_world_px_first_90_ticks": 9.89,
+      "peak_card_offset_world_px_release_ticks_123_139": 0.0,
+      "distinct_card_offsets_first_90_ticks": 35
+    },
+    "worker": {
+      "shock_drawn_first_90_ticks": 46,
+      "spans": [
+        {
+          "first_tick": 0,
+          "last_tick": 29,
+          "strip": "ped_worker_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 30,
+          "last_tick": 59,
+          "strip": "ped_worker_shock_hit.png",
+          "cell_row": 0
+        },
+        {
+          "first_tick": 60,
+          "last_tick": 80,
+          "strip": "ped_worker_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 81,
+          "last_tick": 88,
+          "strip": "ped_worker_shock_hit.png",
+          "cell_row": 0
+        },
+        {
+          "first_tick": 89,
+          "last_tick": 109,
+          "strip": "ped_worker_walk.png",
+          "cell_row": 1
+        },
+        {
+          "first_tick": 110,
+          "last_tick": 117,
+          "strip": "ped_worker_shock_hit.png",
+          "cell_row": 0
+        },
+        {
+          "first_tick": 118,
+          "last_tick": 168,
+          "strip": "ped_worker_walk.png",
+          "cell_row": 1
+        }
+      ],
+      "peak_card_offset_world_px_first_90_ticks": 39.0,
+      "peak_card_offset_world_px_release_ticks_123_139": 27.96,
+      "distinct_card_offsets_first_90_ticks": 64
+    }
+  },
+  "city_film": {
+    "shot": "weapon:electro_gun",
+    "victim": "ped/head_shopper",
+    "ticks": 900,
+    "seed": 20261109,
+    "ppm": 32,
+    "events": {
+      "fire": [
+        324,
+        406,
+        716,
+        781
+      ],
+      "kill": [
+        413,
+        787
+      ]
+    },
+    "first_victim_samples": {
+      "329": {
+        "row": "ped/head_shopper",
+        "hp": 1.0,
+        "alive": true,
+        "on_screen": true
+      },
+      "330": {
+        "row": "ped/head_shopper",
+        "hp": 0.4,
+        "alive": true,
+        "on_screen": true
+      },
+      "412": {
+        "row": "ped/head_shopper",
+        "hp": 0.4,
+        "alive": true,
+        "on_screen": true
+      },
+      "413": {
+        "row": "",
+        "hp": 0.0,
+        "alive": false,
+        "on_screen": false
+      }
+    }
+  },
+  "scenario_human_react": {
+    "burn_char": 1.0,
+    "digest": [
+      1400046892,
+      1400046892
+    ],
+    "direction_dot_min": 1.0,
+    "knockdown_lie_s": 1.56666666666667,
+    "planted_inverted_dot_min": -1.0,
+    "planted_no_burn_row_char": 0.0,
+    "planted_signature_took": true,
+    "ticks_to_clear": {
+      "burn": 151,
+      "cover": 21,
+      "flinch": 15,
+      "fold": 31,
+      "knockdown": 133,
+      "shield": 18,
+      "spin": 28,
+      "stagger": 33,
+      "stun": 72
+    }
+  },
+  "final_recapture": {
+    "32": {
+      "saved_frames": 85,
+      "full_rig_tick_rows": 676,
+      "preimpact_frame_identical_to_base": true,
+      "frame_files_identical_to_first_implementation": 85,
+      "matching_facing_strip_and_row_per_tick": true,
+      "script_errors": 0,
+      "reported_instances_at_process_shutdown": 56
+    },
+    "64": {
+      "saved_frames": 85,
+      "full_rig_tick_rows": 676,
+      "preimpact_frame_identical_to_base": true,
+      "frame_files_identical_to_first_implementation": 84,
+      "matching_facing_strip_and_row_per_tick": true,
+      "script_errors": 0,
+      "reported_instances_at_process_shutdown": 56
+    }
+  },
+  "gallery": {
+    "street-shock.mp4": {
+      "bytes": 1312140,
+      "sha256": "1f4b19ad1282c054a194828d9b3794faec617f3e518c8d0e8cfdfebcbec78128",
+      "width": 1200,
+      "height": 638,
+      "r_frame_rate": "30/1",
+      "duration": "4.300000",
+      "nb_frames": "129"
+    },
+    "street-shock-32.jpg": {
+      "bytes": 349863,
+      "sha256": "182197c1bc75d66394c98b600b2fd992fffac0a1dd66b4166b5bb55d7230b721"
+    },
+    "hat-64.jpg": {
+      "bytes": 471471,
+      "sha256": "8deb7a123b1adfa597e4d458dd03bcd0dfdafc5704b25b49ca6b9dd9ffc02ed2"
+    },
+    "elder-64.jpg": {
+      "bytes": 498491,
+      "sha256": "5cf43b4abcea5197339b52993868d61dd9863052ccff56e2c8169733029742b0"
+    },
+    "shopper-64.jpg": {
+      "bytes": 490634,
+      "sha256": "71aeb69104b7296936618f9f2552c720bdcd60c085703c70750fb5e3f6208ae0"
+    }
+  }
+}

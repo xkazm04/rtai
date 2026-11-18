@@ -22,12 +22,19 @@ static func step(rig: CutRig) -> void:
 		_lift(rig)
 
 
-## After the react's post pose (CutRig.drive): a drawn fall is placed again, since the post turns
-## the card's parent (a cop's head-and-chest card hangs under the turned torso: the 3/4-away
-## corpse drew upright, it8). Alive, with no fall grid or straight down (no card), nothing.
+## The whole-figure shock and fall cards stand on the ground after the reaction has moved
+## their parent head socket. The other cards inherit the socket's motion.
 static func post(rig: CutRig) -> void:
 	var card: Sprite2D = rig.head_card
-	if card != null and StreetFallBetween.is_fall_card(card) and card.visible:
+	if card == null or not card.visible:
+		return
+	if (
+		StreetFallBetween.is_fall_card(card)
+		or (
+			card.has_meta(StreetWalkerCards.ON)
+			and StreetPedShock.active(rig.react, StreetWalkerCards.row_of(rig))
+		)
+	):
 		StreetWalkerCards.place(rig, card)
 
 

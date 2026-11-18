@@ -117,6 +117,8 @@ static func grid_of(rig: CutRig, row: String) -> String:
 		return GRIDS[row] if open else ""
 	if r.kind == &"burn" and BURN_ON and BURN_GRIDS.has(row):
 		return flail_frame(BURN_GRIDS[row], r.t)
+	if StreetPedShock.active(r, row):
+		return StreetPedShock.grid(r, row)
 	var cls: String = StreetHitClass.grid(r, row)
 	if cls != "":
 		return cls

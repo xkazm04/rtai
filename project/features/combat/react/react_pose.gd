@@ -12,6 +12,9 @@ const SNAP_OUT_S: float = 0.3
 
 static func pre(r: HumanReact, rig: CutRig) -> void:
 	var k: float = r.progress()
+	if (r.kind == &"stun" or r.blow == &"shock") and StreetPedShock.pose_parts(r, rig):
+		_hit_snap(r, rig, r.t)
+		return
 	match r.kind:
 		&"flinch":
 			_flinch(r, rig, snap(k, 0.15), 1.0)

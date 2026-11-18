@@ -66,9 +66,10 @@ static func strip_of(rig: CutRig) -> String:
 	if not ENABLED or rig.head_card == null:
 		return ""
 	var ped: bool = rig.plan.art_dir == "ped"
-	var hit: String = StreetWalkerHit.grid_of(rig, row_of(rig))
-	if not hit.is_empty():
-		return DIR + hit
+	if rig.react != null and rig.react.active():
+		var hit: String = StreetWalkerHit.grid_of(rig, row_of(rig))
+		if not hit.is_empty():
+			return DIR + hit
 	var on: String = rig.head_card.get_meta(ON, "")
 	var stale: bool = on.ends_with("_fall.png") or StreetWalkerHit.is_grid(on)
 	if not on.is_empty() and not StreetWalkerFall.down(rig) and not stale:

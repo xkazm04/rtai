@@ -87,6 +87,7 @@ func settle() -> void:
 
 func clear() -> void:
 	kind = &""
+	blow = &""
 	dying = false
 	t = 0.0
 	last_carry = Vector2.ZERO

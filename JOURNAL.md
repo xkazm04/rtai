@@ -1,0 +1,24 @@
+START 17:40
+17:41 MILESTONE Verified that 75dc0cc96 already supplied the three five-facing shock sheets and wired the impact. The older report describes its draft.
+17:43 FRICTION Initial asset verification reimported 1261 files, about 2 min CONTENDED. Base rig bench recorded before any gameplay edit.
+17:47 MILESTONE Native-size board lands four uncharged electro rounds through FightAreas and ReactLink, on three real pedestrian looks and one worker. Both densities render; the stun loops onto walking art, and clear() leaves the old hit sprite latched.
+17:49 MILESTONE Baseline production code fails both regression tests and twelve assertions covering the three looks. Matched board captures and per-tick pose logs retained in build/shock/base32 and base64.
+17:49 DECISION Reuse the shipped shock and fall drawings. Hold the rigid figure during the actual stun, drop to its knees on release, then stand. The distant atlas offers only generic HIT for every look.
+17:53 FRICTION The capture fixture would raise dev_loc by 109 and inherited merge-lane isolation affected two synthetic fixture tests. Moved the standalone board to evidence and limited the isolation setting to the actual commit hook. Verified its external Godot launcher at 32 px/m.
+18:00 MILESTONE Added a parts-only arch and knee tuck. The selected suite passes all 29 tests, including card anchors, facing, phase boundaries, the baton and three cutout wardrobes. The 64 px/m board shows the cane and bag landing alongside their owner.
+18:03 MILESTONE Committed gameplay and regression tests on 277d8ae72. Selected suite 30/30; scenario_human_react 1/1. No debt increase.
+18:04 DECISION Measure eight base/change rig-bench pairs, alternating which revision runs first. Record both crowd sizes, both percentiles, all hard-limit misses and all rounds; CONTENDED.
+18:14 FRICTION Eight matched pairs took about 8 min CONTENDED. The 200-person median rose in all eight initial pairs. Removed the wardrobe lookup for walkers with no active wound and reused the fall grid's existing sizing path for the catch.
+18:16 MILESTONE The planted-foot test caught a one-row scale lag during the routing change. Fitting the selected knee row after setting its coordinates restores the expected size.
+18:17 DECISION Repeat the eight rig-bench rounds from detached snapshots and bracket the change with two identical base runs per round. Keep the first study and all follow-up results.
+18:26 MILESTONE Reviewed both native capture sequences and the five gallery entries. All three show their shock during 90/90 sampled hit ticks versus 46/90 on the starting build. Peak card offset during that interval is 9.73 / 12.33 / 9.89 world px for hat / elder / shopper, and each catch lands at the rig point to 0.01 px precision.
+18:29 MILESTONE Final paired rig p50 fell in all eight rounds at 50 and 200 people (median paired change -0.030 / -0.046 ms CONTENDED). The 200-person p99 rose 0.879 ms against 1.559 ms median absolute base/base variation CONTENDED. All baseline and final p99 runs exceeded 1 ms CONTENDED. Full code snapshot gate started.
+18:41 FRICTION The code gate spent about 12 min CONTENDED materializing the detached revision and its runtime before evidence execution. The mutation checkout is prepared while that gate runs. Both runners serialize Godot.
+18:57 BLOCKED Supplied debug CitySim DLL lacks the police and blood-flight methods in the bound source. Eleven unrelated full-suite tests fail on the absent interface. Saved triage and stopped only the known gate process tree. Rebuilding the ignored debug DLL from this revision under native/ is required to run the gate.
+18:59 FRICTION The lane DLLs had been refreshed on disk at 18:42, after the gate snapshot copied the older debug library. SHA-256 e62ca1f2... has all three missing entry names. Stopped the fallback SCons attempt before linking and retained the refreshed supplied DLL. No native source changed. Re-running the affected tests before the same-revision gate.
+19:01 MILESTONE All 27 tests in the eight affected native-dependent files pass with the refreshed lane DLL. The retry snapshot reports copied project/native/bin; its debug SHA-256 matches the lane. No native file or build configuration is staged.
+19:23 MILESTONE Gameplay gate PASS on 0ecb743fb630. Lint 19/19, unit 2948 passed / 2 pending / 0 failed, scenarios 55, parity 1200 steps, goldens 11/11 and 5/5, release compile 737/737. The rig_stress scenario budget was not judged after the 5 min CONTENDED quiet wait.
+19:51 MILESTONE Full mutation result 42/44 killed (95.5%), two survived, zero invalid and zero timeout. Surviving changes affect intermediate arm reach and card skew. Blind report and gallery manifest verified.
+19:51 MILESTONE Report committed at b32f221a7a02. The code gate and all report citations pass.
+NEXT: Blind review of the five masters. Final commit gate output is stored under build/gate by SHA.
+QUEUE EMPTY

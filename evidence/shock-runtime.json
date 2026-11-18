@@ -1,0 +1,96 @@
+{
+  "commit": "0ecb743fb630",
+  "provided_debug_dll": {
+    "sha256": "a9c6f9bcc04844be2271f24e9d8a34abd55dad7e8dd9313ad8b882ce86ccdeff",
+    "bytes": 432128,
+    "registered_name_strings": {
+      "set_police": false,
+      "heat_level": false,
+      "step_blood_drops": false
+    }
+  },
+  "first_gate_failing_tests": [
+    {
+      "file": "res://tests/unit/test_blood_flight.gd",
+      "test": "test_the_native_flight_matches_the_script",
+      "reason": "this DLL has the entry"
+    },
+    {
+      "file": "res://tests/unit/test_city_cop_sees.gd",
+      "test": "test_the_sim_answers_like_the_snapshot_walk_on_both_backends",
+      "reason": "[false] expected to equal [true]:  t 0 at (270.5, 284.5) r 30"
+    },
+    {
+      "file": "res://tests/unit/test_city_heat.gd",
+      "test": "test_the_native_backend_takes_the_same_heat_command",
+      "reason": "[-1] expected to equal [3]:  clamped as the reference clamps"
+    },
+    {
+      "file": "res://tests/unit/test_city_police_parity.gd",
+      "test": "test_the_heat_ladder_is_bit_exact_native_vs_reference",
+      "reason": "diverged at tick 0 (168 vs 168 floats)"
+    },
+    {
+      "file": "res://tests/unit/test_city_police_parity.gd",
+      "test": "test_the_car_ladder_is_bit_exact_native_vs_reference",
+      "reason": "car ladder diverged at tick 0"
+    },
+    {
+      "file": "res://tests/unit/test_city_police_parity.gd",
+      "test": "test_the_heat_3_squad_and_roadblock_are_bit_exact_native_vs_reference",
+      "reason": "heat 3 ladder diverged at tick 0"
+    },
+    {
+      "file": "res://tests/unit/test_downed_person_walkable.gd",
+      "test": "test_a_sprint_over_a_downed_person_is_a_sprint_over_nothing",
+      "reason": "[0] expected to equal [1]:  the sprint knocked the person down"
+    },
+    {
+      "file": "res://tests/unit/test_downed_person_walkable.gd",
+      "test": "test_walking_over_a_downed_person_does_not_move_them",
+      "reason": "[0] expected to equal [4]:  still on the ground"
+    },
+    {
+      "file": "res://tests/unit/test_quest1_city_heat.gd",
+      "test": "test_quest_1_heat_drives_the_city_sim_police",
+      "reason": "Unexpected Errors:"
+    },
+    {
+      "file": "res://tests/unit/test_quest1_sim_police.gd",
+      "test": "test_sim_police_replaces_the_stage_patrols",
+      "reason": "Unexpected Errors:"
+    },
+    {
+      "file": "res://tests/unit/test_world_context.gd",
+      "test": "test_world_in_the_tree_wires_the_autoloads",
+      "reason": "Unexpected Errors:"
+    }
+  ],
+  "refreshed_debug_dll": {
+    "sha256": "e62ca1f2427cf86b63bb1544a4a1d49647d693a1f63d563839686aa8f10b7f9d",
+    "bytes": 456192,
+    "mtime_local": "2026-11-18T18:42:53",
+    "registered_name_strings": {
+      "set_police": true,
+      "heat_level": true,
+      "step_blood_drops": true
+    }
+  },
+  "refreshed_release_dll": {
+    "sha256": "a7cd671186582c1291a497036a1f018fb43f1ca756d349203fb41744e609847a",
+    "bytes": 420864,
+    "mtime_local": "2026-11-18T18:42:54",
+    "registered_name_strings": {
+      "set_police": true,
+      "heat_level": true,
+      "step_blood_drops": true
+    }
+  },
+  "affected_test_rerun": {
+    "passed": 27,
+    "failed": 0,
+    "skipped": 0,
+    "summary": "unit-tests: 27 passed, 0 failed, 0 skipped (GUT, headless)"
+  },
+  "retry_snapshot_debug_sha256": "e62ca1f2427cf86b63bb1544a4a1d49647d693a1f63d563839686aa8f10b7f9d"
+}
