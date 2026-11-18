@@ -42,7 +42,7 @@ func step(p_tick: int) -> void:
 	stepped = 0
 	fired.clear()
 	states.clear()
-	if squad_ai != null and guard_tell == null:
+	if squad_ai != null:
 		_started_us = Time.get_ticks_usec()
 	super.step(p_tick)
 
@@ -72,7 +72,7 @@ func _step_hostile(h: Fighter) -> void:
 
 
 func _state(h: Fighter, before: Vector2, telling: bool) -> String:
-	if squad_ai != null and guard_tell == null and squad_ai.minds.has(h.id):
+	if squad_ai != null and squad_ai.minds.has(h.id):
 		return str(EnemyAgent.State.keys()[squad_ai.minds[h.id].agent.state]).to_lower()
 	# The pursuit caches sight between route checks. GuardTell's committed burst bypasses it.
 	if not telling and h.pursuit != null and h.pursuit._blocked:

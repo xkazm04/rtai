@@ -19,6 +19,7 @@ var peak_pairs: int = 0
 var total_pairs: int = 0
 var distance_m: float = 0.0
 var states: Dictionary[String, int] = {}
+var archetype_states: Dictionary[StringName, Dictionary] = {}
 var flankers: Dictionary[int, bool] = {}
 var flank_angles: Dictionary[int, bool] = {}
 var rows: Array[Array] = []
@@ -70,6 +71,9 @@ func _actor(h: Fighter, near: bool, mean_dir: Vector2) -> void:
 	crowded += int(near)
 	distance_m += bearing.length()
 	states[state] = states.get(state, 0) + 1
+	var id: StringName = h.archetype if h.archetype != &"" else &"contractor"
+	var histogram: Dictionary = archetype_states.get_or_add(id, {})
+	histogram[state] = histogram.get(state, 0) + 1
 	if trace != null:
 		rows.append([h.id, state, h.pos.x, h.pos.y, los, cover, near, fired])
 
@@ -100,16 +104,8 @@ func finish_tick() -> void:
 	ticks += 1
 	if trace == null:
 		return
-	var record: Array = [
-		encounter,
-		world_seed,
-		arena.tick,
-		arena.hostile_us,
-		arena.stepped,
-		rivet_pos.x,
-		rivet_pos.y,
-		rows
-	]
+	var record: Array = [encounter, world_seed, arena.tick, arena.hostile_us, arena.stepped]
+	record.append_array([rivet_pos.x, rivet_pos.y, rows])
 	ok = trace.store_line(JSON.stringify(record, "", false, true)) and ok
 
 
@@ -124,6 +120,7 @@ func summary() -> Dictionary:
 		"pairs_peak": peak_pairs,
 		"pairs_mean": float(total_pairs) / ticks if ticks else null,
 		"state_histogram": states,
+		"states_by_archetype": archetype_states,
 		"distinct_flank_angles_deg": flank_angles.size(),
 		"distinct_flanking_shooters": flankers.size(),
 	}

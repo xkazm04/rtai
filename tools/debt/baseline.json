@@ -69,7 +69,7 @@
         "project/dev/bench": 1906,
         "project/dev/bosses": 55,
         "project/dev/bots": 496,
-        "project/dev/enemy_ai": 1203,
+        "project/dev/enemy_ai": 1200,
         "project/dev/frames": 1087,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
@@ -94,7 +94,7 @@
         "project/dev/view": 433,
         "project/dev/weapon_art": 506
       },
-      "total": 23265
+      "total": 23262
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -287,7 +287,7 @@
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/showcase/city_fight.gd": 300,
-        "project/features/arena/arena_rigs.gd": 294,
+        "project/features/arena/arena_rigs.gd": 284,
         "project/features/bosses/boss_hook.gd": 281,
         "project/features/bosses/servo/servo_rig.gd": 287,
         "project/features/combat/kills/kill_view.gd": 286,
@@ -348,7 +348,7 @@
         "project/dev/showcase/d5_hero_run.gd": 265,
         "project/dev/showcase/reel_director.gd": 209,
         "project/dev/weapon_art/weapon_lineup_run.gd": 210,
-        "project/features/arena/arena_rigs.gd": 294,
+        "project/features/arena/arena_rigs.gd": 284,
         "project/features/arena/prop_occlusion.gd": 202,
         "project/features/bosses/boss_bot.gd": 202,
         "project/features/bosses/boss_fight.gd": 269,
