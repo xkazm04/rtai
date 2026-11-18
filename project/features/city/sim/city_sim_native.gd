@@ -106,6 +106,10 @@ func heat_level() -> int:
 	return h if h is int else -1
 
 
+func set_police(tune: PackedFloat64Array) -> void:
+	_call(&"set_police", [tune])
+
+
 func set_car_state(i: int, state: int) -> void:
 	_call(&"set_car_state", [i, state])
 

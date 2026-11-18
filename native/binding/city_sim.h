@@ -39,6 +39,7 @@ public:
 	void set_car_state(int i, int state);
 	void set_obstacles(const PackedFloat64Array &xy);
 	void set_heat(int level, double x, double y);
+	void set_police(const PackedFloat64Array &tune);
 	int heat_level() const;
 	void fire(double x, double y, double vx, double vy, double ttl);
 	void step(double dt, double camx, double camy, double tgx, double tgy);

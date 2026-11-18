@@ -45,6 +45,10 @@ void CityCore::init(int64_t seed) {
 	ff_ticks_ = 0;
 	heat_level_ = -1;
 	heat_x_ = heat_y_ = 0.0;
+	pol_cx_ = pol_cy_ = 0;
+	pol_level_ = -1;
+	pol_search_ = 0.0;
+	pol_done_ = false;
 	std::memset(ff_stats_, 0, sizeof(ff_stats_));
 }
 

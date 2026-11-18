@@ -2,6 +2,58 @@
   "$id": "gtai.heat/1",
   "additionalProperties": false,
   "properties": {
+    "city": {
+      "additionalProperties": false,
+      "properties": {
+        "arrive_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "drain_s_per_level": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "foot_cops": {
+          "items": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array"
+        },
+        "living_police": {
+          "type": "boolean"
+        },
+        "patrol_cops": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "search_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "walk_mps": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "doc",
+        "drain_s_per_level",
+        "foot_cops",
+        "search_s",
+        "arrive_m",
+        "walk_mps",
+        "living_police",
+        "patrol_cops"
+      ],
+      "type": "object"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"
@@ -28,7 +80,8 @@
     "doc",
     "max_level",
     "drain_s_per_level",
-    "sight_m"
+    "sight_m",
+    "city"
   ],
   "type": "object"
 }

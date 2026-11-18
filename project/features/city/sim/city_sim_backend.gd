@@ -32,6 +32,9 @@ extends RefCounted
 @abstract func set_heat(level: int, x: float, y: float) -> void
 ## The level set_heat() last stored (clamped to -1..3).
 @abstract func heat_level() -> int
+## n18 police: the heat ladder's tune (SimConst.PT_LEN floats, PT_FOOT0..PT_WALK_V; the heat
+## table's `city` block); a sim input kept across init().
+@abstract func set_police(tune: PackedFloat64Array) -> void
 ## One fixed tick (SIM-01): dt is SimClock.TICK_DT; cam is the bubble centre; tg the pursuit target.
 @abstract func step(dt: float, camx: float, camy: float, tgx: float, tgy: float) -> void
 @abstract func get_counters() -> PackedInt32Array

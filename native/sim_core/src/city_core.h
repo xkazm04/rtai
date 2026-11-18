@@ -87,6 +87,9 @@ public:
 		heat_y_ = y;
 	}
 	int heat_level() const { return heat_level_; }
+	// The heat ladder's tune (PT_LEN doubles, PT_FOOT0..PT_WALK_V; data/tables/heat.json `city`),
+	// a sim input kept across init(). police.cpp.
+	void set_police(const double *tune, int n);
 
 	// step.cpp
 	void step(double dt, double camx, double camy, double tgx, double tgy);
@@ -160,6 +163,11 @@ private:
 	int32_t ff_stats_[FS_LEN] = {};
 	int heat_level_ = -1;
 	double heat_x_ = 0.0, heat_y_ = 0.0;
+	// n18 living police (police.cpp): the ladder's tune and the search at the last-seen point
+	double pol_[PT_LEN] = {0.0, 3.0, 4.0, 6.0, 10.0, 3.0, 1.4};
+	int pol_cx_ = 0, pol_cy_ = 0, pol_level_ = -1;
+	double pol_search_ = 0.0;
+	bool pol_done_ = false;
 
 	double cx_ = 0.0, cy_ = 0.0;  // contact scratch position (crowd / solid)
 	double body_[BD_LEN] = {}, bx_ = 0.0, by_ = 0.0;  // the player body (body.cpp)
@@ -189,6 +197,12 @@ private:
 	void ped_flee(int i, double dt, double x, double y, double &dx, double &dy);
 	void ped_riot(int i, double dt, double x, double y, double &dx, double &dy);
 	void cop(int i, double dt, double tgx, double tgy);
+	void person_move(int i, double x, double y, double dx, double dy, double spd, double dt);
+	void police_pass(double dt);                      // police.cpp
+	void police_fill(int want);                       // police.cpp
+	void cop_heat(int i, double dt, double tgx, double tgy);  // police.cpp
+	void cop_walk(int i, double dt);                  // police.cpp
+	bool cop_search(int i, double x, double y, double &dx, double &dy, double &spd) const;
 	void crowd(int i);                                // contact.cpp
 	void solid(double r);                             // contact.cpp
 	void body_push(int i, double pvx, double pvy);    // body.cpp

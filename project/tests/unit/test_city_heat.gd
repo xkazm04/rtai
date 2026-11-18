@@ -17,8 +17,9 @@ func before_each() -> void:
 	assert_gte(CityWallMap.spawn_cop(_city.sim, COP), 0)
 	_city.sim.step(SimClock.TICK_DT, COP.x, COP.y, COP.x, COP.y)
 	_heat = CityHeat.new(_city)
-	var ctx: WorldContext = WorldContext.new(_bus, null, null, null)
+	var ctx: WorldContext = WorldContext.new(_bus, null, null, RngRegistry.new(1))
 	_heat.setup(ctx)
+	_heat.patrol.want = 0  # one hand-placed cop; the patrol has its own test
 
 
 func test_a_cop_sees_near_and_in_the_clear_only() -> void:
@@ -77,3 +78,29 @@ func test_the_native_backend_takes_the_same_heat_command() -> void:
 	assert_eq(sim.heat_level(), 3, "clamped as the reference clamps")
 	sim.init(7)
 	assert_eq(sim.heat_level(), -1, "init resets it")
+
+
+## n18 item 3: the heat table's city block reaches the meter and the sim's ladder.
+func test_the_city_block_tunes_the_drain_and_the_sim_ladder() -> void:
+	var t: CityHeatTune = _heat.tune
+	assert_true(t.living, "living police on by default")
+	assert_eq(_heat.meter.drain_ticks, t.drain_ticks, "the city drains on its own clock")
+	assert_eq(t.drain_ticks, 1200, "20 s per level")
+	assert_eq(t.sim_tune.size(), SimConst.PT_LEN)
+	assert_eq(t.sim_tune[SimConst.PT_FOOT1], 3.0, "heat 1: three foot cops investigate")
+	assert_eq(t.sim_tune[SimConst.PT_FOOT3], 6.0)
+
+
+## n18 item 3: the patrol keeps city.patrol_cops foot cops on sidewalk cells of the bubble.
+func test_the_patrol_fills_the_bubble_with_foot_cops_on_sidewalks() -> void:
+	var sim: CitySimRef = CityWallMap.walled(true)
+	var patrol: CityPatrol = CityPatrol.new(RngRegistry.new(1).stream(CityPatrol.STREAM), 10)
+	var made: int = patrol.tick(sim, Vector2(320.0, 320.0))
+	assert_eq(made, 10, "the first tick fills the bubble")
+	assert_eq(sim.get_counters()[SimConst.CN_COPS], 0, "counted after the next step")
+	sim.step(SimClock.TICK_DT, 320.0, 320.0, 320.0, 320.0)
+	assert_eq(sim.get_counters()[SimConst.CN_COPS], 10)
+	assert_eq(patrol.tick(sim, Vector2(320.0, 320.0)), 0, "full: nothing more")
+	var snap: PackedFloat64Array = sim.snapshot()
+	for r: int in range(0, snap.size(), SimConst.SNAP_STRIDE):
+		assert_eq(sim.cell_at(snap[r + 4], snap[r + 5]), SimConst.C_WALK, "on a sidewalk")

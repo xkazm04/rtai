@@ -10,7 +10,8 @@ var _s: CitySimState = CitySimState.new()
 var _h: CitySimHash = CitySimHash.new(_s)
 var _flow: CitySimFlow = CitySimFlow.new(_s)
 var _body: CitySimBody = CitySimBody.new(_s, _h)
-var _people: CitySimPeople = CitySimPeople.new(_s, _h, _flow, _body)
+var _police: CitySimPolice = CitySimPolice.new(_s, _flow)
+var _people: CitySimPeople = CitySimPeople.new(_s, _h, _flow, _body, _police)
 var _cars: CitySimCars = CitySimCars.new(_s, _h, _flow)
 var _shots: CitySimShots = CitySimShots.new(_s, _h)
 var _render: CitySimRender = CitySimRender.new(_s)
@@ -27,6 +28,7 @@ func backend_name() -> StringName:
 func init(seed_value: int) -> void:
 	_s.init(seed_value)
 	_flow.reset()
+	_police.reset()
 
 
 func set_radii(ra: float, rb: float, riot: float) -> void:
@@ -82,11 +84,15 @@ func set_obstacles(xy: PackedFloat64Array) -> void:
 
 
 func set_heat(level: int, x: float, y: float) -> void:
-	_flow.set_heat(level, x, y)
+	_police.set_heat(level, x, y)
 
 
 func heat_level() -> int:
-	return _flow.heat_level
+	return _police.level
+
+
+func set_police(tune: PackedFloat64Array) -> void:
+	_police.set_tune(tune)
 
 
 func set_car_state(i: int, state: int) -> void:
@@ -99,7 +105,14 @@ func step(dt: float, camx: float, camy: float, tgx: float, tgy: float) -> void:
 	_body.clear_step()
 	CitySimTier.tier(_s, dt, camx, camy)
 	_h.build(camx, camy)
-	_flow.update(tgx, tgy)
+	var gx: float = tgx
+	var gy: float = tgy
+	if _police.level >= 0:  # n18 living police: the field leads to the last-seen point
+		_police.pass_step(dt)
+		gx = _police.heat_x
+		gy = _police.heat_y
+	if _police.level != 0:
+		_flow.update(gx, gy)
 	for i: int in SimConst.CAP:
 		if _s.alive[i] == 0:
 			continue

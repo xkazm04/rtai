@@ -21,7 +21,13 @@ void CityCore::step(double dt, double camx, double camy, double tgx, double tgy)
 		tier_pass_one(i, camx, camy);
 	}
 	build_hash(camx, camy);
-	flow_update(tgx, tgy);
+	double gx = tgx, gy = tgy;
+	if (heat_level_ >= 0) {  // n18 living police: the field leads to the last-seen point
+		police_pass(dt);
+		gx = heat_x_;
+		gy = heat_y_;
+	}
+	if (heat_level_ != 0) flow_update(gx, gy);
 	for (int i = 0; i < CAP; i++) {
 		if (alive_[i] == 0) continue;
 		int k = kind_[i];

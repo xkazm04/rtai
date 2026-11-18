@@ -11,6 +11,12 @@ const GAP_Y1: int = 328
 
 static func walled(gap: bool) -> CitySimRef:
 	var sim: CitySimRef = CitySimRef.new()
+	paint(sim, gap)
+	return sim
+
+
+## The same map on any backend (the native one for a heat parity run).
+static func paint(sim: CitySimBackend, gap: bool) -> void:
 	sim.init(7)
 	var n: int = SimConst.CHUNK_CELLS
 	var tiles: PackedByteArray = CityChunk.zeros(CityChunk.TILES)
@@ -24,7 +30,6 @@ static func walled(gap: bool) -> CitySimRef:
 		for x: int in range(WALL_X, WALL_X + 3):
 			cells[ly * n + (x - 2 * n)] = SimConst.C_BUILD
 	sim.stamp_chunk(2, 2, tiles, cells)
-	return sim
 
 
 static func spawn_cop(sim: CitySimBackend, at: Vector2) -> int:

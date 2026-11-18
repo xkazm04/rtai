@@ -10,6 +10,10 @@ extends WorldSystem
 ## The city this heat watches (its sim and Rivet's position, `target`).
 var city: CitySystem = null
 var meter: HeatMeter = null
+## The heat table's city block (drain, the ladder's counts and times, living_police).
+var tune: CityHeatTune = null
+## The foot patrol the ladder sends (the street targets keep none).
+var patrol: CityPatrol = null
 ## A sim cop sees Rivet this tick.
 var seen: bool = false
 ## Where a cop last saw Rivet (the investigate point); valid once `ever_seen`.
@@ -24,6 +28,10 @@ func _init(p_city: CitySystem) -> void:
 
 func setup(ctx: WorldContext) -> void:
 	meter = HeatMeter.new(ctx.events)
+	tune = CityHeatTune.load_table()
+	meter.drain_ticks = tune.drain_ticks
+	city.sim.set_police(tune.sim_tune)
+	patrol = CityPatrol.new(ctx.rng.stream(CityPatrol.STREAM), tune.patrol_cops)
 	@warning_ignore("return_value_discarded")
 	ctx.events.pedestrian_struck.connect(_on_struck)
 	@warning_ignore("return_value_discarded")
@@ -39,7 +47,9 @@ func step(_tick: int, _input: TickInput) -> void:
 		meter.raise_by(1)
 	_violence = 0
 	meter.step(seen)
-	city.sim.set_heat(meter.level, last_seen.x, last_seen.y)
+	city.sim.set_heat(meter.level if tune.living else -1, last_seen.x, last_seen.y)
+	@warning_ignore("return_value_discarded")
+	patrol.tick(city.sim, city.focus)
 
 
 ## Violence from outside the sim's own events (a shot Rivet fired, later sources).

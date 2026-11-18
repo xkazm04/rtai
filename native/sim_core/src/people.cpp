@@ -146,6 +146,10 @@ void CityCore::cop(int i, double dt, double tgx, double tgy) {
 		down(i, dt);
 		return;
 	}
+	if (heat_level_ >= 0) {  // n18 living police (police.cpp)
+		cop_heat(i, dt, tgx, tgy);
+		return;
+	}
 	double ax = tgx - x, ay = tgy - y;
 	double d = std::sqrt(ax * ax + ay * ay);
 	double dx = hx_[i], dy = hy_[i];
@@ -169,13 +173,19 @@ void CityCore::cop(int i, double dt, double tgx, double tgy) {
 		t2_[i] = 0.8 + rnd() * 1.6;
 		t1_[i] = 0.25;
 	}
-	x += mx * spd * dt;
-	y += my * spd * dt;
+	person_move(i, x, y, mx, my, spd, dt);
+}
+
+// Integrate a person's step along (dx, dy) at spd, then (tier A only) part from people, take the
+// body's push and leave solid cells; write position, heading, speed and stride phase.
+void CityCore::person_move(int i, double x, double y, double dx, double dy, double spd, double dt) {
+	x += dx * spd * dt;
+	y += dy * spd * dt;
 	if (tier_[i] == 0) {
 		cx_ = x;
 		cy_ = y;
 		crowd(i);
-		body_push(i, mx * spd, my * spd);
+		body_push(i, dx * spd, dy * spd);
 		solid(0.3);
 		x = cx_;
 		y = cy_;
@@ -183,8 +193,8 @@ void CityCore::cop(int i, double dt, double tgx, double tgy) {
 	px_[i] = x;
 	py_[i] = y;
 	if (mode_[i] == M_DOWN) return;  // tackled this step (body_push)
-	hx_[i] = mx;
-	hy_[i] = my;
+	hx_[i] = dx;
+	hy_[i] = dy;
 	v_[i] = spd;
 	phase_[i] += spd * dt;
 }

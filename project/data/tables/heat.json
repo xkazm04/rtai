@@ -1,4 +1,19 @@
 {
+  "city": {
+    "arrive_m": 3,
+    "doc": "n18 living police in the streamed city (CityHeat, the sim's set_police): drain_s_per_level replaces the quest's for the city; foot_cops[level] = cops engaged at heat 0..3 (nearest the last-seen point first); they search search_s once one is within arrive_m of it, then walk again; a free cop walks at walk_mps; patrol_cops foot cops are kept on the bubble's sidewalks (CityPatrol); living_police false = the pre-n18 sim police (every cop pursues Rivet).",
+    "drain_s_per_level": 20,
+    "foot_cops": [
+      0,
+      3,
+      4,
+      6
+    ],
+    "living_police": true,
+    "patrol_cops": 10,
+    "search_s": 10,
+    "walk_mps": 1.4
+  },
   "doc": "Heat (wanted) in Act 1 (quest collect-call mechanic `heat`): 0 to max_level; one level drains per drain_s_per_level seconds out of every human sight (sight_m); being seen restarts the count.",
   "drain_s_per_level": 6,
   "max_level": 3,
