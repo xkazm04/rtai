@@ -14,8 +14,7 @@ extends RefCounted
 ## Muzzle requires an equipped row and a populated row for every existing diag/left strip.
 ## Reload: parts.mag at every pitch for magazine users, plus RivetReload's standing right/left
 ## strips where WeaponMagView hides the part. Tubes, tanks, belts and thrown bottles have no mag.
-## Recoil: numeric class kick (zero is authored for sway/throw), reporting optional arena and
-## hit-feel overrides. Casings: cased rounds resolve WeaponArt.casing to their FX sprite.
+## Recoil checks class and override values. Cased rounds resolve WeaponArt.casing to their sprite.
 ## Pickup: own pickup/icon and rack membership, plus angled floor showcase and flat rack icon.
 ## Melee strikes occupy equipped cells 5/6; RivetWindup selects separate windup and left strips.
 ## HOLE counts are per cell; one missing shared part can affect several pitches. table_errors
@@ -75,15 +74,16 @@ func build(lookup: Callable = FileAccess.file_exists) -> Dictionary[String, Vari
 
 
 func _row(id: String, pitch: String, grip: String) -> Dictionary[String, Dictionary]:
-	var base: String = RivetStrips.DIR + pitch + "/rivet_eq_" + id
+	var key: String = RivetGunDiag.art_key(id)
+	var base: String = RivetStrips.DIR + pitch + "/rivet_eq_" + key
 	var gun: Dictionary = _tables.guns.get(id, {})
-	var art: Dictionary = _tables.arts.get(id, {})
+	var art: Dictionary = _tables.arts.get(key, {})
 	var melee: bool = _tables.melee.has(id)
 	var top: bool = pitch == "top"
 	var cells: Dictionary[String, Dictionary] = {}
 	cells.held = _tables.held(id, pitch, base)
-	cells.pickup = _tables.pickup(id, pitch, art)
-	cells.reload = _tables.reload(id, pitch, grip, gun)
+	cells.pickup = _tables.pickup(key, pitch, art)
+	cells.reload = _tables.reload(key, pitch, grip, gun)
 	cells.casing = _tables.casing(id, gun, art)
 	cells.recoil = ArsenalAuditFiles.cell("n/a", MELEE) if melee else _tables.recoil(id, grip)
 	var hand: String = "fixed weapon hand" if RivetStrips.ONE_HAND.has(id) else "own left facing"
@@ -96,7 +96,7 @@ func _row(id: String, pitch: String, grip: String) -> Dictionary[String, Diction
 	if grip == "thrown":
 		skip = "bottle thrown by hand"
 	if skip.is_empty():
-		cells.fire8 = _tables.files.fire(base, pitch, id, str(gun.get("kind", "")) == "cone")
+		cells.fire8 = _tables.files.fire(base, pitch, key, str(gun.get("kind", "")) == "cone")
 		cells.muzzle = _muzzle(base, pitch)
 	else:
 		cells.fire8 = ArsenalAuditFiles.cell("n/a", skip)

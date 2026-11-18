@@ -1,8 +1,6 @@
 class_name ArsenalAuditTables
 extends RefCounted
 ## Compare the shipped rows before runtime loaders substitute default rows, art ids or textures.
-## Also walk every res:// value in the audited tables, including disabled pitch parts and shared FX
-## without a weapon owner. Independent table errors are fatal to the runner and the ratchet test.
 
 const DIR: String = "res://data/tables/"
 
@@ -48,16 +46,18 @@ func _init(lookup: Callable) -> void:
 
 func held(id: String, pitch: String, base: String) -> Dictionary:
 	var issues: Array[String] = []
-	var stand: Dictionary = arsenal.get("art_stand_in", {})
-	var art: Dictionary = arts.get(id, {})
+	var key: StringName = RivetGunDiag.art_key(id)
+	var aliases: Dictionary = arsenal.get("art_stand_in", {})
+	var shown: String = aliases.get(id, id)
+	var art: Dictionary = arts.get(key, {})
 	if pitch == "top":
-		if stand.has(id):
-			issues.append("art_stand_in -> " + str(stand[id]))
+		if shown != key:
+			issues.append("art_stand_in -> " + shown)
 		files.require_file(str(art.get("held", "")), "own held art", issues)
 		var parts: Dictionary = art.get("parts", {})
-		for key: String in parts:
-			if key != "mag":
-				files.references(parts[key], issues)
+		for part: String in parts:
+			if part != "mag":
+				files.references(parts[part], issues)
 		return ArsenalAuditFiles.result(issues, "own held part on the posed gun claw")
 	var view: Dictionary = pitch_art.get(pitch.trim_prefix("p"), {})
 	var rows: Dictionary = view.get("weapons", {})
@@ -67,7 +67,7 @@ func held(id: String, pitch: String, base: String) -> Dictionary:
 		files.require_file(base.get_base_dir() + "/" + RivetStrips.BASE, "base strip", issues)
 		files.check_strip(base + ".png", RivetFrames.EQ_CELLS, [0, 1, 2, 3, 4, 7], issues)
 		return ArsenalAuditFiles.result(issues, "own equipped facing and rest cells")
-	if stand.has(id) or not pitched.get("enabled", true) or not files.has(str(art.get("held", ""))):
+	if shown != key or not pitched.get("enabled", true) or not files.has(str(art.get("held", ""))):
 		issues.append("no usable own pitch part")
 	files.require_file(
 		str(pitched.get("art", "")), "equipped strip or active own pitch art", issues
