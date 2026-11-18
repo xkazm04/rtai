@@ -187,7 +187,12 @@ FRICTION: a mutation that leaves a local unused fails to parse (warnings are err
 "red before" via deletion proves nothing; mutate with `(not x or true)` instead.
 
 NEXT (session 3):
-1. Heat 2 clip that works. First prove the jam's cause with a headless trace (copy the session-2
+1. Heat 2 clip that works. Session-2 trace (reference sim, sandbox seed 18, heat 2 at START, throwaway
+   GUT test, deleted): dispatched car 416 at (284.4,202) heading W pushes a STOPPED traffic car 2.2 m
+   ahead (v 0, flags 0) at 0.9 m/s from t600 to t1350: that car queues for the junction west of it
+   (x 264-271, y 200-207) whose reservation never frees; car 417 got through at t1050 and reached
+   (242,270) by t1350. So the pursuer is not the blocker: a reservation held upstream is. Next: print
+   owner[jt] for that junction and the owner's state (stuck? waiting? promoted?). Then: prove the jam's cause with a headless trace (copy the session-2
    pattern: a throwaway GUT test building World + CitySystem(native) + CityHeat, force heat 2 at
    CitySystem.START, print K_PCAR slot/pos/v/dir and res_/owner per 120 ticks; delete it after).
    Suspects, in order: (a) engaged cops searching IN the junction (traffic brakes for people ahead
