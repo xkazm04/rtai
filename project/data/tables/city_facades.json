@@ -201,7 +201,7 @@
     },
     "dock_rope_net": {
       "art": "res://features/city/art/view/<art>/prop_dock_rope_net.png",
-      "cell_w_m": 1.75
+      "cell_w_m": 1.76
     },
     "dock_scrap_skip": {
       "art": "res://features/city/art/view/<art>/prop_dock_scrap_skip.png",
