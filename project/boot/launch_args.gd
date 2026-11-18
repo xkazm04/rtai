@@ -111,6 +111,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--device",
 	# d9-handheld: --save-cross=write|read,<dir>[,ticks,after,idle] (dev/save_cross.gd, E14)
 	"--save-cross",
+	"--enemy-brain",
 ]
 
 var _values: Dictionary[String, String] = {}
