@@ -39,6 +39,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--end-cue",
 	# n7-ranged: --quest-guns=off keeps quest 1's evening gun path (the before of the table guns)
 	"--quest-guns",
+	"--sim-police",  # n18 police: quest 1's stage patrol cops replaced by the city's sim cops
 	# n7-ranged: --flash-at=side prints the muzzle flash beside the aim line (the before of HeldMuzzle)
 	"--flash-at",
 	# n7-ranged: --throw-windup=off holds a ready molotov out at the aim (the before of RigThrow)

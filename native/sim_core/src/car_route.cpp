@@ -6,8 +6,9 @@
 namespace gtai::sim {
 
 void CityCore::car(int i, double dt, double tgx, double tgy) {
-	Car c{i, px_[i], py_[i], dir_[i], 0.0, 0.0, kind_[i] == K_PCAR, false, 0.0, 0.0, 0.0, 0.0,
-			is_bike(i)};
+	// police: every police car pursues before n18 (heat -1); under heat only a dispatched one
+	bool is_p = kind_[i] == K_PCAR && (heat_level_ < 0 || (flags_[i] & F_ENGAGED) != 0);
+	Car c{i, px_[i], py_[i], dir_[i], 0.0, 0.0, is_p, false, 0.0, 0.0, 0.0, 0.0, is_bike(i)};
 	c.ddx = DX[c.d];
 	c.ddy = DY[c.d];
 	if (ndir_[i] < 0) car_plan(c, tgx, tgy);
@@ -17,6 +18,7 @@ void CityCore::car(int i, double dt, double tgx, double tgy) {
 	car_steer(c, dt);
 	c.vv = v_[i];
 	double vdes = car_desired_speed(c);
+	if (heat_level_ >= 0 && kind_[i] == K_PCAR) vdes = car_police_speed(c, vdes);
 	if (c.vv < vdes) c.vv = minf(vdes, c.vv + 6.0 * dt);
 	else c.vv = maxf(vdes, c.vv - 14.0 * dt);
 	c.x += c.hhx * c.vv * dt;
@@ -33,8 +35,11 @@ void CityCore::car(int i, double dt, double tgx, double tgy) {
 	hy_[i] = c.hhy;
 	v_[i] = c.vv;
 	phase_[i] += c.vv * dt;
+	if (heat_level_ >= 0 && kind_[i] == K_PCAR) car_unload(c);
 	if ((stuck_[i] > 8.0 && tier_[i] == 1) || stuck_[i] > 20.0) {
-		if ((flags_[i] & F_PROMOTED) == 0) kill(i);
+		// n18: under heat an idle police car is traffic; promoted or not, a jam must clear
+		bool idle_p = heat_level_ >= 0 && kind_[i] == K_PCAR && (flags_[i] & (F_ENGAGED | F_PARKED)) == 0;
+		if ((flags_[i] & F_PROMOTED) == 0 || idle_p) kill(i);
 	}
 }
 
@@ -161,7 +166,7 @@ void CityCore::car_reserve(Car &c) {
 	if (o == 0 || o == i + 1 || alive_[o - 1] == 0 || res_[o - 1] != jt) {
 		owner_[jt] = i + 1;
 		res_[i] = jt;
-	} else {
+	} else if (heat_level_ < 0 || !c.is_p) {  // n18: a dispatched car (siren) does not queue
 		c.waiting = true;
 	}
 }

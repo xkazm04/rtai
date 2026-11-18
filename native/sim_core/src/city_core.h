@@ -78,6 +78,19 @@ public:
 		for (int k = 0; k < obst_n_ * 2; k++) obst_[k] = xy[k];
 	}
 
+	// Heat (n18 police): the game's wanted level and the point a cop last saw Rivet, a sim input
+	// set before step() and kept until the next call. -1 (the default, every boot that never
+	// calls it) keeps the pre-n18 police: every cop pursues the step's target.
+	void set_heat(int level, double x, double y) {
+		heat_level_ = level < -1 ? -1 : (level > 3 ? 3 : level);
+		heat_x_ = x;
+		heat_y_ = y;
+	}
+	int heat_level() const { return heat_level_; }
+	// The heat ladder's tune (PT_LEN doubles, PT_FOOT0..PT_WALK_V; data/tables/heat.json `city`),
+	// a sim input kept across init(). police.cpp.
+	void set_police(const double *tune, int n);
+
 	// step.cpp
 	void step(double dt, double camx, double camy, double tgx, double tgy);
 
@@ -108,6 +121,10 @@ public:
 	// flow.cpp: the police flow field (WLD-09). Distance in cells to the target, or -1.
 	int flow_dist(double x, double y) const;
 	bool flow_dir(double x, double y, double &dx, double &dy) const;
+	// flow.cpp: line of sight on the cell map (every cell strictly between the ends walkable).
+	bool sight(double x0, double y0, double x1, double y1) const;
+	// flow.cpp: a live foot cop within r of (x, y) with sight to it (CityHeat's per-tick question).
+	bool cop_sees(double x, double y, double r) const;
 	const int32_t *flow_stats() const { return ff_stats_; }
 	const int32_t *counters() const { return counters_; }
 
@@ -146,6 +163,13 @@ private:
 	uint32_t map_version_ = 0, ff_map_version_ = 0;
 	int64_t ff_ticks_ = 0;
 	int32_t ff_stats_[FS_LEN] = {};
+	int heat_level_ = -1;
+	double heat_x_ = 0.0, heat_y_ = 0.0;
+	// n18 living police (police.cpp): the ladder's tune and the search at the last-seen point
+	double pol_[PT_LEN] = {0.0, 3.0, 4.0, 6.0, 10.0, 3.0, 1.4, 2.0, 12.0, 4.0, 4.0, 6.0, 8.0};
+	int pol_cx_ = 0, pol_cy_ = 0, pol_level_ = -1;
+	double pol_search_ = 0.0;
+	bool pol_done_ = false;
 
 	double cx_ = 0.0, cy_ = 0.0;  // contact scratch position (crowd / solid)
 	double body_[BD_LEN] = {}, bx_ = 0.0, by_ = 0.0;  // the player body (body.cpp)
@@ -175,6 +199,15 @@ private:
 	void ped_flee(int i, double dt, double x, double y, double &dx, double &dy);
 	void ped_riot(int i, double dt, double x, double y, double &dx, double &dy);
 	void cop(int i, double dt, double tgx, double tgy);
+	void person_move(int i, double x, double y, double dx, double dy, double spd, double dt);
+	void police_pass(double dt);                      // police.cpp
+	void police_fill(int want);                       // police.cpp
+	void police_release();                            // police.cpp
+	double car_police_speed(const Car &c, double vdes) const;  // police.cpp (heat 2)
+	void car_unload(const Car &c);                    // police.cpp (heat 2)
+	void cop_heat(int i, double dt, double tgx, double tgy);  // police.cpp
+	void cop_walk(int i, double dt);                  // police.cpp
+	bool cop_search(int i, double x, double y, double &dx, double &dy, double &spd) const;
 	void crowd(int i);                                // contact.cpp
 	void solid(double r);                             // contact.cpp
 	void body_push(int i, double pvx, double pvy);    // body.cpp

@@ -38,7 +38,8 @@ double CityCore::car_desired_speed(const Car &c) {
 		double dist = (jx_[i] * c.ddx + jy_[i] * c.ddy) - along2 - 14.0;
 		vdes = minf(vdes, maxf(0.0, dist));
 	}
-	if (tier_[i] != 0 || c.is_p) return vdes;
+	// a pursuer rams through (pre-n18); under heat a dispatched car brakes like traffic (n18)
+	if (tier_[i] != 0 || (c.is_p && heat_level_ < 0)) return vdes;
 	int n = query(c.x + c.hhx * 7.0, c.y + c.hhy * 7.0, 1, qbuf_);
 	for (int q = 0; q < n; q++) {
 		int j = qbuf_[q];

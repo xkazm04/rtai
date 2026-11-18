@@ -3,7 +3,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { parseArgs as scenarioArgs } from './run_scenarios.mjs';
-import { parseArgs as benchArgs } from '../bench/run.mjs';
+import { parseArgs as benchArgs, scenarioArgs as benchScenarioArgs } from '../bench/run.mjs';
 
 test('run_scenarios: defaults, minutes and a name list', () => {
   assert.deepEqual(scenarioArgs([]), {});
@@ -19,12 +19,21 @@ test('run_scenarios: a malformed wait, an empty --only or an unknown flag is a u
 });
 
 test('bench: defaults and numbers', () => {
-  assert.deepEqual(benchArgs([]), { headless: false, secs: 60, runs: 3, waitMin: 20 });
-  assert.deepEqual(benchArgs(['--headless', '--secs=30', '--runs=1', '--wait=0']), { headless: true, secs: 30, runs: 1, waitMin: 0 });
+  assert.deepEqual(benchArgs([]), { headless: false, secs: 60, runs: 3, waitMin: 20, heat: -1 });
+  assert.deepEqual(benchArgs(['--headless', '--secs=30', '--runs=1', '--wait=0']), { headless: true, secs: 30, runs: 1, waitMin: 0, heat: -1 });
+  assert.equal(benchArgs(['--heat=3']).heat, 3);
+  assert.equal(benchArgs(['--heat=0']).heat, 0);
+});
+
+test('bench: --heat reaches every scenario run, and only when given', () => {
+  const sc = { name: 'riot', scenario: 'riot', zoom: '1.0' };
+  assert.ok(benchScenarioArgs(sc, 60, 'o.json', 3).includes('--heat=3'));
+  assert.ok(!benchScenarioArgs(sc, 60, 'o.json').some((a) => a.startsWith('--heat')));
+  assert.ok(!benchScenarioArgs(sc, 60, 'o.json', -1).some((a) => a.startsWith('--heat')));
 });
 
 test('bench: NaN, zero runs or secs, and unknown flags are usage errors', () => {
-  for (const bad of [['--wait=20m'], ['--wait=-1'], ['--secs=abc'], ['--secs=0'], ['--runs=0'], ['--runs=1.5'], ['--headles'], ['--secs']]) {
+  for (const bad of [['--wait=20m'], ['--wait=-1'], ['--secs=abc'], ['--secs=0'], ['--runs=0'], ['--runs=1.5'], ['--headles'], ['--secs'], ['--heat=4'], ['--heat=-1'], ['--heat=1.5'], ['--heat=']]) {
     assert.throws(() => benchArgs(bad), { name: 'UsageError' }, bad.join(' '));
   }
 });

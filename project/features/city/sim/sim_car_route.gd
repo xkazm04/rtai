@@ -80,7 +80,7 @@ func reserve(i: int) -> bool:
 		_s.owner[jt] = i + 1
 		_s.res[i] = jt
 		return false
-	return true
+	return _s.heat < 0 or not CitySimPoliceCars.pursuer(_s, i)  # n18: a dispatched car does not queue
 
 
 func _pick(i: int, icx: float, icy: float, tgx: float, tgy: float) -> int:
@@ -96,7 +96,7 @@ func _pick(i: int, icx: float, icy: float, tgx: float, tgy: float) -> int:
 			ok[c] = true
 			sumw += WEIGHTS[c]
 	var pick: int = -1
-	if _s.kind[i] == SimConst.K_PCAR:
+	if CitySimPoliceCars.pursuer(_s, i):
 		pick = _nearest(cand, ok, [icx, icy, tgx, tgy])
 	elif sumw > 0.0:
 		var r: float = _s.rnd() * sumw

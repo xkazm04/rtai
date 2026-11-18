@@ -8,6 +8,7 @@ var _h: CitySimHash
 var _solid: CitySimSolid
 var _flow: CitySimFlow
 var _body: CitySimBody
+var _cops: CitySimCops
 var _dx: float = 0.0
 var _dy: float = 0.0
 var _spd: float = 0.0
@@ -16,12 +17,17 @@ var _y: float = 0.0
 
 
 func _init(
-	state: CitySimState, hash_grid: CitySimHash, flow: CitySimFlow, body: CitySimBody
+	state: CitySimState,
+	hash_grid: CitySimHash,
+	flow: CitySimFlow,
+	body: CitySimBody,
+	police: CitySimPolice
 ) -> void:
 	_s = state
 	_h = hash_grid
 	_flow = flow
 	_body = body
+	_cops = CitySimCops.new(state, flow, police)
 	_solid = CitySimSolid.new(state)
 
 
@@ -48,41 +54,12 @@ func ped(i: int, dt: float) -> void:
 
 
 func cop(i: int, dt: float, tgx: float, tgy: float) -> void:
-	var x: float = _s.px[i]
-	var y: float = _s.py[i]
 	if _s.mode[i] == SimConst.M_DEAD:
 		return
 	if _s.mode[i] == SimConst.M_DOWN:
 		_body.down(i, dt)
 		return
-	var ax: float = tgx - x
-	var ay: float = tgy - y
-	var d: float = sqrt(ax * ax + ay * ay)
-	_dx = _s.hx[i]
-	_dy = _s.hy[i]
-	if d > 0.001:
-		_dx = ax / d
-		_dy = ay / d
-	# move along the flow field (WLD-09); aim and shoot straight at the target
-	var mx: float = _dx
-	var my: float = _dy
-	if d > SimConst.FF_NEAR_M and _flow.dir(x, y):
-		mx = _flow.dx
-		my = _flow.dy
-	_spd = 3.4 if d > 7.0 else 0.0
-	_s.t2[i] -= dt
-	_s.t1[i] -= dt
-	if d < 20.0 and _s.t2[i] <= 0.0:
-		var sp: float = (_s.rnd() - 0.5) * 0.16
-		var fx: float = _dx - _dy * sp
-		var fy: float = _dy + _dx * sp
-		var l: float = sqrt(fx * fx + fy * fy)
-		_s.fire(x + fx / l * 0.8, y + fy / l * 0.8, fx / l * 38.0, fy / l * 38.0, 1.5)
-		_s.t2[i] = 0.8 + _s.rnd() * 1.6
-		_s.t1[i] = 0.25
-	_dx = mx
-	_dy = my
-	_move(i, x, y, dt)
+	_cops.step(self, i, dt, tgx, tgy)
 
 
 func _flee(i: int, x: float, y: float, dt: float) -> void:
@@ -96,9 +73,8 @@ func _flee(i: int, x: float, y: float, dt: float) -> void:
 	_spd = 4.5
 	if _s.cell_at(x + _dx, y + _dy) >= 4 or _s.cell_at(x + _dx, y + _dy) == 0:
 		var nx: float = -_dy
-		var ny: float = _dx
+		_dy = _dx
 		_dx = nx
-		_dy = ny
 	if _s.t1[i] > 0.0:
 		return
 	if (_s.flags[i] & SimConst.F_RIOTER) != 0:
@@ -161,6 +137,27 @@ func _walk(i: int, x: float, y: float) -> void:
 		_dy = -_dy
 	else:
 		_spd = 0.0
+
+
+## n18 police (CitySimPolice): one cop step along (dx, dy) at spd (CityCore::person_move).
+func cop_move(i: int, dx: float, dy: float, spd: float, dt: float) -> void:
+	_dx = dx
+	_dy = dy
+	_spd = spd
+	_move(i, _s.px[i], _s.py[i], dt)
+
+
+## n18 police: a free cop's sidewalk walk from heading (dx, dy), at spd where it moves
+## (CityCore::cop_walk after its axis snap).
+func cop_walk(i: int, dx: float, dy: float, spd: float, dt: float) -> void:
+	var x: float = _s.px[i]
+	var y: float = _s.py[i]
+	_dx = dx
+	_dy = dy
+	_walk(i, x, y)
+	if _spd > 0.0:
+		_spd = spd
+	_move(i, x, y, dt)
 
 
 ## Integrate, then (tier A only) separate from people and push out of solid cells.

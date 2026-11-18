@@ -27,6 +27,14 @@ extends RefCounted
 ## Sim input: points outside the sim (service cars' hull circles, x y pairs, at most
 ## SimConst.OBST_MAX) that traffic brakes for like a car ahead; kept until the next call.
 @abstract func set_obstacles(xy: PackedFloat64Array) -> void
+## n18 police: the wanted level (0-3; -1 = pre-n18 police, the default) and the point a cop last
+## saw Rivet. A sim input set before step() and kept until the next call.
+@abstract func set_heat(level: int, x: float, y: float) -> void
+## The level set_heat() last stored (clamped to -1..3).
+@abstract func heat_level() -> int
+## n18 police: the heat ladder's tune (SimConst.PT_LEN floats, PT_FOOT0..PT_WALK_V; the heat
+## table's `city` block); a sim input kept across init().
+@abstract func set_police(tune: PackedFloat64Array) -> void
 ## One fixed tick (SIM-01): dt is SimClock.TICK_DT; cam is the bubble centre; tg the pursuit target.
 @abstract func step(dt: float, camx: float, camy: float, tgx: float, tgy: float) -> void
 @abstract func get_counters() -> PackedInt32Array
@@ -50,3 +58,8 @@ extends RefCounted
 @abstract func flow_stats() -> PackedInt32Array
 ## Flow-field distance in cells from (x, y) to the pursuit target, or -1.
 @abstract func flow_dist(x: float, y: float) -> int
+## Line of sight on the 1 m cell map: every cell strictly between the two points' cells walkable.
+@abstract func sight(x0: float, y0: float, x1: float, y1: float) -> bool
+
+## A live foot cop within r of (x, y) with sight to it (no snapshot copy; n18 police item 7).
+@abstract func cop_sees(x: float, y: float, r: float) -> bool

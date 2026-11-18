@@ -170,6 +170,24 @@
           "name": "F_PASSING",
           "type": "int",
           "value": 8
+        },
+        {
+          "doc": "n18: a cop the heat ladder sent to the last-seen point",
+          "name": "F_ENGAGED",
+          "type": "int",
+          "value": 16
+        },
+        {
+          "doc": "n18: a foot cop who came in a dispatched police car (his car's crew)",
+          "name": "F_CREW",
+          "type": "int",
+          "value": 32
+        },
+        {
+          "doc": "n18: a dispatched police car parked at the last-seen point",
+          "name": "F_PARKED",
+          "type": "int",
+          "value": 64
         }
       ],
       "doc": "Actor flag bits.",
@@ -574,14 +592,134 @@
           "value": 3
         },
         {
+          "doc": "flow_stats(): cops engaged by the heat ladder after the last step (n18)",
+          "name": "FS_ENGAGED",
+          "type": "int",
+          "value": 4
+        },
+        {
+          "doc": "flow_stats(): ticks searched at the current last-seen point (n18)",
+          "name": "FS_SEARCH_TICKS",
+          "type": "int",
+          "value": 5
+        },
+        {
           "doc": "flow_stats() length",
           "name": "FS_LEN",
           "type": "int",
-          "value": 4
+          "value": 6
         }
       ],
       "doc": "Police flow field (WLD-09): integer BFS over 1 m cells in a window centred on the target.",
       "name": "flow"
+    },
+    {
+      "constants": [
+        {
+          "doc": "set_police(): foot cops engaged at heat 0",
+          "name": "PT_FOOT0",
+          "type": "int",
+          "value": 0
+        },
+        {
+          "doc": "set_police(): foot cops engaged at heat 1",
+          "name": "PT_FOOT1",
+          "type": "int",
+          "value": 1
+        },
+        {
+          "doc": "set_police(): foot cops engaged at heat 2",
+          "name": "PT_FOOT2",
+          "type": "int",
+          "value": 2
+        },
+        {
+          "doc": "set_police(): foot cops engaged at heat 3",
+          "name": "PT_FOOT3",
+          "type": "int",
+          "value": 3
+        },
+        {
+          "doc": "set_police(): seconds the engaged cops search at the last-seen point",
+          "name": "PT_SEARCH_S",
+          "type": "int",
+          "value": 4
+        },
+        {
+          "doc": "set_police(): search radius round the last-seen point, m",
+          "name": "PT_ARRIVE_M",
+          "type": "int",
+          "value": 5
+        },
+        {
+          "doc": "set_police(): a free cop's walking speed, m/s",
+          "name": "PT_WALK_V",
+          "type": "int",
+          "value": 6
+        },
+        {
+          "doc": "set_police(): foot cops a dispatched police car brings",
+          "name": "PT_CREW",
+          "type": "int",
+          "value": 7
+        },
+        {
+          "doc": "set_police(): a dispatched car stops this near the point, m",
+          "name": "PT_CAR_STOP_M",
+          "type": "int",
+          "value": 8
+        },
+        {
+          "doc": "set_police(): a dispatched car stuck this long parks, its crew walks, s",
+          "name": "PT_BAIL_S",
+          "type": "int",
+          "value": 9
+        },
+        {
+          "doc": "set_police(): foot cops a dispatched car brings at heat 3 (squad)",
+          "name": "PT_SQUAD",
+          "type": "int",
+          "value": 10
+        },
+        {
+          "doc": "set_police(): art variant of a heat 3 squad's even cops (riot 6)",
+          "name": "PT_SQUAD_V0",
+          "type": "int",
+          "value": 11
+        },
+        {
+          "doc": "set_police(): art variant of a heat 3 squad's odd cops (SWAT 8)",
+          "name": "PT_SQUAD_V1",
+          "type": "int",
+          "value": 12
+        },
+        {
+          "doc": "set_police() length",
+          "name": "PT_LEN",
+          "type": "int",
+          "value": 13
+        },
+        {
+          "doc": "crowd art id of a foot cop (the spawner's cop look)",
+          "name": "ART_COP",
+          "type": "int",
+          "value": 7
+        },
+        {
+          "doc": "an engaged cop's search amble, m/s",
+          "name": "POL_SEARCH_V",
+          "type": "float",
+          "value": 1.25
+        },
+        {
+          "doc": "seconds an amble keeps one heading",
+          "name": "POL_SEARCH_TURN_S",
+          "type": "float",
+          "value": 1.5
+        }
+      ],
+      "doc": "n18 living police: the heat ladder's tune (set_police, from data/tables/heat.json).",
+      "name": "police"
     },
     {
       "constants": [

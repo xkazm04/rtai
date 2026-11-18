@@ -5,6 +5,7 @@
 // FF_EVERY ticks, only when the target cell or the map changed and police are alive.
 #include <chrono>
 #include <cmath>
+#include <cstdlib>
 
 #include "city_core.h"
 
@@ -109,6 +110,49 @@ int CityCore::local_dist(int lx, int ly) const {
 	if (lx < 0 || ly < 0 || lx >= FF_W || ly >= FF_W) return -1;
 	int d = ff_dist_[ly * FF_W + lx];
 	return d == FF_UNREACHED ? -1 : d;
+}
+
+// Line of sight on the 1 m cell map (n18 police item 1): an integer walk over the cells between
+// (x0, y0)'s cell and (x1, y1)'s (between cell centres; a corner crossing checks both side cells).
+// True when every cell strictly between the two ends is walkable. Integers only (exact in both
+// runtimes, CitySimFlow.sight).
+bool CityCore::sight(double x0, double y0, double x1, double y1) const {
+	int cx = (int)std::floor(x0), cy = (int)std::floor(y0);
+	int ex = (int)std::floor(x1), ey = (int)std::floor(y1);
+	int nx = std::abs(ex - cx), ny = std::abs(ey - cy);
+	int sx = ex > cx ? 1 : -1, sy = ey > cy ? 1 : -1;
+	int ix = 0, iy = 0;
+	while (ix < nx || iy < ny) {
+		int dec = (1 + 2 * ix) * ny - (1 + 2 * iy) * nx;
+		if (dec == 0) {
+			if (!walkable(map_cell(cx + sx, cy)) || !walkable(map_cell(cx, cy + sy))) return false;
+			cx += sx;
+			cy += sy;
+			ix++;
+			iy++;
+		} else if (dec < 0) {
+			cx += sx;
+			ix++;
+		} else {
+			cy += sy;
+			iy++;
+		}
+		if ((ix < nx || iy < ny) && !walkable(map_cell(cx, cy))) return false;
+	}
+	return true;
+}
+
+// A live foot cop within r of (x, y) with sight to it, slot order (n18 police item 7: CityHeat asked
+// this of a full snapshot copy every tick; CitySimFlow.cop_sees is the same walk).
+bool CityCore::cop_sees(double x, double y, double r) const {
+	const double r2 = r * r;
+	for (int i = 0; i < CAP; i++) {
+		if (alive_[i] == 0 || kind_[i] != K_COP || mode_[i] == M_DEAD) continue;
+		const double dx = x - px_[i];
+		const double dy = y - py_[i];
+		if (dx * dx + dy * dy <= r2 && sight(px_[i], py_[i], x, y)) return true;
+	}
+	return false;
 }
 
 }  // namespace gtai::sim

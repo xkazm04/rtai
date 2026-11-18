@@ -172,3 +172,11 @@ static func _count(a: PackedByteArray) -> int:
 	for v: int in a:
 		c += v
 	return c
+
+
+## human-reactions: the riot's crowd reactions and what CrowdReact cost the frame (REQUEST 23).
+static func log_crowd(c: CrowdReact) -> void:
+	var n: Array[int] = [c.cowers, c.startles, c.trips, c.deaths]
+	printerr("city_bench: crowd %d cowers (%d at a death), %d trips, %d deaths" % n)
+	var us: Array[int] = [c.cost_us / maxi(c.cost_calls, 1), c.cost_max_us, c.cost_calls]
+	printerr("city_bench: crowd observe mean %d us, worst %d us over %d calls" % us)

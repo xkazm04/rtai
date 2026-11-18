@@ -97,6 +97,19 @@ func set_obstacles(xy: PackedFloat64Array) -> void:
 	_call(&"set_obstacles", [xy])
 
 
+func set_heat(level: int, x: float, y: float) -> void:
+	_call(&"set_heat", [level, x, y])
+
+
+func heat_level() -> int:
+	var h: Variant = _call(&"heat_level", [])
+	return h if h is int else -1
+
+
+func set_police(tune: PackedFloat64Array) -> void:
+	_call(&"set_police", [tune])
+
+
 func set_car_state(i: int, state: int) -> void:
 	_call(&"set_car_state", [i, state])
 
@@ -145,6 +158,16 @@ func flow_stats() -> PackedInt32Array:
 func flow_dist(x: float, y: float) -> int:
 	var d: Variant = _call(&"flow_dist", [x, y])
 	return d if d is int else -1
+
+
+func sight(x0: float, y0: float, x1: float, y1: float) -> bool:
+	var s: Variant = _call(&"sight", [x0, y0, x1, y1])
+	return s if s is bool else false
+
+
+func cop_sees(x: float, y: float, r: float) -> bool:
+	var s: Variant = _call(&"cop_sees", [x, y, r])
+	return s if s is bool else false
 
 
 func set_rig_slots(slots: PackedInt32Array) -> void:

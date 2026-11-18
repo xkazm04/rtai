@@ -45,6 +45,7 @@ func boot() -> void:
 	settings.reduced_motion = settings.reduced_motion or LaunchArgs.has("--reduced-motion")
 	Quest1Session.ghost_locks = not LaunchArgs.has("--ghosts-free")  # ghost-powers-5's old default
 	Quest1Session.table_guns = LaunchArgs.value("--quest-guns") != "off"  # n7-ranged's before
+	StagePolice.sim_police = LaunchArgs.has("--sim-police")  # n18 police item 6
 	Quest1Session.blade = Quest1Game.blade_of(LaunchArgs.value("--quest-blade"))  # n7-melee
 	add_child(card)
 	@warning_ignore("return_value_discarded")

@@ -47,6 +47,7 @@ var ra: float = 80.0
 var rb: float = 160.0
 var riot_r: float = 14.0
 var time: float = 0.0
+var heat: int = -1  # n18: the wanted level (CitySimPolice.set_heat; -1 = pre-n18 police)
 var rs: int = 1
 var dir16x: PackedFloat64Array
 var dir16y: PackedFloat64Array

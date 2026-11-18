@@ -1,0 +1,22 @@
+{
+ "backend": "native",
+ "cops": 16,
+ "engaged": 0,
+ "heat_us": {
+  "max": 382,
+  "mean": 59.73,
+  "p50": 51,
+  "p99": 151
+ },
+ "level": 3,
+ "peds_target": 270,
+ "police": "pre",
+ "schema": "gtai.heat-cost/1",
+ "sim_us": {
+  "max": 354,
+  "mean": 48.2811111111111,
+  "p50": 45,
+  "p99": 111
+ },
+ "ticks": 1800
+}

@@ -2,6 +2,168 @@
   "$id": "gtai.heat/1",
   "additionalProperties": false,
   "properties": {
+    "city": {
+      "additionalProperties": false,
+      "properties": {
+        "arrive_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "bail_s": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "car_delay_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "car_ring_m": {
+          "items": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "car_stop_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "cars": {
+          "items": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array"
+        },
+        "crew": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "drain_s_per_level": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "foot_cops": {
+          "items": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array"
+        },
+        "living_police": {
+          "type": "boolean"
+        },
+        "patrol_cops": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "quest1": {
+          "type": "boolean"
+        },
+        "quest1_cars": {
+          "items": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array"
+        },
+        "quest1_patrol_cops": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "quest1_sim_police_cops": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "roadblock_ahead_m": {
+          "items": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "roadblock_cars": {
+          "items": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array"
+        },
+        "roadblock_delay_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "roadblock_past_m": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "search_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "squad": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "squad_looks": {
+          "items": {
+            "maximum": 8,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "walk_mps": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "arrive_m",
+        "bail_s",
+        "car_delay_s",
+        "car_ring_m",
+        "car_stop_m",
+        "cars",
+        "crew",
+        "doc",
+        "drain_s_per_level",
+        "foot_cops",
+        "living_police",
+        "patrol_cops",
+        "quest1",
+        "quest1_cars",
+        "quest1_patrol_cops",
+        "quest1_sim_police_cops",
+        "roadblock_ahead_m",
+        "roadblock_cars",
+        "roadblock_delay_s",
+        "roadblock_past_m",
+        "search_s",
+        "squad",
+        "squad_looks",
+        "walk_mps"
+      ],
+      "type": "object"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"
@@ -28,7 +190,8 @@
     "doc",
     "max_level",
     "drain_s_per_level",
-    "sight_m"
+    "sight_m",
+    "city"
   ],
   "type": "object"
 }

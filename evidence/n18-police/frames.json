@@ -1,0 +1,128 @@
+[
+ {
+  "file": "item6_quest1_before_unfixed_fixed_t1200_32ppm.png",
+  "title": "Quest 1 at t1200 (heat drained to 0 while Rivet hid): BEFORE no connection | city sim police on quest heat (739a90264) | with the hide rule (b1418a966)",
+  "source": "node tools/film/film.mjs quest1 --stills=300,600,1200 --ppm=32 (heat.json city.quest1 false / true), hstack",
+  "branch": "n18-police 739a90264, b1418a966",
+  "ppm": 32,
+  "before": "left third: city.quest1 false (the quest's sim at heat -1)",
+  "note": "Middle: the sim cops saw Rivet through the dumpster hide (the sim's sight knows no hides) and fired: people lie dead in the street. Right: hidden = sim heat 0, fewer bodies, but one cop and one ped still lie at the left corner (untraced: suspects a sim cop hit by traffic or caught in the opening fight; open finding). The t300 bodies near the dumpster are quest 1's scripted opening (Rivet's line: 'I stopped a cop... THROUGH another cop')."
+ },
+ {
+  "file": "item6_quest1_simcops_b1418a966_t300_32ppm.png",
+  "title": "Quest 1 t300 (heat 2): a city sim cop running toward Rivet's start while he hides",
+  "source": "film.mjs quest1 --stills=300 at b1418a966",
+  "branch": "n18-police b1418a966",
+  "ppm": 32,
+  "before": "item6_quest1_before_unfixed_fixed_t1200_32ppm.png (left third, no sim police answer)",
+  "note": "The quest opens at start_heat 2: the 4 nearest of quest1_patrol_cops (6) are claimed for the alarm point (Rivet's start). Stills only (the quest1 shot records stills)."
+ },
+ {
+  "file": "item5_heat2_vs_heat3_t2176_32ppm.png",
+  "title": "Heat 2 | heat 3 at t2176 (33 s after the raise): heat 3's riot/SWAT squads at A",
+  "source": "godot --rendering-driver d3d12 --path project --fixed-fps 60 --resolution 1280x720 res://dev/sim/heat_clip.tscn -- --level=3 --police=living --seconds=40 (frame f_00544), hstack with the heat 2 run of the same seed",
+  "branch": "n18-police eebc2600e",
+  "ppm": 32,
+  "before": "left half: --level=2 (crews of 2, patrol look)",
+  "note": "Heat 3: 3 cars, each a squad of 4 (looks riot 6 / SWAT 8 in turn); first squad cop within 4 m of A at t968, all 12 by t2176; max 17 cops within 4 m (6 foot + squads); roadblock placed at t524. Heat 2 (left): 2 cars x 2 crew, max 7 within 4 m. Level drains 3 -> 2 at t1680 (25 s)."
+ },
+ {
+  "file": "item5_heat3_roadblock_t600_32ppm.png",
+  "title": "Heat 3 roadblock, t600: two cruisers parked across the road past the junction ahead of Rivet",
+  "source": "godot --rendering-driver d3d12 --path project --fixed-fps 60 --resolution 1280x720 res://dev/sim/heat_clip.tscn -- --level=3 --police=living --seconds=30 --watch=block (frame f_00150)",
+  "branch": "n18-police eebc2600e",
+  "ppm": 32,
+  "before": "none: no roadblock existed before item 5",
+  "note": "Rivet seen at A then 60 m south: heading south; the first junction 25-90 m ahead of him, the block 6 m past its far edge at (268, 406), one cruiser per lane, placed at t524 (the 2 s delay ran out at ~t300; the chunk there streamed in later, it retries each tick). Traffic on this street was thin: max 1 car stopped within 25 m of the block in 30 s (the unit test shows the braking: a car stops at 5.5 m behind it)."
+ },
+ {
+  "file": "item5_heat3_squad_t1044_64ppm.png",
+  "title": "Heat 3 squad close-up, 64 px/m, t1044: SWAT (dark helmet, visor) and riot (shield) cops reach A",
+  "source": "godot --rendering-driver d3d12 --path project --fixed-fps 60 --resolution 1280x720 res://dev/sim/heat_clip.tscn -- --level=3 --police=living --seconds=22 --zoom=2 (frame f_00261)",
+  "branch": "n18-police eebc2600e",
+  "ppm": 64,
+  "before": "item4_heat2_living_e7cb74202_32ppm_t2244.png (heat 2 crews in the patrol look)",
+  "note": "The squad's looks come from the sim spawn variant (heat.json city.squad_looks [6, 8]); full rigs near the camera draw them; the baked atlas (LOD 1) prints SWAT as patrol."
+ },
+ {
+  "file": "item5_heat2_vs_heat3_32ppm.mp4",
+  "title": "Heat 2 | heat 3 clip, 43 s at 15 fps (every 4th tick), camera on A",
+  "source": "the two runs of the pair still, ffmpeg hstack, scaled to 1920 wide",
+  "branch": "n18-police eebc2600e",
+  "ppm": 32,
+  "before": "left half",
+  "note": "item5_heat3_living_timeline.json: heat, engaged, near A, squad near A, block, every cop position per sample."
+ },
+ {
+  "file": "item5_heat3_roadblock_32ppm.mp4",
+  "title": "Heat 3 roadblock clip, 33 s, the camera moves to the block when it stands (t524)",
+  "source": "godot --rendering-driver d3d12 --path project --fixed-fps 60 --resolution 1280x720 res://dev/sim/heat_clip.tscn -- --level=3 --police=living --seconds=30 --watch=block",
+  "branch": "n18-police eebc2600e",
+  "ppm": 32,
+  "before": "none",
+  "note": "Moving the camera moves the sim bubble, so this run's A numbers differ from the A-view run; only its block numbers count (item5_heat3_roadblock_timeline.json)."
+ },
+ {
+  "file": "item5_heat3_squad_64ppm.mp4",
+  "title": "Heat 3 squad, 64 px/m close-up clip, 25 s",
+  "source": "godot --rendering-driver d3d12 --path project --fixed-fps 60 --resolution 1280x720 res://dev/sim/heat_clip.tscn -- --level=3 --police=living --seconds=22 --zoom=2",
+  "branch": "n18-police eebc2600e",
+  "ppm": 64,
+  "before": "none",
+  "note": ""
+ },
+ {
+  "file": "item4_heat2_living_e7cb74202_32ppm_t2244.png",
+  "title": "Heat 2 in the sandbox city, t2244: the dispatched cars' crews reached A on foot (7 cops in the ring)",
+  "source": "godot --rendering-driver d3d12 --path project --fixed-fps 60 --resolution 1280x720 res://dev/sim/heat_clip.tscn -- --level=2 --police=living --seconds=40 (frame f_00561)",
+  "branch": "n18-police e7cb74202",
+  "ppm": 32,
+  "before": "item4_heat2_living_c19685d17_32ppm.mp4 (same run at c19685d17: crews released ~60 m off, max 4 within 4 m of A)",
+  "note": "Heat 2 raised at t180 at A (witnessed kill), Rivet moved 60 m off. Both cars bail out of junction traffic ~t900-960 (bail_s 4 s) 60-70 m from A, 2 crew each out; the search now waits while a crew cop walks in; all 4 crew within 4 m of A by t2244 (near A 7 = 3 foot + 4 crew; before: max 4, crew 0). Level 2 -> 1 at t1680 (25 s drain). Cars at A 0: they park where traffic held them, by design (bail)."
+ },
+ {
+  "file": "item4_heat2_living_e7cb74202_32ppm.mp4",
+  "title": "Heat 2 clip, 43 s at 15 fps (every 4th tick): cars dispatched, bail out of traffic, crews walk to A",
+  "source": "same run as the still, ffmpeg of the PNG sequence",
+  "branch": "n18-police e7cb74202",
+  "ppm": 32,
+  "before": "item4_heat2_living_c19685d17_32ppm.mp4",
+  "note": "item4_heat2_living_e7cb74202_timeline.json: heat, engaged, near A and every cop position per sample."
+ },
+ {
+  "file": "item3_heat1_pair_t808_32ppm.png",
+  "title": "Heat 1 in the sandbox city, t808 (10.5 s after the raise): BEFORE pre-n18 sim police | AFTER living police",
+  "source": "godot --rendering-driver d3d12 --path project --fixed-fps 60 --resolution 1280x720 res://dev/sim/heat_clip.tscn -- --level=1 --police=living|pre --seconds=30 (frames f_00202), hstack",
+  "branch": "n18-police e5a648203",
+  "ppm": 32,
+  "before": "left half (--police=pre: set_heat -1; the label's 'heat 2' is the meter, the sim ignores it)",
+  "note": "Ring = the 3 m search radius round A (the last-seen point, the junction at the sandbox start); heat forced at t180 as a witnessed kill does, Rivet moved 60 m south out of sight. AFTER: 3 engaged cops searching at A (timeline: first within 4 m at t388 = 3.5 s, all 3 at t808, released after the 10 s search at t1020, heat 0 at t1680 = 25 s drain). BEFORE: every sim cop chases Rivet wherever he is from tick 0, crime or not; nobody looks at A (0 within 4 m all clip)."
+ },
+ {
+  "file": "item3_heat1_pair_32ppm.mp4",
+  "title": "Heat 1 clip, 33 s at 15 fps (every 4th tick): BEFORE pre-n18 | AFTER living police",
+  "source": "same runs as the still, ffmpeg hstack of the two PNG sequences",
+  "branch": "n18-police e5a648203",
+  "ppm": 32,
+  "before": "left half",
+  "note": "The label lags the image by one sample (4 ticks). item3_heat1_living_timeline.json / item3_pre_n18_timeline.json hold heat, engaged and every cop position per sample."
+ },
+ {
+  "file": "item1_cityfight_after_39c831f52_32ppm_t650.png",
+  "title": "n15 city street fight t650 AFTER the sim cop sight fix: the four wall cops unchanged",
+  "source": "node tools/film/film.mjs city --ppm=32 --stills=250,450,650,850,1150",
+  "branch": "n18-police",
+  "ppm": 32,
+  "before": "item1_cityfight_before_36dd26ba6_32ppm_t650.png",
+  "note": "Identical to the before. The four cops at the wall's north foot are arena pit guards (Fighters 3001-3004, item1_cityfight_after_probe.json t650: pos y 530.3, Rivet 527.5,535.0), driven by the combat enemy AI, not by the city sim's cop() step. The sim fix is proven by tests/unit/test_city_cop_sight.gd (never -> tick 617/615), not by this frame; the n15 defect stays open under combat AI nav."
+ },
+ {
+  "file": "item1_cityfight_before_36dd26ba6_32ppm_t650.png",
+  "title": "n15 city street fight t650 BEFORE (int-n17 36dd26ba6, own DLLs)",
+  "source": "film.mjs city --ppm=32 --tree=<worktree at 36dd26ba6>",
+  "branch": "int-n17",
+  "ppm": 32,
+  "before": null,
+  "note": "The n15 DEFECTS still: four cops pressed against the sidewalk wall's north foot."
+ }
+]

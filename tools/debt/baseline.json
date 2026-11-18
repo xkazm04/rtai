@@ -48,17 +48,24 @@
         "2026-11-11: n16 tools: FilmProbe pins the film cursor (CURSOR_OFF + doc, +2 dev lines): films read the desk mouse, so Rivet's aim differed run to run (s3ab) (dev_loc 21700 -> 21702)",
         "2026-11-11: 2026-11-11: n17 rivet-strike item 1: dialogue_board --slots, the weapon slot's before/after stills (dev evidence) (dev_loc 21702 -> 21741)",
         "2026-11-11: n17 rivet-strike: dev chapters katana_thrust/_cam (an armored cop so the katana's whole combo and its drawn thrust are filmed) (dev_loc 21741 -> 21752)",
-        "2026-11-11: n17 rivet-strike: quest1_clip --hud-weapon=off, the HUD slot's before filmable in game (+2 dev lines) (dev_loc 21752 -> 21754)"
+        "2026-11-11: n17 rivet-strike: quest1_clip --hud-weapon=off, the HUD slot's before filmable in game (+2 dev lines) (dev_loc 21752 -> 21754)",
+        "2026-11-18: n18 police: dev/sim/heat_clip.gd + heat_clip_mark.gd, the heat ladder's 32 px/m clip scene (items 3-5 evidence; no film shot covers the sandbox city) (dev_loc 21754 -> 21939)",
+        "2026-11-18: n18 police: heat_clip.gd counts police cars stopped at A (the heat 2 clip's number) (dev_loc 21939 -> 21947)",
+        "2026-11-18: n18 police item 5: heat_clip --watch=block and HeatClipCount (the heat 3 clip's numbers); dev-only evidence tooling (dev_loc 21947 -> 22006)",
+        "2026-11-18: n18 police item 6/7: --sim-police in LaunchArgs.KNOWN_FLAGS (the brief names the flag there; launch_args.gd 200 -> 201) and dev/sim/heat_cost.gd (the heat 3 cost probe) (dev_loc 22006 -> 22133)",
+        "2026-11-18: n18 police: dev evidence tooling (heat_clip body counts, quest1_clip --sim-police) (dev_loc 22133 -> 22165)",
+        "2026-11-18: n18 police: quest1_clip_rec death probe line (dev evidence) (dev_loc 22165 -> 22170)",
+        "2026-11-18: n18 police: bench --heat (CityHeat pinned at a level: item 7's heat 3 bench) and dev/sim/cop_wall_trails.gd (item 1's before/after trails on the wall map); dev evidence tooling (dev_loc 22170 -> 22309)"
       ],
       "files": {
         "project/dev/arena": 711,
         "project/dev/audio": 367,
         "project/dev/bake_city.gd": 32,
-        "project/dev/bench": 1886,
+        "project/dev/bench": 1906,
         "project/dev/bosses": 55,
         "project/dev/bots": 399,
         "project/dev/enemy_ai": 662,
-        "project/dev/frames": 1081,
+        "project/dev/frames": 1087,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
         "project/dev/gunplay": 674,
@@ -78,11 +85,11 @@
         "project/dev/selftest": 1454,
         "project/dev/servo": 434,
         "project/dev/showcase": 6775,
-        "project/dev/sim": 196,
+        "project/dev/sim": 725,
         "project/dev/view": 195,
         "project/dev/weapon_art": 506
       },
-      "total": 21754
+      "total": 22309
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -95,7 +102,10 @@
         "2026-11-08: n9 world item 4 evidence clip dev/showcase/dead_wall_clip (dev-only, the car_knock_clip pattern: one cmdline read, ~190 dev lines) (direct_cmdline_reads 158 -> 159)",
         "2026-11-08: n9 merge: the combined growth of the four lanes (world, rivet, perf, handheld), each individually under its own baseline (direct_cmdline_reads 159 -> 160)",
         "2026-11-08: block70 test branch: the dev still scene for the true-70 city block (direct_cmdline_reads 160 -> 161)",
-        "2026-11-11: n15 tools: dev/sim/car_route_trails.gd, the t-4 evidence tool for a hand-made map (Call c-2); a -s SceneTree script reads its own two flags like dev/bake_city.gd (direct_cmdline_reads 161 -> 162)"
+        "2026-11-11: n15 tools: dev/sim/car_route_trails.gd, the t-4 evidence tool for a hand-made map (Call c-2); a -s SceneTree script reads its own two flags like dev/bake_city.gd (direct_cmdline_reads 161 -> 162)",
+        "2026-11-18: n18 police: dev/sim/heat_clip.gd + heat_clip_mark.gd, the heat ladder's 32 px/m clip scene (items 3-5 evidence; no film shot covers the sandbox city) (direct_cmdline_reads 162 -> 163)",
+        "2026-11-18: n18 police item 6/7: --sim-police in LaunchArgs.KNOWN_FLAGS (the brief names the flag there; launch_args.gd 200 -> 201) and dev/sim/heat_cost.gd (the heat 3 cost probe) (direct_cmdline_reads 163 -> 164)",
+        "2026-11-18: n18 police: bench --heat (CityHeat pinned at a level: item 7's heat 3 bench) and dev/sim/cop_wall_trails.gd (item 1's before/after trails on the wall map); dev evidence tooling (direct_cmdline_reads 164 -> 165)"
       ],
       "files": {
         "project/core/render/view_mode.gd": 1,
@@ -188,6 +198,9 @@
         "project/dev/showcase/street_crowd.gd": 1,
         "project/dev/showcase/vehicle_frame.gd": 1,
         "project/dev/sim/car_route_trails.gd": 1,
+        "project/dev/sim/cop_wall_trails.gd": 1,
+        "project/dev/sim/heat_clip.gd": 1,
+        "project/dev/sim/heat_cost.gd": 1,
         "project/dev/weapon_art/electro_cells.gd": 1,
         "project/dev/weapon_art/swat_lineup.gd": 1,
         "project/dev/weapon_art/weapon_lineup.gd": 1,
@@ -244,7 +257,7 @@
         "project/tests/run_scenarios.gd": 1,
         "project/tests/unit/test_launch_args.gd": 1
       },
-      "total": 162
+      "total": 165
     },
     "files_near_cap": {
       "accepted": [
@@ -257,11 +270,12 @@
         "2026-11-10: n12 E1: ArenaRigs attaches the combat lights (two lines) (files_near_cap 16 -> 16)",
         "2026-11-10: n12 E3 crowd ripple: CrowdReact's delayed startle + its one host line in ArenaRigs (files_near_cap 16 -> 16)",
         "2026-11-10: n11 merge: n11-tools dev tooling (film probe, film triggers) on top of n12 (files_near_cap 16 -> 16)",
-        "2026-11-10: n11 merge: n11-combat dev films and body probes on top of n12+tools+hero (files_near_cap 16 -> 14)"
+        "2026-11-10: n11 merge: n11-combat dev films and body probes on top of n12+tools+hero (files_near_cap 16 -> 14)",
+        "2026-11-18: n18 police item 6/7: --sim-police in LaunchArgs.KNOWN_FLAGS (the brief names the flag there; launch_args.gd 200 -> 201) and dev/sim/heat_cost.gd (the heat 3 cost probe) (files_near_cap 14 -> 14)"
       ],
       "files": {
         "project/boot/collect_call/view/fx_view.gd": 271,
-        "project/boot/quest1_game.gd": 272,
+        "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/showcase/city_fight.gd": 300,
         "project/features/arena/arena_rigs.gd": 294,
@@ -298,15 +312,17 @@
         "2026-11-10: n12 E3 crowd ripple: CrowdReact's delayed cower (+_cower_due) and three tests pinned to the same-tick startle (files_past_soft_cap 66 -> 66)",
         "2026-11-10: n11 merge: n11-tools dev tooling (film probe, film triggers) on top of n12 (files_past_soft_cap 66 -> 66)",
         "2026-11-10: n11 merge: n11-hero dev films and ghost tooling on top of n12+tools (files_past_soft_cap 66 -> 66)",
-        "2026-11-10: n11 merge: n11-combat dev films and body probes on top of n12+tools+hero (files_past_soft_cap 66 -> 66)"
+        "2026-11-10: n11 merge: n11-combat dev films and body probes on top of n12+tools+hero (files_past_soft_cap 66 -> 66)",
+        "2026-11-18: n18 police item 6/7: --sim-police in LaunchArgs.KNOWN_FLAGS (the brief names the flag there; launch_args.gd 200 -> 201) and dev/sim/heat_cost.gd (the heat 3 cost probe) (files_past_soft_cap 66 -> 67)"
       ],
       "files": {
-        "project/boot/collect_call/collect_call_stage.gd": 262,
+        "project/boot/collect_call/collect_call_stage.gd": 261,
         "project/boot/collect_call/view/cast_view.gd": 230,
         "project/boot/collect_call/view/collect_call_view.gd": 237,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/quest1_game.gd": 272,
+        "project/boot/launch_args.gd": 201,
+        "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,
         "project/dev/bench/fight_frames.gd": 246,
@@ -335,7 +351,7 @@
         "project/features/bosses/servo/servo_swarm.gd": 208,
         "project/features/characters/cut_rig.gd": 263,
         "project/features/city/gen/tile_painter.gd": 243,
-        "project/features/city/sim/sim_people.gd": 205,
+        "project/features/city/sim/sim_people.gd": 202,
         "project/features/city/view/city_view.gd": 259,
         "project/features/combat/ai/enemy_pit.gd": 244,
         "project/features/combat/combat_arena.gd": 299,
@@ -368,7 +384,7 @@
         "project/tests/unit/test_gun_fx.gd": 213,
         "project/tests/unit/test_weapon_art.gd": 223
       },
-      "total": 66
+      "total": 67
     },
     "lane_named_dev_dirs": {
       "files": {

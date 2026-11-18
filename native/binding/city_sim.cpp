@@ -81,6 +81,14 @@ void CitySim::scare(double x, double y) { core_->scare(x, y); }
 
 void CitySim::set_car_state(int i, int state) { core_->set_car_state(i, state); }
 
+void CitySim::set_heat(int level, double x, double y) { core_->set_heat(level, x, y); }
+
+int CitySim::heat_level() const { return core_->heat_level(); }
+
+void CitySim::set_police(const PackedFloat64Array &tune) {
+	core_->set_police(tune.ptr(), (int)tune.size());
+}
+
 void CitySim::set_obstacles(const PackedFloat64Array &xy) {
 	core_->set_obstacles(xy.ptr(), (int)(xy.size() / 2));
 }
@@ -232,6 +240,12 @@ PackedInt32Array CitySim::flow_stats() const {
 
 int CitySim::flow_dist(double x, double y) const { return core_->flow_dist(x, y); }
 
+bool CitySim::sight(double x0, double y0, double x1, double y1) const {
+	return core_->sight(x0, y0, x1, y1);
+}
+
+bool CitySim::cop_sees(double x, double y, double r) const { return core_->cop_sees(x, y, r); }
+
 void CitySim::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("init", "seed"), &CitySim::init);
 	ClassDB::bind_method(D_METHOD("set_radii", "ra", "rb", "riot"), &CitySim::set_radii);
@@ -247,6 +261,9 @@ void CitySim::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("scare", "x", "y"), &CitySim::scare);
 	ClassDB::bind_method(D_METHOD("set_car_state", "i", "state"), &CitySim::set_car_state);
 	ClassDB::bind_method(D_METHOD("set_obstacles", "xy"), &CitySim::set_obstacles);
+	ClassDB::bind_method(D_METHOD("set_heat", "level", "x", "y"), &CitySim::set_heat);
+	ClassDB::bind_method(D_METHOD("heat_level"), &CitySim::heat_level);
+	ClassDB::bind_method(D_METHOD("set_police", "tune"), &CitySim::set_police);
 	ClassDB::bind_method(D_METHOD("fire", "x", "y", "vx", "vy", "ttl"), &CitySim::fire);
 	ClassDB::bind_method(D_METHOD("step", "dt", "camx", "camy", "tgx", "tgy"), &CitySim::step);
 	ClassDB::bind_method(D_METHOD("get_counters"), &CitySim::get_counters);
@@ -264,4 +281,6 @@ void CitySim::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_person_px", "px"), &CitySim::set_person_px);
 	ClassDB::bind_method(D_METHOD("get_variants"), &CitySim::get_variants);
 	ClassDB::bind_method(D_METHOD("flow_dist", "x", "y"), &CitySim::flow_dist);
+	ClassDB::bind_method(D_METHOD("sight", "x0", "y0", "x1", "y1"), &CitySim::sight);
+	ClassDB::bind_method(D_METHOD("cop_sees", "x", "y", "r"), &CitySim::cop_sees);
 }

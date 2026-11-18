@@ -148,6 +148,11 @@ func _leading_in(tick: int) -> bool:
 
 ## --ticks: a clip frame only inside the window.
 func _in_window(tick: int) -> void:
+	if tick % 60 == 0:  # n18 police: who lies dead, the sim or the stage (render-free numbers)
+		var c: PackedInt32Array = _game.session.city.sim.get_counters()
+		var a: CombatArena = _game.session.stage.arena
+		var dead: int = a.hostiles.filter(func(f: Fighter) -> bool: return not f.alive()).size()
+		Log.info("clip", "t%d sim dead %d killed %d, stage dead %d" % [tick, c[7], c[9], dead])
 	if tick >= tick_window.x:
 		await _save("clip_%05d" % _frame)
 		_frame += 1

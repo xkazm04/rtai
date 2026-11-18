@@ -50,7 +50,8 @@ func _initialize() -> void:
 	if _tier_a:
 		_fill_cells()
 	_hash = CitySimHash.new(_s)
-	_cars = CitySimCars.new(_s, _hash, CitySimFlow.new(_s))
+	var flow: CitySimFlow = CitySimFlow.new(_s)
+	_cars = CitySimCars.new(_s, _hash, flow, CitySimPolice.new(_s, flow))
 	var spawned: Array[int] = [
 		_spawn(Vector2(100 * 8 + 4, ROAD_ROW * 8 + 4), 0),
 		_spawn(Vector2(ROAD_COL * 8 + 4, 117 * 8 + 4), 3),

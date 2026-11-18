@@ -10,8 +10,9 @@ var _s: CitySimState = CitySimState.new()
 var _h: CitySimHash = CitySimHash.new(_s)
 var _flow: CitySimFlow = CitySimFlow.new(_s)
 var _body: CitySimBody = CitySimBody.new(_s, _h)
-var _people: CitySimPeople = CitySimPeople.new(_s, _h, _flow, _body)
-var _cars: CitySimCars = CitySimCars.new(_s, _h, _flow)
+var _police: CitySimPolice = CitySimPolice.new(_s, _flow)
+var _people: CitySimPeople = CitySimPeople.new(_s, _h, _flow, _body, _police)
+var _cars: CitySimCars = CitySimCars.new(_s, _h, _flow, _police)
 var _shots: CitySimShots = CitySimShots.new(_s, _h)
 var _render: CitySimRender = CitySimRender.new(_s)
 
@@ -27,6 +28,7 @@ func backend_name() -> StringName:
 func init(seed_value: int) -> void:
 	_s.init(seed_value)
 	_flow.reset()
+	_police.reset()
 
 
 func set_radii(ra: float, rb: float, riot: float) -> void:
@@ -81,6 +83,18 @@ func set_obstacles(xy: PackedFloat64Array) -> void:
 	_s.obst = xy.slice(0, mini(xy.size() >> 1, SimConst.OBST_MAX) * 2)
 
 
+func set_heat(level: int, x: float, y: float) -> void:
+	_police.set_heat(level, x, y)
+
+
+func heat_level() -> int:
+	return _police.level
+
+
+func set_police(tune: PackedFloat64Array) -> void:
+	_police.set_tune(tune)
+
+
 func set_car_state(i: int, state: int) -> void:
 	if i >= 0 and i < SimConst.CAP:
 		_render.car_state[i] = state
@@ -89,9 +103,16 @@ func set_car_state(i: int, state: int) -> void:
 func step(dt: float, camx: float, camy: float, tgx: float, tgy: float) -> void:
 	_s.time += dt
 	_body.clear_step()
-	_tier(dt, camx, camy)
+	CitySimTier.tier(_s, dt, camx, camy)
 	_h.build(camx, camy)
-	_flow.update(tgx, tgy)
+	var gx: float = tgx
+	var gy: float = tgy
+	if _police.level >= 0:  # n18 living police: the field leads to the last-seen point
+		_police.pass_step(dt)
+		gx = _police.heat_x
+		gy = _police.heat_y
+	if _police.level != 0:
+		_flow.update(gx, gy)
 	for i: int in SimConst.CAP:
 		if _s.alive[i] == 0:
 			continue
@@ -101,7 +122,7 @@ func step(dt: float, camx: float, camy: float, tgx: float, tgy: float) -> void:
 		elif k == SimConst.K_COP:
 			_people.cop(i, dt, tgx, tgy)
 		else:
-			_cars.car(i, dt, tgx, tgy)
+			_cars.car(i, dt, gx, gy)  # police cars route to the field's goal
 	_body.resolve()
 	_shots.step(dt)
 	_count()
@@ -155,33 +176,12 @@ func flow_dist(x: float, y: float) -> int:
 	return _flow.dist(x, y)
 
 
-## Despawns dead bodies after 8 s (or at once in tier B) and re-tiers everyone by distance.
-func _tier(dt: float, camx: float, camy: float) -> void:
-	var ra2: float = _s.ra * _s.ra
-	var rb2: float = _s.rb * _s.rb
-	for i: int in SimConst.CAP:
-		if _s.alive[i] == 0:
-			continue
-		var k: int = _s.kind[i]
-		if (k == SimConst.K_PED or k == SimConst.K_COP) and _s.mode[i] == SimConst.M_DEAD:
-			_s.t2[i] += dt
-			if _s.t2[i] > 8.0 or _s.tier[i] == 1:
-				_s.kill(i)
-				continue
-		var ddx: float = _s.px[i] - camx
-		var ddy: float = _s.py[i] - camy
-		var d2: float = ddx * ddx + ddy * ddy
-		if (_s.flags[i] & SimConst.F_PROMOTED) != 0:
-			if d2 > rb2 * 2.56:
-				_s.kill(i)
-				continue
-			_s.tier[i] = 0
-		elif d2 < ra2:
-			_s.tier[i] = 0
-		elif d2 < rb2:
-			_s.tier[i] = 1
-		else:
-			_s.kill(i)
+func sight(x0: float, y0: float, x1: float, y1: float) -> bool:
+	return _flow.sight(x0, y0, x1, y1)
+
+
+func cop_sees(x: float, y: float, r: float) -> bool:
+	return _flow.cop_sees(x, y, r)
 
 
 func _count() -> void:

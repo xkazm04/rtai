@@ -75,7 +75,7 @@ struct Chase {
 	double final_dist;
 };
 
-Chase chase() {
+Chase chase(double cx, double tx) {
 	auto s = std::make_unique<CityCore>();
 	s->init(7);
 	std::vector<uint8_t> tiles(CHUNK_TILES * CHUNK_TILES, T_PLAZA);
@@ -85,14 +85,14 @@ Chase chase() {
 		for (int lx = 44; lx < 47; lx++) cells[ly * CHUNK_CELLS + lx] = C_BUILD;
 	}
 	s->stamp_chunk(2, 2, tiles.data(), cells.data());
-	int cop = spawn(*s, K_COP, 290.5, 290.5, 3.4, -1, 0.0);
-	s->step(1.0 / 60.0, 305.0, 300.0, 315.5, 290.5);
-	Chase r{s->flow_dist(290.5, 290.5), 0, 1e9};
-	for (int t = 0; t < 3000; t++) s->step(1.0 / 60.0, 305.0, 300.0, 315.5, 290.5);
+	int cop = spawn(*s, K_COP, cx, 290.5, 3.4, -1, 0.0);
+	s->step(1.0 / 60.0, 305.0, 300.0, tx, 290.5);
+	Chase r{s->flow_dist(cx, 290.5), 0, 1e9};
+	for (int t = 0; t < 3000; t++) s->step(1.0 / 60.0, 305.0, 300.0, tx, 290.5);
 	std::vector<double> snap = s->snapshot();
 	for (size_t k = 0; k + SNAP_STRIDE <= snap.size(); k += SNAP_STRIDE) {
 		if (snap[k] != (double)cop) continue;
-		double dx = snap[k + 4] - 315.5, dy = snap[k + 5] - 290.5;
+		double dx = snap[k + 4] - tx, dy = snap[k + 5] - 290.5;
 		r.final_dist = std::sqrt(dx * dx + dy * dy);
 	}
 	r.computes = s->flow_stats()[FS_COMPUTES];
@@ -207,7 +207,10 @@ int main() {
 	check(a.car_x1 >= 0.0 && std::fabs(a.car_x1 - a.car_x0) > 5.0, "the car drove along its lane");
 	check(a.counters[CN_PEDS] + a.counters[CN_COPS] >= 1, "people are counted");
 	check(a.counters[CN_TIER_A] + a.counters[CN_TIER_B] > 0, "every live actor has a tier");
-	Chase f = chase();
+	Chase f = chase(290.5, 315.5);
+	// n18: 9 m apart with the wall between (inside FF_NEAR_M): no sight, so round by the gap
+	Chase n = chase(296.5, 305.5);
+	check(n.final_dist < 9.0 && n.final_dist >= 6.5, "cop sight: a near cop behind a wall goes round");
 	check(f.detour > 40, "flow field: the route around the wall is longer than the straight line");
 	check(f.final_dist < 9.0, "flow field: the cop reached the target through the gap");
 	check(f.computes >= 1, "flow field: computed at least once");
