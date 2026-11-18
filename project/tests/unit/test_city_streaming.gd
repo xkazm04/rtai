@@ -128,6 +128,14 @@ func test_mixed_traffic_keeps_the_default_art_sequence() -> void:
 	assert_eq(_traffic(mixed, _gen.zones), _traffic(mixed, null))
 
 
+func test_traffic_can_draw_both_ends_of_a_twelve_entry_mix() -> void:
+	var zones := CityZones.new()
+	zones.rows[0].car_art = [6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3]
+	var arts: PackedByteArray = _traffic(Vector2i(2, 4), zones)
+	assert_true(arts.has(6), "the only ambulance is in the first slot")
+	assert_true(arts.has(3), "the only taxi is in the last slot")
+
+
 func _residency() -> CityResidency:
 	var sim: CitySimRef = CitySimRef.new()
 	sim.init(1)
