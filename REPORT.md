@@ -1,4 +1,4 @@
-# n18 police: heat drives the city's police (REPORT, draft updated at session 5, 06:00)
+# n18 police: heat drives the city's police (REPORT, final at session 6, 07:35)
 
 Branch `n18-police`, worktree `C:\Users\kazda\kiro\gtai-wt\n18-police`, cut from `int-n17` at
 `36dd26ba6`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n18\police\` (`frames.json`) and
@@ -86,3 +86,15 @@ Branch `n18-police`, worktree `C:\Users\kazda\kiro\gtai-wt\n18-police`, cut from
 - Tools: `tools/bench/run.mjs --heat=0..3` (+ `scenarioArgs` export, node test), `dev/bench/city_bench.gd`
   `--heat` + `BenchDriver.mount_heat`, `BenchStats.log_crowd` (moved from city_bench); `dev/sim/cop_wall_trails.gd`.
 - One-line dev edit outside the lists: `dev/frames/quest1_clip.gd` KNOWN_FLAGS gains `--sim-police`.
+
+## Next steps
+
+1. Director: after the merge with districts, re-bless parity/replay once (both lanes moved the sim inputs);
+   then run `tools/bench/run.mjs --heat=3` under the bench lock on a quiet machine to drop the CONTENDED label.
+2. Confirm or close the LOD-1 far-cop look (finding (c)) with a probe that logs atlas row per LOD-1 COP,
+   not by eye; fix is one kind fallback at `character_rigs.gd:135` plus `frame_of` (needs the characters owner).
+3. Quest 1's car ladder: make the quest1_input bot finish the heat 3 hot walk (or a scripted heat-3 test),
+   so quest 1's dispatched cars get a number.
+4. If the owner takes `--sim-police` by default: retire the stage patrol path only after a second night
+   of quest 1 scenarios/replay on the flag; keep the before path until then.
+5. Zone-specific counts in `heat.json` once districts' zone id per chunk lands on the merged branch.

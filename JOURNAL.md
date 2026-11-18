@@ -507,3 +507,12 @@ NEXT (session 6, freeze 07:30, REPORT 07:40):
    `node tools/evidence/cites.mjs REPORT.md`, refresh `## Calls for the owner` order.
 3. If time: finding (c) by a test-free probe (log per LOD-1 row: kind COP with look 7) instead of eyes;
    districts' car_mix row (not landed at 06:00).
+
+## Session 6 (STABILIZE, 07:30-07:40)
+- 07:31 HEAD 77ce22a5b is docs-only past the cd92fabc0 evidence gate (`git diff --stat cd92fabc0 HEAD`:
+  JOURNAL.md, REPORT.md): the gate PASS stands for the final code. cites REPORT.md 5/5 ok; frames.json
+  15 entries, every file present; no Godot process of mine running, no bench.lock.
+- 07:35 REPORT final: title stamp, `## Next steps` added. No code change this session.
+
+NEXT: lane done for n18. Morning: Director merges, re-blesses parity/replay once, runs the heat 3
+bench quiet under the lock; finding (c) probe and quest 1 car ladder are the open items (REPORT Next steps).
