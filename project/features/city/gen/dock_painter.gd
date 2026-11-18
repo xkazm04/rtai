@@ -73,7 +73,11 @@ func block(g: CityGen, b: ChunkBuild, zone: CityZone, t: Vector2i) -> int:
 	elif u % 2 == 0:
 		var longs: Array[int] = zone.long_roofs
 		var tex: int = longs[int(g.rnd(t.x, t.y, 0, 33) * longs.size())]
-		var upright: bool = BlockPainter.LETTERED.has(tex) or tex == BlockPainter.T_LONG_T1
+		var upright: bool = (
+			BlockPainter.LETTERED.has(tex)
+			or tex == BlockPainter.T_LONG_T1
+			or zone.upright_roofs.has(tex)
+		)
 		var turn: bool = not upright and g.rnd(t.x, t.y, 0, 34) < 0.5
 		b.add(ChunkBuild.L_ROOF, tex, Vector2(c.x + 4.0, c.y), PI if turn else 0.0, true)
 	return SimConst.T_BLOCK

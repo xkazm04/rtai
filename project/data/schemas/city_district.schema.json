@@ -211,6 +211,15 @@
             "minimum": 1,
             "type": "integer"
           },
+          "upright_roofs": {
+            "description": "long roofs drawn with a south-eave feature, never turned 180 deg (DockPainter); absent = none",
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "type": "array"
+          },
           "water_ground": {
             "items": {
               "maximum": 255,

@@ -1156,6 +1156,83 @@
         2
       ],
       "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_down_clocktower.png",
+      "class": "building",
+      "id": 105,
+      "name": "roof_down_clocktower",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_down_terrace.png",
+      "class": "building",
+      "id": 106,
+      "name": "roof_down_terrace",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_down_tall_c.png",
+      "class": "building",
+      "id": 107,
+      "name": "roof_down_tall_c",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_down_bank_dome.png",
+      "class": "building",
+      "id": 108,
+      "name": "roof_down_bank_dome",
+      "size_m": [
+        16.4,
+        16.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_down_crown.png",
+      "class": "building",
+      "id": 109,
+      "name": "roof_down_crown",
+      "size_m": [
+        16.4,
+        16.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_dock_shed_b.png",
+      "class": "building",
+      "id": 110,
+      "name": "roof_dock_shed_b",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_dock_warehouse_c.png",
+      "class": "building",
+      "id": 111,
+      "name": "roof_dock_warehouse_c",
+      "size_m": [
+        16.4,
+        8.4
+      ],
+      "solid": true
     }
   ]
 }

@@ -51,6 +51,10 @@
       "height_m": 7,
       "style": "dock"
     },
+    "roof_dock_shed_b": {
+      "height_m": 6,
+      "style": "dock"
+    },
     "roof_dock_warehouse": {
       "height_m": 8.5,
       "style": "dock"
@@ -59,12 +63,36 @@
       "height_m": 8.5,
       "style": "dock"
     },
+    "roof_dock_warehouse_c": {
+      "height_m": 9,
+      "style": "dock"
+    },
+    "roof_down_bank_dome": {
+      "height_m": 14,
+      "style": "tall"
+    },
+    "roof_down_clocktower": {
+      "height_m": 22,
+      "style": "tall"
+    },
+    "roof_down_crown": {
+      "height_m": 26,
+      "style": "tall"
+    },
     "roof_down_tall": {
       "height_m": 20,
       "style": "glass"
     },
     "roof_down_tall_b": {
       "height_m": 18,
+      "style": "glass"
+    },
+    "roof_down_tall_c": {
+      "height_m": 19,
+      "style": "glass"
+    },
+    "roof_down_terrace": {
+      "height_m": 16,
       "style": "glass"
     },
     "roof_down_tower": {
@@ -183,7 +211,7 @@
     },
     "sculpture_plinth": {
       "art": "res://features/city/art/view/<art>/prop_sculpture_plinth.png",
-      "cell_w_m": 2.53
+      "cell_w_m": 2.35
     },
     "street_sign": {
       "art": "res://features/city/art/view/<art>/prop_street_sign.png",

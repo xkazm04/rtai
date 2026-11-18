@@ -28,6 +28,7 @@ const LISTS: Array[String] = [
 	"water_ground",
 	"quay_ground",
 	"yard_props",
+	"upright_roofs",
 ]
 
 var id: StringName = &"mixed"
@@ -67,6 +68,8 @@ var quay_ground: Array[int] = []
 ## Container-yard stacks (DockPainter.yard; empty = a yard paints as a plaza, the v15 look),
 ## one per DockPainter.YARD_SLOTS slot under yard_prop_share.
 var yard_props: Array[int] = []
+## Long roofs drawn with a south-eave feature (a hoist): never turned 180 deg (DockPainter).
+var upright_roofs: Array[int] = []
 ## A plaza block's centrepiece on its middle tile (a city_textures id; -1 = none, slots only).
 var plaza_centre: int = -1
 ## At most one lettered landmark roof a block (BlockPainter.sign_tile; false = the v14 rule).

@@ -97,7 +97,8 @@
       "generic_roofs": [
         88,
         67,
-        70
+        70,
+        110
       ],
       "id": "docks",
       "landmark_roofs": [
@@ -108,7 +109,8 @@
         86,
         87,
         97,
-        98
+        98,
+        111
       ],
       "long_share": 1,
       "ped_corner": 30,
@@ -128,6 +130,9 @@
         94
       ],
       "street_keep_x": 2,
+      "upright_roofs": [
+        111
+      ],
       "water_ground": [
         91,
         92
@@ -145,7 +150,11 @@
         89,
         90,
         78,
-        79
+        79,
+        89,
+        90,
+        108,
+        109
       ],
       "big_share": 0.6,
       "car_lane": 230,
@@ -159,7 +168,9 @@
         69,
         71,
         99,
-        100
+        100,
+        106,
+        107
       ],
       "id": "downtown",
       "landmark_roofs": [
@@ -167,7 +178,8 @@
         15,
         16,
         19,
-        20
+        20,
+        105
       ],
       "landmark_share": 0.35,
       "long_roofs": [
