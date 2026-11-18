@@ -20,3 +20,9 @@ START 17:38
 19:29 ASTRA readme-numbers started (brief evidence/briefs/04-readme-numbers.md; docs only, while the gate runs on b2fbdf865)
 19:37 FRICTION debt ratchet FAIL on HEAD: bake_city.gd 32 -> 34 lines (351b11ec5 restored the doc header on top of eb16964ad's flag check). Killed my gate on b2fbdf865 (would fail debt). ASTRA readme-numbers 6 accepted (316516ff7). ASTRA debt started (brief evidence/briefs/05-debt.md)
 19:45 ASTRA debt 9 accepted (d0da8cf23: bake_city.gd back to 32 lines, same messages and exits; lint 19/19 incl. debt-ratchet per its run). Gate restarted on d0da8cf23 -> evidence/gate.txt. FRICTION (mine): I did not run debt.mjs --check when reviewing 351b11ec5; it cost a killed gate (~8 min).
+20:10 MILESTONE gate PASS on d0da8cf23 (final code): lint 19/19, unit 2945/0 (2 skipped), scenarios 55 (CONTENDED nav budget not judged), parity bit-exact, looks 11/11, release-compile 736/0; build/gate/d0da8cf23514/gate.json (copy evidence/gate.json).
+20:12 MILESTONE `--lines=63,104 --oracle=bake-check` on final code: 10 mutants 56 s (3.96 s/mutant, less contended now): :63 true -> false and :104 0.12 -> 1.12 killed [golden c_00_00.bin]; 1 survivor :104 < -> <= (equivalent). evidence/mutate-kerb-lines-63-104.txt
+20:15 mutate on the changed .gd (city_bake.gd, `--oracle=tests,bake-check --tests=test_city_bake`, capped at 390 s) -> evidence/mutate-city-bake.txt
+20:19 city_bake.gd mutate (tests,bake-check) stopped by my 390 s cap at 19/41: killed 14 (tests), survived 4 (:41/:44/:47 in the untested plain check(), :67 equivalent), invalid 1. evidence/mutate-city-bake.txt
+20:20 MILESTONE REPORT.md written, cites clean apart from files committed with it.
+NEXT: finish city_bake.gd mutate (22 left) and pin check() with a unit test; read kerb survivors :101 and :133 (does the district reach _lane_paint?); try `--oracle=tests,bake-check` on dock_dresser.gd / dock_painter.gd.

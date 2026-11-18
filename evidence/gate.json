@@ -1,0 +1,18 @@
+{
+ "schema": "gtai.gate/1",
+ "sha": "d0da8cf23514c3a451c78fe9ef1eddc538f4e3c8",
+ "outcome": "pass",
+ "lines": [
+  "PASS lint: lint: all 19 checks pass over 1600 GDScript files",
+  "PASS unit-tests: unit-tests: 2945 passed, 0 failed, 2 skipped (GUT, headless)",
+  "PASS scenario-tests: scenario-tests: 55 ran, CONTENDED: city_chase.nav_max_us 4946 > 2000 (10 other runs); budget not judged, the machine never went quiet in 5 min",
+  "PASS parity: parity: native == GDScript reference bit for bit over 1200 steps (40 snapshot checks, 3502 floats); planted mutation caught at step 629",
+  "PASS selftest: selftest: D4 city frames rendered (32 px/m ok, 100 actors, 128 colours; 48 px/m ok, 85 actors, 120 colours); 141 art textures, 0 placeholders, prewarm 17 ms; look goldens 11/11 within mean 4 (worst 0.31); accent pixels 32: 1.25 %, 48: 1.65 %, 64: 3.48 %; crowd atlas 6/6 pedestrian looks on doctrine, cop looks still vermilion (debt, cops go cop_blue): none; no new off-doctrine accents; known debt: 32 px/m vermilion on vehicles: 4 px (debt blood_flicker_vehicles_vermilion_32, <= 12, gunplay); 32 px/m blood on vehicles: 8 px (debt blood_flicker_vehicles_32, <= 12, d5-city); 32 px/m vermilion on cop: 4 px (debt blood_flicker_cop_vermilion_32, <= 12, gunplay); block goldens 5/5 within mean 4 (worst 0.17); block accent pixels 32: 0.94 %, 48: 1.40 %, 64: 1.04 %; crowd atlas 6/6 pedestrian looks on doctrine, cop looks still vermilion (debt, cops go cop_blue): none; no new off-doctrine accents; known debt: 64 px/m blood on vehicles: 4 px (debt blood_flicker_vehicles_64, <= 12, d5-city); world lock holds (32: 0.00 %, 48: 0.00 %, 64: 0.00 % of the overlap differs after a pan, max 0.5 %); debt rows seen at neither site this run (a flicker row goes only after several quiet runs): blood_flicker_cop_48, blood_flicker_cop_block_64, blood_flicker_vehicles_48, blood_flicker_vehicles_vermilion_48",
+  "PASS export-audit: release-compile: 736 loaded, 0 failed"
+ ],
+ "code": 0,
+ "reels": "none",
+ "timing": {
+  "evidence_s": 1420
+ }
+}
