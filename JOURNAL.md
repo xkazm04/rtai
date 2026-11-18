@@ -418,3 +418,20 @@ answered in session 3; their row has not landed), no bench.lock present at 03:20
 - Bench (item 7): the first try (--wait=10) sat 21 min in the queue behind districts' reel gate
   (its quiet wait restarts with each reel view) and was stopped at 04:19, lock released; re-run
   04:21 with --wait=0 under gtai-n18/bench.lock (CONTENDED by construction: 8 other Godot runs).
+- Gate on a65570c92 (snapshot): PASS lint 19/19, unit 2878/0 (2 skip), scenarios 55/55, parity
+  bit-exact (planted caught 629), look goldens 11/11 (worst 0.31), export-audit 729/0
+  (`build/gate/a65570c927ae/gate.json`). 0022e89a5 after it only adds a dev log line + docs.
+
+NEXT (session 5):
+1. Read the bench (started 04:21, --wait=0, CONTENDED): `/c/Users/kazda/kiro/gtai-n18/scratch/
+   police-bench-s4b.log` and `build/evidence/bench.json` / `build/bench/`; put section 20 numbers
+   in JOURNAL + REPORT row 7 / Call 5 (CONTENDED label). If it failed or never ran, re-run at a
+   quiet moment: `node tools/bench/run.mjs --wait=0` under gtai-n18/bench.lock (the --wait form
+   starves behind the other lane's reel gate). Delete gtai-n18/bench.lock if it is mine and stale.
+2. Reel gate on HEAD (native changed since the last reel gate on b1418a966):
+   `node tools/gate/run.mjs --reels` (~45 min with evidence).
+3. Finding (c) by eye: a frame where some city cops are baked (LOD 1), e.g. heat_clip --level=3
+   --zoom=0.5; if a cop prints as the overalls ped, NEED director with the frame.
+4. A 64 px/m close-up for the item 6 Call (quest1_clip.gd --ppm=64 --ticks=600-1000, off/on).
+5. districts' car_mix row (not landed at 04:20).
+6. REPORT final at 07:40 (draft current at 0022e89a5).
