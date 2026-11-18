@@ -49,10 +49,10 @@ plasma_rifle     top    .     -      -     -       .       .       -       .    
 plasma_sword     top    .     -      -     -       -       -       -       .       -       -       -            -            0
                  p55    .     -      .     -       -       -       -       .       .       .       .            .
                  p70    .     -      .     -       -       -       -       .       .       .       .            .
-ray_gun          top    .     -      -     -       X       .       -       .       -       -       -            -            5
-                 p55    .     X      .     .       X       .       -       .       -       -       -            -
-                 p70    .     X      .     .       X       .       -       .       -       -       -            -
+ray_gun          top    .     -      -     -       .       .       -       .       -       -       -            -            0
+                 p55    .     .      .     .       .       .       -       .       -       -       -            -
+                 p70    .     .      .     .       .       .       -       .       -       -       -            -
 rocket_launcher  top    .     -      -     -       -       .       -       .       -       -       -            -            4
                  p55    .     X      X     .       -       .       -       .       -       -       -            -
                  p70    .     X      X     .       -       .       -       .       -       -       -            -
-Total holes  31
+Total holes  26
