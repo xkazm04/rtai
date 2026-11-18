@@ -14,9 +14,7 @@ func _arena(boxes: Array[Rect2] = []) -> CombatArena:
 
 
 func _spawn(arena: CombatArena, at: Vector2, id: StringName = &"") -> Fighter:
-	var g: Fighter = arena.spawn_guard(at)
-	if id != &"":
-		arena.squad_ai.equip(g, id, arena.tuning)
+	var g: Fighter = arena.spawn_guard(at, id)
 	g.pos = at
 	g.cooldown = 0
 	return g
@@ -150,9 +148,11 @@ func test_swat_reaches_flank_with_a_holder_and_cover_available() -> void:
 	arena.squad_ai.pit.roster.max_shooters = 1
 	var holder: Fighter = _spawn(arena, Vector2(-6, 4), &"patrol_cop")
 	var swat: Fighter = _spawn(arena, Vector2(-2, -8), &"swat")
+	var patrol: Fighter = _spawn(arena, Vector2(25, 0), &"patrol_cop")
 	swat.cooldown = 10000
 	for tick: int in 300:
 		arena.step(tick)
+		assert_ne(arena.squad_ai.minds[patrol.id].motion, EnemyAgent.State.FLANK)
 		var e: EnemyAgent = arena.squad_ai.minds[swat.id].agent
 		if e.state == EnemyAgent.State.FLANK and swat.pos.distance_to(e.goal) < 1:
 			assert_true(arena.squad_ai.minds[holder.id].agent.token)

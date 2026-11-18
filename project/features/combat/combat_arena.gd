@@ -67,8 +67,8 @@ func _init(p_tuning: CombatTuning, events: EventBus, rng: RandomNumberGenerator)
 	rivet.radius_m = tuning.rivet["radius_m"]
 
 
-## A contractor near `at` (spread up to SPAWN_SPREAD_M, so a wave pours in, not a queue).
-func spawn_guard(at: Vector2) -> Fighter:
+## A guard near `at`, spread up to SPAWN_SPREAD_M. The default squad row is contractor.
+func spawn_guard(at: Vector2, archetype: StringName = &"") -> Fighter:
 	var spread: Vector2 = Vector2(_rng.randf_range(-1.0, 1.0), _rng.randf_range(-1.0, 1.0))
 	var pos: Vector2 = at + spread * SPAWN_SPREAD_M
 	var g: Fighter = Fighter.make(Fighter.Kind.GUARD, _next_id, pos, tuning.human["hp"])
@@ -78,6 +78,8 @@ func spawn_guard(at: Vector2) -> Fighter:
 	if guard_map != null:
 		g.pursuit = GuardPursuit.new(guard_map)
 	g.cooldown = _rng.randi_range(0, tuning.weapon(g.weapon).cooldown_ticks)
+	if squad_ai != null:
+		squad_ai.equip(g, archetype, tuning)
 	hostiles.append(g)
 	return g
 
@@ -157,9 +159,7 @@ func step(p_tick: int) -> void:
 	tick = p_tick
 	kills_now = 0
 	tazer_hit_now = false
-	var ordered: Array[Fighter] = hostiles
-	if squad_ai != null and rivet.alive():
-		ordered = squad_ai.assign(self)
+	var ordered: Array[Fighter] = squad_ai.assign(self) if squad_ai and rivet.alive() else hostiles
 	rivet.cooldown = maxi(rivet.cooldown - 1, 0)
 	for h: Fighter in ordered:
 		if h.alive() and rivet.alive():

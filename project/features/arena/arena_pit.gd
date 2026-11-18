@@ -3,7 +3,7 @@ extends RefCounted
 ## The pit's waves: once Rivet is inside the pit (trigger_inset_m in from its edge) and no pit
 ## guard is standing, the next wave comes after gap_s: first_wave guards, grow more each wave, up
 ## to max_wave, each at the pit's "enemy" spawn points in turn (CombatArena.spawn_guard spreads
-## them). They are the real GuardBrain contractors with their real rifles. Rivet's death clears
+## them). The optional squad brain fields the pit's rotating archetype mix. Rivet's death clears
 ## the pit and starts it again from wave 1. Numbers: arena.json "pit". A placeholder: it drives
 ## only the arena lane's own enemy spawns, and stands down when another lane's station declares
 ## enemies in the pit (that lane's wave spawner owns the pit then).
@@ -116,13 +116,12 @@ func _spawn_wave(arena: CombatArena) -> void:
 	wave += 1
 	var n: int = mini(first_wave + grow * (wave - 1), max_wave)
 	for i: int in n:
-		var g: Fighter = arena.spawn_guard(points[(wave + i) % points.size()])
 		var armored: bool = riot_hp > 0.0 and i == 0 and wave >= 2
-		if arena.squad_ai != null:
-			var id: StringName = (
-				&"" if squad_mix.is_empty() else squad_mix[(wave - 1 + i) % squad_mix.size()]
-			)
-			arena.squad_ai.equip(g, &"riot_cop" if armored else id, arena.tuning)
+		var id: StringName = &""
+		if arena.squad_ai != null and not squad_mix.is_empty():
+			id = squad_mix[(wave - 1 + i) % squad_mix.size()]
+		var at: Vector2 = points[(wave + i) % points.size()]
+		var g: Fighter = arena.spawn_guard(at, &"riot_cop" if armored else id)
 		if armored:
 			g.max_hp *= riot_hp
 			g.hp = g.max_hp
