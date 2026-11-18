@@ -88,7 +88,7 @@ func quay(g: CityGen, b: ChunkBuild, kerb: KerbDresser, t: Vector2i, apron: bool
 	var o: Vector2 = TilePainter.origin(t)
 	var zone: CityZone = g.zones.of_tile(t)
 	if not apron:
-		return _water(g, b, zone, t)
+		return _water(g, b, kerb, zone, t)
 	var turn: float = deg_to_rad(90.0 * int(g.rnd(t.x, t.y, 0, 26) * 4.0))
 	var ground: int = zone.apron_ground if zone.apron_ground >= 0 else T_PAVING
 	b.add(ChunkBuild.L_GROUND, ground, o + Vector2(4.0, 4.0), turn)
@@ -96,6 +96,7 @@ func quay(g: CityGen, b: ChunkBuild, kerb: KerbDresser, t: Vector2i, apron: bool
 	if zone.quay_ground.size() < 2:  # no coping art: the bollard line marks the edge
 		for vm: float in BOLLARD_V_M:
 			kerb.prop(g, b, T_BOLLARD, o + Vector2(7.4, vm), 0.0)
+	DockDresser.apron(g, b, kerb, zone, t)
 	b.chunk.dens_ped[TilePainter.local_index(t)] = int(zone.ped_plaza * 0.25 * b.district)
 	return SimConst.T_PLAZA
 
@@ -138,7 +139,7 @@ static func quay_case(zone: CityZone, t: Vector2i) -> Array[int]:
 
 
 ## A water tile: open water, or a quay edge (coping + LAND_M of apron on its land sides, walkable).
-func _water(g: CityGen, b: ChunkBuild, zone: CityZone, t: Vector2i) -> int:
+func _water(g: CityGen, b: ChunkBuild, kerb: KerbDresser, zone: CityZone, t: Vector2i) -> int:
 	var o: Vector2 = TilePainter.origin(t)
 	b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_BUILD)
 	var case: Array[int] = quay_case(zone, t)
@@ -158,6 +159,8 @@ func _water(g: CityGen, b: ChunkBuild, zone: CityZone, t: Vector2i) -> int:
 		b.stamp(Rect2(o + Vector2(0, 8 - land), Vector2(8, land)), SimConst.C_WALK)
 	if case[0] & EDGE_W:
 		b.stamp(Rect2(o, Vector2(land, 8)), SimConst.C_WALK)
+	if case[0] == EDGE_W:
+		DockDresser.quay_edge(g, b, kerb, zone, t)
 	b.chunk.dens_ped[TilePainter.local_index(t)] = int(zone.ped_plaza * 0.1 * b.district)
 	return SimConst.T_PLAZA
 

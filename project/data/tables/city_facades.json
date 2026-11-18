@@ -163,6 +163,18 @@
       "cell_w_m": 3.2,
       "print_art": "res://features/city/art/view/<art>/prop_crate_stack_print.png"
     },
+    "dock_cargo_tarp": {
+      "art": "res://features/city/art/view/<art>/prop_dock_cargo_tarp.png",
+      "cell_w_m": 3.47
+    },
+    "dock_fuel_tank": {
+      "art": "res://features/city/art/view/<art>/prop_dock_fuel_tank.png",
+      "cell_w_m": 5.01
+    },
+    "dock_lifebuoy": {
+      "art": "res://features/city/art/view/<art>/prop_dock_lifebuoy.png",
+      "cell_w_m": 0.76
+    },
     "dumpster": {
       "art": "res://features/city/art/view/<art>/prop_dumpster.png",
       "cell_w_m": 2.25

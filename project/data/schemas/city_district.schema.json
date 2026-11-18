@@ -78,6 +78,21 @@
             "minimum": 0,
             "type": "integer"
           },
+          "apron_prop_share": {
+            "description": "the share of quay apron tiles that stand one apron_props prop on their land side (DockPainter.apron_prop)",
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "apron_props": {
+            "description": "quay apron dressing, city_textures ids, one per apron tile under apron_prop_share; absent = none",
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "type": "array"
+          },
           "big_roofs": {
             "items": {
               "maximum": 255,
@@ -215,6 +230,12 @@
               "type": "integer"
             },
             "type": "array"
+          },
+          "quay_edge_prop": {
+            "description": "a prop on the land strip of the middle tile of each basin's west quay, by the coping (DockPainter._water); absent = none",
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
           },
           "quay_ground": {
             "description": "the quay edge art [straight, inner corner] (DockPainter.quay_case); absent = open water and the apron bollard line",

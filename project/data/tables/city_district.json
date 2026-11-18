@@ -86,6 +86,12 @@
     },
     {
       "apron_ground": 113,
+      "apron_prop_share": 0.5,
+      "apron_props": [
+        117,
+        118,
+        117
+      ],
       "big_roofs": [
         80
       ],
@@ -126,6 +132,7 @@
         39
       ],
       "plaza_share": 0.2,
+      "quay_edge_prop": 119,
       "quay_ground": [
         93,
         94

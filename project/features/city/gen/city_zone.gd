@@ -12,6 +12,7 @@ const FLOATS: Array[String] = [
 	"empty_share",
 	"plaza_prop_share",
 	"yard_prop_share",
+	"apron_prop_share",
 	"ped_corner",
 	"ped_kerb",
 	"ped_plaza",
@@ -28,6 +29,7 @@ const LISTS: Array[String] = [
 	"water_ground",
 	"quay_ground",
 	"yard_props",
+	"apron_props",
 	"upright_roofs",
 	"plaza_singles",
 ]
@@ -87,6 +89,12 @@ var yard_ground: int = -1
 ## At most one lettered landmark roof a block (BlockPainter.sign_tile; false = the v14 rule).
 var one_sign: bool = false
 var yard_prop_share: float = 0.0
+## Quay apron dressing (DockPainter.apron_prop): one prop on the land side of an apron tile under
+## apron_prop_share (empty = a bare apron, the v25 look).
+var apron_props: Array[int] = []
+var apron_prop_share: float = 0.0
+## A prop by the coping on the middle tile of each basin's west quay (-1 = none; DockPainter).
+var quay_edge_prop: int = -1
 
 
 static func from_row(row: Dictionary) -> CityZone:
@@ -104,6 +112,7 @@ static func from_row(row: Dictionary) -> CityZone:
 		"plaza_ground",
 		"apron_ground",
 		"yard_ground",
+		"quay_edge_prop",
 	]:
 		if row.has(key):
 			var f: float = row[key]

@@ -1288,6 +1288,39 @@
         8
       ],
       "solid": false
+    },
+    {
+      "art": "res://features/city/art/props/dock_cargo_tarp.png",
+      "class": "prop",
+      "id": 117,
+      "name": "dock_cargo_tarp",
+      "size_m": [
+        3.16,
+        2
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_fuel_tank.png",
+      "class": "prop",
+      "id": 118,
+      "name": "dock_fuel_tank",
+      "size_m": [
+        4.91,
+        2.6
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_lifebuoy.png",
+      "class": "prop",
+      "id": 119,
+      "name": "dock_lifebuoy",
+      "size_m": [
+        0.96,
+        0.75
+      ],
+      "solid": true
     }
   ]
 }
