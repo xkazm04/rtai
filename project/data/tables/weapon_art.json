@@ -1271,12 +1271,17 @@
         93
       ],
       "part_grip_px": {
+        "mag": [
+          33,
+          17
+        ],
         "small": [
           143,
           93
         ]
       },
       "parts": {
+        "mag": "res://features/combat/weapons/art/homing_shard/mag.png",
         "small": "res://features/combat/weapons/art/homing_shard/held_small.png"
       },
       "pickup": "res://features/combat/weapons/art/homing_shard/pickup.png",
