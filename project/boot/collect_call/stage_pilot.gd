@@ -6,6 +6,8 @@ extends RefCounted
 ## with its i-frames), a held fire shoots along the aim heading, an interact press uses whatever
 ## is in reach (StageActions), melee is the claw combo (PlayerMelee over rivet_melee.json), and
 ## the car key is a stub until the vehicles lane's enter/exit API lands.
+## Vaults own the stage position and attack input through their landing tick.
+## Station cover holds the fighter on the face and releases fire at a full corner peek.
 
 var actions: PlayerActions
 var motion: PlayerMotion = PlayerMotion.shipped()
@@ -53,7 +55,7 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 	var rivet: Fighter = stage.arena.rivet
 	if carry != null and rivet.alive():
 		carry.step(c, actions, stage.arena)
-	_follow_weapon(rivet.weapon)
+	hold.follow_weapon(rivet.weapon)
 	_pick_melee()
 	if stage.hidden_in != "" and c.move == Vector2.ZERO:
 		motion.stop()
@@ -128,15 +130,6 @@ func _move(stage: CollectCallStage, c: PlayerCommand) -> void:
 	c.aim = aim
 	rivet.facing = motion.heading(c.aim)
 	rivet.exposed = not motion.invulnerable()
-
-
-## Starts a stow and draw when the arena changed Rivet's weapon (a pickup, the rifle running dry).
-func _follow_weapon(weapon: StringName) -> void:
-	var coming: StringName = hold.pending if hold.state == WeaponHold.State.STOWING else hold.held
-	if weapon != coming:
-		@warning_ignore("return_value_discarded")
-		hold.equip(weapon)
-	hold.step()
 
 
 ## rivet-arsenal: a carried melee weapon (katana, baton) is in the claw.

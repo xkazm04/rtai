@@ -48,6 +48,15 @@ func reload(reload_s: float) -> bool:
 	return true
 
 
+## Starts a stow and draw when the arena changed Rivet's weapon (a pickup, the rifle running dry).
+func follow_weapon(weapon: StringName) -> void:
+	var coming: StringName = pending if state == State.STOWING else held
+	if weapon != coming:
+		@warning_ignore("return_value_discarded")
+		equip(weapon)
+	step()
+
+
 func step() -> void:
 	if state == State.READY:
 		return

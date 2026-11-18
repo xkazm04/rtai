@@ -1,6 +1,11 @@
 class_name PlayerMotion
 extends RefCounted
-## Fixed-tick walk, sprint, roll and vault, with optional station cover (rivet_motion.json).
+## Rivet's locomotion on the fixed tick, on top of TopDownMover (rivet_motion.json): the held
+## sprint (above the 5.0 m/s tackle line; the facing follows the walk, at a slower turn) and the
+## dodge roll (a press: roll_m on an ease-out curve, invulnerable on a window of its ticks, then
+## a recovery with a damped stick and a cooldown). Free movement is TopDownMover unchanged.
+## A roll press can start a vault, with its own path and i-frames before shared recovery.
+## Station cover owns the grounded snap, slide and corner peek while its flag is enabled.
 
 enum Phase { FREE, ROLL, RECOVER, VAULT }
 
@@ -26,6 +31,8 @@ var recovery_ticks: int = 10
 var recovery_move_scale: float = 0.35
 var cooldown_ticks: int = 8
 var exit_speed_k: float = 0.5
+## n11 (the owner's "direction of player should follow cursor"; rivet_motion.json face_aim): the
+## look is the aim wherever a device aims, a sprint included; false = the turned, walking facing.
 var face_aim: bool = true
 var errors: Array[String] = []
 var _phase_tick: int = 0
@@ -43,27 +50,7 @@ static func shipped() -> PlayerMotion:
 
 
 static func from_table(t: DataTable) -> PlayerMotion:
-	var m: PlayerMotion = PlayerMotion.new()
-	var s: Dictionary = t.object(t.raw, "sprint")
-	m.sprint_mps = t.num(s, "sprint_mps")
-	m.sprint_accel_mps2 = t.num(s, "accel_mps2")
-	m.sprint_turn_dps = t.num(s, "turn_dps")
-	m.min_forward_dot = t.num(s, "min_forward_dot")
-	var r: Dictionary = t.object(t.raw, "roll")
-	m.roll_m = t.num(r, "roll_m")
-	m.roll_ticks = maxi(t.integer(r, "roll_ticks"), 1)
-	m.iframe_from = t.integer(r, "iframe_from")
-	m.iframe_to = t.integer(r, "iframe_to")
-	m.recovery_ticks = t.integer(r, "recovery_ticks")
-	m.recovery_move_scale = t.num(r, "recovery_move_scale")
-	m.cooldown_ticks = t.integer(r, "cooldown_ticks")
-	m.exit_speed_k = t.num(r, "exit_speed_k")
-	m.face_aim = t.raw.get("face_aim", true) == true
-	m.cover.configure(t)
-	m.errors = m.vault.configure(t)
-	if m.iframe_to >= m.roll_ticks:
-		m.errors.append("rivet_motion.json: roll.iframe_to must be inside roll_ticks")
-	return m
+	return PlayerMotionTable.read(t)
 
 
 func drive(stage: CollectCallStage, pilot: StagePilot, c: PlayerCommand, walk: float) -> void:
@@ -71,6 +58,7 @@ func drive(stage: CollectCallStage, pilot: StagePilot, c: PlayerCommand, walk: f
 		vault.drive(stage, pilot, c, walk)
 
 
+## The displacement for one tick. `aim` Vector2.ZERO faces the walk direction.
 func step(c: PlayerCommand, walk_mps: float, actions: PlayerActions) -> Vector2:
 	_cooldown = maxi(_cooldown - 1, 0)
 	_roll_tick = -1
@@ -113,6 +101,8 @@ func facing() -> Vector2:
 	return mover.facing
 
 
+## The look: the aim while a device aims (not during a roll, which faces its roll), else the turned
+## facing. Turning and the sprint's own heading stay in the mover (speed, strafe).
 func heading(aim: Vector2) -> Vector2:
 	if face_aim and aim != Vector2.ZERO and phase != Phase.ROLL and vault.frame < 0:
 		return aim.normalized()
