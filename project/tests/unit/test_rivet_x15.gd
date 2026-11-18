@@ -64,6 +64,25 @@ func test_base_profile_boot_rows_allow_for_gpu_block_padding() -> void:
 		assert_eq(cell.get_height() - cell.get_used_rect().end.y, 0 if art == "p70" else 6)
 
 
+func test_four_frame_cells_preserve_the_original_extent_and_bob() -> void:
+	for art: String in ["p70", "p55"]:
+		var path: String = RivetStrips.DIR + art + "/" + RivetWalk.STRIP4
+		var card: Sprite2D = autofree(Sprite2D.new())
+		card.texture = load(path) as Texture2D
+		card.set_meta(RivetFrames.ON, path)
+		card.hframes = 4
+		card.vframes = RivetWalk.ROWS
+		var old: Vector2 = Vector2(107, 128) if art == "p70" else Vector2(100, 123)
+		var cell: Vector2 = card.texture.get_size() / Vector2(4, RivetWalk.ROWS)
+		assert_almost_eq(cell, old * 1.5, Vector2.ONE * 0.51)
+		assert_almost_eq(cell / RivetWalk.res_of(card), old, Vector2.ONE * 0.34)
+		# Toward, first passing pose: 8 px / 3 px of helmet travel, damped by 0.7.
+		card.frame = 1
+		var stretch: float = 5.6 / (128.0 - 20.0) if art == "p70" else 2.1 / (123.0 - 9.0)
+		assert_almost_eq(RivetBob.stretch(card), 1.0 + stretch, 0.00001)
+		assert_eq(RivetBob.up(card, 1.0), Vector2.ZERO)
+
+
 func test_the_katana_strip_is_its_110_cut_times_res() -> void:
 	var path: String = RivetStrips.DIR + "p70/rivet_eq_katana.png"
 	assert_eq(RivetRes.of(path), RivetWalk.RES)
