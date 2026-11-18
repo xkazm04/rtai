@@ -62,3 +62,63 @@ func test_continuous_cover_crossing_and_tackle() -> void:
 			% [steps, air, tackle_speed, push]
 		)
 	)
+
+
+func test_lethal_round_on_an_airborne_tick_lands_before_the_death_beat() -> void:
+	for k: int in 13:
+		_tick(k)
+	assert_true(vault.airborne())
+	var shot: Shot = Shot.new()
+	shot.from_rivet = false
+	shot.pos = vault.hit.landing
+	shot.vel = Vector2.UP * 3.0
+	shot.damage = body.max_hp
+	stage.arena.shots.append(shot)
+	_tick(13)  # still over the far edge, just past the i-frame window
+	assert_false(body.alive())
+	_assert_interrupted()
+
+
+func test_stop_in_midair_lands_immediately_and_is_idempotent() -> void:
+	for k: int in 8:
+		_tick(k)
+	assert_true(vault.airborne())
+	stage.pilot.stop()
+	_assert_interrupted()
+	stage.pilot.stop()
+	_assert_interrupted()
+
+
+func test_hide_stop_uses_the_same_landing() -> void:
+	for k: int in 8:
+		_tick(k)
+	assert_true(vault.airborne())
+	stage.hidden_in = "test_hide"
+	stage.step(8, TickInput.new())
+	_assert_interrupted()
+
+
+func test_body_displacement_into_other_cover_cannot_take_the_airborne_exemption() -> void:
+	var wall: ArenaStation.Prop = ArenaStation.Prop.new()
+	wall.kind = "wall_high"
+	wall.at = Vector2(4.8, 12.8)
+	wall.size = Vector2(0.2, 0.4)
+	stage.stations.stations[0].props.append(wall)
+	stage.walls = ArenaWalls.from_stations(stage.stations, stage.plan.base)
+	for k: int in 8:
+		_tick(k)
+	assert_true(vault.airborne())
+	# A body displaced Rivet sideways after the pilot wrote the path for this tick.
+	body.pos += Vector2.RIGHT * 0.2
+	assert_true(vault.airborne(), "his circle still overlaps the vault target")
+	assert_false(vault.airborne_after_contacts(motion))
+	_assert_interrupted()
+
+
+func _assert_interrupted() -> void:
+	assert_eq(body.pos, vault.hit.landing)
+	assert_eq(motion.phase, PlayerMotion.Phase.RECOVER)
+	assert_true(vault.probe.clear_at(body.pos, body.radius_m))
+	assert_true(body.exposed)
+	assert_false(vault.airborne())
+	assert_eq(vault.lift(), 0.0)

@@ -99,7 +99,27 @@ func advance(k: int) -> int:
 
 ## Read the fighter after body resolution as collision can displace him from the sampled path.
 func airborne() -> bool:
-	return frame >= 0 and probe.contacts(_body.pos, _radius, hit) == VaultProbe.Contact.TARGET
+	return frame >= 0 and (probe.contacts(_body.pos, _radius, hit) & VaultProbe.Contact.TARGET) != 0
+
+
+## Combat runs after the pilot. A lethal hit or a body blocking the path into another solid
+## interrupts now, before the stage decides whether to skip its ground collision.
+func airborne_after_contacts(motion: PlayerMotion) -> bool:
+	if frame < 0:
+		return false
+	if not _body.alive() or (_body.pos != position and _touches_other_solid()):
+		motion.stop()
+		return false
+	return airborne()
+
+
+func interrupt() -> void:
+	if frame >= 0:
+		position = hit.landing
+		_body.pos = position
+		_body.exposed = true
+	_ready = false
+	reset_tick()
 
 
 ## Parabolic visual lift, normalized to reach one on the middle tick of any multi-tick vault.
@@ -137,6 +157,10 @@ func guard_move(stage: CollectCallStage) -> void:
 	_bind(stage)
 	if not probe.clear_at(stage.collide_preview(resolved), stage.arena.rivet.radius_m):
 		stage.intent.move_by = Vector2.ZERO
+
+
+func _touches_other_solid() -> bool:
+	return (probe.contacts(_body.pos, _radius, hit) & VaultProbe.Contact.OTHER) != 0
 
 
 func _bind(stage: CollectCallStage) -> void:

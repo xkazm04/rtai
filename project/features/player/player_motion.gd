@@ -125,10 +125,10 @@ func velocity() -> Vector2:
 
 
 func stop() -> void:
+	vault.interrupt()
 	if phase == Phase.VAULT:
 		phase = Phase.RECOVER
 		_phase_tick = 0
-	vault.reset_tick()
 	mover.stop()
 	sprinting = false
 

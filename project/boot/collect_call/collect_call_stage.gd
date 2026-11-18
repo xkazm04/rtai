@@ -106,7 +106,7 @@ func step(p_tick: int, tick_input: TickInput) -> void:
 	arena.step(tick)
 	@warning_ignore("return_value_discarded")
 	ArenaBodies.resolve(arena, (arena.rivet.pos - from) / SimClock.TICK_DT)  # features/bodies
-	if pilot == null or not pilot.motion.vault.airborne():
+	if pilot == null or not pilot.motion.vault.airborne_after_contacts(pilot.motion):
 		arena.rivet.pos = _collide(arena.rivet.pos)
 	_collide_hostiles()
 	_encounters()
