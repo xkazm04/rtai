@@ -60,3 +60,16 @@ quick gate + lint clean; `run_unit.mjs --changed` and `--fast` green; the vault 
 `node tools/dev/run.mjs vault_course ...` ends with an `ok exit 0; SCRIPT ERROR 0; unknown arg 0` verdict line
 (quote it); the stills, sheets and clips exist in the masters folder; report the list of files with one line
 each saying what is in it.
+
+## Also in this package (from my review of 01/01b)
+A. Mutation on `features/player/player_vault.gd` (sampled 12, mine): 50%. Real gaps, kill them with tests:
+   line 32 (`enabled` from data: assert the shipped table gives false and `shipped()` without flags is off),
+   line 74 (`intercept` without a `prepare` this tick must refuse), line 121 (`interrupt` clears `_ready`, so a
+   stale prepare cannot fire later), line 172 (`_bind` from an arena stage then a non-arena stage clears the
+   arena boxes). Run `node tools/mutate/mutate.mjs --file=features/player/player_vault.gd --max=20` after and
+   quote the score; do the same for `features/player/vault_probe.gd`.
+B. The fuzz started only 26 vaults of 360. Add a second fuzz family aimed at vaultable obstacles (approach
+   points sampled in front of cover_low faces and city props whose height <= max, speeds and angles spread
+   around the limits) so at least 200 vaults start; keep the per-tick asserts and print the counts.
+C. A vault into a standing guard moved him 1.7 m at 11.3 m/s peak (smoothstep). Keep it (the sprint tackles
+   too), but put the peak speed and the guard displacement in the scenario's printed counts.

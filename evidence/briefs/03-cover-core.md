@@ -19,8 +19,13 @@ digests with it off. Engine behaviour plus tests and a scenario; the view pose a
 - DECISION (mine): cover is offered only on solids whose shots-stop rule exists: the arena-station boxes (arena
   and the city proving block's stations). City props/buildings are NOT offered as cover tonight (they would
   protect nothing). The query API still reports them with `protects=false` so the ai lane can see why.
-- Vault work from package 01 is in `features/player/` (read it: the obstacle read of `ArenaStations`, the flag
-  pattern, the pilot call-site style). Reuse its station/box reader rather than writing a second one.
+- Vault work from packages 01/02 is in `features/player/` (read it): `VaultProbe.stations(source, base)` fills
+  `boxes: Dictionary[Rect2, String]` (box -> station kind), `clear_at(p, r)`, `contacts()`; `PlayerVault._bind`
+  binds a stage's stations/cells; `PlayerVault.drive()` is the pilot hook; `CollectCallStage.collide_preview()`
+  is public; flags read in `apply_flags()`. Reuse the box reader (factor a shared `StageSolids` out of it if
+  cover and vault both need it; keep the vault's tests green and its digests identical) rather than a second one.
+  Remember the stage re-collides Rivet after body resolution (`collect_call_stage.gd:109`): cover positions
+  must be ground-clear, so that pass leaves them alone.
 - Input: `data/tables/input_actions.json` rows; bits 0..15 are taken, `TickInput.buttons` has room. Add a row
   `cover` at bit 16 (keyboard `C`, and a gamepad button that is free: check the rows, choose, and say which).
   Adding a row must not change any replay: old logs never set bit 16.
