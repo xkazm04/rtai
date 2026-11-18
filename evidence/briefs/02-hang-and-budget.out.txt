@@ -1,0 +1,12 @@
+**All 36 mutation tests passed.** `node --test "tools/mutate/*.test.mjs"` reported `ℹ pass 36` and `ℹ fail 0`. The real-process cases took 9.72 seconds, covered all five requested outcomes, and confirmed by PID that the crash stop killed the grandchild.
+
+| Commit | Change |
+|---|---|
+| `376d276b4` | Made the bake launcher injectable in `tools/mutate/oracles.mjs` and added real Node child tests in `tools/mutate/bake_process.test.mjs`. |
+| `e73cb388e` | Raised the bake budget to 3× baseline with a 120-second floor. Updated `tools/mutate/oracles.mjs`, `oracles.test.mjs`, and `README.md`. |
+| `e3e07595f` | Updated `tools/mutate/README.md` with both lane commands, oracle selection guidance, and fail-fast ordering. |
+| `351b11ec5` | Restored the dev-only description and both output paths in `project/dev/bake_city.gd` using two `##` lines. |
+
+The quick gate passed with `--no-godot --no-clash`. I ran pre-commit lint separately to avoid sibling-worktree checks. One unrelated `step_guard` test timed out during Node startup and passed on its isolated rerun. Godot was never started.
+
+[astra: 876s, exit 0]
