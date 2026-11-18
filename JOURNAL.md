@@ -228,3 +228,34 @@ NEXT (session 3, in order):
 7. Reel gate: PASSED on a9d327061 at 02:09 (3/3 views, exit 0, ~15 min); re-run on the final commit.
 8. Wire the forklift/pallets/gatehouse as yard dressing only if 1-6 are done; then raise the weakest item (the film).
 Session 2 ended ~02:00 with a clean tree; HEAD is the JOURNAL commit after bc29c8a7e.
+## Session 3 (2026-11-18 02:10 -> )
+Read: JOURNAL NEXT, git log, asset replies (it471: 01:45, 01:54, 02:01 notes), police JOURNAL (no NEED districts).
+Registry rules applied this session: concept-scene-parity (each roof judged in game at 32/48 px/m before taking,
+not on the asset board), sprite-and-atlas-production (copied at game size, plan art 80 px/m, cards through the
+cutter, provenance line per PNG), procedural-level-planning (a new roof is data in the zone row; the counts per
+zone checked after the bake so no new roof floods a zone).
+- 02:20 MILESTONE item 3, commit 395b7ec80, generator v22: it471 roofs (clocktower, terrace _t, tall sq_c_t, bank
+  dome, muted crown, dock shed b, warehouse c B) + sculpture v3 card/plan; zone key `upright_roofs` (warehouse c's
+  hoist must stay south: seen turned 180 in the first v22 still -> fixed + test_dock_upright, planted caught 29).
+  Counts (v22): downtown clocktower 63 (vs unlettered 15: 52, 20: 48), terrace 108, tall c 90, bank dome 3, crown 2;
+  docks shed b 77, warehouse c 334 (the other long roofs 323-346). Not taken: `warehouse_70_c_v2` (02:10 file, no
+  note yet), silos (B, standalone landmark: needs a placement rule), apron v3t, plaza paving, street/dock cards.
+- 02:21 item 6 second pass rendering: `zone_frame --drive=1990,1026,1250,1026,20` (2 m into the north sidewalk, so
+  the north blocks' roofs and south faces fill the top half of the frame).
+- 02:22 item 5 flag ON root cause (read, not guessed): `CollectCallBot._fight()` held at `layout.w(DOCK_HOLD)`, the
+  STREET mapping, and `_boss()` at `w(BOSS_STANDOFF)`: with the flag Rivet stood on Harbor Road while the waves
+  spawned on the dock place ~1.6 km east (AIM_M 14 m: he never shot). Second cause: the bot walks straight lines and
+  Rivet collides with buildings (StageCells.push_out), so a far goal ends against a wall. Fix (dev bot only):
+  `StageLayout.w_dock()` for the two hold points; `BotRoute` (dev/bots, AStarGrid2D over 4 m cells of the 1 m walk
+  cells, open = no solid 1 m cell) walks goals >= 40 m away, only when the dock is on. `project/dev/bots/` is in
+  neither lane's list; the bot and its route are dev code (not shipped).
+- 02:26 MILESTONE item 5, commit 0511d8629: quest1_input flag ON pays in 921 s (55277 ticks; flag off 317 s), 0 deaths,
+  replay identical; b4-dock 12932 -> 33825 (the 348 s walk to Dock 9 + the fight), b6 back 343 s. Flag off 4/4 quest
+  scenarios, same checkpoints. test_bot_route 4/4, planted caught. Debt dev_loc +97 accepted (dev bot).
+- 02:30 MILESTONE item 6 second pass: `evidence/n18-districts/drive2_docks_downtown_v22_combo_32ppm.mp4` (37 s, 1110
+  frames, 0 SCRIPT ERROR, y 1026 = the north sidewalk: the blocks fill the top half). Looked at 7 frames: docks
+  warehouse roofs + roller doors, mixed, downtown glass walls + terraces. Zone stills 48 px/m:
+  `evidence/n18-districts/zones_v22_combo_48ppm.jpg`. Masters frames.json rebuilt, 15 entries (v20 drive, v15 map and
+  dock9 v15/v16 removed as superseded).
+- Seen in the yard still: black "!" marks over the warehouse roof's north edge (prop cards north of the building
+  drawn over its lifted roof?). Investigating.
