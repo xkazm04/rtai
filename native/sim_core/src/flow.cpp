@@ -142,4 +142,17 @@ bool CityCore::sight(double x0, double y0, double x1, double y1) const {
 	return true;
 }
 
+// A live foot cop within r of (x, y) with sight to it, slot order (n18 police item 7: CityHeat asked
+// this of a full snapshot copy every tick; CitySimFlow.cop_sees is the same walk).
+bool CityCore::cop_sees(double x, double y, double r) const {
+	const double r2 = r * r;
+	for (int i = 0; i < CAP; i++) {
+		if (alive_[i] == 0 || kind_[i] != K_COP || mode_[i] == M_DEAD) continue;
+		const double dx = x - px_[i];
+		const double dy = y - py_[i];
+		if (dx * dx + dy * dy <= r2 && sight(px_[i], py_[i], x, y)) return true;
+	}
+	return false;
+}
+
 }  // namespace gtai::sim

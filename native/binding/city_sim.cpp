@@ -244,6 +244,8 @@ bool CitySim::sight(double x0, double y0, double x1, double y1) const {
 	return core_->sight(x0, y0, x1, y1);
 }
 
+bool CitySim::cop_sees(double x, double y, double r) const { return core_->cop_sees(x, y, r); }
+
 void CitySim::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("init", "seed"), &CitySim::init);
 	ClassDB::bind_method(D_METHOD("set_radii", "ra", "rb", "riot"), &CitySim::set_radii);
@@ -280,4 +282,5 @@ void CitySim::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_variants"), &CitySim::get_variants);
 	ClassDB::bind_method(D_METHOD("flow_dist", "x", "y"), &CitySim::flow_dist);
 	ClassDB::bind_method(D_METHOD("sight", "x0", "y0", "x1", "y1"), &CitySim::sight);
+	ClassDB::bind_method(D_METHOD("cop_sees", "x", "y", "r"), &CitySim::cop_sees);
 }

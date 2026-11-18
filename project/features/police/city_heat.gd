@@ -115,22 +115,10 @@ func witness_violence() -> void:
 	_violence += 1
 
 
-## True when a live sim foot cop stands within r of `at` with a clear line on the cell map.
+## True when a live sim foot cop stands within r of `at` with a clear line on the cell map (the
+## sim answers it: no snapshot copy, n18 item 7).
 static func cop_sees(sim: CitySimBackend, at: Vector2, r: float) -> bool:
-	var snap: PackedFloat64Array = sim.snapshot()
-	var r2: float = r * r
-	for k: int in range(0, snap.size() - SimConst.SNAP_STRIDE + 1, SimConst.SNAP_STRIDE):
-		if snap[k] >= SimConst.SNAP_PROJ_BASE:
-			break
-		if int(snap[k + 1]) != SimConst.K_COP or int(snap[k + 2]) == SimConst.M_DEAD:
-			continue
-		var x: float = snap[k + 4]
-		var y: float = snap[k + 5]
-		var dx: float = at.x - x
-		var dy: float = at.y - y
-		if dx * dx + dy * dy <= r2 and sim.sight(x, y, at.x, at.y):
-			return true
-	return false
+	return sim.cop_sees(at.x, at.y, r)
 
 
 func write_state(out: StreamPeerBuffer) -> void:

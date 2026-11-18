@@ -165,6 +165,11 @@ func sight(x0: float, y0: float, x1: float, y1: float) -> bool:
 	return s if s is bool else false
 
 
+func cop_sees(x: float, y: float, r: float) -> bool:
+	var s: Variant = _call(&"cop_sees", [x, y, r])
+	return s if s is bool else false
+
+
 func set_rig_slots(slots: PackedInt32Array) -> void:
 	_call(&"set_rig_slots", [slots])
 

@@ -60,6 +60,7 @@ public:
 	PackedInt32Array flow_stats() const;
 	int flow_dist(double x, double y) const;
 	bool sight(double x0, double y0, double x1, double y1) const;
+	bool cop_sees(double x, double y, double r) const;
 
 protected:
 	static void _bind_methods();

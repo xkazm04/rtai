@@ -60,3 +60,6 @@ extends RefCounted
 @abstract func flow_dist(x: float, y: float) -> int
 ## Line of sight on the 1 m cell map: every cell strictly between the two points' cells walkable.
 @abstract func sight(x0: float, y0: float, x1: float, y1: float) -> bool
+
+## A live foot cop within r of (x, y) with sight to it (no snapshot copy; n18 police item 7).
+@abstract func cop_sees(x: float, y: float, r: float) -> bool

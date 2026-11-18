@@ -123,6 +123,8 @@ public:
 	bool flow_dir(double x, double y, double &dx, double &dy) const;
 	// flow.cpp: line of sight on the cell map (every cell strictly between the ends walkable).
 	bool sight(double x0, double y0, double x1, double y1) const;
+	// flow.cpp: a live foot cop within r of (x, y) with sight to it (CityHeat's per-tick question).
+	bool cop_sees(double x, double y, double r) const;
 	const int32_t *flow_stats() const { return ff_stats_; }
 	const int32_t *counters() const { return counters_; }
 

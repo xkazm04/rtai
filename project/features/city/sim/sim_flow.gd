@@ -182,3 +182,17 @@ func sight(x0: float, y0: float, x1: float, y1: float) -> bool:
 		if (ix < nx or iy < ny) and not _walkable(cx, cy):
 			return false
 	return true
+
+
+## A live foot cop within r of (x, y) with sight to it, slot order, op for op flow.cpp cop_sees()
+## (n18 police item 7: CityHeat asked this of a full snapshot copy every tick).
+func cop_sees(x: float, y: float, r: float) -> bool:
+	var r2: float = r * r
+	for i: int in SimConst.CAP:
+		if _s.alive[i] == 0 or _s.kind[i] != SimConst.K_COP or _s.mode[i] == SimConst.M_DEAD:
+			continue
+		var ddx: float = x - _s.px[i]
+		var ddy: float = y - _s.py[i]
+		if ddx * ddx + ddy * ddy <= r2 and sight(_s.px[i], _s.py[i], x, y):
+			return true
+	return false

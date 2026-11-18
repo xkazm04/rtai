@@ -180,6 +180,10 @@ func sight(x0: float, y0: float, x1: float, y1: float) -> bool:
 	return _flow.sight(x0, y0, x1, y1)
 
 
+func cop_sees(x: float, y: float, r: float) -> bool:
+	return _flow.cop_sees(x, y, r)
+
+
 func _count() -> void:
 	var c: PackedInt32Array = SimArrays.i32(8, 0)
 	for i: int in SimConst.CAP:
