@@ -28,6 +28,9 @@ var ever_seen: bool = false
 var quest_meter: HeatMeter = null
 ## Quest 1: the stage saw Rivet this tick (its patrols and fighters), set by the stage.
 var stage_seen: bool = false
+## Quest 1: Rivet is in a hide spot (the stage's hidden_in): the sim hears heat 0 (its cops walk on
+## and hold fire; the sim's sight knows no hides), the stage's meter keeps its level.
+var stage_hidden: bool = false
 ## Wall time this system's steps took, us (item 7's cost probe, dev/sim/heat_cost.gd).
 var cost_us: int = 0
 var _violence: int = 0
@@ -84,7 +87,10 @@ func step(tick: int, _input: TickInput) -> void:
 
 
 func _step(tick: int) -> void:
-	seen = cop_sees(city.sim, city.target, meter.sight_m) or stage_seen
+	if quest_meter != null:
+		seen = stage_seen  # the stage's sight (hides; --sim-police adds the sim cops' there)
+	else:
+		seen = cop_sees(city.sim, city.target, meter.sight_m)
 	if seen:
 		last_seen = city.target
 		ever_seen = true
@@ -93,10 +99,11 @@ func _step(tick: int) -> void:
 			meter.raise_by(1)
 		meter.step(seen)
 	_violence = 0
-	city.sim.set_heat(meter.level if tune.living else -1, last_seen.x, last_seen.y)
+	var heard: int = 0 if stage_hidden else meter.level
+	city.sim.set_heat(heard if tune.living else -1, last_seen.x, last_seen.y)
 	@warning_ignore("return_value_discarded")
 	patrol.tick(city.sim, city.focus)
-	var lv: int = meter.level if tune.living else 0
+	var lv: int = heard if tune.living else 0
 	@warning_ignore("return_value_discarded")
 	dispatch.step(city.sim, tick, lv, last_seen, city.focus)
 	@warning_ignore("return_value_discarded")

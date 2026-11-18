@@ -49,6 +49,7 @@ static func step_heat(stage: CollectCallStage) -> void:
 	stage.heat.step(saw)
 	if stage.city_heat != null:
 		stage.city_heat.stage_seen = saw
+		stage.city_heat.stage_hidden = stage.hidden_in != ""
 	if witnessed:
 		stage.heat.raise_by(1)
 

@@ -132,3 +132,26 @@ func test_quest_mode_forwards_the_stage_meter_to_the_sim() -> void:
 	stage_meter.set_level(0)
 	q.step(9999, TickInput.new())
 	assert_eq(_city.sim.heat_level(), 0)
+
+
+## n18 item 6 (quest 1 film t600-1200: people shot dead in the street while Rivet hid in the
+## dumpster): on quest 1 the sim cops do not see through a hide. Only the stage's sighting moves the
+## point, and while Rivet is hidden the sim hears heat 0 (cops walk on, hold fire); the stage's
+## meter keeps its level.
+func test_quest_mode_a_hidden_rivet_is_heat_0_for_the_sim() -> void:
+	var stage_meter: HeatMeter = HeatMeter.new(_bus)
+	stage_meter.set_level(2)
+	_city.target = COP + Vector2(0, 3)  # in the open, 3 m from a sim cop
+	var q: CityHeat = CityHeat.new(_city)
+	q.quest_meter = stage_meter
+	q.setup(WorldContext.new(_bus, null, null, RngRegistry.new(1)))
+	q.patrol.want = 0
+	q.last_seen = Vector2(250.5, 250.5)
+	q.stage_hidden = true
+	q.step(0, TickInput.new())
+	assert_eq(_city.sim.heat_level(), 0, "hidden: the sim hears heat 0")
+	assert_eq(q.last_seen, Vector2(250.5, 250.5), "a sim cop's own sight does not move the point")
+	assert_eq(stage_meter.level, 2, "the stage keeps its level")
+	q.stage_hidden = false
+	q.step(1, TickInput.new())
+	assert_eq(_city.sim.heat_level(), 2, "out of the hide: the stage's level again")
