@@ -8,6 +8,7 @@ var ticks: int
 var iframe_from: int
 var iframe_to: int
 var no_fire: bool
+var top_scale: float
 var apex_m: float
 var probe: VaultProbe
 var hit: VaultProbe.Hit
@@ -34,6 +35,7 @@ func configure(t: DataTable) -> Array[String]:
 	iframe_from = t.integer(row, "iframe_from")
 	iframe_to = t.integer(row, "iframe_to")
 	no_fire = row.get("no_fire", true) == true
+	top_scale = t.num(row, "top_scale")
 	apex_m = t.num(row, "apex_m")
 	probe = VaultProbe.new(t, row)
 	var errors: Array[String] = t.errors()
@@ -47,6 +49,7 @@ func drive(stage: CollectCallStage, pilot: StagePilot, c: PlayerCommand, walk: f
 	if motion.phase == PlayerMotion.Phase.FREE and c.was_pressed(pilot.actions, &"roll"):
 		prepare(stage)
 	stage.intent.move_by = motion.step(c, walk, pilot.actions)
+	_ready = false
 	if owns_move:
 		stage.arena.rivet.pos = position
 		if frame >= 0:

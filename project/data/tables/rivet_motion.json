@@ -51,6 +51,7 @@
     "min_speed_mps": 5,
     "no_fire": true,
     "reach_m": 0.55,
-    "ticks": 18
+    "ticks": 18,
+    "top_scale": 1.12
   }
 }

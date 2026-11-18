@@ -122,3 +122,41 @@ func _assert_interrupted() -> void:
 	assert_true(body.exposed)
 	assert_false(vault.airborne())
 	assert_eq(vault.lift(), 0.0)
+
+
+func test_shipped_default_and_table_disable_the_vault() -> void:
+	var table: DataTable = DataTable.open(PlayerMotion.TABLE, PlayerMotion.SCHEMA)
+	var default_enabled: bool = table.object(table.raw, "vault")["enabled"]
+	assert_false(default_enabled)
+	assert_false(PlayerMotion.shipped().vault.enabled)
+	table.raw["vault"]["enabled"] = true
+	assert_true(PlayerMotion.from_table(table).vault.enabled)
+
+
+func test_intercept_requires_a_fresh_prepare() -> void:
+	assert_false(vault.intercept(motion, Vector2.DOWN))
+	vault.prepare(stage)
+	assert_true(vault.intercept(motion, Vector2.DOWN))
+	assert_false(vault.intercept(motion, Vector2.DOWN))
+
+
+func test_prepare_expires_at_the_end_of_a_tick_without_a_press() -> void:
+	vault.prepare(stage)
+	stage.step(0, TickInput.new())
+	assert_false(vault.intercept(motion, Vector2.DOWN))
+
+
+func test_interrupt_discards_a_prepared_press() -> void:
+	vault.prepare(stage)
+	vault.interrupt()
+	assert_false(vault.intercept(motion, Vector2.DOWN))
+
+
+func test_binding_an_ordinary_stage_forgets_arena_walls() -> void:
+	vault.prepare(stage)
+	assert_false(vault.probe.boxes.is_empty())
+	var street: CollectCallStage = CollectCallStage.new(stage.layout)
+	street.arena = stage.arena
+	vault.prepare(street)
+	assert_true(vault.probe.boxes.is_empty())
+	assert_true(vault.probe.clear_at(Vector2(4.0, 13.0), body.radius_m))

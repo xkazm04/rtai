@@ -160,6 +160,10 @@
           "maximum": 120,
           "minimum": 1,
           "type": "integer"
+        },
+        "top_scale": {
+          "minimum": 1,
+          "type": "number"
         }
       },
       "required": [
@@ -175,7 +179,8 @@
         "min_speed_mps",
         "no_fire",
         "reach_m",
-        "ticks"
+        "ticks",
+        "top_scale"
       ],
       "type": "object"
     }

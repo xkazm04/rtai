@@ -140,6 +140,7 @@ func _process(_delta: float) -> void:
 	var sway: float = stage.pilot.sway_rad if stage.pilot != null else 0.0  # the flamer's hose
 	f.aim[0] = (r.pos + r.facing.rotated(sway) * 4.0) * SimConst.PX_PER_M
 	_rivet_clips(f)
+	VaultView.feed(rigs, stage.pilot.motion.vault if stage.pilot != null else null)
 	var i: int = 1
 	for h: Fighter in stage.arena.hostiles:
 		if h.kind == Fighter.Kind.BOSS and not stage is ArenaStage:
