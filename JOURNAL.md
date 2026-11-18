@@ -423,11 +423,7 @@ answered in session 3; their row has not landed), no bench.lock present at 03:20
   (`build/gate/a65570c927ae/gate.json`). 0022e89a5 after it only adds a dev log line + docs.
 
 NEXT (session 5):
-1. (done 04:34, bench exit 0 CONTENDED at heat -1; see above) a heat 3 bench needs city_bench.gd --heat.
-   police-bench-s4b.log` and `build/evidence/bench.json` / `build/bench/`; put section 20 numbers
-   in JOURNAL + REPORT row 7 / Call 5 (CONTENDED label). If it failed or never ran, re-run at a
-   quiet moment: `node tools/bench/run.mjs --wait=0` under gtai-n18/bench.lock (the --wait form
-   starves behind the other lane's reel gate). Delete gtai-n18/bench.lock if it is mine and stale.
+1. (done 04:34: bench exit 0, CONTENDED, heat -1 only; see the BENCH line below) a heat 3 bench needs city_bench.gd to mount CityHeat (--heat=<level>, REQUEST tools); build it if time allows.
 2. Reel gate on HEAD (native changed since the last reel gate on b1418a966):
    `node tools/gate/run.mjs --reels` (~45 min with evidence).
 3. Finding (c) by eye: a frame where some city cops are baked (LOD 1), e.g. heat_clip --level=3
@@ -446,3 +442,5 @@ NEXT (session 5):
   (sim step 34-40 us, CityHeat 55 us). A heat-3 bench scenario would need CityHeat mounted in
   city_bench.gd (dev/bench, no lane's file): REQUEST tools: a `--heat=<level>` bench flag.
   evidence/n18-police/s4/bench_0022e89a5_contended.txt.
+NEXT (session 5, final order): the NEXT list above from item 2 (reel gate on HEAD first: native
+changed since the last reel gate), then a heat-3 bench flag if time allows, REPORT final 07:40.
