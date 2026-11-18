@@ -160,3 +160,30 @@ func test_binding_an_ordinary_stage_forgets_arena_walls() -> void:
 	vault.prepare(street)
 	assert_true(vault.probe.boxes.is_empty())
 	assert_true(vault.probe.clear_at(Vector2(4.0, 13.0), body.radius_m))
+
+
+func test_missing_switches_default_to_off_and_keep_the_gun_down() -> void:
+	var table: DataTable = DataTable.open(PlayerMotion.TABLE, PlayerMotion.SCHEMA)
+	var row: Dictionary = table.object(table.raw, "vault")
+	assert_true(row.erase("enabled"))
+	assert_true(row.erase("no_fire"))
+	var configured: PlayerVault = PlayerMotion.from_table(table).vault
+	assert_false(configured.enabled)
+	assert_true(configured.no_fire)
+
+
+func test_first_tick_can_be_protected_and_can_be_interrupted() -> void:
+	vault.iframe_from = 0
+	_tick(0)
+	assert_false(body.exposed)
+	body.hp = 0.0
+	assert_false(vault.airborne_after_contacts(motion))
+	_assert_interrupted()
+
+
+func test_contact_can_shift_an_airborne_body_without_a_second_solid() -> void:
+	for k: int in 8:
+		_tick(k)
+	body.pos += Vector2.RIGHT * 0.1
+	assert_true(vault.airborne_after_contacts(motion))
+	assert_eq(motion.phase, PlayerMotion.Phase.VAULT)

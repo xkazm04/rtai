@@ -74,3 +74,21 @@ func test_airborne_oracle_rejects_an_adjacent_prop_of_the_same_kind_and_void() -
 	var both: int = VaultProbe.Contact.TARGET | VaultProbe.Contact.OTHER
 	assert_eq(probe.contacts(over, r, hit), both)
 	assert_eq(probe.contacts(Vector2(-2, -2), r, hit), VaultProbe.Contact.OTHER)
+
+
+func test_diagonal_reach_uses_the_normal_distance_to_the_face() -> void:
+	var velocity: Vector2 = Vector2.DOWN.rotated(deg_to_rad(30.0)) * 8.0
+	p.y = box.position.y - r - probe.reach + 0.01
+	assert_eq(_press(velocity).reason, &"ok")
+	p.y -= 0.02
+	assert_eq(_press(velocity).reason, &"none")
+
+
+func test_obstacle_at_the_depth_limit_and_circle_at_its_corner() -> void:
+	probe.boxes.clear()
+	probe.boxes[Rect2(0, 0, 5, 2)] = "cover_low"
+	p = Vector2(2, -1)
+	probe.max_depth = 2.0
+	assert_eq(_press(Vector2.DOWN * 8.0).reason, &"ok")
+	assert_true(probe.clear_at(Vector2(-0.45, -0.45), r))
+	assert_false(probe.clear_at(Vector2(-0.4, -0.4), r))
