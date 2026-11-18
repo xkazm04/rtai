@@ -14,6 +14,9 @@ const LOOK_COUNT: int = 9
 ## made the walking hoodie ped a dark blob at 32-48 px/m). "_dark" = the iteration 12 look.
 const HOODIE_SLEEVE: String = "_grey"
 
+## Cache the cast's body plans so baked lookups don't construct a variant per actor per frame.
+static var _look_kinds: Dictionary[int, BodyPlan.Kind] = {}
+
 var tag: String = ""
 var kind: BodyPlan.Kind = BodyPlan.Kind.PED
 var head: String = ""
@@ -76,6 +79,13 @@ static func crowd(index: int) -> RigVariant:
 ## prints as the patrol cop (same body, a blue shirt) until the city bakes a ninth row.
 static func atlas_look(index: int) -> int:
 	return 5 if index == SWAT else clampi(index, 0, CROWD_COUNT - 1)
+
+
+## Resolve a supplied crowd look before either LOD selects its art.
+static func look_for(look: int, id: int, body: BodyPlan.Kind) -> int:
+	if not _look_kinds.has(look):
+		_look_kinds[look] = crowd(look).kind
+	return look if _look_kinds[look] == body else crowd_index_for(id, body)
 
 
 ## The pit's rifle squads (arena --rigs): patrol, riot and SWAT by actor id, no RNG draw.

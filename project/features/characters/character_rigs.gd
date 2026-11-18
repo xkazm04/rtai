@@ -132,7 +132,8 @@ func rig_for(actor_id: int) -> CutRig:
 ## The atlas cell of a row drawn by the crowd layer, at clip time t (s).
 func baked_cell(i: int, t: float) -> int:
 	var c: CrowdAtlas.Clip = CrowdAtlas.clip_of(feed, i)
-	return CrowdAtlas.cell_for(feed.look_of(i), c, t)
+	var kind: BodyPlan.Kind = feed.kinds[i] as BodyPlan.Kind
+	return CrowdAtlas.cell_for(RigVariant.look_for(feed.look_of(i), feed.ids[i], kind), c, t)
 
 
 func _assign() -> void:
@@ -189,11 +190,11 @@ func _remap() -> bool:
 
 func _acquire(i: int) -> CutRig:
 	var kind: BodyPlan.Kind = feed.kinds[i] as BodyPlan.Kind
-	var look: RigVariant = RigVariant.rivet()
-	if kind != BodyPlan.Kind.RIVET:
-		look = RigVariant.crowd(feed.look_of(i))
-		if look.kind != kind:  # a look of another body plan: fall back to the actor's own pick
-			look = RigVariant.crowd(RigVariant.crowd_index_for(feed.ids[i], kind))
+	var look: RigVariant
+	if kind == BodyPlan.Kind.RIVET:
+		look = RigVariant.rivet()
+	else:
+		look = RigVariant.crowd(RigVariant.look_for(feed.look_of(i), feed.ids[i], kind))
 	var rig: CutRig = _pool.acquire(kind, look, feed.pos[i], feed.face[i])
 	rig.actor_id = feed.ids[i]
 	return rig
