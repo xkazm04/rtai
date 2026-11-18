@@ -137,8 +137,8 @@ func body_result() -> PackedFloat64Array:
 	return r if r is PackedFloat64Array else PackedFloat64Array()
 
 
-func set_render(mms: Array[RID], clips: PackedInt32Array) -> void:
-	_call(&"set_render", [Array(mms), clips])
+func set_render(mms: Array[RID], clips: PackedInt32Array, hips: Vector2 = Vector2.ZERO) -> void:
+	_call(&"set_render", [Array(mms), clips, hips])
 
 
 func write_render(vx0: float, vy0: float, vx1: float, vy1: float) -> void:

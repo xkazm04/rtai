@@ -51,7 +51,7 @@ public:
 			const Vector2 &focus, double r2, const Vector2 &aim, double px);
 	void set_body(const PackedFloat64Array &spec);
 	PackedFloat64Array body_result() const;
-	void set_render(const Array &mms, const PackedInt32Array &clips);
+	void set_render(const Array &mms, const PackedInt32Array &clips, const Vector2 &hips);
 	void write_render(double vx0, double vy0, double vx1, double vy1);
 	PackedInt32Array get_render_counts() const;
 	void set_rig_slots(const PackedInt32Array &slots);

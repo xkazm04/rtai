@@ -221,6 +221,18 @@ void far_cop_rows_test() {
 		check(data[RL_PEDS][i * RL_STRIDE + 12] == expected[i], "render: crowd atlas row");
 		check(sim->variant_of(i) == variants[i], "render: sim variant preserved");
 	}
+	const int32_t near[] = {0};
+	sim->set_rig_slots(near, 1);
+	sim->strike(5, 1.0, 0.0, true);
+	sim->set_contact_hips(17.0f, 23.0f);
+	sim->fill_render(-1.0, -1.0, 1.0, 1.0, layers, counts);
+	check(counts[RL_PED_SHADOWS] == 4, "contacts: skip the rig and the corpse");
+	for (int i = 0; i < 4; ++i) {
+		const float hip = kinds[i + 1] == K_PED ? 17.0f : 23.0f;
+		const float *sh = data[RL_PED_SHADOWS] + i * RL_STRIDE;
+		check(sh[0] == hip && sh[5] == hip, "contacts: scale the mesh by this body's hip");
+		check(sh[3] == 0 && sh[7] == 0 && sh[11] == 1, "contacts: at the feet with the mesh ink");
+	}
 }
 
 int main() {

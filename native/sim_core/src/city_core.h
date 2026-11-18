@@ -100,6 +100,7 @@ public:
 	// Render only (never sim state): actors drawn by a full cutout rig skip their atlas body;
 	// the person quad's world-px size matches the baked crowd atlas cell.
 	void set_rig_slots(const int32_t *slots, int n);
+	void set_contact_hips(float ped, float cop) { ped_hip_ = ped; cop_hip_ = cop; }
 	void set_person_px(float px) { person_px_ = px; }
 	uint8_t variant_of(int i) const { return (i >= 0 && i < CAP) ? variant_[i] : 0; }
 	// Render only: a car's state for the view's atlas pick (custom.y: 0 intact, 1 d1, 2 d2,
@@ -153,6 +154,7 @@ private:
 	std::vector<int32_t> clips_;
 	uint8_t rigged_[CAP] = {};
 	uint8_t cstate_[CAP] = {};
+	float ped_hip_ = 0.0f, cop_hip_ = 0.0f;
 	float person_px_ = 122.88f;
 
 	// flow field (flow.cpp); map_version_ bumps on every stamp / clear (world.cpp)

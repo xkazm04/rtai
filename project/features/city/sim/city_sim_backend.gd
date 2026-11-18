@@ -45,7 +45,9 @@ extends RefCounted
 @abstract func set_body(spec: PackedFloat64Array) -> void
 ## After a step: BR_X, BR_Y (the body pushed out of people), BR_N, then (slot, x, y) knockdowns.
 @abstract func body_result() -> PackedFloat64Array
-@abstract func set_render(mms: Array[RID], clips: PackedInt32Array) -> void
+## With a contact mesh, hips gives the standing ped and cop scales in px. Zero uses the round blob.
+@abstract
+func set_render(mms: Array[RID], clips: PackedInt32Array, hips: Vector2 = Vector2.ZERO) -> void
 @abstract func write_render(vx0: float, vy0: float, vx1: float, vy1: float) -> void
 @abstract func get_render_counts() -> PackedInt32Array
 ## Render only (never sim state): slots drawn by a full cutout rig skip their atlas body.

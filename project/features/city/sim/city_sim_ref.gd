@@ -144,8 +144,8 @@ func body_result() -> PackedFloat64Array:
 	return _body.result()
 
 
-func set_render(mms: Array[RID], clips: PackedInt32Array) -> void:
-	_render.setup(mms, clips)
+func set_render(mms: Array[RID], clips: PackedInt32Array, hips: Vector2 = Vector2.ZERO) -> void:
+	_render.setup(mms, clips, hips)
 
 
 func write_render(vx0: float, vy0: float, vx1: float, vy1: float) -> void:

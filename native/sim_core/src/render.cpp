@@ -82,9 +82,14 @@ void CityCore::fill_render(double vx0, double vy0, double vx1, double vy1, float
 			if (!people) continue;
 			int cell = 0;
 			frame_of(i, cell);
-			const float sh[8] = {SH, 0.0f, 0.0f, X + 2.0f, 0.0f, SH, 0.0f, Y + 3.0f};
-			put(bufs[RL_PED_SHADOWS] + nps * RL_STRIDE, sh, INK_PED, 0.0f);
-			nps++;
+			if (ped_hip_ == 0.0f && cop_hip_ == 0.0f) {
+				const float sh[8] = {SH, 0.0f, 0.0f, X + 2.0f, 0.0f, SH, 0.0f, Y + 3.0f};
+				put(bufs[RL_PED_SHADOWS] + nps++ * RL_STRIDE, sh, INK_PED, 0.0f);
+			} else if (!rigged_[i] && mode_[i] != M_DEAD && mode_[i] != M_DOWN) {
+				const float hip = k == K_PED ? ped_hip_ : cop_hip_;
+				const float sh[8] = {hip, 0.0f, 0.0f, X, 0.0f, hip, 0.0f, Y};
+				put(bufs[RL_PED_SHADOWS] + nps++ * RL_STRIDE, sh, WHITE, 0.0f);
+			}
 			if (rigged_[i]) continue;  // drawn by its cutout rig
 			const float body[8] = {dx * S, -dy * S, 0.0f, X, dy * S, dx * S, 0.0f, Y};
 			put(bufs[RL_PEDS] + np * RL_STRIDE, body, WHITE, (float)cell);
