@@ -189,3 +189,13 @@ the open water and the quay edge water match.
   ready if the owner says no orange on roofs); outer corner (no layout case).
 - 01:20 item 6: `zone_frame --drive=1990,1036,1250,1036,20 --zooms=1 --fixed-fps 60` (docks -> downtown along y 1036,
   37 s) rendering to %TEMP%/n18d/drive.
+- 01:24 MILESTONE item 6 first pass, commit 8c42f0ade: `evidence/n18-districts/drive_docks_downtown_v20_combo_32ppm.mp4`
+  (37 s, 1110 frames, 0 SCRIPT ERROR; zone_frame saves ~1 frame/s, so a 37 s drive takes ~15 min). Looked at frames
+  0/300/600/900/1100: the street centre fills the 25 m frame; docks blocks at the start, downtown landmark roofs at
+  the end, the zones show only at the frame edges. A second pass offset onto the blocks is NEXT.
+- 01:27 MILESTONE commit 5443ab411: two walls a zone (FacadeStrips alt: dock -> brick warehouse, glass -> stone office,
+  it470 A, place hash). `evidence/n18-districts/ab_facade_alt_office_v20_combo_32ppm.jpg` (tower glass -> office). A
+  docks row I filmed happened to hash all three buildings to the first wall (no change in that frame).
+- 01:30 full unit on 8c42f0ade: 2867 passed, 0 failed, 2 skipped. Masters `gtai-masters\n18\districts\frames.json`
+  rebuilt: 11 entries, best first; removed the stale v15/v16 quay/water/yard stills (the water ones showed my bug).
+- REPORT.md draft written (cwd root).
