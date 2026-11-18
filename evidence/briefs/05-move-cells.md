@@ -58,3 +58,12 @@ stage JOURNAL.md. Commits `move: ...` with `Co-Authored-By: GPT-6.2 Astra <norep
 quick gate + lint clean; `run_unit.mjs --changed` and `--fast` green; vault + cover scenarios green; both dev
 course verdicts `ok exit 0; SCRIPT ERROR 0; unknown arg 0`; cells, masters, manifest, prompts, provenance lines
 present; `git status` clean.
+
+## Merge note (anim lane, tonight)
+The anim lane (`n19-anim`) is re-cutting Rivet's base, walk, knock and strike strips at native x1.5 (165 px
+figures; `RivetRes.X15`, `tools/art/rivet_frames.py`). Do not touch their strips or that script. Generate the
+masters large enough for x1.5, and give `tools/art/move_cells_cut.py` a `--scale` (1.0 = the 110 px figures our
+branch reads today, 1.5 = theirs) and write both outputs if the reader picks by resolution the way
+`RivetRes` does on their branch (read `git -C ../n19-anim show HEAD:project/features/characters/rivet_res.gd` if it
+exists; read only, never edit that worktree). Say in your report which one our branch shows and how the merge
+switches to the other.
