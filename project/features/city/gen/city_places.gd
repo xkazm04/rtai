@@ -4,7 +4,8 @@ extends RefCounted
 ## gtai.places/1). A row names a zone and a rule that picks one block of that zone from the
 ## generator alone (no baked file, no hand-placed metres), so a place is as deterministic as the
 ## bake. place(id) answers {zone, block, chunk, cell, door, facing}: the door is a walkable
-## sidewalk point on the block's frontage, facing out of the building onto the street.
+## sidewalk point on the block's frontage, facing out of the building onto the street (its
+## middle, or with `door: "office"` before the block's harbour office).
 ## Rules: dock_block_nearest (a docks long block whose south row is warehouse, not yard) and
 ## block_nearest (a square building block of the zone, not a plaza), each the one nearest
 ## `near`, a fraction of the city ([1, 0.5] = the middle of the east edge, the quay).
@@ -97,13 +98,24 @@ static func _candidates(gen: CityGen, rule: String, zone: StringName) -> Array[R
 	return out
 
 
+## The tile x the door starts its slide from: the frontage's middle (west of the water), or with
+## `door: "office"` the middle of the block's harbour office tile (DockDresser) when it has one.
+func _door_x(row: Dictionary, block: Rect2i) -> float:
+	var zone: CityZone = _gen.zones.of_tile(block.position)
+	if str(row.get("door", "middle")) == "office":
+		var office: Vector2i = DockDresser.office_tile_on(zone, block)
+		if office.x >= 0:
+			return float(office.x) + 0.5
+	var wx: int = DockPainter.water_x(zone)
+	var right: int = block.end.x if wx < 0 else mini(block.end.x, wx - 1)
+	return (float(block.position.x) + float(right)) * 0.5
+
+
 ## The door on the block's south frontage (the street below it): OUT_M into the sidewalk from
 ## the wall, slid along the wall to the nearest free walk cell; facing south, onto the street.
 func _frontage(row: Dictionary, block: Rect2i) -> Dictionary:
 	var tile_m: float = SimConst.TILE_M
-	var wx: int = DockPainter.water_x(_gen.zones.of_tile(block.position))
-	var right: int = block.end.x if wx < 0 else mini(block.end.x, wx - 1)
-	var mid_x: float = (float(block.position.x) + float(right)) * 0.5 * tile_m
+	var mid_x: float = _door_x(row, block) * tile_m
 	var wall_y: float = float(block.end.y) * tile_m
 	var cells: CityChunk = null
 	for k: int in range(0, SLIDE_M * 2 + 1):

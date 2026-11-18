@@ -38,7 +38,10 @@ func test_the_route_goes_round_on_open_cells() -> void:
 	for i: int in range(1, r.size()):
 		var step: float = r.waypoints[i - 1].distance_to(r.waypoints[i])
 		length += step
-		assert_lt(step, BotRoute.STEP_M * 1.5, "step %d" % i)
+		# The ends are the exact door and goal inside their cells: up to a diagonal cell and a
+		# half from the next cell's centre; every step between joins two cell centres.
+		var end: bool = i == 1 or i == r.size() - 1
+		assert_lt(step, BotRoute.STEP_M * (2.2 if end else 1.5), "step %d" % i)
 	for i: int in range(1, r.size() - 1):
 		var c: Vector2i = Vector2i(r.waypoints[i]) / BotRoute.STEP_M
 		assert_true(BotRoute.is_open(_cells, c.x, c.y), "waypoint %d open" % i)

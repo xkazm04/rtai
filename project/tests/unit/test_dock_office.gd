@@ -1,7 +1,8 @@
 extends GutTest
 ## Dock 9's harbour office (n18 districts item 5, the asset lane's it471 office roof): the docks
 ## row's office_roof stands exactly once in the city, on the quay-end shed tile of the south row
-## of the block places.json's dock_9 resolves to, so the place and its landmark agree.
+## of the block places.json's dock_9 resolves to, so the place and its landmark agree; and
+## dock_9's door (door: "office") stands before it.
 
 const DISTRICT: String = "res://data/tables/city_district.json"
 const TEXTURES: String = "res://data/tables/city_textures.json"
@@ -47,3 +48,18 @@ func test_the_office_stands_once_on_dock_9s_block() -> void:
 	assert_eq(found.size(), 1, "one harbour office in the city (shadows aside): %s" % [found])
 	if found.size() == 1:
 		assert_eq(found[0], Vector2(tile * 8) + Vector2(4.0, 4.0), "drawn on the office tile")
+
+
+func test_dock_9s_door_stands_before_the_office() -> void:
+	var tile: Vector2i = DockDresser.office_tile(_gen, _docks)
+	var door: Vector2 = CityPlaces.shipped(_gen).place("dock_9")["door"]
+	var x0: float = tile.x * SimConst.TILE_M
+	assert_between(door.x, x0, x0 + SimConst.TILE_M, "door %s before office tile %s" % [door, tile])
+	var row: Dictionary = {"id": "m", "zone": "docks", "rule": DockDresser.OFFICE_RULE}
+	row["near"] = [DockDresser.OFFICE_NEAR.x, DockDresser.OFFICE_NEAR.y]
+	var middle: Dictionary = CityPlaces.new(_gen, {"places": [row]}).place("m")
+	var mid_door: Vector2 = middle["door"]
+	assert_lt(mid_door.x, x0, "without door: office the door stays at the frontage's middle")
+	var mid_block: Rect2i = middle["block"]
+	var dock_block: Rect2i = CityPlaces.shipped(_gen).place("dock_9")["block"]
+	assert_eq(mid_block, dock_block, "the same block")

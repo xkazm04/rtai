@@ -57,7 +57,12 @@ static func shed_or_office(g: CityGen, zone: CityZone, t: Vector2i, shed: int) -
 
 ## The shed tile at the quay end of the south row of the block nearest OFFICE_NEAR (-1, -1: none).
 static func office_tile(g: CityGen, zone: CityZone) -> Vector2i:
-	var block: Rect2i = CityPlaces.nearest_block(g, OFFICE_RULE, zone.id, OFFICE_NEAR)
+	return office_tile_on(zone, CityPlaces.nearest_block(g, OFFICE_RULE, zone.id, OFFICE_NEAR))
+
+
+## The shed tile at the quay end of the block's south row (-1, -1: none); CityPlaces puts a
+## `door: "office"` place's door before it.
+static func office_tile_on(zone: CityZone, block: Rect2i) -> Vector2i:
 	var wx: int = DockPainter.water_x(zone)
 	var last_u: int = CityGen.PERIOD * zone.street_keep_x - 4
 	var y: int = block.end.y - 1
