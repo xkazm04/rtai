@@ -67,8 +67,8 @@ export async function baseline({ names, runners, wt, timeoutS, explicit, note, i
       const imp = /class cache stale[\s\S]*?--import (?:done|FAILED[^\n]*?) in ([\d.]+) s/.exec(base.out);
       if (imp) firstImportMs ??= Math.round(Number(imp[1]) * 1000);
     }
-    const seconds = Math.ceil(base.durationMs / 1000);
-    timeoutMs += 1000 * (name === 'tests' ? Math.min(300, Math.max(90, seconds * 3)) : Math.max(60, seconds * 2));
+    const tripleSeconds = 3 * Math.ceil(base.durationMs / 1000);
+    timeoutMs += 1000 * (name === 'tests' ? Math.min(300, Math.max(90, tripleSeconds)) : Math.max(120, tripleSeconds));
     durationMs += base.durationMs;
     if (names.length > 1) note(`${name} baseline green in ${(base.durationMs / 1000).toFixed(1)} s`);
   }

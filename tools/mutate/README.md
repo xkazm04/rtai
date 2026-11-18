@@ -55,7 +55,7 @@ you want. Every selected oracle must pass on the original file before mutation s
 | timeout | The per-mutant deadline expired and the runner killed the process tree. Excluded from the score. |
 | infrastructure failure | An unexplained exit or missing bake verdict stops the run with exit 2. A red baseline also exits 2. |
 
-The tests budget is 3× baseline (90–300 s). The bake budget is 2× baseline (at least 60 s).
+The tests budget is 3× baseline (90–300 s). The bake budget is 3× baseline (at least 120 s).
 Combined runs share the sum of those budgets. `--timeout=N` sets the whole mutant's budget in seconds.
 Explicit oracle reports give mean seconds per mutant excluding setup, and kills by oracle and cause.
 JSON records the requested `oracles` in order and the last `oracle` reached by each mutant.

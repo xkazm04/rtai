@@ -66,9 +66,12 @@ test('each baseline must pass before mutation, import is separate from the bake 
     importProject: ({ projectDir }) => { calls.push(projectDir); return { imported: true, status: 0, durationMs: 999 }; },
     runners: { tests: () => { calls.push('tests'); return survived; },
       'bake-check': () => { calls.push('bake-check'); return { ...survived, durationMs: 41000 }; } } };
-  assert.deepEqual(await baseline(options), { durationMs: 41100, firstImportMs: 999, timeoutMs: 172000 });
+  assert.deepEqual(await baseline(options), { durationMs: 41100, firstImportMs: 999, timeoutMs: 213000 });
   assert.deepEqual(calls, ['tests', join(wt, 'project'), 'bake-check']);
   assert.equal((await baseline({ ...options, timeoutS: 3 })).timeoutMs, 3000);
+  const contendedBake = await baseline({ ...options, names: ['bake-check'],
+    runners: { 'bake-check': () => ({ ...survived, durationMs: 20700 }) } });
+  assert.equal(contendedBake.timeoutMs, 120000);
   await assert.rejects(baseline({ ...options, runners: { ...options.runners, 'bake-check': () => ({ ...golden, status: 1, out: 'diff' }) } }),
     /baseline red: bake-check: golden.*nothing mutated/);
 });
