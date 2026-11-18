@@ -19,7 +19,9 @@ tiles + 2408 plaza/yard/quay tiles; downtown 25 chunks (9.77 %), 2000 block + 50
 (71.48 %), 16125 block + 2175 plaza tiles. Generating all 256 chunks: 5.0 s in the zone-map run; a full bake 6.1 s
 wall (CONTENDED: not under the bench lock).
 Gates: full gate (`tools/gate/run.mjs --reels`, snapshot) PASS on 70ca0c1e7 (v23): lint 19/19, unit 2879/0, scenarios 55/55,
-parity bit-exact (planted caught at 629), look goldens 11/11, release-compile 726/0, reels exit 0. Mutate dock_painter.gd: 4/12 killed (33.3 %); the
+parity bit-exact (planted caught at 629), look goldens 11/11, release-compile 726/0, reels exit 0. Evidence gate PASS on
+93f37b1d7 (v24): unit 2882/0, scenarios 55/55, parity bit-exact, look goldens 11/11 (reels not yet re-run on v24).
+Mutate `dev/bots/bot_route.gd`: 7/8 killed (87.5 %), the survivor near-equivalent. Mutate dock_painter.gd: 4/12 killed (33.3 %); the
 survivors are look-only, pinned by the golden hash list; the one real gap (:126) got a test (bc29c8a7e).
 
 ## What does not work

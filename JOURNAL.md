@@ -300,9 +300,9 @@ prefer data, say so here and I add a `car_mix` weight row to the docks/downtown 
   cart read, parasol greyed by the print. `evidence/n18-districts/ab_it471_plaza_singles_kiosk-{32,48}ppm_v23_v24_combo.jpg`.
 - 03:11 gate (snapshot, evidence only, no reels) on 93f37b1d7 (v24) started in the background.
 NEXT (session 4, in order):
-1. Read the v24 gate: `build/gate/93f37b1d7*/gate.json` (started 03:11, evidence only). If it is missing or red, re-run
-   `node tools/gate/run.mjs --reels` on HEAD. Gates must run through tools/gate/run.mjs (snapshot) while I edit.
-2. Mutate (quote scores): `node tools/mutate/mutate.mjs --file=dev/bots/bot_route.gd`, `--file=boot/collect_call/stage_dock_place.gd`,
+1. The reel gate on v24 (evidence passed, reels not run): `node tools/gate/run.mjs --reels` on HEAD (~25 min). Gates must run
+   through tools/gate/run.mjs (snapshot) while I edit.
+2. Mutate (quote scores): `--file=boot/collect_call/stage_dock_place.gd`,
    `--file=features/city/gen/tile_painter.gd --tests=test_city_plaza_singles,test_city_zone_grounds,test_city_plaza_centre`.
 3. More it471 dressing as zone data (one bake each, before/after): docks apron (lifebuoy post A, oil drums v2 A, cargo tarp
    v2 A, fuel tank v2 A, rope net A) as `apron_props`/yard dressing; downtown kerb cards (bus shelter v2 A, street clock A,
@@ -321,3 +321,9 @@ it471 kiosk/food-cart plans, keyed, for the it471 cards I want to wire next sess
 `prop_down_bollards`, `prop_down_news_boxes_v2` (name each `<card id>_plan_70.png`, size = the object's footprint in m x 80).
 The top view draws the plan art (city_textures `art`); the 70 cards draw only under a tilt, so a card without a plan twin
 cannot ship. (Bus shelter, kiosk, food cart and sculpture v3 already have theirs: thanks.)
+- 03:19 GATE PASS on 93f37b1d7 (v24), evidence only (snapshot): lint 19/19, unit 2882/0 (2 skipped), scenarios 55/55, parity
+  bit-exact (planted caught at 629), look goldens 11/11 (worst 0.31), 0 placeholders, release-compile 726/0. Reels: not
+  run on v24 (passed on v23 70ca0c1e7 at 03:04).
+- 03:21 mutate `dev/bots/bot_route.gd` (8 of 50 sampled, tests test_bot_route): 7/8 killed, 87.5 %; survivor :70 rings 4 -> 5
+  in `_nearest_open` (only differs when no open cell lies within 3 cells: near-equivalent). Checkout clean after.
+Session 3 ended 03:22 with a clean tree; HEAD = this JOURNAL commit after 93f37b1d7 (v24).
