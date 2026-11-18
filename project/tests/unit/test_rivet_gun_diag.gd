@@ -114,7 +114,7 @@ func test_every_listed_gun_ships_its_strip_twin_and_rows() -> void:
 
 func test_quest_rifle_uses_its_own_p55_and_keeps_the_p70_stand_in() -> void:
 	var rifle: StringName = &"assault-rifle"
-	assert_eq(RivetGunDiag.art_key(rifle), &"assault_rifle")
+	assert_eq(WeaponArtKey.of(rifle), &"assault_rifle")
 	assert_eq(RivetStrips.strip_of("p55", rifle).get_file(), "rivet_eq_assault_rifle.png")
 	assert_eq(RivetStrips.left_of("p55", rifle).get_file(), "rivet_eq_assault_rifle_left.png")
 	assert_true(RivetGunDiag.draws("p55", rifle))

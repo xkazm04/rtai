@@ -74,7 +74,7 @@ func build(lookup: Callable = FileAccess.file_exists) -> Dictionary[String, Vari
 
 
 func _row(id: String, pitch: String, grip: String) -> Dictionary[String, Dictionary]:
-	var key: String = RivetGunDiag.art_key(id)
+	var key: String = WeaponArtKey.of(id)
 	var base: String = RivetStrips.DIR + pitch + "/rivet_eq_" + key
 	var gun: Dictionary = _tables.guns.get(id, {})
 	var art: Dictionary = _tables.arts.get(key, {})

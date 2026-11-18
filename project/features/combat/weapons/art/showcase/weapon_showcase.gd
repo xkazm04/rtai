@@ -31,7 +31,7 @@ static func on() -> bool:
 
 
 static func path_of(id: StringName, form: String) -> String:
-	return "%s%s/%s.png" % [DIR, form, id]
+	return "%s%s/%s.png" % [DIR, form, WeaponArtKey.of(id)]
 
 
 ## The drawing of `id` at `form`, or null (no form, or no drawing yet: the caller's stand-in).

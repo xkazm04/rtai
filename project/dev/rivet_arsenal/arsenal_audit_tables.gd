@@ -46,7 +46,7 @@ func _init(lookup: Callable) -> void:
 
 func held(id: String, pitch: String, base: String) -> Dictionary:
 	var issues: Array[String] = []
-	var key: StringName = RivetGunDiag.art_key(id)
+	var key: StringName = WeaponArtKey.of(id)
 	var aliases: Dictionary = arsenal.get("art_stand_in", {})
 	var shown: String = aliases.get(id, id)
 	var art: Dictionary = arts.get(key, {})

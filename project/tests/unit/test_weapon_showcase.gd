@@ -29,6 +29,10 @@ func test_hud_icon_falls_back_to_the_shipped_icon() -> void:
 	var feed: HudFeed = HudFeed.new()
 	assert_not_null(feed.icon_of(&"pistol"), "pistol has a shipped icon part")
 	assert_null(feed.icon_of(&""), "unarmed: no icon")
+	var rifle: Texture2D = feed.icon_of(&"assault-rifle")
+	assert_not_null(rifle, "the quest HUD passes the gameplay id")
+	if rifle != null:
+		assert_eq(rifle.resource_path, WeaponShowcase.DIR + "icon/assault_rifle.png")
 
 
 func test_all_eighteen_weapons_have_every_form() -> void:

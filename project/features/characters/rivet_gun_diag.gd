@@ -88,26 +88,17 @@ const FOOT_PX: Dictionary[String, float] = {
 const FIT_TOL: float = PI / 8.0
 
 static var enabled: bool = true
-static var _rifle_key: StringName = &""
-
-
-## The gameplay id predates the asset schema. Only its own spelling counts as own art.
-static func art_key(weapon: StringName) -> StringName:
-	if weapon != &"assault-rifle":
-		return weapon
-	if _rifle_key == &"":
-		var alias: StringName = ArsenalTable.shipped().art_id(weapon)
-		_rifle_key = alias if alias == String(weapon).replace("-", "_") else weapon
-	return _rifle_key
 
 
 ## Part 2 can drop the p70 fallback once the rifle's own facing strip is present.
 static func strip_key(art: String, weapon: StringName) -> StringName:
 	if weapon == &"assault-rifle" and art == "p70":
-		var own: String = RivetStrips.DIR + art + "/rivet_eq_" + String(art_key(weapon)) + ".png"
+		var own: String = (
+			RivetStrips.DIR + art + "/rivet_eq_" + String(WeaponArtKey.of(weapon)) + ".png"
+		)
 		if not RivetStrips.has_file(own):
 			return &"machine_pistol"
-	return art_key(weapon)
+	return WeaponArtKey.of(weapon)
 
 
 static func equipped_path(art: String, weapon: StringName) -> String:
