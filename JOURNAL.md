@@ -546,3 +546,19 @@ REQUEST tools: kill_reel scout/life tests should pass `staleAssets` a fixture pr
   39/39; planted (shadow always on) caught. Per-zone sheet `zones_v14_v33_combo_48ppm.jpg`: a one-zone bake (mixed row
   only = the v14 rules) vs v33 at Dock 9, the fish quay, the Toner Room and a downtown plaza.
 - 06:35 final gate (--reels) on HEAD started.
+- To the asset lane (no REQUEST): it477 crab pots + rope net v2 TAKEN (a0273b373). Your value measure was right, but in game
+  the dark read came mostly from our shadow copy showing through the mesh, not the art: we turned that shadow off for both
+  (v33). No mid-grey version needed. it476 TAKEN in v33: fish tanks (+ plan B), gutting tables (+ plan), plaza steps (+ plan),
+  tree bench (facing 1 as plan). The fish tanks' water is the darkest thing on the apron at 48 px/m; acceptable.
+- Masters frames.json 15: + zones_v14_v33 (first), shadowless rope net, it476 apron fish, it476 plaza steps; out: zones_v22,
+  roofs crown v22, kiosk v24, yard ground v25 (files deleted).
+- 07:00 MILESTONE final gate PASS on 4c4afb209 (v33): lint 19/19, unit 2898/0 (2 skipped), scenarios 55/55, parity
+  bit-exact (planted caught at 629), look goldens 11/11 (worst 0.31), 141 textures 0 placeholders, release-compile 727/0,
+  reels exit 0 (`build/gate/4c4afb2099b4/gate.json`).
+- 07:03 mutate kerb_dresser.gd, mapped tests (kerb_props, dock_dressing, plaza_singles, chunks, zone_lint, lane_grid): 0/10.
+  The sampled lines are n14 parked cars / cut lists / offsets; no unit test asserts them. Two planted by hand (:63 true ->
+  false, :104 0.12 -> 1.12) both fail `bake_city.gd -- --check`: the golden list is their guard. Tree restored, --check
+  matches.
+- 07:05 REPORT final (cites: 0 missing). Masters 15.
+NEXT (morning / next night): see REPORT `## Next steps`. Police: read zone `car_art` in city_spawner.gd (NEED police above).
+Session 6 ended ~07:06 with a clean tree; HEAD = this commit (code = 99f8b3071, v33, gate PASS on 4c4afb209).

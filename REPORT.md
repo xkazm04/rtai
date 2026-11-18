@@ -1,4 +1,4 @@
-# REPORT - night n18, lane districts (DRAFT, end of session 5; final at 07:40)
+# REPORT - night n18, lane districts (final, 2026-11-18 07:2x)
 
 Branch `n18-districts` (worktree `C:\Users\kazda\kiro\gtai-wt\n18-districts`), cut from `int-n17` at `36dd26ba6`.
 Evidence: `evidence/n18-districts/` (in the branch) and `C:\Users\kazda\kiro\gtai-masters\n18\districts\frames.json`.
@@ -7,62 +7,69 @@ Evidence: `evidence/n18-districts/` (in the branch) and `C:\Users\kazda\kiro\gta
 
 | Item | What | Evidence |
 |---|---|---|
-| 1 zones as data | layout consts -> `city_district.json` zone rows (`gtai.city-district/2`), zone map of chunk rects; step one byte-identical at v14 (`bake --check`), planted share change caught | commits 634b2f552, 6ca059905; `evidence/n18-districts/zone_map_v15.{png,json}` |
+| 1 zones as data | layout consts -> `city_district.json` zone rows (`gtai.city-district/2`), zone map of chunk rects; step one byte-identical at v14 (`bake --check`), planted share change caught. `CityZones.of_chunk(cx, cy)` / `id_of_chunk` expose the zone per chunk (police may read). Session 6: zone rows take `car_art` (the traffic mix, read game side by the police lane's spawner after the merge) | commits 634b2f552, 6ca059905; `evidence/n18-districts/zone_map_v15.{png,json}`; test_city_zones |
 | 2 zone layouts + lint | docks east band (48 chunks, 18.75 %): long warehouse blocks over dropped streets, yard rows, quay + water; downtown centre (25 chunks): denser towers, plazas, crowds; mixed elsewhere. test_city_zone_lint: roads one network, sidewalks + zebras one network, every zone has road and sidewalk | e8ecb61c9 |
-| 3 art | v16 warehouse/shed/tower roofs + water; dock + glass facades (+ brick dock and stone office alternates); v17 water bug fix; v18 quay edge autotile; v19 container yards; v20 downtown plazas (one fountain per plaza), cold store, sawtooth, square tall roofs; v21 one lettered name a block; v22 it471 roofs (clocktower, terrace, billboard tall roof, bank dome + crown 2x2, shed b, warehouse c kept upright by `upright_roofs`), sculpture v3; v23 zone grounds (downtown plaza granite bond `plaza_ground`, docks apron v3t `apron_ground`); v24 plaza singles (one coffee kiosk + one food cart a downtown plaza, `plaza_singles`); v25 docks yard ground (`yard_ground`, REQUEST 11); v26 docks dressing (`DockDresser`: tarps + fuel tanks on the quay apron, a lifebuoy by each basin's coping); v27 downtown's own street furniture (`kerb_props` + `wall_props`: street clocks, bollards, litter bins, planters; no dumpsters downtown); v28 Dock 9's harbour office roof on the dock_9 block (`office_roof`); v29 the asset lane's ochre twins (rope net, oil drums on the apron; news boxes downtown) and a bow-north tug moored in half the basins (`basin_boat`); v30 downtown plaza singles (planter bed, stone ledges, chess tables, flower crates: once a plaza block each); v31 the docks apron mix (a spare propeller, crab pots, an upturned dinghy; oil drums plan v3); v32 REQUEST 15's nav buoys and scrap skip on the apron. test_city_zone_cards: every standing prop a zone names has a card row | `evidence/n18-districts/ab_*` (v22: `ab_it471_roofs_*_v21_v22_combo.jpg`; v23: `ab_it471_ground_*_v22_v23_combo.jpg`; v24: `ab_it471_plaza_singles_*_v23_v24_combo.jpg`; v25: `ab_it472_yard_ground_v24_v25_combo_{32,48}ppm.jpg`; v26: `ab_it473_apron_dressing_v25_v26_combo_{32,48}ppm.jpg`; v27: `ab_it472_downtown_{kerbs,kerbbs}_v26_v27_combo_{32,48}ppm.jpg`; v28: `ab_it471_dock9_office_v27_v28_combo_{32,48}ppm.jpg`; v29: `ab_it474_basin_tug_ochre_v28_v29_combo_32ppm.jpg`; v30: `ab_it474_downtown_plaza_singles_v29_v30_combo_{32,48}ppm.jpg`, `downtown_plaza_chess_flowers_v30_combo_48ppm.jpg`; v31: `ab_it475_docks_apron_v30_v31_combo_{32,48}ppm.jpg`, `docks_apron_propeller_v31_combo_64ppm.jpg`; v32: `ab_it476_docks_apron_{skip,buoys}_v31_v32_combo_48ppm.jpg`) |
+| 3 art | v16 warehouse/shed/tower roofs + water; dock + glass facades (+ brick dock and stone office alternates); v17 water bug fix; v18 quay edge autotile; v19 container yards; v20 downtown plazas (one fountain per plaza), cold store, sawtooth, square tall roofs; v21 one lettered name a block; v22 it471 roofs (clocktower, terrace, billboard tall roof, bank dome + crown 2x2, shed b, warehouse c kept upright by `upright_roofs`), sculpture v3; v23 zone grounds (downtown plaza granite `plaza_ground`, docks apron `apron_ground`); v24 plaza singles (coffee kiosk, food cart); v25 docks yard ground (`yard_ground`); v26 docks dressing (`DockDresser`: tarps + fuel tanks on the quay apron, a lifebuoy by each basin's coping); v27 downtown's own street furniture (`kerb_props` + `wall_props`); v28 Dock 9's harbour office roof (`office_roof`); v29 the asset lane's ochre twins and a bow-north tug moored in half the basins (`basin_boat`); v30 downtown plaza singles (planter bed, stone ledges, chess tables, flower crates); v31 the docks apron mix (propeller, crab pots, dinghy); v32 nav buoys and scrap skip. Session 6: it477 crab pots + rope net v2 (values lifted); v33 fish tanks + gutting tables on the apron, plaza steps + tree bench as downtown plaza singles, and texture rows' `shadow` key (false on the rope net and crab pots: their dark shadow copy showed through the mesh cards; the value lift alone did not lift them). test_city_zone_cards: every standing prop a zone names has a card row | `evidence/n18-districts/ab_*` (one pair per version, named `ab_<offer>_<what>_v<N-1>_v<N>_combo_{32,48}ppm.jpg`); v33: `ab_it476_apron_fish_v32_v33_combo_{32,48}ppm.jpg`, `ab_it476_plaza_steps_bench_v32_v33_combo_{32,48}ppm.jpg`, `ab_shadowless_{rope_net,crab_pots}_v33_combo_48ppm.jpg`, `ab_it477_crab_rope_v1_v2_v32_combo_{32,48}ppm.jpg` |
 | 4 places | `data/tables/places.json` + CityPlaces.place(id) -> {zone, block, chunk, cell, door, facing}; a row's optional `door` (`middle` or `office`) says where on the frontage the door stands; test_city_places, test_dock_office | ca6b1fcc2, bf5857f6f |
-| 5 Dock 9 | v28: Dock 9 has a landmark in the city, the harbour office at the quay end of its block (test_dock_office pins it to places.json's dock_9 rule). `--quest1-places`: Dock 9's own stage points sit before the dock_9 door; off by default; scenarios flag off 55/55. Flag ON: quest1_input pays (921 s, 0 deaths, replay identical) after the bot fix (BotRoute A* walk + `StageLayout.w_dock`). Session 5: Dock 9's door stands before the harbour office (`door: "office"`), and quest1_input with the flag still pays (930 s, 0 deaths, 49 kills, replay identical) | b0314350c, 0511d8629, bf5857f6f; `evidence/n18-districts/quest1_places_on_scenarios_v2.txt`, `quest1_places_on_office_door.txt`, `ab_dock9_door_middle_office_v30_combo_{32,48}ppm.jpg`, `dock9_door_office_rivet_v32_combo_{32,48}ppm.jpg` |
-| 6 film | docks -> downtown drive, 37 s at 32 px/m (pass 3 on v32, the north sidewalk of y 1026); a 37 s drive along the docks quay apron (v32); one 48 px/m still per zone (v22) | `evidence/n18-districts/drive3_docks_downtown_v32_combo_32ppm.mp4`, `drive4_docks_apron_v32_combo_32ppm.mp4` (+ `_sheet.jpg`), `zones_v22_combo_48ppm.jpg`; masters frames.json (15) |
+| 5 Dock 9 | v28: Dock 9 has a landmark in the city, the harbour office at the quay end of its block (test_dock_office pins it to places.json's dock_9 rule). `--quest1-places`: Dock 9's own stage points sit before the dock_9 door; off by default; scenarios flag off 55/55. Flag ON: quest1_input pays (930 s, 0 deaths, 49 kills, replay identical) with the door before the harbour office | b0314350c, 0511d8629, bf5857f6f; `evidence/n18-districts/quest1_places_on_office_door.txt`, `ab_dock9_door_middle_office_v30_combo_{32,48}ppm.jpg`, `dock9_door_office_rivet_v32_combo_{32,48}ppm.jpg` |
+| 6 film | docks -> downtown drive, 37 s at 32 px/m (pass 3 on v32); a 37 s drive along the docks quay apron (v32); each zone before tonight vs v33 at 48 px/m, same points (before = a bake with only the mixed row, i.e. the v14 rules) | `evidence/n18-districts/drive3_docks_downtown_v32_combo_32ppm.mp4`, `drive4_docks_apron_v32_combo_32ppm.mp4` (+ `_sheet.jpg`), `zones_v14_v33_combo_48ppm.jpg`; masters frames.json (15) |
 
-Generator numbers (v32 re-measured, unchanged since v21: `evidence/n18-districts/zone_map_v32.{png,json}`): docks 48 chunks (18.75 %), 3832 block
+Generator numbers (tile counts measured on v32, `evidence/n18-districts/zone_map_v32.{png,json}`; v33 changed props only and was not re-measured): docks 48 chunks (18.75 %), 3832 block
 tiles + 2408 plaza/yard/quay tiles; downtown 25 chunks (9.77 %), 2000 block + 500 plaza tiles; mixed 183 chunks
-(71.48 %), 16125 block + 2175 plaza tiles. Generating all 256 chunks: 3.6 s in the zone-map run (v32); a full bake 4.9 s
-wall (CONTENDED: not under the bench lock).
-Gates: full gate on 5058c48d8 (v31): unit 2893/0, scenarios 55/55, parity bit-exact (planted caught at 629), look goldens 11/11 (worst 0.31), 135 art textures 0 placeholders, release-compile 727/0, reels exit 0; lint 18/19, the one FAIL a timing flake in `tools/film/film2.break.test.mjs` under both lanes' gates (alone 57/57; fixed in 81c409665). Evidence gate PASS on 8894e90aa (v29): unit 2892/0, scenarios 55/55, parity bit-exact, look goldens 11/11 (reels not yet
-run on v29). Full gate (`tools/gate/run.mjs --reels`, snapshot) PASS on dee06ed7b (v28): lint 19/19, unit 2891/0, scenarios 55/55,
-parity bit-exact, look goldens 11/11, release-compile 727/0, reels exit 0. PASS on b32980b92 (v27): lint 19/19, unit 2889/0, scenarios 55/55,
-parity bit-exact (planted caught at 629), look goldens 11/11 (worst 0.31), release-compile 727/0, reels exit 0. Earlier: PASS on 70ca0c1e7 (v23): lint 19/19, unit 2879/0, scenarios 55/55,
-parity bit-exact (planted caught at 629), look goldens 11/11, release-compile 726/0, reels exit 0. Evidence gate PASS on
-93f37b1d7 (v24): unit 2882/0, scenarios 55/55, parity bit-exact, look goldens 11/11 (reels not yet re-run on v24).
-Mutate `features/city/gen/dock_dresser.gd`: 6/12 (50 %), then 10/12 (83.3 %) after 73e02f64b; the two survivors are near-equivalent. `kerb_dresser.gd`: 0/12 with the wrong tests (the n14 kerb lines): not yet quoted. Mutate `dev/bots/bot_route.gd`: 7/8 killed (87.5 %), the survivor near-equivalent. Mutate dock_painter.gd: 4/12 killed (33.3 %); the
-survivors are look-only, pinned by the golden hash list; the one real gap (:126) got a test (bc29c8a7e).
+(71.48 %), 16125 block + 2175 plaza tiles. Generating all 256 chunks: 3.6 s in the zone-map run; a full bake 4.9 s
+wall on v32, 4.8 s on v33 (both CONTENDED: not under the bench lock). v33's new props over all 256 chunks: fish tanks 11, gutting tables 6, plaza steps 16, tree benches 13.
+
+Gates: full gate (`tools/gate/run.mjs --rev=HEAD --reels`, snapshot) PASS on 4c4afb209 (v33, the final code commit 99f8b3071 + JOURNAL): lint 19/19, unit 2898/0 (2 skipped), scenarios 55/55, parity bit-exact (planted caught at 629), look goldens 11/11 (worst 0.31), 141 art textures 0 placeholders, release-compile 727/0, reels exit 0 (`build/gate/4c4afb2099b4/gate.json`). Before it: PASS on e597460ec (v32), same numbers (unit 2896/0, 137 textures), reels exit 0. Commits after 4c4afb209 are JOURNAL/REPORT only.
+
+Mutate `features/city/gen/dock_dresser.gd`: 6/12 (50 %), then 10/12 (83.3 %) after 73e02f64b; the two survivors are near-equivalent. Mutate `features/city/gen/kerb_dresser.gd` with its mapped unit tests (kerb_props, dock_dressing, plaza_singles, chunks, zone_lint, lane_grid): 0/10 (0 %): the sampled lines are the n14 parked cars, cut lists and offsets, which no unit test asserts; their guard is the AST-12 golden list: two survivors planted by hand (:63 parked car shadow true -> false, :104 0.12 -> 1.12) both fail `bake_city.gd -- --check` (chunks differ from the golden list). Mutate `dev/bots/bot_route.gd`: 7/8 (87.5 %). Mutate dock_painter.gd: 4/12 (33.3 %); the survivors are look-only, pinned by the golden hash list; the one real gap (:126) got a test (bc29c8a7e).
 
 ## What does not work
-- `--quest1-places` ON: quest1_input FAILED in session 2 ("not paid ... b4-dock, tick 90000"). Cause: the dev bot held the fight
-  at the street mapping and walked straight into buildings. Fixed in 0511d8629 (dev bot only): it now pays. What the flag still
-  costs a player: the walk Harbor Road -> Dock 9 takes 348 s on foot and the walk back 343 s (quest 921 s vs 317 s).
+- `--quest1-places` ON costs a player a long walk: Harbor Road -> Dock 9 takes 348 s on foot and back 343 s (quest 930 s vs
+  317 s). The quest has no car leg.
 - Docks yards put walkers right against a warehouse's north wall, so the rigs' "behind a roof" ink silhouettes
   (CityOcclusion, n8 design) show often there as black wedges on the roof edge (`zones_v22_combo_48ppm.jpg`, yard panel).
   Not changed.
+- The zone `car_art` rows are data only on this branch: the spawner that reads them is the police lane's file (NEED police in
+  JOURNAL); until then every zone draws `CitySpawner.CAR_ART`.
 
 ## Calls for the owner
-- Dock 9's door: decided in session 5 and built: it stands before the harbour office (places.json `door: "office"`), so the
-  landmark and the quest marker coincide (`ab_dock9_door_middle_office_v30_combo_32ppm.jpg`, before = mid-block). To revert,
-  delete the key: one data value, and the bake does not change.
-- Hazard stripes (orange/black) on the tug and the rope net, like the 2x2 tower roofs: danger marking (allowed vermilion) or
-  off-law? Tonight both ship as the asset lane's `_ochre` twins (v29); the original striped files are not used.
-- Dock 9 into the docks by default? (today: behind `--quest1-places`). Recommendation: not yet. It plays (quest1_input pays with
-  the flag on), but the walk Harbor Road -> Dock 9 is 348 s each way on foot, and the quest has no car leg yet.
+- Dock 9 into the docks by default? (today: behind `--quest1-places`). Recommendation: not yet. It plays (quest1_input pays
+  with the flag on), but the walk is 348 s each way on foot, and the quest has no car leg yet.
+- Dock 9's door: built before the harbour office (places.json `door: "office"`), so the landmark and the quest marker
+  coincide (`ab_dock9_door_middle_office_v30_combo_32ppm.jpg`, before = mid-block). Revert: delete the key; the bake does not move.
+- Hazard stripes (orange/black) on the tug, the rope net and the 2x2 tower roofs: danger marking (allowed vermilion) or
+  off-law? Tonight all ship as the asset lane's `_ochre` twins; the striped files are not used.
+- Each zone's look, before tonight vs v33 at the same points (48 px/m): `zones_v14_v33_combo_48ppm.jpg` (Dock 9's harbour
+  office, the fish quay, the Toner Room's downtown street, a granite plaza with steps + tree bench).
 - Docks on the east edge (vs another edge); downtown size (25 chunks) and landmark density (0.35).
-- The 2x2 tower roofs' orange hazard stripes vs the colour law (the asset lane's `_ochre` twins are ready).
-- Each zone's look, before/after stills: see masters frames.json; one still per zone at 48 px/m: `evidence/n18-districts/zones_v22_combo_48ppm.jpg`.
-- Downtown's granite plaza ground (v23) is darker and busier than the mixed zone's slabs: it separates the zones, the walkers
-  still read on it; keep, or ask the asset lane for a lighter granite? (`ab_it471_ground_plaza-32ppm_v22_v23_combo.jpg`)
-- Art not taken in session 4 and why: oil drums v2 (rust-red drums: red is blood only), rope net (vermilion hazard stripes on
-  the hook block), news boxes v2 (the cutter found fewer than five facings). The asset lane fixed all three (`_ochre` twins,
-  re-spaced news boxes), and they ship in v29.
-- Art not taken at first in session 5 and why: the nav buoys (magenta key spill inside the cradle) and the scrap skip (the
-  cutter found fewer than five facings). REQUEST assets 15 fixed both within the hour, and they ship in v32. Flower crates as a slot prop: six in one frame, so they ship as a
-  once-a-block single (v30). Taken but weak: the crab pots read as small dark heaps at 48 px/m beside the tarps (v31).
-- Art not taken yet and why: the coaster ship (drawn east-west, the docks basins run north-south), the silos (needs a
-  landmark placement rule), `warehouse_70_c_v2` (no grade yet), the street/dock cards (next: plaza/yard/apron dressing).
+- Downtown's granite plaza ground (v23) is darker and busier than the mixed zone's slabs: keep, or a lighter granite?
+  (`ab_it471_ground_plaza-32ppm_v22_v23_combo.jpg`)
+- Art taken late and why: crab pots and rope net v1 read as dark heaps (median L 53-85); the asset lane's it477 v2 lifted the
+  values (182-206), but in game the read barely moved (`ab_it477_crab_rope_v1_v2_v32_combo_48ppm.jpg`): our offset shadow
+  copy showed through the mesh. v33 turns their shadow off (`ab_shadowless_rope_net_v33_combo_48ppm.jpg`). Call: keep
+  shadowless mesh props (they sit lighter on the ground, a touch less anchored), or a softer shadow for see-through art?
+- Taken in v33 (it476, A): fish tanks, gutting tables (apron), plaza steps, round tree bench (downtown singles). The fish
+  tanks' grey water is the darkest object on the apron at 48 px/m (`ab_it476_apron_fish_v32_v33_combo_48ppm.jpg`).
+- Art not taken and why: oil drums v2 rust-red (red is blood only) -> ochre twin taken; nav buoys v1 (magenta key spill) and
+  scrap skip v1 (fewer than five facings) -> v2 taken; the plan twins of propeller / nav buoys / scrap skip (the combo view
+  draws the cards, so no visible change; the skip's plan cast a longer shadow than its card); the coaster ship (drawn
+  east-west, the basins run north-south); the silos (need a landmark rule). Flower crates ship as a once-a-block single,
+  not a slot prop (six in one frame as a slot prop).
 
 ## Merge notes
-- Re-blessed: `project/data/generated/city_chunks.sha256` (GENERATOR_VERSION 14 -> 32). No replay or parity digest moved.
+- Re-blessed: `project/data/generated/city_chunks.sha256` (GENERATOR_VERSION 14 -> 33).
+- Schema keys added (optional, defaults keep the old output): `city_district` zone rows `car_art` (not a generator input);
+  `city_textures` rows `shadow` (default true). No replay or parity digest moved
+  (the city replay digests move when the police lane's spawner reads `car_art`: one re-bless after the merge).
 - `tools/debt/baseline.json`: dev_loc 21992 -> 22089 accepted (dev/bots BotRoute; reason stored).
-- Tools touched (no tools lane tonight): `tools/godot/check.mjs` (shutdown report is not a cause; 1ce6ece2f), `tools/film/film2.break.test.mjs` (hang timer 2 s -> 15 s; 81c409665).
-- Shared files touched: `project/boot/launch_args.gd` (one flag line `--quest1-places`; the `--perf-hud` comment moved
-  onto its flag's line to keep 200 lines).
+- Tools touched (no tools lane tonight): `tools/godot/check.mjs` (shutdown report is not a cause; 1ce6ece2f),
+  `tools/film/film2.break.test.mjs` (hang timer 2 s -> 15 s; 81c409665).
+- Shared files touched: `project/boot/launch_args.gd` (one flag line `--quest1-places`).
 
 ## Next steps
-(see JOURNAL NEXT)
+1. Police lane (after the merge): `city_spawner.gd` reads `CityZones.of_chunk(cx, cy).car_art`; re-bless the city replay digests once.
+2. Dock 9 as the default (if the owner says yes): a car leg Harbor Road -> Dock 9, or a closer `near` for the dock_9 row.
+3. The yard silhouettes (CityOcclusion wedges on warehouse roofs when walkers hug a north wall): a docks-only yard gap.
+4. Unused offers: the coaster ship (needs an east-west basin or a bow-north drawing), silos (a landmark rule), the plan
+   twins of propeller / nav buoys (judge in the top view, not combo).
+5. Unit tests that pin kerb_dresser's n14 rules (parked cars per kerb tile, cut lists) so mutate scores them, not only the golden list.
