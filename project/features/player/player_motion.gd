@@ -1,16 +1,14 @@
 class_name PlayerMotion
 extends RefCounted
-## Rivet's locomotion on the fixed tick, on top of TopDownMover (rivet_motion.json): the held
-## sprint (above the 5.0 m/s tackle line; the facing follows the walk, at a slower turn) and the
-## dodge roll (a press: roll_m on an ease-out curve, invulnerable on a window of its ticks, then
-## a recovery with a damped stick and a cooldown). Free movement is TopDownMover unchanged.
+## Fixed-tick walk, sprint, roll and vault. The two committed moves share recovery and cooldown.
 
-enum Phase { FREE, ROLL, RECOVER }
+enum Phase { FREE, ROLL, RECOVER, VAULT }
 
 const TABLE: String = "res://data/tables/rivet_motion.json"
 const SCHEMA: String = "gtai.rivet-motion/1"
 
 var mover: TopDownMover = TopDownMover.new()
+var vault: PlayerVault = PlayerVault.new()
 var phase: Phase = Phase.FREE
 var sprinting: bool = false
 var rolls: int = 0
@@ -27,8 +25,6 @@ var recovery_ticks: int = 10
 var recovery_move_scale: float = 0.35
 var cooldown_ticks: int = 8
 var exit_speed_k: float = 0.5
-## n11 (the owner's "direction of player should follow cursor"; rivet_motion.json face_aim): the
-## look is the aim wherever a device aims, a sprint included; false = the turned, walking facing.
 var face_aim: bool = true
 var errors: Array[String] = []
 var _phase_tick: int = 0
@@ -59,19 +55,34 @@ static func from_table(t: DataTable) -> PlayerMotion:
 	m.cooldown_ticks = t.integer(r, "cooldown_ticks")
 	m.exit_speed_k = t.num(r, "exit_speed_k")
 	m.face_aim = t.raw.get("face_aim", true) == true
+	m.vault.configure(t)
 	m.errors = t.errors()
+	if m.vault.iframe_from > m.vault.iframe_to or m.vault.iframe_to >= m.vault.ticks:
+		m.errors.append("rivet_motion.json: vault i-frames must be ordered and inside ticks")
 	if m.iframe_to >= m.roll_ticks:
 		m.errors.append("rivet_motion.json: roll.iframe_to must be inside roll_ticks")
 	return m
 
 
-## The displacement for one tick. `aim` Vector2.ZERO faces the walk direction.
 func step(c: PlayerCommand, walk_mps: float, actions: PlayerActions) -> Vector2:
 	_cooldown = maxi(_cooldown - 1, 0)
 	_roll_tick = -1
+	vault.reset_tick()
 	if c.was_pressed(actions, &"roll") and can_roll():
-		_start_roll(c.move)
+		if vault.intercept(mover, c.move):
+			sprinting = false
+			if vault.hit.reason == &"landing_blocked":
+				return Vector2.ZERO
+			phase = Phase.VAULT
+		else:
+			_start_roll(c.move)
 	match phase:
+		Phase.VAULT:
+			vault.advance(_phase_tick)
+			_phase_tick = (_phase_tick + 1) % vault.ticks
+			if _phase_tick == 0:
+				phase = Phase.RECOVER
+			return Vector2.ZERO
 		Phase.ROLL:
 			return _roll_step(walk_mps)
 		Phase.RECOVER:
@@ -83,9 +94,8 @@ func can_roll() -> bool:
 	return phase == Phase.FREE and _cooldown == 0
 
 
-## True on the roll's invulnerable ticks (iframe_from..iframe_to, inclusive).
 func invulnerable() -> bool:
-	return _roll_tick >= iframe_from and _roll_tick <= iframe_to
+	return vault.invulnerable() or (_roll_tick >= iframe_from and _roll_tick <= iframe_to)
 
 
 ## 0..1 through the roll (for the rig's tuck), 0 outside it.
@@ -97,10 +107,8 @@ func facing() -> Vector2:
 	return mover.facing
 
 
-## The look: the aim while a device aims (not during a roll, which faces its roll), else the turned
-## facing. Turning and the sprint's own heading stay in the mover (speed, strafe).
 func heading(aim: Vector2) -> Vector2:
-	if face_aim and aim != Vector2.ZERO and phase != Phase.ROLL:
+	if face_aim and aim != Vector2.ZERO and phase != Phase.ROLL and vault.frame < 0:
 		return aim.normalized()
 	return mover.facing
 
@@ -110,6 +118,10 @@ func velocity() -> Vector2:
 
 
 func stop() -> void:
+	if phase == Phase.VAULT:
+		phase = Phase.RECOVER
+		_phase_tick = 0
+	vault.reset_tick()
 	mover.stop()
 	sprinting = false
 
@@ -121,6 +133,8 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(_cooldown)
 	out.put_float(roll_dir.x)
 	out.put_float(roll_dir.y)
+	if phase == Phase.VAULT:
+		vault.write_state(out)
 
 
 func _free_step(c: PlayerCommand, walk_mps: float, actions: PlayerActions) -> Vector2:
@@ -168,7 +182,6 @@ func _recover_step(c: PlayerCommand, walk_mps: float, actions: PlayerActions) ->
 	return mover.step(c.move * recovery_move_scale, c.aim, walk_mps, actions)
 
 
-## The sprint's feel: the table's accel and turn rate over the walk's brake and strafe.
 func _sprint_feel(actions: PlayerActions) -> PlayerActions:
 	if _sprint_actions == null:
 		_sprint_actions = PlayerActions.new()

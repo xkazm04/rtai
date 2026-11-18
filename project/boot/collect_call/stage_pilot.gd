@@ -1,19 +1,13 @@
 class_name StagePilot
 extends RefCounted
-## The player at quest 1's stage (and the arena's, and the city block's): each tick's TickInput
-## (live devices or a replay log, never raw keys) decoded into StageIntent. The move stick drives
-## PlayerMotion (rivet_motion.json over TopDownMover: the walk, the held sprint, the dodge roll
-## with its i-frames), a held fire shoots along the aim heading, an interact press uses whatever
-## is in reach (StageActions), melee is the claw combo (PlayerMelee over rivet_melee.json), and
-## the car key is a stub until the vehicles lane's enter/exit API lands.
+## Decode live or replay input into the quest and arena stage's movement and combat intents.
 
 var actions: PlayerActions
 var motion: PlayerMotion = PlayerMotion.shipped()
 var melee: PlayerMelee = PlayerMelee.new()
 ## rivet-arsenal: hold melee after the jab to charge the electroshock, release to discharge.
 var shock: PlayerShock = PlayerShock.shipped()
-## rivet-arsenal: the weapon in the claw follows the arena's rivet.weapon with a stow and a draw
-## (rivet_arsenal.json); no shot leaves before the draw ends.
+## Stow and draw gate for the carried weapon.
 var hold: WeaponHold = WeaponHold.new()
 ## rivet-arsenal: the carried guns and the switch keys (null: quest 1 keeps its own weapons).
 var carry: RivetCarry = null
@@ -24,15 +18,12 @@ var throw: PlayerThrow = PlayerThrow.new()
 ## Claw hits started (a press that started or chained a hit; the Hauler's stomp is not one).
 var melee_swings: int = 0
 var car_presses: int = 0
-## features/souls: the four ghost forms for the bound player (GhostPilot: Q / LB transforms, G / RB
-## picks or switches the ghost); the bot never builds a pilot. hauler (Tonnage), dent, kerf and ohm
-## are its attack stages (lane ghost-powers), kept here for the views and the tests.
+## The bound player's four ghost forms and their attack stages.
 var ghosts: GhostPilot = GhostPilot.shipped()
 var hauler: HaulerStage = ghosts.hauler
 var dent: DentStage = ghosts.dent
 var kerf: KerfStage = ghosts.kerf
 var ohm: OhmStage = ghosts.ohm
-## The tick the last input arrived and the tick its first move or claw started (latency probe).
 var last_press_tick: int = -1
 var _previous: int = 0
 ## rivet-arsenal: the claw and each carried melee weapon's combo, by weapon id.
@@ -45,6 +36,12 @@ func _init(p_actions: PlayerActions) -> void:
 
 ## Fills the stage's intent for this tick from `input`.
 func drive(stage: CollectCallStage, input: TickInput) -> void:
+	_drive(stage, input)
+	if motion.vault.enabled:
+		motion.vault.guard_move(stage)
+
+
+func _drive(stage: CollectCallStage, input: TickInput) -> void:
 	var c: PlayerCommand = PlayerCommand.decode(input, _previous, actions)
 	_previous = input.buttons
 	if c.pressed != 0:
@@ -63,6 +60,8 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 	if c.was_pressed(actions, &"interact"):
 		stage.intent.interact = true
 	_fire(stage, c)
+	if motion.vault.owns_move:
+		return
 	var press: bool = _melee_press(c)
 	if _ghosts(stage, c, press):
 		return
@@ -81,8 +80,7 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 		Log.info("pilot", "enter/exit car pressed (stub until the vehicles lane's API lands)")
 
 
-## The ghost forms (features/souls GhostPilot); true when a form owns the melee press this tick
-## (the pilot skips the claw).
+## True when a ghost form owns this tick's melee press.
 func _ghosts(stage: CollectCallStage, c: PlayerCommand, press: bool) -> bool:
 	if ghosts == null:
 		return false
@@ -94,7 +92,6 @@ func facing() -> Vector2:
 	return motion.facing()
 
 
-## Kept for the dev arena's teleport and older hosts: the walk under PlayerMotion.
 func stop() -> void:
 	motion.stop()
 
@@ -112,9 +109,6 @@ func write_state(out: StreamPeerBuffer) -> void:
 		ghosts.write_state(out)
 
 
-## The walk, sprint and roll; a claw hit slows the walk (move_mult), so do spinning barrels (the
-## gatling's fire_move_mult), and the roll's i-frames close
-## Rivet to damage (CombatArena.damage skips a fighter that is not exposed).
 func _move(stage: CollectCallStage, c: PlayerCommand) -> void:
 	var rivet: Fighter = stage.arena.rivet
 	var walk: float = stage.arena.tuning.rivet["walk_mps"] * melee.move_scale()
@@ -124,13 +118,18 @@ func _move(stage: CollectCallStage, c: PlayerCommand) -> void:
 	var aim: Vector2 = c.aim
 	if melee.busy() and aim == Vector2.ZERO:
 		c.aim = motion.facing()  # a swing holds the heading it started on
+	if motion.phase == PlayerMotion.Phase.FREE and c.was_pressed(actions, &"roll"):
+		motion.vault.prepare(stage)
 	stage.intent.move_by = motion.step(c, walk, actions)
+	if motion.vault.owns_move:
+		rivet.pos = motion.vault.position
+		if motion.vault.frame >= 0:
+			stage.hidden_in = ""
 	c.aim = aim
 	rivet.facing = motion.heading(c.aim)
 	rivet.exposed = not motion.invulnerable()
 
 
-## Starts a stow and draw when the arena changed Rivet's weapon (a pickup, the rifle running dry).
 func _follow_weapon(weapon: StringName) -> void:
 	var coming: StringName = hold.pending if hold.state == WeaponHold.State.STOWING else hold.held
 	if weapon != coming:
@@ -173,7 +172,8 @@ func _attack_held(c: PlayerCommand) -> bool:
 
 ## A held fire shoots along the aim; the flamer's hose sways the line (ArsenalTable.Grip.sway).
 func _fire(stage: CollectCallStage, c: PlayerCommand) -> void:
-	var rolling: bool = motion.phase == PlayerMotion.Phase.ROLL  # n10 r-2: no gun is drawn in the ball
+	var rolling: bool = motion.phase == PlayerMotion.Phase.ROLL
+	rolling = rolling or (motion.vault.frame >= 0 and motion.vault.no_fire)
 	var armed: bool = (
 		hold.can_fire() and not melee.busy() and not shock.busy() and not wielding() and not rolling
 	)

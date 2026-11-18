@@ -11,6 +11,7 @@ class Hit:
 	var landing: Vector2 = Vector2.ZERO
 	var takeoff: Vector2 = Vector2.ZERO
 	var touchdown: Vector2 = Vector2.ZERO
+	var kind: String = ""
 	var height: float = INF
 	var depth: float = 0.0
 
@@ -49,9 +50,35 @@ func stations(source: ArenaStations, base: Vector2) -> void:
 
 func clear_at(p: Vector2, r: float) -> bool:
 	for box: Rect2 in boxes:
-		if p.distance_squared_to(p.clamp(box.position, box.end)) < r * r:
+		if _overlaps(p, r, box):
 			return false
-	return city == null or city.cells.clear(p, r)
+	if city != null:
+		for y: int in range(floori(p.y - r), floori(p.y + r) + 1):
+			for x: int in range(floori(p.x - r), floori(p.x + r) + 1):
+				if city.cells.solid(x, y) and _overlaps(p, r, Rect2(x, y, 1, 1)):
+					return false
+	return true
+
+
+## A face + radius rounds to a Vector2. Subtracting the face back can measure less than r
+## (e.g. 7.7 - 7.1). Accept the representable contact point; one float further inside still fails.
+static func _overlaps(p: Vector2, r: float, box: Rect2) -> bool:
+	var near: Vector2 = p.clamp(box.position, box.end)
+	if p == near:
+		return r > 0.0
+	var d: Vector2 = p - near
+	if d.length_squared() >= r * r:
+		return false
+	if d.x == 0.0 or d.y == 0.0:
+		return p != near + d.normalized() * r
+	# At a corner both coordinates rounded on ejection. Project their half-ULPs onto the
+	# contact normal, so a rounded tangent remains clear even if its angle rounded as well.
+	var half_bin: Vector2 = Vector2(_half_ulp(p.x), _half_ulp(p.y))
+	return r - d.length() > half_bin.dot(d.normalized().abs()) + _half_ulp(r)
+
+
+static func _half_ulp(x: float) -> float:
+	return pow(2.0, floorf(log(maxf(absf(x), 1e-37)) / log(2.0)) - 24.0)
 
 
 func find(p: Vector2, r: float, velocity: Vector2, heading: Vector2) -> Hit:
@@ -74,7 +101,8 @@ func find(p: Vector2, r: float, velocity: Vector2, heading: Vector2) -> Hit:
 		return hit
 	hit.entry = p + dir * nearest.x
 	hit.depth = nearest.y - nearest.x
-	hit.height = heights.get(nearby[target], INF)
+	hit.kind = nearby[target]
+	hit.height = heights.get(hit.kind, INF)
 	var margin: float = (r + 0.001) / nearest.z
 	hit.takeoff = p + dir * maxf(0.0, nearest.x - margin)
 	# A diagonal ray can exit through a different face. Growing the box also clears its corners.
