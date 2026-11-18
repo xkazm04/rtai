@@ -445,3 +445,11 @@ propeller (about 2.2 m), crab pots and nav buoys, if facing 1 is not pure plan.
 - 05:04 Dock 9 door still, middle vs office (camera on the place, zone_frame --place=dock_9; before = places.json without the
   key, restored after): the door now stands before the office's stone front + lookout mast instead of a roller-door run.
   `ab_dock9_door_middle_office_v30_combo_{32,48}ppm.jpg`. (zone_frame parks Rivet ~9 m north of the focus: on the roof.)
+- 05:06 MILESTONE item 3, commit 5058c48d8, generator v31: docks apron_props add the it475 propeller 132, crab pots 133 and
+  the it474 dinghy 134 (plan twin turned 90 deg to the bow-on card); propeller/crab pots plan = card facing 0 scaled to
+  80 px/m (no plan twin offered); oil drums plan -> it475 v3 (six drums). Full unit 2893/0; bake --check ok. Looked: the
+  propeller reads as a bronze landmark at 64 px/m; crab pots and rope nets are small dark heaps at 48 px/m (weaker than the
+  tarps). `ab_it475_docks_apron_v30_v31_combo_{32,48}ppm.jpg`, `docks_apron_propeller_v31_combo_64ppm.jpg`.
+- 05:07 full gate (snapshot, --reels) on 5058c48d8 (v31) started, background (`build/gate/s5_v31_reels.log`).
+- Masters frames.json: 15 (added dock 9 door office, v30 plaza singles, v31 apron, v29 tug; dropped one-sign v21, yard
+  containers v19, dock c roofs v22, facade alt v20 and their files).
