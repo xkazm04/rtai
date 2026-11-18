@@ -10,10 +10,13 @@ var sampled: Callable
 var hostile_us: int
 var stepped: int
 var costs: Array[int] = []
+var assignment_us: int
+var assignment_ticks: int
 var rounds: int
 var hits: int
 var damage_taken: float
 var deaths: int
+var _started_us: int = -1
 
 
 func _init() -> void:
@@ -39,10 +42,17 @@ func step(p_tick: int) -> void:
 	stepped = 0
 	fired.clear()
 	states.clear()
+	if squad_ai != null and guard_tell == null:
+		_started_us = Time.get_ticks_usec()
 	super.step(p_tick)
 
 
 func _step_hostile(h: Fighter) -> void:
+	# Includes the pre-loop bookkeeping up to the first live hostile, once per squad tick.
+	if _started_us >= 0:
+		assignment_us += Time.get_ticks_usec() - _started_us
+		assignment_ticks += 1
+		_started_us = -1
 	if not squad.has(h):
 		super._step_hostile(h)
 		return
@@ -62,6 +72,8 @@ func _step_hostile(h: Fighter) -> void:
 
 
 func _state(h: Fighter, before: Vector2, telling: bool) -> String:
+	if squad_ai != null and guard_tell == null and squad_ai.minds.has(h.id):
+		return str(EnemyAgent.State.keys()[squad_ai.minds[h.id].agent.state]).to_lower()
 	# The pursuit caches sight between route checks. GuardTell's committed burst bypasses it.
 	if not telling and h.pursuit != null and h.pursuit._blocked:
 		return "route"

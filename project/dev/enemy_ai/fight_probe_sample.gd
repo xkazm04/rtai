@@ -138,6 +138,8 @@ func cost() -> Dictionary:
 		total += us
 	return {
 		"label": "CONTENDED",
+		"assignment_us": arena.assignment_us,
+		"assignment_ticks": arena.assignment_ticks,
 		"hostile_steps": n,
 		"total_us": total,
 		"mean_us_per_tick": float(total) / ticks if ticks else null,

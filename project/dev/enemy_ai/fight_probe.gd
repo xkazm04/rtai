@@ -3,7 +3,7 @@ extends SceneTree
 ## Like rig_bench, load the world after the -s entry has initialized its autoloads.
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--all", "--encounter", "--seeds", "--out", "--brain", "--trace"
+	"--all", "--encounter", "--seeds", "--out", "--enemy-brain", "--trace"
 ]
 const RUN_TICKS: int = 2400
 const ENCOUNTERS: PackedStringArray = ["city", "pit", "quest1"]
@@ -11,7 +11,7 @@ const ENCOUNTERS: PackedStringArray = ["city", "pit", "quest1"]
 var selected: PackedStringArray = []
 var seeds: int = 5
 var path: String = ""
-var brain: String = "old"
+var brain: String
 var trace_enabled: bool = false
 
 
@@ -35,14 +35,13 @@ func _parse() -> bool:
 	seeds = count.to_int() if count.is_valid_int() else 0
 	path = args.text("--out")
 	trace_enabled = args.has("--trace")
-	# Production sees these same user args. Enable "squad" here once it exists.
-	brain = args.text("--brain", "old")
+	brain = args.text("--enemy-brain", SquadChoice.DEFAULT_BRAIN)
 	return (
 		selected[0] in ENCOUNTERS
 		and seeds > 0
 		and path.is_absolute_path()
 		and path.get_extension().to_lower() == "json"
-		and brain == "old"
+		and brain in ["guard", "squad"]
 		and args.text("--trace") == ""
 	)
 
@@ -51,7 +50,7 @@ func _run() -> void:
 	if not _parse():
 		printerr(
 			"fight_probe: use --all or --encounter=city|pit|quest1, --out=<absolute.json>",
-			" [--seeds=<positive integer>] [--brain=old] [--trace]"
+			" [--seeds=<positive integer>] [--enemy-brain=guard|squad] [--trace]"
 		)
 		quit(2)
 		return
@@ -61,16 +60,12 @@ func _run() -> void:
 		return
 	var trace: FileAccess
 	if trace_enabled:
-		var trace_path: String = path.get_basename() + ".ndjson"
-		trace = FileAccess.open(trace_path, FileAccess.WRITE)
+		trace = FileAccess.open(path.get_basename() + ".ndjson", FileAccess.WRITE)
 		if trace == null:
-			printerr("fight_probe: cannot create ", trace_path)
+			printerr("fight_probe: cannot create trace beside ", path)
 			quit(1)
 			return
-	var ok: bool = _sweep(trace)
-	if trace != null:
-		trace.close()
-	quit(0 if ok else 1)
+	quit(0 if _sweep(trace) else 1)
 
 
 func _sweep(trace: FileAccess) -> bool:
@@ -82,7 +77,7 @@ func _sweep(trace: FileAccess) -> bool:
 			var trial: Object = script.new()
 			var result: Dictionary = trial.call("run", encounter, 20261103 + i, trace)
 			runs.append(result)
-			valid = valid and result.valid
+			valid = valid and result.valid and result.objective_reached
 			var fields: Array = [encounter, result.seed, result.fight.waves_cleared, result.digest]
 			printerr("fight_probe %s %d waves %d digest %s" % fields)
 	return _write(runs, trace) and valid
@@ -97,16 +92,7 @@ func _write(runs: Array[Dictionary], trace: FileAccess) -> bool:
 		"runs": runs,
 		"trace": trace.get_path().get_file() if trace != null else null,
 		"tick_columns":
-		[
-			"encounter",
-			"seed",
-			"tick",
-			"hostile_us",
-			"hostile_steps",
-			"rivet_x",
-			"rivet_y",
-			"hostiles"
-		],
+		"encounter seed tick hostile_us hostile_steps rivet_x rivet_y hostiles".split(" "),
 		"hostile_columns": ["id", "state", "x", "y", "los", "in_cover", "crowded", "fired"]
 	}
 	if file == null or not file.store_string(JSON.stringify(report, "  ", true, true) + "\n"):
