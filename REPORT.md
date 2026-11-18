@@ -72,6 +72,9 @@ Branch `n18-police`, worktree `C:\Users\kazda\kiro\gtai-wt\n18-police`, cut from
 
 ## Merge notes
 
+- Gates: PASS with reels on 0e5d8cdad (`build/gate/0e5d8cdad55c/gate.json`); PASS evidence on cd92fabc0
+  (unit 2878/0, scenarios 55/55, parity bit-exact, look goldens 11/11, export-audit 729/0).
+
 - Parity/replay goldens: none re-blessed so far (the n18 sim changes are behind heat >= 0; the
   parity gate and replay goldens run at heat -1 and stayed bit-exact).
 - Files outside the police list touched with one line each: `boot/collect_call/quest1_session.gd`

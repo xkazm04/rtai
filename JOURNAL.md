@@ -495,8 +495,13 @@ Read: JOURNAL NEXT, git log -30, districts JOURNAL (no new NEED police; car_mix 
   after the hide at heat 0, no police in frame: deleted.) frames.json 15: dropped the item6 t1200
   32 px/m still and the item4 t2244 still (their clips stay). Scratch renders deleted.
 
+- 06:08 GATE PASS (evidence, no reels) on cd92fabc0: lint 19/19, unit 2878/0 (2 skip), scenarios
+  55/55, parity bit-exact (planted caught 629), look goldens 11/11, export-audit 729/0
+  (`build/gate/cd92fabc03cf/gate.json`). Reels last passed on 0e5d8cdad (05:15); since then only
+  dev/, tools/bench and docs changed (no game path a reel plays).
+
 NEXT (session 6, freeze 07:30, REPORT 07:40):
-1. Final gate on HEAD (`node tools/gate/run.mjs --rev=HEAD --reels`; this session's commits after the
+1. Final gate on HEAD (if HEAD moves past cd92fabc0 with code) (`node tools/gate/run.mjs --rev=HEAD --reels`; this session's commits after the
    0e5d8cdad gate are dev/bench, dev/sim, tools/bench and docs only: lint + node tests passed at commit).
 2. REPORT final (draft current at session 5): add the gate line, check every cited path with
    `node tools/evidence/cites.mjs REPORT.md`, refresh `## Calls for the owner` order.
