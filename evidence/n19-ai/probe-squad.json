@@ -1,0 +1,1174 @@
+{
+  "brain": "squad",
+  "hostile_columns": [
+    "id",
+    "state",
+    "x",
+    "y",
+    "los",
+    "in_cover",
+    "crowded",
+    "fired"
+  ],
+  "runs": [
+    {
+      "ai": {
+        "cover_share": 0.6259920634920635,
+        "crowded_share": 0.001488095238095238,
+        "distinct_flank_angles_deg": 4,
+        "distinct_flanking_shooters": 1,
+        "hostile_ticks": 4032,
+        "los_share": 0.10143849206349206,
+        "mean_distance_m": 14.459281409898448,
+        "pairs_mean": 0.0013026487190620929,
+        "pairs_peak": 1,
+        "state_histogram": {
+          "cover": 576,
+          "engage": 3007,
+          "fire": 50,
+          "panic": 179,
+          "recover": 217,
+          "windup": 3
+        }
+      },
+      "cost": {
+        "assignment_ticks": 2400,
+        "assignment_us": 138810,
+        "hostile_steps": 4032,
+        "label": "CONTENDED",
+        "max_us_per_hostile": 135,
+        "mean_us_per_hostile": 18.843998015873016,
+        "mean_us_per_tick": 32.99131567520625,
+        "p99_us_per_hostile": 59,
+        "total_us": 75979
+      },
+      "digest": "a6799c9e43863c92e69bd935e8388f016adb688c8b19dd4ef2e9721909642824",
+      "encounter": "city",
+      "fight": {
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0,
+        "encounter_clear_s": 21.016666666666666,
+        "hits_on_rivet": 4,
+        "hostile_shots": 9,
+        "kills": 14,
+        "waves": [
+          {
+            "clear_s": 5.483333333333333,
+            "start_tick": 97,
+            "wave": 1
+          },
+          {
+            "clear_s": 5.783333333333333,
+            "start_tick": 576,
+            "wave": 2
+          },
+          {
+            "clear_s": 4.75,
+            "start_tick": 1073,
+            "wave": 3
+          },
+          {
+            "clear_s": 14.083333333333334,
+            "start_tick": 1508,
+            "wave": 4
+          }
+        ],
+        "waves_cleared": 4
+      },
+      "last_tick": 2399,
+      "measured_ticks": 2303,
+      "objective": "first three pit waves",
+      "objective_reached": true,
+      "seed": 20261103,
+      "start_tick": 97,
+      "tick_budget": 2400,
+      "valid": true
+    },
+    {
+      "ai": {
+        "cover_share": 0.5654728065188555,
+        "crowded_share": 0.0062535531552018195,
+        "distinct_flank_angles_deg": 5,
+        "distinct_flanking_shooters": 3,
+        "hostile_ticks": 5277,
+        "los_share": 0.09039226833428084,
+        "mean_distance_m": 15.032470720293668,
+        "pairs_mean": 0.00998697351280938,
+        "pairs_peak": 3,
+        "state_histogram": {
+          "cover": 1080,
+          "engage": 3757,
+          "fire": 35,
+          "panic": 54,
+          "recover": 347,
+          "windup": 4
+        }
+      },
+      "cost": {
+        "assignment_ticks": 2400,
+        "assignment_us": 126670,
+        "hostile_steps": 5277,
+        "label": "CONTENDED",
+        "max_us_per_hostile": 136,
+        "mean_us_per_hostile": 18.26227022929695,
+        "mean_us_per_tick": 41.8454190186713,
+        "p99_us_per_hostile": 62,
+        "total_us": 96370
+      },
+      "digest": "7fdbf32c2a9889dc6cd32ed37e24dd9eceb7ce17a5e5ef25f3c175c5ff9f64d9",
+      "encounter": "city",
+      "fight": {
+        "damage_taken_hp": 2.9999999999999716,
+        "deaths": 0,
+        "encounter_clear_s": 19.566666666666666,
+        "hits_on_rivet": 5,
+        "hostile_shots": 8,
+        "kills": 18,
+        "waves": [
+          {
+            "clear_s": 4.916666666666667,
+            "start_tick": 97,
+            "wave": 1
+          },
+          {
+            "clear_s": 3.85,
+            "start_tick": 542,
+            "wave": 2
+          },
+          {
+            "clear_s": 5.8,
+            "start_tick": 923,
+            "wave": 3
+          },
+          {
+            "clear_s": 7.066666666666666,
+            "start_tick": 1421,
+            "wave": 4
+          },
+          {
+            "clear_s": null,
+            "start_tick": 1995,
+            "wave": 5
+          }
+        ],
+        "waves_cleared": 4
+      },
+      "last_tick": 2399,
+      "measured_ticks": 2303,
+      "objective": "first three pit waves",
+      "objective_reached": true,
+      "seed": 20261104,
+      "start_tick": 97,
+      "tick_budget": 2400,
+      "valid": true
+    },
+    {
+      "ai": {
+        "cover_share": 0.5203267846722428,
+        "crowded_share": 0.0007780587434351293,
+        "distinct_flank_angles_deg": 10,
+        "distinct_flanking_shooters": 3,
+        "hostile_ticks": 5141,
+        "los_share": 0.09336704921221552,
+        "mean_distance_m": 14.423536080559087,
+        "pairs_mean": 0.0008684324793747286,
+        "pairs_peak": 1,
+        "state_histogram": {
+          "cover": 968,
+          "engage": 3650,
+          "fire": 86,
+          "panic": 103,
+          "recover": 329,
+          "windup": 5
+        }
+      },
+      "cost": {
+        "assignment_ticks": 2400,
+        "assignment_us": 127472,
+        "hostile_steps": 5141,
+        "label": "CONTENDED",
+        "max_us_per_hostile": 95,
+        "mean_us_per_hostile": 18.157556895545614,
+        "mean_us_per_tick": 40.53321754233608,
+        "p99_us_per_hostile": 62,
+        "total_us": 93348
+      },
+      "digest": "609262b67051686d7a73c97b9b616f2985331064e9f386ca299028e4bb862bda",
+      "encounter": "city",
+      "fight": {
+        "damage_taken_hp": 2.9999999999999716,
+        "deaths": 0,
+        "encounter_clear_s": 21.166666666666668,
+        "hits_on_rivet": 5,
+        "hostile_shots": 16,
+        "kills": 18,
+        "waves": [
+          {
+            "clear_s": 5.316666666666666,
+            "start_tick": 97,
+            "wave": 1
+          },
+          {
+            "clear_s": 4.433333333333334,
+            "start_tick": 566,
+            "wave": 2
+          },
+          {
+            "clear_s": 6.416666666666667,
+            "start_tick": 982,
+            "wave": 3
+          },
+          {
+            "clear_s": 6.066666666666666,
+            "start_tick": 1517,
+            "wave": 4
+          },
+          {
+            "clear_s": null,
+            "start_tick": 2031,
+            "wave": 5
+          }
+        ],
+        "waves_cleared": 4
+      },
+      "last_tick": 2399,
+      "measured_ticks": 2303,
+      "objective": "first three pit waves",
+      "objective_reached": true,
+      "seed": 20261105,
+      "start_tick": 97,
+      "tick_budget": 2400,
+      "valid": true
+    },
+    {
+      "ai": {
+        "cover_share": 0.5607772254857659,
+        "crowded_share": 0.0,
+        "distinct_flank_angles_deg": 3,
+        "distinct_flanking_shooters": 2,
+        "hostile_ticks": 4426,
+        "los_share": 0.14889290555806597,
+        "mean_distance_m": 14.872880960340366,
+        "pairs_mean": 0.0,
+        "pairs_peak": 0,
+        "state_histogram": {
+          "cover": 696,
+          "engage": 3092,
+          "fire": 119,
+          "panic": 179,
+          "recover": 334,
+          "windup": 6
+        }
+      },
+      "cost": {
+        "assignment_ticks": 2400,
+        "assignment_us": 136844,
+        "hostile_steps": 4426,
+        "label": "CONTENDED",
+        "max_us_per_hostile": 103,
+        "mean_us_per_hostile": 18.629010393131495,
+        "mean_us_per_tick": 35.80199739470256,
+        "p99_us_per_hostile": 62,
+        "total_us": 82452
+      },
+      "digest": "01979f6fa164782a1aa7516490aa3e8a3e354d42bde6977828f6c03f0810c13c",
+      "encounter": "city",
+      "fight": {
+        "damage_taken_hp": 1.799999999999983,
+        "deaths": 0,
+        "encounter_clear_s": 20.55,
+        "hits_on_rivet": 3,
+        "hostile_shots": 22,
+        "kills": 14,
+        "waves": [
+          {
+            "clear_s": 5.316666666666666,
+            "start_tick": 97,
+            "wave": 1
+          },
+          {
+            "clear_s": 2.9166666666666665,
+            "start_tick": 566,
+            "wave": 2
+          },
+          {
+            "clear_s": 7.316666666666666,
+            "start_tick": 891,
+            "wave": 3
+          },
+          {
+            "clear_s": 15.083333333333334,
+            "start_tick": 1480,
+            "wave": 4
+          }
+        ],
+        "waves_cleared": 4
+      },
+      "last_tick": 2399,
+      "measured_ticks": 2303,
+      "objective": "first three pit waves",
+      "objective_reached": true,
+      "seed": 20261106,
+      "start_tick": 97,
+      "tick_budget": 2400,
+      "valid": true
+    },
+    {
+      "ai": {
+        "cover_share": 0.4853157121879589,
+        "crowded_share": 0.002936857562408223,
+        "distinct_flank_angles_deg": 5,
+        "distinct_flanking_shooters": 2,
+        "hostile_ticks": 4086,
+        "los_share": 0.1196769456681351,
+        "mean_distance_m": 15.033762341787344,
+        "pairs_mean": 0.0026052974381241857,
+        "pairs_peak": 1,
+        "state_histogram": {
+          "cover": 514,
+          "engage": 2976,
+          "fire": 97,
+          "panic": 179,
+          "recover": 314,
+          "windup": 6
+        }
+      },
+      "cost": {
+        "assignment_ticks": 2400,
+        "assignment_us": 130068,
+        "hostile_steps": 4086,
+        "label": "CONTENDED",
+        "max_us_per_hostile": 140,
+        "mean_us_per_hostile": 17.65761135584924,
+        "mean_us_per_tick": 31.328267477203646,
+        "p99_us_per_hostile": 61,
+        "total_us": 72149
+      },
+      "digest": "2b069d717916c727a88b824f973bae753cad99cddef3d970a3d9ac070adbcc2f",
+      "encounter": "city",
+      "fight": {
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0,
+        "encounter_clear_s": 20.983333333333334,
+        "hits_on_rivet": 6,
+        "hostile_shots": 17,
+        "kills": 14,
+        "waves": [
+          {
+            "clear_s": 5.316666666666666,
+            "start_tick": 97,
+            "wave": 1
+          },
+          {
+            "clear_s": 4.666666666666667,
+            "start_tick": 566,
+            "wave": 2
+          },
+          {
+            "clear_s": 6.0,
+            "start_tick": 996,
+            "wave": 3
+          },
+          {
+            "clear_s": 13.75,
+            "start_tick": 1506,
+            "wave": 4
+          }
+        ],
+        "waves_cleared": 4
+      },
+      "last_tick": 2399,
+      "measured_ticks": 2303,
+      "objective": "first three pit waves",
+      "objective_reached": true,
+      "seed": 20261107,
+      "start_tick": 97,
+      "tick_budget": 2400,
+      "valid": true
+    },
+    {
+      "ai": {
+        "cover_share": 0.22859765893963738,
+        "crowded_share": 0.0,
+        "distinct_flank_angles_deg": 4,
+        "distinct_flanking_shooters": 1,
+        "hostile_ticks": 4357,
+        "los_share": 0.364011934817535,
+        "mean_distance_m": 14.849875083723719,
+        "pairs_mean": 0.0,
+        "pairs_peak": 0,
+        "state_histogram": {
+          "cover": 743,
+          "engage": 2581,
+          "fire": 108,
+          "panic": 204,
+          "recover": 715,
+          "windup": 6
+        }
+      },
+      "cost": {
+        "assignment_ticks": 2400,
+        "assignment_us": 148714,
+        "hostile_steps": 4357,
+        "label": "CONTENDED",
+        "max_us_per_hostile": 78,
+        "mean_us_per_hostile": 16.935047050722975,
+        "mean_us_per_tick": 32.039079461571866,
+        "p99_us_per_hostile": 45,
+        "total_us": 73786
+      },
+      "digest": "1c4c87823dc57a8d03533f820d2fcdc37383ca52d81d126c63bb86ff2a9ca812",
+      "encounter": "pit",
+      "fight": {
+        "damage_taken_hp": 2.9999999999999716,
+        "deaths": 0,
+        "encounter_clear_s": 18.6,
+        "hits_on_rivet": 5,
+        "hostile_shots": 19,
+        "kills": 18,
+        "waves": [
+          {
+            "clear_s": 4.483333333333333,
+            "start_tick": 97,
+            "wave": 1
+          },
+          {
+            "clear_s": 4.316666666666666,
+            "start_tick": 516,
+            "wave": 2
+          },
+          {
+            "clear_s": 4.8,
+            "start_tick": 925,
+            "wave": 3
+          },
+          {
+            "clear_s": 5.75,
+            "start_tick": 1363,
+            "wave": 4
+          },
+          {
+            "clear_s": null,
+            "start_tick": 1858,
+            "wave": 5
+          }
+        ],
+        "waves_cleared": 4
+      },
+      "last_tick": 2399,
+      "measured_ticks": 2303,
+      "objective": "first three pit waves",
+      "objective_reached": true,
+      "seed": 20261103,
+      "start_tick": 97,
+      "tick_budget": 2400,
+      "valid": true
+    },
+    {
+      "ai": {
+        "cover_share": 0.1712257256212153,
+        "crowded_share": 0.0,
+        "distinct_flank_angles_deg": 9,
+        "distinct_flanking_shooters": 4,
+        "hostile_ticks": 4789,
+        "los_share": 0.41678847358529963,
+        "mean_distance_m": 13.638821013612523,
+        "pairs_mean": 0.0,
+        "pairs_peak": 0,
+        "state_histogram": {
+          "cover": 925,
+          "engage": 2625,
+          "fire": 228,
+          "flank": 12,
+          "panic": 50,
+          "recover": 937,
+          "windup": 12
+        }
+      },
+      "cost": {
+        "assignment_ticks": 2400,
+        "assignment_us": 140167,
+        "hostile_steps": 4789,
+        "label": "CONTENDED",
+        "max_us_per_hostile": 118,
+        "mean_us_per_hostile": 17.1083733556066,
+        "mean_us_per_tick": 35.57620495006513,
+        "p99_us_per_hostile": 43,
+        "total_us": 81932
+      },
+      "digest": "b7ffb28d2a51e3c58cff0a934c4727edcb44b683fa3cf0114b92921da7d2c2ac",
+      "encounter": "pit",
+      "fight": {
+        "damage_taken_hp": 7.799999999999926,
+        "deaths": 0,
+        "encounter_clear_s": 18.266666666666666,
+        "hits_on_rivet": 13,
+        "hostile_shots": 41,
+        "kills": 20,
+        "waves": [
+          {
+            "clear_s": 5.633333333333333,
+            "start_tick": 97,
+            "wave": 1
+          },
+          {
+            "clear_s": 3.3833333333333333,
+            "start_tick": 585,
+            "wave": 2
+          },
+          {
+            "clear_s": 4.25,
+            "start_tick": 938,
+            "wave": 3
+          },
+          {
+            "clear_s": 4.2,
+            "start_tick": 1343,
+            "wave": 4
+          },
+          {
+            "clear_s": 4.733333333333333,
+            "start_tick": 1745,
+            "wave": 5
+          },
+          {
+            "clear_s": null,
+            "start_tick": 2179,
+            "wave": 6
+          }
+        ],
+        "waves_cleared": 5
+      },
+      "last_tick": 2399,
+      "measured_ticks": 2303,
+      "objective": "first three pit waves",
+      "objective_reached": true,
+      "seed": 20261104,
+      "start_tick": 97,
+      "tick_budget": 2400,
+      "valid": true
+    },
+    {
+      "ai": {
+        "cover_share": 0.16803584764749813,
+        "crowded_share": 0.0,
+        "distinct_flank_angles_deg": 9,
+        "distinct_flanking_shooters": 4,
+        "hostile_ticks": 4017,
+        "los_share": 0.5013691809808315,
+        "mean_distance_m": 14.068722975144256,
+        "pairs_mean": 0.0,
+        "pairs_peak": 0,
+        "state_histogram": {
+          "cover": 494,
+          "engage": 2186,
+          "fire": 223,
+          "panic": 218,
+          "recover": 885,
+          "windup": 11
+        }
+      },
+      "cost": {
+        "assignment_ticks": 2400,
+        "assignment_us": 146718,
+        "hostile_steps": 4017,
+        "label": "CONTENDED",
+        "max_us_per_hostile": 74,
+        "mean_us_per_hostile": 16.617874035349764,
+        "mean_us_per_tick": 28.985670864090316,
+        "p99_us_per_hostile": 41,
+        "total_us": 66754
+      },
+      "digest": "da2cc1ae23887ada4238ae93f35993cd1521b085b21d7cef56ef7c9ca0c118c9",
+      "encounter": "pit",
+      "fight": {
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0,
+        "encounter_clear_s": 16.766666666666666,
+        "hits_on_rivet": 12,
+        "hostile_shots": 41,
+        "kills": 18,
+        "waves": [
+          {
+            "clear_s": 4.866666666666666,
+            "start_tick": 97,
+            "wave": 1
+          },
+          {
+            "clear_s": 3.2,
+            "start_tick": 539,
+            "wave": 2
+          },
+          {
+            "clear_s": 3.6999999999999997,
+            "start_tick": 881,
+            "wave": 3
+          },
+          {
+            "clear_s": 11.633333333333333,
+            "start_tick": 1253,
+            "wave": 4
+          },
+          {
+            "clear_s": null,
+            "start_tick": 2101,
+            "wave": 5
+          }
+        ],
+        "waves_cleared": 4
+      },
+      "last_tick": 2399,
+      "measured_ticks": 2303,
+      "objective": "first three pit waves",
+      "objective_reached": true,
+      "seed": 20261105,
+      "start_tick": 97,
+      "tick_budget": 2400,
+      "valid": true
+    },
+    {
+      "ai": {
+        "cover_share": 0.19657762938230383,
+        "crowded_share": 0.0,
+        "distinct_flank_angles_deg": 13,
+        "distinct_flanking_shooters": 5,
+        "hostile_ticks": 4792,
+        "los_share": 0.47308013355592654,
+        "mean_distance_m": 13.54032950041091,
+        "pairs_mean": 0.0,
+        "pairs_peak": 0,
+        "state_histogram": {
+          "cover": 890,
+          "engage": 2231,
+          "fire": 347,
+          "panic": 181,
+          "recover": 1125,
+          "windup": 18
+        }
+      },
+      "cost": {
+        "assignment_ticks": 2400,
+        "assignment_us": 144562,
+        "hostile_steps": 4792,
+        "label": "CONTENDED",
+        "max_us_per_hostile": 131,
+        "mean_us_per_hostile": 17.20930717863105,
+        "mean_us_per_tick": 35.808510638297875,
+        "p99_us_per_hostile": 45,
+        "total_us": 82467
+      },
+      "digest": "9499148344a00fdad6416810ef0d49c811956ef606375ae4da85b16cd7b11a5c",
+      "encounter": "pit",
+      "fight": {
+        "damage_taken_hp": 11.999999999999886,
+        "deaths": 0,
+        "encounter_clear_s": 20.016666666666666,
+        "hits_on_rivet": 20,
+        "hostile_shots": 59,
+        "kills": 18,
+        "waves": [
+          {
+            "clear_s": 5.633333333333333,
+            "start_tick": 97,
+            "wave": 1
+          },
+          {
+            "clear_s": 4.25,
+            "start_tick": 585,
+            "wave": 2
+          },
+          {
+            "clear_s": 5.133333333333333,
+            "start_tick": 990,
+            "wave": 3
+          },
+          {
+            "clear_s": 5.216666666666667,
+            "start_tick": 1448,
+            "wave": 4
+          },
+          {
+            "clear_s": null,
+            "start_tick": 1911,
+            "wave": 5
+          }
+        ],
+        "waves_cleared": 4
+      },
+      "last_tick": 2399,
+      "measured_ticks": 2303,
+      "objective": "first three pit waves",
+      "objective_reached": true,
+      "seed": 20261106,
+      "start_tick": 97,
+      "tick_budget": 2400,
+      "valid": true
+    },
+    {
+      "ai": {
+        "cover_share": 0.2581227436823105,
+        "crowded_share": 0.0,
+        "distinct_flank_angles_deg": 3,
+        "distinct_flanking_shooters": 1,
+        "hostile_ticks": 4432,
+        "los_share": 0.4268953068592058,
+        "mean_distance_m": 13.847286587802943,
+        "pairs_mean": 0.0,
+        "pairs_peak": 0,
+        "state_histogram": {
+          "cover": 840,
+          "engage": 2381,
+          "fire": 164,
+          "panic": 235,
+          "recover": 800,
+          "windup": 12
+        }
+      },
+      "cost": {
+        "assignment_ticks": 2400,
+        "assignment_us": 148034,
+        "hostile_steps": 4432,
+        "label": "CONTENDED",
+        "max_us_per_hostile": 76,
+        "mean_us_per_hostile": 17.020081227436823,
+        "mean_us_per_tick": 32.75423360833695,
+        "p99_us_per_hostile": 44,
+        "total_us": 75433
+      },
+      "digest": "3680f974b569df6e490c5208a2b7ab98487d5227509b43fbe23df2b55ca6c406",
+      "encounter": "pit",
+      "fight": {
+        "damage_taken_hp": 8.999999999999915,
+        "deaths": 0,
+        "encounter_clear_s": 14.683333333333334,
+        "hits_on_rivet": 15,
+        "hostile_shots": 31,
+        "kills": 18,
+        "waves": [
+          {
+            "clear_s": 3.6333333333333333,
+            "start_tick": 97,
+            "wave": 1
+          },
+          {
+            "clear_s": 2.7333333333333334,
+            "start_tick": 465,
+            "wave": 2
+          },
+          {
+            "clear_s": 3.3166666666666664,
+            "start_tick": 779,
+            "wave": 3
+          },
+          {
+            "clear_s": 12.483333333333333,
+            "start_tick": 1128,
+            "wave": 4
+          },
+          {
+            "clear_s": null,
+            "start_tick": 2027,
+            "wave": 5
+          }
+        ],
+        "waves_cleared": 4
+      },
+      "last_tick": 2399,
+      "measured_ticks": 2303,
+      "objective": "first three pit waves",
+      "objective_reached": true,
+      "seed": 20261107,
+      "start_tick": 97,
+      "tick_budget": 2400,
+      "valid": true
+    },
+    {
+      "ai": {
+        "cover_share": 0.0,
+        "crowded_share": 0.19779437922447526,
+        "distinct_flank_angles_deg": 0,
+        "distinct_flanking_shooters": 0,
+        "hostile_ticks": 5622,
+        "los_share": 1.0,
+        "mean_distance_m": 15.237082869842865,
+        "pairs_mean": 0.2840690978886756,
+        "pairs_peak": 4,
+        "state_histogram": {
+          "approach": 4840,
+          "burst": 92,
+          "cooldown": 690
+        }
+      },
+      "cost": {
+        "assignment_ticks": 0,
+        "assignment_us": 0,
+        "hostile_steps": 5622,
+        "label": "CONTENDED",
+        "max_us_per_hostile": 8,
+        "mean_us_per_hostile": 1.3655282817502667,
+        "mean_us_per_tick": 3.683781190019194,
+        "p99_us_per_hostile": 3,
+        "total_us": 7677
+      },
+      "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+      "encounter": "quest1",
+      "fight": {
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0,
+        "encounter_clear_s": 34.71666666666667,
+        "hits_on_rivet": 6,
+        "hostile_shots": 17,
+        "kills": 48,
+        "waves": [
+          {
+            "clear_s": 3.65,
+            "start_tick": 13471,
+            "wave": 1
+          },
+          {
+            "clear_s": 4.55,
+            "start_tick": 13824,
+            "wave": 2
+          },
+          {
+            "clear_s": 3.783333333333333,
+            "start_tick": 14231,
+            "wave": 3
+          },
+          {
+            "clear_s": 4.883333333333333,
+            "start_tick": 14592,
+            "wave": 4
+          },
+          {
+            "clear_s": 6.683333333333334,
+            "start_tick": 15019,
+            "wave": 5
+          }
+        ],
+        "waves_cleared": 5
+      },
+      "last_tick": 15554,
+      "measured_ticks": 2084,
+      "objective": "Dock 9 bonded storage",
+      "objective_reached": true,
+      "seed": 20261103,
+      "start_tick": 13471,
+      "tick_budget": 72000,
+      "valid": true
+    },
+    {
+      "ai": {
+        "cover_share": 0.0,
+        "crowded_share": 0.3237302248126561,
+        "distinct_flank_angles_deg": 3,
+        "distinct_flanking_shooters": 2,
+        "hostile_ticks": 6005,
+        "los_share": 1.0,
+        "mean_distance_m": 15.447850132067932,
+        "pairs_mean": 0.4890646812470917,
+        "pairs_peak": 4,
+        "state_histogram": {
+          "approach": 5149,
+          "burst": 155,
+          "cooldown": 701
+        }
+      },
+      "cost": {
+        "assignment_ticks": 0,
+        "assignment_us": 0,
+        "hostile_steps": 6005,
+        "label": "CONTENDED",
+        "max_us_per_hostile": 8,
+        "mean_us_per_hostile": 1.3092422980849292,
+        "mean_us_per_tick": 3.6584457887389483,
+        "p99_us_per_hostile": 3,
+        "total_us": 7862
+      },
+      "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+      "encounter": "quest1",
+      "fight": {
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0,
+        "encounter_clear_s": 35.8,
+        "hits_on_rivet": 4,
+        "hostile_shots": 28,
+        "kills": 48,
+        "waves": [
+          {
+            "clear_s": 3.8666666666666667,
+            "start_tick": 13471,
+            "wave": 1
+          },
+          {
+            "clear_s": 4.633333333333333,
+            "start_tick": 13837,
+            "wave": 2
+          },
+          {
+            "clear_s": 4.45,
+            "start_tick": 14249,
+            "wave": 3
+          },
+          {
+            "clear_s": 4.983333333333333,
+            "start_tick": 14650,
+            "wave": 4
+          },
+          {
+            "clear_s": 6.7,
+            "start_tick": 15083,
+            "wave": 5
+          }
+        ],
+        "waves_cleared": 5
+      },
+      "last_tick": 15619,
+      "measured_ticks": 2149,
+      "objective": "Dock 9 bonded storage",
+      "objective_reached": true,
+      "seed": 20261104,
+      "start_tick": 13471,
+      "tick_budget": 72000,
+      "valid": true
+    },
+    {
+      "ai": {
+        "cover_share": 0.0,
+        "crowded_share": 0.2740415854450942,
+        "distinct_flank_angles_deg": 0,
+        "distinct_flanking_shooters": 0,
+        "hostile_ticks": 6156,
+        "los_share": 1.0,
+        "mean_distance_m": 15.377440887894856,
+        "pairs_mean": 0.5220243673851921,
+        "pairs_peak": 6,
+        "state_histogram": {
+          "approach": 5246,
+          "burst": 172,
+          "cooldown": 738
+        }
+      },
+      "cost": {
+        "assignment_ticks": 0,
+        "assignment_us": 0,
+        "hostile_steps": 6156,
+        "label": "CONTENDED",
+        "max_us_per_hostile": 13,
+        "mean_us_per_hostile": 1.3219623131903833,
+        "mean_us_per_tick": 3.8134957825679474,
+        "p99_us_per_hostile": 3,
+        "total_us": 8138
+      },
+      "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+      "encounter": "quest1",
+      "fight": {
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0,
+        "encounter_clear_s": 35.55,
+        "hits_on_rivet": 12,
+        "hostile_shots": 30,
+        "kills": 48,
+        "waves": [
+          {
+            "clear_s": 4.1,
+            "start_tick": 13471,
+            "wave": 1
+          },
+          {
+            "clear_s": 4.316666666666666,
+            "start_tick": 13851,
+            "wave": 2
+          },
+          {
+            "clear_s": 3.783333333333333,
+            "start_tick": 14244,
+            "wave": 3
+          },
+          {
+            "clear_s": 5.316666666666666,
+            "start_tick": 14605,
+            "wave": 4
+          },
+          {
+            "clear_s": 6.866666666666666,
+            "start_tick": 15058,
+            "wave": 5
+          }
+        ],
+        "waves_cleared": 5
+      },
+      "last_tick": 15604,
+      "measured_ticks": 2134,
+      "objective": "Dock 9 bonded storage",
+      "objective_reached": true,
+      "seed": 20261105,
+      "start_tick": 13471,
+      "tick_budget": 72000,
+      "valid": true
+    },
+    {
+      "ai": {
+        "cover_share": 0.0,
+        "crowded_share": 0.14621676891615543,
+        "distinct_flank_angles_deg": 0,
+        "distinct_flanking_shooters": 0,
+        "hostile_ticks": 5868,
+        "los_share": 1.0,
+        "mean_distance_m": 15.567507899855787,
+        "pairs_mean": 0.2059529524723956,
+        "pairs_peak": 2,
+        "state_histogram": {
+          "approach": 5169,
+          "burst": 155,
+          "cooldown": 544
+        }
+      },
+      "cost": {
+        "assignment_ticks": 0,
+        "assignment_us": 0,
+        "hostile_steps": 5868,
+        "label": "CONTENDED",
+        "max_us_per_hostile": 56,
+        "mean_us_per_hostile": 1.3222563053851397,
+        "mean_us_per_tick": 3.7249159865578494,
+        "p99_us_per_hostile": 3,
+        "total_us": 7759
+      },
+      "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+      "encounter": "quest1",
+      "fight": {
+        "damage_taken_hp": 6.5999999999999375,
+        "deaths": 0,
+        "encounter_clear_s": 34.7,
+        "hits_on_rivet": 11,
+        "hostile_shots": 28,
+        "kills": 48,
+        "waves": [
+          {
+            "clear_s": 3.183333333333333,
+            "start_tick": 13471,
+            "wave": 1
+          },
+          {
+            "clear_s": 4.583333333333333,
+            "start_tick": 13796,
+            "wave": 2
+          },
+          {
+            "clear_s": 3.8333333333333335,
+            "start_tick": 14205,
+            "wave": 3
+          },
+          {
+            "clear_s": 5.066666666666666,
+            "start_tick": 14569,
+            "wave": 4
+          },
+          {
+            "clear_s": 6.866666666666666,
+            "start_tick": 15007,
+            "wave": 5
+          }
+        ],
+        "waves_cleared": 5
+      },
+      "last_tick": 15553,
+      "measured_ticks": 2083,
+      "objective": "Dock 9 bonded storage",
+      "objective_reached": true,
+      "seed": 20261106,
+      "start_tick": 13471,
+      "tick_budget": 72000,
+      "valid": true
+    },
+    {
+      "ai": {
+        "cover_share": 0.0,
+        "crowded_share": 0.29606625258799174,
+        "distinct_flank_angles_deg": 1,
+        "distinct_flanking_shooters": 1,
+        "hostile_ticks": 6279,
+        "los_share": 1.0,
+        "mean_distance_m": 15.307195322094763,
+        "pairs_mean": 0.6749884419787332,
+        "pairs_peak": 7,
+        "state_histogram": {
+          "approach": 5172,
+          "burst": 170,
+          "cooldown": 937
+        }
+      },
+      "cost": {
+        "assignment_ticks": 0,
+        "assignment_us": 0,
+        "hostile_steps": 6279,
+        "label": "CONTENDED",
+        "max_us_per_hostile": 99,
+        "mean_us_per_hostile": 1.344640866379997,
+        "mean_us_per_tick": 3.9033749422098936,
+        "p99_us_per_hostile": 3,
+        "total_us": 8443
+      },
+      "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3",
+      "encounter": "quest1",
+      "fight": {
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0,
+        "encounter_clear_s": 36.03333333333333,
+        "hits_on_rivet": 6,
+        "hostile_shots": 27,
+        "kills": 48,
+        "waves": [
+          {
+            "clear_s": 3.966666666666667,
+            "start_tick": 13471,
+            "wave": 1
+          },
+          {
+            "clear_s": 4.883333333333333,
+            "start_tick": 13843,
+            "wave": 2
+          },
+          {
+            "clear_s": 4.216666666666667,
+            "start_tick": 14270,
+            "wave": 3
+          },
+          {
+            "clear_s": 4.883333333333333,
+            "start_tick": 14657,
+            "wave": 4
+          },
+          {
+            "clear_s": 6.916666666666667,
+            "start_tick": 15084,
+            "wave": 5
+          }
+        ],
+        "waves_cleared": 5
+      },
+      "last_tick": 15633,
+      "measured_ticks": 2163,
+      "objective": "Dock 9 bonded storage",
+      "objective_reached": true,
+      "seed": 20261107,
+      "start_tick": 13471,
+      "tick_budget": 72000,
+      "valid": true
+    }
+  ],
+  "schema": "gtai.fight-probe/1",
+  "tick_columns": [
+    "encounter",
+    "seed",
+    "tick",
+    "hostile_us",
+    "hostile_steps",
+    "rivet_x",
+    "rivet_y",
+    "hostiles"
+  ],
+  "tick_hz": 60,
+  "trace": null
+}
