@@ -11,3 +11,5 @@ START 17:47
 19:04 DECISION Keep the city fight and replay on routed guards. Isolate the existing player close-in fault using two identical holding-cover encounters. The broken player previously won wave 6 because the guards did the approaching.
 19:09 MILESTONE The revised city fight scenario passes its live, replay, pit, positive and planted controls. Refreshed DLL reproduces zero versus four street crossings; guard 3002 now clears on tick 247 (two ticks earlier). Refreshing both films.
 19:13 MILESTONE Updated blind movie and tick-450 frame reviewed. Refreshed native runtime, 650 ticks, exact headless/rendered fighter states across 17356 before and 17626 after observations. The 32-mutant run is under way.
+19:33 MILESTONE Route map mutation score 62.5%: killed 20, survived 12, timeout 0, invalid 0 in a repeatable 32-of-105 sample. Seven survivors concern entry from a partly occupied cell. Full snapshot gate started on f08ae9135.
+19:53 MILESTONE Verified the complete code and tests snapshot: 55/55 scenarios, parity 1200 steps, all look goldens, lint and release compile. Completed the blind report.
