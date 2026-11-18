@@ -11,7 +11,7 @@ const SEPARATION_GAIN: float = 3.0
 static func move(
 	e: EnemyAgent, desired: Vector2, look_at: Vector2, agents: Array[EnemyAgent], pit: EnemyPit
 ) -> void:
-	steer(e, desired + separation(e, agents, pit), look_at, pit)
+	steer(e, desired + _separation(e, agents, pit), look_at, pit)
 
 
 static func steer(e: EnemyAgent, want: Vector2, look_at: Vector2, pit: EnemyPit) -> void:
@@ -55,6 +55,11 @@ static func arrive(e: EnemyAgent, to: Vector2, speed: float, stop_m: float = 0.2
 		return Vector2.ZERO
 	var slow: float = clampf(dist / 1.5, 0.25, 1.0)
 	return d / dist * speed * slow
+
+
+## The enemy pit uses its original body gap and overlap response.
+static func _separation(e: EnemyAgent, agents: Array[EnemyAgent], pit: EnemyPit) -> Vector2:
+	return separation(e, agents, pit)
 
 
 static func separation(
