@@ -103,16 +103,18 @@ const KNOWN_FLAGS: PackedStringArray = [
 	# --rivet-flame=side fires the side cell on the diagonals too (no drawn diagonal flame);
 	# --rivet-flame=all draws the fire cell at any aim (it9: the side flame under an up jet)
 	"--rivet-flame",
-	"--rivet-reload",  # n9-rivet: off keeps the at-rest cell through a reload
+	# n9-rivet: --rivet-reload=off keeps the at-rest cell through a reload (no drawn reload)
+	"--rivet-reload",
 	"--perf-hud",  # d9-perf: draws the frame-budget overlay (dev/perf/perf_hud.gd), read only
 	"--delta-smooth",  # n9-perf: on = FrameDeltaSmoother under mailbox (World._smoothed, L16 arm)
-	"--device",  # d9-handheld: devices.json profile id (window, frame cap, stretch)
+	# d9-handheld: --device=<devices.json id> the handheld profile (window, frame cap, stretch)
+	"--device",
 	# d9-handheld: --save-cross=write|read,<dir>[,ticks,after,idle] (dev/save_cross.gd, E14)
 	"--save-cross",
 	"--vault",  # lane move n19: force low-obstacle vaults on
 	"--no-vault",  # lane move n19: force vaults off
-	"--cover",
-	"--no-cover",
+	"--cover",  # lane move n19: force station cover on
+	"--no-cover",  # lane move n19: force station cover off
 ]
 
 var _values: Dictionary[String, String] = {}
