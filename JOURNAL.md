@@ -294,3 +294,18 @@ Registry rules applied (items 4-5):
   drain; squads arrive 13-33 s after the raise, inside it.
 - `cross-runtime-rules-conformance`: tune values cross as doubles (PT_SQUAD_V0/V1 are art ids
   stored as double, cast at spawn on both sides); the render guard is the same branch on both sides.
+
+### MILESTONE item 6 part 1 (739a90264): quest 1's heat drives the city sim police
+- `CityHeat.mount_quest(world, city, stage.heat)` (one call line in boot/collect_call/
+  quest1_session.gd `_add_city`, outside both lanes' lists: named here) + `StagePolice.step_heat`
+  (the stage's heat lines moved there; collect_call_stage.gd 262 -> 261). Quest mode: the stage's
+  meter sets the level, the sim follows; last-seen starts at Rivet's start, moves on any sighting.
+- heat.json city.quest1 true, quest1_patrol_cops 6, quest1_cars [0,0,0,0].
+- FINDING (bisect on scenario quest1_input, 4 runs ~20-30 s each): connection with the city's cars
+  2/3 + squads: FAIL "not paid: state active at beat b6-hot-walk, tick 90000"; cars 0 + patrol 0:
+  pass; cars 0 + patrol 6: pass; cars 0 + patrol 6 + roadblock: pass. So the dispatched squads
+  stop the bot finishing the heat 3 walk home. Cause inside (shot dead and retrying vs. blocked)
+  not traced. DECISION police/quest1-heat.
+- Test test_quest1_city_heat (the real Quest1Session on the city, 240 ticks): sim heat 2 = stage's,
+  up to 4 city foot cops engaged; before (city.quest1 false): city_heat null (red, run).
+- Quest scenarios 11/11 with it on (quest1_input 19 s).
