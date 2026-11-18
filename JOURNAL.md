@@ -225,6 +225,6 @@ NEXT (session 3, in order):
    and `--file=boot/collect_call/stage_dock_place.gd` (quote the scores).
 6. --quest1-places ON: quest1_input stalls at b4-dock. Investigate why (the walk? the city streaming radius around the
    far dock? waves spawning outside the sim radius?), report; do not make it default.
-7. Reel gate (`node tools/reel/run_reels.mjs`) has not run on this branch yet: run it first thing (it may be long).
+7. Reel gate: PASSED on a9d327061 at 02:09 (3/3 views, exit 0, ~15 min); re-run on the final commit.
 8. Wire the forklift/pallets/gatehouse as yard dressing only if 1-6 are done; then raise the weakest item (the film).
 Session 2 ended ~02:00 with a clean tree; HEAD is the JOURNAL commit after bc29c8a7e.

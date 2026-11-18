@@ -19,7 +19,7 @@ tiles + 2408 plaza/yard/quay tiles; downtown 25 chunks (9.77 %), 2000 block + 50
 (71.48 %), 16125 block + 2175 plaza tiles. Generating all 256 chunks: 5.0 s in the zone-map run; a full bake 6.1 s
 wall (CONTENDED: not under the bench lock).
 Gates on 506761966 (v20 + alt walls): evidence run PASS (lint 19/19, unit 2867/0, scenarios 55/55, parity bit-exact,
-look goldens 11/11, block goldens 5/5). Reel gate not yet run. Mutate dock_painter.gd: 4/12 killed (33.3 %); the
+look goldens 11/11, block goldens 5/5). Reel gate PASS on a9d327061 (3/3 views, exit 0). Mutate dock_painter.gd: 4/12 killed (33.3 %); the
 survivors are look-only, pinned by the golden hash list; the one real gap (:126) got a test (bc29c8a7e).
 
 ## What does not work
