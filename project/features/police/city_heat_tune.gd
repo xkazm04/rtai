@@ -30,6 +30,7 @@ static func load_table(path: String = HeatMeter.TABLE) -> CityHeatTune:
 	out.sim_tune[SimConst.PT_WALK_V] = t.num(c, "walk_mps")
 	out.sim_tune[SimConst.PT_CREW] = t.num(c, "crew")
 	out.sim_tune[SimConst.PT_CAR_STOP_M] = t.num(c, "car_stop_m")
+	out.sim_tune[SimConst.PT_BAIL_S] = t.num(c, "bail_s")
 	var per: Array = t.array(c, "cars")
 	for k: int in mini(4, per.size()):
 		out.cars[k] = t.integer({"n": per[k]}, "n")

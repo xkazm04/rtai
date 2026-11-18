@@ -81,7 +81,7 @@ func _desired_speed(i: int, x: float, y: float, waiting: bool) -> float:
 		var along2: float = x * _r.ddx + y * _r.ddy
 		var dist: float = (_s.jx[i] * _r.ddx + _s.jy[i] * _r.ddy) - along2 - 14.0
 		vdes = minf(vdes, maxf(0.0, dist))
-	if _s.tier[i] != 0 or CitySimPolice.pursuer(_s, i):
+	if _s.tier[i] != 0 or (CitySimPolice.pursuer(_s, i) and _s.heat < 0):
 		return vdes
 	for j: int in _h.query(x + _hx * 7.0, y + _hy * 7.0, 1):
 		if j == i:

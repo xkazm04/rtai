@@ -670,10 +670,16 @@
           "value": 8
         },
         {
+          "doc": "set_police(): a dispatched car stuck this long parks, its crew walks, s",
+          "name": "PT_BAIL_S",
+          "type": "int",
+          "value": 9
+        },
+        {
           "doc": "set_police() length",
           "name": "PT_LEN",
           "type": "int",
-          "value": 9
+          "value": 10
         },
         {
           "doc": "crowd art id of a foot cop (the spawner's cop look)",

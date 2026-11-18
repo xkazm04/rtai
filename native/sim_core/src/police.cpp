@@ -173,14 +173,15 @@ double CityCore::car_police_speed(const Car &c, double vdes) const {
 	return ax * ax + ay * ay <= r * r ? 0.0 : vdes;
 }
 
-// Stopped there (under 0.5 m/s): the car parks and its crew gets out 2 m to the side facing the
+// Stopped there (under 0.5 m/s), or stuck en route longer than PT_BAIL_S (it follows traffic
+// under heat): the car parks and its crew gets out 2 m to the side facing the
 // point (the flow field does not see cars: a crew on the far side pressed into its own car),
 // 1.4 m apart along it, facing out.
 void CityCore::car_unload(const Car &c) {
 	int i = c.i;
 	if ((flags_[i] & F_ENGAGED) == 0 || c.vv >= 0.5) return;
 	double ax = c.x - heat_x_, ay = c.y - heat_y_, r = pol_[PT_CAR_STOP_M];
-	if (ax * ax + ay * ay > r * r) return;
+	if (ax * ax + ay * ay > r * r && stuck_[i] <= pol_[PT_BAIL_S]) return;  // or bail out, stuck
 	flags_[i] = (uint8_t)((flags_[i] & ~F_ENGAGED) | F_PARKED);
 	int n = (int)pol_[PT_CREW];
 	double sx = -c.hhy, sy = c.hhx;

@@ -9,6 +9,10 @@
           "exclusiveMinimum": 0,
           "type": "number"
         },
+        "bail_s": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
         "car_delay_s": {
           "minimum": 0,
           "type": "number"
@@ -85,7 +89,8 @@
         "car_delay_s",
         "car_ring_m",
         "crew",
-        "car_stop_m"
+        "car_stop_m",
+        "bail_s"
       ],
       "type": "object"
     },

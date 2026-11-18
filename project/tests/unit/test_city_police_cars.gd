@@ -108,3 +108,24 @@ func test_the_search_waits_for_a_dispatched_car_en_route() -> void:
 	for t: int in 300:
 		_step(sim, RIVET)
 	assert_eq(CityRoadMap.count(sim, SimConst.K_COP), 3, "the car arrived and its crew got out")
+
+
+## A dispatched car behind a stopped car (the sandbox's junction pile-ups) brakes like traffic and,
+## stuck PT_BAIL_S, parks there; its crew goes on foot (before: it rammed the stopped car along at
+## ~0.9 m/s and no crew came for ~40 s).
+func test_a_car_stuck_in_traffic_parks_and_its_crew_goes_on_foot() -> void:
+	var sim: CitySimRef = _map()
+	var block: Array = [SimConst.K_CAR, 300.0, CityRoadMap.LANE_E, 1.0, 0.0, 0, 0, 0.0]
+	var blocker: int = sim.spawn(PackedFloat64Array(block + [CityRoadMap.LANE_E, 0]))
+	var car: int = CityRoadMap.dispatch_car(sim, 262.0)
+	sim.set_heat(2, POINT.x, POINT.y)
+	var out_tick: int = -1
+	for t: int in 600:
+		_step(sim, RIVET)
+		if CityRoadMap.count(sim, SimConst.K_COP) > 0:
+			out_tick = t + 1
+			break
+	gut.p("stuck in traffic: crew out at tick %d (-1 = not in 10 s)" % out_tick)
+	assert_gt(out_tick, 0, "bailed out inside 10 s")
+	assert_lt(CityWallMap.pos(sim, car).x, 300.0, "parked behind the stopped car")
+	assert_almost_eq(CityWallMap.pos(sim, blocker).x, 300.0, 0.5, "the stopped car was not rammed")

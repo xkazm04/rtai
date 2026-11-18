@@ -13,7 +13,7 @@ var level: int = -1
 var heat_x: float = 0.0
 var heat_y: float = 0.0
 ## The ladder's tune (SimConst.PT_LEN, data/tables/heat.json `city`); kept across reset().
-var tune: PackedFloat64Array = PackedFloat64Array([0.0, 3.0, 4.0, 6.0, 10.0, 3.0, 1.4, 2.0, 12.0])
+var tune: PackedFloat64Array = [0.0, 3.0, 4.0, 6.0, 10.0, 3.0, 1.4, 2.0, 12.0, 4.0]
 var _s: CitySimState
 var _flow: CitySimFlow
 var _cx: int = 0
@@ -172,7 +172,7 @@ func car_unload(i: int, x: float, y: float, hv: PackedFloat64Array) -> void:
 	var ax: float = x - heat_x
 	var ay: float = y - heat_y
 	var r: float = tune[SimConst.PT_CAR_STOP_M]
-	if ax * ax + ay * ay > r * r:
+	if ax * ax + ay * ay > r * r and _s.stuck[i] <= tune[SimConst.PT_BAIL_S]:
 		return
 	_s.flags[i] = (_s.flags[i] & ~SimConst.F_ENGAGED) | SimConst.F_PARKED
 	var n: int = int(tune[SimConst.PT_CREW])
