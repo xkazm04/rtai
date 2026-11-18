@@ -103,7 +103,7 @@ func _add_places(ids: String) -> void:
 			continue
 		var door: Vector2 = p["door"]
 		printerr("zone_frame: place %s door %s cell %s" % [id, door, p["cell"]])
-		_shots.append(["place-" + id, door + Vector2(0.0, -6.0)])
+		_shots.append(["place-" + id, door])  # Rivet stands at the focus: on the door, not the roof
 
 
 func _focus(p: Vector2) -> void:
