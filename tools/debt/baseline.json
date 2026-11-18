@@ -62,7 +62,8 @@
         "2026-11-18: The 80-line headless arena cost scene measures 400 mobile guard approaches, including cold path searches and the open-street control. (dev_loc 22644 -> 22724)",
         "2026-11-18: n19 gfx: fixed-seed traffic census over every chunk and synchronized world ticks for district film comparisons (dev_loc 22724 -> 22800)",
         "2026-11-18: n19 gfx: fixed-camera traffic film with on-screen moving-car counts read from each sim tick (dev_loc 22800 -> 22926)",
-        "2026-11-18: n19 gfx: fixed-seed far-cop frame and MultiMesh readback evidence (dev_loc 22926 -> 23027)"
+        "2026-11-18: n19 gfx: fixed-seed far-cop frame and MultiMesh readback evidence (dev_loc 22926 -> 23027)",
+        "2026-11-18: n19 gfx: count live traffic quads and replay every sample for the district film captions (dev_loc 23027 -> 23098)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -93,10 +94,10 @@
         "project/dev/servo": 434,
         "project/dev/showcase": 6775,
         "project/dev/sim": 893,
-        "project/dev/view": 568,
+        "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 23027
+      "total": 23098
     },
     "direct_cmdline_reads": {
       "accepted": [

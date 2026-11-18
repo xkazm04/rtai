@@ -1,223 +1,474 @@
 {
-  "schema": "gtai.zone-traffic-film/2",
-  "master_dir": "C:/Users/kazda/kiro/gtai-masters/n19/gfx/zones",
+  "schema": "gtai.zone-traffic-film/3",
   "scene": "res://dev/view/zone_traffic_film.tscn",
+  "masters": "C:/Users/kazda/kiro/gtai-masters/n19/gfx/zones",
+  "index": "frames.json",
   "seed": 91,
-  "ppm": 32,
-  "target_cars": 75,
   "window_px": [
     1920,
     1080
   ],
   "fps": 15,
   "seconds": 10,
-  "comparison_tick": 116,
-  "frames": "frames.json",
-  "moving": "K_CAR with centre on screen and speed > 0.2 m/s. Bikes disabled.",
-  "shots": {
-    "fixed-after-docks-top": {
-      "movie": "fixed-after-docks-top/traffic.mp4",
-      "still": "fixed-after-docks-top/f013.png",
-      "timeline": "fixed-after-docks-top/ticks.json",
-      "art": [
-        3,
-        2,
-        1,
-        0,
-        1,
-        2,
-        0,
-        0
+  "frames": 150,
+  "first_tick": 64,
+  "last_tick": 660,
+  "step_ticks": 4,
+  "comparison_tick": 468,
+  "selection": "Every live K_CAR from the sim snapshot whose oriented 6.4 by 3.2 m render quad overlaps the viewport. Variants come from the same sim slot. All speeds count. Bikes are disabled. Kerb-parked generator props belong to chunk draw lists and have no live car slot.",
+  "art_groups": {
+    "van": [
+      4
+    ],
+    "pickup": [
+      5
+    ],
+    "taxi": [
+      3
+    ],
+    "ambulance": [
+      6
+    ],
+    "sedans": [
+      0,
+      1,
+      2,
+      7
+    ]
+  },
+  "clip_counts": "Car-frame observations, summed once per visible car per sampled frame. Moving samples have speed above 0.2 m/s. Each share uses all observations in its panel.",
+  "panels": {
+    "after-docks-top-32": {
+      "camera_m": [
+        1864,
+        1042
       ],
-      "moving": 9,
-      "tick": 116
+      "target_cars": 24,
+      "view": "top",
+      "ppm": 32,
+      "arm": "after",
+      "tick_counts": {
+        "van": 2,
+        "pickup": 3,
+        "taxi": 0,
+        "ambulance": 0,
+        "sedans": 3
+      },
+      "tick_moving": 8,
+      "clip_counts": {
+        "van": 366,
+        "pickup": 401,
+        "taxi": 8,
+        "ambulance": 0,
+        "sedans": 668
+      },
+      "clip_share_percent": {
+        "vans_plus_pickups": 53.15,
+        "taxis": 0.55
+      },
+      "clip_moving_samples": 1404,
+      "movie": "docks3-top.mp4"
     },
-    "fixed-after-docks-tilt70": {
-      "movie": "fixed-after-docks-tilt70/traffic.mp4",
-      "still": "fixed-after-docks-tilt70/f013.png",
-      "timeline": "fixed-after-docks-tilt70/ticks.json",
-      "art": [
-        3,
-        2,
-        1,
-        0,
-        1,
-        2,
-        0,
-        0
+    "before-docks-top-32": {
+      "camera_m": [
+        1864,
+        1042
       ],
-      "moving": 9,
-      "tick": 116
+      "target_cars": 24,
+      "view": "top",
+      "ppm": 32,
+      "arm": "before",
+      "tick_counts": {
+        "van": 1,
+        "pickup": 2,
+        "taxi": 2,
+        "ambulance": 0,
+        "sedans": 3
+      },
+      "tick_moving": 8,
+      "clip_counts": {
+        "van": 195,
+        "pickup": 298,
+        "taxi": 293,
+        "ambulance": 109,
+        "sedans": 548
+      },
+      "clip_share_percent": {
+        "vans_plus_pickups": 34.16,
+        "taxis": 20.3
+      },
+      "clip_moving_samples": 1404,
+      "movie": "baseline3/docks-top.mp4"
     },
-    "fixed-after-downtown-top": {
-      "movie": "fixed-after-downtown-top/traffic.mp4",
-      "still": "fixed-after-downtown-top/f013.png",
-      "timeline": "fixed-after-downtown-top/ticks.json",
-      "art": [
-        1,
-        2,
-        3,
-        3,
-        0,
-        0,
-        0,
-        0
+    "after-docks-tilt70-32": {
+      "camera_m": [
+        1864,
+        1042
       ],
-      "moving": 9,
-      "tick": 116
+      "target_cars": 24,
+      "view": "tilt70",
+      "ppm": 32,
+      "arm": "after",
+      "tick_counts": {
+        "van": 2,
+        "pickup": 3,
+        "taxi": 0,
+        "ambulance": 0,
+        "sedans": 3
+      },
+      "tick_moving": 8,
+      "clip_counts": {
+        "van": 366,
+        "pickup": 401,
+        "taxi": 8,
+        "ambulance": 0,
+        "sedans": 668
+      },
+      "clip_share_percent": {
+        "vans_plus_pickups": 53.15,
+        "taxis": 0.55
+      },
+      "clip_moving_samples": 1404,
+      "movie": "docks3-tilt70.mp4"
     },
-    "fixed-after-downtown-tilt70": {
-      "movie": "fixed-after-downtown-tilt70/traffic.mp4",
-      "still": "fixed-after-downtown-tilt70/f013.png",
-      "timeline": "fixed-after-downtown-tilt70/ticks.json",
-      "art": [
-        1,
-        2,
-        3,
-        3,
-        0,
-        0,
-        0,
-        0
+    "before-docks-tilt70-32": {
+      "camera_m": [
+        1864,
+        1042
       ],
-      "moving": 9,
-      "tick": 116
+      "target_cars": 24,
+      "view": "tilt70",
+      "ppm": 32,
+      "arm": "before",
+      "tick_counts": {
+        "van": 1,
+        "pickup": 2,
+        "taxi": 2,
+        "ambulance": 0,
+        "sedans": 3
+      },
+      "tick_moving": 8,
+      "clip_counts": {
+        "van": 195,
+        "pickup": 298,
+        "taxi": 293,
+        "ambulance": 109,
+        "sedans": 548
+      },
+      "clip_share_percent": {
+        "vans_plus_pickups": 34.16,
+        "taxis": 20.3
+      },
+      "clip_moving_samples": 1404,
+      "movie": "baseline3/docks-tilt70.mp4"
     },
-    "fixed-after-mixed-top": {
-      "movie": "fixed-after-mixed-top/traffic.mp4",
-      "still": "fixed-after-mixed-top/f013.png",
-      "timeline": "fixed-after-mixed-top/ticks.json",
-      "art": [
-        1,
-        1,
-        5,
-        1,
-        0,
-        0,
-        0,
-        1
+    "after-downtown-top-32": {
+      "camera_m": [
+        940,
+        978
       ],
-      "moving": 9,
-      "tick": 116
+      "target_cars": 24,
+      "view": "top",
+      "ppm": 32,
+      "arm": "after",
+      "tick_counts": {
+        "van": 1,
+        "pickup": 0,
+        "taxi": 3,
+        "ambulance": 0,
+        "sedans": 3
+      },
+      "tick_moving": 4,
+      "clip_counts": {
+        "van": 118,
+        "pickup": 0,
+        "taxi": 337,
+        "ambulance": 0,
+        "sedans": 379
+      },
+      "clip_share_percent": {
+        "vans_plus_pickups": 14.15,
+        "taxis": 40.41
+      },
+      "clip_moving_samples": 527,
+      "movie": "downtown3-top.mp4"
     },
-    "fixed-after-mixed-tilt70": {
-      "movie": "fixed-after-mixed-tilt70/traffic.mp4",
-      "still": "fixed-after-mixed-tilt70/f013.png",
-      "timeline": "fixed-after-mixed-tilt70/ticks.json",
-      "art": [
-        1,
-        1,
-        5,
-        1,
-        0,
-        0,
-        0,
-        1
+    "before-downtown-top-32": {
+      "camera_m": [
+        940,
+        978
       ],
-      "moving": 9,
-      "tick": 116
+      "target_cars": 24,
+      "view": "top",
+      "ppm": 32,
+      "arm": "before",
+      "tick_counts": {
+        "van": 0,
+        "pickup": 1,
+        "taxi": 1,
+        "ambulance": 1,
+        "sedans": 4
+      },
+      "tick_moving": 4,
+      "clip_counts": {
+        "van": 0,
+        "pickup": 133,
+        "taxi": 137,
+        "ambulance": 187,
+        "sedans": 377
+      },
+      "clip_share_percent": {
+        "vans_plus_pickups": 15.95,
+        "taxis": 16.43
+      },
+      "clip_moving_samples": 527,
+      "movie": "baseline3/downtown-top.mp4"
     },
-    "fixed-before-docks-top": {
-      "movie": "fixed-before-docks-top/traffic.mp4",
-      "still": "fixed-before-docks-top/f013.png",
-      "timeline": "fixed-before-docks-top/ticks.json",
-      "art": [
-        0,
-        1,
-        2,
-        2,
-        2,
-        1,
-        1,
-        0
+    "after-downtown-tilt70-32": {
+      "camera_m": [
+        940,
+        978
       ],
-      "moving": 9,
-      "tick": 116
+      "target_cars": 24,
+      "view": "tilt70",
+      "ppm": 32,
+      "arm": "after",
+      "tick_counts": {
+        "van": 1,
+        "pickup": 0,
+        "taxi": 3,
+        "ambulance": 0,
+        "sedans": 3
+      },
+      "tick_moving": 4,
+      "clip_counts": {
+        "van": 121,
+        "pickup": 0,
+        "taxi": 378,
+        "ambulance": 0,
+        "sedans": 392
+      },
+      "clip_share_percent": {
+        "vans_plus_pickups": 13.58,
+        "taxis": 42.42
+      },
+      "clip_moving_samples": 570,
+      "movie": "downtown3-tilt70.mp4"
     },
-    "fixed-before-docks-tilt70": {
-      "movie": "fixed-before-docks-tilt70/traffic.mp4",
-      "still": "fixed-before-docks-tilt70/f013.png",
-      "timeline": "fixed-before-docks-tilt70/ticks.json",
-      "art": [
-        0,
-        1,
-        2,
-        2,
-        2,
-        1,
-        1,
-        0
+    "before-downtown-tilt70-32": {
+      "camera_m": [
+        940,
+        978
       ],
-      "moving": 9,
-      "tick": 116
+      "target_cars": 24,
+      "view": "tilt70",
+      "ppm": 32,
+      "arm": "before",
+      "tick_counts": {
+        "van": 0,
+        "pickup": 1,
+        "taxi": 1,
+        "ambulance": 1,
+        "sedans": 4
+      },
+      "tick_moving": 4,
+      "clip_counts": {
+        "van": 0,
+        "pickup": 136,
+        "taxi": 137,
+        "ambulance": 188,
+        "sedans": 430
+      },
+      "clip_share_percent": {
+        "vans_plus_pickups": 15.26,
+        "taxis": 15.38
+      },
+      "clip_moving_samples": 570,
+      "movie": "baseline3/downtown-tilt70.mp4"
     },
-    "fixed-before-downtown-top": {
-      "movie": "fixed-before-downtown-top/traffic.mp4",
-      "still": "fixed-before-downtown-top/f013.png",
-      "timeline": "fixed-before-downtown-top/ticks.json",
-      "art": [
-        0,
-        2,
-        2,
-        3,
-        1,
-        0,
-        1,
-        0
+    "after-mixed-top-32": {
+      "camera_m": [
+        550,
+        529
       ],
-      "moving": 9,
-      "tick": 116
+      "target_cars": 24,
+      "view": "top",
+      "ppm": 32,
+      "arm": "after",
+      "tick_counts": {
+        "van": 1,
+        "pickup": 0,
+        "taxi": 1,
+        "ambulance": 1,
+        "sedans": 6
+      },
+      "tick_moving": 4,
+      "clip_counts": {
+        "van": 150,
+        "pickup": 52,
+        "taxi": 105,
+        "ambulance": 124,
+        "sedans": 709
+      },
+      "clip_share_percent": {
+        "vans_plus_pickups": 17.72,
+        "taxis": 9.21
+      },
+      "clip_moving_samples": 662,
+      "movie": "mixed3-top.mp4"
     },
-    "fixed-before-downtown-tilt70": {
-      "movie": "fixed-before-downtown-tilt70/traffic.mp4",
-      "still": "fixed-before-downtown-tilt70/f013.png",
-      "timeline": "fixed-before-downtown-tilt70/ticks.json",
-      "art": [
-        0,
-        2,
-        2,
-        3,
-        1,
-        0,
-        1,
-        0
+    "before-mixed-top-32": {
+      "camera_m": [
+        550,
+        529
       ],
-      "moving": 9,
-      "tick": 116
+      "target_cars": 24,
+      "view": "top",
+      "ppm": 32,
+      "arm": "before",
+      "tick_counts": {
+        "van": 1,
+        "pickup": 0,
+        "taxi": 1,
+        "ambulance": 1,
+        "sedans": 6
+      },
+      "tick_moving": 4,
+      "clip_counts": {
+        "van": 150,
+        "pickup": 52,
+        "taxi": 105,
+        "ambulance": 124,
+        "sedans": 709
+      },
+      "clip_share_percent": {
+        "vans_plus_pickups": 17.72,
+        "taxis": 9.21
+      },
+      "clip_moving_samples": 662,
+      "movie": "baseline3/mixed-top.mp4"
     },
-    "fixed-before-mixed-top": {
-      "movie": "fixed-before-mixed-top/traffic.mp4",
-      "still": "fixed-before-mixed-top/f013.png",
-      "timeline": "fixed-before-mixed-top/ticks.json",
-      "art": [
-        1,
-        1,
-        5,
-        1,
-        0,
-        0,
-        0,
-        1
+    "after-mixed-tilt70-32": {
+      "camera_m": [
+        550,
+        529
       ],
-      "moving": 9,
-      "tick": 116
+      "target_cars": 24,
+      "view": "tilt70",
+      "ppm": 32,
+      "arm": "after",
+      "tick_counts": {
+        "van": 1,
+        "pickup": 0,
+        "taxi": 1,
+        "ambulance": 1,
+        "sedans": 6
+      },
+      "tick_moving": 4,
+      "clip_counts": {
+        "van": 150,
+        "pickup": 54,
+        "taxi": 105,
+        "ambulance": 124,
+        "sedans": 758
+      },
+      "clip_share_percent": {
+        "vans_plus_pickups": 17.13,
+        "taxis": 8.82
+      },
+      "clip_moving_samples": 697,
+      "movie": "mixed3-tilt70.mp4"
     },
-    "fixed-before-mixed-tilt70": {
-      "movie": "fixed-before-mixed-tilt70/traffic.mp4",
-      "still": "fixed-before-mixed-tilt70/f013.png",
-      "timeline": "fixed-before-mixed-tilt70/ticks.json",
-      "art": [
-        1,
-        1,
-        5,
-        1,
-        0,
-        0,
-        0,
-        1
+    "before-mixed-tilt70-32": {
+      "camera_m": [
+        550,
+        529
       ],
-      "moving": 9,
-      "tick": 116
+      "target_cars": 24,
+      "view": "tilt70",
+      "ppm": 32,
+      "arm": "before",
+      "tick_counts": {
+        "van": 1,
+        "pickup": 0,
+        "taxi": 1,
+        "ambulance": 1,
+        "sedans": 6
+      },
+      "tick_moving": 4,
+      "clip_counts": {
+        "van": 150,
+        "pickup": 54,
+        "taxi": 105,
+        "ambulance": 124,
+        "sedans": 758
+      },
+      "clip_share_percent": {
+        "vans_plus_pickups": 17.13,
+        "taxis": 8.82
+      },
+      "clip_moving_samples": 697,
+      "movie": "baseline3/mixed-tilt70.mp4"
+    },
+    "after-docks-top-64": {
+      "camera_m": [
+        1870,
+        1036
+      ],
+      "target_cars": 24,
+      "view": "top",
+      "ppm": 64,
+      "arm": "after",
+      "tick_counts": {
+        "van": 1,
+        "pickup": 2,
+        "taxi": 0,
+        "ambulance": 0,
+        "sedans": 0
+      },
+      "tick_moving": 3,
+      "clip_counts": {
+        "van": 163,
+        "pickup": 331,
+        "taxi": 0,
+        "ambulance": 0,
+        "sedans": 375
+      },
+      "clip_share_percent": {
+        "vans_plus_pickups": 56.85,
+        "taxis": 0.0
+      },
+      "clip_moving_samples": 831
+    },
+    "before-docks-top-64": {
+      "camera_m": [
+        1870,
+        1036
+      ],
+      "target_cars": 24,
+      "view": "top",
+      "ppm": 64,
+      "arm": "before",
+      "tick_counts": {
+        "van": 0,
+        "pickup": 2,
+        "taxi": 0,
+        "ambulance": 0,
+        "sedans": 1
+      },
+      "tick_moving": 3,
+      "clip_counts": {
+        "van": 99,
+        "pickup": 258,
+        "taxi": 199,
+        "ambulance": 28,
+        "sedans": 285
+      },
+      "clip_share_percent": {
+        "vans_plus_pickups": 41.08,
+        "taxis": 22.9
+      },
+      "clip_moving_samples": 831
     }
   }
 }
