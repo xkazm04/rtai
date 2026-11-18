@@ -139,6 +139,7 @@
         92
       ],
       "water_tiles": 3,
+      "yard_ground": 116,
       "yard_prop_share": 0.6,
       "yard_props": [
         95,

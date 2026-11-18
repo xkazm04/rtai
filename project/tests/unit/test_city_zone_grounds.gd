@@ -1,7 +1,8 @@
 extends GutTest
 ## A zone's own ground (n18 districts item 3, the asset lane's it471 grounds): downtown's plaza
 ## tiles draw its plaza_ground (granite running bond) turned only 0 / 180 deg, the docks' quay
-## apron draws its apron_ground, and the mixed zone's plazas keep the sidewalk paving 13.
+## apron draws its apron_ground, its container yards their yard_ground unturned (painted bays
+## under DockPainter.YARD_SLOTS), and the mixed zone's plazas keep the sidewalk paving 13.
 
 const DISTRICT: String = "res://data/tables/city_district.json"
 const TEXTURES: String = "res://data/tables/city_textures.json"
@@ -68,3 +69,16 @@ func test_the_quay_apron_draws_the_docks_apron_ground() -> void:
 		for gr: Vector2 in _grounds(15, cy, SimConst.T_PLAZA):
 			aprons += 1 if int(gr.x) == want else 0
 	assert_gt(aprons, 10, "the east edge's apron tiles draw the apron ground")
+
+
+func test_docks_yards_draw_the_yard_ground_unturned() -> void:
+	var want: int = _zone(&"docks").yard_ground
+	assert_gt(want, PAVING)
+	var yards: int = 0
+	for cy: int in range(0, 16):
+		for cx: int in range(12, 16):
+			for gr: Vector2 in _grounds(cx, cy, SimConst.T_PLAZA):
+				if int(gr.x) == want:
+					yards += 1
+					assert_eq(gr.y, 0.0, "painted bays turned off their YARD_SLOTS rows")
+	assert_gt(yards, 20, "the docks have yard tiles")

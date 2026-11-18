@@ -1277,6 +1277,17 @@
         2.2
       ],
       "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/ground/dock_yard.png",
+      "class": "ground",
+      "id": 116,
+      "name": "dock_yard",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
     }
   ]
 }

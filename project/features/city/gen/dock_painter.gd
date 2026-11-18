@@ -100,12 +100,15 @@ func quay(g: CityGen, b: ChunkBuild, kerb: KerbDresser, t: Vector2i, apron: bool
 	return SimConst.T_PLAZA
 
 
-## A container-yard tile: paving, then a stack in each YARD_SLOTS row under yard_prop_share (a
-## 0 / 180 turn; the card's broadside faces the camera either way).
+## A container-yard tile: paving (the zone's yard_ground, unturned), then a stack in each
+## YARD_SLOTS row under yard_prop_share (a 0 / 180 turn; the broadside faces the camera).
 func yard(g: CityGen, b: ChunkBuild, kerb: KerbDresser, zone: CityZone, t: Vector2i) -> int:
 	var o: Vector2 = TilePainter.origin(t)
 	var turn: float = deg_to_rad(90.0 * int(g.rnd(t.x, t.y, 0, 26) * 4.0))
-	b.add(ChunkBuild.L_GROUND, T_PAVING, o + Vector2(4.0, 4.0), turn)
+	if zone.yard_ground >= 0:  # painted bays line up with YARD_SLOTS: never turned
+		b.add(ChunkBuild.L_GROUND, zone.yard_ground, o + Vector2(4.0, 4.0), 0.0)
+	else:
+		b.add(ChunkBuild.L_GROUND, T_PAVING, o + Vector2(4.0, 4.0), turn)
 	b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_WALK)
 	b.chunk.dens_ped[TilePainter.local_index(t)] = int(zone.ped_plaza * b.district)
 	for k: int in YARD_SLOTS.size():

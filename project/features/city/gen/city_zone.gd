@@ -81,6 +81,9 @@ var plaza_ground: int = -1
 var plaza_singles: Array[int] = []
 ## The docks quay apron's ground (-1 = the sidewalk paving 13), in quarter turns.
 var apron_ground: int = -1
+## A container-yard tile's ground (-1 = the sidewalk paving 13 in quarter turns): painted bays
+## under DockPainter.YARD_SLOTS, so it never turns.
+var yard_ground: int = -1
 ## At most one lettered landmark roof a block (BlockPainter.sign_tile; false = the v14 rule).
 var one_sign: bool = false
 var yard_prop_share: float = 0.0
@@ -94,7 +97,13 @@ static func from_row(row: Dictionary) -> CityZone:
 			var f: float = row[key]
 			z.set(key, f)
 	for key: String in [
-		"car_lane", "street_keep_x", "water_tiles", "plaza_centre", "plaza_ground", "apron_ground"
+		"car_lane",
+		"street_keep_x",
+		"water_tiles",
+		"plaza_centre",
+		"plaza_ground",
+		"apron_ground",
+		"yard_ground",
 	]:
 		if row.has(key):
 			var f: float = row[key]

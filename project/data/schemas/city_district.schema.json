@@ -255,6 +255,12 @@
             "minimum": 0,
             "type": "integer"
           },
+          "yard_ground": {
+            "description": "a container-yard tile's ground (painted bays under DockPainter.YARD_SLOTS), a city_textures id, never turned; absent = the sidewalk paving 13 in quarter turns",
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
           "yard_prop_share": {
             "maximum": 1,
             "minimum": 0,
