@@ -30,7 +30,9 @@ func _init(source: StageCells) -> void:
 
 
 ## Each unknown cell remains its own solid box. A building or void always has unknown height.
-func collect(bounds: Rect2, out: Dictionary[Rect2, String]) -> void:
+func collect(
+	bounds: Rect2, out: Dictionary[Rect2, String], owners: Dictionary[Rect2, Prop] = {}
+) -> void:
 	for y: int in range(floori(bounds.position.y), ceili(bounds.end.y)):
 		for x: int in range(floori(bounds.position.x), ceili(bounds.end.x)):
 			if not cells.solid(x, y):
@@ -42,7 +44,8 @@ func collect(bounds: Rect2, out: Dictionary[Rect2, String]) -> void:
 				var prop: Prop = owner(cell)
 				if prop != null:
 					box = prop.bounds
-					kind = prop.kind
+					kind = prop.kind if not out.has(box) or owners.get(box) == prop else ""
+					owners[box] = prop
 			out[box] = kind if out.get(box, kind) == kind else ""
 
 

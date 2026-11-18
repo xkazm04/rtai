@@ -17,6 +17,7 @@ var refused: Dictionary[StringName, int] = {}
 var started: int = 0
 var landed: int = 0
 var attempts: int = 0
+var airborne_ticks: int = 0
 var city_starts: Dictionary[String, int] = {}
 
 
@@ -35,11 +36,11 @@ func run(_tree: SceneTree) -> String:
 	Log.info(
 		"vault",
 		(
-			"attempts %d started %d refused %s landed %d; city %s"
-			% [attempts, started, refused, landed, city_starts]
+			"attempts %d started %d refused %s landed %d airborne ticks %d; city %s"
+			% [attempts, started, refused, landed, airborne_ticks, city_starts]
 		)
 	)
-	if started == 0 or started != landed or not city_starts.has("sedan"):
+	if airborne_ticks == 0 or started == 0 or started != landed or not city_starts.has("sedan"):
 		return "expected every started vault to land and a parked sedan crossing"
 	for kind: String in ["bollard", "bench", "planter", "fire_hydrant", "trash_can"]:
 		if city_starts.has(kind):
@@ -148,7 +149,12 @@ func _attempt(stage: ArenaStage, dir: Vector2, press: int) -> String:
 		stage.step(
 			attempts * 52 + i, _input_for(stage, dir if i <= press else Vector2.ZERO, i == press)
 		)
-		if not vault.probe.clear_at(body.pos, body.radius_m):
+		if vault.airborne():
+			var mask: int = vault.probe.contacts(body.pos, body.radius_m, vault.hit)
+			if mask != VaultProbe.Contact.TARGET or vault.hit.height > vault.probe.max_height:
+				return "airborne contact with a foreign or high solid at %s" % body.pos
+			airborne_ticks += 1
+		elif not vault.probe.clear_at(body.pos, body.radius_m):
 			return "overlap tick %d pos %s phase %d" % [i, body.pos, motion.phase]
 		if i == press:
 			if vault.hit == null:

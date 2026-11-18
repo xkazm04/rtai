@@ -50,6 +50,7 @@ func test_low_cover_commits_until_landing_with_iframes_and_no_shots() -> void:
 	_course("cover_low")
 	pilot.hold.held = body.weapon
 	pilot.hold.state = WeaponHold.State.READY
+	var previous: Vector2 = body.pos
 	for i: int in 18:
 		stage.step(i, _command(i == 0))
 		if i == 0:
@@ -57,7 +58,13 @@ func test_low_cover_commits_until_landing_with_iframes_and_no_shots() -> void:
 		assert_eq(body.exposed, not (i >= 3 and i <= 12))
 		assert_eq(stage.shots_fired, 0)
 		var box: Rect2 = stage.walls.boxes[0]
-		assert_gte(body.pos.distance_to(body.pos.clamp(box.position, box.end)), radius)
+		var over: bool = body.pos.distance_to(body.pos.clamp(box.position, box.end)) < radius
+		assert_eq(motion.vault.airborne(), over)
+		var mean: float = origin.distance_to(motion.vault.hit.landing) / motion.vault.ticks
+		assert_gt(body.pos.y, previous.y)
+		assert_lte(body.pos.distance_to(previous), 2.0 * mean)
+		previous = body.pos
+		assert_almost_eq(motion.vault.lift(), 1.0 - pow((i + 1) / 9.0 - 1.0, 2), 1e-6)
 	assert_eq(motion.phase, PlayerMotion.Phase.RECOVER)
 	assert_gt(body.pos.y, stage.walls.boxes[0].end.y + radius)
 	stage.step(18, _command(false))
@@ -114,7 +121,7 @@ func test_city_building_and_generated_low_prop() -> void:
 	assert_eq(motion.phase, PlayerMotion.Phase.VAULT)
 	for i: int in range(1, 18):
 		stage.step(i, _command(false))
-		assert_true(stage.cells.clear(body.pos, radius))
+		assert_eq(motion.vault.airborne(), not stage.cells.clear(body.pos, radius))
 	assert_gt(body.pos.y, 47.0 + radius)
 	_course("cover_low")
 	stage.cells = StageCells.shipped()

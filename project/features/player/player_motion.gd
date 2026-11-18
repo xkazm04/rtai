@@ -140,8 +140,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(_cooldown)
 	out.put_float(roll_dir.x)
 	out.put_float(roll_dir.y)
-	if phase == Phase.VAULT:
-		vault.write_state(out)
+	vault.write_state(out, phase)
 
 
 func _free_step(c: PlayerCommand, walk_mps: float, actions: PlayerActions) -> Vector2:

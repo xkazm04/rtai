@@ -1,8 +1,7 @@
 class_name PlayerVault
 extends RefCounted
-## The committed crossing. The stage always collides its grounded circle after resolving bodies.
-## It approaches the near face, transfers across at mid-flight, and settles past the far face.
-## Start and landing also define the uninterrupted airborne path for the pose.
+## The committed crossing uses the same eased world position for combat, collision and the rig.
+## Only contact with the selected low obstacle may bypass the stage's ground collision pass.
 
 var enabled: bool = false
 var ticks: int
@@ -17,6 +16,7 @@ var position: Vector2
 ## Tick just executed, including the final tick whose next phase is RECOVER.
 var frame: int = -1
 var owns_move: bool = false
+var _body: Fighter
 var _radius: float
 var _ready: bool = false
 var _stations: ArenaStations
@@ -58,8 +58,9 @@ func prepare(stage: CollectCallStage) -> void:
 	if not enabled:
 		return
 	_bind(stage)
-	start = stage.arena.rivet.pos
-	_radius = stage.arena.rivet.radius_m
+	_body = stage.arena.rivet
+	start = _body.pos
+	_radius = _body.radius_m
 	_ready = true
 
 
@@ -92,19 +93,34 @@ func advance(k: int) -> int:
 	owns_move = true
 	frame = k
 	var u: float = float(k + 1) / ticks
-	if u < 0.5:
-		position = start.lerp(hit.takeoff, 2.0 * u)
-	else:
-		position = hit.touchdown.lerp(hit.landing, 2.0 * u - 1.0)
+	position = start.lerp(hit.landing, smoothstep(0.0, 1.0, u))
 	return (k + 1) % ticks
+
+
+## Read the fighter after body resolution as collision can displace him from the sampled path.
+func airborne() -> bool:
+	return frame >= 0 and probe.contacts(_body.pos, _radius, hit) == VaultProbe.Contact.TARGET
+
+
+## Parabolic visual lift, normalized to reach one on the middle tick of any multi-tick vault.
+func lift() -> float:
+	if frame < 0 or ticks < 2:
+		return 0.0
+	var elapsed: int = frame + 1
+	var middle: int = ticks >> 1
+	return float(elapsed * (ticks - elapsed)) / (middle * (ticks - middle))
 
 
 func invulnerable() -> bool:
 	return frame >= 0 and frame >= iframe_from and frame <= iframe_to
 
 
-func write_state(out: StreamPeerBuffer) -> void:
-	for p: Vector2 in [start, hit.takeoff, hit.touchdown, hit.landing]:
+func write_state(out: StreamPeerBuffer, phase: PlayerMotion.Phase) -> void:
+	if phase != PlayerMotion.Phase.VAULT:
+		return
+	out.put_u8(1 if hit.city_prop != null else 0)
+	out.put_float(_radius)
+	for p: Vector2 in [start, hit.landing, hit.box.position, hit.box.size]:
 		out.put_float(p.x)
 		out.put_float(p.y)
 

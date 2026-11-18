@@ -3,14 +3,16 @@ extends RefCounted
 ## A press-time query. The nearest face wins, even when its height is unknown. Other solids
 ## along the crossing can veto it, including city cells underneath an arena station.
 
+enum Contact { TARGET = 1, OTHER = 2 }
+
 
 class Hit:
 	extends RefCounted
 	var reason: StringName = &"none"
 	var entry: Vector2 = Vector2.ZERO
 	var landing: Vector2 = Vector2.ZERO
-	var takeoff: Vector2 = Vector2.ZERO
-	var touchdown: Vector2 = Vector2.ZERO
+	var box: Rect2
+	var city_prop: VaultCity.Prop
 	var kind: String = ""
 	var height: float = INF
 	var depth: float = 0.0
@@ -45,19 +47,32 @@ func stations(source: ArenaStations, base: Vector2) -> void:
 		for prop: ArenaStation.Prop in s.props:
 			if prop.kind in ArenaWalls.SOLID:
 				var box: Rect2 = Rect2(base + prop.at - prop.size * 0.5, prop.size)
-				boxes[box] = prop.kind if boxes.get(box, prop.kind) == prop.kind else ""
+				boxes[box] = "" if boxes.has(box) else prop.kind
 
 
 func clear_at(p: Vector2, r: float) -> bool:
+	return contacts(p, r) == 0
+
+
+## All solids touching the circle. For city props only occupied cells of the selected sprite
+## count as the target, even if another cell lies inside its bounding rectangle.
+func contacts(p: Vector2, r: float, hit: Hit = null) -> int:
+	var mask: int = 0
 	for box: Rect2 in boxes:
 		if _overlaps(p, r, box):
-			return false
-	if city != null:
-		for y: int in range(floori(p.y - r), floori(p.y + r) + 1):
-			for x: int in range(floori(p.x - r), floori(p.x + r) + 1):
-				if city.cells.solid(x, y) and _overlaps(p, r, Rect2(x, y, 1, 1)):
-					return false
-	return true
+			var target: bool = hit != null and hit.city_prop == null and hit.box == box
+			mask |= Contact.TARGET if target else Contact.OTHER
+	if city == null:
+		return mask
+	for y: int in range(floori(p.y - r), floori(p.y + r) + 1):
+		for x: int in range(floori(p.x - r), floori(p.x + r) + 1):
+			if not city.cells.solid(x, y) or not _overlaps(p, r, Rect2(x, y, 1, 1)):
+				continue
+			var target: bool = hit != null and hit.city_prop != null
+			target = target and city.cells.code_at(x, y) == SimConst.C_PROP
+			target = target and city.owner(Vector2i(x, y)) == hit.city_prop
+			mask |= Contact.TARGET if target else Contact.OTHER
+	return mask
 
 
 ## A face + radius rounds to a Vector2. Subtracting the face back can measure less than r
@@ -87,9 +102,10 @@ func find(p: Vector2, r: float, velocity: Vector2, heading: Vector2) -> Hit:
 	if dir == Vector2.ZERO:
 		return hit
 	var nearby: Dictionary[Rect2, String] = boxes.duplicate()
+	var owners: Dictionary[Rect2, VaultCity.Prop] = {}
 	var span: float = (reach + 2.0 * r + land_clear) / angle_cos + max_depth
 	if city != null:
-		city.collect(Rect2(p, Vector2.ZERO).expand(p + dir * span).grow(r), nearby)
+		city.collect(Rect2(p, Vector2.ZERO).expand(p + dir * span).grow(r), nearby, owners)
 	var target: Rect2
 	var nearest: Vector3 = Vector3(INF, INF, 0.0)
 	for box: Rect2 in nearby:
@@ -103,11 +119,10 @@ func find(p: Vector2, r: float, velocity: Vector2, heading: Vector2) -> Hit:
 	hit.depth = nearest.y - nearest.x
 	hit.kind = nearby[target]
 	hit.height = heights.get(hit.kind, INF)
-	var margin: float = (r + 0.001) / nearest.z
-	hit.takeoff = p + dir * maxf(0.0, nearest.x - margin)
+	hit.box = target
+	hit.city_prop = owners.get(target)
 	# A diagonal ray can exit through a different face. Growing the box also clears its corners.
 	var far: float = _interval(p, dir, target.grow(r + 0.001)).y
-	hit.touchdown = p + dir * far
 	hit.landing = p + dir * (far + land_clear)
 	hit.reason = _verdict(hit, velocity.length(), nearest.z)
 	if hit.reason == &"ok" and _blocked(p, r, hit.landing, target, nearby):

@@ -60,3 +60,17 @@ func test_generated_parked_sedan_across_width_and_along_length() -> void:
 	assert_true(probe.city.cells.clear(hit.landing, r))
 	p = Vector2(rect.get_center().x, rect.position.y - r - 0.1)
 	assert_eq(_press(Vector2.DOWN * 8.0).reason, &"too_deep")
+
+
+func test_airborne_oracle_rejects_an_adjacent_prop_of_the_same_kind_and_void() -> void:
+	probe.boxes.clear()
+	probe.city = VaultCity.new(StageCells.shipped())
+	p = Vector2(5.5, 45.15)
+	var hit: VaultProbe.Hit = _press(Vector2.DOWN * 8.0)
+	assert_eq(hit.reason, &"ok")
+	var over: Vector2 = Vector2(5.5, 46.5)
+	assert_eq(probe.contacts(over, r, hit), VaultProbe.Contact.TARGET)
+	probe.boxes[Rect2(over, Vector2.ONE)] = hit.kind
+	var both: int = VaultProbe.Contact.TARGET | VaultProbe.Contact.OTHER
+	assert_eq(probe.contacts(over, r, hit), both)
+	assert_eq(probe.contacts(Vector2(-2, -2), r, hit), VaultProbe.Contact.OTHER)
