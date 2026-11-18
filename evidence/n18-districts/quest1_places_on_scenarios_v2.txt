@@ -1,0 +1,7 @@
+# --quest1-places ON, quest1_input after the bot fix (BotRoute + StageLayout.w_dock), generator v22, 395b7ec80 + working tree
+# command: godot --headless --path project -s <temp copy of tests/run_scenarios.gd admitting --quest1-places> -- --only=quest1_input --quest1-places
+run_scenarios: [1/1] quest1_input ok, 28.1 s
+run_scenarios: 1 ran, 0 failed
+{"ticks": 55277, "seconds": 921.283333333333, "paid": 1500, "deaths": 0, "kills": 49, "shots": 66, "replay": "identical", "verdict": "pass", "input_changes": 8412, "beats": ["b1-dumpster", "b2-payphone", "b3-toner-room", "b4-dock", "b5-quartermaster", "b6-hot-walk"], "checkpoints": ["b2-payphone@755", "b3-toner-room@5564", "b4-dock@12932", "b5-quartermaster@33825", "b6-hot-walk@34675"], "checkpoint_load": {"beat": "b4-dock", "resumed": true, "tamper_refused": true}}
+# flag OFF (same tree, node tools/tests/run_scenarios.mjs --only=quest1_input,...): 4/4 ok
+{"ticks": 18995, "seconds": 316.583333333333, "kills": 49, "shots": 65, "replay": "identical", "verdict": "pass", "checkpoints": ["b2-payphone@755", "b3-toner-room@5564", "b4-dock@12932", "b5-quartermaster@15181", "b6-hot-walk@16023"]}

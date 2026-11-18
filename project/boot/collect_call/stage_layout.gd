@@ -105,6 +105,11 @@ func w(p: Vector2) -> Vector2:
 	return origin + p * squash
 
 
+## A Dock 9 stage point with no id (a bot's hold) in world metres: on the dock place when it is on.
+func w_dock(p: Vector2) -> Vector2:
+	return dock.w(p) if dock != null else w(p)
+
+
 ## A named stage point in world metres: Dock 9's own points follow the dock place when it is on.
 func w_of(id: String, p: Vector2) -> Vector2:
 	return dock.w(p) if dock != null and dock.has(id) else w(p)

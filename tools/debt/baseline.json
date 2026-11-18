@@ -50,7 +50,8 @@
         "2026-11-11: n17 rivet-strike: dev chapters katana_thrust/_cam (an armored cop so the katana's whole combo and its drawn thrust are filmed) (dev_loc 21741 -> 21752)",
         "2026-11-11: n17 rivet-strike: quest1_clip --hud-weapon=off, the HUD slot's before filmable in game (+2 dev lines) (dev_loc 21752 -> 21754)",
         "2026-11-17: n18 districts: dev/view/city_zone_map.gd, the headless plan of the generated city per zone (cells, zone tint, numbers JSON); a -s script has no LaunchArgs autoload, so it reads OS args as dev/bake_city.gd does (dev_loc 21754 -> 21849)",
-        "2026-11-17: n18 districts: dev/view/zone_frame.gd, zone stills + a straight drive clip through the generated city (the evidence of items 3 and 6); its flags are its own (KNOWN), not game flags, so it reads OS args as dev/showcase/city_frame.gd does (dev_loc 21849 -> 21992)"
+        "2026-11-17: n18 districts: dev/view/zone_frame.gd, zone stills + a straight drive clip through the generated city (the evidence of items 3 and 6); its flags are its own (KNOWN), not game flags, so it reads OS args as dev/showcase/city_frame.gd does (dev_loc 21849 -> 21992)",
+        "2026-11-18: n18 districts item 5: dev/bots BotRoute (+route use in CollectCallBot) so the quest bot can walk to Dock 9 on the city's dock place under --quest1-places; dev only, not shipped (dev_loc 21992 -> 22089)"
       ],
       "files": {
         "project/dev/arena": 711,
@@ -58,7 +59,7 @@
         "project/dev/bake_city.gd": 32,
         "project/dev/bench": 1886,
         "project/dev/bosses": 55,
-        "project/dev/bots": 399,
+        "project/dev/bots": 496,
         "project/dev/enemy_ai": 662,
         "project/dev/frames": 1081,
         "project/dev/ghost-forms": 616,
@@ -84,7 +85,7 @@
         "project/dev/view": 433,
         "project/dev/weapon_art": 506
       },
-      "total": 21992
+      "total": 22089
     },
     "direct_cmdline_reads": {
       "accepted": [
