@@ -41,7 +41,7 @@ func _parse() -> bool:
 		and seeds > 0
 		and path.is_absolute_path()
 		and path.get_extension().to_lower() == "json"
-		and brain in ["guard", "squad"]
+		and brain in ["guard", "squad", "mixed"]
 		and args.text("--trace") == ""
 	)
 
@@ -50,7 +50,7 @@ func _run() -> void:
 	if not _parse():
 		printerr(
 			"fight_probe: use --all or --encounter=city|pit|quest1, --out=<absolute.json>",
-			" [--seeds=<positive integer>] [--enemy-brain=guard|squad] [--trace]"
+			" [--seeds=<positive integer>] [--enemy-brain=guard|squad|mixed] [--trace]"
 		)
 		quit(2)
 		return

@@ -32,8 +32,8 @@ func run(_tree: SceneTree) -> String:
 	return ""
 
 
-func _open() -> ArenaSession:
-	var options: ArenaArgs = ArenaArgs.parse(["--arena=city", "--enemy-brain=squad"])
+func _open(brain: String = "mixed") -> ArenaSession:
+	var options: ArenaArgs = ArenaArgs.parse(["--arena=city", "--enemy-brain=" + brain])
 	return ArenaSession.open_with_args(Events, Data, ArenaSession.MASTER_SEED, null, options)
 
 
@@ -138,7 +138,7 @@ func _judge_mix(arena: CombatArena) -> String:
 	var stage: ArenaSession = _open()
 	var pit: ArenaPit = stage.stage.pit
 	var seen: Dictionary[StringName, bool] = {}
-	var valid: bool = true
+	var valid: bool = _contractors_only()
 	for i: int in 3:
 		pit._spawn_wave(stage.stage.arena)
 		for j: int in pit.standing.size():
@@ -173,3 +173,16 @@ func _look_matches(h: Fighter) -> bool:
 		&"swat":
 			return look == RigVariant.SWAT
 	return look == ArenaSquadLooks.PATROL_LOOK
+
+
+func _contractors_only() -> bool:
+	var session: ArenaSession = _open("squad")
+	var pit: ArenaPit = session.stage.pit
+	pit.wave = 1
+	pit.riot_hp = ArenaPit.armored_hp()
+	pit._spawn_wave(session.stage.arena)
+	var valid: bool = session.stage.arena.squad_ai != null and not pit.standing.is_empty()
+	for h: Fighter in pit.standing:
+		valid = valid and h.archetype == &"contractor"
+	_close(session)
+	return valid

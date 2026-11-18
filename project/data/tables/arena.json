@@ -86,6 +86,9 @@
     "max_shooters": 2,
     "max_wave": 5,
     "squad_mix": [
+      "contractor"
+    ],
+    "squad_mix_full": [
       "patrol_cop",
       "swat",
       "riot_cop",

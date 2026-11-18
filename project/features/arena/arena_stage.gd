@@ -59,9 +59,11 @@ func setup(ctx: WorldContext) -> void:
 		arena.guard_map = GuardRouteMap.new(
 			bounds, walls.boxes, cells, arena.tuning.human["radius_m"]
 		)
-		if _options.text("--enemy-brain", SquadChoice.DEFAULT_BRAIN) == "squad":
+		var brain: String = _options.text("--enemy-brain", SquadChoice.DEFAULT_BRAIN)
+		if brain in ["squad", "mixed"]:
 			arena.squad_ai = ArenaSquad.new(arena.guard_map)
-			var mix: Array = plan.pit.get("squad_mix", [])
+			pit.mixed = brain == "mixed"
+			var mix: Array = plan.pit.get("squad_mix_full" if pit.mixed else "squad_mix", [])
 			pit.squad_mix.assign(mix)
 			var slots: float = plan.pit.get("max_shooters", arena.squad_ai.pit.roster.max_shooters)
 			arena.squad_ai.pit.roster.max_shooters = roundi(slots)
