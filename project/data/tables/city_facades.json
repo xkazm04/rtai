@@ -179,9 +179,17 @@
       "art": "res://features/city/art/view/<art>/prop_dock_dinghy.png",
       "cell_w_m": 4.35
     },
+    "dock_fish_tanks": {
+      "art": "res://features/city/art/view/<art>/prop_dock_fish_tanks.png",
+      "cell_w_m": 2.87
+    },
     "dock_fuel_tank": {
       "art": "res://features/city/art/view/<art>/prop_dock_fuel_tank.png",
       "cell_w_m": 5.01
+    },
+    "dock_gutting_tables": {
+      "art": "res://features/city/art/view/<art>/prop_dock_gutting_tables.png",
+      "cell_w_m": 4.26
     },
     "dock_lifebuoy": {
       "art": "res://features/city/art/view/<art>/prop_dock_lifebuoy.png",
@@ -231,6 +239,10 @@
       "art": "res://features/city/art/view/<art>/prop_down_planter_bed.png",
       "cell_w_m": 4.04
     },
+    "down_plaza_steps": {
+      "art": "res://features/city/art/view/<art>/prop_down_plaza_steps.png",
+      "cell_w_m": 5.05
+    },
     "down_stone_ledges": {
       "art": "res://features/city/art/view/<art>/prop_down_stone_ledges.png",
       "cell_w_m": 4.26
@@ -238,6 +250,10 @@
     "down_street_clock": {
       "art": "res://features/city/art/view/<art>/prop_down_street_clock.png",
       "cell_w_m": 0.92
+    },
+    "down_tree_bench": {
+      "art": "res://features/city/art/view/<art>/prop_down_tree_bench.png",
+      "cell_w_m": 2.42
     },
     "dumpster": {
       "art": "res://features/city/art/view/<art>/prop_dumpster.png",

@@ -37,6 +37,7 @@ const LISTS: Array[String] = [
 	"wall_props",
 	"upright_roofs",
 	"plaza_singles",
+	"car_art",
 ]
 
 var id: StringName = &"mixed"
@@ -113,6 +114,10 @@ var basin_boat_share: float = 0.0
 ## caches that tile (UNRESOLVED until the first docks shed asks).
 var office_roof: int = -1
 var office_tile: Vector2i = UNRESOLVED
+## The traffic car art a spawn in this zone picks from (empty = CitySpawner.CAR_ART). Not a
+## generator input: the police lane's spawner reads it game side (VehicleProfile.
+## archetype_of_variant: 3 taxi, 4 van, 5 pickup), so the docks run vans and pickups.
+var car_art: Array[int] = []
 
 
 static func from_row(row: Dictionary) -> CityZone:

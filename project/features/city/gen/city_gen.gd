@@ -7,7 +7,7 @@ extends RefCounted
 ## plazas by seed.
 
 ## Bump when the output of any generator code changes (it is stamped into every chunk header).
-const GENERATOR_VERSION: int = 32
+const GENERATOR_VERSION: int = 33
 const PERIOD: int = 8
 ## Street cross-section (owner call C1, T1 shows about 10 m; built at 12 m): the 8 m lane tile plus
 ## two 8 m kerb tiles, each WALK_M of sidewalk (art/ground/curb12_*) and 8 - WALK_M of kerb-side
@@ -21,6 +21,9 @@ var seed_value: int = 1
 var district_id: String = ""
 var sizes: Array[Vector2] = []
 var solid: Array[bool] = []
+## Whether a texture casts the offset shadow copy (city_textures `shadow`, default true); false for
+## see-through art (a net, a pot's mesh), where the dark copy showed through the card.
+var shadowed: Array[bool] = []
 ## Which zone row paints each chunk (city_district.json zones + zone_map); one `mixed` by default.
 var zones: CityZones = CityZones.new()
 var _tiles: TilePainter = null
@@ -36,6 +39,8 @@ func _init(p_seed: int, texture_table: Dictionary) -> void:
 		sizes.append(Vector2(w, h))
 		var is_solid: bool = row["solid"]
 		solid.append(is_solid)
+		var casts: bool = row.get("shadow", true)
+		shadowed.append(casts)
 	_tiles = TilePainter.new()
 
 

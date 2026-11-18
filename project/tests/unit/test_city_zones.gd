@@ -77,3 +77,23 @@ func test_the_docks_water_draws_its_own_art() -> void:
 	var docks: CityZone = gen.zones.rows[gen.zones.index_of(&"docks")]
 	assert_false(docks.water_ground.has(72), "72 is the plain asphalt box, not water")
 	assert_gt(docks.water_ground.size(), 0)
+
+
+func test_the_docks_traffic_runs_more_vans_and_pickups_than_the_default() -> void:
+	var gen: CityGen = CityGen.from_tables(DISTRICT, "res://data/tables/city_textures.json")
+	var docks: CityZone = gen.zones.rows[gen.zones.index_of(&"docks")]
+	var mixed: CityZone = gen.zones.rows[gen.zones.index_of(&"mixed")]
+	assert_true(mixed.car_art.is_empty(), "mixed keeps CitySpawner.CAR_ART")
+	assert_gt(_work_share(docks.car_art), _work_share(CitySpawner.CAR_ART) * 2.0)
+	for zone: CityZone in gen.zones.rows:
+		for art: int in zone.car_art:
+			var kind: StringName = VehicleProfile.archetype_of_variant(art, false)
+			assert_true(kind != &"bike" and kind != &"police_cruiser", "%s %d" % [zone.id, art])
+
+
+func _work_share(arts: Array[int]) -> float:
+	var n: int = 0
+	for art: int in arts:
+		var kind: StringName = VehicleProfile.archetype_of_variant(art, false)
+		n += 1 if kind == &"van" or kind == &"pickup" else 0
+	return n / float(maxi(arts.size(), 1))

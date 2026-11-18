@@ -37,6 +37,10 @@
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
           },
+          "shadow": {
+            "description": "false: no offset shadow copy (see-through art such as a net or a mesh pot, where the dark copy showed through the card); absent = true",
+            "type": "boolean"
+          },
           "size_m": {
             "items": {
               "minimum": 0,

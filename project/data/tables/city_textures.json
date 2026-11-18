@@ -1371,6 +1371,7 @@
       "class": "prop",
       "id": 124,
       "name": "dock_rope_net",
+      "shadow": false,
       "size_m": [
         1.4,
         1.32
@@ -1470,6 +1471,7 @@
       "class": "prop",
       "id": 133,
       "name": "dock_crab_pots",
+      "shadow": false,
       "size_m": [
         1.6,
         1.45
@@ -1506,6 +1508,50 @@
       "size_m": [
         2,
         2.64
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_fish_tanks.png",
+      "class": "prop",
+      "id": 137,
+      "name": "dock_fish_tanks",
+      "size_m": [
+        2.84,
+        1.29
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_gutting_tables.png",
+      "class": "prop",
+      "id": 138,
+      "name": "dock_gutting_tables",
+      "size_m": [
+        4,
+        1.36
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/down_plaza_steps.png",
+      "class": "prop",
+      "id": 139,
+      "name": "down_plaza_steps",
+      "size_m": [
+        5,
+        2.01
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/down_tree_bench.png",
+      "class": "prop",
+      "id": 140,
+      "name": "down_tree_bench",
+      "size_m": [
+        2.4,
+        2.4
       ],
       "solid": true
     }

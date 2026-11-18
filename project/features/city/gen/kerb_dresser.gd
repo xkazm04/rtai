@@ -23,9 +23,10 @@ const CAR_STRIP_M: float = 1.8
 const PARKED: Array[int] = [44, 45, 46, 47, 48, 49, 44, 45, 46, 50, 52, 53]
 
 
-## A prop (with its shadow); a solid one blocks its footprint (85% of the art, rotated).
+## A prop (with its shadow unless its texture row says `shadow: false`); a solid one blocks its
+## footprint (85% of the art, rotated).
 func prop(g: CityGen, b: ChunkBuild, tex: int, p: Vector2, rot: float) -> void:
-	b.add(ChunkBuild.L_PROP, tex, p, rot, true)
+	b.add(ChunkBuild.L_PROP, tex, p, rot, g.shadowed[tex])
 	if not g.solid[tex]:
 		return
 	_block_footprint(b, p, g.sizes[tex] * 0.85, rot)

@@ -25,8 +25,8 @@ func test_tables_load() -> void:
 	why += " tank, lifebuoy; 120-122 street clock, bollards, litter bins; 123 Dock 9 office roof;"
 	why += " 124-127 rope net, oil drums (ochre), news boxes, tug; 128-131 planter bed, stone"
 	why += " ledges, chess tables, flower crates; 132-134 propeller, crab pots, dinghy; 135-136 nav"
-	why += " buoys, scrap skip"
-	assert_eq(_gen.sizes.size(), 137, why)
+	why += " buoys, scrap skip; 137-140 fish tanks, gutting tables, plaza steps, tree bench"
+	assert_eq(_gen.sizes.size(), 141, why)
 
 
 func test_generation_is_deterministic() -> void:

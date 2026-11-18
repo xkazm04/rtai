@@ -108,6 +108,25 @@ func test_the_dressing_stands_unturned() -> void:
 
 
 ## [x, y, tex] of every standing prop of `texs` in chunk ch.
+func test_see_through_dressing_casts_no_shadow_copy_and_the_rest_does() -> void:
+	var seen: Dictionary = {}  # tex -> [stands, shadow copies]
+	for cy: int in SimConst.CITY_CHUNKS:
+		var ch: CityChunk = _gen.gen_chunk(EAST_CHUNK, cy)
+		for i: int in ch.tex.size():
+			var t: int = ch.tex[i]
+			if _docks.apron_props.has(t):
+				var n: Array = seen.get(t, [0, 0])
+				n[int(ch.xf[i * CityChunk.XF_STRIDE + 3])] += 1
+				seen[t] = n
+	for t: int in seen:
+		var stands: int = seen[t][0]
+		var copies: int = seen[t][1]
+		var want: int = stands if _gen.shadowed[t] else 0
+		assert_eq(copies, want, "tex %d: %d stand, %d shadow copies" % [t, stands, copies])
+	assert_false(_gen.shadowed[133], "the crab pots' mesh shows the ground, not a dark copy")
+	assert_false(_gen.shadowed[124], "the rope net likewise")
+
+
 func _props(ch: CityChunk, texs: Array) -> Array[Vector3]:
 	var out: Array[Vector3] = []
 	for i: int in ch.tex.size():
