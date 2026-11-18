@@ -9,6 +9,11 @@ var _rigs: CharacterRigs
 var _vault: PlayerVault
 
 
+## Feed the arena's current motion, including a missing pilot on a bot-driven tick.
+static func feed_motion(rigs: CharacterRigs, motion: PlayerMotion) -> void:
+	feed(rigs, motion.vault if motion != null else null)
+
+
 static func feed(rigs: CharacterRigs, vault: PlayerVault) -> void:
 	if vault == null or vault.frame < 0:
 		if rigs.has_meta(ACTIVE):
