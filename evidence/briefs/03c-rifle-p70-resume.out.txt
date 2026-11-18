@@ -1,0 +1,21 @@
+The quest rifle now draws its own art at top, p55, and p70. Both raised pitches use 165-pixel figures and have reload strips for the straight box magazine. **Rifle holes fell from 9 to 3**, all for arena rack membership. Total arsenal holes fell from 42 to 36. No cells were mirrored. [Audit matrix](evidence/arsenal/matrix_after_3b.txt)
+
+The rifle’s shot cue, hit feel, flash, and tracer resolve to its own data. **Quest shots still do not eject a casing.** The casing renderer requires a table gun, and the authorized `bare_gun_fx.gd` lookup cannot reach it. The reload strips passed rig tests. In the quest, an empty rifle switches to Gloria.
+
+**Evidence.** Both contact sheets show all eight directions at rest and firing against `28302bd3c`. The 32 px/m clip runs 10.67 seconds and shows eight rounds spent, from 30 to 22. [P55 sheet](<C:/Users/kazda/kiro/gtai-masters/n19/guns/rifle/p55_64_comparison.png>) · [P70 sheet](<C:/Users/kazda/kiro/gtai-masters/n19/guns/rifle/p70_64_comparison.png>) · [Turning clip](<C:/Users/kazda/kiro/gtai-masters/n19/guns/rifle/p55_turn_32.mp4>) · [Top-down still](<C:/Users/kazda/kiro/gtai-masters/n19/guns/rifle/3b/new/top/oct0_fire.png>) · [Plasma density comparison](<C:/Users/kazda/kiro/gtai-masters/n19/guns/rifle/p55_density_64.png>) · [Frame index](<C:/Users/kazda/kiro/gtai-masters/n19/guns/rifle/frames.json>)
+
+**Verification.** The changed suite passed 1,650 tests with two skipped. All 20 requested focused tests passed. Lint passed all 19 checks, release compile loaded all 740 resources, and replay, native parity, and bake checks passed. The mutation score was **7/(7+1), or 87.5%**, with two invalid mutants. The fit-angle boundary mutation survived.
+
+| Commit | Change | Quick gate |
+|---|---|---|
+| `0b116fbd9` | Recut p55 at 165 px and remeasured anchors | `--no-godot` |
+| `ca05925c4` | Fixed the `bare_gun_fx.gd` art lookup | Passed |
+| `49773d472` | Added the eight-direction film driver | Passed |
+| `641d01f96` | Added p70 strips, muzzle rows, and diagonal measurements | `--no-godot` |
+| `189af69f1` | Added both pitches’ reload strips | `--no-godot` |
+| `3671e3509` | Removed the stand-in | `--no-godot` |
+| `1d48faf9c` | Recorded the final audit | No GDScript changes |
+
+The standalone quick-gate parser again reported `SCRIPT ERROR: Compile Error: Failed to compile depended scripts.` at `res://features/characters/rig_clips.gd:0`, followed by `ERROR: Failed to load script "res://features/characters/rivet_gun_diag.gd" with error "Compilation failed".` The quest recorder also reported resources still in use at shutdown after saving every frame. [Full file list, shared line numbers, and per-commit diagnostics](<C:/Users/kazda/kiro/gtai-masters/n19/guns/rifle/package_3b.md>)
+
+[astra: 1297s, exit 0]
