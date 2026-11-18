@@ -8,17 +8,17 @@
    "rivet_eq_assault_rifle": {
     "act_k": 0.94,
     "counts": "5,3",
-    "fig_h": 110,
+    "fig_h": 165,
     "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/main_key.png"
    },
    "rivet_eq_assault_rifle_diag": {
     "counts": "4",
-    "fig_h": 110,
+    "fig_h": 165,
     "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/diag_key.png"
    },
    "rivet_eq_assault_rifle_left": {
     "counts": "3",
-    "fig_h": 110,
+    "fig_h": 165,
     "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/left_key.png"
    },
    "rivet_eq_chainsaw": {

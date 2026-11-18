@@ -79,16 +79,16 @@ STRIKE_TIP = ("electro_baton",)
 ## claw), so the near cable spike is the leftmost px of the arm band: the bell mouth, read by eye
 ## on a x5 zoom of the cut cell (d9 it16). Re-read it when the strip is re-cut from another sheet.
 # Pale outlined stars can fall outside flash_core's blue threshold. Measured against the
-# exact noflash twin with rivet_gun_diag_measure.cell_stats, in the strip's 110-space.
-FIRE_PINNED = {("p55", "rivet_eq_assault_rifle", 5): [136, 55],
-               ("p55", "rivet_eq_assault_rifle", 6): [69, 84]}
+# exact noflash twin with rivet_gun_diag_measure.cell_stats, in strip pixels (converted to 110-space with the other measured cells).
+FIRE_PINNED = {("p55", "rivet_eq_assault_rifle", 5): [202, 79],
+               ("p55", "rivet_eq_assault_rifle", 6): [103, 125]}
 LEFT_PINNED = {("p55", "rivet_eq_homing_shard_left", 2): [43, 78]}
 # n17 rivet-strike: a gun's drawn diagonal fire strip (RivetGunDiag, x1.5 cells): its gun's light
 # tan reads as flash core, so the flash root is pinned in 110 space (strip px / 1.5), read as the
 # biggest hot blob that differs from the flashless twin, its pixel nearest the body centre.
 DIAG_PINNED = {
     ("p55", "rivet_eq_assault_rifle_diag"): {
-        "0": [132, 80], "1": [153, 13], "2": [30, 82], "3": [11, 14]
+        "0": [131, 79], "1": [153, 13], "2": [29, 81], "3": [11, 12]
     },
     ("p70", "rivet_eq_pistol_diag"): {"0": [160, 101], "1": [127, 35], "2": [27, 100], "3": [59, 37]},
     ("p70", "rivet_eq_machine_pistol_diag"): {
@@ -252,6 +252,8 @@ def measure(out_dir, strips):
                 else:
                     p = FIRE_PINNED.get((art, name, c)) or fire_point(cell, c) or shape_point(cell, c)
                 if p is not None:
+                    if name.startswith("rivet_eq_assault_rifle"):
+                        p = [round(v / 1.5) for v in p]
                     cells[str(c)] = p
             if cells:
                 rows[name] = {"cells": cells}

@@ -49,7 +49,7 @@ const HELMET_X: Dictionary[String, PackedFloat32Array] = {
 	"p70/electro_gun": [112.5, 77.0, 111.5, 148.0],
 	"p70/rocket_launcher": [130.0, 90.2, 130.0, 165.5],
 	# p55: the dome's run centre as above
-	"p55/assault_rifle": [85.5, 83.5, 83.0, 82.0],
+	"p55/assault_rifle": [127.0, 123.5, 122.5, 123.0],
 	"p55/pistol": [97.5, 66.5, 96.5, 126.5],
 	"p55/machine_pistol": [99.5, 65.0, 101.5, 135.0],
 	"p55/plasma_rifle": [133.0, 98.2, 133.0, 169.2],
