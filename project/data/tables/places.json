@@ -1,0 +1,27 @@
+{
+  "doc": "Named places bound to generated blocks (CityPlaces, n18 districts item 4). Each row: a stable id, the zone it lies in, a rule that picks one block of that zone from the generator alone (dock_block_nearest: a docks long block that is not a whole container yard; block_nearest: a square building block that is not a plaza), and `near`, the point the rule picks nearest to as a fraction of the city (x, y; [1, 0.5] = the middle of the east edge). CityPlaces.place(id) gives the block, its chunk, and the door: a free sidewalk cell 1.5 m out from the block's south wall (slid along the wall past lamps and parked cars), facing south onto the street; `door` (optional) says where along the frontage the slide starts: middle (the default) or office (before the block's harbour office tile, DockDresser.office_tile_on). Changing a row moves the place, never the bake.",
+  "places": [
+    {
+      "doc": "Quest 1's Dock 9: the warehouse block nearest the middle of the quay; its door stands before the harbour office (the it471 office roof) on the block's quay end.",
+      "door": "office",
+      "id": "dock_9",
+      "near": [
+        1,
+        0.5
+      ],
+      "rule": "dock_block_nearest",
+      "zone": "docks"
+    },
+    {
+      "doc": "Quest 1's Toner Room: the downtown block nearest the city's centre.",
+      "id": "toner_room",
+      "near": [
+        0.5,
+        0.5
+      ],
+      "rule": "block_nearest",
+      "zone": "downtown"
+    }
+  ],
+  "schema": "gtai.places/1"
+}

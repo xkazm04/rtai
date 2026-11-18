@@ -1,5 +1,5 @@
 {
-  "$id": "gtai.city-district/1",
+  "$id": "gtai.city-district/2",
   "additionalProperties": false,
   "properties": {
     "chunks": {
@@ -20,12 +20,336 @@
       "type": "string"
     },
     "schema": {
-      "const": "gtai.city-district/1"
+      "const": "gtai.city-district/2"
     },
     "seed": {
       "maximum": 4294967295,
       "minimum": 0,
       "type": "integer"
+    },
+    "zone_map": {
+      "additionalProperties": false,
+      "properties": {
+        "default": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "rects": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "chunks": {
+                "items": {
+                  "maximum": 16,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "maxItems": 4,
+                "minItems": 4,
+                "type": "array"
+              },
+              "zone": {
+                "pattern": "^[a-z][a-z0-9_]*$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "zone",
+              "chunks"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "default",
+        "rects"
+      ],
+      "type": "object"
+    },
+    "zones": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "apron_ground": {
+            "description": "the docks quay apron's ground, a city_textures id in quarter turns; absent = the sidewalk paving 13",
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "apron_prop_share": {
+            "description": "the share of quay apron tiles that stand one apron_props prop on their land side (DockPainter.apron_prop)",
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "apron_props": {
+            "description": "quay apron dressing, city_textures ids, one per apron tile under apron_prop_share; absent = none",
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "basin_boat": {
+            "description": "a boat drawn flat in a basin's open water beside its west quay, bow north (DockDresser.quay_edge), a city_textures id; absent = none",
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "basin_boat_share": {
+            "description": "the share of basins that moor a basin_boat",
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "big_roofs": {
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "big_share": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "car_art": {
+            "description": "the traffic car art variants a spawn in this zone picks from (CitySpawner.CAR_ART, VehicleProfile.archetype_of_variant: 3 taxi, 4 van, 5 pickup); not a generator input, read game side; absent = CitySpawner.CAR_ART",
+            "items": {
+              "maximum": 7,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "car_lane": {
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "density_min": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "density_span": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "empty_share": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "generic_roofs": {
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "kerb_props": {
+            "description": "a zone's sidewalk furniture, city_textures ids picked one a kerb tile (KerbDresser.dress; KerbDresser.NEAR_KERB ids stand by the wall); absent = KerbDresser.KERB_PROPS, the n14 mix",
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "landmark_roofs": {
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "landmark_share": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "long_roofs": {
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "long_share": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "office_roof": {
+            "description": "Dock 9's harbour office roof, a city_textures id: it replaces the shed at the quay end of the south row of the docks block nearest the quay's middle (DockDresser.shed_or_office, places.json dock_9's rule); absent = none",
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "one_sign": {
+            "description": "at most one lettered landmark roof a block (BlockPainter.sign_tile)",
+            "type": "boolean"
+          },
+          "ped_corner": {
+            "maximum": 255,
+            "minimum": 0,
+            "type": "number"
+          },
+          "ped_kerb": {
+            "maximum": 255,
+            "minimum": 0,
+            "type": "number"
+          },
+          "ped_plaza": {
+            "maximum": 255,
+            "minimum": 0,
+            "type": "number"
+          },
+          "plaza_centre": {
+            "description": "a plaza block's centrepiece on its middle tile (city_textures id); absent = none",
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "plaza_ground": {
+            "description": "a plaza tile's ground, a city_textures id turned 0/180 deg; absent = the sidewalk paving 13 in quarter turns",
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "plaza_prop_share": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "plaza_props": {
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "plaza_share": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "plaza_singles": {
+            "description": "plaza props standing at most once a plaza block, each on a seeded tile off the middle (TilePainter.plaza_single); absent = none",
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "quay_edge_prop": {
+            "description": "a prop on the land strip of the middle tile of each basin's west quay, by the coping (DockPainter._water); absent = none",
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "quay_ground": {
+            "description": "the quay edge art [straight, inner corner] (DockPainter.quay_case); absent = open water and the apron bollard line",
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "street_keep_x": {
+            "maximum": 4,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "upright_roofs": {
+            "description": "long roofs drawn with a south-eave feature, never turned 180 deg (DockPainter); absent = none",
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "wall_props": {
+            "description": "a zone's wall-side clutter, city_textures ids flush to the building on the tile half the kerb prop left free (KerbDresser._wall_prop); absent = KerbDresser.WALL_PROPS, the n14 mix (crates, dumpsters, vending, bins)",
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "water_ground": {
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "water_tiles": {
+            "maximum": 5,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "yard_ground": {
+            "description": "a container-yard tile's ground (painted bays under DockPainter.YARD_SLOTS), a city_textures id, never turned; absent = the sidewalk paving 13 in quarter turns",
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "yard_prop_share": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "yard_props": {
+            "description": "container-yard stacks, city_textures ids (DockPainter.yard); absent = a yard paints as a plaza",
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
     }
   },
   "required": [
@@ -34,7 +358,9 @@
     "seed",
     "chunks",
     "name_key",
-    "doc"
+    "doc",
+    "zones",
+    "zone_map"
   ],
   "type": "object"
 }

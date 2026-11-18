@@ -5,6 +5,54 @@
     "doc": {
       "type": "string"
     },
+    "dock_place": {
+      "additionalProperties": false,
+      "description": "Dock 9 on the city's dock_9 place under --quest1-places (StageDockPlace)",
+      "properties": {
+        "doc": {
+          "type": "string"
+        },
+        "markers": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "out_m": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "place": {
+          "type": "string"
+        },
+        "props": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "spawn_points": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "stage_anchor": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "place",
+        "stage_anchor",
+        "out_m"
+      ],
+      "type": "object"
+    },
     "ghost_cars": {
       "items": {
         "items": {

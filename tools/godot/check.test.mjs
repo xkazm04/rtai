@@ -74,3 +74,22 @@ test('a run with only dependency cascades is UNVERIFIABLE (exit 3), never ok, an
   assert.equal(verdictCode([u, { target: 'd', ok: false, note: 'usage', lines: [] }]), 2);
   assert.equal(verdictCode([{ target: 'b', ok: true, lines: [] }]), 0);
 });
+
+test('the shutdown report after a cascade is not a cause: the run stays unverifiable', async () => {
+  const { causeUnseen } = await import('./check.mjs');
+  const out = lines(
+    'SCRIPT ERROR: Compile Error: Failed to compile depended scripts.',
+    '   at: GDScript::reload (res://core/events/events.gd:0)',
+    'ERROR: Failed to load script "res://tests/unit/test_x.gd" with error "Compilation failed".',
+    '   at: load (modules/gdscript/gdscript_resource_format.cpp:46)',
+    "ERROR: 3 RID allocations of type 'PN18TextServerAdvanced12FontAdvancedE' were leaked at exit.",
+    '   at: cleanup (core/object/object.cpp:2536)',
+    'ERROR: 39 resources still in use at exit (run with --verbose for details).',
+    '   at: clear (core/io/resource.cpp:822)',
+  );
+  const bad = errorLines(out, autoloads);
+  assert.ok(!bad.some((l) => /leaked at exit|still in use at exit|object\.cpp|resource\.cpp/.test(l)));
+  assert.equal(causeUnseen(bad), true);
+  const real = errorLines(lines('SCRIPT ERROR: Parse Error: Expected end of statement', bad.join('\n')), autoloads);
+  assert.equal(causeUnseen(real), false, 'a real parse error beside the shutdown report still fails');
+});

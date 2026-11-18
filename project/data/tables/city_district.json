@@ -1,8 +1,293 @@
 {
   "chunks": 16,
-  "doc": "The authored district the city chunks are baked from (AST-12). The generator is procedural: this row is its whole input besides the texture table. Changing seed or chunks re-bakes every chunk and the golden hash list.",
+  "doc": "The authored district the city chunks are baked from (AST-12). The generator is procedural: this row is its whole input besides the texture table. Changing seed, chunks, a zone row or the zone map re-bakes every chunk and the golden hash list. zones: one row per zone, the layout rules the generator paints that zone's chunks with (CityZone: block shares, roof sets as city_textures ids, plaza props, spawn densities, street_keep_x, water_tiles); a key a row leaves out takes the n14 city's value. zone_map: every chunk takes `default`, then each rect [x, y, w, h] in chunks paints its zone over it (later rects win). The zone of a chunk is read through CityGen.zones / CitySystem, never a parallel table.",
   "id": "district_01",
   "name_key": "DISTRICT_01_NAME",
-  "schema": "gtai.city-district/1",
-  "seed": 1
+  "schema": "gtai.city-district/2",
+  "seed": 1,
+  "zone_map": {
+    "default": "mixed",
+    "rects": [
+      {
+        "chunks": [
+          6,
+          6,
+          5,
+          5
+        ],
+        "zone": "downtown"
+      },
+      {
+        "chunks": [
+          13,
+          0,
+          3,
+          16
+        ],
+        "zone": "docks"
+      }
+    ]
+  },
+  "zones": [
+    {
+      "big_roofs": [
+        78,
+        79,
+        80
+      ],
+      "big_share": 0.35,
+      "car_lane": 200,
+      "density_min": 0.45,
+      "density_span": 0.55,
+      "empty_share": 0.45,
+      "generic_roofs": [
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71
+      ],
+      "id": "mixed",
+      "landmark_roofs": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "landmark_share": 0.3,
+      "long_roofs": [
+        22,
+        23,
+        81
+      ],
+      "long_share": 0.3,
+      "ped_corner": 90,
+      "ped_kerb": 140,
+      "ped_plaza": 255,
+      "plaza_prop_share": 0.6,
+      "plaza_props": [
+        28,
+        33,
+        26,
+        28,
+        32,
+        29,
+        33
+      ],
+      "plaza_share": 0.12,
+      "street_keep_x": 1,
+      "water_tiles": 0
+    },
+    {
+      "apron_ground": 113,
+      "apron_prop_share": 0.5,
+      "apron_props": [
+        117,
+        118,
+        117,
+        124,
+        125,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138
+      ],
+      "basin_boat": 127,
+      "basin_boat_share": 0.5,
+      "big_roofs": [
+        80
+      ],
+      "big_share": 0,
+      "car_art": [
+        4,
+        5,
+        0,
+        4,
+        1,
+        5,
+        2,
+        4,
+        7,
+        5,
+        3,
+        0
+      ],
+      "car_lane": 150,
+      "density_min": 0.45,
+      "density_span": 0.55,
+      "doc": "The supply chain on the east edge (follow-the-money): long warehouse blocks over every other north-south street (street_keep_x 2), one container-yard row per block and whole yard blocks on plaza_share, a quay apron and 3 tiles of water at the city's edge, few people. Roofs today's art recombined: the warehouse and T1 long roofs, sawtooth / solar / tank sheds, the LOCAL 9 UNION hall now and then.",
+      "empty_share": 0,
+      "generic_roofs": [
+        88,
+        67,
+        70,
+        110
+      ],
+      "id": "docks",
+      "landmark_roofs": [
+        21
+      ],
+      "landmark_share": 0.08,
+      "long_roofs": [
+        86,
+        87,
+        97,
+        98,
+        111
+      ],
+      "long_share": 1,
+      "office_roof": 123,
+      "ped_corner": 30,
+      "ped_kerb": 45,
+      "ped_plaza": 70,
+      "plaza_prop_share": 0.85,
+      "plaza_props": [
+        39,
+        34,
+        39,
+        37,
+        39
+      ],
+      "plaza_share": 0.2,
+      "quay_edge_prop": 119,
+      "quay_ground": [
+        93,
+        94
+      ],
+      "street_keep_x": 2,
+      "upright_roofs": [
+        111
+      ],
+      "water_ground": [
+        91,
+        92
+      ],
+      "water_tiles": 3,
+      "yard_ground": 116,
+      "yard_prop_share": 0.6,
+      "yard_props": [
+        95,
+        95,
+        96
+      ]
+    },
+    {
+      "big_roofs": [
+        89,
+        90,
+        78,
+        79,
+        89,
+        90,
+        108,
+        109
+      ],
+      "big_share": 0.6,
+      "car_art": [
+        0,
+        1,
+        2,
+        3,
+        3,
+        7,
+        0,
+        1,
+        3,
+        4,
+        6,
+        2
+      ],
+      "car_lane": 230,
+      "density_min": 0.75,
+      "density_span": 0.25,
+      "doc": "Where the money lands, the city's centre: more and bigger towers (big_share, the tall landmarks), fewer empty yards and long rows, twice the plazas, the densest crowds and traffic.",
+      "empty_share": 0.15,
+      "generic_roofs": [
+        65,
+        66,
+        69,
+        71,
+        99,
+        100,
+        106,
+        107
+      ],
+      "id": "downtown",
+      "kerb_props": [
+        120,
+        121,
+        122,
+        121,
+        122,
+        120,
+        28,
+        33,
+        25,
+        36
+      ],
+      "landmark_roofs": [
+        14,
+        15,
+        16,
+        19,
+        20,
+        105
+      ],
+      "landmark_share": 0.35,
+      "long_roofs": [
+        22,
+        81
+      ],
+      "long_share": 0.15,
+      "one_sign": true,
+      "ped_corner": 150,
+      "ped_kerb": 220,
+      "ped_plaza": 255,
+      "plaza_centre": 101,
+      "plaza_ground": 112,
+      "plaza_prop_share": 0.75,
+      "plaza_props": [
+        28,
+        102,
+        102,
+        103,
+        33,
+        26,
+        28,
+        102,
+        104,
+        33
+      ],
+      "plaza_share": 0.24,
+      "plaza_singles": [
+        114,
+        115,
+        128,
+        129,
+        130,
+        131,
+        139,
+        140
+      ],
+      "street_keep_x": 1,
+      "wall_props": [
+        33,
+        26,
+        122,
+        33,
+        28,
+        126
+      ],
+      "water_tiles": 0
+    }
+  ]
 }

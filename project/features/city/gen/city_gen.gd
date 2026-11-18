@@ -7,7 +7,7 @@ extends RefCounted
 ## plazas by seed.
 
 ## Bump when the output of any generator code changes (it is stamped into every chunk header).
-const GENERATOR_VERSION: int = 14
+const GENERATOR_VERSION: int = 33
 const PERIOD: int = 8
 ## Street cross-section (owner call C1, T1 shows about 10 m; built at 12 m): the 8 m lane tile plus
 ## two 8 m kerb tiles, each WALK_M of sidewalk (art/ground/curb12_*) and 8 - WALK_M of kerb-side
@@ -21,6 +21,11 @@ var seed_value: int = 1
 var district_id: String = ""
 var sizes: Array[Vector2] = []
 var solid: Array[bool] = []
+## Whether a texture casts the offset shadow copy (city_textures `shadow`, default true); false for
+## see-through art (a net, a pot's mesh), where the dark copy showed through the card.
+var shadowed: Array[bool] = []
+## Which zone row paints each chunk (city_district.json zones + zone_map); one `mixed` by default.
+var zones: CityZones = CityZones.new()
 var _tiles: TilePainter = null
 
 
@@ -34,6 +39,8 @@ func _init(p_seed: int, texture_table: Dictionary) -> void:
 		sizes.append(Vector2(w, h))
 		var is_solid: bool = row["solid"]
 		solid.append(is_solid)
+		var casts: bool = row.get("shadow", true)
+		shadowed.append(casts)
 	_tiles = TilePainter.new()
 
 
@@ -46,6 +53,7 @@ static func from_tables(district_path: String, textures_path: String) -> CityGen
 	var p_seed: float = district.get("seed", 1.0)
 	var gen: CityGen = CityGen.new(int(p_seed), textures)
 	gen.district_id = str(district.get("id", ""))
+	gen.zones = CityZones.from_district(district)
 	return gen
 
 
@@ -65,7 +73,8 @@ func rnd(a: int, b: int, c: int, salt: int) -> float:
 
 func gen_chunk(cx: int, cy: int) -> CityChunk:
 	var b: ChunkBuild = ChunkBuild.new(cx, cy)
-	b.district = 0.45 + 0.55 * rnd(cx >> 2, cy >> 2, 0, 11)
+	var zone: CityZone = zones.of_chunk(cx, cy)
+	b.district = zone.density_min + zone.density_span * rnd(cx >> 2, cy >> 2, 0, 11)
 	var n: int = SimConst.CHUNK_TILES
 	for ly: int in n:
 		for lx: int in n:

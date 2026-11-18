@@ -79,7 +79,9 @@ test('frame picking refuses enormous equal-ended ranges without hanging', async 
   { eval: true, resourceLimits: { maxOldGenerationSizeMb: 16 } });
   t.after(() => worker.terminate());
   const result = await new Promise((resolve, reject) => {
-    const timer = setTimeout(() => resolve({ hung: true }), 2000);
+    // 15 s, not 2: under two lanes' gates the worker's start alone took longer (n18 districts gate,
+    // 13 s run); a real hang never answers, so it still fails, only later.
+    const timer = setTimeout(() => resolve({ hung: true }), 15000);
     worker.once('message', (value) => { clearTimeout(timer); resolve(value); });
     worker.once('error', (error) => { clearTimeout(timer); reject(error); });
   });

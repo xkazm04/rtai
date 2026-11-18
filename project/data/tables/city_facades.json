@@ -39,6 +39,74 @@
       "height_m": 8.5,
       "style": "shop"
     },
+    "roof_dock_coldstore": {
+      "height_m": 9,
+      "style": "dock"
+    },
+    "roof_dock_office": {
+      "height_m": 10,
+      "style": "office"
+    },
+    "roof_dock_sawtooth": {
+      "height_m": 8.5,
+      "style": "dock"
+    },
+    "roof_dock_shed": {
+      "height_m": 7,
+      "style": "dock"
+    },
+    "roof_dock_shed_b": {
+      "height_m": 6,
+      "style": "dock"
+    },
+    "roof_dock_warehouse": {
+      "height_m": 8.5,
+      "style": "dock"
+    },
+    "roof_dock_warehouse_b": {
+      "height_m": 8.5,
+      "style": "dock"
+    },
+    "roof_dock_warehouse_c": {
+      "height_m": 9,
+      "style": "dock"
+    },
+    "roof_down_bank_dome": {
+      "height_m": 14,
+      "style": "tall"
+    },
+    "roof_down_clocktower": {
+      "height_m": 22,
+      "style": "tall"
+    },
+    "roof_down_crown": {
+      "height_m": 26,
+      "style": "tall"
+    },
+    "roof_down_tall": {
+      "height_m": 20,
+      "style": "glass"
+    },
+    "roof_down_tall_b": {
+      "height_m": 18,
+      "style": "glass"
+    },
+    "roof_down_tall_c": {
+      "height_m": 19,
+      "style": "glass"
+    },
+    "roof_down_terrace": {
+      "height_m": 16,
+      "style": "glass"
+    },
+    "roof_down_tower": {
+      "height_m": 24,
+      "style": "glass"
+    },
+    "roof_down_tower_b": {
+      "height_m": 21,
+      "style": "glass"
+    },
     "roof_sawtooth": {
       "height_m": 8.5,
       "style": "shop"
@@ -52,7 +120,7 @@
     "height_m": 14,
     "style": "tenement"
   },
-  "doc": "City south faces under an angled view (night n8 lane city, FacadeArt / ChunkLift): under a tilt every building's roof is lifted by its height (ViewMode.lift_px(height_m * height_k)) and its south face is drawn under it, tiled bay by bay across the footprint's width from a style's wall strip. by_name: a city_textures `name` -> its style and height in metres (else default). height_k scales every height (1 = true height; the owner's call: a shortened cut for play visibility). styles: art = the strip per view art key (`<art>` is the view row's art, p55 / p70), bays = bay cells in the strip, bay_m = a bay's width on the ground. art_fallback: an art key whose strip is missing draws the named key's strip (p70 draws the p55 drawing, stretched by the geometry, until the 70 twins land). occlude: a body behind a building draws as an ink silhouette under the redrawn face and roof (CityOcclusion; false = the body draws over the lifted roof). parked_cards: hand the kerb-parked cars to VehicleParked as cards instead of drawing them flat, per chunk only while VehicleParked.drawn() (a live VehicleView: the arena city has none and keeps its flat cars). `top` draws none of this (bit-identical). props: the street props standing as cards under a tilt (PropCards, five facings cut by tools/art/city_prop_cut.py from the library's prop sheets, p55 / p70); a name not listed (fire_escape) stays flat; lamp_post and traffic_light stand at their post base (foot_m) with the arm turned by the flat art's turn; remove a row to put a prop back flat. storeys (optional per style, by art key): the wall stacked from whole storeys at the elevation's aspect (FacadeStoreys, tools/art/city_facade_storeys.py), the `art` sheet holding an upper row above a ground row, ground_h / upper_h = the rows' px, bay_m = the storey-wall's own bay width; a style without a row for this art key keeps the single stretched strip (`art`, p55). cast_m (n10 world): a pole's ground shadow stays a short contact dash (0.7 m, no blob): the old 1.6-1.8 m stroke with a globe at its end read as the post lying flat on the pavement.",
+  "doc": "City south faces under an angled view (night n8 lane city, FacadeArt / ChunkLift): under a tilt every building's roof is lifted by its height (ViewMode.lift_px(height_m * height_k)) and its south face is drawn under it, tiled bay by bay across the footprint's width from a style's wall strip. by_name: a city_textures `name` -> its style and height in metres (else default). height_k scales every height (1 = true height; the owner's call: a shortened cut for play visibility). styles: art = the strip per view art key (`<art>` is the view row's art, p55 / p70), bays = bay cells in the strip, bay_m = a bay's width on the ground. art_fallback: an art key whose strip is missing draws the named key's strip (p70 draws the p55 drawing, stretched by the geometry, until the 70 twins land). occlude: a body behind a building draws as an ink silhouette under the redrawn face and roof (CityOcclusion; false = the body draws over the lifted roof). parked_cards: hand the kerb-parked cars to VehicleParked as cards instead of drawing them flat, per chunk only while VehicleParked.drawn() (a live VehicleView: the arena city has none and keeps its flat cars). `top` draws none of this (bit-identical). props: the street props standing as cards under a tilt (PropCards, five facings cut by tools/art/city_prop_cut.py from the library's prop sheets, p55 / p70); a name not listed (fire_escape) stays flat; lamp_post and traffic_light stand at their post base (foot_m) with the arm turned by the flat art's turn; remove a row to put a prop back flat. storeys (optional per style, by art key): the wall stacked from whole storeys at the elevation's aspect (FacadeStoreys, tools/art/city_facade_storeys.py), the `art` sheet holding an upper row above a ground row, ground_h / upper_h = the rows' px, bay_m = the storey-wall's own bay width; a style without a row for this art key keeps the single stretched strip (`art`, p55). cast_m (n10 world): a pole's ground shadow stays a short contact dash (0.7 m, no blob): the old 1.6-1.8 m stroke with a globe at its end read as the post lying flat on the pavement. alt (n18 districts, optional per style): a second style about half the buildings of this style draw instead, by a stable place hash (FacadeStrips.style_at), so a zone shows two walls.",
   "height_k": 0.5,
   "occlude": true,
   "parked_cards": true,
@@ -70,6 +138,10 @@
       "art": "res://features/city/art/view/<art>/prop_bench.png",
       "cell_w_m": 1.9
     },
+    "bike_racks": {
+      "art": "res://features/city/art/view/<art>/prop_bike_racks.png",
+      "cell_w_m": 2.42
+    },
     "bollard": {
       "art": "res://features/city/art/view/<art>/prop_bollard.png",
       "cell_w_m": 0.4
@@ -78,10 +150,110 @@
       "art": "res://features/city/art/view/<art>/prop_bus_stop.png",
       "cell_w_m": 3.4
     },
+    "coffee_kiosk": {
+      "art": "res://features/city/art/view/<art>/prop_coffee_kiosk.png",
+      "cell_w_m": 2.3
+    },
+    "container2": {
+      "art": "res://features/city/art/view/<art>/prop_container2.png",
+      "cell_w_m": 6.16
+    },
+    "container3": {
+      "art": "res://features/city/art/view/<art>/prop_container3.png",
+      "cell_w_m": 6.16
+    },
     "crate_stack": {
       "art": "res://features/city/art/view/<art>/prop_crate_stack.png",
       "cell_w_m": 3.2,
       "print_art": "res://features/city/art/view/<art>/prop_crate_stack_print.png"
+    },
+    "dock_cargo_tarp": {
+      "art": "res://features/city/art/view/<art>/prop_dock_cargo_tarp.png",
+      "cell_w_m": 3.47
+    },
+    "dock_crab_pots": {
+      "art": "res://features/city/art/view/<art>/prop_dock_crab_pots.png",
+      "cell_w_m": 1.88
+    },
+    "dock_dinghy": {
+      "art": "res://features/city/art/view/<art>/prop_dock_dinghy.png",
+      "cell_w_m": 4.35
+    },
+    "dock_fish_tanks": {
+      "art": "res://features/city/art/view/<art>/prop_dock_fish_tanks.png",
+      "cell_w_m": 2.87
+    },
+    "dock_fuel_tank": {
+      "art": "res://features/city/art/view/<art>/prop_dock_fuel_tank.png",
+      "cell_w_m": 5.01
+    },
+    "dock_gutting_tables": {
+      "art": "res://features/city/art/view/<art>/prop_dock_gutting_tables.png",
+      "cell_w_m": 4.26
+    },
+    "dock_lifebuoy": {
+      "art": "res://features/city/art/view/<art>/prop_dock_lifebuoy.png",
+      "cell_w_m": 0.76
+    },
+    "dock_nav_buoys": {
+      "art": "res://features/city/art/view/<art>/prop_dock_nav_buoys.png",
+      "cell_w_m": 2.5
+    },
+    "dock_oil_drums": {
+      "art": "res://features/city/art/view/<art>/prop_dock_oil_drums.png",
+      "cell_w_m": 2.21
+    },
+    "dock_propeller": {
+      "art": "res://features/city/art/view/<art>/prop_dock_propeller.png",
+      "cell_w_m": 2.29
+    },
+    "dock_rope_net": {
+      "art": "res://features/city/art/view/<art>/prop_dock_rope_net.png",
+      "cell_w_m": 1.76
+    },
+    "dock_scrap_skip": {
+      "art": "res://features/city/art/view/<art>/prop_dock_scrap_skip.png",
+      "cell_w_m": 3.39
+    },
+    "down_bollards": {
+      "art": "res://features/city/art/view/<art>/prop_down_bollards.png",
+      "cell_w_m": 2.42
+    },
+    "down_chess_tables": {
+      "art": "res://features/city/art/view/<art>/prop_down_chess_tables.png",
+      "cell_w_m": 2.02
+    },
+    "down_flower_crates": {
+      "art": "res://features/city/art/view/<art>/prop_down_flower_crates.png",
+      "cell_w_m": 2.47
+    },
+    "down_litter_bins": {
+      "art": "res://features/city/art/view/<art>/prop_down_litter_bins.png",
+      "cell_w_m": 1.82
+    },
+    "down_news_boxes": {
+      "art": "res://features/city/art/view/<art>/prop_down_news_boxes.png",
+      "cell_w_m": 1.63
+    },
+    "down_planter_bed": {
+      "art": "res://features/city/art/view/<art>/prop_down_planter_bed.png",
+      "cell_w_m": 4.04
+    },
+    "down_plaza_steps": {
+      "art": "res://features/city/art/view/<art>/prop_down_plaza_steps.png",
+      "cell_w_m": 5.05
+    },
+    "down_stone_ledges": {
+      "art": "res://features/city/art/view/<art>/prop_down_stone_ledges.png",
+      "cell_w_m": 4.26
+    },
+    "down_street_clock": {
+      "art": "res://features/city/art/view/<art>/prop_down_street_clock.png",
+      "cell_w_m": 0.92
+    },
+    "down_tree_bench": {
+      "art": "res://features/city/art/view/<art>/prop_down_tree_bench.png",
+      "cell_w_m": 2.42
     },
     "dumpster": {
       "art": "res://features/city/art/view/<art>/prop_dumpster.png",
@@ -90,6 +262,14 @@
     "fire_hydrant": {
       "art": "res://features/city/art/view/<art>/prop_fire_hydrant.png",
       "cell_w_m": 0.55
+    },
+    "food_cart": {
+      "art": "res://features/city/art/view/<art>/prop_food_cart.png",
+      "cell_w_m": 2.5
+    },
+    "fountain": {
+      "art": "res://features/city/art/view/<art>/prop_fountain.png",
+      "cell_w_m": 3.53
     },
     "lamp_post": {
       "art": "res://features/city/art/view/<art>/prop_lamp_post.png",
@@ -129,6 +309,10 @@
       "cell_w_m": 2.2,
       "turn": 1
     },
+    "sculpture_plinth": {
+      "art": "res://features/city/art/view/<art>/prop_sculpture_plinth.png",
+      "cell_w_m": 2.35
+    },
     "street_sign": {
       "art": "res://features/city/art/view/<art>/prop_street_sign.png",
       "cast_m": 1,
@@ -154,6 +338,10 @@
       "art": "res://features/city/art/view/<art>/prop_trash_can.png",
       "cell_w_m": 0.75
     },
+    "tree_grate": {
+      "art": "res://features/city/art/view/<art>/prop_tree_grate.png",
+      "cell_w_m": 2.36
+    },
     "vending_machine": {
       "art": "res://features/city/art/view/<art>/prop_vending_machine.png",
       "cell_w_m": 1.3,
@@ -162,6 +350,64 @@
   },
   "schema": "gtai.city-facades/1",
   "styles": {
+    "dock": {
+      "alt": "dock_b",
+      "art": "res://features/city/art/view/<art>/facade_shop.png",
+      "bay_m": 4.1,
+      "bays": 3,
+      "storeys": {
+        "p70": {
+          "art": "res://features/city/art/view/p70/facade_dock_storeys.png",
+          "bay_m": 4.1,
+          "bays": 4,
+          "ground_h": 124,
+          "upper_h": 80
+        }
+      }
+    },
+    "dock_b": {
+      "art": "res://features/city/art/view/<art>/facade_shop.png",
+      "bay_m": 4.1,
+      "bays": 3,
+      "storeys": {
+        "p70": {
+          "art": "res://features/city/art/view/p70/facade_dock_b_storeys.png",
+          "bay_m": 4.1,
+          "bays": 4,
+          "ground_h": 150,
+          "upper_h": 106
+        }
+      }
+    },
+    "glass": {
+      "alt": "office",
+      "art": "res://features/city/art/view/<art>/facade_tall.png",
+      "bay_m": 4.2,
+      "bays": 3,
+      "storeys": {
+        "p70": {
+          "art": "res://features/city/art/view/p70/facade_glass_storeys.png",
+          "bay_m": 3.6,
+          "bays": 4,
+          "ground_h": 128,
+          "upper_h": 72
+        }
+      }
+    },
+    "office": {
+      "art": "res://features/city/art/view/<art>/facade_tall.png",
+      "bay_m": 4.2,
+      "bays": 3,
+      "storeys": {
+        "p70": {
+          "art": "res://features/city/art/view/p70/facade_office_storeys.png",
+          "bay_m": 3.6,
+          "bays": 4,
+          "ground_h": 144,
+          "upper_h": 112
+        }
+      }
+    },
     "shop": {
       "art": "res://features/city/art/view/<art>/facade_shop.png",
       "bay_m": 4.1,

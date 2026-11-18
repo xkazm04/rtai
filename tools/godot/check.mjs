@@ -40,11 +40,25 @@ const isAt = (l) => /^\s+at: /.test(l ?? '');
 /** Godot's own cascade lines, whole: a real error that merely quotes the words is not one. */
 const CASCADE = /^(SCRIPT ERROR: Compile Error: Failed to compile depended scripts\.?|ERROR: Failed to load script "[^"]*" with error "Compilation failed"\.?)$/;
 
+/** Godot's shutdown report after a failed load (leaked RIDs, resources still in use): never a cause. */
+const EXIT_NOISE = /^ERROR: (\d+ RID allocations of type '[^']*' were leaked at exit|\d+ resources still in use at exit)/;
+
+/** The lines minus the shutdown report and its `at:` lines (n18 districts: with them, an all-cascade
+ *  run read FAIL, not UNVERIFIABLE, for unchanged tests that reach CitySystem). */
+function dropExitNoise(lines) {
+  const out = [];
+  for (let i = 0; i < lines.length; i += 1) {
+    if (!EXIT_NOISE.test(lines[i])) { out.push(lines[i]); continue; }
+    while (isAt(lines[i + 1])) i += 1;
+  }
+  return out;
+}
+
 /** The error lines of a run minus autoload-identifier false positives (and their `at:` lines). When
  *  nothing else was reported the script is fine, so the generic "Failed to load script" trailer goes too.
  *  A cascade with no autoload noise behind it is kept: its cause was not seen, so it is not a pass. */
 export function errorLines(out, autoloads = autoloadNames()) {
-  const lines = out.split('\n').filter((l) => ERROR_LINE.test(l)).map((l) => l.trimEnd());
+  const lines = dropExitNoise(out.split('\n').filter((l) => ERROR_LINE.test(l)).map((l) => l.trimEnd()));
   const kept = [];
   let noise = false;
   for (let i = 0; i < lines.length; i += 1) {

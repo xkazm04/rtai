@@ -15,8 +15,18 @@ func before_all() -> void:
 func test_tables_load() -> void:
 	assert_not_null(_gen)
 	assert_eq(_gen.district_id, "district_01")
-	var why: String = "ids 72-85: box, zebra, eraser, story paint, 2x2, long roof, 12 m kerb"
-	assert_eq(_gen.sizes.size(), 86, why)
+	var why: String = "ids 72-85: box, zebra, eraser, story paint, 2x2, long roof, 12 m kerb;"
+	why += " 86-92 (n18):"
+	why += " dock warehouse a/b, dock shed, downtown tower a/b, dock water a/b; 93-94 quay edge;"
+	why += " 95-96 container stacks 2-high, 3-high; 97-104 cold store, sawtooth, tall a/b,"
+	why += " fountain, tree grate, bike racks, plinth; 105-111 clocktower, terrace, tall c,"
+	why += " bank dome, crown, shed b, warehouse c; 112-113 downtown plaza paving, quay apron;"
+	why += " 114-115 coffee kiosk, food cart; 116 docks yard ground; 117-119 cargo tarp, fuel"
+	why += " tank, lifebuoy; 120-122 street clock, bollards, litter bins; 123 Dock 9 office roof;"
+	why += " 124-127 rope net, oil drums (ochre), news boxes, tug; 128-131 planter bed, stone"
+	why += " ledges, chess tables, flower crates; 132-134 propeller, crab pots, dinghy; 135-136 nav"
+	why += " buoys, scrap skip; 137-140 fish tanks, gutting tables, plaza steps, tree bench"
+	assert_eq(_gen.sizes.size(), 141, why)
 
 
 func test_generation_is_deterministic() -> void:

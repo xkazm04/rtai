@@ -55,7 +55,10 @@
         "2026-11-18: n18 police item 6/7: --sim-police in LaunchArgs.KNOWN_FLAGS (the brief names the flag there; launch_args.gd 200 -> 201) and dev/sim/heat_cost.gd (the heat 3 cost probe) (dev_loc 22006 -> 22133)",
         "2026-11-18: n18 police: dev evidence tooling (heat_clip body counts, quest1_clip --sim-police) (dev_loc 22133 -> 22165)",
         "2026-11-18: n18 police: quest1_clip_rec death probe line (dev evidence) (dev_loc 22165 -> 22170)",
-        "2026-11-18: n18 police: bench --heat (CityHeat pinned at a level: item 7's heat 3 bench) and dev/sim/cop_wall_trails.gd (item 1's before/after trails on the wall map); dev evidence tooling (dev_loc 22170 -> 22309)"
+        "2026-11-18: n18 police: bench --heat (CityHeat pinned at a level: item 7's heat 3 bench) and dev/sim/cop_wall_trails.gd (item 1's before/after trails on the wall map); dev evidence tooling (dev_loc 22170 -> 22309)",
+        "2026-11-17: n18 districts: dev/view/city_zone_map.gd, the headless plan of the generated city per zone (cells, zone tint, numbers JSON); a -s script has no LaunchArgs autoload, so it reads OS args as dev/bake_city.gd does (dev_loc 21754 -> 21849)",
+        "2026-11-17: n18 districts: dev/view/zone_frame.gd, zone stills + a straight drive clip through the generated city (the evidence of items 3 and 6); its flags are its own (KNOWN), not game flags, so it reads OS args as dev/showcase/city_frame.gd does (dev_loc 21849 -> 21992)",
+        "2026-11-18: n18 districts item 5: dev/bots BotRoute (+route use in CollectCallBot) so the quest bot can walk to Dock 9 on the city's dock place under --quest1-places; dev only, not shipped (dev_loc 21992 -> 22089)"
       ],
       "files": {
         "project/dev/arena": 711,
@@ -63,7 +66,7 @@
         "project/dev/bake_city.gd": 32,
         "project/dev/bench": 1906,
         "project/dev/bosses": 55,
-        "project/dev/bots": 399,
+        "project/dev/bots": 496,
         "project/dev/enemy_ai": 662,
         "project/dev/frames": 1087,
         "project/dev/ghost-forms": 616,
@@ -86,10 +89,10 @@
         "project/dev/servo": 434,
         "project/dev/showcase": 6775,
         "project/dev/sim": 725,
-        "project/dev/view": 195,
+        "project/dev/view": 433,
         "project/dev/weapon_art": 506
       },
-      "total": 22309
+      "total": 22644
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -105,7 +108,9 @@
         "2026-11-11: n15 tools: dev/sim/car_route_trails.gd, the t-4 evidence tool for a hand-made map (Call c-2); a -s SceneTree script reads its own two flags like dev/bake_city.gd (direct_cmdline_reads 161 -> 162)",
         "2026-11-18: n18 police: dev/sim/heat_clip.gd + heat_clip_mark.gd, the heat ladder's 32 px/m clip scene (items 3-5 evidence; no film shot covers the sandbox city) (direct_cmdline_reads 162 -> 163)",
         "2026-11-18: n18 police item 6/7: --sim-police in LaunchArgs.KNOWN_FLAGS (the brief names the flag there; launch_args.gd 200 -> 201) and dev/sim/heat_cost.gd (the heat 3 cost probe) (direct_cmdline_reads 163 -> 164)",
-        "2026-11-18: n18 police: bench --heat (CityHeat pinned at a level: item 7's heat 3 bench) and dev/sim/cop_wall_trails.gd (item 1's before/after trails on the wall map); dev evidence tooling (direct_cmdline_reads 164 -> 165)"
+        "2026-11-18: n18 police: bench --heat (CityHeat pinned at a level: item 7's heat 3 bench) and dev/sim/cop_wall_trails.gd (item 1's before/after trails on the wall map); dev evidence tooling (direct_cmdline_reads 164 -> 165)",
+        "2026-11-17: n18 districts: dev/view/city_zone_map.gd, the headless plan of the generated city per zone (cells, zone tint, numbers JSON); a -s script has no LaunchArgs autoload, so it reads OS args as dev/bake_city.gd does (direct_cmdline_reads 162 -> 163)",
+        "2026-11-17: n18 districts: dev/view/zone_frame.gd, zone stills + a straight drive clip through the generated city (the evidence of items 3 and 6); its flags are its own (KNOWN), not game flags, so it reads OS args as dev/showcase/city_frame.gd does (direct_cmdline_reads 163 -> 164)"
       ],
       "files": {
         "project/core/render/view_mode.gd": 1,
@@ -201,6 +206,8 @@
         "project/dev/sim/cop_wall_trails.gd": 1,
         "project/dev/sim/heat_clip.gd": 1,
         "project/dev/sim/heat_cost.gd": 1,
+        "project/dev/view/city_zone_map.gd": 1,
+        "project/dev/view/zone_frame.gd": 1,
         "project/dev/weapon_art/electro_cells.gd": 1,
         "project/dev/weapon_art/swat_lineup.gd": 1,
         "project/dev/weapon_art/weapon_lineup.gd": 1,
@@ -257,7 +264,7 @@
         "project/tests/run_scenarios.gd": 1,
         "project/tests/unit/test_launch_args.gd": 1
       },
-      "total": 165
+      "total": 167
     },
     "files_near_cap": {
       "accepted": [
@@ -316,7 +323,7 @@
         "2026-11-18: n18 police item 6/7: --sim-police in LaunchArgs.KNOWN_FLAGS (the brief names the flag there; launch_args.gd 200 -> 201) and dev/sim/heat_cost.gd (the heat 3 cost probe) (files_past_soft_cap 66 -> 67)"
       ],
       "files": {
-        "project/boot/collect_call/collect_call_stage.gd": 261,
+        "project/boot/collect_call/collect_call_stage.gd": 262,
         "project/boot/collect_call/view/cast_view.gd": 230,
         "project/boot/collect_call/view/collect_call_view.gd": 237,
         "project/boot/collect_call/view/fx_view.gd": 271,
@@ -351,7 +358,7 @@
         "project/features/bosses/servo/servo_swarm.gd": 208,
         "project/features/characters/cut_rig.gd": 263,
         "project/features/city/gen/tile_painter.gd": 243,
-        "project/features/city/sim/sim_people.gd": 202,
+        "project/features/city/sim/sim_people.gd": 205,
         "project/features/city/view/city_view.gd": 259,
         "project/features/combat/ai/enemy_pit.gd": 244,
         "project/features/combat/combat_arena.gd": 299,

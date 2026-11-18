@@ -19,6 +19,8 @@ const AT_ALLY: Vector2 = Vector2(0.0, 1.6)
 const LINGER_TICKS: int = 120
 ## How long a bot that will not torch waits by the crates before it gives up (10 s).
 const GIVE_UP_TICKS: int = 600
+## A goal at least this far away is walked by a BotRoute (with Dock 9 on its dock place).
+const ROUTE_M: float = 40.0
 
 var phase: String = "start"
 ## How near a goal counts as there (the input driver's thumb arrives less exactly than a direct
@@ -34,6 +36,7 @@ var grabbed: bool = false
 ## Walking to a dropped rifle (kept until it is in hand, even when the next wave comes).
 var fetching: bool = false
 var _waited: int = 0
+var _route: BotRoute = null
 var _stage: CollectCallStage
 var _system: QuestSystem
 
@@ -76,8 +79,26 @@ func _go(to: Vector2) -> bool:
 
 
 func _walk(to: Vector2) -> void:
-	if _stage.arena.rivet.pos.distance_to(to) > stand_m:
-		_stage.intent.move_to = to
+	var at: Vector2 = _stage.arena.rivet.pos
+	if at.distance_to(to) > stand_m:
+		_stage.intent.move_to = _routed(at, to)
+
+
+## A far goal on the city walks a BotRoute round the buildings, only with Dock 9 on its dock place
+## (--quest1-places): the street stage keeps every leg on one street, its straight walks unchanged.
+func _routed(at: Vector2, to: Vector2) -> Vector2:
+	if _stage.cells == null or _stage.layout.dock == null:
+		return to
+	var planned: bool = _route != null and _route.goal == to
+	if not planned and at.distance_to(to) < ROUTE_M:
+		return to
+	if not planned:
+		_route = BotRoute.find(_stage.cells, at, to)
+		if _route == null:
+			_route = BotRoute.new()
+			_route.goal = to
+			_route.waypoints = PackedVector2Array([to])
+	return _route.steer(at)
 
 
 func _hide(spot: String) -> void:
@@ -115,7 +136,7 @@ func _fight() -> void:
 			_stage.intent.interact = true
 			grabbed = true
 	else:
-		_walk(_stage.layout.w(DOCK_HOLD))
+		_walk(_stage.layout.w_dock(DOCK_HOLD))
 	_shoot_nearest()
 
 
@@ -125,7 +146,7 @@ func _boss() -> void:
 		_walk(_stage.layout.marker("Dock 9 vault cage").at)
 		return
 	if arena.boss.alive():
-		_walk(_stage.layout.w(BOSS_STANDOFF))
+		_walk(_stage.layout.w_dock(BOSS_STANDOFF))
 		if arena.boss.exposed and arena.tazer_hits >= 1:
 			_stage.intent.fire_at = arena.boss.pos
 		return

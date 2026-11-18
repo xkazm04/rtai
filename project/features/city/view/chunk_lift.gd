@@ -60,6 +60,7 @@ func _setup(d: Dictionary, tex: CityTextures, is_building: Array[bool], art: Str
 		var row: Dictionary = styles[style]
 		var fb_styles: Dictionary = d["art_fallback"]
 		_faces.add_style(row, art, fb_styles)
+	_faces.link_alts(names)
 	occlude = d.get("occlude", true)
 	var props: Dictionary = d.get("props", {})
 	var fb: Dictionary = d["art_fallback"]

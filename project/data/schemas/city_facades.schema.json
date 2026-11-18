@@ -143,6 +143,11 @@
       "additionalProperties": {
         "additionalProperties": false,
         "properties": {
+          "alt": {
+            "description": "a style about half the buildings of this style draw instead (FacadeStrips.style_at)",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
           "art": {
             "pattern": "^res://",
             "type": "string"
@@ -165,6 +170,11 @@
                 "bay_m": {
                   "minimum": 0,
                   "type": "number"
+                },
+                "bays": {
+                  "description": "the storey sheet's own bay count (else the style's bays)",
+                  "minimum": 1,
+                  "type": "integer"
                 },
                 "ground_h": {
                   "minimum": 0,

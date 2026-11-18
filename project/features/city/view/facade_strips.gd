@@ -11,6 +11,10 @@ const INK: Color = Color(0.09, 0.075, 0.106, 1.0)
 var _strips: Array[Texture2D] = []
 var _bays: Array[int] = []
 var _bay_px: Array[float] = []
+## n18 districts: a style row's `alt` style (its index, -1 none): about half the buildings of the
+## style draw the alt wall instead, picked by a stable place hash (two wall strips a zone).
+var _alt_names: Array[String] = []
+var _alt: Array[int] = []
 ## a style's whole-storey wall (null = the single stretched strip)
 var _storeys: Array[FacadeStoreys] = []
 
@@ -28,19 +32,35 @@ func add_style(row: Dictionary, art: String, fallback: Dictionary) -> void:
 		var upper_h: float = rows["upper_h"]
 		var ground_h: float = rows["ground_h"]
 		var sheet: Texture2D = load(str(rows["art"]))
-		storeys = FacadeStoreys.new(sheet, bays, upper_h, ground_h)
+		var sheet_bays: int = rows.get("bays", bays)
+		storeys = FacadeStoreys.new(sheet, sheet_bays, upper_h, ground_h)
 	_strips.append(PropCards.art_texture(str(row["art"]), art, fallback))
 	_bays.append(bays)
 	_bay_px.append(bay_m * SimConst.PX_PER_M)
 	_storeys.append(storeys)
+	_alt_names.append(str(row.get("alt", "")))
 
 
 func has_strip(s: int) -> bool:
 	return _strips[s] != null or _storeys[s] != null
 
 
+## Resolves every style's `alt` by name (`names`: the styles in add order).
+func link_alts(names: Array[String]) -> void:
+	_alt.clear()
+	for alt: String in _alt_names:
+		_alt.append(names.find(alt) if alt != "" else -1)
+
+
+## The style a building at ground centre `at` (px) draws: s, or s's alt on about half the places.
+func style_at(s: int, at: Vector2) -> int:
+	var alt: int = _alt[s] if s < _alt.size() else -1
+	return alt if alt >= 0 and absi(roundi(at.x * 0.11 + at.y * 0.53)) % 2 == 1 else s
+
+
 ## Draws style s's face over the ground rect `ext` (px) centred on `at`, `lift` px tall.
-func draw(item: RID, s: int, ext: Vector2, at: Vector2, lift: float) -> void:
+func draw(item: RID, s0: int, ext: Vector2, at: Vector2, lift: float) -> void:
+	var s: int = style_at(s0, at)
 	var base: float = at.y + ext.y * 0.5
 	var x0: float = at.x - ext.x * 0.5
 	var n: int = maxi(1, roundi(ext.x / _bay_px[s]))

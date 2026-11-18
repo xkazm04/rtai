@@ -1,0 +1,71 @@
+{
+  "$id": "gtai.places/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "places": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "door": {
+            "enum": [
+              "middle",
+              "office"
+            ],
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "near": {
+            "items": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "rule": {
+            "enum": [
+              "dock_block_nearest",
+              "block_nearest"
+            ],
+            "type": "string"
+          },
+          "zone": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "zone",
+          "rule",
+          "near"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.places/1"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "places"
+  ],
+  "type": "object"
+}

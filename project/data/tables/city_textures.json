@@ -947,6 +947,613 @@
         8
       ],
       "solid": false
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_dock_warehouse.png",
+      "class": "building",
+      "id": 86,
+      "name": "roof_dock_warehouse",
+      "size_m": [
+        16.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_dock_warehouse_b.png",
+      "class": "building",
+      "id": 87,
+      "name": "roof_dock_warehouse_b",
+      "size_m": [
+        16.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_dock_shed.png",
+      "class": "building",
+      "id": 88,
+      "name": "roof_dock_shed",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_down_tower.png",
+      "class": "building",
+      "id": 89,
+      "name": "roof_down_tower",
+      "size_m": [
+        16.4,
+        16.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_down_tower_b.png",
+      "class": "building",
+      "id": 90,
+      "name": "roof_down_tower_b",
+      "size_m": [
+        16.4,
+        16.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/ground/dock_water.png",
+      "class": "ground",
+      "id": 91,
+      "name": "dock_water",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/d5/ground/dock_water_b.png",
+      "class": "ground",
+      "id": 92,
+      "name": "dock_water_b",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/d5/ground/quay_straight.png",
+      "class": "ground",
+      "id": 93,
+      "name": "quay_straight",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/d5/ground/quay_inner.png",
+      "class": "ground",
+      "id": 94,
+      "name": "quay_inner",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/props/container2.png",
+      "class": "prop",
+      "id": 95,
+      "name": "container2",
+      "size_m": [
+        6.1,
+        2.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/container3.png",
+      "class": "prop",
+      "id": 96,
+      "name": "container3",
+      "size_m": [
+        6.1,
+        2.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_dock_coldstore.png",
+      "class": "building",
+      "id": 97,
+      "name": "roof_dock_coldstore",
+      "size_m": [
+        16.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_dock_sawtooth.png",
+      "class": "building",
+      "id": 98,
+      "name": "roof_dock_sawtooth",
+      "size_m": [
+        16.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_down_tall.png",
+      "class": "building",
+      "id": 99,
+      "name": "roof_down_tall",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_down_tall_b.png",
+      "class": "building",
+      "id": 100,
+      "name": "roof_down_tall_b",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/fountain.png",
+      "class": "prop",
+      "id": 101,
+      "name": "fountain",
+      "size_m": [
+        3,
+        3
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/tree_grate.png",
+      "class": "prop",
+      "id": 102,
+      "name": "tree_grate",
+      "size_m": [
+        1.7,
+        1.7
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/bike_racks.png",
+      "class": "prop",
+      "id": 103,
+      "name": "bike_racks",
+      "size_m": [
+        2.4,
+        0.77
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/sculpture_plinth.png",
+      "class": "prop",
+      "id": 104,
+      "name": "sculpture_plinth",
+      "size_m": [
+        2,
+        2
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_down_clocktower.png",
+      "class": "building",
+      "id": 105,
+      "name": "roof_down_clocktower",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_down_terrace.png",
+      "class": "building",
+      "id": 106,
+      "name": "roof_down_terrace",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_down_tall_c.png",
+      "class": "building",
+      "id": 107,
+      "name": "roof_down_tall_c",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_down_bank_dome.png",
+      "class": "building",
+      "id": 108,
+      "name": "roof_down_bank_dome",
+      "size_m": [
+        16.4,
+        16.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_down_crown.png",
+      "class": "building",
+      "id": 109,
+      "name": "roof_down_crown",
+      "size_m": [
+        16.4,
+        16.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_dock_shed_b.png",
+      "class": "building",
+      "id": 110,
+      "name": "roof_dock_shed_b",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_dock_warehouse_c.png",
+      "class": "building",
+      "id": 111,
+      "name": "roof_dock_warehouse_c",
+      "size_m": [
+        16.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/ground/down_plaza_paving.png",
+      "class": "ground",
+      "id": 112,
+      "name": "down_plaza_paving",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/d5/ground/quay_apron.png",
+      "class": "ground",
+      "id": 113,
+      "name": "quay_apron",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/props/coffee_kiosk.png",
+      "class": "prop",
+      "id": 114,
+      "name": "coffee_kiosk",
+      "size_m": [
+        2,
+        2.85
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/food_cart.png",
+      "class": "prop",
+      "id": 115,
+      "name": "food_cart",
+      "size_m": [
+        2.33,
+        2.2
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/ground/dock_yard.png",
+      "class": "ground",
+      "id": 116,
+      "name": "dock_yard",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/props/dock_cargo_tarp.png",
+      "class": "prop",
+      "id": 117,
+      "name": "dock_cargo_tarp",
+      "size_m": [
+        3.16,
+        2
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_fuel_tank.png",
+      "class": "prop",
+      "id": 118,
+      "name": "dock_fuel_tank",
+      "size_m": [
+        4.91,
+        2.6
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_lifebuoy.png",
+      "class": "prop",
+      "id": 119,
+      "name": "dock_lifebuoy",
+      "size_m": [
+        0.96,
+        0.75
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/down_street_clock.png",
+      "class": "prop",
+      "id": 120,
+      "name": "down_street_clock",
+      "size_m": [
+        0.9,
+        0.9
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/down_bollards.png",
+      "class": "prop",
+      "id": 121,
+      "name": "down_bollards",
+      "size_m": [
+        2.4,
+        0.75
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/down_litter_bins.png",
+      "class": "prop",
+      "id": 122,
+      "name": "down_litter_bins",
+      "size_m": [
+        1.8,
+        0.71
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_dock_office.png",
+      "class": "building",
+      "id": 123,
+      "name": "roof_dock_office",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_rope_net.png",
+      "class": "prop",
+      "id": 124,
+      "name": "dock_rope_net",
+      "shadow": false,
+      "size_m": [
+        1.4,
+        1.32
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_oil_drums.png",
+      "class": "prop",
+      "id": 125,
+      "name": "dock_oil_drums",
+      "size_m": [
+        1.9,
+        1.94
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/down_news_boxes.png",
+      "class": "prop",
+      "id": 126,
+      "name": "down_news_boxes",
+      "size_m": [
+        1.6,
+        0.61
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_tug.png",
+      "class": "prop",
+      "id": 127,
+      "name": "dock_tug",
+      "size_m": [
+        5.37,
+        13.97
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/props/down_planter_bed.png",
+      "class": "prop",
+      "id": 128,
+      "name": "down_planter_bed",
+      "size_m": [
+        4,
+        1.45
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/down_stone_ledges.png",
+      "class": "prop",
+      "id": 129,
+      "name": "down_stone_ledges",
+      "size_m": [
+        4,
+        2.27
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/down_chess_tables.png",
+      "class": "prop",
+      "id": 130,
+      "name": "down_chess_tables",
+      "size_m": [
+        2,
+        3.6
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/down_flower_crates.png",
+      "class": "prop",
+      "id": 131,
+      "name": "down_flower_crates",
+      "size_m": [
+        2.4,
+        1.24
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_propeller.png",
+      "class": "prop",
+      "id": 132,
+      "name": "dock_propeller",
+      "size_m": [
+        2.2,
+        2.16
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_crab_pots.png",
+      "class": "prop",
+      "id": 133,
+      "name": "dock_crab_pots",
+      "shadow": false,
+      "size_m": [
+        1.6,
+        1.45
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_dinghy.png",
+      "class": "prop",
+      "id": 134,
+      "name": "dock_dinghy",
+      "size_m": [
+        2.48,
+        4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_nav_buoys.png",
+      "class": "prop",
+      "id": 135,
+      "name": "dock_nav_buoys",
+      "size_m": [
+        2.2,
+        2.25
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_scrap_skip.png",
+      "class": "prop",
+      "id": 136,
+      "name": "dock_scrap_skip",
+      "size_m": [
+        2,
+        2.64
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_fish_tanks.png",
+      "class": "prop",
+      "id": 137,
+      "name": "dock_fish_tanks",
+      "size_m": [
+        2.84,
+        1.29
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_gutting_tables.png",
+      "class": "prop",
+      "id": 138,
+      "name": "dock_gutting_tables",
+      "size_m": [
+        4,
+        1.36
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/down_plaza_steps.png",
+      "class": "prop",
+      "id": 139,
+      "name": "down_plaza_steps",
+      "size_m": [
+        5,
+        2.01
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/down_tree_bench.png",
+      "class": "prop",
+      "id": 140,
+      "name": "down_tree_bench",
+      "size_m": [
+        2.4,
+        2.4
+      ],
+      "solid": true
     }
   ]
 }

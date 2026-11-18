@@ -1,0 +1,11 @@
+run_scenarios: [1/9] quest1_dent ok, 0.5 s
+run_scenarios: [2/9] quest1_dent_lock ok, 0.2 s
+FAIL scenario_quest1_input.gd: not paid: state active at beat b4-dock, tick 90000
+run_scenarios: [3/9] quest1_input FAIL, 17.0 s
+run_scenarios: [4/9] quest1_kerf ok, 0.5 s
+run_scenarios: [5/9] quest1_keys ok, 0.1 s
+run_scenarios: [6/9] quest1_ohm ok, 0.6 s
+run_scenarios: [7/9] quest1_tonnage ok, 0.7 s
+run_scenarios: [8/9] quest_collect_call ok, 2.5 s
+run_scenarios: [9/9] quest_selftest ok, 0.1 s
+run_scenarios: 9 ran, 1 failed
