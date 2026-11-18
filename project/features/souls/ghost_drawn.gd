@@ -1,9 +1,7 @@
 class_name GhostDrawn
 extends RefCounted
-## n11 hero: a ghost form as one drawn figure under a tilt, in Rivet's strip format: a walk grid
-## (5 facings, the left three drawn or mirrored: GhostSheet; tools/art/ghost_pack.py) stepped by
-## the ground walked so a planted foot stays put, feet on the rig's point, its limbs and card
-## hidden. Without the art it builds nothing and the form keeps its card. Render only.
+## A drawn ghost steps by the ground walked, feet on the rig's point. Without its walk art
+## the rig keeps its card. GhostSheet handles drawn and mirrored left facings. Render only.
 
 const ART_DIR: String = "res://features/souls/art/view/"
 const COLS: int = 8
@@ -19,8 +17,7 @@ const BACKPEDAL_DOT: float = -0.25
 const STRIDE_K: Dictionary[String, float] = {"dent/p55": 0.8, "tonnage/p55": 0.95}
 const STILL_FRAMES: int = 3  # frames without ground walked before the figure stands
 const OCT_HOLD_RAD: float = deg_to_rad(4.0)
-## The act grid (`<name>_act.png`): 4 columns, the phases: wind-up (only a form whose sim has one,
-## Tonnage's slam), cut, follow-through, hit; ticks each phase shows for.
+## Columns in the act grid, followed by optional jab cells.
 const ACT_COLS: int = 4
 const WINDUP_COL: int = 0
 const CUT_COL: int = 1
@@ -33,6 +30,7 @@ const JAB_SHIFT: int = 4
 const JAB_COLS: Dictionary[String, int] = {"dent/p70": 7, "dent/p55": 7}
 const JAB_LEFT_COLS: Dictionary[String, int] = {"dent/p70": 7, "dent/p55": 7}
 const CUT_TICKS: int = 5
+const OHM_WINDUP_TICKS: int = 3  # inside the cut; 2 matches the lunge's ease-in, 0 skips it
 const FOLLOW_TICKS: int = 10
 const HIT_TICKS: int = 10
 
@@ -129,6 +127,8 @@ func act_col() -> int:
 		return WINDUP_COL
 	var since: int = _tick - _act_from
 	if _act_from >= 0 and since < CUT_TICKS + FOLLOW_TICKS:
+		if card_name == "ohm" and since < OHM_WINDUP_TICKS:
+			return WINDUP_COL
 		return CUT_COL if since < CUT_TICKS else FOLLOW_COL
 	return HIT_COL if _hurt >= 0 and _tick - _hurt < HIT_TICKS else -1
 

@@ -17,12 +17,38 @@ const CELLS: Dictionary[String, Array] = {
 	[Vector2(-44, -59), Vector2(14, -63), Vector2(71, -61), Vector2(80, -105), Vector2(44, -152)],
 }
 
+## Raised prong tips in wind-up column zero, relative to the foot point. Five right rows
+## followed by the three independently drawn left rows.
+const WINDUP: Dictionary[String, Array] = {
+	"ohm/p70":
+	[
+		Vector2(-60, -211),
+		Vector2(-104, -162),
+		Vector2(-78, -152),
+		Vector2(-5, -181),
+		Vector2(-15, -125),
+		Vector2(87, -178),
+		Vector2(84, -134),
+		Vector2(84, -165)
+	],
+	"ohm/p55":
+	[
+		Vector2(-64, -216),
+		Vector2(-99, -179),
+		Vector2(-88, -151),
+		Vector2(-53, -183),
+		Vector2(-7, -146),
+		Vector2(108, -198),
+		Vector2(105, -180),
+		Vector2(88, -186)
+	],
+}
+
 static var enabled: bool = true
 static var _at: Dictionary[String, Vector2] = {}
 
 
-## GhostDrawn, each frame: `spr` shows octant `oct`; `striking` while its cut or follow-through
-## cell shows. Notes the hand's canvas position, or forgets it.
+## Records the casting hand on each drawn cast frame, including its raised wind-up.
 static func note(name: String, art: String, spr: Sprite2D, oct: int, striking: bool) -> void:
 	var key: String = name + "/" + art
 	if not enabled or not striking or not CELLS.has(key):
@@ -32,6 +58,11 @@ static func note(name: String, art: String, spr: Sprite2D, oct: int, striking: b
 	var cell: Vector2 = CELLS[key][RigHeadCard.OCT_FRAME[oct]]
 	if RigHeadCard.OCT_FLIP[oct] == 1:
 		cell.x = -cell.x
+	if spr.hframes == GhostDrawn.ACT_COLS and spr.frame_coords.x == GhostDrawn.WINDUP_COL:
+		var left: bool = spr.vframes == GhostSheet.LEFT_ROWS
+		cell = WINDUP[key][spr.frame_coords.y + (GhostDrawn.ROWS if left else 0)]
+		if spr.flip_h:
+			cell.x = -cell.x
 	_at[name] = spr.get_global_transform_with_canvas() * cell
 
 

@@ -41,3 +41,13 @@ func test_off_or_unmeasured_forgets() -> void:
 	GhostHand.enabled = true
 	GhostHand.note("kerf", "p70", spr, 0, true)
 	assert_eq(GhostHand.local_to("kerf", spr), Vector2.INF)
+
+
+func test_the_bolt_follows_the_raised_profile_prongs_on_both_sheets() -> void:
+	var sheet: GhostSheet = GhostSheet.act_of(GhostDrawn.path_of("p70", "ohm", "act"), "ohm/p70")
+	var spr: Sprite2D = add_child_autofree(Sprite2D.new())
+	for oct: int in [0, 4]:
+		sheet.show(spr, oct, GhostDrawn.WINDUP_COL)
+		GhostHand.note("ohm", "p70", spr, oct, true)
+		var expected: Vector2 = Vector2(-78, -152) if oct == 0 else Vector2(84, -134)
+		assert_almost_eq(GhostHand.local_to("ohm", spr), expected, Vector2(0.01, 0.01))
