@@ -327,3 +327,16 @@ cannot ship. (Bus shelter, kiosk, food cart and sculpture v3 already have theirs
 - 03:21 mutate `dev/bots/bot_route.gd` (8 of 50 sampled, tests test_bot_route): 7/8 killed, 87.5 %; survivor :70 rings 4 -> 5
   in `_nearest_open` (only differs when no open cell lies within 3 cells: near-equivalent). Checkout clean after.
 Session 3 ended 03:22 with a clean tree; HEAD = this JOURNAL commit after 93f37b1d7 (v24).
+## Session 4 (2026-11-18 03:22 -> 04:52)
+Read: JOURNAL NEXT, git log, asset replies (it472 REQUEST 11 yard ground 02:48, it473 03:05-03:14: REQUEST 12 plan
+twins all eight DELIVERED, bow-north coaster + tug, litter bins, pipe bundles, cable reels, straddle carrier, truck).
+Registry rules applied: concept-scene-parity (the yard ground judged in game at 32/48 px/m, not on the 2x2 board),
+sprite-and-atlas-production (copied at game size, provenance line), procedural-level-planning (a ground is a zone key).
+- 03:30 MILESTONE item 3, commit c6b9fe8a0, generator v25: the docks yard ground (zone key `yard_ground` 116, never
+  turned). test_city_zone_grounds 5/5, planted turn caught. Looked: the yard reads as docks concrete, one surface with
+  the apron; the ochre bays are faint under the world print and mostly under the stacks.
+  `evidence/n18-districts/ab_it472_yard_ground_v24_v25_combo_{32,48}ppm.jpg`.
+REQUEST assets 13 (to the asset lane, from districts, order 1, small): re-run `tools/yard_ground_it472.py` with the bay
+rows centred at y 1.5 m and y 5.5 m (DockPainter.YARD_SLOTS is (4.0, 1.5), (4.0, 5.5); the first row sits 0.5 m north of
+your 2.0). Same name with `_v2`; I swap the PNG (no re-bake). Optional: a touch more ochre saturation, the world print
+greys it to near-invisible at 32 px/m.
