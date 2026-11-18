@@ -115,11 +115,11 @@ func guard_move(stage: CollectCallStage) -> void:
 	if not enabled or stage.intent.move_by == Vector2.ZERO or stage.intent.move_to != Vector2.INF:
 		return
 	var p: Vector2 = stage.arena.rivet.pos + stage.intent.move_by
-	var resolved: Vector2 = stage._collide(p)
+	var resolved: Vector2 = stage.collide_preview(p)
 	if resolved == p:
 		return
 	_bind(stage)
-	if not probe.clear_at(stage._collide(resolved), stage.arena.rivet.radius_m):
+	if not probe.clear_at(stage.collide_preview(resolved), stage.arena.rivet.radius_m):
 		stage.intent.move_by = Vector2.ZERO
 
 

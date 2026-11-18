@@ -175,6 +175,10 @@ func _move() -> void:
 	arena.rivet.pos = _collide(arena.rivet.pos.move_toward(intent.move_to, speed))
 
 
+func collide_preview(p: Vector2) -> Vector2:
+	return _collide(p)
+
+
 ## Rivet keeps out of the city's cells and the parked ghost cars (not the one he rides).
 func _collide(p: Vector2) -> Vector2:
 	var r: float = arena.tuning.rivet["radius_m"]
