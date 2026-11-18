@@ -171,7 +171,7 @@
       "aggression": 0.7,
       "attack_m": 15,
       "body": "human",
-      "cover_bias": 0.65,
+      "cover_bias": 1,
       "doc": "Production pit and street guard. The schema weapon identifies a ranged fighter. CombatTuning and the production rifle trigger supply its actual rounds and burst timing.",
       "flanks": true,
       "hit_fx": "blood",
