@@ -65,7 +65,11 @@ static func near(
 
 
 static func protects(spot: CoverSpot, threat: Vector2) -> bool:
-	return spot.protects_shots and ArenaWalls._crosses(spot.box, threat, spot.at)
+	if not spot.protects_shots:
+		return false
+	var wall: ArenaWalls = ArenaWalls.new()
+	wall.boxes.append(spot.box)
+	return wall.blocks(threat, spot.at)
 
 
 static func _face(box: Rect2, at: Vector2, n: Vector2, peek_m: float) -> CoverSpot:

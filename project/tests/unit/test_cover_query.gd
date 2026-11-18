@@ -35,3 +35,19 @@ func test_distance_then_geometry_break_ties_regardless_of_dictionary_order() -> 
 		assert_false(spots[0].low)
 		assert_false(spots[2].protects_shots)
 		assert_false(CoverQuery.protects(spots[2], Vector2(0, 6)))
+
+
+func test_protection_matches_single_station_even_on_edges_and_corners() -> void:
+	var walls: ArenaWalls = ArenaWalls.new()
+	walls.boxes.append(BOX)
+	var spot: CoverQuery.CoverSpot = CoverQuery.CoverSpot.new()
+	spot.protects_shots = true
+	spot.box = BOX
+	var grid: Array[Vector2] = []
+	for y: int in range(-2, 3):
+		for x: int in range(-3, 4):
+			grid.append(Vector2(x, y))
+	for at: Vector2 in grid:
+		spot.at = at
+		for threat: Vector2 in grid:
+			assert_eq(CoverQuery.protects(spot, threat), walls.blocks(threat, at))
