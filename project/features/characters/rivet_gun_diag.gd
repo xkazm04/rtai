@@ -15,6 +15,7 @@ extends RefCounted
 ## Screen angle (deg, y down) of the drawn gun per diagonal cell, keyed "<art>/<gun>".
 const DEG: Dictionary[String, PackedFloat32Array] = {
 	"p70/assault_rifle": [23.0, -43.0, 155.0, -142.0],
+	"p70/ray_gun": [36.0, -38.0, 144.0, -153.0],
 	"p70/homing_shard": [27.0, -41.0, 144.0, -150.0],
 	"p70/pistol": [32.0, -25.0, 146.0, -150.0],
 	"p70/machine_pistol": [40.0, -31.0, 139.0, -149.0],
@@ -27,6 +28,7 @@ const DEG: Dictionary[String, PackedFloat32Array] = {
 	"p70/rocket_launcher": [18.0, -39.0, 161.0, -151.0],
 	# p55 (it458/it462): barrel axes by eye at 2x (pistol, machine pistol: the flash read)
 	"p55/assault_rifle": [27.0, -30.0, 150.0, -151.0],
+	"p55/ray_gun": [32.0, -36.0, 148.0, -148.0],
 	"p55/homing_shard": [29.0, -27.0, 153.0, -153.0],
 	"p55/pistol": [37.0, -42.0, 145.0, -138.0],
 	"p55/machine_pistol": [39.0, -40.0, 137.0, -145.0],
@@ -43,6 +45,7 @@ const DEG: Dictionary[String, PackedFloat32Array] = {
 ## 64 px/m on the shot tick).
 const HELMET_X: Dictionary[String, PackedFloat32Array] = {
 	"p70/assault_rifle": [166.0, 77.0, 161.0, 277.5],
+	"p70/ray_gun": [177.5, 56.0, 174.5, 176.0],
 	"p70/homing_shard": [118.0, 117.5, 116.5, 119.0],
 	"p70/pistol": [140.5, 93.5, 140.5, 191.0],
 	"p70/machine_pistol": [127.5, 89.5, 126.5, 163.5],
@@ -55,6 +58,7 @@ const HELMET_X: Dictionary[String, PackedFloat32Array] = {
 	"p70/rocket_launcher": [130.0, 90.2, 130.0, 165.5],
 	# p55: the dome's run centre as above
 	"p55/assault_rifle": [127.0, 123.5, 122.5, 123.0],
+	"p55/ray_gun": [111.0, 103.5, 100.5, 99.0],
 	"p55/homing_shard": [109.0, 106.5, 103.0, 106.0],
 	"p55/pistol": [97.5, 66.5, 96.5, 126.5],
 	"p55/machine_pistol": [99.5, 65.0, 101.5, 135.0],
@@ -71,6 +75,7 @@ const HELMET_X: Dictionary[String, PackedFloat32Array] = {
 ## floor), so their pads are about 60 px more (the machine pistol's boots at 172 of 235).
 const FOOT_PX: Dictionary[String, float] = {
 	"p70/assault_rifle": 2.0,
+	"p70/ray_gun": 2.0,
 	"p70/homing_shard": 2.0,
 	"p70/pistol": 1.0,
 	"p70/machine_pistol": 62.0,
@@ -82,6 +87,7 @@ const FOOT_PX: Dictionary[String, float] = {
 	"p70/rocket_launcher": 62.0,
 	# p55: the delivered cells (no tall cut), boots at row 167-171 of 170-172
 	"p55/assault_rifle": 2.0,
+	"p55/ray_gun": 2.0,
 	"p55/homing_shard": 2.0,
 	"p55/pistol": 2.0,
 	"p55/machine_pistol": 2.0,

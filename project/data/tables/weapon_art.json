@@ -1238,12 +1238,17 @@
         119
       ],
       "part_grip_px": {
+        "mag": [
+          33,
+          15
+        ],
         "small": [
           119,
           119
         ]
       },
       "parts": {
+        "mag": "res://features/combat/weapons/art/ray_gun/mag.png",
         "small": "res://features/combat/weapons/art/ray_gun/held_small.png"
       },
       "pickup": "res://features/combat/weapons/art/ray_gun/pickup.png",
