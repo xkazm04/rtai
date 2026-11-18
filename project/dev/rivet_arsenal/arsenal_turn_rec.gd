@@ -26,7 +26,7 @@ func _ready() -> void:
 	session.world.loop().set_input(_pad)
 	_pad.actions = session.actions
 	_arena = session.stage.arena
-	_arena.rivet.pos = session.plan.base + Vector2(-37.0, 28.0)
+	_arena.rivet.pos = session.plan.area("boulevard").rect.end - Vector2(6.0, 6.0)
 	var carry: RivetCarry = session.pilot.carry
 	if carry == null:
 		carry = RivetCarry.new(
@@ -94,7 +94,7 @@ func _reload() -> void:
 	var gun: GunHand = _arena.gun
 	if gun == null or clip:
 		return
-	_pad.aim = Vector2.RIGHT
+	_pad.aim = Vector2(1.0, 1.0).normalized()
 	gun.trigger.start_reload()
 	for tick: int in gun.trigger.spec.reload_ticks + 1:
 		await _step()
@@ -111,7 +111,7 @@ func _save(stem: String, crop: bool) -> void:
 		var rig: CutRig = _game.cast.rigs.rig_for(_arena.rivet.id)
 		var scale_px: Vector2 = Vector2(image.get_size()) / get_viewport().get_visible_rect().size
 		var foot: Vector2 = rig.get_global_transform_with_canvas().origin * scale_px
-		image = image.get_region(Rect2i(Vector2i(foot) - Vector2i(102, 148), Vector2i(204, 194)))
+		image = image.get_region(Rect2i(Vector2i(foot) - Vector2i(102, 164), Vector2i(204, 194)))
 	if image.save_png(out_dir.path_join(stem + ".png")) != OK:
 		Log.error("turn", "cannot write " + stem)
 		_failed = true
