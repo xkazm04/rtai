@@ -1,0 +1,131 @@
+{
+  "scene": "res://dev/sim/far_cop_frame.tscn",
+  "seed": 18,
+  "tick": 90,
+  "heat": 3,
+  "sim_variant": 7,
+  "master_dir": "C:/Users/kazda/kiro/gtai-masters/n19/gfx/farcop",
+  "measurement": "People-layer custom.x divided by the crowd atlas column count, matched by transform origin to cop slots in the same tick. Arrays count rows 0 through 7.",
+  "shots": {
+    "top-16": {
+      "backend": "native",
+      "submitted_people": 70,
+      "before": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        70
+      ],
+      "after": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        33,
+        37,
+        0
+      ]
+    },
+    "tilt70-16": {
+      "backend": "native",
+      "submitted_people": 73,
+      "before": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        73
+      ],
+      "after": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        36,
+        37,
+        0
+      ]
+    },
+    "top-32": {
+      "backend": "native",
+      "submitted_people": 15,
+      "before": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        15
+      ],
+      "after": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        8,
+        7,
+        0
+      ]
+    },
+    "tilt70-32": {
+      "backend": "native",
+      "submitted_people": 17,
+      "before": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        17
+      ],
+      "after": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        9,
+        8,
+        0
+      ]
+    },
+    "reference-top-16": {
+      "backend": "gdscript",
+      "submitted_people": 70,
+      "before": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        70
+      ],
+      "after": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        33,
+        37,
+        0
+      ]
+    }
+  }
+}

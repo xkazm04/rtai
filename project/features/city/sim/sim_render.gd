@@ -113,7 +113,7 @@ func _upload() -> void:
 
 func _frame_cell(i: int) -> int:
 	var cl: int = CitySimClips.clip_of(_s, i)
-	var vr: int = _s.variant[i] if _s.variant[i] < SimConst.CLIP_VARIANTS else 5  # SWAT 8: patrol
+	var vr: int = CitySimClips.row_of(_s.kind[i], _s.variant[i], i)
 	var b: int = (vr * SimConst.CLIPS + cl) * 3
 	if b + 2 >= _clips.size():
 		return 0

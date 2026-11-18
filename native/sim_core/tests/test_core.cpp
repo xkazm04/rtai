@@ -193,7 +193,38 @@ void feed_rows_test() {
 	check(out.empty(), "feed: an empty snapshot");
 }
 
+void far_cop_rows_test() {
+	auto sim = std::make_unique<CityCore>();
+	sim->init(18);
+	int32_t table[CLIP_VARIANTS * CLIPS * 3] = {};
+	for (int i = 0; i < CLIP_VARIANTS * CLIPS; ++i) {
+		table[i * 3] = i / CLIPS;  // a single cell per look for every clip
+		table[i * 3 + 1] = 1;
+	}
+	sim->set_clips(table, CLIP_VARIANTS * CLIPS * 3);
+	const int kinds[] = {K_COP, K_PED, K_COP, K_PED, K_COP, K_PED};
+	const int variants[] = {7, 5, 7, 7, 8, 255};
+	const int expected[] = {5, 3, 6, 7, 5, 1};
+	for (int i = 0; i < 6; ++i) {
+		double spec[SP_LEN] = {};
+		spec[SP_KIND] = kinds[i];
+		spec[SP_VARIANT] = variants[i];
+		check(sim->spawn(spec) == i, "render: actor occupies the expected slot");
+	}
+	float data[RL_COUNT][6 * RL_STRIDE] = {};
+	float *layers[RL_COUNT];
+	for (int i = 0; i < RL_COUNT; ++i) layers[i] = data[i];
+	int32_t counts[RL_COUNT] = {};
+	sim->fill_render(-1.0, -1.0, 1.0, 1.0, layers, counts);
+	check(counts[RL_PEDS] == 6, "render: all six crowd instances submitted");
+	for (int i = 0; i < 6; ++i) {
+		check(data[RL_PEDS][i * RL_STRIDE + 12] == expected[i], "render: crowd atlas row");
+		check(sim->variant_of(i) == variants[i], "render: sim variant preserved");
+	}
+}
+
 int main() {
+	far_cop_rows_test();
 	scan_test();
 	crowd_rect_test();
 	blood_drops_test();

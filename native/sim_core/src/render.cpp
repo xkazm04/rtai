@@ -8,6 +8,18 @@
 namespace gtai::sim {
 
 namespace {
+// Same slot, body check and atlas fallback as CitySimClips::row_of in the reference writer.
+static inline int row_of(int kind, int variant, int slot) {
+	const bool cop = kind == K_COP;
+	const bool cop_look = variant == 5 || variant == 6 || variant == 8;
+	if (variant == 255 || cop != cop_look) {
+		const uint64_t h = ((uint64_t(slot) * 2654435761ULL) >> 13) & 0x7fffffffULL;
+		static constexpr int ped_rows[] = {0, 1, 2, 3, 4, 7};
+		return cop ? 5 + int(h % 2) : ped_rows[h % 6];
+	}
+	return variant == 8 ? 5 : std::clamp(variant, 0, CLIP_VARIANTS - 1);
+}
+
 // 2D transform rows (a, b, 0, ox / c, d, 0, oy), then colour, custom.x (art cell) and custom.y
 // (cars: the render state set_car_state() holds).
 void put(float *o, const float *xf, const float *rgba, float custom, float custom_y = 0.0f) {
@@ -41,7 +53,7 @@ int CityCore::frame_of(int i, int &cell) const {
 	else if (v_[i] < 0.2) cl = 0;
 	else if (m == M_FLEE || m == M_RIOT || k == K_COP || v_[i] > 3.0) cl = 2;
 	const int32_t *cp = clips_.data();
-	int vr = variant_[i] < CLIP_VARIANTS ? variant_[i] : 5;  // a look past the table (SWAT 8): patrol
+	const int vr = row_of(k, variant_[i], i);
 	int b = (vr * CLIPS + cl) * 3;
 	int cnt = cp[b + 1];
 	if (cl == 4) f = std::min((int)(t2_[i] * cp[b + 2]), cnt - 1);
