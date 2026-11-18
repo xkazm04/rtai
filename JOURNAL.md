@@ -355,3 +355,7 @@ NEXT (session 4):
    clip) at heat with and without --sim-police for the REPORT Call.
 5. districts' car_mix when their row lands.
 6. REPORT.md: draft in the tree (uncommitted until the gates' line); finish Calls + merge notes.
+Gates on b1418a966 (03:04): full unit 2876 passed / 0 failed / 2 skipped; parity bit-exact (1200
+steps, mutation caught at 629); scenarios 55/55 (none CONTENDED this run); lint 19/19 (hook);
+native core tests 0 failed (eaf66ffb8 build). Earlier on 739a90264: unit 2874/0, scenarios 55 ran
+with rig_stress p50 CONTENDED (8 other runs). Reel gate: started 03:05 (result line below if it lands).
