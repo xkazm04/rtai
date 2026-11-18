@@ -1,5 +1,59 @@
 [
  {
+  "file": "item5_heat2_vs_heat3_t2176_32ppm.png",
+  "title": "Heat 2 | heat 3 at t2176 (33 s after the raise): heat 3's riot/SWAT squads at A",
+  "source": "godot --rendering-driver d3d12 --path project --fixed-fps 60 --resolution 1280x720 res://dev/sim/heat_clip.tscn -- --level=3 --police=living --seconds=40 (frame f_00544), hstack with the heat 2 run of the same seed",
+  "branch": "n18-police eebc2600e",
+  "ppm": 32,
+  "before": "left half: --level=2 (crews of 2, patrol look)",
+  "note": "Heat 3: 3 cars, each a squad of 4 (looks riot 6 / SWAT 8 in turn); first squad cop within 4 m of A at t968, all 12 by t2176; max 17 cops within 4 m (6 foot + squads); roadblock placed at t524. Heat 2 (left): 2 cars x 2 crew, max 7 within 4 m. Level drains 3 -> 2 at t1680 (25 s)."
+ },
+ {
+  "file": "item5_heat3_roadblock_t600_32ppm.png",
+  "title": "Heat 3 roadblock, t600: two cruisers parked across the road past the junction ahead of Rivet",
+  "source": "godot --rendering-driver d3d12 --path project --fixed-fps 60 --resolution 1280x720 res://dev/sim/heat_clip.tscn -- --level=3 --police=living --seconds=30 --watch=block (frame f_00150)",
+  "branch": "n18-police eebc2600e",
+  "ppm": 32,
+  "before": "none: no roadblock existed before item 5",
+  "note": "Rivet seen at A then 60 m south: heading south; the first junction 25-90 m ahead of him, the block 6 m past its far edge at (268, 406), one cruiser per lane, placed at t524 (the 2 s delay ran out at ~t300; the chunk there streamed in later, it retries each tick). Traffic on this street was thin: max 1 car stopped within 25 m of the block in 30 s (the unit test shows the braking: a car stops at 5.5 m behind it)."
+ },
+ {
+  "file": "item5_heat3_squad_t1044_64ppm.png",
+  "title": "Heat 3 squad close-up, 64 px/m, t1044: SWAT (dark helmet, visor) and riot (shield) cops reach A",
+  "source": "godot --rendering-driver d3d12 --path project --fixed-fps 60 --resolution 1280x720 res://dev/sim/heat_clip.tscn -- --level=3 --police=living --seconds=22 --zoom=2 (frame f_00261)",
+  "branch": "n18-police eebc2600e",
+  "ppm": 64,
+  "before": "item4_heat2_living_e7cb74202_32ppm_t2244.png (heat 2 crews in the patrol look)",
+  "note": "The squad's looks come from the sim spawn variant (heat.json city.squad_looks [6, 8]); full rigs near the camera draw them; the baked atlas (LOD 1) prints SWAT as patrol."
+ },
+ {
+  "file": "item5_heat2_vs_heat3_32ppm.mp4",
+  "title": "Heat 2 | heat 3 clip, 43 s at 15 fps (every 4th tick), camera on A",
+  "source": "the two runs of the pair still, ffmpeg hstack, scaled to 1920 wide",
+  "branch": "n18-police eebc2600e",
+  "ppm": 32,
+  "before": "left half",
+  "note": "item5_heat3_living_timeline.json: heat, engaged, near A, squad near A, block, every cop position per sample."
+ },
+ {
+  "file": "item5_heat3_roadblock_32ppm.mp4",
+  "title": "Heat 3 roadblock clip, 33 s, the camera moves to the block when it stands (t524)",
+  "source": "godot --rendering-driver d3d12 --path project --fixed-fps 60 --resolution 1280x720 res://dev/sim/heat_clip.tscn -- --level=3 --police=living --seconds=30 --watch=block",
+  "branch": "n18-police eebc2600e",
+  "ppm": 32,
+  "before": "none",
+  "note": "Moving the camera moves the sim bubble, so this run's A numbers differ from the A-view run; only its block numbers count (item5_heat3_roadblock_timeline.json)."
+ },
+ {
+  "file": "item5_heat3_squad_64ppm.mp4",
+  "title": "Heat 3 squad, 64 px/m close-up clip, 25 s",
+  "source": "godot --rendering-driver d3d12 --path project --fixed-fps 60 --resolution 1280x720 res://dev/sim/heat_clip.tscn -- --level=3 --police=living --seconds=22 --zoom=2",
+  "branch": "n18-police eebc2600e",
+  "ppm": 64,
+  "before": "none",
+  "note": ""
+ },
+ {
   "file": "item4_heat2_living_e7cb74202_32ppm_t2244.png",
   "title": "Heat 2 in the sandbox city, t2244: the dispatched cars' crews reached A on foot (7 cops in the ring)",
   "source": "godot --rendering-driver d3d12 --path project --fixed-fps 60 --resolution 1280x720 res://dev/sim/heat_clip.tscn -- --level=2 --police=living --seconds=40 (frame f_00561)",
@@ -43,15 +97,6 @@
   "ppm": 32,
   "before": "left half",
   "note": "The label lags the image by one sample (4 ticks). item3_heat1_living_timeline.json / item3_pre_n18_timeline.json hold heat, engaged and every cop position per sample."
- },
- {
-  "file": "item4_heat2_living_20609876f_32ppm.mp4",
-  "title": "Heat 2 clip at 20609876f: the dispatched cars do NOT arrive (open defect)",
-  "source": "heat_clip.tscn --level=2 --police=living --seconds=30",
-  "branch": "n18-police 20609876f",
-  "ppm": 32,
-  "before": "item3_heat1_pair_32ppm.mp4 (left half)",
-  "note": "4 foot cops engaged and at A (max 4 within 4 m at t1468) but 0 cars stopped at A in 30 s. Headless trace: both dispatched cars stalled 63-70 m out behind a junction-reservation jam (fixed in 2df162b6d: sirens skip the queue, idle police cars despawn when stuck); after the fix one car reaches 11 m by t1920 crawling at ~0.9 m/s through a jam round A. Not yet a working heat 2 clip."
  },
  {
   "file": "item1_cityfight_after_39c831f52_32ppm_t650.png",

@@ -257,3 +257,40 @@ Heat 2 re-film (heat_clip --level=2 --seconds=40, e7cb74202): both cars bail out
 from A, all 4 crew within 4 m of A by t2244 (near A 7 = 3 foot + 4 crew; c19685d17: max 4, crew 0).
 Known: a crew stuck forever would hold the search until the heat drains (bounded by drain_s).
 Evidence: gtai-masters/n18/police item4_heat2_living_e7cb74202_32ppm{.mp4,_t2244.png}, timeline.
+
+### MILESTONE item 5 heat 3 (eaf66ffb8, eebc2600e clip tool)
+- Sim (native + reference): at heat 3 a dispatched car unloads city.squad (4) cops, looks
+  city.squad_looks [6 riot, 8 SWAT] in turn (tune PT_SQUAD/V0/V1, PT_LEN 13). The sim's crowd clip
+  table has 8 rows: a look past it renders as patrol 5 (native render.cpp read past the table before;
+  only reachable now). Test `test_at_heat_3_a_car_brings_a_riot_and_swat_squad` (before: 2 cops,
+  variant 7 = PT_CREW, ART_COP; after 4: {6: 2, 8: 2}).
+- Game: `CityRoadblock` (features/police) parks city.roadblock_cars[3] (2) cruisers across the
+  road 6 m past the first junction 25-90 m ahead of Rivet's heading, 2 s after the rise; F_PARKED
+  holds them, traffic brakes behind. Tests test_city_roadblock (4): find() x 302 / y 324 on the
+  cross map, two parked across (one per lane, 4 m apart) and still after 600 ticks, a westbound car
+  stops at x 307.5 (block 302), none at heat 2. Parity: heat 3 1200 ticks bit for bit (squad 4).
+- heat.json: squad 4, squad_looks [6, 8], roadblock_cars [0,0,0,2], roadblock_ahead_m [25, 90],
+  roadblock_past_m 6, roadblock_delay_s 2 (+ schema). DECISION police/heat-ladder-3.
+- Clip (heat_clip --level=3, 40 s): squad cops at A from t968, all 12 within 4 m by t2176, max 17
+  cops within 4 m; block placed t524 at (268, 406) (it waits for the chunk to stream in); max 1
+  traffic car stopped within 25 m of it in 30 s (thin traffic there). Heat 2 same seed: max 7.
+  64 px/m close-up: SWAT (visor) and riot (shield) read. Evidence: gtai-masters/n18/police item5_*.
+- FINDING (look, not fixed): in the heat 3 frame t2176 two peds lie dead beside a dispatched police
+  car (bottom centre): likely run over by a dispatched car (sirens skip the junction queue; under
+  heat they brake for people ahead, so maybe hit from the side at the turn). Check with a trace.
+- FINDING (not mine, NEED districts? no: characters/view, no lane): sim cops carry art variant 7
+  (ART_COP), but RigVariant.crowd(7) is the overalls-bald ped: the full rigs fall back to the actor's
+  own cop pick (kind mismatch) but CrowdAtlas.cell_for(look_of) prints atlas row 7 for a LOD-1 cop,
+  i.e. a far sim cop may draw as an overalls ped. Unverified by eye; check a far LOD-1 cop in a clip.
+
+Registry rules applied (items 4-5):
+- `agent-behaviour-authoring` "every dispossessed holder falls back to a stated alternative":
+  the crews/squads and the roadblock all fall back to traffic/walking when the claims end (search
+  over or heat 0), one release path. "Coordination is a claim on a scarce resource": the search
+  clock is the point's claim; arriving crews hold it open (crew-wait) instead of a commander.
+- `combat-pacing-and-dramatic-arc` "escalation must be legible": each level adds one visible
+  thing (1 foot cops, 2 cars + crews, 3 squads in a different look + a roadblock), and every count
+  is one data value. "Duration is a two-sided envelope": a heat 3 episode unseen lasts 75 s of
+  drain; squads arrive 13-33 s after the raise, inside it.
+- `cross-runtime-rules-conformance`: tune values cross as doubles (PT_SQUAD_V0/V1 are art ids
+  stored as double, cast at spawn on both sides); the render guard is the same branch on both sides.
