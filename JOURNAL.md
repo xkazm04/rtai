@@ -510,3 +510,39 @@ Session 5 ended ~05:58 with a clean tree; HEAD = this JOURNAL commit after 73e02
 - 05:58 full gate (--reels) on e597460ec (HEAD, v32) STARTED in the background by session 5: node PID 42032, log
   `build/gate/s5_head_reels.log`, result `build/gate/e597460ec*/gate.json`. Session 6: if PID 42032 still runs, wait for it
   (do not start a second gate); if it is gone with no gate.json, re-run. It frees Godot on exit.
+## Session 6 (2026-11-18 05:58 -> )
+Read: JOURNAL NEXT, git log, asset replies (it476 05:41-05:48 offers: gutting tables, tree bench, fish tanks, plaza steps +
+plans; it477 05:59: crab pots + rope net v2, values lifted), police JOURNAL (no NEED districts). Registry rules applied:
+concept-scene-parity (the it477 value lift is judged in game under the print, not on the board), sprite-and-atlas-production
+(cut by the cutter, plans at 80 px/m, a provenance line per PNG; the v1 recut equals the repo to the pixel before swapping),
+procedural-level-planning (a 5 m plaza prop is a once-a-block single, never a slot prop).
+- 05:59 gate PID 42032 (session 5, on e597460ec v32, --reels) still running: no Godot for me until it ends.
+- 06:01 MILESTONE item 3, commit a0273b373: it477 crab pots + rope net v2 (cards cut, rope net plan v2, crab pots plan from the
+  v2 card's facing 0 = the v31 recipe, reproduced to diff 0 on v1 first). No re-bake (city_facades is not a generator input).
+- 06:02 v33 prepared in the tree (not baked): fish tanks 137 + gutting tables 138 on the docks apron, plaza steps 139 + tree
+  bench 140 as downtown plaza singles; data, version, test count, provenance, decisions line. Bake after the gate.
+- 06:05 car_art landed in the tree (commit with v33): zone rows `car_art` (docks [4,5,0,4,1,5,2,4,7,5,3,0]: 6 of 12
+  vans/pickups; downtown [0,1,2,3,3,7,0,1,3,4,6,2]: 3 taxis), `CityZone.car_art` (empty in mixed = CitySpawner.CAR_ART).
+NEED police: `features/city/city_spawner.gd` line 76: read `CityZones.of_chunk(cx, cy).car_art` (CitySystem's gen.zones) for the
+  spawn's chunk and pick `car_art[_rng.randi_range(0, car_art.size() - 1)]` when it is not empty (same single draw, 12
+  entries, so mixed chunks keep their draws). Your file: I do not touch it.
+- FRICTION: lint tool-tests fails 6 `tools/film/kill_reel_{scout,life}.break.test.mjs` tests while the tree has PNGs not yet
+  imported: `film.mjs filmOne` checks the REAL tree's assets (staleAssets) and launches `--import` through the test's mock
+  runner, which has no `--film-dir` (mkdirSync(undefined)). Not my code; clears after `--import`.
+REQUEST tools: kill_reel scout/life tests should pass `staleAssets` a fixture project (or stub it), so they never read the
+  working tree's import state.
+- 06:07 gate on e597460ec (v32) evidence half: lint 19/19, unit 2896/0 (2 skipped), scenarios 55/55, parity bit-exact
+  (planted caught at 629), look goldens 11/11 (worst 0.31), block goldens 5/5, 137 art textures 0 placeholders,
+  release-compile 727/0. Reels running.
+- 06:22 MILESTONE gate PASS on e597460ec (v32), reels exit 0 (`build/gate/e597460ece54/gate.json`).
+- 06:2x it477 before/after at the same v32 point (2014, 1696): the v2 values barely change the read; the heaps stay dark.
+  Cause (looked): the offset shadow copy (ChunkBuild L_SHADOW, the plan art darkened, 0.18 m off) shows through the
+  see-through mesh cards. Fix: texture rows take `shadow` (default true); 124 + 133 false. Same-point pair shadow on/off on
+  v33: the rope net reads as a pale coil net, the crab pots lighten. Taken.
+- FRICTION: `git show <rev>:<png>` gives the LFS pointer, and Godot's import of a pointer rewrote the tracked `.import`
+  files with `valid=false`; fixed by `git show | git lfs smudge` and `git checkout HEAD -- <png>.import` + re-import.
+- 06:33 MILESTONE item 3 + 2, commit 99f8b3071, generator v33: fish tanks 137 + gutting tables 138 (apron), plaza steps 139
+  + tree bench 140 (downtown singles), `shadow: false` on 124/133, zone `car_art`. Bake 4.8 s, --check matches; city tests
+  39/39; planted (shadow always on) caught. Per-zone sheet `zones_v14_v33_combo_48ppm.jpg`: a one-zone bake (mixed row
+  only = the v14 rules) vs v33 at Dock 9, the fish quay, the Toner Room and a downtown plaza.
+- 06:35 final gate (--reels) on HEAD started.
