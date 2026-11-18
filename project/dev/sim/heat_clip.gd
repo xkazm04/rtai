@@ -79,8 +79,8 @@ func _record(world: World) -> void:
 			continue
 		var row: Dictionary = _sample(tick)
 		_label.text = (
-			"t%d  heat %d  engaged %d  near A %d  (%s police)"
-			% [tick, row["level"], row["engaged"], row["near"], "living" if _living else "pre-n18"]
+			"t%d  heat %d  engaged %d  near A %d  cars at A %d  (%s)"
+			% [tick, row["level"], row["engaged"], row["near"], row["cars_stopped"], _arm()]
 		)
 		var img: Image = get_viewport().get_texture().get_image()
 		if img != null and img.save_png(_out.path_join("f_%05d.png" % saved)) == OK:
@@ -102,14 +102,17 @@ func _raise() -> void:
 
 func _sample(tick: int) -> Dictionary:
 	var near: int = 0
+	var cars: int = 0
 	var cops: Array = []
 	var snap: PackedFloat64Array = _city.sim.snapshot()
 	for k: int in range(0, snap.size() - SimConst.SNAP_STRIDE + 1, SimConst.SNAP_STRIDE):
 		if snap[k] >= SimConst.SNAP_PROJ_BASE:
 			break
+		var p: Vector2 = Vector2(snap[k + 4], snap[k + 5])
+		if int(snap[k + 1]) == SimConst.K_PCAR and p.distance_to(A) <= 15.0 and snap[k + 8] < 0.5:
+			cars += 1
 		if int(snap[k + 1]) != SimConst.K_COP or int(snap[k + 2]) == SimConst.M_DEAD:
 			continue
-		var p: Vector2 = Vector2(snap[k + 4], snap[k + 5])
 		cops.append([snapped(p.x, 0.01), snapped(p.y, 0.01)])
 		if p.distance_to(A) <= NEAR_M:
 			near += 1
@@ -118,10 +121,15 @@ func _sample(tick: int) -> Dictionary:
 		"level": _heat.meter.level,
 		"engaged": _city.sim.flow_stats()[SimConst.FS_ENGAGED],
 		"near": near,
+		"cars_stopped": cars,
 		"cops": cops,
 	}
 	_rows.append(row)
 	return row
+
+
+func _arm() -> String:
+	return "living police" if _living else "pre-n18 police"
 
 
 func _make_label() -> Label:

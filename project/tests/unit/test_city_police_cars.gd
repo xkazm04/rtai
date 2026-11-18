@@ -89,3 +89,22 @@ func _row(sim: CitySimBackend, slot: int) -> int:
 		if int(snap[r]) == slot:
 			return r
 	return -1
+
+
+## The search at the point waits for a dispatched car still on its way (before: a foot cop already
+## there searched search_s, the search ended and released the car en route, so no crew came).
+func test_the_search_waits_for_a_dispatched_car_en_route() -> void:
+	var sim: CitySimRef = CitySimRef.new()
+	CityRoadMap.paint(sim)
+	var tune: PackedFloat64Array = TUNE.duplicate()
+	tune[SimConst.PT_SEARCH_S] = 2.0
+	sim.set_police(tune)
+	assert_gte(CityWallMap.spawn_cop(sim, POINT), 0)
+	assert_gte(CityRoadMap.dispatch_car(sim, 262.0), 0)
+	sim.set_heat(2, POINT.x, POINT.y)
+	for t: int in 300:
+		_step(sim, RIVET)
+	assert_eq(sim.flow_stats()[SimConst.FS_SEARCH_TICKS], 0, "no search clock while the car drives")
+	for t: int in 300:
+		_step(sim, RIVET)
+	assert_eq(CityRoadMap.count(sim, SimConst.K_COP), 3, "the car arrived and its crew got out")

@@ -65,8 +65,13 @@ func pass_step(dt: float) -> void:
 	var want: int = 0 if (level == 0 or _done) else int(tune[SimConst.PT_FOOT0 + level])
 	var a2: float = tune[SimConst.PT_ARRIVE_M] * tune[SimConst.PT_ARRIVE_M]
 	var arrived: bool = false
+	var enroute: bool = false  # the search waits for dispatched cars en route
 	for i: int in SimConst.CAP:
-		if _s.alive[i] == 0 or _s.kind[i] != SimConst.K_COP or not _engaged(i):
+		if _s.alive[i] == 0 or not _engaged(i):
+			continue
+		if _s.kind[i] == SimConst.K_PCAR:
+			enroute = true
+		if _s.kind[i] != SimConst.K_COP:
 			continue
 		if _s.mode[i] == SimConst.M_DEAD:
 			_s.flags[i] = _s.flags[i] & ~SimConst.F_ENGAGED
@@ -75,7 +80,7 @@ func pass_step(dt: float) -> void:
 		var ay: float = _s.py[i] - heat_y
 		if ax * ax + ay * ay <= a2:
 			arrived = true
-	if arrived and not _done:
+	if arrived and not enroute and not _done:
 		_search += dt
 		if _search >= tune[SimConst.PT_SEARCH_S]:
 			_done = true

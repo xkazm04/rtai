@@ -30,9 +30,11 @@ void CityCore::police_pass(double dt) {
 	pol_level_ = heat_level_;
 	int want = (heat_level_ == 0 || pol_done_) ? 0 : (int)pol_[PT_FOOT0 + heat_level_];
 	double a2 = pol_[PT_ARRIVE_M] * pol_[PT_ARRIVE_M];
-	bool arrived = false;
+	bool arrived = false, enroute = false;  // the search waits for dispatched cars en route
 	for (int i = 0; i < CAP; i++) {
-		if (alive_[i] == 0 || kind_[i] != K_COP || (flags_[i] & F_ENGAGED) == 0) continue;
+		if (alive_[i] == 0 || (flags_[i] & F_ENGAGED) == 0) continue;
+		if (kind_[i] == K_PCAR) enroute = true;
+		if (kind_[i] != K_COP) continue;
 		if (mode_[i] == M_DEAD) {
 			flags_[i] = flags_[i] & ~F_ENGAGED;
 			continue;
@@ -40,7 +42,7 @@ void CityCore::police_pass(double dt) {
 		double ax = px_[i] - heat_x_, ay = py_[i] - heat_y_;
 		if (ax * ax + ay * ay <= a2) arrived = true;
 	}
-	if (arrived && !pol_done_) {
+	if (arrived && !enroute && !pol_done_) {
 		pol_search_ += dt;
 		if (pol_search_ >= pol_[PT_SEARCH_S]) {
 			pol_done_ = true;
