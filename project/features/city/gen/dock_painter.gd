@@ -66,9 +66,9 @@ func block(g: CityGen, b: ChunkBuild, zone: CityZone, t: Vector2i) -> int:
 	var wx: int = water_x(zone)
 	var room: bool = wx < 0 or t.x + 1 < wx - 1  # a long roof never crosses onto the quay
 	if u == last_u or (u % 2 == 0 and not room):
-		var tex: int = _shed(g, zone, t)
-		var lettered: bool = BlockPainter.LETTERED.has(tex)
-		var rot: float = 0.0 if lettered else deg_to_rad(90.0 * int(g.rnd(t.x, t.y, 0, 34) * 4.0))
+		var tex: int = DockDresser.shed_or_office(g, zone, t, _shed(g, zone, t))
+		var still: bool = BlockPainter.LETTERED.has(tex) or tex == zone.office_roof
+		var rot: float = 0.0 if still else deg_to_rad(90.0 * int(g.rnd(t.x, t.y, 0, 34) * 4.0))
 		b.add(ChunkBuild.L_ROOF, tex, c, rot, true)
 	elif u % 2 == 0:
 		var longs: Array[int] = zone.long_roofs

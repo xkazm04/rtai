@@ -54,13 +54,18 @@ func place(id: String) -> Dictionary:
 func _pick(row: Dictionary) -> Rect2i:
 	var zone: StringName = StringName(str(row.get("zone", "mixed")))
 	var near_f: Array = row.get("near", [0.5, 0.5])
-	var city_t: float = float(SimConst.CITY_CHUNKS * SimConst.CHUNK_TILES)
 	var fx: float = near_f[0]
 	var fy: float = near_f[1]
-	var near_t: Vector2 = Vector2(fx, fy) * city_t
+	return nearest_block(_gen, str(row.get("rule", "")), zone, Vector2(fx, fy))
+
+
+## The block of `zone` the rule accepts nearest `near` (a fraction of the city), from the
+## generator's rules alone (no chunk is generated: DockPainter calls it while painting).
+static func nearest_block(gen: CityGen, rule: String, zone: StringName, near: Vector2) -> Rect2i:
+	var near_t: Vector2 = near * float(SimConst.CITY_CHUNKS * SimConst.CHUNK_TILES)
 	var best: Rect2i = Rect2i()
 	var best_d: float = INF
-	for r: Rect2i in _candidates(str(row.get("rule", "")), zone):
+	for r: Rect2i in _candidates(gen, rule, zone):
 		var d: float = (Vector2(r.position) + Vector2(r.size) * 0.5).distance_squared_to(near_t)
 		if d < best_d:
 			best_d = d
@@ -70,29 +75,26 @@ func _pick(row: Dictionary) -> Rect2i:
 
 ## Every block of the zone the rule accepts, as tile rects, in row-major order (ties keep the
 ## first, so the pick is stable).
-func _candidates(rule: String, zone: StringName) -> Array[Rect2i]:
+static func _candidates(gen: CityGen, rule: String, zone: StringName) -> Array[Rect2i]:
 	var out: Array[Rect2i] = []
 	var period: int = CityGen.PERIOD
 	var n: int = floori(float(SimConst.CITY_CHUNKS * SimConst.CHUNK_TILES) / period)
 	for by: int in n - 1:  # the last row's frontage would lie off the map
 		for bx: int in n:
 			var t: Vector2i = Vector2i(bx * period + 3, by * period + 3)
-			var z: CityZone = _gen.zones.of_tile(t)
+			var z: CityZone = gen.zones.of_tile(t)
 			if z.id != zone:
 				continue
 			if rule == "dock_block_nearest" and z.street_keep_x > 1:
 				if (
 					posmod(bx, z.street_keep_x) == 0
-					and not DockPainter.is_yard(_gen, z, t + Vector2i(0, 4))
+					and not DockPainter.is_yard(gen, z, t + Vector2i(0, 4))
 				):
 					out.append(Rect2i(t, Vector2i(period * z.street_keep_x - 3, 5)))
-			elif rule == "block_nearest" and z.street_keep_x == 1 and not _plaza(z, bx, by):
-				out.append(Rect2i(t, Vector2i(5, 5)))
+			elif rule == "block_nearest" and z.street_keep_x == 1:
+				if gen.rnd(bx, by, 0, 5) >= z.plaza_share:  # not a plaza block
+					out.append(Rect2i(t, Vector2i(5, 5)))
 	return out
-
-
-func _plaza(z: CityZone, bx: int, by: int) -> bool:
-	return _gen.rnd(bx, by, 0, 5) < z.plaza_share
 
 
 ## The door on the block's south frontage (the street below it): OUT_M into the sidewalk from

@@ -181,6 +181,12 @@
             "minimum": 0,
             "type": "number"
           },
+          "office_roof": {
+            "description": "Dock 9's harbour office roof, a city_textures id: it replaces the shed at the quay end of the south row of the docks block nearest the quay's middle (DockDresser.shed_or_office, places.json dock_9's rule); absent = none",
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
           "one_sign": {
             "description": "at most one lettered landmark roof a block (BlockPainter.sign_tile)",
             "type": "boolean"

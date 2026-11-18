@@ -43,6 +43,10 @@
       "height_m": 9,
       "style": "dock"
     },
+    "roof_dock_office": {
+      "height_m": 10,
+      "style": "office"
+    },
     "roof_dock_sawtooth": {
       "height_m": 8.5,
       "style": "dock"

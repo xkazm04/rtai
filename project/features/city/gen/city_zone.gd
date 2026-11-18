@@ -20,6 +20,8 @@ const FLOATS: Array[String] = [
 	"density_span",
 ]
 
+const UNRESOLVED: Vector2i = Vector2i(-2, -2)
+
 const LISTS: Array[String] = [
 	"landmark_roofs",
 	"generic_roofs",
@@ -101,6 +103,11 @@ var wall_props: Array[int] = []
 var apron_prop_share: float = 0.0
 ## A prop by the coping on the middle tile of each basin's west quay (-1 = none; DockPainter).
 var quay_edge_prop: int = -1
+## Dock 9's harbour office roof (DockDresser.shed_or_office; -1 = none): it replaces the shed
+## at the quay end of the south row of the docks block nearest the quay's middle. office_tile
+## caches that tile (UNRESOLVED until the first docks shed asks).
+var office_roof: int = -1
+var office_tile: Vector2i = UNRESOLVED
 
 
 static func from_row(row: Dictionary) -> CityZone:
@@ -119,6 +126,7 @@ static func from_row(row: Dictionary) -> CityZone:
 		"apron_ground",
 		"yard_ground",
 		"quay_edge_prop",
+		"office_roof",
 	]:
 		if row.has(key):
 			var f: float = row[key]

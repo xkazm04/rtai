@@ -1354,6 +1354,17 @@
         0.71
       ],
       "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/roof_dock_office.png",
+      "class": "building",
+      "id": 123,
+      "name": "roof_dock_office",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
     }
   ]
 }

@@ -2,10 +2,14 @@ class_name DockDresser
 extends RefCounted
 ## The docks' standing dressing (n18 districts item 3, the asset lane's it471/it473 cards and plan
 ## twins): a prop on the quay apron's land side, and one by the coping of each basin's west quay.
-## Data: the zone row's apron_props / apron_prop_share and quay_edge_prop.
+## Data: the zone row's apron_props / apron_prop_share and quay_edge_prop; Dock 9's office roof.
 
 ## The open walk the apron keeps by the water, metres from the apron tile's east edge.
 const OPEN_M: float = 2.5
+## Dock 9's block: the rule and point of places.json's dock_9 row (test_dock_office pins them
+## together; a place row moves the place, never the bake).
+const OFFICE_RULE: String = "dock_block_nearest"
+const OFFICE_NEAR: Vector2 = Vector2(1.0, 0.5)
 
 
 ## One apron_props prop under apron_prop_share, front to the camera, on the apron tile's land
@@ -32,3 +36,26 @@ static func quay_edge(
 	var half: Vector2 = g.sizes[zone.quay_edge_prop] * 0.5
 	var o: Vector2 = TilePainter.origin(t)
 	kerb.prop(g, b, zone.quay_edge_prop, o + Vector2(DockPainter.LAND_M - 0.4 - half.x, 4.0), 0.0)
+
+
+## The zone's office_roof on Dock 9's office tile, else the shed it was given.
+static func shed_or_office(g: CityGen, zone: CityZone, t: Vector2i, shed: int) -> int:
+	if zone.office_roof < 0:
+		return shed
+	if zone.office_tile == CityZone.UNRESOLVED:
+		zone.office_tile = office_tile(g, zone)
+	return zone.office_roof if t == zone.office_tile else shed
+
+
+## The shed tile at the quay end of the south row of the block nearest OFFICE_NEAR (-1, -1: none).
+static func office_tile(g: CityGen, zone: CityZone) -> Vector2i:
+	var block: Rect2i = CityPlaces.nearest_block(g, OFFICE_RULE, zone.id, OFFICE_NEAR)
+	var wx: int = DockPainter.water_x(zone)
+	var last_u: int = CityGen.PERIOD * zone.street_keep_x - 4
+	var y: int = block.end.y - 1
+	for x: int in range(block.end.x - 1, block.position.x - 1, -1):
+		var u: int = posmod(x, CityGen.PERIOD * zone.street_keep_x) - 3
+		var room: bool = wx < 0 or x + 1 < wx - 1
+		if (wx < 0 or x < wx - 1) and (u == last_u or (u % 2 == 0 and not room)):
+			return Vector2i(x, y)
+	return Vector2i(-1, -1)
