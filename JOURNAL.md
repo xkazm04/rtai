@@ -527,7 +527,7 @@ once, runs the heat 3 bench quiet under the lock; open items are in REPORT `## N
 
 ## Session 8 (REPORT, 07:40-07:50)
 - 07:42 HEAD 8ae396874 is docs-only past the cd92fabc0 evidence gate PASS (`git diff --stat cd92fabc0 HEAD`:
-  JOURNAL.md, REPORT.md). No bench.lock, no Godot of mine running. masters/n18/police holds the 15 frames.json files.
+  JOURNAL.md, REPORT.md). No bench.lock, no Godot of mine running. masters/n18/police frames.json: 15 entries, 0 missing (node check).
 - 07:45 REPORT: added `## What blocked me (and for how long)` (from the FRICTION lines), title stamp; cites re-run ok.
   No code change.
 
