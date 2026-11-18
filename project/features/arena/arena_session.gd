@@ -34,6 +34,16 @@ static func open(
 	input: InputSource = null,
 	on_city: bool = false
 ) -> ArenaSession:
+	var options: ArenaArgs = ArenaArgs.parse()
+	options.values["--arena"] = "city" if on_city else ""
+	return open_with_args(events, data, seed, input, options)
+
+
+## A fresh world using explicit arena options, including for replay of a recorded fight.
+static func open_with_args(
+	events: EventBus, data: DataStore, seed: int, input: InputSource, options: ArenaArgs
+) -> ArenaSession:
+	var on_city: bool = options.text("--arena") == "city"
 	var s: ArenaSession = ArenaSession.new()
 	s.actions = PlayerActions.shipped()
 	s.actions.install()
@@ -43,7 +53,7 @@ static func open(
 	if on_city:
 		s.plan = ArenaPlan.shipped(s.plan.city_base)
 	s.stations = ArenaStations.shipped()
-	s.stage = ArenaStage.new(s.plan, s.stations)
+	s.stage = ArenaStage.new(s.plan, s.stations, options)
 	s.pilot = StagePilot.new(s.actions)
 	s.stage.pilot = s.pilot
 	if on_city:

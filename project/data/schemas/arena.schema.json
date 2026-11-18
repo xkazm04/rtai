@@ -74,6 +74,11 @@
           "minimum": 0,
           "type": "integer"
         },
+        "max_shooters": {
+          "maximum": 8,
+          "minimum": 1,
+          "type": "integer"
+        },
         "max_wave": {
           "maximum": 24,
           "minimum": 1,

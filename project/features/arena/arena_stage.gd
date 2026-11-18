@@ -18,11 +18,13 @@ var pit: ArenaPit
 var dodges: ArenaDodges = ArenaDodges.new()
 ## Other lanes' code, from their stations' `script` (ArenaHook), in station-file order.
 var hooks: Array[ArenaHook] = []
+var _options: ArenaArgs
 var _shots_before: int = 0
 
 
-func _init(p_plan: ArenaPlan, p_stations: ArenaStations) -> void:
+func _init(p_plan: ArenaPlan, p_stations: ArenaStations, options: ArenaArgs = null) -> void:
 	super(cleared_layout(p_plan))
+	_options = options if options != null else ArenaArgs.parse()
 	plan = p_plan
 	stations = p_stations
 	walls = ArenaWalls.from_stations(p_stations, p_plan.base)
@@ -57,6 +59,10 @@ func setup(ctx: WorldContext) -> void:
 		arena.guard_map = GuardRouteMap.new(
 			bounds, walls.boxes, cells, arena.tuning.human["radius_m"]
 		)
+		if _options.text("--enemy-brain", SquadChoice.DEFAULT_BRAIN) == "squad":
+			arena.squad_ai = ArenaSquad.new(arena.guard_map)
+			var slots: float = plan.pit.get("max_shooters", arena.squad_ai.pit.roster.max_shooters)
+			arena.squad_ai.pit.roster.max_shooters = roundi(slots)
 	arena.rivet.weapon = WEAPON
 	var id: int = 1000
 	for s: ArenaStation in stations.stations:
