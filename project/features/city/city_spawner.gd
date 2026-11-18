@@ -29,12 +29,19 @@ var use_density: bool = true
 var _rng: RandomNumberGenerator
 var _sim: CitySimBackend
 var _res: CityResidency
+var _zones: CityZones
 
 
-func _init(sim: CitySimBackend, residency: CityResidency, rng: RandomNumberGenerator) -> void:
+func _init(
+	sim: CitySimBackend,
+	residency: CityResidency,
+	rng: RandomNumberGenerator,
+	zones: CityZones = null
+) -> void:
 	_sim = sim
 	_res = residency
 	_rng = rng
+	_zones = zones
 
 
 func try_ped(cam: Vector2, r0: float, r1: float) -> bool:
@@ -73,7 +80,7 @@ func try_car(cam: Vector2, r0: float, r1: float, police: bool) -> bool:
 	if police:
 		var spec: Array = [SimConst.K_PCAR, x, y, DX[d], DY[d], ART_POLICE_CAR]
 		return _spawn(spec + [SimConst.F_PROMOTED, 17.0, lane, d]) >= 0
-	var art: int = CAR_ART[_rng.randi_range(0, 11)]
+	var art: int = _traffic_mix(p)[_rng.randi_range(0, 11)]
 	var vmax: float = _rng.randf_range(9.0, 13.0)
 	if bike_rng != null and bike_rng.randf() < bike_share:
 		art = ART_BIKE
@@ -132,6 +139,15 @@ func _ring(centre: Vector2, r0: float, r1: float) -> Vector2:
 	var a: float = _rng.randf() * TAU
 	var r: float = sqrt(lerpf(r0 * r0, r1 * r1, _rng.randf()))
 	return centre + Vector2(cos(a), sin(a)) * r
+
+
+func _traffic_mix(p: Vector2) -> Array[int]:
+	if _zones != null:
+		var chunk := Vector2i((p / SimConst.CHUNK_M).floor())
+		var mix: Array[int] = _zones.of_chunk(chunk.x, chunk.y).car_art
+		if not mix.is_empty():
+			return mix
+	return CAR_ART
 
 
 func _dens(p: Vector2, car: bool) -> bool:

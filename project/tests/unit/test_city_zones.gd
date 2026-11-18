@@ -86,9 +86,10 @@ func test_the_docks_traffic_runs_more_vans_and_pickups_than_the_default() -> voi
 	assert_true(mixed.car_art.is_empty(), "mixed keeps CitySpawner.CAR_ART")
 	assert_gt(_work_share(docks.car_art), _work_share(CitySpawner.CAR_ART) * 2.0)
 	for zone: CityZone in gen.zones.rows:
+		if not zone.car_art.is_empty():
+			assert_eq(zone.car_art.size(), 12, str(zone.id))
 		for art: int in zone.car_art:
-			var kind: StringName = VehicleProfile.archetype_of_variant(art, false)
-			assert_true(kind != &"bike" and kind != &"police_cruiser", "%s %d" % [zone.id, art])
+			assert_between(art, 0, 7, str(zone.id))
 
 
 func _work_share(arts: Array[int]) -> float:
