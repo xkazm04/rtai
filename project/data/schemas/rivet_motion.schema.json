@@ -2,6 +2,62 @@
   "$id": "gtai.rivet-motion/1",
   "additionalProperties": false,
   "properties": {
+    "cover": {
+      "additionalProperties": false,
+      "properties": {
+        "edge_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "leave_dot": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "leave_ticks": {
+          "maximum": 120,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "move_mps": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "peek_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "peek_ticks": {
+          "maximum": 120,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "snap_reach_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "snap_ticks": {
+          "maximum": 120,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "edge_m",
+        "enabled",
+        "leave_dot",
+        "leave_ticks",
+        "move_mps",
+        "peek_m",
+        "peek_ticks",
+        "snap_reach_m",
+        "snap_ticks"
+      ],
+      "type": "object"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"
@@ -186,6 +242,7 @@
     }
   },
   "required": [
+    "cover",
     "doc",
     "roll",
     "schema",

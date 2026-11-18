@@ -24,6 +24,23 @@ var _end: int
 var _probe: VaultProbe
 
 
+func apply_flags() -> void:
+	enabled = (enabled or LaunchArgs.has("--cover")) and not LaunchArgs.has("--no-cover")
+
+
+func configure(t: DataTable) -> void:
+	var row: Dictionary = t.object(t.raw, "cover")
+	enabled = row.get("enabled", false) == true
+	snap_reach_m = t.num(row, "snap_reach_m")
+	snap_ticks = maxi(1, t.integer(row, "snap_ticks"))
+	move_mps = t.num(row, "move_mps")
+	peek_m = t.num(row, "peek_m")
+	peek_ticks = maxi(1, t.integer(row, "peek_ticks"))
+	edge_m = t.num(row, "edge_m")
+	leave_dot = t.num(row, "leave_dot")
+	leave_ticks = maxi(1, t.integer(row, "leave_ticks"))
+
+
 func interrupt() -> void:
 	phase = Phase.OFF
 	spot = null

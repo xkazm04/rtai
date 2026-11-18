@@ -26,7 +26,6 @@ var recovery_ticks: int = 10
 var recovery_move_scale: float = 0.35
 var cooldown_ticks: int = 8
 var exit_speed_k: float = 0.5
-## Whether aim overrides walking and sprint facing.
 var face_aim: bool = true
 var errors: Array[String] = []
 var _phase_tick: int = 0
@@ -39,6 +38,7 @@ var _sprint_actions: PlayerActions = null
 static func shipped() -> PlayerMotion:
 	var m: PlayerMotion = from_table(DataTable.open(TABLE, SCHEMA))
 	m.vault.apply_flags()
+	m.cover.apply_flags()
 	return m
 
 
@@ -59,6 +59,7 @@ static func from_table(t: DataTable) -> PlayerMotion:
 	m.cooldown_ticks = t.integer(r, "cooldown_ticks")
 	m.exit_speed_k = t.num(r, "exit_speed_k")
 	m.face_aim = t.raw.get("face_aim", true) == true
+	m.cover.configure(t)
 	m.errors = m.vault.configure(t)
 	if m.iframe_to >= m.roll_ticks:
 		m.errors.append("rivet_motion.json: roll.iframe_to must be inside roll_ticks")
@@ -112,7 +113,6 @@ func facing() -> Vector2:
 	return mover.facing
 
 
-## Aim overrides mover facing outside a roll or vault.
 func heading(aim: Vector2) -> Vector2:
 	if face_aim and aim != Vector2.ZERO and phase != Phase.ROLL and vault.frame < 0:
 		return aim.normalized()

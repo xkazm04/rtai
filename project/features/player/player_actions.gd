@@ -10,6 +10,8 @@ const SCHEMA: String = "gtai.input-actions/1"
 const ACTION_DEADZONE: float = 0.08
 
 var bits: Dictionary[StringName, int] = {}
+var button_mask: int = 0
+var live_mask: int = 0
 var aim_shift: int = 16
 var aim_steps: int = 256
 var aim_range_m: float = 14.0
@@ -44,11 +46,19 @@ static func from_table(t: DataTable) -> PlayerActions:
 	for raw: Variant in t.array(t.raw, "rows"):
 		var row: Dictionary = raw if raw is Dictionary else {}
 		a.rows.append(row)
-		var b: int = t.integer(row, "bit")
+		var b: int = t.integer(row, "wire_bit" if row.has("wire_bit") else "bit")
 		if b >= 0:
 			a.bits[StringName(t.text(row, "id"))] = b
+			a.button_mask |= 1 << b
+	a.enable_cover_input(false)
 	a.errors = t.errors()
 	return a
+
+
+## Disabled live actions leave no trace in recorded TickInput. Scripted inputs still decode.
+func enable_cover_input(enabled: bool) -> void:
+	var cover: int = bit(&"cover")
+	live_mask = button_mask if enabled or cover < 0 else button_mask & ~(1 << cover)
 
 
 func bit(action: StringName) -> int:

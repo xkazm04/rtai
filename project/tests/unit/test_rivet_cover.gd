@@ -35,15 +35,6 @@ func test_disabled_script_matches_pre_cover_stage_bytes() -> void:
 func _enable() -> PlayerCover:
 	var cover: PlayerCover = stage.pilot.motion.cover
 	cover.enabled = true
-	actions.bits[&"cover"] = 14
-	cover.snap_reach_m = 0.85
-	cover.snap_ticks = 5
-	cover.move_mps = 3.0
-	cover.peek_m = 0.8
-	cover.peek_ticks = 6
-	cover.edge_m = 0.2
-	cover.leave_dot = 0.65
-	cover.leave_ticks = 4
 	return cover
 
 

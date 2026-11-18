@@ -6,7 +6,6 @@ extends RefCounted
 ## with its i-frames), a held fire shoots along the aim heading, an interact press uses whatever
 ## is in reach (StageActions), melee is the claw combo (PlayerMelee over rivet_melee.json), and
 ## the car key is a stub until the vehicles lane's enter/exit API lands.
-## Vaults own the stage position and attack input through their landing tick.
 
 var actions: PlayerActions
 var motion: PlayerMotion = PlayerMotion.shipped()
@@ -42,6 +41,7 @@ var _melees: Dictionary[StringName, PlayerMelee] = {}
 
 func _init(p_actions: PlayerActions) -> void:
 	actions = p_actions
+	actions.enable_cover_input(motion.cover.enabled)
 
 
 ## Fills the stage's intent for this tick from `input`.

@@ -20,7 +20,7 @@
         "additionalProperties": false,
         "properties": {
           "bit": {
-            "maximum": 15,
+            "maximum": 16,
             "minimum": -1,
             "type": "integer"
           },
@@ -48,6 +48,11 @@
               "type": "integer"
             },
             "type": "array"
+          },
+          "wire_bit": {
+            "maximum": 31,
+            "minimum": 29,
+            "type": "integer"
           }
         },
         "required": [
