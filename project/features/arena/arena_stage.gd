@@ -61,6 +61,8 @@ func setup(ctx: WorldContext) -> void:
 		)
 		if _options.text("--enemy-brain", SquadChoice.DEFAULT_BRAIN) == "squad":
 			arena.squad_ai = ArenaSquad.new(arena.guard_map)
+			var mix: Array = plan.pit.get("squad_mix", [])
+			pit.squad_mix.assign(mix)
 			var slots: float = plan.pit.get("max_shooters", arena.squad_ai.pit.roster.max_shooters)
 			arena.squad_ai.pit.roster.max_shooters = roundi(slots)
 	arena.rivet.weapon = WEAPON

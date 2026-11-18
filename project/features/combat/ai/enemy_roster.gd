@@ -35,6 +35,10 @@ class Archetype:
 	var turn_rad_per_tick: float = 0.1
 	var preferred_m: float = 8.0
 	var attack_m: float = 12.0
+	var cover_bias: float = 0.0
+	var peek_ticks: int = 0
+	var production_weapon: StringName = &"assault-rifle"
+	var production_damage: float = 0.0
 	var aggression: float = 0.5
 	var morale: float = 0.5
 	var reaction_ticks: int = 30
@@ -81,6 +85,8 @@ static func shipped(path: String = TABLE, production: bool = false) -> EnemyRost
 		if row.get("production_only", false) == true and not production:
 			continue
 		var a: Archetype = r._archetype(t, row)
+		if production:
+			a.uses_cover = a.cover_bias > 0.0
 		r.archetypes[a.id] = a
 	r._squad(t, t.object(t.raw, "squad"))
 	r._errors.append_array(t.errors())
@@ -98,7 +104,7 @@ func errors() -> Array[String]:
 
 
 func archetype(id: StringName) -> Archetype:
-	return archetypes.get(id, null)
+	return archetypes.get(id if id != &"" else &"contractor", null)
 
 
 func _squad(t: DataTable, s: Dictionary) -> void:
@@ -131,6 +137,11 @@ func _archetype(t: DataTable, row: Dictionary) -> Archetype:
 	a.turn_rad_per_tick = deg_to_rad(t.num(row, "turn_deg_s")) * SimClock.TICK_DT
 	a.preferred_m = t.num(row, "preferred_m")
 	a.attack_m = t.num(row, "attack_m")
+	a.cover_bias = t.num(row, "cover_bias")
+	a.peek_ticks = CombatTuning.ticks(t.num(row, "peek_s"))
+	a.production_damage = t.num(row, "production_damage")
+	if row.has("production_weapon"):
+		a.production_weapon = StringName(t.text(row, "production_weapon"))
 	a.aggression = t.num(row, "aggression")
 	a.morale = t.num(row, "morale")
 	a.reaction_ticks = CombatTuning.ticks(t.num(row, "reaction_s"))

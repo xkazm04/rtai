@@ -158,7 +158,7 @@ func step(p_tick: int) -> void:
 	kills_now = 0
 	tazer_hit_now = false
 	var ordered: Array[Fighter] = hostiles
-	if squad_ai != null and guard_tell == null and rivet.alive():
+	if squad_ai != null and rivet.alive():
 		ordered = squad_ai.assign(self)
 	rivet.cooldown = maxi(rivet.cooldown - 1, 0)
 	for h: Fighter in ordered:
@@ -220,10 +220,10 @@ func _step_hostile(h: Fighter) -> void:
 			balls.append(ball)
 		return
 	var shot: Shot
-	if guard_tell != null:
-		shot = guard_tell.step(h, rivet.pos, tuning, _rng)
-	elif squad_ai != null and h.kind == Fighter.Kind.GUARD:
+	if squad_ai != null and h.kind == Fighter.Kind.GUARD:
 		shot = squad_ai.step(h, self, _rng)
+	elif guard_tell != null:
+		shot = guard_tell.step(h, rivet.pos, tuning, _rng)
 	else:
 		shot = GuardBrain.step(h, rivet.pos, tuning, _rng)
 	if shot != null:
@@ -240,7 +240,7 @@ func _drop(victim: Fighter) -> void:
 		if tazer != null:  # an act boss (features/bosses) has no tazer and drops nothing
 			tazer.short_out()
 		balls.clear()
-	else:
+	elif squad_ai == null or victim.weapon == &"assault-rifle":
 		rifle_drops.append(victim.pos)
 
 

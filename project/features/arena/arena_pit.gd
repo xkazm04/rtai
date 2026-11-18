@@ -12,6 +12,7 @@ extends RefCounted
 const HORDE: Vector4i = Vector4i(4, 2, 10, 30)
 const HORDE_RIVET_HP: float = 50.0
 
+var squad_mix: Array[StringName] = []
 var points: Array[Vector2] = []
 var zone: Rect2 = Rect2()
 var first_wave: int = 2
@@ -116,7 +117,13 @@ func _spawn_wave(arena: CombatArena) -> void:
 	var n: int = mini(first_wave + grow * (wave - 1), max_wave)
 	for i: int in n:
 		var g: Fighter = arena.spawn_guard(points[(wave + i) % points.size()])
-		if riot_hp > 0.0 and i == 0 and wave >= 2:
+		var armored: bool = riot_hp > 0.0 and i == 0 and wave >= 2
+		if arena.squad_ai != null:
+			var id: StringName = (
+				&"" if squad_mix.is_empty() else squad_mix[(wave - 1 + i) % squad_mix.size()]
+			)
+			arena.squad_ai.equip(g, &"riot_cop" if armored else id, arena.tuning)
+		if armored:
 			g.max_hp *= riot_hp
 			g.hp = g.max_hp
 			riot[g.id] = true
