@@ -32,17 +32,20 @@ Survivors are listed first, then timeouts, invalid, killed. Score = killed / (ki
 
 ## Oracles
 
-`tests` runs the selected unit tests and is the default. For city generators under
-`features/city/gen/`, use the AST-12 golden list directly.
+`tests` runs the selected unit tests and is the default. For generators under `features/city/gen/`,
+use `tests,bake-check` to run unit tests first and catch what they miss with the AST-12 golden list,
+or use `bake-check` alone when no test maps to the file.
 
 ```
-node tools/mutate/mutate.mjs --file=features/city/gen/kerb_dresser.gd --oracle=bake-check --max=4
+node tools/mutate/mutate.mjs --file=features/city/gen/kerb_dresser.gd --oracle=bake-check
+node tools/mutate/mutate.mjs --file=features/city/gen/kerb_dresser.gd --oracle=tests,bake-check
 ```
 
-`bake-check` skips test mapping. It imports a fresh worktree before running
-`bake_city.gd -- --check --fail-fast`. It checks the header and each chunk in row-major order,
-then byte-compares a second bake if every hash matched. A script error stops the Godot process tree
-after a 1.5 s grace period so a failed SceneTree initialization cannot hang the run.
+`bake-check` alone skips test mapping. It imports a fresh worktree and gives the same pass/fail
+result as `bake_city.gd -- --check`. The oracle adds `--fail-fast` to reorder the checks. It compares
+the header and each chunk against the golden list first, then byte-compares a second bake for
+determinism only if all chunks matched. A script error stops the Godot process tree after a 1.5 s
+grace period so a failed SceneTree initialization cannot hang the run.
 
 With `--oracle=tests,bake-check`, only survivors reach the next oracle. List the names in the order
 you want. Every selected oracle must pass on the original file before mutation starts.
