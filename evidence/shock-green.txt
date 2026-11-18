@@ -1,0 +1,2 @@
+unit-tests: 30 passed, 0 failed, 0 skipped (GUT, headless)
+log: build/test-results/unit-tests.log (20.6 s)

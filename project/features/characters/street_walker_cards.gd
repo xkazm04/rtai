@@ -53,7 +53,8 @@ static func step(rig: CutRig) -> void:
 	if not rig.limbs_cold:  # a cold rig posed no part this step: nothing re-showed them
 		var hid: Array[CanvasItem] = rig.body.get_meta(HID)
 		StreetView.hide_all(hid)
-	place(rig, card)
+	if rig.react == null or not StreetPedShock.active(rig.react, row_of(rig)):
+		place(rig, card)  # the shocked walker is placed once, after the head jolts
 
 
 ## True while this rig's parts are hidden under its whole-figure card (limbs need no pose).
