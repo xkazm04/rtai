@@ -175,3 +175,17 @@ the open water and the quay edge water match.
   2 rows a tile, test_dock_yard; the first slots closed the row gap on the 1 m cell grid: caught by the test
   before commit). Evidence `evidence/n18-districts/ab_yard_containers_v18_v19_combo_{32,48}ppm.jpg`. Looked: the
   stacks read as corrugated containers with corner castings; the world print greys their colour like every prop.
+- 01:18 MILESTONE item 3, commit bbc3dae4d, generator v20: downtown plazas (zone key `plaza_centre`: one fountain per
+  plaza block on its middle tile; my first wiring put the fountain among slot props -> ~8 a plaza, seen in the
+  still, fixed + test_city_plaza_centre), trees in grates (v2 A), bike racks (v2 A), sculpture (B) 1 in 10 (at 1 in 7
+  six bronzes in one view read as debris), downtown landmark_share 0.55 -> 0.35; docks long roofs + cold store A +
+  sawtooth v2 A; downtown generic roofs + two square tall roofs A (glass walls). Evidence
+  `evidence/n18-districts/ab_downtown_{plaza-32ppm,plaza-48ppm,tall-48ppm}_v19_v20_combo.jpg`.
+  Asset lane offers NOT taken (and why): water v2 / v2b / `_w2` quay set (the asset lane withdrew them: void premise);
+  `ground_dock_water_70_v2_t1` + `_w2t1` quay set (A; the current water reads; a candidate for the next session,
+  one data swap); dock facade b brick + downtown stone office (A; need a per-roof alternate style: next session);
+  kiosk, mooring bollard, pallets, forklift (B muted), gatehouse v2 ochre (A): dock/plaza dressing for the next
+  session (the apron and yards); quay apron tiles (B, seam faults); tower roofs `_ochre` (the colour-law Call:
+  ready if the owner says no orange on roofs); outer corner (no layout case).
+- 01:20 item 6: `zone_frame --drive=1990,1036,1250,1036,20 --zooms=1 --fixed-fps 60` (docks -> downtown along y 1036,
+  37 s) rendering to %TEMP%/n18d/drive.
