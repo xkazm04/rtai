@@ -18,6 +18,7 @@ var tex: Texture2D = null
 var cols: int = 8
 var left: Texture2D = null
 var left_cols: int = 0
+var hitback: GhostSheet = null  # optional one-column alternate on an act grid
 
 
 func _init(p_tex: Texture2D, p_cols: int, p_left: Texture2D = null, p_left_cols: int = 0) -> void:
@@ -43,7 +44,22 @@ static func of(path: String, p_cols: int, p_left_cols: int = -1) -> GhostSheet:
 static func act_of(path: String, key: String) -> GhostSheet:
 	var acts: int = GhostDrawn.JAB_COLS.get(key, GhostDrawn.ACT_COLS)
 	var lefts: int = GhostDrawn.JAB_LEFT_COLS.get(key, GhostDrawn.ACT_COLS)
-	return of(path, acts, lefts)
+	var sheet: GhostSheet = of(path, acts, lefts)
+	var rear: String = path.get_basename() + "_hitback.png"
+	if sheet != null and ResourceLoader.exists(rear):
+		sheet.hitback = GhostSheet.new(load(rear) as Texture2D, 1)
+	return sheet
+
+
+## Creates the ghost sprite standing on this walk sheet, with its outline attached.
+func make_sprite() -> Sprite2D:
+	var spr: Sprite2D = Sprite2D.new()
+	spr.name = &"ghost_drawn"
+	spr.centered = false
+	show(spr, 2, GhostDrawn.STAND_COL)
+	spr.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	GhostSoulLine.attach(spr)
+	return spr
 
 
 ## True when octant `oct` at column `col` draws from the left sheet.
