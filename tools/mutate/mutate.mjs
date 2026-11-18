@@ -14,7 +14,7 @@ import { ROOT } from '../lib/repo.mjs';
 import { OPS, applyMutant, generateMutants, sampleMutants } from './operators.mjs';
 import { baseline, judgeMutant, ORACLES, oracleRunners } from './oracles.mjs';
 import { buildJson, formatReport, mutantLine } from './report.mjs';
-import { acquireLock, ensureWorktree, removeWorktree, restoreFile, slugOf, stemOf, writeSidecar }
+import { ensureWorktree, removeWorktree, restoreFile, slugOf, stemOf, writeSidecar }
   from './worktree.mjs';
 
 export class UsageError extends Error {}
@@ -93,7 +93,7 @@ export function checkFilePath(file) {
 const note = (s) => console.error(`mutate: ${s}`);
 
 /** The tests to run: --tests, else the test_map mapping (from the worktree copy), slow tier dropped. */
-async function pickTests(o, wt) {
+export async function pickTests(o, wt) {
   if (o.tests.length) return o.tests;
   const tm = await import(pathToFileURL(join(wt, 'tools', 'tests', 'test_map.mjs')).href);
   const map = tm.mapChanges([`project/${o.file}`], tm.realIndex());
@@ -124,8 +124,8 @@ async function mutateLoop({ file, target, original, mutants, names, runners, tim
   return results;
 }
 
-export async function main(argv) {
-  const o = parseArgs(argv);
+/** Run with exclusive ownership of the scratch file. Save its sidecar just before the first write. */
+export async function withMutationFile(o, run) {
   checkFilePath(o.file);
   const g = resolveGodot();
   if (!g.ok) throw new Error(g.message);
@@ -135,31 +135,46 @@ export async function main(argv) {
   note(`worktree ${wt} at ${wtInfo.head.slice(0, 8)} (${wtInfo.created ? 'created' : 'reused'})`);
   for (const r of wtInfo.repaired) note(`REPAIRED a crashed run: restored ${r} from its sidecar`);
   for (const n of wtInfo.notes) note(n);
-  const release = acquireLock(wt);
   const target = join(wt, 'project', ...o.file.split('/'));
   let original = null;
   let sidecar = null;
   const cleanup = () => {
-    if (original) { try { restoreFile(target, original); } catch (e) { note(String(e)); } }
-    if (sidecar) { try { unlinkSync(sidecar); } catch { /* gone */ } sidecar = null; }
-    release();
+    try {
+      if (sidecar) {
+        restoreFile(target, original);
+        unlinkSync(sidecar);
+      }
+    } finally { wtInfo.release(); }
   };
-  for (const sig of ['SIGINT', 'SIGTERM']) process.on(sig, () => { cleanup(); process.exit(130); });
+  const interrupt = () => process.exit(130);
+  process.once('exit', cleanup);
+  for (const sig of ['SIGINT', 'SIGTERM']) process.once(sig, interrupt);
   try {
     if (!existsSync(target)) throw new UsageError(`${o.file} does not exist at HEAD ${wtInfo.head.slice(0, 8)} (commit it first)`);
     original = readFileSync(target);
+    const saveOriginal = () => { sidecar = writeSidecar(target, original); };
+    return await run({ wt, wtInfo, target, original, saveOriginal, t0, env: { ...process.env, GODOT_BIN: g.bin } });
+  } finally {
+    process.off('exit', cleanup);
+    for (const sig of ['SIGINT', 'SIGTERM']) process.off(sig, interrupt);
+    cleanup();
+  }
+}
+
+export async function main(argv) {
+  const o = parseArgs(argv);
+  const wt = await withMutationFile(o, async ({ wt, wtInfo, target, original, saveOriginal, t0, env }) => {
     const all = filterMutantsByLines(generateMutants(original.toString('utf8'), { ops: o.ops }), o.lines);
     if (!all.length) throw new UsageError(`${o.file}: no mutants for ops ${o.ops.join(',')}`);
     const mutants = sampleMutants(all, o.max, o.file);
     const tests = o.oracles.includes('tests') ? await pickTests(o, wt) : [];
-    const env = { ...process.env, GODOT_BIN: g.bin };
     const oracles = o.explicit ? o.oracles : undefined;
     note(`${mutants.length}/${all.length} mutant(s); baseline run of ${(oracles ?? tests).join(', ')}`);
     const runners = oracleRunners(wt, tests, env, o.explicit);
     const base = await baseline({ names: o.oracles, runners, wt, timeoutS: o.timeoutS, explicit: o.explicit, note });
     const { timeoutMs } = base;
     note(`baseline green in ${(base.durationMs / 1000).toFixed(1)} s; per-mutant timeout ${timeoutMs / 1000} s`);
-    sidecar = writeSidecar(target, original);
+    saveOriginal();
     const results = await mutateLoop({ file: o.file, target, original, mutants, names: o.oracles, runners, timeoutMs, oracles });
     const totalMs = Date.now() - t0;
     console.log(formatReport({ file: o.file, results, totalMs, tests, oracles, sampled: mutants.length < all.length ? all.length : 0 }));
@@ -172,9 +187,8 @@ export async function main(argv) {
         total: all.length, max: o.max })));
       note(`wrote build/mutate/${slugOf(o.file)}.json`);
     }
-  } finally {
-    cleanup();
-  }
+    return wt;
+  });
   if (o.remove) { removeWorktree({ root: ROOT, path: wt }); note(`removed ${wt}`); }
 }
 

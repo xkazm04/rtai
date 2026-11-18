@@ -69,6 +69,12 @@ On this machine the four-mutant sample above averaged **7.69 s/mutant**. All fou
 `c_00_00.bin`. The clean bake took 13.5 s after a one-time 182.3 s import. A surviving mutant
 pays for both full bakes. Focused unit tests have measured about 6.5 s/mutant.
 
+## Negative controls
+
+Run `node tools/mutate/controls.mjs --file=features/city/gen/kerb_dresser.gd --oracle=bake-check`
+to check a hang, a runtime crash, a parse error and the clean file against the live oracle.
+Pass `--timeout=60` for a 60-second cap. The hang must return within 15 seconds of that cap.
+
 ## Operators (one change, one line)
 
 | op | change |

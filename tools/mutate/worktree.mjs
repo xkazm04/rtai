@@ -108,31 +108,38 @@ export function copyRuntime(root, wt) {
   return copied;
 }
 
-/** Creates or reuses the worktree at the main checkout's HEAD. -> {path, head, created, repaired, notes, copied}. */
+/** Creates or reuses the worktree at HEAD, returning it locked. The caller must release it. */
 export function ensureWorktree({ root, path = defaultWorktreePath(root), tmp = tmpdir() }) {
   assertSafe(path, { root, tmp });
   const head = git(root, 'rev-parse', 'HEAD');
   const notes = [];
-  let created = false;
-  let repaired = [];
-  if (existsSync(path)) {
+  const created = !existsSync(path);
+  if (!created) {
     assertSafe(path, { root, tmp, requireMarker: true });
-    repaired = repairSidecars(path);
-    for (const l of dirtyLines(path)) {
-      if (!l.startsWith('??')) { // tracked change: repair with the allowed fallback
-        const f = l.slice(3).trim();
-        git(path, 'checkout', '--', f);
-        notes.push(`repaired tracked change: ${f}`);
-      } else notes.push(`untracked file left alone: ${l.slice(3).trim()}`);
-    }
-    git(path, 'checkout', '--quiet', '--detach', head);
   } else {
     execFileSync('git', ['-C', root, 'worktree', 'prune'], { windowsHide: true });
     execFileSync('git', ['-C', root, 'worktree', 'add', '--quiet', '--detach', path, head], { encoding: 'utf8', windowsHide: true });
-    writeFileSync(join(path, MARKER), JSON.stringify({ root: resolve(root), head, created: new Date().toISOString() }));
-    created = true;
   }
-  return { path, head, created, repaired, notes, copied: copyRuntime(root, path) };
+  const release = acquireLock(path);
+  try {
+    const repaired = created ? [] : repairSidecars(path);
+    if (created) {
+      writeFileSync(join(path, MARKER), JSON.stringify({ root: resolve(root), head, created: new Date().toISOString() }));
+    } else {
+      for (const l of dirtyLines(path)) {
+        if (!l.startsWith('??')) { // tracked change: repair with the allowed fallback
+          const f = l.slice(3).trim();
+          git(path, 'checkout', '--', f);
+          notes.push(`repaired tracked change: ${f}`);
+        } else notes.push(`untracked file left alone: ${l.slice(3).trim()}`);
+      }
+      git(path, 'checkout', '--quiet', '--detach', head);
+    }
+    return { path, head, created, repaired, notes, copied: copyRuntime(root, path), release };
+  } catch (err) {
+    release();
+    throw err;
+  }
 }
 
 /** The ONLY removal: `git worktree remove --force <exact path>` + prune, after assertSafe. */

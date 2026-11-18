@@ -3,7 +3,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmdirSync, unlinkSync
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
-import { MARKER, SIDECAR, UnsafePath, assertSafe, defaultWorktreePath, removeWorktree, repairSidecars, restoreFile,
+import { LOCK, MARKER, SIDECAR, UnsafePath, assertSafe, defaultWorktreePath, ensureWorktree, removeWorktree, repairSidecars, restoreFile,
   writeSidecar } from './worktree.mjs';
 
 const ROOT = 'C:/Users/kazda/kiro/gtai';
@@ -90,6 +90,26 @@ test('sidecar crash repair restores the original bytes and removes the sidecar',
     unlinkSync(file);
     rmdirSync(dir);
     rmdirSync(join(wt, 'project'));
+    rmdirSync(wt);
+  }
+});
+
+test('a live lock protects the running fault and its sidecar from startup repair', () => {
+  const wt = mkdtempSync(join(TMP, 'gtai-mutate-test-'));
+  const dir = join(wt, 'project');
+  const file = join(dir, 'target.gd');
+  mkdirSync(dir);
+  try {
+    writeFileSync(join(wt, MARKER), JSON.stringify({ root: process.cwd() }));
+    writeFileSync(join(wt, LOCK), String(process.ppid));
+    writeSidecar(file, Buffer.from('original'));
+    writeFileSync(file, 'live fault');
+    assert.throws(() => ensureWorktree({ root: process.cwd(), path: wt }), /another mutate run/);
+    assert.equal(readFileSync(file, 'utf8'), 'live fault');
+    assert.equal(readFileSync(file + SIDECAR, 'utf8'), 'original');
+  } finally {
+    for (const p of [file, file + SIDECAR, join(wt, LOCK), join(wt, MARKER)]) if (existsSync(p)) unlinkSync(p);
+    rmdirSync(dir);
     rmdirSync(wt);
   }
 });
