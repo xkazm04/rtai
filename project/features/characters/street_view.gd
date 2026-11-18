@@ -29,11 +29,12 @@ static func post(rig: CutRig) -> void:
 	if card == null or not card.visible:
 		return
 	if (
-		card.has_meta(StreetWalkerCards.ON)
-		and StreetPedShock.active(rig.react, StreetWalkerCards.row_of(rig))
+		StreetFallBetween.is_fall_card(card)
+		or (
+			card.has_meta(StreetWalkerCards.ON)
+			and StreetPedShock.active(rig.react, StreetWalkerCards.row_of(rig))
+		)
 	):
-		StreetPedShock.place(rig, card)
-	elif StreetFallBetween.is_fall_card(card):
 		StreetWalkerCards.place(rig, card)
 
 

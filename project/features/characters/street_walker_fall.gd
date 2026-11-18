@@ -136,6 +136,9 @@ static func draw(rig: CutRig, card: Sprite2D, k: float) -> void:
 	var h: float = StreetWalkerCards.HEIGHT_BY_ART.get(from, StreetWalkerCards.HEIGHT_M)
 	var s: float = h * CharacterRigs.PX_PER_M * k / STILL_PX
 	var r: HumanReact = rig.react
+	if r != null and not r.dying and StreetPedShock.active(r, StreetWalkerCards.row_of(rig)):
+		StreetPedShock.place_drop(rig, card, s)
+		return
 	if not card.has_meta(OCT):
 		var blow: Vector2 = r.dir.rotated(rig.facing) if r != null else Vector2.DOWN
 		card.set_meta(OCT, RigHeadCard.frame_of(blow.angle()))

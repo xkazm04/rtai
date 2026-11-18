@@ -70,21 +70,12 @@ static func pose_parts(r: HumanReact, rig: CutRig) -> bool:
 	return true
 
 
-## Place after HumanReact.post has jolted the card's parent. A whole figure hung on the
-## head would otherwise inherit the head's separate displacement, rotation and hat scale.
-static func place(rig: CutRig, card: Sprite2D) -> void:
-	if not StreetFallBetween.is_fall_card(card):
-		StreetWalkerCards.place(rig, card)
-		return
+## A living knee catch uses the same foot point and fitted scale as the drawn fall.
+static func place_drop(rig: CutRig, card: Sprite2D, scale_at_stand: float) -> void:
 	var r: HumanReact = rig.react
 	StreetWalkerHit.face(card, r.dir.rotated(rig.facing))
 	# The short, three-row fall sheet has no kneel. Its last row is already prone.
 	var row: int = mini(drop_row(r.progress()), card.vframes - 2)
 	card.frame_coords = Vector2i(card.frame_coords.x, row)
-	var art: String = card.texture.resource_path.get_base_dir().get_file()
-	var h: float = StreetWalkerCards.HEIGHT_BY_ART.get(art, StreetWalkerCards.HEIGHT_M)
-	var k: float = 1.0 + StreetCrowdCards.SCALE_VAR * StreetCrowdCards.vary(rig.actor_id, 3)
-	var s: float = (
-		h * CharacterRigs.PX_PER_M * k * StreetFallFit.k(card) / StreetWalkerFall.STILL_PX
-	)
-	card.global_transform = Transform2D(0.0, Vector2.ONE * s, 0.0, rig.global_position)
+	var size: Vector2 = Vector2.ONE * scale_at_stand * StreetFallFit.k(card)
+	card.global_transform = Transform2D(0.0, size, 0.0, rig.global_position)

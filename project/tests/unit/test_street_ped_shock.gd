@@ -35,7 +35,8 @@ func test_the_three_looks_keep_their_own_shock_after_the_jab_and_heavy_would_end
 		assert_eq(StreetWalkerCards.strip_of(rig).get_file(), shock)
 		rig.react.t = 0.65
 		assert_eq(StreetWalkerCards.strip_of(rig).get_file(), shock, row + " during stun")
-		rig.react.t = 0.86 * rig.react.length
+		rig.react.length = 1.0
+		rig.react.t = 0.76
 		assert_eq(StreetWalkerCards.strip_of(rig).get_file(), ROWS[row] + "_between_fall.png")
 		rig.react.clear()
 		assert_eq(StreetWalkerHit.grid_of(rig, row), "", row + " after release")
@@ -105,10 +106,16 @@ func test_the_parts_arch_and_jolt_then_bend_the_knees_for_the_same_three_wardrob
 		rig.actor_id = cast.x
 		rig.variant = RigVariant.crowd(cast.y)
 		_wound(rig, &"shock", &"electro_gun")
+		rig.gun_out = true
 		rig.react.t = 0.35
 		ReactPose.pre(rig.react, rig)
 		assert_lt(rig.c_lean, 0.0, "back arched")
+		assert_false(rig.gun_out, "the jolt interrupts the weapon pose")
 		assert_ne(rig.react.off, Vector2.ZERO, "current through the body")
+		rig.react.length = 1.0
+		rig.react.t = 0.76
+		ReactPose.pre(rig.react, rig)
+		assert_eq(rig.c_lean, 0.0, "the arch lets go as the knees start to bend")
 		rig.react.t = 0.86 * rig.react.length
 		ReactPose.pre(rig.react, rig)
 		assert_almost_eq(rig.c_tuck, StreetPedShock.KNEE_TUCK, 0.0001)
@@ -116,6 +123,22 @@ func test_the_parts_arch_and_jolt_then_bend_the_knees_for_the_same_three_wardrob
 		rig.react.t = 0.995 * rig.react.length
 		ReactPose.pre(rig.react, rig)
 		assert_eq(rig.c_tuck, 0.0)
+	ViewMode._shared = saved
+
+
+func test_the_parts_overlay_belongs_only_to_its_three_looks_in_the_flat_view() -> void:
+	var saved: ViewMode = ViewMode._shared
+	var rig: CutRig = _ped("ped/head_hat")
+	_wound(rig, &"shock", &"electro_gun")
+	ViewMode.select("top")
+	assert_false(StreetPedShock.pose_parts(rig.react, rig), "no wardrobe")
+	rig.actor_id = 3
+	rig.variant = RigVariant.crowd(7)
+	assert_false(StreetPedShock.pose_parts(rig.react, rig), "worker uses the shared jolt")
+	rig.actor_id = 1
+	rig.variant = RigVariant.crowd(0)
+	ViewMode.select("combo")
+	assert_false(StreetPedShock.pose_parts(rig.react, rig), "the tilted view uses the card")
 	ViewMode._shared = saved
 
 
@@ -127,5 +150,5 @@ func test_the_short_fall_sheet_stays_off_its_prone_frame() -> void:
 	c.texture = load(StreetWalkerCards.DIR + "p70/ped_hat_long_fall.png")
 	c.hframes = RigHeadCard.FRAMES
 	c.vframes = StreetWalkerFall.FALL_FRAMES
-	StreetPedShock.place(rig, c)
+	StreetWalkerCards.place(rig, c)
 	assert_eq(c.frame_coords.y, 1, "buckle while living")

@@ -11,7 +11,6 @@ const LANE_CENTRE_M: float = 1.8
 const HIT_TICK: int = 30
 const LAST_TICK: int = 168
 const AIM: Vector2 = Vector2(-1.0, -1.0)
-const STILLS: Array[int] = [28, 34, 74, 124, 130, 146]
 
 var _arena: CombatArena
 var _link: ReactLink
@@ -59,7 +58,7 @@ func shoot() -> int:
 		_link.apply(_rigs)
 		_rigs.step_ticks(1)
 		_record(poses, t)
-		if not (STILLS.has(t) or (ppm == 64 and t % 2 == 0)):
+		if t % 2 != 0:
 			continue
 		await get_tree().process_frame
 		await RenderingServer.frame_post_draw
