@@ -1,0 +1,46 @@
+Far foot cops now draw as patrol or riot in both city renderers. **No digest or golden moved.**
+
+### Far-cop readback
+
+At heat 3, seed 18, tick 90, every submitted foot cop kept its slot and position. The people MultiMesh showed these atlas rows. [rows.json](C:/Users/kazda/kiro/gtai-wt/n19-gfx/evidence/n19-gfx/farcop/rows.json)
+
+| View | Before · civilian row 7 | After · patrol row 5 | After · riot row 6 |
+|---|---:|---:|---:|
+| Top, 16 px/m | 70 | 33 | 37 |
+| Tilt 70, 16 px/m | 73 | 36 | 37 |
+| Top, 32 px/m | 15 | 8 | 7 |
+| Tilt 70, 32 px/m | 17 | 9 | 8 |
+
+The independent GDScript readback matched native slot for slot at 16 px/m. Both rig-feed writers pass the snapshot slot as the actor ID consumed by `RigVariant.crowd_index_for`. The unit test cross-checks IDs 0–999 for both body kinds. [Patrol and riot close-ups](C:/Users/kazda/kiro/gtai-masters/n19/gfx/farcop/top-32-cop-details.png) · [All four frame pairs](C:/Users/kazda/kiro/gtai-masters/n19/gfx/farcop/)
+
+### District traffic films
+
+All twelve fixed-camera clips are 10 seconds at 32 px/m, with per-tick counts burned in. At comparison tick 116, both views showed **nine moving cars per district**. Counts vary as traffic queues during the clips. Mixed matched before and after across all 150 sampled ticks.
+
+| District, after | Vans | Pickups | Taxis | Ambulances | Sedans |
+|---|---:|---:|---:|---:|---:|
+| Docks | 1 | 2 | 0 | 0 | 6 |
+| Downtown | 0 | 0 | 3 | 0 | 6 |
+| Mixed | 0 | 0 | 1 | 0 | 8 |
+
+The 14-entry index includes the district before/after pairs and clips. [Top comparison](C:/Users/kazda/kiro/gtai-masters/n19/gfx/zones/districts2-top.png) · [Tilt 70 comparison](C:/Users/kazda/kiro/gtai-masters/n19/gfx/zones/districts2-tilt70.png) · [Frame and clip index](C:/Users/kazda/kiro/gtai-masters/n19/gfx/zones/frames.json)
+
+### Verification
+
+- Lint passed **19/19**. Full GUT passed **2,966**, with zero failures and two skipped tilt-art tests. Scenarios passed **55/55**. Quick ran before each commit.
+- Native debug and release DLLs rebuilt against the existing godot-cpp libraries. Standalone core tests had **zero failures**. The DLLs are git-ignored.
+- Parity was exact over **1,200 steps** and caught its planted fault at step 629. It compares sim state. The separate GPU readback verified the render rows.
+- All 20 city replay checkpoints matched baseline, final `7571fcfe027f9994`. The 60-second replay stayed at `cbeb734ff9b97c41`, and parity stayed at `94b2865f7f17d778`.
+- Spawner changed-line mutation scored **4/(4+0)** after the new endpoint test killed the survivor. The fifth mutation, the null-zone guard at line 145, timed out at both 90 and 240 seconds and is excluded from the score.
+- Far-cop helper-file mutation scored **14/(14+1)**. All eight sampled mutations in the new row mapping were killed. The survivor was in the existing run-animation phase calculation at line 53.
+
+### Commits
+
+| Commit | Files changed |
+|---|---|
+| `de01ecf7c` | `zone_traffic_film.gd`, its UID and scene, `zones/film.json`, debt baseline |
+| `f94ca6118` | `test_city_streaming.gd` — checks both endpoints of the 12-entry traffic draw |
+| `b9cddfe91` | `render.cpp`, `sim_render.gd`, `sim_clips.gd`, `test_core.cpp`, `test_sim_render_rows.gd` and UID, `far_cop_frame.gd` and its UID and scene, `farcop/rows.json`, debt baseline |
+| `ca6438e84` | `docs/decisions.md` — records the readback and unchanged digests |
+
+[astra: 2676s, exit 0]
