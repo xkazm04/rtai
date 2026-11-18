@@ -20,6 +20,8 @@ var scenario: String = "drive"
 var route: BenchRoute = BenchRoute.new()
 var _city: CitySystem
 var _s: float = 0.0
+var _heat: CityHeat = null
+var _heat_level: int = -1
 
 
 func _init(city: CitySystem, p_scenario: String) -> void:
@@ -46,7 +48,21 @@ func setup(_ctx: WorldContext) -> void:
 	pass
 
 
+## n18 police (bench --heat): mounts CityHeat after this driver and pins its wanted level at
+## `level` (last seen at the bench target whenever it is re-raised); level < 0 mounts nothing.
+func mount_heat(world: World, level: int) -> void:
+	if level < 0:
+		return
+	_heat = CityHeat.new(_city)
+	_heat_level = level
+	world.add_system(_heat)
+
+
 func step(tick: int, _input: TickInput) -> void:
+	if _heat != null and _heat.meter != null and _heat.meter.level < _heat_level:
+		_heat.last_seen = _city.target
+		_heat.ever_seen = true
+		_heat.meter.set_level(_heat_level)
 	if scenario == "riot":
 		var t: float = tick * SimClock.TICK_DT
 		_city.target = RIOT + Vector2(cos(t * 0.3), sin(t * 0.3)) * 6.0

@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 // The city bench (WLD-08, STANDARDS section 20): bake the chunks, export the windows-bench
 // release build, run the crowded drive and the 400-actor riot, judge the hard limits.
-//   node tools/bench/run.mjs [--headless] [--secs=60] [--runs=3] [--wait=<minutes, default 20>]
+//   node tools/bench/run.mjs [--headless] [--secs=60] [--runs=3] [--wait=<minutes, default 20>] [--heat=0..3]
+// --heat=<level> (n18 police) mounts CityHeat in every scenario and pins the wanted level there (the
+// living police at that heat, last seen at the bench target); default: no CityHeat (heat -1, pre-n18).
 // Queueing (run_ledger.mjs): the bench takes a machine-wide FIFO ticket, waits for the machine to be
 // quiet (no other registered Godot run, no unregistered Godot process) and for bench.lock, printing an
 // ETA from the running entries' start times (bench ~14 min); a legacy <repo>/build/bench.lock still
@@ -103,11 +105,11 @@ function combine(runs, mode) {
 }
 
 /** One pass over every scenario; {byName, files} or {error}. */
-async function onePass(mode, secs, outDir, pass) {
+async function onePass(mode, secs, outDir, pass, heat) {
   const byName = {};
   const files = [];
   for (const sc of SCENARIOS) {
-    const r = await runScenario({ ...sc, name: sc.name }, mode, secs, outDir);
+    const r = await runScenario({ ...sc, name: sc.name }, mode, secs, outDir, heat);
     if (r.error) return { error: `${r.error} (${mode}, run ${pass})` };
     if (r.data.backend !== 'native') return { error: `${sc.name} ran on ${r.data.backend}` };
     byName[sc.name] = r.data;
@@ -142,13 +144,13 @@ export async function runBench(outDir, opts = {}) {
 }
 
 // Gate: section 20 hard limits on every run, and F-07's "no unexplained frame over 50 ms".
-async function benchRun(outDir, { headless = false, secs = 60, runs = 3 } = {}) {
+async function benchRun(outDir, { headless = false, secs = 60, runs = 3, heat = -1 } = {}) {
   const prep = await prepare(headless || process.platform !== 'win32');
   if (prep.error) return { ok: false, summary: `bench: ${prep.error}` };
   const passes = [];
   let artifacts = [];
   for (let pass = 1; pass <= runs; pass += 1) {
-    const r = await onePass(prep.mode, secs, outDir, pass);
+    const r = await onePass(prep.mode, secs, outDir, pass, heat);
     if (r.error) return { ok: false, summary: `bench: ${r.error}` };
     passes.push(r.byName);
     artifacts = r.files;
@@ -158,7 +160,7 @@ async function benchRun(outDir, { headless = false, secs = 60, runs = 3 } = {}) 
   if (m['over50.unexplained'] > 0) misses.push(['over50.unexplained']);
   const failures = SCENARIOS.reduce((a, sc) => a + m[`${sc.name}.chunkFailures`], 0);
   const what = prep.mode === 'exported' ? 'exported release build, windowed' : 'headless CPU only, no rendering';
-  const summary = `bench (${what}, ${runs} consecutive runs x ${SCENARIOS.length} scenarios x ${secs} s): `
+  const summary = `bench (${what}${heat >= 0 ? `, CityHeat pinned at heat ${heat}` : ''}, ${runs} consecutive runs x ${SCENARIOS.length} scenarios x ${secs} s): `
     + `p99 ${m.p99CpuMs} ms, 1% low ${Math.round(m.low1Fps)} fps, worst swap ${m.worstSwapMs} ms, `
     + `worst frame ${m.worstFrameMs} ms; hitches >25 ms ${m.hitches25}, >50 ms ${m.hitchesOver50} `
     + `(unexplained ${m['over50.unexplained']}, outside ${m['over50.outside']}, present `
@@ -174,19 +176,20 @@ export class UsageError extends Error {
   name = 'UsageError';
 }
 
-const NUMERIC = { '--secs': ['secs', (n) => n > 0], '--runs': ['runs', (n) => Number.isInteger(n) && n > 0], '--wait': ['waitMin', (n) => n >= 0] };
+const NUMERIC = { '--secs': ['secs', (n) => n > 0], '--runs': ['runs', (n) => Number.isInteger(n) && n > 0], '--wait': ['waitMin', (n) => n >= 0],
+  '--heat': ['heat', (n) => Number.isInteger(n) && n >= 0 && n <= 3] };
 
-/** argv -> {headless, secs, runs, waitMin}. Throws UsageError for an unknown flag or a value that is
+/** argv -> {headless, secs, runs, waitMin, heat (-1 = no CityHeat)}. Throws UsageError for an unknown flag or a value that is
  *  not a valid number (NaN --wait used to queue forever; --runs=0 crashed combine()). */
 export function parseArgs(argv) {
-  const o = { headless: false, secs: 60, runs: 3, waitMin: 20 };
+  const o = { headless: false, secs: 60, runs: 3, waitMin: 20, heat: -1 };
   for (const a of argv) {
     const k = a.split('=')[0];
     const v = a.includes('=') ? a.slice(a.indexOf('=') + 1) : '';
     const spec = NUMERIC[k];
     if (a === '--headless') o.headless = true;
     else if (spec && v.trim() !== '' && spec[1](Number(v))) o[spec[0]] = Number(v);
-    else throw new UsageError(`unknown or malformed argument: ${a} (usage: [--headless] [--secs=N] [--runs=N] [--wait=<minutes>])`);
+    else throw new UsageError(`unknown or malformed argument: ${a} (usage: [--headless] [--secs=N] [--runs=N] [--wait=<minutes>] [--heat=0..3])`);
   }
   return o;
 }

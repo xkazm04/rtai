@@ -19,7 +19,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--strip-prefetch",
 	"--delta-smooth",  # n9-perf: read by World (LaunchArgs), the mailbox delta smoothing A/B
 	"--max-fps",  # L10: the frame limiter (0 = none, the default); the engine's own --max-fps is reset
-	"--view"  # read by ViewMode.shared() (the view lab A/B); top = the default
+	"--view",  # read by ViewMode.shared() (the view lab A/B); top = the default
+	"--heat",  # n18 police: CityHeat mounted, wanted level pinned (BenchDriver.mount_heat)
 ]
 const VSYNC: Dictionary[String, DisplayServer.VSyncMode] = {
 	"disabled": DisplayServer.VSYNC_DISABLED,
@@ -39,6 +40,7 @@ var _args: Dictionary[String, String] = {
 	"--fx-feed": "on",
 	"--spans": "",
 	"--blood": "",  # read by CombatBlood (LaunchArgs): ink = the riot without the noir blood
+	"--heat": "-1",
 }
 var _world: World = null
 var _city: CitySystem = null
@@ -69,7 +71,9 @@ func _ready() -> void:
 	world.start(Events, Data, MASTER_SEED)
 	_city = CitySystem.new(true)
 	world.add_system(_city)
-	world.add_system(BenchDriver.new(_city, _args["--scenario"]))
+	var driver: BenchDriver = BenchDriver.new(_city, _args["--scenario"])
+	world.add_system(driver)
+	driver.mount_heat(world, _args["--heat"].to_int())
 	_view = CityView.new()
 	_view.zoom = _args["--zoom"].to_float()
 	add_child(_view)
@@ -125,6 +129,7 @@ func _finish() -> void:
 		"zoom": _view.zoom,
 		"view": String(ViewMode.shared().id),
 		"vsync": _args["--vsync"],
+		"heat": _args["--heat"].to_int(),
 		"label": _args["--label"] if _args["--label"] != "" else _args["--scenario"],
 		"frames": _stats.frames,
 		"metrics": _with_blood(_with_hitches(_stats.metrics())),
@@ -145,17 +150,8 @@ func _finish() -> void:
 			% [_args["--scenario"], JSON.stringify(res["metrics"]), _args["--out"]]
 		)
 	)
-	_log_crowd()
+	BenchStats.log_crowd(_characters.crowd)
 	get_tree().quit(0 if ok else 1)
-
-
-## human-reactions: the riot's crowd reactions and what CrowdReact cost the frame (REQUEST 23).
-func _log_crowd() -> void:
-	var c: CrowdReact = _characters.crowd
-	var n: Array[int] = [c.cowers, c.startles, c.trips, c.deaths]
-	printerr("city_bench: crowd %d cowers (%d at a death), %d trips, %d deaths" % n)
-	var us: Array[int] = [c.cost_us / maxi(c.cost_calls, 1), c.cost_max_us, c.cost_calls]
-	printerr("city_bench: crowd observe mean %d us, worst %d us over %d calls" % us)
 
 
 ## Adds the TEL-03 hitch counts: over 25 ms, over 50 ms, and over 50 ms by cause.
