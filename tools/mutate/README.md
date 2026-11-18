@@ -1,12 +1,13 @@
 # tools/mutate - "do my tests bite on this file?"
 
 Real mutation testing for one GDScript file (STANDARDS TST-05). It plants single-line faults in the
-file, runs the tests that cover it, and reports which faults the tests noticed.
+file and reports which faults the selected checks caught.
 
 ```
 node tools/mutate/mutate.mjs --file=core/save/gtsv_container.gd [--max=25] [--ops=cmp_flip,boundary]
                              [--tests=test_gtsv_container,test_save_facade] [--timeout=90] [--json]
-                             [--worktree=<path>] [--remove-worktree]
+                             [--oracle=tests,bake-check] [--worktree=<path>] [--remove-worktree]
+                             [--lines=<n,a-b>]
 just mutate --file=core/save/gtsv_container.gd --max=25
 ```
 
@@ -15,6 +16,7 @@ just mutate --file=core/save/gtsv_container.gd --max=25
   (class_name / res:// mentions + the `test_<basename>.gd` twin), minus the slow tier. If the map says
   FULL suite the run stops and asks for `--tests` (1,400 tests per mutant is not acceptable).
 - `--max=N` samples N mutants, deterministically (seeded by the file path, source order kept).
+- `--lines` selects source lines and inclusive ranges before `--max` samples them, as in `node tools/mutate/mutate.mjs --file=features/city/gen/kerb_dresser.gd --oracle=bake-check --lines=63,104`.
 - `--json` writes `build/mutate/<file-slug>.json` (`gtai.mutate/1`, canonical JSON) in the main checkout.
 - Exit 0 for every completed run (it is a measurement; the score is yours to judge), 2 for usage or
   infrastructure errors (including "baseline red").
@@ -30,15 +32,58 @@ score 79.1% = killed 34 / (killed 34 + survived 9); timeout 0, invalid 0; 292 s
 
 Survivors are listed first, then timeouts, invalid, killed. Score = killed / (killed + survived).
 
-| verdict | meaning |
-|---|---|
-| killed | a mapped test failed (or the mutant crashed at run time in a way the clean file does not) |
-| survived | every mapped test passed: the tests do not notice this fault |
-| timeout | the per-mutant cap hit (default 3x the baseline, 90-300 s); the tree was killed. Usually an infinite loop the mutant created, which counts as noticed but is not scored |
-| invalid | the mutant does not compile (a `Parse Error` / `Failed to load script`): not a test result, left out of the score |
+## Oracles
 
-Before the first mutant the mapped tests run on the unmutated file; red means "baseline red", nothing
-is mutated.
+`tests` runs the selected unit tests and is the default. For generators under `features/city/gen/`,
+use `tests,bake-check` to run unit tests first and catch what they miss with the AST-12 golden list,
+or use `bake-check` alone when no test maps to the file.
+
+```
+node tools/mutate/mutate.mjs --file=features/city/gen/kerb_dresser.gd --oracle=bake-check
+node tools/mutate/mutate.mjs --file=features/city/gen/kerb_dresser.gd --oracle=tests,bake-check
+```
+
+`bake-check` alone skips test mapping. It imports a fresh worktree and gives the same pass/fail
+result as `bake_city.gd -- --check`. The oracle adds `--fail-fast` to reorder the checks. It compares
+the header and each chunk against the golden list first, then byte-compares a second bake for
+determinism only if all chunks matched. A script error stops the Godot process tree after a 1.5 s
+grace period so a failed SceneTree initialization cannot hang the run.
+
+With `--oracle=tests,bake-check`, only survivors reach the next oracle. List the names in the order
+you want. Every selected oracle must pass on the original file before mutation starts.
+
+| Verdict | What decided it |
+|---|---|
+| killed | Failed assertions (`tests`), golden-list drift (`golden`), different bytes on the second bake (`nondeterministic`), or a runtime script error (`crash`). |
+| survived | Every selected oracle passed. The bake requires both exit 0 and its explicit OK line. |
+| invalid | A parse, load or compile error. Excluded from the score. |
+| timeout | The per-mutant deadline expired and the runner killed the process tree. Excluded from the score. |
+| infrastructure failure | An unexplained exit or missing bake verdict stops the run with exit 2. A red baseline also exits 2. |
+
+The tests budget is 3× baseline (90–300 s). The bake budget is 3× baseline (at least 120 s).
+Combined runs share the sum of those budgets. `--timeout=N` sets the whole mutant's budget in seconds.
+Explicit oracle reports give mean seconds per mutant excluding setup, and kills by oracle and cause.
+JSON records the requested `oracles` in order and the last `oracle` reached by each mutant.
+
+**Field notes: bake-check** (all runs CONTENDED, about 15 lanes on one machine). The full
+`kerb_dresser.gd` run scored **93.0% = 238 / (238 + 18)** across 261 mutants, with 0 timeouts
+and 5 invalid. It took 3013 s wall, averaging 11.41 s/mutant excluding setup. The earlier
+mapped unit tests killed 0/10.
+
+| Result | Observation |
+|---|---|
+| 238 kills | All 234 golden kills first differed in `c_00_00.bin` (one Godot start and one chunk, 6–17 s). Four mutants crashed at `:121` or `:122` by indexing `LANE_PAINT` out of range. |
+| Districts hand plants | Both changed `c_00_00.bin`: `:63` `true -> false` (parked car shadow) and `:104` `0.12 -> 1.12`. |
+| 18 survivors | The clean baseline took 21.3 s. Each survivor ran both full bakes (16–42 s). Fifteen `g.rnd()` changes (`<` to `<=` or `>=` to `>`) are effectively equivalent because a draw almost never equals the bound. At `:131`, dividing `LANE_M` by `side` equals multiplying by it (`side` is ±1). Two remain unexplained, `:101` `1 -> 0` and `:133` `0.0 -> 1.0`. The district may never reach those branches. |
+| 5 invalid | Deleting a call at `:55`, `:68`, `:95`, `:133` or `:159` left an unused local. Warnings-as-errors made each a parse error. |
+| Timeout floor | Deleting `busy.append` at `:56` timed out at 63 s with the old 2× budget and 60 s floor. The 3× budget with a 120 s floor let the oracle kill it in 16.5 s under contention. |
+| Negative controls | All four passed with `--oracle=bake-check --timeout=60`. The hang timed out in 61.0 s, the crash was killed (`crash`) in 7.4 s, the parse error was invalid in 2.6 s, and the clean file survived in 17.2 s. |
+
+## Negative controls
+
+Run `node tools/mutate/controls.mjs --file=features/city/gen/kerb_dresser.gd --oracle=bake-check`
+to check a hang, a runtime crash, a parse error and the clean file against the live oracle.
+Pass `--timeout=60` for a 60-second cap. The hang must return within 15 seconds of that cap.
 
 ## Operators (one change, one line)
 
@@ -99,9 +144,6 @@ node tools/mutate/mutate.mjs --file=features/combat/ai/enemy_pit.gd --max=25
 Quote `file, mutants, killed/survived/invalid/timeout, score` in the ticket. Read the survivors: each is
 either an equivalent mutant (no observable change), a real test gap (name the missing test), or dead
 code. A hand-written negative control is still worth keeping, but it is not a score.
-
-Cost: about 6.5 s per mutant for small focused tests (a Godot start + import step per mutant), so 25
-mutants is ~3 minutes and a full 43-mutant file ~5 minutes.
 
 ## Field notes
 

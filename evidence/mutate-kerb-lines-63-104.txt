@@ -1,0 +1,30 @@
+mutate: worktree C:\Users\kazda\AppData\Local\Temp\gtai-mutate-809b9299 at 8e70201b (reused)
+mutate: 10/10 mutant(s); baseline run of bake-check
+mutate: baseline green in 14.7 s; per-mutant timeout 120 s
+mutate: [1/10] features/city/gen/kerb_dresser.gd:63 delete  b.add(ChunkBuild.L_PROP, car, p, r, true) -> pass  killed [bake-check: golden c_00_00.bin]  (3.2 s)
+mutate: [2/10] features/city/gen/kerb_dresser.gd:63 boolean  true -> false  killed [bake-check: golden c_00_00.bin]  (3.6 s)
+mutate: [3/10] features/city/gen/kerb_dresser.gd:104 return  g.rnd(floori(n.x / period), floori(n.y / period), 0, 5) < 0.12 -> not (g.rnd(floori(n.x / period), floori(n.y / period), 0, 5) < 0.12)  killed [bake-check: golden c_00_00.bin]  (3.5 s)
+mutate: [4/10] features/city/gen/kerb_dresser.gd:104 arith  / -> *  killed [bake-check: golden c_00_00.bin]  (3.3 s)
+mutate: [5/10] features/city/gen/kerb_dresser.gd:104 arith  / -> *  killed [bake-check: golden c_00_00.bin]  (3.2 s)
+mutate: [6/10] features/city/gen/kerb_dresser.gd:104 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (3.2 s)
+mutate: [7/10] features/city/gen/kerb_dresser.gd:104 literal  5 -> 6  killed [bake-check: golden c_00_00.bin]  (3.7 s)
+mutate: [8/10] features/city/gen/kerb_dresser.gd:104 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]  (3.2 s)
+mutate: [9/10] features/city/gen/kerb_dresser.gd:104 boundary  < -> <=  survived [bake-check]  (9.3 s)
+mutate: [10/10] features/city/gen/kerb_dresser.gd:104 literal  0.12 -> 1.12  killed [bake-check: golden c_00_00.bin]  (3.3 s)
+mutate features/city/gen/kerb_dresser.gd: 10 mutant(s), oracles: bake-check
+  features/city/gen/kerb_dresser.gd:104 boundary  < -> <=  survived [bake-check]
+  features/city/gen/kerb_dresser.gd:63 delete  b.add(ChunkBuild.L_PROP, car, p, r, true) -> pass  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:63 boolean  true -> false  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:104 return  g.rnd(floori(n.x / period), floori(n.y / period), 0, 5) < 0.12 -> not (g.rnd(floori(n.x / period), floori(n.y / period), 0, 5) < 0.12)  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:104 arith  / -> *  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:104 arith  / -> *  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:104 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:104 literal  5 -> 6  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:104 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:104 literal  0.12 -> 1.12  killed [bake-check: golden c_00_00.bin]
+score 90.0% = killed 9 / (killed 9 + survived 1); timeout 0, invalid 0; 56 s; 3.96 s/mutant; kills by oracle: bake-check 9; by via: golden 9
+
+real	0m55.921s
+user	0m0.000s
+sys	0m0.092s
+EXIT 0

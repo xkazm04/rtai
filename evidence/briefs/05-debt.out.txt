@@ -1,0 +1,19 @@
+Committed `d0da8cf23` with the normal hook. Condensing the usage comment and reusing the table directory brought `project/dev/bake_city.gd` from 34 to 32 lines. The longest line is 99 characters. The fix preserves flag behavior, messages, and exit codes.
+
+Godot’s parse check passed. `test_city_bake` passed all 5 tests. The debt check passed and required no baseline update.
+
+```text
+debt-ratchet: ok
+```
+
+Full lint ended with:
+
+```text
+ok   debt-ratchet
+ok   achievements-validate
+ok   achievements-drift
+ok   tool-tests
+lint: all 19 checks pass over 1600 GDScript files
+```
+
+[astra: 493s, exit 0]

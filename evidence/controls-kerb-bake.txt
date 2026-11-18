@@ -1,0 +1,10 @@
+mutate: worktree C:\Users\kazda\AppData\Local\Temp\gtai-mutate-809b9299 at b2fbdf86 (reused)
+control hang: expected timeout/timeout got timeout/timeout in 61.02 s  PASS
+control crash: expected killed/crash got killed/crash in 7.36 s  PASS
+control parse: expected invalid/parse got invalid/parse in 2.56 s  PASS
+control clean: expected survived/ok got survived/ok in 17.23 s  PASS
+
+real	1m53.999s
+user	0m0.015s
+sys	0m0.061s
+EXIT 0

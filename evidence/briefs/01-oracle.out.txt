@@ -1,0 +1,26 @@
+Implemented `--oracle=bake-check` on `bk-dx-duo`. The smoke run killed **4 of 4 sampled mutants** by golden mismatch, averaging **7.69 s/mutant**. The default tests-only text and JSON formats are preserved.
+
+| Commit | Change |
+|---|---|
+| `eb16964ad` | Added fail-fast checking in `bake_city.gd` and `city_bake.gd`, added `test_city_bake.gd` and its `.uid`, and tightened `tools/debt/baseline.json`. |
+| `d58644649` | Added ordered oracle execution and reporting in `tools/mutate/{mutate,oracles,report}.mjs`, with coverage in `oracles.test.mjs`. |
+| `1e63815a2` | Documented oracle selection, verdicts, timeouts, and measured cost in `tools/mutate/README.md` and `AGENTS.md`. |
+
+**Measurements.** Clean plain `--check` passed in 38.833 s before the change and 37.456 s afterward. Clean `--check --fail-fast` passed in 11.780 s. The line 63 `true` → `false` fault failed on `c_00_00.bin` in **5.812 s**. I restored and byte-verified the scratch file. These timings are individual runs on the contended machine.
+
+**Verification.** All 5 GDScript tests, all 32 mutation-tool tests, the Godot parse check, quick gates, and commit hooks passed. A combined `tests,bake-check` run confirmed that line 117 survived the mapped tests and that JSON attributed the kill to `bake-check` via `golden`.
+
+I reproduced the reported `from_tables` error on the original commit with a missing class cache. The stop-on-error guard killed the tree in 1.887 s. The smoke run then imported that worktree in 182.3 s, passed its clean baseline in 13.5 s, and set a 60 s per-mutant timeout.
+
+**Full smoke stdout**
+
+```text
+mutate features/city/gen/kerb_dresser.gd: 4 mutant(s) (sampled from 261), oracles: bake-check
+  features/city/gen/kerb_dresser.gd:47 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:86 delete  next.append(Vector2(f.x, minf(f.y, cut.x))) -> pass  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:104 literal  0.12 -> 1.12  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:117 literal  0.55 -> 1.55  killed [bake-check: golden c_00_00.bin]
+score 100.0% = killed 4 / (killed 4 + survived 0); timeout 0, invalid 0; 247 s; 7.69 s/mutant; kills by oracle: bake-check 4; by via: golden 4
+```
+
+[astra: 1450s, exit 0]

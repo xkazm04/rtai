@@ -1,0 +1,533 @@
+mutate: worktree C:\Users\kazda\AppData\Local\Temp\gtai-mutate-809b9299 at 351b11ec (reused)
+mutate: REPAIRED a crashed run: restored C:\Users\kazda\AppData\Local\Temp\gtai-mutate-809b9299\project\features\city\gen\kerb_dresser.gd from its sidecar
+mutate: 261/261 mutant(s); baseline run of bake-check
+mutate: baseline green in 21.3 s; per-mutant timeout 120 s
+mutate: [1/261] features/city/gen/kerb_dresser.gd:29 delete  b.add(ChunkBuild.L_PROP, tex, p, rot, g.shadowed[tex]) -> pass  killed [bake-check: golden c_00_00.bin]  (17.1 s)
+mutate: [2/261] features/city/gen/kerb_dresser.gd:30 boolean  not -> (removed)  killed [bake-check: golden c_00_00.bin]  (14.3 s)
+mutate: [3/261] features/city/gen/kerb_dresser.gd:32 delete  _block_footprint(b, p, g.sizes[tex] * 0.85, rot) -> pass  killed [bake-check: golden c_00_00.bin]  (13.5 s)
+mutate: [4/261] features/city/gen/kerb_dresser.gd:32 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (14.1 s)
+mutate: [5/261] features/city/gen/kerb_dresser.gd:32 literal  0.85 -> 1.85  killed [bake-check: golden c_00_00.bin]  (18.2 s)
+mutate: [6/261] features/city/gen/kerb_dresser.gd:37 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (15.4 s)
+mutate: [7/261] features/city/gen/kerb_dresser.gd:37 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]  (15.9 s)
+mutate: [8/261] features/city/gen/kerb_dresser.gd:37 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]  (17.2 s)
+mutate: [9/261] features/city/gen/kerb_dresser.gd:39 literal  2 -> 3  killed [bake-check: golden c_00_00.bin]  (21.2 s)
+mutate: [10/261] features/city/gen/kerb_dresser.gd:39 cmp_flip  == -> !=  killed [bake-check: golden c_00_00.bin]  (21.4 s)
+mutate: [11/261] features/city/gen/kerb_dresser.gd:39 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (28.1 s)
+mutate: [12/261] features/city/gen/kerb_dresser.gd:43 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]  (27.1 s)
+mutate: [13/261] features/city/gen/kerb_dresser.gd:43 arith  - -> +  killed [bake-check: golden c_00_00.bin]  (25.1 s)
+mutate: [14/261] features/city/gen/kerb_dresser.gd:43 literal  0.6 -> 1.6  killed [bake-check: golden c_00_00.bin]  (20.2 s)
+mutate: [15/261] features/city/gen/kerb_dresser.gd:44 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (20.9 s)
+mutate: [16/261] features/city/gen/kerb_dresser.gd:44 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (24.6 s)
+mutate: [17/261] features/city/gen/kerb_dresser.gd:44 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]  (19.0 s)
+mutate: [18/261] features/city/gen/kerb_dresser.gd:45 boolean  true -> false  killed [bake-check: golden c_00_00.bin]  (19.6 s)
+mutate: [19/261] features/city/gen/kerb_dresser.gd:47 delete  busy.append(Vector2(4.0 - 0.25, 4.0 + 0.25)) -> pass  killed [bake-check: golden c_00_00.bin]  (21.7 s)
+mutate: [20/261] features/city/gen/kerb_dresser.gd:47 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]  (22.6 s)
+mutate: [21/261] features/city/gen/kerb_dresser.gd:47 arith  - -> +  killed [bake-check: golden c_00_00.bin]  (30.7 s)
+mutate: [22/261] features/city/gen/kerb_dresser.gd:47 literal  0.25 -> 1.25  killed [bake-check: golden c_00_00.bin]  (24.4 s)
+mutate: [23/261] features/city/gen/kerb_dresser.gd:47 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]  (16.8 s)
+mutate: [24/261] features/city/gen/kerb_dresser.gd:47 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (23.1 s)
+mutate: [25/261] features/city/gen/kerb_dresser.gd:47 literal  0.25 -> 1.25  killed [bake-check: golden c_00_00.bin]  (17.4 s)
+mutate: [26/261] features/city/gen/kerb_dresser.gd:48 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (17.9 s)
+mutate: [27/261] features/city/gen/kerb_dresser.gd:48 literal  41 -> 42  killed [bake-check: golden c_00_00.bin]  (13.3 s)
+mutate: [28/261] features/city/gen/kerb_dresser.gd:48 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]  (13.7 s)
+mutate: [29/261] features/city/gen/kerb_dresser.gd:48 boundary  < -> <=  survived [bake-check]  (42.2 s)
+mutate: [30/261] features/city/gen/kerb_dresser.gd:48 literal  0.4 -> 1.4  killed [bake-check: golden c_00_00.bin]  (36.1 s)
+mutate: [31/261] features/city/gen/kerb_dresser.gd:52 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (44.5 s)
+mutate: [32/261] features/city/gen/kerb_dresser.gd:52 literal  42 -> 43  killed [bake-check: golden c_00_00.bin]  (18.7 s)
+mutate: [33/261] features/city/gen/kerb_dresser.gd:52 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (15.8 s)
+mutate: [34/261] features/city/gen/kerb_dresser.gd:53 literal  1.2 -> 2.2  killed [bake-check: golden c_00_00.bin]  (15.9 s)
+mutate: [35/261] features/city/gen/kerb_dresser.gd:53 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (16.6 s)
+mutate: [36/261] features/city/gen/kerb_dresser.gd:53 literal  5.6 -> 6.6  killed [bake-check: golden c_00_00.bin]  (16.3 s)
+mutate: [37/261] features/city/gen/kerb_dresser.gd:53 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (13.6 s)
+mutate: [38/261] features/city/gen/kerb_dresser.gd:53 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (15.2 s)
+mutate: [39/261] features/city/gen/kerb_dresser.gd:53 literal  43 -> 44  killed [bake-check: golden c_00_00.bin]  (13.2 s)
+mutate: [40/261] features/city/gen/kerb_dresser.gd:54 literal  0.9 -> 1.9  killed [bake-check: golden c_00_00.bin]  (16.8 s)
+mutate: [41/261] features/city/gen/kerb_dresser.gd:54 arith  - -> +  killed [bake-check: golden c_00_00.bin]  (13.1 s)
+mutate: [42/261] features/city/gen/kerb_dresser.gd:54 literal  0.7 -> 1.7  killed [bake-check: golden c_00_00.bin]  (14.2 s)
+mutate: [43/261] features/city/gen/kerb_dresser.gd:55 delete  prop(g, b, tex, _local(c, rot, u, v), rot) -> pass  invalid [bake-check: parse]  (4.8 s)
+mutate: [44/261] features/city/gen/kerb_dresser.gd:56 delete  busy.append(Vector2(u - g.sizes[tex].x * 0.5, u + g.sizes[tex].x * 0.5)) -> pass  killed [bake-check: golden c_00_00.bin]  (16.5 s)
+mutate: [45/261] features/city/gen/kerb_dresser.gd:56 arith  - -> +  killed [bake-check: golden c_00_00.bin]  (13.7 s)
+mutate: [46/261] features/city/gen/kerb_dresser.gd:56 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (12.1 s)
+mutate: [47/261] features/city/gen/kerb_dresser.gd:56 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]  (13.8 s)
+mutate: [48/261] features/city/gen/kerb_dresser.gd:56 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (12.3 s)
+mutate: [49/261] features/city/gen/kerb_dresser.gd:56 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (14.1 s)
+mutate: [50/261] features/city/gen/kerb_dresser.gd:56 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]  (13.2 s)
+mutate: [51/261] features/city/gen/kerb_dresser.gd:57 boolean  not -> (removed)  killed [bake-check: golden c_00_00.bin]  (11.8 s)
+mutate: [52/261] features/city/gen/kerb_dresser.gd:58 delete  _wall_prop(g, b, t, rot, busy) -> pass  killed [bake-check: golden c_00_00.bin]  (10.5 s)
+mutate: [53/261] features/city/gen/kerb_dresser.gd:59 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (11.3 s)
+mutate: [54/261] features/city/gen/kerb_dresser.gd:59 literal  44 -> 45  killed [bake-check: golden c_00_00.bin]  (11.7 s)
+mutate: [55/261] features/city/gen/kerb_dresser.gd:59 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]  (11.4 s)
+mutate: [56/261] features/city/gen/kerb_dresser.gd:59 boundary  < -> <=  survived [bake-check]  (17.5 s)
+mutate: [57/261] features/city/gen/kerb_dresser.gd:59 literal  0.4 -> 1.4  killed [bake-check: golden c_00_00.bin]  (8.2 s)
+mutate: [58/261] features/city/gen/kerb_dresser.gd:60 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (9.5 s)
+mutate: [59/261] features/city/gen/kerb_dresser.gd:60 literal  45 -> 46  killed [bake-check: golden c_00_00.bin]  (8.4 s)
+mutate: [60/261] features/city/gen/kerb_dresser.gd:60 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (8.4 s)
+mutate: [61/261] features/city/gen/kerb_dresser.gd:61 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]  (11.0 s)
+mutate: [62/261] features/city/gen/kerb_dresser.gd:61 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (10.0 s)
+mutate: [63/261] features/city/gen/kerb_dresser.gd:61 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (8.6 s)
+mutate: [64/261] features/city/gen/kerb_dresser.gd:61 literal  46 -> 47  killed [bake-check: golden c_00_00.bin]  (10.8 s)
+mutate: [65/261] features/city/gen/kerb_dresser.gd:61 arith  - -> +  killed [bake-check: golden c_00_00.bin]  (9.9 s)
+mutate: [66/261] features/city/gen/kerb_dresser.gd:61 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]  (7.8 s)
+mutate: [67/261] features/city/gen/kerb_dresser.gd:61 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (7.5 s)
+mutate: [68/261] features/city/gen/kerb_dresser.gd:61 literal  1.05 -> 2.05  killed [bake-check: golden c_00_00.bin]  (6.8 s)
+mutate: [69/261] features/city/gen/kerb_dresser.gd:62 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (6.7 s)
+mutate: [70/261] features/city/gen/kerb_dresser.gd:62 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (7.7 s)
+mutate: [71/261] features/city/gen/kerb_dresser.gd:62 literal  47 -> 48  killed [bake-check: golden c_00_00.bin]  (11.2 s)
+mutate: [72/261] features/city/gen/kerb_dresser.gd:62 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]  (9.0 s)
+mutate: [73/261] features/city/gen/kerb_dresser.gd:62 boundary  < -> <=  survived [bake-check]  (19.0 s)
+mutate: [74/261] features/city/gen/kerb_dresser.gd:62 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]  (10.3 s)
+mutate: [75/261] features/city/gen/kerb_dresser.gd:62 literal  0.0 -> 1.0  killed [bake-check: golden c_00_00.bin]  (8.7 s)
+mutate: [76/261] features/city/gen/kerb_dresser.gd:63 delete  b.add(ChunkBuild.L_PROP, car, p, r, true) -> pass  killed [bake-check: golden c_00_00.bin]  (9.6 s)
+mutate: [77/261] features/city/gen/kerb_dresser.gd:63 boolean  true -> false  killed [bake-check: golden c_00_00.bin]  (8.5 s)
+mutate: [78/261] features/city/gen/kerb_dresser.gd:65 delete  _block_footprint(b, p, Vector2(g.sizes[car].x * 0.9, CAR_STRIP_M), r) -> pass  killed [bake-check: golden c_00_00.bin]  (10.0 s)
+mutate: [79/261] features/city/gen/kerb_dresser.gd:65 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (8.9 s)
+mutate: [80/261] features/city/gen/kerb_dresser.gd:65 literal  0.9 -> 1.9  killed [bake-check: golden c_00_00.bin]  (9.5 s)
+mutate: [81/261] features/city/gen/kerb_dresser.gd:66 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (8.6 s)
+mutate: [82/261] features/city/gen/kerb_dresser.gd:66 literal  48 -> 49  killed [bake-check: golden c_00_00.bin]  (7.7 s)
+mutate: [83/261] features/city/gen/kerb_dresser.gd:66 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]  (6.6 s)
+mutate: [84/261] features/city/gen/kerb_dresser.gd:66 boundary  < -> <=  survived [bake-check]  (16.2 s)
+mutate: [85/261] features/city/gen/kerb_dresser.gd:66 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]  (10.5 s)
+mutate: [86/261] features/city/gen/kerb_dresser.gd:67 literal  1.0 -> 0.0  killed [bake-check: golden c_00_00.bin]  (11.6 s)
+mutate: [87/261] features/city/gen/kerb_dresser.gd:67 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (7.7 s)
+mutate: [88/261] features/city/gen/kerb_dresser.gd:67 literal  6.0 -> 7.0  killed [bake-check: golden c_00_00.bin]  (9.5 s)
+mutate: [89/261] features/city/gen/kerb_dresser.gd:67 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (8.3 s)
+mutate: [90/261] features/city/gen/kerb_dresser.gd:67 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (7.8 s)
+mutate: [91/261] features/city/gen/kerb_dresser.gd:67 literal  49 -> 50  killed [bake-check: golden c_00_00.bin]  (6.9 s)
+mutate: [92/261] features/city/gen/kerb_dresser.gd:67 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (7.0 s)
+mutate: [93/261] features/city/gen/kerb_dresser.gd:67 literal  0.35 -> 1.35  killed [bake-check: golden c_00_00.bin]  (10.4 s)
+mutate: [94/261] features/city/gen/kerb_dresser.gd:68 delete  b.add(ChunkBuild.L_DECAL, T_DRAIN, p, rot) -> pass  invalid [bake-check: parse]  (4.0 s)
+mutate: [95/261] features/city/gen/kerb_dresser.gd:73 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (9.8 s)
+mutate: [96/261] features/city/gen/kerb_dresser.gd:73 literal  56 -> 57  killed [bake-check: golden c_00_00.bin]  (9.3 s)
+mutate: [97/261] features/city/gen/kerb_dresser.gd:73 cmp_flip  >= -> <  killed [bake-check: golden c_00_00.bin]  (7.2 s)
+mutate: [98/261] features/city/gen/kerb_dresser.gd:73 boundary  >= -> >  survived [bake-check]  (16.8 s)
+mutate: [99/261] features/city/gen/kerb_dresser.gd:78 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (9.1 s)
+mutate: [100/261] features/city/gen/kerb_dresser.gd:78 literal  57 -> 58  killed [bake-check: golden c_00_00.bin]  (11.1 s)
+mutate: [101/261] features/city/gen/kerb_dresser.gd:78 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (7.4 s)
+mutate: [102/261] features/city/gen/kerb_dresser.gd:79 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (7.5 s)
+mutate: [103/261] features/city/gen/kerb_dresser.gd:79 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]  (8.1 s)
+mutate: [104/261] features/city/gen/kerb_dresser.gd:80 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (9.7 s)
+mutate: [105/261] features/city/gen/kerb_dresser.gd:80 literal  0.3 -> 1.3  killed [bake-check: golden c_00_00.bin]  (11.2 s)
+mutate: [106/261] features/city/gen/kerb_dresser.gd:80 literal  7.7 -> 8.7  killed [bake-check: golden c_00_00.bin]  (12.8 s)
+mutate: [107/261] features/city/gen/kerb_dresser.gd:80 arith  - -> +  killed [bake-check: golden c_00_00.bin]  (8.6 s)
+mutate: [108/261] features/city/gen/kerb_dresser.gd:82 arith  - -> +  killed [bake-check: golden c_00_00.bin]  (9.6 s)
+mutate: [109/261] features/city/gen/kerb_dresser.gd:82 arith  - -> +  killed [bake-check: golden c_00_00.bin]  (9.8 s)
+mutate: [110/261] features/city/gen/kerb_dresser.gd:82 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (9.3 s)
+mutate: [111/261] features/city/gen/kerb_dresser.gd:82 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (9.4 s)
+mutate: [112/261] features/city/gen/kerb_dresser.gd:85 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]  (11.0 s)
+mutate: [113/261] features/city/gen/kerb_dresser.gd:85 boundary  < -> <=  killed [bake-check: golden c_00_00.bin]  (10.6 s)
+mutate: [114/261] features/city/gen/kerb_dresser.gd:86 delete  next.append(Vector2(f.x, minf(f.y, cut.x))) -> pass  killed [bake-check: golden c_00_00.bin]  (10.5 s)
+mutate: [115/261] features/city/gen/kerb_dresser.gd:87 cmp_flip  > -> <=  killed [bake-check: golden c_00_00.bin]  (10.2 s)
+mutate: [116/261] features/city/gen/kerb_dresser.gd:87 boundary  > -> >=  killed [bake-check: golden c_00_00.bin]  (12.1 s)
+mutate: [117/261] features/city/gen/kerb_dresser.gd:88 delete  next.append(Vector2(maxf(f.x, cut.y), f.y)) -> pass  killed [bake-check: golden c_00_00.bin]  (9.5 s)
+mutate: [118/261] features/city/gen/kerb_dresser.gd:92 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (9.6 s)
+mutate: [119/261] features/city/gen/kerb_dresser.gd:92 literal  58 -> 59  killed [bake-check: golden c_00_00.bin]  (9.3 s)
+mutate: [120/261] features/city/gen/kerb_dresser.gd:92 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (9.7 s)
+mutate: [121/261] features/city/gen/kerb_dresser.gd:93 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (11.2 s)
+mutate: [122/261] features/city/gen/kerb_dresser.gd:93 literal  59 -> 60  killed [bake-check: golden c_00_00.bin]  (10.4 s)
+mutate: [123/261] features/city/gen/kerb_dresser.gd:94 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (10.0 s)
+mutate: [124/261] features/city/gen/kerb_dresser.gd:94 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]  (9.8 s)
+mutate: [125/261] features/city/gen/kerb_dresser.gd:94 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]  (10.6 s)
+mutate: [126/261] features/city/gen/kerb_dresser.gd:95 delete  prop(g, b, tex, _local(c, rot, u, half.y + WALL_GAP_M), rot) -> pass  invalid [bake-check: parse]  (3.8 s)
+mutate: [127/261] features/city/gen/kerb_dresser.gd:95 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (13.3 s)
+mutate: [128/261] features/city/gen/kerb_dresser.gd:101 literal  1 -> 0  killed [bake-check: golden c_00_00.bin]  (11.6 s)
+mutate: [129/261] features/city/gen/kerb_dresser.gd:101 cmp_flip  == -> !=  killed [bake-check: golden c_00_00.bin]  (12.2 s)
+mutate: [130/261] features/city/gen/kerb_dresser.gd:101 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (11.1 s)
+mutate: [131/261] features/city/gen/kerb_dresser.gd:101 literal  1 -> 0  survived [bake-check]  (16.3 s)
+mutate: [132/261] features/city/gen/kerb_dresser.gd:102 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (11.4 s)
+mutate: [133/261] features/city/gen/kerb_dresser.gd:102 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (11.3 s)
+mutate: [134/261] features/city/gen/kerb_dresser.gd:102 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (19.9 s)
+mutate: [135/261] features/city/gen/kerb_dresser.gd:104 return  g.rnd(floori(n.x / period), floori(n.y / period), 0, 5) < 0.12 -> not (g.rnd(floori(n.x / period), floori(n.y / period), 0, 5) < 0.12)  killed [bake-check: golden c_00_00.bin]  (15.4 s)
+mutate: [136/261] features/city/gen/kerb_dresser.gd:104 arith  / -> *  killed [bake-check: golden c_00_00.bin]  (11.3 s)
+mutate: [137/261] features/city/gen/kerb_dresser.gd:104 arith  / -> *  killed [bake-check: golden c_00_00.bin]  (9.3 s)
+mutate: [138/261] features/city/gen/kerb_dresser.gd:104 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (8.0 s)
+mutate: [139/261] features/city/gen/kerb_dresser.gd:104 literal  5 -> 6  killed [bake-check: golden c_00_00.bin]  (9.6 s)
+mutate: [140/261] features/city/gen/kerb_dresser.gd:104 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]  (13.5 s)
+mutate: [141/261] features/city/gen/kerb_dresser.gd:104 boundary  < -> <=  survived [bake-check]  (20.9 s)
+mutate: [142/261] features/city/gen/kerb_dresser.gd:104 literal  0.12 -> 1.12  killed [bake-check: golden c_00_00.bin]  (10.0 s)
+mutate: [143/261] features/city/gen/kerb_dresser.gd:108 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (9.5 s)
+mutate: [144/261] features/city/gen/kerb_dresser.gd:108 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]  (10.7 s)
+mutate: [145/261] features/city/gen/kerb_dresser.gd:108 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]  (8.7 s)
+mutate: [146/261] features/city/gen/kerb_dresser.gd:109 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (6.5 s)
+mutate: [147/261] features/city/gen/kerb_dresser.gd:109 literal  51 -> 52  killed [bake-check: golden c_00_00.bin]  (6.5 s)
+mutate: [148/261] features/city/gen/kerb_dresser.gd:110 literal  0.0 -> 1.0  killed [bake-check: golden c_00_00.bin]  (6.7 s)
+mutate: [149/261] features/city/gen/kerb_dresser.gd:110 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (6.7 s)
+mutate: [150/261] features/city/gen/kerb_dresser.gd:110 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]  (6.1 s)
+mutate: [151/261] features/city/gen/kerb_dresser.gd:111 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (5.9 s)
+mutate: [152/261] features/city/gen/kerb_dresser.gd:111 literal  52 -> 53  killed [bake-check: golden c_00_00.bin]  (6.1 s)
+mutate: [153/261] features/city/gen/kerb_dresser.gd:111 arith  - -> +  killed [bake-check: golden c_00_00.bin]  (5.7 s)
+mutate: [154/261] features/city/gen/kerb_dresser.gd:111 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]  (5.8 s)
+mutate: [155/261] features/city/gen/kerb_dresser.gd:112 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (5.7 s)
+mutate: [156/261] features/city/gen/kerb_dresser.gd:112 literal  53 -> 54  killed [bake-check: golden c_00_00.bin]  (7.7 s)
+mutate: [157/261] features/city/gen/kerb_dresser.gd:112 arith  - -> +  killed [bake-check: golden c_00_00.bin]  (8.3 s)
+mutate: [158/261] features/city/gen/kerb_dresser.gd:112 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]  (7.9 s)
+mutate: [159/261] features/city/gen/kerb_dresser.gd:113 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]  (7.9 s)
+mutate: [160/261] features/city/gen/kerb_dresser.gd:113 boundary  < -> <=  survived [bake-check]  (15.0 s)
+mutate: [161/261] features/city/gen/kerb_dresser.gd:113 literal  0.25 -> 1.25  killed [bake-check: golden c_00_00.bin]  (6.8 s)
+mutate: [162/261] features/city/gen/kerb_dresser.gd:114 delete  b.add(ChunkBuild.L_DECAL, 54, c + Vector2(jx * 4.0, jy * 4.0), rot) -> pass  killed [bake-check: golden c_00_00.bin]  (9.4 s)
+mutate: [163/261] features/city/gen/kerb_dresser.gd:114 literal  54 -> 55  killed [bake-check: golden c_00_00.bin]  (8.5 s)
+mutate: [164/261] features/city/gen/kerb_dresser.gd:114 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (7.8 s)
+mutate: [165/261] features/city/gen/kerb_dresser.gd:114 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (8.1 s)
+mutate: [166/261] features/city/gen/kerb_dresser.gd:114 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]  (10.3 s)
+mutate: [167/261] features/city/gen/kerb_dresser.gd:114 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (9.0 s)
+mutate: [168/261] features/city/gen/kerb_dresser.gd:114 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]  (8.6 s)
+mutate: [169/261] features/city/gen/kerb_dresser.gd:115 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]  (7.9 s)
+mutate: [170/261] features/city/gen/kerb_dresser.gd:115 boundary  < -> <=  survived [bake-check]  (18.1 s)
+mutate: [171/261] features/city/gen/kerb_dresser.gd:115 literal  0.4 -> 1.4  killed [bake-check: golden c_00_00.bin]  (12.0 s)
+mutate: [172/261] features/city/gen/kerb_dresser.gd:116 delete  b.add(ChunkBuild.L_DECAL, 55, c + Vector2(jx * 4.0, jy * 2.0), 0.0) -> pass  killed [bake-check: golden c_00_00.bin]  (8.7 s)
+mutate: [173/261] features/city/gen/kerb_dresser.gd:116 literal  55 -> 56  killed [bake-check: golden c_00_00.bin]  (10.1 s)
+mutate: [174/261] features/city/gen/kerb_dresser.gd:116 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (9.8 s)
+mutate: [175/261] features/city/gen/kerb_dresser.gd:116 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (7.8 s)
+mutate: [176/261] features/city/gen/kerb_dresser.gd:116 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]  (8.4 s)
+mutate: [177/261] features/city/gen/kerb_dresser.gd:116 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (10.1 s)
+mutate: [178/261] features/city/gen/kerb_dresser.gd:116 literal  2.0 -> 3.0  killed [bake-check: golden c_00_00.bin]  (12.9 s)
+mutate: [179/261] features/city/gen/kerb_dresser.gd:116 literal  0.0 -> 1.0  killed [bake-check: golden c_00_00.bin]  (8.4 s)
+mutate: [180/261] features/city/gen/kerb_dresser.gd:117 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]  (10.9 s)
+mutate: [181/261] features/city/gen/kerb_dresser.gd:117 boundary  < -> <=  survived [bake-check]  (17.0 s)
+mutate: [182/261] features/city/gen/kerb_dresser.gd:117 literal  0.55 -> 1.55  killed [bake-check: golden c_00_00.bin]  (7.3 s)
+mutate: [183/261] features/city/gen/kerb_dresser.gd:118 delete  b.add(ChunkBuild.L_DECAL, 56 if r < 0.5 else 59, c + Vector2(jx * 5.0, jy * 4.0), rot) -> pass  killed [bake-check: golden c_00_00.bin]  (6.3 s)
+mutate: [184/261] features/city/gen/kerb_dresser.gd:118 literal  56 -> 57  killed [bake-check: golden c_00_00.bin]  (6.3 s)
+mutate: [185/261] features/city/gen/kerb_dresser.gd:118 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]  (7.8 s)
+mutate: [186/261] features/city/gen/kerb_dresser.gd:118 boundary  < -> <=  survived [bake-check]  (17.0 s)
+mutate: [187/261] features/city/gen/kerb_dresser.gd:118 literal  0.5 -> 1.5  killed [bake-check: golden c_01_00.bin]  (7.9 s)
+mutate: [188/261] features/city/gen/kerb_dresser.gd:118 literal  59 -> 60  killed [bake-check: golden c_01_00.bin]  (7.9 s)
+mutate: [189/261] features/city/gen/kerb_dresser.gd:118 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (8.4 s)
+mutate: [190/261] features/city/gen/kerb_dresser.gd:118 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (13.4 s)
+mutate: [191/261] features/city/gen/kerb_dresser.gd:118 literal  5.0 -> 6.0  killed [bake-check: golden c_00_00.bin]  (10.3 s)
+mutate: [192/261] features/city/gen/kerb_dresser.gd:118 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (9.9 s)
+mutate: [193/261] features/city/gen/kerb_dresser.gd:118 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]  (8.7 s)
+mutate: [194/261] features/city/gen/kerb_dresser.gd:119 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]  (10.0 s)
+mutate: [195/261] features/city/gen/kerb_dresser.gd:119 boundary  < -> <=  survived [bake-check]  (17.2 s)
+mutate: [196/261] features/city/gen/kerb_dresser.gd:119 literal  0.6 -> 1.6  killed [bake-check: golden c_00_00.bin]  (11.3 s)
+mutate: [197/261] features/city/gen/kerb_dresser.gd:120 delete  b.add(ChunkBuild.L_DECAL, 62, Vector2(c.x, c.y + jy * 3.0), rot) -> pass  killed [bake-check: golden c_00_00.bin]  (11.1 s)
+mutate: [198/261] features/city/gen/kerb_dresser.gd:120 literal  62 -> 63  killed [bake-check: golden c_00_00.bin]  (8.5 s)
+mutate: [199/261] features/city/gen/kerb_dresser.gd:120 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (8.1 s)
+mutate: [200/261] features/city/gen/kerb_dresser.gd:120 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (7.4 s)
+mutate: [201/261] features/city/gen/kerb_dresser.gd:120 literal  3.0 -> 4.0  killed [bake-check: golden c_00_00.bin]  (6.8 s)
+mutate: [202/261] features/city/gen/kerb_dresser.gd:121 cmp_flip  < -> >=  killed [bake-check: crash]  (6.7 s)
+mutate: [203/261] features/city/gen/kerb_dresser.gd:121 boundary  < -> <=  survived [bake-check]  (14.0 s)
+mutate: [204/261] features/city/gen/kerb_dresser.gd:121 literal  0.68 -> 1.68  killed [bake-check: crash]  (7.3 s)
+mutate: [205/261] features/city/gen/kerb_dresser.gd:122 delete  _lane_paint(g, b, t, horiz, LANE_PAINT[int((r - 0.6) / 0.08 * LANE_PAINT.size())]) -> pass  killed [bake-check: golden c_00_00.bin]  (6.3 s)
+mutate: [206/261] features/city/gen/kerb_dresser.gd:122 arith  - -> +  killed [bake-check: crash]  (5.9 s)
+mutate: [207/261] features/city/gen/kerb_dresser.gd:122 literal  0.6 -> 1.6  killed [bake-check: crash]  (5.9 s)
+mutate: [208/261] features/city/gen/kerb_dresser.gd:122 arith  / -> *  killed [bake-check: golden c_00_00.bin]  (6.1 s)
+mutate: [209/261] features/city/gen/kerb_dresser.gd:122 literal  0.08 -> 1.08  killed [bake-check: golden c_00_00.bin]  (7.7 s)
+mutate: [210/261] features/city/gen/kerb_dresser.gd:122 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (10.4 s)
+mutate: [211/261] features/city/gen/kerb_dresser.gd:128 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (7.5 s)
+mutate: [212/261] features/city/gen/kerb_dresser.gd:128 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]  (6.7 s)
+mutate: [213/261] features/city/gen/kerb_dresser.gd:128 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]  (6.2 s)
+mutate: [214/261] features/city/gen/kerb_dresser.gd:129 literal  1.0 -> 0.0  killed [bake-check: golden c_00_00.bin]  (6.1 s)
+mutate: [215/261] features/city/gen/kerb_dresser.gd:129 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (6.4 s)
+mutate: [216/261] features/city/gen/kerb_dresser.gd:129 literal  54 -> 55  killed [bake-check: golden c_01_00.bin]  (6.6 s)
+mutate: [217/261] features/city/gen/kerb_dresser.gd:129 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]  (6.2 s)
+mutate: [218/261] features/city/gen/kerb_dresser.gd:129 boundary  < -> <=  survived [bake-check]  (13.9 s)
+mutate: [219/261] features/city/gen/kerb_dresser.gd:129 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]  (7.5 s)
+mutate: [220/261] features/city/gen/kerb_dresser.gd:129 arith  - -> +  killed [bake-check: golden c_00_00.bin]  (7.6 s)
+mutate: [221/261] features/city/gen/kerb_dresser.gd:129 literal  1.0 -> 0.0  killed [bake-check: golden c_00_00.bin]  (8.4 s)
+mutate: [222/261] features/city/gen/kerb_dresser.gd:130 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]  (7.2 s)
+mutate: [223/261] features/city/gen/kerb_dresser.gd:130 literal  55 -> 56  killed [bake-check: golden c_00_00.bin]  (7.2 s)
+mutate: [224/261] features/city/gen/kerb_dresser.gd:130 arith  - -> +  killed [bake-check: golden c_00_00.bin]  (9.8 s)
+mutate: [225/261] features/city/gen/kerb_dresser.gd:130 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]  (11.8 s)
+mutate: [226/261] features/city/gen/kerb_dresser.gd:130 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (9.5 s)
+mutate: [227/261] features/city/gen/kerb_dresser.gd:130 literal  3.0 -> 4.0  killed [bake-check: golden c_00_00.bin]  (9.5 s)
+mutate: [228/261] features/city/gen/kerb_dresser.gd:131 arith  * -> /  survived [bake-check]  (18.2 s)
+mutate: [229/261] features/city/gen/kerb_dresser.gd:131 arith  * -> /  survived [bake-check]  (18.6 s)
+mutate: [230/261] features/city/gen/kerb_dresser.gd:132 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (10.1 s)
+mutate: [231/261] features/city/gen/kerb_dresser.gd:132 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]  (12.8 s)
+mutate: [232/261] features/city/gen/kerb_dresser.gd:132 literal  0.0 -> 1.0  killed [bake-check: golden c_00_00.bin]  (14.5 s)
+mutate: [233/261] features/city/gen/kerb_dresser.gd:133 delete  b.add(ChunkBuild.L_DECAL, tex, c + off, rot + (PI if side < 0.0 else 0.0)) -> pass  invalid [bake-check: parse]  (3.7 s)
+mutate: [234/261] features/city/gen/kerb_dresser.gd:133 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (10.2 s)
+mutate: [235/261] features/city/gen/kerb_dresser.gd:133 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (8.5 s)
+mutate: [236/261] features/city/gen/kerb_dresser.gd:133 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]  (8.6 s)
+mutate: [237/261] features/city/gen/kerb_dresser.gd:133 boundary  < -> <=  survived [bake-check]  (16.8 s)
+mutate: [238/261] features/city/gen/kerb_dresser.gd:133 literal  0.0 -> 1.0  survived [bake-check]  (16.4 s)
+mutate: [239/261] features/city/gen/kerb_dresser.gd:133 literal  0.0 -> 1.0  killed [bake-check: golden c_00_00.bin]  (8.6 s)
+mutate: [240/261] features/city/gen/kerb_dresser.gd:138 arith  + -> -  killed [bake-check: golden c_00_00.bin]  (8.9 s)
+mutate: [241/261] features/city/gen/kerb_dresser.gd:138 arith  - -> +  killed [bake-check: golden c_00_00.bin]  (9.5 s)
+mutate: [242/261] features/city/gen/kerb_dresser.gd:138 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]  (8.8 s)
+mutate: [243/261] features/city/gen/kerb_dresser.gd:138 arith  - -> +  killed [bake-check: golden c_00_00.bin]  (8.8 s)
+mutate: [244/261] features/city/gen/kerb_dresser.gd:138 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]  (10.0 s)
+mutate: [245/261] features/city/gen/kerb_dresser.gd:144 arith  / -> *  killed [bake-check: golden c_00_00.bin]  (12.9 s)
+mutate: [246/261] features/city/gen/kerb_dresser.gd:144 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (10.0 s)
+mutate: [247/261] features/city/gen/kerb_dresser.gd:144 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]  (9.7 s)
+mutate: [248/261] features/city/gen/kerb_dresser.gd:144 literal  4 -> 5  killed [bake-check: golden c_00_00.bin]  (8.6 s)
+mutate: [249/261] features/city/gen/kerb_dresser.gd:146 literal  1 -> 0  killed [bake-check: golden c_00_00.bin]  (10.5 s)
+mutate: [250/261] features/city/gen/kerb_dresser.gd:148 literal  2 -> 3  killed [bake-check: golden c_00_00.bin]  (8.8 s)
+mutate: [251/261] features/city/gen/kerb_dresser.gd:150 literal  3 -> 4  killed [bake-check: golden c_00_00.bin]  (7.9 s)
+mutate: [252/261] features/city/gen/kerb_dresser.gd:157 arith  / -> *  killed [bake-check: golden c_00_00.bin]  (7.6 s)
+mutate: [253/261] features/city/gen/kerb_dresser.gd:157 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (8.6 s)
+mutate: [254/261] features/city/gen/kerb_dresser.gd:157 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]  (10.6 s)
+mutate: [255/261] features/city/gen/kerb_dresser.gd:157 literal  2 -> 3  killed [bake-check: golden c_00_00.bin]  (9.1 s)
+mutate: [256/261] features/city/gen/kerb_dresser.gd:157 cmp_flip  == -> !=  killed [bake-check: golden c_00_00.bin]  (8.2 s)
+mutate: [257/261] features/city/gen/kerb_dresser.gd:157 literal  1 -> 0  killed [bake-check: golden c_00_00.bin]  (7.8 s)
+mutate: [258/261] features/city/gen/kerb_dresser.gd:159 delete  b.stamp(Rect2(p - sz * 0.5, sz), SimConst.C_PROP) -> pass  invalid [bake-check: parse]  (2.6 s)
+mutate: [259/261] features/city/gen/kerb_dresser.gd:159 arith  - -> +  killed [bake-check: golden c_00_00.bin]  (8.0 s)
+mutate: [260/261] features/city/gen/kerb_dresser.gd:159 arith  * -> /  killed [bake-check: golden c_00_00.bin]  (7.5 s)
+mutate: [261/261] features/city/gen/kerb_dresser.gd:159 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]  (8.7 s)
+mutate features/city/gen/kerb_dresser.gd: 261 mutant(s), oracles: bake-check
+  features/city/gen/kerb_dresser.gd:48 boundary  < -> <=  survived [bake-check]
+  features/city/gen/kerb_dresser.gd:59 boundary  < -> <=  survived [bake-check]
+  features/city/gen/kerb_dresser.gd:62 boundary  < -> <=  survived [bake-check]
+  features/city/gen/kerb_dresser.gd:66 boundary  < -> <=  survived [bake-check]
+  features/city/gen/kerb_dresser.gd:73 boundary  >= -> >  survived [bake-check]
+  features/city/gen/kerb_dresser.gd:101 literal  1 -> 0  survived [bake-check]
+  features/city/gen/kerb_dresser.gd:104 boundary  < -> <=  survived [bake-check]
+  features/city/gen/kerb_dresser.gd:113 boundary  < -> <=  survived [bake-check]
+  features/city/gen/kerb_dresser.gd:115 boundary  < -> <=  survived [bake-check]
+  features/city/gen/kerb_dresser.gd:117 boundary  < -> <=  survived [bake-check]
+  features/city/gen/kerb_dresser.gd:118 boundary  < -> <=  survived [bake-check]
+  features/city/gen/kerb_dresser.gd:119 boundary  < -> <=  survived [bake-check]
+  features/city/gen/kerb_dresser.gd:121 boundary  < -> <=  survived [bake-check]
+  features/city/gen/kerb_dresser.gd:129 boundary  < -> <=  survived [bake-check]
+  features/city/gen/kerb_dresser.gd:131 arith  * -> /  survived [bake-check]
+  features/city/gen/kerb_dresser.gd:131 arith  * -> /  survived [bake-check]
+  features/city/gen/kerb_dresser.gd:133 boundary  < -> <=  survived [bake-check]
+  features/city/gen/kerb_dresser.gd:133 literal  0.0 -> 1.0  survived [bake-check]
+  features/city/gen/kerb_dresser.gd:55 delete  prop(g, b, tex, _local(c, rot, u, v), rot) -> pass  invalid [bake-check: parse]
+  features/city/gen/kerb_dresser.gd:68 delete  b.add(ChunkBuild.L_DECAL, T_DRAIN, p, rot) -> pass  invalid [bake-check: parse]
+  features/city/gen/kerb_dresser.gd:95 delete  prop(g, b, tex, _local(c, rot, u, half.y + WALL_GAP_M), rot) -> pass  invalid [bake-check: parse]
+  features/city/gen/kerb_dresser.gd:133 delete  b.add(ChunkBuild.L_DECAL, tex, c + off, rot + (PI if side < 0.0 else 0.0)) -> pass  invalid [bake-check: parse]
+  features/city/gen/kerb_dresser.gd:159 delete  b.stamp(Rect2(p - sz * 0.5, sz), SimConst.C_PROP) -> pass  invalid [bake-check: parse]
+  features/city/gen/kerb_dresser.gd:29 delete  b.add(ChunkBuild.L_PROP, tex, p, rot, g.shadowed[tex]) -> pass  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:30 boolean  not -> (removed)  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:32 delete  _block_footprint(b, p, g.sizes[tex] * 0.85, rot) -> pass  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:32 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:32 literal  0.85 -> 1.85  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:37 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:37 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:37 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:39 literal  2 -> 3  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:39 cmp_flip  == -> !=  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:39 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:43 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:43 arith  - -> +  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:43 literal  0.6 -> 1.6  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:44 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:44 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:44 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:45 boolean  true -> false  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:47 delete  busy.append(Vector2(4.0 - 0.25, 4.0 + 0.25)) -> pass  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:47 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:47 arith  - -> +  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:47 literal  0.25 -> 1.25  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:47 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:47 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:47 literal  0.25 -> 1.25  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:48 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:48 literal  41 -> 42  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:48 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:48 literal  0.4 -> 1.4  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:52 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:52 literal  42 -> 43  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:52 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:53 literal  1.2 -> 2.2  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:53 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:53 literal  5.6 -> 6.6  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:53 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:53 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:53 literal  43 -> 44  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:54 literal  0.9 -> 1.9  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:54 arith  - -> +  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:54 literal  0.7 -> 1.7  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:56 delete  busy.append(Vector2(u - g.sizes[tex].x * 0.5, u + g.sizes[tex].x * 0.5)) -> pass  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:56 arith  - -> +  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:56 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:56 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:56 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:56 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:56 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:57 boolean  not -> (removed)  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:58 delete  _wall_prop(g, b, t, rot, busy) -> pass  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:59 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:59 literal  44 -> 45  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:59 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:59 literal  0.4 -> 1.4  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:60 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:60 literal  45 -> 46  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:60 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:61 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:61 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:61 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:61 literal  46 -> 47  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:61 arith  - -> +  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:61 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:61 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:61 literal  1.05 -> 2.05  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:62 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:62 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:62 literal  47 -> 48  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:62 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:62 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:62 literal  0.0 -> 1.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:63 delete  b.add(ChunkBuild.L_PROP, car, p, r, true) -> pass  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:63 boolean  true -> false  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:65 delete  _block_footprint(b, p, Vector2(g.sizes[car].x * 0.9, CAR_STRIP_M), r) -> pass  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:65 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:65 literal  0.9 -> 1.9  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:66 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:66 literal  48 -> 49  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:66 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:66 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:67 literal  1.0 -> 0.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:67 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:67 literal  6.0 -> 7.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:67 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:67 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:67 literal  49 -> 50  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:67 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:67 literal  0.35 -> 1.35  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:73 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:73 literal  56 -> 57  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:73 cmp_flip  >= -> <  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:78 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:78 literal  57 -> 58  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:78 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:79 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:79 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:80 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:80 literal  0.3 -> 1.3  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:80 literal  7.7 -> 8.7  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:80 arith  - -> +  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:82 arith  - -> +  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:82 arith  - -> +  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:82 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:82 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:85 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:85 boundary  < -> <=  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:86 delete  next.append(Vector2(f.x, minf(f.y, cut.x))) -> pass  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:87 cmp_flip  > -> <=  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:87 boundary  > -> >=  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:88 delete  next.append(Vector2(maxf(f.x, cut.y), f.y)) -> pass  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:92 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:92 literal  58 -> 59  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:92 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:93 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:93 literal  59 -> 60  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:94 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:94 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:94 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:95 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:101 literal  1 -> 0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:101 cmp_flip  == -> !=  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:101 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:102 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:102 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:102 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:104 return  g.rnd(floori(n.x / period), floori(n.y / period), 0, 5) < 0.12 -> not (g.rnd(floori(n.x / period), floori(n.y / period), 0, 5) < 0.12)  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:104 arith  / -> *  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:104 arith  / -> *  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:104 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:104 literal  5 -> 6  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:104 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:104 literal  0.12 -> 1.12  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:108 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:108 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:108 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:109 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:109 literal  51 -> 52  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:110 literal  0.0 -> 1.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:110 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:110 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:111 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:111 literal  52 -> 53  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:111 arith  - -> +  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:111 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:112 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:112 literal  53 -> 54  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:112 arith  - -> +  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:112 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:113 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:113 literal  0.25 -> 1.25  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:114 delete  b.add(ChunkBuild.L_DECAL, 54, c + Vector2(jx * 4.0, jy * 4.0), rot) -> pass  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:114 literal  54 -> 55  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:114 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:114 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:114 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:114 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:114 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:115 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:115 literal  0.4 -> 1.4  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:116 delete  b.add(ChunkBuild.L_DECAL, 55, c + Vector2(jx * 4.0, jy * 2.0), 0.0) -> pass  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:116 literal  55 -> 56  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:116 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:116 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:116 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:116 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:116 literal  2.0 -> 3.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:116 literal  0.0 -> 1.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:117 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:117 literal  0.55 -> 1.55  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:118 delete  b.add(ChunkBuild.L_DECAL, 56 if r < 0.5 else 59, c + Vector2(jx * 5.0, jy * 4.0), rot) -> pass  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:118 literal  56 -> 57  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:118 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:118 literal  0.5 -> 1.5  killed [bake-check: golden c_01_00.bin]
+  features/city/gen/kerb_dresser.gd:118 literal  59 -> 60  killed [bake-check: golden c_01_00.bin]
+  features/city/gen/kerb_dresser.gd:118 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:118 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:118 literal  5.0 -> 6.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:118 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:118 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:119 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:119 literal  0.6 -> 1.6  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:120 delete  b.add(ChunkBuild.L_DECAL, 62, Vector2(c.x, c.y + jy * 3.0), rot) -> pass  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:120 literal  62 -> 63  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:120 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:120 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:120 literal  3.0 -> 4.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:121 cmp_flip  < -> >=  killed [bake-check: crash]
+  features/city/gen/kerb_dresser.gd:121 literal  0.68 -> 1.68  killed [bake-check: crash]
+  features/city/gen/kerb_dresser.gd:122 delete  _lane_paint(g, b, t, horiz, LANE_PAINT[int((r - 0.6) / 0.08 * LANE_PAINT.size())]) -> pass  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:122 arith  - -> +  killed [bake-check: crash]
+  features/city/gen/kerb_dresser.gd:122 literal  0.6 -> 1.6  killed [bake-check: crash]
+  features/city/gen/kerb_dresser.gd:122 arith  / -> *  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:122 literal  0.08 -> 1.08  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:122 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:128 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:128 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:128 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:129 literal  1.0 -> 0.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:129 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:129 literal  54 -> 55  killed [bake-check: golden c_01_00.bin]
+  features/city/gen/kerb_dresser.gd:129 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:129 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:129 arith  - -> +  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:129 literal  1.0 -> 0.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:130 literal  0 -> 1  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:130 literal  55 -> 56  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:130 arith  - -> +  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:130 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:130 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:130 literal  3.0 -> 4.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:132 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:132 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:132 literal  0.0 -> 1.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:133 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:133 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:133 cmp_flip  < -> >=  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:133 literal  0.0 -> 1.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:138 arith  + -> -  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:138 arith  - -> +  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:138 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:138 arith  - -> +  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:138 literal  4.0 -> 5.0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:144 arith  / -> *  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:144 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:144 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:144 literal  4 -> 5  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:146 literal  1 -> 0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:148 literal  2 -> 3  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:150 literal  3 -> 4  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:157 arith  / -> *  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:157 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:157 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:157 literal  2 -> 3  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:157 cmp_flip  == -> !=  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:157 literal  1 -> 0  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:159 arith  - -> +  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:159 arith  * -> /  killed [bake-check: golden c_00_00.bin]
+  features/city/gen/kerb_dresser.gd:159 literal  0.5 -> 1.5  killed [bake-check: golden c_00_00.bin]
+score 93.0% = killed 238 / (killed 238 + survived 18); timeout 0, invalid 5; 3013 s; 11.41 s/mutant; kills by oracle: bake-check 238; by via: golden 234, crash 4
+mutate: wrote build/mutate/features-city-gen-kerb_dresser.json
+
+real	50m15.394s
+user	0m0.015s
+sys	0m0.015s

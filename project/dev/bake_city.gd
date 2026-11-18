@@ -1,32 +1,32 @@
 extends SceneTree
-## Bakes the district's chunk files and the golden hash list (AST-12). Dev-only tool (dev/ is
-## excluded from release exports).
-## Usage: godot --headless --path project -s res://dev/bake_city.gd [-- --check]
-##   (no flag)  write res://data/generated/city/c_XX_YY.bin + data/generated/city_chunks.sha256
-##   --check    bake twice, byte-compare, compare with the committed list; exit 1 on drift
+## Dev-only: godot --headless --path project -s res://dev/bake_city.gd [-- --check [--fail-fast]]
+## With no flags, write data/generated/city/c_XX_YY.bin and data/generated/city_chunks.sha256.
+## --check compares two bakes with the golden list. --fail-fast stops at the first differing chunk.
 
-const KNOWN_FLAGS: PackedStringArray = ["--check"]
+const KNOWN_FLAGS: PackedStringArray = ["--check", "--fail-fast"]
+const TABLES: String = "res://data/tables/"
 
 
 func _initialize() -> void:
-	for arg: String in OS.get_cmdline_user_args():
+	var args: PackedStringArray = OS.get_cmdline_user_args()
+	for arg: String in args:
 		if not KNOWN_FLAGS.has(arg):
 			printerr("bake_city: unknown argument %s" % arg)
 			quit(2)
 			return
-	var bake_script: GDScript = load("res://features/city/gen/city_bake.gd")
-	var gen_script: GDScript = load("res://features/city/gen/city_gen.gd")
-	var gen: Object = gen_script.call(
-		"from_tables",
-		"res://data/tables/city_district.json",
-		"res://data/tables/city_textures.json"
-	)
-	var bake: Object = bake_script.new(gen, 16)
-	if OS.get_cmdline_user_args().has("--check"):
-		var problem: String = bake.call("check")
-		printerr("bake_city: %s" % (problem if problem != "" else "deterministic, matches golden"))
+	var fast: bool = args.has("--fail-fast")
+	if fast and not args.has("--check"):
+		printerr("bake_city: --fail-fast requires --check")
+		quit(2)
+		return
+	var gen := CityGen.from_tables(TABLES + "city_district.json", TABLES + "city_textures.json")
+	var bake: CityBake = CityBake.new(gen, SimConst.CITY_CHUNKS)
+	if args.has("--check"):
+		var problem: String = bake.check_fail_fast() if fast else bake.check()
+		var success: String = ("OK " if fast else "") + "deterministic, matches golden"
+		printerr("bake_city: %s" % (problem if problem != "" else success))
 		quit(0 if problem == "" else 1)
 		return
-	var written: int = bake.call("write_files")
+	var written: int = bake.write_files()
 	printerr("bake_city: wrote %d chunks" % written)
 	quit(0 if written > 0 else 1)

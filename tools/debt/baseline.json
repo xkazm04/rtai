@@ -119,7 +119,7 @@
         "project/dev/audio/audio_beat.gd": 1,
         "project/dev/audio/audio_riot.gd": 1,
         "project/dev/audio/line_timeline.gd": 1,
-        "project/dev/bake_city.gd": 2,
+        "project/dev/bake_city.gd": 1,
         "project/dev/bench/bodies_cost.gd": 1,
         "project/dev/bench/chunk_cost.gd": 1,
         "project/dev/bench/city_bench.gd": 1,
@@ -264,7 +264,7 @@
         "project/tests/run_scenarios.gd": 1,
         "project/tests/unit/test_launch_args.gd": 1
       },
-      "total": 167
+      "total": 166
     },
     "files_near_cap": {
       "accepted": [
