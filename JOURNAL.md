@@ -199,3 +199,32 @@ the open water and the quay edge water match.
 - 01:30 full unit on 8c42f0ade: 2867 passed, 0 failed, 2 skipped. Masters `gtai-masters\n18\districts\frames.json`
   rebuilt: 11 entries, best first; removed the stale v15/v16 quay/water/yard stills (the water ones showed my bug).
 - REPORT.md draft written (cwd root).
+- 01:40 GATE: `node tools/evidence/run.mjs --no-bench --no-release` on 506761966: PASS lint 19/19, unit 2867/0,
+  scenarios 55/55 (rig_stress contended, re-judged alone: within budget), parity bit-exact (planted caught at 629),
+  selftest look goldens 11/11 (worst 0.31) + block goldens 5/5. Reel gate NOT run yet.
+- 01:44 MILESTONE commit cd5da26a1, generator v21: downtown `one_sign` (one lettered name a block, on a seeded sign
+  tile; my first rule gated the 21 % pick on 1 tile in 25 -> no names at all in 5 chunks, caught by the test's
+  "still has landmarks" check; now the sign tile always carries one). Evidence `ab_one_sign_v20_v21_combo_32ppm.jpg`
+  (an HQ off its sign tile becomes a plain roof).
+- 01:52 mutate dock_painter.gd: 4/12 killed (33.3 %); survivors look-only (golden-pinned) except :126 -> test added,
+  now killed (bc29c8a7e).
+- 01:55 zone map v21 numbers (REPORT): docks 48 ch 18.75 % (3832 block / 2408 plaza-yard-quay tiles), downtown 25 ch
+  9.77 % (2000 / 500), mixed 183 ch 71.48 % (16125 / 2175); gen 256 chunks 5.0 s; bake 6.1 s wall (CONTENDED).
+NEXT (session 3, in order):
+1. Item 6 second pass: a drive offset onto the blocks (e.g. y 1062 through the docks long blocks' middle, or a
+   north-south drive x 1700 -> through yards), and 48 px/m stills per zone (`--at` one docks, one downtown, one mixed).
+   Encode with ffmpeg -framerate 30 -crf 23; add to masters frames.json.
+2. Asset lane offers to wire (one data swap each, re-bake + golden + before/after): `ground_dock_water_70_v2_t1` with
+   the `_w2t1` quay straight/inner (open water and quay edge one texture); the dock apron/yard dressing: mooring
+   bollard (A) on the coping? (the coping already draws bollards: maybe pallets A + forklift B-muted + gatehouse v2
+   ochre A at yard entrances), coffee kiosk A in downtown plazas (needs a plan twin: ask or skip in the top view).
+3. Lettered landmark no-repeat rule (downtown): no two identical LETTERED roofs within 2 blocks (BlockPainter), test.
+4. Generator numbers for REPORT: run dev/view/city_zone_map.gd on v20 (zone shares, block counts, bake time).
+5. Gates on the session's last code commit: `node tools/evidence/run.mjs --no-bench --no-release` (parity + look
+   goldens), reel gate `node tools/reel/run_reels.mjs`, `tools/mutate/mutate.mjs --file=features/city/gen/dock_painter.gd`
+   and `--file=boot/collect_call/stage_dock_place.gd` (quote the scores).
+6. --quest1-places ON: quest1_input stalls at b4-dock. Investigate why (the walk? the city streaming radius around the
+   far dock? waves spawning outside the sim radius?), report; do not make it default.
+7. Reel gate (`node tools/reel/run_reels.mjs`) has not run on this branch yet: run it first thing (it may be long).
+8. Wire the forklift/pallets/gatehouse as yard dressing only if 1-6 are done; then raise the weakest item (the film).
+Session 2 ended ~02:00 with a clean tree; HEAD is the JOURNAL commit after bc29c8a7e.
