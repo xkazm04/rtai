@@ -575,3 +575,10 @@ Session 6 ended ~07:10 with a clean tree; final code = 771ae3ba9 (v33; gate PASS
   the v33 build (771ae3ba9 adds only a unit test).
 NEXT: morning merge per REPORT `## Merge notes` (re-bless golden hash list after merge; police reads zone `car_art`).
 Session 7 ended ~07:35 with a clean tree.
+
+## Session 8 (iteration 8, STABILIZE, 07:31-07:40)
+- 07:31 tree clean, HEAD 46fa9903f. No code change (past freeze); code = 771ae3ba9 (v33).
+- 07:32 cites REPORT.md: 14 paths, 13 ok, 1 pattern, 0 missing. Masters `gtai-masters/n18/districts/frames.json`: 15
+  entries, every file present (node check). Evidence still matches the v33 build; REPORT unchanged.
+NEXT: morning merge per REPORT `## Merge notes` (re-bless golden hash list after merge; police reads zone `car_art`).
+Session 8 ended ~07:33 with a clean tree.
