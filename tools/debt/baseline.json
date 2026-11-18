@@ -60,7 +60,8 @@
         "2026-11-17: n18 districts: dev/view/zone_frame.gd, zone stills + a straight drive clip through the generated city (the evidence of items 3 and 6); its flags are its own (KNOWN), not game flags, so it reads OS args as dev/showcase/city_frame.gd does (dev_loc 21849 -> 21992)",
         "2026-11-18: n18 districts item 5: dev/bots BotRoute (+route use in CollectCallBot) so the quest bot can walk to Dock 9 on the city's dock place under --quest1-places; dev only, not shipped (dev_loc 21992 -> 22089)",
         "2026-11-18: The 80-line headless arena cost scene measures 400 mobile guard approaches, including cold path searches and the open-street control. (dev_loc 22644 -> 22724)",
-        "2026-11-18: n19 gfx: fixed-seed traffic census over every chunk and synchronized world ticks for district film comparisons (dev_loc 22724 -> 22800)"
+        "2026-11-18: n19 gfx: fixed-seed traffic census over every chunk and synchronized world ticks for district film comparisons (dev_loc 22724 -> 22800)",
+        "2026-11-18: n19 gfx: fixed-camera traffic film with on-screen moving-car counts read from each sim tick (dev_loc 22800 -> 22926)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -91,10 +92,10 @@
         "project/dev/servo": 434,
         "project/dev/showcase": 6775,
         "project/dev/sim": 792,
-        "project/dev/view": 442,
+        "project/dev/view": 568,
         "project/dev/weapon_art": 506
       },
-      "total": 22800
+      "total": 22926
     },
     "direct_cmdline_reads": {
       "accepted": [

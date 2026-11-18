@@ -1,136 +1,223 @@
 {
-  "schema": "gtai.zone-traffic-film/1",
+  "schema": "gtai.zone-traffic-film/2",
   "master_dir": "C:/Users/kazda/kiro/gtai-masters/n19/gfx/zones",
-  "scene": "res://dev/view/zone_frame.tscn",
-  "master_seed": 91,
+  "scene": "res://dev/view/zone_traffic_film.tscn",
+  "seed": 91,
   "ppm": 32,
+  "target_cars": 75,
   "window_px": [
-    1280,
-    800
+    1920,
+    1080
   ],
-  "sim_hz": 60,
-  "clip_fps": 30,
-  "clip_seconds": 10,
-  "requested_start_tick": 240,
-  "comparison_tick": 418,
-  "drive": {
-    "docks": [
-      1932,
-      1036,
-      1812,
-      1036,
-      12
-    ],
-    "downtown": [
-      1164,
-      1036,
-      1044,
-      1036,
-      12
-    ]
-  },
+  "fps": 15,
+  "seconds": 10,
+  "comparison_tick": 116,
+  "frames": "frames.json",
+  "moving": "K_CAR with centre on screen and speed > 0.2 m/s. Bikes disabled.",
   "shots": {
-    "before-docks-top": {
-      "movie": "before-docks-top/traffic.mp4",
-      "still": "before-docks-top/drive-00088.png",
-      "world_ticks": [
-        242,
-        840
-      ]
+    "fixed-after-docks-top": {
+      "movie": "fixed-after-docks-top/traffic.mp4",
+      "still": "fixed-after-docks-top/f013.png",
+      "timeline": "fixed-after-docks-top/ticks.json",
+      "art": [
+        3,
+        2,
+        1,
+        0,
+        1,
+        2,
+        0,
+        0
+      ],
+      "moving": 9,
+      "tick": 116
     },
-    "after-docks-top": {
-      "movie": "after-docks-top/traffic.mp4",
-      "still": "after-docks-top/drive-00088.png",
-      "world_ticks": [
-        242,
-        840
-      ]
+    "fixed-after-docks-tilt70": {
+      "movie": "fixed-after-docks-tilt70/traffic.mp4",
+      "still": "fixed-after-docks-tilt70/f013.png",
+      "timeline": "fixed-after-docks-tilt70/ticks.json",
+      "art": [
+        3,
+        2,
+        1,
+        0,
+        1,
+        2,
+        0,
+        0
+      ],
+      "moving": 9,
+      "tick": 116
     },
-    "before-docks-tilt70": {
-      "movie": "before-docks-tilt70/traffic.mp4",
-      "still": "before-docks-tilt70/drive-00088.png",
-      "world_ticks": [
-        242,
-        840
-      ]
+    "fixed-after-downtown-top": {
+      "movie": "fixed-after-downtown-top/traffic.mp4",
+      "still": "fixed-after-downtown-top/f013.png",
+      "timeline": "fixed-after-downtown-top/ticks.json",
+      "art": [
+        1,
+        2,
+        3,
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "moving": 9,
+      "tick": 116
     },
-    "after-docks-tilt70": {
-      "movie": "after-docks-tilt70/traffic.mp4",
-      "still": "after-docks-tilt70/drive-00088.png",
-      "world_ticks": [
-        242,
-        840
-      ]
+    "fixed-after-downtown-tilt70": {
+      "movie": "fixed-after-downtown-tilt70/traffic.mp4",
+      "still": "fixed-after-downtown-tilt70/f013.png",
+      "timeline": "fixed-after-downtown-tilt70/ticks.json",
+      "art": [
+        1,
+        2,
+        3,
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "moving": 9,
+      "tick": 116
     },
-    "before-downtown-top": {
-      "movie": "before-downtown-top/traffic.mp4",
-      "still": "before-downtown-top/drive-00088.png",
-      "world_ticks": [
-        242,
-        840
-      ]
+    "fixed-after-mixed-top": {
+      "movie": "fixed-after-mixed-top/traffic.mp4",
+      "still": "fixed-after-mixed-top/f013.png",
+      "timeline": "fixed-after-mixed-top/ticks.json",
+      "art": [
+        1,
+        1,
+        5,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "moving": 9,
+      "tick": 116
     },
-    "after-downtown-top": {
-      "movie": "after-downtown-top/traffic.mp4",
-      "still": "after-downtown-top/drive-00088.png",
-      "world_ticks": [
-        242,
-        840
-      ]
+    "fixed-after-mixed-tilt70": {
+      "movie": "fixed-after-mixed-tilt70/traffic.mp4",
+      "still": "fixed-after-mixed-tilt70/f013.png",
+      "timeline": "fixed-after-mixed-tilt70/ticks.json",
+      "art": [
+        1,
+        1,
+        5,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "moving": 9,
+      "tick": 116
     },
-    "before-downtown-tilt70": {
-      "movie": "before-downtown-tilt70/traffic.mp4",
-      "still": "before-downtown-tilt70/drive-00088.png",
-      "world_ticks": [
-        242,
-        840
-      ]
+    "fixed-before-docks-top": {
+      "movie": "fixed-before-docks-top/traffic.mp4",
+      "still": "fixed-before-docks-top/f013.png",
+      "timeline": "fixed-before-docks-top/ticks.json",
+      "art": [
+        0,
+        1,
+        2,
+        2,
+        2,
+        1,
+        1,
+        0
+      ],
+      "moving": 9,
+      "tick": 116
     },
-    "after-downtown-tilt70": {
-      "movie": "after-downtown-tilt70/traffic.mp4",
-      "still": "after-downtown-tilt70/drive-00088.png",
-      "world_ticks": [
-        242,
-        840
-      ]
+    "fixed-before-docks-tilt70": {
+      "movie": "fixed-before-docks-tilt70/traffic.mp4",
+      "still": "fixed-before-docks-tilt70/f013.png",
+      "timeline": "fixed-before-docks-tilt70/ticks.json",
+      "art": [
+        0,
+        1,
+        2,
+        2,
+        2,
+        1,
+        1,
+        0
+      ],
+      "moving": 9,
+      "tick": 116
+    },
+    "fixed-before-downtown-top": {
+      "movie": "fixed-before-downtown-top/traffic.mp4",
+      "still": "fixed-before-downtown-top/f013.png",
+      "timeline": "fixed-before-downtown-top/ticks.json",
+      "art": [
+        0,
+        2,
+        2,
+        3,
+        1,
+        0,
+        1,
+        0
+      ],
+      "moving": 9,
+      "tick": 116
+    },
+    "fixed-before-downtown-tilt70": {
+      "movie": "fixed-before-downtown-tilt70/traffic.mp4",
+      "still": "fixed-before-downtown-tilt70/f013.png",
+      "timeline": "fixed-before-downtown-tilt70/ticks.json",
+      "art": [
+        0,
+        2,
+        2,
+        3,
+        1,
+        0,
+        1,
+        0
+      ],
+      "moving": 9,
+      "tick": 116
+    },
+    "fixed-before-mixed-top": {
+      "movie": "fixed-before-mixed-top/traffic.mp4",
+      "still": "fixed-before-mixed-top/f013.png",
+      "timeline": "fixed-before-mixed-top/ticks.json",
+      "art": [
+        1,
+        1,
+        5,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "moving": 9,
+      "tick": 116
+    },
+    "fixed-before-mixed-tilt70": {
+      "movie": "fixed-before-mixed-tilt70/traffic.mp4",
+      "still": "fixed-before-mixed-tilt70/f013.png",
+      "timeline": "fixed-before-mixed-tilt70/ticks.json",
+      "art": [
+        1,
+        1,
+        5,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "moving": 9,
+      "tick": 116
     }
-  },
-  "sheets": [
-    {
-      "file": "districts-top.png",
-      "left": "after-docks-top",
-      "right": "after-downtown-top",
-      "changed_pixels": 780650
-    },
-    {
-      "file": "docks-top-before-after.png",
-      "left": "before-docks-top",
-      "right": "after-docks-top",
-      "changed_pixels": 12438
-    },
-    {
-      "file": "downtown-top-before-after.png",
-      "left": "before-downtown-top",
-      "right": "after-downtown-top",
-      "changed_pixels": 17418
-    },
-    {
-      "file": "districts-tilt70.png",
-      "left": "after-docks-tilt70",
-      "right": "after-downtown-tilt70",
-      "changed_pixels": 808550
-    },
-    {
-      "file": "docks-tilt70-before-after.png",
-      "left": "before-docks-tilt70",
-      "right": "after-docks-tilt70",
-      "changed_pixels": 11587
-    },
-    {
-      "file": "downtown-tilt70-before-after.png",
-      "left": "before-downtown-tilt70",
-      "right": "after-downtown-tilt70",
-      "changed_pixels": 16221
-    }
-  ]
+  }
 }
