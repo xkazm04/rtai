@@ -1,5 +1,23 @@
 [
  {
+  "file": "item6_quest1_before_unfixed_fixed_t1200_32ppm.png",
+  "title": "Quest 1 at t1200 (heat drained to 0 while Rivet hid): BEFORE no connection | city sim police on quest heat (739a90264) | with the hide rule (b1418a966)",
+  "source": "node tools/film/film.mjs quest1 --stills=300,600,1200 --ppm=32 (heat.json city.quest1 false / true), hstack",
+  "branch": "n18-police 739a90264, b1418a966",
+  "ppm": 32,
+  "before": "left third: city.quest1 false (the quest's sim at heat -1)",
+  "note": "Middle: the sim cops saw Rivet through the dumpster hide (the sim's sight knows no hides) and fired: people lie dead in the street. Right: hidden = sim heat 0, fewer bodies, but one cop and one ped still lie at the left corner (untraced: suspects a sim cop hit by traffic or caught in the opening fight; open finding). The t300 bodies near the dumpster are quest 1's scripted opening (Rivet's line: 'I stopped a cop... THROUGH another cop')."
+ },
+ {
+  "file": "item6_quest1_simcops_b1418a966_t300_32ppm.png",
+  "title": "Quest 1 t300 (heat 2): a city sim cop running toward Rivet's start while he hides",
+  "source": "film.mjs quest1 --stills=300 at b1418a966",
+  "branch": "n18-police b1418a966",
+  "ppm": 32,
+  "before": "item6_quest1_before_unfixed_fixed_t1200_32ppm.png (left third, no sim police answer)",
+  "note": "The quest opens at start_heat 2: the 4 nearest of quest1_patrol_cops (6) are claimed for the alarm point (Rivet's start). Stills only (the quest1 shot records stills)."
+ },
+ {
   "file": "item5_heat2_vs_heat3_t2176_32ppm.png",
   "title": "Heat 2 | heat 3 at t2176 (33 s after the raise): heat 3's riot/SWAT squads at A",
   "source": "godot --rendering-driver d3d12 --path project --fixed-fps 60 --resolution 1280x720 res://dev/sim/heat_clip.tscn -- --level=3 --police=living --seconds=40 (frame f_00544), hstack with the heat 2 run of the same seed",
@@ -70,15 +88,6 @@
   "ppm": 32,
   "before": "item4_heat2_living_c19685d17_32ppm.mp4",
   "note": "item4_heat2_living_e7cb74202_timeline.json: heat, engaged, near A and every cop position per sample."
- },
- {
-  "file": "item4_heat2_living_c19685d17_32ppm.mp4",
-  "title": "Heat 2 clip at c19685d17: cars bail out of traffic, crews come on foot (search ends before they arrive)",
-  "source": "heat_clip.tscn --level=2 --police=living --seconds=30",
-  "branch": "n18-police c19685d17",
-  "ppm": 32,
-  "before": "item4_heat2_living_20609876f_32ppm.mp4",
-  "note": "timeline: 4 foot cops within 4 m of A (max), cops in the bubble 16 -> 19 (crews out after bail_s, ~60 m off), 0 cars stopped at A (they park where traffic holds them, as designed), claims cancelled at ~t1600 after the 10 s search started by the foot cops, so the crews never reach A. Next: the search should wait for crews still walking in. Not yet the heat 2 clip the brief asks for."
  },
  {
   "file": "item3_heat1_pair_t808_32ppm.png",

@@ -309,3 +309,49 @@ Registry rules applied (items 4-5):
 - Test test_quest1_city_heat (the real Quest1Session on the city, 240 ticks): sim heat 2 = stage's,
   up to 4 city foot cops engaged; before (city.quest1 false): city_heat null (red, run).
 - Quest scenarios 11/11 with it on (quest1_input 19 s).
+
+### MILESTONE item 6 part 2 (b7f47254f, b1418a966)
+- `--sim-police` (KNOWN_FLAGS; quest1_game.gd one line `StagePolice.sim_police = LaunchArgs.has(..)`,
+  launch_args.gd one line: both outside the lists, named here; launch_args 200 -> 201 lines, debt
+  accepted with reason). On: the stage's scripted patrols leave (patrol_pos cleared on the first
+  tick), the city patrol keeps city.quest1_sim_police_cops (10), and a sim cop's sight is the
+  patrols' sight while hot (StagePolice.seen). Test test_quest1_sim_police: 0 stage patrols, 10 sim
+  cops after 240 ticks. quest1_input with the flag forced on: paid, 18.2 s (flag off 19.3 s).
+- Quest 1 film (film.mjs quest1 --stills=300,600,1200, before = city.quest1 false): FINDING at
+  739a90264: the sim cops saw Rivet through the dumpster hide and fired; people lay dead at t1200.
+  Fix b1418a966: quest mode uses only the stage's sighting, and hidden = sim heat 0 (test
+  test_quest_mode_a_hidden_rivet_is_heat_0_for_the_sim). After: fewer bodies, but one cop and one
+  ped still lie at the left corner at t1200 (OPEN: not traced; the before has none).
+  DECISION police/quest1-hide. Evidence item6_quest1_* in gtai-masters/n18/police.
+
+### Item 7 cost (b7f47254f probe, CONTENDED: districts' gates and 5 Godot processes running, no bench lock)
+`dev/sim/heat_cost.tscn` (headless, native, seed 18, heat 3 forced at t180, ticks 600-2400):
+| arm | peds target | sim us/tick mean / p50 / p99 | CityHeat us/tick mean / p50 / p99 |
+|---|---|---|---|
+| pre-n18 police | 270 | 48.3 / 45 / 111 | 59.7 / 51 / 151 |
+| living, heat 3 | 270 | 48.9 / 52 / 75 | 57.7 / 63 / 82 |
+| pre-n18 police | 400 | 36.9 / 31 / 66 | 35.6 / 30 / 79 |
+| living, heat 3 | 400 | 56.3 / 53 / 118 | 96.3 / 87 / 193 |
+Read: the living police add ~0-20 us to the sim step; CityHeat's own step (cop_sees copies the
+full snapshot every tick) is as large as the sim step: the cheap win is a sim-side "any cop sees"
+query instead of a snapshot copy. All of it < 0.3 ms of the 16.7 ms tick. NOT judged: the bench's
+section 20 numbers (bench lock not taken: other lanes' gates running). Files evidence/n18-police/cost/.
+
+### Reply to districts (NEED police, their 02:5x line: more vans/pickups in the docks)
+I prefer data: add the `car_mix` weight row to the docks/downtown rows of city_district.json (your
+file); the car art pick is game side (`features/city/city_spawner.gd` `CAR_ART[_rng...]`, not the
+sim), and I will read `CityZones.id_of_chunk` there when the row lands. It changes the spawner's RNG
+draws, so the city replay digests move: one re-bless after the merge.
+
+NEXT (session 4):
+1. Gates on b1418a966 (running at session end: see the line below if it landed) + evidence run.mjs
+   (look goldens) + reel gate (`node tools/reel/run_reels.mjs`) — never run yet this night.
+2. Item 7 under the bench lock when nothing heavy runs (`node tools/bench/run.mjs`, section 20),
+   at heat 3 if the bench can force it (else the probe at quiet). Cheap win: a sim "cop sees" query.
+3. Trace the open findings: (a) the downed cop + ped at quest 1 t1200 (b1418a966 film), (b) the
+   dead peds beside a dispatched car in the heat 3 clip (item5 pair t2176), (c) sim cop art variant 7
+   = overalls in the crowd atlas (LOD 1 cops may draw as peds).
+4. A 10-40 s quest 1 clip (film.mjs quest1 makes stills; quest1_clip.gd --ticks=<from>-<to> makes a
+   clip) at heat with and without --sim-police for the REPORT Call.
+5. districts' car_mix when their row lands.
+6. REPORT.md: draft in the tree (uncommitted until the gates' line); finish Calls + merge notes.
