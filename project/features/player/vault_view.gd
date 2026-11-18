@@ -30,6 +30,9 @@ static func feed(rigs: CharacterRigs, vault: PlayerVault) -> void:
 		host.process_priority = 102  # after the depth sort and prop occluders
 		rigs.add_child(host)
 		rigs.set_meta(ACTIVE, host)
+		# A node added during the feed first processes next frame. Pose this takeoff
+		# after the current frame's rigs and depth sorter have also finished.
+		host._place.call_deferred()
 		_shadow_origin(rigs, true)
 		f.clip[0] = RigClips.Clip.ROLL
 		f.clip_arg[0] = (vault.ticks - vault.frame) * SimClock.TICK_DT
@@ -42,6 +45,12 @@ static func projection(vault: PlayerVault, view: ViewMode) -> Transform2D:
 
 
 func _process(_delta: float) -> void:
+	_place()
+
+
+func _place() -> void:
+	if is_queued_for_deletion() or _vault.frame < 0:
+		return
 	var rig: CutRig = _rigs.rig_for(_rigs.feed.ids[0])
 	if rig == null:
 		return
