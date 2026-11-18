@@ -26,3 +26,4 @@ START 17:38
 20:19 city_bake.gd mutate (tests,bake-check) stopped by my 390 s cap at 19/41: killed 14 (tests), survived 4 (:41/:44/:47 in the untested plain check(), :67 equivalent), invalid 1. evidence/mutate-city-bake.txt
 20:20 MILESTONE REPORT.md written, cites clean apart from files committed with it.
 NEXT: finish city_bake.gd mutate (22 left) and pin check() with a unit test; read kerb survivors :101 and :133 (does the district reach _lane_paint?); try `--oracle=tests,bake-check` on dock_dresser.gd / dock_painter.gd.
+QUEUE EMPTY
