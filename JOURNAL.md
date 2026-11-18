@@ -444,3 +444,47 @@ NEXT (session 5):
   evidence/n18-police/s4/bench_0022e89a5_contended.txt.
 NEXT (session 5, final order): the NEXT list above from item 2 (reel gate on HEAD first: native
 changed since the last reel gate), then a heat-3 bench flag if time allows, REPORT final 07:40.
+
+## Session 5 (iteration 5, BUILD, 04:50-06:20)
+Read: JOURNAL NEXT, git log -30, districts JOURNAL (no new NEED police; car_mix row not landed), no bench.lock.
+- 04:52 full gate with reels on 0e5d8cdad (snapshot, `tools/gate/run.mjs --rev=HEAD --reels`) started, background.
+- 05:00 gate evidence half PASS on 0e5d8cdad: lint, unit 2878/0 (2 skip), scenarios 55/55, parity bit-exact (planted caught 629), look goldens 11/11 (worst 0.31), block goldens 5/5, export-audit 729/0; reels running.
+- In the tree (not yet parse-checked: the gate holds this lane's one Godot): (1) the heat-3 bench
+  flag (my own REQUEST tools from session 4, built here): `tools/bench/run.mjs --heat=0..3` passes
+  `--heat=<n>` to every scenario; `dev/bench/city_bench.gd` mounts CityHeat via
+  `BenchDriver.mount_heat` and pins the wanted level (last seen at the bench target when re-raised);
+  the result JSON carries `heat`. city_bench's crowd log moved to `BenchStats.log_crowd` (stays
+  under the 200-line soft cap). Node test runner_args: --heat parse + 4 malformed values, 7/7.
+  (2) `dev/sim/cop_wall_trails.gd`: item 1's before/after as a picture: the reference sim's cop on
+  test_city_cop_sight's wall map, 4 starts, trails at 16 px/m + ticks to cross, run in this tree
+  and in police-before (36dd26ba6).
+- Finding (c) chain completed in code: `boot/city_characters.gd:99` feeds `sim.get_variants()` as
+  the rig feed's looks, so a cop's look is 7 and the LOD-1 cell is atlas row 7 (overalls-bald).
+- 05:15 GATE PASS (full, with reels) on 0e5d8cdad: evidence half above + reels exit 0
+  (`build/gate/0e5d8cdad55c/gate.json`). This covers cop_sees (native changed since the last reel gate).
+- 05:18 MILESTONE 731b58e66: bench --heat and cop_wall_trails committed. Item 1 picture (reference sim,
+  wall map, 4 cops, 1500 ticks): before 36dd26ba6 3 of 4 never cross (stuck 1.5-2.5 m off the wall's
+  west face), after all 4 cross at 617 / 615 / 741 / 444 (the 11 m SW start crosses at 444 in both:
+  it starts on the flow field). Filed gtai-masters/n18/police/item1_cop_wall_trails_before_after_16ppm.png
+  (frames.json: top; dropped the superseded item6 t300 still). Looked: the before trails end at the
+  wall face, the after trails run down the wall to the gap and up the east side.
+  Headless 20 s riot sanity of --heat: heat 3 vs -1 actors 404.7 vs 399.8, sim step 0.106 ms both,
+  crowd deaths 7 vs 17 (the living police kill fewer in the riot, as in session 4's body count).
+- 05:20 bench --heat=3 under gtai-n18/bench.lock (taken 05:19, noclobber; 0 other console Godots), running.
+- 05:36 FRICTION: the first `bench --heat=3` ran at heat -1: my python replace of runScenario in
+  731b58e66 missed (escaped backslashes), so no scenario got `--heat`; the node summary said "heat 3"
+  from the CLI alone. Caught by reading the result JSONs' new `heat` field (-1). As a heat -1 re-run it
+  still counts (731b58e66, CONTENDED up to 1 other run, exit 0): p99 3.134 ms, 1 % low 264 fps,
+  worst swap 9.487 ms, worst frame 40.5 ms, >25 ms 3, >50 ms 0; sim step drive 0.044 / drive48 0.051 /
+  riot 0.103 ms per tick. Fixed in 6fced6b9c: exported `scenarioArgs` + a node test, and the bench
+  fails when a scenario JSON reports another heat than asked. Re-run 05:38 under the lock.
+- 05:53 MILESTONE item 7 bench at heat 3 (6fced6b9c, `bench/run.mjs --heat=3 --wait=2` under
+  gtai-n18/bench.lock, released; every scenario JSON reports heat 3): exit 0, section 20 held:
+  p99 2.389 ms, 1 % low 355 fps, worst swap 5.353 ms, worst frame 19.6 ms, hitches >25 ms 0;
+  sim step per tick drive 0.041 / drive48 0.051 / riot 0.092 ms (heat -1 at 731b58e66: 0.044 /
+  0.051 / 0.103); actors ~410 (heat -1: ~397). CONTENDED: 1 other run. Caveat: the heat 3 riot draws
+  165 visible vs 281 (crowd leaves the riot centre once squads arrive): its frame numbers are lighter,
+  not like for like. No heat.json cap needed. evidence/n18-police/s5/bench_heat3/.
+- 05:55 Finding (c) by eye, heat_clip --level=3 --zoom=0.5 (16 px/m), t1440 crop at 2x: every figure
+  I can name as a cop draws blue; the far figures are too small to name. Still unconfirmed; the NEED
+  director line stays. Scratch deleted (nothing filed).

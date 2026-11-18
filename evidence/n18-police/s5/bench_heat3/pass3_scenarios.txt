@@ -1,0 +1,4 @@
+drive heat 3 simStep_ms 0.0407 actors 415.1 visible 50.0 p99 1.623
+drive48 heat 3 simStep_ms 0.0506 actors 408.4 visible 11.0 p99 1.516
+riot heat 3 simStep_ms 0.0924 actors 412.0 visible 164.6 p99 2.389
+drive48vsync heat 3 simStep_ms 0.0566 actors 408.4 visible 11.2 p99 17.03
