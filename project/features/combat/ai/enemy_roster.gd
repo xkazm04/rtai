@@ -70,7 +70,7 @@ var hearing_m: float = 22.0
 var _errors: Array[String] = []
 
 
-static func shipped(path: String = TABLE) -> EnemyRoster:
+static func shipped(path: String = TABLE, production: bool = false) -> EnemyRoster:
 	var r: EnemyRoster = EnemyRoster.new()
 	var t: DataTable = DataTable.open(path, SCHEMA)
 	var wrows: Dictionary = t.object(t.raw, "weapons")
@@ -78,6 +78,8 @@ static func shipped(path: String = TABLE) -> EnemyRoster:
 		r.weapons[StringName(wid)] = _weapon(t, StringName(wid), t.object(wrows, wid))
 	for raw: Variant in t.array(t.raw, "archetypes"):
 		var row: Dictionary = raw if raw is Dictionary else {}
+		if row.get("production_only", false) == true and not production:
+			continue
 		var a: Archetype = r._archetype(t, row)
 		r.archetypes[a.id] = a
 	r._squad(t, t.object(t.raw, "squad"))

@@ -121,6 +121,8 @@ func _spawn_wave(arena: CombatArena) -> void:
 			g.hp = g.max_hp
 			riot[g.id] = true
 		standing.append(g)
+	if arena.squad_ai != null:
+		arena.squad_ai.begin_wave(standing)
 	arena.announce_wave(&"arena_pit", wave)
 	_due_tick = -1
 	Log.info("arena", "pit wave %d: %d guards" % [wave, n])

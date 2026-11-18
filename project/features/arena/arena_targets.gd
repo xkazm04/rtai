@@ -37,6 +37,7 @@ func add(arena: CombatArena, spawn: ArenaStation.Spawn, base: Vector2, id: int) 
 	t.home = base + spawn.at
 	t.fighter = Fighter.make(Fighter.Kind.GUARD, id, t.home, DUMMY_HP)
 	t.fighter.radius_m = arena.tuning.human["radius_m"]
+	t.fighter.brain_owned = arena.squad_ai != null  # Station motion owns this dummy.
 	t.fighter.weapon = &"assault-rifle"
 	t.fighter.cooldown = NEVER
 	arena.hostiles.append(t.fighter)

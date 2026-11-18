@@ -1,10 +1,6 @@
 class_name CombatArena
 extends RefCounted
-## One fight as data: Rivet, the hostiles, shots in flight, arc balls, dropped rifles. Every hit
-## goes through damage() (the chokepoint: humans have 1 hp, so any hit kills; kills emit
-## Events.actor_killed). The fight's own tells go out as Events too: wave_started (the stage
-## announces each wave through announce_wave), boss_engaged, attack_telegraphed, player_hit.
-## Deterministic: ticks, and the `combat` RNG stream only for guard spread and spawn jitter.
+## Deterministic fight. Damage and combat events go through this arena.
 
 ## A round landed (after damage): the hit-feel hook (features/combat/hit_feel, lane gunplay).
 signal struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName)
@@ -12,15 +8,14 @@ signal struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName)
 ## kill payload for brutality and human-reactions (weapon id or &"burn", hit direction, hit point
 ## in metres, the events.json death kind). Lane gunplay, night JOURNAL REQUEST 1.
 signal kill_landed(victim: Fighter, weapon: StringName, dir: Vector2, at: Vector2, kind: StringName)
-## A non-lethal hit on a non-Rivet fighter, from the chokepoint (view only: MeleeWound, n7-melee).
 signal wounded(victim: Fighter, weapon: StringName)
-## A hostile round batted back by the plasma sword at `at`, now flying along `back` (view only).
 signal deflected(at: Vector2, back: Vector2)
 
 const SPAWN_SPREAD_M: float = 2.5
 
 var tuning: CombatTuning
 var guard_map: GuardRouteMap
+var squad_ai: ArenaSquad = null
 var rivet: Fighter
 var hostiles: Array[Fighter] = []
 var shots: Array[Shot] = []
@@ -156,8 +151,11 @@ func step(p_tick: int) -> void:
 	tick = p_tick
 	kills_now = 0
 	tazer_hit_now = false
+	var ordered: Array[Fighter] = hostiles
+	if squad_ai != null and guard_tell == null and rivet.alive():
+		ordered = squad_ai.assign(self)
 	rivet.cooldown = maxi(rivet.cooldown - 1, 0)
-	for h: Fighter in hostiles:
+	for h: Fighter in ordered:
 		if h.alive() and rivet.alive():
 			_step_hostile(h)
 	if tazer != null and tazer.charge_began():
@@ -215,11 +213,13 @@ func _step_hostile(h: Fighter) -> void:
 		if ball != null:
 			balls.append(ball)
 		return
-	var shot: Shot = (
-		guard_tell.step(h, rivet.pos, tuning, _rng)
-		if guard_tell != null
-		else GuardBrain.step(h, rivet.pos, tuning, _rng)
-	)
+	var shot: Shot
+	if guard_tell != null:
+		shot = guard_tell.step(h, rivet.pos, tuning, _rng)
+	elif squad_ai != null and h.kind == Fighter.Kind.GUARD:
+		shot = squad_ai.step(h, self, _rng)
+	else:
+		shot = GuardBrain.step(h, rivet.pos, tuning, _rng)
 	if shot != null:
 		shots.append(shot)
 

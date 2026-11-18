@@ -10,6 +10,10 @@ static func step(
 ) -> Shot:
 	if approach(g, target, tuning):
 		return null
+	return trigger(g, tuning, rng)
+
+
+static func trigger(g: Fighter, tuning: CombatTuning, rng: RandomNumberGenerator) -> Shot:
 	var w: CombatTuning.Weapon = tuning.weapon(g.weapon)
 	if g.burst_left > 0:
 		if g.burst_gap > 0:

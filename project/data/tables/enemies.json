@@ -139,6 +139,35 @@
       "turn_deg_s": 200,
       "uses_cover": false,
       "weapon": "cannon"
+    },
+    {
+      "accel_mps2": 16,
+      "accuracy": {
+        "far": 0.35,
+        "far_m": 22,
+        "near": 0.8,
+        "near_m": 5
+      },
+      "aggression": 0.7,
+      "attack_m": 15,
+      "body": "human",
+      "doc": "Production pit and street guard. The schema weapon identifies a ranged fighter. CombatTuning and the production rifle trigger supply its actual rounds and burst timing.",
+      "flanks": true,
+      "hit_fx": "blood",
+      "hp": 1,
+      "id": "contractor",
+      "morale": 0.75,
+      "preferred_m": 9.5,
+      "production_only": true,
+      "reaction_s": 0.3,
+      "shield_front_mult": 1,
+      "speed_mps": 3,
+      "stagger_s": 0.35,
+      "strafe_mps": 2.4,
+      "telegraph_s": 0.6,
+      "turn_deg_s": 420,
+      "uses_cover": true,
+      "weapon": "rifle"
     }
   ],
   "doc": "Enemy archetypes for the arena pit and the city (features/combat/ai/README.md). Seconds and metres; the sim converts to 60 Hz ticks. hp is in Rivet-nail hits (humans die to one, owner doctrine). accuracy: the chance a shot at a standing Rivet hits, linear between near_m and far_m. telegraph_s: the visible tell before every attack (aim line or windup pose); the aim keeps tracking until aim_lock_s before the shot, then locks so a player who moves dodges. aim_lead: while it tracks, a gun leads a moving Rivet by this share of his travel over the lock plus the round's flight, so a steady strafe is hit and only a change of course after the lock dodges (0 = aim at where he stands). squad: at most max_shooters fire at once and max_melee swing at once; the rest reposition (cover, flank, orbit). morale: the fraction of the squad that may fall before this archetype panics (1 = never). stagger_s: a hit that does not kill interrupts the enemy for this long (a windup is cancelled; 0 = the hit does not stagger, heavy robots). lunge_m / lunge_mps (melee weapons, optional): after the windup the swing dashes up to lunge_m along the LOCKED aim at lunge_mps, then lands; a player who sidesteps the tell is missed.",

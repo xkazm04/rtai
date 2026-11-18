@@ -11,7 +11,10 @@ const SEPARATION_GAIN: float = 3.0
 static func move(
 	e: EnemyAgent, desired: Vector2, look_at: Vector2, agents: Array[EnemyAgent], pit: EnemyPit
 ) -> void:
-	var want: Vector2 = desired + _separation(e, agents, pit)
+	steer(e, desired + separation(e, agents, pit), look_at, pit)
+
+
+static func steer(e: EnemyAgent, want: Vector2, look_at: Vector2, pit: EnemyPit) -> void:
 	var top: float = e.arch.speed_mps * (1.6 if e.state == EnemyAgent.State.PANIC else 1.0)
 	want = want.limit_length(top)
 	e.vel = e.vel.move_toward(want, e.arch.accel_mps2 * SimClock.TICK_DT)
@@ -54,13 +57,27 @@ static func arrive(e: EnemyAgent, to: Vector2, speed: float, stop_m: float = 0.2
 	return d / dist * speed * slow
 
 
-static func _separation(e: EnemyAgent, agents: Array[EnemyAgent], pit: EnemyPit) -> Vector2:
+static func separation(
+	e: EnemyAgent,
+	agents: Array[EnemyAgent],
+	pit: EnemyPit,
+	gap: float = SEPARATION_GAP_M,
+	split_overlap: bool = false
+) -> Vector2:
 	var push: Vector2 = Vector2.ZERO
 	for o: EnemyAgent in agents:
 		if o == e or not o.alive() or o.state == EnemyAgent.State.DOWN:
 			continue
-		push += _repel(e.pos, o.pos, e.radius() + o.radius() + SEPARATION_GAP_M)
-	push += _repel(e.pos, pit.rivet_pos, e.radius() + pit.rivet_radius + SEPARATION_GAP_M)
+		var keep: float = e.radius() + o.radius() + gap
+		if split_overlap and e.pos == o.pos:
+			push += Vector2.RIGHT * (keep if e.id > o.id else -keep)
+		else:
+			push += _repel(e.pos, o.pos, keep)
+	var keep_player: float = e.radius() + pit.rivet_radius + gap
+	if split_overlap and e.pos == pit.rivet_pos:
+		push += Vector2.RIGHT * keep_player * e.strafe_sign
+	else:
+		push += _repel(e.pos, pit.rivet_pos, keep_player)
 	return push * SEPARATION_GAIN
 
 
