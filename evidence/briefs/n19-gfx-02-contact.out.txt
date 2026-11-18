@@ -1,0 +1,15 @@
+**A landed in `268960380`. C reproduced and needs the arena owner. B passed at both pitches.** [Full report and changed files](C:/Users/kazda/kiro/gtai-masters/n19/gfx/contact/REPORT.md) · [18-frame manifest](C:/Users/kazda/kiro/gtai-masters/n19/gfx/contact/frames.json)
+
+**A — Crowd contact.** The old blob was visible in top, tilt70 and combo. At tilt70, rigs also drew a contact ellipse. Crossing into the baked crowd lost 84% of the shadow’s darkening at 64 px/m. The native and GDScript writers now use the rig’s contact geometry and ink for standing baked people. Both sides of the switch measure 59 × 34 pixels at 64 px/m and 30 × 18 at 32 px/m. All top-view controls matched their originals. The only out-of-lane edit was one call in `project/boot/city_characters.gd`. [Before and after, ticks 31–33](C:/Users/kazda/kiro/gtai-masters/n19/gfx/contact/A-compare-tilt70-64ppm-t31-32-33.png)
+
+**C — Kerb overlap remains open.** At seed 5, tick 900, hiding the crowd atlas changed zero pixels in the kerb crop. Hiding riot cop 3002’s full-rig fall sprite revealed the barrier. The arena-owned `prop_lying.gd::patch` needs to test the drawn sprite bounds. I supplied the failing regression and same-tick isolation frame for that change. [Frame and arena NEED](C:/Users/kazda/kiro/gtai-masters/n19/gfx/contact/C-NEED.md)
+
+**B — Head cards.** All 13 street appearances used drawn cards at 64 px/m in both views. No art change was needed. [Tilt70 sheet](C:/Users/kazda/kiro/gtai-masters/n19/gfx/contact/B-tilt70-p70-64ppm-t60.png) · [p55 sheet](C:/Users/kazda/kiro/gtai-masters/n19/gfx/contact/B-tilt-p55-64ppm-t60.png)
+
+**Verification.** Lint passed 19/19, quick passed, and native debug and release rebuilt. Native tests had zero failures. Changed and full unit runs passed 2,952 and 2,968 tests respectively, each with two skips. All 55 scenarios passed. Parity matched over 1,200 steps. Mutation killed **9/18** valid mutants, with nine survivors and two invalid.
+
+All 16 look frames matched the original branch byte for byte. Six junction frames already failed their stored goldens. None were re-blessed. [Golden comparison](C:/Users/kazda/kiro/gtai-masters/n19/gfx/contact/golden-comparison.json)
+
+**Bench — CONTENDED** on both runs. At 50 people, p50/p99 went from **0.513/0.978** to **0.495/0.812 ms**. At 200, it went from **0.485/1.416** to **0.483/1.124 ms**. Both 200-person runs exceeded the 1 ms p99 ceiling.
+
+[astra: 2169s, exit 0]

@@ -1,0 +1,42 @@
+Committed **`b095bdf0c`**. Over ten seconds, vans and pickups accounted for **53%** of visible traffic on the docks warehouse road and **14%** downtown. Taxis accounted for **1%** at the docks and **40%** downtown in top view, rising to **42%** downtown at tilt 70. Mixed matched before and after on all 150 frames. [Top comparison](C:/Users/kazda/kiro/gtai-masters/n19/gfx/zones/districts3-top.png) · [Tilt 70 comparison](C:/Users/kazda/kiro/gtai-masters/n19/gfx/zones/districts3-tilt70.png) · [64 px/m docks close-up](C:/Users/kazda/kiro/gtai-masters/n19/gfx/zones/docks3-top-64.png)
+
+### Panel census
+
+Counts are in **van / pickup / taxi / ambulance / sedan** order. Each visible spawned car counts once per sampled frame, including stopped cars. Kerb-parked props have no live sim slot. At tick 468, downtown counted seven cars, four moving and three stopped.
+
+| Panel | Tick 468 before | Tick 468 after | 150-frame sum before | 150-frame sum after |
+|---|---|---|---|---|
+| Docks, 32 px/m, both views | 1/2/2/0/3 | 2/3/0/0/3 | 195/298/293/109/548 | 366/401/8/0/668 |
+| Downtown, 32, top | 0/1/1/1/4 | 1/0/3/0/3 | 0/133/137/187/377 | 118/0/337/0/379 |
+| Downtown, 32, tilt 70 | 0/1/1/1/4 | 1/0/3/0/3 | 0/136/137/188/430 | 121/0/378/0/392 |
+| Mixed, 32, top | 1/0/1/1/6 | 1/0/1/1/6 | 150/52/105/124/709 | 150/52/105/124/709 |
+| Mixed, 32, tilt 70 | 1/0/1/1/6 | 1/0/1/1/6 | 150/54/105/124/758 | 150/54/105/124/758 |
+| Docks, 64, top | 0/2/0/0/1 | 1/2/0/0/0 | 99/258/199/28/285 | 163/331/0/0/375 |
+
+### Files and verification
+
+Changed [zone_traffic_film.gd](C:/Users/kazda/kiro/gtai-wt/n19-gfx/project/dev/view/zone_traffic_film.gd), [film.json](C:/Users/kazda/kiro/gtai-wt/n19-gfx/evidence/n19-gfx/zones/film.json), and the [generated debt baseline](C:/Users/kazda/kiro/gtai-wt/n19-gfx/tools/debt/baseline.json). Full lint passed **19/19** and quick passed before commit. I visually reviewed every panel and verified all twelve clips at **1920×1080, 150 frames, 10 seconds**. All 30 indexed media files resolve. The 33 obsolete top-level scratch items were removed.
+
+### Frame and clip paths
+
+All paths are relative to `C:/Users/kazda/kiro/gtai-masters/n19/gfx/zones/`. [frames.json](C:/Users/kazda/kiro/gtai-masters/n19/gfx/zones/frames.json)
+
+| File | Before reference |
+|---|---|
+| `districts3-top.png` | `baseline3/districts3-top.png` |
+| `districts3-tilt70.png` | `baseline3/districts3-tilt70.png` |
+| `docks3-top-64.png` | `baseline3/docks-top-64.png` |
+| `docks3-top-before-after.png` | `baseline3/docks-top-32.png` |
+| `docks3-tilt70-before-after.png` | `baseline3/docks-tilt70-32.png` |
+| `downtown3-top-before-after.png` | `baseline3/downtown-top-32.png` |
+| `downtown3-tilt70-before-after.png` | `baseline3/downtown-tilt70-32.png` |
+| `mixed3-top-before-after.png` | `baseline3/mixed-top-32.png` |
+| `mixed3-tilt70-before-after.png` | `baseline3/mixed-tilt70-32.png` |
+| `docks3-top.mp4` | `baseline3/docks-top.mp4` |
+| `docks3-tilt70.mp4` | `baseline3/docks-tilt70.mp4` |
+| `downtown3-top.mp4` | `baseline3/downtown-top.mp4` |
+| `downtown3-tilt70.mp4` | `baseline3/downtown-tilt70.mp4` |
+| `mixed3-top.mp4` | `baseline3/mixed-top.mp4` |
+| `mixed3-tilt70.mp4` | `baseline3/mixed-tilt70.mp4` |
+
+[astra: 1484s, exit 0]

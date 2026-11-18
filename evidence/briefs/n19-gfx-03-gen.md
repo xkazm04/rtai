@@ -1,6 +1,6 @@
 # Brief n19-gfx-03-gen: the zebra rule over the generated city, and the docks roof wedges
 
-Lane `gfx`, night run n19. You build; the director reviews every diff and frame. Engine polish only: no new content.
+Lane `gfx`, night run n19, NEW session (fresh context). Read `git log --oneline -15` and `AGENTS.md` first. You build; the director reviews every diff and frame. Engine polish only: no new content.
 
 ## Environment (every Godot run)
 - `export GODOT_BIN=C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe`
@@ -16,6 +16,7 @@ Zebras are decals `TilePainter.T_ZEBRA` (73) laid by `project/features/city/gen/
 
 ## Part 2. Docks roof wedges
 `docs/day/2026-11-17/districts/REPORT.md` line ~30 and next step 3: docks yards put walkers right against a warehouse's north wall, so `CityOcclusion` (`project/features/city/view/city_occlusion.gd`, n8: a body north of a building under tilt is repainted with the printed world and inked as a silhouette) shows black wedges on the roof edge. The note's proposed fix: "a docks-only yard gap" (layout). The alternative is an occlusion fix (e.g. the silhouette/patch for a body whose feet sit within `NORTH_TOL_PX` of the north edge, or the patch clipped to the roof's drawn area makes a wedge).
+What the director already read: `docs/day/2026-11-17/districts/JOURNAL.md` ~line 260: the wedges (black "!" marks over a warehouse roof's north edge, still `evidence/n18-districts/zones_v22_combo_48ppm.jpg`, yard panel) are the full rigs' behind-a-roof ink silhouettes, n8 design (rigs keep theirs, the baked crowd is hidden). So the occlusion is probably working as designed and the layout fix (docks-only yard gap) is the expected route; prove it in the probe before choosing.
 1. PROBE: reproduce in the docks (a docks yard next to a warehouse, tilt 70 and combo, 32 and 48 px/m, any walker hugging the north wall) and capture the wedge; read the code and state the root cause in one paragraph (which rect/patch draws the wedge, and why at the north wall).
 2. FIX: if the cause is an occlusion fault that would also show anywhere else, fix the occlusion (`city_occlusion.gd` / `city_crowd_occlusion.gd` / shader), not the layout. If the occlusion is right and only the layout puts walkers in the bad band, make the docks layout keep walkers off the warehouse's north wall (a docks-only yard gap: walkable cells against the north wall become non-walkable apron/props, or the yard row shifts), **without changing any downtown or mixed block** (prove it: the bake golden list differs only in docks chunks; list the changed chunk ids and their zones).
 3. Same-tick before/after frames at the same spot, 32 and 64 px/m, tilt 70 and top.
