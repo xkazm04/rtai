@@ -101,7 +101,19 @@ func _reload() -> void:
 		var phase: float = _game.session.pilot.hold.table.reload_phase(gun)
 		if phase >= 1.1 and phase < 2.0:
 			await _save("reload", true)
+			if view_id == "top":
+				_log_magazine()
 			return
+
+
+func _log_magazine() -> void:
+	for node: Node in _game.find_children("*", "Node2D", true, false):
+		if node is WeaponMagView:
+			var sprite: Sprite2D = (node as WeaponMagView)._mag
+			if sprite != null and sprite.is_visible_in_tree():
+				Log.info("turn", "visible magazine " + sprite.texture.resource_path)
+		if node is RivetMagView:
+			Log.info("turn", "placeholder held: " + str((node as RivetMagView)._held))
 
 
 func _save(stem: String, crop: bool) -> void:
@@ -111,7 +123,8 @@ func _save(stem: String, crop: bool) -> void:
 		var rig: CutRig = _game.cast.rigs.rig_for(_arena.rivet.id)
 		var scale_px: Vector2 = Vector2(image.get_size()) / get_viewport().get_visible_rect().size
 		var foot: Vector2 = rig.get_global_transform_with_canvas().origin * scale_px
-		image = image.get_region(Rect2i(Vector2i(foot) - Vector2i(102, 164), Vector2i(204, 194)))
+		var offset: Vector2i = Vector2i(102, 94 if view_id == "top" else 164)
+		image = image.get_region(Rect2i(Vector2i(foot) - offset, Vector2i(204, 194)))
 	if image.save_png(out_dir.path_join(stem + ".png")) != OK:
 		Log.error("turn", "cannot write " + stem)
 		_failed = true
