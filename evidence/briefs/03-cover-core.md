@@ -91,3 +91,8 @@ Commits `move: ...` with `Co-Authored-By: GPT-6.2 Astra <noreply@openai.com>`.
 quick gate + lint clean; `run_unit.mjs --changed` then `--fast` green; your scenario + the vault scenario + the
 quest 1 / replay scenarios green; `git status` clean. Report commits, numbers, the chosen gamepad button, fuzz
 counts, the quest 1 hide answer, and anything left.
+
+## Session note (23:25)
+Fresh session. HEAD is f301785dc: the vault (packages 01/02) is committed and green per its last run; nothing is
+uncommitted except the director's JOURNAL.md (never stage it). This session is stopped at 75 minutes: commit each
+step as it lands (query + tests first, then PlayerCover, then flags/data, then the scenario) so a cut loses little.
