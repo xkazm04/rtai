@@ -1,0 +1,77 @@
+{
+  "films": [
+    {
+      "side": "before",
+      "revision": "97d8f349818942502ae3927ff8dc9e814ff87399",
+      "clean": true,
+      "verdict": "pass",
+      "seed": "20261109",
+      "camera_m": "534,533",
+      "view": "combo",
+      "ppm": "32",
+      "rendered_ticks": 680,
+      "sha256_source_mp4": "d131b0599bf3995293c09a12b1a54157f07ebcc13e82ef83b06f99cf1b24e856",
+      "headless_vs_rendered": {
+        "ticks": 650,
+        "fields": [
+          "id",
+          "alive",
+          "hp",
+          "pos.x",
+          "pos.y"
+        ],
+        "headless": {
+          "sha256": "d5513a429c8676e86ad4ce3756bb8f7e989eb20c62c1aa0222332a4dcef59307",
+          "samples": 17356
+        },
+        "rendered": {
+          "sha256": "d5513a429c8676e86ad4ce3756bb8f7e989eb20c62c1aa0222332a4dcef59307",
+          "samples": 17356
+        },
+        "identical": true
+      }
+    },
+    {
+      "side": "after",
+      "revision": "a48a797e1651074a1fc21b03d1e9023758b6ce7b",
+      "clean": true,
+      "verdict": "pass",
+      "seed": "20261109",
+      "camera_m": "534,533",
+      "view": "combo",
+      "ppm": "32",
+      "rendered_ticks": 680,
+      "sha256_source_mp4": "d14d9d996a99291cf476179470dea1fad3325bff664832fc29b1f8a3ad870b9c",
+      "headless_vs_rendered": {
+        "ticks": 650,
+        "fields": [
+          "id",
+          "alive",
+          "hp",
+          "pos.x",
+          "pos.y"
+        ],
+        "headless": {
+          "sha256": "295de1faf3f2669c8a51d887a24c44abbcb6abc03924118308c9655edfda8882",
+          "samples": 17611
+        },
+        "rendered": {
+          "sha256": "295de1faf3f2669c8a51d887a24c44abbcb6abc03924118308c9655edfda8882",
+          "samples": 17611
+        },
+        "identical": true
+      }
+    }
+  ],
+  "masters": [
+    {
+      "file": "north-wall.mp4",
+      "sha256": "5d4586ba07d668a9560f5c7542ea925b150e2f9cbf4d2eb875c9b6aaccf43a34"
+    },
+    {
+      "file": "north-wall-t450.jpg",
+      "sha256": "55d73b3d1037bba8979528b3d6a4d1039fe548b53615fc14a78738db0b5e4cef"
+    }
+  ],
+  "index_sha256": "8671f2978a9d8b740404d9135046b1a4ba2c6afaad5d38d0c4eeacdf709415e3"
+}
