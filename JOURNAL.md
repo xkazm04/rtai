@@ -423,7 +423,7 @@ answered in session 3; their row has not landed), no bench.lock present at 03:20
   (`build/gate/a65570c927ae/gate.json`). 0022e89a5 after it only adds a dev log line + docs.
 
 NEXT (session 5):
-1. Read the bench (started 04:21, --wait=0, CONTENDED): `/c/Users/kazda/kiro/gtai-n18/scratch/
+1. (done 04:34, bench exit 0 CONTENDED at heat -1; see above) a heat 3 bench needs city_bench.gd --heat.
    police-bench-s4b.log` and `build/evidence/bench.json` / `build/bench/`; put section 20 numbers
    in JOURNAL + REPORT row 7 / Call 5 (CONTENDED label). If it failed or never ran, re-run at a
    quiet moment: `node tools/bench/run.mjs --wait=0` under gtai-n18/bench.lock (the --wait form
@@ -435,3 +435,14 @@ NEXT (session 5):
 4. A 64 px/m close-up for the item 6 Call (quest1_clip.gd --ppm=64 --ticks=600-1000, off/on).
 5. districts' car_mix row (not landed at 04:20).
 6. REPORT final at 07:40 (draft current at 0022e89a5).
+- 04:34 BENCH (item 7) on 0022e89a5, `tools/bench/run.mjs --wait=0` under gtai-n18/bench.lock
+  (released), exported release build, windowed, 3 runs x 4 scenarios x 60 s: exit 0 (section 20
+  limits held). p99 3.291 ms, 1 % low 248 fps, worst swap 7.422 ms, worst frame 34.323 ms, hitches
+  >25 ms 3 / >50 ms 0 (unexplained 0), vsync-on drive >25 ms 0, visible avg 47.9 / 10.5 / 281.0
+  (drive/drive48/riot), rigs p99 0.834 ms. CONTENDED: up to 2 other runs during it.
+  CAVEAT: dev/bench/city_bench.gd builds its own World with CitySystem only (no CityHeat), so the
+  bench runs the sim at heat -1 (pre-n18 police): it shows the n18 native changes (sight rule,
+  cop_sees) broke no section 20 limit, NOT the heat 3 cost. The heat 3 cost is the probe
+  (sim step 34-40 us, CityHeat 55 us). A heat-3 bench scenario would need CityHeat mounted in
+  city_bench.gd (dev/bench, no lane's file): REQUEST tools: a `--heat=<level>` bench flag.
+  evidence/n18-police/s4/bench_0022e89a5_contended.txt.

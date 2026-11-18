@@ -19,7 +19,10 @@ Branch `n18-police`, worktree `C:\Users\kazda\kiro\gtai-wt\n18-police`, cut from
 
 ## What does not (yet)
 
-- Item 7's bench section 20 numbers: not measured (no quiet machine / bench lock this session).
+- Item 7's bench (0022e89a5, CONTENDED, exit 0, section 20 held: p99 3.29 ms, 1 % low 248 fps,
+  worst frame 34.3 ms, 3 hitches > 25 ms, riot 281 visible) runs the city at heat -1: the bench
+  scene mounts no CityHeat, so it is a regression check of the native changes, not a heat 3
+  number. Heat 3 cost = the probe (row 7). A `--heat` bench flag is a tools REQUEST.
 - (Closed, session 4) Quest 1's t1200 corner figures (one cop, one ped lying) are not deaths: sim
   dead 0, killed 0 and stage hostiles dead 0 every 60 ticks t60-1320 (`evidence/n18-police/s4/
   quest1_flag_off_deaths_t60-1320.txt`); rig reaction poses, as in the heat 3 clip.
@@ -52,7 +55,7 @@ Branch `n18-police`, worktree `C:\Users\kazda\kiro\gtai-wt\n18-police`, cut from
    Recommend: keep off tonight (one clip of the opening, the hot walk not filmed with it).
 5. Cost at heat 3 (CONTENDED, 400 peds): the sim step 34-40 us with or without living police;
    CityHeat 55 us after the sim-side sighting query (was 77): together < 0.6 % of the 16.7 ms tick.
-   The bench's section 20 numbers: see Merge notes / What does not.
+   The bench (heat -1 only, CONTENDED) held every section 20 limit: see What does not.
 
 ## Merge notes
 
