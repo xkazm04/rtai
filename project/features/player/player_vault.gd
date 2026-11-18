@@ -23,7 +23,11 @@ var _stations: ArenaStations
 var _base: Vector2
 
 
-func configure(t: DataTable) -> void:
+func apply_flags() -> void:
+	enabled = (enabled or LaunchArgs.has("--vault")) and not LaunchArgs.has("--no-vault")
+
+
+func configure(t: DataTable) -> Array[String]:
 	var row: Dictionary = t.object(t.raw, "vault")
 	enabled = row.get("enabled", false) == true
 	ticks = t.integer(row, "ticks")
@@ -32,6 +36,21 @@ func configure(t: DataTable) -> void:
 	no_fire = row.get("no_fire", true) == true
 	apex_m = t.num(row, "apex_m")
 	probe = VaultProbe.new(t, row)
+	var errors: Array[String] = t.errors()
+	if iframe_from > iframe_to or iframe_to >= ticks:
+		errors.append("rivet_motion.json: vault i-frames must be ordered and inside ticks")
+	return errors
+
+
+func drive(stage: CollectCallStage, pilot: StagePilot, c: PlayerCommand, walk: float) -> void:
+	var motion: PlayerMotion = pilot.motion
+	if motion.phase == PlayerMotion.Phase.FREE and c.was_pressed(pilot.actions, &"roll"):
+		prepare(stage)
+	stage.intent.move_by = motion.step(c, walk, pilot.actions)
+	if owns_move:
+		stage.arena.rivet.pos = position
+		if frame >= 0:
+			stage.hidden_in = ""
 
 
 ## Prepare only on a press. Retain the stage's geometry without retaining the stage or pilot.
@@ -50,23 +69,26 @@ func reset_tick() -> void:
 
 
 ## A blocked landing consumes the roll press and stops the mover at its current position.
-func intercept(mover: TopDownMover, stick: Vector2) -> bool:
+func intercept(motion: PlayerMotion, stick: Vector2) -> bool:
 	if not enabled or not _ready:
 		return false
 	_ready = false
+	var mover: TopDownMover = motion.mover
 	var heading: Vector2 = stick if stick != Vector2.ZERO else mover.facing
 	hit = probe.find(start, _radius, mover.velocity, heading)
 	if hit.reason != &"ok" and hit.reason != &"landing_blocked":
 		return false
 	position = start
+	motion.sprinting = false
 	owns_move = true
 	if hit.reason == &"ok":
+		motion.phase = PlayerMotion.Phase.VAULT
 		mover.facing = start.direction_to(hit.landing)
 	mover.stop()
 	return true
 
 
-func advance(k: int) -> void:
+func advance(k: int) -> int:
 	owns_move = true
 	frame = k
 	var u: float = float(k + 1) / ticks
@@ -74,6 +96,7 @@ func advance(k: int) -> void:
 		position = start.lerp(hit.takeoff, 2.0 * u)
 	else:
 		position = hit.touchdown.lerp(hit.landing, 2.0 * u - 1.0)
+	return (k + 1) % ticks
 
 
 func invulnerable() -> bool:
@@ -89,7 +112,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 ## Sequential ejection from touching solids can push a circle back into the first one. Keep
 ## the current footing if even the final body-collision pass would still leave it embedded.
 func guard_move(stage: CollectCallStage) -> void:
-	if stage.intent.move_by == Vector2.ZERO or stage.intent.move_to != Vector2.INF:
+	if not enabled or stage.intent.move_by == Vector2.ZERO or stage.intent.move_to != Vector2.INF:
 		return
 	var p: Vector2 = stage.arena.rivet.pos + stage.intent.move_by
 	var resolved: Vector2 = stage._collide(p)
