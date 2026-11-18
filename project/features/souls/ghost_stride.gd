@@ -8,7 +8,7 @@ extends RefCounted
 
 const MIN_SHARE: float = 0.4
 ## Maximum walk step as a multiple of its table's mean. Unlisted walks use their drawn steps.
-const MAX_STEP_SHARE: Dictionary[String, float] = {"tonnage/p70": 1.25, "tonnage/p55": 1.0}
+const MAX_STEP_SHARE: Dictionary[String, float] = {"tonnage/p70": 2.0, "tonnage/p55": 0.0}
 ## Each drawn walk's measured stride, "<name>/<art>": the profile row's stance travel a frame
 ## (contact centres, tools foot_travel.py; a foot switch takes the mean). No entry: the even cycle.
 const TABLES: Dictionary[String, Array] = {

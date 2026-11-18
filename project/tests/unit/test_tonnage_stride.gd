@@ -47,9 +47,11 @@ func test_fractional_steps_keep_their_proportions_at_any_scale() -> void:
 
 
 func test_shipped_walk_timing_uses_the_filmed_cap_for_each_pitch() -> void:
+	assert_eq(GhostStride.MAX_STEP_SHARE["tonnage/p70"], 2.0)
+	assert_eq(GhostStride.MAX_STEP_SHARE["tonnage/p55"], 0.0)
 	var p70: PackedFloat32Array = PackedFloat32Array(GhostStride.TABLES["tonnage/p70"])
-	assert_eq(GhostStride.table_of("tonnage", "p70"), GhostStride.capped_steps(p70, 1.25))
+	assert_eq(GhostStride.table_of("tonnage", "p70"), GhostStride.capped_steps(p70, 2.0))
 	var p55: PackedFloat32Array = PackedFloat32Array(GhostStride.TABLES["tonnage/p55"])
-	assert_eq(GhostStride.table_of("tonnage", "p55"), GhostStride.capped_steps(p55, 1.0))
+	assert_eq(GhostStride.table_of("tonnage", "p55"), p55)
 	var ohm: PackedFloat32Array = PackedFloat32Array(GhostStride.TABLES["ohm/p70"])
 	assert_eq(GhostStride.table_of("ohm", "p70"), ohm)

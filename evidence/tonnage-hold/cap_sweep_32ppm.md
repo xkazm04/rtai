@@ -11,13 +11,15 @@ Each row uses the same 110 consecutive sprint-right ticks in the p70 and p55 vie
 | 1.25 | **14.13** | **10.37** | **4.040** | **1.5704** | 27.55 | 22.12 | 8.103 | 3.0613 |
 | 1.0 | 12.04 | 9.94 | 4.779 | 1.5929 | **23.46** | **19.49** | **8.546** | **2.8486** |
 
-**p70 ships 1.25.** Worst ride falls from 25.42 to 14.13 px, 5.13 px above the worst-hold bar. Drift rises from 2.819 to 4.040 px, 1.040 px above its bar. Even timing shortens the worst hold further but scores 1.5929 against 1.5704 for 1.25.
+Shipped after review: p70 2.0 keeps drift below 3 px and cuts worst ride to 18.39 px; p55 off keeps drift closer to 3 px and avoids the visible even-timed skate.
 
-**p55 ships 1.0.** Worst ride falls from 31.71 to 23.46 px, 14.46 px above the bar. Drift rises from 7.222 to 8.546 px, 5.546 px above the bar. The even eight-frame gait holds most poses for ten or eleven ticks.
+**Original p70 sweep pick: 1.25.** Worst ride falls from 25.42 to 14.13 px, 5.13 px above the worst-hold bar. Drift rises from 2.819 to 4.040 px, 1.040 px above its bar. Even timing shortens the worst hold further but scores 1.5929 against 1.5704 for 1.25.
+
+**Original p55 sweep pick: 1.0.** Worst ride falls from 31.71 to 23.46 px, 14.46 px above the bar. Drift rises from 7.222 to 8.546 px, 5.546 px above the bar. The even eight-frame gait holds most poses for ten or eleven ticks.
 
 The mean filmed ride also exceeds 9 px by 1.37 px at p70 and 10.49 px at p55. The historical sheet calculation reports mean dwell travel of 8.1 and 15.5 nominal px respectively across all six caps because each pitch retains its cycle length.
 
-In the p70 trace the longest diagonal streaks shorten, but the pad still moves forward during the hold and steps back when the pose changes. The p55 trace shows this skate clearly even with even timing. The first 110 ticks of each shipped clip reproduce the selected arm's hold lengths and rides. [p70 trace](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/tonnage_p70_cap_trace_32ppm.png>) · [p55 trace](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/tonnage_p55_cap_trace_32ppm.png>) · [12-second walk comparison](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/tonnage_cap_walk_32ppm.mp4>)
+In the p70 trace the longest diagonal streaks shorten, but the pad still moves forward during the hold and steps back when the pose changes. The p55 trace shows this skate clearly even with even timing. The first 110 ticks of each original comparison clip reproduce the selected arm's hold lengths and rides. [p70 trace](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/tonnage_p70_cap_trace_32ppm.png>) · [p55 trace](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/tonnage_p55_cap_trace_32ppm.png>) · [12-second walk comparison](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/tonnage_cap_walk_32ppm.mp4>)
 
 ## Reproduction
 
