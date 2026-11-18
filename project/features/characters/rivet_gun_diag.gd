@@ -24,6 +24,7 @@ const DEG: Dictionary[String, PackedFloat32Array] = {
 	"p70/electro_gun": [24.0, -41.0, 150.0, -139.0],
 	"p70/rocket_launcher": [18.0, -39.0, 161.0, -151.0],
 	# p55 (it458/it462): barrel axes by eye at 2x (pistol, machine pistol: the flash read)
+	"p55/assault_rifle": [27.0, -30.0, 150.0, -151.0],
 	"p55/pistol": [37.0, -42.0, 145.0, -138.0],
 	"p55/machine_pistol": [39.0, -40.0, 137.0, -145.0],
 	"p55/plasma_rifle": [27.0, -45.0, 149.0, -139.0],
@@ -48,6 +49,7 @@ const HELMET_X: Dictionary[String, PackedFloat32Array] = {
 	"p70/electro_gun": [112.5, 77.0, 111.5, 148.0],
 	"p70/rocket_launcher": [130.0, 90.2, 130.0, 165.5],
 	# p55: the dome's run centre as above
+	"p55/assault_rifle": [85.5, 83.5, 83.0, 82.0],
 	"p55/pistol": [97.5, 66.5, 96.5, 126.5],
 	"p55/machine_pistol": [99.5, 65.0, 101.5, 135.0],
 	"p55/plasma_rifle": [133.0, 98.2, 133.0, 169.2],
@@ -71,6 +73,7 @@ const FOOT_PX: Dictionary[String, float] = {
 	"p70/electro_gun": 61.0,
 	"p70/rocket_launcher": 62.0,
 	# p55: the delivered cells (no tall cut), boots at row 167-171 of 170-172
+	"p55/assault_rifle": 2.0,
 	"p55/pistol": 2.0,
 	"p55/machine_pistol": 2.0,
 	"p55/plasma_rifle": 1.0,
@@ -85,10 +88,35 @@ const FOOT_PX: Dictionary[String, float] = {
 const FIT_TOL: float = PI / 8.0
 
 static var enabled: bool = true
+static var _rifle_key: StringName = &""
+
+
+## The gameplay id predates the asset schema. Only its own spelling counts as own art.
+static func art_key(weapon: StringName) -> StringName:
+	if weapon != &"assault-rifle":
+		return weapon
+	if _rifle_key == &"":
+		var alias: StringName = ArsenalTable.shipped().art_id(weapon)
+		_rifle_key = alias if alias == String(weapon).replace("-", "_") else weapon
+	return _rifle_key
+
+
+## Part 2 can drop the p70 fallback once the rifle's own facing strip is present.
+static func strip_key(art: String, weapon: StringName) -> StringName:
+	if weapon == &"assault-rifle" and art == "p70":
+		var own: String = RivetStrips.DIR + art + "/rivet_eq_" + String(art_key(weapon)) + ".png"
+		if not RivetStrips.has_file(own):
+			return &"machine_pistol"
+	return art_key(weapon)
+
+
+static func equipped_path(art: String, weapon: StringName) -> String:
+	return "%s%s/rivet_eq_%s" % [RivetStrips.DIR, art, strip_key(art, weapon)]
 
 
 ## True when `weapon` fires drawn diagonal cells under `art` (a gun in DEG with its strip shipped).
 static func draws(art: String, weapon: StringName) -> bool:
+	weapon = strip_key(art, weapon)
 	if not enabled or not DEG.has(art + "/" + String(weapon)):
 		return false
 	return RivetStrips.has_file(
@@ -136,6 +164,7 @@ static func foot_or(path: String, art: String, fallback: float) -> float:
 ## The drawn gun's screen angle (rad) at octant `o`: its diagonal cell's where drawn, else the
 ## facing fire cell's (the camera 90, the sides 0 / 180).
 static func gun_rad(weapon: StringName, o: int, art: String) -> float:
+	weapon = strip_key(art, weapon)
 	var c: int = RivetStrips.DIAG_CELL[o]
 	if c < 0 or not RivetStrips.diag or not draws(art, weapon):
 		return deg_to_rad(90.0 if o == 2 else 180.0 * RivetFrames.LEFT[o])

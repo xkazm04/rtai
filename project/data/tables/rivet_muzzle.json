@@ -3,6 +3,66 @@
   "schema": "gtai.rivet-muzzle/1",
   "strips": {
     "p55": {
+      "rivet_eq_assault_rifle": {
+        "cells": {
+          "1": [
+            114,
+            57
+          ],
+          "3": [
+            111,
+            56
+          ],
+          "4": [
+            114,
+            58
+          ],
+          "5": [
+            136,
+            55
+          ],
+          "6": [
+            69,
+            84
+          ]
+        }
+      },
+      "rivet_eq_assault_rifle_diag": {
+        "cells": {
+          "0": [
+            132,
+            80
+          ],
+          "1": [
+            153,
+            13
+          ],
+          "2": [
+            30,
+            82
+          ],
+          "3": [
+            11,
+            14
+          ]
+        }
+      },
+      "rivet_eq_assault_rifle_left": {
+        "cells": {
+          "0": [
+            6,
+            49
+          ],
+          "1": [
+            3,
+            49
+          ],
+          "2": [
+            2,
+            49
+          ]
+        }
+      },
       "rivet_eq_electro_baton": {
         "cells": {
           "5": [

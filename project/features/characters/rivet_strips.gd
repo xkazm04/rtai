@@ -10,6 +10,7 @@ const BASE: String = "rivet_frames.png"
 
 ## Holds drawn with one hand on the weapon: never mirrored (the owner's hand rule).
 const ONE_HAND: Array[StringName] = [
+	&"assault-rifle",  # two hands, asymmetric grip: its left facings are drawn
 	&"pistol",
 	&"machine_pistol",
 	&"hand_cannon",
@@ -85,7 +86,7 @@ static func strip_of(art: String, weapon: StringName) -> String:
 	var base: String = DIR + art + "/" + BASE
 	if art.is_empty() or not has_file(base):
 		return ""
-	var eq: String = DIR + art + "/rivet_eq_" + String(weapon) + ".png"
+	var eq: String = RivetGunDiag.equipped_path(art, weapon) + ".png"
 	return eq if weapon != &"" and has_file(eq) else base
 
 
@@ -95,7 +96,7 @@ static func diag_or(rig: CutRig, art: String, weapon: StringName, path: String) 
 	var o: int = RivetFrames.oct_of(rig)
 	if not diag or weapon == &"" or cone.has(weapon) or DIAG_CELL[o] < 0:
 		return path
-	var d: String = DIR + art + "/rivet_eq_" + String(weapon) + DIAG
+	var d: String = RivetGunDiag.equipped_path(art, weapon) + DIAG
 	if not fire_latched(rig) or not has_file(d) or RivetGunDiag.off(d):
 		return path
 	if RivetGunDiag.owns(d):  # n17: a gun's drawn diagonal, while the aim lies nearest it
@@ -128,7 +129,7 @@ static func foot_px(path: String) -> float:
 
 ## A one-handed hold turned left: its drawn left strip, else the base (the fallback, logged once).
 static func left_of(art: String, weapon: StringName) -> String:
-	var path: String = DIR + art + "/rivet_eq_" + String(weapon) + "_left.png"
+	var path: String = RivetGunDiag.equipped_path(art, weapon) + "_left.png"
 	if has_file(path):
 		return path
 	if not _logged.has(weapon):

@@ -47,6 +47,7 @@ FACE_WEAPONS = ("flamethrower",)
 GUN_FACE_CELLS = (3, 4)
 GUN_FACE_ONE_HAND = ("pistol", "machine_pistol", "hand_cannon", "ray_gun", "homing_shard")
 GUN_FACE_TOWARD = (
+    "assault_rifle",
     "electro_gun",
     "gloria",
     "plasma_rifle",
@@ -77,11 +78,18 @@ STRIKE_TIP = ("electro_baton",)
 ## Left cells whose gun is held low at the hip (the asset lane's hand fix: the gun in the far
 ## claw), so the near cable spike is the leftmost px of the arm band: the bell mouth, read by eye
 ## on a x5 zoom of the cut cell (d9 it16). Re-read it when the strip is re-cut from another sheet.
+# Pale outlined stars can fall outside flash_core's blue threshold. Measured against the
+# exact noflash twin with rivet_gun_diag_measure.cell_stats, in the strip's 110-space.
+FIRE_PINNED = {("p55", "rivet_eq_assault_rifle", 5): [136, 55],
+               ("p55", "rivet_eq_assault_rifle", 6): [69, 84]}
 LEFT_PINNED = {("p55", "rivet_eq_homing_shard_left", 2): [43, 78]}
 # n17 rivet-strike: a gun's drawn diagonal fire strip (RivetGunDiag, x1.5 cells): its gun's light
 # tan reads as flash core, so the flash root is pinned in 110 space (strip px / 1.5), read as the
 # biggest hot blob that differs from the flashless twin, its pixel nearest the body centre.
 DIAG_PINNED = {
+    ("p55", "rivet_eq_assault_rifle_diag"): {
+        "0": [132, 80], "1": [153, 13], "2": [30, 82], "3": [11, 14]
+    },
     ("p70", "rivet_eq_pistol_diag"): {"0": [160, 101], "1": [127, 35], "2": [27, 100], "3": [59, 37]},
     ("p70", "rivet_eq_machine_pistol_diag"): {
         "0": [121, 98], "1": [117, 15], "2": [26, 98], "3": [51, 15]
@@ -220,6 +228,8 @@ def measure(out_dir, strips):
     for art in sorted(strips):
         rows = {}
         for name in sorted(strips[art]):
+            if name.endswith("_diag"):
+                continue  # measured against its flashless twin below
             if name[9:] in STRIKE_TIP:
                 w = im_w(out_dir, art, name) // EQ_CELLS
                 rows[name] = {"cells": {"5": shape_point(cell_of(out_dir, art, name, 5, w), 5)}}
@@ -240,7 +250,7 @@ def measure(out_dir, strips):
                 elif c in face:
                     p = shape_point(cell, 5, FACE_BAND if flamer else ARM_BAND)  # the nozzle
                 else:
-                    p = fire_point(cell, c) or shape_point(cell, c)
+                    p = FIRE_PINNED.get((art, name, c)) or fire_point(cell, c) or shape_point(cell, c)
                 if p is not None:
                     cells[str(c)] = p
             if cells:
@@ -302,6 +312,12 @@ def contact(out_dir, table, path):
 def main(argv):
     man = json.load(open(MANIFEST, encoding="utf-8"))
     table = measure(man["out"], man["strips"])
+    only = next((arg[7:] for arg in argv if arg.startswith("--only=")), "")
+    if only:
+        existing = json.load(open(OUT, encoding="utf-8"))["strips"]
+        for art, rows in table.items():
+            existing[art].update({name: row for name, row in rows.items() if name.startswith(only)})
+        table = existing
     doc = (
         "d9 rivet: the muzzle point of Rivet's drawn strip cells, measured by "
         "tools/art/rivet_muzzle.py (px from the cell's top-left, unmirrored). The flamer's facing "

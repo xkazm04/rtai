@@ -65,7 +65,11 @@ static func ticks_of(weapon: StringName) -> int:
 		_feel = HitFeel.shipped()
 	if not _feel.enabled:
 		return 0
-	return roundi(_feel.weapon_num(weapon, "trail_ticks", 0.0))
+	# The quest rifle keeps its original tracer tail when its held art changes.
+	var fallback: float = 0.0
+	if weapon == &"assault_rifle":
+		fallback = _feel.weapon_num(&"machine_pistol", "trail_ticks", 0.0)
+	return roundi(_feel.weapon_num(weapon, "trail_ticks", fallback))
 
 
 ## Drop the trails whose life is over at `tick`.

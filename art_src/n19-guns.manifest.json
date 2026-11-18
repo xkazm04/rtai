@@ -15,6 +15,77 @@
    "sha256": "6626d0f64eb13c5701ed424acf27d23ee36fa4a459d9b91c68346d1d2a010066",
    "tool": "Pillow"
   },
+  "diag_dark": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/diag_dark.png",
+   "layout_template": "masters:n19/guns/masters/diag_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/diag_hands.txt",
+   "prompt_sha256": "c13a71511aa0f7a4ff7e57e875366df17f249ed400cb09c9b7c817fc0792be65",
+   "references": [
+    "masters:n19/guns/masters/diag_raw.png"
+   ],
+   "seed": null,
+   "sha256": "a5dd9aeb48a527be39eecd8ddfa0c7cafe48758528e3ee9c3de8978d783d3906",
+   "tool": "Pillow"
+  },
+  "diag_first": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/diag_first.png",
+   "layout_template": "masters:n19/guns/masters/diag_layout.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/diag.txt",
+   "prompt_sha256": "6316e6c55bbd6755ac966e9d975565e8d27f74f378f5928a685112f155942f18",
+   "references": [
+    "masters:n19/guns/masters/diag_layout.png",
+    "masters:n19/guns/masters/contractor_prop.png"
+   ],
+   "seed": null,
+   "sha256": "4ac202eed0c6becc62f82685ce54c2e56f3afc0c5f22751b1108d4e8aa1faf22",
+   "tool": "image_gen"
+  },
+  "diag_key": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/diag_key.png",
+   "layout_template": "masters:n19/guns/masters/diag_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/diag_hands.txt",
+   "prompt_sha256": "c13a71511aa0f7a4ff7e57e875366df17f249ed400cb09c9b7c817fc0792be65",
+   "references": [
+    "masters:n19/guns/masters/diag_raw.png"
+   ],
+   "seed": null,
+   "sha256": "dceb4889c404775ed8192a5a5a882e2d7128a14e92c994ac5339130bd6afbb1d",
+   "tool": "Pillow"
+  },
+  "diag_layout": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/diag_layout.png",
+   "layout_template": "project/features/characters/art/view/p55/rivet_eq_plasma_rifle_diag_noflash.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/diag.txt",
+   "prompt_sha256": "6316e6c55bbd6755ac966e9d975565e8d27f74f378f5928a685112f155942f18",
+   "references": [
+    "project/features/characters/art/view/p55/rivet_eq_plasma_rifle_diag_noflash.png"
+   ],
+   "seed": null,
+   "sha256": "152a3998ec2d15cfa0d248d368c09b8b1a7483c1aadc48f9dc887e6e9595c90f",
+   "tool": "Pillow"
+  },
+  "diag_raw": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/diag_raw.png",
+   "layout_template": "masters:n19/guns/masters/diag_first.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/diag_hands.txt",
+   "prompt_sha256": "c13a71511aa0f7a4ff7e57e875366df17f249ed400cb09c9b7c817fc0792be65",
+   "references": [
+    "masters:n19/guns/masters/diag_first.png"
+   ],
+   "seed": null,
+   "sha256": "2cc43fdf43ac1082ba88c50e16300641f63b808adeba83a8c78f4872524c1e1c",
+   "tool": "image_gen"
+  },
   "held_key": {
    "date": "2026-11-18",
    "file": "masters:n19/guns/masters/held_key.png",
@@ -41,6 +112,150 @@
    ],
    "seed": null,
    "sha256": "0233e134895541e8e686505f9c3adcfd93c78a0c01d90d2c32ac3594e5b2d9f2",
+   "tool": "image_gen"
+  },
+  "left_first": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/left_first.png",
+   "layout_template": "masters:n19/guns/masters/left_layout.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/left.txt",
+   "prompt_sha256": "d1dcac9c5d089b8d8defc3bc978cbb0d71f42c3083f0ee094e8d22184197c083",
+   "references": [
+    "masters:n19/guns/masters/left_layout.png",
+    "masters:n19/guns/masters/contractor_prop.png"
+   ],
+   "seed": null,
+   "sha256": "c5b38b691d09066bbd0cec8048c4945b53f56b2723ec82fa59b6e36e8604bfa2",
+   "tool": "image_gen"
+  },
+  "left_key": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/left_key.png",
+   "layout_template": "masters:n19/guns/masters/left_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/left_hands.txt",
+   "prompt_sha256": "cd0a6938b2a13f11b847eff9295d616fec318fbb0ba31b8b009eaf18c8114e5b",
+   "references": [
+    "masters:n19/guns/masters/left_raw.png"
+   ],
+   "seed": null,
+   "sha256": "1d5fb326cdf03c183b2428d1f9361eb1d424f4b1e1c6d60d01c6f29816642da5",
+   "tool": "Pillow"
+  },
+  "left_layout": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/left_layout.png",
+   "layout_template": "library:keyed/rivet/rivet_eq_electro_gun_55_left.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/left.txt",
+   "prompt_sha256": "d1dcac9c5d089b8d8defc3bc978cbb0d71f42c3083f0ee094e8d22184197c083",
+   "references": [
+    "library:keyed/rivet/rivet_eq_electro_gun_55_left.png"
+   ],
+   "seed": null,
+   "sha256": "9072ed58863e4ffd6adefa57a7e37001987dae025d25c6769f2cfe4f63bb0890",
+   "tool": "Pillow"
+  },
+  "left_raw": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/left_raw.png",
+   "layout_template": "masters:n19/guns/masters/left_first.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/left_hands.txt",
+   "prompt_sha256": "cd0a6938b2a13f11b847eff9295d616fec318fbb0ba31b8b009eaf18c8114e5b",
+   "references": [
+    "masters:n19/guns/masters/left_first.png"
+   ],
+   "seed": null,
+   "sha256": "b93a5b1c2c20dd31eb98a4faad225f9c02266a61dda918c39d4a3c095eb8fc3b",
+   "tool": "image_gen"
+  },
+  "main_dark": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/main_dark.png",
+   "layout_template": "masters:n19/guns/masters/main_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/main.txt",
+   "prompt_sha256": "e047de0e9e4eb1b04be86f23b72d51cfca13bbb7c715afcb8f819e6d2151c80d",
+   "references": [
+    "masters:n19/guns/masters/main_raw.png"
+   ],
+   "seed": null,
+   "sha256": "c90bef685d312f89fc04f2603d0843481b2a34bbf30a6f3722c75149cd40c652",
+   "tool": "Pillow"
+  },
+  "main_key": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/main_key.png",
+   "layout_template": "masters:n19/guns/masters/main_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/main.txt",
+   "prompt_sha256": "e047de0e9e4eb1b04be86f23b72d51cfca13bbb7c715afcb8f819e6d2151c80d",
+   "references": [
+    "masters:n19/guns/masters/main_raw.png"
+   ],
+   "seed": null,
+   "sha256": "2a249cef2f9b825b43804220cc79f86d696396dcb59f75ce97771855c47db529",
+   "tool": "Pillow"
+  },
+  "main_layout": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/main_layout.png",
+   "layout_template": "library:keyed/rivet/rivet_eq_plasma_rifle_55_v2.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/main.txt",
+   "prompt_sha256": "e047de0e9e4eb1b04be86f23b72d51cfca13bbb7c715afcb8f819e6d2151c80d",
+   "references": [
+    "library:keyed/rivet/rivet_eq_plasma_rifle_55_v2.png"
+   ],
+   "seed": null,
+   "sha256": "53c9f2260722620b573ffd58621d579414dbce93ee329ae4b283ef4afd36cca1",
+   "tool": "Pillow"
+  },
+  "main_raw": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/main_raw.png",
+   "layout_template": "masters:n19/guns/masters/main_layout.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/main.txt",
+   "prompt_sha256": "e047de0e9e4eb1b04be86f23b72d51cfca13bbb7c715afcb8f819e6d2151c80d",
+   "references": [
+    "masters:n19/guns/masters/main_layout.png",
+    "masters:n19/guns/masters/contractor_prop.png"
+   ],
+   "seed": null,
+   "sha256": "140ea7eb93da077edb6923cee5db5d8b62c271d76043e7f67cf09a002322aef5",
+   "tool": "image_gen"
+  },
+  "model_reference": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/model_reference.png",
+   "layout_template": "project/features/combat/weapons/art/ground_rifle_70.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/rejected_model.txt",
+   "prompt_sha256": "234fa585e33bccab86dfd32de8a8d2d9c9d3b403aa5953fa213d9503ab0b691f",
+   "references": [
+    "project/features/combat/weapons/art/ground_rifle_70.png",
+    "project/features/characters/art/view/p55/contractor_card.png",
+    "project/features/characters/art/view/p55/rivet_eq_plasma_rifle.png"
+   ],
+   "seed": null,
+   "sha256": "629477b8fb0591ef982236730fcd3eb7a4848fd6e97f265cb7c1a50d858a0c9e",
+   "tool": "Pillow"
+  },
+  "rejected_model_raw": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/rejected_model_raw.png",
+   "layout_template": "masters:n19/guns/masters/model_reference.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/rejected_model.txt",
+   "prompt_sha256": "234fa585e33bccab86dfd32de8a8d2d9c9d3b403aa5953fa213d9503ab0b691f",
+   "references": [
+    "masters:n19/guns/masters/model_reference.png"
+   ],
+   "seed": null,
+   "sha256": "67619ba4a68bbf4680a35b90a436873093dac68eaa5c190e79aac6eb147f685e",
    "tool": "image_gen"
   }
  }

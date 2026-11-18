@@ -76,11 +76,12 @@ func test_a_weapon_out_takes_its_equipped_strip() -> void:
 	assert_eq(RivetStrips.strip_of("p70", &""), P70 + RivetStrips.BASE)
 
 
-func test_every_one_handed_hold_has_a_drawn_left_strip_at_both_pitches() -> void:
+func test_fixed_hand_holds_use_a_drawn_left_strip_at_both_pitches() -> void:
 	for art: String in ["p70", "p55"]:
 		for w: StringName in RivetStrips.ONE_HAND:
 			var path: String = RivetStrips.left_of(art, w)
-			assert_eq(path, RivetStrips.DIR + art + "/rivet_eq_%s_left.png" % w)
+			var key: StringName = RivetGunDiag.strip_key(art, w)
+			assert_eq(path, RivetStrips.DIR + art + "/rivet_eq_%s_left.png" % key)
 			var tex: Texture2D = load(path) as Texture2D
 			assert_eq(tex.get_width() % RivetFrames.LEFT_CELLS, 0, String(w))
 

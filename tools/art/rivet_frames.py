@@ -177,7 +177,7 @@ def _manifest(path: str, only: str = "", no_rim: bool = False) -> None:
         for name, row in rows.items():
             if not name.startswith(only):
                 continue
-            argv = [f"{lib}/{row['sheet']}", f"{out}/{art}/{name}.png", row["counts"]]
+            argv = [str(Path(lib) / row["sheet"]), f"{out}/{art}/{name}.png", row["counts"]]
             if "cc" in row:
                 argv.append(f"--cc={row['cc']}")
             if "act_k" in row:
@@ -206,6 +206,11 @@ def main() -> None:
     fig_h = float(opts.get("fig_h", 110))
     cc = tuple(int(c) for c in opts["cc"].split(",")) if "cc" in opts else ()
     rgba, bands = _sheet(args[0], counts, cc)
+    if "pixels" in opts:  # flashless twin: identical crop geometry and helmet/foot anchors
+        alternate = Image.open(opts["pixels"]).convert("RGBA")
+        if alternate.size != rgba.size:
+            raise ValueError("alternate pixels must match the measured sheet")
+        rgba = alternate
     if "feet_up" in opts:
         _feet_up(bands[0], [float(v) for v in opts["feet_up"].split(",")])
     ref_w = float(np.median([f["head_w"] for f in bands[0]]))
