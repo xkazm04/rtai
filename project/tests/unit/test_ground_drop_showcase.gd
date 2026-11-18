@@ -15,7 +15,9 @@ func test_the_drop_is_the_pickups_own_drawing_by_the_views_art() -> void:
 	var tex: Texture2D = GroundDropShowcase.texture()
 	var form: String = WeaponShowcase.form_of(ViewMode.shared())
 	var art: StringName = ArsenalTable.shipped().art_id(GroundDropShowcase.PICKUP)
-	assert_eq(art, &"assault_rifle", "the pickup and held rifle share their own art")
+	assert_eq(
+		WeaponArtKey.of(art), &"assault_rifle", "the pickup and held rifle share their own art"
+	)
 	assert_not_null(tex, "a showcase drawing under a tilt")
 	if tex != null:
 		assert_eq(tex.resource_path, WeaponShowcase.path_of(art, form))
