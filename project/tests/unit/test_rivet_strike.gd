@@ -53,6 +53,8 @@ func test_native_grid_preserves_draw_size_and_boot_line() -> void:
 		var old: Vector2 = Vector2(163, 154) if art == "p70" else Vector2(170, 139)
 		assert_almost_eq(cell, old * 1.5, Vector2.ONE * 0.51)
 		assert_almost_eq(cell * card.global_scale, old, Vector2.ONE * 0.34)
+		assert_eq(card.offset.x + cell.x * 0.5, 0.0, "collar axis on the rig origin")
+		assert_eq(card.global_position, rig.global_position)
 		var boot: float = (cell.y + card.offset.y) * card.global_scale.y
 		assert_almost_eq(boot, 26.0 if art == "p70" else 14.0, 0.001)
 	ViewMode._shared = was
