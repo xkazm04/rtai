@@ -9,7 +9,7 @@ Evidence: `evidence/n18-districts/` (in the branch) and `C:\Users\kazda\kiro\gta
 |---|---|---|
 | 1 zones as data | layout consts -> `city_district.json` zone rows (`gtai.city-district/2`), zone map of chunk rects; step one byte-identical at v14 (`bake --check`), planted share change caught | commits 634b2f552, 6ca059905; `evidence/n18-districts/zone_map_v15.{png,json}` |
 | 2 zone layouts + lint | docks east band (48 chunks, 18.75 %): long warehouse blocks over dropped streets, yard rows, quay + water; downtown centre (25 chunks): denser towers, plazas, crowds; mixed elsewhere. test_city_zone_lint: roads one network, sidewalks + zebras one network, every zone has road and sidewalk | e8ecb61c9 |
-| 3 art | v16 warehouse/shed/tower roofs + water; dock + glass facades (+ brick dock and stone office alternates); v17 water bug fix; v18 quay edge autotile; v19 container yards; v20 downtown plazas (one fountain per plaza), cold store, sawtooth, square tall roofs; v21 one lettered name a block; v22 it471 roofs (clocktower, terrace, billboard tall roof, bank dome + crown 2x2, shed b, warehouse c kept upright by `upright_roofs`), sculpture v3 | `evidence/n18-districts/ab_*` (v22: `ab_it471_roofs_*_v21_v22_combo.jpg`) |
+| 3 art | v16 warehouse/shed/tower roofs + water; dock + glass facades (+ brick dock and stone office alternates); v17 water bug fix; v18 quay edge autotile; v19 container yards; v20 downtown plazas (one fountain per plaza), cold store, sawtooth, square tall roofs; v21 one lettered name a block; v22 it471 roofs (clocktower, terrace, billboard tall roof, bank dome + crown 2x2, shed b, warehouse c kept upright by `upright_roofs`), sculpture v3; v23 zone grounds (downtown plaza granite bond `plaza_ground`, docks apron v3t `apron_ground`) | `evidence/n18-districts/ab_*` (v22: `ab_it471_roofs_*_v21_v22_combo.jpg`; v23: `ab_it471_ground_*_v22_v23_combo.jpg`) |
 | 4 places | `data/tables/places.json` + CityPlaces.place(id) -> {zone, block, chunk, cell, door, facing}; test_city_places | ca6b1fcc2 |
 | 5 Dock 9 | `--quest1-places`: Dock 9's own stage points sit before the dock_9 door; off by default; scenarios flag off 55/55. Flag ON: quest1_input pays (921 s, 0 deaths, replay identical) after the bot fix (BotRoute A* walk + `StageLayout.w_dock`) | b0314350c, 0511d8629; `evidence/n18-districts/quest1_places_on_scenarios_v2.txt` |
 | 6 film | docks -> downtown drive, 37 s at 32 px/m, along the north sidewalk (pass 2, v22); one 48 px/m still per zone | `evidence/n18-districts/drive2_docks_downtown_v22_combo_32ppm.mp4`, `zones_v22_combo_48ppm.jpg`; masters frames.json (15) |
@@ -35,10 +35,14 @@ survivors are look-only, pinned by the golden hash list; the one real gap (:126)
   the flag on), but the walk Harbor Road -> Dock 9 is 348 s each way on foot, and the quest has no car leg yet.
 - Docks on the east edge (vs another edge); downtown size (25 chunks) and landmark density (0.35).
 - The 2x2 tower roofs' orange hazard stripes vs the colour law (the asset lane's `_ochre` twins are ready).
-- Each zone's look, before/after stills: see masters frames.json.
+- Each zone's look, before/after stills: see masters frames.json; one still per zone at 48 px/m: `evidence/n18-districts/zones_v22_combo_48ppm.jpg`.
+- Downtown's granite plaza ground (v23) is darker and busier than the mixed zone's slabs: it separates the zones, the walkers
+  still read on it; keep, or ask the asset lane for a lighter granite? (`ab_it471_ground_plaza-32ppm_v22_v23_combo.jpg`)
+- Art not taken yet and why: the coaster ship (drawn east-west, the docks basins run north-south), the silos (needs a
+  landmark placement rule), `warehouse_70_c_v2` (no grade yet), the street/dock cards (next: plaza/yard/apron dressing).
 
 ## Merge notes
-- Re-blessed: `project/data/generated/city_chunks.sha256` (GENERATOR_VERSION 14 -> 22). No replay or parity digest moved.
+- Re-blessed: `project/data/generated/city_chunks.sha256` (GENERATOR_VERSION 14 -> 23). No replay or parity digest moved.
 - `tools/debt/baseline.json`: dev_loc 21992 -> 22089 accepted (dev/bots BotRoute; reason stored).
 - Shared files touched: `project/boot/launch_args.gd` (one flag line `--quest1-places`; the `--perf-hud` comment moved
   onto its flag's line to keep 200 lines).

@@ -281,3 +281,15 @@ REQUEST assets 11 (new, order 1): a docks yard ground, 8 x 8 m at 96 px/m (768 p
 worn concrete with painted yellow-ochre (not vermilion) bay lines for 6.1 x 2.4 m containers, two rows a tile (the
 YARD_SLOTS rows at about y 2 m and y 5.5 m of the tile), periodic both ways; match `ground_quay_apron_70_v3t` tone.
 It would make the container yards read as yards, not plazas.
+NEED police: `project/features/city/sim/**` (traffic variant pick) - the brief asks for "more trucks in the docks if the
+vehicle table has them": there is no truck, but van and pickup exist (`VehicleProfile.archetype_of_variant`). If you
+want it, read `CityZones.id_of_chunk(cx, cy)` (gen side, read-only for you) and weight van/pickup up in `&"docks"`. If you
+prefer data, say so here and I add a `car_mix` weight row to the docks/downtown rows of city_district.json (my file).
+- 02:50 the it471 coaster ship (A) is drawn lying east-west for the 70 camera; the docks basins run north-south (24 m wide
+  between piers), so it cannot moor there without a 90 deg turn that breaks the drawing. Options for later: an east-west
+  basin along the south edge of the docks band, or ask the asset lane for a bow-north drawing. Not done.
+- 02:53 GATE (snapshot, `tools/gate/run.mjs --reels`) on 70ca0c1e7 (v23): evidence PASS lint 19/19, unit 2879/0 (2 skipped),
+  scenarios 55/55, parity bit-exact (planted caught at 629), selftest look goldens 11/11 (worst 0.31) + 0 placeholders,
+  export-audit release-compile 726/0. Reels running.
+- v24 prepared in the tree, not baked yet (Godot held by the gate): coffee kiosk (A) + food cart v2 (A) cards + plan twins
+  into downtown plaza_props (ids 114-115).
