@@ -1194,6 +1194,11 @@
           40
         ],
         "grids": {
+          "p55": {
+            "cop/head_cap": "cop_patrol_claw_throw.png",
+            "cop/head_helmet": "cop_riot_claw_throw.png",
+            "cop/head_swat": "swat_claw_throw.png"
+          },
           "p70": {
             "cop/head_cap": "cop_patrol_claw_throw.png",
             "cop/head_helmet": "cop_riot_claw_throw.png",

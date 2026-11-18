@@ -11,6 +11,7 @@ corpse (the last frame) is the 3/4-away one when BACK_FROM_AWAY names the kind, 
 grids do (a face-down corpse seen from behind reads as a person standing). Deterministic.
 
     PYTHONDONTWRITEBYTECODE=1 python tools/art/kill_cells_pack.py --death=pistol_snap [--art=p55] [--lib=<dir>]
+For the area-matched p55 police claw corpses, add --variant=area to --death=claw_throw --art=p55.
 A death in SCRAPS_BY_DEATH also packs its loose scrap row as `<kind>_<death>_scraps.png`.
 
     PYTHONDONTWRITEBYTECODE=1 python tools/art/kill_cells_pack.py --headgear  (<kind>_headgear_tumble.png)
@@ -72,8 +73,9 @@ def frames_of(src: Path) -> int:
     return n
 
 
-def pack(kind: str, death: str, lib: Path, art: str = "p70") -> Path | None:
-    src = lib / f"{kind}_{death}_{art[1:]}_cells"
+def pack(kind: str, death: str, lib: Path, art: str = "p70", variant: str = "") -> Path | None:
+    suffix = f"_{variant}" if variant else ""
+    src = lib / f"{kind}_{death}_{art[1:]}{suffix}_cells"
     n = min(frames_of(src), FRAMES_BY_DEATH.get(death, 99))
     if n == 0:
         return None
@@ -146,13 +148,14 @@ def main() -> None:
     ap.add_argument("--death", default="pistol_snap")
     ap.add_argument("--lib", default=str(LIB))
     ap.add_argument("--art", default="p70", help="p70 or p55 (the cells' pitch)")
+    ap.add_argument("--variant", choices=["area"], default="", help="use the alternate source cut")
     ap.add_argument("--headgear", action="store_true", help="pack the loose headgear cells instead")
     args = ap.parse_args()
     for kind in KINDS:
         if args.headgear:
             dst = pack_headgear(kind, Path(args.lib))
         else:
-            dst = pack(kind, args.death, Path(args.lib), args.art)
+            dst = pack(kind, args.death, Path(args.lib), args.art, args.variant)
         if dst is None:
             print(f"{kind}: no cells")
             continue

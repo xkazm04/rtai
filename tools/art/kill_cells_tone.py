@@ -16,7 +16,7 @@ A grid whose grey-violet share is over VIOLET_K x its walk's (and over VIOLET_MI
 walk's blue hue, saturation x VIOLET_SAT (value and shading kept); afterwards its share reads ~0, so a second
 run changes nothing.
 
-    PYTHONDONTWRITEBYTECODE=1 python tools/art/kill_cells_tone.py [--write]   (no --write = report)
+    PYTHONDONTWRITEBYTECODE=1 python tools/art/kill_cells_tone.py [--write] [p55/file.png ...]
 """
 
 import json
@@ -83,7 +83,9 @@ def own_files() -> set:
 
 def main() -> int:
     write = "--write" in sys.argv[1:]
+    selected = {arg for arg in sys.argv[1:] if arg != "--write"}
     files = own_files()
+    seen = set()
     for art in ("p70", "p55"):
         for kind, walk in KINDS.items():
             ref = VIEW / art / walk
@@ -91,9 +93,12 @@ def main() -> int:
                 continue
             _, rh, rv = blue(ref)
             for f in sorted(x for x in files if x.startswith(kind + "_")):
+                if selected and f"{art}/{f}" not in selected:
+                    continue
                 p = VIEW / art / f
                 if not p.exists():
                     continue
+                seen.add(f"{art}/{f}")
                 n, h, v = blue(p)
                 off = abs(h - rh) > HUE_TOL or abs(v / rv - 1.0) > VALUE_TOL
                 print(f"{art}/{f:38s} hue {h - rh:+5.1f} value x{v / rv:.2f} {'TONE' if off else 'ok'}")
@@ -104,6 +109,9 @@ def main() -> int:
                     print(f"{art}/{f:38s} grey-violet {share:.3f} vs walk {walk_share:.3f} UNVIOLET")
                     if write:
                         unviolet(p, rh)
+    if selected - seen:
+        print("No police grid matched: " + ", ".join(sorted(selected - seen)), file=sys.stderr)
+        return 1
     return 0
 
 

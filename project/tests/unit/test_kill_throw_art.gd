@@ -64,6 +64,14 @@ func test_the_four_street_kinds_play_their_own_drawn_throw() -> void:
 	assert_almost_eq(look, Vector2.LEFT, Vector2.ONE * 0.0001, "on his back, head away from Rivet")
 
 
+func test_tilt_uses_the_three_cops_drawn_at_55_degrees() -> void:
+	var e: KillTrackRows.Extra = KillTrackRows.of(&"claw_throw")
+	for row: String in ["cop/head_cap", "cop/head_helmet", "cop/head_swat"]:
+		var file: String = "p55/%s_claw_throw.png" % StreetDeadPlan.CLASS_OF[row]
+		assert_eq(KillDeathCells.path_of(e, "p55", row), file)
+		assert_true(ResourceLoader.exists(StreetWalkerCards.DIR + file), file)
+
+
 func test_his_own_drawn_body_is_thrown_further_than_the_fall_grid() -> void:
 	var d: KillNewStyles.Death = _death()
 	var grid: Vector2 = KillThrowArt.slide(d, 400, PPM)
