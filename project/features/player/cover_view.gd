@@ -83,7 +83,7 @@ func _place() -> void:
 		var draw: Transform2D = parent_inv * around_feet * f.global_transform
 		RenderingServer.canvas_item_set_transform(f.get_canvas_item(), draw)
 	var behind: bool = _cover.spot != null and _cover.spot.normal == Vector2.UP
-	if view.occlude and behind and RivetFrames.drawn(rig):
+	if view.occlude and behind and _cover.blocks_fire() and RivetFrames.drawn(rig):
 		_upper = CoverUpperCard.show_above(
 			rig.head_card, _upper if is_instance_valid(_upper) else null
 		)

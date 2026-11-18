@@ -1,9 +1,10 @@
 class_name CoverUpperCard
 extends Sprite2D
 ## The north face is behind the station card. Trace Rivet's actual helmet and gun cell over
-## that card at half opacity. The boots stay behind the prop with its ordinary ink silhouette.
+## that card translucently. The boots stay behind the prop with its ordinary ink silhouette.
 
-const UPPER: float = 0.70
+## The equipped side cell carries the pistol below the belt, roughly 85% down its crop.
+const UPPER: float = 0.87
 
 
 static func show_above(source: Sprite2D, last: CoverUpperCard) -> CoverUpperCard:
@@ -14,7 +15,7 @@ static func show_above(source: Sprite2D, last: CoverUpperCard) -> CoverUpperCard
 		ink.region_enabled = true
 		ink.z_as_relative = false
 		ink.z_index = RenderLayers.z(&"roof_occluders") + 1
-		ink.self_modulate.a = 0.6
+		ink.self_modulate.a = 0.78
 		source.add_child(ink)
 	elif ink.get_parent() != source:
 		ink.reparent(source, false)
