@@ -582,3 +582,10 @@ Session 7 ended ~07:35 with a clean tree.
   entries, every file present (node check). Evidence still matches the v33 build; REPORT unchanged.
 NEXT: morning merge per REPORT `## Merge notes` (re-bless golden hash list after merge; police reads zone `car_art`).
 Session 8 ended ~07:33 with a clean tree.
+
+## Session 9 (iteration 9, REPORT, 07:40-07:45)
+- 07:41 tree clean, HEAD 76b6d8289. No code change. REPORT gained `## What blocked or slowed the lane` (from JOURNAL
+  FRICTION lines: no hard block; snapshot gate rule, quick.mjs cascade, kill_reel tests before import, LFS pointer import).
+  cites REPORT.md: 0 missing.
+NEXT: morning merge per REPORT `## Merge notes` (re-bless golden hash list after merge; police reads zone `car_art`).
+Session 9 ended ~07:45 with a clean tree.

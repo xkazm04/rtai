@@ -32,6 +32,17 @@ Mutate `features/city/gen/dock_dresser.gd`: 6/12 (50 %), then 10/12 (83.3 %) aft
 - The zone `car_art` rows are data only on this branch: the spawner that reads them is the police lane's file (NEED police in
   JOURNAL); until then every zone draws `CitySpawner.CAR_ART`.
 
+## What blocked or slowed the lane (no hard block)
+- Nothing blocked an item outright; the asset lane delivered through the night (it471-it477), so no item waited on art.
+- 02:33, about 15 min lost: an evidence run on the live tree came back INVALID because I edited files while it ran. Fix: gates
+  go through `tools/gate/run.mjs` (snapshot) from then on (JOURNAL 02:33).
+- `tools/gate/quick.mjs` reports FAIL on tests that reach CitySystem: a check-only compile cascade from
+  `core/events/events.gd`, while GUT passes them. Worked around with full unit runs; `REQUEST tools:` in JOURNAL.
+- Lint tool-tests fail 6 kill_reel break tests while new PNGs are not yet imported (they read the real tree); clears after
+  `--import`. `REQUEST tools:` in JOURNAL.
+- `git show <rev>:<png>` returns the LFS pointer; importing it rewrote tracked `.import` files with `valid=false`, about
+  10 min to restore (smudge + checkout of the `.import`). Before/after renders now smudge first.
+
 ## Calls for the owner
 - Dock 9 into the docks by default? (today: behind `--quest1-places`). Recommendation: not yet. It plays (quest1_input pays
   with the flag on), but the walk is 348 s each way on foot, and the quest has no car leg yet.
