@@ -57,3 +57,39 @@ func _populate(sim: CitySimBackend) -> void:
 	for k: int in 6:
 		var spec: Array = [SimConst.K_PED, 270.5 + 3.0 * k, 310.5, 1.0, 0.0, 1, 0, 1.3, 0.0, 0]
 		assert_gte(sim.spawn(PackedFloat64Array(spec)), 0)
+
+
+## Heat 2 on CityRoadMap: two dispatched cars (east and west), an undispatched one, foot cops;
+## the cars park, crews get out, then heat 0 sends everyone on. Bit for bit, every tick.
+func test_the_car_ladder_is_bit_exact_native_vs_reference() -> void:
+	if not CitySimNative.available():
+		pending("no native library in this build")
+		return
+	var ref: CitySimBackend = CitySimRef.new()
+	var nat: CitySimBackend = CitySimNative.new()
+	var tune: PackedFloat64Array = [0.0, 3.0, 4.0, 6.0, 10.0, 3.0, 1.4, 2.0, 12.0]
+	for sim: CitySimBackend in [ref, nat]:
+		CityRoadMap.paint(sim)
+		sim.set_police(tune)
+		assert_gte(CityRoadMap.dispatch_car(sim, 262.0), 0)
+		var west: Array = [SimConst.K_PCAR, 380.0, CityRoadMap.LANE_W, -1.0, 0.0, 8]
+		west.append_array([SimConst.F_PROMOTED | SimConst.F_ENGAGED, 17.0, CityRoadMap.LANE_W, 2])
+		assert_gte(sim.spawn(PackedFloat64Array(west)), 0)
+		var idle: Array = [SimConst.K_PCAR, 300.0, CityRoadMap.LANE_E, 1.0, 0.0, 8, 1, 17.0]
+		assert_gte(sim.spawn(PackedFloat64Array(idle + [CityRoadMap.LANE_E, 0])), 0)
+		for k: int in 4:
+			assert_gte(CityWallMap.spawn_cop(sim, Vector2(280.5 + 12.0 * k, 300.5)), 0)
+		sim.set_heat(2, 340.5, 317.5)
+	var cops_max: int = 0
+	for t: int in 1200:
+		if t == 900:
+			for sim: CitySimBackend in [ref, nat]:
+				sim.set_heat(0, 340.5, 317.5)
+		for sim: CitySimBackend in [ref, nat]:
+			sim.step(SimClock.TICK_DT, 320.0, 320.0, 270.5, 290.5)
+		if ref.snapshot() != nat.snapshot():
+			fail_test("car ladder diverged at tick %d" % t)
+			return
+		cops_max = maxi(cops_max, ref.get_counters()[SimConst.CN_COPS])
+	gut.p("car ladder parity: 1200 ticks bit for bit, up to %d cops (4 foot + crews)" % cops_max)
+	assert_eq(cops_max, 8, "both dispatched cars unloaded their crews")

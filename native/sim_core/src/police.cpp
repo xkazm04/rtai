@@ -4,7 +4,11 @@
 // lowest slot on a tie): they path to the point on the flow field, steer at Rivet and fire only
 // with him in sight, and search pol_[PT_SEARCH_S] once one is within PT_ARRIVE_M of it; then all
 // go back to walking until the point moves to another cell or the level rises.
-// GDScript reference: project/features/city/sim/sim_police.gd (op for op, parity).
+// Heat 2 (the game dispatches police cars, F_ENGAGED): a dispatched car routes to the point with
+// the police turn rule, stops within PT_CAR_STOP_M of it and parks (F_PARKED); its PT_CREW cops
+// get out on the side facing the point as engaged foot cops (F_CREW, outside the PT_FOOT count).
+// When the search ends or heat falls to 0 every claim is cancelled: crews walk, cars drive on.
+// GDScript reference: project/features/city/sim/sim_police.gd + sim_cops.gd (op for op, parity).
 #include <cmath>
 
 #include "city_core.h"
@@ -43,15 +47,26 @@ void CityCore::police_pass(double dt) {
 			want = 0;
 		}
 	}
+	if (want == 0) police_release();
 	police_fill(want);
 	ff_stats_[FS_SEARCH_TICKS] = (int32_t)std::floor(pol_search_ / dt + 0.5);
 }
 
+// Every claim cancelled: cops (crews too) walk, police cars drive on as traffic.
+void CityCore::police_release() {
+	for (int i = 0; i < CAP; i++) {
+		if (alive_[i] == 0) continue;
+		if (kind_[i] == K_COP) flags_[i] = flags_[i] & ~(F_ENGAGED | F_CREW);
+		else if (kind_[i] == K_PCAR) flags_[i] = flags_[i] & ~(F_ENGAGED | F_PARKED);
+	}
+}
+
 // Engage or release cops until want are engaged: release the farthest first, engage the nearest.
+// A car's crew is outside the count.
 void CityCore::police_fill(int want) {
 	int n = 0;
 	for (int i = 0; i < CAP; i++) {
-		if (alive_[i] != 0 && kind_[i] == K_COP && (flags_[i] & F_ENGAGED) != 0) n++;
+		if (alive_[i] != 0 && kind_[i] == K_COP && (flags_[i] & (F_ENGAGED | F_CREW)) == F_ENGAGED) n++;
 	}
 	while (n != want) {
 		bool add = n < want;
@@ -59,7 +74,7 @@ void CityCore::police_fill(int want) {
 		double best = 0.0;
 		for (int i = 0; i < CAP; i++) {
 			if (alive_[i] == 0 || kind_[i] != K_COP || mode_[i] == M_DEAD) continue;
-			if (((flags_[i] & F_ENGAGED) != 0) == add) continue;
+			if (((flags_[i] & F_ENGAGED) != 0) == add || (flags_[i] & F_CREW) != 0) continue;
 			double ax = px_[i] - heat_x_, ay = py_[i] - heat_y_;
 			double d2 = ax * ax + ay * ay;
 			if (pick < 0 || (add ? d2 < best : d2 > best)) {
@@ -144,6 +159,40 @@ void CityCore::cop_walk(int i, double dt) {
 	ped_walk(i, x, y, dx, dy, spd);
 	if (spd > 0.0) spd = pol_[PT_WALK_V];
 	person_move(i, x, y, dx, dy, spd, dt);
+}
+
+// Heat 2: a dispatched car brakes to a stop within PT_CAR_STOP_M of the last-seen point; a parked
+// one stays stopped.
+double CityCore::car_police_speed(const Car &c, double vdes) const {
+	int i = c.i;
+	if ((flags_[i] & F_PARKED) != 0) return 0.0;
+	if ((flags_[i] & F_ENGAGED) == 0) return vdes;
+	double ax = c.x - heat_x_, ay = c.y - heat_y_, r = pol_[PT_CAR_STOP_M];
+	return ax * ax + ay * ay <= r * r ? 0.0 : vdes;
+}
+
+// Stopped there (under 0.5 m/s): the car parks and its crew gets out 2 m to the side facing the
+// point (the flow field does not see cars: a crew on the far side pressed into its own car),
+// 1.4 m apart along it, facing out.
+void CityCore::car_unload(const Car &c) {
+	int i = c.i;
+	if ((flags_[i] & F_ENGAGED) == 0 || c.vv >= 0.5) return;
+	double ax = c.x - heat_x_, ay = c.y - heat_y_, r = pol_[PT_CAR_STOP_M];
+	if (ax * ax + ay * ay > r * r) return;
+	flags_[i] = (uint8_t)((flags_[i] & ~F_ENGAGED) | F_PARKED);
+	int n = (int)pol_[PT_CREW];
+	double sx = -c.hhy, sy = c.hhx;
+	if (sx * (heat_x_ - c.x) + sy * (heat_y_ - c.y) < 0.0) {
+		sx = -sx;
+		sy = -sy;
+	}
+	for (int k = 0; k < n; k++) {
+		double along = (double)k * 1.4 - 0.7 * (double)(n - 1);
+		double spec[SP_LEN] = {(double)K_COP, c.x + sx * 2.0 + c.hhx * along,
+			c.y + sy * 2.0 + c.hhy * along, sx, sy, (double)ART_COP,
+			(double)(F_PROMOTED | F_ENGAGED | F_CREW), 3.4, 0.0, 0.0};
+		spawn(spec);
+	}
 }
 
 }  // namespace gtai::sim

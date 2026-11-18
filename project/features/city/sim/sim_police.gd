@@ -13,7 +13,7 @@ var level: int = -1
 var heat_x: float = 0.0
 var heat_y: float = 0.0
 ## The ladder's tune (SimConst.PT_LEN, data/tables/heat.json `city`); kept across reset().
-var tune: PackedFloat64Array = PackedFloat64Array([0.0, 3.0, 4.0, 6.0, 10.0, 3.0, 1.4])
+var tune: PackedFloat64Array = PackedFloat64Array([0.0, 3.0, 4.0, 6.0, 10.0, 3.0, 1.4, 2.0, 12.0])
 var _s: CitySimState
 var _flow: CitySimFlow
 var _cx: int = 0
@@ -30,6 +30,7 @@ func _init(state: CitySimState, flow: CitySimFlow) -> void:
 
 func reset() -> void:
 	level = -1
+	_s.heat = -1
 	heat_x = 0.0
 	heat_y = 0.0
 	_cx = 0
@@ -41,6 +42,7 @@ func reset() -> void:
 
 func set_heat(p_level: int, x: float, y: float) -> void:
 	level = clampi(p_level, -1, 3)
+	_s.heat = level
 	heat_x = x
 	heat_y = y
 
@@ -78,6 +80,8 @@ func pass_step(dt: float) -> void:
 		if _search >= tune[SimConst.PT_SEARCH_S]:
 			_done = true
 			want = 0
+	if want == 0:
+		_release()
 	_fill(want)
 	_flow.stats[SimConst.FS_SEARCH_TICKS] = floori(_search / dt + 0.5)
 
@@ -86,7 +90,7 @@ func pass_step(dt: float) -> void:
 func _fill(want: int) -> void:
 	var n: int = 0
 	for i: int in SimConst.CAP:
-		if _s.alive[i] != 0 and _s.kind[i] == SimConst.K_COP and _engaged(i):
+		if _s.alive[i] != 0 and _s.kind[i] == SimConst.K_COP and _claimed(i):
 			n += 1
 	while n != want:
 		var add: bool = n < want
@@ -95,7 +99,7 @@ func _fill(want: int) -> void:
 		for i: int in SimConst.CAP:
 			if _s.alive[i] == 0 or _s.kind[i] != SimConst.K_COP or _s.mode[i] == SimConst.M_DEAD:
 				continue
-			if _engaged(i) == add:
+			if _engaged(i) == add or (_s.flags[i] & SimConst.F_CREW) != 0:
 				continue
 			var ax: float = _s.px[i] - heat_x
 			var ay: float = _s.py[i] - heat_y
@@ -115,3 +119,69 @@ func _fill(want: int) -> void:
 
 func _engaged(i: int) -> bool:
 	return (_s.flags[i] & SimConst.F_ENGAGED) != 0
+
+
+## A cop on a PT_FOOT claim (engaged, not a car's crew).
+func _claimed(i: int) -> bool:
+	return (_s.flags[i] & (SimConst.F_ENGAGED | SimConst.F_CREW)) == SimConst.F_ENGAGED
+
+
+## Every claim cancelled (CityCore::police_release): crews walk, police cars drive on as traffic.
+func _release() -> void:
+	for i: int in SimConst.CAP:
+		if _s.alive[i] == 0:
+			continue
+		if _s.kind[i] == SimConst.K_COP:
+			_s.flags[i] = _s.flags[i] & ~(SimConst.F_ENGAGED | SimConst.F_CREW)
+		elif _s.kind[i] == SimConst.K_PCAR:
+			_s.flags[i] = _s.flags[i] & ~(SimConst.F_ENGAGED | SimConst.F_PARKED)
+
+
+## A police car pursues (the turn rule, no yielding): every one before n18, a dispatched one under
+## heat (CityCore::car's is_p).
+static func pursuer(s: CitySimState, i: int) -> bool:
+	if s.kind[i] != SimConst.K_PCAR:
+		return false
+	return s.heat < 0 or (s.flags[i] & SimConst.F_ENGAGED) != 0
+
+
+## Heat 2 (CityCore::car_police_speed): a dispatched car stops within PT_CAR_STOP_M of the point.
+func car_speed(i: int, x: float, y: float, vdes: float) -> float:
+	if _s.heat < 0 or _s.kind[i] != SimConst.K_PCAR:
+		return vdes
+	if (_s.flags[i] & SimConst.F_PARKED) != 0:
+		return 0.0
+	if not _engaged(i):
+		return vdes
+	var ax: float = x - heat_x
+	var ay: float = y - heat_y
+	var r: float = tune[SimConst.PT_CAR_STOP_M]
+	return 0.0 if ax * ax + ay * ay <= r * r else vdes
+
+
+## Heat 2 (CityCore::car_unload): stopped there, the car parks and its crew gets out on the side
+## facing the point. hv: the car's heading x, y and speed after its step.
+func car_unload(i: int, x: float, y: float, hv: PackedFloat64Array) -> void:
+	if _s.heat < 0 or _s.kind[i] != SimConst.K_PCAR or not _engaged(i) or hv[2] >= 0.5:
+		return
+	var ax: float = x - heat_x
+	var ay: float = y - heat_y
+	var r: float = tune[SimConst.PT_CAR_STOP_M]
+	if ax * ax + ay * ay > r * r:
+		return
+	_s.flags[i] = (_s.flags[i] & ~SimConst.F_ENGAGED) | SimConst.F_PARKED
+	var n: int = int(tune[SimConst.PT_CREW])
+	var sx: float = -hv[1]
+	var sy: float = hv[0]
+	if sx * (heat_x - x) + sy * (heat_y - y) < 0.0:
+		sx = -sx
+		sy = -sy
+	var fl: int = SimConst.F_PROMOTED | SimConst.F_ENGAGED | SimConst.F_CREW
+	for k: int in n:
+		var along: float = float(k) * 1.4 - 0.7 * float(n - 1)
+		var spec: PackedFloat64Array = PackedFloat64Array(
+			[SimConst.K_COP, x + sx * 2.0 + hv[0] * along, y + sy * 2.0 + hv[1] * along, sx, sy]
+		)
+		spec.append_array(PackedFloat64Array([SimConst.ART_COP, fl, 3.4, 0.0, 0.0]))
+		@warning_ignore("return_value_discarded")
+		_s.spawn(spec)

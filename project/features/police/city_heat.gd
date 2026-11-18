@@ -14,6 +14,8 @@ var meter: HeatMeter = null
 var tune: CityHeatTune = null
 ## The foot patrol the ladder sends (the street targets keep none).
 var patrol: CityPatrol = null
+## Heat 2-3: police cars sent to the last-seen point.
+var dispatch: CityDispatch = null
 ## A sim cop sees Rivet this tick.
 var seen: bool = false
 ## Where a cop last saw Rivet (the investigate point); valid once `ever_seen`.
@@ -32,13 +34,17 @@ func setup(ctx: WorldContext) -> void:
 	meter.drain_ticks = tune.drain_ticks
 	city.sim.set_police(tune.sim_tune)
 	patrol = CityPatrol.new(ctx.rng.stream(CityPatrol.STREAM), tune.patrol_cops)
+	dispatch = CityDispatch.new(ctx.rng.stream(CityDispatch.STREAM))
+	dispatch.cars = tune.cars
+	dispatch.delay_ticks = tune.car_delay_ticks
+	dispatch.ring_m = tune.car_ring_m
 	@warning_ignore("return_value_discarded")
 	ctx.events.pedestrian_struck.connect(_on_struck)
 	@warning_ignore("return_value_discarded")
 	ctx.events.actor_killed.connect(_on_killed)
 
 
-func step(_tick: int, _input: TickInput) -> void:
+func step(tick: int, _input: TickInput) -> void:
 	seen = cop_sees(city.sim, city.target, meter.sight_m)
 	if seen:
 		last_seen = city.target
@@ -50,6 +56,9 @@ func step(_tick: int, _input: TickInput) -> void:
 	city.sim.set_heat(meter.level if tune.living else -1, last_seen.x, last_seen.y)
 	@warning_ignore("return_value_discarded")
 	patrol.tick(city.sim, city.focus)
+	var lv: int = meter.level if tune.living else 0
+	@warning_ignore("return_value_discarded")
+	dispatch.step(city.sim, tick, lv, last_seen, city.focus)
 
 
 ## Violence from outside the sim's own events (a shot Rivet fired, later sources).
@@ -77,6 +86,7 @@ static func cop_sees(sim: CitySimBackend, at: Vector2, r: float) -> bool:
 
 func write_state(out: StreamPeerBuffer) -> void:
 	meter.write_state(out)
+	dispatch.write_state(out)
 	out.put_8(1 if ever_seen else 0)
 	out.put_double(last_seen.x)
 	out.put_double(last_seen.y)

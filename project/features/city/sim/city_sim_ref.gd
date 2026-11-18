@@ -12,7 +12,7 @@ var _flow: CitySimFlow = CitySimFlow.new(_s)
 var _body: CitySimBody = CitySimBody.new(_s, _h)
 var _police: CitySimPolice = CitySimPolice.new(_s, _flow)
 var _people: CitySimPeople = CitySimPeople.new(_s, _h, _flow, _body, _police)
-var _cars: CitySimCars = CitySimCars.new(_s, _h, _flow)
+var _cars: CitySimCars = CitySimCars.new(_s, _h, _flow, _police)
 var _shots: CitySimShots = CitySimShots.new(_s, _h)
 var _render: CitySimRender = CitySimRender.new(_s)
 
@@ -122,7 +122,7 @@ func step(dt: float, camx: float, camy: float, tgx: float, tgy: float) -> void:
 		elif k == SimConst.K_COP:
 			_people.cop(i, dt, tgx, tgy)
 		else:
-			_cars.car(i, dt, tgx, tgy)
+			_cars.car(i, dt, gx, gy)  # police cars route to the field's goal
 	_body.resolve()
 	_shots.step(dt)
 	_count()

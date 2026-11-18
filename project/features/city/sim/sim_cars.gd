@@ -8,6 +8,7 @@ var _s: CitySimState
 var _h: CitySimHash
 var _r: CitySimCarRoute
 var _pass: CitySimCarPass
+var _police: CitySimPolice
 var _x: float = 0.0
 var _y: float = 0.0
 var _hx: float = 0.0
@@ -16,9 +17,12 @@ var _vv: float = 0.0
 var _bike: bool = false  # d9: this car is a bike (CitySimCarPush)
 
 
-func _init(state: CitySimState, hash_grid: CitySimHash, flow: CitySimFlow) -> void:
+func _init(
+	state: CitySimState, hash_grid: CitySimHash, flow: CitySimFlow, police: CitySimPolice
+) -> void:
 	_s = state
 	_h = hash_grid
+	_police = police
 	_r = CitySimCarRoute.new(state, flow)
 	_pass = CitySimCarPass.new(state, hash_grid)
 
@@ -36,7 +40,8 @@ func car(i: int, dt: float, tgx: float, tgy: float) -> void:
 	if _s.ndir[i] >= 0 and _s.tier[i] == 0 and _s.res[i] < 0:
 		waiting = _r.reserve(i)
 	_steer(i, x, y, _pass.lane_line(i, x, y, _r), dt)
-	_vv = _accelerate(_s.v[i], _desired_speed(i, x, y, waiting), dt)
+	var vdes: float = _police.car_speed(i, x, y, _desired_speed(i, x, y, waiting))
+	_vv = _accelerate(_s.v[i], vdes, dt)
 	_x = x + _hx * _vv * dt
 	_y = y + _hy * _vv * dt
 	if _s.tier[i] == 0:
@@ -76,7 +81,7 @@ func _desired_speed(i: int, x: float, y: float, waiting: bool) -> float:
 		var along2: float = x * _r.ddx + y * _r.ddy
 		var dist: float = (_s.jx[i] * _r.ddx + _s.jy[i] * _r.ddy) - along2 - 14.0
 		vdes = minf(vdes, maxf(0.0, dist))
-	if _s.tier[i] != 0 or _s.kind[i] == SimConst.K_PCAR:
+	if _s.tier[i] != 0 or CitySimPolice.pursuer(_s, i):
 		return vdes
 	for j: int in _h.query(x + _hx * 7.0, y + _hy * 7.0, 1):
 		if j == i:
@@ -187,6 +192,7 @@ func _finish(i: int, dt: float, waiting: bool) -> void:
 	_s.hy[i] = _hy
 	_s.v[i] = _vv
 	_s.phase[i] += _vv * dt
+	_police.car_unload(i, _x, _y, PackedFloat64Array([_hx, _hy, _vv]))
 	var stuck: float = _s.stuck[i]
 	if (stuck > 8.0 and _s.tier[i] == 1) or stuck > 20.0:
 		if (_s.flags[i] & SimConst.F_PROMOTED) == 0:

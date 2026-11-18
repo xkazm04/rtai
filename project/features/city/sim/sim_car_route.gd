@@ -96,7 +96,7 @@ func _pick(i: int, icx: float, icy: float, tgx: float, tgy: float) -> int:
 			ok[c] = true
 			sumw += WEIGHTS[c]
 	var pick: int = -1
-	if _s.kind[i] == SimConst.K_PCAR:
+	if CitySimPolice.pursuer(_s, i):
 		pick = _nearest(cand, ok, [icx, icy, tgx, tgy])
 	elif sumw > 0.0:
 		var r: float = _s.rnd() * sumw

@@ -1,8 +1,21 @@
 {
   "city": {
     "arrive_m": 3,
-    "doc": "n18 living police in the streamed city (CityHeat, the sim's set_police): drain_s_per_level replaces the quest's for the city; foot_cops[level] = cops engaged at heat 0..3 (nearest the last-seen point first); they search search_s once one is within arrive_m of it, then walk again; a free cop walks at walk_mps; patrol_cops foot cops are kept on the bubble's sidewalks (CityPatrol); living_police false = the pre-n18 sim police (every cop pursues Rivet).",
-    "drain_s_per_level": 20,
+    "car_delay_s": 3,
+    "car_ring_m": [
+      60,
+      110
+    ],
+    "car_stop_m": 12,
+    "cars": [
+      0,
+      0,
+      2,
+      3
+    ],
+    "crew": 2,
+    "doc": "n18 living police in the streamed city (CityHeat, the sim's set_police): drain_s_per_level replaces the quest's for the city; foot_cops[level] = cops engaged at heat 0..3 (nearest the last-seen point first); they search search_s once one is within arrive_m of it, then walk again; a free cop walks at walk_mps; patrol_cops foot cops are kept on the bubble's sidewalks (CityPatrol); cars[level] police cars are dispatched car_delay_s after the level rises (spawned on a road car_ring_m from the last-seen point), stop within car_stop_m of it and let crew foot cops out; living_police false = the pre-n18 sim police (every cop pursues Rivet).",
+    "drain_s_per_level": 25,
     "foot_cops": [
       0,
       3,
@@ -10,7 +23,7 @@
       6
     ],
     "living_police": true,
-    "patrol_cops": 10,
+    "patrol_cops": 16,
     "search_s": 10,
     "walk_mps": 1.4
   },

@@ -33,7 +33,7 @@ void CityCore::step(double dt, double camx, double camy, double tgx, double tgy)
 		int k = kind_[i];
 		if (k == K_PED) ped(i, dt);
 		else if (k == K_COP) cop(i, dt, tgx, tgy);
-		else car(i, dt, tgx, tgy);
+		else car(i, dt, gx, gy);  // police cars route to the field's goal
 	}
 	body_resolve();
 	projectiles(dt);

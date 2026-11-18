@@ -20,7 +20,7 @@ func _init(state: CitySimState, hash_grid: CitySimHash) -> void:
 
 func lane_line(i: int, x: float, y: float, r: CitySimCarRoute) -> float:
 	var own: float = _s.lane[i]
-	if _s.kind[i] == SimConst.K_PCAR or _s.tier[i] != 0:
+	if CitySimPolice.pursuer(_s, i) or _s.tier[i] != 0:
 		_s.flags[i] = _s.flags[i] & ~SimConst.F_PASSING
 		return own
 	var other: float = own - 2.0 * CitySimState.LANE_OFF[r.d]

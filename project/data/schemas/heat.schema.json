@@ -9,6 +9,36 @@
           "exclusiveMinimum": 0,
           "type": "number"
         },
+        "car_delay_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "car_ring_m": {
+          "items": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "car_stop_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "cars": {
+          "items": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array"
+        },
+        "crew": {
+          "minimum": 0,
+          "type": "integer"
+        },
         "doc": {
           "minLength": 1,
           "type": "string"
@@ -50,7 +80,12 @@
         "arrive_m",
         "walk_mps",
         "living_police",
-        "patrol_cops"
+        "patrol_cops",
+        "cars",
+        "car_delay_s",
+        "car_ring_m",
+        "crew",
+        "car_stop_m"
       ],
       "type": "object"
     },

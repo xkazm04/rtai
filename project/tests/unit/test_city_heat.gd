@@ -85,7 +85,7 @@ func test_the_city_block_tunes_the_drain_and_the_sim_ladder() -> void:
 	var t: CityHeatTune = _heat.tune
 	assert_true(t.living, "living police on by default")
 	assert_eq(_heat.meter.drain_ticks, t.drain_ticks, "the city drains on its own clock")
-	assert_eq(t.drain_ticks, 1200, "20 s per level")
+	assert_eq(t.drain_ticks, 1500, "25 s per level")
 	assert_eq(t.sim_tune.size(), SimConst.PT_LEN)
 	assert_eq(t.sim_tune[SimConst.PT_FOOT1], 3.0, "heat 1: three foot cops investigate")
 	assert_eq(t.sim_tune[SimConst.PT_FOOT3], 6.0)
