@@ -186,6 +186,17 @@
     "left": "rivet_55_left.png",
     "sheet": "rivet_55_v2.png"
    },
+   "rivet_reload_assault_rifle": {
+    "act_k": 0.821,
+    "counts": "5,3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/reload55_key.png"
+   },
+   "rivet_reload_assault_rifle_left": {
+    "counts": "3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/reload55_left_key.png"
+   },
    "rivet_reload_gatling": {
     "act_k": 0.699,
     "counts": "5,3",
@@ -404,6 +415,17 @@
     "counts": "5,6",
     "left": "rivet_70_left_v4.png",
     "sheet": "rivet_70_v3.png"
+   },
+   "rivet_reload_assault_rifle": {
+    "act_k": 0.823,
+    "counts": "5,3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/reload70_key.png"
+   },
+   "rivet_reload_assault_rifle_left": {
+    "counts": "3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/reload70_left_key.png"
    },
    "rivet_reload_gatling": {
     "act_k": 0.778,

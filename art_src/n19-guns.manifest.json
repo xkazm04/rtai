@@ -458,6 +458,207 @@
    "sha256": "67619ba4a68bbf4680a35b90a436873093dac68eaa5c190e79aac6eb147f685e",
    "tool": "image_gen"
   },
+  "reload55_key": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/reload55_key.png",
+   "layout_template": "masters:n19/guns/masters/reload55_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/reload55.txt",
+   "prompt_sha256": "cd50e365e9b52dbeede759c2f5b2c87c930aecfed98a1591be0cb967fe825a20",
+   "references": [
+    "masters:n19/guns/masters/reload55_raw.png"
+   ],
+   "seed": null,
+   "sha256": "254863f72ce7523bf5d1d2ac4205f924bc335cf058af87d12c94a7ee9907fe6a",
+   "tool": "Pillow"
+  },
+  "reload55_layout": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/reload55_layout.png",
+   "layout_template": "library:keyed/rivet/rivet_reload_twohand_55_claw_build.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/reload55.txt",
+   "prompt_sha256": "cd50e365e9b52dbeede759c2f5b2c87c930aecfed98a1591be0cb967fe825a20",
+   "references": [
+    "library:keyed/rivet/rivet_reload_twohand_55_claw_build.png"
+   ],
+   "seed": null,
+   "sha256": "530e55048cc80d28bb855c70e2445f03bf85c89461bc8e05e1b090d46ca76fb9",
+   "tool": "Pillow"
+  },
+  "reload55_left_corrected": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/reload55_left_corrected.png",
+   "layout_template": "masters:n19/guns/masters/reload55_left_raw.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/reload55_left_corrected.txt",
+   "prompt_sha256": "98e22c3cce37c629d29613dc5a6a3c81bfd8be1d03eae069a831f8787d0e8e4a",
+   "references": [
+    "masters:n19/guns/masters/reload55_left_raw.png",
+    "masters:n19/guns/masters/left3b_reference.png"
+   ],
+   "seed": null,
+   "sha256": "d2b81c4ef0cedf0cab5bbb856f409d20bb6312a8224073956797a0153ef1927b",
+   "tool": "image_gen"
+  },
+  "reload55_left_final": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/reload55_left_final.png",
+   "layout_template": "masters:n19/guns/masters/left3b_reference.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/reload55_left_final.txt",
+   "prompt_sha256": "14c7171b767373eac304c42f1cd2edeac80a6f0fd906693b129bc478f3d8aaa3",
+   "references": [
+    "masters:n19/guns/masters/left3b_reference.png"
+   ],
+   "seed": null,
+   "sha256": "664d061d150d7dea872609cf070978035902416a4d2a2bd5da73d65ff3683a44",
+   "tool": "image_gen"
+  },
+  "reload55_left_key": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/reload55_left_key.png",
+   "layout_template": "masters:n19/guns/masters/reload55_left_final.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/reload55_left_final.txt",
+   "prompt_sha256": "14c7171b767373eac304c42f1cd2edeac80a6f0fd906693b129bc478f3d8aaa3",
+   "references": [
+    "masters:n19/guns/masters/reload55_left_final.png"
+   ],
+   "seed": null,
+   "sha256": "d5d5cb1c3ea4ca15fc29d8de4233c83313fbc8eba841bc6b3c43da388283ca9a",
+   "tool": "Pillow"
+  },
+  "reload55_left_layout": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/reload55_left_layout.png",
+   "layout_template": "library:keyed/rivet/rivet_reload_twohand_55_left_claw_v2.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/reload55_left.txt",
+   "prompt_sha256": "603d77208aab1b13936344d3d8aaaa81347f2b76e5358bb496da4511d13d16d9",
+   "references": [
+    "library:keyed/rivet/rivet_reload_twohand_55_left_claw_v2.png"
+   ],
+   "seed": null,
+   "sha256": "f5b7a499a05c9f32a298950a76bd094894c6d5d2e3235ad2edd80ec02d2aeec6",
+   "tool": "Pillow"
+  },
+  "reload55_left_raw": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/reload55_left_raw.png",
+   "layout_template": "masters:n19/guns/masters/reload55_left_layout.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/reload55_left.txt",
+   "prompt_sha256": "603d77208aab1b13936344d3d8aaaa81347f2b76e5358bb496da4511d13d16d9",
+   "references": [
+    "masters:n19/guns/masters/reload55_left_layout.png",
+    "masters:n19/guns/masters/rifle3b_reference.png"
+   ],
+   "seed": null,
+   "sha256": "c161e74428823b22b207a1de18bb84a98f1631d4974ed8f01e6df804ccc22840",
+   "tool": "image_gen"
+  },
+  "reload55_raw": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/reload55_raw.png",
+   "layout_template": "masters:n19/guns/masters/reload55_layout.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/reload55.txt",
+   "prompt_sha256": "cd50e365e9b52dbeede759c2f5b2c87c930aecfed98a1591be0cb967fe825a20",
+   "references": [
+    "masters:n19/guns/masters/reload55_layout.png",
+    "masters:n19/guns/masters/rifle3b_reference.png"
+   ],
+   "seed": null,
+   "sha256": "04cc1567d5489833312925ad129971ca60e5ff2fd9ee10176f2fac17716145be",
+   "tool": "image_gen"
+  },
+  "reload70_key": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/reload70_key.png",
+   "layout_template": "masters:n19/guns/masters/reload70_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/reload70.txt",
+   "prompt_sha256": "cd50e365e9b52dbeede759c2f5b2c87c930aecfed98a1591be0cb967fe825a20",
+   "references": [
+    "masters:n19/guns/masters/reload70_raw.png"
+   ],
+   "seed": null,
+   "sha256": "a42288530f55abb13a2ac1235a77ca50e224196eeed6f109915ecd0a39c0697d",
+   "tool": "Pillow"
+  },
+  "reload70_layout": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/reload70_layout.png",
+   "layout_template": "library:keyed/rivet/rivet_reload_twohand_70_claw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/reload70.txt",
+   "prompt_sha256": "cd50e365e9b52dbeede759c2f5b2c87c930aecfed98a1591be0cb967fe825a20",
+   "references": [
+    "library:keyed/rivet/rivet_reload_twohand_70_claw.png"
+   ],
+   "seed": null,
+   "sha256": "19ee38cc919b4e65b1e8c897db83954d967c149f1ca43b70b7c3bcbdbd9a060e",
+   "tool": "Pillow"
+  },
+  "reload70_left_key": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/reload70_left_key.png",
+   "layout_template": "masters:n19/guns/masters/reload70_left_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/reload70_left.txt",
+   "prompt_sha256": "603d77208aab1b13936344d3d8aaaa81347f2b76e5358bb496da4511d13d16d9",
+   "references": [
+    "masters:n19/guns/masters/reload70_left_raw.png"
+   ],
+   "seed": null,
+   "sha256": "eadae665e3e05b9a7b7cc08c7ab515e2d66916bbbb852bbb4c1fdb50f2e86d22",
+   "tool": "Pillow"
+  },
+  "reload70_left_layout": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/reload70_left_layout.png",
+   "layout_template": "library:keyed/rivet/rivet_reload_twohand_70_left_claw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/reload70_left.txt",
+   "prompt_sha256": "603d77208aab1b13936344d3d8aaaa81347f2b76e5358bb496da4511d13d16d9",
+   "references": [
+    "library:keyed/rivet/rivet_reload_twohand_70_left_claw.png"
+   ],
+   "seed": null,
+   "sha256": "dbf41a794c40e7fd34e874ec97ec08eb0f890df333eeddebf5dc50f813b3c7ce",
+   "tool": "Pillow"
+  },
+  "reload70_left_raw": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/reload70_left_raw.png",
+   "layout_template": "masters:n19/guns/masters/reload70_left_layout.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/reload70_left.txt",
+   "prompt_sha256": "603d77208aab1b13936344d3d8aaaa81347f2b76e5358bb496da4511d13d16d9",
+   "references": [
+    "masters:n19/guns/masters/reload70_left_layout.png",
+    "masters:n19/guns/masters/rifle3b_reference.png"
+   ],
+   "seed": null,
+   "sha256": "09122f546280393d5bf5f4ac4bd240f0d9792b468c4eed682f6ea8549f4f067e",
+   "tool": "image_gen"
+  },
+  "reload70_raw": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/reload70_raw.png",
+   "layout_template": "masters:n19/guns/masters/reload70_layout.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/reload70.txt",
+   "prompt_sha256": "cd50e365e9b52dbeede759c2f5b2c87c930aecfed98a1591be0cb967fe825a20",
+   "references": [
+    "masters:n19/guns/masters/reload70_layout.png",
+    "masters:n19/guns/masters/rifle3b_reference.png"
+   ],
+   "seed": null,
+   "sha256": "9cefcafd7a0713e63bfac4ef19cdbe9314c533b17c085fba33035168b8590235",
+   "tool": "image_gen"
+  },
   "rifle3b_reference": {
    "date": "2026-11-18",
    "file": "masters:n19/guns/masters/rifle3b_reference.png",

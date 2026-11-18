@@ -1,9 +1,7 @@
 {
   "holes": {
     "assault-rifle/p55/pickup": "absent from rack ORDER",
-    "assault-rifle/p55/reload": "missing or invalid rivet_reload_assault_rifle.png; missing or invalid rivet_reload_assault_rifle_left.png",
     "assault-rifle/p70/pickup": "absent from rack ORDER",
-    "assault-rifle/p70/reload": "missing or invalid rivet_reload_assault_rifle.png; missing or invalid rivet_reload_assault_rifle_left.png",
     "assault-rifle/top/pickup": "absent from rack ORDER",
     "electro_gun/p55/reload": "missing own parts.mag; missing or invalid rivet_reload_electro_gun.png; missing or invalid rivet_reload_electro_gun_left.png",
     "electro_gun/p70/reload": "missing own parts.mag; missing or invalid rivet_reload_electro_gun.png; missing or invalid rivet_reload_electro_gun_left.png",

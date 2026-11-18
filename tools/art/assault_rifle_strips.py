@@ -93,3 +93,7 @@ if __name__ == "__main__":
     subprocess.run([sys.executable, str(CUT), "--manifest=" + str(MANIFEST), "--only=" + NAME], check=True)
     twins(masters, manifest, "p55", ("main", "diag"))
     twins(masters, manifest, "p70", ("eq70", "diag70"))
+    prepare(masters, {"reload55": "raw", "reload55_left": "final",
+                      "reload70": "raw", "reload70_left": "raw"})
+    subprocess.run([sys.executable, str(CUT), "--manifest=" + str(MANIFEST),
+                    "--only=rivet_reload_assault_rifle"], check=True)

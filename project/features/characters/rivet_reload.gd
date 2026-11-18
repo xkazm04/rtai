@@ -25,7 +25,8 @@ static func path_or(rig: CutRig, art: String, weapon: StringName, path: String) 
 	if not on(rig) or weapon == &"" or path.is_empty():
 		return path
 	var left: String = "_left" if RivetFrames.LEFT[RivetFrames.oct_of(rig)] == 1 else ""
-	var file: String = RivetStrips.DIR + art + "/" + PREFIX + String(weapon) + left + ".png"
+	var key: StringName = WeaponArtKey.of(weapon)
+	var file: String = RivetStrips.DIR + art + "/" + PREFIX + String(key) + left + ".png"
 	return file if RivetStrips.has_file(file) else path
 
 
