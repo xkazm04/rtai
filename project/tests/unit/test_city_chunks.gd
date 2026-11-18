@@ -20,8 +20,9 @@ func test_tables_load() -> void:
 	why += " dock warehouse a/b, dock shed, downtown tower a/b, dock water a/b; 93-94 quay edge;"
 	why += " 95-96 container stacks 2-high, 3-high; 97-104 cold store, sawtooth, tall a/b,"
 	why += " fountain, tree grate, bike racks, plinth; 105-111 clocktower, terrace, tall c,"
-	why += " bank dome, crown, shed b, warehouse c; 112-113 downtown plaza paving, quay apron"
-	assert_eq(_gen.sizes.size(), 114, why)
+	why += " bank dome, crown, shed b, warehouse c; 112-113 downtown plaza paving, quay apron;"
+	why += " 114-115 coffee kiosk, food cart"
+	assert_eq(_gen.sizes.size(), 116, why)
 
 
 func test_generation_is_deterministic() -> void:

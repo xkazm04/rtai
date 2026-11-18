@@ -1255,6 +1255,28 @@
         8
       ],
       "solid": false
+    },
+    {
+      "art": "res://features/city/art/props/coffee_kiosk.png",
+      "class": "prop",
+      "id": 114,
+      "name": "coffee_kiosk",
+      "size_m": [
+        2,
+        2.85
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/food_cart.png",
+      "class": "prop",
+      "id": 115,
+      "name": "food_cart",
+      "size_m": [
+        2.33,
+        2.2
+      ],
+      "solid": true
     }
   ]
 }

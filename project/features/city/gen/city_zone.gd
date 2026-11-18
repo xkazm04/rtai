@@ -29,6 +29,7 @@ const LISTS: Array[String] = [
 	"quay_ground",
 	"yard_props",
 	"upright_roofs",
+	"plaza_singles",
 ]
 
 var id: StringName = &"mixed"
@@ -75,6 +76,9 @@ var plaza_centre: int = -1
 ## A plaza tile's ground (a city_textures id; -1 = the sidewalk paving 13 in quarter turns); a
 ## zone ground only turns 0 / 180 deg, so a bond pattern keeps its heading across tiles.
 var plaza_ground: int = -1
+## Plaza props that stand at most once a plaza block, each on a seeded tile
+## (TilePainter.plaza_single).
+var plaza_singles: Array[int] = []
 ## The docks quay apron's ground (-1 = the sidewalk paving 13), in quarter turns.
 var apron_ground: int = -1
 ## At most one lettered landmark roof a block (BlockPainter.sign_tile; false = the v14 rule).

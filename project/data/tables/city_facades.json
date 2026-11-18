@@ -146,6 +146,10 @@
       "art": "res://features/city/art/view/<art>/prop_bus_stop.png",
       "cell_w_m": 3.4
     },
+    "coffee_kiosk": {
+      "art": "res://features/city/art/view/<art>/prop_coffee_kiosk.png",
+      "cell_w_m": 2.3
+    },
     "container2": {
       "art": "res://features/city/art/view/<art>/prop_container2.png",
       "cell_w_m": 6.16
@@ -166,6 +170,10 @@
     "fire_hydrant": {
       "art": "res://features/city/art/view/<art>/prop_fire_hydrant.png",
       "cell_w_m": 0.55
+    },
+    "food_cart": {
+      "art": "res://features/city/art/view/<art>/prop_food_cart.png",
+      "cell_w_m": 2.5
     },
     "fountain": {
       "art": "res://features/city/art/view/<art>/prop_fountain.png",

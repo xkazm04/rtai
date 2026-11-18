@@ -207,6 +207,15 @@
             "minimum": 0,
             "type": "number"
           },
+          "plaza_singles": {
+            "description": "plaza props standing at most once a plaza block, each on a seeded tile off the middle (TilePainter.plaza_single); absent = none",
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "type": "array"
+          },
           "quay_ground": {
             "description": "the quay edge art [straight, inner corner] (DockPainter.quay_case); absent = open water and the apron bollard line",
             "items": {

@@ -150,6 +150,10 @@ func _plaza(g: CityGen, b: ChunkBuild, t: Vector2i) -> int:
 	if zone.plaza_centre >= 0 and posmod(t.x, PERIOD) == 5 and posmod(t.y, PERIOD) == 5:
 		_kerb.prop(g, b, zone.plaza_centre, o + Vector2(4.0, 4.0), 0.0)  # the block's middle tile
 		return SimConst.T_PLAZA
+	var single: int = plaza_single(g, zone, t)
+	if single >= 0:
+		_kerb.prop(g, b, single, o + Vector2(4.0, 4.0), 0.0)  # front to the camera
+		return SimConst.T_PLAZA
 	for k: int in PLAZA_SLOTS.size():
 		if g.rnd(t.x, t.y, k, 21) < zone.plaza_prop_share:
 			var props: Array[int] = zone.plaza_props
@@ -170,3 +174,15 @@ static func _variant(g: CityGen, t: Vector2i, horiz: bool) -> int:
 	var k: int = t.x if horiz else t.y
 	var line: int = t.y if horiz else t.x
 	return posmod(k + int(g.rnd(line, 1 if horiz else 0, 0, 7) * 3.0), 3)
+
+
+## The zone's plaza_singles prop that stands on plaza tile t (each at most once a block, on a
+## seeded interior tile off the middle), or -1.
+static func plaza_single(g: CityGen, zone: CityZone, t: Vector2i) -> int:
+	var bk: Vector2i = Vector2i(floori(t.x / float(PERIOD)), floori(t.y / float(PERIOD)))
+	for k: int in zone.plaza_singles.size():
+		var n: int = int(g.rnd(bk.x, bk.y, k, 83) * 24.0)
+		n += 1 if n >= 12 else 0  # skip the middle tile (5, 5)
+		if posmod(t.x, PERIOD) == 3 + n % 5 and posmod(t.y, PERIOD) == 3 + floori(n / 5.0):
+			return zone.plaza_singles[k]
+	return -1
