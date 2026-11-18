@@ -376,3 +376,7 @@ twin); and the oil drums v2 card + plan with the rust-red drums turned grey-gree
   landmark among roller doors; it stands ~30 m east of the door (the door is the block middle). Evidence
   `ab_it471_dock9_office_v27_v28_combo_{32,48}ppm.jpg`, `ab_it471_dock9_door_v27_v28_combo_48ppm.jpg`; masters 15 (quay v17/v18 out).
 - 04:13 gate (snapshot, --reels) on dee06ed7b (v28) started, background.
+- 04:15 asset replies it474: REQUEST 14 DELIVERED (03:58: tug, rope net, oil drums `_ochre`; news boxes v2 re-spaced). Also
+  offered (not wired): planter bed, stone ledges, chess tables (+ plans), dinghy (plan drawing), straddle carrier, container
+  truck, cable reels, pipe bundles, litter bins (wired v27). v29 prepared in the tree (ochre rope net + drums on the apron,
+  news boxes on downtown walls, a bow-north tug moored flat in half the basins: `basin_boat`), to bake after the v28 gate.

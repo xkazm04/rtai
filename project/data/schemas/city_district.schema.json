@@ -93,6 +93,18 @@
             },
             "type": "array"
           },
+          "basin_boat": {
+            "description": "a boat drawn flat in a basin's open water beside its west quay, bow north (DockDresser.quay_edge), a city_textures id; absent = none",
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "basin_boat_share": {
+            "description": "the share of basins that moor a basin_boat",
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
           "big_roofs": {
             "items": {
               "maximum": 255,

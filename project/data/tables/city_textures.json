@@ -1365,6 +1365,50 @@
         8.4
       ],
       "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_rope_net.png",
+      "class": "prop",
+      "id": 124,
+      "name": "dock_rope_net",
+      "size_m": [
+        1.4,
+        1.32
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_oil_drums.png",
+      "class": "prop",
+      "id": 125,
+      "name": "dock_oil_drums",
+      "size_m": [
+        1.9,
+        1.75
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/down_news_boxes.png",
+      "class": "prop",
+      "id": 126,
+      "name": "down_news_boxes",
+      "size_m": [
+        1.6,
+        0.61
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_tug.png",
+      "class": "prop",
+      "id": 127,
+      "name": "dock_tug",
+      "size_m": [
+        5.37,
+        13.97
+      ],
+      "solid": false
     }
   ]
 }

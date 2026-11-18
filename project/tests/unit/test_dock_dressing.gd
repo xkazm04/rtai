@@ -2,7 +2,8 @@ extends GutTest
 ## The docks dressing (n18 districts item 3, the asset lane's it471/it473 cards and plan twins,
 ## DockDresser): quay apron tiles stand an apron prop on their land side under apron_prop_share
 ## and keep DockDresser.OPEN_M by the water walkable; each basin's west quay stands one
-## quay_edge_prop on its land strip by the coping.
+## quay_edge_prop on its land strip by the coping, and about basin_boat_share of the basins moor
+## a basin_boat wholly in open water.
 
 const DISTRICT: String = "res://data/tables/city_district.json"
 const TEXTURES: String = "res://data/tables/city_textures.json"
@@ -62,6 +63,30 @@ func test_each_basin_stands_one_quay_edge_prop_by_the_coping() -> void:
 			assert_lt(p.x - wx * 8.0, DockPainter.LAND_M, "on the land strip")
 			stood += 1
 	assert_eq(stood, SimConst.CITY_CHUNKS * 2)
+
+
+func test_basin_boats_moor_in_open_water() -> void:
+	var wx: int = DockPainter.water_x(_docks)
+	var half: Vector2 = _gen.sizes[_docks.basin_boat] * 0.5
+	assert_false(_gen.solid[_docks.basin_boat], "a boat on water stamps no cells")
+	var boats: int = 0
+	for cy: int in SimConst.CITY_CHUNKS:
+		var ch: CityChunk = _gen.gen_chunk(EAST_CHUNK, cy)
+		for p: Vector3 in _props(ch, [_docks.basin_boat]):
+			boats += 1
+			var basin_y: float = floorf(p.y / (CityGen.PERIOD * 8.0)) * CityGen.PERIOD * 8.0
+			var water_n: float = basin_y + 3.0 * 8.0 + DockPainter.LAND_M  # past the north pier's apron
+			var water_s: float = basin_y + CityGen.PERIOD * 8.0 - DockPainter.LAND_M
+			assert_gt(p.x - half.x, wx * 8.0 + DockPainter.LAND_M, "off the west coping")
+			assert_lt(
+				p.x + half.x, SimConst.CITY_CHUNKS * SimConst.CHUNK_TILES * 8.0, "inside the city"
+			)
+			assert_gt(p.y - half.y, water_n, "south of the north pier")
+			assert_lt(p.y + half.y, water_s, "north of the south pier")
+	var basins: int = SimConst.CITY_CHUNKS * 2
+	assert_between(
+		boats, int(basins * _docks.basin_boat_share * 0.5), basins - 4, "about the share"
+	)
 
 
 ## [x, y, tex] of every standing prop of `texs` in chunk ch.

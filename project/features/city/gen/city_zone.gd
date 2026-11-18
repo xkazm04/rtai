@@ -13,6 +13,7 @@ const FLOATS: Array[String] = [
 	"plaza_prop_share",
 	"yard_prop_share",
 	"apron_prop_share",
+	"basin_boat_share",
 	"ped_corner",
 	"ped_kerb",
 	"ped_plaza",
@@ -103,6 +104,10 @@ var wall_props: Array[int] = []
 var apron_prop_share: float = 0.0
 ## A prop by the coping on the middle tile of each basin's west quay (-1 = none; DockPainter).
 var quay_edge_prop: int = -1
+## A boat drawn flat (no card) in a basin's open water by its west quay, bow north, on
+## basin_boat_share of the basins (DockDresser.quay_edge; -1 = none).
+var basin_boat: int = -1
+var basin_boat_share: float = 0.0
 ## Dock 9's harbour office roof (DockDresser.shed_or_office; -1 = none): it replaces the shed
 ## at the quay end of the south row of the docks block nearest the quay's middle. office_tile
 ## caches that tile (UNRESOLVED until the first docks shed asks).
@@ -127,6 +132,7 @@ static func from_row(row: Dictionary) -> CityZone:
 		"yard_ground",
 		"quay_edge_prop",
 		"office_roof",
+		"basin_boat",
 	]:
 		if row.has(key):
 			var f: float = row[key]

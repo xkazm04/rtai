@@ -6,6 +6,7 @@ extends RefCounted
 
 ## The open walk the apron keeps by the water, metres from the apron tile's east edge.
 const OPEN_M: float = 2.5
+const BOAT_GAP_M: float = 1.0
 ## Dock 9's block: the rule and point of places.json's dock_9 row (test_dock_office pins them
 ## together; a place row moves the place, never the bake).
 const OFFICE_RULE: String = "dock_block_nearest"
@@ -27,15 +28,22 @@ static func apron(
 
 
 ## The zone's quay_edge_prop on the land strip by the coping of a straight west quay tile, on the
-## basin's middle tile only (one a basin).
+## basin's middle tile only (one a basin); and on basin_boat_share of the basins a basin_boat
+## moored BOAT_GAP_M off the coping, in open water (it never touches a walk cell).
 static func quay_edge(
 	g: CityGen, b: ChunkBuild, kerb: KerbDresser, zone: CityZone, t: Vector2i
 ) -> void:
-	if zone.quay_edge_prop < 0 or posmod(t.y, CityGen.PERIOD) != 5:
+	if posmod(t.y, CityGen.PERIOD) != 5:
 		return
-	var half: Vector2 = g.sizes[zone.quay_edge_prop] * 0.5
 	var o: Vector2 = TilePainter.origin(t)
-	kerb.prop(g, b, zone.quay_edge_prop, o + Vector2(DockPainter.LAND_M - 0.4 - half.x, 4.0), 0.0)
+	if zone.quay_edge_prop >= 0:
+		var half: Vector2 = g.sizes[zone.quay_edge_prop] * 0.5
+		var at: Vector2 = o + Vector2(DockPainter.LAND_M - 0.4 - half.x, 4.0)
+		kerb.prop(g, b, zone.quay_edge_prop, at, 0.0)
+	if zone.basin_boat >= 0 and g.rnd(t.x, t.y, 0, 67) < zone.basin_boat_share:
+		var boat: Vector2 = g.sizes[zone.basin_boat] * 0.5
+		var x: float = DockPainter.LAND_M + BOAT_GAP_M + boat.x
+		b.add(ChunkBuild.L_PROP, zone.basin_boat, o + Vector2(x, 4.0), 0.0)
 
 
 ## The zone's office_roof on Dock 9's office tile, else the shed it was given.
