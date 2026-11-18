@@ -340,3 +340,21 @@ REQUEST assets 13 (to the asset lane, from districts, order 1, small): re-run `t
 rows centred at y 1.5 m and y 5.5 m (DockPainter.YARD_SLOTS is (4.0, 1.5), (4.0, 5.5); the first row sits 0.5 m north of
 your 2.0). Same name with `_v2`; I swap the PNG (no re-bake). Optional: a touch more ochre saturation, the world print
 greys it to near-invisible at 32 px/m.
+- 03:36 MILESTONE item 3, commit 7afb9a689, generator v26: the docks dressing (`DockDresser`, gen): cargo tarp v2 + fuel tank v2
+  on the quay apron's land side (`apron_props` share 0.5, `OPEN_M` 2.5 m by the water kept open), a lifebuoy post by each
+  basin's west coping (`quay_edge_prop`). Cards cut with city_prop_cut.py; the tarp and tank plan twins turned 90 deg (their
+  cards' fronts show the long side: facing widths 233/126 and 257/130 px). test_dock_dressing 3/3. Looked: the fuel tank reads
+  well at 48 px/m. NOT taken: oil drums v2 (rust-red drums: red is blood only), rope net (vermilion hazard stripes on the hook
+  block), news boxes v2 (the cutter finds fewer than five facings). `ab_it473_apron_dressing_v25_v26_combo_{32,48}ppm.jpg`.
+- 03:42 MILESTONE item 3, commit b32980b92, generator v27: downtown's own sidewalk furniture: zone keys `kerb_props` and
+  `wall_props` (KerbDresser; absent = the n14 mixes, so mixed/docks unchanged). First pass with kerb_props alone: the frame
+  still showed three n14 dumpsters along a downtown wall, so wall_props too (planters, trash cans, litter bins, benches).
+  test_city_kerb_props 3/3 (planted caught). `ab_it472_downtown_{kerbs,kerbbs}_v26_v27_combo_{32,48}ppm.jpg`.
+- FRICTION (my error): a cleanup `rm` deleted one evidence pair right before `git add`, so the add aborted and the commit took
+  only the art; I amended that unpushed commit with the rest (same message). Rule: never rm in the same command as the add.
+- 03:44 gate (snapshot, `tools/gate/run.mjs --reels`) on b32980b92 (v27) started, background.
+- Masters frames.json: 15 entries (added kerbs v27, apron v26, yard ground v25; dropped water v16/v17, dock9 facade v16,
+  downtown tall v19/v20 and their files).
+- v28 prepared (not baked: Godot held by the gate): Dock 9's harbour office roof (it471 A) on the quay-end shed of dock_9's
+  block (zone key `office_roof`, `DockDresser.shed_or_office`; `CityPlaces.nearest_block` made static so the generator reuses
+  the place rule without reading places.json). test_dock_office written.
