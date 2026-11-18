@@ -1,6 +1,10 @@
 class_name CombatArena
 extends RefCounted
-## Deterministic fight. Damage and combat events go through this arena.
+## One fight as data: Rivet, the hostiles, shots in flight, arc balls, dropped rifles. Every hit
+## goes through damage() (the chokepoint: humans have 1 hp, so any hit kills; kills emit
+## Events.actor_killed). The fight's own tells go out as Events too: wave_started (the stage
+## announces each wave through announce_wave), boss_engaged, attack_telegraphed, player_hit.
+## Deterministic: ticks, and the `combat` RNG stream only for guard spread and spawn jitter.
 
 ## A round landed (after damage): the hit-feel hook (features/combat/hit_feel, lane gunplay).
 signal struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName)
@@ -8,7 +12,9 @@ signal struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName)
 ## kill payload for brutality and human-reactions (weapon id or &"burn", hit direction, hit point
 ## in metres, the events.json death kind). Lane gunplay, night JOURNAL REQUEST 1.
 signal kill_landed(victim: Fighter, weapon: StringName, dir: Vector2, at: Vector2, kind: StringName)
+## A non-lethal hit on a non-Rivet fighter, from the chokepoint (view only: MeleeWound, n7-melee).
 signal wounded(victim: Fighter, weapon: StringName)
+## A hostile round batted back by the plasma sword at `at`, now flying along `back` (view only).
 signal deflected(at: Vector2, back: Vector2)
 
 const SPAWN_SPREAD_M: float = 2.5
@@ -161,7 +167,7 @@ func step(p_tick: int) -> void:
 	if tazer != null and tazer.charge_began():
 		_events.attack_telegraphed.emit(boss.weapon)
 	_step_shots()
-	_step_balls()
+	ArenaProjectiles.step_balls(self, _events)
 	_repair()
 	if gun != null:
 		gun.settle()
@@ -225,61 +231,7 @@ func _step_hostile(h: Fighter) -> void:
 
 
 func _step_shots() -> void:
-	for s: Shot in shots.duplicate():
-		var lands: bool = s.spec != null and areas != null
-		if lands and s.spec.homing_rad_per_tick > 0.0:
-			FightReach.home(self, s)
-		var from: Vector2 = s.advance()
-		# A thrown bottle flies over bodies and lands at the aimed point.
-		var over: bool = lands and s.spec.kind == WeaponSpec.Kind.THROWN
-		var victim: Fighter = null if over else _struck(s, from)
-		var ends: bool = victim != null or s.spent() or _blocked(s, from)
-		if victim != null:
-			hit_at = Geometry2D.get_closest_point_to_segment(victim.pos, from, s.pos)
-		struck_charged = s.charged
-		if lands and ends:
-			areas.land(self, s, victim, hit_at if victim != null else s.pos)
-		elif victim != null:
-			hit_dir = s.vel.normalized()
-			damage(victim, s.damage, s.shooter_id, s.weapon)
-			struck.emit(victim, hit_dir, not victim.alive(), s.weapon)
-		if ends:
-			shots.erase(s)
-
-
-func _struck(s: Shot, from: Vector2) -> Fighter:
-	if not s.from_rivet:
-		return rivet if rivet.alive() and s.crossed(from, rivet.pos, rivet.radius_m) else null
-	for h: Fighter in hostiles:
-		if h.alive() and h.exposed and s.crossed(from, h.pos, h.radius_m):
-			return h
-	return null
-
-
-## A nail at the boss while he is in cover stops in the crates in front of him.
-func _blocked(s: Shot, from: Vector2) -> bool:
-	return (
-		s.from_rivet
-		and boss != null
-		and boss.alive()
-		and not boss.exposed
-		and (s.crossed(from, boss.pos, boss.radius_m + 0.6))
-	)
-
-
-func _step_balls() -> void:
-	for b: ArcBall in balls.duplicate():
-		b.step(rivet.pos, rivet.radius_m, metal)
-		if b.burst:
-			balls.erase(b)
-			if b.hit_rivet:
-				tazer_hits += 1
-				tazer_hit_now = true
-				_events.player_hit.emit(&"robo-tazer")
-				damage(rivet, tuning.tazer["damage"], boss.id if boss != null else 0, &"robo-tazer")
-			burst_arcs.append(b.arcs)
-	if burst_arcs.size() > 8:
-		burst_arcs = burst_arcs.slice(burst_arcs.size() - 8)
+	ArenaProjectiles.step_shots(self)
 
 
 ## Dead guards drop their rifles; the quartermaster's Robo-tazer shorts out and is never dropped.
