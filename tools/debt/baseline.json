@@ -58,10 +58,11 @@
         "2026-11-18: n18 police: bench --heat (CityHeat pinned at a level: item 7's heat 3 bench) and dev/sim/cop_wall_trails.gd (item 1's before/after trails on the wall map); dev evidence tooling (dev_loc 22170 -> 22309)",
         "2026-11-17: n18 districts: dev/view/city_zone_map.gd, the headless plan of the generated city per zone (cells, zone tint, numbers JSON); a -s script has no LaunchArgs autoload, so it reads OS args as dev/bake_city.gd does (dev_loc 21754 -> 21849)",
         "2026-11-17: n18 districts: dev/view/zone_frame.gd, zone stills + a straight drive clip through the generated city (the evidence of items 3 and 6); its flags are its own (KNOWN), not game flags, so it reads OS args as dev/showcase/city_frame.gd does (dev_loc 21849 -> 21992)",
-        "2026-11-18: n18 districts item 5: dev/bots BotRoute (+route use in CollectCallBot) so the quest bot can walk to Dock 9 on the city's dock place under --quest1-places; dev only, not shipped (dev_loc 21992 -> 22089)"
+        "2026-11-18: n18 districts item 5: dev/bots BotRoute (+route use in CollectCallBot) so the quest bot can walk to Dock 9 on the city's dock place under --quest1-places; dev only, not shipped (dev_loc 21992 -> 22089)",
+        "2026-11-18: The 80-line headless arena cost scene measures 400 mobile guard approaches, including cold path searches and the open-street control. (dev_loc 22644 -> 22724)"
       ],
       "files": {
-        "project/dev/arena": 711,
+        "project/dev/arena": 791,
         "project/dev/audio": 367,
         "project/dev/bake_city.gd": 32,
         "project/dev/bench": 1906,
@@ -92,7 +93,7 @@
         "project/dev/view": 433,
         "project/dev/weapon_art": 506
       },
-      "total": 22644
+      "total": 22724
     },
     "direct_cmdline_reads": {
       "accepted": [

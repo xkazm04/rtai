@@ -7,6 +7,7 @@ extends CollectCallStage
 ## samples every tick. No QuestSystem runs here.
 
 const WEAPON: StringName = &"gloria"
+const ROUTE_GUARDS: bool = true
 
 var plan: ArenaPlan
 var stations: ArenaStations
@@ -49,6 +50,13 @@ func setup(ctx: WorldContext) -> void:
 	super.setup(ctx)
 	if cells != null:
 		pit = ArenaPit.from_plan(plan, stations, cells)
+	if ROUTE_GUARDS:
+		var bounds: Rect2 = pit.zone
+		for area: ArenaPlan.Area in plan.areas:
+			bounds = bounds.merge(area.rect)
+		arena.guard_map = GuardRouteMap.new(
+			bounds, walls.boxes, cells, arena.tuning.human["radius_m"]
+		)
 	arena.rivet.weapon = WEAPON
 	var id: int = 1000
 	for s: ArenaStation in stations.stations:

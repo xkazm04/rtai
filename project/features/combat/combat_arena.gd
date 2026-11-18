@@ -20,6 +20,7 @@ signal deflected(at: Vector2, back: Vector2)
 const SPAWN_SPREAD_M: float = 2.5
 
 var tuning: CombatTuning
+var guard_map: GuardRouteMap
 var rivet: Fighter
 var hostiles: Array[Fighter] = []
 var shots: Array[Shot] = []
@@ -68,12 +69,13 @@ func _init(p_tuning: CombatTuning, events: EventBus, rng: RandomNumberGenerator)
 ## A contractor near `at` (spread up to SPAWN_SPREAD_M, so a wave pours in, not a queue).
 func spawn_guard(at: Vector2) -> Fighter:
 	var spread: Vector2 = Vector2(_rng.randf_range(-1.0, 1.0), _rng.randf_range(-1.0, 1.0))
-	var g: Fighter = Fighter.make(
-		Fighter.Kind.GUARD, _next_id, at + spread * SPAWN_SPREAD_M, tuning.human["hp"]
-	)
+	var pos: Vector2 = at + spread * SPAWN_SPREAD_M
+	var g: Fighter = Fighter.make(Fighter.Kind.GUARD, _next_id, pos, tuning.human["hp"])
 	_next_id += 1
 	g.radius_m = tuning.human["radius_m"]
 	g.weapon = &"assault-rifle"
+	if guard_map != null:
+		g.pursuit = GuardPursuit.new(guard_map)
 	g.cooldown = _rng.randi_range(0, tuning.weapon(g.weapon).cooldown_ticks)
 	hostiles.append(g)
 	return g
@@ -206,9 +208,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 
 
 func _step_hostile(h: Fighter) -> void:
-	if h.brain_owned:  # a boss: BossHook steps it (features/bosses)
-		return
-	if areas != null and areas.holds(self, h):
+	if h.brain_owned or (areas != null and areas.holds(self, h)):
 		return
 	if h.kind == Fighter.Kind.BOSS:
 		var ball: ArcBall = BossBrain.step(h, tazer, rivet.pos, boss_anchor, tuning)

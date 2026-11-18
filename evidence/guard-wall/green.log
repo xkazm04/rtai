@@ -1,0 +1,94 @@
+===== import (exit 0, 12.2 s)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[   0% ] first_scan_filesystem | Started Project initialization (5 steps)
+[   0% ] first_scan_filesystem | Scanning file structure...
+[  16% ] first_scan_filesystem | Loading global class names...
+[  33% ] first_scan_filesystem | Verifying GDExtensions...
+[  50% ] first_scan_filesystem | Creating autoload scripts...
+[  66% ] first_scan_filesystem | Initializing plugins...
+[  83% ] first_scan_filesystem | Starting file scan...
+[ DONE ] first_scan_filesystem
+
+[   0% ] update_scripts_classes | Started Registering global classes... (5 steps)
+[   0% ] update_scripts_classes | 
+[  16% ] update_scripts_classes | ArenaStage
+[  33% ] update_scripts_classes | GuardRouteMap
+[  50% ] update_scripts_classes | GuardPursuit
+[  66% ] update_scripts_classes | 
+[ DONE ] update_scripts_classes
+
+[   0% ] loading_editor_layout | Started Loading editor (5 steps)
+[   0% ] loading_editor_layout | Loading editor layout...
+[  16% ] loading_editor_layout | Loading docks...
+[ DONE ] loading_editor_layout
+
+
+===== gut (exit 0, 7.6 s)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---  GUT  ---
+[INFO]:  using [C:/Users/kazda/kiro/gtai-bake/appdata/wild-astra/RTAI Uprising] for temporary output.
+Godot version:  4.7.2
+GUT version:  9.7.1
+
+
+res://tests/integration/test_arena_guard_wall.gd
+* test_both_guard_brains_round_the_shipped_north_wall
+[INFO] arena: city block: spawn at (529.0, 509.0) is in a building, dropped
+    street wall told=false crossed=205 final=(543.5, 531.3495)
+[INFO] arena: city block: spawn at (529.0, 509.0) is in a building, dropped
+    street wall told=true crossed=205 final=(543.5, 531.3495)
+* test_clear_street_keeps_walk_speed_and_rifle_standoff
+[INFO] arena: city block: spawn at (529.0, 509.0) is in a building, dropped
+    clear street told=false first stationary=162 final=(532.048, 524.0)
+[INFO] arena: city block: spawn at (529.0, 509.0) is in a building, dropped
+    clear street told=true first stationary=162 final=(532.048, 524.0)
+2/2 passed.
+
+
+res://tests/unit/test_enemy_motor_wall.gd
+* test_all_roster_bodies_walk_round_the_pit_wall
+    pit wall patrol_cop reached 0.3 m at 361
+    pit wall riot_cop reached 0.3 m at 410
+    pit wall swat reached 0.3 m at 339
+    pit wall robot_thug reached 0.3 m at 494
+    pit wall robot_gunner reached 0.3 m at 530
+1/1 passed.
+
+
+res://tests/unit/test_guard_route_map.gd
+* test_body_width_blocks_a_grazing_line_but_leaves_the_door_open
+* test_city_cells_and_props_both_constrain_the_same_path
+* test_a_body_pushed_against_a_rounded_corner_can_leave_it
+* test_guards_share_one_search_per_start_cell_for_the_current_target
+* test_an_unreachable_target_is_cached_and_a_clear_new_approach_resumes
+5/5 passed.
+
+
+res://tests/unit/test_guard_tell.gd
+* test_the_burst_is_told_before_any_round
+* test_the_lock_holds_the_aim_and_a_strafe_beats_the_burst
+* test_planted_fault_tracking_through_the_lock_is_caught
+* test_one_slot_never_lets_two_gunners_tell_at_once
+4/4 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               4
+Tests                12
+Passing Tests        12
+Asserts             259
+Time              0.861s
+
+
+---- All tests passed! ----
+
+Results saved to C:/Users/kazda/kiro/gtai-wt/bk-wild-astra/build/test-results/unit-tests.junit.xml

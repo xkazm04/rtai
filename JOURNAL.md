@@ -2,3 +2,7 @@ START 17:47
 17:52 MILESTONE Reproduced the street fight headless through the normal arena scene and FilmProbe. At tick 650 all four living claw guards 3001-3004 are at y=530.25 on the north face. The D3D12 frame matches.
 17:55 FRICTION The first test import caught an untyped EventBus fixture. Typed locals fixed it before measuring the red run.
 17:57 MILESTONE Both combat guard brains fail the shipped north-wall test at tick 900. Both stop on tick 162 in the clear control. All five standalone EnemyMotor archetypes already pass the single-wall route on base.
+18:15 DECISION Route mobile Fighters in the shared rifle approach. Preserve their 12 m engagement distance on a clear line. The separate EnemyMotor already rounds this wall with every roster body. ArenaStage.ROUTE_GUARDS switches the arena back.
+18:15 MILESTONE Shared metre-grid routes over station props and city solids. The two rifle brains cross on tick 205. Out-of-range and close controls, city and prop bends, a rounded corner, failed-route caching and route sharing are covered.
+18:15 FRICTION First cost probe found 400 searches on one spawn tick. Indexed body clearance by 8 m sector, staggered checks and shared paths to the target cell. The final cold 400-guard wall probe makes three searches over 144000 guard-ticks, zero in the clear.
+18:17 FRICTION Pre-commit caught the 80-line dev cost fixture and the isolation setting reaching the merge-tool tests. Recorded the dev-only increase with the debt tool and confined the sibling-scan setting to the lane hook.
