@@ -1,0 +1,24 @@
+**Both weapons went from five holes to zero.** The arsenal total fell from 36 to 26. The final audit found no missing resources or table errors. [Audit matrix](C:/Users/kazda/kiro/gtai-wt/n19-guns/evidence/arsenal/matrix_after_4.txt) · [JSON](C:/Users/kazda/kiro/gtai-wt/n19-guns/evidence/arsenal/matrix_after_4.json)
+
+| Change | Commits |
+|---|---|
+| General turn driver, revision comparison, camera framing and tests | `1f99f642d`, `5ca80fdef`, `c916e4e75`, `d3d95ad7e` |
+| Homing shard art, measured data and audit | `0fa3fd30e`, `4f9481e4e`, `03a0da41a` |
+| Ray gun art, measured data and audit | `73efd586a`, `d3616c064`, `860f5ed8a` |
+
+Both weapons now have p55 and p70 diagonal fire cells, flashless twins, reload strips and their own magazine part. **None of the 16 diagonal cells or reload cells was mirrored.** The away-left poses needed the most revision. I redrew the shard pose to show the empty near claw and the ray pose to keep its emitter coils visible beyond the helmet.
+
+Each evidence index contains both 64 px/m revision comparisons, a 10.67-second p55 clip, three reload stills and two neighbour comparisons. Both overhead captures confirmed the weapon’s own `mag.png` was visible and the placeholder was inactive. [Homing shard evidence](C:/Users/kazda/kiro/gtai-masters/n19/guns/homing_shard/frames.json) · [Ray gun evidence](C:/Users/kazda/kiro/gtai-masters/n19/guns/ray_gun/frames.json)
+
+**Shared-file rows.** In `rivet_frames.json`, shard rows start at 233, 238, 243, 493, 498 and 503. Ray rows start at 248, 253, 258, 508, 513 and 518. In `rivet_res.gd`, shard registrations occupy lines 35–37 and 70–72, and ray registrations occupy 30–32 and 65–67. `rivet_strips.gd` required no edit.
+
+**Verification.** Changed GUT passed 1,652 tests with two skips. The requested selection passed all 20. All 283 film-tool tests and 19 lint checks passed. Release compile loaded all 740 scripts. Three replay scenarios, 1,200-step parity and the bake golden check passed. Mutation scores were **87.5%** for `rivet_gun_diag.gd` (7 killed, 1 survived, 2 invalid) and **50%** for `arsenal_turn.gd` (5 killed, 5 survived).
+
+The quick gate’s standalone Godot check reproduced the baseline error below. The four weapon art/data commits used `--no-godot` after that failure. The camera-framing commit passed a Godot check scoped to its changed script.
+
+```text
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+at: GDScript::reload (res://features/characters/rig_clips.gd:0)
+```
+
+[astra: 3831s, exit 0]
