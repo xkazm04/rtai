@@ -78,3 +78,34 @@ func test_top_and_thrown_use_rig_paths() -> void:
 		assert_eq(str(_matrix.weapons.molotov[pitch].fire8.status), "n/a")
 		assert_eq(str(_matrix.weapons.molotov[pitch].reload.status), "n/a")
 		assert_eq(str(_matrix.weapons.katana[pitch].recoil.status), "n/a")
+
+
+func test_rocket_fire_checks_each_diagonal_and_rejects_unequal_cell_widths() -> void:
+	var base: String = TestTmp.dir("arsenal_audit").path_join("rivet_eq_rocket_launcher")
+	var eq: Image = Image.create_empty(RivetFrames.EQ_CELLS, 1, false, Image.FORMAT_RGBA8)
+	eq.fill(Color.GRAY)
+	assert_eq(eq.save_png(base + ".png"), OK)
+	assert_eq(eq.save_png(base + RivetNoFlash.SUFFIX), OK)
+
+	# A gray pose in every cell. Place one flash behind each helmet: first pair facing
+	# right, last pair facing left. Reading cell zero four times must fail the left pair.
+	var width: int = 256
+	var diag: Image = Image.create_empty(
+		width * RivetStrips.DIAG_CELLS, 1, false, Image.FORMAT_RGBA8
+	)
+	diag.fill(Color.GRAY)
+	assert_eq(diag.save_png(base + "_diag" + RivetNoFlash.SUFFIX), OK)
+	for i: int in RivetStrips.DIAG_CELLS:
+		var rear: int = 0 if i < 2 else width - 1
+		diag.set_pixel(i * width + rear, 0, Color.ORANGE)
+	assert_eq(diag.save_png(base + RivetStrips.DIAG), OK)
+	var valid: Dictionary = ArsenalAuditFiles.new().fire(base, "p55", "rocket_launcher", false)
+	assert_eq(str(valid.status), "ok", str(valid.reason))
+
+	# Both twins still match and every pose has ink, but one extra column breaks the layout.
+	eq.resize(RivetFrames.EQ_CELLS + 1, 1, Image.INTERPOLATE_NEAREST)
+	assert_eq(eq.save_png(base + ".png"), OK)
+	assert_eq(eq.save_png(base + RivetNoFlash.SUFFIX), OK)
+	var invalid: Dictionary = ArsenalAuditFiles.new().fire(base, "p55", "rocket_launcher", false)
+	assert_eq(str(invalid.status), "HOLE", str(invalid.reason))
+	assert_string_contains(str(invalid.reason), base.get_file() + ".png")
