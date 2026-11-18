@@ -1,0 +1,14 @@
+{
+  "cells": [
+    "vault_plant",
+    "vault_land",
+    "cover_low",
+    "cover_high",
+    "vault_plant_left",
+    "vault_land_left",
+    "cover_low_left",
+    "cover_high_left"
+  ],
+  "foot_pad": 2,
+  "schema": "gtai.rivet-moves/1"
+}
