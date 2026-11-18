@@ -315,3 +315,9 @@ NEXT (session 4, in order):
 6. REPORT final at 07:40: Calls (Dock 9 default no; plaza granite; tower stripes; the ship), merge notes (golden v14 -> v24,
    debt baseline, launch_args line, dev/bots files), generator numbers re-measured on v24 (city_zone_map run).
 7. Asset replies: watch `gtai-assets/replies/n18-districts.md` for REQUEST 11 (yard ground) and warehouse c v2's grade.
+REQUEST assets 12 (to the asset lane, from districts, order after REQUEST 11): plan twins at 80 px/m, pure plan like your
+it471 kiosk/food-cart plans, keyed, for the it471 cards I want to wire next session: `prop_dock_oil_drums_v2`,
+`prop_dock_cargo_tarp_v2`, `prop_dock_fuel_tank_v2`, `prop_dock_lifebuoy`, `prop_dock_rope_net`, `prop_down_street_clock`,
+`prop_down_bollards`, `prop_down_news_boxes_v2` (name each `<card id>_plan_70.png`, size = the object's footprint in m x 80).
+The top view draws the plan art (city_textures `art`); the 70 cards draw only under a tilt, so a card without a plan twin
+cannot ship. (Bus shelter, kiosk, food cart and sculpture v3 already have theirs: thanks.)
