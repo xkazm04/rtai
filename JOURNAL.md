@@ -405,3 +405,43 @@ NEXT (session 5, in order):
 7. REPORT final at 07:40 (Calls: Dock 9 default no; door at office; hazard stripes; plaza granite; tower stripes; merge notes:
    golden v14 -> v29, debt baseline, launch_args line, dev/bots files).
 Session 4 ended 04:47 with a clean tree; HEAD = this JOURNAL commit after 8894e90aa (v29).
+## Session 5 (2026-11-18 04:47 -> )
+Read: JOURNAL NEXT, git log, asset replies (it474 04:18-04:26: dinghy plan, ledges v2, hatch covers v2, grain v2, gangway v2,
+flower crates + plan; it475 04:45: drums plan v3, propeller, crab pots, nav buoys, scrap skip, road works), police JOURNAL
+(no NEED districts). Registry rules applied: concept-scene-parity (each card judged in game at 32/48 px/m: the flower crates
+were dropped from the slot mix after the still, not on the board), sprite-and-atlas-production (cut by the cutter, plan
+twins at their game size, a provenance line per PNG), procedural-level-planning (a landmark-sized prop is a once-a-block
+single, never a slot prop; one data value moves it).
+- 04:48 reel gate on a2797f8b7 (v29) started, then STOPPED by me at 04:56 (my PIDs 47696 tree): it held Godot ~30 min for a
+  commit already superseded; the final commit gets the full gate instead. Reels last PASSED on dee06ed7b (v28).
+- 04:58 MILESTONE items 4 + 5, commit bf5857f6f: places.json `door` key (middle | office); dock_9 `door: "office"`: its door
+  slides from the harbour office tile's middle (`DockDresser.office_tile_on`), not the long block's middle. Place only, no
+  re-bake. test_dock_office 3/3 (door inside the office tile's x span; a door-less row on the same rule stays west, same
+  block). test_bot_route's step bound was 1.5 cells for every step; the end steps join the exact door/goal inside a 4 m cell
+  (up to 2.2 cells), and the moved door made the last 6.04 m > 6.0: bound split (ends 2.2, inner 1.5).
+- FRICTION: `tools/gate/quick.mjs` reports FAIL on any test that reaches CitySystem (test_bot_route, and the UNCHANGED
+  test_stage_dock_place): `check.mjs` alone sees "Failed to compile depended scripts" from res://core/events/events.gd down,
+  while events.gd alone checks ok and GUT compiles + passes them. A check-only cascade, not a parse error.
+REQUEST tools: `tools/godot/check.mjs` should classify a cascade whose root (core/events/events.gd) checks ok alone as
+UNVERIFIABLE (exit 3), not FAIL. Repro: `node tools/godot/check.mjs res://tests/unit/test_stage_dock_place.gd` on 7dd676b04.
+- 05:00 MILESTONE item 3, commit 7dd676b04, generator v30: downtown plaza singles: planter bed 128, stone ledges v2 129, chess
+  tables 130, flower crates 131 (it474 A, cards + plan twins). First pass had the flower crates as a slot prop: six in one
+  32 px/m frame and every slot pick reshuffled (seen in the still), so they became a single; slot mix = v29. Full unit
+  2895/0; bake --check deterministic + matches. Looked: the L ledges and planter bed read at 48 px/m; the flower colours grey
+  out under the world print like every prop (the crates still read as a display). Evidence
+  `ab_it474_downtown_plaza_singles_v29_v30_combo_{32,48}ppm.jpg`, `downtown_plaza_chess_flowers_v30_combo_48ppm.jpg`.
+- Cut and looked (not wired yet): it475 propeller (A: five facings near-identical, flat bronze), crab pots (A), dinghy (card
+  facing 0 is bow-on; its plan twin lies east-west: turn it 90 deg like the tarp/tank), nav buoys (magenta key spill inside
+  the cradle, all five facings), scrap skip (the cutter finds fewer than five facings in the top row).
+REQUEST assets 15 (to the asset lane, from districts, small): (a) `prop_dock_nav_buoys_70.png`: despill the magenta key
+inside the cradle (between and under the two buoys, every facing); same name `_v2`. (b) `prop_dock_scrap_skip_70.png`: the
+cutter (`tools/art/city_prop_cut.py`, alpha >= 24, column runs joined under 12 px) finds fewer than five facings in the top
+row: two facings touch or one is missing; re-space to five clear facings, `_v2`. (c) plan twins at 80 px/m for the
+propeller (about 2.2 m), crab pots and nav buoys, if facing 1 is not pure plan.
+- 05:02 item 5 flag ON with the office door (on 7dd676b04): quest1_input PASS, pays in 930 s (55817 ticks; middle door 921 s /
+  55277), 0 deaths, 49 kills, replay identical; checkpoints b4-dock@12932, b5@34095 (middle door 33825). One WARN
+  "checkpoint at b4-dock did not re-simulate to its hash" (then the resume + tamper refusal pass). 28.6 s wall.
+  `evidence/n18-districts/quest1_places_on_office_door.txt`.
+- 05:04 Dock 9 door still, middle vs office (camera on the place, zone_frame --place=dock_9; before = places.json without the
+  key, restored after): the door now stands before the office's stone front + lookout mast instead of a roller-door run.
+  `ab_dock9_door_middle_office_v30_combo_{32,48}ppm.jpg`. (zone_frame parks Rivet ~9 m north of the focus: on the roof.)
