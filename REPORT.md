@@ -1,4 +1,4 @@
-# n18 police: heat drives the city's police (REPORT, final at session 6, 07:35)
+# n18 police: heat drives the city's police (REPORT, final at session 8, 07:45)
 
 Branch `n18-police`, worktree `C:\Users\kazda\kiro\gtai-wt\n18-police`, cut from `int-n17` at
 `36dd26ba6`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n18\police\` (`frames.json`) and
@@ -46,6 +46,18 @@ Branch `n18-police`, worktree `C:\Users\kazda\kiro\gtai-wt\n18-police`, cut from
   NOT seen by eye: in the heat 3 frames every visible cop draws blue (all may have been full
   rigs); a heat 3 frame at 16 px/m (session 5, t1440) shows every figure I can name as a cop in blue,
   the far ones are too small to name. Fix if confirmed: the same kind fallback at :135 and in frame_of, or the cops' art id 5.
+
+## What blocked me (and for how long)
+
+Nothing blocked the lane outright; the time sinks were:
+- The n15 street-fight wall cops (item 1's re-film): about 1 h in session 1 to learn they are arena pit
+  guards on `enemy_motor.gd`, not sim cops, so the sim nav fix cannot move them (NEED director). A `-s`
+  dev script cannot load the arena (autoloads at compile time), so no headless arena cop counter was built.
+- A contended machine all night: no bench ran quiet, so item 7's numbers stay CONTENDED.
+- The first `bench --heat=3` (05:20-05:36) silently ran at heat -1 (a botched script edit of
+  `tools/bench/run.mjs`); caught by the result JSONs' `heat` field and re-run (6fced6b9c).
+- Small: a GDScript local named `free` crashes `--check-only` (0xC0000005); a unit run started
+  mid-edit went red and was re-run on a settled tree.
 
 ## Calls for the owner
 
