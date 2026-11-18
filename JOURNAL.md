@@ -388,7 +388,9 @@ twin); and the oil drums v2 card + plan with the rust-red drums turned grey-gree
   132/132. Looked: the tug reads in the basin water at 32 px/m, the rope nets show as dark heaps on the apron.
   `ab_it474_basin_tug_ochre_v28_v29_combo_32ppm.jpg`. Evidence gate (no reels) on 8894e90aa started 04:39.
 NEXT (session 5, in order):
-1. Read the 04:39 evidence gate result on 8894e90aa (`build/gate/<sha>/gate.json`); then the reel gate on v29
+1. Evidence gate on 8894e90aa (v29) PASSED at 04:46: lint 19/19, unit 2892/0 (2 skipped), scenarios 55/55, parity bit-exact
+   (planted caught at 629), look goldens 11/11, 128 art textures 0 placeholders, release-compile 727/0
+   (`build/gate/8894e90aa443/gate.json`). Still to run: the reel gate on v29
    (`node tools/gate/run.mjs --reels`, ~25 min). Gates only through tools/gate/run.mjs while editing.
 2. Masters: add the v29 tug still (frames.json at 15: drop the weakest), 48 px/m tug + drums close-up.
 3. Dock 9 door at the office (REPORT Call): a places.json frontage key (e.g. `door: "office"`) that puts dock_9's door before
@@ -402,3 +404,4 @@ NEXT (session 5, in order):
    plus 48 px/m stills per zone; generator numbers re-measured (dev/view/city_zone_map.gd) for REPORT.
 7. REPORT final at 07:40 (Calls: Dock 9 default no; door at office; hazard stripes; plaza granite; tower stripes; merge notes:
    golden v14 -> v29, debt baseline, launch_args line, dev/bots files).
+Session 4 ended 04:47 with a clean tree; HEAD = this JOURNAL commit after 8894e90aa (v29).

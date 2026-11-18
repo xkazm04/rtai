@@ -18,7 +18,8 @@ Generator numbers (v21, `evidence/n18-districts/zone_map_v21.{png,json}`): docks
 tiles + 2408 plaza/yard/quay tiles; downtown 25 chunks (9.77 %), 2000 block + 500 plaza tiles; mixed 183 chunks
 (71.48 %), 16125 block + 2175 plaza tiles. Generating all 256 chunks: 5.0 s in the zone-map run; a full bake 6.1 s
 wall (CONTENDED: not under the bench lock).
-Gates: full gate (`tools/gate/run.mjs --reels`, snapshot) PASS on dee06ed7b (v28): lint 19/19, unit 2891/0, scenarios 55/55,
+Gates: evidence gate PASS on 8894e90aa (v29): unit 2892/0, scenarios 55/55, parity bit-exact, look goldens 11/11 (reels not yet
+run on v29). Full gate (`tools/gate/run.mjs --reels`, snapshot) PASS on dee06ed7b (v28): lint 19/19, unit 2891/0, scenarios 55/55,
 parity bit-exact, look goldens 11/11, release-compile 727/0, reels exit 0. PASS on b32980b92 (v27): lint 19/19, unit 2889/0, scenarios 55/55,
 parity bit-exact (planted caught at 629), look goldens 11/11 (worst 0.31), release-compile 727/0, reels exit 0. Earlier: PASS on 70ca0c1e7 (v23): lint 19/19, unit 2879/0, scenarios 55/55,
 parity bit-exact (planted caught at 629), look goldens 11/11, release-compile 726/0, reels exit 0. Evidence gate PASS on
