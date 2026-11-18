@@ -10,6 +10,7 @@ const SECTOR_M: float = 8.0
 var searches: int = 0
 var _grid: AStarGrid2D = AStarGrid2D.new()
 var _sectors: Dictionary[Vector2i, Array] = {}
+var _raw_sectors: Dictionary[Vector2i, Array] = {}
 var _paths: Dictionary[Vector2i, PackedVector2Array] = {}
 var _destination: Vector2i
 var _radius: float
@@ -25,6 +26,7 @@ func _init(bounds: Rect2, boxes: Array[Rect2], cells: StageCells, radius: float)
 	_grid.update()
 	for box: Rect2 in boxes:
 		_add_box(box)
+		_index_raw(box)
 	if cells != null:
 		_index_city(cells)
 
@@ -32,15 +34,55 @@ func _init(bounds: Rect2, boxes: Array[Rect2], cells: StageCells, radius: float)
 ## Contiguous solid city cells in a row make one box. The same geometry supplies both the
 ## search grid and the radius-wide sight check, including city props and parked cars.
 func _index_city(cells: StageCells) -> void:
+	var previous: Dictionary[Vector2i, Rect2] = {}
 	for y: int in range(_grid.region.position.y, _grid.region.end.y):
+		var current: Dictionary[Vector2i, Rect2] = {}
 		var x: int = _grid.region.position.x
 		while x < _grid.region.end.x:
 			var start: int = x
 			while x < _grid.region.end.x and cells.solid(x, y):
 				x += 1
 			if x > start:
-				_add_box(Rect2(start, y, x - start, 1))
+				var row: Rect2 = Rect2(start, y, x - start, 1)
+				_add_box(row)
+				var span: Vector2i = Vector2i(start, x)
+				var above: Rect2 = previous.get(span, row)
+				current[span] = above.merge(row)
 			x += 1
+		for span: Vector2i in previous:
+			if not current.has(span):
+				_index_raw(previous[span])
+		previous = current
+	for box: Rect2 in previous.values():
+		_index_raw(box)
+
+
+func _index_raw(box: Rect2) -> void:
+	var lo: Vector2i = Vector2i((box.position / SECTOR_M).floor())
+	var hi: Vector2i = Vector2i((box.end / SECTOR_M).floor())
+	for y: int in range(lo.y, hi.y + 1):
+		for x: int in range(lo.x, hi.x + 1):
+			var key: Vector2i = Vector2i(x, y)
+			if not _raw_sectors.has(key):
+				_raw_sectors[key] = []
+			_raw_sectors[key].append(box)
+
+
+## Raw cover faces within r metres. A building crossing sectors appears only once.
+func boxes_near(p: Vector2, r: float) -> Array[Rect2]:
+	var lo: Vector2i = Vector2i(((p - Vector2.ONE * r) / SECTOR_M).floor())
+	var hi: Vector2i = Vector2i(((p + Vector2.ONE * r) / SECTOR_M).floor())
+	var found: Dictionary[Rect2, bool] = {}
+	for y: int in range(lo.y, hi.y + 1):
+		for x: int in range(lo.x, hi.x + 1):
+			for box: Rect2 in _raw_sectors.get(Vector2i(x, y), []):
+				if p.distance_squared_to(p.clamp(box.position, box.end)) <= r * r:
+					found[box] = true
+	return found.keys()
+
+
+func region() -> Rect2:
+	return Rect2(_grid.region)
 
 
 func _add_box(box: Rect2) -> void:
