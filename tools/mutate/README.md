@@ -7,6 +7,7 @@ file and reports which faults the selected checks caught.
 node tools/mutate/mutate.mjs --file=core/save/gtsv_container.gd [--max=25] [--ops=cmp_flip,boundary]
                              [--tests=test_gtsv_container,test_save_facade] [--timeout=90] [--json]
                              [--oracle=tests,bake-check] [--worktree=<path>] [--remove-worktree]
+                             [--lines=<n,a-b>]
 just mutate --file=core/save/gtsv_container.gd --max=25
 ```
 
@@ -15,6 +16,7 @@ just mutate --file=core/save/gtsv_container.gd --max=25
   (class_name / res:// mentions + the `test_<basename>.gd` twin), minus the slow tier. If the map says
   FULL suite the run stops and asks for `--tests` (1,400 tests per mutant is not acceptable).
 - `--max=N` samples N mutants, deterministically (seeded by the file path, source order kept).
+- `--lines` selects source lines and inclusive ranges before `--max` samples them, as in `node tools/mutate/mutate.mjs --file=features/city/gen/kerb_dresser.gd --oracle=bake-check --lines=63,104`.
 - `--json` writes `build/mutate/<file-slug>.json` (`gtai.mutate/1`, canonical JSON) in the main checkout.
 - Exit 0 for every completed run (it is a measurement; the score is yours to judge), 2 for usage or
   infrastructure errors (including "baseline red").

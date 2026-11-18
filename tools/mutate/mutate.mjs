@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Real mutation testing for one GDScript file: "do my tests bite on this file?"
-//   node tools/mutate/mutate.mjs --file=<project-relative .gd> [--max=N] [--ops=a,b] [--tests=<basenames>]
+//   node tools/mutate/mutate.mjs --file=<project-relative .gd> [--lines=<n,a-b>] [--max=N] [--ops=a,b] [--tests=<basenames>]
 //                                [--oracle=tests,bake-check] [--timeout=<s>] [--worktree=<path>] [--remove-worktree] [--json]
 // All mutation happens in a dedicated git worktree OUTSIDE the repo (see worktree.mjs and the README);
 // the main checkout is only read, and --json writes build/mutate/<slug>.json in it. Exit 0 for every
@@ -19,6 +19,35 @@ import { acquireLock, ensureWorktree, removeWorktree, restoreFile, slugOf, stemO
 
 export class UsageError extends Error {}
 
+function parseLines(value) {
+  return value.split(',').map((item) => {
+    const match = /^(\d+)(?:-(\d+))?$/.exec(item);
+    if (match) {
+      const first = Number(match[1]);
+      const last = Number(match[2] ?? match[1]);
+      if (first > 0 && last >= first && Number.isSafeInteger(last)) return [first, last];
+    }
+    throw new UsageError(`invalid --lines=${value}; expected positive line numbers or ranges like 40-60`);
+  });
+}
+
+/** Keep source order and original mutant ids, even for overlapping ranges. */
+export function filterMutantsByLines(mutants, ranges) {
+  if (!ranges) return mutants;
+  const selected = mutants.filter(({ line }) => ranges.some(([a, b]) => a <= line && line <= b));
+  if (selected.length) return selected;
+  const lines = [...new Set(mutants.map((m) => m.line))].sort((a, b) => a - b);
+  const nearby = new Set();
+  for (const [a, b] of ranges) {
+    const before = lines.findLast((n) => n < a);
+    const after = lines.find((n) => n > b);
+    if (before !== undefined) nearby.add(before);
+    if (after !== undefined) nearby.add(after);
+  }
+  const requested = ranges.map(([a, b]) => a === b ? a : `${a}-${b}`);
+  throw new UsageError(`--lines=${requested.join(',')} matches no mutants; nearest mutant lines: ${[...nearby].join(', ') || 'none'}`);
+}
+
 /** argv -> options; unknown or malformed args throw UsageError. */
 export function parseArgs(argv) {
   const o = { file: null, max: 0, ops: OPS, tests: [], oracles: ['tests'], explicit: false,
@@ -28,6 +57,7 @@ export function parseArgs(argv) {
     const k = a.split('=')[0];
     const v = a.includes('=') ? a.slice(a.indexOf('=') + 1) : '';
     if (k === '--file' && v) o.file = v.replace(/\\/g, '/');
+    else if (k === '--lines') o.lines = parseLines(v);
     else if (k === '--max' && /^\d+$/.test(v) && Number(v) > 0) o.max = Number(v);
     else if (k === '--ops' && v) o.ops = v.split(',').filter(Boolean);
     else if (k === '--oracle' && v) {
@@ -118,7 +148,7 @@ export async function main(argv) {
   try {
     if (!existsSync(target)) throw new UsageError(`${o.file} does not exist at HEAD ${wtInfo.head.slice(0, 8)} (commit it first)`);
     original = readFileSync(target);
-    const all = generateMutants(original.toString('utf8'), { ops: o.ops });
+    const all = filterMutantsByLines(generateMutants(original.toString('utf8'), { ops: o.ops }), o.lines);
     if (!all.length) throw new UsageError(`${o.file}: no mutants for ops ${o.ops.join(',')}`);
     const mutants = sampleMutants(all, o.max, o.file);
     const tests = o.oracles.includes('tests') ? await pickTests(o, wt) : [];
