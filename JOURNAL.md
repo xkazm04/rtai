@@ -453,3 +453,29 @@ propeller (about 2.2 m), crab pots and nav buoys, if facing 1 is not pure plan.
 - 05:07 full gate (snapshot, --reels) on 5058c48d8 (v31) started, background (`build/gate/s5_v31_reels.log`).
 - Masters frames.json: 15 (added dock 9 door office, v30 plaza singles, v31 apron, v29 tug; dropped one-sign v21, yard
   containers v19, dock c roofs v22, facade alt v20 and their files).
+- 05:1x MILESTONE tools, commit 1ce6ece2f: the REQUEST tools above, built (no tools lane tonight): `tools/godot/check.mjs`
+  drops Godot's shutdown report ("N RID allocations ... leaked at exit", "N resources still in use at exit" + their at:
+  lines) before judging; those two lines were the "cause" that turned an all-cascade run into FAIL. New test in
+  check.test.mjs; planted bypass caught (1 fail); tools/godot tests 96/96. Live re-check of test_stage_dock_place after
+  the gate frees Godot.
+- 05:1x asset replies it476 (05:08): REQUEST 15 (a) nav buoys v2 despilled (802 magenta px -> 0) and (b) scrap skip v2
+  re-spaced (five facings, 60 px gaps) DELIVERED; (c) plan twins for propeller / crab pots / nav buoys drawing (round
+  20261118-0610; facing 1 of each card shows sides). Cut + looked: both clean. v32 prepared in the tree (nav buoys 135,
+  scrap skip 136 on the docks apron; card facing 0 as the plan stand-in), to bake after the gate.
+- Prepared: zone_frame place shots focus on the door itself (Rivet stood on the roof 6 m north); test_city_zone_cards (every
+  standing prop a zone row names has a city_facades card row with art on disk, so none draws flat unseen).
+- 05:17 evidence gate on 5058c48d8 (v31): unit 2893/0 (2 skipped), scenarios 55/55, parity bit-exact (planted caught at
+  629), look goldens 11/11 (worst 0.31), 135 art textures 0 placeholders, release-compile 727/0; lint FAIL 1/19
+  (tool-tests): `tools/film/film2.break.test.mjs:73` "an unsafe integer must not trap the range loop": its 2 s worker hang
+  timer fired under both lanes' gates (test 13 s). Alone: 57/57 in 175 ms, twice; tools/film unchanged since the base.
+- MILESTONE tools, commit 81c409665: that timer 2 s -> 15 s; planted (shots.mjs:151 safe-integer guard out) still caught.
+  Reels on 5058c48d8 running.
+- 05:32 full gate on 5058c48d8 (v31): reels PASS (exit 0); the gate verdict FAIL is only lint's tool-tests flake above (fixed
+  in 81c409665): `build/gate/5058c48d81df/gate.json`. Everything else PASS (numbers at 05:17).
+- 05:35 MILESTONE commit 69fb262cd: test_city_zone_cards (planted: dock_scrap_skip's card row removed -> caught) + zone_frame
+  place shots on the door (Rivet at Dock 9's office door: `dock9_door_office_rivet_v32_combo_{32,48}ppm.jpg`).
+- 05:36 MILESTONE item 3, commit cf4605b1e, generator v32: nav buoys v2 135 + scrap skip v2 136 on the docks apron (REQUEST 15
+  a+b). Full unit 2895/0; bake --check ok. `ab_it476_docks_apron_{skip,buoys}_v31_v32_combo_48ppm.jpg`. Looked: the skip's
+  chevrons read; the buoys' ochre bands grey under the print.
+- 05:37 `node tools/godot/check.mjs res://tests/unit/test_stage_dock_place.gd` -> ok (exit 0) live.
+- 05:38 item 6 film pass 3 rendering (zone_frame --drive=1990,1026,1250,1026,20, --fixed-fps 60, v32).
