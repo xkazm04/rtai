@@ -92,6 +92,6 @@ static func place(rig: CutRig, card: Sprite2D, s: float, h_px: float) -> void:
 	var w: float = card.texture.get_width() / float(COLS)
 	card.offset = Vector2(-w * 0.5, -w * 0.5)
 	card.global_rotation = turn_of(head, col)
-	card.global_scale = Vector2(s, s)
+	card.global_scale = Vector2(s, s) / RivetWalk.RES
 	card.global_position = rig.global_position
 	rig.set_meta(RigCastShadows.CAST_HIP, h_px * SHADOW / RigCastShadows.BODY_IN_HIPS)
