@@ -104,3 +104,107 @@ NEXT (session 2): item 3 (heat 1 investigate), per the design above:
    disengage. Then parity, then a 32 px/m clip of the sandbox (film has no sandbox shot: check
    tools/film/shots.mjs, else REQUEST tools / a dev scene).
 4. NEED director (unchanged): combat AI pit-guard nav (`enemy_motor.gd`) for the n15 frame.
+
+## Session 2 (2026-11-18 00:47 -> )
+
+Registry rules applied (item 3):
+- `agent-behaviour-authoring` "coordination is a claim on a scarce resource, the registry owned by
+  the contested resource": the last-seen point owns PT_FOOT<level> claims (F_ENGAGED), nearest cop
+  first, lowest slot on a tie; no commander. "Every dispossessed holder falls back to a stated
+  alternative": search over or heat 0 cancels every claim at once and they walk. "Commitment
+  windows in seconds": search_s 10, the city drain 20 s/level, both in heat.json.
+- `combat-pacing-and-dramatic-arc` "duration is a two-sided envelope": a heat-1 episode lasts
+  20 s unseen (cops 40 m away arrive at 11.5 s, then search 10 s): long enough to see the answer,
+  well under the ~45 s "spongy" ceiling.
+- `cross-runtime-rules-conformance`: every new sim value is doubles (Vector2/3 are float32 in
+  GDScript, so the reference keeps double scratch members, never vectors); the ladder gets its own
+  native-vs-reference test because the parity gate runs at heat -1 only.
+
+### Item 3: heat 1 investigate (52d03bdbd)
+- Sim (native `police.cpp` + reference `sim_police.gd`/`sim_cops.gd`): heat 0 = cops walk the
+  sidewalk at 1.4 m/s, no fire; heat 1-3 = foot_cops[level] 0/3/4/6 nearest the point engaged,
+  flow field to the point (the field's goal is now the last-seen point under heat), search 10 s
+  within 3 m, released; fire needs line of sight. heat -1 unchanged (parity gate bit-exact).
+- Game: `CityHeatTune` reads heat.json `city`; `CityPatrol` keeps 10 foot cops in the sandbox
+  bubble (FINDING: the sandbox street targets keep NO foot cops; they only came with a riot).
+- Tests (`test_city_police_heat` 6, `test_city_police_parity` 1, `test_city_heat` +2): before =
+  the files do not compile on 39c831f52 (no set_police/FS_ENGAGED) and, behaviourally, every cop
+  pursued Rivet at any heat. Numbers: three nearest cops (~40 m) within 4 m of the point at tick
+  691; at heat 0 a cop walks 7.0 m in 5 s and fires 0 rounds; Rivet behind the wall 15 m: 0 shots,
+  in the open 5 m: > 0. Ladder parity: 1500 ticks bit for bit, up to 6 engaged.
+- DECISION police/heat-ladder-1 (docs/decisions.md): city drain 20 s (measured: 6 s ended heat 1
+  before anyone arrived).
+- Gates on 52d03bdbd: lint 19/19, full unit 2857 passed / 0 failed / 2 skipped, parity bit-exact
+  (1200 steps, mutation caught at 629), native core tests 0 failed.
+FRICTION: a full unit run started while I was still editing went red on a half-written import;
+re-run on a settled tree. Never edit project/ while a gate runs.
+
+### Clip tool (799a958a4)
+`project/dev/sim/heat_clip.tscn` (dev/police would be a new lane-named dev dir: the debt ratchet
+refuses it): the real World + CitySystem + CityHeat + CityView at 32 px/m, camera on A (the
+sandbox start junction); at --heat-at (180) it does what a witnessed kill at A does (level,
+last-seen A) and moves Rivet 60 m south out of sight; PNG every 4 ticks + timeline.json (heat,
+engaged, cops within 4 m of A, police cars stopped at A, every cop position). `--police=pre` =
+set_heat -1 (the pre-n18 sim police, same patrol). Run Godot directly (tools/dev/run.mjs passes no
+--rendering-driver/--resolution); ffmpeg for the mp4. Debt: dev_loc and direct_cmdline_reads
+accepted with a reason (`--accept-regression`).
+REQUEST tools: a `sandbox` shot in tools/film (film.mjs) for the streamed city with a heat plan, so
+heat clips get the film kit's --rev snapshots, probe.json and compare.mjs instead of heat_clip.
+
+### Item 3 film (e5a648203, patrol 16, drain 25 s)
+Heat 1 living: raise t180; first cop within 4 m of A at t388 (3.5 s), 3 within 4 m at t808 (10.5 s),
+claims cancelled at t1020 (10 s search), heat 0 at t1680 (25 s drain). Pre-n18: 0 cops within 4 m
+all clip (every sim cop chases Rivet from tick 0, crime or not). First cut (52d03bdbd, patrol 10,
+drain 20 s): only 1 of 3 engaged cops reached A before the drain (the nearest, 15.7 m, vanished at
+t300-400 crossing the junction, most likely run over) -> DECISION retune (heat-ladder-2 line).
+Evidence: gtai-masters/n18/police + evidence/n18-police (pair still t808, mp4 pair, timelines).
+
+### Item 4: heat 2 cars (e5a648203, 20609876f, 2df162b6d)
+- CityDispatch (game) + sim car stop/park/crew (native + reference). Tests: test_city_police_cars
+  (4), test_city_dispatch (2), car ladder parity (1200 ticks bit for bit, 8 cops incl. crews).
+  Numbers: a dispatched car 78 m off parks and unloads at tick 403; 2 cars sent by tick 183 on the
+  road map (delay 180).
+- FINDING (unit): crew out on the kerb side pressed into its own parked car forever (the flow field
+  does not see cars) -> crew gets out on the side facing the point.
+- FINDING (clip h2 at e5a648203): the foot search ended at t1020 and released both cars en route ->
+  the search waits while a dispatched car is en route (20609876f; test red without: search clock
+  121 ticks while the car drove).
+- FINDING (headless sandbox trace, 20609876f): both dispatched cars stalled 63-70 m from A behind
+  junction reservations held by promoted spawner police cars (now traffic under heat, never
+  despawned) -> 2df162b6d: a dispatched car skips the reservation queue (siren), an idle police
+  car stuck like traffic despawns. After: one car reaches 11 m from A by t1920 but crawls at
+  ~0.9 m/s through a jam round A; the other still stalls 67 m out. Cause not proven; suspects:
+  the engaged cops searching IN the junction (traffic brakes for people ahead, so the junction
+  owner never clears) and pursuers having no following logic (they press into the car ahead).
+  No dedicated unit test yet for the siren/idle rules (parity tests cover their bit-exactness).
+- Heat 2 clip: NOT evidenced yet (item4_heat2_living_20609876f shows 0 cars at A, labelled a defect).
+
+Gates on 2df162b6d: lint 19/19, full unit 2864 passed / 0 failed / 2 skipped, native core 0 failed,
+parity bit-exact (1200 steps, mutation caught at 629), scenarios 55/55 (01:50, none CONTENDED).
+FRICTION: a GDScript local named `free` (shadows Object.free) crashes `--check-only` with
+0xC0000005 (tools/gate/quick.mjs reports `exit 3221225477`); GUT ran the file fine.
+FRICTION: a mutation that leaves a local unused fails to parse (warnings are errors), so a
+"red before" via deletion proves nothing; mutate with `(not x or true)` instead.
+
+NEXT (session 3):
+1. Heat 2 clip that works. First prove the jam's cause with a headless trace (copy the session-2
+   pattern: a throwaway GUT test building World + CitySystem(native) + CityHeat, force heat 2 at
+   CitySystem.START, print K_PCAR slot/pos/v/dir and res_/owner per 120 ticks; delete it after).
+   Suspects, in order: (a) engaged cops searching IN the junction (traffic brakes for people ahead
+   and holds the reservation): snap the search amble to stay on walk cells, or let a car whose
+   blocker is an engaged cop pass; (b) pursuers' missing follow logic (they press into the car
+   ahead at ~0.9 m/s). Then re-film `heat_clip --level=2` living vs pre, number = cars stopped at A
+   and crew within 4 m of A. Add a unit test for the siren rule (a dispatched car is never
+   `waiting`) and the idle-car despawn.
+2. Item 5 (heat 3): crews of heat-3 cars are squads: city.squad (4) per car, looks riot (crowd
+   index 6) and SWAT (RigVariant.SWAT 8) via the spawn variant byte (feed.looks = sim variant;
+   check by eye that a K_COP with variant 6/8 draws riot/SWAT in the atlas path: RigVariant.atlas_look
+   prints SWAT as patrol at LOD 1). Roadblock: CityRoadblock (game) parks city.roadblock_cars (3)
+   K_PCAR F_PARKED across the lane at the junction ahead of Rivet's heading (from last_seen's
+   motion), spacing in heat.json; traffic already brakes for cars ahead; a parked car must not
+   steer (skip car_steer when F_PARKED under heat). Tests + parity + clip.
+3. Item 6 (quest 1 heat into the sim on the slice boot, then --sim-police flag) and item 7 (cost
+   at heat 3, bench lock) after.
+4. Not run this session: evidence run.mjs (look goldens), reel gate, bench. Run them on the next
+   commit before the REPORT.
+5. Before-tree worktree `C:\Users\kazda\kiro\gtai-n18\police-before` still KEPT (36dd26ba6).

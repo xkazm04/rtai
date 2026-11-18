@@ -1,0 +1,47 @@
+[
+ {
+  "file": "item3_heat1_pair_t808_32ppm.png",
+  "title": "Heat 1 in the sandbox city, t808 (10.5 s after the raise): BEFORE pre-n18 sim police | AFTER living police",
+  "source": "godot --rendering-driver d3d12 --path project --fixed-fps 60 --resolution 1280x720 res://dev/sim/heat_clip.tscn -- --level=1 --police=living|pre --seconds=30 (frames f_00202), hstack",
+  "branch": "n18-police e5a648203",
+  "ppm": 32,
+  "before": "left half (--police=pre: set_heat -1; the label's 'heat 2' is the meter, the sim ignores it)",
+  "note": "Ring = the 3 m search radius round A (the last-seen point, the junction at the sandbox start); heat forced at t180 as a witnessed kill does, Rivet moved 60 m south out of sight. AFTER: 3 engaged cops searching at A (timeline: first within 4 m at t388 = 3.5 s, all 3 at t808, released after the 10 s search at t1020, heat 0 at t1680 = 25 s drain). BEFORE: every sim cop chases Rivet wherever he is from tick 0, crime or not; nobody looks at A (0 within 4 m all clip)."
+ },
+ {
+  "file": "item3_heat1_pair_32ppm.mp4",
+  "title": "Heat 1 clip, 33 s at 15 fps (every 4th tick): BEFORE pre-n18 | AFTER living police",
+  "source": "same runs as the still, ffmpeg hstack of the two PNG sequences",
+  "branch": "n18-police e5a648203",
+  "ppm": 32,
+  "before": "left half",
+  "note": "The label lags the image by one sample (4 ticks). item3_heat1_living_timeline.json / item3_pre_n18_timeline.json hold heat, engaged and every cop position per sample."
+ },
+ {
+  "file": "item4_heat2_living_20609876f_32ppm.mp4",
+  "title": "Heat 2 clip at 20609876f: the dispatched cars do NOT arrive (open defect)",
+  "source": "heat_clip.tscn --level=2 --police=living --seconds=30",
+  "branch": "n18-police 20609876f",
+  "ppm": 32,
+  "before": "item3_heat1_pair_32ppm.mp4 (left half)",
+  "note": "4 foot cops engaged and at A (max 4 within 4 m at t1468) but 0 cars stopped at A in 30 s. Headless trace: both dispatched cars stalled 63-70 m out behind a junction-reservation jam (fixed in 2df162b6d: sirens skip the queue, idle police cars despawn when stuck); after the fix one car reaches 11 m by t1920 crawling at ~0.9 m/s through a jam round A. Not yet a working heat 2 clip."
+ },
+ {
+  "file": "item1_cityfight_after_39c831f52_32ppm_t650.png",
+  "title": "n15 city street fight t650 AFTER the sim cop sight fix: the four wall cops unchanged",
+  "source": "node tools/film/film.mjs city --ppm=32 --stills=250,450,650,850,1150",
+  "branch": "n18-police",
+  "ppm": 32,
+  "before": "item1_cityfight_before_36dd26ba6_32ppm_t650.png",
+  "note": "Identical to the before. The four cops at the wall's north foot are arena pit guards (Fighters 3001-3004, item1_cityfight_after_probe.json t650: pos y 530.3, Rivet 527.5,535.0), driven by the combat enemy AI, not by the city sim's cop() step. The sim fix is proven by tests/unit/test_city_cop_sight.gd (never -> tick 617/615), not by this frame; the n15 defect stays open under combat AI nav."
+ },
+ {
+  "file": "item1_cityfight_before_36dd26ba6_32ppm_t650.png",
+  "title": "n15 city street fight t650 BEFORE (int-n17 36dd26ba6, own DLLs)",
+  "source": "film.mjs city --ppm=32 --tree=<worktree at 36dd26ba6>",
+  "branch": "int-n17",
+  "ppm": 32,
+  "before": null,
+  "note": "The n15 DEFECTS still: four cops pressed against the sidewalk wall's north foot."
+ }
+]
