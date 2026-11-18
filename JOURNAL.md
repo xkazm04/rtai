@@ -365,3 +365,14 @@ greys it to near-invisible at 32 px/m.
 REQUEST assets 14 (to the asset lane, from districts, order after 13): ochre-stripe twins (the hazard stripes in your
 yellow-ochre, like the `_ochre` tower roof twins) of `prop_dock_tug_plan_70_north` and `prop_dock_rope_net_70` (+ its plan
 twin); and the oil drums v2 card + plan with the rust-red drums turned grey-green/ochre (red is blood only). Names `_ochre`.
+- 03:5x evidence gate (snapshot) PASS on b32980b92 (v27): lint 19/19, unit 2889/0 (2 skipped), scenarios 55/55, parity
+  bit-exact (planted caught at 629), look goldens 11/11 (worst 0.31), 123 art textures 0 placeholders, release-compile 727/0.
+  Reels running.
+- 04:07 GATE PASS on b32980b92 (v27), full: evidence (above) + reels exit 0 (`build/gate/ace68b55a262/gate.json`).
+- 04:12 MILESTONE items 3 + 5, commit dee06ed7b, generator v28: Dock 9's harbour office (it471 A) on the quay-end shed of the
+  dock_9 block's south row (zone key `office_roof`, `DockDresser.shed_or_office`; `CityPlaces.nearest_block` static). Tests
+  131/131; planted "any shed on the row" (3 offices) and "row above" caught; "within 2 tiles of the office" survived (no other
+  shed there: near-equivalent). Door unchanged (1980.5, 1025.5). Looked: lookout cabin + mast + stone front read as Dock 9's
+  landmark among roller doors; it stands ~30 m east of the door (the door is the block middle). Evidence
+  `ab_it471_dock9_office_v27_v28_combo_{32,48}ppm.jpg`, `ab_it471_dock9_door_v27_v28_combo_48ppm.jpg`; masters 15 (quay v17/v18 out).
+- 04:13 gate (snapshot, --reels) on dee06ed7b (v28) started, background.
