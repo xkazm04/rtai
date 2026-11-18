@@ -1,0 +1,20 @@
+The quest rifle now uses its own held art at top and its own equipped, firing, diagonal, and left-facing strips at p55. At 32 px/m I verified that top loads the rifle and p70 still holds and fires the machine-pistol fallback. **Rifle holes fell from 18 to 9. Total arsenal holes fell from 51 to 42.** The final audit reproduced both committed matrices byte for byte. [Text matrix](evidence/arsenal/matrix_after_3a.txt) · [JSON matrix](evidence/arsenal/matrix_after_3a.json)
+
+**One visual requirement remains open.** The p55 strips use 110-pixel figures. Their neighbours use 165. Matching that density requires registering the rifle in `rivet_res.gd`, outside this lane’s ownership. No cells were mirrored.
+
+**Stills.** Captured side, toward, away, diagonal, and left, each holding and firing, before and after at p55 and 64 px/m. Both runs equipped the rifle through the quest pickup and fired five rounds, taking ammo from 30 to 25. Both logged a resource-cleanup error after saving the frames. [All stills](<C:/Users/kazda/kiro/gtai-masters/n19/guns/rifle/stills.md>) · [Visual comparison](<C:/Users/kazda/kiro/gtai-masters/n19/guns/rifle/angles_comparison.png>)
+
+**Verification.** Changed suite passed 1,650 with two skipped. Focused tests passed 97. Lint, release compile (740 resources), quest and replay scenarios, native parity, and bake checks passed. The full quick gate passed before the first commit. Later runs hit a Godot parse/teardown failure also reproduced on the untouched baseline. The quick gate passed those commits with `--no-godot`.
+
+**Commits**
+
+- `6dfc4f826` Give the contractor rifle its own held, magazine and pickup art
+- `4da2be5c6` Draw and seat the quest rifle at p55 with a p70 fallback
+- `b4ee10f4d` Ratchet the arsenal audit against the rifle's own art key
+- `e654f4043` Resolve the quest rifle icon from its gameplay ID
+
+Shared edits were lines 13, 89, 99, and 132 of [rivet_strips.gd](project/features/characters/rivet_strips.gd), and lines 8–23 of [rivet_frames.json](tools/art/rivet_frames.json).
+
+**Part 2** has four p70 art holes and two reload holes. The other three are rack checks, one per view. The pickup, icon, and showcase art shipped. Adding the rack slot would widen the arena wall by one metre, so I left its layout intact.
+
+[astra: 2895s, exit 0]
