@@ -50,11 +50,17 @@ func test_yards_stand_stacks_and_keep_their_aisles() -> void:
 		for t: Vector2i in _yard_tiles(c):
 			tiles += 1
 			var o: Vector2i = t * 8 - c * SimConst.CHUNK_CELLS
-			for y: int in 8:
+			var below: int = TilePainter.local_index(t) + SimConst.CHUNK_TILES
+			var at_wall: bool = below < ch.tiles.size() and ch.tiles[below] == SimConst.T_BLOCK
+			for y: int in 5 if at_wall else 8:
 				assert_eq(_cell(ch, o + Vector2i(0, y)), SimConst.C_WALK, "%s west aisle" % t)
 			for x: int in 8:
 				assert_eq(_cell(ch, o + Vector2i(x, 3)), SimConst.C_WALK, "%s row gap" % t)
-				assert_eq(_cell(ch, o + Vector2i(x, 7)), SimConst.C_WALK, "%s south aisle" % t)
+				if at_wall:
+					for y: int in range(5, 8):
+						assert_eq(_cell(ch, o + Vector2i(x, y)), SimConst.C_PROP, "%s apron" % t)
+				else:
+					assert_eq(_cell(ch, o + Vector2i(x, 7)), SimConst.C_WALK, "%s south aisle" % t)
 			var want: int = SimConst.C_PROP if _stood(ch, t, 0) else SimConst.C_WALK
 			assert_eq(_cell(ch, o + Vector2i(4, 1)), want, "%s slot 0 solid iff stood" % t)
 	assert_gt(tiles, 0, "the two chunks hold yard tiles")

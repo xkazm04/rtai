@@ -17,8 +17,10 @@ const BOLLARD_V_M: Array[float] = [1.5, 4.0, 6.5]
 ## coping), the inner corner land north and west; a turn carries them to the tile's land sides.
 const LAND_M: float = 5.0
 ## Two container rows a yard tile, long axis east-west: their 85 % footprints (cells 1-6 x 0-2
-## and 1-6 x 4-6) leave cell rows 3 and 7 and columns 0 and 7 walkable: one walk network.
+## and 1-6 x 4-6) leave an east-west aisle in row 3, including beside a warehouse loading apron.
 const YARD_SLOTS: Array[Vector2] = [Vector2(4.0, 1.5), Vector2(4.0, 5.5)]
+## Keep feet clear of the roof overhang and its lift at 70 degrees (up to 2.1 m at the office).
+const LOADING_APRON_M: float = 3.0
 const EDGE_N: int = 1
 const EDGE_S: int = 2
 const EDGE_W: int = 4
@@ -112,6 +114,9 @@ func yard(g: CityGen, b: ChunkBuild, kerb: KerbDresser, zone: CityZone, t: Vecto
 		b.add(ChunkBuild.L_GROUND, T_PAVING, o + Vector2(4.0, 4.0), turn)
 	b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_WALK)
 	b.chunk.dens_ped[TilePainter.local_index(t)] = int(zone.ped_plaza * b.district)
+	if posmod(t.y, PERIOD) < PERIOD - 1 and not is_yard(g, zone, t + Vector2i.DOWN):
+		var apron := Rect2(o + Vector2(0, 8.0 - LOADING_APRON_M), Vector2(8, LOADING_APRON_M))
+		b.stamp(apron, SimConst.C_PROP)
 	for k: int in YARD_SLOTS.size():
 		if g.rnd(t.x, t.y, k, 61) < zone.yard_prop_share:
 			var stacks: Array[int] = zone.yard_props
