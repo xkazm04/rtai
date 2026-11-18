@@ -1,10 +1,6 @@
 class_name PlayerMotion
 extends RefCounted
-## Rivet's locomotion on the fixed tick, on top of TopDownMover (rivet_motion.json): the held
-## sprint (above the 5.0 m/s tackle line; the facing follows the walk, at a slower turn) and the
-## dodge roll (a press: roll_m on an ease-out curve, invulnerable on a window of its ticks, then
-## a recovery with a damped stick and a cooldown). Free movement is TopDownMover unchanged.
-## A roll press can start a vault, with its own path and i-frames before shared recovery.
+## Fixed-tick walk, sprint, roll and vault, with optional station cover (rivet_motion.json).
 
 enum Phase { FREE, ROLL, RECOVER, VAULT }
 
@@ -13,6 +9,7 @@ const SCHEMA: String = "gtai.rivet-motion/1"
 
 var mover: TopDownMover = TopDownMover.new()
 var vault: PlayerVault = PlayerVault.new()
+var cover: PlayerCover = PlayerCover.new()
 var phase: Phase = Phase.FREE
 var sprinting: bool = false
 var rolls: int = 0
@@ -29,8 +26,7 @@ var recovery_ticks: int = 10
 var recovery_move_scale: float = 0.35
 var cooldown_ticks: int = 8
 var exit_speed_k: float = 0.5
-## n11 (the owner's "direction of player should follow cursor"; rivet_motion.json face_aim): the
-## look is the aim wherever a device aims, a sprint included; false = the turned, walking facing.
+## Whether aim overrides walking and sprint facing.
 var face_aim: bool = true
 var errors: Array[String] = []
 var _phase_tick: int = 0
@@ -69,7 +65,11 @@ static func from_table(t: DataTable) -> PlayerMotion:
 	return m
 
 
-## The displacement for one tick. `aim` Vector2.ZERO faces the walk direction.
+func drive(stage: CollectCallStage, pilot: StagePilot, c: PlayerCommand, walk: float) -> void:
+	if not cover.drive(stage, pilot, c, walk):
+		vault.drive(stage, pilot, c, walk)
+
+
 func step(c: PlayerCommand, walk_mps: float, actions: PlayerActions) -> Vector2:
 	_cooldown = maxi(_cooldown - 1, 0)
 	_roll_tick = -1
@@ -91,7 +91,7 @@ func step(c: PlayerCommand, walk_mps: float, actions: PlayerActions) -> Vector2:
 
 
 func blocks_fire() -> bool:
-	return phase == Phase.ROLL or (vault.frame >= 0 and vault.no_fire)
+	return cover.blocks_fire() or phase == Phase.ROLL or (vault.frame >= 0 and vault.no_fire)
 
 
 func can_roll() -> bool:
@@ -112,8 +112,7 @@ func facing() -> Vector2:
 	return mover.facing
 
 
-## The look: the aim while a device aims (not during a roll, which faces its roll), else the turned
-## facing. Turning and the sprint's own heading stay in the mover (speed, strafe).
+## Aim overrides mover facing outside a roll or vault.
 func heading(aim: Vector2) -> Vector2:
 	if face_aim and aim != Vector2.ZERO and phase != Phase.ROLL and vault.frame < 0:
 		return aim.normalized()
@@ -125,6 +124,7 @@ func velocity() -> Vector2:
 
 
 func stop() -> void:
+	cover.interrupt()
 	vault.interrupt()
 	if phase == Phase.VAULT:
 		phase = Phase.RECOVER
@@ -141,6 +141,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_float(roll_dir.x)
 	out.put_float(roll_dir.y)
 	vault.write_state(out, phase)
+	cover.write_state(out)
 
 
 func _free_step(c: PlayerCommand, walk_mps: float, actions: PlayerActions) -> Vector2:

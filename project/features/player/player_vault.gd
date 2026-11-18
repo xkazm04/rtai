@@ -60,7 +60,7 @@ func drive(stage: CollectCallStage, pilot: StagePilot, c: PlayerCommand, walk: f
 func prepare(stage: CollectCallStage) -> void:
 	if not enabled:
 		return
-	_bind(stage)
+	bind_solids(stage)
 	_body = stage.arena.rivet
 	start = _body.pos
 	_radius = _body.radius_m
@@ -157,7 +157,7 @@ func guard_move(stage: CollectCallStage) -> void:
 	var resolved: Vector2 = stage.collide_preview(p)
 	if resolved == p:
 		return
-	_bind(stage)
+	bind_solids(stage)
 	if not probe.clear_at(stage.collide_preview(resolved), stage.arena.rivet.radius_m):
 		stage.intent.move_by = Vector2.ZERO
 
@@ -166,7 +166,7 @@ func _touches_other_solid() -> bool:
 	return (probe.contacts(_body.pos, _radius, hit) & VaultProbe.Contact.OTHER) != 0
 
 
-func _bind(stage: CollectCallStage) -> void:
+func bind_solids(stage: CollectCallStage) -> void:
 	var arena: ArenaStage = stage as ArenaStage
 	if arena != null and (arena.stations != _stations or arena.plan.base != _base):
 		_stations = arena.stations

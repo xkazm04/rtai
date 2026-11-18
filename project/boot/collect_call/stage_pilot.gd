@@ -64,7 +64,7 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 	stage.intent.interact = stage.intent.interact or c.was_pressed(actions, &"interact")
 	_fire(stage, c)
 	var press: bool = _melee_press(c)
-	if not motion.vault.owns_move and not _ghosts(stage, c, press):
+	if motion.cover.spot == null and not motion.vault.owns_move and not _ghosts(stage, c, press):
 		var free: bool = motion.phase == PlayerMotion.Phase.FREE
 		var down: bool = c.is_held(actions, &"melee") and rivet.alive()
 		@warning_ignore("return_value_discarded")
@@ -124,7 +124,7 @@ func _move(stage: CollectCallStage, c: PlayerCommand) -> void:
 	var aim: Vector2 = c.aim
 	if melee.busy() and aim == Vector2.ZERO:
 		c.aim = motion.facing()  # a swing holds the heading it started on
-	motion.vault.drive(stage, self, c, walk)
+	motion.drive(stage, self, c, walk)
 	c.aim = aim
 	rivet.facing = motion.heading(c.aim)
 	rivet.exposed = not motion.invulnerable()
