@@ -1,0 +1,24 @@
+{
+  "base_sha256": "15e270d29c49c3ab9fa028141d28e91f7c4b7eef00732738549db93f2fbc138e",
+  "masters": {
+    "profile_col_2": {
+      "date": "2026-11-11",
+      "file": "gtai-art/library/keyed/ghosts/tonnage_walk16_70_cells_req221/placed_163x230/3_3.png",
+      "model": "Codex built-in image generation (image model not reported)",
+      "prompt_ref": "gtai-art/library/rounds/20261111-0600/jobs.json#tonnage_walk16_70_row3_col2_even",
+      "seed": null,
+      "sha256": "61fa12a44f9994b74c178183ad5aeaf36cac2044bda82f217642ebface6791c9",
+      "tool": "codex-image"
+    },
+    "profile_col_6": {
+      "date": "2026-11-11",
+      "file": "gtai-art/library/keyed/ghosts/tonnage_walk16_70_cells_req221/placed_163x230/3_7.png",
+      "model": "Codex built-in image generation (image model not reported)",
+      "prompt_ref": "gtai-art/library/rounds/20261111-0600/jobs.json#tonnage_walk16_70_row3_col6_even",
+      "seed": null,
+      "sha256": "677744119a9f1843b63843c52a2dbfbe58b8bac17031445fd15eba6d80be238e",
+      "tool": "codex-image"
+    }
+  },
+  "sheet": "project/features/souls/art/view/p70/tonnage_walk8.png"
+}
