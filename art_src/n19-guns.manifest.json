@@ -1,5 +1,5 @@
 {
- "_doc": "Contractor rifle prop and Rivet strips. Raw, keyed and reference masters outside git. Cut with tools/art/assault_rifle_parts.py and assault_rifle_strips.py.",
+ "_doc": "N19 Rivet weapon art. Source masters, generated masters, reference layouts and keyed derivatives are catalogued by hash.",
  "masters": {
   "contractor_prop": {
    "date": "2026-11-18",
@@ -241,6 +241,384 @@
    "seed": null,
    "sha256": "0233e134895541e8e686505f9c3adcfd93c78a0c01d90d2c32ac3594e5b2d9f2",
    "tool": "image_gen"
+  },
+  "homing_shard_mag_raw": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_mag_raw.png",
+   "layout_template": "masters:n19/guns/masters/homing_shard_p55_diag_ref.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_mag.txt",
+   "prompt_sha256": "dcd7e8947858827ac4c74e3f72430ce8e9c8dde20853a783d8d29fcc12b85d9f",
+   "references": [
+    "masters:n19/guns/masters/homing_shard_p55_diag_ref.png"
+   ],
+   "seed": null,
+   "sha256": "714a621e16fe03801d9b8d4ddc596b0dadf228e9a19d72ab584dfe30225b584f",
+   "tool": "image_gen"
+  },
+  "homing_shard_p55_diag_corrected": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p55_diag_corrected.png",
+   "layout_template": "masters:n19/guns/masters/homing_shard_p55_diag_ref.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p55_diag_corrected.txt",
+   "prompt_sha256": "2a44a851ad011951a948a82535fae26264c758770fc0f6b2d19af1a4094af2d6",
+   "references": [
+    "masters:n19/guns/masters/homing_shard_p55_diag_ref.png"
+   ],
+   "seed": null,
+   "sha256": "afc64008bbd18b0c4b8769f5dba5c2aeb7165dc4fc28e9d2cf638d81c821f469",
+   "tool": "image_gen"
+  },
+  "homing_shard_p55_diag_dark": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p55_diag_dark.png",
+   "layout_template": "masters:n19/guns/masters/homing_shard_p55_diag_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p55_diag.txt",
+   "prompt_sha256": "a730f7df3d893075d15a1c5edfec87fd1d7590ced399963a2ed097043f380909",
+   "references": [
+    "masters:n19/guns/masters/homing_shard_p55_diag_raw.png",
+    "masters:n19/guns/masters/homing_shard_p55_diag_corrected.png"
+   ],
+   "seed": null,
+   "sha256": "e8b1a61900e0152c9f46a19aeafd9d5d450ceaf62975742344463df4399dfd70",
+   "tool": "Pillow"
+  },
+  "homing_shard_p55_diag_key": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p55_diag_key.png",
+   "layout_template": "masters:n19/guns/masters/homing_shard_p55_diag_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p55_diag.txt",
+   "prompt_sha256": "a730f7df3d893075d15a1c5edfec87fd1d7590ced399963a2ed097043f380909",
+   "references": [
+    "masters:n19/guns/masters/homing_shard_p55_diag_raw.png",
+    "masters:n19/guns/masters/homing_shard_p55_diag_corrected.png"
+   ],
+   "seed": null,
+   "sha256": "faa5c6888e07f85a3c13174b00027e3dcd1ac97cf70917ab1073dc31eff66457",
+   "tool": "Pillow"
+  },
+  "homing_shard_p55_diag_raw": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p55_diag_raw.png",
+   "layout_template": "masters:n19/guns/masters/homing_shard_p55_diag_ref.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p55_diag.txt",
+   "prompt_sha256": "a730f7df3d893075d15a1c5edfec87fd1d7590ced399963a2ed097043f380909",
+   "references": [
+    "masters:n19/guns/masters/homing_shard_p55_diag_ref.png"
+   ],
+   "seed": null,
+   "sha256": "97cd80e1a89d74f3cc1c05010795fedd2e9a574a1989fd500be0e501578c9fb5",
+   "tool": "image_gen"
+  },
+  "homing_shard_p55_diag_ref": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p55_diag_ref.png",
+   "layout_template": "project/features/characters/art/view/p55/rivet_eq_electro_gun_diag.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p55_diag.txt",
+   "prompt_sha256": "a730f7df3d893075d15a1c5edfec87fd1d7590ced399963a2ed097043f380909",
+   "references": [
+    "project/features/characters/art/view/p55/rivet_eq_electro_gun_diag.png",
+    "project/features/characters/art/view/p55/rivet_eq_homing_shard.png",
+    "project/features/characters/art/view/p55/rivet_eq_homing_shard_left.png",
+    "project/features/combat/weapons/art/homing_shard/held.png",
+    "project/features/combat/weapons/art/fx/colour/shard.png"
+   ],
+   "seed": null,
+   "sha256": "5de1f01239ac5b609e0093ecc26eb2e1b946ec07246e271b5ffc83292d2c22eb",
+   "tool": "Pillow"
+  },
+  "homing_shard_p55_original": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p55_original.png",
+   "layout_template": "library:keyed/rivet/rivet_eq_homing_shard_55.png",
+   "model": "source derivative",
+   "prompt_ref": "tools/art/shard_strips.py",
+   "prompt_sha256": "24ffca130691162f160d8163a579fd48edcf2b57d8c8d255198a1f628be9e540",
+   "references": [
+    "library:keyed/rivet/rivet_eq_homing_shard_55.png"
+   ],
+   "seed": null,
+   "sha256": "a1cd575e7c95a5561098043c28d16bcf0ac6886428bac0cde8df31caa2c77781",
+   "tool": "Pillow"
+  },
+  "homing_shard_p55_reload_key": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p55_reload_key.png",
+   "layout_template": "masters:n19/guns/masters/homing_shard_p55_reload_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p55_reload.txt",
+   "prompt_sha256": "6dcf494509be93fad3612962ecd9bf5b478944e35e3371bfd77ddbeaebf2839e",
+   "references": [
+    "masters:n19/guns/masters/homing_shard_p55_reload_raw.png"
+   ],
+   "seed": null,
+   "sha256": "a841ea113d3eb755407800778d05aadc62c992e201ee47977f58c23ae57e2f6d",
+   "tool": "Pillow"
+  },
+  "homing_shard_p55_reload_left_key": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p55_reload_left_key.png",
+   "layout_template": "masters:n19/guns/masters/homing_shard_p55_reload_left_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p55_reload_left.txt",
+   "prompt_sha256": "251ba38b82fd9a03c3cb52892a04af1a14220a745500755b83fad73be6bad6cc",
+   "references": [
+    "masters:n19/guns/masters/homing_shard_p55_reload_left_raw.png"
+   ],
+   "seed": null,
+   "sha256": "fdd5c84c7bb5df4b1fa514b6c488d09d3d350519652ab4fc481b4901ca390526",
+   "tool": "Pillow"
+  },
+  "homing_shard_p55_reload_left_raw": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p55_reload_left_raw.png",
+   "layout_template": "masters:n19/guns/masters/homing_shard_p55_reload_left_ref.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p55_reload_left.txt",
+   "prompt_sha256": "251ba38b82fd9a03c3cb52892a04af1a14220a745500755b83fad73be6bad6cc",
+   "references": [
+    "masters:n19/guns/masters/homing_shard_p55_reload_left_ref.png"
+   ],
+   "seed": null,
+   "sha256": "679e58024f8f566f4b871f9dbc68c14b4ad51391449226c02e68dfff2ce3304a",
+   "tool": "image_gen"
+  },
+  "homing_shard_p55_reload_left_ref": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p55_reload_left_ref.png",
+   "layout_template": "library:keyed/rivet/rivet_reload_onehand_55_left_claw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p55_reload_left.txt",
+   "prompt_sha256": "251ba38b82fd9a03c3cb52892a04af1a14220a745500755b83fad73be6bad6cc",
+   "references": [
+    "library:keyed/rivet/rivet_reload_onehand_55_left_claw.png",
+    "project/features/characters/art/view/p55/rivet_eq_homing_shard.png",
+    "project/features/characters/art/view/p55/rivet_eq_homing_shard_left.png",
+    "project/features/combat/weapons/art/homing_shard/held.png",
+    "project/features/combat/weapons/art/fx/colour/shard.png"
+   ],
+   "seed": null,
+   "sha256": "c6663d095db332225b973574022109ac821d3c2ba109b0f6a0f979b73c3fad82",
+   "tool": "Pillow"
+  },
+  "homing_shard_p55_reload_raw": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p55_reload_raw.png",
+   "layout_template": "masters:n19/guns/masters/homing_shard_p55_reload_ref.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p55_reload.txt",
+   "prompt_sha256": "6dcf494509be93fad3612962ecd9bf5b478944e35e3371bfd77ddbeaebf2839e",
+   "references": [
+    "masters:n19/guns/masters/homing_shard_p55_reload_ref.png"
+   ],
+   "seed": null,
+   "sha256": "0e58b47a7421668e88c2b5bf77c4b305c04c2c49eb91d4d01b4b431f865ab7dd",
+   "tool": "image_gen"
+  },
+  "homing_shard_p55_reload_ref": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p55_reload_ref.png",
+   "layout_template": "library:keyed/rivet/rivet_reload_onehand_55_claw_build.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p55_reload.txt",
+   "prompt_sha256": "6dcf494509be93fad3612962ecd9bf5b478944e35e3371bfd77ddbeaebf2839e",
+   "references": [
+    "library:keyed/rivet/rivet_reload_onehand_55_claw_build.png",
+    "project/features/characters/art/view/p55/rivet_eq_homing_shard.png",
+    "project/features/characters/art/view/p55/rivet_eq_homing_shard_left.png",
+    "project/features/combat/weapons/art/homing_shard/held.png",
+    "project/features/combat/weapons/art/fx/colour/shard.png"
+   ],
+   "seed": null,
+   "sha256": "30eb3d2fb5f35813ddc932b164bdd2bfd7edbc3fe95fe88e4188a5b3e4e5d162",
+   "tool": "Pillow"
+  },
+  "homing_shard_p70_diag_corrected": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p70_diag_corrected.png",
+   "layout_template": "masters:n19/guns/masters/homing_shard_p70_diag_ref.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p70_diag_corrected.txt",
+   "prompt_sha256": "247265844e8fe010563bcac6668664afb6f70445c9d0436ed34b3d4c516415c5",
+   "references": [
+    "masters:n19/guns/masters/homing_shard_p70_diag_ref.png"
+   ],
+   "seed": null,
+   "sha256": "ba387fdf989b774bf1153e121c23080690da70b6c299e129280879703808b8a4",
+   "tool": "image_gen"
+  },
+  "homing_shard_p70_diag_dark": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p70_diag_dark.png",
+   "layout_template": "masters:n19/guns/masters/homing_shard_p70_diag_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p70_diag.txt",
+   "prompt_sha256": "2cdf65680be592b3ce4d90e31a5e94ffae3cdf10d6ec563915050f2eff74fac1",
+   "references": [
+    "masters:n19/guns/masters/homing_shard_p70_diag_raw.png",
+    "masters:n19/guns/masters/homing_shard_p70_diag_corrected.png"
+   ],
+   "seed": null,
+   "sha256": "71070bdd41d5b0fb973ed1e966e4b00b589ee7193e02b0013dd14b0a054e5d0e",
+   "tool": "Pillow"
+  },
+  "homing_shard_p70_diag_key": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p70_diag_key.png",
+   "layout_template": "masters:n19/guns/masters/homing_shard_p70_diag_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p70_diag.txt",
+   "prompt_sha256": "2cdf65680be592b3ce4d90e31a5e94ffae3cdf10d6ec563915050f2eff74fac1",
+   "references": [
+    "masters:n19/guns/masters/homing_shard_p70_diag_raw.png",
+    "masters:n19/guns/masters/homing_shard_p70_diag_corrected.png"
+   ],
+   "seed": null,
+   "sha256": "0edb0fa25196759fea4c4e3398c7101ab2feeb69bdbf09dccb598fa0e35dd401",
+   "tool": "Pillow"
+  },
+  "homing_shard_p70_diag_raw": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p70_diag_raw.png",
+   "layout_template": "masters:n19/guns/masters/homing_shard_p70_diag_ref.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p70_diag.txt",
+   "prompt_sha256": "2cdf65680be592b3ce4d90e31a5e94ffae3cdf10d6ec563915050f2eff74fac1",
+   "references": [
+    "masters:n19/guns/masters/homing_shard_p70_diag_ref.png"
+   ],
+   "seed": null,
+   "sha256": "b289a4e80cb519e6f5bdd2fbe9210df8755a5c1b657613646bfb1f6dd521528b",
+   "tool": "image_gen"
+  },
+  "homing_shard_p70_diag_ref": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p70_diag_ref.png",
+   "layout_template": "project/features/characters/art/view/p70/rivet_eq_electro_gun_diag.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p70_diag.txt",
+   "prompt_sha256": "2cdf65680be592b3ce4d90e31a5e94ffae3cdf10d6ec563915050f2eff74fac1",
+   "references": [
+    "project/features/characters/art/view/p70/rivet_eq_electro_gun_diag.png",
+    "project/features/characters/art/view/p70/rivet_eq_homing_shard.png",
+    "project/features/characters/art/view/p70/rivet_eq_homing_shard_left.png",
+    "project/features/combat/weapons/art/homing_shard/held.png",
+    "project/features/combat/weapons/art/fx/colour/shard.png"
+   ],
+   "seed": null,
+   "sha256": "2559f6b23810228b46f2263e4b1343003b920d4ee6c190604f7575e196df4c22",
+   "tool": "Pillow"
+  },
+  "homing_shard_p70_original": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p70_original.png",
+   "layout_template": "library:keyed/rivet/rivet_eq_homing_shard_70.png",
+   "model": "source derivative",
+   "prompt_ref": "tools/art/shard_strips.py",
+   "prompt_sha256": "24ffca130691162f160d8163a579fd48edcf2b57d8c8d255198a1f628be9e540",
+   "references": [
+    "library:keyed/rivet/rivet_eq_homing_shard_70.png"
+   ],
+   "seed": null,
+   "sha256": "049bc7b3d3a98cb7b86474f97d15de3bd994d0b2dc0755b3ebbede0bf520c7a6",
+   "tool": "Pillow"
+  },
+  "homing_shard_p70_reload_key": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p70_reload_key.png",
+   "layout_template": "masters:n19/guns/masters/homing_shard_p70_reload_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p70_reload.txt",
+   "prompt_sha256": "4eecf2210243b5f99f2f15714176fc2cdae3bb83c89441feec6172dc2835aeca",
+   "references": [
+    "masters:n19/guns/masters/homing_shard_p70_reload_raw.png"
+   ],
+   "seed": null,
+   "sha256": "f07e8d8cffebafb26fb09cd629e00f994ae934b2a328592b0a407713db6b2a1b",
+   "tool": "Pillow"
+  },
+  "homing_shard_p70_reload_left_key": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p70_reload_left_key.png",
+   "layout_template": "masters:n19/guns/masters/homing_shard_p70_reload_left_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p70_reload_left.txt",
+   "prompt_sha256": "7014f179eef6fb919749e32fab00303fff1720eb7a8c91147f5762ef1f4845b0",
+   "references": [
+    "masters:n19/guns/masters/homing_shard_p70_reload_left_raw.png"
+   ],
+   "seed": null,
+   "sha256": "84c0724646b7c98dd096af7ada3ea97bd30eb801082c6c1f8678d87656f914f5",
+   "tool": "Pillow"
+  },
+  "homing_shard_p70_reload_left_raw": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p70_reload_left_raw.png",
+   "layout_template": "masters:n19/guns/masters/homing_shard_p70_reload_left_ref.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p70_reload_left.txt",
+   "prompt_sha256": "7014f179eef6fb919749e32fab00303fff1720eb7a8c91147f5762ef1f4845b0",
+   "references": [
+    "masters:n19/guns/masters/homing_shard_p70_reload_left_ref.png"
+   ],
+   "seed": null,
+   "sha256": "b25546184fe0ae0ef03d285e58a94cf05ecfa3ff49ebfdd10fe00753cf58554b",
+   "tool": "image_gen"
+  },
+  "homing_shard_p70_reload_left_ref": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p70_reload_left_ref.png",
+   "layout_template": "library:keyed/rivet/rivet_reload_onehand_70_left_claw_build.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p70_reload_left.txt",
+   "prompt_sha256": "7014f179eef6fb919749e32fab00303fff1720eb7a8c91147f5762ef1f4845b0",
+   "references": [
+    "library:keyed/rivet/rivet_reload_onehand_70_left_claw_build.png",
+    "project/features/characters/art/view/p70/rivet_eq_homing_shard.png",
+    "project/features/characters/art/view/p70/rivet_eq_homing_shard_left.png",
+    "project/features/combat/weapons/art/homing_shard/held.png",
+    "project/features/combat/weapons/art/fx/colour/shard.png"
+   ],
+   "seed": null,
+   "sha256": "70a898bcce4eac3cd04aa5b0a41ecdf83663e0705e29f84e5b311ddf5272d15c",
+   "tool": "Pillow"
+  },
+  "homing_shard_p70_reload_raw": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p70_reload_raw.png",
+   "layout_template": "masters:n19/guns/masters/homing_shard_p70_reload_ref.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p70_reload.txt",
+   "prompt_sha256": "4eecf2210243b5f99f2f15714176fc2cdae3bb83c89441feec6172dc2835aeca",
+   "references": [
+    "masters:n19/guns/masters/homing_shard_p70_reload_ref.png"
+   ],
+   "seed": null,
+   "sha256": "2dbda2e211644418d1a1248f5b9eb810aecbc9008fb6ff0446efe973b9c841c7",
+   "tool": "image_gen"
+  },
+  "homing_shard_p70_reload_ref": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/homing_shard_p70_reload_ref.png",
+   "layout_template": "library:keyed/rivet/rivet_reload_onehand_70_claw_build.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/homing_shard_p70_reload.txt",
+   "prompt_sha256": "4eecf2210243b5f99f2f15714176fc2cdae3bb83c89441feec6172dc2835aeca",
+   "references": [
+    "library:keyed/rivet/rivet_reload_onehand_70_claw_build.png",
+    "project/features/characters/art/view/p70/rivet_eq_homing_shard.png",
+    "project/features/characters/art/view/p70/rivet_eq_homing_shard_left.png",
+    "project/features/combat/weapons/art/homing_shard/held.png",
+    "project/features/combat/weapons/art/fx/colour/shard.png"
+   ],
+   "seed": null,
+   "sha256": "3b4f42f15778c952fe1b17a1e52774c2a29cd637513444664be8b9854c4d72ba",
+   "tool": "Pillow"
   },
   "left3b_reference": {
    "date": "2026-11-18",

@@ -229,6 +229,21 @@
     "counts": "3",
     "sheet": "rivet_reload_twohand_55_left_claw_v2.png",
     "fig_h": 165
+   },
+   "rivet_eq_homing_shard_diag": {
+    "counts": "4",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/homing_shard_p55_diag_key.png"
+   },
+   "rivet_reload_homing_shard": {
+    "counts": "5,3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/homing_shard_p55_reload_key.png"
+   },
+   "rivet_reload_homing_shard_left": {
+    "counts": "3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/homing_shard_p55_reload_left_key.png"
    }
   },
   "p70": {
@@ -459,6 +474,21 @@
     "counts": "3",
     "sheet": "rivet_reload_twohand_70_left_claw.png",
     "fig_h": 165
+   },
+   "rivet_eq_homing_shard_diag": {
+    "counts": "4",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/homing_shard_p70_diag_key.png"
+   },
+   "rivet_reload_homing_shard": {
+    "counts": "5,3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/homing_shard_p70_reload_key.png"
+   },
+   "rivet_reload_homing_shard_left": {
+    "counts": "3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/homing_shard_p70_reload_left_key.png"
    }
   }
  }
