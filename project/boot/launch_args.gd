@@ -111,6 +111,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--device",
 	# d9-handheld: --save-cross=write|read,<dir>[,ticks,after,idle] (dev/save_cross.gd, E14)
 	"--save-cross",
+	"--vault",  # lane move n19: force low-obstacle vaults on
+	"--no-vault",  # lane move n19: force vaults off
 ]
 
 var _values: Dictionary[String, String] = {}

@@ -35,7 +35,11 @@ var _sprint_actions: PlayerActions = null
 
 
 static func shipped() -> PlayerMotion:
-	return from_table(DataTable.open(TABLE, SCHEMA))
+	var m: PlayerMotion = from_table(DataTable.open(TABLE, SCHEMA))
+	m.vault.enabled = (
+		(m.vault.enabled or LaunchArgs.has("--vault")) and not LaunchArgs.has("--no-vault")
+	)
+	return m
 
 
 static func from_table(t: DataTable) -> PlayerMotion:
