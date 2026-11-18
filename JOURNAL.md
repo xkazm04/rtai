@@ -165,3 +165,13 @@ the open water and the quay edge water match.
   test_stage_dock_place 5/5; planted out_m 1.5 -> metal on a building cell, caught.
 - FRICTION: GDScript constructors on Variant (int(case[0]), Vector2(a[0], a[1])) are warnings-as-errors; the
   pattern is typed locals first. gdformat writes CRLF on this machine (git normalises; harmless).
+- 01:08 scenarios on b0314350c (flag OFF, the default): 55/55 passed (`node tools/tests/run_scenarios.mjs`).
+- 01:09 item 5 flag ON: the 9 quest scenarios through a temp copy of run_scenarios.gd that admits
+  `--quest1-places` (`%TEMP%/n18d/run_scenarios_places.gd`, not in the tree): 8/9 pass; **quest1_input FAILS**
+  "not paid: state active at beat b4-dock, tick 90000": the input-driven run reaches the b4-dock beat but never
+  finishes the dock fight (Dock 9 now ~1.6 km east of Harbor Road). Log: `evidence/n18-districts/quest1_places_on_scenarios.txt`.
+  The others pass because they play on the arena layout (shipped() with city false) or don't reach Dock 9.
+- 01:12 MILESTONE item 3, commit 82e8076d3, generator v19: container yards (it469/it470 stacks as standing cards,
+  2 rows a tile, test_dock_yard; the first slots closed the row gap on the 1 m cell grid: caught by the test
+  before commit). Evidence `evidence/n18-districts/ab_yard_containers_v18_v19_combo_{32,48}ppm.jpg`. Looked: the
+  stacks read as corrugated containers with corner castings; the world print greys their colour like every prop.
