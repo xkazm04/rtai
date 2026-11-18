@@ -60,7 +60,8 @@
         "2026-11-17: n18 districts: dev/view/zone_frame.gd, zone stills + a straight drive clip through the generated city (the evidence of items 3 and 6); its flags are its own (KNOWN), not game flags, so it reads OS args as dev/showcase/city_frame.gd does (dev_loc 21849 -> 21992)",
         "2026-11-18: n18 districts item 5: dev/bots BotRoute (+route use in CollectCallBot) so the quest bot can walk to Dock 9 on the city's dock place under --quest1-places; dev only, not shipped (dev_loc 21992 -> 22089)",
         "2026-11-18: The 80-line headless arena cost scene measures 400 mobile guard approaches, including cold path searches and the open-street control. (dev_loc 22644 -> 22724)",
-        "2026-11-18: n19 guns: arsenal completeness audit (dev/rivet_arsenal, ratchet test) +522 dev LOC (dev_loc 22724 -> 23246)"
+        "2026-11-18: n19 guns: arsenal completeness audit (dev/rivet_arsenal, ratchet test) +522 dev LOC (dev_loc 22724 -> 23246)",
+        "2026-11-18: Requested dev-only quest rifle turning film with all eight verified shot poses (dev_loc 23246 -> 23347)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -81,7 +82,7 @@
         "project/dev/perf": 160,
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
-        "project/dev/rivet_arsenal": 777,
+        "project/dev/rivet_arsenal": 878,
         "project/dev/rivet_motion": 1966,
         "project/dev/save_crash_loop.gd": 14,
         "project/dev/save_crash_writer.gd": 18,
@@ -94,7 +95,7 @@
         "project/dev/view": 433,
         "project/dev/weapon_art": 506
       },
-      "total": 23246
+      "total": 23347
     },
     "direct_cmdline_reads": {
       "accepted": [
