@@ -479,3 +479,31 @@ propeller (about 2.2 m), crab pots and nav buoys, if facing 1 is not pure plan.
   chevrons read; the buoys' ochre bands grey under the print.
 - 05:37 `node tools/godot/check.mjs res://tests/unit/test_stage_dock_place.gd` -> ok (exit 0) live.
 - 05:38 item 6 film pass 3 rendering (zone_frame --drive=1990,1026,1250,1026,20, --fixed-fps 60, v32).
+- 05:41 MILESTONE item 6 film pass 3, commit 0c31cdf2f: `drive3_docks_downtown_v32_combo_32ppm.mp4` (37 s, 1110 frames, 0 SCRIPT
+  ERROR, 3.7 min render) + sheet. Looked at 5 frames: warehouse fronts -> towers; this street shows none of the apron/plazas.
+- 05:44 MILESTONE item 6, commit after 0c31cdf2f: `drive4_docks_apron_v32_combo_32ppm.mp4` (north -> south along the apron x
+  2012, 26 m/s, 37 s, 1108 frames, 0 SCRIPT ERROR) + 6-frame sheet: warehouse ends, apron dressing, the basin edge.
+- 05:45 zone map v32 (`evidence/n18-districts/zone_map_v32.{png,json}`): tile counts = v21 (docks 48 chunks, 3832 block +
+  2408 plaza/yard/quay tiles; downtown 25, 2000 + 500; mixed 183, 16125 + 2175); 256 chunks generated in 3.6 s; bake 4.9 s
+  wall (CONTENDED). Masters frames.json 15: + drive4, drive3 (replaces drive2), zone map v32; clocktower v22 out.
+- 05:49 mutate dock_dresser.gd (12 sampled; tests dock_dressing, dock_office, city_places): 6/12 = 50 %. Survivors :26 7.5->8.5,
+  :27 rot, :41 - -> +, :46 rot were real gaps -> commit 73e02f64b (apron props 0.5 m inside the tile, quay edge prop wholly on
+  land, the dressing unturned). Re-run 10/12 = 83.3 %; survivors :26 salt 66->67, :39 >= -> > (near-equivalent). Clean after.
+- 05:55 mutate kerb_dresser.gd with test_city_kerb_props, test_dock_dressing, test_city_plaza_singles: 0/12 (0 %). The sampled
+  lines are the n14 kerb code (parked cars, cut lists, plaza checks: :58-:156), which none of those three tests reach. Re-run
+  it with the mapped tests (`node tools/tests/test_map.mjs project/features/city/gen/kerb_dresser.gd`) before quoting.
+- 05:56 asset plan twins landed (it476 round 0610: propeller, crab pots, nav buoys, scrap skip v2). Tried them as v33 and
+  REVERTED (not committed): in the combo view the cards draw, so before/after at 48 px/m was identical for the propeller,
+  and the scrap skip's real 3.5 m plan cast a shadow box longer than its end-on card (worse). Crab pots plan not taken:
+  an empty pot without the card's floats and rope coil. Tree back to v32, bake --check matches.
+NEXT (session 6, freeze 07:30, REPORT 07:40):
+1. FULL GATE on HEAD first (`node tools/gate/run.mjs --reels`, ~25-35 min under load). Last: v31 5058c48d8 everything PASS
+   (reels exit 0) except the film2 timer flake, fixed in 81c409665. v32 = props + test only; full unit 2895/0 on it.
+2. If time while the gate runs (no Godot): REPORT final. Calls: Dock 9 default (no: 348 s walk each way), door at office
+   (built; revert = delete the key), hazard stripes / tower stripes (`_ochre` twins used), plaza granite, the flower crates as
+   a single, the weak crab pots; merge notes: golden v14 -> v32, debt baseline dev_loc, launch_args line, tools touched
+   (check.mjs 1ce6ece2f, film2.break.test 81c409665), dev/bots files.
+3. Plan twins (top view only): swap propeller + nav buoys plan twins (size_m 2.2x2.21, 2.2x1.32), judge in the TOP view
+   (`--view=top`?) not combo; scrap skip plan needs the card cell re-fit (its end-on card is shallower than the plan).
+4. kerb_dresser mutate with mapped tests; quote the score.
+Session 5 ended ~05:58 with a clean tree; HEAD = this JOURNAL commit after 73e02f64b (v32).
