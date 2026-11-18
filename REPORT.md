@@ -60,6 +60,9 @@ Branch `n18-police`, worktree `C:\Users\kazda\kiro\gtai-wt\n18-police`, cut from
    was tuned on); the bot is paid with it on. Clip `item6_quest1_simpolice_off_on_t120-1320_32ppm.mp4`
    (left off, right on): the same beats, the hide clears 36 ticks sooner with it, no blue stage
    patrol walks past the dumpster, and the flag-off arm's left-corner bodies at t1200 are absent.
+   64 px/m close-up `item6_quest1_simpolice_off_on_t240-840_64ppm.mp4` (+ t720 still): flag off,
+   a blue stage patrol walks past the dumpster twice and the hide holds to 1/6 at t720; with the
+   flag no patrol walks by and the HUD is at 2/6 by t720.
    Recommend: keep off tonight (one clip of the opening, the hot walk not filmed with it).
 5. Cost at heat 3 (CONTENDED, 400 peds): the sim step 34-40 us with or without living police;
    CityHeat 55 us after the sim-side sighting query (was 77): together < 0.6 % of the 16.7 ms tick.

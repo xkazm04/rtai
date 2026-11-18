@@ -488,3 +488,17 @@ Read: JOURNAL NEXT, git log -30, districts JOURNAL (no new NEED police; car_mix 
 - 05:55 Finding (c) by eye, heat_clip --level=3 --zoom=0.5 (16 px/m), t1440 crop at 2x: every figure
   I can name as a cop draws blue; the far figures are too small to name. Still unconfirmed; the NEED
   director line stays. Scratch deleted (nothing filed).
+- 05:59 Item 6 Call close-up: quest1_clip.gd --ppm=64 --ticks=240-840, flag off vs --sim-police
+  (~58 s each), hstack -> gtai-masters/n18/police/item6_quest1_simpolice_off_on_t240-840_64ppm.mp4
+  + t720 still. Looked: off: a blue stage patrol crosses past the dumpster (t300) and stands beside
+  it (t720), HUD 1/6; on: no patrol, HUD 2/6 Collect Call at t720. (A first try at t600-1200 was
+  after the hide at heat 0, no police in frame: deleted.) frames.json 15: dropped the item6 t1200
+  32 px/m still and the item4 t2244 still (their clips stay). Scratch renders deleted.
+
+NEXT (session 6, freeze 07:30, REPORT 07:40):
+1. Final gate on HEAD (`node tools/gate/run.mjs --rev=HEAD --reels`; this session's commits after the
+   0e5d8cdad gate are dev/bench, dev/sim, tools/bench and docs only: lint + node tests passed at commit).
+2. REPORT final (draft current at session 5): add the gate line, check every cited path with
+   `node tools/evidence/cites.mjs REPORT.md`, refresh `## Calls for the owner` order.
+3. If time: finding (c) by a test-free probe (log per LOD-1 row: kind COP with look 7) instead of eyes;
+   districts' car_mix row (not landed at 06:00).
