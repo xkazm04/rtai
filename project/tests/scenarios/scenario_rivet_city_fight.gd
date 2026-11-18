@@ -3,8 +3,8 @@ extends Scenario
 ## the 12 m city a pit guard holds behind a kerb car or a corner; the bot then walks straight at
 ## him after stuck_ticks in reach without a shot, so the block's fight keeps moving. With a pistol
 ## it must reach the third wave and drop five guards in 40 s, and the run replays identical
-## (SIM-05). TST-05: a planted fault (neither stuck_ticks nor GunplayBot's flank ever runs
-## out) must stall in the first wave.
+## (SIM-05). Against guards holding cover, the working bot must still win. Disabling its
+## close-in and flank must stall the same encounter (TST-05).
 ## The dev arena's pit must still fight from its entry walk (the close-in once hijacked the walk
 ## in, where a guard is already in reach: 0 shots): two guards down in 20 s there.
 
@@ -30,7 +30,17 @@ func run(_tree: SceneTree) -> String:
 	if divergence != "":
 		return divergence
 	var pit: String = _pit()
-	return pit if pit != "" else _planted()
+	if pit != "":
+		return pit
+	var control: Dictionary = _holding_cover(false)
+	if control["wave"] < MIN_WAVE or control["kills"] < MIN_KILLS:
+		return "the bot failed to close on guards holding cover: %s" % control
+	var planted: Dictionary = _holding_cover(true)
+	if planted["wave"] >= MIN_WAVE:
+		return (
+			"planted fault not caught: a bot that never closes in reached wave %d" % planted["wave"]
+		)
+	return ""
 
 
 static func _open(bus: EventBus, data: DataStore, on_city: bool = true) -> ArenaSession:
@@ -59,23 +69,24 @@ func _replay(log: ReplayLog) -> String:
 	return "" if divergence == "" else "city fight replay diverged: %s" % divergence
 
 
-func _planted() -> String:
+## Mobile guards can bring the fight to a broken bot. Keep the defenders' approach identical
+## in this pair so only the player's ability to close on an obstructed defender changes.
+func _holding_cover(disable_close_in: bool) -> Dictionary:
 	var bus: EventBus = EventBus.new()
 	var data: DataStore = DataStore.new()
 	var s: ArenaSession = _open(bus, data)
+	s.stage.arena.guard_map = null
+	for guard: Fighter in s.stage.arena.hostiles:
+		guard.pursuit = null
 	var bot: ArenaArsenalBot = ArenaArsenalBot.new(s.stage, s.actions)
-	bot.never_close_in(LIMIT_TICKS * 2)
+	if disable_close_in:
+		bot.never_close_in(LIMIT_TICKS * 2)
 	s.world.loop().set_input(bot)
 	var tel: Dictionary = _play(s)
 	s.world.free()
 	bus.free()
 	data.free()
-	if tel["wave"] >= MIN_WAVE:
-		return (
-			"planted fault not caught: a bot that never closes in still reached wave %d"
-			% tel["wave"]
-		)
-	return ""
+	return tel
 
 
 ## The pit in the dev arena (teleported in, as --start=pit): the bot's entry walk then the fight.

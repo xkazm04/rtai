@@ -1,0 +1,17 @@
+START 17:47
+17:52 MILESTONE Reproduced the street fight headless through the normal arena scene and FilmProbe. At tick 650 all four living claw guards 3001-3004 are at y=530.25 on the north face. The D3D12 frame matches.
+17:55 FRICTION The first test import caught an untyped EventBus fixture. Typed locals fixed it before measuring the red run.
+17:57 MILESTONE Both combat guard brains fail the shipped north-wall test at tick 900. Both stop on tick 162 in the clear control. All five standalone EnemyMotor archetypes already pass the single-wall route on base.
+18:15 DECISION Route mobile Fighters in the shared rifle approach. Preserve their 12 m engagement distance on a clear line. The separate EnemyMotor already rounds this wall with every roster body. ArenaStage.ROUTE_GUARDS switches the arena back.
+18:15 MILESTONE Shared metre-grid routes over station props and city solids. The two rifle brains cross on tick 205. Out-of-range and close controls, city and prop bends, a rounded corner, failed-route caching and route sharing are covered.
+18:15 FRICTION First cost probe found 400 searches on one spawn tick. Indexed body clearance by 8 m sector, staggered checks and shared paths to the target cell. The final cold 400-guard wall probe makes three searches over 144000 guard-ticks, zero in the clear.
+18:17 FRICTION Pre-commit caught the 80-line dev cost fixture and the isolation setting reaching the merge-tool tests. Recorded the dev-only increase with the debt tool and confined the sibling-scan setting to the lane hook.
+18:27 MILESTONE Seed 20261109, headless street and separate D3D12 movie: body clears at ticks 188, 249, 290 and 316 versus none by 650. All 17611 post-fix fighter samples (id, alive, HP and position) match between headless and rendered. Reviewed the matched 32 px/m movie and tick-450 frame. Code snapshot gate started on a48a797e1.
+18:48 FRICTION The original snapshot predated a native DLL refresh to the lane at 18:43. Its 11 failures included absent base methods (cop_sees and step_blood_drops). Stopped that gate, copied the refreshed lane runtime to the private snapshots and restarted verification.
+19:04 DECISION Keep the city fight and replay on routed guards. Isolate the existing player close-in fault using two identical holding-cover encounters. The broken player previously won wave 6 because the guards did the approaching.
+19:09 MILESTONE The revised city fight scenario passes its live, replay, pit, positive and planted controls. Refreshed DLL reproduces zero versus four street crossings; guard 3002 now clears on tick 247 (two ticks earlier). Refreshing both films.
+19:13 MILESTONE Updated blind movie and tick-450 frame reviewed. Refreshed native runtime, 650 ticks, exact headless/rendered fighter states across 17356 before and 17626 after observations. The 32-mutant run is under way.
+19:33 MILESTONE Route map mutation score 62.5%: killed 20, survived 12, timeout 0, invalid 0 in a repeatable 32-of-105 sample. Seven survivors concern entry from a partly occupied cell. Full snapshot gate started on f08ae9135.
+19:53 MILESTONE Verified the complete code and tests snapshot: 55/55 scenarios, parity 1200 steps, all look goldens, lint and release compile. Completed the blind report.
+NEXT: Owner may review the paired movie and read the full snapshot gate for the delivery commit.
+QUEUE EMPTY

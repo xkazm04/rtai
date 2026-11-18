@@ -8,10 +8,7 @@ extends RefCounted
 static func step(
 	g: Fighter, target: Vector2, tuning: CombatTuning, rng: RandomNumberGenerator
 ) -> Shot:
-	var to: Vector2 = target - g.pos
-	g.facing = to.normalized() if to.length() > 0.01 else g.facing
-	if to.length() > tuning.human["engage_m"]:
-		g.pos += g.facing * tuning.human["walk_mps"] * SimClock.TICK_DT
+	if approach(g, target, tuning):
 		return null
 	var w: CombatTuning.Weapon = tuning.weapon(g.weapon)
 	if g.burst_left > 0:
@@ -28,3 +25,17 @@ static func step(
 	g.burst_left = w.burst
 	g.cooldown = w.cooldown_ticks
 	return null
+
+
+## Both rifle brains share the approach. On open ground the original speed and range apply.
+static func approach(g: Fighter, target: Vector2, tuning: CombatTuning) -> bool:
+	var speed: float = tuning.human["walk_mps"]
+	if g.pursuit != null and g.pursuit.advance(g, target, speed):
+		return true
+	var to: Vector2 = target - g.pos
+	if to.length() > 0.01:
+		g.facing = to.normalized()
+	if to.length() <= tuning.human["engage_m"]:
+		return false
+	g.pos += g.facing * speed * SimClock.TICK_DT
+	return true

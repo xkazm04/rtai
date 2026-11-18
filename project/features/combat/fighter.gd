@@ -12,6 +12,7 @@ var facing: Vector2 = Vector2.RIGHT
 var hp: float = 1.0
 var max_hp: float = 1.0
 var radius_m: float = 0.45
+var pursuit: GuardPursuit
 var weapon: StringName = &""
 var cooldown: int = 0
 var burst_left: int = 0

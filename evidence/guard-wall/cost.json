@@ -1,0 +1,115 @@
+{
+  "actors": 400,
+  "rows": [
+    {
+      "batch_max_us": 10138,
+      "batch_p99_us": 1771,
+      "peak_searches_in_tick": 0,
+      "routes": false,
+      "searches": 0,
+      "us_per_guard_tick": 1.08969444444444,
+      "wall": false
+    },
+    {
+      "batch_max_us": 1735,
+      "batch_p99_us": 1537,
+      "peak_searches_in_tick": 0,
+      "routes": true,
+      "searches": 0,
+      "us_per_guard_tick": 1.61495833333333,
+      "wall": false
+    },
+    {
+      "batch_max_us": 1347,
+      "batch_p99_us": 642,
+      "peak_searches_in_tick": 0,
+      "routes": false,
+      "searches": 0,
+      "us_per_guard_tick": 0.871972222222222,
+      "wall": true
+    },
+    {
+      "batch_max_us": 1827,
+      "batch_p99_us": 1039,
+      "peak_searches_in_tick": 3,
+      "routes": true,
+      "searches": 3,
+      "us_per_guard_tick": 1.71477083333333,
+      "wall": true
+    },
+    {
+      "batch_max_us": 20195,
+      "batch_p99_us": 3176,
+      "peak_searches_in_tick": 0,
+      "routes": true,
+      "searches": 0,
+      "us_per_guard_tick": 1.95565972222222,
+      "wall": false
+    },
+    {
+      "batch_max_us": 2004,
+      "batch_p99_us": 799,
+      "peak_searches_in_tick": 0,
+      "routes": false,
+      "searches": 0,
+      "us_per_guard_tick": 0.954465277777778,
+      "wall": false
+    },
+    {
+      "batch_max_us": 12179,
+      "batch_p99_us": 4266,
+      "peak_searches_in_tick": 3,
+      "routes": true,
+      "searches": 3,
+      "us_per_guard_tick": 2.09928472222222,
+      "wall": true
+    },
+    {
+      "batch_max_us": 4225,
+      "batch_p99_us": 488,
+      "peak_searches_in_tick": 0,
+      "routes": false,
+      "searches": 0,
+      "us_per_guard_tick": 0.875944444444444,
+      "wall": true
+    },
+    {
+      "batch_max_us": 1031,
+      "batch_p99_us": 577,
+      "peak_searches_in_tick": 0,
+      "routes": false,
+      "searches": 0,
+      "us_per_guard_tick": 0.899291666666667,
+      "wall": false
+    },
+    {
+      "batch_max_us": 6057,
+      "batch_p99_us": 1244,
+      "peak_searches_in_tick": 0,
+      "routes": true,
+      "searches": 0,
+      "us_per_guard_tick": 1.69489583333333,
+      "wall": false
+    },
+    {
+      "batch_max_us": 7337,
+      "batch_p99_us": 1186,
+      "peak_searches_in_tick": 0,
+      "routes": false,
+      "searches": 0,
+      "us_per_guard_tick": 0.982208333333333,
+      "wall": true
+    },
+    {
+      "batch_max_us": 4238,
+      "batch_p99_us": 2540,
+      "peak_searches_in_tick": 3,
+      "routes": true,
+      "searches": 3,
+      "us_per_guard_tick": 1.92178472222222,
+      "wall": true
+    }
+  ],
+  "ticks": 360,
+  "timing": "CONTENDED"
+}

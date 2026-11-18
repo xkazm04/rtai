@@ -1,0 +1,78 @@
+{
+  "films": [
+    {
+      "side": "before",
+      "revision": "97d8f349818942502ae3927ff8dc9e814ff87399",
+      "clean": true,
+      "verdict": "pass",
+      "seed": "20261109",
+      "camera_m": "534,533",
+      "view": "combo",
+      "ppm": "32",
+      "rendered_ticks": 680,
+      "sha256_source_mp4": "3e446c607f3eaf88f75f01d56be4b81e9938ec204f487ca590e6d0102171e32f",
+      "headless_vs_rendered": {
+        "ticks": 650,
+        "fields": [
+          "id",
+          "alive",
+          "hp",
+          "pos.x",
+          "pos.y"
+        ],
+        "headless": {
+          "sha256": "fb16b6ca1065be93963ea8a65c2480ed983e9a0477d805eb106d3462f7e4c35e",
+          "samples": 17356
+        },
+        "rendered": {
+          "sha256": "fb16b6ca1065be93963ea8a65c2480ed983e9a0477d805eb106d3462f7e4c35e",
+          "samples": 17356
+        },
+        "identical": true
+      }
+    },
+    {
+      "side": "after",
+      "revision": "f08ae9135ea219611af1bebc54b88de26fca8210",
+      "clean": true,
+      "verdict": "pass",
+      "seed": "20261109",
+      "camera_m": "534,533",
+      "view": "combo",
+      "ppm": "32",
+      "rendered_ticks": 680,
+      "sha256_source_mp4": "a932b577b1cbc9011c443aabbafe83e2c60dac67d0d4c05726978dc654d29b6b",
+      "headless_vs_rendered": {
+        "ticks": 650,
+        "fields": [
+          "id",
+          "alive",
+          "hp",
+          "pos.x",
+          "pos.y"
+        ],
+        "headless": {
+          "sha256": "05dc3030ee0a8e7e6f281e99b63a1f7c0ea607405ffd58c01ebf83f96d855b1e",
+          "samples": 17626
+        },
+        "rendered": {
+          "sha256": "05dc3030ee0a8e7e6f281e99b63a1f7c0ea607405ffd58c01ebf83f96d855b1e",
+          "samples": 17626
+        },
+        "identical": true
+      }
+    }
+  ],
+  "masters": [
+    {
+      "file": "north-wall.mp4",
+      "sha256": "9ff2aae29795f6c474936e31f06eda13c983e0e7bd234006748173b37fbcea50"
+    },
+    {
+      "file": "north-wall-t450.jpg",
+      "sha256": "5850db1c07728cff175c9cbbfdd535a691976e10584894c37acd02a2afbbde54"
+    }
+  ],
+  "index_sha256": "8556c43e97ec3c32af6e9daebb2f78d28910ae62c4cd5b51692f617755ba5406",
+  "native_debug_sha256": "e62ca1f2427cf86b63bb1544a4a1d49647d693a1f63d563839686aa8f10b7f9d"
+}

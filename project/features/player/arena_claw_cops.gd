@@ -38,6 +38,8 @@ func setup(stage: ArenaStage, _ctx: WorldContext) -> void:
 		var f: Fighter = Fighter.make(Fighter.Kind.GUARD, FIRST_ID + i, at, hp)
 		f.radius_m = stage.arena.tuning.human["radius_m"]
 		f.weapon = &"assault-rifle"
+		if stage.arena.guard_map != null:
+			f.pursuit = GuardPursuit.new(stage.arena.guard_map)
 		f.cooldown = NEVER
 		f.facing = Vector2.UP
 		stage.arena.hostiles.append(f)

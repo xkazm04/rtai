@@ -55,10 +55,7 @@ func step(g: Fighter, target: Vector2, tuning: CombatTuning, rng: RandomNumberGe
 		return null
 	if g.burst_left > 0:
 		return _burst(g, w, rng)
-	if to.length() > 0.01:
-		g.facing = to.normalized()
-	if to.length() > tuning.human["engage_m"]:
-		g.pos += g.facing * tuning.human["walk_mps"] * SimClock.TICK_DT
+	if GuardBrain.approach(g, target, tuning):
 		return null
 	if g.cooldown > 0:
 		g.cooldown -= 1

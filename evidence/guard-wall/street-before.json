@@ -1,0 +1,48 @@
+{
+  "ticks": 650,
+  "body_south_y_m": 531.75,
+  "sha256_positions": "139f11dba44b9ccfbab899435b608f75ec9c15975c1c8273d4e15c6676afef88",
+  "rivet_at_650_m": [
+    527.510070800781,
+    535.045837402344
+  ],
+  "body_south_at_650": 0,
+  "guards": [
+    {
+      "id": 3001,
+      "first_body_south_tick": null,
+      "crossing_pos_m": null,
+      "pos_at_650_m": [
+        535.054077148438,
+        530.25
+      ]
+    },
+    {
+      "id": 3002,
+      "first_body_south_tick": null,
+      "crossing_pos_m": null,
+      "pos_at_650_m": [
+        536.054077148438,
+        530.25
+      ]
+    },
+    {
+      "id": 3003,
+      "first_body_south_tick": null,
+      "crossing_pos_m": null,
+      "pos_at_650_m": [
+        537.054077148438,
+        530.25
+      ]
+    },
+    {
+      "id": 3004,
+      "first_body_south_tick": null,
+      "crossing_pos_m": null,
+      "pos_at_650_m": [
+        537.962219238281,
+        529.831420898438
+      ]
+    }
+  ]
+}
