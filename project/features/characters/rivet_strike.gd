@@ -59,9 +59,9 @@ static func placed(rig: CutRig, card: Sprite2D, s: float, h_px: float) -> bool:
 	card.flip_h = false
 	var cell: Vector2 = card.texture.get_size() / Vector2(COLS, ROWS)
 	var foot: float = FOOT_PX.get(ViewMode.shared().art, RivetFrames.PAD_PX)
-	card.offset = Vector2(-cell.x * 0.5, foot - cell.y)
+	card.offset = Vector2(-cell.x * 0.5, foot * RivetWalk.RES - cell.y)
 	card.global_rotation = 0.0
-	card.global_scale = Vector2(s, s)
+	card.global_scale = Vector2(s, s) / RivetWalk.RES
 	card.global_position = rig.global_position
 	rig.set_meta(RigCastShadows.CAST_HIP, h_px / RigCastShadows.BODY_IN_HIPS)
 	return true

@@ -38,6 +38,38 @@ func test_the_grid_ships_with_a_whole_number_of_cells() -> void:
 		assert_eq(tex.get_height() % RivetStrike.ROWS, 0, art)
 
 
+func test_native_grid_preserves_draw_size_and_boot_line() -> void:
+	var was: ViewMode = ViewMode._shared
+	for view: String in ["tilt70", "tilt"]:
+		ViewMode._shared = ViewMode.of(view)
+		var art: String = ViewMode.shared().art
+		var rig: CutRig = _rig(0)
+		var card: Sprite2D = rig.head_card
+		var path: String = RivetStrips.DIR + art + "/" + RivetStrike.STRIP
+		card.texture = load(path) as Texture2D
+		card.set_meta(RivetFrames.ON, path)
+		assert_true(RivetStrike.placed(rig, card, 1.0, 110.0))
+		var cell: Vector2 = card.texture.get_size() / Vector2(card.hframes, card.vframes)
+		var old: Vector2 = Vector2(163, 154) if art == "p70" else Vector2(170, 139)
+		assert_almost_eq(cell, old * 1.5, Vector2.ONE * 0.51)
+		assert_almost_eq(cell * card.global_scale, old, Vector2.ONE * 0.34)
+		var boot: float = (cell.y + card.offset.y) * card.global_scale.y
+		assert_almost_eq(boot, 26.0 if art == "p70" else 14.0, 0.001)
+	ViewMode._shared = was
+
+
+func test_the_sim_keeps_the_base_radius_and_claw_reach() -> void:
+	assert_eq(BodyTable.load_default().radius(&"rivet_base"), 0.42)
+	var arena: CombatArena = CombatArena.new(
+		CombatTuning.shipped(), Events, RngRegistry.new(1).stream(&"combat")
+	)
+	assert_eq(arena.rivet.radius_m, 0.6)
+	var claw: MeleeTable = MeleeTable.shipped()
+	assert_eq(claw.hits[0].reach_m, 1.4)
+	assert_eq(claw.hits[1].reach_m, 1.4)
+	assert_eq(claw.hits[2].reach_m, 1.6)
+
+
 func test_a_bare_claw_strike_takes_the_grid() -> void:
 	assert_eq(RivetStrike.path_or(_rig(0), "p70", &"", "x.png"), _grid_path())
 
