@@ -37,6 +37,10 @@ func test_apron_props_stand_on_the_land_side_and_keep_the_walk() -> void:
 			assert_eq(t.x, wx - 1, "an apron prop stands in the apron column")
 			var right: float = p.x - t.x * 8.0 + _gen.sizes[int(p.z)].x * 0.5
 			assert_lt(right, 8.0 - DockDresser.OPEN_M + 0.01, "%s leaves the open walk" % t)
+			var half_y: float = _gen.sizes[int(p.z)].y * 0.5
+			var v: float = p.y - t.y * 8.0
+			assert_gt(v - half_y, 0.49, "%s keeps 0.5 m to the tile's north edge" % t)
+			assert_lt(v + half_y, 8.0 - 0.49, "%s keeps 0.5 m to the tile's south edge" % t)
 			props += 1
 		for j: int in SimConst.CHUNK_TILES:
 			var t: Vector2i = Vector2i(wx - 1, cy * SimConst.CHUNK_TILES + j)
@@ -60,7 +64,8 @@ func test_each_basin_stands_one_quay_edge_prop_by_the_coping() -> void:
 		assert_eq(here.size(), SimConst.CHUNK_TILES / CityGen.PERIOD, "one a basin, chunk %d" % cy)
 		for p: Vector3 in here:
 			assert_eq(floori(p.x / 8.0), wx, "on the west quay")
-			assert_lt(p.x - wx * 8.0, DockPainter.LAND_M, "on the land strip")
+			var half_x: float = _gen.sizes[int(p.z)].x * 0.5
+			assert_lt(p.x + half_x - wx * 8.0, DockPainter.LAND_M, "wholly on the land strip")
 			stood += 1
 	assert_eq(stood, SimConst.CITY_CHUNKS * 2)
 
@@ -87,6 +92,19 @@ func test_basin_boats_moor_in_open_water() -> void:
 	assert_between(
 		boats, int(basins * _docks.basin_boat_share * 0.5), basins - 4, "about the share"
 	)
+
+
+func test_the_dressing_stands_unturned() -> void:
+	var texs: Array = _docks.apron_props + [_docks.quay_edge_prop, _docks.basin_boat]
+	var seen: int = 0
+	for cy: int in SimConst.CITY_CHUNKS:
+		var ch: CityChunk = _gen.gen_chunk(EAST_CHUNK, cy)
+		for i: int in ch.tex.size():
+			if texs.has(ch.tex[i]):
+				seen += 1
+				var rot: float = ch.xf[i * CityChunk.XF_STRIDE + 2]
+				assert_eq(rot, 0.0, "tex %d front to the camera (boat: bow north)" % ch.tex[i])
+	assert_gt(seen, 50, "the docks stand their dressing")
 
 
 ## [x, y, tex] of every standing prop of `texs` in chunk ch.
