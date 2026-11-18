@@ -1,12 +1,12 @@
 # tools/mutate - "do my tests bite on this file?"
 
 Real mutation testing for one GDScript file (STANDARDS TST-05). It plants single-line faults in the
-file, runs the tests that cover it, and reports which faults the tests noticed.
+file and reports which faults the selected checks caught.
 
 ```
 node tools/mutate/mutate.mjs --file=core/save/gtsv_container.gd [--max=25] [--ops=cmp_flip,boundary]
                              [--tests=test_gtsv_container,test_save_facade] [--timeout=90] [--json]
-                             [--worktree=<path>] [--remove-worktree]
+                             [--oracle=tests,bake-check] [--worktree=<path>] [--remove-worktree]
 just mutate --file=core/save/gtsv_container.gd --max=25
 ```
 
@@ -30,15 +30,39 @@ score 79.1% = killed 34 / (killed 34 + survived 9); timeout 0, invalid 0; 292 s
 
 Survivors are listed first, then timeouts, invalid, killed. Score = killed / (killed + survived).
 
-| verdict | meaning |
-|---|---|
-| killed | a mapped test failed (or the mutant crashed at run time in a way the clean file does not) |
-| survived | every mapped test passed: the tests do not notice this fault |
-| timeout | the per-mutant cap hit (default 3x the baseline, 90-300 s); the tree was killed. Usually an infinite loop the mutant created, which counts as noticed but is not scored |
-| invalid | the mutant does not compile (a `Parse Error` / `Failed to load script`): not a test result, left out of the score |
+## Oracles
 
-Before the first mutant the mapped tests run on the unmutated file; red means "baseline red", nothing
-is mutated.
+`tests` runs the selected unit tests and is the default. For city generators under
+`features/city/gen/`, use the AST-12 golden list directly.
+
+```
+node tools/mutate/mutate.mjs --file=features/city/gen/kerb_dresser.gd --oracle=bake-check --max=4
+```
+
+`bake-check` skips test mapping. It imports a fresh worktree before running
+`bake_city.gd -- --check --fail-fast`. It checks the header and each chunk in row-major order,
+then byte-compares a second bake if every hash matched. A script error stops the Godot process tree
+after a 1.5 s grace period so a failed SceneTree initialization cannot hang the run.
+
+With `--oracle=tests,bake-check`, only survivors reach the next oracle. List the names in the order
+you want. Every selected oracle must pass on the original file before mutation starts.
+
+| Verdict | What decided it |
+|---|---|
+| killed | Failed assertions (`tests`), golden-list drift (`golden`), different bytes on the second bake (`nondeterministic`), or a runtime script error (`crash`). |
+| survived | Every selected oracle passed. The bake requires both exit 0 and its explicit OK line. |
+| invalid | A parse, load or compile error. Excluded from the score. |
+| timeout | The per-mutant deadline expired and the runner killed the process tree. Excluded from the score. |
+| infrastructure failure | An unexplained exit or missing bake verdict stops the run with exit 2. A red baseline also exits 2. |
+
+The tests budget is 3× baseline (90–300 s). The bake budget is 2× baseline (at least 60 s).
+Combined runs share the sum of those budgets. `--timeout=N` sets the whole mutant's budget in seconds.
+Explicit oracle reports give mean seconds per mutant excluding setup, and kills by oracle and cause.
+JSON records the requested `oracles` in order and the last `oracle` reached by each mutant.
+
+On this machine the four-mutant sample above averaged **7.69 s/mutant**. All four differed in
+`c_00_00.bin`. The clean bake took 13.5 s after a one-time 182.3 s import. A surviving mutant
+pays for both full bakes. Focused unit tests have measured about 6.5 s/mutant.
 
 ## Operators (one change, one line)
 
@@ -99,9 +123,6 @@ node tools/mutate/mutate.mjs --file=features/combat/ai/enemy_pit.gd --max=25
 Quote `file, mutants, killed/survived/invalid/timeout, score` in the ticket. Read the survivors: each is
 either an equivalent mutant (no observable change), a real test gap (name the missing test), or dead
 code. A hand-written negative control is still worth keeping, but it is not a score.
-
-Cost: about 6.5 s per mutant for small focused tests (a Godot start + import step per mutant), so 25
-mutants is ~3 minutes and a full 43-mutant file ~5 minutes.
 
 ## Field notes
 
