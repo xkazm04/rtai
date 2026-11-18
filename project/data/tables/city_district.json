@@ -106,7 +106,9 @@
       "landmark_share": 0.08,
       "long_roofs": [
         86,
-        87
+        87,
+        97,
+        98
       ],
       "long_share": 1,
       "ped_corner": 30,
@@ -155,7 +157,9 @@
         65,
         66,
         69,
-        71
+        71,
+        99,
+        100
       ],
       "id": "downtown",
       "landmark_roofs": [
@@ -165,7 +169,7 @@
         19,
         20
       ],
-      "landmark_share": 0.55,
+      "landmark_share": 0.35,
       "long_roofs": [
         22,
         81
@@ -174,14 +178,18 @@
       "ped_corner": 150,
       "ped_kerb": 220,
       "ped_plaza": 255,
+      "plaza_centre": 101,
       "plaza_prop_share": 0.75,
       "plaza_props": [
         28,
+        102,
+        102,
+        103,
         33,
         26,
         28,
-        32,
-        29,
+        102,
+        104,
         33
       ],
       "plaza_share": 0.24,

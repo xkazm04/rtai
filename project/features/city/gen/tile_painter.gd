@@ -140,6 +140,9 @@ func _plaza(g: CityGen, b: ChunkBuild, t: Vector2i) -> int:
 	b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_WALK)
 	var zone: CityZone = g.zones.of_tile(t)
 	b.chunk.dens_ped[local_index(t)] = int(zone.ped_plaza * b.district)
+	if zone.plaza_centre >= 0 and posmod(t.x, PERIOD) == 5 and posmod(t.y, PERIOD) == 5:
+		_kerb.prop(g, b, zone.plaza_centre, o + Vector2(4.0, 4.0), 0.0)  # the block's middle tile
+		return SimConst.T_PLAZA
 	for k: int in PLAZA_SLOTS.size():
 		if g.rnd(t.x, t.y, k, 21) < zone.plaza_prop_share:
 			var props: Array[int] = zone.plaza_props

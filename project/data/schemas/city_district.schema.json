@@ -166,6 +166,12 @@
             "minimum": 0,
             "type": "number"
           },
+          "plaza_centre": {
+            "description": "a plaza block's centrepiece on its middle tile (city_textures id); absent = none",
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
           "plaza_prop_share": {
             "maximum": 1,
             "minimum": 0,

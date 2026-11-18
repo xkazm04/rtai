@@ -39,6 +39,14 @@
       "height_m": 8.5,
       "style": "shop"
     },
+    "roof_dock_coldstore": {
+      "height_m": 9,
+      "style": "dock"
+    },
+    "roof_dock_sawtooth": {
+      "height_m": 8.5,
+      "style": "dock"
+    },
     "roof_dock_shed": {
       "height_m": 7,
       "style": "dock"
@@ -50,6 +58,14 @@
     "roof_dock_warehouse_b": {
       "height_m": 8.5,
       "style": "dock"
+    },
+    "roof_down_tall": {
+      "height_m": 20,
+      "style": "glass"
+    },
+    "roof_down_tall_b": {
+      "height_m": 18,
+      "style": "glass"
     },
     "roof_down_tower": {
       "height_m": 24,
@@ -90,6 +106,10 @@
       "art": "res://features/city/art/view/<art>/prop_bench.png",
       "cell_w_m": 1.9
     },
+    "bike_racks": {
+      "art": "res://features/city/art/view/<art>/prop_bike_racks.png",
+      "cell_w_m": 2.42
+    },
     "bollard": {
       "art": "res://features/city/art/view/<art>/prop_bollard.png",
       "cell_w_m": 0.4
@@ -118,6 +138,10 @@
     "fire_hydrant": {
       "art": "res://features/city/art/view/<art>/prop_fire_hydrant.png",
       "cell_w_m": 0.55
+    },
+    "fountain": {
+      "art": "res://features/city/art/view/<art>/prop_fountain.png",
+      "cell_w_m": 3.53
     },
     "lamp_post": {
       "art": "res://features/city/art/view/<art>/prop_lamp_post.png",
@@ -157,6 +181,10 @@
       "cell_w_m": 2.2,
       "turn": 1
     },
+    "sculpture_plinth": {
+      "art": "res://features/city/art/view/<art>/prop_sculpture_plinth.png",
+      "cell_w_m": 2.53
+    },
     "street_sign": {
       "art": "res://features/city/art/view/<art>/prop_street_sign.png",
       "cast_m": 1,
@@ -181,6 +209,10 @@
     "trash_can": {
       "art": "res://features/city/art/view/<art>/prop_trash_can.png",
       "cell_w_m": 0.75
+    },
+    "tree_grate": {
+      "art": "res://features/city/art/view/<art>/prop_tree_grate.png",
+      "cell_w_m": 2.36
     },
     "vending_machine": {
       "art": "res://features/city/art/view/<art>/prop_vending_machine.png",

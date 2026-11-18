@@ -67,6 +67,8 @@ var quay_ground: Array[int] = []
 ## Container-yard stacks (DockPainter.yard; empty = a yard paints as a plaza, the v15 look),
 ## one per DockPainter.YARD_SLOTS slot under yard_prop_share.
 var yard_props: Array[int] = []
+## A plaza block's centrepiece on its middle tile (a city_textures id; -1 = none, slots only).
+var plaza_centre: int = -1
 var yard_prop_share: float = 0.0
 
 
@@ -77,7 +79,7 @@ static func from_row(row: Dictionary) -> CityZone:
 		if row.has(key):
 			var f: float = row[key]
 			z.set(key, f)
-	for key: String in ["car_lane", "street_keep_x", "water_tiles"]:
+	for key: String in ["car_lane", "street_keep_x", "water_tiles", "plaza_centre"]:
 		if row.has(key):
 			var f: float = row[key]
 			z.set(key, int(f))
