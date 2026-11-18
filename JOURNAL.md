@@ -150,3 +150,18 @@ REQUEST assets: 9 WITHDRAWN (to the asset lane): the water a/b you delivered was
 in 82557533a). In game at 32 px/m it now reads as dark water with warm ripple glints; no redraw needed. If you have
 time, the plain-water tile drawn by example from the quay tiles' water (your it470 note) is still welcome, so
 the open water and the quay edge water match.
+- 01:00 MILESTONE commit 8796ec18a, generator v18: the quay edge autotile (straight N/S/W, inner NW/SW from the
+  asset lane's it470 set, ids 93-94, zone key `quay_ground`), 5 m walkable apron on the land sides, the apron's
+  bollard line dropped (the coping carries bollards). Registry autotile-rule-set-completeness: test_dock_quay
+  lists every neighbour case from the painted tiles (open, N, S, W, NW, SW) and fails on a case without art.
+  Outer corner (B) not used: no layout case (the piers run to the city edge). Evidence
+  `evidence/n18-districts/ab_quay_edge_v17_v18_combo_{32,48}ppm.jpg`, `quay_pier_join_v18_combo_48ppm.jpg`. Looked:
+  the coping turns land on the right sides; the pier sidewalk meets the apron with a small paving-grid change.
+- 01:02 full unit on 8796ec18a: 2858 passed, 0 failed, 2 skipped (77 s).
+- 01:05 MILESTONE item 5, commit b0314350c: `--quest1-places` (StageDockPlace + collect_call_city.json `dock_place`).
+  Shared-file call sites (named here as the brief asks): `project/boot/launch_args.gd` KNOWN_FLAGS gains
+  `"--quest1-places"` (one line, after `--strip-prefetch`), and the `--perf-hud` comment moved onto its flag's
+  line (same words) so the file stays at 200 lines (debt files_past_soft_cap would have gone 65 -> 66).
+  test_stage_dock_place 5/5; planted out_m 1.5 -> metal on a building cell, caught.
+- FRICTION: GDScript constructors on Variant (int(case[0]), Vector2(a[0], a[1])) are warnings-as-errors; the
+  pattern is typed locals first. gdformat writes CRLF on this machine (git normalises; harmless).
