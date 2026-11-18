@@ -98,6 +98,14 @@
       "art": "res://features/city/art/view/<art>/prop_bus_stop.png",
       "cell_w_m": 3.4
     },
+    "container2": {
+      "art": "res://features/city/art/view/<art>/prop_container2.png",
+      "cell_w_m": 6.16
+    },
+    "container3": {
+      "art": "res://features/city/art/view/<art>/prop_container3.png",
+      "cell_w_m": 6.16
+    },
     "crate_stack": {
       "art": "res://features/city/art/view/<art>/prop_crate_stack.png",
       "cell_w_m": 3.2,

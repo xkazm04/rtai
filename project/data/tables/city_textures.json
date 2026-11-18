@@ -1046,6 +1046,28 @@
         8
       ],
       "solid": false
+    },
+    {
+      "art": "res://features/city/art/props/container2.png",
+      "class": "prop",
+      "id": 95,
+      "name": "container2",
+      "size_m": [
+        6.1,
+        2.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/container3.png",
+      "class": "prop",
+      "id": 96,
+      "name": "container3",
+      "size_m": [
+        6.1,
+        2.4
+      ],
+      "solid": true
     }
   ]
 }

@@ -11,6 +11,7 @@ const FLOATS: Array[String] = [
 	"long_share",
 	"empty_share",
 	"plaza_prop_share",
+	"yard_prop_share",
 	"ped_corner",
 	"ped_kerb",
 	"ped_plaza",
@@ -26,6 +27,7 @@ const LISTS: Array[String] = [
 	"plaza_props",
 	"water_ground",
 	"quay_ground",
+	"yard_props",
 ]
 
 var id: StringName = &"mixed"
@@ -62,6 +64,10 @@ var water_ground: Array[int] = [72]
 ## The quay edge art [straight, inner corner] (DockPainter.quay_case; empty = open water and the
 ## apron's bollard line, the v15 look).
 var quay_ground: Array[int] = []
+## Container-yard stacks (DockPainter.yard; empty = a yard paints as a plaza, the v15 look),
+## one per DockPainter.YARD_SLOTS slot under yard_prop_share.
+var yard_props: Array[int] = []
+var yard_prop_share: float = 0.0
 
 
 static func from_row(row: Dictionary) -> CityZone:

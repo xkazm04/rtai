@@ -214,6 +214,20 @@
             "maximum": 5,
             "minimum": 0,
             "type": "integer"
+          },
+          "yard_prop_share": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "yard_props": {
+            "description": "container-yard stacks, city_textures ids (DockPainter.yard); absent = a yard paints as a plaza",
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "type": "array"
           }
         },
         "required": [

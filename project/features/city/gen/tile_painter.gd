@@ -57,8 +57,8 @@ func _docks_tile(g: CityGen, b: ChunkBuild, zone: CityZone, t: Vector2i) -> int:
 		return _junction(g, b, t)
 	elif posmod(t.x, PERIOD) <= 2 or my <= 2:
 		return _street(g, b, t, my <= 2)
-	if DockPainter.is_yard(g, zone, t):
-		return _plaza(g, b, t)
+	if DockPainter.is_yard(g, zone, t):  # no yard_props: a plaza (the v18 look)
+		return _plaza(g, b, t) if zone.yard_props.is_empty() else _docks.yard(g, b, _kerb, zone, t)
 	return _docks.block(g, b, zone, t)
 
 

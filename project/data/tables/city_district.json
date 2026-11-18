@@ -130,7 +130,13 @@
         91,
         92
       ],
-      "water_tiles": 3
+      "water_tiles": 3,
+      "yard_prop_share": 0.6,
+      "yard_props": [
+        95,
+        95,
+        96
+      ]
     },
     {
       "big_roofs": [

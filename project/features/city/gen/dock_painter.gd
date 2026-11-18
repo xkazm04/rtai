@@ -16,6 +16,9 @@ const BOLLARD_V_M: Array[float] = [1.5, 4.0, 6.5]
 ## The quay set (asset lane it469/it470): the straight is drawn land north (5 m of apron to its
 ## coping), the inner corner land north and west; a turn carries them to the tile's land sides.
 const LAND_M: float = 5.0
+## Two container rows a yard tile, long axis east-west: their 85 % footprints (cells 1-6 x 0-2
+## and 1-6 x 4-6) leave cell rows 3 and 7 and columns 0 and 7 walkable: one walk network.
+const YARD_SLOTS: Array[Vector2] = [Vector2(4.0, 1.5), Vector2(4.0, 5.5)]
 const EDGE_N: int = 1
 const EDGE_S: int = 2
 const EDGE_W: int = 4
@@ -89,6 +92,22 @@ func quay(g: CityGen, b: ChunkBuild, kerb: KerbDresser, t: Vector2i, apron: bool
 		for vm: float in BOLLARD_V_M:
 			kerb.prop(g, b, T_BOLLARD, o + Vector2(7.4, vm), 0.0)
 	b.chunk.dens_ped[TilePainter.local_index(t)] = int(zone.ped_plaza * 0.25 * b.district)
+	return SimConst.T_PLAZA
+
+
+## A container-yard tile: paving, then a stack in each YARD_SLOTS row under yard_prop_share (a
+## 0 / 180 turn; the card's broadside faces the camera either way).
+func yard(g: CityGen, b: ChunkBuild, kerb: KerbDresser, zone: CityZone, t: Vector2i) -> int:
+	var o: Vector2 = TilePainter.origin(t)
+	var turn: float = deg_to_rad(90.0 * int(g.rnd(t.x, t.y, 0, 26) * 4.0))
+	b.add(ChunkBuild.L_GROUND, T_PAVING, o + Vector2(4.0, 4.0), turn)
+	b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_WALK)
+	b.chunk.dens_ped[TilePainter.local_index(t)] = int(zone.ped_plaza * b.district)
+	for k: int in YARD_SLOTS.size():
+		if g.rnd(t.x, t.y, k, 61) < zone.yard_prop_share:
+			var stacks: Array[int] = zone.yard_props
+			var tex: int = stacks[int(g.rnd(t.x, t.y, k, 62) * stacks.size())]
+			kerb.prop(g, b, tex, o + YARD_SLOTS[k], PI * int(g.rnd(t.x, t.y, k, 63) * 2.0))
 	return SimConst.T_PLAZA
 
 
