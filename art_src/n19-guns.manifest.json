@@ -1,5 +1,5 @@
 {
- "_doc": "Package 3a contractor rifle. Own reference derivatives and raw and keyed masters outside git. Recipes in tools/art/assault_rifle_parts.py and assault_rifle_strips.py.",
+ "_doc": "Contractor rifle prop and Rivet strips. Raw, keyed and reference masters outside git. Cut with tools/art/assault_rifle_parts.py and assault_rifle_strips.py.",
  "masters": {
   "contractor_prop": {
    "date": "2026-11-18",
@@ -14,6 +14,77 @@
    "seed": null,
    "sha256": "6626d0f64eb13c5701ed424acf27d23ee36fa4a459d9b91c68346d1d2a010066",
    "tool": "Pillow"
+  },
+  "diag70_corrected": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/diag70_corrected.png",
+   "layout_template": "masters:n19/guns/masters/diag70_raw.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/diag70_corrected.txt",
+   "prompt_sha256": "ee2d4fc2be61e136b5606218a8d96ea42890bcec8d2b50bd3d7edfe58bbcfc26",
+   "references": [
+    "masters:n19/guns/masters/diag70_raw.png"
+   ],
+   "seed": null,
+   "sha256": "10a221e42b58ecf8334f89ddb4d31e43fd5c4b0aee9bf38b7049bd5d0f797b24",
+   "tool": "image_gen"
+  },
+  "diag70_dark": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/diag70_dark.png",
+   "layout_template": "masters:n19/guns/masters/diag70_corrected.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/diag70_corrected.txt",
+   "prompt_sha256": "ee2d4fc2be61e136b5606218a8d96ea42890bcec8d2b50bd3d7edfe58bbcfc26",
+   "references": [
+    "masters:n19/guns/masters/diag70_corrected.png"
+   ],
+   "seed": null,
+   "sha256": "23f6a72f9bb48b9032ea9d7335b048c578f5f38dbc5119455f6d7a82d764a1c4",
+   "tool": "Pillow"
+  },
+  "diag70_key": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/diag70_key.png",
+   "layout_template": "masters:n19/guns/masters/diag70_corrected.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/diag70_corrected.txt",
+   "prompt_sha256": "ee2d4fc2be61e136b5606218a8d96ea42890bcec8d2b50bd3d7edfe58bbcfc26",
+   "references": [
+    "masters:n19/guns/masters/diag70_corrected.png"
+   ],
+   "seed": null,
+   "sha256": "bfb6c785ebeef2b897dad7a4ccf90e21dedb4e8e989ee4e0ddd4ee8fbaee3023",
+   "tool": "Pillow"
+  },
+  "diag70_layout": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/diag70_layout.png",
+   "layout_template": "project/features/characters/art/view/p70/rivet_eq_plasma_rifle_diag.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/diag70.txt",
+   "prompt_sha256": "1b6c88b7431b87524cb21fb6ee6ef22a11336915b880d988fe183fd32a2e6e04",
+   "references": [
+    "project/features/characters/art/view/p70/rivet_eq_plasma_rifle_diag.png"
+   ],
+   "seed": null,
+   "sha256": "c33ef5b74e9630aaafca566c15bfca67a8730e7c8877a3cf0f92a1913e64f22f",
+   "tool": "Pillow"
+  },
+  "diag70_raw": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/diag70_raw.png",
+   "layout_template": "masters:n19/guns/masters/diag70_layout.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/diag70.txt",
+   "prompt_sha256": "1b6c88b7431b87524cb21fb6ee6ef22a11336915b880d988fe183fd32a2e6e04",
+   "references": [
+    "masters:n19/guns/masters/diag70_layout.png",
+    "masters:n19/guns/masters/rifle3b_reference.png"
+   ],
+   "seed": null,
+   "sha256": "1e44c23babeae7d36dc75c2baa669a8df5d50dc9f3bdf0a1972f3622689d1016",
+   "tool": "image_gen"
   },
   "diag_dark": {
    "date": "2026-11-18",
@@ -86,6 +157,63 @@
    "sha256": "2cc43fdf43ac1082ba88c50e16300641f63b808adeba83a8c78f4872524c1e1c",
    "tool": "image_gen"
   },
+  "eq70_dark": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/eq70_dark.png",
+   "layout_template": "masters:n19/guns/masters/eq70_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/eq70.txt",
+   "prompt_sha256": "7dfd375febae76c140ce8e19808173b17a951c5133ac6f827356619f5f7cbe4b",
+   "references": [
+    "masters:n19/guns/masters/eq70_raw.png"
+   ],
+   "seed": null,
+   "sha256": "635c79c6949a3635328839b1bcd49b9f2c845b39e8b18b4455f68101679eef45",
+   "tool": "Pillow"
+  },
+  "eq70_key": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/eq70_key.png",
+   "layout_template": "masters:n19/guns/masters/eq70_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/eq70.txt",
+   "prompt_sha256": "7dfd375febae76c140ce8e19808173b17a951c5133ac6f827356619f5f7cbe4b",
+   "references": [
+    "masters:n19/guns/masters/eq70_raw.png"
+   ],
+   "seed": null,
+   "sha256": "df98b7f3cbd4cf80895b3d35680932b19ae73487a78e2fe3c718dc679f2943ee",
+   "tool": "Pillow"
+  },
+  "eq70_layout": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/eq70_layout.png",
+   "layout_template": "library:keyed/rivet/rivet_eq_plasma_rifle_70.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/eq70.txt",
+   "prompt_sha256": "7dfd375febae76c140ce8e19808173b17a951c5133ac6f827356619f5f7cbe4b",
+   "references": [
+    "library:keyed/rivet/rivet_eq_plasma_rifle_70.png"
+   ],
+   "seed": null,
+   "sha256": "a7b25ad79a66b8167cd05c805c2ac4a69eed7c9abd098b93eb5ac6bb9aa0fd9f",
+   "tool": "Pillow"
+  },
+  "eq70_raw": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/eq70_raw.png",
+   "layout_template": "masters:n19/guns/masters/eq70_layout.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/eq70.txt",
+   "prompt_sha256": "7dfd375febae76c140ce8e19808173b17a951c5133ac6f827356619f5f7cbe4b",
+   "references": [
+    "masters:n19/guns/masters/eq70_layout.png",
+    "masters:n19/guns/masters/rifle3b_reference.png"
+   ],
+   "seed": null,
+   "sha256": "4b1a0a248f7ccfd391afc4d6a98feb09af5755ebe6423b6c61b0163df6217b38",
+   "tool": "image_gen"
+  },
   "held_key": {
    "date": "2026-11-18",
    "file": "masters:n19/guns/masters/held_key.png",
@@ -112,6 +240,78 @@
    ],
    "seed": null,
    "sha256": "0233e134895541e8e686505f9c3adcfd93c78a0c01d90d2c32ac3594e5b2d9f2",
+   "tool": "image_gen"
+  },
+  "left3b_reference": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/left3b_reference.png",
+   "layout_template": "masters:n19/guns/masters/left_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/left70_corrected.txt",
+   "prompt_sha256": "d7eadfbcc72680dad9fa366210d694844d0fd9afb80d0728724adacf0eecfb4a",
+   "references": [
+    "masters:n19/guns/masters/left_raw.png"
+   ],
+   "seed": null,
+   "sha256": "b4ca76d363cca513b6762920fd7ba1bae038e7f92bc75691ec74886bc39426a6",
+   "tool": "Pillow"
+  },
+  "left70_corrected": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/left70_corrected.png",
+   "layout_template": "masters:n19/guns/masters/left70_raw.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/left70_corrected.txt",
+   "prompt_sha256": "d7eadfbcc72680dad9fa366210d694844d0fd9afb80d0728724adacf0eecfb4a",
+   "references": [
+    "masters:n19/guns/masters/left70_raw.png",
+    "masters:n19/guns/masters/left3b_reference.png"
+   ],
+   "seed": null,
+   "sha256": "bf7ae650b85c455607a7e55343345f3474c9341c2018bb476e6ec2d6a034ff43",
+   "tool": "image_gen"
+  },
+  "left70_key": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/left70_key.png",
+   "layout_template": "masters:n19/guns/masters/left70_corrected.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/left70_corrected.txt",
+   "prompt_sha256": "d7eadfbcc72680dad9fa366210d694844d0fd9afb80d0728724adacf0eecfb4a",
+   "references": [
+    "masters:n19/guns/masters/left70_corrected.png"
+   ],
+   "seed": null,
+   "sha256": "9c78b9474cfe2363979945e4082f9b1671e12705f24c0391d18360dcce62af39",
+   "tool": "Pillow"
+  },
+  "left70_layout": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/left70_layout.png",
+   "layout_template": "library:keyed/rivet/rivet_eq_electro_gun_70_left_v2.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/left70.txt",
+   "prompt_sha256": "2fc2fd34334bba000888b4b90d569b8c092896fb7342457e446c1ab567fe3c0d",
+   "references": [
+    "library:keyed/rivet/rivet_eq_electro_gun_70_left_v2.png"
+   ],
+   "seed": null,
+   "sha256": "ef863968b2549d495c90df13b9641544b736be2a5f7ecad159cc749337bd68e8",
+   "tool": "Pillow"
+  },
+  "left70_raw": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/left70_raw.png",
+   "layout_template": "masters:n19/guns/masters/left70_layout.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/left70.txt",
+   "prompt_sha256": "2fc2fd34334bba000888b4b90d569b8c092896fb7342457e446c1ab567fe3c0d",
+   "references": [
+    "masters:n19/guns/masters/left70_layout.png",
+    "masters:n19/guns/masters/rifle3b_reference.png"
+   ],
+   "seed": null,
+   "sha256": "6c7d842faa36cb574e89e4aa14359e5871705880725014c0c73ca8394bd49bab",
    "tool": "image_gen"
   },
   "left_first": {
@@ -257,6 +457,22 @@
    "seed": null,
    "sha256": "67619ba4a68bbf4680a35b90a436873093dac68eaa5c190e79aac6eb147f685e",
    "tool": "image_gen"
+  },
+  "rifle3b_reference": {
+   "date": "2026-11-18",
+   "file": "masters:n19/guns/masters/rifle3b_reference.png",
+   "layout_template": "project/features/characters/art/view/p55/rivet_eq_assault_rifle.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/eq70.txt",
+   "prompt_sha256": "7dfd375febae76c140ce8e19808173b17a951c5133ac6f827356619f5f7cbe4b",
+   "references": [
+    "project/features/characters/art/view/p55/rivet_eq_assault_rifle.png",
+    "masters:n19/guns/masters/contractor_prop.png",
+    "project/features/combat/weapons/art/assault_rifle/mag.png"
+   ],
+   "seed": null,
+   "sha256": "adf371b63128c13a55326dcff25f333bb736312af60d89d2ec27263569836ea4",
+   "tool": "Pillow"
   }
  }
 }

@@ -2,10 +2,6 @@
   "holes": {
     "assault-rifle/p55/pickup": "absent from rack ORDER",
     "assault-rifle/p55/reload": "missing or invalid rivet_reload_assault_rifle.png; missing or invalid rivet_reload_assault_rifle_left.png",
-    "assault-rifle/p70/fire8": "missing or invalid rivet_eq_assault_rifle.png; missing or invalid rivet_eq_assault_rifle_diag.png; incomplete DEG; incomplete HELMET_X; missing FOOT_PX; missing or invalid rivet_eq_assault_rifle_noflash.png; missing or invalid rivet_eq_assault_rifle_diag_noflash.png",
-    "assault-rifle/p70/held": "missing equipped strip or active own pitch art",
-    "assault-rifle/p70/left": "missing or invalid rivet_eq_assault_rifle_left.png",
-    "assault-rifle/p70/muzzle": "no muzzle row for rivet_eq_assault_rifle",
     "assault-rifle/p70/pickup": "absent from rack ORDER",
     "assault-rifle/p70/reload": "missing or invalid rivet_reload_assault_rifle.png; missing or invalid rivet_reload_assault_rifle_left.png",
     "assault-rifle/top/pickup": "absent from rack ORDER",

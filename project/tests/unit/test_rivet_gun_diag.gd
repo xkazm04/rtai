@@ -112,10 +112,11 @@ func test_every_listed_gun_ships_its_strip_twin_and_rows() -> void:
 			assert_gt(RivetMuzzle.point(path, c).x, 0.0, "%s cell %d: a muzzle" % [key, c])
 
 
-func test_quest_rifle_uses_its_own_p55_and_keeps_the_p70_stand_in() -> void:
+func test_quest_rifle_uses_its_own_strips_at_both_pitches() -> void:
 	var rifle: StringName = &"assault-rifle"
 	assert_eq(WeaponArtKey.of(rifle), &"assault_rifle")
 	assert_eq(RivetStrips.strip_of("p55", rifle).get_file(), "rivet_eq_assault_rifle.png")
 	assert_eq(RivetStrips.left_of("p55", rifle).get_file(), "rivet_eq_assault_rifle_left.png")
 	assert_true(RivetGunDiag.draws("p55", rifle))
-	assert_eq(RivetStrips.strip_of("p70", rifle).get_file(), "rivet_eq_machine_pistol.png")
+	assert_eq(RivetStrips.strip_of("p70", rifle).get_file(), "rivet_eq_assault_rifle.png")
+	assert_true(RivetGunDiag.draws("p70", rifle))

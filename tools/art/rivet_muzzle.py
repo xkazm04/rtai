@@ -80,13 +80,18 @@ STRIKE_TIP = ("electro_baton",)
 ## on a x5 zoom of the cut cell (d9 it16). Re-read it when the strip is re-cut from another sheet.
 # Pale outlined stars can fall outside flash_core's blue threshold. Measured against the
 # exact noflash twin with rivet_gun_diag_measure.cell_stats, in strip pixels (converted to 110-space with the other measured cells).
-FIRE_PINNED = {("p55", "rivet_eq_assault_rifle", 5): [202, 79],
+FIRE_PINNED = {("p70", "rivet_eq_assault_rifle", 5): [290, 102],
+               ("p70", "rivet_eq_assault_rifle", 6): [171, 185],
+               ("p55", "rivet_eq_assault_rifle", 5): [202, 79],
                ("p55", "rivet_eq_assault_rifle", 6): [103, 125]}
 LEFT_PINNED = {("p55", "rivet_eq_homing_shard_left", 2): [43, 78]}
 # n17 rivet-strike: a gun's drawn diagonal fire strip (RivetGunDiag, x1.5 cells): its gun's light
 # tan reads as flash core, so the flash root is pinned in 110 space (strip px / 1.5), read as the
 # biggest hot blob that differs from the flashless twin, its pixel nearest the body centre.
 DIAG_PINNED = {
+    ("p70", "rivet_eq_assault_rifle_diag"): {
+        "0": [173, 95], "1": [119, 11], "2": [39, 95], "3": [111, 11]
+    },
     ("p55", "rivet_eq_assault_rifle_diag"): {
         "0": [131, 79], "1": [153, 13], "2": [29, 81], "3": [11, 12]
     },

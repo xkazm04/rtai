@@ -14,6 +14,7 @@ extends RefCounted
 
 ## Screen angle (deg, y down) of the drawn gun per diagonal cell, keyed "<art>/<gun>".
 const DEG: Dictionary[String, PackedFloat32Array] = {
+	"p70/assault_rifle": [23.0, -43.0, 155.0, -142.0],
 	"p70/pistol": [32.0, -25.0, 146.0, -150.0],
 	"p70/machine_pistol": [40.0, -31.0, 139.0, -149.0],
 	# the barrel's axis by eye at 2x (+-5 deg): these flashes fan off the barrel, the tool misreads
@@ -39,6 +40,7 @@ const DEG: Dictionary[String, PackedFloat32Array] = {
 ## 191), so each cell is seated on his helmet, not on the canvas centre (a 20 px sideways pop at
 ## 64 px/m on the shot tick).
 const HELMET_X: Dictionary[String, PackedFloat32Array] = {
+	"p70/assault_rifle": [166.0, 77.0, 161.0, 277.5],
 	"p70/pistol": [140.5, 93.5, 140.5, 191.0],
 	"p70/machine_pistol": [127.5, 89.5, 126.5, 163.5],
 	# the dome's run centre 12-28 px under its top (a raised gun or pack widens the widest run)
@@ -64,6 +66,7 @@ const HELMET_X: Dictionary[String, PackedFloat32Array] = {
 ## TALL cells (it463: the drawn cell + 60 clear rows, so a down-aimed flash is not cut at the cell
 ## floor), so their pads are about 60 px more (the machine pistol's boots at 172 of 235).
 const FOOT_PX: Dictionary[String, float] = {
+	"p70/assault_rifle": 2.0,
 	"p70/pistol": 1.0,
 	"p70/machine_pistol": 62.0,
 	"p70/plasma_rifle": 62.0,
@@ -90,24 +93,20 @@ const FIT_TOL: float = PI / 8.0
 static var enabled: bool = true
 
 
-## Part 2 can drop the p70 fallback once the rifle's own facing strip is present.
-static func strip_key(art: String, weapon: StringName) -> StringName:
-	if weapon == &"assault-rifle" and art == "p70":
-		var own: String = (
-			RivetStrips.DIR + art + "/rivet_eq_" + String(WeaponArtKey.of(weapon)) + ".png"
-		)
-		if not RivetStrips.has_file(own):
-			return &"machine_pistol"
-	return WeaponArtKey.of(weapon)
+## The p70 rifle camera flash extends below the feet, leaving 77 texture pixels of pad.
+static func equipped_pad(path: String) -> float:
+	return (
+		77.0 if path == RivetStrips.DIR + "p70/rivet_eq_assault_rifle.png" else RivetFrames.PAD_PX
+	)
 
 
 static func equipped_path(art: String, weapon: StringName) -> String:
-	return "%s%s/rivet_eq_%s" % [RivetStrips.DIR, art, strip_key(art, weapon)]
+	return "%s%s/rivet_eq_%s" % [RivetStrips.DIR, art, WeaponArtKey.of(weapon)]
 
 
 ## True when `weapon` fires drawn diagonal cells under `art` (a gun in DEG with its strip shipped).
 static func draws(art: String, weapon: StringName) -> bool:
-	weapon = strip_key(art, weapon)
+	weapon = WeaponArtKey.of(weapon)
 	if not enabled or not DEG.has(art + "/" + String(weapon)):
 		return false
 	return RivetStrips.has_file(
@@ -155,7 +154,7 @@ static func foot_or(path: String, art: String, fallback: float) -> float:
 ## The drawn gun's screen angle (rad) at octant `o`: its diagonal cell's where drawn, else the
 ## facing fire cell's (the camera 90, the sides 0 / 180).
 static func gun_rad(weapon: StringName, o: int, art: String) -> float:
-	weapon = strip_key(art, weapon)
+	weapon = WeaponArtKey.of(weapon)
 	var c: int = RivetStrips.DIAG_CELL[o]
 	if c < 0 or not RivetStrips.diag or not draws(art, weapon):
 		return deg_to_rad(90.0 if o == 2 else 180.0 * RivetFrames.LEFT[o])

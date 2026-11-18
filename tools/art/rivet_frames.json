@@ -221,6 +221,23 @@
    }
   },
   "p70": {
+   "rivet_eq_assault_rifle": {
+    "act_k": 0.88,
+    "action_feet_up": "0,0.324,0",
+    "counts": "5,3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/eq70_key.png"
+   },
+   "rivet_eq_assault_rifle_diag": {
+    "counts": "4",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/diag70_key.png"
+   },
+   "rivet_eq_assault_rifle_left": {
+    "counts": "3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/left70_key.png"
+   },
    "rivet_eq_chainsaw": {
     "act_k": 0.82,
     "counts": "5,3",

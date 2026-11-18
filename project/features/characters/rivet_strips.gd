@@ -124,7 +124,7 @@ static func foot_px(path: String) -> float:
 		var flame: float = DIAG_FOOT_PX.get(art, 0.0)
 		return RivetGunDiag.foot_or(path, art, flame)
 	var res: float = RivetRes.of(path)
-	return FOOT_PX.get(art + "/" + path.get_file(), RivetFrames.PAD_PX / res) * res
+	return FOOT_PX.get(art + "/" + path.get_file(), RivetGunDiag.equipped_pad(path) / res) * res
 
 
 ## A one-handed hold turned left: its drawn left strip, else the base (the fallback, logged once).

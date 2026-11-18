@@ -1,4 +1,4 @@
-"""Prepare the p55 sheets and cut all five strips with the normal Rivet anchors.
+"""Prepare the two pitches and cut the quest rifle strips with the normal Rivet anchors.
 
 python tools/art/assault_rifle_strips.py C:/Users/kazda/kiro/gtai-masters/n19/guns/masters
 The chroma-keyed lit master supplies geometry for both twins. The dark twin clips only
@@ -19,6 +19,16 @@ CUT = MANIFEST.with_suffix(".py")
 NAME = "rivet_eq_assault_rifle"
 # Rect containing each flare, point on its muzzle rim, outward screen vector.
 FLARES = {
+    "eq70": [
+        ((426, 600, 575, 749), (431, 692), (1, 0)),
+        ((683, 820, 829, 990), (754, 824), (0, 1)),
+    ],
+    "diag70": [
+        ((518, 380, 566, 427), (523, 394), (2, 1)),
+        ((1134, 135, 1183, 185), (1142, 167), (1, -1)),
+        ((111, 956, 159, 1003), (151, 968), (-2, 1)),
+        ((869, 699, 913, 751), (905, 735), (-1, -1)),
+    ],
     "main": [
         ((449, 659, 504, 718), (449, 690), (1, 0)),
         ((734, 803, 790, 863), (763, 804), (0, 1)),
@@ -49,29 +59,37 @@ def diagonal_row(im):
     return out
 
 
-def cut(masters):
-    man = json.loads(MANIFEST.read_text())
-    rows = man["strips"]["p55"]
-    dest = Path(man["out"]) / "p55"
-    for sheet in ("main", "left", "diag"):
-        source = keyed(masters / (sheet + "_raw.png"))
-        lit = diagonal_row(source) if sheet == "diag" else source
+def prepare(masters, sheets):
+    for sheet, take in sheets.items():
+        source = keyed(masters / (sheet + "_" + take + ".png"))
+        lit = diagonal_row(source) if sheet.startswith("diag") else source
         lit.save(masters / (sheet + "_key.png"))
         if sheet in FLARES:
             dark = remove_flares(source, FLARES[sheet])
-            if sheet == "diag":
+            if sheet.startswith("diag"):
                 dark = diagonal_row(dark)
             dark.save(masters / (sheet + "_dark.png"))
-    subprocess.run([sys.executable, str(CUT), "--manifest=" + str(MANIFEST), "--only=" + NAME], check=True)
-    for sheet, suffix in (("main", ""), ("diag", "_diag")):
+
+
+def twins(masters, man, pitch, sheets):
+    rows = man["strips"][pitch]
+    dest = Path(man["out"]) / pitch
+    for sheet, suffix in zip(sheets, ("", "_diag")):
         row = rows[NAME + suffix]
         args = [sys.executable, str(CUT), str(masters / (sheet + "_key.png")),
                 str(dest / (NAME + suffix + "_noflash.png")), row["counts"],
                 "--fig_h=" + str(row["fig_h"]), "--pixels=" + str(masters / (sheet + "_dark.png"))]
-        if "act_k" in row:
-            args.append("--act_k=" + str(row["act_k"]))
+        for opt in ("act_k", "action_feet_up"):
+            if opt in row:
+                args.append(f"--{opt}={row[opt]}")
         subprocess.run(args, check=True)
 
 
 if __name__ == "__main__":
-    cut(Path(sys.argv[1]))
+    masters = Path(sys.argv[1])
+    manifest = json.loads(MANIFEST.read_text())
+    prepare(masters, {"main": "raw", "left": "raw", "diag": "raw",
+                      "eq70": "raw", "left70": "corrected", "diag70": "corrected"})
+    subprocess.run([sys.executable, str(CUT), "--manifest=" + str(MANIFEST), "--only=" + NAME], check=True)
+    twins(masters, manifest, "p55", ("main", "diag"))
+    twins(masters, manifest, "p70", ("eq70", "diag70"))

@@ -184,6 +184,8 @@ def _manifest(path: str, only: str = "", no_rim: bool = False) -> None:
                 argv.append(f"--act_k={row['act_k']}")
             if "feet_up" in row:
                 argv.append(f"--feet_up={row['feet_up']}")
+            if "action_feet_up" in row:
+                argv.append(f"--action_feet_up={row['action_feet_up']}")
             if "left" in row:
                 argv.append(f"--left={lib}/{row['left']}")
             sys.argv = [sys.argv[0]] + argv + [f"--fig_h={row.get('fig_h', man['fig_h'])}"]
@@ -213,6 +215,8 @@ def main() -> None:
         rgba = alternate
     if "feet_up" in opts:
         _feet_up(bands[0], [float(v) for v in opts["feet_up"].split(",")])
+    if "action_feet_up" in opts:
+        _feet_up(bands[1], [float(v) for v in opts["action_feet_up"].split(",")])
     ref_w = float(np.median([f["head_w"] for f in bands[0]]))
     k0 = fig_h / float(np.median([f["h"] for f in bands[0]]))
     items = [(rgba, f, k0) for f in bands[0]]
