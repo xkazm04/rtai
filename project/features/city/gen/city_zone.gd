@@ -30,6 +30,8 @@ const LISTS: Array[String] = [
 	"quay_ground",
 	"yard_props",
 	"apron_props",
+	"kerb_props",
+	"wall_props",
 	"upright_roofs",
 	"plaza_singles",
 ]
@@ -92,6 +94,10 @@ var yard_prop_share: float = 0.0
 ## Quay apron dressing (DockPainter.apron_prop): one prop on the land side of an apron tile under
 ## apron_prop_share (empty = a bare apron, the v25 look).
 var apron_props: Array[int] = []
+## A zone's sidewalk furniture mix (KerbDresser.dress; empty = KerbDresser.KERB_PROPS, n14).
+var kerb_props: Array[int] = []
+## A zone's wall-side clutter mix (KerbDresser._wall_prop; empty = KerbDresser.WALL_PROPS, n14).
+var wall_props: Array[int] = []
 var apron_prop_share: float = 0.0
 ## A prop by the coping on the middle tile of each basin's west quay (-1 = none; DockPainter).
 var quay_edge_prop: int = -1

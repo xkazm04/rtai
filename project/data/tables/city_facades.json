@@ -175,6 +175,18 @@
       "art": "res://features/city/art/view/<art>/prop_dock_lifebuoy.png",
       "cell_w_m": 0.76
     },
+    "down_bollards": {
+      "art": "res://features/city/art/view/<art>/prop_down_bollards.png",
+      "cell_w_m": 2.42
+    },
+    "down_litter_bins": {
+      "art": "res://features/city/art/view/<art>/prop_down_litter_bins.png",
+      "cell_w_m": 1.82
+    },
+    "down_street_clock": {
+      "art": "res://features/city/art/view/<art>/prop_down_street_clock.png",
+      "cell_w_m": 0.92
+    },
     "dumpster": {
       "art": "res://features/city/art/view/<art>/prop_dumpster.png",
       "cell_w_m": 2.25

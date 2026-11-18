@@ -45,7 +45,10 @@ func dress(g: CityGen, b: ChunkBuild, t: Vector2i, rot: float, horiz: bool) -> v
 		)
 		busy.append(Vector2(4.0 - 0.25, 4.0 + 0.25))
 	if g.rnd(t.x, t.y, 0, 41) < 0.4:
-		var tex: int = KERB_PROPS[int(g.rnd(t.x, t.y, 0, 42) * KERB_PROPS.size())]
+		var mix: Array[int] = g.zones.of_tile(t).kerb_props
+		if mix.is_empty():
+			mix = KERB_PROPS
+		var tex: int = mix[int(g.rnd(t.x, t.y, 0, 42) * mix.size())]
 		var u: float = 1.2 + 5.6 * g.rnd(t.x, t.y, 0, 43)
 		var v: float = 0.9 if NEAR_KERB.has(tex) else CityGen.WALK_M - 0.7
 		prop(g, b, tex, _local(c, rot, u, v), rot)
@@ -68,7 +71,10 @@ func dress(g: CityGen, b: ChunkBuild, t: Vector2i, rot: float, horiz: bool) -> v
 func _wall_prop(g: CityGen, b: ChunkBuild, t: Vector2i, rot: float, busy: Array[Vector2]) -> void:
 	if g.rnd(t.x, t.y, 0, 56) >= WALL_SHARE:
 		return
-	var tex: int = WALL_PROPS[int(g.rnd(t.x, t.y, 0, 57) * WALL_PROPS.size())]
+	var mix: Array[int] = g.zones.of_tile(t).wall_props
+	if mix.is_empty():
+		mix = WALL_PROPS
+	var tex: int = mix[int(g.rnd(t.x, t.y, 0, 57) * mix.size())]
 	var half: Vector2 = g.sizes[tex] * 0.5
 	var free: Array[Vector2] = [Vector2(half.x + 0.3, 7.7 - half.x)]
 	for span: Vector2 in busy:

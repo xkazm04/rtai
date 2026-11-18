@@ -1321,6 +1321,39 @@
         0.75
       ],
       "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/down_street_clock.png",
+      "class": "prop",
+      "id": 120,
+      "name": "down_street_clock",
+      "size_m": [
+        0.9,
+        0.9
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/down_bollards.png",
+      "class": "prop",
+      "id": 121,
+      "name": "down_bollards",
+      "size_m": [
+        2.4,
+        0.75
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/down_litter_bins.png",
+      "class": "prop",
+      "id": 122,
+      "name": "down_litter_bins",
+      "size_m": [
+        1.8,
+        0.71
+      ],
+      "solid": true
     }
   ]
 }

@@ -144,6 +144,15 @@
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
           },
+          "kerb_props": {
+            "description": "a zone's sidewalk furniture, city_textures ids picked one a kerb tile (KerbDresser.dress; KerbDresser.NEAR_KERB ids stand by the wall); absent = KerbDresser.KERB_PROPS, the n14 mix",
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "type": "array"
+          },
           "landmark_roofs": {
             "items": {
               "maximum": 255,
@@ -255,6 +264,15 @@
           },
           "upright_roofs": {
             "description": "long roofs drawn with a south-eave feature, never turned 180 deg (DockPainter); absent = none",
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "wall_props": {
+            "description": "a zone's wall-side clutter, city_textures ids flush to the building on the tile half the kerb prop left free (KerbDresser._wall_prop); absent = KerbDresser.WALL_PROPS, the n14 mix (crates, dumpsters, vending, bins)",
             "items": {
               "maximum": 255,
               "minimum": 0,
