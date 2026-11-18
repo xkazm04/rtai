@@ -69,6 +69,8 @@ var quay_ground: Array[int] = []
 var yard_props: Array[int] = []
 ## A plaza block's centrepiece on its middle tile (a city_textures id; -1 = none, slots only).
 var plaza_centre: int = -1
+## At most one lettered landmark roof a block (BlockPainter.sign_tile; false = the v14 rule).
+var one_sign: bool = false
 var yard_prop_share: float = 0.0
 
 
@@ -83,6 +85,8 @@ static func from_row(row: Dictionary) -> CityZone:
 		if row.has(key):
 			var f: float = row[key]
 			z.set(key, int(f))
+	var signs_one: bool = row.get("one_sign", false)
+	z.one_sign = signs_one
 	for key: String in LISTS:
 		if row.has(key):
 			var values: Array = row[key]

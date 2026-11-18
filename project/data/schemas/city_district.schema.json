@@ -151,6 +151,10 @@
             "minimum": 0,
             "type": "number"
           },
+          "one_sign": {
+            "description": "at most one lettered landmark roof a block (BlockPainter.sign_tile)",
+            "type": "boolean"
+          },
           "ped_corner": {
             "maximum": 255,
             "minimum": 0,

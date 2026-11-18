@@ -175,6 +175,7 @@
         81
       ],
       "long_share": 0.15,
+      "one_sign": true,
       "ped_corner": 150,
       "ped_kerb": 220,
       "ped_plaza": 255,

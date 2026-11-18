@@ -76,11 +76,25 @@ static func _roof_pick(g: CityGen, t: Vector2i) -> int:
 	var r: float = g.rnd(t.x, t.y, 0, 33)
 	var share: float = zone.landmark_share
 	var marks: Array[int] = zone.landmark_roofs
-	if r < share:
-		return marks[mini(int(r / share * marks.size()), marks.size() - 1)]
 	var generic: Array[int] = zone.generic_roofs
+	if zone.one_sign and sign_tile(g, t):
+		var named: Array[int] = marks.filter(func(m: int) -> bool: return LETTERED.has(m))
+		if not named.is_empty():
+			return named[mini(int(r * named.size()), named.size() - 1)]
+	if r < share:
+		var mark: int = marks[mini(int(r / share * marks.size()), marks.size() - 1)]
+		if not LETTERED.has(mark) or not zone.one_sign:
+			return mark
+		return generic[mini(int(g.rnd(t.x, t.y, 0, 82) * generic.size()), generic.size() - 1)]
 	var k: int = int((r - share) / (1.0 - share) * generic.size())
 	return generic[mini(k, generic.size() - 1)]
+
+
+## The one interior tile of t's block that carries its lettered roof (CityZone.one_sign; when it is
+## a square-roof tile), seeded per block: one name a block, never repeated across one view.
+static func sign_tile(g: CityGen, t: Vector2i) -> bool:
+	var k: int = int(g.rnd(floori(t.x / float(PERIOD)), floori(t.y / float(PERIOD)), 0, 81) * 25.0)
+	return posmod(t.x, PERIOD) == 3 + k % 5 and posmod(t.y, PERIOD) == 3 + floori(k / 5.0)
 
 
 static func _edge(mx: int, my: int) -> float:

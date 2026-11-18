@@ -7,7 +7,7 @@ extends RefCounted
 ## plazas by seed.
 
 ## Bump when the output of any generator code changes (it is stamped into every chunk header).
-const GENERATOR_VERSION: int = 20
+const GENERATOR_VERSION: int = 21
 const PERIOD: int = 8
 ## Street cross-section (owner call C1, T1 shows about 10 m; built at 12 m): the 8 m lane tile plus
 ## two 8 m kerb tiles, each WALK_M of sidewalk (art/ground/curb12_*) and 8 - WALK_M of kerb-side
