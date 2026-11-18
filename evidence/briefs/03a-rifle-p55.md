@@ -1,0 +1,41 @@
+# Package 3a (guns lane, night n19): the assault rifle, part 1 - its own art (top + p55)
+
+Lane goal: by morning no weapon is a stand-in. Your audit (`project/dev/rivet_arsenal/`, `evidence/arsenal/matrix_before.txt`) shows `assault-rifle` with 18 holes: it draws the machine pistol (`rivet_arsenal.json` `art_stand_in`), has no `weapon_art.json` row, no strips, no muzzle row, no pickup/icon/showcase, no casing, no reload strips. This package gives it its own look at `top` and `p55`. Part 2 (next package) does p70, the reload strips and the stand-in removal if not done here.
+
+## What the rifle is (do not invent a new gun)
+
+The assault rifle is the contractors' rifle that Rivet picks up in quest 1 (`combat.json` `weapons.assault-rifle`: 4-round bursts, 30 rounds). The game already draws that rifle: `project/features/combat/weapons/art/ground_rifle_70.png` (the dropped rifle in 8 headings: wooden stock and grip, black riveted receiver with a top rail, a perforated round barrel shroud, a straight box magazine) and the contractor cards (`project/features/characters/art/view/p55/contractor_card.png`, `.../p70/...`). **Rivet's held rifle must be that same rifle** so what he picks up is what he holds. Size: a long gun, `two_hand_long` (stock at the shoulder, off hand under the barrel); compare `plasma_rifle` and `electro_gun` held art and strips for scale. It must not read as the machine pistol at 32 px/m: long silhouette, wood stock, shroud.
+
+## Deliverables (this package)
+
+1. `weapon_art.json` row for the rifle with its own art under `project/features/combat/weapons/art/<folder>/`: `held.png` (top-down rig part, pointing +x, grip_px, muzzle_px, length_px, length_m consistent with the rig scale 320 part px/m), `held_small.png` (via `tools/art/held_small.py`), `mag.png` (+ `part_grip_px.mag`), `pickup.png`, `icon.png`, `casing` (the existing rifle/pistol casing fx; a rifle shell, not a new effect unless one exists), `muzzle_fx` (an existing flash cell that reads as a rifle, larger than `flash_smg`; reuse, do not draw new fx tonight unless nothing fits), `projectile_fx` tracer, `grip_class two_hand_long`. Showcase art `showcase/p55/<id>.png`, `showcase/p70/<id>.png`, `showcase/icon/<id>.png` as the audit expects, and the rack ORDER entry in `arena_weapon_rack.gd` if the wall should show it (a weapon wall slot is fine; if adding it changes an arena layout or a digest, do NOT add it and record why).
+2. p55 Rivet strips, drawn new, matching the neighbours' layout exactly (read `tools/art/rivet_frames.py`, `tools/art/rivet_frames.json`, `rivet_fire_noflash.py`, `rivet_gun_diag_measure.py`, `rivet_muzzle.py`):
+   - `rivet_eq_<id>.png` (5 facings + fire side + fire toward camera + at rest),
+   - `rivet_eq_<id>_diag.png` (4 diagonal fire cells in RivetStrips' DIAG order) and the `_noflash` twins of both,
+   - `rivet_eq_<id>_left.png` (3 drawn left facings),
+   - `RivetGunDiag` DEG / HELMET_X / FOOT_PX rows for `p55/<id>` (measured with `rivet_gun_diag_measure.py`, axes checked by eye at 2x as the comments describe), `rivet_muzzle.json` rows for each strip (`rivet_muzzle.py`).
+3. The id has a hyphen (`assault-rifle`). Check whether file names / lint / `RivetStrips` lookups accept it; if not, add the smallest mapping (an art key `assault_rifle`) in a data table you own, and record a DECISION line in `docs/decisions.md` (append one line).
+4. Until p70 strips exist, p70 must still draw something sane: either keep the stand-in for p70 only (if the code supports a per-pitch fallback cheaply) or keep `art_stand_in` and make the p55 strips win where they exist. Say which. Do not leave p70 drawing nothing.
+5. Update `project/dev/rivet_arsenal/arsenal_known_holes.json` to remove every hole you close (the ratchet test fails until you do), re-run the audit, write `evidence/arsenal/matrix_after_3a.txt` (+ .json).
+
+## Art pipeline (law)
+
+- New cells are drawn with your built-in `image_gen`. References: ONLY this project's own art: Rivet's existing p55 strips (`rivet_eq_plasma_rifle.png`, `_diag`, `rivet_eq_machine_pistol_left.png`, `rivet_eq_electro_gun_left.png`), the keyed library sheets in `C:/Users/kazda/kiro/gtai-art/library/keyed/rivet/` (e.g. `rivet_eq_plasma_rifle_55.png`, `_diag_55_v2.png`, `_55_left.png`; read `C:/Users/kazda/kiro/gtai-art/library/LIBRARY.md` for how they were made and keyed), and `ground_rifle_70.png` / the contractor card for the gun. Same texel density, ink weight and palette as the neighbours. Rivet's neck band is a rigid striped hazard COLLAR (never cloth, never a scarf). Vermilion only on the collar and danger; no red except blood; the muzzle flash keeps the existing ballistic flash colours.
+- Masters (raw image_gen output, keyed copies, references you composed) go to `C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/` (never into git), each with an entry in a manifest in the `art_src/` format (`art_src/d5.manifest.json` shows the fields): add `art_src/n19-guns.manifest.json`. Prompts are committed under `docs/art/prompts/n19/guns/`. One provenance line per shipped PNG appended to `steam/ai-provenance/2026-11.jsonl` (copy the field set of existing lines; `model` = what image_gen reports).
+- Cut with scripts under `tools/art/` (add a row to `rivet_frames.json` and use `rivet_frames.py --manifest --only=...`; if you need a new script, put it in `tools/art/` and name it for the job). Never cut or paint a shipped PNG by hand. If a mirrored cell is used anywhere, it is only acceptable where the weapon and Rivet are symmetric in that view; list every mirrored cell in your report.
+- LOOK at every generated sheet and every cut strip yourself before it ships (open the PNG). Re-draw a sheet whose figures are off-model (wrong helmet, scarf instead of collar, wrong proportions vs the neighbours, gun in the wrong hand, gun that is not the contractors' rifle).
+
+## Acceptance
+
+1. `node tools/tests/run_unit.mjs --changed` green, plus `--select=test_arsenal_audit,test_rivet_gun_diag,test_rivet_fire_cam` and any muzzle/strip tests the map names.
+2. `node tools/lint/lint.mjs` green; `node tools/tests/release_compile.mjs` green; `node tools/gate/quick.mjs` before each commit.
+3. Stills: `node tools/film/film.mjs weapon:...` cannot film the rifle (no weapons.json row). Find how the rifle is equipped in a film (quest 1 pick-up, `--loadout`, a cheat or dev flag) and save, at 64 px/m p55, Rivet holding and firing it in at least side, toward, away, one diagonal and one left facing, before (`--rev=<the commit before your art>`) and after. Put them in `C:/Users/kazda/kiro/gtai-masters/n19/guns/rifle/` and list them. If you cannot film it, say exactly what blocks it.
+4. Commits: one per change (data row + top art; p55 strips + tables; audit allowlist update), staged per path, `.import` and `.uid` committed with their sources.
+
+## Law
+
+- Before any Godot run: `export APPDATA=C:/Users/kazda/kiro/gtai-n19/appdata/guns` and `export GODOT_BIN=C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe`; `--rendering-driver d3d12` for anything that renders; windowed runs take `--position 0,1440`. One Godot process at a time; kill only your own PIDs.
+- No balance change: damage, rate, burst, spread, range, hitboxes stay. Determinism: no sim/replay/parity/bake digest moves; if one does, stop and report.
+- Typed GDScript, ~200 LOC files (hard 300), functions <= 40 lines, <= 5 params, `Log` not `print`. No `git stash`, no `add -A/./-u`, no `commit -a`, no `reset --hard`, never push.
+- Ownership: guns owns `project/features/combat/weapons/**`, Rivet's gun/muzzle/magazine/gun-diag view files and the `rivet_eq_*`/`rivet_reload_*` gun strips, `rivet_arsenal.json`, `rivet_muzzle.json`, `weapon_art.json`, `weapons.json`, `melee_weapons.json`, `project/dev/rivet_arsenal/**`. `tools/art/rivet_frames.json` and `project/features/characters/rivet_strips.gd` are shared with the anim lane: add only the rifle's rows/lines and list each line you touched in your report. Nothing else under `project/features/characters/**` or `project/features/player/**`.
+- End with: commits (sha + subject), the audit's hole count before/after, the stills list, every mirrored cell, and what is left for part 2.
