@@ -259,3 +259,25 @@ zone checked after the bake so no new roof floods a zone).
   dock9 v15/v16 removed as superseded).
 - Seen in the yard still: black "!" marks over the warehouse roof's north edge (prop cards north of the building
   drawn over its lifted roof?). Investigating.
+- Not a defect (read city_crowd_occlusion.gd): the "!" wedges are the rigs' behind-a-roof ink silhouettes (n8 design: rigs
+  keep theirs, the baked crowd is hidden). Docks yards put walkers against warehouse north walls, so they show more
+  there. Noted in REPORT, not changed (police/view n8 behaviour, a Call at most).
+- 02:33 FRICTION (my error): I ran `tools/evidence/run.mjs` on the live tree and edited v23 files while it ran: every kind
+  came back INVALID ("the tree changed while ... ran"). Its numbers (unit 2875/0 FLAKY 2, parity bit-exact, look
+  goldens 11/11) do not count. Rule for me: gates go through `tools/gate/run.mjs` (a snapshot) whenever I keep working.
+- 02:41 MILESTONE item 3, commit 55105450a, generator v23: zone grounds. Downtown plazas draw the it471 granite running
+  bond (`plaza_ground` 112, half turns only: a bond turned a quarter breaks at the tile seam), the docks apron the it471
+  apron v3t (`apron_ground` 113). test_city_zone_grounds 4/4, planted caught. Looked: the downtown plaza now reads as
+  civic stone, clearly not the mixed zone's sidewalk slabs; darker and busier, the walkers still read on it. The
+  apron change is small (the apron west of the basin takes the coping's 2 m slab grid).
+  Evidence `evidence/n18-districts/ab_it471_ground_{plaza-32ppm,plaza-48ppm,apron-48ppm}_v22_v23_combo.jpg`.
+- 02:42 gate: `node tools/gate/run.mjs --reels` on 70ca0c1e7 (v23 + REPORT), background.
+REQUEST assets (to the asset lane, from districts; it471 read at 02:10): TAKEN in v22/v23: clocktower, terrace _t,
+tall sq_c_t, bank dome, landmark 2x2 muted (as `roof_down_crown`), shed b, warehouse c (B; turned never, its hoist
+stays south), sculpture v3 card + plan, plaza paving, apron v3t. NOT YET: warehouse_70_c_v2 (no note: what changed?),
+silos (needs a landmark placement rule: next), the street/dock cards (drums, tarp, rope net, fuel tank, bus shelter,
+clock, bollards, food cart v2, news boxes v2, lifebuoy, kiosk + plans) - next session as plaza/yard/apron dressing.
+REQUEST assets 11 (new, order 1): a docks yard ground, 8 x 8 m at 96 px/m (768 px), plan view, the D5 grey print:
+worn concrete with painted yellow-ochre (not vermilion) bay lines for 6.1 x 2.4 m containers, two rows a tile (the
+YARD_SLOTS rows at about y 2 m and y 5.5 m of the tile), periodic both ways; match `ground_quay_apron_70_v3t` tone.
+It would make the container yards read as yards, not plazas.
