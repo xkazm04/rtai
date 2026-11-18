@@ -171,6 +171,14 @@
       "art": "res://features/city/art/view/<art>/prop_dock_cargo_tarp.png",
       "cell_w_m": 3.47
     },
+    "dock_crab_pots": {
+      "art": "res://features/city/art/view/<art>/prop_dock_crab_pots.png",
+      "cell_w_m": 1.88
+    },
+    "dock_dinghy": {
+      "art": "res://features/city/art/view/<art>/prop_dock_dinghy.png",
+      "cell_w_m": 4.35
+    },
     "dock_fuel_tank": {
       "art": "res://features/city/art/view/<art>/prop_dock_fuel_tank.png",
       "cell_w_m": 5.01
@@ -182,6 +190,10 @@
     "dock_oil_drums": {
       "art": "res://features/city/art/view/<art>/prop_dock_oil_drums.png",
       "cell_w_m": 2.21
+    },
+    "dock_propeller": {
+      "art": "res://features/city/art/view/<art>/prop_dock_propeller.png",
+      "cell_w_m": 2.29
     },
     "dock_rope_net": {
       "art": "res://features/city/art/view/<art>/prop_dock_rope_net.png",

@@ -1384,7 +1384,7 @@
       "name": "dock_oil_drums",
       "size_m": [
         1.9,
-        1.75
+        1.94
       ],
       "solid": true
     },
@@ -1451,6 +1451,39 @@
       "size_m": [
         2.4,
         1.24
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_propeller.png",
+      "class": "prop",
+      "id": 132,
+      "name": "dock_propeller",
+      "size_m": [
+        2.2,
+        2.16
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_crab_pots.png",
+      "class": "prop",
+      "id": 133,
+      "name": "dock_crab_pots",
+      "size_m": [
+        1.6,
+        1.45
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/props/dock_dinghy.png",
+      "class": "prop",
+      "id": 134,
+      "name": "dock_dinghy",
+      "size_m": [
+        2.48,
+        4
       ],
       "solid": true
     }
