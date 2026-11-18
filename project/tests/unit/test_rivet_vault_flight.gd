@@ -174,7 +174,9 @@ func test_missing_switches_default_to_off_and_keep_the_gun_down() -> void:
 
 func test_first_tick_can_be_protected_and_can_be_interrupted() -> void:
 	vault.iframe_from = 0
+	motion.sprinting = true
 	_tick(0)
+	assert_false(motion.sprinting)
 	assert_false(body.exposed)
 	body.hp = 0.0
 	assert_false(vault.airborne_after_contacts(motion))
