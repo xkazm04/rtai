@@ -72,6 +72,12 @@
       "items": {
         "additionalProperties": false,
         "properties": {
+          "apron_ground": {
+            "description": "the docks quay apron's ground, a city_textures id in quarter turns; absent = the sidewalk paving 13",
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
           "big_roofs": {
             "items": {
               "maximum": 255,
@@ -172,6 +178,12 @@
           },
           "plaza_centre": {
             "description": "a plaza block's centrepiece on its middle tile (city_textures id); absent = none",
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "plaza_ground": {
+            "description": "a plaza tile's ground, a city_textures id turned 0/180 deg; absent = the sidewalk paving 13 in quarter turns",
             "maximum": 255,
             "minimum": 0,
             "type": "integer"

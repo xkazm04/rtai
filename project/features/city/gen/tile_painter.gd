@@ -134,11 +134,18 @@ func _street(g: CityGen, b: ChunkBuild, t: Vector2i, horiz: bool) -> int:
 
 func _plaza(g: CityGen, b: ChunkBuild, t: Vector2i) -> int:
 	var o: Vector2 = origin(t)
-	# a quarter turn per tile breaks the 8 m repeat of the paving's cracks and stains (joints stay)
-	var turn: float = deg_to_rad(90.0 * int(g.rnd(t.x, t.y, 0, 26) * 4.0))
-	b.add(ChunkBuild.L_GROUND, 13, o + Vector2(4.0, 4.0), turn)
-	b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_WALK)
 	var zone: CityZone = g.zones.of_tile(t)
+	# a quarter turn per tile breaks the 8 m repeat of the paving's cracks and stains (joints stay);
+	# a zone's own ground (a bond) turns only by half turns
+	var turns: int = 4 if zone.plaza_ground < 0 else 2
+	var turn: float = deg_to_rad(360.0 / turns * int(g.rnd(t.x, t.y, 0, 26) * turns))
+	b.add(
+		ChunkBuild.L_GROUND,
+		zone.plaza_ground if zone.plaza_ground >= 0 else 13,
+		o + Vector2(4.0, 4.0),
+		turn
+	)
+	b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_WALK)
 	b.chunk.dens_ped[local_index(t)] = int(zone.ped_plaza * b.district)
 	if zone.plaza_centre >= 0 and posmod(t.x, PERIOD) == 5 and posmod(t.y, PERIOD) == 5:
 		_kerb.prop(g, b, zone.plaza_centre, o + Vector2(4.0, 4.0), 0.0)  # the block's middle tile

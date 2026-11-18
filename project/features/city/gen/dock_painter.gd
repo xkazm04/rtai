@@ -90,7 +90,8 @@ func quay(g: CityGen, b: ChunkBuild, kerb: KerbDresser, t: Vector2i, apron: bool
 	if not apron:
 		return _water(g, b, zone, t)
 	var turn: float = deg_to_rad(90.0 * int(g.rnd(t.x, t.y, 0, 26) * 4.0))
-	b.add(ChunkBuild.L_GROUND, T_PAVING, o + Vector2(4.0, 4.0), turn)
+	var ground: int = zone.apron_ground if zone.apron_ground >= 0 else T_PAVING
+	b.add(ChunkBuild.L_GROUND, ground, o + Vector2(4.0, 4.0), turn)
 	b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_WALK)
 	if zone.quay_ground.size() < 2:  # no coping art: the bollard line marks the edge
 		for vm: float in BOLLARD_V_M:

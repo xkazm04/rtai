@@ -1233,6 +1233,28 @@
         8.4
       ],
       "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/ground/down_plaza_paving.png",
+      "class": "ground",
+      "id": 112,
+      "name": "down_plaza_paving",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/d5/ground/quay_apron.png",
+      "class": "ground",
+      "id": 113,
+      "name": "quay_apron",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
     }
   ]
 }

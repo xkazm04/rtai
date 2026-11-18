@@ -85,6 +85,7 @@
       "water_tiles": 0
     },
     {
+      "apron_ground": 113,
       "big_roofs": [
         80
       ],
@@ -192,6 +193,7 @@
       "ped_kerb": 220,
       "ped_plaza": 255,
       "plaza_centre": 101,
+      "plaza_ground": 112,
       "plaza_prop_share": 0.75,
       "plaza_props": [
         28,
