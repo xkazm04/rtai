@@ -1,2 +1,13 @@
 unit-tests: 30 passed, 0 failed, 0 skipped (GUT, headless)
 log: build/test-results/unit-tests.log (20.6 s)
+
+0ecb743fb630 full snapshot, character regression suite
+tests/unit/test_street_ped_shock.gd
+PASS test_the_three_looks_keep_their_own_shock_after_the_jab_and_heavy_would_end
+PASS test_a_rig_reentering_a_held_stun_resolves_its_wardrobe_without_the_first_hit
+PASS test_the_worker_and_a_lethal_shock_keep_their_existing_families
+PASS test_the_baton_can_release_on_its_melee_clock
+PASS test_the_release_catches_kneels_then_stands_on_the_same_point_and_heading
+PASS test_the_parts_arch_and_jolt_then_bend_the_knees_for_the_same_three_wardrobes
+PASS test_the_parts_overlay_belongs_only_to_its_three_looks_in_the_flat_view
+PASS test_the_short_fall_sheet_stays_off_its_prone_frame

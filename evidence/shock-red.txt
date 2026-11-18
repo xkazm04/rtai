@@ -11,9 +11,9 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 [ DONE ] first_scan_filesystem
 
 [   0% ] update_scripts_classes | Started Registering global classes... (3 steps)
-[   0% ] update_scripts_classes | 
-[  25% ] update_scripts_classes | 
-[  50% ] update_scripts_classes | 
+[   0% ] update_scripts_classes |
+[  25% ] update_scripts_classes |
+[  50% ] update_scripts_classes |
 [ DONE ] update_scripts_classes
 
 [   0% ] loading_editor_layout | Started Loading editor (5 steps)
@@ -35,28 +35,28 @@ res://tests/unit/test_street_ped_shock.gd
 * test_the_three_looks_keep_their_own_shock_after_the_jab_and_heavy_would_end
     [Failed]:  [""] expected to equal ["ped_hat_shock_hit.png"]:  ped/head_hat during stun
       at line 37
-    [Failed]:  [""] expected to equal ["ped_hat_between_fall.png"]:  
+    [Failed]:  [""] expected to equal ["ped_hat_between_fall.png"]:
       at line 39
     [Failed]:  ["p70/ped_hat_shock_hit.png"] expected to equal [""]:  ped/head_hat after release
       at line 41
     [Failed]:  [""] expected to equal ["ped_elder_shock_hit.png"]:  ped/head_bald during stun
       at line 37
-    [Failed]:  [""] expected to equal ["ped_elder_between_fall.png"]:  
+    [Failed]:  [""] expected to equal ["ped_elder_between_fall.png"]:
       at line 39
     [Failed]:  ["p70/ped_elder_shock_hit.png"] expected to equal [""]:  ped/head_bald after release
       at line 41
     [Failed]:  [""] expected to equal ["ped_shopper_shock_hit.png"]:  ped/head_shopper during stun
       at line 37
-    [Failed]:  [""] expected to equal ["ped_shopper_between_fall.png"]:  
+    [Failed]:  [""] expected to equal ["ped_shopper_between_fall.png"]:
       at line 39
     [Failed]:  ["p70/ped_shopper_shock_hit.png"] expected to equal [""]:  ped/head_shopper after release
       at line 41
 * test_a_rig_reentering_a_held_stun_resolves_its_wardrobe_without_the_first_hit
-    [Failed]:  [""] expected to equal ["ped_hat_shock_hit.png"]:  
+    [Failed]:  [""] expected to equal ["ped_hat_shock_hit.png"]:
       at line 48
-    [Failed]:  [""] expected to equal ["ped_elder_shock_hit.png"]:  
+    [Failed]:  [""] expected to equal ["ped_elder_shock_hit.png"]:
       at line 48
-    [Failed]:  [""] expected to equal ["ped_shopper_shock_hit.png"]:  
+    [Failed]:  [""] expected to equal ["ped_shopper_shock_hit.png"]:
       at line 48
 0/2 passed.
 
@@ -71,28 +71,28 @@ res://tests/unit/test_street_ped_shock.gd
 - test_the_three_looks_keep_their_own_shock_after_the_jab_and_heavy_would_end
     [Failed]:  [""] expected to equal ["ped_hat_shock_hit.png"]:  ped/head_hat during stun
           at line 37
-    [Failed]:  [""] expected to equal ["ped_hat_between_fall.png"]:  
+    [Failed]:  [""] expected to equal ["ped_hat_between_fall.png"]:
           at line 39
     [Failed]:  ["p70/ped_hat_shock_hit.png"] expected to equal [""]:  ped/head_hat after release
           at line 41
     [Failed]:  [""] expected to equal ["ped_elder_shock_hit.png"]:  ped/head_bald during stun
           at line 37
-    [Failed]:  [""] expected to equal ["ped_elder_between_fall.png"]:  
+    [Failed]:  [""] expected to equal ["ped_elder_between_fall.png"]:
           at line 39
     [Failed]:  ["p70/ped_elder_shock_hit.png"] expected to equal [""]:  ped/head_bald after release
           at line 41
     [Failed]:  [""] expected to equal ["ped_shopper_shock_hit.png"]:  ped/head_shopper during stun
           at line 37
-    [Failed]:  [""] expected to equal ["ped_shopper_between_fall.png"]:  
+    [Failed]:  [""] expected to equal ["ped_shopper_between_fall.png"]:
           at line 39
     [Failed]:  ["p70/ped_shopper_shock_hit.png"] expected to equal [""]:  ped/head_shopper after release
           at line 41
 - test_a_rig_reentering_a_held_stun_resolves_its_wardrobe_without_the_first_hit
-    [Failed]:  [""] expected to equal ["ped_hat_shock_hit.png"]:  
+    [Failed]:  [""] expected to equal ["ped_hat_shock_hit.png"]:
           at line 48
-    [Failed]:  [""] expected to equal ["ped_elder_shock_hit.png"]:  
+    [Failed]:  [""] expected to equal ["ped_elder_shock_hit.png"]:
           at line 48
-    [Failed]:  [""] expected to equal ["ped_shopper_shock_hit.png"]:  
+    [Failed]:  [""] expected to equal ["ped_shopper_shock_hit.png"]:
           at line 48
 
 Totals
@@ -122,28 +122,28 @@ res://tests/unit/test_street_ped_shock.gd
 * test_the_three_looks_keep_their_own_shock_after_the_jab_and_heavy_would_end
     [Failed]:  [""] expected to equal ["ped_hat_shock_hit.png"]:  ped/head_hat during stun
       at line 37
-    [Failed]:  [""] expected to equal ["ped_hat_between_fall.png"]:  
+    [Failed]:  [""] expected to equal ["ped_hat_between_fall.png"]:
       at line 39
     [Failed]:  ["p70/ped_hat_shock_hit.png"] expected to equal [""]:  ped/head_hat after release
       at line 41
     [Failed]:  [""] expected to equal ["ped_elder_shock_hit.png"]:  ped/head_bald during stun
       at line 37
-    [Failed]:  [""] expected to equal ["ped_elder_between_fall.png"]:  
+    [Failed]:  [""] expected to equal ["ped_elder_between_fall.png"]:
       at line 39
     [Failed]:  ["p70/ped_elder_shock_hit.png"] expected to equal [""]:  ped/head_bald after release
       at line 41
     [Failed]:  [""] expected to equal ["ped_shopper_shock_hit.png"]:  ped/head_shopper during stun
       at line 37
-    [Failed]:  [""] expected to equal ["ped_shopper_between_fall.png"]:  
+    [Failed]:  [""] expected to equal ["ped_shopper_between_fall.png"]:
       at line 39
     [Failed]:  ["p70/ped_shopper_shock_hit.png"] expected to equal [""]:  ped/head_shopper after release
       at line 41
 * test_a_rig_reentering_a_held_stun_resolves_its_wardrobe_without_the_first_hit
-    [Failed]:  [""] expected to equal ["ped_hat_shock_hit.png"]:  
+    [Failed]:  [""] expected to equal ["ped_hat_shock_hit.png"]:
       at line 48
-    [Failed]:  [""] expected to equal ["ped_elder_shock_hit.png"]:  
+    [Failed]:  [""] expected to equal ["ped_elder_shock_hit.png"]:
       at line 48
-    [Failed]:  [""] expected to equal ["ped_shopper_shock_hit.png"]:  
+    [Failed]:  [""] expected to equal ["ped_shopper_shock_hit.png"]:
       at line 48
 0/2 passed.
 
@@ -158,28 +158,28 @@ res://tests/unit/test_street_ped_shock.gd
 - test_the_three_looks_keep_their_own_shock_after_the_jab_and_heavy_would_end
     [Failed]:  [""] expected to equal ["ped_hat_shock_hit.png"]:  ped/head_hat during stun
           at line 37
-    [Failed]:  [""] expected to equal ["ped_hat_between_fall.png"]:  
+    [Failed]:  [""] expected to equal ["ped_hat_between_fall.png"]:
           at line 39
     [Failed]:  ["p70/ped_hat_shock_hit.png"] expected to equal [""]:  ped/head_hat after release
           at line 41
     [Failed]:  [""] expected to equal ["ped_elder_shock_hit.png"]:  ped/head_bald during stun
           at line 37
-    [Failed]:  [""] expected to equal ["ped_elder_between_fall.png"]:  
+    [Failed]:  [""] expected to equal ["ped_elder_between_fall.png"]:
           at line 39
     [Failed]:  ["p70/ped_elder_shock_hit.png"] expected to equal [""]:  ped/head_bald after release
           at line 41
     [Failed]:  [""] expected to equal ["ped_shopper_shock_hit.png"]:  ped/head_shopper during stun
           at line 37
-    [Failed]:  [""] expected to equal ["ped_shopper_between_fall.png"]:  
+    [Failed]:  [""] expected to equal ["ped_shopper_between_fall.png"]:
           at line 39
     [Failed]:  ["p70/ped_shopper_shock_hit.png"] expected to equal [""]:  ped/head_shopper after release
           at line 41
 - test_a_rig_reentering_a_held_stun_resolves_its_wardrobe_without_the_first_hit
-    [Failed]:  [""] expected to equal ["ped_hat_shock_hit.png"]:  
+    [Failed]:  [""] expected to equal ["ped_hat_shock_hit.png"]:
           at line 48
-    [Failed]:  [""] expected to equal ["ped_elder_shock_hit.png"]:  
+    [Failed]:  [""] expected to equal ["ped_elder_shock_hit.png"]:
           at line 48
-    [Failed]:  [""] expected to equal ["ped_shopper_shock_hit.png"]:  
+    [Failed]:  [""] expected to equal ["ped_shopper_shock_hit.png"]:
           at line 48
 
 Totals

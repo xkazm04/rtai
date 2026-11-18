@@ -1,0 +1,37 @@
+[
+  {
+    "file": "street-shock.mp4",
+    "title": "Three shocks and the worker reference",
+    "ppm": 64,
+    "before": false,
+    "note": "Real time at native 64 and 32 px/m, then a half-speed before/after replay of release at 64. Impact is tick 30."
+  },
+  {
+    "file": "street-shock-32.jpg",
+    "title": "All three at game size",
+    "ppm": 32,
+    "before": false,
+    "note": "Pairs show the starting build and the change at +4, +44 and +100 ticks. Native-size crops."
+  },
+  {
+    "file": "hat-64.jpg",
+    "title": "Hat at impact, hold and release",
+    "ppm": 64,
+    "before": false,
+    "note": "After, before and the worker reference at +4, +44, +100 and +116 ticks. Native-size crops."
+  },
+  {
+    "file": "elder-64.jpg",
+    "title": "Elder at impact, hold and release",
+    "ppm": 64,
+    "before": false,
+    "note": "After, before and the worker reference at +4, +44, +100 and +116 ticks. Native-size crops."
+  },
+  {
+    "file": "shopper-64.jpg",
+    "title": "Shopper at impact, hold and release",
+    "ppm": 64,
+    "before": false,
+    "note": "After, before and the worker reference at +4, +44, +100 and +116 ticks. Native-size crops."
+  }
+]
