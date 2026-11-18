@@ -185,6 +185,17 @@
             "minimum": 0,
             "type": "number"
           },
+          "quay_ground": {
+            "description": "the quay edge art [straight, inner corner] (DockPainter.quay_case); absent = open water and the apron bollard line",
+            "items": {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
           "street_keep_x": {
             "maximum": 4,
             "minimum": 1,

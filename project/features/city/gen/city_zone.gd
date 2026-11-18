@@ -19,7 +19,13 @@ const FLOATS: Array[String] = [
 ]
 
 const LISTS: Array[String] = [
-	"landmark_roofs", "generic_roofs", "big_roofs", "long_roofs", "plaza_props", "water_ground"
+	"landmark_roofs",
+	"generic_roofs",
+	"big_roofs",
+	"long_roofs",
+	"plaza_props",
+	"water_ground",
+	"quay_ground",
 ]
 
 var id: StringName = &"mixed"
@@ -53,6 +59,9 @@ var street_keep_x: int = 1
 ## ground art (city_textures ids, checkered by tile; 72, the plain asphalt box, until art lands).
 var water_tiles: int = 0
 var water_ground: Array[int] = [72]
+## The quay edge art [straight, inner corner] (DockPainter.quay_case; empty = open water and the
+## apron's bollard line, the v15 look).
+var quay_ground: Array[int] = []
 
 
 static func from_row(row: Dictionary) -> CityZone:

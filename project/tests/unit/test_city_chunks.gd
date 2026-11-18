@@ -17,8 +17,8 @@ func test_tables_load() -> void:
 	assert_eq(_gen.district_id, "district_01")
 	var why: String = "ids 72-85: box, zebra, eraser, story paint, 2x2, long roof, 12 m kerb;"
 	why += " 86-92 (n18):"
-	why += " dock warehouse a/b, dock shed, downtown tower a/b, dock water a/b"
-	assert_eq(_gen.sizes.size(), 93, why)
+	why += " dock warehouse a/b, dock shed, downtown tower a/b, dock water a/b; 93-94 quay edge"
+	assert_eq(_gen.sizes.size(), 95, why)
 
 
 func test_generation_is_deterministic() -> void:

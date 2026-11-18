@@ -13,6 +13,19 @@ const T_PAVING: int = 13
 const T_BOLLARD: int = 37
 const SHED_U: int = 12
 const BOLLARD_V_M: Array[float] = [1.5, 4.0, 6.5]
+## The quay set (asset lane it469/it470): the straight is drawn land north (5 m of apron to its
+## coping), the inner corner land north and west; a turn carries them to the tile's land sides.
+const LAND_M: float = 5.0
+const EDGE_N: int = 1
+const EDGE_S: int = 2
+const EDGE_W: int = 4
+const QUAY_CASES: Dictionary = {
+	EDGE_N: [0, 0],
+	EDGE_S: [0, 180],
+	EDGE_W: [0, 270],
+	EDGE_N | EDGE_W: [1, 0],
+	EDGE_S | EDGE_W: [1, 270],
+}
 
 
 ## Whether the street line through tile t is dropped in its zone (a long block runs over it).
@@ -66,20 +79,59 @@ func block(g: CityGen, b: ChunkBuild, zone: CityZone, t: Vector2i) -> int:
 ## The quay apron (paving, a bollard line at the water's edge) or a water tile.
 func quay(g: CityGen, b: ChunkBuild, kerb: KerbDresser, t: Vector2i, apron: bool) -> int:
 	var o: Vector2 = TilePainter.origin(t)
+	var zone: CityZone = g.zones.of_tile(t)
 	if not apron:
-		var water: Array[int] = g.zones.of_tile(t).water_ground
-		var turn_w: float = PI * int(g.rnd(t.x, t.y, 0, 27) * 2.0)  # 0 / 180: ripples keep one heading
-		var tex: int = water[posmod(t.x + t.y, water.size())]
-		b.add(ChunkBuild.L_GROUND, tex, o + Vector2(4.0, 4.0), turn_w)
-		b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_BUILD)
-		return SimConst.T_BLOCK
+		return _water(g, b, zone, t)
 	var turn: float = deg_to_rad(90.0 * int(g.rnd(t.x, t.y, 0, 26) * 4.0))
 	b.add(ChunkBuild.L_GROUND, T_PAVING, o + Vector2(4.0, 4.0), turn)
 	b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_WALK)
-	for vm: float in BOLLARD_V_M:
-		kerb.prop(g, b, T_BOLLARD, o + Vector2(7.4, vm), 0.0)
-	var zone: CityZone = g.zones.of_tile(t)
+	if zone.quay_ground.size() < 2:  # no coping art: the bollard line marks the edge
+		for vm: float in BOLLARD_V_M:
+			kerb.prop(g, b, T_BOLLARD, o + Vector2(7.4, vm), 0.0)
 	b.chunk.dens_ped[TilePainter.local_index(t)] = int(zone.ped_plaza * 0.25 * b.district)
+	return SimConst.T_PLAZA
+
+
+## The quay edge's autotile case of a water tile: [land sides (bits EDGE_N/S/W), the art index
+## into quay_ground (0 straight, 1 inner corner, -1 open water), its turn in degrees]. The basin
+## between two piers is closed west by the apron, north and south by the pier streets.
+static func quay_case(zone: CityZone, t: Vector2i) -> Array[int]:
+	var my: int = posmod(t.y, PERIOD)
+	var sides: int = 0
+	if t.x == water_x(zone):
+		sides |= EDGE_W
+	if my == 3:
+		sides |= EDGE_N
+	elif my == PERIOD - 1:
+		sides |= EDGE_S
+	var case: Array = QUAY_CASES.get(sides, [-1, 0])
+	var art: int = case[0]
+	var turn: int = case[1]
+	return [sides, art, turn]
+
+
+## A water tile: open water, or a quay edge (coping + LAND_M of apron on its land sides, walkable).
+func _water(g: CityGen, b: ChunkBuild, zone: CityZone, t: Vector2i) -> int:
+	var o: Vector2 = TilePainter.origin(t)
+	b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_BUILD)
+	var case: Array[int] = quay_case(zone, t)
+	if case[1] < 0 or zone.quay_ground.size() < 2:
+		var water: Array[int] = zone.water_ground
+		var turn_w: float = PI * int(g.rnd(t.x, t.y, 0, 27) * 2.0)  # 0 / 180: ripples keep one heading
+		var tex: int = water[posmod(t.x + t.y, water.size())]
+		b.add(ChunkBuild.L_GROUND, tex, o + Vector2(4.0, 4.0), turn_w)
+		return SimConst.T_BLOCK
+	b.add(
+		ChunkBuild.L_GROUND, zone.quay_ground[case[1]], o + Vector2(4.0, 4.0), deg_to_rad(case[2])
+	)
+	var land: float = LAND_M
+	if case[0] & EDGE_N:
+		b.stamp(Rect2(o, Vector2(8, land)), SimConst.C_WALK)
+	if case[0] & EDGE_S:
+		b.stamp(Rect2(o + Vector2(0, 8 - land), Vector2(8, land)), SimConst.C_WALK)
+	if case[0] & EDGE_W:
+		b.stamp(Rect2(o, Vector2(land, 8)), SimConst.C_WALK)
+	b.chunk.dens_ped[TilePainter.local_index(t)] = int(zone.ped_plaza * 0.1 * b.district)
 	return SimConst.T_PLAZA
 
 

@@ -1024,6 +1024,28 @@
         8
       ],
       "solid": false
+    },
+    {
+      "art": "res://features/city/art/d5/ground/quay_straight.png",
+      "class": "ground",
+      "id": 93,
+      "name": "quay_straight",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/d5/ground/quay_inner.png",
+      "class": "ground",
+      "id": 94,
+      "name": "quay_inner",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
     }
   ]
 }
