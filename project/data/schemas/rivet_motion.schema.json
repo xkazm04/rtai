@@ -5,6 +5,11 @@
     "cover": {
       "additionalProperties": false,
       "properties": {
+        "crouch_scale_y": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "type": "number"
+        },
         "edge_m": {
           "exclusiveMinimum": 0,
           "type": "number"
@@ -46,6 +51,7 @@
         }
       },
       "required": [
+        "crouch_scale_y",
         "edge_m",
         "enabled",
         "leave_dot",

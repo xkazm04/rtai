@@ -14,7 +14,7 @@ static func feed(rigs: CharacterRigs, vault: PlayerVault) -> void:
 		if rigs.has_meta(ACTIVE):
 			var last: CutRig = rigs.rig_for(rigs.feed.ids[0])
 			if last != null:
-				RenderingServer.canvas_item_set_transform(last.get_canvas_item(), last.transform)
+				MotionRigPose.place(last, Transform2D.IDENTITY)
 			var host: VaultView = rigs.get_meta(ACTIVE)
 			host.set_process(false)
 			host.queue_free()
@@ -59,9 +59,7 @@ func _place() -> void:
 	if RivetFrames.drawn(rig) and rig.head_card.frame == RivetFrames.Cell.ROLL:
 		rig.head_card.global_rotation = 0.0
 	var xf: Transform2D = projection(_vault, ViewMode.shared())
-	var draw: Transform2D = rig.transform.scaled_local(xf.get_scale())
-	draw.origin += xf.origin
-	RenderingServer.canvas_item_set_transform(rig.get_canvas_item(), draw)
+	MotionRigPose.place(rig, xf)
 	# Only the tilted cameras sort standing cards in front of bodies.
 	if not ViewMode.shared().is_flat() and _vault.airborne():
 		rig.z_index = RenderLayers.z(&"roof_occluders") + 1 - _rigs.z_index

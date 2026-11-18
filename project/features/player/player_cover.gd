@@ -8,6 +8,7 @@ enum Phase { OFF, SNAP, IN, PEEK, LEAVE }
 var enabled: bool = false
 var phase: Phase = Phase.OFF
 var spot: CoverQuery.CoverSpot
+var crouch_scale_y: float
 var snap_reach_m: float
 var snap_ticks: int
 var move_mps: float
@@ -31,6 +32,7 @@ func apply_flags() -> void:
 func configure(t: DataTable) -> void:
 	var row: Dictionary = t.object(t.raw, "cover")
 	enabled = row.get("enabled", false) == true
+	crouch_scale_y = t.num(row, "crouch_scale_y")
 	snap_reach_m = t.num(row, "snap_reach_m")
 	snap_ticks = maxi(1, t.integer(row, "snap_ticks"))
 	move_mps = t.num(row, "move_mps")
@@ -44,6 +46,15 @@ func configure(t: DataTable) -> void:
 func interrupt() -> void:
 	phase = Phase.OFF
 	spot = null
+
+
+## Render-only amount of low-cover tuck at the end of the current simulation tick.
+func crouch_weight() -> float:
+	if spot == null or not spot.low:
+		return 0.0
+	if phase == Phase.SNAP:
+		return float(_frame) / snap_ticks
+	return (1.0 - float(_frame) / peek_ticks) * (1.0 - float(_away) / leave_ticks)
 
 
 func blocks_fire() -> bool:
