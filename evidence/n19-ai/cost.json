@@ -1,0 +1,7277 @@
+{
+  "schema": "gtai.squad-cost-report/1",
+  "hz": 60,
+  "seeds": [
+    20261103,
+    20261104,
+    20261105,
+    20261106,
+    20261107
+  ],
+  "fight_probe_means": {
+    "probe-squad": {
+      "city": {
+        "encounter_clear_s": 20.656666666666666,
+        "damage_taken_hp": 2.759999999999974,
+        "deaths": 0,
+        "clear_change_pct": 17.500948047023137,
+        "damage_change_pct": -23.33333333333333
+      },
+      "pit": {
+        "encounter_clear_s": 17.666666666666668,
+        "damage_taken_hp": 7.799999999999926,
+        "deaths": 0,
+        "clear_change_pct": 21.55963302752295,
+        "damage_change_pct": 6.557377049180313
+      },
+      "quest1": {
+        "encounter_clear_s": 35.36,
+        "damage_taken_hp": 4.679999999999955,
+        "deaths": 0,
+        "clear_change_pct": 0.0,
+        "damage_change_pct": 0.0
+      }
+    },
+    "uncapped-final": {
+      "city": {
+        "encounter_clear_s": 22.98,
+        "damage_taken_hp": 2.0399999999999805,
+        "deaths": 0,
+        "clear_change_pct": 30.716723549488066,
+        "damage_change_pct": -43.333333333333336
+      },
+      "pit": {
+        "encounter_clear_s": 22.333333333333332,
+        "damage_taken_hp": 7.5599999999999286,
+        "deaths": 0,
+        "clear_change_pct": 53.669724770642205,
+        "damage_change_pct": 3.2786885245901676
+      },
+      "quest1": {
+        "encounter_clear_s": 35.36,
+        "damage_taken_hp": 4.679999999999955,
+        "deaths": 0,
+        "clear_change_pct": 0.0,
+        "damage_change_pct": 0.0
+      }
+    },
+    "uncapped": {
+      "city": {
+        "encounter_clear_s": 23.066666666666666,
+        "damage_taken_hp": 2.0399999999999805,
+        "deaths": 0,
+        "clear_change_pct": 31.20970800151688,
+        "damage_change_pct": -43.333333333333336
+      },
+      "pit": {
+        "encounter_clear_s": 22.333333333333332,
+        "damage_taken_hp": 7.5599999999999286,
+        "deaths": 0,
+        "clear_change_pct": 53.669724770642205,
+        "damage_change_pct": 3.2786885245901676
+      },
+      "quest1": {
+        "encounter_clear_s": 35.36,
+        "damage_taken_hp": 4.679999999999955,
+        "deaths": 0,
+        "clear_change_pct": 0.0,
+        "damage_change_pct": 0.0
+      }
+    },
+    "slots3": {
+      "city": {
+        "encounter_clear_s": 19.386666666666667,
+        "damage_taken_hp": 2.759999999999974,
+        "deaths": 0,
+        "clear_change_pct": 10.276829730754656,
+        "damage_change_pct": -23.33333333333333
+      },
+      "pit": {
+        "encounter_clear_s": 17.92,
+        "damage_taken_hp": 9.239999999999913,
+        "deaths": 0,
+        "clear_change_pct": 23.30275229357799,
+        "damage_change_pct": 26.22950819672132
+      },
+      "quest1": {
+        "encounter_clear_s": 35.36,
+        "damage_taken_hp": 4.679999999999955,
+        "deaths": 0,
+        "clear_change_pct": 0.0,
+        "damage_change_pct": 0.0
+      }
+    },
+    "bias1": {
+      "city": {
+        "encounter_clear_s": 20.616666666666667,
+        "damage_taken_hp": 3.1199999999999704,
+        "deaths": 0,
+        "clear_change_pct": 17.27341676147138,
+        "damage_change_pct": -13.33333333333333
+      },
+      "pit": {
+        "encounter_clear_s": 17.416666666666668,
+        "damage_taken_hp": 6.479999999999938,
+        "deaths": 0,
+        "clear_change_pct": 19.839449541284402,
+        "damage_change_pct": -11.475409836065587
+      },
+      "quest1": {
+        "encounter_clear_s": 35.36,
+        "damage_taken_hp": 4.679999999999955,
+        "deaths": 0,
+        "clear_change_pct": 0.0,
+        "damage_change_pct": 0.0
+      }
+    },
+    "preferred": {
+      "city": {
+        "encounter_clear_s": 20.27,
+        "damage_taken_hp": 2.1599999999999797,
+        "deaths": 0,
+        "clear_change_pct": 15.301478953356096,
+        "damage_change_pct": -39.99999999999999
+      },
+      "pit": {
+        "encounter_clear_s": 17.416666666666668,
+        "damage_taken_hp": 6.959999999999934,
+        "deaths": 0,
+        "clear_change_pct": 19.839449541284402,
+        "damage_change_pct": -4.918032786885251
+      },
+      "quest1": {
+        "encounter_clear_s": 35.36,
+        "damage_taken_hp": 4.679999999999955,
+        "deaths": 0,
+        "clear_change_pct": 0.0,
+        "damage_change_pct": 0.0
+      }
+    },
+    "blind6": {
+      "city": {
+        "encounter_clear_s": 21.07,
+        "damage_taken_hp": 2.759999999999974,
+        "deaths": 0,
+        "clear_change_pct": 19.852104664391355,
+        "damage_change_pct": -23.33333333333333
+      },
+      "pit": {
+        "encounter_clear_s": 18.416666666666668,
+        "damage_taken_hp": 6.35999999999994,
+        "deaths": 0,
+        "clear_change_pct": 26.720183486238547,
+        "damage_change_pct": -13.11475409836066
+      },
+      "quest1": {
+        "encounter_clear_s": 35.36,
+        "damage_taken_hp": 4.679999999999955,
+        "deaths": 0,
+        "clear_change_pct": 0.0,
+        "damage_change_pct": 0.0
+      }
+    },
+    "peek_off": {
+      "city": {
+        "encounter_clear_s": 21.1,
+        "damage_taken_hp": 2.759999999999974,
+        "deaths": 0,
+        "clear_change_pct": 20.022753128555195,
+        "damage_change_pct": -23.33333333333333
+      },
+      "pit": {
+        "encounter_clear_s": 17.666666666666668,
+        "damage_taken_hp": 8.759999999999916,
+        "deaths": 0,
+        "clear_change_pct": 21.55963302752295,
+        "damage_change_pct": 19.67213114754096
+      },
+      "quest1": {
+        "encounter_clear_s": 35.36,
+        "damage_taken_hp": 4.679999999999955,
+        "deaths": 0,
+        "clear_change_pct": 0.0,
+        "damage_change_pct": 0.0
+      }
+    },
+    "a2_plan": {
+      "city": {
+        "encounter_clear_s": 20.656666666666666,
+        "damage_taken_hp": 2.759999999999974,
+        "deaths": 0,
+        "clear_change_pct": 17.500948047023137,
+        "damage_change_pct": -23.33333333333333
+      },
+      "pit": {
+        "encounter_clear_s": 17.666666666666668,
+        "damage_taken_hp": 7.799999999999926,
+        "deaths": 0,
+        "clear_change_pct": 21.55963302752295,
+        "damage_change_pct": 6.557377049180313
+      },
+      "quest1": {
+        "encounter_clear_s": 35.36,
+        "damage_taken_hp": 4.679999999999955,
+        "deaths": 0,
+        "clear_change_pct": 0.0,
+        "damage_change_pct": 0.0
+      }
+    },
+    "capped": {
+      "city": {
+        "encounter_clear_s": 23.143333333333334,
+        "damage_taken_hp": 1.9199999999999817,
+        "deaths": 0,
+        "clear_change_pct": 31.64580963215777,
+        "damage_change_pct": -46.666666666666664
+      },
+      "pit": {
+        "encounter_clear_s": 23.176666666666666,
+        "damage_taken_hp": 7.679999999999927,
+        "deaths": 0,
+        "clear_change_pct": 59.472477064220186,
+        "damage_change_pct": 4.918032786885229
+      },
+      "quest1": {
+        "encounter_clear_s": 35.36,
+        "damage_taken_hp": 4.679999999999955,
+        "deaths": 0,
+        "clear_change_pct": 0.0,
+        "damage_change_pct": 0.0
+      }
+    },
+    "probe-squad-final": {
+      "city": {
+        "encounter_clear_s": 23.08,
+        "damage_taken_hp": 1.9199999999999817,
+        "deaths": 0,
+        "clear_change_pct": 31.28555176336747,
+        "damage_change_pct": -46.666666666666664
+      },
+      "pit": {
+        "encounter_clear_s": 21.336666666666666,
+        "damage_taken_hp": 6.119999999999942,
+        "deaths": 0,
+        "clear_change_pct": 46.811926605504595,
+        "damage_change_pct": -16.393442622950815
+      },
+      "quest1": {
+        "encounter_clear_s": 35.36,
+        "damage_taken_hp": 4.679999999999955,
+        "deaths": 0,
+        "clear_change_pct": 0.0,
+        "damage_change_pct": 0.0
+      }
+    },
+    "probe-mixed": {
+      "city": {
+        "encounter_clear_s": 24.86,
+        "damage_taken_hp": 2.639999999999975,
+        "deaths": 0,
+        "clear_change_pct": 41.410693970420944,
+        "damage_change_pct": -26.66666666666667
+      },
+      "pit": {
+        "encounter_clear_s": 20.626666666666665,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0,
+        "clear_change_pct": 41.92660550458716,
+        "damage_change_pct": -1.6393442622950838
+      },
+      "quest1": {
+        "encounter_clear_s": 35.36,
+        "damage_taken_hp": 4.679999999999955,
+        "deaths": 0,
+        "clear_change_pct": 0.0,
+        "damage_change_pct": 0.0
+      }
+    },
+    "guard": {
+      "city": {
+        "encounter_clear_s": 17.58,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0,
+        "clear_change_pct": 0.0,
+        "damage_change_pct": 0.0
+      },
+      "pit": {
+        "encounter_clear_s": 14.533333333333333,
+        "damage_taken_hp": 7.319999999999931,
+        "deaths": 0,
+        "clear_change_pct": 0.0,
+        "damage_change_pct": 0.0
+      },
+      "quest1": {
+        "encounter_clear_s": 35.36,
+        "damage_taken_hp": 4.679999999999955,
+        "deaths": 0,
+        "clear_change_pct": 0.0,
+        "damage_change_pct": 0.0
+      }
+    }
+  },
+  "initial_cap_isolation_pit_s": {
+    "only_routes": 22.333333333333332,
+    "only_cover": 23.176666666666666
+  },
+  "cost_pooled": [
+    {
+      "workload": "city_horde",
+      "brain": "guard",
+      "hostile_us": {
+        "mean": 3.2088636363636365,
+        "p99": 14,
+        "max": 12100
+      },
+      "tick_us": {
+        "mean": 26.978980891719747,
+        "p99": 75,
+        "max": 12158
+      },
+      "ticks": 31400,
+      "hostile_steps": 264000,
+      "routes_per_s": 2.90828025477707,
+      "cover_per_tick": 0.0,
+      "sight_per_hostile": 0.06823863636363636,
+      "peak": {
+        "alive": 10,
+        "cover": 0,
+        "routes": 1,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_slack_with_spawns": 0,
+      "budget_violations": 0,
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 1,
+        "spawns": 0,
+        "tick": 3616,
+        "total_us": 12158,
+        "seed": 20261104
+      }
+    },
+    {
+      "workload": "city_horde",
+      "brain": "squad",
+      "hostile_us": {
+        "mean": 26.188662878787877,
+        "p99": 107,
+        "max": 13673
+      },
+      "tick_us": {
+        "mean": 289.690127388535,
+        "p99": 556,
+        "max": 14953
+      },
+      "ticks": 31400,
+      "hostile_steps": 264000,
+      "routes_per_s": 18.9343949044586,
+      "cover_per_tick": 0.2454140127388535,
+      "sight_per_hostile": 1.0646780303030303,
+      "peak": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_slack_with_spawns": 0,
+      "budget_violations": 0,
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 128,
+        "cover": 1,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 11,
+        "spawns": 0,
+        "tick": 2388,
+        "total_us": 14953,
+        "seed": 20261106
+      }
+    },
+    {
+      "workload": "city_horde",
+      "brain": "mixed",
+      "hostile_us": {
+        "mean": 25.504143939393938,
+        "p99": 93,
+        "max": 700
+      },
+      "tick_us": {
+        "mean": 276.6604458598726,
+        "p99": 488,
+        "max": 1039
+      },
+      "ticks": 31400,
+      "hostile_steps": 264000,
+      "routes_per_s": 16.144585987261145,
+      "cover_per_tick": 0.09834394904458599,
+      "sight_per_hostile": 1.076469696969697,
+      "peak": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_slack_with_spawns": 0,
+      "budget_violations": 0,
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 430,
+        "cover": 1,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 10,
+        "spawns": 0,
+        "tick": 2687,
+        "total_us": 1039,
+        "seed": 20261105
+      }
+    },
+    {
+      "workload": "pit_horde",
+      "brain": "guard",
+      "hostile_us": {
+        "mean": 2.830102272727273,
+        "p99": 10,
+        "max": 236
+      },
+      "tick_us": {
+        "mean": 23.79449044585987,
+        "p99": 54,
+        "max": 289
+      },
+      "ticks": 31400,
+      "hostile_steps": 264000,
+      "routes_per_s": 1.0987261146496816,
+      "cover_per_tick": 0.0,
+      "sight_per_hostile": 0.06823863636363636,
+      "peak": {
+        "alive": 10,
+        "cover": 0,
+        "routes": 1,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_slack_with_spawns": 0,
+      "budget_violations": 0,
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 1,
+        "spawns": 0,
+        "tick": 4631,
+        "total_us": 289,
+        "seed": 20261106
+      }
+    },
+    {
+      "workload": "pit_horde",
+      "brain": "squad",
+      "hostile_us": {
+        "mean": 22.498287878787878,
+        "p99": 76,
+        "max": 13056
+      },
+      "tick_us": {
+        "mean": 249.8614968152866,
+        "p99": 547,
+        "max": 13565
+      },
+      "ticks": 31400,
+      "hostile_steps": 264000,
+      "routes_per_s": 14.684713375796179,
+      "cover_per_tick": 0.2809235668789809,
+      "sight_per_hostile": 1.1252727272727272,
+      "peak": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_slack_with_spawns": 0,
+      "budget_violations": 0,
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 175,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 11,
+        "spawns": 0,
+        "tick": 2927,
+        "total_us": 13565,
+        "seed": 20261103
+      }
+    },
+    {
+      "workload": "pit_horde",
+      "brain": "mixed",
+      "hostile_us": {
+        "mean": 24.22635606060606,
+        "p99": 70,
+        "max": 21179
+      },
+      "tick_us": {
+        "mean": 266.01589171974524,
+        "p99": 515,
+        "max": 21409
+      },
+      "ticks": 31400,
+      "hostile_steps": 264000,
+      "routes_per_s": 10.660509554140127,
+      "cover_per_tick": 0.10191082802547771,
+      "sight_per_hostile": 1.1238333333333332,
+      "peak": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_slack_with_spawns": 0,
+      "budget_violations": 0,
+      "worst_tick": {
+        "alive": 8,
+        "assignment_us": 63,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 10,
+        "spawns": 0,
+        "tick": 1407,
+        "total_us": 21409,
+        "seed": 20261104
+      }
+    },
+    {
+      "workload": "pit_10",
+      "brain": "guard",
+      "hostile_us": {
+        "mean": 2.837833333333333,
+        "p99": 11,
+        "max": 180
+      },
+      "tick_us": {
+        "mean": 28.331114808652245,
+        "p99": 69,
+        "max": 210
+      },
+      "ticks": 3005,
+      "hostile_steps": 30000,
+      "routes_per_s": 3.713810316139767,
+      "cover_per_tick": 0.0,
+      "sight_per_hostile": 0.06833333333333333,
+      "peak": {
+        "alive": 10,
+        "cover": 0,
+        "routes": 1,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_slack_with_spawns": 1,
+      "budget_violations": 0,
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 0,
+        "spawns": 0,
+        "tick": 278,
+        "total_us": 210,
+        "seed": 20261103
+      }
+    },
+    {
+      "workload": "pit_10",
+      "brain": "squad",
+      "hostile_us": {
+        "mean": 27.257866666666665,
+        "p99": 89,
+        "max": 330
+      },
+      "tick_us": {
+        "mean": 349.0242928452579,
+        "p99": 504,
+        "max": 933
+      },
+      "ticks": 3005,
+      "hostile_steps": 30000,
+      "routes_per_s": 17.770382695507486,
+      "cover_per_tick": 0.3547420965058236,
+      "sight_per_hostile": 1.0919333333333334,
+      "peak": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_slack_with_spawns": 0,
+      "budget_violations": 0,
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 106,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 11,
+        "spawns": 0,
+        "tick": 518,
+        "total_us": 933,
+        "seed": 20261106
+      }
+    },
+    {
+      "workload": "pit_10",
+      "brain": "mixed",
+      "hostile_us": {
+        "mean": 25.934533333333334,
+        "p99": 79,
+        "max": 792
+      },
+      "tick_us": {
+        "mean": 325.85191347753744,
+        "p99": 483,
+        "max": 1413
+      },
+      "ticks": 3005,
+      "hostile_steps": 30000,
+      "routes_per_s": 15.214642262895175,
+      "cover_per_tick": 0.12146422628951747,
+      "sight_per_hostile": 1.1058333333333332,
+      "peak": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_slack_with_spawns": 0,
+      "budget_violations": 0,
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 88,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 12,
+        "spawns": 0,
+        "tick": 620,
+        "total_us": 1413,
+        "seed": 20261105
+      }
+    },
+    {
+      "workload": "pit_40",
+      "brain": "guard",
+      "hostile_us": {
+        "mean": 3.5327,
+        "p99": 15,
+        "max": 1537
+      },
+      "tick_us": {
+        "mean": 141.0728785357737,
+        "p99": 375,
+        "max": 1801
+      },
+      "ticks": 3005,
+      "hostile_steps": 120000,
+      "routes_per_s": 13.437603993344426,
+      "cover_per_tick": 0.0,
+      "sight_per_hostile": 0.06825,
+      "peak": {
+        "alive": 40,
+        "cover": 0,
+        "routes": 3,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_slack_with_spawns": 4,
+      "budget_violations": 0,
+      "worst_tick": {
+        "alive": 40,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 4,
+        "routes": 0,
+        "sight": 3,
+        "spawns": 0,
+        "tick": 123,
+        "total_us": 1801,
+        "seed": 20261105
+      }
+    },
+    {
+      "workload": "pit_40",
+      "brain": "squad",
+      "hostile_us": {
+        "mean": 61.949375,
+        "p99": 150,
+        "max": 945
+      },
+      "tick_us": {
+        "mean": 2865.2066555740435,
+        "p99": 3598,
+        "max": 4610
+      },
+      "ticks": 3005,
+      "hostile_steps": 120000,
+      "routes_per_s": 85.29783693843594,
+      "cover_per_tick": 1.8585690515806987,
+      "sight_per_hostile": 1.0360583333333333,
+      "peak": {
+        "alive": 40,
+        "cover": 4,
+        "routes": 2,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_slack_with_spawns": 0,
+      "budget_violations": 0,
+      "worst_tick": {
+        "alive": 40,
+        "assignment_us": 431,
+        "cover": 1,
+        "cover_limit": 4,
+        "routes": 2,
+        "sight": 42,
+        "spawns": 0,
+        "tick": 670,
+        "total_us": 4610,
+        "seed": 20261103
+      }
+    },
+    {
+      "workload": "pit_40",
+      "brain": "mixed",
+      "hostile_us": {
+        "mean": 59.77695,
+        "p99": 120,
+        "max": 440
+      },
+      "tick_us": {
+        "mean": 2724.5783693843596,
+        "p99": 3477,
+        "max": 4037
+      },
+      "ticks": 3005,
+      "hostile_steps": 120000,
+      "routes_per_s": 61.277870216306155,
+      "cover_per_tick": 0.7603993344425957,
+      "sight_per_hostile": 1.0336416666666666,
+      "peak": {
+        "alive": 40,
+        "cover": 4,
+        "routes": 2,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_slack_with_spawns": 0,
+      "budget_violations": 0,
+      "worst_tick": {
+        "alive": 40,
+        "assignment_us": 400,
+        "cover": 2,
+        "cover_limit": 4,
+        "routes": 1,
+        "sight": 42,
+        "spawns": 0,
+        "tick": 304,
+        "total_us": 4037,
+        "seed": 20261105
+      }
+    }
+  ],
+  "cost_runs": [
+    {
+      "active_ticks": 6000,
+      "brain": "guard",
+      "budget_violations": 0,
+      "composition": [],
+      "counts": {
+        "cover": 0,
+        "routes": 287,
+        "sight": 3603
+      },
+      "cover_per_tick": 0.0,
+      "fielded": {
+        "": 88
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 137,
+        "mean": 2.83121212121212,
+        "p99": 12
+      },
+      "max": {
+        "alive": 10,
+        "cover": 0,
+        "routes": 1,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 2.74203821656051,
+      "seed": 20261103,
+      "sight_per_hostile": 0.0682386363636364,
+      "tick_us": {
+        "max": 144,
+        "mean": 23.803821656051,
+        "p99": 65
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "city_horde",
+      "worst_tick": {
+        "alive": 4,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 1,
+        "sight": 1,
+        "spawns": 0,
+        "tick": 142,
+        "total_us": 144
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "guard",
+      "budget_violations": 0,
+      "composition": [],
+      "counts": {
+        "cover": 0,
+        "routes": 298,
+        "sight": 3603
+      },
+      "cover_per_tick": 0.0,
+      "fielded": {
+        "": 88
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 12100,
+        "mean": 3.95214015151515,
+        "p99": 16
+      },
+      "max": {
+        "alive": 10,
+        "cover": 0,
+        "routes": 1,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 2.84713375796178,
+      "seed": 20261104,
+      "sight_per_hostile": 0.0682386363636364,
+      "tick_us": {
+        "max": 12158,
+        "mean": 33.2281847133758,
+        "p99": 90
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "city_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 1,
+        "spawns": 0,
+        "tick": 3616,
+        "total_us": 12158
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "guard",
+      "budget_violations": 0,
+      "composition": [],
+      "counts": {
+        "cover": 0,
+        "routes": 320,
+        "sight": 3603
+      },
+      "cover_per_tick": 0.0,
+      "fielded": {
+        "": 88
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 131,
+        "mean": 3.25772727272727,
+        "p99": 14
+      },
+      "max": {
+        "alive": 10,
+        "cover": 0,
+        "routes": 1,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 3.05732484076433,
+      "seed": 20261105,
+      "sight_per_hostile": 0.0682386363636364,
+      "tick_us": {
+        "max": 159,
+        "mean": 27.3898089171975,
+        "p99": 78
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "city_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 1,
+        "sight": 10,
+        "spawns": 0,
+        "tick": 4515,
+        "total_us": 159
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "guard",
+      "budget_violations": 0,
+      "composition": [],
+      "counts": {
+        "cover": 0,
+        "routes": 309,
+        "sight": 3603
+      },
+      "cover_per_tick": 0.0,
+      "fielded": {
+        "": 88
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 125,
+        "mean": 3.10246212121212,
+        "p99": 14
+      },
+      "max": {
+        "alive": 10,
+        "cover": 0,
+        "routes": 1,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 2.95222929936306,
+      "seed": 20261106,
+      "sight_per_hostile": 0.0682386363636364,
+      "tick_us": {
+        "max": 328,
+        "mean": 26.0843949044586,
+        "p99": 76
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "city_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 0,
+        "spawns": 0,
+        "tick": 2259,
+        "total_us": 328
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "guard",
+      "budget_violations": 0,
+      "composition": [],
+      "counts": {
+        "cover": 0,
+        "routes": 308,
+        "sight": 3603
+      },
+      "cover_per_tick": 0.0,
+      "fielded": {
+        "": 88
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 184,
+        "mean": 2.90077651515152,
+        "p99": 13
+      },
+      "max": {
+        "alive": 10,
+        "cover": 0,
+        "routes": 1,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 2.94267515923567,
+      "seed": 20261107,
+      "sight_per_hostile": 0.0682386363636364,
+      "tick_us": {
+        "max": 201,
+        "mean": 24.3886942675159,
+        "p99": 68
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "city_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 1,
+        "spawns": 0,
+        "tick": 4632,
+        "total_us": 201
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "guard",
+      "budget_violations": 0,
+      "composition": [],
+      "counts": {
+        "cover": 0,
+        "routes": 112,
+        "sight": 3603
+      },
+      "cover_per_tick": 0.0,
+      "fielded": {
+        "": 88
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 115,
+        "mean": 2.83414772727273,
+        "p99": 10
+      },
+      "max": {
+        "alive": 10,
+        "cover": 0,
+        "routes": 1,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 1.07006369426752,
+      "seed": 20261103,
+      "sight_per_hostile": 0.0682386363636364,
+      "tick_us": {
+        "max": 125,
+        "mean": 23.8285031847134,
+        "p99": 53
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "pit_horde",
+      "worst_tick": {
+        "alive": 4,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 1,
+        "sight": 1,
+        "spawns": 0,
+        "tick": 109,
+        "total_us": 125
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "guard",
+      "budget_violations": 0,
+      "composition": [],
+      "counts": {
+        "cover": 0,
+        "routes": 121,
+        "sight": 3603
+      },
+      "cover_per_tick": 0.0,
+      "fielded": {
+        "": 88
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 118,
+        "mean": 2.73757575757576,
+        "p99": 9
+      },
+      "max": {
+        "alive": 10,
+        "cover": 0,
+        "routes": 1,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 1.15605095541401,
+      "seed": 20261104,
+      "sight_per_hostile": 0.0682386363636364,
+      "tick_us": {
+        "max": 197,
+        "mean": 23.0165605095541,
+        "p99": 53
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "pit_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 1,
+        "spawns": 0,
+        "tick": 3523,
+        "total_us": 197
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "guard",
+      "budget_violations": 0,
+      "composition": [],
+      "counts": {
+        "cover": 0,
+        "routes": 112,
+        "sight": 3603
+      },
+      "cover_per_tick": 0.0,
+      "fielded": {
+        "": 88
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 104,
+        "mean": 2.99397727272727,
+        "p99": 10
+      },
+      "max": {
+        "alive": 10,
+        "cover": 0,
+        "routes": 1,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 1.07006369426752,
+      "seed": 20261105,
+      "sight_per_hostile": 0.0682386363636364,
+      "tick_us": {
+        "max": 160,
+        "mean": 25.1722929936306,
+        "p99": 54
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "pit_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 1,
+        "spawns": 0,
+        "tick": 3520,
+        "total_us": 160
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "guard",
+      "budget_violations": 0,
+      "composition": [],
+      "counts": {
+        "cover": 0,
+        "routes": 101,
+        "sight": 3603
+      },
+      "cover_per_tick": 0.0,
+      "fielded": {
+        "": 88
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 236,
+        "mean": 2.89416666666667,
+        "p99": 11
+      },
+      "max": {
+        "alive": 10,
+        "cover": 0,
+        "routes": 1,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 0.964968152866242,
+      "seed": 20261106,
+      "sight_per_hostile": 0.0682386363636364,
+      "tick_us": {
+        "max": 289,
+        "mean": 24.3331210191083,
+        "p99": 56
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "pit_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 1,
+        "spawns": 0,
+        "tick": 4631,
+        "total_us": 289
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "guard",
+      "budget_violations": 0,
+      "composition": [],
+      "counts": {
+        "cover": 0,
+        "routes": 129,
+        "sight": 3603
+      },
+      "cover_per_tick": 0.0,
+      "fielded": {
+        "": 88
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 82,
+        "mean": 2.69064393939394,
+        "p99": 9
+      },
+      "max": {
+        "alive": 10,
+        "cover": 0,
+        "routes": 1,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 1.23248407643312,
+      "seed": 20261107,
+      "sight_per_hostile": 0.0682386363636364,
+      "tick_us": {
+        "max": 124,
+        "mean": 22.621974522293,
+        "p99": 52
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "pit_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 1,
+        "spawns": 0,
+        "tick": 5067,
+        "total_us": 124
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "guard",
+      "budget_violations": 0,
+      "composition": [],
+      "counts": {
+        "cover": 0,
+        "routes": 41,
+        "sight": 410
+      },
+      "cover_per_tick": 0.0,
+      "fielded": {
+        "": 10
+      },
+      "hostile_steps": 6000,
+      "hostile_us": {
+        "max": 180,
+        "mean": 2.9665,
+        "p99": 11
+      },
+      "max": {
+        "alive": 10,
+        "cover": 0,
+        "routes": 1,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 1,
+      "routes_per_second": 4.09317803660566,
+      "seed": 20261103,
+      "sight_per_hostile": 0.0683333333333333,
+      "tick_us": {
+        "max": 210,
+        "mean": 29.6156405990017,
+        "p99": 66
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_10",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 0,
+        "spawns": 0,
+        "tick": 278,
+        "total_us": 210
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "guard",
+      "budget_violations": 0,
+      "composition": [],
+      "counts": {
+        "cover": 0,
+        "routes": 44,
+        "sight": 410
+      },
+      "cover_per_tick": 0.0,
+      "fielded": {
+        "": 10
+      },
+      "hostile_steps": 6000,
+      "hostile_us": {
+        "max": 81,
+        "mean": 2.70883333333333,
+        "p99": 11
+      },
+      "max": {
+        "alive": 10,
+        "cover": 0,
+        "routes": 1,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 1,
+      "routes_per_second": 4.39267886855241,
+      "seed": 20261104,
+      "sight_per_hostile": 0.0683333333333333,
+      "tick_us": {
+        "max": 101,
+        "mean": 27.0432612312812,
+        "p99": 70
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_10",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 1,
+        "sight": 1,
+        "spawns": 0,
+        "tick": 109,
+        "total_us": 101
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "guard",
+      "budget_violations": 0,
+      "composition": [],
+      "counts": {
+        "cover": 0,
+        "routes": 33,
+        "sight": 410
+      },
+      "cover_per_tick": 0.0,
+      "fielded": {
+        "": 10
+      },
+      "hostile_steps": 6000,
+      "hostile_us": {
+        "max": 68,
+        "mean": 2.87066666666667,
+        "p99": 11
+      },
+      "max": {
+        "alive": 10,
+        "cover": 0,
+        "routes": 1,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 1,
+      "routes_per_second": 3.29450915141431,
+      "seed": 20261105,
+      "sight_per_hostile": 0.0683333333333333,
+      "tick_us": {
+        "max": 87,
+        "mean": 28.6589018302829,
+        "p99": 66
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_10",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 1,
+        "sight": 1,
+        "spawns": 0,
+        "tick": 110,
+        "total_us": 87
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "guard",
+      "budget_violations": 0,
+      "composition": [],
+      "counts": {
+        "cover": 0,
+        "routes": 30,
+        "sight": 410
+      },
+      "cover_per_tick": 0.0,
+      "fielded": {
+        "": 10
+      },
+      "hostile_steps": 6000,
+      "hostile_us": {
+        "max": 69,
+        "mean": 2.82166666666667,
+        "p99": 11
+      },
+      "max": {
+        "alive": 10,
+        "cover": 0,
+        "routes": 1,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 1,
+      "routes_per_second": 2.99500831946755,
+      "seed": 20261106,
+      "sight_per_hostile": 0.0683333333333333,
+      "tick_us": {
+        "max": 81,
+        "mean": 28.1697171381032,
+        "p99": 63
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_10",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 1,
+        "sight": 1,
+        "spawns": 0,
+        "tick": 110,
+        "total_us": 81
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "guard",
+      "budget_violations": 0,
+      "composition": [],
+      "counts": {
+        "cover": 0,
+        "routes": 38,
+        "sight": 410
+      },
+      "cover_per_tick": 0.0,
+      "fielded": {
+        "": 10
+      },
+      "hostile_steps": 6000,
+      "hostile_us": {
+        "max": 73,
+        "mean": 2.8215,
+        "p99": 11
+      },
+      "max": {
+        "alive": 10,
+        "cover": 0,
+        "routes": 1,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 1,
+      "routes_per_second": 3.7936772046589,
+      "seed": 20261107,
+      "sight_per_hostile": 0.0683333333333333,
+      "tick_us": {
+        "max": 96,
+        "mean": 28.1680532445923,
+        "p99": 78
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_10",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 1,
+        "sight": 1,
+        "spawns": 0,
+        "tick": 151,
+        "total_us": 96
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "guard",
+      "budget_violations": 0,
+      "composition": [],
+      "counts": {
+        "cover": 0,
+        "routes": 148,
+        "sight": 1638
+      },
+      "cover_per_tick": 0.0,
+      "fielded": {
+        "": 40
+      },
+      "hostile_steps": 24000,
+      "hostile_us": {
+        "max": 100,
+        "mean": 2.486625,
+        "p99": 9
+      },
+      "max": {
+        "alive": 40,
+        "cover": 0,
+        "routes": 3,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 4,
+      "routes_per_second": 14.7753743760399,
+      "seed": 20261103,
+      "sight_per_hostile": 0.06825,
+      "tick_us": {
+        "max": 293,
+        "mean": 99.2995008319468,
+        "p99": 220
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_40",
+      "worst_tick": {
+        "alive": 40,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 4,
+        "routes": 3,
+        "sight": 3,
+        "spawns": 0,
+        "tick": 133,
+        "total_us": 293
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "guard",
+      "budget_violations": 0,
+      "composition": [],
+      "counts": {
+        "cover": 0,
+        "routes": 135,
+        "sight": 1638
+      },
+      "cover_per_tick": 0.0,
+      "fielded": {
+        "": 40
+      },
+      "hostile_steps": 24000,
+      "hostile_us": {
+        "max": 953,
+        "mean": 3.33666666666667,
+        "p99": 15
+      },
+      "max": {
+        "alive": 40,
+        "cover": 0,
+        "routes": 3,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 4,
+      "routes_per_second": 13.477537437604,
+      "seed": 20261104,
+      "sight_per_hostile": 0.06825,
+      "tick_us": {
+        "max": 1435,
+        "mean": 133.24459234609,
+        "p99": 425
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_40",
+      "worst_tick": {
+        "alive": 40,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 4,
+        "routes": 0,
+        "sight": 3,
+        "spawns": 0,
+        "tick": 576,
+        "total_us": 1435
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "guard",
+      "budget_violations": 0,
+      "composition": [],
+      "counts": {
+        "cover": 0,
+        "routes": 128,
+        "sight": 1638
+      },
+      "cover_per_tick": 0.0,
+      "fielded": {
+        "": 40
+      },
+      "hostile_steps": 24000,
+      "hostile_us": {
+        "max": 1537,
+        "mean": 4.136875,
+        "p99": 19
+      },
+      "max": {
+        "alive": 40,
+        "cover": 0,
+        "routes": 3,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 4,
+      "routes_per_second": 12.7787021630616,
+      "seed": 20261105,
+      "sight_per_hostile": 0.06825,
+      "tick_us": {
+        "max": 1801,
+        "mean": 165.199667221298,
+        "p99": 482
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_40",
+      "worst_tick": {
+        "alive": 40,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 4,
+        "routes": 0,
+        "sight": 3,
+        "spawns": 0,
+        "tick": 123,
+        "total_us": 1801
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "guard",
+      "budget_violations": 0,
+      "composition": [],
+      "counts": {
+        "cover": 0,
+        "routes": 126,
+        "sight": 1638
+      },
+      "cover_per_tick": 0.0,
+      "fielded": {
+        "": 40
+      },
+      "hostile_steps": 24000,
+      "hostile_us": {
+        "max": 474,
+        "mean": 3.88120833333333,
+        "p99": 17
+      },
+      "max": {
+        "alive": 40,
+        "cover": 0,
+        "routes": 3,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 4,
+      "routes_per_second": 12.5790349417637,
+      "seed": 20261106,
+      "sight_per_hostile": 0.06825,
+      "tick_us": {
+        "max": 661,
+        "mean": 154.990016638935,
+        "p99": 323
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_40",
+      "worst_tick": {
+        "alive": 40,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 4,
+        "routes": 0,
+        "sight": 3,
+        "spawns": 0,
+        "tick": 420,
+        "total_us": 661
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "guard",
+      "budget_violations": 0,
+      "composition": [],
+      "counts": {
+        "cover": 0,
+        "routes": 136,
+        "sight": 1638
+      },
+      "cover_per_tick": 0.0,
+      "fielded": {
+        "": 40
+      },
+      "hostile_steps": 24000,
+      "hostile_us": {
+        "max": 112,
+        "mean": 3.822125,
+        "p99": 14
+      },
+      "max": {
+        "alive": 40,
+        "cover": 0,
+        "routes": 3,
+        "sight_per_hostile": 1
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 4,
+      "routes_per_second": 13.5773710482529,
+      "seed": 20261107,
+      "sight_per_hostile": 0.06825,
+      "tick_us": {
+        "max": 404,
+        "mean": 152.630615640599,
+        "p99": 298
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_40",
+      "worst_tick": {
+        "alive": 40,
+        "assignment_us": 0,
+        "cover": 0,
+        "cover_limit": 4,
+        "routes": 2,
+        "sight": 40,
+        "spawns": 0,
+        "tick": 98,
+        "total_us": 404
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "squad",
+      "budget_violations": 0,
+      "composition": [
+        "contractor"
+      ],
+      "counts": {
+        "cover": 1513,
+        "routes": 1963,
+        "sight": 56387
+      },
+      "cover_per_tick": 0.240923566878981,
+      "fielded": {
+        "contractor": 88
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 847,
+        "mean": 27.5427462121212,
+        "p99": 109
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 18.7547770700637,
+      "seed": 20261103,
+      "sight_per_hostile": 1.06793560606061,
+      "tick_us": {
+        "max": 1675,
+        "mean": 306.029777070064,
+        "p99": 527
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "city_horde",
+      "worst_tick": {
+        "alive": 6,
+        "assignment_us": 178,
+        "cover": 1,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 7,
+        "spawns": 0,
+        "tick": 1274,
+        "total_us": 1675
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "squad",
+      "budget_violations": 0,
+      "composition": [
+        "contractor"
+      ],
+      "counts": {
+        "cover": 1562,
+        "routes": 2007,
+        "sight": 56132
+      },
+      "cover_per_tick": 0.248726114649682,
+      "fielded": {
+        "contractor": 88
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 1540,
+        "mean": 28.2909659090909,
+        "p99": 115
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 19.1751592356688,
+      "seed": 20261104,
+      "sight_per_hostile": 1.06310606060606,
+      "tick_us": {
+        "max": 2219,
+        "mean": 312.809872611465,
+        "p99": 622
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "city_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 101,
+        "cover": 1,
+        "cover_limit": 1,
+        "routes": 1,
+        "sight": 10,
+        "spawns": 0,
+        "tick": 5276,
+        "total_us": 2219
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "squad",
+      "budget_violations": 0,
+      "composition": [
+        "contractor"
+      ],
+      "counts": {
+        "cover": 1526,
+        "routes": 1979,
+        "sight": 56301
+      },
+      "cover_per_tick": 0.242993630573248,
+      "fielded": {
+        "contractor": 88
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 3339,
+        "mean": 29.293446969697,
+        "p99": 117
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 18.9076433121019,
+      "seed": 20261105,
+      "sight_per_hostile": 1.06630681818182,
+      "tick_us": {
+        "max": 3505,
+        "mean": 324.374522292994,
+        "p99": 589
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "city_horde",
+      "worst_tick": {
+        "alive": 6,
+        "assignment_us": 48,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 6,
+        "spawns": 0,
+        "tick": 1017,
+        "total_us": 3505
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "squad",
+      "budget_violations": 0,
+      "composition": [
+        "contractor"
+      ],
+      "counts": {
+        "cover": 1563,
+        "routes": 1990,
+        "sight": 56248
+      },
+      "cover_per_tick": 0.248885350318471,
+      "fielded": {
+        "contractor": 88
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 13673,
+        "mean": 25.304375,
+        "p99": 101
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 19.0127388535032,
+      "seed": 20261106,
+      "sight_per_hostile": 1.06530303030303,
+      "tick_us": {
+        "max": 14953,
+        "mean": 277.946815286624,
+        "p99": 626
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "city_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 128,
+        "cover": 1,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 11,
+        "spawns": 0,
+        "tick": 2388,
+        "total_us": 14953
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "squad",
+      "budget_violations": 0,
+      "composition": [
+        "contractor"
+      ],
+      "counts": {
+        "cover": 1542,
+        "routes": 1970,
+        "sight": 56007
+      },
+      "cover_per_tick": 0.245541401273885,
+      "fielded": {
+        "contractor": 88
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 287,
+        "mean": 20.5117803030303,
+        "p99": 80
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 18.8216560509554,
+      "seed": 20261107,
+      "sight_per_hostile": 1.06073863636364,
+      "tick_us": {
+        "max": 1426,
+        "mean": 227.289649681529,
+        "p99": 449
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "city_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 377,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 10,
+        "spawns": 0,
+        "tick": 4201,
+        "total_us": 1426
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "squad",
+      "budget_violations": 0,
+      "composition": [
+        "contractor"
+      ],
+      "counts": {
+        "cover": 1783,
+        "routes": 1532,
+        "sight": 59331
+      },
+      "cover_per_tick": 0.283917197452229,
+      "fielded": {
+        "contractor": 88
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 13056,
+        "mean": 23.098446969697,
+        "p99": 75
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 14.6369426751592,
+      "seed": 20261103,
+      "sight_per_hostile": 1.12369318181818,
+      "tick_us": {
+        "max": 13565,
+        "mean": 254.806369426752,
+        "p99": 1082
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "pit_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 175,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 11,
+        "spawns": 0,
+        "tick": 2927,
+        "total_us": 13565
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "squad",
+      "budget_violations": 0,
+      "composition": [
+        "contractor"
+      ],
+      "counts": {
+        "cover": 1768,
+        "routes": 1588,
+        "sight": 59009
+      },
+      "cover_per_tick": 0.281528662420382,
+      "fielded": {
+        "contractor": 88
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 145,
+        "mean": 18.6649810606061,
+        "p99": 59
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 15.171974522293,
+      "seed": 20261104,
+      "sight_per_hostile": 1.1175946969697,
+      "tick_us": {
+        "max": 560,
+        "mean": 207.925159235669,
+        "p99": 426
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "pit_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 124,
+        "cover": 1,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 11,
+        "spawns": 0,
+        "tick": 4560,
+        "total_us": 560
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "squad",
+      "budget_violations": 0,
+      "composition": [
+        "contractor"
+      ],
+      "counts": {
+        "cover": 1764,
+        "routes": 1477,
+        "sight": 60041
+      },
+      "cover_per_tick": 0.280891719745223,
+      "fielded": {
+        "contractor": 88
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 332,
+        "mean": 19.0870075757576,
+        "p99": 62
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 14.1114649681529,
+      "seed": 20261105,
+      "sight_per_hostile": 1.13714015151515,
+      "tick_us": {
+        "max": 983,
+        "mean": 212.070859872611,
+        "p99": 429
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "pit_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 130,
+        "cover": 1,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 12,
+        "spawns": 0,
+        "tick": 5373,
+        "total_us": 983
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "squad",
+      "budget_violations": 0,
+      "composition": [
+        "contractor"
+      ],
+      "counts": {
+        "cover": 1734,
+        "routes": 1521,
+        "sight": 59143
+      },
+      "cover_per_tick": 0.276114649681529,
+      "fielded": {
+        "contractor": 88
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 3646,
+        "mean": 23.092196969697,
+        "p99": 82
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 14.531847133758,
+      "seed": 20261106,
+      "sight_per_hostile": 1.12013257575758,
+      "tick_us": {
+        "max": 4140,
+        "mean": 257.000159235669,
+        "p99": 615
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "pit_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 109,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 1,
+        "sight": 12,
+        "spawns": 0,
+        "tick": 4554,
+        "total_us": 4140
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "squad",
+      "budget_violations": 0,
+      "composition": [
+        "contractor"
+      ],
+      "counts": {
+        "cover": 1772,
+        "routes": 1567,
+        "sight": 59548
+      },
+      "cover_per_tick": 0.282165605095541,
+      "fielded": {
+        "contractor": 88
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 3067,
+        "mean": 28.5488068181818,
+        "p99": 94
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 14.9713375796178,
+      "seed": 20261107,
+      "sight_per_hostile": 1.12780303030303,
+      "tick_us": {
+        "max": 3619,
+        "mean": 317.504936305732,
+        "p99": 584
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "pit_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 70,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 1,
+        "sight": 11,
+        "spawns": 0,
+        "tick": 2337,
+        "total_us": 3619
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "squad",
+      "budget_violations": 0,
+      "composition": [
+        "contractor"
+      ],
+      "counts": {
+        "cover": 200,
+        "routes": 171,
+        "sight": 6566
+      },
+      "cover_per_tick": 0.332778702163062,
+      "fielded": {
+        "contractor": 10
+      },
+      "hostile_steps": 6000,
+      "hostile_us": {
+        "max": 330,
+        "mean": 25.0058333333333,
+        "p99": 82
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 17.0715474209651,
+      "seed": 20261103,
+      "sight_per_hostile": 1.09433333333333,
+      "tick_us": {
+        "max": 706,
+        "mean": 319.254575707155,
+        "p99": 505
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_10",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 112,
+        "cover": 1,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 11,
+        "spawns": 0,
+        "tick": 460,
+        "total_us": 706
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "squad",
+      "budget_violations": 0,
+      "composition": [
+        "contractor"
+      ],
+      "counts": {
+        "cover": 238,
+        "routes": 213,
+        "sight": 6605
+      },
+      "cover_per_tick": 0.396006655574043,
+      "fielded": {
+        "contractor": 10
+      },
+      "hostile_steps": 6000,
+      "hostile_us": {
+        "max": 169,
+        "mean": 29.3348333333333,
+        "p99": 99
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 21.2645590682196,
+      "seed": 20261104,
+      "sight_per_hostile": 1.10083333333333,
+      "tick_us": {
+        "max": 503,
+        "mean": 376.722129783694,
+        "p99": 485
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_10",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 109,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 1,
+        "sight": 10,
+        "spawns": 0,
+        "tick": 148,
+        "total_us": 503
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "squad",
+      "budget_violations": 0,
+      "composition": [
+        "contractor"
+      ],
+      "counts": {
+        "cover": 216,
+        "routes": 159,
+        "sight": 6597
+      },
+      "cover_per_tick": 0.359400998336107,
+      "fielded": {
+        "contractor": 10
+      },
+      "hostile_steps": 6000,
+      "hostile_us": {
+        "max": 207,
+        "mean": 25.1591666666667,
+        "p99": 79
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 15.873544093178,
+      "seed": 20261105,
+      "sight_per_hostile": 1.0995,
+      "tick_us": {
+        "max": 826,
+        "mean": 320.943427620632,
+        "p99": 507
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_10",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 131,
+        "cover": 1,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 11,
+        "spawns": 0,
+        "tick": 416,
+        "total_us": 826
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "squad",
+      "budget_violations": 0,
+      "composition": [
+        "contractor"
+      ],
+      "counts": {
+        "cover": 195,
+        "routes": 171,
+        "sight": 6469
+      },
+      "cover_per_tick": 0.324459234608985,
+      "fielded": {
+        "contractor": 10
+      },
+      "hostile_steps": 6000,
+      "hostile_us": {
+        "max": 278,
+        "mean": 27.1305,
+        "p99": 85
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 17.0715474209651,
+      "seed": 20261106,
+      "sight_per_hostile": 1.07816666666667,
+      "tick_us": {
+        "max": 933,
+        "mean": 347.542429284526,
+        "p99": 496
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_10",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 106,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 11,
+        "spawns": 0,
+        "tick": 518,
+        "total_us": 933
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "squad",
+      "budget_violations": 0,
+      "composition": [
+        "contractor"
+      ],
+      "counts": {
+        "cover": 217,
+        "routes": 176,
+        "sight": 6521
+      },
+      "cover_per_tick": 0.361064891846922,
+      "fielded": {
+        "contractor": 10
+      },
+      "hostile_steps": 6000,
+      "hostile_us": {
+        "max": 187,
+        "mean": 29.659,
+        "p99": 92
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 17.5707154742096,
+      "seed": 20261107,
+      "sight_per_hostile": 1.08683333333333,
+      "tick_us": {
+        "max": 560,
+        "mean": 380.658901830283,
+        "p99": 509
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_10",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 229,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 10,
+        "spawns": 0,
+        "tick": 98,
+        "total_us": 560
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "squad",
+      "budget_violations": 0,
+      "composition": [
+        "contractor"
+      ],
+      "counts": {
+        "cover": 1094,
+        "routes": 862,
+        "sight": 24843
+      },
+      "cover_per_tick": 1.82029950083195,
+      "fielded": {
+        "contractor": 40
+      },
+      "hostile_steps": 24000,
+      "hostile_us": {
+        "max": 945,
+        "mean": 58.980125,
+        "p99": 148
+      },
+      "max": {
+        "alive": 40,
+        "cover": 4,
+        "routes": 2,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 86.0565723793677,
+      "seed": 20261103,
+      "sight_per_hostile": 1.035125,
+      "tick_us": {
+        "max": 4610,
+        "mean": 2724.47420965058,
+        "p99": 3566
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_40",
+      "worst_tick": {
+        "alive": 40,
+        "assignment_us": 431,
+        "cover": 1,
+        "cover_limit": 4,
+        "routes": 2,
+        "sight": 42,
+        "spawns": 0,
+        "tick": 670,
+        "total_us": 4610
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "squad",
+      "budget_violations": 0,
+      "composition": [
+        "contractor"
+      ],
+      "counts": {
+        "cover": 1152,
+        "routes": 863,
+        "sight": 24860
+      },
+      "cover_per_tick": 1.91680532445923,
+      "fielded": {
+        "contractor": 40
+      },
+      "hostile_steps": 24000,
+      "hostile_us": {
+        "max": 466,
+        "mean": 62.6512916666667,
+        "p99": 149
+      },
+      "max": {
+        "alive": 40,
+        "cover": 4,
+        "routes": 2,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 86.1564059900166,
+      "seed": 20261104,
+      "sight_per_hostile": 1.03583333333333,
+      "tick_us": {
+        "max": 3610,
+        "mean": 2904.90183028286,
+        "p99": 3564
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_40",
+      "worst_tick": {
+        "alive": 40,
+        "assignment_us": 623,
+        "cover": 4,
+        "cover_limit": 4,
+        "routes": 2,
+        "sight": 40,
+        "spawns": 0,
+        "tick": 189,
+        "total_us": 3610
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "squad",
+      "budget_violations": 0,
+      "composition": [
+        "contractor"
+      ],
+      "counts": {
+        "cover": 1144,
+        "routes": 816,
+        "sight": 24932
+      },
+      "cover_per_tick": 1.90349417637271,
+      "fielded": {
+        "contractor": 40
+      },
+      "hostile_steps": 24000,
+      "hostile_us": {
+        "max": 678,
+        "mean": 62.6306666666667,
+        "p99": 149
+      },
+      "max": {
+        "alive": 40,
+        "cover": 4,
+        "routes": 2,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 81.4642262895175,
+      "seed": 20261105,
+      "sight_per_hostile": 1.03883333333333,
+      "tick_us": {
+        "max": 4511,
+        "mean": 2898.86855241265,
+        "p99": 3560
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_40",
+      "worst_tick": {
+        "alive": 40,
+        "assignment_us": 436,
+        "cover": 1,
+        "cover_limit": 4,
+        "routes": 2,
+        "sight": 42,
+        "spawns": 0,
+        "tick": 471,
+        "total_us": 4511
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "squad",
+      "budget_violations": 0,
+      "composition": [
+        "contractor"
+      ],
+      "counts": {
+        "cover": 1092,
+        "routes": 903,
+        "sight": 24846
+      },
+      "cover_per_tick": 1.81697171381032,
+      "fielded": {
+        "contractor": 40
+      },
+      "hostile_steps": 24000,
+      "hostile_us": {
+        "max": 288,
+        "mean": 60.3674583333333,
+        "p99": 153
+      },
+      "max": {
+        "alive": 40,
+        "cover": 4,
+        "routes": 2,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 90.1497504159734,
+      "seed": 20261106,
+      "sight_per_hostile": 1.03525,
+      "tick_us": {
+        "max": 3887,
+        "mean": 2788.06655574043,
+        "p99": 3608
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_40",
+      "worst_tick": {
+        "alive": 40,
+        "assignment_us": 811,
+        "cover": 1,
+        "cover_limit": 4,
+        "routes": 1,
+        "sight": 40,
+        "spawns": 0,
+        "tick": 98,
+        "total_us": 3887
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "squad",
+      "budget_violations": 0,
+      "composition": [
+        "contractor"
+      ],
+      "counts": {
+        "cover": 1103,
+        "routes": 828,
+        "sight": 24846
+      },
+      "cover_per_tick": 1.83527454242928,
+      "fielded": {
+        "contractor": 40
+      },
+      "hostile_steps": 24000,
+      "hostile_us": {
+        "max": 762,
+        "mean": 65.1173333333333,
+        "p99": 154
+      },
+      "max": {
+        "alive": 40,
+        "cover": 4,
+        "routes": 2,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 82.6622296173045,
+      "seed": 20261107,
+      "sight_per_hostile": 1.03525,
+      "tick_us": {
+        "max": 4035,
+        "mean": 3009.72212978369,
+        "p99": 3615
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_40",
+      "worst_tick": {
+        "alive": 40,
+        "assignment_us": 430,
+        "cover": 0,
+        "cover_limit": 4,
+        "routes": 2,
+        "sight": 42,
+        "spawns": 0,
+        "tick": 261,
+        "total_us": 4035
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "mixed",
+      "budget_violations": 0,
+      "composition": [
+        "patrol_cop",
+        "swat",
+        "riot_cop",
+        "robot_thug",
+        "robot_gunner",
+        "contractor"
+      ],
+      "counts": {
+        "cover": 622,
+        "routes": 1512,
+        "sight": 57065
+      },
+      "cover_per_tick": 0.0990445859872612,
+      "fielded": {
+        "contractor": 14,
+        "patrol_cop": 15,
+        "riot_cop": 15,
+        "robot_gunner": 14,
+        "robot_thug": 16,
+        "swat": 14
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 176,
+        "mean": 23.5202083333333,
+        "p99": 88
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 14.4458598726115,
+      "seed": 20261103,
+      "sight_per_hostile": 1.08077651515152,
+      "tick_us": {
+        "max": 741,
+        "mean": 254.69872611465,
+        "p99": 473
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "city_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 142,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 11,
+        "spawns": 0,
+        "tick": 2894,
+        "total_us": 741
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "mixed",
+      "budget_violations": 0,
+      "composition": [
+        "patrol_cop",
+        "swat",
+        "riot_cop",
+        "robot_thug",
+        "robot_gunner",
+        "contractor"
+      ],
+      "counts": {
+        "cover": 620,
+        "routes": 1769,
+        "sight": 57119
+      },
+      "cover_per_tick": 0.0987261146496815,
+      "fielded": {
+        "contractor": 14,
+        "patrol_cop": 15,
+        "riot_cop": 15,
+        "robot_gunner": 14,
+        "robot_thug": 16,
+        "swat": 14
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 203,
+        "mean": 25.2650757575758,
+        "p99": 95
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 16.9012738853503,
+      "seed": 20261104,
+      "sight_per_hostile": 1.08179924242424,
+      "tick_us": {
+        "max": 600,
+        "mean": 274.134554140127,
+        "p99": 502
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "city_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 126,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 10,
+        "spawns": 0,
+        "tick": 5917,
+        "total_us": 600
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "mixed",
+      "budget_violations": 0,
+      "composition": [
+        "patrol_cop",
+        "swat",
+        "riot_cop",
+        "robot_thug",
+        "robot_gunner",
+        "contractor"
+      ],
+      "counts": {
+        "cover": 617,
+        "routes": 1700,
+        "sight": 56933
+      },
+      "cover_per_tick": 0.0982484076433121,
+      "fielded": {
+        "contractor": 14,
+        "patrol_cop": 15,
+        "riot_cop": 15,
+        "robot_gunner": 14,
+        "robot_thug": 16,
+        "swat": 14
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 210,
+        "mean": 27.6605871212121,
+        "p99": 99
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 16.2420382165605,
+      "seed": 20261105,
+      "sight_per_hostile": 1.07827651515152,
+      "tick_us": {
+        "max": 1039,
+        "mean": 299.919585987261,
+        "p99": 499
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "city_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 430,
+        "cover": 1,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 10,
+        "spawns": 0,
+        "tick": 2687,
+        "total_us": 1039
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "mixed",
+      "budget_violations": 0,
+      "composition": [
+        "patrol_cop",
+        "swat",
+        "riot_cop",
+        "robot_thug",
+        "robot_gunner",
+        "contractor"
+      ],
+      "counts": {
+        "cover": 618,
+        "routes": 1706,
+        "sight": 56358
+      },
+      "cover_per_tick": 0.0984076433121019,
+      "fielded": {
+        "contractor": 14,
+        "patrol_cop": 15,
+        "riot_cop": 15,
+        "robot_gunner": 14,
+        "robot_thug": 16,
+        "swat": 14
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 700,
+        "mean": 25.6340909090909,
+        "p99": 89
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 16.2993630573248,
+      "seed": 20261106,
+      "sight_per_hostile": 1.06738636363636,
+      "tick_us": {
+        "max": 1019,
+        "mean": 278.430095541401,
+        "p99": 459
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "city_horde",
+      "worst_tick": {
+        "alive": 8,
+        "assignment_us": 83,
+        "cover": 1,
+        "cover_limit": 1,
+        "routes": 1,
+        "sight": 8,
+        "spawns": 0,
+        "tick": 1521,
+        "total_us": 1019
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "mixed",
+      "budget_violations": 0,
+      "composition": [
+        "patrol_cop",
+        "swat",
+        "riot_cop",
+        "robot_thug",
+        "robot_gunner",
+        "contractor"
+      ],
+      "counts": {
+        "cover": 611,
+        "routes": 1762,
+        "sight": 56713
+      },
+      "cover_per_tick": 0.0972929936305733,
+      "fielded": {
+        "contractor": 14,
+        "patrol_cop": 15,
+        "riot_cop": 15,
+        "robot_gunner": 14,
+        "robot_thug": 16,
+        "swat": 14
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 208,
+        "mean": 25.4407575757576,
+        "p99": 91
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 16.8343949044586,
+      "seed": 20261107,
+      "sight_per_hostile": 1.07410984848485,
+      "tick_us": {
+        "max": 729,
+        "mean": 276.119267515924,
+        "p99": 479
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "city_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 130,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 1,
+        "sight": 11,
+        "spawns": 0,
+        "tick": 5949,
+        "total_us": 729
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "mixed",
+      "budget_violations": 0,
+      "composition": [
+        "patrol_cop",
+        "swat",
+        "riot_cop",
+        "robot_thug",
+        "robot_gunner",
+        "contractor"
+      ],
+      "counts": {
+        "cover": 663,
+        "routes": 1129,
+        "sight": 59458
+      },
+      "cover_per_tick": 0.105573248407643,
+      "fielded": {
+        "contractor": 14,
+        "patrol_cop": 15,
+        "riot_cop": 15,
+        "robot_gunner": 14,
+        "robot_thug": 16,
+        "swat": 14
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 177,
+        "mean": 23.2087310606061,
+        "p99": 65
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 10.7866242038217,
+      "seed": 20261103,
+      "sight_per_hostile": 1.12609848484848,
+      "tick_us": {
+        "max": 706,
+        "mean": 255.686146496815,
+        "p99": 453
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "pit_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 179,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 12,
+        "spawns": 0,
+        "tick": 4634,
+        "total_us": 706
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "mixed",
+      "budget_violations": 0,
+      "composition": [
+        "patrol_cop",
+        "swat",
+        "riot_cop",
+        "robot_thug",
+        "robot_gunner",
+        "contractor"
+      ],
+      "counts": {
+        "cover": 648,
+        "routes": 1142,
+        "sight": 59447
+      },
+      "cover_per_tick": 0.103184713375796,
+      "fielded": {
+        "contractor": 14,
+        "patrol_cop": 15,
+        "riot_cop": 15,
+        "robot_gunner": 14,
+        "robot_thug": 16,
+        "swat": 14
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 21179,
+        "mean": 26.0319128787879,
+        "p99": 71
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 10.9108280254777,
+      "seed": 20261104,
+      "sight_per_hostile": 1.12589015151515,
+      "tick_us": {
+        "max": 21409,
+        "mean": 282.054617834395,
+        "p99": 838
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "pit_horde",
+      "worst_tick": {
+        "alive": 8,
+        "assignment_us": 63,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 10,
+        "spawns": 0,
+        "tick": 1407,
+        "total_us": 21409
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "mixed",
+      "budget_violations": 0,
+      "composition": [
+        "patrol_cop",
+        "swat",
+        "riot_cop",
+        "robot_thug",
+        "robot_gunner",
+        "contractor"
+      ],
+      "counts": {
+        "cover": 660,
+        "routes": 1115,
+        "sight": 59396
+      },
+      "cover_per_tick": 0.105095541401274,
+      "fielded": {
+        "contractor": 14,
+        "patrol_cop": 15,
+        "riot_cop": 15,
+        "robot_gunner": 14,
+        "robot_thug": 16,
+        "swat": 14
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 378,
+        "mean": 25.6671212121212,
+        "p99": 70
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 10.6528662420382,
+      "seed": 20261105,
+      "sight_per_hostile": 1.12492424242424,
+      "tick_us": {
+        "max": 1018,
+        "mean": 282.737579617834,
+        "p99": 462
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "pit_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 210,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 11,
+        "spawns": 0,
+        "tick": 5189,
+        "total_us": 1018
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "mixed",
+      "budget_violations": 0,
+      "composition": [
+        "patrol_cop",
+        "swat",
+        "riot_cop",
+        "robot_thug",
+        "robot_gunner",
+        "contractor"
+      ],
+      "counts": {
+        "cover": 601,
+        "routes": 1162,
+        "sight": 58866
+      },
+      "cover_per_tick": 0.0957006369426752,
+      "fielded": {
+        "contractor": 14,
+        "patrol_cop": 15,
+        "riot_cop": 15,
+        "robot_gunner": 14,
+        "robot_thug": 16,
+        "swat": 14
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 2431,
+        "mean": 19.4755871212121,
+        "p99": 58
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 11.1019108280255,
+      "seed": 20261106,
+      "sight_per_hostile": 1.11488636363636,
+      "tick_us": {
+        "max": 9023,
+        "mean": 215.704140127389,
+        "p99": 484
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "pit_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 8666,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 11,
+        "spawns": 0,
+        "tick": 6344,
+        "total_us": 9023
+      }
+    },
+    {
+      "active_ticks": 6000,
+      "brain": "mixed",
+      "budget_violations": 0,
+      "composition": [
+        "patrol_cop",
+        "swat",
+        "riot_cop",
+        "robot_thug",
+        "robot_gunner",
+        "contractor"
+      ],
+      "counts": {
+        "cover": 628,
+        "routes": 1031,
+        "sight": 59525
+      },
+      "cover_per_tick": 0.1,
+      "fielded": {
+        "contractor": 14,
+        "patrol_cop": 15,
+        "riot_cop": 15,
+        "robot_gunner": 14,
+        "robot_thug": 16,
+        "swat": 14
+      },
+      "hostile_steps": 52800,
+      "hostile_us": {
+        "max": 2500,
+        "mean": 26.748428030303,
+        "p99": 81
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 9.85031847133758,
+      "seed": 20261107,
+      "sight_per_hostile": 1.12736742424242,
+      "tick_us": {
+        "max": 3006,
+        "mean": 293.896974522293,
+        "p99": 612
+      },
+      "ticks": 6280,
+      "valid": true,
+      "wave": 10,
+      "waves_cleared": 9,
+      "workload": "pit_horde",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 151,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 1,
+        "sight": 11,
+        "spawns": 0,
+        "tick": 3968,
+        "total_us": 3006
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "mixed",
+      "budget_violations": 0,
+      "composition": [
+        "patrol_cop",
+        "swat",
+        "riot_cop",
+        "robot_thug",
+        "robot_gunner",
+        "contractor"
+      ],
+      "counts": {
+        "cover": 72,
+        "routes": 154,
+        "sight": 6686
+      },
+      "cover_per_tick": 0.119800332778702,
+      "fielded": {
+        "contractor": 1,
+        "patrol_cop": 2,
+        "riot_cop": 2,
+        "robot_gunner": 1,
+        "robot_thug": 2,
+        "swat": 2
+      },
+      "hostile_steps": 6000,
+      "hostile_us": {
+        "max": 179,
+        "mean": 26.1493333333333,
+        "p99": 77
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 15.3743760399334,
+      "seed": 20261103,
+      "sight_per_hostile": 1.11433333333333,
+      "tick_us": {
+        "max": 700,
+        "mean": 329.417637271215,
+        "p99": 484
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_10",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 199,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 12,
+        "spawns": 0,
+        "tick": 403,
+        "total_us": 700
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "mixed",
+      "budget_violations": 0,
+      "composition": [
+        "patrol_cop",
+        "swat",
+        "riot_cop",
+        "robot_thug",
+        "robot_gunner",
+        "contractor"
+      ],
+      "counts": {
+        "cover": 84,
+        "routes": 162,
+        "sight": 6705
+      },
+      "cover_per_tick": 0.139767054908486,
+      "fielded": {
+        "contractor": 1,
+        "patrol_cop": 2,
+        "riot_cop": 2,
+        "robot_gunner": 1,
+        "robot_thug": 2,
+        "swat": 2
+      },
+      "hostile_steps": 6000,
+      "hostile_us": {
+        "max": 166,
+        "mean": 25.5816666666667,
+        "p99": 74
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 16.1730449251248,
+      "seed": 20261104,
+      "sight_per_hostile": 1.1175,
+      "tick_us": {
+        "max": 590,
+        "mean": 322.316139767055,
+        "p99": 452
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_10",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 107,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 1,
+        "sight": 11,
+        "spawns": 0,
+        "tick": 546,
+        "total_us": 590
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "mixed",
+      "budget_violations": 0,
+      "composition": [
+        "patrol_cop",
+        "swat",
+        "riot_cop",
+        "robot_thug",
+        "robot_gunner",
+        "contractor"
+      ],
+      "counts": {
+        "cover": 77,
+        "routes": 159,
+        "sight": 6564
+      },
+      "cover_per_tick": 0.128119800332779,
+      "fielded": {
+        "contractor": 1,
+        "patrol_cop": 2,
+        "riot_cop": 2,
+        "robot_gunner": 1,
+        "robot_thug": 2,
+        "swat": 2
+      },
+      "hostile_steps": 6000,
+      "hostile_us": {
+        "max": 792,
+        "mean": 26.741,
+        "p99": 89
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 15.873544093178,
+      "seed": 20261105,
+      "sight_per_hostile": 1.094,
+      "tick_us": {
+        "max": 1413,
+        "mean": 335.633943427621,
+        "p99": 501
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_10",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 88,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 12,
+        "spawns": 0,
+        "tick": 620,
+        "total_us": 1413
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "mixed",
+      "budget_violations": 0,
+      "composition": [
+        "patrol_cop",
+        "swat",
+        "riot_cop",
+        "robot_thug",
+        "robot_gunner",
+        "contractor"
+      ],
+      "counts": {
+        "cover": 71,
+        "routes": 142,
+        "sight": 6638
+      },
+      "cover_per_tick": 0.118136439267887,
+      "fielded": {
+        "contractor": 1,
+        "patrol_cop": 2,
+        "riot_cop": 2,
+        "robot_gunner": 1,
+        "robot_thug": 2,
+        "swat": 2
+      },
+      "hostile_steps": 6000,
+      "hostile_us": {
+        "max": 199,
+        "mean": 25.3921666666667,
+        "p99": 79
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 14.1763727121464,
+      "seed": 20261106,
+      "sight_per_hostile": 1.10633333333333,
+      "tick_us": {
+        "max": 608,
+        "mean": 318.178036605657,
+        "p99": 484
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_10",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 235,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 1,
+        "sight": 10,
+        "spawns": 0,
+        "tick": 98,
+        "total_us": 608
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "mixed",
+      "budget_violations": 0,
+      "composition": [
+        "patrol_cop",
+        "swat",
+        "riot_cop",
+        "robot_thug",
+        "robot_gunner",
+        "contractor"
+      ],
+      "counts": {
+        "cover": 61,
+        "routes": 145,
+        "sight": 6582
+      },
+      "cover_per_tick": 0.101497504159734,
+      "fielded": {
+        "contractor": 1,
+        "patrol_cop": 2,
+        "riot_cop": 2,
+        "robot_gunner": 1,
+        "robot_thug": 2,
+        "swat": 2
+      },
+      "hostile_steps": 6000,
+      "hostile_us": {
+        "max": 203,
+        "mean": 25.8085,
+        "p99": 77
+      },
+      "max": {
+        "alive": 10,
+        "cover": 1,
+        "routes": 1,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 14.4758735440932,
+      "seed": 20261107,
+      "sight_per_hostile": 1.097,
+      "tick_us": {
+        "max": 673,
+        "mean": 323.71381031614,
+        "p99": 462
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_10",
+      "worst_tick": {
+        "alive": 10,
+        "assignment_us": 350,
+        "cover": 0,
+        "cover_limit": 1,
+        "routes": 0,
+        "sight": 11,
+        "spawns": 0,
+        "tick": 688,
+        "total_us": 673
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "mixed",
+      "budget_violations": 0,
+      "composition": [
+        "patrol_cop",
+        "swat",
+        "riot_cop",
+        "robot_thug",
+        "robot_gunner",
+        "contractor"
+      ],
+      "counts": {
+        "cover": 469,
+        "routes": 649,
+        "sight": 24678
+      },
+      "cover_per_tick": 0.780366056572379,
+      "fielded": {
+        "contractor": 6,
+        "patrol_cop": 7,
+        "riot_cop": 7,
+        "robot_gunner": 6,
+        "robot_thug": 7,
+        "swat": 7
+      },
+      "hostile_steps": 24000,
+      "hostile_us": {
+        "max": 314,
+        "mean": 56.4865,
+        "p99": 119
+      },
+      "max": {
+        "alive": 40,
+        "cover": 4,
+        "routes": 2,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 64.7920133111481,
+      "seed": 20261103,
+      "sight_per_hostile": 1.02825,
+      "tick_us": {
+        "max": 3585,
+        "mean": 2575.35773710483,
+        "p99": 3417
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_40",
+      "worst_tick": {
+        "alive": 40,
+        "assignment_us": 427,
+        "cover": 2,
+        "cover_limit": 4,
+        "routes": 2,
+        "sight": 41,
+        "spawns": 0,
+        "tick": 154,
+        "total_us": 3585
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "mixed",
+      "budget_violations": 0,
+      "composition": [
+        "patrol_cop",
+        "swat",
+        "riot_cop",
+        "robot_thug",
+        "robot_gunner",
+        "contractor"
+      ],
+      "counts": {
+        "cover": 478,
+        "routes": 604,
+        "sight": 24765
+      },
+      "cover_per_tick": 0.795341098169717,
+      "fielded": {
+        "contractor": 6,
+        "patrol_cop": 7,
+        "riot_cop": 7,
+        "robot_gunner": 6,
+        "robot_thug": 7,
+        "swat": 7
+      },
+      "hostile_steps": 24000,
+      "hostile_us": {
+        "max": 250,
+        "mean": 60.059,
+        "p99": 121
+      },
+      "max": {
+        "alive": 40,
+        "cover": 4,
+        "routes": 2,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 60.2995008319468,
+      "seed": 20261104,
+      "sight_per_hostile": 1.031875,
+      "tick_us": {
+        "max": 3719,
+        "mean": 2741.99168053245,
+        "p99": 3585
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_40",
+      "worst_tick": {
+        "alive": 40,
+        "assignment_us": 542,
+        "cover": 3,
+        "cover_limit": 4,
+        "routes": 2,
+        "sight": 40,
+        "spawns": 0,
+        "tick": 191,
+        "total_us": 3719
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "mixed",
+      "budget_violations": 0,
+      "composition": [
+        "patrol_cop",
+        "swat",
+        "riot_cop",
+        "robot_thug",
+        "robot_gunner",
+        "contractor"
+      ],
+      "counts": {
+        "cover": 463,
+        "routes": 613,
+        "sight": 24852
+      },
+      "cover_per_tick": 0.770382695507488,
+      "fielded": {
+        "contractor": 6,
+        "patrol_cop": 7,
+        "riot_cop": 7,
+        "robot_gunner": 6,
+        "robot_thug": 7,
+        "swat": 7
+      },
+      "hostile_steps": 24000,
+      "hostile_us": {
+        "max": 440,
+        "mean": 64.1106666666667,
+        "p99": 122
+      },
+      "max": {
+        "alive": 40,
+        "cover": 4,
+        "routes": 2,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 61.198003327787,
+      "seed": 20261105,
+      "sight_per_hostile": 1.0355,
+      "tick_us": {
+        "max": 4037,
+        "mean": 2913.2762063228,
+        "p99": 3387
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_40",
+      "worst_tick": {
+        "alive": 40,
+        "assignment_us": 400,
+        "cover": 2,
+        "cover_limit": 4,
+        "routes": 1,
+        "sight": 42,
+        "spawns": 0,
+        "tick": 304,
+        "total_us": 4037
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "mixed",
+      "budget_violations": 0,
+      "composition": [
+        "patrol_cop",
+        "swat",
+        "riot_cop",
+        "robot_thug",
+        "robot_gunner",
+        "contractor"
+      ],
+      "counts": {
+        "cover": 443,
+        "routes": 606,
+        "sight": 24818
+      },
+      "cover_per_tick": 0.737104825291181,
+      "fielded": {
+        "contractor": 6,
+        "patrol_cop": 7,
+        "riot_cop": 7,
+        "robot_gunner": 6,
+        "robot_thug": 7,
+        "swat": 7
+      },
+      "hostile_steps": 24000,
+      "hostile_us": {
+        "max": 227,
+        "mean": 57.3264166666667,
+        "p99": 116
+      },
+      "max": {
+        "alive": 40,
+        "cover": 4,
+        "routes": 2,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 60.4991680532446,
+      "seed": 20261106,
+      "sight_per_hostile": 1.03408333333333,
+      "tick_us": {
+        "max": 3606,
+        "mean": 2618.30948419301,
+        "p99": 3512
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_40",
+      "worst_tick": {
+        "alive": 40,
+        "assignment_us": 455,
+        "cover": 1,
+        "cover_limit": 4,
+        "routes": 2,
+        "sight": 42,
+        "spawns": 0,
+        "tick": 460,
+        "total_us": 3606
+      }
+    },
+    {
+      "active_ticks": 600,
+      "brain": "mixed",
+      "budget_violations": 0,
+      "composition": [
+        "patrol_cop",
+        "swat",
+        "riot_cop",
+        "robot_thug",
+        "robot_gunner",
+        "contractor"
+      ],
+      "counts": {
+        "cover": 432,
+        "routes": 597,
+        "sight": 24924
+      },
+      "cover_per_tick": 0.718801996672213,
+      "fielded": {
+        "contractor": 6,
+        "patrol_cop": 7,
+        "riot_cop": 7,
+        "robot_gunner": 6,
+        "robot_thug": 7,
+        "swat": 7
+      },
+      "hostile_steps": 24000,
+      "hostile_us": {
+        "max": 286,
+        "mean": 60.9021666666667,
+        "p99": 121
+      },
+      "max": {
+        "alive": 40,
+        "cover": 4,
+        "routes": 2,
+        "sight_per_hostile": 2
+      },
+      "min_cover_slack": 0,
+      "min_cover_slack_with_spawns": 0,
+      "routes_per_second": 59.6006655574043,
+      "seed": 20261107,
+      "sight_per_hostile": 1.0385,
+      "tick_us": {
+        "max": 3504,
+        "mean": 2773.95673876872,
+        "p99": 3398
+      },
+      "ticks": 601,
+      "valid": true,
+      "wave": 1,
+      "waves_cleared": 0,
+      "workload": "pit_40",
+      "worst_tick": {
+        "alive": 40,
+        "assignment_us": 628,
+        "cover": 3,
+        "cover_limit": 4,
+        "routes": 1,
+        "sight": 41,
+        "spawns": 0,
+        "tick": 210,
+        "total_us": 3504
+      }
+    }
+  ],
+  "gate_path": "build/perf/fight-gate/n19-a4b-complete/gate.json",
+  "gate": {
+    "schema": "gtai.fight-gate/1",
+    "when": "2026-11-18T22:59:21.144Z",
+    "contendedStart": false,
+    "arms": [
+      {
+        "name": "old",
+        "user": [
+          "--enemy-brain=guard"
+        ]
+      },
+      {
+        "name": "squad",
+        "user": [
+          "--enemy-brain=squad"
+        ]
+      },
+      {
+        "name": "mixed",
+        "user": [
+          "--enemy-brain=mixed"
+        ]
+      },
+      {
+        "name": "old~aa",
+        "user": [
+          "--enemy-brain=guard"
+        ],
+        "twin": true
+      }
+    ],
+    "scenes": {
+      "city": {
+        "summary": {
+          "medians": {
+            "old": {
+              "p50": 4.8420000076293945,
+              "p99": 9.144500255584715,
+              "worst": 39.3395004272461,
+              "over25": 3,
+              "cpu": 15.7578125,
+              "load": 3.126042170373398
+            },
+            "squad": {
+              "p50": 4.499500036239625,
+              "p99": 9.426000118255615,
+              "worst": 39.58399963378905,
+              "over25": 1,
+              "cpu": 15.1875,
+              "load": 3.756075383900797
+            },
+            "mixed": {
+              "p50": 4.61650013923645,
+              "p99": 9.003999710083011,
+              "worst": 38.350000381469755,
+              "over25": 1,
+              "cpu": 15.3984375,
+              "load": 3.3598844059547828
+            },
+            "old~aa": {
+              "p50": 4.944000005722045,
+              "p99": 9.53350019454956,
+              "worst": 40.5645008087158,
+              "over25": 3,
+              "cpu": 16.125,
+              "load": 3.3446344380879154
+            }
+          },
+          "floor": {
+            "p50": {
+              "n": 6,
+              "median": 0.04400014877318981,
+              "ci95": [
+                -0.008999824523930222,
+                0.1960000991821298
+              ],
+              "lower": 3,
+              "signP": 1,
+              "call": "WASH",
+              "halfWidth": 0.1960000991821298
+            },
+            "p99": {
+              "n": 6,
+              "median": 0.20399999618530007,
+              "ci95": [
+                0.02600002288818004,
+                2.3189992904663104
+              ],
+              "lower": 1,
+              "signP": 0.21875,
+              "call": "HIGHER",
+              "halfWidth": 2.3189992904663104
+            },
+            "worst": {
+              "n": 6,
+              "median": 1.0090007781982528,
+              "ci95": [
+                -10.590000152587898,
+                2.074001312255895
+              ],
+              "lower": 2,
+              "signP": 0.6875,
+              "call": "WASH",
+              "halfWidth": 10.590000152587898
+            },
+            "over25": {
+              "n": 6,
+              "median": 0,
+              "ci95": [
+                -1,
+                1
+              ],
+              "lower": 2,
+              "signP": 0.6875,
+              "call": "WASH",
+              "halfWidth": 1
+            },
+            "cpu": {
+              "n": 6,
+              "median": 0.1328125,
+              "ci95": [
+                -6.65625,
+                0.96875
+              ],
+              "lower": 2,
+              "signP": 0.6875,
+              "call": "WASH",
+              "halfWidth": 6.65625
+            }
+          },
+          "vsBase": {
+            "squad": {
+              "p50": {
+                "n": 6,
+                "median": -0.38250017166137473,
+                "ci95": [
+                  -0.4969997406005904,
+                  -0.23999977111815962
+                ],
+                "lower": 6,
+                "signP": 0.03125,
+                "call": "LOWER"
+              },
+              "p99": {
+                "n": 6,
+                "median": -0.9875001907348597,
+                "ci95": [
+                  -2.1549997329711905,
+                  4.777999877929659
+                ],
+                "lower": 4,
+                "signP": 0.6875,
+                "call": "WASH"
+              },
+              "worst": {
+                "n": 6,
+                "median": -0.15949821472170456,
+                "ci95": [
+                  -0.5890007019042969,
+                  4.4010009765625
+                ],
+                "lower": 3,
+                "signP": 1,
+                "call": "WASH"
+              },
+              "over25": {
+                "n": 6,
+                "median": -2,
+                "ci95": [
+                  -3,
+                  -2
+                ],
+                "lower": 6,
+                "signP": 0.03125,
+                "call": "LOWER"
+              },
+              "cpu": {
+                "n": 6,
+                "median": -1.359375,
+                "ci95": [
+                  -5.75,
+                  0.515625
+                ],
+                "lower": 5,
+                "signP": 0.21875,
+                "call": "WASH"
+              }
+            },
+            "mixed": {
+              "p50": {
+                "n": 6,
+                "median": -0.22549986839294522,
+                "ci95": [
+                  -0.2799997329712003,
+                  -0.1180000305175799
+                ],
+                "lower": 6,
+                "signP": 0.03125,
+                "call": "LOWER"
+              },
+              "p99": {
+                "n": 6,
+                "median": -0.04400014877318981,
+                "ci95": [
+                  -1.1129999160766602,
+                  0.9679994583129599
+                ],
+                "lower": 3,
+                "signP": 1,
+                "call": "WASH"
+              },
+              "worst": {
+                "n": 6,
+                "median": -0.9895000457763494,
+                "ci95": [
+                  -14.747001647949197,
+                  4.810001373291001
+                ],
+                "lower": 4,
+                "signP": 0.6875,
+                "call": "WASH"
+              },
+              "over25": {
+                "n": 6,
+                "median": -2,
+                "ci95": [
+                  -3,
+                  -2
+                ],
+                "lower": 6,
+                "signP": 0.03125,
+                "call": "LOWER"
+              },
+              "cpu": {
+                "n": 6,
+                "median": -0.359375,
+                "ci95": [
+                  -7.25,
+                  0
+                ],
+                "lower": 5,
+                "signP": 0.21875,
+                "call": "WASH"
+              }
+            }
+          }
+        },
+        "runs": [
+          {
+            "p50": 4.83900022506714,
+            "p99": 9.38700008392334,
+            "worst": 69.9209976196289,
+            "over25": 4,
+            "cpu": 22.96875,
+            "load": 3.181152491919752,
+            "frames": 2097,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 1,
+            "pre": null,
+            "waited": 0,
+            "arm": "old",
+            "round": 0
+          },
+          {
+            "p50": 4.49900007247925,
+            "p99": 9.48299980163574,
+            "worst": 40.3530006408691,
+            "over25": 1,
+            "cpu": 15.015625,
+            "load": 3.209369553550265,
+            "frames": 2030,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 1,
+            "pre": null,
+            "waited": 0,
+            "arm": "squad",
+            "round": 0
+          },
+          {
+            "p50": 4.59700012207031,
+            "p99": 10.3549995422363,
+            "worst": 37.2519989013672,
+            "over25": 1,
+            "cpu": 15.71875,
+            "load": 3.727947873143307,
+            "frames": 2031,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 1,
+            "pre": null,
+            "waited": 0,
+            "arm": "mixed",
+            "round": 0
+          },
+          {
+            "p50": 4.9520001411438,
+            "p99": 9.63199996948242,
+            "worst": 37.7019996643066,
+            "over25": 3,
+            "cpu": 16.3125,
+            "load": 3.5212733565369696,
+            "frames": 2088,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 1,
+            "pre": null,
+            "waited": 0,
+            "arm": "old~aa",
+            "round": 0
+          },
+          {
+            "p50": 4.7649998664856,
+            "p99": 8.82499980926514,
+            "worst": 39.1730003356934,
+            "over25": 3,
+            "cpu": 15.375,
+            "load": 2.337207104985911,
+            "frames": 2060,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 1,
+            "pre": null,
+            "waited": 0,
+            "arm": "old",
+            "round": 1
+          },
+          {
+            "p50": 4.75600004196167,
+            "p99": 8.98799991607666,
+            "worst": 41.1699981689453,
+            "over25": 3,
+            "cpu": 15.71875,
+            "load": 3.021503147723491,
+            "frames": 2048,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 1,
+            "pre": null,
+            "waited": 0,
+            "arm": "old~aa",
+            "round": 1
+          },
+          {
+            "p50": 4.4850001335144,
+            "p99": 7.71199989318848,
+            "worst": 37.7980003356934,
+            "over25": 1,
+            "cpu": 15.328125,
+            "load": 3.0068160216161615,
+            "frames": 2018,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 1,
+            "pre": null,
+            "waited": 0,
+            "arm": "mixed",
+            "round": 1
+          },
+          {
+            "p50": 4.5,
+            "p99": 13.6029996871948,
+            "worst": 38.8460006713867,
+            "over25": 1,
+            "cpu": 15.890625,
+            "load": 4.976063999114383,
+            "frames": 2002,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 1,
+            "pre": null,
+            "waited": 0,
+            "arm": "squad",
+            "round": 1
+          },
+          {
+            "p50": 4.64499998092651,
+            "p99": 9.03899955749512,
+            "worst": 43.2830009460449,
+            "over25": 1,
+            "cpu": 15.375,
+            "load": 3.5090571620941162,
+            "frames": 2031,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 3,
+            "pre": null,
+            "waited": 0,
+            "arm": "mixed",
+            "round": 2
+          },
+          {
+            "p50": 4.80000019073486,
+            "p99": 11.6260004043579,
+            "worst": 39.4309997558594,
+            "over25": 3,
+            "cpu": 15.9375,
+            "load": 3.1679955196388607,
+            "frames": 2075,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 2,
+            "pre": null,
+            "waited": 0,
+            "arm": "old~aa",
+            "round": 2
+          },
+          {
+            "p50": 4.80299997329712,
+            "p99": 9.42500019073486,
+            "worst": 38.4729995727539,
+            "over25": 3,
+            "cpu": 15.78125,
+            "load": 3.260100933043867,
+            "frames": 2039,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 2,
+            "pre": null,
+            "waited": 0,
+            "arm": "old",
+            "round": 2
+          },
+          {
+            "p50": 4.56300020217896,
+            "p99": 9.36900043487549,
+            "worst": 40.2509994506836,
+            "over25": 1,
+            "cpu": 15.359375,
+            "load": 4.302781214251329,
+            "frames": 2022,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 3,
+            "pre": null,
+            "waited": 0,
+            "arm": "squad",
+            "round": 2
+          },
+          {
+            "p50": 4.72900009155273,
+            "p99": 9.54199981689453,
+            "worst": 42.9679985046387,
+            "over25": 1,
+            "cpu": 15.625,
+            "load": 5.015372067944115,
+            "frames": 2017,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 3,
+            "pre": null,
+            "waited": 0,
+            "arm": "mixed",
+            "round": 3
+          },
+          {
+            "p50": 4.42199993133545,
+            "p99": 6.98299980163574,
+            "worst": 38.4970016479492,
+            "over25": 1,
+            "cpu": 14.5,
+            "load": 2.229463799420408,
+            "frames": 2025,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 1,
+            "pre": null,
+            "waited": 0,
+            "arm": "squad",
+            "round": 3
+          },
+          {
+            "p50": 4.84700012207031,
+            "p99": 8.90200042724609,
+            "worst": 38.4889984130859,
+            "over25": 3,
+            "cpu": 15.625,
+            "load": 2.7656373318057272,
+            "frames": 2056,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 2,
+            "pre": null,
+            "waited": 0,
+            "arm": "old",
+            "round": 3
+          },
+          {
+            "p50": 5.04300022125244,
+            "p99": 11.2209997177124,
+            "worst": 40.5629997253418,
+            "over25": 4,
+            "cpu": 16.59375,
+            "load": 3.9780270796073207,
+            "frames": 2054,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 2,
+            "pre": null,
+            "waited": 0,
+            "arm": "old~aa",
+            "round": 3
+          },
+          {
+            "p50": 8.0600004196167,
+            "p99": 13.7229995727539,
+            "worst": 52.4710006713867,
+            "over25": 7,
+            "cpu": 24.96875,
+            "load": 12.493925193362605,
+            "frames": 2133,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 2,
+            "pre": null,
+            "waited": 0,
+            "arm": "old",
+            "round": 4
+          },
+          {
+            "p50": 5.90899991989136,
+            "p99": 9.58399963378906,
+            "worst": 56.8720016479492,
+            "over25": 1,
+            "cpu": 19.21875,
+            "load": 8.970834596912837,
+            "frames": 2056,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 2,
+            "pre": null,
+            "waited": 0,
+            "arm": "squad",
+            "round": 4
+          },
+          {
+            "p50": 4.39400005340576,
+            "p99": 8.7480001449585,
+            "worst": 37.7239990234375,
+            "over25": 1,
+            "cpu": 14.578125,
+            "load": 2.048449244169207,
+            "frames": 1999,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 2,
+            "pre": null,
+            "waited": 0,
+            "arm": "mixed",
+            "round": 4
+          },
+          {
+            "p50": 5.10599994659424,
+            "p99": 9.4350004196167,
+            "worst": 41.8810005187988,
+            "over25": 4,
+            "cpu": 16.390625,
+            "load": 4.108356365431618,
+            "frames": 2073,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 2,
+            "pre": null,
+            "waited": 0,
+            "arm": "old~aa",
+            "round": 4
+          },
+          {
+            "p50": 4.84499979019165,
+            "p99": 8.67099952697754,
+            "worst": 39.5060005187988,
+            "over25": 3,
+            "cpu": 15.734375,
+            "load": 3.070931848827044,
+            "frames": 2057,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 2,
+            "pre": null,
+            "waited": 0,
+            "arm": "old",
+            "round": 5
+          },
+          {
+            "p50": 4.93599987030029,
+            "p99": 8.69699954986572,
+            "worst": 40.5660018920898,
+            "over25": 3,
+            "cpu": 15.84375,
+            "load": 2.979113328743381,
+            "frames": 2064,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 2,
+            "pre": null,
+            "waited": 0,
+            "arm": "old~aa",
+            "round": 5
+          },
+          {
+            "p50": 4.63600015640259,
+            "p99": 8.9689998626709,
+            "worst": 38.9020004272461,
+            "over25": 1,
+            "cpu": 15.421875,
+            "load": 3.2107116498154498,
+            "frames": 2012,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 2,
+            "pre": null,
+            "waited": 0,
+            "arm": "mixed",
+            "round": 5
+          },
+          {
+            "p50": 4.34800004959106,
+            "p99": 6.51599979400635,
+            "worst": 38.9169998168945,
+            "over25": 1,
+            "cpu": 14.140625,
+            "load": 1.8740888936912092,
+            "frames": 2025,
+            "ticks": 2098,
+            "errors": 0,
+            "contended": 1,
+            "pre": null,
+            "waited": 0,
+            "arm": "squad",
+            "round": 5
+          }
+        ]
+      },
+      "horde": {
+        "summary": {
+          "medians": {
+            "old": {
+              "p50": 5.062000036239625,
+              "p99": 9.225499629974365,
+              "worst": 37.636001586914105,
+              "over25": 3,
+              "cpu": 13.4609375,
+              "load": 3.381640655885511
+            },
+            "squad": {
+              "p50": 4.584499835968016,
+              "p99": 8.683499813079836,
+              "worst": 35.1870002746582,
+              "over25": 1,
+              "cpu": 12.4140625,
+              "load": 4.67568174798591
+            },
+            "mixed": {
+              "p50": 4.427999973297119,
+              "p99": 7.64499998092651,
+              "worst": 35.57950019836425,
+              "over25": 3,
+              "cpu": 12.515625,
+              "load": 4.847080276519628
+            },
+            "old~aa": {
+              "p50": 5.069499969482425,
+              "p99": 9.309000015258789,
+              "worst": 34.462499618530245,
+              "over25": 3,
+              "cpu": 13.296875,
+              "load": 2.73961096202978
+            }
+          },
+          "floor": {
+            "p50": {
+              "n": 6,
+              "median": 0,
+              "ci95": [
+                -0.06900024414062944,
+                1.32400035858155
+              ],
+              "lower": 3,
+              "signP": 1,
+              "call": "WASH",
+              "halfWidth": 1.32400035858155
+            },
+            "p99": {
+              "n": 6,
+              "median": 0.07700014114379972,
+              "ci95": [
+                -0.25399971008299893,
+                2.624000549316399
+              ],
+              "lower": 3,
+              "signP": 1,
+              "call": "WASH",
+              "halfWidth": 2.624000549316399
+            },
+            "worst": {
+              "n": 6,
+              "median": -0.6240005493164524,
+              "ci95": [
+                -6.561000823974702,
+                11.256999969482393
+              ],
+              "lower": 4,
+              "signP": 0.6875,
+              "call": "WASH",
+              "halfWidth": 11.256999969482393
+            },
+            "over25": {
+              "n": 6,
+              "median": 0,
+              "ci95": [
+                0,
+                1
+              ],
+              "lower": 0,
+              "signP": 0.03125,
+              "call": "WASH",
+              "halfWidth": 1
+            },
+            "cpu": {
+              "n": 6,
+              "median": -0.2890625,
+              "ci95": [
+                -0.5625,
+                1.15625
+              ],
+              "lower": 4,
+              "signP": 0.6875,
+              "call": "WASH",
+              "halfWidth": 1.15625
+            }
+          },
+          "vsBase": {
+            "squad": {
+              "p50": {
+                "n": 6,
+                "median": -0.8934998512268102,
+                "ci95": [
+                  -0.9600000381469798,
+                  1.2480001449584996
+                ],
+                "lower": 5,
+                "signP": 0.21875,
+                "call": "WASH"
+              },
+              "p99": {
+                "n": 6,
+                "median": -1.7369999885559055,
+                "ci95": [
+                  -2.0889997482299796,
+                  1.2110004425048508
+                ],
+                "lower": 4,
+                "signP": 0.6875,
+                "call": "WASH"
+              },
+              "worst": {
+                "n": 6,
+                "median": 0.926500320434549,
+                "ci95": [
+                  -8.5060005187989,
+                  9.6830024719238
+                ],
+                "lower": 3,
+                "signP": 1,
+                "call": "WASH"
+              },
+              "over25": {
+                "n": 6,
+                "median": -2,
+                "ci95": [
+                  -2,
+                  -2
+                ],
+                "lower": 6,
+                "signP": 0.03125,
+                "call": "LOWER"
+              },
+              "cpu": {
+                "n": 6,
+                "median": -2.0625,
+                "ci95": [
+                  -2.390625,
+                  1.84375
+                ],
+                "lower": 5,
+                "signP": 0.21875,
+                "call": "WASH"
+              }
+            },
+            "mixed": {
+              "p50": {
+                "n": 6,
+                "median": -0.7574999332427952,
+                "ci95": [
+                  -0.9300003051757795,
+                  -0.47499990463257014
+                ],
+                "lower": 6,
+                "signP": 0.03125,
+                "call": "WASH"
+              },
+              "p99": {
+                "n": 6,
+                "median": -1.7324998378753707,
+                "ci95": [
+                  -2.80399942398072,
+                  -0.7379999160766602
+                ],
+                "lower": 6,
+                "signP": 0.03125,
+                "call": "WASH"
+              },
+              "worst": {
+                "n": 6,
+                "median": -1.3885002136231002,
+                "ci95": [
+                  -11.183998107910206,
+                  1.9689979553221946
+                ],
+                "lower": 4,
+                "signP": 0.6875,
+                "call": "WASH"
+              },
+              "over25": {
+                "n": 6,
+                "median": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "lower": 0,
+                "signP": 0.03125,
+                "call": "WASH"
+              },
+              "cpu": {
+                "n": 6,
+                "median": -1.375,
+                "ci95": [
+                  -2.140625,
+                  0.109375
+                ],
+                "lower": 5,
+                "signP": 0.21875,
+                "call": "WASH"
+              }
+            }
+          }
+        },
+        "runs": [
+          {
+            "p50": 5.0460000038147,
+            "p99": 9.22799968719482,
+            "worst": 34.2330017089844,
+            "over25": 3,
+            "cpu": 13.46875,
+            "load": 3.3622874625570245,
+            "frames": 1671,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 1,
+            "pre": null,
+            "waited": 0,
+            "arm": "old",
+            "round": 0
+          },
+          {
+            "p50": 4.16800022125244,
+            "p99": 7.17000007629395,
+            "worst": 37.9150009155273,
+            "over25": 1,
+            "cpu": 11.578125,
+            "load": 3.4641196921478015,
+            "frames": 1594,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 1,
+            "pre": null,
+            "waited": 0,
+            "arm": "squad",
+            "round": 0
+          },
+          {
+            "p50": 4.42399978637695,
+            "p99": 7.59800004959106,
+            "worst": 36.2019996643066,
+            "over25": 3,
+            "cpu": 12.859375,
+            "load": 6.313784051616831,
+            "frames": 1652,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 1,
+            "pre": null,
+            "waited": 0,
+            "arm": "mixed",
+            "round": 0
+          },
+          {
+            "p50": 5.08799982070923,
+            "p99": 9.01599979400635,
+            "worst": 36.9650001525879,
+            "over25": 3,
+            "cpu": 13.1875,
+            "load": 2.778582147813374,
+            "frames": 1680,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 1,
+            "pre": null,
+            "waited": 0,
+            "arm": "old~aa",
+            "round": 0
+          },
+          {
+            "p50": 5.20599985122681,
+            "p99": 9.30700016021729,
+            "worst": 44.8880004882813,
+            "over25": 3,
+            "cpu": 14.28125,
+            "load": 5.374733643557008,
+            "frames": 1710,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 2,
+            "pre": null,
+            "waited": 0,
+            "arm": "old",
+            "round": 1
+          },
+          {
+            "p50": 5.05100011825562,
+            "p99": 9.0290002822876,
+            "worst": 34.4469985961914,
+            "over25": 3,
+            "cpu": 13.40625,
+            "load": 2.5723229766842555,
+            "frames": 1668,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 2,
+            "pre": null,
+            "waited": 0,
+            "arm": "old~aa",
+            "round": 1
+          },
+          {
+            "p50": 4.43200016021729,
+            "p99": 7.47200012207031,
+            "worst": 33.0740013122559,
+            "over25": 3,
+            "cpu": 12.140625,
+            "load": 3.06497899963505,
+            "frames": 1636,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 3,
+            "pre": null,
+            "waited": 0,
+            "arm": "mixed",
+            "round": 1
+          },
+          {
+            "p50": 4.24599981307983,
+            "p99": 7.89099979400635,
+            "worst": 31.2819995880127,
+            "over25": 1,
+            "cpu": 11.890625,
+            "load": 4.067176762694457,
+            "frames": 1608,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 3,
+            "pre": null,
+            "waited": 0,
+            "arm": "squad",
+            "round": 1
+          },
+          {
+            "p50": 4.32499980926514,
+            "p99": 7.69199991226196,
+            "worst": 34.9570007324219,
+            "over25": 3,
+            "cpu": 12.171875,
+            "load": 3.6387886935557714,
+            "frames": 1605,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 3,
+            "pre": null,
+            "waited": 0,
+            "arm": "mixed",
+            "round": 2
+          },
+          {
+            "p50": 5.02400016784668,
+            "p99": 8.95100021362305,
+            "worst": 33.2290000915527,
+            "over25": 3,
+            "cpu": 12.84375,
+            "load": 2.7006397762461862,
+            "frames": 1668,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 2,
+            "pre": null,
+            "waited": 0,
+            "arm": "old~aa",
+            "round": 2
+          },
+          {
+            "p50": 5.06599998474121,
+            "p99": 9.20499992370605,
+            "worst": 33.9370002746582,
+            "over25": 3,
+            "cpu": 13.40625,
+            "load": 3.400993849213998,
+            "frames": 1681,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 2,
+            "pre": null,
+            "waited": 0,
+            "arm": "old",
+            "round": 2
+          },
+          {
+            "p50": 6.31400012969971,
+            "p99": 10.4160003662109,
+            "worst": 37.8409996032715,
+            "over25": 1,
+            "cpu": 15.25,
+            "load": 9.920644350403753,
+            "frames": 1627,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 2,
+            "pre": null,
+            "waited": 0,
+            "arm": "squad",
+            "round": 2
+          },
+          {
+            "p50": 5.77600002288818,
+            "p99": 11.6040000915527,
+            "worst": 37.9770011901855,
+            "over25": 3,
+            "cpu": 16.546875,
+            "load": 11.17710319047473,
+            "frames": 1709,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 2,
+            "pre": null,
+            "waited": 0,
+            "arm": "mixed",
+            "round": 3
+          },
+          {
+            "p50": 6.84499979019165,
+            "p99": 12.0159997940063,
+            "worst": 58.8440017700195,
+            "over25": 1,
+            "cpu": 17.75,
+            "load": 13.72638891303107,
+            "frames": 1703,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 2,
+            "pre": null,
+            "waited": 0,
+            "arm": "squad",
+            "round": 3
+          },
+          {
+            "p50": 8.48999977111816,
+            "p99": 16.2169990539551,
+            "worst": 49.1609992980957,
+            "over25": 3,
+            "cpu": 21.890625,
+            "load": 13.22894939436692,
+            "frames": 1767,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 2,
+            "pre": null,
+            "waited": 0,
+            "arm": "old",
+            "round": 3
+          },
+          {
+            "p50": 9.81400012969971,
+            "p99": 18.8409996032715,
+            "worst": 60.4179992675781,
+            "over25": 4,
+            "cpu": 23.046875,
+            "load": 14.559194720523939,
+            "frames": 1790,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 3,
+            "pre": null,
+            "waited": 0,
+            "arm": "old~aa",
+            "round": 3
+          },
+          {
+            "p50": 5.03999996185303,
+            "p99": 9.1899995803833,
+            "worst": 41.0390014648438,
+            "over25": 3,
+            "cpu": 13.453125,
+            "load": 3.1124083546339962,
+            "frames": 1678,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 2,
+            "pre": null,
+            "waited": 0,
+            "arm": "old",
+            "round": 4
+          },
+          {
+            "p50": 4.9229998588562,
+            "p99": 9.47599983215332,
+            "worst": 32.5330009460449,
+            "over25": 1,
+            "cpu": 12.9375,
+            "load": 5.284186733277362,
+            "frames": 1591,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 2,
+            "pre": null,
+            "waited": 0,
+            "arm": "squad",
+            "round": 4
+          },
+          {
+            "p50": 4.56500005722046,
+            "p99": 8.45199966430664,
+            "worst": 38.8479995727539,
+            "over25": 3,
+            "cpu": 13.5625,
+            "load": 6.0553718594834836,
+            "frames": 1694,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 3,
+            "pre": null,
+            "waited": 0,
+            "arm": "mixed",
+            "round": 4
+          },
+          {
+            "p50": 5.22300004959106,
+            "p99": 10.0080003738403,
+            "worst": 34.4780006408691,
+            "over25": 3,
+            "cpu": 14.140625,
+            "load": 4.419677355682409,
+            "frames": 1682,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 3,
+            "pre": null,
+            "waited": 0,
+            "arm": "old~aa",
+            "round": 4
+          },
+          {
+            "p50": 5.05800008773804,
+            "p99": 9.22299957275391,
+            "worst": 33.9930000305176,
+            "over25": 3,
+            "cpu": 13.21875,
+            "load": 2.0917715645795405,
+            "frames": 1670,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 1,
+            "pre": null,
+            "waited": 0,
+            "arm": "old",
+            "round": 5
+          },
+          {
+            "p50": 4.98899984359741,
+            "p99": 9.58899974822998,
+            "worst": 33.4529991149902,
+            "over25": 3,
+            "cpu": 12.921875,
+            "load": 2.209780479986208,
+            "frames": 1670,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 1,
+            "pre": null,
+            "waited": 0,
+            "arm": "old~aa",
+            "round": 5
+          },
+          {
+            "p50": 4.12799978256226,
+            "p99": 6.41900014877319,
+            "worst": 33.4070014953613,
+            "over25": 3,
+            "cpu": 11.703125,
+            "load": 2.492355462823806,
+            "frames": 1615,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 1,
+            "pre": null,
+            "waited": 0,
+            "arm": "mixed",
+            "round": 5
+          },
+          {
+            "p50": 4.14900016784668,
+            "p99": 7.13399982452393,
+            "worst": 32.1640014648438,
+            "over25": 1,
+            "cpu": 10.984375,
+            "load": 2.399576608777821,
+            "frames": 1591,
+            "ticks": 1798,
+            "errors": 0,
+            "contended": 1,
+            "pre": null,
+            "waited": 0,
+            "arm": "squad",
+            "round": 5
+          }
+        ]
+      }
+    },
+    "recovery": {
+      "original": "build/perf/fight-gate/n19-a4b/gate.json",
+      "retry": "build/perf/fight-gate/n19-a4b-city-retry-1/gate.json",
+      "scene": "city",
+      "round": 3,
+      "original_exit": -1073741819,
+      "method": "Repeated all four arms of the affected round on the same export, using the original order and the lane lock. Recomputed intervals with fight_gate.summarise."
+    }
+  },
+  "lock": {
+    "owner": {
+      "pid": 44448,
+      "time": "2026-11-18T22:39:50.191062+00:00"
+    },
+    "released": "2026-11-18T23:03:10.794811+00:00",
+    "status": {
+      "gate": 1,
+      "bench": 0,
+      "control": 0
+    }
+  },
+  "riot": {
+    "a3_control": {
+      "p99CpuMs": 5.882,
+      "simStepMsPerTick": 0.131378052283826,
+      "actorsAvg": 399.796035621948,
+      "worstSwapMs": 10.006,
+      "hitches25": 2.0,
+      "hitchesOver50": 0.0,
+      "over50.unexplained": 0.0,
+      "low1Fps": 114.595168012887
+    },
+    "final": {
+      "p99CpuMs": 6.933,
+      "simStepMsPerTick": 0.118779373743177,
+      "actorsAvg": 399.796035621948,
+      "worstSwapMs": 10.861,
+      "hitches25": 2.0,
+      "hitchesOver50": 0.0,
+      "over50.unexplained": 0.0,
+      "low1Fps": 100.411687920474
+    }
+  },
+  "scenario_files": {
+    "arena-pit-telemetry": {
+      "sha256": "2c9239521ac07d08e4855f9491220647e8674d772e5bfbb2fa8c15424c1c48eb",
+      "equal_before": true
+    },
+    "arena-city-telemetry": {
+      "sha256": "e2954a8fa9cd230b110dbef1acfaf892f39bd210f9c4cf8a78634bc90df1679a",
+      "equal_before": true
+    },
+    "enemy-pit": {
+      "sha256": "55bec1d435d7d8d50367b7cebd97edbe5b93d689d15defa60ca4f67c5006a023",
+      "equal_before": true
+    },
+    "quest-collect-call": {
+      "sha256": "0be37fbda3bd56397ba4ebed391b7adca5787aa36b98948526fcd6597167f689",
+      "equal_before": true
+    },
+    "arena-squad": {
+      "sha256": "940b09ae5a45f925eb8065c3749c26340fb762a898270d07ef6d9ade16d44b6d",
+      "equal_before": false
+    }
+  },
+  "checks": [
+    "run_scenarios: [1/5] arena_city ok, 3.1 s",
+    "run_scenarios: [2/5] arena_pit ok, 2.7 s",
+    "run_scenarios: [3/5] arena_squad ok, 13.1 s",
+    "run_scenarios: [4/5] enemy_pit ok, 1.6 s",
+    "run_scenarios: [5/5] quest_collect_call ok, 3.7 s",
+    "run_scenarios: 5 ran, 0 failed",
+    "scenario-tests: 5 passed (headless)",
+    "unit-tests: 27 passed, 0 failed, 0 skipped (GUT, headless)"
+  ],
+  "guard_digests": [
+    {
+      "seed": 20261103,
+      "encounter": "city",
+      "digest": "7a61766c8e50d05869f4a60992ece5cd79d11b15266ef2384afa28e5a372d0c2"
+    },
+    {
+      "seed": 20261104,
+      "encounter": "city",
+      "digest": "6c453d01df988d826d259f2f8a2ad11ad20cb3ddf5fe2f3ed8c7a32c0b17322f"
+    },
+    {
+      "seed": 20261105,
+      "encounter": "city",
+      "digest": "638eac3e621c0a7da3dafacb33764f94ad0ea1ca068f86c7928de71ca962eee9"
+    },
+    {
+      "seed": 20261106,
+      "encounter": "city",
+      "digest": "b98df35202c6ddff8796a87c6c240ef3c7b21ac3e418b475c617261527569df3"
+    },
+    {
+      "seed": 20261107,
+      "encounter": "city",
+      "digest": "d91f383ea1078089179e1850067e5a680eb23cdbb947904a4310f826e84509fb"
+    },
+    {
+      "seed": 20261103,
+      "encounter": "pit",
+      "digest": "1efb05436029012bc6de1fb538e9ccf60a6713b0b8b6792bd658aa08e6cb88c1"
+    },
+    {
+      "seed": 20261104,
+      "encounter": "pit",
+      "digest": "b69d9deefdf67c5a4af3771ff85e35c73b16c8d848d559a77d099eb1dca00c42"
+    },
+    {
+      "seed": 20261105,
+      "encounter": "pit",
+      "digest": "cb2515acd326c937550d7022487cfbd433f42c261d61a47c7e1d383ca522082d"
+    },
+    {
+      "seed": 20261106,
+      "encounter": "pit",
+      "digest": "3976a3c2f3c61b5b8eced3af67440ab6f7c6009229782f0a8aba645c8a21afd1"
+    },
+    {
+      "seed": 20261107,
+      "encounter": "pit",
+      "digest": "99df41cff4ce66254ee09acec482624a23572c1d5f7157f87b4fd9b18cd9671d"
+    },
+    {
+      "seed": 20261103,
+      "encounter": "quest1",
+      "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f"
+    },
+    {
+      "seed": 20261104,
+      "encounter": "quest1",
+      "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6"
+    },
+    {
+      "seed": 20261105,
+      "encounter": "quest1",
+      "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082"
+    },
+    {
+      "seed": 20261106,
+      "encounter": "quest1",
+      "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334"
+    },
+    {
+      "seed": 20261107,
+      "encounter": "quest1",
+      "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3"
+    }
+  ],
+  "commands": [
+    "$env:APPDATA='C:/Users/kazda/kiro/gtai-n19/appdata/ai'",
+    "$env:GODOT_BIN='C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe'",
+    "node tools/dev/run.mjs fight_probe --all --seeds=5 --enemy-brain=<guard|squad|mixed> --out=<absolute.json>",
+    "node tools/dev/run.mjs squad_cost --seeds=5 --timeout=600 --out=<absolute.json>",
+    "node tools/tests/run_unit.mjs --select=test_squad_budget,test_arena_squad,test_enemy_ai,test_fight_probe",
+    "node tools/tests/run_scenarios.mjs --only=arena_pit,arena_city,arena_squad,enemy_pit,quest_collect_call",
+    "node --import ./build/a4b/position.mjs tools/perf/fight_gate.mjs --arms=old:--enemy-brain=guard,squad:--enemy-brain=squad,mixed:--enemy-brain=mixed --rounds=6 --out=build/perf/fight-gate/n19-a4b",
+    "node tools/bench/run.mjs --headless --runs=1",
+    "& $env:GODOT_BIN --headless --path project --fixed-fps 60 res://dev/bench/city_bench.tscn -- --scenario=riot --label=riot --secs=60 --zoom=1.0 --vsync=disabled --out=<absolute A3 control.json>",
+    "node --import ./build/a4b/round3.mjs --import ./build/a4b/position.mjs tools/perf/fight_gate.mjs --arms=old:--enemy-brain=guard,squad:--enemy-brain=squad,mixed:--enemy-brain=mixed --rounds=1 --scenes=city --no-export --wait=1 --out=<retry-dir>"
+  ],
+  "fight_seed_rows": {
+    "probe-squad": [
+      {
+        "encounter": "city",
+        "seed": 20261103,
+        "digest": "a6799c9e43863c92e69bd935e8388f016adb688c8b19dd4ef2e9721909642824",
+        "encounter_clear_s": 21.016666666666666,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261104,
+        "digest": "7fdbf32c2a9889dc6cd32ed37e24dd9eceb7ce17a5e5ef25f3c175c5ff9f64d9",
+        "encounter_clear_s": 19.566666666666666,
+        "damage_taken_hp": 2.9999999999999716,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261105,
+        "digest": "609262b67051686d7a73c97b9b616f2985331064e9f386ca299028e4bb862bda",
+        "encounter_clear_s": 21.166666666666668,
+        "damage_taken_hp": 2.9999999999999716,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261106,
+        "digest": "01979f6fa164782a1aa7516490aa3e8a3e354d42bde6977828f6c03f0810c13c",
+        "encounter_clear_s": 20.55,
+        "damage_taken_hp": 1.799999999999983,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261107,
+        "digest": "2b069d717916c727a88b824f973bae753cad99cddef3d970a3d9ac070adbcc2f",
+        "encounter_clear_s": 20.983333333333334,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261103,
+        "digest": "1c4c87823dc57a8d03533f820d2fcdc37383ca52d81d126c63bb86ff2a9ca812",
+        "encounter_clear_s": 18.6,
+        "damage_taken_hp": 2.9999999999999716,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261104,
+        "digest": "b7ffb28d2a51e3c58cff0a934c4727edcb44b683fa3cf0114b92921da7d2c2ac",
+        "encounter_clear_s": 18.266666666666666,
+        "damage_taken_hp": 7.799999999999926,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261105,
+        "digest": "da2cc1ae23887ada4238ae93f35993cd1521b085b21d7cef56ef7c9ca0c118c9",
+        "encounter_clear_s": 16.766666666666666,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261106,
+        "digest": "9499148344a00fdad6416810ef0d49c811956ef606375ae4da85b16cd7b11a5c",
+        "encounter_clear_s": 20.016666666666666,
+        "damage_taken_hp": 11.999999999999886,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261107,
+        "digest": "3680f974b569df6e490c5208a2b7ab98487d5227509b43fbe23df2b55ca6c406",
+        "encounter_clear_s": 14.683333333333334,
+        "damage_taken_hp": 8.999999999999915,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261103,
+        "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+        "encounter_clear_s": 34.71666666666667,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261104,
+        "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+        "encounter_clear_s": 35.8,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261105,
+        "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+        "encounter_clear_s": 35.55,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261106,
+        "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+        "encounter_clear_s": 34.7,
+        "damage_taken_hp": 6.5999999999999375,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261107,
+        "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3",
+        "encounter_clear_s": 36.03333333333333,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      }
+    ],
+    "uncapped-final": [
+      {
+        "encounter": "city",
+        "seed": 20261103,
+        "digest": "c2189fcd90395c14f5150a4c6c12e3adb273baef188f6e4e3b73806d2c1195fc",
+        "encounter_clear_s": 21.516666666666666,
+        "damage_taken_hp": 1.799999999999983,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261104,
+        "digest": "0dc69fd833671e35bb21d79813a33f08f11e86ea31cbe9d1ea1ea4fed8927fc8",
+        "encounter_clear_s": 22.216666666666665,
+        "damage_taken_hp": 1.799999999999983,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261105,
+        "digest": "570fb3cd44978e48cca1f6c3356824c59e7b21d94af9c87154dd93afd8f275fb",
+        "encounter_clear_s": 20.616666666666667,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261106,
+        "digest": "f0c9b70fb6e5bbc55ad60843419a4796c8e3da6176f6e4a1ab0468f0d78fc51a",
+        "encounter_clear_s": 21.316666666666666,
+        "damage_taken_hp": 1.799999999999983,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261107,
+        "digest": "756772f7db23ddad00b9851f00b042c8e2dc17c473ac2f1dce3187f97f993254",
+        "encounter_clear_s": 29.233333333333334,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261103,
+        "digest": "a748f13087ae01779714dbf28a35e9dbbca57f2f100b7ca2982a204905e83279",
+        "encounter_clear_s": 19.866666666666667,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261104,
+        "digest": "477bea90cb2b158148d02296fec0a4967ec0ff46a72bc34e93839563ddf07ea3",
+        "encounter_clear_s": 28.7,
+        "damage_taken_hp": 8.39999999999992,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261105,
+        "digest": "86fb5e00f716f77d25d31516bafcded73abbc033ea7e9a76ad1fce09c4f319ab",
+        "encounter_clear_s": 21.583333333333332,
+        "damage_taken_hp": 4.7999999999999545,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261106,
+        "digest": "78bbe32ff6eab89a154eb173bec9ac596436a03b3a666d79532b9053197730f0",
+        "encounter_clear_s": 23.016666666666666,
+        "damage_taken_hp": 10.199999999999903,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261107,
+        "digest": "e377303e6ffcf6ada177ca59ab0fc2affc15c058ac2b8ec89e2623438d6bdc8a",
+        "encounter_clear_s": 18.5,
+        "damage_taken_hp": 10.799999999999898,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261103,
+        "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+        "encounter_clear_s": 34.71666666666667,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261104,
+        "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+        "encounter_clear_s": 35.8,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261105,
+        "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+        "encounter_clear_s": 35.55,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261106,
+        "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+        "encounter_clear_s": 34.7,
+        "damage_taken_hp": 6.5999999999999375,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261107,
+        "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3",
+        "encounter_clear_s": 36.03333333333333,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      }
+    ],
+    "uncapped": [
+      {
+        "encounter": "city",
+        "seed": 20261103,
+        "digest": "663e363a2a49570a9400d2f2fe3bdd3a4e0f51e524cd4a761f8fb2b5fd21c5ab",
+        "encounter_clear_s": 21.516666666666666,
+        "damage_taken_hp": 1.799999999999983,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261104,
+        "digest": "1c03ebe000ea5fb4f52aea36e34655c21e243cb9887620720ab7ac33c4198176",
+        "encounter_clear_s": 22.65,
+        "damage_taken_hp": 1.799999999999983,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261105,
+        "digest": "570fb3cd44978e48cca1f6c3356824c59e7b21d94af9c87154dd93afd8f275fb",
+        "encounter_clear_s": 20.616666666666667,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261106,
+        "digest": "f0c9b70fb6e5bbc55ad60843419a4796c8e3da6176f6e4a1ab0468f0d78fc51a",
+        "encounter_clear_s": 21.316666666666666,
+        "damage_taken_hp": 1.799999999999983,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261107,
+        "digest": "756772f7db23ddad00b9851f00b042c8e2dc17c473ac2f1dce3187f97f993254",
+        "encounter_clear_s": 29.233333333333334,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261103,
+        "digest": "a748f13087ae01779714dbf28a35e9dbbca57f2f100b7ca2982a204905e83279",
+        "encounter_clear_s": 19.866666666666667,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261104,
+        "digest": "477bea90cb2b158148d02296fec0a4967ec0ff46a72bc34e93839563ddf07ea3",
+        "encounter_clear_s": 28.7,
+        "damage_taken_hp": 8.39999999999992,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261105,
+        "digest": "86fb5e00f716f77d25d31516bafcded73abbc033ea7e9a76ad1fce09c4f319ab",
+        "encounter_clear_s": 21.583333333333332,
+        "damage_taken_hp": 4.7999999999999545,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261106,
+        "digest": "78bbe32ff6eab89a154eb173bec9ac596436a03b3a666d79532b9053197730f0",
+        "encounter_clear_s": 23.016666666666666,
+        "damage_taken_hp": 10.199999999999903,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261107,
+        "digest": "e377303e6ffcf6ada177ca59ab0fc2affc15c058ac2b8ec89e2623438d6bdc8a",
+        "encounter_clear_s": 18.5,
+        "damage_taken_hp": 10.799999999999898,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261103,
+        "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+        "encounter_clear_s": 34.71666666666667,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261104,
+        "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+        "encounter_clear_s": 35.8,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261105,
+        "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+        "encounter_clear_s": 35.55,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261106,
+        "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+        "encounter_clear_s": 34.7,
+        "damage_taken_hp": 6.5999999999999375,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261107,
+        "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3",
+        "encounter_clear_s": 36.03333333333333,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      }
+    ],
+    "slots3": [
+      {
+        "encounter": "city",
+        "seed": 20261103,
+        "digest": "0d6b08ab2619d0e95d88ea9fb117adb9f3bbf246d4daacc390c6a8d7af5a00da",
+        "encounter_clear_s": 18.666666666666668,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261104,
+        "digest": "d632ebf5201e9510c939b78b9aaad89b280c70c4482aaebd653db77c7a667203",
+        "encounter_clear_s": 19.333333333333332,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261105,
+        "digest": "0a10351d9031e4fde21b3d792bd8972da069c683112d76898124c7d102299f44",
+        "encounter_clear_s": 20.35,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261106,
+        "digest": "36b2afc2c2c7f856708619d7799bf5bb9d4d9e04de296f590dd3f652339bb5e2",
+        "encounter_clear_s": 18.65,
+        "damage_taken_hp": 1.799999999999983,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261107,
+        "digest": "7e6594cdf60b6d20201b0734a1c969f3ae548104bad5c196ba350b5f45331fc5",
+        "encounter_clear_s": 19.933333333333334,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261103,
+        "digest": "7e935a883c82befb1fefe450d1d9a1101133fb4bead1ec9253c1aee0bbe839e7",
+        "encounter_clear_s": 16.983333333333334,
+        "damage_taken_hp": 11.999999999999886,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261104,
+        "digest": "d1703230a34c9684c818cde2345807063f81bde38fa041fb220646d1ac464f74",
+        "encounter_clear_s": 19.683333333333334,
+        "damage_taken_hp": 8.999999999999915,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261105,
+        "digest": "9df23c422a52e8e131942946c9be8a2a68f7b0692728b4ad89b3c1db6e6cfb40",
+        "encounter_clear_s": 16.766666666666666,
+        "damage_taken_hp": 8.39999999999992,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261106,
+        "digest": "8b3668081962385e73450c33384cf873bbf5a37766e9615337cb957ac1df86e2",
+        "encounter_clear_s": 21.05,
+        "damage_taken_hp": 8.999999999999915,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261107,
+        "digest": "9eaeba4583dd6fd9a0a89a0df1083732059e5fcd8caaccd0a494d19fae4237e0",
+        "encounter_clear_s": 15.116666666666667,
+        "damage_taken_hp": 7.799999999999926,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261103,
+        "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+        "encounter_clear_s": 34.71666666666667,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261104,
+        "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+        "encounter_clear_s": 35.8,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261105,
+        "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+        "encounter_clear_s": 35.55,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261106,
+        "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+        "encounter_clear_s": 34.7,
+        "damage_taken_hp": 6.5999999999999375,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261107,
+        "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3",
+        "encounter_clear_s": 36.03333333333333,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      }
+    ],
+    "bias1": [
+      {
+        "encounter": "city",
+        "seed": 20261103,
+        "digest": "c3cc68b4de3964e4b3233de6cc40400caa073302c63b04e75b5f7ff7e5048ea6",
+        "encounter_clear_s": 20.7,
+        "damage_taken_hp": 1.1999999999999886,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261104,
+        "digest": "3800473ae74886f43714b3a1ff6254b3e705e89e700212a706ec6e3990c25b95",
+        "encounter_clear_s": 19.583333333333332,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261105,
+        "digest": "3d885dfa75fa70081f593d41da94d75b4cac2d60f0a57ec79ed4cb72bca2114e",
+        "encounter_clear_s": 21.15,
+        "damage_taken_hp": 4.7999999999999545,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261106,
+        "digest": "9870ee1d0459f77096d5c05d9f08abc70c752419b9f66df6c02691d9b32e44ed",
+        "encounter_clear_s": 20.933333333333334,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261107,
+        "digest": "ce818e3d1ec910a74bb8ff1efccc9b2dd418da5152d1070cd8f5da852c34a77f",
+        "encounter_clear_s": 20.716666666666665,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261103,
+        "digest": "38dc21fff8c38cf4d0534b05e41be20aaf52d3946ca505b784a23a2c9cca00e8",
+        "encounter_clear_s": 17.35,
+        "damage_taken_hp": 4.19999999999996,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261104,
+        "digest": "a9c9003631a2c5a2c0a47c7cede7b904de01bf0941a5c526063845c6a8b64051",
+        "encounter_clear_s": 18.25,
+        "damage_taken_hp": 8.39999999999992,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261105,
+        "digest": "b6c7b48f1d7c336db9c31f026af8977e7a36d82dbea39922b9233541789ac6d9",
+        "encounter_clear_s": 16.766666666666666,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261106,
+        "digest": "8ce88686c1d275504320d2b5d801a2feb354b666b359970d5336d1098685c058",
+        "encounter_clear_s": 17.216666666666665,
+        "damage_taken_hp": 6.5999999999999375,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261107,
+        "digest": "a372938cfd0df53ee0c8d25a54b06cfb1b553a1ee2655d220355eeadda797d4f",
+        "encounter_clear_s": 17.5,
+        "damage_taken_hp": 5.999999999999943,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261103,
+        "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+        "encounter_clear_s": 34.71666666666667,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261104,
+        "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+        "encounter_clear_s": 35.8,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261105,
+        "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+        "encounter_clear_s": 35.55,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261106,
+        "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+        "encounter_clear_s": 34.7,
+        "damage_taken_hp": 6.5999999999999375,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261107,
+        "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3",
+        "encounter_clear_s": 36.03333333333333,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      }
+    ],
+    "preferred": [
+      {
+        "encounter": "city",
+        "seed": 20261103,
+        "digest": "1253abd81e2c03bc17ec71ea9a953316d84c60721837a91efcd715085a0934d4",
+        "encounter_clear_s": 19.75,
+        "damage_taken_hp": 0.0,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261104,
+        "digest": "c26f05204191ac50ce4802eee7c988ce19171b55302a274f8e0596e38f22d2f9",
+        "encounter_clear_s": 19.6,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261105,
+        "digest": "44f9e6d11915770ac0965448657399d82ed63a6ad9e72576c05dad9f031d348c",
+        "encounter_clear_s": 21.15,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261106,
+        "digest": "acea14702d97efdad306c5001773389d075c7d938e542832e2bb36ebeb5121a0",
+        "encounter_clear_s": 19.866666666666667,
+        "damage_taken_hp": 0.0,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261107,
+        "digest": "011c8c43c874af0240b99853311a2f1bc73e0a12a8fe48a2f6565456a29acbb8",
+        "encounter_clear_s": 20.983333333333334,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261103,
+        "digest": "6f95a3c71b4969f074d4c98ac8188a0d8b900b7940d0581f59628947c14bf41b",
+        "encounter_clear_s": 17.35,
+        "damage_taken_hp": 4.19999999999996,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261104,
+        "digest": "7dd872c5b8342808cda3f982a985a24d15a7321491aa37daa1481fff0c4de9b2",
+        "encounter_clear_s": 18.25,
+        "damage_taken_hp": 8.39999999999992,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261105,
+        "digest": "8a55c3f280bb9b23e2fa89462b48db3bdd8191ab60a5a76bd219f6e2d56ce581",
+        "encounter_clear_s": 16.766666666666666,
+        "damage_taken_hp": 7.799999999999926,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261106,
+        "digest": "e37eae952a6f1d07c013a4ed7d2a96264530be1a190cab72f188203541b6a26b",
+        "encounter_clear_s": 17.216666666666665,
+        "damage_taken_hp": 6.5999999999999375,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261107,
+        "digest": "81b69875fa36caf7a1f986cd910ac26402d830ddd8821b4c911636ace0475294",
+        "encounter_clear_s": 17.5,
+        "damage_taken_hp": 7.799999999999926,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261103,
+        "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+        "encounter_clear_s": 34.71666666666667,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261104,
+        "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+        "encounter_clear_s": 35.8,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261105,
+        "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+        "encounter_clear_s": 35.55,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261106,
+        "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+        "encounter_clear_s": 34.7,
+        "damage_taken_hp": 6.5999999999999375,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261107,
+        "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3",
+        "encounter_clear_s": 36.03333333333333,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      }
+    ],
+    "blind6": [
+      {
+        "encounter": "city",
+        "seed": 20261103,
+        "digest": "c44fb5b37475ce1e7a4340c10b7e1b1f1ffbded6fc0f5b6eee8d19bf205a2990",
+        "encounter_clear_s": 21.016666666666666,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261104,
+        "digest": "654a9754e0d8c68e27f2d0c8f1623a5ffaf8037fc58a285d78dc41df1f44e7d7",
+        "encounter_clear_s": 21.4,
+        "damage_taken_hp": 2.9999999999999716,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261105,
+        "digest": "d18f1dc76aa829de95a361204c87b90609d2e346f7b39e43820c4c57c12c15ae",
+        "encounter_clear_s": 20.733333333333334,
+        "damage_taken_hp": 1.799999999999983,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261106,
+        "digest": "6961a0d383943475d095873f4dd128d82f723f7135995470e78d5012aa3b3249",
+        "encounter_clear_s": 21.216666666666665,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261107,
+        "digest": "fa4aaa6de6170e2283fe75b48ae7e2477bbf1b8c2b24b47bfb012af468297abe",
+        "encounter_clear_s": 20.983333333333334,
+        "damage_taken_hp": 4.19999999999996,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261103,
+        "digest": "58831911c7cba173dd94213e22c96089c7f852ef8a046c614cbfafe00308be4f",
+        "encounter_clear_s": 18.6,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261104,
+        "digest": "20e3ba0263a19f29a30404533370a9f197f8fe95cfbfc208b46ea8fcff987f69",
+        "encounter_clear_s": 18.25,
+        "damage_taken_hp": 6.5999999999999375,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261105,
+        "digest": "142bb41376c92cf0354f18c62049a68f7a8d37a5d9c770bfdd9df888cb222c42",
+        "encounter_clear_s": 16.766666666666666,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261106,
+        "digest": "2c0fcc2dee0b1cccbdfda008d70d653fd7b21fb65b6caecf222b912bac96561a",
+        "encounter_clear_s": 20.966666666666665,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261107,
+        "digest": "bf6db305b5336297cb0f6e530c622ae5dbd326a39ca10a01a0950755623ceb84",
+        "encounter_clear_s": 17.5,
+        "damage_taken_hp": 8.39999999999992,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261103,
+        "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+        "encounter_clear_s": 34.71666666666667,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261104,
+        "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+        "encounter_clear_s": 35.8,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261105,
+        "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+        "encounter_clear_s": 35.55,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261106,
+        "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+        "encounter_clear_s": 34.7,
+        "damage_taken_hp": 6.5999999999999375,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261107,
+        "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3",
+        "encounter_clear_s": 36.03333333333333,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      }
+    ],
+    "peek_off": [
+      {
+        "encounter": "city",
+        "seed": 20261103,
+        "digest": "c44fb5b37475ce1e7a4340c10b7e1b1f1ffbded6fc0f5b6eee8d19bf205a2990",
+        "encounter_clear_s": 21.016666666666666,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261104,
+        "digest": "e88cbb94fb0c403fc83b97d8a57bae264fc495b604500cbb2fa4c691d6f5dfbe",
+        "encounter_clear_s": 21.78333333333333,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261105,
+        "digest": "974e8c8233a7839f70d17bbbdece1d67f5501c56b215e8949850c44dc6a986a8",
+        "encounter_clear_s": 21.166666666666668,
+        "damage_taken_hp": 2.9999999999999716,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261106,
+        "digest": "43d1ada0870d183a2754983b78dc69d55aca2775677edb2b62dbf4508bd4735d",
+        "encounter_clear_s": 20.55,
+        "damage_taken_hp": 1.799999999999983,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261107,
+        "digest": "fa4aaa6de6170e2283fe75b48ae7e2477bbf1b8c2b24b47bfb012af468297abe",
+        "encounter_clear_s": 20.983333333333334,
+        "damage_taken_hp": 4.19999999999996,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261103,
+        "digest": "7595fb908a8b44023d95740d00b4f2c796584261b1d1c2cdb31a27398898e690",
+        "encounter_clear_s": 18.6,
+        "damage_taken_hp": 4.7999999999999545,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261104,
+        "digest": "b0ad7032e2e92410604448bfad0f038ec50301ca31b110f92399cf94e53e4127",
+        "encounter_clear_s": 18.266666666666666,
+        "damage_taken_hp": 9.599999999999909,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261105,
+        "digest": "3fe972c72fcac2ade2c0a9530c7e4f06403c2f2c0df9e7aec1c11be415be9c3a",
+        "encounter_clear_s": 16.766666666666666,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261106,
+        "digest": "ed8335889c1958c2dc8f2c0bb6ef018a64da0678e65bcd3bcc8fd06d2ad18c89",
+        "encounter_clear_s": 20.016666666666666,
+        "damage_taken_hp": 12.59999999999988,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261107,
+        "digest": "02d2396b318ea8e89e60fb0f0729b72c7838c8dfdfa24e3592d926fbe83cc642",
+        "encounter_clear_s": 14.683333333333334,
+        "damage_taken_hp": 9.599999999999909,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261103,
+        "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+        "encounter_clear_s": 34.71666666666667,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261104,
+        "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+        "encounter_clear_s": 35.8,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261105,
+        "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+        "encounter_clear_s": 35.55,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261106,
+        "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+        "encounter_clear_s": 34.7,
+        "damage_taken_hp": 6.5999999999999375,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261107,
+        "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3",
+        "encounter_clear_s": 36.03333333333333,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      }
+    ],
+    "a2_plan": [
+      {
+        "encounter": "city",
+        "seed": 20261103,
+        "digest": "a6799c9e43863c92e69bd935e8388f016adb688c8b19dd4ef2e9721909642824",
+        "encounter_clear_s": 21.016666666666666,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261104,
+        "digest": "7fdbf32c2a9889dc6cd32ed37e24dd9eceb7ce17a5e5ef25f3c175c5ff9f64d9",
+        "encounter_clear_s": 19.566666666666666,
+        "damage_taken_hp": 2.9999999999999716,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261105,
+        "digest": "609262b67051686d7a73c97b9b616f2985331064e9f386ca299028e4bb862bda",
+        "encounter_clear_s": 21.166666666666668,
+        "damage_taken_hp": 2.9999999999999716,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261106,
+        "digest": "01979f6fa164782a1aa7516490aa3e8a3e354d42bde6977828f6c03f0810c13c",
+        "encounter_clear_s": 20.55,
+        "damage_taken_hp": 1.799999999999983,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261107,
+        "digest": "2b069d717916c727a88b824f973bae753cad99cddef3d970a3d9ac070adbcc2f",
+        "encounter_clear_s": 20.983333333333334,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261103,
+        "digest": "1c4c87823dc57a8d03533f820d2fcdc37383ca52d81d126c63bb86ff2a9ca812",
+        "encounter_clear_s": 18.6,
+        "damage_taken_hp": 2.9999999999999716,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261104,
+        "digest": "b7ffb28d2a51e3c58cff0a934c4727edcb44b683fa3cf0114b92921da7d2c2ac",
+        "encounter_clear_s": 18.266666666666666,
+        "damage_taken_hp": 7.799999999999926,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261105,
+        "digest": "da2cc1ae23887ada4238ae93f35993cd1521b085b21d7cef56ef7c9ca0c118c9",
+        "encounter_clear_s": 16.766666666666666,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261106,
+        "digest": "9499148344a00fdad6416810ef0d49c811956ef606375ae4da85b16cd7b11a5c",
+        "encounter_clear_s": 20.016666666666666,
+        "damage_taken_hp": 11.999999999999886,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261107,
+        "digest": "3680f974b569df6e490c5208a2b7ab98487d5227509b43fbe23df2b55ca6c406",
+        "encounter_clear_s": 14.683333333333334,
+        "damage_taken_hp": 8.999999999999915,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261103,
+        "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+        "encounter_clear_s": 34.71666666666667,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261104,
+        "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+        "encounter_clear_s": 35.8,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261105,
+        "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+        "encounter_clear_s": 35.55,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261106,
+        "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+        "encounter_clear_s": 34.7,
+        "damage_taken_hp": 6.5999999999999375,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261107,
+        "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3",
+        "encounter_clear_s": 36.03333333333333,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      }
+    ],
+    "capped": [
+      {
+        "encounter": "city",
+        "seed": 20261103,
+        "digest": "22df55df71cd6b1f2741d49fef2e7fb6608ccbca1778aad41a473a8d1b55aa29",
+        "encounter_clear_s": 21.516666666666666,
+        "damage_taken_hp": 1.799999999999983,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261104,
+        "digest": "589f66eb2b9229a7c174a8cc40882925e4836eb98ded6c1313cf8107888247e0",
+        "encounter_clear_s": 22.65,
+        "damage_taken_hp": 1.799999999999983,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261105,
+        "digest": "d68cf41fc3393b9cf46d43e89b6bfcfbf1fe3d26adfe2255ba94b71feb01021e",
+        "encounter_clear_s": 21.0,
+        "damage_taken_hp": 1.799999999999983,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261106,
+        "digest": "21f5576b65dfbff8b666455ab7a641364b73eb6a600b64e9d4e50e725059dd28",
+        "encounter_clear_s": 21.316666666666666,
+        "damage_taken_hp": 1.799999999999983,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261107,
+        "digest": "ddb94765859bdbf9fd4254177c0e1ef1f7931bc9674f88cba87d28bb5e088d3c",
+        "encounter_clear_s": 29.233333333333334,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261103,
+        "digest": "7ccdb6315287d0a245e6d6238e7b207ab79cf512d65e312290c7fd7f30f6ffdd",
+        "encounter_clear_s": 18.483333333333334,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261104,
+        "digest": "fca166626e0b82a74b6ceed87c7cb5f65279a5bdf434e157c64093f2207e0ddd",
+        "encounter_clear_s": 28.7,
+        "damage_taken_hp": 4.7999999999999545,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261105,
+        "digest": "5436984e6e98704b5d91bc64dead9272a4878c06171c3c3519af8629709fe145",
+        "encounter_clear_s": 21.583333333333332,
+        "damage_taken_hp": 4.7999999999999545,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261106,
+        "digest": "9c0beacfa4ecccc06911b11155a46c7fc843249616e12e49a69321057d557c09",
+        "encounter_clear_s": 23.016666666666666,
+        "damage_taken_hp": 10.199999999999903,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261107,
+        "digest": "5ebae0f04ecc381f1e9c7da1f6cd27de7306b0dd809a42d1ba3b46ef003d5642",
+        "encounter_clear_s": 24.1,
+        "damage_taken_hp": 11.399999999999892,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261103,
+        "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+        "encounter_clear_s": 34.71666666666667,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261104,
+        "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+        "encounter_clear_s": 35.8,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261105,
+        "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+        "encounter_clear_s": 35.55,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261106,
+        "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+        "encounter_clear_s": 34.7,
+        "damage_taken_hp": 6.5999999999999375,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261107,
+        "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3",
+        "encounter_clear_s": 36.03333333333333,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      }
+    ],
+    "probe-squad-final": [
+      {
+        "encounter": "city",
+        "seed": 20261103,
+        "digest": "a1115b7e5dd209647a19f18b3ec0eb67fd7aa463ea0c157fbd7a2fd84a5545d9",
+        "encounter_clear_s": 21.516666666666666,
+        "damage_taken_hp": 1.799999999999983,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261104,
+        "digest": "205589dcb988005a3834e4b529805b875f1380da6b9f723eefa895e155fbc4d9",
+        "encounter_clear_s": 21.916666666666668,
+        "damage_taken_hp": 1.799999999999983,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261105,
+        "digest": "f5ab40437f88ebff76aa85ea3b61659902610f25873cce5e5861215c9fb09672",
+        "encounter_clear_s": 21.0,
+        "damage_taken_hp": 1.799999999999983,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261106,
+        "digest": "f7f4208b9770163a9126adee80d548135295a2220da1c6cf0f552b2728421cb7",
+        "encounter_clear_s": 21.316666666666666,
+        "damage_taken_hp": 1.799999999999983,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261107,
+        "digest": "15299fef242b7b1d9b7bc49751a90db9fc78fb1da5b93e3ddb11321cffb8dbc8",
+        "encounter_clear_s": 29.65,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261103,
+        "digest": "29fb0552a0f3a2cc266ffb1759b1cca4d04c5ff7316580a1935e5cdd4860c3b7",
+        "encounter_clear_s": 19.866666666666667,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261104,
+        "digest": "093f48811276572b3bded78904975cbc941698a21343a5f2595aa602ee4aa070",
+        "encounter_clear_s": 28.7,
+        "damage_taken_hp": 4.7999999999999545,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261105,
+        "digest": "c06b71f80a06824f688770dae3d4db07226c166d95235cf29cd82446078ea0d7",
+        "encounter_clear_s": 18.78333333333333,
+        "damage_taken_hp": 5.999999999999943,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261106,
+        "digest": "bb2185eefc529d5e19934c763459727ca113f8f95563000af8de9729f398f41d",
+        "encounter_clear_s": 20.833333333333332,
+        "damage_taken_hp": 8.39999999999992,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261107,
+        "digest": "8c85a989c115fdeb1440683df4e4b0a658b4da894eb9a9517b765d8d376f137a",
+        "encounter_clear_s": 18.5,
+        "damage_taken_hp": 7.799999999999926,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261103,
+        "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+        "encounter_clear_s": 34.71666666666667,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261104,
+        "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+        "encounter_clear_s": 35.8,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261105,
+        "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+        "encounter_clear_s": 35.55,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261106,
+        "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+        "encounter_clear_s": 34.7,
+        "damage_taken_hp": 6.5999999999999375,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261107,
+        "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3",
+        "encounter_clear_s": 36.03333333333333,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      }
+    ],
+    "probe-mixed": [
+      {
+        "encounter": "city",
+        "seed": 20261103,
+        "digest": "a748167087966364e55e0ebec4cc3543ac0ab691e63b189db737db474395f3e1",
+        "encounter_clear_s": 22.65,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261104,
+        "digest": "68f32f7762d8fe7e723314f09cd66fd49f02d345ef6e64a4c186ee36bfbd626e",
+        "encounter_clear_s": 24.05,
+        "damage_taken_hp": 0.5999999999999943,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261105,
+        "digest": "b60e374643b4e42e3dd5f04e6793557ebd00ed919ebc3bf1da80f36c6f40a3ce",
+        "encounter_clear_s": 25.4,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261106,
+        "digest": "3b798606dd7b423b331b7cbf4ba8a75960e639f70f91d884259d32be8a0b9c35",
+        "encounter_clear_s": 23.216666666666665,
+        "damage_taken_hp": 4.19999999999996,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261107,
+        "digest": "de5c78d234fc6985e49ee6a8548b061b038d98dc9e26f3617b4f60db4ac93639",
+        "encounter_clear_s": 28.983333333333334,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261103,
+        "digest": "34dce7c1f1a8840b479b6c75d864298072bb2fb383756cd6c6639398f7e0fed1",
+        "encounter_clear_s": 20.583333333333332,
+        "damage_taken_hp": 5.999999999999943,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261104,
+        "digest": "6d9b24e5f796c7e6c999a2e04ca48134b137876255b3d519fd5ac00d0ae16ac0",
+        "encounter_clear_s": 21.6,
+        "damage_taken_hp": 8.39999999999992,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261105,
+        "digest": "5a5a65f8a4d3a338def3bdda1b3a243da74cbf70dbce655b8db77c9da4d26ebd",
+        "encounter_clear_s": 20.366666666666667,
+        "damage_taken_hp": 6.5999999999999375,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261106,
+        "digest": "44485a8b414c4afec47371816bcdab9a5387740fe2aa45209bbf4047bf5d24e4",
+        "encounter_clear_s": 20.133333333333333,
+        "damage_taken_hp": 7.799999999999926,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261107,
+        "digest": "7bfbf6e02791f91143122b83fce9dd2cd726750f65ee97825ae86b14123a16ea",
+        "encounter_clear_s": 20.45,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261103,
+        "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+        "encounter_clear_s": 34.71666666666667,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261104,
+        "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+        "encounter_clear_s": 35.8,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261105,
+        "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+        "encounter_clear_s": 35.55,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261106,
+        "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+        "encounter_clear_s": 34.7,
+        "damage_taken_hp": 6.5999999999999375,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261107,
+        "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3",
+        "encounter_clear_s": 36.03333333333333,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      }
+    ],
+    "guard": [
+      {
+        "encounter": "city",
+        "seed": 20261103,
+        "digest": "7a61766c8e50d05869f4a60992ece5cd79d11b15266ef2384afa28e5a372d0c2",
+        "encounter_clear_s": 16.816666666666666,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261104,
+        "digest": "6c453d01df988d826d259f2f8a2ad11ad20cb3ddf5fe2f3ed8c7a32c0b17322f",
+        "encounter_clear_s": 17.75,
+        "damage_taken_hp": 5.399999999999949,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261105,
+        "digest": "638eac3e621c0a7da3dafacb33764f94ad0ea1ca068f86c7928de71ca962eee9",
+        "encounter_clear_s": 18.466666666666665,
+        "damage_taken_hp": 5.399999999999949,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261106,
+        "digest": "b98df35202c6ddff8796a87c6c240ef3c7b21ac3e418b475c617261527569df3",
+        "encounter_clear_s": 16.516666666666666,
+        "damage_taken_hp": 4.19999999999996,
+        "deaths": 0
+      },
+      {
+        "encounter": "city",
+        "seed": 20261107,
+        "digest": "d91f383ea1078089179e1850067e5a680eb23cdbb947904a4310f826e84509fb",
+        "encounter_clear_s": 18.35,
+        "damage_taken_hp": 0.5999999999999943,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261103,
+        "digest": "1efb05436029012bc6de1fb538e9ccf60a6713b0b8b6792bd658aa08e6cb88c1",
+        "encounter_clear_s": 15.049999999999999,
+        "damage_taken_hp": 1.1999999999999886,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261104,
+        "digest": "b69d9deefdf67c5a4af3771ff85e35c73b16c8d848d559a77d099eb1dca00c42",
+        "encounter_clear_s": 14.183333333333334,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261105,
+        "digest": "cb2515acd326c937550d7022487cfbd433f42c261d61a47c7e1d383ca522082d",
+        "encounter_clear_s": 14.116666666666667,
+        "damage_taken_hp": 7.799999999999926,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261106,
+        "digest": "3976a3c2f3c61b5b8eced3af67440ab6f7c6009229782f0a8aba645c8a21afd1",
+        "encounter_clear_s": 15.35,
+        "damage_taken_hp": 10.199999999999903,
+        "deaths": 0
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261107,
+        "digest": "99df41cff4ce66254ee09acec482624a23572c1d5f7157f87b4fd9b18cd9671d",
+        "encounter_clear_s": 13.966666666666667,
+        "damage_taken_hp": 10.199999999999903,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261103,
+        "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+        "encounter_clear_s": 34.71666666666667,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261104,
+        "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+        "encounter_clear_s": 35.8,
+        "damage_taken_hp": 2.3999999999999773,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261105,
+        "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+        "encounter_clear_s": 35.55,
+        "damage_taken_hp": 7.199999999999932,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261106,
+        "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+        "encounter_clear_s": 34.7,
+        "damage_taken_hp": 6.5999999999999375,
+        "deaths": 0
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261107,
+        "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3",
+        "encounter_clear_s": 36.03333333333333,
+        "damage_taken_hp": 3.599999999999966,
+        "deaths": 0
+      }
+    ]
+  },
+  "rendered_verdict": {
+    "accepted_runs": 48,
+    "valid_after_paired_retry": true,
+    "original_gate_exit": 1,
+    "script_errors": 0
+  },
+  "scenario_mixed": {
+    "live": {
+      "cleared": 5,
+      "cover": 0.510187963986732,
+      "crowded": 0.0,
+      "flank_ticks": 180,
+      "flankers": 2,
+      "replayed": true,
+      "spawned": 5,
+      "ticks": 3071
+    },
+    "no_separation": {
+      "cleared": 5,
+      "cover": 0.47634703196347,
+      "crowded": 0.0767123287671233,
+      "flank_ticks": 96,
+      "flankers": 2,
+      "spawned": 5,
+      "ticks": 2976
+    }
+  }
+}
