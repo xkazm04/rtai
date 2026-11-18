@@ -31,7 +31,7 @@ export function classifyTests(raw, explicit) {
   return { verdict: result.verdict, via: { survived: 'ok', invalid: 'parse', timeout: 'timeout' }[result.verdict] };
 }
 
-export function oracleRunners(wt, tests, env, explicit) {
+export function oracleRunners(wt, tests, env, explicit, { runBake = runGodot } = {}) {
   return {
     tests: async (timeoutMs) => {
       const raw = await runProcess(process.execPath, [join(wt, 'tools/tests/run_unit.mjs'),
@@ -39,7 +39,7 @@ export function oracleRunners(wt, tests, env, explicit) {
       return { ...raw, ...classifyTests(raw, explicit) };
     },
     'bake-check': async (timeoutMs) => {
-      const raw = await runGodot(['-s', 'res://dev/bake_city.gd', '--', '--check', '--fail-fast'],
+      const raw = await runBake(['-s', 'res://dev/bake_city.gd', '--', '--check', '--fail-fast'],
         { cwd: wt, timeoutMs, env, stopOn: SCRIPT_ERROR });
       return { ...raw, ...classifyBake(raw) };
     },
