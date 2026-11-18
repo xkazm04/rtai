@@ -57,9 +57,16 @@ async function runExe(user, timeoutMs) {
   }
 }
 
-async function runScenario(sc, mode, secs, outDir) {
-  const out = join(outDir, `bench-${sc.name}.json`).replace(/\\/g, '/');
+/** The user args one scenario run gets (after `--`); heat >= 0 adds `--heat=<n>` (CityHeat pinned). */
+export function scenarioArgs(sc, secs, out, heat = -1) {
   const user = ['--', `--scenario=${sc.scenario}`, `--label=${sc.name}`, `--secs=${secs}`, `--zoom=${sc.zoom}`, `--vsync=${sc.vsync ?? 'disabled'}`, `--out=${out}`];
+  if (heat >= 0) user.push(`--heat=${heat}`);
+  return user;
+}
+
+async function runScenario(sc, mode, secs, outDir, heat = -1) {
+  const out = join(outDir, `bench-${sc.name}.json`).replace(/\\/g, '/');
+  const user = scenarioArgs(sc, secs, out, heat);
   const res = mode === 'exported'
     ? await runExe(user, (secs + 120) * 1000)
     : await godot(['--headless', '--fixed-fps', '60', 'res://dev/bench/city_bench.tscn', ...user],
@@ -112,6 +119,7 @@ async function onePass(mode, secs, outDir, pass, heat) {
     const r = await runScenario({ ...sc, name: sc.name }, mode, secs, outDir, heat);
     if (r.error) return { error: `${r.error} (${mode}, run ${pass})` };
     if (r.data.backend !== 'native') return { error: `${sc.name} ran on ${r.data.backend}` };
+    if (heat >= 0 && r.data.heat !== heat) return { error: `${sc.name} ran at heat ${r.data.heat}, not ${heat}` };
     byName[sc.name] = r.data;
     files.push(r.file);
   }
