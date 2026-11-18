@@ -235,7 +235,11 @@
       "plaza_share": 0.24,
       "plaza_singles": [
         114,
-        115
+        115,
+        128,
+        129,
+        130,
+        131
       ],
       "street_keep_x": 1,
       "wall_props": [

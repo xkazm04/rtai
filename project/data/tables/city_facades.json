@@ -191,6 +191,14 @@
       "art": "res://features/city/art/view/<art>/prop_down_bollards.png",
       "cell_w_m": 2.42
     },
+    "down_chess_tables": {
+      "art": "res://features/city/art/view/<art>/prop_down_chess_tables.png",
+      "cell_w_m": 2.02
+    },
+    "down_flower_crates": {
+      "art": "res://features/city/art/view/<art>/prop_down_flower_crates.png",
+      "cell_w_m": 2.47
+    },
     "down_litter_bins": {
       "art": "res://features/city/art/view/<art>/prop_down_litter_bins.png",
       "cell_w_m": 1.82
@@ -198,6 +206,14 @@
     "down_news_boxes": {
       "art": "res://features/city/art/view/<art>/prop_down_news_boxes.png",
       "cell_w_m": 1.63
+    },
+    "down_planter_bed": {
+      "art": "res://features/city/art/view/<art>/prop_down_planter_bed.png",
+      "cell_w_m": 4.04
+    },
+    "down_stone_ledges": {
+      "art": "res://features/city/art/view/<art>/prop_down_stone_ledges.png",
+      "cell_w_m": 4.26
     },
     "down_street_clock": {
       "art": "res://features/city/art/view/<art>/prop_down_street_clock.png",
