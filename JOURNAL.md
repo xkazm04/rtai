@@ -507,3 +507,6 @@ NEXT (session 6, freeze 07:30, REPORT 07:40):
    (`--view=top`?) not combo; scrap skip plan needs the card cell re-fit (its end-on card is shallower than the plan).
 4. kerb_dresser mutate with mapped tests; quote the score.
 Session 5 ended ~05:58 with a clean tree; HEAD = this JOURNAL commit after 73e02f64b (v32).
+- 05:58 full gate (--reels) on e597460ec (HEAD, v32) STARTED in the background by session 5: node PID 42032, log
+  `build/gate/s5_head_reels.log`, result `build/gate/e597460ec*/gate.json`. Session 6: if PID 42032 still runs, wait for it
+  (do not start a second gate); if it is gone with no gate.json, re-run. It frees Godot on exit.
