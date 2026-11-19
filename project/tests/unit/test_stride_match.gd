@@ -12,6 +12,12 @@ func test_distance_and_cadence_follow_the_measured_support_path() -> void:
 	assert_eq(StrideMatch.cycle_length(12, 0, 8, 2), 0.0)
 
 
+func test_one_column_cycle_and_sub_hertz_cap() -> void:
+	assert_eq(StrideMatch.cycle_length(6.0, 1, 1, 0.5), 3.0)
+	assert_eq(StrideMatch.cadence(12.0, 3.0, 0.5), 0.5)
+	assert_eq(StrideMatch.cadence(12.0, 3.0, 0.0), 0.0)
+
+
 func test_pistol_profile_follows_each_boot_and_other_rows_keep_their_cycle() -> void:
 	var card: Sprite2D = autofree(Sprite2D.new())
 	card.texture = load("res://features/characters/art/view/p55/rivet_walk_eq_pistol.png")

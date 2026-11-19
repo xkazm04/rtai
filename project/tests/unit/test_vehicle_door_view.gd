@@ -8,6 +8,13 @@ var view: VehicleDoorView
 var positions: Array[Vector2] = []
 
 
+class RigSlot:
+	extends Node2D
+
+	func rig_for(_actor: int) -> CanvasItem:
+		return self
+
+
 func before_each() -> void:
 	svc = VehicleService.new()
 	var bus: EventBus = autofree(EventBus.new())
@@ -102,3 +109,35 @@ func test_rivet_goes_under_the_card_then_recovers_his_original_depth() -> void:
 	_pose(21)
 	view.tint()
 	assert_true(rig.z_as_relative, "the emerging foot has cleared the door")
+
+
+func test_city_foot_pass_replaces_the_standing_row_only_during_the_walk() -> void:
+	var canvas: CanvasLayer = add_child_autofree(CanvasLayer.new())
+	var slot: RigSlot = RigSlot.new()
+	view.attach(slot, svc)
+	canvas.add_child(slot)
+	assert_true(VehicleDoorView.on_foot(slot.rig_for, _put, 0, 0, true))
+	assert_true(positions.is_empty())
+	svc.doors.enabled = false
+	assert_eq(svc.try_enter(svc.world.player_pos()), car.id)
+	assert_false(VehicleDoorView.on_foot(slot.rig_for, _put, 0, 1, true))
+	assert_eq(positions.size(), 1)
+	assert_true(view.walking())
+	assert_false(VehicleDoorView.on_foot(slot.rig_for, _put, 0, 1 + svc.doors.enter_ticks, false))
+	assert_false(view.walking())
+
+
+func test_detaching_an_old_view_leaves_the_new_canvas_owner_attached() -> void:
+	var canvas: CanvasLayer = add_child_autofree(CanvasLayer.new())
+	var first: Node = Node.new()
+	view.attach(first, svc)
+	canvas.add_child(first)
+	var replacement: VehicleDoorView = VehicleDoorView.new()
+	var second: Node = Node.new()
+	replacement.attach(second, svc)
+	canvas.add_child(second)
+	view.detach()
+	var owner_view: VehicleDoorView = canvas.get_meta(VehicleDoorView.META, null)
+	assert_same(owner_view, replacement)
+	replacement.detach()
+	assert_false(canvas.has_meta(VehicleDoorView.META))
