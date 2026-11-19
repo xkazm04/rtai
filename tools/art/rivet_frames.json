@@ -268,6 +268,7 @@
    "rivet_eq_mini_nuke_left": {
     "counts": "3",
     "fig_h": 165,
+    "shell_fit": ["28,66 66,56 92,71 88,106 49,112 28,99", "0,66 38,57 78,64 74,103 22,108 0,99", "16,56 36,47 67,56 88,77 75,102 31,91"],
     "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/mini_nuke_p55_left_key.png"
    },
    "rivet_eq_rocket_launcher_left": {
@@ -543,6 +544,7 @@
    "rivet_eq_mini_nuke_left": {
     "counts": "3",
     "fig_h": 165,
+    "shell_fit": ["21,99 96,86 121,109 107,137 30,154 20,142", "0,94 33,86 107,91 122,116 92,136 5,141", "11,73 30,63 80,84 99,111 81,122 17,103"],
     "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/mini_nuke_p70_left_key.png"
    },
    "rivet_eq_rocket_launcher_left": {

@@ -14,6 +14,7 @@ from PIL import Image
 
 from assault_rifle_parts import keyed
 from assault_rifle_strips import diagonal_row
+from launcher_left_fit import fit_left
 from rivet_frames import _sheet
 from shard_strips import CUT, VIEW, cut
 
@@ -109,7 +110,9 @@ def build(masters):
         left = "mini_nuke_" + pitch + "_left"
         key = masters / (left + "_key.png")
         keyed(masters / (left + "_raw.png")).save(key)
-        cut(key, VIEW / pitch / (NAME + "_left.png"), {"counts": "3", "fig_h": 165})
+        target = VIEW / pitch / (NAME + "_left.png")
+        cut(key, target, {"counts": "3", "fig_h": 165})
+        fit_left(target, manifest["strips"][pitch][NAME + "_left"]["shell_fit"])
     orig = Image.open(masters / "mini_nuke_p55_original.png")
     x = 5*orig.width//8
     front = orig.crop((x+195, 46, x+257, 117))

@@ -8743,15 +8743,15 @@
    "strip": "rivet_eq_mini_nuke_left",
    "cell": 0,
    "facing": "SW",
-   "height_px": 138.01,
+   "height_px": 137.17,
    "shell_rgb": [
-    154,
-    106,
-    76
+    122,
+    83,
+    61
    ],
-   "height_pct": -1.79,
-   "delta_e": 13.81,
-   "flag": "T"
+   "height_pct": -2.38,
+   "delta_e": 4.28,
+   "flag": "-"
   },
   {
    "weapon": "mini_nuke",
@@ -8759,447 +8759,447 @@
    "strip": "rivet_eq_mini_nuke_left",
    "cell": 1,
    "facing": "W",
-   "height_px": 138.01,
+   "height_px": 137.17,
    "shell_rgb": [
-    153,
-    102,
-    74
-   ],
-   "height_pct": -1.79,
-   "delta_e": 13.54,
-   "flag": "T"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p55",
-   "strip": "rivet_eq_mini_nuke_left",
-   "cell": 2,
-   "facing": "NW",
-   "height_px": 139.68,
-   "shell_rgb": [
-    144,
-    98,
-    71
-   ],
-   "height_pct": -0.6,
-   "delta_e": 10.49,
-   "flag": "T"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke",
-   "cell": 0,
-   "facing": "S",
-   "height_px": 133.96,
-   "shell_rgb": [
-    124,
-    96,
-    76
-   ],
-   "height_pct": 0.0,
-   "delta_e": 7.07,
-   "flag": "-"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke",
-   "cell": 1,
-   "facing": "SE",
-   "height_px": 137.21,
-   "shell_rgb": [
-    136,
-    105,
-    84
-   ],
-   "height_pct": 2.42,
-   "delta_e": 3.21,
-   "flag": "-"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke",
-   "cell": 2,
-   "facing": "E",
-   "height_px": 133.96,
-   "shell_rgb": [
-    143,
-    110,
-    85
-   ],
-   "height_pct": 0.0,
-   "delta_e": 0.0,
-   "flag": "-"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke",
-   "cell": 3,
-   "facing": "NE",
-   "height_px": 134.77,
-   "shell_rgb": [
-    150,
-    111,
-    80
-   ],
-   "height_pct": 0.61,
-   "delta_e": 4.75,
-   "flag": "-"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke",
-   "cell": 4,
-   "facing": "N",
-   "height_px": 124.22,
-   "shell_rgb": [
-    129,
-    99,
-    77
-   ],
-   "height_pct": -7.27,
-   "delta_e": 5.01,
-   "flag": "H"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke",
-   "cell": 5,
-   "facing": "E-fire",
-   "height_px": 134.77,
-   "shell_rgb": [
-    132,
-    101,
-    80
-   ],
-   "height_pct": 0.61,
-   "delta_e": 4.34,
-   "flag": "-"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke",
-   "cell": 6,
-   "facing": "S-fire",
-   "height_px": 142.08,
-   "shell_rgb": [
-    122,
-    92,
-    72
-   ],
-   "height_pct": 6.06,
-   "delta_e": 7.98,
-   "flag": "H"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke",
-   "cell": 7,
-   "facing": "idle",
-   "height_px": 146.14,
-   "shell_rgb": [
-    128,
-    100,
-    80
-   ],
-   "height_pct": 9.09,
-   "delta_e": 5.66,
-   "flag": "H"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke_noflash",
-   "cell": 0,
-   "facing": "S",
-   "height_px": 133.96,
-   "shell_rgb": [
-    124,
-    96,
-    76
-   ],
-   "height_pct": 0.0,
-   "delta_e": 7.07,
-   "flag": "-"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke_noflash",
-   "cell": 1,
-   "facing": "SE",
-   "height_px": 137.21,
-   "shell_rgb": [
-    136,
-    105,
-    84
-   ],
-   "height_pct": 2.42,
-   "delta_e": 3.21,
-   "flag": "-"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke_noflash",
-   "cell": 2,
-   "facing": "E",
-   "height_px": 133.96,
-   "shell_rgb": [
-    143,
-    110,
-    85
-   ],
-   "height_pct": 0.0,
-   "delta_e": 0.0,
-   "flag": "-"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke_noflash",
-   "cell": 3,
-   "facing": "NE",
-   "height_px": 134.77,
-   "shell_rgb": [
-    150,
-    111,
-    80
-   ],
-   "height_pct": 0.61,
-   "delta_e": 4.75,
-   "flag": "-"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke_noflash",
-   "cell": 4,
-   "facing": "N",
-   "height_px": 124.22,
-   "shell_rgb": [
-    129,
-    99,
-    77
-   ],
-   "height_pct": -7.27,
-   "delta_e": 5.01,
-   "flag": "H"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke_noflash",
-   "cell": 5,
-   "facing": "E-fire",
-   "height_px": 134.77,
-   "shell_rgb": [
-    132,
-    101,
-    80
-   ],
-   "height_pct": 0.61,
-   "delta_e": 4.34,
-   "flag": "-"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke_noflash",
-   "cell": 6,
-   "facing": "S-fire",
-   "height_px": 142.08,
-   "shell_rgb": [
-    122,
-    92,
-    72
-   ],
-   "height_pct": 6.06,
-   "delta_e": 7.98,
-   "flag": "H"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke_noflash",
-   "cell": 7,
-   "facing": "idle",
-   "height_px": 146.14,
-   "shell_rgb": [
-    128,
-    100,
-    80
-   ],
-   "height_pct": 9.09,
-   "delta_e": 5.66,
-   "flag": "H"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke_diag",
-   "cell": 0,
-   "facing": "SE",
-   "height_px": 133.15,
-   "shell_rgb": [
-    155,
-    107,
-    83
-   ],
-   "height_pct": -0.61,
-   "delta_e": 6.98,
-   "flag": "-"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke_diag",
-   "cell": 1,
-   "facing": "NE",
-   "height_px": 133.96,
-   "shell_rgb": [
-    172,
-    116,
-    84
-   ],
-   "height_pct": 0.0,
-   "delta_e": 12.91,
-   "flag": "T"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke_diag",
-   "cell": 2,
-   "facing": "SW",
-   "height_px": 133.96,
-   "shell_rgb": [
-    163,
-    114,
-    86
-   ],
-   "height_pct": 0.0,
-   "delta_e": 8.21,
-   "flag": "T"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke_diag",
-   "cell": 3,
-   "facing": "NW",
-   "height_px": 133.96,
-   "shell_rgb": [
-    160,
-    109,
-    84
-   ],
-   "height_pct": 0.0,
-   "delta_e": 8.48,
-   "flag": "T"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke_diag_noflash",
-   "cell": 0,
-   "facing": "SE",
-   "height_px": 133.15,
-   "shell_rgb": [
-    155,
-    107,
-    83
-   ],
-   "height_pct": -0.61,
-   "delta_e": 6.98,
-   "flag": "-"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke_diag_noflash",
-   "cell": 1,
-   "facing": "NE",
-   "height_px": 133.96,
-   "shell_rgb": [
-    172,
-    116,
-    84
-   ],
-   "height_pct": 0.0,
-   "delta_e": 12.91,
-   "flag": "T"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke_diag_noflash",
-   "cell": 2,
-   "facing": "SW",
-   "height_px": 133.96,
-   "shell_rgb": [
-    163,
-    114,
-    86
-   ],
-   "height_pct": 0.0,
-   "delta_e": 8.21,
-   "flag": "T"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke_diag_noflash",
-   "cell": 3,
-   "facing": "NW",
-   "height_px": 133.96,
-   "shell_rgb": [
-    160,
-    109,
-    84
-   ],
-   "height_pct": 0.0,
-   "delta_e": 8.48,
-   "flag": "T"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke_left",
-   "cell": 0,
-   "facing": "SW",
-   "height_px": 133.96,
-   "shell_rgb": [
-    143,
-    96,
-    70
-   ],
-   "height_pct": 0.0,
-   "delta_e": 8.35,
-   "flag": "T"
-  },
-  {
-   "weapon": "mini_nuke",
-   "pitch": "p70",
-   "strip": "rivet_eq_mini_nuke_left",
-   "cell": 1,
-   "facing": "W",
-   "height_px": 132.34,
-   "shell_rgb": [
-    139,
-    90,
+    118,
+    84,
     63
    ],
-   "height_pct": -1.21,
-   "delta_e": 10.97,
+   "height_pct": -2.38,
+   "delta_e": 1.86,
+   "flag": "-"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p55",
+   "strip": "rivet_eq_mini_nuke_left",
+   "cell": 2,
+   "facing": "NW",
+   "height_px": 137.17,
+   "shell_rgb": [
+    113,
+    81,
+    59
+   ],
+   "height_pct": -2.38,
+   "delta_e": 2.87,
+   "flag": "-"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke",
+   "cell": 0,
+   "facing": "S",
+   "height_px": 133.96,
+   "shell_rgb": [
+    124,
+    96,
+    76
+   ],
+   "height_pct": 0.0,
+   "delta_e": 7.07,
+   "flag": "-"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke",
+   "cell": 1,
+   "facing": "SE",
+   "height_px": 137.21,
+   "shell_rgb": [
+    136,
+    105,
+    84
+   ],
+   "height_pct": 2.42,
+   "delta_e": 3.21,
+   "flag": "-"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke",
+   "cell": 2,
+   "facing": "E",
+   "height_px": 133.96,
+   "shell_rgb": [
+    143,
+    110,
+    85
+   ],
+   "height_pct": 0.0,
+   "delta_e": 0.0,
+   "flag": "-"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke",
+   "cell": 3,
+   "facing": "NE",
+   "height_px": 134.77,
+   "shell_rgb": [
+    150,
+    111,
+    80
+   ],
+   "height_pct": 0.61,
+   "delta_e": 4.75,
+   "flag": "-"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke",
+   "cell": 4,
+   "facing": "N",
+   "height_px": 124.22,
+   "shell_rgb": [
+    129,
+    99,
+    77
+   ],
+   "height_pct": -7.27,
+   "delta_e": 5.01,
+   "flag": "H"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke",
+   "cell": 5,
+   "facing": "E-fire",
+   "height_px": 134.77,
+   "shell_rgb": [
+    132,
+    101,
+    80
+   ],
+   "height_pct": 0.61,
+   "delta_e": 4.34,
+   "flag": "-"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke",
+   "cell": 6,
+   "facing": "S-fire",
+   "height_px": 142.08,
+   "shell_rgb": [
+    122,
+    92,
+    72
+   ],
+   "height_pct": 6.06,
+   "delta_e": 7.98,
+   "flag": "H"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke",
+   "cell": 7,
+   "facing": "idle",
+   "height_px": 146.14,
+   "shell_rgb": [
+    128,
+    100,
+    80
+   ],
+   "height_pct": 9.09,
+   "delta_e": 5.66,
+   "flag": "H"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke_noflash",
+   "cell": 0,
+   "facing": "S",
+   "height_px": 133.96,
+   "shell_rgb": [
+    124,
+    96,
+    76
+   ],
+   "height_pct": 0.0,
+   "delta_e": 7.07,
+   "flag": "-"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke_noflash",
+   "cell": 1,
+   "facing": "SE",
+   "height_px": 137.21,
+   "shell_rgb": [
+    136,
+    105,
+    84
+   ],
+   "height_pct": 2.42,
+   "delta_e": 3.21,
+   "flag": "-"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke_noflash",
+   "cell": 2,
+   "facing": "E",
+   "height_px": 133.96,
+   "shell_rgb": [
+    143,
+    110,
+    85
+   ],
+   "height_pct": 0.0,
+   "delta_e": 0.0,
+   "flag": "-"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke_noflash",
+   "cell": 3,
+   "facing": "NE",
+   "height_px": 134.77,
+   "shell_rgb": [
+    150,
+    111,
+    80
+   ],
+   "height_pct": 0.61,
+   "delta_e": 4.75,
+   "flag": "-"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke_noflash",
+   "cell": 4,
+   "facing": "N",
+   "height_px": 124.22,
+   "shell_rgb": [
+    129,
+    99,
+    77
+   ],
+   "height_pct": -7.27,
+   "delta_e": 5.01,
+   "flag": "H"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke_noflash",
+   "cell": 5,
+   "facing": "E-fire",
+   "height_px": 134.77,
+   "shell_rgb": [
+    132,
+    101,
+    80
+   ],
+   "height_pct": 0.61,
+   "delta_e": 4.34,
+   "flag": "-"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke_noflash",
+   "cell": 6,
+   "facing": "S-fire",
+   "height_px": 142.08,
+   "shell_rgb": [
+    122,
+    92,
+    72
+   ],
+   "height_pct": 6.06,
+   "delta_e": 7.98,
+   "flag": "H"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke_noflash",
+   "cell": 7,
+   "facing": "idle",
+   "height_px": 146.14,
+   "shell_rgb": [
+    128,
+    100,
+    80
+   ],
+   "height_pct": 9.09,
+   "delta_e": 5.66,
+   "flag": "H"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke_diag",
+   "cell": 0,
+   "facing": "SE",
+   "height_px": 133.15,
+   "shell_rgb": [
+    155,
+    107,
+    83
+   ],
+   "height_pct": -0.61,
+   "delta_e": 6.98,
+   "flag": "-"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke_diag",
+   "cell": 1,
+   "facing": "NE",
+   "height_px": 133.96,
+   "shell_rgb": [
+    172,
+    116,
+    84
+   ],
+   "height_pct": 0.0,
+   "delta_e": 12.91,
    "flag": "T"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke_diag",
+   "cell": 2,
+   "facing": "SW",
+   "height_px": 133.96,
+   "shell_rgb": [
+    163,
+    114,
+    86
+   ],
+   "height_pct": 0.0,
+   "delta_e": 8.21,
+   "flag": "T"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke_diag",
+   "cell": 3,
+   "facing": "NW",
+   "height_px": 133.96,
+   "shell_rgb": [
+    160,
+    109,
+    84
+   ],
+   "height_pct": 0.0,
+   "delta_e": 8.48,
+   "flag": "T"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke_diag_noflash",
+   "cell": 0,
+   "facing": "SE",
+   "height_px": 133.15,
+   "shell_rgb": [
+    155,
+    107,
+    83
+   ],
+   "height_pct": -0.61,
+   "delta_e": 6.98,
+   "flag": "-"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke_diag_noflash",
+   "cell": 1,
+   "facing": "NE",
+   "height_px": 133.96,
+   "shell_rgb": [
+    172,
+    116,
+    84
+   ],
+   "height_pct": 0.0,
+   "delta_e": 12.91,
+   "flag": "T"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke_diag_noflash",
+   "cell": 2,
+   "facing": "SW",
+   "height_px": 133.96,
+   "shell_rgb": [
+    163,
+    114,
+    86
+   ],
+   "height_pct": 0.0,
+   "delta_e": 8.21,
+   "flag": "T"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke_diag_noflash",
+   "cell": 3,
+   "facing": "NW",
+   "height_px": 133.96,
+   "shell_rgb": [
+    160,
+    109,
+    84
+   ],
+   "height_pct": 0.0,
+   "delta_e": 8.48,
+   "flag": "T"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke_left",
+   "cell": 0,
+   "facing": "SW",
+   "height_px": 130.71,
+   "shell_rgb": [
+    144,
+    107,
+    81
+   ],
+   "height_pct": -2.42,
+   "delta_e": 2.09,
+   "flag": "-"
+  },
+  {
+   "weapon": "mini_nuke",
+   "pitch": "p70",
+   "strip": "rivet_eq_mini_nuke_left",
+   "cell": 1,
+   "facing": "W",
+   "height_px": 130.71,
+   "shell_rgb": [
+    148,
+    111,
+    85
+   ],
+   "height_pct": -2.42,
+   "delta_e": 2.11,
+   "flag": "-"
   },
   {
    "weapon": "mini_nuke",
@@ -9207,15 +9207,15 @@
    "strip": "rivet_eq_mini_nuke_left",
    "cell": 2,
    "facing": "NW",
-   "height_px": 133.96,
+   "height_px": 130.71,
    "shell_rgb": [
-    167,
-    110,
-    77
+    136,
+    103,
+    79
    ],
-   "height_pct": 0.0,
-   "delta_e": 12.99,
-   "flag": "T"
+   "height_pct": -2.42,
+   "delta_e": 2.79,
+   "flag": "-"
   },
   {
    "weapon": "molotov",
