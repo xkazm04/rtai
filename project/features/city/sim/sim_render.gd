@@ -2,8 +2,8 @@ class_name CitySimRender
 extends RefCounted
 ## The reference sim's MultiMesh writer: every visible actor into five 2D-transform buffers
 ## (people, people shadows, cars, car shadows, bullets; RL_STRIDE floats per instance: 2x4
-## transform rows, colour, custom x = atlas cell, custom y = car state), one upload per layer
-## per frame. Render output is not sim state: parity and replay never read it. Only the
+## transform rows, colour, custom x = atlas cell, custom y = body slot + 1 or car state), one upload
+## per layer per frame. Render output is not sim state: parity and replay never read it. Only the
 ## fallback path uses this writer; the game draws through the native one.
 
 const S_PED: float = 122.88
@@ -61,7 +61,7 @@ func write(vx0: float, vy0: float, vx1: float, vy1: float) -> void:
 			_person_shadow(i, pos)
 			if _rigged[i] == 0:
 				_put(SimConst.RL_PEDS, h, Vector2(person_px, person_px), pos)
-				_tint(SimConst.RL_PEDS, Color.WHITE, _frame_cell(i))
+				_tint(SimConst.RL_PEDS, Color.WHITE, _frame_cell(i), i + 1)
 		else:
 			_put(SimConst.RL_CARS, h, Vector2(CAR_L, CAR_W), pos)
 			_tint(SimConst.RL_CARS, Color.WHITE, _s.variant[i], car_state[i])

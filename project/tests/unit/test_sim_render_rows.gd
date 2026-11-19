@@ -29,6 +29,33 @@ func test_reference_writer_resolves_looks_by_body_without_changing_the_sim() -> 
 		assert_eq(int(s.variant[slot]), variants[slot], "rendering preserves the variant")
 
 
+func test_baked_bodies_keep_their_sim_slot_across_a_rigged_slot() -> void:
+	var state := CitySimState.new()
+	state.init(18)
+	for slot: int in [0, 14, 15, 511]:
+		state.alive[slot] = 1
+		state.kind[slot] = SimConst.K_PED
+	var renderer := CitySimRender.new(state)
+	var rids: Array[RID] = []
+	for k: int in SimConst.RL_COUNT:
+		var rid: RID = RenderingServer.multimesh_create()
+		var cap: int = SimConst.PCAP if k == SimConst.RL_BULLETS else SimConst.CAP
+		RenderingServer.multimesh_allocate_data(
+			rid, cap, RenderingServer.MULTIMESH_TRANSFORM_2D, true, true
+		)
+		rids.append(rid)
+	renderer.setup(rids, PackedInt32Array())
+	renderer.set_rig_slots(PackedInt32Array([14]))
+	renderer.write(-1, -1, 1, 1)
+	for rid: RID in rids:
+		RenderingServer.free_rid(rid)
+	assert_eq(renderer.counts[SimConst.RL_PEDS], 3)
+	var rows := PackedFloat32Array(renderer._layers[SimConst.RL_PEDS])
+	var slots: Array[int] = [0, 15, 511]
+	for row: int in slots.size():
+		assert_eq(rows[row * SimConst.RL_STRIDE + 13], float(slots[row] + 1))
+
+
 func test_rows_match_the_rig_choice_for_a_thousand_actor_ids() -> void:
 	for body: BodyPlan.Kind in [BodyPlan.Kind.COP, BodyPlan.Kind.PED]:
 		var kind: int = SimConst.K_COP if body == BodyPlan.Kind.COP else SimConst.K_PED

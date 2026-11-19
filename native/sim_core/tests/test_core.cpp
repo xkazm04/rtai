@@ -235,7 +235,36 @@ void far_cop_rows_test() {
 	}
 }
 
+void baked_body_slots_test() {
+	auto sim = std::make_unique<CityCore>();
+	sim->init(18);
+	std::vector<int32_t> clips(CLIP_VARIANTS * CLIPS * 3, 1);
+	sim->set_clips(clips.data(), (int)clips.size());
+	double spec[SP_LEN] = {};
+	spec[SP_KIND] = K_PED;
+	for (int slot = 0; slot <= 511; ++slot) {
+		spec[SP_X] = slot == 0 || slot == 14 || slot == 15 || slot == 511 ? 0.0 : 10.0;
+		if (sim->spawn(spec) != slot) {
+			check(false, "render: slots allocated in order");
+			return;
+		}
+	}
+	const int32_t rigged = 14;
+	sim->set_rig_slots(&rigged, 1);
+	std::vector<float> data(RL_COUNT * CAP * RL_STRIDE);
+	float *layers[RL_COUNT];
+	for (int i = 0; i < RL_COUNT; ++i) layers[i] = data.data() + i * CAP * RL_STRIDE;
+	int32_t counts[RL_COUNT] = {};
+	sim->fill_render(-1, -1, 1, 1, layers, counts);
+	check(counts[RL_PEDS] == 3, "render: three visible baked bodies");
+	const int slots[] = {0, 15, 511};
+	for (int i = 0; i < 3; ++i) {
+		check(layers[RL_PEDS][i * RL_STRIDE + 13] == slots[i] + 1, "render: baked body sim slot + 1");
+	}
+}
+
 int main() {
+	baked_body_slots_test();
 	far_cop_rows_test();
 	scan_test();
 	crowd_rect_test();

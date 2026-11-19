@@ -21,7 +21,7 @@ static inline int row_of(int kind, int variant, int slot) {
 }
 
 // 2D transform rows (a, b, 0, ox / c, d, 0, oy), then colour, custom.x (art cell) and custom.y
-// (cars: the render state set_car_state() holds).
+// (people: sim slot + 1, cars: the render state set_car_state() holds).
 void put(float *o, const float *xf, const float *rgba, float custom, float custom_y = 0.0f) {
 	for (int k = 0; k < 8; k++) o[k] = xf[k];
 	for (int k = 0; k < 4; k++) o[8 + k] = rgba[k];
@@ -92,7 +92,7 @@ void CityCore::fill_render(double vx0, double vy0, double vx1, double vy1, float
 			}
 			if (rigged_[i]) continue;  // drawn by its cutout rig
 			const float body[8] = {dx * S, -dy * S, 0.0f, X, dy * S, dx * S, 0.0f, Y};
-			put(bufs[RL_PEDS] + np * RL_STRIDE, body, WHITE, (float)cell);
+			put(bufs[RL_PEDS] + np * RL_STRIDE, body, WHITE, (float)cell, (float)(i + 1));
 			np++;
 		} else {
 			const float body[8] = {dx * CL, -dy * CW, 0.0f, X, dy * CL, dx * CW, 0.0f, Y};
