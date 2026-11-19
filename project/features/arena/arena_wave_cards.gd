@@ -3,8 +3,6 @@ extends Node2D
 ## Living wave members outside the full-rig selection use the same armed walk sheets as the rigs.
 ## The flat view uses the baked top-down cop. Neither representation occupies a full-rig slot.
 
-const FLAT_COP: String = "res://features/quest/art/collect_call/cast_cop.png"
-
 
 class Card:
 	extends Sprite2D
@@ -23,7 +21,7 @@ class Card:
 			walked += position.distance_to(feed.pos[i])
 		position = feed.pos[i]
 		show()
-		if art.is_empty():
+		if centered:
 			rotation = feed.face[i] + PI * 0.5
 			return
 		var facing: Vector2i = RigHeadCard.frame_of(feed.face[i])
@@ -35,16 +33,19 @@ class Card:
 	func _configure(id: int) -> void:
 		rotation = 0.0
 		flip_h = false
-		centered = art.is_empty()
+		var row: String = "cop/" + RigVariant.crowd(look).head
+		var sheets: Dictionary = StreetCopWalk.WALKS.get(art, {})
+		centered = not sheets.has(row)
 		if centered:
+			if not art.is_empty():
+				Log.warn("arena", "no armed walk for %s/%s, using the flat cop" % [art, row])
 			hframes = 1
 			vframes = 1
-			texture = StreetStrips.get_tex(FLAT_COP)
+			texture = QuestArt.shared().texture(&"cop")
 			offset = Vector2.ZERO
-			scale = Vector2.ONE * (2.83 * SimConst.PX_PER_M / texture.get_height())
+			scale = QuestArt.shared().size_m(&"cop") * SimConst.PX_PER_M / texture.get_size()
 			return
-		var row: String = "cop/" + RigVariant.crowd(look).head
-		var file: String = StreetCopWalk.WALKS[art][row]
+		var file: String = sheets[row]
 		var path: String = StreetWalkerCards.DIR + art + "/" + file
 		texture = StreetStrips.get_tex(path)
 		hframes = RigHeadCard.FRAMES

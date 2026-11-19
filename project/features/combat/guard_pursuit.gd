@@ -23,6 +23,14 @@ func blocked_goal() -> Vector2:
 	return _goal if _blocked else Vector2.INF
 
 
+func blocked() -> bool:
+	return _blocked
+
+
+func ticks_advanced() -> int:
+	return _ticks
+
+
 ## True while rounding cover (or holding at an unreachable target). A locked burst calls
 ## this only once it finishes, so turning a corner cannot redirect rounds already committed.
 func advance(g: Fighter, target: Vector2, speed: float) -> bool:

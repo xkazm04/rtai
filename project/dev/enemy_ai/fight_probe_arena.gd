@@ -64,12 +64,12 @@ func _step_hostile(h: Fighter) -> void:
 	var telling: bool = guard_tell != null and (h.tell_left > 0 or h.burst_left > 0)
 	var sights: int = guard_map.sight_checks if squad_ai != null else 0
 	var pursuit: GuardPursuit = h.pursuit if squad_ai == null else null
-	var age: int = pursuit._ticks if pursuit != null else -1
+	var age: int = pursuit.ticks_advanced() if pursuit != null else -1
 	var start: int = Time.get_ticks_usec()
 	super._step_hostile(h)
 	var elapsed: int = Time.get_ticks_usec() - start
 	var checks: int = guard_map.sight_checks - sights if squad_ai != null else 0
-	if pursuit != null and pursuit._ticks != age:
+	if pursuit != null and pursuit.ticks_advanced() != age:
 		# GuardPursuit.advance performs one target LOS on first advance or a refresh slot.
 		checks = int(age == 0 or (age + h.id) % GuardPursuit.CHECK_TICKS == 0)
 	peak_sight = maxi(peak_sight, checks)
@@ -87,7 +87,7 @@ func _state(h: Fighter, before: Vector2, telling: bool) -> String:
 	if squad_ai != null and squad_ai.minds.has(h.id):
 		return str(EnemyAgent.State.keys()[squad_ai.minds[h.id].agent.state]).to_lower()
 	# The pursuit caches sight between route checks. GuardTell's committed burst bypasses it.
-	if not telling and h.pursuit != null and h.pursuit._blocked:
+	if not telling and h.pursuit != null and h.pursuit.blocked():
 		return "route"
 	if h.pos != before:
 		return "approach"
