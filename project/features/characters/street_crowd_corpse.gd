@@ -116,7 +116,8 @@ static func _blit(image: Image, body: Image, col: int, look: int) -> void:
 	var cell: int = CrowdAtlas.CELL_PX
 	var origin: Vector2i = Vector2i(col * cell, look * cell)
 	image.fill_rect(Rect2i(origin, Vector2i(cell, cell)), Color(0.0, 0.0, 0.0, 0.0))
-	# CrowdBaker stands each rig at (0.5, 0.55) of its cell
-	var at: Vector2i = Vector2i(roundi(cell * 0.5), roundi(cell * 0.55)) - body.get_size() / 2
+	var at: Vector2i = (
+		CrowdAtlas.anchor(ViewMode.shared(), CrowdAtlas.Clip.DEATH) - body.get_size() / 2
+	)
 	at = at.clamp(Vector2i.ZERO, Vector2i(cell, cell) - body.get_size())
 	image.blend_rect(body, Rect2i(Vector2i.ZERO, body.get_size()), origin + at)

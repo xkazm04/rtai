@@ -4,8 +4,8 @@ extends Node
 ## through every clip on the fixed tick and captured frame by frame into one atlas image
 ## (25 captures, then the viewport and the rigs are freed). Headless (no GPU) it leaves the
 ## atlas unbaked; the layout and the clip table do not depend on it.
-## Await bake(): it spans about 30 rendered frames, at load only (never in play). The captures
-## are read back asynchronously (CrowdReadback, n9-perf): no synchronous GPU stall per capture.
+## Await bake(): it spans about 30 rendered frames at load. CrowdReadback takes each frame
+## synchronously by default; the async readback flag queues it until _drain().
 
 const TICK: float = 1.0 / 60.0
 ## Frames to wait for the last readbacks before the bake gives up on them (they land in 1-3).
@@ -15,6 +15,8 @@ var _rigs: Array[CutRig] = []
 var _vp: SubViewport = null
 var _image: Image = null
 var _readback: CrowdReadback = CrowdReadback.new()
+var _clip: CrowdAtlas.Clip = CrowdAtlas.Clip.IDLE
+var _reactions: ReactTable
 
 
 func bake(atlas: CrowdAtlas) -> void:
@@ -28,6 +30,8 @@ func bake(atlas: CrowdAtlas) -> void:
 		CrowdAtlas.cols() * cell, CrowdAtlas.rows() * cell, false, Image.FORMAT_RGBA8
 	)
 	for c: int in CrowdAtlas.CLIPS:
+		var zoom: Vector2 = CrowdAtlas.bake_scale(ViewMode.shared(), c as CrowdAtlas.Clip)
+		_vp.canvas_transform = Transform2D.IDENTITY.scaled(zoom)
 		_start_clip(c as CrowdAtlas.Clip)
 		var at: float = 0.0
 		for f: int in CrowdAtlas.FRAMES[c]:
@@ -37,7 +41,12 @@ func bake(atlas: CrowdAtlas) -> void:
 			await RenderingServer.frame_post_draw
 			_capture(CrowdAtlas.CLIP_FIRST[c] + f)
 	await _drain()
-	StreetCrowdCorpse.stamp(_image, _rigs)  # n8 street: the drawn corpse under a card view
+	atlas.bake_view = ViewMode.new()
+	atlas.bake_view.cards = ViewMode.shared().cards
+	atlas.bake_view.art = ViewMode.shared().art
+	atlas.bake_view.pitch_deg = ViewMode.shared().pitch_deg
+	if not CrowdAtlas.drawn_fall(atlas.bake_view):
+		StreetCrowdCorpse.stamp(_image, _rigs)
 	atlas.texture = ImageTexture.create_from_image(_image)
 	atlas.baked = true
 	_vp.queue_free()
@@ -63,7 +72,7 @@ func _make_stage() -> void:
 	_vp.transparent_bg = true
 	_vp.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	add_child(_vp)
-	_vp.canvas_transform = Transform2D.IDENTITY.scaled(Vector2.ONE * CrowdAtlas.BAKE_ZOOM)
+	_reactions = ReactTable.shipped() if CrowdAtlas.drawn_fall(ViewMode.shared()) else null
 	for look: int in CrowdAtlas.LOOKS:
 		var v: RigVariant = RigVariant.crowd(look)
 		var rig: CutRig = CutRig.new()
@@ -73,11 +82,13 @@ func _make_stage() -> void:
 
 
 func _centre(look: int) -> Vector2:
-	var w: float = CrowdAtlas.cell_world_px()
-	return Vector2((look + 0.5) * w, 0.55 * w)
+	var pixel: Vector2i = CrowdAtlas.anchor(ViewMode.shared(), _clip)
+	pixel.x += look * CrowdAtlas.CELL_PX
+	return Vector2(pixel) / CrowdAtlas.bake_scale(ViewMode.shared(), _clip)
 
 
 func _start_clip(c: CrowdAtlas.Clip) -> void:
+	_clip = c
 	for look: int in _rigs.size():
 		var rig: CutRig = _rigs[look]
 		rig.global_position = _centre(look)
@@ -95,6 +106,8 @@ func _start_clip(c: CrowdAtlas.Clip) -> void:
 				rig.clips.hit(rig, Vector2.RIGHT)
 			CrowdAtlas.Clip.DEATH:
 				rig.clips.die(false)
+				if _reactions != null:
+					HumanReact.on(rig).play(rig, &"death_bullet", Vector2.RIGHT, _reactions)
 			CrowdAtlas.Clip.SHOOT:
 				rig.clips.shoot(1.0)
 	_advance(0.6 if c == CrowdAtlas.Clip.WALK or c == CrowdAtlas.Clip.FLEE else 0.0)
