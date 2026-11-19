@@ -1,8 +1,4 @@
 {
-  "holes": {
-    "assault-rifle/p55/pickup": "absent from rack ORDER",
-    "assault-rifle/p70/pickup": "absent from rack ORDER",
-    "assault-rifle/top/pickup": "absent from rack ORDER"
-  },
+  "holes": {},
   "schema": "gtai.arsenal-known-holes/1"
 }

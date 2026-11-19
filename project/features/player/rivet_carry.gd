@@ -8,6 +8,8 @@ extends RefCounted
 ## leaves before the draw ends. Deterministic: only the tick's press edges move it.
 
 const SLOTS: int = 4
+## The contractor rifle fires CombatArena's finite magazine from combat.json.
+const RIFLE: StringName = &"assault-rifle"
 const SLOT_ACTIONS: Array[StringName] = [
 	&"weapon_slot_1", &"weapon_slot_2", &"weapon_slot_3", &"weapon_slot_4"
 ]
@@ -35,10 +37,14 @@ var _arsenal: ArsenalTable
 var _rng: RandomNumberGenerator
 
 
-func _init(table: WeaponTable, arsenal: ArsenalTable, rng: RandomNumberGenerator) -> void:
+func _init(
+	table: WeaponTable, arsenal: ArsenalTable, rng: RandomNumberGenerator, drawn: GunHand = null
+) -> void:
 	_table = table
 	_arsenal = arsenal
 	_rng = rng
+	if drawn != null:
+		_hands[drawn.trigger.spec.id] = drawn
 
 
 ## Puts a table gun into its class's slot (replacing what was there); returns the slot index,
@@ -53,6 +59,12 @@ func add(id: StringName) -> int:
 
 ## The tick's switch and reload presses.
 func step(c: PlayerCommand, actions: PlayerActions, arena: CombatArena) -> void:
+	if weapon() == RIFLE and arena.rifle_ammo == 0 and arena.rivet.weapon != RIFLE:
+		slots[current] = &""
+		current = -1
+		var next: int = _cycle(1)
+		if next >= 0:
+			select(next, arena)
 	if sheathe and current >= 0 and arena.rivet.weapon != slots[current]:
 		current = -1  # the story put another weapon in the claw
 	var want: int = current
@@ -82,13 +94,15 @@ func slot_of(id: StringName) -> int:
 	return grip.slot - 1 if grip != null and carries(id) else -1
 
 
-## A weapons.json gun or a melee_weapons.json weapon.
+## The contractor rifle, a weapons.json gun or a melee_weapons.json weapon.
 func carries(id: StringName) -> bool:
-	return _table.weapons.has(id) or melee_ids.has(id)
+	return id == RIFLE or _table.weapons.has(id) or melee_ids.has(id)
 
 
 ## A picked-up gun into its slot and into the claw; the same gun again refills its magazine.
 func take(id: StringName, arena: CombatArena) -> void:
+	if id == RIFLE:
+		arena.rifle_ammo = arena.tuning.weapon(RIFLE).magazine
 	var hand: GunHand = _hands.get(id, null)
 	if hand != null:
 		hand.trigger.ammo = hand.trigger.spec.magazine
@@ -103,19 +117,17 @@ func select(i: int, arena: CombatArena) -> void:
 	var id: StringName = slots[i]
 	if id == &"":
 		return
-	if melee_ids.has(id):
-		if sheathe and not melee_ids.has(arena.rivet.weapon):
+	if _table.weapons.has(id):
+		if not _hands.has(id):
+			_hands[id] = GunHand.make(_table, id, _rng)
+		arena.gun = _hands[id]
+		arena.gun.tap = tap
+	else:
+		if id == RIFLE and arena.rifle_ammo == 0:
+			arena.rifle_ammo = arena.tuning.weapon(RIFLE).magazine
+		if sheathe and melee_ids.has(id) and not melee_ids.has(arena.rivet.weapon):
 			_stowed = arena.rivet.weapon
 		arena.gun = null
-		arena.rivet.weapon = id
-		current = i
-		switches += 1
-		return
-	if not _hands.has(id):
-		_hands[id] = GunHand.make(_table, id, _rng)
-	var hand: GunHand = _hands[id]
-	hand.tap = tap
-	arena.gun = hand
 	arena.rivet.weapon = id
 	current = i
 	switches += 1

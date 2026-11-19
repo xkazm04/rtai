@@ -97,6 +97,34 @@ func test_the_rack_hangs_handguns_flat_under_a_form_and_all_muzzle_up_in_top() -
 	assert_eq(rack._pegs.size(), k, "one peg per hung weapon")
 
 
+func test_the_east_rifle_peg_keeps_its_space_and_drawn_length_in_each_view() -> void:
+	var rack: WeaponRackView = WeaponRackView.new()
+	add_child_autofree(rack)
+	for form: String in ["", "p55", "p70"]:
+		rack._form = form
+		rack.rifle_taken = false
+		rack._hang()
+		var rifle: Sprite2D = rack._sprites.back()
+		var expected: Texture2D = rack.art.pickup_texture(&"assault_rifle")
+		if form != "":
+			expected = rack.showcase.texture(&"assault_rifle", WeaponShowcase.ICON)
+		assert_eq(rifle.texture, expected)
+		assert_almost_eq(
+			rifle.texture.get_width() * rifle.scale.x / SimConst.PX_PER_M,
+			rack.art.length_m(&"assault_rifle"),
+			0.001,
+			form
+		)
+		assert_eq(rack._pegs.size(), 18)
+		assert_eq(rifle.position.x - rack._sprites[-2].position.x, SimConst.PX_PER_M * 1.0)
+		rack.rifle_taken = true
+		assert_false(rifle.visible)
+		rack._hang()
+		assert_false(rack._sprites[-1].visible, "a camera change keeps the peg empty")
+		assert_true(rack._sprites[-2].visible)
+		assert_eq(rack._pegs.size(), 18)
+
+
 func test_the_rack_hangs_the_molotov_at_the_show_minimum_only_under_a_form() -> void:
 	var rack: WeaponRackView = WeaponRackView.new()
 	add_child_autofree(rack)

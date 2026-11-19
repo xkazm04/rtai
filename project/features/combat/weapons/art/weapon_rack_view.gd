@@ -1,7 +1,7 @@
 class_name WeaponRackView
 extends Node2D
 ## weapon-art's weapon wall in the arena hub (arena_stations/weapon-art.json): every weapon with
-## art hangs muzzle up on a paper board along the hub's north edge, in the brief's order, as its
+## art hangs on a paper board along the hub's north edge, in the brief's order, as its
 ## pickup side view at its drawn length, so the whole arsenal is seen at 32 to 128 px/m in the
 ## live print beside the cops. Render only: no sim state, nothing in the replay hash.
 ## n8-hud: under an angled view (WeaponShowcase.form_of) a weapon with a showcase drawing hangs as
@@ -30,6 +30,7 @@ const ORDER: Array[StringName] = [
 	&"homing_shard",
 	&"mini_nuke",
 	&"gatling",
+	&"assault_rifle",
 ]
 const GAP_M: float = 1.0
 const BOARD_H_M: float = 1.8
@@ -58,10 +59,16 @@ const MIN_SHOW_M: float = 0.7
 
 ## The board's left end, bottom edge (hub-relative metres + the stage base, set by the hook).
 var origin_m: Vector2 = Vector2.ZERO
+var rifle_taken: bool = false:
+	set(value):
+		rifle_taken = value
+		if is_instance_valid(_rifle):
+			_rifle.visible = not value
 var art: WeaponArt = WeaponArt.new()
 var showcase: WeaponShowcase = WeaponShowcase.new()
 var _form: String = "?"
 var _sprites: Array[Sprite2D] = []
+var _rifle: Sprite2D
 var _paper: Color = PaletteTokens.shared().color(&"paper")
 var _ink: Color = PaletteTokens.shared().color(&"ink")
 var _shown: int = 0
@@ -105,6 +112,9 @@ func _hang() -> void:
 			_pegs.append(_slot(k) - Vector2(0.0, PEG_M * SimConst.PX_PER_M))
 		if icon == null:
 			s.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, false, 0)
+		if id == &"assault_rifle":
+			_rifle = s
+			s.visible = not rifle_taken
 		add_child(s)
 		_sprites.append(s)
 		k += 1
