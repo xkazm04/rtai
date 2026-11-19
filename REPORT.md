@@ -80,3 +80,5 @@ What I would brief differently: ask for the build-on-the-hand-made-cell method (
 The assault rifle hangs on the new east peg at its drawn length in top, p55 and p70. The hub board grew from 17 to 18 m at x1 scale. All 17 previous pegs and all 83 arena props kept their positions. In the four 64 px/m stills under `C:/Users/kazda/kiro/gtai-masters/n19/guns/rack/`, every changed pixel falls within the added strip and its outline. Both captures at each pitch saved successfully and emitted the same resource-cleanup messages on exit.
 
 The audit fell from three holes to zero (`evidence/arsenal/matrix_after_verdict.txt`). The rifle pickup scenario walks Rivet to the peg, takes the rifle once with Interact, fires a round, switches away and back with 29 rounds left, and replays identically. The owner reserved the 12 weapons’ armed walk/run grids for a dedicated night.
+
+The full gate passed on `1efe65477`. It recorded 2,987 passing unit tests, two skips and 56 passing scenarios. The existing arena digests, 11 look goldens and five block goldens passed. The result includes lint, native parity and release compilation in `build/gate/1efe65477992/gate.json`.
