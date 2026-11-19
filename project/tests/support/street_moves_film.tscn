@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://tests/support/street_moves_film.gd" id="1"]
+
+[node name="StreetMovesFilm" type="Node"]
+script = ExtResource("1")
