@@ -16,7 +16,7 @@ Evidence root: `C:/Users/kazda/kiro/gtai-masters/n19/gfx/` (written M below). Ga
 | Tilted city draws repeatably (found while making item 4's sheets) | `030352b1d` | M `tilt-11-REPORT.md`, `gen/apron_edge_before_tilt70_32ppm_t150.png` | lifted canvas items of neighbouring 64 m quadrants shared a z band and drew in pool order, so the same seed, tick and camera could stack a container over or under a warehouse roof. Now a world-quadrant draw index (lifted views only). Reversed pool history: 33,475 px changed before, 0 after. Mutate changed lines 11/12 (survivor order-preserving). |
 | anim NEED part 1: baked crowd body carries its slot | `0dc71557a` | M `tilt-11-REPORT.md` | custom.y = slot + 1 on every baked people body (native + GDScript), tested at slots 0/15/511 across a rigged slot. No look golden moved (16/16 captures, 0 changed pixels); parity exact; mutate 3/3 GDScript, 4/4 native. |
 | 3A cost, measured | `3a69fe5a0` (dev probe) | M `cost-12-REPORT.md`, M `bench/crowd-contact-cost.json` | interleaved in one process, ON / OFF (old blob) / ON again, 24 rounds x 60 frames, 400-person heat-3 riot at tilt 70, 32 px/m, 1080p: native writer +0.0003 ms [CI95 -0.0005, +0.0011] against an A/A floor of 0.0034 ms; viewport GPU +0.004 ms [-0.002, +0.010] against a floor of 0.021 ms; viewport CPU +0.007 ms against 0.103 ms. All below the noise floor (not zero). 345 contacts per frame (the blob drew 363: it also shadowed rigged and fallen people). CONTENDED (10/6 other Godot processes), debug editor build. |
-| 6 Heat-3 bench re-run | none (measurement) | M `bench-10-REPORT.md` | gate exit 0: p99 6.399 ms, 1 % low 127 fps, hitches >25 ms 3, >50 ms 0. Still CONTENDED: 6-16 other Godot processes in every run (other lanes' mutate runs and another project's worktrees); the machine never went quiet tonight. |
+| 6 Heat-3 bench re-run | none (measurement) | M `bench-10-REPORT.md`, M `cost-12-REPORT.md` Part B | two runs, both exit 0. 02:43: p99 6.399 ms, 1 % low 127 fps, hitches >25 ms 3, >50 ms 0. 04:54-05:07 (lock, 20 min quiet wait): p99 5.702 ms, 1 % low 150 fps, worst frame 40.7 ms, hitches >25 ms 20, >50 ms 0 (unexplained 0), rigs p99 1.305 ms. Still CONTENDED: 2-9 other runs active in the second, 6-16 Godot processes in the first; the machine never went quiet tonight. |
 
 ## What does not
 
@@ -67,4 +67,5 @@ Evidence root: `C:/Users/kazda/kiro/gtai-masters/n19/gfx/` (written M below). Ga
 | polish2 (resume) | 30 | accepted (code); its apron sheets bounced (a spurious container change) |
 | bench10 | 59 | accepted (measurement only, no commit) |
 | tilt11 | 37 | accepted (anim NEED part 1, tilted draw-order fix, honest apron sheets, gate PASS) |
-| cost12 | TODO | TODO |
+| cost12 | 52 | accepted (dev cost probe `3a69fe5a0`: 3A below the A/A floor; heat-3 bench retry PASS, still CONTENDED) |
+| merge13 | TODO | TODO |
