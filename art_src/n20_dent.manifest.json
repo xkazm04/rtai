@@ -1,0 +1,20 @@
+{
+  "_doc": "Dent's spectral body. Each entry maps a shipped PNG to the raw sheet used to cut it.",
+  "masters": {
+    "project/features/souls/art/view/p70/dent_sp_fly.png": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n20/dent/masters/dent_sp_fly_70_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/dent/dent_sp_fly_70.txt",
+      "references": [
+        "masters:n20/concepts/dent_a.png",
+        "own: gtai-art/library/rounds/20261109-2015/out/dent_act_70.png",
+        "own: gtai-art/library/refs/camera_guide_70.png"
+      ],
+      "seed": null,
+      "sha256": "9cdcbf11f1dc7a33c74419b4b9f1402e2f060042615eed83b1a485f8f25d7d11",
+      "tool": "codex-image"
+    }
+  }
+}
