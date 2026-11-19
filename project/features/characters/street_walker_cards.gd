@@ -155,7 +155,7 @@ static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 
 
 static func place(rig: CutRig, card: Sprite2D) -> void:
-	var k: float = 1.0 + StreetCrowdCards.SCALE_VAR * StreetCrowdCards.vary(rig.actor_id, 3)
+	var k: float = StreetCrowdCards.body_scale(rig.actor_id)
 	if StreetFallBetween.is_fall_card(card):
 		StreetWalkerFall.draw(rig, card, k)
 		return

@@ -1,6 +1,6 @@
 """n9 rivet it7: pack the library's knock-down strips (a car throws Rivet) into one game grid per art key.
 
-usage: python -I tools/art/rivet_knock.py <p70|p55> <out.png> [--len=1.45] [--tone=<ref.png>] [--json=<out.json>]
+usage: python -I tools/art/rivet_knock.py <p70|p55> <out.png> [--scale=1.0] [--len=1.45] [--tone=<ref.png>] [--json=<out.json>]
 
 Rows (RivetKnock.Row): 0 toward (thrown down the picture, helmet leading), 1 away (up the picture), 2 right,
 3 left (drawn, not mirrored); columns: impact, tumble, slide, down, kneel (it7b, the rise). Each library sheet is 1 x 4, cut by
@@ -118,29 +118,29 @@ def main() -> None:
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     art, dst = args[0], args[1]
     length = float(opts.get("len", 1.45)) * FIG_H
+    scale = float(opts.get("scale", 1.0))
     rows, ks = [], []
     for ri, name in enumerate(PICKS[art]):
         cells = _cells(name)
         down = cells[3]
         k = length / (down.height if ri < 2 else down.width)
-        ks.append(round(k, 4))
-        sized = []
-        for c in cells:
-            size = (max(1, round(c.width * k)), max(1, round(c.height * k)))
-            sized.append(c.convert("RGBa").resize(size, Image.LANCZOS).convert("RGBA"))
-        rows.append(sized)
+        ks.append(round(k * scale, 4))
+        rows.append([(c, k) for c in cells])
     for r, c in zip(rows, _kneels(art)):
-        size = (max(1, round(c.width * KNEEL_K[art])), max(1, round(c.height * KNEEL_K[art])))
-        r.append(c.convert("RGBa").resize(size, Image.LANCZOS).convert("RGBA"))
+        r.append((c, KNEEL_K[art]))
+    # Size the original 110-space canvas first, including its rounding and margin.
     half = 0
-    for r in rows:
-        for c, drop in ((r[0], IMPACT_DROP), (r[4], KNEEL_DROP)):
-            half = max(half, c.width / 2, c.height * (1 - drop))
-        half = max([half] + [max(c.width, c.height) / 2 for c in r[1:4]])
-    cell = int(np.ceil(2 * half)) + 4
+    for row in rows:
+        for col, (c, k) in enumerate(row):
+            w, h = round(c.width * k), round(c.height * k)
+            drop = {0: IMPACT_DROP, 4: KNEEL_DROP}.get(col, 0.5)
+            half = max(half, w / 2, h * (1 - drop))
+    cell = round((int(np.ceil(2 * half)) + 4) * scale)
     out = Image.new("RGBA", (cell * 5, cell * 4), (0, 0, 0, 0))
     for ri, r in enumerate(rows):
-        for ci, c in enumerate(r):
+        for ci, (source, k) in enumerate(r):
+            size = (max(1, round(source.width * k * scale)), max(1, round(source.height * k * scale)))
+            c = source.convert("RGBa").resize(size, Image.LANCZOS).convert("RGBA")
             x = ci * cell + round((cell - c.width) / 2)
             if ci in (0, 4):
                 drop = IMPACT_DROP if ci == 0 else KNEEL_DROP
@@ -155,10 +155,11 @@ def main() -> None:
     out.save(dst, optimize=True)
     meta = {"art": art, "cell": cell, "len_x_fig": float(opts.get("len", 1.45)), "scales": ks}
     meta["src"] = ["rivet_knockdown_" + n for n in PICKS[art]]
+    meta["fig_h"] = FIG_H * scale
     meta["tone"] = opts.get("tone", "")
     meta["impact_drop"] = IMPACT_DROP
     meta["cell_tone"] = {f"{d[0]},{d[1]}": f"{r[0]},{r[1]}" for d, r in CELL_TONE.get(art, {}).items()}
-    meta["kneel"] = {"src": GETUP[art], "rows": KNEEL_ROW, "k": KNEEL_K[art], "left": "mirrored", "drop": KNEEL_DROP}
+    meta["kneel"] = {"src": GETUP[art], "rows": KNEEL_ROW, "k": KNEEL_K[art] * scale, "left": "mirrored", "drop": KNEEL_DROP}
     if "json" in opts:
         with open(opts["json"], "w", encoding="utf-8") as fh:
             json.dump(meta, fh, indent=1, sort_keys=True)

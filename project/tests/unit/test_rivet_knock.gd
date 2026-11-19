@@ -9,6 +9,8 @@ func after_each() -> void:
 func test_each_art_key_has_a_five_by_four_knock_grid_of_square_cells() -> void:
 	for art: String in ["p70", "p55"]:
 		var tex: Texture2D = load(RivetStrips.DIR + art + "/" + RivetKnock.STRIP) as Texture2D
+		var old_cell: float = 198.0 if art == "p70" else 277.0
+		assert_eq(tex.get_width(), roundi(old_cell * RivetWalk.RES) * RivetKnock.COLS)
 		assert_not_null(tex, art)
 		assert_eq(tex.get_width() / RivetKnock.COLS, tex.get_height() / RivetKnock.CELLS, art)
 		assert_eq(tex.get_width() % RivetKnock.COLS, 0, art)
@@ -63,6 +65,8 @@ func test_place_centres_the_cell_on_his_ground_point() -> void:
 	var w: float = card.texture.get_width() / float(RivetKnock.COLS)
 	assert_eq(card.frame, RivetKnock.Row.LEFT * RivetKnock.COLS)
 	assert_eq(card.offset, Vector2(-w * 0.5, -w * 0.5))
+	assert_almost_eq(w * card.global_scale.x, 198.0 * 0.5, 0.001)
+	assert_eq(card.global_scale.y, card.global_scale.x)
 	assert_eq(card.global_position, rig.global_position)
 	assert_true(rig.has_meta(RigCastShadows.CAST_HIP))
 

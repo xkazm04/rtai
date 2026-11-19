@@ -116,6 +116,18 @@ func test_a_hit_flinches_but_a_strike_wins() -> void:
 	assert_eq(d.act_col(), -1)
 
 
+func test_ohms_instant_bolt_shows_anticipation_within_the_original_cut() -> void:
+	var d: GhostDrawn = GhostDrawn.new("ohm", 2.0, 180.0, 180.0)
+	d.feed(1, -1, 70)
+	assert_eq(d.act_col(), -1)
+	for age: int in 16:
+		d.feed(2, -1, 75 + age)
+		var expected: int = GhostDrawn.WINDUP_COL if age < 3 else GhostDrawn.CUT_COL
+		if age >= 5:
+			expected = GhostDrawn.FOLLOW_COL if age < 15 else -1
+		assert_eq(d.act_col(), expected, "bolt age %d" % age)
+
+
 func test_every_ghost_act_grid_divides_into_its_cells() -> void:
 	for ghost: String in ["kerf", "dent", "tonnage", "ohm"]:
 		var tex: Texture2D = load(GhostDrawn.path_of(P70, ghost, "act")) as Texture2D

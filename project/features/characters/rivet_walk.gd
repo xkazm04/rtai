@@ -60,7 +60,7 @@ const RUN_ROW_K: Dictionary[String, float] = {
 	"p55/flamethrower/3": 0.93,
 }
 const ROWS: int = 8
-## n11: the grids (not d9's STRIP4) are packed at RES x the 110 px figure, so the x1.5 player size
+## n11: all walk and run grids are packed at RES x the 110 px figure, so the x1.5 player size
 ## draws them near 1:1; cell-px tables stay in 110 px space, only the card's scale divides by it.
 const RES: float = 1.5
 const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
@@ -127,7 +127,7 @@ static func is_grid(card: Sprite2D) -> bool:
 ## strip's own RivetRes.of off one).
 static func res_of(card: Sprite2D) -> float:
 	var on: String = str(card.get_meta(RivetFrames.ON, ""))
-	return RES if is_grid(card) and not on.ends_with("/" + STRIP4) else RivetRes.of(on)
+	return RES if is_grid(card) else RivetRes.of(on)
 
 
 ## True when `card` shows an armed walk grid (the drawn figure carries the weapon).

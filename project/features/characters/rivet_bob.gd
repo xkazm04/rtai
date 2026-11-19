@@ -54,6 +54,9 @@ static func stretch(card: Sprite2D) -> float:
 	var key: String = _key(card)
 	var top: int = _top(key, card.frame, card.hframes)
 	var cell_h: float = card.texture.get_height() / float(card.vframes)
+	if key.get_file() == RivetWalk.STRIP4:
+		# The four-frame gait's original helmet table and stretch stay in 110-space.
+		cell_h = roundf(cell_h / RivetWalk.RES)
 	var figure: float = cell_h - float(maxi(top, 0))
 	var extra: float = stretch_cell(key, card.frame, card.hframes, _running(card))
 	return 1.0 + extra / maxf(figure, 1.0)

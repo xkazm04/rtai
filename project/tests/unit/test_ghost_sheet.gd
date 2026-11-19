@@ -74,11 +74,19 @@ func test_the_feet_sit_on_each_grids_own_cell() -> void:
 
 
 func test_without_a_left_sheet_every_left_octant_mirrors() -> void:
-	var sheet: GhostSheet = GhostSheet.new(_sheet(8, 8).tex, 8)
+	var sheet: GhostSheet = GhostSheet.new(_sheet(8, 8).tex, 8, null, 4)
 	var spr: Sprite2D = autofree(Sprite2D.new())
+	assert_eq(sheet.left_cols, 0)
 	sheet.show(spr, 4, 1)
 	assert_eq(spr.texture, sheet.tex)
 	assert_true(spr.flip_h)
+
+
+func test_a_mirrored_front_has_no_recordable_octant() -> void:
+	var sheet: GhostSheet = _sheet(8, 8)
+	var spr: Sprite2D = autofree(sheet.make_sprite())
+	spr.flip_h = true
+	assert_eq(GhostSheet.oct_of(spr), -1)
 
 
 func test_the_shipped_left_sheets_divide_into_three_rows_of_the_right_columns() -> void:
@@ -116,6 +124,46 @@ func test_dents_jab_plays_the_jab_columns_while_it_winds_up_and_strikes() -> voi
 	assert_false(GhostActs.jabbing(jab), "the act phases are over")
 
 
+func test_spawn_shows_the_front_standing_cell_and_attaches_its_outline() -> void:
+	var sheet: GhostSheet = _sheet(8, 8)
+	var spr: Sprite2D = autofree(sheet.make_sprite())
+	assert_false(spr.centered)
+	assert_eq(spr.texture, sheet.tex)
+	assert_eq(spr.frame_coords, Vector2i(GhostDrawn.STAND_COL, 0))
+	assert_eq(spr.get_child_count(), GhostSoulLine.COPIES)
+	sheet.show(spr, 5, 3)
+	for node: Node in spr.get_children():
+		var copy: Sprite2D = node as Sprite2D
+		assert_eq(copy.texture, sheet.left)
+		assert_eq(copy.frame, spr.frame)
+
+
+func test_first_column_beyond_left_grid_mirrors_and_empty_left_grid_is_respected() -> void:
+	var sheet: GhostSheet = _sheet(8, 4)
+	var spr: Sprite2D = autofree(Sprite2D.new())
+	sheet.show(spr, 4, 4)
+	assert_eq(spr.texture, sheet.tex)
+	assert_true(spr.flip_h)
+	var empty: GhostSheet = GhostSheet.of(GhostDrawn.path_of("p70", "tonnage"), 8, 0)
+	assert_not_null(empty.left)
+	assert_false(empty.drawn_left(4, 0))
+
+
+func test_switching_one_grid_attribute_rebinds_the_sprite() -> void:
+	var spr: Sprite2D = autofree(Sprite2D.new())
+	var first: GhostSheet = _sheet(8, 8)
+	var next: GhostSheet = _sheet(8, 8)
+	first.show(spr, 0, 2)
+	next.show(spr, 0, 2)
+	assert_eq(spr.texture, next.tex, "a different sheet with identical dimensions")
+	var actions: GhostSheet = GhostSheet.new(next.tex, 4)
+	actions.show(spr, 0, 2)
+	assert_eq(spr.hframes, 4, "same texture, different columns")
+	spr.vframes = 1
+	actions.show(spr, 0, 2)
+	assert_eq(spr.vframes, GhostDrawn.ROWS, "restore rows even when the columns already match")
+
+
 func test_dents_act_sheets_carry_the_jab_columns() -> void:
 	for pitch: String in [P70, "p55"]:
 		var tex: Texture2D = load(GhostDrawn.path_of(pitch, "dent", "act")) as Texture2D
@@ -136,3 +184,10 @@ func test_the_jab_moves_the_strike_phases_but_never_the_hit() -> void:
 	assert_eq(
 		GhostDrawn.jab_col(GhostDrawn.CUT_COL, true, four), GhostDrawn.CUT_COL, "no jab cells"
 	)
+
+
+func test_p55_detail_loader_requires_the_eight_key_table() -> void:
+	var path: String = GhostDrawn.path_of("p55", "tonnage")
+	var other_steps: PackedFloat32Array = GhostStride.table_of("tonnage", "p70")
+	var sheet: GhostSheet = GhostSheet.walk_of(path, other_steps)
+	assert_true(sheet._intervals.is_empty())

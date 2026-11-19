@@ -1,0 +1,1075 @@
+{
+	"backend": "native",
+	"heat": 3,
+	"ppm": 16,
+	"rows": [
+		{
+			"actor_id": 1,
+			"atlas_row": 7,
+			"cell": 184,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 1,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				751.7978515625,
+				831.35546875
+			],
+			"sim_cell": 184,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 4,
+			"atlas_row": 7,
+			"cell": 184,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 4,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				1077.0009765625,
+				319.7109375
+			],
+			"sim_cell": 184,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 7,
+			"atlas_row": 7,
+			"cell": 189,
+			"character_row": 7,
+			"in_city_feed": true,
+			"instance": 5,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				615.36083984375,
+				654.11962890625
+			],
+			"sim_cell": 189,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 13,
+			"atlas_row": 7,
+			"cell": 199,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 9,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				648.93896484375,
+				686.5048828125
+			],
+			"sim_cell": 199,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 15,
+			"atlas_row": 7,
+			"cell": 184,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 11,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				268.906494140625,
+				405.329345703125
+			],
+			"sim_cell": 184,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 19,
+			"atlas_row": 7,
+			"cell": 184,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 14,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				688.50244140625,
+				824.29736328125
+			],
+			"sim_cell": 184,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 21,
+			"atlas_row": 7,
+			"cell": 189,
+			"character_row": 7,
+			"in_city_feed": true,
+			"instance": 15,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				873.51806640625,
+				314.432861328125
+			],
+			"sim_cell": 189,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 23,
+			"atlas_row": 7,
+			"cell": 189,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 16,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				579.28173828125,
+				679.8798828125
+			],
+			"sim_cell": 189,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 25,
+			"atlas_row": 7,
+			"cell": 184,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 17,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				272.4287109375,
+				479.4248046875
+			],
+			"sim_cell": 184,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 27,
+			"atlas_row": 7,
+			"cell": 184,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 19,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				528.0302734375,
+				830.71044921875
+			],
+			"sim_cell": 184,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 30,
+			"atlas_row": 7,
+			"cell": 184,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 20,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				1049.51513671875,
+				517.0576171875
+			],
+			"sim_cell": 184,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 34,
+			"atlas_row": 7,
+			"cell": 184,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 23,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				637.7529296875,
+				828.142578125
+			],
+			"sim_cell": 184,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 36,
+			"atlas_row": 7,
+			"cell": 184,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 24,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				1080.005859375,
+				525.173828125
+			],
+			"sim_cell": 184,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 38,
+			"atlas_row": 7,
+			"cell": 189,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 25,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				372.489990234375,
+				277.6884765625
+			],
+			"sim_cell": 189,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 41,
+			"atlas_row": 7,
+			"cell": 184,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 27,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				291.14892578125,
+				235.10595703125
+			],
+			"sim_cell": 184,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 44,
+			"atlas_row": 7,
+			"cell": 184,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 29,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				152.330322265625,
+				323.196044921875
+			],
+			"sim_cell": 184,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 49,
+			"atlas_row": 7,
+			"cell": 184,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 33,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				279.45166015625,
+				311.67626953125
+			],
+			"sim_cell": 184,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 56,
+			"atlas_row": 7,
+			"cell": 184,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 36,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				1017.45947265625,
+				545.84033203125
+			],
+			"sim_cell": 184,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 60,
+			"atlas_row": 7,
+			"cell": 184,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 39,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				287.03271484375,
+				512.42919921875
+			],
+			"sim_cell": 184,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 63,
+			"atlas_row": 7,
+			"cell": 184,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 41,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				286.820068359375,
+				219.807861328125
+			],
+			"sim_cell": 184,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 64,
+			"atlas_row": 7,
+			"cell": 184,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 42,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				1055.10107421875,
+				352.558349609375
+			],
+			"sim_cell": 184,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 65,
+			"atlas_row": 7,
+			"cell": 184,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 43,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				1088.39306640625,
+				365.333984375
+			],
+			"sim_cell": 184,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 66,
+			"atlas_row": 7,
+			"cell": 189,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 44,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				621.19482421875,
+				671.80615234375
+			],
+			"sim_cell": 189,
+			"sim_row": 7,
+			"tick": 120
+		},
+		{
+			"actor_id": 4,
+			"atlas_row": 7,
+			"cell": 185,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 3,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				1032.201171875,
+				319.7109375
+			],
+			"sim_cell": 185,
+			"sim_row": 7,
+			"tick": 240
+		},
+		{
+			"actor_id": 13,
+			"atlas_row": 7,
+			"cell": 198,
+			"character_row": 7,
+			"in_city_feed": true,
+			"instance": 7,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				651.4140625,
+				589.72998046875
+			],
+			"sim_cell": 198,
+			"sim_row": 7,
+			"tick": 240
+		},
+		{
+			"actor_id": 15,
+			"atlas_row": 7,
+			"cell": 186,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 9,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				318.506591796875,
+				405.329345703125
+			],
+			"sim_cell": 186,
+			"sim_row": 7,
+			"tick": 240
+		},
+		{
+			"actor_id": 19,
+			"atlas_row": 7,
+			"cell": 185,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 13,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				647.55712890625,
+				820.95263671875
+			],
+			"sim_cell": 185,
+			"sim_row": 7,
+			"tick": 240
+		},
+		{
+			"actor_id": 23,
+			"atlas_row": 7,
+			"cell": 199,
+			"character_row": 7,
+			"in_city_feed": true,
+			"instance": 15,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				640.2802734375,
+				601.83740234375
+			],
+			"sim_cell": 199,
+			"sim_row": 7,
+			"tick": 240
+		},
+		{
+			"actor_id": 25,
+			"atlas_row": 7,
+			"cell": 185,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 17,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				317.228515625,
+				479.4248046875
+			],
+			"sim_cell": 185,
+			"sim_row": 7,
+			"tick": 240
+		},
+		{
+			"actor_id": 30,
+			"atlas_row": 7,
+			"cell": 185,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 19,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				1011.56201171875,
+				512.54736328125
+			],
+			"sim_cell": 185,
+			"sim_row": 7,
+			"tick": 240
+		},
+		{
+			"actor_id": 34,
+			"atlas_row": 7,
+			"cell": 185,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 21,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				678.7509765625,
+				831.46484375
+			],
+			"sim_cell": 185,
+			"sim_row": 7,
+			"tick": 240
+		},
+		{
+			"actor_id": 36,
+			"atlas_row": 7,
+			"cell": 185,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 22,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				1035.2060546875,
+				525.173828125
+			],
+			"sim_cell": 185,
+			"sim_row": 7,
+			"tick": 240
+		},
+		{
+			"actor_id": 38,
+			"atlas_row": 7,
+			"cell": 195,
+			"character_row": 7,
+			"in_city_feed": true,
+			"instance": 23,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				443.6533203125,
+				344.559814453125
+			],
+			"sim_cell": 195,
+			"sim_row": 7,
+			"tick": 240
+		},
+		{
+			"actor_id": 41,
+			"atlas_row": 7,
+			"cell": 185,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 26,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				331.416748046875,
+				235.954345703125
+			],
+			"sim_cell": 185,
+			"sim_row": 7,
+			"tick": 240
+		},
+		{
+			"actor_id": 44,
+			"atlas_row": 7,
+			"cell": 185,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 29,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				197.130126953125,
+				323.196044921875
+			],
+			"sim_cell": 185,
+			"sim_row": 7,
+			"tick": 240
+		},
+		{
+			"actor_id": 49,
+			"atlas_row": 7,
+			"cell": 185,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 32,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				324.25146484375,
+				311.67626953125
+			],
+			"sim_cell": 185,
+			"sim_row": 7,
+			"tick": 240
+		},
+		{
+			"actor_id": 56,
+			"atlas_row": 7,
+			"cell": 185,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 38,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				1001.53857421875,
+				516.76318359375
+			],
+			"sim_cell": 185,
+			"sim_row": 7,
+			"tick": 240
+		},
+		{
+			"actor_id": 60,
+			"atlas_row": 7,
+			"cell": 185,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 40,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				324.716796875,
+				511.2626953125
+			],
+			"sim_cell": 185,
+			"sim_row": 7,
+			"tick": 240
+		},
+		{
+			"actor_id": 63,
+			"atlas_row": 7,
+			"cell": 185,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 42,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				320.046630859375,
+				230.68310546875
+			],
+			"sim_cell": 185,
+			"sim_row": 7,
+			"tick": 240
+		},
+		{
+			"actor_id": 64,
+			"atlas_row": 7,
+			"cell": 185,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 43,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				1010.30126953125,
+				352.558349609375
+			],
+			"sim_cell": 185,
+			"sim_row": 7,
+			"tick": 240
+		},
+		{
+			"actor_id": 65,
+			"atlas_row": 7,
+			"cell": 185,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 44,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				1043.59326171875,
+				365.333984375
+			],
+			"sim_cell": 185,
+			"sim_row": 7,
+			"tick": 240
+		},
+		{
+			"actor_id": 66,
+			"atlas_row": 7,
+			"cell": 186,
+			"character_row": 7,
+			"in_city_feed": true,
+			"instance": 45,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				640.21435546875,
+				588.8427734375
+			],
+			"sim_cell": 186,
+			"sim_row": 7,
+			"tick": 240
+		},
+		{
+			"actor_id": 4,
+			"atlas_row": 7,
+			"cell": 186,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 3,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				987.40087890625,
+				319.7109375
+			],
+			"sim_cell": 186,
+			"sim_row": 7,
+			"tick": 360
+		},
+		{
+			"actor_id": 15,
+			"atlas_row": 7,
+			"cell": 191,
+			"character_row": 7,
+			"in_city_feed": true,
+			"instance": 9,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				427.306640625,
+				405.329345703125
+			],
+			"sim_cell": 191,
+			"sim_row": 7,
+			"tick": 360
+		},
+		{
+			"actor_id": 19,
+			"atlas_row": 7,
+			"cell": 186,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 13,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				602.75732421875,
+				820.95263671875
+			],
+			"sim_cell": 186,
+			"sim_row": 7,
+			"tick": 360
+		},
+		{
+			"actor_id": 25,
+			"atlas_row": 7,
+			"cell": 186,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 16,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				362.028564453125,
+				479.4248046875
+			],
+			"sim_cell": 186,
+			"sim_row": 7,
+			"tick": 360
+		},
+		{
+			"actor_id": 30,
+			"atlas_row": 7,
+			"cell": 186,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 18,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				974.455078125,
+				512.30615234375
+			],
+			"sim_cell": 186,
+			"sim_row": 7,
+			"tick": 360
+		},
+		{
+			"actor_id": 34,
+			"atlas_row": 7,
+			"cell": 186,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 21,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				723.55078125,
+				831.46484375
+			],
+			"sim_cell": 186,
+			"sim_row": 7,
+			"tick": 360
+		},
+		{
+			"actor_id": 36,
+			"atlas_row": 7,
+			"cell": 186,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 22,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				991.302734375,
+				525.20361328125
+			],
+			"sim_cell": 186,
+			"sim_row": 7,
+			"tick": 360
+		},
+		{
+			"actor_id": 38,
+			"atlas_row": 7,
+			"cell": 197,
+			"character_row": 7,
+			"in_city_feed": true,
+			"instance": 23,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				443.6533203125,
+				344.559814453125
+			],
+			"sim_cell": 197,
+			"sim_row": 7,
+			"tick": 360
+		},
+		{
+			"actor_id": 41,
+			"atlas_row": 7,
+			"cell": 186,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 26,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				371.988037109375,
+				239.124267578125
+			],
+			"sim_cell": 186,
+			"sim_row": 7,
+			"tick": 360
+		},
+		{
+			"actor_id": 44,
+			"atlas_row": 7,
+			"cell": 186,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 29,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				241.93017578125,
+				323.196044921875
+			],
+			"sim_cell": 186,
+			"sim_row": 7,
+			"tick": 360
+		},
+		{
+			"actor_id": 49,
+			"atlas_row": 7,
+			"cell": 186,
+			"character_row": 7,
+			"in_city_feed": true,
+			"instance": 32,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				369.051513671875,
+				311.67626953125
+			],
+			"sim_cell": 186,
+			"sim_row": 7,
+			"tick": 360
+		},
+		{
+			"actor_id": 56,
+			"atlas_row": 7,
+			"cell": 186,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 36,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				997.771484375,
+				475.21923828125
+			],
+			"sim_cell": 186,
+			"sim_row": 7,
+			"tick": 360
+		},
+		{
+			"actor_id": 60,
+			"atlas_row": 7,
+			"cell": 186,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 40,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				367.69775390625,
+				509.29833984375
+			],
+			"sim_cell": 186,
+			"sim_row": 7,
+			"tick": 360
+		},
+		{
+			"actor_id": 63,
+			"atlas_row": 7,
+			"cell": 186,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 42,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				311.4599609375,
+				264.712646484375
+			],
+			"sim_cell": 186,
+			"sim_row": 7,
+			"tick": 360
+		},
+		{
+			"actor_id": 64,
+			"atlas_row": 7,
+			"cell": 186,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 43,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				965.5009765625,
+				352.558349609375
+			],
+			"sim_cell": 186,
+			"sim_row": 7,
+			"tick": 360
+		},
+		{
+			"actor_id": 65,
+			"atlas_row": 7,
+			"cell": 186,
+			"character_row": 7,
+			"in_city_feed": false,
+			"instance": 44,
+			"is_cop": false,
+			"kind": 1,
+			"look_of": 7,
+			"screen_px": [
+				998.79296875,
+				365.333984375
+			],
+			"sim_cell": 186,
+			"sim_row": 7,
+			"tick": 360
+		}
+	],
+	"schema": "gtai.far-cop-rows/1",
+	"seed": 18,
+	"sim_render": {
+		"cop_rows_baked": 58,
+		"drawn_as_cop": 0,
+		"drawn_as_ped": 58,
+		"row_counts": {
+			"7": 58
+		}
+	},
+	"summary": {
+		"cop_rows_baked": 58,
+		"drawn_as_cop": 0,
+		"drawn_as_ped": 58,
+		"row_counts": {
+			"7": 58
+		}
+	},
+	"summary_source": "character preview (baked_cell row, sim clip and frame)",
+	"ticks": [
+		120,
+		240,
+		360
+	]
+}

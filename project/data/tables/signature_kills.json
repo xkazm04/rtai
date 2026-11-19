@@ -1111,6 +1111,11 @@
           150
         ],
         "grids": {
+          "p55": {
+            "cop/head_cap": "cop_patrol_molotov_torch.png",
+            "cop/head_helmet": "cop_riot_molotov_torch.png",
+            "cop/head_swat": "swat_molotov_torch.png"
+          },
           "p70": {
             "cop/head_cap": "cop_patrol_molotov_torch.png",
             "cop/head_helmet": "cop_riot_molotov_torch.png",
@@ -1194,11 +1199,24 @@
           40
         ],
         "grids": {
+          "p55": {
+            "cop/head_cap": "cop_patrol_claw_throw.png",
+            "cop/head_helmet": "cop_riot_claw_throw.png",
+            "cop/head_swat": "swat_claw_throw.png"
+          },
           "p70": {
             "cop/head_cap": "cop_patrol_claw_throw.png",
             "cop/head_helmet": "cop_riot_claw_throw.png",
             "cop/head_swat": "swat_claw_throw.png",
-            "ped/head_hair": "ped_suit_claw_throw.png"
+            "ped/head_bald": "ped_elder_claw_throw.png",
+            "ped/head_cap": "ped_cap_claw_throw.png",
+            "ped/head_hair": "ped_suit_claw_throw.png",
+            "ped/head_hat": "ped_hat_claw_throw.png",
+            "ped/head_hood": "ped_hood_claw_throw.png",
+            "ped/head_jogger": "ped_jogger_claw_throw.png",
+            "ped/head_punk": "ped_punk_claw_throw.png",
+            "ped/head_shopper": "ped_shopper_claw_throw.png",
+            "ped/head_worker": "ped_worker_claw_throw.png"
           }
         }
       },

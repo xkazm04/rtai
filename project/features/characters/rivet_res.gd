@@ -5,6 +5,8 @@ extends RefCounted
 ## tables (foot pad, rivet_muzzle.json points, smear tip) stay in 110 space, read through of().
 
 const X15: PackedStringArray = [
+	"p70/rivet_frames.png",
+	"p55/rivet_frames.png",
 	"p70/rivet_eq_pistol.png",
 	"p70/rivet_eq_pistol_left.png",
 	"p70/rivet_eq_pistol_diag.png",  # n17: drawn on the pistol strip's cells (it458)

@@ -44,6 +44,7 @@
   "ohm": {
     "bolt_damage": 2,
     "bolt_gap_s": 0.5,
+    "bolt_windup_ticks": 3,
     "branch_k": 0.55,
     "car_damage": 12,
     "cone_deg": 30,

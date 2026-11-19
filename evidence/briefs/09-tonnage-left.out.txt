@@ -1,0 +1,34 @@
+Both parts were committed by **03:01**. The shadow placement test now kills **7/7 valid mutations**, up from **0/7**. Tonnage’s p70 left profile cleared the 9 px bar across all 16 keys. At 32 px/m, worst completed hold fell from **18.401 to 7.018 px**, mean ride from **9.504 to 5.008 px**, and mean stance drift from **3.342 to 2.440 px**. The final open hold measured **7.032 px**.
+
+| Commit | Files and change |
+|---|---|
+| `fb63aecfa` | `rig_cast_shadows.gd` and `test_rig_cast_shadows.gd` now expose and verify placement at polygon submission. Tests cover ring centres and radii, figure feet and tip, and identity restoration after both draws. |
+| `f63f8f094` | `tonnage_midpoint.py` derives ten left-profile cells from Tonnage’s shipped left keys. Added `tonnage_walk8_mid_left.png` and its import metadata. Updated `ghost_sheet.gd`, `ghost_stride.gd`, `test_tonnage_stride.gd`, provenance, the decision log, `LEVEL.md`, and the [measurement report](<C:/Users/kazda/kiro/gtai-wt/n19-anim/evidence/tonnage-hold/holds_it4.md>). |
+
+**Every originally over-bar hold improved.** The table follows each retained key across the two films.
+
+| Original ticks | Key | Before, px | After, px |
+|---|---|---:|---:|
+| 244–248 | C9 | 9.183 | 4.464 |
+| 249–253 | C10 | 9.212 | 4.722 |
+| 254–259 | C11 | 11.722 | 4.440 |
+| 260–266 | C12 | 13.750 | 6.879 |
+| 267–275 | C13 | 18.401 | 6.911 |
+| 276–281 | C14 | 11.344 | 6.938 |
+| 289–296 | C2 | 15.731 | 6.993 |
+| 297–305 | C3 | 18.389 | 6.995 |
+| 306–310 | C4 | 9.165 | 7.018 |
+| 315–322 | C6 | 16.241 | 6.448 |
+| 323–329 | C7 | 13.559 | 6.466 |
+| 336–340 | C10 | 9.152 | 2.160 |
+| 341–346 | C11 | 11.409 | 4.784 |
+
+All **192 original walk cells**, the existing right midpoint atlas, and all **64 same-key film crops** matched byte for byte. At 64 px/m, the C10→C11 rear socket stays connected and the C13→C14 shaft clears the rear pad. I saw no doubled limbs across the ten triplets. [64 px/m master still](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it4-left-midpoints-64ppm.png>) · [Raw films and capture probes](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/raw/it4-left/>)
+
+The optional three-quarter measurements are recorded for both sides. On the left, logged-key worst/mean ride was **17.529/7.687 px toward** and **21.042/10.438 px away**. The pixel detector split unchanged diagonal poses, so the report includes both measurements.
+
+**Verification.** The quick gate passed before both commits. `run_unit.mjs --changed` passed **2,983 tests** for Part A and **2,984** for Part B, each with zero failures and two skips. Mutation scores were **7/7** for shadows, **13/13** for stride, and **12/13** for sheet selection. Four shadow mutants failed to compile. The sole sheet survivor changed the left-atlas availability check from column 0 to column 1. Both exist in the ten-column atlas and both return false when it is absent.
+
+All requested work finished by **03:10**.
+
+[astra: 1497s, exit 0]

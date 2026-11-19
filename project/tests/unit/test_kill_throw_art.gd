@@ -51,17 +51,33 @@ func test_no_blood_and_the_fight_barely_stops() -> void:
 	assert_lte(row.hitstop_ticks, 6)
 
 
-func test_the_four_street_kinds_play_their_own_drawn_throw() -> void:
+func test_every_human_p70_long_fall_kind_plays_its_own_drawn_throw() -> void:
+	var e: KillTrackRows.Extra = KillTrackRows.of(&"claw_throw")
+	for row: String in StreetWalkerFall.LONG_FALLS["p70"]:
+		if row == "thug":
+			continue
+		var file: String = "p70/%s_claw_throw.png" % StreetDeadPlan.CLASS_OF[row]
+		assert_eq(KillDeathCells.path_of(e, "p70", row), file)
+		assert_true(ResourceLoader.exists(StreetWalkerCards.DIR + file), file)
+
+
+func test_the_four_throw_frames_keep_the_head_away_from_rivet() -> void:
 	var e: KillTrackRows.Extra = KillTrackRows.of(&"claw_throw")
 	assert_eq(e.cells_at.size(), 4, "struck, flung, landed, still")
-	for row: String in ["cop/head_cap", "cop/head_helmet", "cop/head_swat", "ped/head_hair"]:
-		assert_false(KillDeathCells.path_of(e, "p70", row).is_empty(), row)
 	assert_eq(KillDeathCells.frame_at(e, roundi(e.num("land_at", 0.0))), 2, "lands on his back")
 	var d: KillNewStyles.Death = _death()
 	var look: Vector2 = Vector2.from_angle(KillDeathCells.face_of(d, 1))
 	assert_almost_eq(look, Vector2.LEFT, Vector2.ONE * 0.0001, "flung: at the shooter")
 	look = Vector2.from_angle(KillDeathCells.face_of(d, 2))
 	assert_almost_eq(look, Vector2.LEFT, Vector2.ONE * 0.0001, "on his back, head away from Rivet")
+
+
+func test_tilt_uses_the_three_cops_drawn_at_55_degrees() -> void:
+	var e: KillTrackRows.Extra = KillTrackRows.of(&"claw_throw")
+	for row: String in ["cop/head_cap", "cop/head_helmet", "cop/head_swat"]:
+		var file: String = "p55/%s_claw_throw.png" % StreetDeadPlan.CLASS_OF[row]
+		assert_eq(KillDeathCells.path_of(e, "p55", row), file)
+		assert_true(ResourceLoader.exists(StreetWalkerCards.DIR + file), file)
 
 
 func test_his_own_drawn_body_is_thrown_further_than_the_fall_grid() -> void:

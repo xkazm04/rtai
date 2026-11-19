@@ -12,7 +12,10 @@ func test_the_three_cops_burn_in_their_own_drawn_frames() -> void:
 		var row: String = {
 			"cop_patrol": "cop/head_cap", "cop_riot": "cop/head_helmet", "swat": "cop/head_swat"
 		}[kind]
-		assert_eq(KillDeathCells.path_of(e, "p70", row), "p70/%s_molotov_torch.png" % kind)
+		for art: String in ["p55", "p70"]:
+			var path: String = "%s/%s_molotov_torch.png" % [art, kind]
+			assert_eq(KillDeathCells.path_of(e, art, row), path)
+			assert_true(ResourceLoader.exists(StreetWalkerCards.DIR + path), path)
 	assert_eq(KillDeathCells.path_of(e, "p70", "ped/head_hair"), "", "the suit keeps the fall")
 	assert_eq(KillDeathCells.frame_at(e, roundi(e.num("cells_at", 0.0))), 2, "lies as he burns")
 	assert_lt(e.cells_at[3], roundi(e.num("burn_to", 0.0)), "charred while the last flames die")

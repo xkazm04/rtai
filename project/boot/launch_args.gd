@@ -113,6 +113,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--save-cross",
 	"--enemy-brain",
 	"--squad-overlay",
+	"--ohm-bolt-delay",
 ]
 
 var _values: Dictionary[String, String] = {}
@@ -122,7 +123,7 @@ var _device_on: bool = false
 
 
 func _init() -> void:
-	parse(OS.get_cmdline_user_args())
+	parse()
 	# d9-handheld: selected here, before the main scene's initializers read it
 	var want: String = value("--device") if has("--device") else _auto_device()
 	_device_on = has("--device") or want != ""
@@ -179,8 +180,7 @@ func engine_fixed_fps() -> bool:
 	return OS.get_cmdline_args().has("--fixed-fps")
 
 
-## Parses `--flag` and `--flag=value` pairs; unknown ones are kept for unknown().
-func parse(args: PackedStringArray) -> void:
+func parse(args: PackedStringArray = OS.get_cmdline_user_args()) -> void:
 	_values.clear()
 	_unknown.clear()
 	for arg: String in args:

@@ -1,9 +1,7 @@
 class_name GhostDrawn
 extends RefCounted
-## n11 hero: a ghost form as one drawn figure under a tilt, in Rivet's strip format: a walk grid
-## (5 facings, the left three drawn or mirrored: GhostSheet; tools/art/ghost_pack.py) stepped by
-## the ground walked so a planted foot stays put, feet on the rig's point, its limbs and card
-## hidden. Without the art it builds nothing and the form keeps its card. Render only.
+## A drawn ghost steps by the ground walked, feet on the rig's point. Without its walk art
+## the rig keeps its card. GhostSheet handles drawn and mirrored left facings. Render only.
 
 const ART_DIR: String = "res://features/souls/art/view/"
 const COLS: int = 8
@@ -19,27 +17,23 @@ const BACKPEDAL_DOT: float = -0.25
 const STRIDE_K: Dictionary[String, float] = {"dent/p55": 0.8, "tonnage/p55": 0.95}
 const STILL_FRAMES: int = 3  # frames without ground walked before the figure stands
 const OCT_HOLD_RAD: float = deg_to_rad(4.0)
-## The act grid (`<name>_act.png`): 4 columns, the phases: wind-up (only a form whose sim has one,
-## Tonnage's slam), cut, follow-through, hit; ticks each phase shows for.
 const ACT_COLS: int = 4
 const WINDUP_COL: int = 0
 const CUT_COL: int = 1
 const FOLLOW_COL: int = 2
 const HIT_COL: int = 3
-## n15 h-4: Dent's arm jab draws in act columns 4-6 (wind-up, jab, recoil) where his act sheet
-## has them (JAB_COLS columns); a sheet without them plays the jab on the act phases. The left
-## sheets in JAB_LEFT_COLS draw it too; an absent key mirrors the right jab in the left octants.
-const JAB_SHIFT: int = 4
+const JAB_SHIFT: int = 4  # Dent's optional jab cells occupy columns 4-6 on each side.
 const JAB_COLS: Dictionary[String, int] = {"dent/p70": 7, "dent/p55": 7}
 const JAB_LEFT_COLS: Dictionary[String, int] = {"dent/p70": 7, "dent/p55": 7}
 const CUT_TICKS: int = 5
 const FOLLOW_TICKS: int = 10
 const HIT_TICKS: int = 10
+const HIT_FROM_BEHIND: bool = true
+const REAR_DOT: float = 0.5  # within 60 degrees of the facing, including the adjacent octants
 
 var card_name: String = ""
 var height_m: float = 1.75
-## One drawn stride cycle's ground in cell px (the stance foot's travel over a cycle, measured).
-var cycle_cell: float = 150.0
+var cycle_cell: float = 150.0  # measured stance foot travel per cycle (cell px)
 var run_cell: float = 0.0  # the run grid's stride cycle in cell px (0 = no run grid)
 var fig_px: float = 180.0  # the figure's median height in the grid, cell px (ghost_pack prints it)
 var still: bool = false  # something else carries the form (Dent on a car roof): stands still
@@ -59,6 +53,7 @@ var _walk: GhostSheet = null
 var _run: GhostSheet = null
 var _running: bool = false
 var _windup: bool = false
+var _instant_windup: int = 0
 var _act: GhostSheet = null
 var _seq: int = 0
 var _fed: bool = false
@@ -76,10 +71,10 @@ func _init(
 	cycle_cell = p_cycle_cell
 	fig_px = p_fig_px
 	run_cell = p_run_cell
+	if card_name == "ohm":
+		_instant_windup = int(GhostAttacks.shipped().num(&"ohm", &"bolt_windup_ticks"))
 
 
-## Each pose: builds the sprite on a view change, faces and steps it. Returns true while it draws
-## (the caller then skips its card); `parts` hide with it. `size_k`: the rig's unfold.
 func step(
 	host: Node2D, parts: Array[Sprite2D], px_per_m: float, size_k: float, look: float = NAN
 ) -> bool:
@@ -94,7 +89,7 @@ func step(
 	var walk: int = _column(host, s, RigHeadCard.OCT_FRAME[o])
 	var act: int = jab_col(act_col(), jab, _act.cols) if _act != null else -1
 	var sheet: GhostSheet = _act if act >= 0 else (_run if _running and _run != null else _walk)
-	sheet.show(_spr, o, act if act >= 0 else walk)
+	_show_cell(sheet, o, act if act >= 0 else walk)
 	var hurt: int = _tick - _hurt if act == HIT_COL else -1
 	var since: int = _tick - _act_from if _act_from >= 0 else -1
 	var tilt: float = GhostRecoil.tilt(hurt, _look, GhostRecoil.lean_of(card_name), blow)
@@ -106,15 +101,24 @@ func step(
 	return true
 
 
-## A sheet of this ghost under an art key: "walk8", "act", "run8" or "run16".
+func _show_cell(sheet: GhostSheet, oct: int, col: int, rear_hits: bool = HIT_FROM_BEHIND) -> void:
+	if rear_hits and sheet.hitback != null and col == HIT_COL:
+		if blow.normalized().dot(Vector2.from_angle(_look)) > REAR_DOT:
+			sheet.hitback.show(_spr, oct, 0)
+			return
+	sheet.show(_spr, oct, col, -1.0 if _still > STILL_FRAMES else _phase)
+
+
 static func path_of(art: String, name: String, sheet: String = "walk8") -> String:
 	return ART_DIR.path_join(art).path_join("%s_%s.png" % [name, sheet])
 
 
-## Each frame (GhostActs): `seq` a counter that rises on a strike, `hurt` the tick of the last hit,
-## `windup` true while the sim holds a telegraphed strike.
-func feed(seq: int, hurt: int, tick: int, windup: bool = false) -> void:
-	if _fed and seq > _seq:
+## A strike counter drives instant acts. A delayed cast supplies its actual release tick.
+func feed(seq: int, hurt: int, tick: int, windup: bool = false, release_tick: int = -1) -> void:
+	if release_tick >= 0:
+		_act_from = release_tick
+		_instant_windup = 0  # this cast already showed its wind-up before release
+	elif _fed and seq > _seq:
 		_act_from = tick
 	_fed = true
 	_seq = seq
@@ -129,12 +133,13 @@ func act_col() -> int:
 		return WINDUP_COL
 	var since: int = _tick - _act_from
 	if _act_from >= 0 and since < CUT_TICKS + FOLLOW_TICKS:
+		if since < _instant_windup:
+			return WINDUP_COL
 		return CUT_COL if since < CUT_TICKS else FOLLOW_COL
 	return HIT_COL if _hurt >= 0 and _tick - _hurt < HIT_TICKS else -1
 
 
-## The act column on a sheet of `cols` columns: Dent's jab moves a wind-up, cut or follow-through
-## to its drawn jab cells where the sheet has them; a hit stays the hit.
+## Dent's jab moves to its own cells on sheets that have them.
 static func jab_col(act: int, p_jab: bool, cols: int) -> int:
 	var shift: bool = p_jab and act >= 0 and act != HIT_COL and cols > JAB_SHIFT
 	return act + JAB_SHIFT if shift else act
@@ -185,16 +190,11 @@ func _rebuild(host: Node2D, parts: Array[Sprite2D], vm: ViewMode) -> void:
 	_run_steps = GhostStride.run_table_of(card_name, _art)
 	var path: String = path_of(_art, card_name)
 	if vm.cards and _art != "" and ResourceLoader.exists(path):
-		_spr = Sprite2D.new()
-		_spr.name = &"ghost_drawn"
-		_walk = GhostSheet.of(path, GhostStride.cols_of(_steps))
+		_walk = GhostSheet.walk_of(path, _steps)
 		_act = GhostSheet.act_of(path_of(_art, card_name, "act"), card_name + "/" + _art)
 		var rc: int = GhostStride.cols_of(_run_steps)
 		_run = GhostSheet.of(path_of(_art, card_name, "run%d" % rc), rc)
-		_spr.centered = false
-		_walk.show(_spr, 2, STAND_COL)
-		_spr.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-		GhostSoulLine.attach(_spr)
+		_spr = _walk.make_sprite()
 		host.add_child(_spr)
 	for p: Sprite2D in parts:
 		p.visible = _spr == null

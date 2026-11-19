@@ -108,7 +108,12 @@ func test_the_near_side_lies_between_the_shadow_and_the_body() -> void:
 
 
 func test_the_far_crowd_shader_snaps_only_the_drawn_corpse_cells() -> void:
-	var code: String = (load(CrowdAtlas.SHADER_PATH) as Shader).code
+	var shader: Shader = load(CrowdAtlas.SHADER_PATH) as Shader
+	var path: String = CrowdAtlas.SHADER_PATH.get_base_dir().path_join(
+		"crowd_atlas_vertex.gdshaderinc"
+	)
+	assert_true(shader.code.contains(path.get_file()))
+	var code: String = (load(path) as ShaderInclude).code
 	var first: int = CrowdAtlas.CLIP_FIRST[CrowdAtlas.Clip.DEATH]
 	var last: int = first + CrowdAtlas.FRAMES[CrowdAtlas.Clip.DEATH] - 1
 	assert_true(code.contains("DEAD_FROM = %d.0" % (first + 1)), "past the mid-fall cell")

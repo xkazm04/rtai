@@ -1,0 +1,28 @@
+Shipped **cap 1.25 for p70** and **cap 1.0 for p55**. No tested cap met both bars. The shipped values minimize `max(worst ride / 9, drift / 3)` for their respective pitches.
+
+- **p70** worst ride fell from 25.42 to **14.13 px**, missing the bar by 5.13 px. Drift rose to **4.04 px**, missing by 1.04 px.
+- **p55** worst ride fell from 31.71 to **23.46 px**, missing by 14.46 px. Drift rose to **8.55 px**, missing by 5.55 px.
+
+The p70 trace shows shorter forward slides, but the pad still moves between pose changes. The skate is more visible on p55, where most poses hold for ten or eleven ticks.
+
+**Sweep over the same 110 ticks at 32 px/m** · [Measurements, scores and reproduction commands](<C:/Users/kazda/kiro/gtai-wt/n19-anim/evidence/tonnage-hold/cap_sweep_32ppm.md>)
+
+| Cap | p70 worst ride | p70 mean ride | p70 drift | p55 worst ride | p55 mean ride | p55 drift |
+|---|---:|---:|---:|---:|---:|---:|
+| Off | 25.42 | 9.75 | 2.819 | 31.71 | 20.24 | 7.222 |
+| 2.0 | 18.39 | 9.47 | 2.991 | 31.71 | 20.24 | 7.222 |
+| 1.75 | 21.25 | 9.52 | 3.195 | 31.71 | 20.32 | 7.267 |
+| 1.5 | 16.14 | 9.62 | 3.667 | 27.55 | 20.20 | 7.506 |
+| 1.25 | **14.13** | **10.37** | **4.040** | 27.55 | 22.12 | 8.103 |
+| 1.0 | 12.04 | 9.94 | 4.779 | **23.46** | **19.49** | **8.546** |
+
+**Commits**
+
+- `5b7bebe7d` — `anim: cap Tonnage walk steps at the measured pitch-specific shares` changed `ghost_stride.gd`, `test_tonnage_stride.gd` and `cap_sweep_32ppm.md`.
+- `809187ff9` — `docs: record Tonnage's n19 planted-feet measurements` appended the results to the existing Tonnage cell in [LEVEL.md](<C:/Users/kazda/kiro/gtai-wt/n19-anim/LEVEL.md:10>), preserving its level.
+
+**Verification.** Full unit suite: 2,970 passed, 0 failed, 2 skipped. `--changed`: 1,675 passed, 0 failed, 2 skipped. Quick gates passed. Mutation score was **23 killed / (23 killed + 1 survived) = 95.8%**. The survivor changed the sort comparison for equal step weights.
+
+**Frames** · [p70 off vs shipped](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/tonnage_p70_cap_trace_32ppm.png>) · [p55 off vs shipped](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/tonnage_p55_cap_trace_32ppm.png>) · [12-second clip, real time then one-third speed](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/tonnage_cap_walk_32ppm.mp4>)
+
+[astra: 991s, exit 0]

@@ -1,0 +1,18 @@
+**Set A landed in `98e30b34a`. Set B stopped at the combat ownership boundary.** Nothing was pushed.
+
+| Set | Before | Handoff |
+|---|---|---|
+| A · p55 police claw | Three delivered, previously packed and removed, none wired | Three packed, imported, wired and filmed. The historical pack reproduced exactly. The committed area-matched cut reduced the visible size jump on landing. |
+| B · p70 claw | Nine delivered, none packed or wired | Nine packed and imported, with table entries, provenance and tests in the working tree. **Uncommitted.** All 16 paired hood and thug stills were byte-identical before and after wiring. The shopper’s drawing has no dropped bag. |
+| C · p55 police Molotov | All 60 source cells delivered, none wired | Unstarted under the required set order. |
+| D · burn art | Patrol lying char, worker and Torque gang burn, back-facing collapses and the robot-thug replacement are delivered and unwired. Eight front-facing collapses already ship. | Read-only inventory completed. |
+
+**B’s blocker:** `KillFallCells.attach` returns before consulting the grid table when the victim uses separate body parts. The film command verified the victim’s head row, but the frames showed the original parts body at both zooms. Supporting the replacement at that point requires a combat-lane change. [Guard at line 19](C:/Users/kazda/kiro/gtai-wt/n19-anim/project/features/combat/kills/kill_fall_cells.gd:19)
+
+**Verification:** `run_unit.mjs --changed` passed **1,721 / 0 failed / 2 skipped** for A and **1,722 / 0 failed / 2 skipped** for B. Quick lint passed both. A’s commit hook passed all 19 checks. All 446 pre-A grids and 449 pre-B grids remained byte-identical. Mutation exited 2 because the only changed GDScript was a test, which the runner rejects.
+
+A changed the three PNG/import pairs, `signature_kills.json`, `test_kill_throw_art.gd`, provenance, and the pack and tone tools. The 4.2 m slide reads at both zooms. The existing rifle-placement defect remains visible: at 64 px/m its nearest edge rests about **0.86 m** from the patrol boots against the requested 0.5 m.
+
+[Full report and burn inventory](C:/Users/kazda/kiro/gtai-masters/n19/anim/death-cells/REPORT.md) · [32 px/m stills](C:/Users/kazda/kiro/gtai-masters/n19/anim/death-cells/A/after-32.jpg) · [64 px/m stills](C:/Users/kazda/kiro/gtai-masters/n19/anim/death-cells/A/after-64.jpg) · [10-second clip](C:/Users/kazda/kiro/gtai-masters/n19/anim/death-cells/A/after/cop_head_cap_32/kill-claw_shock.mp4)
+
+[astra: 1338s, exit 0]

@@ -1,0 +1,28 @@
+All six requested rows meet both limits at 32 px/m. The largest hold was **7.131 px** and the largest mean stance drift was **2.799 px**. Both parts are committed.
+
+| Row | Worst hold, before → after | Mean hold, before → after | Mean stance drift, before → after |
+|---|---:|---:|---:|
+| p70 right toward | 16.392 → 3.902 | 8.021 → 1.140 | 8.930 → 2.799 |
+| p70 right away | 21.886 → 5.079 | 10.679 → 1.439 | 8.010 → 2.114 |
+| p70 left toward | 17.529 → 2.903 | 7.687 → 0.983 | 8.213 → 2.317 |
+| p70 left away | 21.042 → 5.500 | 10.438 → 1.255 | 8.123 → 2.140 |
+| p55 right profile | 31.707 → 7.131 | 20.239 → 4.408 | 7.222 → 2.763 |
+| p55 left profile | 31.587 → 7.105 | 20.136 → 4.378 | 6.853 → 2.655 |
+
+Each film covered 110 ticks. I judged holds by consecutive logged texture and column because the pixel detector split unchanged diagonal poses. Every original over-limit hold improved, and no retained original hold increased. [Per-hold tables and reproduction commands](<C:/Users/kazda/kiro/gtai-wt/n19-anim/evidence/tonnage-hold/holds_it4.md>)
+
+| Commit | Change | `--changed` unit result | Changed-line mutants killed, stride / sheet |
+|---|---|---|---|
+| `d698f9f09` | Derived 40 cells for each p70 diagonal, 160 total | 2,985 passed, 0 failed, 2 skipped | 21/21 · 42/44 |
+| `c07ebf33e` | Derived 20 cells per p55 profile, retaining the eight original keys and uncapped timing | 2,986 passed, 0 failed, 2 skipped | 2/2 · 24/27 |
+
+Both quick gates and commit hooks passed. The final sheet mutation run also killed all three phase-zero mutants, including the boundary fault that survived on the p70 commit, for **27/30** including that line. Two p55 sheet-loading condition mutations survived, as did a left-column probe equivalent on the shipped atlases.
+
+The four new atlases came from Tonnage’s own cells. Eight prior PNGs matched their committed SHA-256 objects, all six supplemental atlases repacked byte-for-byte, and **170/170** comparable original-key film crops were byte-identical. I inspected all 200 derived poses beside their neighbours at 64 px/m. The final plates showed continuous limb outlines and distinct feet. Some raised p55 pads sit flatter than the original tilted pads.
+
+**Masters**
+
+- p70 triplets — [right toward](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it4-diag-right-toward-midpoints-64ppm.png>), [right away](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it4-diag-right-away-midpoints-64ppm.png>), [left toward](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it4-diag-left-toward-midpoints-64ppm.png>), [left away](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it4-diag-left-away-midpoints-64ppm.png>), [raw films and logs](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/raw/it4-diag/>).
+- p55 triplets — [right](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it4-p55-right-midpoints-64ppm.png>), [left](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it4-p55-left-midpoints-64ppm.png>), [raw films and 16-pose timing trials](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/raw/it4-p55/>).
+
+[astra: 3890s, exit 0]

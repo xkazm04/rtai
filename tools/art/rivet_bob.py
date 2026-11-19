@@ -1,7 +1,9 @@
 """n11 hero (the owner's "Rivet jumps too much"): measure the helmet's top per walk/run grid cell.
 
-usage: py -3 -I tools/art/rivet_bob.py project/features/characters/art/view project/data/tables/rivet_bob.json
+usage: py -3 -I tools/art/rivet_bob.py <110-space layout root with p70/ and p55/> project/data/tables/rivet_bob.json
 
+Measure the layout cuts at their original density, including rivet_walk.py --scale=1 for walk4.
+The runtime reads these helmet offsets in 110-space across native recuts.
 The grids are packed bottom-aligned (rivet_walk.py), so the drawn up-and-down of the helmet is the bob
 the game shows. RivetBob reads this table and lifts each frame to cut that travel (damp_walk, damp_run).
 Deterministic.

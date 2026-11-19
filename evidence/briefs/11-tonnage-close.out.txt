@@ -1,0 +1,37 @@
+All 16 Tonnage walk rows now meet the 9 px hold and 3 px mean stance-drift limits at 32 px/m. Across both pitches, the worst completed hold is **7.131 px** and the highest mean stance drift is **2.799 px**. All four parts are committed. The tracked worktree is clean.
+
+### Film results
+
+Each entry gives **worst hold / mean hold / mean stance drift**, in pixels. Holds use logged texture and column changes over 110 ticks of leg 2. Row links open the 64 px/m masters.
+
+| Pitch and facing | Before | After |
+|---|---:|---:|
+| [p55 right toward](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it5-p55-right-toward-midpoints-64ppm.png>) | 26.089 / 16.687 / 10.519 | 2.995 / 1.085 / 2.305 |
+| [p55 right away](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it5-p55-right-away-midpoints-64ppm.png>) | 34.142 / 22.253 / 12.415 | 3.708 / 1.405 / 2.066 |
+| [p55 left toward](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it5-p55-left-toward-midpoints-64ppm.png>) | 25.883 / 15.232 / 10.554 | 3.767 / 1.028 / 2.280 |
+| [p55 left away](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it5-p55-left-away-midpoints-64ppm.png>) | 33.885 / 21.852 / 12.560 | 3.862 / 1.413 / 2.069 |
+| [p55 toward](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it5-p55-toward-midpoints-64ppm.png>) | 17.101 / 11.961 / 22.637 | 2.434 / 0.862 / 1.955 |
+| [p55 away](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it5-p55-away-midpoints-64ppm.png>) | 22.241 / 16.220 / 19.710 | 3.354 / 1.147 / 2.007 |
+| [p70 toward](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it5-p70-toward-midpoints-64ppm.png>) | 12.016 / 6.454 / 10.556 | 2.915 / 0.821 / 2.203 |
+| [p70 away](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it5-p70-away-midpoints-64ppm.png>) | 19.841 / 8.851 / 11.639 | 3.449 / 1.182 / 2.387 |
+| [p55 right profile, pad rotation](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it5-p55-right-profile-tilt-64ppm.png>) | 7.131 / 4.408 / 2.763 | 7.131 / 4.408 / 2.763 |
+| [p55 left profile, pad rotation](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it5-p55-left-profile-tilt-64ppm.png>) | 7.105 / 4.378 / 2.655 | 7.105 / 4.378 / 2.655 |
+
+I derived **344 new cells** from Tonnage’s shipped keys and inspected each beside its neighbours. Every retained original hold rode the same distance or less. All **170** coincident original-key crop pairs were byte-identical, and all six new atlas pages reproduced byte-for-byte. The straight-facing measurements use screen y for stance matching because their horizontal travel is zero. [Measurements and atlas hashes](<C:/Users/kazda/kiro/gtai-wt/n19-anim/evidence/tonnage-hold/holds_it4.md>) · [Raw films and logs](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/raw/it5/>)
+
+I corrected **34 of 40** existing p55 profile cells. Across 45 measurable raised rims, worst angular error fell from **31° to 2.5°** on the right and **29.5° to 1.5°** on the left. At 64 px/m the raised rim turns around the ankle while the shaft stays straight. All 54 original-key crop pairs, the six retained cells, and the 14 other walk PNGs matched byte-for-byte. [Per-midpoint measurements](<C:/Users/kazda/kiro/gtai-wt/n19-anim/evidence/tonnage-hold/p55_pad_tilt.md>)
+
+### Verification and commits
+
+The p55 loader test failed on the planted first `and → or` fault. It killed **5/5** guard mutants, including both prior survivors. The final `ghost_sheet.gd` sweep killed **25/25** valid mutants, with two invalid and zero timeouts. The quick gate passed before every commit. The final `--changed` run recorded **2,989 passed, 0 failed, 2 skipped**. All films reached tick 348 before Godot emitted its existing shutdown diagnostics.
+
+| Commit | Change |
+|---|---|
+| `84aaf1131` | Tested the p55 loader with a mismatched 16-key table. |
+| `3232206dc` | Recorded all eight missing baselines in `holds_it4.md`. |
+| `dcd270e82` | Added six p55 rows, paged sheet loading, and timing-boundary tests. |
+| `a49d8867a` | Added both straight p70 rows and updated the planted-feet measurements. |
+| `ed9a67db8` | Corrected p55 profile pad rotation and recorded per-midpoint evidence. |
+| `9ade97fe5` | Tested the displayed atlas frame width independently of the loader. |
+
+[astra: 3796s, exit 0]

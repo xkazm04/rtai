@@ -1,0 +1,16 @@
+Rivet’s knock/get-up, claw strike, base poses and selectable four-frame walk now use native x1.5 art at p70 and p55. All eight original PNGs and all eight replacements rebuilt **byte-for-byte** from source. Across eight same-tick comparisons at 64 px/m, figure height and boot position each moved by at most one pixel. The helmet seams and claw joints look sharper, and the rigid collar stayed within 1.7 px of its original position. Hit boxes, collision and reach stayed unchanged. [Measurements, texture sizes, stills and 2× zooms](<C:/Users/kazda/kiro/gtai-wt/n19-anim/evidence/rivet-x15/README.md>)
+
+Tonnage now ships **p70 = 2.0, p55 = off**. The 110-tick p70 refilm measured **18.39 px worst hold, 9.47 px mean** at 32 px/m. The sweep measured 2.99 px of pose-change drift.
+
+| Check | Result |
+|---|---|
+| `run_unit.mjs --changed` | All five runs passed |
+| `run_unit.mjs --all` | 2,975 passed, 0 failed, 2 skipped |
+| Post-commit mutation | Knock **1/1**, strike **5/5**, resolution lookup **1/1** killed. The changed resolution string entries had no eligible mutants. |
+| Quick gate | **Failed** on the four art commits and the final ten-file recheck. Standalone Godot reported autoload compilation errors and an allocator shutdown error. All ten files passed `--no-godot`, and the scripts loaded in initialized Godot scenes. |
+
+Six commits cover Tonnage `e0a504451`, knock `e4d879d28`, strike `1cca98628`, base `ed4f9c495`, walk `4b31b3b3c` and verification `ae74bd261`. The merge preview flagged `tools/art/rivet_frames.py` against lane guns. [Full report with changed files, commit subjects, command results and frame paths](<C:/Users/kazda/kiro/gtai-masters/n19/anim/rivet-x15/REPORT.md>)
+
+The remaining 110-upscaled strips belong to lane guns: plasma sword, electro baton and diagonal flamethrower at both pitches, the p70 right katana wind-up, and the p55 katana and chainsaw sets.
+
+[astra: 2010s, exit 0]

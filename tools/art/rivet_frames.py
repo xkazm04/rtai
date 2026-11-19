@@ -1,7 +1,7 @@
 """d9 rivet: cut a library Rivet sheet (keyed, transparent) into one game strip of whole figures.
 
 usage: python -I tools/art/rivet_frames.py <keyed.png> <out.png> <counts> [--left=<keyed_left.png>] [--cc=<band,..>]
-       [--fig_h=110] [--json=<out.json>]
+       [--fig_h=110] [--layout_h=<original fig_h>] [--json=<out.json>]
 
 <counts> = figures per band, top to bottom, e.g. 5,6 (the base sheet: five facings, then walk,
 sprint, roll, claw strike, hit, death) or 5,3 (an equipped sheet: five facings, then the fire or
@@ -13,6 +13,7 @@ drew it width-matched to the turned views, rivet_70_left_v4's notes).
 python -I tools/art/rivet_frames.py --manifest=tools/art/rivet_frames.json cuts every strip the
 manifest names (the owner-judged picks) into project/features/characters/art/view/<art>/;
 --only=<name prefix> as a second argument cuts only those rows; a row's fig_h overrides the manifest's.
+A row's layout_h keeps the original rounded canvas in proportion to fig_h.
 n13: a row's "ink_rim" ({"px", "reach"}) then cuts treatment B (a heavier ink rim round the blade,
 tools/art/blade_ink_rim.py) into the strip; --no-ink-rim (or the key removed) cuts the strip without it.
 A row's "windup" (tools/art/blade_windup.py options) also cuts <name>_windup.png from the cut strip.
@@ -151,7 +152,8 @@ def _feet_up(figs: list, fracs: list) -> None:
 
 
 def _ink_rim(path: str, rim: dict) -> None:
-    """n13: a row's "ink_rim" ({"px", "reach"}) cuts treatment B into the strip (blade_ink_rim.py)."""
+    """A row's layout_h keeps the original rounded canvas in proportion to fig_h.
+n13: a row's "ink_rim" ({"px", "reach"}) cuts treatment B into the strip (blade_ink_rim.py)."""
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     from blade_ink_rim import ink_rim  # noqa: E402
 
@@ -178,6 +180,8 @@ def _manifest(path: str, only: str = "", no_rim: bool = False) -> None:
             if not name.startswith(only):
                 continue
             argv = [f"{lib}/{row['sheet']}", f"{out}/{art}/{name}.png", row["counts"]]
+            if "layout_h" in row:
+                argv.append(f"--layout_h={row['layout_h']}")
             if "cc" in row:
                 argv.append(f"--cc={row['cc']}")
             if "act_k" in row:
@@ -194,6 +198,20 @@ def _manifest(path: str, only: str = "", no_rim: bool = False) -> None:
                 _windup(f"{out}/{art}/{name}.png", row["windup"])
 
 
+def _bc_span(pixels: int) -> float:
+    """Logical pixels occupied by one source texel after padding to a four-texel BC block."""
+    return pixels / ((pixels + 3) // 4 * 4)
+
+
+def _native_span(start: int, length: int, layout: tuple, canvas: tuple, scale: float) -> tuple:
+    """Read the 110 cut in logical pixels, scale about its anchor, then undo the new BC padding."""
+    old_size, old_anchor = layout
+    new_size, new_anchor = canvas
+    old_span, new_span = _bc_span(old_size), _bc_span(new_size)
+    offset = start * old_span - old_anchor
+    return round((new_anchor + offset * scale) / new_span), max(1, round(length * scale * old_span / new_span))
+
+
 def main() -> None:
     if len(sys.argv) >= 2 and sys.argv[1].startswith("--manifest="):
         rest = [a for a in sys.argv[2:] if a != "--no-ink-rim"]
@@ -204,12 +222,14 @@ def main() -> None:
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     counts = [int(c) for c in args[2].split(",")]
     fig_h = float(opts.get("fig_h", 110))
+    layout_h = float(opts.get("layout_h", fig_h))
+    scale = fig_h / layout_h
     cc = tuple(int(c) for c in opts["cc"].split(",")) if "cc" in opts else ()
     rgba, bands = _sheet(args[0], counts, cc)
     if "feet_up" in opts:
         _feet_up(bands[0], [float(v) for v in opts["feet_up"].split(",")])
     ref_w = float(np.median([f["head_w"] for f in bands[0]]))
-    k0 = fig_h / float(np.median([f["h"] for f in bands[0]]))
+    k0 = layout_h / float(np.median([f["h"] for f in bands[0]]))
     items = [(rgba, f, k0) for f in bands[0]]
     if "left" in opts:
         lrgba, lbands = _sheet(opts["left"], [3])
@@ -227,7 +247,9 @@ def main() -> None:
     below = max((f["box"][3] - f["box"][1] - f.get("feet_h", f["box"][3] - f["box"][1])) * k for _, f, k in items)
     below = int(np.ceil(below))
     cw, ch = int(np.ceil(2 * half)) + 4, int(np.ceil(up)) + PAD + 2 + below
-    out = Image.new("RGBA", (cw * len(items), ch), (0, 0, 0, 0))
+    canvas = (round(cw * scale), round(ch * scale))
+    old_pad, pad = PAD + below, PAD + round(below * scale)
+    out = Image.new("RGBA", (canvas[0] * len(items), canvas[1]), (0, 0, 0, 0))
     for i, (src, f, k) in enumerate(items):
         x0, y0, x1, y1 = f["box"]
         fig = src.crop((x0, y0, x1, y1))
@@ -236,13 +258,19 @@ def main() -> None:
             fig.putalpha(Image.fromarray(alpha.astype(np.uint8)))
         fig = fig.convert("RGBa")
         size = (max(1, round((x1 - x0) * k)), max(1, round((y1 - y0) * k)))
-        fig = fig.resize(size, Image.LANCZOS).convert("RGBA")
         px = i * cw + round(cw / 2 - (f["ax"] - x0) * k)
-        py = ch - PAD - below - round(f.get("feet_h", y1 - y0) * k)
+        py = ch - old_pad - round(f.get("feet_h", y1 - y0) * k)
+        if scale != 1:
+            old_x = (cw * len(items), (i + 0.5) * cw)
+            new_x = (out.width, (i + 0.5) * canvas[0])
+            px, width = _native_span(px, size[0], old_x, new_x, scale)
+            py, height = _native_span(py, size[1], (ch, ch - old_pad), (out.height, out.height - pad), scale)
+            size = (width, height)
+        fig = fig.resize(size, Image.LANCZOS).convert("RGBA")
         out.alpha_composite(fig, (px, py))
     out.save(args[1], optimize=True)
-    meta = {"cells": len(items), "cell": [cw, ch], "fig_h": fig_h, "pad": PAD + below, "src": args[0]}
-    meta["scales"] = [round(k, 4) for _, _, k in items]
+    meta = {"cells": len(items), "cell": list(canvas), "fig_h": fig_h, "pad": pad, "src": args[0]}
+    meta["scales"] = [round(k * scale, 4) for _, _, k in items]
     if "json" in opts:
         with open(opts["json"], "w", encoding="utf-8") as fh:
             json.dump(meta, fh, indent=1, sort_keys=True)

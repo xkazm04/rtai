@@ -161,7 +161,7 @@ func _process(_delta: float) -> void:
 	_dent.blasts = pilot.dent.blasts
 	_dent.step(is_dent, at, r.facing.angle(), steps, arena.tick)
 	var is_kerf: bool = _step_light(_kerf, KerfStage.GHOST, at, r.facing.angle(), steps)
-	_ohm.bolts = pilot.ohm.bolts
+	GhostActs.prepare_ohm(_ohm, pilot.ohm, r, arena.tick)
 	var is_ohm: bool = _step_light(_ohm, OhmStage.GHOST, at, r.facing.angle(), steps)
 	appear.step(at, r.facing.angle(), steps, arena.tick)
 	_hide_rivet(is_big or is_dent or is_kerf or is_ohm, r.id)

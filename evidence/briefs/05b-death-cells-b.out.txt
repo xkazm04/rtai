@@ -1,0 +1,14 @@
+**Set C landed in `d136db41a`.** Set A was already committed. B and D remain unstaged.
+
+| Set | Delivered, packed and wired | Verification |
+|---|---|---|
+| A · p55 police claw | Three delivered sets, all three shipped in `98e30b34a`. | The 4.2 m slide reads at both zooms. The rifle still lands farther than 0.5 m from the body. |
+| B · p70 claw | Nine delivered, nine packed and mapped in the candidate. | The card-rig tests went from **1 pass, 2 failures** on HEAD to **3 passes**. At tick 127 the real hood switched to its own throw. The real thug powered down with no signature cells at either zoom. B remains uncommitted. |
+| C · p55 police torch | Three delivered sets went from zero p55 entries to three shipped PNG/import pairs. The commit also updates `signature_kills.json`, the torch test and provenance. | Patrol, riot and SWAT died at tick 182 in every capture. All 60 cells retained their source alpha detail. The changed suite passed **1,725 tests, 2 skipped**. Quick and all 19 commit-hook checks passed. |
+| D · burn cells | The worker’s two delivered poses were packed and wired in the candidate. | Both poses played at 32 and 64 px/m. The burn suite passed **8/8**. The changed suite had **one failure** because every burning kind requires standing char art. No worker char set was delivered, and combat owns its registry. Torque gang has no spawned row. The patrol lying char and rear collapse facings also need combat-side selection. |
+
+The final mutation command exited 2 because C changed only test GDScript, which the mutation tool excludes. The index is empty. Nothing was pushed.
+
+[Full report, source trace, commands and frame paths](C:/Users/kazda/kiro/gtai-masters/n19/anim/death-cells/RESUME.md) · [10-second hood and thug comparison](C:/Users/kazda/kiro/gtai-masters/n19/anim/death-cells/B/hood-and-thug-32.mp4) · [Lane ai handoff](C:/Users/kazda/kiro/gtai-wt/n19-anim/evidence/death-cells/NEED-ai.md)
+
+[astra: 1593s, exit 0]

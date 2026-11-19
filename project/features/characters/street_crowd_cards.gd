@@ -34,7 +34,7 @@ static func step(rig: CutRig) -> void:
 	if not card.has_meta(K):
 		var k_swap: float = _swap(rig, card)
 		if rig.plan.art_dir == "ped":
-			k_swap *= 1.0 + SCALE_VAR * vary(rig.actor_id, 3)
+			k_swap *= body_scale(rig.actor_id)
 			var v: float = 1.0 + VALUE_VAR * vary(rig.actor_id, 17)
 			card.self_modulate = Color(v, v, v)
 		card.set_meta(K, k_swap)
@@ -63,6 +63,10 @@ static func pick(tag: String, actor_id: int) -> String:
 static func vary(actor_id: int, salt: int) -> float:
 	var h: int = (((actor_id + salt * 7919) * 2654435761) >> 11) & 0xFFFF
 	return h / 32767.5 - 1.0
+
+
+static func body_scale(actor_id: int) -> float:
+	return 1.0 + SCALE_VAR * vary(actor_id, 3)
 
 
 static func _swap(rig: CutRig, card: Sprite2D) -> float:

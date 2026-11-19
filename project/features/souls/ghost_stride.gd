@@ -7,14 +7,37 @@ extends RefCounted
 ## the mean so a near-still pair of frames still shows. No table: the even cycle.
 
 const MIN_SHARE: float = 0.4
+## Maximum walk step as a multiple of its table's mean. Unlisted walks use their drawn steps.
+const MAX_STEP_SHARE: Dictionary[String, float] = {"tonnage/p70": 2.0, "tonnage/p55": 0.0}
 ## Each drawn walk's measured stride, "<name>/<art>": the profile row's stance travel a frame
 ## (contact centres, tools foot_travel.py; a foot switch takes the mean). No entry: the even cycle.
 const TABLES: Dictionary[String, Array] = {
 	"ohm/p70": [0.0, 47.7, 6.8, 17.2, 29.0, 12.5, 7.0, 17.2],
 	"tonnage/p70":
-	[11.0, 35.0, 10.5, 3.5, 13.5, 43.5, 23.9, 5.5, 14.5, 10.0, 15.0, 17.5, 25.9, 3.5, 0.0, 3.0],
+	[11.0, 25.0, 20.0, 3.5, 13.5, 44.5, 4.0, 5.5, 14.5, 10.0, 15.0, 17.5, 25.9, 3.5, 0.0, 3.0],
 	"tonnage/p55": [46.0, 13.5, 51.0, 28.0, 24.5, 32.0, 28.0, 1.0],
 }
+
+## The diagonal atlas subdivides each interval between two original key centres.
+const DIAGONAL_DIVISIONS: Array[int] = [4, 6, 4, 4, 4, 4, 2, 2, 4, 4, 4, 4, 4, 2, 2, 2]
+const PROFILE55_DIVISIONS: Array[int] = [4, 4, 4, 4, 4, 4, 2, 2]
+const OTHER55_DIVISIONS: Array[int] = [6, 8, 8, 8, 6, 6, 6, 4]
+
+## Tonnage p70 profile atlas order. Each pair borrows cell-pixel dwell from
+## the outgoing and incoming key. The two contributions keep the cycle length.
+const MID_STEPS: Array[int] = [5, 0, 1, 2, 4, 8, 9, 10, 11, 12]
+const MID_DWELL: Array[Vector2] = [
+	Vector2(3.44, 6.7625),
+	Vector2(3.07, 6.51),
+	Vector2(2.96, 7.24),
+	Vector2(7.27, 2.93),
+	Vector2(2.77, 7.43),
+	Vector2(4.05, 4.05),
+	Vector2(2.79, 2.79),
+	Vector2(4.19, 5.95),
+	Vector2(2.01, 8.19),
+	Vector2(4.92, 5.28),
+]
 
 ## Run rows ("<name>/<art>", 0 = toward) drawn as a gallop (both halves lead with one leg): that
 ## facing walks at the cadence cap instead. Empty since it14: Dent's 3/4 away row (off at it13
@@ -74,8 +97,34 @@ static func runs(name: String, art: String, row: int, off_rows: Dictionary = RUN
 
 ## The table of `name`'s walk under the art key `art`, empty for the even cycle.
 static func table_of(name: String, art: String) -> PackedFloat32Array:
-	var row: Array = TABLES.get(name + "/" + art, [])
-	return PackedFloat32Array(row)
+	var key: String = name + "/" + art
+	var row: Array = TABLES.get(key, [])
+	var max_share: float = MAX_STEP_SHARE.get(key, 0.0)
+	return capped_steps(PackedFloat32Array(row), max_share)
+
+
+## Keep the cycle total. Allocate the largest steps first so the remaining steps share
+## the excess in their original proportions. If only zero weights remain, split it evenly.
+static func capped_steps(steps: PackedFloat32Array, max_share: float) -> PackedFloat32Array:
+	if steps.is_empty() or max_share <= 0.0 or is_inf(max_share):
+		return steps
+	var remaining: float = 0.0
+	var order: Array[int] = []
+	for i: int in steps.size():
+		order.append(i)
+		remaining += steps[i]
+	var limit: float = maxf(1.0, max_share) * remaining / steps.size()
+	var weight: float = remaining
+	order.sort_custom(func(a: int, b: int) -> bool: return steps[a] > steps[b])
+	var out: PackedFloat32Array = steps.duplicate()
+	for rank: int in order.size():
+		var i: int = order[rank]
+		var fraction: float = steps[i] / weight if weight > 0.0 else 1.0 / (order.size() - rank)
+		var share: float = minf(limit, remaining * fraction)
+		out[i] = share
+		remaining -= share
+		weight -= steps[i]
+	return out
 
 
 ## The step table of `name`'s run grid under `art` (16 steps for a run16), empty for a run8.
@@ -118,3 +167,33 @@ static func dwell_of(steps: PackedFloat32Array) -> PackedFloat32Array:
 	for i: int in n:
 		out[i] = maxf((steps[posmod(i - 1, n)] + steps[i]) * 0.5, mean * MIN_SHARE)
 	return out
+
+
+## Phase intervals in the extra atlas's column order, for the measured 16-key walk.
+static func tonnage_windows(steps: PackedFloat32Array) -> Array[Vector2]:
+	var ends: PackedFloat32Array = dwell_of(steps)
+	for i: int in range(1, ends.size()):
+		ends[i] += ends[i - 1]
+	var windows: Array[Vector2] = []
+	for i: int in MID_STEPS.size():
+		var boundary: float = ends[MID_STEPS[i]]
+		var share: Vector2 = MID_DWELL[i]
+		windows.append(Vector2(boundary - share.x, boundary + share.y) / ends[-1])
+	return windows
+
+
+## Divide the arc between adjacent original key centres. The seam continues past phase 1.
+static func interval_windows(steps: PackedFloat32Array, divisions: Array[int]) -> Array[Vector2]:
+	var dwell: PackedFloat32Array = dwell_of(steps)
+	var at: float = 0.0
+	var windows: Array[Vector2] = []
+	for i: int in dwell.size():
+		var centre: float = at + dwell[i] * 0.5
+		var gap: float = (dwell[i] + dwell[(i + 1) % dwell.size()]) * 0.5 / divisions[i]
+		for j: int in range(1, divisions[i]):
+			var t: float = centre + j * gap
+			windows.append(Vector2(t - 0.5 * gap, t + 0.5 * gap))
+		at += dwell[i]
+	for i: int in windows.size():
+		windows[i] /= at
+	return windows

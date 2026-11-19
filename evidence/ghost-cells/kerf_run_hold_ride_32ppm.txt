@@ -1,0 +1,101 @@
+Kerf's planted feet at 32 px/m, p70 run16
+
+Eight stride_film runs, leg 2, 48 consecutive ticks per direction (245 through
+292). Kerf is on screen in the same octant on the first and last tick and on
+every tick between. All distances below are native screen pixels.
+
+ turn  facing         ground/tick   changes   mean ride   worst ride   worst identical art
+    0  right                 8.83        40         1.6        8.978                 9.007
+   45  toward right          8.12        47         0.0        0.000                 8.870
+   90  toward                7.78        47         0.0        0.000                16.713
+  135  toward left           8.32        46         0.2        7.992                 8.949
+  180  left                  8.82        41         1.3        8.980                10.012
+ -135  away left             8.82        39         1.8        9.355                 9.415
+  -90  away                  8.65        28         5.8       18.084                25.310
+  -45  away right            8.84        45         0.4        8.953                 9.442
+
+Ground/tick, changes, mean ride and worst ride use the n15 detector. Its
+fixed figure box includes moving scenery, particularly when running toward
+camera. A zero means that box changed on every tick. For the last column,
+group consecutive ticks whose displayed atlas cells have identical RGBA bytes
+and sum the same ground shifts within each group. This includes the final hold.
+Neither measurement tracks an individual foot across changes of drawing.
+
+The strict worst-hold target is below 9 px. Straight away is worst by both
+methods. The n15 detector finds 18.084 px at frames 6-8. The sprite trace finds
+25.310 px at frames 28-31 (ticks 273-276). Row 5 columns 3, 3, 4, 4 display one
+drawing for all four ticks. Row 1 has a similar three-tick hold running toward.
+
+Row 4 alternate trial
+Repacked the shipped right atlas from run8 and the keyed run16 sources using
+evidence/s14/tools/double_sheet.py. All 80 cells matched. Substituting only
+4_8.png and 4_10.png preserved all 78 other cells. Refilmed all eight octants.
+Six of 384 crops displayed an alternate. All other 378 matched pixel for
+pixel. Every table entry above was identical between shipped art and trial.
+The row 4 maximum by the n15 method was at C12, outside the changed slots.
+The longest identical-art ride on that row was at C8 on frames 13-14. Both
+ticks still select C8, so the new pose rides the same 9.442 px. At both zooms
+the trial tucks the front foot at C8 and extends it at C10. Retained the
+shipped atlas. The delivered alternates cover neither of the row 5 cells.
+
+Capture and measurement
+  stride_film with a logging-only _grab override (capture/n19_stride_probe.gd)
+  --rigs --ppm=32 --start=pad --film-form=kerf --film-turn=<turn>
+  --film-leg=2 --film-every=1 --film-frames=48 --film-out=<prefix>
+  --fixed-fps 60 --rendering-driver d3d12 --position 0,1440
+  python evidence/s15/tools/hold_ride.py <prefix> 2 48 0,45 70,150,190,222
+
+Master directory: C:/Users/kazda/kiro/gtai-masters/n19/anim/ghost-cells/
+  kerf_run_baseline_8dir_32ppm.png, kerf_run_trial_8dir_32ppm.png
+  kerf_away_hold_32ppm.png, kerf_row4_alternates_{32,64}ppm.png
+  raw/c/kerf_{baseline,trial}_pose_trace.tsv (tick, sheet, cell, ground shift)
+  raw/c/kerf_{baseline,trial}_hold_trace.txt and 768 original 32 px/m crops
+  capture/kerf_run16_alt.py (verified baseline and trial repack)
+
+N19 axial in-betweens (rows and columns below are one-based)
+The original p70 sheet was reproduced byte-for-byte, PNG SHA-256
+4a32e2fd7b97b075cd4d1ab35051a18d96c56006740112e648f995d91b1febcd.
+From the repo root, with V = project/features/souls/art/view/p70 and
+K = C:/Users/kazda/kiro/gtai-art/library/keyed/ghosts:
+  python evidence/s14/tools/double_sheet.py V/kerf_run8.png 5 base.png K/kerf_run16_70_cells 1,2,3 3
+  python tools/art/kerf_run16_midpoints.py base.png V/kerf_run16.png
+
+The first pack centres the run8 keys with 3 px of side padding. Only rows
+2, 3 and 4 receive delivered in-betweens. The library's left_row1 sources
+are three-quarter toward-left. Both axial rows repeat C1/2, C3/4, C5/6,
+C7/8, C9/10, C11/12, C13/14 and C15/16. There are no extra adjacent
+mirror-only pairs, including C16/1. Mirroring the opposite phase of the
+back row gives the existing key again. The v2 run8 keys and upright walk
+do not supply the missing running phases. The second pack derives the
+even columns from Kerf's own keys, placing individual toes and knees between
+their two positions. All 64 other RGBA cells matched. The left sheet is common
+to both films. Both axial rows now have distinct adjacent drawings throughout.
+
+Same leg 2, ticks 245-292 inclusive, 32 px/m. Re-measured both sets of crops
+with the historical hold_ride.py and the identical-RGBA grouping above.
+Each before/after pair had the same displayed cell and measured ground shift.
+Of 384 pairs, 332 were pixel-identical; the 52 differences were precisely
+the ticks showing the replaced cells (26 toward, 26 away).
+
+                      n15 changes    n15 worst px    worst identical-art px
+ turn  facing        before after    before after      before     after
+    0  right             40    40     8.978 8.978       9.007     9.007
+   45  toward right      47    47     0.000 0.000       8.870     8.870
+   90  toward            47    47     0.000 0.000      16.713     8.372
+  135  toward left       46    46     7.992 7.992       8.949     8.949
+  180  left              41    41     8.980 8.980      10.012    10.012
+ -135  away left         39    39     9.355 9.355       9.415     9.415
+  -90  away              28    38    18.084 8.966      25.310     8.966
+  -45  away right        45    45     8.953 8.953       9.442     9.442
+
+Away now rises out of the crouch and extends its left leg on t275, between
+the low C3 on t273-274 and the visible sole at C5 on t277. Toward t253
+shows the toes passing under the housing before the opposite leg takes
+the lead. The electrode housing rises and falls less abruptly at 64 px/m.
+The remaining straight holds last two ticks within a single column. Left
+profile is now worst at 10.012 px. Level 2 remains (profile drift 3.0 px).
+
+Under C:/Users/kazda/kiro/gtai-masters/n19/anim/ghost-cells/:
+  kerf_run16_axial_64ppm.png (same-tick pairs for every replaced column)
+  kerf_run16_axial_ticks_32ppm.png (native-scale consecutive ticks)
+  raw/kerf-away/kerf_fixed_{pose_trace.tsv,hold_trace.txt} and 384 crops

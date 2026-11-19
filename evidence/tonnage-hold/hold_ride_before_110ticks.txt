@@ -1,0 +1,4 @@
+ground px/tick mean 2.29; pose changes 20 in 110 ticks
+holds (ticks): [6, 6, 3, 5, 4, 6, 8, 5, 2, 2, 2, 9, 8, 2, 3, 11, 12, 5, 3, 5]
+ride inside each hold (crop px): 11.4 11.3 4.3 9.2 6.4 11.3 16.1 9.1 2.1 2.1 2.1 17.6 15.5 2.1 5.0 22.7 25.5 9.2 4.2 9.2
+ride mean 9.8, max 25.5 crop px

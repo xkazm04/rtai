@@ -1,6 +1,6 @@
 """d9 rivet (Call 2): pack the asset lane's walk cells into one game grid of whole figures.
 
-usage: python -I tools/art/rivet_walk.py <cells_dir> <left_cells_dir> <out.png> [--fig_h=110] [--cols=4] [--json=<out.json>]
+usage: python -I tools/art/rivet_walk.py <cells_dir> <left_cells_dir> <out.png> [--fig_h=110] [--scale=1] [--cols=4] [--json=<out.json>]
 
 <cells_dir> holds 20 tight cells `r_c.png` (rows 1-5 = facings toward, 3/4 toward, profile, 3/4 away,
 away; columns 1-4 = contact, passing, contact (the other foot), passing), <left_cells_dir> 12 (rows
@@ -74,6 +74,7 @@ def main() -> None:
     opts = {a.split("=")[0][2:]: a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--")}
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     fig_h = float(opts.get("fig_h", 110))
+    scale = float(opts.get("scale", 1.0))
     cols = int(opts.get("cols", COLS))
     rows = _rows(args[0], 5, cols)
     left = _mirrored(rows) if args[1] == "mirror" else _rows(args[1], 3, cols)
@@ -85,8 +86,10 @@ def main() -> None:
     half = max(max(c["ax"] - c["box"][0], c["box"][2] - c["ax"]) * s for c, s in items)
     up = max(c["h"] * s for c, s in items)
     cw, ch = int(np.ceil(2 * half)) + 4, int(np.ceil(up)) + PAD + 2
+    cw, ch = round(cw * scale), round(ch * scale)
     out = Image.new("RGBA", (cw * cols, ch * 8), (0, 0, 0, 0))
     for i, (c, s) in enumerate(items):
+        s *= scale
         x0, y0, x1, y1 = c["box"]
         fig = c["im"].crop((x0, y0, x1, y1)).convert("RGBa")
         size = (max(1, round((x1 - x0) * s)), max(1, round((y1 - y0) * s)))
@@ -96,7 +99,7 @@ def main() -> None:
     if "tone" in opts:
         out = _tone(out, opts["tone"])
     out.save(args[2], optimize=True)
-    meta = {"cell": [cw, ch], "cols": cols, "rows": 8, "fig_h": fig_h, "pad": PAD, "scales": [round(k, 4), round(kl, 4)]}
+    meta = {"cell": [cw, ch], "cols": cols, "rows": 8, "fig_h": fig_h * scale, "pad": PAD, "scales": [round(k * scale, 4), round(kl * scale, 4)]}
     meta["src"] = [args[0], args[1]]
     meta["tone"] = opts.get("tone", "")
     if "json" in opts:

@@ -18,6 +18,10 @@ var tex: Texture2D = null
 var cols: int = 8
 var left: Texture2D = null
 var left_cols: int = 0
+var hitback: GhostSheet = null  # optional one-column alternate on an act grid
+var _profile_mid: GhostSheet = null
+var _intervals: Dictionary[int, GhostWalkPages] = {}
+var _mid_windows: Array[Vector2] = []
 
 
 func _init(p_tex: Texture2D, p_cols: int, p_left: Texture2D = null, p_left_cols: int = 0) -> void:
@@ -38,12 +42,65 @@ static func of(path: String, p_cols: int, p_left_cols: int = -1) -> GhostSheet:
 	)
 
 
+## The two measured profiles share timing and each has its own pad drawings.
+static func walk_of(path: String, steps: PackedFloat32Array) -> GhostSheet:
+	var sheet: GhostSheet = of(path, GhostStride.cols_of(steps))
+	if sheet != null and steps.size() == 16 and path.ends_with("/p70/tonnage_walk8.png"):
+		sheet._mid_windows = GhostStride.tonnage_windows(steps)
+		sheet._profile_mid = of(path.get_basename() + "_mid.png", sheet._mid_windows.size())
+		sheet._load_detail(path, steps, [1, 3, 5, 7], ["_diag"], GhostStride.DIAGONAL_DIVISIONS)
+		sheet._load_detail(
+			path, steps, [2, 6], ["_fill_a", "_fill_b"], GhostStride.DIAGONAL_DIVISIONS
+		)
+	elif sheet != null and steps.size() == 8 and path.ends_with("/p55/tonnage_walk8.png"):
+		sheet._load_detail(path, steps, [0, 4], ["_detail"], GhostStride.PROFILE55_DIVISIONS)
+		sheet._load_detail(
+			path, steps, [1, 2, 3, 5, 6, 7], ["_fill_a", "_fill_b"], GhostStride.OTHER55_DIVISIONS
+		)
+	return sheet
+
+
+func _load_detail(
+	path: String,
+	steps: PackedFloat32Array,
+	octants: Array[int],
+	suffixes: Array[String],
+	divisions: Array[int]
+) -> void:
+	var bank: GhostWalkPages = GhostWalkPages.new()
+	bank.windows = GhostStride.interval_windows(steps, divisions)
+	@warning_ignore("integer_division")
+	var page_cols: int = bank.windows.size() / suffixes.size()
+	for suffix: String in suffixes:
+		var page: GhostSheet = of(path.get_basename() + suffix + ".png", page_cols)
+		if page == null:
+			return
+		bank.pages.append(page)
+	for oct: int in octants:
+		_intervals[oct] = bank
+
+
 ## An act grid (`key` "<name>/<pitch>"): its columns and its left sheet's, with Dent's jab columns
 ## where GhostDrawn.JAB_COLS / JAB_LEFT_COLS name the key.
 static func act_of(path: String, key: String) -> GhostSheet:
 	var acts: int = GhostDrawn.JAB_COLS.get(key, GhostDrawn.ACT_COLS)
 	var lefts: int = GhostDrawn.JAB_LEFT_COLS.get(key, GhostDrawn.ACT_COLS)
-	return of(path, acts, lefts)
+	var sheet: GhostSheet = of(path, acts, lefts)
+	var rear: String = path.get_basename() + "_hitback.png"
+	if sheet != null and ResourceLoader.exists(rear):
+		sheet.hitback = GhostSheet.new(load(rear) as Texture2D, 1)
+	return sheet
+
+
+## Creates the ghost sprite standing on this walk sheet, with its outline attached.
+func make_sprite() -> Sprite2D:
+	var spr: Sprite2D = Sprite2D.new()
+	spr.name = &"ghost_drawn"
+	spr.centered = false
+	show(spr, 2, GhostDrawn.STAND_COL)
+	spr.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	GhostSoulLine.attach(spr)
+	return spr
 
 
 ## True when octant `oct` at column `col` draws from the left sheet.
@@ -52,7 +109,14 @@ func drawn_left(oct: int, col: int) -> bool:
 
 
 ## Puts cell `col` of octant `oct` on `spr`: texture, grid, feet offset, frame and mirror.
-func show(spr: Sprite2D, oct: int, col: int) -> void:
+func show(spr: Sprite2D, oct: int, col: int, phase: float = -1.0) -> void:
+	if _profile_mid != null and (oct == 0 or (oct == 4 and _profile_mid.drawn_left(oct, 0))):
+		var mid: int = _profile_col(col, phase)
+		if mid >= 0:
+			_profile_mid.show(spr, oct, mid)
+			return
+	if _intervals.has(oct) and _intervals[oct].show(spr, oct, phase):
+		return
 	var on_left: bool = drawn_left(oct, col)
 	var t: Texture2D = left if on_left else tex
 	var c: int = left_cols if on_left else cols
@@ -68,6 +132,16 @@ func show(spr: Sprite2D, oct: int, col: int) -> void:
 	spr.frame = row * c + col
 	spr.flip_h = not on_left and RigHeadCard.OCT_FLIP[oct] == 1
 	GhostSoulLine.sync(spr)
+
+
+## Both profile drawings use the same two neighbouring dwells and half-open interval.
+func _profile_col(col: int, phase: float) -> int:
+	for i: int in _mid_windows.size():
+		var step: int = GhostStride.MID_STEPS[i]
+		var w: Vector2 = _mid_windows[i]
+		if (col == step or col == step + 1) and phase >= w.x and phase < w.y:
+			return i
+	return -1
 
 
 ## The screen octant a shown cell faces (a drawn left row, or a right row and its mirror).
