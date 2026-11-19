@@ -1,7 +1,6 @@
 class_name GhostDrawn
 extends RefCounted
-## A drawn ghost steps by the ground walked, feet on the rig's point. Without its walk art
-## the rig keeps its card. GhostSheet handles drawn and mirrored left facings. Render only.
+## Draws the ghost's walk, hover and combat cells at the rig's point.
 
 const ART_DIR: String = "res://features/souls/art/view/"
 const COLS: int = 8
@@ -13,7 +12,6 @@ const MAX_CYCLES_S: float = 3.0  # the cadence's cap (cycles/s): past it the fee
 const RUN_FROM_MPS: float = 5.0  # the run grid (optional) takes over above this, with its own cap
 const MAX_RUN_CYCLES_S: float = 3.5
 const BACKPEDAL_DOT: float = -0.25
-## A pitch's drawn stride against the p70 cycle ("<name>/<art>"), measured off its stance foot.
 const STRIDE_K: Dictionary[String, float] = {"dent/p55": 0.8, "tonnage/p55": 0.95}
 const STILL_FRAMES: int = 3  # frames without ground walked before the figure stands
 const OCT_HOLD_RAD: float = deg_to_rad(4.0)
@@ -36,6 +34,8 @@ var height_m: float = 1.75
 var cycle_cell: float = 150.0  # measured stance foot travel per cycle (cell px)
 var run_cell: float = 0.0  # the run grid's stride cycle in cell px (0 = no run grid)
 var fig_px: float = 180.0  # the figure's median height in the grid, cell px (ghost_pack prints it)
+var flight: GhostFlight
+var hover: bool = false
 var still: bool = false  # something else carries the form (Dent on a car roof): stands still
 var blow: Vector2 = Vector2.ZERO  # the last hit's line (GhostActs, Fighter.hurt_dir; ZERO = none)
 var jab: bool = false  # the strike or wind-up shown is Dent's arm jab (GhostActs)
@@ -83,8 +83,11 @@ func step(
 		_rebuild(host, parts, vm)
 	if _spr == null:
 		return false
-	var s: float = height_m * size_k * px_per_m * absf(host.global_scale.x) / fig_px
+	var fit: float = absf(host.scale.x if flight != null else host.global_scale.x)
+	var s: float = height_m * size_k * px_per_m * fit / fig_px
 	_look = host.global_rotation if is_nan(look) else look
+	if flight != null and not is_nan(look):
+		_look += flight.body_rotation()
 	var o: int = octant(_look)
 	var walk: int = _column(host, s, RigHeadCard.OCT_FRAME[o])
 	var act: int = jab_col(act_col(), jab, _act.cols) if _act != null else -1
@@ -97,6 +100,8 @@ func step(
 	var reach: Vector2 = GhostLunge.reach(since, _look, card_name) * SimConst.PX_PER_M * size_k
 	_spr.global_position = host.global_position + reach
 	_spr.global_scale = Vector2(s, s / vm.ground_k())
+	if flight != null:
+		_spr.global_scale *= flight.body_scale()
 	GhostHand.note(card_name, _art, _spr, o, act >= 0 and act != HIT_COL)
 	return true
 
@@ -106,14 +111,13 @@ func _show_cell(sheet: GhostSheet, oct: int, col: int, rear_hits: bool = HIT_FRO
 		if blow.normalized().dot(Vector2.from_angle(_look)) > REAR_DOT:
 			sheet.hitback.show(_spr, oct, 0)
 			return
-	sheet.show(_spr, oct, col, -1.0 if _still > STILL_FRAMES else _phase)
+	sheet.show(_spr, oct, col, -1.0 if hover or _still > STILL_FRAMES else _phase)
 
 
 static func path_of(art: String, name: String, sheet: String = "walk8") -> String:
 	return ART_DIR.path_join(art).path_join("%s_%s.png" % [name, sheet])
 
 
-## A strike counter drives instant acts. A delayed cast supplies its actual release tick.
 func feed(seq: int, hurt: int, tick: int, windup: bool = false, release_tick: int = -1) -> void:
 	if release_tick >= 0:
 		_act_from = release_tick
@@ -127,7 +131,6 @@ func feed(seq: int, hurt: int, tick: int, windup: bool = false, release_tick: in
 	_windup = windup
 
 
-## The act column to show now, -1 for the walk. A strike wins over a hit, a wind-up over both.
 func act_col() -> int:
 	if _windup:
 		return WINDUP_COL
@@ -139,13 +142,11 @@ func act_col() -> int:
 	return HIT_COL if _hurt >= 0 and _tick - _hurt < HIT_TICKS else -1
 
 
-## Dent's jab moves to its own cells on sheets that have them.
 static func jab_col(act: int, p_jab: bool, cols: int) -> int:
 	var shift: bool = p_jab and act >= 0 and act != HIT_COL and cols > JAB_SHIFT
 	return act + JAB_SHIFT if shift else act
 
 
-## The drawn octant of `look`, held OCT_HOLD_RAD past the boundary (as Rivet's RivetStride.oct_of).
 func octant(look: float) -> int:
 	if _oct >= 0 and absf(angle_difference(look, _oct * PI * 0.25)) <= PI / 8.0 + OCT_HOLD_RAD:
 		return _oct
@@ -153,17 +154,16 @@ func octant(look: float) -> int:
 	return _oct
 
 
-## The grid column by the ground walked; the standing cell below the walk's speed. `row` the
-## drawn facing: a row GhostStride keeps off the run walks at the cap.
+## Ground distance sets the column. A spectral or braced figure uses its standing cell.
 func _column(host: Node2D, s: float, row: int) -> int:
 	var at: Vector2 = host.global_position
 	var moved: Vector2 = Vector2.ZERO if _last == Vector2.INF else at - _last
 	_last = at
 	var px: float = moved.length()
 	var speed: float = px / SimClock.TICK_DT
-	if still or speed < WALK_FROM_MPS * SimConst.PX_PER_M:
+	if hover or still or speed < WALK_FROM_MPS * SimConst.PX_PER_M:
 		_still += 1  # a frame with no sim step (a hit-stop, a fast display) keeps the stride
-		if _still > STILL_FRAMES:
+		if hover or _still > STILL_FRAMES:
 			_col = roundi(STAND_COL * GhostStride.cols_of(_steps) / float(COLS))
 			_running = false
 		return _col
