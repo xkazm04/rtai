@@ -93,3 +93,19 @@ func test_obstacle_at_the_depth_limit_and_circle_at_its_corner() -> void:
 	assert_eq(_press(Vector2.DOWN * 8.0).reason, &"ok")
 	assert_true(probe.clear_at(Vector2(-0.45, -0.45), r))
 	assert_false(probe.clear_at(Vector2(-0.4, -0.4), r))
+
+
+func test_relocating_a_station_removes_its_old_footprint() -> void:
+	var prop: ArenaStation.Prop = ArenaStation.Prop.new()
+	prop.kind = "cover_low"
+	var station: ArenaStation = ArenaStation.new()
+	station.props.append(prop)
+	var source: ArenaStations = ArenaStations.new()
+	source.stations.append(station)
+	var old_base: Vector2 = Vector2(4, 6)
+	var new_base: Vector2 = Vector2(12, 6)
+	probe.stations(source, old_base)
+	assert_false(probe.clear_at(old_base, r))
+	probe.stations(source, new_base)
+	assert_true(probe.clear_at(old_base, r))
+	assert_false(probe.clear_at(new_base, r))
