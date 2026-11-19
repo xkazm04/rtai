@@ -21,3 +21,7 @@ The `gfx-preview` stills use the native buffer unchanged except for that single 
 2. In `NoirFrames._ink_crowd()`, remove the `old` material variable and replace the two `set_shader_parameter` calls with `_characters.rigs.atlas.configure_material(m)`. Use just `m.shader.resource_path` in the dev log, or retain `old` for the log.
 
 The shared include reads the bake's anchors, projection and actor scale uniforms. The ordinary city material already uses it.
+
+## Golden integration
+
+The merge preview identifies five golden PNGs changed on both lanes under `project/tests/golden/look/`: auto-48ppm-ov.png, auto-56ppm-ov.png, auto-64ppm-ov.png, d4-48ppm.png and d5-48ppm-ov.png. Render these five on the combined revision after the native DLL rebuild. Both the gfx image changes and the corrected crowd anchor affect the expected pixels.

@@ -71,3 +71,19 @@ Re-blessed files
 - `block-auto-64ppm-ov.png`
 - `block-d4-48ppm-night.png`
 - `block-auto-64ppm-ov-night.png`
+
+## Changed files
+
+- Runtime geometry and appearance live in `project/features/characters/crowd_atlas.gd`, `crowd_baker.gd`, `crowd_atlas.gdshader`, `crowd_atlas_vertex.gdshaderinc`, `street_crowd_corpse.gd`, `street_crowd_cards.gd` and `street_walker_cards.gd`.
+- The two showcase scenes and scripts are `crowd_pop_audit` and `crowd_pop_ring` under `project/dev/showcase/`. The film launcher is `tools/art/crowd_pop.mjs`. The new resources include their Godot UIDs.
+- Regression coverage lives under `project/tests/unit/` in `test_crowd_cell_layout.gd`, `test_street_dead_heading.gd`, `test_ghost_sheet.gd` and `test_tonnage_stride.gd`. The 13 updated references are listed above.
+- `docs/decisions.md` records the layout choice. `tools/debt/baseline.json` accounts for the two GPU measurement fixtures. This directory contains the two audits, the per-frame golden checks and the gfx handoff.
+
+## Verification
+
+- The quick gate passed with `--no-godot`. The full pre-commit lint passed all 19 checks. The changed-suite runner selected the full fast suite and passed 2,980 tests with two skips and zero failures. All 16 look goldens passed their final GPU comparison.
+- The headroom regression failed with the old layout. The stage provided 46.93 world px above the actor against the test's 64.70 px minimum. The new tilt70 stage provides 70.24 world px and the same assertion passes.
+- `b472095b6` — Match crowd atlas headroom, projection and foot anchors to the live rig.
+- `595b5a652` — Cover ghost sheet rebinding and Tonnage midpoint boundaries.
+- The full GhostSheet run at `a2e7b603b` killed **60/(60+24)**, with three invalid mutants and zero timeouts. The follow-up tests exercise the midpoint entry and exit, its sixth-step and pitch guards, grid rebinding, initial standing cell, outline sync, fallback octant and left-grid boundaries. Two surviving initializers are overwritten by the constructor on every path.
+- The GhostDrawn run restricted to lines 111 and 193 killed **1/(1+0)**. The operator removed the frame display at line 111. It generated no mutant on line 193.
