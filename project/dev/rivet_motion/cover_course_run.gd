@@ -100,7 +100,7 @@ func _open(kind: String) -> void:
 		_make_view()
 
 
-func _make_view() -> void:
+func _make_view(focus: Vector2 = CENTER + Vector2(1.2, 0.1)) -> void:
 	var view: CollectCallView = CollectCallView.new()
 	view.stage_view.free()
 	view.stage_view = ArenaFloorView.new()
@@ -114,7 +114,7 @@ func _make_view() -> void:
 	cast.attach(stage, view, ctx)
 	cast.ghost_view.hud.hide()
 	PropOcclusion.for_view(view)
-	view.focus = CENTER + Vector2(1.2, 0.1)
+	view.focus = focus
 
 
 func _step(k: int, tick: int) -> bool:

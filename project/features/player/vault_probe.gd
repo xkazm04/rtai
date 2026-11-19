@@ -171,3 +171,18 @@ static func _interval(p: Vector2, dir: Vector2, box: Rect2) -> Vector3:
 	if leave < maxf(0.0, enter):
 		return Vector3(INF, INF, 0.0)
 	return Vector3(maxf(0.0, enter), leave, alignment)
+
+
+## Compare with the arena body circles at the press, before the crossing starts.
+static func landing_occupied(arena: CombatArena, landing: Vector2) -> bool:
+	var table: BodyTable = ArenaBodies.table()
+	var areas: FightAreas = arena.areas
+	for h: Fighter in arena.hostiles:
+		var fx: FighterFx = areas.fx.get(h.id) if areas != null else null
+		if h.alive() and (fx == null or fx.down_ticks == 0):
+			var separation: float = (
+				table.radius(RivetBody.CLASS) + table.radius(ArenaBodies.class_of(h))
+			)
+			if landing.distance_squared_to(h.pos) < separation * separation:
+				return true
+	return false

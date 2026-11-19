@@ -35,6 +35,7 @@
   },
   "vault": {
     "apex_m": 1.45,
+    "bodies_block_landing": false,
     "drawn_cells": true,
     "enabled": true,
     "heights": {

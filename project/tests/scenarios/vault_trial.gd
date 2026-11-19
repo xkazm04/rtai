@@ -3,7 +3,7 @@ extends RefCounted
 ## Shared arena and street setup for replay, fuzz and the measured guard impact.
 
 
-static func stage_for(city: bool) -> ArenaStage:
+static func stage_for(city: bool, ctx: WorldContext = null) -> ArenaStage:
 	var stations: ArenaStations = ArenaStations.new()
 	if not city:
 		stations.add_file(ArenaStations.DIR + "/arena.json")
@@ -12,7 +12,7 @@ static func stage_for(city: bool) -> ArenaStage:
 			station.spawns.clear()
 	var stage: ArenaStage = ArenaStage.new(ArenaPlan.shipped(), stations)
 	stage.cells = StageCells.shipped() if city else null
-	stage.setup(World.build_context(Events, Data, 1918))
+	stage.setup(ctx if ctx != null else World.build_context(Events, Data, 1918))
 	stage.pilot = StagePilot.new(PlayerActions.shipped())
 	stage.pilot.motion.vault.enabled = true
 	stage.pilot.motion.vault.prepare(stage)
@@ -53,8 +53,8 @@ static func forbidden_contact(stage: ArenaStage) -> String:
 	return "overlap at %s with %s" % [body.pos, touched]
 
 
-static func tackle() -> Vector3:
-	var stage: ArenaStage = stage_for(false)
+## The measured pit landing. The visual comparison uses the same feet and approach speed.
+static func place_tackle(stage: ArenaStage) -> Fighter:
 	var body: Fighter = stage.arena.rivet
 	body.pos = Vector2(4.0, 11.75)
 	stage.pilot.motion.mover.velocity = Vector2.DOWN * 8.0
@@ -62,6 +62,14 @@ static func tackle() -> Vector3:
 	var guard: Fighter = Fighter.make(Fighter.Kind.GUARD, 190, at, 1.0)
 	guard.brain_owned = true
 	stage.arena.hostiles.append(guard)
+	return guard
+
+
+static func tackle() -> Vector3:
+	var stage: ArenaStage = stage_for(false)
+	var guard: Fighter = place_tackle(stage)
+	var at: Vector2 = guard.pos
+	var body: Fighter = stage.arena.rivet
 	var result: Vector3 = Vector3.ZERO
 	for i: int in stage.pilot.motion.vault.ticks:
 		var before: Vector2 = body.pos

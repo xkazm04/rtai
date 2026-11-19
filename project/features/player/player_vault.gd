@@ -5,6 +5,7 @@ extends RefCounted
 
 var enabled: bool = false
 var drawn_cells: bool = true
+var bodies_block_landing: bool
 var ticks: int
 var iframe_from: int
 var iframe_to: int
@@ -21,6 +22,7 @@ var owns_move: bool = false
 var _body: Fighter
 var _radius: float
 var _ready: bool = false
+var _landing_arena: CombatArena
 var _stations: ArenaStations
 var _base: Vector2
 
@@ -32,6 +34,7 @@ func apply_flags() -> void:
 func configure(t: DataTable) -> Array[String]:
 	var row: Dictionary = t.object(t.raw, "vault")
 	enabled = row.get("enabled", false) == true
+	bodies_block_landing = row.get("bodies_block_landing", false) == true
 	drawn_cells = row.get("drawn_cells", true) == true
 	ticks = t.integer(row, "ticks")
 	iframe_from = t.integer(row, "iframe_from")
@@ -52,6 +55,7 @@ func drive(stage: CollectCallStage, pilot: StagePilot, c: PlayerCommand, walk: f
 		prepare(stage)
 	stage.intent.move_by = motion.step(c, walk, pilot.actions)
 	_ready = false
+	_landing_arena = null
 	if owns_move:
 		stage.arena.rivet.pos = position
 		if frame >= 0:
@@ -66,6 +70,7 @@ func prepare(stage: CollectCallStage) -> void:
 	_body = stage.arena.rivet
 	start = _body.pos
 	_radius = _body.radius_m
+	_landing_arena = stage.arena if bodies_block_landing else null
 	_ready = true
 
 
@@ -82,6 +87,12 @@ func intercept(motion: PlayerMotion, stick: Vector2) -> bool:
 	var mover: TopDownMover = motion.mover
 	var heading: Vector2 = stick if stick != Vector2.ZERO else mover.facing
 	hit = probe.find(start, _radius, mover.velocity, heading)
+	if (
+		_landing_arena != null
+		and hit.reason == &"ok"
+		and VaultProbe.landing_occupied(_landing_arena, hit.landing)
+	):
+		hit.reason = &"landing_blocked"
 	if hit.reason != &"ok" and hit.reason != &"landing_blocked":
 		return false
 	position = start

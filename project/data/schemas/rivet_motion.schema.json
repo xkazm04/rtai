@@ -183,6 +183,9 @@
           "exclusiveMinimum": 0,
           "type": "number"
         },
+        "bodies_block_landing": {
+          "type": "boolean"
+        },
         "drawn_cells": {
           "type": "boolean"
         },
@@ -247,6 +250,7 @@
       },
       "required": [
         "apex_m",
+        "bodies_block_landing",
         "drawn_cells",
         "enabled",
         "heights",
