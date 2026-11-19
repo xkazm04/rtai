@@ -78,3 +78,41 @@ func take(slot: int, world: VehicleWorld, svc: VehicleService) -> void:
 		break
 	forget(slot, world)
 	world.take_car(slot)
+
+
+## Take the nearest sim car, preserving its motion and damage, and eject its driver.
+func hijack(at: Vector2, svc: VehicleService, events: EventBus) -> VehicleBody:
+	var world: VehicleWorld = svc.world
+	var recs: PackedFloat64Array = world.cars_near(at, VehicleService.ENTER_R + 1.0)
+	var best: int = -1
+	var best_d: float = INF
+	for r: int in range(0, recs.size(), VehicleWorld.CAR_STRIDE):
+		var d: float = Vector2(recs[r + 2], recs[r + 3]).distance_to(at)
+		if d < best_d:
+			best_d = d
+			best = r
+	if best < 0:
+		return null
+	var head: Vector2 = Vector2(recs[best + 4], recs[best + 5])
+	var police: bool = recs[best + 1] > 0.5
+	var kind: StringName = VehicleProfile.archetype_of_variant(int(recs[best + 7]), police)
+	var slot: int = int(recs[best])
+	var center: Vector2 = Vector2(recs[best + 2], recs[best + 3])
+	if svc.doors.enabled and recs[best + 6] == 0.0:
+		var door: Vector2 = center + VehicleDoorPath.offset(head, svc.doors.radius)
+		if not VehicleDoorPath.clear(svc, at, door, svc.doors.radius):
+			return null
+	var b: VehicleBody = svc.spawn_parked(kind, center, head, int(recs[best + 7]))
+	b.vel = head * recs[best + 6]
+	b.hp_lost = lost_of(slot)
+	b.soul_hijacked = soul(slot)
+	b.state = _rules.state_for(b.hp_lost, b.soul_hijacked)
+	forget(slot, world)
+	world.take_car(slot)
+	world.eject_driver(
+		b.pos + Vector2(b.head.y, -b.head.x) * VehicleService.DOOR_OFF,
+		Vector2(b.head.y, -b.head.x),
+		0
+	)
+	events.vehicle_hijacked.emit(kind)
+	return b

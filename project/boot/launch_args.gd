@@ -86,8 +86,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--pickup-hover",
 	# n8-hud: --pickup-crate=on|off lays a floor gun's showcase drawing in an open crate (else hover)
 	"--pickup-crate",
-	# d9-rivet: --rivet-height=<m> sets Rivet's drawn standing height under a card view (Call 1)
-	"--rivet-height",
+	"--rivet-height",  # d9-rivet: drawn standing height (m) under a card view (Call 1)
 	# d9-rivet: --rivet-walk=bob keeps the facing card with the built bob (Call 2's before);
 	# n9-rivet: --rivet-walk=4 plays d9's 4-frame grid by the gait phase (the 8-frame walk's before);
 	# --rivet-walk=walk8 keeps the walk at every speed (the drawn run's before)
@@ -115,6 +114,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--no-vault",  # lane move n19: force vaults off
 	"--cover",  # lane move n19: force station cover on
 	"--no-cover",  # lane move n19: force station cover off
+	"--car-doors",  # lane move n19: take the timed walk to and from a car door
 ]
 
 var _values: Dictionary[String, String] = {}
