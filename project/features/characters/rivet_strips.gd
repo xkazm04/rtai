@@ -7,9 +7,9 @@ extends RefCounted
 
 const DIR: String = "res://features/characters/art/view/"
 const BASE: String = "rivet_frames.png"
-
 ## Holds drawn with one hand on the weapon: never mirrored (the owner's hand rule).
 const ONE_HAND: Array[StringName] = [
+	&"mini_nuke",  # asymmetric shoulder hold
 	&"assault-rifle",  # two hands, asymmetric grip: its left facings are drawn
 	&"pistol",
 	&"machine_pistol",

@@ -84,11 +84,21 @@ FIRE_PINNED = {("p70", "rivet_eq_assault_rifle", 5): [290, 102],
                ("p70", "rivet_eq_assault_rifle", 6): [171, 185],
                ("p55", "rivet_eq_assault_rifle", 5): [202, 79],
                ("p55", "rivet_eq_assault_rifle", 6): [103, 125]}
-LEFT_PINNED = {("p55", "rivet_eq_homing_shard_left", 2): [43, 78]}
+LEFT_PINNED = {
+    ("p70", "rivet_eq_mini_nuke_left", 2): [17, 52],
+    ("p70", "rivet_eq_mini_nuke_left", 1): [7, 64],
+    ("p70", "rivet_eq_mini_nuke_left", 0): [21, 72],
+    ("p55", "rivet_eq_mini_nuke_left", 2): [15, 52],
+    ("p55", "rivet_eq_mini_nuke_left", 1): [6, 60],
+    ("p55", "rivet_eq_mini_nuke_left", 0): [23, 66],
+    ("p55", "rivet_eq_homing_shard_left", 2): [43, 78],
+}
 # n17 rivet-strike: a gun's drawn diagonal fire strip (RivetGunDiag, x1.5 cells): its gun's light
 # tan reads as flash core, so the flash root is pinned in 110 space (strip px / 1.5), read as the
 # biggest hot blob that differs from the flashless twin, its pixel nearest the body centre.
 DIAG_PINNED = {
+    ("p70", "rivet_eq_mini_nuke_diag"): {"0": [104, 89], "1": [118, 48], "2": [34, 89], "3": [26, 39]},
+    ("p55", "rivet_eq_mini_nuke_diag"): {"0": [94, 72], "1": [110, 41], "2": [34, 67], "3": [26, 35]},
     ("p70", "rivet_eq_ray_gun_diag"): {"0": [142, 105], "1": [105, 17], "2": [63, 95], "3": [47, 17]},
     ("p55", "rivet_eq_ray_gun_diag"): {"0": [97, 95], "1": [122, 25], "2": [31, 78], "3": [14, 25]},
     ("p70", "rivet_eq_homing_shard_diag"): {"0": [105, 98], "1": [146, 21], "2": [12, 92], "3": [25, 20]},
