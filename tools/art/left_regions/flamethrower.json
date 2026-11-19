@@ -25,6 +25,7 @@
   "p55_fire": [
     [
       {"part": "rigid hazard collar stripes", "band": [[163, 120, 126], [172, 126, 133], [185, 130, 136], [194, 126, 134], [202, 121, 128]]},
+      {"part": "preserve mirrored helmet against equipment changes", "keep": [158, 71, 211, 131]},
       {"part": "fuel tank valve and retaining strap", "band": [[143, 100, 111], [154, 102, 112], [161, 105, 111]]},
       {"part": "curved supply hose and its hip coupling", "band": [[131, 142, 151], [136, 152, 159], [147, 156, 164], [158, 158, 164]]},
       {"part": "wand regulator and trigger latch", "band": [[174, 142, 148], [189, 144, 151]]},
@@ -41,6 +42,7 @@
     ],
     [
       {"part": "rigid hazard collar stripes", "band": [[217, 180, 188], [226, 189, 198], [240, 196, 205], [255, 196, 206], [269, 190, 198]]},
+      {"part": "preserve mirrored helmet against equipment changes", "keep": [210, 113, 289, 197]},
       {"part": "fuel tank valve and retaining strap", "band": [[185, 186, 196], [199, 190, 201], [213, 185, 195]]},
       {"part": "curved supply hose and its hip coupling", "band": [[198, 240, 249], [208, 246, 255], [224, 249, 256], [239, 249, 256]]},
       {"part": "wand regulator and trigger latch", "band": [[263, 215, 222], [277, 208, 215]]},
@@ -57,6 +59,7 @@
   "p70_fire": [
     [
       {"part": "rigid hazard collar stripes", "band": [[222, 194, 201], [231, 203, 211], [245, 207, 216], [260, 204, 214], [278, 190, 199]]},
+      {"part": "preserve mirrored helmet against equipment changes", "keep": [212, 128, 288, 208]},
       {"part": "fuel tank valve and retaining strap", "band": [[195, 176, 188], [208, 179, 192], [218, 175, 185]]},
       {"part": "curved supply hose and its hip coupling", "band": [[180, 220, 228], [185, 231, 239], [196, 237, 245], [212, 240, 247]]},
       {"part": "wand regulator and trigger latch", "band": [[237, 222, 229], [256, 224, 232]]},

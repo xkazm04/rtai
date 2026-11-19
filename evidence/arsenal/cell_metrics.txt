@@ -189,7 +189,7 @@ flamethrower p55 rivet_eq_flamethrower_diag 3 NW 105.39 119,93,72 -23.64 3.62 0.
 flamethrower p55 rivet_eq_flamethrower_left 0 SW 140.52 124,91,69 1.82 5.06 0.4048 0.6369 29.05 18.33 1.2 - SE 0.0 -1.44 0.0 -
 flamethrower p55 rivet_eq_flamethrower_left 1 W 138.01 113,86,69 0.0 0.0 0.3939 0.4909 29.73 17.62 -1.53 - E 0.0 -1.53 0.0 -
 flamethrower p55 rivet_eq_flamethrower_left 2 NW 139.68 122,89,67 1.21 4.74 0.4072 0.5868 30.4 17.48 1.8 - NE 0.0 1.5 0.0 -
-flamethrower p55 rivet_eq_flamethrower_left_fire 0 W-fire 117.94 121,88,64 -14.55 5.48 0.4326 1.6879 42.89 31.31 8.15 HR E-fire 0.0 0.0 1.89 -
+flamethrower p55 rivet_eq_flamethrower_left_fire 0 W-fire 117.94 121,90,68 -14.55 4.25 0.4326 1.6879 42.78 31.24 8.15 HR E-fire 0.0 0.0 0.0 -
 flamethrower p70 rivet_eq_flamethrower 0 S 133.15 136,104,81 -0.61 2.94 0.5488 0.9878 29.61 18.33 7.8 R None None None None None
 flamethrower p70 rivet_eq_flamethrower 1 SE 133.96 138,105,82 0.0 2.58 0.5394 0.9333 29.69 18.79 5.95 R None None None None None
 flamethrower p70 rivet_eq_flamethrower 2 E 133.96 141,109,82 0.0 0.0 0.5091 0.6727 30.76 18.73 0.0 - None None None None None
@@ -203,9 +203,9 @@ flamethrower p70 rivet_eq_flamethrower_diag 1 NE 104.73 126,92,67 -21.82 6.72 0.
 flamethrower p70 rivet_eq_flamethrower_diag 2 SW 126.66 130,93,69 -5.45 6.46 0.4038 1.1923 39.73 29.18 -20.68 HR None None None None None
 flamethrower p70 rivet_eq_flamethrower_diag 3 NW 104.73 125,90,68 -21.82 7.74 0.4651 1.4651 38.6 25.81 -8.64 HR None None None None None
 flamethrower p70 rivet_eq_flamethrower_left 0 SW 133.96 138,105,82 0.0 2.58 0.5394 0.9333 29.69 18.8 5.95 R SE 0.0 0.0 0.0 -
-flamethrower p70 rivet_eq_flamethrower_left 1 W 133.96 141,109,82 0.0 0.0 0.503 0.6727 30.72 18.69 -1.2 - E 0.0 -1.2 0.0 -
+flamethrower p70 rivet_eq_flamethrower_left 1 W 133.96 141,109,82 0.0 0.0 0.503 0.6727 30.63 18.64 -1.2 - E 0.0 -1.2 0.0 -
 flamethrower p70 rivet_eq_flamethrower_left 2 NW 136.4 126,97,77 1.82 6.6 0.4762 0.6429 31.1 18.68 -6.46 R NE 0.0 -1.22 0.0 -
-flamethrower p70 rivet_eq_flamethrower_left_fire 0 W-fire 120.97 125,94,73 -9.7 6.57 0.557 2.1275 42.84 32.71 9.41 HR E-fire 0.0 0.0 0.0 -
+flamethrower p70 rivet_eq_flamethrower_left_fire 0 W-fire 120.97 125,94,73 -9.7 6.57 0.557 2.1275 42.61 32.58 9.41 HR E-fire 0.0 0.0 0.0 -
 gatling p55 rivet_eq_gatling 0 S 138.01 145,111,85 -1.2 9.84 0.4303 0.7818 29.67 18.5 4.14 T None None None None None
 gatling p55 rivet_eq_gatling 1 SE 139.68 128,96,73 0.0 3.66 0.4192 0.7964 28.41 18.16 1.45 - None None None None None
 gatling p55 rivet_eq_gatling 2 E 139.68 121,89,71 0.0 0.0 0.4132 0.7365 28.45 18.11 0.0 - None None None None None

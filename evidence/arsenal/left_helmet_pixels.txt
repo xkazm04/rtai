@@ -1,0 +1,75 @@
+weapon pitch pose source_helmet_xyxy changed collar_only other
+gloria p55 SW 86,4,142,70 219 219 0
+gloria p55 W 86,3,139,67 141 141 0
+gloria p55 NW 85,4,140,67 123 123 0
+gloria p55 W-fire 89,12,143,68 150 150 0
+gloria p55 W-fire-noflash 89,12,143,68 150 150 0
+gloria p70 SW 121,46,199,128 301 301 0
+gloria p70 W 124,49,201,133 387 387 0
+gloria p70 NW 123,49,198,131 274 274 0
+gloria p70 W-fire 132,67,206,148 237 237 0
+gloria p70 W-fire-noflash 132,67,206,148 237 237 0
+rocket_launcher p55 SW 57,2,115,71 137 137 0
+rocket_launcher p55 W 55,3,113,67 160 160 0
+rocket_launcher p55 NW 56,3,113,66 149 149 0
+rocket_launcher p55 W-fire 60,36,107,84 40 40 0
+rocket_launcher p55 W-fire-noflash 60,36,107,84 40 40 0
+rocket_launcher p70 SW 92,2,170,90 379 379 0
+rocket_launcher p70 W 93,3,170,92 456 456 0
+rocket_launcher p70 NW 91,3,169,90 428 428 0
+rocket_launcher p70 W-fire 98,29,170,105 97 97 0
+rocket_launcher p70 W-fire-noflash 98,29,170,105 97 97 0
+mini_nuke p55 SW 98,9,156,76 126 126 0
+mini_nuke p55 W 102,6,155,71 117 117 0
+mini_nuke p55 NW 100,8,158,73 140 140 0
+mini_nuke p55 W-fire 102,2,155,62 45 45 0
+mini_nuke p55 W-fire-noflash 102,2,155,62 45 45 0
+mini_nuke p70 SW 93,36,180,129 136 136 0
+mini_nuke p70 W 95,40,181,130 331 331 0
+mini_nuke p70 NW 95,39,181,131 175 175 0
+mini_nuke p70 W-fire 81,33,178,126 80 80 0
+mini_nuke p70 W-fire-noflash 81,33,178,126 80 80 0
+plasma_rifle p55 SW 105,5,164,73 262 262 0
+plasma_rifle p55 W 105,3,161,68 187 187 0
+plasma_rifle p55 NW 105,7,162,73 200 200 0
+plasma_rifle p55 W-fire 107,17,159,76 139 139 0
+plasma_rifle p55 W-fire-noflash 107,17,159,76 139 139 0
+plasma_rifle p70 SW 128,57,218,147 289 289 0
+plasma_rifle p70 W 127,55,216,148 439 439 0
+plasma_rifle p70 NW 130,55,220,146 324 324 0
+plasma_rifle p70 W-fire 123,68,209,153 189 189 0
+plasma_rifle p70 W-fire-noflash 123,68,209,153 189 189 0
+gatling p55 SW 105,2,165,71 137 137 0
+gatling p55 W 104,2,162,69 144 144 0
+gatling p55 NW 108,4,166,69 138 138 0
+gatling p55 W-fire 109,20,162,79 89 89 0
+gatling p55 W-fire-noflash 109,20,162,79 89 89 0
+gatling p70 SW 111,20,191,107 239 239 0
+gatling p70 W 111,18,190,104 254 254 0
+gatling p70 NW 108,17,191,102 188 188 0
+gatling p70 W-fire 114,26,191,108 242 242 0
+gatling p70 W-fire-noflash 114,26,191,108 242 242 0
+flamethrower p55 SW 156,44,212,113 279 279 0
+flamethrower p55 W 154,47,212,114 131 131 0
+flamethrower p55 NW 153,45,214,111 55 55 0
+flamethrower p55 W-fire 158,71,211,131 193 193 0
+flamethrower p70 SW 217,113,294,202 280 280 0
+flamethrower p70 W 210,113,289,197 224 224 0
+flamethrower p70 NW 207,110,285,191 60 60 0
+flamethrower p70 W-fire 212,128,288,208 315 315 0
+
+Native RGBA pixels. Boxes are in unmirrored, full source-cell coordinates; right and bottom are exclusive.
+The box includes the curved collar at its lower corners. Collar-only means RGBA equals the collar-only reconstruction.
+Source cells: SW = 1 (SE), W = 2 (E), NW = 3 (NE), W fire = 5 (E fire). Flamethrower has no dark fire twin.
+rocket_launcher p70 W visor window (150, 49, 171, 72), 32 bright yellow source pixels. RGBA differences from mirrored E: bfb5080c7 = 0, 6d = 0.
+gloria p70 W visor window (180, 90, 202, 115), 31 bright yellow source pixels. RGBA differences from mirrored E: d798a20b8 = 0, 6d = 0.
+rocket_launcher p70 NW bfb5080c7: rear bell centre (122,116) to nose (209,68) in NE source coordinates, 28.9 degrees above horizontal. Both 5x5 endpoint patches and the complete alpha silhouette match.
+rocket_launcher p70 NW 6d: rear bell centre (122,116) to nose (209,68) in NE source coordinates, 28.9 degrees above horizontal. Both 5x5 endpoint patches and the complete alpha silhouette match.
+gloria p70 W RGBA differences inside the receiver, rail and rack polygon: 594 at d798a20b8, 20 after 6d.
+gloria p70 NW RGBA differences inside the receiver, rail and rack polygon: 601 at d798a20b8, 38 after 6d.
+gloria matching-facing max absolute differences: height 0%, helmet ratio 1.74%, CIE76 0.
+rocket_launcher matching-facing max absolute differences: height 0%, helmet ratio 2.95%, CIE76 0.
+mini_nuke matching-facing max absolute differences: height 0%, helmet ratio 3.21%, CIE76 0.
+plasma_rifle matching-facing max absolute differences: height 0%, helmet ratio 2.19%, CIE76 0.
+gatling matching-facing max absolute differences: height 0%, helmet ratio 1.53%, CIE76 0.
+flamethrower matching-facing max absolute differences: height 0%, helmet ratio 1.53%, CIE76 0.
