@@ -85,6 +85,8 @@ FIRE_PINNED = {("p70", "rivet_eq_assault_rifle", 5): [290, 102],
                ("p55", "rivet_eq_assault_rifle", 5): [202, 79],
                ("p55", "rivet_eq_assault_rifle", 6): [103, 125]}
 LEFT_PINNED = {
+    ("p70", "rivet_eq_mini_nuke_left_fire", 0): [34, 110],
+    ("p55", "rivet_eq_mini_nuke_left_fire", 0): [43, 58],
     ("p70", "rivet_eq_rocket_launcher_left_fire", 0): [43, 72],
     ("p55", "rivet_eq_rocket_launcher_left_fire", 0): [23, 64],
     ("p70", "rivet_eq_gloria_left_fire", 0): [31, 97],
@@ -127,12 +129,12 @@ LEFT_PINNED = {
     ("p55", "rivet_eq_rocket_launcher_left", 0): [29, 62],
     ("p55", "rivet_eq_rocket_launcher_left", 1): [16, 47],
     ("p55", "rivet_eq_rocket_launcher_left", 2): [15, 44],
-    ("p70", "rivet_eq_mini_nuke_left", 2): [18, 53],
-    ("p70", "rivet_eq_mini_nuke_left", 1): [8, 65],
-    ("p70", "rivet_eq_mini_nuke_left", 0): [22, 73],
-    ("p55", "rivet_eq_mini_nuke_left", 2): [16, 53],
-    ("p55", "rivet_eq_mini_nuke_left", 1): [6, 60],
-    ("p55", "rivet_eq_mini_nuke_left", 0): [23, 66],
+    ("p70", "rivet_eq_mini_nuke_left", 2): [46, 78],
+    ("p70", "rivet_eq_mini_nuke_left", 1): [37, 95],
+    ("p70", "rivet_eq_mini_nuke_left", 0): [41, 102],
+    ("p55", "rivet_eq_mini_nuke_left", 2): [44, 54],
+    ("p55", "rivet_eq_mini_nuke_left", 1): [46, 55],
+    ("p55", "rivet_eq_mini_nuke_left", 0): [54, 68],
     ("p55", "rivet_eq_homing_shard_left", 2): [43, 78],
 }
 # n17 rivet-strike: a gun's drawn diagonal fire strip (RivetGunDiag, x1.5 cells): its gun's light

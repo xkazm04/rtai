@@ -1,0 +1,66 @@
+{
+  "p55": [
+    [
+      {"part": "rigid hazard collar stripes", "band": [[107, 64, 69], [113, 71, 76], [121, 75, 80], [130, 76, 81], [141, 73, 79], [148, 67, 73]]},
+      {"part": "asymmetric warning plate on the barrel housing", "band": [[160, 102, 108], [166, 100, 106], [172, 99, 105]]},
+      {"part": "carry bracket hinge above the shoulder cradle", "band": [[121, 88, 92], [126, 86, 89]]},
+      {"part": "trigger claw and hip hose coupling", "band": [[94, 101, 109], [101, 105, 113], [107, 105, 112]]},
+      {"part": "launcher drum and visible barrel", "gun_mask": [[90, 101], [114, 89], [130, 82], [151, 79], [161, 84], [176, 86], [179, 103], [169, 120], [149, 131], [118, 129], [99, 120]]}
+    ],
+    [
+      {"part": "rigid hazard collar stripes", "band": [[106, 58, 65], [113, 65, 72], [125, 70, 77], [136, 71, 77], [144, 68, 74]]},
+      {"part": "asymmetric warning plate on the barrel housing", "band": [[176, 86, 91], [182, 83, 89], [185, 81, 86]]},
+      {"part": "carry bracket hinge above the shoulder cradle", "band": [[146, 73, 78], [150, 70, 74]]},
+      {"part": "trigger claw and hip hose coupling", "band": [[115, 103, 109], [122, 104, 111], [128, 103, 108]]},
+      {"part": "launcher drum and visible barrel", "gun_mask": [[120, 92], [140, 80], [146, 65], [165, 59], [182, 68], [190, 76], [190, 94], [172, 110], [141, 122], [125, 111]]}
+    ],
+    [
+      {"part": "rigid hazard collar stripes", "band": [[103, 61, 67], [111, 67, 73], [123, 72, 78], [135, 72, 78], [143, 67, 74]]},
+      {"part": "asymmetric warning plate on the barrel housing", "band": [[179, 82, 88], [184, 80, 86], [187, 78, 83]]},
+      {"part": "carry bracket hinge above the shoulder cradle", "band": [[143, 75, 80], [147, 71, 76]]},
+      {"part": "trigger claw and hip hose coupling", "band": [[102, 100, 107], [106, 109, 115], [114, 112, 118]]},
+      {"part": "launcher drum and visible barrel", "gun_mask": [[130, 94], [143, 80], [148, 67], [166, 61], [183, 66], [192, 71], [191, 91], [170, 113], [147, 123], [133, 112]]}
+    ]
+  ],
+  "p55_fire": [
+    [
+      {"part": "rigid hazard collar stripes", "band": [[114, 54, 60], [119, 58, 63], [124, 60, 65]]},
+      {"part": "asymmetric warning plate on the barrel housing", "band": [[172, 79, 86], [179, 79, 86], [185, 79, 86]]},
+      {"part": "carry bracket hinge above the shoulder cradle", "band": [[135, 60, 65], [140, 57, 62]]},
+      {"part": "trigger claw and hip hose coupling", "band": [[84, 83, 90], [92, 91, 98], [102, 93, 100]]},
+      {"part": "launcher drum and visible barrel", "gun_mask": [[104, 69], [127, 60], [134, 51], [167, 50], [179, 65], [197, 70], [198, 92], [178, 103], [141, 109], [107, 90]]}
+    ]
+  ],
+  "p70": [
+    [
+      {"part": "rigid hazard collar stripes", "band": [[116, 122, 128], [124, 127, 134], [136, 130, 138], [146, 130, 138], [157, 126, 134], [168, 118, 125]]},
+      {"part": "asymmetric warning plate on the barrel housing", "band": [[190, 159, 167], [197, 156, 164], [205, 153, 160]]},
+      {"part": "carry bracket hinge above the shoulder cradle", "band": [[143, 146, 152], [149, 141, 147]]},
+      {"part": "trigger claw and hip hose coupling", "band": [[104, 153, 162], [113, 158, 167], [125, 159, 168]]},
+      {"part": "launcher drum and visible barrel", "gun_mask": [[116, 150], [141, 139], [161, 127], [178, 126], [190, 141], [210, 144], [214, 173], [191, 184], [164, 196], [133, 190], [114, 172]]}
+    ],
+    [
+      {"part": "rigid hazard collar stripes", "band": [[99, 111, 119], [107, 119, 127], [118, 125, 134], [131, 129, 138], [143, 129, 138], [156, 125, 134], [165, 116, 125]]},
+      {"part": "asymmetric warning plate on the barrel housing", "band": [[206, 143, 151], [212, 139, 147], [216, 135, 142]]},
+      {"part": "carry bracket hinge above the shoulder cradle", "band": [[159, 139, 145], [163, 133, 140]]},
+      {"part": "trigger claw and hip hose coupling", "band": [[109, 159, 169], [121, 167, 178], [133, 169, 179]]},
+      {"part": "launcher drum and visible barrel", "gun_mask": [[128, 150], [151, 135], [161, 122], [188, 115], [199, 120], [212, 115], [221, 128], [222, 149], [204, 170], [171, 186], [146, 184], [123, 169]]}
+    ],
+    [
+      {"part": "rigid hazard collar stripes", "band": [[94, 115, 123], [103, 123, 130], [115, 130, 138], [129, 132, 141], [142, 131, 140], [154, 124, 132]]},
+      {"part": "asymmetric warning plate on the barrel housing", "band": [[195, 115, 120], [200, 109, 116], [203, 106, 112]]},
+      {"part": "carry bracket hinge above the shoulder cradle", "band": [[162, 132, 137], [167, 122, 129]]},
+      {"part": "trigger claw and hip hose coupling", "band": [[104, 158, 170], [113, 172, 182], [127, 182, 190], [137, 184, 191]]},
+      {"part": "launcher drum and visible barrel", "gun_mask": [[141, 152], [153, 133], [169, 105], [184, 94], [199, 99], [208, 115], [206, 142], [191, 169], [164, 187], [141, 182]]}
+    ]
+  ],
+  "p70_fire": [
+    [
+      {"part": "rigid hazard collar stripes", "band": [[103, 116, 122], [114, 123, 131], [125, 127, 135], [135, 126, 131]]},
+      {"part": "asymmetric warning plate on the barrel housing", "band": [[200, 165, 175], [209, 166, 176], [216, 165, 175]]},
+      {"part": "carry bracket hinge above the shoulder cradle", "band": [[143, 133, 140], [148, 127, 132]]},
+      {"part": "trigger claw and hip hose coupling", "band": [[93, 144, 152], [106, 154, 164], [116, 154, 162]]},
+      {"part": "launcher drum and visible barrel", "gun_mask": [[114, 135], [135, 125], [148, 114], [191, 115], [205, 138], [225, 146], [228, 173], [214, 188], [174, 196], [138, 180], [114, 160]]}
+    ]
+  ]
+}

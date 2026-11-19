@@ -160,6 +160,22 @@
     "sheet": "rivet_eq_mini_nuke_55.png",
     "fig_h": 165
    },
+   "rivet_eq_mini_nuke_left": {
+    "mirror_from": "rivet_eq_mini_nuke.png",
+    "regions": "left_regions/mini_nuke.json"
+   },
+   "rivet_eq_mini_nuke_left_fire": {
+    "mirror_from": "rivet_eq_mini_nuke.png",
+    "regions": "left_regions/mini_nuke.json",
+    "pose": "_fire",
+    "source_cells": [5]
+   },
+   "rivet_eq_mini_nuke_left_fire_noflash": {
+    "mirror_from": "rivet_eq_mini_nuke_noflash.png",
+    "regions": "left_regions/mini_nuke.json",
+    "pose": "_fire",
+    "source_cells": [5]
+   },
    "rivet_eq_molotov": {
     "counts": "5,3",
     "sheet": "rivet_eq_molotov_55.png",
@@ -338,12 +354,6 @@
     "counts": "4",
     "fig_h": 165,
     "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/mini_nuke_p55_diag_key.png"
-   },
-   "rivet_eq_mini_nuke_left": {
-    "counts": "3",
-    "fig_h": 165,
-    "shell_fit": ["28,66 66,56 92,71 88,106 49,112 28,99", "0,66 38,57 78,64 74,103 22,108 0,99", "16,56 36,47 67,56 88,77 75,102 31,91"],
-    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/mini_nuke_p55_left_key.png"
    }
   },
   "p70": {
@@ -505,6 +515,22 @@
     "counts": "5,3",
     "sheet": "rivet_eq_mini_nuke_70_v2.png",
     "fig_h": 165
+   },
+   "rivet_eq_mini_nuke_left": {
+    "mirror_from": "rivet_eq_mini_nuke.png",
+    "regions": "left_regions/mini_nuke.json"
+   },
+   "rivet_eq_mini_nuke_left_fire": {
+    "mirror_from": "rivet_eq_mini_nuke.png",
+    "regions": "left_regions/mini_nuke.json",
+    "pose": "_fire",
+    "source_cells": [5]
+   },
+   "rivet_eq_mini_nuke_left_fire_noflash": {
+    "mirror_from": "rivet_eq_mini_nuke_noflash.png",
+    "regions": "left_regions/mini_nuke.json",
+    "pose": "_fire",
+    "source_cells": [5]
    },
    "rivet_eq_molotov": {
     "counts": "5,3",
@@ -683,12 +709,6 @@
     "counts": "4",
     "fig_h": 165,
     "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/mini_nuke_p70_diag_key.png"
-   },
-   "rivet_eq_mini_nuke_left": {
-    "counts": "3",
-    "fig_h": 165,
-    "shell_fit": ["21,99 96,86 121,109 107,137 30,154 20,142", "0,94 33,86 107,91 122,116 92,136 5,141", "11,73 30,63 80,84 99,111 81,122 17,103"],
-    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/mini_nuke_p70_left_key.png"
    }
   }
  }

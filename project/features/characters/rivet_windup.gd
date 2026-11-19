@@ -22,7 +22,7 @@ const LEFT_STRIKE_FILE: String = "_left_strike.png"
 const CELLS: int = 2
 const LEFT_CELLS: int = 1
 const LEFT_LONG_GUNS: Array[StringName] = [
-	&"plasma_rifle", &"gatling", &"flamethrower", &"gloria", &"rocket_launcher"
+	&"plasma_rifle", &"gatling", &"flamethrower", &"gloria", &"rocket_launcher", &"mini_nuke"
 ]
 const SIDE: int = 0
 const CAM: int = 1
