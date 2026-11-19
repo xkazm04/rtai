@@ -127,3 +127,16 @@ func test_one_float_inside_either_face_is_solid() -> void:
 	for normal: Vector2 in [Vector2.UP, Vector2.LEFT]:
 		assert_true(probe.clear_at(normal * 0.75, 0.5))
 		assert_false(probe.clear_at(normal * (0.75 - step_in), 0.5))
+
+
+func test_corner_is_clear_at_the_rounding_limit_and_solid_beyond_it() -> void:
+	probe.boxes.clear()
+	probe.boxes[Rect2(0.125, -0.75, 1, 1)] = "cover_low"
+	# From the corner to the centre is a 3:4:5 triangle of length 0.625 m.
+	var center: Vector2 = Vector2(1.5, 0.75)
+	var half_step: float = pow(2.0, -25)
+	# The projected half-ULPs of the centre contribute (2 * 3/5 + 4/5) steps,
+	# and rounding the radius contributes one more.
+	var limit: float = 0.625 + 3.0 * half_step
+	assert_true(probe.clear_at(center, limit))
+	assert_false(probe.clear_at(center, limit + half_step))
