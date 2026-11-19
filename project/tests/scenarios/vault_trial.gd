@@ -26,6 +26,33 @@ static func sample(stage: ArenaStage, direction: Vector2, press: bool) -> TickIn
 	return TickInput.new(bits, roundi(axes.x), roundi(axes.y))
 
 
+## After the whole stage step, the only legal overlap is the low target of an airborne vault.
+static func forbidden_contact(stage: ArenaStage) -> String:
+	var body: Fighter = stage.arena.rivet
+	var vault: PlayerVault = stage.pilot.motion.vault
+	if vault.airborne():
+		var mask: int = vault.probe.contacts(body.pos, body.radius_m, vault.hit)
+		if mask == VaultProbe.Contact.TARGET and vault.hit.height <= vault.probe.max_height:
+			return ""
+	elif vault.probe.clear_at(body.pos, body.radius_m):
+		return ""
+	var touched: PackedStringArray = []
+	for box: Rect2 in vault.probe.boxes:
+		if VaultProbe._overlaps(body.pos, body.radius_m, box):
+			@warning_ignore("return_value_discarded")
+			touched.append("station %s %s" % [vault.probe.boxes[box], box])
+	if stage.cells != null:
+		var r: float = body.radius_m
+		for y: int in range(floori(body.pos.y - r), floori(body.pos.y + r) + 1):
+			for x: int in range(floori(body.pos.x - r), floori(body.pos.x + r) + 1):
+				if stage.cells.solid(x, y) and VaultProbe._overlaps(body.pos, r, Rect2(x, y, 1, 1)):
+					var prop: VaultCity.Prop = vault.probe.city.owner(Vector2i(x, y))
+					var kind: String = prop.kind if prop != null else str(stage.cells.code_at(x, y))
+					@warning_ignore("return_value_discarded")
+					touched.append("city (%d,%d) %s" % [x, y, kind])
+	return "overlap at %s with %s" % [body.pos, touched]
+
+
 static func tackle() -> Vector3:
 	var stage: ArenaStage = stage_for(false)
 	var body: Fighter = stage.arena.rivet

@@ -167,13 +167,11 @@ func _attempt(stage: ArenaStage, dir: Vector2, press: int) -> String:
 			attempts * 52 + i,
 			VaultTrial.sample(stage, dir if i <= press else Vector2.ZERO, i == press)
 		)
+		var contact: String = VaultTrial.forbidden_contact(stage)
+		if contact != "":
+			return "tick %d phase %d: %s" % [i, motion.phase, contact]
 		if vault.airborne():
-			var mask: int = vault.probe.contacts(body.pos, body.radius_m, vault.hit)
-			if mask != VaultProbe.Contact.TARGET or vault.hit.height > vault.probe.max_height:
-				return "airborne contact with a foreign or high solid at %s" % body.pos
 			airborne_ticks += 1
-		elif not vault.probe.clear_at(body.pos, body.radius_m):
-			return "overlap tick %d pos %s phase %d" % [i, body.pos, motion.phase]
 		if i == press:
 			if vault.hit == null:
 				return "press did not reach the probe"
