@@ -1,5 +1,4 @@
 extends Node
-## Measure the shipping heat-3 people writer and viewport against the old blob on a frozen city.
 ## node tools/dev/run.mjs crowd_contact_cost --windowed --out=<json> --result=<json>
 
 const KNOWN_FLAGS: PackedStringArray = ["--out"]
@@ -30,6 +29,7 @@ func _ready() -> void:
 	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
 	get_window().size = Vector2i(1920, 1080)
 	ViewMode.select("tilt70")
+	ViewMode.shared().crowd_contact_hip_scale = 1.0  # Capture the ring arm at bake time.
 	_start_count = _other_godots()
 	if _start_count < 0:
 		printerr("crowd_contact_cost: process census failed or missing --fixed-fps 60")

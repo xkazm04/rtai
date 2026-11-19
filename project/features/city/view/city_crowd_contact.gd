@@ -1,19 +1,24 @@
 class_name CityCrowdContact
 extends RefCounted
-## Shipped contact views use the rig's ground print for the baked crowd. Mesh vertices are in
-## standing hip heights. Each writer only scales and translates that mesh to the person's feet.
+## With nonzero contact hips, the baked crowd uses the rig's ground print in contact views.
+## At zero the original textured quad and the writers' one-blob-per-person path stay paired.
 
 
 static func setup(crowd: CrowdLayers, sim: CitySimBackend) -> void:
 	var view: ViewMode = ViewMode.shared()
 	var hips: Vector2 = Vector2.ZERO
-	if view.cast_k > 0.0 and view.cast_k < RigCastShadows.CONTACT_BELOW_K:
+	if (
+		view.crowd_contact_hip_scale > 0.0
+		and view.cast_k > 0.0
+		and view.cast_k < RigCastShadows.CONTACT_BELOW_K
+	):
 		var shadow: MultiMeshInstance2D = crowd.nodes[SimConst.RL_PED_SHADOWS]
 		shadow.multimesh.mesh = mesh(view.cast_dir())
 		shadow.texture = null
 		# The rings carry the rig's own ink. Keep the city's item print from tinting it twice.
 		shadow.material = CanvasItemMaterial.new()
 		hips = Vector2(standing_hip(BodyPlan.Kind.PED), standing_hip(BodyPlan.Kind.COP))
+		hips *= view.crowd_contact_hip_scale
 		_ensure_rig_shadows(shadow.get_parent())
 	sim.set_render(crowd.rids(), CrowdAtlas.clip_table(), hips)
 

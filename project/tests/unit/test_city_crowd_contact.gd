@@ -66,6 +66,7 @@ func test_only_baked_living_slots_get_their_own_contact() -> void:
 	sim.strike(2, 1.0, 0.0, true)
 	var saved: ViewMode = ViewMode.shared()
 	ViewMode.select("tilt70")
+	ViewMode.shared().crowd_contact_hip_scale = 0.5
 	RigCastShadows.attach(layer)
 	CityCrowdContact.setup(crowd, sim)
 	assert_eq(layer.get_child_count(), SimConst.RL_COUNT + 1, "reuse the existing rig pass")
@@ -74,7 +75,8 @@ func test_only_baked_living_slots_get_their_own_contact() -> void:
 	assert_eq(sim.get_render_counts()[SimConst.RL_PED_SHADOWS], 1)
 	var row := PackedFloat32Array(sim._render._layers[SimConst.RL_PED_SHADOWS])
 	assert_eq(
-		Vector2(row[0], row[5]), Vector2.ONE * CityCrowdContact.standing_hip(BodyPlan.Kind.PED)
+		Vector2(row[0], row[5]),
+		Vector2.ONE * 0.5 * CityCrowdContact.standing_hip(BodyPlan.Kind.PED)
 	)
 	assert_eq(Vector2(row[3], row[7]), Vector2(1, 2) * SimConst.PX_PER_M)
 	sim.set_render(crowd.rids(), CrowdAtlas.clip_table())
@@ -87,6 +89,7 @@ func test_contact_view_installs_a_rig_pass_only_between_the_cast_thresholds() ->
 	for k: float in [0.0, RigCastShadows.CONTACT_BELOW_K * 0.5, RigCastShadows.CONTACT_BELOW_K]:
 		var view := ViewMode.new()
 		view.cast_k = k
+		view.crowd_contact_hip_scale = 1.0
 		ViewMode._shared = view
 		var layer: Node2D = autofree(Node2D.new())
 		var crowd := CrowdLayers.new()
@@ -135,6 +138,9 @@ func test_reference_shadow_buffers_preserve_the_top_print_and_baked_cop_contact(
 	sim._s.mode[slot] = SimConst.M_DOWN
 	sim.write_render(0, 0, 10, 10)
 	assert_eq(sim.get_render_counts()[SimConst.RL_PED_SHADOWS], 0)
+	sim.set_render(crowd.rids(), CrowdAtlas.clip_table(), Vector2.ZERO)
+	sim.write_render(0, 0, 10, 10)
+	_check_print(sim, px + Vector2(2, 3), CitySimRender.S_SHADOW, ink)
 
 
 func _check_print(sim: CitySimRef, pos: Vector2, size_px: float, color: Color) -> void:

@@ -36,6 +36,8 @@ var eye_h_m: float = 0.0
 ## Cast shadows by height (RigCastShadows, KingCarStack, the arena props): a shadow's length per
 ## unit of height, thrown down-right (CAST_DIR, the city's building shadows' direction); 0 = none.
 var cast_k: float = 0.0
+## Baked crowd contacts in standing hip heights. Zero keeps the textured round blob.
+var crowd_contact_hip_scale: float = 0.0
 ## Under a tilt: the standing props drawn over a body behind them (PropOcclusion); false = not.
 var occlude: bool = false
 ## The look-ahead at speed (CameraRig: the in-car lead and its cap) x this; 1 = camera.json.
@@ -63,6 +65,7 @@ static func of(want: String) -> ViewMode:
 	if parser.parse(FileAccess.get_file_as_string(TABLE)) != OK or not parser.data is Dictionary:
 		return v
 	var d: Dictionary = parser.data
+	v.crowd_contact_hip_scale = d["crowd_contact_hip_scale"]
 	var pick: String = want if want != "" else str(d["default"])
 	for row: Dictionary in d["views"]:
 		v.ids.append(str(row["id"]))
