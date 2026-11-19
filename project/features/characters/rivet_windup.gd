@@ -21,7 +21,9 @@ const LEFT_FIRE_FILE: String = "_left_fire.png"
 const LEFT_STRIKE_FILE: String = "_left_strike.png"
 const CELLS: int = 2
 const LEFT_CELLS: int = 1
-const LEFT_LONG_GUNS: Array[StringName] = [&"plasma_rifle", &"gatling", &"flamethrower", &"gloria"]
+const LEFT_LONG_GUNS: Array[StringName] = [
+	&"plasma_rifle", &"gatling", &"flamethrower", &"gloria", &"rocket_launcher"
+]
 const SIDE: int = 0
 const CAM: int = 1
 ## n15: two-handed blades with a drawn left set (it338 strips, it346 wind-ups, it342 strikes):

@@ -798,16 +798,24 @@
       "rivet_eq_rocket_launcher_left": {
         "cells": {
           "0": [
-            18,
-            76
+            29,
+            62
           ],
           "1": [
-            2,
-            46
+            16,
+            47
           ],
           "2": [
-            10,
-            18
+            15,
+            44
+          ]
+        }
+      },
+      "rivet_eq_rocket_launcher_left_fire": {
+        "cells": {
+          "0": [
+            23,
+            64
           ]
         }
       }
@@ -1608,16 +1616,24 @@
       "rivet_eq_rocket_launcher_left": {
         "cells": {
           "0": [
-            20,
-            103
+            33,
+            71
           ],
           "1": [
-            5,
-            72
+            31,
+            69
           ],
           "2": [
-            17,
-            18
+            30,
+            48
+          ]
+        }
+      },
+      "rivet_eq_rocket_launcher_left_fire": {
+        "cells": {
+          "0": [
+            43,
+            72
           ]
         }
       }

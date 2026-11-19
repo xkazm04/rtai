@@ -1,0 +1,66 @@
+{
+  "p55": [
+    [
+      {"part": "exposed rigid collar stripes above the shoulder tube", "band": [[90, 65, 69], [94, 68, 78], [98, 68, 80], [102, 66, 80], [106, 62, 77], [110, 55, 67], [114, 53, 59]]},
+      {"part": "shoulder cradle and offset sight block", "band": [[69, 60, 66], [78, 63, 68], [85, 65, 70]]},
+      {"part": "launcher-side latch and retaining bracket", "band": [[71, 79, 85], [83, 84, 90], [94, 88, 94]]},
+      {"part": "trigger claw and hip return coupling", "band": [[45, 78, 84], [52, 83, 89], [60, 84, 91]]},
+      {"part": "shoulder tube and rocket nose", "gun_mask": [[32, 50], [49, 44], [74, 54], [93, 66], [123, 76], [128, 88], [119, 103], [92, 107], [41, 78]]}
+    ],
+    [
+      {"part": "exposed rigid collar stripes above the shoulder tube", "band": [[55, 53, 62], [59, 55, 65], [63, 58, 67], [67, 61, 68], [71, 63, 69], [75, 64, 69], [79, 65, 69], [81, 65, 68]]},
+      {"part": "shoulder cradle and offset sight block", "band": [[98, 57, 64], [106, 57, 63], [111, 57, 62]]},
+      {"part": "launcher-side latch and retaining bracket", "band": [[87, 81, 86], [102, 79, 84]]},
+      {"part": "trigger claw and hip return coupling", "band": [[67, 98, 104], [79, 95, 102], [86, 94, 99]]},
+      {"part": "shoulder tube and rocket nose", "gun_mask": [[45, 66], [74, 64], [94, 54], [119, 53], [147, 62], [147, 79], [115, 91], [53, 94]]}
+    ],
+    [
+      {"part": "exposed rigid collar stripes above the shoulder tube", "band": [[57, 55, 69], [61, 58, 71], [65, 61, 72], [69, 63, 73], [73, 65, 73], [77, 66, 73], [81, 66, 73], [85, 66, 72], [89, 65, 71], [93, 64, 70], [97, 62, 68], [101, 60, 66], [103, 59, 64]]},
+      {"part": "shoulder cradle and offset sight block", "band": [[109, 51, 58], [117, 47, 54], [123, 47, 52]]},
+      {"part": "launcher-side latch and retaining bracket", "band": [[105, 80, 87], [115, 75, 83], [127, 69, 75]]},
+      {"part": "trigger claw and hip return coupling", "band": [[55, 97, 106], [58, 108, 114], [65, 114, 119]]},
+      {"part": "shoulder tube and rocket nose", "gun_mask": [[64, 70], [93, 62], [107, 50], [140, 47], [151, 54], [149, 69], [119, 93], [81, 104]]}
+    ]
+  ],
+  "p55_fire": [
+    [
+      {"part": "exposed rigid collar stripes above the shoulder tube", "band": [[73, 79, 83], [81, 83, 87], [89, 83, 86], [92, 82, 85]]},
+      {"part": "shoulder cradle and offset sight block", "band": [[99, 78, 84], [112, 78, 83], [117, 78, 82]]},
+      {"part": "launcher-side latch and retaining bracket", "band": [[81, 96, 101], [97, 96, 101]]},
+      {"part": "trigger claw and hip return coupling", "band": [[59, 108, 114], [70, 108, 114]]},
+      {"part": "shoulder tube and rocket nose", "gun_mask": [[48, 78], [65, 78], [88, 81], [108, 74], [133, 78], [150, 87], [149, 99], [117, 109], [55, 102]]}
+    ]
+  ],
+  "p70": [
+    [
+      {"part": "exposed rigid collar stripes above the shoulder tube", "band": [[98, 72, 82], [102, 76, 86], [106, 79, 90], [110, 82, 93], [114, 85, 95], [118, 87, 97], [122, 88, 99], [126, 89, 100], [130, 89, 100], [134, 89, 100], [138, 89, 100], [142, 88, 99], [146, 86, 97], [150, 84, 95], [154, 82, 92], [158, 79, 89], [162, 75, 86], [164, 73, 84]]},
+      {"part": "shoulder cradle and offset sight block", "band": [[153, 92, 100], [164, 92, 100], [170, 92, 98]]},
+      {"part": "launcher-side latch and retaining bracket", "band": [[130, 115, 121], [148, 115, 122]]},
+      {"part": "trigger claw and hip return coupling", "band": [[89, 136, 142], [97, 142, 148], [107, 143, 149]]},
+      {"part": "shoulder tube and rocket nose", "gun_mask": [[82, 91], [117, 95], [144, 85], [175, 85], [177, 95], [210, 98], [211, 114], [185, 128], [113, 131], [87, 119]]}
+    ],
+    [
+      {"part": "exposed rigid collar stripes above the shoulder tube", "band": [[93, 68, 85], [97, 71, 88], [101, 75, 91], [105, 79, 93], [109, 82, 95], [113, 85, 97], [117, 88, 98], [121, 89, 99], [125, 91, 100], [129, 91, 100], [133, 91, 100], [137, 91, 100], [141, 90, 99], [145, 89, 98], [149, 87, 96], [153, 84, 95], [157, 81, 91], [158, 80, 91]]},
+      {"part": "shoulder cradle and offset sight block", "band": [[160, 84, 93], [169, 84, 91], [176, 83, 90]]},
+      {"part": "launcher-side latch and retaining bracket", "band": [[142, 113, 119], [163, 108, 114]]},
+      {"part": "trigger claw and hip return coupling", "band": [[97, 140, 146], [104, 146, 152], [116, 148, 153]]},
+      {"part": "shoulder tube and rocket nose", "gun_mask": [[92, 93], [131, 94], [155, 82], [177, 81], [205, 90], [216, 97], [216, 115], [180, 127], [117, 134], [97, 130]]}
+    ],
+    [
+      {"part": "exposed rigid collar stripes above the shoulder tube", "band": [[93, 67, 84], [97, 70, 87], [101, 75, 91], [105, 78, 93], [109, 82, 96], [113, 84, 98], [117, 86, 99], [121, 88, 100], [125, 89, 100], [129, 90, 101], [133, 90, 100], [137, 89, 99], [141, 88, 98], [145, 87, 96], [149, 85, 94], [153, 83, 92], [157, 80, 89], [159, 78, 87]]},
+      {"part": "shoulder cradle and offset sight block", "band": [[166, 76, 84], [175, 71, 80], [180, 68, 76]]},
+      {"part": "launcher-side latch and retaining bracket", "band": [[165, 104, 111], [178, 95, 102]]},
+      {"part": "trigger claw and hip return coupling", "band": [[98, 130, 137], [106, 134, 142], [117, 135, 144]]},
+      {"part": "shoulder tube and rocket nose", "gun_mask": [[105, 94], [146, 82], [166, 68], [200, 62], [214, 67], [212, 85], [182, 108], [134, 135], [114, 133]]}
+    ]
+  ],
+  "p70_fire": [
+    [
+      {"part": "exposed rigid collar stripes above the shoulder tube", "band": [[112, 97, 103], [116, 98, 105], [120, 100, 107], [124, 101, 108], [128, 102, 109], [132, 104, 109], [136, 105, 109], [140, 106, 109], [144, 106, 108], [145, 106, 107]]},
+      {"part": "shoulder cradle and offset sight block", "band": [[149, 104, 111], [158, 104, 111], [165, 104, 109]]},
+      {"part": "launcher-side latch and retaining bracket", "band": [[128, 124, 130], [148, 123, 129]]},
+      {"part": "trigger claw and hip return coupling", "band": [[95, 136, 142], [104, 142, 149], [113, 143, 150]]},
+      {"part": "shoulder tube and rocket nose", "gun_mask": [[85, 104], [113, 105], [146, 97], [167, 98], [169, 105], [191, 105], [192, 133], [152, 145], [95, 137]]}
+    ]
+  ]
+}
