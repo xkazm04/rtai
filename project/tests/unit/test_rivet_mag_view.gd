@@ -59,7 +59,7 @@ func test_unknown_mag_drops_once_at_the_phase_boundary_and_expires() -> void:
 	assert_false(mag._held)
 	mag.feed(rig, -1.0, 109, id)
 	assert_eq(mag.dropped_count(), 1)
-	mag.feed(rig, -1.0, 111, id)
+	mag.feed(rig, -1.0, 110, id)
 	assert_eq(mag.dropped_count(), 0)
 	assert_eq(Log.recent().count(warning) - warnings_before, 1)
 	assert_true(RivetMagView._warned.erase(id))
@@ -82,3 +82,26 @@ func test_real_magazines_skip_the_block_and_tubes_show_only_the_inward_round() -
 		mag.feed(rig, 2.0, 2, tube)
 		assert_false(mag._held)
 		assert_eq(mag.dropped_count(), 0)
+
+
+func test_drop_expires_at_the_inclusive_lifetime() -> void:
+	var mag: TimedMagazine = add_child_autofree(TimedMagazine.new())
+	mag._drop()
+	# A live tick can skip across an exact floating-point timestamp.
+	# Sample the timestamp itself as well as the preceding tick.
+	var lifetime: float = RivetMagView.DROP_LINGER_S + RivetMagView.DROP_FADE_S
+	mag.age = lifetime - SimClock.TICK_DT
+	mag._age()
+	assert_eq(mag.dropped_count(), 1)
+	mag.age = lifetime
+	mag._age()
+	assert_eq(mag.dropped_count(), 0)
+
+
+class TimedMagazine:
+	extends RivetMagView
+
+	var age: float = 0.0
+
+	func _age_s(_index: int) -> float:
+		return age
