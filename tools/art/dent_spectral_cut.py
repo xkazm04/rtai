@@ -2,15 +2,18 @@
 
 cut MASTER CELLS   -> tight {facing}_{pose}.png, for ghost_pack.py
 board PACKED PREFIX HOVER_HEIGHT   -> PREFIX_board.png and PREFIX_32ppm.png
+parts MASTER DEST BOARD   -> scaled top-view PNGs, joint metadata and assembly
 HOVER_HEIGHT is the packed median of the five hover poses at that pitch.
 """
 
 import argparse
+import json
+import math
 from pathlib import Path
 
 import cv2
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageDraw
 
 
 def key(image):
@@ -100,6 +103,84 @@ def board(packed, prefix, hover_height):
     )
 
 
+PART_NAMES = ("head", "torso", "upperarm", "forearm_fist", "forearm_open", "tail_root")
+# Joint locations on the tight raw take 1 cuts in pixels (shoulder disc, elbow
+# disc, proximal forearm socket and knuckle/fingertip at the distal end).
+JOINTS = {
+    "upperarm": ((80, 94), (352, 104)),
+    "forearm_fist": ((29, 106), (351, 106)),
+    "forearm_open": ((28, 126), (458, 129)),
+}
+
+
+def assembly(parts, metadata):
+    frame = Image.new("RGBA", (600, 760))
+
+    def place(name, anchor, target, degrees):
+        im = parts[name]
+        ax, ay = anchor
+        tx, ty = target
+        angle = math.radians(degrees)
+        c, s = math.cos(angle), math.sin(angle)
+        inverse = (c, s, ax-c*tx-s*ty, -s, c, ay+s*tx-c*ty)
+        frame.alpha_composite(im.transform(frame.size, Image.Transform.AFFINE, inverse,
+                                           resample=Image.Resampling.BICUBIC))
+        bx, by = metadata[name]["pivot_b"]
+        return (tx+c*(bx-ax)-s*(by-ay), ty+s*(bx-ax)+c*(by-ay))
+
+    torso = parts["torso"]
+    tx, ty = 300, 300
+    place("tail_root", metadata["tail_root"]["pivot_a"], (tx, ty-28), 180)
+    for side, hand in ((-1, "forearm_fist"), (1, "forearm_open")):
+        shoulder = (tx+side*torso.width*0.345, ty-torso.height*0.09)
+        elbow = place("upperarm", metadata["upperarm"]["pivot_a"], shoulder, 90-side*18)
+        place(hand, metadata[hand]["pivot_a"], elbow, 90+side*12)
+    place("torso", metadata["torso"]["pivot_a"], (tx, ty), 0)
+    place("head", metadata["head"]["pivot_a"], (tx, ty-torso.height*0.30), 0)
+    return frame.crop(frame.getbbox())
+
+
+def parts(master, dest, proof):
+    raw = {PART_NAMES[r*3+c]: im for r, c, im in figures(master, 2, 3)}
+    # The master repeats the waist buckle above the tail. Start at the glass
+    # and flame below that buckle so the torso supplies the single visible belt.
+    tail = raw["tail_root"]
+    tail = tail.crop((0, 71, tail.width, tail.height))
+    raw["tail_root"] = tail.crop(tail.getbbox())
+    with Image.open(dest.parent / "helmet.png") as old:
+        scale = old.height / raw["head"].width
+    dest.mkdir(parents=True, exist_ok=True)
+    metadata = {}
+    textures = {}
+    for name, im in raw.items():
+        w, h = (round(n*scale) for n in im.size)
+        texture = im.resize((w, h), Image.Resampling.LANCZOS)
+        textures[name] = texture
+        texture.save(dest / f"{name}.png")
+        a = b = [w/2, h/2]
+        if name in JOINTS:
+            a, b = ([round(x*w/im.width, 1), round(y*h/im.height, 1)] for x, y in JOINTS[name])
+        elif name == "tail_root":
+            a, b = [w/2, 0], [w/2, h-1]
+        metadata[name] = {"size": [w, h], "sheet": f"n20/dent/masters/{master.name}",
+                          "pivot_a": a, "pivot_b": b}
+        print(f"{name} {w} x {h} pivots {a} {b}")
+    (dest / "parts.json").write_text(json.dumps(metadata, indent=1) + "\n",
+                                     encoding="utf-8", newline="\n")
+    art = assembly(textures, metadata)
+    canvas = Image.new("RGB", (1320, 660), "#3a3a3a")
+    labels = ImageDraw.Draw(canvas)
+    for i, (name, texture) in enumerate(textures.items()):
+        x, y = 147+(i%3)*296, 164+(i//3)*315
+        canvas.paste(texture, (x-texture.width//2, y-texture.height//2), texture)
+        labels.text((x, y+129), name.replace("_", " "), fill="white", anchor="mm", font_size=18)
+    art.thumbnail((380, 552), Image.Resampling.LANCZOS)
+    canvas.paste(art, (1100-art.width//2, 308-art.height//2), art)
+    labels.text((1100, 609), "assembled", fill="white", anchor="mm", font_size=18)
+    proof.parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(proof)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
@@ -110,8 +191,14 @@ if __name__ == "__main__":
     preview.add_argument("packed", type=Path)
     preview.add_argument("prefix", type=Path)
     preview.add_argument("hover_height", type=float)
+    top = commands.add_parser("parts")
+    top.add_argument("master", type=Path)
+    top.add_argument("dest", type=Path)
+    top.add_argument("proof", type=Path)
     args = parser.parse_args()
     if args.command == "cut":
         cut(args.master, args.dest)
-    else:
+    elif args.command == "board":
         board(args.packed, args.prefix, args.hover_height)
+    else:
+        parts(args.master, args.dest, args.proof)

@@ -19,3 +19,14 @@ The masters and tight cells are under `C:/Users/kazda/kiro/gtai-masters/n20/dent
 `dent_sp_act_70` shipped take 1 of 1, zero re-rolls. The twenty belt-up figures share the plate's cracked visor, coloured discs and seatbelt. The jab and the two-hand steering pose read differently in profile. The rear jab points slightly to the right of straight ahead.
 
 The raw profile cock head was smaller than hover. `ghost_pack.py --match=240.4` (k = 1.097716894977169) produced 298 × 251 px cells with a median figure height of 238.5 px. Measured on the **packed textures**, profile hover and cock heads both span **90 px**, at scanlines 42 and 49 from the top of their tight alpha crops, respectively (alpha ≥ 128). The 91 px measurement above is on the flight cell before packing.
+
+## Top parts
+
+Input order for `dent_sp_top` was:
+
+1. `C:/Users/kazda/kiro/gtai-masters/n20/concepts/dent_a.png`
+2. `C:/Users/kazda/kiro/gtai-masters/n6/ghost-forms/gen/r2/out/dent_parts.png`
+
+Shipped **take 1 of 3**. Take 1 repeated the waist buckle on the plume and drew four fingers plus a thumb. Re-roll 1 (take 2) retained both details and turned the glass into regular diamonds. Re-roll 2 (take 3) also retained both details. Take 1 had the clearest irregular glass shards. The cutter starts the tail immediately below the duplicate buckle. The open hand retains its thumb. The torso is deeper than the plate's top-view panel.
+
+All six parts share a scale of 165 / 317. The raw 317 px head width sets the shipped width to the old sideways helmet's 165 px height. Tight dimensions in source reading order are 165 × 183, 270 × 187, 216 × 96, 190 × 101, 242 × 127 and 138 × 196 px. Median part height is 155 px. The assembly uses the same elbow and shoulder pivots recorded in `parts.json`.

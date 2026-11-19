@@ -1,6 +1,90 @@
 {
   "_doc": "Dent's spectral body. Each entry maps a shipped PNG to the raw sheet used to cut it.",
   "masters": {
+    "project/features/characters/art/dent/spectral/forearm_fist.png": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n20/dent/masters/dent_sp_top_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/dent/dent_sp_top.txt",
+      "references": [
+        "masters:n20/concepts/dent_a.png",
+        "masters:n6/ghost-forms/gen/r2/out/dent_parts.png"
+      ],
+      "seed": null,
+      "sha256": "547b24a9eda519513b7f6f63e7cfde83f8b14dec7ad104a5bcfb366cfe97f826",
+      "tool": "codex-image"
+    },
+    "project/features/characters/art/dent/spectral/forearm_open.png": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n20/dent/masters/dent_sp_top_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/dent/dent_sp_top.txt",
+      "references": [
+        "masters:n20/concepts/dent_a.png",
+        "masters:n6/ghost-forms/gen/r2/out/dent_parts.png"
+      ],
+      "seed": null,
+      "sha256": "547b24a9eda519513b7f6f63e7cfde83f8b14dec7ad104a5bcfb366cfe97f826",
+      "tool": "codex-image"
+    },
+    "project/features/characters/art/dent/spectral/head.png": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n20/dent/masters/dent_sp_top_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/dent/dent_sp_top.txt",
+      "references": [
+        "masters:n20/concepts/dent_a.png",
+        "masters:n6/ghost-forms/gen/r2/out/dent_parts.png"
+      ],
+      "seed": null,
+      "sha256": "547b24a9eda519513b7f6f63e7cfde83f8b14dec7ad104a5bcfb366cfe97f826",
+      "tool": "codex-image"
+    },
+    "project/features/characters/art/dent/spectral/tail_root.png": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n20/dent/masters/dent_sp_top_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/dent/dent_sp_top.txt",
+      "references": [
+        "masters:n20/concepts/dent_a.png",
+        "masters:n6/ghost-forms/gen/r2/out/dent_parts.png"
+      ],
+      "seed": null,
+      "sha256": "547b24a9eda519513b7f6f63e7cfde83f8b14dec7ad104a5bcfb366cfe97f826",
+      "tool": "codex-image"
+    },
+    "project/features/characters/art/dent/spectral/torso.png": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n20/dent/masters/dent_sp_top_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/dent/dent_sp_top.txt",
+      "references": [
+        "masters:n20/concepts/dent_a.png",
+        "masters:n6/ghost-forms/gen/r2/out/dent_parts.png"
+      ],
+      "seed": null,
+      "sha256": "547b24a9eda519513b7f6f63e7cfde83f8b14dec7ad104a5bcfb366cfe97f826",
+      "tool": "codex-image"
+    },
+    "project/features/characters/art/dent/spectral/upperarm.png": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n20/dent/masters/dent_sp_top_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/dent/dent_sp_top.txt",
+      "references": [
+        "masters:n20/concepts/dent_a.png",
+        "masters:n6/ghost-forms/gen/r2/out/dent_parts.png"
+      ],
+      "seed": null,
+      "sha256": "547b24a9eda519513b7f6f63e7cfde83f8b14dec7ad104a5bcfb366cfe97f826",
+      "tool": "codex-image"
+    },
     "project/features/souls/art/view/p70/dent_sp_act.png": {
       "accepted": true,
       "date": "2026-11-20",
