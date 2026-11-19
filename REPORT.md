@@ -6,7 +6,7 @@ Final at the 07:30 freeze; HEAD `87d0606ab`.
 Score: the audit matrix (`project/dev/rivet_arsenal/arsenal_audit.gd`, ratchet test `project/tests/unit/test_arsenal_audit.gd`).
 Before `evidence/arsenal/matrix_before.txt`: **51 holes**. After package 6: **10 holes** (`evidence/arsenal/matrix_after_6.txt`). After package 7b: **3 holes** (`evidence/arsenal/matrix_after_7.txt`; the 3 = assault rifle arena rack slot, a Call). Final: **3 holes** (`evidence/arsenal/matrix_after_11.txt`, `.json`), plus **52 informational gaps** (13 weapons x walk + run grid x 2 pitches) reported outside the ratcheted total.
 
-Gate: `node tools/gate/run.mjs --rev=HEAD` on `87d0606ab`: RUNNING at 07:35 (log `build/gate/87d0606ab5c8/evidence.log`); result appended below when it ends. Frames index: `gtai-masters/n19/guns/frames.json` (12 entries).
+Gate: `node tools/gate/run.mjs --rev=HEAD` on `87d0606ab`: started 07:30, **not finished at the 07:40 stop**, so there is no green line to quote (log `build/gate/87d0606ab5c8/evidence.log`, snapshot `Temp/gtai-gate-87d0606ab5c8`). The `--reels` run was not done. Every commit tonight passed the quick gate, unit `--changed` and lint; release compile loaded 740 scripts with 0 failures (package 11). Before merge: re-run `node tools/gate/run.mjs --rev=87d0606ab`. Frames index: `gtai-masters/n19/guns/frames.json` (12 entries).
 
 ## What works
 
