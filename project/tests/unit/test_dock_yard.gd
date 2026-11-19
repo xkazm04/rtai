@@ -67,6 +67,20 @@ func test_yards_stand_stacks_and_keep_their_aisles() -> void:
 	assert_gt(stacks, tiles / 2, "about yard_prop_share x 2 stacks a yard tile")
 
 
+func test_loading_apron_keeps_the_neighbour_tile_untouched() -> void:
+	# The warehouse from the loading-apron shot. Paint it in isolation so a later tile
+	# cannot hide an apron stamp that crossed the boundary.
+	var tile := Vector2i(229, 134)
+	var chunk := Vector2i(14, 8)
+	var build := ChunkBuild.new(chunk.x, chunk.y)
+	var painter := DockPainter.new()
+	assert_eq(painter.yard(_gen, build, KerbDresser.new(), _docks, tile), SimConst.T_PLAZA)
+	var local: Vector2i = tile * 8 - chunk * SimConst.CHUNK_CELLS
+	for y: int in range(5, 8):
+		assert_eq(_cell(build.chunk, local + Vector2i(7, y)), SimConst.C_PROP, "east apron edge")
+		assert_eq(_cell(build.chunk, local + Vector2i(8, y)), SimConst.C_VOID, "next tile")
+
+
 ## Whether slot k of tile t stands a stack (the chunk's prop commands).
 func _stood(ch: CityChunk, t: Vector2i, k: int) -> bool:
 	var at: Vector2 = Vector2(t * 8) + DockPainter.YARD_SLOTS[k]
