@@ -1,4 +1,25 @@
 {
+  "$defs": {
+    "max_shooters": {
+      "maximum": 8,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "squad_mix": {
+      "description": "Squad brain only. Wave and member indices start at zero and their sum cycles through these archetype ids. An absent or empty list fields contractors.",
+      "items": {
+        "enum": [
+          "contractor",
+          "patrol_cop",
+          "riot_cop",
+          "robot_gunner",
+          "robot_thug",
+          "swat"
+        ]
+      },
+      "type": "array"
+    }
+  },
   "$id": "gtai.arena/1",
   "additionalProperties": false,
   "properties": {
@@ -56,6 +77,19 @@
             "pattern": "^[a-z][a-z0-9_]*/(0|[1-9][0-9]*)$"
           },
           "type": "object"
+        },
+        "squad": {
+          "additionalProperties": false,
+          "description": "Overrides for the squad brain on the city block. Omitted fields inherit the pit settings.",
+          "properties": {
+            "max_shooters": {
+              "$ref": "#/$defs/max_shooters"
+            },
+            "squad_mix": {
+              "$ref": "#/$defs/squad_mix"
+            }
+          },
+          "type": "object"
         }
       },
       "required": [
@@ -90,9 +124,7 @@
           "type": "integer"
         },
         "max_shooters": {
-          "maximum": 8,
-          "minimum": 1,
-          "type": "integer"
+          "$ref": "#/$defs/max_shooters"
         },
         "max_wave": {
           "maximum": 24,
@@ -100,18 +132,7 @@
           "type": "integer"
         },
         "squad_mix": {
-          "description": "Squad brain only. Wave and member indices start at zero and their sum cycles through these archetype ids. An absent or empty list fields contractors.",
-          "items": {
-            "enum": [
-              "contractor",
-              "patrol_cop",
-              "riot_cop",
-              "robot_gunner",
-              "robot_thug",
-              "swat"
-            ]
-          },
-          "type": "array"
+          "$ref": "#/$defs/squad_mix"
         },
         "squad_mix_full": {
           "description": "Archetype rotation used by the mixed brain, indexed by wave plus member.",

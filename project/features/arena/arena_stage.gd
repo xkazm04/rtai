@@ -63,9 +63,12 @@ func setup(ctx: WorldContext) -> void:
 		if brain in ["squad", "mixed"]:
 			arena.squad_ai = ArenaSquad.new(arena.guard_map)
 			pit.mixed = brain == "mixed"
-			var mix: Array = plan.pit.get("squad_mix_full" if pit.mixed else "squad_mix", [])
+			var rules: Dictionary = plan.pit
+			if cells != null and not pit.mixed:
+				rules = rules.merged(plan.city_squad, true)
+			var mix: Array = rules.get("squad_mix_full" if pit.mixed else "squad_mix", [])
 			pit.squad_mix.assign(mix)
-			var slots: float = plan.pit.get("max_shooters", arena.squad_ai.pit.roster.max_shooters)
+			var slots: float = rules.get("max_shooters", arena.squad_ai.pit.roster.max_shooters)
 			arena.squad_ai.pit.roster.max_shooters = roundi(slots)
 	arena.rivet.weapon = WEAPON
 	var id: int = 1000

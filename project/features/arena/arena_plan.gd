@@ -25,6 +25,7 @@ var pit: Dictionary = {}
 ## Where the hub sits on the generated city for the proving block (--arena=city).
 var city_base: Vector2 = Vector2.ZERO
 var city_prop_shifts: Dictionary[String, Vector2] = {}
+var city_squad: Dictionary = {}
 ## --rigs: the SHOOT recoil strength per weapon id (a weapon not listed kicks 1.0).
 var rig_kick: Dictionary[StringName, float] = {}
 var errors: Array[String] = []
@@ -51,6 +52,8 @@ static func shipped(p_base: Vector2 = Vector2.ZERO) -> ArenaPlan:
 	p.pit = t.object(t.raw, "pit")
 	var city: Dictionary = t.object(t.raw, "city")
 	p.city_base = t.vec(city, "base")
+	if city.has("squad"):
+		p.city_squad = t.object(city, "squad")
 	if city.has("shift_props"):
 		var shifts: Dictionary = t.object(city, "shift_props")
 		for key: String in shifts:
