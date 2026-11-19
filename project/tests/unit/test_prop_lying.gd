@@ -96,3 +96,19 @@ func test_hidden_or_missing_lying_card_keeps_socket_box_and_live_rig_keeps_stand
 	rig.dead = false
 	var standing: Rect2 = PropOcclusion.body_patch(Vector2.ZERO, head, area)
 	assert_eq(PropLying.patch(po, rig, Vector2.ZERO, head, area), standing)
+
+
+func test_textureless_or_absent_head_card_falls_back_to_the_available_geometry() -> void:
+	var po: Node2D = add_child_autofree(Node2D.new())
+	var rig: CutRig = _dead_rig()
+	var lying: Sprite2D = _lying_card(rig)
+	lying.texture = null
+	var area: Rect2 = Rect2(-100, -100, 200, 200)
+	var head: Vector2 = Vector2.UP * 80
+	var socket: Rect2 = PropLying.lying_box(Vector2.ZERO, rig.head.position)
+	assert_eq(PropLying.patch(po, rig, Vector2.ZERO, head, area), socket)
+	rig.head_card = null
+	assert_eq(PropLying.patch(po, rig, Vector2.ZERO, head, area), socket)
+	rig.head = null
+	var standing: Rect2 = PropOcclusion.body_patch(Vector2.ZERO, head, area)
+	assert_eq(PropLying.patch(po, rig, Vector2.ZERO, head, area), standing)
