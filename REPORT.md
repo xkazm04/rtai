@@ -36,7 +36,7 @@ Masters and frames live in `C:/Users/kazda/kiro/gtai-masters/n19/move/` (not in 
 - TODO car doors: sim phase on (moves city digests: gfx re-bless) or cosmetic only.
 
 ## Merge notes
-- One-line call sites in other lanes' files: `project/features/characters/rivet_frames.gd` (2 lines, anim), `project/features/arena/prop_occlusion.gd` (4 added lines, ai), `project/features/arena/arena_rigs.gd` (3 lines, ai), `project/boot/collect_call/collect_call_stage.gd` (airborne guard on `_collide`, `collide_preview`), `project/boot/launch_args.gd` (4 appended flags).
+- One-line call sites in other lanes' files: `project/features/characters/rivet_frames.gd` (2 lines, anim), `project/features/arena/prop_occlusion.gd` (4 added lines, ai), `project/features/arena/arena_rigs.gd` (3 lines, ai), `project/boot/collect_call/collect_call_stage.gd` (airborne guard on `_collide`, `collide_preview`), `project/boot/launch_args.gd` (5 appended flags: `--vault`, `--no-vault`, `--cover`, `--no-cover`, `--car-doors`), `project/boot/city_characters.gd:100` (one line: the car-door view wraps `if rivet_on_foot:`).
 - Conflicts at 03:15: with n19-ai in `launch_args.gd` (keep both blocks) and `prop_occlusion.gd` (take ai's `_hits_of`, add `h.rig = rigs[i]` after its `h.area = area`); `tools/debt/baseline.json` with every lane (`node tools/debt/merge_baseline.mjs`).
 
 ## Next steps
