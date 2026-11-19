@@ -289,3 +289,7 @@ Repack the two pages with `python tools/art/tonnage_midpoint.py --fill p70 --pag
 |---|---|
 | tonnage_walk8_fill_a.png | `4c157ba2ccd59ebec042a9e234ad23bab60af222c4a766d7a339663f9d9349bc` |
 | tonnage_walk8_fill_b.png | `211faa85608682f1904d9781c5b9d4a34ed4ed310a3d5caa15878e821b0cdc8c` |
+
+### p55 profile raised shoes
+
+The refilmed right/left profiles retain 7.131/7.105 px worst holds, 4.408/4.378 px mean rides and 2.763/2.655 px mean stance drift. The largest raised-rim angle errors across both profiles decreased from 31.0° to 2.5°. [Per-midpoint tilt measurements and 64 px/m comparisons](p55_pad_tilt.md).

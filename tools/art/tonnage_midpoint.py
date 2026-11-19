@@ -9,6 +9,7 @@ import numpy as np
 from PIL import Image
 
 from tonnage_profile import profile_pose
+from tonnage_shoe import RIM_TURNS
 from tonnage_pads import LEFT_PADS, PADS, PROFILE55_PADS, diagonal_pads, straight_pads
 from tonnage_warp import articulated_pose, midpoint, piston_ink, register_crown, warp_pads
 
@@ -122,9 +123,10 @@ def pack_intervals(sheet, rows, selected, divisions, style="diagonal"):
                 fraction = (j if a == i else count - j) / count
                 source, target = (start, end) if a == i else (end, start)
                 crown = register_crown(keys[a], keys[b])
-                if profile55 and i not in (1, 7):
+                turns = RIM_TURNS[rows == 3][col] if profile55 else ()
+                if profile55 and (turns or i not in (1, 7)):
                     pose = profile_pose((keys[a], keys[b]), (source, target), crown, fraction,
-                                        (rows == 3, a, b))
+                                        (rows == 3, a, b, turns))
                 else:
                     pose = articulated_pose(keys[a], (source, target), crown, fraction, warp)
                 atlas.paste(pose, (col * (w + 8), row * h))

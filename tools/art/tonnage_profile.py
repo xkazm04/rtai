@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 from PIL import Image
 
+from tonnage_shoe import draw_piston
 from tonnage_warp import remap_ink
 
 
@@ -111,21 +112,6 @@ def piston_strip(key, sole, root):
     return Image.fromarray(pad)
 
 
-def draw_piston(strip, foot, socket, scale, grid):
-    xx, yy = grid
-    # The upper two rows of the strip are the original cylindrical shaft.
-    # Extend it behind the housing, shearing from the socket to the ankle.
-    sx, sy = socket
-    fx, fy = foot
-    ankle = fy - 13 * scale
-    t = np.clip((yy - sy) / max(1, ankle - sy), 0, 1)
-    centre = sx + t * (fx - sx)
-    mx = (xx - centre) / scale + 22
-    my = np.clip((yy - fy) / scale + 25, 0, 28)
-    my[yy < sy - 12] = 29
-    return remap_ink(strip, mx.astype("float32"), my.astype("float32"))
-
-
 def rear_pad(pair, left):
     """Take a complete shadowed rim from the clearer of these two shipped keys."""
     i, k = pair[0][1], pair[1][1]
@@ -158,7 +144,7 @@ def rear_pad(pair, left):
 def profile_pose(keys, pins, crown, fraction, indices):
     key, neighbour = keys
     start, end = pins
-    left, i, k = indices
+    left, i, k, turns = indices
     sockets, other = SOCKETS[left][i], SOCKETS[left][k]
     body = crown * fraction
     delta = (end - start) * fraction
@@ -184,7 +170,9 @@ def profile_pose(keys, pins, crown, fraction, indices):
         close, tx, ty = min(other, key=lambda p: abs(p[0] - ex))
         root = np.array([tx - sx, ty - sy]) * fraction if abs(close - ex) < 3 else body
         scale = 1.0 if j == old else 0.84
-        out.alpha_composite(draw_piston(strip, start[j] + delta[j], [sx, sy] + root, scale, (xx, yy)))
+        foot = start[j] + delta[j]
+        shoe = scale, turns[j] if turns else 0.0
+        out.alpha_composite(draw_piston(strip, foot, [sx, sy] + root, shoe, (xx, yy)))
     hull = housing(key, RIMS[left][i])
     out.alpha_composite(
         remap_ink(hull, (xx - body[0]).astype("float32"), (yy - body[1]).astype("float32"))
