@@ -83,3 +83,5 @@ NEXT:
 - 03:40 LOOKED contact/item3a-contact-tilt70-32ppm.mp4 at 4.5 s (t272) and 9.5 s (t572): before, the baked walker's 64 px/m feet inset has no shadow; after, a rig-style ellipse under the shoes. Reads in 10 s. ACCEPTED.
 - 03:41 contact/frames.json trimmed 19 -> 15 (dropped the four top single panels, already in the A-compare-top sheets; files deleted).
 - 03:39 ASTRA RUNNING tilt11 since 03:39 (NEW session, detached, lock pid 41012; brief evidence/briefs/n19-gfx-11-tilt-repeat.md Part 0 anim slot NEED, A tilt repeat probe, B apron sheets, C gate; out evidence/briefs/n19-gfx-11-tilt-repeat.out.txt; report gtai-masters/n19/gfx/tilt-11-REPORT.md)
+- 03:47 LOOKED contact/B-tilt70-p70-64ppm-t60.png: all 13 heads read tilted (faces/caps visible), 3B holds. The thug cell is a box-headed robot (thug_head_card, by design) framed larger than its tile: probe framing, not a fault.
+- 03:48 MILESTONE top-level gtai-masters/n19/gfx/frames.json written (11 entries, best per item first). Brief 12 written (evidence/briefs/n19-gfx-12-contact-cost.md: interleaved in-process ON/OFF/A' cost probe for 3A in dev/bench, then one more heat-3 quiet try). Goes after tilt11.
