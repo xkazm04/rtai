@@ -33,15 +33,37 @@ func setup(camera: CanvasLayer, origin: Vector2i, mps: float, pistol: bool, ppm:
 	RivetFrames.publish(rig, &"pistol" if armed else &"", null)
 
 
-func advance() -> void:
+func advance(matched: bool) -> bool:
 	var displacement: Vector2 = _motion.step(_command, speed, _actions) * CharacterRigs.PX_PER_M
+	var phase: float = _next_phase() if matched else -1.0
 	rig.position += displacement
 	rig.vel_in = _motion.velocity() * CharacterRigs.PX_PER_M
 	rig.face_to = _motion.facing().angle()
 	rig.drive(SimClock.TICK_DT)
+	if phase >= 0.0:
+		# drive recorded today's position. A second public placement reads zero new distance.
+		rig.set_meta(RivetWalk.META_PH, phase)
+		RivetFrames.place(rig, rig.head_card)
 	var anchor: Vector2 = Vector2(rect.position) + Vector2(SIZE.x / 2, FEET_Y)
 	_camera.transform = Transform2D(0.0, _zoom, 0.0, anchor - (rig.position * _zoom).round())
 	queue_redraw()
+	return not matched or phase >= 0.0
+
+
+## The film enables this only at constant velocity. Read the previous drawing's support boot,
+## as phase_of does before it selects the next cell. The mover and the camera never see phase.
+func _next_phase() -> float:
+	var card: Sprite2D = rig.head_card
+	var length: float = StrideMatch.profile_cycle(card, card.global_scale.x, 0.0)
+	if length <= 0.0:
+		return -1.0
+	var run: bool = RivetWalk.is_run(str(card.get_meta(RivetFrames.ON)))
+	var cap: float = RivetWalk.MAX_RUN_CYCLES_S if run else RivetWalk.MAX_CYCLES_S
+	var hz: float = StrideMatch.cadence(
+		_motion.velocity().length() * CharacterRigs.PX_PER_M, length, cap
+	)
+	var previous: float = rig.get_meta(RivetWalk.META_PH, 0.0)
+	return fposmod(previous + hz * SimClock.TICK_DT, 1.0)
 
 
 func record_column() -> bool:

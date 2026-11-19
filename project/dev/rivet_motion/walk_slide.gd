@@ -4,7 +4,7 @@ extends Node
 
 const RUN_TICKS: int = 300
 const NEEDS_WINDOW: bool = true
-const KNOWN_FLAGS: PackedStringArray = ["--ppm", "--view", "--out"]
+const KNOWN_FLAGS: PackedStringArray = ["--ppm", "--view", "--out", "--matched"]
 const SPEEDS: Array[float] = [1.2, 1.8, 2.1, 2.4, 2.6, 3.2]
 const FIRST_TICK: int = 40
 const END_TICK: int = 280
@@ -13,6 +13,7 @@ var _tiles: Array[WalkSlideTile] = []
 var _out: String
 var _ppm: int
 var _view: String
+var _matched: bool
 
 
 func _ready() -> void:
@@ -20,6 +21,7 @@ func _ready() -> void:
 	_ppm = int(args.text("--ppm", "32"))
 	_view = args.text("--view", "tilt70")
 	_out = args.text("--out")
+	_matched = args.has("--matched")
 	for flag: String in args.values:
 		if flag not in KNOWN_FLAGS:
 			Log.warn("walk-slide", "unknown argument " + flag)
@@ -52,7 +54,9 @@ func _film() -> int:
 	for tick: int in END_TICK:
 		await get_tree().process_frame
 		for tile: WalkSlideTile in _tiles:
-			tile.advance()
+			if not tile.advance(_matched and tick >= FIRST_TICK):
+				Log.warn("walk-slide", "missing profile measurement at tick %d" % tick)
+				return 1
 		if tick < FIRST_TICK:
 			continue
 		for tile: WalkSlideTile in _tiles:
@@ -75,6 +79,7 @@ func _film() -> int:
 		"view": _view,
 		"first_tick": FIRST_TICK,
 		"lanes": lanes,
+		"matched": _matched,
 	}
 	var output: FileAccess = FileAccess.open(_out.path_join("film.json"), FileAccess.WRITE)
 	if output == null:
