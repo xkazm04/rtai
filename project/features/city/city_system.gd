@@ -50,7 +50,7 @@ func setup(ctx: WorldContext) -> void:
 	sim.init(ctx.rng.stream(SIM_STREAM).randi())
 	sim.set_radii(RA, RB, RIOT_R)
 	residency = CityResidency.new(source, sim, SimConst.CITY_CHUNKS)
-	spawner = CitySpawner.new(sim, residency, ctx.rng.stream(SPAWN_STREAM))
+	spawner = CitySpawner.new(sim, residency, ctx.rng.stream(SPAWN_STREAM), gen.zones)
 	spawner.rb = RB
 	var share: float = bike_share if bike_share >= 0.0 else CitySpawner.table_bike_share()
 	spawner.set_bikes(share, ctx.rng.stream(BIKE_STREAM))  # d9: its own stream, cars never move

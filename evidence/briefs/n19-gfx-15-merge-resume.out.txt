@@ -1,0 +1,9 @@
+The merged crowd holds its live height at the tilt-70 switch. At tick 33, the hat stayed **115 px**, riot **118 px**, and overalls **122 px**. On anim alone they shrank to 101, 104, and 107 px. In top view, both builds gained 2 px across the switch. Native and GDScript slot checks passed. [Labelled sheet](C:/Users/kazda/kiro/gtai-masters/n19/gfx/merge/crowd-switch-merged-64ppm.png)
+
+All 16 merged goldens reproduced exactly on a second render. **Two junction frames outside the five Git conflicts also exceeded both lane tolerances**: `d4-64ppm.png` and `d4-48ppm-night.png`. Overall, 1/16 passed against gfx and 9/16 against anim. [Five conflicted re-renders](C:/Users/kazda/kiro/gtai-masters/n19/gfx/merge/goldens/)
+
+**Lint was the only red gate.** The combined `project/dev/sim` measured 1,091 lines against the resolver’s 923-line allowance. No regression was accepted. Both DLLs built, 3,002 fast tests passed with two skips, all 55 scenarios passed, parity matched over 1,200 steps, and bake `--check` passed. The noir patch parsed and rendered 18 frames. [Noir patch](C:/Users/kazda/kiro/gtai-masters/n19/gfx/merge/anim-need-part2.patch)
+
+Cleanup finished at **05:36 local**. The temporary worktree and branch are gone. Nothing was committed to a lane or pushed. [Full report, golden table, and gate lines](C:/Users/kazda/kiro/gtai-masters/n19/gfx/merge-13-REPORT.md)
+
+[astra: 1544s, exit 0]

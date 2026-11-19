@@ -193,7 +193,79 @@ void feed_rows_test() {
 	check(out.empty(), "feed: an empty snapshot");
 }
 
+void far_cop_rows_test() {
+	auto sim = std::make_unique<CityCore>();
+	sim->init(18);
+	int32_t table[CLIP_VARIANTS * CLIPS * 3] = {};
+	for (int i = 0; i < CLIP_VARIANTS * CLIPS; ++i) {
+		table[i * 3] = i / CLIPS;  // a single cell per look for every clip
+		table[i * 3 + 1] = 1;
+	}
+	sim->set_clips(table, CLIP_VARIANTS * CLIPS * 3);
+	const int kinds[] = {K_COP, K_PED, K_COP, K_PED, K_COP, K_PED};
+	const int variants[] = {7, 5, 7, 7, 8, 255};
+	const int expected[] = {5, 3, 6, 7, 5, 1};
+	for (int i = 0; i < 6; ++i) {
+		double spec[SP_LEN] = {};
+		spec[SP_KIND] = kinds[i];
+		spec[SP_VARIANT] = variants[i];
+		check(sim->spawn(spec) == i, "render: actor occupies the expected slot");
+	}
+	float data[RL_COUNT][6 * RL_STRIDE] = {};
+	float *layers[RL_COUNT];
+	for (int i = 0; i < RL_COUNT; ++i) layers[i] = data[i];
+	int32_t counts[RL_COUNT] = {};
+	sim->fill_render(-1.0, -1.0, 1.0, 1.0, layers, counts);
+	check(counts[RL_PEDS] == 6, "render: all six crowd instances submitted");
+	for (int i = 0; i < 6; ++i) {
+		check(data[RL_PEDS][i * RL_STRIDE + 12] == expected[i], "render: crowd atlas row");
+		check(sim->variant_of(i) == variants[i], "render: sim variant preserved");
+	}
+	const int32_t near[] = {0};
+	sim->set_rig_slots(near, 1);
+	sim->strike(5, 1.0, 0.0, true);
+	sim->set_contact_hips(17.0f, 23.0f);
+	sim->fill_render(-1.0, -1.0, 1.0, 1.0, layers, counts);
+	check(counts[RL_PED_SHADOWS] == 4, "contacts: skip the rig and the corpse");
+	for (int i = 0; i < 4; ++i) {
+		const float hip = kinds[i + 1] == K_PED ? 17.0f : 23.0f;
+		const float *sh = data[RL_PED_SHADOWS] + i * RL_STRIDE;
+		check(sh[0] == hip && sh[5] == hip, "contacts: scale the mesh by this body's hip");
+		check(sh[3] == 0 && sh[7] == 0 && sh[11] == 1, "contacts: at the feet with the mesh ink");
+	}
+}
+
+void baked_body_slots_test() {
+	auto sim = std::make_unique<CityCore>();
+	sim->init(18);
+	std::vector<int32_t> clips(CLIP_VARIANTS * CLIPS * 3, 1);
+	sim->set_clips(clips.data(), (int)clips.size());
+	double spec[SP_LEN] = {};
+	spec[SP_KIND] = K_PED;
+	for (int slot = 0; slot <= 511; ++slot) {
+		spec[SP_X] = slot == 0 || slot == 14 || slot == 15 || slot == 511 ? 0.0 : 10.0;
+		if (sim->spawn(spec) != slot) {
+			check(false, "render: slots allocated in order");
+			return;
+		}
+	}
+	const int32_t rigged = 14;
+	sim->set_rig_slots(&rigged, 1);
+	std::vector<float> data(RL_COUNT * CAP * RL_STRIDE);
+	float *layers[RL_COUNT];
+	for (int i = 0; i < RL_COUNT; ++i) layers[i] = data.data() + i * CAP * RL_STRIDE;
+	int32_t counts[RL_COUNT] = {};
+	sim->fill_render(-1, -1, 1, 1, layers, counts);
+	check(counts[RL_PEDS] == 3, "render: three visible baked bodies");
+	const int slots[] = {0, 15, 511};
+	for (int i = 0; i < 3; ++i) {
+		check(layers[RL_PEDS][i * RL_STRIDE + 13] == slots[i] + 1, "render: baked body sim slot + 1");
+	}
+}
+
 int main() {
+	baked_body_slots_test();
+	far_cop_rows_test();
 	scan_test();
 	crowd_rect_test();
 	blood_drops_test();

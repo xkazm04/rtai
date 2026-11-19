@@ -1,0 +1,39 @@
+Traffic cars now use the 12-slot art mix of their **spawn chunk**, with the same single RNG draw. Docks produced **51.2% vans and pickups** and zero ambulances. Downtown produced **24.5% taxis** and zero pickups. Mixed traffic retained its byte-identical art sequence. Police and bike selection are unchanged.
+
+**No digest or golden needed re-blessing.** All 20 city replay checkpoints matched the baseline, including final hash `7571fcfe027f9994`. The 60-second dummy replay stayed at `cbeb734ff9b97c41`, and all 256 bake hashes matched.
+
+### Census
+
+Seed 91, 384 spawn attempts per chunk across all 256 chunks. Counts cover successfully spawned traffic cars. [Census JSON](C:/Users/kazda/kiro/gtai-wt/n19-gfx/evidence/n19-gfx/zones/car_census.json)
+
+| Zone | Run | Sedan | Sedan B | Sedan C | Taxi | Van | Pickup | Ambulance | Grey sedan | Total |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Docks | Before | 254 | 254 | 247 | 256 | 133 | 129 | 115 | 134 | 1,522 |
+| Docks | After | 246 | 133 | 115 | 130 | 397 | 383 | 0 | 118 | 1,522 |
+| Downtown | Before | 238 | 205 | 262 | 230 | 122 | 132 | 120 | 118 | 1,427 |
+| Downtown | After | 246 | 214 | 243 | 349 | 109 | 0 | 134 | 132 | 1,427 |
+| Mixed | Both | 1,520 | 1,467 | 1,435 | 1,484 | 716 | 740 | 751 | 736 | 8,849 |
+
+### Verification
+
+| Gate | Result |
+|---|---|
+| Lint and quick gates | All 19 lint checks passed. Quick passed before each commit. |
+| Unit tests | Changed suite 2,947 passed. Full suite 2,963 passed. Both had zero failures and two skips for missing tilt-card strips. |
+| Regression | The old picker spawned 4 ambulances in 128 docks spawns. The new picker spawned 0 with the same seed and the camera in mixed. |
+| Scenarios | 55 passed, zero failed. Godot emitted resource-cleanup errors at shutdown after the suite verdict. |
+| Parity | Native and GDScript matched exactly across 1,200 steps and 40 snapshot checks. The planted mutation was caught at step 629. |
+| Bake | Two deterministic bakes matched all 256 committed chunk hashes. |
+| Mutation | **4 / (4 + 20) = 16.7%**. One invalid mutant, zero timeouts. The tests caught the art-index upper bound changing from 11 to 12. The CLI required a path relative to `project/`. [Mutation report](C:/Users/kazda/kiro/gtai-wt/n19-gfx/build/mutate/features-city-city_spawner.json) |
+
+### Films and commits
+
+All eight 10-second clips cover world ticks 242–840 at 32 px/m, in top and tilt-70 views. The side-by-sides use tick 418. [Top comparison](C:/Users/kazda/kiro/gtai-masters/n19/gfx/zones/districts-top.png) · [Tilt-70 comparison](C:/Users/kazda/kiro/gtai-masters/n19/gfx/zones/districts-tilt70.png) · [All clips, frames and district before/after pairs](C:/Users/kazda/kiro/gtai-masters/n19/gfx/zones/) · [Film manifest](C:/Users/kazda/kiro/gtai-wt/n19-gfx/evidence/n19-gfx/zones/film.json)
+
+| Commit | Files changed |
+|---|---|
+| `0f11a6936` | `city_spawner.gd`, `city_system.gd`, `city_district.schema.json`, `test_city_streaming.gd`, `test_city_zones.gd` |
+| `49146d65f` | `docs/decisions.md` records the replay and bake results. |
+| `b22af79bb` | `zone_car_census.gd`, its `.uid` and `.tscn`, `zone_frame.gd`, `car_census.json`, `film.json`, and the dev-line allowance in `tools/debt/baseline.json` |
+
+[astra: 2401s, exit 0]

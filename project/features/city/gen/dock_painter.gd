@@ -1,24 +1,23 @@
 class_name DockPainter
 extends RefCounted
-## The docks zone's own block layout (n18 districts item 2; CityZone.street_keep_x 2 and
-## water_tiles): every other north-south street line is dropped, so two blocks and the street
-## between them make one 13-tile long block (u 0-12 across, v 0-4 down) of 16.4 m warehouse
-## roofs in rows, one container-yard row per block (or a whole yard block under the zone's
-## plaza_share), a shed at the long block's east end; along the city's east edge a quay apron
-## and water_tiles of water. Today's art recombined until the asset lane's docks set lands
-## (JOURNAL REQUEST assets 1-5); the water draws the zone's water_ground, checkered, turned.
+## Dropped streets join docks blocks into 13 x 5 tiles of warehouses, container yards and an
+## east-end shed. The easternmost blocks meet the quay and water.
 
 const PERIOD: int = CityGen.PERIOD
 const T_PAVING: int = 13
 const T_BOLLARD: int = 37
 const SHED_U: int = 12
 const BOLLARD_V_M: Array[float] = [1.5, 4.0, 6.5]
+## The 6.1 m container leaves a narrow clear margin at either end of an occupied bay.
+const STACK_EDGE_M: Array[float] = [0.5]
 ## The quay set (asset lane it469/it470): the straight is drawn land north (5 m of apron to its
 ## coping), the inner corner land north and west; a turn carries them to the tile's land sides.
 const LAND_M: float = 5.0
 ## Two container rows a yard tile, long axis east-west: their 85 % footprints (cells 1-6 x 0-2
-## and 1-6 x 4-6) leave cell rows 3 and 7 and columns 0 and 7 walkable: one walk network.
+## and 1-6 x 4-6) leave an east-west aisle in row 3, including beside a warehouse loading apron.
 const YARD_SLOTS: Array[Vector2] = [Vector2(4.0, 1.5), Vector2(4.0, 5.5)]
+## Keep feet clear of the roof overhang and its lift at 70 degrees (up to 2.1 m at the office).
+const LOADING_APRON_M: float = 3.0
 const EDGE_N: int = 1
 const EDGE_S: int = 2
 const EDGE_W: int = 4
@@ -112,11 +111,19 @@ func yard(g: CityGen, b: ChunkBuild, kerb: KerbDresser, zone: CityZone, t: Vecto
 		b.add(ChunkBuild.L_GROUND, T_PAVING, o + Vector2(4.0, 4.0), turn)
 	b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_WALK)
 	b.chunk.dens_ped[TilePainter.local_index(t)] = int(zone.ped_plaza * b.district)
+	var edge_marks: Array[float] = BOLLARD_V_M
 	for k: int in YARD_SLOTS.size():
 		if g.rnd(t.x, t.y, k, 61) < zone.yard_prop_share:
 			var stacks: Array[int] = zone.yard_props
 			var tex: int = stacks[int(g.rnd(t.x, t.y, k, 62) * stacks.size())]
 			kerb.prop(g, b, tex, o + YARD_SLOTS[k], PI * int(g.rnd(t.x, t.y, k, 63) * 2.0))
+			if k == 1:
+				edge_marks = STACK_EDGE_M
+	if posmod(t.y, PERIOD) < PERIOD - 1 and not is_yard(g, zone, t + Vector2i.DOWN):
+		var apron := Rect2(o + Vector2(0, 8.0 - LOADING_APRON_M), Vector2(8, LOADING_APRON_M))
+		b.stamp(apron, SimConst.C_PROP)
+		for x: float in edge_marks:
+			kerb.prop(g, b, T_BOLLARD, apron.position + Vector2(x, 0.25), 0.0)
 	return SimConst.T_PLAZA
 
 

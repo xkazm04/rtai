@@ -1,0 +1,20 @@
+Published and visually checked both sheets.
+
+- **Traffic:** At seed 91, tick 468 and 64 px/m, the docks show **1 van and 2 pickups**. Downtown shows **3 taxis and 1 sedan**. All seven cars are moving. [Side-by-side sheet](C:/Users/kazda/kiro/gtai-masters/n19/gfx/zones/docks-vs-downtown-top-64.png) · [Downtown close-up](C:/Users/kazda/kiro/gtai-masters/n19/gfx/zones/downtown3-top-64.png)
+- **Crossings:** None of the 3,712 zebras across all 256 chunks has a solid within 2 m. The four panels show the actual district minima at top and tilt 70°: **3.7321 m** to a planter beside the docks warehouse and **3.4602 m** to bollards beside a downtown tower. [Crossing sheet](C:/Users/kazda/kiro/gtai-masters/n19/gfx/gen/zebra-closest-64ppm.png)
+
+The five smallest gaps all involve downtown bollards, texture `121`. [Measurement output](C:/Users/kazda/kiro/gtai-masters/n19/gfx/gen/zebra-gaps-v35.json)
+
+| Chunk | Gap (m) |
+|---|---:|
+| (7, 10) | 3.4602 |
+| (7, 10) | 3.5101 |
+| (9, 8) | 3.5762 |
+| (9, 8) | 3.6262 |
+| (7, 9) | 3.6541 |
+
+Dev-only commit `cbb8cebf3` changed `zone_traffic_film.gd` and its `.tscn`. The quick gate passed in 1.7 s, pre-commit lint passed 19/19, and the zebra guard passed. Fresh renders reproduced all six source frames byte-for-byte.
+
+Moved **53 files** to `_scratch` and verified every SHA-256: zones 2, farcop 30, contact 8, gen 13. All five indexes resolve. [Report and complete move list](C:/Users/kazda/kiro/gtai-masters/n19/gfx/eye-14-REPORT.md)
+
+[astra: 1122s, exit 0]

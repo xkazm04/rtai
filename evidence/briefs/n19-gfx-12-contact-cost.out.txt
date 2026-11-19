@@ -1,0 +1,26 @@
+**The baked contact shadow’s native writer cost was below the noise floor of 0.00225 ms per frame. Its GPU cost was below the noise floor of 0.21469 ms.** The heat-3 release bench passed under contention.
+
+**Part A · `3a69fe5a0`** added the `crowd_contact_cost` dev scene, its city fixture and statistics helper, three script UIDs, and the tooling debt-baseline entry. The probe ran 24 paired rounds with **345 / 363 / 345 shadows per frame** for ON / OFF / ON repeat. It counted 8 other Godot processes at startup and 2 at exit.
+
+| Metric | ON p50/p95 ms | OFF p50/p95 ms | ON repeat p50/p95 ms | Paired ON − OFF ms [CI95] | A/A floor ms | Δ µs/contact |
+|---|---:|---:|---:|---:|---:|---:|
+| Native writer | .016 / .022 | .016 / .023 | .016 / .022 | −.000650 [−.001304, +.000003] | .00225 | −.00188 |
+| GDScript writer | 1.390 / 2.565 | 1.334 / 2.482 | 1.387 / 2.563 | +.11141 [+.04544, +.17738] | .61841 | +.32292 |
+| Viewport CPU | .335 / .577 | .340 / .600 | .335 / .580 | −.02650 [−.04937, −.00364] | .08908 | −.07682 |
+| Viewport GPU | .482 / .577 | .485 / .575 | .483 / .586 | −.01491 [−.05849, +.02867] | .21469 | −.04323 |
+
+All four estimates fell inside their A/A floors. Writer timings include all five buffer uploads. The probe used the editor debug build and emitted a shutdown warning after saving the JSON. A verbose run identified four retained reference-sim resources.
+
+```text
+ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 1 against KNOWN_FLAGS (res://dev/bench/crowd_contact_cost.gd)
+quick: ok, 3 file(s), 2.5 s
+lint: all 19 checks pass over 1618 GDScript files
+```
+
+**Part B · PASS, CONTENDED.** The first export found an empty lane-local template directory. After temporarily supplying the matching 4.7.2 templates, the single retry completed all 12 scenarios. It counted 2 other Godot processes at queue entry, 2–8 at scenario launches, and 4 at exit. The lock was released. Part B produced no repository changes.
+
+> bench (exported release build, windowed, CityHeat pinned at heat 3, 3 consecutive runs x 4 scenarios x 60 s): p99 5.702 ms, 1% low 150 fps, worst swap 21.438 ms, worst frame 40.712 ms; hitches >25 ms 20, >50 ms 0 (unexplained 0, outside 0, present 0); vsync-on drive >25 ms: 10; visible avg 49.651 / 10.95 / 170.28 (drive/drive48/riot); rigs p50 0 / p99 1.305 ms per frame (riot, up to 20); CONTENDED: up to 9 other run(s) active during the bench (numbers are pessimistic)
+
+[Report](C:/Users/kazda/kiro/gtai-masters/n19/gfx/cost-12-REPORT.md) · [Measurement JSON](C:/Users/kazda/kiro/gtai-masters/n19/gfx/bench/crowd-contact-cost.json)
+
+[astra: 3109s, exit 0]

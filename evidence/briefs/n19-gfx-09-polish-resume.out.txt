@@ -1,0 +1,17 @@
+**Brief 07.** All 813 aprons faced warehouse blocks. Dock-painter mutation scored **11/15** file-wide and **11/12** on changed lines. The zebra guard caught the planted prop and scored **1/7**, with one timeout. Crowd contact reached **23/23**, and the render writer reached **11/11**. The rig triangulation errors predate item 3A. Six junction goldens moved with the intended far-crowd change and passed after re-blessing. The report includes both clips and identifies the acceptance runs unfinished at the 07 cutoff. [Polish 07 report](C:/Users/kazda/kiro/gtai-masters/n19/gfx/polish-07-REPORT.md)
+
+**Brief 08, Part A.** Commit `e5872048b` changed `dock_painter.gd` and `test_dock_yard.gd`. Open bays use three existing bollards. Loaded bays use one clear of the container. Commit `df39aece8` bumped `city_gen.gd` to v35, regenerated `city_chunks.sha256` and recorded the decision in `docs/decisions.md`. The equal-version bake changed **46/48 docks, 0/25 downtown and 0/183 mixed**. Removing the 1,453 posts and their shadows reproduced every v34 chunk hash. Connectivity and all four digests matched. Mutation scored **18/19**, with one equivalent survivor. [Part A report](C:/Users/kazda/kiro/gtai-masters/n19/gfx/gen/apron-bollards-REPORT.md) · [32 px/m comparison](C:/Users/kazda/kiro/gtai-masters/n19/gfx/gen/apron_edge_before_tilt70_32ppm_t150.png)
+
+Final acceptance at `df39aece8`:
+
+```text
+lint: all 19 checks pass over 1615 GDScript files
+unit-tests: 2974 passed, 0 failed, 2 skipped (GUT, headless)
+scenario-tests: 55 passed (headless)
+parity: native == GDScript reference bit for bit over 1200 steps (40 snapshot checks, 3502 floats); planted mutation caught at step 629
+bake_city: deterministic, matches golden
+```
+
+The tracked tree is clean. Only the pre-existing brief transcript is untracked.
+
+[astra: 1786s, exit 0]

@@ -8,8 +8,20 @@
 namespace gtai::sim {
 
 namespace {
+// Same slot, body check and atlas fallback as CitySimClips::row_of in the reference writer.
+static inline int row_of(int kind, int variant, int slot) {
+	const bool cop = kind == K_COP;
+	const bool cop_look = variant == 5 || variant == 6 || variant == 8;
+	if (variant == 255 || cop != cop_look) {
+		const uint64_t h = ((uint64_t(slot) * 2654435761ULL) >> 13) & 0x7fffffffULL;
+		static constexpr int ped_rows[] = {0, 1, 2, 3, 4, 7};
+		return cop ? 5 + int(h % 2) : ped_rows[h % 6];
+	}
+	return variant == 8 ? 5 : std::clamp(variant, 0, CLIP_VARIANTS - 1);
+}
+
 // 2D transform rows (a, b, 0, ox / c, d, 0, oy), then colour, custom.x (art cell) and custom.y
-// (cars: the render state set_car_state() holds).
+// (people: sim slot + 1, cars: the render state set_car_state() holds).
 void put(float *o, const float *xf, const float *rgba, float custom, float custom_y = 0.0f) {
 	for (int k = 0; k < 8; k++) o[k] = xf[k];
 	for (int k = 0; k < 4; k++) o[8 + k] = rgba[k];
@@ -41,7 +53,7 @@ int CityCore::frame_of(int i, int &cell) const {
 	else if (v_[i] < 0.2) cl = 0;
 	else if (m == M_FLEE || m == M_RIOT || k == K_COP || v_[i] > 3.0) cl = 2;
 	const int32_t *cp = clips_.data();
-	int vr = variant_[i] < CLIP_VARIANTS ? variant_[i] : 5;  // a look past the table (SWAT 8): patrol
+	const int vr = row_of(k, variant_[i], i);
 	int b = (vr * CLIPS + cl) * 3;
 	int cnt = cp[b + 1];
 	if (cl == 4) f = std::min((int)(t2_[i] * cp[b + 2]), cnt - 1);
@@ -70,12 +82,17 @@ void CityCore::fill_render(double vx0, double vy0, double vx1, double vy1, float
 			if (!people) continue;
 			int cell = 0;
 			frame_of(i, cell);
-			const float sh[8] = {SH, 0.0f, 0.0f, X + 2.0f, 0.0f, SH, 0.0f, Y + 3.0f};
-			put(bufs[RL_PED_SHADOWS] + nps * RL_STRIDE, sh, INK_PED, 0.0f);
-			nps++;
+			if (ped_hip_ == 0.0f && cop_hip_ == 0.0f) {
+				const float sh[8] = {SH, 0.0f, 0.0f, X + 2.0f, 0.0f, SH, 0.0f, Y + 3.0f};
+				put(bufs[RL_PED_SHADOWS] + nps++ * RL_STRIDE, sh, INK_PED, 0.0f);
+			} else if (!rigged_[i] && mode_[i] != M_DEAD && mode_[i] != M_DOWN) {
+				const float hip = k == K_PED ? ped_hip_ : cop_hip_;
+				const float sh[8] = {hip, 0.0f, 0.0f, X, 0.0f, hip, 0.0f, Y};
+				put(bufs[RL_PED_SHADOWS] + nps++ * RL_STRIDE, sh, WHITE, 0.0f);
+			}
 			if (rigged_[i]) continue;  // drawn by its cutout rig
 			const float body[8] = {dx * S, -dy * S, 0.0f, X, dy * S, dx * S, 0.0f, Y};
-			put(bufs[RL_PEDS] + np * RL_STRIDE, body, WHITE, (float)cell);
+			put(bufs[RL_PEDS] + np * RL_STRIDE, body, WHITE, (float)cell, (float)(i + 1));
 			np++;
 		} else {
 			const float body[8] = {dx * CL, -dy * CW, 0.0f, X, dy * CL, dx * CW, 0.0f, Y};

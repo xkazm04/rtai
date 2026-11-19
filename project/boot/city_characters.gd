@@ -57,7 +57,7 @@ func bake() -> void:
 	var people: MultiMeshInstance2D = _view.crowd.nodes[SimConst.RL_PEDS]
 	people.texture = rigs.atlas.texture
 	people.material = rigs.atlas.crowd_material()
-	_city.sim.set_render(_view.crowd.rids(), CrowdAtlas.clip_table())
+	CityCrowdContact.setup(_view.crowd, _city.sim)
 	_city.sim.set_person_px(CrowdAtlas.cell_world_px())
 
 

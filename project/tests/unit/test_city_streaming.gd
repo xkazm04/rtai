@@ -115,7 +115,47 @@ func test_resident_keys_stay_sorted_and_are_rebuilt_only_on_a_change() -> void:
 	assert_true(k3.has(Vector2i(10, 5)), "an adopted key joined it")
 
 
+func test_docks_spawns_use_the_docks_mix_even_when_camera_is_in_mixed() -> void:
+	var docks := Vector2i(13, 4)
+	assert_eq(_gen.zones.id_of_chunk(docks.x - 1, docks.y), &"mixed")
+	assert_gt(_traffic(docks, null).count(6), 0, "default mix includes ambulances at this seed")
+	assert_eq(_traffic(docks, _gen.zones).count(6), 0, "no ambulance can spawn in docks")
+
+
+func test_mixed_traffic_keeps_the_default_art_sequence() -> void:
+	var mixed := Vector2i(2, 4)
+	assert_eq(_gen.zones.id_of_chunk(mixed.x, mixed.y), &"mixed")
+	assert_eq(_traffic(mixed, _gen.zones), _traffic(mixed, null))
+
+
+func test_traffic_can_draw_both_ends_of_a_twelve_entry_mix() -> void:
+	var zones := CityZones.new()
+	zones.rows[0].car_art = [6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3]
+	var arts: PackedByteArray = _traffic(Vector2i(2, 4), zones)
+	assert_true(arts.has(6), "the only ambulance is in the first slot")
+	assert_true(arts.has(3), "the only taxi is in the last slot")
+
+
 func _residency() -> CityResidency:
 	var sim: CitySimRef = CitySimRef.new()
 	sim.init(1)
 	return CityResidency.new(ChunkSource.new(_gen, _dir.path_join("no_such_dir")), sim, 16)
+
+
+## Only this chunk has roads. Put the camera just west of it so every accepted spawn crosses
+## the chunk boundary, exercising the spawn point's zone independently of the camera's zone.
+func _traffic(key: Vector2i, zones: CityZones) -> PackedByteArray:
+	var sim := CitySimRef.new()
+	var chunk: CityChunk = _gen.gen_chunk(key.x, key.y)
+	sim.stamp_chunk(key.x, key.y, chunk.tiles, chunk.cells)
+	var rng: RandomNumberGenerator = RngRegistry.new(11).stream(&"city_spawn")
+	var sp := CitySpawner.new(sim, null, rng, zones)
+	var cam: Vector2 = Vector2(key) * SimConst.CHUNK_M + Vector2(-1, 76)
+	var made: int = 0
+	for attempt: int in 10000:
+		if sp.try_car(cam, 0.0, 48.0, false):
+			made += 1
+			if made == 128:
+				break
+	assert_eq(made, 128, "all sampled slots hold a traffic car")
+	return sim.get_variants().slice(0, made)

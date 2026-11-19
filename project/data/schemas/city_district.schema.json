@@ -120,13 +120,21 @@
             "type": "number"
           },
           "car_art": {
-            "description": "the traffic car art variants a spawn in this zone picks from (CitySpawner.CAR_ART, VehicleProfile.archetype_of_variant: 3 taxi, 4 van, 5 pickup); not a generator input, read game side; absent = CitySpawner.CAR_ART",
+            "description": "Traffic car art variants in draw order for the zone (3 taxi, 4 van, 5 pickup). An absent or empty list uses CitySpawner.CAR_ART. Used at spawn time only.",
             "items": {
               "maximum": 7,
               "minimum": 0,
               "type": "integer"
             },
-            "minItems": 1,
+            "oneOf": [
+              {
+                "maxItems": 0
+              },
+              {
+                "maxItems": 12,
+                "minItems": 12
+              }
+            ],
             "type": "array"
           },
           "car_lane": {

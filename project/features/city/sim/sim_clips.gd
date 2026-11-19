@@ -9,6 +9,17 @@ const RUN: int = 2
 const HIT: int = 3
 const DEATH: int = 4
 const SHOOT: int = 5
+const PED_ROWS: Array[int] = [0, 1, 2, 3, 4, 7]
+
+
+## Mirrors the rig body check (CharacterRigs._acquire) and its stable look for this sim slot.
+static func row_of(kind: int, variant: int, slot: int) -> int:
+	var cop: bool = kind == SimConst.K_COP
+	var cop_look: bool = variant == 5 or variant == 6 or variant == 8
+	if variant == 255 or cop != cop_look:
+		var h: int = ((slot * 2654435761) >> 13) & 0x7fffffff
+		return 5 + h % 2 if cop else PED_ROWS[h % PED_ROWS.size()]
+	return 5 if variant == 8 else clampi(variant, 0, SimConst.CLIP_VARIANTS - 1)
 
 
 static func clip_of(s: CitySimState, i: int) -> int:

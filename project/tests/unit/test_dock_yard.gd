@@ -50,15 +50,72 @@ func test_yards_stand_stacks_and_keep_their_aisles() -> void:
 		for t: Vector2i in _yard_tiles(c):
 			tiles += 1
 			var o: Vector2i = t * 8 - c * SimConst.CHUNK_CELLS
-			for y: int in 8:
+			var below: int = TilePainter.local_index(t) + SimConst.CHUNK_TILES
+			var at_wall: bool = below < ch.tiles.size() and ch.tiles[below] == SimConst.T_BLOCK
+			for y: int in 5 if at_wall else 8:
 				assert_eq(_cell(ch, o + Vector2i(0, y)), SimConst.C_WALK, "%s west aisle" % t)
 			for x: int in 8:
 				assert_eq(_cell(ch, o + Vector2i(x, 3)), SimConst.C_WALK, "%s row gap" % t)
-				assert_eq(_cell(ch, o + Vector2i(x, 7)), SimConst.C_WALK, "%s south aisle" % t)
+				if at_wall:
+					for y: int in range(5, 8):
+						assert_eq(_cell(ch, o + Vector2i(x, y)), SimConst.C_PROP, "%s apron" % t)
+				else:
+					assert_eq(_cell(ch, o + Vector2i(x, 7)), SimConst.C_WALK, "%s south aisle" % t)
 			var want: int = SimConst.C_PROP if _stood(ch, t, 0) else SimConst.C_WALK
 			assert_eq(_cell(ch, o + Vector2i(4, 1)), want, "%s slot 0 solid iff stood" % t)
 	assert_gt(tiles, 0, "the two chunks hold yard tiles")
 	assert_gt(stacks, tiles / 2, "about yard_prop_share x 2 stacks a yard tile")
+
+
+func test_loading_apron_keeps_the_neighbour_tile_untouched() -> void:
+	# The warehouse from the loading-apron shot. Paint it in isolation so a later tile
+	# cannot hide an apron stamp that crossed the boundary.
+	var tile := Vector2i(229, 134)
+	var chunk := Vector2i(14, 8)
+	var build := ChunkBuild.new(chunk.x, chunk.y)
+	var painter := DockPainter.new()
+	assert_eq(painter.yard(_gen, build, KerbDresser.new(), _docks, tile), SimConst.T_PLAZA)
+	var local: Vector2i = tile * 8 - chunk * SimConst.CHUNK_CELLS
+	for y: int in range(5, 8):
+		assert_eq(_cell(build.chunk, local + Vector2i(7, y)), SimConst.C_PROP, "east apron edge")
+		assert_eq(_cell(build.chunk, local + Vector2i(8, y)), SimConst.C_VOID, "next tile")
+
+
+func test_each_warehouse_apron_marks_its_edge_clear_of_stacks() -> void:
+	var aprons: int = 0
+	for cy: int in SimConst.CITY_CHUNKS:
+		for cx: int in SimConst.CITY_CHUNKS:
+			if _gen.zones.of_chunk(cx, cy) != _docks:
+				continue
+			var ch: CityChunk = _gen.gen_chunk(cx, cy)
+			var markers: Dictionary = _bollards_by_tile(ch)
+			for t: Vector2i in _yard_tiles(Vector2i(cx, cy)):
+				var below: int = TilePainter.local_index(t) + SimConst.CHUNK_TILES
+				var want: Array[Vector2] = []
+				if below < ch.tiles.size() and ch.tiles[below] == SimConst.T_BLOCK:
+					aprons += 1
+					if _stood(ch, t, 1):
+						want = [Vector2(0.5, 5.25)]
+					else:
+						want = [Vector2(1.5, 5.25), Vector2(4, 5.25), Vector2(6.5, 5.25)]
+				var actual: Array = markers.get(t, [])
+				assert_eq(actual, want, "yard %s loading edge" % t)
+	assert_gt(aprons, 0, "the district contains warehouse loading aprons")
+
+
+func _bollards_by_tile(ch: CityChunk) -> Dictionary:
+	var markers: Dictionary = {}
+	for i: int in ch.tex.size():
+		var xf: int = i * CityChunk.XF_STRIDE
+		if ch.tex[i] != DockPainter.T_BOLLARD or ch.xf[xf + 3] != 0.0:
+			continue
+		var pos := Vector2(ch.xf[xf], ch.xf[xf + 1])
+		var tile := Vector2i((pos / SimConst.TILE_M).floor())
+		if not markers.has(tile):
+			markers[tile] = []
+		var positions: Array = markers[tile]
+		positions.append(pos - TilePainter.origin(tile))
+	return markers
 
 
 ## Whether slot k of tile t stands a stack (the chunk's prop commands).

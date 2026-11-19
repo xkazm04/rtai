@@ -2,8 +2,8 @@ class_name CitySimRender
 extends RefCounted
 ## The reference sim's MultiMesh writer: every visible actor into five 2D-transform buffers
 ## (people, people shadows, cars, car shadows, bullets; RL_STRIDE floats per instance: 2x4
-## transform rows, colour, custom x = atlas cell, custom y = car state), one upload per layer
-## per frame. Render output is not sim state: parity and replay never read it. Only the
+## transform rows, colour, custom x = atlas cell, custom y = body slot + 1 or car state), one upload
+## per layer per frame. Render output is not sim state: parity and replay never read it. Only the
 ## fallback path uses this writer; the game draws through the native one.
 
 const S_PED: float = 122.88
@@ -18,6 +18,7 @@ var counts: PackedInt32Array = SimArrays.i32(SimConst.RL_COUNT, 0)
 var car_state: PackedByteArray = SimArrays.u8(SimConst.CAP)
 var person_px: float = S_PED
 var _rigged: PackedByteArray = SimArrays.u8(SimConst.CAP)
+var _contact_hips: Vector2 = Vector2.ZERO
 var _s: CitySimState
 var _mms: Array[RID] = []
 var _clips: PackedInt32Array = PackedInt32Array()
@@ -35,7 +36,8 @@ func set_rig_slots(slots: PackedInt32Array) -> void:
 			_rigged[slot] = 1
 
 
-func setup(mms: Array[RID], clips: PackedInt32Array) -> void:
+func setup(mms: Array[RID], clips: PackedInt32Array, hips: Vector2 = Vector2.ZERO) -> void:
+	_contact_hips = hips
 	_mms = mms
 	_clips = clips
 
@@ -56,16 +58,10 @@ func write(vx0: float, vy0: float, vx1: float, vy1: float) -> void:
 		var h: Vector2 = Vector2(_s.hx[i], _s.hy[i])
 		var k: int = _s.kind[i]
 		if k == SimConst.K_PED or k == SimConst.K_COP:
-			_put(
-				SimConst.RL_PED_SHADOWS,
-				Vector2.RIGHT,
-				Vector2(S_SHADOW, S_SHADOW),
-				pos + Vector2(2, 3)
-			)
-			_tint(SimConst.RL_PED_SHADOWS, Color(INK, 0.3), 0)
+			_person_shadow(i, pos)
 			if _rigged[i] == 0:
 				_put(SimConst.RL_PEDS, h, Vector2(person_px, person_px), pos)
-				_tint(SimConst.RL_PEDS, Color.WHITE, _frame_cell(i))
+				_tint(SimConst.RL_PEDS, Color.WHITE, _frame_cell(i), i + 1)
 		else:
 			_put(SimConst.RL_CARS, h, Vector2(CAR_L, CAR_W), pos)
 			_tint(SimConst.RL_CARS, Color.WHITE, _s.variant[i], car_state[i])
@@ -73,6 +69,17 @@ func write(vx0: float, vy0: float, vx1: float, vy1: float) -> void:
 			_tint(SimConst.RL_CAR_SHADOWS, Color(INK, 0.45), _s.variant[i])
 	_write_bullets(view)
 	_upload()
+
+
+func _person_shadow(i: int, pos: Vector2) -> void:
+	var layer: int = SimConst.RL_PED_SHADOWS
+	if _contact_hips == Vector2.ZERO:
+		_put(layer, Vector2.RIGHT, Vector2.ONE * S_SHADOW, pos + Vector2(2, 3))
+		_tint(layer, Color(INK, 0.3), 0)
+	elif _rigged[i] == 0 and _s.mode[i] != SimConst.M_DEAD and _s.mode[i] != SimConst.M_DOWN:
+		var hip: float = _contact_hips.x if _s.kind[i] == SimConst.K_PED else _contact_hips.y
+		_put(layer, Vector2.RIGHT, Vector2.ONE * hip, pos)
+		_tint(layer, Color.WHITE, 0)
 
 
 func _write_bullets(view: Rect2) -> void:
@@ -113,7 +120,7 @@ func _upload() -> void:
 
 func _frame_cell(i: int) -> int:
 	var cl: int = CitySimClips.clip_of(_s, i)
-	var vr: int = _s.variant[i] if _s.variant[i] < SimConst.CLIP_VARIANTS else 5  # SWAT 8: patrol
+	var vr: int = CitySimClips.row_of(_s.kind[i], _s.variant[i], i)
 	var b: int = (vr * SimConst.CLIPS + cl) * 3
 	if b + 2 >= _clips.size():
 		return 0

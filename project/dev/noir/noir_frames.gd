@@ -138,12 +138,8 @@ func _ok(cond: bool) -> void:
 ## Experiment (--crowd=ink): the baked crowd as ink silhouettes with a lit-side white rim.
 func _ink_crowd() -> void:
 	var people: MultiMeshInstance2D = _view.crowd.nodes[SimConst.RL_PEDS]
-	var old: ShaderMaterial = people.material as ShaderMaterial
 	var m: ShaderMaterial = ShaderMaterial.new()
 	m.shader = load(CROWD_SHADER) as Shader
-	m.set_shader_parameter(&"cols", old.get_shader_parameter(&"cols"))
-	m.set_shader_parameter(&"rows", old.get_shader_parameter(&"rows"))
+	_characters.rigs.atlas.configure_material(m)
 	people.material = m
-	printerr(
-		"noir_frames: crowd shader %s (was %s)" % [m.shader.resource_path, old.shader.resource_path]
-	)
+	printerr("noir_frames: crowd shader %s" % m.shader.resource_path)

@@ -186,12 +186,13 @@ Array CitySim::fill_feed_rows(const PackedFloat64Array &snap, const PackedByteAr
 	return out;
 }
 
-void CitySim::set_render(const Array &mms, const PackedInt32Array &clips) {
+void CitySim::set_render(const Array &mms, const PackedInt32Array &clips, const Vector2 &hips) {
 	if (mms.size() != sim::RL_COUNT || clips.size() < sim::CLIP_VARIANTS * sim::CLIPS * 3) {
 		UtilityFunctions::push_error("CitySim.set_render: needs 5 MultiMesh RIDs and the clip table");
 		return;
 	}
 	core_->set_clips(clips.ptr(), (int)clips.size());
+	core_->set_contact_hips(hips.x, hips.y);
 	for (int k = 0; k < sim::RL_COUNT; k++) {
 		rmm_[k] = mms[k];
 		int cap = k == sim::RL_BULLETS ? sim::PCAP : sim::CAP;
@@ -273,7 +274,7 @@ void CitySim::_bind_methods() {
 	ClassDB::bind_static_method("CitySim", D_METHOD("fill_feed_rows", "snap", "variants", "focus", "r2", "aim", "px"), &CitySim::fill_feed_rows);
 	ClassDB::bind_method(D_METHOD("set_body", "spec"), &CitySim::set_body);
 	ClassDB::bind_method(D_METHOD("body_result"), &CitySim::body_result);
-	ClassDB::bind_method(D_METHOD("set_render", "mms", "clips"), &CitySim::set_render);
+	ClassDB::bind_method(D_METHOD("set_render", "mms", "clips", "hips"), &CitySim::set_render, DEFVAL(Vector2()));
 	ClassDB::bind_method(D_METHOD("write_render", "vx0", "vy0", "vx1", "vy1"), &CitySim::write_render);
 	ClassDB::bind_method(D_METHOD("get_render_counts"), &CitySim::get_render_counts);
 	ClassDB::bind_method(D_METHOD("flow_stats"), &CitySim::flow_stats);
