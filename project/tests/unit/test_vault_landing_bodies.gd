@@ -41,3 +41,20 @@ func test_a_clear_landing_or_a_dead_guard_still_allows_the_vault() -> void:
 
 func test_a_downed_guard_does_not_block_the_landing() -> void:
 	assert_eq(_press(true, Vector2.ZERO, true, true).pilot.motion.phase, PlayerMotion.Phase.VAULT)
+
+
+func test_a_guard_exactly_tangent_to_the_landing_leaves_it_clear() -> void:
+	var stage: ArenaStage = VaultTrial.stage_for(false)
+	var guard: Fighter = VaultTrial.place_tackle(stage)
+	guard.pos = Vector2(0.75, 0)
+	# Exactly representable radii make the equality case observable in Vector2 metres.
+	var saved: BodyTable = ArenaBodies._table
+	var table: BodyTable = BodyTable.new()
+	table._radius[RivetBody.CLASS] = 0.5
+	table._radius[RivetBody.PERSON] = 0.25
+	ArenaBodies._table = table
+	var tangent: bool = VaultProbe.landing_occupied(stage.arena, Vector2.ZERO)
+	var overlapping: bool = VaultProbe.landing_occupied(stage.arena, Vector2(0.125, 0))
+	ArenaBodies._table = saved
+	assert_false(tangent)
+	assert_true(overlapping)
