@@ -22,9 +22,9 @@ gatling          top    .     -      -     -       -       .       .       .    
 gloria           top    .     -      -     -       -       .       -       .       -       -       -            -            0
                  p55    .     .      .     .       -       .       -       .       -       -       -            -
                  p70    .     .      .     .       -       .       -       .       -       -       -            -
-hand_cannon      top    .     -      -     -       .       .       .       .       -       -       -            -            2
-                 p55    .     .      .     .       X       .       .       .       -       -       -            -
-                 p70    .     .      .     .       X       .       .       .       -       -       -            -
+hand_cannon      top    .     -      -     -       .       .       .       .       -       -       -            -            0
+                 p55    .     .      .     .       .       .       .       .       -       -       -            -
+                 p70    .     .      .     .       .       .       .       .       -       -       -            -
 homing_shard     top    .     -      -     -       .       .       -       .       -       -       -            -            0
                  p55    .     .      .     .       .       .       -       .       -       -       -            -
                  p70    .     .      .     .       .       .       -       .       -       -       -            -
@@ -55,4 +55,4 @@ ray_gun          top    .     -      -     -       .       .       -       .    
 rocket_launcher  top    .     -      -     -       -       .       -       .       -       -       -            -            0
                  p55    .     .      .     .       -       .       -       .       -       -       -            -
                  p70    .     .      .     .       -       .       -       .       -       -       -            -
-Total holes  5
+Total holes  3

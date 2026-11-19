@@ -84,19 +84,19 @@ def equipped_receiver(gun, pitch, outline):
         cell = sheet.crop((5*w, 0, 6*w, sheet.height)).convert("RGBA")
     cell = cell.crop(cell.getbbox())
     mask = Image.new("L", cell.size)
-    ImageDraw.Draw(mask).polygon(outline, fill=255)
+    ImageDraw.Draw(mask).polygon([tuple(pt) for pt in outline], fill=255)
     cell.putalpha(Image.fromarray(np.minimum(np.asarray(mask), np.asarray(cell.getchannel("A")))))
     return cell.crop(cell.getbbox())
 
 
-def inset(body, part, segment, offset, outline=None, loose=False, pistol_base=False):
+def inset(body, part, segment, offset, outline=None, loose=False, pistol_base=False, round_load=False):
     """Project the part along the painted surface. Preserve the hand-inked outer
     contour and the original opacity where the gun and claw overlap."""
     x, y, tx, ty, width = segment
     start = np.array([x, y], dtype=float) + offset
     end = np.array([tx, ty], dtype=float) + offset
     axis = end - start
-    if loose:
+    if loose or round_load:
         width = max(width, np.linalg.norm(axis) * part.height / part.width)
     across = np.array([-axis[1], axis[0]]) / np.linalg.norm(axis) * width / 2
     if end[0] < start[0]:
@@ -126,6 +126,16 @@ def inset(body, part, segment, offset, outline=None, loose=False, pistol_base=Fa
         if label == 0 or np.sum(ids == label) > 4 * np.linalg.norm(axis)**2:
             raise ValueError("loose magazine is not a separate opaque component")
         body.paste((0, 0, 0, 0), mask=Image.fromarray(cv2.dilate((ids == label).astype("uint8")*255, np.ones((3,3), "uint8"))))
+        body.alpha_composite(paint)
+        return
+    if round_load:
+        # A speedloader is circular. Seat its full face between the fingers,
+        # replacing the exposed flat surface of the base pistol magazine.
+        core = Image.new("L", body.size)
+        n = across * segment[4] / width
+        points = [start-n, end-n, end+n, start+n]
+        ImageDraw.Draw(core).polygon([tuple(np.rint(pt).astype(int)) for pt in points], fill=255)
+        body.paste((0, 0, 0, 0), mask=core)
         body.alpha_composite(paint)
         return
     if outline:
@@ -191,8 +201,8 @@ def build(gun, only_pitch=None, only_suffix=None):
         if gun == "electro_gun":
             angled = electro_barrel(pitch, 1)
             side = electro_barrel(pitch, 5)
-        if gun == "machine_pistol":
-            # Side rest exposes the stock loop, receiver hoop and vented muzzle.
+        else:
+            # Side rest exposes the silhouette around the slide and muzzle.
             outline = json.loads((RECIPES / (gun + "_held.json")).read_text())[pitch]
             held = equipped_receiver(gun, pitch, outline)
         for suffix, count, offset in (("", 8, 0), ("_left", 3, 8)):
@@ -216,15 +226,21 @@ def build(gun, only_pitch=None, only_suffix=None):
                     if offset+i == 4:  # only the emitter projects past the back of the helmet
                         held = angled.crop((angled.width//2, 0, angled.width, angled.height))
                         gun_region[4] *= 1.9
-                elif gun == "machine_pistol":
+                else:
                     # Seat the longer skeleton stock behind the grip. Keep the
                     # slotted muzzle at the location painted into the base.
                     start, tip = np.array(gun_region[:2]), np.array(gun_region[2:4])
-                    start = start - (tip-start) * .33
+                    start = start - (tip-start) * (.33 if gun == "machine_pistol" else .10)
+                    if gun == "hand_cannon":
+                        # The broad cylinder seats lower in the claw than the
+                        # pistol slide. Allow the round muzzle its full lip.
+                        start[1] += 3
+                        tip = tip + (tip-start) * .07 + [0, 3]
                     gun_region = [*start, *tip, np.linalg.norm(tip-start)*held.height/held.width]
                 inset(cell, held, gun_region, origin, outline=outlines[pitch][offset+i], pistol_base=base == "pistol")
                 for n, region in enumerate(magazines):
-                    inset(cell, mag, region, origin, loose=offset+i == 5 and n == len(magazines)-1, pistol_base=base == "pistol")
+                    inset(cell, mag, region, origin, loose=offset+i == 5 and n == len(magazines)-1,
+                          pistol_base=base == "pistol", round_load=gun == "hand_cannon")
                 strip.paste(cell, (i*width, 0))
             strip.save(VIEW / pitch / name.replace(base, gun), optimize=True)
 

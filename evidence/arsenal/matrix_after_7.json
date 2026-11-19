@@ -2,9 +2,7 @@
   "holes": {
     "assault-rifle/p55/pickup": "absent from rack ORDER",
     "assault-rifle/p70/pickup": "absent from rack ORDER",
-    "assault-rifle/top/pickup": "absent from rack ORDER",
-    "hand_cannon/p55/reload": "missing or invalid rivet_reload_hand_cannon.png; missing or invalid rivet_reload_hand_cannon_left.png",
-    "hand_cannon/p70/reload": "missing or invalid rivet_reload_hand_cannon.png; missing or invalid rivet_reload_hand_cannon_left.png"
+    "assault-rifle/top/pickup": "absent from rack ORDER"
   },
   "holes_per_weapon": {
     "assault-rifle": 3,
@@ -14,7 +12,7 @@
     "flamethrower": 0,
     "gatling": 0,
     "gloria": 0,
-    "hand_cannon": 2,
+    "hand_cannon": 0,
     "homing_shard": 0,
     "katana": 0,
     "machine_pistol": 0,
@@ -29,7 +27,7 @@
   "missing_resources": {},
   "schema": "gtai.arsenal-audit/1",
   "table_errors": [],
-  "total_holes": 5,
+  "total_holes": 3,
   "weapons": {
     "assault-rifle": {
       "p55": {
@@ -1134,8 +1132,8 @@
           "status": "ok"
         },
         "reload": {
-          "reason": "missing or invalid rivet_reload_hand_cannon.png; missing or invalid rivet_reload_hand_cannon_left.png",
-          "status": "HOLE"
+          "reason": "magazine part and both reload strips",
+          "status": "ok"
         },
         "strike": {
           "reason": "no melee swing",
@@ -1184,8 +1182,8 @@
           "status": "ok"
         },
         "reload": {
-          "reason": "missing or invalid rivet_reload_hand_cannon.png; missing or invalid rivet_reload_hand_cannon_left.png",
-          "status": "HOLE"
+          "reason": "magazine part and both reload strips",
+          "status": "ok"
         },
         "strike": {
           "reason": "no melee swing",

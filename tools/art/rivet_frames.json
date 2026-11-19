@@ -299,6 +299,7 @@
     "sheet": "rivet_reload_heavy_55_left_claw.png"
    },
    "rivet_reload_machine_pistol": {"reload_composite": "machine_pistol"},
+   "rivet_reload_hand_cannon": {"reload_composite": "hand_cannon"},
    "rivet_reload_pistol": {
     "act_k": 0.814,
     "counts": "5,3",
@@ -306,6 +307,7 @@
     "sheet": "rivet_reload_onehand_55_claw_build.png"
    },
    "rivet_reload_machine_pistol_left": {"reload_composite": "machine_pistol"},
+   "rivet_reload_hand_cannon_left": {"reload_composite": "hand_cannon"},
    "rivet_reload_pistol_left": {
     "counts": "3",
     "sheet": "rivet_reload_onehand_55_left_claw.png",
@@ -658,6 +660,7 @@
     "fig_h": 165
    },
    "rivet_reload_machine_pistol": {"reload_composite": "machine_pistol"},
+   "rivet_reload_hand_cannon": {"reload_composite": "hand_cannon"},
    "rivet_reload_pistol": {
     "act_k": 0.706,
     "counts": "5,3",
@@ -665,6 +668,7 @@
     "sheet": "rivet_reload_onehand_70_claw_build.png"
    },
    "rivet_reload_machine_pistol_left": {"reload_composite": "machine_pistol"},
+   "rivet_reload_hand_cannon_left": {"reload_composite": "hand_cannon"},
    "rivet_reload_pistol_left": {
     "counts": "3",
     "sheet": "rivet_reload_onehand_70_left_claw_build.png",

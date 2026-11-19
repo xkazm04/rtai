@@ -178,6 +178,7 @@ def _manifest(path: str, only: str = "", no_rim: bool = False) -> None:
             if not name.startswith(only):
                 continue
             if "reload_composite" in row:
+                sys.path.insert(0, str(Path(__file__).resolve().parent))
                 from reload_composite import build as build_reload
                 build_reload(row["reload_composite"], art, "_left" if name.endswith("_left") else "")
                 continue

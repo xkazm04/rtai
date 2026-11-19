@@ -2,9 +2,7 @@
   "holes": {
     "assault-rifle/p55/pickup": "absent from rack ORDER",
     "assault-rifle/p70/pickup": "absent from rack ORDER",
-    "assault-rifle/top/pickup": "absent from rack ORDER",
-    "hand_cannon/p55/reload": "missing or invalid rivet_reload_hand_cannon.png; missing or invalid rivet_reload_hand_cannon_left.png",
-    "hand_cannon/p70/reload": "missing or invalid rivet_reload_hand_cannon.png; missing or invalid rivet_reload_hand_cannon_left.png"
+    "assault-rifle/top/pickup": "absent from rack ORDER"
   },
   "schema": "gtai.arsenal-known-holes/1"
 }
