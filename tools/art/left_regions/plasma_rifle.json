@@ -24,6 +24,7 @@
   "p70": [
     [
       {"part": "rigid hazard collar stripes", "band": [[129, 122, 131], [131, 124, 133], [140, 134, 145], [154, 143, 154], [168, 148, 158], [178, 147, 157], [185, 143, 152], [187, 141, 150]]},
+      {"part": "preserve mirrored helmet against equipment changes", "keep": [128, 57, 218, 147]},
       {"part": "receiver latch relief", "band": [[187, 154, 159], [210, 144, 149]]},
       {"part": "trigger claw and stock catch", "band": [[157, 174, 180], [169, 169, 175]]},
       {"part": "return hose under the near claw, reverse the curved coupling in its seat", "band": [[117, 184, 188], [121, 190, 194], [128, 194, 199], [137, 195, 200], [143, 194, 197]]},
@@ -31,6 +32,7 @@
     ],
     [
       {"part": "rigid hazard collar stripes", "band": [[127, 122, 132], [129, 124, 134], [139, 135, 146], [153, 143, 154], [169, 147, 158], [181, 145, 156], [192, 138, 149], [194, 136, 147]]},
+      {"part": "preserve mirrored helmet against equipment changes", "keep": [127, 55, 216, 148]},
       {"part": "receiver latch relief", "band": [[201, 147, 152], [219, 140, 145]]},
       {"part": "trigger claw and stock catch", "band": [[172, 167, 172], [186, 160, 166]]},
       {"part": "return hose under the near claw, reverse the curved coupling in its seat", "band": [[125, 181, 187], [129, 191, 196], [137, 197, 201], [148, 201, 205], [156, 201, 204]]},
@@ -38,6 +40,7 @@
     ],
     [
       {"part": "rigid hazard collar stripes", "band": [[130, 120, 130], [132, 122, 132], [141, 135, 145], [153, 142, 153], [168, 146, 157], [183, 144, 156], [190, 137, 149], [192, 135, 147]]},
+      {"part": "preserve mirrored helmet against equipment changes", "keep": [130, 55, 220, 146]},
       {"part": "receiver latch relief", "band": [[198, 147, 151], [216, 137, 142]]},
       {"part": "trigger claw and stock catch", "band": [[177, 174, 180], [187, 168, 174]]},
       {"part": "return hose under the near claw, reverse the curved coupling in its seat", "band": [[120, 169, 176], [124, 179, 183], [132, 184, 188], [140, 187, 190]]},
