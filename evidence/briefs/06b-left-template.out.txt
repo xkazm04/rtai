@@ -1,0 +1,24 @@
+**The plasma rifle audits at 0 holes, down from 2. Its art is uncommitted because the hand-made p55 SE pose itself exceeds the helmet tolerance.** Its helmet measures 69/165 px, or 41.8% of figure height. E rest measures 65/167 px, or 38.9%. The corrected SW cell preserves the SE proportion exactly, putting it 7.45% above E. [Measured comparison](C:/Users/kazda/kiro/gtai-masters/n19/guns/plasma_rifle/plasma_rifle_p55_helmet.png)
+
+`f21f56f91` commits the mirror cutter, its tests, the extended cell metrics, and centered turn framing. The plasma candidate adds six PNGs with imports and provenance. SW, W, NW, and W fire are mirror-based, corrected for the rigid collar stripes, receiver latch, trigger claw, and visible cable. **Zero pixels differed outside the correction masks** across all six PNGs.
+
+| Rest pose | Height at 64 px/m | Height Δ vs E | Helmet / figure | Helmet Δ vs E | Shell ΔE |
+|---|---:|---:|---:|---:|---:|
+| p55 SW | 138.01 px | −1.20% | 41.82% | **+7.45%** | 2.01 |
+| p55 W | 139.68 px | 0% | 38.92% | 0% | 0 |
+| p55 NW | 136.34 px | −2.40% | 40.49% | +4.03% | 3.70 |
+| p70 SW | 133.96 px | −1.20% | 56.36% | +4.58% | 4.64 |
+| p70 W | 135.59 px | 0% | 53.89% | 0% | 0 |
+| p70 NW | 135.59 px | 0% | 54.49% | +1.11% | 0.85 |
+
+The W fire and noflash twins also inherit the hand-made firing crouch. They stand 8.38% below E rest at p55 and 7.78% below it at p70. The full table includes width/height, mean L\*, and mean C\* for all 906 cells. [Metrics](C:/Users/kazda/kiro/gtai-wt/n19-guns/evidence/arsenal/cell_metrics.txt) · [Audit matrix](C:/Users/kazda/kiro/gtai-wt/n19-guns/evidence/arsenal/matrix_after_6.txt)
+
+**Verification.** Changed units passed 1,659 with 2 skipped. All 22 selected units and all five Python tests passed. Lint passed all 19 checks. Release compile loaded 740 scripts with zero failures. The tool commit passed the full quick gate. The candidate’s standalone Godot check reproduced `SCRIPT ERROR: Compile Error: Identifier not found: Log` at `res://features/characters/part_library.gd:60` on both the candidate and `28302bd3c`. Its `--no-godot` quick gate passed.
+
+**Evidence.** Both pitches have director crops and old-over-new arena sheets. The p55 clip runs 10.67 seconds with Rivet centered through all eight directions. [Evidence index](C:/Users/kazda/kiro/gtai-masters/n19/guns/plasma_rifle/frames.json) · [p55 crop](C:/Users/kazda/kiro/gtai-masters/n19/guns/plasma_rifle/plasma_rifle_p55_left_check.png) · [p70 crop](C:/Users/kazda/kiro/gtai-masters/n19/guns/plasma_rifle/plasma_rifle_p70_left_check.png) · [Turning clip](C:/Users/kazda/kiro/gtai-masters/n19/guns/plasma_rifle/plasma_rifle_p55_turn32.mp4)
+
+Shared registration rows are `rivet_frames.json` 149, 155, 161, 444, 450, 456; `rivet_res.gd` 15–16 and 81–82; and `rivet_muzzle.json` 602, 618, 1340, 1356.
+
+Gatling, flamethrower, Gloria, and both launcher rebuilds remain pending in the requested order. **I recommend using the matching hand-made facing as the acceptance reference when that source already exceeds the E-rest limit**, while continuing to publish the E-rest difference.
+
+[astra: 1314s, exit 0]
