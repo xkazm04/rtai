@@ -81,6 +81,43 @@ func test_loading_apron_keeps_the_neighbour_tile_untouched() -> void:
 		assert_eq(_cell(build.chunk, local + Vector2i(8, y)), SimConst.C_VOID, "next tile")
 
 
+func test_each_warehouse_apron_marks_its_edge_clear_of_stacks() -> void:
+	var aprons: int = 0
+	for cy: int in SimConst.CITY_CHUNKS:
+		for cx: int in SimConst.CITY_CHUNKS:
+			if _gen.zones.of_chunk(cx, cy) != _docks:
+				continue
+			var ch: CityChunk = _gen.gen_chunk(cx, cy)
+			var markers: Dictionary = _bollards_by_tile(ch)
+			for t: Vector2i in _yard_tiles(Vector2i(cx, cy)):
+				var below: int = TilePainter.local_index(t) + SimConst.CHUNK_TILES
+				var want: Array[Vector2] = []
+				if below < ch.tiles.size() and ch.tiles[below] == SimConst.T_BLOCK:
+					aprons += 1
+					if _stood(ch, t, 1):
+						want = [Vector2(0.5, 5.25)]
+					else:
+						want = [Vector2(1.5, 5.25), Vector2(4, 5.25), Vector2(6.5, 5.25)]
+				var actual: Array = markers.get(t, [])
+				assert_eq(actual, want, "yard %s loading edge" % t)
+	assert_gt(aprons, 0, "the district contains warehouse loading aprons")
+
+
+func _bollards_by_tile(ch: CityChunk) -> Dictionary:
+	var markers: Dictionary = {}
+	for i: int in ch.tex.size():
+		var xf: int = i * CityChunk.XF_STRIDE
+		if ch.tex[i] != DockPainter.T_BOLLARD or ch.xf[xf + 3] != 0.0:
+			continue
+		var pos := Vector2(ch.xf[xf], ch.xf[xf + 1])
+		var tile := Vector2i((pos / SimConst.TILE_M).floor())
+		if not markers.has(tile):
+			markers[tile] = []
+		var positions: Array = markers[tile]
+		positions.append(pos - TilePainter.origin(tile))
+	return markers
+
+
 ## Whether slot k of tile t stands a stack (the chunk's prop commands).
 func _stood(ch: CityChunk, t: Vector2i, k: int) -> bool:
 	var at: Vector2 = Vector2(t * 8) + DockPainter.YARD_SLOTS[k]
