@@ -47,7 +47,7 @@ func destination() -> Vector2:
 func velocity(pit: EnemyPit, map: GuardRouteMap, fallen: float) -> Vector2:
 	var e: EnemyAgent = agent
 	_blind = 0 if e.sees else _blind + 1
-	if EnemyBrain.break_morale(e, fallen, pit.roster.panic_ticks):
+	if fallen > e.arch.morale and EnemyBrain.break_morale(e, fallen, pit.roster.panic_ticks):
 		motion = S.PANIC
 	if motion == S.PANIC:
 		e.timer -= 1
@@ -138,7 +138,8 @@ func _plan(pit: EnemyPit, map: GuardRouteMap) -> void:
 
 
 func _set_goal(goal: Vector2, map: GuardRouteMap, known_blocked: bool = false) -> void:
-	agent.goal = goal.clamp(map.region().position, map.region().end)
+	var bounds: Rect2 = map.region()
+	agent.goal = goal.clamp(bounds.position, bounds.end)
 	if agent.goal.floor() == _destination.floor():
 		return
 	_destination = agent.goal

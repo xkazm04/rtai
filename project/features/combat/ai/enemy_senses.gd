@@ -52,7 +52,10 @@ static func best_cover(
 	for r: Rect2 in cover:
 		var spot: Vector2 = cover_spot(r, threat, radius)
 		var d: float = e.pos.distance_to(spot)
-		if d < best_d and not _taken(spot, taken) and blocked(spot, threat, cover):
+		if d >= best_d or _taken(spot, taken):
+			continue
+		# The hiding spot is projected away from the threat through this box's centre.
+		if _segment_hits_rect(spot, threat, r) or blocked(spot, threat, cover):
 			best_d = d
 			best = spot
 	return best

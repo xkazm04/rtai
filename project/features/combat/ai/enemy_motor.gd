@@ -15,13 +15,14 @@ static func move(
 
 
 static func steer(e: EnemyAgent, want: Vector2, look_at: Vector2, pit: EnemyPit) -> void:
-	var top: float = e.arch.speed_mps * (1.6 if e.state == EnemyAgent.State.PANIC else 1.0)
+	var arch: EnemyRoster.Archetype = e.arch
+	var top: float = arch.speed_mps * (1.6 if e.state == EnemyAgent.State.PANIC else 1.0)
 	want = want.limit_length(top)
-	e.vel = e.vel.move_toward(want, e.arch.accel_mps2 * SimClock.TICK_DT)
-	e.pos += e.vel * SimClock.TICK_DT
+	e.vel = e.vel.move_toward(want, arch.accel_mps2 * SimClock.TICK_DT)
+	var pos: Vector2 = e.pos + e.vel * SimClock.TICK_DT
 	if not pit.cover.is_empty():
-		e.pos = EnemySenses.push_out(e.pos, e.radius(), pit.cover)
-	e.pos = e.pos.clamp(pit.bounds.position, pit.bounds.end)
+		pos = EnemySenses.push_out(pos, e.radius(), pit.cover)
+	e.pos = pos.clamp(pit.bounds.position, pit.bounds.end)
 	var face: Vector2 = look_at - e.pos
 	if e.state == EnemyAgent.State.PANIC or e.state == EnemyAgent.State.PATROL:
 		face = e.vel if e.vel.length() > 0.3 else e.facing
@@ -79,15 +80,16 @@ static func separation(
 	var reach: float = radius + EnemyAgent.ROBOT_RADIUS_M + gap + 0.001
 	var reach_sq: float = reach * reach
 	for o: EnemyAgent in agents:
-		var delta: Vector2 = p - o.pos
-		if delta.length_squared() > reach_sq or o == e:
+		var other: Vector2 = o.pos
+		if p.distance_squared_to(other) > reach_sq or o == e:
 			continue
 		if o.state == EnemyAgent.State.DEAD or o.state == EnemyAgent.State.DOWN:
 			continue
 		var keep: float = radius + o.radius() + gap
-		if split_overlap and delta == Vector2.ZERO:
+		if split_overlap and p == other:
 			push += Vector2.RIGHT * (keep if e.id > o.id else -keep)
 		else:
+			var delta: Vector2 = p - other
 			var dist: float = delta.length()
 			if dist < keep and dist >= 0.0001:
 				push += delta / dist * (keep - dist)
