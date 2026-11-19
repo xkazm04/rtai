@@ -5,21 +5,25 @@ extends RefCounted
 
 
 static func make(cap: int, shader: Shader, cols: int, rows: int) -> MultiMeshInstance2D:
-	var mm: MultiMesh = MultiMesh.new()
-	mm.transform_format = MultiMesh.TRANSFORM_2D
-	mm.use_colors = true
-	mm.use_custom_data = true
-	mm.mesh = quad()
-	mm.instance_count = cap
-	mm.visible_instance_count = 0
-	mm.custom_aabb = AABB(Vector3(-1e7, -1e7, -10), Vector3(2e7, 2e7, 20))
 	var node: MultiMeshInstance2D = MultiMeshInstance2D.new()
-	node.multimesh = mm
+	node.multimesh = instances(cap, quad())
+	node.multimesh.custom_aabb = AABB(Vector3(-1e7, -1e7, -10), Vector3(2e7, 2e7, 20))
 	var mat: ShaderMaterial = ShaderMaterial.new()
 	mat.shader = shader
 	node.material = mat
 	set_grid(node, Vector2i(cols, rows))
 	return node
+
+
+static func instances(cap: int, mesh: Mesh) -> MultiMesh:
+	var mm: MultiMesh = MultiMesh.new()
+	mm.transform_format = MultiMesh.TRANSFORM_2D
+	mm.use_colors = true
+	mm.use_custom_data = true
+	mm.mesh = mesh
+	mm.instance_count = cap
+	mm.visible_instance_count = 0
+	return mm
 
 
 ## The atlas grid (columns, rows) the layer's shader reads its cells from.
