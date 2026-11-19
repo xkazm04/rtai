@@ -11,6 +11,7 @@ Same pipeline and law as packages 3-5 (your thread knows them); the turn kit fro
 64 px/m contact sheets per pitch, old (`28302bd3c`) above new; 32 px/m turning clip p55; `frames.json` (8-15 entries, best first). Compare each new left cell with the hand-made neighbours at 64 px/m and redraw any that can be told apart; say which came closest.
 
 ## Acceptance
+- Measured, not eyeballed (package 5 drew left cells 30 % too tall and pale): `cell_metrics` (package 5b's tool) shows each new left cell within 5 % height and inside the tone threshold of that weapon's own E rest cell, at both pitches. Quote the rows.
 - Audit: each finished weapon 0 holes; `arsenal_known_holes.json` updated; `evidence/arsenal/matrix_after_6.txt` (+ .json).
 - `run_unit.mjs --changed` and `--select=test_arsenal_audit,test_rivet_gun_diag,test_rivet_fire_cam` green; lint; `release_compile.mjs`; `node tools/gate/quick.mjs` before each commit (`--no-godot` only for the known standalone-autoload error, said per commit). Mutate the main changed `.gd` if any (quote the score).
 - One commit per weapon (art + rows), staged per path (stage only yours; commit with `-- <paths>`), `.import`/`.uid` with their sources.

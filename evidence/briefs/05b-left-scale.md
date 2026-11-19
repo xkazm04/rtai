@@ -1,0 +1,14 @@
+# Package 5b (guns lane, n19): bounce - the new left cells are oversized and pale
+
+Director's look at your package 5 evidence (64 px/m): `mini_nuke_p55_left_neighbors.png` and `rocket_launcher_p55_left_neighbors.png`. Your new SW/W/NW cells show Rivet about 30 % taller than the hand-made electro_gun left cells beside them (W rocket: figure ~150 px tall vs electro ~110 px in that sheet), and his shell is a pale orange copper where the hand-made left and rest cells are dark rust-brown. In `rocket_launcher_p55_64.png` the W/SW/NW REST cells are visibly bigger and lighter than the same weapon's own E/SE REST cells in the same row. At 64 px/m a player can tell them apart. That fails the brief's main test.
+
+## Do
+1. A measuring script (`tools/art/cell_metrics.py` or similar, kept in the repo with a small test): for every rendered (or cut) Rivet cell, report the figure's opaque bounding-box height in px at the game's scale, and the median colour of Rivet's shell (exclude gun, collar, flash). Run it over every weapon's strips at p55 and p70: right, diag, left, reload. Write `evidence/arsenal/cell_metrics.txt` (+ .json): one row per weapon x pitch x facing. Mark every cell whose height differs by more than 5 % from that weapon's own right-facing (E) rest cell, or whose shell colour is clearly off from it (pick a threshold and state it; the hand-made strips' own spread is a fair yardstick).
+2. Fix the left cells you drew tonight (mini_nuke, rocket_launcher, p55 and p70) so they pass: re-cut or re-scale to the right height in the cutter (script, not by hand), and pull the shell tone to the rest strip's (colour grade in the cutter, or redraw if a grade cannot do it cleanly). Re-check the muzzle/exhaust rows if the scale moves the anchor.
+3. Report the metrics table's other outliers (any weapon, including tonight's rifle, homing_shard and ray_gun diagonals, and the hand-made ones) but do not fix those in this package. The director picks.
+4. Evidence: re-shoot `<gun>_p55_64.png`, `_p70_64.png` and `_left_neighbors.png` (both pitches) for both weapons, old (the 6644bda03 cells) above new, into the same folders; update `frames.json`.
+
+## Acceptance
+Both weapons' left cells within 5 % height and inside the tone threshold of their own E rest cell. Audit still 0 holes for both. Unit `--changed` + `--select=test_arsenal_audit,test_rivet_gun_diag` green; lint; release_compile; quick gate before each commit (say if `--no-godot`). One commit for the tool + test, one per weapon. Shared rows only, lines listed.
+Law as packages 3-5: `export APPDATA=C:/Users/kazda/kiro/gtai-n19/appdata/guns`, GODOT_BIN, d3d12, `--position 0,1440`, one Godot, own PIDs; no stash / add -A / commit -a / reset --hard / push; image_gen + manifest + provenance if anything is redrawn.
+Report: the metrics table (outliers), commits, evidence paths.
