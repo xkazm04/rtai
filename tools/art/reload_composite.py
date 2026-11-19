@@ -89,7 +89,49 @@ def equipped_receiver(gun, pitch, outline):
     return cell.crop(cell.getbbox())
 
 
-def inset(body, part, segment, offset, outline=None, loose=False, pistol_base=False, round_load=False):
+# Target polygons in native base-cell coordinates, followed by the source
+# offset on that same painted cell. Restore the claw or collar behind the
+# new receiver before laying the gun down. A zero offset keeps original ink.
+GRIP_PATCHES = {
+    ("pistol", "p55", 1): [
+        ([(43,63),(51,62),(59,58),(68,57),(64,60),(55,63),(50,67),
+          (49,70),(48,77),(45,80),(43,78)], (0,0)),
+        ([(47,78),(47,73),(49,69),(52,66),(57,65),(61,67),(67,72),
+          (71,77),(68,81),(52,82)], (0,12)),
+        ([(45,79),(53,78),(60,78),(67,76),(75,73),(76,75),(69,82),
+          (52,85),(45,84)], (0,3)),
+    ],
+    ("pistol", "p55", 7): [
+        ([(53,51),(67,48),(73,47),(71,50),(64,51),(58,55),(58,62),
+          (55,67),(53,66)], (0,0)),
+        ([(55,67),(56,60),(59,56),(63,55),(69,56),(78,62),(77,68),
+          (65,70),(56,71)], (0,12)),
+    ],
+    ("plasma_rifle", "p70", 7): [
+        ([(74,79),(108,73),(125,72),(141,88),(141,94),(119,95),
+          (90,96),(76,98)], (0,0)),
+        ([(84,96),(87,91),(91,86),(97,83),(103,81),(109,81),
+          (115,83),(120,87),(124,91),(138,91),(140,98),(130,102),
+          (110,99),(83,99)], (-74,0)),
+        ([(113,83),(120,87),(124,91),(138,91),(140,98),(130,102),
+          (110,99),(108,92)], (-101,2)),
+        ([(141,89),(178,89),(178,125),(141,125)], (45,0)),
+    ],
+}
+
+
+def refill(body, original, offset, patches, erased):
+    for points, (dx, dy) in patches:
+        mask = Image.new("L", body.size)
+        ImageDraw.Draw(mask).polygon([tuple(np.add(pt, offset)) for pt in points], fill=255)
+        # Pillow translates the entire donor in integer pixels, including its
+        # transparent edge, so hidden steel cannot leave an interpolated halo.
+        donor = Image.new("RGBA", body.size)
+        donor.paste(original, (-dx, -dy))
+        body.paste(donor, mask=Image.fromarray(np.minimum(np.asarray(mask), erased)))
+
+
+def inset(body, part, segment, offset, outline=None, loose=False, pistol_base=False, round_load=False, patches=()):
     """Project the part along the painted surface. Preserve the hand-inked outer
     contour and the original opacity where the gun and claw overlap."""
     x, y, tx, ty, width = segment
@@ -169,6 +211,8 @@ def inset(body, part, segment, offset, outline=None, loose=False, pistol_base=Fa
         else:
             alpha[muzzle] = 0
         body.paste(Image.fromarray(np.dstack((rgb, alpha))), mask=Image.fromarray((mask > 0) | muzzle))
+        if patches:
+            refill(body, Image.fromarray(original), offset, patches, ((mask > 0) | muzzle).astype("uint8")*255)
         body.alpha_composite(paint)
         if pistol_base:
             # A slide sight can leave a detached antialiased edge just outside
@@ -237,7 +281,8 @@ def build(gun, only_pitch=None, only_suffix=None):
                         start[1] += 3
                         tip = tip + (tip-start) * .07 + [0, 3]
                     gun_region = [*start, *tip, np.linalg.norm(tip-start)*held.height/held.width]
-                inset(cell, held, gun_region, origin, outline=outlines[pitch][offset+i], pistol_base=base == "pistol")
+                inset(cell, held, gun_region, origin, outline=outlines[pitch][offset+i], pistol_base=base == "pistol",
+                      patches=GRIP_PATCHES.get((base, pitch, offset+i), ()))
                 for n, region in enumerate(magazines):
                     inset(cell, mag, region, origin, loose=offset+i == 5 and n == len(magazines)-1,
                           pistol_base=base == "pistol", round_load=gun == "hand_cannon")
