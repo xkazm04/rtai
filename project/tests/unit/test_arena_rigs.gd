@@ -81,6 +81,7 @@ func test_wave_member_outside_rig_radius_keeps_one_drawn_body() -> void:
 	rigs.feed.looks[0] = ArenaSquadLooks.PATROL_LOOK
 	rigs.feed.count = 1
 	var cards: ArenaWaveCards = ArenaWaveCards.attach(rigs, pit.standing)
+	assert_gt(cards.process_priority, rigs.process_priority, "read the current rig selection")
 	for distance: float in [20.0, 0.0, 20.0]:
 		rigs.focus = rigs.feed.pos[0] + Vector2.RIGHT * distance * SimConst.PX_PER_M
 		for _tick: int in CharacterRigs.SELECT_EVERY:
@@ -94,6 +95,27 @@ func test_wave_member_outside_rig_radius_keeps_one_drawn_body() -> void:
 	guard.hp = 0
 	cards._process(0.0)
 	assert_null(cards.card_for(guard.id))
+
+
+func test_patrol_card_follows_the_first_stride_and_draws_at_body_height() -> void:
+	var host: ArenaRigs = _rigs()
+	host._put(0, _armed(17), BodyPlan.Kind.COP)
+	var feed: RigFeed = host.rigs.feed
+	feed.looks[0] = ArenaSquadLooks.PATROL_LOOK
+	feed.vel[0] = Vector2.RIGHT * SimConst.PX_PER_M
+	var card: ArenaWaveCards.Card = autofree(ArenaWaveCards.Card.new())
+	var previous: ViewMode = ViewMode.shared()
+	ViewMode.select("tilt")
+	card.hide()
+	card.pose(feed, 0)
+	feed.pos[0].x += 0.375 * StreetQuestCards.STRIDE_M * SimConst.PX_PER_M
+	card.pose(feed, 0)
+	ViewMode._shared = previous
+	assert_eq(card.frame_coords.y, 1)
+	var cell: Vector2 = card.texture.get_size() / Vector2(card.hframes, card.vframes)
+	assert_almost_eq(card.offset.y, -cell.y * StreetWalkerCards.FOOT_Y, 0.001)
+	var height_m: float = cell.y * card.scale.y / SimConst.PX_PER_M
+	assert_between(height_m, 1.75, 2.55, "two-metre patrol sheet with per-actor variation")
 
 
 func test_a_rifle_kicks_harder_than_the_pistol() -> void:
