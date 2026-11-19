@@ -1,0 +1,59 @@
+Rivet arsenal    . ok    X HOLE    i informational gap    - n/a
+
+weapon           pitch  held  fire8  left  muzzle  reload  recoil  casing  pickup  strike  windup  left_strike  left_windup  walk  run  holes
+assault-rifle    top    .     -      -     -       .       .       .       X       -       -       -            -            -     -    3
+                 p55    .     .      .     .       .       .       .       X       -       -       -            -            i     i
+                 p70    .     .      .     .       .       .       .       X       -       -       -            -            i     i
+chainsaw         top    .     -      -     -       -       -       -       .       -       -       -            -            -     -    0
+                 p55    .     -      .     -       -       -       -       .       .       .       .            .            i     i
+                 p70    .     -      .     -       -       -       -       .       .       .       .            .            i     i
+electro_baton    top    .     -      -     -       -       -       -       .       -       -       -            -            -     -    0
+                 p55    .     -      .     -       -       -       -       .       .       .       .            .            i     i
+                 p70    .     -      .     -       -       -       -       .       .       .       .            .            i     i
+electro_gun      top    .     -      -     -       .       .       -       .       -       -       -            -            -     -    0
+                 p55    .     .      .     .       .       .       -       .       -       -       -            -            i     i
+                 p70    .     .      .     .       .       .       -       .       -       -       -            -            i     i
+flamethrower     top    .     -      -     -       -       .       -       .       -       -       -            -            -     -    0
+                 p55    .     .      .     .       -       .       -       .       -       -       -            -            .     .
+                 p70    .     .      .     .       -       .       -       .       -       -       -            -            .     .
+gatling          top    .     -      -     -       -       .       .       .       -       -       -            -            -     -    0
+                 p55    .     .      .     .       -       .       .       .       -       -       -            -            .     .
+                 p70    .     .      .     .       -       .       .       .       -       -       -            -            .     .
+gloria           top    .     -      -     -       -       .       -       .       -       -       -            -            -     -    0
+                 p55    .     .      .     .       -       .       -       .       -       -       -            -            i     i
+                 p70    .     .      .     .       -       .       -       .       -       -       -            -            i     i
+hand_cannon      top    .     -      -     -       .       .       .       .       -       -       -            -            -     -    0
+                 p55    .     .      .     .       .       .       .       .       -       -       -            -            i     i
+                 p70    .     .      .     .       .       .       .       .       -       -       -            -            i     i
+homing_shard     top    .     -      -     -       .       .       -       .       -       -       -            -            -     -    0
+                 p55    .     .      .     .       .       .       -       .       -       -       -            -            i     i
+                 p70    .     .      .     .       .       .       -       .       -       -       -            -            i     i
+katana           top    .     -      -     -       -       -       -       .       -       -       -            -            -     -    0
+                 p55    .     -      .     -       -       -       -       .       .       .       .            .            .     .
+                 p70    .     -      .     -       -       -       -       .       .       .       .            .            .     .
+machine_pistol   top    .     -      -     -       .       .       .       .       -       -       -            -            -     -    0
+                 p55    .     .      .     .       .       .       .       .       -       -       -            -            i     i
+                 p70    .     .      .     .       .       .       .       .       -       -       -            -            i     i
+mini_nuke        top    .     -      -     -       -       .       -       .       -       -       -            -            -     -    0
+                 p55    .     .      .     .       -       .       -       .       -       -       -            -            i     i
+                 p70    .     .      .     .       -       .       -       .       -       -       -            -            i     i
+molotov          top    .     -      -     -       -       .       -       .       -       -       -            -            -     -    0
+                 p55    .     -      .     -       -       .       -       .       -       -       -            -            i     i
+                 p70    .     -      .     -       -       .       -       .       -       -       -            -            i     i
+pistol           top    .     -      -     -       .       .       .       .       -       -       -            -            -     -    0
+                 p55    .     .      .     .       .       .       .       .       -       -       -            -            .     .
+                 p70    .     .      .     .       .       .       .       .       -       -       -            -            .     .
+plasma_rifle     top    .     -      -     -       .       .       -       .       -       -       -            -            -     -    0
+                 p55    .     .      .     .       .       .       -       .       -       -       -            -            .     .
+                 p70    .     .      .     .       .       .       -       .       -       -       -            -            .     .
+plasma_sword     top    .     -      -     -       -       -       -       .       -       -       -            -            -     -    0
+                 p55    .     -      .     -       -       -       -       .       .       .       .            .            i     i
+                 p70    .     -      .     -       -       -       -       .       .       .       .            .            i     i
+ray_gun          top    .     -      -     -       .       .       -       .       -       -       -            -            -     -    0
+                 p55    .     .      .     .       .       .       -       .       -       -       -            -            i     i
+                 p70    .     .      .     .       .       .       -       .       -       -       -            -            i     i
+rocket_launcher  top    .     -      -     -       -       .       -       .       -       -       -            -            -     -    0
+                 p55    .     .      .     .       -       .       -       .       -       -       -            -            i     i
+                 p70    .     .      .     .       -       .       -       .       -       -       -            -            i     i
+Total holes  3
+Informational gaps 52

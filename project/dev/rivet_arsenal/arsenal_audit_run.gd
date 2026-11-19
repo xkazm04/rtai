@@ -3,7 +3,7 @@ extends SceneTree
 ## Paths may be absolute or relative to the repository root. Both outputs are optional.
 
 const KNOWN_FLAGS: PackedStringArray = ["--out", "--txt"]
-const SYMBOLS: Dictionary[String, String] = {"ok": ".", "HOLE": "X", "n/a": "-"}
+const SYMBOLS: Dictionary[String, String] = {"ok": ".", "HOLE": "X", "n/a": "-", "gap": "i"}
 
 
 func _initialize() -> void:
@@ -43,7 +43,9 @@ func _run() -> void:
 
 
 func _format(matrix: Dictionary, spec: Dictionary) -> String:
-	var lines: Array[String] = ["Rivet arsenal    . ok    X HOLE    - n/a", ""]
+	var lines: Array[String] = [
+		"Rivet arsenal    . ok    X HOLE    i informational gap    - n/a", ""
+	]
 	var header: String = "weapon".rpad(17) + "pitch".rpad(7)
 	for col: String in spec.COLUMNS:
 		header += col.rpad(col.length() + 2)
@@ -62,6 +64,7 @@ func _format(matrix: Dictionary, spec: Dictionary) -> String:
 				line + str(matrix.holes_per_weapon[id]) if first else line.strip_edges(false, true)
 			)
 	lines.append("Total holes  %d" % matrix.total_holes)
+	lines.append("Informational gaps %d" % matrix.informational_gaps)
 	return "\n".join(lines) + "\n"
 
 

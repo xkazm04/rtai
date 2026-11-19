@@ -1,0 +1,3202 @@
+{
+  "holes": {
+    "assault-rifle/p55/pickup": "absent from rack ORDER",
+    "assault-rifle/p70/pickup": "absent from rack ORDER",
+    "assault-rifle/top/pickup": "absent from rack ORDER"
+  },
+  "holes_per_weapon": {
+    "assault-rifle": 3,
+    "chainsaw": 0,
+    "electro_baton": 0,
+    "electro_gun": 0,
+    "flamethrower": 0,
+    "gatling": 0,
+    "gloria": 0,
+    "hand_cannon": 0,
+    "homing_shard": 0,
+    "katana": 0,
+    "machine_pistol": 0,
+    "mini_nuke": 0,
+    "molotov": 0,
+    "pistol": 0,
+    "plasma_rifle": 0,
+    "plasma_sword": 0,
+    "ray_gun": 0,
+    "rocket_launcher": 0
+  },
+  "informational_gaps": 52,
+  "missing_resources": {},
+  "schema": "gtai.arsenal-audit/1",
+  "table_errors": [],
+  "total_holes": 3,
+  "weapons": {
+    "assault-rifle": {
+      "p55": {
+        "casing": {
+          "reason": "casing resolves to on-disk FX art",
+          "status": "ok"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "absent from rack ORDER",
+          "status": "HOLE"
+        },
+        "recoil": {
+          "reason": "two_hand_long kick 1.0, arena rig_kick 1.4, fire_kick_px 1.2",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part and both reload strips",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_assault_rifle.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_assault_rifle.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "p70": {
+        "casing": {
+          "reason": "casing resolves to on-disk FX art",
+          "status": "ok"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "absent from rack ORDER",
+          "status": "HOLE"
+        },
+        "recoil": {
+          "reason": "two_hand_long kick 1.0, arena rig_kick 1.4, fire_kick_px 1.2",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part and both reload strips",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_assault_rifle.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_assault_rifle.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "top": {
+        "casing": {
+          "reason": "casing resolves to on-disk FX art",
+          "status": "ok"
+        },
+        "fire8": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own held part on the posed gun claw",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "absent from rack ORDER",
+          "status": "HOLE"
+        },
+        "recoil": {
+          "reason": "two_hand_long kick 1.0, arena rig_kick 1.4, fire_kick_px 1.2",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      }
+    },
+    "chainsaw": {
+      "p55": {
+        "casing": {
+          "reason": "melee has no rounds",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "own left facing",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "drawn left strike",
+          "status": "ok"
+        },
+        "left_windup": {
+          "reason": "drawn left windup",
+          "status": "ok"
+        },
+        "muzzle": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "reload": {
+          "reason": "melee has no magazine",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_chainsaw.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "side and camera strike",
+          "status": "ok"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_chainsaw.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "side and camera windup",
+          "status": "ok"
+        }
+      },
+      "p70": {
+        "casing": {
+          "reason": "melee has no rounds",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "own left facing",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "drawn left strike",
+          "status": "ok"
+        },
+        "left_windup": {
+          "reason": "drawn left windup",
+          "status": "ok"
+        },
+        "muzzle": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "reload": {
+          "reason": "melee has no magazine",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_chainsaw.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "side and camera strike",
+          "status": "ok"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_chainsaw.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "side and camera windup",
+          "status": "ok"
+        }
+      },
+      "top": {
+        "casing": {
+          "reason": "melee has no rounds",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own held part on the posed gun claw",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_strike": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup and icon on rack",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "reload": {
+          "reason": "melee has no magazine",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "strike": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "windup": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        }
+      }
+    },
+    "electro_baton": {
+      "p55": {
+        "casing": {
+          "reason": "melee has no rounds",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "drawn left strike",
+          "status": "ok"
+        },
+        "left_windup": {
+          "reason": "drawn left windup",
+          "status": "ok"
+        },
+        "muzzle": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "reload": {
+          "reason": "melee has no magazine",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_electro_baton.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "side and camera strike",
+          "status": "ok"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_electro_baton.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "side and camera windup",
+          "status": "ok"
+        }
+      },
+      "p70": {
+        "casing": {
+          "reason": "melee has no rounds",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "drawn left strike",
+          "status": "ok"
+        },
+        "left_windup": {
+          "reason": "drawn left windup",
+          "status": "ok"
+        },
+        "muzzle": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "reload": {
+          "reason": "melee has no magazine",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_electro_baton.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "side and camera strike",
+          "status": "ok"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_electro_baton.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "side and camera windup",
+          "status": "ok"
+        }
+      },
+      "top": {
+        "casing": {
+          "reason": "melee has no rounds",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own held part on the posed gun claw",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_strike": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup and icon on rack",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "reload": {
+          "reason": "melee has no magazine",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "strike": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "windup": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        }
+      }
+    },
+    "electro_gun": {
+      "p55": {
+        "casing": {
+          "reason": "caseless projectile (arc)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "two_hand_long kick 1.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part and both reload strips",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_electro_gun.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_electro_gun.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "p70": {
+        "casing": {
+          "reason": "caseless projectile (arc)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "two_hand_long kick 1.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part and both reload strips",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_electro_gun.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_electro_gun.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "top": {
+        "casing": {
+          "reason": "caseless projectile (arc)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own held part on the posed gun claw",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup and icon on rack",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "two_hand_long kick 1.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      }
+    },
+    "flamethrower": {
+      "p55": {
+        "casing": {
+          "reason": "caseless projectile (flame)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "side/camera, stream diagonals and flame placement",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "own left facing",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "backpack_hose kick 0.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "bottle, fuel tank or belt box (backpack_hose)",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "rivet_run8_eq_flamethrower.png",
+          "status": "ok"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "rivet_walk_eq_flamethrower.png",
+          "status": "ok"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "p70": {
+        "casing": {
+          "reason": "caseless projectile (flame)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "side/camera, stream diagonals and flame placement",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "own left facing",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "backpack_hose kick 0.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "bottle, fuel tank or belt box (backpack_hose)",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "rivet_run8_eq_flamethrower.png",
+          "status": "ok"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "rivet_walk_eq_flamethrower.png",
+          "status": "ok"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "top": {
+        "casing": {
+          "reason": "caseless projectile (flame)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own held part on the posed gun claw",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup and icon on rack",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "backpack_hose kick 0.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "bottle, fuel tank or belt box (backpack_hose)",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      }
+    },
+    "gatling": {
+      "p55": {
+        "casing": {
+          "reason": "casing resolves to on-disk FX art",
+          "status": "ok"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "own left facing",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "hip_belt kick 1.3, arena rig_kick 1.3, fire_kick_px 1.8",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "bottle, fuel tank or belt box (hip_belt)",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "rivet_run8_eq_gatling.png",
+          "status": "ok"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "rivet_walk_eq_gatling.png",
+          "status": "ok"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "p70": {
+        "casing": {
+          "reason": "casing resolves to on-disk FX art",
+          "status": "ok"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "own left facing",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "hip_belt kick 1.3, arena rig_kick 1.3, fire_kick_px 1.8",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "bottle, fuel tank or belt box (hip_belt)",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "rivet_run8_eq_gatling.png",
+          "status": "ok"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "rivet_walk_eq_gatling.png",
+          "status": "ok"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "top": {
+        "casing": {
+          "reason": "casing resolves to on-disk FX art",
+          "status": "ok"
+        },
+        "fire8": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own held part on the posed gun claw",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup and icon on rack",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "hip_belt kick 1.3, arena rig_kick 1.3, fire_kick_px 1.8",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "bottle, fuel tank or belt box (hip_belt)",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      }
+    },
+    "gloria": {
+      "p55": {
+        "casing": {
+          "reason": "caseless projectile (nail)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "own left facing",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "one_hand kick 0.8, arena rig_kick 0.8, fire_kick_px 1.5",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "unlimited ammunition",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_gloria.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_gloria.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "p70": {
+        "casing": {
+          "reason": "caseless projectile (nail)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "own left facing",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "one_hand kick 0.8, arena rig_kick 0.8, fire_kick_px 1.5",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "unlimited ammunition",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_gloria.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_gloria.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "top": {
+        "casing": {
+          "reason": "caseless projectile (nail)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own held part on the posed gun claw",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup and icon on rack",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "one_hand kick 0.8, arena rig_kick 0.8, fire_kick_px 1.5",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "unlimited ammunition",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      }
+    },
+    "hand_cannon": {
+      "p55": {
+        "casing": {
+          "reason": "casing resolves to on-disk FX art",
+          "status": "ok"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "one_hand kick 0.8, arena rig_kick 1.6, fire_kick_px 2.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part and both reload strips",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_hand_cannon.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_hand_cannon.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "p70": {
+        "casing": {
+          "reason": "casing resolves to on-disk FX art",
+          "status": "ok"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "one_hand kick 0.8, arena rig_kick 1.6, fire_kick_px 2.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part and both reload strips",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_hand_cannon.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_hand_cannon.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "top": {
+        "casing": {
+          "reason": "casing resolves to on-disk FX art",
+          "status": "ok"
+        },
+        "fire8": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own held part on the posed gun claw",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup and icon on rack",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "one_hand kick 0.8, arena rig_kick 1.6, fire_kick_px 2.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      }
+    },
+    "homing_shard": {
+      "p55": {
+        "casing": {
+          "reason": "caseless projectile (shard)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "two_hand_long kick 1.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part and both reload strips",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_homing_shard.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_homing_shard.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "p70": {
+        "casing": {
+          "reason": "caseless projectile (shard)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "two_hand_long kick 1.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part and both reload strips",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_homing_shard.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_homing_shard.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "top": {
+        "casing": {
+          "reason": "caseless projectile (shard)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own held part on the posed gun claw",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup and icon on rack",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "two_hand_long kick 1.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      }
+    },
+    "katana": {
+      "p55": {
+        "casing": {
+          "reason": "melee has no rounds",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "own left facing",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "drawn left strike",
+          "status": "ok"
+        },
+        "left_windup": {
+          "reason": "drawn left windup",
+          "status": "ok"
+        },
+        "muzzle": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "reload": {
+          "reason": "melee has no magazine",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "rivet_run8_eq_katana.png",
+          "status": "ok"
+        },
+        "strike": {
+          "reason": "side and camera strike",
+          "status": "ok"
+        },
+        "walk": {
+          "reason": "rivet_walk_eq_katana.png",
+          "status": "ok"
+        },
+        "windup": {
+          "reason": "side and camera windup",
+          "status": "ok"
+        }
+      },
+      "p70": {
+        "casing": {
+          "reason": "melee has no rounds",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "own left facing",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "drawn left strike",
+          "status": "ok"
+        },
+        "left_windup": {
+          "reason": "drawn left windup",
+          "status": "ok"
+        },
+        "muzzle": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "reload": {
+          "reason": "melee has no magazine",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "rivet_run8_eq_katana.png",
+          "status": "ok"
+        },
+        "strike": {
+          "reason": "side and camera strike",
+          "status": "ok"
+        },
+        "walk": {
+          "reason": "rivet_walk_eq_katana.png",
+          "status": "ok"
+        },
+        "windup": {
+          "reason": "side and camera windup",
+          "status": "ok"
+        }
+      },
+      "top": {
+        "casing": {
+          "reason": "melee has no rounds",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own held part on the posed gun claw",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_strike": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup and icon on rack",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "reload": {
+          "reason": "melee has no magazine",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "strike": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "windup": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        }
+      }
+    },
+    "machine_pistol": {
+      "p55": {
+        "casing": {
+          "reason": "casing resolves to on-disk FX art",
+          "status": "ok"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "one_hand kick 0.8",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part and both reload strips",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_machine_pistol.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_machine_pistol.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "p70": {
+        "casing": {
+          "reason": "casing resolves to on-disk FX art",
+          "status": "ok"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "one_hand kick 0.8",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part and both reload strips",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_machine_pistol.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_machine_pistol.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "top": {
+        "casing": {
+          "reason": "casing resolves to on-disk FX art",
+          "status": "ok"
+        },
+        "fire8": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own held part on the posed gun claw",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup and icon on rack",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "one_hand kick 0.8",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      }
+    },
+    "mini_nuke": {
+      "p55": {
+        "casing": {
+          "reason": "caseless projectile (nuke_shell)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "shoulder kick 1.6, fire_kick_px 4.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "single shell loaded into tube",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_mini_nuke.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_mini_nuke.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "p70": {
+        "casing": {
+          "reason": "caseless projectile (nuke_shell)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "shoulder kick 1.6, fire_kick_px 4.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "single shell loaded into tube",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_mini_nuke.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_mini_nuke.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "top": {
+        "casing": {
+          "reason": "caseless projectile (nuke_shell)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own held part on the posed gun claw",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup and icon on rack",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "shoulder kick 1.6, fire_kick_px 4.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "single shell loaded into tube",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      }
+    },
+    "molotov": {
+      "p55": {
+        "casing": {
+          "reason": "caseless projectile (flame)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "bottle thrown by hand",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "bottle thrown by hand",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "thrown kick 0.0, arena rig_kick -1.6",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "bottle, fuel tank or belt box (thrown)",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_molotov.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_molotov.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "p70": {
+        "casing": {
+          "reason": "caseless projectile (flame)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "bottle thrown by hand",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "bottle thrown by hand",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "thrown kick 0.0, arena rig_kick -1.6",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "bottle, fuel tank or belt box (thrown)",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_molotov.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_molotov.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "top": {
+        "casing": {
+          "reason": "caseless projectile (flame)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "bottle thrown by hand",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own held part on the posed gun claw",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "bottle thrown by hand",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup and icon on rack",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "thrown kick 0.0, arena rig_kick -1.6",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "bottle, fuel tank or belt box (thrown)",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      }
+    },
+    "pistol": {
+      "p55": {
+        "casing": {
+          "reason": "casing resolves to on-disk FX art",
+          "status": "ok"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "one_hand kick 0.8",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part and both reload strips",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "rivet_run8_eq_pistol.png",
+          "status": "ok"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "rivet_walk_eq_pistol.png",
+          "status": "ok"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "p70": {
+        "casing": {
+          "reason": "casing resolves to on-disk FX art",
+          "status": "ok"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "one_hand kick 0.8",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part and both reload strips",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "rivet_run8_eq_pistol.png",
+          "status": "ok"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "rivet_walk_eq_pistol.png",
+          "status": "ok"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "top": {
+        "casing": {
+          "reason": "casing resolves to on-disk FX art",
+          "status": "ok"
+        },
+        "fire8": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own held part on the posed gun claw",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup and icon on rack",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "one_hand kick 0.8",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      }
+    },
+    "plasma_rifle": {
+      "p55": {
+        "casing": {
+          "reason": "caseless projectile (plasma_bolt)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "own left facing",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "two_hand_long kick 1.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part and both reload strips",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "rivet_run8_eq_plasma_rifle.png",
+          "status": "ok"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "rivet_walk_eq_plasma_rifle.png",
+          "status": "ok"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "p70": {
+        "casing": {
+          "reason": "caseless projectile (plasma_bolt)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "own left facing",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "two_hand_long kick 1.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part and both reload strips",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "rivet_run8_eq_plasma_rifle.png",
+          "status": "ok"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "rivet_walk_eq_plasma_rifle.png",
+          "status": "ok"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "top": {
+        "casing": {
+          "reason": "caseless projectile (plasma_bolt)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own held part on the posed gun claw",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup and icon on rack",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "two_hand_long kick 1.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      }
+    },
+    "plasma_sword": {
+      "p55": {
+        "casing": {
+          "reason": "melee has no rounds",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "own left facing",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "drawn left strike",
+          "status": "ok"
+        },
+        "left_windup": {
+          "reason": "drawn left windup",
+          "status": "ok"
+        },
+        "muzzle": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "reload": {
+          "reason": "melee has no magazine",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_plasma_sword.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "side and camera strike",
+          "status": "ok"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_plasma_sword.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "side and camera windup",
+          "status": "ok"
+        }
+      },
+      "p70": {
+        "casing": {
+          "reason": "melee has no rounds",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "own left facing",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "drawn left strike",
+          "status": "ok"
+        },
+        "left_windup": {
+          "reason": "drawn left windup",
+          "status": "ok"
+        },
+        "muzzle": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "reload": {
+          "reason": "melee has no magazine",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_plasma_sword.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "side and camera strike",
+          "status": "ok"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_plasma_sword.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "side and camera windup",
+          "status": "ok"
+        }
+      },
+      "top": {
+        "casing": {
+          "reason": "melee has no rounds",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own held part on the posed gun claw",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_strike": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup and icon on rack",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "melee has no gun discharge",
+          "status": "n/a"
+        },
+        "reload": {
+          "reason": "melee has no magazine",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "strike": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "windup": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        }
+      }
+    },
+    "ray_gun": {
+      "p55": {
+        "casing": {
+          "reason": "caseless projectile (ray_beam)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "two_hand_long kick 1.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part and both reload strips",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_ray_gun.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_ray_gun.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "p70": {
+        "casing": {
+          "reason": "caseless projectile (ray_beam)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "two_hand_long kick 1.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part and both reload strips",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_ray_gun.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_ray_gun.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "top": {
+        "casing": {
+          "reason": "caseless projectile (ray_beam)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own held part on the posed gun claw",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup and icon on rack",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "two_hand_long kick 1.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "magazine part",
+          "status": "ok"
+        },
+        "run": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      }
+    },
+    "rocket_launcher": {
+      "p55": {
+        "casing": {
+          "reason": "caseless projectile (rocket)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "shoulder kick 1.6, fire_kick_px 3.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "single shell loaded into tube",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_rocket_launcher.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_rocket_launcher.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "p70": {
+        "casing": {
+          "reason": "caseless projectile (rocket)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "side/camera, four seated diagonals and matching noflash strips",
+          "status": "ok"
+        },
+        "held": {
+          "reason": "own equipped facing and rest cells",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "fixed weapon hand",
+          "status": "ok"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "measured rows for equipped and shipped diag/left strips",
+          "status": "ok"
+        },
+        "pickup": {
+          "reason": "pickup, icon, pitch showcase and rack icon",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "shoulder kick 1.6, fire_kick_px 3.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "single shell loaded into tube",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "missing rivet_run8_eq_rocket_launcher.png",
+          "status": "gap"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "missing rivet_walk_eq_rocket_launcher.png",
+          "status": "gap"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      },
+      "top": {
+        "casing": {
+          "reason": "caseless projectile (rocket)",
+          "status": "n/a"
+        },
+        "fire8": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "held": {
+          "reason": "own held part on the posed gun claw",
+          "status": "ok"
+        },
+        "left": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "left_strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "left_windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "muzzle": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "pickup": {
+          "reason": "pickup and icon on rack",
+          "status": "ok"
+        },
+        "recoil": {
+          "reason": "shoulder kick 1.6, fire_kick_px 3.0",
+          "status": "ok"
+        },
+        "reload": {
+          "reason": "single shell loaded into tube",
+          "status": "n/a"
+        },
+        "run": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "strike": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        },
+        "walk": {
+          "reason": "cutout rig poses the held part continuously",
+          "status": "n/a"
+        },
+        "windup": {
+          "reason": "no melee swing",
+          "status": "n/a"
+        }
+      }
+    }
+  }
+}

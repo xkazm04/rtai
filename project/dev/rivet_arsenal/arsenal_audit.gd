@@ -33,7 +33,9 @@ const COLUMNS: Array[String] = [
 	"strike",
 	"windup",
 	"left_strike",
-	"left_windup"
+	"left_windup",
+	"walk",
+	"run"
 ]
 const TOP: String = "cutout rig poses the held part continuously"
 const MELEE: String = "melee has no gun discharge"
@@ -46,6 +48,7 @@ func build(lookup: Callable = FileAccess.file_exists) -> Dictionary[String, Vari
 	var weapons: Dictionary[String, Dictionary] = {}
 	var holes: Dictionary[String, String] = {}
 	var counts: Dictionary[String, int] = {}
+	var informational: int = 0
 	var roster: Dictionary = _tables.arsenal.get("weapons", {})
 	for id: String in roster:
 		var rows: Dictionary[String, Dictionary] = {}
@@ -60,6 +63,8 @@ func build(lookup: Callable = FileAccess.file_exists) -> Dictionary[String, Vari
 				if c.status == "HOLE":
 					holes["%s/%s/%s" % [id, pitch, column]] = c.reason
 					counts[id] += 1
+				elif c.status == "gap":
+					informational += 1
 		weapons[id] = rows
 	_tables.errors.sort()
 	return {
@@ -68,6 +73,7 @@ func build(lookup: Callable = FileAccess.file_exists) -> Dictionary[String, Vari
 		"holes": holes,
 		"holes_per_weapon": counts,
 		"total_holes": holes.size(),
+		"informational_gaps": informational,
 		"missing_resources": _tables.missing_resources,
 		"table_errors": _tables.errors
 	}
@@ -81,6 +87,8 @@ func _row(id: String, pitch: String, grip: String) -> Dictionary[String, Diction
 	var melee: bool = _tables.melee.has(id)
 	var top: bool = pitch == "top"
 	var cells: Dictionary[String, Dictionary] = {}
+	cells.walk = _motion(pitch, key, RivetWalk.ARMED)
+	cells.run = _motion(pitch, key, RivetWalk.ARMED_RUN)
 	cells.held = _tables.held(id, pitch, base)
 	cells.pickup = _tables.pickup(key, pitch, art)
 	cells.reload = _tables.reload(key, pitch, grip, gun)
@@ -107,6 +115,15 @@ func _row(id: String, pitch: String, grip: String) -> Dictionary[String, Diction
 		else:
 			cells[column] = ArsenalAuditFiles.cell("n/a", TOP if melee else "no melee swing")
 	return cells
+
+
+func _motion(pitch: String, key: String, prefix: String) -> Dictionary:
+	if pitch == "top":
+		return ArsenalAuditFiles.cell("n/a", TOP)
+	var file: String = prefix + key + ".png"
+	if _tables.files.has(RivetStrips.DIR + pitch + "/" + file):
+		return ArsenalAuditFiles.cell("ok", file)
+	return ArsenalAuditFiles.cell("gap", "missing " + file)
 
 
 func _swing(column: String, base: String) -> Dictionary:

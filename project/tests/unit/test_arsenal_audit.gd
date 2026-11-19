@@ -41,10 +41,10 @@ func test_matrix_covers_roster_and_counts_each_hole_once() -> void:
 		var count: int = 0
 		for pitch: String in ["top", "p55", "p70"]:
 			var row: Dictionary = _matrix.weapons[id][pitch]
-			assert_eq(row.size(), 12)
+			assert_eq(row.size(), 14)
 			for col: String in row:
 				var c: Dictionary = row[col]
-				assert_has(["ok", "HOLE", "n/a"], str(c.status))
+				assert_has(["ok", "HOLE", "n/a", "gap"], str(c.status))
 				assert_false(str(c.reason).is_empty())
 				if c.status == "HOLE":
 					assert_has(holes, "%s/%s/%s" % [id, pitch, col])
@@ -53,6 +53,29 @@ func test_matrix_covers_roster_and_counts_each_hole_once() -> void:
 		total += count
 	var reported: int = _matrix.total_holes
 	assert_eq(reported, total)
+
+
+func test_armed_walk_and_run_only_contribute_to_informational_gaps() -> void:
+	var gaps: int = 0
+	var holes: Dictionary = _matrix.holes
+	var reported: int = _matrix.informational_gaps
+	for id: String in _matrix.weapons:
+		for pitch: String in ArsenalAudit.PITCHES:
+			for column: String in ["walk", "run"]:
+				var cell: Dictionary = _matrix.weapons[id][pitch][column]
+				assert_false(holes.has("%s/%s/%s" % [id, pitch, column]))
+				if pitch == "top":
+					assert_eq(str(cell.status), "n/a")
+					continue
+				var prefix: String = RivetWalk.ARMED if column == "walk" else RivetWalk.ARMED_RUN
+				var path: String = (
+					RivetStrips.DIR + pitch + "/" + prefix + WeaponArtKey.of(id) + ".png"
+				)
+				var present: bool = FileAccess.file_exists(path)
+				assert_eq(str(cell.status), "ok" if present else "gap", path)
+				if not present:
+					gaps += 1
+	assert_eq(reported, gaps)
 
 
 func test_missing_declared_art_is_a_hole_without_touching_the_file() -> void:
