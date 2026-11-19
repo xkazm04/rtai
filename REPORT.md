@@ -73,3 +73,8 @@ The stills in `C:/Users/kazda/kiro/gtai-masters/n19/move/calls/` compare the opt
 - The owner kept the cover peek at 0.8 m and car doors cosmetic. The simulation door phase stays off.
 - Before the data change, the shipped-data unit test observed `ok` where it expected `landing_blocked`, and the vault scenario failed on the guard at (4.0, 14.2).
 - After the change, `node tools/tests/run_unit.mjs --changed` passed 3,045 tests with two skips. The vault, fuzz, street and move replay scenarios passed twice with identical counters and a byte-identical 215-tick replay. Each run refused all 32 guarded landings with 0 m guard displacement, landed all 514 clear vault starts and recorded zero forbidden overlaps.
+- Snapshot gate on `0dfc47b0c2c4` passed all 19 lint checks, 3,061 unit tests (two skipped), all 61 scenarios, native parity, visual selftests and the release export audit.
+
+```text
+gate: PASS; C:\Users\kazda\kiro\gtai-wt\n19-move\build\gate\0dfc47b0c2c4\gate.json
+```
