@@ -111,19 +111,54 @@ func test_a_dying_card_keeps_its_shadow_until_it_lies() -> void:
 class CityShadowProbe:
 	extends RigCastShadows
 
-	var rings: Array[PackedVector2Array] = []
+	var offset: Vector2 = Vector2.ZERO
+	var offsets: Array[Vector2] = []
+	var polys: Array[PackedVector2Array] = []
 
-	func _draw() -> void:
-		rings.clear()
-		_contact(Vector2(16961.630859375, 16930.5390625), 21.0392377138649)
+	func _place(at: Vector2) -> void:
+		offset = at
 
 	func _fill(points: PackedVector2Array, _ink: Color) -> void:
-		rings.append(points)
+		offsets.append(offset)
+		polys.append(points)
 
 
 func test_city_contact_draws_three_complete_rings_at_tick_634() -> void:
-	var probe: CityShadowProbe = add_child_autofree(CityShadowProbe.new())
-	await wait_process_frames(2)
-	assert_eq(probe.rings.size(), 3)
-	for ring: PackedVector2Array in probe.rings:
+	var probe: CityShadowProbe = autofree(CityShadowProbe.new())
+	var at: Vector2 = Vector2(16961.630859375, 16930.5390625)
+	var hip: float = 21.0392377138649
+	probe._contact(at, hip)
+	assert_eq(probe.polys.size(), 3)
+	var radii: PackedFloat32Array = [hip * 0.5, hip * 0.39, hip * 0.275]
+	for i: int in probe.polys.size():
+		var ring: PackedVector2Array = probe.polys[i]
 		assert_eq(Geometry2D.triangulate_polygon(ring).size(), 54, "18 triangles per ring")
+		var box: Rect2 = Rect2(ring[0], Vector2.ZERO)
+		for vertex: Vector2 in ring:
+			box = box.expand(vertex)
+		assert_eq(probe.offsets[i] + box.get_center(), at)
+		assert_almost_eq(box.size.x / 2.0, radii[i], 0.0001)
+	assert_eq(probe.offset, Vector2.ZERO, "the next draw uses canvas coordinates")
+
+
+func test_cast_figure_lands_on_its_feet_and_restores_canvas_coordinates() -> void:
+	var saved: ViewMode = ViewMode.shared()
+	ViewMode.select("combo_ease12")
+	var layer: Node2D = add_child_autofree(Node2D.new())
+	var rig: CutRig = CutRig.new()
+	rig.plan = HumanPlan.cop()
+	layer.add_child(rig)
+	rig.position = Vector2(16897.25, 16934.75)
+	rig.set_meta(RigCastShadows.CAST_HIP, 21.0)
+	var probe: CityShadowProbe = autofree(CityShadowProbe.new())
+	probe._layer = layer
+	probe._draw()
+	var view: ViewMode = ViewMode.shared()
+	ViewMode._shared = saved
+	assert_eq(probe.polys.size(), 1)
+	for points: PackedVector2Array in probe.polys:
+		var feet: Vector2 = (points[0] + points[1]) * 0.5
+		assert_eq(probe.offsets[0] + feet, rig.position)
+		var tip: Vector2 = (points[4] + points[5]) * 0.5
+		assert_almost_eq(tip - feet, view.cast_dir() * 42.0 * view.cast_k, Vector2.ONE * 0.001)
+	assert_eq(probe.offset, Vector2.ZERO, "the next draw uses canvas coordinates")

@@ -64,9 +64,9 @@ func _draw() -> void:
 		var hip: float = hip_px(rig)
 		var feet: Vector2 = to_local(rig.global_position + card_push(rig))
 		if not contact:
-			draw_set_transform(feet)
+			_place(feet)
 			_fill(figure(Vector2.ZERO, view.cast_dir(), hip * view.cast_k), SHADOW)
-			draw_set_transform(Vector2.ZERO)
+			_place(Vector2.ZERO)
 		elif not rig.dead or STANDS_DYING and stands_dying(rig):  # a body: its own (StreetDeadRest)
 			_contact(feet + view.cast_dir() * hip * CONTACT_SLIDE_HIPS, hip)
 
@@ -74,10 +74,14 @@ func _draw() -> void:
 ## The soft ink ellipse under a standing body with hip height `hip`, centred at `at`.
 func _contact(at: Vector2, hip: float) -> void:
 	# Triangulate near zero even when the actor layer spans thousands of pixels.
-	draw_set_transform(at)
+	_place(at)
 	for ring: Vector2 in CONTACT_RINGS:
 		_fill(contact_ellipse(Vector2.ZERO, hip * CONTACT_R_HIPS * ring.x), Color(SHADOW, ring.y))
-	draw_set_transform(Vector2.ZERO)
+	_place(Vector2.ZERO)
+
+
+func _place(at: Vector2) -> void:
+	draw_set_transform(at)
 
 
 func _fill(points: PackedVector2Array, ink: Color) -> void:
