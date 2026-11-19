@@ -1,0 +1,24 @@
+# Package 6b (guns lane, n19): left cells built on the hand-made figure (replaces brief 06)
+
+I stopped your package 6 run three minutes in (nothing was changed). Reason: package 5b's numbers pass (height within 2.4 %, CIE76 < 8) but the eye still tells the new launcher left cells apart at 64 px/m. Look at `build/left_check.png` (director's crop of p55 strips, figures bbox-cropped): rows electro_gun, pistol, rocket_launcher, gatling; columns = own cells 0-2, the mirror of cell 2, then the `_left` cells. The hand-made left cells (electro, pistol) are the same chibi figure as the right cells: big helmet on a short blocky body, thick dark ink, dark rust-brown. The rocket `_left` cells are another drawing: smaller helmet relative to longer legs and torso, wide adult stance, smoother rendering, thinner ink, lighter orange. Height and median shell tone cannot see that. A fresh image_gen figure will keep drifting this way, so stop generating the body.
+
+## Method (all left cells from here on)
+Build each left cell on the weapon's OWN hand-made figure, by script under `tools/art/` (e.g. `tools/art/left_from_right.py`, with a small test):
+1. Base = the horizontal mirror of the weapon's hand-made source cell for that facing (the cell `RivetFrames.EQ_OCT` already mirrors at runtime: SW <- SE, W <- E, NW <- NE; fire/noflash twins the same way). Rivet's body is symmetric in these views EXCEPT: the hazard collar's diagonal stripes (they slant the wrong way when mirrored: re-flip the collar band region in place, or repaint it), and any one-sided part (hip cable/hose, gun ejection port, gatling belt box, flamer tank, gloria's asymmetric parts, rocket tube shoulder). Name each asymmetric part per weapon and correct it: by a scripted re-flip of that region, or by image_gen EDIT with the mirrored cell as the input image and a mask limited to that region (never a fresh full-figure generation). The gun's colours stay its own; the amber comet stays plasma's projectile only; vermilion danger only; collar rigid.
+2. The body pixels outside the corrected regions are the mirror, so proportions, ink and palette are the hand-made ones by construction. Disclose in the report, per weapon: which regions were corrected and how, and that the rest is a mirror (this is the brief's "say which cells are mirrors": the honest wording is "mirror-based, corrected for <parts>").
+3. Rows: whatever the left path reads (`rivet_muzzle.json` left rows, `RivetFireCam`/`RivetStrips` tables, `rivet_frames.json`) as you wired for assault_rifle and the launchers; muzzle/exhaust anchors from the mirrored right anchors (x -> cell_w - x) unless a corrected part moved them.
+
+## Order
+1. plasma_rifle, gatling, flamethrower, gloria (8 open holes, p55 + p70), each finished before the next.
+2. Then rebuild rocket_launcher and mini_nuke `_left` strips (p55 + p70) the same way, replacing the drawn 5b cells, keeping 5b's diagonal back-blast work (diagonals are not touched here).
+If time runs short, stop at a finished weapon and say which are left.
+
+## Acceptance (measured AND looked)
+- Extend `tools/art/cell_metrics.py`: per cell also helmet height / figure height (helmet = the bbox of the top blob above the collar; state how you find it), figure bbox width / height, and the figure's mean L* and C* (whole figure, gun excluded where the mask allows). Each new left cell within 5 % of its weapon's E rest cell on height and helmet ratio, and inside the tone threshold. Quote the rows.
+- Director look: a sheet per weapon like `build/left_check.png` (own cells 0-2 | the new left cells, bbox-cropped, same scale) at p55 and p70, plus the usual 64 px/m old (28302bd3c) above new contact sheets and a 32 px/m p55 turning clip with Rivet centred in the frame (move the camera or his spot so he is not at the edge). `frames.json` per weapon, 8-15 entries, best first.
+- Audit: each finished weapon 0 holes; `arsenal_known_holes.json`; `evidence/arsenal/matrix_after_6.txt` (+ .json).
+- `run_unit.mjs --changed` and `--select=test_arsenal_audit,test_rivet_gun_diag,test_rivet_fire_cam` green; lint; `release_compile.mjs`; `node tools/gate/quick.mjs` before each commit (say if `--no-godot`). One commit for the tool + test, one per weapon, staged per path (`git commit -- <paths>`), `.import`/`.uid` with sources. Masters/manifest/prompts/provenance for any image_gen edit, provenance line per shipped PNG either way (say `derived: mirror of <file> + <edit>`).
+
+## Law
+As packages 3-5b: `export APPDATA=C:/Users/kazda/kiro/gtai-n19/appdata/guns`, GODOT_BIN, `--rendering-driver d3d12`, windowed `--position 0,1440`, one Godot at a time, kill only your PIDs. No balance change, no digest moves. Typed GDScript, size limits, `Log`. No stash / add -A / commit -a / reset --hard / push. Shared files: this weapon's rows only, list the lines.
+Report: commits, holes before/after, metrics rows, corrected regions per weapon, evidence paths, anything left.
