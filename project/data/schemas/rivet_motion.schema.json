@@ -43,6 +43,14 @@
           "minimum": 1,
           "type": "integer"
         },
+        "silhouette_alpha": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "silhouette_enabled": {
+          "type": "boolean"
+        },
         "snap_reach_m": {
           "exclusiveMinimum": 0,
           "type": "number"
@@ -63,6 +71,8 @@
         "move_mps",
         "peek_m",
         "peek_ticks",
+        "silhouette_alpha",
+        "silhouette_enabled",
         "snap_reach_m",
         "snap_ticks"
       ],

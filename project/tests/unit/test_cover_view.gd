@@ -59,3 +59,38 @@ func test_peek_stands_upright_and_high_cover_keeps_the_standing_cell() -> void:
 	assert_eq(cover.phase, PlayerCover.Phase.IN)
 	assert_false(cover.spot.low)
 	assert_eq(_scale(), Vector2.ONE)
+
+
+func test_cover_takes_over_the_generic_wedge_even_when_silhouette_is_disabled() -> void:
+	var rig: CutRig = autofree(CutRig.new())
+	var hit: PropOcclusion.Hit = PropOcclusion.Hit.new()
+	hit.rig = rig
+	var canvas: Node2D = autofree(Node2D.new())
+	_step(Vector2.ZERO, &"cover")
+	CoverUpperCard.bind(rig, cover)
+	cover.silhouette_enabled = false
+	assert_true(CoverUpperCard.draw_hidden(canvas, hit), "skip the generic ink and cream rim")
+	cover.interrupt()
+	CoverUpperCard.bind(rig, cover)
+	assert_false(CoverUpperCard.draw_hidden(canvas, hit), "ordinary depth markers resume")
+
+
+func test_hidden_contour_uses_only_the_selected_cells_alpha_and_flip() -> void:
+	var card: Sprite2D = autofree(Sprite2D.new())
+	var img: Image = Image.create_empty(20, 10, false, Image.FORMAT_RGBA8)
+	img.fill_rect(Rect2i(0, 0, 10, 10), Color.WHITE)
+	img.fill_rect(Rect2i(11, 2, 3, 6), Color.ORANGE)
+	img.fill_rect(Rect2i(12, 3, 1, 2), Color.BLACK)
+	card.texture = ImageTexture.create_from_image(img)
+	card.centered = false
+	card.hframes = 2
+	card.frame = 1
+	for mirrored: bool in [false, true]:
+		card.flip_h = mirrored
+		var shapes: Array[PackedVector2Array] = CoverUpperCard.outlines(card)
+		assert_eq(shapes.size(), 1, "interior colours leave a single solid contour")
+		if shapes.size() != 1:
+			return
+		var x: float = 7.5 if mirrored else 2.5
+		assert_true(Geometry2D.is_point_in_polygon(Vector2(x, 4.5), shapes[0]))
+		assert_false(Geometry2D.is_point_in_polygon(Vector2(10.0 - x, 4.5), shapes[0]))

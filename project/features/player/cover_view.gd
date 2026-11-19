@@ -10,12 +10,12 @@ var _cover: PlayerCover
 var _weight: float
 var _tick: int
 var _followers: Array[Node2D] = []
-var _upper: CoverUpperCard
 
 
 static func feed(rigs: CharacterRigs, motion: PlayerMotion, tick: int) -> void:
 	var host: CoverView = rigs.get_meta(ACTIVE, null) if rigs.has_meta(ACTIVE) else null
 	var cover: PlayerCover = motion.cover if motion != null else null
+	CoverUpperCard.bind(rigs.rig_for(rigs.feed.ids[0]) if rigs.feed.count > 0 else null, cover)
 	MotionRigPose.publish(rigs, MoveCells.COVER, cover_cell(cover))
 	if cover == null or cover.spot == null:
 		if host != null:
@@ -58,9 +58,6 @@ func _release(motion: PlayerMotion, tick: int) -> void:
 		MotionRigPose.place(rig, Transform2D.IDENTITY)
 	for follower: Node2D in _followers:
 		RenderingServer.canvas_item_set_transform(follower.get_canvas_item(), follower.transform)
-	if is_instance_valid(_upper):
-		_upper.hide()
-		_upper.queue_free()
 	_rigs.remove_meta(ACTIVE)
 	set_process(false)
 	queue_free()
@@ -93,10 +90,3 @@ func _place() -> void:
 		var parent_inv: Transform2D = f.transform * f.global_transform.affine_inverse()
 		var draw: Transform2D = parent_inv * around_feet * f.global_transform
 		RenderingServer.canvas_item_set_transform(f.get_canvas_item(), draw)
-	var behind: bool = _cover.spot != null and _cover.spot.normal == Vector2.UP
-	if view.occlude and behind and _cover.blocks_fire() and RivetFrames.drawn(rig):
-		_upper = CoverUpperCard.show_above(
-			rig.head_card, _upper if is_instance_valid(_upper) else null
-		)
-	elif is_instance_valid(_upper):
-		_upper.hide()
