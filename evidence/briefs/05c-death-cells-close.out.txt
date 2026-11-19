@@ -1,0 +1,37 @@
+Committed the eight accepted pedestrian claw throws. All tracked files are clean, and `project/`, `tools/`, and `steam/` contain no untracked files.
+
+| Commit | Changes |
+|---|---|
+| `1f57e2d10` — Wire p70 claw throws for eight human pedestrians | Eight PNG/import pairs, table entries, provenance, the packer’s `--kinds` option, and both claw-art tests. The robot test verifies its existing power-down fall. |
+| `f9f3d52ca` — Record held death cells and patrol rifle spacing | Recorded the robot, worker-char and rifle-spacing requests in [NEED-ai.md](evidence/death-cells/NEED-ai.md). |
+
+Moved the robot throw and both worker-burn PNG/import pairs to `gtai-masters/n19/anim/death-cells/held/` and verified their hashes. Restored the worker-burn code and removed the one-off capture scenes, whose script lacked `KNOWN_FLAGS`.
+
+**Verification:** `run_unit.mjs --changed` reported **1,725 passed, 0 failed, 2 skipped**. Quick passed both changed GDScript files, and all 19 commit-hook checks passed. The mutation runner exited 2 because the GDScript changes are tests.
+
+Final `git status --short`:
+
+```text
+?? JOURNAL.md
+?? REPORT.md
+?? evidence/briefs/01-farcop.md
+?? evidence/briefs/01-farcop.out.txt
+?? evidence/briefs/02-tonnage-hold.md
+?? evidence/briefs/02-tonnage-hold.out.txt
+?? evidence/briefs/02b-tonnage-cap.md
+?? evidence/briefs/02b-tonnage-cap.out.txt
+?? evidence/briefs/03-rivet-x15.md
+?? evidence/briefs/03-rivet-x15.out.txt
+?? evidence/briefs/04-ghost-cells.md
+?? evidence/briefs/04-ghost-cells.out.txt
+?? evidence/briefs/05-death-cells.md
+?? evidence/briefs/05-death-cells.out.txt
+?? evidence/briefs/05b-death-cells-b.md
+?? evidence/briefs/05b-death-cells-b.out.txt
+?? evidence/briefs/05c-death-cells-close.md
+?? evidence/briefs/05c-death-cells-close.out.txt
+?? evidence/briefs/06-kerf-away.md
+?? evidence/briefs/07-crowd-pop.md
+```
+
+[astra: 228s, exit 0]

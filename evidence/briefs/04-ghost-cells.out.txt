@@ -1,0 +1,30 @@
+Ohm now raises his electrodes before extending his arm, and Dent and Ohm lurch forward when struck from behind. Both changes are render-only. Kerf still exceeds the **<9 px** planted-foot target. The two delivered alternates produced identical hold measurements, so I retained his shipped sheet.
+
+| Commit | Files changed |
+|---|---|
+| `75143d50e` `anim: draw Ohm's raised electrodes in the opening cast ticks` | `ghost_drawn.gd`, `ghost_hand.gd`, their unit tests, four p55/p70 Ohm act sheets, `tools/art/ohm_windup.py`, provenance |
+| `19135b1b0` `anim: draw Dent and Ohm staggering into blows from behind` | `ghost_drawn.gd`, `ghost_sheet.gd`, `test_ghost_hitback.gd` and UID, four hitback sheets and imports, `tools/art/ghost_hitback.py`, provenance |
+| `7ecf4047f` `evidence: measure Kerf's run holds in all eight octants` | [Eight-octant measurement report](<C:/Users/kazda/kiro/gtai-wt/n19-anim/evidence/ghost-cells/kerf_run_hold_ride_32ppm.txt>) |
+
+**Ohm’s cast.** Column 0 was never drawn for Ohm. His bolt resolves on the decision tick. At 32 px/m the electrodes now rise beside his head on ticks 0–2 and snap forward on tick 3. `OHM_WINDUP_TICKS` controls that interval. All eight facings read at both pitches. The packer reproduced all four original sheets and preserved all 48 untouched cells pixel-for-pixel. [Eight-facing comparison](<C:/Users/kazda/kiro/gtai-masters/n19/anim/ghost-cells/ohm_cast_8dir_64ppm.png>) · [Tick strip](<C:/Users/kazda/kiro/gtai-masters/n19/anim/ghost-cells/ohm_cast_ticks_32ppm.png>) · [12-second film](<C:/Users/kazda/kiro/gtai-masters/n19/anim/ghost-cells/ohm_cast_32ppm.mp4>)
+
+**Rear hits.** Separate one-column sheets preserve the existing HIT and jab cells. A blow travelling within 60° of facing selects the rear pose, which includes adjacent diagonals and excludes side hits. Left facings mirror the art. In profile, Dent pitches forward with his rear boot raised and Ohm’s beard swings ahead of his body. Toward camera, both duck. Facing away, the impact is visible on their backs. Switching `HIT_FROM_BEHIND` off reproduced the original rendering across 576 comparison crops. [64 px/m comparison](<C:/Users/kazda/kiro/gtai-masters/n19/anim/ghost-cells/dent_ohm_hitback_64ppm.png>) · [12-second film](<C:/Users/kazda/kiro/gtai-masters/n19/anim/ghost-cells/dent_ohm_hitback_32ppm.mp4>) · [Both pitches and tick strips](<C:/Users/kazda/kiro/gtai-masters/n19/anim/ghost-cells/>)
+
+**Kerf’s worst hold** in screen pixels at 32 px/m. The second measure tracks consecutive ticks displaying pixel-identical artwork. Moving scenery inside the historical detector’s figure box can register as a pose change.
+
+| Facing | Historical detector | Identical artwork |
+|---|---:|---:|
+| Right | 8.978 | 9.007 |
+| Toward right | 0.000 | 8.870 |
+| Toward | 0.000 | 16.713 |
+| Toward left | 7.992 | 8.949 |
+| Left | 8.980 | 10.012 |
+| Away left | 9.355 | 9.415 |
+| Away | **18.084** | **25.310** |
+| Away right | 8.953 | 9.442 |
+
+Straight away, row 5 columns 3 and 4 show one drawing for four ticks. The row 4 alternates changed the foot placement in six filmed frames, with all 378 other frames pixel-identical. Neither alternate shortened a hold. [Worst hold](<C:/Users/kazda/kiro/gtai-masters/n19/anim/ghost-cells/kerf_away_hold_32ppm.png>) · [Alternate comparison](<C:/Users/kazda/kiro/gtai-masters/n19/anim/ghost-cells/kerf_row4_alternates_64ppm.png>)
+
+**Verification.** `node tools/tests/run_unit.mjs --changed` passed before each commit with 1,692, 1,697 and 1,697 passing respectively, zero failures and two skips per run. `quick.mjs --no-godot --no-clash` passed both code commits and found no changed GDScript in the evidence commit. Changed-line mutation scores for `ghost_drawn.gd` were **4/(4+0)** and **12/(12+0)**, with one invalid mutant in B. All 16 look goldens passed against their existing references.
+
+[astra: 2962s, exit 0]

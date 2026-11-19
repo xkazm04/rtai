@@ -1,0 +1,33 @@
+Kerf’s four-tick straight-away hold is fixed. At tick 275 his planted leg extends and his body rises between the crouch and push-off. Worst identical-art ride fell from **25.310 to 8.966 px away** and **16.713 to 8.372 px toward**. Both clear the 9 px target. Left profile now sets the maximum at 10.012 px, so planted feet stays at level 2. [64 px/m before/after stills](<C:/Users/kazda/kiro/gtai-masters/n19/anim/ghost-cells/kerf_run16_axial_64ppm.png>) · [32 px/m tick strip](<C:/Users/kazda/kiro/gtai-masters/n19/anim/ghost-cells/kerf_run16_axial_ticks_32ppm.png>)
+
+Rows 1 and 5 each duplicated C1/2, C3/4, C5/6, C7/8, C9/10, C11/12, C13/14 and C15/16. Neither had an additional adjacent mirror pair. `double_sheet.py` reproduced the shipped PNG byte-for-byte. The new packer derived all 16 in-betweens from Kerf’s own keys and preserved the other 64 cells exactly. [Packing recipe and film measurements](<C:/Users/kazda/kiro/gtai-wt/n19-anim/evidence/ghost-cells/kerf_run_hold_ride_32ppm.txt>)
+
+Tonnage’s step-5 in-between cut that transition’s worst ride from **16.19 to 11.26 px**. Across 110 ticks, mean ride fell from 9.47 to 8.91 px and stance drift from 2.991 to 2.381 px. C3 still sets the overall maximum at 18.39 px. [32 px/m before/after strip](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/tonnage_step5_32ppm.png>) · [Measurements](<C:/Users/kazda/kiro/gtai-wt/n19-anim/evidence/tonnage-hold/step5_32ppm.md>)
+
+**Commits and files**
+
+| Commit | Files and result |
+|---|---|
+| `453d55fce` docs: record ghost cast, rear-hit and eight-octant run evidence | `LEVEL.md`, `docs/decisions.md`. Ohm combat feel rose to 3 because the raised electrodes and snap read at play zoom. Dent and Ohm rose to 4 on hit because the rear-hit drawings follow the blow at both pitches. Ohm attack cells stayed at 3 because the bolt fires during the wind-up. |
+| `3eb1b98da` anim: fill Kerf's straight run16 holds from his own keys | `kerf_run16.png`, `kerf_run16_midpoints.py`, `kerf_run_hold_ride_32ppm.txt`, `LEVEL.md`, and the November provenance log. |
+| `a2e7b603b` anim: draw Tonnage's right-profile pad between the step-five keys | `tonnage_walk8_mid.png` and its `.import`, `tonnage_midpoint.py`, `ghost_drawn.gd`, `ghost_sheet.gd`, `test_tonnage_stride.gd`, `step5_32ppm.md`, `LEVEL.md`, and the provenance log. |
+
+**Verification**
+
+- `stride_film` and `hold_ride.py` reproduced Kerf’s baseline on ticks 245–292. All 384 before/after pairs selected the same column. Exactly 52 crops changed, all on replacement cells.
+- `node tools/gate/quick.mjs --no-godot` passed. `node tools/tests/run_unit.mjs --changed` reported 1,725 passed for Kerf and 1,726 passed after Tonnage, each with 0 failures and 2 skips. Pre-commit lint passed all 19 checks.
+
+**Kerf worst identical-art ride, px at 32 px/m**
+
+| Octant | Before | After |
+|---|---:|---:|
+| Right | 9.007 | 9.007 |
+| Toward-right | 8.870 | 8.870 |
+| Toward | 16.713 | **8.372** |
+| Toward-left | 8.949 | 8.949 |
+| Left | 10.012 | 10.012 |
+| Away-left | 9.415 | 9.415 |
+| Away | 25.310 | **8.966** |
+| Away-right | 9.442 | 9.442 |
+
+[astra: 1142s, exit 0]

@@ -1,0 +1,27 @@
+Landed Tonnage’s two p70 right-profile redraws and retimed the four adjacent steps from measured pad contacts. **The worst held-frame ride remains above the 9 px target.**
+
+| 32 px/m measurement | Before | Art swap only | Art + timing |
+|---|---:|---:|---:|
+| 48 ticks, mean / worst | 8.3 / 16.1 px | 8.3 / 16.1 px | 8.4 / 15.5 px |
+| 110 ticks, mean / worst | 9.8 / 25.5 px | — | 9.8 / 25.4 px |
+
+The original 48-tick worst was an eight-tick hold on column 12. The longer film covers both redraws and shows the remaining limit: column 6 shortened from 12 ticks to nine, but column 5 now holds for 12. The feet trace shows the stance pad returning to ground x 191–192 across four successive poses, with visible forward ride during each hold. The riveted body, yellow stripe and teal outline read consistently in both redraws. I saw no cell seam. The left profile is separately drawn. [Measurements and reproduction commands](<C:/Users/kazda/kiro/gtai-wt/n19-anim/evidence/tonnage-hold/README.md>)
+
+**Files and commits**
+
+| Commit | Subject | Files |
+|---|---|---|
+| `fe890210d` | dev: record far cop row probe and accepted evidence debt | `far_cop_rows.gd`, `.gd.uid`, `.tscn`, debt baseline |
+| `18c38e915` | art: land Tonnage's two req221 right-profile walk cells | `tonnage_walk8.png`, swap script, source manifest, provenance log, baseline and art-only measurements |
+| `27d2338bd` | anim: time Tonnage's redrawn profile steps from pad contacts | `ghost_stride.gd`, `test_tonnage_stride.gd` and `.uid`, feet tracks, ride measurements and frame script |
+
+**Commands and results**
+
+- Debt acceptance recorded `n19 anim: far_cop_rows dev probe (item 1 evidence) (dev_loc 22724 -> 22922)`.
+- `tonnage_walk16_swap.py` reported `78/78 non-swapped cells byte-identical (RGBA); 2/2 profile cells match req221.`
+- `node tools/tests/run_unit.mjs --changed` finished with **1,670 passed, 0 failed, 2 skipped**. Quick gates passed before each commit. Look goldens passed **11/11 junction and 5/5 block**.
+- `mutate.mjs --file=features/souls/ghost_stride.gd --lines=15` generated zero mutants because it skips constant tables. Separately reverting each changed value against the new test scored **4 killed / (4 killed + 0 survived)**.
+
+**Frames** · [64 px/m same-tick comparison](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/profile_before_after_64ppm.png>) · [Feet trace before](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/feet_trace_before_32ppm.png>) · [Feet trace after](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/feet_trace_after_32ppm.png>) · [12-second walk clip, real time then one-third speed](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/tonnage_walk_after_32ppm.mp4>)
+
+[astra: 1088s, exit 0]

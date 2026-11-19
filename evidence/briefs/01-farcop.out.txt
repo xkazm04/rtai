@@ -1,0 +1,19 @@
+Confirmed and fixed the GDScript LOD mismatch. At heat 3 and 16 px/m, all **58** sampled far-cop draws used civilian row 7 before the fix. The character path now draws **25 patrol, 33 riot, zero civilians**. The native city writer still draws all 58 as civilians. [Before JSON](evidence/farcop/probe_before.json) · [After JSON](evidence/farcop/probe_after.json) · [Exact gfx handoff](evidence/farcop/NEED-gfx.md)
+
+**One commit is blocked.** The dev probe, scene and `.uid` are staged under `project/dev/sim/far_cop_rows.*`. Its quick gate passed. The pre-commit hook rejected only the 198-line increase in `dev_loc`. Permission to update the out-of-lane debt baseline is pending.
+
+| Commit | Subject | Files changed |
+|---|---|---|
+| `87f5a019e` | Resolve crowd looks by actor kind across character LODs | `character_rigs.gd`, `rig_variant.gd` |
+| `a6ad0e96e` | Test city cop and pedestrian looks through a real LOD transition | `test_far_cop_look.gd` and `.uid` |
+| `d8159c501` | Record far cop readbacks, comparison crops and remaining city writer fix | `probe_before.json`, `probe_after.json`, `NEED-gfx.md`, `tools/art/far_cop_stills.py` |
+
+**Commands and results**
+
+- `run_unit.mjs --select=test_far_cop_look` on the old code failed the cop assertion twice, including the isolated rerun. The pedestrian and SWAT controls passed.
+- `run_unit.mjs --changed` on the fix reported **1,664 passed, 0 failed, 2 skipped**. `quick.mjs --no-clash` passed.
+- `mutate.mjs` on the changed lines killed **1/1** in `character_rigs.gd` and **2/2** in `rig_variant.gd`. Zero survivors, invalid mutants or timeouts.
+
+**Frames** show cop 49 at seed 18, tick 360. The character preview changes from civilian row 7 to patrol row 5 at both zooms. The untouched native frames were pixel-identical before and after at all three sampled ticks. [16 px/m comparison](C:/Users/kazda/kiro/gtai-masters/n19/anim/farcop/character_pair_t360_16ppm.png) · [32 px/m comparison](C:/Users/kazda/kiro/gtai-masters/n19/anim/farcop/character_pair_t360_32ppm.png) · [Native comparison](C:/Users/kazda/kiro/gtai-masters/n19/anim/farcop/city_pair_t360_32ppm.png) · [10-second street clip](C:/Users/kazda/kiro/gtai-masters/n19/anim/farcop/after/heat3_city_32ppm.mp4)
+
+[astra: 1078s, exit 0]

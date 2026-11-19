@@ -1,0 +1,5 @@
+**Tonnage, Planted feet: 2 → 3.** All 16 walk rows at p70 and p55 measured under 9 px at 32 px/m. The worst hold was 7.131 px. This was the only lead-number change. [Measurements](<C:/Users/kazda/kiro/gtai-wt/n19-anim/evidence/tonnage-hold/holds_it4.md>)
+
+Commit `b63c755fa` updated [LEVEL.md](<C:/Users/kazda/kiro/gtai-wt/n19-anim/LEVEL.md:10>). It replaced six level-4 claims with measured results and clarified the historical Dent and Ohm hit wording. The quick gate passed, as did all 19 pre-commit checks.
+
+[astra: 155s, exit 0]

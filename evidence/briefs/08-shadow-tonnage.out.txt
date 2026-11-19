@@ -1,0 +1,44 @@
+**The shadow repro went from 2 triangulation errors to 0. Tonnage’s p70 right-profile walk cleared the 9 px bar across all 16 columns.** At 32 px/m, worst ride fell from **18.395 to 7.121 px**, mean ride from **8.911 to 5.005 px**, and mean stance drift from **2.381 to 2.082 px**.
+
+| Commit | Change |
+|---|---|
+| `c07cab306` | Localized contact rings and cast figures in `rig_cast_shadows.gd`. Added the failing-centre regression in `test_rig_cast_shadows.gd` and the [repro logs](<C:/Users/kazda/kiro/gtai-wt/n19-anim/evidence/shadow-tri/README.md>). |
+| `4535fb7ef` | Added nine midpoint cells through `tonnage_midpoint.py` and the p70 midpoint atlas. Updated `ghost_stride.gd`, `ghost_sheet.gd`, `ghost_drawn.gd`, boundary tests, provenance, `LEVEL.md`, and the decision record. |
+
+### Contact shadows
+
+The regression produced **0 triangle indices before and 54 after** for the failing inner ring. All 47,064 corrected rings triangulated. The observer also found 312 failures among 16,282 figure outlines evaluated at the repro’s short cast length. Localizing the figure reduced that count to zero. The logs retain engine shutdown leak diagnostics in both runs.
+
+The tick-1 standing-rig crop at 64 px/m differed in **0 pixels**. The full 1280 × 800 frames also matched exactly. [Before still](<C:/Users/kazda/kiro/gtai-masters/n19/anim/shadow-tri/before-t1-64ppm.png>) · [After still](<C:/Users/kazda/kiro/gtai-masters/n19/anim/shadow-tri/after-t1-64ppm.png>)
+
+### Tonnage holds
+
+Each row follows an originally over-bar pose into the corrected film. The new overall worst was the C2→C3 midpoint at ticks 296–299.
+
+| Pose | Original ticks | Before, px | After, px |
+|---|---:|---:|---:|
+| C9 | 244–248 | 9.186 | 4.179 |
+| C10 | 249–253 | 9.205 | 5.010 |
+| C11 | 254–259 | 12.014 | 4.261 |
+| C12 | 260–266 | 13.384 | 7.033 |
+| C13 | 267–275 | 18.316 | 7.034 |
+| C14 | 276–281 | 11.289 | 7.026 |
+| C2 | 289–296 | 15.504 | 7.105 |
+| C3 | 297–305 | 18.395 | 7.108 |
+| C4 | 306–310 | 9.175 | 7.034 |
+| C6 | 315–320 | 11.263 | 6.370 |
+| Existing C6→C7 midpoint | 321–325 | 9.157 | 6.327 |
+| C10 | 336–340 | 9.179 | 2.065 |
+| C11 | 341–346 | 11.271 | 4.942 |
+
+The nine new cells follow **C1, C2, C3, C5, C9, C10, C11, C12 and C13**. All 192 base-sheet cells and the existing midpoint’s RGBA bytes matched their committed originals. At 64 px/m I saw continuous outlines and no doubled limbs. The C10→C11 midpoint uses C10’s metal to fill a hole inherited from C11’s piston. Four rendered crops of the existing midpoint varied by at most two channel levels in the wider atlas. [64 px/m triplets](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it4-midpoints-64ppm.png>) · [Raw films and probe](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/raw/it4/>)
+
+Level 4 applies to **p70 right profile**. The separately drawn p70 left, p55 right and p55 left controls matched all 110 baseline crops each. Their worst holds remain **18.401, 31.707 and 31.587 px**, respectively. [Tick spans, stance jumps and byte checks](<C:/Users/kazda/kiro/gtai-wt/n19-anim/evidence/tonnage-hold/holds_it4.md>)
+
+### Verification
+
+- `quick.mjs --no-godot` passed. Final commit lint passed all 19 checks.
+- `run_unit.mjs --changed` passed **2,981** tests after Part A and **2,982** after Part B, with **0 failures and 2 skips** in each run.
+- Changed-line mutation scores, killed/(killed + survived), were **0/7** for `rig_cast_shadows.gd`, **8/8** for `ghost_stride.gd`, and **21/21** for `ghost_sheet.gd`. The shadow regression caught the original coordinate fault, but all seven valid generated shadow mutations survived.
+
+[astra: 2012s, exit 0]
