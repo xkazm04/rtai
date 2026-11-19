@@ -9,6 +9,9 @@ extends RefCounted
 
 enum State { INTACT, D1, D2, HIJACKED, WRECK }
 
+## The full parked card footprint, in metres, also bounds the door approach.
+const PARKED_HALF: Vector2 = Vector2(3.2, 1.6)
+
 ## The steer rate reaches its full value at this forward speed (m/s) and fades above 60 % vmax.
 const STEER_FULL_V: float = 6.0
 const STEER_HIGH_FADE: float = 0.35

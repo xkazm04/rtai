@@ -12,6 +12,7 @@ var step_out_m: float
 var radius: float
 var car: VehicleBody
 var entering: bool
+var sheltered: bool
 var elapsed: int
 var origin: Vector2
 var goal: Vector2
@@ -43,6 +44,7 @@ func begin(svc: VehicleService, b: VehicleBody, start: Vector2, enter: bool) -> 
 	foot = a
 	car = b
 	entering = enter
+	sheltered = false
 	elapsed = 0
 	b.vel = Vector2.ZERO
 	b.spin = 0.0
@@ -51,6 +53,9 @@ func begin(svc: VehicleService, b: VehicleBody, start: Vector2, enter: bool) -> 
 
 
 func advance(svc: VehicleService) -> void:
+	if sheltered:
+		_shelter(svc)
+		return
 	var duration: int = enter_ticks if entering else exit_ticks
 	var door: Vector2 = VehicleDoorPath.driver_door(car, radius)
 	var end: Vector2 = door if entering else door + car.head.orthogonal() * step_out_m
@@ -88,16 +93,34 @@ func _cancel(svc: VehicleService) -> void:
 				break
 		if not VehicleDoorPath.clear(svc, foot, foot, radius):
 			var side: Vector2 = VehicleDoorPath.clear_side(svc, car, radius)
-			if side != Vector2.INF:
-				foot = side
+			if side == Vector2.INF:
+				side = VehicleDoorPath.clear_ground(svc, foot, radius)
+			if side == Vector2.INF:
+				# Traffic has swallowed all nearby footing. Shelter in the car.
+				sheltered = true
+				_shelter(svc)
+				return
+			foot = side
 		svc.world.set_focus(foot, false)
 	car = null
+
+
+## Every nearby standing point closed during this entry. Keep the on-foot body withdrawn
+## until the usual seating tick, with the car still held against throttle.
+func _shelter(svc: VehicleService) -> void:
+	foot = car.pos
+	svc.world.set_focus(foot, true)
+	elapsed += 1
+	if elapsed >= enter_ticks:
+		svc.seat(car)
+		car = null
 
 
 func write_state(out: StreamPeerBuffer) -> void:
 	if car == null:
 		return
-	out.put_u8(1 if entering else 2)
+	var phase: int = 1 if entering else 2
+	out.put_u8(3 if sheltered else phase)
 	out.put_32(car.id)
 	out.put_32(elapsed)
 	for p: Vector2 in [origin, goal, foot]:

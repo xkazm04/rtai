@@ -3,7 +3,7 @@ extends RefCounted
 ## Sweep Rivet's foot circle through the world's actual solid cells and oriented car hulls.
 ## Both endpoints, edges and round corners count, even on the first use-key tick.
 
-const HALF: Vector2 = Vector2(VehicleView.CAR_L, VehicleView.CAR_W) * 0.5 / SimConst.PX_PER_M
+const HALF: Vector2 = VehicleBody.PARKED_HALF
 
 
 static func driver_door(b: VehicleBody, radius: float) -> Vector2:
@@ -73,4 +73,22 @@ static func clear_side(svc: VehicleService, car: VehicleBody, radius: float) -> 
 			var p: Vector2 = car.pos + away + away.normalized() * float(extra)
 			if clear(svc, p, p, radius):
 				return p
+	return Vector2.INF
+
+
+## A knot of traffic can close all four sides mid-step. Search the surrounding ground cells,
+## nearest ring first. Stay within two sedan lengths of the interrupted walk.
+static func clear_ground(svc: VehicleService, near: Vector2, radius: float) -> Vector2:
+	var centre: Vector2 = near.floor() + Vector2(0.5, 0.5)
+	for ring: int in range(ceili(4.0 * HALF.x) + 1):
+		for across: int in range(-ring, ring + 1):
+			for delta: Vector2 in [
+				Vector2(across, -ring),
+				Vector2(across, ring),
+				Vector2(-ring, across),
+				Vector2(ring, across)
+			]:
+				var p: Vector2 = centre + delta
+				if clear(svc, p, p, radius):
+					return p
 	return Vector2.INF

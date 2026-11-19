@@ -3,32 +3,9 @@ extends GutTest
 
 const LEGACY_DOOR: Vector2 = Vector2.DOWN * VehicleService.DOOR_OFF
 
-
-class Lot:
-	extends VehicleWorld
-	var foot: Vector2 = Vector2(1.6, 3.0)
-	var blocked: bool = false
-	var sim_cars: PackedFloat64Array = []
-
-	func solid(x: float, y: float) -> bool:
-		return blocked and floori(x) == 0 and floori(y) == 2
-
-	func cars_near(_p: Vector2, _r: float) -> PackedFloat64Array:
-		return sim_cars
-
-	func take_car(_slot: int) -> void:
-		sim_cars.clear()
-
-	func player_pos() -> Vector2:
-		return foot
-
-	func set_focus(p: Vector2, _seated: bool) -> void:
-		foot = p
-
-
 var svc: VehicleService
 var car: VehicleBody
-var lot: Lot
+var lot: DoorTestLot
 var bus: EventBus
 var tick: int
 var saved: PackedStringArray
@@ -48,7 +25,7 @@ func _setup(on: bool) -> void:
 	bus = autofree(EventBus.new())
 	var data: DataStore = autofree(DataStore.new())
 	svc = VehicleService.new()
-	lot = Lot.new()
+	lot = DoorTestLot.new()
 	svc.world = lot
 	svc.setup(World.build_context(bus, data, 19))
 	car = svc.spawn_parked(&"sedan", Vector2.ZERO, Vector2.LEFT)
@@ -172,6 +149,24 @@ func test_new_obstruction_interrupts_entry_on_clear_footing() -> void:
 	assert_null(svc.driving)
 	assert_true(VehicleDoorPath.clear(svc, lot.foot, lot.foot, svc.doors.radius))
 	assert_signal_not_emitted(bus, "vehicle_entered")
+
+
+func test_a_wreck_during_entry_leaves_rivet_on_clear_ground() -> void:
+	assert_eq(svc.try_enter(lot.foot), car.id)
+	_step()
+	car.state = VehicleBody.State.WRECK
+	_step()
+	assert_null(svc.doors.car)
+	assert_null(svc.driving)
+	assert_signal_not_emitted(bus, "vehicle_entered")
+	assert_true(VehicleDoorPath.clear(svc, lot.foot, lot.foot, svc.doors.radius))
+
+
+func test_solid_separating_rivet_from_a_clear_driver_door_refuses_entry() -> void:
+	var passenger: Vector2 = Vector2(0.0, -2.5)
+	assert_true(VehicleDoorPath.clear(svc, passenger, passenger, svc.doors.radius))
+	assert_eq(svc.try_enter(passenger), -1)
+	assert_null(svc.doors.car)
 
 
 func test_off_is_instant_and_writes_the_original_stage_bytes() -> void:
