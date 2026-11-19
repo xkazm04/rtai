@@ -576,9 +576,9 @@ mini_nuke p55 rivet_eq_mini_nuke_diag_noflash 2 SW 137.17 157,104,81 -2.38 13.75
 mini_nuke p55 rivet_eq_mini_nuke_diag_noflash 3 NW 137.17 150,99,75 -2.38 12.04 0.3598 0.6585 33.09 27.84 -7.0 TR None None None None None
 mini_nuke p55 rivet_eq_mini_nuke_left 0 SW 138.01 125,93,74 -1.79 2.86 0.4121 0.5394 26.93 18.42 6.51 R SE 0.0 1.48 0.0 -
 mini_nuke p55 rivet_eq_mini_nuke_left 1 W 140.52 118,86,67 0.0 0.0 0.3869 0.4643 27.91 19.26 0.0 - E 0.0 0.0 0.0 -
-mini_nuke p55 rivet_eq_mini_nuke_left 2 NW 138.85 112,83,67 -1.19 2.62 0.3855 0.5181 26.76 18.02 -0.36 - NE 0.0 1.58 0.0 -
-mini_nuke p55 rivet_eq_mini_nuke_left_fire 0 W-fire 143.87 126,89,70 2.38 3.08 0.3605 0.6512 27.63 17.49 -6.82 R E-fire 0.0 3.35 0.0 -
-mini_nuke p55 rivet_eq_mini_nuke_left_fire_noflash 0 W-fire 143.87 126,89,70 2.38 3.08 0.3605 0.6512 27.63 17.49 -6.82 R E-fire 0.0 3.35 0.0 -
+mini_nuke p55 rivet_eq_mini_nuke_left 2 NW 138.85 112,83,67 -1.19 2.62 0.3855 0.5181 26.76 18.01 -0.36 - NE 0.0 1.58 0.0 -
+mini_nuke p55 rivet_eq_mini_nuke_left_fire 0 W-fire 143.87 126,89,70 2.38 3.08 0.3547 0.6512 27.63 17.49 -8.32 R E-fire 0.0 1.69 0.0 -
+mini_nuke p55 rivet_eq_mini_nuke_left_fire_noflash 0 W-fire 143.87 126,89,70 2.38 3.08 0.3547 0.6512 27.63 17.49 -8.32 R E-fire 0.0 1.69 0.0 -
 mini_nuke p70 rivet_eq_mini_nuke 0 S 132.34 124,96,76 -1.21 7.07 0.4847 0.8957 30.7 23.47 -14.0 R None None None None None
 mini_nuke p70 rivet_eq_mini_nuke 1 SE 137.21 136,105,84 2.42 3.21 0.5562 0.7456 29.15 20.52 -1.31 - None None None None None
 mini_nuke p70 rivet_eq_mini_nuke 2 E 133.96 143,110,85 0.0 0.0 0.5636 0.7212 29.44 20.78 0.0 - None None None None None
