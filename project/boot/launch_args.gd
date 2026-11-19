@@ -119,8 +119,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--cover",  # lane move n19: force station cover on
 	"--no-cover",  # lane move n19: force station cover off
 	"--car-doors",  # lane move n19: take the timed walk to and from a car door
+	"--ghost-look",  # n20-flight: override the per-form visual look
 ]
-
 var _values: Dictionary[String, String] = {}
 var _unknown: Array[String] = []
 ## n9-handheld: a device row was picked (`--device=`, or a Steam Deck seen by itself).
