@@ -85,6 +85,21 @@
       "sha256": "547b24a9eda519513b7f6f63e7cfde83f8b14dec7ad104a5bcfb366cfe97f826",
       "tool": "codex-image"
     },
+    "project/features/souls/art/view/p55/dent_sp_act.png": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n20/dent/masters/dent_sp_act_55_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/dent/dent_sp_act_55.txt",
+      "references": [
+        "masters:n20/concepts/dent_a.png",
+        "own: gtai-art/library/rounds/20261109-2205/out/dent_act_55.png",
+        "own: gtai-art/library/refs/camera_guide_55.png"
+      ],
+      "seed": null,
+      "sha256": "b9687196b50be05f4b6084cea2c4e135094af63f871ec0f7fb06551a6ad0467a",
+      "tool": "codex-image"
+    },
     "project/features/souls/art/view/p55/dent_sp_fly.png": {
       "accepted": true,
       "date": "2026-11-20",

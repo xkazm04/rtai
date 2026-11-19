@@ -42,3 +42,13 @@ All six parts share a scale of 165 / 317. The raw 317 px head width sets the shi
 `dent_sp_fly_55` shipped take 1 of 1, zero re-rolls. All twenty figures have the belt-up silhouette, cracked visor, crash-test discs and glass plume. The plate has a longer, more continuous trail. The forward dive is more upright in the front view than in profile.
 
 `ghost_pack.py --k=1` produced 267 × 221 px cells with a median figure height of 201.5 px. The profile hover head measures 77 px on the packed texture at tight-crop scanline 38 (alpha ≥ 128). Median hover height is 212 px. Both 55° proof boards use 86.4 / 212 game pixels per atlas pixel.
+
+## Action at 55°
+
+`dent_sp_act_55` shipped take 1 of 1, zero re-rolls. The torso plates, strap and cracked visor match the plate. The generated tail is short, with angular shards, and the rear jab extends to the right of the body's facing. Each facing has four separate, legless poses.
+
+`ghost_pack.py --match=201.1` (k = 0.9058558558558558) produced 237 × 216 px cells with a median figure height of 202 px. The packed profile cock head measures **77 px**, matching the **77 px** profile hover head. Both measurements use tight-crop scanline 38 and alpha ≥ 128.
+
+## Rebuilding the proof boards
+
+Run `py -3 -I tools/art/dent_spectral_cut.py cut MASTER CELLS`, then `py -3 -I tools/art/ghost_pack.py CELLS PACKED SCALE` with the scale option above. Run `py -3 -I tools/art/dent_spectral_cut.py board PACKED PREFIX HOVER_HEIGHT` with the pitch's median hover height. For the overhead sheet use `py -3 -I tools/art/dent_spectral_cut.py parts MASTER project/features/characters/art/dent/spectral evidence/a1/top_parts_board.png`. The cutter uses Pillow, NumPy and OpenCV.
