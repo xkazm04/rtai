@@ -127,7 +127,7 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	var art: String = ViewMode.shared().art
 	var h: float = HEIGHT_BY_ART.get(art, HEIGHT_M) * height_k * PlayerScale.k()
 	var s: float = h * CharacterRigs.PX_PER_M / FIG_PX
-	if MoveCells.draw(rig, card, s) or RivetStrike.placed(rig, card, s, h * CharacterRigs.PX_PER_M):
+	if MotionRigPose.draw(rig, s) or RivetStrike.placed(rig, card, s, h * CharacterRigs.PX_PER_M):
 		return
 	var drawn_walk: bool = RivetWalk.is_grid(card)
 	var ph: float = RivetWalk.phase_of(rig, art, s)

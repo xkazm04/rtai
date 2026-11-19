@@ -7,9 +7,9 @@ static var _missing: Dictionary[String, bool] = {}
 
 ## Project the canvas item about its own ground pivot, after the pose and depth sort.
 static func place(rig: Node2D, projection: Transform2D) -> void:
-	var draw: Transform2D = rig.transform.scaled_local(projection.get_scale())
-	draw.origin += projection.origin
-	RenderingServer.canvas_item_set_transform(rig.get_canvas_item(), draw)
+	var projected: Transform2D = rig.transform.scaled_local(projection.get_scale())
+	projected.origin += projection.origin
+	RenderingServer.canvas_item_set_transform(rig.get_canvas_item(), projected)
 
 
 ## The views publish before the rig is driven. A release clears only its own phase.
@@ -39,12 +39,23 @@ static func publish(rigs: CharacterRigs, channel: StringName, pose: StringName) 
 	selected.foot_y = (RivetFrames.FIG_PX + RivetFrames.PAD_PX) * selected.resolution
 	var octant: int = posmod(roundi(rigs.feed.face[0] / (PI * 0.25)), 8)
 	selected.frame = MoveCells.frame_of(pose, RivetFrames.LEFT[octant] == 1)
-	var height: float = RivetFrames.HEIGHT_BY_ART.get(art, RivetFrames.HEIGHT_M)
-	var h_px: float = height * RivetFrames.height_k * PlayerScale.k() * CharacterRigs.PX_PER_M
+
+
+static func draw(rig: CutRig, scale_px: float) -> bool:
+	if not MoveCells.draw(rig, rig.head_card, scale_px):
+		return false
+	var selected: MoveCells = rig.get_meta(MoveCells.ACTIVE)
+	# The standing/roll renderer also observes every ground step. Skipping them makes the
+	# first ordinary walk frame take the entire crossing as a single stride.
+	@warning_ignore("return_value_discarded")
+	RivetWalk.phase_of(rig, selected.art, scale_px)
 	var k: float = RigTilt.hip_h(rig) / rig.plan.hip_z
-	if channel == MoveCells.VAULT:
+	if selected.owner == MoveCells.VAULT:
 		k = RivetFrames.ROLL_SHADOW
-	rig.set_meta(RigCastShadows.CAST_HIP, h_px * k / RigCastShadows.BODY_IN_HIPS)
+	rig.set_meta(
+		RigCastShadows.CAST_HIP, scale_px * RivetFrames.FIG_PX * k / RigCastShadows.BODY_IN_HIPS
+	)
+	return true
 
 
 static func strip_for(pose: StringName, art: String) -> String:

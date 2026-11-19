@@ -113,3 +113,24 @@ func test_both_native_resolutions_seat_the_same_frame_at_the_same_height() -> vo
 		assert_false(card.flip_h)
 		assert_eq(card.global_position, rig.global_position)
 		assert_almost_eq(card.offset.y * card.global_scale.y, -84.0, 0.0001)
+
+
+func test_the_gait_samples_each_vault_step_before_recovery() -> void:
+	var rig: CutRig = add_child_autofree(CutRig.new())
+	rig.plan = RivetPlan.build()
+	var card: Sprite2D = Sprite2D.new()
+	rig.add_child(card)
+	rig.head_card = card
+	card.hframes = 8
+	var selected: MoveCells = MoveCells.new()
+	selected.art = "p70"
+	selected.owner = MoveCells.VAULT
+	selected.path = MotionRigPose.strip_for(&"vault_plant", selected.art)
+	selected.resolution = RivetRes.of(RivetStrips.DIR + "p70/" + RivetStrips.BASE)
+	rig.set_meta(MoveCells.ACTIVE, selected)
+	card.texture = load(selected.path) as Texture2D
+	for x: int in [10, 23, 41]:
+		rig.position.x = x
+		assert_true(MotionRigPose.draw(rig, 0.5))
+		var sampled: Vector2 = rig.get_meta(RivetWalk.META_AT, Vector2.ZERO)
+		assert_eq(sampled, rig.position)
