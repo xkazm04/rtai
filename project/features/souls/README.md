@@ -36,6 +36,8 @@ The soul **trail** stays off (owner verdict, 2026-11-03): powers are not the tra
 
 `--ghost-look=legacy|spectral` overrides every form, including in `ghost_review.tscn`. Without the flag, each form uses its `look` in `ghost_forms.json`. Missing and unknown looks select `legacy`. A form lane switches its row to `spectral` only after its body, flight and all attacks are complete and filmed in both tilts (70 and 55 degrees).
 
+Use `--view=tilt70` for the 70-degree art and `--view=tilt` for the 55-degree art. For a matching pair of review PNGs, give both runs the same `--shot-tick` and a different absolute `--shot=<path.png>`. The arena saves the rendered frame and exits.
+
 - `GhostLook.of(form_id: StringName) -> StringName` returns `GhostLook.LEGACY` or `GhostLook.SPECTRAL`. `GhostLook.spectral(form_id) -> bool` selects a rig's legless build. Tests use `override_for_test(look)` (empty selects rows) and `reset_for_test()`.
 - `GhostHoverRow.of(form_id) -> GhostHoverRow` reads a cached, shared tuning row. Treat it as read-only. In `ghost_hover.json`, `height_m` is the rest height, `bob_m` the bob amplitude and `bob_ticks` its period. `bank_deg` caps roll and `bank_per_dps` converts yaw rate in degrees/second to degrees of roll. `lag_ticks` sets the critically damped follow delay. `lean_deg` is the forward pitch at `top_mps`.
 - `tail.anchor_m` uses body axes (+x forward, +y right). `length_m` and `width_m` set the resting length and root width. `stretch_k` adds metres per m/s, `swing_k` sets turn lag from 0 to 1, `segments` counts links and `fray` varies their widths from smooth (0) to ragged (1). `shadow.radius_m` sets the ground radius, `alpha` sets centre opacity, and `shrink_k` is the scale lost per metre of lift.
