@@ -92,3 +92,32 @@ func test_a_drop_lands_with_the_body_not_while_he_holds_the_gun() -> void:
 	assert_true(GroundRifle.landed(at, 900), "and it stays")
 	GroundRifle.forget()
 	assert_false(GroundRifle.landed(at, 900), "a new fight starts the drop again")
+
+
+func test_offscreen_draw_does_not_start_the_landing_clock() -> void:
+	GroundRifle.forget()
+	var item: Node2D = autofree(Node2D.new())
+	var at: Vector2 = Vector2(GroundRifle.DRAW_M + 2.0, 0.0)
+	GroundRifle.draw(item, at, Vector2.ZERO, 100)
+	var first_visible: int = 100 + GroundRifle.LAND_TICKS + 1
+	assert_false(GroundRifle.landed(at, first_visible), "first visible tick starts the delay")
+	assert_true(GroundRifle.landed(at, first_visible + GroundRifle.LAND_TICKS))
+	GroundRifle.forget()
+
+
+func test_radial_alternative_offsets_across_the_barrel() -> void:
+	for at: Vector2 in [Vector2(3.0, 4.0), Vector2(-7.0, 2.0)]:
+		var barrel: Vector2 = Vector2.from_angle(GroundRifle.turn(at))
+		var offset: Vector2 = GroundRifle.lies_at(at) - at
+		assert_almost_eq(barrel.dot(offset), 0.0, 0.0001, "perpendicular to the drawn gun")
+		assert_almost_eq(barrel.cross(offset), GroundRifle.BESIDE_M, 0.0001)
+
+
+func test_fallback_mesh_carries_its_cream_highlight() -> void:
+	var arrays: Array = GroundRifle.mesh().surface_get_arrays(0)
+	var colors: PackedColorArray = arrays[Mesh.ARRAY_COLOR]
+	var highlights: int = 0
+	for color: Color in colors:
+		if color.to_html(false) == Ink.CREAM.to_html(false):
+			highlights += 1
+	assert_eq(highlights, 6, "two cream triangles on the receiver")
