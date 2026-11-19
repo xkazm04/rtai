@@ -39,6 +39,7 @@ var stage: CollectCallStage = null
 var ppm: float = 32.0
 var reduced_motion: bool = false
 var flare: bool = HitFeel.feel_flag() != "off"
+var _spectral: bool = GhostLook.spectral(KerfStage.GHOST)
 var _echo: Array[KerfRig] = []
 
 
@@ -67,7 +68,8 @@ func _draw() -> void:
 			_cut(k.trail_cut[i] * ppm, dir.rotated(deg_to_rad(CUT_DEG)), fade, i)
 			_flare(k, k.trail_cut[i] * ppm, dir, age)
 	if k.on():
-		_aura(k)
+		if not _spectral:
+			_aura(k)
 		_sight(k)
 
 
@@ -102,6 +104,7 @@ func _place_echoes() -> void:
 func _echo_at(j: int, at: Vector2, angle: float, alpha: float) -> void:
 	while _echo.size() <= j:
 		var rig: KerfRig = KerfRig.new()
+		rig.echo = true
 		rig.show_behind_parent = true  # under the path and the cut line
 		add_child(rig)
 		rig.speed_mps = KerfRig.FAST_MPS
@@ -113,6 +116,8 @@ func _echo_at(j: int, at: Vector2, angle: float, alpha: float) -> void:
 	r.rotation = angle
 	r.scale = Vector2.ONE * ppm / KerfRig.PX_PER_M
 	r.modulate = Color(ECHO_WASH, alpha)
+	if _spectral:
+		r.pose()
 
 
 ## The hanging cut: a thin white line across the target with a teal glow, shrinking to its middle.
