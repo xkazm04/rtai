@@ -1,0 +1,18 @@
+**Package 6c is complete in six commits.** All six weapons audit at zero holes. The full arsenal went from 18 holes to 10, closing all eight assigned holes. The matching-facing rule is recorded in [docs/decisions.md](C:/Users/kazda/kiro/gtai-wt/n19-guns/docs/decisions.md:1360).
+
+Every corrected cell matched its hand-made source height exactly. Across all 58 measured cells, the largest helmet-ratio difference was **3.35%** and the largest shell-tone difference was **CIE76 1.89**, within the limits of 5% and 8. All 34 shipped PNGs reproduced byte-for-byte from the cutters.
+
+| Weapon and evidence | Commit | Holes | Max helmet difference, p55 / p70 | Corrected regions besides the collar |
+|---|---|---:|---:|---|
+| [Plasma rifle](C:/Users/kazda/kiro/gtai-masters/n19/guns/plasma_rifle/frames.json) | `d5dadd25d` | 2 → 0 | 0.00% / 2.19% | Receiver latch, trigger claw, hip cable |
+| [Gatling](C:/Users/kazda/kiro/gtai-masters/n19/guns/gatling/frames.json) | `f1a70395d` | 2 → 0 | 1.53% / 1.19% | Belt-box plate, feed coupling, receiver port |
+| [Flamethrower](C:/Users/kazda/kiro/gtai-masters/n19/guns/flamethrower/frames.json) | `82426c67d` | 2 → 0 | 1.53% / 1.22% | Tank valve and strap, supply hose, wand regulator |
+| [Gloria](C:/Users/kazda/kiro/gtai-masters/n19/guns/gloria/frames.json) | `d798a20b8` | 2 → 0 | 1.74% / 1.19% | Receiver cover, cartridge rack, rear grip and cable |
+| [Rocket launcher](C:/Users/kazda/kiro/gtai-masters/n19/guns/rocket_launcher/frames.json) | `bfb5080c7` | 0 → 0 | 2.95% / 1.32% | Shoulder cradle, sight block, latch and coupling |
+| [Mini nuke](C:/Users/kazda/kiro/gtai-masters/n19/guns/mini_nuke/frames.json) | `ca6a3ef74` | 0 → 0 | 3.35% / 3.21% | Barrel warning plate, carry hinge, trigger claw and hose |
+
+All poses are mirror-based. Pixels outside the correction masks matched their source mirrors exactly. I verified all 12 old/new contact sheets against the captured frames and all six centered p55 clips at 10.67 seconds each. [Per-cell measurements and shared-file lines](C:/Users/kazda/kiro/gtai-wt/n19-guns/build/6c-review.txt) · [Final audit](C:/Users/kazda/kiro/gtai-wt/n19-guns/evidence/arsenal/matrix_after_6.txt)
+
+**Checks:** Changed units passed 1,659 with two skipped. All 22 selected tests, five Python tests, and 19 lint checks passed. Release compile loaded 740 scripts with zero failures. Each commit used `--no-godot` after the full quick gate hit the known standalone `Identifier not found: Log` error at `part_library.gd:60`.
+
+[astra: 2243s, exit 0]

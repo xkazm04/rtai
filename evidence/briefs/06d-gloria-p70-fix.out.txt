@@ -1,0 +1,20 @@
+Fixed Gloria’s p70 W and NW rest cells. The receiver, rail and rack now retain the hand-made ink, with one scripted 5 × 5 fastener flip per cell. Pixel differences from the mirrored source fell from **594 to 20** on W and **601 to 38** on NW. Gloria’s accepted p55 and p70 fire art stayed byte-identical. [West still](C:/Users/kazda/kiro/gtai-masters/n19/guns/gloria/gloria_p70_west.png) · [NW still](C:/Users/kazda/kiro/gtai-masters/n19/guns/gloria/gloria_p70_nw.png) · [Left check](C:/Users/kazda/kiro/gtai-masters/n19/guns/gloria/gloria_p70_left_check.png) · [2× source comparison](C:/Users/kazda/kiro/gtai-masters/n19/guns/gloria/gloria_p70_left_zoom.png)
+
+The yellow visor slit comes from **hand-made p70 E cell 2** on both Gloria and rocket_launcher. The visor windows match the source pixel-for-pixel before and after 6d. Rocket’s NW tube also matches mirrored NE at **28.9° above horizontal**. Both endpoint patches and the complete silhouette match in `bfb5080c7` and now. [Rocket comparison](C:/Users/kazda/kiro/gtai-masters/n19/guns/rocket_launcher/rocket_launcher_p70_left_zoom.png)
+
+**All 58 cells passed the helmet check.** Every changed pixel inside a helmet box was on the overlapping collar band. Counts below are in SW, W, NW, W-fire, W-fire-noflash order. Flamethrower has no noflash twin. [Per-cell measurements and source coordinates](C:/Users/kazda/kiro/gtai-wt/n19-guns/evidence/arsenal/left_helmet_pixels.txt)
+
+| Weapon | p55 collar pixels | p70 collar pixels | Change and commit |
+|---|---|---|---|
+| Gloria | 219, 141, 123, 150, 150 | 301, 387, 274, 237, 237 | Receiver fasteners and cutter regression test · `2cd0b71a5` |
+| Rocket launcher | 137, 160, 149, 40, 40 | 379, 456, 428, 97, 97 | Exact sight and latch flips · `d844844c4` |
+| Mini nuke | 126, 117, 140, 45, 45 | 136, 331, 175, 80, 80 | Exact warning-plate and hinge flips · `1272c3d98` |
+| Plasma rifle | 262, 187, 200, 139, 139 | 289, 439, 324, 189, 189 | Protected helmet box in all three p70 rest cells · `9203acf6f` |
+| Flamethrower | 279, 131, 55, 193 | 280, 224, 60, 315 | Protected p55 W-fire and p70 W rest/fire · `b494289eb` |
+| Gatling | 137, 144, 138, 89, 89 | 239, 254, 188, 242, 242 | Passed as shipped |
+
+All corrections were scripted. Across the six weapons, maximum matching-source differences were **0% height, 3.21% helmet ratio and 0 CIE76**. The arsenal audit reproduced the previous matrix exactly, with **0 holes per reviewed weapon and 10 overall**. [Metrics](C:/Users/kazda/kiro/gtai-wt/n19-guns/evidence/arsenal/cell_metrics.txt) · [Audit matrix](C:/Users/kazda/kiro/gtai-wt/n19-guns/evidence/arsenal/matrix_after_6.txt)
+
+Changed units passed **1,659**, with 2 skipped. Selected units passed **22/22**, Python art tests **6/6**, lint **19/19**, and release compile **740/740**. Quick passed before all five commits without `--no-godot`.
+
+[astra: 1681s, exit 0]

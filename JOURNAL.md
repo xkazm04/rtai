@@ -118,3 +118,13 @@ NEXT: (session 7) wait for node 7580 (lock logs/guns/astra.lock). LOOK at re-sho
 - 06:13 REPORT.md filled except: final matrix (Final:), mag view mutate, turn-kit row number, Next steps, gate line, ledger row 16. What does not / Calls / Merge notes / ledger are written (2107805f3..).
 NEXT: (session 7) ASTRA RUNNING final since 06:10 (node pid 7580; lock logs/guns/astra.lock; out evidence/briefs/11-final.out.txt else logs/guns/astra-16-final.last.txt). Follow the 06:10 NEXT above; fill the six REPORT gaps; Next steps = collar bands (brief 10 items 1-3), armed walk/run grids, rifle rack if the Call says yes, arsenal_turn/rivet_gun_diag survivors if 11 did not reach them.
 - 06:16 READ 0a4a693db (brief 11 item 1): matrix_after_11 = Total holes 3, Informational gaps 52 (walk/run, outside the ratchet). Put both numbers in REPORT's Final line. Astra still running (node 7580) on item 2.
+
+## Session 7 (07:30 - 07:40, STABILIZE)
+
+- 07:30 Read journal. final (11) ended 07:02 exit 0, no lock. Freeze: no new Astra calls.
+- 07:31 ASTRA final 52 accepted (0a4a693db, f0990e096, ffae79afc, 4043fc526, 87d0606ab). Holes 3 (rack) + 52 info gaps.
+- 07:32 LOOKED hand_cannon_p55_reload_zoom: wrist residue gone, own revolver + speed loader, clean.
+- 07:33 frames.json written in gtai-masters/n19/guns (12 entries). Gate --rev=HEAD started on 87d0606ab (log build/gate/87d0606ab5c8/evidence.log).
+- 07:36 REPORT filled (final matrix, mag mutate, turn kit, residue row, Next steps, ledger 16); cites clean.
+- FRICTION the --reels gate run was not done: no time after the snapshot gate.
+NEXT: (morning) read the gate result in build/gate/87d0606ab5c8/; if red, the REPORT gate line says RUNNING and must be corrected before merge. Untracked evidence/briefs/*.out.txt are Astra transcripts (inert evidence).

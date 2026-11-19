@@ -1,10 +1,12 @@
 # REPORT - n19 lane `guns`: complete the arsenal
 
 Branch `n19-guns` from `int-n19` @ `28302bd3c`. Director: Claude Opus 5.5. Builder: Astra (GPT-6.2, high).
-DRAFT (04:20): sections marked (pending) are filled at the freeze.
+Final at the 07:30 freeze; HEAD `87d0606ab`.
 
-Score: the audit matrix (`tools/arsenal` audit, ratchet test `test_arsenal_audit`).
-Before `evidence/arsenal/matrix_before.txt`: **51 holes**. After package 6: **10 holes** (`evidence/arsenal/matrix_after_6.txt`). After package 7b: **3 holes** (`evidence/arsenal/matrix_after_7.txt`; the 3 = assault rifle arena rack slot, a Call). Final: (pending).
+Score: the audit matrix (`project/dev/rivet_arsenal/arsenal_audit.gd`, ratchet test `project/tests/unit/test_arsenal_audit.gd`).
+Before `evidence/arsenal/matrix_before.txt`: **51 holes**. After package 6: **10 holes** (`evidence/arsenal/matrix_after_6.txt`). After package 7b: **3 holes** (`evidence/arsenal/matrix_after_7.txt`; the 3 = assault rifle arena rack slot, a Call). Final: **3 holes** (`evidence/arsenal/matrix_after_11.txt`, `.json`), plus **52 informational gaps** (13 weapons x walk + run grid x 2 pitches) reported outside the ratcheted total.
+
+Gate: `node tools/gate/run.mjs --rev=HEAD` on `87d0606ab`: RUNNING at 07:35 (log `build/gate/87d0606ab5c8/evidence.log`); result appended below when it ends. Frames index: `gtai-masters/n19/guns/frames.json` (12 entries).
 
 ## What works
 
@@ -16,9 +18,10 @@ Before `evidence/arsenal/matrix_before.txt`: **51 holes**. After package 6: **10
 | mini_nuke diagonals + left; rocket diagonals with back-blast on the rear bell at p55 + p70, left | `gtai-masters/n19/guns/rocket_launcher/rocket_launcher_p55_64.png` | 4 -> 0 each |
 | Left cells for plasma_rifle, gatling, flamethrower, gloria (and rocket/mini_nuke rebuilt) on the weapon's own hand-made poses: mirror + masked corrections of the asymmetric parts, script-cut (`tools/art/left_from_right.py`, regions in `tools/art/left_regions/`) | `<gun>_p55_left_check.png`, `<gun>_p55_west.png` per weapon | 2 -> 0 each; helmet-ratio delta <= 3.35 %, CIE76 <= 1.89 vs source |
 | Dropped rifle lies 0.5 m from the body (owner verdict; ai/anim NEED) | `gtai-masters/n19/guns/rifle_drop/claw_shock_measurements.png` | 0.86 -> 0.52-0.53 m; mutate ground_rifle.gd 8/10 sample |
+| Reload residue fix: wrists/shoulder refilled from the hand-made base cells, 12 strips recut byte-identical elsewhere | `gtai-masters/n19/guns/hand_cannon/hand_cannon_p55_reload_zoom.png` (looked: clean) | f0990e096 |
 | Reload cells for electro_gun, machine_pistol, hand_cannon (p55 + p70, right + left): the hand-made plasma/pistol reload figure with the gun's own held art and its own magazine composited by script (`tools/art/reload_composite.py`); electro gun's new brass energy-cell mag | `gtai-masters/n19/guns/<gun>/<gun>_<pitch>_reload_zoom.png`, `<gun>_p55_reload_64.png`, `<gun>_p55_reload_turn32.mp4` | 3 -> 0 holes each (commits 7a696962f, a5b02604b, 9bed8f09c) |
-| Magazine view: the ink-block placeholder is now reached only by an unknown weapon (logged once); shoulder tubes carry their own round | `project/tests/unit/test_rivet_mag_view.gd` (00b00b7b9) | mutate (pending) |
-| Turn kit: Rivet firing while turning through 8 octants, centred, 32 px/m | `<gun>_p55_turn32.mp4` per weapon | (pending) |
+| Magazine view: the ink-block placeholder is now reached only by an unknown weapon (logged once); shoulder tubes carry their own round | `project/tests/unit/test_rivet_mag_view.gd` (00b00b7b9) | mutate rivet_mag_view.gd 17/38 (40 sampled) + line 135 boundary 1/1 (4043fc526) |
+| Turn kit: Rivet firing while turning through 8 octants, centred, 32 px/m | `<gun>_p55_turn32.mp4` per weapon; index `evidence/arsenal/turns_after_11.json` | 6 pre-centring clips re-shot (5 weapons incl. both rocket arenas), 48 firing frames checked; mutate turn driver 23/24, diagonal fit 32/39 |
 
 ## What does not
 - The assault rifle has no slot on the arena weapon rack (3 holes: top/p55/p70 rack pickup). Adding one widens the hub weapon wall by 1 m (a layout change; the wall keeps its x1 scale either way): a Call, not built.
@@ -44,7 +47,11 @@ Before `evidence/arsenal/matrix_before.txt`: **51 holes**. After package 6: **10
 - `project/features/combat/weapons/art/ground_rifle.gd`: `GroundRifle.BODY_GAP` (false = old placement) answers ai/anim's NEED (rifle 0.86 m -> 0.52 m).
 
 ## Next steps
-(pending)
+1. Clean scripted collar bands on the mirror-based left cells (`evidence/briefs/10-collar-bands.md` items 1-3).
+2. Armed walk/run grids for the 13 weapons the info column names (Call 2).
+3. Rifle rack slot if Call 1 says yes (closes the last 3 holes).
+4. Raise rivet_mag_view.gd's mutation score (17/38 sampled) with first-author tests.
+5. Quick gate's standalone `Log` parse error (`part_library.gd:60`) so commits stop needing `--no-godot`.
 
 ## Astra ledger
 | # | Tag | Min | Verdict |
@@ -64,6 +71,6 @@ Before `evidence/arsenal/matrix_before.txt`: **51 holes**. After package 6: **10
 | 13 | p70-fix | 28 | accepted |
 | 14 | reload | 16 | bounced (electro reload kept the plasma stock) |
 | 15 | reload-gun | 75 | accepted (cap hit during the last mutate run) |
-| 16 | final | (pending) | (pending) |
+| 16 | final | 52 | accepted (walk/run info column, reload residue fix, clips re-shot, mutate survivors) |
 
 What I would brief differently: ask for the build-on-the-hand-made-cell method (mirror + masked correction, composite onto the hand-made reload figure) from the first art package, not after two rounds of fresh full-figure generations; demand the 2x zoom sheet (source | new | held) with every art commit from the start, because a thumbnail sheet hid both real faults and caused one wrong bounce; and keep mutate runs out of the last 15 minutes of a session.

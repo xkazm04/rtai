@@ -1,0 +1,24 @@
+Package 11 is complete. All product changes were committed before 07:20.
+
+The final audit reproduced the committed matrix byte-for-byte. **`Total holes  3`** are the assault-rifle rack pickups. **`Informational gaps 52`** are 13 missing walk grids and 13 missing run grids at each pitch. [Matrix TXT](C:/Users/kazda/kiro/gtai-wt/n19-guns/evidence/arsenal/matrix_after_11.txt) · [JSON](C:/Users/kazda/kiro/gtai-wt/n19-guns/evidence/arsenal/matrix_after_11.json)
+
+| Commit | Change |
+|---|---|
+| `0a4a693db` | Added walk/run coverage to the audit and tested the ratchet. |
+| `f0990e096` | Refilled the exposed wrists and shoulder from native reload pixels and removed the extra magazine speck. All 12 strips recut byte-for-byte. |
+| `ffae79afc` | Replaced six centered p55 clips across five weapons, including both rocket-launcher arenas. Checked all 48 firing frames. |
+| `4043fc526` | Tested magazine expiry at the exact fade boundary. |
+| `87d0606ab` | Tested deferred turn startup, error handling and both diagonal-fit boundaries. |
+
+**Visual review:** [Hand cannon p55](C:/Users/kazda/kiro/gtai-masters/n19/guns/hand_cannon/hand_cannon_p55_reload_zoom.png) · [Machine pistol p55](C:/Users/kazda/kiro/gtai-masters/n19/guns/machine_pistol/machine_pistol_p55_reload_zoom.png) · [Electro gun p70](C:/Users/kazda/kiro/gtai-masters/n19/guns/electro_gun/electro_gun_p70_reload_zoom.png) · [Clip and still index](C:/Users/kazda/kiro/gtai-wt/n19-guns/evidence/arsenal/turns_after_11.json)
+
+| Mutation run | Killed / valid |
+|---|---:|
+| Magazine view, 40 sampled | 17/38 |
+| Magazine line 135, `>=` → `>` | 1/1 |
+| Turn driver, all five previous survivors caught | 23/24 |
+| Diagonal fit, previous `<=` → `<` survivor caught | 32/39 |
+
+The changed suite passed 1,706 tests with two skips. All 27 selected tests, eight Python tests and 19 lint checks passed. Release compile loaded 740 scripts with zero failures. The audit and turn/diagonal commits used `--no-godot` after the known standalone `Identifier not found: Log` error at `part_library.gd:60`. The dev-line baseline increased by 26 lines across those two commits.
+
+[astra: 3119s, exit 0]
