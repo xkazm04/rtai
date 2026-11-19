@@ -51,3 +51,51 @@ Master directory: C:/Users/kazda/kiro/gtai-masters/n19/anim/ghost-cells/
   raw/c/kerf_{baseline,trial}_pose_trace.tsv (tick, sheet, cell, ground shift)
   raw/c/kerf_{baseline,trial}_hold_trace.txt and 768 original 32 px/m crops
   capture/kerf_run16_alt.py (verified baseline and trial repack)
+
+N19 axial in-betweens (rows and columns below are one-based)
+The original p70 sheet was reproduced byte-for-byte, PNG SHA-256
+4a32e2fd7b97b075cd4d1ab35051a18d96c56006740112e648f995d91b1febcd.
+From the repo root, with V = project/features/souls/art/view/p70 and
+K = C:/Users/kazda/kiro/gtai-art/library/keyed/ghosts:
+  python evidence/s14/tools/double_sheet.py V/kerf_run8.png 5 base.png K/kerf_run16_70_cells 1,2,3 3
+  python tools/art/kerf_run16_midpoints.py base.png V/kerf_run16.png
+
+The first pack centres the run8 keys with 3 px of side padding. Only rows
+2, 3 and 4 receive delivered in-betweens. The library's left_row1 sources
+are three-quarter toward-left. Both axial rows repeat C1/2, C3/4, C5/6,
+C7/8, C9/10, C11/12, C13/14 and C15/16. There are no extra adjacent
+mirror-only pairs, including C16/1. Mirroring the opposite phase of the
+back row gives the existing key again. The v2 run8 keys and upright walk
+do not supply the missing running phases. The second pack derives the
+even columns from Kerf's own keys, placing individual toes and knees between
+their two positions. All 64 other RGBA cells matched. The left sheet is common
+to both films. Both axial rows now have distinct adjacent drawings throughout.
+
+Same leg 2, ticks 245-292 inclusive, 32 px/m. Re-measured both sets of crops
+with the historical hold_ride.py and the identical-RGBA grouping above.
+Each before/after pair had the same displayed cell and measured ground shift.
+Of 384 pairs, 332 were pixel-identical; the 52 differences were precisely
+the ticks showing the replaced cells (26 toward, 26 away).
+
+                      n15 changes    n15 worst px    worst identical-art px
+ turn  facing        before after    before after      before     after
+    0  right             40    40     8.978 8.978       9.007     9.007
+   45  toward right      47    47     0.000 0.000       8.870     8.870
+   90  toward            47    47     0.000 0.000      16.713     8.372
+  135  toward left       46    46     7.992 7.992       8.949     8.949
+  180  left              41    41     8.980 8.980      10.012    10.012
+ -135  away left         39    39     9.355 9.355       9.415     9.415
+  -90  away              28    38    18.084 8.966      25.310     8.966
+  -45  away right        45    45     8.953 8.953       9.442     9.442
+
+Away now rises out of the crouch and extends its left leg on t275, between
+the low C3 on t273-274 and the visible sole at C5 on t277. Toward t253
+shows the toes passing under the housing before the opposite leg takes
+the lead. The electrode housing rises and falls less abruptly at 64 px/m.
+The remaining straight holds last two ticks within a single column. Left
+profile is now worst at 10.012 px. Level 2 remains (profile drift 3.0 px).
+
+Under C:/Users/kazda/kiro/gtai-masters/n19/anim/ghost-cells/:
+  kerf_run16_axial_64ppm.png (same-tick pairs for every replaced column)
+  kerf_run16_axial_ticks_32ppm.png (native-scale consecutive ticks)
+  raw/kerf-away/kerf_fixed_{pose_trace.tsv,hold_trace.txt} and 384 crops
