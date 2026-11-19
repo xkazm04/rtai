@@ -77,11 +77,21 @@ func _burst_at(tick: int) -> void:
 func _nearest() -> Vector2:
 	var p: Vector2 = stage.arena.rivet.pos
 	var offset: Vector2 = Vector2.INF
-	for boxes: Array[Rect2] in [_targets, _city_targets]:
-		for box: Rect2 in boxes:
-			var d: Vector2 = p.clamp(box.position, box.end) - p
-			if d.length_squared() < offset.length_squared():
-				offset = d
+	for box: Rect2 in _targets:
+		var d: Vector2 = p.clamp(box.position, box.end) - p
+		if d.length_squared() < offset.length_squared():
+			offset = d
+	if stage.cells != null:
+		# The stick can carry Rivet beyond the respawn patch. Check every occupied cell
+		# close enough to beat the nearest station, including cells of irregular props.
+		var reach: float = offset.length()
+		for y: int in range(floori(p.y - reach), floori(p.y + reach) + 1):
+			for x: int in range(floori(p.x - reach), floori(p.x + reach) + 1):
+				if stage.cells.solid(x, y):
+					var corner: Vector2 = Vector2(x, y)
+					var d: Vector2 = p.clamp(corner, corner + Vector2.ONE) - p
+					if d.length_squared() < offset.length_squared():
+						offset = d
 	return offset.normalized()
 
 

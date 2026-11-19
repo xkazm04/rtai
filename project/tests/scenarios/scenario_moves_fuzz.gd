@@ -13,6 +13,7 @@ class Trace:
 	var counts: Dictionary[String, int] = {
 		"ticks": 0,
 		"vault_starts": 0,
+		"vault_refusals": 0,
 		"landings": 0,
 		"snaps": 0,
 		"peeks": 0,
@@ -147,7 +148,10 @@ func _run(tape: MovesFuzzTape, city: bool, ticks: int, expected: Trace = null) -
 			trace.failure = _failure(tape, tick, "no clear respawn", city)
 			break
 		var before: PlayerCover.Phase = motion.cover.phase
+		var last_hit: VaultProbe.Hit = motion.vault.hit
 		w.loop().step()
+		if motion.vault.hit != null and motion.vault.hit != last_hit and motion.vault.frame != 0:
+			trace.counts["vault_refusals"] += 1
 		_observe(tape, trace, before, tick)
 		var contact: String = VaultTrial.forbidden_contact(stage)
 		if contact != "":
