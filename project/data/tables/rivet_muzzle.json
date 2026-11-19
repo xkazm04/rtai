@@ -319,6 +319,30 @@
           ]
         }
       },
+      "rivet_eq_gloria_left": {
+        "cells": {
+          "0": [
+            40,
+            53
+          ],
+          "1": [
+            43,
+            48
+          ],
+          "2": [
+            44,
+            49
+          ]
+        }
+      },
+      "rivet_eq_gloria_left_fire": {
+        "cells": {
+          "0": [
+            29,
+            49
+          ]
+        }
+      },
       "rivet_eq_hand_cannon": {
         "cells": {
           "3": [
@@ -1102,6 +1126,30 @@
           "3": [
             77,
             57
+          ]
+        }
+      },
+      "rivet_eq_gloria_left": {
+        "cells": {
+          "0": [
+            58,
+            93
+          ],
+          "1": [
+            58,
+            83
+          ],
+          "2": [
+            58,
+            74
+          ]
+        }
+      },
+      "rivet_eq_gloria_left_fire": {
+        "cells": {
+          "0": [
+            31,
+            97
           ]
         }
       },

@@ -1,0 +1,66 @@
+{
+  "p55": [
+    [
+      {"part": "rigid hazard collar stripes", "band": [[86, 57, 63], [90, 58, 64], [94, 60, 67], [98, 62, 71], [102, 64, 73], [106, 66, 75], [110, 68, 77], [114, 69, 77], [118, 69, 77], [122, 68, 75], [126, 67, 73], [130, 65, 70], [133, 63, 68]]},
+      {"part": "asymmetric bolted side cover on Gloria's receiver", "band": [[136, 84, 95], [148, 81, 92], [155, 79, 90]]},
+      {"part": "feed rail and lower cartridge rack", "band": [[132, 103, 110], [144, 99, 105], [154, 95, 101]]},
+      {"part": "rear grip coupling and exposed hip cable", "band": [[99, 88, 97], [105, 87, 96], [115, 83, 92]]},
+      {"part": "visible receiver, rail and cartridge rack", "gun_mask": [[95, 87], [118, 78], [158, 69], [168, 75], [169, 88], [159, 110], [121, 124], [107, 110]]}
+    ],
+    [
+      {"part": "rigid hazard collar stripes", "band": [[88, 55, 67], [92, 57, 70], [96, 61, 72], [100, 63, 74], [104, 66, 75], [108, 67, 76], [112, 68, 76], [116, 67, 76], [120, 66, 75], [124, 65, 73], [128, 62, 71], [131, 60, 69]]},
+      {"part": "asymmetric bolted side cover on Gloria's receiver", "band": [[140, 78, 86], [151, 72, 81], [157, 69, 77]]},
+      {"part": "feed rail and lower cartridge rack", "band": [[136, 97, 105], [145, 91, 100], [153, 87, 94]]},
+      {"part": "rear grip coupling and exposed hip cable", "band": [[86, 102, 109], [89, 108, 115], [96, 113, 119]]},
+      {"part": "visible receiver, rail and cartridge rack", "gun_mask": [[111, 91], [128, 78], [156, 64], [164, 67], [164, 82], [149, 104], [123, 116], [113, 105]]}
+    ],
+    [
+      {"part": "rigid hazard collar stripes", "band": [[87, 55, 67], [91, 58, 70], [95, 61, 72], [99, 63, 74], [103, 65, 75], [107, 66, 76], [111, 67, 76], [115, 67, 76], [119, 67, 75], [123, 66, 74], [127, 64, 72], [130, 63, 71]]},
+      {"part": "asymmetric bolted side cover on Gloria's receiver", "band": [[138, 79, 87], [146, 74, 83], [153, 72, 78]]},
+      {"part": "feed rail and lower cartridge rack", "band": [[133, 98, 106], [142, 92, 100], [148, 88, 96]]},
+      {"part": "rear grip coupling and exposed hip cable", "band": [[81, 100, 108], [85, 107, 113], [91, 108, 115]]},
+      {"part": "visible receiver, rail and cartridge rack", "gun_mask": [[111, 90], [124, 79], [151, 65], [160, 68], [160, 86], [141, 105], [118, 118], [109, 108]]}
+    ]
+  ],
+  "p55_fire": [
+    [
+      {"part": "rigid hazard collar stripes", "band": [[94, 55, 63], [98, 60, 68], [102, 63, 72], [106, 66, 75], [110, 67, 77], [114, 68, 78], [118, 68, 78], [122, 68, 77], [126, 66, 74], [130, 63, 71], [134, 60, 67], [136, 58, 64]]},
+      {"part": "asymmetric bolted side cover on Gloria's receiver", "band": [[147, 76, 84], [158, 74, 84], [166, 74, 82]]},
+      {"part": "feed rail and lower cartridge rack", "band": [[139, 96, 101], [151, 93, 99], [161, 91, 96]]},
+      {"part": "rear grip coupling and exposed hip cable", "band": [[72, 90, 97], [77, 99, 103], [84, 100, 107]]},
+      {"part": "visible receiver, rail and cartridge rack", "gun_mask": [[97, 83], [123, 71], [169, 65], [179, 70], [180, 89], [161, 105], [123, 108], [101, 101]]}
+    ]
+  ],
+  "p70": [
+    [
+      {"part": "rigid hazard collar stripes", "band": [[123, 109, 117], [127, 113, 121], [131, 117, 126], [135, 120, 129], [139, 123, 132], [143, 125, 135], [147, 127, 137], [151, 128, 139], [155, 129, 140], [159, 129, 140], [163, 129, 140], [167, 128, 139], [171, 127, 138], [175, 125, 137], [179, 123, 135], [183, 120, 132], [187, 117, 129], [190, 114, 126]]},
+      {"part": "asymmetric bolted side cover on Gloria's receiver", "band": [[190, 145, 161], [205, 140, 156], [216, 137, 152]]},
+      {"part": "feed rail and lower cartridge rack", "band": [[181, 178, 187], [194, 174, 182], [209, 167, 177]]},
+      {"part": "rear grip coupling and exposed hip cable", "band": [[130, 160, 169], [138, 159, 170], [150, 156, 166]]},
+      {"part": "visible receiver, rail and cartridge rack", "gun_mask": [[125, 161], [161, 143], [224, 124], [236, 130], [236, 153], [222, 186], [176, 201], [142, 188]]}
+    ],
+    [
+      {"part": "rigid hazard collar stripes", "band": [[122, 106, 125], [126, 111, 129], [130, 116, 133], [134, 121, 136], [138, 125, 139], [142, 128, 141], [146, 130, 143], [150, 132, 144], [154, 134, 145], [158, 134, 145], [162, 134, 145], [166, 134, 144], [170, 132, 143], [174, 131, 141], [178, 128, 138], [182, 125, 135], [186, 121, 132], [188, 119, 130]]},
+      {"part": "asymmetric bolted side cover on Gloria's receiver", "band": [[205, 133, 148], [214, 127, 141], [224, 121, 132]]},
+      {"part": "feed rail and lower cartridge rack", "band": [[197, 168, 180], [209, 161, 173], [220, 153, 164]]},
+      {"part": "rear grip coupling and exposed hip cable", "band": [[146, 180, 188], [154, 187, 195], [164, 186, 193]]},
+      {"part": "visible receiver, rail and cartridge rack", "gun_mask": [[156, 163], [185, 137], [223, 110], [237, 114], [236, 140], [217, 173], [183, 191], [162, 184]]}
+    ],
+    [
+      {"part": "rigid hazard collar stripes", "band": [[121, 107, 127], [125, 112, 129], [129, 117, 134], [133, 121, 137], [137, 125, 140], [141, 128, 142], [145, 130, 143], [149, 132, 144], [153, 133, 145], [157, 134, 145], [161, 134, 145], [165, 133, 144], [169, 132, 143], [173, 130, 141], [177, 127, 138], [181, 124, 136], [183, 122, 134]]},
+      {"part": "asymmetric bolted side cover on Gloria's receiver", "band": [[204, 124, 139], [213, 118, 132], [220, 112, 126]]},
+      {"part": "feed rail and lower cartridge rack", "band": [[196, 157, 169], [208, 148, 161], [220, 136, 151]]},
+      {"part": "rear grip coupling and exposed hip cable", "band": [[133, 179, 185], [140, 188, 194], [153, 191, 198]]},
+      {"part": "visible receiver, rail and cartridge rack", "gun_mask": [[163, 158], [182, 132], [218, 100], [235, 98], [237, 131], [216, 158], [187, 184], [169, 188]]}
+    ]
+  ],
+  "p70_fire": [
+    [
+      {"part": "rigid hazard collar stripes", "band": [[138, 133, 143], [142, 136, 146], [146, 139, 150], [150, 142, 152], [154, 144, 154], [158, 145, 156], [162, 146, 157], [166, 147, 157], [170, 147, 157], [174, 147, 156], [178, 146, 155], [182, 145, 154], [186, 143, 152], [190, 141, 149]]},
+      {"part": "asymmetric bolted side cover on Gloria's receiver", "band": [[229, 145, 157], [243, 144, 156], [256, 144, 154]]},
+      {"part": "feed rail and lower cartridge rack", "band": [[218, 173, 180], [233, 171, 180], [250, 168, 176]]},
+      {"part": "rear grip coupling and exposed hip cable", "band": [[118, 156, 164], [125, 167, 175], [134, 170, 176]]},
+      {"part": "visible receiver, rail and cartridge rack", "gun_mask": [[174, 139], [200, 132], [245, 128], [277, 136], [276, 159], [253, 185], [208, 195], [182, 179]]}
+    ]
+  ]
+}

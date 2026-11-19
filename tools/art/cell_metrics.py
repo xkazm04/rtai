@@ -155,8 +155,9 @@ def report():
                                 ImageDraw.Draw(gun_mask).polygon(
                                     list(map(tuple, region["gun_mask"])), fill=1)
                         gun_mask = np.asarray(gun_mask)
-                    edge_key = f"{pitch}/{eq}" if firing_left else seed_key
-                    edge = edges.get(edge_key, {}).get(str(5 if firing_left else index))
+                    edge_key = f"{pitch}/{eq}" if mirror else seed_key
+                    edge_index = (5 if firing_left else index+1) if mirror else index
+                    edge = edges.get(edge_key, {}).get(str(edge_index))
                     props = shape(cell, 110*factor, h, sample, gun_mask, edge)
                     measured.append((stem, index, facing, h * game_scale / factor, rgb, props))
             ref = next(r for r in measured if r[:2] == (eq, 2))
@@ -191,7 +192,7 @@ def write(out):
     method = ("64 px/m standing turn scale; alpha >= 128, connected crown to sole, "
               "median sRGB of rust pixels on upper helmet plate. E = equipped cell 2. For mirror-derived poses source_flag grades the matching original facing; E-rest flags are informational. "
               "H: abs(height difference) > 5%; T: CIE76 D65 delta E > 8. "
-              "R: helmet fraction differs >5% from E. Helmet spans crown to upper central orange collar stripes, or the reviewed lower helmet edge where the gun obscures that band. Width/height and mean D65 L* and C* use connected opacity between crown and sole, excluding annotated gun panels when available. Lit cells use matching flashless geometry; projecting weapons use reviewed boot seeds.")
+              "R: helmet fraction differs >5% from E. Helmet spans crown to upper central orange collar stripes, or the reviewed lower helmet edge where equipment obscures the band or helmet trim shares its colour. Width/height and mean D65 L* and C* use connected opacity between crown and sole, excluding annotated gun panels when available. Lit cells use matching flashless geometry; projecting weapons use reviewed boot seeds.")
     out.with_suffix(".json").write_text(json.dumps(dict(method=method, rows=rows), indent=1)+"\n", newline="\n")
     with out.with_suffix(".txt").open("w", newline="\n") as f:
         print(method, file=f)

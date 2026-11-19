@@ -19,9 +19,9 @@ flamethrower     top    .     -      -     -       -       .       -       .    
 gatling          top    .     -      -     -       -       .       .       .       -       -       -            -            0
                  p55    .     .      .     .       -       .       .       .       -       -       -            -
                  p70    .     .      .     .       -       .       .       .       -       -       -            -
-gloria           top    .     -      -     -       -       .       -       .       -       -       -            -            2
-                 p55    .     .      X     .       -       .       -       .       -       -       -            -
-                 p70    .     .      X     .       -       .       -       .       -       -       -            -
+gloria           top    .     -      -     -       -       .       -       .       -       -       -            -            0
+                 p55    .     .      .     .       -       .       -       .       -       -       -            -
+                 p70    .     .      .     .       -       .       -       .       -       -       -            -
 hand_cannon      top    .     -      -     -       .       .       .       .       -       -       -            -            2
                  p55    .     .      .     .       X       .       .       .       -       -       -            -
                  p70    .     .      .     .       X       .       .       .       -       -       -            -
@@ -55,4 +55,4 @@ ray_gun          top    .     -      -     -       .       .       -       .    
 rocket_launcher  top    .     -      -     -       -       .       -       .       -       -       -            -            0
                  p55    .     .      .     .       -       .       -       .       -       -       -            -
                  p70    .     .      .     .       -       .       -       .       -       -       -            -
-Total holes  12
+Total holes  10
