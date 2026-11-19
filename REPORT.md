@@ -82,3 +82,7 @@ What I would brief differently:
 - Name the real victim/actor the film must use (set B ran on a lab-guard parts rig and hit a combat-owned path; a card ped from the start would have saved a call).
 - Start long calls only with > 75 min of director session left (crowd-pop died with session 3), and put a TIME BOX line in every brief.
 - Ask for the mutation-killing test in the same brief as the change (shadow-tonnage's test killed 0/7 and needed a follow-up).
+
+## Owner verdicts 2026-11-19
+
+- Ohm bolt delay baseline at `5937f0f2`: the quest 1 cast ended at world hash `fd2779b3c87a24f445bfbb31f26848462d777f3772c0a13899ea3da13ebdd57d` (9 bolts, 10 bodies struck, 1 car wrecked). The timing and two interruption tests failed on the immediate bolt. The flag-off legacy byte check passed.
