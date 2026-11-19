@@ -70,6 +70,33 @@ func test_batch_matches_three_intermediate_tick_poses() -> void:
 	_same(a, b)
 
 
+func test_reentering_on_a_paused_frame_places_the_whole_form_at_its_new_mark() -> void:
+	var row: GhostHoverRow = GhostHoverRow.of(&"kerf")
+	var flight: GhostFlight = add_child_autofree(GhostFlight.make(row.id))
+	var body: Node2D = Node2D.new()
+	flight.mount(body)
+	flight.step(Vector2.ZERO, 0.0, 1)
+	flight.step(Vector2(12.0, 0.0), 0.3, 3)
+	assert_gt(flight.hover.speed_mps, 0.0)
+	var lift: float = flight.hover.lift_m
+	var mark: Vector2 = Vector2(800.0, -1200.0)
+	flight.hide()
+	flight.step(mark, PI, 15)
+	assert_false(body.is_visible_in_tree())
+	assert_eq(flight.hover.lift_m, lift, "a hidden form does no flight work")
+	flight.show()
+	flight.step(mark, PI, 0)
+	assert_true(body.is_visible_in_tree())
+	assert_eq(flight.shadow.position, mark)
+	assert_eq(flight.hover.lag_px, Vector2.ZERO)
+	assert_eq(flight.hover.speed_mps, 0.0)
+	assert_eq(body.global_position, mark + ViewMode.shared().lift_px(row.height_m))
+	var anchor: Vector2 = mark + (row.tail.anchor_m * SimConst.PX_PER_M).rotated(PI)
+	assert_eq(flight.tail._chain[0], anchor)
+	var length_px: float = row.tail.length_m * SimConst.PX_PER_M
+	assert_almost_eq(flight.tail._chain[-1].distance_to(anchor), length_px, 0.001)
+
+
 func _same(a: GhostHover, b: GhostHover) -> void:
 	assert_almost_eq(a.lift_m, b.lift_m, 0.00001)
 	assert_almost_eq(a.bank, b.bank, 0.00001)

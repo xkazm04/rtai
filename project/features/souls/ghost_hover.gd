@@ -36,6 +36,18 @@ func _init(row: GhostHoverRow) -> void:
 	_row = row
 
 
+## A newly visible body starts at rest on its own mark, even during a paused frame.
+func reset(at_px: Vector2, facing: float) -> void:
+	_at = at_px
+	_facing = facing
+	_phase = 0
+	_bank = 0.0
+	_lag_px = Vector2.ZERO
+	_velocity = Vector2.ZERO
+	_speed_mps = 0.0
+	_yaw_rate_dps = 0.0
+
+
 func step(at_px: Vector2, facing: float, ticks: int) -> void:
 	if ticks <= 0:
 		return
