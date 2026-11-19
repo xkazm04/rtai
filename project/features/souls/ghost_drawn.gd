@@ -41,6 +41,7 @@ var blow: Vector2 = Vector2.ZERO  # the last hit's line (GhostActs, Fighter.hurt
 var jab: bool = false  # the strike or wind-up shown is Dent's arm jab (GhostActs)
 var _spr: Sprite2D = null
 var _art: String = "?"
+var _built_hover: bool = false
 var _steps: PackedFloat32Array = PackedFloat32Array()  # measured stride per frame; empty = even
 var _run_steps: PackedFloat32Array = PackedFloat32Array()  # GhostStride.run_table_of
 var _phase: float = 0.0
@@ -79,15 +80,15 @@ func step(
 	host: Node2D, parts: Array[Sprite2D], px_per_m: float, size_k: float, look: float = NAN
 ) -> bool:
 	var vm: ViewMode = ViewMode.shared()
-	if vm.art != _art:
+	if vm.art != _art or _built_hover != hover:
+		_built_hover = hover
 		_rebuild(host, parts, vm)
 	if _spr == null:
 		return false
 	var fit: float = absf(host.scale.x if flight != null else host.global_scale.x)
 	var s: float = height_m * size_k * px_per_m * fit / fig_px
-	_look = host.global_rotation if is_nan(look) else look
-	if flight != null and not is_nan(look):
-		_look += flight.body_rotation()
+	var yaw: float = flight.body_rotation() if flight != null else 0.0
+	_look = host.global_rotation if is_nan(look) else look + yaw
 	var o: int = octant(_look)
 	var walk: int = _column(host, s, RigHeadCard.OCT_FRAME[o])
 	var act: int = jab_col(act_col(), jab, _act.cols) if _act != null else -1
@@ -99,9 +100,8 @@ func step(
 	_spr.global_rotation = tilt + _lunge.lean(_tick, since, _windup, _look, card_name)
 	var reach: Vector2 = GhostLunge.reach(since, _look, card_name) * SimConst.PX_PER_M * size_k
 	_spr.global_position = host.global_position + reach
-	_spr.global_scale = Vector2(s, s / vm.ground_k())
-	if flight != null:
-		_spr.global_scale *= flight.body_scale()
+	var bank_scale: Vector2 = flight.body_scale() if flight != null else Vector2.ONE
+	_spr.global_scale = Vector2(s, s / vm.ground_k()) * bank_scale
 	GhostHand.note(card_name, _art, _spr, o, act >= 0 and act != HIT_COL)
 	return true
 
@@ -182,19 +182,19 @@ func _column(host: Node2D, s: float, row: int) -> int:
 
 
 func _rebuild(host: Node2D, parts: Array[Sprite2D], vm: ViewMode) -> void:
-	if _spr != null:
-		_spr.queue_free()
-		_spr = null
+	_walk = null
+	_run = null
 	_art = vm.art
 	_steps = GhostStride.table_of(card_name, _art)
 	_run_steps = GhostStride.run_table_of(card_name, _art)
 	var path: String = path_of(_art, card_name)
 	if vm.cards and _art != "" and ResourceLoader.exists(path):
-		_walk = GhostSheet.walk_of(path, _steps)
+		_walk = GhostSheet.walk_of(path, _steps, hover)
+		if _walk == null:
+			Log.warn("ghost_drawn", "could not read %s, keeping the rig visible" % path)
 		_act = GhostSheet.act_of(path_of(_art, card_name, "act"), card_name + "/" + _art)
 		var rc: int = GhostStride.cols_of(_run_steps)
-		_run = GhostSheet.of(path_of(_art, card_name, "run%d" % rc), rc)
-		_spr = _walk.make_sprite()
-		host.add_child(_spr)
+		_run = null if hover else GhostSheet.of(path_of(_art, card_name, "run%d" % rc), rc)
+	_spr = GhostSheet.replace_sprite(host, _spr, _walk)
 	for p: Sprite2D in parts:
 		p.visible = _spr == null
