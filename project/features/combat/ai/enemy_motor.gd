@@ -70,19 +70,30 @@ static func separation(
 	split_overlap: bool = false
 ) -> Vector2:
 	var push: Vector2 = Vector2.ZERO
+	var p: Vector2 = e.pos
+	var radius: float = e.radius()
+	# Reject distant bodies before reading their state and archetype or normalizing.
+	# Round out the broad phase; the original length comparison decides contacts.
+	var reach: float = radius + EnemyAgent.ROBOT_RADIUS_M + gap + 0.001
+	var reach_sq: float = reach * reach
 	for o: EnemyAgent in agents:
-		if o == e or not o.alive() or o.state == EnemyAgent.State.DOWN:
+		var delta: Vector2 = p - o.pos
+		if delta.length_squared() > reach_sq or o == e:
 			continue
-		var keep: float = e.radius() + o.radius() + gap
-		if split_overlap and e.pos == o.pos:
+		if o.state == EnemyAgent.State.DEAD or o.state == EnemyAgent.State.DOWN:
+			continue
+		var keep: float = radius + o.radius() + gap
+		if split_overlap and delta == Vector2.ZERO:
 			push += Vector2.RIGHT * (keep if e.id > o.id else -keep)
 		else:
-			push += _repel(e.pos, o.pos, keep)
-	var keep_player: float = e.radius() + pit.rivet_radius + gap
-	if split_overlap and e.pos == pit.rivet_pos:
+			var dist: float = delta.length()
+			if dist < keep and dist >= 0.0001:
+				push += delta / dist * (keep - dist)
+	var keep_player: float = radius + pit.rivet_radius + gap
+	if split_overlap and p == pit.rivet_pos:
 		push += Vector2.RIGHT * keep_player * e.strafe_sign
 	else:
-		push += _repel(e.pos, pit.rivet_pos, keep_player)
+		push += _repel(p, pit.rivet_pos, keep_player)
 	return push * SEPARATION_GAIN
 
 
