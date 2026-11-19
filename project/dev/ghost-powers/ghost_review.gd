@@ -1,10 +1,16 @@
 extends Node
 ## Captures the production arena at one physical screen pixel per camera pixel.
-## Use --fixed-fps 60 and --write-movie. The trace maps movie frames to sim ticks,
-## including hit-stop, actually displayed gait cells and actual damage events.
+## Use --fixed-fps 60 and --write-movie. The trace records sim ticks, gait cells and damage.
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--ghost", "--take", "--ppm", "--view", "--clean", "--ohm-bolt-delay", "--film-trace"
+	"--ghost",
+	"--ghost-look",
+	"--take",
+	"--ppm",
+	"--view",
+	"--clean",
+	"--ohm-bolt-delay",
+	"--film-trace"
 ]
 const RUN_TICKS: int = 370
 ## Camera marks in metres from the starting position, keeping the turn in frame at both zooms.
@@ -35,14 +41,14 @@ func _ready() -> void:
 		Log.error("ghost_review", "invalid ghost or take")
 		get_tree().quit(2)
 		return
+	Log.info("ghost_review", "%s %s uses %s look" % [ghost, take, GhostLook.of(ghost)])
 	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
 	_game = ArenaGame.new()
 	add_child(_game)
 	_input = GhostReviewInput.new(_game.session, ghost, take == "attack")
 	_game.session.world.loop().set_input(_input)
-	_game.view.focus = (
-		GhostReviewInput.MARK + (Vector2(7, 0) if _input.attacking else MOVE_CENTRE[ghost])
-	)
+	var offset: Vector2 = Vector2(7, 0) if _input.attacking else MOVE_CENTRE[ghost]
+	_game.view.focus = GhostReviewInput.MARK + offset
 	if _input.attacking and ghost == &"kerf":
 		_game.view.focus = Vector2.INF  # The arena camera follows Kerf's actual blink glide.
 	if args.has("--film-trace"):
@@ -72,7 +78,6 @@ func _process(_delta: float) -> void:
 
 func _trace_frame(stage: ArenaStage) -> void:
 	var p: StagePilot = stage.pilot
-	var cell: String = _gait_cell(stage)
 	var r: Fighter = stage.arena.rivet
 	var px: Vector2 = get_viewport().get_canvas_transform() * (r.pos * SimConst.PX_PER_M)
 	var row: Array = [
@@ -82,7 +87,7 @@ func _trace_frame(stage: ArenaStage) -> void:
 		r.pos.x,
 		r.pos.y,
 		r.facing.angle(),
-		cell,
+		_gait_cell(stage),
 		p.hauler.form.stomps,
 		p.hauler.ram_hits,
 		p.hauler.cars_crushed,
@@ -97,12 +102,9 @@ func _trace_frame(stage: ArenaStage) -> void:
 		p.ohm.struck,
 		p.ohm.cars_hit,
 		_hits,
-		_game.view.print_stage.camera.zoom.x * SimConst.PX_PER_M,
-		p.dent.blast_at.x,
-		p.dent.blast_at.y,
-		px.x,
-		px.y
+		_game.view.print_stage.camera.zoom.x * SimConst.PX_PER_M
 	]
+	row.append_array([p.dent.blast_at.x, p.dent.blast_at.y, px.x, px.y])
 	@warning_ignore("return_value_discarded")
 	_trace.store_line(JSON.stringify(row))
 	_hits.clear()
@@ -113,10 +115,8 @@ func _gait_cell(stage: ArenaStage) -> String:
 		_sprites = _game.cast.ghost_view.find_children("ghost_drawn", "Sprite2D", true, false)
 	for n: Sprite2D in _sprites:
 		if n.is_visible_in_tree():
-			return (
-				"%s/%d/%d"
-				% [n.texture.resource_path.get_file(), n.frame_coords.y, n.frame_coords.x]
-			)
+			var atlas: String = n.texture.resource_path.get_file()
+			return "%s/%d/%d" % [atlas, n.frame_coords.y, n.frame_coords.x]
 	return ""
 
 
