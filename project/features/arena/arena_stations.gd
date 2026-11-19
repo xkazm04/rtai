@@ -9,20 +9,21 @@ const SCHEMA: String = "gtai.arena-station/1"
 
 var stations: Array[ArenaStation] = []
 var errors: Array[String] = []
+var station_spacing_m: float = 0.0
 
 
-static func shipped(dir: String = DIR) -> ArenaStations:
+static func shipped(dir: String = DIR, on_city: bool = false) -> ArenaStations:
 	var out: ArenaStations = ArenaStations.new()
 	var files: PackedStringArray = DirAccess.get_files_at(dir)
 	files.sort()
 	for f: String in files:
 		if f.get_extension() == "json":
-			out.add_file("%s/%s" % [dir, f])
+			out.add_file("%s/%s" % [dir, f], on_city and f == "arena.json")
 	return out
 
 
-func add_file(path: String) -> void:
-	add_text(FileAccess.get_file_as_string(path), path.get_file())
+func add_file(path: String, city_rules: bool = false) -> void:
+	add_text(FileAccess.get_file_as_string(path), path.get_file(), city_rules)
 
 
 ## Apply the city offsets to this session's fresh station props before collision and view setup.
@@ -38,10 +39,15 @@ func shift_props(shifts: Dictionary[String, Vector2]) -> void:
 		s.props[i].at += shifts[key]
 
 
-func add_text(json: String, file_name: String) -> void:
+func add_text(json: String, file_name: String, city_rules: bool = false) -> void:
 	var t: DataTable = DataTable.parse(json, SCHEMA, file_name)
 	var lane: String = t.text(t.raw, "lane")
 	var found: Array[ArenaStation] = []
+	var spacing: float = 0.0
+	if city_rules and t.raw.has("city"):
+		var city: Dictionary = t.object(t.raw, "city")
+		if city.has("station_spacing_m"):
+			spacing = t.num(city, "station_spacing_m")
 	for v: Variant in t.array(t.raw, "stations"):
 		var row: Dictionary = v if v is Dictionary else {}
 		found.append(ArenaStation.from_row(t, row, lane))
@@ -50,6 +56,8 @@ func add_text(json: String, file_name: String) -> void:
 		Log.warn("arena", "station file skipped: %s" % [t.errors()])
 		return
 	stations.append_array(found)
+	if city_rules:
+		station_spacing_m = spacing
 
 
 func by_id(id: String) -> ArenaStation:

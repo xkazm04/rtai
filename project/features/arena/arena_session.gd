@@ -50,7 +50,7 @@ static func open_with_args(
 	s.world.name = "ArenaWorld"
 	s.world.start(events, data, seed)
 	s.plan = ArenaPlan.shipped()
-	s.stations = ArenaStations.shipped()
+	s.stations = ArenaStations.shipped(ArenaStations.DIR, on_city)
 	if on_city:
 		s.plan = ArenaPlan.shipped(s.plan.city_base)
 		s.stations.shift_props(s.plan.city_prop_shifts)
@@ -74,6 +74,10 @@ static func open_with_args(
 
 ## As quest 1 on the city: the bubble follows Rivet, the chunks round him resident at tick 0.
 func _add_city() -> void:
+	for hook: ArenaHook in stage.hooks:
+		if hook is ArenaClawCops:
+			for partner: Fighter in (hook as ArenaClawCops).cops:
+				partner.station_spacing_m = stations.station_spacing_m
 	var extent: Array[Vector2] = [plan.base]
 	for a: ArenaPlan.Area in plan.areas:
 		extent.append_array([a.rect.position, a.rect.end])

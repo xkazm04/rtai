@@ -86,22 +86,16 @@ static func separation(
 		if o.state == EnemyAgent.State.DEAD or o.state == EnemyAgent.State.DOWN:
 			continue
 		var keep: float = radius + o.radius() + gap
-		if split_overlap and p == other:
-			push += Vector2.RIGHT * (keep if e.id > o.id else -keep)
-		else:
-			var delta: Vector2 = p - other
-			var dist: float = delta.length()
-			if dist < keep and dist >= 0.0001:
-				push += delta / dist * (keep - dist)
+		var side: float = 1.0 if e.id > o.id else -1.0
+		push += repel(p, other, keep, side if split_overlap else 0.0)
 	var keep_player: float = radius + pit.rivet_radius + gap
-	if split_overlap and p == pit.rivet_pos:
-		push += Vector2.RIGHT * keep_player * e.strafe_sign
-	else:
-		push += _repel(p, pit.rivet_pos, keep_player)
+	push += repel(p, pit.rivet_pos, keep_player, e.strafe_sign if split_overlap else 0.0)
 	return push * SEPARATION_GAIN
 
 
-static func _repel(p: Vector2, other: Vector2, keep: float) -> Vector2:
+static func repel(p: Vector2, other: Vector2, keep: float, overlap_sign: float = 0.0) -> Vector2:
+	if p == other:
+		return Vector2.RIGHT * keep * overlap_sign
 	var d: Vector2 = p - other
 	var dist: float = d.length()
 	if dist >= keep or dist < 0.0001:
