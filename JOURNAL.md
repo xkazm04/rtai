@@ -129,3 +129,5 @@ NEXT: (session 7) ASTRA RUNNING final since 06:10 (node pid 7580; lock logs/guns
 - FRICTION the --reels gate run was not done: no time after the snapshot gate.
 NEXT: (morning) read the gate result in build/gate/87d0606ab5c8/; if red, the REPORT gate line says RUNNING and must be corrected before merge. Untracked evidence/briefs/*.out.txt are Astra transcripts (inert evidence).
 - 07:39 BLOCKED gate --rev=HEAD (87d0606ab) not done by 07:40; REPORT says so. Re-run before merge. Clean Temp/gtai-gate-87d0606ab5c8 afterwards.
+- 07:42 Gate --rev=HEAD on 87d0606ab: outcome pass (lint, unit 2986/0, scenarios 55, parity, selftest, export-audit 740/0); build/gate/87d0606ab5c8/gate.json. Supersedes the 07:39 BLOCKED line. --reels still not run. REPORT gate line updated.
+NEXT: (morning) run `node tools/gate/run.mjs --rev=87d0606ab --reels` once before merge; clean Temp/gtai-gate-87d0606ab5c8 after merge. Calls and merge notes in REPORT.md.
