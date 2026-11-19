@@ -21,7 +21,9 @@ var _nudge: Vector2
 var _svc: VehicleService
 var _canvas: CanvasLayer
 var _rig_for: Callable
-var _was_faded: bool
+var _inside: bool
+var _styled: CanvasItem
+var _relative: bool
 
 
 func attach(view: Node, svc: VehicleService) -> void:
@@ -40,6 +42,7 @@ func _mounted(view: Node) -> void:
 func detach() -> void:
 	if is_instance_valid(_canvas) and _canvas.get_meta(META, null) == self:
 		_canvas.remove_meta(META)
+	_car = null
 	opacity = 1.0
 	tint()
 
@@ -100,7 +103,8 @@ func _draw_step(put_row: Callable, row: int, u: float, screen: Transform2D) -> v
 	var inside: float = smoothstep(0.58, 1.0, u) if _enter else 1.0 - smoothstep(0.0, 0.42, u)
 	var prev: Vector2 = drawn_foot
 	drawn_foot = at.lerp(_car.pos, inside * 0.72)
-	opacity = 1.0 - inside
+	_inside = inside > 0.0
+	opacity = minf(1.0, 1.8 * (1.0 - inside))
 	var walk: Vector2 = ((drawn_foot - prev) / SimClock.TICK_DT).limit_length(WALK_MPS)
 	@warning_ignore("return_value_discarded")
 	put_row.call(
@@ -119,11 +123,22 @@ func car_position(b: VehicleBody) -> Vector2:
 	return b.pos + _nudge if b == _car else b.pos
 
 
-## Called after the normal rig pose so a newly acquired rig also takes its transition opacity.
+## Inside the door, take Rivet out of the actors' +100 z band. His rig's local depth
+## levels and parts then sit below even a car card drawn under a nearby pedestrian.
+## Restore the original relative depth when the foot clears the sill or the rig returns.
 func tint() -> void:
-	if not _rig_for.is_valid() or (not _was_faded and opacity == 1.0):
+	if _car == null and not is_instance_valid(_styled):
 		return
-	var rig: CanvasItem = _rig_for.call(ACTOR)
+	var rig: CanvasItem = null
+	if _car != null and _rig_for.is_valid():
+		rig = _rig_for.call(ACTOR)
+	if rig != _styled:
+		if is_instance_valid(_styled):
+			_styled.z_as_relative = _relative
+			_styled.modulate.a = 1.0
+		_styled = rig
+		if rig != null:
+			_relative = rig.z_as_relative
 	if rig != null:
+		rig.z_as_relative = _relative and not _inside
 		rig.modulate.a = opacity
-	_was_faded = opacity != 1.0

@@ -77,3 +77,28 @@ func test_timed_sim_walk_can_run_with_the_view_switched_off() -> void:
 		assert_eq(view.opacity, 1.0)
 		assert_eq(view.car_position(car), car.pos)
 	assert_eq(svc.driving, car)
+
+
+func test_rivet_goes_under_the_card_then_recovers_his_original_depth() -> void:
+	var rig: Node2D = autofree(Node2D.new())
+	view._rig_for = func(_actor: int) -> CanvasItem: return rig
+	svc.doors.enabled = false
+	assert_eq(svc.try_enter(svc.world.player_pos()), car.id)
+	_pose(1)
+	view.tint()
+	assert_true(rig.z_as_relative)
+	_pose(13)
+	view.tint()
+	assert_false(rig.z_as_relative, "inside the car, every rig part is below its card")
+	_pose(15)
+	view.tint()
+	assert_true(rig.z_as_relative)
+	assert_eq(rig.modulate.a, 1.0)
+	@warning_ignore("return_value_discarded")
+	svc.exit()
+	_pose(16)
+	view.tint()
+	assert_false(rig.z_as_relative)
+	_pose(21)
+	view.tint()
+	assert_true(rig.z_as_relative, "the emerging foot has cleared the door")
