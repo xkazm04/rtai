@@ -1,0 +1,66 @@
+{
+  "p55": [
+    [
+      {"part": "rigid diagonal collar stripes", "band": [[115, 61, 67], [124, 68, 74], [138, 71, 79], [149, 69, 77], [158, 63, 70]]},
+      {"part": "rear belt-box access plate and latch", "band": [[83, 52, 62], [96, 57, 67]]},
+      {"part": "handed belt-feed coupling on the hip", "band": [[79, 88, 96], [83, 98, 105], [92, 104, 112], [101, 108, 114]]},
+      {"part": "receiver port above the trigger claw", "band": [[135, 93, 100], [151, 99, 107]]},
+      {"part": "visible rotary gun", "gun_mask": [[113, 85], [129, 77], [205, 113], [211, 134], [198, 143], [122, 116]]}
+    ],
+    [
+      {"part": "rigid diagonal collar stripes", "band": [[109, 58, 63], [117, 65, 72], [131, 69, 77], [143, 67, 76], [153, 61, 67]]},
+      {"part": "rear belt-box access plate and latch", "band": [[90, 64, 79], [101, 64, 79]]},
+      {"part": "handed belt-feed coupling on the hip", "band": [[95, 97, 105], [99, 107, 114], [108, 115, 122], [119, 116, 123]]},
+      {"part": "receiver port above the trigger claw", "band": [[154, 90, 96], [170, 83, 89]]},
+      {"part": "visible rotary gun", "gun_mask": [[136, 97], [152, 76], [206, 64], [213, 80], [168, 107], [141, 118]]}
+    ],
+    [
+      {"part": "rigid diagonal collar stripes", "band": [[112, 59, 65], [121, 66, 74], [135, 69, 77], [146, 66, 75], [154, 62, 68]]},
+      {"part": "rear belt-box access plate and latch", "band": [[93, 71, 84], [107, 82, 96]]},
+      {"part": "handed belt-feed coupling on the hip", "band": [[98, 108, 115], [103, 116, 123], [113, 122, 128], [125, 120, 127]]},
+      {"part": "receiver port above the trigger claw", "band": [[159, 89, 96], [170, 82, 89]]},
+      {"part": "visible rotary gun", "gun_mask": [[146, 92], [196, 62], [210, 62], [210, 84], [162, 116], [146, 115]]}
+    ]
+  ],
+  "p55_fire": [
+    [
+      {"part": "rigid diagonal collar stripes", "band": [[115, 70, 75], [122, 77, 82], [134, 80, 85], [146, 78, 84], [154, 71, 78]]},
+      {"part": "rear belt-box access plate and latch", "band": [[89, 64, 72], [100, 69, 76]]},
+      {"part": "handed belt-feed coupling on the hip", "band": [[82, 89, 96], [84, 98, 104], [94, 105, 112], [104, 107, 114]]},
+      {"part": "receiver port above the trigger claw", "band": [[135, 95, 101], [151, 98, 104]]},
+      {"part": "visible rotary gun", "gun_mask": [[117, 90], [144, 84], [217, 96], [219, 122], [171, 128], [119, 116]]}
+    ]
+  ],
+  "p70": [
+    [
+      {"part": "rigid diagonal collar stripes", "band": [[130, 94, 101], [140, 100, 108], [154, 107, 116], [170, 104, 114], [181, 96, 105]]},
+      {"part": "rear belt-box access plate and latch", "band": [[88, 75, 88], [99, 81, 93]]},
+      {"part": "handed belt-feed coupling on the hip", "band": [[85, 119, 127], [89, 131, 139], [100, 140, 148], [113, 146, 154]]},
+      {"part": "receiver port above the trigger claw", "band": [[158, 128, 135], [173, 131, 138]]},
+      {"part": "visible rotary gun", "gun_mask": [[138, 119], [154, 113], [226, 145], [229, 173], [213, 181], [145, 153]]}
+    ],
+    [
+      {"part": "rigid diagonal collar stripes", "band": [[116, 87, 95], [125, 96, 103], [140, 102, 111], [153, 104, 113], [169, 101, 110], [178, 94, 102]]},
+      {"part": "rear belt-box access plate and latch", "band": [[90, 96, 112], [104, 96, 112]]},
+      {"part": "handed belt-feed coupling on the hip", "band": [[98, 129, 138], [104, 144, 153], [117, 154, 163], [132, 157, 164]]},
+      {"part": "receiver port above the trigger claw", "band": [[181, 119, 128], [193, 114, 122]]},
+      {"part": "visible rotary gun", "gun_mask": [[151, 126], [229, 95], [242, 103], [243, 123], [173, 154], [149, 156]]}
+    ],
+    [
+      {"part": "rigid diagonal collar stripes", "band": [[118, 86, 93], [128, 95, 103], [143, 102, 111], [156, 103, 112], [167, 99, 108], [173, 94, 101]]},
+      {"part": "rear belt-box access plate and latch", "band": [[91, 95, 108], [110, 113, 127]]},
+      {"part": "handed belt-feed coupling on the hip", "band": [[111, 142, 148], [120, 154, 161], [133, 157, 164], [144, 156, 163]]},
+      {"part": "receiver port above the trigger claw", "band": [[179, 116, 125], [191, 108, 116]]},
+      {"part": "visible rotary gun", "gun_mask": [[161, 123], [216, 82], [230, 85], [230, 111], [183, 145], [161, 151]]}
+    ]
+  ],
+  "p70_fire": [
+    [
+      {"part": "rigid diagonal collar stripes", "band": [[125, 94, 101], [138, 105, 113], [155, 109, 117], [169, 104, 113], [182, 92, 99]]},
+      {"part": "rear belt-box access plate and latch", "band": [[93, 75, 89], [106, 80, 92]]},
+      {"part": "handed belt-feed coupling on the hip", "band": [[86, 116, 125], [90, 130, 137], [103, 139, 147], [115, 142, 150]]},
+      {"part": "receiver port above the trigger claw", "band": [[164, 125, 131], [183, 127, 134]]},
+      {"part": "visible rotary gun", "gun_mask": [[131, 119], [156, 114], [251, 129], [261, 135], [259, 174], [194, 173], [133, 147]]}
+    ]
+  ]
+}

@@ -8,8 +8,6 @@
     "electro_gun/top/reload": "missing own parts.mag",
     "flamethrower/p55/left": "missing or invalid rivet_eq_flamethrower_left.png",
     "flamethrower/p70/left": "missing or invalid rivet_eq_flamethrower_left.png",
-    "gatling/p55/left": "missing or invalid rivet_eq_gatling_left.png",
-    "gatling/p70/left": "missing or invalid rivet_eq_gatling_left.png",
     "gloria/p55/left": "missing or invalid rivet_eq_gloria_left.png",
     "gloria/p70/left": "missing or invalid rivet_eq_gloria_left.png",
     "hand_cannon/p55/reload": "missing or invalid rivet_reload_hand_cannon.png; missing or invalid rivet_reload_hand_cannon_left.png",

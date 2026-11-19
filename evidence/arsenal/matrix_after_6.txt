@@ -16,9 +16,9 @@ electro_gun      top    .     -      -     -       X       .       -       .    
 flamethrower     top    .     -      -     -       -       .       -       .       -       -       -            -            2
                  p55    .     .      X     .       -       .       -       .       -       -       -            -
                  p70    .     .      X     .       -       .       -       .       -       -       -            -
-gatling          top    .     -      -     -       -       .       .       .       -       -       -            -            2
-                 p55    .     .      X     .       -       .       .       .       -       -       -            -
-                 p70    .     .      X     .       -       .       .       .       -       -       -            -
+gatling          top    .     -      -     -       -       .       .       .       -       -       -            -            0
+                 p55    .     .      .     .       -       .       .       .       -       -       -            -
+                 p70    .     .      .     .       -       .       .       .       -       -       -            -
 gloria           top    .     -      -     -       -       .       -       .       -       -       -            -            2
                  p55    .     .      X     .       -       .       -       .       -       -       -            -
                  p70    .     .      X     .       -       .       -       .       -       -       -            -
@@ -55,4 +55,4 @@ ray_gun          top    .     -      -     -       .       .       -       .    
 rocket_launcher  top    .     -      -     -       -       .       -       .       -       -       -            -            0
                  p55    .     .      .     .       -       .       -       .       -       -       -            -
                  p70    .     .      .     .       -       .       -       .       -       -       -            -
-Total holes  16
+Total holes  14

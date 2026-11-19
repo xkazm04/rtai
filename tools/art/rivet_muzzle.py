@@ -85,6 +85,14 @@ FIRE_PINNED = {("p70", "rivet_eq_assault_rifle", 5): [290, 102],
                ("p55", "rivet_eq_assault_rifle", 5): [202, 79],
                ("p55", "rivet_eq_assault_rifle", 6): [103, 125]}
 LEFT_PINNED = {
+    ("p70", "rivet_eq_gatling_left_fire", 0): [30, 102],
+    ("p70", "rivet_eq_gatling_left", 2): [47, 65],
+    ("p70", "rivet_eq_gatling_left", 1): [40, 76],
+    ("p70", "rivet_eq_gatling_left", 0): [61, 90],
+    ("p55", "rivet_eq_gatling_left_fire", 0): [35, 73],
+    ("p55", "rivet_eq_gatling_left", 2): [40, 51],
+    ("p55", "rivet_eq_gatling_left", 1): [40, 54],
+    ("p55", "rivet_eq_gatling_left", 0): [41, 80],
     ("p55", "rivet_eq_plasma_rifle_left_fire", 0): [21, 57],
     ("p70", "rivet_eq_plasma_rifle_left_fire", 0): [43, 100],
     # Native mirrored cards, 110-space: width/res - right anchor. The side

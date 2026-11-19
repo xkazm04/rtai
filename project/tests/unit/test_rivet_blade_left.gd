@@ -24,7 +24,7 @@ func test_the_blades_turned_left_draw_their_left_strip_unless_the_flag_is_off() 
 	for w: StringName in BLADES:
 		assert_true(RivetWindup.left_drawn(w), String(w))
 	assert_true(RivetWindup.left_drawn(&"pistol"), "a one-hand hold keeps its left strip")
-	assert_false(RivetWindup.left_drawn(&"gatling"))
+	assert_true(RivetWindup.left_drawn(&"gatling"), "the belt box has its own left facings")
 	RivetWindup.blade_left = false
 	assert_false(RivetWindup.left_drawn(&"katana"), "the before: mirrored")
 	assert_true(RivetWindup.left_drawn(&"electro_baton"), "the flag leaves one-hand holds")

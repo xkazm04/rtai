@@ -63,6 +63,22 @@
     "sheet": "rivet_eq_gatling_55.png",
     "fig_h": 165
    },
+   "rivet_eq_gatling_left": {
+    "mirror_from": "rivet_eq_gatling.png",
+    "regions": "left_regions/gatling.json"
+   },
+   "rivet_eq_gatling_left_fire": {
+    "mirror_from": "rivet_eq_gatling.png",
+    "regions": "left_regions/gatling.json",
+    "pose": "_fire",
+    "source_cells": [5]
+   },
+   "rivet_eq_gatling_left_fire_noflash": {
+    "mirror_from": "rivet_eq_gatling_noflash.png",
+    "regions": "left_regions/gatling.json",
+    "pose": "_fire",
+    "source_cells": [5]
+   },
    "rivet_eq_gloria": {
     "act_k": 0.86,
     "counts": "5,3",
@@ -356,6 +372,22 @@
     "counts": "5,3",
     "sheet": "rivet_eq_gatling_70_v2.png",
     "fig_h": 165
+   },
+   "rivet_eq_gatling_left": {
+    "mirror_from": "rivet_eq_gatling.png",
+    "regions": "left_regions/gatling.json"
+   },
+   "rivet_eq_gatling_left_fire": {
+    "mirror_from": "rivet_eq_gatling.png",
+    "regions": "left_regions/gatling.json",
+    "pose": "_fire",
+    "source_cells": [5]
+   },
+   "rivet_eq_gatling_left_fire_noflash": {
+    "mirror_from": "rivet_eq_gatling_noflash.png",
+    "regions": "left_regions/gatling.json",
+    "pose": "_fire",
+    "source_cells": [5]
    },
    "rivet_eq_gloria": {
     "act_k": 0.88,

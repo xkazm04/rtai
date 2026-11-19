@@ -227,6 +227,30 @@
           ]
         }
       },
+      "rivet_eq_gatling_left": {
+        "cells": {
+          "0": [
+            41,
+            80
+          ],
+          "1": [
+            40,
+            54
+          ],
+          "2": [
+            40,
+            51
+          ]
+        }
+      },
+      "rivet_eq_gatling_left_fire": {
+        "cells": {
+          "0": [
+            35,
+            73
+          ]
+        }
+      },
       "rivet_eq_gloria": {
         "cells": {
           "1": [
@@ -962,6 +986,30 @@
           "3": [
             66,
             39
+          ]
+        }
+      },
+      "rivet_eq_gatling_left": {
+        "cells": {
+          "0": [
+            61,
+            90
+          ],
+          "1": [
+            40,
+            76
+          ],
+          "2": [
+            47,
+            65
+          ]
+        }
+      },
+      "rivet_eq_gatling_left_fire": {
+        "cells": {
+          "0": [
+            30,
+            102
           ]
         }
       },
