@@ -1,0 +1,38 @@
+{
+  "masters": {
+    "parts_take1": {
+      "date": "2026-11-20",
+      "file": "C:/Users/kazda/kiro/gtai-masters/n20/tonnage/masters/parts_take1.png",
+      "model": "Codex built-in image generation (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/tonnage/parts.md",
+      "seed": null,
+      "sha256": "922e4a882127571a7810ff6cc145e7dc1debd09aeb51bd808ca4b6ffd9600929",
+      "tool": "codex-image"
+    },
+    "parts_take2": {
+      "date": "2026-11-20",
+      "file": "C:/Users/kazda/kiro/gtai-masters/n20/tonnage/masters/parts_take2.png",
+      "model": "Codex built-in image generation (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/tonnage/parts.md",
+      "seed": null,
+      "sha256": "764fd2cd932db424c7e76e91039d15c8d059b0a1186a5419cbfb45d6887604bb",
+      "tool": "codex-image"
+    },
+    "parts_take3": {
+      "date": "2026-11-20",
+      "file": "C:/Users/kazda/kiro/gtai-masters/n20/tonnage/masters/parts_take3.png",
+      "model": "Codex built-in image generation (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/tonnage/parts.md",
+      "seed": null,
+      "sha256": "796adf8ebd37f544883d47ae41c7062fa2813fb050f80735516e513a528b8043",
+      "tool": "codex-image"
+    }
+  },
+  "sheets": {
+    "project/features/souls/art/tonnage/spectral/back.png": "parts_take3",
+    "project/features/souls/art/tonnage/spectral/upper_arm.png": "parts_take3",
+    "project/features/souls/art/tonnage/spectral/forearm.png": "parts_take3",
+    "project/features/souls/art/tonnage/spectral/fist.png": "parts_take3",
+    "project/features/souls/art/tonnage/spectral/hoses.png": "parts_take3"
+  }
+}
