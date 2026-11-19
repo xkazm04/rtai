@@ -1,0 +1,65 @@
+[
+  {
+    "file": "stills/pit-squad-t0536.png",
+    "title": "Six fighters in the pit",
+    "ppm": 32,
+    "before": "stills/pit-guard-t0536.png",
+    "note": "Tick 536. C 2, E 3, F 1. Fighter 10 flanks across the north side. The three southern fighters close on Rivet."
+  },
+  {
+    "file": "stills/street-squad-t0480.png",
+    "title": "Street flank from the west lane",
+    "ppm": 32,
+    "before": "stills/street-guard-t0480.png",
+    "note": "Tick 480. C 2, E 3, F 1. Fighter 9 advances along the road while two squadmates take cover and three engage from the east."
+  },
+  {
+    "file": "stills/pit-close-t0626.png",
+    "title": "Two fighters at the crate face",
+    "ppm": 64,
+    "before": null,
+    "note": "Tick 626. C 3, E 2. The cover fighter passes the north-east corner while the nearer fighter fires. 2 of 5 living wave members are in the frame."
+  },
+  {
+    "file": "stills/street-squad-t0770.png",
+    "title": "Cover beside the parked car",
+    "ppm": 32,
+    "before": "stills/street-guard-t0770.png",
+    "note": "Tick 770. C 1, E 4. Fighter 7 takes cover near the kerb as four squadmates engage."
+  },
+  {
+    "file": "stills/mixed-lines-t2231.png",
+    "title": "SWAT takes the flank",
+    "ppm": 32,
+    "before": null,
+    "note": "Tick 2231. E 3, F 1. The SWAT officer crosses the east side. A robot gunner, a contractor and a patrol cop engage."
+  },
+  {
+    "file": "stills/pit-mixed-t1541.png",
+    "title": "Mixed wave without labels",
+    "ppm": 32,
+    "before": null,
+    "note": "Tick 1541. C 1, E 4. Patrol, SWAT, a contractor and two machines share the pit. Overlay off."
+  },
+  {
+    "file": "stills/pit-guard-t0536.png",
+    "title": "Pit guard comparison",
+    "ppm": 32,
+    "before": null,
+    "note": "Tick 536. G 3. Guard actions were approach 2, cooldown 1. Three guards remain at the same instant as the six-fighter squad frame."
+  },
+  {
+    "file": "stills/street-guard-t0480.png",
+    "title": "Street guard comparison at the first flank",
+    "ppm": 32,
+    "before": null,
+    "note": "Tick 480. G 1. Guard actions were route 1. The remaining guard in the first wave routes around cover."
+  },
+  {
+    "file": "stills/street-guard-t0770.png",
+    "title": "Street guard comparison at the kerb",
+    "ppm": 32,
+    "before": null,
+    "note": "Tick 770. G 2. Guard actions were route 2. Two guards close together west of Rivet."
+  }
+]
