@@ -946,12 +946,17 @@
         105
       ],
       "part_grip_px": {
+        "mag": [
+          52,
+          19
+        ],
         "small": [
           153,
           105
         ]
       },
       "parts": {
+        "mag": "res://features/combat/weapons/art/electro_gun/mag.png",
         "small": "res://features/combat/weapons/art/electro_gun/held_small.png"
       },
       "pickup": "res://features/combat/weapons/art/electro_gun/pickup.png",

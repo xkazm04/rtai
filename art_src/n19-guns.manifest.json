@@ -1815,6 +1815,20 @@
    "seed": null,
    "sha256": "7c3e7289d63e6fe007f9ccc04c9f7ef928be9959635f9310d9807491de4c9a4e",
    "tool": "Pillow"
+  },
+  "electro_gun_energy_cell": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/electro_gun_energy_cell.png",
+   "model": "built-in image_gen (image model not reported)",
+   "tool": "image_gen",
+   "prompt_ref": "docs/art/prompts/n19/guns/electro_gun_energy_cell.txt",
+   "prompt_sha256": "f4f712a2a2e86909d5bf0f68aef583f98de5bcd22d88b4f273988f68d5508fd2",
+   "sha256": "af33f1fe88ce6c19546159cd7913016d7d2ff6a37e2bb711b9b9d2e56fb38589",
+   "references": [
+    "project/features/combat/weapons/art/electro_gun/held.png",
+    "project/features/combat/weapons/art/pistol/mag.png"
+   ],
+   "seed": null
   }
  }
 }
