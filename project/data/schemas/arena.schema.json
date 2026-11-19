@@ -41,6 +41,21 @@
           },
           "minItems": 2,
           "type": "array"
+        },
+        "shift_props": {
+          "additionalProperties": {
+            "items": {
+              "type": "integer"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "description": "City-only offsets [dx, dy] in whole metres, keyed by station id and zero-based prop index.",
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9_]*/(0|[1-9][0-9]*)$"
+          },
+          "type": "object"
         }
       },
       "required": [

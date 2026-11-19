@@ -55,11 +55,7 @@ func run(brain: String, workload: String, seed: int) -> Dictionary:
 
 
 func _close(bus: EventBus, data: DataStore) -> void:
-	session.stage.hooks.clear()
-	session.live.cursor_px = Callable()
-	if session.stage.vehicles != null:
-		session.stage.vehicles.world = null
-	session.world.free()
+	session.close()
 	bus.free()
 	data.free()
 

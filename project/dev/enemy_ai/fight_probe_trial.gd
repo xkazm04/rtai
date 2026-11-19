@@ -51,13 +51,8 @@ func run(encounter: String, world_seed: int, trace: FileAccess) -> Dictionary:
 
 
 func _release() -> void:
-	# Session hooks retain their stage, and the parked car service retains its world.
 	if session != null:
-		session.stage.hooks.clear()
-		session.live.cursor_px = Callable()  # the live cursor lambda captures its LiveInput
-		if stage.vehicles != null:
-			stage.vehicles.world = null
-		session.world.free()
+		session.close()
 		bus.free()
 		data.free()
 	else:

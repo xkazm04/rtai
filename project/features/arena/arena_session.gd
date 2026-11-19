@@ -50,9 +50,10 @@ static func open_with_args(
 	s.world.name = "ArenaWorld"
 	s.world.start(events, data, seed)
 	s.plan = ArenaPlan.shipped()
+	s.stations = ArenaStations.shipped()
 	if on_city:
 		s.plan = ArenaPlan.shipped(s.plan.city_base)
-	s.stations = ArenaStations.shipped()
+		s.stations.shift_props(s.plan.city_prop_shifts)
 	s.stage = ArenaStage.new(s.plan, s.stations, options)
 	s.pilot = StagePilot.new(s.actions)
 	s.stage.pilot = s.pilot
@@ -98,6 +99,15 @@ func step() -> void:
 
 func tick() -> int:
 	return world.context().clock.tick()
+
+
+## Release an arena opened by a headless caller. Hooks and input callbacks retain the stage.
+func close() -> void:
+	stage.hooks.clear()
+	live.cursor_px = Callable()
+	if stage.vehicles != null:
+		stage.vehicles.world = null
+	world.free()
 
 
 ## The session's telemetry as JSON at `path` (a directory is made if missing).
