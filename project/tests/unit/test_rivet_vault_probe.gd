@@ -109,3 +109,11 @@ func test_relocating_a_station_removes_its_old_footprint() -> void:
 	probe.stations(source, new_base)
 	assert_true(probe.clear_at(old_base, r))
 	assert_false(probe.clear_at(new_base, r))
+
+
+func test_circle_just_outside_a_face_is_clear_when_distance_rounds_to_radius() -> void:
+	probe.boxes.clear()
+	probe.boxes[Rect2(-1.375, -1, 1, 2)] = "cover_low"
+	# The face is at -0.375. At one float past 0.125, subtracting the face still yields 0.5.
+	var outside: Vector2 = Vector2(0.125 + pow(2.0, -26), 0)
+	assert_true(probe.clear_at(outside, 0.5))
