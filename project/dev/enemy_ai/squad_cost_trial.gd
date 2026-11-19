@@ -20,13 +20,17 @@ var active_ticks: int = 0
 var fielded: Dictionary[StringName, int] = {}
 
 
-func run(brain: String, workload: String, seed: int) -> Dictionary:
+func run(brain: String, workload: String, seed: int, profile: bool = false) -> Dictionary:
 	var bus: EventBus = EventBus.new()
 	var data: DataStore = DataStore.new()
 	var scene: String = "city" if workload == "city_horde" else "pit"
 	var opts: ArenaArgs = ArenaArgs.parse(["--enemy-brain=" + brain, "--arena=" + scene])
 	session = ArenaSession.open_with_args(bus, data, seed, null, opts)
 	arena = FightProbeArena.attach(session.stage.arena)
+	if profile:
+		var sections: SquadCostSections = SquadCostSections.new(arena.guard_map)
+		sections.pit = arena.squad_ai.pit
+		arena.squad_ai = sections
 	var pit: ArenaPit = session.stage.pit
 	pit.horde()
 	# Exclude the other stations' sparring partners from this pit-only cost measurement.
@@ -48,6 +52,8 @@ func run(brain: String, workload: String, seed: int) -> Dictionary:
 	if brain == "squad":
 		wired = wired and fielded.keys() == [&"contractor"]
 	var row: Dictionary = _summary(brain, workload, seed)
+	if profile:
+		row.sections_us = (arena.squad_ai as SquadCostSections).totals()
 	row.composition = pit.squad_mix.duplicate()
 	row.valid = wired and completed and excess == 0 and peaks.alive == (fixed if fixed else 10)
 	_close(bus, data)

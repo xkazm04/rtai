@@ -32,6 +32,11 @@ func _run() -> void:
 			for i: int in count.to_int():
 				var trial: Object = script.new()
 				var row: Dictionary = trial.call("run", mode, workload, 20261103 + i)
+				if mode != "guard" and workload in ["pit_10", "pit_40"]:
+					var replay: Object = script.new()
+					var timed: Dictionary = replay.call("run", mode, workload, row.seed, true)
+					row.sections_us = timed.sections_us
+					valid = valid and timed.valid and timed.counts == row.counts
 				runs.append(row)
 				valid = valid and row.valid
 				printerr("squad_cost %s %s %d valid=%s" % [mode, workload, row.seed, row.valid])

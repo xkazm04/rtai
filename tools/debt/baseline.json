@@ -61,7 +61,8 @@
         "2026-11-18: n18 districts item 5: dev/bots BotRoute (+route use in CollectCallBot) so the quest bot can walk to Dock 9 on the city's dock place under --quest1-places; dev only, not shipped (dev_loc 21992 -> 22089)",
         "2026-11-18: The 80-line headless arena cost scene measures 400 mobile guard approaches, including cold path searches and the open-street control. (dev_loc 22644 -> 22724)",
         "2026-11-18: n19 ai: production fight probe (dev/enemy_ai), dev-only measuring tool (dev_loc 22724 -> 23265)",
-        "2026-11-18: A4 measures hostile and assignment time, bounded cover and route searches, and the matched 10/40-guard scaling slope in the dev probe. (dev_loc 23262 -> 23501)"
+        "2026-11-18: A4 measures hostile and assignment time, bounded cover and route searches, and the matched 10/40-guard scaling slope in the dev probe. (dev_loc 23262 -> 23501)",
+        "2026-11-19: Dev-only squad section timers and separate fixed-workload replay requested for n19. (dev_loc 23496 -> 23568)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -70,7 +71,7 @@
         "project/dev/bench": 1906,
         "project/dev/bosses": 55,
         "project/dev/bots": 496,
-        "project/dev/enemy_ai": 1434,
+        "project/dev/enemy_ai": 1506,
         "project/dev/frames": 1087,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
@@ -95,7 +96,7 @@
         "project/dev/view": 433,
         "project/dev/weapon_art": 506
       },
-      "total": 23496
+      "total": 23568
     },
     "direct_cmdline_reads": {
       "accepted": [
