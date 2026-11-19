@@ -32,3 +32,24 @@ func test_pistol_profile_follows_each_boot_and_other_rows_keep_their_cycle() -> 
 	card.texture = load("res://features/characters/art/view/p55/rivet_walk_eq_katana.png")
 	card.frame_coords = Vector2i(0, 2)
 	assert_eq(StrideMatch.profile_cycle(card, 1.0, 101.0), 101.0)
+
+
+func test_walk_band_advances_by_the_displayed_pistol_stance() -> void:
+	var rig: CutRig = add_child_autofree(CutRig.new())
+	var card: Sprite2D = Sprite2D.new()
+	rig.add_child(card)
+	rig.head_card = card
+	var path: String = RivetStrips.DIR + "p55/rivet_walk_eq_pistol.png"
+	card.texture = load(path)
+	card.set_meta(RivetFrames.ON, path)
+	card.hframes = 4
+	card.vframes = 8
+	card.frame_coords = Vector2i(0, 2)
+	rig.speed_now = 2.4 * CharacterRigs.PX_PER_M
+	assert_eq(RivetWalk.phase_of(rig, "p55", 0.75), 0.0)
+	# At half a world pixel per packed texel each stance spans one pose advance.
+	rig.position.x += 21.5 * 0.5
+	assert_almost_eq(RivetWalk.phase_of(rig, "p55", 0.75), 0.25, 0.00001)
+	card.frame_coords = Vector2i(2, 2)
+	rig.position.x += 21.0 * 0.5
+	assert_almost_eq(RivetWalk.phase_of(rig, "p55", 0.75), 0.5, 0.00001)

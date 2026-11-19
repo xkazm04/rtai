@@ -164,6 +164,8 @@ static func phase_of(rig: CutRig, art: String, scale: float) -> float:
 	var cycle: float = cycle_cell(card, art, running) * scale * row_k(card, art, rig)
 	if (frames != 8 and not is_armed(rig.head_card)) or cycle <= 0.0:
 		return rig.phase
+	if not running:
+		cycle = StrideMatch.profile_cycle(card, scale / RES, cycle)
 	cycle = maxf(cycle, rig.speed_now / (MAX_RUN_CYCLES_S if running else MAX_CYCLES_S))
 	var was: float = rig.get_meta(META_PH, 0.0)
 	var step: float = rig.global_position.distance_to(at) / cycle
