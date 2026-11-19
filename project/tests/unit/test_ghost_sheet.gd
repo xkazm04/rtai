@@ -184,3 +184,11 @@ func test_the_jab_moves_the_strike_phases_but_never_the_hit() -> void:
 	assert_eq(
 		GhostDrawn.jab_col(GhostDrawn.CUT_COL, true, four), GhostDrawn.CUT_COL, "no jab cells"
 	)
+
+
+func test_p55_detail_loader_requires_the_eight_key_table() -> void:
+	var path: String = GhostDrawn.path_of("p55", "tonnage")
+	var other_steps: PackedFloat32Array = GhostStride.table_of("tonnage", "p70")
+	var sheet: GhostSheet = GhostSheet.walk_of(path, other_steps)
+	assert_null(sheet._detail)
+	assert_eq(sheet._detail_windows.size(), 0)
