@@ -79,3 +79,12 @@ Evidence root: `C:/Users/kazda/kiro/gtai-masters/n19/gfx/` (written M below). Ga
 | merge13 | 2 | bounced (my brief said stop on any non-golden conflict; the debt baseline has a resolver) |
 | merge15 (resume) | 26 | accepted (merged crowd-switch sheet, golden table, noir patch, merged gates; report only) |
 | eye14 | 19 | accepted (docks vs downtown 64 px/m sheet, zebra closest-call sheet; dev-only `cbb8cebf3`; evidence folders tidied, 53 files to `_scratch/`) |
+
+Total: 13 calls, about 467 Astra minutes; 10 accepted, 1 bounced-partial, 1 bounced, 1 killed at a handover with its work kept.
+
+What I would brief differently:
+- Launch every call detached from the start. The first background-shell launch died with my session at a handover (`gen`).
+- Ask for the report file first and the work second. A call that hits the 75 min cap with no final message (`polish`) then still leaves its numbers on disk.
+- Name the repo's own resolvers in any merge brief. "Stop on any other conflict" bounced `merge13` on `tools/debt/baseline.json`, which `tools/debt/merge_baseline.mjs` resolves by design.
+- Ask for an A/A twin in every before/after render from the first brief. The non-repeatable tilt-70 frame (a real draw-order fault, `030352b1d`) showed up only because two "same" renders disagreed.
+- Ask for a paired, interleaved in-process probe for any small cost from the start (`cost12`). The rig bench cannot resolve a 0.01 ms effect on a machine running 6-16 other Godot processes.
