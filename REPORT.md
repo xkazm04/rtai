@@ -30,10 +30,11 @@ Masters and frames live in `C:/Users/kazda/kiro/gtai-masters/n19/move/` (not in 
 - An Astra call started from the director's own shell died with the director session (vault-view, 23:20): about 38 min of builder time lost until calls were launched detached.
 
 ## Calls for the owner
-- Cover peek distance: `peek_m` 0.8 (shipped, Rivet's own diagonal shots clear the box) vs about 0.45 (a tighter half-body peek). TODO side-by-side still.
-- Vault into a guard: peak 12.2 m/s, guard shoved 1.74 m. Keep as a tackle, or stop the vault at a body? TODO still.
-- `NEED anim`: `project/features/characters/rivet_walk.gd` one line calling `StrideMatch.profile_cycle` (see Merge notes).
-- TODO car doors: sim phase on (moves city digests: gfx re-bless) or cosmetic only.
+Stills: `C:/Users/kazda/kiro/gtai-masters/n19/move/calls/` (INDEX.md there), same tick, tilt 70, 64 and 32 px/m, shipped value on the left.
+- **Cover peek distance** (`cover-64-t162.png`): `peek_m` 0.8 (shipped) vs 0.45. At both values Rivet's first round past the station end is not stopped by the box he covers behind (`ArenaWalls.blocks` false and false), so 0.45 is safe for his own fire and reads as a tighter half-body peek; 0.8 puts him visibly clear of the box end. Recommendation: 0.45 if the owner wants peeks to feel like cover, 0.8 if the owner prefers a clear firing lane. One data value in `rivet_motion.json`.
+- **Vault into a guard** (`vault-64-t012.png`): `vault.bodies_block_landing` false (shipped: the vault tackles, peak 12.2 m/s, guard shoved 1.74 m) vs true (the vault refuses, `landing_blocked`, guard moved 0.00 m). Recommendation: true (humans stay weaker than Rivet either way; a refusal keeps the vault a traversal move, and the tackle is a guns/melee question). Shipped false so tonight's behaviour matches the evidence the gate ran.
+- **Car doors** (`car-64-t124.png`): flag off (instant seat, render-only ease) vs `--car-doors` (14-tick enter, 10-tick exit in the sim). Turning the sim phase on moves city digests (gfx re-bless). Recommendation: on, in the night that re-blesses city digests.
+- **Walk slide** (`NEED anim`): one line in `project/features/characters/rivet_walk.gd` calling `StrideMatch.profile_cycle` for the walk band (planted-step drift 14.2 -> 0.7 cm at 2.4 m/s). Anim owns the file.
 
 ## Merge notes
 - One-line call sites in other lanes' files: `project/features/characters/rivet_frames.gd` (2 lines, anim), `project/features/arena/prop_occlusion.gd` (4 added lines, ai), `project/features/arena/arena_rigs.gd` (3 lines, ai), `project/boot/collect_call/collect_call_stage.gd` (airborne guard on `_collide`, `collide_preview`), `project/boot/launch_args.gd` (5 appended flags: `--vault`, `--no-vault`, `--cover`, `--no-cover`, `--car-doors`), `project/boot/city_characters.gd:100` (one line: the car-door view wraps `if rivet_on_foot:`).
