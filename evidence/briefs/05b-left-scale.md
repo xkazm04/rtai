@@ -13,3 +13,6 @@ Director's look at your package 5 evidence (64 px/m): `mini_nuke_p55_left_neighb
 Both weapons' left cells within 5 % height and inside the tone threshold of their own E rest cell. Audit still 0 holes for both. Unit `--changed` + `--select=test_arsenal_audit,test_rivet_gun_diag` green; lint; release_compile; quick gate before each commit (say if `--no-godot`). One commit for the tool + test, one per weapon. Shared rows only, lines listed.
 Law as packages 3-5: `export APPDATA=C:/Users/kazda/kiro/gtai-n19/appdata/guns`, GODOT_BIN, d3d12, `--position 0,1440`, one Godot, own PIDs; no stash / add -A / commit -a / reset --hard / push; image_gen + manifest + provenance if anything is redrawn.
 Report: the metrics table (outliers), commits, evidence paths.
+
+## Also (small, after the above)
+Package 8's mutate on `ground_rifle.gd` scored 5/10. Add unit tests that kill at least 3 of the 5 survivors (list them, re-run `node tools/mutate/mutate.mjs --file=features/combat/weapons/art/ground_rifle.gd`, quote the new score). One commit.
