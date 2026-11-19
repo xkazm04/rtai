@@ -6,6 +6,7 @@ extends RefCounted
 enum State {PATROL, ALERT, ENGAGE, WINDUP, FIRE, RECOVER, COVER, FLANK, PANIC, DOWN, DEAD, STAGGER}
 
 const HURT_TICKS: int = 12
+const ROBOT_RADIUS_M: float = 0.5
 
 var id: int = 0
 var arch: EnemyRoster.Archetype = null
@@ -63,8 +64,13 @@ func melee() -> bool:
 	return arch.weapon.melee
 
 
+## Current firing opportunity, shared by squad trigger and cover-peek timing.
+func has_shot_at(target: Vector2) -> bool:
+	return sees and pos.distance_to(target) <= arch.attack_m
+
+
 func radius() -> float:
-	return 0.5 if arch.body == &"robot" else 0.35
+	return ROBOT_RADIUS_M if arch.body == &"robot" else 0.35
 
 
 func enter(next: State, ticks: int = 0) -> void:

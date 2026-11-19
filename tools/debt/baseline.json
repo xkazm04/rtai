@@ -59,7 +59,10 @@
         "2026-11-17: n18 districts: dev/view/city_zone_map.gd, the headless plan of the generated city per zone (cells, zone tint, numbers JSON); a -s script has no LaunchArgs autoload, so it reads OS args as dev/bake_city.gd does (dev_loc 21754 -> 21849)",
         "2026-11-17: n18 districts: dev/view/zone_frame.gd, zone stills + a straight drive clip through the generated city (the evidence of items 3 and 6); its flags are its own (KNOWN), not game flags, so it reads OS args as dev/showcase/city_frame.gd does (dev_loc 21849 -> 21992)",
         "2026-11-18: n18 districts item 5: dev/bots BotRoute (+route use in CollectCallBot) so the quest bot can walk to Dock 9 on the city's dock place under --quest1-places; dev only, not shipped (dev_loc 21992 -> 22089)",
-        "2026-11-18: The 80-line headless arena cost scene measures 400 mobile guard approaches, including cold path searches and the open-street control. (dev_loc 22644 -> 22724)"
+        "2026-11-18: The 80-line headless arena cost scene measures 400 mobile guard approaches, including cold path searches and the open-street control. (dev_loc 22644 -> 22724)",
+        "2026-11-18: n19 ai: production fight probe (dev/enemy_ai), dev-only measuring tool (dev_loc 22724 -> 23265)",
+        "2026-11-18: A4 measures hostile and assignment time, bounded cover and route searches, and the matched 10/40-guard scaling slope in the dev probe. (dev_loc 23262 -> 23501)",
+        "2026-11-19: Dev-only squad section timers and separate fixed-workload replay requested for n19. (dev_loc 23496 -> 23568)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -68,7 +71,7 @@
         "project/dev/bench": 1906,
         "project/dev/bosses": 55,
         "project/dev/bots": 496,
-        "project/dev/enemy_ai": 662,
+        "project/dev/enemy_ai": 1506,
         "project/dev/frames": 1087,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1137,
@@ -93,7 +96,7 @@
         "project/dev/view": 433,
         "project/dev/weapon_art": 506
       },
-      "total": 22724
+      "total": 23568
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -286,10 +289,9 @@
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/showcase/city_fight.gd": 300,
-        "project/features/arena/arena_rigs.gd": 294,
+        "project/features/arena/arena_rigs.gd": 284,
         "project/features/bosses/boss_hook.gd": 281,
         "project/features/bosses/servo/servo_rig.gd": 287,
-        "project/features/combat/combat_arena.gd": 299,
         "project/features/combat/kills/kill_view.gd": 286,
         "project/features/combat/react/react_link.gd": 288,
         "project/features/combat/weapons/art/weapon_art.gd": 274,
@@ -297,7 +299,7 @@
         "project/features/fx/combat_blood.gd": 297,
         "project/features/player/rivet_held_view.gd": 282
       },
-      "total": 14
+      "total": 13
     },
     "files_past_soft_cap": {
       "accepted": [
@@ -321,7 +323,9 @@
         "2026-11-10: n11 merge: n11-tools dev tooling (film probe, film triggers) on top of n12 (files_past_soft_cap 66 -> 66)",
         "2026-11-10: n11 merge: n11-hero dev films and ghost tooling on top of n12+tools (files_past_soft_cap 66 -> 66)",
         "2026-11-10: n11 merge: n11-combat dev films and body probes on top of n12+tools+hero (files_past_soft_cap 66 -> 66)",
-        "2026-11-18: n18 police item 6/7: --sim-police in LaunchArgs.KNOWN_FLAGS (the brief names the flag there; launch_args.gd 200 -> 201) and dev/sim/heat_cost.gd (the heat 3 cost probe) (files_past_soft_cap 66 -> 67)"
+        "2026-11-18: n18 police item 6/7: --sim-police in LaunchArgs.KNOWN_FLAGS (the brief names the flag there; launch_args.gd 200 -> 201) and dev/sim/heat_cost.gd (the heat 3 cost probe) (files_past_soft_cap 66 -> 67)",
+        "2026-11-18: n19 ai: --enemy-brain flag line in KNOWN_FLAGS (shared append-only registry) (files_past_soft_cap 66 -> 66)",
+        "2026-11-19: A6b shared launch flags are append-only: restore the save-cross comment verbatim and append squad-overlay (202 to 203 lines). (files_past_soft_cap 66 -> 66)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 261,
@@ -329,7 +333,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 237,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 201,
+        "project/boot/launch_args.gd": 203,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,
@@ -347,7 +351,7 @@
         "project/dev/showcase/d5_hero_run.gd": 265,
         "project/dev/showcase/reel_director.gd": 209,
         "project/dev/weapon_art/weapon_lineup_run.gd": 210,
-        "project/features/arena/arena_rigs.gd": 294,
+        "project/features/arena/arena_rigs.gd": 284,
         "project/features/arena/prop_occlusion.gd": 202,
         "project/features/bosses/boss_bot.gd": 202,
         "project/features/bosses/boss_fight.gd": 269,
@@ -361,7 +365,7 @@
         "project/features/city/sim/sim_people.gd": 202,
         "project/features/city/view/city_view.gd": 259,
         "project/features/combat/ai/enemy_pit.gd": 244,
-        "project/features/combat/combat_arena.gd": 299,
+        "project/features/combat/combat_arena.gd": 251,
         "project/features/combat/hit_feel/hit_feel.gd": 220,
         "project/features/combat/kills/kill_char_fx.gd": 203,
         "project/features/combat/kills/kill_lab.gd": 213,

@@ -1,0 +1,1448 @@
+{
+  "schema": "gtai.squad-ownership/1",
+  "before_enrollment": {
+    "trace-six": {
+      "ghost_attacks": {
+        "wave": [],
+        "unregistered": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          3000,
+          3001,
+          3002,
+          3003,
+          3004
+        ],
+        "unregistered_token": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "rivet_chainsaw": {
+        "wave": [],
+        "unregistered": [
+          3000,
+          3001,
+          3002,
+          3003,
+          3004
+        ],
+        "unregistered_token": []
+      },
+      "rivet_city_fight": {
+        "wave": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "unregistered": [
+          3000,
+          3001,
+          3002,
+          3003,
+          3004
+        ],
+        "unregistered_token": []
+      },
+      "rivet_claw": {
+        "wave": [],
+        "unregistered": [
+          3000,
+          3001,
+          3002,
+          3003,
+          3004
+        ],
+        "unregistered_token": []
+      },
+      "rivet_katana": {
+        "wave": [],
+        "unregistered": [
+          3000,
+          3001,
+          3002,
+          3003,
+          3004
+        ],
+        "unregistered_token": []
+      },
+      "showcase_director": {
+        "wave": [],
+        "unregistered": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          3000,
+          3001,
+          3002,
+          3003,
+          3004
+        ],
+        "unregistered_token": [
+          15
+        ]
+      }
+    },
+    "trace-city": {
+      "wave": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "unregistered": [
+        3000,
+        3001,
+        3002,
+        3003,
+        3004
+      ],
+      "unregistered_token": []
+    },
+    "trace-pit": {
+      "wave": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "unregistered": [
+        3000,
+        3001,
+        3002,
+        3003,
+        3004
+      ],
+      "unregistered_token": []
+    }
+  },
+  "a1_guard": [
+    {
+      "encounter": "city",
+      "seed": 20261103,
+      "digest": "7a61766c8e50d05869f4a60992ece5cd79d11b15266ef2384afa28e5a372d0c2",
+      "objective_reached": true,
+      "encounter_clear_s": 16.816666666666666,
+      "damage_taken_hp": 2.3999999999999773,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261104,
+      "digest": "6c453d01df988d826d259f2f8a2ad11ad20cb3ddf5fe2f3ed8c7a32c0b17322f",
+      "objective_reached": true,
+      "encounter_clear_s": 17.75,
+      "damage_taken_hp": 5.399999999999949,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261105,
+      "digest": "638eac3e621c0a7da3dafacb33764f94ad0ea1ca068f86c7928de71ca962eee9",
+      "objective_reached": true,
+      "encounter_clear_s": 18.466666666666665,
+      "damage_taken_hp": 5.399999999999949,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261106,
+      "digest": "b98df35202c6ddff8796a87c6c240ef3c7b21ac3e418b475c617261527569df3",
+      "objective_reached": true,
+      "encounter_clear_s": 16.516666666666666,
+      "damage_taken_hp": 4.19999999999996,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261107,
+      "digest": "d91f383ea1078089179e1850067e5a680eb23cdbb947904a4310f826e84509fb",
+      "objective_reached": true,
+      "encounter_clear_s": 18.35,
+      "damage_taken_hp": 0.5999999999999943,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261103,
+      "digest": "1efb05436029012bc6de1fb538e9ccf60a6713b0b8b6792bd658aa08e6cb88c1",
+      "objective_reached": true,
+      "encounter_clear_s": 15.049999999999999,
+      "damage_taken_hp": 1.1999999999999886,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261104,
+      "digest": "b69d9deefdf67c5a4af3771ff85e35c73b16c8d848d559a77d099eb1dca00c42",
+      "objective_reached": true,
+      "encounter_clear_s": 14.183333333333334,
+      "damage_taken_hp": 7.199999999999932,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261105,
+      "digest": "cb2515acd326c937550d7022487cfbd433f42c261d61a47c7e1d383ca522082d",
+      "objective_reached": true,
+      "encounter_clear_s": 14.116666666666667,
+      "damage_taken_hp": 7.799999999999926,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261106,
+      "digest": "3976a3c2f3c61b5b8eced3af67440ab6f7c6009229782f0a8aba645c8a21afd1",
+      "objective_reached": true,
+      "encounter_clear_s": 15.35,
+      "damage_taken_hp": 10.199999999999903,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261107,
+      "digest": "99df41cff4ce66254ee09acec482624a23572c1d5f7157f87b4fd9b18cd9671d",
+      "objective_reached": true,
+      "encounter_clear_s": 13.966666666666667,
+      "damage_taken_hp": 10.199999999999903,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261103,
+      "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+      "objective_reached": true,
+      "encounter_clear_s": 34.71666666666667,
+      "damage_taken_hp": 3.599999999999966,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261104,
+      "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+      "objective_reached": true,
+      "encounter_clear_s": 35.8,
+      "damage_taken_hp": 2.3999999999999773,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261105,
+      "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+      "objective_reached": true,
+      "encounter_clear_s": 35.55,
+      "damage_taken_hp": 7.199999999999932,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261106,
+      "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+      "objective_reached": true,
+      "encounter_clear_s": 34.7,
+      "damage_taken_hp": 6.5999999999999375,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261107,
+      "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3",
+      "objective_reached": true,
+      "encounter_clear_s": 36.03333333333333,
+      "damage_taken_hp": 3.599999999999966,
+      "deaths": 0
+    }
+  ],
+  "a7_squad": [
+    {
+      "encounter": "city",
+      "seed": 20261103,
+      "digest": "441587c384b7d113f28ec1c249b153267bf5bbc2605e465fa82673e9cd23ac4a",
+      "encounter_clear_s": 20.7,
+      "damage_taken_hp": 1.1999999999999886,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261104,
+      "digest": "03b7bd02dcaf63116a5d2402ee4334c3caddd81c6c4867afac40878c9688555d",
+      "encounter_clear_s": 19.583333333333332,
+      "damage_taken_hp": 2.3999999999999773,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261105,
+      "digest": "67237c5dbfbcf926521f17f7d876ffeecd3937a228e3c3872f2029a8540e2031",
+      "encounter_clear_s": 21.15,
+      "damage_taken_hp": 4.7999999999999545,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261106,
+      "digest": "c90cefe035b6067477030f48b30583f07341d539f92dadd99419dc2c9ef9196d",
+      "encounter_clear_s": 20.933333333333334,
+      "damage_taken_hp": 3.599999999999966,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261107,
+      "digest": "4ca4c3afd29bb0bdb5a24037817c8d197c4e3802b2913c486285def0d7d9fc6e",
+      "encounter_clear_s": 20.716666666666665,
+      "damage_taken_hp": 3.599999999999966,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261103,
+      "digest": "bd45d9a652be4d9c615ccf8a74c664da955fd6f7aa6597d51838df539f7886d0",
+      "encounter_clear_s": 17.35,
+      "damage_taken_hp": 4.19999999999996,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261104,
+      "digest": "2b42d743e19ee82179b51e57be6aad9d481b4196eefcb4f7b7264190a2f2d04e",
+      "encounter_clear_s": 18.25,
+      "damage_taken_hp": 8.39999999999992,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261105,
+      "digest": "7e0c7754df8e4e67d18b5c6658008f37fd754922f3547dd9f67c8e6966e89835",
+      "encounter_clear_s": 16.766666666666666,
+      "damage_taken_hp": 12.59999999999988,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261106,
+      "digest": "a3fa848dfeae734f9258eb6454a6c28c1d4ca90318c854a0d71149624b4764e1",
+      "encounter_clear_s": 17.216666666666665,
+      "damage_taken_hp": 6.5999999999999375,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261107,
+      "digest": "8a22f8626db3c27558f404fef8ae2b0965b5b22d7ec85c2c9cf50afc8e68c77b",
+      "encounter_clear_s": 17.5,
+      "damage_taken_hp": 5.399999999999949,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261103,
+      "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+      "encounter_clear_s": 34.71666666666667,
+      "damage_taken_hp": 3.599999999999966,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261104,
+      "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+      "encounter_clear_s": 35.8,
+      "damage_taken_hp": 2.3999999999999773,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261105,
+      "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+      "encounter_clear_s": 35.55,
+      "damage_taken_hp": 7.199999999999932,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261106,
+      "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+      "encounter_clear_s": 34.7,
+      "damage_taken_hp": 6.5999999999999375,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261107,
+      "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3",
+      "encounter_clear_s": 36.03333333333333,
+      "damage_taken_hp": 3.599999999999966,
+      "deaths": 0
+    }
+  ],
+  "initial_scope": [
+    {
+      "encounter": "city",
+      "seed": 20261103,
+      "digest": "08ae97a9d54a78dbe307fb30ac282cbbe9defb145b1861a5902ec1bdd5d56146",
+      "objective_reached": true,
+      "encounter_clear_s": 19.75,
+      "damage_taken_hp": 0.5999999999999943,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261104,
+      "digest": "c1f860434875910fd880c0560c4993fdbd888a9a0213f316919a5034a3f69a0c",
+      "objective_reached": false,
+      "encounter_clear_s": null,
+      "damage_taken_hp": 3.599999999999966,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261105,
+      "digest": "8abb4440982908574c4af5afd45199b37346393219914f3723c93db1eab5b112",
+      "objective_reached": true,
+      "encounter_clear_s": 20.333333333333332,
+      "damage_taken_hp": 2.9999999999999716,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261106,
+      "digest": "98f473e06792726a2eb52aaba09d18ea587d235dae91f1417440c82d7219efd0",
+      "objective_reached": true,
+      "encounter_clear_s": 21.866666666666667,
+      "damage_taken_hp": 2.3999999999999773,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261107,
+      "digest": "169ba998312bc31fb9bb60f9bf03a45da1772551fad67fdea71b00e9d981758e",
+      "objective_reached": true,
+      "encounter_clear_s": 20.983333333333334,
+      "damage_taken_hp": 4.19999999999996,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261103,
+      "digest": "9e2607a1de584f5e5f01c0bbb0669cf97f5ba4ead0ef2133afa8da45dc15f5d3",
+      "objective_reached": true,
+      "encounter_clear_s": 18.583333333333332,
+      "damage_taken_hp": 3.599999999999966,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261104,
+      "digest": "6b51b09ffebc785a16c339b1952ebcb70f71870a7286d6c269fa1a3eda88ff0a",
+      "objective_reached": true,
+      "encounter_clear_s": 18.25,
+      "damage_taken_hp": 9.599999999999909,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261105,
+      "digest": "7216b66a67e73c0f89716f406a8076fe1c3a9cd2d7ded02706b86b349e0ac3ef",
+      "objective_reached": true,
+      "encounter_clear_s": 16.766666666666666,
+      "damage_taken_hp": 7.799999999999926,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261106,
+      "digest": "acb5231f4bf8986342458df50aa351d1ea82c043076d9f50b6a95aab611eae71",
+      "objective_reached": true,
+      "encounter_clear_s": 17.216666666666665,
+      "damage_taken_hp": 6.5999999999999375,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261107,
+      "digest": "e704efd4e3ec555409ee9b7b6e8749f730c232b39e69d6e1d94cf90816301a01",
+      "objective_reached": true,
+      "encounter_clear_s": 15.116666666666667,
+      "damage_taken_hp": 10.799999999999898,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261103,
+      "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+      "objective_reached": true,
+      "encounter_clear_s": 34.71666666666667,
+      "damage_taken_hp": 3.599999999999966,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261104,
+      "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+      "objective_reached": true,
+      "encounter_clear_s": 35.8,
+      "damage_taken_hp": 2.3999999999999773,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261105,
+      "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+      "objective_reached": true,
+      "encounter_clear_s": 35.55,
+      "damage_taken_hp": 7.199999999999932,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261106,
+      "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+      "objective_reached": true,
+      "encounter_clear_s": 34.7,
+      "damage_taken_hp": 6.5999999999999375,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261107,
+      "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3",
+      "objective_reached": true,
+      "encounter_clear_s": 36.03333333333333,
+      "damage_taken_hp": 3.599999999999966,
+      "deaths": 0
+    }
+  ],
+  "scoped_squad": [
+    {
+      "encounter": "city",
+      "seed": 20261103,
+      "digest": "08ae97a9d54a78dbe307fb30ac282cbbe9defb145b1861a5902ec1bdd5d56146",
+      "objective_reached": true,
+      "encounter_clear_s": 19.75,
+      "damage_taken_hp": 0.5999999999999943,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261104,
+      "digest": "b38c0a89eb23d809603ac4a50219e88e8aa9fce830372a16aed788c67dc21d9b",
+      "objective_reached": true,
+      "encounter_clear_s": 19.566666666666666,
+      "damage_taken_hp": 4.19999999999996,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261105,
+      "digest": "8abb4440982908574c4af5afd45199b37346393219914f3723c93db1eab5b112",
+      "objective_reached": true,
+      "encounter_clear_s": 20.333333333333332,
+      "damage_taken_hp": 2.9999999999999716,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261106,
+      "digest": "9f14838c93c54da39f96c7a0fa1a23ae0b8fe280e987fdd9280585b62e01bc5a",
+      "objective_reached": true,
+      "encounter_clear_s": 19.5,
+      "damage_taken_hp": 3.599999999999966,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261107,
+      "digest": "169ba998312bc31fb9bb60f9bf03a45da1772551fad67fdea71b00e9d981758e",
+      "objective_reached": true,
+      "encounter_clear_s": 20.983333333333334,
+      "damage_taken_hp": 4.19999999999996,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261103,
+      "digest": "327070b24d2e5560a6d2e326cfe2a195d22bf978a0ac5f23962d2e9f6eac6133",
+      "objective_reached": true,
+      "encounter_clear_s": 18.583333333333332,
+      "damage_taken_hp": 2.9999999999999716,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261104,
+      "digest": "71026551a0b287751fe963168fee90027763cbcce6f6a1ed6ba64ca2fe0930d7",
+      "objective_reached": true,
+      "encounter_clear_s": 18.266666666666666,
+      "damage_taken_hp": 7.799999999999926,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261105,
+      "digest": "f6a99f4deaa20de824c0da16c8dc6441cf3ebae9ff8885d82d92a6c06ac57ec1",
+      "objective_reached": true,
+      "encounter_clear_s": 16.766666666666666,
+      "damage_taken_hp": 8.39999999999992,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261106,
+      "digest": "648662bcd029595e59d66085d5410149f9914b23f64eaf6927bd142d306718f2",
+      "objective_reached": true,
+      "encounter_clear_s": 17.216666666666665,
+      "damage_taken_hp": 7.799999999999926,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261107,
+      "digest": "fdc84baa88b9c1a1c7502600cf9f7984fa39668d98cf027501a96fc23dcf2e5c",
+      "objective_reached": true,
+      "encounter_clear_s": 14.683333333333334,
+      "damage_taken_hp": 8.39999999999992,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261103,
+      "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+      "objective_reached": true,
+      "encounter_clear_s": 34.71666666666667,
+      "damage_taken_hp": 3.599999999999966,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261104,
+      "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+      "objective_reached": true,
+      "encounter_clear_s": 35.8,
+      "damage_taken_hp": 2.3999999999999773,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261105,
+      "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+      "objective_reached": true,
+      "encounter_clear_s": 35.55,
+      "damage_taken_hp": 7.199999999999932,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261106,
+      "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+      "objective_reached": true,
+      "encounter_clear_s": 34.7,
+      "damage_taken_hp": 6.5999999999999375,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261107,
+      "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3",
+      "objective_reached": true,
+      "encounter_clear_s": 36.03333333333333,
+      "damage_taken_hp": 3.599999999999966,
+      "deaths": 0
+    }
+  ],
+  "explicit_guard": [
+    {
+      "encounter": "city",
+      "seed": 20261103,
+      "digest": "7a61766c8e50d05869f4a60992ece5cd79d11b15266ef2384afa28e5a372d0c2",
+      "objective_reached": true,
+      "encounter_clear_s": 16.816666666666666,
+      "damage_taken_hp": 2.3999999999999773,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261104,
+      "digest": "6c453d01df988d826d259f2f8a2ad11ad20cb3ddf5fe2f3ed8c7a32c0b17322f",
+      "objective_reached": true,
+      "encounter_clear_s": 17.75,
+      "damage_taken_hp": 5.399999999999949,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261105,
+      "digest": "638eac3e621c0a7da3dafacb33764f94ad0ea1ca068f86c7928de71ca962eee9",
+      "objective_reached": true,
+      "encounter_clear_s": 18.466666666666665,
+      "damage_taken_hp": 5.399999999999949,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261106,
+      "digest": "b98df35202c6ddff8796a87c6c240ef3c7b21ac3e418b475c617261527569df3",
+      "objective_reached": true,
+      "encounter_clear_s": 16.516666666666666,
+      "damage_taken_hp": 4.19999999999996,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261107,
+      "digest": "d91f383ea1078089179e1850067e5a680eb23cdbb947904a4310f826e84509fb",
+      "objective_reached": true,
+      "encounter_clear_s": 18.35,
+      "damage_taken_hp": 0.5999999999999943,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261103,
+      "digest": "1efb05436029012bc6de1fb538e9ccf60a6713b0b8b6792bd658aa08e6cb88c1",
+      "objective_reached": true,
+      "encounter_clear_s": 15.049999999999999,
+      "damage_taken_hp": 1.1999999999999886,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261104,
+      "digest": "b69d9deefdf67c5a4af3771ff85e35c73b16c8d848d559a77d099eb1dca00c42",
+      "objective_reached": true,
+      "encounter_clear_s": 14.183333333333334,
+      "damage_taken_hp": 7.199999999999932,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261105,
+      "digest": "cb2515acd326c937550d7022487cfbd433f42c261d61a47c7e1d383ca522082d",
+      "objective_reached": true,
+      "encounter_clear_s": 14.116666666666667,
+      "damage_taken_hp": 7.799999999999926,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261106,
+      "digest": "3976a3c2f3c61b5b8eced3af67440ab6f7c6009229782f0a8aba645c8a21afd1",
+      "objective_reached": true,
+      "encounter_clear_s": 15.35,
+      "damage_taken_hp": 10.199999999999903,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261107,
+      "digest": "99df41cff4ce66254ee09acec482624a23572c1d5f7157f87b4fd9b18cd9671d",
+      "objective_reached": true,
+      "encounter_clear_s": 13.966666666666667,
+      "damage_taken_hp": 10.199999999999903,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261103,
+      "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+      "objective_reached": true,
+      "encounter_clear_s": 34.71666666666667,
+      "damage_taken_hp": 3.599999999999966,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261104,
+      "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+      "objective_reached": true,
+      "encounter_clear_s": 35.8,
+      "damage_taken_hp": 2.3999999999999773,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261105,
+      "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+      "objective_reached": true,
+      "encounter_clear_s": 35.55,
+      "damage_taken_hp": 7.199999999999932,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261106,
+      "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+      "objective_reached": true,
+      "encounter_clear_s": 34.7,
+      "damage_taken_hp": 6.5999999999999375,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261107,
+      "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3",
+      "objective_reached": true,
+      "encounter_clear_s": 36.03333333333333,
+      "damage_taken_hp": 3.599999999999966,
+      "deaths": 0
+    }
+  ],
+  "mixed": [
+    {
+      "encounter": "city",
+      "seed": 20261103,
+      "digest": "30a7d96cd7a0df583d6f528c39a4b277c67b0a9d0d291e1e7f7591d8dd311a80",
+      "objective_reached": true,
+      "encounter_clear_s": 22.65,
+      "damage_taken_hp": 2.9999999999999716,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261104,
+      "digest": "ad9887e58b7af1a394e26eb75cef1d56f314d79d32afbe2042ca3f240875a271",
+      "objective_reached": true,
+      "encounter_clear_s": 24.05,
+      "damage_taken_hp": 1.799999999999983,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261105,
+      "digest": "90e23065bad281ea97f6c295879decd152384db5350c7f95cdbe89f04208e461",
+      "objective_reached": true,
+      "encounter_clear_s": 23.333333333333332,
+      "damage_taken_hp": 3.599999999999966,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261106,
+      "digest": "004dcc16c06d1e110fc091dc3e6b184af865dab108eb58f21e18b329e55b2231",
+      "objective_reached": true,
+      "encounter_clear_s": 23.216666666666665,
+      "damage_taken_hp": 3.599999999999966,
+      "deaths": 0
+    },
+    {
+      "encounter": "city",
+      "seed": 20261107,
+      "digest": "0ec3da242d991e6a4fdca821ec8593bedfb153106d7cb3873704b0eae72a96c2",
+      "objective_reached": true,
+      "encounter_clear_s": 25.916666666666668,
+      "damage_taken_hp": 4.19999999999996,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261103,
+      "digest": "f2f025829c9057bda3d4b4bb5adbe03c7708c249e32de95710096fefbfe5e5dc",
+      "objective_reached": true,
+      "encounter_clear_s": 20.583333333333332,
+      "damage_taken_hp": 5.999999999999943,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261104,
+      "digest": "286381727725818ad85966926328fc73ae3e81b596ae8edc4c3c3e78291059b5",
+      "objective_reached": true,
+      "encounter_clear_s": 21.6,
+      "damage_taken_hp": 9.599999999999909,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261105,
+      "digest": "12f017fa1c0976bd603d17351b0a2d51eb4059ffe9844cc52401670094bebdca",
+      "objective_reached": true,
+      "encounter_clear_s": 20.366666666666667,
+      "damage_taken_hp": 7.199999999999932,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261106,
+      "digest": "e0e84ba95b5c32c5965116575d03f0bc04544b3d5902420dd1d3a7ec2212312b",
+      "objective_reached": true,
+      "encounter_clear_s": 20.133333333333333,
+      "damage_taken_hp": 9.599999999999909,
+      "deaths": 0
+    },
+    {
+      "encounter": "pit",
+      "seed": 20261107,
+      "digest": "fa8da3c1bc2fff91bf7c47ced35c51f7d309863e0ade0790448b4b5521d7d4dd",
+      "objective_reached": true,
+      "encounter_clear_s": 20.45,
+      "damage_taken_hp": 8.39999999999992,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261103,
+      "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+      "objective_reached": true,
+      "encounter_clear_s": 34.71666666666667,
+      "damage_taken_hp": 3.599999999999966,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261104,
+      "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+      "objective_reached": true,
+      "encounter_clear_s": 35.8,
+      "damage_taken_hp": 2.3999999999999773,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261105,
+      "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+      "objective_reached": true,
+      "encounter_clear_s": 35.55,
+      "damage_taken_hp": 7.199999999999932,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261106,
+      "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+      "objective_reached": true,
+      "encounter_clear_s": 34.7,
+      "damage_taken_hp": 6.5999999999999375,
+      "deaths": 0
+    },
+    {
+      "encounter": "quest1",
+      "seed": 20261107,
+      "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3",
+      "objective_reached": true,
+      "encounter_clear_s": 36.03333333333333,
+      "damage_taken_hp": 3.599999999999966,
+      "deaths": 0
+    }
+  ],
+  "mixed_scenario": {
+    "flanks": [
+      0,
+      0,
+      0,
+      24,
+      0
+    ],
+    "live": {
+      "cleared": 5,
+      "cover": 0.499075163948209,
+      "crowded": 0.0,
+      "flank_ticks": 0,
+      "flankers": 2,
+      "replayed": true,
+      "spawned": 5,
+      "ticks": 3020
+    },
+    "no_separation": {
+      "cleared": 5,
+      "cover": 0.484958111195735,
+      "crowded": 0.0841584158415842,
+      "flank_ticks": 0,
+      "flankers": 3,
+      "spawned": 5,
+      "ticks": 2604
+    }
+  },
+  "rollout": {
+    "default_brain": "squad",
+    "unflagged_matches_explicit": 15,
+    "quest1_matches_a1": [
+      "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+      "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+      "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+      "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+      "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3"
+    ],
+    "scenarios": "run_scenarios: 56 ran, 0 failed",
+    "unit": "unit-tests: 2985 passed, 0 failed, 2 skipped (GUT, headless)",
+    "parity": "parity: native == GDScript reference bit for bit over 1200 steps (40 snapshot checks, 3502 floats); planted mutation caught at step 629"
+  },
+  "mutation": {
+    "arena_squad": {
+      "results": [
+        {
+          "sample": 1,
+          "line": 14,
+          "operator": "literal",
+          "before": "0.0",
+          "after": "1.0",
+          "verdict": "survived"
+        },
+        {
+          "sample": 2,
+          "line": 60,
+          "operator": "boolean",
+          "before": "not",
+          "after": "(removed)",
+          "verdict": "killed"
+        },
+        {
+          "sample": 3,
+          "line": 60,
+          "operator": "cmp_flip",
+          "before": "==",
+          "after": "!=",
+          "verdict": "killed"
+        },
+        {
+          "sample": 4,
+          "line": 61,
+          "operator": "delete",
+          "before": "ordered.append(h)",
+          "after": "pass",
+          "verdict": "killed"
+        },
+        {
+          "sample": 5,
+          "line": 64,
+          "operator": "boundary",
+          "before": "<",
+          "after": "<=",
+          "verdict": "survived"
+        },
+        {
+          "sample": 6,
+          "line": 72,
+          "operator": "boolean",
+          "before": "false",
+          "after": "true",
+          "verdict": "killed"
+        },
+        {
+          "sample": 7,
+          "line": 83,
+          "operator": "delete",
+          "before": "_schedule()",
+          "after": "pass",
+          "verdict": "killed"
+        },
+        {
+          "sample": 8,
+          "line": 93,
+          "operator": "arith",
+          "before": "+",
+          "after": "-",
+          "verdict": "killed"
+        },
+        {
+          "sample": 9,
+          "line": 94,
+          "operator": "arith",
+          "before": "+",
+          "after": "-",
+          "verdict": "killed"
+        },
+        {
+          "sample": 10,
+          "line": 99,
+          "operator": "delete",
+          "before": "mind.retry_route(_map)",
+          "after": "pass",
+          "verdict": "killed"
+        },
+        {
+          "sample": 11,
+          "line": 106,
+          "operator": "arith",
+          "before": "/",
+          "after": "*",
+          "verdict": "survived"
+        },
+        {
+          "sample": 12,
+          "line": 106,
+          "operator": "literal",
+          "before": "0.0",
+          "after": "1.0",
+          "verdict": "survived"
+        },
+        {
+          "sample": 13,
+          "line": 133,
+          "operator": "cmp_flip",
+          "before": ">",
+          "after": "<=",
+          "verdict": "survived"
+        },
+        {
+          "sample": 14,
+          "line": 133,
+          "operator": "literal",
+          "before": "0",
+          "after": "1",
+          "verdict": "survived"
+        },
+        {
+          "sample": 15,
+          "line": 137,
+          "operator": "cmp_flip",
+          "before": ">",
+          "after": "<=",
+          "verdict": "killed"
+        },
+        {
+          "sample": 16,
+          "line": 137,
+          "operator": "boundary",
+          "before": ">",
+          "after": ">=",
+          "verdict": "killed"
+        },
+        {
+          "sample": 17,
+          "line": 144,
+          "operator": "cmp_flip",
+          "before": ">",
+          "after": "<=",
+          "verdict": "survived"
+        },
+        {
+          "sample": 18,
+          "line": 144,
+          "operator": "boundary",
+          "before": ">",
+          "after": ">=",
+          "verdict": "survived"
+        },
+        {
+          "sample": 19,
+          "line": 146,
+          "operator": "cmp_flip",
+          "before": ">",
+          "after": "<=",
+          "verdict": "survived"
+        },
+        {
+          "sample": 20,
+          "line": 146,
+          "operator": "literal",
+          "before": "0",
+          "after": "1",
+          "verdict": "survived"
+        }
+      ],
+      "counts": {
+        "survived": 10,
+        "killed": 10
+      },
+      "killed": 10,
+      "denominator": 20
+    },
+    "squad_mind": {
+      "results": [
+        {
+          "sample": 1,
+          "line": 16,
+          "operator": "boolean",
+          "before": "false",
+          "after": "true",
+          "verdict": "killed"
+        },
+        {
+          "sample": 2,
+          "line": 23,
+          "operator": "literal",
+          "before": "1",
+          "after": "0",
+          "verdict": "survived"
+        },
+        {
+          "sample": 3,
+          "line": 24,
+          "operator": "literal",
+          "before": "0",
+          "after": "1",
+          "verdict": "survived"
+        },
+        {
+          "sample": 4,
+          "line": 29,
+          "operator": "literal",
+          "before": "0",
+          "after": "1",
+          "verdict": "killed"
+        },
+        {
+          "sample": 5,
+          "line": 40,
+          "operator": "cmp_flip",
+          "before": "<=",
+          "after": ">",
+          "verdict": "killed"
+        },
+        {
+          "sample": 6,
+          "line": 49,
+          "operator": "arith",
+          "before": "-=",
+          "after": "+=",
+          "verdict": "killed"
+        },
+        {
+          "sample": 7,
+          "line": 84,
+          "operator": "literal",
+          "before": "0",
+          "after": "1",
+          "verdict": "survived"
+        },
+        {
+          "sample": 8,
+          "line": 86,
+          "operator": "cmp_flip",
+          "before": "<",
+          "after": ">=",
+          "verdict": "killed"
+        },
+        {
+          "sample": 9,
+          "line": 89,
+          "operator": "boundary",
+          "before": "<=",
+          "after": "<",
+          "verdict": "killed"
+        },
+        {
+          "sample": 10,
+          "line": 91,
+          "operator": "arith",
+          "before": "+",
+          "after": "-",
+          "verdict": "killed"
+        },
+        {
+          "sample": 11,
+          "line": 98,
+          "operator": "arith",
+          "before": "/",
+          "after": "*",
+          "verdict": "killed"
+        },
+        {
+          "sample": 12,
+          "line": 114,
+          "operator": "cmp_flip",
+          "before": "!=",
+          "after": "==",
+          "verdict": "killed"
+        },
+        {
+          "sample": 13,
+          "line": 129,
+          "operator": "boolean",
+          "before": "true",
+          "after": "false",
+          "verdict": "killed"
+        },
+        {
+          "sample": 14,
+          "line": 153,
+          "operator": "boolean",
+          "before": "false",
+          "after": "true",
+          "verdict": "killed"
+        },
+        {
+          "sample": 15,
+          "line": 158,
+          "operator": "boundary",
+          "before": "<",
+          "after": "<=",
+          "verdict": "killed"
+        },
+        {
+          "sample": 16,
+          "line": 160,
+          "operator": "cmp_flip",
+          "before": "<",
+          "after": ">=",
+          "verdict": "killed"
+        },
+        {
+          "sample": 17,
+          "line": 175,
+          "operator": "boolean",
+          "before": "or",
+          "after": "and",
+          "verdict": "killed"
+        },
+        {
+          "sample": 18,
+          "line": 175,
+          "operator": "literal",
+          "before": "0",
+          "after": "1",
+          "verdict": "killed"
+        },
+        {
+          "sample": 19,
+          "line": 190,
+          "operator": "boundary",
+          "before": "<=",
+          "after": "<",
+          "verdict": "killed"
+        },
+        {
+          "sample": 20,
+          "line": 190,
+          "operator": "boundary",
+          "before": ">=",
+          "after": ">",
+          "verdict": "killed"
+        }
+      ],
+      "counts": {
+        "killed": 17,
+        "survived": 3
+      },
+      "killed": 17,
+      "denominator": 20
+    },
+    "former_survivors_killed": [
+      {
+        "a7_line": 88,
+        "current_line": 89,
+        "operator": "boundary",
+        "before": "<=",
+        "after": "<"
+      },
+      {
+        "a7_line": 90,
+        "current_line": 91,
+        "operator": "arith",
+        "before": "+",
+        "after": "-"
+      },
+      {
+        "a7_line": 97,
+        "current_line": 98,
+        "operator": "arith",
+        "before": "/",
+        "after": "*"
+      },
+      {
+        "a7_line": 174,
+        "current_line": 175,
+        "operator": "literal",
+        "before": "0",
+        "after": "1"
+      },
+      {
+        "a7_line": 189,
+        "current_line": 190,
+        "operator": "boundary",
+        "before": "<=",
+        "after": "<"
+      },
+      {
+        "a7_line": 189,
+        "current_line": 190,
+        "operator": "boundary",
+        "before": ">=",
+        "after": ">"
+      }
+    ]
+  },
+  "final_unit": "unit-tests: 2987 passed, 0 failed, 2 skipped (GUT, headless)",
+  "station_modes": {
+    "checked": {
+      "stations-guard": [
+        "ghost_attacks",
+        "rivet_chainsaw",
+        "rivet_city_fight",
+        "rivet_claw",
+        "rivet_katana",
+        "showcase_director"
+      ],
+      "stations-mixed": [
+        "ghost_attacks",
+        "rivet_chainsaw",
+        "rivet_city_fight",
+        "rivet_claw",
+        "rivet_katana",
+        "showcase_director"
+      ]
+    },
+    "telemetry_equal_in_guard_squad_and_mixed": [
+      "ghost-attacks.json",
+      "rivet-chainsaw-telemetry.json",
+      "rivet-claw-telemetry.json",
+      "rivet-katana-telemetry.json",
+      "showcase-director-telemetry.json"
+    ]
+  }
+}

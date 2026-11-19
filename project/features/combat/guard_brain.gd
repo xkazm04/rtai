@@ -10,6 +10,23 @@ static func step(
 ) -> Shot:
 	if approach(g, target, tuning):
 		return null
+	return trigger(g, tuning, rng)
+
+
+## Resolve body penetration on the moving partner. Wave guards keep their own movement.
+static func space_partner(g: Fighter, hostiles: Array[Fighter]) -> void:
+	if g.pursuit == null:
+		return
+	for other: Fighter in hostiles:
+		if other == g or not other.alive():
+			continue
+		var side: float = 1.0 if g.id > other.id else -1.0
+		var push: Vector2 = EnemyMotor.repel(g.pos, other.pos, g.station_spacing_m, side)
+		if push != Vector2.ZERO:
+			g.pursuit.push_body(g, push)
+
+
+static func trigger(g: Fighter, tuning: CombatTuning, rng: RandomNumberGenerator) -> Shot:
 	var w: CombatTuning.Weapon = tuning.weapon(g.weapon)
 	if g.burst_left > 0:
 		if g.burst_gap > 0:

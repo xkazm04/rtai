@@ -61,12 +61,19 @@ static func _timed(e: EnemyAgent, pit: EnemyPit) -> void:
 		e.enter(S.ENGAGE)
 
 
+static func break_morale(e: EnemyAgent, fallen: float, panic_ticks: int) -> bool:
+	if e.broke or fallen <= e.arch.morale:
+		return false
+	e.broke = true
+	e.token = false
+	e.enter(S.PANIC, panic_ticks)
+	return true
+
+
 static func _engage(e: EnemyAgent, pit: EnemyPit) -> void:
-	if not e.broke and e.arch.morale < 1.0 and pit.fallen_frac(e.squad) > e.arch.morale:
-		e.broke = true
-		e.token = false
-		e.enter(S.PANIC, pit.roster.panic_ticks)
-		return
+	if not e.broke and e.arch.morale < 1.0:
+		if break_morale(e, pit.fallen_frac(e.squad), pit.roster.panic_ticks):
+			return
 	var dist: float = e.pos.distance_to(e.last_seen)
 	var w: EnemyRoster.Weapon = e.arch.weapon
 	var in_range: bool = dist <= (w.reach_m + w.lunge_m if w.melee else e.arch.attack_m)
@@ -97,7 +104,7 @@ static func _reposition(e: EnemyAgent, pit: EnemyPit) -> Vector2:
 		return _hold_range(e, pit, a.preferred_m if e.token else WAIT_RING_M)
 	if not e.token and a.flanks:
 		e.state = S.FLANK
-		e.goal = _flank_spot(e, pit)
+		e.goal = flank_spot(e, pit)
 		return EnemyMotor.arrive(e, e.goal, a.speed_mps, 0.6)
 	e.state = S.ENGAGE
 	return _hold_range(e, pit, a.preferred_m)
@@ -107,7 +114,11 @@ static func _reposition(e: EnemyAgent, pit: EnemyPit) -> Vector2:
 static func _hold_range(e: EnemyAgent, pit: EnemyPit, ring: float) -> Vector2:
 	if EnemySenses.blocked(e.pos, pit.rivet_pos, pit.cover):
 		return EnemyMotor.arrive(e, pit.rivet_pos, e.arch.speed_mps, ring)
-	var to: Vector2 = pit.rivet_pos - e.pos
+	return strafe(e, pit.rivet_pos, ring)
+
+
+static func strafe(e: EnemyAgent, target: Vector2, ring: float) -> Vector2:
+	var to: Vector2 = target - e.pos
 	var dist: float = maxf(to.length(), 0.001)
 	var dir: Vector2 = to / dist
 	var radial: float = clampf(dist - ring, -1.0, 1.0)
@@ -116,7 +127,7 @@ static func _hold_range(e: EnemyAgent, pit: EnemyPit, ring: float) -> Vector2:
 
 
 ## A spot on Rivet's flank: rotated away from where the shooting squad stands.
-static func _flank_spot(e: EnemyAgent, pit: EnemyPit) -> Vector2:
+static func flank_spot(e: EnemyAgent, pit: EnemyPit) -> Vector2:
 	var anchor: Vector2 = pit.holder_centroid()
 	if anchor == Vector2.INF:
 		anchor = e.pos

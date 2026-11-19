@@ -34,16 +34,27 @@ static func open(
 	input: InputSource = null,
 	on_city: bool = false
 ) -> ArenaSession:
+	var options: ArenaArgs = ArenaArgs.parse()
+	options.values["--arena"] = "city" if on_city else ""
+	return open_with_args(events, data, seed, input, options)
+
+
+## A fresh world using explicit arena options, including for replay of a recorded fight.
+static func open_with_args(
+	events: EventBus, data: DataStore, seed: int, input: InputSource, options: ArenaArgs
+) -> ArenaSession:
+	var on_city: bool = options.text("--arena") == "city"
 	var s: ArenaSession = ArenaSession.new()
 	s.actions = PlayerActions.shipped()
 	s.actions.install()
 	s.world.name = "ArenaWorld"
 	s.world.start(events, data, seed)
 	s.plan = ArenaPlan.shipped()
+	s.stations = ArenaStations.shipped(ArenaStations.DIR, on_city)
 	if on_city:
 		s.plan = ArenaPlan.shipped(s.plan.city_base)
-	s.stations = ArenaStations.shipped()
-	s.stage = ArenaStage.new(s.plan, s.stations)
+		s.stations.shift_props(s.plan.city_prop_shifts)
+	s.stage = ArenaStage.new(s.plan, s.stations, options)
 	s.pilot = StagePilot.new(s.actions)
 	s.stage.pilot = s.pilot
 	if on_city:
@@ -63,6 +74,10 @@ static func open(
 
 ## As quest 1 on the city: the bubble follows Rivet, the chunks round him resident at tick 0.
 func _add_city() -> void:
+	for hook: ArenaHook in stage.hooks:
+		if hook is ArenaClawCops:
+			for partner: Fighter in (hook as ArenaClawCops).cops:
+				partner.station_spacing_m = stations.station_spacing_m
 	var extent: Array[Vector2] = [plan.base]
 	for a: ArenaPlan.Area in plan.areas:
 		extent.append_array([a.rect.position, a.rect.end])
@@ -88,6 +103,15 @@ func step() -> void:
 
 func tick() -> int:
 	return world.context().clock.tick()
+
+
+## Release an arena opened by a headless caller. Hooks and input callbacks retain the stage.
+func close() -> void:
+	stage.hooks.clear()
+	live.cursor_px = Callable()
+	if stage.vehicles != null:
+		stage.vehicles.world = null
+	world.free()
 
 
 ## The session's telemetry as JSON at `path` (a directory is made if missing).

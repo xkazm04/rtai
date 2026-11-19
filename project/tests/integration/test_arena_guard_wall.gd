@@ -6,10 +6,11 @@ const LIMIT: int = 900
 const BASE: Vector2 = Vector2(524, 524)
 
 
-func _stage() -> ArenaStage:
+func _stage(flags: PackedStringArray = ["--enemy-brain=guard"]) -> ArenaStage:
 	var stations: ArenaStations = ArenaStations.new()
 	stations.add_file(ArenaStations.DIR + "/arena.json")
-	var stage: ArenaStage = ArenaStage.new(ArenaPlan.shipped(BASE), stations)
+	var opts: ArenaArgs = ArenaArgs.parse(flags)
+	var stage: ArenaStage = ArenaStage.new(ArenaPlan.shipped(BASE), stations, opts)
 	stage.cells = StageCells.shipped()
 	var world: World = autofree(World.new())
 	var bus: EventBus = autofree(EventBus.new())
@@ -71,3 +72,24 @@ func test_clear_street_keeps_walk_speed_and_rifle_standoff() -> void:
 		assert_between(still, 160, 162)
 		assert_eq(guard.pos.y, BASE.y)
 		assert_almost_eq(guard.pos.distance_to(stage.arena.rivet.pos), 12.0, 0.06)
+
+
+func test_explicit_guard_mode_uses_guard_approach() -> void:
+	var stage: ArenaStage = _stage()
+	var arena: CombatArena = stage.arena
+	assert_null(arena.squad_ai)
+	var g: Fighter = _guard(stage, arena.rivet.pos + Vector2(0, -18), false)
+	g.pursuit = null
+	var at: Vector2 = g.pos
+	arena.step(1)
+	assert_almost_eq(at.distance_to(g.pos), float(arena.tuning.human["walk_mps"]) / 60, 0.0001)
+
+
+func test_default_stage_fields_contractors_with_the_squad_brain() -> void:
+	var stage: ArenaStage = _stage([])
+	stage.pit._spawn_wave(stage.arena)
+	stage.arena.step(1)
+	assert_gt(stage.pit.standing.size(), 0)
+	for guard: Fighter in stage.pit.standing:
+		assert_eq(guard.archetype, &"contractor")
+		assert_true(stage.arena.squad_ai != null and stage.arena.squad_ai.minds.has(guard.id))

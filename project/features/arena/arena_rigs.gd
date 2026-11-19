@@ -1,19 +1,13 @@
 class_name ArenaRigs
 extends RigHost
 ## Dev flag --rigs: the arena's fighters drawn on the cast rigs (CharacterRigs, d5-cast) instead of
-## quest 1's stills and guard sprites (CastView is hidden). Rivet is the RIVET rig, every hostile
-## and dummy a COP rig (the robot and contractor plans land with the enemy-ai and rivet-motion
-## merges). Render only: reads the CombatArena every frame and fills the rig feed (world px at
-## SimConst.PX_PER_M, the print stage's space); it writes nothing back and draws no RNG.
+## quest 1's stills and guard sprites (CastView is hidden). Rivet uses the RIVET rig. Squad
+## humans use the cop variants, and ArenaRobotRigs draws the machines. The render feed reads
+## positions in world pixels at SimConst.PX_PER_M without changing the sim or drawing RNG.
 
 const DOWN_FLAGS: int = RigFeed.Flag.DEAD | RigFeed.Flag.DOWN
-## CharacterRigs poses full rigs within RADIUS_M (14 m) of its focus and leaves the rest to the
-## city's crowd atlas, which the arena has not got: the focus sits this far ahead of Rivet along
-## his aim, so the rigs cover the screen he faces (the range's 20 m lane), Rivet still inside.
+## The rig focus sits ahead of Rivet; wave members beyond its full rigs use arena wave cards.
 const FOCUS_AHEAD_M: float = 7.0
-## The riot cop's look (RigVariant.crowd: the shield), worn by the pit's --riot guards.
-const RIOT_LOOK: int = 6
-const PATROL_LOOK: int = 5
 ## rivet-arsenal: the claw combo's arm per hit (left jab, right backhand, both-hands slam).
 const STRIKE_ARMS: Array[int] = [BodyPlan.L, BodyPlan.R, 2]
 ## Hostiles farther than this from Rivet (another station's) do not pull the bubble.
@@ -30,6 +24,9 @@ var crowd: CrowdReact = null
 var ghost_view: GhostFormView = null
 ## ghost-powers: the arena's robot on the robot thug's rig (null in quest 1).
 var robots: ArenaRobotRigs = null
+var wave_cards: ArenaWaveCards
+var _pit: ArenaPit
+var _squad_looks: ArenaSquadLooks = ArenaSquadLooks.new()
 var _last: Dictionary[int, Vector2] = {}
 var _print: PrintStage = null
 var _city: CityView = null
@@ -48,8 +45,7 @@ var _arsenal: ArsenalTable = ArsenalTable.shipped()
 var _looks: Dictionary[int, Vector2i] = {}
 
 
-## Puts the rigs on the view's actor layer and hides the sprite cast: the printed path's, or
-## (human-reactions) the CityView's on the city block (--arena=city); false with neither.
+## Puts rigs on the print or city actor layer and hides the sprite cast. False without either.
 func attach(p_stage: CollectCallStage, view: CollectCallView, ctx: WorldContext) -> bool:
 	var layer: CanvasLayer = null
 	if view.print_stage != null:
@@ -76,7 +72,10 @@ func attach(p_stage: CollectCallStage, view: CollectCallView, ctx: WorldContext)
 	RigCarry.wire(view.fx_view.gun_fx().follow, rigs)  # n15: a body hit's burst rides the body
 	if arena_stage == null:
 		return true
+	_pit = arena_stage.pit
 	_add_robots(layer, p_stage.arena, view.blood)
+	wave_cards = ArenaWaveCards.attach(rigs, _pit.standing)
+	SquadOverlay.attach(rigs, arena_stage, self)
 	for t: ArenaTargets.Target in arena_stage.targets.targets:
 		var look: Vector2i = ReactLineBot.look_of(t.spawn.id)
 		if look.x >= 0:
@@ -148,9 +147,12 @@ func _process(_delta: float) -> void:
 			continue  # a boss draws itself (features/bosses, n7-king)
 		if robots != null and ArenaRobotRigs.takes(h):
 			continue
-		var look: Vector2i = _looks.get(h.id, Vector2i(BodyPlan.Kind.COP, _pit_look(h.id)))
+		var riot: bool = _pit != null and _pit.riot_hp > 0.0
+		var variant: int = ArenaSquadLooks.look(h, riot, riot and _pit.riot.has(h.id))
+		var look: Vector2i = _looks.get(h.id, Vector2i(BodyPlan.Kind.COP, variant))
 		_put(i, h, look.x as BodyPlan.Kind)
 		f.looks[i] = look.y
+		_squad_looks.swing(h, f, i)
 		if _looks.has(h.id):  # the reaction line stands still facing east: the four sides differ
 			f.face[i] = 0.0
 			f.aim[i] = f.pos[i] + Vector2.RIGHT * 4.0 * SimConst.PX_PER_M
@@ -172,18 +174,6 @@ func forget(id: int) -> void:
 	for d: Dictionary in [_last, _hurt_seen, _fire_seen, hidden]:
 		@warning_ignore("return_value_discarded")
 		d.erase(id)
-
-
-## human-reactions' patrol/riot/SWAT mix by actor id; under --riot the shield is worn only by
-## the pit's armored riot cops (the mix's other riot picks dress as patrol).
-func _pit_look(id: int) -> int:
-	var squad: int = RigVariant.squad_index_for(id)
-	var arena_stage: ArenaStage = stage as ArenaStage
-	if arena_stage == null or arena_stage.pit == null or arena_stage.pit.riot_hp <= 0.0:
-		return squad
-	if arena_stage.pit.riot.has(id):
-		return RIOT_LOOK
-	return PATROL_LOOK if squad == RIOT_LOOK else squad
 
 
 func _put(i: int, who: Fighter, kind: BodyPlan.Kind) -> void:

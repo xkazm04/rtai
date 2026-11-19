@@ -75,7 +75,36 @@
     "base": [
       524,
       524
-    ]
+    ],
+    "shift_props": {
+      "boss_fight/24": [
+        0,
+        -1
+      ],
+      "pit/0": [
+        0,
+        3
+      ],
+      "pit/1": [
+        0,
+        3
+      ],
+      "pit/2": [
+        0,
+        3
+      ],
+      "pit/3": [
+        0,
+        3
+      ],
+      "pit/4": [
+        0,
+        3
+      ]
+    },
+    "squad": {
+      "contractor_speed_mps": 4.2
+    }
   },
   "doc": "The dev arena's floor plan (features/arena/README.md): areas as rects in metres from the hub, where Rivet starts, and the zoom steps (px per metre) the zoom keys cycle. Stations (arena_stations/*.json) place their spawns and props inside their area. pit: the pit's waves (first wave size, +grow per wave up to max_wave guards, gap_s between a cleared wave and the next; they start once Rivet is trigger_inset_m inside the pit area). city: the city proving block (--arena=city): the hub sits at base (world metres, a 3 x 3 tile junction of the generated city); spawns that land in a building are dropped.",
   "pit": {
@@ -83,7 +112,19 @@
     "first_wave": 2,
     "gap_s": 2.5,
     "grow": 1,
+    "max_shooters": 3,
     "max_wave": 5,
+    "squad_mix": [
+      "contractor"
+    ],
+    "squad_mix_full": [
+      "patrol_cop",
+      "swat",
+      "riot_cop",
+      "robot_thug",
+      "robot_gunner",
+      "contractor"
+    ],
     "trigger_inset_m": 3
   },
   "rig_kick": {

@@ -18,11 +18,13 @@ var pit: ArenaPit
 var dodges: ArenaDodges = ArenaDodges.new()
 ## Other lanes' code, from their stations' `script` (ArenaHook), in station-file order.
 var hooks: Array[ArenaHook] = []
+var _options: ArenaArgs
 var _shots_before: int = 0
 
 
-func _init(p_plan: ArenaPlan, p_stations: ArenaStations) -> void:
+func _init(p_plan: ArenaPlan, p_stations: ArenaStations, options: ArenaArgs = null) -> void:
 	super(cleared_layout(p_plan))
+	_options = options if options != null else ArenaArgs.parse()
 	plan = p_plan
 	stations = p_stations
 	walls = ArenaWalls.from_stations(p_stations, p_plan.base)
@@ -57,6 +59,20 @@ func setup(ctx: WorldContext) -> void:
 		arena.guard_map = GuardRouteMap.new(
 			bounds, walls.boxes, cells, arena.tuning.human["radius_m"]
 		)
+		var brain: String = _options.text("--enemy-brain", SquadChoice.DEFAULT_BRAIN)
+		if brain in ["squad", "mixed"]:
+			arena.squad_ai = ArenaSquad.new(arena.guard_map)
+			var roster: EnemyRoster = arena.squad_ai.pit.roster
+			pit.mixed = brain == "mixed"
+			var rules: Dictionary = plan.pit
+			if cells != null and not pit.mixed:
+				rules = rules.merged(plan.city_squad, true)
+				if rules.has("contractor_speed_mps"):
+					roster.archetype(&"contractor").speed_mps = rules["contractor_speed_mps"]
+			var mix: Array = rules.get("squad_mix_full" if pit.mixed else "squad_mix", [])
+			pit.squad_mix.assign(mix)
+			var slots: float = rules.get("max_shooters", roster.max_shooters)
+			roster.max_shooters = roundi(slots)
 	arena.rivet.weapon = WEAPON
 	var id: int = 1000
 	for s: ArenaStation in stations.stations:

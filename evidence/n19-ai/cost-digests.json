@@ -1,0 +1,236 @@
+{
+  "head": "91644f6cfe4259ee384fa2636dfbcd3876f018da",
+  "runs": {
+    "squad": [
+      {
+        "encounter": "city",
+        "seed": 20261103,
+        "digest": "92cef5b0b52c2b8bb1af772ab2619743db85140db485587ade5e2b9a3e59c530"
+      },
+      {
+        "encounter": "city",
+        "seed": 20261104,
+        "digest": "6581bcf8daeb90ee46ce225a1a7b21a6d9bbef3ae2b3ac610ac499eb14fe2fea"
+      },
+      {
+        "encounter": "city",
+        "seed": 20261105,
+        "digest": "ec21c8929ee44bc5bd06b17d1f7ed66d50f21b14f6ad59eb7fc76ef517466b05"
+      },
+      {
+        "encounter": "city",
+        "seed": 20261106,
+        "digest": "b13aed6fa8a9eebcebdab6b76c69cb60d91f0988d89a6ada6f3761f9e2e8620a"
+      },
+      {
+        "encounter": "city",
+        "seed": 20261107,
+        "digest": "8a5fa5f8122f6540e48766e5c5a9e3976697671c552fc0bbabd7c777cc4758d9"
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261103,
+        "digest": "327070b24d2e5560a6d2e326cfe2a195d22bf978a0ac5f23962d2e9f6eac6133"
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261104,
+        "digest": "71026551a0b287751fe963168fee90027763cbcce6f6a1ed6ba64ca2fe0930d7"
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261105,
+        "digest": "f6a99f4deaa20de824c0da16c8dc6441cf3ebae9ff8885d82d92a6c06ac57ec1"
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261106,
+        "digest": "648662bcd029595e59d66085d5410149f9914b23f64eaf6927bd142d306718f2"
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261107,
+        "digest": "fdc84baa88b9c1a1c7502600cf9f7984fa39668d98cf027501a96fc23dcf2e5c"
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261103,
+        "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f"
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261104,
+        "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6"
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261105,
+        "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082"
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261106,
+        "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334"
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261107,
+        "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3"
+      }
+    ],
+    "mixed": [
+      {
+        "encounter": "city",
+        "seed": 20261103,
+        "digest": "eb89df1d709dc103509705c5d43e109de0f71f2f21d47cfb1d3af6acd7602f02"
+      },
+      {
+        "encounter": "city",
+        "seed": 20261104,
+        "digest": "0f5b860e065cc3ddaca4e5078a7cf012c491e6572b69f54499ed6e8308386d84"
+      },
+      {
+        "encounter": "city",
+        "seed": 20261105,
+        "digest": "60946796e938d9acbc527127df8f630eadaa3d705a3719e8291978e79d0a2c96"
+      },
+      {
+        "encounter": "city",
+        "seed": 20261106,
+        "digest": "8a1f61f960e853b9a5a21df882f95ae24cfbe7151db2f56ae5a7df710605d759"
+      },
+      {
+        "encounter": "city",
+        "seed": 20261107,
+        "digest": "3513e707c164442a0e393eccfb36fa3ac093e20f8c732d8d1a186d5c6ee44f9a"
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261103,
+        "digest": "f2f025829c9057bda3d4b4bb5adbe03c7708c249e32de95710096fefbfe5e5dc"
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261104,
+        "digest": "286381727725818ad85966926328fc73ae3e81b596ae8edc4c3c3e78291059b5"
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261105,
+        "digest": "12f017fa1c0976bd603d17351b0a2d51eb4059ffe9844cc52401670094bebdca"
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261106,
+        "digest": "e0e84ba95b5c32c5965116575d03f0bc04544b3d5902420dd1d3a7ec2212312b"
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261107,
+        "digest": "fa8da3c1bc2fff91bf7c47ced35c51f7d309863e0ade0790448b4b5521d7d4dd"
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261103,
+        "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f"
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261104,
+        "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6"
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261105,
+        "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082"
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261106,
+        "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334"
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261107,
+        "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3"
+      }
+    ],
+    "guard": [
+      {
+        "encounter": "city",
+        "seed": 20261103,
+        "digest": "ce4ece59bafc8bebd61134802e0fad42a91756bc2359143ff3500d4f2f1ba3d3"
+      },
+      {
+        "encounter": "city",
+        "seed": 20261104,
+        "digest": "d8892ede5486333495ce9b8a7c5a8c7e7985adadee01272a94af70f4904bcac4"
+      },
+      {
+        "encounter": "city",
+        "seed": 20261105,
+        "digest": "ee21ab841f477d1effc911d13f14833194eba276c7cfdb4c89e7b96897795829"
+      },
+      {
+        "encounter": "city",
+        "seed": 20261106,
+        "digest": "b0a536df21b22dc3aed8903fdd44ed2dbcc919a5ead7deb20c5802741da13cfe"
+      },
+      {
+        "encounter": "city",
+        "seed": 20261107,
+        "digest": "e20efceecba3a1b33a329f2466e32a9f442e39b75ac679963c9498922efc9fe1"
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261103,
+        "digest": "1efb05436029012bc6de1fb538e9ccf60a6713b0b8b6792bd658aa08e6cb88c1"
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261104,
+        "digest": "b69d9deefdf67c5a4af3771ff85e35c73b16c8d848d559a77d099eb1dca00c42"
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261105,
+        "digest": "cb2515acd326c937550d7022487cfbd433f42c261d61a47c7e1d383ca522082d"
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261106,
+        "digest": "3976a3c2f3c61b5b8eced3af67440ab6f7c6009229782f0a8aba645c8a21afd1"
+      },
+      {
+        "encounter": "pit",
+        "seed": 20261107,
+        "digest": "99df41cff4ce66254ee09acec482624a23572c1d5f7157f87b4fd9b18cd9671d"
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261103,
+        "digest": "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f"
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261104,
+        "digest": "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6"
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261105,
+        "digest": "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082"
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261106,
+        "digest": "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334"
+      },
+      {
+        "encounter": "quest1",
+        "seed": 20261107,
+        "digest": "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3"
+      }
+    ]
+  }
+}

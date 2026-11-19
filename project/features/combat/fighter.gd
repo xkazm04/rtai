@@ -7,11 +7,15 @@ enum Kind { RIVET, GUARD, BOSS }
 
 var id: int = 0
 var kind: Kind = Kind.GUARD
+## Production squad row. An untyped guard uses the contractor row.
+var archetype: StringName = &""
 var pos: Vector2 = Vector2.ZERO
 var facing: Vector2 = Vector2.RIGHT
 var hp: float = 1.0
 var max_hp: float = 1.0
 var radius_m: float = 0.45
+## Minimum centre spacing for a city station partner; zero uses ordinary guard movement.
+var station_spacing_m: float = 0.0
 var pursuit: GuardPursuit
 var weapon: StringName = &""
 var cooldown: int = 0
@@ -25,6 +29,9 @@ var hurt_tick: int = -1000000
 var hurt_dir: Vector2 = Vector2.ZERO
 ## Lane gunplay (GuardTell): ticks of the readable tell left before a burst; 0 = none.
 var tell_left: int = 0
+## Production melee windup. Rigs start their strike clip on the first observed tick.
+var swing_left: int = 0
+var swing_tick: int = -1
 ## Lane ghost-powers: the share of every hit this fighter takes (Tonnage's plates: 0.3; 1 = none).
 var damage_k: float = 1.0
 ## Lane n7-king (boss framework): an outside brain (BossFight, through BossHook) steps this

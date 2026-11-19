@@ -19,6 +19,28 @@ func _init(map: GuardRouteMap) -> void:
 	_map = map
 
 
+func blocked_goal() -> Vector2:
+	return _goal if _blocked else Vector2.INF
+
+
+func blocked() -> bool:
+	return _blocked
+
+
+func ticks_advanced() -> int:
+	return _ticks
+
+
+## Use the stage's circle clearance at the destination and the route's swept clearance on the
+## way there. A push can end in clear space on the far side of a thin wall.
+func push_body(g: Fighter, push: Vector2) -> void:
+	var to: Vector2 = g.pos + push
+	for box: Rect2 in _map.boxes_near(to, g.radius_m):
+		to = ArenaWalls.eject_circle(to, box, g.radius_m)
+	if _map.region().has_point(to) and _map.clear_line(g.pos, to):
+		g.pos = to
+
+
 ## True while rounding cover (or holding at an unreachable target). A locked burst calls
 ## this only once it finishes, so turning a corner cannot redirect rounds already committed.
 func advance(g: Fighter, target: Vector2, speed: float) -> bool:

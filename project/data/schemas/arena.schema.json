@@ -1,4 +1,25 @@
 {
+  "$defs": {
+    "max_shooters": {
+      "maximum": 8,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "squad_mix": {
+      "description": "Squad brain only. Wave and member indices start at zero and their sum cycles through these archetype ids. An absent or empty list fields contractors.",
+      "items": {
+        "enum": [
+          "contractor",
+          "patrol_cop",
+          "riot_cop",
+          "robot_gunner",
+          "robot_thug",
+          "swat"
+        ]
+      },
+      "type": "array"
+    }
+  },
   "$id": "gtai.arena/1",
   "additionalProperties": false,
   "properties": {
@@ -41,6 +62,40 @@
           },
           "minItems": 2,
           "type": "array"
+        },
+        "shift_props": {
+          "additionalProperties": {
+            "items": {
+              "type": "integer"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "description": "City-only offsets [dx, dy] in whole metres, keyed by station id and zero-based prop index.",
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9_]*/(0|[1-9][0-9]*)$"
+          },
+          "type": "object"
+        },
+        "squad": {
+          "additionalProperties": false,
+          "description": "Overrides for the squad brain on the city block. Omitted fields inherit the pit settings.",
+          "properties": {
+            "contractor_speed_mps": {
+              "description": "Movement speed in metres per second for contractors in this city's squad. Defaults to the contractor archetype's speed_mps.",
+              "maximum": 10,
+              "minimum": 0.5,
+              "type": "number"
+            },
+            "max_shooters": {
+              "$ref": "#/$defs/max_shooters"
+            },
+            "squad_mix": {
+              "$ref": "#/$defs/squad_mix"
+            }
+          },
+          "type": "object"
         }
       },
       "required": [
@@ -74,10 +129,30 @@
           "minimum": 0,
           "type": "integer"
         },
+        "max_shooters": {
+          "$ref": "#/$defs/max_shooters"
+        },
         "max_wave": {
           "maximum": 24,
           "minimum": 1,
           "type": "integer"
+        },
+        "squad_mix": {
+          "$ref": "#/$defs/squad_mix"
+        },
+        "squad_mix_full": {
+          "description": "Archetype rotation used by the mixed brain, indexed by wave plus member.",
+          "items": {
+            "enum": [
+              "contractor",
+              "patrol_cop",
+              "riot_cop",
+              "robot_gunner",
+              "robot_thug",
+              "swat"
+            ]
+          },
+          "type": "array"
         },
         "trigger_inset_m": {
           "maximum": 20,

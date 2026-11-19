@@ -23,7 +23,7 @@ static func from_stations(stations: ArenaStations, base: Vector2) -> ArenaWalls:
 func push_out(p: Vector2, r: float) -> Vector2:
 	var out: Vector2 = p
 	for b: Rect2 in boxes:
-		out = _eject(out, b, r)
+		out = eject_circle(out, b, r)
 	return out
 
 
@@ -35,7 +35,7 @@ func blocks(a: Vector2, b: Vector2) -> bool:
 	return false
 
 
-static func _eject(p: Vector2, b: Rect2, r: float) -> Vector2:
+static func eject_circle(p: Vector2, b: Rect2, r: float) -> Vector2:
 	var near: Vector2 = p.clamp(b.position, b.end)
 	var d: Vector2 = p - near
 	if d != Vector2.ZERO:

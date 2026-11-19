@@ -147,12 +147,12 @@ func test_separation_ignores_self_dead_and_downed_but_includes_staggered() -> vo
 
 func test_repulsion_is_zero_at_overlap_and_outside_keep_distance() -> void:
 	for distance: float in [0.0, 0.00009999, 2.0, 2.001]:
-		assert_eq(EnemyMotor._repel(Vector2.ZERO, Vector2(distance, 0.0), 2.0), Vector2.ZERO)
+		assert_eq(EnemyMotor.repel(Vector2.ZERO, Vector2(distance, 0.0), 2.0), Vector2.ZERO)
 	_vector(
-		EnemyMotor._repel(Vector2.ZERO, Vector2(0.00010001, 0.0), 2.0), Vector2(-1.99989999, 0.0)
+		EnemyMotor.repel(Vector2.ZERO, Vector2(0.00010001, 0.0), 2.0), Vector2(-1.99989999, 0.0)
 	)
-	_vector(EnemyMotor._repel(Vector2(3.0, 4.0), Vector2.ZERO, 6.0), Vector2(0.6, 0.8))
-	_vector(EnemyMotor._repel(Vector2.ZERO, Vector2(1.999, 0.0), 2.0), Vector2(-0.001, 0.0))
+	_vector(EnemyMotor.repel(Vector2(3.0, 4.0), Vector2.ZERO, 6.0), Vector2(0.6, 0.8))
+	_vector(EnemyMotor.repel(Vector2.ZERO, Vector2(1.999, 0.0), 2.0), Vector2(-0.001, 0.0))
 
 
 func test_dash_commits_exact_velocity_without_acceleration_speed_limit_or_turning() -> void:

@@ -22,6 +22,7 @@ var blood: CombatBlood = null
 var consumed: Dictionary[int, bool] = {}
 var gone: Dictionary[int, bool] = {}
 var _by_id: Dictionary[int, CutRig] = {}
+var _squad_looks: ArenaSquadLooks = ArenaSquadLooks.new()
 var _feed: RigFeed = RigFeed.new(1)
 var _last: Dictionary[int, Vector2] = {}
 var _hurt_seen: Dictionary[int, int] = {}
@@ -32,7 +33,7 @@ var _ticks: int = -1
 ## True for the fighters this view draws (ArenaRigs leaves them out of the cop feed).
 static func takes(h: Fighter) -> bool:
 	return (
-		h.kind == Fighter.Kind.BOSS
+		(h.kind == Fighter.Kind.BOSS or (h.machine and h.archetype != &""))
 		and not h.brain_owned
 		and not OS.get_cmdline_user_args().has("--no-robot-rig")
 	)
@@ -75,7 +76,7 @@ func _rig(h: Fighter) -> CutRig:
 	return _by_id[h.id]
 
 
-## Feed row 0: the robot's place, velocity and facing; its claws are its weapon (no gun drawn).
+## Feed row 0: the robot's place, velocity and facing; the thug winds up a claw and the gunner aims.
 func _row(h: Fighter) -> void:
 	var at: Vector2 = h.pos * SimConst.PX_PER_M
 	var vel: Vector2 = (at - _last.get(h.id, at)) * float(SimClock.TICK_RATE)
@@ -86,6 +87,9 @@ func _row(h: Fighter) -> void:
 	_feed.face[0] = h.facing.angle()
 	_feed.aim[0] = at + h.facing * 4.0 * SimConst.PX_PER_M
 	_feed.flags[0] = DOWN_FLAGS if not h.alive() else 0
+	if h.machine and h.alive() and h.weapon != &"":
+		_feed.flags[0] = RigFeed.Flag.GUN_OUT | RigFeed.Flag.AIMING
+	_squad_looks.swing(h, _feed, 0)
 
 
 ## A new hurt tick shoves the frame away from Rivet; the first dead frame plays the power-down.

@@ -24,15 +24,20 @@ var areas: Array[Area] = []
 var pit: Dictionary = {}
 ## Where the hub sits on the generated city for the proving block (--arena=city).
 var city_base: Vector2 = Vector2.ZERO
+var city_prop_shifts: Dictionary[String, Vector2] = {}
+var city_squad: Dictionary = {}
 ## --rigs: the SHOOT recoil strength per weapon id (a weapon not listed kicks 1.0).
 var rig_kick: Dictionary[StringName, float] = {}
 var errors: Array[String] = []
 
 
 static func shipped(p_base: Vector2 = Vector2.ZERO) -> ArenaPlan:
+	return from_table(DataTable.open(TABLE, SCHEMA), p_base)
+
+
+static func from_table(t: DataTable, p_base: Vector2 = Vector2.ZERO) -> ArenaPlan:
 	var p: ArenaPlan = ArenaPlan.new()
 	p.base = p_base
-	var t: DataTable = DataTable.open(TABLE, SCHEMA)
 	p.rivet_start = p_base + t.vec(t.raw, "rivet_start")
 	p.zoom_ppm.clear()
 	for z: Variant in t.array(t.raw, "zoom_ppm"):
@@ -48,7 +53,14 @@ static func shipped(p_base: Vector2 = Vector2.ZERO) -> ArenaPlan:
 			a.rect = Rect2(p_base + at, t.vec({"v": [r[2], r[3]]}, "v"))
 		p.areas.append(a)
 	p.pit = t.object(t.raw, "pit")
-	p.city_base = t.vec(t.object(t.raw, "city"), "base")
+	var city: Dictionary = t.object(t.raw, "city")
+	p.city_base = t.vec(city, "base")
+	if city.has("squad"):
+		p.city_squad = t.object(city, "squad")
+	if city.has("shift_props"):
+		var shifts: Dictionary = t.object(city, "shift_props")
+		for key: String in shifts:
+			p.city_prop_shifts[key] = t.vec(shifts, key)
 	var kicks: Dictionary = t.object(t.raw, "rig_kick")
 	for w: Variant in kicks:
 		p.rig_kick[StringName(str(w))] = t.num(kicks, str(w))

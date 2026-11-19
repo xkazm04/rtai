@@ -3,7 +3,7 @@ extends RefCounted
 ## The pit's waves: once Rivet is inside the pit (trigger_inset_m in from its edge) and no pit
 ## guard is standing, the next wave comes after gap_s: first_wave guards, grow more each wave, up
 ## to max_wave, each at the pit's "enemy" spawn points in turn (CombatArena.spawn_guard spreads
-## them). They are the real GuardBrain contractors with their real rifles. Rivet's death clears
+## them). The optional squad brain fields the pit's rotating archetype mix. Rivet's death clears
 ## the pit and starts it again from wave 1. Numbers: arena.json "pit". A placeholder: it drives
 ## only the arena lane's own enemy spawns, and stands down when another lane's station declares
 ## enemies in the pit (that lane's wave spawner owns the pit then).
@@ -12,6 +12,8 @@ extends RefCounted
 const HORDE: Vector4i = Vector4i(4, 2, 10, 30)
 const HORDE_RIVET_HP: float = 50.0
 
+var mixed: bool = false
+var squad_mix: Array[StringName] = []
 var points: Array[Vector2] = []
 var zone: Rect2 = Rect2()
 var first_wave: int = 2
@@ -107,16 +109,29 @@ func reset(arena: CombatArena) -> void:
 	for f: Fighter in standing:
 		arena.hostiles.erase(f)
 	standing.clear()
+	if arena.squad_ai != null:
+		arena.squad_ai.clear_wave()
 	wave = 0
 	_due_tick = -1
 
 
 func _spawn_wave(arena: CombatArena) -> void:
 	wave += 1
+	if arena.squad_ai != null:
+		arena.squad_ai.clear_wave()
 	var n: int = mini(first_wave + grow * (wave - 1), max_wave)
 	for i: int in n:
-		var g: Fighter = arena.spawn_guard(points[(wave + i) % points.size()])
-		if riot_hp > 0.0 and i == 0 and wave >= 2:
+		var armored: bool = riot_hp > 0.0 and i == 0 and wave >= 2
+		var at: Vector2 = points[(wave + i) % points.size()]
+		var g: Fighter
+		if arena.squad_ai == null:
+			g = arena.spawn_guard(at)
+		else:
+			var id: StringName = &""
+			if not squad_mix.is_empty():
+				id = squad_mix[(wave - 1 + i) % squad_mix.size()]
+			g = arena.squad_ai.spawn_member(arena, at, &"riot_cop" if armored and mixed else id)
+		if armored:
 			g.max_hp *= riot_hp
 			g.hp = g.max_hp
 			riot[g.id] = true

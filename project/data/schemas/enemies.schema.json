@@ -44,6 +44,7 @@
             "type": "object"
           },
           "aggression": {
+            "description": "Production waiters close from attack_m toward preferred_m as aggression rises. Aggressive guards also leave blind cover sooner.",
             "maximum": 1,
             "minimum": 0,
             "type": "number"
@@ -59,6 +60,12 @@
               "human",
               "robot"
             ]
+          },
+          "cover_bias": {
+            "description": "Fraction of deterministic planning slots spent seeking cover while waiting for a production attack token.",
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
           },
           "doc": {
             "minLength": 1,
@@ -87,10 +94,33 @@
             "minimum": 0,
             "type": "number"
           },
+          "peek_s": {
+            "description": "Seconds of sight a token holder may spend exposed after leaving cover before returning to its claimed spot.",
+            "maximum": 5,
+            "minimum": 0,
+            "type": "number"
+          },
           "preferred_m": {
             "maximum": 60,
             "minimum": 0.5,
             "type": "number"
+          },
+          "production_damage": {
+            "description": "Rivet HP lost to one connected production melee swing. Ranged damage comes from combat.json.",
+            "maximum": 100,
+            "minimum": 0,
+            "type": "number"
+          },
+          "production_only": {
+            "type": "boolean"
+          },
+          "production_weapon": {
+            "default": "assault-rifle",
+            "description": "Combat weapon id for the production ranged trigger. Melee uses the enemy weapon's reach and swing cooldown.",
+            "enum": [
+              "assault-rifle",
+              "gloria"
+            ]
           },
           "reaction_s": {
             "maximum": 3,
@@ -141,13 +171,16 @@
           "aggression",
           "attack_m",
           "body",
+          "cover_bias",
           "doc",
           "flanks",
           "hit_fx",
           "hp",
           "id",
           "morale",
+          "peek_s",
           "preferred_m",
+          "production_damage",
           "reaction_s",
           "shield_front_mult",
           "speed_mps",

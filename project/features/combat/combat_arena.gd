@@ -21,6 +21,7 @@ const SPAWN_SPREAD_M: float = 2.5
 
 var tuning: CombatTuning
 var guard_map: GuardRouteMap
+var squad_ai: ArenaSquad = null
 var rivet: Fighter
 var hostiles: Array[Fighter] = []
 var shots: Array[Shot] = []
@@ -45,8 +46,7 @@ var tick: int = 0
 var gun: GunHand = null
 ## Lane gunplay: readable contractor bursts (tell, lock, slowed rounds); null keeps GuardBrain.
 var guard_tell: GuardTell = null
-## Lane gunplay: the table's area behaviours (splash, chain, stun, burn, fire patches); made with
-## the first GunHand shot, so quest 1 (no gun) never has one and its goldens do not move.
+## Area effects start with the first GunHand shot, so quest 1 (no gun) keeps its goldens.
 var areas: FightAreas = null
 ## The landing hit's direction and point, set before damage() (kill_landed reads them).
 var hit_dir: Vector2 = Vector2.ZERO
@@ -66,7 +66,7 @@ func _init(p_tuning: CombatTuning, events: EventBus, rng: RandomNumberGenerator)
 	rivet.radius_m = tuning.rivet["radius_m"]
 
 
-## A contractor near `at` (spread up to SPAWN_SPREAD_M, so a wave pours in, not a queue).
+## Station spawns keep the guard tell or GuardBrain. ArenaSquad.spawn_member equips wave members.
 func spawn_guard(at: Vector2) -> Fighter:
 	var spread: Vector2 = Vector2(_rng.randf_range(-1.0, 1.0), _rng.randf_range(-1.0, 1.0))
 	var pos: Vector2 = at + spread * SPAWN_SPREAD_M
@@ -156,14 +156,15 @@ func step(p_tick: int) -> void:
 	tick = p_tick
 	kills_now = 0
 	tazer_hit_now = false
+	var ordered: Array[Fighter] = squad_ai.assign(self) if squad_ai and rivet.alive() else hostiles
 	rivet.cooldown = maxi(rivet.cooldown - 1, 0)
-	for h: Fighter in hostiles:
+	for h: Fighter in ordered:
 		if h.alive() and rivet.alive():
 			_step_hostile(h)
 	if tazer != null and tazer.charge_began():
 		_events.attack_telegraphed.emit(boss.weapon)
 	_step_shots()
-	_step_balls()
+	ArenaProjectiles.step_balls(self, _events)
 	_repair()
 	if gun != null:
 		gun.settle()
@@ -215,71 +216,22 @@ func _step_hostile(h: Fighter) -> void:
 		if ball != null:
 			balls.append(ball)
 		return
-	var shot: Shot = (
-		guard_tell.step(h, rivet.pos, tuning, _rng)
-		if guard_tell != null
-		else GuardBrain.step(h, rivet.pos, tuning, _rng)
-	)
+	var shot: Shot
+	if squad_ai != null and squad_ai.owns(h):
+		shot = squad_ai.step(h, self, _rng)
+	else:
+		if guard_tell != null:
+			shot = guard_tell.step(h, rivet.pos, tuning, _rng)
+		else:
+			shot = GuardBrain.step(h, rivet.pos, tuning, _rng)
+		if h.station_spacing_m > 0.0:
+			GuardBrain.space_partner(h, hostiles)
 	if shot != null:
 		shots.append(shot)
 
 
 func _step_shots() -> void:
-	for s: Shot in shots.duplicate():
-		var lands: bool = s.spec != null and areas != null
-		if lands and s.spec.homing_rad_per_tick > 0.0:
-			FightReach.home(self, s)
-		var from: Vector2 = s.advance()
-		# A thrown bottle flies over bodies and lands at the aimed point.
-		var over: bool = lands and s.spec.kind == WeaponSpec.Kind.THROWN
-		var victim: Fighter = null if over else _struck(s, from)
-		var ends: bool = victim != null or s.spent() or _blocked(s, from)
-		if victim != null:
-			hit_at = Geometry2D.get_closest_point_to_segment(victim.pos, from, s.pos)
-		struck_charged = s.charged
-		if lands and ends:
-			areas.land(self, s, victim, hit_at if victim != null else s.pos)
-		elif victim != null:
-			hit_dir = s.vel.normalized()
-			damage(victim, s.damage, s.shooter_id, s.weapon)
-			struck.emit(victim, hit_dir, not victim.alive(), s.weapon)
-		if ends:
-			shots.erase(s)
-
-
-func _struck(s: Shot, from: Vector2) -> Fighter:
-	if not s.from_rivet:
-		return rivet if rivet.alive() and s.crossed(from, rivet.pos, rivet.radius_m) else null
-	for h: Fighter in hostiles:
-		if h.alive() and h.exposed and s.crossed(from, h.pos, h.radius_m):
-			return h
-	return null
-
-
-## A nail at the boss while he is in cover stops in the crates in front of him.
-func _blocked(s: Shot, from: Vector2) -> bool:
-	return (
-		s.from_rivet
-		and boss != null
-		and boss.alive()
-		and not boss.exposed
-		and (s.crossed(from, boss.pos, boss.radius_m + 0.6))
-	)
-
-
-func _step_balls() -> void:
-	for b: ArcBall in balls.duplicate():
-		b.step(rivet.pos, rivet.radius_m, metal)
-		if b.burst:
-			balls.erase(b)
-			if b.hit_rivet:
-				tazer_hits += 1
-				tazer_hit_now = true
-				_events.player_hit.emit(&"robo-tazer")
-				damage(rivet, tuning.tazer["damage"], boss.id if boss != null else 0, &"robo-tazer")
-			burst_arcs.append(b.arcs)
-	if burst_arcs.size() > 8:
-		burst_arcs = burst_arcs.slice(burst_arcs.size() - 8)
+	ArenaProjectiles.step_shots(self)
 
 
 ## Dead guards drop their rifles; the quartermaster's Robo-tazer shorts out and is never dropped.
@@ -288,7 +240,7 @@ func _drop(victim: Fighter) -> void:
 		if tazer != null:  # an act boss (features/bosses) has no tazer and drops nothing
 			tazer.short_out()
 		balls.clear()
-	else:
+	elif squad_ai == null or not squad_ai.owns(victim) or victim.weapon == &"assault-rifle":
 		rifle_drops.append(victim.pos)
 
 

@@ -2,6 +2,17 @@
   "$id": "gtai.arena-station/1",
   "additionalProperties": false,
   "properties": {
+    "city": {
+      "additionalProperties": false,
+      "properties": {
+        "station_spacing_m": {
+          "description": "Centre spacing in metres between a city sparring partner and another living hostile.",
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"

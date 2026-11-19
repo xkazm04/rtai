@@ -139,8 +139,7 @@ static func silhouette(feet: Vector2, head: Vector2) -> PackedVector2Array:
 	return fig
 
 
-## Every (body, prop) pair where the body stands behind the prop and its screen box meets the
-## prop's drawn area, in this node's local px.
+## Each body behind a prop whose screen box meets the prop's drawn area, in local pixels.
 func hits() -> Array[Hit]:
 	var out: Array[Hit] = []
 	var arena: ArenaStage = _floor.stage as ArenaStage
@@ -171,18 +170,19 @@ func _hits_of(at: Vector2, p: ArenaStation.Prop, rigs: Array[CutRig], out: Array
 		var feet: Vector2 = _ends[i * 2]
 		if not PropLying.patch(self, rigs[i], feet, _ends[i * 2 + 1], area).has_area():
 			continue
-		var h: Hit = Hit.new()
-		h.area = area
-		cut = ArenaPropCards.cut_polys(p.kind, r, area) if cut.is_empty() else cut
-		h.cut = cut
-		h.prop = p
-		h.feet = feet
-		h.head = feet if rigs[i].dead and PropLying.ON else _ends[i * 2 + 1]  # a corpse: no ink
-		if feet.y < r.position.y:  # north of the prop's north edge: behind it
-			out.append(h)
-		else:
+		if feet.y >= r.position.y:  # in front of the prop
 			_front.append(rigs[i])
 			_front_of.append(p)
+			continue
+		var h: Hit = Hit.new()
+		h.area = area
+		h.prop = p
+		if not (rigs[i].dead and PropLying.ON):  # a corpse needs the prop redraw alone
+			cut = ArenaPropCards.cut_polys(p.kind, r, area) if cut.is_empty() else cut
+			h.cut = cut
+			h.feet = feet
+			h.head = _ends[i * 2 + 1]
+		out.append(h)
 
 
 ## The prop's drawn area (local px): city's card (ArenaPropCards.stand_rect), else the box lifted.

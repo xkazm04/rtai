@@ -1,0 +1,614 @@
+{
+  "source_commit": "ab12bb094",
+  "results": {
+    "features/combat/ai/enemy_motor.gd": [
+      {
+        "id": 4,
+        "line": 19,
+        "op": "literal",
+        "before": "1.6",
+        "after": "2.6",
+        "verdict": "killed"
+      },
+      {
+        "id": 5,
+        "line": 19,
+        "op": "cmp_flip",
+        "before": "==",
+        "after": "!=",
+        "verdict": "killed"
+      },
+      {
+        "id": 16,
+        "line": 28,
+        "op": "boundary",
+        "before": ">",
+        "after": ">=",
+        "verdict": "survived"
+      },
+      {
+        "id": 19,
+        "line": 35,
+        "op": "arith",
+        "before": "+=",
+        "after": "-=",
+        "verdict": "killed"
+      },
+      {
+        "id": 23,
+        "line": 41,
+        "op": "literal",
+        "before": "0.001",
+        "after": "1.001",
+        "verdict": "killed"
+      },
+      {
+        "id": 26,
+        "line": 54,
+        "op": "arith",
+        "before": "-",
+        "after": "+",
+        "verdict": "survived"
+      },
+      {
+        "id": 32,
+        "line": 59,
+        "op": "literal",
+        "before": "1.5",
+        "after": "2.5",
+        "verdict": "killed"
+      },
+      {
+        "id": 40,
+        "line": 80,
+        "op": "arith",
+        "before": "+",
+        "after": "-",
+        "verdict": "survived"
+      },
+      {
+        "id": 45,
+        "line": 84,
+        "op": "boolean",
+        "before": "or",
+        "after": "and",
+        "verdict": "killed"
+      },
+      {
+        "id": 46,
+        "line": 84,
+        "op": "cmp_flip",
+        "before": "==",
+        "after": "!=",
+        "verdict": "killed"
+      },
+      {
+        "id": 47,
+        "line": 86,
+        "op": "cmp_flip",
+        "before": "==",
+        "after": "!=",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_speed_limit_applies_after_separation_with_panic_multiplier",
+          "test_separation_adds_neighbours_and_rivet_using_both_body_radii",
+          "test_separation_ignores_self_dead_and_downed_but_includes_staggered"
+        ]
+      },
+      {
+        "id": 50,
+        "line": 88,
+        "op": "arith",
+        "before": "+",
+        "after": "-",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_speed_limit_applies_after_separation_with_panic_multiplier",
+          "test_separation_adds_neighbours_and_rivet_using_both_body_radii",
+          "test_separation_ignores_self_dead_and_downed_but_includes_staggered"
+        ]
+      },
+      {
+        "id": 51,
+        "line": 88,
+        "op": "arith",
+        "before": "+",
+        "after": "-",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_speed_limit_applies_after_separation_with_panic_multiplier",
+          "test_separation_adds_neighbours_and_rivet_using_both_body_radii",
+          "test_separation_ignores_self_dead_and_downed_but_includes_staggered"
+        ]
+      },
+      {
+        "id": 52,
+        "line": 89,
+        "op": "boolean",
+        "before": "and",
+        "after": "or",
+        "verdict": "survived"
+      },
+      {
+        "id": 54,
+        "line": 90,
+        "op": "arith",
+        "before": "+=",
+        "after": "-=",
+        "verdict": "survived"
+      },
+      {
+        "id": 67,
+        "line": 95,
+        "op": "arith",
+        "before": "/",
+        "after": "*",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_speed_limit_applies_after_separation_with_panic_multiplier",
+          "test_separation_adds_neighbours_and_rivet_using_both_body_radii",
+          "test_separation_ignores_self_dead_and_downed_but_includes_staggered"
+        ]
+      },
+      {
+        "id": 71,
+        "line": 96,
+        "op": "arith",
+        "before": "+",
+        "after": "-",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_separation_adds_neighbours_and_rivet_using_both_body_radii"
+        ]
+      },
+      {
+        "id": 75,
+        "line": 98,
+        "op": "arith",
+        "before": "*",
+        "after": "/",
+        "verdict": "survived"
+      },
+      {
+        "id": 84,
+        "line": 107,
+        "op": "boundary",
+        "before": "<",
+        "after": "<=",
+        "verdict": "survived"
+      },
+      {
+        "id": 86,
+        "line": 109,
+        "op": "arith",
+        "before": "/",
+        "after": "*",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_separation_adds_neighbours_and_rivet_using_both_body_radii",
+          "test_repulsion_is_zero_at_overlap_and_outside_keep_distance"
+        ]
+      }
+    ],
+    "features/combat/squad/arena_squad.gd": [
+      {
+        "id": 2,
+        "line": 14,
+        "op": "literal",
+        "before": "0.0",
+        "after": "1.0",
+        "verdict": "survived"
+      },
+      {
+        "id": 12,
+        "line": 60,
+        "op": "boolean",
+        "before": "not ",
+        "after": "",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_exact_overlap_separates_within_a_second",
+          "test_guard_claims_and_reaches_cover_behind_box",
+          "test_firing_bearings_spread_and_bursts_obey_token_limit",
+          "test_panic_ends_and_the_next_wave_starts_with_full_morale",
+          "test_a_waiter_pushes_out_of_blind_cover",
+          "test_area_hold_and_external_brain_do_not_take_attack_slots",
+          "test_swat_reaches_flank_with_a_holder_and_cover_available",
+          "test_aggression_moves_the_waiting_ring_inward",
+          "test_melee_windup_can_land_or_be_dodged",
+          "test_sparse_ids_that_share_a_slot_spread_their_cover_searches",
+          "test_blocked_routes_queue_by_id_and_drop_dead_requests",
+          "test_queued_cover_request_keeps_the_previous_motion",
+          "test_each_hostile_checks_sight_at_most_twice_even_when_firing_or_swinging",
+          "test_only_wave_members_plan_and_station_guards_keep_their_approach",
+          "test_a_cover_holder_spends_its_peek_only_in_firing_range",
+          "test_cover_bias_draw_is_stable_within_each_planning_slot",
+          "test_melee_token_respects_cooldown_then_hits_at_reach_and_arc_boundaries",
+          "test_interrupted_last_round_survives_multiple_ticks_without_a_token",
+          "test_cooldown_windup_and_inter_round_gap_are_distinct_states",
+          "test_one_round_weapon_winds_up_before_firing",
+          "test_morale_breaks_only_above_the_fraction_of_enrolled_members_lost"
+        ]
+      },
+      {
+        "id": 14,
+        "line": 60,
+        "op": "cmp_flip",
+        "before": "==",
+        "after": "!=",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_exact_overlap_separates_within_a_second",
+          "test_guard_claims_and_reaches_cover_behind_box",
+          "test_firing_bearings_spread_and_bursts_obey_token_limit",
+          "test_panic_ends_and_the_next_wave_starts_with_full_morale",
+          "test_a_waiter_pushes_out_of_blind_cover",
+          "test_area_hold_and_external_brain_do_not_take_attack_slots",
+          "test_swat_reaches_flank_with_a_holder_and_cover_available",
+          "test_aggression_moves_the_waiting_ring_inward",
+          "test_melee_windup_can_land_or_be_dodged",
+          "test_sparse_ids_that_share_a_slot_spread_their_cover_searches",
+          "test_blocked_routes_queue_by_id_and_drop_dead_requests",
+          "test_queued_cover_request_keeps_the_previous_motion",
+          "test_each_hostile_checks_sight_at_most_twice_even_when_firing_or_swinging",
+          "test_only_wave_members_plan_and_station_guards_keep_their_approach",
+          "test_a_cover_holder_spends_its_peek_only_in_firing_range",
+          "test_cover_bias_draw_is_stable_within_each_planning_slot",
+          "test_melee_token_respects_cooldown_then_hits_at_reach_and_arc_boundaries",
+          "test_interrupted_last_round_survives_multiple_ticks_without_a_token",
+          "test_cooldown_windup_and_inter_round_gap_are_distinct_states",
+          "test_one_round_weapon_winds_up_before_firing",
+          "test_morale_breaks_only_above_the_fraction_of_enrolled_members_lost"
+        ]
+      },
+      {
+        "id": 15,
+        "line": 61,
+        "op": "delete",
+        "before": "ordered.append(h)",
+        "after": "pass",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_exact_overlap_separates_within_a_second",
+          "test_guard_claims_and_reaches_cover_behind_box",
+          "test_firing_bearings_spread_and_bursts_obey_token_limit",
+          "test_panic_ends_and_the_next_wave_starts_with_full_morale",
+          "test_a_waiter_pushes_out_of_blind_cover",
+          "test_area_hold_and_external_brain_do_not_take_attack_slots",
+          "test_swat_reaches_flank_with_a_holder_and_cover_available",
+          "test_aggression_moves_the_waiting_ring_inward",
+          "test_melee_windup_can_land_or_be_dodged",
+          "test_sparse_ids_that_share_a_slot_spread_their_cover_searches",
+          "test_blocked_routes_queue_by_id_and_drop_dead_requests",
+          "test_queued_cover_request_keeps_the_previous_motion",
+          "test_each_hostile_checks_sight_at_most_twice_even_when_firing_or_swinging",
+          "test_only_wave_members_plan_and_station_guards_keep_their_approach",
+          "test_a_cover_holder_spends_its_peek_only_in_firing_range",
+          "test_cover_bias_draw_is_stable_within_each_planning_slot",
+          "test_melee_token_respects_cooldown_then_hits_at_reach_and_arc_boundaries",
+          "test_interrupted_last_round_survives_multiple_ticks_without_a_token",
+          "test_cooldown_windup_and_inter_round_gap_are_distinct_states",
+          "test_one_round_weapon_winds_up_before_firing",
+          "test_morale_breaks_only_above_the_fraction_of_enrolled_members_lost"
+        ]
+      },
+      {
+        "id": 19,
+        "line": 64,
+        "op": "boundary",
+        "before": "<",
+        "after": "<=",
+        "verdict": "survived"
+      },
+      {
+        "id": 24,
+        "line": 72,
+        "op": "boolean",
+        "before": "false",
+        "after": "true",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_area_hold_and_external_brain_do_not_take_attack_slots"
+        ]
+      },
+      {
+        "id": 30,
+        "line": 83,
+        "op": "delete",
+        "before": "_schedule()",
+        "after": "pass",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_guard_claims_and_reaches_cover_behind_box",
+          "test_a_waiter_pushes_out_of_blind_cover",
+          "test_sparse_ids_that_share_a_slot_spread_their_cover_searches",
+          "test_blocked_routes_queue_by_id_and_drop_dead_requests"
+        ]
+      },
+      {
+        "id": 35,
+        "line": 93,
+        "op": "arith",
+        "before": "+",
+        "after": "-",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_guard_claims_and_reaches_cover_behind_box",
+          "test_sparse_ids_that_share_a_slot_spread_their_cover_searches"
+        ]
+      },
+      {
+        "id": 36,
+        "line": 94,
+        "op": "arith",
+        "before": "+",
+        "after": "-",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_a_waiter_pushes_out_of_blind_cover",
+          "test_blocked_routes_queue_by_id_and_drop_dead_requests"
+        ]
+      },
+      {
+        "id": 37,
+        "line": 99,
+        "op": "delete",
+        "before": "mind.retry_route(_map)",
+        "after": "pass",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_blocked_routes_queue_by_id_and_drop_dead_requests"
+        ]
+      },
+      {
+        "id": 41,
+        "line": 106,
+        "op": "arith",
+        "before": "/",
+        "after": "*",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_morale_breaks_only_above_the_fraction_of_enrolled_members_lost"
+        ]
+      },
+      {
+        "id": 43,
+        "line": 106,
+        "op": "literal",
+        "before": "0.0",
+        "after": "1.0",
+        "verdict": "survived"
+      },
+      {
+        "id": 56,
+        "line": 133,
+        "op": "cmp_flip",
+        "before": ">",
+        "after": "<=",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_interrupted_last_round_survives_multiple_ticks_without_a_token"
+        ]
+      },
+      {
+        "id": 58,
+        "line": 133,
+        "op": "literal",
+        "before": "0",
+        "after": "1",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_interrupted_last_round_survives_multiple_ticks_without_a_token"
+        ]
+      },
+      {
+        "id": 60,
+        "line": 137,
+        "op": "cmp_flip",
+        "before": ">",
+        "after": "<=",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_firing_bearings_spread_and_bursts_obey_token_limit",
+          "test_interrupted_last_round_survives_multiple_ticks_without_a_token",
+          "test_cooldown_windup_and_inter_round_gap_are_distinct_states"
+        ]
+      },
+      {
+        "id": 61,
+        "line": 137,
+        "op": "boundary",
+        "before": ">",
+        "after": ">=",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_firing_bearings_spread_and_bursts_obey_token_limit",
+          "test_cooldown_windup_and_inter_round_gap_are_distinct_states"
+        ]
+      },
+      {
+        "id": 67,
+        "line": 144,
+        "op": "cmp_flip",
+        "before": ">",
+        "after": "<=",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_cooldown_windup_and_inter_round_gap_are_distinct_states",
+          "test_one_round_weapon_winds_up_before_firing"
+        ]
+      },
+      {
+        "id": 68,
+        "line": 144,
+        "op": "boundary",
+        "before": ">",
+        "after": ">=",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_cooldown_windup_and_inter_round_gap_are_distinct_states",
+          "test_one_round_weapon_winds_up_before_firing"
+        ]
+      },
+      {
+        "id": 70,
+        "line": 146,
+        "op": "cmp_flip",
+        "before": ">",
+        "after": "<=",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_cooldown_windup_and_inter_round_gap_are_distinct_states",
+          "test_one_round_weapon_winds_up_before_firing"
+        ]
+      },
+      {
+        "id": 72,
+        "line": 146,
+        "op": "literal",
+        "before": "0",
+        "after": "1",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_one_round_weapon_winds_up_before_firing"
+        ]
+      }
+    ],
+    "features/arena/arena_wave_cards.gd": [
+      {
+        "id": 9,
+        "line": 23,
+        "op": "delete",
+        "before": "show()",
+        "after": "pass",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_wave_member_outside_rig_radius_keeps_one_drawn_body",
+          "test_patrol_card_follows_the_first_stride_and_draws_at_body_height"
+        ]
+      },
+      {
+        "id": 14,
+        "line": 28,
+        "op": "arith",
+        "before": "*",
+        "after": "/",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_patrol_card_follows_the_first_stride_and_draws_at_body_height"
+        ]
+      },
+      {
+        "id": 23,
+        "line": 42,
+        "op": "literal",
+        "before": "1",
+        "after": "0",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_wave_member_outside_rig_radius_keeps_one_drawn_body"
+        ]
+      },
+      {
+        "id": 28,
+        "line": 49,
+        "op": "arith",
+        "before": "+",
+        "after": "-",
+        "verdict": "invalid",
+        "failing_tests": [
+          "test_wave_member_outside_rig_radius_keeps_one_drawn_body",
+          "test_patrol_card_follows_the_first_stride_and_draws_at_body_height"
+        ]
+      },
+      {
+        "id": 29,
+        "line": 53,
+        "op": "arith",
+        "before": "/",
+        "after": "*",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_patrol_card_follows_the_first_stride_and_draws_at_body_height"
+        ]
+      },
+      {
+        "id": 36,
+        "line": 57,
+        "op": "arith",
+        "before": "*",
+        "after": "/",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_patrol_card_follows_the_first_stride_and_draws_at_body_height"
+        ]
+      },
+      {
+        "id": 37,
+        "line": 57,
+        "op": "arith",
+        "before": "*",
+        "after": "/",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_patrol_card_follows_the_first_stride_and_draws_at_body_height"
+        ]
+      },
+      {
+        "id": 40,
+        "line": 57,
+        "op": "arith",
+        "before": "/",
+        "after": "*",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_patrol_card_follows_the_first_stride_and_draws_at_body_height"
+        ]
+      },
+      {
+        "id": 42,
+        "line": 69,
+        "op": "literal",
+        "before": "1",
+        "after": "0",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_wave_member_outside_rig_radius_keeps_one_drawn_body"
+        ]
+      },
+      {
+        "id": 45,
+        "line": 82,
+        "op": "boolean",
+        "before": "not ",
+        "after": "",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_wave_member_outside_rig_radius_keeps_one_drawn_body"
+        ]
+      },
+      {
+        "id": 47,
+        "line": 86,
+        "op": "boundary",
+        "before": ">=",
+        "after": ">",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_wave_member_outside_rig_radius_keeps_one_drawn_body"
+        ]
+      },
+      {
+        "id": 57,
+        "line": 92,
+        "op": "delete",
+        "before": "card.pose(_rigs.feed, i)",
+        "after": "pass",
+        "verdict": "killed",
+        "failing_tests": [
+          "test_wave_member_outside_rig_radius_keeps_one_drawn_body"
+        ]
+      }
+    ]
+  }
+}
