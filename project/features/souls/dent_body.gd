@@ -20,6 +20,8 @@ var blasts: int = 0
 ## n11: the drawn walk (dent_walk8.png, tools/art/ghost_pack.py), feet on his point; the rig under
 ## a view without it. Cycle 163 cell px (stance foot, 20.4 a frame); run8 330 (41 a frame).
 var drawn: GhostDrawn = GhostDrawn.new("dent", 1.8, 163.0, 176.5, 330.0)
+var _spectral: DentSpectralDrawn
+var _view: GhostFormView
 var _rig: CutRig = CutRig.new()
 var _lurch: DentLurch = DentLurch.new()
 var _aura: GhostAura = GhostAura.new()
@@ -32,6 +34,10 @@ var _jump: float = 0.0
 ## Builds the rig for Dent's form row (null = the plan's defaults).
 func setup(row: GhostFormDef) -> void:
 	visible = false
+	if drawn.flight != null:
+		_spectral = DentSpectralDrawn.new()
+		add_child(_spectral)
+		_view = drawn.flight.get_parent() as GhostFormView
 	if lurch_on:
 		_rig.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS  # raw art at 32 px/m
 	_aura.reduced_motion = reduced_motion
@@ -47,6 +53,17 @@ func setup(row: GhostFormDef) -> void:
 ## One frame: shown or not, at Rivet's spot `at` (px) facing `facing`, `steps` sim ticks since
 ## the last frame (the gait from Rivet's own travel), `tick` for the glow's breath.
 func step(show: bool, at: Vector2, facing: float, steps: int, tick: int) -> void:
+	if _spectral != null:
+		_spectral.visible = ViewMode.shared().cards and ViewMode.shared().art != ""
+		if _spectral.visible:
+			visible = show
+			_rig.visible = false
+			_aura.visible = false
+			if show:
+				position = at
+				scale = Vector2.ONE * PlayerScale.k()
+				_spectral.show_pose(drawn, facing, _flight_pose(tick))
+			return
 	if show and not visible:
 		_lurch.reset()
 		_place(at, facing)  # before the reset: the rig plants its feet where it stands
@@ -70,6 +87,19 @@ func step(show: bool, at: Vector2, facing: float, steps: int, tick: int) -> void
 	drawn.still = riding
 	_rig.visible = not drawn.step(self, DRAWN_PARTS, SimConst.PX_PER_M, 1.0, facing)
 	_aura.sync(tick, clampf(_rig.vel_in.length() / SimConst.PX_PER_M / 7.0, 0.0, 1.0))
+
+
+func _flight_pose(tick: int) -> DentSpectralDrawn.Pose:
+	var jab: DentJab
+	var seized: bool = false
+	var hurt_age: int = -1
+	if _view != null and _view.pilot != null:
+		jab = _view.pilot.ghosts.jab
+		seized = _view.pilot.dent.car != null
+		var hurt: int = _view.arena.rivet.hurt_tick
+		if hurt >= 0:
+			hurt_age = tick - hurt
+	return DentSpectralDrawn.pose(drawn.flight.hover, jab, seized, hurt_age)
 
 
 ## The root at Rivet's spot, rolled sideways and yawed by the lurch (the rig sits at its origin).
