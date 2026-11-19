@@ -14,6 +14,7 @@ func test_revision_probe_configures_the_requested_view_and_cadence() -> void:
 					"--out=" + dest,
 					"--weapon=ray_gun",
 					"--boss=servo",
+					"--reload-turn=on",
 					"--pitch=" + pitch,
 					"--ppm=" + ppm
 				]
@@ -30,7 +31,13 @@ func test_invalid_flags_do_not_configure_a_film() -> void:
 	var dest: String = TestTmp.dir("turn")
 	var rec: Recorder = autofree(Recorder.new())
 	for bad: String in [
-		"--boss=absent", "--view=p55", "--pitch=p45", "--ppm=48", "--out=", "--weapon="
+		"--reload-turn=bad",
+		"--boss=absent",
+		"--view=p55",
+		"--pitch=p45",
+		"--ppm=48",
+		"--out=",
+		"--weapon="
 	]:
 		var args: ArenaArgs = ArenaArgs.parse(["--out=" + dest, "--weapon=pistol", bad])
 		assert_ne(Turn.configure(args, rec), "", bad)

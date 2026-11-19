@@ -21,11 +21,14 @@ export function layout(sides) {
     }))));
 }
 
-function sheet(sides, file) {
-  const cells = layout(sides);
-  const first = readPng(join(sides[0].dir, 'oct0_rest.png'));
+function sheet(sides, file, reload) {
+  const slots = ['S', 'SE 1', 'E', 'NE', 'N', 'SE OUT', 'SE IN', 'SE READY', 'SW', 'W', 'NW'];
+  const cells = reload ? sides.flatMap((side, row) => slots.map((slot, col) => ({
+    row, col, side, stem: 'reload' + col, caption: slot + ' ' + side.label,
+  }))) : layout(sides);
+  const first = readPng(join(sides[0].dir, cells[0].stem + '.png'));
   const w = first.width, h = first.height, stride = w + 4, rowHeight = h + 22;
-  const width = 16 * stride - 4, height = sides.length * rowHeight;
+  const width = (reload ? slots.length : 16) * stride - 4, height = sides.length * rowHeight;
   const pixels = Buffer.alloc(width * height * 3, 26);
   for (const { row, col, side, stem, caption } of cells) {
     const img = readPng(join(side.dir, stem + '.png'));
@@ -52,19 +55,19 @@ function sideAt(rev, root) {
   // Load this kit alongside any driver already committed in the historical revision.
   const dest = join(side.tree, 'project/dev/film_turn_probe');
   mkdirSync(dest, { recursive: true });
-  for (const file of ['arsenal_turn.gd', 'arsenal_turn_rec.gd']) copyFileSync(join(root, rel, file), join(dest, file));
+  for (const file of ['arsenal_turn.gd', 'arsenal_turn_rec.gd', 'arsenal_reload_turn.gd']) copyFileSync(join(root, rel, file), join(dest, file));
   return { ...side, script: 'res://dev/film_turn_probe/arsenal_turn.gd' };
 }
 
-async function capture(side, weapon, pitch, ppm, scratch, boss) {
+async function capture(side, weapon, pitch, ppm, scratch, boss, reload) {
   const dir = mkdtempSync(join(scratch, side.label + '-'));
   const r = await runGodot(['--rendering-driver', 'd3d12', '--position', '0,1440', '--resolution', '1280x720',
     '--fixed-fps', '60', '-s', side.script, '--', '--weapon=' + weapon, '--pitch=' + pitch,
-    '--ppm=' + ppm, '--out=' + dir, ...(boss ? ['--boss=' + boss] : [])], {
+    '--ppm=' + ppm, '--out=' + dir, ...(reload ? ['--reload-turn=on'] : []), ...(boss ? ['--boss=' + boss] : [])], {
     cwd: side.tree, headless: false, timeoutMs: 300000, name: 'arsenal-turn', stopOn: /SCRIPT ERROR/,
   });
   writeFileSync(join(dir, 'capture.log'), r.out);
-  if (r.status !== 0 || /SCRIPT ERROR/.test(r.out) || !existsSync(join(dir, 'oct7_fire.png'))) {
+  if (r.status !== 0 || /SCRIPT ERROR/.test(r.out) || !existsSync(join(dir, reload ? (ppm === 32 ? 'clip_0159.png' : 'reload10.png') : 'oct7_fire.png'))) {
     throw Error('turn: incomplete capture, see ' + join(dir, 'capture.log'));
   }
   return { ...side, dir };
@@ -73,7 +76,7 @@ async function capture(side, weapon, pitch, ppm, scratch, boss) {
 async function main(argv) {
   const { values: v } = parseArgs({ args: argv, options: {
     weapon: { type: 'string' }, pitch: { type: 'string', default: 'p55' }, out: { type: 'string' },
-    boss: { type: 'string' }, rev: { type: 'string' }, a: { type: 'string' }, b: { type: 'string' }, stills: { type: 'boolean' },
+    boss: { type: 'string' }, rev: { type: 'string' }, a: { type: 'string' }, b: { type: 'string' }, reload: { type: 'boolean' }, stills: { type: 'boolean' },
   } });
   if (!/^[a-z0-9_-]+$/.test(v.weapon ?? '') || !['p55', 'p70', 'top'].includes(v.pitch) || !v.out ||
       (!!v.a !== !!v.b) || (v.rev && v.a)) throw Error('expected --weapon=<id> --out=<dir> [--rev=<sha> | --a=<sha> --b=<sha>]');
@@ -83,10 +86,10 @@ async function main(argv) {
   mkdirSync(scratch, { recursive: true });
   const sides = [];
   for (const rev of v.a ? [v.a, v.b] : [v.rev || '.']) {
-    sides.push(await capture(sideAt(rev, root), v.weapon, v.pitch, 64, scratch, v.boss));
+    sides.push(await capture(sideAt(rev, root), v.weapon, v.pitch, 64, scratch, v.boss, v.reload));
   }
   const last = sides.at(-1);
-  sheet(sides, join(out, name + '_64.png'));
+  sheet(sides, join(out, name + (v.reload ? '_reload_64.png' : '_64.png')), v.reload);
   if (v.boss) {
     for (const i of [1, 7, 3, 5]) {
       copyFileSync(join(last.dir, `oct${i}_fire_arena.png`), join(out, directions[i] + '.png'));
@@ -94,9 +97,9 @@ async function main(argv) {
   }
   if (existsSync(join(last.dir, 'reload.png'))) copyFileSync(join(last.dir, 'reload.png'), join(out, name + '_reload.png'));
   if (!v.stills) {
-    const clip = await capture(last, v.weapon, v.pitch, 32, scratch, v.boss);
+    const clip = await capture(last, v.weapon, v.pitch, 32, scratch, v.boss, v.reload);
     const r = spawnSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', '15', '-i', join(clip.dir, 'clip_%04d.png'),
-      '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', join(out, name + '_turn32.mp4')], { stdio: 'inherit' });
+      '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', join(out, name + (v.reload ? '_reload_turn32.mp4' : '_turn32.mp4'))], { stdio: 'inherit' });
     if (r.status !== 0) throw Error('turn: ffmpeg failed in ' + clip.dir);
   }
   console.log('turn: ' + name + ' in ' + out);

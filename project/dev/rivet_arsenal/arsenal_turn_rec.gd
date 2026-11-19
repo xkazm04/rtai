@@ -45,6 +45,10 @@ func _ready() -> void:
 		_arena.rivet.weapon = weapon
 		_arena.gun = null
 		_arena.rifle_ammo = _arena.tuning.weapon(weapon).magazine
+	await _record()
+
+
+func _record() -> void:
 	for octant: int in 8:
 		if not await _octant(octant):
 			Log.error("turn", "no attack for %s at octant %d" % [weapon, octant])
