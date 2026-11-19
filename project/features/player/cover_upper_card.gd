@@ -29,8 +29,9 @@ static func release(rig: Node2D) -> void:
 		rig.remove_meta(STANCE)
 
 
-static func draw_hidden(canvas: Node2D, hit: PropOcclusion.Hit) -> bool:
-	var rig: CutRig = hit.rig
+## The arena supplies its Hit record. Keep the low-level ink renderer independent of arena rigs.
+static func draw_hidden(canvas: Node2D, hit: RefCounted) -> bool:
+	var rig: Node2D = hit.get(&"rig")
 	if rig == null or not rig.has_meta(STANCE):
 		return false
 	var ink: CoverUpperCard = rig.get_meta(STANCE)
@@ -42,9 +43,10 @@ static func draw_hidden(canvas: Node2D, hit: PropOcclusion.Hit) -> bool:
 	var xf: Transform2D = (
 		canvas.global_transform.affine_inverse() * pose * ink._card.global_transform
 	)
+	var cuts: Array[PackedVector2Array] = hit.get(&"cut")
 	for line: PackedVector2Array in outlines(ink._card):
 		var placed: PackedVector2Array = xf * line
-		for cut: PackedVector2Array in hit.cut:
+		for cut: PackedVector2Array in cuts:
 			for part: PackedVector2Array in Geometry2D.intersect_polygons(placed, cut):
 				if not Geometry2D.triangulate_polygon(part).is_empty():
 					canvas.draw_colored_polygon(part, color)
