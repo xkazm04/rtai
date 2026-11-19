@@ -13,6 +13,8 @@ Evidence root: `C:/Users/kazda/kiro/gtai-masters/n19/gfx/` (written M below). Ga
 | 3B Heads under tilt | none needed | M `contact/B-tilt70-p70-64ppm-t60.png`, `contact/B-heads.json` | 13/13 street heads (SWAT, patrol, riot, thug, 9 civilians) already draw cards at both pitches. |
 | 4 Docks roof wedges | `6ead32adc`, `77ad43790`, `8519afcd4`, `e5872048b`, `df39aece8` | M `gen/yard_compare_tilt70_64ppm_t150.png`, `gen/item4-apron-tilt70-32ppm.mp4`, `gen/apron_edge_before_tilt70_64ppm_t150.png` | a 3 m loading apron where a docks yard meets a warehouse's north wall (v34), marked by a bollard row (v35): walkers turn short of the wall, no ink wedge. 813 apron tiles in 46 docks chunks; v35 moved 46/48 docks chunks, downtown and mixed 0; sim digests unchanged. Mutate dock_painter changed lines 11/12, v35 18/19. |
 | 5 Zebra rule | `08db28411` | `project/tests/unit/test_city_zebra_clear.gd` | 0 / 3712 zebra cells under a solid over 256 chunks; a planted fault fails with the chunk and zebra named. |
+| Tilted city draws repeatably (found while making item 4's sheets) | `030352b1d` | M `tilt-11-REPORT.md`, `gen/apron_edge_before_tilt70_32ppm_t150.png` | lifted canvas items of neighbouring 64 m quadrants shared a z band and drew in pool order, so the same seed, tick and camera could stack a container over or under a warehouse roof. Now a world-quadrant draw index (lifted views only). Reversed pool history: 33,475 px changed before, 0 after. Mutate changed lines 11/12 (survivor order-preserving). |
+| anim NEED part 1: baked crowd body carries its slot | `0dc71557a` | M `tilt-11-REPORT.md` | custom.y = slot + 1 on every baked people body (native + GDScript), tested at slots 0/15/511 across a rigged slot. No look golden moved (16/16 captures, 0 changed pixels); parity exact; mutate 3/3 GDScript, 4/4 native. |
 | 6 Heat-3 bench re-run | none (measurement) | M `bench-10-REPORT.md` | gate exit 0: p99 6.399 ms, 1 % low 127 fps, hitches >25 ms 3, >50 ms 0. Still CONTENDED: 6-16 other Godot processes in every run (other lanes' mutate runs and another project's worktrees); the machine never went quiet tonight. |
 
 ## What does not
@@ -24,11 +26,14 @@ Evidence root: `C:/Users/kazda/kiro/gtai-masters/n19/gfx/` (written M below). Ga
 
 - Astra `gen` call killed at my 00:51 session handover (background shell child): ~25 min of its work unreported, mutate scores re-asked. Fixed by launching every later call detached (WMI `Win32_Process.Create`).
 - Astra `polish` hit the 75 min cap with no final message: report re-asked by --resume.
-- TODO
+- A non-repeatable tilt-70 frame (02:41) made one apron sheet lie about a container. Finding the cause and fixing it took one call (tilt11, about 20 min of it). It was a real draw-order fault, now fixed (`030352b1d`).
+- The machine was never quiet: 6-16 other Godot processes in every bench run (other lanes' mutate runs, another project's worktrees). Every performance number tonight is CONTENDED. Bench and rig bench under the lock: about 35 min.
 
 ## Calls for the owner
 
-TODO
+1. **Docks roof wedges: layout, not occlusion** (item 4). Built: a 3 m loading apron where a docks yard meets a warehouse's north wall, marked by the quay bollards (v35). Walkers turn short of the wall, so no roof wedge can form. The other way: change the shared occlusion and silhouette ink, which would touch every district, downtown included. Recommended: keep the apron. Pair: M `gen/yard_compare_tilt70_64ppm_t150.png` (wedge before, clean after), M `gen/apron_edge_before_tilt70_32ppm_t150.png` (unmarked v34 apron vs bollards).
+2. **How strong the district traffic mix is** (item 1). Built from the zone data as it stood: docks 53 % vans and pickups and 1 % taxis, downtown 40 % taxis. A stronger or weaker mix is one data edit in `project/features/city/gen/city_zone.gd` (`car_art`), and it moves no digest. Recommended: keep it. Still: M `zones/districts3-top.png`.
+3. **The far crowd's contact shadow is rings, not a blob** (item 3A). Built: the baked crowd draws the rigs' contact rings scaled by hip height, so nothing pops at the 16-rig switch. The old round blob comes back with contact hips of zero. Recommended: keep the rings. Clip: M `contact/item3a-contact-tilt70-32ppm.mp4` (feet inset at 64 px/m).
 
 ## Merge notes
 
@@ -54,4 +59,6 @@ TODO
 | contact | 35 | accepted |
 | gen | 26 | accepted (killed at handover before its report) |
 | polish | 75 | bounced-partial (cap, no final message) |
-| polish2 (resume) | TODO | TODO |
+| polish2 (resume) | 30 | accepted (code); its apron sheets bounced (a spurious container change) |
+| bench10 | 59 | accepted (measurement only, no commit) |
+| tilt11 | TODO | TODO |
