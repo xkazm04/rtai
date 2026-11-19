@@ -27,7 +27,7 @@ static func sample(stage: ArenaStage, direction: Vector2, press: bool) -> TickIn
 
 
 ## After the whole stage step, the only legal overlap is the low target of an airborne vault.
-static func forbidden_contact(stage: ArenaStage) -> String:
+static func forbidden_contact(stage: CollectCallStage) -> String:
 	var body: Fighter = stage.arena.rivet
 	var vault: PlayerVault = stage.pilot.motion.vault
 	if vault.airborne():
