@@ -40,11 +40,12 @@ var _ends: PackedVector2Array = PackedVector2Array()  # each rig's (feet, head) 
 
 ## A body hidden behind a prop: the prop's drawn area (local px), the prop, the body's feet, head.
 class Hit:
-	var rig: CutRig
+	var area: Rect2
 	var cut: Array[PackedVector2Array]  # the silhouette's cut: the card's outline(s), else area
 	var prop: ArenaStation.Prop
 	var feet: Vector2
 	var head: Vector2
+	var rig: CutRig
 
 
 ## The arena's view (tilted --view only): on the print stage's actor layer, else the city's.
@@ -109,20 +110,21 @@ func _lift_front() -> void:
 
 ## The props with a body behind them, then each such body's silhouette cut to its prop's area.
 func _draw() -> void:
-	if _hits.is_empty():
-		return
-	var base: Vector2 = (_floor.stage as ArenaStage).plan.base
+	var base: Vector2 = (
+		(_floor.stage as ArenaStage).plan.base if not _hits.is_empty() else Vector2()
+	)
 	var done: Dictionary[ArenaStation.Prop, bool] = {}
 	for h: Hit in _hits:
 		if not done.has(h.prop):
 			done[h.prop] = true
 			_floor._prop(self, base + h.prop.at, h.prop)
 	for h: Hit in _hits:
-		if CoverUpperCard.draw_hidden(self, h.rig, h.cut):
+		if CoverUpperCard.draw_hidden(self, h):
 			continue
-		var figure: PackedVector2Array = silhouette(h.feet, h.head)
 		for cut: PackedVector2Array in h.cut:
-			for part: PackedVector2Array in Geometry2D.intersect_polygons(figure, cut):
+			for part: PackedVector2Array in Geometry2D.intersect_polygons(
+				silhouette(h.feet, h.head), cut
+			):
 				if not Geometry2D.triangulate_polygon(part).is_empty():  # a sliver: no ink
 					draw_colored_polygon(part, SILHOUETTE)
 					@warning_ignore("return_value_discarded")
@@ -150,16 +152,17 @@ func hits() -> Array[Hit]:
 		return out
 	_front.clear()
 	_front_of.clear()
+	var rigs: Array[CutRig] = sorter.frame_rigs
 	_ends.clear()
 	var lift: Vector2 = ViewMode.shared().lift_px(1.0) * RigCastShadows.BODY_IN_HIPS
-	for rig: CutRig in sorter.frame_rigs:
+	for rig: CutRig in rigs:
 		var hip: float = RigCastShadows.hip_px(rig)
 		var head: Vector2 = rig.global_position + lift * hip / SimConst.PX_PER_M
 		_ends += PackedVector2Array([to_local(rig.global_position), to_local(head)])
 	for s: ArenaStation in arena.stations.stations:
 		for p: ArenaStation.Prop in s.props:
 			if ArenaFloorView.PROP_H_M.get(p.kind, 0.0) >= MIN_H_M:
-				_hits_of(arena.plan.base + p.at, p, sorter.frame_rigs, out)
+				_hits_of(arena.plan.base + p.at, p, rigs, out)
 	return out
 
 
@@ -172,6 +175,7 @@ func _hits_of(at: Vector2, p: ArenaStation.Prop, rigs: Array[CutRig], out: Array
 		if not PropLying.patch(self, rigs[i], feet, _ends[i * 2 + 1], area).has_area():
 			continue
 		var h: Hit = Hit.new()
+		h.area = area
 		h.rig = rigs[i]
 		cut = ArenaPropCards.cut_polys(p.kind, r, area) if cut.is_empty() else cut
 		h.cut = cut

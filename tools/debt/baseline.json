@@ -333,7 +333,8 @@
         "2026-11-18: n19 vault course and the ArenaRigs feed call (files_past_soft_cap 66 -> 66)",
         "2026-11-18: n19 move: --cover/--no-cover appended to the shared KNOWN_FLAGS list (files_past_soft_cap 66 -> 66)",
         "2026-11-18: n19 move: one CoverView feed call beside VaultView in the shared arena rig (files_past_soft_cap 66 -> 66)",
-        "2026-11-18: n19 move: read the arena pilot motion once for the cover and vault rig feeds (files_past_soft_cap 66 -> 66)"
+        "2026-11-18: n19 move: read the arena pilot motion once for the cover and vault rig feeds (files_past_soft_cap 66 -> 66)",
+        "2026-11-19: Preserve the AI lane's base occluder verbatim and append the required hit field, assignment and formatted cover call. (files_past_soft_cap 66 -> 66)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -360,7 +361,7 @@
         "project/dev/showcase/reel_director.gd": 209,
         "project/dev/weapon_art/weapon_lineup_run.gd": 210,
         "project/features/arena/arena_rigs.gd": 297,
-        "project/features/arena/prop_occlusion.gd": 202,
+        "project/features/arena/prop_occlusion.gd": 206,
         "project/features/bosses/boss_bot.gd": 202,
         "project/features/bosses/boss_fight.gd": 269,
         "project/features/bosses/boss_hook.gd": 281,

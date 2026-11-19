@@ -29,7 +29,8 @@ static func release(rig: Node2D) -> void:
 		rig.remove_meta(STANCE)
 
 
-static func draw_hidden(canvas: Node2D, rig: Node2D, cuts: Array[PackedVector2Array]) -> bool:
+static func draw_hidden(canvas: Node2D, hit: PropOcclusion.Hit) -> bool:
+	var rig: CutRig = hit.rig
 	if rig == null or not rig.has_meta(STANCE):
 		return false
 	var ink: CoverUpperCard = rig.get_meta(STANCE)
@@ -43,7 +44,7 @@ static func draw_hidden(canvas: Node2D, rig: Node2D, cuts: Array[PackedVector2Ar
 	)
 	for line: PackedVector2Array in outlines(ink._card):
 		var placed: PackedVector2Array = xf * line
-		for cut: PackedVector2Array in cuts:
+		for cut: PackedVector2Array in hit.cut:
 			for part: PackedVector2Array in Geometry2D.intersect_polygons(placed, cut):
 				if not Geometry2D.triangulate_polygon(part).is_empty():
 					canvas.draw_colored_polygon(part, color)
