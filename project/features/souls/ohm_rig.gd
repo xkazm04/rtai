@@ -1,24 +1,13 @@
 class_name OhmRig
 extends Node2D
-## Ohm, the elder spot-welder (TARGETS.md ghost_ohm_mage.jpg, its top-down drawing), as a cutout rig
-## from straight above: the domed riveted shell with its goggles at the front, the cable beard
-## spilling forward, the copper hose loop on its back, two stubby feet, two long arms ending in
-## copper electrode fingers (the Codex sheet cut by tools/art/ghost_parts.py, art/ohm/). Units:
-## world px at PX_PER_M; +x = facing (set rotation = facing angle).
-## Gait "cane": the right arm is the cane, planted ahead and left behind as the body shuffles past
-## it, then swung forward again; the feet patter under the shell, the body leans onto the cane. The
-## left arm holds its electrodes forward (the bolt's hand). unfold (0..1) is the transformation:
-## 0 = limbs folded under the shell.
+## Ohm's elder welder rig. World pixels, +x forward and +y right.
+## The legacy cane plants ahead and slides back as the shell shuffles over it.
 
 const ART: String = "res://features/souls/art/ohm/"
 const PX_PER_M: float = 32.0
 const TEAL: Color = Color(0.18, 0.77, 0.71)
-## Part lengths (metres, the art's long side) and their spots in the body frame (x forward,
-## y right).
 const SHELL_M: float = 0.8
 const BEARD_M: float = 0.5
-## The soul glow under him: across (m), centre alpha. The smallest body needs the widest pool for
-## its size to read as possessed at 32 px/m (was 1.9 m at 0.4, under Kerf's 2.4).
 const GLOW_M: float = 2.6
 const GLOW_A: float = 0.5
 const BEARD_AT: Vector2 = Vector2(0.42, 0.0)
@@ -30,44 +19,35 @@ const SHOULDER: Vector2 = Vector2(0.1, 0.26)
 const UPPER_M: float = 0.36
 const FORE_M: float = 0.54
 const ARM_THICK_M: float = 0.24
-## The guard arm (left): its electrode tips held at the bolt's hands (OhmStage.HANDS_M ahead, a
-## little to the left), the elbow cocked out to the side as in the target.
 const GUARD_HAND: Vector2 = Vector2(0.5, -0.12)
-## The cane arm (right): how far ahead it plants and how far back it trails (metres, body frame).
 const CANE_AHEAD_M: float = 0.7
 const CANE_SIDE_M: float = 0.5
-## One cane cycle covers STRIDE_M of ground; the swing takes the last SWING_K of it.
 const STRIDE_M: float = 0.7
 const SWING_K: float = 0.3
-## Feet: fore/aft reach (metres) and steps per cane cycle; the lean onto the cane (radians).
 const FOOT_REACH_M: float = 0.1
 const STEPS_PER_CYCLE: float = 2.0
 const LEAN: float = deg_to_rad(6.0)
 const BREATH_HZ: float = 0.6
 const BREATH_K: float = 0.025
-## The kick per bolt (ghost-powers REQUEST 8): the guard hand snaps KICK_M out and back over KICK_S,
-## the shell recoils RECOIL_M and twists KICK_TWIST, the cane holds; halved under reduced motion.
 const KICK_M: float = 0.2
 const KICK_S: float = 0.25
 const RECOIL_M: float = 0.1
 const KICK_TWIST: float = deg_to_rad(16.0)
-## Tilted view: the facing card (GhostCard, art/view/<art>/ohm_card.png: shell, goggles, beard,
-## back cables): width (m), the ground point's height in the card, its soul halo alpha (0 = none).
-## The arms and feet stay rig parts on the ground, so cane, guard hand and bolt prongs still meet.
 const CARD_M: float = 1.2
 const CARD_ANCHOR: float = 0.8
 const CARD_HALO_A: float = 0.45
 const CYCLE_CELL: float = 126.0  # n11 it10: the profile row's stance foot, 15.7 cell px a frame
 
+var ohm: OhmStage
 var unfold: float = 1.0
 ## OhmStage.bolts, fed by the host: a rise kicks the guard arm (the first sight only arms it).
 var bolts: int = 0
 var reduced_motion: bool = false
-## Ground speed (m/s), fed by the host each tick.
 var speed_mps: float = 0.0
 ## 0..1 through the cane cycle (advances with ground covered, not time).
 var phase: float = 0.0
 var drawn: GhostDrawn = GhostDrawn.new("ohm", 1.55, CYCLE_CELL, 180.0)  # n11: ohm_walk8.png
+var _spectral: OhmDrawn
 var _t: float = 0.0
 var _seen_bolts: int = -1
 var _kick: float = 0.0  # 1 at the bolt, falling to 0 over KICK_S
@@ -79,7 +59,22 @@ var _card: GhostCard = GhostCard.new("ohm", CARD_M, CARD_ANCHOR)
 var _all: Array[Sprite2D] = []
 
 
+func _init() -> void:
+	if GhostLook.spectral(OhmStage.ID):
+		_spectral = OhmDrawn.new()
+		drawn._instant_windup = 0  # Spectral jars telegraph the instant cast.
+
+
+func _process(_delta: float) -> void:
+	if ohm != null:
+		_spectral.charge.step(ohm, drawn._tick)
+	if visible:
+		pose()
+
+
 func _ready() -> void:
+	set_process(_spectral != null)
+	process_priority = 21  # GhostFormView finishes feeding the instant cast at priority 20.
 	add_child(GhostRim.soft_glow(TEAL, GLOW_A, GLOW_M * PX_PER_M))  # teal belongs to the souls
 	add_child(_body)
 	for side: int in 2:
@@ -105,7 +100,6 @@ func _ready() -> void:
 	pose()
 
 
-## One step of `dt` seconds (the host passes SimClock.TICK_DT per sim tick).
 func advance(dt: float) -> void:
 	_t = fmod(_t + dt, 1000.0)
 	if _seen_bolts >= 0 and bolts > _seen_bolts:
@@ -114,7 +108,8 @@ func advance(dt: float) -> void:
 	if _kick <= 0.0:  # the cane stays planted through the kick
 		phase = fmod(phase + speed_mps * dt / STRIDE_M, 1.0)
 	_kick = maxf(0.0, _kick - dt / KICK_S)
-	pose()
+	if _spectral == null:
+		pose()
 
 
 ## The kick's reach now (metres the guard hand is thrown forward): a snap out over the first
@@ -157,6 +152,9 @@ func pose() -> void:
 	var sh_l: Vector2 = Vector2(SHOULDER.x, -SHOULDER.y)
 	var guard: Vector2 = GUARD_HAND + Vector2(kick_m() + RECOIL_M * kick, 0.0)
 	_arm(2, sh_l, sh_l.lerp(guard, u), -1.0)
+	if _spectral != null:
+		_body.visible = not _spectral.step(self, drawn, _body.scale.x)
+		return
 	var carded: bool = not drawn.step(self, _all, PX_PER_M, _body.scale.x)
 	_card.set_shown(carded)
 	if carded:
