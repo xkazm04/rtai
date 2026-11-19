@@ -4,3 +4,15 @@
 
 [node name="ZoneTrafficFilm" type="Node"]
 script = ExtResource("1")
+traffic_foci = Dictionary[String, Vector2]({
+"docks": Vector2(1864, 1042),
+"docks/crossing": Vector2(1819, 271),
+"downtown": Vector2(940, 978),
+"downtown/crossing": Vector2(977, 1345),
+"downtown/traffic": Vector2(1048, 1038),
+"mixed": Vector2(550, 529)
+})
+close_up_centres = Dictionary[String, Vector2]({
+"docks": Vector2(1870, 1036),
+"downtown/traffic": Vector2(1012, 1036)
+})

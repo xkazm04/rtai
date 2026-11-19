@@ -5,9 +5,6 @@ extends Node
 const KNOWN_FLAGS: PackedStringArray = [
 	"--cars", "--zone", "--out", "--before", "--view", "--counts-only", "--ppm", "--still-tick"
 ]
-const CENTRES: Dictionary[String, Vector2] = {
-	"docks": Vector2(1864, 1042), "downtown": Vector2(940, 978), "mixed": Vector2(550, 529)
-}
 ## Art IDs in sim order mapped to van, pickup, taxi, ambulance and sedan counts.
 const GROUP_BY_ART: Array[int] = [4, 4, 4, 2, 0, 1, 3, 4]
 const SEED_VALUE: int = 91
@@ -16,6 +13,9 @@ const STEP: int = 4
 const WARMUP: int = 60
 ## Quad size in metres from the city render writer, nose along the heading.
 const CAR_HALF := Vector2(3.2, 1.6)
+
+@export var traffic_foci: Dictionary[String, Vector2]
+@export var close_up_centres: Dictionary[String, Vector2]
 
 var _world: World
 var _city: CitySystem
@@ -64,11 +64,10 @@ func _configure(args: ArenaArgs) -> bool:
 	_before = args.has("--before")
 	_target = int(args.number("--cars", 24))
 	_ppm = int(args.number("--ppm", 32))
-	if not CENTRES.has(_zone) or _out.is_empty() or _target < 1 or _target > SimConst.CAP:
+	if not traffic_foci.has(_zone) or _out.is_empty() or _target < 1 or _target > SimConst.CAP:
 		return false
-	_centre = CENTRES[_zone]
-	if _zone == "docks" and _ppm == 64:
-		_centre += Vector2(6, -6)  # Centre the close-up on both lanes of the warehouse road.
+	var centres: Dictionary[String, Vector2] = close_up_centres if _ppm == 64 else traffic_foci
+	_centre = centres.get(_zone, traffic_foci[_zone])
 	if _ppm != 32 and _ppm != 64:
 		return false
 	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
@@ -93,7 +92,7 @@ func _start_sim() -> void:
 	_city.bike_share = 0.0
 	_world.add_system(_city)
 	_city.steer_by_input = false
-	_city.focus = CENTRES[_zone]
+	_city.focus = traffic_foci[_zone]
 	_city.target = _city.focus
 	_city.body.on = false
 	if _before:
@@ -160,7 +159,8 @@ func _caption(row: Dictionary) -> String:
 	var fmt: String = "Van %d   Pickup %d   Taxi %d   Ambulance %d   Sedans %d"
 	var total: int = _totals.reduce(func(a: int, b: int) -> int: return a + b, 0)
 	var per: float = 100.0 / maxi(total, 1)
-	var district: String = "%s %s" % [_zone.capitalize(), "before" if _before else "after"]
+	var arm: String = " before" if _before else " after"
+	var district: String = _zone.get_slice("/", 0).capitalize() + arm
 	var sample: String = "%s   |   Tick %d   |   %s" % [district, row.tick, fmt % row.art]
 	var shares: String = (
 		"Vans+pickups %.0f%%   Taxis %.0f%%" % [(_totals[0] + _totals[1]) * per, _totals[2] * per]
