@@ -1,6 +1,5 @@
 extends Node
-## Captures the production arena at one physical screen pixel per camera pixel.
-## Use --fixed-fps 60 and --write-movie. The trace records sim ticks, gait cells and damage.
+## Capture the arena at native camera scale. The optional trace records ticks, gait and damage.
 
 const KNOWN_FLAGS: PackedStringArray = [
 	"--ghost",
@@ -9,6 +8,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--ppm",
 	"--view",
 	"--clean",
+	"--shot",
+	"--shot-tick",
 	"--ohm-bolt-delay",
 	"--film-trace"
 ]
@@ -124,10 +125,9 @@ func _trace_header() -> void:
 	var fields: String = "frame tick form x_m y_m facing_rad atlas_row_col slams ram_hits crushes "
 	fields += "jab_hits seizes car_hits blasts blinks slices delay_ticks bolts struck car_bolts "
 	fields += "damage_events px_per_m blast_x_m blast_y_m screen_x screen_y"
+	var header: Dictionary = {"schema": "gtai.ghost-review/1", "columns": fields.split(" ")}
 	@warning_ignore("return_value_discarded")
-	_trace.store_line(
-		JSON.stringify({"schema": "gtai.ghost-review/1", "columns": fields.split(" ")})
-	)
+	_trace.store_line(JSON.stringify(header))
 
 
 func _exit_tree() -> void:
