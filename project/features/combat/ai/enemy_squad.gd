@@ -10,6 +10,8 @@ static func assign(agents: Array[EnemyAgent], target: Vector2, roster: EnemyRost
 	var shooters: int = 0
 	var swingers: int = 0
 	var want: Array[EnemyAgent] = []
+	var wants_melee: bool = false
+	var wants_ranged: bool = false
 	for e: EnemyAgent in agents:
 		if not e.engaged():
 			e.token = false
@@ -22,12 +24,29 @@ static func assign(agents: Array[EnemyAgent], target: Vector2, roster: EnemyRost
 			if not attacking and e.token_ticks > hold:
 				e.token = false
 		if e.token:
-			swingers += 1 if e.melee() else 0
-			shooters += 0 if e.melee() else 1
+			if e.melee():
+				swingers += 1
+			else:
+				shooters += 1
 			continue
 		e.waited += 1
 		if e.sees or e.arch.uses_cover:
 			want.append(e)
+			if e.melee():
+				wants_melee = true
+			else:
+				wants_ranged = true
+	if (
+		(not wants_melee or swingers >= roster.max_melee)
+		and (not wants_ranged or shooters >= roster.max_shooters)
+	):
+		return
+	_grant_waiters(want, target, roster, shooters, swingers)
+
+
+static func _grant_waiters(
+	want: Array[EnemyAgent], target: Vector2, roster: EnemyRoster, shooters: int, swingers: int
+) -> void:
 	want.sort_custom(func(a: EnemyAgent, b: EnemyAgent) -> bool: return _before(a, b, target))
 	for e: EnemyAgent in want:
 		if e.melee() and swingers < roster.max_melee:
