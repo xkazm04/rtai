@@ -108,7 +108,7 @@ func _show_cell(sheet: GhostSheet, oct: int, col: int, rear_hits: bool = HIT_FRO
 		if blow.normalized().dot(Vector2.from_angle(_look)) > REAR_DOT:
 			sheet.hitback.show(_spr, oct, 0)
 			return
-	sheet.show(_spr, oct, col, _phase)
+	sheet.show(_spr, oct, col, -1.0 if _still > STILL_FRAMES else _phase)
 
 
 static func path_of(art: String, name: String, sheet: String = "walk8") -> String:

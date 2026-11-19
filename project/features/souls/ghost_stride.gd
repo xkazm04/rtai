@@ -18,6 +18,22 @@ const TABLES: Dictionary[String, Array] = {
 	"tonnage/p55": [46.0, 13.5, 51.0, 28.0, 24.5, 32.0, 28.0, 1.0],
 }
 
+## Tonnage p70 profile atlas order. Each pair borrows cell-pixel dwell from
+## the outgoing and incoming key. The two contributions keep the cycle length.
+const MID_STEPS: Array[int] = [5, 0, 1, 2, 4, 8, 9, 10, 11, 12]
+const MID_DWELL: Array[Vector2] = [
+	Vector2(3.44, 6.7625),
+	Vector2(3.07, 6.51),
+	Vector2(2.96, 7.24),
+	Vector2(7.27, 2.93),
+	Vector2(2.77, 7.43),
+	Vector2(4.05, 4.05),
+	Vector2(2.79, 2.79),
+	Vector2(4.19, 5.95),
+	Vector2(2.01, 8.19),
+	Vector2(4.92, 5.28),
+]
+
 ## Run rows ("<name>/<art>", 0 = toward) drawn as a gallop (both halves lead with one leg): that
 ## facing walks at the cadence cap instead. Empty since it14: Dent's 3/4 away row (off at it13
 ## after three galloping redraws) alternates legs in its fourth take.
@@ -146,3 +162,16 @@ static func dwell_of(steps: PackedFloat32Array) -> PackedFloat32Array:
 	for i: int in n:
 		out[i] = maxf((steps[posmod(i - 1, n)] + steps[i]) * 0.5, mean * MIN_SHARE)
 	return out
+
+
+## Phase intervals in the extra atlas's column order, for the measured 16-key walk.
+static func tonnage_windows(steps: PackedFloat32Array) -> Array[Vector2]:
+	var ends: PackedFloat32Array = dwell_of(steps)
+	for i: int in range(1, ends.size()):
+		ends[i] += ends[i - 1]
+	var windows: Array[Vector2] = []
+	for i: int in MID_STEPS.size():
+		var boundary: float = ends[MID_STEPS[i]]
+		var share: Vector2 = MID_DWELL[i]
+		windows.append(Vector2(boundary - share.x, boundary + share.y) / ends[-1])
+	return windows

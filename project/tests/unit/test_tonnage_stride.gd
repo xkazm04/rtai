@@ -57,51 +57,76 @@ func test_shipped_walk_timing_uses_the_filmed_cap_for_each_pitch() -> void:
 	assert_eq(GhostStride.table_of("ohm", "p70"), ohm)
 
 
-func test_tonnage_shows_extra_pad_pose_only_in_the_right_profile_step() -> void:
+func test_tonnage_midpoints_only_draw_while_walking_in_right_profile() -> void:
 	var saved: ViewMode = ViewMode.shared()
 	ViewMode.select("combo")
 	var rig: TonnageRig = autofree(TonnageRig.new())
 	var host: Node2D = add_child_autofree(Node2D.new())
 	var drawn: GhostDrawn = rig.drawn
 	var mid: String = GhostDrawn.path_of("p70", "tonnage", "walk8_mid")
-	var count: int = 0
+	var seen: Dictionary[int, bool] = {}
 	for i: int in 160:
 		host.position.x += 1.0
 		assert_true(drawn.step(host, [], 32.0, 1.0, 0.0))
-		# The middle half of capped step 5 is phase [0.39851, 0.45897).
-		var between: bool = drawn._phase >= 0.39851 and drawn._phase < 0.45897
-		assert_eq(drawn._spr.texture.resource_path == mid, between)
-		if between:
-			count += 1
-			assert_eq(drawn._spr.frame_coords, Vector2i(0, 2))
+		if drawn._spr.texture.resource_path == mid:
+			seen[drawn._spr.frame_coords.x] = true
 			drawn._show_cell(drawn._walk, 4, drawn._col)
 			assert_eq(
 				drawn._spr.texture.resource_path, GhostDrawn.path_of("p70", "tonnage", "walk8_left")
 			)
 			drawn._show_cell(drawn._act, 0, GhostDrawn.HIT_COL)
 			assert_eq(drawn._spr.texture.resource_path, GhostDrawn.path_of("p70", "tonnage", "act"))
-	assert_gt(count, 0)
+	assert_eq(seen.size(), 10)
+	drawn._phase = 0.33  # stopping during the C5-to-C6 window should show the standing key
+	for i: int in GhostDrawn.STILL_FRAMES + 1:
+		assert_true(drawn.step(host, [], 32.0, 1.0, 0.0))
+	assert_eq(drawn._spr.texture.resource_path, GhostDrawn.path_of("p70", "tonnage"))
+	assert_eq(drawn._spr.frame_coords, Vector2i(4, 2))
 	ViewMode._shared = saved
 
 
-func test_midpoint_is_half_open_and_needs_both_the_step_and_the_right_profile() -> void:
-	# Eight unit steps put the C6/C7 boundary at 6/8, with a quarter-step either side.
-	var steps: PackedFloat32Array = [1, 1, 1, 1, 1, 1, 1, 1]
+func test_each_filmed_midpoint_enters_and_exits_at_its_two_neighbours() -> void:
+	var expected: Array[Vector2] = [
+		Vector2(0.41336418, 0.45897461),
+		Vector2(0.02125453, 0.06408207),
+		Vector2(0.10969352, 0.15529278),
+		Vector2(0.20085933, 0.24645859),
+		Vector2(0.32216594, 0.36776520),
+		Vector2(0.55525040, 0.59146157),
+		Vector2(0.62209652, 0.64704200),
+		Vector2(0.67830032, 0.72363135),
+		Vector2(0.76924733, 0.81484658),
+		Vector2(0.86042561, 0.90602487),
+	]
+	var starts: Array[int] = [5, 0, 1, 2, 4, 8, 9, 10, 11, 12]
+	var steps: PackedFloat32Array = GhostStride.table_of("tonnage", "p70")
 	var path: String = GhostDrawn.path_of("p70", "tonnage")
+	var mid: String = GhostDrawn.path_of("p70", "tonnage", "walk8_mid")
 	var sheet: GhostSheet = GhostSheet.walk_of(path, steps)
 	var spr: Sprite2D = autofree(Sprite2D.new())
-	var mid: String = GhostDrawn.path_of("p70", "tonnage", "walk8_mid")
-	for col: int in [5, 6]:
-		sheet.show(spr, 0, col, 5.75 / 8)
-		assert_eq(spr.texture.resource_path, mid, "enters on the first sample")
-		sheet.show(spr, 0, col, 6.25 / 8)
-		assert_eq(spr.texture.resource_path, path, "leaves on the last boundary")
-	for col: int in [4, 7]:
-		sheet.show(spr, 0, col, 6.0 / 8)
-		assert_eq(spr.texture.resource_path, path, "neighbouring steps keep their keys")
-	var short_walk: GhostSheet = GhostSheet.walk_of(path, steps.slice(0, 5))
-	short_walk.show(spr, 0, 5, 6.0 / 8)
-	assert_eq(spr.texture.resource_path, path, "missing sixth step has no midpoint")
-	var other: GhostSheet = GhostSheet.walk_of(GhostDrawn.path_of("p55", "tonnage"), steps)
-	other.show(spr, 0, 5, 6.0 / 8)
-	assert_eq(spr.texture.resource_path, GhostDrawn.path_of("p55", "tonnage"))
+	var windows: Array[Vector2] = GhostStride.tonnage_windows(steps)
+	assert_eq(windows.size(), expected.size())
+	for i: int in expected.size():
+		assert_almost_eq(windows[i], expected[i], Vector2.ONE * 0.000001)
+		var w: Vector2 = windows[i]
+		for col: int in [starts[i], starts[i] + 1]:
+			sheet.show(spr, 0, col, w.x - 0.000001)
+			assert_eq(spr.texture.resource_path, path)
+			sheet.show(spr, 0, col, w.x)
+			assert_eq(spr.texture.resource_path, mid)
+			assert_eq(spr.frame_coords, Vector2i(i, 2))
+			sheet.show(spr, 0, col, w.y - 0.000001)
+			assert_eq(spr.texture.resource_path, mid)
+			sheet.show(spr, 0, col, w.y)
+			assert_eq(spr.texture.resource_path, path)
+		sheet.show(spr, 0, posmod(starts[i] - 1, 16), w.x)
+		assert_eq(spr.texture.resource_path, path)
+
+
+func test_eight_key_walks_keep_their_own_sheet() -> void:
+	var steps: PackedFloat32Array = GhostStride.table_of("tonnage", "p55")
+	var spr: Sprite2D = autofree(Sprite2D.new())
+	for art: String in ["p55", "p70"]:
+		var path: String = GhostDrawn.path_of(art, "tonnage")
+		GhostSheet.walk_of(path, steps).show(spr, 0, 5, 0.42)
+		assert_eq(spr.texture.resource_path, path)
