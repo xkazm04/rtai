@@ -1,5 +1,55 @@
 # City station spacing
 
+## A10b wall collision
+
+Baseline `d6f76375c7429615cec9c57838834c6b496a0a82`. Wall collision and tests `01781501ffa0e6050139f5d06651dcbcbde3b93e`. For each spacing push the partner's pursuit map supplies the wall, cover and solid city boxes. The stage's circle resolver supplies the candidate position. The route map checks the segment to that point, including a push that could otherwise cross a thin wall and end in open space. A partner without pursuit holds its position.
+
+The probe counted a tick once when any living station partner's centre was inside any solid. It sampled immediately after the partner's spacing step and again after all stage hooks. The second sample also counted ticks with a living hostile within 1 m. Both revisions used seeds 20261103 through 20261122 and 2,400 ticks per seed. All 40 baseline digests reproduced the A10 results.
+
+| City brain | Ticks per revision | Inside immediately after spacing, before / after | Inside at tick end, before / after | Crowded at tick end, before / after | Mean clear (s), both revisions | Mean HP lost, both revisions | Deaths, before / after |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Guard | 48,000 | 0 / 0 | 0 / 0 | 0 / 0 | 17.6825 | 3.15 | 0 / 0 |
+| Squad | 48,000 | 436 / 0 | 0 / 0 | 0 / 0 | 18.1300 | 2.91 | 0 / 0 |
+
+All 436 baseline post-push penetrations occurred on squad seed 20261107. The stage cleared them by tick end. All 40 paired seeds reproduced the full `fight` result, including individual waves, HP lost and deaths. All reached the three-wave objective. The per-seed clear times and HP losses are in the A10 table below. Squad took 2.5% longer and lost 7.6% less HP than guard.
+
+### Tick 697
+
+The replacement `C:/Users/kazda/kiro/gtai-masters/n19/ai/station/after-t0697.png` has SHA-256 `9fbaedaa45b61a1180f7eea7146841ba7d1af1f1f9972ad005a58b362a13622a`. I opened the old and new stills and compared the west end at double size. The northern cop's boot previously extended onto the top of the slab. In the new frame his feet meet the pavement above its edge. The southern cop's helmet is partly occluded by the drawn wall end. His centre is 1.050 m from the physical box. The five body circles clear the slab and their closest centre pair is 1.650 m apart.
+
+| Partner | Distance from centre to north wall box at tick 697 (m) |
+|---|---:|
+| 3000 | 1.050 |
+| 3001 | 1.946 |
+| 3002 | 0.578 |
+| 3003 | 1.658 |
+| 3004 | 0.736 |
+
+The guard radius is 0.45 m. The wall spans x = 529 to 543 m and y = 533.7 to 534.3 m. All five partners spawn north of this wall at y = 528.4 m. The film used the same camera (530, 535), seed 20261103, squad, pit bot, combo view, 32 px/m and 1280 x 800 frame as A10.
+
+### A10b checks and reproduction
+
+At the baseline, the three original spacing tests passed and all three new tests failed. The new tests cover a push into a wall face, a push through a thin slab to a clear endpoint and a partner without a pursuit map. On the gameplay commit all six passed. The quick gate passed on the five changed GDScript files and the commit hook passed all 18 scoped lint checks. Both restored comments fit within the existing 251 lines of `combat_arena.gd`.
+
+All 17 scenarios in the command below passed. Their log contains the existing Godot shutdown resource diagnostics. The film passed with the same triangulation diagnostic recorded in the original shot. Fresh pit probes matched all 20 fair20 digests per brain. Quest 1 matched the five reference digests per brain in `evidence/n19-ai/cost-digests.json`. The digest commands below were repeated with output under `build/a10b`.
+
+Use the APPDATA and GODOT_BIN settings in the reproduction block below and run one Godot process at a time. For the baseline, use the A10b observer from this evidence revision with the project at `d6f76375c`.
+
+Mutation of `project/features/combat/guard_brain.gd` lines 17-26 killed 10 of 11 valid mutants (90.9%), with zero invalid and zero timeouts. The control passed 23 tests. The survivor changed the ID tie-break from `>` to `>=` for distinct fighters with distinct IDs. Replacing the resolved move with `g.pos += push` failed both wall tests by assertion. Removing the push entirely also failed the original overlapping-partners test.
+
+```powershell
+python evidence/n19-ai/station-probe.py build/a10b/before
+# With project at 01781501f:
+python evidence/n19-ai/station-probe.py build/a10b/after
+node tools/tests/run_unit.mjs --select=test_arena_station_spacing --no-rerun
+node tools/gate/quick.mjs --no-clash --files=project/features/arena/arena_walls.gd,project/features/combat/combat_arena.gd,project/features/combat/guard_brain.gd,project/features/combat/guard_pursuit.gd,project/tests/unit/test_arena_station_spacing.gd
+node tools/tests/run_scenarios.mjs --only=arena_stations,rivet_claw,rivet_chainsaw,rivet_katana,arena_city,arena_zebra,arena_pit,quest1_dent,quest1_dent_lock,quest1_input,quest1_kerf,quest1_keys,quest1_ohm,quest1_tonnage,quest_collect_call,enemy_pit,enemy_waves
+node evidence/n19-ai/station-mutate.mjs --lines=17-26
+node evidence/n19-ai/station-film.mjs 01781501ffa0e6050139f5d06651dcbcbde3b93e build/a10b/film-after
+```
+
+## A10 original spacing comparison
+
 The five city station partners now use 1.65 m centre spacing. `arena_stations.gd` reads the optional `city.station_spacing_m` from `project/data/tables/arena_stations/arena.json` under `arena_station.schema.json`. On the city block, `arena_session.gd` sets the `fighter.gd` field on the claw station's own partners. The guard branch in `combat_arena.gd` calls `GuardBrain.space_partner`, which shares `EnemyMotor.repel` with the squad motor. The stage then applies its wall and city collision. Wave members and range dummies can be neighbours. Only the station partner moves in response.
 
 | City brain and revision | Ticks with any partner within 1 m / 48,000 | Crowded partner-ticks | Mean three-wave clear (s) | Mean HP lost | Deaths |
@@ -48,7 +98,7 @@ Each seed contributes 2,400 end-of-tick observations. The clear-time and HP pair
 
 I opened both PNGs. Before spacing, the five bodies crowd the corner and obscure each other's outlines. After spacing, all five can be picked out individually on the asphalt and pavement around the wall end. The camera was locked at (530, 535) m for both captures, with the pit bot, squad, seed 20261103, combo view, 32 px/m, 1280 x 800 and film tick 697. The closest pair of station centres changed from 0.99995 m to 1.65001 m. Both film runs passed on D3D12 at (0, 1440), with zero script errors. Both logs contain the existing triangulation and shutdown diagnostics.
 
-| PNG under `C:/Users/kazda/kiro/gtai-masters/n19/ai/station/` | SHA-256 of published PNG |
+| Original A10 PNG (superseded after frame retained in `build/a10/film-after/t697.png`) | Original SHA-256 |
 |---|---|
 | before-t0697.png | `02416d9018611466c542b4b0d05d221266855ebb70d9ca60f247d87f32b1b00a` |
 | after-t0697.png | `0258a868199208d44a6455279570b5e1673cc6387cfef4b886dd581329b14fdc` |

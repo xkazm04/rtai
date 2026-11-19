@@ -4,15 +4,17 @@ import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, write
 import { dirname, join, resolve } from 'node:path';
 import { runGodot, SCRIPT_ERROR } from '../../tools/lib/godot.mjs';
 import { generateMutants, applyMutant } from '../../tools/mutate/operators.mjs';
+import { filterMutantsByLines, parseArgs } from '../../tools/mutate/mutate.mjs';
 import { formatReport } from '../../tools/mutate/report.mjs';
 import { parseJunit } from '../../tools/tests/junit.mjs';
 
 const git = (...args) => execFileSync('git', args, { encoding: 'utf8' }).trim();
 if (git('status', '--porcelain', '--', 'project')) throw Error('Commit the gameplay project first');
-const out = resolve('build/a10');
+const file = 'features/combat/guard_brain.gd';
+const { lines } = parseArgs(['--file=' + file, ...process.argv.slice(2)]);
+const out = resolve(lines ? 'build/a10b' : 'build/a10');
 mkdirSync(out, { recursive: true });
 const scratch = mkdtempSync(join(out, 'mutation-'));
-const file = 'features/combat/guard_brain.gd';
 const target = join(scratch, 'project', file);
 const tests = ['unit/test_arena_station_spacing', 'integration/test_arena_guard_wall',
   'unit/test_guard_tell', 'unit/test_dock_waves', 'unit/test_fight_probe'];
@@ -54,14 +56,21 @@ try {
   if (!negative.failed.includes('test_coincident_partners_separate_on_the_guard_path')) {
     throw Error('Removing the push escaped the overlap assertion');
   }
-  for (const mutant of generateMutants(original)) {
+  let noResolve;
+  if (lines) {
+    noResolve = await run(original.replace('g.pursuit.push_body(g, push)', 'g.pos += push'));
+    if (!noResolve.failed.includes('test_push_into_wall_stops_the_body_at_its_near_face')) {
+      throw Error('Removing wall resolution escaped the near-face assertion');
+    }
+  }
+  for (const mutant of filterMutantsByLines(generateMutants(original), lines)) {
     const result = await run(applyMutant(original, mutant));
     if (result.verdict === 'survived' && result.cases !== control.cases) throw Error('Incomplete run');
     results.push({ ...mutant, ...result });
     console.log(mutant.id, mutant.line, mutant.op, result.verdict);
   }
   console.log(formatReport({ file, tests, results, totalMs: Date.now() - start }));
-  writeFileSync(join(out, 'mutation.json'), JSON.stringify({ head, tests, control, negative, results }, null, 2));
+  writeFileSync(join(out, 'mutation.json'), JSON.stringify({ head, tests, lines, control, negative, noResolve, results }, null, 2));
 } finally {
   if (dirname(scratch) === out) rmSync(scratch, { recursive: true, force: true });
 }
