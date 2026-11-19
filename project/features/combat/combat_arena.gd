@@ -46,7 +46,7 @@ var tick: int = 0
 var gun: GunHand = null
 ## Lane gunplay: readable contractor bursts (tell, lock, slowed rounds); null keeps GuardBrain.
 var guard_tell: GuardTell = null
-## Area effects start with the first GunHand shot. Quest 1 has no GunHand.
+## Area effects start with the first GunHand shot, so quest 1 (no gun) keeps its goldens.
 var areas: FightAreas = null
 ## The landing hit's direction and point, set before damage() (kill_landed reads them).
 var hit_dir: Vector2 = Vector2.ZERO
@@ -66,7 +66,7 @@ func _init(p_tuning: CombatTuning, events: EventBus, rng: RandomNumberGenerator)
 	rivet.radius_m = tuning.rivet["radius_m"]
 
 
-## Spawn a guard near the point. ArenaSquad.spawn_member enrolls and equips squad wave members.
+## Station spawns keep the guard tell or GuardBrain. ArenaSquad.spawn_member equips wave members.
 func spawn_guard(at: Vector2) -> Fighter:
 	var spread: Vector2 = Vector2(_rng.randf_range(-1.0, 1.0), _rng.randf_range(-1.0, 1.0))
 	var pos: Vector2 = at + spread * SPAWN_SPREAD_M

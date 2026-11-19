@@ -13,8 +13,12 @@ func _spacing(city: Dictionary, on_city: bool = true) -> float:
 	return stations.station_spacing_m
 
 
-func _arena() -> CombatArena:
-	return CombatArena.new(CombatTuning.shipped(), Events, RngRegistry.new(7).stream(&"combat"))
+func _arena(boxes: Array[Rect2] = []) -> CombatArena:
+	var arena: CombatArena = CombatArena.new(
+		CombatTuning.shipped(), Events, RngRegistry.new(7).stream(&"combat")
+	)
+	arena.guard_map = GuardRouteMap.new(Rect2(-16, -16, 32, 32), boxes, null, 0.45)
+	return arena
 
 
 func _guard(arena: CombatArena, spacing: float = 0.0) -> Fighter:
@@ -62,3 +66,34 @@ func test_partner_yields_to_live_wave_body_and_ignores_dead_guards() -> void:
 	assert_eq(partner.pos, AT + Vector2.UP)
 	assert_eq(wave.pos, AT + Vector2(0, 0.5))
 	assert_eq(dead.pos, AT + Vector2.UP)
+
+
+func test_push_into_wall_stops_the_body_at_its_near_face() -> void:
+	var wall: Rect2 = Rect2(1, 1, 2.25, 2)
+	var arena: CombatArena = _arena([wall])
+	var partner: Fighter = _guard(arena, 1.65)
+	var neighbour: Fighter = _guard(arena)
+	GuardBrain.space_partner(partner, arena.hostiles)
+	assert_eq(neighbour.pos, AT)
+	assert_false(wall.has_point(partner.pos))
+	assert_almost_eq(partner.pos.x, wall.end.x + partner.radius_m, 0.00001)
+
+
+func test_push_cannot_cross_a_thin_wall_to_an_open_endpoint() -> void:
+	var wall: Rect2 = Rect2(3, 1, 0.1, 2)
+	var arena: CombatArena = _arena([wall])
+	var partner: Fighter = _guard(arena, 1.65)
+	var neighbour: Fighter = _guard(arena)
+	GuardBrain.space_partner(partner, arena.hostiles)
+	assert_eq(neighbour.pos, AT)
+	assert_gte(partner.pos.x, wall.end.x + partner.radius_m)
+
+
+func test_partner_without_pursuit_holds_position() -> void:
+	var arena: CombatArena = _arena()
+	arena.guard_map = null
+	var partner: Fighter = _guard(arena, 1.65)
+	var neighbour: Fighter = _guard(arena)
+	GuardBrain.space_partner(partner, arena.hostiles)
+	assert_eq(neighbour.pos, AT)
+	assert_eq(partner.pos, AT)
