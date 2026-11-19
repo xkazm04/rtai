@@ -19,7 +19,8 @@ static func steer(e: EnemyAgent, want: Vector2, look_at: Vector2, pit: EnemyPit)
 	want = want.limit_length(top)
 	e.vel = e.vel.move_toward(want, e.arch.accel_mps2 * SimClock.TICK_DT)
 	e.pos += e.vel * SimClock.TICK_DT
-	e.pos = EnemySenses.push_out(e.pos, e.radius(), pit.cover)
+	if not pit.cover.is_empty():
+		e.pos = EnemySenses.push_out(e.pos, e.radius(), pit.cover)
 	e.pos = e.pos.clamp(pit.bounds.position, pit.bounds.end)
 	var face: Vector2 = look_at - e.pos
 	if e.state == EnemyAgent.State.PANIC or e.state == EnemyAgent.State.PATROL:
@@ -46,9 +47,10 @@ static func turn_toward(e: EnemyAgent, dir: Vector2) -> void:
 ## Steer toward `to`, easing to a stop inside `stop_m` (arrival, so nobody overshoots and jitters).
 static func arrive(e: EnemyAgent, to: Vector2, speed: float, stop_m: float = 0.25) -> Vector2:
 	var cover: Array[Rect2] = e.cover_ref
-	var via: Vector2 = EnemySenses.detour(e.pos, to, e.radius(), cover)
-	if via != to:
-		return (via - e.pos).normalized() * speed
+	if not cover.is_empty():
+		var via: Vector2 = EnemySenses.detour(e.pos, to, e.radius(), cover)
+		if via != to:
+			return (via - e.pos).normalized() * speed
 	var d: Vector2 = to - e.pos
 	var dist: float = d.length()
 	if dist <= stop_m:

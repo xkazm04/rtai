@@ -6,6 +6,7 @@ extends RefCounted
 const HALF: Vector2 = Vector2(0.5, 0.5)
 const WALL_MARGIN_M: float = 0.01
 const SECTOR_M: float = 8.0
+const MAX_SLAB_QUERIES: int = 256
 
 var searches: int = 0
 var cover_searches: int = 0
@@ -13,6 +14,8 @@ var sight_checks: int = 0
 var _grid: AStarGrid2D = AStarGrid2D.new()
 var _sectors: Dictionary[Vector2i, Array] = {}
 var _raw_sectors: Dictionary[Vector2i, Array] = {}
+var _slab_queries: Dictionary[Vector4i, Array] = {}
+var _bounds: Rect2
 var _paths: Dictionary[Vector2i, PackedVector2Array] = {}
 var _destination: Vector2i
 var _radius: float
@@ -21,6 +24,7 @@ var _radius: float
 func _init(bounds: Rect2, boxes: Array[Rect2], cells: StageCells, radius: float) -> void:
 	_radius = maxf(radius - WALL_MARGIN_M, 0.0)
 	_grid.region = Rect2i(bounds.grow(4.0))
+	_bounds = Rect2(_grid.region)
 	_grid.offset = HALF
 	_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
 	_grid.default_compute_heuristic = AStarGrid2D.HEURISTIC_OCTILE
@@ -28,7 +32,7 @@ func _init(bounds: Rect2, boxes: Array[Rect2], cells: StageCells, radius: float)
 	_grid.update()
 	for box: Rect2 in boxes:
 		_add_box(box)
-		_index_raw(box)
+		_index_shape(_raw_sectors, box, box)
 	if cells != null:
 		_index_city(cells)
 
@@ -53,21 +57,21 @@ func _index_city(cells: StageCells) -> void:
 			x += 1
 		for span: Vector2i in previous:
 			if not current.has(span):
-				_index_raw(previous[span])
+				_index_shape(_raw_sectors, previous[span], previous[span])
 		previous = current
 	for box: Rect2 in previous.values():
-		_index_raw(box)
+		_index_shape(_raw_sectors, box, box)
 
 
-func _index_raw(box: Rect2) -> void:
+func _index_shape(index: Dictionary[Vector2i, Array], box: Rect2, shape: Variant) -> void:
 	var lo: Vector2i = Vector2i((box.position / SECTOR_M).floor())
 	var hi: Vector2i = Vector2i((box.end / SECTOR_M).floor())
 	for y: int in range(lo.y, hi.y + 1):
 		for x: int in range(lo.x, hi.x + 1):
 			var key: Vector2i = Vector2i(x, y)
-			if not _raw_sectors.has(key):
-				_raw_sectors[key] = []
-			_raw_sectors[key].append(box)
+			if not index.has(key):
+				index[key] = []
+			index[key].append(shape)
 
 
 ## Raw cover faces within r metres. A building crossing sectors appears only once.
@@ -85,7 +89,7 @@ func boxes_near(p: Vector2, r: float) -> Array[Rect2]:
 
 
 func region() -> Rect2:
-	return Rect2(_grid.region)
+	return _bounds
 
 
 func _add_box(box: Rect2) -> void:
@@ -94,14 +98,7 @@ func _add_box(box: Rect2) -> void:
 	_grid.fill_solid_region(Rect2i(lo, hi - lo).intersection(_grid.region))
 	var g: Rect2 = box.grow(_radius)
 	var slab: AABB = AABB(Vector3(g.position.x, g.position.y, -1), Vector3(g.size.x, g.size.y, 2))
-	lo = Vector2i((g.position / SECTOR_M).floor())
-	hi = Vector2i((g.end / SECTOR_M).floor())
-	for y: int in range(lo.y, hi.y + 1):
-		for x: int in range(lo.x, hi.x + 1):
-			var key: Vector2i = Vector2i(x, y)
-			if not _sectors.has(key):
-				_sectors[key] = []
-			_sectors[key].append(slab)
+	_index_shape(_sectors, g, slab)
 
 
 ## Perception and attack confirmation. Navigation also uses clear_line for body clearance.
@@ -112,20 +109,32 @@ func sight_line(a: Vector2, b: Vector2) -> bool:
 
 func clear_line(a: Vector2, b: Vector2) -> bool:
 	# Outside the authored arena, hand control back to the ordinary guard approach.
-	if not (_grid.is_in_boundsv(Vector2i(a.floor())) and _grid.is_in_boundsv(Vector2i(b.floor()))):
+	if not (_bounds.has_point(a) and _bounds.has_point(b)):
 		return true
-	var lo: Vector2i = Vector2i((a.min(b) / SECTOR_M).floor())
-	var hi: Vector2i = Vector2i((a.max(b) / SECTOR_M).floor())
 	var start: Vector3 = Vector3(a.x, a.y, 0)
 	var end: Vector3 = Vector3(b.x, b.y, 0)
+	for slab: AABB in _slabs(a, b):
+		if slab.intersects_segment(start, end) != null:
+			if not (_leaves_corner(slab, start, end) or _leaves_corner(slab, end, start)):
+				return false
+	return true
+
+
+func _slabs(a: Vector2, b: Vector2) -> Array:
+	var lo: Vector2i = Vector2i((a.min(b) / SECTOR_M).floor())
+	var hi: Vector2i = Vector2i((a.max(b) / SECTOR_M).floor())
+	var key: Vector4i = Vector4i(lo.x, lo.y, hi.x, hi.y)
+	if _slab_queries.has(key):
+		return _slab_queries[key]
+	var found: Dictionary[AABB, bool] = {}
 	for y: int in range(lo.y, hi.y + 1):
 		for x: int in range(lo.x, hi.x + 1):
 			for slab: AABB in _sectors.get(Vector2i(x, y), []):
-				if slab.intersects_segment(start, end) == null:
-					continue
-				if not (_leaves_corner(slab, start, end) or _leaves_corner(slab, end, start)):
-					return false
-	return true
+				found[slab] = true
+	if _slab_queries.size() >= MAX_SLAB_QUERIES:
+		_slab_queries.clear()
+	_slab_queries[key] = found.keys()
+	return _slab_queries[key]
 
 
 ## Separation can put a round body inside the square padding at a corner. A step tangent

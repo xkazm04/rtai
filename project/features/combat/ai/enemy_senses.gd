@@ -48,12 +48,11 @@ static func best_cover(
 ) -> Vector2:
 	var best: Vector2 = Vector2.INF
 	var best_d: float = INF
+	var radius: float = e.radius()
 	for r: Rect2 in cover:
-		var spot: Vector2 = cover_spot(r, threat, e.radius())
-		if spot == Vector2.INF or not blocked(spot, threat, cover) or _taken(spot, taken):
-			continue
+		var spot: Vector2 = cover_spot(r, threat, radius)
 		var d: float = e.pos.distance_to(spot)
-		if d < best_d:
+		if d < best_d and not _taken(spot, taken) and blocked(spot, threat, cover):
 			best_d = d
 			best = spot
 	return best
@@ -123,8 +122,11 @@ static func _segment_hits_rect(a: Vector2, b: Vector2, r: Rect2) -> bool:
 		return true
 	var p: Vector2 = r.position
 	var q: Vector2 = r.end
-	var corners: Array[Vector2] = [p, Vector2(q.x, p.y), q, Vector2(p.x, q.y)]
-	for i: int in 4:
-		if Geometry2D.segment_intersects_segment(a, b, corners[i], corners[(i + 1) % 4]) != null:
-			return true
-	return false
+	var top_right: Vector2 = Vector2(q.x, p.y)
+	var bottom_left: Vector2 = Vector2(p.x, q.y)
+	return (
+		Geometry2D.segment_intersects_segment(a, b, p, top_right) != null
+		or Geometry2D.segment_intersects_segment(a, b, top_right, q) != null
+		or Geometry2D.segment_intersects_segment(a, b, q, bottom_left) != null
+		or Geometry2D.segment_intersects_segment(a, b, bottom_left, p) != null
+	)
