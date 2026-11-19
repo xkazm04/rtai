@@ -52,3 +52,70 @@ func test_only_baked_living_slots_get_their_own_contact() -> void:
 	sim.set_render(crowd.rids(), CrowdAtlas.clip_table())
 	sim.write_render(-10, -10, 10, 10)
 	assert_eq(sim.get_render_counts()[SimConst.RL_PED_SHADOWS], 3)
+
+
+func test_contact_view_installs_a_rig_pass_only_between_the_cast_thresholds() -> void:
+	var saved: ViewMode = ViewMode.shared()
+	for k: float in [0.0, RigCastShadows.CONTACT_BELOW_K * 0.5, RigCastShadows.CONTACT_BELOW_K]:
+		var view := ViewMode.new()
+		view.cast_k = k
+		ViewMode._shared = view
+		var layer: Node2D = autofree(Node2D.new())
+		var crowd := CrowdLayers.new()
+		crowd.attach(layer)
+		var shadow := crowd.nodes[SimConst.RL_PED_SHADOWS]
+		var original: Mesh = shadow.multimesh.mesh
+		CityCrowdContact.setup(crowd, CitySimRef.new())
+		var contact: bool = k > 0.0 and k < RigCastShadows.CONTACT_BELOW_K
+		assert_eq(shadow.multimesh.mesh != original, contact, "contact mesh at cast_k %s" % k)
+		var passes: int = 0
+		for child: Node in layer.get_children():
+			if child is RigCastShadows:
+				passes += 1
+		assert_eq(passes, int(contact), "standalone city pass at cast_k %s" % k)
+	ViewMode._shared = saved
+
+
+func test_every_ring_covers_its_ellipse_once() -> void:
+	var mesh := CityCrowdContact.mesh(Vector2.RIGHT)
+	var indices: PackedInt32Array = mesh.surface_get_arrays(0)[Mesh.ARRAY_INDEX]
+	var n: int = RigCastShadows.CONTACT_POINTS
+	var expected := PackedInt32Array()
+	for ring: int in RigCastShadows.CONTACT_RINGS.size():
+		var first: int = ring * n
+		for edge: int in range(1, n - 1):
+			expected.append_array(PackedInt32Array([first, first + edge, first + edge + 1]))
+	assert_eq(indices, expected, "each consecutive edge closes a triangle inside its own ring")
+
+
+func test_reference_shadow_buffers_preserve_the_top_print_and_baked_cop_contact() -> void:
+	var sim := CitySimRef.new()
+	var crowd := CrowdLayers.new()
+	var layer: Node2D = autofree(Node2D.new())
+	crowd.attach(layer)
+	var pos := Vector2(2, 3)
+	var slot: int = sim.spawn(PackedFloat64Array([SimConst.K_COP, 2, 3, 1, 0, 5, 0, 1, 0, 0]))
+	assert_eq(slot, 0)
+	sim.set_render(crowd.rids(), CrowdAtlas.clip_table())
+	sim.write_render(0, 0, 10, 10)
+	var ink: Color = Color(CitySimRender.INK, 0.3)
+	var px: Vector2 = pos * SimConst.PX_PER_M
+	_check_print(sim, px + Vector2(2, 3), CitySimRender.S_SHADOW, ink)
+	sim.set_render(crowd.rids(), CrowdAtlas.clip_table(), Vector2(12, 17))
+	sim.write_render(0, 0, 10, 10)
+	_check_print(sim, px, 17.0, Color.WHITE)
+	sim._s.mode[slot] = SimConst.M_DOWN
+	sim.write_render(0, 0, 10, 10)
+	assert_eq(sim.get_render_counts()[SimConst.RL_PED_SHADOWS], 0)
+
+
+func _check_print(sim: CitySimRef, pos: Vector2, size_px: float, color: Color) -> void:
+	var row := PackedFloat32Array(sim._render._layers[SimConst.RL_PED_SHADOWS])
+	assert_eq(row.size(), SimConst.RL_STRIDE)
+	if row.size() != SimConst.RL_STRIDE:
+		return
+	assert_eq(Vector2(row[0], row[5]), Vector2.ONE * size_px, "world size")
+	assert_eq(Vector2(row[3], row[7]), pos, "foot position")
+	assert_eq(Vector2(row[1], row[4]), Vector2.ZERO, "unrotated ground print")
+	assert_eq(Color(row[8], row[9], row[10], row[11]), color, "shadow ink")
+	assert_eq(row.slice(12), PackedFloat32Array([0, 0, 0, 0]), "untextured shadow cell")
