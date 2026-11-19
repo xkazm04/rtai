@@ -15,9 +15,7 @@
     "hand_cannon/p55/reload": "missing or invalid rivet_reload_hand_cannon.png; missing or invalid rivet_reload_hand_cannon_left.png",
     "hand_cannon/p70/reload": "missing or invalid rivet_reload_hand_cannon.png; missing or invalid rivet_reload_hand_cannon_left.png",
     "machine_pistol/p55/reload": "missing or invalid rivet_reload_machine_pistol.png; missing or invalid rivet_reload_machine_pistol_left.png",
-    "machine_pistol/p70/reload": "missing or invalid rivet_reload_machine_pistol.png; missing or invalid rivet_reload_machine_pistol_left.png",
-    "plasma_rifle/p55/left": "missing or invalid rivet_eq_plasma_rifle_left.png",
-    "plasma_rifle/p70/left": "missing or invalid rivet_eq_plasma_rifle_left.png"
+    "machine_pistol/p70/reload": "missing or invalid rivet_reload_machine_pistol.png; missing or invalid rivet_reload_machine_pistol_left.png"
   },
   "schema": "gtai.arsenal-known-holes/1"
 }

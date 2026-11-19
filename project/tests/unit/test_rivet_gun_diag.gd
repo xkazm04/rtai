@@ -123,3 +123,24 @@ func test_quest_rifle_uses_its_own_strips_at_both_pitches() -> void:
 	assert_true(RivetGunDiag.draws("p55", rifle))
 	assert_eq(RivetStrips.strip_of("p70", rifle).get_file(), "rivet_eq_assault_rifle.png")
 	assert_true(RivetGunDiag.draws("p70", rifle))
+
+
+func test_plasma_west_uses_its_side_shot_and_flashless_twin() -> void:
+	var rig: CutRig = _rig(4, 180.0)
+	rig.gun_out = true
+	rig.set_meta(RivetFrames.WEAPON, &"plasma_rifle")
+	for pitch: String in ["p55", "p70"]:
+		var left: String = RivetStrips.DIR + pitch + "/rivet_eq_plasma_rifle_left.png"
+		var fire: String = left.trim_suffix(".png") + "_fire.png"
+		assert_eq(RivetWindup.path_or(rig, pitch, &"plasma_rifle", left), fire)
+		assert_eq(RivetStrips.cells_of(fire, false), 1)
+		assert_eq(RivetFrames.cell_of(rig, 1), Vector2i.ZERO)
+		var card: Sprite2D = autofree(Sprite2D.new())
+		card.set_meta(RivetFrames.ON, fire)
+		card.texture = StreetStrips.get_tex(fire)
+		rig.set_meta(RivetNoFlash.AGE, RivetNoFlash.ticks_of(&"plasma_rifle"))
+		RivetNoFlash.show(rig, card, 0)
+		assert_eq(card.texture.resource_path, fire.trim_suffix(".png") + "_noflash.png")
+		rig.set_meta(RivetNoFlash.AGE, 0)
+		RivetNoFlash.show(rig, card, 0)
+		assert_eq(card.texture.resource_path, fire)

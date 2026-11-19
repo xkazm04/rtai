@@ -146,6 +146,22 @@
     "sheet": "rivet_eq_plasma_rifle_55_v2.png",
     "fig_h": 165
    },
+   "rivet_eq_plasma_rifle_left_fire": {
+    "mirror_from": "rivet_eq_plasma_rifle.png",
+    "pose": "_fire",
+    "regions": "left_regions/plasma_rifle.json",
+    "source_cells": [5]
+   },
+   "rivet_eq_plasma_rifle_left_fire_noflash": {
+    "mirror_from": "rivet_eq_plasma_rifle_noflash.png",
+    "pose": "_fire",
+    "regions": "left_regions/plasma_rifle.json",
+    "source_cells": [5]
+   },
+   "rivet_eq_plasma_rifle_left": {
+    "mirror_from": "rivet_eq_plasma_rifle.png",
+    "regions": "left_regions/plasma_rifle.json"
+   },
    "rivet_eq_plasma_sword": {
     "act_k": 0.85,
     "cc": "1",
@@ -424,6 +440,22 @@
     "counts": "5,3",
     "sheet": "rivet_eq_plasma_rifle_70.png",
     "fig_h": 165
+   },
+   "rivet_eq_plasma_rifle_left_fire": {
+    "mirror_from": "rivet_eq_plasma_rifle.png",
+    "pose": "_fire",
+    "regions": "left_regions/plasma_rifle.json",
+    "source_cells": [5]
+   },
+   "rivet_eq_plasma_rifle_left_fire_noflash": {
+    "mirror_from": "rivet_eq_plasma_rifle_noflash.png",
+    "pose": "_fire",
+    "regions": "left_regions/plasma_rifle.json",
+    "source_cells": [5]
+   },
+   "rivet_eq_plasma_rifle_left": {
+    "mirror_from": "rivet_eq_plasma_rifle.png",
+    "regions": "left_regions/plasma_rifle.json"
    },
    "rivet_eq_plasma_sword": {
     "act_k": 0.82,

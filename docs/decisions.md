@@ -1357,3 +1357,4 @@ One dated line per decision. Deviations use `DEVIATION <RULE-ID>` and carry a re
 - [2026-11-18] DECISION rifle art: map the legacy quest id assault-rifle to its own snake_case assault_rifle assets through the existing art_stand_in lookup. The p70 card alone uses machine_pistol until its own facing strip ships.
 
 - [2026-11-18] DECISION rifle art: WeaponArtKey resolves the quest id assault-rifle to the asset id assault_rifle at both pitches and top. Both pitches now ship their own strips, so the temporary stand-in is empty.
+- [2026-11-19] DECISION Rivet mirror-based facings: compare height and helmet fraction within 5% and shell CIE76 within 8 against the matching hand-made facing or firing pose. Keep the E-rest differences in the metrics table to show shot and facing variation.

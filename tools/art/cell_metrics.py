@@ -109,6 +109,7 @@ def report():
     manifest = json.loads(Path(__file__).with_name("rivet_frames.json").read_text())["strips"]
     rows = []
     seeds = json.loads(Path(__file__).with_name("cell_boot_seeds.json").read_text())
+    edges = json.loads(Path(__file__).with_name("cell_helmet_edges.json").read_text())
     for weapon in sorted(arsenal["weapons"]):
         gun = weapon.replace("-", "_")
         for pitch, game_scale in Y_AT_110.items():
@@ -117,10 +118,12 @@ def report():
             reload = "rivet_reload_" + gun
             groups = [(eq, FACING), (eq+"_noflash", FACING), (eq+"_diag", DIAG),
                       (eq+"_diag_noflash", DIAG), (eq+"_left", LEFT),
+                      (eq+"_left_fire", ("W-fire",)), (eq+"_left_fire_noflash", ("W-fire",)),
                       (reload, RELOAD), (reload+"_left", LEFT)]
             recipe_path = manifest[pitch].get(eq+"_left", {}).get("regions")
-            recipe = json.loads(Path(__file__).with_name("rivet_frames.json").parent.joinpath(
-                recipe_path).read_text())[pitch] if recipe_path else []
+            recipes = json.loads(Path(__file__).with_name("rivet_frames.json").parent.joinpath(
+                recipe_path).read_text()) if recipe_path else {}
+            recipe = recipes.get(pitch, [])
             measured = []
             for stem, frames in groups:
                 path = folder / (stem + ".png")
@@ -135,19 +138,26 @@ def report():
                     seed_key = f"{pitch}/{stem.removesuffix('_noflash')}"
                     seed = seeds.get(seed_key, {}).get(str(index))
                     native = stem.removesuffix("_noflash")
-                    mirror = native == eq+"_left" and bool(recipe)
+                    firing_left = native == eq+"_left_fire"
+                    side_fire = firing_left or (native == eq and index == 5)
+                    mask_rows = recipes.get(pitch+"_fire", []) if side_fire else recipe
+                    mirror = (native == eq+"_left" or firing_left) and bool(mask_rows)
                     cell = image[:, ::-1] if mirror else image
+                    if mirror:
+                        seed = seeds.get(f"{pitch}/{eq}", {}).get(str(5 if firing_left else index+1))
                     h, rgb, sample = figure(cell, 110 * factor, seed)
-                    pose = index if mirror else index-1
+                    pose = 0 if side_fire else (index if mirror else index-1)
                     gun_mask = None
-                    if recipe and (native == eq or mirror) and 0 <= pose < 3:
+                    if mask_rows and (native == eq or mirror) and 0 <= pose < len(mask_rows):
                         gun_mask = Image.new("1", (cell.shape[1], cell.shape[0]))
-                        for region in recipe[pose]:
+                        for region in mask_rows[pose]:
                             if "gun_mask" in region:
                                 ImageDraw.Draw(gun_mask).polygon(
                                     list(map(tuple, region["gun_mask"])), fill=1)
                         gun_mask = np.asarray(gun_mask)
-                    props = shape(cell, 110*factor, h, sample, gun_mask)
+                    edge_key = f"{pitch}/{eq}" if firing_left else seed_key
+                    edge = edges.get(edge_key, {}).get(str(5 if firing_left else index))
+                    props = shape(cell, 110*factor, h, sample, gun_mask, edge)
                     measured.append((stem, index, facing, h * game_scale / factor, rgb, props))
             ref = next(r for r in measured if r[:2] == (eq, 2))
             for stem, index, facing, height, rgb, props in measured:
@@ -156,20 +166,33 @@ def report():
                 hd = round(100*(ratio/baseline-1), 2) if ratio and baseline else None
                 if hd is not None and abs(hd) > HEIGHT_LIMIT:
                     flag = flag.strip("-") + "R"
+                src = None
+                if recipe and stem.removesuffix("_noflash") in (eq+"_left", eq+"_left_fire"):
+                    src_index = 5 if "_fire" in stem else index+1
+                    src = next(r for r in measured if r[:2] == (eq, src_index))
+                sh, st, sr, verdict = None, None, None, None
+                if src:
+                    sh, st, verdict = compare(height, rgb, src[3], src[4])
+                    if ratio and src[5]["helmet_ratio"]:
+                        sr = round(100*(ratio/src[5]["helmet_ratio"]-1), 2)
+                    if sr is None or abs(sr) > HEIGHT_LIMIT:
+                        verdict = verdict.strip("-") + "R"
                 rows.append(dict(weapon=weapon, pitch=pitch, strip=stem, cell=index,
                                  facing=facing, height_px=round(height, 2),
                                  shell_rgb=list(map(int, np.rint(rgb))), height_pct=delta,
-                                 delta_e=de, **props, helmet_pct=hd, flag=flag))
+                                 delta_e=de, **props, helmet_pct=hd, flag=flag, source=src[2] if src else None,
+                                 source_height_pct=sh, source_helmet_pct=sr, source_delta_e=st,
+                                 source_flag=verdict))
     return rows
 
 
 def write(out):
     rows = report()
     method = ("64 px/m standing turn scale; alpha >= 128, connected crown to sole, "
-              "median sRGB of rust pixels on upper helmet plate. E = equipped cell 2. "
+              "median sRGB of rust pixels on upper helmet plate. E = equipped cell 2. For mirror-derived poses source_flag grades the matching original facing; E-rest flags are informational. "
               "H: abs(height difference) > 5%; T: CIE76 D65 delta E > 8. "
-              "R: helmet fraction differs >5% from E. Helmet spans crown to upper central orange collar stripes; null when occluded. Width/height and mean D65 L* and C* use connected opacity between crown and sole, excluding annotated gun panels when available. Lit cells use matching flashless geometry; projecting weapons use reviewed boot seeds.")
-    out.with_suffix(".json").write_text(json.dumps(dict(method=method, rows=rows), indent=1)+"\n")
+              "R: helmet fraction differs >5% from E. Helmet spans crown to upper central orange collar stripes, or the reviewed lower helmet edge where the gun obscures that band. Width/height and mean D65 L* and C* use connected opacity between crown and sole, excluding annotated gun panels when available. Lit cells use matching flashless geometry; projecting weapons use reviewed boot seeds.")
+    out.with_suffix(".json").write_text(json.dumps(dict(method=method, rows=rows), indent=1)+"\n", newline="\n")
     with out.with_suffix(".txt").open("w", newline="\n") as f:
         print(method, file=f)
         print(*rows[0].keys(), file=f)

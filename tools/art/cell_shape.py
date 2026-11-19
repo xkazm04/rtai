@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 
 
-def shape(cell, nominal, height, sample, gun_mask=None):
+def shape(cell, nominal, height, sample, gun_mask=None, helmet_edge=None):
     alpha = (cell[:, :, 3] >= 128).astype(np.uint8)
     _, ids, stats, _ = cv2.connectedComponentsWithStats(alpha, connectivity=8)
     body = ids == (1 + stats[1:, cv2.CC_STAT_AREA].argmax())
@@ -30,6 +30,8 @@ def shape(cell, nominal, height, sample, gun_mask=None):
     if columns.sum() >= max(3, height*.025):
         upper = np.argmax(centre[:, columns], axis=0)
         helmet_h = int(round(np.median(upper))) - crown
+    if helmet_edge is not None:
+        helmet_h = helmet_edge - crown
     # Without an annotated gun mask the connected silhouette includes attached
     # equipment. Preserve that limitation instead of classifying dark ink as gun.
     visible = body & (y >= crown) & (y < crown+height)

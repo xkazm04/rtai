@@ -1,898 +1,908 @@
-64 px/m standing turn scale; alpha >= 128, connected crown to sole, median sRGB of rust pixels on upper helmet plate. E = equipped cell 2. H: abs(height difference) > 5%; T: CIE76 D65 delta E > 8. Lit cells use matching flashless geometry when supplied; projecting weapons use reviewed boot seeds.
-weapon pitch strip cell facing height_px shell_rgb height_pct delta_E flag
-assault-rifle p55 rivet_eq_assault_rifle 0 S 138.01 159,114,81 -1.2 7.63 -
-assault-rifle p55 rivet_eq_assault_rifle 1 SE 138.01 144,99,72 -1.2 1.5 -
-assault-rifle p55 rivet_eq_assault_rifle 2 E 139.68 140,96,68 0.0 0.0 -
-assault-rifle p55 rivet_eq_assault_rifle 3 NE 136.34 127,85,61 -2.4 4.85 -
-assault-rifle p55 rivet_eq_assault_rifle 4 N 136.34 121,81,60 -2.4 7.5 -
-assault-rifle p55 rivet_eq_assault_rifle 5 E-fire 141.36 162,112,79 1.2 7.68 -
-assault-rifle p55 rivet_eq_assault_rifle 6 S-fire 141.36 158,107,74 1.2 6.64 -
-assault-rifle p55 rivet_eq_assault_rifle 7 idle 145.54 152,104,73 4.19 4.51 -
-assault-rifle p55 rivet_eq_assault_rifle_noflash 0 S 138.01 159,114,81 -1.2 7.63 -
-assault-rifle p55 rivet_eq_assault_rifle_noflash 1 SE 138.01 144,99,72 -1.2 1.5 -
-assault-rifle p55 rivet_eq_assault_rifle_noflash 2 E 139.68 140,96,68 0.0 0.0 -
-assault-rifle p55 rivet_eq_assault_rifle_noflash 3 NE 136.34 127,85,61 -2.4 4.85 -
-assault-rifle p55 rivet_eq_assault_rifle_noflash 4 N 136.34 121,81,60 -2.4 7.5 -
-assault-rifle p55 rivet_eq_assault_rifle_noflash 5 E-fire 141.36 162,112,79 1.2 7.68 -
-assault-rifle p55 rivet_eq_assault_rifle_noflash 6 S-fire 141.36 158,107,74 1.2 6.64 -
-assault-rifle p55 rivet_eq_assault_rifle_noflash 7 idle 145.54 152,104,73 4.19 4.51 -
-assault-rifle p55 rivet_eq_assault_rifle_diag 0 SE 137.17 187,126,89 -1.8 15.93 T
-assault-rifle p55 rivet_eq_assault_rifle_diag 1 NE 138.01 148,97,71 -1.2 3.24 -
-assault-rifle p55 rivet_eq_assault_rifle_diag 2 SW 138.01 182,125,90 -1.2 14.08 T
-assault-rifle p55 rivet_eq_assault_rifle_diag 3 NW 138.01 178,119,86 -1.2 12.54 T
-assault-rifle p55 rivet_eq_assault_rifle_diag_noflash 0 SE 137.17 187,126,89 -1.8 15.93 T
-assault-rifle p55 rivet_eq_assault_rifle_diag_noflash 1 NE 138.01 148,97,71 -1.2 3.24 -
-assault-rifle p55 rivet_eq_assault_rifle_diag_noflash 2 SW 138.01 182,125,90 -1.2 14.08 T
-assault-rifle p55 rivet_eq_assault_rifle_diag_noflash 3 NW 138.01 178,119,86 -1.2 12.54 T
-assault-rifle p55 rivet_eq_assault_rifle_left 0 SW 138.01 182,133,95 -1.2 15.78 T
-assault-rifle p55 rivet_eq_assault_rifle_left 1 W 138.01 152,102,67 -1.2 5.89 -
-assault-rifle p55 rivet_eq_assault_rifle_left 2 NW 138.01 148,101,72 -1.2 2.74 -
-assault-rifle p55 rivet_reload_assault_rifle 0 S 136.34 206,144,106 -2.4 21.92 T
-assault-rifle p55 rivet_reload_assault_rifle 1 SE 138.01 204,141,104 -1.2 21.14 T
-assault-rifle p55 rivet_reload_assault_rifle 2 E 138.01 196,132,94 -1.2 18.87 T
-assault-rifle p55 rivet_reload_assault_rifle 3 NE 139.68 149,94,64 0.0 5.63 -
-assault-rifle p55 rivet_reload_assault_rifle 4 N 136.34 163,108,77 -2.4 7.81 -
-assault-rifle p55 rivet_reload_assault_rifle 5 SE-out 138.01 207,146,109 -1.2 22.23 T
-assault-rifle p55 rivet_reload_assault_rifle 6 SE-in 138.01 209,146,110 -1.2 22.58 T
-assault-rifle p55 rivet_reload_assault_rifle 7 SE-ready 137.17 210,146,110 -1.8 22.92 T
-assault-rifle p55 rivet_reload_assault_rifle_left 0 SW 138.01 196,134,95 -1.2 18.94 T
-assault-rifle p55 rivet_reload_assault_rifle_left 1 W 138.01 195,133,93 -1.2 18.83 T
-assault-rifle p55 rivet_reload_assault_rifle_left 2 NW 138.01 159,104,72 -1.2 7.09 -
-assault-rifle p70 rivet_eq_assault_rifle 0 S 131.53 153,109,75 -2.41 1.69 -
-assault-rifle p70 rivet_eq_assault_rifle 1 SE 133.96 159,114,79 -0.6 0.88 -
-assault-rifle p70 rivet_eq_assault_rifle 2 E 134.77 158,112,77 0.0 0.0 -
-assault-rifle p70 rivet_eq_assault_rifle 3 NE 134.77 153,108,76 0.0 2.29 -
-assault-rifle p70 rivet_eq_assault_rifle 4 N 131.53 151,105,74 -2.41 3.31 -
-assault-rifle p70 rivet_eq_assault_rifle 5 E-fire 131.53 152,110,76 -2.41 2.5 -
-assault-rifle p70 rivet_eq_assault_rifle 6 S-fire 133.15 161,117,82 -1.2 2.08 -
-assault-rifle p70 rivet_eq_assault_rifle 7 idle 142.89 148,105,74 6.02 3.89 H
-assault-rifle p70 rivet_eq_assault_rifle_noflash 0 S 131.53 153,109,75 -2.41 1.69 -
-assault-rifle p70 rivet_eq_assault_rifle_noflash 1 SE 133.96 159,114,79 -0.6 0.88 -
-assault-rifle p70 rivet_eq_assault_rifle_noflash 2 E 134.77 158,112,77 0.0 0.0 -
-assault-rifle p70 rivet_eq_assault_rifle_noflash 3 NE 134.77 153,108,76 0.0 2.29 -
-assault-rifle p70 rivet_eq_assault_rifle_noflash 4 N 131.53 151,105,74 -2.41 3.31 -
-assault-rifle p70 rivet_eq_assault_rifle_noflash 5 E-fire 131.53 152,110,76 -2.41 2.5 -
-assault-rifle p70 rivet_eq_assault_rifle_noflash 6 S-fire 133.15 161,117,82 -1.2 2.08 -
-assault-rifle p70 rivet_eq_assault_rifle_noflash 7 idle 142.89 148,105,74 6.02 3.89 H
-assault-rifle p70 rivet_eq_assault_rifle_diag 0 SE 132.34 195,123,84 -1.81 13.89 T
-assault-rifle p70 rivet_eq_assault_rifle_diag 1 NE 132.34 107,70,48 -1.81 19.1 T
-assault-rifle p70 rivet_eq_assault_rifle_diag 2 SW 134.77 193,126,86 0.0 12.33 T
-assault-rifle p70 rivet_eq_assault_rifle_diag 3 NW 132.34 125,81,54 -1.81 12.9 T
-assault-rifle p70 rivet_eq_assault_rifle_diag_noflash 0 SE 132.34 195,123,84 -1.81 13.89 T
-assault-rifle p70 rivet_eq_assault_rifle_diag_noflash 1 NE 132.34 107,70,48 -1.81 19.1 T
-assault-rifle p70 rivet_eq_assault_rifle_diag_noflash 2 SW 134.77 193,126,86 0.0 12.33 T
-assault-rifle p70 rivet_eq_assault_rifle_diag_noflash 3 NW 132.34 125,81,54 -1.81 12.9 T
-assault-rifle p70 rivet_eq_assault_rifle_left 0 SW 133.96 174,125,85 -0.6 5.87 -
-assault-rifle p70 rivet_eq_assault_rifle_left 1 W 133.96 173,122,83 -0.6 5.13 -
-assault-rifle p70 rivet_eq_assault_rifle_left 2 NW 133.96 184,132,90 -0.6 9.02 T
-assault-rifle p70 rivet_reload_assault_rifle 0 S 132.34 162,111,74 -1.81 2.85 -
-assault-rifle p70 rivet_reload_assault_rifle 1 SE 133.96 171,118,80 -0.6 4.7 -
-assault-rifle p70 rivet_reload_assault_rifle 2 E 134.77 187,127,87 0.0 9.79 T
-assault-rifle p70 rivet_reload_assault_rifle 3 NE 134.77 172,118,80 0.0 5.11 -
-assault-rifle p70 rivet_reload_assault_rifle 4 N 131.53 147,99,69 -2.41 5.4 -
-assault-rifle p70 rivet_reload_assault_rifle 5 SE-out 133.96 168,114,77 -0.6 4.29 -
-assault-rifle p70 rivet_reload_assault_rifle 6 SE-in 133.96 169,116,79 -0.6 4.11 -
-assault-rifle p70 rivet_reload_assault_rifle 7 SE-ready 133.96 167,115,78 -0.6 3.53 -
-assault-rifle p70 rivet_reload_assault_rifle_left 0 SW 133.15 191,128,91 -1.2 10.71 T
-assault-rifle p70 rivet_reload_assault_rifle_left 1 W 133.96 173,115,81 -0.6 5.88 -
-assault-rifle p70 rivet_reload_assault_rifle_left 2 NW 133.96 181,120,85 -0.6 8.03 T
-chainsaw p55 rivet_eq_chainsaw 0 S 138.01 140,106,82 -1.79 7.95 -
-chainsaw p55 rivet_eq_chainsaw 1 SE 138.01 134,97,76 -1.79 5.3 -
-chainsaw p55 rivet_eq_chainsaw 2 E 140.52 120,90,72 0.0 0.0 -
-chainsaw p55 rivet_eq_chainsaw 3 NE 138.01 122,86,68 -1.79 2.7 -
-chainsaw p55 rivet_eq_chainsaw 4 N 134.25 109,75,60 -4.46 5.92 -
-chainsaw p55 rivet_eq_chainsaw 5 E-fire 122.96 132,98,75 -12.5 4.98 H
-chainsaw p55 rivet_eq_chainsaw 6 S-fire 102.88 127,92,72 -26.79 3.23 H
-chainsaw p55 rivet_eq_chainsaw 7 idle 121.7 120,89,70 -13.39 1.2 H
-chainsaw p55 rivet_eq_chainsaw_left 0 SW 139.27 130,99,71 -0.89 7.18 -
-chainsaw p55 rivet_eq_chainsaw_left 1 W 138.01 120,89,63 -1.79 5.34 -
-chainsaw p55 rivet_eq_chainsaw_left 2 NW 138.01 121,92,69 -1.79 3.51 -
-chainsaw p70 rivet_eq_chainsaw 0 S 132.34 119,96,76 -1.81 7.47 -
-chainsaw p70 rivet_eq_chainsaw 1 SE 135.59 138,111,87 0.6 0.86 -
-chainsaw p70 rivet_eq_chainsaw 2 E 134.77 139,113,89 0.0 0.0 -
-chainsaw p70 rivet_eq_chainsaw 3 NE 133.96 161,124,90 -0.6 9.2 T
-chainsaw p70 rivet_eq_chainsaw 4 N 129.9 125,103,81 -3.61 4.88 -
-chainsaw p70 rivet_eq_chainsaw 5 E-fire 119.35 136,111,86 -11.45 1.14 H
-chainsaw p70 rivet_eq_chainsaw 6 S-fire 116.1 130,102,77 -13.86 4.45 H
-chainsaw p70 rivet_eq_chainsaw 7 idle 131.53 132,104,81 -2.41 3.54 -
-chainsaw p70 rivet_eq_chainsaw_left 0 SW 132.34 130,96,76 -1.81 7.3 -
-chainsaw p70 rivet_eq_chainsaw_left 1 W 133.96 129,92,72 -0.6 9.16 T
-chainsaw p70 rivet_eq_chainsaw_left 2 NW 134.77 140,101,79 0.0 7.12 -
-electro_baton p55 rivet_eq_electro_baton 0 S 125.46 149,116,88 0.0 7.25 -
-electro_baton p55 rivet_eq_electro_baton 1 SE 136.76 150,111,84 9.0 6.78 H
-electro_baton p55 rivet_eq_electro_baton 2 E 125.46 132,100,79 0.0 0.0 -
-electro_baton p55 rivet_eq_electro_baton 3 NE 125.46 126,93,72 0.0 2.87 -
-electro_baton p55 rivet_eq_electro_baton 4 N 125.46 145,110,86 0.0 4.65 -
-electro_baton p55 rivet_eq_electro_baton 5 E-fire 130.48 152,112,86 4.0 6.98 -
-electro_baton p55 rivet_eq_electro_baton 6 S-fire 120.45 137,100,75 -4.0 3.58 -
-electro_baton p55 rivet_eq_electro_baton 7 idle 119.19 134,102,80 -5.0 0.94 -
-electro_baton p55 rivet_eq_electro_baton_left 0 SW 140.52 159,117,77 12.0 13.78 HT
-electro_baton p55 rivet_eq_electro_baton_left 1 W 138.01 172,128,86 10.0 17.37 HT
-electro_baton p55 rivet_eq_electro_baton_left 2 NW 138.01 141,106,73 10.0 7.41 H
-electro_baton p70 rivet_eq_electro_baton 0 S 124.22 180,137,109 -5.56 3.96 H
-electro_baton p70 rivet_eq_electro_baton 1 SE 129.09 184,143,115 -1.85 3.47 -
-electro_baton p70 rivet_eq_electro_baton 2 E 131.53 187,144,110 0.0 0.0 -
-electro_baton p70 rivet_eq_electro_baton 3 NE 126.66 167,116,88 -3.7 11.07 T
-electro_baton p70 rivet_eq_electro_baton 4 N 127.87 162,119,94 -2.78 10.51 T
-electro_baton p70 rivet_eq_electro_baton 5 E-fire 125.44 196,153,123 -4.63 4.17 -
-electro_baton p70 rivet_eq_electro_baton 6 S-fire 130.31 172,129,97 -0.93 5.68 -
-electro_baton p70 rivet_eq_electro_baton 7 idle 121.78 190,149,121 -7.41 4.04 H
-electro_baton p70 rivet_eq_electro_baton_left 0 SW 132.74 156,111,91 0.93 14.21 T
-electro_baton p70 rivet_eq_electro_baton_left 1 W 133.96 162,116,90 1.85 11.19 T
-electro_baton p70 rivet_eq_electro_baton_left 2 NW 133.96 160,113,91 1.85 12.97 T
-electro_gun p55 rivet_eq_electro_gun 0 S 138.01 158,114,91 0.0 4.35 -
-electro_gun p55 rivet_eq_electro_gun 1 SE 138.85 154,109,85 0.61 2.9 -
-electro_gun p55 rivet_eq_electro_gun 2 E 138.01 147,103,82 0.0 0.0 -
-electro_gun p55 rivet_eq_electro_gun 3 NE 138.01 152,104,81 0.0 2.23 -
-electro_gun p55 rivet_eq_electro_gun 4 N 134.67 159,115,92 -2.42 4.72 -
-electro_gun p55 rivet_eq_electro_gun 5 E-fire 129.65 171,122,92 -6.06 8.97 HT
-electro_gun p55 rivet_eq_electro_gun 6 S-fire 132.99 156,111,88 -3.64 3.35 -
-electro_gun p55 rivet_eq_electro_gun 7 idle 129.65 175,125,94 -6.06 10.64 HT
-electro_gun p55 rivet_eq_electro_gun_noflash 0 S 138.01 158,114,91 0.0 4.35 -
-electro_gun p55 rivet_eq_electro_gun_noflash 1 SE 138.85 154,109,85 0.61 2.9 -
-electro_gun p55 rivet_eq_electro_gun_noflash 2 E 138.01 147,103,82 0.0 0.0 -
-electro_gun p55 rivet_eq_electro_gun_noflash 3 NE 138.01 152,104,81 0.0 2.23 -
-electro_gun p55 rivet_eq_electro_gun_noflash 4 N 134.67 159,115,92 -2.42 4.72 -
-electro_gun p55 rivet_eq_electro_gun_noflash 5 E-fire 129.65 171,122,92 -6.06 8.97 HT
-electro_gun p55 rivet_eq_electro_gun_noflash 6 S-fire 132.99 156,111,88 -3.64 3.35 -
-electro_gun p55 rivet_eq_electro_gun_noflash 7 idle 129.65 175,125,94 -6.06 10.64 HT
-electro_gun p55 rivet_eq_electro_gun_diag 0 SE 127.14 179,129,97 -7.88 12.3 HT
-electro_gun p55 rivet_eq_electro_gun_diag 1 NE 130.48 149,102,80 -5.45 1.66 H
-electro_gun p55 rivet_eq_electro_gun_diag 2 SW 127.97 168,114,82 -7.27 9.35 HT
-electro_gun p55 rivet_eq_electro_gun_diag 3 NW 129.65 158,108,83 -6.06 4.47 H
-electro_gun p55 rivet_eq_electro_gun_diag_noflash 0 SE 127.14 179,129,97 -7.88 12.3 HT
-electro_gun p55 rivet_eq_electro_gun_diag_noflash 1 NE 130.48 149,102,80 -5.45 1.66 H
-electro_gun p55 rivet_eq_electro_gun_diag_noflash 2 SW 127.97 168,114,82 -7.27 9.35 HT
-electro_gun p55 rivet_eq_electro_gun_diag_noflash 3 NW 129.65 158,108,83 -6.06 4.47 H
-electro_gun p55 rivet_eq_electro_gun_left 0 SW 138.01 147,109,82 0.0 4.31 -
-electro_gun p55 rivet_eq_electro_gun_left 1 W 138.01 134,94,70 0.0 4.63 -
-electro_gun p55 rivet_eq_electro_gun_left 2 NW 138.01 119,83,66 0.0 9.75 T
-electro_gun p70 rivet_eq_electro_gun 0 S 134.77 151,112,89 0.61 7.73 -
-electro_gun p70 rivet_eq_electro_gun 1 SE 137.21 161,124,100 2.42 5.61 -
-electro_gun p70 rivet_eq_electro_gun 2 E 133.96 174,126,99 0.0 0.0 -
-electro_gun p70 rivet_eq_electro_gun 3 NE 131.53 186,140,104 -1.82 6.86 -
-electro_gun p70 rivet_eq_electro_gun 4 N 131.53 144,106,85 -1.82 10.11 T
-electro_gun p70 rivet_eq_electro_gun 5 E-fire 124.22 151,110,88 -7.27 7.97 H
-electro_gun p70 rivet_eq_electro_gun 6 S-fire 142.89 156,114,89 6.67 5.9 H
-electro_gun p70 rivet_eq_electro_gun 7 idle 133.15 149,109,89 -0.61 9.0 T
-electro_gun p70 rivet_eq_electro_gun_noflash 0 S 134.77 151,112,89 0.61 7.73 -
-electro_gun p70 rivet_eq_electro_gun_noflash 1 SE 137.21 161,124,100 2.42 5.61 -
-electro_gun p70 rivet_eq_electro_gun_noflash 2 E 133.96 174,126,99 0.0 0.0 -
-electro_gun p70 rivet_eq_electro_gun_noflash 3 NE 131.53 186,140,104 -1.82 6.86 -
-electro_gun p70 rivet_eq_electro_gun_noflash 4 N 131.53 144,106,85 -1.82 10.11 T
-electro_gun p70 rivet_eq_electro_gun_noflash 5 E-fire 124.22 151,110,88 -7.27 7.97 H
-electro_gun p70 rivet_eq_electro_gun_noflash 6 S-fire 142.89 156,114,89 6.67 5.9 H
-electro_gun p70 rivet_eq_electro_gun_noflash 7 idle 133.15 149,109,89 -0.61 9.0 T
-electro_gun p70 rivet_eq_electro_gun_diag 0 SE 127.47 166,122,89 -4.85 3.87 -
-electro_gun p70 rivet_eq_electro_gun_diag 1 NE 126.66 180,135,99 -5.45 5.54 H
-electro_gun p70 rivet_eq_electro_gun_diag 2 SW 125.84 169,128,95 -6.06 4.16 H
-electro_gun p70 rivet_eq_electro_gun_diag 3 NW 128.28 182,137,102 -4.24 5.57 -
-electro_gun p70 rivet_eq_electro_gun_diag_noflash 0 SE 127.47 166,122,89 -4.85 3.87 -
-electro_gun p70 rivet_eq_electro_gun_diag_noflash 1 NE 126.66 180,135,99 -5.45 5.54 H
-electro_gun p70 rivet_eq_electro_gun_diag_noflash 2 SW 125.84 169,128,95 -6.06 4.16 H
-electro_gun p70 rivet_eq_electro_gun_diag_noflash 3 NW 128.28 182,137,102 -4.24 5.57 -
-electro_gun p70 rivet_eq_electro_gun_left 0 SW 132.34 142,112,83 -1.21 10.49 T
-electro_gun p70 rivet_eq_electro_gun_left 1 W 133.96 153,112,80 0.0 7.21 -
-electro_gun p70 rivet_eq_electro_gun_left 2 NW 135.59 149,116,85 1.21 8.4 T
-flamethrower p55 rivet_eq_flamethrower 0 S 138.01 145,108,80 0.0 12.6 T
-flamethrower p55 rivet_eq_flamethrower 1 SE 140.52 124,91,69 1.82 5.06 -
-flamethrower p55 rivet_eq_flamethrower 2 E 138.01 113,86,69 0.0 0.0 -
-flamethrower p55 rivet_eq_flamethrower 3 NE 139.68 122,89,67 1.21 4.74 -
-flamethrower p55 rivet_eq_flamethrower 4 N 138.01 117,88,68 0.0 2.46 -
-flamethrower p55 rivet_eq_flamethrower 5 E-fire 117.94 121,90,68 -14.55 4.25 H
-flamethrower p55 rivet_eq_flamethrower 6 S-fire 93.68 133,99,71 -32.12 9.53 HT
-flamethrower p55 rivet_eq_flamethrower 7 idle 132.16 120,88,65 -4.24 4.65 -
-flamethrower p55 rivet_eq_flamethrower_diag 0 SE 115.43 132,103,75 -16.36 9.5 HT
-flamethrower p55 rivet_eq_flamethrower_diag 1 NE 106.64 117,88,68 -22.73 2.46 H
-flamethrower p55 rivet_eq_flamethrower_diag 2 SW 116.68 138,103,80 -15.45 9.53 HT
-flamethrower p55 rivet_eq_flamethrower_diag 3 NW 105.39 119,93,72 -23.64 3.62 H
-flamethrower p70 rivet_eq_flamethrower 0 S 133.15 136,104,81 -0.61 2.94 -
-flamethrower p70 rivet_eq_flamethrower 1 SE 133.96 138,105,82 0.0 2.58 -
-flamethrower p70 rivet_eq_flamethrower 2 E 133.96 141,109,82 0.0 0.0 -
-flamethrower p70 rivet_eq_flamethrower 3 NE 136.4 126,97,77 1.82 6.6 -
-flamethrower p70 rivet_eq_flamethrower 4 N 136.4 132,101,78 1.82 3.85 -
-flamethrower p70 rivet_eq_flamethrower 5 E-fire 120.97 125,94,73 -9.7 6.57 H
-flamethrower p70 rivet_eq_flamethrower 6 S-fire 108.79 125,95,70 -18.79 5.93 H
-flamethrower p70 rivet_eq_flamethrower 7 idle 125.03 132,102,78 -6.67 3.43 H
-flamethrower p70 rivet_eq_flamethrower_diag 0 SE 121.78 128,90,67 -9.09 7.83 H
-flamethrower p70 rivet_eq_flamethrower_diag 1 NE 104.73 126,92,67 -21.82 6.72 H
-flamethrower p70 rivet_eq_flamethrower_diag 2 SW 126.66 130,93,69 -5.45 6.46 H
-flamethrower p70 rivet_eq_flamethrower_diag 3 NW 104.73 125,90,68 -21.82 7.74 H
-gatling p55 rivet_eq_gatling 0 S 138.01 145,111,85 -1.2 9.84 T
-gatling p55 rivet_eq_gatling 1 SE 139.68 128,96,73 0.0 3.66 -
-gatling p55 rivet_eq_gatling 2 E 139.68 121,89,71 0.0 0.0 -
-gatling p55 rivet_eq_gatling 3 NE 138.01 110,83,67 -1.2 3.92 -
-gatling p55 rivet_eq_gatling 4 N 137.17 113,86,69 -1.8 2.99 -
-gatling p55 rivet_eq_gatling 5 E-fire 124.63 119,86,66 -10.78 1.87 H
-gatling p55 rivet_eq_gatling 6 S-fire 116.26 132,96,73 -16.77 4.98 H
-gatling p55 rivet_eq_gatling 7 idle 126.3 124,90,70 -9.58 1.7 H
-gatling p55 rivet_eq_gatling_noflash 0 S 138.01 145,111,85 -1.2 9.84 T
-gatling p55 rivet_eq_gatling_noflash 1 SE 139.68 128,96,73 0.0 3.66 -
-gatling p55 rivet_eq_gatling_noflash 2 E 139.68 121,89,71 0.0 0.0 -
-gatling p55 rivet_eq_gatling_noflash 3 NE 138.01 110,83,67 -1.2 3.92 -
-gatling p55 rivet_eq_gatling_noflash 4 N 137.17 113,86,69 -1.8 2.99 -
-gatling p55 rivet_eq_gatling_noflash 5 E-fire 124.63 119,86,66 -10.78 1.87 H
-gatling p55 rivet_eq_gatling_noflash 6 S-fire 116.26 132,96,73 -16.77 4.98 H
-gatling p55 rivet_eq_gatling_noflash 7 idle 126.3 124,90,70 -9.58 1.7 H
-gatling p55 rivet_eq_gatling_diag 0 SE 135.5 162,113,80 -2.99 16.35 T
-gatling p55 rivet_eq_gatling_diag 1 NE 136.34 134,92,71 -2.4 5.93 -
-gatling p55 rivet_eq_gatling_diag 2 SW 136.34 164,114,83 -2.4 16.17 T
-gatling p55 rivet_eq_gatling_diag 3 NW 136.34 136,90,69 -2.4 7.91 -
-gatling p55 rivet_eq_gatling_diag_noflash 0 SE 135.5 162,113,80 -2.99 16.35 T
-gatling p55 rivet_eq_gatling_diag_noflash 1 NE 136.34 134,92,71 -2.4 5.93 -
-gatling p55 rivet_eq_gatling_diag_noflash 2 SW 136.34 164,114,83 -2.4 16.17 T
-gatling p55 rivet_eq_gatling_diag_noflash 3 NW 136.34 136,90,69 -2.4 7.91 -
-gatling p55 rivet_reload_gatling 0 S 136.34 176,128,91 -2.4 21.0 T
-gatling p55 rivet_reload_gatling 1 SE 138.01 170,124,87 -1.2 19.27 T
-gatling p55 rivet_reload_gatling 2 E 138.85 170,121,85 -0.6 19.0 T
-gatling p55 rivet_reload_gatling 3 NE 138.85 171,124,87 -0.6 19.52 T
-gatling p55 rivet_reload_gatling 4 N 138.01 176,126,86 -1.2 21.87 T
-gatling p55 rivet_reload_gatling 5 SE-out 137.17 176,124,84 -1.8 22.1 T
-gatling p55 rivet_reload_gatling 6 SE-in 138.01 175,122,83 -1.2 21.48 T
-gatling p55 rivet_reload_gatling 7 SE-ready 138.01 173,120,82 -1.2 20.6 T
-gatling p55 rivet_reload_gatling_left 0 SW 133.83 125,98,70 -4.19 6.51 -
-gatling p55 rivet_reload_gatling_left 1 W 132.16 120,86,59 -5.39 5.76 H
-gatling p55 rivet_reload_gatling_left 2 NW 132.16 115,87,63 -5.39 4.0 H
-gatling p70 rivet_eq_gatling 0 S 132.34 130,103,82 -2.4 0.75 -
-gatling p70 rivet_eq_gatling 1 SE 133.96 136,109,87 -1.2 2.92 -
-gatling p70 rivet_eq_gatling 2 E 135.59 129,102,82 0.0 0.0 -
-gatling p70 rivet_eq_gatling 3 NE 136.4 120,94,79 0.6 4.45 -
-gatling p70 rivet_eq_gatling 4 N 133.15 128,98,78 -1.8 2.0 -
-gatling p70 rivet_eq_gatling 5 E-fire 124.22 129,102,82 -8.38 0.0 H
-gatling p70 rivet_eq_gatling 6 S-fire 115.29 127,99,79 -14.97 1.23 H
-gatling p70 rivet_eq_gatling 7 idle 122.6 121,97,80 -9.58 3.17 H
-gatling p70 rivet_eq_gatling_noflash 0 S 132.34 130,103,82 -2.4 0.75 -
-gatling p70 rivet_eq_gatling_noflash 1 SE 133.96 136,109,87 -1.2 2.92 -
-gatling p70 rivet_eq_gatling_noflash 2 E 135.59 129,102,82 0.0 0.0 -
-gatling p70 rivet_eq_gatling_noflash 3 NE 136.4 120,94,79 0.6 4.45 -
-gatling p70 rivet_eq_gatling_noflash 4 N 133.15 128,98,78 -1.8 2.0 -
-gatling p70 rivet_eq_gatling_noflash 5 E-fire 124.22 129,102,82 -8.38 0.0 H
-gatling p70 rivet_eq_gatling_noflash 6 S-fire 115.29 127,99,79 -14.97 1.23 H
-gatling p70 rivet_eq_gatling_noflash 7 idle 122.6 121,97,80 -9.58 3.17 H
-gatling p70 rivet_eq_gatling_diag 0 SE 136.4 127,93,73 0.6 4.59 -
-gatling p70 rivet_eq_gatling_diag 1 NE 139.65 137,103,80 2.99 3.99 -
-gatling p70 rivet_eq_gatling_diag 2 SW 134.77 134,99,78 -0.6 3.97 -
-gatling p70 rivet_eq_gatling_diag 3 NW 138.83 136,102,80 2.4 3.76 -
-gatling p70 rivet_eq_gatling_diag_noflash 0 SE 136.4 127,93,73 0.6 4.59 -
-gatling p70 rivet_eq_gatling_diag_noflash 1 NE 139.65 137,103,80 2.99 3.99 -
-gatling p70 rivet_eq_gatling_diag_noflash 2 SW 134.77 134,99,78 -0.6 3.97 -
-gatling p70 rivet_eq_gatling_diag_noflash 3 NW 138.83 136,102,80 2.4 3.76 -
-gatling p70 rivet_reload_gatling 0 S 132.34 150,112,85 -2.4 8.18 T
-gatling p70 rivet_reload_gatling 1 SE 133.96 166,127,97 -1.2 13.26 T
-gatling p70 rivet_reload_gatling 2 E 135.59 155,114,85 0.0 10.3 T
-gatling p70 rivet_reload_gatling 3 NE 136.4 158,123,95 0.6 10.44 T
-gatling p70 rivet_reload_gatling 4 N 133.15 126,95,73 -1.8 3.57 -
-gatling p70 rivet_reload_gatling 5 SE-out 137.21 156,122,94 1.2 9.86 T
-gatling p70 rivet_reload_gatling 6 SE-in 133.15 149,113,84 -1.8 8.37 T
-gatling p70 rivet_reload_gatling 7 SE-ready 129.09 152,118,91 -4.79 8.44 T
-gatling p70 rivet_reload_gatling_left 0 SW 134.77 151,110,86 -0.6 8.23 T
-gatling p70 rivet_reload_gatling_left 1 W 133.96 176,132,102 -1.2 16.12 T
-gatling p70 rivet_reload_gatling_left 2 NW 133.15 174,129,102 -1.8 15.0 T
-gloria p55 rivet_eq_gloria 0 S 138.01 142,108,82 -0.6 10.55 T
-gloria p55 rivet_eq_gloria 1 SE 138.01 118,86,66 -0.6 1.19 -
-gloria p55 rivet_eq_gloria 2 E 138.85 117,85,67 0.0 0.0 -
-gloria p55 rivet_eq_gloria 3 NE 138.01 111,82,63 -0.6 2.12 -
-gloria p55 rivet_eq_gloria 4 N 136.34 111,84,66 -1.81 2.55 -
-gloria p55 rivet_eq_gloria 5 E-fire 131.32 116,83,64 -5.42 1.17 H
-gloria p55 rivet_eq_gloria 6 S-fire 123.79 138,102,77 -10.84 8.33 HT
-gloria p55 rivet_eq_gloria 7 idle 130.48 122,88,65 -6.02 3.28 H
-gloria p55 rivet_eq_gloria_noflash 0 S 138.01 142,108,82 -0.6 10.55 T
-gloria p55 rivet_eq_gloria_noflash 1 SE 138.01 118,86,66 -0.6 1.19 -
-gloria p55 rivet_eq_gloria_noflash 2 E 138.85 117,85,67 0.0 0.0 -
-gloria p55 rivet_eq_gloria_noflash 3 NE 138.01 111,82,63 -0.6 2.12 -
-gloria p55 rivet_eq_gloria_noflash 4 N 136.34 111,84,66 -1.81 2.55 -
-gloria p55 rivet_eq_gloria_noflash 5 E-fire 131.32 116,83,64 -5.42 1.17 H
-gloria p55 rivet_eq_gloria_noflash 6 S-fire 123.79 138,102,77 -10.84 8.33 HT
-gloria p55 rivet_eq_gloria_noflash 7 idle 130.48 122,88,65 -6.02 3.28 H
-gloria p55 rivet_eq_gloria_diag 0 SE 118.77 146,109,83 -14.46 11.09 HT
-gloria p55 rivet_eq_gloria_diag 1 NE 120.45 123,87,66 -13.25 2.99 H
-gloria p55 rivet_eq_gloria_diag 2 SW 117.94 144,108,81 -15.06 10.78 HT
-gloria p55 rivet_eq_gloria_diag 3 NW 120.45 120,88,68 -13.25 1.6 H
-gloria p55 rivet_eq_gloria_diag_noflash 0 SE 118.77 146,109,83 -14.46 11.09 HT
-gloria p55 rivet_eq_gloria_diag_noflash 1 NE 120.45 123,87,66 -13.25 2.99 H
-gloria p55 rivet_eq_gloria_diag_noflash 2 SW 117.94 144,108,81 -15.06 10.78 HT
-gloria p55 rivet_eq_gloria_diag_noflash 3 NW 120.45 120,88,68 -13.25 1.6 H
-gloria p70 rivet_eq_gloria 0 S 134.77 123,97,76 0.61 5.19 -
-gloria p70 rivet_eq_gloria 1 SE 136.4 127,100,79 1.82 4.34 -
-gloria p70 rivet_eq_gloria 2 E 133.96 134,100,75 0.0 0.0 -
-gloria p70 rivet_eq_gloria 3 NE 133.15 159,119,81 -0.61 10.8 T
-gloria p70 rivet_eq_gloria 4 N 130.71 141,106,81 -2.42 2.5 -
-gloria p70 rivet_eq_gloria 5 E-fire 119.35 129,101,78 -10.91 3.24 H
-gloria p70 rivet_eq_gloria 6 S-fire 124.22 136,106,83 -7.27 3.17 H
-gloria p70 rivet_eq_gloria 7 idle 133.96 128,101,79 0.0 3.98 -
-gloria p70 rivet_eq_gloria_noflash 0 S 134.77 123,97,76 0.61 5.19 -
-gloria p70 rivet_eq_gloria_noflash 1 SE 136.4 127,100,79 1.82 4.34 -
-gloria p70 rivet_eq_gloria_noflash 2 E 133.96 134,100,75 0.0 0.0 -
-gloria p70 rivet_eq_gloria_noflash 3 NE 133.15 159,119,81 -0.61 10.8 T
-gloria p70 rivet_eq_gloria_noflash 4 N 130.71 141,106,81 -2.42 2.5 -
-gloria p70 rivet_eq_gloria_noflash 5 E-fire 119.35 129,101,78 -10.91 3.24 H
-gloria p70 rivet_eq_gloria_noflash 6 S-fire 124.22 136,106,83 -7.27 3.17 H
-gloria p70 rivet_eq_gloria_noflash 7 idle 133.96 128,101,79 0.0 3.98 -
-gloria p70 rivet_eq_gloria_diag 0 SE 120.16 144,100,76 -10.3 4.76 H
-gloria p70 rivet_eq_gloria_diag 1 NE 123.41 159,110,80 -7.88 9.3 HT
-gloria p70 rivet_eq_gloria_diag 2 SW 120.16 142,97,73 -10.3 5.46 H
-gloria p70 rivet_eq_gloria_diag 3 NW 121.78 164,115,85 -9.09 10.37 HT
-gloria p70 rivet_eq_gloria_diag_noflash 0 SE 120.16 144,100,76 -10.3 4.76 H
-gloria p70 rivet_eq_gloria_diag_noflash 1 NE 123.41 159,110,80 -7.88 9.3 HT
-gloria p70 rivet_eq_gloria_diag_noflash 2 SW 120.16 142,97,73 -10.3 5.46 H
-gloria p70 rivet_eq_gloria_diag_noflash 3 NW 121.78 164,115,85 -9.09 10.37 HT
-hand_cannon p55 rivet_eq_hand_cannon 0 S 138.01 140,108,84 0.61 8.63 T
-hand_cannon p55 rivet_eq_hand_cannon 1 SE 138.85 121,92,74 1.22 1.36 -
-hand_cannon p55 rivet_eq_hand_cannon 2 E 137.17 117,90,72 0.0 0.0 -
-hand_cannon p55 rivet_eq_hand_cannon 3 NE 138.01 114,86,68 0.61 1.65 -
-hand_cannon p55 rivet_eq_hand_cannon 4 N 138.01 105,82,68 0.61 4.69 -
-hand_cannon p55 rivet_eq_hand_cannon 5 E-fire 129.65 132,100,78 -5.49 5.8 H
-hand_cannon p55 rivet_eq_hand_cannon 6 S-fire 130.48 130,99,77 -4.88 5.2 -
-hand_cannon p55 rivet_eq_hand_cannon 7 idle 132.16 126,95,77 -3.66 3.19 -
-hand_cannon p55 rivet_eq_hand_cannon_noflash 0 S 138.01 140,108,84 0.61 8.63 T
-hand_cannon p55 rivet_eq_hand_cannon_noflash 1 SE 138.85 121,92,74 1.22 1.36 -
-hand_cannon p55 rivet_eq_hand_cannon_noflash 2 E 137.17 117,90,72 0.0 0.0 -
-hand_cannon p55 rivet_eq_hand_cannon_noflash 3 NE 138.01 114,86,68 0.61 1.65 -
-hand_cannon p55 rivet_eq_hand_cannon_noflash 4 N 138.01 105,82,68 0.61 4.69 -
-hand_cannon p55 rivet_eq_hand_cannon_noflash 5 E-fire 129.65 132,100,78 -5.49 5.8 H
-hand_cannon p55 rivet_eq_hand_cannon_noflash 6 S-fire 130.48 130,99,77 -4.88 5.2 -
-hand_cannon p55 rivet_eq_hand_cannon_noflash 7 idle 132.16 126,95,77 -3.66 3.19 -
-hand_cannon p55 rivet_eq_hand_cannon_diag 0 SE 123.79 143,95,70 -9.76 12.19 HT
-hand_cannon p55 rivet_eq_hand_cannon_diag 1 NE 123.79 130,89,71 -9.76 7.03 H
-hand_cannon p55 rivet_eq_hand_cannon_diag 2 SW 124.63 149,99,75 -9.15 13.28 HT
-hand_cannon p55 rivet_eq_hand_cannon_diag 3 NW 124.63 135,93,74 -9.15 7.89 H
-hand_cannon p55 rivet_eq_hand_cannon_diag_noflash 0 SE 123.79 143,95,70 -9.76 12.19 HT
-hand_cannon p55 rivet_eq_hand_cannon_diag_noflash 1 NE 123.79 130,89,71 -9.76 7.03 H
-hand_cannon p55 rivet_eq_hand_cannon_diag_noflash 2 SW 124.63 149,99,75 -9.15 13.28 HT
-hand_cannon p55 rivet_eq_hand_cannon_diag_noflash 3 NW 124.63 135,93,74 -9.15 7.89 H
-hand_cannon p55 rivet_eq_hand_cannon_left 0 SW 139.68 138,103,72 1.83 10.5 T
-hand_cannon p55 rivet_eq_hand_cannon_left 1 W 137.17 132,92,63 0.0 10.01 T
-hand_cannon p55 rivet_eq_hand_cannon_left 2 NW 138.01 123,91,65 0.61 5.6 -
-hand_cannon p70 rivet_eq_hand_cannon 0 S 121.78 122,94,75 -8.54 3.42 H
-hand_cannon p70 rivet_eq_hand_cannon 1 SE 135.59 120,91,73 1.83 3.81 -
-hand_cannon p70 rivet_eq_hand_cannon 2 E 133.15 131,98,80 0.0 0.0 -
-hand_cannon p70 rivet_eq_hand_cannon 3 NE 133.96 129,97,77 0.61 1.31 -
-hand_cannon p70 rivet_eq_hand_cannon 4 N 127.47 125,96,79 -4.27 2.53 -
-hand_cannon p70 rivet_eq_hand_cannon 5 E-fire 113.67 122,92,72 -14.63 3.36 H
-hand_cannon p70 rivet_eq_hand_cannon 6 S-fire 119.35 125,94,75 -10.37 2.22 H
-hand_cannon p70 rivet_eq_hand_cannon 7 idle 108.79 123,96,75 -18.29 3.6 H
-hand_cannon p70 rivet_eq_hand_cannon_noflash 0 S 121.78 122,94,75 -8.54 3.42 H
-hand_cannon p70 rivet_eq_hand_cannon_noflash 1 SE 135.59 120,91,73 1.83 3.81 -
-hand_cannon p70 rivet_eq_hand_cannon_noflash 2 E 133.15 131,98,80 0.0 0.0 -
-hand_cannon p70 rivet_eq_hand_cannon_noflash 3 NE 133.96 129,97,77 0.61 1.31 -
-hand_cannon p70 rivet_eq_hand_cannon_noflash 4 N 127.47 125,96,79 -4.27 2.53 -
-hand_cannon p70 rivet_eq_hand_cannon_noflash 5 E-fire 113.67 122,92,72 -14.63 3.36 H
-hand_cannon p70 rivet_eq_hand_cannon_noflash 6 S-fire 119.35 125,94,75 -10.37 2.22 H
-hand_cannon p70 rivet_eq_hand_cannon_noflash 7 idle 108.79 123,96,75 -18.29 3.6 H
-hand_cannon p70 rivet_eq_hand_cannon_diag 0 SE 123.41 139,102,83 -7.32 2.74 H
-hand_cannon p70 rivet_eq_hand_cannon_diag 1 NE 115.29 133,98,80 -13.41 1.17 H
-hand_cannon p70 rivet_eq_hand_cannon_diag 2 SW 112.85 138,100,81 -15.24 2.75 H
-hand_cannon p70 rivet_eq_hand_cannon_diag 3 NW 115.29 141,103,82 -13.41 3.81 H
-hand_cannon p70 rivet_eq_hand_cannon_diag_noflash 0 SE 123.41 139,102,83 -7.32 2.74 H
-hand_cannon p70 rivet_eq_hand_cannon_diag_noflash 1 NE 115.29 133,98,80 -13.41 1.17 H
-hand_cannon p70 rivet_eq_hand_cannon_diag_noflash 2 SW 112.85 138,100,81 -15.24 2.75 H
-hand_cannon p70 rivet_eq_hand_cannon_diag_noflash 3 NW 115.29 141,103,82 -13.41 3.81 H
-hand_cannon p70 rivet_eq_hand_cannon_left 0 SW 133.96 137,98,79 0.61 3.02 -
-hand_cannon p70 rivet_eq_hand_cannon_left 1 W 133.15 135,96,76 0.0 3.3 -
-hand_cannon p70 rivet_eq_hand_cannon_left 2 NW 134.77 141,101,81 1.22 3.99 -
-homing_shard p55 rivet_eq_homing_shard 0 S 137.17 137,103,77 -1.8 7.28 -
-homing_shard p55 rivet_eq_homing_shard 1 SE 138.01 123,90,69 -1.2 1.84 -
-homing_shard p55 rivet_eq_homing_shard 2 E 139.68 122,88,70 0.0 0.0 -
-homing_shard p55 rivet_eq_homing_shard 3 NE 138.01 116,82,64 -1.2 2.51 -
-homing_shard p55 rivet_eq_homing_shard 4 N 136.34 143,102,78 -2.4 7.9 -
-homing_shard p55 rivet_eq_homing_shard 5 E-fire 125.46 119,84,64 -10.18 2.2 H
-homing_shard p55 rivet_eq_homing_shard 6 S-fire 123.79 141,100,75 -11.38 7.64 H
-homing_shard p55 rivet_eq_homing_shard 7 idle 125.46 134,98,73 -10.18 5.73 H
-homing_shard p55 rivet_eq_homing_shard_noflash 0 S 137.17 137,103,77 -1.8 7.28 -
-homing_shard p55 rivet_eq_homing_shard_noflash 1 SE 138.01 123,90,69 -1.2 1.84 -
-homing_shard p55 rivet_eq_homing_shard_noflash 2 E 139.68 122,88,70 0.0 0.0 -
-homing_shard p55 rivet_eq_homing_shard_noflash 3 NE 138.01 116,82,64 -1.2 2.51 -
-homing_shard p55 rivet_eq_homing_shard_noflash 4 N 136.34 143,102,78 -2.4 7.9 -
-homing_shard p55 rivet_eq_homing_shard_noflash 5 E-fire 125.46 119,84,64 -10.18 2.2 H
-homing_shard p55 rivet_eq_homing_shard_noflash 6 S-fire 123.79 141,100,75 -11.38 7.64 H
-homing_shard p55 rivet_eq_homing_shard_noflash 7 idle 125.46 134,98,73 -10.18 5.73 H
-homing_shard p55 rivet_eq_homing_shard_diag 0 SE 133.83 171,105,68 -4.19 22.07 T
-homing_shard p55 rivet_eq_homing_shard_diag 1 NE 136.34 165,107,76 -2.4 17.17 T
-homing_shard p55 rivet_eq_homing_shard_diag 2 SW 139.68 182,118,79 0.0 23.83 T
-homing_shard p55 rivet_eq_homing_shard_diag 3 NW 142.19 156,104,81 1.8 12.19 T
-homing_shard p55 rivet_eq_homing_shard_diag_noflash 0 SE 133.83 171,105,68 -4.19 22.07 T
-homing_shard p55 rivet_eq_homing_shard_diag_noflash 1 NE 136.34 165,107,76 -2.4 17.17 T
-homing_shard p55 rivet_eq_homing_shard_diag_noflash 2 SW 139.68 182,118,79 0.0 23.83 T
-homing_shard p55 rivet_eq_homing_shard_diag_noflash 3 NW 142.19 156,104,81 1.8 12.19 T
-homing_shard p55 rivet_eq_homing_shard_left 0 SW 138.01 158,116,76 -1.2 17.14 T
-homing_shard p55 rivet_eq_homing_shard_left 1 W 136.34 150,104,67 -2.4 14.58 T
-homing_shard p55 rivet_eq_homing_shard_left 2 NW 138.01 136,97,64 -1.2 9.94 T
-homing_shard p55 rivet_reload_homing_shard 0 S 138.01 202,142,101 -1.2 28.89 T
-homing_shard p55 rivet_reload_homing_shard 1 SE 140.52 199,139,98 0.6 27.96 T
-homing_shard p55 rivet_reload_homing_shard 2 E 138.01 188,124,83 -1.2 25.59 T
-homing_shard p55 rivet_reload_homing_shard 3 NE 138.01 166,104,70 -1.2 19.29 T
-homing_shard p55 rivet_reload_homing_shard 4 N 138.01 192,123,81 -1.2 27.49 T
-homing_shard p55 rivet_reload_homing_shard 5 SE-out 153.07 205,143,102 9.58 29.59 HT
-homing_shard p55 rivet_reload_homing_shard 6 SE-in 153.07 204,142,101 9.58 29.32 HT
-homing_shard p55 rivet_reload_homing_shard 7 SE-ready 153.07 205,144,102 9.58 29.7 HT
-homing_shard p55 rivet_reload_homing_shard_left 0 SW 139.68 168,118,69 0.0 22.96 T
-homing_shard p55 rivet_reload_homing_shard_left 1 W 138.01 170,116,65 -1.2 24.7 T
-homing_shard p55 rivet_reload_homing_shard_left 2 NW 138.01 159,110,64 -1.2 20.19 T
-homing_shard p70 rivet_eq_homing_shard 0 S 131.53 129,96,74 -1.82 8.01 T
-homing_shard p70 rivet_eq_homing_shard 1 SE 134.77 149,112,85 0.61 0.95 -
-homing_shard p70 rivet_eq_homing_shard 2 E 133.96 150,114,86 0.0 0.0 -
-homing_shard p70 rivet_eq_homing_shard 3 NE 133.96 129,92,70 0.0 8.98 T
-homing_shard p70 rivet_eq_homing_shard 4 N 129.09 126,93,70 -3.64 8.99 T
-homing_shard p70 rivet_eq_homing_shard 5 E-fire 120.16 129,95,72 -10.3 8.02 HT
-homing_shard p70 rivet_eq_homing_shard 6 S-fire 118.54 141,99,70 -11.52 6.34 H
-homing_shard p70 rivet_eq_homing_shard 7 idle 129.09 130,96,73 -3.64 7.65 -
-homing_shard p70 rivet_eq_homing_shard_noflash 0 S 131.53 129,96,74 -1.82 8.01 T
-homing_shard p70 rivet_eq_homing_shard_noflash 1 SE 134.77 149,112,85 0.61 0.95 -
-homing_shard p70 rivet_eq_homing_shard_noflash 2 E 133.96 150,114,86 0.0 0.0 -
-homing_shard p70 rivet_eq_homing_shard_noflash 3 NE 133.96 129,92,70 0.0 8.98 T
-homing_shard p70 rivet_eq_homing_shard_noflash 4 N 129.09 126,93,70 -3.64 8.99 T
-homing_shard p70 rivet_eq_homing_shard_noflash 5 E-fire 120.16 129,95,72 -10.3 8.02 HT
-homing_shard p70 rivet_eq_homing_shard_noflash 6 S-fire 118.54 141,99,70 -11.52 6.34 H
-homing_shard p70 rivet_eq_homing_shard_noflash 7 idle 129.09 130,96,73 -3.64 7.65 -
-homing_shard p70 rivet_eq_homing_shard_diag 0 SE 133.96 180,120,81 0.0 14.09 T
-homing_shard p70 rivet_eq_homing_shard_diag 1 NE 133.96 162,107,73 0.0 10.43 T
-homing_shard p70 rivet_eq_homing_shard_diag 2 SW 132.34 167,109,73 -1.21 12.21 T
-homing_shard p70 rivet_eq_homing_shard_diag 3 NW 134.77 174,112,74 0.61 14.48 T
-homing_shard p70 rivet_eq_homing_shard_diag_noflash 0 SE 133.96 180,120,81 0.0 14.09 T
-homing_shard p70 rivet_eq_homing_shard_diag_noflash 1 NE 133.96 162,107,73 0.0 10.43 T
-homing_shard p70 rivet_eq_homing_shard_diag_noflash 2 SW 132.34 167,109,73 -1.21 12.21 T
-homing_shard p70 rivet_eq_homing_shard_diag_noflash 3 NW 134.77 174,112,74 0.61 14.48 T
-homing_shard p70 rivet_eq_homing_shard_left 0 SW 133.15 146,105,80 -0.61 4.04 -
-homing_shard p70 rivet_eq_homing_shard_left 1 W 133.96 148,103,77 0.0 5.59 -
-homing_shard p70 rivet_eq_homing_shard_left 2 NW 134.77 156,111,83 0.61 4.27 -
-homing_shard p70 rivet_reload_homing_shard 0 S 134.77 198,137,94 0.61 18.11 T
-homing_shard p70 rivet_reload_homing_shard 1 SE 133.96 197,136,93 0.0 17.78 T
-homing_shard p70 rivet_reload_homing_shard 2 E 133.15 192,130,88 -0.61 16.89 T
-homing_shard p70 rivet_reload_homing_shard 3 NE 134.77 214,153,107 0.61 22.29 T
-homing_shard p70 rivet_reload_homing_shard 4 N 133.96 202,141,96 0.0 19.45 T
-homing_shard p70 rivet_reload_homing_shard 5 SE-out 139.65 199,136,91 4.24 19.1 T
-homing_shard p70 rivet_reload_homing_shard 6 SE-in 139.65 196,134,91 4.24 17.85 T
-homing_shard p70 rivet_reload_homing_shard 7 SE-ready 139.65 203,138,94 4.24 19.9 T
-homing_shard p70 rivet_reload_homing_shard_left 0 SW 133.96 191,108,74 0.0 23.16 T
-homing_shard p70 rivet_reload_homing_shard_left 1 W 133.96 168,90,61 0.0 21.56 T
-homing_shard p70 rivet_reload_homing_shard_left 2 NW 133.96 165,89,59 0.0 21.07 T
-katana p55 rivet_eq_katana 0 S 136.76 140,110,84 -0.91 9.0 T
-katana p55 rivet_eq_katana 1 SE 138.01 128,92,72 0.0 3.09 -
-katana p55 rivet_eq_katana 2 E 138.01 120,89,69 0.0 0.0 -
-katana p55 rivet_eq_katana 3 NE 138.01 113,84,64 0.0 2.39 -
-katana p55 rivet_eq_katana 4 N 135.5 100,74,61 -1.82 8.02 T
-katana p55 rivet_eq_katana 5 E-fire 135.5 129,99,76 -1.82 4.22 -
-katana p55 rivet_eq_katana 6 S-fire 111.66 130,98,76 -19.09 4.04 H
-katana p55 rivet_eq_katana 7 idle 134.25 117,85,65 -2.73 1.64 -
-katana p55 rivet_eq_katana_left 0 SW 138.01 130,96,66 0.0 6.74 -
-katana p55 rivet_eq_katana_left 1 W 136.76 123,87,60 -0.91 5.22 -
-katana p55 rivet_eq_katana_left 2 NW 138.01 123,89,63 0.0 4.03 -
-katana p70 rivet_eq_katana 0 S 129.9 126,99,78 -3.61 3.75 -
-katana p70 rivet_eq_katana 1 SE 134.77 133,103,81 0.0 1.95 -
-katana p70 rivet_eq_katana 2 E 134.77 135,106,81 0.0 0.0 -
-katana p70 rivet_eq_katana 3 NE 133.96 123,96,76 -0.6 5.08 -
-katana p70 rivet_eq_katana 4 N 129.09 116,90,73 -4.22 8.08 T
-katana p70 rivet_eq_katana 5 E-fire 118.54 124,97,75 -12.05 4.24 H
-katana p70 rivet_eq_katana 6 S-fire 109.61 126,99,76 -18.67 3.23 H
-katana p70 rivet_eq_katana 7 idle 116.1 131,102,81 -13.86 2.67 H
-katana p70 rivet_eq_katana_left 0 SW 132.34 148,111,89 -1.81 4.7 -
-katana p70 rivet_eq_katana_left 1 W 133.96 142,102,82 -0.6 5.53 -
-katana p70 rivet_eq_katana_left 2 NW 135.59 149,111,90 0.6 5.26 -
-machine_pistol p55 rivet_eq_machine_pistol 0 S 138.01 129,98,75 0.0 1.26 -
-machine_pistol p55 rivet_eq_machine_pistol 1 SE 138.85 132,98,75 0.61 1.66 -
-machine_pistol p55 rivet_eq_machine_pistol 2 E 138.01 130,97,76 0.0 0.0 -
-machine_pistol p55 rivet_eq_machine_pistol 3 NE 136.34 125,92,70 -1.21 2.17 -
-machine_pistol p55 rivet_eq_machine_pistol 4 N 136.34 139,103,77 -1.21 4.24 -
-machine_pistol p55 rivet_eq_machine_pistol 5 E-fire 131.32 134,99,76 -4.85 1.98 -
-machine_pistol p55 rivet_eq_machine_pistol 6 S-fire 128.81 139,103,79 -6.67 3.56 H
-machine_pistol p55 rivet_eq_machine_pistol 7 idle 135.5 137,101,77 -1.82 3.08 -
-machine_pistol p55 rivet_eq_machine_pistol_noflash 0 S 138.01 129,98,75 0.0 1.26 -
-machine_pistol p55 rivet_eq_machine_pistol_noflash 1 SE 138.85 132,98,75 0.61 1.66 -
-machine_pistol p55 rivet_eq_machine_pistol_noflash 2 E 138.01 130,97,76 0.0 0.0 -
-machine_pistol p55 rivet_eq_machine_pistol_noflash 3 NE 136.34 125,92,70 -1.21 2.17 -
-machine_pistol p55 rivet_eq_machine_pistol_noflash 4 N 136.34 139,103,77 -1.21 4.24 -
-machine_pistol p55 rivet_eq_machine_pistol_noflash 5 E-fire 131.32 134,99,76 -4.85 1.98 -
-machine_pistol p55 rivet_eq_machine_pistol_noflash 6 S-fire 128.81 139,103,79 -6.67 3.56 H
-machine_pistol p55 rivet_eq_machine_pistol_noflash 7 idle 135.5 137,101,77 -1.82 3.08 -
-machine_pistol p55 rivet_eq_machine_pistol_diag 0 SE 140.52 149,104,77 1.82 8.05 T
-machine_pistol p55 rivet_eq_machine_pistol_diag 1 NE 140.52 148,102,75 1.82 8.02 T
-machine_pistol p55 rivet_eq_machine_pistol_diag 2 SW 138.01 156,109,77 0.0 11.26 T
-machine_pistol p55 rivet_eq_machine_pistol_diag 3 NW 139.68 152,112,86 1.21 7.84 -
-machine_pistol p55 rivet_eq_machine_pistol_diag_noflash 0 SE 140.52 149,104,77 1.82 8.05 T
-machine_pistol p55 rivet_eq_machine_pistol_diag_noflash 1 NE 140.52 148,102,75 1.82 8.02 T
-machine_pistol p55 rivet_eq_machine_pistol_diag_noflash 2 SW 138.01 156,109,77 0.0 11.26 T
-machine_pistol p55 rivet_eq_machine_pistol_diag_noflash 3 NW 139.68 152,112,86 1.21 7.84 -
-machine_pistol p55 rivet_eq_machine_pistol_left 0 SW 138.01 127,97,67 0.0 5.14 -
-machine_pistol p55 rivet_eq_machine_pistol_left 1 W 136.34 119,86,60 -1.21 5.78 -
-machine_pistol p55 rivet_eq_machine_pistol_left 2 NW 138.01 121,90,63 0.0 4.79 -
-machine_pistol p70 rivet_eq_machine_pistol 0 S 133.96 120,92,74 0.0 1.42 -
-machine_pistol p70 rivet_eq_machine_pistol 1 SE 135.59 128,100,80 1.21 2.54 -
-machine_pistol p70 rivet_eq_machine_pistol 2 E 133.96 124,95,78 0.0 0.0 -
-machine_pistol p70 rivet_eq_machine_pistol 3 NE 131.53 116,89,72 -1.82 2.77 -
-machine_pistol p70 rivet_eq_machine_pistol 4 N 127.47 111,86,70 -4.85 4.44 -
-machine_pistol p70 rivet_eq_machine_pistol 5 E-fire 128.28 122,91,72 -4.24 2.28 -
-machine_pistol p70 rivet_eq_machine_pistol 6 S-fire 127.47 117,91,71 -4.85 2.9 -
-machine_pistol p70 rivet_eq_machine_pistol 7 idle 124.22 130,101,80 -7.27 3.26 H
-machine_pistol p70 rivet_eq_machine_pistol_noflash 0 S 133.96 120,92,74 0.0 1.42 -
-machine_pistol p70 rivet_eq_machine_pistol_noflash 1 SE 135.59 128,100,80 1.21 2.54 -
-machine_pistol p70 rivet_eq_machine_pistol_noflash 2 E 133.96 124,95,78 0.0 0.0 -
-machine_pistol p70 rivet_eq_machine_pistol_noflash 3 NE 131.53 116,89,72 -1.82 2.77 -
-machine_pistol p70 rivet_eq_machine_pistol_noflash 4 N 127.47 111,86,70 -4.85 4.44 -
-machine_pistol p70 rivet_eq_machine_pistol_noflash 5 E-fire 128.28 122,91,72 -4.24 2.28 -
-machine_pistol p70 rivet_eq_machine_pistol_noflash 6 S-fire 127.47 117,91,71 -4.85 2.9 -
-machine_pistol p70 rivet_eq_machine_pistol_noflash 7 idle 124.22 130,101,80 -7.27 3.26 H
-machine_pistol p70 rivet_eq_machine_pistol_diag 0 SE 133.15 138,101,77 -0.61 6.67 -
-machine_pistol p70 rivet_eq_machine_pistol_diag 1 NE 138.83 142,102,78 3.64 7.95 -
-machine_pistol p70 rivet_eq_machine_pistol_diag 2 SW 131.53 139,100,77 -1.82 6.94 -
-machine_pistol p70 rivet_eq_machine_pistol_diag 3 NW 138.83 146,107,82 3.64 8.85 T
-machine_pistol p70 rivet_eq_machine_pistol_diag_noflash 0 SE 133.15 138,101,77 -0.61 6.67 -
-machine_pistol p70 rivet_eq_machine_pistol_diag_noflash 1 NE 138.83 142,102,78 3.64 7.95 -
-machine_pistol p70 rivet_eq_machine_pistol_diag_noflash 2 SW 131.53 139,100,77 -1.82 6.94 -
-machine_pistol p70 rivet_eq_machine_pistol_diag_noflash 3 NW 138.83 146,107,82 3.64 8.85 T
-machine_pistol p70 rivet_eq_machine_pistol_left 0 SW 133.96 137,101,83 0.0 4.66 -
-machine_pistol p70 rivet_eq_machine_pistol_left 1 W 133.96 139,102,81 0.0 5.87 -
-machine_pistol p70 rivet_eq_machine_pistol_left 2 NW 133.96 144,108,87 0.0 7.08 -
-mini_nuke p55 rivet_eq_mini_nuke 0 S 138.01 136,103,82 -1.79 7.0 -
-mini_nuke p55 rivet_eq_mini_nuke 1 SE 138.01 125,93,74 -1.79 2.86 -
-mini_nuke p55 rivet_eq_mini_nuke 2 E 140.52 118,86,67 0.0 0.0 -
-mini_nuke p55 rivet_eq_mini_nuke 3 NE 138.85 112,83,67 -1.19 2.62 -
-mini_nuke p55 rivet_eq_mini_nuke 4 N 137.17 130,95,78 -2.38 4.42 -
-mini_nuke p55 rivet_eq_mini_nuke 5 E-fire 143.87 126,89,70 2.38 3.08 -
-mini_nuke p55 rivet_eq_mini_nuke 6 S-fire 140.52 132,97,76 0.0 5.08 -
-mini_nuke p55 rivet_eq_mini_nuke 7 idle 139.68 122,88,70 -0.6 1.45 -
-mini_nuke p55 rivet_eq_mini_nuke_noflash 0 S 138.01 136,103,82 -1.79 7.0 -
-mini_nuke p55 rivet_eq_mini_nuke_noflash 1 SE 138.01 125,93,74 -1.79 2.86 -
-mini_nuke p55 rivet_eq_mini_nuke_noflash 2 E 140.52 118,86,67 0.0 0.0 -
-mini_nuke p55 rivet_eq_mini_nuke_noflash 3 NE 138.85 112,83,67 -1.19 2.62 -
-mini_nuke p55 rivet_eq_mini_nuke_noflash 4 N 137.17 130,95,78 -2.38 4.42 -
-mini_nuke p55 rivet_eq_mini_nuke_noflash 5 E-fire 143.87 126,89,70 2.38 3.08 -
-mini_nuke p55 rivet_eq_mini_nuke_noflash 6 S-fire 140.52 132,97,76 0.0 5.08 -
-mini_nuke p55 rivet_eq_mini_nuke_noflash 7 idle 139.68 122,88,70 -0.6 1.45 -
-mini_nuke p55 rivet_eq_mini_nuke_diag 0 SE 138.85 151,101,76 -1.19 12.11 T
-mini_nuke p55 rivet_eq_mini_nuke_diag 1 NE 139.68 137,84,63 -0.6 10.86 T
-mini_nuke p55 rivet_eq_mini_nuke_diag 2 SW 137.17 157,104,81 -2.38 13.75 T
-mini_nuke p55 rivet_eq_mini_nuke_diag 3 NW 137.17 150,99,75 -2.38 12.04 T
-mini_nuke p55 rivet_eq_mini_nuke_diag_noflash 0 SE 138.85 151,101,76 -1.19 12.11 T
-mini_nuke p55 rivet_eq_mini_nuke_diag_noflash 1 NE 139.68 137,84,63 -0.6 10.86 T
-mini_nuke p55 rivet_eq_mini_nuke_diag_noflash 2 SW 137.17 157,104,81 -2.38 13.75 T
-mini_nuke p55 rivet_eq_mini_nuke_diag_noflash 3 NW 137.17 150,99,75 -2.38 12.04 T
-mini_nuke p55 rivet_eq_mini_nuke_left 0 SW 137.17 122,83,61 -2.38 4.28 -
-mini_nuke p55 rivet_eq_mini_nuke_left 1 W 137.17 118,84,63 -2.38 1.86 -
-mini_nuke p55 rivet_eq_mini_nuke_left 2 NW 137.17 113,81,59 -2.38 2.87 -
-mini_nuke p70 rivet_eq_mini_nuke 0 S 132.34 124,96,76 -1.21 7.07 -
-mini_nuke p70 rivet_eq_mini_nuke 1 SE 137.21 136,105,84 2.42 3.21 -
-mini_nuke p70 rivet_eq_mini_nuke 2 E 133.96 143,110,85 0.0 0.0 -
-mini_nuke p70 rivet_eq_mini_nuke 3 NE 134.77 150,111,80 0.61 4.75 -
-mini_nuke p70 rivet_eq_mini_nuke 4 N 124.22 129,99,77 -7.27 5.01 H
-mini_nuke p70 rivet_eq_mini_nuke 5 E-fire 130.71 132,101,80 -2.42 4.34 -
-mini_nuke p70 rivet_eq_mini_nuke 6 S-fire 120.16 122,92,72 -10.3 7.98 H
-mini_nuke p70 rivet_eq_mini_nuke 7 idle 130.71 128,100,80 -2.42 5.66 -
-mini_nuke p70 rivet_eq_mini_nuke_noflash 0 S 132.34 124,96,76 -1.21 7.07 -
-mini_nuke p70 rivet_eq_mini_nuke_noflash 1 SE 137.21 136,105,84 2.42 3.21 -
-mini_nuke p70 rivet_eq_mini_nuke_noflash 2 E 133.96 143,110,85 0.0 0.0 -
-mini_nuke p70 rivet_eq_mini_nuke_noflash 3 NE 134.77 150,111,80 0.61 4.75 -
-mini_nuke p70 rivet_eq_mini_nuke_noflash 4 N 124.22 129,99,77 -7.27 5.01 H
-mini_nuke p70 rivet_eq_mini_nuke_noflash 5 E-fire 130.71 132,101,80 -2.42 4.34 -
-mini_nuke p70 rivet_eq_mini_nuke_noflash 6 S-fire 120.16 122,92,72 -10.3 7.98 H
-mini_nuke p70 rivet_eq_mini_nuke_noflash 7 idle 130.71 128,100,80 -2.42 5.66 -
-mini_nuke p70 rivet_eq_mini_nuke_diag 0 SE 133.15 155,107,83 -0.61 6.98 -
-mini_nuke p70 rivet_eq_mini_nuke_diag 1 NE 133.96 172,116,84 0.0 12.91 T
-mini_nuke p70 rivet_eq_mini_nuke_diag 2 SW 133.96 163,114,86 0.0 8.21 T
-mini_nuke p70 rivet_eq_mini_nuke_diag 3 NW 133.96 160,109,84 0.0 8.48 T
-mini_nuke p70 rivet_eq_mini_nuke_diag_noflash 0 SE 133.15 155,107,83 -0.61 6.98 -
-mini_nuke p70 rivet_eq_mini_nuke_diag_noflash 1 NE 133.96 172,116,84 0.0 12.91 T
-mini_nuke p70 rivet_eq_mini_nuke_diag_noflash 2 SW 133.96 163,114,86 0.0 8.21 T
-mini_nuke p70 rivet_eq_mini_nuke_diag_noflash 3 NW 133.96 160,109,84 0.0 8.48 T
-mini_nuke p70 rivet_eq_mini_nuke_left 0 SW 130.71 144,107,81 -2.42 2.09 -
-mini_nuke p70 rivet_eq_mini_nuke_left 1 W 130.71 148,111,85 -2.42 2.11 -
-mini_nuke p70 rivet_eq_mini_nuke_left 2 NW 130.71 136,103,79 -2.42 2.79 -
-molotov p55 rivet_eq_molotov 0 S 137.17 140,107,82 -1.8 9.33 T
-molotov p55 rivet_eq_molotov 1 SE 138.01 126,94,74 -1.2 3.42 -
-molotov p55 rivet_eq_molotov 2 E 139.68 119,89,74 0.0 0.0 -
-molotov p55 rivet_eq_molotov 3 NE 139.68 115,86,70 0.0 1.53 -
-molotov p55 rivet_eq_molotov 4 N 136.34 143,107,84 -2.4 9.35 T
-molotov p55 rivet_eq_molotov 5 E-fire 137.17 136,100,75 -1.8 8.4 T
-molotov p55 rivet_eq_molotov 6 S-fire 121.28 136,100,78 -13.17 7.09 H
-molotov p55 rivet_eq_molotov 7 idle 123.79 128,92,72 -11.38 4.83 H
-molotov p55 rivet_eq_molotov_left 0 SW 139.68 162,117,75 0.0 20.84 T
-molotov p55 rivet_eq_molotov_left 1 W 138.01 168,119,75 -1.2 23.06 T
-molotov p55 rivet_eq_molotov_left 2 NW 138.01 133,90,61 -1.2 11.39 T
-molotov p70 rivet_eq_molotov 0 S 133.15 128,99,75 -3.53 7.93 -
-molotov p70 rivet_eq_molotov 1 SE 134.77 149,117,89 -2.35 0.93 -
-molotov p70 rivet_eq_molotov 2 E 138.02 151,117,89 0.0 0.0 -
-molotov p70 rivet_eq_molotov 3 NE 133.96 125,95,73 -2.94 9.69 T
-molotov p70 rivet_eq_molotov 4 N 133.15 131,100,76 -3.53 7.26 -
-molotov p70 rivet_eq_molotov 5 E-fire 144.52 154,119,88 4.71 1.68 -
-molotov p70 rivet_eq_molotov 6 S-fire 130.71 147,114,86 -5.29 1.32 H
-molotov p70 rivet_eq_molotov 7 idle 129.9 129,100,76 -5.88 7.67 H
-molotov p70 rivet_eq_molotov_left 0 SW 132.34 140,102,79 -4.12 6.2 -
-molotov p70 rivet_eq_molotov_left 1 W 133.96 141,101,78 -2.94 6.71 -
-molotov p70 rivet_eq_molotov_left 2 NW 134.77 157,115,88 -2.35 3.67 -
-pistol p55 rivet_eq_pistol 0 S 137.17 145,114,90 -1.8 9.71 T
-pistol p55 rivet_eq_pistol 1 SE 138.01 125,96,76 -1.2 2.84 -
-pistol p55 rivet_eq_pistol 2 E 139.68 122,92,77 0.0 0.0 -
-pistol p55 rivet_eq_pistol 3 NE 138.01 115,89,72 -1.2 2.43 -
-pistol p55 rivet_eq_pistol 4 N 137.17 143,109,86 -1.8 8.36 T
-pistol p55 rivet_eq_pistol 5 E-fire 123.79 143,106,80 -11.38 9.13 HT
-pistol p55 rivet_eq_pistol 6 S-fire 123.79 137,102,81 -11.38 6.04 H
-pistol p55 rivet_eq_pistol 7 idle 122.96 138,104,83 -11.98 6.43 H
-pistol p55 rivet_eq_pistol_noflash 0 S 137.17 145,114,90 -1.8 9.71 T
-pistol p55 rivet_eq_pistol_noflash 1 SE 138.01 125,96,76 -1.2 2.84 -
-pistol p55 rivet_eq_pistol_noflash 2 E 139.68 122,92,77 0.0 0.0 -
-pistol p55 rivet_eq_pistol_noflash 3 NE 138.01 115,89,72 -1.2 2.43 -
-pistol p55 rivet_eq_pistol_noflash 4 N 137.17 143,109,86 -1.8 8.36 T
-pistol p55 rivet_eq_pistol_noflash 5 E-fire 123.79 143,106,80 -11.38 9.13 HT
-pistol p55 rivet_eq_pistol_noflash 6 S-fire 123.79 137,102,81 -11.38 6.04 H
-pistol p55 rivet_eq_pistol_noflash 7 idle 122.96 138,104,83 -11.98 6.43 H
-pistol p55 rivet_eq_pistol_diag 0 SE 129.65 150,109,85 -7.19 10.77 HT
-pistol p55 rivet_eq_pistol_diag 1 NE 129.65 133,94,75 -7.19 5.62 H
-pistol p55 rivet_eq_pistol_diag 2 SW 128.81 150,108,86 -7.78 10.37 HT
-pistol p55 rivet_eq_pistol_diag 3 NW 128.81 131,93,74 -7.78 5.11 H
-pistol p55 rivet_eq_pistol_diag_noflash 0 SE 129.65 150,109,85 -7.19 10.77 HT
-pistol p55 rivet_eq_pistol_diag_noflash 1 NE 129.65 133,94,75 -7.19 5.62 H
-pistol p55 rivet_eq_pistol_diag_noflash 2 SW 128.81 150,108,86 -7.78 10.37 HT
-pistol p55 rivet_eq_pistol_diag_noflash 3 NW 128.81 131,93,74 -7.78 5.11 H
-pistol p55 rivet_eq_pistol_left 0 SW 139.68 136,103,73 0.0 9.56 T
-pistol p55 rivet_eq_pistol_left 1 W 137.17 132,96,67 -1.8 9.06 T
-pistol p55 rivet_eq_pistol_left 2 NW 138.01 112,84,62 -1.2 5.59 -
-pistol p55 rivet_reload_pistol 0 S 127.97 192,140,106 -8.38 24.91 HT
-pistol p55 rivet_reload_pistol 1 SE 129.65 172,120,90 -7.19 18.62 HT
-pistol p55 rivet_reload_pistol 2 E 128.81 170,119,91 -7.78 17.52 HT
-pistol p55 rivet_reload_pistol 3 NE 128.81 168,117,87 -7.78 17.6 HT
-pistol p55 rivet_reload_pistol 4 N 127.14 161,111,83 -8.98 15.42 HT
-pistol p55 rivet_reload_pistol 5 SE-out 128.81 179,126,95 -7.78 20.73 HT
-pistol p55 rivet_reload_pistol 6 SE-in 127.97 181,129,96 -8.38 21.7 HT
-pistol p55 rivet_reload_pistol 7 SE-ready 128.81 176,121,90 -7.78 20.16 HT
-pistol p55 rivet_reload_pistol_left 0 SW 139.68 160,119,76 0.0 19.8 T
-pistol p55 rivet_reload_pistol_left 1 W 137.17 156,111,69 -1.8 19.16 T
-pistol p55 rivet_reload_pistol_left 2 NW 138.01 139,102,67 -1.2 12.78 T
-pistol p70 rivet_eq_pistol 0 S 127.47 135,107,86 -5.99 4.6 H
-pistol p70 rivet_eq_pistol 1 SE 133.96 136,108,87 -1.2 4.95 -
-pistol p70 rivet_eq_pistol 2 E 135.59 123,97,79 0.0 0.0 -
-pistol p70 rivet_eq_pistol 3 NE 136.4 133,106,86 0.6 3.74 -
-pistol p70 rivet_eq_pistol 4 N 129.09 120,94,77 -4.79 1.3 -
-pistol p70 rivet_eq_pistol 5 E-fire 105.55 125,98,80 -22.16 0.67 H
-pistol p70 rivet_eq_pistol 6 S-fire 113.67 131,102,83 -16.17 2.86 H
-pistol p70 rivet_eq_pistol 7 idle 122.6 129,100,79 -9.58 2.86 H
-pistol p70 rivet_eq_pistol_noflash 0 S 127.47 135,107,86 -5.99 4.6 H
-pistol p70 rivet_eq_pistol_noflash 1 SE 133.96 136,108,87 -1.2 4.95 -
-pistol p70 rivet_eq_pistol_noflash 2 E 135.59 123,97,79 0.0 0.0 -
-pistol p70 rivet_eq_pistol_noflash 3 NE 136.4 133,106,86 0.6 3.74 -
-pistol p70 rivet_eq_pistol_noflash 4 N 129.09 120,94,77 -4.79 1.3 -
-pistol p70 rivet_eq_pistol_noflash 5 E-fire 105.55 125,98,80 -22.16 0.67 H
-pistol p70 rivet_eq_pistol_noflash 6 S-fire 113.67 131,102,83 -16.17 2.86 H
-pistol p70 rivet_eq_pistol_noflash 7 idle 122.6 129,100,79 -9.58 2.86 H
-pistol p70 rivet_eq_pistol_diag 0 SE 132.34 147,110,91 -2.4 8.07 T
-pistol p70 rivet_eq_pistol_diag 1 NE 135.59 148,110,91 0.0 8.44 T
-pistol p70 rivet_eq_pistol_diag 2 SW 132.34 148,112,92 -2.4 8.39 T
-pistol p70 rivet_eq_pistol_diag 3 NW 134.77 153,114,92 -0.6 10.25 T
-pistol p70 rivet_eq_pistol_diag_noflash 0 SE 132.34 147,110,91 -2.4 8.07 T
-pistol p70 rivet_eq_pistol_diag_noflash 1 NE 135.59 148,110,91 0.0 8.44 T
-pistol p70 rivet_eq_pistol_diag_noflash 2 SW 132.34 148,112,92 -2.4 8.39 T
-pistol p70 rivet_eq_pistol_diag_noflash 3 NW 134.77 153,114,92 -0.6 10.25 T
-pistol p70 rivet_eq_pistol_left 0 SW 133.15 152,111,88 -1.8 10.36 T
-pistol p70 rivet_eq_pistol_left 1 W 133.96 147,105,82 -1.2 9.48 T
-pistol p70 rivet_eq_pistol_left 2 NW 134.77 151,111,85 -0.6 10.67 T
-pistol p70 rivet_reload_pistol 0 S 142.08 169,124,96 4.79 16.21 T
-pistol p70 rivet_reload_pistol 1 SE 142.08 187,138,106 4.79 22.22 T
-pistol p70 rivet_reload_pistol 2 E 142.08 196,143,106 4.79 25.63 T
-pistol p70 rivet_reload_pistol 3 NE 142.89 193,142,109 5.39 24.03 HT
-pistol p70 rivet_reload_pistol 4 N 142.08 174,127,98 4.79 17.84 T
-pistol p70 rivet_reload_pistol 5 SE-out 141.27 183,133,101 4.19 21.04 T
-pistol p70 rivet_reload_pistol 6 SE-in 141.27 184,134,101 4.19 21.53 T
-pistol p70 rivet_reload_pistol 7 SE-ready 141.27 178,128,96 4.19 19.78 T
-pistol p70 rivet_reload_pistol_left 0 SW 133.96 175,113,85 -1.2 20.67 T
-pistol p70 rivet_reload_pistol_left 1 W 133.96 198,134,103 -1.2 25.95 T
-pistol p70 rivet_reload_pistol_left 2 NW 133.96 190,126,97 -1.2 23.88 T
-plasma_rifle p55 rivet_eq_plasma_rifle 0 S 138.01 143,108,82 -1.2 8.66 T
-plasma_rifle p55 rivet_eq_plasma_rifle 1 SE 138.01 124,93,72 -1.2 2.01 -
-plasma_rifle p55 rivet_eq_plasma_rifle 2 E 139.68 122,90,72 0.0 0.0 -
-plasma_rifle p55 rivet_eq_plasma_rifle 3 NE 136.34 111,83,65 -2.4 3.7 -
-plasma_rifle p55 rivet_eq_plasma_rifle 4 N 136.34 111,83,65 -2.4 3.7 -
-plasma_rifle p55 rivet_eq_plasma_rifle 5 E-fire 127.97 138,100,76 -8.38 6.35 H
-plasma_rifle p55 rivet_eq_plasma_rifle 6 S-fire 127.97 142,102,75 -8.38 8.6 HT
-plasma_rifle p55 rivet_eq_plasma_rifle 7 idle 131.32 133,97,74 -5.99 4.82 H
-plasma_rifle p55 rivet_eq_plasma_rifle_noflash 0 S 138.01 143,108,82 -1.2 8.66 T
-plasma_rifle p55 rivet_eq_plasma_rifle_noflash 1 SE 138.01 124,93,72 -1.2 2.01 -
-plasma_rifle p55 rivet_eq_plasma_rifle_noflash 2 E 139.68 122,90,72 0.0 0.0 -
-plasma_rifle p55 rivet_eq_plasma_rifle_noflash 3 NE 136.34 111,83,65 -2.4 3.7 -
-plasma_rifle p55 rivet_eq_plasma_rifle_noflash 4 N 136.34 111,83,65 -2.4 3.7 -
-plasma_rifle p55 rivet_eq_plasma_rifle_noflash 5 E-fire 127.97 138,100,76 -8.38 6.35 H
-plasma_rifle p55 rivet_eq_plasma_rifle_noflash 6 S-fire 127.97 142,102,75 -8.38 8.6 HT
-plasma_rifle p55 rivet_eq_plasma_rifle_noflash 7 idle 131.32 133,97,74 -5.99 4.82 H
-plasma_rifle p55 rivet_eq_plasma_rifle_diag 0 SE 129.65 164,114,88 -7.19 14.7 HT
-plasma_rifle p55 rivet_eq_plasma_rifle_diag 1 NE 129.65 159,109,84 -7.19 13.25 HT
-plasma_rifle p55 rivet_eq_plasma_rifle_diag 2 SW 129.65 162,117,91 -7.19 13.96 HT
-plasma_rifle p55 rivet_eq_plasma_rifle_diag 3 NW 129.65 169,122,92 -7.19 16.83 HT
-plasma_rifle p55 rivet_eq_plasma_rifle_diag_noflash 0 SE 129.65 164,114,88 -7.19 14.7 HT
-plasma_rifle p55 rivet_eq_plasma_rifle_diag_noflash 1 NE 129.65 159,109,84 -7.19 13.25 HT
-plasma_rifle p55 rivet_eq_plasma_rifle_diag_noflash 2 SW 129.65 162,117,91 -7.19 13.96 HT
-plasma_rifle p55 rivet_eq_plasma_rifle_diag_noflash 3 NW 129.65 169,122,92 -7.19 16.83 HT
-plasma_rifle p55 rivet_reload_plasma_rifle 0 S 121.28 191,134,99 -13.17 24.33 HT
-plasma_rifle p55 rivet_reload_plasma_rifle 1 SE 122.12 184,127,95 -12.57 21.8 HT
-plasma_rifle p55 rivet_reload_plasma_rifle 2 E 122.12 178,121,90 -12.57 20.18 HT
-plasma_rifle p55 rivet_reload_plasma_rifle 3 NE 123.79 131,85,62 -11.38 8.34 HT
-plasma_rifle p55 rivet_reload_plasma_rifle 4 N 121.28 173,118,90 -13.17 17.9 HT
-plasma_rifle p55 rivet_reload_plasma_rifle 5 SE-out 122.12 185,131,99 -12.57 21.98 HT
-plasma_rifle p55 rivet_reload_plasma_rifle 6 SE-in 122.12 189,133,101 -12.57 23.14 HT
-plasma_rifle p55 rivet_reload_plasma_rifle 7 SE-ready 121.28 190,133,101 -13.17 23.43 HT
-plasma_rifle p55 rivet_reload_plasma_rifle_left 0 SW 139.68 171,124,77 0.0 22.67 T
-plasma_rifle p55 rivet_reload_plasma_rifle_left 1 W 138.01 181,129,78 -1.2 26.58 T
-plasma_rifle p55 rivet_reload_plasma_rifle_left 2 NW 138.01 156,111,69 -1.2 17.74 T
-plasma_rifle p70 rivet_eq_plasma_rifle 0 S 132.34 124,92,68 -2.4 3.53 -
-plasma_rifle p70 rivet_eq_plasma_rifle 1 SE 133.96 146,110,81 -1.2 4.64 -
-plasma_rifle p70 rivet_eq_plasma_rifle 2 E 135.59 134,100,75 0.0 0.0 -
-plasma_rifle p70 rivet_eq_plasma_rifle 3 NE 135.59 136,100,75 0.0 0.85 -
-plasma_rifle p70 rivet_eq_plasma_rifle 4 N 132.34 132,95,72 -2.4 2.38 -
-plasma_rifle p70 rivet_eq_plasma_rifle 5 E-fire 125.03 132,98,74 -7.78 0.91 H
-plasma_rifle p70 rivet_eq_plasma_rifle 6 S-fire 133.15 138,104,76 -1.8 2.2 -
-plasma_rifle p70 rivet_eq_plasma_rifle 7 idle 134.77 128,96,71 -0.6 1.99 -
-plasma_rifle p70 rivet_eq_plasma_rifle_noflash 0 S 132.34 124,92,68 -2.4 3.53 -
-plasma_rifle p70 rivet_eq_plasma_rifle_noflash 1 SE 133.96 146,110,81 -1.2 4.64 -
-plasma_rifle p70 rivet_eq_plasma_rifle_noflash 2 E 135.59 134,100,75 0.0 0.0 -
-plasma_rifle p70 rivet_eq_plasma_rifle_noflash 3 NE 135.59 136,100,75 0.0 0.85 -
-plasma_rifle p70 rivet_eq_plasma_rifle_noflash 4 N 132.34 132,95,72 -2.4 2.38 -
-plasma_rifle p70 rivet_eq_plasma_rifle_noflash 5 E-fire 125.03 132,98,74 -7.78 0.91 H
-plasma_rifle p70 rivet_eq_plasma_rifle_noflash 6 S-fire 133.15 138,104,76 -1.8 2.2 -
-plasma_rifle p70 rivet_eq_plasma_rifle_noflash 7 idle 134.77 128,96,71 -0.6 1.99 -
-plasma_rifle p70 rivet_eq_plasma_rifle_diag 0 SE 123.41 162,110,80 -8.98 10.59 HT
-plasma_rifle p70 rivet_eq_plasma_rifle_diag 1 NE 123.41 159,109,77 -8.98 10.07 HT
-plasma_rifle p70 rivet_eq_plasma_rifle_diag 2 SW 124.22 148,100,74 -8.38 6.89 H
-plasma_rifle p70 rivet_eq_plasma_rifle_diag 3 NW 121.78 161,113,78 -10.18 10.84 HT
-plasma_rifle p70 rivet_eq_plasma_rifle_diag_noflash 0 SE 123.41 162,110,80 -8.98 10.59 HT
-plasma_rifle p70 rivet_eq_plasma_rifle_diag_noflash 1 NE 123.41 159,109,77 -8.98 10.07 HT
-plasma_rifle p70 rivet_eq_plasma_rifle_diag_noflash 2 SW 124.22 148,100,74 -8.38 6.89 H
-plasma_rifle p70 rivet_eq_plasma_rifle_diag_noflash 3 NW 121.78 161,113,78 -10.18 10.84 HT
-plasma_rifle p70 rivet_reload_plasma_rifle 0 S 133.15 150,107,75 -1.8 6.96 -
-plasma_rifle p70 rivet_reload_plasma_rifle 1 SE 133.96 148,106,74 -1.2 6.62 -
-plasma_rifle p70 rivet_reload_plasma_rifle 2 E 134.77 173,124,88 -0.6 13.95 T
-plasma_rifle p70 rivet_reload_plasma_rifle 3 NE 134.77 159,112,80 -0.6 9.37 T
-plasma_rifle p70 rivet_reload_plasma_rifle 4 N 131.53 145,103,74 -2.99 4.99 -
-plasma_rifle p70 rivet_reload_plasma_rifle 5 SE-out 133.96 144,103,72 -1.2 5.32 -
-plasma_rifle p70 rivet_reload_plasma_rifle 6 SE-in 133.96 147,105,75 -1.2 5.59 -
-plasma_rifle p70 rivet_reload_plasma_rifle 7 SE-ready 133.96 152,107,75 -1.2 7.73 -
-plasma_rifle p70 rivet_reload_plasma_rifle_left 0 SW 132.34 172,124,96 -2.4 12.28 T
-plasma_rifle p70 rivet_reload_plasma_rifle_left 1 W 133.96 175,124,96 -1.2 13.27 T
-plasma_rifle p70 rivet_reload_plasma_rifle_left 2 NW 133.96 164,115,89 -1.2 9.86 T
-plasma_sword p55 rivet_eq_plasma_sword 0 S 136.76 146,113,91 -1.8 7.2 -
-plasma_sword p55 rivet_eq_plasma_sword 1 SE 138.01 132,94,76 -0.9 3.55 -
-plasma_sword p55 rivet_eq_plasma_sword 2 E 139.27 128,97,81 0.0 0.0 -
-plasma_sword p55 rivet_eq_plasma_sword 3 NE 139.27 124,91,77 0.0 2.54 -
-plasma_sword p55 rivet_eq_plasma_sword 4 N 135.5 136,101,84 -2.7 2.84 -
-plasma_sword p55 rivet_eq_plasma_sword 5 E-fire 136.76 133,99,81 -1.8 2.16 -
-plasma_sword p55 rivet_eq_plasma_sword 6 S-fire 141.77 130,95,77 1.8 2.46 -
-plasma_sword p55 rivet_eq_plasma_sword 7 idle 139.27 134,98,75 0.0 5.03 -
-plasma_sword p55 rivet_eq_plasma_sword_left 0 SW 138.01 132,96,65 -0.9 9.49 T
-plasma_sword p55 rivet_eq_plasma_sword_left 1 W 136.76 119,82,55 -1.8 9.82 T
-plasma_sword p55 rivet_eq_plasma_sword_left 2 NW 138.01 119,89,62 -0.9 7.48 -
-plasma_sword p70 rivet_eq_plasma_sword 0 S 132.74 154,112,88 -2.68 4.66 -
-plasma_sword p70 rivet_eq_plasma_sword 1 SE 135.18 144,109,88 -0.89 5.58 -
-plasma_sword p70 rivet_eq_plasma_sword 2 E 136.4 144,100,77 0.0 0.0 -
-plasma_sword p70 rivet_eq_plasma_sword 3 NE 133.96 153,104,78 -1.79 3.72 -
-plasma_sword p70 rivet_eq_plasma_sword 4 N 133.96 130,95,74 -1.79 5.26 -
-plasma_sword p70 rivet_eq_plasma_sword 5 E-fire 109.61 129,96,74 -19.64 5.85 H
-plasma_sword p70 rivet_eq_plasma_sword 6 S-fire 96.21 132,94,72 -29.46 4.02 H
-plasma_sword p70 rivet_eq_plasma_sword 7 idle 109.61 125,95,75 -19.64 7.93 H
-plasma_sword p70 rivet_eq_plasma_sword_left 0 SW 126.66 142,101,82 -7.14 2.87 H
-plasma_sword p70 rivet_eq_plasma_sword_left 1 W 129.09 145,102,78 -5.36 0.95 H
-plasma_sword p70 rivet_eq_plasma_sword_left 2 NW 129.09 152,108,87 -5.36 3.48 H
-ray_gun p55 rivet_eq_ray_gun 0 S 138.01 141,110,87 -1.2 8.45 T
-ray_gun p55 rivet_eq_ray_gun 1 SE 138.01 129,98,78 -1.2 3.55 -
-ray_gun p55 rivet_eq_ray_gun 2 E 139.68 120,90,72 0.0 0.0 -
-ray_gun p55 rivet_eq_ray_gun 3 NE 138.01 112,82,66 -1.2 3.38 -
-ray_gun p55 rivet_eq_ray_gun 4 N 137.17 117,91,73 -1.8 2.13 -
-ray_gun p55 rivet_eq_ray_gun 5 E-fire 136.34 129,92,73 -2.4 3.82 -
-ray_gun p55 rivet_eq_ray_gun 6 S-fire 139.68 143,107,83 0.0 8.51 T
-ray_gun p55 rivet_eq_ray_gun 7 idle 139.68 127,93,71 0.0 3.72 -
-ray_gun p55 rivet_eq_ray_gun_noflash 0 S 138.01 141,110,87 -1.2 8.45 T
-ray_gun p55 rivet_eq_ray_gun_noflash 1 SE 138.01 129,98,78 -1.2 3.55 -
-ray_gun p55 rivet_eq_ray_gun_noflash 2 E 139.68 120,90,72 0.0 0.0 -
-ray_gun p55 rivet_eq_ray_gun_noflash 3 NE 138.01 112,82,66 -1.2 3.38 -
-ray_gun p55 rivet_eq_ray_gun_noflash 4 N 137.17 117,91,73 -1.8 2.13 -
-ray_gun p55 rivet_eq_ray_gun_noflash 5 E-fire 136.34 129,92,73 -2.4 3.82 -
-ray_gun p55 rivet_eq_ray_gun_noflash 6 S-fire 139.68 143,107,83 0.0 8.51 T
-ray_gun p55 rivet_eq_ray_gun_noflash 7 idle 139.68 127,93,71 0.0 3.72 -
-ray_gun p55 rivet_eq_ray_gun_diag 0 SE 137.17 185,120,89 -1.8 23.46 T
-ray_gun p55 rivet_eq_ray_gun_diag 1 NE 138.85 166,107,81 -0.6 17.47 T
-ray_gun p55 rivet_eq_ray_gun_diag 2 SW 135.5 182,120,91 -2.99 21.86 T
-ray_gun p55 rivet_eq_ray_gun_diag 3 NW 149.72 161,105,70 7.19 18.58 HT
-ray_gun p55 rivet_eq_ray_gun_diag_noflash 0 SE 137.17 185,120,89 -1.8 23.46 T
-ray_gun p55 rivet_eq_ray_gun_diag_noflash 1 NE 138.85 166,107,81 -0.6 17.47 T
-ray_gun p55 rivet_eq_ray_gun_diag_noflash 2 SW 135.5 182,120,91 -2.99 21.86 T
-ray_gun p55 rivet_eq_ray_gun_diag_noflash 3 NW 149.72 161,105,70 7.19 18.58 HT
-ray_gun p55 rivet_eq_ray_gun_left 0 SW 138.01 132,97,66 -1.2 8.83 T
-ray_gun p55 rivet_eq_ray_gun_left 1 W 137.17 127,90,61 -1.8 8.01 T
-ray_gun p55 rivet_eq_ray_gun_left 2 NW 138.01 122,91,65 -1.2 4.99 -
-ray_gun p55 rivet_reload_ray_gun 0 S 137.17 204,147,113 -1.8 28.4 T
-ray_gun p55 rivet_reload_ray_gun 1 SE 139.68 191,137,105 0.0 24.27 T
-ray_gun p55 rivet_reload_ray_gun 2 E 138.01 193,134,102 -1.2 24.91 T
-ray_gun p55 rivet_reload_ray_gun 3 NE 138.01 189,131,100 -1.2 23.59 T
-ray_gun p55 rivet_reload_ray_gun 4 N 136.34 183,128,98 -2.4 21.61 T
-ray_gun p55 rivet_reload_ray_gun 5 SE-out 149.72 197,143,112 7.19 25.9 HT
-ray_gun p55 rivet_reload_ray_gun 6 SE-in 148.88 192,137,107 6.59 24.19 HT
-ray_gun p55 rivet_reload_ray_gun 7 SE-ready 149.72 196,139,109 7.19 25.22 HT
-ray_gun p55 rivet_reload_ray_gun_left 0 SW 138.01 191,127,70 -1.2 32.58 T
-ray_gun p55 rivet_reload_ray_gun_left 1 W 136.34 199,133,74 -2.4 34.88 T
-ray_gun p55 rivet_reload_ray_gun_left 2 NW 138.01 170,108,61 -1.2 25.54 T
-ray_gun p70 rivet_eq_ray_gun 0 S 122.6 117,93,74 -8.48 9.67 HT
-ray_gun p70 rivet_eq_ray_gun 1 SE 143.71 136,108,86 7.27 4.46 H
-ray_gun p70 rivet_eq_ray_gun 2 E 133.96 142,107,80 0.0 0.0 -
-ray_gun p70 rivet_eq_ray_gun 3 NE 116.1 133,100,76 -13.33 3.43 H
-ray_gun p70 rivet_eq_ray_gun 4 N 126.66 123,95,76 -5.45 7.87 H
-ray_gun p70 rivet_eq_ray_gun 5 E-fire 116.91 131,102,81 -12.73 5.18 H
-ray_gun p70 rivet_eq_ray_gun 6 S-fire 129.09 113,88,69 -3.64 10.77 T
-ray_gun p70 rivet_eq_ray_gun 7 idle 129.9 138,108,85 -3.03 3.52 -
-ray_gun p70 rivet_eq_ray_gun_noflash 0 S 122.6 117,93,74 -8.48 9.67 HT
-ray_gun p70 rivet_eq_ray_gun_noflash 1 SE 143.71 136,108,86 7.27 4.46 H
-ray_gun p70 rivet_eq_ray_gun_noflash 2 E 133.96 142,107,80 0.0 0.0 -
-ray_gun p70 rivet_eq_ray_gun_noflash 3 NE 116.1 133,100,76 -13.33 3.43 H
-ray_gun p70 rivet_eq_ray_gun_noflash 4 N 126.66 123,95,76 -5.45 7.87 H
-ray_gun p70 rivet_eq_ray_gun_noflash 5 E-fire 116.91 131,102,81 -12.73 5.18 H
-ray_gun p70 rivet_eq_ray_gun_noflash 6 S-fire 129.09 113,88,69 -3.64 10.77 T
-ray_gun p70 rivet_eq_ray_gun_noflash 7 idle 129.9 138,108,85 -3.03 3.52 -
-ray_gun p70 rivet_eq_ray_gun_diag 0 SE 132.34 192,129,89 -1.21 18.55 T
-ray_gun p70 rivet_eq_ray_gun_diag 1 NE 133.96 173,110,73 0.0 15.61 T
-ray_gun p70 rivet_eq_ray_gun_diag 2 SW 133.15 193,128,90 -0.61 18.68 T
-ray_gun p70 rivet_eq_ray_gun_diag 3 NW 138.02 179,113,68 3.03 19.44 T
-ray_gun p70 rivet_eq_ray_gun_diag_noflash 0 SE 132.34 192,129,89 -1.21 18.55 T
-ray_gun p70 rivet_eq_ray_gun_diag_noflash 1 NE 133.96 173,110,73 0.0 15.61 T
-ray_gun p70 rivet_eq_ray_gun_diag_noflash 2 SW 133.15 193,128,90 -0.61 18.68 T
-ray_gun p70 rivet_eq_ray_gun_diag_noflash 3 NW 138.02 179,113,68 3.03 19.44 T
-ray_gun p70 rivet_eq_ray_gun_left 0 SW 133.15 138,106,90 -0.61 6.07 -
-ray_gun p70 rivet_eq_ray_gun_left 1 W 133.96 138,105,87 0.0 5.36 -
-ray_gun p70 rivet_eq_ray_gun_left 2 NW 133.96 147,110,91 0.0 4.81 -
-ray_gun p70 rivet_reload_ray_gun 0 S 133.15 204,143,101 -0.61 21.35 T
-ray_gun p70 rivet_reload_ray_gun 1 SE 133.15 206,145,102 -0.61 22.23 T
-ray_gun p70 rivet_reload_ray_gun 2 E 133.96 202,138,97 0.0 20.99 T
-ray_gun p70 rivet_reload_ray_gun 3 NE 133.96 204,142,99 0.0 21.68 T
-ray_gun p70 rivet_reload_ray_gun 4 N 134.77 203,140,99 0.61 21.09 T
-ray_gun p70 rivet_reload_ray_gun 5 SE-out 136.4 208,143,98 1.82 23.39 T
-ray_gun p70 rivet_reload_ray_gun 6 SE-in 136.4 204,140,97 1.82 21.9 T
-ray_gun p70 rivet_reload_ray_gun 7 SE-ready 137.21 209,145,101 2.42 23.28 T
-ray_gun p70 rivet_reload_ray_gun_left 0 SW 134.77 184,108,80 0.61 19.67 T
-ray_gun p70 rivet_reload_ray_gun_left 1 W 133.96 210,130,96 0.0 24.5 T
-ray_gun p70 rivet_reload_ray_gun_left 2 NW 133.96 201,123,90 0.0 22.48 T
-rocket_launcher p55 rivet_eq_rocket_launcher 0 S 138.85 133,102,79 0.61 3.56 -
-rocket_launcher p55 rivet_eq_rocket_launcher 1 SE 138.85 131,97,76 0.61 2.31 -
-rocket_launcher p55 rivet_eq_rocket_launcher 2 E 138.01 125,94,74 0.0 0.0 -
-rocket_launcher p55 rivet_eq_rocket_launcher 3 NE 138.01 110,82,65 0.0 5.53 -
-rocket_launcher p55 rivet_eq_rocket_launcher 4 N 136.34 133,98,76 -1.21 3.16 -
-rocket_launcher p55 rivet_eq_rocket_launcher 5 E-fire 110.41 133,99,74 -20.0 4.27 H
-rocket_launcher p55 rivet_eq_rocket_launcher 6 S-fire 112.92 134,100,78 -18.18 3.33 H
-rocket_launcher p55 rivet_eq_rocket_launcher 7 idle 110.41 136,100,76 -20.0 4.36 H
-rocket_launcher p55 rivet_eq_rocket_launcher_noflash 0 S 138.85 133,102,79 0.61 3.56 -
-rocket_launcher p55 rivet_eq_rocket_launcher_noflash 1 SE 138.85 131,97,76 0.61 2.31 -
-rocket_launcher p55 rivet_eq_rocket_launcher_noflash 2 E 138.01 125,94,74 0.0 0.0 -
-rocket_launcher p55 rivet_eq_rocket_launcher_noflash 3 NE 138.01 110,82,65 0.0 5.53 -
-rocket_launcher p55 rivet_eq_rocket_launcher_noflash 4 N 136.34 133,98,76 -1.21 3.16 -
-rocket_launcher p55 rivet_eq_rocket_launcher_noflash 5 E-fire 110.41 133,99,74 -20.0 4.27 H
-rocket_launcher p55 rivet_eq_rocket_launcher_noflash 6 S-fire 112.92 134,100,78 -18.18 3.33 H
-rocket_launcher p55 rivet_eq_rocket_launcher_noflash 7 idle 110.41 136,100,76 -20.0 4.36 H
-rocket_launcher p55 rivet_eq_rocket_launcher_diag 0 SE 124.63 152,108,78 -9.7 10.95 HT
-rocket_launcher p55 rivet_eq_rocket_launcher_diag 1 NE 128.81 139,98,73 -6.67 6.52 H
-rocket_launcher p55 rivet_eq_rocket_launcher_diag 2 SW 125.46 156,108,78 -9.09 12.47 HT
-rocket_launcher p55 rivet_eq_rocket_launcher_diag 3 NW 128.81 149,105,78 -6.67 9.47 HT
-rocket_launcher p55 rivet_eq_rocket_launcher_diag_noflash 0 SE 124.63 152,108,78 -9.7 10.95 HT
-rocket_launcher p55 rivet_eq_rocket_launcher_diag_noflash 1 NE 128.81 139,98,73 -6.67 6.52 H
-rocket_launcher p55 rivet_eq_rocket_launcher_diag_noflash 2 SW 125.46 156,108,78 -9.09 12.47 HT
-rocket_launcher p55 rivet_eq_rocket_launcher_diag_noflash 3 NW 128.81 149,105,78 -6.67 9.47 HT
-rocket_launcher p55 rivet_eq_rocket_launcher_left 0 SW 134.67 126,88,63 -2.42 5.55 -
-rocket_launcher p55 rivet_eq_rocket_launcher_left 1 W 134.67 138,96,70 -2.42 6.92 -
-rocket_launcher p55 rivet_eq_rocket_launcher_left 2 NW 134.67 123,88,67 -2.42 3.09 -
-rocket_launcher p70 rivet_eq_rocket_launcher 0 S 131.53 154,115,86 -1.82 1.59 -
-rocket_launcher p70 rivet_eq_rocket_launcher 1 SE 134.77 141,110,86 0.61 4.04 -
-rocket_launcher p70 rivet_eq_rocket_launcher 2 E 133.96 151,113,86 0.0 0.0 -
-rocket_launcher p70 rivet_eq_rocket_launcher 3 NE 133.96 129,100,79 0.0 7.83 -
-rocket_launcher p70 rivet_eq_rocket_launcher 4 N 129.09 163,122,93 -3.64 4.14 -
-rocket_launcher p70 rivet_eq_rocket_launcher 5 E-fire 112.85 133,102,78 -15.76 6.07 H
-rocket_launcher p70 rivet_eq_rocket_launcher 6 S-fire 116.1 143,108,80 -13.33 2.71 H
-rocket_launcher p70 rivet_eq_rocket_launcher 7 idle 113.67 135,105,82 -15.15 5.7 H
-rocket_launcher p70 rivet_eq_rocket_launcher_noflash 0 S 131.53 154,115,86 -1.82 1.59 -
-rocket_launcher p70 rivet_eq_rocket_launcher_noflash 1 SE 134.77 141,110,86 0.61 4.04 -
-rocket_launcher p70 rivet_eq_rocket_launcher_noflash 2 E 133.96 151,113,86 0.0 0.0 -
-rocket_launcher p70 rivet_eq_rocket_launcher_noflash 3 NE 133.96 129,100,79 0.0 7.83 -
-rocket_launcher p70 rivet_eq_rocket_launcher_noflash 4 N 129.09 163,122,93 -3.64 4.14 -
-rocket_launcher p70 rivet_eq_rocket_launcher_noflash 5 E-fire 112.85 133,102,78 -15.76 6.07 H
-rocket_launcher p70 rivet_eq_rocket_launcher_noflash 6 S-fire 116.1 143,108,80 -13.33 2.71 H
-rocket_launcher p70 rivet_eq_rocket_launcher_noflash 7 idle 113.67 135,105,82 -15.15 5.7 H
-rocket_launcher p70 rivet_eq_rocket_launcher_diag 0 SE 116.1 146,102,74 -13.33 5.05 H
-rocket_launcher p70 rivet_eq_rocket_launcher_diag 1 NE 117.72 128,88,65 -12.12 9.86 HT
-rocket_launcher p70 rivet_eq_rocket_launcher_diag 2 SW 116.91 152,110,81 -12.73 2.76 H
-rocket_launcher p70 rivet_eq_rocket_launcher_diag 3 NW 118.54 162,114,84 -11.52 5.1 H
-rocket_launcher p70 rivet_eq_rocket_launcher_diag_noflash 0 SE 116.1 146,102,74 -13.33 5.05 H
-rocket_launcher p70 rivet_eq_rocket_launcher_diag_noflash 1 NE 117.72 128,88,65 -12.12 9.86 HT
-rocket_launcher p70 rivet_eq_rocket_launcher_diag_noflash 2 SW 116.91 152,110,81 -12.73 2.76 H
-rocket_launcher p70 rivet_eq_rocket_launcher_diag_noflash 3 NW 118.54 162,114,84 -11.52 5.1 H
-rocket_launcher p70 rivet_eq_rocket_launcher_left 0 SW 130.71 142,103,79 -2.42 3.99 -
-rocket_launcher p70 rivet_eq_rocket_launcher_left 1 W 130.71 145,104,76 -2.42 4.05 -
-rocket_launcher p70 rivet_eq_rocket_launcher_left 2 NW 130.71 140,102,77 -2.42 4.33 -
+64 px/m standing turn scale; alpha >= 128, connected crown to sole, median sRGB of rust pixels on upper helmet plate. E = equipped cell 2. For mirror-derived poses source_flag grades the matching original facing; E-rest flags are informational. H: abs(height difference) > 5%; T: CIE76 D65 delta E > 8. R: helmet fraction differs >5% from E. Helmet spans crown to upper central orange collar stripes, or the reviewed lower helmet edge where the gun obscures that band. Width/height and mean D65 L* and C* use connected opacity between crown and sole, excluding annotated gun panels when available. Lit cells use matching flashless geometry; projecting weapons use reviewed boot seeds.
+weapon pitch strip cell facing height_px shell_rgb height_pct delta_e helmet_ratio width_ratio mean_l mean_c helmet_pct flag source source_height_pct source_helmet_pct source_delta_e source_flag
+assault-rifle p55 rivet_eq_assault_rifle 0 S 138.01 159,114,81 -1.2 7.63 0.4242 0.6606 29.54 22.11 8.99 R None None None None None
+assault-rifle p55 rivet_eq_assault_rifle 1 SE 138.01 144,99,72 -1.2 1.5 0.4182 0.6485 28.74 21.93 7.45 R None None None None None
+assault-rifle p55 rivet_eq_assault_rifle 2 E 139.68 140,96,68 0.0 0.0 0.3892 0.497 29.14 22.31 0.0 - None None None None None
+assault-rifle p55 rivet_eq_assault_rifle 3 NE 136.34 127,85,61 -2.4 4.85 0.4049 0.5644 29.42 22.18 4.03 - None None None None None
+assault-rifle p55 rivet_eq_assault_rifle 4 N 136.34 121,81,60 -2.4 7.5 0.4233 0.638 29.59 22.62 8.76 R None None None None None
+assault-rifle p55 rivet_eq_assault_rifle 5 E-fire 141.36 162,112,79 1.2 7.68 0.4083 0.8047 30.89 21.93 4.91 - None None None None None
+assault-rifle p55 rivet_eq_assault_rifle 6 S-fire 141.36 158,107,74 1.2 6.64 0.3964 0.6627 31.0 22.88 1.85 - None None None None None
+assault-rifle p55 rivet_eq_assault_rifle 7 idle 145.54 152,104,73 4.19 4.51 0.3851 0.7414 31.51 22.86 -1.05 - None None None None None
+assault-rifle p55 rivet_eq_assault_rifle_noflash 0 S 138.01 159,114,81 -1.2 7.63 0.4242 0.6606 29.54 22.11 8.99 R None None None None None
+assault-rifle p55 rivet_eq_assault_rifle_noflash 1 SE 138.01 144,99,72 -1.2 1.5 0.4182 0.6485 28.74 21.93 7.45 R None None None None None
+assault-rifle p55 rivet_eq_assault_rifle_noflash 2 E 139.68 140,96,68 0.0 0.0 0.3892 0.497 29.14 22.31 0.0 - None None None None None
+assault-rifle p55 rivet_eq_assault_rifle_noflash 3 NE 136.34 127,85,61 -2.4 4.85 0.4049 0.5644 29.42 22.18 4.03 - None None None None None
+assault-rifle p55 rivet_eq_assault_rifle_noflash 4 N 136.34 121,81,60 -2.4 7.5 0.4233 0.638 29.59 22.62 8.76 R None None None None None
+assault-rifle p55 rivet_eq_assault_rifle_noflash 5 E-fire 141.36 162,112,79 1.2 7.68 0.4083 0.8047 30.89 21.93 4.91 - None None None None None
+assault-rifle p55 rivet_eq_assault_rifle_noflash 6 S-fire 141.36 158,107,74 1.2 6.64 0.3964 0.6627 31.0 22.88 1.85 - None None None None None
+assault-rifle p55 rivet_eq_assault_rifle_noflash 7 idle 145.54 152,104,73 4.19 4.51 0.3851 0.7414 31.51 22.86 -1.05 - None None None None None
+assault-rifle p55 rivet_eq_assault_rifle_diag 0 SE 137.17 187,126,89 -1.8 15.93 0.372 0.75 34.05 23.59 -4.42 T None None None None None
+assault-rifle p55 rivet_eq_assault_rifle_diag 1 NE 138.01 148,97,71 -1.2 3.24 0.4061 0.9091 35.21 24.38 4.34 - None None None None None
+assault-rifle p55 rivet_eq_assault_rifle_diag 2 SW 138.01 182,125,90 -1.2 14.08 0.2788 0.8121 34.95 24.17 -28.37 TR None None None None None
+assault-rifle p55 rivet_eq_assault_rifle_diag 3 NW 138.01 178,119,86 -1.2 12.54 0.4182 0.9152 36.32 25.35 7.45 TR None None None None None
+assault-rifle p55 rivet_eq_assault_rifle_diag_noflash 0 SE 137.17 187,126,89 -1.8 15.93 0.372 0.75 34.05 23.59 -4.42 T None None None None None
+assault-rifle p55 rivet_eq_assault_rifle_diag_noflash 1 NE 138.01 148,97,71 -1.2 3.24 0.4061 0.9091 35.21 24.38 4.34 - None None None None None
+assault-rifle p55 rivet_eq_assault_rifle_diag_noflash 2 SW 138.01 182,125,90 -1.2 14.08 0.2788 0.8121 34.95 24.17 -28.37 TR None None None None None
+assault-rifle p55 rivet_eq_assault_rifle_diag_noflash 3 NW 138.01 178,119,86 -1.2 12.54 0.4182 0.9152 36.32 25.35 7.45 TR None None None None None
+assault-rifle p55 rivet_eq_assault_rifle_left 0 SW 138.01 182,133,95 -1.2 15.78 0.3697 0.6121 33.1 23.34 -5.01 TR None None None None None
+assault-rifle p55 rivet_eq_assault_rifle_left 1 W 138.01 152,102,67 -1.2 5.89 0.3576 0.6 32.68 23.33 -8.12 R None None None None None
+assault-rifle p55 rivet_eq_assault_rifle_left 2 NW 138.01 148,101,72 -1.2 2.74 0.3576 0.6303 33.27 23.75 -8.12 R None None None None None
+assault-rifle p55 rivet_reload_assault_rifle 0 S 136.34 206,144,106 -2.4 21.92 0.5153 0.8282 32.22 23.46 32.4 TR None None None None None
+assault-rifle p55 rivet_reload_assault_rifle 1 SE 138.01 204,141,104 -1.2 21.14 0.5091 0.7939 33.12 24.52 30.81 TR None None None None None
+assault-rifle p55 rivet_reload_assault_rifle 2 E 138.01 196,132,94 -1.2 18.87 0.5091 0.7333 32.67 24.86 30.81 TR None None None None None
+assault-rifle p55 rivet_reload_assault_rifle 3 NE 139.68 149,94,64 0.0 5.63 0.497 0.7246 34.15 25.66 27.7 R None None None None None
+assault-rifle p55 rivet_reload_assault_rifle 4 N 136.34 163,108,77 -2.4 7.81 0.5215 0.7853 35.44 27.37 33.99 R None None None None None
+assault-rifle p55 rivet_reload_assault_rifle 5 SE-out 138.01 207,146,109 -1.2 22.23 0.4364 0.8727 33.68 23.95 12.13 TR None None None None None
+assault-rifle p55 rivet_reload_assault_rifle 6 SE-in 138.01 209,146,110 -1.2 22.58 0.4424 0.8485 34.06 24.38 13.67 TR None None None None None
+assault-rifle p55 rivet_reload_assault_rifle 7 SE-ready 137.17 210,146,110 -1.8 22.92 0.5061 0.9451 33.77 24.3 30.04 TR None None None None None
+assault-rifle p55 rivet_reload_assault_rifle_left 0 SW 138.01 196,134,95 -1.2 18.94 0.3636 0.5939 35.11 27.58 -6.58 TR None None None None None
+assault-rifle p55 rivet_reload_assault_rifle_left 1 W 138.01 195,133,93 -1.2 18.83 0.3697 0.6 34.73 27.28 -5.01 TR None None None None None
+assault-rifle p55 rivet_reload_assault_rifle_left 2 NW 138.01 159,104,72 -1.2 7.09 0.3636 0.6303 34.7 27.72 -6.58 R None None None None None
+assault-rifle p70 rivet_eq_assault_rifle 0 S 131.53 153,109,75 -2.41 1.69 0.5123 0.8704 28.84 21.59 -2.25 - None None None None None
+assault-rifle p70 rivet_eq_assault_rifle 1 SE 133.96 159,114,79 -0.6 0.88 0.5455 0.8424 28.73 21.61 4.08 - None None None None None
+assault-rifle p70 rivet_eq_assault_rifle 2 E 134.77 158,112,77 0.0 0.0 0.5241 0.8373 28.81 21.33 0.0 - None None None None None
+assault-rifle p70 rivet_eq_assault_rifle 3 NE 134.77 153,108,76 0.0 2.29 0.5422 0.8012 29.2 21.97 3.45 - None None None None None
+assault-rifle p70 rivet_eq_assault_rifle 4 N 131.53 151,105,74 -2.41 3.31 0.5741 0.8827 29.37 22.99 9.54 R None None None None None
+assault-rifle p70 rivet_eq_assault_rifle 5 E-fire 131.53 152,110,76 -2.41 2.5 0.2901 1.1481 29.6 21.12 -44.65 R None None None None None
+assault-rifle p70 rivet_eq_assault_rifle 6 S-fire 133.15 161,117,82 -1.2 2.08 0.5732 0.878 30.66 22.67 9.37 R None None None None None
+assault-rifle p70 rivet_eq_assault_rifle 7 idle 142.89 148,105,74 6.02 3.89 0.5114 0.983 29.85 21.47 -2.42 H None None None None None
+assault-rifle p70 rivet_eq_assault_rifle_noflash 0 S 131.53 153,109,75 -2.41 1.69 0.5123 0.8704 28.84 21.59 -2.25 - None None None None None
+assault-rifle p70 rivet_eq_assault_rifle_noflash 1 SE 133.96 159,114,79 -0.6 0.88 0.5455 0.8424 28.73 21.61 4.08 - None None None None None
+assault-rifle p70 rivet_eq_assault_rifle_noflash 2 E 134.77 158,112,77 0.0 0.0 0.5241 0.8373 28.81 21.33 0.0 - None None None None None
+assault-rifle p70 rivet_eq_assault_rifle_noflash 3 NE 134.77 153,108,76 0.0 2.29 0.5422 0.8012 29.2 21.97 3.45 - None None None None None
+assault-rifle p70 rivet_eq_assault_rifle_noflash 4 N 131.53 151,105,74 -2.41 3.31 0.5741 0.8827 29.37 22.99 9.54 R None None None None None
+assault-rifle p70 rivet_eq_assault_rifle_noflash 5 E-fire 131.53 152,110,76 -2.41 2.5 0.2901 1.1481 29.6 21.12 -44.65 R None None None None None
+assault-rifle p70 rivet_eq_assault_rifle_noflash 6 S-fire 133.15 161,117,82 -1.2 2.08 0.5732 0.878 30.66 22.67 9.37 R None None None None None
+assault-rifle p70 rivet_eq_assault_rifle_noflash 7 idle 142.89 148,105,74 6.02 3.89 0.5114 0.983 29.85 21.47 -2.42 H None None None None None
+assault-rifle p70 rivet_eq_assault_rifle_diag 0 SE 132.34 195,123,84 -1.81 13.89 0.4601 0.9939 34.05 27.54 -12.21 TR None None None None None
+assault-rifle p70 rivet_eq_assault_rifle_diag 1 NE 132.34 107,70,48 -1.81 19.1 0.5583 0.9693 33.32 26.05 6.53 TR None None None None None
+assault-rifle p70 rivet_eq_assault_rifle_diag 2 SW 134.77 193,126,86 0.0 12.33 0.4639 0.9699 34.75 27.87 -11.49 TR None None None None None
+assault-rifle p70 rivet_eq_assault_rifle_diag 3 NW 132.34 125,81,54 -1.81 12.9 0.5828 0.9939 34.72 28.1 11.2 TR None None None None None
+assault-rifle p70 rivet_eq_assault_rifle_diag_noflash 0 SE 132.34 195,123,84 -1.81 13.89 0.4601 0.9939 34.05 27.54 -12.21 TR None None None None None
+assault-rifle p70 rivet_eq_assault_rifle_diag_noflash 1 NE 132.34 107,70,48 -1.81 19.1 0.5583 0.9693 33.32 26.05 6.53 TR None None None None None
+assault-rifle p70 rivet_eq_assault_rifle_diag_noflash 2 SW 134.77 193,126,86 0.0 12.33 0.4639 0.9699 34.75 27.87 -11.49 TR None None None None None
+assault-rifle p70 rivet_eq_assault_rifle_diag_noflash 3 NW 132.34 125,81,54 -1.81 12.9 0.5828 0.9939 34.72 28.1 11.2 TR None None None None None
+assault-rifle p70 rivet_eq_assault_rifle_left 0 SW 133.96 174,125,85 -0.6 5.87 0.4424 0.8485 33.51 25.56 -15.59 R None None None None None
+assault-rifle p70 rivet_eq_assault_rifle_left 1 W 133.96 173,122,83 -0.6 5.13 0.4242 0.8909 33.91 25.8 -19.06 R None None None None None
+assault-rifle p70 rivet_eq_assault_rifle_left 2 NW 133.96 184,132,90 -0.6 9.02 0.497 0.9273 33.89 25.76 -5.17 TR None None None None None
+assault-rifle p70 rivet_reload_assault_rifle 0 S 132.34 162,111,74 -1.81 2.85 0.5276 0.9018 30.34 23.74 0.67 - None None None None None
+assault-rifle p70 rivet_reload_assault_rifle 1 SE 133.96 171,118,80 -0.6 4.7 0.5152 0.8485 30.18 24.01 -1.7 - None None None None None
+assault-rifle p70 rivet_reload_assault_rifle 2 E 134.77 187,127,87 0.0 9.79 0.5301 0.7831 30.61 24.24 1.14 T None None None None None
+assault-rifle p70 rivet_reload_assault_rifle 3 NE 134.77 172,118,80 0.0 5.11 0.5542 0.8072 30.77 24.99 5.74 R None None None None None
+assault-rifle p70 rivet_reload_assault_rifle 4 N 131.53 147,99,69 -2.41 5.4 0.5679 0.821 31.36 26.3 8.36 R None None None None None
+assault-rifle p70 rivet_reload_assault_rifle 5 SE-out 133.96 168,114,77 -0.6 4.29 0.5091 0.9758 31.39 25.08 -2.86 - None None None None None
+assault-rifle p70 rivet_reload_assault_rifle 6 SE-in 133.96 169,116,79 -0.6 4.11 0.5091 0.9455 31.27 24.39 -2.86 - None None None None None
+assault-rifle p70 rivet_reload_assault_rifle 7 SE-ready 133.96 167,115,78 -0.6 3.53 0.5152 1.0788 31.46 24.98 -1.7 - None None None None None
+assault-rifle p70 rivet_reload_assault_rifle_left 0 SW 133.15 191,128,91 -1.2 10.71 0.4817 0.7744 32.95 26.44 -8.09 TR None None None None None
+assault-rifle p70 rivet_reload_assault_rifle_left 1 W 133.96 173,115,81 -0.6 5.88 0.4424 0.7515 33.27 26.73 -15.59 R None None None None None
+assault-rifle p70 rivet_reload_assault_rifle_left 2 NW 133.96 181,120,85 -0.6 8.03 0.4909 0.7455 32.82 26.54 -6.33 TR None None None None None
+chainsaw p55 rivet_eq_chainsaw 0 S 138.01 140,106,82 -1.79 7.95 0.4273 0.6364 30.16 19.96 8.76 R None None None None None
+chainsaw p55 rivet_eq_chainsaw 1 SE 138.01 134,97,76 -1.79 5.3 0.4 0.6636 29.83 19.74 1.81 - None None None None None
+chainsaw p55 rivet_eq_chainsaw 2 E 140.52 120,90,72 0.0 0.0 0.3929 0.5446 29.69 19.79 0.0 - None None None None None
+chainsaw p55 rivet_eq_chainsaw 3 NE 138.01 122,86,68 -1.79 2.7 0.3909 0.6 28.33 19.18 -0.51 - None None None None None
+chainsaw p55 rivet_eq_chainsaw 4 N 134.25 109,75,60 -4.46 5.92 0.4206 0.7009 27.34 18.21 7.05 R None None None None None
+chainsaw p55 rivet_eq_chainsaw 5 E-fire 122.96 132,98,75 -12.5 4.98 0.449 1.1224 35.32 21.24 14.28 HR None None None None None
+chainsaw p55 rivet_eq_chainsaw 6 S-fire 102.88 127,92,72 -26.79 3.23 0.4756 0.8049 32.15 20.53 21.05 HR None None None None None
+chainsaw p55 rivet_eq_chainsaw 7 idle 121.7 120,89,70 -13.39 1.2 0.4433 0.701 32.06 20.64 12.83 HR None None None None None
+chainsaw p55 rivet_eq_chainsaw_left 0 SW 139.27 130,99,71 -0.89 7.18 0.3964 0.5766 30.29 20.4 0.89 - None None None None None
+chainsaw p55 rivet_eq_chainsaw_left 1 W 138.01 120,89,63 -1.79 5.34 0.3909 0.5909 30.06 20.17 -0.51 - None None None None None
+chainsaw p55 rivet_eq_chainsaw_left 2 NW 138.01 121,92,69 -1.79 3.51 0.3818 0.6182 30.39 20.15 -2.83 - None None None None None
+chainsaw p70 rivet_eq_chainsaw 0 S 132.34 119,96,76 -1.81 7.47 0.5583 0.8773 30.48 19.37 2.97 - None None None None None
+chainsaw p70 rivet_eq_chainsaw 1 SE 135.59 138,111,87 0.6 0.86 0.5389 0.8263 30.16 19.54 -0.61 - None None None None None
+chainsaw p70 rivet_eq_chainsaw 2 E 134.77 139,113,89 0.0 0.0 0.5422 0.7349 29.35 19.02 0.0 - None None None None None
+chainsaw p70 rivet_eq_chainsaw 3 NE 133.96 161,124,90 -0.6 9.2 0.5515 0.8 28.75 18.59 1.72 T None None None None None
+chainsaw p70 rivet_eq_chainsaw 4 N 129.9 125,103,81 -3.61 4.88 0.5625 0.8875 27.46 17.03 3.74 - None None None None None
+chainsaw p70 rivet_eq_chainsaw 5 E-fire 119.35 136,111,86 -11.45 1.14 0.619 1.3333 34.38 20.66 14.16 HR None None None None None
+chainsaw p70 rivet_eq_chainsaw 6 S-fire 116.1 130,102,77 -13.86 4.45 0.5594 0.8112 30.82 19.5 3.17 H None None None None None
+chainsaw p70 rivet_eq_chainsaw 7 idle 131.53 132,104,81 -2.41 3.54 0.5432 0.784 31.59 19.91 0.18 - None None None None None
+chainsaw p70 rivet_eq_chainsaw_left 0 SW 132.34 130,96,76 -1.81 7.3 0.5337 0.7669 31.75 21.04 -1.57 - None None None None None
+chainsaw p70 rivet_eq_chainsaw_left 1 W 133.96 129,92,72 -0.6 9.16 0.5152 0.7091 31.82 20.82 -4.98 T None None None None None
+chainsaw p70 rivet_eq_chainsaw_left 2 NW 134.77 140,101,79 0.0 7.12 0.5241 0.6687 31.76 20.72 -3.34 - None None None None None
+electro_baton p55 rivet_eq_electro_baton 0 S 125.46 149,116,88 0.0 7.25 0.46 0.82 30.03 18.66 6.98 R None None None None None
+electro_baton p55 rivet_eq_electro_baton 1 SE 136.76 150,111,84 9.0 6.78 0.4037 0.4771 29.99 18.52 -6.12 HR None None None None None
+electro_baton p55 rivet_eq_electro_baton 2 E 125.46 132,100,79 0.0 0.0 0.43 0.37 30.39 19.54 0.0 - None None None None None
+electro_baton p55 rivet_eq_electro_baton 3 NE 125.46 126,93,72 0.0 2.87 0.43 0.77 29.66 18.41 0.0 - None None None None None
+electro_baton p55 rivet_eq_electro_baton 4 N 125.46 145,110,86 0.0 4.65 0.44 0.83 30.42 18.34 2.33 - None None None None None
+electro_baton p55 rivet_eq_electro_baton 5 E-fire 130.48 152,112,86 4.0 6.98 0.4519 1.4327 31.82 18.03 5.09 R None None None None None
+electro_baton p55 rivet_eq_electro_baton 6 S-fire 120.45 137,100,75 -4.0 3.58 0.4896 0.9792 30.99 18.54 13.86 R None None None None None
+electro_baton p55 rivet_eq_electro_baton 7 idle 119.19 134,102,80 -5.0 0.94 0.4947 1.2105 31.22 18.56 15.05 R None None None None None
+electro_baton p55 rivet_eq_electro_baton_left 0 SW 140.52 159,117,77 12.0 13.78 0.4018 0.5804 36.43 26.42 -6.56 HTR None None None None None
+electro_baton p55 rivet_eq_electro_baton_left 1 W 138.01 172,128,86 10.0 17.37 0.3818 0.5545 35.97 25.9 -11.21 HTR None None None None None
+electro_baton p55 rivet_eq_electro_baton_left 2 NW 138.01 141,106,73 10.0 7.41 0.3909 0.6636 35.98 25.67 -9.09 HR None None None None None
+electro_baton p70 rivet_eq_electro_baton 0 S 124.22 180,137,109 -5.56 3.96 0.6176 1.1373 35.03 21.85 9.35 HR None None None None None
+electro_baton p70 rivet_eq_electro_baton 1 SE 129.09 184,143,115 -1.85 3.47 0.5849 0.9623 34.93 22.19 3.56 - None None None None None
+electro_baton p70 rivet_eq_electro_baton 2 E 131.53 187,144,110 0.0 0.0 0.5648 0.8148 35.3 22.2 0.0 - None None None None None
+electro_baton p70 rivet_eq_electro_baton 3 NE 126.66 167,116,88 -3.7 11.07 0.5962 1.0577 34.72 21.93 5.56 TR None None None None None
+electro_baton p70 rivet_eq_electro_baton 4 N 127.87 162,119,94 -2.78 10.51 0.619 1.0952 35.37 22.0 9.6 TR None None None None None
+electro_baton p70 rivet_eq_electro_baton 5 E-fire 125.44 196,153,123 -4.63 4.17 0.6505 1.4757 37.69 21.13 15.17 R None None None None None
+electro_baton p70 rivet_eq_electro_baton 6 S-fire 130.31 172,129,97 -0.93 5.68 0.5981 1.0374 35.85 21.66 5.9 R None None None None None
+electro_baton p70 rivet_eq_electro_baton 7 idle 121.78 190,149,121 -7.41 4.04 0.67 1.43 36.76 21.46 18.63 HR None None None None None
+electro_baton p70 rivet_eq_electro_baton_left 0 SW 132.74 156,111,91 0.93 14.21 0.5138 0.9266 31.57 23.86 -9.03 TR None None None None None
+electro_baton p70 rivet_eq_electro_baton_left 1 W 133.96 162,116,90 1.85 11.19 0.6 0.8091 31.87 23.96 6.23 TR None None None None None
+electro_baton p70 rivet_eq_electro_baton_left 2 NW 133.96 160,113,91 1.85 12.97 0.6182 0.8364 32.1 23.83 9.45 TR None None None None None
+electro_gun p55 rivet_eq_electro_gun 0 S 138.01 158,114,91 0.0 4.35 0.4242 0.6606 30.3 22.59 7.69 R None None None None None
+electro_gun p55 rivet_eq_electro_gun 1 SE 138.85 154,109,85 0.61 2.9 0.4036 0.6145 30.06 22.91 2.46 - None None None None None
+electro_gun p55 rivet_eq_electro_gun 2 E 138.01 147,103,82 0.0 0.0 0.3939 0.5152 30.03 22.24 0.0 - None None None None None
+electro_gun p55 rivet_eq_electro_gun 3 NE 138.01 152,104,81 0.0 2.23 0.3939 0.5515 29.86 22.02 0.0 - None None None None None
+electro_gun p55 rivet_eq_electro_gun 4 N 134.67 159,115,92 -2.42 4.72 0.4161 0.7019 29.28 21.22 5.64 R None None None None None
+electro_gun p55 rivet_eq_electro_gun 5 E-fire 129.65 171,122,92 -6.06 8.97 0.3742 0.9355 31.03 22.88 -5.0 HT None None None None None
+electro_gun p55 rivet_eq_electro_gun 6 S-fire 132.99 156,111,88 -3.64 3.35 0.4088 0.7799 31.98 24.18 3.78 - None None None None None
+electro_gun p55 rivet_eq_electro_gun 7 idle 129.65 175,125,94 -6.06 10.64 0.4 0.7935 31.83 24.24 1.55 HT None None None None None
+electro_gun p55 rivet_eq_electro_gun_noflash 0 S 138.01 158,114,91 0.0 4.35 0.4242 0.6606 30.3 22.59 7.69 R None None None None None
+electro_gun p55 rivet_eq_electro_gun_noflash 1 SE 138.85 154,109,85 0.61 2.9 0.4036 0.6145 30.06 22.91 2.46 - None None None None None
+electro_gun p55 rivet_eq_electro_gun_noflash 2 E 138.01 147,103,82 0.0 0.0 0.3939 0.5152 30.03 22.24 0.0 - None None None None None
+electro_gun p55 rivet_eq_electro_gun_noflash 3 NE 138.01 152,104,81 0.0 2.23 0.3939 0.5515 29.86 22.02 0.0 - None None None None None
+electro_gun p55 rivet_eq_electro_gun_noflash 4 N 134.67 159,115,92 -2.42 4.72 0.4161 0.7019 29.28 21.22 5.64 R None None None None None
+electro_gun p55 rivet_eq_electro_gun_noflash 5 E-fire 129.65 171,122,92 -6.06 8.97 0.3742 0.9355 31.03 22.88 -5.0 HT None None None None None
+electro_gun p55 rivet_eq_electro_gun_noflash 6 S-fire 132.99 156,111,88 -3.64 3.35 0.4088 0.7799 31.98 24.18 3.78 - None None None None None
+electro_gun p55 rivet_eq_electro_gun_noflash 7 idle 129.65 175,125,94 -6.06 10.64 0.4 0.7935 31.83 24.24 1.55 HT None None None None None
+electro_gun p55 rivet_eq_electro_gun_diag 0 SE 127.14 179,129,97 -7.88 12.3 0.4013 0.8355 34.83 25.91 1.88 HT None None None None None
+electro_gun p55 rivet_eq_electro_gun_diag 1 NE 130.48 149,102,80 -5.45 1.66 0.4038 0.8013 32.53 24.42 2.51 H None None None None None
+electro_gun p55 rivet_eq_electro_gun_diag 2 SW 127.97 168,114,82 -7.27 9.35 0.3987 0.8301 34.75 25.69 1.22 HT None None None None None
+electro_gun p55 rivet_eq_electro_gun_diag 3 NW 129.65 158,108,83 -6.06 4.47 0.4 0.8065 32.45 24.56 1.55 H None None None None None
+electro_gun p55 rivet_eq_electro_gun_diag_noflash 0 SE 127.14 179,129,97 -7.88 12.3 0.4013 0.8355 34.83 25.91 1.88 HT None None None None None
+electro_gun p55 rivet_eq_electro_gun_diag_noflash 1 NE 130.48 149,102,80 -5.45 1.66 0.4038 0.8013 32.53 24.42 2.51 H None None None None None
+electro_gun p55 rivet_eq_electro_gun_diag_noflash 2 SW 127.97 168,114,82 -7.27 9.35 0.3987 0.8301 34.75 25.69 1.22 HT None None None None None
+electro_gun p55 rivet_eq_electro_gun_diag_noflash 3 NW 129.65 158,108,83 -6.06 4.47 0.4 0.8065 32.45 24.56 1.55 H None None None None None
+electro_gun p55 rivet_eq_electro_gun_left 0 SW 138.01 147,109,82 0.0 4.31 0.3758 0.6424 30.51 21.49 -4.6 - None None None None None
+electro_gun p55 rivet_eq_electro_gun_left 1 W 138.01 134,94,70 0.0 4.63 0.3636 0.5879 31.05 21.68 -7.69 R None None None None None
+electro_gun p55 rivet_eq_electro_gun_left 2 NW 138.01 119,83,66 0.0 9.75 0.3636 0.6727 29.72 20.91 -7.69 TR None None None None None
+electro_gun p70 rivet_eq_electro_gun 0 S 134.77 151,112,89 0.61 7.73 0.5723 0.8072 33.05 23.88 33.0 R None None None None None
+electro_gun p70 rivet_eq_electro_gun 1 SE 137.21 161,124,100 2.42 5.61 0.5503 0.7811 32.16 23.32 27.89 R None None None None None
+electro_gun p70 rivet_eq_electro_gun 2 E 133.96 174,126,99 0.0 0.0 0.4303 0.7576 32.18 22.8 0.0 - None None None None None
+electro_gun p70 rivet_eq_electro_gun 3 NE 131.53 186,140,104 -1.82 6.86 0.5432 0.7963 32.22 22.26 26.24 R None None None None None
+electro_gun p70 rivet_eq_electro_gun 4 N 131.53 144,106,85 -1.82 10.11 0.5123 0.8951 31.5 21.75 19.06 TR None None None None None
+electro_gun p70 rivet_eq_electro_gun 5 E-fire 124.22 151,110,88 -7.27 7.97 0.281 1.085 34.2 24.63 -34.7 HR None None None None None
+electro_gun p70 rivet_eq_electro_gun 6 S-fire 142.89 156,114,89 6.67 5.9 0.642 0.5852 35.22 24.79 49.2 HR None None None None None
+electro_gun p70 rivet_eq_electro_gun 7 idle 133.15 149,109,89 -0.61 9.0 0.3354 0.9451 34.65 24.98 -22.05 TR None None None None None
+electro_gun p70 rivet_eq_electro_gun_noflash 0 S 134.77 151,112,89 0.61 7.73 0.5723 0.8072 33.05 23.88 33.0 R None None None None None
+electro_gun p70 rivet_eq_electro_gun_noflash 1 SE 137.21 161,124,100 2.42 5.61 0.5503 0.7811 32.16 23.32 27.89 R None None None None None
+electro_gun p70 rivet_eq_electro_gun_noflash 2 E 133.96 174,126,99 0.0 0.0 0.4303 0.7576 32.18 22.8 0.0 - None None None None None
+electro_gun p70 rivet_eq_electro_gun_noflash 3 NE 131.53 186,140,104 -1.82 6.86 0.5432 0.7963 32.22 22.26 26.24 R None None None None None
+electro_gun p70 rivet_eq_electro_gun_noflash 4 N 131.53 144,106,85 -1.82 10.11 0.5123 0.8951 31.5 21.75 19.06 TR None None None None None
+electro_gun p70 rivet_eq_electro_gun_noflash 5 E-fire 124.22 151,110,88 -7.27 7.97 0.281 1.085 34.2 24.63 -34.7 HR None None None None None
+electro_gun p70 rivet_eq_electro_gun_noflash 6 S-fire 142.89 156,114,89 6.67 5.9 0.642 0.5852 35.22 24.79 49.2 HR None None None None None
+electro_gun p70 rivet_eq_electro_gun_noflash 7 idle 133.15 149,109,89 -0.61 9.0 0.3354 0.9451 34.65 24.98 -22.05 TR None None None None None
+electro_gun p70 rivet_eq_electro_gun_diag 0 SE 127.47 166,122,89 -4.85 3.87 0.5732 0.9108 36.94 30.34 33.21 R None None None None None
+electro_gun p70 rivet_eq_electro_gun_diag 1 NE 126.66 180,135,99 -5.45 5.54 0.5256 1.0064 36.41 29.02 22.15 HR None None None None None
+electro_gun p70 rivet_eq_electro_gun_diag 2 SW 125.84 169,128,95 -6.06 4.16 0.5419 0.929 36.62 30.47 25.94 HR None None None None None
+electro_gun p70 rivet_eq_electro_gun_diag 3 NW 128.28 182,137,102 -4.24 5.57 0.4747 0.9937 36.19 28.63 10.32 R None None None None None
+electro_gun p70 rivet_eq_electro_gun_diag_noflash 0 SE 127.47 166,122,89 -4.85 3.87 0.5732 0.9108 36.94 30.34 33.21 R None None None None None
+electro_gun p70 rivet_eq_electro_gun_diag_noflash 1 NE 126.66 180,135,99 -5.45 5.54 0.5256 1.0064 36.41 29.02 22.15 HR None None None None None
+electro_gun p70 rivet_eq_electro_gun_diag_noflash 2 SW 125.84 169,128,95 -6.06 4.16 0.5419 0.929 36.62 30.47 25.94 HR None None None None None
+electro_gun p70 rivet_eq_electro_gun_diag_noflash 3 NW 128.28 182,137,102 -4.24 5.57 0.4747 0.9937 36.19 28.63 10.32 R None None None None None
+electro_gun p70 rivet_eq_electro_gun_left 0 SW 132.34 142,112,83 -1.21 10.49 0.6074 1.1227 32.66 23.94 41.16 TR None None None None None
+electro_gun p70 rivet_eq_electro_gun_left 1 W 133.96 153,112,80 0.0 7.21 0.5879 0.9394 32.43 23.35 36.63 R None None None None None
+electro_gun p70 rivet_eq_electro_gun_left 2 NW 135.59 149,116,85 1.21 8.4 0.6108 0.9281 32.13 22.93 41.95 TR None None None None None
+flamethrower p55 rivet_eq_flamethrower 0 S 138.01 145,108,80 0.0 12.6 0.4303 0.8242 29.24 17.96 7.57 TR None None None None None
+flamethrower p55 rivet_eq_flamethrower 1 SE 140.52 124,91,69 1.82 5.06 0.4107 0.7857 29.3 18.03 2.68 - None None None None None
+flamethrower p55 rivet_eq_flamethrower 2 E 138.01 113,86,69 0.0 0.0 0.4 0.7879 29.98 17.61 0.0 - None None None None None
+flamethrower p55 rivet_eq_flamethrower 3 NE 139.68 122,89,67 1.21 4.74 0.4012 0.7365 30.71 17.58 0.3 - None None None None None
+flamethrower p55 rivet_eq_flamethrower 4 N 138.01 117,88,68 0.0 2.46 0.4121 0.7212 31.12 18.09 3.02 - None None None None None
+flamethrower p55 rivet_eq_flamethrower 5 E-fire 117.94 121,90,68 -14.55 4.25 0.4326 1.6879 41.22 29.33 8.15 HR None None None None None
+flamethrower p55 rivet_eq_flamethrower 6 S-fire 93.68 133,99,71 -32.12 9.53 0.5446 0.8929 31.25 19.39 36.15 HTR None None None None None
+flamethrower p55 rivet_eq_flamethrower 7 idle 132.16 120,88,65 -4.24 4.65 0.4051 0.8671 30.58 18.44 1.28 - None None None None None
+flamethrower p55 rivet_eq_flamethrower_diag 0 SE 115.43 132,103,75 -16.36 9.5 0.4022 1.3261 40.94 28.12 0.55 HT None None None None None
+flamethrower p55 rivet_eq_flamethrower_diag 1 NE 106.64 117,88,68 -22.73 2.46 0.4118 1.4353 41.29 27.48 2.95 H None None None None None
+flamethrower p55 rivet_eq_flamethrower_diag 2 SW 116.68 138,103,80 -15.45 9.53 0.3978 1.2688 41.21 28.48 -0.55 HT None None None None None
+flamethrower p55 rivet_eq_flamethrower_diag 3 NW 105.39 119,93,72 -23.64 3.62 0.4167 1.4167 42.24 28.01 4.17 H None None None None None
+flamethrower p70 rivet_eq_flamethrower 0 S 133.15 136,104,81 -0.61 2.94 0.5488 0.9878 29.61 18.33 7.8 R None None None None None
+flamethrower p70 rivet_eq_flamethrower 1 SE 133.96 138,105,82 0.0 2.58 0.5394 0.9697 29.73 18.48 5.95 R None None None None None
+flamethrower p70 rivet_eq_flamethrower 2 E 133.96 141,109,82 0.0 0.0 0.5091 0.9455 30.62 18.52 0.0 - None None None None None
+flamethrower p70 rivet_eq_flamethrower 3 NE 136.4 126,97,77 1.82 6.6 0.4821 0.9167 30.92 18.53 -5.3 R None None None None None
+flamethrower p70 rivet_eq_flamethrower 4 N 136.4 132,101,78 1.82 3.85 0.5 0.881 31.46 19.01 -1.79 - None None None None None
+flamethrower p70 rivet_eq_flamethrower 5 E-fire 120.97 125,94,73 -9.7 6.57 0.557 2.1275 41.36 30.69 9.41 HR None None None None None
+flamethrower p70 rivet_eq_flamethrower 6 S-fire 108.79 125,95,70 -18.79 5.93 0.597 0.8731 30.26 18.83 17.27 HR None None None None None
+flamethrower p70 rivet_eq_flamethrower 7 idle 125.03 132,102,78 -6.67 3.43 0.539 1.1688 30.37 18.49 5.87 HR None None None None None
+flamethrower p70 rivet_eq_flamethrower_diag 0 SE 121.78 128,90,67 -9.09 7.83 0.42 1.25 39.03 28.02 -17.5 HR None None None None None
+flamethrower p70 rivet_eq_flamethrower_diag 1 NE 104.73 126,92,67 -21.82 6.72 0.5 1.5 37.81 25.77 -1.79 H None None None None None
+flamethrower p70 rivet_eq_flamethrower_diag 2 SW 126.66 130,93,69 -5.45 6.46 0.4038 1.1923 39.73 29.18 -20.68 HR None None None None None
+flamethrower p70 rivet_eq_flamethrower_diag 3 NW 104.73 125,90,68 -21.82 7.74 0.4651 1.4651 38.6 25.81 -8.64 HR None None None None None
+gatling p55 rivet_eq_gatling 0 S 138.01 145,111,85 -1.2 9.84 0.4303 0.7818 29.67 18.5 4.14 T None None None None None
+gatling p55 rivet_eq_gatling 1 SE 139.68 128,96,73 0.0 3.66 0.4192 0.7964 29.72 18.3 1.45 - None None None None None
+gatling p55 rivet_eq_gatling 2 E 139.68 121,89,71 0.0 0.0 0.4132 0.7425 29.23 18.21 0.0 - None None None None None
+gatling p55 rivet_eq_gatling 3 NE 138.01 110,83,67 -1.2 3.92 0.4 0.7394 29.34 18.07 -3.19 - None None None None None
+gatling p55 rivet_eq_gatling 4 N 137.17 113,86,69 -1.8 2.99 0.4207 0.7561 29.55 18.32 1.82 - None None None None None
+gatling p55 rivet_eq_gatling 5 E-fire 124.63 119,86,66 -10.78 1.87 0.3893 0.9396 30.31 18.72 -5.78 HR None None None None None
+gatling p55 rivet_eq_gatling 6 S-fire 116.26 132,96,73 -16.77 4.98 0.4245 0.7914 30.2 19.23 2.73 H None None None None None
+gatling p55 rivet_eq_gatling 7 idle 126.3 124,90,70 -9.58 1.7 0.3907 0.894 30.56 18.22 -5.45 HR None None None None None
+gatling p55 rivet_eq_gatling_noflash 0 S 138.01 145,111,85 -1.2 9.84 0.4303 0.7818 29.67 18.5 4.14 T None None None None None
+gatling p55 rivet_eq_gatling_noflash 1 SE 139.68 128,96,73 0.0 3.66 0.4192 0.7964 29.72 18.3 1.45 - None None None None None
+gatling p55 rivet_eq_gatling_noflash 2 E 139.68 121,89,71 0.0 0.0 0.4132 0.7425 29.23 18.21 0.0 - None None None None None
+gatling p55 rivet_eq_gatling_noflash 3 NE 138.01 110,83,67 -1.2 3.92 0.4 0.7394 29.34 18.07 -3.19 - None None None None None
+gatling p55 rivet_eq_gatling_noflash 4 N 137.17 113,86,69 -1.8 2.99 0.4207 0.7561 29.55 18.32 1.82 - None None None None None
+gatling p55 rivet_eq_gatling_noflash 5 E-fire 124.63 119,86,66 -10.78 1.87 0.3893 0.9396 30.31 18.72 -5.78 HR None None None None None
+gatling p55 rivet_eq_gatling_noflash 6 S-fire 116.26 132,96,73 -16.77 4.98 0.4245 0.7914 30.2 19.23 2.73 H None None None None None
+gatling p55 rivet_eq_gatling_noflash 7 idle 126.3 124,90,70 -9.58 1.7 0.3907 0.894 30.56 18.22 -5.45 HR None None None None None
+gatling p55 rivet_eq_gatling_diag 0 SE 135.5 162,113,80 -2.99 16.35 0.4074 0.7963 33.84 24.82 -1.4 T None None None None None
+gatling p55 rivet_eq_gatling_diag 1 NE 136.34 134,92,71 -2.4 5.93 0.3558 0.7546 33.52 24.13 -13.89 R None None None None None
+gatling p55 rivet_eq_gatling_diag 2 SW 136.34 164,114,83 -2.4 16.17 0.4172 0.7853 33.54 24.51 0.97 T None None None None None
+gatling p55 rivet_eq_gatling_diag 3 NW 136.34 136,90,69 -2.4 7.91 0.362 0.7853 34.0 24.64 -12.39 R None None None None None
+gatling p55 rivet_eq_gatling_diag_noflash 0 SE 135.5 162,113,80 -2.99 16.35 0.4074 0.7963 33.84 24.82 -1.4 T None None None None None
+gatling p55 rivet_eq_gatling_diag_noflash 1 NE 136.34 134,92,71 -2.4 5.93 0.3558 0.7546 33.52 24.13 -13.89 R None None None None None
+gatling p55 rivet_eq_gatling_diag_noflash 2 SW 136.34 164,114,83 -2.4 16.17 0.4172 0.7853 33.54 24.51 0.97 T None None None None None
+gatling p55 rivet_eq_gatling_diag_noflash 3 NW 136.34 136,90,69 -2.4 7.91 0.362 0.7853 34.0 24.64 -12.39 R None None None None None
+gatling p55 rivet_reload_gatling 0 S 136.34 176,128,91 -2.4 21.0 0.3988 0.681 33.34 23.3 -3.48 T None None None None None
+gatling p55 rivet_reload_gatling 1 SE 138.01 170,124,87 -1.2 19.27 0.3879 0.697 33.47 23.08 -6.12 TR None None None None None
+gatling p55 rivet_reload_gatling 2 E 138.85 170,121,85 -0.6 19.0 0.3795 0.753 33.26 23.62 -8.16 TR None None None None None
+gatling p55 rivet_reload_gatling 3 NE 138.85 171,124,87 -0.6 19.52 0.3675 0.7229 32.92 23.13 -11.06 TR None None None None None
+gatling p55 rivet_reload_gatling 4 N 138.01 176,126,86 -1.2 21.87 0.3879 0.703 33.6 23.44 -6.12 TR None None None None None
+gatling p55 rivet_reload_gatling 5 SE-out 137.17 176,124,84 -1.8 22.1 0.3476 0.7134 34.61 23.83 -15.88 TR None None None None None
+gatling p55 rivet_reload_gatling 6 SE-in 138.01 175,122,83 -1.2 21.48 0.3394 0.6424 35.28 24.15 -17.86 TR None None None None None
+gatling p55 rivet_reload_gatling 7 SE-ready 138.01 173,120,82 -1.2 20.6 0.3394 0.6545 35.44 24.16 -17.86 TR None None None None None
+gatling p55 rivet_reload_gatling_left 0 SW 133.83 125,98,70 -4.19 6.51 0.425 0.8125 30.59 21.96 2.86 - None None None None None
+gatling p55 rivet_reload_gatling_left 1 W 132.16 120,86,59 -5.39 5.76 0.4114 0.8608 30.38 21.83 -0.44 H None None None None None
+gatling p55 rivet_reload_gatling_left 2 NW 132.16 115,87,63 -5.39 4.0 0.4114 0.8861 30.13 21.42 -0.44 H None None None None None
+gatling p70 rivet_eq_gatling 0 S 132.34 130,103,82 -2.4 0.75 0.5644 0.8712 30.03 18.5 7.12 R None None None None None
+gatling p70 rivet_eq_gatling 1 SE 133.96 136,109,87 -1.2 2.92 0.5515 0.8909 30.0 18.32 4.67 - None None None None None
+gatling p70 rivet_eq_gatling 2 E 135.59 129,102,82 0.0 0.0 0.5269 0.9281 29.84 18.18 0.0 - None None None None None
+gatling p70 rivet_eq_gatling 3 NE 136.4 120,94,79 0.6 4.45 0.5179 0.8571 30.05 18.26 -1.71 - None None None None None
+gatling p70 rivet_eq_gatling 4 N 133.15 128,98,78 -1.8 2.0 0.5366 0.8598 30.39 18.91 1.84 - None None None None None
+gatling p70 rivet_eq_gatling 5 E-fire 124.22 129,102,82 -8.38 0.0 0.5556 1.1438 31.62 19.52 5.45 HR None None None None None
+gatling p70 rivet_eq_gatling 6 S-fire 115.29 127,99,79 -14.97 1.23 0.6197 0.8662 31.96 19.75 17.61 HR None None None None None
+gatling p70 rivet_eq_gatling 7 idle 122.6 121,97,80 -9.58 3.17 0.5629 1.106 32.46 19.73 6.83 HR None None None None None
+gatling p70 rivet_eq_gatling_noflash 0 S 132.34 130,103,82 -2.4 0.75 0.5644 0.8712 30.03 18.5 7.12 R None None None None None
+gatling p70 rivet_eq_gatling_noflash 1 SE 133.96 136,109,87 -1.2 2.92 0.5515 0.8909 30.0 18.32 4.67 - None None None None None
+gatling p70 rivet_eq_gatling_noflash 2 E 135.59 129,102,82 0.0 0.0 0.5269 0.9281 29.84 18.18 0.0 - None None None None None
+gatling p70 rivet_eq_gatling_noflash 3 NE 136.4 120,94,79 0.6 4.45 0.5179 0.8571 30.05 18.26 -1.71 - None None None None None
+gatling p70 rivet_eq_gatling_noflash 4 N 133.15 128,98,78 -1.8 2.0 0.5366 0.8598 30.39 18.91 1.84 - None None None None None
+gatling p70 rivet_eq_gatling_noflash 5 E-fire 124.22 129,102,82 -8.38 0.0 0.5556 1.1438 31.62 19.52 5.45 HR None None None None None
+gatling p70 rivet_eq_gatling_noflash 6 S-fire 115.29 127,99,79 -14.97 1.23 0.6197 0.8662 31.96 19.75 17.61 HR None None None None None
+gatling p70 rivet_eq_gatling_noflash 7 idle 122.6 121,97,80 -9.58 3.17 0.5629 1.106 32.46 19.73 6.83 HR None None None None None
+gatling p70 rivet_eq_gatling_diag 0 SE 136.4 127,93,73 0.6 4.59 0.5298 0.9107 31.83 21.51 0.55 - None None None None None
+gatling p70 rivet_eq_gatling_diag 1 NE 139.65 137,103,80 2.99 3.99 0.5116 0.9651 32.96 21.58 -2.9 - None None None None None
+gatling p70 rivet_eq_gatling_diag 2 SW 134.77 134,99,78 -0.6 3.97 0.5361 0.9157 31.51 21.17 1.75 - None None None None None
+gatling p70 rivet_eq_gatling_diag 3 NW 138.83 136,102,80 2.4 3.76 0.5029 0.9708 32.25 21.0 -4.55 - None None None None None
+gatling p70 rivet_eq_gatling_diag_noflash 0 SE 136.4 127,93,73 0.6 4.59 0.5298 0.9107 31.83 21.51 0.55 - None None None None None
+gatling p70 rivet_eq_gatling_diag_noflash 1 NE 139.65 137,103,80 2.99 3.99 0.5116 0.9651 32.96 21.58 -2.9 - None None None None None
+gatling p70 rivet_eq_gatling_diag_noflash 2 SW 134.77 134,99,78 -0.6 3.97 0.5361 0.9157 31.51 21.17 1.75 - None None None None None
+gatling p70 rivet_eq_gatling_diag_noflash 3 NW 138.83 136,102,80 2.4 3.76 0.5029 0.9708 32.25 21.0 -4.55 - None None None None None
+gatling p70 rivet_reload_gatling 0 S 132.34 150,112,85 -2.4 8.18 0.5583 0.908 34.31 23.19 5.96 TR None None None None None
+gatling p70 rivet_reload_gatling 1 SE 133.96 166,127,97 -1.2 13.26 0.5394 0.8545 34.08 23.38 2.37 T None None None None None
+gatling p70 rivet_reload_gatling 2 E 135.59 155,114,85 0.0 10.3 0.521 0.9042 34.38 23.82 -1.12 T None None None None None
+gatling p70 rivet_reload_gatling 3 NE 136.4 158,123,95 0.6 10.44 0.5179 0.881 34.7 23.58 -1.71 T None None None None None
+gatling p70 rivet_reload_gatling 4 N 133.15 126,95,73 -1.8 3.57 0.5366 0.7622 35.12 24.31 1.84 - None None None None None
+gatling p70 rivet_reload_gatling 5 SE-out 137.21 156,122,94 1.2 9.86 0.5207 0.9527 35.33 23.55 -1.18 T None None None None None
+gatling p70 rivet_reload_gatling 6 SE-in 133.15 149,113,84 -1.8 8.37 0.5488 0.8659 36.28 24.16 4.16 T None None None None None
+gatling p70 rivet_reload_gatling 7 SE-ready 129.09 152,118,91 -4.79 8.44 0.4843 1.0314 36.59 23.77 -8.09 TR None None None None None
+gatling p70 rivet_reload_gatling_left 0 SW 134.77 151,110,86 -0.6 8.23 0.4337 1.0542 32.73 24.93 -17.69 TR None None None None None
+gatling p70 rivet_reload_gatling_left 1 W 133.96 176,132,102 -1.2 16.12 0.5091 1.1394 33.66 25.35 -3.38 T None None None None None
+gatling p70 rivet_reload_gatling_left 2 NW 133.15 174,129,102 -1.8 15.0 0.4817 1.1402 34.03 25.59 -8.58 TR None None None None None
+gloria p55 rivet_eq_gloria 0 S 138.01 142,108,82 -0.6 10.55 0.4121 0.6121 29.9 18.51 5.23 TR None None None None None
+gloria p55 rivet_eq_gloria 1 SE 138.01 118,86,66 -0.6 1.19 0.3939 0.5818 29.25 18.62 0.59 - None None None None None
+gloria p55 rivet_eq_gloria 2 E 138.85 117,85,67 0.0 0.0 0.3916 0.488 28.65 17.76 0.0 - None None None None None
+gloria p55 rivet_eq_gloria 3 NE 138.01 111,82,63 -0.6 2.12 0.3879 0.5091 27.75 17.84 -0.94 - None None None None None
+gloria p55 rivet_eq_gloria 4 N 136.34 111,84,66 -1.81 2.55 0.4049 0.5644 27.89 17.86 3.4 - None None None None None
+gloria p55 rivet_eq_gloria 5 E-fire 131.32 116,83,64 -5.42 1.17 0.3631 0.7134 29.84 17.78 -7.28 HR None None None None None
+gloria p55 rivet_eq_gloria 6 S-fire 123.79 138,102,77 -10.84 8.33 0.4122 0.6959 29.53 18.25 5.26 HTR None None None None None
+gloria p55 rivet_eq_gloria 7 idle 130.48 122,88,65 -6.02 3.28 0.3654 0.6859 30.74 18.45 -6.69 HR None None None None None
+gloria p55 rivet_eq_gloria_noflash 0 S 138.01 142,108,82 -0.6 10.55 0.4121 0.6121 29.9 18.51 5.23 TR None None None None None
+gloria p55 rivet_eq_gloria_noflash 1 SE 138.01 118,86,66 -0.6 1.19 0.3939 0.5818 29.25 18.62 0.59 - None None None None None
+gloria p55 rivet_eq_gloria_noflash 2 E 138.85 117,85,67 0.0 0.0 0.3916 0.488 28.65 17.76 0.0 - None None None None None
+gloria p55 rivet_eq_gloria_noflash 3 NE 138.01 111,82,63 -0.6 2.12 0.3879 0.5091 27.75 17.84 -0.94 - None None None None None
+gloria p55 rivet_eq_gloria_noflash 4 N 136.34 111,84,66 -1.81 2.55 0.4049 0.5644 27.89 17.86 3.4 - None None None None None
+gloria p55 rivet_eq_gloria_noflash 5 E-fire 131.32 116,83,64 -5.42 1.17 0.3631 0.7134 29.84 17.78 -7.28 HR None None None None None
+gloria p55 rivet_eq_gloria_noflash 6 S-fire 123.79 138,102,77 -10.84 8.33 0.4122 0.6959 29.53 18.25 5.26 HTR None None None None None
+gloria p55 rivet_eq_gloria_noflash 7 idle 130.48 122,88,65 -6.02 3.28 0.3654 0.6859 30.74 18.45 -6.69 HR None None None None None
+gloria p55 rivet_eq_gloria_diag 0 SE 118.77 146,109,83 -14.46 11.09 0.4155 0.7394 32.73 19.42 6.1 HTR None None None None None
+gloria p55 rivet_eq_gloria_diag 1 NE 120.45 123,87,66 -13.25 2.99 0.3958 0.6736 31.91 19.27 1.07 H None None None None None
+gloria p55 rivet_eq_gloria_diag 2 SW 117.94 144,108,81 -15.06 10.78 0.4184 0.7163 32.56 19.65 6.84 HTR None None None None None
+gloria p55 rivet_eq_gloria_diag 3 NW 120.45 120,88,68 -13.25 1.6 0.3958 0.6667 31.92 19.06 1.07 H None None None None None
+gloria p55 rivet_eq_gloria_diag_noflash 0 SE 118.77 146,109,83 -14.46 11.09 0.4155 0.7394 32.73 19.42 6.1 HTR None None None None None
+gloria p55 rivet_eq_gloria_diag_noflash 1 NE 120.45 123,87,66 -13.25 2.99 0.3958 0.6736 31.91 19.27 1.07 H None None None None None
+gloria p55 rivet_eq_gloria_diag_noflash 2 SW 117.94 144,108,81 -15.06 10.78 0.4184 0.7163 32.56 19.65 6.84 HTR None None None None None
+gloria p55 rivet_eq_gloria_diag_noflash 3 NW 120.45 120,88,68 -13.25 1.6 0.3958 0.6667 31.92 19.06 1.07 H None None None None None
+gloria p70 rivet_eq_gloria 0 S 134.77 123,97,76 0.61 5.19 0.5361 0.8072 31.53 19.81 36.1 R None None None None None
+gloria p70 rivet_eq_gloria 1 SE 136.4 127,100,79 1.82 4.34 0.5 0.7738 30.92 19.1 26.94 R None None None None None
+gloria p70 rivet_eq_gloria 2 E 133.96 134,100,75 0.0 0.0 0.3939 0.703 30.58 19.37 0.0 - None None None None None
+gloria p70 rivet_eq_gloria 3 NE 133.15 159,119,81 -0.61 10.8 0.5122 0.7256 29.58 18.72 30.03 TR None None None None None
+gloria p70 rivet_eq_gloria 4 N 130.71 141,106,81 -2.42 2.5 0.5528 0.7888 27.88 18.47 40.34 R None None None None None
+gloria p70 rivet_eq_gloria 5 E-fire 119.35 129,101,78 -10.91 3.24 0.551 1.1293 31.51 18.88 39.88 HR None None None None None
+gloria p70 rivet_eq_gloria 6 S-fire 124.22 136,106,83 -7.27 3.17 0.5556 0.7843 32.1 19.98 41.05 HR None None None None None
+gloria p70 rivet_eq_gloria 7 idle 133.96 128,101,79 0.0 3.98 0.503 0.7939 31.56 18.79 27.7 R None None None None None
+gloria p70 rivet_eq_gloria_noflash 0 S 134.77 123,97,76 0.61 5.19 0.5361 0.8072 31.53 19.81 36.1 R None None None None None
+gloria p70 rivet_eq_gloria_noflash 1 SE 136.4 127,100,79 1.82 4.34 0.5 0.7738 30.92 19.1 26.94 R None None None None None
+gloria p70 rivet_eq_gloria_noflash 2 E 133.96 134,100,75 0.0 0.0 0.3939 0.703 30.58 19.37 0.0 - None None None None None
+gloria p70 rivet_eq_gloria_noflash 3 NE 133.15 159,119,81 -0.61 10.8 0.5122 0.7256 29.58 18.72 30.03 TR None None None None None
+gloria p70 rivet_eq_gloria_noflash 4 N 130.71 141,106,81 -2.42 2.5 0.5528 0.7888 27.88 18.47 40.34 R None None None None None
+gloria p70 rivet_eq_gloria_noflash 5 E-fire 119.35 129,101,78 -10.91 3.24 0.551 1.1293 31.51 18.88 39.88 HR None None None None None
+gloria p70 rivet_eq_gloria_noflash 6 S-fire 124.22 136,106,83 -7.27 3.17 0.5556 0.7843 32.1 19.98 41.05 HR None None None None None
+gloria p70 rivet_eq_gloria_noflash 7 idle 133.96 128,101,79 0.0 3.98 0.503 0.7939 31.56 18.79 27.7 R None None None None None
+gloria p70 rivet_eq_gloria_diag 0 SE 120.16 144,100,76 -10.3 4.76 0.5338 0.7973 33.98 24.71 35.52 HR None None None None None
+gloria p70 rivet_eq_gloria_diag 1 NE 123.41 159,110,80 -7.88 9.3 0.5132 0.8553 31.59 24.22 30.29 HTR None None None None None
+gloria p70 rivet_eq_gloria_diag 2 SW 120.16 142,97,73 -10.3 5.46 0.5405 0.8378 33.64 24.89 37.22 HR None None None None None
+gloria p70 rivet_eq_gloria_diag 3 NW 121.78 164,115,85 -9.09 10.37 0.52 0.8533 31.57 24.15 32.01 HTR None None None None None
+gloria p70 rivet_eq_gloria_diag_noflash 0 SE 120.16 144,100,76 -10.3 4.76 0.5338 0.7973 33.98 24.71 35.52 HR None None None None None
+gloria p70 rivet_eq_gloria_diag_noflash 1 NE 123.41 159,110,80 -7.88 9.3 0.5132 0.8553 31.59 24.22 30.29 HTR None None None None None
+gloria p70 rivet_eq_gloria_diag_noflash 2 SW 120.16 142,97,73 -10.3 5.46 0.5405 0.8378 33.64 24.89 37.22 HR None None None None None
+gloria p70 rivet_eq_gloria_diag_noflash 3 NW 121.78 164,115,85 -9.09 10.37 0.52 0.8533 31.57 24.15 32.01 HTR None None None None None
+hand_cannon p55 rivet_eq_hand_cannon 0 S 138.01 140,108,84 0.61 8.63 0.4545 0.7576 27.63 17.53 11.26 TR None None None None None
+hand_cannon p55 rivet_eq_hand_cannon 1 SE 138.85 121,92,74 1.22 1.36 0.4398 0.5301 28.04 17.91 7.66 R None None None None None
+hand_cannon p55 rivet_eq_hand_cannon 2 E 137.17 117,90,72 0.0 0.0 0.4085 0.5061 28.92 18.09 0.0 - None None None None None
+hand_cannon p55 rivet_eq_hand_cannon 3 NE 138.01 114,86,68 0.61 1.65 0.4061 0.5333 27.1 17.12 -0.59 - None None None None None
+hand_cannon p55 rivet_eq_hand_cannon 4 N 138.01 105,82,68 0.61 4.69 0.4424 0.7212 27.52 16.88 8.3 R None None None None None
+hand_cannon p55 rivet_eq_hand_cannon 5 E-fire 129.65 132,100,78 -5.49 5.8 0.4129 0.9419 28.56 17.23 1.08 H None None None None None
+hand_cannon p55 rivet_eq_hand_cannon 6 S-fire 130.48 130,99,77 -4.88 5.2 0.4487 0.7949 30.46 20.12 9.84 R None None None None None
+hand_cannon p55 rivet_eq_hand_cannon 7 idle 132.16 126,95,77 -3.66 3.19 0.4177 0.7215 29.07 17.39 2.25 - None None None None None
+hand_cannon p55 rivet_eq_hand_cannon_noflash 0 S 138.01 140,108,84 0.61 8.63 0.4545 0.7576 27.63 17.53 11.26 TR None None None None None
+hand_cannon p55 rivet_eq_hand_cannon_noflash 1 SE 138.85 121,92,74 1.22 1.36 0.4398 0.5301 28.04 17.91 7.66 R None None None None None
+hand_cannon p55 rivet_eq_hand_cannon_noflash 2 E 137.17 117,90,72 0.0 0.0 0.4085 0.5061 28.92 18.09 0.0 - None None None None None
+hand_cannon p55 rivet_eq_hand_cannon_noflash 3 NE 138.01 114,86,68 0.61 1.65 0.4061 0.5333 27.1 17.12 -0.59 - None None None None None
+hand_cannon p55 rivet_eq_hand_cannon_noflash 4 N 138.01 105,82,68 0.61 4.69 0.4424 0.7212 27.52 16.88 8.3 R None None None None None
+hand_cannon p55 rivet_eq_hand_cannon_noflash 5 E-fire 129.65 132,100,78 -5.49 5.8 0.4129 0.9419 28.56 17.23 1.08 H None None None None None
+hand_cannon p55 rivet_eq_hand_cannon_noflash 6 S-fire 130.48 130,99,77 -4.88 5.2 0.4487 0.7949 30.46 20.12 9.84 R None None None None None
+hand_cannon p55 rivet_eq_hand_cannon_noflash 7 idle 132.16 126,95,77 -3.66 3.19 0.4177 0.7215 29.07 17.39 2.25 - None None None None None
+hand_cannon p55 rivet_eq_hand_cannon_diag 0 SE 123.79 143,95,70 -9.76 12.19 0.4459 0.7973 32.94 22.14 9.16 HTR None None None None None
+hand_cannon p55 rivet_eq_hand_cannon_diag 1 NE 123.79 130,89,71 -9.76 7.03 0.4392 0.8716 31.36 21.28 7.52 HR None None None None None
+hand_cannon p55 rivet_eq_hand_cannon_diag 2 SW 124.63 149,99,75 -9.15 13.28 0.4497 0.8926 32.7 22.5 10.09 HTR None None None None None
+hand_cannon p55 rivet_eq_hand_cannon_diag 3 NW 124.63 135,93,74 -9.15 7.89 0.4295 0.8322 31.21 21.02 5.14 HR None None None None None
+hand_cannon p55 rivet_eq_hand_cannon_diag_noflash 0 SE 123.79 143,95,70 -9.76 12.19 0.4459 0.7973 32.94 22.14 9.16 HTR None None None None None
+hand_cannon p55 rivet_eq_hand_cannon_diag_noflash 1 NE 123.79 130,89,71 -9.76 7.03 0.4392 0.8716 31.36 21.28 7.52 HR None None None None None
+hand_cannon p55 rivet_eq_hand_cannon_diag_noflash 2 SW 124.63 149,99,75 -9.15 13.28 0.4497 0.8926 32.7 22.5 10.09 HTR None None None None None
+hand_cannon p55 rivet_eq_hand_cannon_diag_noflash 3 NW 124.63 135,93,74 -9.15 7.89 0.4295 0.8322 31.21 21.02 5.14 HR None None None None None
+hand_cannon p55 rivet_eq_hand_cannon_left 0 SW 139.68 138,103,72 1.83 10.5 0.3952 0.5928 29.54 21.69 -3.26 T None None None None None
+hand_cannon p55 rivet_eq_hand_cannon_left 1 W 137.17 132,92,63 0.0 10.01 0.3902 0.5671 29.54 21.63 -4.48 T None None None None None
+hand_cannon p55 rivet_eq_hand_cannon_left 2 NW 138.01 123,91,65 0.61 5.6 0.3818 0.6788 29.33 21.33 -6.54 R None None None None None
+hand_cannon p70 rivet_eq_hand_cannon 0 S 121.78 122,94,75 -8.54 3.42 0.6733 1.0133 28.09 17.88 16.23 HR None None None None None
+hand_cannon p70 rivet_eq_hand_cannon 1 SE 135.59 120,91,73 1.83 3.81 0.5808 0.6826 28.37 18.23 0.26 - None None None None None
+hand_cannon p70 rivet_eq_hand_cannon 2 E 133.15 131,98,80 0.0 0.0 0.5793 0.628 28.91 18.59 0.0 - None None None None None
+hand_cannon p70 rivet_eq_hand_cannon 3 NE 133.96 129,97,77 0.61 1.31 0.5818 0.7576 26.87 17.83 0.43 - None None None None None
+hand_cannon p70 rivet_eq_hand_cannon 4 N 127.47 125,96,79 -4.27 2.53 0.6561 0.9618 28.49 17.81 13.26 R None None None None None
+hand_cannon p70 rivet_eq_hand_cannon 5 E-fire 113.67 122,92,72 -14.63 3.36 0.6286 1.2929 27.77 17.44 8.51 HR None None None None None
+hand_cannon p70 rivet_eq_hand_cannon 6 S-fire 119.35 125,94,75 -10.37 2.22 0.6122 0.9728 28.93 18.05 5.68 HR None None None None None
+hand_cannon p70 rivet_eq_hand_cannon 7 idle 108.79 123,96,75 -18.29 3.6 0.6716 1.0075 29.0 18.47 15.93 HR None None None None None
+hand_cannon p70 rivet_eq_hand_cannon_noflash 0 S 121.78 122,94,75 -8.54 3.42 0.6733 1.0133 28.09 17.88 16.23 HR None None None None None
+hand_cannon p70 rivet_eq_hand_cannon_noflash 1 SE 135.59 120,91,73 1.83 3.81 0.5808 0.6826 28.37 18.23 0.26 - None None None None None
+hand_cannon p70 rivet_eq_hand_cannon_noflash 2 E 133.15 131,98,80 0.0 0.0 0.5793 0.628 28.91 18.59 0.0 - None None None None None
+hand_cannon p70 rivet_eq_hand_cannon_noflash 3 NE 133.96 129,97,77 0.61 1.31 0.5818 0.7576 26.87 17.83 0.43 - None None None None None
+hand_cannon p70 rivet_eq_hand_cannon_noflash 4 N 127.47 125,96,79 -4.27 2.53 0.6561 0.9618 28.49 17.81 13.26 R None None None None None
+hand_cannon p70 rivet_eq_hand_cannon_noflash 5 E-fire 113.67 122,92,72 -14.63 3.36 0.6286 1.2929 27.77 17.44 8.51 HR None None None None None
+hand_cannon p70 rivet_eq_hand_cannon_noflash 6 S-fire 119.35 125,94,75 -10.37 2.22 0.6122 0.9728 28.93 18.05 5.68 HR None None None None None
+hand_cannon p70 rivet_eq_hand_cannon_noflash 7 idle 108.79 123,96,75 -18.29 3.6 0.6716 1.0075 29.0 18.47 15.93 HR None None None None None
+hand_cannon p70 rivet_eq_hand_cannon_diag 0 SE 123.41 139,102,83 -7.32 2.74 0.6053 0.8421 31.93 21.88 4.49 H None None None None None
+hand_cannon p70 rivet_eq_hand_cannon_diag 1 NE 115.29 133,98,80 -13.41 1.17 0.6479 1.1268 29.13 20.69 11.84 HR None None None None None
+hand_cannon p70 rivet_eq_hand_cannon_diag 2 SW 112.85 138,100,81 -15.24 2.75 0.6691 1.1079 29.62 20.7 15.5 HR None None None None None
+hand_cannon p70 rivet_eq_hand_cannon_diag 3 NW 115.29 141,103,82 -13.41 3.81 0.6549 1.1338 29.08 20.61 13.05 HR None None None None None
+hand_cannon p70 rivet_eq_hand_cannon_diag_noflash 0 SE 123.41 139,102,83 -7.32 2.74 0.6053 0.8421 31.93 21.88 4.49 H None None None None None
+hand_cannon p70 rivet_eq_hand_cannon_diag_noflash 1 NE 115.29 133,98,80 -13.41 1.17 0.6479 1.1268 29.13 20.69 11.84 HR None None None None None
+hand_cannon p70 rivet_eq_hand_cannon_diag_noflash 2 SW 112.85 138,100,81 -15.24 2.75 0.6691 1.1079 29.62 20.7 15.5 HR None None None None None
+hand_cannon p70 rivet_eq_hand_cannon_diag_noflash 3 NW 115.29 141,103,82 -13.41 3.81 0.6549 1.1338 29.08 20.61 13.05 HR None None None None None
+hand_cannon p70 rivet_eq_hand_cannon_left 0 SW 133.96 137,98,79 0.61 3.02 0.5333 0.9333 28.59 20.8 -7.94 R None None None None None
+hand_cannon p70 rivet_eq_hand_cannon_left 1 W 133.15 135,96,76 0.0 3.3 0.4512 0.8232 28.52 20.66 -22.11 R None None None None None
+hand_cannon p70 rivet_eq_hand_cannon_left 2 NW 134.77 141,101,81 1.22 3.99 0.6205 0.7892 28.44 20.34 7.11 R None None None None None
+homing_shard p55 rivet_eq_homing_shard 0 S 137.17 137,103,77 -1.8 7.28 0.4085 0.5854 28.73 21.45 6.6 R None None None None None
+homing_shard p55 rivet_eq_homing_shard 1 SE 138.01 123,90,69 -1.2 1.84 0.4 0.5879 28.92 21.91 4.38 - None None None None None
+homing_shard p55 rivet_eq_homing_shard 2 E 139.68 122,88,70 0.0 0.0 0.3832 0.5269 28.49 20.93 0.0 - None None None None None
+homing_shard p55 rivet_eq_homing_shard 3 NE 138.01 116,82,64 -1.2 2.51 0.3818 0.5455 28.21 20.42 -0.37 - None None None None None
+homing_shard p55 rivet_eq_homing_shard 4 N 136.34 143,102,78 -2.4 7.9 0.411 0.5951 28.24 19.66 7.25 R None None None None None
+homing_shard p55 rivet_eq_homing_shard 5 E-fire 125.46 119,84,64 -10.18 2.2 0.3933 0.72 29.13 21.5 2.64 H None None None None None
+homing_shard p55 rivet_eq_homing_shard 6 S-fire 123.79 141,100,75 -11.38 7.64 0.4324 0.6486 29.94 21.8 12.84 HR None None None None None
+homing_shard p55 rivet_eq_homing_shard 7 idle 125.46 134,98,73 -10.18 5.73 0.4067 0.66 29.12 22.08 6.13 HR None None None None None
+homing_shard p55 rivet_eq_homing_shard_noflash 0 S 137.17 137,103,77 -1.8 7.28 0.4085 0.5854 28.73 21.45 6.6 R None None None None None
+homing_shard p55 rivet_eq_homing_shard_noflash 1 SE 138.01 123,90,69 -1.2 1.84 0.4 0.5879 28.92 21.91 4.38 - None None None None None
+homing_shard p55 rivet_eq_homing_shard_noflash 2 E 139.68 122,88,70 0.0 0.0 0.3832 0.5269 28.49 20.93 0.0 - None None None None None
+homing_shard p55 rivet_eq_homing_shard_noflash 3 NE 138.01 116,82,64 -1.2 2.51 0.3818 0.5455 28.21 20.42 -0.37 - None None None None None
+homing_shard p55 rivet_eq_homing_shard_noflash 4 N 136.34 143,102,78 -2.4 7.9 0.411 0.5951 28.24 19.66 7.25 R None None None None None
+homing_shard p55 rivet_eq_homing_shard_noflash 5 E-fire 125.46 119,84,64 -10.18 2.2 0.3933 0.72 29.13 21.5 2.64 H None None None None None
+homing_shard p55 rivet_eq_homing_shard_noflash 6 S-fire 123.79 141,100,75 -11.38 7.64 0.4324 0.6486 29.94 21.8 12.84 HR None None None None None
+homing_shard p55 rivet_eq_homing_shard_noflash 7 idle 125.46 134,98,73 -10.18 5.73 0.4067 0.66 29.12 22.08 6.13 HR None None None None None
+homing_shard p55 rivet_eq_homing_shard_diag 0 SE 133.83 171,105,68 -4.19 22.07 0.3812 0.8063 34.55 28.66 -0.52 T None None None None None
+homing_shard p55 rivet_eq_homing_shard_diag 1 NE 136.34 165,107,76 -2.4 17.17 0.3681 0.8344 34.78 28.46 -3.94 T None None None None None
+homing_shard p55 rivet_eq_homing_shard_diag 2 SW 139.68 182,118,79 0.0 23.83 0.3713 0.8144 35.6 29.48 -3.11 T None None None None None
+homing_shard p55 rivet_eq_homing_shard_diag 3 NW 142.19 156,104,81 1.8 12.19 0.3647 0.5824 31.02 25.34 -4.83 T None None None None None
+homing_shard p55 rivet_eq_homing_shard_diag_noflash 0 SE 133.83 171,105,68 -4.19 22.07 0.3812 0.8063 34.55 28.66 -0.52 T None None None None None
+homing_shard p55 rivet_eq_homing_shard_diag_noflash 1 NE 136.34 165,107,76 -2.4 17.17 0.3681 0.8344 34.78 28.46 -3.94 T None None None None None
+homing_shard p55 rivet_eq_homing_shard_diag_noflash 2 SW 139.68 182,118,79 0.0 23.83 0.3713 0.8144 35.6 29.48 -3.11 T None None None None None
+homing_shard p55 rivet_eq_homing_shard_diag_noflash 3 NW 142.19 156,104,81 1.8 12.19 0.3647 0.5824 31.02 25.34 -4.83 T None None None None None
+homing_shard p55 rivet_eq_homing_shard_left 0 SW 138.01 158,116,76 -1.2 17.14 0.3818 0.6485 33.15 26.85 -0.37 T None None None None None
+homing_shard p55 rivet_eq_homing_shard_left 1 W 136.34 150,104,67 -2.4 14.58 0.3804 0.6135 32.55 26.52 -0.73 T None None None None None
+homing_shard p55 rivet_eq_homing_shard_left 2 NW 138.01 136,97,64 -1.2 9.94 0.3758 0.5273 32.81 26.56 -1.93 T None None None None None
+homing_shard p55 rivet_reload_homing_shard 0 S 138.01 202,142,101 -1.2 28.89 0.4788 0.5515 36.15 28.48 24.95 TR None None None None None
+homing_shard p55 rivet_reload_homing_shard 1 SE 140.52 199,139,98 0.6 27.96 0.4167 0.5655 36.68 28.81 8.74 TR None None None None None
+homing_shard p55 rivet_reload_homing_shard 2 E 138.01 188,124,83 -1.2 25.59 0.4242 0.5636 36.87 29.56 10.7 TR None None None None None
+homing_shard p55 rivet_reload_homing_shard 3 NE 138.01 166,104,70 -1.2 19.29 0.3758 0.5818 37.61 29.89 -1.93 T None None None None None
+homing_shard p55 rivet_reload_homing_shard 4 N 138.01 192,123,81 -1.2 27.49 0.3818 0.5758 38.08 29.94 -0.37 T None None None None None
+homing_shard p55 rivet_reload_homing_shard 5 SE-out 153.07 205,143,102 9.58 29.59 0.3989 0.6393 39.17 30.36 4.1 HT None None None None None
+homing_shard p55 rivet_reload_homing_shard 6 SE-in 153.07 204,142,101 9.58 29.32 0.3989 0.6393 39.06 30.66 4.1 HT None None None None None
+homing_shard p55 rivet_reload_homing_shard 7 SE-ready 153.07 205,144,102 9.58 29.7 0.3989 0.6667 38.97 30.23 4.1 HT None None None None None
+homing_shard p55 rivet_reload_homing_shard_left 0 SW 139.68 168,118,69 0.0 22.96 0.3952 0.6048 37.75 33.22 3.13 T None None None None None
+homing_shard p55 rivet_reload_homing_shard_left 1 W 138.01 170,116,65 -1.2 24.7 0.3939 0.6061 37.92 32.67 2.79 T None None None None None
+homing_shard p55 rivet_reload_homing_shard_left 2 NW 138.01 159,110,64 -1.2 20.19 0.3939 0.6182 38.22 32.93 2.79 T None None None None None
+homing_shard p70 rivet_eq_homing_shard 0 S 131.53 129,96,74 -1.82 8.01 0.5617 0.7778 29.8 23.52 -0.34 T None None None None None
+homing_shard p70 rivet_eq_homing_shard 1 SE 134.77 149,112,85 0.61 0.95 0.5482 0.7289 29.68 23.37 -2.73 - None None None None None
+homing_shard p70 rivet_eq_homing_shard 2 E 133.96 150,114,86 0.0 0.0 0.5636 0.8121 29.7 23.3 0.0 - None None None None None
+homing_shard p70 rivet_eq_homing_shard 3 NE 133.96 129,92,70 0.0 8.98 0.5576 0.7455 28.67 22.26 -1.06 T None None None None None
+homing_shard p70 rivet_eq_homing_shard 4 N 129.09 126,93,70 -3.64 8.99 0.6038 0.8176 29.13 21.69 7.13 TR None None None None None
+homing_shard p70 rivet_eq_homing_shard 5 E-fire 120.16 129,95,72 -10.3 8.02 0.5473 1.0135 30.55 24.13 -2.89 HT None None None None None
+homing_shard p70 rivet_eq_homing_shard 6 S-fire 118.54 141,99,70 -11.52 6.34 0.3151 0.7329 31.04 23.69 -44.09 HR None None None None None
+homing_shard p70 rivet_eq_homing_shard 7 idle 129.09 130,96,73 -3.64 7.65 0.5409 0.805 31.54 24.44 -4.03 - None None None None None
+homing_shard p70 rivet_eq_homing_shard_noflash 0 S 131.53 129,96,74 -1.82 8.01 0.5617 0.7778 29.8 23.52 -0.34 T None None None None None
+homing_shard p70 rivet_eq_homing_shard_noflash 1 SE 134.77 149,112,85 0.61 0.95 0.5482 0.7289 29.68 23.37 -2.73 - None None None None None
+homing_shard p70 rivet_eq_homing_shard_noflash 2 E 133.96 150,114,86 0.0 0.0 0.5636 0.8121 29.7 23.3 0.0 - None None None None None
+homing_shard p70 rivet_eq_homing_shard_noflash 3 NE 133.96 129,92,70 0.0 8.98 0.5576 0.7455 28.67 22.26 -1.06 T None None None None None
+homing_shard p70 rivet_eq_homing_shard_noflash 4 N 129.09 126,93,70 -3.64 8.99 0.6038 0.8176 29.13 21.69 7.13 TR None None None None None
+homing_shard p70 rivet_eq_homing_shard_noflash 5 E-fire 120.16 129,95,72 -10.3 8.02 0.5473 1.0135 30.55 24.13 -2.89 HT None None None None None
+homing_shard p70 rivet_eq_homing_shard_noflash 6 S-fire 118.54 141,99,70 -11.52 6.34 0.3151 0.7329 31.04 23.69 -44.09 HR None None None None None
+homing_shard p70 rivet_eq_homing_shard_noflash 7 idle 129.09 130,96,73 -3.64 7.65 0.5409 0.805 31.54 24.44 -4.03 - None None None None None
+homing_shard p70 rivet_eq_homing_shard_diag 0 SE 133.96 180,120,81 0.0 14.09 0.5697 0.7455 35.32 32.16 1.08 T None None None None None
+homing_shard p70 rivet_eq_homing_shard_diag 1 NE 133.96 162,107,73 0.0 10.43 0.4727 0.9939 34.79 31.12 -16.13 TR None None None None None
+homing_shard p70 rivet_eq_homing_shard_diag 2 SW 132.34 167,109,73 -1.21 12.21 0.5767 1.0429 34.75 31.87 2.32 T None None None None None
+homing_shard p70 rivet_eq_homing_shard_diag 3 NW 134.77 174,112,74 0.61 14.48 0.4699 0.7711 32.73 29.05 -16.63 TR None None None None None
+homing_shard p70 rivet_eq_homing_shard_diag_noflash 0 SE 133.96 180,120,81 0.0 14.09 0.5697 0.7455 35.32 32.16 1.08 T None None None None None
+homing_shard p70 rivet_eq_homing_shard_diag_noflash 1 NE 133.96 162,107,73 0.0 10.43 0.4727 0.9939 34.79 31.12 -16.13 TR None None None None None
+homing_shard p70 rivet_eq_homing_shard_diag_noflash 2 SW 132.34 167,109,73 -1.21 12.21 0.5767 1.0429 34.75 31.87 2.32 T None None None None None
+homing_shard p70 rivet_eq_homing_shard_diag_noflash 3 NW 134.77 174,112,74 0.61 14.48 0.4699 0.7711 32.73 29.05 -16.63 TR None None None None None
+homing_shard p70 rivet_eq_homing_shard_left 0 SW 133.15 146,105,80 -0.61 4.04 0.5061 1.1707 30.95 25.41 -10.2 R None None None None None
+homing_shard p70 rivet_eq_homing_shard_left 1 W 133.96 148,103,77 0.0 5.59 0.4545 1.1212 31.19 25.19 -19.36 R None None None None None
+homing_shard p70 rivet_eq_homing_shard_left 2 NW 134.77 156,111,83 0.61 4.27 0.6145 1.1446 30.98 25.06 9.03 R None None None None None
+homing_shard p70 rivet_reload_homing_shard 0 S 134.77 198,137,94 0.61 18.11 0.5181 0.6807 35.38 27.04 -8.07 TR None None None None None
+homing_shard p70 rivet_reload_homing_shard 1 SE 133.96 197,136,93 0.0 17.78 0.5091 0.6606 35.25 27.47 -9.67 TR None None None None None
+homing_shard p70 rivet_reload_homing_shard 2 E 133.15 192,130,88 -0.61 16.89 0.5122 0.6951 34.62 27.69 -9.12 TR None None None None None
+homing_shard p70 rivet_reload_homing_shard 3 NE 134.77 214,153,107 0.61 22.29 0.5241 0.6867 35.55 27.72 -7.01 TR None None None None None
+homing_shard p70 rivet_reload_homing_shard 4 N 133.96 202,141,96 0.0 19.45 0.5273 0.7273 35.59 27.74 -6.44 TR None None None None None
+homing_shard p70 rivet_reload_homing_shard 5 SE-out 139.65 199,136,91 4.24 19.1 0.5 0.7093 36.37 29.04 -11.28 TR None None None None None
+homing_shard p70 rivet_reload_homing_shard 6 SE-in 139.65 196,134,91 4.24 17.85 0.4942 0.6977 37.07 28.37 -12.31 TR None None None None None
+homing_shard p70 rivet_reload_homing_shard 7 SE-ready 139.65 203,138,94 4.24 19.9 0.5058 0.7326 37.04 28.76 -10.26 TR None None None None None
+homing_shard p70 rivet_reload_homing_shard_left 0 SW 133.96 191,108,74 0.0 23.16 0.2606 0.8667 35.01 34.02 -53.76 TR None None None None None
+homing_shard p70 rivet_reload_homing_shard_left 1 W 133.96 168,90,61 0.0 21.56 0.2606 0.8848 35.82 34.28 -53.76 TR None None None None None
+homing_shard p70 rivet_reload_homing_shard_left 2 NW 133.96 165,89,59 0.0 21.07 0.2606 0.8545 36.56 35.33 -53.76 TR None None None None None
+katana p55 rivet_eq_katana 0 S 136.76 140,110,84 -0.91 9.0 0.3945 0.7706 29.48 18.26 5.85 TR None None None None None
+katana p55 rivet_eq_katana 1 SE 138.01 128,92,72 0.0 3.09 0.3909 0.7182 29.2 18.21 4.88 - None None None None None
+katana p55 rivet_eq_katana 2 E 138.01 120,89,69 0.0 0.0 0.3727 0.5818 28.91 18.46 0.0 - None None None None None
+katana p55 rivet_eq_katana 3 NE 138.01 113,84,64 0.0 2.39 0.3818 0.6273 28.69 18.15 2.44 - None None None None None
+katana p55 rivet_eq_katana 4 N 135.5 100,74,61 -1.82 8.02 0.3889 0.7593 27.94 17.3 4.35 T None None None None None
+katana p55 rivet_eq_katana 5 E-fire 135.5 129,99,76 -1.82 4.22 0.3981 1.3426 38.68 18.76 6.82 R None None None None None
+katana p55 rivet_eq_katana 6 S-fire 111.66 130,98,76 -19.09 4.04 0.4831 1.1685 33.01 18.18 29.62 HR None None None None None
+katana p55 rivet_eq_katana 7 idle 134.25 117,85,65 -2.73 1.64 0.4019 1.0935 30.05 18.08 7.83 R None None None None None
+katana p55 rivet_eq_katana_left 0 SW 138.01 130,96,66 0.0 6.74 0.3909 0.5727 28.95 21.1 4.88 - None None None None None
+katana p55 rivet_eq_katana_left 1 W 136.76 123,87,60 -0.91 5.22 0.3853 0.5321 28.64 20.93 3.38 - None None None None None
+katana p55 rivet_eq_katana_left 2 NW 138.01 123,89,63 0.0 4.03 0.3818 0.6 29.04 20.65 2.44 - None None None None None
+katana p70 rivet_eq_katana 0 S 129.9 126,99,78 -3.61 3.75 0.5813 0.9563 29.87 17.7 -0.51 - None None None None None
+katana p70 rivet_eq_katana 1 SE 134.77 133,103,81 0.0 1.95 0.5542 0.8434 29.59 17.33 -5.15 R None None None None None
+katana p70 rivet_eq_katana 2 E 134.77 135,106,81 0.0 0.0 0.5843 0.7349 29.1 17.85 0.0 - None None None None None
+katana p70 rivet_eq_katana 3 NE 133.96 123,96,76 -0.6 5.08 0.5636 0.7576 29.08 17.68 -3.54 - None None None None None
+katana p70 rivet_eq_katana 4 N 129.09 116,90,73 -4.22 8.08 0.5849 0.9686 28.39 16.78 0.1 T None None None None None
+katana p70 rivet_eq_katana 5 E-fire 118.54 124,97,75 -12.05 4.24 0.5274 1.8425 36.15 18.02 -9.74 HR None None None None None
+katana p70 rivet_eq_katana 6 S-fire 109.61 126,99,76 -18.67 3.23 0.5704 1.2963 30.8 17.66 -2.38 H None None None None None
+katana p70 rivet_eq_katana 7 idle 116.1 131,102,81 -13.86 2.67 0.6503 1.7762 30.7 17.66 11.3 HR None None None None None
+katana p70 rivet_eq_katana_left 0 SW 132.34 148,111,89 -1.81 4.7 0.6074 1.0491 30.85 20.59 3.95 - None None None None None
+katana p70 rivet_eq_katana_left 1 W 133.96 142,102,82 -0.6 5.53 0.4667 0.8848 30.75 20.61 -20.13 R None None None None None
+katana p70 rivet_eq_katana_left 2 NW 135.59 149,111,90 0.6 5.26 0.6108 0.8743 30.58 20.39 4.54 - None None None None None
+machine_pistol p55 rivet_eq_machine_pistol 0 S 138.01 129,98,75 0.0 1.26 0.4364 0.5818 28.2 18.18 4.35 - None None None None None
+machine_pistol p55 rivet_eq_machine_pistol 1 SE 138.85 132,98,75 0.61 1.66 0.4277 0.5663 28.32 18.38 2.27 - None None None None None
+machine_pistol p55 rivet_eq_machine_pistol 2 E 138.01 130,97,76 0.0 0.0 0.4182 0.5818 28.19 17.88 0.0 - None None None None None
+machine_pistol p55 rivet_eq_machine_pistol 3 NE 136.34 125,92,70 -1.21 2.17 0.4172 0.5583 26.95 17.31 -0.24 - None None None None None
+machine_pistol p55 rivet_eq_machine_pistol 4 N 136.34 139,103,77 -1.21 4.24 0.4356 0.5828 27.02 17.64 4.16 - None None None None None
+machine_pistol p55 rivet_eq_machine_pistol 5 E-fire 131.32 134,99,76 -4.85 1.98 0.3949 0.7834 29.27 18.36 -5.57 R None None None None None
+machine_pistol p55 rivet_eq_machine_pistol 6 S-fire 128.81 139,103,79 -6.67 3.56 0.513 0.6818 29.31 18.99 22.67 HR None None None None None
+machine_pistol p55 rivet_eq_machine_pistol 7 idle 135.5 137,101,77 -1.82 3.08 0.4012 0.5741 29.78 18.72 -4.07 - None None None None None
+machine_pistol p55 rivet_eq_machine_pistol_noflash 0 S 138.01 129,98,75 0.0 1.26 0.4364 0.5818 28.2 18.18 4.35 - None None None None None
+machine_pistol p55 rivet_eq_machine_pistol_noflash 1 SE 138.85 132,98,75 0.61 1.66 0.4277 0.5663 28.32 18.38 2.27 - None None None None None
+machine_pistol p55 rivet_eq_machine_pistol_noflash 2 E 138.01 130,97,76 0.0 0.0 0.4182 0.5818 28.19 17.88 0.0 - None None None None None
+machine_pistol p55 rivet_eq_machine_pistol_noflash 3 NE 136.34 125,92,70 -1.21 2.17 0.4172 0.5583 26.95 17.31 -0.24 - None None None None None
+machine_pistol p55 rivet_eq_machine_pistol_noflash 4 N 136.34 139,103,77 -1.21 4.24 0.4356 0.5828 27.02 17.64 4.16 - None None None None None
+machine_pistol p55 rivet_eq_machine_pistol_noflash 5 E-fire 131.32 134,99,76 -4.85 1.98 0.3949 0.7834 29.27 18.36 -5.57 R None None None None None
+machine_pistol p55 rivet_eq_machine_pistol_noflash 6 S-fire 128.81 139,103,79 -6.67 3.56 0.513 0.6818 29.31 18.99 22.67 HR None None None None None
+machine_pistol p55 rivet_eq_machine_pistol_noflash 7 idle 135.5 137,101,77 -1.82 3.08 0.4012 0.5741 29.78 18.72 -4.07 - None None None None None
+machine_pistol p55 rivet_eq_machine_pistol_diag 0 SE 140.52 149,104,77 1.82 8.05 0.3988 0.6845 32.49 21.98 -4.64 T None None None None None
+machine_pistol p55 rivet_eq_machine_pistol_diag 1 NE 140.52 148,102,75 1.82 8.02 0.375 0.7798 30.73 20.76 -10.33 TR None None None None None
+machine_pistol p55 rivet_eq_machine_pistol_diag 2 SW 138.01 156,109,77 0.0 11.26 0.4121 0.7879 31.92 21.35 -1.46 T None None None None None
+machine_pistol p55 rivet_eq_machine_pistol_diag 3 NW 139.68 152,112,86 1.21 7.84 0.3713 0.7305 31.35 20.75 -11.21 R None None None None None
+machine_pistol p55 rivet_eq_machine_pistol_diag_noflash 0 SE 140.52 149,104,77 1.82 8.05 0.3988 0.6845 32.49 21.98 -4.64 T None None None None None
+machine_pistol p55 rivet_eq_machine_pistol_diag_noflash 1 NE 140.52 148,102,75 1.82 8.02 0.375 0.7798 30.73 20.76 -10.33 TR None None None None None
+machine_pistol p55 rivet_eq_machine_pistol_diag_noflash 2 SW 138.01 156,109,77 0.0 11.26 0.4121 0.7879 31.92 21.35 -1.46 T None None None None None
+machine_pistol p55 rivet_eq_machine_pistol_diag_noflash 3 NW 139.68 152,112,86 1.21 7.84 0.3713 0.7305 31.35 20.75 -11.21 R None None None None None
+machine_pistol p55 rivet_eq_machine_pistol_left 0 SW 138.01 127,97,67 0.0 5.14 0.4061 0.6303 28.39 20.66 -2.89 - None None None None None
+machine_pistol p55 rivet_eq_machine_pistol_left 1 W 136.34 119,86,60 -1.21 5.78 0.3926 0.5951 28.04 20.08 -6.12 R None None None None None
+machine_pistol p55 rivet_eq_machine_pistol_left 2 NW 138.01 121,90,63 0.0 4.79 0.3879 0.6545 28.02 19.94 -7.25 R None None None None None
+machine_pistol p70 rivet_eq_machine_pistol 0 S 133.96 120,92,74 0.0 1.42 0.5697 0.8121 26.89 17.92 1.08 - None None None None None
+machine_pistol p70 rivet_eq_machine_pistol 1 SE 135.59 128,100,80 1.21 2.54 0.5629 0.6647 27.54 18.44 -0.12 - None None None None None
+machine_pistol p70 rivet_eq_machine_pistol 2 E 133.96 124,95,78 0.0 0.0 0.5636 0.6061 28.25 18.23 0.0 - None None None None None
+machine_pistol p70 rivet_eq_machine_pistol 3 NE 131.53 116,89,72 -1.82 2.77 0.5679 0.7284 25.8 17.13 0.76 - None None None None None
+machine_pistol p70 rivet_eq_machine_pistol 4 N 127.47 111,86,70 -4.85 4.44 0.5987 0.8599 26.07 17.13 6.23 R None None None None None
+machine_pistol p70 rivet_eq_machine_pistol 5 E-fire 128.28 122,91,72 -4.24 2.28 0.5316 0.8608 29.16 19.03 -5.68 R None None None None None
+machine_pistol p70 rivet_eq_machine_pistol 6 S-fire 127.47 117,91,71 -4.85 2.9 0.5541 0.9682 28.02 18.32 -1.69 - None None None None None
+machine_pistol p70 rivet_eq_machine_pistol 7 idle 124.22 130,101,80 -7.27 3.26 0.549 0.8105 28.16 18.45 -2.59 H None None None None None
+machine_pistol p70 rivet_eq_machine_pistol_noflash 0 S 133.96 120,92,74 0.0 1.42 0.5697 0.8121 26.89 17.92 1.08 - None None None None None
+machine_pistol p70 rivet_eq_machine_pistol_noflash 1 SE 135.59 128,100,80 1.21 2.54 0.5629 0.6647 27.54 18.44 -0.12 - None None None None None
+machine_pistol p70 rivet_eq_machine_pistol_noflash 2 E 133.96 124,95,78 0.0 0.0 0.5636 0.6061 28.25 18.23 0.0 - None None None None None
+machine_pistol p70 rivet_eq_machine_pistol_noflash 3 NE 131.53 116,89,72 -1.82 2.77 0.5679 0.7284 25.8 17.13 0.76 - None None None None None
+machine_pistol p70 rivet_eq_machine_pistol_noflash 4 N 127.47 111,86,70 -4.85 4.44 0.5987 0.8599 26.07 17.13 6.23 R None None None None None
+machine_pistol p70 rivet_eq_machine_pistol_noflash 5 E-fire 128.28 122,91,72 -4.24 2.28 0.5316 0.8608 29.16 19.03 -5.68 R None None None None None
+machine_pistol p70 rivet_eq_machine_pistol_noflash 6 S-fire 127.47 117,91,71 -4.85 2.9 0.5541 0.9682 28.02 18.32 -1.69 - None None None None None
+machine_pistol p70 rivet_eq_machine_pistol_noflash 7 idle 124.22 130,101,80 -7.27 3.26 0.549 0.8105 28.16 18.45 -2.59 H None None None None None
+machine_pistol p70 rivet_eq_machine_pistol_diag 0 SE 133.15 138,101,77 -0.61 6.67 0.5183 0.75 30.75 22.6 -8.04 R None None None None None
+machine_pistol p70 rivet_eq_machine_pistol_diag 1 NE 138.83 142,102,78 3.64 7.95 0.5029 0.8655 29.32 21.81 -10.77 R None None None None None
+machine_pistol p70 rivet_eq_machine_pistol_diag 2 SW 131.53 139,100,77 -1.82 6.94 0.5185 0.9815 29.51 22.52 -8.0 R None None None None None
+machine_pistol p70 rivet_eq_machine_pistol_diag 3 NW 138.83 146,107,82 3.64 8.85 0.5029 0.8596 29.66 21.89 -10.77 TR None None None None None
+machine_pistol p70 rivet_eq_machine_pistol_diag_noflash 0 SE 133.15 138,101,77 -0.61 6.67 0.5183 0.75 30.75 22.6 -8.04 R None None None None None
+machine_pistol p70 rivet_eq_machine_pistol_diag_noflash 1 NE 138.83 142,102,78 3.64 7.95 0.5029 0.8655 29.32 21.81 -10.77 R None None None None None
+machine_pistol p70 rivet_eq_machine_pistol_diag_noflash 2 SW 131.53 139,100,77 -1.82 6.94 0.5185 0.9815 29.51 22.52 -8.0 R None None None None None
+machine_pistol p70 rivet_eq_machine_pistol_diag_noflash 3 NW 138.83 146,107,82 3.64 8.85 0.5029 0.8596 29.66 21.89 -10.77 TR None None None None None
+machine_pistol p70 rivet_eq_machine_pistol_left 0 SW 133.96 137,101,83 0.0 4.66 0.6182 0.9879 29.79 20.61 9.69 R None None None None None
+machine_pistol p70 rivet_eq_machine_pistol_left 1 W 133.96 139,102,81 0.0 5.87 0.4606 0.9333 30.42 20.49 -18.28 R None None None None None
+machine_pistol p70 rivet_eq_machine_pistol_left 2 NW 133.96 144,108,87 0.0 7.08 0.6182 0.9273 30.02 20.33 9.69 R None None None None None
+mini_nuke p55 rivet_eq_mini_nuke 0 S 138.01 136,103,82 -1.79 7.0 0.4182 0.6424 28.7 22.41 8.09 R None None None None None
+mini_nuke p55 rivet_eq_mini_nuke 1 SE 138.01 125,93,74 -1.79 2.86 0.4061 0.5879 28.61 22.7 4.96 - None None None None None
+mini_nuke p55 rivet_eq_mini_nuke 2 E 140.52 118,86,67 0.0 0.0 0.3869 0.5298 28.72 22.5 0.0 - None None None None None
+mini_nuke p55 rivet_eq_mini_nuke 3 NE 138.85 112,83,67 -1.19 2.62 0.3795 0.5723 28.1 21.21 -1.91 - None None None None None
+mini_nuke p55 rivet_eq_mini_nuke 4 N 137.17 130,95,78 -2.38 4.42 0.4085 0.6037 27.24 18.73 5.58 R None None None None None
+mini_nuke p55 rivet_eq_mini_nuke 5 E-fire 143.87 126,89,70 2.38 3.08 0.3488 0.6802 28.92 22.11 -9.85 R None None None None None
+mini_nuke p55 rivet_eq_mini_nuke 6 S-fire 140.52 132,97,76 0.0 5.08 0.3571 0.619 29.75 23.29 -7.7 R None None None None None
+mini_nuke p55 rivet_eq_mini_nuke 7 idle 139.68 122,88,70 -0.6 1.45 0.3952 0.7066 29.45 22.11 2.15 - None None None None None
+mini_nuke p55 rivet_eq_mini_nuke_noflash 0 S 138.01 136,103,82 -1.79 7.0 0.4182 0.6424 28.7 22.41 8.09 R None None None None None
+mini_nuke p55 rivet_eq_mini_nuke_noflash 1 SE 138.01 125,93,74 -1.79 2.86 0.4061 0.5879 28.61 22.7 4.96 - None None None None None
+mini_nuke p55 rivet_eq_mini_nuke_noflash 2 E 140.52 118,86,67 0.0 0.0 0.3869 0.5298 28.72 22.5 0.0 - None None None None None
+mini_nuke p55 rivet_eq_mini_nuke_noflash 3 NE 138.85 112,83,67 -1.19 2.62 0.3795 0.5723 28.1 21.21 -1.91 - None None None None None
+mini_nuke p55 rivet_eq_mini_nuke_noflash 4 N 137.17 130,95,78 -2.38 4.42 0.4085 0.6037 27.24 18.73 5.58 R None None None None None
+mini_nuke p55 rivet_eq_mini_nuke_noflash 5 E-fire 143.87 126,89,70 2.38 3.08 0.3488 0.6802 28.92 22.11 -9.85 R None None None None None
+mini_nuke p55 rivet_eq_mini_nuke_noflash 6 S-fire 140.52 132,97,76 0.0 5.08 0.3571 0.619 29.75 23.29 -7.7 R None None None None None
+mini_nuke p55 rivet_eq_mini_nuke_noflash 7 idle 139.68 122,88,70 -0.6 1.45 0.3952 0.7066 29.45 22.11 2.15 - None None None None None
+mini_nuke p55 rivet_eq_mini_nuke_diag 0 SE 138.85 151,101,76 -1.19 12.11 0.3795 0.5663 32.09 27.55 -1.91 T None None None None None
+mini_nuke p55 rivet_eq_mini_nuke_diag 1 NE 139.68 137,84,63 -0.6 10.86 0.3593 0.6287 31.11 26.45 -7.13 TR None None None None None
+mini_nuke p55 rivet_eq_mini_nuke_diag 2 SW 137.17 157,104,81 -2.38 13.75 0.378 0.6646 32.87 27.92 -2.3 T None None None None None
+mini_nuke p55 rivet_eq_mini_nuke_diag 3 NW 137.17 150,99,75 -2.38 12.04 0.3598 0.6585 33.09 27.84 -7.0 TR None None None None None
+mini_nuke p55 rivet_eq_mini_nuke_diag_noflash 0 SE 138.85 151,101,76 -1.19 12.11 0.3795 0.5663 32.09 27.55 -1.91 T None None None None None
+mini_nuke p55 rivet_eq_mini_nuke_diag_noflash 1 NE 139.68 137,84,63 -0.6 10.86 0.3593 0.6287 31.11 26.45 -7.13 TR None None None None None
+mini_nuke p55 rivet_eq_mini_nuke_diag_noflash 2 SW 137.17 157,104,81 -2.38 13.75 0.378 0.6646 32.87 27.92 -2.3 T None None None None None
+mini_nuke p55 rivet_eq_mini_nuke_diag_noflash 3 NW 137.17 150,99,75 -2.38 12.04 0.3598 0.6585 33.09 27.84 -7.0 TR None None None None None
+mini_nuke p55 rivet_eq_mini_nuke_left 0 SW 137.17 122,83,61 -2.38 4.28 0.378 0.6341 27.47 22.12 -2.3 - None None None None None
+mini_nuke p55 rivet_eq_mini_nuke_left 1 W 137.17 118,84,63 -2.38 1.86 0.3415 0.7866 27.96 22.26 -11.73 R None None None None None
+mini_nuke p55 rivet_eq_mini_nuke_left 2 NW 137.17 113,81,59 -2.38 2.87 0.3537 0.6829 28.71 22.82 -8.58 R None None None None None
+mini_nuke p70 rivet_eq_mini_nuke 0 S 132.34 124,96,76 -1.21 7.07 0.4847 0.8957 30.7 23.47 -14.0 R None None None None None
+mini_nuke p70 rivet_eq_mini_nuke 1 SE 137.21 136,105,84 2.42 3.21 0.5562 0.7692 30.74 23.88 -1.31 - None None None None None
+mini_nuke p70 rivet_eq_mini_nuke 2 E 133.96 143,110,85 0.0 0.0 0.5636 0.7758 30.55 23.79 0.0 - None None None None None
+mini_nuke p70 rivet_eq_mini_nuke 3 NE 134.77 150,111,80 0.61 4.75 0.5602 0.7349 28.57 21.16 -0.6 - None None None None None
+mini_nuke p70 rivet_eq_mini_nuke 4 N 124.22 129,99,77 -7.27 5.01 0.6275 0.9412 28.07 20.29 11.34 HR None None None None None
+mini_nuke p70 rivet_eq_mini_nuke 5 E-fire 130.71 132,101,80 -2.42 4.34 0.5714 0.9752 32.59 25.5 1.38 - None None None None None
+mini_nuke p70 rivet_eq_mini_nuke 6 S-fire 120.16 122,92,72 -10.3 7.98 0.6284 0.8784 32.96 25.56 11.5 HR None None None None None
+mini_nuke p70 rivet_eq_mini_nuke 7 idle 130.71 128,100,80 -2.42 5.66 0.5714 0.9689 33.19 25.7 1.38 - None None None None None
+mini_nuke p70 rivet_eq_mini_nuke_noflash 0 S 132.34 124,96,76 -1.21 7.07 0.4847 0.8957 30.7 23.47 -14.0 R None None None None None
+mini_nuke p70 rivet_eq_mini_nuke_noflash 1 SE 137.21 136,105,84 2.42 3.21 0.5562 0.7692 30.74 23.88 -1.31 - None None None None None
+mini_nuke p70 rivet_eq_mini_nuke_noflash 2 E 133.96 143,110,85 0.0 0.0 0.5636 0.7758 30.55 23.79 0.0 - None None None None None
+mini_nuke p70 rivet_eq_mini_nuke_noflash 3 NE 134.77 150,111,80 0.61 4.75 0.5602 0.7349 28.57 21.16 -0.6 - None None None None None
+mini_nuke p70 rivet_eq_mini_nuke_noflash 4 N 124.22 129,99,77 -7.27 5.01 0.6275 0.9412 28.07 20.29 11.34 HR None None None None None
+mini_nuke p70 rivet_eq_mini_nuke_noflash 5 E-fire 130.71 132,101,80 -2.42 4.34 0.5714 0.9752 32.59 25.5 1.38 - None None None None None
+mini_nuke p70 rivet_eq_mini_nuke_noflash 6 S-fire 120.16 122,92,72 -10.3 7.98 0.6284 0.8784 32.96 25.56 11.5 HR None None None None None
+mini_nuke p70 rivet_eq_mini_nuke_noflash 7 idle 130.71 128,100,80 -2.42 5.66 0.5714 0.9689 33.19 25.7 1.38 - None None None None None
+mini_nuke p70 rivet_eq_mini_nuke_diag 0 SE 133.15 155,107,83 -0.61 6.98 0.4573 0.7317 31.44 26.21 -18.86 R None None None None None
+mini_nuke p70 rivet_eq_mini_nuke_diag 1 NE 133.96 172,116,84 0.0 12.91 0.5394 0.7333 30.04 24.8 -4.29 T None None None None None
+mini_nuke p70 rivet_eq_mini_nuke_diag 2 SW 133.96 163,114,86 0.0 8.21 0.4364 0.7818 31.75 26.67 -22.57 TR None None None None None
+mini_nuke p70 rivet_eq_mini_nuke_diag 3 NW 133.96 160,109,84 0.0 8.48 0.5333 0.7394 31.4 26.28 -5.38 TR None None None None None
+mini_nuke p70 rivet_eq_mini_nuke_diag_noflash 0 SE 133.15 155,107,83 -0.61 6.98 0.4573 0.7317 31.44 26.21 -18.86 R None None None None None
+mini_nuke p70 rivet_eq_mini_nuke_diag_noflash 1 NE 133.96 172,116,84 0.0 12.91 0.5394 0.7333 30.04 24.8 -4.29 T None None None None None
+mini_nuke p70 rivet_eq_mini_nuke_diag_noflash 2 SW 133.96 163,114,86 0.0 8.21 0.4364 0.7818 31.75 26.67 -22.57 TR None None None None None
+mini_nuke p70 rivet_eq_mini_nuke_diag_noflash 3 NW 133.96 160,109,84 0.0 8.48 0.5333 0.7394 31.4 26.28 -5.38 TR None None None None None
+mini_nuke p70 rivet_eq_mini_nuke_left 0 SW 130.71 144,107,81 -2.42 2.09 0.441 0.8012 32.59 24.8 -21.75 R None None None None None
+mini_nuke p70 rivet_eq_mini_nuke_left 1 W 130.71 148,111,85 -2.42 2.11 0.5031 0.9379 33.2 25.05 -10.73 R None None None None None
+mini_nuke p70 rivet_eq_mini_nuke_left 2 NW 130.71 136,103,79 -2.42 2.79 0.5093 0.8696 31.35 24.34 -9.63 R None None None None None
+molotov p55 rivet_eq_molotov 0 S 137.17 140,107,82 -1.8 9.33 0.4695 0.6951 29.63 19.43 8.91 TR None None None None None
+molotov p55 rivet_eq_molotov 1 SE 138.01 126,94,74 -1.2 3.42 0.4485 0.5758 28.7 19.16 4.04 - None None None None None
+molotov p55 rivet_eq_molotov 2 E 139.68 119,89,74 0.0 0.0 0.4311 0.4371 29.87 19.52 0.0 - None None None None None
+molotov p55 rivet_eq_molotov 3 NE 139.68 115,86,70 0.0 1.53 0.4311 0.5808 28.84 18.49 0.0 - None None None None None
+molotov p55 rivet_eq_molotov 4 N 136.34 143,107,84 -2.4 9.35 0.454 0.6933 29.33 18.77 5.31 TR None None None None None
+molotov p55 rivet_eq_molotov 5 E-fire 137.17 136,100,75 -1.8 8.4 0.4695 0.8476 30.41 19.65 8.91 TR None None None None None
+molotov p55 rivet_eq_molotov 6 S-fire 121.28 136,100,78 -13.17 7.09 0.4276 0.8552 31.05 19.95 -0.81 H None None None None None
+molotov p55 rivet_eq_molotov 7 idle 123.79 128,92,72 -11.38 4.83 0.3986 0.75 30.63 19.48 -7.54 HR None None None None None
+molotov p55 rivet_eq_molotov_left 0 SW 139.68 162,117,75 0.0 20.84 0.3952 0.5749 33.04 27.25 -8.33 TR None None None None None
+molotov p55 rivet_eq_molotov_left 1 W 138.01 168,119,75 -1.2 23.06 0.3939 0.5394 33.07 27.54 -8.63 TR None None None None None
+molotov p55 rivet_eq_molotov_left 2 NW 138.01 133,90,61 -1.2 11.39 0.3818 0.5455 33.69 27.6 -11.44 TR None None None None None
+molotov p70 rivet_eq_molotov 0 S 133.15 128,99,75 -3.53 7.93 0.5793 0.9573 29.27 20.67 11.92 R None None None None None
+molotov p70 rivet_eq_molotov 1 SE 134.77 149,117,89 -2.35 0.93 0.6807 0.7952 29.64 20.61 31.51 R None None None None None
+molotov p70 rivet_eq_molotov 2 E 138.02 151,117,89 0.0 0.0 0.5176 0.5706 31.11 21.1 0.0 - None None None None None
+molotov p70 rivet_eq_molotov 3 NE 133.96 125,95,73 -2.94 9.69 0.6667 0.8606 29.3 20.17 28.81 TR None None None None None
+molotov p70 rivet_eq_molotov 4 N 133.15 131,100,76 -3.53 7.26 0.7012 0.9695 29.22 20.04 35.47 R None None None None None
+molotov p70 rivet_eq_molotov 5 E-fire 144.52 154,119,88 4.71 1.68 0.4101 1.0618 30.39 20.86 -20.77 R None None None None None
+molotov p70 rivet_eq_molotov 6 S-fire 130.71 147,114,86 -5.29 1.32 0.677 1.1739 31.64 21.66 30.8 HR None None None None None
+molotov p70 rivet_eq_molotov 7 idle 129.9 129,100,76 -5.88 7.67 0.6062 1.025 30.75 21.03 17.12 HR None None None None None
+molotov p70 rivet_eq_molotov_left 0 SW 132.34 140,102,79 -4.12 6.2 0.6135 0.8344 31.73 23.58 18.53 R None None None None None
+molotov p70 rivet_eq_molotov_left 1 W 133.96 141,101,78 -2.94 6.71 0.6061 0.7152 32.14 23.32 17.1 R None None None None None
+molotov p70 rivet_eq_molotov_left 2 NW 134.77 157,115,88 -2.35 3.67 0.6265 0.741 31.45 23.14 21.04 R None None None None None
+pistol p55 rivet_eq_pistol 0 S 137.17 145,114,90 -1.8 9.71 0.439 0.6951 29.35 18.53 7.81 TR None None None None None
+pistol p55 rivet_eq_pistol 1 SE 138.01 125,96,76 -1.2 2.84 0.4242 0.5212 29.51 18.76 4.17 - None None None None None
+pistol p55 rivet_eq_pistol 2 E 139.68 122,92,77 0.0 0.0 0.4072 0.4192 30.04 18.85 0.0 - None None None None None
+pistol p55 rivet_eq_pistol 3 NE 138.01 115,89,72 -1.2 2.43 0.4061 0.5576 28.7 18.08 -0.27 - None None None None None
+pistol p55 rivet_eq_pistol 4 N 137.17 143,109,86 -1.8 8.36 0.4207 0.689 29.32 18.09 3.32 T None None None None None
+pistol p55 rivet_eq_pistol 5 E-fire 123.79 143,106,80 -11.38 9.13 0.4054 0.8041 30.45 18.55 -0.44 HT None None None None None
+pistol p55 rivet_eq_pistol 6 S-fire 123.79 137,102,81 -11.38 6.04 0.4189 0.6824 29.92 18.22 2.87 H None None None None None
+pistol p55 rivet_eq_pistol 7 idle 122.96 138,104,83 -11.98 6.43 0.4218 0.7483 30.5 18.47 3.59 H None None None None None
+pistol p55 rivet_eq_pistol_noflash 0 S 137.17 145,114,90 -1.8 9.71 0.439 0.6951 29.35 18.53 7.81 TR None None None None None
+pistol p55 rivet_eq_pistol_noflash 1 SE 138.01 125,96,76 -1.2 2.84 0.4242 0.5212 29.51 18.76 4.17 - None None None None None
+pistol p55 rivet_eq_pistol_noflash 2 E 139.68 122,92,77 0.0 0.0 0.4072 0.4192 30.04 18.85 0.0 - None None None None None
+pistol p55 rivet_eq_pistol_noflash 3 NE 138.01 115,89,72 -1.2 2.43 0.4061 0.5576 28.7 18.08 -0.27 - None None None None None
+pistol p55 rivet_eq_pistol_noflash 4 N 137.17 143,109,86 -1.8 8.36 0.4207 0.689 29.32 18.09 3.32 T None None None None None
+pistol p55 rivet_eq_pistol_noflash 5 E-fire 123.79 143,106,80 -11.38 9.13 0.4054 0.8041 30.45 18.55 -0.44 HT None None None None None
+pistol p55 rivet_eq_pistol_noflash 6 S-fire 123.79 137,102,81 -11.38 6.04 0.4189 0.6824 29.92 18.22 2.87 H None None None None None
+pistol p55 rivet_eq_pistol_noflash 7 idle 122.96 138,104,83 -11.98 6.43 0.4218 0.7483 30.5 18.47 3.59 H None None None None None
+pistol p55 rivet_eq_pistol_diag 0 SE 129.65 150,109,85 -7.19 10.77 0.4129 0.7355 32.42 23.27 1.4 HT None None None None None
+pistol p55 rivet_eq_pistol_diag 1 NE 129.65 133,94,75 -7.19 5.62 0.4 0.7742 31.23 22.25 -1.77 H None None None None None
+pistol p55 rivet_eq_pistol_diag 2 SW 128.81 150,108,86 -7.78 10.37 0.4156 0.8182 32.09 23.18 2.06 HT None None None None None
+pistol p55 rivet_eq_pistol_diag 3 NW 128.81 131,93,74 -7.78 5.11 0.4026 0.7597 32.03 22.67 -1.13 H None None None None None
+pistol p55 rivet_eq_pistol_diag_noflash 0 SE 129.65 150,109,85 -7.19 10.77 0.4129 0.7355 32.42 23.27 1.4 HT None None None None None
+pistol p55 rivet_eq_pistol_diag_noflash 1 NE 129.65 133,94,75 -7.19 5.62 0.4 0.7742 31.23 22.25 -1.77 H None None None None None
+pistol p55 rivet_eq_pistol_diag_noflash 2 SW 128.81 150,108,86 -7.78 10.37 0.4156 0.8182 32.09 23.18 2.06 HT None None None None None
+pistol p55 rivet_eq_pistol_diag_noflash 3 NW 128.81 131,93,74 -7.78 5.11 0.4026 0.7597 32.03 22.67 -1.13 H None None None None None
+pistol p55 rivet_eq_pistol_left 0 SW 139.68 136,103,73 0.0 9.56 0.4012 0.5749 30.95 21.93 -1.47 T None None None None None
+pistol p55 rivet_eq_pistol_left 1 W 137.17 132,96,67 -1.8 9.06 0.3963 0.5305 30.96 21.99 -2.68 T None None None None None
+pistol p55 rivet_eq_pistol_left 2 NW 138.01 112,84,62 -1.2 5.59 0.3879 0.6182 30.25 21.41 -4.74 - None None None None None
+pistol p55 rivet_reload_pistol 0 S 127.97 192,140,106 -8.38 24.91 0.4575 0.5556 35.25 24.1 12.35 HTR None None None None None
+pistol p55 rivet_reload_pistol 1 SE 129.65 172,120,90 -7.19 18.62 0.4323 0.5484 35.58 24.38 6.16 HTR None None None None None
+pistol p55 rivet_reload_pistol 2 E 128.81 170,119,91 -7.78 17.52 0.4351 0.4935 35.4 24.57 6.85 HTR None None None None None
+pistol p55 rivet_reload_pistol 3 NE 128.81 168,117,87 -7.78 17.6 0.4286 0.513 35.0 24.6 5.26 HTR None None None None None
+pistol p55 rivet_reload_pistol 4 N 127.14 161,111,83 -8.98 15.42 0.4342 0.5658 35.24 23.86 6.63 HTR None None None None None
+pistol p55 rivet_reload_pistol 5 SE-out 128.81 179,126,95 -7.78 20.73 0.4091 0.6299 37.05 24.71 0.47 HT None None None None None
+pistol p55 rivet_reload_pistol 6 SE-in 127.97 181,129,96 -8.38 21.7 0.4183 0.6209 37.06 25.13 2.73 HT None None None None None
+pistol p55 rivet_reload_pistol 7 SE-ready 128.81 176,121,90 -7.78 20.16 0.4156 0.6104 37.08 24.92 2.06 HT None None None None None
+pistol p55 rivet_reload_pistol_left 0 SW 139.68 160,119,76 0.0 19.8 0.3952 0.509 36.01 27.3 -2.95 T None None None None None
+pistol p55 rivet_reload_pistol_left 1 W 137.17 156,111,69 -1.8 19.16 0.3963 0.5183 35.23 26.78 -2.68 T None None None None None
+pistol p55 rivet_reload_pistol_left 2 NW 138.01 139,102,67 -1.2 12.78 0.3879 0.5333 35.67 26.94 -4.74 T None None None None None
+pistol p70 rivet_eq_pistol 0 S 127.47 135,107,86 -5.99 4.6 0.6752 1.0446 27.99 17.74 6.38 HR None None None None None
+pistol p70 rivet_eq_pistol 1 SE 133.96 136,108,87 -1.2 4.95 0.6242 0.7939 28.36 17.78 -1.65 - None None None None None
+pistol p70 rivet_eq_pistol 2 E 135.59 123,97,79 0.0 0.0 0.6347 0.8024 28.94 17.76 0.0 - None None None None None
+pistol p70 rivet_eq_pistol 3 NE 136.4 133,106,86 0.6 3.74 0.625 0.9107 27.87 17.44 -1.53 - None None None None None
+pistol p70 rivet_eq_pistol 4 N 129.09 120,94,77 -4.79 1.3 0.6541 1.0629 28.01 17.58 3.06 - None None None None None
+pistol p70 rivet_eq_pistol 5 E-fire 105.55 125,98,80 -22.16 0.67 0.6923 1.3231 29.49 18.07 9.08 HR None None None None None
+pistol p70 rivet_eq_pistol 6 S-fire 113.67 131,102,83 -16.17 2.86 0.6357 0.9786 29.73 18.2 0.16 H None None None None None
+pistol p70 rivet_eq_pistol 7 idle 122.6 129,100,79 -9.58 2.86 0.6026 0.9338 29.88 18.31 -5.06 HR None None None None None
+pistol p70 rivet_eq_pistol_noflash 0 S 127.47 135,107,86 -5.99 4.6 0.6752 1.0446 27.99 17.74 6.38 HR None None None None None
+pistol p70 rivet_eq_pistol_noflash 1 SE 133.96 136,108,87 -1.2 4.95 0.6242 0.7939 28.36 17.78 -1.65 - None None None None None
+pistol p70 rivet_eq_pistol_noflash 2 E 135.59 123,97,79 0.0 0.0 0.6347 0.8024 28.94 17.76 0.0 - None None None None None
+pistol p70 rivet_eq_pistol_noflash 3 NE 136.4 133,106,86 0.6 3.74 0.625 0.9107 27.87 17.44 -1.53 - None None None None None
+pistol p70 rivet_eq_pistol_noflash 4 N 129.09 120,94,77 -4.79 1.3 0.6541 1.0629 28.01 17.58 3.06 - None None None None None
+pistol p70 rivet_eq_pistol_noflash 5 E-fire 105.55 125,98,80 -22.16 0.67 0.6923 1.3231 29.49 18.07 9.08 HR None None None None None
+pistol p70 rivet_eq_pistol_noflash 6 S-fire 113.67 131,102,83 -16.17 2.86 0.6357 0.9786 29.73 18.2 0.16 H None None None None None
+pistol p70 rivet_eq_pistol_noflash 7 idle 122.6 129,100,79 -9.58 2.86 0.6026 0.9338 29.88 18.31 -5.06 HR None None None None None
+pistol p70 rivet_eq_pistol_diag 0 SE 132.34 147,110,91 -2.4 8.07 0.6442 1.1043 30.08 22.33 1.5 T None None None None None
+pistol p70 rivet_eq_pistol_diag 1 NE 135.59 148,110,91 0.0 8.44 0.6287 1.0539 30.95 22.32 -0.95 T None None None None None
+pistol p70 rivet_eq_pistol_diag 2 SW 132.34 148,112,92 -2.4 8.39 0.6319 1.135 30.36 22.4 -0.44 T None None None None None
+pistol p70 rivet_eq_pistol_diag 3 NW 134.77 153,114,92 -0.6 10.25 0.6446 1.0964 30.85 22.28 1.56 T None None None None None
+pistol p70 rivet_eq_pistol_diag_noflash 0 SE 132.34 147,110,91 -2.4 8.07 0.6442 1.1043 30.08 22.33 1.5 T None None None None None
+pistol p70 rivet_eq_pistol_diag_noflash 1 NE 135.59 148,110,91 0.0 8.44 0.6287 1.0539 30.95 22.32 -0.95 T None None None None None
+pistol p70 rivet_eq_pistol_diag_noflash 2 SW 132.34 148,112,92 -2.4 8.39 0.6319 1.135 30.36 22.4 -0.44 T None None None None None
+pistol p70 rivet_eq_pistol_diag_noflash 3 NW 134.77 153,114,92 -0.6 10.25 0.6446 1.0964 30.85 22.28 1.56 T None None None None None
+pistol p70 rivet_eq_pistol_left 0 SW 133.15 152,111,88 -1.8 10.36 0.6159 0.9207 30.67 21.78 -2.96 T None None None None None
+pistol p70 rivet_eq_pistol_left 1 W 133.96 147,105,82 -1.2 9.48 0.6 0.8 30.31 21.52 -5.47 TR None None None None None
+pistol p70 rivet_eq_pistol_left 2 NW 134.77 151,111,85 -0.6 10.67 0.6084 0.8193 30.31 21.41 -4.14 T None None None None None
+pistol p70 rivet_reload_pistol 0 S 142.08 169,124,96 4.79 16.21 0.5314 0.6571 35.12 22.01 -16.28 TR None None None None None
+pistol p70 rivet_reload_pistol 1 SE 142.08 187,138,106 4.79 22.22 0.52 0.6514 34.63 21.77 -18.07 TR None None None None None
+pistol p70 rivet_reload_pistol 2 E 142.08 196,143,106 4.79 25.63 0.5257 0.6914 34.16 21.3 -17.17 TR None None None None None
+pistol p70 rivet_reload_pistol 3 NE 142.89 193,142,109 5.39 24.03 0.5284 0.6534 34.51 21.44 -16.75 HTR None None None None None
+pistol p70 rivet_reload_pistol 4 N 142.08 174,127,98 4.79 17.84 0.5371 0.68 34.9 22.14 -15.38 TR None None None None None
+pistol p70 rivet_reload_pistol 5 SE-out 141.27 183,133,101 4.19 21.04 0.5 0.6782 35.52 22.71 -21.22 TR None None None None None
+pistol p70 rivet_reload_pistol 6 SE-in 141.27 184,134,101 4.19 21.53 0.5 0.6667 35.62 22.7 -21.22 TR None None None None None
+pistol p70 rivet_reload_pistol 7 SE-ready 141.27 178,128,96 4.19 19.78 0.5057 0.7184 35.53 22.57 -20.32 TR None None None None None
+pistol p70 rivet_reload_pistol_left 0 SW 133.96 175,113,85 -1.2 20.67 0.4485 0.8061 34.26 29.31 -29.34 TR None None None None None
+pistol p70 rivet_reload_pistol_left 1 W 133.96 198,134,103 -1.2 25.95 0.3939 0.8848 34.99 28.84 -37.94 TR None None None None None
+pistol p70 rivet_reload_pistol_left 2 NW 133.96 190,126,97 -1.2 23.88 0.4909 0.8545 34.68 29.11 -22.66 TR None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle 0 S 138.01 143,108,82 -1.2 8.66 0.4303 0.6667 29.0 18.7 10.56 TR None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle 1 SE 138.01 124,93,72 -1.2 2.01 0.4182 0.5636 26.86 18.66 7.45 R None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle 2 E 139.68 122,90,72 0.0 0.0 0.3892 0.4371 27.41 18.77 0.0 - None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle 3 NE 136.34 111,83,65 -2.4 3.7 0.4049 0.4969 27.81 18.74 4.03 - None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle 4 N 136.34 111,83,65 -2.4 3.7 0.4233 0.6503 27.47 17.79 8.76 R None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle 5 E-fire 127.97 138,100,76 -8.38 6.35 0.3529 0.6797 28.3 18.53 -9.33 HR None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle 6 S-fire 127.97 142,102,75 -8.38 8.6 0.3791 0.6536 30.08 19.18 -2.6 HT None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle 7 idle 131.32 133,97,74 -5.99 4.82 0.3885 0.7707 31.21 19.57 -0.18 H None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle_noflash 0 S 138.01 143,108,82 -1.2 8.66 0.4303 0.6667 29.0 18.7 10.56 TR None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle_noflash 1 SE 138.01 124,93,72 -1.2 2.01 0.4182 0.5636 26.86 18.66 7.45 R None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle_noflash 2 E 139.68 122,90,72 0.0 0.0 0.3892 0.4371 27.41 18.77 0.0 - None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle_noflash 3 NE 136.34 111,83,65 -2.4 3.7 0.4049 0.4969 27.81 18.74 4.03 - None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle_noflash 4 N 136.34 111,83,65 -2.4 3.7 0.4233 0.6503 27.47 17.79 8.76 R None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle_noflash 5 E-fire 127.97 138,100,76 -8.38 6.35 0.3529 0.6797 28.3 18.53 -9.33 HR None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle_noflash 6 S-fire 127.97 142,102,75 -8.38 8.6 0.3791 0.6536 30.08 19.18 -2.6 HT None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle_noflash 7 idle 131.32 133,97,74 -5.99 4.82 0.3885 0.7707 31.21 19.57 -0.18 H None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle_diag 0 SE 129.65 164,114,88 -7.19 14.7 0.4 0.7419 34.52 23.0 2.77 HT None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle_diag 1 NE 129.65 159,109,84 -7.19 13.25 0.4065 0.7742 33.67 22.35 4.45 HT None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle_diag 2 SW 129.65 162,117,91 -7.19 13.96 0.4194 0.7613 34.55 23.02 7.76 HTR None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle_diag 3 NW 129.65 169,122,92 -7.19 16.83 0.4129 0.7677 34.01 22.42 6.09 HTR None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle_diag_noflash 0 SE 129.65 164,114,88 -7.19 14.7 0.4 0.7419 34.52 23.0 2.77 HT None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle_diag_noflash 1 NE 129.65 159,109,84 -7.19 13.25 0.4065 0.7742 33.67 22.35 4.45 HT None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle_diag_noflash 2 SW 129.65 162,117,91 -7.19 13.96 0.4194 0.7613 34.55 23.02 7.76 HTR None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle_diag_noflash 3 NW 129.65 169,122,92 -7.19 16.83 0.4129 0.7677 34.01 22.42 6.09 HTR None None None None None
+plasma_rifle p55 rivet_eq_plasma_rifle_left 0 SW 138.01 124,93,72 -1.2 2.01 0.4182 0.5636 26.79 18.79 7.45 R SE 0.0 0.0 0.0 -
+plasma_rifle p55 rivet_eq_plasma_rifle_left 1 W 139.68 122,90,72 0.0 0.0 0.3892 0.4371 27.52 18.86 0.0 - E 0.0 0.0 0.0 -
+plasma_rifle p55 rivet_eq_plasma_rifle_left 2 NW 136.34 111,83,65 -2.4 3.7 0.4049 0.4969 27.79 18.93 4.03 - NE 0.0 0.0 0.0 -
+plasma_rifle p55 rivet_eq_plasma_rifle_left_fire 0 W-fire 127.97 138,100,76 -8.38 6.35 0.3529 0.6797 28.3 18.52 -9.33 HR E-fire 0.0 0.0 0.0 -
+plasma_rifle p55 rivet_eq_plasma_rifle_left_fire_noflash 0 W-fire 127.97 138,100,76 -8.38 6.35 0.3529 0.6797 28.3 18.52 -9.33 HR E-fire 0.0 0.0 0.0 -
+plasma_rifle p55 rivet_reload_plasma_rifle 0 S 121.28 191,134,99 -13.17 24.33 0.5241 0.8345 33.94 24.18 34.66 HTR None None None None None
+plasma_rifle p55 rivet_reload_plasma_rifle 1 SE 122.12 184,127,95 -12.57 21.8 0.5137 0.8151 34.28 24.86 31.99 HTR None None None None None
+plasma_rifle p55 rivet_reload_plasma_rifle 2 E 122.12 178,121,90 -12.57 20.18 0.5137 0.7603 33.92 24.94 31.99 HTR None None None None None
+plasma_rifle p55 rivet_reload_plasma_rifle 3 NE 123.79 131,85,62 -11.38 8.34 0.5068 0.7568 34.88 25.37 30.22 HTR None None None None None
+plasma_rifle p55 rivet_reload_plasma_rifle 4 N 121.28 173,118,90 -13.17 17.9 0.5241 0.8414 34.4 25.46 34.66 HTR None None None None None
+plasma_rifle p55 rivet_reload_plasma_rifle 5 SE-out 122.12 185,131,99 -12.57 21.98 0.5 0.9178 34.97 24.76 28.47 HTR None None None None None
+plasma_rifle p55 rivet_reload_plasma_rifle 6 SE-in 122.12 189,133,101 -12.57 23.14 0.4932 0.8973 35.21 25.06 26.72 HTR None None None None None
+plasma_rifle p55 rivet_reload_plasma_rifle 7 SE-ready 121.28 190,133,101 -13.17 23.43 0.5103 1.0069 35.46 25.17 31.12 HTR None None None None None
+plasma_rifle p55 rivet_reload_plasma_rifle_left 0 SW 139.68 171,124,77 0.0 22.67 0.3353 0.5569 35.7 30.64 -13.85 TR None None None None None
+plasma_rifle p55 rivet_reload_plasma_rifle_left 1 W 138.01 181,129,78 -1.2 26.58 0.3939 0.5697 36.45 31.15 1.21 T None None None None None
+plasma_rifle p55 rivet_reload_plasma_rifle_left 2 NW 138.01 156,111,69 -1.2 17.74 0.3879 0.5939 36.51 31.24 -0.33 T None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle 0 S 132.34 124,92,68 -2.4 3.53 0.5828 0.9325 28.92 19.8 8.15 R None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle 1 SE 133.96 146,110,81 -1.2 4.64 0.5515 0.7818 27.76 20.17 2.34 - None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle 2 E 135.59 134,100,75 0.0 0.0 0.5389 0.7844 27.86 19.56 0.0 - None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle 3 NE 135.59 136,100,75 0.0 0.85 0.5509 0.7665 28.14 19.96 2.23 - None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle 4 N 132.34 132,95,72 -2.4 2.38 0.5828 0.8896 27.87 19.83 8.15 R None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle 5 E-fire 125.03 132,98,74 -7.78 0.91 0.5455 1.1104 28.99 20.05 1.22 H None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle 6 S-fire 133.15 138,104,76 -1.8 2.2 0.5305 0.8293 30.42 21.19 -1.56 - None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle 7 idle 134.77 128,96,71 -0.6 1.99 0.5241 1.0602 30.55 20.56 -2.75 - None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle_noflash 0 S 132.34 124,92,68 -2.4 3.53 0.5828 0.9325 28.92 19.8 8.15 R None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle_noflash 1 SE 133.96 146,110,81 -1.2 4.64 0.5515 0.7818 27.76 20.17 2.34 - None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle_noflash 2 E 135.59 134,100,75 0.0 0.0 0.5389 0.7844 27.86 19.56 0.0 - None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle_noflash 3 NE 135.59 136,100,75 0.0 0.85 0.5509 0.7665 28.14 19.96 2.23 - None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle_noflash 4 N 132.34 132,95,72 -2.4 2.38 0.5828 0.8896 27.87 19.83 8.15 R None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle_noflash 5 E-fire 125.03 132,98,74 -7.78 0.91 0.5455 1.1104 28.99 20.05 1.22 H None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle_noflash 6 S-fire 133.15 138,104,76 -1.8 2.2 0.5305 0.8293 30.42 21.19 -1.56 - None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle_noflash 7 idle 134.77 128,96,71 -0.6 1.99 0.5241 1.0602 30.55 20.56 -2.75 - None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle_diag 0 SE 123.41 162,110,80 -8.98 10.59 0.4605 0.9539 33.45 25.74 -14.55 HTR None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle_diag 1 NE 123.41 159,109,77 -8.98 10.07 0.5724 0.9474 32.56 24.96 6.22 HTR None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle_diag 2 SW 124.22 148,100,74 -8.38 6.89 0.4641 0.9542 33.0 25.24 -13.88 HR None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle_diag 3 NW 121.78 161,113,78 -10.18 10.84 0.5733 0.9333 32.01 24.67 6.38 HTR None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle_diag_noflash 0 SE 123.41 162,110,80 -8.98 10.59 0.4605 0.9539 33.45 25.74 -14.55 HTR None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle_diag_noflash 1 NE 123.41 159,109,77 -8.98 10.07 0.5724 0.9474 32.56 24.96 6.22 HTR None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle_diag_noflash 2 SW 124.22 148,100,74 -8.38 6.89 0.4641 0.9542 33.0 25.24 -13.88 HR None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle_diag_noflash 3 NW 121.78 161,113,78 -10.18 10.84 0.5733 0.9333 32.01 24.67 6.38 HTR None None None None None
+plasma_rifle p70 rivet_eq_plasma_rifle_left 0 SW 133.96 146,110,81 -1.2 4.64 0.5636 0.7818 27.73 20.12 4.58 - SE 0.0 2.19 0.0 -
+plasma_rifle p70 rivet_eq_plasma_rifle_left 1 W 135.59 134,100,75 0.0 0.0 0.5389 0.7844 27.81 19.54 0.0 - E 0.0 0.0 0.0 -
+plasma_rifle p70 rivet_eq_plasma_rifle_left 2 NW 135.59 136,100,75 0.0 0.85 0.5449 0.7665 28.19 19.99 1.11 - NE 0.0 -1.09 0.0 -
+plasma_rifle p70 rivet_eq_plasma_rifle_left_fire 0 W-fire 125.03 132,98,74 -7.78 0.91 0.5455 1.1104 28.95 20.04 1.22 H E-fire 0.0 0.0 0.0 -
+plasma_rifle p70 rivet_eq_plasma_rifle_left_fire_noflash 0 W-fire 125.03 132,98,74 -7.78 0.91 0.5455 1.1104 28.95 20.04 1.22 H E-fire 0.0 0.0 0.0 -
+plasma_rifle p70 rivet_reload_plasma_rifle 0 S 133.15 150,107,75 -1.8 6.96 0.561 0.9207 32.24 24.17 4.1 - None None None None None
+plasma_rifle p70 rivet_reload_plasma_rifle 1 SE 133.96 148,106,74 -1.2 6.62 0.5273 0.8909 31.81 24.23 -2.15 - None None None None None
+plasma_rifle p70 rivet_reload_plasma_rifle 2 E 134.77 173,124,88 -0.6 13.95 0.5422 0.8373 32.01 24.19 0.61 T None None None None None
+plasma_rifle p70 rivet_reload_plasma_rifle 3 NE 134.77 159,112,80 -0.6 9.37 0.5422 0.8373 31.65 23.93 0.61 T None None None None None
+plasma_rifle p70 rivet_reload_plasma_rifle 4 N 131.53 145,103,74 -2.99 4.99 0.5741 0.8457 31.53 23.87 6.53 R None None None None None
+plasma_rifle p70 rivet_reload_plasma_rifle 5 SE-out 133.96 144,103,72 -1.2 5.32 0.5212 1.0061 32.22 24.67 -3.28 - None None None None None
+plasma_rifle p70 rivet_reload_plasma_rifle 6 SE-in 133.96 147,105,75 -1.2 5.59 0.5152 0.9515 32.9 24.53 -4.4 - None None None None None
+plasma_rifle p70 rivet_reload_plasma_rifle 7 SE-ready 133.96 152,107,75 -1.2 7.73 0.5273 1.0485 32.9 24.83 -2.15 - None None None None None
+plasma_rifle p70 rivet_reload_plasma_rifle_left 0 SW 132.34 172,124,96 -2.4 12.28 0.5951 0.7975 34.84 26.26 10.43 TR None None None None None
+plasma_rifle p70 rivet_reload_plasma_rifle_left 1 W 133.96 175,124,96 -1.2 13.27 0.5939 0.7697 35.27 26.36 10.21 TR None None None None None
+plasma_rifle p70 rivet_reload_plasma_rifle_left 2 NW 133.96 164,115,89 -1.2 9.86 0.5818 0.7697 34.86 26.48 7.96 TR None None None None None
+plasma_sword p55 rivet_eq_plasma_sword 0 S 136.76 146,113,91 -1.8 7.2 0.422 0.9725 33.64 20.64 8.93 R None None None None None
+plasma_sword p55 rivet_eq_plasma_sword 1 SE 138.01 132,94,76 -0.9 3.55 0.4 0.8182 33.07 20.1 3.25 - None None None None None
+plasma_sword p55 rivet_eq_plasma_sword 2 E 139.27 128,97,81 0.0 0.0 0.3874 0.6667 33.0 20.21 0.0 - None None None None None
+plasma_sword p55 rivet_eq_plasma_sword 3 NE 139.27 124,91,77 0.0 2.54 0.3874 0.6577 31.92 19.01 0.0 - None None None None None
+plasma_sword p55 rivet_eq_plasma_sword 4 N 135.5 136,101,84 -2.7 2.84 0.3981 0.9444 31.97 18.92 2.76 - None None None None None
+plasma_sword p55 rivet_eq_plasma_sword 5 E-fire 136.76 133,99,81 -1.8 2.16 0.3853 1.2752 37.68 23.15 -0.54 - None None None None None
+plasma_sword p55 rivet_eq_plasma_sword 6 S-fire 141.77 130,95,77 1.8 2.46 0.3717 1.1062 39.71 24.1 -4.05 - None None None None None
+plasma_sword p55 rivet_eq_plasma_sword 7 idle 139.27 134,98,75 0.0 5.03 0.3784 1.1982 37.73 22.81 -2.32 - None None None None None
+plasma_sword p55 rivet_eq_plasma_sword_left 0 SW 138.01 132,96,65 -0.9 9.49 0.3818 0.9818 31.59 23.13 -1.45 T None None None None None
+plasma_sword p55 rivet_eq_plasma_sword_left 1 W 136.76 119,82,55 -1.8 9.82 0.3853 1.0 31.7 23.03 -0.54 T None None None None None
+plasma_sword p55 rivet_eq_plasma_sword_left 2 NW 138.01 119,89,62 -0.9 7.48 0.3727 0.9909 31.52 22.84 -3.79 - None None None None None
+plasma_sword p70 rivet_eq_plasma_sword 0 S 132.74 154,112,88 -2.68 4.66 0.5505 1.1101 32.58 22.59 12.1 R None None None None None
+plasma_sword p70 rivet_eq_plasma_sword 1 SE 135.18 144,109,88 -0.89 5.58 0.5225 1.018 32.26 22.06 6.39 R None None None None None
+plasma_sword p70 rivet_eq_plasma_sword 2 E 136.4 144,100,77 0.0 0.0 0.4911 0.8214 31.5 21.51 0.0 - None None None None None
+plasma_sword p70 rivet_eq_plasma_sword 3 NE 133.96 153,104,78 -1.79 3.72 0.4909 0.9364 31.3 21.51 -0.04 - None None None None None
+plasma_sword p70 rivet_eq_plasma_sword 4 N 133.96 130,95,74 -1.79 5.26 0.5182 1.0909 30.4 20.64 5.52 R None None None None None
+plasma_sword p70 rivet_eq_plasma_sword 5 E-fire 109.61 129,96,74 -19.64 5.85 0.5667 1.7667 36.39 25.16 15.39 HR None None None None None
+plasma_sword p70 rivet_eq_plasma_sword 6 S-fire 96.21 132,94,72 -29.46 4.02 0.6582 0.962 30.43 20.17 34.03 HR None None None None None
+plasma_sword p70 rivet_eq_plasma_sword 7 idle 109.61 125,95,75 -19.64 7.93 0.5667 1.1333 30.79 19.5 15.39 HR None None None None None
+plasma_sword p70 rivet_eq_plasma_sword_left 0 SW 126.66 142,101,82 -7.14 2.87 0.625 1.5192 34.31 25.79 27.27 HR None None None None None
+plasma_sword p70 rivet_eq_plasma_sword_left 1 W 129.09 145,102,78 -5.36 0.95 0.6038 1.217 33.71 25.28 22.95 HR None None None None None
+plasma_sword p70 rivet_eq_plasma_sword_left 2 NW 129.09 152,108,87 -5.36 3.48 0.6226 1.3113 34.55 25.89 26.78 HR None None None None None
+ray_gun p55 rivet_eq_ray_gun 0 S 138.01 141,110,87 -1.2 8.45 0.4121 0.5515 29.5 20.02 5.88 TR None None None None None
+ray_gun p55 rivet_eq_ray_gun 1 SE 138.01 129,98,78 -1.2 3.55 0.4 0.5515 28.72 19.79 2.77 - None None None None None
+ray_gun p55 rivet_eq_ray_gun 2 E 139.68 120,90,72 0.0 0.0 0.3892 0.491 28.97 19.61 0.0 - None None None None None
+ray_gun p55 rivet_eq_ray_gun 3 NE 138.01 112,82,66 -1.2 3.38 0.3818 0.5091 28.42 19.11 -1.9 - None None None None None
+ray_gun p55 rivet_eq_ray_gun 4 N 137.17 117,91,73 -1.8 2.13 0.4146 0.5549 27.86 18.04 6.53 R None None None None None
+ray_gun p55 rivet_eq_ray_gun 5 E-fire 136.34 129,92,73 -2.4 3.82 0.3742 0.8282 29.37 19.38 -3.85 - None None None None None
+ray_gun p55 rivet_eq_ray_gun 6 S-fire 139.68 143,107,83 0.0 8.51 0.3653 0.6048 30.68 20.0 -6.14 TR None None None None None
+ray_gun p55 rivet_eq_ray_gun 7 idle 139.68 127,93,71 0.0 3.72 0.3772 0.6347 30.15 20.2 -3.08 - None None None None None
+ray_gun p55 rivet_eq_ray_gun_noflash 0 S 138.01 141,110,87 -1.2 8.45 0.4121 0.5515 29.5 20.02 5.88 TR None None None None None
+ray_gun p55 rivet_eq_ray_gun_noflash 1 SE 138.01 129,98,78 -1.2 3.55 0.4 0.5515 28.72 19.79 2.77 - None None None None None
+ray_gun p55 rivet_eq_ray_gun_noflash 2 E 139.68 120,90,72 0.0 0.0 0.3892 0.491 28.97 19.61 0.0 - None None None None None
+ray_gun p55 rivet_eq_ray_gun_noflash 3 NE 138.01 112,82,66 -1.2 3.38 0.3818 0.5091 28.42 19.11 -1.9 - None None None None None
+ray_gun p55 rivet_eq_ray_gun_noflash 4 N 137.17 117,91,73 -1.8 2.13 0.4146 0.5549 27.86 18.04 6.53 R None None None None None
+ray_gun p55 rivet_eq_ray_gun_noflash 5 E-fire 136.34 129,92,73 -2.4 3.82 0.3742 0.8282 29.37 19.38 -3.85 - None None None None None
+ray_gun p55 rivet_eq_ray_gun_noflash 6 S-fire 139.68 143,107,83 0.0 8.51 0.3653 0.6048 30.68 20.0 -6.14 TR None None None None None
+ray_gun p55 rivet_eq_ray_gun_noflash 7 idle 139.68 127,93,71 0.0 3.72 0.3772 0.6347 30.15 20.2 -3.08 - None None None None None
+ray_gun p55 rivet_eq_ray_gun_diag 0 SE 137.17 185,120,89 -1.8 23.46 0.3902 0.7683 36.83 31.34 0.26 T None None None None None
+ray_gun p55 rivet_eq_ray_gun_diag 1 NE 138.85 166,107,81 -0.6 17.47 0.3735 0.7952 36.08 30.9 -4.03 T None None None None None
+ray_gun p55 rivet_eq_ray_gun_diag 2 SW 135.5 182,120,91 -2.99 21.86 0.4074 0.7407 37.21 31.69 4.68 T None None None None None
+ray_gun p55 rivet_eq_ray_gun_diag 3 NW 149.72 161,105,70 7.19 18.58 0.3631 0.6816 37.4 32.16 -6.71 HTR None None None None None
+ray_gun p55 rivet_eq_ray_gun_diag_noflash 0 SE 137.17 185,120,89 -1.8 23.46 0.3902 0.7683 36.83 31.34 0.26 T None None None None None
+ray_gun p55 rivet_eq_ray_gun_diag_noflash 1 NE 138.85 166,107,81 -0.6 17.47 0.3735 0.7952 36.08 30.9 -4.03 T None None None None None
+ray_gun p55 rivet_eq_ray_gun_diag_noflash 2 SW 135.5 182,120,91 -2.99 21.86 0.4074 0.7407 37.21 31.69 4.68 T None None None None None
+ray_gun p55 rivet_eq_ray_gun_diag_noflash 3 NW 149.72 161,105,70 7.19 18.58 0.3631 0.6816 37.4 32.16 -6.71 HTR None None None None None
+ray_gun p55 rivet_eq_ray_gun_left 0 SW 138.01 132,97,66 -1.2 8.83 0.4 0.6242 29.55 22.84 2.77 T None None None None None
+ray_gun p55 rivet_eq_ray_gun_left 1 W 137.17 127,90,61 -1.8 8.01 0.3902 0.5854 29.53 22.77 0.26 T None None None None None
+ray_gun p55 rivet_eq_ray_gun_left 2 NW 138.01 122,91,65 -1.2 4.99 0.3818 0.6848 29.97 22.52 -1.9 - None None None None None
+ray_gun p55 rivet_reload_ray_gun 0 S 137.17 204,147,113 -1.8 28.4 0.2988 0.5244 39.0 29.0 -23.23 TR None None None None None
+ray_gun p55 rivet_reload_ray_gun 1 SE 139.68 191,137,105 0.0 24.27 0.4371 0.5389 39.32 29.09 12.31 TR None None None None None
+ray_gun p55 rivet_reload_ray_gun 2 E 138.01 193,134,102 -1.2 24.91 0.3697 0.5212 39.23 29.26 -5.01 TR None None None None None
+ray_gun p55 rivet_reload_ray_gun 3 NE 138.01 189,131,100 -1.2 23.59 0.3758 0.5515 39.12 29.3 -3.44 T None None None None None
+ray_gun p55 rivet_reload_ray_gun 4 N 136.34 183,128,98 -2.4 21.61 0.3742 0.5706 40.46 29.03 -3.85 T None None None None None
+ray_gun p55 rivet_reload_ray_gun 5 SE-out 149.72 197,143,112 7.19 25.9 0.4134 0.6257 41.62 29.11 6.22 HTR None None None None None
+ray_gun p55 rivet_reload_ray_gun 6 SE-in 148.88 192,137,107 6.59 24.19 0.3427 0.6348 41.53 29.58 -11.95 HTR None None None None None
+ray_gun p55 rivet_reload_ray_gun 7 SE-ready 149.72 196,139,109 7.19 25.22 0.3352 0.6257 41.57 29.05 -13.87 HTR None None None None None
+ray_gun p55 rivet_reload_ray_gun_left 0 SW 138.01 191,127,70 -1.2 32.58 0.3455 0.6364 36.97 34.21 -11.23 TR None None None None None
+ray_gun p55 rivet_reload_ray_gun_left 1 W 136.34 199,133,74 -2.4 34.88 0.3681 0.6135 37.3 33.93 -5.42 TR None None None None None
+ray_gun p55 rivet_reload_ray_gun_left 2 NW 138.01 170,108,61 -1.2 25.54 0.3697 0.5636 37.97 34.76 -5.01 TR None None None None None
+ray_gun p70 rivet_eq_ray_gun 0 S 122.6 117,93,74 -8.48 9.67 0.5695 1.0795 28.68 19.27 2.13 HT None None None None None
+ray_gun p70 rivet_eq_ray_gun 1 SE 143.71 136,108,86 7.27 4.46 0.5424 0.6045 30.52 21.54 -2.73 H None None None None None
+ray_gun p70 rivet_eq_ray_gun 2 E 133.96 142,107,80 0.0 0.0 0.5576 0.6667 30.06 20.65 0.0 - None None None None None
+ray_gun p70 rivet_eq_ray_gun 3 NE 116.1 133,100,76 -13.33 3.43 0.3846 0.993 28.92 19.68 -31.03 HR None None None None None
+ray_gun p70 rivet_eq_ray_gun 4 N 126.66 123,95,76 -5.45 7.87 0.609 1.0 29.13 19.32 9.22 HR None None None None None
+ray_gun p70 rivet_eq_ray_gun 5 E-fire 116.91 131,102,81 -12.73 5.18 0.6389 1.2569 31.53 21.81 14.58 HR None None None None None
+ray_gun p70 rivet_eq_ray_gun 6 S-fire 129.09 113,88,69 -3.64 10.77 0.5283 1.0189 30.6 20.84 -5.25 TR None None None None None
+ray_gun p70 rivet_eq_ray_gun 7 idle 129.9 138,108,85 -3.03 3.52 0.5437 1.025 30.59 20.46 -2.49 - None None None None None
+ray_gun p70 rivet_eq_ray_gun_noflash 0 S 122.6 117,93,74 -8.48 9.67 0.5695 1.0795 28.68 19.27 2.13 HT None None None None None
+ray_gun p70 rivet_eq_ray_gun_noflash 1 SE 143.71 136,108,86 7.27 4.46 0.5424 0.6045 30.52 21.54 -2.73 H None None None None None
+ray_gun p70 rivet_eq_ray_gun_noflash 2 E 133.96 142,107,80 0.0 0.0 0.5576 0.6667 30.06 20.65 0.0 - None None None None None
+ray_gun p70 rivet_eq_ray_gun_noflash 3 NE 116.1 133,100,76 -13.33 3.43 0.3846 0.993 28.92 19.68 -31.03 HR None None None None None
+ray_gun p70 rivet_eq_ray_gun_noflash 4 N 126.66 123,95,76 -5.45 7.87 0.609 1.0 29.13 19.32 9.22 HR None None None None None
+ray_gun p70 rivet_eq_ray_gun_noflash 5 E-fire 116.91 131,102,81 -12.73 5.18 0.6389 1.2569 31.53 21.81 14.58 HR None None None None None
+ray_gun p70 rivet_eq_ray_gun_noflash 6 S-fire 129.09 113,88,69 -3.64 10.77 0.5283 1.0189 30.6 20.84 -5.25 TR None None None None None
+ray_gun p70 rivet_eq_ray_gun_noflash 7 idle 129.9 138,108,85 -3.03 3.52 0.5437 1.025 30.59 20.46 -2.49 - None None None None None
+ray_gun p70 rivet_eq_ray_gun_diag 0 SE 132.34 192,129,89 -1.21 18.55 0.5337 0.816 38.63 32.66 -4.29 T None None None None None
+ray_gun p70 rivet_eq_ray_gun_diag 1 NE 133.96 173,110,73 0.0 15.61 0.4545 0.9576 38.84 32.62 -18.49 TR None None None None None
+ray_gun p70 rivet_eq_ray_gun_diag 2 SW 133.15 193,128,90 -0.61 18.68 0.5305 0.8598 38.0 32.79 -4.86 T None None None None None
+ray_gun p70 rivet_eq_ray_gun_diag 3 NW 138.02 179,113,68 3.03 19.44 0.4412 0.8882 37.12 33.26 -20.88 TR None None None None None
+ray_gun p70 rivet_eq_ray_gun_diag_noflash 0 SE 132.34 192,129,89 -1.21 18.55 0.5337 0.816 38.63 32.66 -4.29 T None None None None None
+ray_gun p70 rivet_eq_ray_gun_diag_noflash 1 NE 133.96 173,110,73 0.0 15.61 0.4545 0.9576 38.84 32.62 -18.49 TR None None None None None
+ray_gun p70 rivet_eq_ray_gun_diag_noflash 2 SW 133.15 193,128,90 -0.61 18.68 0.5305 0.8598 38.0 32.79 -4.86 T None None None None None
+ray_gun p70 rivet_eq_ray_gun_diag_noflash 3 NW 138.02 179,113,68 3.03 19.44 0.4412 0.8882 37.12 33.26 -20.88 TR None None None None None
+ray_gun p70 rivet_eq_ray_gun_left 0 SW 133.15 138,106,90 -0.61 6.07 0.5061 1.0854 30.89 21.07 -9.24 R None None None None None
+ray_gun p70 rivet_eq_ray_gun_left 1 W 133.96 138,105,87 0.0 5.36 0.5273 1.0182 31.12 20.61 -5.43 R None None None None None
+ray_gun p70 rivet_eq_ray_gun_left 2 NW 133.96 147,110,91 0.0 4.81 0.6121 1.0788 30.99 20.55 9.77 R None None None None None
+ray_gun p70 rivet_reload_ray_gun 0 S 133.15 204,143,101 -0.61 21.35 0.5366 0.6951 38.35 28.66 -3.77 T None None None None None
+ray_gun p70 rivet_reload_ray_gun 1 SE 133.15 206,145,102 -0.61 22.23 0.5122 0.6463 38.22 28.49 -8.14 TR None None None None None
+ray_gun p70 rivet_reload_ray_gun 2 E 133.96 202,138,97 0.0 20.99 0.5333 0.6909 37.63 28.26 -4.36 T None None None None None
+ray_gun p70 rivet_reload_ray_gun 3 NE 133.96 204,142,99 0.0 21.68 0.5273 0.6727 37.83 28.42 -5.43 TR None None None None None
+ray_gun p70 rivet_reload_ray_gun 4 N 134.77 203,140,99 0.61 21.09 0.5301 0.7169 38.39 28.43 -4.93 T None None None None None
+ray_gun p70 rivet_reload_ray_gun 5 SE-out 136.4 208,143,98 1.82 23.39 0.506 0.6845 40.13 29.85 -9.25 TR None None None None None
+ray_gun p70 rivet_reload_ray_gun 6 SE-in 136.4 204,140,97 1.82 21.9 0.5119 0.7024 40.03 29.98 -8.2 TR None None None None None
+ray_gun p70 rivet_reload_ray_gun 7 SE-ready 137.21 209,145,101 2.42 23.28 0.5148 0.716 40.07 29.63 -7.68 TR None None None None None
+ray_gun p70 rivet_reload_ray_gun_left 0 SW 134.77 184,108,80 0.61 19.67 0.4096 0.8193 34.15 31.53 -26.54 TR None None None None None
+ray_gun p70 rivet_reload_ray_gun_left 1 W 133.96 210,130,96 0.0 24.5 0.4545 0.8364 34.55 31.45 -18.49 TR None None None None None
+ray_gun p70 rivet_reload_ray_gun_left 2 NW 133.96 201,123,90 0.0 22.48 0.4606 0.8242 34.34 31.62 -17.4 TR None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher 0 S 138.85 133,102,79 0.61 3.56 0.4277 0.5422 29.57 20.24 12.02 R None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher 1 SE 138.85 131,97,76 0.61 2.31 0.4096 0.5723 30.33 19.72 7.28 R None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher 2 E 138.01 125,94,74 0.0 0.0 0.3818 0.6182 31.2 18.81 0.0 - None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher 3 NE 138.01 110,82,65 0.0 5.53 0.3879 0.6061 29.48 18.45 1.6 - None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher 4 N 136.34 133,98,76 -1.21 3.16 0.4233 0.6012 27.97 18.18 10.87 R None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher 5 E-fire 110.41 133,99,74 -20.0 4.27 0.3712 0.8258 32.04 19.08 -2.78 H None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher 6 S-fire 112.92 134,100,78 -18.18 3.33 0.4741 0.5926 32.46 21.28 24.17 HR None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher 7 idle 110.41 136,100,76 -20.0 4.36 0.3788 0.7652 31.98 19.16 -0.79 H None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher_noflash 0 S 138.85 133,102,79 0.61 3.56 0.4277 0.5422 29.57 20.24 12.02 R None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher_noflash 1 SE 138.85 131,97,76 0.61 2.31 0.4096 0.5723 30.33 19.72 7.28 R None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher_noflash 2 E 138.01 125,94,74 0.0 0.0 0.3818 0.6182 31.2 18.81 0.0 - None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher_noflash 3 NE 138.01 110,82,65 0.0 5.53 0.3879 0.6061 29.48 18.45 1.6 - None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher_noflash 4 N 136.34 133,98,76 -1.21 3.16 0.4233 0.6012 27.97 18.18 10.87 R None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher_noflash 5 E-fire 110.41 133,99,74 -20.0 4.27 0.3712 0.8258 32.04 19.08 -2.78 H None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher_noflash 6 S-fire 112.92 134,100,78 -18.18 3.33 0.4741 0.5926 32.46 21.28 24.17 HR None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher_noflash 7 idle 110.41 136,100,76 -20.0 4.36 0.3788 0.7652 31.98 19.16 -0.79 H None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher_diag 0 SE 124.63 152,108,78 -9.7 10.95 0.2752 0.6443 34.74 25.26 -27.92 HTR None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher_diag 1 NE 128.81 139,98,73 -6.67 6.52 0.3896 0.7662 34.58 25.97 2.04 H None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher_diag 2 SW 125.46 156,108,78 -9.09 12.47 0.28 0.6333 34.88 25.17 -26.66 HTR None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher_diag 3 NW 128.81 149,105,78 -6.67 9.47 0.3896 0.7403 34.52 25.63 2.04 HT None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher_diag_noflash 0 SE 124.63 152,108,78 -9.7 10.95 0.2752 0.6443 34.74 25.26 -27.92 HTR None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher_diag_noflash 1 NE 128.81 139,98,73 -6.67 6.52 0.3896 0.7662 34.58 25.97 2.04 H None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher_diag_noflash 2 SW 125.46 156,108,78 -9.09 12.47 0.28 0.6333 34.88 25.17 -26.66 HTR None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher_diag_noflash 3 NW 128.81 149,105,78 -6.67 9.47 0.3896 0.7403 34.52 25.63 2.04 HT None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher_left 0 SW 134.67 126,88,63 -2.42 5.55 0.3354 0.7826 32.95 24.8 -12.15 R None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher_left 1 W 134.67 138,96,70 -2.42 6.92 0.3292 0.8758 34.3 24.5 -13.78 R None None None None None
+rocket_launcher p55 rivet_eq_rocket_launcher_left 2 NW 134.67 123,88,67 -2.42 3.09 0.3602 0.8075 33.84 23.94 -5.66 R None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher 0 S 131.53 154,115,86 -1.82 1.59 0.5556 0.821 31.78 20.29 5.37 R None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher 1 SE 134.77 141,110,86 0.61 4.04 0.5361 0.8072 31.47 20.03 1.67 - None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher 2 E 133.96 151,113,86 0.0 0.0 0.5273 0.7697 31.56 19.74 0.0 - None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher 3 NE 133.96 129,100,79 0.0 7.83 0.5273 0.7576 30.52 19.57 0.0 - None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher 4 N 129.09 163,122,93 -3.64 4.14 0.566 0.8176 29.75 18.94 7.34 R None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher 5 E-fire 112.85 133,102,78 -15.76 6.07 0.5468 0.7914 32.54 19.53 3.7 H None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher 6 S-fire 116.1 143,108,80 -13.33 2.71 0.5664 0.8112 33.82 21.78 7.42 HR None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher 7 idle 113.67 135,105,82 -15.15 5.7 0.5643 0.8929 33.63 20.84 7.02 HR None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher_noflash 0 S 131.53 154,115,86 -1.82 1.59 0.5556 0.821 31.78 20.29 5.37 R None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher_noflash 1 SE 134.77 141,110,86 0.61 4.04 0.5361 0.8072 31.47 20.03 1.67 - None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher_noflash 2 E 133.96 151,113,86 0.0 0.0 0.5273 0.7697 31.56 19.74 0.0 - None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher_noflash 3 NE 133.96 129,100,79 0.0 7.83 0.5273 0.7576 30.52 19.57 0.0 - None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher_noflash 4 N 129.09 163,122,93 -3.64 4.14 0.566 0.8176 29.75 18.94 7.34 R None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher_noflash 5 E-fire 112.85 133,102,78 -15.76 6.07 0.5468 0.7914 32.54 19.53 3.7 H None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher_noflash 6 S-fire 116.1 143,108,80 -13.33 2.71 0.5664 0.8112 33.82 21.78 7.42 HR None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher_noflash 7 idle 113.67 135,105,82 -15.15 5.7 0.5643 0.8929 33.63 20.84 7.02 HR None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher_diag 0 SE 116.1 146,102,74 -13.33 5.05 0.5245 0.7832 34.96 24.8 -0.53 H None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher_diag 1 NE 117.72 128,88,65 -12.12 9.86 0.5103 0.8 31.5 22.99 -3.22 HT None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher_diag 2 SW 116.91 152,110,81 -12.73 2.76 0.5208 0.8403 34.32 24.5 -1.23 H None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher_diag 3 NW 118.54 162,114,84 -11.52 5.1 0.5137 0.7603 31.92 23.23 -2.58 H None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher_diag_noflash 0 SE 116.1 146,102,74 -13.33 5.05 0.5245 0.7832 34.96 24.8 -0.53 H None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher_diag_noflash 1 NE 117.72 128,88,65 -12.12 9.86 0.5103 0.8 31.5 22.99 -3.22 HT None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher_diag_noflash 2 SW 116.91 152,110,81 -12.73 2.76 0.5208 0.8403 34.32 24.5 -1.23 H None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher_diag_noflash 3 NW 118.54 162,114,84 -11.52 5.1 0.5137 0.7603 31.92 23.23 -2.58 H None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher_left 0 SW 130.71 142,103,79 -2.42 3.99 0.5466 0.9752 39.58 26.39 3.66 - None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher_left 1 W 130.71 145,104,76 -2.42 4.05 0.5155 1.0745 32.72 23.47 -2.24 - None None None None None
+rocket_launcher p70 rivet_eq_rocket_launcher_left 2 NW 130.71 140,102,77 -2.42 4.33 0.5528 0.9938 37.68 24.91 4.84 - None None None None None

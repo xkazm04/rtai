@@ -85,6 +85,16 @@ FIRE_PINNED = {("p70", "rivet_eq_assault_rifle", 5): [290, 102],
                ("p55", "rivet_eq_assault_rifle", 5): [202, 79],
                ("p55", "rivet_eq_assault_rifle", 6): [103, 125]}
 LEFT_PINNED = {
+    ("p55", "rivet_eq_plasma_rifle_left_fire", 0): [21, 57],
+    ("p70", "rivet_eq_plasma_rifle_left_fire", 0): [43, 100],
+    # Native mirrored cards, 110-space: width/res - right anchor. The side
+    # view has no table anchor; measure its muzzle at the tip of the arm band.
+    ("p55", "rivet_eq_plasma_rifle_left", 0): [46, 53],
+    ("p55", "rivet_eq_plasma_rifle_left", 1): [55, 46],
+    ("p55", "rivet_eq_plasma_rifle_left", 2): [51, 51],
+    ("p70", "rivet_eq_plasma_rifle_left", 0): [62, 95],
+    ("p70", "rivet_eq_plasma_rifle_left", 1): [53, 92],
+    ("p70", "rivet_eq_plasma_rifle_left", 2): [59, 84],
     ("p70", "rivet_eq_rocket_launcher_left", 0): [20, 103],
     ("p70", "rivet_eq_rocket_launcher_left", 1): [5, 72],
     ("p70", "rivet_eq_rocket_launcher_left", 2): [17, 18],
@@ -253,6 +263,11 @@ def measure(out_dir, strips):
     for art in sorted(strips):
         rows = {}
         for name in sorted(strips[art]):
+            if name.endswith("_left_fire_noflash"):
+                continue
+            if name.endswith("_left_fire"):
+                rows[name] = {"cells": {"0": LEFT_PINNED[(art, name, 0)]}}
+                continue
             if name.endswith("_diag"):
                 continue  # measured against its flashless twin below
             if name[9:] in STRIKE_TIP:
@@ -308,6 +323,8 @@ def measure_diag(out_dir, art):
 
 
 def n_cells(name):
+    if name.endswith("_left_fire"):
+        return 1
     if name.endswith("_diag"):
         return DIAG_CELLS
     return LEFT_CELLS if name.endswith("_left") else EQ_CELLS

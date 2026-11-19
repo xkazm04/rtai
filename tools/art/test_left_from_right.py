@@ -31,3 +31,6 @@ class LeftFromRightTest(unittest.TestCase):
             with Image.open(path/"left.png") as out:
                 expected = np.concatenate([src[:, i*4:(i+1)*4][:, ::-1] for i in (1, 2, 3)], axis=1)
                 np.testing.assert_equal(np.asarray(out), expected)
+            build(path/"eq.png", path/"fire.png", [[]], [5])
+            with Image.open(path/"fire.png") as out:
+                np.testing.assert_equal(np.asarray(out), src[:, 20:24][:, ::-1])

@@ -12,6 +12,8 @@ const X15: PackedStringArray = [
 	"p70/rivet_eq_pistol_left.png",
 	"p70/rivet_eq_pistol_diag.png",  # n17: drawn on the pistol strip's cells (it458)
 	"p70/rivet_eq_plasma_rifle.png",
+	"p70/rivet_eq_plasma_rifle_left.png",
+	"p70/rivet_eq_plasma_rifle_left_fire.png",
 	"p70/rivet_eq_plasma_rifle_diag.png",  # n17: drawn on the strip's cells (it458/it463)
 	"p70/rivet_eq_katana.png",
 	"p70/rivet_eq_chainsaw.png",
@@ -76,6 +78,8 @@ const X15: PackedStringArray = [
 	"p55/rivet_eq_molotov.png",
 	"p55/rivet_eq_molotov_left.png",
 	"p55/rivet_eq_plasma_rifle.png",
+	"p55/rivet_eq_plasma_rifle_left.png",
+	"p55/rivet_eq_plasma_rifle_left_fire.png",
 	"p55/rivet_eq_plasma_rifle_diag.png",  # n17: drawn on the strip's cells (it458/it462)
 	"p55/rivet_eq_gatling.png",
 	"p55/rivet_eq_gatling_diag.png",  # n17: drawn on the strip's cells (it458/it462)

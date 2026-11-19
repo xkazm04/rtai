@@ -44,13 +44,13 @@ def mirror_cell(image, regions):
     return Image.fromarray(work[:, ::-1])
 
 
-def build(source, dest, facings):
+def build(source, dest, facings, indices=(1, 2, 3)):
     with Image.open(source) as strip:
-        if strip.width % 8 or len(facings) != 3:
-            raise ValueError("expected eight equipped cells and three left-facing recipes")
+        if strip.width % 8 or len(facings) != len(indices) or not all(0 <= i < 8 for i in indices):
+            raise ValueError("expected eight equipped cells and one recipe per source index")
         w, h = strip.width//8, strip.height
-        out = Image.new("RGBA", (3*w, h))
-        for i, regions in enumerate(facings, 1):
+        out = Image.new("RGBA", (len(indices)*w, h))
+        for slot, (i, regions) in enumerate(zip(indices, facings)):
             cell = strip.crop((i*w, 0, (i+1)*w, h))
-            out.paste(mirror_cell(cell, regions), ((i-1)*w, 0))
+            out.paste(mirror_cell(cell, regions), (slot*w, 0))
     out.save(dest, optimize=True)

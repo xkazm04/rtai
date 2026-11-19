@@ -182,8 +182,9 @@ def _manifest(path: str, only: str = "", no_rim: bool = False) -> None:
                 from left_from_right import build
                 folder = Path(out) / art
                 recipe = Path(path).parent / row["regions"]
-                facings = json.loads(recipe.read_text())[art]
-                build(folder / row["mirror_from"], folder / (name + ".png"), facings)
+                facings = json.loads(recipe.read_text())[art + row.get("pose", "")]
+                build(folder / row["mirror_from"], folder / (name + ".png"), facings,
+                      row.get("source_cells", (1, 2, 3)))
                 continue
             argv = [str(Path(lib) / row["sheet"]), f"{out}/{art}/{name}.png", row["counts"]]
             if "cc" in row:

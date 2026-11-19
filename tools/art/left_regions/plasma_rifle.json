@@ -1,0 +1,65 @@
+{
+  "p55": [
+    [
+      {"part": "rigid hazard collar stripes", "band": [[108, 58, 67], [110, 60, 69], [119, 67, 77], [131, 72, 83], [143, 71, 82], [151, 66, 77], [155, 62, 71], [157, 60, 69]]},
+      {"part": "receiver latch relief", "band": [[145, 84, 89], [158, 80, 84]]},
+      {"part": "trigger claw and stock catch", "band": [[117, 92, 95], [127, 90, 94]]},
+      {"part": "exposed hip cable behind the far claw", "hide": [[151, 116], [163, 115], [168, 114], [180, 112], [183, 137], [164, 137]]},
+      {"part": "visible rifle receiver, barrel and stock", "gun_mask": [[113, 94], [192, 69], [201, 72], [200, 91], [123, 113], [112, 117]]}
+    ],
+    [
+      {"part": "rigid hazard collar stripes", "band": [[107, 57, 65], [109, 59, 67], [118, 63, 74], [131, 67, 78], [141, 67, 77], [150, 61, 71], [152, 59, 69]]},
+      {"part": "receiver latch relief", "band": [[146, 82, 86], [155, 78, 82]]},
+      {"part": "trigger claw and stock catch", "band": [[126, 94, 98], [132, 91, 96]]},
+      {"part": "visible rifle receiver, barrel and stock", "gun_mask": [[128, 92], [183, 59], [190, 61], [190, 81], [145, 102], [129, 116]]}
+    ],
+    [
+      {"part": "rigid hazard collar stripes", "band": [[107, 61, 70], [109, 63, 72], [119, 68, 79], [132, 73, 84], [141, 72, 83], [150, 65, 77], [152, 63, 75]]},
+      {"part": "receiver latch relief", "band": [[145, 84, 88], [155, 80, 84]]},
+      {"part": "trigger claw and stock catch", "band": [[128, 94, 99], [137, 91, 95]]},
+      {"part": "exposed hip cable behind the far claw", "hide": [[92, 123], [104, 126], [109, 127], [114, 125], [115, 144], [92, 145]]},
+      {"part": "visible rifle receiver, barrel and stock", "gun_mask": [[126, 94], [184, 66], [194, 67], [195, 88], [138, 110], [125, 117]]}
+    ]
+  ],
+  "p70": [
+    [
+      {"part": "rigid hazard collar stripes", "band": [[129, 122, 131], [131, 124, 133], [140, 134, 145], [154, 143, 154], [168, 148, 158], [178, 147, 157], [185, 143, 152], [187, 141, 150]]},
+      {"part": "receiver latch relief", "band": [[187, 154, 159], [210, 144, 149]]},
+      {"part": "trigger claw and stock catch", "band": [[157, 174, 180], [169, 169, 175]]},
+      {"part": "return hose under the near claw, reverse the curved coupling in its seat", "band": [[117, 184, 188], [121, 190, 194], [128, 194, 199], [137, 195, 200], [143, 194, 197]]},
+      {"part": "visible rifle receiver, barrel and stock", "gun_mask": [[151, 169], [220, 134], [240, 124], [254, 131], [254, 156], [168, 195], [151, 201]]}
+    ],
+    [
+      {"part": "rigid hazard collar stripes", "band": [[127, 122, 132], [129, 124, 134], [139, 135, 146], [153, 143, 154], [169, 147, 158], [181, 145, 156], [192, 138, 149], [194, 136, 147]]},
+      {"part": "receiver latch relief", "band": [[201, 147, 152], [219, 140, 145]]},
+      {"part": "trigger claw and stock catch", "band": [[172, 167, 172], [186, 160, 166]]},
+      {"part": "return hose under the near claw, reverse the curved coupling in its seat", "band": [[125, 181, 187], [129, 191, 196], [137, 197, 201], [148, 201, 205], [156, 201, 204]]},
+      {"part": "visible rifle receiver, barrel and stock", "gun_mask": [[168, 165], [241, 125], [267, 121], [270, 149], [186, 184], [170, 198]]}
+    ],
+    [
+      {"part": "rigid hazard collar stripes", "band": [[130, 120, 130], [132, 122, 132], [141, 135, 145], [153, 142, 153], [168, 146, 157], [183, 144, 156], [190, 137, 149], [192, 135, 147]]},
+      {"part": "receiver latch relief", "band": [[198, 147, 151], [216, 137, 142]]},
+      {"part": "trigger claw and stock catch", "band": [[177, 174, 180], [187, 168, 174]]},
+      {"part": "return hose under the near claw, reverse the curved coupling in its seat", "band": [[120, 169, 176], [124, 179, 183], [132, 184, 188], [140, 187, 190]]},
+      {"part": "visible rifle receiver, barrel and stock", "gun_mask": [[170, 169], [226, 130], [247, 112], [259, 117], [260, 140], [188, 190], [171, 198]]}
+    ]
+  ],
+  "p55_fire": [
+    [
+      {"part": "visible collar arc above the raised rifle", "band": [[115, 66, 69], [121, 69, 73], [131, 74, 76], [141, 74, 76], [152, 65, 70]]},
+      {"part": "receiver latch relief", "band": [[173, 73, 78], [190, 73, 78]]},
+      {"part": "stock catch and trigger claw", "band": [[137, 91, 96], [146, 91, 96]]},
+      {"part": "return hose coupling", "band": [[96, 96, 99], [100, 101, 104], [107, 103, 106], [112, 102, 105]]},
+      {"part": "raised rifle", "gun_mask": [[116, 77], [153, 74], [180, 68], [219, 70], [225, 74], [224, 97], [149, 91], [119, 87]]}
+    ]
+  ],
+  "p70_fire": [
+    [
+      {"part": "visible collar arc above the raised rifle", "band": [[123, 118, 126], [127, 130, 139], [136, 141, 149], [145, 147, 152]]},
+      {"part": "receiver latch relief", "band": [[227, 147, 153], [245, 148, 154]]},
+      {"part": "stock catch and trigger claw", "band": [[167, 177, 181], [179, 176, 180]]},
+      {"part": "return hose coupling", "band": [[105, 180, 184], [110, 187, 191], [118, 192, 195], [128, 192, 195]]},
+      {"part": "raised rifle", "gun_mask": [[145, 152], [188, 147], [218, 143], [246, 142], [275, 142], [282, 148], [281, 172], [193, 178], [145, 170]]}
+    ]
+  ]
+}
