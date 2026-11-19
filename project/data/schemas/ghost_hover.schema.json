@@ -1,0 +1,162 @@
+{
+  "$id": "gtai.ghost_hover/1",
+  "additionalProperties": false,
+  "properties": {
+    "rows": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "bank_deg": {
+            "maximum": 80,
+            "minimum": 0,
+            "type": "number"
+          },
+          "bank_per_dps": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "bob_m": {
+            "maximum": 2,
+            "minimum": 0,
+            "type": "number"
+          },
+          "bob_ticks": {
+            "maximum": 600,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "height_m": {
+            "maximum": 5,
+            "minimum": 0,
+            "type": "number"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "lag_ticks": {
+            "maximum": 120,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "lean_deg": {
+            "maximum": 80,
+            "minimum": 0,
+            "type": "number"
+          },
+          "shadow": {
+            "additionalProperties": false,
+            "properties": {
+              "alpha": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              "radius_m": {
+                "maximum": 5,
+                "minimum": 0.05,
+                "type": "number"
+              },
+              "shrink_k": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              }
+            },
+            "required": [
+              "alpha",
+              "radius_m",
+              "shrink_k"
+            ],
+            "type": "object"
+          },
+          "tail": {
+            "additionalProperties": false,
+            "properties": {
+              "anchor_m": {
+                "items": {
+                  "maximum": 5,
+                  "minimum": -5,
+                  "type": "number"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "fray": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              "length_m": {
+                "maximum": 8,
+                "minimum": 0.05,
+                "type": "number"
+              },
+              "segments": {
+                "maximum": 32,
+                "minimum": 2,
+                "type": "integer"
+              },
+              "stretch_k": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              "swing_k": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              "width_m": {
+                "maximum": 4,
+                "minimum": 0.01,
+                "type": "number"
+              }
+            },
+            "required": [
+              "anchor_m",
+              "fray",
+              "length_m",
+              "segments",
+              "stretch_k",
+              "swing_k",
+              "width_m"
+            ],
+            "type": "object"
+          },
+          "top_mps": {
+            "maximum": 50,
+            "minimum": 0.1,
+            "type": "number"
+          }
+        },
+        "required": [
+          "bank_deg",
+          "bank_per_dps",
+          "bob_m",
+          "bob_ticks",
+          "height_m",
+          "id",
+          "lag_ticks",
+          "lean_deg",
+          "shadow",
+          "tail",
+          "top_mps"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.ghost_hover/1"
+    }
+  },
+  "required": [
+    "rows",
+    "schema"
+  ],
+  "type": "object"
+}

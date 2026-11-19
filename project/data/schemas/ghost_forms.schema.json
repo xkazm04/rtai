@@ -60,6 +60,12 @@
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
           },
+          "look": {
+            "enum": [
+              "legacy",
+              "spectral"
+            ]
+          },
           "name_key": {
             "pattern": "^[a-z][a-z0-9_.]*$",
             "type": "string"
@@ -107,6 +113,7 @@
           "exit_s",
           "gait",
           "id",
+          "look",
           "name_key",
           "power",
           "radius_m",
