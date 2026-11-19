@@ -30,3 +30,15 @@ Input order for `dent_sp_top` was:
 Shipped **take 1 of 3**. Take 1 repeated the waist buckle on the plume and drew four fingers plus a thumb. Re-roll 1 (take 2) retained both details and turned the glass into regular diamonds. Re-roll 2 (take 3) also retained both details. Take 1 had the clearest irregular glass shards. The cutter starts the tail immediately below the duplicate buckle. The open hand retains its thumb. The torso is deeper than the plate's top-view panel.
 
 All six parts share a scale of 165 / 317. The raw 317 px head width sets the shipped width to the old sideways helmet's 165 px height. Tight dimensions in source reading order are 165 × 183, 270 × 187, 216 × 96, 190 × 101, 242 × 127 and 138 × 196 px. Median part height is 155 px. The assembly uses the same elbow and shoulder pivots recorded in `parts.json`.
+
+## 55° flight and action references in input order
+
+1. `C:/Users/kazda/kiro/gtai-masters/n20/concepts/dent_a.png`
+2. `C:/Users/kazda/kiro/gtai-art/library/rounds/20261109-2205/out/dent_act_55.png`
+3. `C:/Users/kazda/kiro/gtai-art/library/refs/camera_guide_55.png`
+
+## Flight at 55°
+
+`dent_sp_fly_55` shipped take 1 of 1, zero re-rolls. All twenty figures have the belt-up silhouette, cracked visor, crash-test discs and glass plume. The plate has a longer, more continuous trail. The forward dive is more upright in the front view than in profile.
+
+`ghost_pack.py --k=1` produced 267 × 221 px cells with a median figure height of 201.5 px. The profile hover head measures 77 px on the packed texture at tight-crop scanline 38 (alpha ≥ 128). Median hover height is 212 px. Both 55° proof boards use 86.4 / 212 game pixels per atlas pixel.
