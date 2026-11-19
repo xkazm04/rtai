@@ -269,6 +269,11 @@
     "counts": "3",
     "fig_h": 165,
     "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/mini_nuke_p55_left_key.png"
+   },
+   "rivet_eq_rocket_launcher_left": {
+    "counts": "3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/rocket_launcher_p55_left_key.png"
    }
   },
   "p70": {
@@ -539,6 +544,11 @@
     "counts": "3",
     "fig_h": 165,
     "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/mini_nuke_p70_left_key.png"
+   },
+   "rivet_eq_rocket_launcher_left": {
+    "counts": "3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/rocket_launcher_p70_left_key.png"
    }
   }
  }

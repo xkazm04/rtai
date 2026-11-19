@@ -1669,6 +1669,138 @@
    "seed": null,
    "sha256": "adf371b63128c13a55326dcff25f333bb736312af60d89d2ec27263569836ea4",
    "tool": "Pillow"
+  },
+  "rocket_launcher_p55_diag_original": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/rocket_launcher_p55_diag_original.png",
+   "layout_template": "git:28302bd3c/project/features/characters/art/view/p55/rivet_eq_rocket_launcher_diag.png",
+   "model": "source derivative",
+   "prompt_ref": "tools/art/rocket_launcher_strips.py",
+   "prompt_sha256": "ab53bb686bf7725db6be11c790738a63d80ee4f8c8bc58e189ef147d29fb45f3",
+   "references": [
+    "git:28302bd3c/project/features/characters/art/view/p55/rivet_eq_rocket_launcher_diag.png"
+   ],
+   "seed": null,
+   "sha256": "59b3382357a8ae5dd9cdb1388dbe0e2e65806993889130ce643adaaaae5ad8bc",
+   "tool": "Pillow"
+  },
+  "rocket_launcher_p55_diag_original_dark": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/rocket_launcher_p55_diag_original_dark.png",
+   "layout_template": "git:28302bd3c/project/features/characters/art/view/p55/rivet_eq_rocket_launcher_diag_noflash.png",
+   "model": "source derivative",
+   "prompt_ref": "tools/art/rocket_launcher_strips.py",
+   "prompt_sha256": "ab53bb686bf7725db6be11c790738a63d80ee4f8c8bc58e189ef147d29fb45f3",
+   "references": [
+    "git:28302bd3c/project/features/characters/art/view/p55/rivet_eq_rocket_launcher_diag_noflash.png"
+   ],
+   "seed": null,
+   "sha256": "f3c649fef5633c4df73a088e2a79f586e30e6a27c8471a3fb24086959c290753",
+   "tool": "Pillow"
+  },
+  "rocket_launcher_p55_left_key": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/rocket_launcher_p55_left_key.png",
+   "layout_template": "masters:n19/guns/masters/rocket_launcher_p55_left_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/rocket_launcher_p55_left.txt",
+   "prompt_sha256": "f64ccc7524aa9afa29b4af502ea702d5b1f9d9bd34bb6c95501420ba0f36e895",
+   "references": [
+    "masters:n19/guns/masters/rocket_launcher_p55_left_raw.png"
+   ],
+   "seed": null,
+   "sha256": "2d931cce7d7bd42a66e3fb6cb242fac771f6f8428ccbb65e0f0d711d1e545872",
+   "tool": "Pillow"
+  },
+  "rocket_launcher_p55_left_raw": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/rocket_launcher_p55_left_raw.png",
+   "layout_template": "masters:n19/guns/masters/rocket_launcher_p55_ref.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/rocket_launcher_p55_left.txt",
+   "prompt_sha256": "f64ccc7524aa9afa29b4af502ea702d5b1f9d9bd34bb6c95501420ba0f36e895",
+   "references": [
+    "masters:n19/guns/masters/rocket_launcher_p55_ref.png"
+   ],
+   "seed": null,
+   "sha256": "f80d1cd2ef38d38b59f00ad67c42e0b6e38279b2600f07d8e374dd359f63d84f",
+   "tool": "image_gen"
+  },
+  "rocket_launcher_p55_ref": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/rocket_launcher_p55_ref.png",
+   "layout_template": "project/features/characters/art/view/p55/rivet_eq_rocket_launcher.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/rocket_launcher_p55_left.txt",
+   "prompt_sha256": "f64ccc7524aa9afa29b4af502ea702d5b1f9d9bd34bb6c95501420ba0f36e895",
+   "references": [
+    "project/features/characters/art/view/p55/rivet_eq_rocket_launcher.png",
+    "project/features/characters/art/view/p55/rivet_eq_rocket_launcher_diag_noflash.png",
+    "project/features/characters/art/view/p55/rivet_eq_assault_rifle_left.png",
+    "project/features/combat/weapons/art/rocket_launcher/held.png"
+   ],
+   "seed": null,
+   "sha256": "931960fe3274fd63677c0fc1d31898a1ce765830a7a2ca529dc81fc61a83d77b",
+   "tool": "Pillow"
+  },
+  "rocket_launcher_p70_diag_original": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/rocket_launcher_p70_diag_original.png",
+   "layout_template": "git:28302bd3c/project/features/characters/art/view/p70/rivet_eq_rocket_launcher_diag.png",
+   "model": "source derivative",
+   "prompt_ref": "tools/art/rocket_launcher_strips.py",
+   "prompt_sha256": "ab53bb686bf7725db6be11c790738a63d80ee4f8c8bc58e189ef147d29fb45f3",
+   "references": [
+    "git:28302bd3c/project/features/characters/art/view/p70/rivet_eq_rocket_launcher_diag.png"
+   ],
+   "seed": null,
+   "sha256": "82700a0b50e429c7e64c742acf6736f978ee01cee0fa22c18f601ae973c27a0e",
+   "tool": "Pillow"
+  },
+  "rocket_launcher_p70_left_key": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/rocket_launcher_p70_left_key.png",
+   "layout_template": "masters:n19/guns/masters/rocket_launcher_p70_left_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/rocket_launcher_p70_left.txt",
+   "prompt_sha256": "3cac23f6ffe29585749822d1ebc5a26bdeab386d8a4a4bd7905c8f6af0e6a686",
+   "references": [
+    "masters:n19/guns/masters/rocket_launcher_p70_left_raw.png"
+   ],
+   "seed": null,
+   "sha256": "257a0f513a229d0810305d8a050b31081c326ea82293b33aff64f71b876a41ad",
+   "tool": "Pillow"
+  },
+  "rocket_launcher_p70_left_raw": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/rocket_launcher_p70_left_raw.png",
+   "layout_template": "masters:n19/guns/masters/rocket_launcher_p70_ref.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/rocket_launcher_p70_left.txt",
+   "prompt_sha256": "3cac23f6ffe29585749822d1ebc5a26bdeab386d8a4a4bd7905c8f6af0e6a686",
+   "references": [
+    "masters:n19/guns/masters/rocket_launcher_p70_ref.png"
+   ],
+   "seed": null,
+   "sha256": "6b0c2485a41e4e6aa5296c1d0db866c02130d1b4ab13c3ff1110028561a129cf",
+   "tool": "image_gen"
+  },
+  "rocket_launcher_p70_ref": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/rocket_launcher_p70_ref.png",
+   "layout_template": "project/features/characters/art/view/p70/rivet_eq_rocket_launcher.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/rocket_launcher_p70_left.txt",
+   "prompt_sha256": "3cac23f6ffe29585749822d1ebc5a26bdeab386d8a4a4bd7905c8f6af0e6a686",
+   "references": [
+    "project/features/characters/art/view/p70/rivet_eq_rocket_launcher.png",
+    "project/features/characters/art/view/p70/rivet_eq_rocket_launcher_diag_noflash.png",
+    "project/features/characters/art/view/p70/rivet_eq_assault_rifle_left.png",
+    "project/features/combat/weapons/art/rocket_launcher/held.png"
+   ],
+   "seed": null,
+   "sha256": "7c3e7289d63e6fe007f9ccc04c9f7ef928be9959635f9310d9807491de4c9a4e",
+   "tool": "Pillow"
   }
  }
 }
