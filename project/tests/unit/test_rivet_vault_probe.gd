@@ -117,3 +117,13 @@ func test_circle_just_outside_a_face_is_clear_when_distance_rounds_to_radius() -
 	# The face is at -0.375. At one float past 0.125, subtracting the face still yields 0.5.
 	var outside: Vector2 = Vector2(0.125 + pow(2.0, -26), 0)
 	assert_true(probe.clear_at(outside, 0.5))
+
+
+func test_one_float_inside_either_face_is_solid() -> void:
+	probe.boxes.clear()
+	probe.boxes[Rect2(-0.25, -0.25, 1, 1)] = "cover_low"
+	# Each near face is 0.25 m from the origin. The float below 0.75 is one step inward.
+	var step_in: float = pow(2.0, -24)
+	for normal: Vector2 in [Vector2.UP, Vector2.LEFT]:
+		assert_true(probe.clear_at(normal * 0.75, 0.5))
+		assert_false(probe.clear_at(normal * (0.75 - step_in), 0.5))
