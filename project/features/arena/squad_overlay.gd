@@ -15,15 +15,19 @@ const COLORS: Dictionary[String, Color] = {
 
 var _host: ArenaRigs
 var _stage: ArenaStage
+var _world: Node2D
+var _unit: float
 var _ink: Node2D = Node2D.new()
 
 
-static func attach(host: ArenaRigs, stage: ArenaStage) -> void:
+static func attach(world: Node2D, stage: ArenaStage, host: ArenaRigs = null) -> void:
 	if OS.is_debug_build() and ArenaArgs.parse().has("--squad-overlay"):
 		var overlay: SquadOverlay = SquadOverlay.new()
 		overlay._host = host
 		overlay._stage = stage
-		host.add_child(overlay)
+		overlay._world = world
+		overlay._unit = Ink.PX_PER_M if host == null else SimConst.PX_PER_M
+		world.add_child(overlay)
 
 
 func _ready() -> void:
@@ -37,17 +41,25 @@ func _process(_delta: float) -> void:
 	_ink.queue_redraw()
 
 
+func _anchor(h: Fighter, screen: Transform2D) -> Vector2:
+	if _host == null:
+		return screen * (h.pos * _unit)
+	var rig: CutRig = _host.rigs.rig_for(h.id)
+	if rig == null:
+		rig = _host.robots.rig_for(h.id)
+	if rig == null or not rig.is_visible_in_tree():
+		return Vector2.INF
+	return rig.get_global_transform_with_canvas().origin
+
+
 func _draw_wave() -> void:
-	var screen: Transform2D = _host.rigs.get_global_transform_with_canvas()
+	var screen: Transform2D = _world.get_global_transform_with_canvas()
 	for h: Fighter in _stage.pit.standing:
 		if not h.alive():
 			continue
-		var rig: CutRig = _host.rigs.rig_for(h.id)
-		if rig == null:
-			rig = _host.robots.rig_for(h.id)
-		if rig == null or not rig.is_visible_in_tree():
+		var at: Vector2 = _anchor(h, screen)
+		if not at.is_finite():
 			continue
-		var at: Vector2 = rig.get_global_transform_with_canvas().origin
 		var letter: String = "G"
 		var goal: Vector2 = Vector2.INF
 		var squad: ArenaSquad = _stage.arena.squad_ai
@@ -62,7 +74,7 @@ func _draw_wave() -> void:
 			goal = h.pursuit._goal
 		var color: Color = COLORS[letter]
 		if goal.is_finite():
-			var end: Vector2 = screen * (goal * SimConst.PX_PER_M)
+			var end: Vector2 = screen * (goal * _unit)
 			_ink.draw_line(at, end, Ink.INK, 3.0, true)
 			_ink.draw_line(at, end, color, 1.0, true)
 			_ink.draw_circle(end, 3.0, color, false, 1.3, true)

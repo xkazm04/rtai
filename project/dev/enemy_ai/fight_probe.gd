@@ -3,15 +3,15 @@ extends SceneTree
 ## Like rig_bench, load the world after the -s entry has initialized its autoloads.
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--all", "--encounter", "--seeds", "--out", "--enemy-brain", "--trace", "--horde"
+	"--all", "--encounter", "--seeds", "--out", "--enemy-brain", "--trace", "--horde", "--bot"
 ]
 const RUN_TICKS: int = 2400
 const ENCOUNTERS: PackedStringArray = ["city", "pit", "quest1"]
 
-var selected: PackedStringArray = []
-var seeds: int = 5
-var path: String = ""
 var args: ArenaArgs = ArenaArgs.parse()
+var selected: PackedStringArray
+var seeds: int = args.text("--seeds", "5").to_int()
+var path: String = args.text("--out")
 
 
 func _initialize() -> void:
@@ -19,33 +19,28 @@ func _initialize() -> void:
 
 
 func _parse() -> bool:
-	for key: String in args.values:
-		if key not in KNOWN_FLAGS:
-			return false
-	if args.has("--all") == args.has("--encounter") or args.text("--all") != "":
-		return false
 	selected = ENCOUNTERS if args.has("--all") else PackedStringArray([args.text("--encounter")])
-	var count: String = args.text("--seeds", "5")
-	seeds = count.to_int() if count.is_valid_int() else 0
-	path = args.text("--out")
 	return (
-		selected[0] in ENCOUNTERS
+		args.values.keys().all(func(key: String) -> bool: return key in KNOWN_FLAGS)
+		and args.has("--all") != args.has("--encounter")
+		and args.text("--all") == ""
+		and selected[0] in ENCOUNTERS
 		and seeds > 0
+		and args.text("--seeds", "5").is_valid_int()
 		and path.is_absolute_path()
 		and path.get_extension().to_lower() == "json"
 		and args.text("--enemy-brain", SquadChoice.DEFAULT_BRAIN) in ["guard", "squad", "mixed"]
 		and args.text("--trace") == ""
-		and (not args.has("--horde") or (selected.size() == 1 and selected[0] in ["city", "pit"]))
 		and args.text("--horde") == ""
+		and args.text("--bot", "pit") in ["pit", "gunplay"]
+		and (not selected.has("quest1") or not (args.has("--bot") or args.has("--horde")))
 	)
 
 
 func _run() -> void:
 	if not _parse():
-		printerr(
-			"fight_probe: use --all or --encounter=city|pit|quest1, --out=<absolute.json>",
-			" [--seeds=<positive integer>] [--enemy-brain=guard|squad|mixed] [--trace] [--horde]"
-		)
+		printerr("fight_probe: use --all or --encounter=city|pit|quest1, --out=<absolute.json>")
+		printerr("--seeds=N --enemy-brain=guard|squad|mixed --trace --horde --bot=pit|gunplay")
 		quit(2)
 		return
 	if DirAccess.make_dir_recursive_absolute(path.get_base_dir()) != OK:
@@ -65,16 +60,17 @@ func _run() -> void:
 func _sweep(trace: FileAccess) -> bool:
 	var script: GDScript = load("res://dev/enemy_ai/fight_probe_trial.gd")
 	var runs: Array[Dictionary] = []
-	var valid: bool = true
 	for encounter: String in selected:
 		for i: int in seeds:
 			var trial: Object = script.new()
 			var result: Dictionary = trial.call("run", encounter, 20261103 + i, trace)
 			runs.append(result)
-			valid = valid and result.valid and result.objective_reached
 			var fields: Array = [encounter, result.seed, result.fight.waves_cleared, result.digest]
 			printerr("fight_probe %s %d waves %d digest %s" % fields)
-	return _write(runs, trace) and valid
+	var complete: bool = runs.all(
+		func(r: Dictionary) -> bool: return r.valid and r.objective_reached
+	)
+	return _write(runs, trace) and complete
 
 
 func _write(runs: Array[Dictionary], trace: FileAccess) -> bool:
@@ -84,6 +80,7 @@ func _write(runs: Array[Dictionary], trace: FileAccess) -> bool:
 		"tick_hz": 60,
 		"brain": args.text("--enemy-brain", SquadChoice.DEFAULT_BRAIN),
 		"horde": args.has("--horde"),
+		"bot": args.text("--bot", "pit"),
 		"runs": runs,
 		"trace": trace.get_path().get_file() if trace != null else null,
 		"tick_columns":

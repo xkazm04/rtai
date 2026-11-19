@@ -75,7 +75,7 @@ func attach(p_stage: CollectCallStage, view: CollectCallView, ctx: WorldContext)
 		return true
 	_pit = arena_stage.pit
 	_add_robots(layer, p_stage.arena, view.blood)
-	SquadOverlay.attach(self, arena_stage)
+	SquadOverlay.attach(rigs, arena_stage, self)
 	for t: ArenaTargets.Target in arena_stage.targets.targets:
 		var look: Vector2i = ReactLineBot.look_of(t.spawn.id)
 		if look.x >= 0:

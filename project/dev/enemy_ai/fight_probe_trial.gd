@@ -4,7 +4,6 @@ extends RefCounted
 
 const DOCK: String = "Dock 9 bonded storage"
 const PIT_TICKS: int = 2400
-const QUEST_LIMIT: int = CollectCallPlay.TIMEOUT_TICKS
 
 var session: ArenaSession
 var quest: CollectCallPlay
@@ -33,7 +32,11 @@ func run(encounter: String, world_seed: int, trace: FileAccess) -> Dictionary:
 			session.stage.pit.horde()
 			stage.arena.rivet.max_hp *= ArenaPit.HORDE_RIVET_HP
 			stage.arena.rivet.hp = stage.arena.rivet.max_hp
-		session.world.loop().set_input(ArenaPitBot.new(session.stage, session.actions))
+		var bot: InputSource = ArenaPitBot.new(session.stage, session.actions)
+		if ArenaArgs.parse().text("--bot") == "gunplay":
+			var pistol: WeaponSpec = WeaponTable.shipped().weapon(&"pistol")
+			bot = GunplayBot.new(session.stage, session.actions, pistol.range_m)
+		session.world.loop().set_input(bot)
 	var arena: FightProbeArena = FightProbeArena.attach(stage.arena)
 	meter = FightProbeSample.new(arena)
 	meter.trace = trace
@@ -77,7 +80,7 @@ func _wave(marker: StringName, ordinal: int) -> void:
 
 
 func _play() -> void:
-	var limit: int = PIT_TICKS if session != null else QUEST_LIMIT
+	var limit: int = PIT_TICKS if session != null else CollectCallPlay.TIMEOUT_TICKS
 	for i: int in limit:
 		if session != null:
 			session.step()
@@ -126,7 +129,7 @@ func _result() -> Dictionary:
 		"encounter": meter.encounter,
 		"objective": DOCK if dock else "first three pit waves",
 		"seed": meter.world_seed,
-		"tick_budget": QUEST_LIMIT if dock else PIT_TICKS,
+		"tick_budget": CollectCallPlay.TIMEOUT_TICKS if dock else PIT_TICKS,
 		"start_tick": first_tick,
 		"last_tick": stage.tick,
 		"measured_ticks": meter.ticks,
