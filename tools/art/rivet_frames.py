@@ -177,6 +177,14 @@ def _manifest(path: str, only: str = "", no_rim: bool = False) -> None:
         for name, row in rows.items():
             if not name.startswith(only):
                 continue
+            if "mirror_from" in row:
+                sys.path.insert(0, str(Path(__file__).resolve().parent))
+                from left_from_right import build
+                folder = Path(out) / art
+                recipe = Path(path).parent / row["regions"]
+                facings = json.loads(recipe.read_text())[art]
+                build(folder / row["mirror_from"], folder / (name + ".png"), facings)
+                continue
             argv = [str(Path(lib) / row["sheet"]), f"{out}/{art}/{name}.png", row["counts"]]
             if "cc" in row:
                 argv.append(f"--cc={row['cc']}")

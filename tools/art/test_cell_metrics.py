@@ -3,6 +3,7 @@ import unittest
 import numpy as np
 
 from cell_metrics import compare, figure
+from cell_shape import shape
 
 
 class CellMetricsTest(unittest.TestCase):
@@ -14,8 +15,15 @@ class CellMetricsTest(unittest.TestCase):
         frame[5:53, 80:85] = [86, 92, 100, 255]
         frame[49:55, 53:111] = [86, 92, 100, 255]
         frame[10:20, 114:128] = [250, 210, 99, 255]
-        height, rgb, _ = figure(frame, 75)
+        height, rgb, sample = figure(frame, 75)
         self.assertEqual(height, 70)
+        gun_mask = np.zeros(frame.shape[:2], bool)
+        gun_mask[:, 63:] = True
+        measured = shape(frame, 75, height, sample, gun_mask)
+        self.assertAlmostEqual(measured["helmet_ratio"], 25/70, places=4)
+        self.assertAlmostEqual(measured["width_ratio"], 25/70, places=4)
+        self.assertGreater(measured["mean_c"], 0)
+        self.assertLess(measured["mean_l"], 100)
         np.testing.assert_array_equal(rgb, [133, 91, 66])
 
     def test_a_camera_facing_barrel_can_extend_below_both_boots(self):

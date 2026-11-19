@@ -32,7 +32,7 @@ func _ready() -> void:
 	_pad.actions = session.actions
 	_arena = session.stage.arena
 	if boss == &"":
-		_arena.rivet.pos = session.plan.area("boulevard").rect.end - Vector2(6.0, 6.0)
+		_arena.rivet.pos = session.plan.area("boulevard").rect.get_center()
 	var carry: RivetCarry = session.pilot.carry
 	if carry == null:
 		carry = RivetCarry.new(
@@ -125,18 +125,18 @@ func _log_magazine() -> void:
 			Log.info("turn", "placeholder held: " + str((node as RivetMagView)._held))
 
 
-func _save(stem: String, crop: bool) -> void:
+func _save(stem: String, still: bool) -> void:
 	await RenderingServer.frame_post_draw
 	var image: Image = get_viewport().get_texture().get_image()
 	if boss != &"" and not clip and stem.ends_with("_fire"):
 		if image.save_png(out_dir.path_join(stem + "_arena.png")) != OK:
 			_failed = true
-	if crop:
-		var rig: CutRig = _game.cast.rigs.rig_for(_arena.rivet.id)
-		var scale_px: Vector2 = Vector2(image.get_size()) / get_viewport().get_visible_rect().size
-		var foot: Vector2 = rig.get_global_transform_with_canvas().origin * scale_px
-		var offset: Vector2i = Vector2i(102, 94 if view_id == "top" else 164)
-		image = image.get_region(Rect2i(Vector2i(foot) - offset, Vector2i(204, 194)))
+	var rig: CutRig = _game.cast.rigs.rig_for(_arena.rivet.id)
+	var scale_px: Vector2 = Vector2(image.get_size()) / get_viewport().get_visible_rect().size
+	var foot: Vector2 = rig.get_global_transform_with_canvas().origin * scale_px
+	var size: Vector2i = Vector2i(204, 194) if still else Vector2i(640, 360)
+	var base: int = (94 if view_id == "top" else 164) if still else 212
+	image = image.get_region(Rect2i(Vector2i(foot) - Vector2i(size.x >> 1, base), size))
 	if image.save_png(out_dir.path_join(stem + ".png")) != OK:
 		Log.error("turn", "cannot write " + stem)
 		_failed = true
