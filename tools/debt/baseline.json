@@ -323,7 +323,8 @@
         "2026-11-10: n11 merge: n11-hero dev films and ghost tooling on top of n12+tools (files_past_soft_cap 66 -> 66)",
         "2026-11-10: n11 merge: n11-combat dev films and body probes on top of n12+tools+hero (files_past_soft_cap 66 -> 66)",
         "2026-11-18: n18 police item 6/7: --sim-police in LaunchArgs.KNOWN_FLAGS (the brief names the flag there; launch_args.gd 200 -> 201) and dev/sim/heat_cost.gd (the heat 3 cost probe) (files_past_soft_cap 66 -> 67)",
-        "2026-11-18: n19 ai: --enemy-brain flag line in KNOWN_FLAGS (shared append-only registry) (files_past_soft_cap 66 -> 66)"
+        "2026-11-18: n19 ai: --enemy-brain flag line in KNOWN_FLAGS (shared append-only registry) (files_past_soft_cap 66 -> 66)",
+        "2026-11-19: A6b shared launch flags are append-only: restore the save-cross comment verbatim and append squad-overlay (202 to 203 lines). (files_past_soft_cap 66 -> 66)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 261,
@@ -331,7 +332,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 237,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 202,
+        "project/boot/launch_args.gd": 203,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,

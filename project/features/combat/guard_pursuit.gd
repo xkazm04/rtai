@@ -19,6 +19,10 @@ func _init(map: GuardRouteMap) -> void:
 	_map = map
 
 
+func blocked_goal() -> Vector2:
+	return _goal if _blocked else Vector2.INF
+
+
 ## True while rounding cover (or holding at an unreachable target). A locked burst calls
 ## this only once it finishes, so turning a corner cannot redirect rounds already committed.
 func advance(g: Fighter, target: Vector2, speed: float) -> bool:

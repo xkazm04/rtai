@@ -7,9 +7,9 @@ const S := EnemyAgent.State
 const LETTER: Dictionary[int, String] = {S.ENGAGE: "E", S.COVER: "C", S.FLANK: "F", S.PANIC: "P"}
 const COLORS: Dictionary[String, Color] = {
 	"E": Color("#ffebaa"),
-	"C": Color("#70e5e0"),
-	"F": Color("#ffb668"),
-	"P": Color("#ff90ac"),
+	"C": Color("#b4e08a"),
+	"F": Color("#f2b84b"),
+	"P": Color("#d2a8ff"),
 	"G": Color.WHITE,
 }
 
@@ -43,7 +43,11 @@ func _process(_delta: float) -> void:
 
 func _anchor(h: Fighter, screen: Transform2D) -> Vector2:
 	if _host == null:
-		return screen * (h.pos * _unit)
+		var p: Vector2 = h.pos
+		var view: ViewMode = ViewMode.shared()
+		if view.cards and StreetQuestCards.GUARD.has(view.art) and h.kind != Fighter.Kind.BOSS:
+			p.y -= StreetQuestCards.body_m() * (StreetQuestCards.FOOT_Y - 0.5) / view.ground_k()
+		return screen * (p * _unit)
 	var rig: CutRig = _host.rigs.rig_for(h.id)
 	if rig == null:
 		rig = _host.robots.rig_for(h.id)
@@ -72,12 +76,11 @@ func _draw_wave() -> void:
 			if not squad.minds.has(h.id):
 				continue
 			var mind: SquadMind = squad.minds[h.id]
-			letter = LETTER[mind.motion]
-			if mind._destination.is_finite():
-				goal = mind.agent.goal
-		elif h.pursuit != null and h.pursuit._blocked:
-			goal = h.pursuit._goal
-		var color: Color = COLORS[letter]
+			letter = LETTER.get(mind.motion, "?")
+			goal = mind.destination()
+		elif h.pursuit != null:
+			goal = h.pursuit.blocked_goal()
+		var color: Color = COLORS.get(letter, Color.WHITE)
 		if goal.is_finite():
 			var end: Vector2 = screen * (goal * _unit)
 			_ink.draw_line(at, end, Ink.INK, 3.0, true)

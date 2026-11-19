@@ -40,6 +40,10 @@ func available(h: Fighter, arena: CombatArena) -> bool:
 	return arena.tick >= _return_until and h.cooldown <= w.cooldown_ticks and agent.cooldown == 0
 
 
+func destination() -> Vector2:
+	return agent.goal if _destination.is_finite() else Vector2.INF
+
+
 func velocity(pit: EnemyPit, map: GuardRouteMap, fallen: float) -> Vector2:
 	var e: EnemyAgent = agent
 	_blind = 0 if e.sees else _blind + 1
