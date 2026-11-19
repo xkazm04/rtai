@@ -14,6 +14,9 @@ extends RefCounted
 
 ## Screen angle (deg, y down) of the drawn gun per diagonal cell, keyed "<art>/<gun>".
 const DEG: Dictionary[String, PackedFloat32Array] = {
+	"p70/assault_rifle": [23.0, -43.0, 155.0, -142.0],
+	"p70/ray_gun": [36.0, -38.0, 144.0, -153.0],
+	"p70/homing_shard": [27.0, -41.0, 144.0, -150.0],
 	"p70/pistol": [32.0, -25.0, 146.0, -150.0],
 	"p70/machine_pistol": [40.0, -31.0, 139.0, -149.0],
 	# the barrel's axis by eye at 2x (+-5 deg): these flashes fan off the barrel, the tool misreads
@@ -22,8 +25,12 @@ const DEG: Dictionary[String, PackedFloat32Array] = {
 	"p70/hand_cannon": [38.0, -33.0, 124.0, -149.0],
 	"p70/gloria": [35.0, -41.0, 150.0, -138.0],
 	"p70/electro_gun": [24.0, -41.0, 150.0, -139.0],
+	"p70/mini_nuke": [28.0, -26.0, 154.0, -150.0],
 	"p70/rocket_launcher": [18.0, -39.0, 161.0, -151.0],
 	# p55 (it458/it462): barrel axes by eye at 2x (pistol, machine pistol: the flash read)
+	"p55/assault_rifle": [27.0, -30.0, 150.0, -151.0],
+	"p55/ray_gun": [32.0, -36.0, 148.0, -148.0],
+	"p55/homing_shard": [29.0, -27.0, 153.0, -153.0],
 	"p55/pistol": [37.0, -42.0, 145.0, -138.0],
 	"p55/machine_pistol": [39.0, -40.0, 137.0, -145.0],
 	"p55/plasma_rifle": [27.0, -45.0, 149.0, -139.0],
@@ -31,6 +38,7 @@ const DEG: Dictionary[String, PackedFloat32Array] = {
 	"p55/hand_cannon": [34.0, -36.0, 146.0, -146.0],
 	"p55/gloria": [32.0, -52.0, 145.0, -146.0],
 	"p55/electro_gun": [27.0, -34.0, 145.0, -145.0],
+	"p55/mini_nuke": [27.0, -24.0, 157.0, -151.0],
 	"p55/rocket_launcher": [23.0, -34.0, 159.0, -152.0],
 }
 ## The helmet's centre x per diagonal cell (strip px; the strip's cells centre theirs at ~141 of
@@ -38,6 +46,9 @@ const DEG: Dictionary[String, PackedFloat32Array] = {
 ## 191), so each cell is seated on his helmet, not on the canvas centre (a 20 px sideways pop at
 ## 64 px/m on the shot tick).
 const HELMET_X: Dictionary[String, PackedFloat32Array] = {
+	"p70/assault_rifle": [166.0, 77.0, 161.0, 277.5],
+	"p70/ray_gun": [177.5, 56.0, 174.5, 176.0],
+	"p70/homing_shard": [118.0, 117.5, 116.5, 119.0],
 	"p70/pistol": [140.5, 93.5, 140.5, 191.0],
 	"p70/machine_pistol": [127.5, 89.5, 126.5, 163.5],
 	# the dome's run centre 12-28 px under its top (a raised gun or pack widens the widest run)
@@ -46,8 +57,12 @@ const HELMET_X: Dictionary[String, PackedFloat32Array] = {
 	"p70/hand_cannon": [142.0, 97.0, 141.5, 186.5],
 	"p70/gloria": [160.5, 129.8, 160.5, 192.0],
 	"p70/electro_gun": [112.5, 77.0, 111.5, 148.0],
+	"p70/mini_nuke": [110.5, 111.0, 109.5, 108.5],
 	"p70/rocket_launcher": [130.0, 90.2, 130.0, 165.5],
 	# p55: the dome's run centre as above
+	"p55/assault_rifle": [127.0, 123.5, 122.5, 123.0],
+	"p55/ray_gun": [111.0, 103.5, 100.5, 99.0],
+	"p55/homing_shard": [109.0, 106.5, 103.0, 106.0],
 	"p55/pistol": [97.5, 66.5, 96.5, 126.5],
 	"p55/machine_pistol": [99.5, 65.0, 101.5, 135.0],
 	"p55/plasma_rifle": [133.0, 98.2, 133.0, 169.2],
@@ -55,13 +70,17 @@ const HELMET_X: Dictionary[String, PackedFloat32Array] = {
 	"p55/hand_cannon": [113.0, 80.0, 116.5, 149.5],
 	"p55/gloria": [114.0, 90.0, 110.5, 135.0],
 	"p55/electro_gun": [96.8, 67.2, 97.0, 126.0],
-	"p55/rocket_launcher": [83.5, 51.5, 88.5, 119.5],
+	"p55/mini_nuke": [105.0, 103.0, 101.0, 101.5],
+	"p55/rocket_launcher": [83.5, 83.5, 88.5, 119.5],
 }
 ## The boots' pad above the cell bottom (strip px), keyed "<art>/<gun>": cell height - 1 - boot row
 ## (the pistol's cells 0/2 at row 177 and 1/3 at 179 of 180). The other guns ship the asset lane's
 ## TALL cells (it463: the drawn cell + 60 clear rows, so a down-aimed flash is not cut at the cell
 ## floor), so their pads are about 60 px more (the machine pistol's boots at 172 of 235).
 const FOOT_PX: Dictionary[String, float] = {
+	"p70/assault_rifle": 2.0,
+	"p70/ray_gun": 2.0,
+	"p70/homing_shard": 2.0,
 	"p70/pistol": 1.0,
 	"p70/machine_pistol": 62.0,
 	"p70/plasma_rifle": 62.0,
@@ -69,8 +88,12 @@ const FOOT_PX: Dictionary[String, float] = {
 	"p70/hand_cannon": 61.5,
 	"p70/gloria": 62.0,
 	"p70/electro_gun": 61.0,
+	"p70/mini_nuke": 2.0,
 	"p70/rocket_launcher": 62.0,
 	# p55: the delivered cells (no tall cut), boots at row 167-171 of 170-172
+	"p55/assault_rifle": 2.0,
+	"p55/ray_gun": 2.0,
+	"p55/homing_shard": 2.0,
 	"p55/pistol": 2.0,
 	"p55/machine_pistol": 2.0,
 	"p55/plasma_rifle": 1.0,
@@ -78,6 +101,7 @@ const FOOT_PX: Dictionary[String, float] = {
 	"p55/hand_cannon": 1.5,
 	"p55/gloria": 2.0,
 	"p55/electro_gun": 2.0,
+	"p55/mini_nuke": 2.0,
 	"p55/rocket_launcher": 2.0,
 }
 
@@ -87,8 +111,20 @@ const FIT_TOL: float = PI / 8.0
 static var enabled: bool = true
 
 
+## The p70 rifle camera flash extends below the feet, leaving 77 texture pixels of pad.
+static func equipped_pad(path: String) -> float:
+	return (
+		77.0 if path == RivetStrips.DIR + "p70/rivet_eq_assault_rifle.png" else RivetFrames.PAD_PX
+	)
+
+
+static func equipped_path(art: String, weapon: StringName) -> String:
+	return "%s%s/rivet_eq_%s" % [RivetStrips.DIR, art, WeaponArtKey.of(weapon)]
+
+
 ## True when `weapon` fires drawn diagonal cells under `art` (a gun in DEG with its strip shipped).
 static func draws(art: String, weapon: StringName) -> bool:
+	weapon = WeaponArtKey.of(weapon)
 	if not enabled or not DEG.has(art + "/" + String(weapon)):
 		return false
 	return RivetStrips.has_file(
@@ -119,7 +155,12 @@ static func seat(card: Sprite2D, cell: int) -> void:
 ## True when `rig`'s aim (none: the facing's) lies within FIT_TOL of the drawn diagonal gun at `o`.
 static func fits(rig: CutRig, weapon: StringName, o: int, art: String) -> bool:
 	var aim: float = RivetStrips.aim_of(rig)
-	return is_nan(aim) or absf(angle_difference(aim, gun_rad(weapon, o, art))) <= FIT_TOL
+	return is_nan(aim) or angles_fit(aim, gun_rad(weapon, o, art))
+
+
+## Aim angles on either edge of the half octant still use its painted gun.
+static func angles_fit(aim: float, drawn: float) -> bool:
+	return absf(angle_difference(aim, drawn)) <= FIT_TOL
 
 
 ## True for a gun's diagonal strip while `--rivet-gun-diag=off` holds it off.
@@ -136,6 +177,7 @@ static func foot_or(path: String, art: String, fallback: float) -> float:
 ## The drawn gun's screen angle (rad) at octant `o`: its diagonal cell's where drawn, else the
 ## facing fire cell's (the camera 90, the sides 0 / 180).
 static func gun_rad(weapon: StringName, o: int, art: String) -> float:
+	weapon = WeaponArtKey.of(weapon)
 	var c: int = RivetStrips.DIAG_CELL[o]
 	if c < 0 or not RivetStrips.diag or not draws(art, weapon):
 		return deg_to_rad(90.0 if o == 2 else 180.0 * RivetFrames.LEFT[o])

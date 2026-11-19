@@ -55,10 +55,11 @@ func test_the_drawn_reload_ships_for_each_family_at_both_pitches() -> void:
 	var rig: CutRig = _rig()
 	rig.reload_k = 1.5
 	for art: String in ["p70", "p55"]:
-		for weapon: StringName in [&"pistol", &"plasma_rifle", &"gatling"]:
-			var eq: String = RivetStrips.DIR + art + "/rivet_eq_" + String(weapon) + ".png"
+		for weapon: StringName in [&"pistol", &"plasma_rifle", &"gatling", &"assault-rifle"]:
+			var key: String = String(WeaponArtKey.of(weapon))
+			var eq: String = RivetStrips.DIR + art + "/rivet_eq_" + key + ".png"
 			var got: String = RivetReload.path_or(rig, art, weapon, eq)
-			assert_eq(got.get_file(), RivetReload.PREFIX + String(weapon) + ".png", art)
+			assert_eq(got.get_file(), RivetReload.PREFIX + key + ".png", art)
 			var tex: Texture2D = load(got) as Texture2D
 			var left: Texture2D = load(got.replace(".png", "_left.png")) as Texture2D
 			assert_eq(tex.get_width() % 8, 0, "%s %s: 8 cells" % [art, weapon])

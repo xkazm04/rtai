@@ -1,0 +1,77 @@
+**51 hole cells across 18 weapons and 54 pitch rows.** The assault rifle accounts for 18. All four melee weapons have complete strike and windup cells at both raised pitches. The rocket launcher lacks diagonal back-blast at both p55 and p70.
+
+**Committed** the [text matrix](C:/Users/kazda/kiro/gtai-wt/n19-guns/evidence/arsenal/matrix_before.txt) and [JSON matrix with reasons](C:/Users/kazda/kiro/gtai-wt/n19-guns/evidence/arsenal/matrix_before.json) in `8fb10949d`. The [audit, runner, helpers, and allowlist](C:/Users/kazda/kiro/gtai-wt/n19-guns/project/dev/rivet_arsenal) and [GUT test](C:/Users/kazda/kiro/gtai-wt/n19-guns/project/tests/unit/test_arsenal_audit.gd) are staged with their UIDs.
+
+| Check | Result |
+|---|---|
+| `node tools/tests/run_unit.mjs --select=test_arsenal_audit` | 5 passed, 0 failed, 0 skipped |
+| `node tools/dev/run.mjs arsenal_audit_run` with `--out` and `--txt` | Exit 0. Two headless runs produced byte-identical JSON and text. |
+| `node tools/lint/lint.mjs` | 18 of 19 passed. Only `dev_loc` failed, increasing from 22,724 to 23,246 lines. |
+| Audit commit and mutation | The commit hook blocked the audit commit. The mutation runner requires the audit at `HEAD`, so there is no killed/(killed+survived) result. |
+
+**Pending approval:** recording the 522-line increase in `tools/debt/baseline.json` requires an edit outside the guns lane.
+
+The reload column reflects the active renderer. At `top`, the pistol, machine pistol, hand cannon, and plasma rifle have real magazine art. At raised pitches, the renderer hides that part and needs dedicated reload strips. The machine pistol and hand cannon lack those strips.
+
+```text
+Rivet arsenal    . ok    X HOLE    - n/a
+
+weapon           pitch  held  fire8  left  muzzle  reload  recoil  casing  pickup  strike  windup  left_strike  left_windup  holes
+assault-rifle    top    X     -      -     -       X       .       X       X       -       -       -            -            18
+                 p55    X     X      X     X       X       .       X       X       -       -       -            -
+                 p70    X     X      X     X       X       .       X       X       -       -       -            -
+chainsaw         top    .     -      -     -       -       -       -       .       -       -       -            -            0
+                 p55    .     -      .     -       -       -       -       .       .       .       .            .
+                 p70    .     -      .     -       -       -       -       .       .       .       .            .
+electro_baton    top    .     -      -     -       -       -       -       .       -       -       -            -            0
+                 p55    .     -      .     -       -       -       -       .       .       .       .            .
+                 p70    .     -      .     -       -       -       -       .       .       .       .            .
+electro_gun      top    .     -      -     -       X       .       -       .       -       -       -            -            3
+                 p55    .     .      .     .       X       .       -       .       -       -       -            -
+                 p70    .     .      .     .       X       .       -       .       -       -       -            -
+flamethrower     top    .     -      -     -       -       .       -       .       -       -       -            -            2
+                 p55    .     .      X     .       -       .       -       .       -       -       -            -
+                 p70    .     .      X     .       -       .       -       .       -       -       -            -
+gatling          top    .     -      -     -       -       .       .       .       -       -       -            -            2
+                 p55    .     .      X     .       -       .       .       .       -       -       -            -
+                 p70    .     .      X     .       -       .       .       .       -       -       -            -
+gloria           top    .     -      -     -       -       .       -       .       -       -       -            -            2
+                 p55    .     .      X     .       -       .       -       .       -       -       -            -
+                 p70    .     .      X     .       -       .       -       .       -       -       -            -
+hand_cannon      top    .     -      -     -       .       .       .       .       -       -       -            -            2
+                 p55    .     .      .     .       X       .       .       .       -       -       -            -
+                 p70    .     .      .     .       X       .       .       .       -       -       -            -
+homing_shard     top    .     -      -     -       X       .       -       .       -       -       -            -            5
+                 p55    .     X      .     .       X       .       -       .       -       -       -            -
+                 p70    .     X      .     .       X       .       -       .       -       -       -            -
+katana           top    .     -      -     -       -       -       -       .       -       -       -            -            0
+                 p55    .     -      .     -       -       -       -       .       .       .       .            .
+                 p70    .     -      .     -       -       -       -       .       .       .       .            .
+machine_pistol   top    .     -      -     -       .       .       .       .       -       -       -            -            2
+                 p55    .     .      .     .       X       .       .       .       -       -       -            -
+                 p70    .     .      .     .       X       .       .       .       -       -       -            -
+mini_nuke        top    .     -      -     -       -       .       -       .       -       -       -            -            4
+                 p55    .     X      X     .       -       .       -       .       -       -       -            -
+                 p70    .     X      X     .       -       .       -       .       -       -       -            -
+molotov          top    .     -      -     -       -       .       -       .       -       -       -            -            0
+                 p55    .     -      .     -       -       .       -       .       -       -       -            -
+                 p70    .     -      .     -       -       .       -       .       -       -       -            -
+pistol           top    .     -      -     -       .       .       .       .       -       -       -            -            0
+                 p55    .     .      .     .       .       .       .       .       -       -       -            -
+                 p70    .     .      .     .       .       .       .       .       -       -       -            -
+plasma_rifle     top    .     -      -     -       .       .       -       .       -       -       -            -            2
+                 p55    .     .      X     .       .       .       -       .       -       -       -            -
+                 p70    .     .      X     .       .       .       -       .       -       -       -            -
+plasma_sword     top    .     -      -     -       -       -       -       .       -       -       -            -            0
+                 p55    .     -      .     -       -       -       -       .       .       .       .            .
+                 p70    .     -      .     -       -       -       -       .       .       .       .            .
+ray_gun          top    .     -      -     -       X       .       -       .       -       -       -            -            5
+                 p55    .     X      .     .       X       .       -       .       -       -       -            -
+                 p70    .     X      .     .       X       .       -       .       -       -       -            -
+rocket_launcher  top    .     -      -     -       -       .       -       .       -       -       -            -            4
+                 p55    .     X      X     .       -       .       -       .       -       -       -            -
+                 p70    .     X      X     .       -       .       -       .       -       -       -            -
+Total holes  51
+```
+
+[astra: 769s, exit 0]

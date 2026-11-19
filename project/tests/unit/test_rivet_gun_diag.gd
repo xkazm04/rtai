@@ -29,7 +29,10 @@ func _rig(octant: int, aim_deg: float = NAN) -> CutRig:
 func test_a_diagonal_shot_fires_the_drawn_diagonal_strip() -> void:
 	assert_true(RivetGunDiag.draws("p70", &"pistol"))
 	assert_true(RivetGunDiag.draws("p55", &"pistol"), "drawn at p55 too")
-	assert_false(RivetGunDiag.draws("p70", &"ray_gun"), "no drawn diagonal")
+	assert_false(RivetGunDiag.draws("p70", &"no_diag"), "no drawn diagonal")
+	for pitch: String in ["p55", "p70"]:
+		for gun: StringName in [&"homing_shard", &"ray_gun"]:
+			assert_true(RivetGunDiag.draws(pitch, gun), pitch + "/" + String(gun))
 	for o: int in [1, 3, 5, 7]:
 		assert_eq(RivetStrips.diag_or(_rig(o), "p70", &"pistol", EQ), DIAG, "octant %d" % o)
 	assert_eq(RivetStrips.diag_or(_rig(0), "p70", &"pistol", EQ), EQ, "the side keeps its cell")
@@ -39,7 +42,7 @@ func test_the_shot_counts_as_drawn_against_the_drawn_guns_angle() -> void:
 	# octant 1 (3/4 toward right): the drawn gun points 32 deg down-right on screen
 	assert_almost_eq(rad_to_deg(RivetGunDiag.gun_rad(&"pistol", 1, "p70")), 32.0, 0.01)
 	assert_almost_eq(rad_to_deg(RivetGunDiag.gun_rad(&"pistol", 0, "p70")), 0.0, 0.01, "side")
-	assert_almost_eq(rad_to_deg(RivetGunDiag.gun_rad(&"ray_gun", 3, "p55")), 180.0, 0.01, "undrawn")
+	assert_almost_eq(rad_to_deg(RivetGunDiag.gun_rad(&"no_diag", 3, "p55")), 180.0, 0.01, "undrawn")
 	assert_true(RivetGunDiag.fits(_rig(1, 50.0), &"pistol", 1, "p70"), "18 deg off")
 	assert_false(RivetGunDiag.fits(_rig(1, 60.0), &"pistol", 1, "p70"), "28 deg: the camera's")
 	assert_false(RivetGunDiag.fits(_rig(1, 5.0), &"pistol", 1, "p70"), "27 deg: the side's")
@@ -110,3 +113,43 @@ func test_every_listed_gun_ships_its_strip_twin_and_rows() -> void:
 		assert_eq(RivetRes.of(path), RivetRes.of(eq), key + ": at its equipped strip's res")
 		for c: int in RivetStrips.DIAG_CELLS:
 			assert_gt(RivetMuzzle.point(path, c).x, 0.0, "%s cell %d: a muzzle" % [key, c])
+
+
+func test_quest_rifle_uses_its_own_strips_at_both_pitches() -> void:
+	var rifle: StringName = &"assault-rifle"
+	assert_eq(WeaponArtKey.of(rifle), &"assault_rifle")
+	assert_eq(RivetStrips.strip_of("p55", rifle).get_file(), "rivet_eq_assault_rifle.png")
+	assert_eq(RivetStrips.left_of("p55", rifle).get_file(), "rivet_eq_assault_rifle_left.png")
+	assert_true(RivetGunDiag.draws("p55", rifle))
+	assert_eq(RivetStrips.strip_of("p70", rifle).get_file(), "rivet_eq_assault_rifle.png")
+	assert_true(RivetGunDiag.draws("p70", rifle))
+
+
+func test_plasma_west_uses_its_side_shot_and_flashless_twin() -> void:
+	var rig: CutRig = _rig(4, 180.0)
+	rig.gun_out = true
+	rig.set_meta(RivetFrames.WEAPON, &"plasma_rifle")
+	for pitch: String in ["p55", "p70"]:
+		var left: String = RivetStrips.DIR + pitch + "/rivet_eq_plasma_rifle_left.png"
+		var fire: String = left.trim_suffix(".png") + "_fire.png"
+		assert_eq(RivetWindup.path_or(rig, pitch, &"plasma_rifle", left), fire)
+		assert_eq(RivetStrips.cells_of(fire, false), 1)
+		assert_eq(RivetFrames.cell_of(rig, 1), Vector2i.ZERO)
+		var card: Sprite2D = autofree(Sprite2D.new())
+		card.set_meta(RivetFrames.ON, fire)
+		card.texture = StreetStrips.get_tex(fire)
+		rig.set_meta(RivetNoFlash.AGE, RivetNoFlash.ticks_of(&"plasma_rifle"))
+		RivetNoFlash.show(rig, card, 0)
+		assert_eq(card.texture.resource_path, fire.trim_suffix(".png") + "_noflash.png")
+		rig.set_meta(RivetNoFlash.AGE, 0)
+		RivetNoFlash.show(rig, card, 0)
+		assert_eq(card.texture.resource_path, fire)
+
+
+func test_diagonal_fit_includes_both_edges_of_the_half_octant() -> void:
+	var limit: float = PI / 8.0
+	for sign_k: float in [-1.0, 1.0]:
+		assert_true(RivetGunDiag.angles_fit(0.0, sign_k * limit))
+		assert_true(RivetGunDiag.angles_fit(0.0, sign_k * (limit - 0.000001)))
+		assert_false(RivetGunDiag.angles_fit(0.0, sign_k * (limit + 0.000001)))
+	assert_true(RivetGunDiag.angles_fit(TAU - 0.02, 0.01))

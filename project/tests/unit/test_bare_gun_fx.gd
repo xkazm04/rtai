@@ -16,11 +16,11 @@ func _rifle_round(arena: CombatArena) -> Shot:
 	return arena.shots[-1]
 
 
-func test_rifle_round_draws_with_the_stand_in() -> void:
+func test_rifle_round_draws_with_its_own_art() -> void:
 	var s: Shot = _rifle_round(_arena())
 	assert_null(s.spec, "the rifle has no weapons.json row")
-	assert_eq(BareGunFx.stand_in(s), &"machine_pistol")
-	assert_ne(WeaponFxArt.art().muzzle_fx(BareGunFx.stand_in(s)), &"", "the stand-in has a flash")
+	assert_eq(BareGunFx.stand_in(s), &"assault_rifle")
+	assert_eq(WeaponFxArt.art().muzzle_fx(BareGunFx.stand_in(s)), &"flash_pistol")
 
 
 func test_enemy_and_table_rounds_are_not_drawn_here() -> void:

@@ -1,41 +1,22 @@
 class_name GroundDropShowcase
 extends RefCounted
-## n17 npc-react (owner: "weapons after kill are not wrapped in showcase component and not having
-## consistent directions"): a dead guard's dropped gun (CombatArena.rifle_drops, the assault-rifle
-## pickup) draws the pickup's WeaponShowcase drawing (the arsenal's art stand-in: assault-rifle ->
-## machine_pistol, the gun Rivet then holds), keyed by the view's art like every floor pickup,
-## stood up for the camera and never spun. One rule for its direction: it lies along the shot, the
-## muzzle pointing the way the round flew on screen (mirrored, never turned), PAST_M beyond his
-## feet on the side away from his body (StreetDeadRests); with no rest (gibbed, an own-cell death)
-## SIDE_M across the shot on the camera side (along it lay in the gib's spray, film
-## dra_rocket_launcher t218). GroundRifle's spot back toward the shooter lay
-## under the snap's corpse (film drop_068c_d0), a spot across the shot under a diagonal one (film
-## drop_4394_swat32). Before: the sheet at one of 8 headings hashed from the position.
-## Straight down (no form), `--showcase=off` or ON
-## false = GroundRifle's sheet (the before).
+## The dead guard's rifle uses the floor pickup drawing at this pitch.
+## BODY_GAP measures from the opaque resting pose to the nearest edge of the pickup.
 const ON: bool = true
 const PICKUP: StringName = &"assault-rifle"
-## A shot within this of straight up or down the screen keeps the muzzle to +x (no flicker).
 const VERTICAL_X: float = 0.05
-## How far (m) past his feet, away from his body, the gun's middle lies.
 const PAST_M: float = 0.75
-## With no rest: how far (m) across the shot line, on the camera's side, the gun lies.
 const SIDE_M: float = 0.6
-## A published rest whose feet lie within this (m) of the drop is his.
 const MATCH_M: float = 1.5
-## n17 (film dr_machine_pistol t190 -> t191: the gun jumped ~1 m from across the shot to past his
-## feet when his corpse published its rest at the lying frame): a drop's spot is fixed at its first
-## draw, so a dropped gun never moves. LATCH false = recomputed each draw (the before).
 const LATCH: bool = true
 const LATCH_MAX: int = 256
 
+static var _outlines: Dictionary[String, PackedVector2Array] = {}
 static var _showcase: WeaponShowcase = null
 static var _art: StringName = &""
-## (drop m, shot) -> where it lies (m), from its first draw.
 static var _lies: Dictionary[Vector4, Vector2] = {}
 
 
-## The drawing a drop shows at the view's form (null: none, the caller draws its sheet).
 static func texture() -> Texture2D:
 	var form: String = WeaponShowcase.form_of(ViewMode.shared())
 	if not ON or form == "":
@@ -46,13 +27,11 @@ static func texture() -> Texture2D:
 	return _showcase.texture(_art, form)
 
 
-## True when the drawing was drawn beside the drop at `at` (m), its muzzle along `shot` (the
-## shot's ground direction, from the shooter), `length_m` long; false = none (the caller's sheet).
 static func draw(ci: CanvasItem, at: Vector2, shot: Vector2, length_m: float) -> bool:
 	var tex: Texture2D = texture()
 	if tex == null:
 		return false
-	var lies: Vector2 = lies_at(at, shot)
+	var lies: Vector2 = lies_at(at, shot, ci, tex)
 	var gk: float = maxf(ViewMode.shared().ground_k(), 0.1)
 	var k: float = length_m * Ink.PX_PER_M / float(tex.get_width())
 	var size: Vector2 = Vector2(tex.get_width() * k, tex.get_height() * k / gk)
@@ -65,43 +44,154 @@ static func draw(ci: CanvasItem, at: Vector2, shot: Vector2, length_m: float) ->
 	return true
 
 
-## Where the gun lies for a drop at `at` (m) after a shot along `shot`: past his feet, away
-## from his body; no body: across the shot, screen down (straight down the screen: to the right).
-static func lies_at(at: Vector2, shot: Vector2) -> Vector2:
+## With a canvas, use its resting corpse. A null canvas selects the legacy drop-point offsets.
+static func lies_at(
+	at: Vector2, shot: Vector2, ci: CanvasItem = null, tex: Texture2D = null
+) -> Vector2:
 	var key: Vector4 = Vector4(at.x, at.y, shot.x, shot.y)
 	if LATCH and _lies.has(key):
 		return _lies[key]
 	if _lies.size() >= LATCH_MAX:  # a long session's old drops (they decay long before)
 		_lies.clear()
-	_lies[key] = place(at, shot)
+	_lies[key] = (
+		settled(ci, at, shot, tex) if GroundRifle.BODY_GAP and ci != null else place(at, shot)
+	)
 	return _lies[key]
 
 
-## lies_at's rule, unlatched.
 static func place(at: Vector2, shot: Vector2) -> Vector2:
-	var body: Vector2 = body_dir(at)
-	if body != Vector2.ZERO:
-		return at - body * PAST_M
+	var segment: PackedVector2Array = body_segment(at)
+	if segment.size() == 2:
+		return at - segment[0].direction_to(segment[1]) * PAST_M
 	var side: Vector2 = shot.normalized().orthogonal()
 	if side.y < 0.0 or (is_zero_approx(side.y) and side.x < 0.0):
 		side = -side
 	return at + side * SIDE_M
 
 
-## The way the body lying at a drop `at` (m) reaches from its feet (unit; ZERO: no published rest
-## within MATCH_M).
-static func body_dir(at: Vector2) -> Vector2:
+static func body_segment(at: Vector2) -> PackedVector2Array:
 	var best: float = MATCH_M
-	var dir: Vector2 = Vector2.ZERO
+	var segment: PackedVector2Array = [at]
 	for r: Vector4 in StreetDeadRests.all.values():
 		var feet: Vector2 = Vector2(r.x, r.y) / Ink.PX_PER_M
 		var chest: Vector2 = Vector2(r.z, r.w) / Ink.PX_PER_M
 		if feet.distance_to(at) < best and chest != feet:
 			best = feet.distance_to(at)
-			dir = (chest - feet).normalized()
-	return dir
+			segment = [feet, chest]
+	return segment
 
 
-## +1 when the muzzle (+x in the drawing) points right on screen, -1 when the drawing is mirrored.
 static func sign_x(shot: Vector2) -> float:
 	return -1.0 if shot.x < -VERTICAL_X else 1.0
+
+
+## Measure each alpha silhouette once. Keep the body, excluding detached sparks and headgear.
+static func _outline(tex: Texture2D, grid: Vector2i, frame: Vector2i) -> PackedVector2Array:
+	var key: String = "%s:%s:%s" % [tex.get_rid(), grid, frame]
+	if not _outlines.has(key):
+		var image: Image = tex.get_image()
+		if image.is_compressed():
+			@warning_ignore("return_value_discarded")
+			image.decompress()
+		@warning_ignore("integer_division")
+		var size: Vector2i = image.get_size() / grid
+		var bits: BitMap = BitMap.new()
+		bits.create_from_image_alpha(image.get_region(Rect2i(size * frame, size)), 0.5)
+		var largest: PackedVector2Array = [Vector2.ZERO]
+		var area: float = 0.0
+		for poly: PackedVector2Array in bits.opaque_to_polygons(Rect2i(Vector2i.ZERO, size), 1.0):
+			var twice_area: float = 0.0
+			for i: int in poly.size():
+				twice_area += poly[i - 1].cross(poly[i])
+			if absf(twice_area) > area:
+				area = absf(twice_area)
+				largest = poly
+		_outlines[key] = Transform2D(0.0, -Vector2(size) * 0.5) * largest
+	return _outlines[key]
+
+
+static func _gun(tex: Texture2D, at: Vector2, shot: Vector2) -> PackedVector2Array:
+	if tex != null:
+		var k: float = GroundRifle.LENGTH_M / tex.get_width()
+		var flip: Vector2 = Vector2(sign_x(shot), 1.0) * k
+		return Transform2D.IDENTITY.scaled(flip) * _outline(tex, Vector2i.ONE, Vector2i.ZERO)
+	var i: int = GroundRifle.heading(GroundRifle.turn(at))
+	var grid: Vector2i = Vector2i(GroundRifle.HEADINGS, 1)
+	if GroundRifle.sheet() != null:
+		var k: float = GroundRifle.LENGTH_M / GroundRifle.DRAWN_LEN_PX
+		return (
+			Transform2D.IDENTITY.scaled(Vector2.ONE * k)
+			* _outline(GroundRifle.sheet(), grid, Vector2i(i, 0))
+		)
+	var tip: Vector2 = Vector2.from_angle(GroundRifle.turn(at)) * GroundRifle.LENGTH_M * 0.5
+	return [-tip, tip]
+
+
+static func settled(ci: CanvasItem, at: Vector2, shot: Vector2, tex: Texture2D) -> Vector2:
+	var squash: Vector2 = Vector2(1.0, ViewMode.shared().ground_k())
+	var body: PackedVector2Array = _signature(ci, at)
+	if body.is_empty():
+		body = body_segment(at)
+	var projected: PackedVector2Array = Transform2D.IDENTITY.scaled(squash) * body
+	return GroundRifle.beside(projected, _gun(tex, at, shot), shot * squash) / squash
+
+
+## The kill's mark records the same victim position as the drop. Read its final grid cell
+## and slide at first draw, so a settling corpse never makes a landed pickup jump.
+static func _signature(ci: CanvasItem, at: Vector2) -> PackedVector2Array:
+	var layer: CanvasLayer = ci.get_canvas_layer_node()
+	if layer == null:
+		return []
+	var cast: CastView
+	for node: Node in layer.get_children():
+		if node is CastView:
+			cast = node
+		if node is KillView:
+			var view: KillView = node
+			for d: KillNewStyles.Death in view.styles.new_fx._deaths:
+				var ground: KillGround = view._grounds.get(d.serial)
+				if ground != null and ground.mark.at.is_equal_approx(at) and d.cells != null:
+					return _rest(ci, view, d)
+	if cast != null and cast.stage != null and (not cast.fighters_on_rigs or QuestGuardCast.ON):
+		for h: Fighter in cast.stage.arena.hostiles:
+			if h.pos.is_equal_approx(at) and not h.alive() and h.kind != Fighter.Kind.BOSS:
+				return _quest(h)
+	return []
+
+
+static func _quest(h: Fighter) -> PackedVector2Array:
+	var tex: Texture2D = StreetQuestDeadPlan._strip()
+	if StreetQuestDeadPlan.ENABLED and ViewMode.shared().cards and tex != null:
+		var at: Vector2 = Ink.px(h.pos)
+		var pose: int = StreetDeadPlan.pick(StreetQuestDeadPlan.ID_BASE - h.id, &"", at)
+		var grid: Vector2i = Vector2i(StreetDeadPlan.POSES, 1)
+		var xf: Transform2D = StreetQuestDeadPlan.transform_of(at, h, Ink.PX_PER_M)
+		return xf.scaled(Vector2.ONE / Ink.PX_PER_M) * _outline(tex, grid, Vector2i(pose, 0))
+	tex = QuestArt.shared().texture(&"guard_down")
+	var scale: Vector2 = Vector2(1.6, 1.6) / tex.get_size()  # CastView's guard_down draw size
+	return (
+		Transform2D(h.facing.angle() + PI * 0.5, scale, 0.0, h.pos)
+		* _outline(tex, Vector2i.ONE, Vector2i.ZERO)
+	)
+
+
+static func _rest(ci: CanvasItem, view: KillView, d: KillNewStyles.Death) -> PackedVector2Array:
+	var c: Sprite2D = d.cells
+	var last: int = c.vframes - 1
+	var angle: float = KillDeathCells.face_of(d, last) if KillDeathCells.owns(c) else d.fall.angle()
+	if d.row.style == &"stitch":
+		angle = KillStitchArt.facing(d, 2147483647)
+	var face: Vector2i = RigHeadCard.frame_of(angle)
+	var grid: Vector2i = Vector2i(c.hframes, c.vframes)
+	var shape: PackedVector2Array = _outline(c.texture, grid, Vector2i(face.x, last))
+	var scale: Vector2 = c.get_meta(KillDeathCells.BASE, c.get_meta(StreetFallFit.BASE, c.scale))
+	scale.x *= -1.0 if face.y == 1 else 1.0
+	var slide: Vector2 = d.dir * KillDeathCells.slide_m_of(d) * view.ppm
+	if d.row.style == &"pin":
+		slide += KillPinArt.shift(d, 2147483647, view.ppm)
+	var xf: Transform2D = (
+		ci.get_global_transform_with_canvas().affine_inverse()
+		* d.root.get_global_transform_with_canvas().scaled_local(Vector2.ONE / d.root.scale)
+	)
+	var local: Transform2D = Transform2D(0.0, scale, 0.0, c.position + slide)
+	return xf.scaled(Vector2.ONE / Ink.PX_PER_M) * local * shape

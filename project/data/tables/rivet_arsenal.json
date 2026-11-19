@@ -1,7 +1,5 @@
 {
-  "art_stand_in": {
-    "assault-rifle": "machine_pistol"
-  },
+  "art_stand_in": {},
   "classes": {
     "backpack_hose": {
       "doc": "the tank on the back, the wand in both hands at the hip; the flame sways instead of kicking (sway_rad either side of the aim over sway_ticks while the trigger is held: the sim's flame line and the wand both follow it)",

@@ -12,6 +12,8 @@ extends ArenaHook
 var carry: RivetCarry = null
 var _ctx: WorldContext = null
 var _stage: ArenaStage = null
+var _view: CollectCallView
+var _pickups: PickupsView
 
 
 func setup(stage: ArenaStage, ctx: WorldContext) -> void:
@@ -34,9 +36,9 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 
 
 ## Gives Rivet `ids` (each into its class's slot) and draws the first one.
-func arm(ids: Array[StringName], bot: bool) -> RivetCarry:
+func arm(ids: Array[StringName], bot: bool, drawn: GunHand = null) -> RivetCarry:
 	var table: WeaponTable = WeaponTable.shipped()
-	carry = RivetCarry.new(table, ArsenalTable.shipped(), _ctx.rng.stream(&"gunplay"))
+	carry = RivetCarry.new(table, ArsenalTable.shipped(), _ctx.rng.stream(&"gunplay"), drawn)
 	carry.tap = bot
 	var first: int = -1
 	for id: StringName in ids:
@@ -52,22 +54,31 @@ func arm(ids: Array[StringName], bot: bool) -> RivetCarry:
 	_stage.pilot.carry = carry
 	if _stage.arena.guard_tell == null:
 		_stage.arena.guard_tell = GuardTell.from_table(table)
+	_show_pickups()
 	Log.info("rivet_arsenal", "arena: Rivet carries %s" % [carry.slots])
 	return carry
 
 
 func attach_view(view: Node) -> void:
-	var v: CollectCallView = view as CollectCallView
-	if carry == null or v == null or v.print_stage == null:
+	_view = view as CollectCallView
+	_show_pickups()
+
+
+## The wall can start the carry after the arena view is already attached.
+func _show_pickups() -> void:
+	if carry == null or not is_instance_valid(_view) or _view.print_stage == null:
 		return
-	var p: PickupsView = PickupsView.new()
-	p.carry = carry
-	p.z_index = RenderLayers.z(&"actors") - 1
-	v.print_stage.actor_layer().add_child(p)
+	if not is_instance_valid(_pickups):
+		_pickups = PickupsView.new()
+		_pickups.z_index = RenderLayers.z(&"actors") - 1
+		_view.print_stage.actor_layer().add_child(_pickups)
+	_pickups.carry = carry
 
 
 func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(carry.switches if carry != null else -1)
+	if carry != null and carry.slots.has(RivetCarry.RIFLE):
+		out.put_32(_stage.arena.rifle_ammo)
 
 
 func telemetry() -> Dictionary:

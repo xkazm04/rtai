@@ -179,7 +179,21 @@ def _manifest(path: str, only: str = "", no_rim: bool = False) -> None:
         for name, row in rows.items():
             if not name.startswith(only):
                 continue
-            argv = [f"{lib}/{row['sheet']}", f"{out}/{art}/{name}.png", row["counts"]]
+            if "reload_composite" in row:
+                sys.path.insert(0, str(Path(__file__).resolve().parent))
+                from reload_composite import build as build_reload
+                build_reload(row["reload_composite"], art, "_left" if name.endswith("_left") else "")
+                continue
+            if "mirror_from" in row:
+                sys.path.insert(0, str(Path(__file__).resolve().parent))
+                from left_from_right import build
+                folder = Path(out) / art
+                recipe = Path(path).parent / row["regions"]
+                facings = json.loads(recipe.read_text())[art + row.get("pose", "")]
+                build(folder / row["mirror_from"], folder / (name + ".png"), facings,
+                      row.get("source_cells", (1, 2, 3)))
+                continue
+            argv = [str(Path(lib) / row["sheet"]), f"{out}/{art}/{name}.png", row["counts"]]
             if "layout_h" in row:
                 argv.append(f"--layout_h={row['layout_h']}")
             if "cc" in row:
@@ -188,10 +202,16 @@ def _manifest(path: str, only: str = "", no_rim: bool = False) -> None:
                 argv.append(f"--act_k={row['act_k']}")
             if "feet_up" in row:
                 argv.append(f"--feet_up={row['feet_up']}")
+            if "action_feet_up" in row:
+                argv.append(f"--action_feet_up={row['action_feet_up']}")
             if "left" in row:
                 argv.append(f"--left={lib}/{row['left']}")
             sys.argv = [sys.argv[0]] + argv + [f"--fig_h={row.get('fig_h', man['fig_h'])}"]
             main()
+            if "shell_fit" in row:
+                sys.path.insert(0, str(Path(__file__).resolve().parent))
+                from launcher_left_fit import fit_left
+                fit_left(Path(out) / art / (name + ".png"), row["shell_fit"], row.get("shell_curve", False))
             if "ink_rim" in row and not no_rim:
                 _ink_rim(f"{out}/{art}/{name}.png", row["ink_rim"])
             if "windup" in row:
@@ -226,8 +246,15 @@ def main() -> None:
     scale = fig_h / layout_h
     cc = tuple(int(c) for c in opts["cc"].split(",")) if "cc" in opts else ()
     rgba, bands = _sheet(args[0], counts, cc)
+    if "pixels" in opts:  # flashless twin: identical crop geometry and helmet/foot anchors
+        alternate = Image.open(opts["pixels"]).convert("RGBA")
+        if alternate.size != rgba.size:
+            raise ValueError("alternate pixels must match the measured sheet")
+        rgba = alternate
     if "feet_up" in opts:
         _feet_up(bands[0], [float(v) for v in opts["feet_up"].split(",")])
+    if "action_feet_up" in opts:
+        _feet_up(bands[1], [float(v) for v in opts["action_feet_up"].split(",")])
     ref_w = float(np.median([f["head_w"] for f in bands[0]]))
     k0 = layout_h / float(np.median([f["h"] for f in bands[0]]))
     items = [(rgba, f, k0) for f in bands[0]]

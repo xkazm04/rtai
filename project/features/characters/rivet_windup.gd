@@ -17,9 +17,13 @@ extends RefCounted
 
 const FILE: String = "_windup.png"
 const LEFT_FILE: String = "_left_windup.png"
+const LEFT_FIRE_FILE: String = "_left_fire.png"
 const LEFT_STRIKE_FILE: String = "_left_strike.png"
 const CELLS: int = 2
 const LEFT_CELLS: int = 1
+const LEFT_LONG_GUNS: Array[StringName] = [
+	&"plasma_rifle", &"gatling", &"flamethrower", &"gloria", &"rocket_launcher", &"mini_nuke"
+]
 const SIDE: int = 0
 const CAM: int = 1
 ## n15: two-handed blades with a drawn left set (it338 strips, it346 wind-ups, it342 strikes):
@@ -42,13 +46,23 @@ static var hold: bool = true
 ## True when `weapon` turned left draws its drawn left strip (never mirrored): a one-handed hold
 ## (RivetStrips.ONE_HAND) or, under blade_left, a BLADE_LEFT blade.
 static func left_drawn(weapon: StringName) -> bool:
-	return RivetStrips.ONE_HAND.has(weapon) or (blade_left and BLADE_LEFT.has(weapon))
+	return (
+		LEFT_LONG_GUNS.has(weapon)
+		or RivetStrips.ONE_HAND.has(weapon)
+		or (blade_left and BLADE_LEFT.has(weapon))
+	)
 
 
 ## The wind-up strip while `rig`'s strike winds up on the weapon's equipped strip or its drawn
 ## left strip (`path`; a walk grid, a reload or a knock keeps its own) and the weapon has one, else
 ## `path`.
 static func path_or(rig: CutRig, art: String, weapon: StringName, path: String) -> String:
+	if LEFT_LONG_GUNS.has(weapon) and not RivetReload.on(rig) and RivetFrames.oct_of(rig) == 4:
+		if (
+			path.ends_with("_left.png")
+			and RivetStrips.draws_fire(rig, weapon, 4, RivetStrips.fire_latched(rig))
+		):
+			return path.trim_suffix("_left.png") + LEFT_FIRE_FILE
 	var thrust: String = RivetThrust.path_or(rig, art, weapon, path)  # n17: a lunge's drawn thrust
 	if not enabled or weapon == &"" or thrust != path:
 		return thrust
@@ -90,12 +104,14 @@ static func struck(rig: CutRig) -> bool:
 
 ## True for a strip this slot owns (a wind-up strip or the drawn left strike).
 static func owns(path: String) -> bool:
-	return path.ends_with(FILE) or path.ends_with(LEFT_STRIKE_FILE)
+	return (
+		path.ends_with(FILE) or path.ends_with(LEFT_STRIKE_FILE) or path.ends_with(LEFT_FIRE_FILE)
+	)
 
 
 ## The cell count of a wind-up or left strike strip at `path` (RivetStrips.cells_of).
 static func cells_of(path: String) -> int:
-	return LEFT_CELLS if path.ends_with(LEFT_FILE) or path.ends_with(LEFT_STRIKE_FILE) else CELLS
+	return CELLS if path.ends_with(FILE) and not path.ends_with(LEFT_FILE) else LEFT_CELLS
 
 
 ## A short strip's cell and mirror for octant `o`: the wind-up strip's camera cell facing the

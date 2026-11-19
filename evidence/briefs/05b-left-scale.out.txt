@@ -1,0 +1,25 @@
+**All 12 launcher left cells pass at 64 px/m.** Their crown-to-sole heights are within 2.42% of their own east rest cell, and every shell is inside the CIE76 colour threshold of 8. Both launchers retain **zero audit holes**.
+
+| Weapon | Pitch | East rest | SW / W / NW | Largest colour difference |
+|---|---|---:|---:|---:|
+| Mini-nuke | p55 | 140.52 px | 137.17 px | 4.28 |
+| Mini-nuke | p70 | 133.96 px | 130.71 px | 2.79 |
+| Rocket launcher | p55 | 138.01 px | 134.67 px | 6.92 |
+| Rocket launcher | p70 | 133.96 px | 130.71 px | 4.33 |
+
+The original p55 rocket west and east cells both measured 138 px. The west helmet’s colour difference fell from **15.82 to 6.92**. All eight rocket diagonal fire cells now use flame and smoke sampled from the launcher’s own firing art, attached at the rear bell. The evidence shows `6644bda03` above the corrected captures. [Mini-nuke evidence](C:/Users/kazda/kiro/gtai-masters/n19/guns/mini_nuke/frames.json) · [Rocket evidence](C:/Users/kazda/kiro/gtai-masters/n19/guns/rocket_launcher/frames.json)
+
+**Other outliers.** Of 896 cut cells, 167 flagged on height alone, 233 on tone alone and 86 on both. Seven of eight assault-rifle diagonals and all eight homing-shard and ray-gun diagonals flagged on tone. The p55 ray-gun NW diagonal also flagged on height. Among the hand-made sets, pistol had 61 flagged rows, plasma rifle 42 and gatling 38, counting flashless twins separately. [Full metrics table](C:/Users/kazda/kiro/gtai-wt/n19-guns/evidence/arsenal/cell_metrics.txt) · [JSON](C:/Users/kazda/kiro/gtai-wt/n19-guns/evidence/arsenal/cell_metrics.json)
+
+| Commit | Changed |
+|---|---|
+| `e92187d9d` | Cell measuring script, tests and metrics tables |
+| `4cde21719` | Mini-nuke left strips, cutter, muzzle anchors and provenance |
+| `dc84265c5` | Rocket left strips, diagonal fire and flashless twins, cutter, anchors, provenance and reviewed boot measurements |
+| `4392e66ec` | Dropped-rifle regression tests |
+
+Shared art rows start at `rivet_frames.json` lines 268, 274, 546 and 552, and `rivet_muzzle.json` lines 486, 702, 1200 and 1416. The corresponding cutter anchors are at `rivet_muzzle.py` lines 88–99.
+
+**Verification.** The changed unit suite passed 1,658 tests with two skips. All 15 selected arsenal tests, 21 focused rifle tests and three Python metric tests passed. Lint passed all 19 checks, and release compilation loaded all 740 scripts. Every commit passed the quick gate without `--no-godot`.
+
+The new rifle tests caught **three of the five prior survivors**: the draw guard’s `or` changed to `and`, the perpendicular offset’s multiplication changed to division, and deletion of the receiver highlight. The original sample improved from **5/10 to 8/10**. The full mutation score was **39/103 valid mutations killed (37.9%)**, with 64 survivors, three invalid mutations and zero timeouts. [Mutation results](C:/Users/kazda/kiro/gtai-wt/n19-guns/build/mutate/features-combat-weapons-art-ground_rifle.json)

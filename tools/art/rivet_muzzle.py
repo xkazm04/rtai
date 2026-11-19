@@ -47,6 +47,7 @@ FACE_WEAPONS = ("flamethrower",)
 GUN_FACE_CELLS = (3, 4)
 GUN_FACE_ONE_HAND = ("pistol", "machine_pistol", "hand_cannon", "ray_gun", "homing_shard")
 GUN_FACE_TOWARD = (
+    "assault_rifle",
     "electro_gun",
     "gloria",
     "plasma_rifle",
@@ -77,11 +78,81 @@ STRIKE_TIP = ("electro_baton",)
 ## Left cells whose gun is held low at the hip (the asset lane's hand fix: the gun in the far
 ## claw), so the near cable spike is the leftmost px of the arm band: the bell mouth, read by eye
 ## on a x5 zoom of the cut cell (d9 it16). Re-read it when the strip is re-cut from another sheet.
-LEFT_PINNED = {("p55", "rivet_eq_homing_shard_left", 2): [43, 78]}
+# Pale outlined stars can fall outside flash_core's blue threshold. Measured against the
+# exact noflash twin with rivet_gun_diag_measure.cell_stats, in strip pixels (converted to 110-space with the other measured cells).
+FIRE_PINNED = {("p70", "rivet_eq_assault_rifle", 5): [290, 102],
+               ("p70", "rivet_eq_assault_rifle", 6): [171, 185],
+               ("p55", "rivet_eq_assault_rifle", 5): [202, 79],
+               ("p55", "rivet_eq_assault_rifle", 6): [103, 125]}
+LEFT_PINNED = {
+    ("p70", "rivet_eq_mini_nuke_left_fire", 0): [34, 110],
+    ("p55", "rivet_eq_mini_nuke_left_fire", 0): [43, 58],
+    ("p70", "rivet_eq_rocket_launcher_left_fire", 0): [43, 72],
+    ("p55", "rivet_eq_rocket_launcher_left_fire", 0): [23, 64],
+    ("p70", "rivet_eq_gloria_left_fire", 0): [31, 97],
+    ("p70", "rivet_eq_gloria_left", 2): [58, 74],
+    ("p70", "rivet_eq_gloria_left", 1): [58, 83],
+    ("p70", "rivet_eq_gloria_left", 0): [58, 93],
+    ("p55", "rivet_eq_gloria_left_fire", 0): [29, 49],
+    ("p55", "rivet_eq_gloria_left", 2): [44, 49],
+    ("p55", "rivet_eq_gloria_left", 1): [43, 48],
+    ("p55", "rivet_eq_gloria_left", 0): [40, 53],
+    ("p70", "rivet_eq_flamethrower_left_fire", 0): [95, 161],
+    ("p70", "rivet_eq_flamethrower_left", 2): [107, 124],
+    ("p70", "rivet_eq_flamethrower_left", 1): [105, 134],
+    ("p70", "rivet_eq_flamethrower_left", 0): [100, 159],
+    ("p55", "rivet_eq_flamethrower_left_fire", 0): [66, 105],
+    ("p55", "rivet_eq_flamethrower_left", 2): [76, 77],
+    ("p55", "rivet_eq_flamethrower_left", 1): [71, 82],
+    ("p55", "rivet_eq_flamethrower_left", 0): [72, 102],
+    ("p70", "rivet_eq_gatling_left_fire", 0): [30, 102],
+    ("p70", "rivet_eq_gatling_left", 2): [47, 65],
+    ("p70", "rivet_eq_gatling_left", 1): [40, 76],
+    ("p70", "rivet_eq_gatling_left", 0): [61, 90],
+    ("p55", "rivet_eq_gatling_left_fire", 0): [35, 73],
+    ("p55", "rivet_eq_gatling_left", 2): [40, 51],
+    ("p55", "rivet_eq_gatling_left", 1): [40, 54],
+    ("p55", "rivet_eq_gatling_left", 0): [41, 80],
+    ("p55", "rivet_eq_plasma_rifle_left_fire", 0): [21, 57],
+    ("p70", "rivet_eq_plasma_rifle_left_fire", 0): [43, 100],
+    # Native mirrored cards, 110-space: width/res - right anchor. The side
+    # view has no table anchor; measure its muzzle at the tip of the arm band.
+    ("p55", "rivet_eq_plasma_rifle_left", 0): [46, 53],
+    ("p55", "rivet_eq_plasma_rifle_left", 1): [55, 46],
+    ("p55", "rivet_eq_plasma_rifle_left", 2): [51, 51],
+    ("p70", "rivet_eq_plasma_rifle_left", 0): [62, 95],
+    ("p70", "rivet_eq_plasma_rifle_left", 1): [53, 92],
+    ("p70", "rivet_eq_plasma_rifle_left", 2): [59, 84],
+    ("p70", "rivet_eq_rocket_launcher_left", 0): [33, 71],
+    ("p70", "rivet_eq_rocket_launcher_left", 1): [31, 69],
+    ("p70", "rivet_eq_rocket_launcher_left", 2): [30, 48],
+    ("p55", "rivet_eq_rocket_launcher_left", 0): [29, 62],
+    ("p55", "rivet_eq_rocket_launcher_left", 1): [16, 47],
+    ("p55", "rivet_eq_rocket_launcher_left", 2): [15, 44],
+    ("p70", "rivet_eq_mini_nuke_left", 2): [46, 78],
+    ("p70", "rivet_eq_mini_nuke_left", 1): [37, 95],
+    ("p70", "rivet_eq_mini_nuke_left", 0): [41, 102],
+    ("p55", "rivet_eq_mini_nuke_left", 2): [44, 54],
+    ("p55", "rivet_eq_mini_nuke_left", 1): [46, 55],
+    ("p55", "rivet_eq_mini_nuke_left", 0): [54, 68],
+    ("p55", "rivet_eq_homing_shard_left", 2): [43, 78],
+}
 # n17 rivet-strike: a gun's drawn diagonal fire strip (RivetGunDiag, x1.5 cells): its gun's light
 # tan reads as flash core, so the flash root is pinned in 110 space (strip px / 1.5), read as the
 # biggest hot blob that differs from the flashless twin, its pixel nearest the body centre.
 DIAG_PINNED = {
+    ("p70", "rivet_eq_mini_nuke_diag"): {"0": [104, 89], "1": [118, 48], "2": [34, 89], "3": [26, 39]},
+    ("p55", "rivet_eq_mini_nuke_diag"): {"0": [94, 72], "1": [110, 41], "2": [34, 67], "3": [26, 35]},
+    ("p70", "rivet_eq_ray_gun_diag"): {"0": [142, 105], "1": [105, 17], "2": [63, 95], "3": [47, 17]},
+    ("p55", "rivet_eq_ray_gun_diag"): {"0": [97, 95], "1": [122, 25], "2": [31, 78], "3": [14, 25]},
+    ("p70", "rivet_eq_homing_shard_diag"): {"0": [105, 98], "1": [146, 21], "2": [12, 92], "3": [25, 20]},
+    ("p55", "rivet_eq_homing_shard_diag"): {"0": [95, 87], "1": [128, 21], "2": [18, 80], "3": [33, 29]},
+    ("p70", "rivet_eq_assault_rifle_diag"): {
+        "0": [173, 95], "1": [119, 11], "2": [39, 95], "3": [111, 11]
+    },
+    ("p55", "rivet_eq_assault_rifle_diag"): {
+        "0": [131, 79], "1": [153, 13], "2": [29, 81], "3": [11, 12]
+    },
     ("p70", "rivet_eq_pistol_diag"): {"0": [160, 101], "1": [127, 35], "2": [27, 100], "3": [59, 37]},
     ("p70", "rivet_eq_machine_pistol_diag"): {
         "0": [121, 98], "1": [117, 15], "2": [26, 98], "3": [51, 15]
@@ -126,7 +197,7 @@ DIAG_PINNED = {
         "0": [106, 86], "1": [88, 26], "2": [27, 79], "3": [37, 33]
     },
     ("p55", "rivet_eq_rocket_launcher_diag"): {
-        "0": [84, 78], "1": [78, 34], "2": [29, 79], "3": [35, 33]
+        "0": [84, 78], "1": [99, 34], "2": [29, 79], "3": [35, 33]
     },
 }
 
@@ -220,6 +291,13 @@ def measure(out_dir, strips):
     for art in sorted(strips):
         rows = {}
         for name in sorted(strips[art]):
+            if name.endswith("_left_fire_noflash"):
+                continue
+            if name.endswith("_left_fire"):
+                rows[name] = {"cells": {"0": LEFT_PINNED[(art, name, 0)]}}
+                continue
+            if name.endswith("_diag"):
+                continue  # measured against its flashless twin below
             if name[9:] in STRIKE_TIP:
                 w = im_w(out_dir, art, name) // EQ_CELLS
                 rows[name] = {"cells": {"5": shape_point(cell_of(out_dir, art, name, 5, w), 5)}}
@@ -240,8 +318,10 @@ def measure(out_dir, strips):
                 elif c in face:
                     p = shape_point(cell, 5, FACE_BAND if flamer else ARM_BAND)  # the nozzle
                 else:
-                    p = fire_point(cell, c) or shape_point(cell, c)
+                    p = FIRE_PINNED.get((art, name, c)) or fire_point(cell, c) or shape_point(cell, c)
                 if p is not None:
+                    if name.startswith("rivet_eq_assault_rifle"):
+                        p = [round(v / 1.5) for v in p]
                     cells[str(c)] = p
             if cells:
                 rows[name] = {"cells": cells}
@@ -271,6 +351,8 @@ def measure_diag(out_dir, art):
 
 
 def n_cells(name):
+    if name.endswith("_left_fire"):
+        return 1
     if name.endswith("_diag"):
         return DIAG_CELLS
     return LEFT_CELLS if name.endswith("_left") else EQ_CELLS
@@ -302,6 +384,12 @@ def contact(out_dir, table, path):
 def main(argv):
     man = json.load(open(MANIFEST, encoding="utf-8"))
     table = measure(man["out"], man["strips"])
+    only = next((arg[7:] for arg in argv if arg.startswith("--only=")), "")
+    if only:
+        existing = json.load(open(OUT, encoding="utf-8"))["strips"]
+        for art, rows in table.items():
+            existing[art].update({name: row for name, row in rows.items() if name.startswith(only)})
+        table = existing
     doc = (
         "d9 rivet: the muzzle point of Rivet's drawn strip cells, measured by "
         "tools/art/rivet_muzzle.py (px from the cell's top-left, unmirrored). The flamer's facing "

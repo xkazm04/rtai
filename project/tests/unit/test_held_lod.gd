@@ -95,5 +95,8 @@ func test_no_stand_in_hides_a_weapons_own_held_art() -> void:
 	var art: WeaponArt = WeaponArt.new()
 	var arsenal: ArsenalTable = ArsenalTable.shipped()
 	for weapon: StringName in arsenal.art_stand_in:
-		assert_false(art.has(weapon), "%s has its own held art; drop its art_stand_in" % weapon)
+		if arsenal.art_id(weapon) == WeaponArtKey.of(weapon):
+			assert_true(art.has(weapon), "the spelling alias has its own art")
+		else:
+			assert_false(art.has(weapon), "%s has its own held art; drop its art_stand_in" % weapon)
 	assert_eq(arsenal.art_id(&"gloria"), &"gloria", "Gloria draws her own art")

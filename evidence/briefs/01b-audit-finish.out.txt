@@ -1,0 +1,31 @@
+Package 1b is complete. All three commits passed the normal pre-commit hook.
+
+| Commit | Subject |
+|---|---|
+| `3feaecb14` | Record the approved arsenal audit dev LOC allowance |
+| `b8d1929fc` | Audit Rivet arsenal art and ratchet missing cells |
+| `09a1d7a77` | Test strip divisibility and exhaust placement in each rocket diagonal |
+
+Changed files include `tools/debt/baseline.json`, the four `arsenal_audit*.gd` scripts and their UIDs, `arsenal_known_holes.json`, and `test_arsenal_audit.gd` with its UID. The debt tool recorded the approved 522-line increase.
+
+```text
+lint: all 19 checks pass over 1613 GDScript files
+unit-tests: 6 passed, 0 failed, 0 skipped (GUT, headless)
+```
+
+**Mutation scores**
+
+```text
+arsenal_audit.gd
+score 100.0% = killed 6 / (killed 6 + survived 0); timeout 0, invalid 6; 289 s
+
+arsenal_audit_files.gd before the regression test
+score 71.4% = killed 5 / (killed 5 + survived 2); timeout 0, invalid 1; 117 s
+
+arsenal_audit_files.gd after the regression test
+score 100.0% = killed 7 / (killed 7 + survived 0); timeout 0, invalid 1; 126 s
+```
+
+The added test caught both surviving faults. One accepted a strip with an extra pixel column. The other checked the wrong diagonal cell for rocket exhaust.
+
+[astra: 927s, exit 0]

@@ -82,7 +82,9 @@ func test_a_gun_with_a_facing_muzzle_is_untouched() -> void:
 
 
 func test_a_burst_on_the_edge_keeps_its_cell() -> void:
-	# n17: a gun without a drawn diagonal (the p70 pistol fires its diagonal cell here)
+	# Exercise the facing-only fallback even as every gun gains a drawn diagonal.
+	var previous: bool = RivetGunDiag.enabled
+	RivetGunDiag.enabled = false
 	var rig: CutRig = _firing(44.9, &"ray_gun")
 	assert_false(RivetFireCam.drawn(rig), "starts under 45: the side cell")
 	_aim(rig, 45.3)
@@ -97,6 +99,7 @@ func test_a_burst_on_the_edge_keeps_its_cell() -> void:
 	_aim(rig, 38.0)
 	assert_true(RivetStrips.draws_fire(rig, &"ray_gun", 1, true))
 	assert_false(RivetFireCam.drawn(rig), "past the hold back: the side cell")
+	RivetGunDiag.enabled = previous
 
 
 func test_the_cell_is_released_when_the_burst_ends() -> void:

@@ -43,7 +43,7 @@ static func stand_in(s: Shot) -> StringName:
 		return &""
 	if _arsenal == null:
 		_arsenal = ArsenalTable.shipped()
-	var id: StringName = _arsenal.art_stand_in.get(s.weapon, &"")
+	var id: StringName = WeaponArtKey.of(_arsenal.art_id(s.weapon))
 	return id if id != &"" and WeaponFxArt.art().has(id) else &""
 
 

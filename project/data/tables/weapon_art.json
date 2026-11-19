@@ -744,6 +744,44 @@
   "weapons": [
     {
       "casing": "casing",
+      "grip_class": "two_hand_long",
+      "grip_px": [
+        151,
+        37
+      ],
+      "held": "res://features/combat/weapons/art/assault_rifle/held.png",
+      "icon": "res://features/combat/weapons/art/assault_rifle/icon.png",
+      "id": "assault_rifle",
+      "length_m": 1.2,
+      "length_px": 384,
+      "muzzle_fx": "flash_pistol",
+      "muzzle_px": [
+        387,
+        37
+      ],
+      "part_grip_px": {
+        "mag": [
+          24,
+          11
+        ],
+        "small": [
+          151,
+          37
+        ]
+      },
+      "parts": {
+        "mag": "res://features/combat/weapons/art/assault_rifle/mag.png",
+        "small": "res://features/combat/weapons/art/assault_rifle/held_small.png"
+      },
+      "pickup": "res://features/combat/weapons/art/assault_rifle/pickup.png",
+      "projectile_fx": "tracer",
+      "size_px": [
+        392,
+        98
+      ]
+    },
+    {
+      "casing": "casing",
       "grip_class": "one_hand",
       "grip_px": [
         132,
@@ -908,12 +946,17 @@
         105
       ],
       "part_grip_px": {
+        "mag": [
+          52,
+          19
+        ],
         "small": [
           153,
           105
         ]
       },
       "parts": {
+        "mag": "res://features/combat/weapons/art/electro_gun/mag.png",
         "small": "res://features/combat/weapons/art/electro_gun/held_small.png"
       },
       "pickup": "res://features/combat/weapons/art/electro_gun/pickup.png",
@@ -1200,12 +1243,17 @@
         119
       ],
       "part_grip_px": {
+        "mag": [
+          33,
+          15
+        ],
         "small": [
           119,
           119
         ]
       },
       "parts": {
+        "mag": "res://features/combat/weapons/art/ray_gun/mag.png",
         "small": "res://features/combat/weapons/art/ray_gun/held_small.png"
       },
       "pickup": "res://features/combat/weapons/art/ray_gun/pickup.png",
@@ -1233,12 +1281,17 @@
         93
       ],
       "part_grip_px": {
+        "mag": [
+          33,
+          17
+        ],
         "small": [
           143,
           93
         ]
       },
       "parts": {
+        "mag": "res://features/combat/weapons/art/homing_shard/mag.png",
         "small": "res://features/combat/weapons/art/homing_shard/held_small.png"
       },
       "pickup": "res://features/combat/weapons/art/homing_shard/pickup.png",

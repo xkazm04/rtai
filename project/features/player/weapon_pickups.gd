@@ -30,24 +30,30 @@ func drop(id: StringName, at: Vector2) -> void:
 
 ## Takes what Rivet walks over (or swaps on an interact press); at most one item per tick.
 func step(c: PlayerCommand, actions: PlayerActions, arena: CombatArena, carry: RivetCarry) -> void:
-	var rivet: Fighter = arena.rivet
 	for i: int in items.size():
 		var it: Item = items[i]
-		var slot: int = carry.slot_of(it.id)
-		if slot < 0 or it.pos.distance_to(rivet.pos) > REACH_M:
+		if it.pos.distance_to(arena.rivet.pos) > REACH_M:
 			continue
-		var held: StringName = carry.slots[slot]
-		if held == &"" or held == it.id:
+		if collect(it.id, c.was_pressed(actions, &"interact"), arena, carry):
 			items.remove_at(i)
-			carry.take(it.id, arena)
-			picked += 1
 			return
-		if c.was_pressed(actions, &"interact"):
-			items.remove_at(i)
-			drop(held, rivet.pos - rivet.facing * DROP_BEHIND_M)
-			carry.take(it.id, arena)
-			swapped += 1
-			return
+
+
+## Collects a reachable floor or rack weapon. Replacing an occupied slot takes an interact press.
+func collect(id: StringName, interact: bool, arena: CombatArena, carry: RivetCarry) -> bool:
+	var slot: int = carry.slot_of(id)
+	if slot < 0:
+		return false
+	var held: StringName = carry.slots[slot]
+	if held == &"" or held == id:
+		picked += 1
+	elif interact:
+		drop(held, arena.rivet.pos - arena.rivet.facing * DROP_BEHIND_M)
+		swapped += 1
+	else:
+		return false
+	carry.take(id, arena)
+	return true
 
 
 func write_state(out: StreamPeerBuffer) -> void:

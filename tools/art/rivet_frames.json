@@ -5,6 +5,22 @@
  "out": "project/features/characters/art/view",
  "strips": {
   "p55": {
+   "rivet_eq_assault_rifle": {
+    "act_k": 0.94,
+    "counts": "5,3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/main_key.png"
+   },
+   "rivet_eq_assault_rifle_diag": {
+    "counts": "4",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/diag_key.png"
+   },
+   "rivet_eq_assault_rifle_left": {
+    "counts": "3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/left_key.png"
+   },
    "rivet_eq_chainsaw": {
     "act_k": 0.9,
     "counts": "5,3",
@@ -42,16 +58,58 @@
     "sheet": "rivet_eq_flamethrower_55.png",
     "fig_h": 165
    },
+   "rivet_eq_flamethrower_left": {
+    "mirror_from": "rivet_eq_flamethrower.png",
+    "regions": "left_regions/flamethrower.json"
+   },
+   "rivet_eq_flamethrower_left_fire": {
+    "mirror_from": "rivet_eq_flamethrower.png",
+    "regions": "left_regions/flamethrower.json",
+    "pose": "_fire",
+    "source_cells": [5]
+   },
    "rivet_eq_gatling": {
     "counts": "5,3",
     "sheet": "rivet_eq_gatling_55.png",
     "fig_h": 165
+   },
+   "rivet_eq_gatling_left": {
+    "mirror_from": "rivet_eq_gatling.png",
+    "regions": "left_regions/gatling.json"
+   },
+   "rivet_eq_gatling_left_fire": {
+    "mirror_from": "rivet_eq_gatling.png",
+    "regions": "left_regions/gatling.json",
+    "pose": "_fire",
+    "source_cells": [5]
+   },
+   "rivet_eq_gatling_left_fire_noflash": {
+    "mirror_from": "rivet_eq_gatling_noflash.png",
+    "regions": "left_regions/gatling.json",
+    "pose": "_fire",
+    "source_cells": [5]
    },
    "rivet_eq_gloria": {
     "act_k": 0.86,
     "counts": "5,3",
     "sheet": "rivet_eq_gloria_55.png",
     "fig_h": 165
+   },
+   "rivet_eq_gloria_left": {
+    "mirror_from": "rivet_eq_gloria.png",
+    "regions": "left_regions/gloria.json"
+   },
+   "rivet_eq_gloria_left_fire": {
+    "mirror_from": "rivet_eq_gloria.png",
+    "regions": "left_regions/gloria.json",
+    "pose": "_fire",
+    "source_cells": [5]
+   },
+   "rivet_eq_gloria_left_fire_noflash": {
+    "mirror_from": "rivet_eq_gloria_noflash.png",
+    "regions": "left_regions/gloria.json",
+    "pose": "_fire",
+    "source_cells": [5]
    },
    "rivet_eq_hand_cannon": {
     "counts": "5,3",
@@ -102,6 +160,22 @@
     "sheet": "rivet_eq_mini_nuke_55.png",
     "fig_h": 165
    },
+   "rivet_eq_mini_nuke_left": {
+    "mirror_from": "rivet_eq_mini_nuke.png",
+    "regions": "left_regions/mini_nuke.json"
+   },
+   "rivet_eq_mini_nuke_left_fire": {
+    "mirror_from": "rivet_eq_mini_nuke.png",
+    "regions": "left_regions/mini_nuke.json",
+    "pose": "_fire",
+    "source_cells": [5]
+   },
+   "rivet_eq_mini_nuke_left_fire_noflash": {
+    "mirror_from": "rivet_eq_mini_nuke_noflash.png",
+    "regions": "left_regions/mini_nuke.json",
+    "pose": "_fire",
+    "source_cells": [5]
+   },
    "rivet_eq_molotov": {
     "counts": "5,3",
     "sheet": "rivet_eq_molotov_55.png",
@@ -129,6 +203,22 @@
     "counts": "5,3",
     "sheet": "rivet_eq_plasma_rifle_55_v2.png",
     "fig_h": 165
+   },
+   "rivet_eq_plasma_rifle_left_fire": {
+    "mirror_from": "rivet_eq_plasma_rifle.png",
+    "pose": "_fire",
+    "regions": "left_regions/plasma_rifle.json",
+    "source_cells": [5]
+   },
+   "rivet_eq_plasma_rifle_left_fire_noflash": {
+    "mirror_from": "rivet_eq_plasma_rifle_noflash.png",
+    "pose": "_fire",
+    "regions": "left_regions/plasma_rifle.json",
+    "source_cells": [5]
+   },
+   "rivet_eq_plasma_rifle_left": {
+    "mirror_from": "rivet_eq_plasma_rifle.png",
+    "regions": "left_regions/plasma_rifle.json"
    },
    "rivet_eq_plasma_sword": {
     "act_k": 0.85,
@@ -164,6 +254,22 @@
     "sheet": "rivet_eq_rocket_launcher_55_v2.png",
     "fig_h": 165
    },
+   "rivet_eq_rocket_launcher_left": {
+    "mirror_from": "rivet_eq_rocket_launcher.png",
+    "regions": "left_regions/rocket_launcher.json"
+   },
+   "rivet_eq_rocket_launcher_left_fire": {
+    "mirror_from": "rivet_eq_rocket_launcher.png",
+    "regions": "left_regions/rocket_launcher.json",
+    "pose": "_fire",
+    "source_cells": [5]
+   },
+   "rivet_eq_rocket_launcher_left_fire_noflash": {
+    "mirror_from": "rivet_eq_rocket_launcher_noflash.png",
+    "regions": "left_regions/rocket_launcher.json",
+    "pose": "_fire",
+    "source_cells": [5]
+   },
    "rivet_frames": {
     "act_k": 0.97,
     "fig_h": 165,
@@ -171,6 +277,17 @@
     "counts": "5,6",
     "left": "rivet_55_left.png",
     "sheet": "rivet_55_v2.png"
+   },
+   "rivet_reload_assault_rifle": {
+    "act_k": 0.821,
+    "counts": "5,3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/reload55_key.png"
+   },
+   "rivet_reload_assault_rifle_left": {
+    "counts": "3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/reload55_left_key.png"
    },
    "rivet_reload_gatling": {
     "act_k": 0.699,
@@ -183,30 +300,88 @@
     "fig_h": 158.1,
     "sheet": "rivet_reload_heavy_55_left_claw.png"
    },
+   "rivet_reload_machine_pistol": {"reload_composite": "machine_pistol"},
+   "rivet_reload_hand_cannon": {"reload_composite": "hand_cannon"},
    "rivet_reload_pistol": {
     "act_k": 0.814,
     "counts": "5,3",
     "fig_h": 153.75,
     "sheet": "rivet_reload_onehand_55_claw_build.png"
    },
+   "rivet_reload_machine_pistol_left": {"reload_composite": "machine_pistol"},
+   "rivet_reload_hand_cannon_left": {"reload_composite": "hand_cannon"},
    "rivet_reload_pistol_left": {
     "counts": "3",
     "sheet": "rivet_reload_onehand_55_left_claw.png",
     "fig_h": 165
    },
+   "rivet_reload_electro_gun": {"reload_composite": "electro_gun"},
    "rivet_reload_plasma_rifle": {
     "act_k": 0.823,
     "counts": "5,3",
     "fig_h": 146.25,
     "sheet": "rivet_reload_twohand_55_claw_build.png"
    },
+   "rivet_reload_electro_gun_left": {"reload_composite": "electro_gun"},
    "rivet_reload_plasma_rifle_left": {
     "counts": "3",
     "sheet": "rivet_reload_twohand_55_left_claw_v2.png",
     "fig_h": 165
+   },
+   "rivet_eq_homing_shard_diag": {
+    "counts": "4",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/homing_shard_p55_diag_key.png"
+   },
+   "rivet_reload_homing_shard": {
+    "counts": "5,3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/homing_shard_p55_reload_key.png"
+   },
+   "rivet_reload_homing_shard_left": {
+    "counts": "3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/homing_shard_p55_reload_left_key.png"
+   },
+   "rivet_eq_ray_gun_diag": {
+    "counts": "4",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/ray_gun_p55_diag_key.png"
+   },
+   "rivet_reload_ray_gun": {
+    "counts": "5,3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/ray_gun_p55_reload_key.png"
+   },
+   "rivet_reload_ray_gun_left": {
+    "counts": "3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/ray_gun_p55_reload_left_key.png"
+   },
+   "rivet_eq_mini_nuke_diag": {
+    "counts": "4",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/mini_nuke_p55_diag_key.png"
    }
   },
   "p70": {
+   "rivet_eq_assault_rifle": {
+    "act_k": 0.88,
+    "action_feet_up": "0,0.324,0",
+    "counts": "5,3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/eq70_key.png"
+   },
+   "rivet_eq_assault_rifle_diag": {
+    "counts": "4",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/diag70_key.png"
+   },
+   "rivet_eq_assault_rifle_left": {
+    "counts": "3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/left70_key.png"
+   },
    "rivet_eq_chainsaw": {
     "act_k": 0.82,
     "counts": "5,3",
@@ -246,16 +421,58 @@
     "sheet": "rivet_eq_flamethrower_70.png",
     "fig_h": 165
    },
+   "rivet_eq_flamethrower_left": {
+    "mirror_from": "rivet_eq_flamethrower.png",
+    "regions": "left_regions/flamethrower.json"
+   },
+   "rivet_eq_flamethrower_left_fire": {
+    "mirror_from": "rivet_eq_flamethrower.png",
+    "regions": "left_regions/flamethrower.json",
+    "pose": "_fire",
+    "source_cells": [5]
+   },
    "rivet_eq_gatling": {
     "counts": "5,3",
     "sheet": "rivet_eq_gatling_70_v2.png",
     "fig_h": 165
+   },
+   "rivet_eq_gatling_left": {
+    "mirror_from": "rivet_eq_gatling.png",
+    "regions": "left_regions/gatling.json"
+   },
+   "rivet_eq_gatling_left_fire": {
+    "mirror_from": "rivet_eq_gatling.png",
+    "regions": "left_regions/gatling.json",
+    "pose": "_fire",
+    "source_cells": [5]
+   },
+   "rivet_eq_gatling_left_fire_noflash": {
+    "mirror_from": "rivet_eq_gatling_noflash.png",
+    "regions": "left_regions/gatling.json",
+    "pose": "_fire",
+    "source_cells": [5]
    },
    "rivet_eq_gloria": {
     "act_k": 0.88,
     "counts": "5,3",
     "sheet": "rivet_eq_gloria_70.png",
     "fig_h": 165
+   },
+   "rivet_eq_gloria_left": {
+    "mirror_from": "rivet_eq_gloria.png",
+    "regions": "left_regions/gloria.json"
+   },
+   "rivet_eq_gloria_left_fire": {
+    "mirror_from": "rivet_eq_gloria.png",
+    "regions": "left_regions/gloria.json",
+    "pose": "_fire",
+    "source_cells": [5]
+   },
+   "rivet_eq_gloria_left_fire_noflash": {
+    "mirror_from": "rivet_eq_gloria_noflash.png",
+    "regions": "left_regions/gloria.json",
+    "pose": "_fire",
+    "source_cells": [5]
    },
    "rivet_eq_hand_cannon": {
     "counts": "5,3",
@@ -307,6 +524,22 @@
     "sheet": "rivet_eq_mini_nuke_70_v2.png",
     "fig_h": 165
    },
+   "rivet_eq_mini_nuke_left": {
+    "mirror_from": "rivet_eq_mini_nuke.png",
+    "regions": "left_regions/mini_nuke.json"
+   },
+   "rivet_eq_mini_nuke_left_fire": {
+    "mirror_from": "rivet_eq_mini_nuke.png",
+    "regions": "left_regions/mini_nuke.json",
+    "pose": "_fire",
+    "source_cells": [5]
+   },
+   "rivet_eq_mini_nuke_left_fire_noflash": {
+    "mirror_from": "rivet_eq_mini_nuke_noflash.png",
+    "regions": "left_regions/mini_nuke.json",
+    "pose": "_fire",
+    "source_cells": [5]
+   },
    "rivet_eq_molotov": {
     "counts": "5,3",
     "sheet": "rivet_eq_molotov_70.png",
@@ -334,6 +567,22 @@
     "counts": "5,3",
     "sheet": "rivet_eq_plasma_rifle_70.png",
     "fig_h": 165
+   },
+   "rivet_eq_plasma_rifle_left_fire": {
+    "mirror_from": "rivet_eq_plasma_rifle.png",
+    "pose": "_fire",
+    "regions": "left_regions/plasma_rifle.json",
+    "source_cells": [5]
+   },
+   "rivet_eq_plasma_rifle_left_fire_noflash": {
+    "mirror_from": "rivet_eq_plasma_rifle_noflash.png",
+    "pose": "_fire",
+    "regions": "left_regions/plasma_rifle.json",
+    "source_cells": [5]
+   },
+   "rivet_eq_plasma_rifle_left": {
+    "mirror_from": "rivet_eq_plasma_rifle.png",
+    "regions": "left_regions/plasma_rifle.json"
    },
    "rivet_eq_plasma_sword": {
     "act_k": 0.82,
@@ -368,6 +617,22 @@
     "sheet": "rivet_eq_rocket_launcher_70.png",
     "fig_h": 165
    },
+   "rivet_eq_rocket_launcher_left": {
+    "mirror_from": "rivet_eq_rocket_launcher.png",
+    "regions": "left_regions/rocket_launcher.json"
+   },
+   "rivet_eq_rocket_launcher_left_fire": {
+    "mirror_from": "rivet_eq_rocket_launcher.png",
+    "regions": "left_regions/rocket_launcher.json",
+    "pose": "_fire",
+    "source_cells": [5]
+   },
+   "rivet_eq_rocket_launcher_left_fire_noflash": {
+    "mirror_from": "rivet_eq_rocket_launcher_noflash.png",
+    "regions": "left_regions/rocket_launcher.json",
+    "pose": "_fire",
+    "source_cells": [5]
+   },
    "rivet_frames": {
     "act_k": 0.97,
     "fig_h": 165,
@@ -375,6 +640,17 @@
     "counts": "5,6",
     "left": "rivet_70_left_v4.png",
     "sheet": "rivet_70_v3.png"
+   },
+   "rivet_reload_assault_rifle": {
+    "act_k": 0.823,
+    "counts": "5,3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/reload70_key.png"
+   },
+   "rivet_reload_assault_rifle_left": {
+    "counts": "3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/reload70_left_key.png"
    },
    "rivet_reload_gatling": {
     "act_k": 0.778,
@@ -387,27 +663,68 @@
     "sheet": "rivet_reload_heavy_70_left_claw.png",
     "fig_h": 165
    },
+   "rivet_reload_machine_pistol": {"reload_composite": "machine_pistol"},
+   "rivet_reload_hand_cannon": {"reload_composite": "hand_cannon"},
    "rivet_reload_pistol": {
     "act_k": 0.706,
     "counts": "5,3",
     "fig_h": 174.6,
     "sheet": "rivet_reload_onehand_70_claw_build.png"
    },
+   "rivet_reload_machine_pistol_left": {"reload_composite": "machine_pistol"},
+   "rivet_reload_hand_cannon_left": {"reload_composite": "hand_cannon"},
    "rivet_reload_pistol_left": {
     "counts": "3",
     "sheet": "rivet_reload_onehand_70_left_claw_build.png",
     "fig_h": 165
    },
+   "rivet_reload_electro_gun": {"reload_composite": "electro_gun"},
    "rivet_reload_plasma_rifle": {
     "act_k": 0.823,
     "counts": "5,3",
     "sheet": "rivet_reload_twohand_70_claw.png",
     "fig_h": 165
    },
+   "rivet_reload_electro_gun_left": {"reload_composite": "electro_gun"},
    "rivet_reload_plasma_rifle_left": {
     "counts": "3",
     "sheet": "rivet_reload_twohand_70_left_claw.png",
     "fig_h": 165
+   },
+   "rivet_eq_homing_shard_diag": {
+    "counts": "4",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/homing_shard_p70_diag_key.png"
+   },
+   "rivet_reload_homing_shard": {
+    "counts": "5,3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/homing_shard_p70_reload_key.png"
+   },
+   "rivet_reload_homing_shard_left": {
+    "counts": "3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/homing_shard_p70_reload_left_key.png"
+   },
+   "rivet_eq_ray_gun_diag": {
+    "counts": "4",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/ray_gun_p70_diag_key.png"
+   },
+   "rivet_reload_ray_gun": {
+    "counts": "5,3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/ray_gun_p70_reload_key.png"
+   },
+   "rivet_reload_ray_gun_left": {
+    "counts": "3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/ray_gun_p70_reload_left_key.png"
+   },
+   "rivet_eq_mini_nuke_diag": {
+    "counts": "4",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/mini_nuke_p70_diag_key.png"
    }
   }
  }

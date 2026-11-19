@@ -1,0 +1,145 @@
+{
+  "root": "gtai-masters/n19/guns",
+  "camera": "p55",
+  "capture_commit": "f0990e096fc61710b443fb323fb2c7225df69f54",
+  "clips": [
+    {
+      "weapon": "assault-rifle",
+      "clip": "rifle/p55_turn_32.mp4",
+      "octants": "rifle/p55_turn_32_octants.png",
+      "still": "rifle/p55_turn_32_center.png",
+      "boss": null,
+      "frames": 160,
+      "fps": 15.0,
+      "width": 640,
+      "height": 360,
+      "ppm": 32,
+      "fire_frames": [
+        7,
+        27,
+        47,
+        67,
+        87,
+        107,
+        127,
+        147
+      ],
+      "sha256": "87746c9f4dadf49c7f9ee1e42665f2c59138ff33ae8415bd307d5c01cf03979d"
+    },
+    {
+      "weapon": "homing_shard",
+      "clip": "homing_shard/homing_shard_p55_turn32.mp4",
+      "octants": "homing_shard/homing_shard_p55_turn32_octants.png",
+      "still": "homing_shard/homing_shard_p55_turn32_center.png",
+      "boss": null,
+      "frames": 160,
+      "fps": 15.0,
+      "width": 640,
+      "height": 360,
+      "ppm": 32,
+      "fire_frames": [
+        7,
+        27,
+        47,
+        67,
+        87,
+        107,
+        127,
+        147
+      ],
+      "sha256": "d2dce1a5e25577e942110c2622f47134c6c3d4013741975563e2ae2996a94164"
+    },
+    {
+      "weapon": "ray_gun",
+      "clip": "ray_gun/ray_gun_p55_turn32.mp4",
+      "octants": "ray_gun/ray_gun_p55_turn32_octants.png",
+      "still": "ray_gun/ray_gun_p55_turn32_center.png",
+      "boss": null,
+      "frames": 160,
+      "fps": 15.0,
+      "width": 640,
+      "height": 360,
+      "ppm": 32,
+      "fire_frames": [
+        7,
+        27,
+        47,
+        67,
+        87,
+        107,
+        127,
+        147
+      ],
+      "sha256": "cedd1653511cc540af0c6e4e8ab15bac610b119df92ea46d256ed75c79536817"
+    },
+    {
+      "weapon": "mini_nuke",
+      "clip": "mini_nuke/mini_nuke_p55_turn32.mp4",
+      "octants": "mini_nuke/mini_nuke_p55_turn32_octants.png",
+      "still": "mini_nuke/mini_nuke_p55_turn32_center.png",
+      "boss": null,
+      "frames": 160,
+      "fps": 15.0,
+      "width": 640,
+      "height": 360,
+      "ppm": 32,
+      "fire_frames": [
+        7,
+        27,
+        47,
+        67,
+        87,
+        107,
+        127,
+        147
+      ],
+      "sha256": "59774e42d57e1525f2f597060305de5fda9221dfac56432229d3d2115a2a87a6"
+    },
+    {
+      "weapon": "rocket_launcher",
+      "clip": "rocket_launcher/rocket_launcher_p55_turn32.mp4",
+      "octants": "rocket_launcher/rocket_launcher_p55_turn32_octants.png",
+      "still": "rocket_launcher/rocket_launcher_p55_turn32_center.png",
+      "boss": null,
+      "frames": 160,
+      "fps": 15.0,
+      "width": 640,
+      "height": 360,
+      "ppm": 32,
+      "fire_frames": [
+        7,
+        27,
+        47,
+        67,
+        87,
+        107,
+        127,
+        147
+      ],
+      "sha256": "8750709ce345b76e4ea0e868e5ace0d9284d038c88d9a812df1f9af0237a7181"
+    },
+    {
+      "weapon": "rocket_launcher",
+      "clip": "rocket_launcher/boss/rocket_launcher_p55_turn32.mp4",
+      "octants": "rocket_launcher/boss/rocket_launcher_p55_turn32_octants.png",
+      "still": "rocket_launcher/boss/rocket_launcher_p55_turn32_center.png",
+      "boss": "servo",
+      "frames": 160,
+      "fps": 15.0,
+      "width": 640,
+      "height": 360,
+      "ppm": 32,
+      "fire_frames": [
+        7,
+        27,
+        47,
+        67,
+        87,
+        107,
+        127,
+        147
+      ],
+      "sha256": "21d08f79f954fb89fd954817cdae760f7ba8ca5989cde1eaec1240830bc4abd1"
+    }
+  ]
+}

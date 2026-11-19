@@ -82,7 +82,7 @@ static func _opt(t: DataTable, key: String, absent: float) -> float:
 
 
 func has(id: StringName) -> bool:
-	return _rows.has(id)
+	return _rows.has(WeaponArtKey.of(id))
 
 
 func ids() -> Array[StringName]:
@@ -245,12 +245,12 @@ func _read_weapon(t: DataTable, r: Dictionary) -> Row:
 
 
 func _row(id: StringName) -> Row:
-	if not _rows.has(id):
+	if not has(id):
 		if not _missing.has(id):
 			Log.warn("weapon_art", "no art row for %s" % id)
 			_missing[id] = true
 		return Row.new()
-	return _rows[id]
+	return _rows[WeaponArtKey.of(id)]
 
 
 func _load(path: String) -> Texture2D:

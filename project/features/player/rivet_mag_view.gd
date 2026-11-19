@@ -1,11 +1,7 @@
 class_name RivetMagView
 extends Node2D
-## rivet-arsenal: the magazine in Rivet's off claw through a reload (render only), a placeholder
-## ink block for a gun with no weapon-art `mag` part (WeaponMagView carries the real one: showcase
-## REQUEST 14, one magazine per reload). RivetHeldView feeds it the rig's
-## reload_k each frame: phase 0 (0..1) the spent magazine rides the off claw from the gun down to
-## the drop point and falls there (it lies on the floor DROP_LINGER_S, then fades); phase 1 (1..2)
-## a fresh one rides the claw back up into the gun; phase 2 (the rack) shows none.
+## The round carried into a shoulder launcher, or a safe ink block for an unknown weapon.
+## WeaponMagView draws owned detachable magazines, including the spent magazine on the floor.
 
 ## Block size as shares of the forearm's length (long side) and of the long side (short side).
 const LONG_K: float = 1.1
@@ -25,10 +21,13 @@ const SHINE: Color = Color("efe6d4")
 const ROCKET_K: float = 2.0
 const ROCKET_ASPECT: float = 0.35
 
+static var _warned: Dictionary[StringName, bool] = {}
+
 var _held: bool = false
 var _art: WeaponArt = WeaponArt.new()
 var _art_id: StringName = &"-"
 var _tex: Texture2D = null
+var _unknown: bool = false
 var _xf: Transform2D = Transform2D.IDENTITY
 var _size: Vector2 = Vector2.ZERO
 var _last_k: float = -1.0
@@ -61,21 +60,44 @@ func feed(rig: CutRig, k: float, tick: int, art_id: StringName = &"") -> void:
 	_now = tick
 	if art_id != _art_id:
 		_art_id = art_id
-		var rocket: bool = _art.has(art_id) and _art.projectile_fx(art_id) == &"rocket"
-		_tex = _art.fx_frames(&"rocket")[0] if rocket else null
+		_last_k = -1.0
+		_unknown = art_id != &"" and not _art.has(art_id)
+		var tube: bool = _art.has(art_id) and _art.grip_class(art_id) == &"shoulder"
+		_tex = reload_texture(art_id) if tube else null
+	if _unknown and k >= 0.0 and not _warned.has(art_id):
+		Log.warn("rivet", "unknown reload magazine for %s" % art_id)
+		_warned[art_id] = true
 	var off: int = 1 - rig.plan.gun_arm if rig.plan.gun_arm >= 0 else -1
 	var from: float = 1.0 if _tex != null else 0.0
-	_held = k >= from and k < 2.0 and off >= 0 and off < rig.sides.size()
+	_held = (
+		(_unknown or _tex != null) and k >= from and k < 2.0 and off >= 0 and off < rig.sides.size()
+	)
 	if _held:
 		_place(rig, rig.sides[off], rig.plan.fore_len[off])
 	var spent: bool = _last_k >= 0.0 and _last_k < 1.0 and k >= 1.0
-	if spent and _size != Vector2.ZERO and _tex == null:
+	if spent and _size != Vector2.ZERO and _unknown:
 		_drop()
 	_last_k = k
 	_age()
 	queue_redraw()
 	if _floor != null:
 		_floor.queue_redraw()
+
+
+## Actual reload item. WeaponMagView owns detachable magazines, RivetHeldView owns back tanks,
+## and the throwing animation takes the next bottle. Only the tubes use this view's texture.
+func reload_texture(id: StringName) -> Texture2D:
+	if not _art.has(id):
+		return null
+	match _art.grip_class(id):
+		&"shoulder":
+			var frames: Array[Texture2D] = _art.fx_frames(_art.projectile_fx(id))
+			return frames[0] if not frames.is_empty() else null
+		&"backpack_hose", &"hip_belt":
+			return _art.part_texture(id, "tank")
+		&"thrown":
+			return _art.held_texture(id)
+	return _art.part_texture(id, "mag")
 
 
 ## The block in the off claw: at the arm's hand joint (rig-local part px, in the forearm's parent

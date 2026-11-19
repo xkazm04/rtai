@@ -1,0 +1,19 @@
+**Both shoulder launchers went from 4 audit holes to 0.** The arsenal total fell from 26 to 18. All eight closures were p55 or p70 fire and left-facing cells. [Audit matrix](C:/Users/kazda/kiro/gtai-wt/n19-guns/evidence/arsenal/matrix_after_5.txt) · [JSON](C:/Users/kazda/kiro/gtai-wt/n19-guns/evidence/arsenal/matrix_after_5.json)
+
+| Change | Commits |
+|---|---|
+| Mini-nuke strips, measured placement and per-diagonal exhaust test | `5a0603b11`, `b0a74a14e`, `cad9d376e` |
+| Rocket left facings, rear exhaust and corrected p55 placement | `26002a21f`, `fa399ce6e` |
+| Boss-room turn capture and final audit | `edcdb12ce`, `6644bda03` |
+
+Both evidence indexes include 64 px/m before-and-after sheets and 10.67-second turning films at both pitches. The rocket index also includes four full-frame diagonal stills from Servo’s depot. Rocket diagonal inputs were 38° from horizontal, within each requested octant. [Mini-nuke evidence](C:/Users/kazda/kiro/gtai-masters/n19/guns/mini_nuke/frames.json) · [Rocket evidence](C:/Users/kazda/kiro/gtai-masters/n19/guns/rocket_launcher/frames.json) · [Boss film](C:/Users/kazda/kiro/gtai-masters/n19/guns/rocket_launcher/boss/rocket_launcher_p55_turn32.mp4)
+
+**Mirrored cells: none.** The closest visual calls were the mini-nuke’s p70 southwest rest pose, where the drum crowds the visor, and the rocket’s p55 northeast exhaust. Padding both rocket twins exposed the whole plume at 32 px/m while keeping the figure seated.
+
+Shared registrations are in `rivet_strips.gd` lines 11–12, `rivet_res.gd` lines 46–47, 49, 86–87 and 89, and `tools/art/rivet_frames.json` rows beginning at lines 263, 268, 273, 538, 543 and 548. The cutters, prompts, master manifest and PNG provenance were committed with the art.
+
+**Verification:** Changed tests passed 1,653 with two skips. The requested focused suite passed 21/21. All 19 lint checks passed, release compilation loaded 740 resources, and replay, parity and bake checks passed. Mutation scores were **87.5%** for `rivet_gun_diag.gd` (7 killed, 1 survived, 2 invalid) and **90%** for `arsenal_audit_files.gd` (9 killed, 1 survived).
+
+The five art, placement and exhaust-test commits used `--no-godot` after the standalone quick gate reported `SCRIPT ERROR: Compile Error: Failed to compile depended scripts.` at `GDScript::reload (res://features/characters/rig_clips.gd:0)`. The boss-tool and final-audit commits passed the regular quick gate.
+
+[astra: 2996s, exit 0]

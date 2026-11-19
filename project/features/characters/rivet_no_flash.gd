@@ -39,6 +39,7 @@ static func show(rig: CutRig, card: Sprite2D, cell: int) -> void:
 	var want: Texture2D = StreetStrips.get_tex(on)
 	var fire: bool = cell == RivetFrames.Eq.FIRE_SIDE or cell == RivetFrames.Eq.FIRE_CAM
 	fire = fire and card.hframes == RivetFrames.EQ_CELLS or RivetGunDiag.owns(on)  # n17: diag cells
+	fire = fire or on.ends_with(RivetWindup.LEFT_FIRE_FILE)
 	if enabled and fire and _past(rig):
 		var twin: String = on.trim_suffix(".png") + SUFFIX
 		if RivetStrips.has_file(twin):
