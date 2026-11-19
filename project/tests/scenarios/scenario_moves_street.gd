@@ -19,6 +19,10 @@ func run(_tree: SceneTree) -> String:
 		return "street replay changed final digest or counters"
 	Log.info("moves_street", "replay identical %s, %s" % [first.digest, first.counts])
 	Log.info("moves_street", "vaults %s at ticks %s" % [first.kinds, first.starts])
+	if not first.first_footprint.is_empty():
+		Log.info(
+			"moves_street", "unconditional 2D footprint counterexample: " + first.first_footprint
+		)
 	Log.info(
 		"moves_street",
 		(

@@ -23,6 +23,7 @@ var contacts: StreetMovesContacts = StreetMovesContacts.new()
 var target_feet: int = 0
 var target_resolved: int = 0
 var road_landings: int = 0
+var first_footprint: String
 
 
 static func record(tape: StreetMovesTape, expected: StreetMovesTrace = null) -> StreetMovesTrace:
@@ -74,6 +75,11 @@ func advance(s: Quest1Session, tape: StreetMovesTape) -> void:
 	if m.vault.frame == m.vault.ticks - 1:
 		var code: int = s.city.sim.cell_at(p.x, p.y)
 		road_landings += int(code == SimConst.C_LANE and contacts.near_traffic)
+	_check_solids(s, p, resolved)
+
+
+func _check_solids(s: Quest1Session, p: Vector2, resolved: Vector2) -> void:
+	var m: PlayerMotion = s.pilot.motion
 	failure = VaultTrial.forbidden_contact(s.stage)
 	if failure == "":
 		failure = contacts.centre(s, p)
@@ -81,6 +87,18 @@ func advance(s: Quest1Session, tape: StreetMovesTape) -> void:
 	if failure == "":
 		failure = contacts.centre(s, resolved)
 		target_resolved += int(contacts.over_target)
+		if contacts.over_target and first_footprint.is_empty():
+			first_footprint = (
+				"tick %d, city centre %s, cell %s, %s, heading %s, vault frame %d"
+				% [
+					s.stage.tick,
+					resolved,
+					resolved.floor(),
+					m.vault.hit.kind,
+					s.pilot.facing(),
+					m.vault.frame
+				]
+			)
 	if failure != "":
 		counts["overlaps"] += 1
 		failure += (
