@@ -8,12 +8,12 @@ Temporary instrumentation on A7 logged each fighter when it first entered ArenaS
 
 | Scenario | Non-wave fighters assigned on A7 | Consequence |
 |---|---|---|
-| ghost_attacks | Ghost-reel victims 1?6 and claw cops 3000?3004 | All six victims received a token. Tonnage landed one of two required slams. |
-| rivet_chainsaw | Claw cops 3000?3004 | Their pinned triggers prevented tokens, but squad steering moved them out of reach. Zero kills. |
-| rivet_claw | Claw cops 3000?3004 | Zero hits on ten attempts. |
-| rivet_katana | Claw cops 3000?3004 | Zero kills. |
-| showcase_director | Reel victims 1?30 and claw cops 3000?3004 | Victim 15 received a token. The electro-chain chapter killed three of four. |
-| rivet_city_fight | Claw cops 3000?3004 plus genuine wave members 1?14 across this scenario's runs | Its stationary-defender control removed guard pursuit while wave members still used the squad?s route map. The planted bot reached wave four. Both sides of that control now disable both navigation controllers. Its live fight and replay still run the default. |
+| ghost_attacks | Ghost-reel victims 1-6 and claw cops 3000-3004 | All six victims received a token. Tonnage landed one of two required slams. |
+| rivet_chainsaw | Claw cops 3000-3004 | Their pinned triggers prevented tokens, but squad steering moved them out of reach. Zero kills. |
+| rivet_claw | Claw cops 3000-3004 | Zero hits on ten attempts. |
+| rivet_katana | Claw cops 3000-3004 | Zero kills. |
+| showcase_director | Reel victims 1-30 and claw cops 3000-3004 | Victim 15 received a token. The electro-chain chapter killed three of four. |
+| rivet_city_fight | Claw cops 3000-3004 plus genuine wave members 1-14 across this scenario's runs | Its stationary-defender control removed guard pursuit while wave members still used the squad's route map. The planted bot reached wave four. Both sides of that control now disable both navigation controllers. Its live fight and replay still run the default. |
 
 In the city and pit probes on seed 20261103, the five claw cops had squad minds and zero shooting tokens. They consumed planning work and participated in steering. The inspected A7 probe reproduced the saved A7 digest in both encounters.
 
@@ -28,7 +28,7 @@ Times cover the first three waves. Damage and deaths cover all 2,400 arena ticks
 | A7b scoped squad | 20.03 (+13.9%) | 3.12 (-13.3%) | 17.10 (+17.7%) | 7.08 (-3.3%) | 0 |
 | A7b mixed | 23.83 (+35.6%) | 3.24 (-10.0%) | 20.63 (+41.9%) | 8.16 (+11.5%) | 0 |
 
-Compared with A7, the scoped squad changed city clear by -0.59 s and damage by +0.00 HP. Pit changed by -0.31 s and -0.36 HP. The mixed roster remains an owner?s Call on clear time. No row or weapon changed.
+Compared with A7, the scoped squad changed city clear by -0.59 s and kept mean damage at 3.12 HP. Pit changed by -0.31 s and -0.36 HP. The mixed roster remains an owner's Call on clear time. No row or weapon changed.
 
 With ownership alone, city seed 20261104 cleared only two waves within the 40-second probe. The remaining contractor repeatedly walked out of cover, spent its peek on distant sight and retreated before sustaining an engagement. Counting row-defined peek time when the enemy can see a target within attack range let all five seeds finish. The raw ownership-only results, including the incomplete seed, are in ownership.json.
 
@@ -49,3 +49,24 @@ run_scenarios: 56 ran, 0 failed
 unit-tests: 2985 passed, 0 failed, 2 skipped (GUT, headless)
 parity: native == GDScript reference bit for bit over 1200 steps (40 snapshot checks, 3502 floats); planted mutation caught at step 629
 ~~~
+
+The same six scenarios also passed under explicit guard and mixed flags. A temporary copy of the scenario runner accepted the extra game flag and ran the unchanged scenario scripts. Across guard, squad and mixed, the complete ghost, chainsaw, claw, katana and showcase telemetry files matched. The city fight exercises real waves and its live results vary by roster.
+
+## Mutation and final unit results
+
+Both mutation runs used the checked-in tests and the deterministic 20-mutant sample. The SquadMind sample contained the same 20 operations as A7.
+
+| Source | Killed / (killed + survived) | Survived | Invalid | Timed out |
+|---|---:|---:|---:|---:|
+| arena_squad.gd | 10/20 | 10 | 0 | 0 |
+| squad_mind.gd | 17/20 | 3 | 0 | 0 |
+
+A7 killed 11/20 SquadMind mutants. The current tests also kill 6 of the nine original survivors. Their A7 source lines and mutations are 88 (<= to <), 90 (+ to -), 97 (/ to *), 174 (0 to 1), 189 (<= to <), 189 (>= to >). The ownership and peek tests cover the token retreat, and the added tests cover stable cover draws plus melee cooldown, reach and facing at the exact attack boundary.
+
+~~~text
+unit-tests: 2987 passed, 0 failed, 2 skipped (GUT, headless)
+~~~
+
+The two skips are the missing Tonnage and Ohm tilt-art card strips.
+
+Godot exited with status 0 after the full scenario run. At shutdown it logged ObjectDB and resource-leak diagnostics. The A7 engine log and the explicit guard control also contain these shutdown diagnostics.

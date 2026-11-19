@@ -1030,5 +1030,419 @@
     "scenarios": "run_scenarios: 56 ran, 0 failed",
     "unit": "unit-tests: 2985 passed, 0 failed, 2 skipped (GUT, headless)",
     "parity": "parity: native == GDScript reference bit for bit over 1200 steps (40 snapshot checks, 3502 floats); planted mutation caught at step 629"
+  },
+  "mutation": {
+    "arena_squad": {
+      "results": [
+        {
+          "sample": 1,
+          "line": 14,
+          "operator": "literal",
+          "before": "0.0",
+          "after": "1.0",
+          "verdict": "survived"
+        },
+        {
+          "sample": 2,
+          "line": 60,
+          "operator": "boolean",
+          "before": "not",
+          "after": "(removed)",
+          "verdict": "killed"
+        },
+        {
+          "sample": 3,
+          "line": 60,
+          "operator": "cmp_flip",
+          "before": "==",
+          "after": "!=",
+          "verdict": "killed"
+        },
+        {
+          "sample": 4,
+          "line": 61,
+          "operator": "delete",
+          "before": "ordered.append(h)",
+          "after": "pass",
+          "verdict": "killed"
+        },
+        {
+          "sample": 5,
+          "line": 64,
+          "operator": "boundary",
+          "before": "<",
+          "after": "<=",
+          "verdict": "survived"
+        },
+        {
+          "sample": 6,
+          "line": 72,
+          "operator": "boolean",
+          "before": "false",
+          "after": "true",
+          "verdict": "killed"
+        },
+        {
+          "sample": 7,
+          "line": 83,
+          "operator": "delete",
+          "before": "_schedule()",
+          "after": "pass",
+          "verdict": "killed"
+        },
+        {
+          "sample": 8,
+          "line": 93,
+          "operator": "arith",
+          "before": "+",
+          "after": "-",
+          "verdict": "killed"
+        },
+        {
+          "sample": 9,
+          "line": 94,
+          "operator": "arith",
+          "before": "+",
+          "after": "-",
+          "verdict": "killed"
+        },
+        {
+          "sample": 10,
+          "line": 99,
+          "operator": "delete",
+          "before": "mind.retry_route(_map)",
+          "after": "pass",
+          "verdict": "killed"
+        },
+        {
+          "sample": 11,
+          "line": 106,
+          "operator": "arith",
+          "before": "/",
+          "after": "*",
+          "verdict": "survived"
+        },
+        {
+          "sample": 12,
+          "line": 106,
+          "operator": "literal",
+          "before": "0.0",
+          "after": "1.0",
+          "verdict": "survived"
+        },
+        {
+          "sample": 13,
+          "line": 133,
+          "operator": "cmp_flip",
+          "before": ">",
+          "after": "<=",
+          "verdict": "survived"
+        },
+        {
+          "sample": 14,
+          "line": 133,
+          "operator": "literal",
+          "before": "0",
+          "after": "1",
+          "verdict": "survived"
+        },
+        {
+          "sample": 15,
+          "line": 137,
+          "operator": "cmp_flip",
+          "before": ">",
+          "after": "<=",
+          "verdict": "killed"
+        },
+        {
+          "sample": 16,
+          "line": 137,
+          "operator": "boundary",
+          "before": ">",
+          "after": ">=",
+          "verdict": "killed"
+        },
+        {
+          "sample": 17,
+          "line": 144,
+          "operator": "cmp_flip",
+          "before": ">",
+          "after": "<=",
+          "verdict": "survived"
+        },
+        {
+          "sample": 18,
+          "line": 144,
+          "operator": "boundary",
+          "before": ">",
+          "after": ">=",
+          "verdict": "survived"
+        },
+        {
+          "sample": 19,
+          "line": 146,
+          "operator": "cmp_flip",
+          "before": ">",
+          "after": "<=",
+          "verdict": "survived"
+        },
+        {
+          "sample": 20,
+          "line": 146,
+          "operator": "literal",
+          "before": "0",
+          "after": "1",
+          "verdict": "survived"
+        }
+      ],
+      "counts": {
+        "survived": 10,
+        "killed": 10
+      },
+      "killed": 10,
+      "denominator": 20
+    },
+    "squad_mind": {
+      "results": [
+        {
+          "sample": 1,
+          "line": 16,
+          "operator": "boolean",
+          "before": "false",
+          "after": "true",
+          "verdict": "killed"
+        },
+        {
+          "sample": 2,
+          "line": 23,
+          "operator": "literal",
+          "before": "1",
+          "after": "0",
+          "verdict": "survived"
+        },
+        {
+          "sample": 3,
+          "line": 24,
+          "operator": "literal",
+          "before": "0",
+          "after": "1",
+          "verdict": "survived"
+        },
+        {
+          "sample": 4,
+          "line": 29,
+          "operator": "literal",
+          "before": "0",
+          "after": "1",
+          "verdict": "killed"
+        },
+        {
+          "sample": 5,
+          "line": 40,
+          "operator": "cmp_flip",
+          "before": "<=",
+          "after": ">",
+          "verdict": "killed"
+        },
+        {
+          "sample": 6,
+          "line": 49,
+          "operator": "arith",
+          "before": "-=",
+          "after": "+=",
+          "verdict": "killed"
+        },
+        {
+          "sample": 7,
+          "line": 84,
+          "operator": "literal",
+          "before": "0",
+          "after": "1",
+          "verdict": "survived"
+        },
+        {
+          "sample": 8,
+          "line": 86,
+          "operator": "cmp_flip",
+          "before": "<",
+          "after": ">=",
+          "verdict": "killed"
+        },
+        {
+          "sample": 9,
+          "line": 89,
+          "operator": "boundary",
+          "before": "<=",
+          "after": "<",
+          "verdict": "killed"
+        },
+        {
+          "sample": 10,
+          "line": 91,
+          "operator": "arith",
+          "before": "+",
+          "after": "-",
+          "verdict": "killed"
+        },
+        {
+          "sample": 11,
+          "line": 98,
+          "operator": "arith",
+          "before": "/",
+          "after": "*",
+          "verdict": "killed"
+        },
+        {
+          "sample": 12,
+          "line": 114,
+          "operator": "cmp_flip",
+          "before": "!=",
+          "after": "==",
+          "verdict": "killed"
+        },
+        {
+          "sample": 13,
+          "line": 129,
+          "operator": "boolean",
+          "before": "true",
+          "after": "false",
+          "verdict": "killed"
+        },
+        {
+          "sample": 14,
+          "line": 153,
+          "operator": "boolean",
+          "before": "false",
+          "after": "true",
+          "verdict": "killed"
+        },
+        {
+          "sample": 15,
+          "line": 158,
+          "operator": "boundary",
+          "before": "<",
+          "after": "<=",
+          "verdict": "killed"
+        },
+        {
+          "sample": 16,
+          "line": 160,
+          "operator": "cmp_flip",
+          "before": "<",
+          "after": ">=",
+          "verdict": "killed"
+        },
+        {
+          "sample": 17,
+          "line": 175,
+          "operator": "boolean",
+          "before": "or",
+          "after": "and",
+          "verdict": "killed"
+        },
+        {
+          "sample": 18,
+          "line": 175,
+          "operator": "literal",
+          "before": "0",
+          "after": "1",
+          "verdict": "killed"
+        },
+        {
+          "sample": 19,
+          "line": 190,
+          "operator": "boundary",
+          "before": "<=",
+          "after": "<",
+          "verdict": "killed"
+        },
+        {
+          "sample": 20,
+          "line": 190,
+          "operator": "boundary",
+          "before": ">=",
+          "after": ">",
+          "verdict": "killed"
+        }
+      ],
+      "counts": {
+        "killed": 17,
+        "survived": 3
+      },
+      "killed": 17,
+      "denominator": 20
+    },
+    "former_survivors_killed": [
+      {
+        "a7_line": 88,
+        "current_line": 89,
+        "operator": "boundary",
+        "before": "<=",
+        "after": "<"
+      },
+      {
+        "a7_line": 90,
+        "current_line": 91,
+        "operator": "arith",
+        "before": "+",
+        "after": "-"
+      },
+      {
+        "a7_line": 97,
+        "current_line": 98,
+        "operator": "arith",
+        "before": "/",
+        "after": "*"
+      },
+      {
+        "a7_line": 174,
+        "current_line": 175,
+        "operator": "literal",
+        "before": "0",
+        "after": "1"
+      },
+      {
+        "a7_line": 189,
+        "current_line": 190,
+        "operator": "boundary",
+        "before": "<=",
+        "after": "<"
+      },
+      {
+        "a7_line": 189,
+        "current_line": 190,
+        "operator": "boundary",
+        "before": ">=",
+        "after": ">"
+      }
+    ]
+  },
+  "final_unit": "unit-tests: 2987 passed, 0 failed, 2 skipped (GUT, headless)",
+  "station_modes": {
+    "checked": {
+      "stations-guard": [
+        "ghost_attacks",
+        "rivet_chainsaw",
+        "rivet_city_fight",
+        "rivet_claw",
+        "rivet_katana",
+        "showcase_director"
+      ],
+      "stations-mixed": [
+        "ghost_attacks",
+        "rivet_chainsaw",
+        "rivet_city_fight",
+        "rivet_claw",
+        "rivet_katana",
+        "showcase_director"
+      ]
+    },
+    "telemetry_equal_in_guard_squad_and_mixed": [
+      "ghost-attacks.json",
+      "rivet-chainsaw-telemetry.json",
+      "rivet-claw-telemetry.json",
+      "rivet-katana-telemetry.json",
+      "showcase-director-telemetry.json"
+    ]
   }
 }

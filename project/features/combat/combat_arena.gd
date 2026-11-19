@@ -68,8 +68,8 @@ func _init(p_tuning: CombatTuning, events: EventBus, rng: RandomNumberGenerator)
 
 
 ## A regular guard near the spawn point, spread up to SPAWN_SPREAD_M.
-## The source station owns this guard?s behaviour. ArenaSquad registers and equips its wave
-## members at spawn, while regular guards use the arena?s guard tell or GuardBrain.
+## The source station owns this guard's behaviour. ArenaSquad registers and equips its wave
+## members at spawn, while regular guards use the arena's guard tell or GuardBrain.
 func spawn_guard(at: Vector2) -> Fighter:
 	var spread: Vector2 = Vector2(_rng.randf_range(-1.0, 1.0), _rng.randf_range(-1.0, 1.0))
 	var pos: Vector2 = at + spread * SPAWN_SPREAD_M

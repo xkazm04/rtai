@@ -1,6 +1,6 @@
 extends Scenario
 ## City production fight, measured at the same pre-ballistics point as the five-seed probe.
-## Stop on the last kill of wave five. Use the probe?s five seeds for flank opportunities:
+## Stop on the last kill of wave five. Use the five probe seeds for flank opportunities:
 ## an underfilled ranged group can give every living flanker a shooting token.
 
 const WAVES: int = 5
