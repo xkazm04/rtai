@@ -85,13 +85,15 @@ func _spot(drawn: GhostDrawn, at: Vector2, facing: float, steps: int, shown: boo
 	return Vector2.ZERO
 
 
-func _attach_body(parent: Node2D, body: Node2D, drawn: GhostDrawn, id: StringName) -> void:
+static func _attach_body(parent: Node2D, body: Node2D, drawn: GhostDrawn, id: StringName) -> void:
 	body.visible = false
-	if not GhostLook.spectral(id):
-		parent.add_child(body)
-		return
-	drawn.flight = GhostFlight.make(id)
-	drawn.hover = true
-	drawn.flight.visible = false
-	parent.add_child(drawn.flight)
-	drawn.flight.mount(body)
+	if GhostLook.spectral(id):
+		drawn.flight = GhostFlight.make(id)
+		if drawn.flight != null:
+			drawn.hover = true
+			drawn.flight.visible = false
+			parent.add_child(drawn.flight)
+			drawn.flight.mount(body)
+			return
+		Log.warn("ghost_flight", "missing hover row for %s, keeping its ground rig" % id)
+	parent.add_child(body)
