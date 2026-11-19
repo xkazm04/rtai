@@ -71,7 +71,7 @@ const HELMET_X: Dictionary[String, PackedFloat32Array] = {
 	"p55/gloria": [114.0, 90.0, 110.5, 135.0],
 	"p55/electro_gun": [96.8, 67.2, 97.0, 126.0],
 	"p55/mini_nuke": [105.0, 103.0, 101.0, 101.5],
-	"p55/rocket_launcher": [83.5, 51.5, 88.5, 119.5],
+	"p55/rocket_launcher": [83.5, 83.5, 88.5, 119.5],
 }
 ## The boots' pad above the cell bottom (strip px), keyed "<art>/<gun>": cell height - 1 - boot row
 ## (the pistol's cells 0/2 at row 177 and 1/3 at 179 of 180). The other guns ship the asset lane's

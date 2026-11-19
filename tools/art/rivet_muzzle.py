@@ -85,6 +85,12 @@ FIRE_PINNED = {("p70", "rivet_eq_assault_rifle", 5): [290, 102],
                ("p55", "rivet_eq_assault_rifle", 5): [202, 79],
                ("p55", "rivet_eq_assault_rifle", 6): [103, 125]}
 LEFT_PINNED = {
+    ("p70", "rivet_eq_rocket_launcher_left", 0): [21, 103],
+    ("p70", "rivet_eq_rocket_launcher_left", 1): [1, 69],
+    ("p70", "rivet_eq_rocket_launcher_left", 2): [15, 16],
+    ("p55", "rivet_eq_rocket_launcher_left", 0): [17, 75],
+    ("p55", "rivet_eq_rocket_launcher_left", 1): [1, 44],
+    ("p55", "rivet_eq_rocket_launcher_left", 2): [9, 16],
     ("p70", "rivet_eq_mini_nuke_left", 2): [17, 52],
     ("p70", "rivet_eq_mini_nuke_left", 1): [7, 64],
     ("p70", "rivet_eq_mini_nuke_left", 0): [21, 72],
@@ -153,7 +159,7 @@ DIAG_PINNED = {
         "0": [106, 86], "1": [88, 26], "2": [27, 79], "3": [37, 33]
     },
     ("p55", "rivet_eq_rocket_launcher_diag"): {
-        "0": [84, 78], "1": [78, 34], "2": [29, 79], "3": [35, 33]
+        "0": [84, 78], "1": [99, 34], "2": [29, 79], "3": [35, 33]
     },
 }
 

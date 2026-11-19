@@ -46,6 +46,7 @@ const X15: PackedStringArray = [
 	"p70/rivet_eq_mini_nuke_left.png",
 	"p70/rivet_eq_mini_nuke_diag.png",
 	"p70/rivet_eq_rocket_launcher.png",
+	"p70/rivet_eq_rocket_launcher_left.png",
 	"p70/rivet_eq_rocket_launcher_diag.png",  # n17: drawn on the strip's cells (it458/it463)
 	"p55/rivet_eq_assault_rifle.png",
 	"p55/rivet_eq_assault_rifle_left.png",
@@ -85,6 +86,7 @@ const X15: PackedStringArray = [
 	"p55/rivet_eq_mini_nuke_left.png",
 	"p55/rivet_eq_mini_nuke_diag.png",
 	"p55/rivet_eq_rocket_launcher.png",
+	"p55/rivet_eq_rocket_launcher_left.png",
 	"p55/rivet_eq_rocket_launcher_diag.png",  # n17: drawn on the strip's cells (it458/it462)
 	"p70/rivet_reload_assault_rifle.png",
 	"p70/rivet_reload_assault_rifle_left.png",
