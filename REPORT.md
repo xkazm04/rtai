@@ -18,6 +18,8 @@ Masters and frames live in `C:/Users/kazda/kiro/gtai-masters/n19/move/` (not in 
 | Walk-slide measurement + proposal | `tools/film/foot_slide.py`, `project/features/player/stride_match.gd`, `gtai-masters/n19/move/walk/INDEX.md` | planted-step drift 14.2 -> 0.7 cm at 2.4 m/s (p55 pistol, 64 px/m) (Astra) |
 | Solid fuzz (both moves, free input) | `project/tests/scenarios/scenario_moves_fuzz.gd` + `moves_fuzz_tape.gd`: hostile bursts (sprint, roll, cover, fire, roll-then-cover, cover-then-roll) through the real pilot input path, pit arena + city block, checked after every whole stage step with the shared `VaultTrial.forbidden_contact` | 24,000 checked ticks (2 x 6,000 per map), 0 forbidden overlaps; every counter non-zero (Astra counts; scenario green in the director's gate) |
 | Car enter/exit | `project/features/vehicles/vehicle_doors.gd` (sim phase, `--car-doors`, data `doors.enabled` false), `vehicle_door_view.gd` (render-only motion, on); `scenario_vehicle_doors.gd`; frames `car/INDEX.md` | enter 14 ticks, exit 10 ticks below 1.5 m/s; flag-off digests unchanged (gate 60/60); mutate door file 17/20 = 85 % (Astra) |
+| Mutation (sampled, after gap tests) | `build/mutate/calls-polish-survivors.md` (per-survivor diagnosis) | `player_vault.gd` 20/20 (was 50 % at 22:41, 14/20 before the last tests), `stride_match.gd` 14/15 (1 equivalent), `vehicle_door_view.gd` 14/14; earlier `player_cover.gd` 19/20, `cover_query.gd` 18/19, `vehicle_doors.gd` 17/20 (Astra) |
+| Snapshot gate (director) | `build/gate/eea5e9b92ac8/gate.json` | `gate: PASS` on eea5e9b9: lint 19/19, unit 3053/0, scenarios 60/60, parity bit for bit, look goldens 11/11, block goldens 5/5, export-audit 754/0 |
 
 ## What does not
 - Cover snaps only to arena **station** boxes, because the arena's shot-stop rule (`ArenaWalls.blocks`) knows only stations. City props stop no shot today, so cover refuses in the open city and in quest 1 instead of faking protection. Quest 1's hide stays its own case (the p55 hide card is a dumpster with Rivet inside, not wall cover).
@@ -41,7 +43,11 @@ Stills: `C:/Users/kazda/kiro/gtai-masters/n19/move/calls/` (INDEX.md there), sam
 - Conflicts at 03:15: with n19-ai in `launch_args.gd` (keep both blocks) and `prop_occlusion.gd` (take ai's `_hits_of`, add `h.rig = rigs[i]` after its `h.area = area`); `tools/debt/baseline.json` with every lane (`node tools/debt/merge_baseline.mjs`).
 
 ## Next steps
-TODO
+- Owner Calls: `peek_m`, `vault.bodies_block_landing`, car-door sim phase (all one data value each).
+- Cover in the open city and in quest 1 needs a city shot-stop for props (gfx/ai: it moves city combat and digests). Then the quest-1 hide can become a cover case.
+- Anim applies the `StrideMatch` line in `rivet_walk.gd` and re-cuts the armed walk with more than 4 cells (the ride inside one held drawing stays at 33.7 cm).
+- The ai lane can call `CoverQuery` (`project/features/player/cover_query.gd`: cover near a point, the side it protects) for enemies in cover.
+- Replay header: record the session type and move flags so a bare `--replay` of an arena recording reproduces (boot/core).
 
 ## Astra ledger
 | Call | Minutes | Verdict |
@@ -55,4 +61,4 @@ TODO
 | cells-fix (+ flip-on) | 75 | accepted |
 | tidy-walk | 26 | accepted |
 | solid-fuzz (+ car doors) | 72 | accepted with follow-up (launch_args reword, door ghost over the roof) |
-| calls-polish | TODO | TODO |
+| calls-polish | 62 | accepted (launch_args restored verbatim, car door drawn beneath the sedan, three Call stills, `vault.bodies_block_landing` data value, mutation gaps closed) |
