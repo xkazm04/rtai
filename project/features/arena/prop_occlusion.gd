@@ -118,7 +118,7 @@ func _draw() -> void:
 			done[h.prop] = true
 			_floor._prop(self, base + h.prop.at, h.prop)
 	for h: Hit in _hits:
-		if CoverUpperCard.draw_hidden(self, h):
+		if CoverUpperCard.draw_hidden(self, h.rig, h.cut):
 			continue
 		var figure: PackedVector2Array = silhouette(h.feet, h.head)
 		for cut: PackedVector2Array in h.cut:

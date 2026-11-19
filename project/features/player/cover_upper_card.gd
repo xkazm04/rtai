@@ -7,39 +7,43 @@ const STANCE: StringName = &"rivet_cover_ink"
 const BRONZE: Color = Color("#39291e")
 static var _outlines: Dictionary[String, Array] = {}
 
+var _card: Sprite2D
+var _scale: Vector2
+var _alpha: float
 
-static func bind(rig: CutRig, cover: PlayerCover) -> void:
-	if rig == null:
-		return
-	if cover != null and cover.spot != null:
-		rig.set_meta(STANCE, cover)
-	elif rig.has_meta(STANCE):
+
+static func publish(rig: Node2D, source: Sprite2D, pose_scale: Vector2, opacity: float) -> void:
+	var ink: CoverUpperCard
+	if rig.has_meta(STANCE):
+		ink = rig.get_meta(STANCE)
+	else:
+		ink = CoverUpperCard.new()
+		rig.set_meta(STANCE, ink)
+	ink._card = source
+	ink._scale = pose_scale
+	ink._alpha = opacity
+
+
+static func release(rig: Node2D) -> void:
+	if rig.has_meta(STANCE):
 		rig.remove_meta(STANCE)
 
 
-static func draw_hidden(canvas: Node2D, hit: PropOcclusion.Hit) -> bool:
-	if hit.rig == null or not hit.rig.has_meta(STANCE):
+static func draw_hidden(canvas: Node2D, rig: Node2D, cuts: Array[PackedVector2Array]) -> bool:
+	if rig == null or not rig.has_meta(STANCE):
 		return false
-	var cover: PlayerCover = hit.rig.get_meta(STANCE)
-	if cover.spot == null or hit.rig.dead:
-		return false
-	var card: Sprite2D = hit.rig.head_card
-	if (
-		not cover.silhouette_enabled
-		or cover.silhouette_alpha <= 0
-		or not RivetFrames.drawn(hit.rig)
-	):
+	var ink: CoverUpperCard = rig.get_meta(STANCE)
+	if ink._alpha <= 0.0 or not is_instance_valid(ink._card):
 		return true
-	var color: Color = Color(BRONZE, cover.silhouette_alpha)
-	var k: Vector2 = Vector2.ONE
-	if not MoveCells.shows(card):
-		k = CoverView.scale_for(cover.crouch_scale_y, cover.crouch_weight(), false)
-	var rig_xf: Transform2D = hit.rig.global_transform
-	var pose: Transform2D = rig_xf.scaled_local(k) * rig_xf.affine_inverse()
-	var xf: Transform2D = canvas.global_transform.affine_inverse() * pose * card.global_transform
-	for line: PackedVector2Array in outlines(card):
+	var color: Color = Color(BRONZE, ink._alpha)
+	var rig_xf: Transform2D = rig.global_transform
+	var pose: Transform2D = rig_xf.scaled_local(ink._scale) * rig_xf.affine_inverse()
+	var xf: Transform2D = (
+		canvas.global_transform.affine_inverse() * pose * ink._card.global_transform
+	)
+	for line: PackedVector2Array in outlines(ink._card):
 		var placed: PackedVector2Array = xf * line
-		for cut: PackedVector2Array in hit.cut:
+		for cut: PackedVector2Array in cuts:
 			for part: PackedVector2Array in Geometry2D.intersect_polygons(placed, cut):
 				if not Geometry2D.triangulate_polygon(part).is_empty():
 					canvas.draw_colored_polygon(part, color)

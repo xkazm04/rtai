@@ -15,7 +15,6 @@ var _followers: Array[Node2D] = []
 static func feed(rigs: CharacterRigs, motion: PlayerMotion, tick: int) -> void:
 	var host: CoverView = rigs.get_meta(ACTIVE, null) if rigs.has_meta(ACTIVE) else null
 	var cover: PlayerCover = motion.cover if motion != null else null
-	CoverUpperCard.bind(rigs.rig_for(rigs.feed.ids[0]) if rigs.feed.count > 0 else null, cover)
 	MotionRigPose.publish(rigs, MoveCells.COVER, cover_cell(cover))
 	if cover == null or cover.spot == null:
 		if host != null:
@@ -46,6 +45,16 @@ static func scale_for(crouch_scale_y: float, weight: float, flat: bool) -> Vecto
 	return Vector2(height if flat else 1.0, height)
 
 
+## Send the occluder the very transform used by this frame's pose, including a blended tuck.
+static func sync_ink(rig: CutRig, cover: PlayerCover, pose_scale: Vector2) -> void:
+	if rig.dead or cover == null or cover.spot == null:
+		CoverUpperCard.release(rig)
+		return
+	var source: Sprite2D = rig.head_card if RivetFrames.drawn(rig) else null
+	var alpha: float = cover.silhouette_alpha if cover.silhouette_enabled else 0.0
+	CoverUpperCard.publish(rig, source, pose_scale, alpha)
+
+
 func _release(motion: PlayerMotion, tick: int) -> void:
 	# A toggle exits the sim immediately. Finish rising over leave_ticks on the render side.
 	var elapsed: int = maxi(tick - _tick, 0)
@@ -55,6 +64,7 @@ func _release(motion: PlayerMotion, tick: int) -> void:
 		return
 	var rig: CutRig = _rigs.rig_for(_rigs.feed.ids[0])
 	if rig != null:
+		CoverUpperCard.release(rig)
 		MotionRigPose.place(rig, Transform2D.IDENTITY)
 	for follower: Node2D in _followers:
 		RenderingServer.canvas_item_set_transform(follower.get_canvas_item(), follower.transform)
@@ -77,6 +87,7 @@ func _place() -> void:
 	var k: Vector2 = scale_for(_cover.crouch_scale_y, _weight, view.is_flat())
 	if MoveCells.shows(rig.head_card):
 		k = Vector2.ONE
+	sync_ink(rig, _cover, k)
 	var pose: Transform2D = Transform2D(0.0, k, 0.0, Vector2.ZERO)
 	MotionRigPose.place(rig, pose)
 	if _followers.is_empty():

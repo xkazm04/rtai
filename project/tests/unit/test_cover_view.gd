@@ -63,16 +63,15 @@ func test_peek_stands_upright_and_high_cover_keeps_the_standing_cell() -> void:
 
 func test_cover_takes_over_the_generic_wedge_even_when_silhouette_is_disabled() -> void:
 	var rig: CutRig = autofree(CutRig.new())
-	var hit: PropOcclusion.Hit = PropOcclusion.Hit.new()
-	hit.rig = rig
+	var cuts: Array[PackedVector2Array] = []
 	var canvas: Node2D = autofree(Node2D.new())
 	_step(Vector2.ZERO, &"cover")
-	CoverUpperCard.bind(rig, cover)
 	cover.silhouette_enabled = false
-	assert_true(CoverUpperCard.draw_hidden(canvas, hit), "skip the generic ink and cream rim")
+	CoverView.sync_ink(rig, cover, Vector2.ONE)
+	assert_true(CoverUpperCard.draw_hidden(canvas, rig, cuts), "skip the generic ink and cream rim")
 	cover.interrupt()
-	CoverUpperCard.bind(rig, cover)
-	assert_false(CoverUpperCard.draw_hidden(canvas, hit), "ordinary depth markers resume")
+	CoverView.sync_ink(rig, cover, Vector2.ONE)
+	assert_false(CoverUpperCard.draw_hidden(canvas, rig, cuts), "ordinary depth markers resume")
 
 
 func test_hidden_contour_uses_only_the_selected_cells_alpha_and_flip() -> void:
