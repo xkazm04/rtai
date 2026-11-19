@@ -67,6 +67,35 @@ func test_the_dead_lie_down_and_do_not_shoot() -> void:
 	assert_eq(f.clip[0], RigClips.Clip.NONE)
 
 
+func test_wave_member_outside_rig_radius_keeps_one_drawn_body() -> void:
+	var host: ArenaRigs = _rigs()
+	var pit: ArenaPit = ArenaPit.new()
+	var guard: Fighter = _armed(17)
+	pit.standing.append(guard)
+	var rigs: CharacterRigs = host.rigs
+	add_child(rigs)
+	var bus: EventBus = autofree(EventBus.new())
+	var data: DataStore = autofree(DataStore.new())
+	rigs.setup(World.build_context(bus, data, 7))
+	host._put(0, guard, BodyPlan.Kind.COP)
+	rigs.feed.looks[0] = ArenaSquadLooks.PATROL_LOOK
+	rigs.feed.count = 1
+	var cards: ArenaWaveCards = ArenaWaveCards.attach(rigs, pit.standing)
+	for distance: float in [20.0, 0.0, 20.0]:
+		rigs.focus = rigs.feed.pos[0] + Vector2.RIGHT * distance * SimConst.PX_PER_M
+		for _tick: int in CharacterRigs.SELECT_EVERY:
+			rigs.step_ticks(1)
+			cards._process(0.0)
+		var card: Sprite2D = cards.card_for(guard.id)
+		assert_not_null(card.texture)
+		assert_eq(card.is_visible_in_tree(), distance > CharacterRigs.RADIUS_M)
+		assert_eq(rigs.rig_for(guard.id) != null, distance <= CharacterRigs.RADIUS_M)
+		assert_eq(card.position, rigs.feed.pos[0])
+	guard.hp = 0
+	cards._process(0.0)
+	assert_null(cards.card_for(guard.id))
+
+
 func test_a_rifle_kicks_harder_than_the_pistol() -> void:
 	var r: ArenaRigs = _rigs()
 	r.plan = ArenaPlan.shipped()

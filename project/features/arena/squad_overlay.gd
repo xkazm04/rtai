@@ -47,9 +47,14 @@ func _anchor(h: Fighter, screen: Transform2D) -> Vector2:
 	var rig: CutRig = _host.rigs.rig_for(h.id)
 	if rig == null:
 		rig = _host.robots.rig_for(h.id)
-	if rig == null or not rig.is_visible_in_tree():
-		return Vector2.INF
-	return rig.get_global_transform_with_canvas().origin
+	var card: Sprite2D = _host.wave_cards.card_for(h.id)
+	if rig != null and rig.is_visible_in_tree():
+		card = rig.head_card
+		if card == null or not card.is_visible_in_tree():
+			return rig.torso.get_global_transform_with_canvas().origin
+	if card != null and card.is_visible_in_tree():
+		return card.get_global_transform_with_canvas() * card.get_rect().get_center()
+	return Vector2.INF
 
 
 func _draw_wave() -> void:
@@ -78,7 +83,7 @@ func _draw_wave() -> void:
 			_ink.draw_line(at, end, Ink.INK, 3.0, true)
 			_ink.draw_line(at, end, color, 1.0, true)
 			_ink.draw_circle(end, 3.0, color, false, 1.3, true)
-		var label: Vector2 = at + Vector2(9.0, 10.0)
+		var label: Vector2 = at + Vector2(-6.0, 6.0)
 		var font: Font = ThemeDB.fallback_font
 		_ink.draw_string_outline(font, label, letter, HORIZONTAL_ALIGNMENT_LEFT, -1, 18, 5, Ink.INK)
 		_ink.draw_string(font, label, letter, HORIZONTAL_ALIGNMENT_LEFT, -1, 18, color)

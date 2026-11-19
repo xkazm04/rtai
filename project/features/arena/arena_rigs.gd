@@ -6,9 +6,7 @@ extends RigHost
 ## positions in world pixels at SimConst.PX_PER_M without changing the sim or drawing RNG.
 
 const DOWN_FLAGS: int = RigFeed.Flag.DEAD | RigFeed.Flag.DOWN
-## CharacterRigs poses full rigs within RADIUS_M (14 m) of its focus and leaves the rest to the
-## city's crowd atlas, which the arena has not got: the focus sits this far ahead of Rivet along
-## his aim, so the rigs cover the screen he faces (the range's 20 m lane), Rivet still inside.
+## The rig focus sits ahead of Rivet; wave members beyond its full rigs use arena wave cards.
 const FOCUS_AHEAD_M: float = 7.0
 ## rivet-arsenal: the claw combo's arm per hit (left jab, right backhand, both-hands slam).
 const STRIKE_ARMS: Array[int] = [BodyPlan.L, BodyPlan.R, 2]
@@ -26,6 +24,7 @@ var crowd: CrowdReact = null
 var ghost_view: GhostFormView = null
 ## ghost-powers: the arena's robot on the robot thug's rig (null in quest 1).
 var robots: ArenaRobotRigs = null
+var wave_cards: ArenaWaveCards
 var _pit: ArenaPit
 var _squad_looks: ArenaSquadLooks = ArenaSquadLooks.new()
 var _last: Dictionary[int, Vector2] = {}
@@ -75,6 +74,7 @@ func attach(p_stage: CollectCallStage, view: CollectCallView, ctx: WorldContext)
 		return true
 	_pit = arena_stage.pit
 	_add_robots(layer, p_stage.arena, view.blood)
+	wave_cards = ArenaWaveCards.attach(rigs, _pit.standing)
 	SquadOverlay.attach(rigs, arena_stage, self)
 	for t: ArenaTargets.Target in arena_stage.targets.targets:
 		var look: Vector2i = ReactLineBot.look_of(t.spawn.id)
