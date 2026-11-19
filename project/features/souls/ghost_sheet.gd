@@ -13,12 +13,15 @@ const LEFT_ROWS: int = 3
 ## The left sheet's row per screen octant (RigHeadCard's octants; -1 = drawn on the right sheet).
 const LEFT_ROW: PackedInt32Array = [-1, -1, -1, 0, 1, 2, -1, -1]
 const LEFT: bool = true
+const TONNAGE_MID_STEP: int = 5
 
 var tex: Texture2D = null
 var cols: int = 8
 var left: Texture2D = null
 var left_cols: int = 0
 var hitback: GhostSheet = null  # optional one-column alternate on an act grid
+var _profile_mid: GhostSheet = null
+var _mid_window: Vector2 = Vector2.ZERO
 
 
 func _init(p_tex: Texture2D, p_cols: int, p_left: Texture2D = null, p_left_cols: int = 0) -> void:
@@ -37,6 +40,28 @@ static func of(path: String, p_cols: int, p_left_cols: int = -1) -> GhostSheet:
 	return GhostSheet.new(
 		load(path) as Texture2D, p_cols, lt, p_cols if p_left_cols < 0 else p_left_cols
 	)
+
+
+## Tonnage's p70 right profile has one extra drawing between C6 and C7.
+## Use the middle half of the capped step, centred on the usual cell change.
+static func walk_of(path: String, steps: PackedFloat32Array) -> GhostSheet:
+	var sheet: GhostSheet = of(path, GhostStride.cols_of(steps))
+	if (
+		sheet != null
+		and steps.size() > TONNAGE_MID_STEP
+		and path.ends_with("/p70/tonnage_walk8.png")
+	):
+		sheet._profile_mid = of(path.get_basename() + "_mid.png", 1)
+		var dwell: PackedFloat32Array = GhostStride.dwell_of(steps)
+		var boundary: float = 0.0
+		var total: float = 0.0
+		for i: int in dwell.size():
+			total += dwell[i]
+			if i <= TONNAGE_MID_STEP:
+				boundary += dwell[i]
+		var quarter: float = steps[TONNAGE_MID_STEP] * 0.25
+		sheet._mid_window = Vector2(boundary - quarter, boundary + quarter) / total
+	return sheet
 
 
 ## An act grid (`key` "<name>/<pitch>"): its columns and its left sheet's, with Dent's jab columns
@@ -68,7 +93,15 @@ func drawn_left(oct: int, col: int) -> bool:
 
 
 ## Puts cell `col` of octant `oct` on `spr`: texture, grid, feet offset, frame and mirror.
-func show(spr: Sprite2D, oct: int, col: int) -> void:
+func show(spr: Sprite2D, oct: int, col: int, phase: float = -1.0) -> void:
+	if (
+		_profile_mid != null
+		and oct == 0
+		and (col == TONNAGE_MID_STEP or col == TONNAGE_MID_STEP + 1)
+	):
+		if phase >= _mid_window.x and phase < _mid_window.y:
+			_profile_mid.show(spr, oct, 0)
+			return
 	var on_left: bool = drawn_left(oct, col)
 	var t: Texture2D = left if on_left else tex
 	var c: int = left_cols if on_left else cols

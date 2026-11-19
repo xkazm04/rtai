@@ -55,3 +55,30 @@ func test_shipped_walk_timing_uses_the_filmed_cap_for_each_pitch() -> void:
 	assert_eq(GhostStride.table_of("tonnage", "p55"), p55)
 	var ohm: PackedFloat32Array = PackedFloat32Array(GhostStride.TABLES["ohm/p70"])
 	assert_eq(GhostStride.table_of("ohm", "p70"), ohm)
+
+
+func test_tonnage_shows_extra_pad_pose_only_in_the_right_profile_step() -> void:
+	var saved: ViewMode = ViewMode.shared()
+	ViewMode.select("combo")
+	var rig: TonnageRig = autofree(TonnageRig.new())
+	var host: Node2D = add_child_autofree(Node2D.new())
+	var drawn: GhostDrawn = rig.drawn
+	var mid: String = GhostDrawn.path_of("p70", "tonnage", "walk8_mid")
+	var count: int = 0
+	for i: int in 160:
+		host.position.x += 1.0
+		assert_true(drawn.step(host, [], 32.0, 1.0, 0.0))
+		# The middle half of capped step 5 is phase [0.39851, 0.45897).
+		var between: bool = drawn._phase >= 0.39851 and drawn._phase < 0.45897
+		assert_eq(drawn._spr.texture.resource_path == mid, between)
+		if between:
+			count += 1
+			assert_eq(drawn._spr.frame_coords, Vector2i(0, 2))
+			drawn._show_cell(drawn._walk, 4, drawn._col)
+			assert_eq(
+				drawn._spr.texture.resource_path, GhostDrawn.path_of("p70", "tonnage", "walk8_left")
+			)
+			drawn._show_cell(drawn._act, 0, GhostDrawn.HIT_COL)
+			assert_eq(drawn._spr.texture.resource_path, GhostDrawn.path_of("p70", "tonnage", "act"))
+	assert_gt(count, 0)
+	ViewMode._shared = saved

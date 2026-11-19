@@ -108,7 +108,7 @@ func _show_cell(sheet: GhostSheet, oct: int, col: int, rear_hits: bool = HIT_FRO
 		if blow.normalized().dot(Vector2.from_angle(_look)) > REAR_DOT:
 			sheet.hitback.show(_spr, oct, 0)
 			return
-	sheet.show(_spr, oct, col)
+	sheet.show(_spr, oct, col, _phase)
 
 
 static func path_of(art: String, name: String, sheet: String = "walk8") -> String:
@@ -190,7 +190,7 @@ func _rebuild(host: Node2D, parts: Array[Sprite2D], vm: ViewMode) -> void:
 	_run_steps = GhostStride.run_table_of(card_name, _art)
 	var path: String = path_of(_art, card_name)
 	if vm.cards and _art != "" and ResourceLoader.exists(path):
-		_walk = GhostSheet.of(path, GhostStride.cols_of(_steps))
+		_walk = GhostSheet.walk_of(path, _steps)
 		_act = GhostSheet.act_of(path_of(_art, card_name, "act"), card_name + "/" + _art)
 		var rc: int = GhostStride.cols_of(_run_steps)
 		_run = GhostSheet.of(path_of(_art, card_name, "run%d" % rc), rc)
