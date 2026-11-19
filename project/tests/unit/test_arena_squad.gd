@@ -72,18 +72,6 @@ func test_firing_bearings_spread_and_bursts_obey_token_limit() -> void:
 	assert_lte(peak, arena.squad_ai.pit.roster.max_shooters)
 
 
-func test_default_stage_uses_guard_approach() -> void:
-	var session: ArenaSession = ArenaSession.open(Events, Data)
-	var arena: CombatArena = session.stage.arena
-	assert_null(arena.squad_ai)
-	var g: Fighter = arena.spawn_guard(arena.rivet.pos + Vector2(0, -18))
-	g.pursuit = null
-	var at: Vector2 = g.pos
-	arena.step(1)
-	assert_almost_eq(at.distance_to(g.pos), float(arena.tuning.human["walk_mps"]) / 60, 0.0001)
-	session.world.free()
-
-
 func test_local_query_deduplicates_large_boxes_and_filters_by_distance() -> void:
 	var boxes: Array[Rect2] = [Rect2(-12, -3, 24, 2), Rect2(13, 8, 1, 1)]
 	assert_eq(_arena(boxes).guard_map.boxes_near(Vector2.ZERO, 9), [boxes[0]])

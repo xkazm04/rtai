@@ -1,7 +1,7 @@
 extends Scenario
 ## The arena's pit station played by its scripted player (ArenaPitBot): Rivet enters through the
-## west door and fights the pit's waves (real GuardBrain contractors, real rifles, cover that
-## stops shots both ways). Must clear at least one wave inside LIMIT_TICKS and replay identical
+## west door and fights the pit's waves (production squad contractors, real rifles, cover that
+## stops shots both ways). Must finish the scripted waves inside LIMIT_TICKS and replay identical
 ## on a fresh world (SIM-05). TST-05: a planted fault (aim, never fire) must kill nobody.
 
 const LIMIT_TICKS: int = 60 * SimClock.TICK_RATE
@@ -25,8 +25,8 @@ func run(_tree: SceneTree) -> String:
 	var cleared: int = s.stage.pit.waves_cleared
 	var waves: int = s.stage.pit.wave
 	s.world.free()
-	if cleared < 1:
-		return "the pit bot cleared no wave in %d ticks (wave %d)" % [LIMIT_TICKS, waves]
+	if cleared < ArenaPitBot.WAVES or bot.done_tick < 0:
+		return "the pit bot cleared %d waves in %d ticks (wave %d)" % [cleared, LIMIT_TICKS, waves]
 	var divergence: String = _replay(log)
 	return divergence if divergence != "" else _planted()
 

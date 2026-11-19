@@ -1016,5 +1016,19 @@
       "spawned": 5,
       "ticks": 2604
     }
+  },
+  "rollout": {
+    "default_brain": "squad",
+    "unflagged_matches_explicit": 15,
+    "quest1_matches_a1": [
+      "0e26748f40d64c51e27d2ac3fe8c9b81d7f1723d1f9d5e61cd686d39e1bb566f",
+      "53d9556ea0e1315b4cebb25d94b1258d22608cbe47177e4a37e89ea942ce8cb6",
+      "3e19499c28878dac78e27a9504f3f3c4bb6f6fa93f22f666b9a6f4ea5f07a082",
+      "02f49b97b9ccf8d34409c4996f9d612675f25eff7a3a246e8995683825319334",
+      "167aca0103c2f65c271bf819497699917a1f9068135b61854ff240fadc9119f3"
+    ],
+    "scenarios": "run_scenarios: 56 ran, 0 failed",
+    "unit": "unit-tests: 2985 passed, 0 failed, 2 skipped (GUT, headless)",
+    "parity": "parity: native == GDScript reference bit for bit over 1200 steps (40 snapshot checks, 3502 floats); planted mutation caught at step 629"
   }
 }

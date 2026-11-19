@@ -39,3 +39,13 @@ All 15 explicit guard SHA-256 digests matched A1. Quest 1 uses its own stage. Th
 With exactly three shooter slots, the standard city seed assigned tokens to every living ranged flanker on every planning turn in the first five waves. A second trace counted zero times when a ranged flanker planned without a token in either the live or planted run. That seed still produced two shooters firing from a flank. The mixed scenario now clears and replays five waves on each of the five published probe seeds, and requires positive FLANK occupancy across them. It retains the original cover, flanking-fire and separation checks on the standard seed.
 
 The five FLANK counts were 0, 0, 0, 24 and 0. Standard-seed cover was 49.9%. Crowded hostile-ticks rose from 0.0% to 8.4% when separation was disabled.
+
+## Default rollout
+
+The no-flag sweep matched all 15 explicit squad digests. Its five Quest 1 digests matched A1. The pit scenario now requires both scripted waves before its 60-second limit. All six previously failing station scenarios passed in the full suite. Tonnage landed two slams, the chainsaw killed three cops, the claw landed ten hits, the katana killed four cops, and the showcase electro-chain killed all four victims. The city fight reached wave four with its working bot, while the planted bot stayed below wave three in the fixed-defender control.
+
+~~~text
+run_scenarios: 56 ran, 0 failed
+unit-tests: 2985 passed, 0 failed, 2 skipped (GUT, headless)
+parity: native == GDScript reference bit for bit over 1200 steps (40 snapshot checks, 3502 floats); planted mutation caught at step 629
+~~~
