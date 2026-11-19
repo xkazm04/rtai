@@ -336,7 +336,8 @@
         "2026-11-18: n19 move: --cover/--no-cover appended to the shared KNOWN_FLAGS list (files_past_soft_cap 66 -> 66)",
         "2026-11-18: n19 move: one CoverView feed call beside VaultView in the shared arena rig (files_past_soft_cap 66 -> 66)",
         "2026-11-18: n19 move: read the arena pilot motion once for the cover and vault rig feeds (files_past_soft_cap 66 -> 66)",
-        "2026-11-19: Preserve the AI lane's base occluder verbatim and append the required hit field, assignment and formatted cover call. (files_past_soft_cap 66 -> 66)"
+        "2026-11-19: Preserve the AI lane's base occluder verbatim and append the required hit field, assignment and formatted cover call. (files_past_soft_cap 66 -> 66)",
+        "2026-11-19: n19 move flags (files_past_soft_cap 66 -> 66)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -344,7 +345,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 237,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 205,
+        "project/boot/launch_args.gd": 206,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,

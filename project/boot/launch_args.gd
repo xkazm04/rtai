@@ -86,7 +86,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--pickup-hover",
 	# n8-hud: --pickup-crate=on|off lays a floor gun's showcase drawing in an open crate (else hover)
 	"--pickup-crate",
-	"--rivet-height",  # d9-rivet: drawn standing height (m) under a card view (Call 1)
+	# d9-rivet: --rivet-height=<m> sets Rivet's drawn standing height under a card view (Call 1)
+	"--rivet-height",
 	# d9-rivet: --rivet-walk=bob keeps the facing card with the built bob (Call 2's before);
 	# n9-rivet: --rivet-walk=4 plays d9's 4-frame grid by the gait phase (the 8-frame walk's before);
 	# --rivet-walk=walk8 keeps the walk at every speed (the drawn run's before)
