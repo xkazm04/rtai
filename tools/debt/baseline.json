@@ -67,7 +67,8 @@
         "2026-11-18: Package 4: exercise revision probe settings directly, including unknown flags, pitch and capture scale (dev_loc 23428 -> 23431)",
         "2026-11-19: Package 5: film each diagonal at full viewport size in the selected live boss room (dev_loc 23431 -> 23447)",
         "2026-11-19: Package 7 reload film captures eleven native cells and verifies a full-to-empty-to-full magazine on the arena trigger (dev_loc 23447 -> 23539)",
-        "2026-11-19: Package 11 audit reports armed walk and run grid coverage separately from the ratcheted arsenal defects (dev_loc 23539 -> 23559)"
+        "2026-11-19: Package 11 audit reports armed walk and run grid coverage separately from the ratcheted arsenal defects (dev_loc 23539 -> 23559)",
+        "2026-11-19: Exercise the deferred film recorder launch and its real log, cleanup, and usage exit before rendering (dev_loc 23559 -> 23565)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -88,7 +89,7 @@
         "project/dev/perf": 160,
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
-        "project/dev/rivet_arsenal": 1090,
+        "project/dev/rivet_arsenal": 1096,
         "project/dev/rivet_motion": 1966,
         "project/dev/save_crash_loop.gd": 14,
         "project/dev/save_crash_writer.gd": 18,
@@ -101,7 +102,7 @@
         "project/dev/view": 433,
         "project/dev/weapon_art": 506
       },
-      "total": 23559
+      "total": 23565
     },
     "direct_cmdline_reads": {
       "accepted": [

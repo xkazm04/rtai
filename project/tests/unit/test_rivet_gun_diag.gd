@@ -144,3 +144,12 @@ func test_plasma_west_uses_its_side_shot_and_flashless_twin() -> void:
 		rig.set_meta(RivetNoFlash.AGE, 0)
 		RivetNoFlash.show(rig, card, 0)
 		assert_eq(card.texture.resource_path, fire)
+
+
+func test_diagonal_fit_includes_both_edges_of_the_half_octant() -> void:
+	var limit: float = PI / 8.0
+	for sign_k: float in [-1.0, 1.0]:
+		assert_true(RivetGunDiag.angles_fit(0.0, sign_k * limit))
+		assert_true(RivetGunDiag.angles_fit(0.0, sign_k * (limit - 0.000001)))
+		assert_false(RivetGunDiag.angles_fit(0.0, sign_k * (limit + 0.000001)))
+	assert_true(RivetGunDiag.angles_fit(TAU - 0.02, 0.01))

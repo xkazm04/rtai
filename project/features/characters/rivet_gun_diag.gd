@@ -155,7 +155,12 @@ static func seat(card: Sprite2D, cell: int) -> void:
 ## True when `rig`'s aim (none: the facing's) lies within FIT_TOL of the drawn diagonal gun at `o`.
 static func fits(rig: CutRig, weapon: StringName, o: int, art: String) -> bool:
 	var aim: float = RivetStrips.aim_of(rig)
-	return is_nan(aim) or absf(angle_difference(aim, gun_rad(weapon, o, art))) <= FIT_TOL
+	return is_nan(aim) or angles_fit(aim, gun_rad(weapon, o, art))
+
+
+## Aim angles on either edge of the half octant still use its painted gun.
+static func angles_fit(aim: float, drawn: float) -> bool:
+	return absf(angle_difference(aim, drawn)) <= FIT_TOL
 
 
 ## True for a gun's diagonal strip while `--rivet-gun-diag=off` holds it off.

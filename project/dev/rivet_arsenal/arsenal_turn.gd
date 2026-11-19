@@ -18,13 +18,19 @@ func _start() -> void:
 		"arsenal_reload_turn.gd" if args.text("--reload-turn") == "on" else "arsenal_turn_rec.gd"
 	)
 	var recorder: Node = (load(script_dir.path_join(entry)) as GDScript).new()
+	start_recorder(args, recorder, root, quit)
+
+
+static func start_recorder(
+	args: ArenaArgs, recorder: Node, host: Node, exit_on_error: Callable
+) -> void:
 	var error: String = configure(args, recorder)
 	if not error.is_empty():
 		recorder.free()
-		root.get_node("Log").call("error", "turn", error)
-		quit(2)
+		host.get_node("Log").call("error", "turn", error)
+		exit_on_error.call(2)
 		return
-	root.add_child(recorder)
+	host.add_child(recorder)
 
 
 static func configure(args: ArenaArgs, recorder: Node) -> String:
