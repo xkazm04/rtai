@@ -41,6 +41,22 @@ func test_buildings_draw_last_by_south_edge() -> void:
 	assert_eq(got, [1, 2, 3, 0], "the road first, then roofs north to south")
 
 
+func test_lifted_canvas_items_keep_world_order_across_chunk_and_band_boundaries() -> void:
+	var width: int = 2 * SimConst.CITY_CHUNKS
+	for band: int in ChunkView.ITEMS >> 2:
+		var previous: int = -1
+		for y: int in width:
+			for x: int in width:
+				var key := Vector2i(x >> 1, y >> 1)
+				var local: int = (y % 2) * 2 + x % 2
+				var order: int = ChunkView.quadrant_order(key, band * 4 + local)
+				if order <= previous:
+					assert_gt(order, previous, "world quadrant (%d, %d), band %d" % [x, y, band])
+					return
+				previous = order
+	assert_true(true, "all quadrants increase west to east, then north to south, in every band")
+
+
 func test_south_edge_is_in_px_not_metres_plus_px() -> void:
 	var lift: ChunkLift = _lift(70.0)
 	# the warehouse turned a quarter (525 px deep) at y 1 m ends at 294 px; the tall one at y 10 m

@@ -1,13 +1,10 @@
 class_name ChunkView
 extends RefCounted
-## Draws resident chunks (WLD-02 stage 2): one chunk at a time, nearest first, its draw list
-## recorded into pooled canvas items, one per world render layer (ground, ground_decals,
-## building_shadows, props, roofs) per 64 m quadrant so off-screen quadrants cull, time-sliced to
-## BUDGET_US per frame. Items are pooled, never freed mid-run (WLD-05: worst swap 6.1 -> 1.8 ms).
+## Streams the nearest chunk first within BUDGET_US (WLD-02). Pooled canvas items let each
+## render band cull off-screen 64 m quadrants independently (WLD-05).
 
 const R_DRAW: float = 190.0
 const BUDGET_US: int = 1500
-## The world canvas bands a chunk draws into, bottom up; a command's band comes from its class.
 const BANDS: Array[StringName] = [
 	&"ground", &"ground_decals", &"building_shadows", &"props", &"roofs"
 ]
@@ -15,10 +12,7 @@ const BAND_OF_CLASS: Dictionary[String, int] = {
 	"ground": 0, "decal": 1, "prop": 3, "vehicle": 3, "building": 4
 }
 const SHADOW_BAND: int = 2
-## The parapet ink core (n-d5's D5HeroParapets): each building's silhouette again in solid ink,
-## offset cast_shadows.json parapet_core_m down-right, just above the hatched shadow (z + 1): it
-## shows as an ink band along the down-right edges that face open ground (a neighbour roof, on
-## the roofs band, covers it on the inner edges).
+## Parapet ink sits above the hatched shadow, offset by parapet_core_m, below neighbouring roofs.
 const CORE_BAND: int = 5
 const ITEMS: int = 4 * 6
 const SHADOW: Color = Color(0.09, 0.075, 0.106, 0.45)
@@ -42,7 +36,6 @@ var _pool: Array[RID] = []
 var _active: Vector2i = Vector2i(-1, -1)
 var _k: int = 0
 var _band_of: PackedByteArray = PackedByteArray()
-## The building_shadows band's material and per-texture extra cast offset (CastShadows).
 var _shadow_mat: ShaderMaterial = null
 var _shadow_extra: PackedVector2Array = PackedVector2Array()
 var _shadow_zoom: float = 1.0
@@ -148,14 +141,19 @@ func _slice(chunk: CityChunk, t0: int) -> void:
 	_active = Vector2i(-1, -1)
 
 
-## A shadow command's building silhouette in solid ink at the parapet core offset (`at`: the
-## shadow command's position in px, which carries the baked offset).
+## Draws the parapet core at the baked shadow position plus the extra offset in px.
 func _core(item: RID, t: int, rot: float, at: Vector2) -> void:
 	var sz: Vector2 = _tex.size_px[t]
 	RenderingServer.canvas_item_add_set_transform(item, Transform2D(rot, at + _core_px))
 	RenderingServer.canvas_item_add_texture_rect(
 		item, Rect2(-sz * 0.5, sz), _tex.rids[t], false, CORE
 	)
+
+
+## Row-major world order of a band's 64 m quadrants, including across chunk boundaries.
+static func quadrant_order(key: Vector2i, item: int) -> int:
+	var quad: Vector2i = key * 2 + Vector2i(item & 1, (item >> 1) & 1)
+	return quad.y * (2 * SimConst.CITY_CHUNKS) + quad.x
 
 
 func _take_items() -> Array:
@@ -172,6 +170,8 @@ func _take_items() -> Array:
 			else RenderLayers.z(&"building_shadows") + 1
 		)
 		RenderingServer.canvas_item_set_z_index(item, z)
+		if lift != null:
+			RenderingServer.canvas_item_set_draw_index(item, quadrant_order(_active, q))
 		RenderingServer.canvas_item_set_default_texture_filter(item, MIPMAP_FILTER)
 		var shadow_band: bool = (q >> 2) == SHADOW_BAND and _shadow_mat != null
 		RenderingServer.canvas_item_set_material(
