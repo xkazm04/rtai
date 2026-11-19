@@ -47,4 +47,23 @@ Before `evidence/arsenal/matrix_before.txt`: **51 holes**. After package 6: **10
 (pending)
 
 ## Astra ledger
-(pending)
+| # | Tag | Min | Verdict |
+|---|---|---|---|
+| 1 | audit | 13 | accepted (commit blocked by debt; finished in 2) |
+| 2 | audit-finish | 15 | accepted |
+| 3 | rifle-p55 | 48 | accepted |
+| 4 | rifle-p70 | 11 | abandoned (killed by a director session restart) |
+| 5 | rifle-p70b | 22 | accepted |
+| 6 | shard-ray | 64 | accepted |
+| 7 | launchers | 50 | accepted for holes; left-cell look bounced (05b) |
+| 8 | rifle-drop | 29 | accepted |
+| 9 | left-scale | 60 | accepted for tools/holes; look bounced (fresh figures drift) |
+| 10 | left-cells | 3 | abandoned (replaced by the template method) |
+| 11 | left-template | 22 | accepted |
+| 12 | left-continue | 37 | accepted; gloria/rocket p70 bounced |
+| 13 | p70-fix | 28 | accepted |
+| 14 | reload | 16 | bounced (electro reload kept the plasma stock) |
+| 15 | reload-gun | 75 | accepted (cap hit during the last mutate run) |
+| 16 | final | (pending) | (pending) |
+
+What I would brief differently: ask for the build-on-the-hand-made-cell method (mirror + masked correction, composite onto the hand-made reload figure) from the first art package, not after two rounds of fresh full-figure generations; demand the 2x zoom sheet (source | new | held) with every art commit from the start, because a thumbnail sheet hid both real faults and caused one wrong bounce; and keep mutate runs out of the last 15 minutes of a session.
