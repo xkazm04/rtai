@@ -43,7 +43,9 @@ func _check_walk(
 
 
 func _check_cell(spr: Sprite2D, bank: GhostWalkPages, index: int, oct: int) -> void:
-	var width: int = bank.pages[0].cols
+	@warning_ignore("integer_division")
+	var width: int = bank.windows.size() / 2
+	assert_eq(spr.hframes, width, "each of the two atlas pages holds half the in-betweens")
 	@warning_ignore("integer_division")
 	var page: GhostSheet = bank.pages[index / width]
 	var left: bool = GhostSheet.LEFT_ROW[oct] >= 0
