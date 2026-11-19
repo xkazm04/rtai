@@ -56,6 +56,57 @@ func run(_tree: SceneTree) -> String:
 		]:
 			if first.counts[key] == 0:
 				return _failure(tape, TICKS - 1, "missing coverage: " + key, city)
+	return _off_control()
+
+
+func _off_control() -> String:
+	var saved: PackedStringArray = LaunchArgs.unknown()
+	for flag: String in LaunchArgs.KNOWN_FLAGS:
+		if LaunchArgs.has(flag):
+			@warning_ignore("return_value_discarded")
+			saved.append("%s=%s" % [flag, LaunchArgs.value(flag)])
+	LaunchArgs.parse(PackedStringArray(["--no-vault", "--no-cover"]))
+	var tape: MovesFuzzTape = MovesFuzzTape.new(SEED)
+	var raw: Trace = _run(tape, false, 360)
+	var reason: String = raw.failure
+	if reason == "":
+		reason = _compare_off(tape, raw)
+	LaunchArgs.parse(saved)
+	return reason
+
+
+## StagePilot serializes the previous raw buttons. Compare after a shared release tick:
+## vault shares the roll bit, and live input already masks out the disabled cover bit.
+func _compare_off(tape: MovesFuzzTape, raw: Trace) -> String:
+	var pilot: StagePilot = tape.stage.pilot
+	var bit: int = 1 << pilot.actions.bit(&"cover")
+	if pilot.motion.vault.enabled or pilot.motion.cover.enabled or (pilot.actions.live_mask & bit):
+		return "off flags left a move or its live cover input enabled"
+	if (
+		raw.counts["vault_starts"]
+		or raw.counts["snaps"]
+		or not pilot.motion.rolls
+		or not raw.counts["cover_refusals"]
+	):
+		return _failure(tape, 359, "expected refused cover presses and only ordinary rolls", false)
+	tape.playing = true
+	@warning_ignore("return_value_discarded")
+	tape.words.append(TickInput.new().pack())
+	var released: Trace = _run(tape, false, tape.words.size())
+	if released.failure != "":
+		return released.failure
+	for i: int in tape.words.size():
+		tape.words[i] &= ~(bit << 16)
+	var control: Trace = _run(tape, false, tape.words.size(), released)
+	if control.failure != "":
+		return control.failure
+	if (
+		control.digest != released.digest
+		or control.counts["vault_starts"]
+		or control.counts["snaps"]
+	):
+		return _failure(tape, tape.words.size() - 1, "off control diverged", false)
+	Log.info("moves_fuzz", "off: zero starts/snaps, cover stripped, identical " + control.digest)
 	return ""
 
 
