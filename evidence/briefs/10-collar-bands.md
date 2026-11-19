@@ -8,3 +8,6 @@ Do, for every weapon built with `tools/art/left_from_right.py` (plasma_rifle, ga
 3. Re-cut, re-run `cell_metrics` (stay within the 06b thresholds), re-shoot every `<gun>_<pitch>_left_zoom.png` (add any missing) and the `_west`/`_nw` 64 px/m sheets.
 
 Acceptance: as 06c (byte-for-byte reproducible cuts, audit count unchanged, unit `--changed`, Python tests, lint, quick gate; one commit for the tool change and one per weapon or one for all re-cuts). Report: per weapon, collar pixels changed, and which zoom sheets to look at.
+
+## Added 05:23: reload composite residue
+4. `machine_pistol` p55 reload cells 1 and 7 and `hand_cannon` p55 reload cell 1 (a grey square, the largest) (`machine_pistol_p55_reload_zoom.png`): a dark grey halo at the wrist, behind the gun, where the pistol's pixels were erased and not refilled with the forearm/hand; cell 5 has a pale speck beside the mag hand. Fill these from the base reload figure's own pixels (the forearm under the erased gun) in `tools/art/reload_composite.py`, by script; check every reload cell built tonight (electro_gun p70 cell 7 has a faint light smear right of the coil cap) the same way and re-shoot the zoom sheets.
