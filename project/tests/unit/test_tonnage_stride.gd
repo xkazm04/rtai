@@ -82,3 +82,26 @@ func test_tonnage_shows_extra_pad_pose_only_in_the_right_profile_step() -> void:
 			assert_eq(drawn._spr.texture.resource_path, GhostDrawn.path_of("p70", "tonnage", "act"))
 	assert_gt(count, 0)
 	ViewMode._shared = saved
+
+
+func test_midpoint_is_half_open_and_needs_both_the_step_and_the_right_profile() -> void:
+	# Eight unit steps put the C6/C7 boundary at 6/8, with a quarter-step either side.
+	var steps: PackedFloat32Array = [1, 1, 1, 1, 1, 1, 1, 1]
+	var path: String = GhostDrawn.path_of("p70", "tonnage")
+	var sheet: GhostSheet = GhostSheet.walk_of(path, steps)
+	var spr: Sprite2D = autofree(Sprite2D.new())
+	var mid: String = GhostDrawn.path_of("p70", "tonnage", "walk8_mid")
+	for col: int in [5, 6]:
+		sheet.show(spr, 0, col, 5.75 / 8)
+		assert_eq(spr.texture.resource_path, mid, "enters on the first sample")
+		sheet.show(spr, 0, col, 6.25 / 8)
+		assert_eq(spr.texture.resource_path, path, "leaves on the last boundary")
+	for col: int in [4, 7]:
+		sheet.show(spr, 0, col, 6.0 / 8)
+		assert_eq(spr.texture.resource_path, path, "neighbouring steps keep their keys")
+	var short_walk: GhostSheet = GhostSheet.walk_of(path, steps.slice(0, 5))
+	short_walk.show(spr, 0, 5, 6.0 / 8)
+	assert_eq(spr.texture.resource_path, path, "missing sixth step has no midpoint")
+	var other: GhostSheet = GhostSheet.walk_of(GhostDrawn.path_of("p55", "tonnage"), steps)
+	other.show(spr, 0, 5, 6.0 / 8)
+	assert_eq(spr.texture.resource_path, GhostDrawn.path_of("p55", "tonnage"))
