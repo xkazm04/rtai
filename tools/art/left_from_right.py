@@ -32,15 +32,30 @@ def turn_band(original, work, knots):
 def mirror_cell(image, regions):
     source = np.asarray(image.convert("RGBA"))
     work = source.copy()
+    protected = None
     for region in regions:
         if "band" in region:
             turn_band(source, work, region["band"])
+        elif "flip" in region:
+            x, y, right, bottom = region["flip"]
+            patch = source[y:bottom, x:right]
+            if not (0 <= x < right <= image.width and 0 <= y < bottom <= image.height
+                    and np.all(patch[:, :, 3] == 255)):
+                raise ValueError("flip must be inside opaque hardware")
+            work[y:bottom, x:right] = patch[:, ::-1]
+        elif "keep" in region:
+            # After the collar, reserve this box against subsequent equipment edits.
+            x, y, right, bottom = region["keep"]
+            protected = work[y:bottom, x:right]
+            saved = protected.copy()
         elif "hide" in region:
             mask = Image.new("1", image.size)
             ImageDraw.Draw(mask).polygon([tuple(pt) for pt in region["hide"]], fill=1)
             work[np.asarray(mask)] = 0
         elif "gun_mask" not in region:
             raise ValueError(f"unknown correction for {region['part']}")
+    if protected is not None:
+        protected[:] = saved
     return Image.fromarray(work[:, ::-1])
 
 

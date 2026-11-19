@@ -9,6 +9,19 @@ from left_from_right import build, mirror_cell
 
 
 class LeftFromRightTest(unittest.TestCase):
+    def test_hardware_flip_is_a_permutation_and_respects_helmet(self):
+        src = np.arange(6*8*4, dtype=np.uint8).reshape(6, 8, 4)
+        src[:, :, 3] = 255
+        image = Image.fromarray(src)
+        flip = {"flip": [2, 2, 7, 5]}
+        out = np.asarray(mirror_cell(image, [{"keep": [0, 0, 3, 3]}, flip]))[:, ::-1]
+        expected = src.copy()
+        expected[2:5, 2:7] = src[2:5, 2:7][:, ::-1]
+        expected[2, 2] = src[2, 2]
+        np.testing.assert_array_equal(out, expected)
+        with self.assertRaises(ValueError):
+            mirror_cell(image, [{"flip": [-1, 0, 3, 2]}])
+
     def test_local_reflection_preserves_silhouette_and_every_unmasked_pixel(self):
         source = np.arange(8*7*4, dtype=np.uint8).reshape(7, 8, 4)
         source[:, :, 3] = 255

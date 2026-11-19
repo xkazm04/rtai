@@ -41,15 +41,15 @@
     ],
     [
       {"part": "rigid hazard collar stripes", "band": [[122, 106, 125], [126, 111, 129], [130, 116, 133], [134, 121, 136], [138, 125, 139], [142, 128, 141], [146, 130, 143], [150, 132, 144], [154, 134, 145], [158, 134, 145], [162, 134, 145], [166, 134, 144], [170, 132, 143], [174, 131, 141], [178, 128, 138], [182, 125, 135], [186, 121, 132], [188, 119, 130]]},
-      {"part": "asymmetric bolted side cover on Gloria's receiver", "band": [[205, 133, 148], [214, 127, 141], [224, 121, 132]]},
-      {"part": "feed rail and lower cartridge rack", "band": [[197, 168, 180], [209, 161, 173], [220, 153, 164]]},
+      {"part": "preserve mirrored helmet against equipment changes", "keep": [124, 49, 201, 133]},
+      {"part": "inset fastener on receiver side cover", "flip": [207, 136, 212, 141]},
       {"part": "rear grip coupling and exposed hip cable", "band": [[146, 180, 188], [154, 187, 195], [164, 186, 193]]},
       {"part": "visible receiver, rail and cartridge rack", "gun_mask": [[156, 163], [185, 137], [223, 110], [237, 114], [236, 140], [217, 173], [183, 191], [162, 184]]}
     ],
     [
       {"part": "rigid hazard collar stripes", "band": [[121, 107, 127], [125, 112, 129], [129, 117, 134], [133, 121, 137], [137, 125, 140], [141, 128, 142], [145, 130, 143], [149, 132, 144], [153, 133, 145], [157, 134, 145], [161, 134, 145], [165, 133, 144], [169, 132, 143], [173, 130, 141], [177, 127, 138], [181, 124, 136], [183, 122, 134]]},
-      {"part": "asymmetric bolted side cover on Gloria's receiver", "band": [[204, 124, 139], [213, 118, 132], [220, 112, 126]]},
-      {"part": "feed rail and lower cartridge rack", "band": [[196, 157, 169], [208, 148, 161], [220, 136, 151]]},
+      {"part": "preserve mirrored helmet against equipment changes", "keep": [123, 49, 198, 131]},
+      {"part": "inset fastener on receiver side cover", "flip": [210, 120, 215, 125]},
       {"part": "rear grip coupling and exposed hip cable", "band": [[133, 179, 185], [140, 188, 194], [153, 191, 198]]},
       {"part": "visible receiver, rail and cartridge rack", "gun_mask": [[163, 158], [182, 132], [218, 100], [235, 98], [237, 131], [216, 158], [187, 184], [169, 188]]}
     ]
