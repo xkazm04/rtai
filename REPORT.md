@@ -74,3 +74,9 @@ Gate: `node tools/gate/run.mjs --rev=HEAD` on `87d0606ab`: **outcome pass** (sta
 | 16 | final | 52 | accepted (walk/run info column, reload residue fix, clips re-shot, mutate survivors) |
 
 What I would brief differently: ask for the build-on-the-hand-made-cell method (mirror + masked correction, composite onto the hand-made reload figure) from the first art package, not after two rounds of fresh full-figure generations; demand the 2x zoom sheet (source | new | held) with every art commit from the start, because a thumbnail sheet hid both real faults and caused one wrong bounce; and keep mutate runs out of the last 15 minutes of a session.
+
+## Owner verdicts 2026-11-19
+
+The assault rifle hangs on the new east peg at its drawn length in top, p55 and p70. The hub board grew from 17 to 18 m at x1 scale. All 17 previous pegs and all 83 arena props kept their positions. In the four 64 px/m stills under `C:/Users/kazda/kiro/gtai-masters/n19/guns/rack/`, every changed pixel falls within the added strip and its outline. Both captures at each pitch saved successfully and emitted the same resource-cleanup messages on exit.
+
+The audit fell from three holes to zero (`evidence/arsenal/matrix_after_verdict.txt`). The rifle pickup scenario walks Rivet to the peg, takes the rifle once with Interact, fires a round, switches away and back with 29 rounds left, and replays identically. The owner reserved the 12 weapons’ armed walk/run grids for a dedicated night.

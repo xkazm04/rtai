@@ -1358,3 +1358,4 @@ One dated line per decision. Deviations use `DEVIATION <RULE-ID>` and carry a re
 
 - [2026-11-18] DECISION rifle art: WeaponArtKey resolves the quest id assault-rifle to the asset id assault_rifle at both pitches and top. Both pitches now ship their own strips, so the temporary stand-in is empty.
 - [2026-11-19] DECISION Rivet mirror-based facings: compare height and helmet fraction within 5% and shell CIE76 within 8 against the matching hand-made facing or firing pose. Keep the E-rest differences in the metrics table to show shot and facing variation.
+- [2026-11-19] DECISION guns/arena rack: owner verdict n19: extend the north hub board 1 m east at x1 scale for the assault rifle. Rivet takes it from the new peg with Interact. All 17 existing pegs keep their positions.
