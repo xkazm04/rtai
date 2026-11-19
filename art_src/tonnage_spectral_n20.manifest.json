@@ -53,6 +53,33 @@
       "seed": null,
       "sha256": "e2aec2a6bb16f6306c78fdb6f66d2f794afa4fc2616f5ebf9dc1c2511f3e1fe0",
       "tool": "codex-image"
+    },
+    "p70_act_take1": {
+      "date": "2026-11-20",
+      "file": "C:/Users/kazda/kiro/gtai-masters/n20/tonnage/masters/p70_act_take1.png",
+      "model": "Codex built-in image generation (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/tonnage/p70_act.md",
+      "seed": null,
+      "sha256": "4a02ad566be810dd950b8c9c8a0b9fde5c5f751d3daf8b52a12638be0874e441",
+      "tool": "codex-image"
+    },
+    "p70_act_take2": {
+      "date": "2026-11-20",
+      "file": "C:/Users/kazda/kiro/gtai-masters/n20/tonnage/masters/p70_act_take2.png",
+      "model": "Codex built-in image generation (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/tonnage/p70_act.md",
+      "seed": null,
+      "sha256": "b60dd7367c79fdb4fe1c337d9b786aaa03e096b1a026a0b137179aa001c2b1b5",
+      "tool": "codex-image"
+    },
+    "p70_act_take3": {
+      "date": "2026-11-20",
+      "file": "C:/Users/kazda/kiro/gtai-masters/n20/tonnage/masters/p70_act_take3.png",
+      "model": "Codex built-in image generation (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/tonnage/p70_act.md",
+      "seed": null,
+      "sha256": "459e29244bda428ff22cd0cd832bee8ca0d1a1a8a038de5e0b477eb73de1aad2",
+      "tool": "codex-image"
     }
   },
   "sheets": {
@@ -61,6 +88,7 @@
     "project/features/souls/art/tonnage/spectral/forearm.png": "parts_take3",
     "project/features/souls/art/tonnage/spectral/fist.png": "parts_take3",
     "project/features/souls/art/tonnage/spectral/hoses.png": "parts_take3",
-    "project/features/souls/art/view/p70/tonnage_spectral_pose.png": "p70_pose_take2"
+    "project/features/souls/art/view/p70/tonnage_spectral_pose.png": "p70_pose_take2",
+    "project/features/souls/art/view/p70/tonnage_spectral_act.png": "p70_act_take1"
   }
 }
