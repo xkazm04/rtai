@@ -4,9 +4,7 @@
     "assault-rifle/p70/pickup": "absent from rack ORDER",
     "assault-rifle/top/pickup": "absent from rack ORDER",
     "hand_cannon/p55/reload": "missing or invalid rivet_reload_hand_cannon.png; missing or invalid rivet_reload_hand_cannon_left.png",
-    "hand_cannon/p70/reload": "missing or invalid rivet_reload_hand_cannon.png; missing or invalid rivet_reload_hand_cannon_left.png",
-    "machine_pistol/p55/reload": "missing or invalid rivet_reload_machine_pistol.png; missing or invalid rivet_reload_machine_pistol_left.png",
-    "machine_pistol/p70/reload": "missing or invalid rivet_reload_machine_pistol.png; missing or invalid rivet_reload_machine_pistol_left.png"
+    "hand_cannon/p70/reload": "missing or invalid rivet_reload_hand_cannon.png; missing or invalid rivet_reload_hand_cannon_left.png"
   },
   "holes_per_weapon": {
     "assault-rifle": 3,
@@ -19,7 +17,7 @@
     "hand_cannon": 2,
     "homing_shard": 0,
     "katana": 0,
-    "machine_pistol": 2,
+    "machine_pistol": 0,
     "mini_nuke": 0,
     "molotov": 0,
     "pistol": 0,
@@ -31,7 +29,7 @@
   "missing_resources": {},
   "schema": "gtai.arsenal-audit/1",
   "table_errors": [],
-  "total_holes": 7,
+  "total_holes": 5,
   "weapons": {
     "assault-rifle": {
       "p55": {
@@ -1592,8 +1590,8 @@
           "status": "ok"
         },
         "reload": {
-          "reason": "missing or invalid rivet_reload_machine_pistol.png; missing or invalid rivet_reload_machine_pistol_left.png",
-          "status": "HOLE"
+          "reason": "magazine part and both reload strips",
+          "status": "ok"
         },
         "strike": {
           "reason": "no melee swing",
@@ -1642,8 +1640,8 @@
           "status": "ok"
         },
         "reload": {
-          "reason": "missing or invalid rivet_reload_machine_pistol.png; missing or invalid rivet_reload_machine_pistol_left.png",
-          "status": "HOLE"
+          "reason": "magazine part and both reload strips",
+          "status": "ok"
         },
         "strike": {
           "reason": "no melee swing",

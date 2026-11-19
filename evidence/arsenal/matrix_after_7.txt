@@ -31,9 +31,9 @@ homing_shard     top    .     -      -     -       .       .       -       .    
 katana           top    .     -      -     -       -       -       -       .       -       -       -            -            0
                  p55    .     -      .     -       -       -       -       .       .       .       .            .
                  p70    .     -      .     -       -       -       -       .       .       .       .            .
-machine_pistol   top    .     -      -     -       .       .       .       .       -       -       -            -            2
-                 p55    .     .      .     .       X       .       .       .       -       -       -            -
-                 p70    .     .      .     .       X       .       .       .       -       -       -            -
+machine_pistol   top    .     -      -     -       .       .       .       .       -       -       -            -            0
+                 p55    .     .      .     .       .       .       .       .       -       -       -            -
+                 p70    .     .      .     .       .       .       .       .       -       -       -            -
 mini_nuke        top    .     -      -     -       -       .       -       .       -       -       -            -            0
                  p55    .     .      .     .       -       .       -       .       -       -       -            -
                  p70    .     .      .     .       -       .       -       .       -       -       -            -
@@ -55,4 +55,4 @@ ray_gun          top    .     -      -     -       .       .       -       .    
 rocket_launcher  top    .     -      -     -       -       .       -       .       -       -       -            -            0
                  p55    .     .      .     .       -       .       -       .       -       -       -            -
                  p70    .     .      .     .       -       .       -       .       -       -       -            -
-Total holes  7
+Total holes  5
