@@ -13,6 +13,7 @@ const DOOR_OFF: float = 2.0
 var world: VehicleWorld = VehicleWorld.new()
 var profiles: Dictionary[StringName, VehicleProfile] = {}
 var rules: VehicleDamage = null
+var doors: VehicleDoors = VehicleDoors.shipped()
 ## Every car the service owns (parked, driven, wrecks), in creation order.
 var cars: Array[VehicleBody] = []
 ## The car Rivet drives, or null on foot.
@@ -50,7 +51,7 @@ func spawn_parked(kind: StringName, at: Vector2, head: Vector2, art: int = 0) ->
 ## Enters the nearest empty service car within ENTER_R, else hijacks the nearest sim car.
 ## Returns the vehicle id, or -1 when nothing is in reach (or already driving).
 func try_enter(at: Vector2) -> int:
-	if driving != null:
+	if driving != null or doors.car != null:
 		return -1
 	world.refresh()
 	var best: VehicleBody = null
@@ -62,26 +63,43 @@ func try_enter(at: Vector2) -> int:
 			and (best == null or d < best.pos.distance_to(at))
 		):
 			best = b
-	if best == null:
-		best = _hijack(at)
+	var parked: bool = best != null
+	if not parked:
+		best = traffic.hijack(at, self, _events)
 	if best == null:
 		return -1
-	driving = best
-	world.set_focus(best.pos, true)
-	_events.vehicle_entered.emit(best.id)
+	if doors.enabled and (parked or best.speed() == 0.0):
+		return best.id if doors.begin(self, best, at, true) else -1
+	seat(best)
 	return best.id
+
+
+func seat(b: VehicleBody) -> void:
+	driving = b
+	world.set_focus(b.pos, true)
+	_events.vehicle_entered.emit(b.id)
 
 
 ## Gets out on the driver's side; the car stays where it stops. Returns where Rivet stands.
 func exit() -> Vector2:
-	if driving == null:
+	if driving == null or doors.car != null:
 		return world.player_pos()
 	var b: VehicleBody = driving
-	driving = null
 	var door: Vector2 = b.pos + Vector2(b.head.y, -b.head.x) * DOOR_OFF
-	world.set_focus(door, false)
-	_events.vehicle_exited.emit(b.id)
+	if doors.enabled:
+		if b.speed() < doors.exit_max_mps and b.state != VehicleBody.State.WRECK:
+			return doors.foot if doors.begin(self, b, door, false) else b.pos
+		door = VehicleDoorPath.clear_side(self, b, doors.radius)
+		if door == Vector2.INF:
+			return b.pos
+	finish_exit(b, door)
 	return door
+
+
+func finish_exit(b: VehicleBody, at: Vector2) -> void:
+	driving = null
+	world.set_focus(at, false)
+	_events.vehicle_exited.emit(b.id)
 
 
 ## "Hijacked by the soul" (Gearbox): the teal plate on a sim car, until it takes damage.
@@ -119,7 +137,7 @@ func _step(input: TickInput) -> void:
 	var axis: Vector2 = Vector2(input.move_x, input.move_y) / TickInput.AXIS_MAX
 	_contacts.begin()
 	for b: VehicleBody in cars:
-		var mine: bool = b == driving
+		var mine: bool = b == driving and b != doors.car
 		var hb: bool = input.is_pressed(BIT_HANDBRAKE) if mine else true
 		b.step(SimClock.TICK_DT, -axis.y if mine else 0.0, axis.x if mine else 0.0, hb)
 		_collide(b)
@@ -129,7 +147,9 @@ func _step(input: TickInput) -> void:
 		traffic.take(slot, world, self)
 	for k: int in range(0, _contacts.struck.size(), 2):
 		_events.pedestrian_struck.emit(_contacts.struck[k], _contacts.struck[k + 1] == 1)
-	if driving != null:
+	if doors.car != null:
+		doors.advance(self)
+	elif driving != null:
 		world.set_focus(driving.pos, true)
 		if driving.state == VehicleBody.State.WRECK:
 			@warning_ignore("return_value_discarded")
@@ -145,6 +165,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 		]:
 			out.put_double(f)
 		out.put_32(b.state)
+	doors.write_state(out)
 
 
 ## A standing car (parked, a wreck) still meets traffic: it is shoved and both cars take damage.
@@ -158,37 +179,6 @@ func _collide(b: VehicleBody) -> void:
 	for o: VehicleBody in cars:
 		if o != b:
 			_contacts.pair(b, o)
-
-
-func _hijack(at: Vector2) -> VehicleBody:
-	var recs: PackedFloat64Array = world.cars_near(at, ENTER_R + 1.0)
-	var best: int = -1
-	var best_d: float = INF
-	for r: int in range(0, recs.size(), VehicleWorld.CAR_STRIDE):
-		var d: float = Vector2(recs[r + 2], recs[r + 3]).distance_to(at)
-		if d < best_d:
-			best_d = d
-			best = r
-	if best < 0:
-		return null
-	var head: Vector2 = Vector2(recs[best + 4], recs[best + 5])
-	var police: bool = recs[best + 1] > 0.5
-	var kind: StringName = VehicleProfile.archetype_of_variant(int(recs[best + 7]), police)
-	var slot: int = int(recs[best])
-	var b: VehicleBody = spawn_parked(
-		kind, Vector2(recs[best + 2], recs[best + 3]), head, int(recs[best + 7])
-	)
-	b.vel = head * recs[best + 6]
-	b.hp_lost = traffic.lost_of(slot)
-	b.soul_hijacked = traffic.soul(slot)
-	b.state = rules.state_for(b.hp_lost, b.soul_hijacked)
-	traffic.forget(slot, world)
-	world.take_car(slot)
-	world.eject_driver(
-		b.pos + Vector2(b.head.y, -b.head.x) * DOOR_OFF, Vector2(b.head.y, -b.head.x), 0
-	)
-	_events.vehicle_hijacked.emit(kind)
-	return b
 
 
 func _age_wrecks() -> void:

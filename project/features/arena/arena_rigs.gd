@@ -139,7 +139,9 @@ func _process(_delta: float) -> void:
 	var sway: float = stage.pilot.sway_rad if stage.pilot != null else 0.0  # the flamer's hose
 	f.aim[0] = (r.pos + r.facing.rotated(sway) * 4.0) * SimConst.PX_PER_M
 	_rivet_clips(f)
-	var i: int = 1
+	var motion: PlayerMotion = stage.pilot.motion if stage.pilot != null else null
+	CoverView.feed(rigs, motion, stage.tick)
+	VaultView.feed_motion(rigs, motion)
 	for h: Fighter in stage.arena.hostiles:
 		if h.kind == Fighter.Kind.BOSS and not stage is ArenaStage:
 			continue  # quest 1's Mertz keeps the cast view's own drawing (no boss rig yet)
@@ -150,13 +152,13 @@ func _process(_delta: float) -> void:
 		var riot: bool = _pit != null and _pit.riot_hp > 0.0
 		var variant: int = ArenaSquadLooks.look(h, riot, riot and _pit.riot.has(h.id))
 		var look: Vector2i = _looks.get(h.id, Vector2i(BodyPlan.Kind.COP, variant))
+		var i: int = f.count
 		_put(i, h, look.x as BodyPlan.Kind)
 		f.looks[i] = look.y
 		_squad_looks.swing(h, f, i)
 		if _looks.has(h.id):  # the reaction line stands still facing east: the four sides differ
 			f.face[i] = 0.0
 			f.aim[i] = f.pos[i] + Vector2.RIGHT * 4.0 * SimConst.PX_PER_M
-		i += 1
 	rigs.focus = focus_m(stage.arena) * SimConst.PX_PER_M
 	rigs.zoom = _print.zoom if _print != null else _city.zoom
 	if react != null:

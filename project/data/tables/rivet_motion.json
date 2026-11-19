@@ -1,5 +1,20 @@
 {
-  "doc": "Rivet's sprint and dodge roll as data (rivet-motion, 2026-11-03 eve). Ticks are 60 Hz frames. Sprint (owner call C19: a held key) raises the top speed above the 7.5 m/s tackle line (bodies.json rivet run_mps; the owner's 2026-11-04 baseline, 1.5x the evening's 6.2 sprint over a 6.75 m/s walk) while the stick points within min_forward_dot of the facing; the facing then follows the walk at turn_dps, not the aim. The roll is a press: roll_m covered in roll_ticks on an ease-out curve along the stick (or the facing), invulnerable from iframe_from to iframe_to (inclusive), then recovery_ticks with the stick scaled by recovery_move_scale; no new roll until cooldown_ticks after the recovery. The live tuning panel edits these rows.",
+  "cover": {
+    "crouch_scale_y": 0.78,
+    "drawn_cells": true,
+    "edge_m": 0.2,
+    "enabled": true,
+    "leave_dot": 0.65,
+    "leave_ticks": 4,
+    "move_mps": 3,
+    "peek_m": 0.8,
+    "peek_ticks": 6,
+    "silhouette_alpha": 0.3,
+    "silhouette_enabled": true,
+    "snap_reach_m": 0.85,
+    "snap_ticks": 5
+  },
+  "doc": "Rivet's sprint and dodge roll as data (rivet-motion, 2026-11-03 eve). Ticks are 60 Hz frames. Sprint (owner call C19: a held key) raises the top speed above the 7.5 m/s tackle line (bodies.json rivet run_mps; the owner's 2026-11-04 baseline, 1.5x the evening's 6.2 sprint over a 6.75 m/s walk) while the stick points within min_forward_dot of the facing; the facing then follows the walk at turn_dps, not the aim. The roll is a press: roll_m covered in roll_ticks on an ease-out curve along the stick (or the facing), invulnerable from iframe_from to iframe_to (inclusive), then recovery_ticks with the stick scaled by recovery_move_scale; no new roll until cooldown_ticks after the recovery. The live tuning panel edits these rows. With vault enabled, a roll press at speed commits to a low obstacle and a clear landing. Depth follows travel, reach and landing clearance are measured from Rivet's edge, and the vault shares roll recovery. Heights are gameplay metres keyed by station kind or city texture name. Unlisted solids cannot be vaulted.",
   "face_aim": true,
   "roll": {
     "cooldown_ticks": 8,
@@ -17,5 +32,43 @@
     "min_forward_dot": 0.4,
     "sprint_mps": 9.3,
     "turn_dps": 320
+  },
+  "vault": {
+    "apex_m": 1.45,
+    "bodies_block_landing": true,
+    "drawn_cells": true,
+    "enabled": true,
+    "heights": {
+      "ambulance": 2.5,
+      "bench": 0.85,
+      "bollard": 0.9,
+      "car_wreck": 0.9,
+      "cover_high": 1.7,
+      "cover_low": 1,
+      "dumpster": 1.55,
+      "fire_hydrant": 0.8,
+      "mailbox": 1.35,
+      "pickup": 1.8,
+      "planter": 0.8,
+      "police_cruiser": 1.45,
+      "sedan": 1.2,
+      "sedan_b": 1.15,
+      "sedan_c": 1.2,
+      "taxi": 1.45,
+      "trash_can": 1.05,
+      "van": 2.1,
+      "wall_high": 3
+    },
+    "iframe_from": 3,
+    "iframe_to": 12,
+    "land_clear_m": 0.2,
+    "max_angle_deg": 35,
+    "max_depth_m": 2.15,
+    "max_height_m": 1.2,
+    "min_speed_mps": 5,
+    "no_fire": true,
+    "reach_m": 0.55,
+    "ticks": 18,
+    "top_scale": 1.12
   }
 }

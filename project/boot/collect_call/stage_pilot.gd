@@ -6,6 +6,8 @@ extends RefCounted
 ## with its i-frames), a held fire shoots along the aim heading, an interact press uses whatever
 ## is in reach (StageActions), melee is the claw combo (PlayerMelee over rivet_melee.json), and
 ## the car key is a stub until the vehicles lane's enter/exit API lands.
+## Vaults own the stage position and attack input through their landing tick.
+## Station cover holds the fighter on the face and releases fire at a full corner peek.
 
 var actions: PlayerActions
 var motion: PlayerMotion = PlayerMotion.shipped()
@@ -41,6 +43,7 @@ var _melees: Dictionary[StringName, PlayerMelee] = {}
 
 func _init(p_actions: PlayerActions) -> void:
 	actions = p_actions
+	actions.enable_cover_input(motion.cover.enabled)
 
 
 ## Fills the stage's intent for this tick from `input`.
@@ -52,7 +55,7 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 	var rivet: Fighter = stage.arena.rivet
 	if carry != null and rivet.alive():
 		carry.step(c, actions, stage.arena)
-	_follow_weapon(rivet.weapon)
+	hold.follow_weapon(rivet.weapon)
 	_pick_melee()
 	if stage.hidden_in != "" and c.move == Vector2.ZERO:
 		motion.stop()
@@ -60,25 +63,24 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 		_move(stage, c)
 	else:
 		motion.stop()
-	if c.was_pressed(actions, &"interact"):
-		stage.intent.interact = true
+	stage.intent.interact = stage.intent.interact or c.was_pressed(actions, &"interact")
 	_fire(stage, c)
 	var press: bool = _melee_press(c)
-	if _ghosts(stage, c, press):
-		return
-	var free: bool = motion.phase == PlayerMotion.Phase.FREE
-	var down: bool = c.is_held(actions, &"melee") and rivet.alive()
-	@warning_ignore("return_value_discarded")
-	shock.step(stage.arena, down, free and not melee.busy(), rivet.facing)
-	if press and free and not shock.busy():
-		var before: int = melee.combo.starts
-		melee.combo.press()
-		melee_swings += 1 if melee.combo.starts != before or melee.combo.buffered else 0
-	melee.combo.holding = _attack_held(c) and rivet.alive()
-	stage.intent.move_by += melee.step(stage.arena, false, rivet.facing)
-	if c.was_pressed(actions, &"car"):
-		car_presses += 1
-		Log.info("pilot", "enter/exit car pressed (stub until the vehicles lane's API lands)")
+	if motion.cover.spot == null and not motion.vault.owns_move and not _ghosts(stage, c, press):
+		var free: bool = motion.phase == PlayerMotion.Phase.FREE
+		var down: bool = c.is_held(actions, &"melee") and rivet.alive()
+		@warning_ignore("return_value_discarded")
+		shock.step(stage.arena, down, free and not melee.busy(), rivet.facing)
+		if press and free and not shock.busy():
+			var before: int = melee.combo.starts
+			melee.combo.press()
+			melee_swings += 1 if melee.combo.starts != before or melee.combo.buffered else 0
+		melee.combo.holding = _attack_held(c) and rivet.alive()
+		stage.intent.move_by += melee.step(stage.arena, false, rivet.facing)
+		if c.was_pressed(actions, &"car"):
+			car_presses += 1
+			Log.info("pilot", "enter/exit car pressed (stub until the vehicles lane's API lands)")
+	motion.vault.guard_move(stage)
 
 
 ## The ghost forms (features/souls GhostPilot); true when a form owns the melee press this tick
@@ -124,19 +126,10 @@ func _move(stage: CollectCallStage, c: PlayerCommand) -> void:
 	var aim: Vector2 = c.aim
 	if melee.busy() and aim == Vector2.ZERO:
 		c.aim = motion.facing()  # a swing holds the heading it started on
-	stage.intent.move_by = motion.step(c, walk, actions)
+	motion.drive(stage, self, c, walk)
 	c.aim = aim
 	rivet.facing = motion.heading(c.aim)
 	rivet.exposed = not motion.invulnerable()
-
-
-## Starts a stow and draw when the arena changed Rivet's weapon (a pickup, the rifle running dry).
-func _follow_weapon(weapon: StringName) -> void:
-	var coming: StringName = hold.pending if hold.state == WeaponHold.State.STOWING else hold.held
-	if weapon != coming:
-		@warning_ignore("return_value_discarded")
-		hold.equip(weapon)
-	hold.step()
 
 
 ## rivet-arsenal: a carried melee weapon (katana, baton) is in the claw.
@@ -173,7 +166,7 @@ func _attack_held(c: PlayerCommand) -> bool:
 
 ## A held fire shoots along the aim; the flamer's hose sways the line (ArsenalTable.Grip.sway).
 func _fire(stage: CollectCallStage, c: PlayerCommand) -> void:
-	var rolling: bool = motion.phase == PlayerMotion.Phase.ROLL  # n10 r-2: no gun is drawn in the ball
+	var rolling: bool = motion.blocks_fire()  # n10 r-2: no gun is drawn in the ball
 	var armed: bool = (
 		hold.can_fire() and not melee.busy() and not shock.busy() and not wielding() and not rolling
 	)

@@ -21,9 +21,8 @@ var pressed: int = 0
 static func decode(input: TickInput, previous: int, actions: PlayerActions) -> PlayerCommand:
 	var c: PlayerCommand = PlayerCommand.new()
 	c.move = Vector2(input.move_x, input.move_y) / float(TickInput.AXIS_MAX)
-	var mask: int = (1 << actions.aim_shift) - 1
-	c.held = input.buttons & mask
-	c.pressed = c.held & ~(previous & mask)
+	c.held = input.buttons & actions.button_mask
+	c.pressed = c.held & ~previous
 	var word: int = input.buttons >> actions.aim_shift
 	if word & AIM_VALID:
 		var turn: float = float(word & 0xFF) / float(actions.aim_steps)

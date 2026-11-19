@@ -52,7 +52,7 @@ func sample(_tick: int) -> TickInput:
 	for action: StringName in actions.bits:
 		if Input.is_action_pressed(action):
 			buttons |= 1 << actions.bits[action]
-	buttons |= _latched
+	buttons = (buttons | _latched) & actions.live_mask
 	_latched = 0
 	buttons |= PlayerCommand.pack_aim(_aim(), actions, _reach_m())
 	var k: float = float(TickInput.AXIS_MAX)

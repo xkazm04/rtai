@@ -1,0 +1,37 @@
+{
+  "$id": "gtai.rivet-moves/1",
+  "additionalProperties": false,
+  "properties": {
+    "cells": {
+      "items": {
+        "enum": [
+          "vault_plant",
+          "vault_land",
+          "cover_low",
+          "cover_high",
+          "vault_plant_left",
+          "vault_land_left",
+          "cover_low_left",
+          "cover_high_left"
+        ]
+      },
+      "maxItems": 8,
+      "minItems": 8,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "foot_pad": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "schema": {
+      "const": "gtai.rivet-moves/1"
+    }
+  },
+  "required": [
+    "cells",
+    "foot_pad",
+    "schema"
+  ],
+  "type": "object"
+}

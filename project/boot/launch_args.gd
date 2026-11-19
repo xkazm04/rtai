@@ -114,6 +114,11 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--enemy-brain",
 	"--squad-overlay",
 	"--ohm-bolt-delay",
+	"--vault",  # lane move n19: force low-obstacle vaults on
+	"--no-vault",  # lane move n19: force vaults off
+	"--cover",  # lane move n19: force station cover on
+	"--no-cover",  # lane move n19: force station cover off
+	"--car-doors",  # lane move n19: take the timed walk to and from a car door
 ]
 
 var _values: Dictionary[String, String] = {}

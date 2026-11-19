@@ -7,8 +7,8 @@ extends Node2D
 ## only: reads the service, never writes sim state. Sim traffic rammed to D1 or soul-hijacked keeps
 ## driving in the sim: the view lays the D1 / hijacked cell over it at the same transform.
 
-const CAR_L: float = 204.8
-const CAR_W: float = 102.4
+const CAR_L: float = VehicleBody.PARKED_HALF.x * 2.0 * SimConst.PX_PER_M
+const CAR_W: float = VehicleBody.PARKED_HALF.y * 2.0 * SimConst.PX_PER_M
 const SHADOW_OFF: Vector2 = Vector2(5.12, 5.12)
 const SHADOW: Color = Color(0.09, 0.075, 0.106, 0.45)
 const WRECK_TINT: Color = Color(0.62, 0.6, 0.58, 1.0)
@@ -17,6 +17,7 @@ const CAP: int = 32
 const CAR_H_M: float = 1.4  # view lab (cast_k): the roof height a cast shadow is thrown from (m)
 
 var service: VehicleService = null
+var door_view: VehicleDoorView = VehicleDoorView.new()
 ## Tyre marks under the cars (a child, drawn below the shadows).
 var skids: VehicleSkids = VehicleSkids.new()
 ## Burning wrecks (a child, drawn over the car bodies).
@@ -42,6 +43,7 @@ func setup(
 	shadow: MultiMeshInstance2D
 ) -> void:
 	service = svc
+	door_view.attach(self, svc)
 	skids.service = svc
 	skids.z_index = shadow.z_index - 1
 	add_child(skids)
@@ -67,17 +69,12 @@ func setup(
 
 
 func _exit_tree() -> void:
+	door_view.detach()
 	VehicleParked.live = false
 
 
 func _layer(like: MultiMeshInstance2D, tex: Texture2D, z: int) -> MultiMesh:
-	var mm: MultiMesh = MultiMesh.new()
-	mm.transform_format = MultiMesh.TRANSFORM_2D
-	mm.use_colors = true
-	mm.use_custom_data = true
-	mm.mesh = like.multimesh.mesh
-	mm.instance_count = CAP
-	mm.visible_instance_count = 0
+	var mm: MultiMesh = VehicleCardMesh.instances(CAP, like.multimesh.mesh)
 	mm.custom_aabb = AABB(Vector3(-1e7, -1e7, -10), Vector3(2e7, 2e7, 20))
 	var node: MultiMeshInstance2D = MultiMeshInstance2D.new()
 	node.multimesh = mm
@@ -92,6 +89,7 @@ func _layer(like: MultiMeshInstance2D, tex: Texture2D, z: int) -> MultiMesh:
 func _process(_delta: float) -> void:
 	if service == null:
 		return
+	door_view.tint()
 	for m: Array in _mirrors:
 		var mine: MultiMeshInstance2D = m[0]
 		var like: MultiMeshInstance2D = m[1]
@@ -108,7 +106,7 @@ func _process(_delta: float) -> void:
 		var wreck: bool = b.state == VehicleBody.State.WRECK
 		var k: int = b.state
 		var mm: MultiMesh = _bodies[k]
-		var xf: Transform2D = car_xf(b.pos, b.head)
+		var xf: Transform2D = car_xf(door_view.car_position(b), b.head)
 		var tint: Color = WRECK_TINT if wreck and not _burnt else Color.WHITE
 		_put(mm, counts[k], xf, tint, b)
 		counts[k] += 1
@@ -139,11 +137,13 @@ func _draw_cards() -> void:
 	var me: Vector2 = service.world.player_pos()
 	cards.front.clear()
 	cards.front.add_people(service.world.people_near(me, VehicleFront.NEAR_M))
-	if service.driving == null:
+	if door_view.walking():
+		cards.front.add(door_view.drawn_foot)
+	elif service.driving == null:
 		cards.front.add(me)
 	for b: VehicleBody in service.cars:
-		var on_duty: int = VehicleCards.duty(b.art, b.vel.length())
-		cards.put(b.art, b.pos, b.head, Color.WHITE, VehicleCards.wear(b.state, b.id) + on_duty)
+		var wear: int = VehicleCards.wear(b.state, b.id) + VehicleCards.duty(b.art, b.speed())
+		cards.put(b.art, door_view.car_position(b), b.head, Color.WHITE, wear)
 	var book: Dictionary[int, int] = service.traffic.state if service.traffic != null else {}
 	var recs: PackedFloat64Array = service.world.cars_near(me, VehicleCull.reach_m(cards.seen, me))
 	for r: int in range(0, recs.size(), VehicleWorld.CAR_STRIDE):

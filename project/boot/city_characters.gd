@@ -97,7 +97,7 @@ func _fill_feed(focus: Vector2) -> void:
 		_view.fx_feed.observe(snap, _clock.tick())
 	var feed: RigFeed = rigs.feed
 	_rows.fill(feed, snap, _city.sim.get_variants(), focus, _city.target * SimConst.PX_PER_M)
-	if rivet_on_foot:
+	if VehicleDoorView.on_foot(rigs.rig_for, feed.put, feed.count, _clock.tick(), rivet_on_foot):
 		var at: Vector2 = _city.target * SimConst.PX_PER_M
 		var vel: Vector2 = (at - _rivet_prev) / SimClock.TICK_DT
 		_rivet_prev = at

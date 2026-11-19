@@ -45,6 +45,7 @@ class Hit:
 	var prop: ArenaStation.Prop
 	var feet: Vector2
 	var head: Vector2
+	var rig: CutRig
 
 
 ## The arena's view (tilted --view only): on the print stage's actor layer, else the city's.
@@ -118,6 +119,8 @@ func _draw() -> void:
 			done[h.prop] = true
 			_floor._prop(self, base + h.prop.at, h.prop)
 	for h: Hit in _hits:
+		if CoverUpperCard.draw_hidden(self, h):
+			continue
 		for cut: PackedVector2Array in h.cut:
 			for part: PackedVector2Array in Geometry2D.intersect_polygons(
 				silhouette(h.feet, h.head), cut
@@ -176,6 +179,7 @@ func _hits_of(at: Vector2, p: ArenaStation.Prop, rigs: Array[CutRig], out: Array
 			continue
 		var h: Hit = Hit.new()
 		h.area = area
+		h.rig = rigs[i]
 		h.prop = p
 		if not (rigs[i].dead and PropLying.ON):  # a corpse needs the prop redraw alone
 			cut = ArenaPropCards.cut_polys(p.kind, r, area) if cut.is_empty() else cut

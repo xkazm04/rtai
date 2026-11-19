@@ -1,0 +1,165 @@
+{
+  "_doc": "Rivet vault and cover masters. Each sheet contains p55 on the left and p70 on the right.",
+  "masters": {
+    "cover_high": {
+      "accepted": true,
+      "date": "2026-11-19",
+      "file": "masters:n19/move/masters/cover_high.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n19/move/cover_high.md#right",
+      "references": [
+        "project/features/characters/art/view/p55/rivet_frames.png",
+        "project/features/characters/art/view/p55/rivet_eq_machine_pistol.png",
+        "project/features/characters/art/view/p70/rivet_frames.png",
+        "project/features/characters/art/view/p70/rivet_eq_machine_pistol.png"
+      ],
+      "seed": null,
+      "sha256": "ed24bd93e74601e0ae8d5283e7aeedfcf15bff3c74829bf5e723fcf6d09eda1f",
+      "tool": "codex-image"
+    },
+    "cover_high_left": {
+      "accepted": true,
+      "date": "2026-11-19",
+      "file": "masters:n19/move/masters/cover_high_left.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n19/move/cover_high.md#left",
+      "references": [
+        "project/features/characters/art/view/p55/rivet_frames.png",
+        "project/features/characters/art/view/p55/rivet_eq_machine_pistol_left.png",
+        "project/features/characters/art/view/p70/rivet_frames.png",
+        "project/features/characters/art/view/p70/rivet_eq_machine_pistol_left.png"
+      ],
+      "seed": null,
+      "sha256": "49ce9eef32d546db0f8b1933dc6ca8a1acc253c7c3d3c304a8f4f7b6a57df97e",
+      "tool": "codex-image"
+    },
+    "cover_low": {
+      "accepted": true,
+      "date": "2026-11-19",
+      "file": "masters:n19/move/masters/cover_low.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n19/move/cover_low.md#right",
+      "references": [
+        "project/features/characters/art/view/p55/rivet_frames.png",
+        "project/features/characters/art/view/p55/rivet_eq_machine_pistol.png",
+        "project/features/characters/art/view/p70/rivet_frames.png",
+        "project/features/characters/art/view/p70/rivet_eq_machine_pistol.png"
+      ],
+      "seed": null,
+      "sha256": "0ed6dfdc08108e1049d51f299109ee94accc2d6adc52730539a59cd8e2dbbea3",
+      "tool": "codex-image"
+    },
+    "cover_low_left": {
+      "accepted": true,
+      "date": "2026-11-19",
+      "file": "masters:n19/move/masters/cover_low_left.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n19/move/cover_low.md#left",
+      "references": [
+        "project/features/characters/art/view/p55/rivet_frames.png",
+        "project/features/characters/art/view/p55/rivet_eq_machine_pistol_left.png",
+        "project/features/characters/art/view/p70/rivet_frames.png",
+        "project/features/characters/art/view/p70/rivet_eq_machine_pistol_left.png"
+      ],
+      "seed": null,
+      "sha256": "d57eb2042bed20e4d0e16b0eb286eaa84ac2a1af5ee2f9a9eef9a58af0998fe2",
+      "tool": "codex-image"
+    },
+    "cover_low_reject": {
+      "accepted": false,
+      "date": "2026-11-19",
+      "file": "masters:n19/move/masters/cover_low_reject.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n19/move/cover_low.md#rejected-right",
+      "references": [
+        "project/features/characters/art/view/p55/rivet_frames.png",
+        "project/features/characters/art/view/p55/rivet_eq_machine_pistol.png",
+        "project/features/characters/art/view/p70/rivet_frames.png",
+        "project/features/characters/art/view/p70/rivet_eq_machine_pistol.png"
+      ],
+      "seed": null,
+      "sha256": "7479f0fab9cbfc66edb4f3804ae5d6fcb15d364c2f8e759f4fa235a6ddd99f03",
+      "tool": "codex-image"
+    },
+    "vault_land": {
+      "accepted": true,
+      "date": "2026-11-19",
+      "file": "masters:n19/move/masters/vault_land.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n19/move/vault_land.md#right",
+      "references": [
+        "project/features/characters/art/view/p55/rivet_frames.png",
+        "project/features/characters/art/view/p55/rivet_eq_machine_pistol.png",
+        "project/features/characters/art/view/p70/rivet_frames.png",
+        "project/features/characters/art/view/p70/rivet_eq_machine_pistol.png"
+      ],
+      "seed": null,
+      "sha256": "4a8e90f731ee83332248b5e1aed3d21d9ecf826fef0de13c077f30a17315097c",
+      "tool": "codex-image"
+    },
+    "vault_land_left": {
+      "accepted": true,
+      "date": "2026-11-19",
+      "file": "masters:n19/move/masters/vault_land_left.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n19/move/vault_land.md#left",
+      "references": [
+        "project/features/characters/art/view/p55/rivet_frames.png",
+        "project/features/characters/art/view/p55/rivet_eq_machine_pistol_left.png",
+        "project/features/characters/art/view/p70/rivet_frames.png",
+        "project/features/characters/art/view/p70/rivet_eq_machine_pistol_left.png"
+      ],
+      "seed": null,
+      "sha256": "3ed1cba22bcbb99ca1f0e95b94879f40f43a1861c50e9287a81586a54d6c88ee",
+      "tool": "codex-image"
+    },
+    "vault_land_reject": {
+      "accepted": false,
+      "date": "2026-11-19",
+      "file": "masters:n19/move/masters/vault_land_reject.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n19/move/vault_land.md#rejected-right",
+      "references": [
+        "project/features/characters/art/view/p55/rivet_frames.png",
+        "project/features/characters/art/view/p55/rivet_eq_machine_pistol.png",
+        "project/features/characters/art/view/p70/rivet_frames.png",
+        "project/features/characters/art/view/p70/rivet_eq_machine_pistol.png"
+      ],
+      "seed": null,
+      "sha256": "ac5b39f5d7bc8728c28d1efb217053252effc4b4bef9411a665507441f7d8f6d",
+      "tool": "codex-image"
+    },
+    "vault_plant": {
+      "accepted": true,
+      "date": "2026-11-19",
+      "file": "masters:n19/move/masters/vault_plant.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n19/move/vault_plant.md#right",
+      "references": [
+        "project/features/characters/art/view/p55/rivet_frames.png",
+        "project/features/characters/art/view/p55/rivet_eq_machine_pistol.png",
+        "project/features/characters/art/view/p70/rivet_frames.png",
+        "project/features/characters/art/view/p70/rivet_eq_machine_pistol.png"
+      ],
+      "seed": null,
+      "sha256": "4c5281e894b8488fbe65458fb410a94a90478e452009fe050f62522ac42baae1",
+      "tool": "codex-image"
+    },
+    "vault_plant_left": {
+      "accepted": true,
+      "date": "2026-11-19",
+      "file": "masters:n19/move/masters/vault_plant_left.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n19/move/vault_plant.md#left",
+      "references": [
+        "project/features/characters/art/view/p55/rivet_frames.png",
+        "project/features/characters/art/view/p55/rivet_eq_machine_pistol_left.png",
+        "project/features/characters/art/view/p70/rivet_frames.png",
+        "project/features/characters/art/view/p70/rivet_eq_machine_pistol_left.png"
+      ],
+      "seed": null,
+      "sha256": "d84722898e2065efb370c6d23d2c4ed7cbfff137f7d9d6c0cca35e65fd0f5e34",
+      "tool": "codex-image"
+    }
+  }
+}

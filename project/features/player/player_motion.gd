@@ -4,13 +4,17 @@ extends RefCounted
 ## sprint (above the 5.0 m/s tackle line; the facing follows the walk, at a slower turn) and the
 ## dodge roll (a press: roll_m on an ease-out curve, invulnerable on a window of its ticks, then
 ## a recovery with a damped stick and a cooldown). Free movement is TopDownMover unchanged.
+## A roll press can start a vault, with its own path and i-frames before shared recovery.
+## Station cover owns the grounded snap, slide and corner peek while its flag is enabled.
 
-enum Phase { FREE, ROLL, RECOVER }
+enum Phase { FREE, ROLL, RECOVER, VAULT }
 
 const TABLE: String = "res://data/tables/rivet_motion.json"
 const SCHEMA: String = "gtai.rivet-motion/1"
 
 var mover: TopDownMover = TopDownMover.new()
+var vault: PlayerVault = PlayerVault.new()
+var cover: PlayerCover = PlayerCover.new()
 var phase: Phase = Phase.FREE
 var sprinting: bool = false
 var rolls: int = 0
@@ -39,38 +43,34 @@ var _sprint_actions: PlayerActions = null
 
 
 static func shipped() -> PlayerMotion:
-	return from_table(DataTable.open(TABLE, SCHEMA))
+	var m: PlayerMotion = from_table(DataTable.open(TABLE, SCHEMA))
+	m.vault.apply_flags()
+	m.cover.apply_flags()
+	return m
 
 
 static func from_table(t: DataTable) -> PlayerMotion:
-	var m: PlayerMotion = PlayerMotion.new()
-	var s: Dictionary = t.object(t.raw, "sprint")
-	m.sprint_mps = t.num(s, "sprint_mps")
-	m.sprint_accel_mps2 = t.num(s, "accel_mps2")
-	m.sprint_turn_dps = t.num(s, "turn_dps")
-	m.min_forward_dot = t.num(s, "min_forward_dot")
-	var r: Dictionary = t.object(t.raw, "roll")
-	m.roll_m = t.num(r, "roll_m")
-	m.roll_ticks = maxi(t.integer(r, "roll_ticks"), 1)
-	m.iframe_from = t.integer(r, "iframe_from")
-	m.iframe_to = t.integer(r, "iframe_to")
-	m.recovery_ticks = t.integer(r, "recovery_ticks")
-	m.recovery_move_scale = t.num(r, "recovery_move_scale")
-	m.cooldown_ticks = t.integer(r, "cooldown_ticks")
-	m.exit_speed_k = t.num(r, "exit_speed_k")
-	m.face_aim = t.raw.get("face_aim", true) == true
-	m.errors = t.errors()
-	if m.iframe_to >= m.roll_ticks:
-		m.errors.append("rivet_motion.json: roll.iframe_to must be inside roll_ticks")
-	return m
+	return PlayerMotionTable.read(t)
+
+
+func drive(stage: CollectCallStage, pilot: StagePilot, c: PlayerCommand, walk: float) -> void:
+	if not cover.drive(stage, pilot, c, walk):
+		vault.drive(stage, pilot, c, walk)
 
 
 ## The displacement for one tick. `aim` Vector2.ZERO faces the walk direction.
 func step(c: PlayerCommand, walk_mps: float, actions: PlayerActions) -> Vector2:
 	_cooldown = maxi(_cooldown - 1, 0)
 	_roll_tick = -1
-	if c.was_pressed(actions, &"roll") and can_roll():
+	vault.reset_tick()
+	if c.was_pressed(actions, &"roll") and can_roll() and not vault.intercept(self, c.move):
 		_start_roll(c.move)
+	if phase == Phase.VAULT:
+		_phase_tick = vault.advance(_phase_tick)
+		if _phase_tick == 0:
+			phase = Phase.RECOVER
+	if vault.owns_move:
+		return Vector2.ZERO
 	match phase:
 		Phase.ROLL:
 			return _roll_step(walk_mps)
@@ -79,13 +79,17 @@ func step(c: PlayerCommand, walk_mps: float, actions: PlayerActions) -> Vector2:
 	return _free_step(c, walk_mps, actions)
 
 
+func blocks_fire() -> bool:
+	return cover.blocks_fire() or phase == Phase.ROLL or (vault.frame >= 0 and vault.no_fire)
+
+
 func can_roll() -> bool:
 	return phase == Phase.FREE and _cooldown == 0
 
 
 ## True on the roll's invulnerable ticks (iframe_from..iframe_to, inclusive).
 func invulnerable() -> bool:
-	return _roll_tick >= iframe_from and _roll_tick <= iframe_to
+	return vault.invulnerable() or (_roll_tick >= iframe_from and _roll_tick <= iframe_to)
 
 
 ## 0..1 through the roll (for the rig's tuck), 0 outside it.
@@ -100,7 +104,7 @@ func facing() -> Vector2:
 ## The look: the aim while a device aims (not during a roll, which faces its roll), else the turned
 ## facing. Turning and the sprint's own heading stay in the mover (speed, strafe).
 func heading(aim: Vector2) -> Vector2:
-	if face_aim and aim != Vector2.ZERO and phase != Phase.ROLL:
+	if face_aim and aim != Vector2.ZERO and phase != Phase.ROLL and vault.frame < 0:
 		return aim.normalized()
 	return mover.facing
 
@@ -110,6 +114,11 @@ func velocity() -> Vector2:
 
 
 func stop() -> void:
+	cover.interrupt()
+	vault.interrupt()
+	if phase == Phase.VAULT:
+		phase = Phase.RECOVER
+		_phase_tick = 0
 	mover.stop()
 	sprinting = false
 
@@ -121,6 +130,8 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(_cooldown)
 	out.put_float(roll_dir.x)
 	out.put_float(roll_dir.y)
+	vault.write_state(out, phase)
+	cover.write_state(out)
 
 
 func _free_step(c: PlayerCommand, walk_mps: float, actions: PlayerActions) -> Vector2:

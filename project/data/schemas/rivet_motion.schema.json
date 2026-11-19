@@ -2,6 +2,82 @@
   "$id": "gtai.rivet-motion/1",
   "additionalProperties": false,
   "properties": {
+    "cover": {
+      "additionalProperties": false,
+      "properties": {
+        "crouch_scale_y": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "type": "number"
+        },
+        "drawn_cells": {
+          "type": "boolean"
+        },
+        "edge_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "leave_dot": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "leave_ticks": {
+          "maximum": 120,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "move_mps": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "peek_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "peek_ticks": {
+          "maximum": 120,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "silhouette_alpha": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "silhouette_enabled": {
+          "type": "boolean"
+        },
+        "snap_reach_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "snap_ticks": {
+          "maximum": 120,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "crouch_scale_y",
+        "drawn_cells",
+        "edge_m",
+        "enabled",
+        "leave_dot",
+        "leave_ticks",
+        "move_mps",
+        "peek_m",
+        "peek_ticks",
+        "silhouette_alpha",
+        "silhouette_enabled",
+        "snap_reach_m",
+        "snap_ticks"
+      ],
+      "type": "object"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"
@@ -99,13 +175,107 @@
         "turn_dps"
       ],
       "type": "object"
+    },
+    "vault": {
+      "additionalProperties": false,
+      "properties": {
+        "apex_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "bodies_block_landing": {
+          "type": "boolean"
+        },
+        "drawn_cells": {
+          "type": "boolean"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "heights": {
+          "additionalProperties": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
+          "minProperties": 1,
+          "type": "object"
+        },
+        "iframe_from": {
+          "maximum": 120,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "iframe_to": {
+          "maximum": 120,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "land_clear_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "max_angle_deg": {
+          "exclusiveMinimum": 0,
+          "maximum": 80,
+          "type": "number"
+        },
+        "max_depth_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "max_height_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "min_speed_mps": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "no_fire": {
+          "type": "boolean"
+        },
+        "reach_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "ticks": {
+          "maximum": 120,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "top_scale": {
+          "minimum": 1,
+          "type": "number"
+        }
+      },
+      "required": [
+        "apex_m",
+        "bodies_block_landing",
+        "drawn_cells",
+        "enabled",
+        "heights",
+        "iframe_from",
+        "iframe_to",
+        "land_clear_m",
+        "max_angle_deg",
+        "max_depth_m",
+        "max_height_m",
+        "min_speed_mps",
+        "no_fire",
+        "reach_m",
+        "ticks",
+        "top_scale"
+      ],
+      "type": "object"
     }
   },
   "required": [
+    "cover",
     "doc",
     "roll",
     "schema",
-    "sprint"
+    "sprint",
+    "vault"
   ],
   "type": "object"
 }

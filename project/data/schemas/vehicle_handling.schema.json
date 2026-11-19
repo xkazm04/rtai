@@ -49,6 +49,42 @@
       "minLength": 1,
       "type": "string"
     },
+    "doors": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "enter_ticks": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "exit_max_mps": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "exit_ticks": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "step_out_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "view": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enabled",
+        "enter_ticks",
+        "exit_max_mps",
+        "exit_ticks",
+        "step_out_m",
+        "view"
+      ],
+      "type": "object"
+    },
     "kill_at": {
       "minimum": 0,
       "type": "number"
@@ -154,7 +190,8 @@
     "doc",
     "kill_at",
     "damage",
-    "profiles"
+    "profiles",
+    "doors"
   ],
   "type": "object"
 }

@@ -106,7 +106,8 @@ func step(p_tick: int, tick_input: TickInput) -> void:
 	arena.step(tick)
 	@warning_ignore("return_value_discarded")
 	ArenaBodies.resolve(arena, (arena.rivet.pos - from) / SimClock.TICK_DT)  # features/bodies
-	arena.rivet.pos = _collide(arena.rivet.pos)
+	if pilot == null or not pilot.motion.vault.airborne_after_contacts(pilot.motion):
+		arena.rivet.pos = _collide(arena.rivet.pos)
 	_collide_hostiles()
 	_encounters()
 	_spawns()
@@ -173,6 +174,10 @@ func _move() -> void:
 		hidden_in = ""
 	var speed: float = arena.tuning.rivet["walk_mps"] * SimClock.TICK_DT
 	arena.rivet.pos = _collide(arena.rivet.pos.move_toward(intent.move_to, speed))
+
+
+func collide_preview(p: Vector2) -> Vector2:
+	return _collide(p)
 
 
 ## Rivet keeps out of the city's cells and the parked ghost cars (not the one he rides).
