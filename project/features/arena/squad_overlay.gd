@@ -13,12 +13,20 @@ const COLORS: Dictionary[String, Color] = {
 	"G": Color.WHITE,
 }
 
-var _floor_view: ArenaFloorView
+var _host: ArenaRigs
+var _stage: ArenaStage
 var _ink: Node2D = Node2D.new()
 
 
+static func attach(host: ArenaRigs, stage: ArenaStage) -> void:
+	if OS.is_debug_build() and ArenaArgs.parse().has("--squad-overlay"):
+		var overlay: SquadOverlay = SquadOverlay.new()
+		overlay._host = host
+		overlay._stage = stage
+		host.add_child(overlay)
+
+
 func _ready() -> void:
-	_floor_view = get_parent() as ArenaFloorView
 	layer = RenderLayers.canvas(&"hud")
 	add_child(_ink)
 	@warning_ignore("return_value_discarded")
@@ -30,15 +38,19 @@ func _process(_delta: float) -> void:
 
 
 func _draw_wave() -> void:
-	var stage: ArenaStage = _floor_view.stage as ArenaStage
-	var screen: Transform2D = _floor_view.get_global_transform_with_canvas()
-	for h: Fighter in stage.pit.standing:
+	var screen: Transform2D = _host.rigs.get_global_transform_with_canvas()
+	for h: Fighter in _stage.pit.standing:
 		if not h.alive():
 			continue
-		var at: Vector2 = screen * Ink.px(h.pos)
+		var rig: CutRig = _host.rigs.rig_for(h.id)
+		if rig == null:
+			rig = _host.robots.rig_for(h.id)
+		if rig == null or not rig.is_visible_in_tree():
+			continue
+		var at: Vector2 = rig.get_global_transform_with_canvas().origin
 		var letter: String = "G"
 		var goal: Vector2 = Vector2.INF
-		var squad: ArenaSquad = stage.arena.squad_ai
+		var squad: ArenaSquad = _stage.arena.squad_ai
 		if squad != null:
 			if not squad.minds.has(h.id):
 				continue
@@ -50,7 +62,7 @@ func _draw_wave() -> void:
 			goal = h.pursuit._goal
 		var color: Color = COLORS[letter]
 		if goal.is_finite():
-			var end: Vector2 = screen * Ink.px(goal)
+			var end: Vector2 = screen * (goal * SimConst.PX_PER_M)
 			_ink.draw_line(at, end, Ink.INK, 3.0, true)
 			_ink.draw_line(at, end, color, 1.0, true)
 			_ink.draw_circle(end, 3.0, color, false, 1.3, true)

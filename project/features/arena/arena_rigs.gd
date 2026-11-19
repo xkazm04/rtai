@@ -46,8 +46,7 @@ var _arsenal: ArsenalTable = ArsenalTable.shipped()
 var _looks: Dictionary[int, Vector2i] = {}
 
 
-## Puts the rigs on the view's actor layer and hides the sprite cast: the printed path's, or
-## (human-reactions) the CityView's on the city block (--arena=city); false with neither.
+## Puts rigs on the print or city actor layer and hides the sprite cast. False without either.
 func attach(p_stage: CollectCallStage, view: CollectCallView, ctx: WorldContext) -> bool:
 	var layer: CanvasLayer = null
 	if view.print_stage != null:
@@ -76,6 +75,7 @@ func attach(p_stage: CollectCallStage, view: CollectCallView, ctx: WorldContext)
 		return true
 	_pit = arena_stage.pit
 	_add_robots(layer, p_stage.arena, view.blood)
+	SquadOverlay.attach(self, arena_stage)
 	for t: ArenaTargets.Target in arena_stage.targets.targets:
 		var look: Vector2i = ReactLineBot.look_of(t.spawn.id)
 		if look.x >= 0:
