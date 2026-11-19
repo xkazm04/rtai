@@ -17,11 +17,7 @@
     "machine_pistol/p55/reload": "missing or invalid rivet_reload_machine_pistol.png; missing or invalid rivet_reload_machine_pistol_left.png",
     "machine_pistol/p70/reload": "missing or invalid rivet_reload_machine_pistol.png; missing or invalid rivet_reload_machine_pistol_left.png",
     "plasma_rifle/p55/left": "missing or invalid rivet_eq_plasma_rifle_left.png",
-    "plasma_rifle/p70/left": "missing or invalid rivet_eq_plasma_rifle_left.png",
-    "rocket_launcher/p55/fire8": "diagonal 0 lacks rear exhaust; diagonal 1 lacks rear exhaust; diagonal 2 lacks rear exhaust; diagonal 3 lacks rear exhaust",
-    "rocket_launcher/p55/left": "missing or invalid rivet_eq_rocket_launcher_left.png",
-    "rocket_launcher/p70/fire8": "diagonal 0 lacks rear exhaust; diagonal 1 lacks rear exhaust; diagonal 2 lacks rear exhaust; diagonal 3 lacks rear exhaust",
-    "rocket_launcher/p70/left": "missing or invalid rivet_eq_rocket_launcher_left.png"
+    "plasma_rifle/p70/left": "missing or invalid rivet_eq_plasma_rifle_left.png"
   },
   "schema": "gtai.arsenal-known-holes/1"
 }
