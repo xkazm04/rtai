@@ -24,3 +24,11 @@ The final production sweep at `ab12bb094` cut mean hostile time by 49.6% at 10 g
 `node tools/tests/run_unit.mjs --changed` selected the full suite and reported 2,985 passed, zero failed and two skipped. All five requested scenarios passed (`arena_squad`, `arena_pit`, `arena_city`, `enemy_pit` and `enemy_waves`).
 
 Final five-seed sweeps with `fight_probe --all --seeds=5` matched the starting commit for 15/15 squad, 15/15 mixed and 15/15 guard fights. Four additional 20-seed sweeps matched the A9b fair20 records for 20/20 city squad, 20/20 city guard, 20/20 pit squad and 20/20 pit guard. The comparison checked the seed, digest and every field outside the timing object. The city squad retained its 18.13 s clear, 2.91 HP lost and zero deaths.
+
+The quick gate passed all 12 changed GDScript files, including the engine parse check. The ownership evidence already used ASCII apostrophes and ranges at the starting commit.
+
+## Mutation results
+
+The unchanged `arena_squad.gd` scored **17/(17+3)**, up from **10/(10+10)** on the same repository sampler and source. The four new burst and morale tests killed seven prior survivors: the casualty fraction at line 106, two last-round pause faults at 133, two FIRE-state faults at 144 and two WINDUP-state faults at 146. The three survivors were the initial morale value, the equal-ID sort boundary and the empty-wave morale value.
+
+After the standard CLI took 17-20 seconds per mutant, the focused run used the repository's `generateMutants`, `sampleMutants` and `applyMutant` on an isolated pre-imported project. Each squad mutant ran in a fresh Godot process against `test_arena_squad`, `test_squad_budget`, `test_squad_burst` and `test_fight_areas`. The clean baseline passed, JUnit supplied the verdicts, and the runner restored the original source after each fault.
