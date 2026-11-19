@@ -32,3 +32,11 @@ The quick gate passed all 12 changed GDScript files, including the engine parse 
 The unchanged `arena_squad.gd` scored **17/(17+3)**, up from **10/(10+10)** on the same repository sampler and source. The four new burst and morale tests killed seven prior survivors: the casualty fraction at line 106, two last-round pause faults at 133, two FIRE-state faults at 144 and two WINDUP-state faults at 146. The three survivors were the initial morale value, the equal-ID sort boundary and the empty-wave morale value.
 
 After the standard CLI took 17-20 seconds per mutant, the focused run used the repository's `generateMutants`, `sampleMutants` and `applyMutant` on an isolated pre-imported project. Each squad mutant ran in a fresh Godot process against `test_arena_squad`, `test_squad_budget`, `test_squad_burst` and `test_fight_areas`. The clean baseline passed, JUnit supplied the verdicts, and the runner restored the original source after each fault.
+
+| Source | Killed / (killed + survived) | Survived | Invalid | Timed out |
+|---|---:|---:|---:|---:|
+| EnemyMotor | 13/20 | 7 | 0 | 0 |
+| ArenaSquad | 17/20 | 3 | 0 | 0 |
+| ArenaWaveCards | 11/11 | 0 | 1 | 0 |
+
+EnemyMotor used the standard mutation CLI for the first ten faults, followed by the remaining ten in fresh GUT processes with the same six mapped test files and a green baseline. The CLI's interrupted scratch file was restored by its sidecar repair. For wave cards, the two focused card tests exercised the unmodified control and the twelve sampled implementations in a single headless GUT run. Each copy had a distinct class name and its own test fixture. The control passed both tests. Subtracting strings in the texture path failed to parse and is excluded from the score. The new tests caught rig selection priority, stride phase, foot offset and three body-scale faults. Per-mutant operations and verdicts are in `evidence/n19-ai/cost-mutations.json`.
