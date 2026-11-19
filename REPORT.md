@@ -1,7 +1,7 @@
 # n19 lane gfx: graphics polish, native and the digests (final, 07:42)
 
 Branch `n19-gfx`, cut from `int-n19` at `28302bd3c`. Director Claude Opus 5.5, builder GPT-6.2 Astra.
-Evidence root: `C:/Users/kazda/kiro/gtai-masters/n19/gfx/` (written M below). Gate (snapshot, mid-night): `gate: PASS` at `030352b1d`, `build/gate/030352b1d48b/gate.json` (lint 19/19, unit 2,976 with 2 skips, scenarios 55, parity exact over 1,200 steps, bake matches). Final gate with `--reels` on `cbb8cebf3`, the last product commit (every later commit is docs-only): `gate: PASS` at `build/gate/cbb8cebf38b9/gate.json` (lint 19/19 over 1,618 files; unit 2,976 passed, 2 skipped; scenarios 55; parity exact over 1,200 steps with a planted mutation caught at step 629; selftest look goldens 11/11 and block 5/5; export-audit 740 loaded, 0 failed; reels exit 0). It ran at 05:57-06:19, before the 07:30 freeze, because the product was final.
+Evidence root: `C:/Users/kazda/kiro/gtai-masters/n19/gfx/` (written M below). Gate (snapshot, mid-night): `gate: PASS` at `030352b1d`, `build/gate/030352b1d48b/gate.json` (lint 19/19, unit 2,976 with 2 skips, scenarios 55, parity exact over 1,200 steps, bake matches). Overnight gate with `--reels` on `cbb8cebf3`, before the owner verdict below: `gate: PASS` at `build/gate/cbb8cebf38b9/gate.json` (lint 19/19 over 1,618 files; unit 2,976 passed, 2 skipped; scenarios 55; parity exact over 1,200 steps with a planted mutation caught at step 629; selftest look goldens 11/11 and block 5/5; export-audit 740 loaded, 0 failed; reels exit 0). It ran at 05:57-06:19, before the 07:30 freeze, because the product was final.
 
 ## What works
 
@@ -30,11 +30,11 @@ Evidence root: `C:/Users/kazda/kiro/gtai-masters/n19/gfx/` (written M below). Ga
 - merge13 bounced after 2 min on my own brief (it said stop on any non-golden conflict; the debt baseline has a repo resolver). The resume took 26 min.
 - The machine was never quiet: 6-16 other Godot processes in every bench run (other lanes' mutate runs, another project's worktrees). Every performance number tonight is CONTENDED. Bench and rig bench under the lock: about 35 min.
 
-## Calls for the owner
+## Calls submitted to the owner
 
 1. **Docks roof wedges: layout, not occlusion** (item 4). Built: a 3 m loading apron where a docks yard meets a warehouse's north wall, marked by the quay bollards (v35). Walkers turn short of the wall, so no roof wedge can form. The other way: change the shared occlusion and silhouette ink, which would touch every district, downtown included. Recommended: keep the apron. Pair: `M/gen/yard_compare_tilt70_64ppm_t150.png` (wedge before, clean after), `M/gen/apron_edge_before_tilt70_32ppm_t150.png` (unmarked v34 apron vs bollards).
 2. **How strong the district traffic mix is** (item 1). Built from the zone data as it stood: docks 53 % vans and pickups and 1 % taxis, downtown 40 % taxis. A stronger or weaker mix is one data edit in `project/features/city/gen/city_zone.gd` (`car_art`), and it moves no digest. Recommended: keep it. Still: `M/zones/districts3-top.png`.
-3. **The far crowd's contact shadow is rings, not a blob** (item 3A). Built: the baked crowd draws the rigs' contact rings scaled by hip height, so nothing pops at the 16-rig switch. The old round blob comes back with contact hips of zero. Recommended: keep the rings. Clip: `M/contact/item3a-contact-tilt70-32ppm.mp4` (feet inset at 64 px/m).
+3. **Far crowd contact shadow** (item 3A). The overnight candidate drew the rigs' contact rings scaled by hip height. The owner selected the old round blob. See the verdict below.
 
 ## Merge notes
 
@@ -57,7 +57,7 @@ Evidence root: `C:/Users/kazda/kiro/gtai-masters/n19/gfx/` (written M below). Ga
 
 ## Next steps
 
-1. Merge order for gfx: after anim, then apply anim NEED part 2 (the noir crowd include) and re-render the five shared look goldens on the merged revision after the DLL rebuild.
+1. Merge gfx after anim, apply anim NEED part 2 (the noir crowd include), rebuild the DLLs and re-render all seven look goldens named in Merge notes.
 2. Re-run the heat-3 bench and the rig bench on a quiet machine (no other lanes, no other project's worktrees) to drop CONTENDED; every number tonight carries it.
 3. Draw art for the docks loading apron (paint, kerb line) so the 3 m stop zone reads as a place, not only a bollard row.
 4. The baked crowd still draws the hat-man smaller with a flat-cut crown at the 16-rig switch on n19-gfx alone; anim's slot-scaled cell plus our slot write fix it only together (check on the merged tree).
@@ -88,3 +88,11 @@ What I would brief differently:
 - Name the repo's own resolvers in any merge brief. "Stop on any other conflict" bounced `merge13` on `tools/debt/baseline.json`, which `tools/debt/merge_baseline.mjs` resolves by design.
 - Ask for an A/A twin in every before/after render from the first brief. The non-repeatable tilt-70 frame (a real draw-order fault, `030352b1d`) showed up only because two "same" renders disagreed.
 - Ask for a paired, interleaved in-process probe for any small cost from the start (`cost12`). The rig bench cannot resolve a 0.01 ms effect on a machine running 6-16 other Godot processes.
+
+## Owner verdicts 2026-11-19
+
+- The owner selected the round blob for the far crowd and accepted the docks loading apron and district traffic mix as built.
+- `project/data/tables/view.json` ships `crowd_contact_hip_scale` at 0. Both writers emit one blob per visible person, including rigged, downed and dead slots. An existing arena rig or corpse shadow can overlap that blob, just as before tonight. Zero adds no rig-shadow pass to the standalone city. Scale 1 restores the rig-sized rings for standing baked people in contact views.
+- Seed 5, tilt 70, tick 33, baked slot 15 on open paving. The fixture has 16 full rigs and one baked pedestrian. It draws 17 blobs or one baked ring instance. On the original paving, the rigged frame at tick 31 and baked frame at tick 33 also match the archived pre-ring blob captures pixel for pixel at both zooms. Pairs: `M/contact/verdict/tilt70-32ppm-t33-comparison.png`, `M/contact/verdict/tilt70-64ppm-t33-comparison.png`.
+- **Look goldens re-blessed: none.** All 11 junction and five block captures are pixel-identical across the verdict. They pin the top view, where the blob was already active. The merged revision still needs the seven goldens named in Merge notes for the combined crowd artwork.
+- The new blob test failed on rings and passed with zero on both renderers. The changed suite passed 2,961 with two skips. The heat-3 probe reproduced 345 / 363 / 345 shadow instances with rings / blob / rings. All 20 city replay checkpoints matched the archive (final `7571fcfe027f9994`), as did the 60 s replay (`cbeb734ff9b97c41`), quest input (`37bf8deacaad2f48`) and 1,200-step parity (`94b2865f7f17d778`).
