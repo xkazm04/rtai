@@ -12,17 +12,18 @@ Masters and frames live in `C:/Users/kazda/kiro/gtai-masters/n19/move/` (not in 
 |---|---|---|
 | Vault (on by default; `--no-vault` turns it off) | `project/features/player/player_vault.gd`, `vault_probe.gd`, `vault_city.gd`; scenario `rivet_vault` (pit arena + city block, aimed and free approaches); masters `cells/vault/sheets/p70_64_crate.png` | 1,080 attempts, 514 landed, 0 forbidden overlaps (director run, 23:47) |
 | Cover (on by default; `--no-cover`) | `player_cover.gd`, `cover_query.gd`, `cover_view.gd`, `cover_upper_card.gd`; scenario `rivet_cover`; `cells/cover/sheets/p70_64_low.png`, `p55_64_high.png` | 800 presses, 488 snaps, 360 peeks, 312 refused (director run, 23:47) |
-| Replay identity | `project/tests/scenarios/scenario_moves_replay.gd` (vault, snap, peek, fire, leave: 215 ticks) | TODO director re-run |
-| Flags switch off cleanly | `project/tests/unit/test_moves_off.gd` pins flag-off stage bytes to the pre-vault locomotion | TODO |
+| Replay identity | `project/tests/scenarios/scenario_moves_replay.gd` (vault, snap, peek, fire, leave: 215 ticks); `scenario_moves_fuzz.gd` replays both 6,000-tick tapes on a fresh stage | per-tick position + final digest identical; in the director's gate run 04:31 (60 scenarios passed) |
+| Flags switch off cleanly | `project/tests/unit/test_moves_off.gd` pins flag-off stage bytes to the pre-vault locomotion; `scenario_moves_fuzz.gd` off control (`--no-vault --no-cover`) | off tape: 0 vault starts, 0 snaps, digest equal to the same tape with cover bits stripped |
 | Drawn cells | `project/features/characters/art/rivet/moves/`, `tools/art/move_cells_cut.py`, 8 of 10 image_gen masters accepted | p55/p70 at x1.0 and x1.5 |
 | Walk-slide measurement + proposal | `tools/film/foot_slide.py`, `project/features/player/stride_match.gd`, `gtai-masters/n19/move/walk/INDEX.md` | planted-step drift 14.2 -> 0.7 cm at 2.4 m/s (p55 pistol, 64 px/m) (Astra) |
-| Solid fuzz (both moves, free input) | TODO `scenario_moves_fuzz` (brief 09) | TODO |
+| Solid fuzz (both moves, free input) | `project/tests/scenarios/scenario_moves_fuzz.gd` + `moves_fuzz_tape.gd`: hostile bursts (sprint, roll, cover, fire, roll-then-cover, cover-then-roll) through the real pilot input path, pit arena + city block, checked after every whole stage step with the shared `VaultTrial.forbidden_contact` | 24,000 checked ticks (2 x 6,000 per map), 0 forbidden overlaps; every counter non-zero (Astra counts; scenario green in the director's gate) |
+| Car enter/exit | `project/features/vehicles/vehicle_doors.gd` (sim phase, `--car-doors`, data `doors.enabled` false), `vehicle_door_view.gd` (render-only motion, on); `scenario_vehicle_doors.gd`; frames `car/INDEX.md` | enter 14 ticks, exit 10 ticks below 1.5 m/s; flag-off digests unchanged (gate 60/60); mutate door file 17/20 = 85 % (Astra) |
 
 ## What does not
 - Cover snaps only to arena **station** boxes, because the arena's shot-stop rule (`ArenaWalls.blocks`) knows only stations. City props stop no shot today, so cover refuses in the open city and in quest 1 instead of faking protection. Quest 1's hide stays its own case (the p55 hide card is a dumpster with Rivet inside, not wall cover).
 - Bare `--replay` of an arena recording exits 1 at tick 60: boot (`project/boot/world.gd`) picks city systems and the replay header (`project/core/replay/replay_log.gd`) records no session type or move flags. The recording reproduces inside an arena session. Not move-owned.
 - The walk keeps visible ride inside one held drawing (47.1 -> 33.7 cm) after the cadence match: the armed walk has 4 cells.
-- TODO car enter/exit (brief 08).
+- Car doors: the sim door phase is OFF (`doors.enabled` false): turning it on changes the city state bytes while a door walk is active, and only gfx re-blesses digests tonight. Flag off, the view plays a short cosmetic ease into and out of the car.
 
 ## What blocked or slowed you
 - Waiting on Astra with no Godot allowed: about 30 min of idle director time at 02:10-02:40.
@@ -52,4 +53,5 @@ TODO
 | move-cells | 43 | accepted with follow-up |
 | cells-fix (+ flip-on) | 75 | accepted |
 | tidy-walk | 26 | accepted |
-| solid-fuzz | TODO | TODO |
+| solid-fuzz (+ car doors) | 72 | accepted with follow-up (launch_args reword, door ghost over the roof) |
+| calls-polish | TODO | TODO |
