@@ -80,3 +80,5 @@ What I would brief differently: name the station sparring partners and the share
 ## Owner verdicts 2026-11-19
 
 Squad stays on by default. The city melee scenario now uses guard for the live fight, replay and planted fault. Rivet dropped eight with melee close-in enabled and zero with it disabled. Under squad the broken bot dropped four, three without the city contractor speed override, and four with station spacing off. See [the four runs](evidence/n19-ai/melee-bisect.md).
+
+At `082023d8f`, all 57 scenarios passed. The changed-unit run passed 2,991 tests and the full GUT run passed 3,007. Each reported two skipped tests.
