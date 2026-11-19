@@ -1,7 +1,7 @@
 # n19 lane gfx: graphics polish, native and the digests (DRAFT, session 5, 03:40)
 
 Branch `n19-gfx`, cut from `int-n19` at `28302bd3c`. Director Claude Opus 5.5, builder GPT-6.2 Astra.
-Evidence root: `C:/Users/kazda/kiro/gtai-masters/n19/gfx/` (written M below). Gate: TODO (`node tools/gate/run.mjs --rev=HEAD`, quote line + gate.json).
+Evidence root: `C:/Users/kazda/kiro/gtai-masters/n19/gfx/` (written M below). Gate (snapshot, mid-night): `gate: PASS` at `030352b1d`, `build/gate/030352b1d48b/gate.json` (lint 19/19, unit 2,976 with 2 skips, scenarios 55, parity exact over 1,200 steps, bake matches). Final gate with `--reels` after the freeze: TODO.
 
 ## What works
 
@@ -61,4 +61,5 @@ TODO
 | polish | 75 | bounced-partial (cap, no final message) |
 | polish2 (resume) | 30 | accepted (code); its apron sheets bounced (a spurious container change) |
 | bench10 | 59 | accepted (measurement only, no commit) |
-| tilt11 | TODO | TODO |
+| tilt11 | 37 | accepted (anim NEED part 1, tilted draw-order fix, honest apron sheets, gate PASS) |
+| cost12 | TODO | TODO |
