@@ -51,3 +51,32 @@ func test_protection_matches_single_station_even_on_edges_and_corners() -> void:
 		spot.at = at
 		for threat: Vector2 in grid:
 			assert_eq(CoverQuery.protects(spot, threat), walls.blocks(threat, at))
+
+
+func test_ties_compare_size_then_normal_and_never_precede_themselves() -> void:
+	var small: CoverQuery.CoverSpot = CoverQuery.CoverSpot.new()
+	var large: CoverQuery.CoverSpot = CoverQuery.CoverSpot.new()
+	small.box = Rect2(2, 2, 1, 1)
+	large.box = Rect2(2, 2, 2, 1)
+	assert_true(small.nearer(large))
+	assert_false(large.nearer(small))
+	large.box = small.box
+	small.normal = Vector2.UP
+	large.normal = Vector2.DOWN
+	assert_true(small.nearer(large))
+	assert_false(large.nearer(small))
+	assert_false(small.nearer(small))
+
+
+func test_explicit_zero_peek_keeps_both_ends_at_the_corners() -> void:
+	var solids: Dictionary[Rect2, String] = {BOX: "cover_high"}
+	var radius: float = 0.5
+	var face: Vector2 = Vector2(0, -1)
+	var spots: Array[CoverQuery.CoverSpot] = CoverQuery.near(
+		face + Vector2.UP, 3, solids, radius, 0
+	)
+	assert_eq(spots.size(), 1)
+	if spots.size() == 1:
+		assert_eq(spots[0].at, face + Vector2.UP * radius)
+		assert_eq(spots[0].edge_a, spots[0].at + Vector2.LEFT * 2.0)
+		assert_eq(spots[0].edge_b, spots[0].at + Vector2.RIGHT * 2.0)
