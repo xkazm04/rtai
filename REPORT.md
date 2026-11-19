@@ -76,3 +76,7 @@ Gate: `node tools/gate/run.mjs --rev=HEAD --reels` started 07:31 on `e11581e9b`.
 | a10b-walls | 13 | accepted | push resolved on the guard route map |
 
 What I would brief differently: name the station sparring partners and the shared pit rows in the very first squad brief (two sessions went to finding them); ask for the 20-seed fairness run from the start (5 seeds hid a +-15 % noise band); and never start a session in the last 30 minutes of a director session (two were killed at handover).
+
+## Owner verdicts 2026-11-19
+
+Squad stays on by default. The city melee scenario now uses guard for the live fight, replay and planted fault. Rivet dropped eight with melee close-in enabled and zero with it disabled. Under squad the broken bot dropped four, three without the city contractor speed override, and four with station spacing off. See [the four runs](evidence/n19-ai/melee-bisect.md).

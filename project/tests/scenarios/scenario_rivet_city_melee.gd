@@ -28,7 +28,11 @@ func run(_tree: SceneTree) -> String:
 
 
 static func _open(bus: EventBus, data: DataStore) -> ArenaSession:
-	var s: ArenaSession = ArenaSession.open(bus, data, ArenaSession.MASTER_SEED, null, true)
+	# This tests Rivet's melee approach. Squad fighters can enter reach even when the bot hangs back.
+	var options: ArenaArgs = ArenaArgs.parse(["--arena=city", "--enemy-brain=guard"])
+	var s: ArenaSession = ArenaSession.open_with_args(
+		bus, data, ArenaSession.MASTER_SEED, null, options
+	)
 	for h: ArenaHook in s.stage.hooks:
 		if h is ArenaArsenal:
 			@warning_ignore("return_value_discarded")
