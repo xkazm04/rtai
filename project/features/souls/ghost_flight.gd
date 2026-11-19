@@ -59,15 +59,18 @@ func step(at_px: Vector2, facing: float, ticks: int) -> void:
 
 
 func _anchor(spot: Vector2, yaw: float) -> Vector2:
-	return spot + hover.lag_px + (_row.tail.anchor_m * SimConst.PX_PER_M).rotated(yaw)
+	var local_px: Vector2 = _row.tail.anchor_m * SimConst.PX_PER_M * body_scale()
+	return spot + hover.lag_px + local_px.rotated(yaw)
 
 
 func _place(at_px: Vector2) -> void:
 	shadow.step(at_px, hover.lift_m)
 	if _mount != null:
-		_mount.position = at_px + body_offset()
-		_mount.rotation = body_rotation()
-		_mount.scale = body_scale()
+		var pose: Transform2D = Transform2D(
+			_facing + body_rotation(), body_scale(), 0.0, at_px + body_offset()
+		)
+		# The rig supplies its own facing. Squash in its facing frame at every compass angle.
+		_mount.transform = pose * Transform2D(-_facing, Vector2.ZERO)
 
 
 func body_offset() -> Vector2:

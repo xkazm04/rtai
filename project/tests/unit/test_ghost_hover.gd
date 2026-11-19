@@ -1,5 +1,15 @@
 extends GutTest
 
+var _saved_view: ViewMode
+
+
+func before_each() -> void:
+	_saved_view = ViewMode._shared
+
+
+func after_each() -> void:
+	ViewMode._shared = _saved_view
+
 
 func test_every_form_has_one_typed_hover_row() -> void:
 	var table: DataTable = DataTable.open(GhostHoverRow.PATH, GhostHoverRow.SCHEMA)
@@ -91,10 +101,33 @@ func test_reentering_on_a_paused_frame_places_the_whole_form_at_its_new_mark() -
 	assert_eq(flight.hover.lag_px, Vector2.ZERO)
 	assert_eq(flight.hover.speed_mps, 0.0)
 	assert_eq(body.global_position, mark + ViewMode.shared().lift_px(row.height_m))
-	var anchor: Vector2 = mark + (row.tail.anchor_m * SimConst.PX_PER_M).rotated(PI)
+	var local: Vector2 = row.tail.anchor_m * SimConst.PX_PER_M * flight.body_scale()
+	var anchor: Vector2 = mark + local.rotated(PI)
 	assert_eq(flight.tail._chain[0], anchor)
 	var length_px: float = row.tail.length_m * SimConst.PX_PER_M
 	assert_almost_eq(flight.tail._chain[-1].distance_to(anchor), length_px, 0.001)
+
+
+func test_a_banked_body_squashes_in_its_facing_frame_and_keeps_its_tail_attached() -> void:
+	var row: GhostHoverRow = GhostHoverRow.of(&"kerf")
+	var flight: GhostFlight = add_child_autofree(GhostFlight.make(row.id))
+	var body: Node2D = Node2D.new()
+	flight.mount(body)
+	for view: String in ["top", "tilt55", "tilt70"]:
+		ViewMode.select(view)
+		flight.step(Vector2.ZERO, 0.0, 1)
+		for i: int in range(1, 31):
+			body.rotation = i * PI / 60.0
+			flight.step(Vector2(i, i), body.rotation, 1)
+		var pose: Transform2D = body.global_transform
+		var scale_k: Vector2 = flight.body_scale()
+		assert_gt(flight.hover.bank, 0.1, view)
+		assert_almost_eq(pose.x.length(), scale_k.x, 0.0001, view)
+		assert_almost_eq(pose.y.length(), scale_k.y, 0.0001, view)
+		assert_almost_eq(pose.x.angle(), body.rotation + flight.body_rotation(), 0.0001, view)
+		var lifted: Vector2 = ViewMode.shared().lift_px(flight.hover.lift_m)
+		var root: Vector2 = pose * (row.tail.anchor_m * SimConst.PX_PER_M) - lifted
+		assert_almost_eq(flight.tail._chain[0], root, Vector2.ONE * 0.0001, view)
 
 
 func _same(a: GhostHover, b: GhostHover) -> void:
