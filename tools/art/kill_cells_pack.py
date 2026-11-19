@@ -12,6 +12,7 @@ grids do (a face-down corpse seen from behind reads as a person standing). Deter
 
     PYTHONDONTWRITEBYTECODE=1 python tools/art/kill_cells_pack.py --death=pistol_snap [--art=p55] [--lib=<dir>]
 For the area-matched p55 police claw corpses, add --variant=area to --death=claw_throw --art=p55.
+Pass --kinds ped_hood ped_cap (etc.) to pack only the named kinds.
 A death in SCRAPS_BY_DEATH also packs its loose scrap row as `<kind>_<death>_scraps.png`.
 
     PYTHONDONTWRITEBYTECODE=1 python tools/art/kill_cells_pack.py --headgear  (<kind>_headgear_tumble.png)
@@ -149,9 +150,10 @@ def main() -> None:
     ap.add_argument("--lib", default=str(LIB))
     ap.add_argument("--art", default="p70", help="p70 or p55 (the cells' pitch)")
     ap.add_argument("--variant", choices=["area"], default="", help="use the alternate source cut")
+    ap.add_argument("--kinds", nargs="+", default=KINDS, help="pack only these street kinds")
     ap.add_argument("--headgear", action="store_true", help="pack the loose headgear cells instead")
     args = ap.parse_args()
-    for kind in KINDS:
+    for kind in args.kinds:
         if args.headgear:
             dst = pack_headgear(kind, Path(args.lib))
         else:
