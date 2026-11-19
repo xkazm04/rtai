@@ -1,4 +1,4 @@
-"""Pack p70 profile in-betweens from Tonnage's shipped keys, in atlas order."""
+"""Pack walk in-betweens from Tonnage's shipped keys, in atlas order."""
 
 import argparse
 import hashlib
@@ -8,22 +8,11 @@ import cv2
 import numpy as np
 from PIL import Image
 
+from tonnage_warp import articulated_pose, diagonal_pads, register_crown, warp_pads, warp_rows
+
 
 VIEW = Path(__file__).resolve().parents[2] / "project/features/souls/art/view/p70"
 LANDING_RGBA = "4cd2ebc2bf4bcaa84cb5c10b17b06a6015b1dafe6753f487bbf49cd933b2a4de"
-
-
-def warp_rows(image, dx, dy):
-    """Inverse displacements of each horizontal scan line, in cell pixels."""
-    width, height = image.size
-    mesh = []
-    for y in range(height):
-        a, b = y + dy[y], y + 1 + dy[y + 1]
-        l, r = dx[y], dx[y + 1]
-        mesh.append(((0, y, width, y + 1), (l, a, r, b, width + r, b, width + l, a)))
-    return image.transform(
-        image.size, Image.Transform.MESH, mesh, Image.Resampling.BILINEAR
-    )
 
 
 def midpoint(landing):
@@ -153,34 +142,6 @@ def between(key, neighbour, pins, split_stance=False):
     return rear
 
 
-def warp_pads(key, pins, body):
-    h, w = key.height, key.width
-    pad = h - 230
-    yy, xx = np.indices((h, w), dtype=np.float32)
-    mx, my = xx.copy(), yy.copy()
-    pins = np.array(pins)
-    half_travel = (pins[:, 2] - pins[:, 0]) / 2
-    stance = np.argmax(pins[:, 1])
-    for y in range(h):
-        # At the pad rim, shift each sole as a rigid piece. Interpolate only
-        # between pads; the piston shafts bend between the socket and rim.
-        gain = np.clip((y - (176 + pad)) / (pins[:, 1] - 12 - (176 + pad)), 0, 1)
-        dx = body[0] + gain * (half_travel - body[0])
-        # Below a raised pad only the planted leg occupies the scanline.
-        # Fade its neighbour's influence out smoothly across the rim.
-        weight = np.clip((pins[:, 1] + 9 - y) / 9, 0, 1)
-        plant_dx = dx[stance]
-        dx = plant_dx + weight * (dx - plant_dx)
-        centres = pins[:, 0] + dx
-        gaps = np.diff(centres)
-        rim = np.minimum(16, 0.46 * np.minimum(np.r_[100, gaps], np.r_[gaps, 100]))
-        rails = np.column_stack((centres - rim, centres + rim)).ravel()
-        mx[y] -= np.interp(xx[y], rails, np.repeat(dx, 2))
-        my[y] -= body[1] * np.clip((212 + pad - y) / 36, 0, 1)
-    pixels = cv2.remap(np.asarray(key.convert("RGBa")), mx, my, cv2.INTER_LINEAR)
-    return Image.frombytes("RGBa", key.size, pixels.tobytes()).convert("RGBA")
-
-
 def pack(steps, output, left=False):
     suffix = "_left" if left else ""
     sheet = Image.open(VIEW / f"tonnage_walk8{suffix}.png").convert("RGBA")
@@ -209,10 +170,46 @@ def pack(steps, output, left=False):
     atlas.save(output or VIEW / f"tonnage_walk8_mid{suffix}.png")
 
 
+# Number of equal intervals between adjacent key centres, including C16-C1.
+DIAGONAL_DIVISIONS = (4, 6, 4, 4, 4, 4, 2, 2, 4, 4, 4, 4, 4, 2, 2, 2)
+
+
+def pack_intervals(sheet, rows, selected, divisions, landmarks):
+    w, h = sheet.width // len(divisions), sheet.height // rows
+    atlas = Image.new("RGBA", ((w + 8) * (sum(divisions) - len(divisions)), sheet.height))
+    for row in selected:
+        col = 0
+        keys = [sheet.crop((i*w, row*h, (i+1)*w, (row+1)*h)) for i in range(len(divisions))]
+        pins = [landmarks(key) for key in keys]
+        for i, count in enumerate(divisions):
+            k = (i + 1) % len(keys)
+            for j in range(1, count):
+                # Use the nearer original to retain drawn detail on both sides of the handoff.
+                a, b = (i, k) if 2*j <= count else (k, i)
+                fraction = min(j, count - j) / count
+                pose = articulated_pose(keys[a], pins[a], pins[b],
+                                        register_crown(keys[a], keys[b]), fraction)
+                atlas.paste(pose, (col * (w + 8), row * h))
+                col += 1
+    return atlas
+
+
+def pack_diagonal(output, left):
+    suffix = "_left" if left else ""
+    sheet = Image.open(VIEW / f"tonnage_walk8{suffix}.png").convert("RGBA")
+    rows, selected = (3, (0, 2)) if left else (5, (1, 3))
+    atlas = pack_intervals(sheet, rows, selected, DIAGONAL_DIVISIONS, diagonal_pads)
+    atlas.save(output or VIEW / f"tonnage_walk8_diag{suffix}.png")
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--steps", nargs="+", type=int, choices=STEPS, default=STEPS)
     parser.add_argument("--left", action="store_true")
+    parser.add_argument("--diagonal", action="store_true")
     parser.add_argument("--out", type=Path)
     args = parser.parse_args()
-    pack(args.steps, args.out, args.left)
+    if args.diagonal:
+        pack_diagonal(args.out, args.left)
+    else:
+        pack(args.steps, args.out, args.left)

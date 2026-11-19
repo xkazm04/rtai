@@ -95,3 +95,76 @@ Each 110-tick film used the same ground band, figure box and change threshold. D
 | Left three-quarter away (−135°) | 5.394 / 0.337 | 21.042 / 10.438 |
 | Right three-quarter toward (45°) | 4.306 / 0.639 | 16.392 / 8.021 |
 | Right three-quarter away (−45°) | 5.211 / 1.381 | 21.886 / 10.679 |
+
+
+## P70 three-quarter walks, brief 10
+
+At 32 px/m, 110 ticks on leg 2 cover every original key and every added cell on all four rows. The fresh right baselines reproduced the brief 09 logged-key measurements. The before films use f63f8f094. A hold lasts as long as the logged sheet and column stay the same. The pixel-change threshold also responds to moving background in a diagonal crop. For each logged hold we sum the ground shifts from the historical 0–45 px band. Summary means cover 21 completed holds before and 71 after. The last open hold after is one tick (0 px) on each row.
+
+| Facing | Worst ride before / after | Mean ride before / after | Mean stance drift before / after | Matched pairs before / after |
+|---|---:|---:|---:|---:|
+| Right toward | 16.392 / 3.902 | 8.021 / 1.140 | 8.930 / 2.799 | 12 / 53 |
+| Right away | 21.886 / 5.079 | 10.679 / 1.439 | 8.010 / 2.114 | 13 / 52 |
+| Left toward | 17.529 / 2.903 | 7.687 / 0.983 | 8.213 / 2.317 | 12 / 52 |
+| Left away | 21.042 / 5.500 | 10.438 / 1.255 | 8.123 / 2.140 | 13 / 52 |
+
+| Facing | Original key | Original ticks | Before ride | After key ticks | After key ride | Worst overlapping ride after |
+|---|---|---|---:|---|---:|---:|
+| Right toward | C9 | 244–248 | 9.155 | 246–246 | 0.000 | 2.322 |
+| Right toward | C11 | 254–259 | 9.699 | 256–257 | 1.552 | 2.223 |
+| Right toward | C12 | 260–266 | 10.693 | 262–263 | 3.036 | 3.036 |
+| Right toward | C13 | 267–275 | 16.392 | 270–271 | 2.629 | 3.324 |
+| Right toward | C14 | 276–281 | 9.597 | 278–279 | 2.596 | 2.596 |
+| Right toward | C2 | 289–296 | 12.986 | 292–293 | 1.263 | 1.813 |
+| Right toward | C3 | 297–305 | 15.730 | 301–301 | 0.000 | 2.615 |
+| Right toward | C6 | 315–322 | 11.800 | 319–319 | 0.000 | 3.271 |
+| Right toward | C7 | 323–329 | 10.618 | 326–326 | 0.000 | 3.902 |
+| Right away | C9 | 244–248 | 10.684 | 246–246 | 0.000 | 2.563 |
+| Right away | C10 | 249–253 | 10.055 | 251–251 | 0.000 | 2.659 |
+| Right away | C11 | 254–259 | 12.534 | 256–257 | 1.806 | 3.165 |
+| Right away | C12 | 260–266 | 16.123 | 262–263 | 3.268 | 3.268 |
+| Right away | C13 | 267–275 | 21.886 | 270–271 | 2.525 | 3.472 |
+| Right away | C14 | 276–281 | 12.325 | 278–279 | 2.091 | 2.417 |
+| Right away | C2 | 289–296 | 17.278 | 292–293 | 2.652 | 3.059 |
+| Right away | C3 | 297–305 | 20.746 | 301–301 | 0.000 | 4.117 |
+| Right away | C4 | 306–310 | 10.002 | 308–308 | 0.000 | 3.715 |
+| Right away | C6 | 315–322 | 16.724 | 319–319 | 0.000 | 3.800 |
+| Right away | C7 | 323–329 | 15.009 | 326–326 | 0.000 | 5.079 |
+| Right away | C10 | 336–340 | 10.682 | 338–338 | 0.000 | 3.018 |
+| Right away | C11 | 341–346 | 13.448 | 343–344 | 2.670 | 3.205 |
+| Left toward | C12 | 259–266 | 10.900 | 262–263 | 1.068 | 1.396 |
+| Left toward | C13 | 267–275 | 11.388 | 270–271 | 1.067 | 2.021 |
+| Left toward | C2 | 289–296 | 13.744 | 292–292 | 0.000 | 2.903 |
+| Left toward | C3 | 297–305 | 17.529 | 301–301 | 0.000 | 2.681 |
+| Left toward | C4 | 306–310 | 9.567 | 308–308 | 0.000 | 2.501 |
+| Left toward | C6 | 315–322 | 14.531 | 318–319 | 1.352 | 2.277 |
+| Left toward | C7 | 323–328 | 10.982 | 325–326 | 2.105 | 2.105 |
+| Left toward | C11 | 341–346 | 10.538 | 343–344 | 2.447 | 2.447 |
+| Left away | C9 | 244–248 | 11.350 | 246–246 | 0.000 | 2.399 |
+| Left away | C10 | 249–253 | 10.000 | 251–251 | 0.000 | 3.165 |
+| Left away | C11 | 254–259 | 11.959 | 256–257 | 1.799 | 3.165 |
+| Left away | C12 | 260–266 | 15.481 | 262–263 | 2.434 | 2.626 |
+| Left away | C13 | 267–275 | 21.042 | 270–271 | 1.846 | 2.345 |
+| Left away | C14 | 276–281 | 11.394 | 278–279 | 1.454 | 1.666 |
+| Left away | C2 | 289–296 | 18.540 | 292–293 | 2.361 | 2.368 |
+| Left away | C3 | 297–305 | 20.945 | 301–301 | 0.000 | 3.521 |
+| Left away | C4 | 306–310 | 9.664 | 308–308 | 0.000 | 2.700 |
+| Left away | C6 | 315–322 | 17.678 | 319–319 | 0.000 | 2.954 |
+| Left away | C7 | 323–329 | 15.173 | 326–326 | 0.000 | 5.500 |
+| Left away | C10 | 336–340 | 10.263 | 338–338 | 0.000 | 3.762 |
+| Left away | C11 | 341–346 | 13.099 | 343–344 | 3.298 | 3.298 |
+
+The detailed table includes every original occurrence above 9 px. The last column counts the entire duration of each after-hold touching that interval. All retained original holds had equal or lower ride. All 29 same-key crops in each before/after pair were byte-identical (116 comparisons).
+
+**Stance drift.** The lowest four rows identify each support using the historical alpha and horizontal pairing thresholds. Centre each contact relative to its own cell's feet. For a pair, add the measured two-axis contact displacement to the ground travel between its pose centres, then take the Euclidean length. At turn θ the screen-space ground vector per cell pixel is (cos θ, sin θ × sin 70°). Normalize the dwell to 235 cell px per cycle and convert to nominal 32 px/m with 3.3 / 190.5. Single midpoints on all 16 transitions still predicted over 3 px on all four rows. The shipped intervals divide the successive centre gaps into 4, 6, 4, 4, 4, 4, 2, 2, 4, 4, 4, 4, 4, 2, 2 and 2 parts. Both neighbours contribute dwell. The wrap from C16 to C1 follows the same rule.
+
+**Art.** Each row has 40 new cells. The packer registers the roof and bends each shaft toward the matching sole on its neighbour. Each output takes colour from one shipped key. Four transparent pixels at each side isolate adjacent cells under linear filtering. The 64 px/m plates show all 160 cells beside their actual two source keys, with capture ticks. Right toward, the initially doubled C1–C2 front pad resolved to a single round sole after tracking local sole peaks. Right away, the C6–C8 outer piston extends below the hose with the near and outer rims separated. Left toward, C7–C9 carries the near piston across under the striped face. Left away, the C13–C15 outer pad extends right while the near shaft remains seated. The source keys alternate sharper and softer roof detail on some transitions, which remains visible. The final plates show continuous limb outlines and a single housing at each fraction.
+
+- [Right toward triplets at 64 px/m](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it4-diag-right-toward-midpoints-64ppm.png>).
+- [Right away triplets at 64 px/m](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it4-diag-right-away-midpoints-64ppm.png>).
+- [Left toward triplets at 64 px/m](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it4-diag-left-toward-midpoints-64ppm.png>).
+- [Left away triplets at 64 px/m](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it4-diag-left-away-midpoints-64ppm.png>).
+
+The four original walk PNGs and the two shipped profile-midpoint PNGs match all six LFS SHA-256 objects at f63f8f094. This covers 192 original cells and all 80 prior midpoint atlas slots, including the 20 painted cells. The packer reproduced both previous midpoint files and both new atlases byte for byte. New right SHA-256 `5f8b6248ba90dba584cb6968f7f2de978cbccb1137319587cb45da8716edcc00`, left `3a133efd291c27793a73852ebf8d3cb4d46fa257013876302ab52ea4e04ed115`.
+
+Repack with `python tools/art/tonnage_midpoint.py --diagonal` and repeat with `--left`. Use the leg-2 flags above, with turns 45, −45, 135 and −135 respectively. Run `python evidence/tonnage-hold/measure_rows.py <prefix> --pitch=p70 --turn=45 --steps=<raw>/steps.json` for the right-toward baseline. For the after film add `--divisions=4,6,4,4,4,4,2,2,4,4,4,4,4,2,2,2`. The engine logged its existing resources/pages-in-use messages at shutdown after recording tick 348. [Crops, per-tick sheet/phase logs, camera probes and timing tables](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/raw/it4-diag/>).

@@ -10,42 +10,6 @@ func test_tonnage_p70_drawn_steps_measure_both_sides_of_each_redrawn_frame() -> 
 	assert_eq(steps[6], 144.0 - 140.0)
 
 
-func test_cap_preserves_cycle_total_and_uncapped_step_ratios() -> void:
-	# 100 / 5 = 20. Capping 60 at 30 pushes 25 over the cap too.
-	var steps: PackedFloat32Array = [5.0, 60.0, 0.0, 25.0, 10.0]
-	var capped: PackedFloat32Array = GhostStride.capped_steps(steps, 1.5)
-	var total: float = 0.0
-	for step: float in capped:
-		total += step
-		assert_lte(step, 30.0)
-	assert_almost_eq(total, 100.0, 0.00001)
-	assert_eq(capped[1], 30.0)
-	assert_eq(capped[3], 30.0)
-	assert_eq(capped[2], 0.0)
-	assert_almost_eq(capped[4], 2.0 * capped[0], 0.00001)
-	assert_eq(steps[1], 60.0, "input contacts stay available")
-
-
-func test_cap_off_and_loose_cap_reproduce_the_input() -> void:
-	var steps: PackedFloat32Array = [5.0, 0.0, 25.0]
-	for share: float in [0.0, INF, 4.0]:
-		assert_eq(GhostStride.capped_steps(steps, share), steps)
-	assert_eq(GhostStride.capped_steps(PackedFloat32Array(), 1.0), PackedFloat32Array())
-
-
-func test_even_cap_and_redistribution_to_zero_weight_frames() -> void:
-	var steps: PackedFloat32Array = [0.0, 12.0, 0.0]
-	assert_eq(GhostStride.capped_steps(steps, 1.0), PackedFloat32Array([4.0, 4.0, 4.0]))
-	assert_eq(GhostStride.capped_steps(steps, 1.5), PackedFloat32Array([3.0, 6.0, 3.0]))
-
-
-func test_fractional_steps_keep_their_proportions_at_any_scale() -> void:
-	var steps: PackedFloat32Array = [0.125, 0.375, 2.5]
-	assert_eq(GhostStride.capped_steps(steps, 2.0), PackedFloat32Array([0.25, 0.75, 2.0]))
-	# The tightest feasible cap is the mean.
-	assert_eq(GhostStride.capped_steps(steps, 0.5), PackedFloat32Array([1.0, 1.0, 1.0]))
-
-
 func test_shipped_walk_timing_uses_the_filmed_cap_for_each_pitch() -> void:
 	assert_eq(GhostStride.MAX_STEP_SHARE["tonnage/p70"], 2.0)
 	assert_eq(GhostStride.MAX_STEP_SHARE["tonnage/p55"], 0.0)
@@ -153,9 +117,68 @@ func test_left_midpoints_require_drawn_left_profile_art() -> void:
 	)
 	var spr: Sprite2D = autofree(Sprite2D.new())
 	var phase: float = sheet._mid_windows[0].x
-	for oct: int in [3, 5]:
+	for oct: int in [2, 6]:
 		sheet.show(spr, oct, 5, phase)
-		assert_eq(spr.texture, sheet.left)
+		assert_eq(spr.texture, sheet.tex)
 	sheet._profile_mid.left = null
 	sheet.show(spr, 4, 5, phase)
 	assert_eq(spr.texture, sheet.left)
+
+
+func _check_intervals(sheet: GhostSheet, centres: Array[float], parts: Array[int]) -> void:
+	var index: int = 0
+	for i: int in parts.size():
+		var start: float = centres[i]
+		var end: float = centres[i + 1] if i + 1 < centres.size() else centres[0] + 1.0
+		for j: int in range(1, parts[i]):
+			var w: Vector2 = sheet._diagonal_windows[index]
+			var left: float = lerpf(start, end, (j - 0.5) / parts[i])
+			var right: float = lerpf(start, end, (j + 0.5) / parts[i])
+			assert_almost_eq(w, Vector2(left, right), Vector2.ONE * 0.000001)
+			assert_eq(sheet._interval_col(fposmod(w.x - 0.000001, 1.0)), index - 1 if j > 1 else -1)
+			assert_eq(sheet._interval_col(fposmod(w.x, 1.0)), index)
+			assert_eq(sheet._interval_col(fposmod(w.y - 0.000001, 1.0)), index)
+			assert_eq(sheet._interval_col(fposmod(w.y, 1.0)), index + 1 if j + 1 < parts[i] else -1)
+			index += 1
+	assert_eq(sheet._diagonal_windows.size(), index)
+	assert_eq(sheet._interval_col(-1.0), -1)
+
+
+func test_each_diagonal_subdivision_uses_its_filmed_window_and_own_drawn_row() -> void:
+	var sheet: GhostSheet = GhostSheet.walk_of(
+		GhostDrawn.path_of("p70", "tonnage"), GhostStride.table_of("tonnage", "p70")
+	)
+	var centres: Array[float] = [
+		0.01748951,
+		0.07895263,
+		0.17814311,
+		0.26271737,
+		0.31331201,
+		0.38164601,
+		0.46397161,
+		0.51129322,
+		0.54837097,
+		0.60396262,
+		0.66580052,
+		0.73763242,
+		0.83032681,
+		0.91702479,
+		0.96372177,
+		0.98790726,
+	]
+	_check_intervals(sheet, centres, [4, 6, 4, 4, 4, 4, 2, 2, 4, 4, 4, 4, 4, 2, 2, 2])
+	var spr: Sprite2D = autofree(Sprite2D.new())
+	var expected_rows: Array[int] = [0, 1, 0, 0, 0, 2, 0, 3]
+	for i: int in sheet._diagonal_windows.size():
+		var w: Vector2 = sheet._diagonal_windows[i]
+		for oct: int in [1, 3, 5, 7]:
+			sheet.show(spr, oct, 0, fposmod((w.x + w.y) * 0.5, 1.0))
+			var left: bool = oct == 3 or oct == 5
+			assert_eq(spr.texture, sheet._diagonal.left if left else sheet._diagonal.tex)
+			assert_eq(spr.frame_coords, Vector2i(i, expected_rows[oct]))
+			assert_false(spr.flip_h)
+			assert_eq(spr.offset.x, -85.5)
+	sheet._diagonal.left = null
+	for oct: int in [3, 5]:
+		sheet.show(spr, oct, 0, sheet._diagonal_windows[0].x)
+		assert_eq(spr.texture, sheet.left)

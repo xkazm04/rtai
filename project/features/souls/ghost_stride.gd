@@ -18,6 +18,9 @@ const TABLES: Dictionary[String, Array] = {
 	"tonnage/p55": [46.0, 13.5, 51.0, 28.0, 24.5, 32.0, 28.0, 1.0],
 }
 
+## The diagonal atlas subdivides each interval between two original key centres.
+const DIAGONAL_DIVISIONS: Array[int] = [4, 6, 4, 4, 4, 4, 2, 2, 4, 4, 4, 4, 4, 2, 2, 2]
+
 ## Tonnage p70 profile atlas order. Each pair borrows cell-pixel dwell from
 ## the outgoing and incoming key. The two contributions keep the cycle length.
 const MID_STEPS: Array[int] = [5, 0, 1, 2, 4, 8, 9, 10, 11, 12]
@@ -177,11 +180,18 @@ static func tonnage_windows(steps: PackedFloat32Array) -> Array[Vector2]:
 	return windows
 
 
-## Both profile drawings use the same two neighbouring dwells and half-open interval.
-static func tonnage_mid_col(windows: Array[Vector2], col: int, phase: float) -> int:
+## Divide the arc between adjacent original key centres. The seam continues past phase 1.
+static func interval_windows(steps: PackedFloat32Array, divisions: Array[int]) -> Array[Vector2]:
+	var dwell: PackedFloat32Array = dwell_of(steps)
+	var at: float = 0.0
+	var windows: Array[Vector2] = []
+	for i: int in dwell.size():
+		var centre: float = at + dwell[i] * 0.5
+		var gap: float = (dwell[i] + dwell[(i + 1) % dwell.size()]) * 0.5 / divisions[i]
+		for j: int in range(1, divisions[i]):
+			var t: float = centre + j * gap
+			windows.append(Vector2(t - 0.5 * gap, t + 0.5 * gap))
+		at += dwell[i]
 	for i: int in windows.size():
-		var step: int = MID_STEPS[i]
-		var w: Vector2 = windows[i]
-		if (col == step or col == step + 1) and phase >= w.x and phase < w.y:
-			return i
-	return -1
+		windows[i] /= at
+	return windows

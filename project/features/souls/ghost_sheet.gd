@@ -20,6 +20,8 @@ var left: Texture2D = null
 var left_cols: int = 0
 var hitback: GhostSheet = null  # optional one-column alternate on an act grid
 var _profile_mid: GhostSheet = null
+var _diagonal: GhostSheet = null
+var _diagonal_windows: Array[Vector2] = []
 var _mid_windows: Array[Vector2] = []
 
 
@@ -47,6 +49,10 @@ static func walk_of(path: String, steps: PackedFloat32Array) -> GhostSheet:
 	if sheet != null and steps.size() == 16 and path.ends_with("/p70/tonnage_walk8.png"):
 		sheet._mid_windows = GhostStride.tonnage_windows(steps)
 		sheet._profile_mid = of(path.get_basename() + "_mid.png", sheet._mid_windows.size())
+		sheet._diagonal_windows = GhostStride.interval_windows(
+			steps, GhostStride.DIAGONAL_DIVISIONS
+		)
+		sheet._diagonal = of(path.get_basename() + "_diag.png", sheet._diagonal_windows.size())
 	return sheet
 
 
@@ -81,9 +87,14 @@ func drawn_left(oct: int, col: int) -> bool:
 ## Puts cell `col` of octant `oct` on `spr`: texture, grid, feet offset, frame and mirror.
 func show(spr: Sprite2D, oct: int, col: int, phase: float = -1.0) -> void:
 	if _profile_mid != null and (oct == 0 or (oct == 4 and _profile_mid.drawn_left(oct, 0))):
-		var mid: int = GhostStride.tonnage_mid_col(_mid_windows, col, phase)
+		var mid: int = _profile_col(col, phase)
 		if mid >= 0:
 			_profile_mid.show(spr, oct, mid)
+			return
+	if _diagonal != null and oct % 2 == 1 and (LEFT_ROW[oct] < 0 or _diagonal.drawn_left(oct, 0)):
+		var mid: int = _interval_col(phase)
+		if mid >= 0:
+			_diagonal.show(spr, oct, mid)
 			return
 	var on_left: bool = drawn_left(oct, col)
 	var t: Texture2D = left if on_left else tex
@@ -100,6 +111,30 @@ func show(spr: Sprite2D, oct: int, col: int, phase: float = -1.0) -> void:
 	spr.frame = row * c + col
 	spr.flip_h = not on_left and RigHeadCard.OCT_FLIP[oct] == 1
 	GhostSoulLine.sync(spr)
+
+
+## Both profile drawings use the same two neighbouring dwells and half-open interval.
+func _profile_col(col: int, phase: float) -> int:
+	for i: int in _mid_windows.size():
+		var step: int = GhostStride.MID_STEPS[i]
+		var w: Vector2 = _mid_windows[i]
+		if (col == step or col == step + 1) and phase >= w.x and phase < w.y:
+			return i
+	return -1
+
+
+## Search sorted half-open windows, continuing the last transition through phase zero.
+func _interval_col(phase: float) -> int:
+	if phase < 0.0:
+		return -1
+	var at: float = phase + 1.0 if phase < _diagonal_windows[0].x else phase
+	for i: int in _diagonal_windows.size():
+		var w: Vector2 = _diagonal_windows[i]
+		if at < w.x:
+			break
+		if at < w.y:
+			return i
+	return -1
 
 
 ## The screen octant a shown cell faces (a drawn left row, or a right row and its mirror).
