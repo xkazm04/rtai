@@ -59,3 +59,7 @@ NEXT: (session 4) wait for node 41992 to exit (lock logs/guns/astra.lock; read a
 - 02:10 Reply for ai/anim lanes (NEED guns 00:52): fixed in efda2a688 on n19-guns, 0.52-0.53 m measured with anim's p55 death cells.
 - 02:10 ASTRA RUNNING left-scale since 02:10 (brief 05b, resume, WMI cmd pid 55024; out evidence/briefs/05b-left-scale.out.txt, else logs/guns/astra-09-left-scale.last.txt)
 NEXT: (session 4) wait for left-scale (lock logs/guns/astra.lock). LOOK at re-shot <gun>_p55/p70_left_neighbors + diagonal_fire for rocket/mini_nuke and evidence/arsenal/cell_metrics.txt; pick outliers to fix later. Then 06 (left cells x4, now metric-gated), 07 (reloads + mag view). Holes 18. Later: turn clip framing (centre on Rivet), rack Call, REPORT 07:40 with gate --rev=HEAD.
+
+## Session 4 (02:11 - )
+
+- 02:13 Read journal. left-scale alive (node pid 47800 per astra.lock; jsonl shows it measuring p55/p70 left crops). No new action until it reports; briefs 06, 07 re-read and kept.
