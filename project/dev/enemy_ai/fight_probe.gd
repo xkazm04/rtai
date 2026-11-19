@@ -3,7 +3,7 @@ extends SceneTree
 ## Like rig_bench, load the world after the -s entry has initialized its autoloads.
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--all", "--encounter", "--seeds", "--out", "--enemy-brain", "--trace"
+	"--all", "--encounter", "--seeds", "--out", "--enemy-brain", "--trace", "--horde"
 ]
 const RUN_TICKS: int = 2400
 const ENCOUNTERS: PackedStringArray = ["city", "pit", "quest1"]
@@ -11,8 +11,7 @@ const ENCOUNTERS: PackedStringArray = ["city", "pit", "quest1"]
 var selected: PackedStringArray = []
 var seeds: int = 5
 var path: String = ""
-var brain: String
-var trace_enabled: bool = false
+var args: ArenaArgs = ArenaArgs.parse()
 
 
 func _initialize() -> void:
@@ -20,29 +19,24 @@ func _initialize() -> void:
 
 
 func _parse() -> bool:
-	var args: ArenaArgs = ArenaArgs.parse()
 	for key: String in args.values:
 		if key not in KNOWN_FLAGS:
 			return false
 	if args.has("--all") == args.has("--encounter") or args.text("--all") != "":
 		return false
-	selected = (
-		ENCOUNTERS.duplicate()
-		if args.has("--all")
-		else PackedStringArray([args.text("--encounter")])
-	)
+	selected = ENCOUNTERS if args.has("--all") else PackedStringArray([args.text("--encounter")])
 	var count: String = args.text("--seeds", "5")
 	seeds = count.to_int() if count.is_valid_int() else 0
 	path = args.text("--out")
-	trace_enabled = args.has("--trace")
-	brain = args.text("--enemy-brain", SquadChoice.DEFAULT_BRAIN)
 	return (
 		selected[0] in ENCOUNTERS
 		and seeds > 0
 		and path.is_absolute_path()
 		and path.get_extension().to_lower() == "json"
-		and brain in ["guard", "squad", "mixed"]
+		and args.text("--enemy-brain", SquadChoice.DEFAULT_BRAIN) in ["guard", "squad", "mixed"]
 		and args.text("--trace") == ""
+		and (not args.has("--horde") or (selected.size() == 1 and selected[0] in ["city", "pit"]))
+		and args.text("--horde") == ""
 	)
 
 
@@ -50,7 +44,7 @@ func _run() -> void:
 	if not _parse():
 		printerr(
 			"fight_probe: use --all or --encounter=city|pit|quest1, --out=<absolute.json>",
-			" [--seeds=<positive integer>] [--enemy-brain=guard|squad|mixed] [--trace]"
+			" [--seeds=<positive integer>] [--enemy-brain=guard|squad|mixed] [--trace] [--horde]"
 		)
 		quit(2)
 		return
@@ -59,7 +53,7 @@ func _run() -> void:
 		quit(1)
 		return
 	var trace: FileAccess
-	if trace_enabled:
+	if args.has("--trace"):
 		trace = FileAccess.open(path.get_basename() + ".ndjson", FileAccess.WRITE)
 		if trace == null:
 			printerr("fight_probe: cannot create trace beside ", path)
@@ -88,7 +82,8 @@ func _write(runs: Array[Dictionary], trace: FileAccess) -> bool:
 	var report: Dictionary = {
 		"schema": "gtai.fight-probe/1",
 		"tick_hz": 60,
-		"brain": brain,
+		"brain": args.text("--enemy-brain", SquadChoice.DEFAULT_BRAIN),
+		"horde": args.has("--horde"),
 		"runs": runs,
 		"trace": trace.get_path().get_file() if trace != null else null,
 		"tick_columns":

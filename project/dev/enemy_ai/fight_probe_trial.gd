@@ -28,6 +28,11 @@ func run(encounter: String, world_seed: int, trace: FileAccess) -> Dictionary:
 		data = DataStore.new()
 		session = ArenaSession.open(bus, data, world_seed, null, encounter == "city")
 		stage = session.stage
+		# Match ArenaGame._dev_fight so the horde trace and the film start from the same fight.
+		if ArenaArgs.parse().has("--horde"):
+			session.stage.pit.horde()
+			stage.arena.rivet.max_hp *= ArenaPit.HORDE_RIVET_HP
+			stage.arena.rivet.hp = stage.arena.rivet.max_hp
 		session.world.loop().set_input(ArenaPitBot.new(session.stage, session.actions))
 	var arena: FightProbeArena = FightProbeArena.attach(stage.arena)
 	meter = FightProbeSample.new(arena)

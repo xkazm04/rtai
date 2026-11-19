@@ -41,6 +41,11 @@ var _static_of: ArenaStage = null
 var _static_rev: int = 0
 
 
+func _ready() -> void:
+	if OS.is_debug_build() and ArenaArgs.parse().has("--squad-overlay"):
+		add_child(SquadOverlay.new())
+
+
 func _draw() -> void:
 	var arena: ArenaStage = stage as ArenaStage
 	if arena == null:

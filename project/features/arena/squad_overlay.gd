@@ -1,0 +1,60 @@
+class_name SquadOverlay
+extends CanvasLayer
+## Live wave members only. Letters describe locomotion, even during a weapon windup or burst.
+## A strafe has no point goal. Only draw a destination when the movement planner has one.
+
+const S := EnemyAgent.State
+const LETTER: Dictionary[int, String] = {S.ENGAGE: "E", S.COVER: "C", S.FLANK: "F", S.PANIC: "P"}
+const COLORS: Dictionary[String, Color] = {
+	"E": Color("#ffebaa"),
+	"C": Color("#70e5e0"),
+	"F": Color("#ffb668"),
+	"P": Color("#ff90ac"),
+	"G": Color.WHITE,
+}
+
+var _floor_view: ArenaFloorView
+var _ink: Node2D = Node2D.new()
+
+
+func _ready() -> void:
+	_floor_view = get_parent() as ArenaFloorView
+	layer = RenderLayers.canvas(&"hud")
+	add_child(_ink)
+	@warning_ignore("return_value_discarded")
+	_ink.draw.connect(_draw_wave)
+
+
+func _process(_delta: float) -> void:
+	_ink.queue_redraw()
+
+
+func _draw_wave() -> void:
+	var stage: ArenaStage = _floor_view.stage as ArenaStage
+	var screen: Transform2D = _floor_view.get_global_transform_with_canvas()
+	for h: Fighter in stage.pit.standing:
+		if not h.alive():
+			continue
+		var at: Vector2 = screen * Ink.px(h.pos)
+		var letter: String = "G"
+		var goal: Vector2 = Vector2.INF
+		var squad: ArenaSquad = stage.arena.squad_ai
+		if squad != null:
+			if not squad.minds.has(h.id):
+				continue
+			var mind: SquadMind = squad.minds[h.id]
+			letter = LETTER[mind.motion]
+			if mind._destination.is_finite():
+				goal = mind.agent.goal
+		elif h.pursuit != null and h.pursuit._blocked:
+			goal = h.pursuit._goal
+		var color: Color = COLORS[letter]
+		if goal.is_finite():
+			var end: Vector2 = screen * Ink.px(goal)
+			_ink.draw_line(at, end, Ink.INK, 3.0, true)
+			_ink.draw_line(at, end, color, 1.0, true)
+			_ink.draw_circle(end, 3.0, color, false, 1.3, true)
+		var label: Vector2 = at + Vector2(9.0, 10.0)
+		var font: Font = ThemeDB.fallback_font
+		_ink.draw_string_outline(font, label, letter, HORIZONTAL_ALIGNMENT_LEFT, -1, 18, 5, Ink.INK)
+		_ink.draw_string(font, label, letter, HORIZONTAL_ALIGNMENT_LEFT, -1, 18, color)

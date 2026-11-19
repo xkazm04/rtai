@@ -109,9 +109,9 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--delta-smooth",  # n9-perf: on = FrameDeltaSmoother under mailbox (World._smoothed, L16 arm)
 	# d9-handheld: --device=<devices.json id> the handheld profile (window, frame cap, stretch)
 	"--device",
-	# d9-handheld: --save-cross=write|read,<dir>[,ticks,after,idle] (dev/save_cross.gd, E14)
-	"--save-cross",
+	"--save-cross",  # d9-handheld: write|read,<dir>[,ticks,after,idle] (dev/save_cross.gd, E14)
 	"--enemy-brain",
+	"--squad-overlay",
 ]
 
 var _values: Dictionary[String, String] = {}
