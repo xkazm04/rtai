@@ -175,3 +175,13 @@ static func tonnage_windows(steps: PackedFloat32Array) -> Array[Vector2]:
 		var share: Vector2 = MID_DWELL[i]
 		windows.append(Vector2(boundary - share.x, boundary + share.y) / ends[-1])
 	return windows
+
+
+## Both profile drawings use the same two neighbouring dwells and half-open interval.
+static func tonnage_mid_col(windows: Array[Vector2], col: int, phase: float) -> int:
+	for i: int in windows.size():
+		var step: int = MID_STEPS[i]
+		var w: Vector2 = windows[i]
+		if (col == step or col == step + 1) and phase >= w.x and phase < w.y:
+			return i
+	return -1

@@ -41,7 +41,7 @@ static func of(path: String, p_cols: int, p_left_cols: int = -1) -> GhostSheet:
 	)
 
 
-## Only the measured right profile has extra pads between its original keys.
+## The two measured profiles share timing and each has its own pad drawings.
 static func walk_of(path: String, steps: PackedFloat32Array) -> GhostSheet:
 	var sheet: GhostSheet = of(path, GhostStride.cols_of(steps))
 	if sheet != null and steps.size() == 16 and path.ends_with("/p70/tonnage_walk8.png"):
@@ -80,13 +80,11 @@ func drawn_left(oct: int, col: int) -> bool:
 
 ## Puts cell `col` of octant `oct` on `spr`: texture, grid, feet offset, frame and mirror.
 func show(spr: Sprite2D, oct: int, col: int, phase: float = -1.0) -> void:
-	if _profile_mid != null and oct == 0:
-		for i: int in _mid_windows.size():
-			var step: int = GhostStride.MID_STEPS[i]
-			var w: Vector2 = _mid_windows[i]
-			if (col == step or col == step + 1) and phase >= w.x and phase < w.y:
-				_profile_mid.show(spr, oct, i)
-				return
+	if _profile_mid != null and (oct == 0 or (oct == 4 and _profile_mid.drawn_left(oct, 0))):
+		var mid: int = GhostStride.tonnage_mid_col(_mid_windows, col, phase)
+		if mid >= 0:
+			_profile_mid.show(spr, oct, mid)
+			return
 	var on_left: bool = drawn_left(oct, col)
 	var t: Texture2D = left if on_left else tex
 	var c: int = left_cols if on_left else cols
