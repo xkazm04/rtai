@@ -220,3 +220,20 @@ At 64 px/m the near piston advances from C3 to C4 with a straight shaft seated i
 All eight prior walk, profile-midpoint and diagonal PNGs match their committed LFS SHA-256 objects. All 27 same-original-key crop pairs per p55 row were byte-identical (54 comparisons). Repacking all six supplemental PNGs reproduced their bytes. The new p55 right atlas SHA-256 is `ec0cf83ca908dda96d63972d14c7e230b4b9174144c2ab20f31742aa0d6f6033`; left is `44d8ec80d0db6246571e4e375d351998a18497fdc1f2c66f059cc04c81c420ce`.
 
 Repack with `python tools/art/tonnage_midpoint.py --p55` and repeat with `--left`. For each capture run `python evidence/tonnage-hold/measure_rows.py <prefix> --pitch=p55 --turn=0 --steps=<raw>/steps.json` (left turn 180). For the final film add `--atlas=detail --divisions=4,4,4,4,4,4,2,2`. For the 16-pose trials give eight divisions of 2, `--atlas-file=<raw>/common16-pr.png` (left `common16-pl.png`) and use `even-steps.json` for the even trial. Each capture reached tick 348 before the engine’s resources/pages-in-use shutdown diagnostics. [Raw p55 captures, trial atlases and timing tables](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/raw/it4-p55/>).
+
+## Brief 11, remaining eight walk rows before subdivision
+
+Leg 2 at 32 px/m, ticks 239–348 inclusive, on 84aaf1131. Hold boundaries come from the logged texture and column, and each ride sums the measured ground-band shifts. Worst and mean cover completed holds. The open tail is reported separately. Stance drift uses the same two-axis displacement and 32 px/m conversion as brief 10. At ±90° the horizontal ground component is zero, so these two rows apply the historical support displacement gate along screen y. All eight baselines exceed 9 px.
+
+| Pitch | Facing (turn) | Completed holds | Worst ride | Mean ride | Mean drift | Matched pairs | Open tail |
+|---|---|---:|---:|---:|---:|---:|---:|
+| p55 | right-toward (45°) | 11 | 26.089 | 16.687 | 10.519 | 5 | 0.000 |
+| p55 | right-away (-45°) | 11 | 34.142 | 22.253 | 12.415 | 6 | 0.000 |
+| p55 | left-toward (135°) | 11 | 25.883 | 15.232 | 10.554 | 5 | 0.000 |
+| p55 | left-away (-135°) | 11 | 33.885 | 21.852 | 12.560 | 6 | 0.000 |
+| p55 | toward (90°) | 11 | 17.101 | 11.961 | 22.637 | 8 | 0.000 |
+| p55 | away (-90°) | 11 | 22.241 | 16.220 | 19.710 | 8 | 0.000 |
+| p70 | toward (90°) | 21 | 12.016 | 6.454 | 10.556 | 16 | 1.698 |
+| p70 | away (-90°) | 21 | 19.841 | 8.851 | 11.639 | 16 | 3.196 |
+
+Reproduce with the brief 10 leg-2 flags, view `tilt` for p55 or `combo` for p70 and the turn in the table. Run `python evidence/tonnage-hold/measure_rows.py <prefix> --steps=<raw>/steps.json --pitch=<pitch> --turn=<turn>`. Every film recorded 110 consecutive samples. Godot issued the existing resources/pages-in-use diagnostics at shutdown. [Raw before/after films and capture probes](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/raw/it5/>).

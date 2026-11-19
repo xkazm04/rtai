@@ -15,7 +15,7 @@ from PIL import Image
 
 
 ROOT = Path(__file__).resolve().parents[2]
-ROW = {0: 2, 45: 1, -45: 3, 135: 0, -135: 2, 180: 1}
+ROW = {0: 2, 45: 1, -45: 3, 135: 0, -135: 2, 180: 1, 90: 0, -90: 4}
 
 
 def film_holds(prefix):
@@ -94,13 +94,15 @@ def stance_drift(pitch, turn, weights, divisions=(), atlas="diag"):
     angle = np.deg2rad(turn)
     ground = np.array([np.cos(angle), np.sin(angle) * np.sin(np.deg2rad(int(pitch[1:])))])
     cycle = 223.25 if pitch == "p55" else 235
+    # Straight-facing travel has no horizontal component. Gate those contacts on y.
+    axis = 1 if abs(turn) == 90 else 0
     errors = []
     for i, points in enumerate(art):
         j = (i + 1) % len(art)
         travel = ground * (dwell[i] + dwell[j]) * 0.5 * cycle
         # Same horizontal support-pair gate as ghost_slip; include both screen axes in the error.
         pairs = [np.linalg.norm(b - a + travel) for a in points for b in art[j]
-                 if -80 < (b[0] - a[0]) * np.sign(ground[0]) <= 4]
+                 if -80 < (b[axis] - a[axis]) * np.sign(ground[axis]) <= 4]
         if pairs:
             errors.append(min(pairs))
     return np.mean(errors) * 32 * 3.3 / 190.5, len(errors)
