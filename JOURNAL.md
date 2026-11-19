@@ -101,3 +101,7 @@ NEXT: (session 6) wait for reload (lock logs/guns/astra.lock, node pid in it). R
 - 04:59 ASTRA reload 16 bounced (stopped by me before it repeated the fault on machine_pistol/hand_cannon; uncommitted electro work left in the tree; removed my stale lock, pid 49504 dead).
 - 05:00 ASTRA RUNNING reload-gun since 05:00 (brief 07b, resume, WMI cmd pid 8572, node 52996; out evidence/briefs/07b-reload-gun.out.txt, else logs/guns/astra-15-reload-gun.last.txt). Requires a <gun>_<pitch>_reload_zoom.png per weapon.
 NEXT: (session 6) wait for reload-gun (node pid in astra.lock). LOOK at each <gun>_<pitch>_reload_zoom.png (gun must be the same object as its held cell; body = hand-made reload figure), a mag-view still per gun, rivet_mag_view.gd mutate score, matrix_after_7 (target 10 -> 3: rack only). Then 09, then 10 (collar bands). If time is short after 07b: run 09 items 1+3 only. Freeze 07:30: node tools/gate/run.mjs --rev=HEAD (+ --reels once after freeze), fill REPORT.md (draft committed), node tools/evidence/cites.mjs REPORT.md, final commit. Calls: rifle rack slot (3 holes, widens hub wall 1 m); armed walk/run grids for 12 weapons.
+
+## Session 6 (04:55 - )
+
+- 04:56 Read journal. reload-gun alive (node pid 52996 per astra.lock; jsonl shows the 7b resume audit run). Waiting. (Clock note: session 5's "05:00" lines were written at ~04:55 local.)
