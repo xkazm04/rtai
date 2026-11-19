@@ -21,7 +21,7 @@ Before `evidence/arsenal/matrix_before.txt`: **51 holes**. After package 6: **10
 | Turn kit: Rivet firing while turning through 8 octants, centred, 32 px/m | `<gun>_p55_turn32.mp4` per weapon | (pending) |
 
 ## What does not
-- The assault rifle has no slot on the arena weapon rack (3 holes: top/p55/p70 rack pickup). Adding one widens the hub weapon wall by 1 m, which the owner fixed at x1: a Call, not built.
+- The assault rifle has no slot on the arena weapon rack (3 holes: top/p55/p70 rack pickup). Adding one widens the hub weapon wall by 1 m (a layout change; the wall keeps its x1 scale either way): a Call, not built.
 - Armed walk/run grids (`rivet_walk_eq_<w>.png`, `rivet_run8_eq_<w>.png`) exist only for pistol, plasma_rifle, gatling, flamethrower and katana; the other 12 weapons walk on the bobbing facing card. Not in the owner's audit list, so the matrix reports them as informational gaps outside the ratcheted total (package 11; see the final matrix).
 - Mirror-based left cells: the re-slanted collar stripes are rough broken strokes at 2x (NW worst) beside the source's clean bands. Not visible at 64 px/m; the scripted clean band is written up in `evidence/briefs/10-collar-bands.md` but was not built.
 - Diagonal fire cells drawn tonight (homing_shard, ray_gun) are a paler copper than the dark rest strip; the hand-made electro/plasma diagonals share that tone, so it is house style, but it is the closest-to-tellable new art.
@@ -33,7 +33,7 @@ Before `evidence/arsenal/matrix_before.txt`: **51 holes**. After package 6: **10
 - Quick gate's Godot step fails standalone on the `Log` autoload in untouched files; commits used `--no-godot` with unit `--changed` green.
 
 ## Calls for the owner
-1. **Assault rifle on the arena rack.** Recommended: leave it off the rack tonight (the hub wall stays x1, per the n11 verdict). Alternative: a fourth rack slot, which widens the wall 1 m and closes the last 3 audit holes. Still: `gtai-masters/n19/guns/rifle/p55_64_comparison.png`.
+1. **Assault rifle on the arena rack.** Recommended: leave it off the rack tonight (the hub wall keeps its current width). Alternative: a fourth rack slot, which widens the wall 1 m and closes the last 3 audit holes. Still: `gtai-masters/n19/guns/rifle/p55_64_comparison.png`.
 2. **Armed walk/run grids for 12 weapons.** Recommended: a dedicated night drawing them through the mirror/composite method (32 + 64 cells per weapon and pitch). Alternative: keep the facing card for one-handed guns and draw only the two-handed ones.
 
 ## Merge notes
