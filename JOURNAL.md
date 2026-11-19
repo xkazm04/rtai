@@ -52,3 +52,4 @@ NEXT:
 4. `node tools/gate/run.mjs --rev=HEAD` once in a gap with no Astra running.
 5. 3C waits on ai's a8-prop-lying (check n19-ai JOURNAL). contact/NEED-anim-triangulation.md: if it says pre-existing in anim's file, file `NEED anim:` line here.
 6. REPORT.md draft from ~06:00; freeze 07:30.
+- 02:13 LOOKED contact/item3a-contact-tilt70-32ppm.mp4 at 8 s (tick 482): before = round blobs under the baked queue, after = rig-style ellipses; the change reads but is subtle. Weak: the marked walker 15 stands over a dark street prop, so its feet inset shows little. If time remains, re-pick a walker on clear paving. Session 3 ends; polish2 running (lock pid 49064).
