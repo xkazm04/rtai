@@ -1,0 +1,49 @@
+{
+  "_doc": "Ohm's spectral Lightning Rod body. The two tilt masters contain five facing rows and six pose columns. The straight-down master contains six rig parts.",
+  "masters": {
+    "ohm_spec_p55": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n20/ohm/masters/ohm_spec_p55_t3.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/ohm/ohm_spec_p55.md",
+      "references": [
+        "masters:n20/concepts/ohm_c.png",
+        "masters:n6/ghost-forms/gen/r4/out/ohm_parts.png",
+        "masters:n20/ohm/masters/ohm_spec_p70_t3.png"
+      ],
+      "seed": null,
+      "sha256": "a346d53600e1f34bab4472635884f7aff556c3c52ad225064ebb0bb4b66f51de",
+      "tool": "codex-image"
+    },
+    "ohm_spec_p70": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n20/ohm/masters/ohm_spec_p70_t3.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/ohm/ohm_spec_p70.md",
+      "references": [
+        "masters:n20/concepts/ohm_c.png",
+        "masters:n6/ghost-forms/gen/r4/out/ohm_parts.png",
+        "project/features/souls/art/view/p70/ohm_act.png"
+      ],
+      "seed": null,
+      "sha256": "f7ee72839383ddb90717c9f5d7bdb16a6e6d1910e2ed4102ab2496587393184b",
+      "tool": "codex-image"
+    },
+    "ohm_spec_top": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n20/ohm/masters/ohm_spec_top_t1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/ohm/ohm_spec_top.md",
+      "references": [
+        "masters:n20/concepts/ohm_c.png",
+        "masters:n6/ghost-forms/gen/r4/out/ohm_parts.png"
+      ],
+      "seed": null,
+      "sha256": "bba03002374a2919a527d84cd9cc06aa8f384baca5683c46da4eb10327bc49cf",
+      "tool": "codex-image"
+    }
+  }
+}
