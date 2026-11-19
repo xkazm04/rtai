@@ -16,7 +16,7 @@ func _option(value: String) -> void:
 	_stage.pilot = _pilot
 	_stage.arena.rivet.pos = Vector2(200.0, 200.0)
 	_stage.arena.rivet.facing = Vector2.RIGHT
-	LaunchArgs.parse(PackedStringArray())
+	LaunchArgs.parse()
 	_pilot.ghosts.forms.selected = OhmStage.GHOST
 	_press(&"power_hauler")
 	_wait(_pilot.ghosts.forms.table.form(OhmStage.GHOST).enter_ticks)
@@ -78,6 +78,41 @@ func test_leaving_ohm_during_windup_cancels_the_bolt() -> void:
 	_press(&"power_hauler")
 	_wait(5)
 	assert_eq(_pilot.ohm.bolts, 0)
+
+
+func test_windup_length_comes_from_the_attack_row() -> void:
+	_option("on")
+	var attacks: GhostAttacks = _pilot.ohm.attacks
+	attacks.block(OhmStage.GHOST)["bolt_windup_ticks"] = 5
+	LaunchArgs.parse(PackedStringArray(["--ohm-bolt-delay=on"]))
+	_pilot.ohm.cast = OhmCast.new(attacks)
+	LaunchArgs.parse()
+	_press(&"melee")
+	var decision: int = _stage.tick
+	_wait(4)
+	assert_eq(_pilot.ohm.bolts, 0)
+	_wait(1)
+	assert_eq(_pilot.ohm.bolt_tick, decision + 5)
+
+
+func test_delayed_cast_pose_and_cadence_follow_the_sim() -> void:
+	_option("on")
+	var rig: OhmRig = add_child_autofree(OhmRig.new())
+	var o: OhmStage = _pilot.ohm
+	_press(&"melee")
+	for age: int in 3:
+		GhostActs.prepare_ohm(rig, o, _stage.arena.rivet, _stage.tick)
+		assert_eq(rig.drawn.act_col(), GhostDrawn.WINDUP_COL)
+		_wait(1)
+	GhostActs.prepare_ohm(rig, o, _stage.arena.rivet, _stage.tick)
+	assert_eq(rig.drawn.act_col(), GhostDrawn.CUT_COL)
+	var first: int = o.bolt_tick
+	var gap: int = PowerDef.ticks(o.num(&"bolt_gap_s"))
+	_wait(gap - 4)
+	_press(&"melee")
+	_wait(3)
+	assert_eq(o.bolt_tick, first + gap)
+	assert_eq(o.bolts, 2)
 
 
 func test_flag_off_keeps_the_instant_hit_and_legacy_state_bytes() -> void:

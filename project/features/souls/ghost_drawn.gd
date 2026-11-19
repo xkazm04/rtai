@@ -17,18 +17,15 @@ const BACKPEDAL_DOT: float = -0.25
 const STRIDE_K: Dictionary[String, float] = {"dent/p55": 0.8, "tonnage/p55": 0.95}
 const STILL_FRAMES: int = 3  # frames without ground walked before the figure stands
 const OCT_HOLD_RAD: float = deg_to_rad(4.0)
-## Columns in the act grid, followed by optional jab cells.
 const ACT_COLS: int = 4
 const WINDUP_COL: int = 0
 const CUT_COL: int = 1
 const FOLLOW_COL: int = 2
 const HIT_COL: int = 3
-## Dent's optional jab cells occupy columns 4-6 on each side.
-const JAB_SHIFT: int = 4
+const JAB_SHIFT: int = 4  # Dent's optional jab cells occupy columns 4-6 on each side.
 const JAB_COLS: Dictionary[String, int] = {"dent/p70": 7, "dent/p55": 7}
 const JAB_LEFT_COLS: Dictionary[String, int] = {"dent/p70": 7, "dent/p55": 7}
 const CUT_TICKS: int = 5
-const OHM_WINDUP_TICKS: int = 3  # inside the cut; 2 matches the lunge's ease-in, 0 skips it
 const FOLLOW_TICKS: int = 10
 const HIT_TICKS: int = 10
 const HIT_FROM_BEHIND: bool = true
@@ -36,8 +33,7 @@ const REAR_DOT: float = 0.5  # within 60 degrees of the facing, including the ad
 
 var card_name: String = ""
 var height_m: float = 1.75
-## One drawn stride cycle's ground in cell px (the stance foot's travel over a cycle, measured).
-var cycle_cell: float = 150.0
+var cycle_cell: float = 150.0  # measured stance foot travel per cycle (cell px)
 var run_cell: float = 0.0  # the run grid's stride cycle in cell px (0 = no run grid)
 var fig_px: float = 180.0  # the figure's median height in the grid, cell px (ghost_pack prints it)
 var still: bool = false  # something else carries the form (Dent on a car roof): stands still
@@ -57,6 +53,7 @@ var _walk: GhostSheet = null
 var _run: GhostSheet = null
 var _running: bool = false
 var _windup: bool = false
+var _instant_windup: int = 0
 var _act: GhostSheet = null
 var _seq: int = 0
 var _fed: bool = false
@@ -74,9 +71,10 @@ func _init(
 	cycle_cell = p_cycle_cell
 	fig_px = p_fig_px
 	run_cell = p_run_cell
+	if card_name == "ohm":
+		_instant_windup = int(GhostAttacks.shipped().num(&"ohm", &"bolt_windup_ticks"))
 
 
-## Returns true while the sprite replaces the rig's card and parts.
 func step(
 	host: Node2D, parts: Array[Sprite2D], px_per_m: float, size_k: float, look: float = NAN
 ) -> bool:
@@ -115,10 +113,12 @@ static func path_of(art: String, name: String, sheet: String = "walk8") -> Strin
 	return ART_DIR.path_join(art).path_join("%s_%s.png" % [name, sheet])
 
 
-## Each frame (GhostActs): `seq` a counter that rises on a strike, `hurt` the tick of the last hit,
-## `windup` true while the sim holds a telegraphed strike.
-func feed(seq: int, hurt: int, tick: int, windup: bool = false) -> void:
-	if _fed and seq > _seq:
+## A strike counter drives instant acts. A delayed cast supplies its actual release tick.
+func feed(seq: int, hurt: int, tick: int, windup: bool = false, release_tick: int = -1) -> void:
+	if release_tick >= 0:
+		_act_from = release_tick
+		_instant_windup = 0  # this cast already showed its wind-up before release
+	elif _fed and seq > _seq:
 		_act_from = tick
 	_fed = true
 	_seq = seq
@@ -133,7 +133,7 @@ func act_col() -> int:
 		return WINDUP_COL
 	var since: int = _tick - _act_from
 	if _act_from >= 0 and since < CUT_TICKS + FOLLOW_TICKS:
-		if card_name == "ohm" and since < OHM_WINDUP_TICKS:
+		if since < _instant_windup:
 			return WINDUP_COL
 		return CUT_COL if since < CUT_TICKS else FOLLOW_COL
 	return HIT_COL if _hurt >= 0 and _tick - _hurt < HIT_TICKS else -1

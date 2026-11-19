@@ -241,6 +241,10 @@
           "minimum": 0,
           "type": "number"
         },
+        "bolt_windup_ticks": {
+          "minimum": 1,
+          "type": "integer"
+        },
         "branch_k": {
           "maximum": 1,
           "minimum": 0.1,
@@ -319,6 +323,7 @@
       "required": [
         "bolt_damage",
         "bolt_gap_s",
+        "bolt_windup_ticks",
         "car_damage",
         "cone_deg",
         "doc",

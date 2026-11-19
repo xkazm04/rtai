@@ -27,6 +27,7 @@ var electrodes: PackedVector2Array = PackedVector2Array(
 
 var powers: SoulPowers
 var attacks: GhostAttacks
+var cast: OhmCast
 var bolts: int = 0
 var struck: int = 0
 var cars_hit: int = 0
@@ -45,6 +46,7 @@ var _shared: bool = false
 
 func _init(table: PowerTable, p_attacks: GhostAttacks = null) -> void:
 	attacks = p_attacks if p_attacks != null else GhostAttacks.shipped()
+	cast = OhmCast.new(attacks)
 	powers = SoulPowers.new(table)
 
 
@@ -86,8 +88,16 @@ func drive(stage: CollectCallStage, power: bool, melee: bool, aim: Vector2) -> v
 			activations += 1
 		powers.tick()
 	_gap = maxi(0, _gap - 1)
-	if on() and melee and _gap == 0 and rivet.alive():
-		_bolt(stage, aim.normalized() if aim.length() > 0.001 else rivet.facing)
+	if cast.due_tick >= 0:
+		if cast.release(stage.tick, on(), rivet):
+			_bolt(stage, cast.aim)
+	elif on() and melee and _gap == 0 and rivet.alive():
+		var direction: Vector2 = aim.normalized() if aim.length() > 0.001 else rivet.facing
+		_gap = PowerDef.ticks(num(&"bolt_gap_s"))
+		if cast.delay_ticks > 0:
+			cast.begin(stage.tick, direction, rivet.hurt_tick)
+		else:
+			_bolt(stage, direction)
 
 
 ## True while the soul is on (the pilot skips the jab: melee is the bolt).
@@ -114,7 +124,6 @@ func _bolt(stage: CollectCallStage, aim: Vector2) -> void:
 		bodies.append(f)
 		@warning_ignore("return_value_discarded")
 		pos.append(f.pos)
-	_gap = PowerDef.ticks(num(&"bolt_gap_s"))
 	bolts += 1
 	bolt_tick = stage.tick
 	bolt_aim = aim
@@ -184,3 +193,4 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(cars_hit)
 	out.put_32(_gap)
 	out.put_32(powers.active_left)
+	cast.write_state(out)
