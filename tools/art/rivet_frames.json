@@ -259,6 +259,16 @@
     "counts": "3",
     "fig_h": 165,
     "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/ray_gun_p55_reload_left_key.png"
+   },
+   "rivet_eq_mini_nuke_diag": {
+    "counts": "4",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/mini_nuke_p55_diag_key.png"
+   },
+   "rivet_eq_mini_nuke_left": {
+    "counts": "3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/mini_nuke_p55_left_key.png"
    }
   },
   "p70": {
@@ -519,6 +529,16 @@
     "counts": "3",
     "fig_h": 165,
     "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/ray_gun_p70_reload_left_key.png"
+   },
+   "rivet_eq_mini_nuke_diag": {
+    "counts": "4",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/mini_nuke_p70_diag_key.png"
+   },
+   "rivet_eq_mini_nuke_left": {
+    "counts": "3",
+    "fig_h": 165,
+    "sheet": "C:/Users/kazda/kiro/gtai-masters/n19/guns/masters/mini_nuke_p70_left_key.png"
    }
   }
  }

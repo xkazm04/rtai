@@ -620,6 +620,20 @@
    "sha256": "3b4f42f15778c952fe1b17a1e52774c2a29cd637513444664be8b9854c4d72ba",
    "tool": "Pillow"
   },
+  "launcher_exhaust_raw": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/launcher_exhaust_raw.png",
+   "layout_template": "masters:n19/guns/masters/mini_nuke_flash_ref.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/launcher_exhaust.txt",
+   "prompt_sha256": "f6064bf9cc217e0d2d1bd227835cb8dcecefbb964f902aaf4c85f6dc09bfc775",
+   "references": [
+    "masters:n19/guns/masters/mini_nuke_flash_ref.png"
+   ],
+   "seed": null,
+   "sha256": "394958f3c7ef92f2729a072eb0137f2554ab4d34c8ecab59fa346049f2d53721",
+   "tool": "image_gen"
+  },
   "left3b_reference": {
    "date": "2026-11-18",
    "file": "masters:n19/guns/masters/left3b_reference.png",
@@ -805,6 +819,229 @@
    "seed": null,
    "sha256": "140ea7eb93da077edb6923cee5db5d8b62c271d76043e7f67cf09a002322aef5",
    "tool": "image_gen"
+  },
+  "mini_nuke_flash_ref": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/mini_nuke_flash_ref.png",
+   "layout_template": "project/features/characters/art/view/p55/rivet_eq_mini_nuke.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/launcher_exhaust.txt",
+   "prompt_sha256": "f6064bf9cc217e0d2d1bd227835cb8dcecefbb964f902aaf4c85f6dc09bfc775",
+   "references": [
+    "project/features/characters/art/view/p55/rivet_eq_mini_nuke.png",
+    "project/features/characters/art/view/p55/rivet_eq_rocket_launcher_diag.png",
+    "project/features/characters/art/view/p70/rivet_eq_mini_nuke.png",
+    "project/features/characters/art/view/p70/rivet_eq_rocket_launcher_diag.png"
+   ],
+   "seed": null,
+   "sha256": "c36551035a2508fc7c298a8a265d525c8f889ae13bfa8e036415041affb03379",
+   "tool": "Pillow"
+  },
+  "mini_nuke_p55_diag_dark": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/mini_nuke_p55_diag_dark.png",
+   "layout_template": "masters:n19/guns/masters/mini_nuke_p55_diag_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/mini_nuke_p55_diag.txt",
+   "prompt_sha256": "d3ffa36addc26921313cd468fb2bfe0226003a73b02c57bbda6723811c4a9e15",
+   "references": [
+    "masters:n19/guns/masters/mini_nuke_p55_diag_raw.png"
+   ],
+   "seed": null,
+   "sha256": "eb4cac655c90daff3341c42e313e6e5cbc538b0cb842df2ceefcd34aed2b117b",
+   "tool": "Pillow"
+  },
+  "mini_nuke_p55_diag_key": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/mini_nuke_p55_diag_key.png",
+   "layout_template": "masters:n19/guns/masters/mini_nuke_p55_diag_dark.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/mini_nuke_p55_diag.txt",
+   "prompt_sha256": "d3ffa36addc26921313cd468fb2bfe0226003a73b02c57bbda6723811c4a9e15",
+   "references": [
+    "masters:n19/guns/masters/mini_nuke_p55_diag_dark.png",
+    "masters:n19/guns/masters/launcher_exhaust_raw.png",
+    "masters:n19/guns/masters/mini_nuke_p55_original.png"
+   ],
+   "seed": null,
+   "sha256": "c983e15efae50f158cb97fc4da0e0505af3fd929b675695befbd7ece35fe9c6c",
+   "tool": "Pillow"
+  },
+  "mini_nuke_p55_diag_raw": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/mini_nuke_p55_diag_raw.png",
+   "layout_template": "masters:n19/guns/masters/mini_nuke_p55_ref.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/mini_nuke_p55_diag.txt",
+   "prompt_sha256": "d3ffa36addc26921313cd468fb2bfe0226003a73b02c57bbda6723811c4a9e15",
+   "references": [
+    "masters:n19/guns/masters/mini_nuke_p55_ref.png"
+   ],
+   "seed": null,
+   "sha256": "9950e78f9108e03b7ab823ea5809f7fce873e9706cda70227c9238adcde7c9db",
+   "tool": "image_gen"
+  },
+  "mini_nuke_p55_left_key": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/mini_nuke_p55_left_key.png",
+   "layout_template": "masters:n19/guns/masters/mini_nuke_p55_left_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/mini_nuke_p55_left.txt",
+   "prompt_sha256": "046282f734b4f96166a82d374beb3a439d2fb76226eaddb127e23486a7b886c1",
+   "references": [
+    "masters:n19/guns/masters/mini_nuke_p55_left_raw.png"
+   ],
+   "seed": null,
+   "sha256": "bcb1c15ea59a7dabb48eb1303c99bb53e4ef2c54eee33aad4b73b85fc81b7a89",
+   "tool": "Pillow"
+  },
+  "mini_nuke_p55_left_raw": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/mini_nuke_p55_left_raw.png",
+   "layout_template": "masters:n19/guns/masters/mini_nuke_p55_ref.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/mini_nuke_p55_left.txt",
+   "prompt_sha256": "046282f734b4f96166a82d374beb3a439d2fb76226eaddb127e23486a7b886c1",
+   "references": [
+    "masters:n19/guns/masters/mini_nuke_p55_ref.png"
+   ],
+   "seed": null,
+   "sha256": "46844501a57b110f85ed62f145045a86f735c93de35a3fa5584b23fc6b40eff7",
+   "tool": "image_gen"
+  },
+  "mini_nuke_p55_original": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/mini_nuke_p55_original.png",
+   "layout_template": "library:keyed/rivet/rivet_eq_mini_nuke_55.png",
+   "model": "source derivative",
+   "prompt_ref": "tools/art/mini_nuke_strips.py",
+   "prompt_sha256": "db1ac45222ee32e4da73b4e145c2bc24f63297c1bbf608845998a3ffc42ac780",
+   "references": [
+    "library:keyed/rivet/rivet_eq_mini_nuke_55.png"
+   ],
+   "seed": null,
+   "sha256": "a4c7a137f75d809ce2dbf58556e0d9c31c98d85245708e6ca3343e74e0ff736f",
+   "tool": "Pillow"
+  },
+  "mini_nuke_p55_ref": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/mini_nuke_p55_ref.png",
+   "layout_template": "project/features/characters/art/view/p55/rivet_eq_mini_nuke.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/mini_nuke_p55_diag.txt",
+   "prompt_sha256": "d3ffa36addc26921313cd468fb2bfe0226003a73b02c57bbda6723811c4a9e15",
+   "references": [
+    "project/features/characters/art/view/p55/rivet_eq_mini_nuke.png",
+    "project/features/characters/art/view/p55/rivet_eq_rocket_launcher_diag_noflash.png",
+    "project/features/characters/art/view/p55/rivet_eq_assault_rifle_left.png",
+    "project/features/combat/weapons/art/mini_nuke/held.png"
+   ],
+   "seed": null,
+   "sha256": "5b3ccf6e66f1f11f1b617f59e66868b2817c63d1b5eaca15ffb0fda3bcca00bb",
+   "tool": "Pillow"
+  },
+  "mini_nuke_p70_diag_dark": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/mini_nuke_p70_diag_dark.png",
+   "layout_template": "masters:n19/guns/masters/mini_nuke_p70_diag_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/mini_nuke_p70_diag.txt",
+   "prompt_sha256": "d35a908ad73fff64c64306429e0af7ac4bedf43266f7132faca5501ed4de6aa0",
+   "references": [
+    "masters:n19/guns/masters/mini_nuke_p70_diag_raw.png"
+   ],
+   "seed": null,
+   "sha256": "31beaafd04c5e67008345c7172435e3dc909f7c9126ca12cc76bdeb9bf2a4985",
+   "tool": "Pillow"
+  },
+  "mini_nuke_p70_diag_key": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/mini_nuke_p70_diag_key.png",
+   "layout_template": "masters:n19/guns/masters/mini_nuke_p70_diag_dark.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/mini_nuke_p70_diag.txt",
+   "prompt_sha256": "d35a908ad73fff64c64306429e0af7ac4bedf43266f7132faca5501ed4de6aa0",
+   "references": [
+    "masters:n19/guns/masters/mini_nuke_p70_diag_dark.png",
+    "masters:n19/guns/masters/launcher_exhaust_raw.png",
+    "masters:n19/guns/masters/mini_nuke_p55_original.png"
+   ],
+   "seed": null,
+   "sha256": "f835abd894c107a731ba017d991089003f215eaaad44f2781033c00572989aae",
+   "tool": "Pillow"
+  },
+  "mini_nuke_p70_diag_raw": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/mini_nuke_p70_diag_raw.png",
+   "layout_template": "masters:n19/guns/masters/mini_nuke_p70_ref.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/mini_nuke_p70_diag.txt",
+   "prompt_sha256": "d35a908ad73fff64c64306429e0af7ac4bedf43266f7132faca5501ed4de6aa0",
+   "references": [
+    "masters:n19/guns/masters/mini_nuke_p70_ref.png"
+   ],
+   "seed": null,
+   "sha256": "f3d0122502e9fde47e7d4b947126897d066ad60e2a068b20c70f5ce88cfa312d",
+   "tool": "image_gen"
+  },
+  "mini_nuke_p70_left_key": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/mini_nuke_p70_left_key.png",
+   "layout_template": "masters:n19/guns/masters/mini_nuke_p70_left_raw.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/mini_nuke_p70_left.txt",
+   "prompt_sha256": "e21e2b3cc302caa12d468541a368d569bf40c36818901cfe9eb6cdb2050e3e23",
+   "references": [
+    "masters:n19/guns/masters/mini_nuke_p70_left_raw.png"
+   ],
+   "seed": null,
+   "sha256": "cb93259de7c0f6a4b491cf4aa8e01accd53915fae43093de4715944480593247",
+   "tool": "Pillow"
+  },
+  "mini_nuke_p70_left_raw": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/mini_nuke_p70_left_raw.png",
+   "layout_template": "masters:n19/guns/masters/mini_nuke_p70_ref.png",
+   "model": "built-in image_gen (image model not reported)",
+   "prompt_ref": "docs/art/prompts/n19/guns/mini_nuke_p70_left.txt",
+   "prompt_sha256": "e21e2b3cc302caa12d468541a368d569bf40c36818901cfe9eb6cdb2050e3e23",
+   "references": [
+    "masters:n19/guns/masters/mini_nuke_p70_ref.png"
+   ],
+   "seed": null,
+   "sha256": "ced8a4606ac9c08f721e5b94f8f1835e5a76197cc653cd4abcaa7b330f465279",
+   "tool": "image_gen"
+  },
+  "mini_nuke_p70_original": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/mini_nuke_p70_original.png",
+   "layout_template": "library:keyed/rivet/rivet_eq_mini_nuke_70_v2.png",
+   "model": "source derivative",
+   "prompt_ref": "tools/art/mini_nuke_strips.py",
+   "prompt_sha256": "db1ac45222ee32e4da73b4e145c2bc24f63297c1bbf608845998a3ffc42ac780",
+   "references": [
+    "library:keyed/rivet/rivet_eq_mini_nuke_70_v2.png"
+   ],
+   "seed": null,
+   "sha256": "fc02595bfeff585b68afbaef82c06e132508fb6f51daa8b478777bf6a4bc03e2",
+   "tool": "Pillow"
+  },
+  "mini_nuke_p70_ref": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/mini_nuke_p70_ref.png",
+   "layout_template": "project/features/characters/art/view/p70/rivet_eq_mini_nuke.png",
+   "model": "source derivative",
+   "prompt_ref": "docs/art/prompts/n19/guns/mini_nuke_p70_diag.txt",
+   "prompt_sha256": "d35a908ad73fff64c64306429e0af7ac4bedf43266f7132faca5501ed4de6aa0",
+   "references": [
+    "project/features/characters/art/view/p70/rivet_eq_mini_nuke.png",
+    "project/features/characters/art/view/p70/rivet_eq_rocket_launcher_diag_noflash.png",
+    "project/features/characters/art/view/p70/rivet_eq_assault_rifle_left.png",
+    "project/features/combat/weapons/art/mini_nuke/held.png"
+   ],
+   "seed": null,
+   "sha256": "70f7d37f9cbc53424bf7a5681d5094aa44c145cd2b9db53c217fbffb2d020cb6",
+   "tool": "Pillow"
   },
   "model_reference": {
    "date": "2026-11-18",
