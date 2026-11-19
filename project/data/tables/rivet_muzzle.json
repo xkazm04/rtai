@@ -183,6 +183,30 @@
           ]
         }
       },
+      "rivet_eq_flamethrower_left": {
+        "cells": {
+          "0": [
+            72,
+            102
+          ],
+          "1": [
+            71,
+            82
+          ],
+          "2": [
+            76,
+            77
+          ]
+        }
+      },
+      "rivet_eq_flamethrower_left_fire": {
+        "cells": {
+          "0": [
+            66,
+            105
+          ]
+        }
+      },
       "rivet_eq_gatling": {
         "cells": {
           "1": [
@@ -942,6 +966,30 @@
           "3": [
             58,
             44
+          ]
+        }
+      },
+      "rivet_eq_flamethrower_left": {
+        "cells": {
+          "0": [
+            100,
+            159
+          ],
+          "1": [
+            105,
+            134
+          ],
+          "2": [
+            107,
+            124
+          ]
+        }
+      },
+      "rivet_eq_flamethrower_left_fire": {
+        "cells": {
+          "0": [
+            95,
+            161
           ]
         }
       },

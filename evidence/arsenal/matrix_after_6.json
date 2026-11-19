@@ -6,8 +6,6 @@
     "electro_gun/p55/reload": "missing own parts.mag; missing or invalid rivet_reload_electro_gun.png; missing or invalid rivet_reload_electro_gun_left.png",
     "electro_gun/p70/reload": "missing own parts.mag; missing or invalid rivet_reload_electro_gun.png; missing or invalid rivet_reload_electro_gun_left.png",
     "electro_gun/top/reload": "missing own parts.mag",
-    "flamethrower/p55/left": "missing or invalid rivet_eq_flamethrower_left.png",
-    "flamethrower/p70/left": "missing or invalid rivet_eq_flamethrower_left.png",
     "gloria/p55/left": "missing or invalid rivet_eq_gloria_left.png",
     "gloria/p70/left": "missing or invalid rivet_eq_gloria_left.png",
     "hand_cannon/p55/reload": "missing or invalid rivet_reload_hand_cannon.png; missing or invalid rivet_reload_hand_cannon_left.png",
@@ -20,7 +18,7 @@
     "chainsaw": 0,
     "electro_baton": 0,
     "electro_gun": 3,
-    "flamethrower": 2,
+    "flamethrower": 0,
     "gatling": 0,
     "gloria": 2,
     "hand_cannon": 2,
@@ -38,7 +36,7 @@
   "missing_resources": {},
   "schema": "gtai.arsenal-audit/1",
   "table_errors": [],
-  "total_holes": 14,
+  "total_holes": 12,
   "weapons": {
     "assault-rifle": {
       "p55": {
@@ -663,8 +661,8 @@
           "status": "ok"
         },
         "left": {
-          "reason": "missing or invalid rivet_eq_flamethrower_left.png",
-          "status": "HOLE"
+          "reason": "own left facing",
+          "status": "ok"
         },
         "left_strike": {
           "reason": "no melee swing",
@@ -713,8 +711,8 @@
           "status": "ok"
         },
         "left": {
-          "reason": "missing or invalid rivet_eq_flamethrower_left.png",
-          "status": "HOLE"
+          "reason": "own left facing",
+          "status": "ok"
         },
         "left_strike": {
           "reason": "no melee swing",

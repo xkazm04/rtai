@@ -58,6 +58,16 @@
     "sheet": "rivet_eq_flamethrower_55.png",
     "fig_h": 165
    },
+   "rivet_eq_flamethrower_left": {
+    "mirror_from": "rivet_eq_flamethrower.png",
+    "regions": "left_regions/flamethrower.json"
+   },
+   "rivet_eq_flamethrower_left_fire": {
+    "mirror_from": "rivet_eq_flamethrower.png",
+    "regions": "left_regions/flamethrower.json",
+    "pose": "_fire",
+    "source_cells": [5]
+   },
    "rivet_eq_gatling": {
     "counts": "5,3",
     "sheet": "rivet_eq_gatling_55.png",
@@ -367,6 +377,16 @@
     "counts": "5,3",
     "sheet": "rivet_eq_flamethrower_70.png",
     "fig_h": 165
+   },
+   "rivet_eq_flamethrower_left": {
+    "mirror_from": "rivet_eq_flamethrower.png",
+    "regions": "left_regions/flamethrower.json"
+   },
+   "rivet_eq_flamethrower_left_fire": {
+    "mirror_from": "rivet_eq_flamethrower.png",
+    "regions": "left_regions/flamethrower.json",
+    "pose": "_fire",
+    "source_cells": [5]
    },
    "rivet_eq_gatling": {
     "counts": "5,3",

@@ -1,0 +1,66 @@
+{
+  "p55": [
+    [
+      {"part": "rigid hazard collar stripes", "band": [[156, 98, 105], [160, 99, 109], [164, 102, 113], [168, 106, 117], [172, 109, 119], [176, 111, 121], [180, 112, 123], [184, 113, 123], [188, 112, 123], [192, 111, 122], [196, 109, 121], [200, 107, 118], [204, 103, 115], [207, 100, 112]]},
+      {"part": "fuel tank valve and retaining strap", "band": [[131, 94, 106], [140, 96, 109], [149, 93, 104]]},
+      {"part": "curved supply hose and its hip coupling", "band": [[130, 136, 144], [135, 148, 155], [145, 154, 162], [158, 155, 162]]},
+      {"part": "wand regulator and trigger latch", "band": [[173, 138, 144], [191, 141, 147]]},
+      {"part": "visible wand and nozzle", "gun_mask": [[162, 131], [188, 133], [213, 141], [257, 144], [259, 162], [202, 161], [166, 154]]}
+    ],
+    [
+      {"part": "rigid hazard collar stripes", "band": [[161, 102, 109], [167, 108, 116], [180, 113, 121], [191, 114, 121], [200, 108, 116]]},
+      {"part": "fuel tank valve and retaining strap", "band": [[137, 115, 125], [148, 117, 128], [158, 115, 124]]},
+      {"part": "curved supply hose and its hip coupling", "band": [[152, 146, 155], [155, 159, 166], [164, 167, 173], [177, 164, 171]]},
+      {"part": "wand regulator and trigger latch", "band": [[194, 141, 147], [206, 137, 143]]},
+      {"part": "visible wand and nozzle", "gun_mask": [[179, 138], [207, 130], [256, 112], [265, 119], [263, 130], [206, 153], [183, 163]]}
+    ],
+    [
+      {"part": "rigid hazard collar stripes", "band": [[169, 106, 111], [177, 110, 117], [187, 111, 119], [198, 107, 115]]},
+      {"part": "fuel tank valve and retaining strap", "band": [[148, 124, 135], [158, 127, 139], [167, 124, 135]]},
+      {"part": "curved supply hose and its hip coupling", "band": [[171, 153, 161], [174, 161, 168], [181, 164, 172], [192, 161, 168]]},
+      {"part": "wand regulator and trigger latch", "band": [[203, 134, 141], [214, 127, 134]]},
+      {"part": "visible wand and nozzle", "gun_mask": [[193, 137], [228, 120], [244, 106], [255, 107], [254, 123], [210, 155], [194, 158]]}
+    ]
+  ],
+  "p55_fire": [
+    [
+      {"part": "rigid hazard collar stripes", "band": [[163, 120, 126], [172, 126, 133], [185, 130, 136], [194, 126, 134], [202, 121, 128]]},
+      {"part": "fuel tank valve and retaining strap", "band": [[143, 100, 111], [154, 102, 112], [161, 105, 111]]},
+      {"part": "curved supply hose and its hip coupling", "band": [[131, 142, 151], [136, 152, 159], [147, 156, 164], [158, 158, 164]]},
+      {"part": "wand regulator and trigger latch", "band": [[174, 142, 148], [189, 144, 151]]},
+      {"part": "visible wand and nozzle", "gun_mask": [[163, 136], [200, 135], [229, 144], [268, 148], [272, 163], [221, 166], [167, 155]]}
+    ]
+  ],
+  "p70": [
+    [
+      {"part": "rigid hazard collar stripes", "band": [[227, 186, 199], [231, 189, 202], [235, 193, 205], [239, 196, 208], [243, 198, 209], [247, 200, 211], [251, 201, 212], [255, 201, 212], [259, 201, 212], [263, 201, 211], [267, 200, 210], [271, 198, 208], [275, 196, 206], [279, 193, 204], [281, 191, 202]]},
+      {"part": "fuel tank valve and retaining strap", "band": [[192, 161, 174], [205, 164, 178], [216, 160, 173]]},
+      {"part": "curved supply hose and its hip coupling", "band": [[191, 216, 226], [197, 229, 236], [210, 237, 246], [223, 240, 247]]},
+      {"part": "wand regulator and trigger latch", "band": [[246, 221, 227], [263, 224, 230]]},
+      {"part": "visible wand and nozzle", "gun_mask": [[234, 212], [266, 215], [301, 225], [345, 228], [346, 247], [299, 248], [236, 235]]}
+    ],
+    [
+      {"part": "rigid hazard collar stripes", "band": [[217, 180, 188], [226, 189, 198], [240, 196, 205], [255, 196, 206], [269, 190, 198]]},
+      {"part": "fuel tank valve and retaining strap", "band": [[185, 186, 196], [199, 190, 201], [213, 185, 195]]},
+      {"part": "curved supply hose and its hip coupling", "band": [[198, 240, 249], [208, 246, 255], [224, 249, 256], [239, 249, 256]]},
+      {"part": "wand regulator and trigger latch", "band": [[263, 215, 222], [277, 208, 215]]},
+      {"part": "visible wand and nozzle", "gun_mask": [[233, 220], [278, 205], [327, 185], [338, 191], [338, 209], [275, 234], [238, 247]]}
+    ],
+    [
+      {"part": "rigid hazard collar stripes", "band": [[229, 186, 193], [240, 190, 199], [253, 192, 201], [265, 187, 195]]},
+      {"part": "fuel tank valve and retaining strap", "band": [[194, 200, 213], [209, 205, 218], [222, 201, 213]]},
+      {"part": "curved supply hose and its hip coupling", "band": [[222, 236, 246], [226, 248, 255], [240, 253, 259], [251, 249, 255]]},
+      {"part": "wand regulator and trigger latch", "band": [[263, 212, 220], [277, 205, 212]]},
+      {"part": "visible wand and nozzle", "gun_mask": [[249, 215], [289, 194], [323, 173], [334, 177], [333, 193], [280, 229], [251, 243]]}
+    ]
+  ],
+  "p70_fire": [
+    [
+      {"part": "rigid hazard collar stripes", "band": [[222, 194, 201], [231, 203, 211], [245, 207, 216], [260, 204, 214], [278, 190, 199]]},
+      {"part": "fuel tank valve and retaining strap", "band": [[195, 176, 188], [208, 179, 192], [218, 175, 185]]},
+      {"part": "curved supply hose and its hip coupling", "band": [[180, 220, 228], [185, 231, 239], [196, 237, 245], [212, 240, 247]]},
+      {"part": "wand regulator and trigger latch", "band": [[237, 222, 229], [256, 224, 232]]},
+      {"part": "visible wand and nozzle", "gun_mask": [[221, 214], [264, 217], [303, 230], [352, 233], [356, 248], [296, 251], [220, 234]]}
+    ]
+  ]
+}
