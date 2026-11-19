@@ -1,5 +1,6 @@
 extends Node
 ## Run the arena's normal pilot, carry, trigger and view. Only the input source is scripted.
+var boss: StringName
 var weapon: StringName
 var out_dir: String
 var view_id: String
@@ -9,6 +10,10 @@ var _pad: TurnPad = TurnPad.new()
 var _arena: CombatArena
 var _frame: int = 0
 var _failed: bool = false
+
+
+func has_boss(id: StringName) -> bool:
+	return BossSpec.ids().has(id)
 
 
 func _ready() -> void:
@@ -26,7 +31,8 @@ func _ready() -> void:
 	session.world.loop().set_input(_pad)
 	_pad.actions = session.actions
 	_arena = session.stage.arena
-	_arena.rivet.pos = session.plan.area("boulevard").rect.end - Vector2(6.0, 6.0)
+	if boss == &"":
+		_arena.rivet.pos = session.plan.area("boulevard").rect.end - Vector2(6.0, 6.0)
 	var carry: RivetCarry = session.pilot.carry
 	if carry == null:
 		carry = RivetCarry.new(
@@ -50,6 +56,9 @@ func _ready() -> void:
 
 func _octant(octant: int) -> bool:
 	_pad.aim = Vector2.from_angle(octant * PI / 4.0)
+	# A shallow diagonal tube still aims inside this octant at 38 degrees.
+	if weapon == &"rocket_launcher" and octant % 2 == 1:
+		_pad.aim.y *= tan(deg_to_rad(38.0))
 	_pad.fire = false
 	var gun: GunHand = _arena.gun
 	if gun != null and gun.trigger.ammo == 0:
@@ -119,6 +128,9 @@ func _log_magazine() -> void:
 func _save(stem: String, crop: bool) -> void:
 	await RenderingServer.frame_post_draw
 	var image: Image = get_viewport().get_texture().get_image()
+	if boss != &"" and not clip and stem.ends_with("_fire"):
+		if image.save_png(out_dir.path_join(stem + "_arena.png")) != OK:
+			_failed = true
 	if crop:
 		var rig: CutRig = _game.cast.rigs.rig_for(_arena.rivet.id)
 		var scale_px: Vector2 = Vector2(image.get_size()) / get_viewport().get_visible_rect().size

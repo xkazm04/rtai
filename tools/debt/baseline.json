@@ -64,7 +64,8 @@
         "2026-11-18: Requested dev-only quest rifle turning film with all eight verified shot poses (dev_loc 23246 -> 23347)",
         "2026-11-18: Package 4: reusable revision-aware arsenal film driver captures the eight rest/fire pairs and a reload through the arena pilot (dev_loc 23347 -> 23415)",
         "2026-11-18: Package 4: verify visible magazine and placeholder on the flat reload proof (dev_loc 23415 -> 23428)",
-        "2026-11-18: Package 4: exercise revision probe settings directly, including unknown flags, pitch and capture scale (dev_loc 23428 -> 23431)"
+        "2026-11-18: Package 4: exercise revision probe settings directly, including unknown flags, pitch and capture scale (dev_loc 23428 -> 23431)",
+        "2026-11-19: Package 5: film each diagonal at full viewport size in the selected live boss room (dev_loc 23431 -> 23447)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -85,7 +86,7 @@
         "project/dev/perf": 160,
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
-        "project/dev/rivet_arsenal": 962,
+        "project/dev/rivet_arsenal": 978,
         "project/dev/rivet_motion": 1966,
         "project/dev/save_crash_loop.gd": 14,
         "project/dev/save_crash_writer.gd": 18,
@@ -98,7 +99,7 @@
         "project/dev/view": 433,
         "project/dev/weapon_art": 506
       },
-      "total": 23431
+      "total": 23447
     },
     "direct_cmdline_reads": {
       "accepted": [

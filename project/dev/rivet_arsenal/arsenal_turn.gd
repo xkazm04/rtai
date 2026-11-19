@@ -1,6 +1,6 @@
 extends SceneTree
 ## Film the arena rig at each ground-plane octant.
-const KNOWN_FLAGS: PackedStringArray = ["--weapon", "--pitch", "--ppm", "--out"]
+const KNOWN_FLAGS: PackedStringArray = ["--weapon", "--pitch", "--ppm", "--out", "--boss"]
 const VIEWS: Dictionary = {"top": "top", "p55": "tilt", "p70": "tilt70"}
 
 
@@ -34,6 +34,10 @@ static func configure(args: ArenaArgs, recorder: Node) -> String:
 		return "expected --weapon=<arsenal id>"
 	if DirAccess.make_dir_recursive_absolute(dest) != OK:
 		return "cannot create " + dest
+	var boss: StringName = StringName(args.text("--boss"))
+	if boss != &"" and recorder.call(&"has_boss", boss) != true:
+		return "unknown boss " + String(boss)
+	recorder.set("boss", boss)
 	recorder.set("weapon", StringName(args.text("--weapon")))
 	recorder.set("out_dir", dest)
 	recorder.set("view_id", VIEWS[pitch])
