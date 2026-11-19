@@ -102,7 +102,7 @@ func test_left_midpoints_require_drawn_left_profile_art() -> void:
 	var phase: float = sheet._mid_windows[0].x
 	for oct: int in [2, 6]:
 		sheet.show(spr, oct, 5, phase)
-		assert_eq(spr.texture, sheet.tex)
+		assert_ne(spr.texture, sheet._profile_mid.tex)
 	sheet._profile_mid.left = null
 	sheet.show(spr, 4, 5, phase)
 	assert_eq(spr.texture, sheet.left)

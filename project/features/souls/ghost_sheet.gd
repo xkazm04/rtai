@@ -49,6 +49,9 @@ static func walk_of(path: String, steps: PackedFloat32Array) -> GhostSheet:
 		sheet._mid_windows = GhostStride.tonnage_windows(steps)
 		sheet._profile_mid = of(path.get_basename() + "_mid.png", sheet._mid_windows.size())
 		sheet._load_detail(path, steps, [1, 3, 5, 7], ["_diag"], GhostStride.DIAGONAL_DIVISIONS)
+		sheet._load_detail(
+			path, steps, [2, 6], ["_fill_a", "_fill_b"], GhostStride.DIAGONAL_DIVISIONS
+		)
 	elif sheet != null and steps.size() == 8 and path.ends_with("/p55/tonnage_walk8.png"):
 		sheet._load_detail(path, steps, [0, 4], ["_detail"], GhostStride.PROFILE55_DIVISIONS)
 		sheet._load_detail(

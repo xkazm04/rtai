@@ -7,6 +7,12 @@ func test_p55_new_octants_cross_each_page_and_window_at_the_measured_phase() -> 
 	_check_walk(sheet, steps, [6, 8, 8, 8, 6, 6, 6, 4], [1, 2, 3, 5, 6, 7])
 
 
+func test_p70_straight_rows_cross_both_atlas_pages() -> void:
+	var steps: PackedFloat32Array = GhostStride.table_of("tonnage", "p70")
+	var sheet: GhostSheet = GhostSheet.walk_of(GhostDrawn.path_of("p70", "tonnage"), steps)
+	_check_walk(sheet, steps, [4, 6, 4, 4, 4, 4, 2, 2, 4, 4, 4, 4, 4, 2, 2, 2], [2, 6])
+
+
 func _check_walk(
 	sheet: GhostSheet, steps: PackedFloat32Array, divisions: Array[int], octants: Array[int]
 ) -> void:

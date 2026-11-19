@@ -102,6 +102,8 @@ def pack_intervals(sheet, rows, selected, divisions, style="diagonal"):
                 warp = "sill"
             elif detect is diagonal_pads:
                 warp = "separate"
+        if style == "fill70":
+            warp = "short_soles"
         pins = [] if profile55 else [detect(key) for key in keys]
         for i, count in enumerate(divisions):
             k = (i + 1) % len(keys)
@@ -113,7 +115,11 @@ def pack_intervals(sheet, rows, selected, divisions, style="diagonal"):
             for j in range(1, count):
                 # Use the nearer original to retain drawn detail on both sides of the handoff.
                 a, b = (i, k) if 2*j <= count else (k, i)
-                fraction = min(j, count - j) / count
+                # The front C5 and C13 shoes retract flush to the sill. Use the
+                # extended neighbour's silver shaft as it comes out of the socket.
+                if style == "fill70" and row == 0 and i in (4, 12) and 2 * j == count:
+                    a, b = k, i
+                fraction = (j if a == i else count - j) / count
                 source, target = (start, end) if a == i else (end, start)
                 crown = register_crown(keys[a], keys[b])
                 if profile55 and i not in (1, 7):
@@ -155,7 +161,13 @@ def pack_fill(pitch, page, output, left):
     suffix = "_left" if left else ""
     sheet = Image.open(view / f"tonnage_walk8{suffix}.png").convert("RGBA")
     rows, selected = (3, (0, 2)) if left else (5, (0, 1, 3, 4))
-    atlas = pack_intervals(sheet, rows, selected, OTHER55_DIVISIONS, style="fill")
+    divisions = OTHER55_DIVISIONS
+    if pitch == "p70":
+        if left:
+            raise ValueError("The p70 straight rows use the five-facing sheet.")
+        selected = (0, 4)
+        divisions = DIAGONAL_DIVISIONS
+    atlas = pack_intervals(sheet, rows, selected, divisions, style="fill70" if pitch == "p70" else "fill")
     half = atlas.width // 2
     x = 0 if page == "a" else half
     atlas.crop((x, 0, x + half, atlas.height)).save(output or view / f"tonnage_walk8_fill_{page}{suffix}.png")
@@ -168,7 +180,7 @@ if __name__ == "__main__":
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--diagonal", action="store_true")
     mode.add_argument("--p55", action="store_true")
-    mode.add_argument("--fill", choices=["p55"])
+    mode.add_argument("--fill", choices=["p55", "p70"])
     parser.add_argument("--page", choices=["a", "b"], default="a")
     parser.add_argument("--out", type=Path)
     args = parser.parse_args()

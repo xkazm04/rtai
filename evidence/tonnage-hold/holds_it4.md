@@ -268,3 +268,24 @@ Repack the two pages with `python tools/art/tonnage_midpoint.py --fill p55 --pag
 | tonnage_walk8_fill_a_left.png | `57e1a8b06e2c7d6e1ef1ee868d01d73ab92875e442f4fe0acc1d6b7db1aabdda` |
 | tonnage_walk8_fill_b.png | `1981804d417956cf3d640341ca6e04226e235cef9bbb3856f9549d56174156bf` |
 | tonnage_walk8_fill_b_left.png | `9d1581e0cd819ceb759683f1afee359f63fb57a35b714ae85de201b65143fd4c` |
+
+### p70 after subdivision
+
+| Facing | Worst before / after | Mean before / after | Stance drift before / after | Matches after | Open tail after | Identical base-key crops |
+|---|---:|---:|---:|---:|---:|---:|
+| toward | 12.016 / 2.915 | 6.454 / 0.821 | 10.556 / 2.203 | 55 | 0.000 | 29 |
+| away | 19.841 / 3.449 | 8.851 / 1.182 | 11.639 / 2.387 | 56 | 0.000 | 29 |
+
+Every original over-limit interval contains only shorter rides in its after-film. Each retained original key rode the same distance or less. The 14 prior walk PNGs matched their committed LFS SHA-256 objects. All 58 coincident original-key crop pairs were byte-identical. Each row adds 40 poses between its original key centres, taking dwell from both neighbours. Intervals per transition are 4, 6, 4, 4, 4, 4, 2, 2, 4, 4, 4, 4, 4, 2, 2, 2.
+
+I inspected all 80 p70 drawings in sequence beside their source keys at 64 px/m. On straight toward, the retracted C5 and C13 shoes nearly meet the sill. Their midpoint uses the extended neighbour's silver shaft, keeping the rubber sole round as it clears the sill. On straight away the side pistons spread at C6–C7 and again at C14–C15 while the rear panel and hoses retain one continuous outline. The alternating sharper and softer print detail is visible in the original keys and at their handoffs.
+
+Repack the two pages with `python tools/art/tonnage_midpoint.py --fill p70 --page a` and `--page b`. For the after films add `--atlas=fill --divisions=4,6,4,4,4,4,2,2,4,4,4,4,4,2,2,2` to the baseline measurement command. The two pages fit the texture-size limit.
+
+- [toward at 64 px/m](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it5-p70-toward-midpoints-64ppm.png>).
+- [away at 64 px/m](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it5-p70-away-midpoints-64ppm.png>).
+
+| Atlas | Repacked SHA-256 |
+|---|---|
+| tonnage_walk8_fill_a.png | `4c157ba2ccd59ebec042a9e234ad23bab60af222c4a766d7a339663f9d9349bc` |
+| tonnage_walk8_fill_b.png | `211faa85608682f1904d9781c5b9d4a34ed4ed310a3d5caa15878e821b0cdc8c` |

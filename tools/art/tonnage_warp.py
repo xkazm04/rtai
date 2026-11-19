@@ -90,12 +90,20 @@ def articulated_pose(key, soles, crown, fraction, style=""):
             dy = crown[1] * fraction + local * (dy - crown[1] * fraction)
         mx[y] -= dx
         my[y] -= dy
-    if style == "sill":
-        return rigid_sill(key, (mx, my), (xx, yy), crown * fraction)
+    if style in ("sill", "short_soles"):
+        mx, my = sill_maps(key, (mx, my), (xx, yy), crown * fraction)
+    if style == "short_soles":
+        for (cx, cy), (dx, dy) in zip(dst, delta):
+            # On the steeper pitch a retracted foot overlaps the plate edge.
+            # Keep its rubber shoe rigid while the short shaft extends above it.
+            toes = np.clip((33 - np.abs(xx - cx)) / 15, 0, 1)
+            toes *= np.clip((yy - cy + 36) / 24, 0, 1)
+            mx += toes * (xx - dx - mx)
+            my += toes * (yy - dy - my)
     return remap_ink(key, mx, my)
 
 
-def rigid_sill(key, inverse, grid, body):
+def sill_maps(key, inverse, grid, body):
     """Move the armour between the front pistons as one rigid plate."""
     pixels = np.asarray(key)
     h, w = pixels.shape[:2]
@@ -116,7 +124,7 @@ def rigid_sill(key, inverse, grid, body):
     # independently. A smooth inverse map keeps the riveted edge connected.
     blend = np.clip(np.hypot(dx, dy) / 18, 0, 1).astype("float32")
     mx, my = inverse
-    return remap_ink(key, bx + blend * (mx - bx), by + blend * (my - by))
+    return bx + blend * (mx - bx), by + blend * (my - by)
 
 
 def remap_ink(key, mx, my):
