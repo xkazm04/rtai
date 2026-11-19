@@ -152,3 +152,47 @@ func test_a_cover_holder_spends_its_peek_only_in_firing_range() -> void:
 	assert_false(e.token)
 	arena.tick = 5
 	assert_false(mind.available(h, arena), "the holder must return to cover before its next peek")
+
+
+func test_cover_bias_draw_is_stable_within_each_planning_slot() -> void:
+	var arena: CombatArena = _arena()
+	var squad: ArenaSquad = arena.squad_ai
+	squad.pit.roster.max_shooters = 0
+	var h: Fighter = squad.spawn_member(arena, Vector2(-4, 0), &"patrol_cop")
+	arena.step(0)
+	var mind: SquadMind = squad.minds[h.id]
+	mind.agent.arch.cover_bias = 0.5
+	var covered: int = 0
+	for slot: int in range(1, 9):
+		var draws: Array[int] = []
+		for offset: int in [0, SquadMind.PLAN_TICKS - 1]:
+			squad.pit.tick = slot * SquadMind.PLAN_TICKS - h.id + offset
+			var before: int = arena.guard_map.cover_searches
+			mind.cover_ceiling = before + 1
+			mind._plan(squad.pit, arena.guard_map)
+			draws.append(arena.guard_map.cover_searches - before)
+		assert_eq(draws[0], draws[1], "retrying in a slot keeps the cover choice")
+		covered += draws[0]
+	assert_between(covered, 1, 7)
+
+
+func test_melee_token_respects_cooldown_then_hits_at_reach_and_arc_boundaries() -> void:
+	var arena: CombatArena = _arena()
+	var h: Fighter = arena.squad_ai.spawn_member(arena, Vector2.ZERO, &"riot_cop")
+	arena.step(0)
+	var mind: SquadMind = arena.squad_ai.minds[h.id]
+	h.pos = Vector2(5, 0)
+	arena.rivet.radius_m = 0.5
+	mind.agent.arch.weapon.reach_m = 1.5
+	arena.rivet.pos = h.pos + Vector2(0.5, sqrt(0.75))
+	mind.agent.sees = true
+	mind.agent.token = true
+	mind.agent.cooldown = 2
+	mind.swing(h, arena, arena.guard_map)
+	assert_eq(h.swing_left, 0, "one cooldown tick remains")
+	mind.swing(h, arena, arena.guard_map)
+	assert_eq(h.swing_left, mind.agent.arch.telegraph_ticks)
+	arena.rivet.pos = h.pos + Vector2.RIGHT * 2.0
+	for tick: int in mind.agent.arch.telegraph_ticks:
+		mind.swing(h, arena, arena.guard_map)
+	assert_almost_eq(arena.rivet.hp, arena.rivet.max_hp - mind.agent.arch.production_damage, 0.001)
