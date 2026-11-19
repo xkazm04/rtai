@@ -1,0 +1,32 @@
+﻿Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] arena: city block: spawn at (529.0, 509.0) is in a building, dropped
+[INFO] arena: city block: spawn at (506.0, 545.0) is in a building, dropped
+[INFO] arena: city block: spawn at (506.0, 551.0) is in a building, dropped
+[INFO] arena: city block: spawn at (488.0, 553.0) is in a building, dropped
+[INFO] arena: city block: spawn at (498.0, 553.0) is in a building, dropped
+[INFO] arena: powers pad: 4 cars parked
+[INFO] arena: arena open: 20 stations
+[INFO] quest1: street filled in 42 chunk passes
+[INFO] characters: prewarmed 41 rigs in 63.6 ms
+[INFO] fx: warmed 61 weapon fx cells
+[INFO] arena: cast rigs: true
+[INFO] characters: prewarmed 41 rigs in 8.0 ms
+[INFO] react: death_melee on 3000, frame 512
+[INFO] react: death_melee on 3001, frame 657
+[INFO] react: death_melee on 3002, frame 762
+[INFO] arena: frame C:\Users\kazda\kiro\gtai-wt\n19-anim\build\shadowtri\after.png at tick 900 (OK)
+[INFO] view: occlusion: 127 body-frames hidden over 928 frames, frames 659-921
+[INFO] tri_observer: rings=47064 empty=0 figures=16282 empty=0
+[INFO] city: occlusion: 0 body-frames hidden over 928 frames; crowd 0 patches, 30 us/frame
+[INFO] arena: react: 3 wounds (0 on a shield), 3 deaths, 0 ducks
+[INFO] arena: crowd: 0 cowers (0 at a death), 0 trips, 0 deaths
+WARNING: 1 RID of type "CanvasItem" was leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2733)
+WARNING: 729 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 117 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+ERROR: Pages in use exist at exit in PagedAllocator: N12VariantPools11BucketSmallE
+   at: ~PagedAllocator (./core/templates/paged_allocator.h:170)

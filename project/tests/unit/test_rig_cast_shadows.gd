@@ -106,3 +106,24 @@ func test_a_dying_card_keeps_its_shadow_until_it_lies() -> void:
 	assert_false(RigCastShadows.stands_dying(fall), "the lying row: the body's own")
 	var walk: CutRig = _wounded_card_cop("res://x/cop_patrol_armed_walk.png")
 	assert_false(RigCastShadows.stands_dying(walk), "not a dying card")
+
+
+class CityShadowProbe:
+	extends RigCastShadows
+
+	var rings: Array[PackedVector2Array] = []
+
+	func _draw() -> void:
+		rings.clear()
+		_contact(Vector2(16961.630859375, 16930.5390625), 21.0392377138649)
+
+	func _fill(points: PackedVector2Array, _ink: Color) -> void:
+		rings.append(points)
+
+
+func test_city_contact_draws_three_complete_rings_at_tick_634() -> void:
+	var probe: CityShadowProbe = add_child_autofree(CityShadowProbe.new())
+	await wait_process_frames(2)
+	assert_eq(probe.rings.size(), 3)
+	for ring: PackedVector2Array in probe.rings:
+		assert_eq(Geometry2D.triangulate_polygon(ring).size(), 54, "18 triangles per ring")
