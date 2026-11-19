@@ -77,3 +77,7 @@ NEXT: (session 5) wait for left-template (lock logs/guns/astra.lock; if a killed
 - 03:36 DECISION mirror-based cells are judged against their own hand-made source facing (SW<-SE, W<-E, NW<-NE), E-rest delta published as info (Astra's recommendation; brief 06c tells it to write the decisions.md line).
 - 03:36 ASTRA RUNNING left-continue since 03:36 (brief 06c, resume, WMI cmd pid 53772, node 30828; out evidence/briefs/06c-left-continue.out.txt, else logs/guns/astra-12-left-continue.last.txt). Commits plasma, then gatling, flamethrower, gloria, rebuild rocket + mini_nuke _left.
 NEXT: (session 5) wait for left-continue (lock logs/guns/astra.lock; check pid 30828). LOOK at each weapon's <gun>_p55/p70_left_check.png in gtai-masters/n19/guns/<gun>/ and the centred turn clip; rocket/mini_nuke left now mirror-based (tube on the other shoulder must be corrected, not left mirrored). Then launch 07 (amended with the template method at its end), then 09 (drop its item 2: f21f56f91 already centred the turn framing; keep 1 and 3). Holes 18 -> 16 after plasma. Freeze 07:30; REPORT 07:40 with `node tools/gate/run.mjs --rev=HEAD` (+ `--reels` once after freeze), `node tools/evidence/cites.mjs REPORT.md`. Calls: rifle rack slot (3 holes, widens hub wall 1 m); walk/run armed grids missing for 12 weapons.
+
+## Session 5 (03:37 - )
+
+- 03:38 Read journal. left-continue alive (node pid 30828, log logs/guns/astra-12-left-continue.jsonl growing); plasma_rifle left PNGs still uncommitted in the tree. Waiting.
