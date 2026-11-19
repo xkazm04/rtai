@@ -35,24 +35,33 @@ func _init(p_tex: Texture2D, p_cols: int, p_left: Texture2D = null, p_left_cols:
 static func of(path: String, p_cols: int, p_left_cols: int = -1) -> GhostSheet:
 	if not ResourceLoader.exists(path):
 		return null
+	var main: Texture2D = load(path) as Texture2D
+	if main == null:
+		return null
 	var lp: String = path.get_basename() + "_left.png"
-	var lt: Texture2D = load(lp) as Texture2D if ResourceLoader.exists(lp) else null
-	return GhostSheet.new(
-		load(path) as Texture2D, p_cols, lt, p_cols if p_left_cols < 0 else p_left_cols
-	)
+	var lt: Texture2D = null
+	if ResourceLoader.exists(lp):
+		lt = load(lp) as Texture2D
+		if lt == null:
+			Log.warn("ghost_sheet", "could not read %s, mirroring right-facing cells" % lp)
+	return GhostSheet.new(main, p_cols, lt, p_cols if p_left_cols < 0 else p_left_cols)
 
 
 ## The two measured profiles share timing and each has its own pad drawings.
-static func walk_of(path: String, steps: PackedFloat32Array) -> GhostSheet:
+static func walk_of(
+	path: String, steps: PackedFloat32Array, standing_only: bool = false
+) -> GhostSheet:
 	var sheet: GhostSheet = of(path, GhostStride.cols_of(steps))
-	if sheet != null and steps.size() == 16 and path.ends_with("/p70/tonnage_walk8.png"):
+	if sheet == null or standing_only:
+		return sheet
+	if steps.size() == 16 and path.ends_with("/p70/tonnage_walk8.png"):
 		sheet._mid_windows = GhostStride.tonnage_windows(steps)
 		sheet._profile_mid = of(path.get_basename() + "_mid.png", sheet._mid_windows.size())
 		sheet._load_detail(path, steps, [1, 3, 5, 7], ["_diag"], GhostStride.DIAGONAL_DIVISIONS)
 		sheet._load_detail(
 			path, steps, [2, 6], ["_fill_a", "_fill_b"], GhostStride.DIAGONAL_DIVISIONS
 		)
-	elif sheet != null and steps.size() == 8 and path.ends_with("/p55/tonnage_walk8.png"):
+	elif steps.size() == 8 and path.ends_with("/p55/tonnage_walk8.png"):
 		sheet._load_detail(path, steps, [0, 4], ["_detail"], GhostStride.PROFILE55_DIVISIONS)
 		sheet._load_detail(
 			path, steps, [1, 2, 3, 5, 6, 7], ["_fill_a", "_fill_b"], GhostStride.OTHER55_DIVISIONS
@@ -100,6 +109,18 @@ func make_sprite() -> Sprite2D:
 	show(spr, 2, GhostDrawn.STAND_COL)
 	spr.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	GhostSoulLine.attach(spr)
+	return spr
+
+
+## Keep the live cell's name stable when the view or look changes in the middle of a frame.
+static func replace_sprite(host: Node2D, old: Sprite2D, sheet: GhostSheet) -> Sprite2D:
+	if old != null:
+		old.get_parent().remove_child(old)
+		old.queue_free()
+	if sheet == null:
+		return null
+	var spr: Sprite2D = sheet.make_sprite()
+	host.add_child(spr)
 	return spr
 
 
