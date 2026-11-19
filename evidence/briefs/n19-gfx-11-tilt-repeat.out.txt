@@ -1,0 +1,18 @@
+**The tilt-70 frame now repeats pixel for pixel.** Before the fix, the three 32 px/m pairwise comparisons differed by **33,461 / 33,461 / 0 pixels**. Afterward, all three pairs had empty diff boxes at both 32 and 64 px/m. The top control also matched exactly.
+
+- `0dc71557a` passes the sim slot plus one in the baked body’s `custom.y` in `render.cpp` and `sim_render.gd`. Both writers passed the slot tests, all 16 look frames stayed pixel-identical, and mutation scores were **3/3 GDScript** and **4/4 native**.
+- `030352b1d` fixes the cause in `chunk_view.gd`. The east container and warehouse occupied different quadrants in the same z band. Reversing only their canvas draw order reproduced the overlap. The fix assigns an explicit world-quadrant order on allocation and reuse. Mutation score **11/12**. The survivor preserves draw order.
+
+All three replacement sheets were visually verified. Only the bollards and their shadows differ. The labels and `frames.json` order were preserved.
+
+| Sheet | Diff bbox | Changed pixels |
+|---|---|---:|
+| [Tilt 70, 32 px/m](C:/Users/kazda/kiro/gtai-masters/n19/gfx/gen/apron_edge_before_tilt70_32ppm_t150.png) | `(185, 328, 1262, 361)` | 4,161 |
+| [Tilt 70, 64 px/m](C:/Users/kazda/kiro/gtai-masters/n19/gfx/gen/apron_edge_before_tilt70_64ppm_t150.png) | `(306, 257, 1280, 320)` | 10,278 |
+| [Top, 64 px/m](C:/Users/kazda/kiro/gtai-masters/n19/gfx/gen/apron_edge_before_top_64ppm_t150.png) | `(306, 274, 1280, 314)` | 6,340 |
+
+The snapshot passed all 19 lint checks, 2,976 unit tests with two skips, all 55 scenarios, and exact parity over 1,200 steps. The bake matched its golden. All requested parts are complete. [Full report](C:/Users/kazda/kiro/gtai-masters/n19/gfx/tilt-11-REPORT.md)
+
+`gate: PASS; C:\Users\kazda\kiro\gtai-wt\n19-gfx\build\gate\030352b1d48b\gate.json`
+
+[astra: 2234s, exit 0]

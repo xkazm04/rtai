@@ -43,11 +43,16 @@ Evidence root: `C:/Users/kazda/kiro/gtai-masters/n19/gfx/` (written M below). Ga
 - 3C: merge n19-ai's `prop_lying.gd` fix; re-check seed 5 tick 900 tilt 70 on the merged revision.
 - Native rebuilt (render.cpp row_of + crowd contact): every merge must rebuild the DLLs (debug + release) and `--import`.
 - Out-of-lane call site: `project/boot/city_characters.gd:60` (one line, after the crowd bake).
-- TODO
+- `030352b1d` (tilted quadrant draw order) touches `project/features/city/view/chunk_view.gd` only: lifted views get a world-quadrant `canvas_item_set_draw_index`; the top view is untouched, so no top golden moves.
+- anim's `c07cab306` closed our triangulation NEED (`rig_cast_shadows.gd`); nothing to do here.
+- Dev-only probe `project/dev/bench/crowd_contact_cost.gd` (`3a69fe5a0`) declares its own `KNOWN_FLAGS` (no `launch_args.gd` line) and raises the debt baseline by its dev lines (reason recorded).
 
 ## Next steps
 
-TODO
+1. Merge order for gfx: after anim, then apply anim NEED part 2 (the noir crowd include) and re-render the five shared look goldens on the merged revision after the DLL rebuild.
+2. Re-run the heat-3 bench and the rig bench on a quiet machine (no other lanes, no other project's worktrees) to drop CONTENDED; every number tonight carries it.
+3. Draw art for the docks loading apron (paint, kerb line) so the 3 m stop zone reads as a place, not only a bollard row.
+4. The baked crowd still draws the hat-man smaller with a flat-cut crown at the 16-rig switch on n19-gfx alone; anim's slot-scaled cell plus our slot write fix it only together (check on the merged tree).
 
 ## Astra ledger
 

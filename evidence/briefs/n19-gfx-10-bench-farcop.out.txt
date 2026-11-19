@@ -1,0 +1,18 @@
+**A. Heat 3 passed under contention.** CPU p99 was **6.399 ms**, 1% low was **127 fps**, and worst swap was **10.447 ms**. All 12 scenarios finished with zero chunk failures. The shared lock was taken at **01:43:03 UTC** and freed at **02:16:54 UTC**.
+
+All four rig runs exceeded the 1 ms p99 limit. Each cell shows **p50 / p99 in ms, before → after**.
+
+| Pair | 50 people | 200 people |
+|---|---|---|
+| 1 | 0.801 / 2.176 → 0.815 / 2.191 | 0.758 / 2.455 → 0.896 / 2.214 |
+| 2 | 0.761 / 2.352 → 0.843 / 1.830 | 0.799 / 2.563 → 0.843 / 1.770 |
+
+The heat scenario launch counts were `6, 11, 10, 8` / `9, 16, 12, 13` / `16, 13, 13, 11`. The rig launch counts were `12, 15, 12, 9` in execution order. Every measurement was **CONTENDED**, so these pairs cannot establish a quiet-machine cost. The full verdict and per-run process paths are in the [report](C:/Users/kazda/kiro/gtai-masters/n19/gfx/bench-10-REPORT.md).
+
+**B. Far cops.** The 15-second clip follows officer 62 at ranks 28–54, with 5–10 far cops in frame. I inspected decoded ticks **255, 702, and 1152**. The ring stays on the same officer as civilian row 7 changes to riot row 6. The clip is second in the eight-entry index. The historical frame directories remain inputs to the readback verifier. [Clip](C:/Users/kazda/kiro/gtai-masters/n19/gfx/farcop/item2-farcop-tilt70-32ppm.mp4) · [Index](C:/Users/kazda/kiro/gtai-masters/n19/gfx/farcop/frames.json)
+
+**C. Contact.** I replaced the clip and put it first in the index. Seed-5 walker **14** reaches rank 16 at tick **152**, rank 17 at **250**, and releases its rig at **252**. On clear light paving, the 64 px/m inset shows the old shadow fade while the HEAD ellipse holds beneath the shoes. [Clip](C:/Users/kazda/kiro/gtai-masters/n19/gfx/contact/item3a-contact-tilt70-32ppm.mp4) · [Index](C:/Users/kazda/kiro/gtai-masters/n19/gfx/contact/frames.json)
+
+Both temporary worktrees were removed and pruned. No product change or commit was needed.
+
+[astra: 3506s, exit 0]
