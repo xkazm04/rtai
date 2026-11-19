@@ -32,9 +32,12 @@ var errors: Array[String] = []
 
 
 static func shipped(p_base: Vector2 = Vector2.ZERO) -> ArenaPlan:
+	return from_table(DataTable.open(TABLE, SCHEMA), p_base)
+
+
+static func from_table(t: DataTable, p_base: Vector2 = Vector2.ZERO) -> ArenaPlan:
 	var p: ArenaPlan = ArenaPlan.new()
 	p.base = p_base
-	var t: DataTable = DataTable.open(TABLE, SCHEMA)
 	p.rivet_start = p_base + t.vec(t.raw, "rivet_start")
 	p.zoom_ppm.clear()
 	for z: Variant in t.array(t.raw, "zoom_ppm"):

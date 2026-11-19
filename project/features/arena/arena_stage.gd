@@ -62,14 +62,17 @@ func setup(ctx: WorldContext) -> void:
 		var brain: String = _options.text("--enemy-brain", SquadChoice.DEFAULT_BRAIN)
 		if brain in ["squad", "mixed"]:
 			arena.squad_ai = ArenaSquad.new(arena.guard_map)
+			var roster: EnemyRoster = arena.squad_ai.pit.roster
 			pit.mixed = brain == "mixed"
 			var rules: Dictionary = plan.pit
 			if cells != null and not pit.mixed:
 				rules = rules.merged(plan.city_squad, true)
+				if rules.has("contractor_speed_mps"):
+					roster.archetype(&"contractor").speed_mps = rules["contractor_speed_mps"]
 			var mix: Array = rules.get("squad_mix_full" if pit.mixed else "squad_mix", [])
 			pit.squad_mix.assign(mix)
-			var slots: float = rules.get("max_shooters", arena.squad_ai.pit.roster.max_shooters)
-			arena.squad_ai.pit.roster.max_shooters = roundi(slots)
+			var slots: float = rules.get("max_shooters", roster.max_shooters)
+			roster.max_shooters = roundi(slots)
 	arena.rivet.weapon = WEAPON
 	var id: int = 1000
 	for s: ArenaStation in stations.stations:

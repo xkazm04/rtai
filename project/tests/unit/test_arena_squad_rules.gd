@@ -16,11 +16,16 @@ func _stage(overrides: Dictionary, city: bool, brain: String = "squad") -> Arena
 	return stage
 
 
-func test_shipped_plan_reads_the_optional_city_squad() -> void:
+func test_plan_loads_tables_with_and_without_the_city_squad_key() -> void:
 	var t: DataTable = DataTable.open(ArenaPlan.TABLE, ArenaPlan.SCHEMA)
 	var city: Dictionary = t.object(t.raw, "city")
-	var expected: Dictionary = city.get("squad", {})
-	assert_eq(ArenaPlan.shipped().city_squad, expected)
+	var override: Dictionary = {"max_shooters": 4}
+	city["squad"] = override
+	assert_eq(ArenaPlan.from_table(t).city_squad, override)
+	assert_true(city.erase("squad"))
+	var legacy: ArenaPlan = ArenaPlan.from_table(t)
+	assert_eq(legacy.city_squad, {})
+	assert_eq(legacy.errors.size(), 0)
 
 
 func test_city_squad_inherits_each_omitted_field() -> void:
@@ -44,3 +49,17 @@ func test_pit_guard_and_mixed_keep_their_own_rules() -> void:
 	assert_eq(mixed.arena.squad_ai.pit.roster.max_shooters, 3)
 	assert_eq(mixed.pit.squad_mix, [&"robot_gunner", &"swat"])
 	assert_null(_stage(overrides, true, "guard").arena.squad_ai)
+
+
+func test_only_the_city_squad_contractor_gets_the_local_speed() -> void:
+	var shared: EnemyRoster = EnemyRoster.shipped(EnemyRoster.TABLE, true)
+	var speed: float = shared.archetype(&"contractor").speed_mps
+	var overrides: Dictionary = {"contractor_speed_mps": speed + 1.0}
+	var city: ArenaStage = _stage(overrides, true)
+	var roster: EnemyRoster = city.arena.squad_ai.pit.roster
+	assert_eq(roster.archetype(&"contractor").speed_mps, speed + 1.0)
+	assert_eq(roster.archetype(&"swat").speed_mps, shared.archetype(&"swat").speed_mps)
+	for other: ArenaStage in [
+		_stage({}, true), _stage(overrides, false), _stage(overrides, true, "mixed")
+	]:
+		assert_eq(other.arena.squad_ai.pit.roster.archetype(&"contractor").speed_mps, speed)

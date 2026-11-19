@@ -82,6 +82,12 @@
           "additionalProperties": false,
           "description": "Overrides for the squad brain on the city block. Omitted fields inherit the pit settings.",
           "properties": {
+            "contractor_speed_mps": {
+              "description": "Movement speed in metres per second for contractors in this city's squad. Defaults to the contractor archetype's speed_mps.",
+              "maximum": 10,
+              "minimum": 0.5,
+              "type": "number"
+            },
             "max_shooters": {
               "$ref": "#/$defs/max_shooters"
             },
