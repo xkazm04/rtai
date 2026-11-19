@@ -35,13 +35,16 @@ func test_all_legacy_headings_and_reaches_survive_an_independent_cover_press() -
 
 
 func test_flag_precedence_and_off_mode_live_recording() -> void:
+	var table: DataTable = DataTable.open(PlayerMotion.TABLE, PlayerMotion.SCHEMA)
+	var shipped: bool = table.object(table.raw, "cover")["enabled"]
 	for flags: PackedStringArray in [
 		PackedStringArray(),
 		PackedStringArray(["--cover"]),
+		PackedStringArray(["--no-cover"]),
 		PackedStringArray(["--cover", "--no-cover"])
 	]:
 		LaunchArgs.parse(flags)
-		var on: bool = flags.size() == 1
+		var on: bool = (shipped or flags.has("--cover")) and not flags.has("--no-cover")
 		var actions: PlayerActions = PlayerActions.shipped()
 		actions.install()
 		var pilot: StagePilot = StagePilot.new(actions)

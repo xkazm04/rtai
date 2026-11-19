@@ -16,6 +16,7 @@ func before_each() -> void:
 
 
 func test_disabled_script_matches_pre_cover_stage_bytes() -> void:
+	stage.pilot.motion.cover.enabled = false
 	var out: StreamPeerBuffer = StreamPeerBuffer.new()
 	for i: int in 70:
 		var heading: Vector2 = Vector2.RIGHT.rotated(TAU * (i + 1) / 256.0)

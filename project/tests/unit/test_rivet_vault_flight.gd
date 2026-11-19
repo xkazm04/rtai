@@ -124,13 +124,13 @@ func _assert_interrupted() -> void:
 	assert_eq(vault.lift(), 0.0)
 
 
-func test_shipped_default_and_table_disable_the_vault() -> void:
+func test_vault_uses_the_configured_default() -> void:
 	var table: DataTable = DataTable.open(PlayerMotion.TABLE, PlayerMotion.SCHEMA)
 	var default_enabled: bool = table.object(table.raw, "vault")["enabled"]
-	assert_false(default_enabled)
-	assert_false(PlayerMotion.shipped().vault.enabled)
-	table.raw["vault"]["enabled"] = true
-	assert_true(PlayerMotion.from_table(table).vault.enabled)
+	assert_eq(PlayerMotion.shipped().vault.enabled, default_enabled)
+	for enabled: bool in [false, true]:
+		table.raw["vault"]["enabled"] = enabled
+		assert_eq(PlayerMotion.from_table(table).vault.enabled, enabled)
 
 
 func test_intercept_requires_a_fresh_prepare() -> void:
