@@ -87,7 +87,8 @@ def stance_drift(pitch, turn, weights, divisions=(), atlas="diag"):
     suffix = ("_left" if left else "") + ".png"
     row, rows = ROW[turn], 3 if left else 5
     base = row_contacts(grid / ("tonnage_walk8" + suffix), len(weights), row, rows)
-    extra = row_contacts(grid / ("tonnage_walk8_" + atlas + suffix),
+    extra_path = atlas if isinstance(atlas, Path) else grid / ("tonnage_walk8_" + atlas + suffix)
+    extra = row_contacts(extra_path,
                          sum(divisions) - len(weights), row, rows) if divisions else []
     art, dwell = pose_dwells(np.array(weights), base, divisions, extra)
     angle = np.deg2rad(turn)
@@ -113,6 +114,7 @@ if __name__ == "__main__":
     parser.add_argument("--turn", type=int, choices=ROW, required=True)
     parser.add_argument("--divisions", help="comma-separated interval counts for the extra atlas")
     parser.add_argument("--atlas", default="diag")
+    parser.add_argument("--atlas-file", type=Path, help="captured comparison atlas for this facing")
     args = parser.parse_args()
     spans = film_holds(args.prefix)
     for key, a, b, ride in spans:
@@ -120,6 +122,6 @@ if __name__ == "__main__":
     rides = [span[3] for span in spans[:-1]]
     divisions = list(map(int, args.divisions.split(","))) if args.divisions else []
     error, n = stance_drift(args.pitch, args.turn, json.loads(args.steps.read_text())[args.pitch],
-                            divisions, args.atlas)
+                            divisions, args.atlas_file or args.atlas)
     print(f"{len(rides)} closed holds, worst {max(rides):.3f}, mean {np.mean(rides):.3f}, "
           f"open tail {spans[-1][3]:.3f}, drift {error:.3f} ({n} matched pairs)")

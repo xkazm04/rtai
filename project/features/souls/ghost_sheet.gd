@@ -20,8 +20,9 @@ var left: Texture2D = null
 var left_cols: int = 0
 var hitback: GhostSheet = null  # optional one-column alternate on an act grid
 var _profile_mid: GhostSheet = null
-var _diagonal: GhostSheet = null
-var _diagonal_windows: Array[Vector2] = []
+var _detail: GhostSheet = null
+var _detail_octants: Array[int] = []
+var _detail_windows: Array[Vector2] = []
 var _mid_windows: Array[Vector2] = []
 
 
@@ -49,11 +50,18 @@ static func walk_of(path: String, steps: PackedFloat32Array) -> GhostSheet:
 	if sheet != null and steps.size() == 16 and path.ends_with("/p70/tonnage_walk8.png"):
 		sheet._mid_windows = GhostStride.tonnage_windows(steps)
 		sheet._profile_mid = of(path.get_basename() + "_mid.png", sheet._mid_windows.size())
-		sheet._diagonal_windows = GhostStride.interval_windows(
-			steps, GhostStride.DIAGONAL_DIVISIONS
-		)
-		sheet._diagonal = of(path.get_basename() + "_diag.png", sheet._diagonal_windows.size())
+		sheet._load_detail(path, steps, [1, 3, 5, 7], "_diag")
+	elif sheet != null and steps.size() == 8 and path.ends_with("/p55/tonnage_walk8.png"):
+		sheet._load_detail(path, steps, [0, 4], "_detail")
 	return sheet
+
+
+func _load_detail(
+	path: String, steps: PackedFloat32Array, octants: Array[int], suffix: String
+) -> void:
+	_detail_windows = GhostStride.interval_windows(steps)
+	_detail = of(path.get_basename() + suffix + ".png", _detail_windows.size())
+	_detail_octants = octants
 
 
 ## An act grid (`key` "<name>/<pitch>"): its columns and its left sheet's, with Dent's jab columns
@@ -91,10 +99,14 @@ func show(spr: Sprite2D, oct: int, col: int, phase: float = -1.0) -> void:
 		if mid >= 0:
 			_profile_mid.show(spr, oct, mid)
 			return
-	if _diagonal != null and oct % 2 == 1 and (LEFT_ROW[oct] < 0 or _diagonal.drawn_left(oct, 0)):
+	if (
+		_detail != null
+		and _detail_octants.has(oct)
+		and (LEFT_ROW[oct] < 0 or _detail.drawn_left(oct, 0))
+	):
 		var mid: int = _interval_col(phase)
 		if mid >= 0:
-			_diagonal.show(spr, oct, mid)
+			_detail.show(spr, oct, mid)
 			return
 	var on_left: bool = drawn_left(oct, col)
 	var t: Texture2D = left if on_left else tex
@@ -127,9 +139,9 @@ func _profile_col(col: int, phase: float) -> int:
 func _interval_col(phase: float) -> int:
 	if phase < 0.0:
 		return -1
-	var at: float = phase + 1.0 if phase < _diagonal_windows[0].x else phase
-	for i: int in _diagonal_windows.size():
-		var w: Vector2 = _diagonal_windows[i]
+	var at: float = phase + 1.0 if phase < _detail_windows[0].x else phase
+	for i: int in _detail_windows.size():
+		var w: Vector2 = _detail_windows[i]
 		if at < w.x:
 			break
 		if at < w.y:

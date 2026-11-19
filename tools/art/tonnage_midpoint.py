@@ -8,38 +8,12 @@ import cv2
 import numpy as np
 from PIL import Image
 
-from tonnage_warp import articulated_pose, diagonal_pads, register_crown, warp_pads, warp_rows
+from tonnage_profile import profile_pose
+from tonnage_warp import articulated_pose, diagonal_pads, register_crown, warp_pads, midpoint, piston_ink
 
 
 VIEW = Path(__file__).resolve().parents[2] / "project/features/souls/art/view/p70"
 LANDING_RGBA = "4cd2ebc2bf4bcaa84cb5c10b17b06a6015b1dafe6753f487bbf49cd933b2a4de"
-
-
-def midpoint(landing):
-    pixels = np.asarray(landing)
-    y, x = np.indices(pixels.shape[:2])
-    # Cut the two near shafts at their visible boundaries below the belly.
-    # The two far pads stay behind them.
-    edge = np.interp(y, [185, 194, 203, 211], [49, 44, 37, 36])
-    trailing = (y >= 185) & (x < edge)
-    leading = (y >= 190) & (x >= 112)
-    body = pixels.copy()
-    body[trailing | leading] = 0
-    result = Image.fromarray(body)
-    rows = np.arange(landing.height + 1)
-    zero = np.zeros_like(rows)
-    # Stance centre C6 = 62, C7 = 17.5: put the landing pad 22.25 px
-    # forward and lift the approaching pad, keeping both pad widths.
-    swing = np.interp(rows, [190, 208], [0, 5])
-    stance = np.interp(rows, [185, 211], [0, -22.25])
-    for mask, dx, dy in [(leading, zero, swing), (trailing, stance, zero)]:
-        layer = pixels.copy()
-        layer[~mask] = 0
-        result.alpha_composite(warp_rows(Image.fromarray(layer), dx, dy))
-    # In the keys the housing moves 1.4 px right and 6 px down. Place it
-    # halfway through that dip. The displacement fades out along the shafts.
-    upper = np.interp(rows, [184, 214], [1, 0])
-    return warp_rows(result, 0.7 * upper, 3 * upper)
 
 
 # Zero-based outgoing step. Each pin tracks the same visible pad between keys
@@ -72,38 +46,6 @@ LEFT_PADS = {
     12: (12, [(32, 185, 22.5), (65, 180, 65), (83.5, 212, 136), (133, 195, 136)]),
 }
 STEPS = (5, *PADS)
-
-
-def piston_ink(key, neighbour, left):
-    """C11 has keyed-out metal. Borrow the corresponding C10 metal under its rim."""
-    if left:
-        # Only the rear socket is missing in the left C11. The intact
-        # near piston already has the left drawing's highlights.
-        under = Image.new("RGBA", key.size)
-        # Extend the shaft behind the belly without carrying C10's wider
-        # housing lip. Back the small keyed hole with adjacent socket metal.
-        under.paste(neighbour.crop((102, 179, 107, 186)), (99, 173))
-        under.alpha_composite(neighbour.crop((93, 173, 108, 181)), (96, 167))
-        under.alpha_composite(neighbour.crop((87, 181, 114, 198)), (90, 175))
-        under.alpha_composite(key)
-        return under
-    pixels = np.array(key)
-    _, labels = cv2.connectedComponents((pixels[..., 3] < 247).astype("uint8"))
-    holes = {labels[y, x] for x, y in [(102, 198), (110, 214), (109, 218)]}
-    yy, xx = np.indices(pixels.shape[:2], dtype=np.float32)
-    source_y = np.interp(yy, [186, 211, 216, 227], [194, 211, 216, 227])
-    here = np.interp(yy, [186, 211, 216], [97, 107, 110.5])
-    there = np.interp(source_y, [194, 211, 216], [126, 132, 134])
-    sample = cv2.remap(np.asarray(neighbour), (xx - here + there).astype("float32"),
-                       source_y.astype("float32"), cv2.INTER_LINEAR)
-    missing = np.isin(labels, list(holes)) & (xx > 85) & (yy > 184)
-    pixels[missing] = sample[missing]
-    # The socket behind the trailing foot is open in C11. Seat the back
-    # piston from C10 behind its existing rim, aligned at the belly.
-    under = Image.new("RGBA", key.size)
-    under.paste(neighbour.crop((49, 193, 78, 213)), (46, 186))
-    under.alpha_composite(Image.fromarray(pixels))
-    return under
 
 
 def between(key, neighbour, pins, split_stance=False):
@@ -170,25 +112,61 @@ def pack(steps, output, left=False):
     atlas.save(output or VIEW / f"tonnage_walk8_mid{suffix}.png")
 
 
+# P55 profile soles in each neighbouring pair, (source x,y, destination x,y).
+# At C4 and C7 the adjacent key loads another piston. Follow both physical
+# soles during the exchange, including the one rising behind the housing.
+PROFILE55_PADS = (
+    (
+        [(35, 208, 36, 210), (100, 201, 126, 199), (139.5, 225, 93, 225)],
+        [(36, 210, 33, 209), (93, 225, 80.5, 225), (126, 199, 138, 193)],
+        [(33, 209, 54, 196), (80.5, 225, 29, 225), (138, 193, 147, 213)],
+        [(29, 225, 46, 209), (99, 200, 100, 201), (147, 213, 138.5, 225)],
+        [(46, 209, 38, 209), (78, 203, 63, 207), (138.5, 225, 113.5, 225)],
+        [(38, 209, 32, 208), (113.5, 225, 82, 225), (124, 190, 134, 198)],
+        [(32, 208, 54, 197), (82, 225, 38, 210), (134, 198, 139, 225)],
+        [(38, 210, 35, 208), (99, 201, 100, 201), (139, 225, 139.5, 225)],
+    ), (
+        [(30, 211, 76, 211), (68, 186, 43, 183), (133, 194, 132, 196)],
+        [(43, 183, 31, 179), (76, 211, 90.5, 211), (132, 196, 137, 195)],
+        [(31, 179, 22, 200), (90.5, 211, 140.5, 211), (137, 195, 116, 187)],
+        [(22, 200, 32.5, 211), (69, 187, 70, 185), (140.5, 211, 124, 195)],
+        [(32.5, 211, 57.5, 211), (83, 188, 103, 194), (124, 195, 132, 196)],
+        [(40, 182, 35, 184), (57.5, 211, 88, 211), (132, 196, 137, 195)],
+        [(35, 184, 31.5, 211), (88, 211, 133, 196), (137, 195, 117, 184)],
+        [(31.5, 211, 30, 211), (71, 187, 68, 186), (133, 196, 133, 194)],
+    ),
+)
+
+
 # Number of equal intervals between adjacent key centres, including C16-C1.
 DIAGONAL_DIVISIONS = (4, 6, 4, 4, 4, 4, 2, 2, 4, 4, 4, 4, 4, 2, 2, 2)
 
 
-def pack_intervals(sheet, rows, selected, divisions, landmarks):
+def pack_intervals(sheet, rows, selected, divisions, profile55=False):
     w, h = sheet.width // len(divisions), sheet.height // rows
     atlas = Image.new("RGBA", ((w + 8) * (sum(divisions) - len(divisions)), sheet.height))
     for row in selected:
         col = 0
         keys = [sheet.crop((i*w, row*h, (i+1)*w, (row+1)*h)) for i in range(len(divisions))]
-        pins = [landmarks(key) for key in keys]
+        pins = [] if profile55 else [diagonal_pads(key) for key in keys]
         for i, count in enumerate(divisions):
             k = (i + 1) % len(keys)
+            if profile55:
+                matched = np.array(PROFILE55_PADS[rows == 3][i])
+                start, end = matched[:, :2], matched[:, 2:]
+            else:
+                start, end = pins[i], pins[k]
             for j in range(1, count):
                 # Use the nearer original to retain drawn detail on both sides of the handoff.
                 a, b = (i, k) if 2*j <= count else (k, i)
                 fraction = min(j, count - j) / count
-                pose = articulated_pose(keys[a], pins[a], pins[b],
-                                        register_crown(keys[a], keys[b]), fraction)
+                source, target = (start, end) if a == i else (end, start)
+                crown = register_crown(keys[a], keys[b])
+                if profile55 and i not in (1, 7):
+                    pose = profile_pose((keys[a], keys[b]), (source, target), crown, fraction,
+                                        (rows == 3, a, b))
+                else:
+                    pose = articulated_pose(keys[a], source, target, crown, fraction)
                 atlas.paste(pose, (col * (w + 8), row * h))
                 col += 1
     return atlas
@@ -198,18 +176,34 @@ def pack_diagonal(output, left):
     suffix = "_left" if left else ""
     sheet = Image.open(VIEW / f"tonnage_walk8{suffix}.png").convert("RGBA")
     rows, selected = (3, (0, 2)) if left else (5, (1, 3))
-    atlas = pack_intervals(sheet, rows, selected, DIAGONAL_DIVISIONS, diagonal_pads)
+    atlas = pack_intervals(sheet, rows, selected, DIAGONAL_DIVISIONS)
     atlas.save(output or VIEW / f"tonnage_walk8_diag{suffix}.png")
+
+
+PROFILE55_DIVISIONS = (4, 4, 4, 4, 4, 4, 2, 2)
+
+
+def pack_profile55(output, left):
+    suffix = "_left" if left else ""
+    view = VIEW.parent / "p55"
+    sheet = Image.open(view / f"tonnage_walk8{suffix}.png").convert("RGBA")
+    rows, selected = (3, (1,)) if left else (5, (2,))
+    atlas = pack_intervals(sheet, rows, selected, PROFILE55_DIVISIONS, profile55=True)
+    atlas.save(output or view / f"tonnage_walk8_detail{suffix}.png")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--steps", nargs="+", type=int, choices=STEPS, default=STEPS)
     parser.add_argument("--left", action="store_true")
-    parser.add_argument("--diagonal", action="store_true")
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--diagonal", action="store_true")
+    mode.add_argument("--p55", action="store_true")
     parser.add_argument("--out", type=Path)
     args = parser.parse_args()
-    if args.diagonal:
+    if args.p55:
+        pack_profile55(args.out, args.left)
+    elif args.diagonal:
         pack_diagonal(args.out, args.left)
     else:
         pack(args.steps, args.out, args.left)

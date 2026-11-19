@@ -168,3 +168,55 @@ The detailed table includes every original occurrence above 9 px. The last colum
 The four original walk PNGs and the two shipped profile-midpoint PNGs match all six LFS SHA-256 objects at f63f8f094. This covers 192 original cells and all 80 prior midpoint atlas slots, including the 20 painted cells. The packer reproduced both previous midpoint files and both new atlases byte for byte. New right SHA-256 `5f8b6248ba90dba584cb6968f7f2de978cbccb1137319587cb45da8716edcc00`, left `3a133efd291c27793a73852ebf8d3cb4d46fa257013876302ab52ea4e04ed115`.
 
 Repack with `python tools/art/tonnage_midpoint.py --diagonal` and repeat with `--left`. Use the leg-2 flags above, with turns 45, −45, 135 and −135 respectively. Run `python evidence/tonnage-hold/measure_rows.py <prefix> --pitch=p70 --turn=45 --steps=<raw>/steps.json` for the right-toward baseline. For the after film add `--divisions=4,6,4,4,4,4,2,2,4,4,4,4,4,2,2,2`. The engine logged its existing resources/pages-in-use messages at shutdown after recording tick 348. [Crops, per-tick sheet/phase logs, camera probes and timing tables](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/raw/it4-diag/>).
+
+## Brief 10, p55 profiles at 32 px/m
+
+Leg 2, turns 0 and 180, ticks 239–348 inclusive. Each consecutive run of the same logged texture and column is one hold. The prior left-profile pixel detector gave 18.364 px mean ride. The logged-key left baseline is 20.136 px. Both rows have 11 completed holds before and 37 after. The final partial holds ride 0 px before and 2.104/2.059 px after (right/left).
+
+| Facing | Worst ride before / after | Mean ride before / after | Mean stance drift before / after | Matched pairs before / after |
+|---|---:|---:|---:|---:|
+| Right profile | 31.707 / 7.131 | 20.239 / 4.408 | 7.222 / 2.763 | 6 / 28 |
+| Left profile | 31.587 / 7.105 | 20.136 / 4.378 | 6.853 / 2.655 | 6 / 28 |
+
+| Facing | Original key | Original ticks | Before ride | After key ticks | After key ride | Worst overlapping ride after |
+|---|---|---|---:|---|---:|---:|
+| Right profile | C4 | 239–244 | 11.288 | outside clip | — | 7.131 |
+| Right profile | C5 | 245–254 | 20.424 | 249–250 | 2.056 | 7.131 |
+| Right profile | C6 | 255–264 | 20.478 | 259–260 | 2.131 | 4.954 |
+| Right profile | C7 | 265–275 | 22.487 | 270–272 | 5.009 | 7.109 |
+| Right profile | C8 | 276–281 | 11.259 | 277–280 | 7.066 | 7.109 |
+| Right profile | C1 | 282–290 | 18.354 | 284–286 | 4.155 | 5.017 |
+| Right profile | C2 | 291–301 | 23.422 | 295–296 | 2.053 | 5.086 |
+| Right profile | C3 | 302–312 | 22.451 | 306–308 | 4.109 | 7.124 |
+| Right profile | C4 | 313–327 | 31.707 | 319–321 | 4.121 | 7.124 |
+| Right profile | C5 | 328–337 | 20.345 | 331–333 | 4.114 | 5.010 |
+| Right profile | C6 | 338–347 | 20.415 | 342–343 | 2.988 | 4.133 |
+| Left profile | C4 | 239–244 | 11.256 | outside clip | — | 7.066 |
+| Left profile | C5 | 245–254 | 20.413 | 249–250 | 2.101 | 7.066 |
+| Left profile | C6 | 255–264 | 20.422 | 259–260 | 2.048 | 5.035 |
+| Left profile | C7 | 265–275 | 22.478 | 270–272 | 4.998 | 7.105 |
+| Left profile | C8 | 276–281 | 11.252 | 277–280 | 7.105 | 7.105 |
+| Left profile | C1 | 282–290 | 18.378 | 284–286 | 4.144 | 5.013 |
+| Left profile | C2 | 291–301 | 23.256 | 295–296 | 2.091 | 4.963 |
+| Left profile | C3 | 302–312 | 22.428 | 306–308 | 4.148 | 7.097 |
+| Left profile | C4 | 313–327 | 31.587 | 319–321 | 4.150 | 7.097 |
+| Left profile | C5 | 328–337 | 19.555 | 331–333 | 3.239 | 5.081 |
+| Left profile | C6 | 338–347 | 20.468 | 342–343 | 2.912 | 4.255 |
+
+The table includes all original holds above 9 px. In both films C4 was already on screen at the first baseline tick. Its shorter after-window falls before tick 239, so the last column gives the largest ride observed during those six ticks. All retained original keys had equal or lower ride.
+
+| Filmed timing and art | Right worst / mean / drift (px) | Left worst / mean / drift (px) |
+|---|---:|---:|
+| 16 poses, original steps, cap off | 14.266 / 9.291 / 4.358 | 14.099 / 9.242 / 4.155 |
+| 16 poses, even steps, cap 1 | 11.258 / 9.428 / 4.692 | 11.336 / 9.385 / 4.488 |
+| 28 poses, original steps, cap off | 7.131 / 4.408 / 2.763 | 7.105 / 4.378 / 2.655 |
+
+Each profile retains its eight drawn keys and gets 20 in-betweens. The first six key-centre intervals take three quarter poses each. C7–C8 and C8–C1 take one halfway pose each. The original step table supplies dwell from both neighbours. The p55 cycle stays 223.25 cell px. Across the final cycle all 28 stance pairs matched on each side.
+
+At 64 px/m the near piston advances from C3 to C4 with a straight shaft seated in its housing. Both pads reach the wide C4–C5 support. At C7–C8 the left profile keeps the hose on its drawn side and the near and far feet stay distinct. Across all 40 drawings the housing has a single contour, the caster stays beneath it, and the rubber rims stay continuous. The raised in-between rims sit flatter than the tilted rims on some original keys. The script samples each facing's shipped piston, pad, caster and housing pixels.
+
+[Right triplets at 64 px/m](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it4-p55-right-midpoints-64ppm.png>) and [left triplets at 64 px/m](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it4-p55-left-midpoints-64ppm.png>).
+
+All eight prior walk, profile-midpoint and diagonal PNGs match their committed LFS SHA-256 objects. All 27 same-original-key crop pairs per p55 row were byte-identical (54 comparisons). Repacking all six supplemental PNGs reproduced their bytes. The new p55 right atlas SHA-256 is `ec0cf83ca908dda96d63972d14c7e230b4b9174144c2ab20f31742aa0d6f6033`; left is `44d8ec80d0db6246571e4e375d351998a18497fdc1f2c66f059cc04c81c420ce`.
+
+Repack with `python tools/art/tonnage_midpoint.py --p55` and repeat with `--left`. For each capture run `python evidence/tonnage-hold/measure_rows.py <prefix> --pitch=p55 --turn=0 --steps=<raw>/steps.json` (left turn 180). For the final film add `--atlas=detail --divisions=4,4,4,4,4,4,2,2`. For the 16-pose trials give eight divisions of 2, `--atlas-file=<raw>/common16-pr.png` (left `common16-pl.png`) and use `even-steps.json` for the even trial. Each capture reached tick 348 before the engine’s resources/pages-in-use shutdown diagnostics. [Raw p55 captures, trial atlases and timing tables](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/raw/it4-p55/>).

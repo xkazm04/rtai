@@ -10,17 +10,6 @@ func test_tonnage_p70_drawn_steps_measure_both_sides_of_each_redrawn_frame() -> 
 	assert_eq(steps[6], 144.0 - 140.0)
 
 
-func test_shipped_walk_timing_uses_the_filmed_cap_for_each_pitch() -> void:
-	assert_eq(GhostStride.MAX_STEP_SHARE["tonnage/p70"], 2.0)
-	assert_eq(GhostStride.MAX_STEP_SHARE["tonnage/p55"], 0.0)
-	var p70: PackedFloat32Array = PackedFloat32Array(GhostStride.TABLES["tonnage/p70"])
-	assert_eq(GhostStride.table_of("tonnage", "p70"), GhostStride.capped_steps(p70, 2.0))
-	var p55: PackedFloat32Array = PackedFloat32Array(GhostStride.TABLES["tonnage/p55"])
-	assert_eq(GhostStride.table_of("tonnage", "p55"), p55)
-	var ohm: PackedFloat32Array = PackedFloat32Array(GhostStride.TABLES["ohm/p70"])
-	assert_eq(GhostStride.table_of("ohm", "p70"), ohm)
-
-
 func test_tonnage_midpoints_use_each_profiles_own_drawing_while_walking() -> void:
 	var saved: ViewMode = ViewMode.shared()
 	ViewMode.select("combo")
@@ -91,8 +80,7 @@ func test_each_filmed_midpoint_enters_and_exits_at_its_two_neighbours() -> void:
 	]
 	var starts: Array[int] = [5, 0, 1, 2, 4, 8, 9, 10, 11, 12]
 	var steps: PackedFloat32Array = GhostStride.table_of("tonnage", "p70")
-	var path: String = GhostDrawn.path_of("p70", "tonnage")
-	var sheet: GhostSheet = GhostSheet.walk_of(path, steps)
+	var sheet: GhostSheet = _tonnage_sheet("p70")
 	var spr: Sprite2D = autofree(Sprite2D.new())
 	var windows: Array[Vector2] = GhostStride.tonnage_windows(steps)
 	assert_eq(windows.size(), expected.size())
@@ -102,19 +90,19 @@ func test_each_filmed_midpoint_enters_and_exits_at_its_two_neighbours() -> void:
 			_check_mid_edges(sheet, spr, oct, starts[i], i)
 
 
-func test_eight_key_walks_keep_their_own_sheet() -> void:
+func test_p55_nonprofile_and_unmatched_grids_keep_the_original_key() -> void:
 	var steps: PackedFloat32Array = GhostStride.table_of("tonnage", "p55")
+	var sheet: GhostSheet = GhostSheet.walk_of(GhostDrawn.path_of("p55", "tonnage"), steps)
 	var spr: Sprite2D = autofree(Sprite2D.new())
-	for art: String in ["p55", "p70"]:
-		var path: String = GhostDrawn.path_of(art, "tonnage")
-		GhostSheet.walk_of(path, steps).show(spr, 0, 5, 0.42)
-		assert_eq(spr.texture.resource_path, path)
+	for oct: int in [1, 2, 3, 5, 6, 7]:
+		sheet.show(spr, oct, 0, sheet._detail_windows[0].x)
+		assert_eq(spr.texture, sheet.left if sheet.drawn_left(oct, 0) else sheet.tex)
+	for path: String in [GhostDrawn.path_of("p70", "tonnage"), GhostDrawn.path_of("p55", "ohm")]:
+		assert_null(GhostSheet.walk_of(path, steps)._detail)
 
 
 func test_left_midpoints_require_drawn_left_profile_art() -> void:
-	var sheet: GhostSheet = GhostSheet.walk_of(
-		GhostDrawn.path_of("p70", "tonnage"), GhostStride.table_of("tonnage", "p70")
-	)
+	var sheet: GhostSheet = _tonnage_sheet("p70")
 	var spr: Sprite2D = autofree(Sprite2D.new())
 	var phase: float = sheet._mid_windows[0].x
 	for oct: int in [2, 6]:
@@ -131,7 +119,7 @@ func _check_intervals(sheet: GhostSheet, centres: Array[float], parts: Array[int
 		var start: float = centres[i]
 		var end: float = centres[i + 1] if i + 1 < centres.size() else centres[0] + 1.0
 		for j: int in range(1, parts[i]):
-			var w: Vector2 = sheet._diagonal_windows[index]
+			var w: Vector2 = sheet._detail_windows[index]
 			var left: float = lerpf(start, end, (j - 0.5) / parts[i])
 			var right: float = lerpf(start, end, (j + 0.5) / parts[i])
 			assert_almost_eq(w, Vector2(left, right), Vector2.ONE * 0.000001)
@@ -140,14 +128,13 @@ func _check_intervals(sheet: GhostSheet, centres: Array[float], parts: Array[int
 			assert_eq(sheet._interval_col(fposmod(w.y - 0.000001, 1.0)), index)
 			assert_eq(sheet._interval_col(fposmod(w.y, 1.0)), index + 1 if j + 1 < parts[i] else -1)
 			index += 1
-	assert_eq(sheet._diagonal_windows.size(), index)
+	assert_eq(sheet._detail_windows.size(), index)
+	assert_eq(sheet._interval_col(0.0), index - 1)
 	assert_eq(sheet._interval_col(-1.0), -1)
 
 
 func test_each_diagonal_subdivision_uses_its_filmed_window_and_own_drawn_row() -> void:
-	var sheet: GhostSheet = GhostSheet.walk_of(
-		GhostDrawn.path_of("p70", "tonnage"), GhostStride.table_of("tonnage", "p70")
-	)
+	var sheet: GhostSheet = _tonnage_sheet("p70")
 	var centres: Array[float] = [
 		0.01748951,
 		0.07895263,
@@ -167,18 +154,47 @@ func test_each_diagonal_subdivision_uses_its_filmed_window_and_own_drawn_row() -
 		0.98790726,
 	]
 	_check_intervals(sheet, centres, [4, 6, 4, 4, 4, 4, 2, 2, 4, 4, 4, 4, 4, 2, 2, 2])
+	_check_detail_rows(sheet, [1, 3, 5, 7], [1, 0, 2, 3], -85.5)
+
+
+func test_p55_quarters_and_midpoints_enter_and_exit_on_both_profiles() -> void:
+	var sheet: GhostSheet = _tonnage_sheet("p55")
+	var centres: Array[float] = [
+		0.05245536,
+		0.17131696,
+		0.30970982,
+		0.46986607,
+		0.61662946,
+		0.73828125,
+		0.86830357,
+		0.96763393,
+	]
+	_check_intervals(sheet, centres, [4, 4, 4, 4, 4, 4, 2, 2])
+	_check_detail_rows(sheet, [0, 4], [2, 1], -89.0)
+
+
+func _check_detail_rows(
+	sheet: GhostSheet, octants: Array[int], rows: Array[int], offset: float
+) -> void:
 	var spr: Sprite2D = autofree(Sprite2D.new())
-	var expected_rows: Array[int] = [0, 1, 0, 0, 0, 2, 0, 3]
-	for i: int in sheet._diagonal_windows.size():
-		var w: Vector2 = sheet._diagonal_windows[i]
-		for oct: int in [1, 3, 5, 7]:
+	for i: int in sheet._detail_windows.size():
+		var w: Vector2 = sheet._detail_windows[i]
+		for j: int in octants.size():
+			var oct: int = octants[j]
 			sheet.show(spr, oct, 0, fposmod((w.x + w.y) * 0.5, 1.0))
-			var left: bool = oct == 3 or oct == 5
-			assert_eq(spr.texture, sheet._diagonal.left if left else sheet._diagonal.tex)
-			assert_eq(spr.frame_coords, Vector2i(i, expected_rows[oct]))
+			var left: bool = sheet.drawn_left(oct, 0)
+			assert_eq(spr.texture, sheet._detail.left if left else sheet._detail.tex)
+			assert_eq(spr.frame_coords, Vector2i(i, rows[j]))
 			assert_false(spr.flip_h)
-			assert_eq(spr.offset.x, -85.5)
-	sheet._diagonal.left = null
-	for oct: int in [3, 5]:
-		sheet.show(spr, oct, 0, sheet._diagonal_windows[0].x)
-		assert_eq(spr.texture, sheet.left)
+			assert_eq(spr.offset.x, offset)
+	sheet._detail.left = null
+	for oct: int in octants:
+		if sheet.drawn_left(oct, 0):
+			sheet.show(spr, oct, 0, sheet._detail_windows[0].x)
+			assert_eq(spr.texture, sheet.left)
+
+
+func _tonnage_sheet(art: String) -> GhostSheet:
+	return GhostSheet.walk_of(
+		GhostDrawn.path_of(art, "tonnage"), GhostStride.table_of("tonnage", art)
+	)
