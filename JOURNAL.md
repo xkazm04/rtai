@@ -63,3 +63,4 @@ NEXT: (session 4) wait for left-scale (lock logs/guns/astra.lock). LOOK at re-sh
 ## Session 4 (02:11 - )
 
 - 02:13 Read journal. left-scale alive (node pid 47800 per astra.lock; jsonl shows it measuring p55/p70 left crops). No new action until it reports; briefs 06, 07 re-read and kept.
+- 02:20 Scouted: armed walk/run grids (`rivet_walk_eq_<w>.png`, `rivet_run8_eq_<w>.png`, RivetWalk) exist only for pistol, plasma_rifle, gatling, flamethrower, katana; every other weapon walks on the bobbing facing card. Not an audit column (owner's list), so the matrix's "0 holes" would overstate. Plan: after 07, add `walk`/`run` as an informational audit column (reported, not ratcheted) and name it in REPORT What does not; drawing 32+64 cells x 12 weapons x 2 pitches does not fit tonight.
