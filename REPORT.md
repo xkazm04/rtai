@@ -1,7 +1,7 @@
 # REPORT lane anim, n19 (2026-11-18 21:53 to 2026-11-19 08:00)
 
 - Branch `n19-anim`, cut from `int-n19` at `28302bd3c`. Director: Claude (Opus); builder: Astra (all product edits).
-- Gate (b63c755fa, 05:55-06:04): `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n19-anim\build\gate\b63c755fa635\gate.json` (lint 19/19 over 1618 files; unit 3005/0/2 skipped; scenarios 55; parity 1200 steps bit for bit, planted mutation caught; look goldens 11/11 + block 5/5; export-audit 740/0). Earlier PASS: c07ebf33e (`build/gate/c07ebf33e50b/gate.json`), f63f8f094 (`build/gate/f63f8f094768/gate.json`). Final `--reels` gate on b63c755fa started 07:31 after the freeze (detached; log `build/gate-logs/gate-b63c755fa-reels.out.txt`, result `build/gate/b63c755fa635/gate.json`); RESULT: see the line appended below the ledger.
+- Gate (b63c755fa, 05:55-06:04): `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n19-anim\build\gate\b63c755fa635\gate.json` (lint 19/19 over 1618 files; unit 3005/0/2 skipped; scenarios 55; parity 1200 steps bit for bit, planted mutation caught; look goldens 11/11 + block 5/5; export-audit 740/0). Earlier PASS: c07ebf33e (`build/gate/c07ebf33e50b/gate.json`), f63f8f094 (`build/gate/f63f8f094768/gate.json`). Final `--reels` gate on b63c755fa started 07:31 after the freeze (detached; log `build/gate-logs/gate-b63c755fa-reels.out.txt`, result `build/gate/b63c755fa635/gate.json`); At 07:39 its evidence step had passed (selftest, look goldens 11/11, export-audit 740/0; `build/gate/b63c755fa635/evidence.log`) and the reels step was still running (node PID 14589); its final verdict lands in that gate.json.
 - Frames: `C:/Users/kazda/kiro/gtai-masters/n19/anim/frames.json` (best first).
 
 ## What works
