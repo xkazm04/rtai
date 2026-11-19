@@ -12,18 +12,41 @@ func test_the_same_drop_keeps_its_angle() -> void:
 	assert_eq(GroundRifle.turn(Vector2(3.0, 9.0)), GroundRifle.turn(Vector2(3.0, 9.0)))
 
 
-func test_it_lies_beside_the_body_not_under_it() -> void:
+func test_the_original_radial_offset_is_available() -> void:
 	var at: Vector2 = Vector2(6.0, 2.0)
 	assert_almost_eq(GroundRifle.lies_at(at).distance_to(at), GroundRifle.BESIDE_M, 0.001)
 
 
-func test_it_lies_on_the_shooters_side_of_the_feet_not_under_the_legs() -> void:
+func test_the_original_shooter_offset_is_available() -> void:
 	# n11 it19: the body falls away from the shot, so the gun beside its feet lay under its legs.
 	GroundRifle.forget()
 	var at: Vector2 = Vector2(6.0, 2.0)
 	var p: Vector2 = GroundRifle.lies_at_from(at, Vector2(0.0, 2.0))
 	assert_lt(p.x - at.x, -0.3, "toward the shooter on the left, the body lies to the right")
 	GroundRifle.forget()
+
+
+func test_visible_rifle_edge_lands_half_a_metre_beside_the_lying_segment_from_each_side() -> void:
+	var at: Vector2 = Vector2(6.0, 2.0)
+	var gun: PackedVector2Array = [
+		Vector2(-0.53, -0.09), Vector2(0.52, -0.09), Vector2(0.52, 0.09), Vector2(-0.53, 0.09)
+	]
+	assert_true(GroundRifle.BODY_GAP)
+	for dir: Vector2 in [Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT, Vector2.UP]:
+		var body: PackedVector2Array = [at + dir, at + dir * 2.5]
+		var point: Vector2 = GroundRifle.beside(body, PackedVector2Array([Vector2.ZERO]), dir)
+		var nearest: Vector2 = Geometry2D.get_closest_point_to_segment(point, body[0], body[1])
+		assert_almost_eq(point.distance_to(nearest), 0.5, 0.001)
+		var lie: Vector2 = GroundRifle.beside(body, gun, dir)
+		var gap: float = INF
+		for i: int in gun.size():
+			var near: PackedVector2Array = Geometry2D.get_closest_points_between_segments(
+				body[0], body[1], lie + gun[i - 1], lie + gun[i]
+			)
+			gap = minf(gap, near[0].distance_to(near[1]))
+		assert_almost_eq(gap, 0.5, 0.001, "nearest rifle edge to the resting segment, %s" % dir)
+		assert_lt((lie - body[0]).dot(dir), 0.0, "on the shooter's side")
+		assert_gt(absf((lie - body[0]).cross(dir)), 0.4, "beside the body")
 
 
 func test_it_keeps_its_place_when_rivet_walks_round_it() -> void:

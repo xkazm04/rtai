@@ -66,3 +66,30 @@ func test_a_drop_lies_where_it_first_landed_when_his_rest_appears() -> void:
 	assert_ne(GroundDropShowcase.place(at, Vector2.RIGHT), first, "the rule now says past his feet")
 	assert_eq(GroundDropShowcase.lies_at(at, Vector2.RIGHT), first, "but the gun stays put")
 	StreetDeadRests.reset()
+
+
+func test_quest_rest_uses_the_settled_pose_of_the_actual_guard() -> void:
+	var was: ViewMode = ViewMode.shared()
+	ViewMode.select("combo")
+	var h: Fighter = Fighter.new()
+	h.id = 947
+	h.pos = Vector2(11.0, 32.0)
+	for facing: Vector2 in [Vector2.RIGHT, Vector2.LEFT, Vector2.UP, Vector2.DOWN]:
+		h.facing = facing
+		var shape: PackedVector2Array = GroundDropShowcase._quest(h)
+		var pelvis: Vector2 = StreetQuestDeadPlan.lying_m(
+			h, StreetQuestDeadPlan.SETTLED, Ink.PX_PER_M
+		)
+		assert_true(
+			Geometry2D.is_point_in_polygon(pelvis, shape), "the outline encloses his drawn pelvis"
+		)
+		var near: Vector2 = GroundRifle.beside(shape, PackedVector2Array([Vector2.ZERO]), -facing)
+		assert_false(Geometry2D.is_point_in_polygon(near, shape))
+		var gap: float = INF
+		for i: int in shape.size():
+			var edge: Vector2 = Geometry2D.get_closest_point_to_segment(
+				near, shape[i - 1], shape[i]
+			)
+			gap = minf(gap, near.distance_to(edge))
+		assert_almost_eq(gap, 0.5, 0.01)
+	ViewMode._shared = was

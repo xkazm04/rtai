@@ -1,20 +1,16 @@
 class_name GroundRifle
 extends RefCounted
-## n11: a dead guard's rifle on the ground (CombatArena.rifle_drops, a pickup), view only: an
-## inked side-view rifle mesh turned by where it lies, or (it14, DRAWN) the asset lane's rifle
-## drawn lying at 70 degrees in 8 headings (ground_rifle_70.png), y un-squashed for the tilt.
+## The dead guard's rifle on the ground, in projected metres for the current view.
 const DRAWN: bool = true
 const SHEET: String = "res://features/combat/weapons/art/ground_rifle_70.png"
 const HEADINGS: int = 8
-## The drawn gun's butt-to-muzzle px in the heading-0 cell (the sheet's one scale).
 const DRAWN_LEN_PX: float = 256.0
 
 const LENGTH_M: float = 1.05  # on the ground (m): a pickup reads larger than life
-## It lies this far to the side of where its owner fell (m): beside the body, not under the boots.
+## Previous drop-point offsets, selectable with BODY_GAP.
 const BESIDE_M: float = 0.55
-## it19: the body falls away from the shot and lies from its feet along that line, so a gun beside
-## the feet lay under the legs (every film). It lies TOWARD_M back toward the shooter (Rivet where
-## the drop was first drawn, remembered per drop) and SIDE_M to one side. AWAY false = BESIDE_M.
+const BODY_GAP: bool = true
+const GAP_M: float = 0.5
 const AWAY: bool = true
 const TOWARD_M: float = 0.5
 const SIDE_M: float = 0.25
@@ -51,6 +47,8 @@ const SIGHT: PackedVector2Array = [
 const SHINE: PackedVector2Array = [
 	Vector2(-0.24, -0.04), Vector2(0.09, -0.04), Vector2(0.09, -0.022), Vector2(-0.24, -0.022)
 ]
+const PIECES: Array[PackedVector2Array] = [STOCK, GRIP, BODY, MAG, GUARD, BARREL, SIGHT]
+const FILLS: PackedColorArray = [FURNITURE, FURNITURE, STEEL, STEEL, FURNITURE, STEEL, STEEL]
 const RIM_DIRS: int = 8
 
 static var _mesh: ArrayMesh = null
@@ -59,15 +57,15 @@ static var _away: Dictionary[Vector2, Vector2] = {}
 static var _seen: Dictionary[Vector2, int] = {}
 
 
-## Draws the rifle lying at `at` (m), unless it is too far from `focus` (m) to be seen or, at sim
-## tick `tick` (-1 = any), not landed yet.
 static func draw(ci: CanvasItem, at: Vector2, focus: Vector2, tick: int = -1) -> void:
 	if not visible_from(at, focus) or (tick >= 0 and not landed(at, tick)):
 		return
 	var lies: Vector2 = lies_at_from(at, focus)
 	var shot: Vector2 = _away.get(at, Vector2.RIGHT)
-	if GroundDropShowcase.draw(ci, at, shot, LENGTH_M):  # n17: the pickup's showcase drawing
+	if GroundDropShowcase.draw(ci, at, shot, LENGTH_M):
 		return
+	if BODY_GAP:
+		lies = GroundDropShowcase.lies_at(at, shot, ci)
 	if DRAWN and sheet() != null:
 		_draw_cell(ci, at, lies, ViewMode.shared().ground_k())
 		return
@@ -79,8 +77,7 @@ static func draw(ci: CanvasItem, at: Vector2, focus: Vector2, tick: int = -1) ->
 	ci.draw_set_transform_matrix(Transform2D.IDENTITY)
 
 
-## The drawn heading for a drop at `at` lying at `lies` (m), its shadow first; `gk` the view's
-## ground squash.
+## Draw the heading and its shadow, undoing the ground squash for the texture.
 static func _draw_cell(ci: CanvasItem, at: Vector2, lies: Vector2, gk: float) -> void:
 	var tex: Texture2D = sheet()
 	var cell: float = float(tex.get_height())
@@ -101,7 +98,6 @@ static func sheet() -> Texture2D:
 	return _sheet
 
 
-## The sheet's cell for a turn (rad, clockwise on screen from muzzle right): the nearest heading.
 static func heading(rad: float) -> int:
 	return posmod(roundi(fposmod(rad, TAU) / (TAU / HEADINGS)), HEADINGS)
 
@@ -143,9 +139,24 @@ static func landed(at: Vector2, tick: int) -> bool:
 static func forget() -> void:
 	_away.clear()
 	_seen.clear()
+	GroundDropShowcase._lies.clear()
 
 
-## How the gun lies (rad): from where it fell, so drops do not all point one way.
+## Points in projected metres: the two support points touch parallel lines perpendicular to
+## the separation. Their distance after translation is exactly the visible edge clearance.
+static func beside(body: PackedVector2Array, gun: PackedVector2Array, shot: Vector2) -> Vector2:
+	var side: Vector2 = (shot.orthogonal() - shot * 0.5).normalized()
+	return _edge(body, side) + side * GAP_M - _edge(gun, -side)
+
+
+static func _edge(points: PackedVector2Array, dir: Vector2) -> Vector2:
+	var best: Vector2 = points[0]
+	for pt: Vector2 in points:
+		if pt.dot(dir) > best.dot(dir):
+			best = pt
+	return best
+
+
 static func turn(at: Vector2) -> float:
 	return fposmod(at.x * 37.13 + at.y * 91.71, TAU)
 
@@ -156,23 +167,11 @@ static func mesh() -> ArrayMesh:
 		return _mesh
 	var pts: PackedVector2Array = PackedVector2Array()
 	var cols: PackedColorArray = PackedColorArray()
-	var pieces: Array[Array] = [
-		[STOCK, FURNITURE],
-		[GRIP, FURNITURE],
-		[BODY, STEEL],
-		[MAG, STEEL],
-		[GUARD, FURNITURE],
-		[BARREL, STEEL],
-		[SIGHT, STEEL]
-	]
-	for piece: Array in pieces:
-		var q: PackedVector2Array = piece[0]
+	for q: PackedVector2Array in PIECES:
 		for d: int in RIM_DIRS:
 			_quad(pts, cols, q, Vector2.from_angle(TAU * d / RIM_DIRS) * INK_PX, Ink.INK)
-	for piece: Array in pieces:
-		var q: PackedVector2Array = piece[0]
-		var tone: Color = piece[1]
-		_quad(pts, cols, q, Vector2.ZERO, tone)
+	for i: int in PIECES.size():
+		_quad(pts, cols, PIECES[i], Vector2.ZERO, FILLS[i])
 	_quad(pts, cols, SHINE, Vector2.ZERO, Ink.CREAM)
 	var arrays: Array = []
 	@warning_ignore("return_value_discarded")
