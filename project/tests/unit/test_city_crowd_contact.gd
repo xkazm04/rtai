@@ -1,6 +1,34 @@
 extends GutTest
 
 
+func test_shipped_tilt_uses_one_legacy_blob_per_person() -> void:
+	var saved: ViewMode = ViewMode.shared()
+	ViewMode.select("tilt70")
+	var writers: Array[CitySimBackend] = [CitySimRef.new()]
+	if CitySimNative.available():
+		writers.append(CitySimNative.new())
+	for sim: CitySimBackend in writers:
+		sim.init(5)
+		var crowd := CrowdLayers.new()
+		var layer: Node2D = autofree(Node2D.new())
+		crowd.attach(layer)
+		var shadow: MultiMeshInstance2D = crowd.nodes[SimConst.RL_PED_SHADOWS]
+		var blob: Texture2D = shadow.texture
+		var quad: Mesh = shadow.multimesh.mesh
+		for slot: int in 3:
+			var kind: int = SimConst.K_COP if slot == 0 else SimConst.K_PED
+			assert_eq(sim.spawn(PackedFloat64Array([kind, slot, 2, 1, 0, 0, 0, 1, 0, 0])), slot)
+		sim.set_rig_slots(PackedInt32Array([1]))
+		sim.strike(2, 1.0, 0.0, true)
+		CityCrowdContact.setup(crowd, sim)
+		sim.write_render(-10, -10, 10, 10)
+		assert_same(shadow.texture, blob)
+		assert_same(shadow.multimesh.mesh, quad)
+		assert_eq(layer.get_child_count(), SimConst.RL_COUNT, "no additional rig shadow pass")
+		assert_eq(sim.get_render_counts()[SimConst.RL_PED_SHADOWS], 3, sim.backend_name())
+	ViewMode._shared = saved
+
+
 func test_baked_rings_match_the_standing_rig_at_both_hip_heights() -> void:
 	var dir: Vector2 = ViewMode.of("tilt70").cast_dir()
 	var mesh: ArrayMesh = CityCrowdContact.mesh(dir)
