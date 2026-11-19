@@ -7,6 +7,7 @@ Walk contact lasts half a cycle. On run8 its fourth cell is flight and is exclud
 """
 
 import argparse
+import hashlib
 import json
 from itertools import groupby
 from pathlib import Path
@@ -123,12 +124,33 @@ def analyze(take):
     return dict(schema="gtai.foot-slide/1", view=info["view"], ppm=ppm, lanes=rows)
 
 
+def measure_strips(root):
+    """Read profile row 2 from the two shipped pitches. Distances stay in packed texture px."""
+    strips = {}
+    for pitch in ("p55", "p70"):
+        for name in ("rivet_walk8", "rivet_walk_eq_pistol", "rivet_run8", "rivet_run8_eq_pistol"):
+            path = root / pitch / (name + ".png")
+            cols = 4 if name == "rivet_walk_eq_pistol" else 8
+            run = "run8" in name
+            last = 2 if run else cols // 2 - 1
+            with Image.open(path) as image:
+                alpha = np.asarray(image.convert("RGBA"))[:, :, 3] >= 128
+            h, w = alpha.shape[0] // 8, alpha.shape[1] // cols
+            xs = [sole_x(alpha[2*h:3*h, c*w:(c+1)*w], run and c % 4 == 2) for c in range(cols)]
+            travel = [xs[c] - xs[c + last] for c in (0, cols // 2)]
+            strips[path.relative_to(root).as_posix()] = dict(
+                sha256=hashlib.sha256(path.read_bytes()).hexdigest(), cols=cols, advances=last,
+                sole_x=xs, travel_texels=travel, cycle_110_px=[d * cols / last / 1.5 for d in travel])
+    return dict(schema="gtai.stride-lengths/1", profile_row=2, strips=strips)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("take", type=Path)
+    parser.add_argument("--strips", action="store_true", help="measure packed strips under the given art root")
     parser.add_argument("--out", type=Path)
     args = parser.parse_args()
-    result = analyze(args.take)
+    result = measure_strips(args.take) if args.strips else analyze(args.take)
     if args.out:
         args.out.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     else:
