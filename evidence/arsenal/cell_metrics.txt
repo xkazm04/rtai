@@ -937,7 +937,7 @@ rocket_launcher p70 rivet_eq_rocket_launcher_diag_noflash 0 SE 116.1 146,102,74 
 rocket_launcher p70 rivet_eq_rocket_launcher_diag_noflash 1 NE 117.72 128,88,65 -12.12 9.86 0.5103 0.8 31.5 22.99 -3.22 HT None None None None None
 rocket_launcher p70 rivet_eq_rocket_launcher_diag_noflash 2 SW 116.91 152,110,81 -12.73 2.76 0.5208 0.8403 34.32 24.5 -1.23 H None None None None None
 rocket_launcher p70 rivet_eq_rocket_launcher_diag_noflash 3 NW 118.54 162,114,84 -11.52 5.1 0.5137 0.7603 31.92 23.23 -2.58 H None None None None None
-rocket_launcher p70 rivet_eq_rocket_launcher_left 0 SW 134.77 141,110,86 0.61 4.04 0.5361 0.6867 28.84 18.74 1.67 - SE 0.0 0.0 0.0 -
+rocket_launcher p70 rivet_eq_rocket_launcher_left 0 SW 134.77 141,110,86 0.61 4.04 0.5361 0.6867 28.84 18.75 1.67 - SE 0.0 0.0 0.0 -
 rocket_launcher p70 rivet_eq_rocket_launcher_left 1 W 133.96 151,113,86 0.0 0.0 0.5212 0.6121 29.46 18.62 -1.16 - E 0.0 -1.16 0.0 -
 rocket_launcher p70 rivet_eq_rocket_launcher_left 2 NW 133.96 129,100,79 0.0 7.83 0.5333 0.6727 28.98 18.45 1.14 - NE 0.0 1.14 0.0 -
 rocket_launcher p70 rivet_eq_rocket_launcher_left_fire 0 W-fire 112.85 133,102,78 -15.76 6.07 0.554 0.7698 30.46 18.8 5.06 HR E-fire 0.0 1.32 0.0 -
