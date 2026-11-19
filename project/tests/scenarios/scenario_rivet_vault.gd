@@ -4,6 +4,7 @@ extends Scenario
 
 const ATTEMPTS: int = 180
 const SEED: int = 1918
+const GUARDED_ATTEMPTS: int = 32
 
 
 class Trace:
@@ -40,11 +41,15 @@ func run(_tree: SceneTree) -> String:
 		if error != "":
 			return error
 	aimed_starts = started - broad
+	for i: int in GUARDED_ATTEMPTS:
+		var offset: float = 0.0 if i == 0 else rng.randf_range(-0.3, 0.3)
+		var error: String = VaultTrial.guarded_landing(Vector2.RIGHT * offset)
+		if error != "":
+			return error
 	return _counts()
 
 
 func _counts() -> String:
-	var impact: Vector3 = VaultTrial.tackle()
 	(
 		Log
 		. info(
@@ -55,15 +60,9 @@ func _counts() -> String:
 			)
 		)
 	)
-	Log.info(
-		"vault",
-		(
-			"peak %.3f m/s, contact %.3f m/s, guard displacement %.3f m"
-			% [impact.x, impact.y, impact.z]
-		)
-	)
-	if aimed_starts < 200 or impact.z <= 0.0:
-		return "expected 200 aimed starts and a guard tackle"
+	Log.info("vault", "%d guarded landings refused, guard displacement 0 m" % GUARDED_ATTEMPTS)
+	if aimed_starts < 200:
+		return "expected 200 aimed starts"
 	if airborne_ticks == 0 or started == 0 or started != landed or not city_starts.has("sedan"):
 		return "expected every started vault to land and a parked sedan crossing"
 	for kind: String in ["bollard", "bench", "planter", "fire_hydrant", "trash_can"]:

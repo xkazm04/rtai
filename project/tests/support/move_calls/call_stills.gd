@@ -1,6 +1,6 @@
 extends "res://dev/rivet_motion/cover_course_run.gd"
 ## Paired visual tests for the owner's Calls. Each arm changes just its named motion setting.
-## A real projectile supplies the cover measurement. The vault take shares the tackle scenario.
+## A real projectile supplies the cover measurement. The vault take shares the guarded landing.
 
 const KNOWN_FLAGS: PackedStringArray = ["--subject", "--value", "--view", "--ppm", "--out"]
 const PEEK_TICK: int = 162
@@ -73,7 +73,7 @@ func _vault_take(value: String) -> bool:
 		return false
 	ctx = World.build_context(Events, Data, 1918)
 	stage = VaultTrial.stage_for(false, ctx)
-	guard = VaultTrial.place_tackle(stage)
+	guard = VaultTrial.place_landing_guard(stage)
 	# The regular guard rig draws this fighter. Within engage range his AI holds position.
 	guard.brain_owned = false
 	guard.weapon = &"assault-rifle"

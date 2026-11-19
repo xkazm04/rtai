@@ -46,6 +46,7 @@ func run(_tree: SceneTree) -> String:
 		for key: String in [
 			"guard_ticks",
 			"vault_starts",
+			"vault_refusals",
 			"landings",
 			"snaps",
 			"peeks",

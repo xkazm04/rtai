@@ -1,6 +1,6 @@
 class_name VaultTrial
 extends RefCounted
-## Shared arena and street setup for replay, fuzz and the measured guard impact.
+## Shared arena and street setup for replay, fuzz and guarded landings.
 
 
 static func stage_for(city: bool, ctx: WorldContext = null) -> ArenaStage:
@@ -53,11 +53,14 @@ static func forbidden_contact(stage: CollectCallStage) -> String:
 	return "overlap at %s with %s" % [body.pos, touched]
 
 
-## The measured pit landing. The visual comparison uses the same feet and approach speed.
-static func place_tackle(stage: ArenaStage) -> Fighter:
-	var body: Fighter = stage.arena.rivet
-	body.pos = Vector2(4.0, 11.75)
+static func approach_crate(stage: ArenaStage) -> void:
+	stage.arena.rivet.pos = Vector2(4.0, 11.75)
 	stage.pilot.motion.mover.velocity = Vector2.DOWN * 8.0
+
+
+## The visual comparison uses the same guard position and approach speed.
+static func place_landing_guard(stage: ArenaStage) -> Fighter:
+	approach_crate(stage)
 	var at: Vector2 = Vector2(4.0, 14.2)
 	var guard: Fighter = Fighter.make(Fighter.Kind.GUARD, 190, at, 1.0)
 	guard.brain_owned = true
@@ -65,19 +68,24 @@ static func place_tackle(stage: ArenaStage) -> Fighter:
 	return guard
 
 
-static func tackle() -> Vector3:
+static func guarded_landing(offset: Vector2) -> String:
 	var stage: ArenaStage = stage_for(false)
-	var guard: Fighter = place_tackle(stage)
+	var guard: Fighter = place_landing_guard(stage)
+	guard.pos += offset
 	var at: Vector2 = guard.pos
-	var body: Fighter = stage.arena.rivet
-	var result: Vector3 = Vector3.ZERO
-	for i: int in stage.pilot.motion.vault.ticks:
-		var before: Vector2 = body.pos
-		var target: Vector2 = guard.pos
+	var start: Vector2 = stage.arena.rivet.pos
+	var vault: PlayerVault = stage.pilot.motion.vault
+	for i: int in vault.ticks:
 		stage.step(i, sample(stage, Vector2.DOWN, i == 0))
-		var speed: float = before.distance_to(body.pos) / SimClock.TICK_DT
-		result.x = maxf(result.x, speed)
-		if guard.pos.distance_to(target) > 1.0:
-			result.y = speed
-	result.z = guard.pos.distance_to(at)
-	return result
+		if i == 0 and (vault.hit == null or vault.hit.reason != &"landing_blocked"):
+			return "occupied landing at %s did not refuse the press" % at
+		if i == 0 and stage.arena.rivet.pos != start:
+			return "Rivet moved on the refused press"
+		if vault.frame >= 0 or guard.pos != at:
+			return (
+				"occupied landing at %s: vault frame %d, guard at %s" % [at, vault.frame, guard.pos]
+			)
+		var contact: String = forbidden_contact(stage)
+		if contact != "":
+			return contact
+	return ""

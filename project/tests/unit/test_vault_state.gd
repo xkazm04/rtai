@@ -15,8 +15,7 @@ func test_last_protected_frame_must_exist_in_the_vault() -> void:
 
 func _take_off(hidden_in: String = "") -> ArenaStage:
 	var stage: ArenaStage = VaultTrial.stage_for(false)
-	@warning_ignore("return_value_discarded")
-	VaultTrial.place_tackle(stage)
+	VaultTrial.approach_crate(stage)
 	stage.hidden_in = hidden_in
 	stage.step(0, VaultTrial.sample(stage, Vector2.DOWN, true))
 	return stage
