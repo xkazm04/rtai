@@ -15,6 +15,8 @@ static func feed_motion(rigs: CharacterRigs, motion: PlayerMotion) -> void:
 
 
 static func feed(rigs: CharacterRigs, vault: PlayerVault) -> void:
+	var cell: StringName = vault_cell(vault)
+	MotionRigPose.publish(rigs, MoveCells.VAULT, cell)
 	if vault == null or vault.frame < 0:
 		if rigs.has_meta(ACTIVE):
 			var last: CutRig = rigs.rig_for(rigs.feed.ids[0])
@@ -41,6 +43,12 @@ static func feed(rigs: CharacterRigs, vault: PlayerVault) -> void:
 		_shadow_origin(rigs, true)
 		f.clip[0] = RigClips.Clip.ROLL
 		f.clip_arg[0] = (vault.ticks - vault.frame) * SimClock.TICK_DT
+
+
+static func vault_cell(vault: PlayerVault) -> StringName:
+	if vault == null:
+		return &""
+	return MoveCells.vault_cell(vault.frame, vault.ticks, vault.drawn_cells)
 
 
 static func projection(vault: PlayerVault, view: ViewMode) -> Transform2D:

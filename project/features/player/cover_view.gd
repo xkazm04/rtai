@@ -16,6 +16,7 @@ var _upper: CoverUpperCard
 static func feed(rigs: CharacterRigs, motion: PlayerMotion, tick: int) -> void:
 	var host: CoverView = rigs.get_meta(ACTIVE, null) if rigs.has_meta(ACTIVE) else null
 	var cover: PlayerCover = motion.cover if motion != null else null
+	MotionRigPose.publish(rigs, MoveCells.COVER, cover_cell(cover))
 	if cover == null or cover.spot == null:
 		if host != null:
 			host._release(motion, tick)
@@ -30,6 +31,14 @@ static func feed(rigs: CharacterRigs, motion: PlayerMotion, tick: int) -> void:
 	host._cover = cover
 	host._tick = tick
 	host._weight = cover.crouch_weight()
+
+
+static func cover_cell(cover: PlayerCover) -> StringName:
+	if cover == null or cover.spot == null:
+		return &""
+	return MoveCells.cover_cell(
+		cover.phase == PlayerCover.Phase.IN, cover.spot.low, cover.drawn_cells
+	)
 
 
 static func scale_for(crouch_scale_y: float, weight: float, flat: bool) -> Vector2:
@@ -69,6 +78,8 @@ func _place() -> void:
 		return
 	var view: ViewMode = ViewMode.shared()
 	var k: Vector2 = scale_for(_cover.crouch_scale_y, _weight, view.is_flat())
+	if MoveCells.shows(rig.head_card):
+		k = Vector2.ONE
 	var pose: Transform2D = Transform2D(0.0, k, 0.0, Vector2.ZERO)
 	MotionRigPose.place(rig, pose)
 	if _followers.is_empty():

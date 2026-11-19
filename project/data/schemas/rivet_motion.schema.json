@@ -10,6 +10,9 @@
           "maximum": 1,
           "type": "number"
         },
+        "drawn_cells": {
+          "type": "boolean"
+        },
         "edge_m": {
           "exclusiveMinimum": 0,
           "type": "number"
@@ -52,6 +55,7 @@
       },
       "required": [
         "crouch_scale_y",
+        "drawn_cells",
         "edge_m",
         "enabled",
         "leave_dot",
@@ -169,6 +173,9 @@
           "exclusiveMinimum": 0,
           "type": "number"
         },
+        "drawn_cells": {
+          "type": "boolean"
+        },
         "enabled": {
           "type": "boolean"
         },
@@ -230,6 +237,7 @@
       },
       "required": [
         "apex_m",
+        "drawn_cells",
         "enabled",
         "heights",
         "iframe_from",

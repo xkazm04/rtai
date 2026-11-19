@@ -47,7 +47,7 @@ static func step(rig: CutRig) -> void:
 	if path != "" and LEFT[oct_of(rig)] == 1 and RivetWindup.left_drawn(weapon):
 		path = RivetStrips.left_of(art, weapon)
 	path = walk if walk != "" else RivetReload.held_or(rig, art, weapon, path)
-	path = RivetWindup.path_or(rig, art, weapon, path)  # n13
+	path = MoveCells.path_or(rig, art, RivetWindup.path_or(rig, art, weapon, path))
 	path = RivetKnock.path_or(rig, art, RivetStrike.path_or(rig, art, weapon, path))
 	if not ENABLED or path.is_empty():
 		release(rig)
@@ -127,7 +127,7 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	var art: String = ViewMode.shared().art
 	var h: float = HEIGHT_BY_ART.get(art, HEIGHT_M) * height_k * PlayerScale.k()
 	var s: float = h * CharacterRigs.PX_PER_M / FIG_PX
-	if RivetStrike.placed(rig, card, s, h * CharacterRigs.PX_PER_M):
+	if MoveCells.draw(rig, card, s) or RivetStrike.placed(rig, card, s, h * CharacterRigs.PX_PER_M):
 		return
 	var drawn_walk: bool = RivetWalk.is_grid(card)
 	var ph: float = RivetWalk.phase_of(rig, art, s)

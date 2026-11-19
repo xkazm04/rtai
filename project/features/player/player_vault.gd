@@ -4,6 +4,7 @@ extends RefCounted
 ## Only contact with the selected low obstacle may bypass the stage's ground collision pass.
 
 var enabled: bool = false
+var drawn_cells: bool = true
 var ticks: int
 var iframe_from: int
 var iframe_to: int
@@ -31,6 +32,7 @@ func apply_flags() -> void:
 func configure(t: DataTable) -> Array[String]:
 	var row: Dictionary = t.object(t.raw, "vault")
 	enabled = row.get("enabled", false) == true
+	drawn_cells = row.get("drawn_cells", true) == true
 	ticks = t.integer(row, "ticks")
 	iframe_from = t.integer(row, "iframe_from")
 	iframe_to = t.integer(row, "iframe_to")

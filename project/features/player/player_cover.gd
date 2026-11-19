@@ -6,6 +6,7 @@ extends RefCounted
 enum Phase { OFF, SNAP, IN, PEEK, LEAVE }
 
 var enabled: bool = false
+var drawn_cells: bool = true
 var phase: Phase = Phase.OFF
 var spot: CoverQuery.CoverSpot
 var crouch_scale_y: float
@@ -32,6 +33,7 @@ func apply_flags() -> void:
 func configure(t: DataTable) -> void:
 	var row: Dictionary = t.object(t.raw, "cover")
 	enabled = row.get("enabled", false) == true
+	drawn_cells = row.get("drawn_cells", true) == true
 	crouch_scale_y = t.num(row, "crouch_scale_y")
 	snap_reach_m = t.num(row, "snap_reach_m")
 	snap_ticks = maxi(1, t.integer(row, "snap_ticks"))

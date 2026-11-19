@@ -5,6 +5,8 @@ extends Sprite2D
 
 ## The equipped side cell carries the pistol below the belt, roughly 85% down its crop.
 const UPPER: float = 0.87
+## Drawn cells hold the gun beside the visor. Leave their knees behind the cover.
+const DRAWN_UPPER: float = 0.60
 
 
 static func show_above(source: Sprite2D, last: CoverUpperCard) -> CoverUpperCard:
@@ -25,8 +27,9 @@ static func show_above(source: Sprite2D, last: CoverUpperCard) -> CoverUpperCard
 	ink.texture = source.texture
 	ink.flip_h = source.flip_h
 	ink.position = rect.position
+	var height: float = DRAWN_UPPER if MoveCells.shows(source) else UPPER
 	ink.region_rect = Rect2(
-		tex_origin + Vector2(source.frame_coords) * cell, cell * Vector2(1, UPPER)
+		tex_origin + Vector2(source.frame_coords) * cell, cell * Vector2(1, height)
 	)
 	ink.texture_filter = source.texture_filter
 	ink.material = source.material

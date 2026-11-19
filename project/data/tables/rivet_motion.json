@@ -1,6 +1,7 @@
 {
   "cover": {
     "crouch_scale_y": 0.78,
+    "drawn_cells": true,
     "edge_m": 0.2,
     "enabled": false,
     "leave_dot": 0.65,
@@ -32,6 +33,7 @@
   },
   "vault": {
     "apex_m": 1.45,
+    "drawn_cells": true,
     "enabled": false,
     "heights": {
       "ambulance": 2.5,
