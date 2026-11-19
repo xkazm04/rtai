@@ -41,3 +41,14 @@ NEXT:
 - 00:52 ASTRA gen 26 accepted (killed before its report; mutate score missing -> brief 07). LOOKED gen/yard_compare_tilt70_64ppm_t150.png: before, the walker's legs ink a black wedge over the warehouse roof edge; after, the walker turns 3 m short on the apron, roof edge clean. Reads in 10 s. Weak: the apron has no drawn art (an invisible stop line); no clip yet.
 - 00:53 DECISION stale lock removed by hand (process gone, verified by tasklist + CIM query).
 - 00:54 ASTRA RUNNING polish since 00:54 (NEW session; brief evidence/briefs/n19-gfx-07-polish.md; out evidence/briefs/n19-gfx-07-polish.out.txt)
+- 00:55 MILESTONE brief 08 drafted (evidence/briefs/n19-gfx-08-apron-bench.md: apron bollard edge v35/36, far-cop clip + frames.json, heat-3 + rig bench under bench.lock). Goes after polish.
+- 02:08 ASTRA polish 75 bounced-partial (cap hit, no final message). Landed 8519afcd4 (apron isolated-tile test), 1c4183544 (crowd contact tests vs survivors), 2e1fa4d76 (6 junction look goldens re-blessed: pass on 28302bd3c and f94ca6118, first cross 2% at b9cddfe91 item 2 far-cop rows = intended effect; decision look/junction-crowd-rows). Clips made: gen/item4-apron-tilt70-32ppm.mp4, contact/item3a-contact-tilt70-32ppm.mp4; contact/NEED-anim-triangulation.md. NOT YET LOOKED by me: the clips, one re-blessed golden diff (check far cops blue in it). Scores unknown -> resume asks for the report file.
+- 02:09 Orphans checked: the gtai-mutate-* node/Godot processes alive now are move/guns/anim lanes' (test selections), not ours. Nothing killed.
+- 02:10 ASTRA RUNNING polish2 since 02:10 (--resume of polish thread; brief evidence/briefs/n19-gfx-09-polish-resume.md; out evidence/briefs/n19-gfx-09-polish-resume.out.txt; report file gtai-masters/n19/gfx/polish-07-REPORT.md)
+NEXT:
+1. Wait for polish2 (lock C:/Users/kazda/kiro/gtai-n19/logs/gfx/astra.lock; last line astra-calls.jsonl). Read the .out.txt and gtai-masters/n19/gfx/polish-07-REPORT.md: log `ASTRA polish2 <min> ...`. Judge 07's scores (dock_painter, zebra guard planted fault, crowd_contact survivors) and 08A (apron bollard edge: chunks per zone downtown/mixed 0, digests, frames in gen/).
+2. LOOK yourself: gen/item4-apron-tilt70-32ppm.mp4 (extract 2-3 frames with ffmpeg), contact/item3a-contact-tilt70-32ppm.mp4, one re-blessed golden (git show 2e1fa4d76^:project/tests/golden/look/d5-64ppm-ov.png vs HEAD) - far cops should be blue.
+3. Then brief 08 Parts B (heat-3 + rig bench under C:/Users/kazda/kiro/gtai-n19/bench.lock) and C (far-cop clip + farcop/frames.json) as a NEW or --resume call (edit the brief: drop Part A).
+4. `node tools/gate/run.mjs --rev=HEAD` once in a gap with no Astra running.
+5. 3C waits on ai's a8-prop-lying (check n19-ai JOURNAL). contact/NEED-anim-triangulation.md: if it says pre-existing in anim's file, file `NEED anim:` line here.
+6. REPORT.md draft from ~06:00; freeze 07:30.
