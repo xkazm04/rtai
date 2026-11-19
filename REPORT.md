@@ -1,4 +1,4 @@
-# n19 lane gfx: graphics polish, native and the digests (DRAFT, session 5, 03:40)
+# n19 lane gfx: graphics polish, native and the digests (final, 07:32)
 
 Branch `n19-gfx`, cut from `int-n19` at `28302bd3c`. Director Claude Opus 5.5, builder GPT-6.2 Astra.
 Evidence root: `C:/Users/kazda/kiro/gtai-masters/n19/gfx/` (written M below). Gate (snapshot, mid-night): `gate: PASS` at `030352b1d`, `build/gate/030352b1d48b/gate.json` (lint 19/19, unit 2,976 with 2 skips, scenarios 55, parity exact over 1,200 steps, bake matches). Final gate with `--reels` on `cbb8cebf3`, the last product commit (every later commit is docs-only): `gate: PASS` at `build/gate/cbb8cebf38b9/gate.json` (lint 19/19 over 1,618 files; unit 2,976 passed, 2 skipped; scenarios 55; parity exact over 1,200 steps with a planted mutation caught at step 629; selftest look goldens 11/11 and block 5/5; export-audit 740 loaded, 0 failed; reels exit 0). It ran at 05:57-06:19, before the 07:30 freeze, because the product was final.
