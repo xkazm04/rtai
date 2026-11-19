@@ -109,3 +109,21 @@ func test_rocket_fire_checks_each_diagonal_and_rejects_unequal_cell_widths() -> 
 	var invalid: Dictionary = ArsenalAuditFiles.new().fire(base, "p55", "rocket_launcher", false)
 	assert_eq(str(invalid.status), "HOLE", str(invalid.reason))
 	assert_string_contains(str(invalid.reason), base.get_file() + ".png")
+
+
+func test_mini_nuke_reports_each_missing_rear_flare() -> void:
+	for pitch: String in ["p55", "p70"]:
+		var base: String = RivetStrips.DIR + pitch + "/rivet_eq_mini_nuke"
+		for i: int in RivetStrips.DIAG_CELLS:
+			var files: ArsenalAuditFiles = ArsenalAuditFiles.new()
+			var valid: Dictionary = files.fire(base, pitch, "mini_nuke", false)
+			assert_eq(str(valid.status), "ok", str(valid.reason))
+			var lit: Image = files._images[base + RivetStrips.DIAG]
+			var dark: Image = files._images[base + "_diag" + RivetNoFlash.SUFFIX]
+			@warning_ignore("integer_division")
+			var w: int = lit.get_width() / RivetStrips.DIAG_CELLS
+			var cell: Rect2i = Rect2i(i * w, 0, w, lit.get_height())
+			lit.blit_rect(dark, cell, cell.position)
+			var result: Dictionary = files.fire(base, pitch, "mini_nuke", false)
+			assert_eq(str(result.status), "HOLE")
+			assert_eq(str(result.reason), "diagonal %d lacks rear exhaust" % i)

@@ -2,7 +2,7 @@ class_name ArsenalAuditFiles
 extends RefCounted
 ## Raw on-disk PNGs keep this audit headless and independent of the import cache. A named strip
 ## needs equal-width cells and visible ink in the requested cells. A noflash twin needs the same
-## canvas. For rockets, require exhaust in EACH diagonal: on the side behind the helmet centre
+## canvas. Shoulder launchers need exhaust in each diagonal. Behind the helmet
 ## at least one opaque warm pixel of flare must disappear/change in the flashless pose.
 
 var exists: Callable = FileAccess.file_exists
@@ -89,7 +89,7 @@ func fire(base: String, pitch: String, id: String, stream: bool) -> Dictionary:
 	@warning_ignore("return_value_discarded")
 	_twin(base, eq, RivetFrames.EQ_CELLS, [5, 6], issues)
 	var twin: Image = _twin(base + "_diag", diagonal, count, range(count), issues)
-	if id == "rocket_launcher" and diagonal != null and twin != null and xs.size() == count:
+	if id in ["mini_nuke", "rocket_launcher"] and xs.size() == count and diagonal and twin:
 		for i: int in count:
 			if not _exhaust(diagonal, twin, i, xs[i]):
 				issues.append("diagonal %d lacks rear exhaust" % i)
