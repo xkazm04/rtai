@@ -26,6 +26,11 @@ func _init(row: GhostHoverRow.Tail) -> void:
 
 
 ## root_px is the body-frame anchor already rotated and translated into world pixels.
+func reset(root_px: Vector2, facing: float, lift_m: float) -> void:
+	_chain.clear()
+	step(root_px, facing, 0.0, lift_m, 1)
+
+
 func step(root_px: Vector2, facing: float, speed_mps: float, lift_m: float, ticks: int) -> void:
 	if ticks <= 0:
 		return

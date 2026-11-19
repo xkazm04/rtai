@@ -33,22 +33,37 @@ func mount(body: Node2D) -> void:
 	_mount.add_child(body)
 
 
+## Hidden forms have no ribbon to integrate. On re-entry, discard their old world-space trail.
 func step(at_px: Vector2, facing: float, ticks: int) -> void:
+	if not visible:
+		_last = Vector2.INF
+		return
+	if _last == Vector2.INF:
+		hover.reset(at_px, facing)
+		_last = at_px
+		_facing = facing
+		tail.reset(_anchor(at_px, facing), facing, hover.lift_m)
+		_place(at_px)
 	if ticks <= 0:
 		return
-	var start: Vector2 = at_px if _last == Vector2.INF else _last
-	var angle: float = facing if _last == Vector2.INF else _facing
 	for i: int in range(1, ticks + 1):
 		var k: float = float(i) / ticks
-		var spot: Vector2 = start.lerp(at_px, k)
-		var yaw: float = lerp_angle(angle, facing, k)
+		var spot: Vector2 = _last.lerp(at_px, k)
+		var yaw: float = lerp_angle(_facing, facing, k)
 		hover.step(spot, yaw, 1)
 		var body_yaw: float = yaw + body_rotation()
-		var anchor: Vector2 = (_row.tail.anchor_m * SimConst.PX_PER_M).rotated(body_yaw)
-		tail.step(spot + hover.lag_px + anchor, body_yaw, hover.speed_mps, hover.lift_m, 1)
-	shadow.step(at_px, hover.lift_m)
+		tail.step(_anchor(spot, body_yaw), body_yaw, hover.speed_mps, hover.lift_m, 1)
 	_last = at_px
 	_facing = facing
+	_place(at_px)
+
+
+func _anchor(spot: Vector2, yaw: float) -> Vector2:
+	return spot + hover.lag_px + (_row.tail.anchor_m * SimConst.PX_PER_M).rotated(yaw)
+
+
+func _place(at_px: Vector2) -> void:
+	shadow.step(at_px, hover.lift_m)
 	if _mount != null:
 		_mount.position = at_px + body_offset()
 		_mount.rotation = body_rotation()
