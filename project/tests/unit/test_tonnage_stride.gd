@@ -90,15 +90,10 @@ func test_each_filmed_midpoint_enters_and_exits_at_its_two_neighbours() -> void:
 			_check_mid_edges(sheet, spr, oct, starts[i], i)
 
 
-func test_p55_nonprofile_and_unmatched_grids_keep_the_original_key() -> void:
+func test_unmatched_grids_keep_the_original_key() -> void:
 	var steps: PackedFloat32Array = GhostStride.table_of("tonnage", "p55")
-	var sheet: GhostSheet = GhostSheet.walk_of(GhostDrawn.path_of("p55", "tonnage"), steps)
-	var spr: Sprite2D = autofree(Sprite2D.new())
-	for oct: int in [1, 2, 3, 5, 6, 7]:
-		sheet.show(spr, oct, 0, sheet._detail_windows[0].x)
-		assert_eq(spr.texture, sheet.left if sheet.drawn_left(oct, 0) else sheet.tex)
 	for path: String in [GhostDrawn.path_of("p70", "tonnage"), GhostDrawn.path_of("p55", "ohm")]:
-		assert_null(GhostSheet.walk_of(path, steps)._detail)
+		assert_true(GhostSheet.walk_of(path, steps)._intervals.is_empty())
 
 
 func test_left_midpoints_require_drawn_left_profile_art() -> void:
@@ -113,24 +108,24 @@ func test_left_midpoints_require_drawn_left_profile_art() -> void:
 	assert_eq(spr.texture, sheet.left)
 
 
-func _check_intervals(sheet: GhostSheet, centres: Array[float], parts: Array[int]) -> void:
+func _check_intervals(bank: GhostWalkPages, centres: Array[float], parts: Array[int]) -> void:
 	var index: int = 0
 	for i: int in parts.size():
 		var start: float = centres[i]
 		var end: float = centres[i + 1] if i + 1 < centres.size() else centres[0] + 1.0
 		for j: int in range(1, parts[i]):
-			var w: Vector2 = sheet._detail_windows[index]
+			var w: Vector2 = bank.windows[index]
 			var left: float = lerpf(start, end, (j - 0.5) / parts[i])
 			var right: float = lerpf(start, end, (j + 0.5) / parts[i])
 			assert_almost_eq(w, Vector2(left, right), Vector2.ONE * 0.000001)
-			assert_eq(sheet._interval_col(fposmod(w.x - 0.000001, 1.0)), index - 1 if j > 1 else -1)
-			assert_eq(sheet._interval_col(fposmod(w.x, 1.0)), index)
-			assert_eq(sheet._interval_col(fposmod(w.y - 0.000001, 1.0)), index)
-			assert_eq(sheet._interval_col(fposmod(w.y, 1.0)), index + 1 if j + 1 < parts[i] else -1)
+			assert_eq(bank.col_at(fposmod(w.x - 0.000001, 1.0)), index - 1 if j > 1 else -1)
+			assert_eq(bank.col_at(fposmod(w.x, 1.0)), index)
+			assert_eq(bank.col_at(fposmod(w.y - 0.000001, 1.0)), index)
+			assert_eq(bank.col_at(fposmod(w.y, 1.0)), index + 1 if j + 1 < parts[i] else -1)
 			index += 1
-	assert_eq(sheet._detail_windows.size(), index)
-	assert_eq(sheet._interval_col(0.0), index - 1)
-	assert_eq(sheet._interval_col(-1.0), -1)
+	assert_eq(bank.windows.size(), index)
+	assert_eq(bank.col_at(0.0), index - 1)
+	assert_eq(bank.col_at(-1.0), -1)
 
 
 func test_each_diagonal_subdivision_uses_its_filmed_window_and_own_drawn_row() -> void:
@@ -153,7 +148,7 @@ func test_each_diagonal_subdivision_uses_its_filmed_window_and_own_drawn_row() -
 		0.96372177,
 		0.98790726,
 	]
-	_check_intervals(sheet, centres, [4, 6, 4, 4, 4, 4, 2, 2, 4, 4, 4, 4, 4, 2, 2, 2])
+	_check_intervals(sheet._intervals[1], centres, [4, 6, 4, 4, 4, 4, 2, 2, 4, 4, 4, 4, 4, 2, 2, 2])
 	_check_detail_rows(sheet, [1, 3, 5, 7], [1, 0, 2, 3], -85.5)
 
 
@@ -169,7 +164,7 @@ func test_p55_quarters_and_midpoints_enter_and_exit_on_both_profiles() -> void:
 		0.86830357,
 		0.96763393,
 	]
-	_check_intervals(sheet, centres, [4, 4, 4, 4, 4, 4, 2, 2])
+	_check_intervals(sheet._intervals[0], centres, [4, 4, 4, 4, 4, 4, 2, 2])
 	_check_detail_rows(sheet, [0, 4], [2, 1], -89.0)
 
 
@@ -177,20 +172,21 @@ func _check_detail_rows(
 	sheet: GhostSheet, octants: Array[int], rows: Array[int], offset: float
 ) -> void:
 	var spr: Sprite2D = autofree(Sprite2D.new())
-	for i: int in sheet._detail_windows.size():
-		var w: Vector2 = sheet._detail_windows[i]
+	var bank: GhostWalkPages = sheet._intervals[octants[0]]
+	for i: int in bank.windows.size():
+		var w: Vector2 = bank.windows[i]
 		for j: int in octants.size():
 			var oct: int = octants[j]
 			sheet.show(spr, oct, 0, fposmod((w.x + w.y) * 0.5, 1.0))
 			var left: bool = sheet.drawn_left(oct, 0)
-			assert_eq(spr.texture, sheet._detail.left if left else sheet._detail.tex)
+			assert_eq(spr.texture, bank.pages[0].left if left else bank.pages[0].tex)
 			assert_eq(spr.frame_coords, Vector2i(i, rows[j]))
 			assert_false(spr.flip_h)
 			assert_eq(spr.offset.x, offset)
-	sheet._detail.left = null
+	bank.pages[0].left = null
 	for oct: int in octants:
 		if sheet.drawn_left(oct, 0):
-			sheet.show(spr, oct, 0, sheet._detail_windows[0].x)
+			sheet.show(spr, oct, 0, bank.windows[0].x)
 			assert_eq(spr.texture, sheet.left)
 
 

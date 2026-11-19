@@ -190,5 +190,4 @@ func test_p55_detail_loader_requires_the_eight_key_table() -> void:
 	var path: String = GhostDrawn.path_of("p55", "tonnage")
 	var other_steps: PackedFloat32Array = GhostStride.table_of("tonnage", "p70")
 	var sheet: GhostSheet = GhostSheet.walk_of(path, other_steps)
-	assert_null(sheet._detail)
-	assert_eq(sheet._detail_windows.size(), 0)
+	assert_true(sheet._intervals.is_empty())

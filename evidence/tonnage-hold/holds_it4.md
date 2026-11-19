@@ -237,3 +237,34 @@ Leg 2 at 32 px/m, ticks 239–348 inclusive, on 84aaf1131. Hold boundaries come 
 | p70 | away (-90°) | 21 | 19.841 | 8.851 | 11.639 | 16 | 3.196 |
 
 Reproduce with the brief 10 leg-2 flags, view `tilt` for p55 or `combo` for p70 and the turn in the table. Run `python evidence/tonnage-hold/measure_rows.py <prefix> --steps=<raw>/steps.json --pitch=<pitch> --turn=<turn>`. Every film recorded 110 consecutive samples. Godot issued the existing resources/pages-in-use diagnostics at shutdown. [Raw before/after films and capture probes](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/raw/it5/>).
+
+### p55 after subdivision
+
+| Facing | Worst before / after | Mean before / after | Stance drift before / after | Matches after | Open tail after | Identical base-key crops |
+|---|---:|---:|---:|---:|---:|---:|
+| right-toward | 26.089 / 2.995 | 16.687 / 1.085 | 10.519 / 2.305 | 46 | 0.000 | 19 |
+| right-away | 34.142 / 3.708 | 22.253 / 1.405 | 12.415 / 2.066 | 48 | 0.000 | 19 |
+| left-toward | 25.883 / 3.767 | 15.232 / 1.028 | 10.554 / 2.280 | 45 | 0.347 | 17 |
+| left-away | 33.885 / 3.862 | 21.852 / 1.413 | 12.560 / 2.069 | 48 | 0.000 | 19 |
+| toward | 17.101 / 2.434 | 11.961 / 0.862 | 22.637 / 1.955 | 52 | 0.000 | 19 |
+| away | 22.241 / 3.354 | 16.220 / 1.147 | 19.710 / 2.007 | 51 | 0.000 | 19 |
+
+Every original over-limit interval contains only shorter rides in its after-film. Each retained original key rode the same distance or less. The 10 prior walk PNGs matched their committed LFS SHA-256 objects. All 112 coincident original-key crop pairs were byte-identical. Each row adds 44 poses between its original key centres, taking dwell from both neighbours. Intervals per transition are 6, 8, 8, 8, 6, 6, 6, 4.
+
+At 64 px/m I reviewed all 264 derived poses with their two original neighbours. On both toward diagonals C4–C5 initially left a second sliver below an outer rubber sole. Keeping the stance displacement clear of both original and destination soles removed it on both sides. The C3–C4 away diagonals show a single tilted rim on each extending piston, and the left hose remains on its drawn side. On straight toward the riveted sill stays level as the pad changes sides. On straight away the narrow side legs extend past the rear armour with continuous outlines. The small change in the original crown lighting at the donor handoff remains visible.
+
+Repack the two pages with `python tools/art/tonnage_midpoint.py --fill p55 --page a` and `--page b` and repeat with `--left`. For the after films add `--atlas=fill --divisions=6,8,8,8,6,6,6,4` to the baseline measurement command. The two pages fit the texture-size limit.
+
+- [right-toward at 64 px/m](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it5-p55-right-toward-midpoints-64ppm.png>).
+- [right-away at 64 px/m](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it5-p55-right-away-midpoints-64ppm.png>).
+- [left-toward at 64 px/m](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it5-p55-left-toward-midpoints-64ppm.png>).
+- [left-away at 64 px/m](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it5-p55-left-away-midpoints-64ppm.png>).
+- [toward at 64 px/m](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it5-p55-toward-midpoints-64ppm.png>).
+- [away at 64 px/m](<C:/Users/kazda/kiro/gtai-masters/n19/anim/tonnage-hold/it5-p55-away-midpoints-64ppm.png>).
+
+| Atlas | Repacked SHA-256 |
+|---|---|
+| tonnage_walk8_fill_a.png | `0135bccd607af732d33e46306ef6a87282289c8cd0e617bb124a9f9298f89588` |
+| tonnage_walk8_fill_a_left.png | `57e1a8b06e2c7d6e1ef1ee868d01d73ab92875e442f4fe0acc1d6b7db1aabdda` |
+| tonnage_walk8_fill_b.png | `1981804d417956cf3d640341ca6e04226e235cef9bbb3856f9549d56174156bf` |
+| tonnage_walk8_fill_b_left.png | `9d1581e0cd819ceb759683f1afee359f63fb57a35b714ae85de201b65143fd4c` |

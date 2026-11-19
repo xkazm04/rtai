@@ -20,9 +20,7 @@ var left: Texture2D = null
 var left_cols: int = 0
 var hitback: GhostSheet = null  # optional one-column alternate on an act grid
 var _profile_mid: GhostSheet = null
-var _detail: GhostSheet = null
-var _detail_octants: Array[int] = []
-var _detail_windows: Array[Vector2] = []
+var _intervals: Dictionary[int, GhostWalkPages] = {}
 var _mid_windows: Array[Vector2] = []
 
 
@@ -50,18 +48,33 @@ static func walk_of(path: String, steps: PackedFloat32Array) -> GhostSheet:
 	if sheet != null and steps.size() == 16 and path.ends_with("/p70/tonnage_walk8.png"):
 		sheet._mid_windows = GhostStride.tonnage_windows(steps)
 		sheet._profile_mid = of(path.get_basename() + "_mid.png", sheet._mid_windows.size())
-		sheet._load_detail(path, steps, [1, 3, 5, 7], "_diag")
+		sheet._load_detail(path, steps, [1, 3, 5, 7], ["_diag"], GhostStride.DIAGONAL_DIVISIONS)
 	elif sheet != null and steps.size() == 8 and path.ends_with("/p55/tonnage_walk8.png"):
-		sheet._load_detail(path, steps, [0, 4], "_detail")
+		sheet._load_detail(path, steps, [0, 4], ["_detail"], GhostStride.PROFILE55_DIVISIONS)
+		sheet._load_detail(
+			path, steps, [1, 2, 3, 5, 6, 7], ["_fill_a", "_fill_b"], GhostStride.OTHER55_DIVISIONS
+		)
 	return sheet
 
 
 func _load_detail(
-	path: String, steps: PackedFloat32Array, octants: Array[int], suffix: String
+	path: String,
+	steps: PackedFloat32Array,
+	octants: Array[int],
+	suffixes: Array[String],
+	divisions: Array[int]
 ) -> void:
-	_detail_windows = GhostStride.interval_windows(steps)
-	_detail = of(path.get_basename() + suffix + ".png", _detail_windows.size())
-	_detail_octants = octants
+	var bank: GhostWalkPages = GhostWalkPages.new()
+	bank.windows = GhostStride.interval_windows(steps, divisions)
+	@warning_ignore("integer_division")
+	var page_cols: int = bank.windows.size() / suffixes.size()
+	for suffix: String in suffixes:
+		var page: GhostSheet = of(path.get_basename() + suffix + ".png", page_cols)
+		if page == null:
+			return
+		bank.pages.append(page)
+	for oct: int in octants:
+		_intervals[oct] = bank
 
 
 ## An act grid (`key` "<name>/<pitch>"): its columns and its left sheet's, with Dent's jab columns
@@ -99,15 +112,8 @@ func show(spr: Sprite2D, oct: int, col: int, phase: float = -1.0) -> void:
 		if mid >= 0:
 			_profile_mid.show(spr, oct, mid)
 			return
-	if (
-		_detail != null
-		and _detail_octants.has(oct)
-		and (LEFT_ROW[oct] < 0 or _detail.drawn_left(oct, 0))
-	):
-		var mid: int = _interval_col(phase)
-		if mid >= 0:
-			_detail.show(spr, oct, mid)
-			return
+	if _intervals.has(oct) and _intervals[oct].show(spr, oct, phase):
+		return
 	var on_left: bool = drawn_left(oct, col)
 	var t: Texture2D = left if on_left else tex
 	var c: int = left_cols if on_left else cols
@@ -131,20 +137,6 @@ func _profile_col(col: int, phase: float) -> int:
 		var step: int = GhostStride.MID_STEPS[i]
 		var w: Vector2 = _mid_windows[i]
 		if (col == step or col == step + 1) and phase >= w.x and phase < w.y:
-			return i
-	return -1
-
-
-## Search sorted half-open windows, continuing the last transition through phase zero.
-func _interval_col(phase: float) -> int:
-	if phase < 0.0:
-		return -1
-	var at: float = phase + 1.0 if phase < _detail_windows[0].x else phase
-	for i: int in _detail_windows.size():
-		var w: Vector2 = _detail_windows[i]
-		if at < w.x:
-			break
-		if at < w.y:
 			return i
 	return -1
 

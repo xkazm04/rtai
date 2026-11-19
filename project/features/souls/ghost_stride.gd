@@ -20,8 +20,8 @@ const TABLES: Dictionary[String, Array] = {
 
 ## The diagonal atlas subdivides each interval between two original key centres.
 const DIAGONAL_DIVISIONS: Array[int] = [4, 6, 4, 4, 4, 4, 2, 2, 4, 4, 4, 4, 4, 2, 2, 2]
-
 const PROFILE55_DIVISIONS: Array[int] = [4, 4, 4, 4, 4, 4, 2, 2]
+const OTHER55_DIVISIONS: Array[int] = [6, 8, 8, 8, 6, 6, 6, 4]
 
 ## Tonnage p70 profile atlas order. Each pair borrows cell-pixel dwell from
 ## the outgoing and incoming key. The two contributions keep the cycle length.
@@ -183,8 +183,7 @@ static func tonnage_windows(steps: PackedFloat32Array) -> Array[Vector2]:
 
 
 ## Divide the arc between adjacent original key centres. The seam continues past phase 1.
-static func interval_windows(steps: PackedFloat32Array) -> Array[Vector2]:
-	var divisions: Array[int] = PROFILE55_DIVISIONS if steps.size() == 8 else DIAGONAL_DIVISIONS
+static func interval_windows(steps: PackedFloat32Array, divisions: Array[int]) -> Array[Vector2]:
 	var dwell: PackedFloat32Array = dwell_of(steps)
 	var at: float = 0.0
 	var windows: Array[Vector2] = []

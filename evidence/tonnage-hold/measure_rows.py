@@ -26,8 +26,15 @@ def film_holds(prefix):
     assert [int(s[0]) for s in samples] == list(range(110))
     first = int(samples[0][1])
     assert [int(s[1]) for s in samples] == list(range(first, first + len(samples)))
-    keys = [("C" if Path(s[2]).stem in ("tonnage_walk8", "tonnage_walk8_left") else "M")
-            + s[3] for s in samples]
+    def label(path):
+        name = Path(path).stem.removesuffix("_left")
+        if name == "tonnage_walk8":
+            return "C"
+        if name.endswith(("_fill_a", "_fill_b")):
+            return name[-1].upper()
+        return "M"
+
+    keys = [label(sample[2]) + sample[3] for sample in samples]
     args = sys.argv
     try:
         sys.argv = ["hold_ride.py", str(prefix), "2", str(len(samples)), "0,45", "70,150,190,222"]
@@ -87,9 +94,14 @@ def stance_drift(pitch, turn, weights, divisions=(), atlas="diag"):
     suffix = ("_left" if left else "") + ".png"
     row, rows = ROW[turn], 3 if left else 5
     base = row_contacts(grid / ("tonnage_walk8" + suffix), len(weights), row, rows)
-    extra_path = atlas if isinstance(atlas, Path) else grid / ("tonnage_walk8_" + atlas + suffix)
-    extra = row_contacts(extra_path,
-                         sum(divisions) - len(weights), row, rows) if divisions else []
+    extra = []
+    if divisions:
+        paths = [atlas] if isinstance(atlas, Path) else [
+            grid / ("tonnage_walk8_" + name + suffix)
+            for name in (("fill_a", "fill_b") if atlas == "fill" else (atlas,))]
+        columns = (sum(divisions) - len(weights)) // len(paths)
+        for page in paths:
+            extra.extend(row_contacts(page, columns, row, rows))
     art, dwell = pose_dwells(np.array(weights), base, divisions, extra)
     angle = np.deg2rad(turn)
     ground = np.array([np.cos(angle), np.sin(angle) * np.sin(np.deg2rad(int(pitch[1:])))])

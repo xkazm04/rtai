@@ -45,31 +45,6 @@ def warp_pads(key, pins, body):
     return remap_ink(key, mx, my)
 
 
-def diagonal_pads(key):
-    """The two outer pads and the near pad, whose sole anchors these rows."""
-    alpha = np.asarray(key)[..., 3] > 128
-    bottom = np.where(alpha.any(0), key.height - 1 - alpha[::-1].argmax(0), -1)
-
-    # A cut through a sloping shaft can be lower than the far sole. Locate
-    # actual peaks of the whole silhouette before assigning the three sockets.
-    peaks = bottom == cv2.dilate(bottom.astype("float32")[None, :],
-                                 np.ones((1, 7), "uint8"))[0]
-    pads = []
-    indices = np.flatnonzero(peaks)
-    for group in np.split(indices, np.flatnonzero(np.diff(indices) > 1) + 1):
-        x = group[len(group) // 2]
-        y = bottom[x]
-        first = last = x
-        while first > 0 and bottom[first - 1] >= y - 3:
-            first -= 1
-        while last + 1 < key.width and bottom[last + 1] >= y - 3:
-            last += 1
-        if last - first < 38:
-            pads.append(((first + last) / 2, y))
-    return np.array([max((p for p in pads if lo <= p[0] < hi), key=lambda p: p[1])
-                     for lo, hi in [(0, 45), (48, 115), (118, key.width)]])
-
-
 def register_crown(key, neighbour):
     # Register the top casing, excluding pistons, alpha fringe and empty margins.
     def gray(im):
@@ -81,24 +56,67 @@ def register_crown(key, neighbour):
     return np.array(cv2.minMaxLoc(score)[3]) - [39, top]
 
 
-def articulated_pose(key, start, end, crown, fraction):
+def articulated_pose(key, soles, crown, fraction, style=""):
     """One source silhouette. Keep each sole rigid and bend its shaft at the socket."""
     h, w = key.height, key.width
     yy, xx = np.indices((h, w + 8), dtype=np.float32)
     xx -= 4  # transparent gutters keep adjacent poses out of the linear-filtered outline
     mx, my = xx.copy(), yy.copy()
+    start, end = soles
     delta = fraction * (end - start)
     dst = start + delta
     for y in range(h):
         gain = np.clip((y - dst[:, 1] + 50) / 36, 0, 1)[:, None]
         shift = crown * fraction + gain * (delta - crown * fraction)
+        if style == "separate":
+            # Past a lifted sole the lower scan lines carry only the stance
+            # foot. Its entire rim must travel with that foot.
+            planted = shift[dst[:, 1].argmax()]
+            clear = np.maximum(dst[:, 1], start[:, 1] + planted[1]) + 2
+            keep = np.clip((clear + 12 - y) / 12, 0, 1)[:, None]
+            shift = planted + keep * (shift - planted)
         centres = start[:, 0] + shift[:, 0]
         gaps = np.diff(centres)
         rim = np.minimum(13, .44 * np.minimum(np.r_[100, gaps], np.r_[gaps, 100]))
         rails = np.column_stack((centres - rim, centres + rim)).ravel()
-        mx[y] -= np.interp(xx[y], rails, np.repeat(shift[:, 0], 2))
-        my[y] -= np.interp(xx[y], rails, np.repeat(shift[:, 1], 2))
+        dx = np.interp(xx[y], rails, np.repeat(shift[:, 0], 2))
+        dy = np.interp(xx[y], rails, np.repeat(shift[:, 1], 2))
+        if len(centres) == 2:
+            # The front/rear sill spans the space between shafts. Keep its
+            # centre rigid and taper the displacement beside each ankle.
+            distance = np.abs(xx[y, :, None] - centres).min(axis=1)
+            local = np.clip((28 - distance) / 8, 0, 1)
+            dx = crown[0] * fraction + local * (dx - crown[0] * fraction)
+            dy = crown[1] * fraction + local * (dy - crown[1] * fraction)
+        mx[y] -= dx
+        my[y] -= dy
+    if style == "sill":
+        return rigid_sill(key, (mx, my), (xx, yy), crown * fraction)
     return remap_ink(key, mx, my)
+
+
+def rigid_sill(key, inverse, grid, body):
+    """Move the armour between the front pistons as one rigid plate."""
+    pixels = np.asarray(key)
+    h, w = pixels.shape[:2]
+    y = np.arange(h)[:, None]
+    bottom = np.where(pixels[..., 3] > 128, y, -1).max(axis=0)
+    low = int(np.median(bottom[w // 2 - 4 : w // 2 + 5]))
+    gray = cv2.cvtColor(pixels, cv2.COLOR_RGBA2GRAY).astype(float)
+    edge = np.abs(np.gradient(gray, axis=1))[low - 16 : low - 8].mean(axis=0)
+    bounds = []
+    for centre in (w * 0.32, w * 0.68):
+        search = np.arange(round(centre) - 6, round(centre) + 8)
+        bounds.append(search[np.argmax(edge[search])] + (1 if centre > w / 2 else -1))
+    xx, yy = grid
+    bx, by = xx - np.float32(body[0]), yy - np.float32(body[1])
+    dx = np.maximum.reduce([bounds[0] - bx, bx - bounds[1], np.zeros_like(bx)])
+    dy = np.maximum(by - low, 0)
+    # The plate follows the crown; only the exposed parts of the legs move
+    # independently. A smooth inverse map keeps the riveted edge connected.
+    blend = np.clip(np.hypot(dx, dy) / 18, 0, 1).astype("float32")
+    mx, my = inverse
+    return remap_ink(key, bx + blend * (mx - bx), by + blend * (my - by))
 
 
 def remap_ink(key, mx, my):
