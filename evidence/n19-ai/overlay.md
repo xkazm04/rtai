@@ -1,5 +1,21 @@
 # Arena wave visibility and city station check
 
+## Street fight at the shipped tune (A6c)
+
+Capture HEAD `61bd372a4e36aedb20e3bc5c512d260e81f4d942` includes the city contractor speed of 4.2 m/s. The replacement `films/street-squad.mp4` uses the A6 guard camera at (536, 544) m, seed 20261104, the pit bot, horde waves and the squad overlay. The film kit ran with `--rev=HEAD` and explicit `--enemy-brain=squad` in the clean project. Both street films are 1280 x 800, combo, 32 px/m, 60 fps and 1,440 frames (24.000 s). The replacement decoded end to end with FFmpeg. Its SHA-256 is `411d25d7475fe5c4c01f41ad7ece91323ff956bfe1db76016bca5844c67a1258`.
+
+The city fight probe ran with `--encounter=city --seeds=2 --bot=pit --horde --trace` for each explicit brain. The table uses the second seed, 20261104. The film numbers completed ticks from 1, so film tick 904 matches world tick 903 in the trace. Rivet's position and the living wave IDs matched at each selected tick. The wave's first FLANK trace row is world tick 1881. The flank pair comes from a longer still run of the same fight.
+
+| Film tick | Trace tick | Squad states across the living wave | What the PNG shows | Same-tick guard |
+|---:|---:|---|---|---|
+| 1905 | 1904 | COVER 6, ENGAGE 3, FLANK 1 | Fighter 27 flanks west of the car. Four cover fighters hold near the kerb. | G 6, route 5 and cooldown 1 |
+| 876 | 875 | COVER 5, ENGAGE 3 | The 64 px/m crop contains four cover fighters. IDs 15 and 17 are 3.30 m apart by the east crates. | |
+| 904 | 903 | COVER 5, ENGAGE 3 | Four take cover around the car and one by the east crates. | G 8, all routing |
+
+Both 32 px/m pairs use camera (539, 542.25) m. Each guard twin uses `--enemy-brain=guard` at the squad tick and camera. The close-up uses (550.5, 536.4) m. The captures used Godot 4.7.2, D3D12, window position (0, 1440), fixed 60 Hz and feel off. The film kit passed the movie and all three retained still runs. The logs include the existing rig-shadow triangulation and shutdown diagnostics.
+
+I opened the five selected street PNGs and both A5 zebra PNGs. The wide shots show every wave label on a fighter, including the gold F on the west lane. The close-up shows four distinct bodies and green labels. I discarded the edge-clipped wide shots, the preliminary west-side crop and the other candidate ticks. The old street pairs at 480 and 770 were retired. The [current catalogue](frames.json) includes the A5 north-wall before/after pair at tick 30.
+
 ## Wave bodies
 
 Pit horde, squad, seed 20261103, 60 Hz, combo, 32 px/m, camera (17, 20). A render-frame observer sampled every distinct sim tick 1 through 1290 from the arena scene. It joined each living ArenaPit.standing fighter to its visible full rig, robot rig or textured fallback sprite by fighter id. Shots below are newly emitted hostile projectiles, attributed by their owner. The HUD letter was sampled at the body anchor in the actor canvas. Rivet and all wave positions, identities, locomotion states and shot events matched at every tick across the two runs.
@@ -58,7 +74,7 @@ Both runs clustered all five on the approach. At tick 697, all five had a clear 
 
 Matched PNGs under the n19/ai masters folder are a6-checks/station-before-a5-t0697.png and a6-checks/station-after-a5-t0697.png.
 
-## Films and selected stills
+## Original A6 films and selected stills
 
 Rendered from 42fe4a733 with the film kit on D3D12 at (0, 1440), 1280 x 800, fixed 60 Hz, 32 px/m. The close-up uses 64 px/m. Each launch checked that the current worktree project was clean and its HEAD equalled the pinned commit. Street twins use the same camera, pit bot, horde schedule and seed. Only the enemy brain differs. The mixed film uses normal pit waves and shows patrol, riot, SWAT, robot thug and robot gunner alongside the contractor.
 
@@ -71,11 +87,11 @@ Rendered from 42fe4a733 with the film kit on D3D12 at (0, 1440), 1280 x 800, fix
 
 Across the four MP4s, all 20,418 living hostile-ticks had exactly one body. The per-fighter counts, positions and shots outside the full-rig pool are in [wave-visibility.csv](wave-visibility.csv). I verified each encoded MP4 with ffprobe. The pose observer recorded every living wave member on every tick of each shot. Production film-probe positions and life flags matched the observer on the film probe collection windows. Guard has no squad archetype and uses G for its baseline locomotion. Counts in frames.json are for the living wave. The 64 px/m entry also gives the crop count.
 
-The [frames.json catalogue](frames.json) has nine stills in viewing order, with relative paths and same-tick guard twins. E is engage, C cover and F flank. Cover uses pale green (#b4e08a), flank gold, engage cream, panic lavender and guard white. Unknown states draw a white question mark. The first city framing put the western flank under the ghost selector. The published camera is 4 m farther west. I inspected each selected PNG at its output resolution. I also moved the mixed-wave camera west to keep the robot gunner clear of the HUD, and removed the preliminary captures and obsolete masters.
+The A6 catalogue at `003b2d152` had nine stills in viewing order, with relative paths and same-tick guard twins. E is engage, C cover and F flank. Cover uses pale green (#b4e08a), flank gold, engage cream, panic lavender and guard white. Unknown states draw a white question mark. The first city framing put the western flank under the ghost selector. The published camera is 4 m farther west. I inspected each selected PNG at its output resolution. I also moved the mixed-wave camera west to keep the robot gunner clear of the HUD, and removed the preliminary captures and obsolete masters.
 
 The raw before/after render samples are in the masters under a6-checks/ as compressed NDJSON. Each line is [tick, wave, station, Rivet x, Rivet y]. Wave columns are id, archetype, sim xy (m), projected foot xy (px), full-rig local xy (px) or null, full-rig screen foot or null, representation, locomotion letter, fired, metres from rig focus, distance rank and, after the fix, label centre (px, null for an unlabelled shot) and combat action. Station samples list id, standing x/y, clear sight, Rivet distance, closest solid at standing and at home.
 
-## Validation
+## Original A6 validation
 
 - Full lint passed all 19 checks over 1,628 GDScript files. The quick gate passed on all eight changed GDScript files. The requested standalone check returned `ok res://features/arena/squad_overlay.gd`.
 - The arena rig, squad and squad-budget GUT suites passed 27/27. The new regression test moves a guard outside, inside and back outside the full-rig radius, then kills it. It checks the rig/card handoff and removal.
