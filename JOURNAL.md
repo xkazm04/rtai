@@ -81,3 +81,10 @@ NEXT: (session 5) wait for left-continue (lock logs/guns/astra.lock; check pid 3
 ## Session 5 (03:37 - )
 
 - 03:38 Read journal. left-continue alive (node pid 30828, log logs/guns/astra-12-left-continue.jsonl growing); plasma_rifle left PNGs still uncommitted in the tree. Waiting.
+- 03:45 LOOKED plasma_rifle_p70_left_check + p55_west (runtime mirror vs corrected left: only collar slant/latch differ) and the plasma turn32 clip tiled: Rivet centred. d5dadd25d accepted.
+- 03:46 LOOKED gatling_p55_left_check + p55_west: hand-made body, collar corrected, backpack/hose read behind him. f1a70395d accepted. Holes 16 -> 14.
+- 03:46 Brief 09 item 2 trimmed to re-shooting pre-f21f56f91 clips (framing code already centred).
+- 03:49 LOOKED flamethrower_p55_left_check + p55_west: hand-made body, tanks behind, collar corrected, flame unchanged. 82426c67d accepted. Holes -> 12.
+- 03:54 LOOKED gloria p55 left_check (ok) + p70 left_check/west/nw + own bbox crop: p70 W rest got a visor slit the hand-made E lacks; W/NW gun region smeared vs the crisp mirror. d798a20b8 holes accepted, p70 look bounced: brief 06d-gloria-p70-fix.md (runs after 06c ends).
+- 03:55 LOOKED gatling_p70_west, flamethrower_p70_nw: clean. Order after 06c: 06d (gloria p70 fix + rocket/mini_nuke self-check), 07 (reloads + mag view), 09 (walk/run info column, re-shoot clips, mutate survivors).
+NEXT: (if replaced) ASTRA RUNNING left-continue since 03:36 (node pid 30828; lock logs/guns/astra.lock; out evidence/briefs/06c-left-continue.out.txt else logs/guns/astra-12-left-continue.last.txt). Look at rocket_launcher + mini_nuke <gun>_p55/p70_left_check (tube on the correct shoulder, no helmet edits, crisp gun ink). Then launch 06d, 07, 09 in order (resume, WMI: Invoke-CimMethod Win32_Process Create, cmd /c "cd /d <wt> && node C:/Users/kazda/kiro/gtai-n19/tools/astra.mjs --lane guns --tag <t> --brief <abs> --resume > <abs out> 2>&1"). Commit journal with git commit -- JOURNAL.md evidence/briefs/<new>.
