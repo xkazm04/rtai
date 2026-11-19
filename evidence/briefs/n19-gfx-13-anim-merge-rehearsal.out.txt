@@ -1,0 +1,9 @@
+The rehearsal stopped at step 1. `n19-anim` fast-forwarded cleanly. Merging `n19-gfx` hit the five expected look PNG conflicts and one additional conflict in **`tools/debt/baseline.json`**, last changed by anim in `b472095b6` and gfx in `3a69fe5a0`. The morning merge tool handles that baseline automatically, but the requested plain Git merge left it unresolved.
+
+Per the brief’s stop condition, the DLL builds, crowd measurements, noir patch, golden comparisons, and gates did not run.
+
+Cleanup passed. The temporary worktree and branch were removed, and `git branch --list rehearse*` returned empty. I wrote only the report and evidence under masters. No lane changes were committed or pushed.
+
+[Rehearsal report](C:/Users/kazda/kiro/gtai-masters/n19/gfx/merge-13-REPORT.md) · [Conflict evidence](C:/Users/kazda/kiro/gtai-masters/n19/gfx/merge/conflicts.json) · [Cleanup log](C:/Users/kazda/kiro/gtai-masters/n19/gfx/merge/cleanup.log)
+
+[astra: 115s, exit 0]

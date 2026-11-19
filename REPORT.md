@@ -40,6 +40,7 @@ Evidence root: `C:/Users/kazda/kiro/gtai-masters/n19/gfx/` (written M below). Ga
 - Digests: items 1 and 2 moved no sim, replay or parity digest (decisions `city/spawner-zone-cars`, `city/far-cop-rows`). Item 4 re-baked the GTCH golden hash list twice: GENERATOR_VERSION 34 (decision `city/zones-v34-loading-apron`), then 35 (bollards). On merge, if another lane bumped GENERATOR_VERSION, take the higher number + 1 and re-bake (`res://dev/bake_city.gd`, then `-- --check`).
 - Look goldens re-blessed for item 2: `project/tests/golden/look/{d4-48ppm,d5-48ppm-ov,d5-64ppm-ov,auto-48ppm-ov,auto-56ppm-ov,auto-64ppm-ov}.png` (decision `look/junction-crowd-rows`). They pass on `28302bd3c` and `f94ca6118` and first cross at `b9cddfe91` (item 2): moved by item 2 alone.
 - anim NEED (02:12, `n19-anim/evidence/crowd-pop/NEED-gfx.md`): part 1 (slot + 1 in the people body custom.y) lands here (brief 11 Part 0). Part 2 (the noir crowd shader `project/assets/shaders/look_noir_crowd.gdshader` includes `crowd_atlas_vertex.gdshaderinc`; `NoirFrames._ink_crowd()` calls `configure_material`) cannot land on this branch: both live only on `n19-anim`. Apply it after merging anim. Part 3: five goldens changed on both branches (`auto-48ppm-ov`, `auto-56ppm-ov`, `auto-64ppm-ov`, `d4-48ppm`, `d5-48ppm-ov`): re-render them on the merged revision after the DLL rebuild, and take neither side's PNG.
+- `tools/debt/baseline.json` conflicts with n19-anim too (anim `b472095b6` x gfx `3a69fe5a0`): run `node tools/debt/merge_baseline.mjs` inside the merge, then `node tools/debt/debt.mjs --check` (rehearsal: `M/merge/conflicts.json`).
 - 3C: merge n19-ai's `prop_lying.gd` fix; re-check seed 5 tick 900 tilt 70 on the merged revision.
 - Native rebuilt (render.cpp row_of + crowd contact): every merge must rebuild the DLLs (debug + release) and `--import`.
 - Out-of-lane call site: `project/boot/city_characters.gd:60` (one line, after the crowd bake).
@@ -68,4 +69,5 @@ Evidence root: `C:/Users/kazda/kiro/gtai-masters/n19/gfx/` (written M below). Ga
 | bench10 | 59 | accepted (measurement only, no commit) |
 | tilt11 | 37 | accepted (anim NEED part 1, tilted draw-order fix, honest apron sheets, gate PASS) |
 | cost12 | 52 | accepted (dev cost probe `3a69fe5a0`: 3A below the A/A floor; heat-3 bench retry PASS, still CONTENDED) |
-| merge13 | TODO | TODO |
+| merge13 | 2 | bounced (my brief said stop on any non-golden conflict; the debt baseline has a resolver) |
+| merge15 (resume) | TODO | TODO |
