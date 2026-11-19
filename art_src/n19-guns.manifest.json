@@ -1676,7 +1676,7 @@
    "layout_template": "git:28302bd3c/project/features/characters/art/view/p55/rivet_eq_rocket_launcher_diag.png",
    "model": "source derivative",
    "prompt_ref": "tools/art/rocket_launcher_strips.py",
-   "prompt_sha256": "ab53bb686bf7725db6be11c790738a63d80ee4f8c8bc58e189ef147d29fb45f3",
+   "prompt_sha256": "de0900efe399d88932941ef67cfe912303701a3f8cfb71ab36e01e3cd390585a",
    "references": [
     "git:28302bd3c/project/features/characters/art/view/p55/rivet_eq_rocket_launcher_diag.png"
    ],
@@ -1690,7 +1690,7 @@
    "layout_template": "git:28302bd3c/project/features/characters/art/view/p55/rivet_eq_rocket_launcher_diag_noflash.png",
    "model": "source derivative",
    "prompt_ref": "tools/art/rocket_launcher_strips.py",
-   "prompt_sha256": "ab53bb686bf7725db6be11c790738a63d80ee4f8c8bc58e189ef147d29fb45f3",
+   "prompt_sha256": "de0900efe399d88932941ef67cfe912303701a3f8cfb71ab36e01e3cd390585a",
    "references": [
     "git:28302bd3c/project/features/characters/art/view/p55/rivet_eq_rocket_launcher_diag_noflash.png"
    ],
@@ -1749,12 +1749,26 @@
    "layout_template": "git:28302bd3c/project/features/characters/art/view/p70/rivet_eq_rocket_launcher_diag.png",
    "model": "source derivative",
    "prompt_ref": "tools/art/rocket_launcher_strips.py",
-   "prompt_sha256": "ab53bb686bf7725db6be11c790738a63d80ee4f8c8bc58e189ef147d29fb45f3",
+   "prompt_sha256": "de0900efe399d88932941ef67cfe912303701a3f8cfb71ab36e01e3cd390585a",
    "references": [
     "git:28302bd3c/project/features/characters/art/view/p70/rivet_eq_rocket_launcher_diag.png"
    ],
    "seed": null,
    "sha256": "82700a0b50e429c7e64c742acf6736f978ee01cee0fa22c18f601ae973c27a0e",
+   "tool": "Pillow"
+  },
+  "rocket_launcher_p70_diag_original_dark": {
+   "date": "2026-11-19",
+   "file": "masters:n19/guns/masters/rocket_launcher_p70_diag_original_dark.png",
+   "layout_template": "git:28302bd3c/project/features/characters/art/view/p70/rivet_eq_rocket_launcher_diag_noflash.png",
+   "model": "source derivative",
+   "prompt_ref": "tools/art/rocket_launcher_strips.py",
+   "prompt_sha256": "de0900efe399d88932941ef67cfe912303701a3f8cfb71ab36e01e3cd390585a",
+   "references": [
+    "git:28302bd3c/project/features/characters/art/view/p70/rivet_eq_rocket_launcher_diag_noflash.png"
+   ],
+   "seed": null,
+   "sha256": "8985363da27f943cfe42bce2b863f14d34a5b813e581c63e85766993289027e7",
    "tool": "Pillow"
   },
   "rocket_launcher_p70_left_key": {

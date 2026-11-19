@@ -193,7 +193,7 @@ def _manifest(path: str, only: str = "", no_rim: bool = False) -> None:
             if "shell_fit" in row:
                 sys.path.insert(0, str(Path(__file__).resolve().parent))
                 from launcher_left_fit import fit_left
-                fit_left(Path(out) / art / (name + ".png"), row["shell_fit"])
+                fit_left(Path(out) / art / (name + ".png"), row["shell_fit"], row.get("shell_curve", False))
             if "ink_rim" in row and not no_rim:
                 _ink_rim(f"{out}/{art}/{name}.png", row["ink_rim"])
             if "windup" in row:

@@ -18,6 +18,14 @@ class CellMetricsTest(unittest.TestCase):
         self.assertEqual(height, 70)
         np.testing.assert_array_equal(rgb, [133, 91, 66])
 
+    def test_a_camera_facing_barrel_can_extend_below_both_boots(self):
+        frame = np.zeros((110, 90, 4), np.uint8)
+        frame[12:76, 29:58] = [133, 91, 66, 255]
+        frame[72:82, 27:35] = [56, 42, 38, 255]
+        frame[69:101, 42:48] = [98, 96, 94, 255]
+        height, _, _ = figure(frame, 75, (31, 77))
+        self.assertEqual(height, 70)
+
     def test_height_and_tone_are_independent(self):
         base = [139, 96, 75]
         self.assertEqual(compare(105, base, 100, base)[2], "-")

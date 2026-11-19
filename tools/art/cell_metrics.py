@@ -39,7 +39,23 @@ def shell_rgb(rgb):
             (r - g < 3.5 * (g - b) + 5) & (r > 48) & (r < 248))
 
 
-def figure(cell, nominal):
+def sole(body, seed):
+    """Follow the run of opaque boot pixels below the reviewed interior point.
+    A camera-facing weapon can extend between both feet and join their component.
+    """
+    y, x = np.nonzero(body)
+    sx, sy = seed
+    nearest = np.argmin((x-sx)**2 + (y-sy)**2)
+    sx, sy = x[nearest], y[nearest]
+    ends = []
+    for col in range(max(0, sx-5), min(body.shape[1], sx+6)):
+        if body[sy, col]:
+            clear = np.flatnonzero(~body[sy:, col])
+            ends.append(sy + clear[0]-1 if clear.size else body.shape[0]-1)
+    return int(max(ends))
+
+
+def figure(cell, nominal, boot_seed=None):
     """Crown-to-sole opaque extent and upper helmet plate sample, in cut pixels."""
     opaque = (cell[:, :, 3] >= 128).astype(np.uint8)
     count, ids, stats, _ = cv2.connectedComponentsWithStats(opaque, connectivity=8)
@@ -67,6 +83,8 @@ def figure(cell, nominal):
     column = body & (abs(x - cx) <= max(3, round(nominal * .13))) & (y <= cy)
     boots = body & (abs(x - cx) <= nominal * .49)
     top, bottom = int(y[column].min()), int(y[boots].max())
+    if boot_seed is not None:
+        bottom = sole(body, boot_seed)
     return bottom-top+1, np.median(cell[plate, :3], axis=0), (int(cx), int(cy), radius)
 
 
@@ -87,6 +105,7 @@ def report():
     high = set(re.findall(r'"(p(?:55|70)/[^"]+\.png)"',
                           (ROOT / "project/features/characters/rivet_res.gd").read_text()))
     rows = []
+    seeds = json.loads(Path(__file__).with_name("cell_boot_seeds.json").read_text())
     for weapon in sorted(arsenal["weapons"]):
         gun = weapon.replace("-", "_")
         for pitch, game_scale in Y_AT_110.items():
@@ -107,7 +126,9 @@ def report():
                 # the actual boots and helmet even where a flare covers them.
                 source = dark if dark.exists() else path
                 for index, (image, facing) in enumerate(zip(cells(source, len(frames)), frames)):
-                    h, rgb, _ = figure(image, 110 * factor)
+                    seed_key = f"{pitch}/{stem.removesuffix('_noflash')}"
+                    seed = seeds.get(seed_key, {}).get(str(index))
+                    h, rgb, _ = figure(image, 110 * factor, seed)
                     measured.append((stem, index, facing, h * game_scale / factor, rgb))
             ref = next(r for r in measured if r[:2] == (eq, 2))
             for stem, index, facing, height, rgb in measured:
@@ -124,7 +145,7 @@ def write(out):
     method = ("64 px/m standing turn scale; alpha >= 128, connected crown to sole, "
               "median sRGB of rust pixels on upper helmet plate. E = equipped cell 2. "
               "H: abs(height difference) > 5%; T: CIE76 D65 delta E > 8. "
-              "Lit cells use matching flashless geometry when supplied.")
+              "Lit cells use matching flashless geometry when supplied; projecting weapons use reviewed boot seeds.")
     out.with_suffix(".json").write_text(json.dumps(dict(method=method, rows=rows), indent=1)+"\n")
     with out.with_suffix(".txt").open("w", newline="\n") as f:
         print(method, file=f)

@@ -1,5 +1,5 @@
 {
- "method": "64 px/m standing turn scale; alpha >= 128, connected crown to sole, median sRGB of rust pixels on upper helmet plate. E = equipped cell 2. H: abs(height difference) > 5%; T: CIE76 D65 delta E > 8. Lit cells use matching flashless geometry when supplied.",
+ "method": "64 px/m standing turn scale; alpha >= 128, connected crown to sole, median sRGB of rust pixels on upper helmet plate. E = equipped cell 2. H: abs(height difference) > 5%; T: CIE76 D65 delta E > 8. Lit cells use matching flashless geometry when supplied; projecting weapons use reviewed boot seeds.",
  "rows": [
   {
    "weapon": "assault-rifle",
@@ -1319,15 +1319,15 @@
    "strip": "rivet_eq_chainsaw",
    "cell": 6,
    "facing": "S-fire",
-   "height_px": 140.52,
+   "height_px": 102.88,
    "shell_rgb": [
     127,
     92,
     72
    ],
-   "height_pct": 0.0,
+   "height_pct": -26.79,
    "delta_e": 3.23,
-   "flag": "-"
+   "flag": "H"
   },
   {
    "weapon": "chainsaw",
@@ -1335,13 +1335,13 @@
    "strip": "rivet_eq_chainsaw",
    "cell": 7,
    "facing": "idle",
-   "height_px": 125.46,
+   "height_px": 121.7,
    "shell_rgb": [
     120,
     89,
     70
    ],
-   "height_pct": -10.71,
+   "height_pct": -13.39,
    "delta_e": 1.2,
    "flag": "H"
   },
@@ -1479,15 +1479,15 @@
    "strip": "rivet_eq_chainsaw",
    "cell": 5,
    "facing": "E-fire",
-   "height_px": 133.96,
+   "height_px": 119.35,
    "shell_rgb": [
     136,
     111,
     86
    ],
-   "height_pct": -0.6,
+   "height_pct": -11.45,
    "delta_e": 1.14,
-   "flag": "-"
+   "flag": "H"
   },
   {
    "weapon": "chainsaw",
@@ -1495,13 +1495,13 @@
    "strip": "rivet_eq_chainsaw",
    "cell": 6,
    "facing": "S-fire",
-   "height_px": 171.31,
+   "height_px": 116.1,
    "shell_rgb": [
     130,
     102,
     77
    ],
-   "height_pct": 27.11,
+   "height_pct": -13.86,
    "delta_e": 4.45,
    "flag": "H"
   },
@@ -1511,15 +1511,15 @@
    "strip": "rivet_eq_chainsaw",
    "cell": 7,
    "facing": "idle",
-   "height_px": 159.94,
+   "height_px": 131.53,
    "shell_rgb": [
     132,
     104,
     81
    ],
-   "height_pct": 18.67,
+   "height_pct": -2.41,
    "delta_e": 3.54,
-   "flag": "H"
+   "flag": "-"
   },
   {
    "weapon": "chainsaw",
@@ -1575,13 +1575,13 @@
    "strip": "rivet_eq_electro_baton",
    "cell": 0,
    "facing": "S",
-   "height_px": 136.76,
+   "height_px": 125.46,
    "shell_rgb": [
     149,
     116,
     88
    ],
-   "height_pct": -3.54,
+   "height_pct": 0.0,
    "delta_e": 7.25,
    "flag": "-"
   },
@@ -1591,15 +1591,15 @@
    "strip": "rivet_eq_electro_baton",
    "cell": 1,
    "facing": "SE",
-   "height_px": 138.01,
+   "height_px": 136.76,
    "shell_rgb": [
     150,
     111,
     84
    ],
-   "height_pct": -2.65,
+   "height_pct": 9.0,
    "delta_e": 6.78,
-   "flag": "-"
+   "flag": "H"
   },
   {
    "weapon": "electro_baton",
@@ -1607,7 +1607,7 @@
    "strip": "rivet_eq_electro_baton",
    "cell": 2,
    "facing": "E",
-   "height_px": 141.77,
+   "height_px": 125.46,
    "shell_rgb": [
     132,
     100,
@@ -1623,13 +1623,13 @@
    "strip": "rivet_eq_electro_baton",
    "cell": 3,
    "facing": "NE",
-   "height_px": 136.76,
+   "height_px": 125.46,
    "shell_rgb": [
     126,
     93,
     72
    ],
-   "height_pct": -3.54,
+   "height_pct": 0.0,
    "delta_e": 2.87,
    "flag": "-"
   },
@@ -1639,13 +1639,13 @@
    "strip": "rivet_eq_electro_baton",
    "cell": 4,
    "facing": "N",
-   "height_px": 135.5,
+   "height_px": 125.46,
    "shell_rgb": [
     145,
     110,
     86
    ],
-   "height_pct": -4.42,
+   "height_pct": 0.0,
    "delta_e": 4.65,
    "flag": "-"
   },
@@ -1661,9 +1661,9 @@
     112,
     86
    ],
-   "height_pct": -7.96,
+   "height_pct": 4.0,
    "delta_e": 6.98,
-   "flag": "H"
+   "flag": "-"
   },
   {
    "weapon": "electro_baton",
@@ -1671,15 +1671,15 @@
    "strip": "rivet_eq_electro_baton",
    "cell": 6,
    "facing": "S-fire",
-   "height_px": 155.58,
+   "height_px": 120.45,
    "shell_rgb": [
     137,
     100,
     75
    ],
-   "height_pct": 9.73,
+   "height_pct": -4.0,
    "delta_e": 3.58,
-   "flag": "H"
+   "flag": "-"
   },
   {
    "weapon": "electro_baton",
@@ -1687,13 +1687,13 @@
    "strip": "rivet_eq_electro_baton",
    "cell": 7,
    "facing": "idle",
-   "height_px": 144.28,
+   "height_px": 119.19,
    "shell_rgb": [
     134,
     102,
     80
    ],
-   "height_pct": 1.77,
+   "height_pct": -5.0,
    "delta_e": 0.94,
    "flag": "-"
   },
@@ -1709,9 +1709,9 @@
     117,
     77
    ],
-   "height_pct": -0.88,
+   "height_pct": 12.0,
    "delta_e": 13.78,
-   "flag": "T"
+   "flag": "HT"
   },
   {
    "weapon": "electro_baton",
@@ -1725,9 +1725,9 @@
     128,
     86
    ],
-   "height_pct": -2.65,
+   "height_pct": 10.0,
    "delta_e": 17.37,
-   "flag": "T"
+   "flag": "HT"
   },
   {
    "weapon": "electro_baton",
@@ -1741,9 +1741,9 @@
     106,
     73
    ],
-   "height_pct": -2.65,
+   "height_pct": 10.0,
    "delta_e": 7.41,
-   "flag": "-"
+   "flag": "H"
   },
   {
    "weapon": "electro_baton",
@@ -1751,13 +1751,13 @@
    "strip": "rivet_eq_electro_baton",
    "cell": 0,
    "facing": "S",
-   "height_px": 129.09,
+   "height_px": 124.22,
    "shell_rgb": [
     180,
     137,
     109
    ],
-   "height_pct": -6.19,
+   "height_pct": -5.56,
    "delta_e": 3.96,
    "flag": "H"
   },
@@ -1767,13 +1767,13 @@
    "strip": "rivet_eq_electro_baton",
    "cell": 1,
    "facing": "SE",
-   "height_px": 133.96,
+   "height_px": 129.09,
    "shell_rgb": [
     184,
     143,
     115
    ],
-   "height_pct": -2.65,
+   "height_pct": -1.85,
    "delta_e": 3.47,
    "flag": "-"
   },
@@ -1783,7 +1783,7 @@
    "strip": "rivet_eq_electro_baton",
    "cell": 2,
    "facing": "E",
-   "height_px": 137.62,
+   "height_px": 131.53,
    "shell_rgb": [
     187,
     144,
@@ -1799,15 +1799,15 @@
    "strip": "rivet_eq_electro_baton",
    "cell": 3,
    "facing": "NE",
-   "height_px": 127.87,
+   "height_px": 126.66,
    "shell_rgb": [
     167,
     116,
     88
    ],
-   "height_pct": -7.08,
+   "height_pct": -3.7,
    "delta_e": 11.07,
-   "flag": "HT"
+   "flag": "T"
   },
   {
    "weapon": "electro_baton",
@@ -1815,13 +1815,13 @@
    "strip": "rivet_eq_electro_baton",
    "cell": 4,
    "facing": "N",
-   "height_px": 133.96,
+   "height_px": 127.87,
    "shell_rgb": [
     162,
     119,
     94
    ],
-   "height_pct": -2.65,
+   "height_pct": -2.78,
    "delta_e": 10.51,
    "flag": "T"
   },
@@ -1831,15 +1831,15 @@
    "strip": "rivet_eq_electro_baton",
    "cell": 5,
    "facing": "E-fire",
-   "height_px": 144.92,
+   "height_px": 125.44,
    "shell_rgb": [
     196,
     153,
     123
    ],
-   "height_pct": 5.31,
+   "height_pct": -4.63,
    "delta_e": 4.17,
-   "flag": "H"
+   "flag": "-"
   },
   {
    "weapon": "electro_baton",
@@ -1847,15 +1847,15 @@
    "strip": "rivet_eq_electro_baton",
    "cell": 6,
    "facing": "S-fire",
-   "height_px": 193.64,
+   "height_px": 130.31,
    "shell_rgb": [
     172,
     129,
     97
    ],
-   "height_pct": 40.71,
+   "height_pct": -0.93,
    "delta_e": 5.68,
-   "flag": "H"
+   "flag": "-"
   },
   {
    "weapon": "electro_baton",
@@ -1863,13 +1863,13 @@
    "strip": "rivet_eq_electro_baton",
    "cell": 7,
    "facing": "idle",
-   "height_px": 179.02,
+   "height_px": 121.78,
    "shell_rgb": [
     190,
     149,
     121
    ],
-   "height_pct": 30.09,
+   "height_pct": -7.41,
    "delta_e": 4.04,
    "flag": "H"
   },
@@ -1879,15 +1879,15 @@
    "strip": "rivet_eq_electro_baton_left",
    "cell": 0,
    "facing": "SW",
-   "height_px": 144.92,
+   "height_px": 132.74,
    "shell_rgb": [
     156,
     111,
     91
    ],
-   "height_pct": 5.31,
+   "height_pct": 0.93,
    "delta_e": 14.21,
-   "flag": "HT"
+   "flag": "T"
   },
   {
    "weapon": "electro_baton",
@@ -1895,15 +1895,15 @@
    "strip": "rivet_eq_electro_baton_left",
    "cell": 1,
    "facing": "W",
-   "height_px": 170.5,
+   "height_px": 133.96,
    "shell_rgb": [
     162,
     116,
     90
    ],
-   "height_pct": 23.89,
+   "height_pct": 1.85,
    "delta_e": 11.19,
-   "flag": "HT"
+   "flag": "T"
   },
   {
    "weapon": "electro_baton",
@@ -1911,15 +1911,15 @@
    "strip": "rivet_eq_electro_baton_left",
    "cell": 2,
    "facing": "NW",
-   "height_px": 170.5,
+   "height_px": 133.96,
    "shell_rgb": [
     160,
     113,
     91
    ],
-   "height_pct": 23.89,
+   "height_pct": 1.85,
    "delta_e": 12.97,
-   "flag": "HT"
+   "flag": "T"
   },
   {
    "weapon": "electro_gun",
@@ -2455,13 +2455,13 @@
    "strip": "rivet_eq_electro_gun",
    "cell": 6,
    "facing": "S-fire",
-   "height_px": 145.33,
+   "height_px": 142.89,
    "shell_rgb": [
     156,
     114,
     89
    ],
-   "height_pct": 8.48,
+   "height_pct": 6.67,
    "delta_e": 5.9,
    "flag": "H"
   },
@@ -2583,13 +2583,13 @@
    "strip": "rivet_eq_electro_gun_noflash",
    "cell": 6,
    "facing": "S-fire",
-   "height_px": 145.33,
+   "height_px": 142.89,
    "shell_rgb": [
     156,
     114,
     89
    ],
-   "height_pct": 8.48,
+   "height_pct": 6.67,
    "delta_e": 5.9,
    "flag": "H"
   },
@@ -2887,13 +2887,13 @@
    "strip": "rivet_eq_flamethrower",
    "cell": 6,
    "facing": "S-fire",
-   "height_px": 175.65,
+   "height_px": 93.68,
    "shell_rgb": [
     133,
     99,
     71
    ],
-   "height_pct": 27.27,
+   "height_pct": -32.12,
    "delta_e": 9.53,
    "flag": "HT"
   },
@@ -3079,13 +3079,13 @@
    "strip": "rivet_eq_flamethrower",
    "cell": 6,
    "facing": "S-fire",
-   "height_px": 223.27,
+   "height_px": 108.79,
    "shell_rgb": [
     125,
     95,
     70
    ],
-   "height_pct": 66.67,
+   "height_pct": -18.79,
    "delta_e": 5.93,
    "flag": "H"
   },
@@ -3831,13 +3831,13 @@
    "strip": "rivet_eq_gatling",
    "cell": 6,
    "facing": "S-fire",
-   "height_px": 148.58,
+   "height_px": 115.29,
    "shell_rgb": [
     127,
     99,
     79
    ],
-   "height_pct": 9.58,
+   "height_pct": -14.97,
    "delta_e": 1.23,
    "flag": "H"
   },
@@ -3847,13 +3847,13 @@
    "strip": "rivet_eq_gatling",
    "cell": 7,
    "facing": "idle",
-   "height_px": 123.41,
+   "height_px": 122.6,
    "shell_rgb": [
     121,
     97,
     80
    ],
-   "height_pct": -8.98,
+   "height_pct": -9.58,
    "delta_e": 3.17,
    "flag": "H"
   },
@@ -3959,13 +3959,13 @@
    "strip": "rivet_eq_gatling_noflash",
    "cell": 6,
    "facing": "S-fire",
-   "height_px": 148.58,
+   "height_px": 115.29,
    "shell_rgb": [
     127,
     99,
     79
    ],
-   "height_pct": 9.58,
+   "height_pct": -14.97,
    "delta_e": 1.23,
    "flag": "H"
   },
@@ -3975,13 +3975,13 @@
    "strip": "rivet_eq_gatling_noflash",
    "cell": 7,
    "facing": "idle",
-   "height_px": 123.41,
+   "height_px": 122.6,
    "shell_rgb": [
     121,
     97,
     80
    ],
-   "height_pct": -8.98,
+   "height_pct": -9.58,
    "delta_e": 3.17,
    "flag": "H"
   },
@@ -5495,15 +5495,15 @@
    "strip": "rivet_eq_hand_cannon",
    "cell": 0,
    "facing": "S",
-   "height_px": 133.96,
+   "height_px": 121.78,
    "shell_rgb": [
     122,
     94,
     75
    ],
-   "height_pct": 0.61,
+   "height_pct": -8.54,
    "delta_e": 3.42,
-   "flag": "-"
+   "flag": "H"
   },
   {
    "weapon": "hand_cannon",
@@ -5511,13 +5511,13 @@
    "strip": "rivet_eq_hand_cannon",
    "cell": 1,
    "facing": "SE",
-   "height_px": 137.21,
+   "height_px": 135.59,
    "shell_rgb": [
     120,
     91,
     73
    ],
-   "height_pct": 3.05,
+   "height_pct": 1.83,
    "delta_e": 3.81,
    "flag": "-"
   },
@@ -5607,15 +5607,15 @@
    "strip": "rivet_eq_hand_cannon",
    "cell": 7,
    "facing": "idle",
-   "height_px": 135.59,
+   "height_px": 108.79,
    "shell_rgb": [
     123,
     96,
     75
    ],
-   "height_pct": 1.83,
+   "height_pct": -18.29,
    "delta_e": 3.6,
-   "flag": "-"
+   "flag": "H"
   },
   {
    "weapon": "hand_cannon",
@@ -5623,15 +5623,15 @@
    "strip": "rivet_eq_hand_cannon_noflash",
    "cell": 0,
    "facing": "S",
-   "height_px": 133.96,
+   "height_px": 121.78,
    "shell_rgb": [
     122,
     94,
     75
    ],
-   "height_pct": 0.61,
+   "height_pct": -8.54,
    "delta_e": 3.42,
-   "flag": "-"
+   "flag": "H"
   },
   {
    "weapon": "hand_cannon",
@@ -5639,13 +5639,13 @@
    "strip": "rivet_eq_hand_cannon_noflash",
    "cell": 1,
    "facing": "SE",
-   "height_px": 137.21,
+   "height_px": 135.59,
    "shell_rgb": [
     120,
     91,
     73
    ],
-   "height_pct": 3.05,
+   "height_pct": 1.83,
    "delta_e": 3.81,
    "flag": "-"
   },
@@ -5735,15 +5735,15 @@
    "strip": "rivet_eq_hand_cannon_noflash",
    "cell": 7,
    "facing": "idle",
-   "height_px": 135.59,
+   "height_px": 108.79,
    "shell_rgb": [
     123,
     96,
     75
    ],
-   "height_pct": 1.83,
+   "height_pct": -18.29,
    "delta_e": 3.6,
-   "flag": "-"
+   "flag": "H"
   },
   {
    "weapon": "hand_cannon",
@@ -7239,13 +7239,13 @@
    "strip": "rivet_eq_katana",
    "cell": 6,
    "facing": "S-fire",
-   "height_px": 171.89,
+   "height_px": 111.66,
    "shell_rgb": [
     130,
     98,
     76
    ],
-   "height_pct": 24.55,
+   "height_pct": -19.09,
    "delta_e": 4.04,
    "flag": "H"
   },
@@ -7399,13 +7399,13 @@
    "strip": "rivet_eq_katana",
    "cell": 5,
    "facing": "E-fire",
-   "height_px": 142.08,
+   "height_px": 118.54,
    "shell_rgb": [
     124,
     97,
     75
    ],
-   "height_pct": 5.42,
+   "height_pct": -12.05,
    "delta_e": 4.24,
    "flag": "H"
   },
@@ -7415,13 +7415,13 @@
    "strip": "rivet_eq_katana",
    "cell": 6,
    "facing": "S-fire",
-   "height_px": 203.79,
+   "height_px": 109.61,
    "shell_rgb": [
     126,
     99,
     76
    ],
-   "height_pct": 51.2,
+   "height_pct": -18.67,
    "delta_e": 3.23,
    "flag": "H"
   },
@@ -8791,13 +8791,13 @@
    "strip": "rivet_eq_mini_nuke",
    "cell": 0,
    "facing": "S",
-   "height_px": 133.96,
+   "height_px": 132.34,
    "shell_rgb": [
     124,
     96,
     76
    ],
-   "height_pct": 0.0,
+   "height_pct": -1.21,
    "delta_e": 7.07,
    "flag": "-"
   },
@@ -8871,13 +8871,13 @@
    "strip": "rivet_eq_mini_nuke",
    "cell": 5,
    "facing": "E-fire",
-   "height_px": 134.77,
+   "height_px": 130.71,
    "shell_rgb": [
     132,
     101,
     80
    ],
-   "height_pct": 0.61,
+   "height_pct": -2.42,
    "delta_e": 4.34,
    "flag": "-"
   },
@@ -8887,13 +8887,13 @@
    "strip": "rivet_eq_mini_nuke",
    "cell": 6,
    "facing": "S-fire",
-   "height_px": 142.08,
+   "height_px": 120.16,
    "shell_rgb": [
     122,
     92,
     72
    ],
-   "height_pct": 6.06,
+   "height_pct": -10.3,
    "delta_e": 7.98,
    "flag": "H"
   },
@@ -8903,15 +8903,15 @@
    "strip": "rivet_eq_mini_nuke",
    "cell": 7,
    "facing": "idle",
-   "height_px": 146.14,
+   "height_px": 130.71,
    "shell_rgb": [
     128,
     100,
     80
    ],
-   "height_pct": 9.09,
+   "height_pct": -2.42,
    "delta_e": 5.66,
-   "flag": "H"
+   "flag": "-"
   },
   {
    "weapon": "mini_nuke",
@@ -8919,13 +8919,13 @@
    "strip": "rivet_eq_mini_nuke_noflash",
    "cell": 0,
    "facing": "S",
-   "height_px": 133.96,
+   "height_px": 132.34,
    "shell_rgb": [
     124,
     96,
     76
    ],
-   "height_pct": 0.0,
+   "height_pct": -1.21,
    "delta_e": 7.07,
    "flag": "-"
   },
@@ -8999,13 +8999,13 @@
    "strip": "rivet_eq_mini_nuke_noflash",
    "cell": 5,
    "facing": "E-fire",
-   "height_px": 134.77,
+   "height_px": 130.71,
    "shell_rgb": [
     132,
     101,
     80
    ],
-   "height_pct": 0.61,
+   "height_pct": -2.42,
    "delta_e": 4.34,
    "flag": "-"
   },
@@ -9015,13 +9015,13 @@
    "strip": "rivet_eq_mini_nuke_noflash",
    "cell": 6,
    "facing": "S-fire",
-   "height_px": 142.08,
+   "height_px": 120.16,
    "shell_rgb": [
     122,
     92,
     72
    ],
-   "height_pct": 6.06,
+   "height_pct": -10.3,
    "delta_e": 7.98,
    "flag": "H"
   },
@@ -9031,15 +9031,15 @@
    "strip": "rivet_eq_mini_nuke_noflash",
    "cell": 7,
    "facing": "idle",
-   "height_px": 146.14,
+   "height_px": 130.71,
    "shell_rgb": [
     128,
     100,
     80
    ],
-   "height_pct": 9.09,
+   "height_pct": -2.42,
    "delta_e": 5.66,
-   "flag": "H"
+   "flag": "-"
   },
   {
    "weapon": "mini_nuke",
@@ -12007,13 +12007,13 @@
    "strip": "rivet_eq_plasma_sword",
    "cell": 6,
    "facing": "S-fire",
-   "height_px": 143.03,
+   "height_px": 141.77,
    "shell_rgb": [
     130,
     95,
     77
    ],
-   "height_pct": 2.7,
+   "height_pct": 1.8,
    "delta_e": 2.46,
    "flag": "-"
   },
@@ -12167,15 +12167,15 @@
    "strip": "rivet_eq_plasma_sword",
    "cell": 5,
    "facing": "E-fire",
-   "height_px": 135.18,
+   "height_px": 109.61,
    "shell_rgb": [
     129,
     96,
     74
    ],
-   "height_pct": -0.89,
+   "height_pct": -19.64,
    "delta_e": 5.85,
-   "flag": "-"
+   "flag": "H"
   },
   {
    "weapon": "plasma_sword",
@@ -12183,13 +12183,13 @@
    "strip": "rivet_eq_plasma_sword",
    "cell": 6,
    "facing": "S-fire",
-   "height_px": 191.2,
+   "height_px": 96.21,
    "shell_rgb": [
     132,
     94,
     72
    ],
-   "height_pct": 40.18,
+   "height_pct": -29.46,
    "delta_e": 4.02,
    "flag": "H"
   },
@@ -12199,15 +12199,15 @@
    "strip": "rivet_eq_plasma_sword",
    "cell": 7,
    "facing": "idle",
-   "height_px": 132.74,
+   "height_px": 109.61,
    "shell_rgb": [
     125,
     95,
     75
    ],
-   "height_pct": -2.68,
+   "height_pct": -19.64,
    "delta_e": 7.93,
-   "flag": "-"
+   "flag": "H"
   },
   {
    "weapon": "plasma_sword",
@@ -12215,13 +12215,13 @@
    "strip": "rivet_eq_plasma_sword_left",
    "cell": 0,
    "facing": "SW",
-   "height_px": 127.87,
+   "height_px": 126.66,
    "shell_rgb": [
     142,
     101,
     82
    ],
-   "height_pct": -6.25,
+   "height_pct": -7.14,
    "delta_e": 2.87,
    "flag": "H"
   },
@@ -12231,15 +12231,15 @@
    "strip": "rivet_eq_plasma_sword_left",
    "cell": 1,
    "facing": "W",
-   "height_px": 131.53,
+   "height_px": 129.09,
    "shell_rgb": [
     145,
     102,
     78
    ],
-   "height_pct": -3.57,
+   "height_pct": -5.36,
    "delta_e": 0.95,
-   "flag": "-"
+   "flag": "H"
   },
   {
    "weapon": "plasma_sword",
@@ -12871,15 +12871,15 @@
    "strip": "rivet_eq_ray_gun",
    "cell": 0,
    "facing": "S",
-   "height_px": 140.46,
+   "height_px": 122.6,
    "shell_rgb": [
     117,
     93,
     74
    ],
-   "height_pct": 4.85,
+   "height_pct": -8.48,
    "delta_e": 9.67,
-   "flag": "T"
+   "flag": "HT"
   },
   {
    "weapon": "ray_gun",
@@ -12887,13 +12887,13 @@
    "strip": "rivet_eq_ray_gun",
    "cell": 1,
    "facing": "SE",
-   "height_px": 146.14,
+   "height_px": 143.71,
    "shell_rgb": [
     136,
     108,
     86
    ],
-   "height_pct": 9.09,
+   "height_pct": 7.27,
    "delta_e": 4.46,
    "flag": "H"
   },
@@ -12919,13 +12919,13 @@
    "strip": "rivet_eq_ray_gun",
    "cell": 3,
    "facing": "NE",
-   "height_px": 125.03,
+   "height_px": 116.1,
    "shell_rgb": [
     133,
     100,
     76
    ],
-   "height_pct": -6.67,
+   "height_pct": -13.33,
    "delta_e": 3.43,
    "flag": "H"
   },
@@ -12951,13 +12951,13 @@
    "strip": "rivet_eq_ray_gun",
    "cell": 5,
    "facing": "E-fire",
-   "height_px": 125.03,
+   "height_px": 116.91,
    "shell_rgb": [
     131,
     102,
     81
    ],
-   "height_pct": -6.67,
+   "height_pct": -12.73,
    "delta_e": 5.18,
    "flag": "H"
   },
@@ -12967,15 +12967,15 @@
    "strip": "rivet_eq_ray_gun",
    "cell": 6,
    "facing": "S-fire",
-   "height_px": 151.82,
+   "height_px": 129.09,
    "shell_rgb": [
     113,
     88,
     69
    ],
-   "height_pct": 13.33,
+   "height_pct": -3.64,
    "delta_e": 10.77,
-   "flag": "HT"
+   "flag": "T"
   },
   {
    "weapon": "ray_gun",
@@ -12983,15 +12983,15 @@
    "strip": "rivet_eq_ray_gun",
    "cell": 7,
    "facing": "idle",
-   "height_px": 161.57,
+   "height_px": 129.9,
    "shell_rgb": [
     138,
     108,
     85
    ],
-   "height_pct": 20.61,
+   "height_pct": -3.03,
    "delta_e": 3.52,
-   "flag": "H"
+   "flag": "-"
   },
   {
    "weapon": "ray_gun",
@@ -12999,15 +12999,15 @@
    "strip": "rivet_eq_ray_gun_noflash",
    "cell": 0,
    "facing": "S",
-   "height_px": 140.46,
+   "height_px": 122.6,
    "shell_rgb": [
     117,
     93,
     74
    ],
-   "height_pct": 4.85,
+   "height_pct": -8.48,
    "delta_e": 9.67,
-   "flag": "T"
+   "flag": "HT"
   },
   {
    "weapon": "ray_gun",
@@ -13015,13 +13015,13 @@
    "strip": "rivet_eq_ray_gun_noflash",
    "cell": 1,
    "facing": "SE",
-   "height_px": 146.14,
+   "height_px": 143.71,
    "shell_rgb": [
     136,
     108,
     86
    ],
-   "height_pct": 9.09,
+   "height_pct": 7.27,
    "delta_e": 4.46,
    "flag": "H"
   },
@@ -13047,13 +13047,13 @@
    "strip": "rivet_eq_ray_gun_noflash",
    "cell": 3,
    "facing": "NE",
-   "height_px": 125.03,
+   "height_px": 116.1,
    "shell_rgb": [
     133,
     100,
     76
    ],
-   "height_pct": -6.67,
+   "height_pct": -13.33,
    "delta_e": 3.43,
    "flag": "H"
   },
@@ -13079,13 +13079,13 @@
    "strip": "rivet_eq_ray_gun_noflash",
    "cell": 5,
    "facing": "E-fire",
-   "height_px": 125.03,
+   "height_px": 116.91,
    "shell_rgb": [
     131,
     102,
     81
    ],
-   "height_pct": -6.67,
+   "height_pct": -12.73,
    "delta_e": 5.18,
    "flag": "H"
   },
@@ -13095,15 +13095,15 @@
    "strip": "rivet_eq_ray_gun_noflash",
    "cell": 6,
    "facing": "S-fire",
-   "height_px": 151.82,
+   "height_px": 129.09,
    "shell_rgb": [
     113,
     88,
     69
    ],
-   "height_pct": 13.33,
+   "height_pct": -3.64,
    "delta_e": 10.77,
-   "flag": "HT"
+   "flag": "T"
   },
   {
    "weapon": "ray_gun",
@@ -13111,15 +13111,15 @@
    "strip": "rivet_eq_ray_gun_noflash",
    "cell": 7,
    "facing": "idle",
-   "height_px": 161.57,
+   "height_px": 129.9,
    "shell_rgb": [
     138,
     108,
     85
    ],
-   "height_pct": 20.61,
+   "height_pct": -3.03,
    "delta_e": 3.52,
-   "flag": "H"
+   "flag": "-"
   },
   {
    "weapon": "ray_gun",
@@ -13863,15 +13863,15 @@
    "strip": "rivet_eq_rocket_launcher_left",
    "cell": 0,
    "facing": "SW",
-   "height_px": 138.01,
+   "height_px": 134.67,
    "shell_rgb": [
-    168,
-    115,
-    82
+    126,
+    88,
+    63
    ],
-   "height_pct": 0.0,
-   "delta_e": 16.58,
-   "flag": "T"
+   "height_pct": -2.42,
+   "delta_e": 5.55,
+   "flag": "-"
   },
   {
    "weapon": "rocket_launcher",
@@ -13879,462 +13879,462 @@
    "strip": "rivet_eq_rocket_launcher_left",
    "cell": 1,
    "facing": "W",
-   "height_px": 138.01,
-   "shell_rgb": [
-    156,
-    97,
-    68
-   ],
-   "height_pct": 0.0,
-   "delta_e": 15.82,
-   "flag": "T"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p55",
-   "strip": "rivet_eq_rocket_launcher_left",
-   "cell": 2,
-   "facing": "NW",
-   "height_px": 138.01,
-   "shell_rgb": [
-    147,
-    99,
-    71
-   ],
-   "height_pct": 0.0,
-   "delta_e": 10.62,
-   "flag": "T"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher",
-   "cell": 0,
-   "facing": "S",
-   "height_px": 131.53,
-   "shell_rgb": [
-    154,
-    115,
-    86
-   ],
-   "height_pct": -1.82,
-   "delta_e": 1.59,
-   "flag": "-"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher",
-   "cell": 1,
-   "facing": "SE",
-   "height_px": 134.77,
-   "shell_rgb": [
-    141,
-    110,
-    86
-   ],
-   "height_pct": 0.61,
-   "delta_e": 4.04,
-   "flag": "-"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher",
-   "cell": 2,
-   "facing": "E",
-   "height_px": 133.96,
-   "shell_rgb": [
-    151,
-    113,
-    86
-   ],
-   "height_pct": 0.0,
-   "delta_e": 0.0,
-   "flag": "-"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher",
-   "cell": 3,
-   "facing": "NE",
-   "height_px": 133.96,
-   "shell_rgb": [
-    129,
-    100,
-    79
-   ],
-   "height_pct": 0.0,
-   "delta_e": 7.83,
-   "flag": "-"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher",
-   "cell": 4,
-   "facing": "N",
-   "height_px": 129.09,
-   "shell_rgb": [
-    163,
-    122,
-    93
-   ],
-   "height_pct": -3.64,
-   "delta_e": 4.14,
-   "flag": "-"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher",
-   "cell": 5,
-   "facing": "E-fire",
-   "height_px": 112.85,
-   "shell_rgb": [
-    133,
-    102,
-    78
-   ],
-   "height_pct": -15.76,
-   "delta_e": 6.07,
-   "flag": "H"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher",
-   "cell": 6,
-   "facing": "S-fire",
-   "height_px": 117.72,
-   "shell_rgb": [
-    143,
-    108,
-    80
-   ],
-   "height_pct": -12.12,
-   "delta_e": 2.71,
-   "flag": "H"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher",
-   "cell": 7,
-   "facing": "idle",
-   "height_px": 114.48,
-   "shell_rgb": [
-    135,
-    105,
-    82
-   ],
-   "height_pct": -14.55,
-   "delta_e": 5.7,
-   "flag": "H"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher_noflash",
-   "cell": 0,
-   "facing": "S",
-   "height_px": 131.53,
-   "shell_rgb": [
-    154,
-    115,
-    86
-   ],
-   "height_pct": -1.82,
-   "delta_e": 1.59,
-   "flag": "-"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher_noflash",
-   "cell": 1,
-   "facing": "SE",
-   "height_px": 134.77,
-   "shell_rgb": [
-    141,
-    110,
-    86
-   ],
-   "height_pct": 0.61,
-   "delta_e": 4.04,
-   "flag": "-"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher_noflash",
-   "cell": 2,
-   "facing": "E",
-   "height_px": 133.96,
-   "shell_rgb": [
-    151,
-    113,
-    86
-   ],
-   "height_pct": 0.0,
-   "delta_e": 0.0,
-   "flag": "-"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher_noflash",
-   "cell": 3,
-   "facing": "NE",
-   "height_px": 133.96,
-   "shell_rgb": [
-    129,
-    100,
-    79
-   ],
-   "height_pct": 0.0,
-   "delta_e": 7.83,
-   "flag": "-"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher_noflash",
-   "cell": 4,
-   "facing": "N",
-   "height_px": 129.09,
-   "shell_rgb": [
-    163,
-    122,
-    93
-   ],
-   "height_pct": -3.64,
-   "delta_e": 4.14,
-   "flag": "-"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher_noflash",
-   "cell": 5,
-   "facing": "E-fire",
-   "height_px": 112.85,
-   "shell_rgb": [
-    133,
-    102,
-    78
-   ],
-   "height_pct": -15.76,
-   "delta_e": 6.07,
-   "flag": "H"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher_noflash",
-   "cell": 6,
-   "facing": "S-fire",
-   "height_px": 117.72,
-   "shell_rgb": [
-    143,
-    108,
-    80
-   ],
-   "height_pct": -12.12,
-   "delta_e": 2.71,
-   "flag": "H"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher_noflash",
-   "cell": 7,
-   "facing": "idle",
-   "height_px": 114.48,
-   "shell_rgb": [
-    135,
-    105,
-    82
-   ],
-   "height_pct": -14.55,
-   "delta_e": 5.7,
-   "flag": "H"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher_diag",
-   "cell": 0,
-   "facing": "SE",
-   "height_px": 116.1,
-   "shell_rgb": [
-    146,
-    102,
-    74
-   ],
-   "height_pct": -13.33,
-   "delta_e": 5.05,
-   "flag": "H"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher_diag",
-   "cell": 1,
-   "facing": "NE",
-   "height_px": 117.72,
-   "shell_rgb": [
-    128,
-    88,
-    65
-   ],
-   "height_pct": -12.12,
-   "delta_e": 9.86,
-   "flag": "HT"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher_diag",
-   "cell": 2,
-   "facing": "SW",
-   "height_px": 116.91,
-   "shell_rgb": [
-    152,
-    110,
-    81
-   ],
-   "height_pct": -12.73,
-   "delta_e": 2.76,
-   "flag": "H"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher_diag",
-   "cell": 3,
-   "facing": "NW",
-   "height_px": 118.54,
-   "shell_rgb": [
-    162,
-    114,
-    84
-   ],
-   "height_pct": -11.52,
-   "delta_e": 5.1,
-   "flag": "H"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher_diag_noflash",
-   "cell": 0,
-   "facing": "SE",
-   "height_px": 116.1,
-   "shell_rgb": [
-    146,
-    102,
-    74
-   ],
-   "height_pct": -13.33,
-   "delta_e": 5.05,
-   "flag": "H"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher_diag_noflash",
-   "cell": 1,
-   "facing": "NE",
-   "height_px": 117.72,
-   "shell_rgb": [
-    128,
-    88,
-    65
-   ],
-   "height_pct": -12.12,
-   "delta_e": 9.86,
-   "flag": "HT"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher_diag_noflash",
-   "cell": 2,
-   "facing": "SW",
-   "height_px": 116.91,
-   "shell_rgb": [
-    152,
-    110,
-    81
-   ],
-   "height_pct": -12.73,
-   "delta_e": 2.76,
-   "flag": "H"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher_diag_noflash",
-   "cell": 3,
-   "facing": "NW",
-   "height_px": 118.54,
-   "shell_rgb": [
-    162,
-    114,
-    84
-   ],
-   "height_pct": -11.52,
-   "delta_e": 5.1,
-   "flag": "H"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher_left",
-   "cell": 0,
-   "facing": "SW",
-   "height_px": 129.09,
-   "shell_rgb": [
-    135,
-    91,
-    71
-   ],
-   "height_pct": -3.64,
-   "delta_e": 9.02,
-   "flag": "T"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher_left",
-   "cell": 1,
-   "facing": "W",
-   "height_px": 138.83,
-   "shell_rgb": [
-    180,
-    115,
-    83
-   ],
-   "height_pct": 3.64,
-   "delta_e": 13.76,
-   "flag": "T"
-  },
-  {
-   "weapon": "rocket_launcher",
-   "pitch": "p70",
-   "strip": "rivet_eq_rocket_launcher_left",
-   "cell": 2,
-   "facing": "NW",
-   "height_px": 133.96,
+   "height_px": 134.67,
    "shell_rgb": [
     138,
     96,
-    74
+    70
+   ],
+   "height_pct": -2.42,
+   "delta_e": 6.92,
+   "flag": "-"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p55",
+   "strip": "rivet_eq_rocket_launcher_left",
+   "cell": 2,
+   "facing": "NW",
+   "height_px": 134.67,
+   "shell_rgb": [
+    123,
+    88,
+    67
+   ],
+   "height_pct": -2.42,
+   "delta_e": 3.09,
+   "flag": "-"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher",
+   "cell": 0,
+   "facing": "S",
+   "height_px": 131.53,
+   "shell_rgb": [
+    154,
+    115,
+    86
+   ],
+   "height_pct": -1.82,
+   "delta_e": 1.59,
+   "flag": "-"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher",
+   "cell": 1,
+   "facing": "SE",
+   "height_px": 134.77,
+   "shell_rgb": [
+    141,
+    110,
+    86
+   ],
+   "height_pct": 0.61,
+   "delta_e": 4.04,
+   "flag": "-"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher",
+   "cell": 2,
+   "facing": "E",
+   "height_px": 133.96,
+   "shell_rgb": [
+    151,
+    113,
+    86
    ],
    "height_pct": 0.0,
-   "delta_e": 6.85,
+   "delta_e": 0.0,
+   "flag": "-"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher",
+   "cell": 3,
+   "facing": "NE",
+   "height_px": 133.96,
+   "shell_rgb": [
+    129,
+    100,
+    79
+   ],
+   "height_pct": 0.0,
+   "delta_e": 7.83,
+   "flag": "-"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher",
+   "cell": 4,
+   "facing": "N",
+   "height_px": 129.09,
+   "shell_rgb": [
+    163,
+    122,
+    93
+   ],
+   "height_pct": -3.64,
+   "delta_e": 4.14,
+   "flag": "-"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher",
+   "cell": 5,
+   "facing": "E-fire",
+   "height_px": 112.85,
+   "shell_rgb": [
+    133,
+    102,
+    78
+   ],
+   "height_pct": -15.76,
+   "delta_e": 6.07,
+   "flag": "H"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher",
+   "cell": 6,
+   "facing": "S-fire",
+   "height_px": 116.1,
+   "shell_rgb": [
+    143,
+    108,
+    80
+   ],
+   "height_pct": -13.33,
+   "delta_e": 2.71,
+   "flag": "H"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher",
+   "cell": 7,
+   "facing": "idle",
+   "height_px": 113.67,
+   "shell_rgb": [
+    135,
+    105,
+    82
+   ],
+   "height_pct": -15.15,
+   "delta_e": 5.7,
+   "flag": "H"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher_noflash",
+   "cell": 0,
+   "facing": "S",
+   "height_px": 131.53,
+   "shell_rgb": [
+    154,
+    115,
+    86
+   ],
+   "height_pct": -1.82,
+   "delta_e": 1.59,
+   "flag": "-"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher_noflash",
+   "cell": 1,
+   "facing": "SE",
+   "height_px": 134.77,
+   "shell_rgb": [
+    141,
+    110,
+    86
+   ],
+   "height_pct": 0.61,
+   "delta_e": 4.04,
+   "flag": "-"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher_noflash",
+   "cell": 2,
+   "facing": "E",
+   "height_px": 133.96,
+   "shell_rgb": [
+    151,
+    113,
+    86
+   ],
+   "height_pct": 0.0,
+   "delta_e": 0.0,
+   "flag": "-"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher_noflash",
+   "cell": 3,
+   "facing": "NE",
+   "height_px": 133.96,
+   "shell_rgb": [
+    129,
+    100,
+    79
+   ],
+   "height_pct": 0.0,
+   "delta_e": 7.83,
+   "flag": "-"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher_noflash",
+   "cell": 4,
+   "facing": "N",
+   "height_px": 129.09,
+   "shell_rgb": [
+    163,
+    122,
+    93
+   ],
+   "height_pct": -3.64,
+   "delta_e": 4.14,
+   "flag": "-"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher_noflash",
+   "cell": 5,
+   "facing": "E-fire",
+   "height_px": 112.85,
+   "shell_rgb": [
+    133,
+    102,
+    78
+   ],
+   "height_pct": -15.76,
+   "delta_e": 6.07,
+   "flag": "H"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher_noflash",
+   "cell": 6,
+   "facing": "S-fire",
+   "height_px": 116.1,
+   "shell_rgb": [
+    143,
+    108,
+    80
+   ],
+   "height_pct": -13.33,
+   "delta_e": 2.71,
+   "flag": "H"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher_noflash",
+   "cell": 7,
+   "facing": "idle",
+   "height_px": 113.67,
+   "shell_rgb": [
+    135,
+    105,
+    82
+   ],
+   "height_pct": -15.15,
+   "delta_e": 5.7,
+   "flag": "H"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher_diag",
+   "cell": 0,
+   "facing": "SE",
+   "height_px": 116.1,
+   "shell_rgb": [
+    146,
+    102,
+    74
+   ],
+   "height_pct": -13.33,
+   "delta_e": 5.05,
+   "flag": "H"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher_diag",
+   "cell": 1,
+   "facing": "NE",
+   "height_px": 117.72,
+   "shell_rgb": [
+    128,
+    88,
+    65
+   ],
+   "height_pct": -12.12,
+   "delta_e": 9.86,
+   "flag": "HT"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher_diag",
+   "cell": 2,
+   "facing": "SW",
+   "height_px": 116.91,
+   "shell_rgb": [
+    152,
+    110,
+    81
+   ],
+   "height_pct": -12.73,
+   "delta_e": 2.76,
+   "flag": "H"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher_diag",
+   "cell": 3,
+   "facing": "NW",
+   "height_px": 118.54,
+   "shell_rgb": [
+    162,
+    114,
+    84
+   ],
+   "height_pct": -11.52,
+   "delta_e": 5.1,
+   "flag": "H"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher_diag_noflash",
+   "cell": 0,
+   "facing": "SE",
+   "height_px": 116.1,
+   "shell_rgb": [
+    146,
+    102,
+    74
+   ],
+   "height_pct": -13.33,
+   "delta_e": 5.05,
+   "flag": "H"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher_diag_noflash",
+   "cell": 1,
+   "facing": "NE",
+   "height_px": 117.72,
+   "shell_rgb": [
+    128,
+    88,
+    65
+   ],
+   "height_pct": -12.12,
+   "delta_e": 9.86,
+   "flag": "HT"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher_diag_noflash",
+   "cell": 2,
+   "facing": "SW",
+   "height_px": 116.91,
+   "shell_rgb": [
+    152,
+    110,
+    81
+   ],
+   "height_pct": -12.73,
+   "delta_e": 2.76,
+   "flag": "H"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher_diag_noflash",
+   "cell": 3,
+   "facing": "NW",
+   "height_px": 118.54,
+   "shell_rgb": [
+    162,
+    114,
+    84
+   ],
+   "height_pct": -11.52,
+   "delta_e": 5.1,
+   "flag": "H"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher_left",
+   "cell": 0,
+   "facing": "SW",
+   "height_px": 130.71,
+   "shell_rgb": [
+    142,
+    103,
+    79
+   ],
+   "height_pct": -2.42,
+   "delta_e": 3.99,
+   "flag": "-"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher_left",
+   "cell": 1,
+   "facing": "W",
+   "height_px": 130.71,
+   "shell_rgb": [
+    145,
+    104,
+    76
+   ],
+   "height_pct": -2.42,
+   "delta_e": 4.05,
+   "flag": "-"
+  },
+  {
+   "weapon": "rocket_launcher",
+   "pitch": "p70",
+   "strip": "rivet_eq_rocket_launcher_left",
+   "cell": 2,
+   "facing": "NW",
+   "height_px": 130.71,
+   "shell_rgb": [
+    140,
+    102,
+    77
+   ],
+   "height_pct": -2.42,
+   "delta_e": 4.33,
    "flag": "-"
   }
  ]
