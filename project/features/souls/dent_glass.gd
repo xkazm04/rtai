@@ -11,7 +11,7 @@ const SHAPE: PackedVector2Array = [
 
 var _points: PackedVector2Array = []
 var _row: GhostHoverRow = GhostHoverRow.of(&"dent")
-var _trail: PackedVector2Array = []
+var _revision: int = -1
 var _tick: int = -1
 var _speed: float = 0.0
 var _vertices: PackedVector2Array = []
@@ -19,16 +19,15 @@ var _colours: PackedColorArray = []
 var _indices: PackedInt32Array = []
 
 
-## The tail uses world pixels in flight's ground frame; the mounted body supplies the raised belt.
-func sync(flight: GhostFlight, belt: Vector2, facing: float, tick: int) -> void:
-	if tick == _tick:
+## Flight has already integrated every intervening tick and projected the lifted ribbon.
+func sync(flight: GhostFlight, tick: int) -> void:
+	if tick == _tick and _revision == ViewMode.revision:
 		return
-	var hover: GhostHover = flight.hover
-	var yaw: float = facing + flight.body_rotation()
-	var up: Vector2 = ViewMode.shared().lift_px(hover.lift_m)
-	var root: Vector2 = belt + (_row.tail.anchor_m * PPM * flight.body_scale()).rotated(yaw) - up
-	_follow(root, yaw, hover.speed_mps, up)
-	_speed = clampf(hover.speed_mps / _row.top_mps, 0.0, 1.0)
+	_revision = ViewMode.revision
+	_points = flight.tail.points()
+	for i: int in _points.size():
+		_points[i] = to_local(_points[i])
+	_speed = clampf(flight.hover.speed_mps / _row.top_mps, 0.0, 1.0)
 	_tick = tick
 	var count: int = 6 + roundi(4.0 * _speed)
 	if count * 8 != _vertices.size():
@@ -38,26 +37,6 @@ func sync(flight: GhostFlight, belt: Vector2, facing: float, tick: int) -> void:
 
 func reset() -> void:
 	_tick = -1
-	_trail.clear()
-
-
-## Carry the belt's last links around a bend and let their height taper back to the ground.
-func _follow(root: Vector2, yaw: float, speed: float, up: Vector2) -> void:
-	var tail: GhostHoverRow.Tail = _row.tail
-	var link: float = (tail.length_m + speed * tail.stretch_k) * PPM / tail.segments
-	var back: Vector2 = -Vector2.from_angle(yaw)
-	if _trail.is_empty():
-		for j: int in tail.segments + 1:
-			@warning_ignore("return_value_discarded")
-			_trail.append(root + j * link * back)
-		_points = _trail.duplicate()
-	_trail[0] = root
-	_points[0] = root + up
-	for j: int in range(1, _trail.size()):
-		var lag: Vector2 = _trail[j - 1].direction_to(_trail[j])
-		var dir: Vector2 = back.slerp(lag, tail.swing_k) if lag != Vector2.ZERO else back
-		_trail[j] = _trail[j - 1] + dir * link
-		_points[j] = _trail[j] + up * (1.0 - float(j) / tail.segments)
 
 
 func _allocate(count: int) -> void:

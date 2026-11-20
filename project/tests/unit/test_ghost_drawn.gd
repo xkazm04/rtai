@@ -117,7 +117,9 @@ func test_a_hit_flinches_but_a_strike_wins() -> void:
 
 
 func test_ohms_instant_bolt_shows_anticipation_within_the_original_cut() -> void:
+	GhostLook.override_for_test(GhostLook.LEGACY)
 	var d: GhostDrawn = GhostDrawn.new("ohm", 2.0, 180.0, 180.0)
+	GhostLook.reset_for_test()
 	d.feed(1, -1, 70)
 	assert_eq(d.act_col(), -1)
 	for age: int in 16:

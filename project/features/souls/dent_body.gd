@@ -98,7 +98,7 @@ func step(show: bool, at: Vector2, facing: float, steps: int, tick: int) -> void
 
 
 func _fly(facing: float, steps: int, tick: int) -> void:
-	_glass.sync(drawn.flight, _glass.to_local(global_position), facing, tick)
+	_glass.sync(drawn.flight, tick)
 	var jab: DentJab
 	var car: VehicleBody
 	var hurt_age: int = -1
