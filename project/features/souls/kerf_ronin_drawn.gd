@@ -6,14 +6,11 @@ enum Pose { HOVER, CRUISE, TURN, HIT, COCK, CUT, RECOVER, BLINK }
 
 const CRUISE_MPS: float = 3.0
 const TURN_DPS: float = 360.0
-const CUT_META: String = "res://features/souls/art/kerf/ronin/cut.json"
 
-static var _centres: Dictionary[String, PackedVector2Array] = {}
-
+var slots: KerfChargeSlots = KerfChargeSlots.new()
+var sheet_id: int = 0
 var _fly: GhostSheet
 var _act: GhostSheet
-var _fly_centres: PackedVector2Array
-var _act_centres: PackedVector2Array
 var _art: String = ""
 var _rim: Sprite2D = Sprite2D.new()
 
@@ -33,6 +30,7 @@ func _init() -> void:
 	_rim.scale = Vector2.ONE * 1.055
 	_rim.hide()
 	add_child(_rim)
+	slots.bind(self)
 
 
 static func pose(speed: float, yaw: float, blink: Pose, locked: bool, hurt: bool) -> Pose:
@@ -56,7 +54,8 @@ func show_pose(oct: int, current: Pose, yaw: float, lean: float, flinch: bool) -
 	sheet.show(self, oct, current - Pose.COCK if acting else current)
 	if current == Pose.TURN and yaw < 0.0:
 		flip_h = not flip_h
-	var centre: Vector2 = (_act_centres if acting else _fly_centres)[frame]
+	sheet_id = (2 if _art == "p55" else 0) + int(acting)
+	var centre: Vector2 = KerfChargeSlots.cell(sheet_id, frame).centre
 	if flip_h:
 		centre.x = get_rect().size.x - centre.x
 	offset = -centre
@@ -73,23 +72,6 @@ func show_pose(oct: int, current: Pose, yaw: float, lean: float, flinch: bool) -
 
 
 func _load_pitch(art: String) -> void:
-	if _centres.is_empty():
-		var cut: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(CUT_META))
-		var sheets: Dictionary = cut["sheets"]
-		for key: String in sheets:
-			var centres: PackedVector2Array = []
-			@warning_ignore("return_value_discarded")
-			centres.resize(4 * GhostDrawn.ROWS)
-			for cell: Dictionary in sheets[key]["cells"]:
-				var xy: Array = cell["alpha_mass_center"]
-				var row: int = cell["facing"]
-				var col: int = cell["pose"]
-				var x: float = xy[0]
-				var y: float = xy[1]
-				centres[row * 4 + col] = Vector2(x, y)
-			_centres[key] = centres
 	_art = art
 	_fly = GhostSheet.of(GhostDrawn.path_of(art, "kerf", "sp_fly"), 4)
 	_act = GhostSheet.of(GhostDrawn.path_of(art, "kerf", "sp_act"), 4)
-	_fly_centres = _centres["kerf_sp_fly_" + art.trim_prefix("p")]
-	_act_centres = _centres["kerf_sp_act_" + art.trim_prefix("p")]

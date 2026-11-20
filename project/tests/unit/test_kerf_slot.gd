@@ -68,7 +68,7 @@ func test_one_tilted_departure_holds_the_previous_cell_scale_and_facing() -> voi
 	assert_eq(body.current, KerfRoninDrawn.Pose.CUT)
 	assert_eq(body._echoes._pool.size(), 1)
 	var echo: KerfEcho.Pose = body._echoes._pool[0]
-	var copy: Sprite2D = echo.sprites[-1]
+	var copy: Sprite2D = echo.sprites[body._echoes._sources.find(body._tilted)]
 	assert_almost_eq(echo.global_position, at, Vector2.ONE * 0.002)
 	assert_almost_eq(echo.modulate.a, 0.35, 0.001)
 	assert_lt(echo.modulate.a, 0.45)
@@ -160,7 +160,7 @@ func test_live_mount_clears_the_flight_lag_and_leaves_the_top_pose_on_its_mark()
 	var body: KerfSpectral = live._spectral
 	assert_almost_eq(body.global_position, _rivet.pos * 32 + Vector2(16, 0), Vector2.ONE * 0.01)
 	var echo: KerfEcho.Pose = body._echoes._pool[0]
-	var copied_lens: Sprite2D = echo.sprites[lens.get_index()]
+	var copied_lens: Sprite2D = echo.sprites[body._echoes._sources.find(lens)]
 	assert_true(copied_lens.visible)
 	assert_same(copied_lens.texture, tex)
 	assert_almost_eq(copied_lens.position, lens_at, Vector2.ONE * 0.002)

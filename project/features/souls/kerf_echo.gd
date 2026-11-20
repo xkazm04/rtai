@@ -73,9 +73,13 @@ static func _wash_material() -> ShaderMaterial:
 shader_type canvas_item;
 render_mode unshaded;
 uniform vec4 wash : source_color;
+varying vec3 tint;
+void vertex() {
+	tint = COLOR.rgb;
+}
 void fragment() {
 	vec4 part = texture(TEXTURE, UV);
-	COLOR = vec4(mix(part.rgb, wash.rgb, wash.a), COLOR.a);
+	COLOR = vec4(mix(part.rgb * tint, wash.rgb, wash.a), COLOR.a);
 }
 """
 	var mat: ShaderMaterial = ShaderMaterial.new()
@@ -84,10 +88,13 @@ void fragment() {
 	return mat
 
 
-func bind(top: Node2D, tilted: Sprite2D) -> void:
+func bind(top: KerfRoninTop, tilted: KerfRoninDrawn) -> void:
 	for sprite: Sprite2D in top.get_children():
 		_sources.append(sprite)
+		if sprite == top.slots.plate:
+			_sources.append_array(top.slots.masks)
 	_sources.append(tilted)
+	_sources.append_array(tilted.slots.masks)
 	_buffer = _new_pose()
 
 

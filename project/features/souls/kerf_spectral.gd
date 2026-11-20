@@ -53,6 +53,10 @@ func live(stage: CollectCallStage, rig: KerfRig) -> void:
 	_arrive(rig, k, since)
 	_hit.read(stage.arena, facing)
 	pose(rig, blink, target != null, bearing, stage.tick)
+	if _tilted.visible:
+		_tilted.slots.paint(_tilted.sheet_id, k.charges, k.recharge_k())
+	else:
+		_top.slots.paint(KerfChargeSlots.TOP, k.charges, k.recharge_k())
 	_hit.apply(self)
 	_step_echoes(stage)
 

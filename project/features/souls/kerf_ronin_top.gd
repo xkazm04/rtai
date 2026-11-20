@@ -11,6 +11,7 @@ const WING_REST: Vector2 = Vector2(45, 34)
 const WING_FAST: Vector2 = Vector2(43, 20)
 const TAIL_ROOT_M: Vector2 = Vector2(-0.28, 0)
 
+var slots: KerfChargeSlots = KerfChargeSlots.new()
 # PartLibrary resolves its folder from features/characters/art.
 var _parts: PartLibrary = PartLibrary.of("../../souls/art/kerf/ronin")
 var _upper: Array[Sprite2D] = []
@@ -33,6 +34,7 @@ func _init() -> void:
 		_blade.append(_part("blade", side + "_blade"))
 	var torso: Sprite2D = _part("torso", "torso")
 	torso.rotation = -PI / 2
+	slots.bind(torso)
 	_head = _part("head", "head")
 	_head.rotation = -PI / 2
 	_head.position = Vector2.RIGHT * 0.46 * PPM
