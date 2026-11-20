@@ -135,3 +135,34 @@ NEXT: (1) Check logs/ohm/astra.lock (PID 62644 = drift-films, detached, started 
   (4) Last new work committed by 06:00; final gate `node tools/gate/run.mjs --rev=HEAD` from 06:15; REPORT 07:40 with
   cites.mjs. Commit JOURNAL.md (per path) when Astra is idle.
 - 03:14 END iteration 2. ASTRA RUNNING drift-films since 02:58 (detached, lock PID 62644); no commit since the merge yet (likely in tests/Part A). See NEXT above.
+- 03:15 START iteration 3 BUILD. ASTRA drift-films still running (lock PID 62644 alive, 17 min in); uncommitted: ohm_drift.gd + test, ohm_drawn/spirit/victim_rims, ghost_hover.json.
+- 03:45 LOOK drift/turn_{before,after}_*_32.png: tilt70 before had a tall vertical teal streak under him (merge-era
+  tail), after: compact hover body, staff+fork right, faint pool; top after: three lit jar circles, hem trails. Too
+  small (340x256) to judge staff lead from above: check in the move film.
+- 03:46 LOOK ohm_tilt55_32.png (press tick, 55 deg): spectral body, empty dark jars, staff thrust, thin first link,
+  teal ring on guard 1; white impact spray beside guard 1 (shared, Call 4). HUD chip still the legacy Ohm head ->
+  brief 05 Part C (spectral chip + NEED flight).
+- 03:47 Brief 05 drafted (evidence/briefs/n20-ohm-05-form-rest.md: transform in/out, hit reaction, HUD chip, look
+  switch GO/HOLD).
+- 03:45 REVIEW 080bfdd5e (drift Part A+A2 code): OhmDrift (critically damped hem 8 / beard 5 ticks, clamped 25 deg,
+  sway 144-tick period 3->1.5 deg), top body lags 0.55x beard, staff leads (fork rotated ahead), fork bob out of
+  phase; ohm hover row bob 0.045/90, lag 14, lean 3, tail width 0.86 (robe-wide), anchor -0.94; OhmVictimRims
+  disconnect + clear on exit_tree + test. No `##` removed. One smell: ohm_drawn.gd reads flight's private
+  `drawn._fade` (clear fallback belt socket) -> follow-up: NEED flight a public `release_fade()` or accept as
+  one-line call. Accepted; films running.
+- 04:04 LOOK films (n20/ohm/ohm_move_32, ohm_attack_32, ohm_close_64 + jpg; 5/5/10 s, h264 1920x1080 60 fps, no audio
+  stream): tilt70 reads as the plate (stoop, three jars, copper fork, robe glow, no feet); top: three lit jar circles
+  and the trailing robe-tail read, but the top staff is a thin rod along his flank and the fork a 3-4 px speck at 32.
+  Attack: bolt from the fork, thin first link, teal rings on victims, jars dark after the press. Faults: (a) shock-kill
+  X-ray skeletons over killed guards dominate at 1.5 s (Call 1, unowned); (b) a small RED dash rides between Ohm and
+  the guards (both views, also tilt55 still): name it; (c) white impact spray at guard 1 (Call 4).
+- 04:05 DECISION look switch: GO for the ohm row -> spectral default (body, drift, bolt, cast tell, amber cancel done
+  and filmed in tilt70/tilt55/top), landed by Astra in brief 05 Part D with a decisions.md line; legacy stays one flag
+  away (--ghost-look=legacy). Final gate at 06:15 confirms; if it goes red on the flip, revert that one commit.
+- 04:13 ASTRA drift-films 75 accepted (hit the 75 min cap, no final message): 080bfdd5e + films ohm_move_32,
+  ohm_attack_32, ohm_close_64, ohm_attack_delay_32 (+jpg), ohm_tilt55_32.png, ohm_turn_64_t163.png, drift stills.
+  Not done: mutate on ohm_spirit.gd (run it myself later or in 05), no written A2 clutter attribution.
+- 04:13 flight (SendMessage): tail-0b ~04:30 lowers the ohm row fade_from to 0.18 on n20-flight; our row sets 0
+  (080bfdd5e) and ours wins at merge -> keep ours unless the film says otherwise.
+- 04:13 ASTRA RUNNING form-rest since 04:13 (brief 05: staff from above + red dash, transform, hit, HUD chip, look
+  switch GO). Detached (Start-Process cmd /c), lock PID 12372, out logs/ohm/director-form-rest.out. Stops by 05:28.
