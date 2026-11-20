@@ -113,3 +113,7 @@ NEXT (session 5, ~05:58 -> 08:00):
 - 05:58 START. No astra.lock; last call 09 apparition-guard done. Verified: tonnage row look = spectral, decision line in, tree clean at b7eeed009 (code HEAD 2d1d83ea3).
 - 05:59 FINAL GATE started early: `node tools/gate/run.mjs --rev=HEAD` (APPDATA tonnage), log build/tonnage-final-gate.txt. No new product work from here.
 - 05:58 REPORT: What does not + Next steps filled. Films (05:10) predate flight final merge 6bb29c7a0 and glow halo off e7efb971e: re-film after the gate.
+- 06:0x Deleted unreferenced scratch renders from masters/n20/tonnage (scratch/rig-review, smoke_*, south_*, glow_top_32*, raise_top_32*); frames.json 15 entries, all files present.
+- 06:10 FINAL GATE PASS on b7eeed009 (code 2d1d83ea3): lint 19/19, unit 3269/0/2, scenarios 65, parity, selftest (look goldens 11/11), export-audit 782/0. build/gate/b7eeed009cc7/gate.json. Re-filming move/attack/close/morph now.
+- 06:15 RE-FILMED at the gated HEAD (flight final merge + one ground glow): move/attack/close/morph + turn t163 via tools/film/ghost_films.mjs into build/refilm, re-encoded full -> limited range (yuv420p, tv) myself, copied over the 05:10 films in masters/n20/tonnage. LOOKED: attack poster = clap in front, car + victims visible both views; t3.5 = armed fist forward; close_64 = one teal pool, smoke behind, no leg read.
+- 06:17 REPORT: films row + reels note. Mutate tonnage_pose.gd --max=40 running (log build/tonnage-mutate-pose.txt; first try used a res-relative path wrongly, exit 2).

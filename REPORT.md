@@ -1,11 +1,10 @@
 # REPORT: n20 lane tonnage: Tonnage becomes the Press Golem
 
-DRAFT (session 4, 04:3x). Final numbers, gate line and film paths are filled in by the last session.
-
 - Lane: `tonnage`, branch `n20-tonnage`, worktree `C:\Users\kazda\kiro\gtai-wt\n20-tonnage`, cut from `int-n20` `a3eb0bf78`.
 - Plate: `C:\Users\kazda\kiro\gtai-masters\n20\concepts\tonnage_b.png` (Press Golem).
 - Evidence: `C:\Users\kazda\kiro\gtai-masters\n20\tonnage\` (`frames.json` first entry = in-game still beside the plate).
-- Final gate: GATE_LINE (`GATE_JSON`).
+- Final gate: `node tools/gate/run.mjs --rev=HEAD` on `b7eeed009` (code HEAD `2d1d83ea3`; later commits are docs only) at 06:10: `gate: PASS` (lint 19/19 over 1750 files; unit 3269 passed / 0 failed / 2 skipped; scenarios 65 passed; parity bit for bit over 1200 steps, planted mutation caught at step 629; selftest look goldens 11/11, block goldens 5/5; export-audit 782 loaded / 0 failed). `build/gate/b7eeed009cc7/gate.json` (git-ignored, in the worktree).
+- Default look: Tonnage's `ghost_forms.json` row is `spectral` (`8c3586694`); `--ghost-look=legacy` brings the old hauler back.
 
 ## What works
 
@@ -20,6 +19,7 @@ DRAFT (session 4, 04:3x). Final numbers, gate line and film paths are filled in 
 | Transformation: golem rises from Rivet's burst, fades in low and small, fists unfold last; out is the reverse | `tonnage_morph_strip_64.png`, `tonnage_morph_32.mp4` | mutate tonnage_morph.gd 24/(24+0) |
 | 55 deg tilt: rest / raise / pound / armed / contact beside the plate | `tonnage_p55_contact_64.png` | 5 panels |
 | Recoil cell kept at golem size | `tonnage_recoil_64.png` / `_before` | p70 hit 307 -> 307 px (was 261) |
+| Films for the morning (spectral, re-filmed 06:12 at the gated HEAD, limited-range H.264 1080p60, posters `.jpg`) | `tonnage_move_32.mp4` 5 s, `tonnage_attack_32.mp4` 5 s, `tonnage_close_64.mp4` 10 s, `tonnage_morph_32.mp4` 6.7 s, each 70 deg above + top view below | attack poster: the clap lands in front, the wrecked car and every victim visible in both views |
 
 ## What does not
 
@@ -53,6 +53,8 @@ DRAFT (session 4, 04:3x). Final numbers, gate line and film paths are filled in 
 
 ## Next steps
 
+0. The `--reels` gate was not run: the freeze is 07:30 and this lane's session stops at 07:27.
+
 1. Seat the smoke column under the hump (raise its root, soften the straight cone edge) in Tonnage's `ghost_hover.json` row and vapour.
 2. Ink the visor slot darker in the chip cut, or cut the chip from a 3/4 cell where the face is larger.
 3. Thicken or brighten the 4 m slam ring at 32 px/m (still a line, not a disk).
@@ -73,3 +75,5 @@ DRAFT (session 4, 04:3x). Final numbers, gate line and film paths are filled in 
 | 7 | flip | 8 | accepted (flip reverted by rule) | list every test that reads the legacy body by default BEFORE flipping; I briefed the flip without that census |
 | 8 | reflip | 13 | accepted | (worked as briefed: pin tests, re-flip, full unit, then polish) |
 | 9 | apparition-guard | 4 | accepted | (exact code in the brief: a one-file test guard needs nothing more) |
+
+Total: 9 Astra calls, about 383 minutes; 6 accepted outright, 1 accepted with its flip reverted by rule and redone in call 8, 1 bounced at the cap (smoke column redone in call 6), 1 abandoned at a director handover (films salvaged).
