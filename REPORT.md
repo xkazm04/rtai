@@ -20,6 +20,7 @@ Final gate (16:30, last code commit `c14ae6f97`, gated at `118872760`): `gate: P
 | 4. Rest of the form: transformation in/out, hit reaction, HUD chip (Ronin bust); Kerf's `look` row flipped to `spectral` (90f948645) | `kerf_morph_32.mp4`, `kerf_transform_strip_32.png`, `kerf_hit_strip.png`, `kerf_hud_chip.png` | morph audit 402 ticks per view clean; full unit after the flip 3368/0/2; scenarios 65/0; replay 60 s `cbeb734ff9b97c41` unchanged; parity 1200 exact; bake 256/256 |
 | 5. Profile HOVER shows the far crescent behind the helmet (74304cba8) | `kerf_profile_far_blade.png` | both blades read as arms at 32 px/m in tilt 70 and 55 |
 | 6. Plain blink in the owner's attack take (polish served kerf's NEED in `25ffc58cd`; filmed session 5): 4 m dash, after-image in the HOVER pose he left, one straight line, Ronin past in CRUISE, no victim | `kerf_plain_blink_strip_32.png`, `kerf_attack_32.mp4` (frame 275) | press -1 / press / +3 / +15 at 32 px/m, tilt 70 and top |
+| 7. Owner Call built as an off flag: `--kerf-cruise-wings=open` (overhead CRUISE 62/40 instead of 43/20), default unchanged (2b38c1353) | `call_cruise_wings_open.png` | `--changed` 3353/0/2; lint 19/19; debt `files_past_soft_cap` 66 -> 64 (one `KNOWN_FLAGS` line accepted) |
 
 ## What does not
 - `kerf_attack_32.mp4` with the plain blink was shot on a film-only commit (`35a611453` = this branch + polish's `25ffc58cd`), not on this branch: until both lanes merge, re-shooting the film from `n21-kerf` alone drops the plain blink again.
@@ -34,11 +35,12 @@ Final gate (16:30, last code commit `c14ae6f97`, gated at `118872760`): `gate: P
 ## Calls for the owner
 - 70-degree ACTION sheet accepted as drawn: in the toward-facing COCK/RECOVER/BLINK cells the crescent tips droop (each lives at most 16 ticks with the blades moving). Re-roll is one sheet job. Kept; judge it in `kerf_attack_32.mp4`.
 - Fly HIT cells are nearly the HOVER pose; the hit reads through the 12-degree lean, the flinch and the helmet snap (`kerf_hit_strip.png`).
-- CRUISE from the top reads as an arrow more than a person (the plate's own top inset is that shape too). Side by side: `call_cruise_top_vs_plate.png` (plate top inset, game HOVER, game CRUISE, 64 px/m). The game keeps the plate's helmet-forward wedge and two side crescents, but sweeps the tips back as the lane brief asked; the plate curves them forward and down. Opening the cruise arms wider is a rig angle in `kerf_ronin_top.gd`, no new art.
+- CRUISE from the top reads as an arrow more than a person (the plate's own top inset is that shape too). Side by side: `call_cruise_top_vs_plate.png` (plate top inset, game HOVER, game CRUISE, 64 px/m). The game keeps the plate's helmet-forward wedge and two side crescents, but sweeps the tips back as the lane brief asked; the plate curves them forward and down. Built as one flag, off: `--kerf-cruise-wings=open` widens the CRUISE sweep 43/20 -> 62/40 (2b38c1353, `kerf_ronin_top.gd`; default byte-identical, unit pins both). Side by side at tick 118, 12 m/s, 64 and 32 px/m: `call_cruise_wings_open.png`. Director's read: open breaks the arrowhead and shows two arms, but the two crescents start to join into one bow; default kept. Your pick flips it (one line in `cruise_sweep`).
 
 ## Merge notes
 - Kerf files only, plus one view-only line set in `kerf_stage.gd` (`trail_radius`, not serialized: no digest moves) and append-only lines in `docs/decisions.md` and `steam/ai-provenance/2026-11.jsonl`.
 - polish's 1123a9881 edited `project/dev/ghost-powers/kerf_beat.gd` (moved `_nearest` into `GhostReel.nearest`); kerf has no commit on that file, so the merge takes polish's side cleanly. Polish planned to restore it to the int-n21 content; either way it merges.
+- `tools/debt/baseline.json` (2b38c1353, `--accept-regression` for one `KNOWN_FLAGS` line) and `project/boot/launch_args.gd` (one appended flag): on a baseline conflict with polish run `node tools/debt/merge_baseline.mjs`, commit, then `--update`.
 - Kerf's row in `ghost_forms.json` is now `spectral`: after the merge, re-run the full unit suite (both lanes touched ghost tests) and the scenarios.
 
 ## Next steps
