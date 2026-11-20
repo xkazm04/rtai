@@ -36,6 +36,7 @@ static func draw(ci: CanvasItem, c: Vector2, form: HaulerForm, tick: int, ppm: f
 		return
 	var reach: float = ArenaBodies.table().radius(form.body_class)
 	var fwd: Vector2 = form.vel.normalized()
+	var width_k: float = 0.5 if GhostLook.spectral(&"tonnage") else 1.0
 	for s: float in [-1.0, 1.0]:  # metres in: x ahead, y out past this flank
 		var xf: Transform2D = Transform2D(fwd * ppm, fwd.orthogonal() * s * ppm, c)
 		var pts: PackedVector2Array = PackedVector2Array()
@@ -45,8 +46,8 @@ static func draw(ci: CanvasItem, c: Vector2, form: HaulerForm, tick: int, ppm: f
 			var out: float = (reach + FLANK_M) * sin(t * PI * 0.5)
 			@warning_ignore("return_value_discarded")
 			pts.push_back(xf * Vector2(back, out))
-		ci.draw_polyline(pts, Color(INK, 0.75 * a), 5.0, true)
-		ci.draw_polyline(pts, Color(CREAM, a), 2.0, true)
+		ci.draw_polyline(pts, Color(INK, 0.75 * a), 5.0 * width_k, true)
+		ci.draw_polyline(pts, Color(CREAM, a), 2.0 * width_k, true)
 		_streaks(ci, xf, reach, a, tick)
 
 
