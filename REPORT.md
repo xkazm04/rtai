@@ -9,7 +9,7 @@ Branch `n20-ohm` (worktree `C:\Users\kazda\kiro\gtai-wt\n20-ohm`), cut from `int
 | Item | Evidence | Number |
 |---|---|---|
 | Spectral body (p70, p55, top), legless; stoop, three jars, copper fork read at 32 px/m | `n20/ohm/ohm_vs_plate.png`, `n20/ohm/body_32ppm_guard.png`, commit d49654b67 | 5 facings x 2 tilts + top parts |
-| Jars are the wind-up: fill one by one in the 0.5 s between casts, empty on the press | `n20/ohm/bolt/cast_strip_top_32.png` (ticks 105..139) | 3 jars, 10 ticks apart |
+| Jars are the wind-up: fill one by one in the 0.5 s between casts, empty on the press; the judged stun-only strip shows all three links and all three ringed victims | `n20/ohm/bolt/cast_strip_stun_{top,tilt70}_32.png` (jars 72/82/92, press 95, +2 97, +4 99) | guards 1.0 -> 0.5 HP, still stunned at +4 |
 | Bolt from the fork, first link thin (0.6x), forks heavier, links 2 ticks apart, teal ring per stunned victim, sparks off the bodies | ba4c81c88, `n20/ohm/bolt/press4_close_64.png` | test_ohm_bolt_draw; mutate ohm_bolt_draw.gd 22/28 (78.6%) |
 | Interrupted delayed cast: jars flash amber and vent (never teal) | `n20/ohm/bolt/cancel_vent_32.png`, `n20/ohm/ohm_attack_delay_32.mp4` | delay stays off by default |
 | Old-man drift: 2.4 s sway, hem/beard follow 8/5 ticks (clamped 25 deg), staff leads, low slow bob | 080bfdd5e, `n20/ohm/drift/turn_{before,after}_*_32.png`, `n20/ohm/ohm_move_32.mp4` | test_ohm_drift |
@@ -18,7 +18,8 @@ Branch `n20-ohm` (worktree `C:\Users\kazda\kiro\gtai-wt\n20-ohm`), cut from `int
 | Hit reaction: spectral hover body leans 12 deg with the blow (GhostRecoil), jars and fork stay on, settles by +16 | 078d91612, `n20/ohm/form/hit_{0,4,8,16}_{tilt70,top}_32.png` | test at ages 0/4/8/16 both sides |
 | HUD chip: spectral portrait with three lit jars, goggles, beard, fork | b38e571cd, `n20/ohm/form/chip_legacy_vs_spec.png` | 84 px |
 | Look switch: spectral is Ohm's default, legacy one flag away (`--ghost-look=legacy`) | 359eacb83, decisions.md line | legacy captures pixel-identical to pre-switch |
-| Films | `n20/ohm/ohm_move_32.mp4`, `ohm_attack_32.mp4`, `ohm_close_64.mp4` (+ jpg) | 5 / 5 / 10 s, 1920x1080 h264 60 fps |
+| Films (re-shot after brief 05, spectral) | `n20/ohm/ohm_move_32.mp4`, `ohm_attack_32.mp4`, `ohm_close_64.mp4` (+ jpg) | 5 / 5 / 10 s, 1920x1080 h264 60 fps, 0 SCRIPT ERROR |
+| Tests and mutation | full unit run on 8b4862e1f | 3259 passed / 0 failed / 2 skipped; mutate ohm_drift 11/12, ohm_spirit 4/9 (+3 invalid), ohm_bolt_draw 22/28 |
 
 ## What does not
 - TODO after brief 05/06.
@@ -38,7 +39,9 @@ Branch `n20-ohm` (worktree `C:\Users\kazda\kiro\gtai-wt\n20-ohm`), cut from `int
 ## Merge notes
 - Ohm's row in `ghost_hover.json` sets `fade_from` 0 (flight's tail-0b sets 0.18 on `n20-flight`): keep ours.
 - Two one-line call sites outside Ohm's files: `shock_arcs_view.gd:102` (`OhmVictimRims.arcs`), `fight_areas_art.gd:39` (`OhmVictimRims.sparks`); one in flight's `ghost_acts.gd` (`rig.tick = tick` in prepare_ohm).
-- `ohm_drawn.gd` reads flight's private `drawn._fade` (NEED flight: a public release call).
+- Public accessors `GhostDrawn.release_fade()` / `GhostDrawnActs.hurt_tick()` used since ca37bd94c (no private reads left).
+- Two edits in flight's tests, agreed with flight; ours wins at the merge: 6c9319597 (`test_ghost_hitback.gd` Ohm windup pinned to legacy), 8b4862e1f (`test_ghost_spectral_sheets.gd` legacy belt test uses Kerf's leg cut, since Ohm's fade is 0).
+- HUD chip is `features/hud/art/ghost_chips/ohm_spectral.png`, loaded by flight's selector (15e257bea).
 
 ## Next steps
 - TODO
@@ -52,4 +55,5 @@ Branch `n20-ohm` (worktree `C:\Users\kazda\kiro\gtai-wt\n20-ohm`), cut from `int
 | bolt-scope (resume) | 45 | accepted (ba4c81c88) |
 | drift-films | 75 (cap) | accepted (080bfdd5e + films) |
 | form-rest | 58 | accepted (078d91612, b38e571cd, 359eacb83); left flight's hitback test red |
-| strip-refilm | running | |
+| strip-refilm | 34 | accepted (a340d0464 merge, befe2be8e, 6c9319597, 3bf81a93d, 15e257bea, ca37bd94c, 901c3475e, a0ce0ebd4) |
+| sheet-test (resume) | 7 | accepted (8b4862e1f) |
