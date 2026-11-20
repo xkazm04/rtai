@@ -25,10 +25,18 @@ const read = file => readFileSync(file, 'utf8');
 const numeric = value => Number.isFinite(value) ? value.toFixed(3) : 'not measured';
 
 export function argumentsFor(ghost, look, path, trace) {
+  const output = path.replaceAll('\\', '/');
   return ['--path', 'project', '--windowed', '--position', '0,1440', '--resolution', '1920x1080',
     '--rendering-driver', 'd3d12', '--disable-vsync', '--fixed-fps', '60', '--quit-after', '402',
     SCENE, '--', '--ghost=' + ghost, '--take=move', '--view=tilt70', '--ppm=32', '--clean',
-    '--ghost-look=' + look, (trace ? '--film-trace=' : '--frames=') + path.replaceAll('\\', '/')];
+    '--ghost-look=' + look, ...(trace ? ['--shot=' + output + '.png', '--shot-tick=' + (END + 1)] : []),
+    (trace ? '--film-trace=' : '--frames=') + output];
+}
+
+// The dev arena reports these two disposal messages after its last frame. Retain them in evidence.
+export function engineErrors(log) {
+  return log.split(/\r?\n/).filter(line => SCRIPT_ERROR.test(line) || /SHADER ERROR|\[ERROR\]|^ERROR:/.test(line))
+    .filter(line => !/^ERROR: (\d+ resources still in use at exit\b|Pages in use exist at exit in PagedAllocator:)/.test(line));
 }
 
 // FightFrames timestamps the interval ending at tick t. Keep exactly the same active ticks in all looks.
@@ -105,7 +113,7 @@ async function launch(ctx, ghost, arm, round, trace = false) {
   while (godotProcesses().length && Date.now() < ctx.until) {
     if (!waiting) console.log('Waiting for other Godot processes to finish.');
     waiting = true;
-    await sleep(3000);
+    await sleep(1000);
   }
   const timeout = Math.min(90, Math.floor((ctx.until - Date.now()) / 1000) - 3);
   if (timeout < 1 || !ctx.lock.owned()) throw Error('deadline or lock lost before launch');
@@ -120,13 +128,15 @@ async function launch(ctx, ghost, arm, round, trace = false) {
   if (!ctx.lock.owned()) throw Error('lost bench.lock during ' + stem);
   const cpu = JSON.parse(result.out.split(/\r?\n/).find(s => s.startsWith('{')) ?? '{}');
   const log = existsSync(stem + '.log') ? read(stem + '.log') : '';
+  const errors = engineErrors(log);
   if (result.status !== 0 || cpu.exit !== 0 || !(cpu.total_s > 0) || !Number.isFinite(cpu.others_cores) ||
-      SCRIPT_ERROR.test(log) || /SHADER ERROR|\[ERROR\]|^ERROR:/m.test(log) ||
+      errors.length || (trace && !existsSync(file + '.png')) ||
       !log.includes(ghost + ' move uses ' + look + ' look') || !/D3D12|Direct3D 12/i.test(log)) {
-    throw Error('invalid engine run ' + stem + ': ' + (cpu.error ?? result.out.slice(-300)));
+    throw Error('invalid engine run ' + stem + ': ' + (errors[0] ?? cpu.error ?? result.out.slice(-300)));
   }
   const command = '& "' + ctx.exe + '" ' + argLine;
-  const common = { ghost, arm, round, file, command, locked: true, otherGodotAfter: godotProcesses().length };
+  const common = { ghost, arm, round, file, command, locked: true, otherGodotAfter: godotProcesses().length,
+    exitDiagnostics: log.split(/\r?\n/).filter(line => /^(ERROR|WARNING):/.test(line)) };
   if (trace) return { ...common, verifiedFrames: checkTrace(read(file), ghost) };
   const stats = frameWindow(JSON.parse(read(file)));
   console.log(ghost, arm, 'r' + round, 'p50', numeric(stats.p50), 'ms, other cores', numeric(cpu.others_cores));
@@ -162,7 +172,8 @@ function save(doc) {
     'The floor is the larger absolute endpoint of the legacy twin’s paired interval. Frame times are in ms and CPU in s.',
     '', ...comparisons, '', 'Commit `' + doc.commit + '`. Measured runs holding the exclusive lock: ' +
       doc.runs.filter(r => r.locked).length + '/' + doc.runs.length + '. Other Godot processes visible at exit: ' +
-      doc.runs.filter(r => r.otherGodotAfter > 0).length + ' runs. All launches waited for a clear process scan.',
+      doc.runs.filter(r => r.otherGodotAfter > 0).length + ' runs. All launches waited for a clear process scan. ' +
+      'Per-run logs retain the arena’s exit-time resource and allocator messages.',
     '', doc.error ? 'Incomplete: ' + doc.error : 'Completed ' + doc.rounds + ' paired rounds per ghost.',
     '', '## Commands', '', '```powershell', 'Set-Location "' + ROOT + '"',
     '$env:APPDATA = "' + process.env.APPDATA + '"', '$env:GODOT_BIN = "' + process.env.GODOT_BIN + '"',

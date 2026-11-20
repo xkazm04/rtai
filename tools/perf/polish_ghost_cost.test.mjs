@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { argumentsFor, frameWindow, checkTrace } from './polish_ghost_cost.mjs';
+import { argumentsFor, frameWindow, checkTrace, engineErrors } from './polish_ghost_cost.mjs';
 import { FRAMES, START } from '../film/ghost_films_plan.mjs';
 
 const ticks = Array.from({ length: FRAMES }, (_, i) => START + i);
@@ -26,11 +26,17 @@ test('missing or repeated ticks and invalid clock samples invalidate a run', () 
 test('runs use the ghost look flag and a separate untimed trace with identical camera and take', () => {
   const args = argumentsFor('dent', 'legacy', 'C:\\test\\run.json', false);
   const trace = argumentsFor('dent', 'legacy', 'C:\\test\\verify.jsonl', true);
-  assert.deepEqual(args.slice(0, -1), trace.slice(0, -1));
+  assert.deepEqual(args.slice(0, -1), trace.filter(a => !a.startsWith('--shot')).slice(0, -1));
   assert.equal(args.at(-1), '--frames=C:/test/run.json');
   assert.equal(trace.at(-1), '--film-trace=C:/test/verify.jsonl');
   for (const arg of ['0,1440', '--windowed', 'd3d12', '--disable-vsync', '--fixed-fps',
     '--ghost=dent', '--ghost-look=legacy', '--take=move', '--ppm=32']) assert.ok(args.includes(arg));
+});
+
+test('exit disposal messages are preserved in logs without accepting frame or asset errors', () => {
+  const bad = ['SCRIPT ERROR: broken', 'ERROR: missing texture', '[ERROR] ghost_review: bad flag'];
+  assert.deepEqual(engineErrors([...bad, 'ERROR: 107 resources still in use at exit (run with --verbose for details).',
+    'ERROR: Pages in use exist at exit in PagedAllocator: X'].join('\n')), bad);
 });
 
 test('the review trace proves form, scale, on-screen position and tick coverage', () => {
