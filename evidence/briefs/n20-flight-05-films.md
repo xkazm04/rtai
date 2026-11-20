@@ -30,5 +30,12 @@ same tick where one exists. Notes are one honest line each (say what is still we
 Delete scratch renders in that folder (not in `before/`, `package2/`, `controls/`) that frames.json does not
 reference and that are not a film/poster pair (`*.mp4` + `*.jpg` of the same name stay).
 
+## 4. Colour range (tonnage's finding)
+`ghost_films.mjs` writes full-range video (`yuvj420p`, `color_range=pc`); some players show it washed or crushed. Do NOT
+edit the tool (the gate already ran). After all films are cut, re-encode each `.mp4` you produced in this session to
+limited range in place via a temp file, e.g.
+`ffmpeg -y -i X.mp4 -vf scale=in_range=pc:out_range=tv -pix_fmt yuv420p -color_range tv -c:v libx264 -preset veryfast -crf 17 -an X.tmp.mp4`
+then replace X.mp4; check with ffprobe that `pix_fmt=yuv420p, color_range=tv` and the frame count is unchanged.
+
 ## Report
 Every film/still path with one line of what you judged in it; the frames.json content; anything that failed to render.
