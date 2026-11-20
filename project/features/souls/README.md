@@ -34,6 +34,8 @@ The soul **trail** stays off (owner verdict, 2026-11-03): powers are not the tra
 
 ## Spectral look
 
+The spectral HUD portrait uses `features/hud/art/ghost_chips/<id>_spectral.png` when supplied and otherwise uses the original chip.
+
 `--ghost-look=legacy|spectral` overrides every form, including in `ghost_review.tscn`. Without the flag, each form uses its `look` in `ghost_forms.json`. Missing and unknown looks select `legacy`. A form lane switches its row to `spectral` only after its body, flight and all attacks are complete and filmed in both tilts (70 and 55 degrees).
 
 Use `--view=tilt70` for the 70-degree art and `--view=tilt` for the 55-degree art. For a matching pair of review PNGs, give both runs the same `--shot-tick` and a different absolute `--shot=<path.png>`. The arena saves the rendered frame and exits.
@@ -45,7 +47,11 @@ Use `--view=tilt70` for the 70-degree art and `--view=tilt` for the 55-degree ar
 - `GhostTail.new(row.tail).step(root_px, facing, speed_mps, lift_m, ticks)` follows the rotated anchor in ground-space pixels. Its raised root descends to a ground-level tip. `GhostShadow.new(row.shadow).step(ground_px, lift_m)` draws ink at the true ground point. The camera squashes the shadow by the view's ground factor.
 - `GhostFlight.make(form_id) -> GhostFlight` builds a shadow and tail with their own hover state. `step(at_px, facing, ticks)` drives all three. `body_offset() -> Vector2` adds world-pixel lag and projected height, `body_scale() -> Vector2` gives unitless scale and `body_rotation() -> float` gives extra yaw in radians. Zero ticks hold the pose.
 
+`GhostFlight.set_emerge(k: float)` sets the visible fraction of a transformation. At 0 the body is grounded and the tail is retracted into its socket. At 1 it has its full hover pose, ribbon and light pool. The form view follows the real midpoint on entry and exit.
+
 ### Tilted pose sheets and overlays
+
+`GhostDrawn.release_fade() -> void` restores the previous sprite and outline materials and releases the fallback belt socket. `GhostDrawnActs.hurt_tick() -> int` returns the last hurt tick supplied to `feed()`, or -1 before a hit.
 
 Set `drawn.own_body = true` when a rig supplies its own spectral body. This removes the shared sprite immediately. The rig controls its parts' visibility, combat feeds continue, and its flight mount still steps. The default is false, including for forms that use a standing legacy cell until their pose sheets arrive.
 

@@ -36,6 +36,11 @@ func feed(seq: int, hurt: int, tick: int, windup: bool = false, release_tick: in
 	_windup = windup
 
 
+## Last hurt tick supplied to feed(), or -1 when the form has never been hurt.
+func hurt_tick() -> int:
+	return _hurt
+
+
 func act_col() -> int:
 	if _windup:
 		return WINDUP_COL
@@ -44,7 +49,7 @@ func act_col() -> int:
 		if since < instant_windup:
 			return WINDUP_COL
 		return CUT_COL if since < CUT_TICKS else FOLLOW_COL
-	return HIT_COL if _hurt >= 0 and _tick - _hurt < HIT_TICKS else -1
+	return HIT_COL if hurt_tick() >= 0 and _tick - hurt_tick() < HIT_TICKS else -1
 
 
 static func jab_col(act: int, p_jab: bool, cols: int) -> int:

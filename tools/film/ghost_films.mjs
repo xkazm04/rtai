@@ -12,6 +12,7 @@ import { describe, ensureImport, runGodot } from '../lib/godot.mjs';
 
 const GHOSTS = ['tonnage', 'dent', 'kerf', 'ohm'];
 const TAKES = ['move', 'attack', 'close'];
+const MORPH_FRAMES = 400;
 const START = 68;
 const FRAMES = 300;
 const TURN = 163;
@@ -24,7 +25,7 @@ export function plan(argv) {
   if (!['legacy', 'spectral'].includes(v.look)) throw Error('--look requires legacy or spectral');
   if (!v.out) throw Error('--out requires a directory');
   const takes = [...new Set((v.takes ?? TAKES.join(',')).split(','))];
-  if (takes.some(t => !TAKES.includes(t))) throw Error('--takes requires move, attack or close');
+  if (takes.some(t => !TAKES.includes(t) && t !== 'morph')) throw Error('--takes requires move, attack, close or morph');
   const stills = v.stills === undefined ? [] : [...new Set(v.stills.split(','))];
   if (stills.some(t => !/^\d+$/.test(t) || +t < START || +t >= START + FRAMES)) {
     throw Error('--stills requires arena ticks 68 through 367');
@@ -74,7 +75,11 @@ async function capture(dir, p, take, ppm, view, end) {
   if (probe.width !== 1920 || probe.height !== 540 || Number(probe.nb_frames) < end) throw Error('incomplete panel ' + movie);
   const [, ...rows] = readFileSync(trace, 'utf8').trim().split(/\r?\n/).map(JSON.parse);
   const live = rows.filter(r => r[1] >= START && r[1] < START + FRAMES);
-  if (live.some(r => r[2] !== p.ghost || Math.abs(r[21] - ppm) > 0.01)) throw Error('form or native scale changed in ' + trace);
+  const forms = rows.map(r => r[2]);
+  if (take === 'morph' && !(forms[0] === 'base' && forms.includes(p.ghost) && forms.at(-1) === 'base')) {
+    throw Error('incomplete base to form to base transition in ' + trace);
+  }
+  if (live.some(r => (take !== 'morph' && r[2] !== p.ghost) || Math.abs(r[21] - ppm) > 0.01)) throw Error('form or native scale changed in ' + trace);
   console.log(view, take, ppm + ' px/m', describe(r));
   return { movie, rows };
 }
@@ -95,15 +100,15 @@ function compose(dir, p, chapters, target, ppm, speed, still) {
   for (const [i, { panels, action }] of chapters.entries()) {
     const [a, b] = panels.map((panel, j) => {
       inputs.push('-i', panel.movie);
-      const start = tickIndex(panel, still ?? START);
-      const count = still === undefined ? FRAMES : 1;
+      const start = tickIndex(panel, still ?? (action === 'morph' ? 1 : START));
+      const count = still === undefined ? (action === 'morph' ? MORPH_FRAMES : FRAMES) : 1;
       const label = 'p' + i + j;
       filters.push('[' + (i * 2 + j) + ':v]trim=start_frame=' + start + ':end_frame=' + (start + count) +
         ',setpts=PTS-STARTPTS,setsar=1[' + label + ']');
       return '[' + label + ']';
     });
     const card = p.ghost[0].toUpperCase() + p.ghost.slice(1);
-    const label = (action === 'move' ? 'Movement' : 'Attack') + (still === undefined ? '' : '    /    Tick ' + still);
+    const label = ({ move: 'Movement', attack: 'Attack', morph: 'Transformation' }[action]) + (still === undefined ? '' : '    /    Tick ' + still);
     filters.push(a + b + 'vstack,drawbox=x=0:y=0:w=iw:h=39:color=0x172023:t=fill,' +
       [title(card + '   ' + speed + ' m/s max    /    ' + ppm + ' px/m', 18, 7, 23),
         title(label + '    /    ' + p.look, 585, 7, 22), title('Play tilt  70\u00b0', 17, 55, 17),
@@ -131,7 +136,7 @@ export async function film(p) {
   const table = JSON.parse(readFileSync(join(ROOT, 'project/data/tables/ghost_forms.json'), 'utf8'));
   const speed = table.forms.find(r => r.id === p.ghost).top_mps;
   const pairs = new Map();
-  async function pair(action, ppm, end = START + FRAMES + 1) {
+  async function pair(action, ppm, end = action === 'morph' ? MORPH_FRAMES + 2 : START + FRAMES + 1) {
     const key = action + ppm;
     if (!pairs.has(key)) {
       const panels = [];
