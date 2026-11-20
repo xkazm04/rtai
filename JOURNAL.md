@@ -135,3 +135,12 @@ NEXT (session 6, after the 18:30 freeze):
 - 16:56 LOOKED `call_cruise_wings_open.png` (tick 118, 12 m/s, 64 + 32 px/m): open breaks the arrowhead and shows two arms, but the crescents begin to join into one bow. DECISION default stays 43/20; the flag is the owner's Call. frames.json #15 = this still (HUD chip still dropped: the morph film shows it). REPORT Call + What works item 7 + merge note (baseline) updated.
 - 16:56 Gate started on 40378a1c7 (code 2b38c1353), out `masters:n21/kerf/scratch/s6_gate.txt`. Last product commit of the night: 2b38c1353.
 - 17:07 MILESTONE final gate PASS on 40378a1c7 (code 2b38c1353): lint 19/19, unit 3369/0/2, scenarios 65, parity 1200 exact (caught at 629), goldens 11/11 + 5/5, export-audit 816/0. `build/gate/40378a1c74cc/gate.json`. REPORT gate paragraph + ledger (9 calls, 281 min) updated.
+- 17:12 mutate `features/souls/kerf_ronin_top.gd` changed lines (18,33-34,94-95,101; tests test_kerf_ronin_top): 4/4 killed (100 %). Note: `--file` is project-relative (`features/...`), a `project/...` path reports "does not exist at HEAD" (FRICTION, 1 min). Temp worktree `%LOCALAPPDATA%\Temp\gtai-mutate-75005d66` is this lane's (created 17:08).
+- 17:13 cites REPORT.md: 5 paths, 5 ok. No product work after 2b38c1353 (commit line 17:00 passed).
+- 17:13 END session 6. No Astra running (9 calls, 281 min, all accepted).
+
+NEXT (session 7, after the 18:30 freeze):
+1. `export APPDATA=C:/Users/kazda/kiro/gtai-n21/appdata/kerf` + GODOT_BIN, then once: `node tools/gate/run.mjs --rev=HEAD --reels`; add its line + `build/gate/<sha>/gate.json` to REPORT's gate paragraph (code is 2b38c1353; later commits are journal/report only).
+2. REPORT header "last edit": update; `node tools/evidence/cites.mjs REPORT.md`; pathspec commit REPORT + JOURNAL.
+3. After the reels gate: remove this lane's `%LOCALAPPDATA%\Temp\gtai-gate-40378a1c74cc`, `gtai-gate-118872760ea2` and `gtai-mutate-75005d66` (by exact name, never a pattern across lanes).
+4. No new Astra calls, no product commits.
