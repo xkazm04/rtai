@@ -1,0 +1,140 @@
+diff --git a/project/features/combat/kills/kill_mark_art.gd b/project/features/combat/kills/kill_mark_art.gd
+index 7101799be..d2c042885 100644
+--- a/project/features/combat/kills/kill_mark_art.gd
++++ b/project/features/combat/kills/kill_mark_art.gd
+@@ -18,6 +18,16 @@ const RUN: float = 0.55
+ const FINGERS: int = 3
+ 
+ 
++static func flashes(
++	ci: CanvasItem, kills: SignatureKills, ppm: float, quiet: Dictionary[KillMarks.Mark, bool]
++) -> void:
++	for m: KillMarks.Mark in kills.marks.marks:
++		var age: int = kills.tick - m.tick
++		var soot: int = 2 if m.flash_scale >= 1.0 else 0
++		if not quiet.has(m) and age >= 0 and age < m.flash_ticks + soot:
++			flash(ci, m, age, ppm, m.flash_ticks)
++
++
+ static func scorch(ci: CanvasItem, m: KillMarks.Mark, ppm: float) -> void:
+ 	if m.line_m > 0.0:
+ 		scorch_line(ci, m, ppm)
+diff --git a/project/features/combat/kills/kill_shock_fx.gd b/project/features/combat/kills/kill_shock_fx.gd
+index fc5735724..f4e9fde10 100644
+--- a/project/features/combat/kills/kill_shock_fx.gd
++++ b/project/features/combat/kills/kill_shock_fx.gd
+@@ -1,11 +1,7 @@
+ class_name KillShockFx
+ extends Node2D
+-## The electro kill (lane brutality, signature style `shock`), render only: the victim's rig copy
+-## locks up in a stiff convulsion (a hashed shake every tick) while the X-ray flash strobes (the
+-## body blinks out and weapon-art's skeleton sticker shows in its place, ringed by cream arcs),
+-## then the body drops stiff (a hard topple along the shot) with smoke rising from the collar.
+-## Timings: row.stand_ticks = the convulsion, against the sim tick, so a replay shows the same
+-## frames. No dice: shapes and the shake come from a hash of the serial and the tick.
++## The rendered shock death holds the posed victim, then topples it into the sprawl cut.
++## Electro draws the X-ray, arcs and collar smoke. Spectral Ohm leaves the falling figure clear.
+ 
+ const XRAY_TEX: Texture2D = preload("res://features/combat/weapons/art/gore/xray.png")
+ const ARC: Color = Color("#F4E3B5")
+@@ -42,6 +38,7 @@ class Shock:
+ 	var row: SignatureKill = null
+ 	var born: int = 0
+ 	var dir: Vector2 = Vector2.RIGHT
++	var rim_only: bool
+ 	var art: Texture2D = null  # KillXray's drawn per-kind strip, or null: XRAY_TEX
+ 
+ 
+@@ -58,6 +55,7 @@ func add(serial: int, body: Node2D, row: SignatureKill, dir: Vector2) -> void:
+ 	s.row = row
+ 	s.born = kills.tick
+ 	s.dir = dir
++	s.rim_only = row.weapon == OhmStage.WEAPON and GhostLook.spectral(OhmStage.ID)
+ 	s.art = KillXray.art_of(body)
+ 	@warning_ignore("return_value_discarded")
+ 	_shocks.append(s)
+@@ -76,7 +74,7 @@ func pose() -> void:
+ 			var amp: float = 0.0 if reduced_motion else 0.05 * ppm
+ 			s.body.position += Vector2(_h(s.serial, age) - 0.5, _h(s.serial, age + 500) - 0.5) * amp
+ 			s.body.rotation += (_h(s.serial, age + 900) - 0.5) * 0.25
+-			s.body.visible = not _xray(s, age)  # print_part writes alpha 1: blink by visibility
++			s.body.visible = s.rim_only or not _xray(s, age)
+ 		else:
+ 			var k: float = clampf(float(age - lock) / DROP_TICKS, 0.0, 1.0)
+ 			s.body.visible = true
+@@ -127,6 +125,8 @@ func _lie(s: Shock, k: float) -> void:
+ 
+ func _draw() -> void:
+ 	for s: Shock in _shocks:
++		if s.rim_only:
++			continue
+ 		var age: int = kills.tick - s.born
+ 		var lock: int = s.row.hitstop_ticks + s.row.stand_ticks
+ 		var p: Vector2 = s.body.position
+diff --git a/project/features/combat/kills/kill_view.gd b/project/features/combat/kills/kill_view.gd
+index 3c890cb38..a4e7e8da2 100644
+--- a/project/features/combat/kills/kill_view.gd
++++ b/project/features/combat/kills/kill_view.gd
+@@ -17,9 +17,7 @@ var reduced_motion: bool = false
+ ## Callable(victim_id: int) -> CutRig (null when the victim has no posed rig).
+ var rig_lookup: Callable = Callable()
+ var gib_layer: Node2D = Node2D.new()
+-## The leftovers: one KillGround per kill (spray, smears, scorch, ash heap), each reprinted only
+-## when its own kill changes (a full reprint of twelve kills was the kill-frame spike); the smears
+-## grow blot by blot into their kill's print as the parts slide.
++## Each kill's independent ground print grows its drag smears as the parts slide.
+ var ground: Node2D = Node2D.new()
+ ## The per-style overlays (char, X-ray, blade streak, dissolve, shard burst) and the cut dispatch.
+ var styles: KillStyles = KillStyles.new()
+@@ -42,6 +40,7 @@ var _ang0: PackedFloat32Array = PackedFloat32Array()
+ var _trail: Array[PackedVector2Array] = []
+ ## Kill serials that bleed no smear (a row with no spray: the burn).
+ var _dry: Dictionary[int, bool] = {}
++var _rim_flash: Dictionary[KillMarks.Mark, bool] = {}
+ var _frame_us: int = 0
+ var _frame_tick: int = 0
+ var _grounds: Dictionary[int, KillGround] = {}
+@@ -116,11 +115,8 @@ func _draw() -> void:
+ 			var r: float = 0.22 * ppm / (1.0 + g.z[i] * 0.6) * body_sink(g.kill_of[i])
+ 			r *= styles.dissolve_fx.left(g.kill_of[i], g.piece[i])
+ 			draw_circle(KillSplitHalves.shadow_at(n), r, SOOT)  # n16: under a blade half, not its root
+-	for m: KillMarks.Mark in kills.marks.marks:
+-		var age: int = kills.tick - m.tick
+-		var soot: int = 2 if m.flash_scale >= 1.0 else 0
+-		if not reduced_motion and age >= 0 and age < m.flash_ticks + soot:
+-			KillMarkArt.flash(self, m, age, ppm, m.flash_ticks)
++	if not reduced_motion:
++		KillMarkArt.flashes(self, kills, ppm, _rim_flash)
+ 	_frame_us += Time.get_ticks_usec() - t0
+ 
+ 
+@@ -166,7 +162,7 @@ func _on_killed(victim_id: int, serial: int, row: SignatureKill, at: Vector2, di
+ 			_ang0[i] = g.ang[i]
+ 			_trail[i] = PackedVector2Array()
+ 	_drop_unused()
+-	_print_ground(serial)
++	_print_ground(serial, row)
+ 	_frame_us += Time.get_ticks_usec() - t0
+ 	@warning_ignore("return_value_discarded")
+ 	kill_us.append(Time.get_ticks_usec() - t0)
+@@ -189,15 +185,19 @@ func _grow_trail(i: int, at: Vector2, grounded: bool) -> void:
+ 
+ 
+ ## The new kill's print (its mark is the newest); prints whose mark was recycled are freed.
+-func _print_ground(serial: int) -> void:
++func _print_ground(serial: int, row: SignatureKill) -> void:
+ 	var kg: KillGround = KillGround.new()
+ 	kg.view = self
+ 	kg.mark = kills.marks.marks.back()
++	if row.weapon == OhmStage.WEAPON and GhostLook.spectral(OhmStage.ID):
++		_rim_flash[kg.mark] = true
+ 	kg.serial = serial
+ 	ground.add_child(kg)
+ 	_grounds[serial] = kg
+ 	for s: int in _grounds.keys():
+ 		if not kills.marks.marks.has(_grounds[s].mark):
++			@warning_ignore("return_value_discarded")
++			_rim_flash.erase(_grounds[s].mark)
+ 			_grounds[s].queue_free()
+ 			@warning_ignore("return_value_discarded")
+ 			_grounds.erase(s)

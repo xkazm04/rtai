@@ -1,0 +1,111 @@
+# n20 ohm JOURNAL (director)
+
+- 00:16 START iteration 1 BUILD. No astra.lock, no astra-calls for ohm. Other lanes: no `NEED ohm`.
+  flight's interface (journal 00:25): GhostLook + `--ghost-look`, row field `look`, GhostHover/GhostTail/
+  GhostShadow/GhostFlight; under spectral GhostDrawn holds the standing cell and the top rigs get speed 0.
+- 00:20 Looked at the plate `n20/concepts/ohm_c.png`, the shipped p70 `ohm_walk8`/`ohm_act` (5 facing rows,
+  act = raised / strike / ready / hurt), the n6 r4 part sheet and job, the n19 film notes.
+- 00:22 DECISION art structure: one tilt sheet per camera tilt (p70, p55), 6 columns x 5 facing rows
+  (hover idle, drift, charged, thrust, recovery, struck), plus a 3x2 top-view part sheet (body with jar tops,
+  coat hem, staff, staff arm, free arm, beard). The jar insides are painted flat magenta in every drawing, so
+  the cut script lifts a per-jar mask (jar 1/2/3 in R/G/B) and the game fills each jar at runtime (empty,
+  filling, full, amber vent) without a drawn cell per charge level. Left rows mirror tonight (staff swaps hand):
+  a Call if it reads wrong. Rejected: a cell per jar level (4x the cells, drawings that drift between them);
+  code-drawn jars over a body without masks (no reliable jar position per facing).
+- 00:20 ASTRA RUNNING body-art since 00:20 (brief evidence/briefs/n20-ohm-01-body-art.md: three image_gen
+  sheets with director-written prompts, tools/art/ohm_spectral_cut.py, jar masks, preview, commit).
+- 00:24 NEED flight: GhostDrawn under the spectral look: (1) load `<card>_spec_hover.png` (5 facing rows; col 0
+  idle, col 1 drift/cruise, chosen by GhostHover speed above ~0.5 m/s; the left `_left.png` twin optional) in
+  place of walk8/run16, and `<card>_spec_act.png` (same 4 act columns as the legacy act sheet: wind-up, strike,
+  follow, hit) in place of `<card>_act.png`, each only when the file exists under art/view/<art>/ (fallback: the
+  legacy sheets, hover holding the standing column as your README says). (2) a public read
+  `func sprite() -> Sprite2D` (the shown sprite, after step) so a form can mirror a mask overlay on the exact
+  cell (Ohm's jar mask `ohm_spec_hover_jars.png` twin). Ohm's sheets land as
+  `project/features/souls/art/view/{p70,p55}/ohm_spec_hover.png` / `ohm_spec_act.png` on n20-ohm tonight.
+- 00:24 REVIEW masters t1: `ohm_spec_top_t1` excellent (body with three magenta jar tops across the back,
+  goggles front, hem, staff with copper fork, both arms, beard). `ohm_spec_p70_t1`: legless, forked staff,
+  magenta jars in every cell, 6x5 as asked; row 5 reads 3/4-away rather than straight away (jars stacked, not
+  side by side): watch at the cut. Teal is more opaque than the plate's glow: lift at runtime (additive rim).
+- 00:26 REVIEW p70 t2, t3: all three takes draw row 5 (away) as 3/4-away-left (jars stacked in depth), not
+  straight from behind; t2 is best (staff in his right hand = screen-left in the toward row; t1/t3 swap it).
+  Follow-up: a one-row strip "straight from behind" (6 poses) to replace row 5, prompt to be written by me.
+- 00:27 REVIEW p55 t1: follows p70 t3 (Astra took t3 as image 3), consistent pair; barely flatter than p70;
+  same row-5 issue; staff in his left hand in the toward row (t3 too). Accept for tonight; row-5 strip for both.
+- 00:40 REVIEW cut (`n20/ohm/body_preview.png`, `body_32ppm_guard.png`): masks clean, jars fill 1 / 1+2 / full
+  and amber in every facing incl. toward (jar tops) and the top-view body (three circles). At 32 px/m beside a
+  patrol cop: stoop, three jars, copper fork read; taller than legacy with the staff above. Away row is 3/4 but
+  shows all three jars: the row-5 regen drops to "if time".
+- 00:41 ASTRA body-art 21 accepted. d49654b67 "Cut Ohm's spectral Lightning Rod body" (39 files: p70/p55
+  ohm_spec_hover + ohm_spec_act + _jars masks + cells json, top parts art/ohm/spectral + parts.json,
+  tools/art/ohm_spectral_cut.py, prompts, manifest, 15 provenance lines). Takes p70 3/3, p55 3/3, top 1/1.
+  Jars: 3 per cell except p70 3/4-away recovery (2). Idle height 74 px p70 / 80 px p55 at 32 px/m = legacy.
+  Lint 19/19. Open: away row 3/4; charged hand beside the head; coat shorter/less luminous than the plate.
+- 00:41 MILESTONE body art in. flight interface 0e7d91e46 landed. NEED flight sent by SendMessage too
+  (spec sheet loading + sprite() + instant wind-up off for ohm under spectral).
+- 00:42 ASTRA RUNNING wire since 00:42 (brief evidence/briefs/n20-ohm-02-wire.md: merge flight, OhmCharge +
+  tests, tilt jar overlay + spec sheets, top-view OhmSpirit, ohm hover row, stills).
+  Call sites allowed: ghost_acts.gd prepare_ohm `rig.ohm = o`; ghost_drawn.gd `sprite()` getter only if absent.
+- 00:46 REVIEW 5134e9d26 OhmCharge (+ OhmStage.gap_left read-only, 7 tests): fill from the live gap, pending
+  delayed cast holds full, cancel = pending cleared with no new bolt -> amber vent. OK. (3d175f56b merged flight.)
+- 00:47 flight (SendMessage) accepts both NEEDs: package 1b adds to GhostDrawn `<card>_spec_hover.png` /
+  `_spec_act.png` loading (`var pose`, col 0 < 0.5 m/s <= col 1), `sprite()`, public `instant_windup` (0 for
+  spectral ohm), GhostTail points()/half_widths(); `rig.ohm = o` call site OK. Expect a small conflict if my
+  wire package added its own `sprite()` getter: resolve to flight's.
+- 00:59 REVIEW 95eaebf58 tilt wiring: OhmDrawn (own spec-sheet sprite, flight lean/bank/scale, idle/drift by
+  hover speed, act cols from GhostDrawn.act_col), OhmJars + shader (bottom-up fill in the jar bbox, flash white,
+  amber vent), additive teal halo; call site ghost_acts.gd `rig.ohm = o` (named, allowed). FOLLOW-UP: (1) it
+  deleted ~20 doc-comment lines from ohm_rig.gd to fit the size cap: restore them, move spectral code out instead;
+  (2) private `drawn._instant_windup` / `drawn._tick` access -> flight 1b's public `instant_windup` / sprite().
+- 01:04 LOOK wire/ohm_top_idle_full.png (crop scratch/top_idle_crop.png, 4x): reads as Ohm from above (jar
+  circles, hem, beard) but: staff diagonal back across his right side, not planted ahead; legacy OhmView
+  fingertip sparks (white streaks) still drawn under spectral; flight tail a faint thin dash behind a big hem;
+  jars: two white dots + one teal, not three clear lit circles. Feed into the follow-up.
+- 01:08 LOOK wire/ohm_tilt70_idle_full.png (scratch/tilt_idle_crop.png): good: three full jars lit, fork, hem,
+  ink readable. Faults: legacy fingertip spark/reach lines still drawn at ground level under spectral; flight
+  tail a detached dash ~1 m behind, not continuing the hem (tail anchor in the ohm hover row, or flight's root).
+- 01:10 LOOK wire/ohm_tilt70_press.png (scratch/tilt_press_crop.png): thrust column shows at the press (staff
+  forward, fork right) = the instant cast no longer shows the raised pose after the bolt. Bolt still the legacy
+  one from the old electrode spot below his hem; white star sparks cover the guards: package 03's job.
+- 01:14 flight 1b landed d2a44407e (GhostDrawn spec sheets, sprite(), instant_windup, tail points). Brief 03
+  step 0 now: merge it, move Ohm's tilt onto flight's GhostDrawn path, jars on drawn.sprite(), one body sprite;
+  plus the still faults (legacy sparks off, staff ahead, full jar circles from above, tail from the hem, restore
+  ohm_rig comments).
+- 01:47 START iteration 2 BUILD. Previous director session cut at 01:46 (90 min); it killed ASTRA wire mid-run
+  (no final message; last commit e80cec55e, tree clean). Stale astra.lock (dead PID 57504) removed.
+- 01:50 ASTRA wire ~64 bounced-by-cut (accepted commits 5134e9d26, 95eaebf58, 2f96cf6fd, e80cec55e; follow-ups open:
+  ohm_rig `##` comments still missing (30 removed, 2 back), OhmView._sparks unguarded under spectral).
+- 01:51 ASTRA RUNNING bolt since 01:51 (brief 03 + status section: verify/finish step 0, fork points, bolt draw,
+  stagger, victim rings, amber cancel, strips). Hard stop 03:05.
+- 01:58 REVIEW 5e8b8d550 (bolt step 0): ohm_rig `##` comments fully restored (net 0 removed vs 95eaebf58^), code
+  moved to new ohm_parts.gd; OhmView._sparks guarded under spectral; top staff ahead + full jar-top circles (shader);
+  ohm tail row anchor -1.55, length 1.18, fray 0.38. Call site in flight's ghost_acts.gd: one more line
+  `rig.tick = tick` in prepare_ohm (named here; flight: one-line call site, legal). Stills to judge at package end.
+- 01:58 Brief 04 written (evidence/briefs/n20-ohm-04-drift-films.md): sway, late hem/beard, staff leading, drift
+  tuning + films (move/attack/close/delay, tilt55 still).
+- 02:12 STOPPED Astra bolt (my own PID tree): uncommitted work edited unowned combat files (kill_mark_art,
+  kill_shock_fx, kill_view: an X-ray "rim_only" for spectral-Ohm kills; shock_arcs_view, fight_areas_art: stun-spark
+  guards), flight's ghost_hand.gd (ohm_prongs), hand-edited tools/debt/baseline.json, and again deleted doc
+  comments/constants to fit size caps. Saved the kill diff as evidence/patches/n20-ohm-kill-rim-only.patch (Call).
+- 02:13 ASTRA bolt 24 bounced (2 commits accepted: 5e8b8d550, 066779cca).
+- 02:14 DECISION scope: the two stun-spark sites (shock_arcs_view.gd, fight_areas_art.gd) may change ONE existing
+  line each, routing the count through OhmVictimRims (0 for a rim-marked victim), no line added (both at the debt
+  cap); the shock-kill X-ray over a falling spectral-Ohm victim stays as is tonight -> Call for the owner/Director.
+- 02:15 ASTRA RUNNING bolt-scope since 02:15 (--resume, brief 03b: revert non-Ohm files, restore docs, two one-line
+  call sites, then finish brief 03). Hard stop 03:00.
+- 02:23 REVIEW bolt-scope staged state: combat kills/ghost_hand/baseline reverted; the two call sites are exactly
+  one line each (`OhmVictimRims.arcs(h, n)` in shock_arcs_view.gd:102, `OhmVictimRims.sparks(h, ...)` in
+  fight_areas_art.gd:39); no `##` line removed anywhere. New: ohm_bolt_draw/ohm_bolt_view/ohm_fork/ohm_victim_rims,
+  test_ohm_bolt_draw. Awaiting tests, commit, strips.
+- 02:36 LOOK bolt strips (n20/ohm/bolt/): top: jars fill 1/2/3 as lit circles; press = one thin link from the fork,
+  +4 two, +6 three; teal rings on all three guards, sparks outward. tilt70: same, fork to first guard thin, forks
+  heavier; press4_close_64 clean (three rings, bodies visible). cancel_vent_32: amber jars + amber fork sputter, hurt
+  pose. Faults -> brief 04 Part A2: strip out of time order (refill frames from after the press first); top tail a
+  thin spike, not the robe; white figure-like clutter beside the upper victim (likely shock-kill X-ray = Call).
+- 02:40 flight (SendMessage): film tool tools/film/ghost_films.mjs on n20-flight (95d914ab8, 073237b56), tail ribbon f183e88a1; package 3 tail vapour running. Brief 04 now starts with git merge n20-flight.
+- 02:57 ASTRA bolt-scope 42 accepted. ba4c81c88 (bolt from the fork, first link 0.6x, links 2 ticks apart, victim
+  rims, amber cancel, two one-line call sites). Astra: check 14/14, lint 19/19, --changed 3223 pass/0 fail/2 skip,
+  scenarios 65/0 incl. replay_60s, quick gate pass, mutate ohm_bolt_draw.gd 78.6% (22 killed, 6 survived: jag shape,
+  seed), cut PNGs byte-identical. Open: white impact spray beside the first guard (shared), shock-kill X-ray over
+  lethal victims (Call, patch saved), OhmVictimRims keeps a static `_marked` dict keyed by instance id (check reset
+  across sessions/tests in a later package).
+- 02:58 MILESTONE attack (bolt) done and stilled; body + cast tell done. Next: drift (flight character) + films.
