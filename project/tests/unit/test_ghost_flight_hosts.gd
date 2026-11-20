@@ -83,23 +83,44 @@ func test_four_arena_drives_keep_spectral_gaits_still_while_the_legacy_gaits_cyc
 	ViewMode.select("tilt70")
 	for look: StringName in [GhostLook.LEGACY, GhostLook.SPECTRAL]:
 		for id: StringName in [&"tonnage", &"dent", &"kerf", &"ohm"]:
-			_build(look)
-			_enter(id)
-			var body: Node2D = _view._bodies.get(id)
-			var drawn: GhostDrawn = body.get(&"drawn")
-			if id == &"tonnage":
-				watch_signals(body)
-			_view.pilot.hauler.form.vel = Vector2.RIGHT * 4.2
-			var columns: Dictionary[int, bool] = {}
-			for tick: int in 90:
-				_move()
-				columns[drawn._col] = true
-			if look == GhostLook.SPECTRAL:
-				assert_eq(columns.size(), 1, str(id))
-				assert_eq(drawn._phase, 0.0, str(id))
-				if id == &"tonnage":
-					assert_signal_not_emitted(body, "stamped")
-			else:
-				assert_gt(columns.size(), 1, str(id))
-				if id == &"tonnage":
-					assert_signal_emitted(body, "stamped")
+			_drive_arena(id, look)
+
+
+func _drive_arena(id: StringName, look: StringName) -> void:
+	GhostLook.override_for_test(look)
+	var bus: EventBus = autofree(EventBus.new())
+	var data: DataStore = autofree(DataStore.new())
+	var session: ArenaSession = ArenaSession.open(bus, data)
+	var drive: GhostReviewInput = GhostReviewInput.new(session, id, false)
+	session.world.loop().set_input(drive)
+	var view: GhostFormView = GhostFormView.make(session.stage, null, null)
+	add_child(view)
+	view.set_process(false)
+	var body: Node2D = view._bodies.get(id)
+	var drawn: GhostDrawn = body.get(&"drawn")
+	var stamps: Array[Vector2] = []
+	@warning_ignore("return_value_discarded")
+	view._bodies.tonnage.stamped.connect(stamps.append)
+	for i: int in GhostReviewInput.START:
+		session.step()
+		view._process(0.0)
+	assert_eq(session.pilot.ghosts.forms.current(), id)
+	var start: Vector2 = session.stage.arena.rivet.pos
+	var cells: Dictionary[int, bool] = {}
+	var planted: bool = false
+	for i: int in 58:
+		session.step()
+		view._process(0.0)
+		cells[drawn.sprite().frame_coords.x] = true
+		if id == &"dent":
+			for side: RigLimbs in view._bodies.dent._rig.sides:
+				planted = planted or side.stepping
+	assert_gt(start.distance_to(session.stage.arena.rivet.pos), 1.0, str(id))
+	var grounded: bool = look == GhostLook.LEGACY
+	assert_eq(cells.size() > 1, grounded, str(id))
+	if id == &"dent":
+		assert_eq(planted, grounded, "Dent's actual IK moved a planted foot")
+	assert_eq(not stamps.is_empty(), grounded and id == &"tonnage", "walking stamps")
+	view.free()
+	session.world.loop().set_input(session.live)
+	session.close()
