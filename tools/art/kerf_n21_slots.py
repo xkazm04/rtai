@@ -5,7 +5,7 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageDraw
 
 ART = Path(__file__).resolve().parents[2] / "project/features/souls/art"
 RONIN = ART / "kerf/ronin"
@@ -48,7 +48,13 @@ def main():
                 alpha.paste(lamp_mask(cell, point, threshold), ((3*col+i)*PATCH, (5*sheet+row)*PATCH))
     torso = Image.open(RONIN / "torso.png")
     for i, point in enumerate(meta["torso"]["slots"]):
-        alpha.paste(lamp_mask(torso, point, (195, 240, 224)), (i*PATCH, 20*PATCH))
+        mask = lamp_mask(torso, point, (195, 240, 224))
+        # The top rig projects 18 source pixels to three pixels on the 32 px/m camera.
+        # Keep each lamp's printed length and widen its face around the measured centre.
+        _, top, _, bottom = mask.point(lambda v: 255 if v >= 128 else 0).getbbox()
+        face = Image.new("L", (PATCH, PATCH))
+        ImageDraw.Draw(face).rounded_rectangle((HALF-9, top, HALF+9, bottom-1), radius=6, fill=255)
+        alpha.paste(face, (i*PATCH, 20*PATCH))
     packed = Image.new("RGBA", alpha.size, "white")
     packed.putalpha(alpha)
     packed.save(RONIN / "slot_masks.png", optimize=True)

@@ -10,6 +10,8 @@ const SHOULDER_M: Vector2 = Vector2(0.02, 0.53)
 const WING_REST: Vector2 = Vector2(45, 34)
 const WING_FAST: Vector2 = Vector2(43, 20)
 const TAIL_ROOT_M: Vector2 = Vector2(-0.28, 0)
+## The helmet and its trailing crest share a texture. The crest passes behind the back plate.
+const HELMET_Y: int = 138
 
 var slots: KerfChargeSlots = KerfChargeSlots.new()
 # PartLibrary resolves its folder from features/characters/art.
@@ -32,19 +34,41 @@ func _init() -> void:
 	for side: String in ["left", "right"]:
 		_upper.append(_part("upperarm", side + "_upperarm"))
 		_blade.append(_part("blade", side + "_blade"))
+	@warning_ignore("return_value_discarded")
+	_head_part(true)
 	var torso: Sprite2D = _part("torso", "torso")
 	torso.rotation = -PI / 2
 	slots.bind(torso)
-	_head = _part("head", "head")
-	_head.rotation = -PI / 2
-	_head.position = Vector2.RIGHT * 0.46 * PPM
+	slots.paint(KerfChargeSlots.TOP, 3, 0.0)
+	_head = _head_part(false)
+
+
+func _head_part(crest: bool) -> Sprite2D:
+	var sprite: Sprite2D = _part("head", "crest" if crest else "head")
+	var region: Rect2 = Rect2(Vector2.ZERO, sprite.texture.get_size())
+	if crest:
+		region.size.y = HELMET_Y
+	else:
+		region.position.y = HELMET_Y
+		region.size.y -= HELMET_Y
+	var atlas: AtlasTexture = AtlasTexture.new()
+	atlas.atlas = sprite.texture
+	atlas.region = region
+	atlas.filter_clip = true
+	sprite.texture = atlas
+	sprite.offset += region.position
+	sprite.rotation = -PI / 2
+	sprite.position = Vector2.RIGHT * 0.46 * PPM
+	return sprite
 
 
 func pose(current: KerfRoninDrawn.Pose, speed: float, yaw: float, steps: int) -> void:
 	var straight: float = clampf(speed / 12.0, 0.0, 1.0)
 	_straight.self_modulate.a = straight
 	_curled.self_modulate.a = 1.0 - straight
-	var ease: float = 1.0 - pow(0.48, maxi(0, steps))
+	# On release the extended elbow tucks in on the first moving frame.
+	var retention: float = 0.30 if _angles[1].y > 90.0 else 0.48
+	var ease: float = 1.0 - pow(retention, maxi(0, steps))
 	if current == POSE.CUT:
 		ease = 1.0
 	for i: int in 2:
@@ -70,7 +94,7 @@ static func _sweep(current: KerfRoninDrawn.Pose, side: float, yaw: float) -> Vec
 		POSE.COCK:
 			return Vector2(22, 4) if side > 0.0 else WING_REST
 		POSE.CUT:
-			return Vector2(50, 180) if side > 0.0 else WING_FAST
+			return Vector2(115, 180) if side > 0.0 else WING_FAST
 		POSE.RECOVER:
 			return Vector2(49, 37) if side > 0.0 else WING_REST
 	return WING_REST

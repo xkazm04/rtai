@@ -81,6 +81,8 @@ func test_only_the_right_cutter_thrusts_along_facing_and_eases_back() -> void:
 	var cut: Vector2 = _far_joint(rig, blade, "blade")
 	assert_lt(cock.x, on_press.x)
 	assert_eq(on_press, cut)
+	var nose: Vector2 = rig._head.transform * (rig._head.offset + rig._head.texture.get_size())
+	assert_gt(on_press.x, nose.x + 0.25 * SimConst.PX_PER_M)
 	assert_gt(cut.x, rig._upper[1].position.x)
 	assert_lt(_far_joint(rig, rig._blade[0], "blade").x, rig._upper[0].position.x)
 	assert_almost_eq((cut - blade.position).angle(), 0.0, 0.001)

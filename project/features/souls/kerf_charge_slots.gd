@@ -10,6 +10,7 @@ const SHEETS: Array[String] = [
 const TOP: int = 4
 const STEEL: Color = Color("#304744")
 const RELIGHT: Color = Color("#d6fff5")
+const TOP_LIT: Color = Color("#b4ffed")
 
 
 class Cell:
@@ -78,6 +79,8 @@ func paint(sheet: int, charges: int, recharge: float) -> void:
 	for i: int in masks.size():
 		var mask: Sprite2D = masks[i]
 		var color: Color = tint(i, charges, recharge)
+		if sheet == TOP and i < charges:
+			color = TOP_LIT
 		mask.visible = i < points.size() and color.a > 0.0
 		if not mask.visible:
 			continue
