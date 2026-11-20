@@ -11,7 +11,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--shot",
 	"--shot-tick",
 	"--ohm-bolt-delay",
-	"--film-trace"
+	"--film-trace",
+	"--film-panel"
 ]
 const RUN_TICKS: int = 370
 ## Camera marks in metres from the starting position, keeping the turn in frame at both zooms.
@@ -22,6 +23,7 @@ const MOVE_CENTRE: Dictionary[StringName, Vector2] = {
 	&"ohm": Vector2(3.6, 2)
 }
 
+var _panel: bool = false
 var _game: ArenaGame
 var _input: GhostReviewInput
 var _trace: FileAccess
@@ -52,6 +54,9 @@ func _ready() -> void:
 	_game.view.focus = GhostReviewInput.MARK + offset
 	if _input.attacking and ghost == &"kerf":
 		_game.view.focus = Vector2.INF  # The arena camera follows Kerf's actual blink glide.
+	_panel = args.has("--film-panel")
+	if _panel:
+		_game.cast.ghost_view.hud.hide()
 	if args.has("--film-trace"):
 		_trace = FileAccess.open(args.text("--film-trace"), FileAccess.WRITE)
 		if _trace == null:
@@ -70,7 +75,14 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	var stage: ArenaStage = _game.session.stage
-	if not _input.attacking and _game.px_per_m > 32.0:
+	if _panel:
+		var at: Vector2 = stage.arena.rivet.pos
+		if _input.attacking and _input.ghost == &"kerf":
+			_game.view.focus.x = at.x
+		var row: GhostFormDef = stage.pilot.ghosts.forms.table.form(_input.ghost)
+		var vm: ViewMode = ViewMode.shared()
+		_game.view.focus.y = at.y if vm.is_flat() else at.y - row.size_k * 0.875 / vm.ground_k()
+	elif not _input.attacking and _game.px_per_m > 32.0:
 		var centre: Vector2 = GhostReviewInput.MARK + MOVE_CENTRE[_input.ghost]
 		_game.view.focus.y = lerpf(centre.y, stage.arena.rivet.pos.y, 0.5)
 	if _trace != null:
@@ -81,30 +93,13 @@ func _trace_frame(stage: ArenaStage) -> void:
 	var p: StagePilot = stage.pilot
 	var r: Fighter = stage.arena.rivet
 	var px: Vector2 = get_viewport().get_canvas_transform() * (r.pos * SimConst.PX_PER_M)
-	var row: Array = [
-		Engine.get_process_frames(),
-		_game.session.tick(),
-		p.ghosts.forms.current(),
-		r.pos.x,
-		r.pos.y,
-		r.facing.angle(),
-		_gait_cell(stage),
-		p.hauler.form.stomps,
-		p.hauler.ram_hits,
-		p.hauler.cars_crushed,
-		p.ghosts.jab.landed,
-		p.dent.seizes,
-		p.dent.strikes,
-		p.dent.blasts,
-		p.kerf.blinks,
-		p.kerf.slices,
-		p.ohm.cast.delay_ticks,
-		p.ohm.bolts,
-		p.ohm.struck,
-		p.ohm.cars_hit,
-		_hits,
-		_game.view.print_stage.camera.zoom.x * SimConst.PX_PER_M
-	]
+	var row: Array = [Engine.get_process_frames(), _game.session.tick(), p.ghosts.forms.current()]
+	row.append_array([r.pos.x, r.pos.y, r.facing.angle(), _gait_cell(stage)])
+	row.append_array([p.hauler.form.stomps, p.hauler.ram_hits, p.hauler.cars_crushed])
+	row.append_array([p.ghosts.jab.landed, p.dent.seizes, p.dent.strikes, p.dent.blasts])
+	row.append_array([p.kerf.blinks, p.kerf.slices])
+	row.append_array([p.ohm.cast.delay_ticks, p.ohm.bolts, p.ohm.struck, p.ohm.cars_hit])
+	row.append_array([_hits, _game.view.print_stage.camera.zoom.x * SimConst.PX_PER_M])
 	row.append_array([p.dent.blast_at.x, p.dent.blast_at.y, px.x, px.y])
 	@warning_ignore("return_value_discarded")
 	_trace.store_line(JSON.stringify(row))

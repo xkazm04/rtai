@@ -51,6 +51,27 @@ func _show(look: float = 0.0) -> Sprite2D:
 	return _drawn.sprite()
 
 
+func test_own_body_preserves_rig_parts_and_flight_then_releases_the_standing_cell() -> void:
+	var walk: Texture2D = _sheet("walk8", 8)
+	var part: Sprite2D = add_child_autofree(Sprite2D.new())
+	assert_eq(_show().texture, walk)
+	assert_eq(_drawn.sprite().frame_coords.x, GhostDrawn.STAND_COL)
+	_drawn.own_body = true
+	assert_null(_drawn.sprite())
+	_drawn.feed(0, -1, 1, true)
+	for show_part: bool in [true, false]:
+		part.visible = show_part
+		_flight.step(Vector2.RIGHT * 10, 0.0, 1)
+		assert_false(_drawn.step(_host, [part], SimConst.PX_PER_M, 1.0))
+		assert_eq(part.visible, show_part)
+		assert_null(_drawn.sprite())
+		assert_eq(_drawn.act_col(), GhostDrawn.WINDUP_COL)
+	assert_false(_flight.tail.points().is_empty())
+	_drawn.own_body = false
+	assert_eq(_show().texture, walk)
+	assert_eq(_drawn.sprite().frame_coords.x, GhostDrawn.STAND_COL)
+
+
 func test_auto_pose_uses_flight_speed_and_combat_overrides_an_explicit_pose() -> void:
 	var poses: Texture2D = _sheet("spec_hover", 2)
 	var acts: Texture2D = _sheet("spec_act", 4)
@@ -150,3 +171,30 @@ func test_overlay_reads_this_ticks_projected_ribbon_before_draw() -> void:
 	pts[0] = Vector2.INF
 	tail.step(Vector2(14.0, 30.0), 0.0, 3.0, 1.0, 1)
 	assert_almost_eq(tail.points()[0], tail.to_global(root + Vector2(2, 0)), Vector2.ONE * 0.001)
+
+
+func test_legacy_cell_cut_and_tail_socket_follow_the_displayed_belt() -> void:
+	var legacy: Texture2D = _sheet("walk8", 8)
+	var stand: Sprite2D = _show()
+	assert_eq(stand.texture, legacy)
+	var cut: float = _flight.fade_from()
+	var cell: Vector2 = stand.texture.get_size() / Vector2(stand.hframes, stand.vframes)
+	var belt: Vector2 = stand.to_global(stand.offset + cell * Vector2(0.5, 1.0 - cut))
+	assert_almost_eq(_flight.tail.points()[0], belt, Vector2.ONE * 0.001)
+	var mat: ShaderMaterial = stand.material as ShaderMaterial
+	assert_eq(mat.shader, preload("res://features/souls/ghost_fade.gdshader"))
+	var phase: float = mat.get_shader_parameter(&"flow")
+	_flight.step(Vector2(120, 20), 2.1, 0)
+	stand = _show()
+	var held: float = mat.get_shader_parameter(&"flow")
+	assert_eq(held, phase)
+	_flight.step(Vector2.RIGHT, 0.0, 1)
+	stand = _show()
+	held = mat.get_shader_parameter(&"flow")
+	assert_gt(held, phase)
+
+
+func test_authored_spectral_cells_bypass_the_legacy_leg_cut() -> void:
+	assert_eq(_sheet("spec_hover", 2), _show().texture)
+	assert_null(_drawn.sprite().material)
+	assert_eq(_flight.tail._socket_width, 0.0)

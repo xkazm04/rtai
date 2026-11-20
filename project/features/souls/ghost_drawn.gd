@@ -1,5 +1,5 @@
 class_name GhostDrawn
-extends RefCounted
+extends GhostDrawnActs
 ## Draws the ghost's walk, hover and combat cells at the rig's point.
 
 const ART_DIR: String = "res://features/souls/art/view/"
@@ -16,17 +16,6 @@ const BACKPEDAL_DOT: float = -0.25
 const STRIDE_K: Dictionary[String, float] = {"dent/p55": 0.8, "tonnage/p55": 0.95}
 const STILL_FRAMES: int = 3  # frames without ground walked before the figure stands
 const OCT_HOLD_RAD: float = deg_to_rad(4.0)
-const ACT_COLS: int = 4
-const WINDUP_COL: int = 0
-const CUT_COL: int = 1
-const FOLLOW_COL: int = 2
-const HIT_COL: int = 3
-const JAB_SHIFT: int = 4  # Dent's optional jab cells occupy columns 4-6 on each side.
-const JAB_COLS: Dictionary[String, int] = {"dent/p70": 7, "dent/p55": 7}
-const JAB_LEFT_COLS: Dictionary[String, int] = {"dent/p70": 7, "dent/p55": 7}
-const CUT_TICKS: int = 5
-const FOLLOW_TICKS: int = 10
-const HIT_TICKS: int = 10
 const HIT_FROM_BEHIND: bool = true
 const REAR_DOT: float = 0.5  # within 60 degrees of the facing, including the adjacent octants
 
@@ -37,11 +26,21 @@ var run_cell: float = 0.0  # the run grid's stride cycle in cell px (0 = no run 
 var fig_px: float = 180.0  # the figure's median height in the grid, cell px (ghost_pack prints it)
 var flight: GhostFlight
 var hover: bool = false
+var own_body: bool = false:
+	set(value):
+		if value == own_body:
+			return
+		if value and _fade != null and flight != null:
+			_fade.clear(flight)
+		if value and _spr != null:
+			_spr = GhostSheet.replace_sprite(_spr.get_parent() as Node2D, _spr, null)
+		own_body = value
+		_art = "?"
 var pose: int = -1
-var instant_windup: int = 0
 var still: bool = false  # something else carries the form (Dent on a car roof): stands still
 var blow: Vector2 = Vector2.ZERO  # the last hit's line (GhostActs, Fighter.hurt_dir; ZERO = none)
 var jab: bool = false  # the strike or wind-up shown is Dent's arm jab (GhostActs)
+var _fade: GhostBridgeFade
 var _spr: Sprite2D = null
 var _art: String = "?"
 var _built_hover: bool = false
@@ -56,13 +55,7 @@ var _look: float = NAN
 var _walk: GhostSheet = null
 var _run: GhostSheet = null
 var _running: bool = false
-var _windup: bool = false
 var _act: GhostSheet = null
-var _seq: int = 0
-var _fed: bool = false
-var _act_from: int = -1
-var _hurt: int = -1
-var _tick: int = 0
 var _lunge: GhostLunge = GhostLunge.new()  # the strike's lean and the wind-up's (n15 combat feel)
 
 
@@ -85,11 +78,15 @@ func sprite() -> Sprite2D:
 func step(
 	host: Node2D, parts: Array[Sprite2D], px_per_m: float, size_k: float, look: float = NAN
 ) -> bool:
+	if own_body:
+		return false
 	var vm: ViewMode = ViewMode.shared()
 	if vm.art != _art or _built_hover != hover:
 		_built_hover = hover
 		_rebuild(host, parts, vm)
 	if _spr == null:
+		if _fade != null and flight != null:
+			_fade.clear(flight)
 		return false
 	var fit: float = absf(host.scale.x if flight != null else host.global_scale.x)
 	var s: float = height_m * size_k * px_per_m * fit / fig_px
@@ -104,10 +101,16 @@ func step(
 	var since: int = _tick - _act_from if _act_from >= 0 else -1
 	var tilt: float = GhostRecoil.tilt(hurt, _look, GhostRecoil.lean_of(card_name), blow)
 	_spr.global_rotation = tilt + _lunge.lean(_tick, since, _windup, _look, card_name)
+	if flight != null:
+		_spr.global_rotation += cos(_look) * flight.hover.lean
 	var reach: Vector2 = GhostLunge.reach(since, _look, card_name) * SimConst.PX_PER_M * size_k
 	_spr.global_position = host.global_position + reach
 	var bank_scale: Vector2 = flight.body_scale() if flight != null else Vector2.ONE
 	_spr.global_scale = Vector2(s, s / vm.ground_k()) * bank_scale
+	if hover and flight != null:
+		if _fade == null:
+			_fade = GhostBridgeFade.new(GhostSoulLine.NAME)
+		_fade.sync(_spr, flight)
 	GhostHand.note(card_name, _art, _spr, o, act >= 0 and act != HIT_COL)
 	return true
 
@@ -119,35 +122,6 @@ func _show_cell(sheet: GhostSheet, oct: int, col: int, rear_hits: bool = HIT_FRO
 
 static func path_of(art: String, name: String, sheet: String = "walk8") -> String:
 	return ART_DIR.path_join(art).path_join("%s_%s.png" % [name, sheet])
-
-
-func feed(seq: int, hurt: int, tick: int, windup: bool = false, release_tick: int = -1) -> void:
-	if release_tick >= 0:
-		_act_from = release_tick
-		instant_windup = 0  # this cast already showed its wind-up before release
-	elif _fed and seq > _seq:
-		_act_from = tick
-	_fed = true
-	_seq = seq
-	_hurt = hurt
-	_tick = tick
-	_windup = windup
-
-
-func act_col() -> int:
-	if _windup:
-		return WINDUP_COL
-	var since: int = _tick - _act_from
-	if _act_from >= 0 and since < CUT_TICKS + FOLLOW_TICKS:
-		if since < instant_windup:
-			return WINDUP_COL
-		return CUT_COL if since < CUT_TICKS else FOLLOW_COL
-	return HIT_COL if _hurt >= 0 and _tick - _hurt < HIT_TICKS else -1
-
-
-static func jab_col(act: int, p_jab: bool, cols: int) -> int:
-	var shift: bool = p_jab and act >= 0 and act != HIT_COL and cols > JAB_SHIFT
-	return act + JAB_SHIFT if shift else act
 
 
 func octant(look: float) -> int:
@@ -185,6 +159,8 @@ func _column(host: Node2D, s: float, row: int) -> int:
 
 
 func _rebuild(host: Node2D, parts: Array[Sprite2D], vm: ViewMode) -> void:
+	if _fade != null and flight != null:
+		_fade.clear(flight)
 	_walk = null
 	_run = null
 	_art = vm.art

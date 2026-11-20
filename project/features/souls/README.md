@@ -34,6 +34,8 @@ The soul **trail** stays off (owner verdict, 2026-11-03): powers are not the tra
 
 ## Spectral look
 
+The spectral HUD portrait uses `features/hud/art/ghost_chips/<id>_spectral.png` when supplied and otherwise uses the original chip.
+
 `--ghost-look=legacy|spectral` overrides every form, including in `ghost_review.tscn`. Without the flag, each form uses its `look` in `ghost_forms.json`. Missing and unknown looks select `legacy`. A form lane switches its row to `spectral` only after its body, flight and all attacks are complete and filmed in both tilts (70 and 55 degrees).
 
 Use `--view=tilt70` for the 70-degree art and `--view=tilt` for the 55-degree art. For a matching pair of review PNGs, give both runs the same `--shot-tick` and a different absolute `--shot=<path.png>`. The arena saves the rendered frame and exits.
@@ -46,6 +48,8 @@ Use `--view=tilt70` for the 70-degree art and `--view=tilt` for the 55-degree ar
 - `GhostFlight.make(form_id) -> GhostFlight` builds a shadow and tail with their own hover state. `step(at_px, facing, ticks)` drives all three. `body_offset() -> Vector2` adds world-pixel lag and projected height, `body_scale() -> Vector2` gives unitless scale and `body_rotation() -> float` gives extra yaw in radians. Zero ticks hold the pose.
 
 ### Tilted pose sheets and overlays
+
+Set `drawn.own_body = true` when a rig supplies its own spectral body. This removes the shared sprite immediately. The rig controls its parts' visibility, combat feeds continue, and its flight mount still steps. The default is false, including for forms that use a standing legacy cell until their pose sheets arrive.
 
 In `art/view/<art>/`, a spectral form can supply `<card>_spec_hover.png`. Use five facing rows in the legacy order (toward, three-quarter toward, profile, three-quarter away, away). Pose cells are square. Their side is the PNG height divided by five, and the width divided by that side gives the column count. Two columns support idle and cruise. Four can hold Tonnage's carry, cruise, armed and recoil. The optional `<card>_spec_hover_left.png` follows the legacy left-sheet layout with three left-facing rows and the same columns. Without it, the left facings mirror.
 
@@ -67,3 +71,18 @@ body.rotation = facing + flight.body_rotation()
 body.scale = Vector2.ONE * PlayerScale.k() * flight.body_scale()
 body.drawn.hover = true
 ```
+
+
+Each form lane tunes its own hover row. `start_lift_m` sets the acceleration lift and stop dip,
+`cruise_bob_k` scales bob amplitude at full speed, and `sway_m` sets lateral drift.
+`shadow.pool_m` and `pool_alpha` set the ground light radius and centre opacity.
+`tail.strands` counts flame tongues, `spread_m` widens the plume behind its socket, and signed
+`rise_m` lifts or drops its middle in tilted views. `curl_m` is the lateral wave amplitude,
+`flow_ticks` its period, and `wisps` the maximum number of detached filaments. All animation
+uses flight ticks and shared fixed-seed noise. The tail overlay reads the same posed centreline.
+
+For tilted legacy cells, `fade_from` is the belt height measured up from the cell bottom as a
+fraction of cell height. `belt_width_k` is the ribbon root width as a fraction of cell width.
+The belt follows the actual cell transform through lean, recoil and lunge. Set `fade_from` to
+zero for a new legless body. Spectral pose and act sheets and form-owned art use the row's
+body-frame anchor directly.
