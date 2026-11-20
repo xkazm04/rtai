@@ -11,7 +11,10 @@ export function plan(argv) {
   const options = Object.fromEntries(['ghost', 'look', 'out', 'takes', 'stills', 'prefix', 'name'].map(k => [k, { type: 'string' }]));
   options.all = { type: 'boolean' };
   const { values: v } = parseArgs({ args: argv, options });
-  if (!['legacy', 'spectral'].includes(v.look)) throw Error('--look requires legacy or spectral');
+  const useFormLooks = v.all && v.look === undefined;
+  if (!useFormLooks && !['legacy', 'spectral'].includes(v.look)) {
+    throw Error('--look requires legacy or spectral');
+  }
   if (!v.out) throw Error('--out requires a directory');
   if (v.all) {
     for (const key of ['ghost', 'takes', 'stills', 'prefix']) {
@@ -38,4 +41,10 @@ export function plan(argv) {
 export function stem(p, take, tick) {
   const name = p.prefix + p.ghost;
   return take === 'turn' ? name + '_turn_64_t' + tick : name + '_' + take + '_' + (take === 'close' ? 64 : 32);
+}
+
+export function chapterSettings(form, override) {
+  const defaultLook = form.look === 'spectral' ? 'spectral' : 'legacy';
+  return { ghost: form.id, speed: form.top_mps, look: override ?? defaultLook,
+    lookArgs: override === undefined ? [] : ['--ghost-look=' + override] };
 }

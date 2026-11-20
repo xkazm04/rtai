@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { resolve } from 'node:path';
 import { encodeArgs, plan, stem } from './ghost_films.mjs';
+import { chapterSettings } from './ghost_films_plan.mjs';
 
 const args = ['--ghost=kerf', '--look=spectral', '--out=build/ghosts'];
 
@@ -61,4 +62,19 @@ test('all selects eight ordered chapters and a single named reel', () => {
     assert.throws(() => plan([...base, arg]));
   }
   assert.throws(() => plan([...args, '--name=morning']), /--all/);
+});
+
+test('all leaves the engine on each form default and labels the chapter with that look', () => {
+  const base = ['--all', '--out=build/ghosts'];
+  const defaults = plan(base);
+  const forced = plan([...base, '--look=spectral']);
+  for (const look of ['spectral', 'legacy']) {
+    const form = { id: 'example', top_mps: 4, look };
+    assert.deepEqual(chapterSettings(form, defaults.look), { ghost: 'example', speed: 4, look, lookArgs: [] });
+    assert.deepEqual(chapterSettings(form, forced.look), { ghost: 'example', speed: 4,
+      look: 'spectral', lookArgs: ['--ghost-look=spectral'] });
+  }
+  assert.equal(chapterSettings({ id: 'older', top_mps: 4 }, defaults.look).look, 'legacy');
+  assert.throws(() => plan([...base, '--look=mist']), /--look/);
+  assert.throws(() => plan(['--ghost=kerf', '--out=build/ghosts']), /--look/);
 });
