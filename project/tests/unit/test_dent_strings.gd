@@ -162,3 +162,14 @@ func test_live_painter_lays_glow_ink_core_and_eyelets_on_the_four_paths() -> voi
 		)
 		assert_eq(recorder.rings[2 * i], s.corner(i))
 		assert_eq(recorder.rings[2 * i + 1], s.corner(i))
+
+
+func test_released_strings_follow_both_hands_and_remember_the_roof() -> void:
+	s.strap.advance(null, 11, 0.0, -1)
+	var travel: Vector2 = Vector2(12, 15)
+	s.strap.place(RIGHT + travel, PPM, false, vm)
+	s.place(LEFT + travel, 1.0, 0, vm)
+	for i: int in 4:
+		assert_eq(s.path(i)[0], (LEFT if i < 2 else RIGHT) + travel)
+	assert_eq(s.turn, 0.0)
+	assert_eq(s.strap.ground_m, car.pos)

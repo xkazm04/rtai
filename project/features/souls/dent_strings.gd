@@ -23,8 +23,8 @@ func _init(tether: DentStrap) -> void:
 
 
 func place(left: Vector2, steer: float, strikes: int, vm: ViewMode) -> void:
+	left_px = left
 	if strap.held:
-		left_px = left
 		turn = steer
 		if strikes > _strikes:
 			_hit_tick = strap.tick
