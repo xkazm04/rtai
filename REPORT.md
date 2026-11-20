@@ -56,7 +56,7 @@
 
 ## Next steps
 
-0. The `--reels` gate was not run: the freeze is 07:30 and this lane's session stops at 07:27.
+0. The `--reels` gate was not run: it needs the freeze (07:30) and the final gate took 11 min (05:59-06:10), past this lane's 07:40 stop. No product file changed after the gated b7eeed009 (`git diff b7eeed009 HEAD -- project tools` is empty at 07:31).
 
 1. Seat the smoke column under the hump (raise its root, soften the straight cone edge) in Tonnage's `ghost_hover.json` row and vapour.
 2. Ink the visor slot darker in the chip cut, or cut the chip from a 3/4 cell where the face is larger.

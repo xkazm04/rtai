@@ -126,3 +126,8 @@ NEXT (session 5, ~05:58 -> 08:00):
 - 06:50 Re-film reset the morph poster to the tool's default tick (burst ring only); re-cut it from frame 101 of the new morph film (half-risen golem, both views), as session 4 did. Added Call 4 (fist shadows in cruise), still tonnage_fist_shadows_64.png. LOOKED morph poster.
 - 06:52 MILESTONE lane closed for the morning: gate PASS (b7eeed009), Tonnage default look = spectral Press Golem, films re-filmed at the gated tree, REPORT complete (cites 5/5 ok). No Astra running, no Godot running.
 NEXT (if any session follows before 07:27): nothing new after the freeze. Only if time: the `--reels` gate cannot run (freeze 07:30 > stop 07:27). Calls 1-4 in REPORT wait for the owner; the cheapest follow-up is Call 4 (fade the fist ink shadows outside the wind-up: one alpha in TonnageSpectral) and the tonnage_spectral.gd draw tests (mutation 27.5%).
+
+## Session 6 (07:30 STABILIZE)
+- 07:30 START. No astra.lock; last Astra call 09 done 05:56. Tree clean at 58ea4d18e; no product file changed since the gated b7eeed009 (diff over project/ tools/ empty), so gate PASS and films still match the build. cites 5/5 ok.
+- 07:31 DECISION skip `--reels`: the gate took 11 min, it cannot finish before the 07:40 stop; a gate left running would be orphaned. REPORT line says so.
+NEXT: nothing. Lane closed; Calls 1-4 in REPORT wait for the owner. Director cleans Temp gtai-gate-b7eeed009cc7 and gtai-mutate-1daa322e.
