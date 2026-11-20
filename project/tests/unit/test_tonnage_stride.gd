@@ -1,6 +1,10 @@
 extends GutTest
 
 
+func after_each() -> void:
+	GhostLook.reset_for_test()
+
+
 func test_tonnage_p70_drawn_steps_measure_both_sides_of_each_redrawn_frame() -> void:
 	var steps: PackedFloat32Array = PackedFloat32Array(GhostStride.TABLES["tonnage/p70"])
 	# Column 2 carries one pad. Column 6 lands the front pad while the rear is still down.
@@ -11,6 +15,7 @@ func test_tonnage_p70_drawn_steps_measure_both_sides_of_each_redrawn_frame() -> 
 
 
 func test_tonnage_midpoints_use_each_profiles_own_drawing_while_walking() -> void:
+	GhostLook.override_for_test(GhostLook.LEGACY)
 	var saved: ViewMode = ViewMode.shared()
 	ViewMode.select("combo")
 	var rig: TonnageRig = autofree(TonnageRig.new())
@@ -191,6 +196,5 @@ func _check_detail_rows(
 
 
 func _tonnage_sheet(art: String) -> GhostSheet:
-	return GhostSheet.walk_of(
-		GhostDrawn.path_of(art, "tonnage"), GhostStride.table_of("tonnage", art)
-	)
+	var steps: PackedFloat32Array = GhostStride.table_of("tonnage", art)
+	return GhostSheet.walk_of(GhostDrawn.path_of(art, "tonnage"), steps)

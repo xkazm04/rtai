@@ -34,8 +34,14 @@ static func draw(
 		var wob: float = 1.0 + 0.07 * sin(a * 7.0 + 1.3) + 0.04 * sin(a * 13.0)
 		@warning_ignore("return_value_discarded")
 		pts.push_back(c + Vector2.from_angle(a) * r * wob)
-	ci.draw_polyline(pts, Color(INK, 1.0 - k), lerpf(9.0, 2.0, k))
-	ci.draw_polyline(pts, Color(TEAL, 0.8 * (1.0 - k)), 1.5)
+	var width: float = lerpf(9.0, 2.0, k)
+	var edge: float = 1.5
+	if GhostLook.spectral(&"tonnage"):
+		var zoom: float = ci.get_canvas_transform().x.length()
+		width = lerpf(3.0, 1.5, k) / zoom
+		edge /= zoom
+	ci.draw_polyline(pts, Color(INK, 1.0 - k), width)
+	ci.draw_polyline(pts, Color(TEAL, 0.8 * (1.0 - k)), edge)
 	for g: int in GRIT:
 		var a: float = TAU * g / GRIT + 0.4 * sin(g * 2.1)
 		var d: float = r * (0.55 + 0.5 * absf(sin(g * 3.7)))

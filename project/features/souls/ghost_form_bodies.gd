@@ -68,6 +68,7 @@ func step_tonnage(p: StagePilot, at: Vector2, facing: float, steps: int) -> bool
 	tonnage.speed_mps = (
 		p.hauler.form.vel.length() if forms.settled() and not tonnage.drawn.hover else 0.0
 	)
+	tonnage.hauler = p.hauler  # n20-tonnage: the spectral body reads the slam and ram state
 	tonnage.advance(steps * SimClock.TICK_DT)
 	return shown
 

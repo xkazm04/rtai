@@ -1,0 +1,7 @@
+Committed `2d1d83ea3`. The only change is the requested null-sprite guard in [test_ghost_apparition.gd](C:/Users/kazda/kiro/gtai-wt/n20-tonnage/project/tests/unit/test_ghost_apparition.gd:100). The spectral voice test now passes when Tonnage draws its own body.
+
+- `--select=test_ghost_apparition` — 6 passed, 0 failed, 0 skipped.
+- `--changed` selected the full suite — 3,253 passed, 0 failed, 2 skipped.
+- Lint — all 19 checks passed.
+
+[astra: 259s, exit 0]

@@ -4,6 +4,24 @@ extends GutTest
 ## at which a touch starts to hurt), and ram_wake_k scales it (0 = the before).
 
 
+func after_each() -> void:
+	GhostLook.reset_for_test()
+
+
+func test_quest_ram_wake_strength_is_the_same_under_both_looks() -> void:
+	var ram: float = HaulerStage.shipped().form.num(&"ram_mps")
+	GhostLook.override_for_test(GhostLook.LEGACY)
+	var legacy: float = RamWake.strength(ram, ram)
+	assert_gt(legacy, 0.0)
+	GhostLook.override_for_test(GhostLook.SPECTRAL)
+	assert_eq(RamWake.strength(ram, ram), legacy)
+
+
+func test_only_the_spectral_arena_body_suppresses_the_wake() -> void:
+	assert_false(TonnageView.wake_on(true))
+	assert_true(TonnageView.wake_on(false))
+
+
 func test_the_wave_grows_in_as_the_press_reaches_ram_speed() -> void:
 	var ram: float = HaulerStage.shipped().form.num(&"ram_mps")
 	assert_gt(ram, 0.0, "the hauler has a ram speed")

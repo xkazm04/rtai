@@ -1,0 +1,17 @@
+**Flip ON.** Spectral is Tonnage’s default. The full suite passed with 3,263 passed, 0 failed, and 2 skipped because the tilt card strips were absent. All five commits landed by 05:46.
+
+| Commit | Change |
+|---|---|
+| `4d2f73e88` | Pinned the walking-grid case in `test_tonnage_stride.gd` to legacy. |
+| `8e82e68d1` | Pin the ghost card test to the legacy look (`test_ghost_card.gd`). |
+| `8c3586694` | Reapplied the spectral default in `ghost_forms.json` and restored its `decisions.md` entry. |
+| `60395712d` | Re-cut the morph poster from frame 101 and recorded it in `tonnage_spectral_n20.manifest.json`. |
+| `e7efb971e` | Set the halo alpha to zero in `tonnage_glow.gd`. The flight pool and body fill remain visible. |
+
+**Other checks:** stride 7/7, isolated vehicle-view 6/6, scenarios 65/65, and lint 19/19. After the glow change, `--changed` reported 3,247 passed, 0 failed, and 2 skipped.
+
+**Visual evidence:** [Tick 72 before](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/tonnage_glow_pool_64_before.png) · [Tick 72 after](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/tonnage_glow_pool_64.png) · [Half-risen morph poster](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/tonnage_morph_32.jpg)
+
+**NEED:** none.
+
+[astra: 771s, exit 0]

@@ -1,0 +1,38 @@
+Implemented brief 06 on `n20-tonnage`. All lane changes are committed through `a865e6eae`. The director’s journal, report and brief files remain uncommitted.
+
+At 55°, the smoke had a visible gap beneath the belly during the armed ram. Moving its socket inside the painted body closed the gap. The spectral ground bow is gone, the fists hold their pose through a slam hit, and the morph shows one golem unfolding from Rivet and receding back to him. [55° comparison](<C:/Users/kazda/kiro/gtai-masters/n20/tonnage/tonnage_p55_contact_64.png>) · [Morph strip](<C:/Users/kazda/kiro/gtai-masters/n20/tonnage/tonnage_morph_strip_64.png>)
+
+### Commits
+
+| Commit | Change |
+|---|---|
+| `2f78f2583` | Merged flight’s dense vapour and tail sockets. |
+| `11db761ac` | Tuned `ghost_hover.json` and `tonnage_vapour.gd`. Disabled spectral bow and dust in `ram_wake.gd`. |
+| `210aeb837` | Added `tonnage_chip_cut.py`, the derived HUD PNG, its import and provenance. |
+| `0b4bba38c` | Braced the slam and fitted the recoil cell in `tonnage_pose.gd` and `tonnage_spectral.gd`. |
+| `7fb3edd73` | Seated the plume inside the belly at both tilted pitches. |
+| `80c27095b` | Merged flight’s emerge stages and morph take. Added one guard at `test_ghost_flight_hosts.gd:114` because custom bodies have no shared walking sprite. |
+| `e9340a178` | Added `tonnage_morph.gd` and its shader, wired them into the rig and recorded the design in `docs/decisions.md`. |
+| `773b62e1e` | Fixed a test parse warning and covered the first unfold tick. |
+| `a865e6eae` | Tested painted height at both pitches and morph scales. |
+
+### Verification
+
+Final `run_unit.mjs --changed` ran the full suite. **3,246 passed, 0 failed, 2 skipped.** Full lint passed all 19 checks. Two earlier gate exceptions occurred. The chip lint retry hit an unrelated Node spawn timeout. The morph commit landed before its test parse warning was corrected in `773b62e1e`.
+
+Mutation testing with `--max=40` killed **24/(24+0)** faults in `tonnage_morph.gd`. The focused spectral rerun killed **12/(12+0)** across cell drawing, scale and hit lean. Session 05’s broader spectral sample scored **5/(5+33)**. The time cap allowed a focused rerun of that file.
+
+### Evidence
+
+All 36 named media files are in the [evidence folder](<C:/Users/kazda/kiro/gtai-masters/n20/tonnage>). The [15-entry index](<C:/Users/kazda/kiro/gtai-masters/n20/tonnage/frames.json>) starts with the plate comparison. Every filename below begins with `tonnage_`.
+
+| Files | Names after the prefix |
+|---|---|
+| Films and matching posters, `.mp4` and `.jpg` | `morph_32`, `move_32`, `attack_32`, `close_64` |
+| PNGs with `_legacy.png` comparisons | `plate_game_64`, `pound_32`, `ram_lead12_64`, `ram_lead_64`, `ram_contact_64`, `chip_hud` |
+| PNGs with `_before.png` comparisons | `tail_fix_rest_64`, `tail_fix_cruise_top_32`, `tail_fix_turn_64`, `hit_slam_64`, `recoil_64` |
+| Additional PNGs | `morph_before_in`, `morph_before_out`, `morph_strip_64`, `morph_out_64`, `p55_contact_64`, `turn_64_t163` |
+
+**NEED flight:** `tools/film/ghost_films.mjs` should explicitly convert full-range capture panels to limited range. I re-encoded the four deliveries from the original panels and verified each as 1920×1080, 60 fps H.264 `yuv420p`.
+
+[astra: 4063s, exit 0]

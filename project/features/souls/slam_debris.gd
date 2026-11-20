@@ -24,7 +24,7 @@ static func draw(ci: CanvasItem, c: Vector2, age: float, ppm: float, seed: int) 
 	_load()
 	if _chips <= 0:
 		return
-	if age < _flash_s:
+	if age < _flash_s and not GhostLook.spectral(&"tonnage"):
 		var k: float = age / _flash_s
 		ci.draw_circle(c, 2.2 * ppm * (1.0 - 0.3 * k), Color(INK, 0.9 * (1.0 - k)))
 		ci.draw_circle(c, 2.0 * ppm * (1.0 - 0.3 * k), Color(CREAM, 1.0 - k))

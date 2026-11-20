@@ -103,7 +103,7 @@
       "exit_s": 0.7,
       "gait": "stamp",
       "id": "tonnage",
-      "look": "legacy",
+      "look": "spectral",
       "name_key": "ghost.tonnage.name",
       "power": "hauler",
       "radius_m": 1.3,

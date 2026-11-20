@@ -7,10 +7,12 @@ var _saved: ViewMode = null
 
 
 func before_each() -> void:
+	GhostLook.override_for_test(GhostLook.LEGACY)
 	_saved = ViewMode._shared
 
 
 func after_each() -> void:
+	GhostLook.reset_for_test()
 	ViewMode._shared = _saved
 
 
