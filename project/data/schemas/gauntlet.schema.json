@@ -1,0 +1,170 @@
+{
+  "$defs": {
+    "point": {
+      "items": {
+        "type": "number"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "prop": {
+      "additionalProperties": false,
+      "properties": {
+        "at": {
+          "$ref": "#/$defs/point"
+        },
+        "kind": {
+          "enum": [
+            "wall_high",
+            "cover_high",
+            "cover_low"
+          ]
+        },
+        "size": {
+          "items": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "at",
+        "size"
+      ],
+      "type": "object"
+    },
+    "segment": {
+      "additionalProperties": false,
+      "properties": {
+        "crossing": {
+          "additionalProperties": false,
+          "properties": {
+            "at": {
+              "$ref": "#/$defs/point"
+            },
+            "size": {
+              "items": {
+                "exclusiveMinimum": 0,
+                "type": "number"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            }
+          },
+          "required": [
+            "at",
+            "size"
+          ],
+          "type": "object"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "length_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "props": {
+          "items": {
+            "$ref": "#/$defs/prop"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "spawns": {
+          "items": {
+            "$ref": "#/$defs/point"
+          },
+          "minItems": 3,
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "length_m",
+        "props",
+        "spawns"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "gtai.gauntlet/1",
+  "additionalProperties": false,
+  "properties": {
+    "boss_every": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "budget": {
+      "additionalProperties": false,
+      "properties": {
+        "base": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "per_wave": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "base",
+        "per_wave"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.gauntlet/1"
+    },
+    "segments": {
+      "items": {
+        "$ref": "#/$defs/segment"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "target_wave_s": {
+      "exclusiveMinimum": 0,
+      "type": "number"
+    },
+    "tier_map": {
+      "additionalProperties": {
+        "maximum": 5,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "description": "Provisional fallback until every enemies.json archetype supplies its own tier.",
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "type": "string"
+      },
+      "type": "object"
+    },
+    "tier_unlock_wave": {
+      "items": {
+        "minimum": 1,
+        "type": "integer"
+      },
+      "maxItems": 5,
+      "minItems": 5,
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "segments",
+    "boss_every",
+    "target_wave_s",
+    "budget",
+    "tier_unlock_wave",
+    "tier_map"
+  ],
+  "type": "object"
+}

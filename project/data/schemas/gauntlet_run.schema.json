@@ -1,0 +1,183 @@
+{
+  "$defs": {
+    "wave": {
+      "additionalProperties": false,
+      "properties": {
+        "damage_taken": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "enemies": {
+          "additionalProperties": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "form_seconds": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "guard_deflects": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "hits": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "n": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "rolls": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "seconds": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "shots": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "n"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "gtai.gauntlet-run/1",
+  "additionalProperties": false,
+  "properties": {
+    "controls": {
+      "enum": [
+        "legacy",
+        "wheel"
+      ]
+    },
+    "death": {
+      "additionalProperties": false,
+      "properties": {
+        "by": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "wave": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "wave"
+      ],
+      "type": "object"
+    },
+    "mods": {
+      "additionalProperties": false,
+      "properties": {
+        "damage": {
+          "type": "number"
+        },
+        "guard_meter": {
+          "type": "number"
+        },
+        "hp_max": {
+          "type": "number"
+        },
+        "regen": {
+          "type": "number"
+        },
+        "speed": {
+          "type": "number"
+        }
+      },
+      "required": [],
+      "type": "object"
+    },
+    "picks": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "offered": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            },
+            "maxItems": 3,
+            "minItems": 3,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "taken": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "wave": {
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "wave",
+          "offered",
+          "taken"
+        ],
+        "type": "object"
+      },
+      "minItems": 0,
+      "type": "array"
+    },
+    "profile": {
+      "enum": [
+        "human",
+        "novice",
+        "average",
+        "expert"
+      ]
+    },
+    "schema": {
+      "const": "gtai.gauntlet-run/1"
+    },
+    "seed": {
+      "maximum": 4294967295,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "wave_reached": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "waves": {
+      "items": {
+        "$ref": "#/$defs/wave"
+      },
+      "minItems": 0,
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "seed",
+    "profile",
+    "controls",
+    "wave_reached",
+    "waves",
+    "picks",
+    "mods"
+  ],
+  "type": "object"
+}
