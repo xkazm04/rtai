@@ -37,8 +37,9 @@ of the HUD chip in a spectral run (`n20/ohm/form/chip_in_hud_32.png`). One commi
 Step 0c (double glow, from flight's review): under the spectral look `ohm_rig.gd` still draws its own ground glow on
 top of flight's teal pool. Look at a top and a tilt70 still at 32 px/m after the merge; if the two glows stack (a
 bright doubled disc), skip Ohm's own glow when the form draws spectral (legacy unchanged) with a unit test, one commit,
-before/after stills `n20/ohm/drift/glow_{before,after}_{top,tilt70}_32.png`. Do NOT switch to flight's coming public
-accessors (`release_fade()`, `hurt_tick()`): they land after our last commit; the private reads stay as merge notes.
+before/after stills `n20/ohm/drift/glow_{before,after}_{top,tilt70}_32.png`. Step 0e (after 0b): the merge brings flight's
+51a905763 (`GhostDrawn.release_fade()`, `GhostDrawnActs.hurt_tick()`, -1 if none): replace our private reads
+`drawn._fade` (ohm_drawn.gd) and `drawn._hurt` (ohm_spirit.gd) with them, behaviour unchanged, one commit, tests green.
 
 ## Part A: the owner's judged strip (no commit needed unless a dev driver changes)
 The owner judges "a strip of one cast (jars at one, two, three, press tick, +4 frames) from the top view with all
