@@ -254,3 +254,8 @@ NEXT (Director / morning): the reels gate (PID 53240, started 07:30) on docs-onl
   non-reels gate PASS on 8b4862e1f stands, and no code has changed since. No Astra running, no lock, worktree clean apart
   from this entry.
 - 07:31 END iteration 6 (waiting on the reels gate until 07:38).
+- 07:40 START iteration 7 (REPORT). No Astra lock. Reels gate PID 53240 on 9958c48ac still running; cites.mjs REPORT.md: 3 paths, 3 ok; every n20/ohm path REPORT cites exists.
+- 07:51 Reels gate: its evidence half passed (lint, unit, scenarios 65/65, parity, selftest, release-compile 787/0); reels 35 chapter lines so far, none failed, last tilt70 chapter 15 riot_cop. No verdict yet. REPORT header updated.
+NEXT (Director / morning): read C:\Users\kazda\kiro\gtai-n20\logs\ohm\reels-gate.out and build\gate\9958c48ac2b4\gate.json for the
+  reels verdict (PID 53240, docs-only HEAD). The PASS for the code commit 8b4862e1f stands. No Astra, no lock, no code change after 8b4862e1f.
+- 07:53 END iteration 7.

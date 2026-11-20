@@ -7,7 +7,7 @@ Branch `n20-ohm` (worktree `C:\Users\kazda\kiro\gtai-wt\n20-ohm`), cut from `int
 0 failed / 2 skipped, scenarios 65 passed, parity bit for bit over 1200 steps (mutation caught at step 629), selftest look
 goldens 11/11 and block goldens 5/5, release-compile 787 loaded / 0 failed. Run 05:57 to 06:08.
 Reels gate (`node tools/gate/run.mjs --rev=HEAD --reels`, once after the 07:30 freeze, on the docs-only HEAD 9958c48ac):
-started 07:30 and still running when this session stopped at 07:40. Its output goes to
+started 07:30. At 07:51 its evidence half had passed (lint, unit, scenarios 65/65, parity exact, selftest goldens 11/11 + 5/5, release-compile 787/0) and the reel half was still running with no failure: 35 chapter lines in `reels.log`, the last `tilt70 chapter 15 riot_cop 1/1 down`. It had not printed a verdict when this report was committed. Its output goes to
 `C:\Users\kazda\kiro\gtai-n20\logs\ohm\reels-gate.out` and its gate.json to `build\gate\9958c48ac2b4\gate.json` (untracked, `evidence.log` beside it).
 
 ## What works
