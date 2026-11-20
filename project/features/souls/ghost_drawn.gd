@@ -30,8 +30,8 @@ var own_body: bool = false:
 	set(value):
 		if value == own_body:
 			return
-		if value and _fade != null and flight != null:
-			_fade.clear(flight)
+		if value:
+			release_fade()
 		if value and _spr != null:
 			_spr = GhostSheet.replace_sprite(_spr.get_parent() as Node2D, _spr, null)
 		own_body = value
@@ -71,6 +71,12 @@ func _init(
 		instant_windup = int(GhostAttacks.shipped().num(&"ohm", &"bolt_windup_ticks"))
 
 
+## Restore the displayed cell and outlines and clear the fallback belt socket.
+func release_fade() -> void:
+	if _fade != null and flight != null:
+		_fade.clear(flight)
+
+
 func sprite() -> Sprite2D:
 	return _spr
 
@@ -85,8 +91,7 @@ func step(
 		_built_hover = hover
 		_rebuild(host, parts, vm)
 	if _spr == null:
-		if _fade != null and flight != null:
-			_fade.clear(flight)
+		release_fade()
 		if hover and flight != null and vm.is_flat():
 			var span: float = height_m * size_k * px_per_m * absf(host.scale.x)
 			var facing: float = (
@@ -94,7 +99,7 @@ func step(
 			)
 			flight.set_rig_belt(span, facing)
 		return false
-	var fit: float = absf(host.scale.x if flight != null else host.global_scale.x)
+	var fit: float = absf(host.scale.x * flight.scale.x if flight != null else host.global_scale.x)
 	var s: float = height_m * size_k * px_per_m * fit / fig_px
 	var yaw: float = flight.body_rotation() if flight != null else 0.0
 	_look = host.global_rotation if is_nan(look) else look + yaw
@@ -103,7 +108,7 @@ func step(
 	var act: int = jab_col(act_col(), jab, _act.cols) if _act != null else -1
 	var sheet: GhostSheet = _act if act >= 0 else (_run if _running and _run != null else _walk)
 	_show_cell(sheet, o, act if act >= 0 else walk)
-	var hurt: int = _tick - _hurt if act == HIT_COL else -1
+	var hurt: int = _tick - hurt_tick() if act == HIT_COL else -1
 	var since: int = _tick - _act_from if _act_from >= 0 else -1
 	var tilt: float = GhostRecoil.tilt(hurt, _look, GhostRecoil.lean_of(card_name), blow)
 	_spr.global_rotation = tilt + _lunge.lean(_tick, since, _windup, _look, card_name)
@@ -165,8 +170,7 @@ func _column(host: Node2D, s: float, row: int) -> int:
 
 
 func _rebuild(host: Node2D, parts: Array[Sprite2D], vm: ViewMode) -> void:
-	if _fade != null and flight != null:
-		_fade.clear(flight)
+	release_fade()
 	_walk = null
 	_run = null
 	_art = vm.art

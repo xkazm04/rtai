@@ -51,6 +51,8 @@ Use `--view=tilt70` for the 70-degree art and `--view=tilt` for the 55-degree ar
 
 ### Tilted pose sheets and overlays
 
+`GhostDrawn.release_fade() -> void` restores the previous sprite and outline materials and releases the fallback belt socket. `GhostDrawnActs.hurt_tick() -> int` returns the last hurt tick supplied to `feed()`, or -1 before a hit.
+
 Set `drawn.own_body = true` when a rig supplies its own spectral body. This removes the shared sprite immediately. The rig controls its parts' visibility, combat feeds continue, and its flight mount still steps. The default is false, including for forms that use a standing legacy cell until their pose sheets arrive.
 
 In `art/view/<art>/`, a spectral form can supply `<card>_spec_hover.png`. Use five facing rows in the legacy order (toward, three-quarter toward, profile, three-quarter away, away). Pose cells are square. Their side is the PNG height divided by five, and the width divided by that side gives the column count. Two columns support idle and cruise. Four can hold Tonnage's carry, cruise, armed and recoil. The optional `<card>_spec_hover_left.png` follows the legacy left-sheet layout with three left-facing rows and the same columns. Without it, the left facings mirror.

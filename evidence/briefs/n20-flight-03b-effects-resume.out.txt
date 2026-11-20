@@ -1,0 +1,19 @@
+Five commits landed on `n20-flight`. The [full report](<C:/Users/kazda/kiro/gtai-wt/n20-flight/build/flight/package3-report.md>) lists the 21 changed files, every check, and all 52 comparison stills, three films, and three posters with visual findings.
+
+| Commit | Change |
+|---|---|
+| `5e906fd53` | Brightened the tail roots and replaced detached chevrons with soft puffs near the tip. |
+| `b0f2629c1` | Tested all four forms through real arena input and fixed Dent’s spectral foot replanting. |
+| `8589b0294` | Added the real transformation take to the review driver and film tool. |
+| `ff370f539` | Raised and retracted each body and tail through the morph stages, with the burst on the ground. |
+| `5707d7198` | Aligned all eight soul-line copies with the body’s faded edge. |
+
+**Verification.** Parse, lint, changed-unit, and quick gates passed before every commit. Final GUT result was **3,216 passed, 0 failed, 2 skipped**. The 60-second replay passed all 60 checkpoints. The fixed-tick legacy comparison differed in **0 of 1,036,800 pixels**. All four tails read in both views. Kerf’s remains unusually straight at speed.
+
+**Mutation score was 18/29 (62.1%).** Eleven mutations survived. The time cap left 11 of the requested 40 unrun. Recoil measured 4° for Tonnage and 12° for the others, with fixed shadows and moving tail roots. The optional aura opt-out, hovering apparition, and signed tail-rise test remain open.
+
+- NEED tonnage: `tonnage_view.gd` calls `ram_wake.gd` for the pale U. Disabling that wake removed the stroke. `tonnage_rig.gd` also adds a ground glow.
+- NEED ohm: `ohm_rig.gd` adds a ground glow alongside the flight pool.
+- NEED dent: `dent_body.gd` set `_aura.form_id = &"dent"` once the shared aura opt-out lands.
+
+[astra: 3899s, exit 0]

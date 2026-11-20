@@ -1,0 +1,23 @@
+The [all-ghosts reel](<C:/Users/kazda/kiro/gtai-masters/n20/flight/all_ghosts_32.mp4>) runs **40 seconds at 1920×1080, 60 fps**. I inspected movement and attack for all four ghosts in both views. It shows the legacy bodies with spectral flight, tails and shadows. The [poster](<C:/Users/kazda/kiro/gtai-masters/n20/flight/all_ghosts_32.jpg>) matches Tonnage’s movement frame at tick 163.
+
+Seven commits landed before the cutoff. The last landed at **05:37:57**. The index is empty.
+
+| Commit | Change |
+|---|---|
+| `51a905763` | Exposed and tested `release_fade()` and `hurt_tick()` for Ohm. |
+| `24936ad1a` | Added `--all`, its planning test, and the reel command documentation. |
+| `fa2b4dac7` | Added the named spectral aura opt-out for Dent. |
+| `6ef44908f` | Kept zero and negative tail rise on the ground plane. |
+| `696862ee0` | Gave Kerf’s cruising wake a visible bend in both views. |
+| `3adcc9ebc` | Brought Tonnage’s frontal smoke below the chest at tick 195. |
+| `fd5da21cf` | Made the speaking apparition hover, scaled its pool and plume, and attached its tether to the visible waist. |
+
+**Verification.** Parse, lint, changed-unit, film-test and quick gates passed before every applicable commit. Final results were **3,222 unit tests passed, 0 failed, 2 skipped**, **288 film tests passed**, and **19/19 lint checks**. The 60-second replay matched all 60 checkpoints. The fixed-tick legacy Kerf comparison differed in **0 of 1,036,800 pixels**. The reel was captured before the subsequent wake refinements. [All 17 changed files, per-commit checks, and every film and still with its visual findings](<C:/Users/kazda/kiro/gtai-wt/n20-flight/build/flight/package4-report.md>)
+
+- NEED dent: `dent_body.gd` set `_aura.form_id = &"dent"`.
+- NEED ohm: `ohm_drawn.gd` and `ohm_spirit.gd` can use the public accessors. `ohm_rig.gd` still adds a ground glow.
+- NEED tonnage: `tonnage_view.gd` draws the pale U through `ram_wake.gd`. `tonnage_rig.gd` also adds a ground glow.
+
+The individual clip refresh, scratch cleanup and `frames.json` are reserved for the director’s post-gate run.
+
+[astra: 1758s, exit 0]
