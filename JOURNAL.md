@@ -1,49 +1,133 @@
-# n20 flight JOURNAL
+# n20 kerf JOURNAL (director: Opus; builder: Astra)
 
-- 00:13 START iteration 1 BUILD. No astra.lock / calls for flight. Other lanes' journals empty (no NEED flight yet).
-- 00:25 DECISION interface shape: GhostLook (static, one "which look" question; `--ghost-look=legacy|spectral`
-  overrides; row field `look` in ghost_forms.json, all "legacy"), GhostHover + ghost_hover.json (hover, bob,
-  bank, lag, plus a `tail` and `shadow` object per form), GhostTail (Node2D), GhostShadow (Node2D),
-  GhostFlight (Node2D composer the form view drives on sim ticks). Feet off: GhostDrawn.hover holds the
-  standing cell (no phase), GhostFormView feeds the top-view rigs speed 0 under spectral (no stamp/stride),
-  so no ghost-lane file needs an edit for the stub. Rejected: per-rig edits by flight (ownership).
-- 00:16 ASTRA RUNNING interface since 00:16 (brief evidence/briefs/n20-flight-01-interface.md)
-- 00:20 PLATES read (all four). Shared: ragged teal vapour tails, bright at the root; every plate puts a teal
-  light pool on the wet street under the ghost (so GhostShadow = dark core + teal pool, not a plain blob).
-  Per-form tail: dent_a one long comet tongue (+glass shards: dent lane's), kerf_a thin straight wisps
-  along the hull (beam streamers: kerf lane's), ohm_c tattered robe hem of 4-5 tatters, tonnage_b thick
-  smoke column curling up/back. Package 2 brief written (evidence/briefs/n20-flight-02-real.md): tail
-  shader on tick (not TIME), shadow+pool, hover character, legless fade bridge on legacy drawn sprites,
-  tools/film/ghost_films.mjs (n19's two-panel 1920x1080 layout was never committed: lanes need it).
-- 00:29 NEED from ohm (spec_hover/spec_act sheets in GhostDrawn, sprite()) + tonnage/dent pose-sheet plans -> package 1b brief (evidence/briefs/n20-flight-01b-sheets.md), queued as --resume after the interface.
-- 00:40 MILESTONE interface 0e7d91e46 (committed 00:37 by Astra, session 'interface' still running for polish)
-- 00:49 NEED from ohm #2 (public instant_windup, 0 under spectral ohm) added to 1b brief. ohm adds a one-line call site in GhostActs.prepare_ohm (rig.ohm = o): accepted.
-- 01:00 NEED from dent (DentBody.step kept under spectral + tail geometry) added to 1b. Looked at scratch kerf_move_tilt70_{spectral,legacy}_f124: spectral stands lifted with lag + wedge stub tail; the ground ring stays put. OK as stub.
-- 01:24 ASTRA interface 68 accepted. Commits 0e7d91e46 (interface 00:37) .. 28f7e5520. Astra's report: lint 19/19, GUT --changed 3202 pass/2 skip, replay 3600 ticks cbeb734ff9b97c41, parity 1200 exact + mutation caught, bake golden, legacy 370 frames pixel-identical, TonnageRig stamps 0 under spectral, Dent 0 catch-up steps. Not yet re-run by me (one Godot per lane; 1b started first).
-- FRICTION: Astra trimmed doc comments in ghost_drawn.gd to fit size; consider moving code out to restore them.
-- 01:24 ASTRA RUNNING sheets since 01:24 (--resume, brief evidence/briefs/n20-flight-01b-sheets.md, out .out.txt)
-- 01:27 Replied to ohm (cross-session): flight adopts `<card>_spec_hover.png` / `_spec_hover_left.png` / `_spec_act.png`, `pose`, `sprite()`, public `instant_windup` (0 under spectral ohm), tail `points()/half_widths()`; promised the 1b sha when it lands.
-NEXT: (1) check astra.lock + astra-02-sheets; when 1b ends, review the diff and its tests, ASTRA sheets <min> accepted|bounced, message ohm (pipe from-name n20-ohm-8c) and write the sha where dent/tonnage read it (their JOURNALs are theirs: just reply via SendMessage if listed). (2) Re-run myself: `node tools/tests/run_unit.mjs --select=test_ghost_look,test_ghost_hover` and the scenario replay (one Godot per lane: only when Astra is idle). (3) Start package 2 (evidence/briefs/n20-flight-02-real.md: tail shader on tick, shadow+teal pool, hover character, legless fade bridge, tools/film/ghost_films.mjs + flight_* films). Consider splitting the film tool out as package 3 if 2 runs long. (4) Commit JOURNAL.md + evidence/briefs/* when Astra is idle (not yet committed). Final gate by 06:15.
-- 01:27 DECISION ghost_hover.json rows: each ghost lane owns and tunes its OWN row (as in ghost_forms.json); flight owns the schema, new fields and defaults. Answers kerf NEED 01:10 (kerf edits lag/bank itself). Kerf's one-line call site in ghost_form_view.gd (`v._bodies.kerf.stage = stage`) accepted. To docs/decisions.md via package 2 (Astra writes it).
-- 01:27 dent LOOKED: the shared comet tail is a thin faint wisp below the plume; wants root as wide as the torso at the belt, tapering over ~2 body lengths, brightest at the root -> added to package 2 brief.
-- 01:25 Messaged kerf (row ownership), dent (tail feedback in pkg 2), tonnage (spec sheet naming, pose). Peer names: n20-tonnage-58, n20-ohm-8c, n20-kerf-26, n20-dent-27.
-- 01:36 tonnage NEED: GhostDrawn opt-out -> DECISION name `drawn.own_body = true` (no sprite at all); first item of package 2. Default fallback (legacy cell, standing) stays for lanes without sheets. dent acks tail plan (will raise its width_m back ~0.5 after the root lands).
-- 01:37 ASTRA RUNNING sheets since 01:24 (--resume of the interface session; lock present; out evidence/briefs/n20-flight-01b-sheets.out.txt; no commit from it yet at 01:37). Session 1 ends.
-NEXT (supersedes the 01:27 NEXT): (1) wait for astra.lock to clear, read 01b out + diff (pose/spec sheets, sprite(), instant_windup, tail points()/half_widths(), DentBody under spectral), log `ASTRA sheets <min> accepted|bounced`. (2) SendMessage the 1b sha to n20-ohm-8c, n20-dent-27, n20-tonnage-58 (promised). (3) Start package 2 (evidence/briefs/n20-flight-02-real.md, now opens with GhostDrawn.own_body for tonnage, then lane feedback, then tail/shadow/hover/fade/film tool). Send the own_body sha to tonnage once committed. (4) When Astra is idle: re-run test_ghost_look/test_ghost_hover myself and commit JOURNAL.md + evidence/briefs/*. (5) Scan the four lane JOURNALs for `NEED flight` each session. Final gate by 06:15.
-- 01:36 tonnage acked own_body; its session hands over ~01:44: send the shas to whichever n20-tonnage-* session ListAgents shows live (same for the other lanes).
-- 01:39 ASTRA sheets 14 accepted. d2a44407e (01:38): spec_hover/spec_act + pose, sprite(), instant_windup (0 spectral ohm), tail points()/half_widths(); Astra: lint 19/19, --changed 3208 pass/0 fail, legacy kerf still byte-identical. Sha sent to ohm + dent; tonnage gets the own_body sha from package 2. No Astra running at session end.
-NEXT: start package 2 now (brief ready, opens with own_body); then items (4)-(5) of the 01:37 NEXT.
-- 01:41 ASTRA RUNNING real since 01:41 (--resume, brief evidence/briefs/n20-flight-02-real.md, out .out.txt). No open NEED flight in the four journals (all answered).
-- 01:46 Package 3 brief written (evidence/briefs/n20-flight-03-effects.md: morph take + emerge, soul line fade, aura opt-out, apparition hover, hit lean). Monitor on commits for own_body sha -> tonnage.
-- 01:56 NEED kerf->flight: HUD chip <id>_spectral.png in ghost_chip_face.gd when look spectral + file exists. ACCEPTED as item 0 of package 3.
-- 01:58 MILESTONE own_body 12ec7bffa (01:49; GhostDrawn split into GhostDrawnActs base to fit size). Sha sent to n20-tonnage-50. Peer names now: ohm-1b, kerf-37, tonnage-50, dent-69.
-- 02:00 tonnage wants waist-wide root, column drags low and curls back; plate shows column up from the back + wisps between the arms. Told them: own row, rise_m 0/negative must drag low (check in pkg 3), second tail = own GhostTail or NEED tail2.
-- 02:05 MILESTONE hover weight+pool 7948f3382 (01:54), tail ribbons+wisps f183e88a1 (02:02). Tail sha sent to tonnage-50 and dent-69.
-- 02:10 LOOKED build/flight/p2-kerf-tilt70-spectral-125.png (pre-fade, 32 px/m): pool reads; kerf tail = thin ground-level streaks (ok for kerf_a); WEAK: wisps that detach 2-5 m behind read as stray bird/chevron glyphs; 3 small dots under the body; the old teal ground ring outline still drawn over the pool; legs visible (fade landed after). -> package 3 item.
-- 02:27 LOOKED flight_dent_move_32.jpg + flight_kerf_turn_64_t163.png: TITLE BAR MOJIBAKE (· and ° double-encoded in ghost_films.mjs source) -> pkg3 item 00; '64 px/m' title overlaps; kerf tilt: three teal legged afterimages (kerf_view.gd, kerf's) ; legacy fade leaves a floating head over a pool far below (bridge only; lanes' new art replaces); ring+dots still there (item 7); top view legs (as briefed).
-- 02:30 kerf: ring+dots = kerf _aura, afterimages: both already gone under spectral on n20-kerf f36c0a161. Brief 3 item 7 updated.
-- 02:36 LOOKED flight_ohm_turn_64_t163.png: Ohm in tilt70 = only a fragment (fade erases nearly all of the legacy figure at this facing); NO tail ribbon visible in tilt at 64, only chevron wisps; top: pool fine. Tail visibility is the weakest item -> pkg3 item 0b (before morph).
-- 02:48 LOOKED flight_tonnage_turn_64_t163.png: captions now clean (Astra fixed mojibake itself, ' / ' separators). Tonnage tilt: fade leaves the press top with a fuzzy hem, reads ok as bridge; TAIL = a thin pale stroke curving to the ground, not vapour (0b covers it); pool large and soft.
-- 02:56 ASTRA real 75 accepted (cap hit, tree clean). 12ec7bffa own_body, 7948f3382 hover weight+pool, f183e88a1 tail ribbons+wisps, 81a78a5e8 legacy leg fade, 95d914ab8 film tool, 073237b56 captions. Films: flight_{dent,kerf,ohm,tonnage}_move_32, flight_{kerf,tonnage}_close_64, before/flight_kerf_*. Missing: zero-foot test, mutate -> pkg3 0c.
-- 02:57 ASTRA RUNNING effects since 02:57 (--resume, brief evidence/briefs/n20-flight-03-effects.md, out .out.txt). Order: 00 captions (likely done), 0 HUD chip <id>_spectral.png (kerf waits: send sha to n20-kerf-*), 0b tail must read (dense bright root, ink edge, Ohm fade_from), 0c zero-foot test + mutate, 1 morph take, 2 emerge, 3 soul line fade, 4 aura opt-out, 5 apparition, 5b rise sign (tonnage), 6 hit lean, 7 wisps near the tip.
-NEXT: (1) watch astra.lock / commits; send the chip sha to kerf, the tail-0b sha to all four lanes. (2) When effects ends (by ~04:12): review diff + stills, log ASTRA effects. (3) Then package 4: the all-ghosts reel (all_ghosts_32.mp4 in masters/n20/flight) + re-film flight_* with the improved tail; then quality on the weakest item. (4) Scan lane JOURNALs for NEED flight. Final gate by 06:15, last code commit by 06:00.
+- 00:15 START iteration 1 BUILD. No astra.lock / calls for kerf. Other lanes: no NEED kerf.
+  Flight 00:25 interface shape: GhostLook (`--ghost-look`), `look` field per row in ghost_forms.json,
+  GhostHover/GhostTail/GhostShadow/GhostFlight; GhostDrawn.hover holds the standing cell, top-view rigs
+  get speed 0 under spectral. Not yet committed on n20-flight.
+- 00:20 Looked at the plate kerf_a.png and the first take. Plate: long teal dart, lens at the nose,
+  horseshoe cable loops, hazard cross-beam stubs, two folded arms, three straight trailing beams.
+- 00:25 DECISION body plan: rigid art, no cycles. Top view = cutout parts (hull, cables, arm, three
+  lens states) moved by KerfRig; tilted views = one packed grid per tilt, 5 facings x 3 moods
+  (POISED idle/cocked, CRUISE dart, LUNGE cut) instead of walk/run grids. Lens states (open/half/slit)
+  make the eye; cable loops raised = hackles in POISED. The three beams are code-drawn (straight teal
+  lines from the tail), so they can be the charges and stretch with speed. Rejected: drawn cycles
+  (legless body needs none), and generating p55 independently (consistency: p55 is redrawn from the
+  accepted p70 sheet).
+- 00:25 DECISION key on #00B140 by border flood, not hue, because the body is teal.
+- 00:19 ASTRA RUNNING body since 00:19 (brief evidence/briefs/n20-kerf-01-body.md)
+- 00:38 ASTRA body 19 accepted (f47c96fb8). Parts take 3 (takes 1-2 fused arms+cables into the hull),
+  hover 70 take 1, hover 55 take 1 (redrawn from 70). 91.67 px/m grid, cruise profile 1.5 m = 137.5 px.
+  Looked at all five takes and the contact sheet: legless, plate silhouette, lens reads as an eye.
+  Weak: POISED arm needles point down a little in the profile row (reads faintly as legs at 3x, not at 32).
+- MILESTONE 00:38 body art committed: body_contact_sheet.png, body_scale_32ppm.png in masters/n20/kerf.
+- 00:39 ASTRA RUNNING wire since 00:39 (brief evidence/briefs/n20-kerf-02-wire.md; flight interface not committed yet: steps 1,2,4 first, step 3 only after merge)
+- 01:07 ASTRA wire 28 accepted (merge 69431c358 of n20-flight 0e7d91e46; 3e2aacee0). KerfSpectral +
+  KerfBeams + KerfRig spectral path + KerfStage.recharge_k (view-only). Unit 3199/0/2 skip, quick ok
+  6 files, legacy 76 frames byte-identical, write_state unchanged. Mutate kerf_spectral 4/12 (33 %): weak.
+  Looked at wire_idle_32 / cruise_32 / close_64 / idle_32_top: tilted body legless and on-plate, cruise
+  dart with three straight beams reads. Top view reads as a bare small jet (cable arch under the hull,
+  arms pointing forward), beams low-contrast on the pale boulevard. Sent back inside brief 03 Part A.
+- 01:07 NEED flight (handled as a one-line call site by kerf, named here): ghost_form_view.gd
+  GhostFormView.make `v._bodies.kerf.stage = stage` (the live rig needs KerfStage for charges/blinks/lock).
+- 01:08 DECISION attack read: after-image = ONE snapshot of the pre-blink pose at trail_from (not three
+  echoes along the path); the path is one thin full-length slot on the press tick that retracts toward
+  him; render-only overshoot 0.5 m for 6 ticks so his body never covers the victim; no flare/star on the
+  victim on the press tick, cut mark from +3 ticks. Victim split delay/flash live in combat files (not
+  ours): Astra reports exact NEED lines. Rejected: delaying the cut in time (sim decides; must stay instant).
+- 01:07 ASTRA RUNNING slice since 01:08 (brief evidence/briefs/n20-kerf-03-slice.md: Part A review fixes, Part B blink-slice)
+- 01:10 NEED flight: project/data/tables/ghost_hover.json kerf row: lag_ticks 3 -> 1 and bank_deg 24 -> 12
+  (brief: "hard turns are sharp, almost no bank lag: he is the one ghost with no weight"). Or say in your
+  JOURNAL that each ghost lane may edit its own ghost_hover row, and kerf will do it.
+- 01:18 brief 03 Part A committed b51c8b3b9 (stage call site, arch over the hull, arms swept back). Looked at wire_idle_32_top at 3x: reads as the plate's top inset now.
+- 01:28 flight DECISION 01:27 (message): each ghost lane owns its ghost_hover.json row; kerf call site in ghost_form_view.gd accepted. My NEED of 01:10 is withdrawn: kerf sets its own row (lag_ticks 1, bank_deg 12) in brief 04 step 1.
+- 01:37 brief 03 Part B committed f36c0a161 ("Draw Kerf's spectral blink from the previous pose on the
+  press tick"); Astra still making the slice strips / mutate at session end.
+- 01:38 ASTRA RUNNING slice since 01:08 (lock C:\Users\kazda\kiro\gtai-n20\logs\kerf\astra.lock; output
+  C:\Users\kazda\kiro\gtai-n20\logs\kerf\slice.out.txt; 75 min cap = ends by 02:23 at the latest).
+NEXT:
+  1. Wait for the slice call to end (lock gone), read slice.out.txt: test/scenario/gate lines, mutate scores
+     (kerf_spectral target >= 8/12; the slot/view file), NEED lines for combat files (victim flash/star,
+     split delay). Log `ASTRA slice <min> accepted|bounced`.
+  2. LOOK at slice_strip_top_32.png, slice_strip_70_32.png, slice_strip_64.png, slice_strip_legacy_32.png
+     in C:\Users\kazda\kiro\gtai-masters\n20\kerf\: at +0 the after-image (where he was), him past the
+     target, and the slot through a STANDING target must all read from the top view; no star/flash on the
+     victim at +0. Bounce with a precise --resume brief if not.
+  3. Write the combat-file NEED lines into JOURNAL (no lane owns combat/kills: they become Calls in REPORT
+     with a still, unless Astra found a one-line call site).
+  4. Start brief 04 (evidence/briefs/n20-kerf-04-films.md, ready): kerf ghost_hover row (lag 1, bank 12),
+     films kerf_move_32 / kerf_attack_32 / kerf_close_64 (+ legacy attack), plate-vs-game still, creature
+     still, frames.json, three decisions.md lines. It needs flight's tools/film/ghost_films.mjs (flight
+     package 2, after their 1b): if not landed, the brief lets Astra use the driver's own capture + ffmpeg.
+  5. Then raise the weakest item: transformation in/out, hit reaction (the act grid has no hit cell:
+     consider a 4th hover column via an image prompt YOU write), HUD chip/card if the old drawing no longer
+     matches. Do NOT flip the kerf look row to spectral until body+flight+all attacks are filmed in both
+     tilts and the gate is green.
+  6. Last new work committed by 06:00; final gate `node tools/gate/run.mjs --rev=HEAD` from 06:15.
+- 01:44 ASTRA slice 35 accepted (b51c8b3b9 Part A, f36c0a161 Part B). Unit 3208/0/2, scenarios 65/0,
+  20 s city + 60 s replay byte-identical vs 3e2aacee0, Kerf quest hash same. Mutate kerf_spectral 11/12,
+  kerf_slot 7/12. Call site ghost_form_view.gd:62 (accepted by flight).
+  LOOKED at slice_strip_top_32.png: at +0 was (after-image), cut (slot) and is (past the guard) all read
+  from above. Still wrong: (a) the combat cream star + slash on the victim at +0 (combat files, NEED below);
+  (b) the after-image is nearly as opaque as the live body, so two Kerfs read at +0: make it fainter and
+  more washed (alpha ~0.35, stronger teal wash); (c) a small red/vermilion speck near the victim at +3:
+  find what draws it (red is blood only; kerf_split is dry).
+- NEED (no owner lane; Call for the owner unless a one-line site is found):
+  project/features/combat/kills/kill_marks.gd: flash_ticks 0 for spectral kerf_split (table value alone
+  changes legacy). project/features/combat/kills/kill_split_fx.gd: intact posed copy to +3, halves from +4,
+  no slash streak for spectral Kerf.
+NEXT (supersedes 01:38 steps 1-3): bounce (b) and (c) as a short --resume brief, then brief 04 (films),
+  then the 01:38 steps 5-6.
+
+## Session 2 (iteration 2, 01:43)
+- 01:45 No astra.lock; last call slice ended. No new NEED kerf in other journals (flight 01:27 already answered).
+- 01:47 ASTRA RUNNING slicefix since 01:47 (--resume of slice thread; brief evidence/briefs/n20-kerf-03b-slice-fix.md:
+  after-image alpha ~0.35 + teal wash, red speck at +3, skip Kerf's own cut_flare under spectral, kerf ghost_hover row
+  lag 1 / bank 12). Output C:\Users\kazda\kiro\gtai-n20\logs\kerf\slicefix.out.txt.
+- 01:55 Step 4 survey: the HUD chip `project/features/hud/art/ghost_chips/kerf.png` is the old biped head (cables +
+  lens on a frame): no longer matches. `kerf_card.png` (p70 upright card) is hidden while a drawn grid stands in, so
+  it does not show under spectral. Transformation/hit lean: flight package 3 (morph take + emerge, hit lean) covers
+  them for all four.
+- 01:55 NEED flight: `project/features/hud/ghost_chip_face.gd` loads `ghost_chips/<id>_spectral.png` when that form's
+  look resolves to spectral and the file exists (else `<id>.png`). Kerf will ship `ghost_chips/kerf_spectral.png`
+  (cut from the spectral p55 hover front cell with `tools/art/ghost_chip_cut.py`), new file, kerf prefix.
+- 01:59 flight (message): accepts the chip rule as proposed: `ghost_chips/<id>_spectral.png` when GhostLook.of(id) ==
+  SPECTRAL; item 0 of flight package 3, lands ~03:00-03:15. Kerf ships `kerf_spectral.png`.
+- 02:00 DECISION victim read: use the night's one-line call-site exception in kill_marks.gd / kill_split_fx.gd, each
+  routed into a new kerf-owned `KerfVictim` (spectral kerf_split -> no star flash, no slash streak), instead of a
+  Call. Why: the brief names "no star or flash on top of the victim" and the strip at +0 is dominated by the star.
+  Rejected: editing signature_kills.json flash_ticks (moves legacy too). Brief 05 written; runs after slicefix,
+  before films (films must show the final press tick).
+- 02:05 flight observation (afterimages with legs + a ground ring in their spectral film): both already gone on n20-kerf (f36c0a161: KerfEcho snapshot, _aura skipped under spectral); flight's tree lacks our commits. Replied.
+- 02:46 ASTRA slicefix 59 accepted (52b595c9d echo wash 0.35/60 %, f6a830612 kerf hover lag 1 / bank 12). Unit 3208/0/2,
+  scenarios 65/0, city 20 s + replay 60 s + quest byte-identical vs f36c0a161. Mutate kerf_echo 48/59 (81 %).
+  LOOKED at slice_strip_top_32: the departure now reads as a ghost, not a second Kerf; slot through the guard to the solid
+  body. Red speck = shooter's vermilion tracer (fx_view.gd:271), not ours: no action. Star + diagonal streak remain
+  (combat files) -> brief 05 Part A. FRICTION: 61 min for a 4-fix resume (re-shooting strips and a full mutate dominate).
+- 02:47 ASTRA RUNNING victim since 02:47 (--resume; brief evidence/briefs/n20-kerf-05-victim-chip.md: KerfVictim + one-line
+  call sites in kill_marks.gd / kill_split_fx.gd (/ kill_view.gd) so spectral kerf_split draws no star, no streak, intact
+  victim to +4; Part B ghost_chips/kerf_spectral.png). Lock pid 63788; output C:\Users\kazda\kiro\gtai-n20\logs\kerf\victim.out.txt.
+NEXT:
+  1. Wait for the victim call (lock gone), read victim.out.txt. Check: the call sites are truly ONE line each (git show on the
+     combat files), nothing serialized changed (write_state / replay lines), legacy strip byte-identical. LOOK at
+     slice_strip_70_32.png and _top_32 at +0: guard whole, no star, only the slot. LOOK at chip_compare.png. Log ASTRA victim.
+     Log each call site file:line in JOURNAL (rule: one-line call sites outside our list are named there).
+  2. Brief 04 films (evidence/briefs/n20-kerf-04-films.md, ready; step 1 already done). Fresh or --resume; flight's film tool
+     may land in their package 2/3 (check `git log n20-flight`); merge n20-flight first (also brings the chip loader, ~03:15).
+  3. After films: if everything filmed in both tilts and green, consider the kerf `look` row -> spectral (only then).
+     Weakest item candidates: transformation in/out on kerf (flight pkg 3 does the shared morph), 55-tilt check.
+  4. Last new work committed by 06:00; final gate `node tools/gate/run.mjs --rev=HEAD` from 06:15; REPORT by 07:40.
+- 02:52 flight: film tool on n20-flight (95d914ab8 + 073237b56): tools/film/ghost_films.mjs --ghost=kerf --look=spectral --takes=move,attack,close --stills=163. Added to brief 04 step 0. Chip loader = flight pkg 3 item 0 (sha to come).
+- Brief 05, spectral Kerf only. kill_marks.gd:50 routes the non-serialized star duration through KerfVictim.flash_ticks. kill_split_fx.gd:110 routes the streak through KerfVictim.streak. kill_view.gd:142 routes the part holder through KerfVictim.holder to reveal both cut edges at press +4. The three call sites are in project/features/combat/kills/.
+- 03:11 flight: chip loader landed n20-flight 4362c8109. Not merged now (Astra victim running in this worktree); brief 04 step 0 merges n20-flight. Tail 0b in progress.
+- 03:11 Session 2 ends. ASTRA RUNNING victim since 02:47 (lock present, pid 63788). NEXT as at 02:47; brief 04 step 0's merge
+  of n20-flight now brings the film tool (95d914ab8 + 073237b56) and the chip loader (4362c8109): merge only after the
+  victim call ends.
+
+## Session 3 (iteration 3, 03:13)
+- 03:14 ASTRA RUNNING victim since 02:47 (lock pid 63788 alive; Astra committing the chip, victim combat call sites still unstaged). Waiting.
+- Brief 05 gate decision pending. Chip committed c3e83779f. Victim changes staged; final changed-suite 3212/0/2, scenarios 65/0, both replays and kill bytes identical, legacy 14/14 frames identical. Default quick's standalone Godot check also fails on all three unmodified combat files at f6a830612 (Log/LaunchArgs unavailable, then PagedAllocator shutdown error). quick --no-godot passes, project import passes, staged pre-commit 18/18. Requested approval to use those checks for the victim commit; the mutate tool requires it at HEAD.
+- 03:21 ASTRA victim 34 accepted. Chip c3e83779f; Part A was left staged (quick gate red). I checked: quick fails with only the "depended scripts" cascade (no root error, same as on untouched files per Astra); run_unit --changed 3212/0/2 incl. test_kerf_victim. Committed Part A myself (git only, no edits): cd4555736. LOOKED at slice_strip_top_32 + _70_32: at +0 the guard stands whole, no star/streak, after-image + slot + Kerf past all read from the top. Call sites: kill_marks.gd:50, kill_split_fx.gd:110, kill_view.gd:142.
+- FRICTION 03:22 quick.mjs Godot parse check gives a false FAIL on combat/kills files (depended-scripts cascade); ~6 min.
+- 03:29 ASTRA RUNNING films since 03:29 (fresh; brief evidence/briefs/n20-kerf-04-films.md + additions; output logs/kerf/films.out.txt)
+- 03:29 ASTRA films 1 abandoned (merge refused: flight tracks a root JOURNAL.md, ours was untracked). FRICTION ~3 min.
+- 03:31 Merged n20-flight myself (91af03d90, clean: film tool, chip loader 4362c8109, tail 0b, own_body). Replaced flight's root JOURNAL.md with kerf's and committed it + the briefs. MERGE NOTE: root JOURNAL.md is per-lane; the Director keeps each lane's copy.
