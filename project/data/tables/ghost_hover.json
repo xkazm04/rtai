@@ -42,7 +42,7 @@
       "top_mps": 7
     },
     {
-      "bank_deg": 24,
+      "bank_deg": 12,
       "bank_per_dps": 0.1,
       "belt_width_k": 0.2,
       "bob_m": 0.03,
@@ -51,7 +51,7 @@
       "fade_from": 0.39,
       "height_m": 0.5,
       "id": "kerf",
-      "lag_ticks": 3,
+      "lag_ticks": 1,
       "lean_deg": 17,
       "shadow": {
         "alpha": 0.26,
@@ -67,7 +67,7 @@
           -0.25,
           0
         ],
-        "curl_m": 0.035,
+        "curl_m": 0,
         "flow_ticks": 32,
         "fray": 0.13,
         "length_m": 2.2,

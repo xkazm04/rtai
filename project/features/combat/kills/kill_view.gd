@@ -139,7 +139,7 @@ func _node(i: int) -> Node2D:
 func _on_killed(victim_id: int, serial: int, row: SignatureKill, at: Vector2, dir: Vector2) -> void:
 	var t0: int = Time.get_ticks_usec()
 	var groups: Array[Node2D] = _parts(victim_id, serial, row, at, dir)
-	var holder: Node2D = Node2D.new()
+	var holder: Node2D = KerfVictim.holder(row, groups, kills)
 	gib_layer.add_child(holder)
 	_holders[serial] = holder
 	_victim[serial] = victim_id

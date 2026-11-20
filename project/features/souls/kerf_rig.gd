@@ -1,13 +1,8 @@
 class_name KerfRig
 extends Node2D
-## Kerf, the freed laser-cutter head (TARGETS.md ghost_kerf_fast.jpg, its top-down drawing), as a
-## cutout rig from straight above: the arrow hull (lens and cutter nozzle at the nose, the hazard
-## cross-beam), the cable loops on its back, two jointed arms from the cross-beam reaching forward
-## to their teal beam emitters (the duelist's guard), two blade legs trailing behind. Parts are the
-## Codex sheet cut by tools/art/ghost_parts.py (art/kerf/, raw art like Tonnage's). Units: world
-## px at PX_PER_M; +x = facing (set rotation = facing angle).
-## Gait "hover": no steps; the body bobs toward the camera, the legs sweep back with speed and the
-## arms tuck in. unfold (0..1) is the transformation: 0 = limbs folded onto the hull.
+## Kerf's freed laser-cutter head. The spectral form rides the flight mount with three charge beams.
+## The legacy cutout uses cables, jointed arms and trailing blade legs. Speed sweeps the limbs
+## back and unfold folds them onto the hull at zero. Parts use world pixels with +x forward.
 
 const ART: String = "res://features/souls/art/kerf/"
 const PX_PER_M: float = 32.0
@@ -58,18 +53,34 @@ var unfold: float = 1.0
 var speed_mps: float = 0.0
 ## n11: the drawn walk (kerf_walk8.png), feet on the rig's point; the card under a view without it.
 var drawn: GhostDrawn = GhostDrawn.new("kerf", 1.8, CYCLE_CELL, 173.0, RUN_CYCLE_CELL)
+## The player's live stage. Standalone apparitions and blink echoes can pose without a pilot.
+var stage: CollectCallStage
+var echo: bool = false
 var _t: float = 0.0
 var _swept: float = 0.0
-var _body: Node2D = Node2D.new()
+var _spectral: KerfSpectral
+var _body: Node2D
 var _hull: Sprite2D = null
 var _cables: Sprite2D = null
 ## Per side (0 = right, 1 = left) four sprites: upper arm, forearm, leg upper, leg lower.
 var _limbs: Array[Sprite2D] = []
 var _hide: Array[Sprite2D] = []
-var _card: GhostCard = GhostCard.new("kerf", CARD_M, CARD_ANCHOR)
+var _card: GhostCard
 
 
 func _ready() -> void:
+	if GhostLook.spectral(KerfStage.GHOST):
+		drawn.hover = true
+		_spectral = KerfSpectral.new(HULL_M * 1.1)
+		_spectral.beams.visible = not echo
+		_spectral.beams.reduced_motion = LaunchArgs.has("--reduced-motion")
+		if drawn.flight != null:
+			drawn.flight.tail.hide()  # The three charge beams are Kerf's tail.
+		add_child(_spectral)
+		pose()
+		return
+	_body = Node2D.new()
+	_card = GhostCard.new("kerf", CARD_M, CARD_ANCHOR)
 	add_child(GhostRim.soft_glow(TEAL, 0.4, 2.4 * PX_PER_M))  # teal belongs to the souls
 	add_child(_body)
 	for side: int in 2:
@@ -93,6 +104,11 @@ func _ready() -> void:
 
 ## One hover step of `dt` seconds (the host passes SimClock.TICK_DT per sim tick).
 func advance(dt: float) -> void:
+	if _spectral != null:
+		if stage == null:
+			_spectral.beams.tick += roundi(dt / SimClock.TICK_DT)
+		pose()
+		return
 	_t = fmod(_t + dt, 1000.0)
 	var want: float = clampf(speed_mps / FAST_MPS, 0.0, 1.0)
 	_swept = move_toward(_swept, want, dt * 3.0)
@@ -101,6 +117,9 @@ func advance(dt: float) -> void:
 
 ## Lays the limbs out for the current sweep, bob and unfold.
 func pose() -> void:
+	if _spectral != null:
+		_pose_spectral()
+		return
 	var u: float = smoothstep(0.0, 1.0, unfold)
 	_body.scale = Vector2.ONE * (1.0 + BOB_K * sin(TAU * BOB_HZ * _t)) * lerpf(0.75, 1.0, u)
 	for side: int in 2:
@@ -128,6 +147,18 @@ func pose() -> void:
 	_card.size_k = _body.scale.x
 	_card.lean = CARD_LEAN * _swept * cos(global_rotation)
 	_card.step(self, _hide, Vector2.ZERO, PX_PER_M)
+
+
+func _pose_spectral() -> void:
+	_spectral.modulate.a = unfold
+	_spectral.beams.emerge = unfold
+	var since: int = 0 if echo else -1
+	var speed: float = drawn.flight.hover.speed_mps if drawn.flight != null else speed_mps
+	var oct: int = drawn.octant(global_rotation)
+	if stage != null and stage.pilot != null:
+		_spectral.live(stage, drawn.flight, speed, global_rotation, oct)
+	else:
+		_spectral.pose(speed, since, false, global_rotation, oct)
 
 
 func _place(s: Sprite2D, a: Vector2, b: Vector2, thick_m: float) -> void:

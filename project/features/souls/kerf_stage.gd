@@ -1,20 +1,14 @@
 class_name KerfStage
 extends RefCounted
-## Kerf (the freed laser-cutter head), lane ghost-powers, for the bound player on quest 1's stage
-## or an arena stage. power `kerf` (powers.json) puts the soul on; while on, Rivet walks at
-## speed_k and the melee press blinks (ghost_attacks.json `kerf`): the live hostile nearest the
-## aim inside the cone and range, with no wall between, is cut: Rivet blinks along the straight
-## line to behind_m past it and the beam slices it (weapon kerf_slice: the human one-shot split
-## with a teal-white cauterised edge, robot_damage on a robot). No target: a plain blink of dash_m
-## along the aim. A chain of `charges` blinks, one back per recharge_s, gap_s apart.
+## Kerf's charged blink on quest and arena stages. Melee cuts the unobstructed hostile nearest
+## the aim line and lands behind it, or dashes along the aim. ghost_attacks.json tunes the chain.
 
 const ID: StringName = &"kerf"
 const GHOST: StringName = &"kerf"
 ## The hanging cut lines kept for the view (the chain's last blinks).
 const KEEP: int = 4
 
-## The kill kind the slice reports (actor_killed): a cauterised cut is dry, no red pool, under
-## --gore=reduced too (BloodVictims.DRY_KILLS), where no signature split runs.
+## BloodVictims.DRY_KILLS keeps the cut dry even under --gore=reduced.
 const KILL_KIND: StringName = &"cauterised"
 
 var powers: SoulPowers
@@ -42,8 +36,7 @@ func _init(table: PowerTable, p_attacks: GhostAttacks = null) -> void:
 	charges = int(num(&"charges"))
 
 
-## GhostPilot: the form's one SoulPowers drives the soul (no own activate or tick) and owns the
-## walk (the form row's top_mps), so the blink keeps only its zero-move tick.
+## GhostPilot owns activation and walking. A blink still consumes its movement tick.
 func share(p_powers: SoulPowers) -> void:
 	powers = p_powers
 	_shared = true
@@ -90,6 +83,13 @@ func _take(power: bool) -> void:
 func ready_k() -> float:
 	var gap: int = PowerDef.ticks(num(&"gap_s"))
 	return 1.0 if gap <= 0 else 1.0 - float(_gap) / gap
+
+
+## Fraction of the next charge's beam already regrown (view only).
+func recharge_k() -> float:
+	if charges >= int(num(&"charges")):
+		return 0.0
+	return float(_recharge) / maxi(1, PowerDef.ticks(num(&"recharge_s")))
 
 
 ## True while the soul is on (the pilot skips the jab: melee is the blink).
