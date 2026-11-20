@@ -22,6 +22,7 @@ var blasts: int = 0
 var drawn: GhostDrawn = GhostDrawn.new("dent", 1.8, 163.0, 176.5, 330.0)
 var _spectral: DentSpectralDrawn
 var _top: DentSpectralTop
+var _glass: DentGlass
 var _view: GhostFormView
 var _rig: CutRig
 var _lurch: DentLurch = DentLurch.new()
@@ -40,6 +41,8 @@ func setup(row: GhostFormDef) -> void:
 		add_child(_spectral)
 		_top = DentSpectralTop.new()
 		add_child(_top)
+		_glass = DentGlass.new()
+		drawn.flight.tail.add_child(_glass)
 		_view = drawn.flight.get_parent() as GhostFormView
 		return
 	_rig = CutRig.new()
@@ -62,6 +65,7 @@ func step(show: bool, at: Vector2, facing: float, steps: int, tick: int) -> void
 	if _spectral != null:
 		if show and not visible:
 			_top.reset()
+			_glass.reset()
 		visible = show
 		if show:
 			position = at
@@ -94,6 +98,7 @@ func step(show: bool, at: Vector2, facing: float, steps: int, tick: int) -> void
 
 
 func _fly(facing: float, steps: int, tick: int) -> void:
+	_glass.sync(drawn.flight, _glass.to_local(global_position), facing, tick)
 	var jab: DentJab
 	var car: VehicleBody
 	var hurt_age: int = -1

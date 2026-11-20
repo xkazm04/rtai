@@ -1,14 +1,14 @@
 {
   "rows": [
     {
-      "bank_deg": 14,
-      "bank_per_dps": 0.08,
-      "bob_m": 0.08,
-      "bob_ticks": 70,
-      "height_m": 0.45,
+      "bank_deg": 38,
+      "bank_per_dps": 0.18,
+      "bob_m": 0.045,
+      "bob_ticks": 27,
+      "height_m": 0.5,
       "id": "dent",
-      "lag_ticks": 6,
-      "lean_deg": 9,
+      "lag_ticks": 2,
+      "lean_deg": 16,
       "shadow": {
         "alpha": 0.28,
         "radius_m": 0.58,
@@ -16,15 +16,15 @@
       },
       "tail": {
         "anchor_m": [
-          -0.18,
+          -0.12,
           0
         ],
-        "fray": 0.21,
-        "length_m": 1.35,
-        "segments": 8,
-        "stretch_k": 0.06,
-        "swing_k": 0.64,
-        "width_m": 0.48
+        "fray": 0.36,
+        "length_m": 1.85,
+        "segments": 14,
+        "stretch_k": 0.34,
+        "swing_k": 0.9,
+        "width_m": 0.26
       },
       "top_mps": 7
     },

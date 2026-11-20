@@ -18,7 +18,9 @@ var _act: GhostSheet
 
 func _init() -> void:
 	_rim.centered = false
-	_rim.material = GhostApparition.ghost_material(true, 0.0)
+	var glow: ShaderMaterial = GhostApparition.ghost_material(true, 0.0)
+	glow.set_shader_parameter(&"hi", Color("#55f3de"))
+	_rim.material = glow
 	add_child(_rim)
 	sprite.centered = false
 	sprite.name = &"ghost_drawn"
@@ -56,14 +58,19 @@ func show_pose(drawn: GhostDrawn, facing: float, current: Pose) -> void:
 		sprite.flip_h = swing_flip(oct, drawn.flight.hover.yaw_rate_dps)
 	sheet.show(_rim, oct, col)
 	_rim.flip_h = sprite.flip_h
-	_place(drawn.flight.hover, facing, vm)
+	var cell: Vector2 = sheet.tex.get_size() / Vector2(4, GhostDrawn.ROWS)
+	# The packed grids stand on their bottom edge. Mount the belt on the ribbon instead.
+	var belt_y: float = 0.82 if current == Pose.DIVE and oct in [0, 1, 3, 4] else 0.69
+	sprite.offset = -cell * Vector2(0.5, belt_y)
+	_rim.offset = sprite.offset
+	_place(drawn.flight.hover, facing, vm, cell)
 
 
 static func swing_flip(oct: int, yaw: float) -> bool:
 	return (RigHeadCard.OCT_FLIP[oct] == 1) != (yaw < 0.0)
 
 
-func _place(hover: GhostHover, facing: float, vm: ViewMode) -> void:
+func _place(hover: GhostHover, facing: float, vm: ViewMode, cell: Vector2) -> void:
 	# Profile head widths at alpha >= 128, excluding legacy's detached wisp.
 	var head_ratio: float = 70.0 / 77.0 if _art == "p55" else 77.0 / 90.0
 	var width: float = 1.8 / 176.5 * head_ratio
@@ -72,6 +79,6 @@ func _place(hover: GhostHover, facing: float, vm: ViewMode) -> void:
 	sprite.rotation = hover.lean * forward.x
 	var tip: float = cos(hover.lean) * (1.0 - 0.22 * hover.lean * forward.y)
 	sprite.scale = Vector2(width, height * tip / vm.ground_k()) * SimConst.PX_PER_M
-	# Expand the one-pass apparition silhouette about the cell centre, not about the feet.
+	# Expand the one-pass apparition silhouette about the cell centre.
 	_rim.transform = sprite.transform.scaled_local(Vector2.ONE * 1.055)
-	_rim.position = Vector2.UP.rotated(sprite.rotation) * sprite.offset.y * sprite.scale.y * 0.0275
+	_rim.position = -sprite.transform.basis_xform(sprite.offset + cell * 0.5) * 0.055

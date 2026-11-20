@@ -1,0 +1,105 @@
+class_name DentGlass
+extends Node2D
+## Pale splinters drift from the belt to the ribbon tip. Phases come from sim ticks only.
+
+const PPM: float = SimConst.PX_PER_M
+const INK: Color = Color("#173c40")
+const GLASS: Color = Color("#b5fff2")
+const SHAPE: PackedVector2Array = [
+	Vector2(-0.58, 0), Vector2(0.12, -0.56), Vector2(0.42, 0), Vector2(0.24, 0.44)
+]
+
+var _points: PackedVector2Array = []
+var _row: GhostHoverRow = GhostHoverRow.of(&"dent")
+var _trail: PackedVector2Array = []
+var _tick: int = -1
+var _speed: float = 0.0
+var _vertices: PackedVector2Array = []
+var _colours: PackedColorArray = []
+var _indices: PackedInt32Array = []
+
+
+## The tail uses world pixels in flight's ground frame; the mounted body supplies the raised belt.
+func sync(flight: GhostFlight, belt: Vector2, facing: float, tick: int) -> void:
+	if tick == _tick:
+		return
+	var hover: GhostHover = flight.hover
+	var yaw: float = facing + flight.body_rotation()
+	var up: Vector2 = ViewMode.shared().lift_px(hover.lift_m)
+	var root: Vector2 = belt + (_row.tail.anchor_m * PPM * flight.body_scale()).rotated(yaw) - up
+	_follow(root, yaw, hover.speed_mps, up)
+	_speed = clampf(hover.speed_mps / _row.top_mps, 0.0, 1.0)
+	_tick = tick
+	var count: int = 6 + roundi(4.0 * _speed)
+	if count * 8 != _vertices.size():
+		_allocate(count)
+	queue_redraw()
+
+
+func reset() -> void:
+	_tick = -1
+	_trail.clear()
+
+
+## Carry the belt's last links around a bend and let their height taper back to the ground.
+func _follow(root: Vector2, yaw: float, speed: float, up: Vector2) -> void:
+	var tail: GhostHoverRow.Tail = _row.tail
+	var link: float = (tail.length_m + speed * tail.stretch_k) * PPM / tail.segments
+	var back: Vector2 = -Vector2.from_angle(yaw)
+	if _trail.is_empty():
+		for j: int in tail.segments + 1:
+			@warning_ignore("return_value_discarded")
+			_trail.append(root + j * link * back)
+		_points = _trail.duplicate()
+	_trail[0] = root
+	_points[0] = root + up
+	for j: int in range(1, _trail.size()):
+		var lag: Vector2 = _trail[j - 1].direction_to(_trail[j])
+		var dir: Vector2 = back.slerp(lag, tail.swing_k) if lag != Vector2.ZERO else back
+		_trail[j] = _trail[j - 1] + dir * link
+		_points[j] = _trail[j] + up * (1.0 - float(j) / tail.segments)
+
+
+func _allocate(count: int) -> void:
+	@warning_ignore("return_value_discarded")
+	_vertices.resize(count * 8)
+	@warning_ignore("return_value_discarded")
+	_colours.resize(count * 8)
+	_indices.clear()
+	for i: int in count * 2:
+		var v: int = i * 4
+		_indices.append_array([v, v + 1, v + 2, v, v + 2, v + 3])
+
+
+func _draw() -> void:
+	if _points.size() < 2:
+		return
+	@warning_ignore("integer_division")
+	for i: int in _vertices.size() / 8:
+		_shard(i)
+	RenderingServer.canvas_item_add_triangle_array(get_canvas_item(), _indices, _vertices, _colours)
+
+
+func _shard(i: int) -> void:
+	var drift: int = 41 + 3 * i
+	var phase: float = fposmod(float(_tick % drift) / drift + i * 0.618, 1.0)
+	var along: float = lerpf(0.10, 0.96, phase) * (_points.size() - 1)
+	var link: int = floori(along)
+	var centre: Vector2 = _points[link].lerp(_points[link + 1], along - link)
+	var tangent: Vector2 = _points[link].direction_to(_points[link + 1])
+	var side: float = -1.0 if i % 2 == 0 else 1.0
+	var arc: float = sin(PI * phase)
+	centre += tangent.orthogonal() * side * (0.07 + arc * (0.13 + 0.05 * (i % 3))) * PPM
+	var axis: Vector2 = tangent.rotated(side * (0.23 + 0.31 * arc))
+	var length_px: float = (0.16 + 0.035 * (i % 4) + 0.19 * _speed) * PPM
+	var width_px: float = (0.075 + 0.014 * (i % 3) + 0.012 * _speed) * PPM
+	var flash: bool = (_tick + 13 * i) % (29 + 4 * i) < 2
+	for j: int in SHAPE.size():
+		var sliver: Vector2 = (
+			axis * SHAPE[j].x * length_px + axis.orthogonal() * SHAPE[j].y * width_px
+		)
+		var v: int = i * 8 + j
+		_vertices[v] = centre + sliver
+		_vertices[v + 4] = centre + sliver * 0.69
+		_colours[v] = Color(INK, 0.70 + 0.26 * arc)
+		_colours[v + 4] = Color.WHITE if flash else Color(GLASS, 0.72 + 0.25 * arc)
