@@ -39,6 +39,7 @@ DRAFT (session 4, 04:3x). Final numbers, gate line and film paths are filled in 
 ## Merge notes
 
 - Flight's `project/tests/unit/test_ghost_card.gd` is pinned to the legacy look on this branch (8e82e68d1, flight OK: ours wins at the merge); one guard at `test_ghost_flight_hosts.gd:114` in merge 80c27095b.
+- Flight's `project/tests/unit/test_ghost_apparition.gd:100` gets a null-sprite guard on this branch (flight OK; own_body forms have no shared sprite to wash). Flight's REPORT lists the voice-wash gap for own_body forms.
 - Named one-line call site in a flight file: `ghost_form_bodies.gd` step_tonnage `tonnage.hauler = p.hauler`.
 - `n20-flight` merged several times into this branch, last 6bb29c7a0 = flight final aa9ff166e (root JOURNAL.md/REPORT.md kept ours). The merge-clash hook warns that flight's `project/tests/unit/test_ghost_look.gd` conflicts with n20-ohm: a flight/ohm overlap carried in through the merge, no tonnage lines.
 - `RamWake` has two callers (`tonnage_view.gd`, `boot/collect_call/view/cast_view.gd` quest 1); the spectral gate is in TonnageView only so quest 1 keeps its bow wave.
@@ -57,3 +58,4 @@ DRAFT (session 4, 04:3x). Final numbers, gate line and film paths are filled in 
 | 6 | form-rest | 68 | accepted | it touched one line of flight's test (test_ghost_flight_hosts.gd:114) during a merge: name foreign test files as off-limits explicitly |
 | 7 | flip | 8 | accepted (flip reverted by rule) | list every test that reads the legacy body by default BEFORE flipping; I briefed the flip without that census |
 | 8 | reflip | 13 | accepted | (worked as briefed: pin tests, re-flip, full unit, then polish) |
+| 9 | apparition-guard | | | |
