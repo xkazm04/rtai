@@ -87,3 +87,20 @@ func body_scale() -> Vector2:
 
 func body_rotation() -> float:
 	return -0.3 * hover.bank
+
+
+func fade_from() -> float:
+	return _row.fade_from
+
+
+func belt_fraction() -> float:
+	return _row.belt_width_k
+
+
+## Align the first strip cross-section with the posed belt, including the sprite's lunge.
+func set_belt(world_px: Vector2, width_px: float) -> void:
+	if _last == Vector2.INF:
+		return
+	var yaw: float = _facing + body_rotation()
+	var anchor: Vector2 = _anchor(_last, yaw) + ViewMode.shared().lift_px(hover.lift_m)
+	tail.align_socket(tail.to_local(world_px) - anchor, width_px / absf(tail.global_scale.x))

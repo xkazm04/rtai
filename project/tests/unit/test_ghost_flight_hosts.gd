@@ -8,7 +8,11 @@ var _view: GhostFormView
 func before_each() -> void:
 	_saved = ViewMode._shared
 	ViewMode.select("top")
-	GhostLook.override_for_test(GhostLook.SPECTRAL)
+	_build(GhostLook.SPECTRAL)
+
+
+func _build(look: StringName) -> void:
+	GhostLook.override_for_test(look)
 	var stage: CollectCallStage = CollectCallPlay.begin().stage
 	stage.pilot = StagePilot.new(PlayerActions.shipped())
 	_view = GhostFormView.make(stage, null, null)
@@ -73,3 +77,29 @@ func test_dents_stationary_gait_does_not_replant_steps_as_the_mount_moves() -> v
 						steps += 1
 	assert_eq(steps, 0, "the floating body carries the resting feet with it")
 	assert_gt(body.drawn.flight.hover.speed_mps, 0.0)
+
+
+func test_four_arena_drives_keep_spectral_gaits_still_while_the_legacy_gaits_cycle() -> void:
+	ViewMode.select("tilt70")
+	for look: StringName in [GhostLook.LEGACY, GhostLook.SPECTRAL]:
+		for id: StringName in [&"tonnage", &"dent", &"kerf", &"ohm"]:
+			_build(look)
+			_enter(id)
+			var body: Node2D = _view._bodies.get(id)
+			var drawn: GhostDrawn = body.get(&"drawn")
+			if id == &"tonnage":
+				watch_signals(body)
+			_view.pilot.hauler.form.vel = Vector2.RIGHT * 4.2
+			var columns: Dictionary[int, bool] = {}
+			for tick: int in 90:
+				_move()
+				columns[drawn._col] = true
+			if look == GhostLook.SPECTRAL:
+				assert_eq(columns.size(), 1, str(id))
+				assert_eq(drawn._phase, 0.0, str(id))
+				if id == &"tonnage":
+					assert_signal_not_emitted(body, "stamped")
+			else:
+				assert_gt(columns.size(), 1, str(id))
+				if id == &"tonnage":
+					assert_signal_emitted(body, "stamped")
