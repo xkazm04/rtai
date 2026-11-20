@@ -137,3 +137,26 @@ func _same(a: GhostHover, b: GhostHover) -> void:
 	assert_almost_eq(a.lag_px, b.lag_px, Vector2.ONE * 0.00001)
 	assert_almost_eq(a.speed_mps, b.speed_mps, 0.00001)
 	assert_almost_eq(a.yaw_rate_dps, b.yaw_rate_dps, 0.001)
+
+
+func test_hover_impulse_settles_above_and_below_the_rest_height() -> void:
+	var data: DataTable = DataTable.open(GhostHoverRow.PATH, GhostHoverRow.SCHEMA)
+	var first: Dictionary = data.array(data.raw, "rows")[0]
+	var row: GhostHoverRow = GhostHoverRow.new(data, first)
+	row.bob_m = 0.0
+	row.start_lift_m = 0.3
+	row.sway_m = 0.0
+	var motion: GhostHover = GhostHover.new(row)
+	motion.reset(Vector2.ZERO, 0.0)
+	var dx: Vector2 = Vector2.RIGHT * row.top_mps * SimConst.PX_PER_M * SimClock.TICK_DT
+	motion.step(dx, 0.0, 1)
+	assert_almost_eq(motion.lift_m, row.height_m + 0.3, 0.00001)
+	motion.step(dx * 61.0, 0.0, 60)
+	assert_almost_eq(motion.lift_m, row.height_m + 0.3 * pow(0.92, 60), 0.00001)
+	motion.step(dx * 61.0, 0.0, 1)
+	assert_lt(motion.lift_m, row.height_m)
+	assert_eq(motion.tick, 62)
+	motion.reset(dx, PI)
+	assert_eq(motion.tick, 0)
+	assert_eq(motion.lift_m, row.height_m)
+	assert_eq(motion.lag_px, Vector2.ZERO)

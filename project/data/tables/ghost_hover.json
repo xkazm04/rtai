@@ -3,112 +3,164 @@
     {
       "bank_deg": 38,
       "bank_per_dps": 0.18,
+      "belt_width_k": 0.47,
       "bob_m": 0.045,
       "bob_ticks": 27,
+      "cruise_bob_k": 0.65,
+      "fade_from": 0.43,
       "height_m": 0.5,
       "id": "dent",
       "lag_ticks": 2,
       "lean_deg": 16,
       "shadow": {
         "alpha": 0.28,
+        "pool_alpha": 0.4,
+        "pool_m": 1.7,
         "radius_m": 0.58,
         "shrink_k": 0.22
       },
+      "start_lift_m": 0.08,
+      "sway_m": 0.025,
       "tail": {
         "anchor_m": [
           -0.12,
           0
         ],
+        "curl_m": 0.14,
+        "flow_ticks": 43,
         "fray": 0.36,
         "length_m": 1.85,
+        "rise_m": 0.32,
         "segments": 14,
+        "spread_m": 0.53,
+        "strands": 1,
         "stretch_k": 0.34,
         "swing_k": 0.9,
-        "width_m": 0.26
+        "width_m": 0.26,
+        "wisps": 6
       },
       "top_mps": 7
     },
     {
       "bank_deg": 24,
       "bank_per_dps": 0.1,
+      "belt_width_k": 0.2,
       "bob_m": 0.03,
       "bob_ticks": 50,
+      "cruise_bob_k": 0,
+      "fade_from": 0.39,
       "height_m": 0.5,
       "id": "kerf",
       "lag_ticks": 3,
       "lean_deg": 17,
       "shadow": {
         "alpha": 0.26,
+        "pool_alpha": 0.32,
+        "pool_m": 1.5,
         "radius_m": 0.49,
         "shrink_k": 0.25
       },
+      "start_lift_m": 0.015,
+      "sway_m": 0,
       "tail": {
         "anchor_m": [
           -0.25,
           0
         ],
+        "curl_m": 0.035,
+        "flow_ticks": 32,
         "fray": 0.13,
         "length_m": 2.2,
+        "rise_m": 0.12,
         "segments": 12,
+        "spread_m": 0.17,
+        "strands": 3,
         "stretch_k": 0.11,
         "swing_k": 0.82,
-        "width_m": 0.28
+        "width_m": 0.28,
+        "wisps": 4
       },
       "top_mps": 12
     },
     {
       "bank_deg": 10,
       "bank_per_dps": 0.07,
+      "belt_width_k": 0.38,
       "bob_m": 0.1,
       "bob_ticks": 90,
+      "cruise_bob_k": 0.9,
+      "fade_from": 0.41,
       "height_m": 0.7,
       "id": "ohm",
       "lag_ticks": 8,
       "lean_deg": 5,
       "shadow": {
         "alpha": 0.25,
+        "pool_alpha": 0.44,
+        "pool_m": 1.75,
         "radius_m": 0.43,
         "shrink_k": 0.27
       },
+      "start_lift_m": 0.065,
+      "sway_m": 0.14,
       "tail": {
         "anchor_m": [
           -0.08,
           0
         ],
+        "curl_m": 0.2,
+        "flow_ticks": 116,
         "fray": 0.25,
         "length_m": 1.45,
+        "rise_m": -0.55,
         "segments": 9,
+        "spread_m": 0.54,
+        "strands": 5,
         "stretch_k": 0.04,
         "swing_k": 0.73,
-        "width_m": 0.34
+        "width_m": 0.34,
+        "wisps": 7
       },
       "top_mps": 4.5
     },
     {
       "bank_deg": 6,
       "bank_per_dps": 0.05,
+      "belt_width_k": 0.53,
       "bob_m": 0.06,
       "bob_ticks": 110,
+      "cruise_bob_k": 0.8,
+      "fade_from": 0.39,
       "height_m": 0.6,
       "id": "tonnage",
       "lag_ticks": 10,
       "lean_deg": 4,
       "shadow": {
         "alpha": 0.35,
+        "pool_alpha": 0.45,
+        "pool_m": 2.8,
         "radius_m": 1.45,
         "shrink_k": 0.18
       },
+      "start_lift_m": 0.34,
+      "sway_m": 0.025,
       "tail": {
         "anchor_m": [
           -0.46,
           0
         ],
+        "curl_m": 0.36,
+        "flow_ticks": 95,
         "fray": 0.16,
         "length_m": 1.05,
+        "rise_m": 3,
         "segments": 7,
+        "spread_m": 0.64,
+        "strands": 2,
         "stretch_k": 0.025,
         "swing_k": 0.48,
-        "width_m": 1.04
+        "width_m": 1.04,
+        "wisps": 8
       },
       "top_mps": 4.2
     }
