@@ -1,14 +1,7 @@
 class_name TonnageRig
 extends Node2D
-## Tonnage, the walking stamping press (TARGETS.md, ghost_tonnage_bulky.jpg), as a cutout rig from
-## straight above: four piston legs out at the corners with their octagonal feet, the riveted crown
-## slab over them, the press head (the brow) at the front edge, the hose bundle on the back. The
-## parts are the Codex sheet cut by tools/art/ghost_parts.py (art/tonnage/), drawn in the shared
-## part print. Units: world px at PX_PER_M; +x = facing (set rotation = facing angle).
-## Gait "stamp": the diagonal leg pairs alternate; a lifted foot rises toward the camera (grows) and
-## swings a stride forward, then stamps down (stamped fires with the foot's local position).
-## unfold (0..1) is the transformation: 0 = the collapsed in-between pose (legs folded under, plates
-## shut), 1 = the full press.
+## Tonnage's spectral Press Golem or the legacy walking press. Local +x faces forward.
+## unfold runs from the collapsed transformation to full size. Only the walking press stamps.
 
 signal stamped(local_m: Vector2)
 
@@ -43,10 +36,7 @@ const CARD_ANCHOR: float = 0.42
 const CARD_HALO_A: float = 0.35
 const CYCLE_CELL: float = 235.0
 
-## The shared part print (PartMaterials) on Tonnage's parts. Off by default: at 32 px/m its
-## flat-sticker LOD prints the gunmetal crown as one ink mass and hides the teal seams (JOURNAL
-## 00:10, frames/tonnage-print-ab-32ppm.png); the raw art keeps the plates and seams. Static so a
-## dev run can flip it before the rig builds.
+## The optional shared print hides the legacy crown seams at 32 px/m.
 static var print_parts: bool = false
 
 var unfold: float = 1.0
@@ -54,7 +44,9 @@ var unfold: float = 1.0
 var speed_mps: float = 0.0
 ## n11: the drawn walk (tonnage_walk8.png), the card and parts under a view without it. it12: the
 ## stamping v2 walk: the stance foot moves 29.4 cell px a frame (profile row, mean), so 235 a cycle.
-var drawn: GhostDrawn = GhostDrawn.new("tonnage", 3.3, CYCLE_CELL, 190.5)
+var drawn: GhostDrawn
+var hauler: HaulerStage
+var _spectral: TonnageSpectral
 var _phase: float = 0.0
 var _feet: Array[Sprite2D] = []
 var _legs: Array[Sprite2D] = []
@@ -67,7 +59,19 @@ var _card: GhostCard = GhostCard.new("tonnage", CARD_M, CARD_ANCHOR)
 var _all: Array[Sprite2D] = []
 
 
+func _init() -> void:
+	if GhostLook.spectral(&"tonnage"):
+		drawn = TonnageSpectral.Feed.new("tonnage", 3.3, CYCLE_CELL, 190.5)
+	else:
+		drawn = GhostDrawn.new("tonnage", 3.3, CYCLE_CELL, 190.5)
+
+
 func _ready() -> void:
+	if drawn is TonnageSpectral.Feed:
+		_spectral = TonnageSpectral.new(drawn as TonnageSpectral.Feed)
+		add_child(_spectral)
+		advance(0.0)
+		return
 	_glow = GhostRim.soft_glow(TEAL, 0.38, 64.0)
 	add_child(_glow)
 	_card.halo = Color(TEAL, CARD_HALO_A)
@@ -84,12 +88,19 @@ func _ready() -> void:
 
 ## One gait step of `dt` seconds of wall or sim time (the host passes SimClock.TICK_DT per tick).
 func advance(dt: float) -> void:
+	if _spectral != null:
+		var fit: float = lerpf(0.62, 1.0, smoothstep(0.0, 1.0, unfold))
+		_spectral.advance(hauler, rotation, roundi(dt / SimClock.TICK_DT), fit)
+		return
 	_phase = fposmod(_phase + speed_mps * dt / (STRIDE_M * 2.0), 1.0)
 	pose()
 
 
 ## Lays every part out for the current phase and unfold.
 func pose() -> void:
+	if _spectral != null:
+		advance(0.0)
+		return
 	var u: float = smoothstep(0.0, 1.0, unfold)
 	var up: Vector2 = _up() * lerpf(0.45, 1.0, u)
 	for i: int in 4:

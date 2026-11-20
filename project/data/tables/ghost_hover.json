@@ -87,7 +87,7 @@
     {
       "bank_deg": 6,
       "bank_per_dps": 0.05,
-      "bob_m": 0.06,
+      "bob_m": 0.14,
       "bob_ticks": 110,
       "height_m": 0.6,
       "id": "tonnage",

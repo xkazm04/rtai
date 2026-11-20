@@ -6,6 +6,7 @@ enum Pose { CARRY, CRUISE, ARMED, RECOIL }
 enum Act { RAISE, POUND, LIFT }
 
 const CHEST_H: float = 1.55
+const BACK_X: float = -0.55
 const CARRY: Vector3 = Vector3(1.0, 0.8, 1.4)
 const RETURN_TICKS: int = 20
 
@@ -21,7 +22,7 @@ class Sample:
 	var bob_m: float
 
 
-var torso: Vector3 = Vector3(0.0, 0.0, CHEST_H)
+var torso: Vector3 = Vector3(BACK_X, 0.0, CHEST_H)
 var pitch: float = 0.0
 var left: Vector3 = Vector3(CARRY.x, -CARRY.y, CARRY.z)
 var right: Vector3 = CARRY
@@ -79,7 +80,7 @@ func _fly(sample: Sample) -> void:
 	var change: Vector2 = _rate + omega * error
 	_follow = target + (error + change * dt) * exp(-omega * dt)
 	_rate = (_rate - omega * change * dt) * exp(-omega * dt)
-	torso = Vector3(_follow.x, _follow.y, CHEST_H + sample.bob_m)
+	torso = Vector3(BACK_X + _follow.x, _follow.y, CHEST_H + sample.bob_m)
 	pitch = _follow.x * 0.55
 	var trail: Vector3 = Vector3(-_follow.x * 1.6, -_follow.y, sample.bob_m)
 	_fist_follow = _fist_follow.lerp(trail, 1.0 - exp(-1.0 / 6.0))
@@ -123,7 +124,8 @@ func _slam(windup: float, age: int) -> void:
 	else:
 		plant_k = 1.0 - smoothstep(0.0, RETURN_TICKS, age - lift_end)
 		lift = 0.8
-	torso = torso.lerp(Vector3(press_ahead_m * 0.45, 0.0, CHEST_H - 0.28), plant_k * (1.0 - lift))
+	var hunch: Vector3 = Vector3(BACK_X + press_ahead_m * 0.4, 0.0, CHEST_H - 0.28)
+	torso = torso.lerp(hunch, plant_k * (1.0 - lift))
 	pitch = lerpf(pitch, 0.24, plant_k * (1.0 - lift))
 	left = left.lerp(landing(-1.0) + Vector3.BACK * lift, plant_k)
 	right = right.lerp(landing(1.0) + Vector3.BACK * lift, plant_k)

@@ -1,0 +1,180 @@
+class_name TonnageSpectral
+extends Node2D
+## Press Golem presentation. The shared flight mount owns the root motion and road shadow.
+
+const PPM: float = SimConst.PX_PER_M
+const BASELINE: float = 315.0
+
+
+## GhostFormView advances the rig, then feeds the current combat tick before drawing the frame.
+class Feed:
+	extends GhostDrawn
+	signal sampled(tick: int, hurt: int)
+
+	func feed(seq: int, hurt: int, tick: int, windup: bool = false, release_tick: int = -1) -> void:
+		super.feed(seq, hurt, tick, windup, release_tick)
+		sampled.emit(tick, hurt)
+
+
+var pose: TonnagePose
+var _sample: TonnagePose.Sample = TonnagePose.Sample.new()
+var _drawn: Feed
+var _row: GhostHoverRow
+var _hauler: HaulerStage
+var _ticks: int = 0
+var _size_k: float = 1.0
+var _parts: TonnageParts = TonnageParts.new()
+var _cell: Sprite2D = Sprite2D.new()
+var _glow: Sprite2D
+var _shadows: Array[Sprite2D] = []
+var _art: String = ""
+var _poses: GhostSheet
+var _acts: GhostSheet
+var _strike_yaw: float = 0.0
+var _last_stomp: int = -1
+
+
+func _init(drawn: Feed) -> void:
+	_drawn = drawn
+	var ahead: float = GhostAttacks.shipped().num(&"tonnage", &"press_ahead_m")
+	pose = TonnagePose.new(
+		ahead, GhostDrawn.CUT_TICKS, GhostDrawn.FOLLOW_TICKS, GhostDrawn.HIT_TICKS
+	)
+	_row = GhostHoverRow.of(&"tonnage")
+	@warning_ignore("return_value_discarded")
+	_drawn.sampled.connect(_combat_tick)
+
+
+func _ready() -> void:
+	for i: int in 2:
+		var ink: Sprite2D = GhostRim.soft_glow(GhostShadow.INK, 0.92, 64.0)
+		if _drawn.flight != null:
+			ink.z_as_relative = false
+			ink.z_index = RenderLayers.z(&"actors") - 1
+		_shadows.append(ink)
+		add_child(ink)
+	_glow = GhostRim.soft_glow(HaulerLook.TEAL, 0.38, 4.3 * PPM)
+	var light: CanvasItemMaterial = CanvasItemMaterial.new()
+	light.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	_glow.material = light
+	add_child(_glow)
+	add_child(_parts)
+	_cell.name = &"ghost_drawn"
+	_cell.centered = false
+	_cell.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	add_child(_cell)
+
+
+func advance(hauler: HaulerStage, facing: float, ticks: int, size_k: float) -> void:
+	_hauler = hauler
+	_sample.facing = facing
+	_ticks = ticks
+	_size_k = size_k
+	if hauler == null:
+		_combat_tick(0, -1)
+
+
+func _combat_tick(tick: int, hurt: int) -> void:
+	if not is_visible_in_tree():
+		return
+	if _hauler != null:
+		_sample.velocity = _hauler.form.vel
+		_sample.windup = _hauler.form.windup_k()
+		_sample.ramming = _hauler.form.ramming()
+		_sample.ram_hits = _hauler.ram_hits
+		var stomp: int = _hauler.stomp_tick
+		_sample.stomp_age = tick - stomp if stomp >= 0 else -1
+		if stomp != _last_stomp:
+			_strike_yaw = _sample.facing
+			_last_stomp = stomp
+	_sample.hurt_age = tick - hurt if hurt >= 0 else -1
+	if _drawn.flight != null:
+		_sample.bob_m = _drawn.flight.hover.lift_m - _row.height_m
+	pose.step(_sample, _ticks)
+	_ticks = 0
+	_present()
+
+
+func _present() -> void:
+	var vm: ViewMode = ViewMode.shared()
+	var flat: bool = vm.is_flat()
+	_parts.visible = flat
+	_cell.visible = not flat
+	scale = Vector2.ONE * _size_k
+	var left: Vector2 = _hand(0, pose.left, -1.0)
+	var right: Vector2 = _hand(1, pose.right, 1.0)
+	var centre: Vector2 = Vector2(pose.torso.x, pose.torso.y) * PPM
+	_glow.position = centre
+	if flat:
+		var fit: float = lerpf(1.0, 1.0 / absf(global_scale.x), pose.plant_k)
+		_parts.update_body(pose, left, right, fit)
+	else:
+		_show_cell(vm, centre - Vector2(TonnagePose.BACK_X * PPM, 0.0))
+
+
+func _hand(i: int, hand: Vector3, side: float) -> Vector2:
+	var flight: GhostFlight = _drawn.flight
+	var local: Vector2 = Vector2(hand.x, hand.y) * PPM
+	var road: Vector2 = to_global(local)
+	var ground: Vector2 = global_position
+	if flight != null:
+		ground = flight.shadow.global_position
+		road -= ViewMode.shared().lift_px(flight.hover.lift_m)
+	var landing: Vector3 = pose.landing(side)
+	var target: Vector2 = ground + Vector2(landing.x, landing.y).rotated(_sample.facing) * PPM
+	if pose.plant_k > 0.0 and _hauler != null:
+		target = _hauler.stomp_at * PPM + Vector2(0.3, landing.y).rotated(_strike_yaw) * PPM
+		# Undo the mount's lag, yaw and enlarged silhouette at the ground contact.
+		var nominal: Vector2 = to_global(Vector2(landing.x, landing.y) * PPM)
+		var correction: Vector2 = target - nominal
+		local = to_local(to_global(local) + correction * pose.plant_k)
+		road = to_global(local)
+		if flight != null:
+			road -= ViewMode.shared().lift_px(flight.hover.lift_m) * (1.0 - pose.plant_k)
+	elif pose.act and pose.column == TonnagePose.Act.RAISE:
+		road = target
+	var shadow: Sprite2D = _shadows[i]
+	var high: float = clampf(hand.z / 2.6, 0.0, 1.0)
+	shadow.global_position = road
+	shadow.global_rotation = _sample.facing
+	shadow.global_scale = Vector2(1.25, 0.92) * PPM / 64.0 * lerpf(1.0, 1.55, high)
+	shadow.self_modulate.a = lerpf(0.88, 0.36, high)
+	return local
+
+
+func _show_cell(vm: ViewMode, centre: Vector2) -> void:
+	var art: String = (
+		vm.art if vm.art in ["p55", "p70"] else ("p55" if vm.pitch_deg < 62.5 else "p70")
+	)
+	if art != _art:
+		_art = art
+		_poses = GhostSheet.of(GhostDrawn.path_of(art, "tonnage", "spectral_pose"), 4)
+		_acts = GhostSheet.of(GhostDrawn.path_of(art, "tonnage", "spectral_act"), 4)
+	var sheet: GhostSheet = _acts if pose.act else _poses
+	var look: float = global_rotation
+	sheet.show(_cell, _drawn.octant(look), pose.column)
+	_cell.offset.y = -BASELINE
+	var host: Node2D = get_parent() as Node2D
+	var fit: float = absf(host.scale.x if _drawn.flight != null else host.global_scale.x)
+	var s: float = _drawn.height_m * _size_k * PPM * fit / (215.5 if art == "p70" else 216.0)
+	var bank: float = 0.0
+	var stretch: Vector2 = Vector2.ONE
+	if _drawn.flight != null:
+		bank = _drawn.flight.hover.bank
+		stretch = _drawn.flight.body_scale()
+	var roll: float = bank * 0.4 + cos(look) * pose.pitch * 0.25
+	_cell.global_rotation = roll
+	if not pose.act and pose.column == TonnagePose.Pose.RECOIL:
+		# GhostActs assigns the current blow immediately after feed. Read it before the frame draws.
+		_hit_lean.call_deferred(look, roll)
+	_cell.global_scale = Vector2(s, s / vm.ground_k()) * stretch
+	var h: float = pose.torso.z - TonnagePose.CHEST_H - _sample.bob_m
+	_cell.global_position = to_global(centre) + vm.lift_px(h * fit * _size_k)
+	_cell.self_modulate.a = 0.55 if pose.act and pose.column != TonnagePose.Act.RAISE else 0.88
+
+
+func _hit_lean(look: float, roll: float) -> void:
+	var tilt: float = GhostRecoil.tilt(
+		_sample.hurt_age, look, GhostRecoil.lean_of("tonnage"), _drawn.blow
+	)
+	_cell.global_rotation = roll + tilt * pose.lean_k
