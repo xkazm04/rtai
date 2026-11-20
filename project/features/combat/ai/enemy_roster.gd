@@ -8,18 +8,12 @@ const SCHEMA: String = "gtai.enemies/1"
 
 
 class Weapon:
-	extends RefCounted
-	var id: StringName = &""
-	var melee: bool = false
-	var burst: int = 1
-	var burst_gap_ticks: int = 0
-	var cooldown_ticks: int = 60
-	var damage: float = 1.0
-	var reach_m: float = 10.0
-	var speed_mps: float = 20.0
-	## melee only: the dash after the windup (0 = none), along the locked aim
-	var lunge_m: float = 0.0
-	var lunge_mps: float = 0.0
+	extends EnemyWeapon
+
+	static func from_row(t: DataTable, weapon_id: StringName, row: Dictionary) -> Weapon:
+		var w: Weapon = Weapon.new()
+		w.read(t, weapon_id, row)
+		return w
 
 
 class Archetype:
@@ -28,6 +22,10 @@ class Archetype:
 	var body: StringName = &"human"
 	var hit_fx: StringName = &"blood"
 	var weapon: Weapon = null
+	var alt_weapon: Weapon
+	var tier: int = 1
+	var explicit_spawn: bool = false
+	var shield_cos: float = 0.5
 	var hp: float = 1.0
 	var speed_mps: float = 3.0
 	var strafe_mps: float = 1.5
@@ -71,6 +69,7 @@ var panic_ticks: int = 180
 var sight_m: float = 24.0
 var sight_cos: float = 0.5
 var hearing_m: float = 22.0
+var _explicit: Dictionary[StringName, Archetype] = {}
 var _errors: Array[String] = []
 
 
@@ -79,12 +78,15 @@ static func shipped(path: String = TABLE, production: bool = false) -> EnemyRost
 	var t: DataTable = DataTable.open(path, SCHEMA)
 	var wrows: Dictionary = t.object(t.raw, "weapons")
 	for wid: String in wrows:
-		r.weapons[StringName(wid)] = _weapon(t, StringName(wid), t.object(wrows, wid))
+		r.weapons[StringName(wid)] = Weapon.from_row(t, StringName(wid), t.object(wrows, wid))
 	for raw: Variant in t.array(t.raw, "archetypes"):
 		var row: Dictionary = raw if raw is Dictionary else {}
+		var a: Archetype = r._archetype(t, row)
 		if row.get("production_only", false) == true and not production:
 			continue
-		var a: Archetype = r._archetype(t, row)
+		if a.explicit_spawn and not production:
+			r._explicit[a.id] = a
+			continue
 		if production:
 			a.uses_cover = a.cover_bias > 0.0
 		r.archetypes[a.id] = a
@@ -104,7 +106,7 @@ func errors() -> Array[String]:
 
 
 func archetype(id: StringName) -> Archetype:
-	return archetypes.get(id if id != &"" else &"contractor", null)
+	return archetypes.get(id if id != &"" else &"contractor", _explicit.get(id))
 
 
 func _squad(t: DataTable, s: Dictionary) -> void:
@@ -123,6 +125,7 @@ func _squad(t: DataTable, s: Dictionary) -> void:
 func _archetype(t: DataTable, row: Dictionary) -> Archetype:
 	var a: Archetype = Archetype.new()
 	a.id = StringName(t.text(row, "id"))
+	_read_foe(t, row, a)
 	a.body = StringName(t.text(row, "body"))
 	a.hit_fx = StringName(t.text(row, "hit_fx"))
 	var wid: StringName = StringName(t.text(row, "weapon"))
@@ -158,16 +161,15 @@ func _archetype(t: DataTable, row: Dictionary) -> Archetype:
 	return a
 
 
-static func _weapon(t: DataTable, id: StringName, row: Dictionary) -> Weapon:
-	var w: Weapon = Weapon.new()
-	w.id = id
-	w.melee = row.get("melee", false) == true
-	w.burst = t.integer(row, "burst")
-	w.burst_gap_ticks = CombatTuning.ticks(t.num(row, "burst_gap_s"))
-	w.cooldown_ticks = CombatTuning.ticks(t.num(row, "cooldown_s"))
-	w.damage = t.num(row, "damage")
-	w.reach_m = t.num(row, "reach_m")
-	w.speed_mps = t.num(row, "speed_mps")
-	w.lunge_m = t.num(row, "lunge_m") if row.has("lunge_m") else 0.0
-	w.lunge_mps = t.num(row, "lunge_mps") if row.has("lunge_mps") else 0.0
-	return w
+func _read_foe(t: DataTable, row: Dictionary, a: Archetype) -> void:
+	var tier: float = t.num(row, "tier")
+	a.tier = int(tier)
+	if tier != a.tier or a.tier < 1 or a.tier > 5:
+		_errors.append("%s: tier must be an integer from 1 to 5" % a.id)
+	a.explicit_spawn = row.get("explicit_spawn", false) == true
+	if row.has("alt_weapon"):
+		a.alt_weapon = weapons.get(StringName(t.text(row, "alt_weapon")))
+		if a.alt_weapon == null:
+			_errors.append("%s: unknown alt_weapon" % a.id)
+	if row.has("shield_arc_deg"):
+		a.shield_cos = cos(deg_to_rad(t.num(row, "shield_arc_deg") * 0.5))

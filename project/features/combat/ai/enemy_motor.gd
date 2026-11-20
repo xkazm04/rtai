@@ -16,6 +16,10 @@ static func move(
 
 static func steer(e: EnemyAgent, want: Vector2, look_at: Vector2, pit: EnemyPit) -> void:
 	var arch: EnemyRoster.Archetype = e.arch
+	if arch.speed_mps == 0.0:
+		e.vel = Vector2.ZERO
+		turn_toward(e, look_at - e.pos)
+		return
 	var top: float = arch.speed_mps * (1.6 if e.state == EnemyAgent.State.PANIC else 1.0)
 	want = want.limit_length(top)
 	e.vel = e.vel.move_toward(want, arch.accel_mps2 * SimClock.TICK_DT)

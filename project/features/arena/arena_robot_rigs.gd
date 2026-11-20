@@ -66,7 +66,7 @@ func _rig(h: Fighter) -> CutRig:
 	if not _by_id.has(h.id):
 		var rig: CutRig = CutRig.new()
 		add_child(rig)
-		rig.setup(ThugPlan.build(), RigVariant.rivet())  # its own gunmetal parts (ART_DIR thug)
+		rig.setup(FoeLooks.robot_plan(h.archetype, ThugPlan.build()), RigVariant.rivet())
 		rig.actor_id = h.id
 		rig.position = h.pos * SimConst.PX_PER_M
 		rig.snap_facing(h.facing.angle())
