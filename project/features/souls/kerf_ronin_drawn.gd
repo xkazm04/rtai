@@ -59,15 +59,12 @@ func show_pose(oct: int, current: Pose, yaw: float, lean: float, flinch: bool) -
 	if flip_h:
 		centre.x = get_rect().size.x - centre.x
 	offset = -centre
-	# The packed profile helmets match Dent at 90 px (70 degrees) and 77 px (55 degrees).
-	var ratio: float = 70.0 / 77.0 if _art == "p55" else 77.0 / 90.0
-	var w: float = 1.8 / 176.5 * ratio
-	var h: float = 1.45 / (212.0 if _art == "p55" else 223.0)
 	rotation = lean
-	scale = Vector2(w, h / vm.ground_k()) * SimConst.PX_PER_M
+	scale = vm.ground_of(Vector2.ONE * DentSpectralDrawn.texel_scale(_art))
 	_rim.visible = flinch
 	if _rim.visible:
 		sheet.show(_rim, oct, frame_coords.x)
+		_rim.flip_h = flip_h
 		_rim.offset = offset
 
 

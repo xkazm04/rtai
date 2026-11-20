@@ -50,7 +50,7 @@ func test_legacy_and_spectral_build_only_their_own_bodies() -> void:
 	assert_null(spectral._cables)
 
 
-func test_each_pitch_uses_both_sheets_and_matches_dents_profile_head() -> void:
+func test_each_pitch_uses_both_sheets_at_their_native_aspect() -> void:
 	var previous: String = ViewMode.shared().id
 	var card: KerfRoninDrawn = add_child_autofree(KerfRoninDrawn.new())
 	for view: String in ["tilt70", "tilt"]:
@@ -63,9 +63,10 @@ func test_each_pitch_uses_both_sheets_and_matches_dents_profile_head() -> void:
 			assert_eq(card.frame_coords, Vector2i(i % 4, 2))
 			assert_eq(card.vframes, 5)
 			assert_eq(card.hframes, 4)
-			var head_px: float = 77 if view == "tilt" else 90
-			var dent_px: float = (70 if view == "tilt" else 77) * 1.8 * SimConst.PX_PER_M / 176.5
-			assert_almost_eq(card.scale.x * head_px, dent_px, 0.001)
+			var screen: Vector2 = card.scale * ViewMode.shared().zoom_of(1.0)
+			assert_almost_eq(screen.x, screen.y, 0.0001)
+			var height_px: float = 212.0 if view == "tilt" else 223.0
+			assert_almost_eq(screen.y * height_px, 1.45 * SimConst.PX_PER_M, 0.001)
 			var anchor: Vector2 = card.offset
 			card.show_pose(4, current, 450.0, 0.0, false)
 			assert_true(card.flip_h)

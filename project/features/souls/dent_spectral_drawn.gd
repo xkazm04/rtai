@@ -90,6 +90,11 @@ static func swing_flip(oct: int, yaw: float) -> bool:
 	return (RigHeadCard.OCT_FLIP[oct] == 1) != (yaw < 0.0)
 
 
+## Dent and the Ronin share the same texel density. The sheets already include the pitch.
+static func texel_scale(art: String) -> float:
+	return HEIGHT_M * SimConst.PX_PER_M / (212.0 if art == "p55" else 223.0)
+
+
 func grip_world(strike: bool = false) -> Vector2:
 	if _on_hit_card():
 		return DentHit.grip(sprite, _art, 1)
@@ -155,14 +160,10 @@ func _steer_palms() -> PackedVector2Array:
 
 
 func _place(hover: GhostHover, facing: float, vm: ViewMode, cell: Vector2) -> void:
-	# Profile head widths at alpha >= 128, excluding legacy's detached wisp.
-	var head_ratio: float = 70.0 / 77.0 if _art == "p55" else 77.0 / 90.0
-	var width: float = 1.8 / 176.5 * head_ratio
-	var height: float = HEIGHT_M / (212.0 if _art == "p55" else 223.0)
 	var forward: Vector2 = Vector2.from_angle(facing)
 	sprite.rotation = hover.lean * forward.x
 	var tip: float = cos(hover.lean) * (1.0 - 0.22 * hover.lean * forward.y)
-	sprite.scale = Vector2(width, height * tip / vm.ground_k()) * SimConst.PX_PER_M
+	sprite.scale = vm.ground_of(Vector2(1.0, tip) * texel_scale(_art))
 	# Expand the one-pass apparition silhouette about the cell centre.
 	_rim.transform = sprite.transform.scaled_local(Vector2.ONE * 1.055)
 	_rim.position = -sprite.transform.basis_xform(sprite.offset + cell * 0.5) * 0.055

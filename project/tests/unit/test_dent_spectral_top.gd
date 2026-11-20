@@ -33,7 +33,10 @@ func test_lean_sweeps_both_hands_behind_the_shoulders() -> void:
 	h.reset(Vector2.ZERO, 0.0)
 	top.pose(h, DentSpectralDrawn.Pose.HOVER, -1, Vector2.ZERO, 1)
 	var rest_x: float = top._head.position.x
+	for upper: Sprite2D in top._upper:
+		assert_almost_eq(absf(upper.scale.y), upper.scale.x, 0.0001)
 	for fore: Sprite2D in top._fore:
+		assert_almost_eq(absf(fore.scale.y), fore.scale.x, 0.0001)
 		assert_gt(_tip(fore).x, 0.0)
 	h.step(Vector2.RIGHT * 7.0 * SimClock.TICK_DT * SimConst.PX_PER_M, 0.0, 1)
 	top.pose(h, DentSpectralDrawn.Pose.DIVE, -1, Vector2.ZERO, 1)

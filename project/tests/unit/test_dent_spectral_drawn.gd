@@ -33,7 +33,7 @@ func test_attack_and_hurt_windows() -> void:
 	assert_eq(DentSpectralDrawn.pose(h, jab, true, -1), DentSpectralDrawn.Pose.STEER)
 
 
-func test_both_pitches_show_the_four_column_sheets_at_head_scale() -> void:
+func test_both_pitches_preserve_the_cell_aspect_and_body_height() -> void:
 	var old_view: String = ViewMode.shared().id
 	var drawn: GhostDrawn = GhostDrawn.new("dent", 1.8, 163.0, 176.5)
 	drawn.flight = GhostFlight.make(&"dent")
@@ -53,8 +53,9 @@ func test_both_pitches_show_the_four_column_sheets_at_head_scale() -> void:
 		)
 		assert_eq(cards.sprite.frame_coords, Vector2i(0, 2))
 		assert_true(cards.sprite.flip_h)
-		var width: float = cards.sprite.scale.x * (77.0 if p55 else 90.0)
-		assert_almost_eq(width, (70.0 if p55 else 77.0) * 1.8 * SimConst.PX_PER_M / 176.5, 0.01)
+		var screen: Vector2 = cards.sprite.scale * ViewMode.shared().zoom_of(1.0)
+		assert_almost_eq(screen.x, screen.y, 0.0001)
+		assert_almost_eq(screen.y * (212.0 if p55 else 223.0), 1.45 * SimConst.PX_PER_M, 0.001)
 		cards.show_pose(drawn, 0.0, DentSpectralDrawn.Pose.STEER)
 		assert_eq(
 			cards.sprite.texture.resource_path,

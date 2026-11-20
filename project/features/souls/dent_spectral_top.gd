@@ -118,5 +118,5 @@ func _limb(s: Sprite2D, id: String, a: Vector2, b: Vector2, side: float) -> void
 	s.texture = _parts.tex(id)
 	s.offset = -_parts.pivots_a[id]
 	s.position = a * PPM
-	s.scale = Vector2(along, side * PART_M * PPM)
+	s.scale = Vector2(1.0, side) * along
 	s.rotation = delta.angle() - (bone * s.scale).angle()
