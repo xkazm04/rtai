@@ -2,6 +2,8 @@ class_name GhostBridgeFade
 extends RefCounted
 ## A legacy cell's temporary belt socket and tick-driven cut. Authored spectral sheets bypass it.
 
+const SHADER: Shader = preload("res://features/souls/ghost_fade.gdshader")
+
 var _marker: StringName
 var _body: ShaderMaterial
 var _line: ShaderMaterial
@@ -62,7 +64,18 @@ func clear(flight: GhostFlight) -> void:
 
 static func _material(line: bool) -> ShaderMaterial:
 	var mat: ShaderMaterial = ShaderMaterial.new()
-	mat.shader = preload("res://features/souls/ghost_fade.gdshader")
+	mat.shader = SHADER
 	mat.set_shader_parameter(&"grain", GhostVapour.grain())
 	mat.set_shader_parameter(&"outline", line)
 	return mat
+
+
+## Keep a speaking fallback cell's belt cut while applying the voice colour and scan bands.
+static func voice(spr: Sprite2D, wash: ShaderMaterial, phase: float) -> void:
+	if spr == null:
+		return
+	var material: ShaderMaterial = spr.material as ShaderMaterial
+	if material != null and material.shader == SHADER:
+		material.set_shader_parameter(&"voice_phase", phase)
+	else:
+		spr.material = wash

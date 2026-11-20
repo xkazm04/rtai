@@ -99,7 +99,7 @@ func step(
 			)
 			flight.set_rig_belt(span, facing)
 		return false
-	var fit: float = absf(host.scale.x if flight != null else host.global_scale.x)
+	var fit: float = absf(host.scale.x * flight.scale.x if flight != null else host.global_scale.x)
 	var s: float = height_m * size_k * px_per_m * fit / fig_px
 	var yaw: float = flight.body_rotation() if flight != null else 0.0
 	_look = host.global_rotation if is_nan(look) else look + yaw
