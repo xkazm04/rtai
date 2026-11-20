@@ -155,3 +155,14 @@ NEXT (session 8, REPORT phase from 18:40):
 1. Read `masters:n21/kerf/scratch/s7_gate_reels.txt`; check node pid 41438 is gone (by process name node, not number only) before any Godot run. If PASS: add its `gate:` line + gate.json path to REPORT's gate paragraph and header. If FAIL or still running at 18:55: say so in REPORT plainly; the 17:07 PASS on code 2b38c1353 stands for code.
 2. After it ends: remove `%LOCALAPPDATA%\Temp\gtai-gate-<that sha>` by exact name.
 3. `node tools/evidence/cites.mjs REPORT.md`; pathspec commit REPORT.md + JOURNAL.md. No Astra, no product commits.
+
+## Session 8 (18:32, iteration 8 STABILIZE)
+- 18:32 START session 8. No Astra running (no lock; last call n=10 cruise06 at 16:55). Tree clean on ad6c46a34.
+- 18:33 Reels gate (node pid 41438, started 18:31 on b045d75e5) still running: out shows the snapshot copied and the evidence step started; no `gate:` result line yet. The last no-reels gate took 11.7 min, so it ends after this session's 18:40 stop.
+- 18:34 REPORT line 3 updated (sessions 4 to 8; reels gate still running at 18:34; the 17:07 PASS on code 2b38c1353 stands). No product edits.
+- 18:35 END session 8. No Astra running (10 calls, 281 min, all accepted). GATE RUNNING reels since 18:31 (pid 41438).
+
+NEXT (session 9, REPORT phase):
+1. Read `masters:n21/kerf/scratch/s7_gate_reels.txt` and `build/gate/b045d75e5a2a/gate.json`. If PASS: add its `gate:` line + gate.json path to REPORT line 3 and the gate paragraph (line 9). If FAIL: say so plainly in REPORT with the failing step; the 17:07 PASS on code 2b38c1353 stands for code. If still running past 18:55: say so.
+2. After it ends: remove `%LOCALAPPDATA%\Temp\gtai-gate-b045d75e5a2a` by exact name.
+3. `node tools/evidence/cites.mjs REPORT.md`; pathspec commit REPORT.md + JOURNAL.md. No Astra, no product commits.
