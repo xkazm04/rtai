@@ -23,7 +23,7 @@ static func attach(spr: Sprite2D) -> void:
 	if _mat == null:
 		_mat = ShaderMaterial.new()
 		_mat.shader = load(SHADER) as Shader
-		_mat.set_shader_parameter(&"line", Color(HaulerLook.TEAL, ALPHA))
+		_mat.set_shader_parameter(&"line", Color(0.18, 0.80, 0.76, ALPHA))
 	for i: int in COPIES:
 		var c: Sprite2D = Sprite2D.new()
 		c.name = NAME
@@ -50,3 +50,12 @@ static func sync(spr: Sprite2D) -> void:
 		c.offset = spr.offset
 		c.frame = spr.frame
 		c.flip_h = spr.flip_h
+
+
+## Match every outline fragment to the same cut on the body, including mirrored facing cells.
+static func align_cut(spr: Sprite2D, cell: Vector2) -> void:
+	var unit: Vector2 = Vector2(-1.0 if spr.flip_h else 1.0, 1.0) / cell
+	for child: Node in spr.get_children():
+		var copy: Sprite2D = child as Sprite2D
+		if copy != null and copy.has_meta(NAME):
+			copy.set_instance_shader_parameter(&"cut_shift", copy.position * unit)
