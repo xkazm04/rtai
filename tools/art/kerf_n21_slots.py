@@ -34,6 +34,7 @@ def lamp_mask(cell, point, threshold):
 def main():
     meta = json.loads((RONIN / "cut.json").read_text())
     alpha = Image.new("L", (12 * PATCH, 21 * PATCH))
+    packed = Image.new("RGBA", alpha.size, "white")
     for sheet, key in enumerate(SHEETS):
         pitch = key[-2:]
         image = Image.open(ART / "view" / ("p" + pitch) / (key[:-3] + ".png"))
@@ -52,10 +53,16 @@ def main():
         # The top rig projects 18 source pixels to three pixels on the 32 px/m camera.
         # Keep each lamp's printed length and widen its face around the measured centre.
         _, top, _, bottom = mask.point(lambda v: 255 if v >= 128 else 0).getbbox()
-        face = Image.new("L", (PATCH, PATCH))
-        ImageDraw.Draw(face).rounded_rectangle((HALF-9, top, HALF+9, bottom-1), radius=6, fill=255)
-        alpha.paste(face, (i*PATCH, 20*PATCH))
-    packed = Image.new("RGBA", alpha.size, "white")
+        outer = (HALF-12, top-3, HALF+12, bottom+2)
+        inner = (HALF-9, top, HALF+8, bottom-1)
+        mask = Image.new("L", (PATCH, PATCH))
+        ImageDraw.Draw(mask).rounded_rectangle(outer, radius=7, fill=255)
+        # A steel lip keeps the two adjacent lit faces distinct when the camera samples the glow.
+        face = Image.new("RGB", (PATCH, PATCH), "#4c655f")
+        ImageDraw.Draw(face).rounded_rectangle(inner, radius=5, fill="white")
+        position = (i*PATCH, 20*PATCH)
+        alpha.paste(mask, position)
+        packed.paste(face, position)
     packed.putalpha(alpha)
     packed.save(RONIN / "slot_masks.png", optimize=True)
 
