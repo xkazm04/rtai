@@ -22,6 +22,7 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, str(HERE))
 from dent_spectral_cut import key
 from ghost_pack import PAD, mass_x
+from kerf_n21_profile import add_far_blade
 
 ROOT = HERE.parents[1]
 SOULS = ROOT / "project/features/souls/art"
@@ -494,6 +495,9 @@ def rebuild(archive):
         master = masters / f"{name}_take{take}.png"
         output = SOULS / f"view/p{pitch}/kerf_sp_{kind}.png"
         info = pack(master, archive / f"cut/{master.stem}", output, scale, SLOT_SAMPLES[key], head)
+        if kind == "fly":
+            # Retain the original body anchor and charge landmarks beneath the far arm.
+            add_far_blade(output, pitch)
         info.update(texture="res://" + output.relative_to(ROOT / "project").as_posix(),
                     master=f"n21/kerf/masters/{master.name}", scale=scale)
         metadata[name] = info
