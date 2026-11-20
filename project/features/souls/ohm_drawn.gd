@@ -27,17 +27,17 @@ func step(host: Node2D, drawn: GhostDrawn, size_k: float) -> bool:
 	GhostSoulLine.sync(shown)
 	if hover != null:
 		shown.global_rotation += hover.lean * cos(host.global_rotation) - 0.3 * hover.bank
-		pin_tail(drawn.flight, host, shown.to_global(Vector2(0.0, -9.0)))
+		pin_tail(drawn.flight, shown.to_global(Vector2(0.0, -9.0)))
 	_overlay()
 	return true
 
 
 ## The flight integrates the ribbon in ground space. Translate the drawing from its neutral
 ## anchor to the actual hem (the artist's anchor on a tilt, the lagging cloth tip from above).
-static func pin_tail(flight: GhostFlight, body: Node2D, tip: Vector2) -> void:
-	var anchor: Vector2 = GhostHoverRow.of(&"ohm").tail.anchor_m * SimConst.PX_PER_M
-	var neutral: Vector2 = (anchor * flight.body_scale()).rotated(body.global_rotation)
-	flight.tail.position = flight.to_local(tip) - flight.to_local(body.global_position) - neutral
+static func pin_tail(flight: GhostFlight, tip: Vector2) -> void:
+	var points: PackedVector2Array = flight.tail.points()
+	if not points.is_empty():
+		flight.tail.position += flight.to_local(tip) - flight.to_local(points[0])
 
 
 func _attach(shown: Sprite2D) -> void:

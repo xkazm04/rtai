@@ -72,11 +72,11 @@
       },
       "tail": {
         "anchor_m": [
-          -1.66,
+          -1.55,
           0
         ],
-        "fray": 0.78,
-        "length_m": 1.45,
+        "fray": 0.38,
+        "length_m": 1.18,
         "segments": 9,
         "stretch_k": 0.04,
         "swing_k": 0.73,

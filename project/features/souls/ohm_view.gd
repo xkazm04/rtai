@@ -66,7 +66,7 @@ func _draw() -> void:
 	var o: OhmStage = ohm()
 	if o == null:
 		return
-	if o.on():
+	if o.on() and not GhostLook.spectral(OhmStage.ID):
 		_sparks()
 	if o.bolt_tick < 0:
 		return

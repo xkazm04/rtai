@@ -37,12 +37,15 @@ func _ready() -> void:
 	_free_arm = _part("arm_free", Vector2(-24.0, -132.0))
 	var body: Sprite2D = _part("body", Vector2.ZERO)
 	var circles: Array = meta.body_jars
+	body.scale = Vector2.ONE * 1.13
 	_build_jars(body, circles)
 	_beard = _part("beard", Vector2(154.0, 0.0))
 	_staff_arm = _part("arm_staff", Vector2(56.0, 124.0))
 	_staff = _part("staff", Vector2.ZERO)
 	# Centre of the round grip hole and the end of the fork, in their untrimmed texture frames.
 	var arm_size: Vector2 = _measure("arm_staff", "size_px")
+	# Hold the shaft just behind its collar so the elbow can reach the grip with the pole ahead.
+	_staff.offset.x = -_measure("staff", "size_px").x * 0.67
 	var staff_size: Vector2 = _measure("staff", "size_px")
 	_lengths = Vector2(arm_size.x * 0.886 + _staff_arm.offset.x, staff_size.x - 3 + _staff.offset.x)
 	_build_flare()
@@ -98,8 +101,9 @@ func _build_jars(body: Sprite2D, circles: Array) -> void:
 		tops[i] = centre.y - radius
 		bottoms[i] = centre.y + radius
 		@warning_ignore("return_value_discarded")
-		_vents.append(body.offset + centre + Vector2.LEFT * radius)
+		_vents.append((body.offset + centre + Vector2.LEFT * radius) * body.scale)
 	_jars.bounds(tops, bottoms)
+	_jars.top_circles()
 
 
 func _build_flare() -> void:
@@ -116,9 +120,8 @@ func _build_flare() -> void:
 	_staff.add_child(_flare)
 
 
-func pose(drawn: GhostDrawn, charge: OhmCharge, stage: OhmStage, calm: bool) -> void:
+func pose(drawn: GhostDrawn, charge: OhmCharge, stage: OhmStage, calm: bool, tick: int) -> void:
 	var hover: GhostHover = drawn.flight.hover if drawn.flight != null else null
-	var tick: int = drawn._tick
 	var steps: int = tick - _last_tick
 	var bank: float = hover.bank if hover != null else 0.0
 	var lean: float = hover.lean if hover != null else 0.0
@@ -132,7 +135,7 @@ func pose(drawn: GhostDrawn, charge: OhmCharge, stage: OhmStage, calm: bool) -> 
 	_hem.rotation = (_lag + 0.3 * bank) * motion
 	if drawn.flight != null:
 		var tip: Vector2 = _hem.to_global(Vector2(_hem.offset.x + 32.0, 0.0))
-		OhmDrawn.pin_tail(drawn.flight, self, tip)
+		OhmDrawn.pin_tail(drawn.flight, tip)
 	_beard.rotation = (0.7 * _lag - 0.25 * bank) * motion
 	_free_arm.rotation = -0.31 + (0.25 * _lag + bank) * motion
 	var target: Vector2 = REST_FORK_M + Vector2(lean * 1.4, bank * 1.15) * motion
@@ -156,7 +159,8 @@ static func thrust(age: int) -> float:
 
 func _staff_pose(target_m: Vector2) -> void:
 	var target: Vector2 = target_m * _texels_per_m / PlayerScale.k()
-	var wrist: Vector2 = OhmArm.joint(_staff_arm.position, target, _lengths.x, _lengths.y, 1.0)
+	var wrist: Vector2 = target - Vector2.RIGHT.rotated(-0.10) * _lengths.y
+	_staff_arm.scale.x = _staff_arm.position.distance_to(wrist) / _lengths.x
 	_staff_arm.rotation = _staff_arm.position.angle_to_point(wrist)
 	_staff.position = wrist
 	_staff.rotation = wrist.angle_to_point(target)

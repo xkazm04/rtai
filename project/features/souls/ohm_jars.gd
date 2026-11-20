@@ -32,6 +32,10 @@ func bounds(top_px: Vector3, bottom_px: Vector3) -> void:
 	_ink.set_shader_parameter(&"bottom_px", bottom_px)
 
 
+func top_circles() -> void:
+	_ink.set_shader_parameter(&"circles", true)
+
+
 func light(fill: Vector3, flash: float, vent: float) -> void:
 	_ink.set_shader_parameter(&"fill", fill)
 	_ink.set_shader_parameter(&"flash", flash)

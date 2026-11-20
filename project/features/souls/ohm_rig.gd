@@ -1,13 +1,23 @@
 class_name OhmRig
 extends Node2D
-## Ohm's elder welder rig. World pixels, +x forward and +y right.
-## The legacy cane plants ahead and slides back as the shell shuffles over it.
+## Ohm, the elder spot-welder (TARGETS.md ghost_ohm_mage.jpg, its top-down drawing), as a cutout rig
+## from straight above: the domed riveted shell with its goggles at the front, the cable beard
+## spilling forward, the copper hose loop on its back, two stubby feet, two long arms ending in
+## copper electrode fingers (the Codex sheet cut by tools/art/ghost_parts.py, art/ohm/). Units:
+## world px at PX_PER_M; +x = facing (set rotation = facing angle).
+## Gait "cane": the right arm is the cane, planted ahead and left behind as the body shuffles past
+## it, then swung forward again; the feet patter under the shell, the body leans onto the cane. The
+## left arm holds its electrodes forward (the bolt's hand). unfold (0..1) is the transformation:
+## 0 = limbs folded under the shell.
 
-const ART: String = "res://features/souls/art/ohm/"
 const PX_PER_M: float = 32.0
 const TEAL: Color = Color(0.18, 0.77, 0.71)
+## Part lengths (metres, the art's long side) and their spots in the body frame (x forward,
+## y right).
 const SHELL_M: float = 0.8
 const BEARD_M: float = 0.5
+## The soul glow under him: across (m), centre alpha. The smallest body needs the widest pool for
+## its size to read as possessed at 32 px/m (was 1.9 m at 0.4, under Kerf's 2.4).
 const GLOW_M: float = 2.6
 const GLOW_A: float = 0.5
 const BEARD_AT: Vector2 = Vector2(0.42, 0.0)
@@ -18,32 +28,44 @@ const HIP: Vector2 = Vector2(-0.04, 0.18)
 const SHOULDER: Vector2 = Vector2(0.1, 0.26)
 const UPPER_M: float = 0.36
 const FORE_M: float = 0.54
-const ARM_THICK_M: float = 0.24
+## The guard arm (left): its electrode tips held at the bolt's hands (OhmStage.HANDS_M ahead, a
+## little to the left), the elbow cocked out to the side as in the target.
 const GUARD_HAND: Vector2 = Vector2(0.5, -0.12)
+## The cane arm (right): how far ahead it plants and how far back it trails (metres, body frame).
 const CANE_AHEAD_M: float = 0.7
 const CANE_SIDE_M: float = 0.5
+## One cane cycle covers STRIDE_M of ground; the swing takes the last SWING_K of it.
 const STRIDE_M: float = 0.7
 const SWING_K: float = 0.3
+## Feet: fore/aft reach (metres) and steps per cane cycle; the lean onto the cane (radians).
 const FOOT_REACH_M: float = 0.1
-const STEPS_PER_CYCLE: float = 2.0
 const LEAN: float = deg_to_rad(6.0)
+const ARM_THICK_PX: float = 0.24 * PX_PER_M
 const BREATH_HZ: float = 0.6
 const BREATH_K: float = 0.025
+## The kick per bolt (ghost-powers REQUEST 8): the guard hand snaps KICK_M out and back over KICK_S,
+## the shell recoils RECOIL_M and twists KICK_TWIST, the cane holds; halved under reduced motion.
 const KICK_M: float = 0.2
 const KICK_S: float = 0.25
 const RECOIL_M: float = 0.1
 const KICK_TWIST: float = deg_to_rad(16.0)
+## Tilted view: the facing card (GhostCard, art/view/<art>/ohm_card.png: shell, goggles, beard,
+## back cables): width (m), the ground point's height in the card, its soul halo alpha (0 = none).
+## The arms and feet stay rig parts on the ground, so cane, guard hand and bolt prongs still meet.
 const CARD_M: float = 1.2
 const CARD_ANCHOR: float = 0.8
 const CARD_HALO_A: float = 0.45
 const CYCLE_CELL: float = 126.0  # n11 it10: the profile row's stance foot, 15.7 cell px a frame
 
+var tick: int = 0
 var ohm: OhmStage
 var unfold: float = 1.0
 ## OhmStage.bolts, fed by the host: a rise kicks the guard arm (the first sight only arms it).
 var bolts: int = 0
 var reduced_motion: bool = false
+## Ground speed (m/s), fed by the host each tick.
 var speed_mps: float = 0.0
+## 0..1 through the cane cycle (advances with ground covered, not time).
 var phase: float = 0.0
 var drawn: GhostDrawn = GhostDrawn.new("ohm", 1.55, CYCLE_CELL, 180.0)  # n11: ohm_walk8.png
 var _spirit: OhmSpirit
@@ -67,7 +89,7 @@ func _init() -> void:
 
 func _process(_delta: float) -> void:
 	if ohm != null:
-		_spectral.charge.step(ohm, drawn._tick)
+		_spectral.charge.step(ohm, tick)
 	if visible:
 		pose()
 
@@ -84,20 +106,20 @@ func _ready() -> void:
 	add_child(GhostRim.soft_glow(TEAL, GLOW_A, GLOW_M * PX_PER_M))  # teal belongs to the souls
 	add_child(_body)
 	for side: int in 2:
-		var foot: Sprite2D = _part("foot", FOOT_M)
+		var foot: Sprite2D = OhmParts.part(_body, "foot", FOOT_M)
 		foot.flip_v = side == 1
 		_feet.append(foot)
-	var hose: Sprite2D = _part("hose", HOSE_M)
+	var hose: Sprite2D = OhmParts.part(_body, "hose", HOSE_M)
 	hose.position = HOSE_AT * PX_PER_M
-	var beard: Sprite2D = _part("beard", BEARD_M)
+	var beard: Sprite2D = OhmParts.part(_body, "beard", BEARD_M)
 	beard.position = BEARD_AT * PX_PER_M
 	for side: int in 2:
 		for n: String in ["upper", "fore"]:
-			var s: Sprite2D = _limb(n)
+			var s: Sprite2D = OhmParts.limb(_body, n)
 			s.flip_v = side == 1
 			GhostRim.limb(s)
 			_arms.append(s)
-	var shell: Sprite2D = _part("shell", SHELL_M)  # added last: over the arms' roots
+	var shell: Sprite2D = OhmParts.part(_body, "shell", SHELL_M)  # added last: over the arms' roots
 	GhostRim.body(shell)
 	shell.add_child(OhmSeams.new())  # the soul seams and lenses, bold enough for 32 px/m
 	_hide = [shell, beard, hose]
@@ -106,6 +128,7 @@ func _ready() -> void:
 	pose()
 
 
+## One step of `dt` seconds (the host passes SimClock.TICK_DT per sim tick).
 func advance(dt: float) -> void:
 	_t = fmod(_t + dt, 1000.0)
 	if _spectral != null:
@@ -119,6 +142,8 @@ func advance(dt: float) -> void:
 	pose()
 
 
+## The kick's reach now (metres the guard hand is thrown forward): a snap out over the first
+## fifth, an ease back over the rest. The prongs start at the data electrodes, under the hand.
 func kick_m() -> float:
 	if _kick <= 0.0:
 		return 0.0
@@ -140,6 +165,7 @@ static func cane_tip(p: float) -> Vector2:
 	return Vector2(x, CANE_SIDE_M)
 
 
+## Lays the body out for the current phase, breath and unfold.
 func pose() -> void:
 	var u: float = smoothstep(0.0, 1.0, unfold)
 	var breath: float = 1.0 + BREATH_K * sin(TAU * BREATH_HZ * _t)
@@ -147,18 +173,17 @@ func pose() -> void:
 	if _spectral != null:
 		_body.visible = not _spectral.step(self, drawn, _body.scale.x)
 		if _body.visible:
-			_spirit.pose(drawn, _spectral.charge, ohm, reduced_motion)
+			_spirit.pose(drawn, _spectral.charge, ohm, reduced_motion, tick)
 		return
 	var kick: float = kick_m() / KICK_M
 	_body.rotation = LEAN * sin(TAU * phase) * u + KICK_TWIST * kick
 	_body.position = Vector2(-RECOIL_M * kick * PX_PER_M, 0.0)
 	for side: int in 2:
 		var m: float = 1.0 if side == 0 else -1.0
-		var step: float = sin(TAU * (phase * STEPS_PER_CYCLE + side * 0.5))
+		var step: float = sin(TAU * (phase * 2.0 + side * 0.5))
 		_feet[side].position = Vector2(HIP.x + step * FOOT_REACH_M * u, HIP.y * m) * PX_PER_M
-	var sh_r: Vector2 = SHOULDER
-	_arm(0, sh_r, sh_r.lerp(cane_tip(phase), u), 1.0)
-	var sh_l: Vector2 = Vector2(SHOULDER.x, -SHOULDER.y)
+	_arm(0, SHOULDER, SHOULDER.lerp(cane_tip(phase), u), 1.0)
+	var sh_l: Vector2 = SHOULDER * Vector2(1, -1)
 	var guard: Vector2 = GUARD_HAND + Vector2(kick_m() + RECOIL_M * kick, 0.0)
 	_arm(2, sh_l, sh_l.lerp(guard, u), -1.0)
 	var carded: bool = not drawn.step(self, _all, PX_PER_M, _body.scale.x)
@@ -168,33 +193,8 @@ func pose() -> void:
 		_card.step(self, _hide, _body.position, PX_PER_M)
 
 
+## Two-bone arm from `a` to the hand `b` (body frame, metres), the elbow bent outward.
 func _arm(i: int, a: Vector2, b: Vector2, m: float) -> void:
 	var elbow: Vector2 = OhmArm.joint(a, b, UPPER_M, FORE_M, m)
-	_place(_arms[i], a, elbow)
-	_place(_arms[i + 1], elbow, b)
-
-
-func _place(s: Sprite2D, a: Vector2, b: Vector2) -> void:
-	GhostRim.place_limb(s, a * PX_PER_M, b * PX_PER_M, ARM_THICK_M * PX_PER_M)
-
-
-func _limb(name: String) -> Sprite2D:
-	var s: Sprite2D = _sprite(name)
-	s.centered = false
-	s.offset = Vector2(0.0, -s.texture.get_height() * 0.5)
-	return s
-
-
-func _part(name: String, length_m: float) -> Sprite2D:
-	var s: Sprite2D = _sprite(name)
-	var long_px: int = maxi(s.texture.get_width(), s.texture.get_height())
-	s.scale = Vector2.ONE * length_m * PX_PER_M / float(long_px)
-	return s
-
-
-func _sprite(name: String) -> Sprite2D:
-	var s: Sprite2D = Sprite2D.new()
-	s.texture = load(ART + name + ".png") as Texture2D
-	s.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	_body.add_child(s)
-	return s
+	GhostRim.place_limb(_arms[i], a * PX_PER_M, elbow * PX_PER_M, ARM_THICK_PX)
+	GhostRim.place_limb(_arms[i + 1], elbow * PX_PER_M, b * PX_PER_M, ARM_THICK_PX)

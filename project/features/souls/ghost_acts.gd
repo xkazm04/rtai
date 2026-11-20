@@ -9,6 +9,7 @@ extends RefCounted
 ## Feed the delayed cast before the rig poses, so the releasing electrode and bolt agree.
 static func prepare_ohm(rig: OhmRig, o: OhmStage, rivet: Fighter, tick: int) -> void:
 	rig.ohm = o
+	rig.tick = tick
 	rig.bolts = o.bolts
 	if o.cast.delay_ticks > 0:
 		rig.drawn.blow = rivet.hurt_dir
