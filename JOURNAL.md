@@ -171,3 +171,19 @@ NEXT:
 - 05:24 flight (message): 696862ee0 tail curl grows with speed stretch (curl_m + min(width_m, 0.24 x stretch)); flight final gate at aa9ff166e, no more flight code. DECISION: accept for kerf. The plate's vapour wavers around ruler-straight beams; the beams are kerf's own and stay straight. Merge n20-flight after the finish call ends, before the final gate.
 - 05:45 ASTRA finish 31 accepted (2827defd9: KerfHit lean 12 deg -> 0 by +15 + lens flinch 6 ticks; beams fade in/out with emerge; kerf hover curl_m 0). Scenarios 65/65; 16 look captures identical; mutate 11/13 (84.6 %). LOOK ROW STAYS legacy: full unit 3251/2/2 with spectral (test_ghost_card.gd:92 assumes Kerf's legacy card; test_ghost_flight_hosts.gd:114), 3252/1/2 with legacy.
 - 05:47 BLOCKED (gate red): test_ghost_flight_hosts.gd:114 (flight, b0f2629c1) reads drawn.sprite().frame_coords; under spectral Kerf has own_body so sprite() is null -> SCRIPT ERROR. Merge-induced (passes on n20-flight, which lacks kerf's body). NEED flight sent (message 05:47): null-guard the sprite. Not editing flight's test (ownership). test_ghost_card.gd:92 only fires if kerf's row goes spectral.
+- 05:46 flight (message): dent and tonnage carry a null-sprite guard at test_ghost_flight_hosts.gd:114 as an accepted call site; theirs win at the merge. DECISION: kerf carries tonnage's identical 2 lines (`if not drawn.own_body:`) so the gate is green; dent's version differs (Director picks one at the merge).
+- 05:47 Merged n20-flight again (3a63413ff: 696862ee0 speed curl, apparition, flight REPORT/briefs). Root JOURNAL.md + REPORT.md kept kerf's. merge-clash WARNING: project/tests/unit/test_ghost_look.gd conflicts with n20-ohm (flight's file vs ohm's lines, not kerf's) -> Merge notes.
+- 05:47 ASTRA RUNNING guard since 05:47 (nohup; brief evidence/briefs/n20-kerf-08-guard.md; out logs/kerf/guard.out.txt).
+- 05:47 REPORT.md drafted (5 TBDs: gate line, guard result, next steps, what I'd brief differently).
+NEXT (session 5, gate + report; this session ends by 06:06):
+  1. If astra.lock exists: guard call (pid in lock, nohup, started 05:47) is still running; wait. Then read
+     C:\Users\kazda\kiro\gtai-n20\logs\kerf\astra-10-guard.last.txt, `git show HEAD` must touch only
+     project/tests/unit/test_ghost_flight_hosts.gd (2 lines, tonnage's `if not drawn.own_body:`). Log `ASTRA guard <min> ...`.
+     If it is not committed by 06:05, commit nothing new: the gate runs on what is there (and REPORT says the test is red).
+  2. 06:15 FINAL GATE: `export APPDATA=C:/Users/kazda/kiro/gtai-n20/appdata/kerf; export GODOT_BIN=...; node tools/gate/run.mjs --rev=HEAD`
+     (Astra idle; JOURNAL/REPORT/briefs dirt is inert). Quote its line + gate.json path in REPORT.
+  3. After the freeze (07:30), `--reels` once only if time remains.
+  4. REPORT.md: fill the TBDs (grep TBD), run `node tools/evidence/cites.mjs REPORT.md`, commit JOURNAL.md + REPORT.md +
+     evidence/briefs/* per path by 07:40. Film list is in frames.json (15 entries; transform + hit strips added by 2827defd9).
+- 05:49 ASTRA guard 1 accepted-but-red (a79b0b861: tonnage's own_body guard; Kerf's own_body is false, sprite() null -> still 12/1). ASTRA RUNNING guard2 since 05:49 (--resume, brief 08b: dent's null-sprite check; commit only if green).
+- 05:50 ASTRA guard2 1 accepted (f67fa2ea0: dent's null-sprite check; select run 13/0/0). The hook flags a same-file conflict with n20-tonnage (their own_body guard): Director picks the null-check form (covers all three).
