@@ -1,14 +1,17 @@
 class_name OhmSpirit
 extends Node2D
-## Straight-down cutout in master texels, with +x forward. Every part shares one scale.
+## Straight-down cutout in master texels, with +x forward and +y to Ohm's right.
 ## The fork and sleeve form a two-link chain with the wrist at their common joint.
 
 const ART: String = "res://features/souls/art/ohm/spectral/"
-const REST_FORK_M: Vector2 = Vector2(1.0, 0.70)
+const REST_FORK_M: Vector2 = Vector2(1.60, 0.96)
+const STAFF_ANGLE: float = 0.18
+const FIST_CENTRE_PX: Vector2 = Vector2(395.0, 99.0)
+const SHAFT_GRIP_PX: float = 264.0
 const THRUST_M: float = 0.35
 const OUT_TICKS: int = 8
 const BACK_TICKS: int = 12
-const AMBER: Color = Color("#ffb000")
+const AMBER: Color = OhmBoltDraw.AMBER
 
 static var _textures: Dictionary[String, Texture2D] = {}
 var _parts: Dictionary
@@ -34,28 +37,17 @@ func _ready() -> void:
 	scale = Vector2.ONE * SimConst.PX_PER_M / _texels_per_m
 	add_child(OhmDrawn.halo(920.0, 0.22))
 	_hem = _part("hem", Vector2(-138.0, 0.0))
+	_staff = _part("staff", Vector2.ZERO)
 	_free_arm = _part("arm_free", Vector2(-24.0, -132.0))
 	var body: Sprite2D = _part("body", Vector2.ZERO)
-	var circles: Array = meta.body_jars
 	body.scale = Vector2.ONE * 1.13
-	_build_jars(body, circles)
-	_beard = _part("beard", Vector2(154.0, 0.0))
+	_jars = OhmJars.new()
+	body.add_child(_jars)
+	var circles: Array = meta.body_jars
+	_vents = _jars.top_circles(body, _texture("body_jars"), circles)
 	_staff_arm = _part("arm_staff", Vector2(56.0, 124.0))
-	_staff = _part("staff", Vector2.ZERO)
-	_staff.scale = Vector2.ONE * 1.5
-	# Centre of the round grip hole and the end of the fork, in their untrimmed texture frames.
-	var arm_size: Vector2 = _measure("arm_staff", "size_px")
-	# Hold the shaft just behind its collar so the elbow can reach the grip with the pole ahead.
-	_staff.offset.x = -_measure("staff", "size_px").x * 0.67
-	var staff_fork: Vector2 = _measure("staff", "fork_px")
-	_staff.offset.y = -staff_fork.y
-	_lengths = Vector2(
-		arm_size.x * 0.886 + _staff_arm.offset.x, (staff_fork.x + _staff.offset.x) * _staff.scale.x
-	)
-	_fork = OhmFork.new()
-	_staff.add_child(_fork)
-	var staff_part: Dictionary = _parts.staff
-	_fork.place(_staff, OhmFork.unpack(staff_part))
+	_beard = _part("beard", Vector2(154.0, 0.0))
+	_build_staff()
 	for vent: Vector2 in _vents:
 		var puff: Sprite2D = GhostRim.soft_glow(AMBER, 1.0, 96.0)
 		puff.position = vent
@@ -63,6 +55,22 @@ func _ready() -> void:
 		add_child(puff)
 		_puffs.append(puff)
 	_staff_pose(REST_FORK_M)
+
+
+func _build_staff() -> void:
+	var fork_px: Vector2 = _measure("staff", "fork_px")
+	# The shaft pivots inside the painted fist. Both anchors lie on their part's local x-axis.
+	_staff_arm.offset.y = -FIST_CENTRE_PX.y
+	_staff.offset = Vector2(-SHAFT_GRIP_PX, -fork_px.y)
+	_staff.scale = Vector2.ONE * 1.5
+	_staff.self_modulate = Color(1.16, 1.16, 1.16)
+	_lengths = Vector2(
+		FIST_CENTRE_PX.x + _staff_arm.offset.x, (fork_px.x + _staff.offset.x) * _staff.scale.x
+	)
+	_fork = OhmFork.new()
+	_staff.add_child(_fork)
+	var staff_part: Dictionary = _parts.staff
+	_fork.place(_staff, OhmFork.unpack(staff_part))
 
 
 func _part(id: String, at: Vector2) -> Sprite2D:
@@ -92,25 +100,6 @@ static func _texture(id: String) -> Texture2D:
 func _measure(id: String, field: String) -> Vector2:
 	var part: Dictionary = _parts[id]
 	return DataTable.new().vec(part, field)
-
-
-func _build_jars(body: Sprite2D, circles: Array) -> void:
-	_jars = OhmJars.new()
-	body.add_child(_jars)
-	_jars.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	_jars.match_cell(body, _texture("body_jars"))
-	var tops: Vector3 = Vector3.ZERO
-	var bottoms: Vector3 = Vector3.ZERO
-	for i: int in 3:
-		var jar: Dictionary = circles[i]
-		var centre: Vector2 = DataTable.new().vec(jar, "center_px")
-		var radius: float = jar.radius_px
-		tops[i] = centre.y - radius
-		bottoms[i] = centre.y + radius
-		@warning_ignore("return_value_discarded")
-		_vents.append((body.offset + centre + Vector2.LEFT * radius) * body.scale)
-	_jars.bounds(tops, bottoms)
-	_jars.top_circles()
 
 
 func pose(drawn: GhostDrawn, charge: OhmCharge, stage: OhmStage, calm: bool, tick: int) -> void:
@@ -157,7 +146,7 @@ static func thrust(age: int) -> float:
 
 func _staff_pose(target_m: Vector2, lead: float = 0.0) -> void:
 	var target: Vector2 = target_m * _texels_per_m / PlayerScale.k()
-	var wrist: Vector2 = target - Vector2.RIGHT.rotated(-0.10 + lead) * _lengths.y
+	var wrist: Vector2 = target - Vector2.RIGHT.rotated(STAFF_ANGLE + lead) * _lengths.y
 	_staff_arm.scale.x = _staff_arm.position.distance_to(wrist) / _lengths.x
 	_staff_arm.rotation = _staff_arm.position.angle_to_point(wrist)
 	_staff.position = wrist
