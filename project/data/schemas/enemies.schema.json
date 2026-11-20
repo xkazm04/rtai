@@ -313,8 +313,22 @@
             "minimum": 0.5,
             "type": "number"
           },
+          "round": {
+            "enum": [
+              "small",
+              "large"
+            ]
+          },
           "speed_mps": {
             "maximum": 120,
+            "minimum": 0,
+            "type": "number"
+          },
+          "splash_damage": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "splash_radius_m": {
             "minimum": 0,
             "type": "number"
           }

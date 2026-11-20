@@ -361,7 +361,8 @@
         "2026-11-19: Preserve the AI lane's base occluder verbatim and append the required hit field, assignment and formatted cover call. (files_past_soft_cap 66 -> 66)",
         "2026-11-19: n19 move flags (files_past_soft_cap 66 -> 66)",
         "2026-11-19: n19 engine night: dev probes (dev/sim far-cop and zone census, dev/enemy_ai fight probe, dev/bench crowd cost, arsenal audit kit) and launch flags, all dev-only evidence tools; owner verdicts 2026-11-19 (files_past_soft_cap 66 -> 66)",
-        "2026-11-20: n21 kerf: one KNOWN_FLAGS line --kerf-cruise-wings (owner Call, off by default) (files_past_soft_cap 66 -> 64)"
+        "2026-11-20: n21 kerf: one KNOWN_FLAGS line --kerf-cruise-wings (owner Call, off by default) (files_past_soft_cap 66 -> 64)",
+        "2026-11-20: --controls for n22 guard (files_past_soft_cap 64 -> 64)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -369,7 +370,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 237,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 209,
+        "project/boot/launch_args.gd": 210,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,
