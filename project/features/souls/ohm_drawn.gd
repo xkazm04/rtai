@@ -47,6 +47,8 @@ func step(host: OhmRig, drawn: GhostDrawn, size_k: float) -> bool:
 ## The flight integrates the ribbon in ground space. Translate the drawing from its neutral
 ## anchor to the actual hem (the artist's anchor on a tilt, the lagging cloth tip from above).
 static func pin_tail(flight: GhostFlight, tip: Vector2) -> void:
+	if flight.hover.tick == 0:
+		return  # The rig can mount before flight has stepped its ribbon.
 	var points: PackedVector2Array = flight.tail.points()
 	if not points.is_empty():
 		flight.tail.position += flight.to_local(tip) - flight.to_local(points[0])
