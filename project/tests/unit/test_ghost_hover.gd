@@ -180,3 +180,18 @@ func test_low_curl_stops_at_ground_and_height_never_moves_the_overhead_centrelin
 				var projected: Vector2 = tail._chain[i] + ViewMode.shared().lift_px(h)
 				assert_almost_eq(points[i], projected, Vector2.ONE * 0.001)
 			assert_almost_eq(points[-1], tail._chain[-1], Vector2.ONE * 0.001)
+
+
+func test_stretched_kerf_wake_bends_either_side_of_its_axis_at_cruise() -> void:
+	ViewMode.select("top")
+	var row: GhostHoverRow = GhostHoverRow.of(&"kerf")
+	var tail: GhostTail = add_child_autofree(GhostTail.new(row.tail))
+	tail.reset(Vector2.ZERO, 0.0, 0.5)
+	tail.step(Vector2.ZERO, 0.0, row.top_mps, 1.0, 1)
+	var left: float = 0.0
+	var right: float = 0.0
+	for point: Vector2 in tail.points():
+		left = minf(left, point.y)
+		right = maxf(right, point.y)
+	assert_lt(left, -2.0)
+	assert_gt(right, 2.0)

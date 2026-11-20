@@ -21,6 +21,7 @@ var _clock: int = 0
 var _socket: Vector2 = Vector2.ZERO
 var _socket_width: float = 0.0
 var _height_m: float = 0.0
+var _curl_m: float = 0.0
 var _dirty: bool = true
 var _last_up: Vector2 = Vector2.INF
 
@@ -57,8 +58,9 @@ func step(root_px: Vector2, facing: float, speed_mps: float, lift_m: float, tick
 	if ticks <= 0:
 		return
 	var back: Vector2 = -Vector2.from_angle(facing)
-	var length_m: float = _row.length_m + speed_mps * _row.stretch_k
-	var link: float = length_m * SimConst.PX_PER_M / _row.segments
+	var extension: float = maxf(0.0, speed_mps * _row.stretch_k)
+	var link: float = (_row.length_m + extension) * SimConst.PX_PER_M / _row.segments
+	_curl_m = _row.curl_m + minf(_row.width_m, extension * 0.24)
 	if _chain.is_empty():
 		for i: int in _row.segments + 1:
 			@warning_ignore("return_value_discarded")
@@ -163,13 +165,12 @@ func _centre(i: int, up: Vector2) -> Vector2:
 	var k: float = float(i) / _row.segments
 	var arch: float = sin(k * PI)
 	var tangent: Vector2 = _chain[maxi(0, i - 1)].direction_to(_chain[mini(i + 1, _row.segments)])
-	var curl: float = sin(k * TAU * 1.4 - TAU * _clock / _row.flow_ticks) * _row.curl_m
-	var offset: Vector2 = tangent.orthogonal() * curl * arch * SimConst.PX_PER_M
+	var curl: float = sin(k * TAU * 1.4 - TAU * _clock / _row.flow_ticks) * _curl_m
 	return (
 		_chain[i]
 		+ (up + _socket) * (1.0 - k)
 		+ ViewMode.shared().lift_px(maxf(_row.rise_m * arch, -_height_m * emerge * (1.0 - k)))
-		+ offset
+		+ tangent.orthogonal() * curl * arch * SimConst.PX_PER_M
 		+ _belt_trail(k, up)
 	)
 
