@@ -23,20 +23,20 @@
       "sway_m": 0.025,
       "tail": {
         "anchor_m": [
-          -0.12,
-          0
+          -0.32,
+          -0.11
         ],
         "curl_m": 0.14,
         "flow_ticks": 43,
-        "fray": 0.36,
-        "length_m": 1.85,
+        "fray": 0.18,
+        "length_m": 2.35,
         "rise_m": 0.32,
         "segments": 14,
         "spread_m": 0.53,
         "strands": 1,
-        "stretch_k": 0.34,
+        "stretch_k": 0.22,
         "swing_k": 0.9,
-        "width_m": 0.26,
+        "width_m": 0.54,
         "wisps": 6
       },
       "top_mps": 7
