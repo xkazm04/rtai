@@ -8,6 +8,7 @@ var dent: DentBody = DentBody.new()
 var kerf: KerfRig = KerfRig.new()
 var ohm: OhmRig = OhmRig.new()
 var _light_last: Dictionary[StringName, Vector2] = {}
+var _carried_rig: CutRig
 
 
 func attach(host: GhostFormView, fx: GhostMorphFx) -> void:
@@ -21,6 +22,15 @@ func attach(host: GhostFormView, fx: GhostMorphFx) -> void:
 	dent.reduced_motion = host.reduced_motion
 	ohm.reduced_motion = host.reduced_motion
 	_attach_body(host, dent, dent.drawn, DentStage.GHOST)
+
+
+func setup_dent(row: GhostFormDef) -> void:
+	dent.setup(row)
+	if dent.drawn.hover:
+		for child: Node in dent.get_children():
+			if child is CutRig:
+				_carried_rig = child as CutRig
+				break
 
 
 func wash() -> void:
@@ -48,8 +58,24 @@ func step_dent(p: StagePilot, at: Vector2, facing: float, steps: int, tick: int)
 	dent.riding = p.dent.riding()
 	dent.strikes = p.dent.strikes
 	dent.blasts = p.dent.blasts
-	dent.step(shown, _spot(dent.drawn, at, facing, steps, shown), facing, steps, tick)
+	dent.step(shown, _dent_spot(at, facing, steps, shown), facing, steps, tick)
 	return shown
+
+
+## The standing IK stores both feet in world space. Carry those anchors with the flight mount
+## so a moving body never asks its stationary gait to take a catch-up step.
+func _dent_spot(at: Vector2, facing: float, steps: int, shown: bool) -> Vector2:
+	if _carried_rig == null or steps <= 0 or not shown or not dent.visible:
+		return _spot(dent.drawn, at, facing, steps, shown)
+	var before: Transform2D = _carried_rig.global_transform
+	var spot: Vector2 = _spot(dent.drawn, at, facing, steps, shown)
+	# The flight already supplies yaw lag. Carry the feet through the rig's own turn as well.
+	_carried_rig.snap_facing(facing)
+	var travel: Transform2D = _carried_rig.global_transform * before.affine_inverse()
+	for side: RigLimbs in _carried_rig.sides:
+		side.foot_w = travel * side.foot_w
+		side.foot_from = travel * side.foot_from
+	return spot
 
 
 func step_light(rig: Node2D, forms: GhostForms, at: Vector2, facing: float, steps: int) -> bool:

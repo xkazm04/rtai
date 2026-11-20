@@ -80,7 +80,7 @@ func _ready() -> void:
 	appear.reduced_motion = reduced_motion
 	add_child(appear)
 	appear.bind(pilot.ghosts.forms if pilot else null, events)
-	_bodies.dent.setup(pilot.ghosts.forms.table.form(DentStage.GHOST) if pilot else null)
+	_bodies.setup_dent(pilot.ghosts.forms.table.form(DentStage.GHOST) if pilot else null)
 	if teal_forms:
 		_bodies.wash()
 	var layer: CanvasLayer = CanvasLayer.new()
