@@ -223,3 +223,14 @@ NEXT: (1) logs/ohm/astra.lock = PID 12372 = ASTRA form-rest (detached, started 0
 - 05:50 ASTRA strip-refilm 34 accepted (a340d0464 merge, befe2be8e, 6c9319597 hitback pin, 3bf81a93d, 15e257bea chip rename, ca37bd94c public accessors, 901c3475e, a0ce0ebd4; strips stun top/tilt70 ticks 72/82/92 jars, press 95, +2 97, +4 99; films re-shot 5/5/10 s; 0 SCRIPT ERROR; mutate ohm_spirit 4/9 (+3 invalid), ohm_drift 11/12). Units 3258/1: flight's test_ghost_spectral_sheets.gd:183 needs a nonzero fade_from on its Ohm fixture -> brief 06b resume (fixture edit only).
 - 05:55 LOOK bolt/cast_strip_stun_top_32.png: jars 1/2/3 at 72/82/92, press 95 from the fork, links at +0/+2/+4, three teal-ringed guards all visible at +4 (shared white spray beside them, Call 4): the owner's judged strip passes. ohm_close_64.jpg: plate reads in both views, single pool, no ground dot (flight's dot is legacy-only). form/chip_in_hud_32.png: spectral chip in the HUD row. frames.json rewritten (14 entries; stun strips at 3-4, staff, hit, chip added).
 - 05:52 ASTRA RUNNING sheet-test since 05:51 (brief 06b resume, lock PID 57232, stop 06:08).
+NEXT (iteration 5, REPORT phase): (1) if logs/ohm/astra.lock exists (sheet-test, PID 57232) wait for it (stops itself by
+  06:08); review its one commit (flight's test_ghost_spectral_sheets.gd:183 fixture only; ghost_hover.json untouched).
+  If it did not land green, revert nothing: final gate anyway and list that one red test in REPORT "What does not" as
+  a NEED flight (fixture assumes Ohm fade_from > 0; ours is 0 by design).
+  (2) 06:15 final gate `export APPDATA=C:/Users/kazda/kiro/gtai-n20/appdata/ohm; node tools/gate/run.mjs --rev=HEAD`
+  (no other Godot of ours running). Quote its line + gate.json path. Then `--reels` once after 07:30 freeze if time.
+  (3) REPORT.md: fill What works (stun strip ticks 72/82/92/95/97/99; films 5/5/10 s 1920x1080 h264 60 fps, 0 SCRIPT
+  ERROR; mutate ohm_spirit 4/9 (+3 invalid), ohm_drift 11/12, ohm_bolt_draw 22/28), merge notes (merged n20-flight
+  twice: 480f141f9, a340d0464; two flight test edits ours win: 6c9319597 test_ghost_hitback pin, 06b sheet test;
+  public accessors used since ca37bd94c; ohm fade_from 0 keep), ledger (form-rest 58 accepted, strip-refilm 34
+  accepted, sheet-test ?), Calls 1-4. Then `node tools/evidence/cites.mjs REPORT.md`, commit REPORT/JOURNAL per path.
