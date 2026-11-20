@@ -6,6 +6,9 @@ Branch `n20-ohm` (worktree `C:\Users\kazda\kiro\gtai-wt\n20-ohm`), cut from `int
 `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n20-ohm\build\gate\8b4862e1f2f9\gate.json`. Lint 19/19, unit 3259 passed /
 0 failed / 2 skipped, scenarios 65 passed, parity bit for bit over 1200 steps (mutation caught at step 629), selftest look
 goldens 11/11 and block goldens 5/5, release-compile 787 loaded / 0 failed. Run 05:57 to 06:08.
+Reels gate (`node tools/gate/run.mjs --rev=HEAD --reels`, once after the 07:30 freeze, on the docs-only HEAD 9958c48ac):
+started 07:30 and still running when this session stopped at 07:40. Its output goes to
+`C:\Users\kazda\kiro\gtai-n20\logs\ohm\reels-gate.out` and its gate.json to `build\gate\9958c48ac2b4\gate.json` (untracked, `evidence.log` beside it).
 
 ## What works
 
