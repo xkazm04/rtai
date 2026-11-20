@@ -133,3 +133,5 @@ NEXT (if any session follows before 07:27): nothing new after the freeze. Only i
 NEXT: nothing. Lane closed; Calls 1-4 in REPORT wait for the owner. Director cleans Temp gtai-gate-b7eeed009cc7 and gtai-mutate-1daa322e.
 - 07:32 Session 7 check: tree clean at 60784c3f2, no project/tools diff since gated b7eeed009, cites 5/5 ok, no astra.lock, no Godot running from this lane. Nothing to fix.
 NEXT: none. Lane closed; Director merges n20-tonnage and cleans Temp gtai-gate-b7eeed009cc7 + gtai-mutate-1daa322e.
+- 07:41 Session 8 (REPORT): REPORT.md has all eight sections; cites 5/5 ok; frames.json 15 entries, all files present; the 4 films present; build/gate/b7eeed009cc7/gate.json present; no project/tools diff since gated b7eeed009; no astra.lock. Nothing to change.
+NEXT: none. Lane closed; Director merges n20-tonnage, cleans Temp gtai-gate-b7eeed009cc7 + gtai-mutate-1daa322e.
