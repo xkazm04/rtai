@@ -28,6 +28,7 @@ var miss_on: bool = not OS.get_cmdline_user_args().has("--no-dent-miss")
 var debris_on: bool = (
 	GhostAttacks.shipped().num(&"dent", &"blast_debris") > 0.0 and HitFeel.feel_flag() != "off"
 )
+var _legacy: DentLegacyAttack
 var _overload: DentOverload
 var _strap: DentStrap
 var _body: DentBody
@@ -39,6 +40,9 @@ var _cam_at: Vector2 = Vector2.INF
 
 func _ready() -> void:
 	if dent == null or stage == null:
+		return
+	if not GhostLook.spectral(DentStage.GHOST):
+		_legacy = DentLegacyAttack.new()
 		return
 	if DentLook.shipped().resolved() == "strap":
 		_strap = DentStrap.new()
@@ -78,7 +82,9 @@ func _follow() -> void:
 func _draw() -> void:
 	if dent == null or stage == null:
 		return
-	if _strap != null and _strap.showing():
+	if _legacy != null and dent.car != null:
+		_legacy.held(self)
+	elif _strap != null and _strap.showing():
 		_tether()
 	if miss_on and dent.miss_tick >= 0 and dent.car == null:
 		var miss_age: float = (stage.tick - dent.miss_tick) * SimClock.TICK_DT
@@ -89,7 +95,8 @@ func _draw() -> void:
 		if age <= BLAST_S:
 			_blast(dent.blast_at * ppm, age / BLAST_S)
 		_debris(stage.tick - dent.blast_tick)
-		_overload.spokes(self, stage.tick - dent.blast_tick)
+		if _overload != null:
+			_overload.spokes(self, stage.tick - dent.blast_tick)
 
 
 ## The blast's slabs, `age` ticks after it: WeaponFxDebris draws in Ink's 48 px/m world, so the
@@ -133,6 +140,9 @@ func _tether() -> void:
 
 
 func _blast(c: Vector2, k: float) -> void:
+	if _legacy != null:
+		_legacy.blast(self, c, k)
+		return
 	var radius: float = dent.num(&"blast_radius_m") * ppm
 	# The front hits the preview circle while it is still bright, then fades in place.
 	var expansion: float = 1.0 - pow(1.0 - minf(1.0, (k + 0.035) / 0.65), 2.0)

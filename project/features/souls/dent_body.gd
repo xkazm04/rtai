@@ -38,7 +38,7 @@ var _jump: float = 0.0
 func setup(row: GhostFormDef) -> void:
 	visible = false
 	_view = (drawn.flight.get_parent() if drawn.flight != null else get_parent()) as GhostFormView
-	if _view != null and _view.pilot != null:
+	if drawn.flight != null and _view != null and _view.pilot != null:
 		add_to_group(group_for(_view.pilot.dent))
 		_jab_order = DentJabOrder.new()
 		_jab_order.bind(self, _view)
@@ -70,10 +70,6 @@ func setup(row: GhostFormDef) -> void:
 func step(show: bool, at: Vector2, facing: float, steps: int, tick: int) -> void:
 	if _jab_order != null:
 		_jab_order.sync(show)
-	if show and _view != null and _view.pilot != null and _view.pilot.dent.car != null:
-		var to_car: Vector2 = _view.pilot.dent.car.pos - _view.arena.rivet.pos
-		if not to_car.is_zero_approx():
-			facing = to_car.angle()
 	if _spectral != null:
 		if show and not visible:
 			_top.reset()
@@ -128,6 +124,10 @@ func _fly(facing: float, steps: int, tick: int) -> void:
 	if _view != null and _view.pilot != null:
 		jab = _view.pilot.ghosts.jab
 		car = _view.pilot.dent.car
+		if car != null:
+			var to_car: Vector2 = car.pos - _view.arena.rivet.pos
+			if not to_car.is_zero_approx():
+				facing = to_car.angle()
 		var hurt: int = _view.arena.rivet.hurt_tick
 		if hurt >= 0:
 			hurt_age = tick - hurt
