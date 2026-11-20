@@ -8,6 +8,7 @@ var id: StringName = &""
 var power: StringName = &""
 var name_key: String = ""
 var body_class: StringName = &""
+var look: StringName = &"legacy"
 var gait: StringName = &""
 var radius_m: float = 0.0
 var size_k: float = 1.0
@@ -31,6 +32,7 @@ static func from_row(t: DataTable, r: Dictionary) -> GhostFormDef:
 	f.power = StringName(t.text(r, "power"))
 	f.name_key = t.text(r, "name_key")
 	f.body_class = StringName(t.text(r, "body_class"))
+	f.look = &"spectral" if r.get("look") == "spectral" else &"legacy"
 	f.gait = StringName(t.text(r, "gait"))
 	f.radius_m = t.num(r, "radius_m")
 	f.size_k = t.num(r, "size_k")

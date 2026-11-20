@@ -1,0 +1,154 @@
+class_name GhostFormBodies
+extends RefCounted
+## Presentation of the four bodies owned by GhostFormView. Attack and morph inputs are shared by
+## both looks. Only the host transform and the locomotion inputs differ for spectral bodies.
+
+var tonnage: TonnageRig = TonnageRig.new()
+var dent: DentBody = DentBody.new()
+var kerf: KerfRig = KerfRig.new()
+var ohm: OhmRig = OhmRig.new()
+var _light_last: Dictionary[StringName, Vector2] = {}
+var _carried_rig: CutRig
+
+
+func attach(host: GhostFormView, fx: GhostMorphFx) -> void:
+	PlayerScale.fit([tonnage, kerf, ohm])
+	mount_rig(host, tonnage, HaulerStage.GHOST)
+	mount_rig(host, kerf, KerfStage.GHOST)
+	mount_rig(host, ohm, OhmStage.GHOST)
+	fx.reduced_motion = host.reduced_motion
+	host.add_child(fx)
+	dent.lurch_on = host.lurch_on
+	dent.reduced_motion = host.reduced_motion
+	ohm.reduced_motion = host.reduced_motion
+	mount_rig(host, dent, DentStage.GHOST)
+
+
+func setup_dent(row: GhostFormDef) -> void:
+	dent.setup(row)
+	_carried_rig = standing_rig(dent)
+
+
+static func standing_rig(body: DentBody) -> CutRig:
+	if body.drawn.hover:
+		for child: Node in body.get_children():
+			if child is CutRig:
+				return child as CutRig
+	return null
+
+
+func wash() -> void:
+	var m: ShaderMaterial = GhostApparition.ghost_material(false, 0.0)
+	for body: Node in [tonnage, kerf, ohm, dent]:
+		GhostApparition.wash(body, m, GhostApparition.ghost_material(true, 0.0))
+
+
+## Select the ghost on either side of the midpoint, including the base-to-form pre-roll.
+func emerge(forms: GhostForms) -> GhostDrawn:
+	var id: StringName = forms.to_id
+	if id == GhostForms.BASE or forms.phase == GhostForms.SWITCHING and forms.stage() == 0:
+		id = forms.from_id
+	if id == GhostForms.BASE:
+		return null
+	var body: Node2D = get(id)
+	var drawn: GhostDrawn = body.get(&"drawn")
+	if drawn.flight == null:
+		return null
+	drawn.flight.set_emerge(GhostFormView.unfold_k(forms, id))
+	return drawn
+
+
+func step_tonnage(p: StagePilot, at: Vector2, facing: float, steps: int) -> bool:
+	var forms: GhostForms = p.ghosts.forms
+	var shown: bool = GhostFormView.big(forms, HaulerStage.GHOST)
+	tonnage.visible = shown
+	tonnage.position = place_body(tonnage.drawn, at, facing, steps, shown)
+	tonnage.rotation = facing
+	tonnage.unfold = GhostFormView.unfold_k(forms, HaulerStage.GHOST)
+	tonnage.speed_mps = (
+		p.hauler.form.vel.length() if forms.settled() and not tonnage.drawn.hover else 0.0
+	)
+	tonnage.advance(steps * SimClock.TICK_DT)
+	return shown
+
+
+func step_dent(p: StagePilot, at: Vector2, facing: float, steps: int, tick: int) -> bool:
+	var shown: bool = GhostFormView.big(p.ghosts.forms, DentStage.GHOST)
+	dent.riding = p.dent.riding()
+	dent.strikes = p.dent.strikes
+	dent.blasts = p.dent.blasts
+	dent.step(shown, _dent_spot(at, facing, steps, shown), facing, steps, tick)
+	return shown
+
+
+## The standing IK stores both feet in world space. Carry those anchors with the flight mount
+## so a moving body never asks its stationary gait to take a catch-up step.
+func _dent_spot(at: Vector2, facing: float, steps: int, shown: bool) -> Vector2:
+	if _carried_rig == null or steps <= 0 or not shown or not dent.visible:
+		return place_body(dent.drawn, at, facing, steps, shown)
+	var spot: Vector2 = place_body(dent.drawn, at, facing, steps, shown)
+	carry_feet(_carried_rig, facing)
+	return spot
+
+
+static func carry_feet(rig: CutRig, facing: float) -> void:
+	# The flight already supplies yaw lag. Carry the feet through the rig's own turn as well.
+	rig.snap_facing(facing)
+	RigTilt.aim_up(rig)
+	var rest: Vector2 = rig.fwd() * rig.plan.foot_fwd * CutRig.SC
+	for side: int in rig.sides.size():
+		rig.sides[side].plant(rig.hip_world(side) + rest)
+
+
+func step_light(rig: Node2D, forms: GhostForms, at: Vector2, facing: float, steps: int) -> bool:
+	var id: StringName = KerfStage.GHOST if rig == kerf else OhmStage.GHOST
+	var drawn: GhostDrawn = kerf.drawn if rig == kerf else ohm.drawn
+	var shown: bool = GhostFormView.big(forms, id)
+	rig.visible = shown
+	var last: Vector2 = _light_last.get(id, at)
+	_light_last[id] = at
+	var spot: Vector2 = place_body(drawn, at, facing, steps, shown)
+	if not shown:
+		return false
+	rig.position = spot
+	rig.rotation = facing
+	rig.set(&"unfold", GhostFormView.unfold_k(forms, id))
+	var dt: float = maxf(1.0, float(steps)) * SimClock.TICK_DT
+	var speed: float = minf(20.0, at.distance_to(last) / SimConst.PX_PER_M / dt)
+	rig.set(&"speed_mps", 0.0 if drawn.hover else speed)
+	rig.call(&"advance", steps * SimClock.TICK_DT)
+	return true
+
+
+func feed(pilot: StagePilot, rivet: Fighter, tick: int) -> void:
+	var drawn: Array[GhostDrawn] = [tonnage.drawn, dent.drawn, kerf.drawn, ohm.drawn]
+	GhostActs.feed(drawn, pilot, rivet, tick)
+
+
+static func place_body(
+	drawn: GhostDrawn, at: Vector2, facing: float, steps: int, shown: bool
+) -> Vector2:
+	if drawn.flight == null:
+		return at
+	drawn.flight.visible = shown
+	drawn.flight.step(at, facing, steps)
+	return Vector2.ZERO
+
+
+static func mount_rig(parent: Node2D, rig: Node2D, id: StringName) -> void:
+	var drawn: GhostDrawn = rig.get(&"drawn")
+	_attach_body(parent, rig, drawn, id)
+
+
+static func _attach_body(parent: Node2D, body: Node2D, drawn: GhostDrawn, id: StringName) -> void:
+	body.visible = false
+	if GhostLook.spectral(id):
+		drawn.flight = GhostFlight.make(id)
+		if drawn.flight != null:
+			drawn.hover = true
+			drawn.flight.visible = false
+			parent.add_child(drawn.flight)
+			drawn.flight.mount(body)
+			return
+		Log.warn("ghost_flight", "missing hover row for %s, keeping its ground rig" % id)
+	parent.add_child(body)

@@ -34,13 +34,8 @@ var beats: int = 0
 ## false (dev `--no-lurch`): Dent as iteration 2 built him (Rivet's plain cycle, linear filter, no
 ## soul glow): the A/B before.
 var lurch_on: bool = true
-var _tonnage: TonnageRig = TonnageRig.new()
-var _kerf: KerfRig = KerfRig.new()
-var _ohm: OhmRig = OhmRig.new()
-## The hover/cane rigs' last spot (px), for their ground speed.
-var _light_last: Dictionary[StringName, Vector2] = {}
+var _bodies: GhostFormBodies = GhostFormBodies.new()
 var _fx: GhostMorphFx = GhostMorphFx.new()
-var _dent: DentBody = DentBody.new()
 var _hidden_rig: CutRig = null
 var _last_tick: int = -1
 var _last_stage: int = 0
@@ -81,26 +76,13 @@ static func make(
 
 func _ready() -> void:
 	process_priority = 20  # after CharacterRigs poses and RivetHeldView feeds the rig
-	_tonnage.visible = false
-	PlayerScale.fit([_tonnage, _kerf, _ohm])  # n11: Dent scales in its own _place (its buck)
-	add_child(_tonnage)
-	for light: Node2D in [_kerf, _ohm]:
-		light.visible = false
-		add_child(light)
-	_fx.reduced_motion = reduced_motion
-	add_child(_fx)
-	_dent.lurch_on = lurch_on
-	_dent.reduced_motion = reduced_motion
-	_ohm.reduced_motion = reduced_motion
-	add_child(_dent)
+	_bodies.attach(self, _fx)
 	appear.reduced_motion = reduced_motion
 	add_child(appear)
 	appear.bind(pilot.ghosts.forms if pilot else null, events)
-	_dent.setup(pilot.ghosts.forms.table.form(DentStage.GHOST) if pilot else null)
+	_bodies.setup_dent(pilot.ghosts.forms.table.form(DentStage.GHOST) if pilot else null)
 	if teal_forms:
-		var m: ShaderMaterial = GhostApparition.ghost_material(false, 0.0)
-		for body: Node in [_tonnage, _kerf, _ohm, _dent]:
-			GhostApparition.wash(body, m, GhostApparition.ghost_material(true, 0.0))
+		_bodies.wash()
 	var layer: CanvasLayer = CanvasLayer.new()
 	layer.layer = HUD_LAYER
 	add_child(layer)
@@ -141,13 +123,9 @@ func _process(_delta: float) -> void:
 	var forms: GhostForms = pilot.ghosts.forms
 	var r: Fighter = arena.rivet
 	var at: Vector2 = r.pos * SimConst.PX_PER_M
-	var is_big: bool = big(forms, HaulerStage.GHOST)
-	_tonnage.visible = is_big
-	_tonnage.position = at
-	_tonnage.rotation = r.facing.angle()
-	_tonnage.unfold = unfold_k(forms, HaulerStage.GHOST)
-	_tonnage.speed_mps = pilot.hauler.form.vel.length() if forms.settled() else 0.0
-	_tonnage.advance(steps * SimClock.TICK_DT)  # the gait on sim ticks, not the frame delta
+	var facing: float = r.facing.angle()
+	var spectral: GhostDrawn = _bodies.emerge(forms)
+	var is_big: bool = _bodies.step_tonnage(pilot, at, facing, steps)
 	_fx.position = at
 	var with_big: bool = forms.to_id == HaulerStage.GHOST or forms.from_id == HaulerStage.GHOST
 	_fx.reach_m = 2.4 if with_big else 1.4
@@ -155,36 +133,14 @@ func _process(_delta: float) -> void:
 	_fx.show_progress(busy, forms.k(), forms.stage(), forms.phase == GhostForms.SWITCHING)
 	_beat(forms.stage() if busy else 0, with_big)
 	hud.sync(forms, arena.rivet.weapon)
-	var is_dent: bool = big(forms, DentStage.GHOST)
-	_dent.riding = pilot.dent.riding()
-	_dent.strikes = pilot.dent.strikes
-	_dent.blasts = pilot.dent.blasts
-	_dent.step(is_dent, at, r.facing.angle(), steps, arena.tick)
-	var is_kerf: bool = _step_light(_kerf, KerfStage.GHOST, at, r.facing.angle(), steps)
-	GhostActs.prepare_ohm(_ohm, pilot.ohm, r, arena.tick)
-	var is_ohm: bool = _step_light(_ohm, OhmStage.GHOST, at, r.facing.angle(), steps)
+	var is_dent: bool = _bodies.step_dent(pilot, at, facing, steps, arena.tick)
+	var is_kerf: bool = _bodies.step_light(_bodies.kerf, forms, at, facing, steps)
+	GhostActs.prepare_ohm(_bodies.ohm, pilot.ohm, r, arena.tick)
+	var is_ohm: bool = _bodies.step_light(_bodies.ohm, forms, at, facing, steps)
+	_fx.pose_body(spectral if busy else null, at)
 	appear.step(at, r.facing.angle(), steps, arena.tick)
 	_hide_rivet(is_big or is_dent or is_kerf or is_ohm, r.id)
-	var drawn: Array[GhostDrawn] = [_tonnage.drawn, _dent.drawn, _kerf.drawn, _ohm.drawn]
-	GhostActs.feed(drawn, pilot, r, arena.tick)
-
-
-## Kerf's hover rig or Ohm's cane rig at Rivet's pose (snaps with Kerf's blink: no tween),
-## unfolding with the morph; `rig` has unfold, speed_mps and advance(dt). True while it shows.
-func _step_light(rig: Node2D, id: StringName, at: Vector2, facing: float, steps: int) -> bool:
-	var show: bool = big(pilot.ghosts.forms, id)
-	rig.visible = show
-	var last: Vector2 = _light_last.get(id, at)
-	_light_last[id] = at
-	if not show:
-		return false
-	rig.position = at
-	rig.rotation = facing
-	rig.set(&"unfold", unfold_k(pilot.ghosts.forms, id))
-	var dt: float = maxf(1.0, float(steps)) * SimClock.TICK_DT
-	rig.set(&"speed_mps", minf(20.0, at.distance_to(last) / SimConst.PX_PER_M / dt))
-	rig.call(&"advance", steps * SimClock.TICK_DT)
-	return true
+	_bodies.feed(pilot, r, arena.tick)
 
 
 ## One camera shake as the transformation passes its in-between pose.

@@ -1,0 +1,17 @@
+**Interface commit `0e7d91e46` landed at 00:37:56 CET**, before the 01:05 deadline. Final commit `28f7e5520`. All four forms default to `legacy` and support `--ghost-look=spectral`.
+
+Added `GhostLook`, `GhostHoverRow`, `GhostHover`, `GhostFlight`, `GhostTail`, `GhostShadow` and `GhostFormBodies`. Updated the form view, drawn sheets, look and hover tables and schemas, launch flag, review driver, tests and decision log. The [souls README](C:/Users/kazda/kiro/gtai-wt/n20-flight/project/features/souls/README.md:35) documents the interface for the four form lanes.
+
+| Check | Result |
+|---|---|
+| Godot parse, quick gate, lint | All 16 changed scripts passed. Lint passed 19/19. |
+| GUT | `--changed` passed 3,202 with 2 skipped. Requested selection passed 32/32. |
+| Replay, parity, bake | Replay finished 3,600 ticks at `cbeb734ff9b97c41`. Native parity matched over 1,200 steps and caught the planted mutation. Bake matched golden. |
+| Foot contacts | `TonnageRig._check_stamps()` emitted zero walking stamps over 60 moving ticks. Dent took zero catch-up steps through 120 ticks of travel and turning. |
+| Render | Both Kerf films exited 0 with `SCRIPT ERROR 0`. All 370 legacy frames matched baseline pixels. Gameplay traces matched across 5,920 paired frames covering all four forms at both tilts. |
+
+**Kerf stills, tilt70, tick 125:** [Spectral PNG](C:/Users/kazda/kiro/gtai-masters/n20/flight/scratch/kerf_move_tilt70_spectral_f124.png) · [Legacy PNG](C:/Users/kazda/kiro/gtai-masters/n20/flight/scratch/kerf_move_tilt70_legacy_f124.png)
+
+The spectral still uses Kerf’s existing standing artwork pending the form lane’s legless replacement. Both films reproduced the baseline renderer’s shutdown resource warnings.
+
+[astra: 4091s, exit 0]

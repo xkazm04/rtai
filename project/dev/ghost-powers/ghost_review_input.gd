@@ -15,15 +15,19 @@ const GUARDS: Dictionary[StringName, Array] = {
 
 var session: ArenaSession
 var ghost: StringName
+var morphing: bool = false
 var attacking: bool
 var victims: Array[Fighter] = []
 var car: VehicleBody
 
 
-func _init(p_session: ArenaSession, p_ghost: StringName, p_attacking: bool) -> void:
+func _init(
+	p_session: ArenaSession, p_ghost: StringName, p_attacking: bool, p_morph: bool = false
+) -> void:
 	session = p_session
 	ghost = p_ghost
 	attacking = p_attacking
+	morphing = p_morph
 	session.stage.arena.rivet.pos = MARK
 
 
@@ -35,7 +39,13 @@ func sample(tick: int) -> TickInput:
 		var pick: int = session.pilot.ghosts.forms.table.order.find(ghost)
 		var cycle: bool = tick >= 2 and tick <= 2 * pick and tick % 2 == 0
 		var action: StringName = &"power_gearbox" if cycle else &""
-		return _pad(Vector2.ZERO, Vector2.RIGHT, &"power_hauler" if tick == 10 else action)
+		var enter: int = 61 if morphing else 10
+		return _pad(Vector2.ZERO, Vector2.RIGHT, &"power_hauler" if tick == enter else action)
+	if morphing:
+		var end: int = 241 + session.pilot.ghosts.forms.table.form(ghost).enter_ticks
+		var aim: Vector2 = Vector2.from_angle(clampf((tick - 125.0) / 90.0, 0.0, 1.0) * PI * 0.6)
+		var move: Vector2 = aim * 0.22 if tick >= 125 and tick < 215 else Vector2.ZERO
+		return _pad(move, aim, &"power_hauler" if tick == end else &"")
 	if not attacking:
 		return _movement(t)
 	match ghost:
@@ -45,12 +55,9 @@ func sample(tick: int) -> TickInput:
 			return _pad(
 				Vector2.RIGHT if go else Vector2.ZERO, Vector2.RIGHT, &"melee" if press else &""
 			)
-		&"dent":
-			return _dent(t)
 		&"kerf":
 			return _pad(Vector2.ZERO, _nearest(), &"melee" if t in [28, 77, 126, 200] else &"")
-		_:
-			return _ohm(t)
+	return _dent(t) if ghost == &"dent" else _ohm(t)
 
 
 func _movement(t: int) -> TickInput:
@@ -98,19 +105,21 @@ func _cast() -> void:
 
 func _nearest() -> Vector2:
 	var at: Vector2 = session.stage.arena.rivet.pos
-	var gap: float = INF
-	var aim: Vector2 = at.direction_to(car.pos) if car != null else Vector2.RIGHT
+	var best: Fighter = null
 	for fighter: Fighter in victims:
-		if fighter.alive() and at.distance_to(fighter.pos) < gap:
-			gap = at.distance_to(fighter.pos)
-			aim = at.direction_to(fighter.pos)
-	return aim
+		if (
+			fighter.alive()
+			and (best == null or at.distance_to(fighter.pos) < at.distance_to(best.pos))
+		):
+			best = fighter
+	if best != null:
+		return at.direction_to(best.pos)
+	return at.direction_to(car.pos) if car != null else Vector2.RIGHT
 
 
 func _pad(move: Vector2, aim: Vector2, action: StringName) -> TickInput:
 	var buttons: int = PlayerCommand.pack_aim(aim, session.actions)
 	if action != &"":
 		buttons |= 1 << session.actions.bit(action)
-	return TickInput.new(
-		buttons, roundi(move.x * TickInput.AXIS_MAX), roundi(move.y * TickInput.AXIS_MAX)
-	)
+	var axes: Vector2i = Vector2i((move * TickInput.AXIS_MAX).round())
+	return TickInput.new(buttons, axes.x, axes.y)

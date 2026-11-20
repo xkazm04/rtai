@@ -1,0 +1,9 @@
+Committed `d2a44407e` at 01:38:25 CET. The tracked worktree is clean.
+
+`ghost_drawn.gd` and `ghost_sheet.gd` now select spectral idle, cruise and explicit poses. Attack cells take priority, and missing pose or act sheets fall back independently. `sprite()` exposes the displayed cell. Spectral Ohm’s instant bolt goes straight to strike, while delayed casts keep their wind-up.
+
+`ghost_tail.gd` exposes projected points and half-widths through `GhostFlight.tail`. Confirmed that `GhostFormView` still calls `DentBody.step()` on its flight mount, so Dent controls its own drawing. The [souls README](C:/Users/kazda/kiro/gtai-wt/n20-flight/project/features/souls/README.md) documents both APIs and the sheet layout.
+
+**Checks passed.** All six changed scripts parsed, lint passed 19/19, the quick gate passed, and `--changed` reported 3,208 passed, 0 failed and 2 skipped. `test_ghost_drawn.gd` and the new `test_ghost_spectral_sheets.gd` cover both looks. The sheet tests used temporary generated PNGs. The legacy Kerf still matched its pre-change capture byte for byte.
+
+[astra: 862s, exit 0]
