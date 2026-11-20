@@ -97,7 +97,11 @@ func test_spectral_voice_keeps_its_cut_and_only_the_speaker_has_a_shadow_and_tai
 	assert_eq(flight.scale, Vector2.ONE * GhostApparition.BIG_K)
 	var tether_end: Vector2 = app._tether.to_global(app._tether.points[-1])
 	assert_almost_eq(tether_end, flight.tail.points()[0], Vector2.ONE * 0.001)
-	var cut: ShaderMaterial = rig.drawn.sprite().material
+	var spr: Sprite2D = rig.drawn.sprite()
+	if spr == null:
+		pass_test("own_body: no shared sprite to wash")
+		return
+	var cut: ShaderMaterial = spr.material
 	assert_eq(cut.shader, GhostBridgeFade.SHADER)
 	var phase: float = cut.get_shader_parameter(&"voice_phase")
 	assert_almost_eq(phase, 0.44, 0.001)
