@@ -89,11 +89,13 @@ func _shed(back: Vector2, speed_mps: float) -> void:
 	if _clock % interval == 0:
 		_update_geometry()
 		var birth: int = floori(float(_clock) / interval)
-		var j: int = 1 + posmod(birth * 7, _row.segments - 1)
+		var j: int = _row.segments - 1 - posmod(birth, maxi(1, floori(_row.segments / 3.0)))
 		var side: float = -1.0 if birth % 2 == 0 else 1.0
 		edge = _vertices[j * 2 + birth % 2]
 		drift = back * (0.5 + minf(speed_mps, 14.0) * 0.14)
 		drift += back.orthogonal() * side * (0.25 + _row.spread_m)
+	var tip: Vector2 = _centre(_row.segments, ViewMode.shared().lift_px(_height_m))
+	_wisps.follow_tip(tip, _row.length_m * SimConst.PX_PER_M)
 	_wisps.step(_clock, edge, drift * SimConst.PX_PER_M)
 
 
@@ -135,8 +137,10 @@ func _update_geometry() -> void:
 		var before: int = maxi(0, i - 1)
 		var after: int = mini(_row.segments, i + 1)
 		var axis: Vector2 = _centre(after, up) - _centre(before, up)
-		var width: float = maxf(_socket_width / SimConst.PX_PER_M, _row.width_m) * (1.0 - k)
-		width += 2.0 * _row.spread_m * sin(k * PI) * (1.0 - k)
+		var width: float = (
+			maxf(_socket_width / SimConst.PX_PER_M, _row.width_m) * (1.0 - k + 0.12 * sin(k * PI))
+		)
+		width += 1.4 * _row.spread_m * sin(k * PI) * (1.0 - k)
 		width *= (1.0 + _row.fray * 0.22 * sin(i * 2.4))
 		var edge: Vector2 = axis.normalized().orthogonal() * width * SimConst.PX_PER_M * 0.5
 		if edge.dot(previous_edge) < 0.0:
@@ -157,7 +161,24 @@ func _centre(i: int, up: Vector2) -> Vector2:
 		+ (up + _socket) * (1.0 - k)
 		+ ViewMode.shared().lift_px(_row.rise_m * arch)
 		+ offset
+		+ _belt_trail(k, up)
 	)
+
+
+## In the tilted bridge the sprite is a vertical billboard. Let the plume clear its hem
+## even when the ground trail points back into the torso in screen space.
+func _belt_trail(k: float, up: Vector2) -> Vector2:
+	if _socket_width <= 0.0:
+		return Vector2.ZERO
+	var root: Vector2 = _chain[0] + up + _socket
+	var run: Vector2 = _chain[-1] - _chain[0]
+	if ViewMode.shared().is_flat():
+		return (_socket + run.normalized() * _socket_width * 0.95) * k
+	var down: float = maxf(0.0, root.y + _socket_width * 1.15 - _chain[-1].y)
+	var fall: float = sin(k * PI) * _socket_width * 0.15
+	var head_on: float = maxf(0.0, -run.y - absf(run.x))
+	var sweep: float = (run.x * 1.1 - head_on * 1.45) * k
+	return Vector2(sweep, down * k + fall)
 
 
 func _draw() -> void:
