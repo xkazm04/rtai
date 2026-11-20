@@ -40,7 +40,7 @@ DRAFT (session 4, 04:3x). Final numbers, gate line and film paths are filled in 
 
 - Flight's `project/tests/unit/test_ghost_card.gd` is pinned to the legacy look on this branch (8e82e68d1, flight OK: ours wins at the merge); one guard at `test_ghost_flight_hosts.gd:114` in merge 80c27095b.
 - Named one-line call site in a flight file: `ghost_form_bodies.gd` step_tonnage `tonnage.hauler = p.hauler`.
-- `n20-flight` merged several times into this branch (last 2f78f2583 = flight 5e906fd53); the Director's merge of flight first then tonnage should be clean.
+- `n20-flight` merged several times into this branch, last 6bb29c7a0 = flight final aa9ff166e (root JOURNAL.md/REPORT.md kept ours). The merge-clash hook warns that flight's `project/tests/unit/test_ghost_look.gd` conflicts with n20-ohm: a flight/ohm overlap carried in through the merge, no tonnage lines.
 - `RamWake` has two callers (`tonnage_view.gd`, `boot/collect_call/view/cast_view.gd` quest 1); the spectral gate is in TonnageView only so quest 1 keeps its bow wave.
 
 ## Next steps
