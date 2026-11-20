@@ -100,3 +100,7 @@ NEXT (session 5, supersedes the earlier NEXT): (1) Check astra.lock pid 45792 is
 - 05:52 tonnage confirms: apparition guard made on n20-tonnage; tonnage look flipped to spectral (8c3586694); merged flight aa9ff166e (6bb29c7a0). Open NEED flight at this point: none.
 - 06:00 films progressing (tonnage move/close re-cut 05:59-06:00; no repo change). Session 4 ends at 06:05 with ASTRA RUNNING films since 05:50 (detached, node pid 45792). NEXT: the 05:50 NEXT.
 - 06:00 LOOKED re-cut all_ghosts_32 at 22 s (kerf, 12 m/s): wake now bends (S-curve in top view, a wave in tilt) instead of a straight rod. ACCEPT. Session 4 ends; ASTRA RUNNING films since 05:50 (detached, pid 45792).
+- 07:32 START session 5 (STABILIZE, past freeze). ASTRA films 17 accepted (ended 06:07, exit 0): reel + flight films re-cut, frames.json 15 entries all present, all_ghosts_32 yuv420p/tv; git status: only the films .out (no repo file changed). Astra lock gone.
+- 07:34 Lane journals: no open NEED flight. Ohm edited flight's test_ghost_spectral_sheets.gd on n20-ohm (8b4862e1f, Kerf fixture; ohm's wins) -> Merge notes. --reels skipped (no time after freeze), said in REPORT.
+- 07:36 REPORT final: films rows + ledger filled, cites ok. No code changes this session.
+NEXT (morning Director): merge all five, run FULL unit, re-cut all_ghosts_32 from the merged tree (REPORT Next steps 1). Nothing running on this lane.

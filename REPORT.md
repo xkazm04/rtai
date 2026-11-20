@@ -27,7 +27,8 @@ steps + planted mutation caught at step 629; selftest look goldens 11/11; releas
 | Public accessors for lanes (ohm NEED) | `51a905763` (`GhostDrawn.release_fade()`, `GhostDrawnActs.hurt_tick()`) | |
 | Aura yields its ground rings to the flight pool (dent NEED) | `fa2b4dac7` (`GhostAura.form_id`, `draws_pool()`) | |
 | Tail rise sign + curl at speed | `6ef44908f` (negative `rise_m` clamps at the street), `696862ee0` (curl grows with speed stretch) | both unit-tested |
-| All-ghosts reel | `24936ad1a` (`ghost_films.mjs --all`); `all_ghosts_32.mp4` + `.jpg` | 40.0 s, 4 ghosts x (move, attack) x 5 s, tilt 70 above, top below |
+| All-ghosts reel | `24936ad1a` (`ghost_films.mjs --all`); `all_ghosts_32.mp4` + `.jpg` | 40.0 s, 4 ghosts x (move, attack) x 5 s, tilt 70 above, top below; re-cut 06:03 from HEAD's code, `yuv420p`/tv range |
+| Post-gate films | `C:/Users/kazda/kiro/gtai-masters/n20/flight/frames.json` (15 entries, all files present): `flight_<ghost>_move_32` / `_close_64` films + posters, turn stills at 64 px/m | Kerf's wake now bends (S-curve top, wave in tilt) at 12 m/s; looked at the reel at 22 s |
 
 Checks (Astra, package 3 end): GUT 3216 passed, 0 failed, 2 skipped; 60 s replay 60/60 checkpoints; legacy look
 0 of 1,036,800 pixels differ at a fixed tick. Mutation `ghost_flight.gd`: 18/29 killed (62.1%), 11 of 40 unrun at the cap.
@@ -37,8 +38,8 @@ Checks (Astra, package 3 end): GUT 3216 passed, 0 failed, 2 skipped; 60 s replay
 - On `n20-flight` the four bodies are still the legacy art with the legs dissolved into the belt plume (the bridge);
   the new bodies live on the ghost lanes' branches. The reel and `flight_*` films therefore show legacy bodies
   with the shared motion, tail and pool. At 64 px/m the bridge leaves Ohm as a fragment in tilt 70.
-- `all_ghosts_32.mp4` was cut at 05:19, before the curl-at-speed, rise-clamp and frontal-plume commits; package 5
-  re-cuts it after the gate.
+- The final gate ran on `aa9ff166e`; only docs commits follow it. `--reels` was not run after the freeze (it
+  holds the lane's Godot 30+ min; no time before the report).
 - Mutation of `ghost_flight.gd` is 18/29 (62.1%) with 11 of 40 unrun: the surviving shadow-child deletion and
   overhead size mutants name gaps in the tests.
 - The double ground light (flight's pool + each rig's own ground glow) is still drawn on tonnage and ohm until
@@ -72,6 +73,7 @@ Checks (Astra, package 3 end): GUT 3216 passed, 0 failed, 2 skipped; 60 s replay
   `project/tests/unit/test_ghost_hitback.gd` Ohm windup test pinned to `GhostLook.LEGACY` (n20-ohm);
   `project/tests/unit/test_ghost_flight_hosts.gd` null-sprite guard for `own_body` rigs (n20-dent and n20-tonnage, the same guard; it also covers Kerf's own body, kerf's NEED);
   `project/tests/unit/test_ghost_card.gd` Tonnage crown/hose cases pinned to legacy (n20-tonnage);
+  `project/tests/unit/test_ghost_spectral_sheets.gd` legacy belt fixture builds a Kerf flight (n20-ohm `8b4862e1f`; Ohm's `fade_from` is 0 there);
   `project/tests/unit/test_ghost_apparition.gd:100` skips the voice-cut assert when `own_body` leaves no sprite (n20-tonnage).
 - Ohm and Dent rows flip to `look: spectral` on their branches: after merging all five, run the FULL unit suite;
   any flight test that asserts a legacy sheet without selecting a look goes red the same way (fix: `override_for_test`);
@@ -103,7 +105,7 @@ Checks (Astra, package 3 end): GUT 3216 passed, 0 failed, 2 skipped; 60 s replay
 | effects | 12 | abandoned | killed with my session at 03:09 |
 | effects-resume | 65 | accepted | tail 0b+7a, zero-foot test, morph take, set_emerge, soul line, mutate (cap cut it at 29/40) |
 | reel | 29 | accepted | ohm accessors, reel, aura opt-out, rise clamp, curl at speed, frontal plume, apparition (7 commits, time-boxed to 05:58) |
-| films | TBD | TBD | post-gate films + frames.json (package 5, no repo changes) |
+| films | 17 | accepted | post-gate re-cut of the reel + flight films, frames.json 15 entries, limited-range re-encode; changed no repo file |
 
 What I would brief differently: a hard time box with an explicit commit deadline in every brief (package 4 had
 one and finished 20 minutes early with 7 clean commits; package 2 without one hit the 75-min cap). Launch every
