@@ -160,3 +160,23 @@ func test_hover_impulse_settles_above_and_below_the_rest_height() -> void:
 	assert_eq(motion.tick, 0)
 	assert_eq(motion.lift_m, row.height_m)
 	assert_eq(motion.lag_px, Vector2.ZERO)
+
+
+func test_low_curl_stops_at_ground_and_height_never_moves_the_overhead_centreline() -> void:
+	var data: DataTable = DataTable.open(GhostHoverRow.PATH, GhostHoverRow.SCHEMA)
+	var source: Dictionary = data.array(data.raw, "rows")[0]
+	var row: GhostHoverRow = GhostHoverRow.new(data, source)
+	row.tail.curl_m = 0.0
+	var tail: GhostTail = add_child_autofree(GhostTail.new(row.tail))
+	for rise: float in [0.0, -2.0]:
+		row.tail.rise_m = rise
+		for view: String in ["top", "tilt70"]:
+			ViewMode.select(view)
+			tail.reset(Vector2.ZERO, 0.0, 0.6)
+			var points: PackedVector2Array = tail.points()
+			for i: int in points.size():
+				var k: float = float(i) / row.tail.segments
+				var h: float = maxf(0.0, 0.6 * (1.0 - k) + rise * sin(k * PI))
+				var projected: Vector2 = tail._chain[i] + ViewMode.shared().lift_px(h)
+				assert_almost_eq(points[i], projected, Vector2.ONE * 0.001)
+			assert_almost_eq(points[-1], tail._chain[-1], Vector2.ONE * 0.001)

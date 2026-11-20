@@ -168,7 +168,7 @@ func _centre(i: int, up: Vector2) -> Vector2:
 	return (
 		_chain[i]
 		+ (up + _socket) * (1.0 - k)
-		+ ViewMode.shared().lift_px(_row.rise_m * arch)
+		+ ViewMode.shared().lift_px(maxf(_row.rise_m * arch, -_height_m * emerge * (1.0 - k)))
 		+ offset
 		+ _belt_trail(k, up)
 	)
