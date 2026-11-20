@@ -56,7 +56,8 @@ func sample(tick: int) -> TickInput:
 				Vector2.RIGHT if go else Vector2.ZERO, Vector2.RIGHT, &"melee" if press else &""
 			)
 		&"kerf":
-			return _pad(Vector2.ZERO, _nearest(), &"melee" if t in [28, 77, 126, 200] else &"")
+			var aim: Vector2 = Vector2.LEFT if t == 250 else _nearest()
+			return _pad(Vector2.ZERO, aim, &"melee" if t in [28, 77, 126, 200, 250] else &"")
 	return _dent(t) if ghost == &"dent" else _ohm(t)
 
 
