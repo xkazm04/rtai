@@ -1,0 +1,14 @@
+**Dent now defaults to spectral Ejected.** `6d9b5e7a6` changed Dent’s row in `project/data/tables/ghost_forms.json` and recorded the decision in `docs/decisions.md` at 05:34 local, before the 05:55 cutoff. `--ghost-look=legacy` remains available.
+
+`961862cb9` fixed the nullable sprite and rig reads in `project/tests/unit/test_ghost_flight_hosts.gd`. `_drive_arena` fits the 40-line limit, and all assertions were preserved.
+
+| Check | Result |
+|---|---|
+| Flight host tests | 4/4 passed with each default |
+| `--changed` | 3,252 passed, 0 failed, 2 skipped |
+| 46-file selection | 269/269 passed |
+| `quest1_dent`, `quest1_dent_lock`, `replay_60s` | 3/3 passed; replay hash `cbeb734ff9b97c41` |
+
+Both commits passed their quick gates and pre-commit checks. The merge preview flagged an overlap with `n20-tonnage` in the host test that will need reconciliation at integration.
+
+[astra: 309s, exit 0]

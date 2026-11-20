@@ -46,11 +46,12 @@ killed/(killed+survived).
 Left facings are mirrors, so the belt diagonal flips. Judge it at 64 px/m: if it reads wrong, list it
 as a Call with a still; do not generate new art in this package.
 
-## Order and time (hard)
-Work in this order: 3 (chip), 4 (overload tests), 2 (hit reaction), 1 (transformation: film and look
-first; fix only if it shows legs or the old standing body and the fix fits), 5 last. Every change
-committed (quick gate green) by **06:00 local time** whatever its state; after 06:00 make no product
-commit, only finish the report. Stop at 35 minutes or 06:00, whichever comes first.
+## Order and time (hard, re-cut 04:55 by iteration 4)
+Only items **3 (chip)** and **4 (overload tests)** are in this package, in that order. Items 1, 2 and
+5 are NOT to be built: if you have a still that bears on them already (flight's transformation stages
+were filmed by a5), name it in the report and stop. Every change committed (quick gate green) by
+**05:58 local time** whatever its state; after 05:58 make no commit at all (the director's final gate
+starts 06:15 on HEAD), only finish the report. Check the clock (`date`) before every commit.
 
 ## Report
 Files, shas, stills with ticks, mutate scores, what is not done.

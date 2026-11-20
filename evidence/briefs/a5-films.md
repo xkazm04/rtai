@@ -15,8 +15,12 @@ Godot process at a time; kill by PID only. If you need `project/override.cfg` fo
 is temporary: delete it afterwards and never commit it. Stage per path; never push.
 
 ## 0. Flight's tail-0b, then Dent's tail row (before any film)
-`git merge n20-flight` (brings 5e906fd53, 04:14: dense bright tail root anchored aft of the body,
-wider body, round puffs near the tip). Then render ONE still pair (tilt 70 + top, 64 px/m, move
+`git merge n20-flight` (at 04:47 it brings 5e906fd53 dense bright tail root anchored aft of the body
++ round puffs at the tip, b0f2629c1 real arena inputs per gait, 8589b0294 + ff370f539 the real
+transformation stages: spectral bodies rise/retract through them; check `--takes` in ghost_films.mjs
+for a transformation take and film it too if it exists: `dent_morph_32.mp4`). After the merge run
+`node tools/tests/run_unit.mjs --select=test_dent_spectral_drawn,test_dent_spectral_top,test_dent_strap,test_dent_strings,test_dent_look`
+and fix (small commit) anything the merge broke before filming. Then render ONE still pair (tilt 70 + top, 64 px/m, move
 take, dive tick 110, `--ghost-look=spectral`) and compare with
 `scratch/a3/top-64ppm-move-dive-tick110-after.png` and the plate's tail (a comet tongue as wide as
 the torso at the belt, tapering over about two body lengths, brightest at the root). If the root now
@@ -70,5 +74,6 @@ each film yourself and say what you see (no claim without a look). Zero script e
 pass (quote the dev_verdict line or the log grep).
 
 ## Time
+The director's session ends at 06:10 and the gate starts 06:15: no product commit after 05:55.
 At 50 minutes stop with what is delivered and a report listing every file, its ffprobe line, and
 what is missing.

@@ -1,0 +1,20 @@
+**Dent’s default remains `legacy`.** All six 55° stills passed visual inspection, but the unit gate failed. I restored `ghost_forms.json`. No decision line was added and no golden was re-blessed.
+
+`607f482fd` moved `scratch/a6/chip.png` out of Git at 05:17 local. The archived copy matches the committed SHA-256, and Git tracks no files under `scratch/`. The quick gate and all 19 pre-commit checks passed. [Archived chip comparison](C:/Users/kazda/kiro/gtai-masters/n20/dent/scratch/a6/chip.png)
+
+All six captures used visible p55 spectral cells at 64 px/m. Dent was legless and fully in frame throughout. [55° contact sheet](C:/Users/kazda/kiro/gtai-masters/n20/dent/scratch/a6/tilt55_sheet.jpg)
+
+| Still | Observation |
+|---|---|
+| [Move 110](C:/Users/kazda/kiro/gtai-masters/n20/dent/scratch/a6/tilt55_move_t110.png) | Dent dives right with the full comet tail visible. |
+| [Move 163](C:/Users/kazda/kiro/gtai-masters/n20/dent/scratch/a6/tilt55_move_t163.png) | Dent has turned and resumed DIVE. The arms-spread SWING cell appeared at [tick 156](C:/Users/kazda/kiro/gtai-masters/n20/dent/scratch/a6/tilt55_move_t156.png). |
+| [Attack 94](C:/Users/kazda/kiro/gtai-masters/n20/dent/scratch/a6/tilt55_attack_t94.png) | The jab reaches the guard beside the car; the teal flash sits on the knuckles. |
+| [Attack 160](C:/Users/kazda/kiro/gtai-masters/n20/dent/scratch/a6/tilt55_attack_t160.png) | The taut strap runs from Dent’s hand to the roof buckle. |
+| [Attack 234](C:/Users/kazda/kiro/gtai-masters/n20/dent/scratch/a6/tilt55_attack_t234.png) | The amber strap reaches the moving car, with the full heat ring on the road. |
+| [Attack 239](C:/Users/kazda/kiro/gtai-masters/n20/dent/scratch/a6/tilt55_attack_t239.png) | The expanding blast, debris and struck-body spoke are visible inside the road ring. |
+
+With spectral as the candidate default, `--changed` recorded **3,251 passed, 1 failed, 2 skipped**. The 46-file selection recorded **268 passed, 1 failed**. Both hit the same null `frame_coords` read. The isolated test failed again after restoring legacy, confirming the blocker also exists at HEAD. [Failing test line](C:/Users/kazda/kiro/gtai-wt/n20-dent/project/tests/unit/test_ghost_flight_hosts.gd:114)
+
+All **3 scenarios passed**. Quest 1 recorded one seize, four strikes and one blast. The 3,600-tick replay retained `cbeb734ff9b97c41`. The earlier overload commits `854d276fe` and `007c4cccd` scored **13/(13+7) = 13/20**.
+
+[astra: 537s, exit 0]

@@ -1,0 +1,7 @@
+The host test passed with Dent’s `legacy` default: **4 passed, 0 failed, 0 skipped**. I kept the sprite guard, added the typed rig guard, and preserved every assertion.
+
+The quick gate then failed at [test_ghost_flight_hosts.gd:89](C:/Users/kazda/kiro/gtai-wt/n20-dent/project/tests/unit/test_ghost_flight_hosts.gd:89): `func _drive_arena is 41 lines > 40`.
+
+I stopped at that new failure. The test edit is unstaged, HEAD remains `607f482fd`, and Dent still defaults to `legacy`. The spectral checks, scenarios and replay were not run.
+
+[astra: 69s, exit 0]
