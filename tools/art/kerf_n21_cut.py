@@ -30,21 +30,131 @@ PARTS = ("head", "torso", "upperarm", "blade", "tail_straight", "tail_curled")
 BACK = "#1d2228"
 FILTER = Image.Resampling.LANCZOS
 
-# Reviewed panel windows in the raw masters, pose-major, then facing. Keep
-# the search on the steel plate so visor, rivet and blade highlights cannot
-# masquerade as charge slots. None denotes a completely occluded panel.
-FLIGHT_PANELS = (
-    ((167,106,202,129),(494,105,527,130),(797,107,816,130),(1038,82,1066,107),(1354,81,1394,107)),
-    ((150,393,186,408),(492,384,525,401),(803,381,830,402),(1073,339,1107,358),(1360,344,1401,369)),
-    ((174,612,210,639),(493,616,521,639),(790,612,814,632),(1097,595,1128,628),(1403,595,1438,631)),
-    ((154,828,191,853),(486,831,520,858),(791,835,816,863),(1045,841,1072,867),(1351,838,1385,866)),
-)
-ACTION_PANELS = (
-    ((149,135,169,145),None,None,(1037,78,1075,104),(1364,88,1405,120)),
-    ((147,378,180,395),None,None,(1066,333,1101,361),(1366,335,1408,364)),
-    ((146,622,180,643),(466,609,500,633),(780,607,797,632),(1043,584,1078,612),(1367,585,1407,614)),
-    ((146,889,179,908),(476,879,505,899),None,(1055,826,1098,852),(1367,835,1406,862)),
-)
+# Master-pixel samples inside each visible lamp, in pose-major, facing-minor
+# order. The cutter locates each connected bright core again on the packed
+# texture; the stored centroid comes from every pixel in that core. Empty
+# tuples mark occlusion by the blade or by the side of the torso.
+SLOT_SAMPLES = {
+    "fly_70": (
+        # Hover
+        ((166, 146), (177, 146), (187, 146)),
+        ((497, 149), (506, 149), (513, 148)),
+        ((801, 152), (806, 150)),
+        ((1035, 137), (1044, 137), (1055, 139)),
+        ((1358, 133), (1370, 133), (1383, 133)),
+        # Cruise
+        ((165, 406), (176, 407), (189, 406)),
+        ((514, 404), (522, 406), (527, 410)),
+        ((811, 405),),
+        ((1074, 359), (1084, 359), (1094, 362)),
+        ((1357, 363), (1369, 363), (1380, 363)),
+        # Turn
+        ((190, 612), (198, 617), (208, 622)),
+        ((508, 620), (513, 626), (521, 629)),
+        ((798, 617), (803, 622)),
+        ((1094, 592), (1103, 599), (1111, 605)),
+        ((1394, 590), (1405, 592), (1415, 596)),
+        # Hit
+        ((162, 855), (173, 854), (186, 855)),
+        ((491, 860), (501, 858), (511, 859)),
+        ((801, 857), (809, 855)),
+        ((1036, 872), (1046, 872), (1057, 870)),
+        ((1356, 870), (1368, 870), (1382, 869)),
+    ),
+    "act_70": (
+        # Cock
+        ((155, 155), (167, 166), (177, 163)),
+        ((493, 163), (497, 162), (502, 160)),
+        (),
+        (),
+        ((1344, 128), (1357, 128), (1368, 128)),
+        # Cut
+        ((158, 400), (168, 400), (178, 399)),
+        (),
+        (),
+        (),
+        ((1364, 374), (1375, 374), (1386, 374)),
+        # Recover
+        ((157, 631), (168, 631), (179, 631)),
+        ((485, 628), (492, 628), (499, 628)),
+        (),
+        (),
+        ((1350, 617), (1362, 617), (1374, 617)),
+        # Blink
+        ((157, 900), (167, 901), (177, 901)),
+        ((485, 896), (492, 899), (500, 894)),
+        (),
+        (),
+        ((1351, 856), (1362, 855), (1374, 855)),
+    ),
+    "fly_55": (
+        # Hover
+        ((150, 135), (159, 135), (168, 136)),
+        ((477, 134), (483, 135), (491, 133)),
+        ((792, 130), (795, 129)),
+        ((1037, 118), (1043, 119), (1050, 120)),
+        ((1367, 123), (1377, 123), (1386, 123)),
+        # Cruise
+        ((149, 386), (158, 390), (168, 388)),
+        ((488, 377), (497, 379), (501, 380)),
+        ((812, 376), (815, 378)),
+        ((1091, 344), (1097, 343), (1104, 343)),
+        ((1372, 344), (1382, 344), (1391, 344)),
+        # Turn
+        ((166, 629), (172, 633), (181, 635)),
+        ((488, 625), (495, 625), (501, 627)),
+        ((790, 624),),
+        ((1075, 594), (1083, 595), (1088, 600)),
+        ((1393, 599), (1401, 601), (1410, 604)),
+        # Hit
+        ((149, 843), (159, 843), (169, 843)),
+        ((480, 829), (488, 827), (496, 827)),
+        ((780, 822), (784, 819)),
+        ((1043, 846), (1049, 845), (1056, 843)),
+        ((1366, 846), (1376, 846), (1386, 846)),
+    ),
+    "act_55": (
+        # Cock
+        ((158, 167), (168, 164)),
+        ((494, 149), (503, 148), (510, 145)),
+        ((810, 137),),
+        ((1058, 123), (1064, 124), (1070, 128)),
+        ((1365, 130), (1377, 131), (1390, 131)),
+        # Cut
+        ((158, 385), (167, 385), (176, 383)),
+        ((472, 392), (478, 393)),
+        ((797, 388),),
+        ((1065, 357), (1072, 357), (1079, 359)),
+        ((1361, 360), (1371, 359), (1379, 360)),
+        # Recover
+        ((157, 629), (168, 629), (178, 629)),
+        ((485, 620), (493, 621), (499, 621)),
+        ((802, 623),),
+        ((1061, 605), (1069, 605), (1076, 606)),
+        ((1366, 608), (1377, 608), (1390, 608)),
+        # Blink
+        ((154, 904), (164, 905), (175, 904)),
+        ((483, 900), (490, 900)),
+        ((799, 896),),
+        ((1062, 860), (1069, 861), (1077, 862)),
+        ((1369, 865), (1379, 865), (1390, 867)),
+    ),
+}
+
+# The crossing blade hides most of the three-quarter cock lamps; only their
+# dim ends remain. The last blink lamp at the same facing also lies in shade.
+SLOT_THRESHOLDS = {
+    ("kerf_sp_act_70_take1", 0, 1): (80, 207, 165),
+    ("kerf_sp_act_70_take1", 3, 1): (115, 215, 189),
+}
+
+# Whole accepted master, ghost_pack scale and profile helmet scan (x0, x1, y).
+SHEETS = {
+    "fly_70": (4, 1.64, (760, 841, 89)),
+    "act_70": (1, 1.855, (794, 858, 91)),
+    "fly_55": (1, 1.59, (755, 839, 73)),
+    "act_55": (1, 1.36, (804, 875, 83)),
+}
 
 
 def write_json(path, data):
@@ -177,6 +287,34 @@ def packed_transform(image, origin, cell, k):
     return lambda px, py: (round(x + (px-origin[0])*sx), round(y + (py-origin[1])*sy))
 
 
+def slot_centres(image, seeds, scale, threshold):
+    """Find connected light cores near the reviewed positions on the charge panel."""
+    if not seeds:
+        return []
+    margin = round(16 * scale)
+    left = min(x for x, _ in seeds) - margin
+    top = min(y for _, y in seeds) - margin
+    right = max(x for x, _ in seeds) + margin + 1
+    bottom = max(y for _, y in seeds) + margin + 1
+    red, green, blue, alpha = np.asarray(image.crop((left, top, right, bottom))).transpose(2, 0, 1)
+    r, g, b = threshold
+    bright = (red >= r) & (green >= g) & (blue >= b) & (alpha >= 128)
+    _, labels, _, centres = cv2.connectedComponentsWithStats(bright.astype("uint8"))
+    ys, xs = np.nonzero(bright)
+    selected = []
+    for x, y in seeds:
+        dist_sq = (xs + left - x)**2 + (ys + top - y)**2
+        if not len(dist_sq) or dist_sq.min() > (4 * scale)**2:
+            raise ValueError(f"no slot core near {x}, {y}")
+        idx = dist_sq.argmin()
+        component = int(labels[ys[idx], xs[idx]])
+        if component in selected:
+            raise ValueError(f"two landmarks reach the same highlight near {x}, {y}")
+        selected.append(component)
+    return sorted([round(float(centres[i, 0]) + left, 2), round(float(centres[i, 1]) + top, 2)]
+                  for i in selected)
+
+
 def pack(master, work, output, k, panels, head):
     work.mkdir(parents=True, exist_ok=True)
     cuts = {}
@@ -189,11 +327,12 @@ def pack(master, work, output, k, panels, head):
     entries = []
     for (pose, face), cell in atlas.items():
         to_cell = packed_transform(*cuts[pose, face], cell, k)
-        panel = panels[pose][face]
-        box = (*to_cell(*panel[:2]), *to_cell(*panel[2:])) if panel else None
-        slots = points(cell, box, k)
-        if len(slots) > 3:
-            raise ValueError(f"extra highlights: {master.name}, pose {pose}, face {face}: {slots}")
+        seeds = [to_cell(x, y) for x, y in panels[pose * 5 + face]]
+        try:
+            threshold = SLOT_THRESHOLDS.get((master.stem, pose, face), (155, 223, 201))
+            slots = slot_centres(cell, seeds, k, threshold)
+        except ValueError as exc:
+            raise ValueError(f"{master.stem}, pose {pose}, facing {face}: {exc}") from exc
         entries.append({"pose": pose, "facing": face, "alpha_mass_center": centre(cell),
                         "slots": slots})
     cell = atlas[0, 2]
@@ -220,27 +359,29 @@ def label(board, xy, caption, size=16):
 
 
 def contact(archive, sheets):
-    board = Image.new("RGB", (1712, 948), BACK)
+    board = Image.new("RGB", (2360, 1280), BACK)
     plate = Image.open(archive / "masters/refs/kerf_b.png").convert("RGB")
-    fit(board, plate, (16, 154, 800, 550))
-    label(board, (16, 118), "SWARF RONIN   /   Owner's concept", 21)
-    label(board, (840, 544), "Overhead parts   /   accepted take 1", 18)
+    fit(board, plate, (16, 260, 800, 550))
+    label(board, (16, 222), "SWARF RONIN   /   Owner's concept", 22)
+    for row, pitch in enumerate((70, 55)):
+        for col, kind in enumerate(("fly", "act")):
+            x, y = 840 + col*760, 20 + row*466
+            path, _, status = sheets[kind, pitch]
+            name = "Flight" if kind == "fly" else "Action"
+            label(board, (x, y), f"{pitch}° {name}   /   {status}", 20)
+            poses = ("Hover", "Cruise", "Turn", "Hit") if kind == "fly" else (
+                "Cock", "Cut", "Recover", "Blink"
+            )
+            for (pose, face), cell in atlas_cells(path).items():
+                top = y + 34 + pose*104
+                if face == 0:
+                    label(board, (x, top+43), poses[pose], 14)
+                fit(board, cell, (x+66+face*134, top, 130, 100))
+    label(board, (840, 966), "Overhead parts   /   take 1", 20)
     for index, name in enumerate(PARTS):
-        x, y = 840+index%3*290, 578+index//3*180
-        fit(board, Image.open(RONIN / f"{name}.png"), (x, y, 265, 141))
-        label(board, (x+65, y+144), name.replace("_", " "))
-    for i, (kind, pitch) in enumerate((("fly",70), ("act",70), ("fly",55), ("act",55))):
-        x, y = 840+(i%2)*436, 20+(i//2)*472
-        name = "Flight" if kind == "fly" else "Action"
-        if (kind, pitch) not in sheets:
-            label(board, (x, y), f"{pitch}° {name}   /   awaiting 70° acceptance")
-            continue
-        path, _, status = sheets[kind, pitch]
-        label(board, (x, y), f"{pitch}° {name}   /   {status}")
-        cells = atlas_cells(path)
-        for (pose, face), cell in cells.items():
-            # The board preserves the master's pose rows and facing columns.
-            fit(board, cell, (x+face*85, y+52+pose*107, 83, 103))
+        x = 840 + index*250
+        fit(board, Image.open(RONIN / f"{name}.png"), (x, 1014, 232, 204))
+        label(board, (x+46, 1236), name.replace("_", " "))
     board.save(archive / "body_contact_sheet.png")
 
 
@@ -252,19 +393,18 @@ def scale_board(archive, sheets):
     label(board, (10, 7), "32 px/m     P70 guard   /   Kerf   /   Dent", 15)
     for row, pitch in enumerate((70, 55)):
         dent = atlas_cells(SOULS / f"view/p{pitch}/dent_sp_fly.png")
-        kerf = sheets.get(("fly", pitch))
-        status = kerf[2] if kerf else "no accepted 70° pair"
+        path, info, status = sheets["fly", pitch]
+        kerf = atlas_cells(path)
+        factor = 86.4 / info["first_pose_median_height"]
         label(board, (10, 37+145*row), f"{pitch}°   {status}", 13)
         for col, face in enumerate((0, 2, 4)):
             x, y = 5+col*273, 144+row*145
             label(board, (x+87, y+8), ("Toward","Profile","Away")[col], 13)
             guard = cop.crop((face*cw, 0, (face+1)*cw, cop.height))
-            trio = [(guard, 32*1.15/cw, 26), (dent[0,face], 86.4/(223 if pitch==70 else 212), 223)]
-            if kerf:
-                src, meta, _ = kerf
-                trio.append((atlas_cells(src)[0,face], 86.4/meta["first_pose_median_height"], 117))
-            for cell, factor, cx in trio:
-                tile = cell.resize(tuple(round(v*factor) for v in cell.size), FILTER)
+            trio = [(guard, 32*1.15/cw, 26), (kerf[0,face], factor, 117),
+                    (dent[0,face], 86.4/(223 if pitch==70 else 212), 223)]
+            for cell, scale, cx in trio:
+                tile = cell.resize(tuple(round(v*scale) for v in cell.size), FILTER)
                 tile = tile.crop(tile.getbbox())
                 board.paste(tile, (x+cx-tile.width//2, y-tile.height), tile)
     zoom = board.resize((board.width*3, board.height*3), Image.Resampling.NEAREST)
@@ -277,17 +417,15 @@ def scale_board(archive, sheets):
 
 def slot_board(archive, sheets, torso):
     panels = []
-    for pitch in (70, 55):
-        if ("fly", pitch) not in sheets:
-            continue
-        path, info, status = sheets["fly", pitch]
+    for row, pitch in enumerate((70, 55)):
+        path, info, _ = sheets["fly", pitch]
         cells = atlas_cells(path)
-        for face, direction in ((0,"toward"), (4,"away")):
+        for col, (face, direction) in enumerate(((0, "toward"), (4, "away"))):
             entry = next(e for e in info["cells"] if e["pose"] == 0 and e["facing"] == face)
-            panels.append((cells[0,face], entry["slots"], f"{pitch}° {direction} hover   /   {status}"))
-    panels.append((Image.open(RONIN / "torso.png"), torso["slots"], "Overhead torso   /   accepted"))
+            panels.append((cells[0, face], entry["slots"], f"{pitch}° {direction} hover", col, row))
+    panels.append((Image.open(RONIN / "torso.png"), torso["slots"], "Overhead torso", 2, 0))
     tiles = []
-    for image, slots, caption in panels:
+    for image, slots, caption, col, row in panels:
         x0, y0, x1, y1 = image.getbbox()
         tile = image.crop((x0, y0, x1, y1)).resize(((x1-x0)*2, (y1-y0)*2), Image.Resampling.NEAREST)
         pen = ImageDraw.Draw(tile)
@@ -295,31 +433,34 @@ def slot_board(archive, sheets, torso):
             x, y = (cx-x0+0.5)*2-0.5, (cy-y0+0.5)*2-0.5
             pen.ellipse((x-8,y-8,x+8,y+8), outline="#ff612f", width=2)
             pen.point((x,y), fill="#ff612f")
-        tiles.append((tile, caption))
-    board = Image.new("RGB", (sum(im.width+24 for im,_ in tiles),
-                              max(im.height for im,_ in tiles)+68), BACK)
-    x = 12
-    for im, caption in tiles:
-        label(board, (x,12), caption, 20)
-        board.paste(im, (x,54), im)
-        x += im.width+24
+        tiles.append((tile, caption, col, row))
+    w = max(im.width for im, *_ in tiles) + 24
+    h = max(im.height for im, *_ in tiles) + 68
+    board = Image.new("RGB", (w*3, h*2), BACK)
+    for im, caption, col, row in tiles:
+        x, y = col*w+(w-im.width)//2, row*h
+        label(board, (x,y+12), caption, 20)
+        board.paste(im, (x,y+52), im)
     board.save(archive / "body_slots.png")
 
 
 def rebuild(archive):
     masters = archive / "masters"
     torso = top_parts(masters / "kerf_sp_top_take1.png")
-    # Only accepted artwork has a runtime file or a row in the runtime metadata.
-    write_json(RONIN / "cut.json", {"schema": "gtai.kerf_ronin_cut/1", "sheets": {}, "torso": torso})
     sheets = {}
-    trials = (("fly", 3, FLIGHT_PANELS, (780,847,60)),
-              ("act", 2, ACTION_PANELS, (803,861,77)))
-    for kind, take, panels, head in trials:
-        name = f"kerf_sp_{kind}_70_take{take}"
-        output = archive / f"cut/{name}.png"
-        info = pack(masters / f"{name}.png", archive / f"cut/{name}", output, 1.8, panels, head)
-        sheets[kind, 70] = (output, info, f"rejected take {take}")
-        write_json(output.with_suffix(".json"), info)
+    metadata = {}
+    for key, (take, scale, head) in SHEETS.items():
+        kind, pitch = key.split("_")
+        name = f"kerf_sp_{key}"
+        master = masters / f"{name}_take{take}.png"
+        output = SOULS / f"view/p{pitch}/kerf_sp_{kind}.png"
+        info = pack(master, archive / f"cut/{master.stem}", output, scale, SLOT_SAMPLES[key], head)
+        info.update(texture="res://" + output.relative_to(ROOT / "project").as_posix(),
+                    master=f"n21/kerf/masters/{master.name}", scale=scale)
+        metadata[name] = info
+        sheets[kind, int(pitch)] = (output, info, f"take {take}")
+    write_json(RONIN / "cut.json", {"schema": "gtai.kerf_ronin_cut/1",
+                                     "sheets": metadata, "torso": torso})
     contact(archive, sheets)
     scale_board(archive, sheets)
     slot_board(archive, sheets, torso)
