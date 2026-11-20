@@ -123,3 +123,8 @@ NEXT (session 6, after the 18:30 freeze):
 1. `export APPDATA=C:/Users/kazda/kiro/gtai-n21/appdata/kerf` + GODOT_BIN, then once: `node tools/gate/run.mjs --rev=HEAD --reels`; put its line + `build/gate/<sha>/gate.json` in REPORT's gate paragraph (code is still c14ae6f97; later commits are journal/report only).
 2. REPORT header says "Written session 4": update to the final session; `node tools/evidence/cites.mjs REPORT.md`; pathspec commit REPORT + JOURNAL.
 3. After the reels gate, clean `%LOCALAPPDATA%\Temp\gtai-gate-*` snapshots of this lane (via the gate tool / `removeSnapshot`, never by name pattern across lanes).
+
+## Session 6 (16:37, iteration 6 BUILD)
+- 16:37 START session 6. No Astra running at start (no lock). Gate PASS on 118872760 (code c14ae6f97) stands.
+- 16:38 DECISION one last code-only call fits before 17:00: the weakest item is the overhead CRUISE arrow read (REPORT Call). Build the alternative as an OFF flag `--kerf-cruise-wings=open` (CRUISE sweep 43/20 -> 62/40, `kerf_ronin_top.gd`), default byte-identical, so the owner's Call is one flag. If it is not committed green by 16:56 nothing ships and the 16:30 gate stands.
+- 16:38 ASTRA RUNNING cruise06 since 16:38 (fresh, brief evidence/briefs/n21-kerf-06-cruise-wings.md; WMI cmd pid 42020, astra lock pid 67460; hard stop 17:00, commit by 16:56; out evidence/briefs/n21-kerf-06-cruise-wings.out.txt). If it commits, re-run the gate by 17:15.
