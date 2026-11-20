@@ -36,13 +36,13 @@ def label(canvas, xy, text, size=18, color=INK):
 def guard_board(archive):
     w, h, margin = 300, 240, 12
     out = Image.new("RGB", (3 * w * 3 + 4 * margin, h * 4 + 144), PAPER)
-    for i, (view, title) in enumerate([("tilt70", "70\u00b0 tilt"), ("tilt", "55\u00b0 tilt"), ("top", "Overhead")]):
+    for i, (view, title) in enumerate([("tilt70", "70 deg tilt"), ("tilt", "55 deg tilt"), ("top", "Overhead")]):
         frame = crop(archive, view, "guard", 32, (w, h))
         x = margin + i * (3 * w + margin)
         label(out, (x, 16), title, 24)
-        label(out, (x + w, 53), "32 px/m  \u00b7  native", 17, MUTED)
+        label(out, (x + w, 53), "32 px/m  /  native", 17, MUTED)
         out.paste(frame, (x + w, 80))
-        label(out, (x, 100 + h), "3\u00d7 nearest-neighbour", 17, MUTED)
+        label(out, (x, 100 + h), "3x nearest-neighbour", 17, MUTED)
         out.paste(frame.resize((3 * w, 3 * h), Image.Resampling.NEAREST), (x, 128 + h))
     out.save(archive / "kerf_guard_32.png")
 
@@ -50,7 +50,7 @@ def guard_board(archive):
 def pose_board(archive):
     w, h, gap = 532, 486, 8
     out = Image.new("RGB", (4 * (w + gap) + gap, 2 * (h + 47) + 48), PAPER)
-    for r, (view, title) in enumerate([("tilt70", "70\u00b0 tilt"), ("top", "Overhead")]):
+    for r, (view, title) in enumerate([("tilt70", "70 deg tilt"), ("top", "Overhead")]):
         y = 46 + r * (h + 47)
         label(out, (gap, y - 3), f"{title}   /   64 px/m", 19, MUTED)
         for i, mark in enumerate(("hover", "cruise", "turn", "hit")):
@@ -64,7 +64,7 @@ def pose_board(archive):
 def plate_board(archive, plate):
     out = Image.new("RGB", (1312, 532), PAPER)
     label(out, (12, 12), "Swarf Ronin   /   concept plate", 21)
-    label(out, (807, 12), "HOVER   /   70\u00b0 tilt   /   64 px/m", 21)
+    label(out, (807, 12), "HOVER   /   70 deg tilt   /   64 px/m", 21)
     with Image.open(plate) as original:
         ref = original.convert("RGB").resize((720, 480), Image.Resampling.LANCZOS)
     out.paste(ref, (12, 42))
@@ -84,7 +84,7 @@ def before_after(archive, before):
         x = 8 + i * 486
         label(out, (x, 12), f"{name}    /    tick {tick}    /    32 px/m", 17)
         with Image.open(path) as frame:
-            for row, (title, y) in enumerate([("70\u00b0 tilt", 154), ("Overhead", 650)]):
+            for row, (title, y) in enumerate([("70 deg tilt", 154), ("Overhead", 650)]):
                 label(out, (x, 43 + row * 320), title, 18, MUTED)
                 out.paste(frame.crop((974, y, 1452, y + 282)), (x, 69 + row * 320))
     out.save(archive / "kerf_move_before_after_32.png")
