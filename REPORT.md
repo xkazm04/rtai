@@ -6,6 +6,10 @@ borrow). Evidence root: `C:/Users/kazda/kiro/gtai-masters/n20/dent/` (`M/` below
 Final gate: `node tools/gate/run.mjs --rev=86fad2566` (05:36-05:48) -> `gate: PASS; build/gate/86fad25665c4/gate.json`
 (lint, unit-tests, scenario-tests 65 passed, parity 1200 exact + planted mutation caught at 629, selftest look goldens
 11/11, export-audit 791 loaded 0 failed; full log `evidence/gate-final.out.txt`). Commits after it are docs only (inert).
+Reel gate: `node tools/gate/run.mjs --rev=HEAD --reels` on `4c8be8dd9` (05:51-06:17, run before the freeze
+because this session stops at 07:19; the code is the same as 86fad2566) -> `gate: PASS; build/gate/4c8be8dd994e/gate.json`
+(lint 19/19, unit 3268 passed 0 failed 2 skipped, scenarios 65, parity exact, selftest, export-audit, reels exit 0;
+log `evidence/gate-reels.out.txt`).
 
 **Dent now defaults to the spectral Ejected look** (`6d9b5e7a6`); the old body is reachable with `--ghost-look=legacy`.
 
