@@ -217,3 +217,4 @@ NEXT: (1) logs/ohm/astra.lock = PID 12372 = ASTRA form-rest (detached, started 0
 - 05:14 DECISION brief 06 reorder: merge, 0d test fix, 0b chip rename, strip, films, glow if time, mutate last.
 - 05:17 flight accepts the test_ghost_hitback.gd Ohm-windup edit on n20-ohm (GhostLook.override_for_test(LEGACY) + reset_for_test), ours wins at merge -> brief 06 Step 0d. Launching brief 06.
 - 05:19 flight 51a905763 public accessors landed -> brief 06 Step 0e switches off drawn._fade/_hurt.
+- 05:20 ASTRA RUNNING strip-refilm since 05:20 (brief 06, detached, lock PID 63344, out logs/ohm/director-strip-refilm.out; hard stop 06:10).
