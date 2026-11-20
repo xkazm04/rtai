@@ -179,3 +179,27 @@ NEXT: (1) Check logs/ohm/astra.lock (PID 62644 = drift-films, detached, started 
 - 04:20 REPORT.md drafted (skeleton with what works so far, Calls 1-4, merge notes, ledger). Brief 06 written
   (evidence/briefs/n20-ohm-06-strip-refilm.md: merge flight tail 0b, stun-only cast strip, re-film, mutate; hard
   stop 06:10).
+- 04:21 REVIEW fc6c6b3fe (05 Part 0): REST_FORK_M (1.0, 0.70), staff x1.5, test: prongs >= 6 px apart at play zoom and the fork 0.70 m out. Accepted (stills drift/staff_*).
+- 04:31 LOOK form/{enter,exit}_{start,mid,end}_tilt70_32.png: enter = Rivet + teal orb -> spectral Ohm inside the
+  teal burst ring -> spectral Ohm; exit mirrors it. No legacy cell, no feet: reads. hit_{0,4,8,16}_{tilt70,top}_32:
+  spectral hover body leans on the hit and recovers by +16, jars and fork stay on, no legacy cell. The small red/orange
+  dashes in these stills are the cop's bullet tracers (they come from the gun), so the "red dash" in the attack film is
+  most likely the same (Astra to confirm in its 05 report). Uncommitted new dev driver project/dev/ghost-powers/
+  ohm_capture.{gd,tscn} (ohm prefix, dev: allowed; check it stays out of release, lint layers).
+NEXT: (1) logs/ohm/astra.lock = PID 12372 = ASTRA form-rest (detached, started 04:13, cap 05:28); out:
+  logs/ohm/director-form-rest.out. Do NOT start a call while it lives. Review its commits: Part A/B (transform/hit:
+  likely "no change" + ohm_capture driver), Part C (ghost_chips/ohm_spec.png + NEED flight line for ghost_chip_face),
+  Part D (ohm row look -> spectral + decisions.md line; check which goldens moved: only Ohm's may be re-blessed).
+  Look at form/chip_legacy_vs_spec.png.
+  (2) Then launch brief 06 DETACHED (evidence/briefs/n20-ohm-06-strip-refilm.md: merge n20-flight tail 0b 5e906fd53
+  keeping our ohm row, stun-only cast strip, re-film the three films, mutate ohm_spirit/ohm_drift; hard stop 06:10).
+  Launch: PowerShell Start-Process -WindowStyle Hidden cmd.exe '/c','node C:/Users/kazda/kiro/gtai-n20/tools/astra.mjs
+  --lane ohm --tag strip-refilm --brief <abs brief> > C:\Users\kazda\kiro\gtai-n20\logs\ohm\director-strip-refilm.out 2>&1'
+  -WorkingDirectory the worktree. If 05 is still running at 05:28 it stops itself; if D is not landed by then,
+  put Part D first in a short resume (--resume).
+  (3) 06:15 final gate `node tools/gate/run.mjs --rev=HEAD` (only Godot of the lane; Astra must be stopped). If red on
+  the look flip, revert that commit (new revert commit) and re-gate.
+  (4) Update n20/ohm/frames.json (I wrote it at 04:15: add cast_strip_stun_top_32 as entry 3, form/ stills, the chip),
+  finish REPORT.md (draft committed d468c2896; Calls 1-4 there), `node tools/evidence/cites.mjs REPORT.md`, commit
+  JOURNAL/REPORT per path. Reply to flight not needed (their fade_from note: ours=0 wins).
+- 04:32 END iteration 3. ASTRA RUNNING form-rest since 04:13 (lock PID 12372).
