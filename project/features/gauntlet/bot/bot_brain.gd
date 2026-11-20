@@ -1,0 +1,184 @@
+class_name GauntletBot
+extends InputSource
+## The brain sees only BotView. It can drive either the street or the pit.
+## A new target costs reaction_ticks before an attack, including weapon selection.
+
+const MELEE_M: float = 1.6
+const ENGAGE_M: float = 13.0
+const STRAFE_TICKS: int = 45
+
+
+class Intent:
+	var move: Vector2
+	var aim: Vector2
+	var reach: float
+	var attack: StringName = &""
+	var slot: StringName = &""
+
+
+var counters: BotCounters = BotCounters.new()
+var _view: BotView
+var _actions: PlayerActions
+var _profile: BotProfile
+var _aim_rng: RandomNumberGenerator
+var _defence: BotDefence
+var _forms: BotForms
+var _target_id: int = -1
+var _last_enemy: int = -1
+var _ready: int = 0
+var _previous: int = 0
+
+
+func _init(view: BotView, actions: PlayerActions, profile: BotProfile, run_seed: int) -> void:
+	_view = view
+	_actions = actions
+	_profile = profile
+	var registry: RngRegistry = RngRegistry.new(run_seed)
+	_aim_rng = registry.stream(&"test_player_aim")
+	_defence = BotDefence.new(profile, registry)
+	_forms = BotForms.new(registry)
+
+
+func sample(tick: int) -> TickInput:
+	_view.refresh()
+	var me: BotView.Player = _view.player()
+	counters.observe_totals(me)
+	counters.sample_form(me)
+	if me.hp <= 0.0:
+		_target_id = -1
+		_previous = 0
+		return TickInput.new()
+	var target: BotView.Hostile = priority_target()
+	_acquire(target, tick)
+	var intent: Intent = Intent.new()
+	if target != null and _view.wave_active():
+		intent = _engage(target, tick)
+	else:
+		intent.move = _view.forward()
+		intent.aim = intent.move
+	var defend: BotDefence.Choice = _defence.choose(_view, tick)
+	var want: StringName = _forms.desired(_view, target, _profile.form_use, defend.form)
+	return _pack(intent, defend, want)
+
+
+func _pack(intent: Intent, defend: BotDefence.Choice, want: StringName) -> TickInput:
+	var me: BotView.Player = _view.player()
+	var buttons: int = _edge(BotForms.transform(me, want))
+	if defend.cover or defend.action != &"":
+		intent.move = defend.move
+		intent.aim = defend.aim if defend.aim != Vector2.ZERO else intent.aim
+		buttons |= _bit(defend.action)
+		counters.guard_ticks += int(defend.action == &"guard" and _bit(&"guard") != 0)
+		counters.cover_ticks += int(defend.cover)
+	elif buttons == 0:
+		buttons |= _edge(intent.slot)
+		var attack: int = _bit(intent.attack)
+		if intent.attack == &"melee" or (me.form == &"dent" and intent.attack == &"fire"):
+			attack = _edge(intent.attack)
+		buttons |= attack
+	_previous = buttons
+	var move: Vector2 = intent.move.limit_length(1.0) * TickInput.AXIS_MAX
+	return TickInput.new(
+		buttons | PlayerCommand.pack_aim(intent.aim, _actions, intent.reach),
+		roundi(move.x),
+		roundi(move.y)
+	)
+
+
+func priority_target() -> BotView.Hostile:
+	var best: BotView.Hostile = null
+	var high: float = -INF
+	for foe: BotView.Hostile in _view.hostiles():
+		if not foe.alive:
+			continue
+		var weight: float = _profile.threat_weights.get(foe.archetype, 1.0)
+		var score: float = weight / maxf(0.25, foe.pos.distance_to(_view.player().pos))
+		if foe.tell == &"large":
+			score += _profile.large_tell_bonus
+		if score > high or (score == high and foe.id < best.id):
+			best = foe
+			high = score
+	return best
+
+
+func _acquire(target: BotView.Hostile, tick: int) -> void:
+	var id: int = target.id if target != null else -1
+	if id == _target_id:
+		return
+	_target_id = id
+	_ready = tick + _profile.reaction_ticks
+	if id >= 0:
+		counters.targets_switched += int(_last_enemy >= 0 and _last_enemy != id)
+		_last_enemy = id
+
+
+func _engage(foe: BotView.Hostile, tick: int) -> Intent:
+	var intent: Intent = Intent.new()
+	var me: BotView.Player = _view.player()
+	var dir: Vector2 = me.pos.direction_to(foe.pos)
+	var distance: float = me.pos.distance_to(foe.pos)
+	intent.aim = dir
+	intent.reach = distance
+	var slot: BotView.Slot = _weapon(distance)
+	var reach: float = slot.reach if slot != null else MELEE_M
+	var blocked: bool = not _view.clear_line(me.pos, foe.pos)
+	var side: float = 1.0 if tick % (2 * STRAFE_TICKS) < STRAFE_TICKS else -1.0
+	if blocked:
+		intent.move = (dir * 0.4 + dir.orthogonal() * side).normalized()
+	elif distance > minf(reach * 0.88, ENGAGE_M):
+		intent.move = dir
+	elif distance > MELEE_M:
+		intent.move = dir.orthogonal() * side * 0.55
+	if tick < _ready or not me.settled:
+		return intent
+	if slot != null and me.current_slot != slot.index:
+		intent.slot = slot.action
+	if blocked:
+		return intent
+	_attack(intent, foe, slot)
+	return intent
+
+
+func _attack(intent: Intent, foe: BotView.Hostile, slot: BotView.Slot) -> void:
+	var me: BotView.Player = _view.player()
+	var distance: float = intent.reach
+	var error: float = _aim_rng.randf_range(-_profile.aim_error_deg, _profile.aim_error_deg)
+	intent.aim = intent.aim.rotated(deg_to_rad(error))
+	if (
+		me.form == &"dent"
+		and me.seized_car_pos == Vector2.INF
+		and me.pos.distance_to(me.car_pos) <= BotForms.DENT_M
+	):
+		intent.aim = me.pos.direction_to(me.car_pos)
+		intent.attack = &"fire"
+	elif me.form == &"dent" and me.seized_car_pos.distance_to(foe.pos) <= BotForms.HEAVY_M:
+		intent.attack = &"melee"
+	elif distance <= maxf(MELEE_M, BotForms.reach(me.form)):
+		intent.attack = &"melee"
+	elif slot != null and not slot.melee and distance <= slot.reach:
+		intent.attack = &"fire"
+
+
+## Shortest gun which reaches, or the longest one while closing in. Prefer a
+## carried melee tool at claw range. With no slots the quick hands strike remains.
+func _weapon(distance: float) -> BotView.Slot:
+	var best: BotView.Slot = null
+	for slot: BotView.Slot in _view.held_slots():
+		if slot.melee and distance <= MELEE_M:
+			return slot
+		if best == null:
+			best = slot
+		elif best.reach < distance and slot.reach > best.reach:
+			best = slot
+		elif slot.reach >= distance and slot.reach < best.reach:
+			best = slot
+	return best
+
+
+func _bit(action: StringName) -> int:
+	var bit: int = _actions.bit(action)
+	return 1 << bit if bit >= 0 else 0
+
+
+func _edge(action: StringName) -> int:
+	return _bit(action) & ~_previous
