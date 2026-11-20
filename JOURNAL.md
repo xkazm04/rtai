@@ -234,3 +234,9 @@ NEXT (iteration 5, REPORT phase): (1) if logs/ohm/astra.lock exists (sheet-test,
   twice: 480f141f9, a340d0464; two flight test edits ours win: 6c9319597 test_ghost_hitback pin, 06b sheet test;
   public accessors used since ca37bd94c; ohm fade_from 0 keep), ledger (form-rest 58 accepted, strip-refilm 34
   accepted, sheet-test ?), Calls 1-4. Then `node tools/evidence/cites.mjs REPORT.md`, commit REPORT/JOURNAL per path.
+- 05:56 ASTRA sheet-test 7 accepted (8b4862e1f: flight's legacy belt test builds a Kerf flight for the leg cut, same checks; units 3259 passed / 0 failed / 2 skipped). Last code commit of the night.
+- 05:57 GATE RUNNING final `node tools/gate/run.mjs --rev=HEAD` on 8b4862e1f since 05:57 (detached cmd PID 24112, APPDATA ohm, out C:\Users\kazda\kiro\gtai-n20\logs\ohm\final-gate.out). No Astra running.
+NEXT (supersedes (1)-(2) above): wait for PID 24112 / final-gate.out; quote its line + gate.json path. If red, read the
+  failing check; a doc-only fix is ours, anything else goes in REPORT "What does not". Then (3) above: REPORT, cites.mjs,
+  commit per path. Ledger add: sheet-test 7 accepted.
+- 05:58 END iteration 4.
