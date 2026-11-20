@@ -30,12 +30,7 @@ var debris_on: bool = (
 )
 var _legacy: DentLegacyAttack
 var _overload: DentOverload
-var _ink: DentStrapCanvas
-var _strap: DentStrap
-var _body: DentBody
-var _body_group: StringName
-var _hand_offset: Vector2
-var _anchor: Vector2
+var _tether: DentTether
 var _cam_at: Vector2 = Vector2.INF
 
 
@@ -45,19 +40,15 @@ func _ready() -> void:
 	if not GhostLook.spectral(DentStage.GHOST):
 		_legacy = DentLegacyAttack.new()
 		return
-	if DentLook.shipped().resolved() == "strap":
-		_strap = DentStrap.new(TEAL, VehicleView.CAR_H_M)
-		_ink = DentStrapCanvas.new(self)
+	_tether = DentTether.new(self)
 	_overload = DentOverload.new()
 	_overload.bind(stage, dent)
 	add_child(_overload)
-	_body_group = DentBody.group_for(dent)
-	_anchor = stage.pilot.ghosts.forms.table.form(DentStage.GHOST).anchor(&"hand_r")
 
 
 func _process(_delta: float) -> void:
-	if _strap != null:
-		_strap.advance(dent.car, stage.tick, dent.link.speed, dent.blast_tick)
+	if _tether != null:
+		_tether.strap.advance(dent.car, stage.tick, dent.link.speed, dent.blast_tick)
 	if _overload != null:
 		_overload.sync(ppm, reduced_motion)
 	if follow_cam != null and dent != null and stage != null:
@@ -84,8 +75,8 @@ func _draw() -> void:
 		return
 	if _legacy != null and dent.car != null:
 		_legacy.held(self)
-	elif _strap != null and _strap.showing():
-		_tether()
+	elif _tether != null and _tether.strap.showing():
+		_tether.paint(self)
 	if miss_on and dent.miss_tick >= 0 and dent.car == null:
 		var miss_age: float = (stage.tick - dent.miss_tick) * SimClock.TICK_DT
 		if miss_age <= MISS_S:
@@ -110,31 +101,6 @@ func _debris(age: int) -> void:
 
 func debris_scale() -> float:
 	return ppm / Ink.PX_PER_M
-
-
-func _tether() -> void:
-	var rivet: Fighter = stage.arena.rivet
-	var at: Vector2 = rivet.pos * ppm
-	if _strap.held:
-		if not is_instance_valid(_body):
-			_body = get_tree().get_first_node_in_group(_body_group) as DentBody
-		var hand: Vector2 = _body.grip_world() if _body != null else Vector2.INF
-		if hand.is_finite():
-			_hand_offset = to_local(hand) - at
-		else:
-			_hand_offset = _anchor.rotated(rivet.facing.angle()) * ppm
-			_hand_offset += (
-				ViewMode.shared().lift_px(_strap.look.hand_height_m) * ppm / SimConst.PX_PER_M
-			)
-	_strap.place(at + _hand_offset, ppm, reduced_motion, ViewMode.shared())
-	var warmth: float = smoothstep(0.0, dent.num(&"arm_k"), dent.heat)
-	var armed: bool = dent.heat >= dent.num(&"arm_k")
-	var pulse: float = 0.5
-	if not reduced_motion:
-		pulse += 0.5 * sin(stage.tick * (0.52 if armed else 0.18))
-	var fill: Color = _strap.fill_at(dent.heat).lerp(FIRE, warmth * (0.4 + 0.3 * pulse))
-	var stripe: Color = DentStrap.AQUA.lerp(FIRE.lerp(HOT, pulse * 0.6), warmth)
-	_strap.paint(_ink, fill, stripe)
 
 
 func _blast(c: Vector2, k: float) -> void:

@@ -21,6 +21,10 @@ func circle(c: Vector2, radius: float, color: Color) -> void:
 	_item.draw_circle(c, radius, color, true, -1.0, true)
 
 
+func ring(c: Vector2, radius: float, color: Color, width: float) -> void:
+	_item.draw_arc(c, radius, 0.0, TAU, 16, color, width, true)
+
+
 func polygon(points: PackedVector2Array, color: Color) -> void:
 	_item.draw_colored_polygon(points, color)
 

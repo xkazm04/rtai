@@ -7,13 +7,14 @@ const PPM: float = SimConst.PX_PER_M
 const PART_M: float = 0.96 / 270.0
 const JAB_REACH_M: float = 1.4
 
+var steer: DentStringSteer
 var _parts: PartLibrary = PartLibrary.of("dent/spectral")
 var _head: Sprite2D
 var _upper: Array[Sprite2D] = []
 var _fore: Array[Sprite2D] = []
 var _drag: float = 0.0
 var _grip_ticks: int = 0
-var _hand_m: Vector2
+var _hands: PackedVector2Array = [Vector2.ZERO, Vector2.ZERO]
 
 
 func _init() -> void:
@@ -66,21 +67,27 @@ func pose(
 		var elbow: Vector2 = Vector2(lerpf(-0.04, -0.38, sweep), side * 0.53 + 0.36 * _drag)
 		var hand: Vector2 = Vector2(lerpf(0.30, -0.77, sweep), side * 0.60 + 0.68 * _drag)
 		var grip: String = "forearm_open"
-		if i == 1:
+		if steer != null and act == DentSpectralDrawn.Pose.STEER:
+			hand = shoulder + shoulder.direction_to(to_local(car_at) / PPM) * 0.82
+			var pull_m: float = -side * steer.turn * DentStringSteer.TRAVEL_M
+			hand.x += pull_m / global_scale.x
+			elbow = shoulder.lerp(hand, 0.46)
+			grip = "forearm_fist"
+		elif i == 1:
 			var target: Vector2 = _right_hand(act, hand, jab_age, car_at)
 			elbow += (target - hand) * 0.42
 			if act == DentSpectralDrawn.Pose.STEER:
 				elbow = shoulder.lerp(target, 0.46)
 			hand = target
-			_hand_m = hand
 			if act in [DentSpectralDrawn.Pose.COCK, DentSpectralDrawn.Pose.JAB] or _grip_ticks >= 4:
 				grip = "forearm_fist"
+		_hands[i] = hand
 		_limb(_upper[i], "upperarm", shoulder, elbow, side)
 		_limb(_fore[i], grip, elbow, hand, side)
 
 
-func grip_world() -> Vector2:
-	return to_global(_hand_m * PPM)
+func grip_world(index: int = 1) -> Vector2:
+	return to_global(_hands[index] * PPM)
 
 
 func _right_hand(act: DentSpectralDrawn.Pose, rest: Vector2, age: int, car_at: Vector2) -> Vector2:

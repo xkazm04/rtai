@@ -6,7 +6,6 @@ const PATH: String = "res://data/tables/dent_look.json"
 const SCHEMA: String = "gtai.dent_look/1"
 
 static var _cached: DentLook
-static var _warned_strings: bool = false
 
 var tether_look: String
 var buckle_m: float
@@ -62,7 +61,4 @@ func requested() -> String:
 
 
 func resolved() -> String:
-	if requested() == "strings" and not _warned_strings:
-		Log.info("dent_look", "Strings requested. Using the seatbelt strap.")
-		_warned_strings = true
-	return "strap"
+	return "strings" if requested() == "strings" else "strap"

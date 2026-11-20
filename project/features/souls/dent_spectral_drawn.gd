@@ -26,6 +26,9 @@ const FIST_70: Array[Vector2] = [
 
 var sprite: Sprite2D = Sprite2D.new()
 var _rim: Sprite2D = Sprite2D.new()
+var _bend: DentSteerMesh
+var _outline_bend: DentSteerMesh
+var _grips: PackedVector2Array = [Vector2.ZERO, Vector2.ZERO]
 var _art: String = ""
 var _fly: GhostSheet
 var _act: GhostSheet
@@ -92,6 +95,36 @@ func grip_world(strike: bool = false) -> Vector2:
 	if sprite.flip_h:
 		cell.x = sprite.get_rect().size.x - cell.x
 	return sprite.to_global(sprite.offset + cell)
+
+
+func string_grip(index: int) -> Vector2:
+	return sprite.to_global(_grips[index])
+
+
+func steer_hands(turn: float, facing: float) -> void:
+	if _bend == null:
+		_bend = DentSteerMesh.new(sprite)
+		_outline_bend = DentSteerMesh.new(_rim)
+	var row: int = sprite.frame_coords.y
+	var fist: Vector2 = (GRIP_55 if _art == "p55" else GRIP_70)[row]
+	var open: Vector2 = (DentStringSteer.OPEN_55 if _art == "p55" else DentStringSteer.OPEN_70)[row]
+	var rest: PackedVector2Array = [open, fist]
+	var shifts: PackedVector2Array = []
+	for i: int in 2:
+		if sprite.flip_h:
+			rest[i] = fist if i == 0 else open
+			rest[i].x = sprite.get_rect().size.x - rest[i].x
+		rest[i] += sprite.offset
+		var travel: Vector2 = DentStringSteer.offset_m(
+			-1 if i == 0 else 1, turn, Vector2.from_angle(facing), ViewMode.shared()
+		)
+		var delta: Vector2 = sprite.to_local(sprite.global_position + travel * SimConst.PX_PER_M)
+		_grips[i] = rest[i] + delta
+		if not is_zero_approx(turn):
+			@warning_ignore("return_value_discarded")
+			shifts.append(delta)
+	_bend.bend(rest, shifts)
+	_outline_bend.bend(rest, shifts)
 
 
 func _place(hover: GhostHover, facing: float, vm: ViewMode, cell: Vector2) -> void:

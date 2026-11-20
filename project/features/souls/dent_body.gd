@@ -20,6 +20,7 @@ var blasts: int = 0
 ## n11: the drawn walk (dent_walk8.png, tools/art/ghost_pack.py), feet on his point; the rig under
 ## a view without it. Cycle 163 cell px (stance foot, 20.4 a frame); run8 330 (41 a frame).
 var drawn: GhostDrawn = GhostDrawn.new("dent", 1.8, 163.0, 176.5, 330.0)
+var steer: DentStringSteer
 var _spectral: DentSpectralDrawn
 var _top: DentSpectralTop
 var _glass: DentGlass
@@ -44,6 +45,8 @@ func setup(row: GhostFormDef) -> void:
 		_jab_order.bind(self, _view, DentJabMark.new(HaulerLook.TEAL, DentStrap.AQUA, DentRoof.INK))
 		add_child(_jab_order)
 	if drawn.flight != null:
+		if DentLook.shipped().resolved() == "strings":
+			steer = DentStringSteer.new()
 		_spectral = DentSpectralDrawn.new()
 		add_child(_spectral)
 		_top = DentSpectralTop.new()
@@ -116,6 +119,12 @@ func grip_world() -> Vector2:
 	return _spectral.grip_world() if _spectral.visible else _top.grip_world()
 
 
+func string_grip(index: int) -> Vector2:
+	if _spectral == null or not is_visible_in_tree():
+		return Vector2.INF
+	return _spectral.string_grip(index) if _spectral.visible else _top.grip_world(index)
+
+
 func _fly(facing: float, steps: int, tick: int) -> void:
 	_glass.sync(drawn.flight, tick)
 	var jab: DentJab
@@ -128,16 +137,20 @@ func _fly(facing: float, steps: int, tick: int) -> void:
 			var to_car: Vector2 = car.pos - _view.arena.rivet.pos
 			if not to_car.is_zero_approx():
 				facing = to_car.angle()
-		var hurt: int = _view.arena.rivet.hurt_tick
-		if hurt >= 0:
-			hurt_age = tick - hurt
+		if _view.arena.rivet.hurt_tick >= 0:
+			hurt_age = tick - _view.arena.rivet.hurt_tick
+		if steer != null:
+			steer.sample(car, tick, _view.pilot.dent.link.num(&"turn_dps"))
 	var hover: GhostHover = drawn.flight.hover
 	var act: DentSpectralDrawn.Pose = DentSpectralDrawn.pose(hover, jab, car != null, hurt_age)
 	_spectral.visible = ViewMode.shared().cards and ViewMode.shared().art != ""
 	_top.visible = not _spectral.visible
 	if _spectral.visible:
 		_spectral.show_pose(drawn, facing, act)
+		if steer != null:
+			_spectral.steer_hands(steer.turn, facing)
 	else:
+		_top.steer = steer
 		_top.rotation = facing
 		var age: int = jab.steps - jab.swung_step if jab != null else -1
 		var car_at: Vector2 = (
