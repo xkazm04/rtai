@@ -14,9 +14,10 @@ func after_each() -> void:
 	ViewMode._shared = _saved
 
 
-func _mount(view: String) -> TonnageRig:
+func _mount(view: String, unfold: float = 1.0) -> TonnageRig:
 	ViewMode._shared = ViewMode.of(view)
 	var rig: TonnageRig = TonnageRig.new()
+	rig.unfold = unfold
 	var flight: GhostFlight = GhostFlight.make(&"tonnage")
 	rig.drawn.flight = flight
 	rig.drawn.hover = true
@@ -63,6 +64,12 @@ func test_eight_headings_use_their_painted_row_on_each_pose_and_act_sheet() -> v
 					assert_eq(ink.offset, Vector2(-192.0, -315.0))
 
 
+func test_a_freshly_mounted_golem_starts_invisible_on_the_first_unfold_tick() -> void:
+	var rig: TonnageRig = _mount("tilt70", 0.0)
+	assert_eq(rig._spectral.modulate.a, 0.0)
+	assert_almost_eq(rig._spectral.scale.x, 1.0 / 3.0, 0.00001)
+
+
 func test_morph_body_and_fists_retrace_the_same_path() -> void:
 	for view: String in ["top", "tilt70"]:
 		var rig: TonnageRig = _mount(view)
@@ -107,7 +114,8 @@ func test_tilted_reveal_tracks_the_tucked_and_unfolding_press_fists() -> void:
 		var mat: ShaderMaterial = body._cell.material as ShaderMaterial
 		assert_not_null(mat)
 		var reach: float = mat.get_shader_parameter(&"reach")
-		assert_almost_eq(float(mat.get_shader_parameter(&"emerge")), k, 0.00001)
+		var emerge: float = mat.get_shader_parameter(&"emerge")
+		assert_almost_eq(emerge, k, 0.00001)
 		assert_almost_eq(reach, smoothstep(2.0 / 3.0, 0.95, k), 0.00001)
 		assert_eq(body._cell_light.self_modulate.a, 0.0)
 	rig.unfold = 0.975
