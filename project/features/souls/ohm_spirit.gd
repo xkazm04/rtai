@@ -19,7 +19,7 @@ var _free_arm: Sprite2D
 var _staff_arm: Sprite2D
 var _staff: Sprite2D
 var _jars: OhmJars
-var _flare: Polygon2D
+var _fork: OhmFork
 var _puffs: Array[Sprite2D] = []
 var _vents: PackedVector2Array = []
 var _lengths: Vector2
@@ -46,9 +46,12 @@ func _ready() -> void:
 	var arm_size: Vector2 = _measure("arm_staff", "size_px")
 	# Hold the shaft just behind its collar so the elbow can reach the grip with the pole ahead.
 	_staff.offset.x = -_measure("staff", "size_px").x * 0.67
-	var staff_size: Vector2 = _measure("staff", "size_px")
-	_lengths = Vector2(arm_size.x * 0.886 + _staff_arm.offset.x, staff_size.x - 3 + _staff.offset.x)
-	_build_flare()
+	var staff_fork: Vector2 = _measure("staff", "fork_px")
+	_lengths = Vector2(arm_size.x * 0.886 + _staff_arm.offset.x, staff_fork.x + _staff.offset.x)
+	_fork = OhmFork.new()
+	_staff.add_child(_fork)
+	var staff_part: Dictionary = _parts.staff
+	_fork.place(_staff, OhmFork.unpack(staff_part))
 	for vent: Vector2 in _vents:
 		var puff: Sprite2D = GhostRim.soft_glow(AMBER, 1.0, 96.0)
 		puff.position = vent
@@ -106,20 +109,6 @@ func _build_jars(body: Sprite2D, circles: Array) -> void:
 	_jars.top_circles()
 
 
-func _build_flare() -> void:
-	_flare = Polygon2D.new()
-	var points: PackedVector2Array = []
-	for i: int in 12:
-		var radius: float = (90.0 if i % 3 == 0 else 48.0) if i % 2 == 0 else 12.0
-		@warning_ignore("return_value_discarded")
-		points.append(Vector2.from_angle(i * TAU / 12.0) * radius)
-	_flare.polygon = points
-	_flare.color = Color("#ebfffc")
-	_flare.position.x = _lengths.y - 16.0
-	_flare.hide()
-	_staff.add_child(_flare)
-
-
 func pose(drawn: GhostDrawn, charge: OhmCharge, stage: OhmStage, calm: bool, tick: int) -> void:
 	var hover: GhostHover = drawn.flight.hover if drawn.flight != null else null
 	var steps: int = tick - _last_tick
@@ -143,9 +132,9 @@ func pose(drawn: GhostDrawn, charge: OhmCharge, stage: OhmStage, calm: bool, tic
 		var aim: Vector2 = stage.bolt_aim.rotated(-global_rotation)
 		target += aim * THRUST_M * thrust(tick - stage.bolt_tick) * motion
 	_staff_pose(target)
-	_jars.light(Vector3(charge.jar(0), charge.jar(1), charge.jar(2)), charge.flash(), charge.vent())
-	_flare.visible = charge.flash() > 0.0
-	_flare.modulate.a = charge.flash()
+	_jars.light(Vector3(charge.jar(0), charge.jar(1), charge.jar(2)), 0.0, charge.vent())
+	_fork.stage = stage
+	_fork.vent = charge.vent()
 	_vent(charge.vent())
 
 

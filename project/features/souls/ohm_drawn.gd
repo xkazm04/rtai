@@ -4,6 +4,8 @@ extends RefCounted
 ## The artist's foot anchor can sit well above the edge of a cell containing trailing cloth.
 
 var charge: OhmCharge = OhmCharge.new()
+var _fork: OhmFork
+var _forks: Dictionary[Texture2D, Array] = {}
 var _sprite: Sprite2D
 var _jars: OhmJars
 var _hover: GhostSheet
@@ -12,7 +14,7 @@ var _cells: Dictionary[Texture2D, Array] = {}
 var _anchor: Vector2
 
 
-func step(host: Node2D, drawn: GhostDrawn, size_k: float) -> bool:
+func step(host: OhmRig, drawn: GhostDrawn, size_k: float) -> bool:
 	if not drawn.step(host, [], SimConst.PX_PER_M, size_k):
 		return false
 	var shown: Sprite2D = drawn.sprite()
@@ -28,6 +30,10 @@ func step(host: Node2D, drawn: GhostDrawn, size_k: float) -> bool:
 	if hover != null:
 		shown.global_rotation += hover.lean * cos(host.global_rotation) - 0.3 * hover.bank
 		pin_tail(drawn.flight, shown.to_global(Vector2(0.0, -9.0)))
+	_fork.stage = host.ohm
+	_fork.vent = charge.vent()
+	var tips: PackedVector2Array = _forks[shown.texture][shown.frame]
+	_fork.place(shown, tips)
 	_overlay()
 	return true
 
@@ -44,6 +50,7 @@ func _attach(shown: Sprite2D) -> void:
 	_sprite = shown
 	_masks.clear()
 	_cells.clear()
+	_forks.clear()
 	var dir: String = GhostDrawn.ART_DIR.path_join(ViewMode.shared().art)
 	var meta: Dictionary = JSON.parse_string(
 		FileAccess.get_file_as_string(dir.path_join("ohm_spec_cells.json"))
@@ -55,6 +62,12 @@ func _attach(shown: Sprite2D) -> void:
 	var act: Texture2D = load(dir.path_join("ohm_spec_act.png")) as Texture2D
 	_masks[act] = load(dir.path_join("ohm_spec_act_jars.png")) as Texture2D
 	_cells[act] = meta.sheets.act.jar_boxes_row_major
+	var hover_rows: Array = meta.sheets.hover.forks_row_major
+	_forks[_hover.tex] = hover_rows.map(OhmFork.unpack)
+	var act_rows: Array = meta.sheets.act.forks_row_major
+	_forks[act] = act_rows.map(OhmFork.unpack)
+	_fork = OhmFork.new()
+	_sprite.add_child(_fork)
 	var glow: Sprite2D = halo(245.0, 0.24)
 	glow.position.y = -86.0
 	_sprite.add_child(glow)
@@ -76,7 +89,7 @@ func _overlay() -> void:
 			top[i] = base_y + y0
 			bottom[i] = base_y + y1
 	_jars.bounds(top, bottom)
-	_jars.light(Vector3(charge.jar(0), charge.jar(1), charge.jar(2)), charge.flash(), charge.vent())
+	_jars.light(Vector3(charge.jar(0), charge.jar(1), charge.jar(2)), 0.0, charge.vent())
 
 
 static func halo(width: float, alpha: float) -> Sprite2D:
