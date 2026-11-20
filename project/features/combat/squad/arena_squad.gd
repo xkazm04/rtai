@@ -31,6 +31,8 @@ func spawn_member(arena: CombatArena, at: Vector2, id: StringName = &"") -> Figh
 		h.max_hp = a.hp
 		h.hp = a.hp
 	h.weapon = &"" if a.weapon.melee else a.production_weapon
+	if a.explicit_spawn and not a.weapon.melee:
+		h.weapon = a.weapon.id
 	h.cooldown = mini(h.cooldown, arena.tuning.weapon(a.production_weapon).cooldown_ticks)
 	return h
 
@@ -120,9 +122,14 @@ func step(h: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
 	EnemyMotor.steer(e, desired, pit.rivet_pos, pit)
 	h.pos = e.pos
 	h.facing = e.facing
+	if e.arch.explicit_spawn and e.arch.shield_front_mult < 1.0:
+		var frontal: bool = h.facing.dot(h.pos.direction_to(pit.rivet_pos)) > e.arch.shield_cos
+		h.damage_k = e.arch.shield_front_mult if frontal else 1.0
 	if e.melee():
 		mind.swing(h, arena, _map)
 		return null
+	if e.arch.explicit_spawn:
+		return FoeAttacks.trigger(e, h, arena)
 	return _ranged(mind, h, arena, rng)
 
 

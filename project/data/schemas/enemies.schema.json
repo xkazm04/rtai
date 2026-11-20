@@ -49,6 +49,10 @@
             "minimum": 0,
             "type": "number"
           },
+          "alt_weapon": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
           "attack_m": {
             "maximum": 60,
             "minimum": 0.5,
@@ -70,6 +74,10 @@
           "doc": {
             "minLength": 1,
             "type": "string"
+          },
+          "explicit_spawn": {
+            "description": "Available by id outside the legacy pit selection pool.",
+            "type": "boolean"
           },
           "flanks": {
             "type": "boolean"
@@ -127,6 +135,12 @@
             "minimum": 0,
             "type": "number"
           },
+          "shield_arc_deg": {
+            "description": "Full frontal protection arc in degrees. Defaults to the riot shield's 120 degrees.",
+            "maximum": 360,
+            "minimum": 0,
+            "type": "number"
+          },
           "shield_front_mult": {
             "maximum": 1,
             "minimum": 0,
@@ -134,7 +148,7 @@
           },
           "speed_mps": {
             "maximum": 10,
-            "minimum": 0.5,
+            "minimum": 0,
             "type": "number"
           },
           "stagger_s": {
@@ -151,6 +165,11 @@
             "maximum": 3,
             "minimum": 0.1,
             "type": "number"
+          },
+          "tier": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer"
           },
           "turn_deg_s": {
             "maximum": 1440,
@@ -187,6 +206,7 @@
           "stagger_s",
           "strafe_mps",
           "telegraph_s",
+          "tier",
           "turn_deg_s",
           "uses_cover",
           "weapon"
@@ -295,6 +315,10 @@
             "minimum": 0,
             "type": "number"
           },
+          "knockback_m": {
+            "minimum": 0,
+            "type": "number"
+          },
           "lunge_m": {
             "maximum": 8,
             "minimum": 0,
@@ -313,8 +337,23 @@
             "minimum": 0.5,
             "type": "number"
           },
+          "round": {
+            "enum": [
+              "small",
+              "large"
+            ],
+            "type": "string"
+          },
           "speed_mps": {
             "maximum": 120,
+            "minimum": 0,
+            "type": "number"
+          },
+          "splash_damage": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "splash_radius_m": {
             "minimum": 0,
             "type": "number"
           }

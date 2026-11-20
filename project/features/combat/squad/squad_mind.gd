@@ -1,7 +1,6 @@
 class_name SquadMind
 extends RefCounted
-## One local cover/flank search per 12 ticks, offset by fighter ID. A blocked goal gets one
-## A* path when it changes cell. Between plans the motor follows the cached bends.
+## Cover and flank plans are staggered by fighter ID. The motor follows cached route bends.
 
 const S := EnemyAgent.State
 const PLAN_TICKS: int = 12
@@ -36,6 +35,8 @@ func _init(h: Fighter, arch: EnemyRoster.Archetype) -> void:
 
 
 func available(h: Fighter, arena: CombatArena) -> bool:
+	if agent.arch.explicit_spawn and not agent.melee():
+		return h.cooldown <= 1
 	var w: CombatTuning.Weapon = arena.tuning.weapon(agent.arch.production_weapon)
 	return arena.tick >= _return_until and h.cooldown <= w.cooldown_ticks and agent.cooldown == 0
 
@@ -194,6 +195,4 @@ func swing(h: Fighter, arena: CombatArena, map: GuardRouteMap) -> void:
 	e.token = false
 	if to.length() <= reach and e.aim.dot(to.normalized()) >= EnemyPit.MELEE_ARC_COS:
 		if map.sight_line(h.pos, arena.rivet.pos):
-			arena.hit_dir = e.aim
-			arena.hit_at = arena.rivet.pos
-			arena.damage(arena.rivet, e.arch.production_damage, h.id, e.arch.weapon.id, &"melee")
+			FoeAttacks.melee_hit(e, arena, map)
