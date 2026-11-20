@@ -1,7 +1,7 @@
-# n20 lane `ohm`: Ohm becomes the Lightning Rod (DRAFT, iteration 3, 04:20; final at 07:40)
+# n20 lane `ohm`: Ohm becomes the Lightning Rod
 
 Branch `n20-ohm` (worktree `C:\Users\kazda\kiro\gtai-wt\n20-ohm`), cut from `int-n20` at `a3eb0bf78`, merges
-`n20-flight` once (480f141f9). Plate: `C:\Users\kazda\kiro\gtai-masters\n20\concepts\ohm_c.png`. Evidence:
+`n20-flight` twice (480f141f9, a340d0464). Plate: `C:\Users\kazda\kiro\gtai-masters\n20\concepts\ohm_c.png`. Evidence:
 `C:\Users\kazda\kiro\gtai-masters\n20\ohm\` (`frames.json`, best first). Final gate: TODO (06:15).
 
 ## What works
@@ -22,7 +22,15 @@ Branch `n20-ohm` (worktree `C:\Users\kazda\kiro\gtai-wt\n20-ohm`), cut from `int
 | Tests and mutation | full unit run on 8b4862e1f | 3259 passed / 0 failed / 2 skipped; mutate ohm_drift 11/12, ohm_spirit 4/9 (+3 invalid), ohm_bolt_draw 22/28 |
 
 ## What does not
-- TODO after brief 05/06.
+- Call 1 is open: under the spectral look a killed guard still gets the shared shock-kill X-ray starburst, which covers the
+  body at +2..+6 (`n20/ohm/ohm_attack_32.jpg`). The judged strip uses stun-only guards, so all three victims show there;
+  in the lethal take they read as skeletons.
+- Left facings mirror the right ones, so the staff changes hands (Call 2); the p70/p55 "away" row is three-quarter (Call 3).
+- A white impact spray (shared hit effect) sits beside the first victim (Call 4).
+- Mutation on `ohm_spirit.gd` is weak: 4/9 killed (+3 invalid). The surviving faults are in draw order and alpha lines
+  that only a pixel golden would see.
+- No bench or rig-cost number for the spectral Ohm. The bench lock was not taken tonight, so any frame time would be
+  CONTENDED, and none is claimed.
 - The small red dash between Ohm and the guards in the attack film is the guard's rifle tracer (shared `fx_view.gd`), not Ohm's.
 
 ## What blocked or slowed you (minutes each)
@@ -44,7 +52,12 @@ Branch `n20-ohm` (worktree `C:\Users\kazda\kiro\gtai-wt\n20-ohm`), cut from `int
 - HUD chip is `features/hud/art/ghost_chips/ohm_spectral.png`, loaded by flight's selector (15e257bea).
 
 ## Next steps
-- TODO
+- Owner verdict on Calls 1-4. If Call 1 is "rim only", apply `evidence/patches/n20-ohm-kill-rim-only.patch` (the combat
+  owner's files) and re-film `ohm_attack_32`.
+- Draw a true left-facing cell (`ohm_spec_hover_left.png`) and a straight-behind "away" row: one image job each,
+  with the same prompt and refs as `docs/art/prompts/n20/ohm/`.
+- Raise `ohm_spirit.gd` mutation with a small look golden of the top-view jars at fill 1/2/3.
+- Measure the spectral Ohm under the bench lock (rig bench, 50 and 200 people).
 
 ## Astra ledger
 | Call | Minutes | Result |
@@ -57,3 +70,9 @@ Branch `n20-ohm` (worktree `C:\Users\kazda\kiro\gtai-wt\n20-ohm`), cut from `int
 | form-rest | 58 | accepted (078d91612, b38e571cd, 359eacb83); left flight's hitback test red |
 | strip-refilm | 34 | accepted (a340d0464 merge, befe2be8e, 6c9319597, 3bf81a93d, 15e257bea, ca37bd94c, 901c3475e, a0ce0ebd4) |
 | sheet-test (resume) | 7 | accepted (8b4862e1f) |
+
+8 calls, about 328 minutes: 6 accepted, 1 bounced and then redone on resume (bolt), 1 cut by a director session end with its commits kept (wire).
+What I would brief differently: (1) launch every call detached from the first one, with the lock and an out file;
+(2) give the owned-file list as an explicit allowlist and say "any other path: stop and report a NEED", which would have
+saved the bolt bounce; (3) name the other lanes' tests that pin the legacy look in the first brief, because two of them
+broke when Ohm's default flipped; (4) ask for the judged strip early, since it was the most useful still and came last.

@@ -240,3 +240,4 @@ NEXT (supersedes (1)-(2) above): wait for PID 24112 / final-gate.out; quote its 
   failing check; a doc-only fix is ours, anything else goes in REPORT "What does not". Then (3) above: REPORT, cites.mjs,
   commit per path. Ledger add: sheet-test 7 accepted.
 - 05:58 END iteration 4.
+- 06:00 START iteration 5. No Astra lock; final gate PID 24112 still running on 8b4862e1f (log build/gate/8b4862e1f2f9/evidence.log). frames.json: 14 entries, all files exist. LOOK ohm_attack_32.jpg poster: three guards down at the fork side, the shock X-ray skeletons are the kill look (Call 1). No new code tonight; REPORT only.
