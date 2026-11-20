@@ -90,8 +90,7 @@ func _ready() -> void:
 ## One gait step of `dt` seconds of wall or sim time (the host passes SimClock.TICK_DT per tick).
 func advance(dt: float) -> void:
 	if _spectral != null:
-		var fit: float = lerpf(0.62, 1.0, smoothstep(0.0, 1.0, unfold))
-		_spectral.advance(hauler, rotation, roundi(dt / SimClock.TICK_DT), fit)
+		_spectral.advance(hauler, rotation, roundi(dt / SimClock.TICK_DT), unfold)
 		return
 	_phase = fposmod(_phase + speed_mps * dt / (STRIDE_M * 2.0), 1.0)
 	pose()

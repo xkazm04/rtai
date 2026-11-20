@@ -79,6 +79,10 @@ func step(sample: Sample, ticks: int) -> void:
 		_slam(sample.windup, stomp)
 
 
+static func recoil_fit(row: int, art: String) -> Vector2:
+	return RECOIL_FIT[row + (GhostDrawn.ROWS if art == "p55" else 0)]
+
+
 func landing(side: float) -> Vector3:
 	return Vector3(press_ahead_m + 0.3, side * 0.7, 0.0)
 

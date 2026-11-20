@@ -22,7 +22,7 @@ var _drawn: Feed
 var _row: GhostHoverRow
 var _hauler: HaulerStage
 var _ticks: int = 0
-var _size_k: float = 1.0
+var _morph: TonnageMorph = TonnageMorph.new()
 var _parts: TonnageParts = TonnageParts.new()
 var _cell: Sprite2D = Sprite2D.new()
 var _cell_light: Sprite2D
@@ -67,11 +67,11 @@ func _ready() -> void:
 	add_child(_cell)
 
 
-func advance(hauler: HaulerStage, facing: float, ticks: int, size_k: float) -> void:
+func advance(hauler: HaulerStage, facing: float, ticks: int, unfold: float) -> void:
 	_hauler = hauler
 	_sample.facing = facing
 	_ticks = ticks
-	_size_k = size_k
+	_morph.set_progress(unfold, self, _cell, _cell_light)
 	if hauler == null:
 		_combat_tick(0, -1)
 
@@ -104,7 +104,7 @@ func _present() -> void:
 	var flat: bool = vm.is_flat()
 	_parts.visible = flat
 	_cell.visible = not flat
-	scale = Vector2.ONE * _size_k
+	scale = Vector2.ONE * _morph.size_k
 	var left: Vector2 = _hand(0, pose.left, -1.0)
 	var right: Vector2 = _hand(1, pose.right, 1.0)
 	var centre: Vector2 = Vector2(pose.torso.x, pose.torso.y) * PPM
@@ -118,6 +118,7 @@ func _present() -> void:
 
 func _hand(i: int, hand: Vector3, side: float) -> Vector2:
 	var flight: GhostFlight = _drawn.flight
+	hand = _morph.hand(hand, side)
 	var local: Vector2 = Vector2(hand.x, hand.y) * PPM
 	var road: Vector2 = to_global(local)
 	var ground: Vector2 = global_position
@@ -171,7 +172,7 @@ func _show_cell(vm: ViewMode, centre: Vector2) -> void:
 	_cell.offset.y = -BASELINE
 	var host: Node2D = get_parent() as Node2D
 	var fit: float = absf(host.scale.x if _drawn.flight != null else host.global_scale.x)
-	var s: float = _drawn.height_m * _size_k * PPM * fit / (215.5 if art == "p70" else 216.0)
+	var s: float = _drawn.height_m * _morph.size_k * PPM * fit / (215.5 if art == "p70" else 216.0)
 	var bank: float = 0.0
 	var stretch: Vector2 = Vector2.ONE
 	if _drawn.flight != null:
@@ -180,15 +181,12 @@ func _show_cell(vm: ViewMode, centre: Vector2) -> void:
 	var roll: float = bank * 0.4 + cos(look) * pose.pitch * 0.25
 	_cell.global_rotation = roll
 	if not pose.act and pose.column == TonnagePose.Pose.RECOIL:
-		# GhostActs assigns the current blow immediately after feed. Read it before the frame draws.
-		stretch *= TonnagePose.RECOIL_FIT[
-			_cell.frame_coords.y + (GhostDrawn.ROWS if art == "p55" else 0)
-		]
+		stretch *= TonnagePose.recoil_fit(_cell.frame_coords.y, art)
 	if _sample.hurt_age >= 0 and _sample.hurt_age < GhostDrawn.HIT_TICKS:
-		_hit_lean.call_deferred(look, roll)
+		_hit_lean.call_deferred(look, roll)  # GhostActs supplies the blow immediately after feed.
 	_cell.global_scale = Vector2(s, s / vm.ground_k()) * stretch
 	var h: float = pose.torso.z - TonnagePose.CHEST_H - _sample.bob_m
-	_cell.global_position = to_global(centre) + vm.lift_px(h * fit * _size_k)
+	_cell.global_position = to_global(centre) + vm.lift_px(h * fit * _morph.size_k)
 	_glow.global_position = _cell.to_global(TonnageGlow.GLOW_CELL_CENTRE)
 	_cell.modulate.a = TonnageGlow.body_alpha(pose)
 
