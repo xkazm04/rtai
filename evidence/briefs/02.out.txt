@@ -1,0 +1,16 @@
+**Verdict: keep the shipped mirror.** After calibration, 27 of 48 p70 cells and 22 of 48 p55 cells exceeded the 5% coat-height tolerance. The largest differences were p70 left-facing struck at **+19.9%** and p55 away-right recovery at **+12.1%**. At both display scales, the rear jars read clearly, but several left profiles hide nearly the entire staff. Recovery also reads as idle, and struck as drift.
+
+I generated and reviewed three takes per job, 18 total. The table links the six masters retained for comparison. The other two takes in each job were rejected. [All take verdicts and verbatim prompts](C:/Users/kazda/kiro/gtai-wt/n21-polish/docs/art/prompts/n21/polish/)
+
+| Tilt | A · Idle / drift | B · Charged / thrust | C · Recovery / struck | Comparison boards |
+|---|---|---|---|---|
+| p70 | [Take 2](C:/Users/kazda/kiro/gtai-masters/n21/polish/masters/ohm_eight_p70_a_t2.png) | [Take 3](C:/Users/kazda/kiro/gtai-masters/n21/polish/masters/ohm_eight_p70_b_t3.png) | [Take 1](C:/Users/kazda/kiro/gtai-masters/n21/polish/masters/ohm_eight_p70_c_t1.png) | [32 px/m](C:/Users/kazda/kiro/gtai-masters/n21/polish/ohm/ohm_eight_vs_shipped_p70_32.png) · [64 px/m](C:/Users/kazda/kiro/gtai-masters/n21/polish/ohm/ohm_eight_vs_shipped_p70_64.png) |
+| p55 | [Take 3](C:/Users/kazda/kiro/gtai-masters/n21/polish/masters/ohm_eight_p55_a_t3.png) | [Take 1](C:/Users/kazda/kiro/gtai-masters/n21/polish/masters/ohm_eight_p55_b_t1.png) | [Take 2](C:/Users/kazda/kiro/gtai-masters/n21/polish/masters/ohm_eight_p55_c_t2.png) | [32 px/m](C:/Users/kazda/kiro/gtai-masters/n21/polish/ohm/ohm_eight_vs_shipped_p55_32.png) · [64 px/m](C:/Users/kazda/kiro/gtai-masters/n21/polish/ohm/ohm_eight_vs_shipped_p55_64.png) |
+
+**Commit** `f8a634283` — *Review Ohm's eight facings and keep the shipped mirror*. It contains the six prompt reviews, the [manifest](C:/Users/kazda/kiro/gtai-wt/n21-polish/art_src/n21_polish_ohm.manifest.json), and the [board script](C:/Users/kazda/kiro/gtai-wt/n21-polish/tools/art/ohm_n21_eight_cut.py).
+
+**Verification.** All six prompts matched the brief verbatim, and all selected master hashes matched the manifest. ImageGen returned near-square originals. The script produced six 1536 × 1024 sheets with green margins around all 96 figures. Those sheets and all four boards rebuilt byte-for-byte. The quick gate exited 0, and the final pre-commit run passed all 19 lint checks.
+
+Stopped after Part 2 as directed by the board verdict. No game art or runtime code shipped, so the Godot import, changed-unit run, mutation score, and film stills were inapplicable.
+
+[astra: 2040s, exit 0]

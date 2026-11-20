@@ -1,0 +1,14 @@
+Completed all three parts on `n21-polish`. The last commit landed at 13:23 Prague time, before the 13:48 cutoff.
+
+- `c89fce348` — **Let Ohm's jars and fork carry his top view.** Enlarged the jar glass and rims by 1.40× and brightened the teal fill. At 64 px/m, each lit circle grew from about 13 to 19 pixels across. The fist now crosses the middle of the shaft. The resting fork moved from `(1.00, 0.70)` to `(1.60, 0.96)` metres forward/right and points 10° outward. The 0.35 m thrust still takes 8 ticks out and 12 back. Changed `ohm_spirit.gd`, `ohm_jars.gd`, `test_ohm_drift.gd` and `docs/decisions.md`.
+- `ca9e9d5c3` — **Pin what Ohm's top-view spirit draws.** Added `test_ohm_spirit.gd` and its `.uid`. The tests sample each painted jar’s mask channel and pin fill, amber cancellation, puff alpha, layer order, the wrist joint and the drawn fork throughout the thrust.
+
+**Verification.** The changed suite passed 267 tests with 2 skipped. The quick gate and commit lint passed. Mutation scored **13 killed / (13 killed + 5 survived) = 72.2%**, with 2 invalid and 0 timeouts. Both Ohm scenarios and the 60-second replay passed. Native parity matched across 1,200 steps, and the bake matched its golden hashes.
+
+**Visual evidence.** The 12 before/after stills cover full charge at tick 125, two jars at tick 115 and the first press at tick 95, each at 32 and 64 px/m. All six after stills matched the committed film frames pixel-for-pixel. [Plate comparison](C:/Users/kazda/kiro/gtai-masters/n21/polish/ohm/ohm_top_vs_plate.png) · [Still directory](C:/Users/kazda/kiro/gtai-masters/n21/polish/ohm)
+
+All three films decoded at 1080p60. [Move · 5 s](C:/Users/kazda/kiro/gtai-masters/n21/polish/ohm/ohm_move_32.mp4) · [Attack · 5 s](C:/Users/kazda/kiro/gtai-masters/n21/polish/ohm/ohm_attack_32.mp4) · [Close · 10 s](C:/Users/kazda/kiro/gtai-masters/n21/polish/ohm/ohm_close_64.mp4)
+
+**NEED for the film harness owner.** Attack captures logged an existing argument-count error in the damage-event recorder, and Godot reported resources still in use at shutdown. The recorder is outside the owned files. All eight film panels exited zero with zero script or shader errors.
+
+[astra: 1580s, exit 0]

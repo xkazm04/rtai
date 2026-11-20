@@ -1,0 +1,29 @@
+Committed `6f592bdb4` — **Hover Ohm in eight drawn facings; keep the act mirror**. Spectral Ohm now uses eight unmirrored rows for idle and drift at both tilts. Left-facing strikes still mirror. All four act PNGs are byte-identical to the baseline.
+
+Changed the hover bodies, jar masks, and metadata for p70 and p55, plus the [drawing code](C:/Users/kazda/kiro/gtai-wt/n21-polish/project/features/souls/ohm_drawn.gd), [tests](C:/Users/kazda/kiro/gtai-wt/n21-polish/project/tests/unit/test_ohm_drawn.gd), [cutter](C:/Users/kazda/kiro/gtai-wt/n21-polish/tools/art/ohm_n21_eight_cut.py), manifest, provenance, and decision log.
+
+**Verification.** Godot import and the quick gate passed. The changed unit suite reported **263 passed, 0 failed, 2 skipped**. All 19 pre-commit checks passed. A second cut reproduced all six PNG and JSON outputs byte-for-byte.
+
+**Mutation score:** `91.7% = killed 11 / (killed 11 + survived 1); timeout 0, invalid 1`. The survivor removed `_rows.clear()`. Every mutation to the eight-row selection and flip logic was caught.
+
+**Coat-height residuals** relative to each shipped partner. All 32 cells landed within 1.00%, against the 5% limit.
+
+| Facing | p70 idle | p70 drift | p55 idle | p55 drift |
+|---|---:|---:|---:|---:|
+| Toward | 0% | +0.61% | −0.52% | 0% |
+| Toward right | 0% | +0.61% | 0% | −0.53% |
+| Right | 0% | 0% | 0% | 0% |
+| Away right | 0% | 0% | +0.52% | 0% |
+| Away | +0.53% | 0% | +0.48% | −0.53% |
+| Away left | 0% | 0% | 0% | 0% |
+| Left | 0% | 0% | 0% | +0.55% |
+| Toward left | 0% | +0.61% | −1.00% | 0% |
+
+**Same-tick stills** show left drift at tick 235 and right drift at tick 128. I used the film tool’s capture routine directly to cover p55 and both scales. The traces confirm left drift moved from row 2 to row 6 and right drift stayed on row 2.
+
+| Tilt | 32 px/m | 64 px/m |
+|---|---|---|
+| p70 | [Before](C:/Users/kazda/kiro/gtai-masters/n21/polish/ohm/ohm_left_p70_32_before.png) · [After](C:/Users/kazda/kiro/gtai-masters/n21/polish/ohm/ohm_left_p70_32_after.png) | [Before](C:/Users/kazda/kiro/gtai-masters/n21/polish/ohm/ohm_left_p70_64_before.png) · [After](C:/Users/kazda/kiro/gtai-masters/n21/polish/ohm/ohm_left_p70_64_after.png) |
+| p55 | [Before](C:/Users/kazda/kiro/gtai-masters/n21/polish/ohm/ohm_left_p55_32_before.png) · [After](C:/Users/kazda/kiro/gtai-masters/n21/polish/ohm/ohm_left_p55_32_after.png) | [Before](C:/Users/kazda/kiro/gtai-masters/n21/polish/ohm/ohm_left_p55_64_before.png) · [After](C:/Users/kazda/kiro/gtai-masters/n21/polish/ohm/ohm_left_p55_64_after.png) |
+
+[astra: 1315s, exit 0]

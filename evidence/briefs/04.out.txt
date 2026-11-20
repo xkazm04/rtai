@@ -1,0 +1,20 @@
+Both fixes are committed. I checked every frame from impact through tick +20 while Dent was flying and holding a car, in all three views at 32 and 64 px/m.
+
+**Hit reaction · `1123a9881`**  
+At 70° and 55°, flying Dent showed the spectral HIT cell without leaning. Holding a car, he stayed in the steering pose. The top view showed no reaction in either state. All three views now lean 12° away from the blow and recover by tick +10. The tail stays attached and pulses on ticks +0–1 and +4–5. Facing stayed consistent, with no walking figure, legs, or red on Dent. [Before clip](C:/Users/kazda/kiro/gtai-masters/n21/polish/dent/dent_hit_before.mp4) · [After clip](C:/Users/kazda/kiro/gtai-masters/n21/polish/dent/dent_hit_after.mp4)
+
+Changed `dent_body.gd`, `dent_hit.gd`, `dent_spectral_drawn.gd`, `dent_spectral_top.gd`, the ghost-review take and its reel helpers, and `test_dent_hit.gd`.
+
+**Seized-car tint · `e90609ff0`**  
+At tick 151, the top-view hood changed from cream to teal at both scales, measuring RGB `(61, 185, 169)` after the fix. The top view uses the tilt shader and alpha. A seize-and-blast test verified that both views apply and release the paint on the same ticks. Changed `dent_view.gd`, `dent_car_top.gd`, `test_dent_car_top.gd`, and one vehicle call-site line in [StageView._car](C:/Users/kazda/kiro/gtai-wt/n21-polish/project/boot/collect_call/view/stage_view.gd:216). Both commits record their decisions in `docs/decisions.md`.
+
+| Commit | Changed unit tests | Quick gate | Mutation score |
+|---|---|---|---|
+| Hit reaction | 316 passed, 2 skipped | Passed | 15 killed / 20, 75% |
+| Car tint | 374 passed, 2 skipped | Passed | 13 killed / 20, 65% |
+
+Lint and all five selected scenarios passed. The 60-second replay retained `cbeb734ff9b97c41`, native parity matched over 1,200 steps, and the city bake matched its golden hashes. Godot reported resource leaks at shutdown in both baseline and final captures. All films completed without script or shader errors.
+
+The [evidence folder](C:/Users/kazda/kiro/gtai-masters/n21/polish/dent/) contains all 12 `dent_hit_{p70,p55,top}_{32,64}_{before,after}.png` strips and four `dent_car_top_{32,64}_{before,after}.png` stills. The final film pass ran once. All three exports verified at 1080p60. [Movement](C:/Users/kazda/kiro/gtai-masters/n21/polish/dent/dent_move_32.mp4) · [Attack](C:/Users/kazda/kiro/gtai-masters/n21/polish/dent/dent_attack_32.mp4) · [64 px/m close-up](C:/Users/kazda/kiro/gtai-masters/n21/polish/dent/dent_close_64.mp4)
+
+[astra: 2469s, exit 0]

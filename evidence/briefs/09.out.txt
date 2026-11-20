@@ -1,0 +1,62 @@
+**All four parts landed before the cutoff.** Spectral p50 cost more for all three ghosts: **+1.674 ms for Tonnage, +2.207 ms for Dent, and +2.232 ms for Ohm**. Only Ohm also lost on p99. Process CPU was a wash for all three. All **36/36** timed runs held the bench lock, and I verified its release.
+
+### Commits and checks
+
+| Part | Local start | Commit | Files and result |
+|---|---|---|---|
+| 0 | 16:06 | `aabe02126` | Restored `kerf_beat.gd` exactly to `int-n21`. The comparison was empty and the Godot parse check passed. Reused `GhostReel.nearest` in `quest_ghost_rec.gd` to satisfy the dev-line ratchet. |
+| 0b | 16:06 | `25ffc58cd` | Changed `ghost_review_input.gd` and added `test_ghost_review_input.gd` with its `.uid`. The test confirmed the four slices at 28/77/126/200, a clear aim cone at 250, and a 4 m plain blink. Changed suite: 375 passed, 2 skipped. Quick gate passed. No Kerf film was taken. |
+| 1 | 16:08; timed run 16:15 | `733391b50` | Changed `polish_ghost_cost.mjs` and `polish_ghost_cost.test.mjs`. All 26 perf tests and all 19 lint checks passed. Verified all 36 raw frame logs, six visibility traces and six scene-tree dumps. Removed the empty failed-run directory. |
+| 2 | 16:11 baseline; 16:39 implementation | `5eba115fd` | Added `voice_wash` and restored the speaking-part assertions. All 8 apparition tests passed. The changed suite passed before and after commit with 403 passed, 0 failed, 2 skipped. Quick gate passed. |
+
+### Cost tables
+
+Four paired rounds per ghost, with 300 frame intervals per run at ticks 68–367, windowed D3D12, 1920×1080 and 32 px/m. The machine was shared with lane kerf. The A/A floor measures the noise. The exact commands and per-run load are in [cost.md](<C:/Users/kazda/kiro/gtai-masters/n21/polish/cost/cost.md>) and [cost.json](<C:/Users/kazda/kiro/gtai-masters/n21/polish/cost/cost.json>).
+
+| Ghost | Look | Runs | p50 ms | p99 ms | Worst ms | Frames >25 ms | CPU s | Other cores | Other Godot at launch (median) |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| tonnage | legacy | 4 | 2.908 | 4.774 | 5.911 | 0.000 | 8.883 | 7.370 | 8.500 |
+| tonnage | spectral | 4 | 4.799 | 7.624 | 8.563 | 0.000 | 8.492 | 4.463 | 8.000 |
+| tonnage | legacy-aa | 4 | 3.178 | 5.313 | 8.867 | 0.000 | 8.219 | 5.345 | 5.500 |
+| dent | legacy | 4 | 3.021 | 5.115 | 6.390 | 0.000 | 8.094 | 4.226 | 5.000 |
+| dent | spectral | 4 | 5.280 | 9.712 | 15.198 | 0.000 | 8.906 | 4.350 | 2.000 |
+| dent | legacy-aa | 4 | 3.070 | 5.051 | 5.531 | 0.000 | 8.375 | 4.762 | 6.500 |
+| ohm | legacy | 4 | 3.057 | 5.141 | 6.583 | 0.000 | 8.344 | 5.924 | 6.500 |
+| ohm | spectral | 4 | 5.447 | 8.349 | 9.562 | 0.000 | 9.047 | 6.762 | 6.500 |
+| ohm | legacy-aa | 4 | 3.049 | 4.872 | 5.549 | 0.000 | 8.328 | 5.610 | 5.500 |
+
+| Ghost | Metric | Spectral − legacy | Paired CI95 | A/A floor (±) | Call |
+|---|---|---:|---|---:|---|
+| tonnage | p50 | 1.674 | 1.426 to 3.171 | 0.292 | LOSS |
+| tonnage | p99 | 2.829 | 2.263 to 4.108 | 10.894 | WASH |
+| tonnage | worst | 2.281 | 1.457 to 4.265 | 12.684 | WASH |
+| tonnage | over25 | 0.000 | 0.000 to 0.000 | 0.000 | WASH |
+| tonnage | cpu | -0.516 | -0.734 to 0.813 | 1.469 | WASH |
+| dent | p50 | 2.207 | 1.479 to 3.682 | 1.239 | LOSS |
+| dent | p99 | 4.722 | 1.780 to 509.143 | 520.402 | WASH |
+| dent | worst | 8.808 | 1.532 to 523.362 | 527.831 | WASH |
+| dent | over25 | 0.000 | 0.000 to 112.000 | 38.000 | WASH |
+| dent | cpu | 0.813 | -0.109 to 39.500 | 21.766 | WASH |
+| ohm | p50 | 2.232 | 1.868 to 2.399 | 0.577 | LOSS |
+| ohm | p99 | 3.490 | 2.648 to 4.128 | 0.511 | LOSS |
+| ohm | worst | 2.730 | 2.222 to 14.071 | 2.729 | LOSS |
+| ohm | over25 | 0.000 | 0.000 to 0.000 | 0.000 | WASH |
+| ohm | cpu | 1.094 | -0.609 to 1.781 | 0.813 | WASH |
+
+The **ground shadow and light pool** had the largest circle-command count for every spectral ghost. At tick 180, their drawing loops account for 44 circles per redraw. Tail wisps add 5 for Tonnage, 25 for Dent and 35 for Ohm. Visible drawing-capable nodes changed from 10 to 8, 10 to 6, and 10 to 14, respectively. Component GPU time was not measured. Dent’s wide p99 interval comes from round one, when both spectral and the legacy A/A twin stalled.
+
+### Voice wash
+
+The tests verified phase `0.44` on the speaking parts of Tonnage, Ohm and Dent in both top and tilted views, and verified that the wash cleared when speech ended. The existing arena voice tour produced all six [before-and-after stills](<C:/Users/kazda/kiro/gtai-masters/n21/polish/shared>).
+
+Part 2 changed `ghost_apparition.gd` and its shader, `ghost_bridge_fade.gd`, `ghost_drawn.gd`, `ghost_fade.gdshader`, `ghost_voice.gdshaderinc` and its `.uid`, `tonnage_spectral.gd`, `dent_body.gd`, `dent_spectral_finish.gdshader`, `ohm_rig.gd`, `ohm_jars.gdshader`, and `test_ghost_apparition.gd`.
+
+`node tools/mutate/mutate.mjs --file=features/souls/ghost_bridge_fade.gd --max=20 --lines=82-118`
+
+> score 84.6% = killed 11 / (killed 11 + survived 2); timeout 0, invalid 0; 491 s
+
+The two survivors removed `_originals.clear()` and `_phases.clear()`. All owned paths were clean at completion.
+
+**NEED kerf: implement `voice_wash` on Kerf's spectral body to wash its parts.**
+
+[astra: 2789s, exit 0]

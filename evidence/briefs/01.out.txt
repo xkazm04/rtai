@@ -1,0 +1,27 @@
+The [all-ghosts reel](C:/Users/kazda/kiro/gtai-masters/n21/polish/all_ghosts_32.mp4) and [poster](C:/Users/kazda/kiro/gtai-masters/n21/polish/all_ghosts_32.jpg) are ready. The reel runs **40.0 seconds** at 1080p60 and took **5m 7.9s** to produce.
+
+`--all` previously required an explicit look. With that flag omitted, it now uses each form’s table default. I verified all eight chapter titles and all 16 capture logs. Tonnage, Dent, and Ohm use spectral. Kerf uses legacy.
+
+```text
+pix_fmt=yuv420p
+color_range=tv
+color_space=bt470bg
+```
+
+The [before](C:/Users/kazda/kiro/gtai-masters/n21/polish/scratch/before_tonnage_move_32.jpg) and [after](C:/Users/kazda/kiro/gtai-masters/n21/polish/scratch/after_tonnage_move_32.jpg) posters retain the dark outlines and saturated teal. The final reel poster is byte-identical to the after poster.
+
+| Commit | Subject | Files changed |
+|---|---|---|
+| `e638d89ed` | Encode ghost films as limited-range yuv420p | `tools/film/ghost_films.mjs`, `tools/film/ghost_films.test.mjs` |
+| `eaf5bb589` | Use each ghost's default look in the all-ghosts reel | Same two files plus `tools/film/ghost_films_plan.mjs` |
+| `2eae86f02` | Pin ghost flight shadow child and overhead scale | `project/tests/unit/test_ghost_flight_pose.gd` and its `.uid` |
+
+The Node film tests passed **7/7**. `run_unit.mjs --changed` passed **3/3**, covering the shadow and mounted scale at 55°, 70°, and 90°. All three commits passed their quick gate and pre-commit checks.
+
+The targeted `ghost_flight.gd` mutation run reported:
+
+```text
+score 100.0% = killed 12 / (killed 12 + survived 0); timeout 0, invalid 0; 570 s
+```
+
+[astra: 1654s, exit 0]
