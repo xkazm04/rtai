@@ -209,3 +209,5 @@ NEXT: (1) logs/ohm/astra.lock = PID 12372 = ASTRA form-rest (detached, started 0
   ohm_spirit.gd via GhostRecoil.tilt(...) reads flight's private `drawn._hurt` (second private read after
   `drawn._fade`): ask Astra in review to use a public accessor if flight has one, else list both as NEED flight.
 - 04:37 END iteration 3 (final). ASTRA RUNNING form-rest since 04:13 (lock PID 12372). NEXT as at 04:32.
+- 04:38 START iteration 4 BUILD. ASTRA form-rest alive (lock PID 12372, since 04:13). Waiting for it before brief 06.
+- 04:41 NOTE flight 4362c8109 loads ghost_chips/<id>_spectral.png; Astra's 05 chip is ohm_spec.png -> brief 06 Step 0b renames it after the merge.

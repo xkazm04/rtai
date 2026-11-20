@@ -17,6 +17,12 @@ the body in both views, wisps soft round puffs. In `ghost_hover.json` keep fligh
 look at one top and one tilt70 still at 32 px/m: if the tail now fights the robe (two tails, or the root floating
 off the hem), retune only the ohm row's tail numbers and say what you changed.
 
+Step 0b (chip name): the merge also brings flight's 4362c8109: `ghost_chip_face.gd` loads
+`features/hud/art/ghost_chips/<id>_spectral.png` when the form draws spectral, else the original chip. Our chip from
+brief 05 must therefore be `ohm_spectral.png` (with its `.import`), not `ohm_spec.png`: `git mv` it (and drop any
+call site brief 05 added in a flight file, since flight's loader now does it). Prove it with a unit test or a still
+of the HUD chip in a spectral run (`n20/ohm/form/chip_in_hud_32.png`). One commit.
+
 ## Part A: the owner's judged strip (no commit needed unless a dev driver changes)
 The owner judges "a strip of one cast (jars at one, two, three, press tick, +4 frames) from the top view with all
 three links and all three victims visible". Today's `n20/ohm/bolt/cast_strip_top_32.png` (ticks 105..139) is a cast
