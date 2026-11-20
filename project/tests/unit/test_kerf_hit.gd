@@ -55,3 +55,53 @@ func test_body_follows_unfold_in_both_directions() -> void:
 		_rig.unfold = k
 		_rig.pose()
 		assert_almost_eq(body.modulate.a, k, 0.0001)
+
+
+func _press(dir: Vector2) -> void:
+	var k: KerfStage = _stage.pilot.kerf
+	@warning_ignore("return_value_discarded")
+	k.powers.try_activate(KerfStage.ID)
+	_stage.tick += 1
+	@warning_ignore("return_value_discarded")
+	k.drive(_stage, false, true, dir, Vector2.ZERO)
+	_rig.position = _stage.arena.rivet.pos * SimConst.PX_PER_M
+	_rig.rotation = _stage.arena.rivet.facing.angle()
+	_rig.pose()
+
+
+func test_cut_and_recovery_face_along_the_trail_in_all_three_views() -> void:
+	var dir: Vector2 = Vector2(-1, -1).normalized()
+	var victim: Fighter = _stage.arena.spawn_guard(_stage.arena.rivet.pos + dir * 5.0)
+	victim.pos = _stage.arena.rivet.pos + dir * 5.0
+	_press(dir)
+	assert_false(victim.alive())
+	assert_lt(_stage.arena.rivet.facing.dot(dir), -0.99)
+	var body: KerfSpectral = _rig._spectral
+	for age: int in [0, 7, 8, 15, 16]:
+		_stage.tick = _stage.pilot.kerf.trail_tick[-1] + age
+		for id: String in ["tilt70", "tilt", "top"]:
+			ViewMode.select(id)
+			_rig.pose()
+			assert_eq(body.current, KerfSpectral.blink_pose(age, true))
+			if id == "top":
+				var forward: Vector2 = body._top.global_transform.x.normalized()
+				assert_gt(forward.dot(dir if age < 16 else -dir), 0.99)
+			else:
+				assert_eq(body._tilted.flip_h, age < 16)
+				assert_eq(body._tilted.frame_coords.y, 3 if age < 16 else 1)
+
+
+func test_plain_blink_arrives_in_blink_with_the_departing_cell_and_one_spent_charge() -> void:
+	ViewMode.select("tilt70")
+	_rig.pose()
+	var body: KerfSpectral = _rig._spectral
+	var before: int = body._tilted.frame
+	var fly: Texture2D = body._tilted.texture
+	_press(Vector2.DOWN)
+	assert_eq(_stage.pilot.kerf.trail_cut[-1], Vector2.INF)
+	assert_eq(_stage.pilot.kerf.charges, 2)
+	assert_eq(body.current, KerfRoninDrawn.Pose.BLINK)
+	assert_eq(body._tilted.frame_coords, Vector2i(3, 0))
+	var copy: Sprite2D = body._echoes._pool[0].sprites[-1]
+	assert_same(copy.texture, fly)
+	assert_eq(copy.frame, before)

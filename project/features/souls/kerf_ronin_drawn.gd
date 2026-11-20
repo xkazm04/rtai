@@ -36,10 +36,10 @@ func _init() -> void:
 
 
 static func pose(speed: float, yaw: float, blink: Pose, locked: bool, hurt: bool) -> Pose:
-	if hurt:
-		return Pose.HIT
 	if blink != Pose.HOVER:
 		return blink
+	if hurt:
+		return Pose.HIT
 	if locked and speed <= CRUISE_MPS:
 		return Pose.COCK
 	if absf(yaw) > TURN_DPS:

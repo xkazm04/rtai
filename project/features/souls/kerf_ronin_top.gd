@@ -43,6 +43,8 @@ func pose(current: KerfRoninDrawn.Pose, speed: float, yaw: float, steps: int) ->
 	_straight.self_modulate.a = straight
 	_curled.self_modulate.a = 1.0 - straight
 	var ease: float = 1.0 - pow(0.48, maxi(0, steps))
+	if current == POSE.CUT:
+		ease = 1.0
 	for i: int in 2:
 		var side: float = -1.0 if i == 0 else 1.0
 		var target: Vector2 = _sweep(current, side, yaw)

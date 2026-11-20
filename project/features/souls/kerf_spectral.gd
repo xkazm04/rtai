@@ -42,14 +42,29 @@ func live(stage: CollectCallStage, rig: KerfRig) -> void:
 	var since: int = -1 if k.trail_tick.is_empty() else stage.tick - k.trail_tick[-1]
 	var sliced: bool = since >= 0 and k.trail_cut[-1] != Vector2.INF
 	var facing: float = rig.global_rotation
-	var target: Fighter
-	if _sight_enabled and k.on() and k.charges > 0 and k.num(&"sight_k") > 0.0:
-		if stage.pilot.ghosts.settled_in(KerfStage.GHOST):
-			target = k.pick(stage, k.sight_aim)
+	var target: Fighter = _lock(stage, k)
 	var bearing: float = facing
 	if target != null:
 		bearing = stage.arena.rivet.pos.angle_to_point(target.pos)
 	_aim(clampf(angle_difference(facing, bearing), -AIM_LIMIT, AIM_LIMIT), stage.tick)
+	var blink: KerfRoninDrawn.Pose = blink_pose(since, sliced)
+	if blink != KerfRoninDrawn.Pose.HOVER and k.trail_from[-1] != k.trail_to[-1]:
+		bearing = k.trail_from[-1].angle_to_point(k.trail_to[-1])
+	_arrive(rig, k, since)
+	_hit.read(stage.arena, facing)
+	pose(rig, blink, target != null, bearing, stage.tick)
+	_hit.apply(self)
+	_step_echoes(stage)
+
+
+func _lock(stage: CollectCallStage, k: KerfStage) -> Fighter:
+	if _sight_enabled and k.on() and k.charges > 0 and k.num(&"sight_k") > 0.0:
+		if stage.pilot.ghosts.settled_in(KerfStage.GHOST):
+			return k.pick(stage, k.sight_aim)
+	return null
+
+
+func _arrive(rig: KerfRig, k: KerfStage, since: int) -> void:
 	transform = Transform2D.IDENTITY
 	if since >= 0 and since < KerfSlot.RETURN_TICKS + TUCK_TICKS:
 		var shift: Vector2 = (KerfSlot.end_m(k, -1, since) - k.trail_to[-1]) * SimConst.PX_PER_M
@@ -59,10 +74,6 @@ func live(stage: CollectCallStage, rig: KerfRig) -> void:
 			)
 			shift -= rig.drawn.flight.hover.lag_px * (1.0 - back)
 		global_position += shift
-	_hit.read(stage.arena, facing)
-	pose(rig, blink_pose(since, sliced), target != null, bearing, stage.tick)
-	_hit.apply(self)
-	_step_echoes(stage)
 
 
 func pose(
@@ -82,12 +93,16 @@ func pose(
 	_top.pose(current, speed, yaw, steps)
 	if _tilted.visible:
 		var oct: int = rig.drawn.octant(rig.global_rotation)
-		if current == KerfRoninDrawn.Pose.COCK:
+		if blink != KerfRoninDrawn.Pose.HOVER or current == KerfRoninDrawn.Pose.COCK:
 			oct = posmod(roundi(bearing / (TAU / 8.0)), 8)
 		var lean: float = flight.hover.lean * cos(rig.rotation) if flight != null else 0.0
 		_tilted.show_pose(oct, current, yaw, lean - rig.rotation, _hit.flinch)
-	else:
+	elif blink == KerfRoninDrawn.Pose.HOVER:
 		_top.rotation = _yaw
+	else:
+		_top.rotation = (
+			global_transform.affine_inverse().basis_xform(Vector2.from_angle(bearing)).angle()
+		)
 
 
 ## A snapped aim octant can turn 45 degrees in one tick. Hold its signed cell long enough to read.
