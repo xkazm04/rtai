@@ -9,7 +9,7 @@ Lane `polish`, branch `n21-polish`, worktree `C:\Users\kazda\kiro\gtai-wt\n21-po
 
 | Item | Evidence | Number |
 |---|---|---|
-| 1. All-ghosts reel, limited-range encode | `e638d89ed`, `eaf5bb589`; `masters:n21/polish/all_ghosts_32.mp4` | 40.0 s, 1080p60, yuv420p tv range; film node tests 7/7 |
+| 1. All-ghosts reel, limited-range encode (re-cut 16:57) | `e638d89ed`, `eaf5bb589`; `masters:n21/polish/all_ghosts_32.mp4`; encode pair `masters:n21/polish/encode/{before,after}_tonnage_move_32.mp4` | 40.0 s, 1080p60; before yuvj420p pc (full), after yuv420p tv (limited); film node tests 7/7 |
 | 2a. Ohm hovers and drifts left in a drawn cell, staff in his own right hand, both tilts | `6f592bdb4`; `masters:n21/polish/ohm/ohm_left_{p70,p55}_{32,64}_{before,after}.png` | 32 hover cells within 1.00% of the shipped coat height; mutate `ohm_drawn.gd` 11/(11+1) = 91.7% |
 | 2b. Ohm's top view carried by the jars and the fork | `c89fce348`, `ca9e9d5c3`; `masters:n21/polish/ohm/ohm_top_vs_plate.png`, `ohm_top_{idle,mid,press}_{32,64}_{before,after}.png` | jars x1.40; mutate `ohm_spirit.gd` 13/(13+5) = 72.2% (n20 4/9) |
 | 3a. Tonnage's smoke column seated under the hump, edges feathered | `9c9d67255`; `masters:n21/polish/tonnage/tonnage_tail_{rest,turn}_64_{before,after}.png` | - |
@@ -23,6 +23,12 @@ Lane `polish`, branch `n21-polish`, worktree `C:\Users\kazda\kiro\gtai-wt\n21-po
 | 5c. The speaking apparition washes ghosts that draw their own body (rigs list `GhostDrawn.voice_parts`; restored assert) | `5eba115fd`; `masters:n21/polish/shared/voice_wash_crops_4x.png`, `voice_wash_{tonnage,ohm,dent}_{before,after}.png` | phase 0.44 on every own part, cleared after; mutate `ghost_bridge_fade.gd` 11/(11+2) = 84.6% |
 | 6. Cost of the spectral bodies, measured under `bench.lock` (36/36 runs, 4 paired rounds, A/A twin) | `733391b50`; `masters:n21/polish/cost/cost.md`, `cost.json` | p50 spectral - legacy: Tonnage +1.67 ms, Dent +2.21 ms, Ohm +2.23 ms (all beyond the A/A floor); CPU a wash |
 | Kerf lane's NEED: a plain blink in Kerf's attack take | `25ffc58cd`; `project/tests/unit/test_ghost_review_input.gd` | presses [28, 77, 126, 200, 250], the 250 press dashes 4 m west with no guard in 9 m / 35 deg |
+
+**Gate** on `4438e4b49` (code = `5eba115fd`; later commits are docs/evidence only): `node tools/gate/run.mjs --rev=HEAD`
+-> `gate: PASS; build/gate/4438e4b49e88/gate.json` (in the worktree, git-ignored). lint 19/19 over 1810 GDScript
+files; unit 3378 passed, 0 failed, 2 skipped; scenarios 65 passed; parity 1200 steps bit for bit, planted mutation
+caught at step 629; selftest look goldens 11/11 (worst 2.06), block goldens 5/5; export-audit 817 loaded, 0 failed.
+`--reels`: TODO after 18:30.
 
 ### The cost table (ghost_review movement take, tilt 70, 32 px/m, D3D12 1080p windowed, 300 frames per run)
 
