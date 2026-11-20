@@ -5,6 +5,7 @@ uniform sampler2D grain : repeat_enable, filter_linear;
 uniform float flow = 0.0;
 uniform int strands = 1;
 uniform float fray = 0.25;
+uniform bool billowing = false;
 
 void fragment() {
 	float x = UV.x;
@@ -33,6 +34,13 @@ void fragment() {
 	vec3 vapour = mix(teal, vec3(0.81, 1.0, 0.97), core * (0.97 - 0.55 * x) + fibre * 0.07);
 	float alpha = mix(0.98, tongue * (0.70 + 0.30 * fine), smoothstep(0.30, 0.52, x));
 	float rim = smoothstep(-2.5 * aa, -0.5 * aa, contour) * (1.0 - smoothstep(0.35, 0.56, x));
+	if (billowing) {
+		// Feather each bank inside the mesh, including the outermost triangles on a tight turn.
+		float bank = abs(y) + (roll - 0.5) * 0.32 + (fine - 0.5) * 0.19;
+		shell = (1.0 - smoothstep(0.40, 0.96, bank)) * (1.0 - smoothstep(0.84, 1.0, abs(y)));
+		alpha = max(alpha, (0.50 + 0.30 * roll) * (1.0 - smoothstep(0.53, 0.92, x)));
+		rim = 0.0;
+	}
 	COLOR = vec4(mix(vapour, vec3(0.043, 0.18, 0.173), rim), shell * mix(alpha, 0.55, rim)
 		* (1.0 - smoothstep(0.77, 1.0, x)) * COLOR.a);
 }

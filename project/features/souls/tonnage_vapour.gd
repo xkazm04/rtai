@@ -1,6 +1,6 @@
 class_name TonnageVapour
 extends RefCounted
-## Short filaments hang between the palms. The flight mount owns the separate road-level column.
+## Short filaments hang between the palms. The flight mount carries the trailing smoke.
 
 const CHEST: Dictionary = {
 	"anchor_m": [0.0, 0.0],
@@ -17,9 +17,8 @@ const CHEST: Dictionary = {
 	"flow_ticks": 83,
 	"curl_m": 0.14,
 }
-## Profile cell pixels relative to the bottom-centre pivot. Keep the broad end
-## inside the painted belly, above the exposed air between fists and road.
-const BELLY_PX: Vector2 = Vector2(-44.0, -91.0)
+## Profile cell pixels from the bottom-centre pivot to the underside of the shoulder housing.
+const HUMP_SOCKET_PX: Vector2 = Vector2(18.0, -123.0)
 const TOP_CHEST_M: float = 0.94
 const TRAIL: float = 0.28
 
@@ -55,8 +54,10 @@ static func present(
 static func seat_column(flight: GhostFlight, cell: Sprite2D, yaw: float) -> void:
 	if flight == null:
 		return
+	if not flight.tail.hanging_smoke:
+		flight.tail.hanging_smoke = true
 	if ViewMode.shared().is_flat():
 		flight.tail.align_socket(Vector2.ZERO, 0.0)
 	else:
-		var waist: Vector2 = Vector2(BELLY_PX.x * cos(yaw), BELLY_PX.y)
-		flight.set_belt(cell.to_global(waist), 0.0)
+		var socket: Vector2 = Vector2(HUMP_SOCKET_PX.x * cos(yaw), HUMP_SOCKET_PX.y)
+		flight.set_belt(cell.to_global(socket), 0.0)

@@ -21,3 +21,17 @@ static func hem_drop(width_px: float, rise_m: float, trail: Vector2) -> float:
 	var toward: float = maxf(0.0, -trail.normalized().y)
 	var rise_px: float = -ViewMode.shared().lift_px(maxf(rise_m, 0.0)).y
 	return width_px * 0.15 + rise_px * toward
+
+
+## Drop below the housing before drifting aft. Both ends stay on the flight chain.
+static func hanging_offset(k: float, run: Vector2, drop: float) -> Vector2:
+	return (Vector2.DOWN * drop * 0.33 - run * k * 0.22) * sin(k * PI)
+
+
+static func hem_trail(
+	k: float, run: Vector2, down: float, width_px: float, rise_m: float
+) -> Vector2:
+	var fall: float = hem_drop(width_px, rise_m, run)
+	var head_on: float = maxf(0.0, -run.y - absf(run.x))
+	var sweep: float = (run.x * 1.1 - head_on * 1.45) * k
+	return Vector2(sweep, down * k + sin(k * PI) * fall)

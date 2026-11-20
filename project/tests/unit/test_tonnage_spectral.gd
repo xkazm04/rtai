@@ -28,19 +28,19 @@ func _mount(view: String, unfold: float = 1.0) -> TonnageRig:
 	return rig
 
 
-func test_column_starts_inside_the_painted_belly_at_both_tilts() -> void:
+func test_column_starts_under_the_hump_at_both_tilts() -> void:
 	for view: String in ["tilt", "tilt70"]:
 		var rig: TonnageRig = _mount(view)
 		var ink: Sprite2D = rig._spectral._cell
 		var flight: GhostFlight = rig.drawn.flight
-		var waist: Vector2 = ink.to_local(flight.tail.points()[0])
-		assert_almost_eq(waist, Vector2(-44, -91), Vector2.ONE * 0.01, view)
+		var socket: Vector2 = ink.to_local(flight.tail.points()[0])
+		assert_almost_eq(socket, Vector2(18, -123), Vector2.ONE * 0.001, view)
+		assert_true(flight.tail.hanging_smoke)
 		ViewMode._shared = ViewMode.of("top")
 		flight.step(Vector2(400, 100), 0.0, 1)
 		rig.advance(SimClock.TICK_DT)
-		var row: GhostHoverRow = GhostHoverRow.of(&"tonnage")
 		var root_px: Vector2 = flight.shadow.global_position + flight.hover.lag_px
-		root_px += row.tail.anchor_m * SimConst.PX_PER_M * flight.body_scale()
+		root_px += Vector2(-0.15, 0.0) * SimConst.PX_PER_M * flight.body_scale()
 		assert_almost_eq(flight.tail.points()[0], root_px, Vector2.ONE * 0.01, "overhead socket")
 
 
