@@ -58,4 +58,4 @@ DRAFT (session 4, 04:3x). Final numbers, gate line and film paths are filled in 
 | 6 | form-rest | 68 | accepted | it touched one line of flight's test (test_ghost_flight_hosts.gd:114) during a merge: name foreign test files as off-limits explicitly |
 | 7 | flip | 8 | accepted (flip reverted by rule) | list every test that reads the legacy body by default BEFORE flipping; I briefed the flip without that census |
 | 8 | reflip | 13 | accepted | (worked as briefed: pin tests, re-flip, full unit, then polish) |
-| 9 | apparition-guard | | | |
+| 9 | apparition-guard | 4 | accepted | (exact code in the brief: a one-file test guard needs nothing more) |
