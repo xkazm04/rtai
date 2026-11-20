@@ -7,7 +7,7 @@ const GLOW_BODY_ALPHA: float = 0.88
 const GLOW_IMPACT_ALPHA: float = 0.55
 const GLOW_COLOR: Color = HaulerLook.TEAL
 const GLOW_FILL_ALPHA: float = 0.42 * GLOW_GAIN
-const GLOW_HALO_ALPHA: float = 0.62 * GLOW_GAIN
+const GLOW_HALO_ALPHA: float = 0.0  # GhostFlight supplies the ground pool.
 const GLOW_DIAMETER_M: float = 5.6
 ## The painted torso centre relative to the tilted cell's baseline, in atlas pixels.
 const GLOW_CELL_CENTRE: Vector2 = Vector2(0.0, -108.0)
