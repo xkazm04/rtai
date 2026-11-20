@@ -166,3 +166,13 @@ NEXT (session 9, REPORT phase):
 1. Read `masters:n21/kerf/scratch/s7_gate_reels.txt` and `build/gate/b045d75e5a2a/gate.json`. If PASS: add its `gate:` line + gate.json path to REPORT line 3 and the gate paragraph (line 9). If FAIL: say so plainly in REPORT with the failing step; the 17:07 PASS on code 2b38c1353 stands for code. If still running past 18:55: say so.
 2. After it ends: remove `%LOCALAPPDATA%\Temp\gtai-gate-b045d75e5a2a` by exact name.
 3. `node tools/evidence/cites.mjs REPORT.md`; pathspec commit REPORT.md + JOURNAL.md. No Astra, no product commits.
+
+## Session 9 (18:40, iteration 9 REPORT)
+- 18:40 START session 9. No Astra running (no lock; last call n=10 cruise06 at 16:55). Tree clean on 71c46ca33.
+- 18:43 Reels gate (node pid 41438 / winpid 50832, started 18:31 on b045d75e5) still running: `build/gate/b045d75e5a2a/evidence.log` at scenarios 49/65, all ok so far; no parity / export-audit / reels result yet.
+- 18:45 REPORT line 3: reels gate has no verdict in this REPORT (still running, no failure seen); the 17:07 PASS on code 2b38c1353 stands. Checked: REPORT has all 8 sections; frames.json 15 entries, all files on disk; the 4 films present. cites: 6 paths, 5 ok, 1 unchecked (masters: root).
+- 18:46 END session 9. No Astra running (10 calls, 281 min, all accepted). GATE RUNNING reels since 18:31 (pid 41438) - left running; its snapshot `%LOCALAPPDATA%\Temp\gtai-gate-b045d75e5a2a` must be removed by exact name after it ends.
+
+NEXT (Director / morning):
+1. Read `masters:n21/kerf/scratch/s7_gate_reels.txt` + `build/gate/b045d75e5a2a/gate.json` for the reels verdict; then remove `%LOCALAPPDATA%\Temp\gtai-gate-b045d75e5a2a` by exact name.
+2. Merge per REPORT "Merge notes" (debt baseline conflict with polish -> `node tools/debt/merge_baseline.mjs`). Kerf's row stays `legacy` unless the owner flips it (REPORT Calls).

@@ -1,6 +1,6 @@
 # n21 lane `kerf`: Kerf becomes the Swarf Ronin (REPORT)
 
-Written sessions 4 to 8 (last edit 18:34). The `--reels` gate on `b045d75e5` (code still `2b38c1353`) was started at 18:31 after the freeze; it was still running at 18:34 (evidence step; no reels result yet), and its result goes into JOURNAL (out `masters:n21/kerf/scratch/s7_gate_reels.txt`). Until then the 17:07 gate below is the standing verdict.
+Written sessions 4 to 9 (last edit 18:45). The `--reels` gate on `b045d75e5` (code still `2b38c1353`) was started at 18:31 after the freeze. At 18:43 it was still running: its evidence log (`build/gate/b045d75e5a2a/evidence.log`, git-ignored) showed scenarios 47 of 65 ok and no failure; parity, export-audit and the reels had not run yet, so it has **no verdict** in this REPORT. Its result goes into JOURNAL if a later session sees it (out `masters:n21/kerf/scratch/s7_gate_reels.txt`). The 17:07 gate below is the standing verdict for the code.
 
 Branch `n21-kerf`, worktree `C:\Users\kazda\kiro\gtai-wt\n21-kerf`, cut from `int-n21` `ad87caa17`. Director: Opus 5.5;
 builder: GPT-6.2 Astra. Films and stills: `C:\Users\kazda\kiro\gtai-masters\n21\kerf\` (`frames.json`, first entry the
