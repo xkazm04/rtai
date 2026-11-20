@@ -99,3 +99,4 @@ NEXT (session 5, supersedes the earlier NEXT): (1) Check astra.lock pid 45792 is
 - 05:51 NEED from tonnage: test_ghost_apparition.gd:100 null sprite under own_body. Accepted call site on n20-tonnage (null-skip), theirs wins at merge; gap (no voice wash for own_body forms) -> REPORT Next steps.
 - 05:52 tonnage confirms: apparition guard made on n20-tonnage; tonnage look flipped to spectral (8c3586694); merged flight aa9ff166e (6bb29c7a0). Open NEED flight at this point: none.
 - 06:00 films progressing (tonnage move/close re-cut 05:59-06:00; no repo change). Session 4 ends at 06:05 with ASTRA RUNNING films since 05:50 (detached, node pid 45792). NEXT: the 05:50 NEXT.
+- 06:00 LOOKED re-cut all_ghosts_32 at 22 s (kerf, 12 m/s): wake now bends (S-curve in top view, a wave in tilt) instead of a straight rod. ACCEPT. Session 4 ends; ASTRA RUNNING films since 05:50 (detached, pid 45792).
