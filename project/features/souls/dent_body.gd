@@ -24,6 +24,7 @@ var _spectral: DentSpectralDrawn
 var _top: DentSpectralTop
 var _glass: DentGlass
 var _view: GhostFormView
+var _jab_order: DentJabOrder
 var _rig: CutRig
 var _lurch: DentLurch = DentLurch.new()
 var _aura: GhostAura
@@ -39,6 +40,9 @@ func setup(row: GhostFormDef) -> void:
 	_view = (drawn.flight.get_parent() if drawn.flight != null else get_parent()) as GhostFormView
 	if _view != null and _view.pilot != null:
 		add_to_group(group_for(_view.pilot.dent))
+		_jab_order = DentJabOrder.new()
+		_jab_order.bind(self, _view)
+		add_child(_jab_order)
 	if drawn.flight != null:
 		_spectral = DentSpectralDrawn.new()
 		add_child(_spectral)
@@ -64,6 +68,8 @@ func setup(row: GhostFormDef) -> void:
 ## One frame: shown or not, at Rivet's spot `at` (px) facing `facing`, `steps` sim ticks since
 ## the last frame (the gait from Rivet's own travel), `tick` for the glow's breath.
 func step(show: bool, at: Vector2, facing: float, steps: int, tick: int) -> void:
+	if _jab_order != null:
+		_jab_order.sync(show)
 	if show and _view != null and _view.pilot != null and _view.pilot.dent.car != null:
 		var to_car: Vector2 = _view.pilot.dent.car.pos - _view.arena.rivet.pos
 		if not to_car.is_zero_approx():
