@@ -166,3 +166,16 @@ NEXT: (1) Check logs/ohm/astra.lock (PID 62644 = drift-films, detached, started 
   (080bfdd5e) and ours wins at merge -> keep ours unless the film says otherwise.
 - 04:13 ASTRA RUNNING form-rest since 04:13 (brief 05: staff from above + red dash, transform, hit, HUD chip, look
   switch GO). Detached (Start-Process cmd /c), lock PID 12372, out logs/ohm/director-form-rest.out. Stops by 05:28.
+- 04:15 frames.json written by me (n20/ohm/frames.json, 12 entries, first = ohm_vs_plate.png: plate beside the in-game
+  tilt70 64 px/m still, nearest x3 from ohm_turn_64_t163.png). Update the film/strip entries after brief 06.
+- 04:16 LOOK bolt/cast_strip_top_32.png (now in time order, ticks 105..139): jars 1/2/3 then press, links arrive in
+  turn. But the three guards DIE in that cast: the shared shock-kill X-ray (skeleton starbursts) hides them = the
+  owner's judged strip fails "all three victims visible" -> brief 06 Part A re-shoots on a stun-only first cast.
+- 04:17 flight (SendMessage): tail 0b landed 5e906fd53 on n20-flight (dense bright root aft, puff wisps; their ohm
+  fade_from 0.18). Brief 06 Step 0 merges it, keeps our ohm row (fade_from 0).
+- 04:19 LOOK (in progress, uncommitted 05 Part 0) drift/staff_{before,after}_top_{32,64}.png: after = the staff a
+  long rod out to his right with a clear copper U beyond the body; reads at 32. Slightly rifle-like (butt end behind
+  him); acceptable, the fork is what had to read.
+- 04:20 REPORT.md drafted (skeleton with what works so far, Calls 1-4, merge notes, ledger). Brief 06 written
+  (evidence/briefs/n20-ohm-06-strip-refilm.md: merge flight tail 0b, stun-only cast strip, re-film, mutate; hard
+  stop 06:10).
