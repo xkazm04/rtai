@@ -62,7 +62,7 @@ static func pose(hover: GhostHover, jab: DentJab, seized: bool, hurt_age: int) -
 	return Pose.DIVE if hover.speed_mps >= DIVE_MPS else Pose.HOVER
 
 
-func show_pose(drawn: GhostDrawn, facing: float, current: Pose) -> void:
+func show_pose(drawn: GhostDrawn, facing: float, current: Pose, strings: bool = false) -> void:
 	var vm: ViewMode = ViewMode.shared()
 	if vm.art != _art:
 		_art = vm.art
@@ -70,6 +70,8 @@ func show_pose(drawn: GhostDrawn, facing: float, current: Pose) -> void:
 		_act = GhostSheet.of(GhostDrawn.path_of(_art, "dent", "sp_act"), 4)
 	var sheet: GhostSheet = _act if current >= Pose.COCK else _fly
 	var col: int = current - Pose.COCK if current >= Pose.COCK else current
+	if strings and current == Pose.STEER:
+		col = 3  # STEER TWO HANDS in the fourth act cell.
 	var oct: int = drawn.octant(facing)
 	sheet.show(sprite, oct, col)
 	if current == Pose.SWING:
@@ -102,29 +104,46 @@ func string_grip(index: int) -> Vector2:
 
 
 func steer_hands(turn: float, facing: float) -> void:
+	if sprite.texture != _act.tex or sprite.frame_coords.x != 3:
+		if _bend != null and _bend.visible:
+			_bend.bend([], [])
+			_outline_bend.bend([], [])
+		return
 	if _bend == null:
 		_bend = DentSteerMesh.new(sprite)
 		_outline_bend = DentSteerMesh.new(_rim)
-	var row: int = sprite.frame_coords.y
-	var fist: Vector2 = (GRIP_55 if _art == "p55" else GRIP_70)[row]
-	var open: Vector2 = (DentStringSteer.OPEN_55 if _art == "p55" else DentStringSteer.OPEN_70)[row]
-	var rest: PackedVector2Array = [open, fist]
+	var rest: PackedVector2Array = _steer_palms()
+	var world_gap: Vector2 = sprite.to_global(rest[1]) - sprite.to_global(rest[0])
+	var screen_gap: Vector2 = world_gap * Vector2(1.0, ViewMode.shared().ground_k())
+	var spread: float = maxf(0.0, 0.48 * SimConst.PX_PER_M / screen_gap.length() - 1.0) * 0.5
 	var shifts: PackedVector2Array = []
 	for i: int in 2:
-		if sprite.flip_h:
-			rest[i] = fist if i == 0 else open
-			rest[i].x = sprite.get_rect().size.x - rest[i].x
-		rest[i] += sprite.offset
+		var side: int = -1 if i == 0 else 1
 		var travel: Vector2 = DentStringSteer.offset_m(
-			-1 if i == 0 else 1, turn, Vector2.from_angle(facing), ViewMode.shared()
+			side, turn, Vector2.from_angle(facing), ViewMode.shared()
 		)
-		var delta: Vector2 = sprite.to_local(sprite.global_position + travel * SimConst.PX_PER_M)
-		_grips[i] = rest[i] + delta
-		if not is_zero_approx(turn):
+		var d: Vector2 = travel * SimConst.PX_PER_M + world_gap * spread * side
+		var shift: Vector2 = sprite.to_local(sprite.global_position + d)
+		_grips[i] = rest[i] + shift
+		if spread > 0.0 or not is_zero_approx(turn):
 			@warning_ignore("return_value_discarded")
-			shifts.append(delta)
+			shifts.append(shift)
 	_bend.bend(rest, shifts)
 	_outline_bend.bend(rest, shifts)
+
+
+func _steer_palms() -> PackedVector2Array:
+	var row: int = sprite.frame_coords.y
+	var left: Vector2 = (DentStringSteer.LEFT_55 if _art == "p55" else DentStringSteer.LEFT_70)[row]
+	var right: Vector2 = (DentStringSteer.RIGHT_55 if _art == "p55" else DentStringSteer.RIGHT_70)[row]
+	var rest: PackedVector2Array = [left, right]
+	if sprite.flip_h:
+		rest = PackedVector2Array([right, left])
+		for i: int in 2:
+			rest[i].x = sprite.get_rect().size.x - rest[i].x
+	for i: int in 2:
+		rest[i] += sprite.offset
+	return rest
 
 
 func _place(hover: GhostHover, facing: float, vm: ViewMode, cell: Vector2) -> void:

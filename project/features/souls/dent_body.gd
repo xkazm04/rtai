@@ -146,7 +146,7 @@ func _fly(facing: float, steps: int, tick: int) -> void:
 	_spectral.visible = ViewMode.shared().cards and ViewMode.shared().art != ""
 	_top.visible = not _spectral.visible
 	if _spectral.visible:
-		_spectral.show_pose(drawn, facing, act)
+		_spectral.show_pose(drawn, facing, act, steer != null)
 		if steer != null:
 			_spectral.steer_hands(steer.turn, facing)
 	else:

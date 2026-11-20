@@ -3,11 +3,18 @@ extends RefCounted
 ## One steering sample per displayed sim tick. Mirrored cards exchange anatomical hands.
 
 const TRAVEL_M: float = 0.25
-const OPEN_55: Array[Vector2] = [
-	Vector2(191, 131), Vector2(192, 134), Vector2(66, 140), Vector2(48, 140), Vector2(40, 141)
+## Palm centres in column four of dent_sp_act, rows toward through away. +y is the right side.
+const LEFT_55: Array[Vector2] = [
+	Vector2(182, 100), Vector2(202, 95), Vector2(188, 72), Vector2(155, 72), Vector2(55, 65)
 ]
-const OPEN_70: Array[Vector2] = [
-	Vector2(251, 164), Vector2(231, 163), Vector2(79, 177), Vector2(62, 170), Vector2(62, 172)
+const RIGHT_55: Array[Vector2] = [
+	Vector2(55, 100), Vector2(112, 108), Vector2(188, 100), Vector2(201, 76), Vector2(183, 64)
+]
+const LEFT_70: Array[Vector2] = [
+	Vector2(223, 127), Vector2(249, 112), Vector2(237, 87), Vector2(207, 74), Vector2(80, 82)
+]
+const RIGHT_70: Array[Vector2] = [
+	Vector2(79, 129), Vector2(175, 127), Vector2(229, 120), Vector2(258, 88), Vector2(219, 80)
 ]
 
 var turn: float = 0.0
