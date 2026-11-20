@@ -6,6 +6,7 @@ const INK: Color = Color(0.035, 0.085, 0.09)
 const LIGHT: Color = Color(0.12, 0.92, 0.76)
 const RINGS: int = 22
 
+var pool_open: float = 1.0
 var _row: GhostHoverRow.Shadow
 var _height: float = -1.0
 
@@ -25,7 +26,10 @@ func _draw() -> void:
 	var height: float = maxf(0.0, _height)
 	var core: float = clampf(1.0 - height * _row.shrink_k, 0.08, 1.0)
 	var spread: float = 1.0 + height * _row.shrink_k
-	_disc(_row.pool_m * spread, LIGHT, _row.pool_alpha / (spread * spread))
+	if pool_open > 0.0:
+		_disc(
+			_row.pool_m * spread * pool_open, LIGHT, _row.pool_alpha * pool_open / (spread * spread)
+		)
 	_disc(_row.radius_m * core, INK, _row.alpha * core)
 
 

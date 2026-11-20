@@ -6,9 +6,11 @@ uniform vec2 grid = vec2(1.0);
 uniform float fade_from = 0.0;
 uniform float flow = 0.0;
 uniform bool outline = false;
+// The outline sprite is nudged on screen. Sample its erosion in the parent's cell coordinates.
+instance uniform vec2 cut_shift = vec2(0.0);
 
 void fragment() {
-	vec2 cell = fract(UV * grid);
+	vec2 cell = fract(UV * grid) + cut_shift;
 	float fine = texture(grain, cell * vec2(3.4, 1.6) + vec2(flow * 0.11, -flow * 0.32)).r;
 	float coarse = texture(grain, cell * vec2(1.3, 0.8) - vec2(flow * 0.17, flow * 0.24)).r;
 	float from_bottom = 1.0 - cell.y;

@@ -45,3 +45,39 @@ func test_switched_off_there_is_no_line() -> void:
 	var spr: Sprite2D = _spr()
 	GhostSoulLine.attach(spr)
 	assert_eq(spr.get_child_count(), 0)
+
+
+func test_all_eight_outline_copies_use_the_bodys_cut_at_the_same_canvas_point() -> void:
+	var saved: ViewMode = ViewMode._shared
+	ViewMode.select("tilt70")
+	var host: Node2D = add_child_autofree(Node2D.new())
+	var flight: GhostFlight = add_child_autofree(GhostFlight.make(&"kerf"))
+	var spr: Sprite2D = _spr()
+	host.add_child(spr)
+	GhostSoulLine.attach(spr)
+	var fade: GhostBridgeFade = GhostBridgeFade.new(GhostSoulLine.NAME)
+	for mirror: bool in [false, true]:
+		spr.flip_h = mirror
+		flight.step(Vector2.ONE, PI if mirror else 0.0, 1)
+		GhostSoulLine.sync(spr)
+		fade.sync(spr, flight)
+		var cell: Vector2 = spr.texture.get_size() / Vector2(spr.hframes, spr.vframes)
+		var body: ShaderMaterial = spr.material as ShaderMaterial
+		var count: int = 0
+		for child: Node in spr.get_children():
+			if not child.has_meta(GhostSoulLine.NAME):
+				continue
+			var copy: Sprite2D = child as Sprite2D
+			var line: ShaderMaterial = copy.material as ShaderMaterial
+			assert_true(is_same(line.get_shader_parameter(&"outline"), true))
+			for key: StringName in [&"flow", &"grid", &"fade_from"]:
+				assert_true(is_same(line.get_shader_parameter(key), body.get_shader_parameter(key)))
+			var shift: Vector2 = copy.get_instance_shader_parameter(&"cut_shift")
+			var sign_x: float = -1.0 if spr.flip_h else 1.0
+			assert_almost_eq(
+				shift, copy.position * Vector2(sign_x, 1.0) / cell, Vector2.ONE * 0.00001
+			)
+			count += 1
+		assert_eq(count, GhostSoulLine.COPIES)
+	fade.clear(flight)
+	ViewMode._shared = saved
