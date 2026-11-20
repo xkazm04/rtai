@@ -24,6 +24,7 @@
 ## What does not
 
 - **Smoke column starts low.** The tail leaves the belly near road level instead of hanging from under the hump as on the plate; at rest one cone side of the column is a straight hard edge (`tonnage_tail_fix_rest_64.png`, x about 380). It reads as smoke, not as a leg, ribbon or sparks.
+- **Two fist shadows on the road in cruise** (tilt 70, `tonnage_close_64.mp4` at 2.0 s, still `tonnage_fist_shadows_64.png`): the two small dark ink ovals under the fists, which mark the landing spot in the wind-up, also show while he cruises. At 64 px/m they sit on the road below the hovering body like two footprints. Worth a look by the owner: they could fade out except in the wind-up (`TonnageSpectral` shadow alpha, one value).
 - **HUD chip visor slot is faint** at 84 px (`tonnage_chip_hud.png`): hump and both striped fists read, the face does not.
 - **No voice wash in the story apparition.** Tonnage draws his own body (own_body), so flight's `GhostBridgeFade.voice` has no shared sprite to tint; it returns safely and the apparition simply has no wash. Flight lists the same gap for the other own_body forms.
 - **The thin 4 m ring is light at 32 px/m**: in the re-filmed attack (2 fps contact sheet) it shows clearly through the wind-up of both slams, but on the strike frame (the poster) the cracks, the wrecked car and the victims draw the eye and the ring is barely seen.
@@ -42,6 +43,8 @@
 1. **The ground bow wave is gone under the spectral look** (the owner called it "a thin bow"); the armed press fist (88 ticks before contact) is the ram tell now. One const (`RamWake.SPECTRAL_GAIN`) brings it back. Quest 1's grown-Rivet ram keeps its wave. Stills: `tonnage_ram_lead_64.png` vs `tonnage_ram_lead_64_legacy.png`.
 2. **The body goes to 0.55 alpha on the slam strike** so the car and the victims under the clap stay visible from the top view (the plate draws them in front; at our camera the body covers them). Still: `tonnage_pound_32.png` vs `_legacy`.
 3. **Default look**: Tonnage's row is spectral (8c3586694); `--ghost-look=legacy` or the row value brings the old hauler back. Two tests that read the legacy body are pinned to legacy (`test_tonnage_stride.gd`, flight's `test_ghost_card.gd`, flight OK).
+
+4. **Fist shadows outside the wind-up.** The two ink ovals under the fists mark the slam landing spot (the brief asked for this), but they also draw in cruise, where at 64 px/m they look like footprints under a legless body. Recommendation: keep them only through the wind-up and the strike, leaving flight's one pool under the body in cruise. One alpha value in `TonnageSpectral`'s shadow code; not changed tonight (after the 06:00 cut-off). Still: `tonnage_fist_shadows_64.png`, against the wind-up use in `tonnage_raise_tilts_64.png`.
 
 ## Merge notes
 
