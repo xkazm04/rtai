@@ -56,6 +56,7 @@ func setup(row: GhostFormDef) -> void:
 		return
 	_rig = CutRig.new()
 	_aura = GhostAura.new()
+	_aura.form_id = &"dent"
 	if lurch_on:
 		_rig.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS  # raw art at 32 px/m
 	_aura.reduced_motion = reduced_motion

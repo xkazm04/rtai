@@ -142,6 +142,9 @@ func test_only_a_named_spectral_aura_yields_the_ground_to_its_flight_shadow() ->
 	assert_true(aura.draws_pool())
 	aura.form_id = &"dent"
 	assert_false(aura.draws_pool())
+	var dent: DentBody = add_child_autofree(DentBody.new())
+	dent.setup(null)
+	assert_false(dent._aura.draws_pool())
 	GhostLook.override_for_test(GhostLook.LEGACY)
 	assert_true(aura.draws_pool())
 	GhostLook.reset_for_test()
