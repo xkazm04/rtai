@@ -71,6 +71,19 @@
       "seed": null,
       "sha256": "29806760afe7a2c3174e09ae37cab2648851895703bcb4d4b2f0f4d3bc06e7f3",
       "tool": "codex-image"
+    },
+    "kerf_spectral_chip": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "project/features/hud/art/ghost_chips/kerf_spectral.png",
+      "model": "source derivative",
+      "prompt_ref": "docs/art/prompts/n20/kerf/kerf_hover_55.md",
+      "references": [
+        "project/features/souls/art/view/p55/kerf_hover.png"
+      ],
+      "seed": null,
+      "sha256": "8971ef7fa5224579422a0f6e2c7a74a32415157e64700f6ed9c741b9a2241a14",
+      "tool": "tools/art/kerf_n20_chip_cut.py"
     }
   }
 }
