@@ -30,6 +30,8 @@ var own_body: bool = false:
 	set(value):
 		if value == own_body:
 			return
+		if value and _fade != null and flight != null:
+			_fade.clear(flight)
 		if value and _spr != null:
 			_spr = GhostSheet.replace_sprite(_spr.get_parent() as Node2D, _spr, null)
 		own_body = value
@@ -38,6 +40,7 @@ var pose: int = -1
 var still: bool = false  # something else carries the form (Dent on a car roof): stands still
 var blow: Vector2 = Vector2.ZERO  # the last hit's line (GhostActs, Fighter.hurt_dir; ZERO = none)
 var jab: bool = false  # the strike or wind-up shown is Dent's arm jab (GhostActs)
+var _fade: GhostBridgeFade
 var _spr: Sprite2D = null
 var _art: String = "?"
 var _built_hover: bool = false
@@ -82,6 +85,8 @@ func step(
 		_built_hover = hover
 		_rebuild(host, parts, vm)
 	if _spr == null:
+		if _fade != null and flight != null:
+			_fade.clear(flight)
 		return false
 	var fit: float = absf(host.scale.x if flight != null else host.global_scale.x)
 	var s: float = height_m * size_k * px_per_m * fit / fig_px
@@ -102,6 +107,10 @@ func step(
 	_spr.global_position = host.global_position + reach
 	var bank_scale: Vector2 = flight.body_scale() if flight != null else Vector2.ONE
 	_spr.global_scale = Vector2(s, s / vm.ground_k()) * bank_scale
+	if hover and flight != null:
+		if _fade == null:
+			_fade = GhostBridgeFade.new(GhostSoulLine.NAME)
+		_fade.sync(_spr, flight)
 	GhostHand.note(card_name, _art, _spr, o, act >= 0 and act != HIT_COL)
 	return true
 
@@ -150,6 +159,8 @@ func _column(host: Node2D, s: float, row: int) -> int:
 
 
 func _rebuild(host: Node2D, parts: Array[Sprite2D], vm: ViewMode) -> void:
+	if _fade != null and flight != null:
+		_fade.clear(flight)
 	_walk = null
 	_run = null
 	_art = vm.art

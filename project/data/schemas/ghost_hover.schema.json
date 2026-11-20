@@ -16,6 +16,11 @@
             "minimum": 0,
             "type": "number"
           },
+          "belt_width_k": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
           "bob_m": {
             "maximum": 2,
             "minimum": 0,
@@ -27,6 +32,11 @@
             "type": "integer"
           },
           "cruise_bob_k": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "fade_from": {
             "maximum": 1,
             "minimum": 0,
             "type": "number"

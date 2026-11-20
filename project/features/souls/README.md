@@ -69,3 +69,18 @@ body.rotation = facing + flight.body_rotation()
 body.scale = Vector2.ONE * PlayerScale.k() * flight.body_scale()
 body.drawn.hover = true
 ```
+
+
+Each form lane tunes its own hover row. `start_lift_m` sets the acceleration lift and stop dip,
+`cruise_bob_k` scales bob amplitude at full speed, and `sway_m` sets lateral drift.
+`shadow.pool_m` and `pool_alpha` set the ground light radius and centre opacity.
+`tail.strands` counts flame tongues, `spread_m` widens the plume behind its socket, and signed
+`rise_m` lifts or drops its middle in tilted views. `curl_m` is the lateral wave amplitude,
+`flow_ticks` its period, and `wisps` the maximum number of detached filaments. All animation
+uses flight ticks and shared fixed-seed noise. The tail overlay reads the same posed centreline.
+
+For tilted legacy cells, `fade_from` is the belt height measured up from the cell bottom as a
+fraction of cell height. `belt_width_k` is the ribbon root width as a fraction of cell width.
+The belt follows the actual cell transform through lean, recoil and lunge. Set `fade_from` to
+zero for a new legless body. Spectral pose and act sheets and form-owned art use the row's
+body-frame anchor directly.

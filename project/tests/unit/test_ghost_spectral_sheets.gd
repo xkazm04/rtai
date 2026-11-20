@@ -171,3 +171,30 @@ func test_overlay_reads_this_ticks_projected_ribbon_before_draw() -> void:
 	pts[0] = Vector2.INF
 	tail.step(Vector2(14.0, 30.0), 0.0, 3.0, 1.0, 1)
 	assert_almost_eq(tail.points()[0], tail.to_global(root + Vector2(2, 0)), Vector2.ONE * 0.001)
+
+
+func test_legacy_cell_cut_and_tail_socket_follow_the_displayed_belt() -> void:
+	var legacy: Texture2D = _sheet("walk8", 8)
+	var stand: Sprite2D = _show()
+	assert_eq(stand.texture, legacy)
+	var cut: float = _flight.fade_from()
+	var cell: Vector2 = stand.texture.get_size() / Vector2(stand.hframes, stand.vframes)
+	var belt: Vector2 = stand.to_global(stand.offset + cell * Vector2(0.5, 1.0 - cut))
+	assert_almost_eq(_flight.tail.points()[0], belt, Vector2.ONE * 0.001)
+	var mat: ShaderMaterial = stand.material as ShaderMaterial
+	assert_eq(mat.shader, preload("res://features/souls/ghost_fade.gdshader"))
+	var phase: float = mat.get_shader_parameter(&"flow")
+	_flight.step(Vector2(120, 20), 2.1, 0)
+	stand = _show()
+	var held: float = mat.get_shader_parameter(&"flow")
+	assert_eq(held, phase)
+	_flight.step(Vector2.RIGHT, 0.0, 1)
+	stand = _show()
+	held = mat.get_shader_parameter(&"flow")
+	assert_gt(held, phase)
+
+
+func test_authored_spectral_cells_bypass_the_legacy_leg_cut() -> void:
+	assert_eq(_sheet("spec_hover", 2), _show().texture)
+	assert_null(_drawn.sprite().material)
+	assert_eq(_flight.tail._socket_width, 0.0)

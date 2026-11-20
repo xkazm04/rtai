@@ -18,6 +18,8 @@ var lean_deg: float
 var start_lift_m: float
 var cruise_bob_k: float
 var sway_m: float
+var fade_from: float
+var belt_width_k: float
 var top_mps: float
 var tail: Tail
 var shadow: Shadow
@@ -93,6 +95,8 @@ func _init(t: DataTable, r: Dictionary) -> void:
 	start_lift_m = r.get("start_lift_m", 0.0)
 	cruise_bob_k = r.get("cruise_bob_k", 1.0)
 	sway_m = r.get("sway_m", 0.0)
+	fade_from = r.get("fade_from", 0.0)
+	belt_width_k = r.get("belt_width_k", 0.4)
 	top_mps = t.num(r, "top_mps")
 	tail = Tail.new(t, t.object(r, "tail"))
 	shadow = Shadow.new(t, t.object(r, "shadow"))
