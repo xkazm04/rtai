@@ -1,0 +1,118 @@
+{
+  "bot": "pit",
+  "brain": "squad",
+  "horde": false,
+  "hostile_columns": [
+    "id",
+    "state",
+    "x",
+    "y",
+    "los",
+    "in_cover",
+    "crowded",
+    "fired"
+  ],
+  "runs": [
+    {
+      "ai": {
+        "cover_share": 0.21806508744742084,
+        "crowded_share": 0.0,
+        "distinct_flank_angles_deg": 4,
+        "distinct_flanking_shooters": 2,
+        "hostile_ticks": 4517,
+        "los_share": 0.3422625636484392,
+        "mean_distance_m": 14.589519907052152,
+        "pairs_mean": 0.0,
+        "pairs_peak": 0,
+        "state_histogram": {
+          "cover": 796,
+          "engage": 2768,
+          "fire": 128,
+          "panic": 206,
+          "recover": 611,
+          "windup": 8
+        },
+        "states_by_archetype": {
+          "contractor": {
+            "cover": 796,
+            "engage": 2768,
+            "fire": 128,
+            "panic": 206,
+            "recover": 611,
+            "windup": 8
+          }
+        }
+      },
+      "cost": {
+        "assignment_ticks": 2400,
+        "assignment_us": 92551,
+        "hostile_steps": 4517,
+        "label": "CONTENDED",
+        "max_us_per_hostile": 112,
+        "mean_us_per_hostile": 16.323223378348462,
+        "mean_us_per_tick": 32.015631784628745,
+        "p99_us_per_hostile": 54,
+        "total_us": 73732
+      },
+      "digest": "327070b24d2e5560a6d2e326cfe2a195d22bf978a0ac5f23962d2e9f6eac6133",
+      "encounter": "pit",
+      "fight": {
+        "damage_taken_hp": 2.9999999999999716,
+        "deaths": 0,
+        "encounter_clear_s": 18.583333333333332,
+        "hits_on_rivet": 5,
+        "hostile_shots": 23,
+        "kills": 18,
+        "waves": [
+          {
+            "clear_s": 4.483333333333333,
+            "start_tick": 97,
+            "wave": 1
+          },
+          {
+            "clear_s": 4.316666666666666,
+            "start_tick": 516,
+            "wave": 2
+          },
+          {
+            "clear_s": 4.783333333333333,
+            "start_tick": 925,
+            "wave": 3
+          },
+          {
+            "clear_s": 5.516666666666667,
+            "start_tick": 1362,
+            "wave": 4
+          },
+          {
+            "clear_s": null,
+            "start_tick": 1843,
+            "wave": 5
+          }
+        ],
+        "waves_cleared": 4
+      },
+      "last_tick": 2399,
+      "measured_ticks": 2303,
+      "objective": "first three pit waves",
+      "objective_reached": true,
+      "seed": 20261103,
+      "start_tick": 97,
+      "tick_budget": 2400,
+      "valid": true
+    }
+  ],
+  "schema": "gtai.fight-probe/1",
+  "tick_columns": [
+    "encounter",
+    "seed",
+    "tick",
+    "hostile_us",
+    "hostile_steps",
+    "rivet_x",
+    "rivet_y",
+    "hostiles"
+  ],
+  "tick_hz": 60,
+  "trace": null
+}
