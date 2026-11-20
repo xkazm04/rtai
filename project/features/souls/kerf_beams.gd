@@ -5,6 +5,7 @@ extends Node2D
 
 const COUNT: int = 3
 const GLOW: Color = Color("#2ec4b659")
+const INK: Color = Color(0.09, 0.08, 0.07, 0.35)
 const CORE: Color = Color(0.85, 1.0, 0.96)
 
 var charges: int = COUNT
@@ -32,5 +33,6 @@ func _draw() -> void:
 		var angle: float = deg_to_rad(side * 7.0 + wave * 3.0) * (1.0 - fast)
 		var start: Vector2 = Vector2(tail_x, -side * 0.12 * fast * SimConst.PX_PER_M)
 		var end: Vector2 = start + Vector2.LEFT.rotated(angle) * length * SimConst.PX_PER_M
+		draw_line(start, end, INK, 0.07 * SimConst.PX_PER_M, true)
 		draw_line(start, end, GLOW, 0.14 * SimConst.PX_PER_M, true)
 		draw_line(start, end, CORE, 0.035 * SimConst.PX_PER_M, true)

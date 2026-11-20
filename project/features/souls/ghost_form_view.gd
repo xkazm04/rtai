@@ -59,6 +59,7 @@ static func make(
 		return null
 	var v: GhostFormView = GhostFormView.new()
 	v.pilot = stage.pilot
+	v._bodies.kerf.stage = stage
 	v.arena = stage.arena
 	v.rigs = p_rigs
 	v.camera = p_camera

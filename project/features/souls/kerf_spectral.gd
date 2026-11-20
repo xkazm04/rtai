@@ -5,12 +5,21 @@ extends Node2D
 enum Mood { POISED, CRUISE, LUNGE }
 
 const LUNGE_TICKS: int = 8
+const TUCK_TICKS: int = 4
+const ARCH_M: float = 0.62
+const ARM_M: float = 0.82
+const KNUCKLE_M: Vector2 = Vector2(-0.34, 0.54)
 const ART: String = "res://features/souls/art/kerf/spectral/"
 ## cut.json packs both tilted grids at the old 1.8 m figure's 165 pixels.
 const GRID_PX_PER_M: float = 165.0 / 1.8
 
 var beams: KerfBeams = KerfBeams.new()
 var _top: Node2D = Node2D.new()
+var _arch: Sprite2D
+var _arch_scale: Vector2
+var _arms: Array[Sprite2D] = []
+var _tuck: float = 0.0
+var _last_pose_tick: int = -1
 var _lens: Sprite2D
 var _tilted: Sprite2D = Sprite2D.new()
 var _sheet: GhostSheet
@@ -32,11 +41,16 @@ static func mood(speed_mps: float, ticks_since_blink: int, _charges: int) -> int
 func _ready() -> void:
 	add_child(beams)
 	add_child(_top)
-	_part("cables", 0.66, Vector2(-0.60, 0.0)).rotation = -PI / 2.0
-	for side: int in [-1, 1]:
-		_part("arm", 0.72, Vector2(0.0, side * 0.54)).rotation = side * deg_to_rad(7.0)
 	@warning_ignore("return_value_discarded")
 	_part("hull", _hull_m, Vector2.ZERO)
+	_arch = _part("cables", ARCH_M, Vector2(-0.2, 0.0))
+	_arch.rotation = -PI / 2.0
+	_arch_scale = Vector2.ONE * ARCH_M * SimConst.PX_PER_M / _arch.texture.get_height()
+	for side: int in [-1, 1]:
+		var arm: Sprite2D = _part("arm", ARM_M, KNUCKLE_M * Vector2(1, side))
+		# Rotate about the round knuckle near the left edge of the cutout.
+		arm.offset.x = arm.texture.get_width() * 0.42
+		_arms.append(arm)
 	# Nose socket (281,154) in the centred 375 x 313 hull, with a 62 px bezel.
 	_lens = _part("lens_open", _hull_m * 62.0 / 375.0, Vector2(93.5, -2.5) * _hull_m / 375.0)
 	_eyes = [_lens.texture, load(ART + "lens_half.png"), load(ART + "lens_slit.png")]
@@ -57,6 +71,7 @@ func pose(speed_mps: float, since: int, locked: bool, facing: float, oct: int) -
 		_tilted.visible = _sheet != null
 		_top.visible = _sheet == null
 	var col: int = mood(speed_mps, since, beams.charges)
+	_fold(col)
 	beams.fast = clampf(speed_mps / 12.0, 0.0, 1.0)
 	beams.tail_x = -0.55 * SimConst.PX_PER_M * absf(global_scale.x)
 	beams.global_transform = Transform2D(facing, global_position)
@@ -73,6 +88,17 @@ func pose(speed_mps: float, since: int, locked: bool, facing: float, oct: int) -
 		_top.scale = Vector2.ONE.lerp(Vector2(1.08, 0.86), beams.fast)
 		var eye: int = Mood.LUNGE if beams.charges == 0 else col
 		_lens.texture = _eyes[Mood.CRUISE if eye == Mood.POISED and locked else eye]
+
+
+func _fold(col: int) -> void:
+	var elapsed: int = maxi(0, beams.tick - _last_pose_tick)
+	_last_pose_tick = beams.tick
+	var target: float = 0.0 if col == Mood.POISED else 1.0
+	_tuck = 1.0 if col == Mood.LUNGE else move_toward(_tuck, target, float(elapsed) / TUCK_TICKS)
+	_arch.scale = _arch_scale * Vector2(lerpf(1.0, 0.9, _tuck), lerpf(1.15, 0.85, _tuck))
+	var angle: float = deg_to_rad(lerpf(14.0, 3.0, _tuck))
+	_arms[0].rotation = PI + angle
+	_arms[1].rotation = PI - angle
 
 
 func _part(part: String, width_m: float, at_m: Vector2) -> Sprite2D:

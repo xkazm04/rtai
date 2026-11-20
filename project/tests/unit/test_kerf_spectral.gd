@@ -16,6 +16,7 @@ func test_mood_boundaries_and_blink_priority() -> void:
 
 func test_each_charge_lights_one_beam_and_only_the_next_regrows() -> void:
 	var beams: KerfBeams = autofree(KerfBeams.new())
+	assert_eq(KerfBeams.COUNT, 3)
 	for fast: float in [0.0, 1.0]:
 		beams.fast = fast
 		var full: float = 0.9 if fast == 0.0 else 3.2
@@ -90,6 +91,13 @@ func test_pitch_changes_keep_the_hover_grid_centred_and_the_left_profile_mirrore
 		ViewMode.select(view)
 		body.pose(12.0, -1, false, PI, 4)
 		var sprite: Sprite2D = body._tilted
+		assert_same(sprite.get_parent(), body)
+		var sx: float = SimConst.PX_PER_M / (165.0 / 1.8)
+		assert_almost_eq(
+			sprite.global_scale,
+			Vector2(sx, sx / ViewMode.shared().ground_k()),
+			Vector2.ONE * 0.0001
+		)
 		assert_true(sprite.visible)
 		assert_false(body._top.visible)
 		assert_eq(sprite.hframes, 3)
@@ -112,3 +120,63 @@ func test_pitch_changes_keep_the_hover_grid_centred_and_the_left_profile_mirrore
 	body.pose(0.0, -1, false, 0.0, 0)
 	assert_eq(body._lens.texture.resource_path.get_file(), "lens_slit.png")
 	ViewMode.select(previous)
+
+
+func test_plate_mounts_scale_and_tail_follow_the_body() -> void:
+	var previous: String = ViewMode.shared().id
+	ViewMode.select("top")
+	var hull_m: float = 1.5
+	var body: KerfSpectral = add_child_autofree(KerfSpectral.new(hull_m))
+	body.scale = Vector2.ONE * 1.4
+	body.position = Vector2(123, 67)
+	body.pose(6.0, -1, false, 0.43, 0)
+	assert_same(body._top.get_parent(), body)
+	assert_same(body.beams.get_parent(), body)
+	assert_eq(body._top.get_child_count(), 5)
+	var hull: Sprite2D = body._top.get_child(0)
+	assert_eq(hull.texture.resource_path.get_file(), "hull.png")
+	assert_almost_eq(hull.scale.x * hull.texture.get_width(), hull_m * 32, 0.0001)
+	assert_same(body._top.get_child(1), body._arch)
+	assert_almost_eq(body._arch.rotation, -PI / 2, 0.0001)
+	assert_almost_eq(body._arch.position, Vector2(-6.4, 0), Vector2.ONE * 0.0001)
+	assert_same(body._top.get_child(4), body._lens)
+	assert_almost_eq(
+		body._lens.position, Vector2(93.5, -2.5) * hull_m * 32 / 375, Vector2.ONE * 0.0001
+	)
+	assert_almost_eq(
+		body._lens.scale.x * body._lens.texture.get_width(), hull_m * 32 * 62 / 375, 0.0001
+	)
+	for arm: Sprite2D in body._arms:
+		assert_same(arm.get_parent(), body._top)
+		assert_almost_eq(arm.offset.x / arm.texture.get_width(), 0.42, 0.0001)
+	assert_almost_eq(body.beams.tail_x, -0.55 * 32 * 1.4, 0.0001)
+	assert_almost_eq(body.beams.global_rotation, 0.43, 0.0001)
+	assert_eq(body.beams.global_position, body.position)
+	assert_almost_eq(body.beams.length_m(2), 2.05, 0.0001)
+	ViewMode.select(previous)
+
+
+func test_arch_and_needles_ease_over_four_distinct_ticks_and_snap_to_lunge() -> void:
+	var body: KerfSpectral = add_child_autofree(KerfSpectral.new(1.5))
+	for tick: int in 5:
+		body.beams.tick = tick
+		var speed: float = 0.0 if tick == 0 else 12.0
+		body.pose(speed, -1, false, 0.0, 0)
+		body.pose(speed, -1, false, 0.0, 0)
+		_assert_fold(body, float(tick) / 4.0)
+	for tick: int in range(5, 9):
+		body.beams.tick = tick
+		body.pose(0.0, -1, false, 0.0, 0)
+		_assert_fold(body, float(8 - tick) / 4.0)
+	body.pose(0.0, 0, false, 0.0, 0)
+	_assert_fold(body, 1.0)
+
+
+func _assert_fold(body: KerfSpectral, tuck: float) -> void:
+	var base: float = 0.62 * 32.0 / body._arch.texture.get_height()
+	var want: Vector2 = Vector2(lerpf(1, 0.9, tuck), lerpf(1.15, 0.85, tuck))
+	assert_almost_eq(body._arch.scale / base, want, Vector2.ONE * 0.0001)
+	for i: int in 2:
+		var tip: Vector2 = Vector2.RIGHT.rotated(body._arms[i].rotation)
+		var spread: float = lerpf(14.0, 3.0, tuck) * (1 if i == 0 else -1)
+		assert_almost_eq(tip, Vector2.LEFT.rotated(deg_to_rad(spread)), Vector2.ONE * 0.0001)
