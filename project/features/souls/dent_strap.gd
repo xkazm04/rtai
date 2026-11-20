@@ -19,6 +19,13 @@ var reduced: bool
 var tick: int = -1
 var release_tick: int = -1
 var held: bool = false
+var _teal: Color
+var _roof_height_m: float
+
+
+func _init(teal: Color, roof_height_m: float) -> void:
+	_teal = teal
+	_roof_height_m = roof_height_m
 
 
 func advance(car: VehicleBody, now: int, speed: float, blast_tick: int) -> void:
@@ -54,15 +61,15 @@ func place(hand: Vector2, scale_ppm: float, still: bool, vm: ViewMode) -> void:
 	hand_px = hand
 	ppm = scale_ppm
 	reduced = still
-	roof_px = DentRoof.centre(ground_m, ppm, vm)
+	roof_px = DentRoof.centre(ground_m, ppm, vm, _roof_height_m)
 
 
 func width_px() -> float:
 	return look.strap_width_m * ppm
 
 
-static func fill_at(heat: float) -> Color:
-	return HaulerLook.TEAL.lerp(AMBER, clampf(heat, 0.0, 1.0))
+func fill_at(heat: float) -> Color:
+	return _teal.lerp(AMBER, clampf(heat, 0.0, 1.0))
 
 
 func point(t: float) -> Vector2:
@@ -86,22 +93,22 @@ func belt_path(end: float) -> PackedVector2Array:
 	return path
 
 
-func paint(canvas: CanvasItem, fill: Color, stripe: Color) -> void:
+func paint(canvas: DentStrapCanvas, fill: Color, stripe: Color) -> void:
 	var fade: float = 1.0 - fray()
-	DentRoof.disc(canvas, roof_px, heading, ppm, fade)
+	DentRoof.disc(canvas, roof_px, heading, ppm, Color(_teal, fade))
 	var path: PackedVector2Array = belt_path(fade)
 	var edge: float = look.strap_edge_m * ppm
 	if hand_px.distance_squared_to(roof_px) > 0.01:
-		canvas.draw_polyline(path, Color(DentRoof.INK, fade), width_px(), true)
-		canvas.draw_polyline(path, Color(fill, fade), width_px() - edge * 2.0, true)
-		canvas.draw_polyline(path, Color(stripe, fade), look.strap_stripe_m * ppm, true)
+		canvas.stroke(path, Color(DentRoof.INK, fade), width_px())
+		canvas.stroke(path, Color(fill, fade), width_px() - edge * 2.0)
+		canvas.stroke(path, Color(stripe, fade), look.strap_stripe_m * ppm)
 		_webbing(canvas, fade)
 		if fade < 1.0:
 			_threads(canvas, fade, fill)
 	DentRoof.buckle(canvas, roof_px, heading, ppm, fade)
 
 
-func _webbing(canvas: CanvasItem, end: float) -> void:
+func _webbing(canvas: DentStrapCanvas, end: float) -> void:
 	var length: float = hand_px.distance_to(roof_px)
 	var gap: float = look.strap_tick_gap_m * ppm
 	var offset: float = 0.0 if reduced else travel_m * ppm
@@ -113,24 +120,22 @@ func _webbing(canvas: CanvasItem, end: float) -> void:
 		var p: Vector2 = point(t)
 		var axis: Vector2 = p.direction_to(point(minf(1.0, t + 0.01)))
 		var side: Vector2 = axis.orthogonal() * half
-		canvas.draw_line(
+		canvas.line(
 			p - side,
 			p + side + axis * half * 0.5,
 			Color(DentRoof.INK, end * look.strap_webbing_alpha),
-			half * 0.42,
-			true
+			half * 0.42
 		)
 
 
-func _threads(canvas: CanvasItem, end: float, fill: Color) -> void:
+func _threads(canvas: DentStrapCanvas, end: float, fill: Color) -> void:
 	var tip: Vector2 = point(end)
 	var fwd: Vector2 = point(maxf(0.0, end - 0.05)).direction_to(tip)
 	for i: int in range(-1, 2):
 		var side: Vector2 = fwd.orthogonal() * width_px() * i * 0.23
-		canvas.draw_line(
+		canvas.line(
 			tip + side,
 			tip + side * 1.7 + fwd * width_px() * (1.1 - 0.4 * absi(i)),
 			Color(fill, end),
-			ppm * look.strap_stripe_m,
-			true
+			ppm * look.strap_stripe_m
 		)

@@ -2,7 +2,7 @@ extends GutTest
 
 
 func test_hand_and_roof_endpoints_at_both_camera_pitches() -> void:
-	var strap: DentStrap = DentStrap.new()
+	var strap: DentStrap = DentStrap.new(HaulerLook.TEAL, VehicleView.CAR_H_M)
 	var car: VehicleBody = VehicleBody.new(1, null, Vector2(3, 2), Vector2.DOWN)
 	var hand: Vector2 = Vector2(11, 25)
 	var old_view: ViewMode = ViewMode.shared()
@@ -22,7 +22,7 @@ func test_hand_and_roof_endpoints_at_both_camera_pitches() -> void:
 
 
 func test_belt_motion_is_tick_based_and_reduced_motion_is_straight() -> void:
-	var s: DentStrap = DentStrap.new()
+	var s: DentStrap = DentStrap.new(HaulerLook.TEAL, VehicleView.CAR_H_M)
 	var car: VehicleBody = VehicleBody.new(1, null, Vector2.RIGHT * 3.0, Vector2.RIGHT)
 	s.advance(car, 5, 10.0, -1)
 	assert_eq(s.travel_m, 0.0)
@@ -39,7 +39,7 @@ func test_belt_motion_is_tick_based_and_reduced_motion_is_straight() -> void:
 
 
 func test_slack_holds_last_roof_for_21_ticks_then_frays_back() -> void:
-	var s: DentStrap = DentStrap.new()
+	var s: DentStrap = DentStrap.new(HaulerLook.TEAL, VehicleView.CAR_H_M)
 	var car: VehicleBody = VehicleBody.new(1, null, Vector2(4, 2), Vector2.RIGHT)
 	s.advance(car, 10, 0.0, -1)
 	s.advance(null, 11, 0.0, -1)
@@ -62,7 +62,7 @@ func test_slack_holds_last_roof_for_21_ticks_then_frays_back() -> void:
 
 
 func test_blast_cuts_the_strap_and_next_seize_starts_fresh() -> void:
-	var s: DentStrap = DentStrap.new()
+	var s: DentStrap = DentStrap.new(HaulerLook.TEAL, VehicleView.CAR_H_M)
 	var car: VehicleBody = VehicleBody.new(1, null, Vector2.ZERO, Vector2.RIGHT)
 	assert_false(s.showing())
 	s.advance(car, 12, 12.0, -1)
@@ -76,10 +76,11 @@ func test_blast_cuts_the_strap_and_next_seize_starts_fresh() -> void:
 
 
 func test_heat_colours() -> void:
+	var strap: DentStrap = DentStrap.new(HaulerLook.TEAL, VehicleView.CAR_H_M)
 	var amber: Color = Color("#E9A23B")
-	assert_eq(DentStrap.fill_at(0.0), HaulerLook.TEAL)
-	assert_eq(DentStrap.fill_at(0.5), HaulerLook.TEAL.lerp(amber, 0.5))
-	assert_true(DentStrap.fill_at(1.0).is_equal_approx(amber))
+	assert_eq(strap.fill_at(0.0), HaulerLook.TEAL)
+	assert_eq(strap.fill_at(0.5), HaulerLook.TEAL.lerp(amber, 0.5))
+	assert_true(strap.fill_at(1.0).is_equal_approx(amber))
 
 
 func test_held_roof_selects_the_mirrored_fist_and_top_arm_independently_of_rivets_aim() -> void:

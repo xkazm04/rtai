@@ -30,6 +30,7 @@ var debris_on: bool = (
 )
 var _legacy: DentLegacyAttack
 var _overload: DentOverload
+var _ink: DentStrapCanvas
 var _strap: DentStrap
 var _body: DentBody
 var _body_group: StringName
@@ -45,7 +46,8 @@ func _ready() -> void:
 		_legacy = DentLegacyAttack.new()
 		return
 	if DentLook.shipped().resolved() == "strap":
-		_strap = DentStrap.new()
+		_strap = DentStrap.new(TEAL, VehicleView.CAR_H_M)
+		_ink = DentStrapCanvas.new(self)
 	_overload = DentOverload.new()
 	_overload.bind(stage, dent)
 	add_child(_overload)
@@ -130,9 +132,9 @@ func _tether() -> void:
 	var pulse: float = 0.5
 	if not reduced_motion:
 		pulse += 0.5 * sin(stage.tick * (0.52 if armed else 0.18))
-	var fill: Color = DentStrap.fill_at(dent.heat).lerp(FIRE, warmth * (0.4 + 0.3 * pulse))
+	var fill: Color = _strap.fill_at(dent.heat).lerp(FIRE, warmth * (0.4 + 0.3 * pulse))
 	var stripe: Color = DentStrap.AQUA.lerp(FIRE.lerp(HOT, pulse * 0.6), warmth)
-	_strap.paint(self, fill, stripe)
+	_strap.paint(_ink, fill, stripe)
 
 
 func _blast(c: Vector2, k: float) -> void:
