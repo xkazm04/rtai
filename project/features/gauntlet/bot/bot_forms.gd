@@ -13,6 +13,7 @@ var _rng: RandomNumberGenerator
 var _last_candidate: StringName = &""
 var _last_target: int = -1
 var _accepted: bool = false
+var _seeking_tonnage: bool = false
 
 
 func _init(registry: RngRegistry) -> void:
@@ -23,9 +24,11 @@ func desired(
 	view: BotView, target: BotView.Hostile, chance: float, emergency: StringName
 ) -> StringName:
 	var me: BotView.Player = view.player()
-	if emergency != &"" and me.forms.has(emergency):
-		return emergency
-	if me.forms.has(&"tonnage") and _heavy_near(view):
+	if me.form == &"tonnage" or not me.forms.has(&"tonnage"):
+		_seeking_tonnage = false
+	elif emergency == &"tonnage" or _heavy_near(view):
+		_seeking_tonnage = true
+	if _seeking_tonnage:
 		return &"tonnage"
 	var candidate: StringName = _offensive(view, target)
 	var id: int = target.id if target != null else -1

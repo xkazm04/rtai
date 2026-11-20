@@ -82,6 +82,39 @@ func test_nearest_of_two_large_rounds_sets_the_dodge_line() -> void:
 	assert_eq(choice.move.y, 0.0)
 
 
+func test_large_round_at_last_lookahead_tick_and_slow_round_near_body() -> void:
+	view.player().can_roll = true
+	var shot: BotView.Round = _round(Vector2(30.5, 0), Vector2.LEFT * 60.0, &"large")
+	assert_eq(defence.choose(view, 0).action, &"roll")
+	shot.pos.x = 30.75
+	assert_eq(defence.choose(view, 1).action, &"")
+	shot.pos.x = 0.625
+	shot.vel = Vector2.LEFT * 0.5
+	assert_almost_eq(BotDefence.impact_ticks(shot, view.player()), 15.0, 0.001)
+	assert_eq(defence.choose(view, 2).action, &"roll")
+
+
+func test_equal_time_small_rounds_hold_the_first_guard_heading() -> void:
+	@warning_ignore("return_value_discarded")
+	_round(Vector2(4, 0), Vector2.LEFT * 60.0)
+	@warning_ignore("return_value_discarded")
+	_round(Vector2(0, 4), Vector2.UP * 60.0)
+	var choice: BotDefence.Choice = defence.choose(view, 0)
+	assert_eq(choice.action, &"guard")
+	assert_eq(choice.aim, Vector2.RIGHT)
+
+
+func test_guard_uses_the_earliest_unobstructed_small_round() -> void:
+	var near: BotView.Round = _round(Vector2(3, 0), Vector2.LEFT * 60.0)
+	@warning_ignore("return_value_discarded")
+	_round(Vector2(9, 0), Vector2.LEFT * 60.0)
+	assert_eq(defence.choose(view, 0).action, &"guard")
+	view.solid_props().append(Rect2(1, -1, 0.5, 2))
+	assert_eq(defence.choose(view, 1).action, &"")
+	near.pos.x = 0.75
+	assert_eq(defence.choose(view, 2).action, &"guard")
+
+
 func test_large_round_seeks_reachable_occluding_prop_without_roll() -> void:
 	@warning_ignore("return_value_discarded")
 	_round(Vector2(10, 0), Vector2.LEFT * 60.0, &"large")

@@ -1,5 +1,14 @@
 extends GutTest
 
+
+class WaveFixture:
+	extends BotView
+	var active: bool = false
+
+	func wave_active() -> bool:
+		return active
+
+
 var view: BotView
 var actions: PlayerActions
 var profile: BotProfile
@@ -59,6 +68,23 @@ func test_advances_and_reacts_before_firing_selects_range_and_counts_switches() 
 	assert_false(brain.sample(20).is_pressed(actions.bit(&"fire")))
 	assert_eq(brain.counters.targets_switched, 1)
 	assert_false(brain.sample(40).is_pressed(actions.bit(&"weapon_slot_1")))
+
+
+func test_street_advances_between_waves_and_waits_during_spawn_gaps() -> void:
+	var street: WaveFixture = WaveFixture.new()
+	view = street
+	brain = GauntletBot.new(street, actions, profile, 22)
+	_slot(0, 30)
+	@warning_ignore("return_value_discarded")
+	_foe(1, 12, &"patrol_cop")
+	var walking: TickInput = brain.sample(0)
+	assert_gt(walking.move_x, 0)
+	assert_false(walking.is_pressed(actions.bit(&"fire")))
+	street.active = true
+	assert_false(brain.sample(50).is_pressed(actions.bit(&"fire")))
+	street.hostiles().clear()
+	var wait: TickInput = brain.sample(51)
+	assert_eq(Vector2i(wait.move_x, wait.move_y), Vector2i.ZERO)
 
 
 func test_hands_close_in_and_attack_with_no_gun_and_choose_carried_melee() -> void:
@@ -129,3 +155,21 @@ func test_ghost_choice_uses_cluster_car_and_heavy_with_locks() -> void:
 	assert_eq(forms.desired(view, foe, 1, &""), &"tonnage")
 	me.forms.clear()
 	assert_eq(forms.desired(view, foe, 1, &""), &"")
+
+
+func test_blast_decision_finishes_cycling_to_tonnage_after_the_shot_passes() -> void:
+	var me: BotView.Player = view.player()
+	me.forms = [&"dent", &"kerf", &"ohm", &"tonnage"]
+	me.selected = &"kerf"
+	var shot: BotView.Round = BotView.Round.new()
+	shot.size = &"large"
+	shot.pos = Vector2(1, 0)
+	shot.vel = Vector2.LEFT * 60.0
+	view.incoming().append(shot)
+	assert_true(brain.sample(0).is_pressed(actions.bit(&"power_gearbox")))
+	view.incoming().clear()
+	me.selected = &"ohm"
+	assert_false(brain.sample(1).is_pressed(actions.bit(&"power_gearbox")))
+	assert_true(brain.sample(2).is_pressed(actions.bit(&"power_gearbox")))
+	me.selected = &"tonnage"
+	assert_true(brain.sample(3).is_pressed(actions.bit(&"power_hauler")))

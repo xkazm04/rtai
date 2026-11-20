@@ -48,12 +48,13 @@ func sample(tick: int) -> TickInput:
 		_target_id = -1
 		_previous = 0
 		return TickInput.new()
-	var target: BotView.Hostile = priority_target()
+	var active: bool = _view.wave_active()
+	var target: BotView.Hostile = priority_target() if active else null
 	_acquire(target, tick)
 	var intent: Intent = Intent.new()
-	if target != null and _view.wave_active():
+	if target != null:
 		intent = _engage(target, tick)
-	else:
+	elif not active:
 		intent.move = _view.forward()
 		intent.aim = intent.move
 	var defend: BotDefence.Choice = _defence.choose(_view, tick)
@@ -124,7 +125,9 @@ func _engage(foe: BotView.Hostile, tick: int) -> Intent:
 	var blocked: bool = not _view.clear_line(me.pos, foe.pos)
 	var side: float = 1.0 if tick % (2 * STRAFE_TICKS) < STRAFE_TICKS else -1.0
 	if blocked:
-		intent.move = (dir * 0.4 + dir.orthogonal() * side).normalized()
+		# Keep the same side until the sight line opens, even at a long wall.
+		var flank: float = 1.0 if foe.id % 2 == 0 else -1.0
+		intent.move = (dir * 0.4 + dir.orthogonal() * flank).normalized()
 	elif distance > minf(reach * 0.88, ENGAGE_M):
 		intent.move = dir
 	elif distance > MELEE_M:

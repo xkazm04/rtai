@@ -23,10 +23,10 @@ func refresh() -> void:
 	_player.facing = rivet.facing
 	_player.radius = rivet.radius_m
 	_player.hp = rivet.hp
-	_player.can_roll = _stage.pilot.motion.can_roll()
+	_player.can_roll = _stage.pilot != null and _stage.pilot.motion.can_roll()
 	_player.can_guard = _actions.bit(&"guard") >= 0
 	_player.shots_fired = _stage.shots_fired
-	_player.rolls_started = _stage.pilot.motion.rolls
+	_player.rolls_started = _stage.pilot.motion.rolls if _stage.pilot != null else 0
 	if _deaths != _stage.deaths:
 		_next_waypoint = 0
 		_deaths = _stage.deaths
@@ -57,15 +57,23 @@ func _read_hostiles() -> void:
 		foe.hp = fighter.hp
 		foe.robot = fighter.machine
 		foe.shooter = fighter.weapon != &""
-		if fighter.swing_left > 0:
-			foe.tell = &"melee"
-		elif fighter.tell_left > 0:
-			foe.tell = (
-				&"large"
-				if foe.archetype in [&"rocket_trooper", &"war_machine", &"robot_gunner"]
-				else &"small"
-			)
+		_read_tell(fighter, foe)
 		_hostiles.append(foe)
+
+
+func _read_tell(fighter: Fighter, foe: Hostile) -> void:
+	var winding: bool = fighter.tell_left > 0 or fighter.swing_left > 0
+	var squad: ArenaSquad = _stage.arena.squad_ai
+	if squad != null and squad.minds.has(fighter.id):
+		var agent: EnemyAgent = squad.minds[fighter.id].agent
+		winding = winding or agent.state == EnemyAgent.State.WINDUP
+		if &"tier" in agent.arch:
+			foe.tier = agent.arch.get(&"tier")
+	if winding:
+		if foe.archetype in [&"rocket_trooper", &"war_machine", &"robot_gunner"]:
+			foe.tell = &"large"
+		else:
+			foe.tell = &"small" if foe.shooter else &"melee"
 
 
 func _read_rounds() -> void:
@@ -90,11 +98,14 @@ func _read_rounds() -> void:
 
 
 func _read_forms() -> void:
-	var ghosts: GhostPilot = _stage.pilot.ghosts
+	var ghosts: GhostPilot = _stage.pilot.ghosts if _stage.pilot != null else null
 	_player.forms.clear()
 	_player.car_pos = Vector2.INF
 	_player.seized_car_pos = Vector2.INF
 	if ghosts == null:
+		_player.form = &"base"
+		_player.settled = true
+		_player.selected = &""
 		return
 	var forms: GhostForms = ghosts.forms
 	_player.form = forms.current()
@@ -116,7 +127,7 @@ func _read_forms() -> void:
 
 func _read_slots() -> void:
 	_slots.clear()
-	var carry: RivetCarry = _stage.pilot.carry
+	var carry: RivetCarry = _stage.pilot.carry if _stage.pilot != null else null
 	_player.current_slot = carry.current if carry != null else -1
 	if carry != null:
 		for i: int in carry.slots.size():

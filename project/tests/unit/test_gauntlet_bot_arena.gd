@@ -27,3 +27,34 @@ func test_recorded_pit_inputs_replay_without_sampling_the_brain() -> void:
 	second.close()
 	events.free()
 	data.free()
+
+
+func test_adapter_reads_squad_windup_and_preserves_projectile_identity() -> void:
+	var bus: EventBus = EventBus.new()
+	var data: DataStore = DataStore.new()
+	var session: ArenaSession = ArenaSession.open_with_args(bus, data, 14, null, ArenaArgs.new())
+	var arena: CombatArena = session.stage.arena
+	var squad: ArenaSquad = arena.squad_ai
+	var foe: Fighter = squad.spawn_member(arena, Vector2(5, 8), &"robot_gunner")
+	session.stage.pit.standing.append(foe)
+	@warning_ignore("return_value_discarded")
+	squad.assign(arena)
+	squad.minds[foe.id].agent.state = EnemyAgent.State.WINDUP
+	var shot: Shot = Shot.new()
+	shot.from_rivet = false
+	arena.shots.append(shot)
+	arena.shots.append(Shot.new())
+	var view: BotViewArena = BotViewArena.new(session.stage, session.actions)
+	view.refresh()
+	assert_eq(view.hostiles()[0].tell, &"large")
+	assert_eq(view.hostiles()[0].archetype, &"robot_gunner")
+	assert_eq(view.incoming().size(), 1)
+	assert_eq(view.incoming()[0].size, &"small")
+	var id: int = view.incoming()[0].id
+	squad.minds[foe.id].agent.state = EnemyAgent.State.RECOVER
+	view.refresh()
+	assert_eq(view.hostiles()[0].tell, &"")
+	assert_eq(view.incoming()[0].id, id)
+	session.close()
+	bus.free()
+	data.free()
