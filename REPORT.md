@@ -1,12 +1,12 @@
 # n21 lane `kerf`: Kerf becomes the Swarf Ronin (REPORT)
 
-DRAFT (session 3, 15:10): sections marked PENDING are filled at the report time.
+Written session 4 (16:30); the `--reels` gate line is added after the 18:30 freeze.
 
 Branch `n21-kerf`, worktree `C:\Users\kazda\kiro\gtai-wt\n21-kerf`, cut from `int-n21` `ad87caa17`. Director: Opus 5.5;
 builder: GPT-6.2 Astra. Films and stills: `C:\Users\kazda\kiro\gtai-masters\n21\kerf\` (`frames.json`, first entry the
 game beside the plate). Plate: `C:\Users\kazda\kiro\gtai-masters\n21\concepts\kerf_b.png`.
 
-Final gate: PENDING (`node tools/gate/run.mjs --rev=HEAD`, line + `gate.json` path).
+Final gate (16:30, last code commit `c14ae6f97`, gated at `118872760`): `gate: PASS` - lint 19/19 over 1805 files; unit 3368 passed / 0 failed / 2 skipped; scenarios 65 passed; parity 1200 steps bit for bit (planted mutation caught at step 629); selftest look goldens 11/11, block goldens 5/5; export-audit 816 loaded / 0 failed. `build/gate/118872760ea2/gate.json` (git-ignored, local).
 
 ## What works
 

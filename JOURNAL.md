@@ -100,3 +100,10 @@ NEXT (session 4, supersedes the 15:48 line): wait for polish05 (hard stop 16:45)
 - 16:15 ASTRA polish05 27 accepted (74304cba8 far crescent in profile HOVER; c14ae6f97 overhead trail ends at the painted ribbon: `flight.tail.hide()` in both views; unit 3352/0/2, quest1_kerf `26fa9dc0...` / replay_60s `cbeb734f...` / parity `94b2865f7f17d778` / bake 256/256 unchanged, mutate 1/1 changed line; move + close films re-shot).
 - 16:16 LOOKED `scratch/brief05/overhead_before_after.png` tick 163 at 64 px/m: the wiggly vapour thread behind the ribbon is gone, the ribbon tip ends cleanly. OK.
 - 16:17 DECISION no further Astra call: the remaining items (ACTION sheet re-roll, distinct fly HIT cell) need image jobs with re-rolls that do not fit before the 17:00 commit line; they go to REPORT Next steps. Final gate starts now on c14ae6f97+ (journal/report only after).
+- 16:30 MILESTONE final gate PASS on 118872760 (code = c14ae6f97): lint 19/19, unit 3368/0/2, scenarios 65, parity 1200 exact (mutation caught at 629), selftest goldens 11/11 + 5/5, export-audit 816/0. `build/gate/118872760ea2/gate.json`. REPORT gate line filled. frames.json now 15 (profile far blade added).
+- 16:31 No new product work after this (commit line 17:00). Only JOURNAL/REPORT commits follow.
+
+NEXT (session 5, after the 18:30 freeze):
+1. `export APPDATA=C:/Users/kazda/kiro/gtai-n21/appdata/kerf` + GODOT_BIN, then once: `node tools/gate/run.mjs --rev=HEAD --reels`; add its line + gate.json path to REPORT's gate paragraph.
+2. Check REPORT reads final (no PENDING), `node tools/evidence/cites.mjs REPORT.md`, pathspec commit REPORT + JOURNAL.
+3. Do not start new Astra calls; all 8 are logged (264 min, 8 accepted). Clean `%LOCALAPPDATA%\Temp\gtai-gate-118872760ea2` only after the reels gate.
