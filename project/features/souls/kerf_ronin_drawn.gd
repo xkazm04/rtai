@@ -25,18 +25,14 @@ func _init() -> void:
 	_rim.name = RigBuild.HALO
 	_rim.centered = false
 	_rim.show_behind_parent = true
-	_rim.material = GhostApparition.ghost_material(true, 0.0)
+	var pale: ShaderMaterial = ShaderMaterial.new()
+	pale.shader = preload("res://features/souls/ghost_apparition.gdshader")
+	pale.set_shader_parameter(&"silhouette", 1.0)
+	pale.set_shader_parameter(&"band_k", 0.0)
+	_rim.material = pale
 	_rim.scale = Vector2.ONE * 1.055
 	_rim.hide()
 	add_child(_rim)
-
-
-static func blink_pose(age: int, sliced: bool) -> Pose:
-	if age >= 0 and age < KerfSpectral.LUNGE_TICKS:
-		return Pose.CUT if sliced else Pose.BLINK
-	if sliced and age >= KerfSpectral.LUNGE_TICKS and age < 2 * KerfSpectral.LUNGE_TICKS:
-		return Pose.RECOVER
-	return Pose.HOVER
 
 
 static func pose(speed: float, yaw: float, blink: Pose, locked: bool, hurt: bool) -> Pose:

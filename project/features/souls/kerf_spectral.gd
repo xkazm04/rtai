@@ -4,13 +4,16 @@ extends Node2D
 
 const LUNGE_TICKS: int = 8
 const TUCK_TICKS: int = 4
+const TURN_HOLD_TICKS: int = 5
 const AIM_LIMIT: float = deg_to_rad(25.0)
 const AIM_TICKS: int = 4
-const ART: String = "res://features/souls/art/kerf/spectral/"
 
 var reduced_motion: bool = LaunchArgs.has("--reduced-motion")
 var current: KerfRoninDrawn.Pose = KerfRoninDrawn.Pose.HOVER
-var _top: Node2D = Node2D.new()
+var _top: KerfRoninTop = KerfRoninTop.new()
+var _last_tick: int = -1
+var _turn_tick: int = -TURN_HOLD_TICKS
+var _turn_rate: float = 0.0
 var _tilted: KerfRoninDrawn = KerfRoninDrawn.new()
 var _echoes: KerfEcho
 var _yaw: float = 0.0
@@ -21,17 +24,16 @@ var _sight_enabled: bool = HitFeel.feel_flag() != "off"
 var _hit: KerfHit = KerfHit.new()
 
 
+static func blink_pose(age: int, sliced: bool) -> KerfRoninDrawn.Pose:
+	if age >= 0 and age < LUNGE_TICKS:
+		return KerfRoninDrawn.Pose.CUT if sliced else KerfRoninDrawn.Pose.BLINK
+	if sliced and age >= LUNGE_TICKS and age < 2 * LUNGE_TICKS:
+		return KerfRoninDrawn.Pose.RECOVER
+	return KerfRoninDrawn.Pose.HOVER
+
+
 func _ready() -> void:
 	add_child(_top)
-	@warning_ignore("return_value_discarded")
-	_part("hull", 1.485, Vector2.ZERO)
-	_part("cables", 0.62, Vector2(-0.2, 0)).rotation = -PI / 2
-	for side: int in [-1, 1]:
-		var arm: Sprite2D = _part("arm", 0.82, Vector2(-0.34, side * 0.54))
-		arm.rotation = PI - side * deg_to_rad(14.0)
-		arm.offset.x = arm.texture.get_width() * 0.42
-	@warning_ignore("return_value_discarded")
-	_part("lens_open", 0.246, Vector2(0.37, -0.01))
 	add_child(_tilted)
 
 
@@ -58,18 +60,26 @@ func live(stage: CollectCallStage, rig: KerfRig) -> void:
 			shift -= rig.drawn.flight.hover.lag_px * (1.0 - back)
 		global_position += shift
 	_hit.read(stage.arena, facing)
-	pose(rig, KerfRoninDrawn.blink_pose(since, sliced), target != null, bearing)
+	pose(rig, blink_pose(since, sliced), target != null, bearing, stage.tick)
 	_hit.apply(self)
 	_step_echoes(stage)
 
 
-func pose(rig: KerfRig, blink: KerfRoninDrawn.Pose, locked: bool, bearing: float) -> void:
+func pose(
+	rig: KerfRig, blink: KerfRoninDrawn.Pose, locked: bool, bearing: float, tick: int
+) -> void:
 	var flight: GhostFlight = rig.drawn.flight
 	var speed: float = flight.hover.speed_mps if flight != null else rig.speed_mps
-	var yaw: float = flight.hover.yaw_rate_dps if flight != null else 0.0
+	var yaw: float = _turn(flight.hover.yaw_rate_dps if flight != null else 0.0, tick)
 	current = KerfRoninDrawn.pose(speed, yaw, blink, locked, _hit.hurt)
 	_tilted.visible = ViewMode.shared().art in ["p55", "p70"]
 	_top.visible = not _tilted.visible
+	if flight != null:
+		# A billboard ribbon hangs down the screen. Only the overhead tip follows a ground anchor.
+		flight.tail.visible = _top.visible
+	var steps: int = maxi(0, tick - _last_tick)
+	_last_tick = tick
+	_top.pose(current, speed, yaw, steps)
 	if _tilted.visible:
 		var oct: int = rig.drawn.octant(rig.global_rotation)
 		if current == KerfRoninDrawn.Pose.COCK:
@@ -78,6 +88,15 @@ func pose(rig: KerfRig, blink: KerfRoninDrawn.Pose, locked: bool, bearing: float
 		_tilted.show_pose(oct, current, yaw, lean - rig.rotation, _hit.flinch)
 	else:
 		_top.rotation = _yaw
+
+
+## A snapped aim octant can turn 45 degrees in one tick. Hold its signed cell long enough to read.
+func _turn(rate: float, tick: int) -> float:
+	if absf(rate) > KerfRoninDrawn.TURN_DPS:
+		_turn_tick = tick
+		_turn_rate = rate
+	var age: int = tick - _turn_tick
+	return _turn_rate if age >= 0 and age < TURN_HOLD_TICKS else rate
 
 
 func _step_echoes(stage: CollectCallStage) -> void:
@@ -98,13 +117,3 @@ func _aim(goal: float, tick: int) -> void:
 		_yaw_goal = goal
 		_aim_tick = tick - 1
 	_yaw = lerpf(_yaw_start, _yaw_goal, smoothstep(0, AIM_TICKS, tick - _aim_tick))
-
-
-func _part(part: String, width_m: float, at_m: Vector2) -> Sprite2D:
-	var sprite: Sprite2D = Sprite2D.new()
-	sprite.texture = load(ART + part + ".png") as Texture2D
-	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	sprite.scale = Vector2.ONE * width_m * SimConst.PX_PER_M / sprite.texture.get_width()
-	sprite.position = at_m * SimConst.PX_PER_M
-	_top.add_child(sprite)
-	return sprite

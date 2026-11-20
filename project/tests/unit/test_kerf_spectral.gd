@@ -14,10 +14,8 @@ func test_plain_blink_and_slice_use_half_open_tick_windows() -> void:
 			slice = POSE.CUT
 		elif age in [8, 15]:
 			slice = POSE.RECOVER
-		assert_eq(KerfRoninDrawn.blink_pose(age, true), slice)
-		assert_eq(
-			KerfRoninDrawn.blink_pose(age, false), POSE.BLINK if age in [0, 7] else POSE.HOVER
-		)
+		assert_eq(KerfSpectral.blink_pose(age, true), slice)
+		assert_eq(KerfSpectral.blink_pose(age, false), POSE.BLINK if age in [0, 7] else POSE.HOVER)
 
 
 func test_hurt_then_blink_then_lock_then_turn_then_speed() -> void:
@@ -74,4 +72,35 @@ func test_each_pitch_uses_both_sheets_and_matches_dents_profile_head() -> void:
 		assert_false(card.flip_h)
 		card.show_pose(0, POSE.TURN, -450.0, 0.0, false)
 		assert_true(card.flip_h)
+	ViewMode.select(previous)
+
+
+func test_hard_turn_holds_its_direction_through_a_snap_then_releases() -> void:
+	var body: KerfSpectral = add_child_autofree(KerfSpectral.new())
+	assert_eq(body._turn(-2700.0, 88), -2700.0)
+	for tick: int in range(88, 93):
+		assert_eq(body._turn(0.0, tick), -2700.0)
+	assert_eq(body._turn(10.0, 93), 10.0)
+	assert_eq(body._turn(720.0, 94), 720.0)
+	assert_eq(body._turn(-720.0, 95), -720.0)
+
+
+func test_wisp_meets_the_overhead_ribbon_tip_and_hides_at_both_play_tilts() -> void:
+	var previous: String = ViewMode.shared().id
+	GhostLook.override_for_test(&"spectral")
+	var flight: GhostFlight = add_child_autofree(GhostFlight.make(&"kerf"))
+	var rig: KerfRig = KerfRig.new()
+	PlayerScale.fit([rig])
+	rig.drawn.flight = flight
+	flight.mount(rig)
+	for view: String in ["tilt70", "tilt", "top"]:
+		ViewMode.select(view)
+		flight.step(Vector2.ZERO, 0.0, 1)
+		rig.pose()
+		assert_eq(flight.tail.visible, view == "top")
+	var top: KerfRoninTop = rig._spectral._top
+	var tip: Vector2 = top._curled.to_global(
+		top._parts.pivots_b["tail_curled"] + top._curled.offset
+	)
+	assert_lt(flight.tail.points()[0].distance_to(tip), 0.15 * SimConst.PX_PER_M)
 	ViewMode.select(previous)

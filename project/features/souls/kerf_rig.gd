@@ -58,6 +58,7 @@ var stage: CollectCallStage
 var echo: bool = false
 var _t: float = 0.0
 var _swept: float = 0.0
+var _pose_tick: int = 0
 var _spectral: KerfSpectral
 var _body: Node2D
 var _hull: Sprite2D = null
@@ -73,8 +74,6 @@ func _ready() -> void:
 		drawn.hover = true
 		drawn.own_body = true
 		_spectral = KerfSpectral.new()
-		if drawn.flight != null:
-			drawn.flight.tail.hide()
 		add_child(_spectral)
 		pose()
 		return
@@ -104,6 +103,7 @@ func _ready() -> void:
 ## One hover step of `dt` seconds (the host passes SimClock.TICK_DT per sim tick).
 func advance(dt: float) -> void:
 	if _spectral != null:
+		_pose_tick += roundi(dt / SimClock.TICK_DT)
 		pose()
 		return
 	_t = fmod(_t + dt, 1000.0)
@@ -154,7 +154,7 @@ func _pose_spectral() -> void:
 		var blink: KerfRoninDrawn.Pose = (
 			KerfRoninDrawn.Pose.BLINK if echo else KerfRoninDrawn.Pose.HOVER
 		)
-		_spectral.pose(self, blink, false, global_rotation)
+		_spectral.pose(self, blink, false, global_rotation, _pose_tick)
 
 
 func _place(s: Sprite2D, a: Vector2, b: Vector2, thick_m: float) -> void:

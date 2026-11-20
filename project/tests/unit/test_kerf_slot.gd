@@ -150,7 +150,7 @@ func test_live_mount_clears_the_flight_lag_and_leaves_the_top_pose_on_its_mark()
 	_stage.arena.tick = 1
 	v._process(0.0)
 	var at: Vector2 = _rivet.pos * 32
-	var lens: Sprite2D = live._spectral._top.get_child(4)
+	var lens: Sprite2D = live._spectral._top._head
 	var lens_at: Vector2 = lens.global_position - at
 	var tex: Texture2D = lens.texture
 	_press(Vector2.RIGHT)
@@ -160,7 +160,7 @@ func test_live_mount_clears_the_flight_lag_and_leaves_the_top_pose_on_its_mark()
 	var body: KerfSpectral = live._spectral
 	assert_almost_eq(body.global_position, _rivet.pos * 32 + Vector2(16, 0), Vector2.ONE * 0.01)
 	var echo: KerfEcho.Pose = body._echoes._pool[0]
-	var copied_lens: Sprite2D = echo.sprites[4]
+	var copied_lens: Sprite2D = echo.sprites[lens.get_index()]
 	assert_true(copied_lens.visible)
 	assert_same(copied_lens.texture, tex)
 	assert_almost_eq(copied_lens.position, lens_at, Vector2.ONE * 0.002)
