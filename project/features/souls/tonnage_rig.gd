@@ -62,6 +62,7 @@ var _all: Array[Sprite2D] = []
 func _init() -> void:
 	if GhostLook.spectral(&"tonnage"):
 		drawn = TonnageSpectral.Feed.new("tonnage", 3.3, CYCLE_CELL, 190.5)
+		drawn.own_body = true
 	else:
 		drawn = GhostDrawn.new("tonnage", 3.3, CYCLE_CELL, 190.5)
 

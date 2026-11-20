@@ -46,6 +46,8 @@ func test_spectral_tilts_show_one_custom_rest_cell() -> void:
 	GhostLook.override_for_test(GhostLook.SPECTRAL)
 	for view: String in ["tilt70", "tilt"]:
 		var rig: TonnageRig = _rig(view)
+		assert_true(rig.drawn.own_body)
+		assert_null(rig.drawn.sprite())
 		rig.drawn.feed(0, -1, 72)
 		var sheets: Array[String] = []
 		for spr: Sprite2D in rig.find_children("ghost_drawn*", "Sprite2D", true, false):
@@ -94,3 +96,21 @@ func test_spectral_top_parts_share_the_pose_opacity_and_additive_light() -> void
 		assert_eq(
 			(light.material as CanvasItemMaterial).blend_mode, CanvasItemMaterial.BLEND_MODE_ADD
 		)
+
+
+func test_chest_vapour_hangs_and_sways_only_on_the_spectral_body() -> void:
+	var legacy: TonnageRig = _rig("tilt70")
+	assert_false(legacy.drawn.own_body)
+	assert_null(legacy.find_child("ChestVapour", true, false))
+	GhostLook.override_for_test(GhostLook.SPECTRAL)
+	var rig: TonnageRig = _rig("tilt70")
+	var tail: GhostTail = rig.find_child("ChestVapour", true, false) as GhostTail
+	assert_not_null(tail)
+	if tail == null:
+		return
+	var points: PackedVector2Array = tail.points()
+	assert_gt(points[-1].y, points[0].y)
+	assert_lt(tail.get_index(), rig._spectral._cell.get_index())
+	assert_lt(tail.get_index(), rig._spectral._parts.get_index())
+	rig.advance(12.0 * SimClock.TICK_DT)
+	assert_ne(tail.points()[6], points[6])

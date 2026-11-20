@@ -30,7 +30,8 @@ var _size_k: float = 1.0
 var _parts: TonnageParts = TonnageParts.new()
 var _cell: Sprite2D = Sprite2D.new()
 var _cell_light: Sprite2D
-var _glow: Sprite2D
+var _glow: Sprite2D = TonnageGlow.halo()
+var _vapour: GhostTail = TonnageVapour.make()
 var _shadows: Array[Sprite2D] = []
 var _art: String = ""
 var _poses: GhostSheet
@@ -60,7 +61,7 @@ func _ready() -> void:
 			ink.z_index = RenderLayers.z(&"actors") - 1
 		_shadows.append(ink)
 		add_child(ink)
-	_glow = TonnageGlow.halo()
+	add_child(_vapour)
 	add_child(_glow)
 	add_child(_parts)
 	_cell.name = &"ghost_drawn"
@@ -96,8 +97,9 @@ func _combat_tick(tick: int, hurt: int) -> void:
 	if _drawn.flight != null:
 		_sample.bob_m = _drawn.flight.hover.lift_m - _row.height_m
 	pose.step(_sample, _ticks)
-	_ticks = 0
 	_present()
+	TonnageVapour.present(_vapour, _glow.global_position, _cell, global_rotation, _ticks)
+	_ticks = 0
 
 
 func _present() -> void:
