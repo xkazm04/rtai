@@ -114,3 +114,9 @@ func test_chest_vapour_hangs_and_sways_only_on_the_spectral_body() -> void:
 	assert_lt(tail.get_index(), rig._spectral._parts.get_index())
 	rig.advance(12.0 * SimClock.TICK_DT)
 	assert_ne(tail.points()[6], points[6])
+
+
+func test_spectral_hud_face_uses_the_front_carry_cut() -> void:
+	GhostLook.override_for_test(GhostLook.SPECTRAL)
+	var face: Texture2D = GhostChipFace.face(&"tonnage")
+	assert_eq(face.resource_path, GhostChipFace.DIR + "tonnage_spectral.png")
