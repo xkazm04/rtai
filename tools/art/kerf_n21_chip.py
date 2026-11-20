@@ -1,5 +1,6 @@
 """Rebuild the Swarf Ronin HUD portrait from its shipped p55 flight sheet."""
 
+import json
 from pathlib import Path
 
 from PIL import Image
@@ -8,19 +9,19 @@ from ghost_chip_cut import SIZE
 
 
 PROJECT = Path(__file__).resolve().parents[2] / "project"
-# Source manifest. Four columns × five facings, HOVER toward camera in row 0, column 0.
-SOURCE = PROJECT / "features/souls/art/view/p55/kerf_sp_fly.png"
-OUTPUT = PROJECT / "features/hud/art/ghost_chips/kerf_spectral.png"
-BUST = (60, 0, 461, 243)  # Both raised blades, helmet and chest down to the waist.
 
 
 def main() -> None:
-    with Image.open(SOURCE) as sheet:
-        hover = sheet.crop((0, 0, sheet.width // 4, sheet.height // 5))
-        bust = hover.convert("RGBA").crop(BUST)
+    cut = json.loads(Path(__file__).with_suffix(".json").read_text(encoding="utf-8"))
+    with Image.open(PROJECT / cut["source"]) as sheet:
+        cols, rows = cut["grid_columns_rows"]
+        col, row = cut["cell_column_row"]
+        w, h = sheet.width // cols, sheet.height // rows
+        hover = sheet.crop((col * w, row * h, (col + 1) * w, (row + 1) * h))
+        bust = hover.convert("RGBA").crop(cut["bust_xyxy"])
     square = Image.new("RGBA", (bust.width, bust.width))
     square.alpha_composite(bust, (0, (square.height - bust.height) // 2))
-    square.resize((SIZE, SIZE), Image.Resampling.LANCZOS).save(OUTPUT)
+    square.resize((SIZE, SIZE), Image.Resampling.LANCZOS).save(PROJECT / cut["output"])
 
 
 if __name__ == "__main__":
