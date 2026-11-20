@@ -5,6 +5,7 @@ extends Node2D
 
 var hover: GhostHover
 var shadow: GhostShadow
+## Overlay source. Its centreline and half-widths include the ribbon's projected lift.
 var tail: GhostTail
 var _mount: Node2D
 var _row: GhostHoverRow
