@@ -31,6 +31,7 @@ var debris_on: bool = (
 var _legacy: DentLegacyAttack
 var _overload: DentOverload
 var _tether: DentTether
+var _top_car: DentCarTop
 var _cam_at: Vector2 = Vector2.INF
 
 
@@ -47,6 +48,15 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
+	if (
+		_top_car == null
+		and stage != null
+		and stage.vehicles != null
+		and ViewMode.shared().is_flat()
+	):
+		_top_car = DentCarTop.new(self)
+	if _top_car != null:
+		_top_car.sync(stage.cars(), ppm)
 	if _tether != null:
 		_tether.strap.advance(dent.car, stage.tick, dent.link.speed, dent.blast_tick)
 	if _overload != null:
