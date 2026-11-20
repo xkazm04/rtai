@@ -155,6 +155,45 @@ def write_json(path, data):
     path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8", newline="\n")
 
 
+def fork_points(tile):
+    """Fit both copper tines together. The distal end opens into air, the base into the pole."""
+    rgba = np.asarray(tile, dtype=float)
+    red, green, blue, alpha = rgba.transpose(2, 0, 1)
+    copper = (red > 1.19 * green) & (green > 1.15 * blue) & (red - blue > 55) & (alpha > 110)
+    solid = ndi.binary_closing(copper, structure=np.ones((3, 3)))
+    labels, count = ndi.label(solid, structure=np.ones((3, 3)))
+    if count < 2:
+        raise ValueError("expected two separate copper tines")
+    areas = np.bincount(labels.ravel())[1:]
+    blobs = [np.column_stack(np.nonzero(labels == i + 1)[::-1]) for i in np.argsort(areas)[-2:]]
+    # A joint principal axis stays stable even when one tine is partly foreshortened.
+    centred = np.concatenate([blob - blob.mean(axis=0) for blob in blobs])
+    axis = np.linalg.eigh(centred.T @ centred)[1][:, -1]
+    centre = np.mean([blob.mean(axis=0) for blob in blobs], axis=0)
+    normal = np.array([-axis[1], axis[0]])
+    relative = np.concatenate(blobs) - centre
+    extent = relative @ axis
+    width = max(abs(relative @ normal))
+
+    def occupancy(sign):
+        end = extent.max() if sign > 0 else extent.min()
+        along = end + sign * np.linspace(2, max(5, np.ptp(extent) * 0.8), 12)
+        across = np.linspace(-width, width, 11)
+        samples = centre + along[:, None, None] * axis + across[None, :, None] * normal
+        return ndi.map_coordinates(alpha, samples.transpose(2, 0, 1)[::-1], order=1).sum()
+
+    if occupancy(-1) < occupancy(1):
+        axis = -axis
+    tips = []
+    for blob in blobs:
+        reach = blob @ axis
+        cap = blob[reach >= reach.max() - 1.5]
+        # Coordinates are continuous cell pixels, measured at the centres of the end-cap texels.
+        tips.append((cap.mean(axis=0) + 0.5).round(2).tolist())
+    tips.sort()
+    return dict(fork_px=np.mean(tips, axis=0).round(3).tolist(), prongs_px=tips)
+
+
 def cut_tilt(master, pitch):
     folder = ART / "view" / pitch
     old = Image.open(folder / "ohm_walk8.png").convert("RGBA")
@@ -182,6 +221,7 @@ def cut_tilt(master, pitch):
     for name, cols in (("hover", (0, 1)), ("act", (2, 3, 4, 5))):
         sheets = [Image.new("RGBA", (size[0] * len(cols), size[1] * 5)) for _ in range(2)]
         frames = []
+        forks = []
         for row in range(5):
             for j, col in enumerate(cols):
                 body, mask, x, y = cut[row * 6 + col]
@@ -191,10 +231,12 @@ def cut_tilt(master, pitch):
                     sheet.paste(dest, (j * size[0], row * size[1]))
                 boxes = [ch.getbbox() for ch in jars_tile.split()[:3]]
                 frames.append(boxes)
+                forks.append(fork_points(tile))
                 packed[row, col] = tile, jars_tile
         for sheet, suffix in zip(sheets, ("", "_jars")):
             sheet.save(folder / f"ohm_spec_{name}{suffix}.png")
-        meta["sheets"][name] = dict(columns=[POSES[c] for c in cols], jar_boxes_row_major=frames)
+        meta["sheets"][name] = dict(columns=[POSES[c] for c in cols], jar_boxes_row_major=frames,
+                                    forks_row_major=forks)
     write_json(folder / "ohm_spec_cells.json", meta)
     return packed, meta
 
@@ -224,6 +266,8 @@ def cut_top(master):
         parts[name] = tile, jars_tile
         meta["parts"][name] = dict(size_px=size,
                                    pivot_px=[PAD + round(f * v) for f, v in zip(pivot, body.size)])
+        if name == "staff":
+            meta["parts"][name].update(fork_points(tile))
         if name == "body":
             jars_tile.save(folder / "body_jars.png")
             for c in jars_tile.split()[:3]:
