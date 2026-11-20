@@ -136,3 +136,5 @@ NEXT (any later session before 08:00): nothing new; product is frozen. Only if a
 NEXT: none tonight. The Director's morning merge follows REPORT "Merge notes".
 - 07:32 START iteration 7 STABILIZE. No astra.lock, last Astra call a6e (04:35Z); tree clean at a7fc7c01e; no `NEED dent` in any lane journal; `node tools/evidence/cites.mjs REPORT.md` -> 29 paths, 29 ok. Gates stay green on the frozen code (86fad2566 final, 4c8be8dd9 reels); films and frames.json match it. Nothing to fix, no product change.
 NEXT: none tonight. Morning merge follows REPORT "Merge notes".
+- 07:41 START iteration 8 REPORT. No astra.lock, last Astra call a6e (04:35Z); tree clean at 9c5cae5db; no `NEED dent` in other lane journals. REPORT.md is final (iteration 5): `node tools/evidence/cites.mjs REPORT.md` -> 29 paths, 29 ok; films dent_move_32, dent_attack_32, dent_close_64, dent_tether_strap_vs_strings_32, dent_morph_32 present under gtai-masters/n20/dent. Gates green on the frozen code (86fad2566 final, 4c8be8dd9 reels). No change to REPORT or product.
+NEXT: none tonight. The morning merge follows REPORT "Merge notes".
