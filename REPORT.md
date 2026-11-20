@@ -23,6 +23,13 @@ DRAFT (session 4, 04:3x). Final numbers, gate line and film paths are filled in 
 
 ## What does not
 
+- **Smoke column starts low.** The tail leaves the belly near road level instead of hanging from under the hump as on the plate; at rest one cone side of the column is a straight hard edge (`tonnage_tail_fix_rest_64.png`, x about 380). It reads as smoke, not as a leg, ribbon or sparks.
+- **HUD chip visor slot is faint** at 84 px (`tonnage_chip_hud.png`): hump and both striped fists read, the face does not.
+- **No voice wash in the story apparition.** Tonnage draws his own body (own_body), so flight's `GhostBridgeFade.voice` has no shared sprite to tint; it returns safely and the apparition simply has no wash. Flight lists the same gap for the other own_body forms.
+- **Thin 4 m ring is faint at 32 px/m** in the attack film poster: the reach mark is there but light against the road; the cracks and victims read more than the ring.
+- **Mutate scores are partial**: `tonnage_morph.gd` 24/(24+0) and `tonnage_spectral.gd` 12/(12+0) focused, but the broad `tonnage_spectral.gd` run was 5/(5+33) before the later tests and `tonnage_pose.gd` never finished a full run under contention (34/(34+48) at 86/158 before the survivor tests).
+- **Performance unmeasured**: no bench under the lock tonight; the glow, morph and plume costs are not numbers.
+
 ## What blocked or slowed you
 
 - Astra session 03 (fix-films) killed at my session handover (01:44) before its report: ~75 min, films salvaged.
@@ -45,6 +52,13 @@ DRAFT (session 4, 04:3x). Final numbers, gate line and film paths are filled in 
 - `RamWake` has two callers (`tonnage_view.gd`, `boot/collect_call/view/cast_view.gd` quest 1); the spectral gate is in TonnageView only so quest 1 keeps its bow wave.
 
 ## Next steps
+
+1. Seat the smoke column under the hump (raise its root, soften the straight cone edge) in Tonnage's `ghost_hover.json` row and vapour.
+2. Ink the visor slot darker in the chip cut, or cut the chip from a 3/4 cell where the face is larger.
+3. Thicken or brighten the 4 m slam ring at 32 px/m (still a line, not a disk).
+4. Finish the `tonnage_pose.gd` and broad `tonnage_spectral.gd` mutation runs on a quiet machine and add tests for the survivors.
+5. Bench the spectral Tonnage under the lock (crowded drive + riot) to put a number on glow, plume and morph.
+6. Retire the legacy hauler body once the owner signs off the spectral look (not tonight: legacy stays one value away).
 
 ## Astra ledger
 
