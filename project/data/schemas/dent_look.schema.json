@@ -1,0 +1,114 @@
+{
+  "$id": "gtai.dent_look/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "type": "string"
+    },
+    "rows": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "buckle_m": {
+            "exclusiveMinimum": 0,
+            "maximum": 5,
+            "type": "number"
+          },
+          "disc_m": {
+            "exclusiveMinimum": 0,
+            "maximum": 5,
+            "type": "number"
+          },
+          "disc_rim_alpha": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "id": {
+            "const": "dent"
+          },
+          "ring_edge_m": {
+            "exclusiveMinimum": 0,
+            "maximum": 5,
+            "type": "number"
+          },
+          "ring_fill_alpha": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "ring_ink_m": {
+            "exclusiveMinimum": 0,
+            "maximum": 5,
+            "type": "number"
+          },
+          "strap_edge_m": {
+            "exclusiveMinimum": 0,
+            "maximum": 5,
+            "type": "number"
+          },
+          "strap_sag_m": {
+            "exclusiveMinimum": 0,
+            "maximum": 5,
+            "type": "number"
+          },
+          "strap_stripe_m": {
+            "exclusiveMinimum": 0,
+            "maximum": 5,
+            "type": "number"
+          },
+          "strap_tick_gap_m": {
+            "exclusiveMinimum": 0,
+            "maximum": 5,
+            "type": "number"
+          },
+          "strap_tremble_m": {
+            "exclusiveMinimum": 0,
+            "maximum": 5,
+            "type": "number"
+          },
+          "strap_width_m": {
+            "exclusiveMinimum": 0,
+            "maximum": 5,
+            "type": "number"
+          },
+          "tether_look": {
+            "enum": [
+              "strap",
+              "strings"
+            ]
+          }
+        },
+        "required": [
+          "buckle_m",
+          "disc_m",
+          "disc_rim_alpha",
+          "id",
+          "ring_edge_m",
+          "ring_fill_alpha",
+          "ring_ink_m",
+          "strap_edge_m",
+          "strap_sag_m",
+          "strap_stripe_m",
+          "strap_tick_gap_m",
+          "strap_tremble_m",
+          "strap_width_m",
+          "tether_look"
+        ],
+        "type": "object"
+      },
+      "maxItems": 1,
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.dent_look/1"
+    }
+  },
+  "required": [
+    "doc",
+    "rows",
+    "schema"
+  ],
+  "type": "object"
+}

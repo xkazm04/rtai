@@ -1,0 +1,22 @@
+{
+  "doc": "Ejected's seatbelt, roof marking and overload on the road. Widths and distances are in world metres.",
+  "rows": [
+    {
+      "buckle_m": 0.42,
+      "disc_m": 1.1,
+      "disc_rim_alpha": 0.36,
+      "id": "dent",
+      "ring_edge_m": 0.085,
+      "ring_fill_alpha": 0.16,
+      "ring_ink_m": 0.17,
+      "strap_edge_m": 0.0625,
+      "strap_sag_m": 0.65,
+      "strap_stripe_m": 0.065,
+      "strap_tick_gap_m": 0.33,
+      "strap_tremble_m": 0.018,
+      "strap_width_m": 0.32,
+      "tether_look": "strap"
+    }
+  ],
+  "schema": "gtai.dent_look/1"
+}
