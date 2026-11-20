@@ -116,3 +116,10 @@ NEXT (session 5, after the 18:30 freeze):
 - 16:34 LOOKED re-shot `kerf_attack_32.mp4` (snapshot of 35a611453): 4 slices unchanged, plain blink at frame 275 (`scratch/s5/blink_top.png`, `blink_70.png`): faint HOVER echo at the start, straight 4 m line, Ronin past in CRUISE, upright by +15, no victim. ACCEPTED: copied over the shipped film + poster; strip `kerf_plain_blink_strip_32.png` (frames 274/275/278/290). frames.json 15 (plain blink in at #5, transform strip out: the morph film covers it).
 - 16:35 REPORT: plain blink moved from "What does not"/Calls to What works item 6; merge note that the film came from a film-only commit; Next step: re-shoot attack from the merged tree.
 - 16:37 Call still `call_cruise_top_vs_plate.png` (plate top inset | game HOVER | game CRUISE, 64 px/m) added to REPORT's CRUISE Call.
+- 16:38 DECISION no product work this session: gate PASS on code c14ae6f97 stands; the open quality items (ACTION droop re-roll, distinct fly HIT cell) need image jobs plus a re-gate that do not fit before 17:00; the CRUISE-arms item is an owner Call with its still. Removed the film snapshot (`removeSnapshot`); scratch/s5 keeps only the tiles the journal cites.
+- 16:38 END session 5. No Astra running (8 calls, 264 min, all accepted).
+
+NEXT (session 6, after the 18:30 freeze):
+1. `export APPDATA=C:/Users/kazda/kiro/gtai-n21/appdata/kerf` + GODOT_BIN, then once: `node tools/gate/run.mjs --rev=HEAD --reels`; put its line + `build/gate/<sha>/gate.json` in REPORT's gate paragraph (code is still c14ae6f97; later commits are journal/report only).
+2. REPORT header says "Written session 4": update to the final session; `node tools/evidence/cites.mjs REPORT.md`; pathspec commit REPORT + JOURNAL.
+3. After the reels gate, clean `%LOCALAPPDATA%\Temp\gtai-gate-*` snapshots of this lane (via the gate tool / `removeSnapshot`, never by name pattern across lanes).
