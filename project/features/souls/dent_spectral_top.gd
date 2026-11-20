@@ -13,6 +13,7 @@ var _upper: Array[Sprite2D] = []
 var _fore: Array[Sprite2D] = []
 var _drag: float = 0.0
 var _grip_ticks: int = 0
+var _hand_m: Vector2
 
 
 func _init() -> void:
@@ -71,10 +72,15 @@ func pose(
 			if act == DentSpectralDrawn.Pose.STEER:
 				elbow = shoulder.lerp(target, 0.46)
 			hand = target
+			_hand_m = hand
 			if act in [DentSpectralDrawn.Pose.COCK, DentSpectralDrawn.Pose.JAB] or _grip_ticks >= 4:
 				grip = "forearm_fist"
 		_limb(_upper[i], "upperarm", shoulder, elbow, side)
 		_limb(_fore[i], grip, elbow, hand, side)
+
+
+func grip_world() -> Vector2:
+	return to_global(_hand_m * PPM)
 
 
 func _right_hand(act: DentSpectralDrawn.Pose, rest: Vector2, age: int, car_at: Vector2) -> Vector2:

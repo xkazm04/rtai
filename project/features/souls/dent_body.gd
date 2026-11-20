@@ -36,6 +36,9 @@ var _jump: float = 0.0
 ## Builds the rig for Dent's form row (null = the plan's defaults).
 func setup(row: GhostFormDef) -> void:
 	visible = false
+	_view = (drawn.flight.get_parent() if drawn.flight != null else get_parent()) as GhostFormView
+	if _view != null and _view.pilot != null:
+		add_to_group(group_for(_view.pilot.dent))
 	if drawn.flight != null:
 		_spectral = DentSpectralDrawn.new()
 		add_child(_spectral)
@@ -43,7 +46,6 @@ func setup(row: GhostFormDef) -> void:
 		add_child(_top)
 		_glass = DentGlass.new()
 		drawn.flight.tail.add_child(_glass)
-		_view = drawn.flight.get_parent() as GhostFormView
 		return
 	_rig = CutRig.new()
 	_aura = GhostAura.new()
@@ -62,6 +64,10 @@ func setup(row: GhostFormDef) -> void:
 ## One frame: shown or not, at Rivet's spot `at` (px) facing `facing`, `steps` sim ticks since
 ## the last frame (the gait from Rivet's own travel), `tick` for the glow's breath.
 func step(show: bool, at: Vector2, facing: float, steps: int, tick: int) -> void:
+	if show and _view != null and _view.pilot != null and _view.pilot.dent.car != null:
+		var to_car: Vector2 = _view.pilot.dent.car.pos - _view.arena.rivet.pos
+		if not to_car.is_zero_approx():
+			facing = to_car.angle()
 	if _spectral != null:
 		if show and not visible:
 			_top.reset()
@@ -95,6 +101,17 @@ func step(show: bool, at: Vector2, facing: float, steps: int, tick: int) -> void
 	drawn.still = riding
 	_rig.visible = not drawn.step(self, DRAWN_PARTS, SimConst.PX_PER_M, 1.0, facing)
 	_aura.sync(tick, clampf(_rig.vel_in.length() / SimConst.PX_PER_M / 7.0, 0.0, 1.0))
+
+
+static func group_for(linked: DentStage) -> StringName:
+	return StringName("dent_body_%d" % linked.get_instance_id())
+
+
+## A spectral hand includes the flight mount, player scale and actual current card or rig pose.
+func grip_world() -> Vector2:
+	if _spectral == null or not is_visible_in_tree():
+		return Vector2.INF
+	return _spectral.grip_world() if _spectral.visible else _top.grip_world()
 
 
 func _fly(facing: float, steps: int, tick: int) -> void:

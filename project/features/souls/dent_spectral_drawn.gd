@@ -8,6 +8,13 @@ const DIVE_MPS: float = 2.5
 const TURN_DPS: float = 150.0
 const HEIGHT_M: float = 1.45
 const FINISH: Shader = preload("res://features/souls/dent_spectral_finish.gdshader")
+## Centres of the gripping fist in STEER, in source-cell pixels (toward through away).
+const GRIP_55: Array[Vector2] = [
+	Vector2(85, 105), Vector2(124, 93), Vector2(199, 82), Vector2(207, 72), Vector2(189, 56)
+]
+const GRIP_70: Array[Vector2] = [
+	Vector2(84, 105), Vector2(219, 86), Vector2(264, 84), Vector2(261, 66), Vector2(243, 62)
+]
 
 var sprite: Sprite2D = Sprite2D.new()
 var _rim: Sprite2D = Sprite2D.new()
@@ -68,6 +75,13 @@ func show_pose(drawn: GhostDrawn, facing: float, current: Pose) -> void:
 
 static func swing_flip(oct: int, yaw: float) -> bool:
 	return (RigHeadCard.OCT_FLIP[oct] == 1) != (yaw < 0.0)
+
+
+func grip_world() -> Vector2:
+	var cell: Vector2 = (GRIP_55 if _art == "p55" else GRIP_70)[sprite.frame_coords.y]
+	if sprite.flip_h:
+		cell.x = sprite.get_rect().size.x - cell.x
+	return sprite.to_global(sprite.offset + cell)
 
 
 func _place(hover: GhostHover, facing: float, vm: ViewMode, cell: Vector2) -> void:

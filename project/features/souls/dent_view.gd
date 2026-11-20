@@ -1,25 +1,12 @@
 class_name DentView
 extends Node2D
-## Dent on the arena's actor layer (lane ghost-powers), render only. While a car is seized: a
-## soul-teal tether from Rivet's hands (HANDS_M ahead) to the car, sagging and trembling, and a
-## heat halo round the car that climbs from a dull amber to white-hot with DentStage.heat (the
-## pulse quickens once the overload is armed). On the blast: an ink shock ring and an amber
-## fireball with a hot core over BLAST_S (reduced motion: the ring only). A seize that finds no car
-## (none in range, or no car service: quest 1) lashes the tether out along the aim to its reach,
-## then it frays into dashes and three teal sparks over MISS_S (reduced motion: it fades whole).
-## n7-melee: the blast flings the rocket blast's slabs and ink specks out past the fireball
-## (WeaponFxDebris, the arsenal's one debris drawer: the blast had a fireball and a ring but
-## nothing left it). ghost_attacks.json dent blast_debris 1 (0, --feel=off or --blast-debris=off =
-## the before).
-## Reads DentStage only.
+## The roof strap, overload and missed seize. Only this view remembers a released roof.
 
 const TEAL: Color = HaulerLook.TEAL
 const INK: Color = Color(0.09, 0.08, 0.07)
 const WARM: Color = Color("#C9822E")
 const HOT: Color = Color(1.0, 0.97, 0.86)
 const HANDS_M: float = 0.5
-const SAG_M: float = 0.6
-const SEGMENTS: int = 14
 const BLAST_S: float = 0.45
 const FIRE: Color = Color("#E9A23B")
 const BURST_POINTS: int = 9
@@ -42,10 +29,26 @@ var miss_on: bool = not OS.get_cmdline_user_args().has("--no-dent-miss")
 var debris_on: bool = (
 	GhostAttacks.shipped().num(&"dent", &"blast_debris") > 0.0 and HitFeel.feel_flag() != "off"
 )
+var _strap: DentStrap
+var _body: DentBody
+var _body_group: StringName
+var _hand_offset: Vector2
+var _anchor: Vector2
 var _cam_at: Vector2 = Vector2.INF
 
 
+func _ready() -> void:
+	if dent == null or stage == null:
+		return
+	if DentLook.shipped().resolved() == "strap":
+		_strap = DentStrap.new()
+	_body_group = DentBody.group_for(dent)
+	_anchor = stage.pilot.ghosts.forms.table.form(DentStage.GHOST).anchor(&"hand_r")
+
+
 func _process(_delta: float) -> void:
+	if _strap != null:
+		_strap.advance(dent.car, stage.tick, dent.link.speed, dent.blast_tick)
 	if follow_cam != null and dent != null and stage != null:
 		_follow()
 	queue_redraw()
@@ -69,10 +72,9 @@ func _draw() -> void:
 	if dent == null or stage == null:
 		return
 	if dent.car != null:
-		var rivet: Fighter = stage.arena.rivet
-		var hands: Vector2 = (rivet.pos + rivet.facing.normalized() * HANDS_M) * ppm
 		_halo(dent.car.pos * ppm, dent.heat)
-		_tether(hands, dent.car.pos * ppm)
+	if _strap != null and _strap.showing():
+		_tether()
 	if miss_on and dent.miss_tick >= 0 and dent.car == null:
 		var miss_age: float = (stage.tick - dent.miss_tick) * SimClock.TICK_DT
 		if miss_age <= MISS_S:
@@ -99,18 +101,22 @@ func debris_scale() -> float:
 	return ppm / Ink.PX_PER_M
 
 
-func _tether(a: Vector2, b: Vector2) -> void:
-	var pts: PackedVector2Array = PackedVector2Array()
-	var side: Vector2 = (b - a).orthogonal().normalized()
-	for i: int in SEGMENTS + 1:
-		var t: float = float(i) / SEGMENTS
-		var sag: float = sin(t * PI) * SAG_M * ppm * 0.4
-		var shake: float = 0.0 if reduced_motion else sin(stage.tick * 0.9 + i * 1.7) * 2.0
-		@warning_ignore("return_value_discarded")
-		pts.push_back(a.lerp(b, t) + side * (sag + shake))
-	draw_polyline(pts, Color(INK, 0.7), 5.0)
-	draw_polyline(pts, TEAL, 2.0)
-	draw_circle(b, 4.0, TEAL)
+func _tether() -> void:
+	var rivet: Fighter = stage.arena.rivet
+	var at: Vector2 = rivet.pos * ppm
+	if _strap.held:
+		if not is_instance_valid(_body):
+			_body = get_tree().get_first_node_in_group(_body_group) as DentBody
+		var hand: Vector2 = _body.grip_world() if _body != null else Vector2.INF
+		if hand.is_finite():
+			_hand_offset = to_local(hand) - at
+		else:
+			_hand_offset = _anchor.rotated(rivet.facing.angle()) * ppm
+			_hand_offset += (
+				ViewMode.shared().lift_px(VehicleFire.HOOD_H_M) * ppm / SimConst.PX_PER_M
+			)
+	_strap.place(at + _hand_offset, ppm, reduced_motion, ViewMode.shared())
+	_strap.paint(self, DentStrap.fill_at(dent.heat), DentStrap.AQUA)
 
 
 func _halo(c: Vector2, heat: float) -> void:
