@@ -3,7 +3,7 @@
 Lane `kerf`, worktree `C:\Users\kazda\kiro\gtai-wt\n21-kerf`, branch `n21-kerf`. VISUAL night: no sim, replay,
 parity or bake digest may move.
 
-**Wall-clock hard stop: HARDSTOP. Commit deadline: COMMITBY.** Commit in small steps. Fix lint and format
+**Wall-clock hard stop: 16:20. Commit deadline: 16:15.** Commit in small steps. Fix lint and format
 findings in your own edits and go on. Never amend, never rebase. No `git stash`, no `git add -A/./-u`, no
 `commit -a`, no `reset --hard`. Stage per path. Before every Godot run:
 `export APPDATA=C:/Users/kazda/kiro/gtai-n21/appdata/kerf`. Godot:
@@ -49,3 +49,16 @@ director names it in JOURNAL) and any other test that reads Kerf's legacy body b
 ## Final message
 Files changed, commits, test/scenario counts and digests, mutate scores, flipped or not (and why), every
 evidence path, anything left undone.
+
+## What the director already knows (15:08)
+- Body, flight and both attacks are accepted (commits up to 56c31b555). Do not change them; this brief adds only
+  the rest of the form. n20 built the same four items for the dart (`docs/day/2026-11-20/kerf/REPORT.md`, rows
+  4, 4b, 4c): reuse its hooks (`KerfHit`, the morph path, the chip loader), re-fit them to the Ronin.
+- After any new PNG lands, run a Godot `--import` (headless) before committing: the film tool tests fail on
+  unimported assets. Commit the `.import` with the PNG. Add a provenance line in
+  `steam/ai-provenance/2026-11.jsonl` only if a NEW generated image ships (a chip cut from an existing sheet is
+  derived art: note its source sheet in the cutter's manifest instead).
+- Time order if short: 3 (chip) and 1 (transform) first, then 2, then 5; 4 may become a NEED. Start item 6 (the
+  flip) only if everything before it is green by 16:00; otherwise leave the row `legacy` and say so.
+- `project/tests/unit/test_ghost_card.gd` is polish's file: the one-line pin at line 92 is the only edit you
+  may make there. Name every other test you pin, one line each, in the final message.
