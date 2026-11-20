@@ -54,6 +54,9 @@ touches the road, the robe and beard arriving late on every turn, a slow sway." 
   `_toss` drops? WeaponFx?) in your report with file:line; change only what is in Ohm's files. If it is the shock
   kill, leave it: the director has it as a morning Call.
 
+- `OhmVictimRims` keeps a static `_marked` dictionary keyed by instance id: make sure it cannot leak across arena
+  sessions or tests (cleared when the arena/session ends, entries dropped when the stun ends; a test for it).
+
 ## Part B: the morning films (no commit needed; files outside git)
 Use flight's film tool (after Step 0): `node tools/film/ghost_films.mjs --ghost=ohm --look=spectral
 --out=C:/Users/kazda/kiro/gtai-masters/n20/ohm --takes=move,attack,close --stills=163` (read its header for the
