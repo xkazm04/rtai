@@ -20,9 +20,15 @@ var blasts: int = 0
 ## n11: the drawn walk (dent_walk8.png, tools/art/ghost_pack.py), feet on his point; the rig under
 ## a view without it. Cycle 163 cell px (stance foot, 20.4 a frame); run8 330 (41 a frame).
 var drawn: GhostDrawn = GhostDrawn.new("dent", 1.8, 163.0, 176.5, 330.0)
-var _rig: CutRig = CutRig.new()
+var steer: DentStringSteer
+var _spectral: DentSpectralDrawn
+var _top: DentSpectralTop
+var _glass: DentGlass
+var _view: GhostFormView
+var _jab_order: DentJabOrder
+var _rig: CutRig
 var _lurch: DentLurch = DentLurch.new()
-var _aura: GhostAura = GhostAura.new()
+var _aura: GhostAura
 var _last_pos: Vector2 = Vector2.ZERO
 var _seen: Vector2i = Vector2i(-1, -1)
 var _buck: float = 0.0
@@ -32,6 +38,24 @@ var _jump: float = 0.0
 ## Builds the rig for Dent's form row (null = the plan's defaults).
 func setup(row: GhostFormDef) -> void:
 	visible = false
+	_view = (drawn.flight.get_parent() if drawn.flight != null else get_parent()) as GhostFormView
+	if drawn.flight != null and _view != null and _view.pilot != null:
+		add_to_group(group_for(_view.pilot.dent))
+		_jab_order = DentJabOrder.new()
+		_jab_order.bind(self, _view, DentJabMark.new(HaulerLook.TEAL, DentStrap.AQUA, DentRoof.INK))
+		add_child(_jab_order)
+	if drawn.flight != null:
+		if DentLook.shipped().resolved() == "strings":
+			steer = DentStringSteer.new()
+		_spectral = DentSpectralDrawn.new()
+		add_child(_spectral)
+		_top = DentSpectralTop.new()
+		add_child(_top)
+		_glass = DentGlass.new()
+		drawn.flight.tail.add_child(_glass)
+		return
+	_rig = CutRig.new()
+	_aura = GhostAura.new()
 	if lurch_on:
 		_rig.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS  # raw art at 32 px/m
 	_aura.reduced_motion = reduced_motion
@@ -47,6 +71,18 @@ func setup(row: GhostFormDef) -> void:
 ## One frame: shown or not, at Rivet's spot `at` (px) facing `facing`, `steps` sim ticks since
 ## the last frame (the gait from Rivet's own travel), `tick` for the glow's breath.
 func step(show: bool, at: Vector2, facing: float, steps: int, tick: int) -> void:
+	if _jab_order != null:
+		_jab_order.sync(show)
+	if _spectral != null:
+		if show and not visible:
+			_top.reset()
+			_glass.reset()
+		visible = show
+		if show:
+			position = at
+			scale = Vector2.ONE * PlayerScale.k()
+			_fly(facing, steps, tick)
+		return
 	if show and not visible:
 		_lurch.reset()
 		_place(at, facing)  # before the reset: the rig plants its feet where it stands
@@ -70,6 +106,65 @@ func step(show: bool, at: Vector2, facing: float, steps: int, tick: int) -> void
 	drawn.still = riding
 	_rig.visible = not drawn.step(self, DRAWN_PARTS, SimConst.PX_PER_M, 1.0, facing)
 	_aura.sync(tick, clampf(_rig.vel_in.length() / SimConst.PX_PER_M / 7.0, 0.0, 1.0))
+
+
+static func group_for(linked: DentStage) -> StringName:
+	return StringName("dent_body_%d" % linked.get_instance_id())
+
+
+## A spectral hand includes the flight mount, player scale and actual current card or rig pose.
+func grip_world() -> Vector2:
+	if _spectral == null or not is_visible_in_tree():
+		return Vector2.INF
+	return _spectral.grip_world() if _spectral.visible else _top.grip_world()
+
+
+func string_grip(index: int) -> Vector2:
+	if _spectral == null or not is_visible_in_tree():
+		return Vector2.INF
+	return _spectral.string_grip(index) if _spectral.visible else _top.grip_world(index)
+
+
+func _fly(facing: float, steps: int, tick: int) -> void:
+	_glass.sync(drawn.flight, tick)
+	var jab: DentJab
+	var car: VehicleBody
+	var hurt_age: int = -1
+	if _view != null and _view.pilot != null:
+		jab = _view.pilot.ghosts.jab
+		car = _view.pilot.dent.car
+		if car != null:
+			var to_car: Vector2 = car.pos - _view.arena.rivet.pos
+			if not to_car.is_zero_approx():
+				facing = to_car.angle()
+		if _view.arena.rivet.hurt_tick >= 0:
+			hurt_age = tick - _view.arena.rivet.hurt_tick
+		if steer != null:
+			steer.sample(car, tick, _view.pilot.dent.link.num(&"turn_dps"))
+	var hover: GhostHover = drawn.flight.hover
+	var act: DentSpectralDrawn.Pose = DentSpectralDrawn.pose(hover, jab, car != null, hurt_age)
+	_spectral.visible = ViewMode.shared().cards and ViewMode.shared().art != ""
+	_top.visible = not _spectral.visible
+	if _spectral.visible:
+		_spectral.show_pose(drawn, facing, act, steer != null)
+		if steer != null:
+			_spectral.steer_hands(steer.turn, facing)
+	else:
+		_top.steer = steer
+		_top.rotation = facing
+		var age: int = jab.steps - jab.swung_step if jab != null else -1
+		var car_at: Vector2 = (
+			_view.to_global(car.pos * SimConst.PX_PER_M) if car != null else Vector2.ZERO
+		)
+		_top.pose(hover, act, age, car_at, steps)
+	if _jab_order != null:
+		if act == DentSpectralDrawn.Pose.JAB:
+			var fist: Vector2 = (
+				_spectral.grip_world(true) if _spectral.visible else _top.grip_world()
+			)
+			_jab_order.strike(jab, fist, facing)
+		else:
+			_jab_order.mark.hide()
 
 
 ## The root at Rivet's spot, rolled sideways and yawed by the lurch (the rig sits at its origin).

@@ -91,8 +91,7 @@ func _drive_arena(id: StringName, look: StringName) -> void:
 	var bus: EventBus = autofree(EventBus.new())
 	var data: DataStore = autofree(DataStore.new())
 	var session: ArenaSession = ArenaSession.open(bus, data)
-	var drive: GhostReviewInput = GhostReviewInput.new(session, id, false)
-	session.world.loop().set_input(drive)
+	session.world.loop().set_input(GhostReviewInput.new(session, id, false))
 	var view: GhostFormView = GhostFormView.make(session.stage, null, null)
 	add_child(view)
 	view.set_process(false)
@@ -108,13 +107,15 @@ func _drive_arena(id: StringName, look: StringName) -> void:
 	var start: Vector2 = session.stage.arena.rivet.pos
 	var cells: Dictionary[int, bool] = {}
 	var planted: bool = false
+	var rig: CutRig = view._bodies.dent._rig if id == &"dent" else null
 	for i: int in 58:
 		session.step()
 		view._process(0.0)
-		if not drawn.own_body:
-			cells[drawn.sprite().frame_coords.x] = true
-		if id == &"dent":
-			for side: RigLimbs in view._bodies.dent._rig.sides:
+		var sprite: Sprite2D = drawn.sprite()
+		if sprite != null:
+			cells[sprite.frame_coords.x] = true
+		if rig != null:
+			for side: RigLimbs in rig.sides:
 				planted = planted or side.stepping
 	assert_gt(start.distance_to(session.stage.arena.rivet.pos), 1.0, str(id))
 	var grounded: bool = look == GhostLook.LEGACY

@@ -1,17 +1,17 @@
 {
   "rows": [
     {
-      "bank_deg": 14,
-      "bank_per_dps": 0.08,
+      "bank_deg": 38,
+      "bank_per_dps": 0.18,
       "belt_width_k": 0.47,
-      "bob_m": 0.08,
-      "bob_ticks": 70,
+      "bob_m": 0.045,
+      "bob_ticks": 27,
       "cruise_bob_k": 0.65,
       "fade_from": 0.43,
-      "height_m": 0.45,
+      "height_m": 0.5,
       "id": "dent",
-      "lag_ticks": 6,
-      "lean_deg": 9,
+      "lag_ticks": 2,
+      "lean_deg": 16,
       "shadow": {
         "alpha": 0.28,
         "pool_alpha": 0.4,
@@ -23,20 +23,20 @@
       "sway_m": 0.025,
       "tail": {
         "anchor_m": [
-          -0.18,
-          0
+          -0.32,
+          -0.11
         ],
         "curl_m": 0.14,
         "flow_ticks": 43,
-        "fray": 0.21,
-        "length_m": 1.35,
+        "fray": 0.18,
+        "length_m": 2.35,
         "rise_m": 0.32,
-        "segments": 8,
+        "segments": 14,
         "spread_m": 0.53,
         "strands": 1,
-        "stretch_k": 0.06,
-        "swing_k": 0.64,
-        "width_m": 0.48,
+        "stretch_k": 0.22,
+        "swing_k": 0.9,
+        "width_m": 0.54,
         "wisps": 6
       },
       "top_mps": 7

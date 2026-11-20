@@ -1,0 +1,17 @@
+Completed all five Dent sheets in five local commits on `n20-dent`. HEAD is `f04ee8a91`. The art package contains four packed atlases, six overhead parts with pivots, and nine proof images. All 80 poses are teal and legless. [Proof boards](C:/Users/kazda/kiro/gtai-wt/n20-dent/evidence/a1)
+
+| Sheet | Shipped take | Re-rolls | Cell size | Median height | Profile head width |
+|---|---:|---:|---:|---:|---:|
+| 70° flight | 1 of 1 | 0 | 269 × 236 | 209.5 px | 90 px |
+| 70° action | 1 of 1 | 0 | 298 × 251 | 238.5 px | 90 px |
+| Top parts | 1 of 3 | 2 | Six tight crops | 155 px | 165 px overhead |
+| 55° flight | 1 of 1 | 0 | 267 × 221 | 201.5 px | 77 px |
+| 55° action | 1 of 1 | 0 | 237 × 216 | 202 px | 77 px |
+
+The sprite plumes are shorter than the concept plate’s comet trail, and the 70° hover reads shallower than the camera guide. All three overhead takes drew four fingers plus a thumb and repeated the waist buckle on the tail. Take 1 had the clearest glass shards. The cutter removed the duplicate buckle. [Assembly board](C:/Users/kazda/kiro/gtai-wt/n20-dent/evidence/a1/top_parts_board.png)
+
+**Verification passed.** Godot imported all ten PNGs. The quick gate passed before every commit, and full lint passed all 19 checks. A clean rebuild reproduced every cell, atlas, part, pivot file, and proof image byte for byte. The 4× crop inspections and pixel checks found no visible pink fringe.
+
+The verbatim prompts, ordered references, take history, and measurements are committed alongside the cutter, manifest, and ten provenance entries. [Art record](C:/Users/kazda/kiro/gtai-wt/n20-dent/docs/art/prompts/n20/dent/README.md) · [Cutter](C:/Users/kazda/kiro/gtai-wt/n20-dent/tools/art/dent_spectral_cut.py) · [Manifest](C:/Users/kazda/kiro/gtai-wt/n20-dent/art_src/n20_dent.manifest.json)
+
+[astra: 1844s, exit 0]

@@ -1,0 +1,92 @@
+{
+ "head": {
+  "size": [
+   165,
+   183
+  ],
+  "sheet": "n20/dent/masters/dent_sp_top_take1.png",
+  "pivot_a": [
+   82.5,
+   91.5
+  ],
+  "pivot_b": [
+   82.5,
+   91.5
+  ]
+ },
+ "torso": {
+  "size": [
+   270,
+   187
+  ],
+  "sheet": "n20/dent/masters/dent_sp_top_take1.png",
+  "pivot_a": [
+   135.0,
+   93.5
+  ],
+  "pivot_b": [
+   135.0,
+   93.5
+  ]
+ },
+ "upperarm": {
+  "size": [
+   216,
+   96
+  ],
+  "sheet": "n20/dent/masters/dent_sp_top_take1.png",
+  "pivot_a": [
+   41.6,
+   48.8
+  ],
+  "pivot_b": [
+   183.2,
+   54.0
+  ]
+ },
+ "forearm_fist": {
+  "size": [
+   190,
+   101
+  ],
+  "sheet": "n20/dent/masters/dent_sp_top_take1.png",
+  "pivot_a": [
+   15.1,
+   54.9
+  ],
+  "pivot_b": [
+   182.7,
+   54.9
+  ]
+ },
+ "forearm_open": {
+  "size": [
+   242,
+   127
+  ],
+  "sheet": "n20/dent/masters/dent_sp_top_take1.png",
+  "pivot_a": [
+   14.6,
+   65.6
+  ],
+  "pivot_b": [
+   238.4,
+   67.1
+  ]
+ },
+ "tail_root": {
+  "size": [
+   138,
+   196
+  ],
+  "sheet": "n20/dent/masters/dent_sp_top_take1.png",
+  "pivot_a": [
+   69.0,
+   0
+  ],
+  "pivot_b": [
+   69.0,
+   195
+  ]
+ }
+}

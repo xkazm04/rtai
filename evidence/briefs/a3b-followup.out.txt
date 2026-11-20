@@ -1,0 +1,17 @@
+Implemented the five follow-up fixes on `n20-dent` through `033ac765b`. The final legacy PNGs at ticks **160 and 200 matched `9e8bc0619` byte-for-byte**.
+
+| Commit | Changed files and result |
+|---|---|
+| `f7f8884e8` | `dent_body`, `dent_view`, `dent_legacy_attack` — restored legacy facing, tether, halo and blast. |
+| `9e0aa327b` | `dent_overload`, `dent_view`, overload tests — retained the dashed ring, added the eight-tick shock disc and doubled the spoke width above the hit star. |
+| `49dd0b1d7` | `dent_look.json`, strap test — widened the belt to 0.48 m and the buckle to 0.58 m. |
+| `c654f6924` | `dent_body`, `dent_spectral_drawn`, `dent_jab_order`, `dent_jab_mark`, jab tests — placed the six-tick impact and speed lines at the drawn fist. |
+| `1e23ea264`, `033ac765b` | `dent_roof`, `dent_strap`, `dent_strap_canvas`, `dent_view`, `dent_plan`, strap tests — isolated render dependencies and tested the actual drawing commands. |
+
+**Inspected stills:** [Blast at 235, 239 and 243](C:/Users/kazda/kiro/gtai-masters/n20/dent/scratch/a3/a3b-blast-32ppm-ticks235-239-243.jpg) · [Belt at 160, at 32 and 64 px/m](C:/Users/kazda/kiro/gtai-masters/n20/dent/scratch/a3/a3b-belt-32-and-64ppm-tick160.jpg) · [Jab at 94 and 97](C:/Users/kazda/kiro/gtai-masters/n20/dent/scratch/a3/a3b-jab-64ppm-ticks94-97.jpg). Each sheet includes tilt 70 and top.
+
+**Gates.** Quick passed before every commit. Standalone `check.mjs` exited **0 for all 18 `dent_*.gd` files**. The changed suite passed 69/69, and the final legacy-plan tests passed 3/3. All five scenarios passed. The 60-second replay retained `cbeb734ff9b97c41`, and native parity matched for 1,200 steps.
+
+**Mutations.** Overload killed **4/(4+16)**. The standard strap runner completed seven cases before I stopped it for the time limit, killing six. A separate headless GUT run exercised all 20 sampled edits against both strap test files and killed **16/(16+4)**. A dedicated standard mutation run confirmed that deleting the buckle draw now fails the test.
+
+[astra: 2745s, exit 0]

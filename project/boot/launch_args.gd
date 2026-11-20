@@ -1,6 +1,5 @@
 extends Node
-## LaunchArgs autoload: user args after `--`. Unknown ones are kept for unknown(); the main scene
-## (boot/boot.gd) warns about each, so a misspelt flag is not silently ignored.
+## User args after `--`. Boot warns about each misspelt flag returned by unknown().
 
 const KNOWN_FLAGS: PackedStringArray = [
 	"--seed",
@@ -120,6 +119,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--no-cover",  # lane move n19: force station cover off
 	"--car-doors",  # lane move n19: take the timed walk to and from a car door
 	"--ghost-look",  # n20-flight: override the per-form visual look
+	"--dent-tether",  # n20-dent: choose the roof tether
 ]
 var _values: Dictionary[String, String] = {}
 var _unknown: Array[String] = []

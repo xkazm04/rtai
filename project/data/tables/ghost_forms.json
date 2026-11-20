@@ -19,7 +19,7 @@
       "exit_s": 0.5,
       "gait": "stagger",
       "id": "dent",
-      "look": "legacy",
+      "look": "spectral",
       "name_key": "ghost.dent.name",
       "power": "gearbox",
       "radius_m": 0.45,

@@ -1,0 +1,16 @@
+Delivered all four Dent films and their 960×540 posters. **The five-second attack includes the jab at tick 94, strap seize at 153, two car hits, and the overload blast at 235 (3.08 s).** [Plate comparison](C:/Users/kazda/kiro/gtai-masters/n20/dent/dent_vs_plate.png) · [11-entry frames.json](C:/Users/kazda/kiro/gtai-masters/n20/dent/frames.json)
+
+| Film | ffprobe | Poster and three-frame inspection |
+|---|---|---|
+| [Movement](C:/Users/kazda/kiro/gtai-masters/n20/dent/dent_move_32.mp4) | 1920×1080 · 60 fps · 5.000 s · 300 frames | The poster catches the turn. Ticks 110, 205 and 337 show the rightward dive, the tail curling behind the turn, and the return to hover. |
+| [Attack](C:/Users/kazda/kiro/gtai-masters/n20/dent/dent_attack_32.mp4) | 1920×1080 · 60 fps · 5.000 s · 300 frames | The poster shows the roof strap. Ticks 94, 192 and 239 show fist contact, the taut belt steering the car, and the blast scattering panels. |
+| [Attack close-up](C:/Users/kazda/kiro/gtai-masters/n20/dent/dent_close_64.mp4) | 1920×1080 · 60 fps · 5.000 s · 300 frames | The poster catches the teal knuckle flash. Ticks 97, 160 and 243 show the extended arm, roof buckle and expanding blast. Dent stays in frame in both views. |
+| [Transformation](C:/Users/kazda/kiro/gtai-masters/n20/dent/dent_morph_32.mp4) | 1920×1080 · 60 fps · 6.667 s · 400 frames | The poster shows Dent emerging through the ring. Ticks 73, 165 and 295 show Rivet entering, Dent in flight, and Rivet returning. |
+
+The index also includes the existing strap-versus-strings film, jab comparison, heat ring, blast, overhead turn and tail comparison. I kept Dent’s tail width after checking both tick-110 views against the plate. The brighter root fits inside the torso. The morph entry uses n19 movement as its appearance reference because n19 has no transformation take.
+
+Flight merged at `1f03405db`. All **23 selected tests passed**. All ten film passes and both still passes reported `SCRIPT ERROR 0`. Godot reported resources still in use at shutdown. All four delivered films decoded through their final frame.
+
+The file-by-file report is committed at `c61d58ced`. [Full report](C:/Users/kazda/kiro/gtai-wt/n20-dent/evidence/ghost-powers/n20-dent-films.md)
+
+[astra: 541s, exit 0]

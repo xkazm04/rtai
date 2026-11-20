@@ -1,0 +1,16 @@
+**The Puppeteer tether reads at 32 px/m.** All four strings can be traced from Dent’s two palms to the roof at both 5 m and 20 m, in tilt and top view. The inside hand pulls back and the roof attachments dip. The chassis itself stays level, so the film demonstrates marionette steering without the concept plate’s two-wheel tip. Strap remains the default.
+
+[32 px/m comparison film](C:/Users/kazda/kiro/gtai-masters/n20/dent/dent_tether_strap_vs_strings_32.mp4) · [Poster](C:/Users/kazda/kiro/gtai-masters/n20/dent/dent_tether_strap_vs_strings_32.jpg) · [64 px/m comparison](C:/Users/kazda/kiro/gtai-masters/n20/dent/scratch/a4/dent_tether_strap_vs_strings_64.mp4) · [Stills and measurements](C:/Users/kazda/kiro/gtai-masters/n20/dent/scratch/a4/strings_eval.json)
+
+The films match 318 frames across ticks 68–367. The 5.01 m still is tick 181. The stock attack reached 15.31 m, so the 19.92 m still at tick 209 uses a separately staged car. At that distance, the 1 px core and 1.5 px ink band measured 1.6–1.8 px effective width. Short sections blended into the floor in both views.
+
+| 32 px/m view | Guard-box overlap frames, strap / strings | Living guards only, strap / strings | Strap `_draw` mean / p99 | Strings `_draw` mean / p99 |
+|---|---:|---:|---:|---:|
+| Tilt 70° | 0 / 2 | 0 / 2 | 258 / 1,508 µs | 332 / 1,358 µs |
+| Top | 94 / 93 | 0 / 4 | 251 / 1,494 µs | 395 / 1,832 µs |
+
+Timing is **CONTENDED**, measured over the whole take without the bench lock. The tether was visible in 94 frames.
+
+Merged `n20-flight` and committed the Dent renderer, steering pose, unit tests, and `tools/film/dent_tether_*` evidence tools through `3be67fcec`. Godot parse, quick gate, all 19 lint checks, 78 final changed tests, native parity, and six focused scenarios passed. Legacy PNG and RGB were byte-identical at ticks **160 and 200**. Mutation testing killed **16/20**. The 65-minute limit stopped the full scenario run after **52/65 passed**, with 13 unverified.
+
+[astra: 3922s, exit 0]
