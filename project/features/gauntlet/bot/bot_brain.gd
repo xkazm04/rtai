@@ -134,7 +134,7 @@ func _engage(foe: BotView.Hostile, tick: int) -> Intent:
 		intent.move = dir.orthogonal() * side * 0.55
 	if tick < _ready or not me.settled:
 		return intent
-	if slot != null and me.current_slot != slot.index:
+	if slot != null and me.current_slot != slot.index and (slot.melee or distance > MELEE_M):
 		intent.slot = slot.action
 	if blocked:
 		return intent

@@ -94,8 +94,9 @@ func test_hands_close_in_and_attack_with_no_gun_and_choose_carried_melee() -> vo
 	foe.pos.x = 1
 	assert_true(brain.sample(21).is_pressed(actions.bit(&"melee")))
 	_slot(0, 30)
+	assert_false(brain.sample(22).is_pressed(actions.bit(&"weapon_slot_1")))
 	_slot(1, 1.6, true)
-	assert_true(brain.sample(22).is_pressed(actions.bit(&"weapon_slot_2")))
+	assert_true(brain.sample(23).is_pressed(actions.bit(&"weapon_slot_2")))
 
 
 func test_guard_button_suppresses_fire_and_releases_on_clear_tick() -> void:
