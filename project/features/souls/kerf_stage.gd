@@ -17,8 +17,7 @@ var charges: int = 0
 var blinks: int = 0
 var slices: int = 0
 var activations: int = 0
-## The last blinks, oldest first: from, to (metres), tick, and the cut target's spot (or
-## Vector2.INF on a plain dash).
+## Last blinks, oldest first. Positions are in metres. A plain dash has no cut (Vector2.INF).
 var trail_from: PackedVector2Array = PackedVector2Array()
 var trail_to: PackedVector2Array = PackedVector2Array()
 var trail_cut: PackedVector2Array = PackedVector2Array()
@@ -133,8 +132,7 @@ func _blink(stage: CollectCallStage, aim: Vector2) -> void:
 	_remember(stage.tick, from, to, cut, target.radius_m if target != null else 0.0)
 
 
-## The target: the live hostile inside the aim cone and range, nearest the aim line (by angle),
-## with no arena wall between; ties to the earlier hostile. Null = none (a plain dash).
+## Nearest unobstructed hostile by aim angle within reach. The earlier hostile wins ties.
 func pick(stage: CollectCallStage, aim: Vector2) -> Fighter:
 	var rivet: Fighter = stage.arena.rivet
 	var walls: ArenaWalls = _walls(stage)
@@ -163,8 +161,7 @@ func _slice(stage: CollectCallStage, target: Fighter, dir: Vector2) -> void:
 	slices += 1
 
 
-## The crowd-tool alternative (an owner's call): path_cut_m > 0 also slices every other live
-## hostile within that many metres (plus its radius) of the blink line. 0 (built) = the target only.
+## Positive path_cut_m also slices hostiles whose radius enters that band. Zero cuts only the pick.
 func _cut_path(
 	stage: CollectCallStage, from: Vector2, to: Vector2, target: Fighter, dir: Vector2
 ) -> void:
@@ -184,12 +181,15 @@ static func _walls(stage: CollectCallStage) -> ArenaWalls:
 	return arena_stage.walls if arena_stage != null else null
 
 
-@warning_ignore("return_value_discarded")
 func _remember(tick: int, from: Vector2, to: Vector2, cut: Vector2, radius: float) -> void:
+	@warning_ignore("return_value_discarded")
 	trail_from.push_back(from)
+	@warning_ignore("return_value_discarded")
 	trail_to.push_back(to)
+	@warning_ignore("return_value_discarded")
 	trail_cut.push_back(cut)
 	trail_radius.push_back(radius)
+	@warning_ignore("return_value_discarded")
 	trail_tick.push_back(tick)
 	if trail_tick.size() > KEEP:
 		trail_from.remove_at(0)
