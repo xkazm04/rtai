@@ -123,3 +123,4 @@ NEXT (iteration 5, from ~06:10; freeze 07:30, REPORT 07:40):
 3. Do NOT merge n20-flight again tonight (aura one-liner is a Merge note). No new product work after 06:00.
 4. 07:40: `node tools/evidence/cites.mjs REPORT.md`, fix MISSING paths (paths under scratch/ and dent_*.mp4 are gtai-masters/n20/dent: declare the root in REPORT prose or use --root), commit JOURNAL + REPORT + evidence/gate-final.out.txt.
 5. Clean scratch renders in gtai-masters/n20/dent not referenced by frames.json only if made by this lane outside scratch/a2..a6 (leave a2..a6).
+- 05:48 MILESTONE FINAL GATE PASS on 86fad2566 (the code HEAD; later commits docs only): build/gate/86fad25665c4/gate.json; scenarios 65/65, parity 1200 exact + mutation caught at 629, look goldens 11/11, export-audit 791/0. NEXT step 1 of iteration 5 is DONE; iteration 5 does steps 2-5 (reels gate after the freeze if it fits, cites, final docs commit).

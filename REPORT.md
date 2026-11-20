@@ -3,8 +3,9 @@
 Branch `n20-dent` (worktree `C:\Users\kazda\kiro\gtai-wt\n20-dent`), cut from `int-n20` `a3eb0bf78`;
 merges `n20-flight` only. Plate: `C:\Users\kazda\kiro\gtai-masters\n20\concepts\dent_a.png` (+ `dent_c.png`
 borrow). Evidence root: `C:\Users\kazda\kiro\gtai-masters\n20\dent\` (`frames.json` best first).
-Final gate: TODO quote the line from `evidence/gate-final.out.txt` (`node tools/gate/run.mjs --rev=86fad2566`,
-started 05:36) + the `build/gate/86fad256*/gate.json` path.
+Final gate: `node tools/gate/run.mjs --rev=86fad2566` (05:36-05:48) -> `gate: PASS; build/gate/86fad25665c4/gate.json`
+(lint, unit-tests, scenario-tests 65 passed, parity 1200 exact + planted mutation caught at 629, selftest look goldens
+11/11, export-audit 791 loaded 0 failed; full log `evidence/gate-final.out.txt`). Commits after it are docs only (inert).
 
 **Dent now defaults to the spectral Ejected look** (`6d9b5e7a6`); the old body is reachable with `--ghost-look=legacy`.
 
