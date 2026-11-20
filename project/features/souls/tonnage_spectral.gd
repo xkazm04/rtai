@@ -94,6 +94,7 @@ func _combat_tick(tick: int, hurt: int) -> void:
 		_sample.bob_m = _drawn.flight.hover.lift_m - _row.height_m
 	pose.step(_sample, _ticks)
 	_present()
+	TonnageVapour.seat_column(_drawn.flight, _cell, global_rotation)
 	TonnageVapour.present(_vapour, _glow.global_position, _cell, global_rotation, _ticks)
 	_ticks = 0
 
