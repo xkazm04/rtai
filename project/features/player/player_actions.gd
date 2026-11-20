@@ -24,6 +24,7 @@ var turn_dps: float = 720.0
 var strafe_scale: float = 0.85
 var rows: Array[Dictionary] = []
 var errors: Array[String] = []
+var _wheel: bool = ControlsMode.wheel()
 
 
 static func shipped() -> PlayerActions:
@@ -50,6 +51,10 @@ static func from_table(t: DataTable) -> PlayerActions:
 		if b >= 0:
 			a.bits[StringName(t.text(row, "id"))] = b
 			a.button_mask |= 1 << b
+	a.live_mask = a.button_mask
+	var guard: int = a.bit(&"guard")
+	if not a._wheel and guard >= 0:
+		a.live_mask &= ~(1 << guard)
 	a.enable_cover_input(false)
 	a.errors = t.errors()
 	return a
@@ -58,7 +63,11 @@ static func from_table(t: DataTable) -> PlayerActions:
 ## Disabled live actions leave no trace in recorded TickInput. Scripted inputs still decode.
 func enable_cover_input(enabled: bool) -> void:
 	var cover: int = bit(&"cover")
-	live_mask = button_mask if enabled or cover < 0 else button_mask & ~(1 << cover)
+	if cover >= 0:
+		if enabled:
+			live_mask |= 1 << cover
+		else:
+			live_mask &= ~(1 << cover)
 
 
 func bit(action: StringName) -> int:
@@ -72,7 +81,17 @@ func install() -> void:
 		if InputMap.has_action(id):
 			InputMap.erase_action(id)
 		InputMap.add_action(id, ACTION_DEADZONE)
+		if id == &"guard" and not _wheel:
+			continue
 		for ev: InputEvent in events_of(row):
+			var mouse: InputEventMouseButton = ev as InputEventMouseButton
+			if (
+				_wheel
+				and id == &"melee"
+				and mouse != null
+				and mouse.button_index == MOUSE_BUTTON_RIGHT
+			):
+				continue
 			InputMap.action_add_event(id, ev)
 
 
