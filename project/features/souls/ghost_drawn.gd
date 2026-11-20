@@ -88,9 +88,9 @@ func voice_wash(voice: GhostBridgeFade.Voice, wash: ShaderMaterial, phase: float
 		GhostBridgeFade.voice(_spr, wash, phase)
 		return
 	for part: CanvasItem in voice_parts:
-		voice.paint(part, wash, phase)
+		voice.paint(part, phase)
 	if _spr != null:
-		voice.paint(_spr, wash, phase)
+		voice.paint(_spr, phase)
 
 
 func step(

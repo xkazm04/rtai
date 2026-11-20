@@ -76,6 +76,7 @@ static func voice(spr: Sprite2D, wash: ShaderMaterial, phase: float) -> void:
 		return
 	var material: ShaderMaterial = spr.material as ShaderMaterial
 	if material != null and material.shader == SHADER:
+		material.set_shader_parameter(&"band_k", wash.get_shader_parameter(&"band_k"))
 		material.set_shader_parameter(&"voice_phase", phase)
 	else:
 		spr.material = wash
@@ -90,8 +91,16 @@ class Voice:
 	]
 	var _originals: Dictionary[int, Material] = {}
 	var _phases: Dictionary[ShaderMaterial, float] = {}
+	var _wash: ShaderMaterial = ShaderMaterial.new()
 
-	func paint(part: CanvasItem, wash: ShaderMaterial, phase: float) -> void:
+	func _init() -> void:
+		_wash.shader = GhostApparition.SHADER
+
+	func paint(part: CanvasItem, phase: float) -> void:
+		_wash.set_shader_parameter(&"voice_phase", phase)
+		_paint(part, phase)
+
+	func _paint(part: CanvasItem, phase: float) -> void:
 		if not part.visible:
 			return
 		var mat: ShaderMaterial = part.material as ShaderMaterial
@@ -100,12 +109,12 @@ class Voice:
 				var previous: Variant = mat.get_shader_parameter(&"voice_phase")
 				_phases[mat] = previous if previous is float else -1.0
 			mat.set_shader_parameter(&"voice_phase", phase)
-		elif mat != wash:
+		elif mat != _wash:
 			_originals[part.get_instance_id()] = part.material
-			part.material = wash
+			part.material = _wash
 		for child: Node in part.get_children():
 			if child is CanvasItem:
-				paint(child as CanvasItem, wash, phase)
+				_paint(child as CanvasItem, phase)
 
 	func clear() -> void:
 		for id: int in _originals:

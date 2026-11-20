@@ -61,15 +61,17 @@ func test_an_unknown_ghost_says_nothing() -> void:
 	assert_false(app.speaking())
 
 
-func test_the_parts_draw_through_the_ghost_material() -> void:
+func test_legacy_kerfs_parts_draw_through_the_original_wash() -> void:
+	GhostLook.override_for_test(GhostLook.LEGACY)
 	var app: GhostApparition = _apparition()
 	app.say(KerfStage.GHOST)
-	var washed: int = 0
-	for n: Node in app.find_children("*", "Sprite2D", true, false):
-		if (n as Sprite2D).material is ShaderMaterial:
-			var m: ShaderMaterial = (n as Sprite2D).material
-			washed += 1 if m.shader == GhostApparition.SHADER else 0
-	assert_gt(washed, 4, "Kerf's parts are washed teal")
+	app.step(Vector2.ZERO, 0.0, 22, 22)
+	var kerf: KerfRig = app._rigs[KerfStage.GHOST]
+	assert_eq(kerf._limbs.size(), 8)
+	for limb: Sprite2D in kerf._limbs:
+		assert_same(limb.material, app._mat)
+	var depth: float = app._mat.get_shader_parameter(&"band_k")
+	assert_almost_eq(depth, 0.2, 0.0001)
 
 
 func test_a_whisper_in_base_shows_the_selected_ghost_and_none_in_a_form() -> void:
@@ -144,6 +146,9 @@ func _body_parts(rig: Node2D, flat: bool) -> Array[CanvasItem]:
 	elif rig is DentBody:
 		var dent: DentBody = rig as DentBody
 		root = dent._top if flat else dent._spectral
+	elif rig is KerfRig:
+		var kerf: KerfSpectral = (rig as KerfRig)._spectral
+		root = kerf._top if flat else kerf._tilted
 	else:
 		var ohm: OhmRig = rig as OhmRig
 		root = ohm._body if flat else ohm.drawn.sprite()
@@ -165,7 +170,7 @@ func test_every_visible_spectral_body_part_loses_the_wash_at_voice_end(
 	ViewMode.select(view)
 	GhostLook.override_for_test(GhostLook.SPECTRAL)
 	var app: GhostApparition = _apparition()
-	for key: StringName in [HaulerStage.GHOST, OhmStage.GHOST, DentStage.GHOST]:
+	for key: StringName in [HaulerStage.GHOST, OhmStage.GHOST, DentStage.GHOST, KerfStage.GHOST]:
 		app.say(key)
 		app.step(Vector2.ZERO, 0.0, 22, 22)
 		var parts: Array[CanvasItem] = _body_parts(app._rigs[key], ViewMode.shared().is_flat())
@@ -183,7 +188,7 @@ func test_a_cut_part_keeps_its_material_and_belt_during_and_after_speech() -> vo
 	cut.set_shader_parameter(&"fade_from", 0.6)
 	part.material = cut
 	var voice: GhostBridgeFade.Voice = GhostBridgeFade.Voice.new()
-	voice.paint(part, GhostApparition.ghost_material(false, 0.2), 0.44)
+	voice.paint(part, 0.44)
 	assert_eq(part.material, cut)
 	assert_almost_eq(_phase(part), 0.44, 0.001)
 	voice.clear()

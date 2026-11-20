@@ -75,6 +75,7 @@ func _ready() -> void:
 		drawn.own_body = true
 		_spectral = KerfSpectral.new()
 		add_child(_spectral)
+		drawn.voice_parts.assign([_spectral._tilted, _spectral._top])
 		pose()
 		return
 	_body = Node2D.new()
