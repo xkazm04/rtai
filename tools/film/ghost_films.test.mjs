@@ -26,3 +26,9 @@ test('invalid inputs are rejected before the engine runs', () => {
     '--prefix=../escape', '--invalid=1']) assert.throws(() => plan([...args, option]));
   assert.throws(() => plan(args.slice(0, 2)), /out/);
 });
+
+test('morph has its own native 32 px/m take', () => {
+  const p = plan([...args, '--takes=morph', '--prefix=flight_']);
+  assert.deepEqual(p.takes, ['morph']);
+  assert.equal(stem(p, 'morph'), 'flight_kerf_morph_32');
+});

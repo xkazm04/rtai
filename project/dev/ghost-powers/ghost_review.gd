@@ -12,22 +12,17 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--shot-tick",
 	"--ohm-bolt-delay",
 	"--film-trace",
-	"--film-panel"
+	"--film-panel",
+	"--apparition"
 ]
-const RUN_TICKS: int = 370
+const RUN_TICKS: int = 402
 ## Camera marks in metres from the starting position, keeping the turn in frame at both zooms.
-const MOVE_CENTRE: Dictionary[StringName, Vector2] = {
-	&"tonnage": Vector2(3.4, 2),
-	&"dent": Vector2(5.6, 3),
-	&"kerf": Vector2(11.4, 5),
-	&"ohm": Vector2(3.6, 2)
-}
+@export var move_centre: Dictionary[StringName, Vector2]
 
 var _panel: bool = false
 var _game: ArenaGame
 var _input: GhostReviewInput
 var _trace: FileAccess
-var _sprites: Array[Node] = []
 var _hits: Array[String] = []
 
 
@@ -40,7 +35,7 @@ func _ready() -> void:
 			Log.error("ghost_review", "unknown argument %s" % flag)
 			get_tree().quit(2)
 			return
-	if not GhostReviewInput.GUARDS.has(ghost) or take not in ["move", "attack"]:
+	if not GhostReviewInput.GUARDS.has(ghost) or take not in ["move", "attack", "morph"]:
 		Log.error("ghost_review", "invalid ghost or take")
 		get_tree().quit(2)
 		return
@@ -48,10 +43,10 @@ func _ready() -> void:
 	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
 	_game = ArenaGame.new()
 	add_child(_game)
-	_input = GhostReviewInput.new(_game.session, ghost, take == "attack")
+	_input = GhostReviewInput.new(_game.session, ghost, take == "attack", take == "morph")
 	_game.session.world.loop().set_input(_input)
-	var offset: Vector2 = Vector2(7, 0) if _input.attacking else MOVE_CENTRE[ghost]
-	_game.view.focus = GhostReviewInput.MARK + offset
+	var offset: Vector2 = Vector2(7, 0) if _input.attacking else move_centre[ghost]
+	_game.view.focus = GhostReviewInput.MARK + (Vector2.ZERO if _input.morphing else offset)
 	if _input.attacking and ghost == &"kerf":
 		_game.view.focus = Vector2.INF  # The arena camera follows Kerf's actual blink glide.
 	_panel = args.has("--film-panel")
@@ -66,9 +61,9 @@ func _ready() -> void:
 		var arena: CombatArena = _game.session.stage.arena
 		_trace_header()
 		@warning_ignore("return_value_discarded")
-		arena.kill_landed.connect(_kill)
+		arena.kill_landed.connect(_record.bind("killed").unbind(3))
 		@warning_ignore("return_value_discarded")
-		arena.wounded.connect(_wound)
+		arena.wounded.connect(_record.bind("wounded").unbind(2))
 	process_priority = FilmProbe.PRIORITY
 	set_process(_trace != null or not _input.attacking)
 
@@ -83,7 +78,7 @@ func _process(_delta: float) -> void:
 		var vm: ViewMode = ViewMode.shared()
 		_game.view.focus.y = at.y if vm.is_flat() else at.y - row.size_k * 0.875 / vm.ground_k()
 	elif not _input.attacking and _game.px_per_m > 32.0:
-		var centre: Vector2 = GhostReviewInput.MARK + MOVE_CENTRE[_input.ghost]
+		var centre: Vector2 = GhostReviewInput.MARK + move_centre[_input.ghost]
 		_game.view.focus.y = lerpf(centre.y, stage.arena.rivet.pos.y, 0.5)
 	if _trace != null:
 		_trace_frame(stage)
@@ -94,7 +89,7 @@ func _trace_frame(stage: ArenaStage) -> void:
 	var r: Fighter = stage.arena.rivet
 	var px: Vector2 = get_viewport().get_canvas_transform() * (r.pos * SimConst.PX_PER_M)
 	var row: Array = [Engine.get_process_frames(), _game.session.tick(), p.ghosts.forms.current()]
-	row.append_array([r.pos.x, r.pos.y, r.facing.angle(), _gait_cell(stage)])
+	row.append_array([r.pos.x, r.pos.y, r.facing.angle(), _gait_cell()])
 	row.append_array([p.hauler.form.stomps, p.hauler.ram_hits, p.hauler.cars_crushed])
 	row.append_array([p.ghosts.jab.landed, p.dent.seizes, p.dent.strikes, p.dent.blasts])
 	row.append_array([p.kerf.blinks, p.kerf.slices])
@@ -106,14 +101,15 @@ func _trace_frame(stage: ArenaStage) -> void:
 	_hits.clear()
 
 
-func _gait_cell(stage: ArenaStage) -> String:
-	if stage.tick == GhostReviewInput.START or (_sprites.is_empty() and ViewMode.shared().cards):
-		_sprites = _game.cast.ghost_view.find_children("ghost_drawn", "Sprite2D", true, false)
-	for n: Sprite2D in _sprites:
-		if n.is_visible_in_tree():
-			var atlas: String = n.texture.resource_path.get_file()
-			return "%s/%d/%d" % [atlas, n.frame_coords.y, n.frame_coords.x]
-	return ""
+func _gait_cell() -> String:
+	var body: Node2D = _game.cast.ghost_view._bodies.get(_input.ghost)
+	var drawn: GhostDrawn = body.get(&"drawn")
+	var spr: Sprite2D = drawn.sprite()
+	if spr == null or not spr.is_visible_in_tree():
+		return ""
+	return (
+		"%s/%d/%d" % [spr.texture.resource_path.get_file(), spr.frame_coords.y, spr.frame_coords.x]
+	)
 
 
 func _trace_header() -> void:
@@ -132,9 +128,5 @@ func _exit_tree() -> void:
 		_trace.close()
 
 
-func _kill(f: Fighter, weapon: StringName, _dir: Vector2, _at: Vector2, _kind: StringName) -> void:
-	_hits.append("%s killed %d" % [weapon, f.id])
-
-
-func _wound(f: Fighter, weapon: StringName) -> void:
-	_hits.append("%s wounded %d" % [weapon, f.id])
+func _record(f: Fighter, weapon: StringName, event: String) -> void:
+	_hits.append("%s %s %d" % [weapon, event, f.id])
