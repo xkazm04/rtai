@@ -1,0 +1,10 @@
+{
+  "schema": "gtai.kerf_hud_cut/1",
+  "source": "features/souls/art/view/p55/kerf_sp_fly.png",
+  "pose": "HOVER",
+  "facing": "toward",
+  "grid_columns_rows": [4, 5],
+  "cell_column_row": [0, 0],
+  "bust_xyxy": [60, 0, 461, 243],
+  "output": "features/hud/art/ghost_chips/kerf_spectral.png"
+}

@@ -72,6 +72,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--melee-dir",
 	# n7-melee: --kerf-glide=off snaps the camera with each Kerf blink (the before)
 	"--kerf-glide",
+	"--kerf-cruise-wings",
 	# view lab: the camera projection (data/tables/view.json; default top = the shipped view)
 	"--view",
 	# d8-weapons: --held-pitch=off: the top-down held weapon under a tilt; =squash: 55's squash

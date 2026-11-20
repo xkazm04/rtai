@@ -1,0 +1,18 @@
+Committed `0c312d279` on `n21-kerf` before the deadline. All four atlases shipped. At both tilts, every visible hover blade tip clears the helmet, and the three-quarter-away hover shows the back slots.
+
+| Atlas | Source for all 20 cells | `--k` | Profile helmet | Cells with three slots |
+|---|---|---:|---:|---:|
+| 70° flight | Take 4 | 1.64 | 90 px | 16/20 |
+| 70° action | Take 1, director ruling 11:59 | 1.855 | 90 px | 11/20 |
+| 55° flight | Take 1 | 1.59 | 77 px | 16/20 |
+| 55° action | Take 1 | 1.36 | 77 px | 13/20 |
+
+70° flight takes 1–3 retained the low hover blades. Take 1 also showed the chest in the fourth hover facing. For 70° action, take 2 spread the front blink blades downward and take 3 brought their tips together around the tail. The director selected take 1 for its clearer back view. Both 55° sheets passed on their first take.
+
+The 15 changed files cover the four PNGs and imports, cutter, `cut.json`, revised prompts, README, manifest and four provenance entries. The six overhead parts from top take 1 remain byte-identical. [Take review and rebuild instructions](C:/Users/kazda/kiro/gtai-wt/n21-kerf/docs/art/prompts/n21/kerf/README.md)
+
+Godot import and the quick gate passed. Full lint passed **19/19**. A second build reproduced every shipped PNG, metadata file and proof board byte for byte.
+
+[Contact sheet](C:/Users/kazda/kiro/gtai-masters/n21/kerf/body_contact_sheet.png) · [32 px/m comparison](C:/Users/kazda/kiro/gtai-masters/n21/kerf/body_scale_32ppm.png) · [Slot centroids](C:/Users/kazda/kiro/gtai-masters/n21/kerf/body_slots.png)
+
+[astra: 914s, exit 0]

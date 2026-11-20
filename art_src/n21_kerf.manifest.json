@@ -1,0 +1,164 @@
+{
+  "_doc": "Swarf Ronin raw generations. All takes and ordered reference copies are in the n21 Kerf archive.",
+  "masters": {
+    "kerf_sp_act_55_take1": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n21/kerf/masters/kerf_sp_act_55_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n21/kerf/kerf_sp_act_55.txt",
+      "references": [
+        "masters:n21/kerf/masters/refs/kerf_b.png",
+        "masters:n21/kerf/masters/refs/dent_sp_fly_55_take1.png",
+        "masters:n21/kerf/masters/refs/camera_guide_55.png"
+      ],
+      "review": "Accepted all 20 cells under the action ruling. The four action phases and five facings are distinct and all figures are legless.",
+      "seed": null,
+      "sha256": "2965dcf7b3714c525d834164ae95defba88841f2a3bbd351c77e7e6ba8deb7d5",
+      "tool": "codex-image"
+    },
+    "kerf_sp_act_70_take1": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n21/kerf/masters/kerf_sp_act_70_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n21/kerf/kerf_sp_act_70.txt",
+      "references": [
+        "masters:n21/kerf/masters/refs/kerf_b.png",
+        "masters:n21/kerf/masters/refs/dent_sp_fly_70_take1.png",
+        "masters:n21/kerf/masters/refs/camera_guide_70.png"
+      ],
+      "review": "Accepted all 20 cells, director ruling 11:59. The three-quarter-away facing shows the back best. Blade droop in the brief action phases is accepted.",
+      "seed": null,
+      "sha256": "61007e814b6edb33ecf732e647b7937bd38fcccb143e4f54b79732c81b34b360",
+      "tool": "codex-image"
+    },
+    "kerf_sp_act_70_take2": {
+      "accepted": false,
+      "date": "2026-11-20",
+      "file": "masters:n21/kerf/masters/kerf_sp_act_70_take2.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n21/kerf/kerf_sp_act_70.txt",
+      "references": [
+        "masters:n21/kerf/masters/refs/kerf_b.png",
+        "masters:n21/kerf/masters/refs/dent_sp_fly_70_take1.png",
+        "masters:n21/kerf/masters/refs/camera_guide_70.png"
+      ],
+      "review": "Rejected. The front blink spreads the blades downward. The director preferred the back view in take 1.",
+      "seed": null,
+      "sha256": "37023970b8711694a2cf39c8132f0936236da2141cf7d57297ba0c3f117be01e",
+      "tool": "codex-image"
+    },
+    "kerf_sp_act_70_take3": {
+      "accepted": false,
+      "date": "2026-11-20",
+      "file": "masters:n21/kerf/masters/kerf_sp_act_70_take3.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n21/kerf/kerf_sp_act_70.txt",
+      "references": [
+        "masters:n21/kerf/masters/refs/kerf_b.png",
+        "masters:n21/kerf/masters/refs/dent_sp_fly_70_take1.png",
+        "masters:n21/kerf/masters/refs/camera_guide_70.png"
+      ],
+      "review": "Rejected. The front blink draws the blade tips down together around the tail and the side cut hooks down at the tip.",
+      "seed": null,
+      "sha256": "4a0102fa92f533596f8a3696a2adab275d18dda5dac0c4127a2f7e46a3ba2e11",
+      "tool": "codex-image"
+    },
+    "kerf_sp_fly_55_take1": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n21/kerf/masters/kerf_sp_fly_55_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n21/kerf/kerf_sp_fly_55.txt",
+      "references": [
+        "masters:n21/kerf/masters/refs/kerf_b.png",
+        "masters:n21/kerf/masters/refs/dent_sp_fly_55_take1.png",
+        "masters:n21/kerf/masters/refs/camera_guide_55.png"
+      ],
+      "review": "Accepted all 20 cells. The five hovers keep the visible crescent tips above the helmet and column four shows the back panel.",
+      "seed": null,
+      "sha256": "8a2c9ebc3f6c78c82f3492b7c8038632c54ea76698da5f0a7f141a1b3a46e928",
+      "tool": "codex-image"
+    },
+    "kerf_sp_fly_70_take1": {
+      "accepted": false,
+      "date": "2026-11-20",
+      "file": "masters:n21/kerf/masters/kerf_sp_fly_70_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n21/kerf/kerf_sp_fly_70.txt",
+      "references": [
+        "masters:n21/kerf/masters/refs/kerf_b.png",
+        "masters:n21/kerf/masters/refs/dent_sp_fly_70_take1.png",
+        "masters:n21/kerf/masters/refs/camera_guide_70.png"
+      ],
+      "review": "Rejected. Hover tips hang beside the ribbon. The fourth hover shows the wrong plate. The director approved rows 2-4 as a fallback.",
+      "seed": null,
+      "sha256": "ebfa72c1407b42319bab4d069b1f85ea17c3a69091b01e3b5ed3b8126a48914f",
+      "tool": "codex-image"
+    },
+    "kerf_sp_fly_70_take2": {
+      "accepted": false,
+      "date": "2026-11-20",
+      "file": "masters:n21/kerf/masters/kerf_sp_fly_70_take2.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n21/kerf/kerf_sp_fly_70.txt",
+      "references": [
+        "masters:n21/kerf/masters/refs/kerf_b.png",
+        "masters:n21/kerf/masters/refs/dent_sp_fly_70_take1.png",
+        "masters:n21/kerf/masters/refs/camera_guide_70.png"
+      ],
+      "review": "Rejected. Hover repeats the low crescent silhouette and the front cruise spreads the blades around the helmet.",
+      "seed": null,
+      "sha256": "55810aa24d478e5a8b6e49b4999ea0ee4bbf50597faa518f8cdeaa0a8316f33f",
+      "tool": "codex-image"
+    },
+    "kerf_sp_fly_70_take3": {
+      "accepted": false,
+      "date": "2026-11-20",
+      "file": "masters:n21/kerf/masters/kerf_sp_fly_70_take3.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n21/kerf/kerf_sp_fly_70.txt",
+      "references": [
+        "masters:n21/kerf/masters/refs/kerf_b.png",
+        "masters:n21/kerf/masters/refs/dent_sp_fly_70_take1.png",
+        "masters:n21/kerf/masters/refs/camera_guide_70.png"
+      ],
+      "review": "Rejected. Clear lens and torso, but the front hover still carries both tips below the chest.",
+      "seed": null,
+      "sha256": "602a45c43495066cd74380bf47754befead8deb07139a73abc7db3a0f74bc445",
+      "tool": "codex-image"
+    },
+    "kerf_sp_fly_70_take4": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n21/kerf/masters/kerf_sp_fly_70_take4.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n21/kerf/kerf_sp_fly_70_raised.txt",
+      "references": [
+        "masters:n21/kerf/masters/refs/kerf_b.png",
+        "masters:n21/kerf/masters/refs/dent_sp_fly_70_take1.png",
+        "masters:n21/kerf/masters/refs/camera_guide_70.png"
+      ],
+      "review": "Accepted all 20 cells. Raised blade tips clear the helmet across the hover row, the fourth facing shows the back slots, and cruise, turn and hit remain distinct.",
+      "seed": null,
+      "sha256": "fae58167713403b546e440aea1a8de13309523f52dddb1cc0241f2418fe501ef",
+      "tool": "codex-image"
+    },
+    "kerf_sp_top_take1": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n21/kerf/masters/kerf_sp_top_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n21/kerf/kerf_sp_top.txt",
+      "references": [
+        "masters:n21/kerf/masters/refs/kerf_b.png",
+        "masters:n21/kerf/masters/refs/dent_sp_top_take1.png"
+      ],
+      "review": "Accepted all six parts. Clear wedge and lens, separate jointed arm and blade, three lit back slots and both ribbon shapes.",
+      "seed": null,
+      "sha256": "bf29315c781ab13ddfd1bb6d3d632d6c81e55e037ae2412e549e685516f30fb7",
+      "tool": "codex-image"
+    }
+  }
+}

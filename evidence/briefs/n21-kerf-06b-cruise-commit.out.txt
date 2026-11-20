@@ -1,0 +1,9 @@
+Committed `2b38c1353` on `n21-kerf` before the deadline. The five files cover the overhead CRUISE sweep, flag registration, unit test, decision, and debt baseline.
+
+- `lint: all 19 checks pass over 1805 GDScript files`
+- `debt-ratchet: ok` — `launch_args.gd` went from 208 to 209 lines. Files above the soft cap fell from 66 to 64.
+- Changed unit suite: **3353 passed, 0 failed, 2 skipped**.
+
+The comparison shows tick 118 at 12 m/s, with default 43°/20° on the left and open 62°/40° on the right, at both 64 and 32 px/m. All four captures saved successfully. Godot reported resources still in use during shutdown. [Open the comparison PNG](C:/Users/kazda/kiro/gtai-masters/n21/kerf/call_cruise_wings_open.png)
+
+[astra: 488s, exit 0]

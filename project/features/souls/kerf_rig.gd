@@ -1,6 +1,6 @@
 class_name KerfRig
 extends Node2D
-## Kerf's freed laser-cutter head. The spectral form rides the flight mount with three charge beams.
+## Kerf's freed laser-cutter head. The spectral Ronin rides the flight mount.
 ## The legacy cutout uses cables, jointed arms and trailing blade legs. Speed sweeps the limbs
 ## back and unfold folds them onto the hull at zero. Parts use world pixels with +x forward.
 
@@ -58,6 +58,7 @@ var stage: CollectCallStage
 var echo: bool = false
 var _t: float = 0.0
 var _swept: float = 0.0
+var _pose_tick: int = 0
 var _spectral: KerfSpectral
 var _body: Node2D
 var _hull: Sprite2D = null
@@ -71,11 +72,8 @@ var _card: GhostCard
 func _ready() -> void:
 	if GhostLook.spectral(KerfStage.GHOST):
 		drawn.hover = true
-		_spectral = KerfSpectral.new(HULL_M * 1.1)
-		_spectral.beams.visible = not echo
-		_spectral.beams.reduced_motion = LaunchArgs.has("--reduced-motion")
-		if drawn.flight != null:
-			drawn.flight.tail.hide()  # The three charge beams are Kerf's tail.
+		drawn.own_body = true
+		_spectral = KerfSpectral.new()
 		add_child(_spectral)
 		pose()
 		return
@@ -105,8 +103,7 @@ func _ready() -> void:
 ## One hover step of `dt` seconds (the host passes SimClock.TICK_DT per sim tick).
 func advance(dt: float) -> void:
 	if _spectral != null:
-		if stage == null:
-			_spectral.beams.tick += roundi(dt / SimClock.TICK_DT)
+		_pose_tick += roundi(dt / SimClock.TICK_DT)
 		pose()
 		return
 	_t = fmod(_t + dt, 1000.0)
@@ -151,14 +148,13 @@ func pose() -> void:
 
 func _pose_spectral() -> void:
 	_spectral.modulate.a = unfold
-	_spectral.beams.emerge = unfold
-	var since: int = 0 if echo else -1
-	var speed: float = drawn.flight.hover.speed_mps if drawn.flight != null else speed_mps
-	var oct: int = drawn.octant(global_rotation)
 	if stage != null and stage.pilot != null:
-		_spectral.live(stage, drawn.flight, speed, global_rotation, oct)
+		_spectral.live(stage, self)
 	else:
-		_spectral.pose(speed, since, false, global_rotation, oct)
+		var blink: KerfRoninDrawn.Pose = (
+			KerfRoninDrawn.Pose.BLINK if echo else KerfRoninDrawn.Pose.HOVER
+		)
+		_spectral.pose(self, blink, false, global_rotation, _pose_tick)
 
 
 func _place(s: Sprite2D, a: Vector2, b: Vector2, thick_m: float) -> void:

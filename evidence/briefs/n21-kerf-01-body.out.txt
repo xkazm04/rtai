@@ -1,0 +1,15 @@
+Committed `f96b2f2e7` on `n21-kerf`. **The six overhead parts shipped.** All six 70° takes failed the blade-direction review. The 55° sheets required an accepted 70° pair, so they remain ungenerated.
+
+| Sheet | Take review | Scale and slots |
+|---|---|---|
+| Top view | **Take 1 shipped.** The wedge helmet, elbow joints, swept blade and punched ribbons read clearly. | Scale `165/201`. All **3 torso slots** detected. |
+| 70° flight | Takes 1–3 all dropped the hover blade tips below the elbows. Take 3 shows the problem most clearly beside the guard at 32 px/m. | Scratch proof `--k=1.8`. Profile hover helmet **91 px**, Dent **90 px**. Three slots in **12/20** cells. |
+| 70° action | Take 1 spread the blink blades downward. Take 2 swept them back in profile but dropped them in the toward view. Take 3 folded the tips down around the tail. | Take 2 scratch proof `--k=1.8`. Profile cock helmet **89 px**. Three slots in **12/20** cells. |
+
+The 23 committed files include the six PNGs and imports, `parts.json`, `cut.json`, the cutter, five prompt texts, the review README, the seven-master manifest and six provenance entries. [Art and metadata](C:/Users/kazda/kiro/gtai-wt/n21-kerf/project/features/souls/art/kerf/ronin) · [Cutter](C:/Users/kazda/kiro/gtai-wt/n21-kerf/tools/art/kerf_n21_cut.py) · [Take review and rebuild instructions](C:/Users/kazda/kiro/gtai-wt/n21-kerf/docs/art/prompts/n21/kerf/README.md)
+
+Godot import exited 0. The quick gate exited 0 with no changed GDScript. Full pre-commit lint passed **19/19**. A second build reproduced all six PNGs, both metadata files and all three boards byte for byte.
+
+[Contact sheet](C:/Users/kazda/kiro/gtai-masters/n21/kerf/body_contact_sheet.png) · [32 px/m comparison](C:/Users/kazda/kiro/gtai-masters/n21/kerf/body_scale_32ppm.png) · [Slot centroids](C:/Users/kazda/kiro/gtai-masters/n21/kerf/body_slots.png)
+
+[astra: 1058s, exit 0]

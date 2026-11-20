@@ -1,0 +1,28 @@
+All four attack presses at 28, 77, 126 and 200 sliced a guard. Each left a COCK after-image in the departing frame and drew Kerf past the whole, standing victim in CUT. The sim faces back toward the victim. At 70°, 55° and overhead, the blade follows the travel direction through CUT and RECOVER. The all-ghosts reel also shows a plain BLINK at tick 76 and a slice at tick 96.
+
+The three plate slots now show the charge count. They spend from the right, mirror with the body, turn dark steel and relight over the last four recharge ticks. Profile cells draw no slots. Tick-seeded aqua sparks stay outside the victim clearance and switch off under reduced motion. Kerf’s default look remains `legacy`.
+
+**Verification**
+
+| Check | Result |
+|---|---|
+| `--changed` unit run | 3,349 passed, 0 failed, 2 skipped |
+| All nine `test_kerf_*` files | 42 passed, 0 failed |
+| Quick gate `--no-godot` | Passed across 14 GDScript files |
+| `quest1_kerf`, `ghost_attacks`, `replay_60s` | 3/3 passed before and after, with byte-identical outputs |
+| Native parity and bake | 1,200 exact steps, final `94b2865f7f17d778`. Planted fault caught at step 629. All 256 bake hashes matched. |
+| Charge-slot mutation | 17/20 killed (85%), 3 survived, 0 invalid or timed out. [Mutation results](C:/Users/kazda/kiro/gtai-masters/n21/kerf/scratch/mutation-result.json) |
+
+The 3,600-tick replay’s final digest before and after was `cbeb734ff9b97c41645f735114692ea3b9e7cc6578750f32d8d9f31d69844e85`. The legacy strip was byte-identical at SHA-256 `1a9314ef39fb65df77191a2aaa7b4b4ccd9ded390b440e3a4edebdd75020232a`. The complete legacy attack film also matched byte for byte.
+
+**Evidence**
+
+- [Top slice strip](C:/Users/kazda/kiro/gtai-masters/n21/kerf/slice_strip_top_32.png) · [70° slice strip](C:/Users/kazda/kiro/gtai-masters/n21/kerf/slice_strip_70_32.png) · [n20/current comparison](C:/Users/kazda/kiro/gtai-masters/n21/kerf/slice_before_after_top_32.png) · [Legacy strip](C:/Users/kazda/kiro/gtai-masters/n21/kerf/slice_strip_legacy_32.png)
+- [Charge counts at 64 and 32 px/m](C:/Users/kazda/kiro/gtai-masters/n21/kerf/charges_3views_64.png) · [First reel slice](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_beat_first_slice_32.png)
+- [Attack film](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_attack_32.mp4) · [Poster](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_attack_32.jpg) · [Close film](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_close_64.mp4) · [Poster](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_close_64.jpg)
+
+**Files and commits.** Changed `kerf_{charge_slots,echo,ronin_drawn,ronin_top,slot,spectral,stage,view}.gd`, the slot-mask atlas and generator, six Kerf test files, their associated metadata and `docs/decisions.md`. Builder commits were `bec7d3229`, `2d4ee940e`, `2166cdcaf`, `4cde368b5`, `86c6743ca`, `196e96d77`, `e7ad31bc4`, `09e7af355`, `42c78b422` and `4174e2a73`. Concurrent staging put the director’s `JOURNAL.md` and `n21-kerf-03b-attacks-fix.md` edits into `4cde368b5`.
+
+NEED polish: ghost_review_input.gd kerf attack take has no plain blink
+
+[astra: 3677s, exit 0]

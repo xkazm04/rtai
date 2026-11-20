@@ -1,0 +1,24 @@
+Kerf’s overhead blades now bow outward and trail the shoulders. HOVER holds the upper arms 45° from the rear spine, TURN uses 50°/25°, and HIT opens to 55°. Only the right-hand CUT thrusts forward. The cutter trimmed the teal fringe from all six overhead parts and preserved the ink outline, blade tip and ribbon end.
+
+**Commits**
+
+- `e0fbe9815` updated `kerf_ronin_top.gd`, its test, `kerf_n21_cut.py`, the six Ronin PNGs, `cut.json` and `docs/decisions.md`.
+- `09ea98c8e` changed `kerf_n21_review.py` to use ASCII evidence labels.
+- `e6e5920d4` added the right-hand COCK regression check. Earlier wiring and film commits were `21f8714b8`, `da5260ebd` and `b535c478b`.
+
+**Verification**
+
+- The tip test transforms the measured blade pixel into world space. Both tips stayed behind the shoulders and on their own sides in all seven non-CUT poses, for both turn directions, including the first tick after CUT. The hand-swap mutation was caught.
+- `--changed` passed **3,339**, with **0 failed, 2 skipped**. The 30 selected Kerf/ghost scripts passed **197**, with **0 failed, 2 skipped**. Quick gate passed all **10** changed GDScript files with `--no-godot`. Each commit passed **18/18** lint checks.
+- Mutation scores, killed/valid, were **14/18** for `kerf_spectral.gd` (2 invalid), **11/20** for `kerf_ronin_drawn.gd`, and **10/20** for `kerf_ronin_top.gd`.
+- Legacy PNGs **and** tick traces were byte-identical at ticks **90 and 163**. Two cutter runs produced identical hashes for all eight overhead assets and metadata files. [Legacy comparison](C:/Users/kazda/kiro/gtai-masters/n21/kerf/wire/topfix/legacy_compare.json)
+
+TURN uses **360°/s** with a five-tick hold. HIT retains its 12° lean and six-tick pale teal rim. The shared wisp continues the overhead ribbon only. The old p55 hover sheet remains because the HUD portrait cutter reads it.
+
+**Evidence**
+
+- [Plate beside game](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_plate_vs_game.png) · [Guard at 32 px/m and 3×](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_guard_32.png) · [Poses at 64 px/m](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_poses_64.png)
+- [Movement film, 300 frames at 60 fps](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_move_32.mp4) · [Poster](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_move_32.jpg) · [Before/after at tick 158](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_move_before_after_32.png)
+- [Refreshed 64 px/m QA](C:/Users/kazda/kiro/gtai-masters/n21/kerf/wire/qa_64.png) · [Refreshed film QA](C:/Users/kazda/kiro/gtai-masters/n21/kerf/wire/qa_film.png)
+
+[astra: 2592s, exit 0]

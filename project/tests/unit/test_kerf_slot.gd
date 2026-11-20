@@ -60,24 +60,24 @@ func test_one_tilted_departure_holds_the_previous_cell_scale_and_facing() -> voi
 	var scale_before: Vector2 = body._tilted.global_scale
 	var cell: Vector2i = body._tilted.frame_coords
 	var at: Vector2 = _rivet.pos * SimConst.PX_PER_M
-	assert_true(body._tilted_eye.is_visible_in_tree())
+	assert_eq(body.current, KerfRoninDrawn.Pose.COCK)
 	assert_true(body._tilted.flip_h)
 	_press(Vector2.LEFT)
 	assert_false(victim.alive())
-	assert_eq(body._tilted.frame_coords.x, KerfSpectral.Mood.LUNGE)
-	assert_eq(body.beams.length_m(2), 0.0)
+	assert_eq(body._tilted.frame_coords.x, 1)
+	assert_eq(body.current, KerfRoninDrawn.Pose.CUT)
 	assert_eq(body._echoes._pool.size(), 1)
 	var echo: KerfEcho.Pose = body._echoes._pool[0]
-	var copy: Sprite2D = echo.sprites[-2]
+	var copy: Sprite2D = echo.sprites[body._echoes._sources.find(body._tilted)]
 	assert_almost_eq(echo.global_position, at, Vector2.ONE * 0.002)
-	assert_almost_eq(echo.modulate.a, 0.35, 0.001)
-	assert_lt(echo.modulate.a, 0.45)
+	assert_almost_eq(echo.self_modulate.a, 0.35, 0.001)
 	assert_eq(body.modulate.a, 1.0)
 	assert_eq(body._tilted.modulate.a, 1.0)
 	var wash: ShaderMaterial = copy.material
 	assert_true(is_same(wash.get_shader_parameter(&"wash"), Color(Color("#2ec4b6"), 0.6)))
 	assert_true(copy.visible and copy.flip_h)
-	assert_true(echo.sprites[-1].visible)
+	assert_false(copy.centered)
+	assert_ne(copy.offset, Vector2.ZERO)
 	assert_same(copy.texture, texture)
 	assert_eq(copy.frame_coords, cell)
 	assert_true(copy.scale.is_equal_approx(scale_before))
@@ -87,7 +87,8 @@ func test_one_tilted_departure_holds_the_previous_cell_scale_and_facing() -> voi
 	_stage.tick += 3
 	_rig.pose()
 	assert_almost_eq(echo.global_scale, Vector2.ONE, Vector2.ONE * 0.0001)
-	assert_almost_eq(echo.modulate.a, 0.35 * KerfSlot.remaining(3, _k.num(&"cut_hang_s")), 0.001)
+	var fade: float = KerfSlot.remaining(3, _k.num(&"cut_hang_s"))
+	assert_almost_eq(echo.self_modulate.a, 0.35 * fade, 0.001)
 	assert_eq(copy.frame_coords, cell)
 
 
@@ -99,7 +100,7 @@ func test_top_sight_yaws_to_the_target_over_four_ticks_with_a_limit() -> void:
 		_rig.pose()
 		var want: float = deg_to_rad(25.0) * smoothstep(0, 4, tick)
 		assert_almost_eq(body._top.global_rotation, want, 0.0001)
-		assert_eq(body._lens.texture.resource_path.get_file(), "lens_half.png")
+		assert_eq(body.current, KerfRoninDrawn.Pose.COCK)
 		_rig.pose()
 		assert_almost_eq(body._top.global_rotation, want, 0.0001)
 	target.pos += Vector2.DOWN * 100
@@ -107,7 +108,7 @@ func test_top_sight_yaws_to_the_target_over_four_ticks_with_a_limit() -> void:
 		_stage.tick += 1
 		_rig.pose()
 	assert_almost_eq(body._top.global_rotation, 0.0, 0.0001)
-	assert_eq(body._lens.texture.resource_path.get_file(), "lens_open.png")
+	assert_eq(body.current, KerfRoninDrawn.Pose.HOVER)
 
 
 func test_slot_retracts_and_thins_from_departure_and_marks_only_from_tick_three() -> void:
@@ -149,7 +150,7 @@ func test_live_mount_clears_the_flight_lag_and_leaves_the_top_pose_on_its_mark()
 	_stage.arena.tick = 1
 	v._process(0.0)
 	var at: Vector2 = _rivet.pos * 32
-	var lens: Sprite2D = live._spectral._lens
+	var lens: Sprite2D = live._spectral._top._head
 	var lens_at: Vector2 = lens.global_position - at
 	var tex: Texture2D = lens.texture
 	_press(Vector2.RIGHT)
@@ -159,7 +160,7 @@ func test_live_mount_clears_the_flight_lag_and_leaves_the_top_pose_on_its_mark()
 	var body: KerfSpectral = live._spectral
 	assert_almost_eq(body.global_position, _rivet.pos * 32 + Vector2(16, 0), Vector2.ONE * 0.01)
 	var echo: KerfEcho.Pose = body._echoes._pool[0]
-	var copied_lens: Sprite2D = echo.sprites[4]
+	var copied_lens: Sprite2D = echo.sprites[body._echoes._sources.find(lens)]
 	assert_true(copied_lens.visible)
 	assert_same(copied_lens.texture, tex)
 	assert_almost_eq(copied_lens.position, lens_at, Vector2.ONE * 0.002)
@@ -167,7 +168,7 @@ func test_live_mount_clears_the_flight_lag_and_leaves_the_top_pose_on_its_mark()
 
 
 func test_plain_dash_has_no_overshoot_or_mark_and_reduced_motion_has_no_echo() -> void:
-	_rig._spectral.beams.reduced_motion = true
+	_rig._spectral.reduced_motion = true
 	_press(Vector2.DOWN)
 	assert_null(_rig._spectral._echoes)
 	assert_true(_rig._spectral.global_position.is_equal_approx(_rivet.pos * 32))
@@ -188,6 +189,7 @@ func test_chain_reuses_three_departures_and_each_expires_on_its_own_tick() -> vo
 		_press(Vector2.RIGHT)
 		assert_eq(body._echoes._pool.size(), mini(n + 1, 3))
 		var p: KerfEcho.Pose = body._echoes._pool[n % 3]
+		assert_eq(p.modulate.a, 1.0)
 		assert_eq(p.global_position, _k.trail_from[-1] * 32)
 	_stage.tick += ceili(_k.num(&"cut_hang_s") / SimClock.TICK_DT) - 1
 	_rig.pose()

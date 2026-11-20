@@ -1,0 +1,27 @@
+**Kerf now defaults to the spectral Swarf Ronin.** The flip landed in `90f948645` before the 16:00 gate. A launch with no look override produced a byte-identical body and HUD frame to the explicit spectral launch. The legacy card test already pins its fixture at line 10. No additional tests needed pinning. [Default-frame proof](C:/Users/kazda/kiro/gtai-masters/n21/kerf/scratch/brief04/default-proof.log) · [Existing pin](C:/Users/kazda/kiro/gtai-wt/n21-kerf/project/tests/unit/test_ghost_card.gd:10)
+
+| Change | Files | Commits |
+|---|---|---|
+| Cut the 84×84 HUD and form-card portrait from the p55 toward HOVER cell | `kerf_spectral.png`, `kerf_n21_chip.py`, `kerf_n21_chip.json` | `6a687d51a`, `f6a85d2f7` |
+| Clear blink echoes on transformation and flinch the overhead helmet and crest together | `kerf_spectral.gd`, `kerf_ronin_top.gd`, `test_kerf_hit.gd` | `d20712d89`, `59619e7c3`, `e5355f75a` |
+| Switch and document Kerf’s default | `ghost_forms.json`, `docs/decisions.md` | `90f948645` |
+
+**Verification**
+
+- Full unit suite **3,368 passed, 0 failed, 2 skipped**. Both skips are existing Tonnage and Ohm card-strip tests. Full lint passed **19/19** on retry after one tooling timeout. [Unit results](C:/Users/kazda/kiro/gtai-masters/n21/kerf/scratch/brief04/unit-final-summary.log) · [Lint](C:/Users/kazda/kiro/gtai-masters/n21/kerf/scratch/brief04/manifest-lint-retry.log)
+- Scenarios **65 passed, 0 failed**. The 60-second replay retained `cbeb734ff9b97c41` across 3,600 ticks. Native/reference parity retained `94b2865f7f17d778` over 1,200 steps. All 256 bake chunks matched golden. [Scenarios](C:/Users/kazda/kiro/gtai-masters/n21/kerf/scratch/brief04/scenarios.log) · [Parity](C:/Users/kazda/kiro/gtai-masters/n21/kerf/scratch/brief04/parity-result.json) · [Bake](C:/Users/kazda/kiro/gtai-masters/n21/kerf/scratch/brief04/bake.log)
+- The morph audit checked **402 ticks per view** with zero body overlaps, legacy Kerf parts, or visible echoes. At both 32 and 64 px/m, hit lean measured **12°, 5.88°, 0.48°, and 0°** at hit, +3, +8, and +15. [Frame audit](C:/Users/kazda/kiro/gtai-masters/n21/kerf/scratch/brief04/audit.json)
+- Changed-line mutation scores were **3/3 killed** for `kerf_spectral` with one invalid mutant, and **5/7 killed** for `kerf_ronin_top`. Both survivors changed the initial helmet position, which `pose()` overwrites. [Spectral results](C:/Users/kazda/kiro/gtai-masters/n21/kerf/scratch/brief04/mutate-spectral.json) · [Overhead results](C:/Users/kazda/kiro/gtai-masters/n21/kerf/scratch/brief04/mutate-top-final.json)
+
+**Visual evidence**
+
+| Take | Film | Poster |
+|---|---|---|
+| Transformation, 32 px/m | [MP4](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_morph_32.mp4) | [JPG](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_morph_32.jpg) |
+| Movement, 32 px/m | [MP4](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_move_32.mp4) | [JPG](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_move_32.jpg) |
+| Attack, 32 px/m | [MP4](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_attack_32.mp4) | [JPG](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_attack_32.jpg) |
+| Close-up, 64 px/m | [MP4](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_close_64.mp4) | [JPG](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_close_64.jpg) |
+
+[Transformation strip](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_transform_strip_32.png) · [Hit strip](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_hit_strip.png) · [HUD chip in game](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_hud_chip.png)
+
+[astra: 2229s, exit 0]

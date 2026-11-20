@@ -1,0 +1,10 @@
+**NEED director: `tools/debt/baseline.json`** — the required flag declaration takes `launch_args.gd` from 208 to 209 lines. The debt ratchet rejects that increase, and the baseline is outside the allowlist.
+
+Staged the overhead CRUISE option, its unit test, the flag declaration, and the decision in `kerf_ronin_top.gd`, `test_kerf_ronin_top.gd`, `launch_args.gd`, and `docs/decisions.md`. The test verifies 43°/20° by default and 62°/40° with the option open.
+
+- `node tools/tests/run_unit.mjs --changed` — **3353 passed, 0 failed, 2 skipped**
+- `node tools/lint/lint.mjs` — `lint: 1 of 19 checks failed (debt-ratchet)`
+
+No commit SHA or comparison PNG. The brief requires green lint before committing and a commit before capture.
+
+[astra: 537s, exit 0]

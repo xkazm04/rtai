@@ -1,0 +1,19 @@
+Both fixes landed on `n21-kerf` before the commit deadline.
+
+| Commit | Files and result |
+|---|---|
+| `74304cba8` | Updated both `kerf_sp_fly.png` atlases through `kerf_n21_cut.py` and `kerf_n21_profile.py`. East and west HOVER now show a 25% darker far crescent above the helmet in both tilts. [Tick 91 comparison at 32 and 64 px/m](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_profile_far_blade.png) |
+| `c14ae6f97` | Updated `kerf_spectral.gd`, its unit test, and `docs/decisions.md`. Kerf’s overhead trail now ends at the painted ribbon tip. [Tick 163 comparison](C:/Users/kazda/kiro/gtai-masters/n21/kerf/scratch/brief05/overhead_before_after.png) |
+
+**Verification.** Both atlases rebuilt byte-for-byte from their masters. All 38 other flight cells and the non-profile tick 163 frame matched baseline. The legacy film, poster, and six-frame strip also matched byte-for-byte. Unit tests passed **3,352**, with **0 failures and 2 skips**. Both commit lint hooks passed 18/18. The changed GDScript line scored **1/1 mutants killed**. [Mutation result](C:/Users/kazda/kiro/gtai-masters/n21/kerf/scratch/brief05/mutation.json)
+
+| Check | Unchanged digest |
+|---|---|
+| `quest1_kerf` | `26fa9dc079c55392da7f59496025abe932e5703ae1b0182cfc66fc88f96844dc` |
+| `replay_60s` | `cbeb734ff9b97c41645f735114692ea3b9e7cc6578750f32d8d9f31d69844e85` |
+| Native parity | `94b2865f7f17d778` over 1,200 steps |
+| City bake | 256/256 chunks matched golden |
+
+Re-shot both films and posters at 1080p60. [Movement, 300 frames](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_move_32.mp4) · [Close, 600 frames](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_close_64.mp4)
+
+[astra: 1648s, exit 0]

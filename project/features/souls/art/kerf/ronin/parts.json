@@ -1,0 +1,92 @@
+{
+ "head": {
+  "size": [
+   165,
+   376
+  ],
+  "sheet": "n21/kerf/masters/kerf_sp_top_take1.png",
+  "pivot_a": [
+   83.7,
+   221.7
+  ],
+  "pivot_b": [
+   83.7,
+   221.7
+  ]
+ },
+ "torso": {
+  "size": [
+   406,
+   304
+  ],
+  "sheet": "n21/kerf/masters/kerf_sp_top_take1.png",
+  "pivot_a": [
+   205.1,
+   127.4
+  ],
+  "pivot_b": [
+   205.1,
+   127.4
+  ]
+ },
+ "upperarm": {
+  "size": [
+   323,
+   103
+  ],
+  "sheet": "n21/kerf/masters/kerf_sp_top_take1.png",
+  "pivot_a": [
+   46.7,
+   67.8
+  ],
+  "pivot_b": [
+   291.8,
+   74.4
+  ]
+ },
+ "blade": {
+  "size": [
+   361,
+   121
+  ],
+  "sheet": "n21/kerf/masters/kerf_sp_top_take1.png",
+  "pivot_a": [
+   44.3,
+   73.3
+  ],
+  "pivot_b": [
+   358.5,
+   1.6
+  ]
+ },
+ "tail_straight": {
+  "size": [
+   76,
+   396
+  ],
+  "sheet": "n21/kerf/masters/kerf_sp_top_take1.png",
+  "pivot_a": [
+   42.1,
+   8.2
+  ],
+  "pivot_b": [
+   28.9,
+   391.1
+  ]
+ },
+ "tail_curled": {
+  "size": [
+   196,
+   387
+  ],
+  "sheet": "n21/kerf/masters/kerf_sp_top_take1.png",
+  "pivot_a": [
+   120.6,
+   8.2
+  ],
+  "pivot_b": [
+   91.0,
+   384.5
+  ]
+ }
+}
