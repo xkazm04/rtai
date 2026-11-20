@@ -104,4 +104,9 @@ func test_wisp_meets_the_overhead_ribbon_tip_and_hides_at_both_play_tilts() -> v
 		top._parts.pivots_b["tail_curled"] + top._curled.offset
 	)
 	assert_lt(flight.tail.points()[0].distance_to(tip), 0.15 * SimConst.PX_PER_M)
+	for blink: KerfRoninDrawn.Pose in [POSE.BLINK, POSE.CUT, POSE.RECOVER]:
+		rig._spectral.pose(rig, blink, false, 0.0, 2)
+		assert_false(flight.tail.visible)
+	rig._spectral.pose(rig, POSE.HOVER, false, 0.0, 3)
+	assert_true(flight.tail.visible)
 	ViewMode.select(previous)

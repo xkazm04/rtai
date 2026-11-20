@@ -52,12 +52,12 @@ func live(stage: CollectCallStage, rig: KerfRig) -> void:
 		bearing = k.trail_from[-1].angle_to_point(k.trail_to[-1])
 	_arrive(rig, k, since)
 	_hit.read(stage.arena, facing)
+	_hit.apply(self)
 	pose(rig, blink, target != null, bearing, stage.tick)
 	if _tilted.visible:
 		_tilted.slots.paint(_tilted.sheet_id, k.charges, k.recharge_k())
 	else:
 		_top.slots.paint(KerfChargeSlots.TOP, k.charges, k.recharge_k())
-	_hit.apply(self)
 	_step_echoes(stage)
 
 
@@ -90,8 +90,8 @@ func pose(
 	_tilted.visible = ViewMode.shared().art in ["p55", "p70"]
 	_top.visible = not _tilted.visible
 	if flight != null:
-		# A billboard ribbon hangs down the screen. Only the overhead tip follows a ground anchor.
-		flight.tail.visible = _top.visible
+		# A teleport stretches the flight ribbon across the slot. Resume it after the attack.
+		flight.tail.visible = _top.visible and blink == KerfRoninDrawn.Pose.HOVER
 	var steps: int = maxi(0, tick - _last_tick)
 	_last_tick = tick
 	_top.pose(current, speed, yaw, steps)

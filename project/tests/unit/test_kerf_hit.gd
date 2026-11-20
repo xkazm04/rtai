@@ -106,3 +106,21 @@ func test_plain_blink_arrives_in_blink_with_the_departing_cell_and_one_spent_cha
 	var copy: Sprite2D = body._echoes._pool[0].sprites[body._echoes._sources.find(body._tilted)]
 	assert_same(copy.texture, fly)
 	assert_eq(copy.frame, before)
+
+
+func test_an_overlapping_recoil_keeps_the_overhead_cutting_edge_on_course() -> void:
+	ViewMode.select("top")
+	var dir: Vector2 = Vector2(1, 1).normalized()
+	var arena: CombatArena = _stage.arena
+	var victim: Fighter = arena.spawn_guard(arena.rivet.pos + dir * 5)
+	victim.pos = arena.rivet.pos + dir * 5
+	arena.tick = 1
+	arena.hit_dir = Vector2.RIGHT
+	arena.damage(arena.rivet, 0.5, 1, &"rifle")
+	_press(dir)
+	var body: KerfSpectral = _rig._spectral
+	assert_eq(body.current, KerfRoninDrawn.Pose.CUT)
+	assert_gt(absf(body._hit.lean), 0.01)
+	var blade: Sprite2D = body._top._blade[1]
+	var tip: Vector2 = blade.to_global(body._top._parts.pivots_b["blade"] + blade.offset)
+	assert_gt(blade.global_position.direction_to(tip).dot(dir), 0.99999)
