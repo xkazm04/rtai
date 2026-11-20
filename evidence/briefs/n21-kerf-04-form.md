@@ -27,7 +27,8 @@ director names it in JOURNAL) and any other test that reads Kerf's legacy body b
    `kerf_transform_strip_32.png` (8 frames across the emerge, tilt 70 above, top below).
 2. **Hit reaction**: check the HIT cell + `KerfHit` lean and flinch at 32 and 64 px/m; strip `kerf_hit_strip.png`
    (hit tick, +3, +8, +15; tilt 70 and top). Lean 12 degrees (`GhostRecoil.LEAN_BY_FORM`), unchanged.
-3. **HUD chip**: cut `project/features/hud/art/ghost_chips/kerf_spectral.png` from the p55 toward HOVER cell (the
+3. **HUD chip**: the current `project/features/hud/art/ghost_chips/kerf_spectral.png` is still n20's rejected
+   dart (a craft with cables). Replace it (same path, same pixel size) with a chip cut from the p55 toward HOVER cell (the
    head, shoulders and the two raised blades), the way Dent's `dent_spectral.png` was cut
    (`tools/art/dent_chip_cut.py`: read it, write your own `tools/art/kerf_n21_chip.py`). Same size as the other
    spectral chips. Still `kerf_hud_chip.png`.
