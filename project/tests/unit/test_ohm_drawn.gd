@@ -1,6 +1,14 @@
 extends GutTest
 
 
+func test_hud_face_follows_ohms_selected_look() -> void:
+	GhostLook.override_for_test(GhostLook.SPECTRAL)
+	assert_eq(GhostChipFace.face(OhmStage.ID).resource_path, GhostChipFace.DIR + "ohm_spectral.png")
+	GhostLook.override_for_test(GhostLook.LEGACY)
+	assert_eq(GhostChipFace.face(OhmStage.ID).resource_path, GhostChipFace.DIR + "ohm.png")
+	GhostLook.reset_for_test()
+
+
 func test_jar_twin_tracks_the_shown_cell_on_both_sheets_and_the_mirrored_side() -> void:
 	var sprite: Sprite2D = add_child_autofree(Sprite2D.new())
 	var jars: OhmJars = OhmJars.new()
