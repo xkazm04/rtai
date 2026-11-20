@@ -35,6 +35,20 @@ node tools/dev/run.mjs bot_pit_probe --profile=average --seed=20261103 --ticks=2
 
 The probe steps the arena's mixed pit waves at 60 Hz. Each wave's clear time runs from its spawn tick to its last kill. Attempts ending in death or at the tick limit retain a null clear time. The run totals include travel and inter-wave gaps. Shots and rolls count simulated discharges and roll starts. Guard ticks count held inputs. Cover ticks count decisions to move into or hold an occluded position. Form ticks count ticks starting in a settled ghost. The SHA-256 digest covers one little-endian 64-bit `TickInput.pack()` word per tick, including repeated inputs.
 
+### Pit reference run
+
+Each profile played seeds 20261103, 20261104 and 20261105 for 2,400 ticks each (40 simulated seconds per seed). The wave counts below follow seed order. Clear seconds are the mean across completed waves. Damage and counters are summed across the three seeds.
+
+| Profile | Waves by seed | Clear (s) | Damage (HP) | Deaths | Guard ticks | Rolls | Cover ticks | Tonnage ticks | Kerf ticks |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Novice | 2 / 2 / 3 | 8.50 | 36.54 | 0 | 0 | 15 | 24 | 426 | 762 |
+| Average | 3 / 3 / 3 | 6.98 | 16.02 | 0 | 0 | 24 | 163 | 457 | 660 |
+| Expert | 4 / 4 / 4 | 5.84 | 4.14 | 0 | 0 | 23 | 177 | 426 | 1,686 |
+
+Expert cleared the first wave faster and took less damage than novice on each seed with the original profile values. Ohm and Dent recorded zero ticks in these runs. This pit build lacks a guard action. The guard unit test supplies that bit and checks that firing resumes when the round clears.
+
+Two independent average runs on seed 20261103 produced the same 2,058-byte JSON file. Both packed-input streams hashed to `2da4599f7139c68d62be3d1382f761f7fe06cd4cfb1ee44ad7fd3816f6cb8555`. The result file SHA-256 was `ad2a360aa3b1206277f7ee023ea8c2c1733215640f601fac4fa3f8bfa8c85a5a`.
+
 ## Batch (TODO)
 
 ## Report (TODO)
