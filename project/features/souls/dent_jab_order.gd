@@ -3,6 +3,7 @@ extends Node
 ## Only the punching body and the rigs named by this jab's damage signals cross the car band.
 ## RigDepthSort assigns the ordinary tilt order at priority 100, including fresh corpses.
 
+var mark: DentJabMark
 var _body: CanvasItem
 var _view: GhostFormView
 var _victims: Array[int] = []
@@ -10,7 +11,9 @@ var _swung: int = -1
 var _saved: Dictionary[int, Vector2i] = {}
 
 
-func bind(body: CanvasItem, view: GhostFormView) -> void:
+func bind(body: CanvasItem, view: GhostFormView, impact: DentJabMark) -> void:
+	mark = impact
+	body.add_child(mark)
 	_body = body
 	_view = view
 	process_priority = 101
@@ -35,7 +38,13 @@ func _hit(f: Fighter, weapon: StringName) -> void:
 	_victims.append(f.id)
 
 
+func strike(jab: DentJab, fist: Vector2, facing: float) -> void:
+	mark.place(jab.steps - jab.swung_step, _swung == jab.swings, fist, facing)
+
+
 func sync(shown: bool) -> void:
+	if not shown:
+		mark.hide()
 	var active: bool = (
 		shown and ViewMode.shared().cards and GhostActs.jabbing(_view.pilot.ghosts.jab)
 	)

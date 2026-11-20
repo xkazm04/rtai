@@ -16,6 +16,14 @@ const GRIP_70: Array[Vector2] = [
 	Vector2(84, 105), Vector2(219, 86), Vector2(264, 84), Vector2(261, 66), Vector2(243, 62)
 ]
 
+## Outer knuckles in the JAB column use a different arm extension from STEER.
+const FIST_55: Array[Vector2] = [
+	Vector2(86, 131), Vector2(216, 104), Vector2(232, 95), Vector2(232, 77), Vector2(184, 55)
+]
+const FIST_70: Array[Vector2] = [
+	Vector2(96, 161), Vector2(199, 171), Vector2(282, 121), Vector2(288, 79), Vector2(244, 63)
+]
+
 var sprite: Sprite2D = Sprite2D.new()
 var _rim: Sprite2D = Sprite2D.new()
 var _art: String = ""
@@ -77,8 +85,10 @@ static func swing_flip(oct: int, yaw: float) -> bool:
 	return (RigHeadCard.OCT_FLIP[oct] == 1) != (yaw < 0.0)
 
 
-func grip_world() -> Vector2:
+func grip_world(strike: bool = false) -> Vector2:
 	var cell: Vector2 = (GRIP_55 if _art == "p55" else GRIP_70)[sprite.frame_coords.y]
+	if strike:
+		cell = (FIST_55 if _art == "p55" else FIST_70)[sprite.frame_coords.y]
 	if sprite.flip_h:
 		cell.x = sprite.get_rect().size.x - cell.x
 	return sprite.to_global(sprite.offset + cell)

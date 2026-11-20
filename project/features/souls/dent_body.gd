@@ -41,7 +41,7 @@ func setup(row: GhostFormDef) -> void:
 	if drawn.flight != null and _view != null and _view.pilot != null:
 		add_to_group(group_for(_view.pilot.dent))
 		_jab_order = DentJabOrder.new()
-		_jab_order.bind(self, _view)
+		_jab_order.bind(self, _view, DentJabMark.new(HaulerLook.TEAL, DentStrap.AQUA, DentRoof.INK))
 		add_child(_jab_order)
 	if drawn.flight != null:
 		_spectral = DentSpectralDrawn.new()
@@ -144,6 +144,14 @@ func _fly(facing: float, steps: int, tick: int) -> void:
 			_view.to_global(car.pos * SimConst.PX_PER_M) if car != null else Vector2.ZERO
 		)
 		_top.pose(hover, act, age, car_at, steps)
+	if _jab_order != null:
+		if act == DentSpectralDrawn.Pose.JAB:
+			var fist: Vector2 = (
+				_spectral.grip_world(true) if _spectral.visible else _top.grip_world()
+			)
+			_jab_order.strike(jab, fist, facing)
+		else:
+			_jab_order.mark.hide()
 
 
 ## The root at Rivet's spot, rolled sideways and yawed by the lurch (the rig sits at its origin).
