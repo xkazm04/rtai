@@ -22,6 +22,7 @@ goldens 11/11 and block goldens 5/5, release-compile 787 loaded / 0 failed. Run 
 | HUD chip: spectral portrait with three lit jars, goggles, beard, fork | b38e571cd, `n20/ohm/form/chip_legacy_vs_spec.png` | 84 px |
 | Look switch: spectral is Ohm's default, legacy one flag away (`--ghost-look=legacy`) | 359eacb83, decisions.md line | legacy captures pixel-identical to pre-switch |
 | Films (re-shot after brief 05, spectral) | `n20/ohm/ohm_move_32.mp4`, `ohm_attack_32.mp4`, `ohm_close_64.mp4` (+ jpg) | 5 / 5 / 10 s, 1920x1080 h264 60 fps, 0 SCRIPT ERROR |
+| Before/after against last night's legacy films (same driver take, half size, side by side; not tick-aligned) | `n20/ohm/ohm_attack_32_before_after.mp4`, `n20/ohm/ohm_move_32_before_after.mp4` (+ jpg) | 300 frames each |
 | Tests and mutation | full unit run on 8b4862e1f | 3259 passed / 0 failed / 2 skipped; mutate ohm_drift 11/12, ohm_spirit 4/9 (+3 invalid), ohm_bolt_draw 22/28 |
 
 ## What does not
