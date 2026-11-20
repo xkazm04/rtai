@@ -61,6 +61,25 @@ func test_body_follows_unfold_in_both_directions() -> void:
 		assert_almost_eq(body.modulate.a, k, 0.0001)
 
 
+func test_overhead_helmet_and_crest_meet_without_overlap_through_the_flinch() -> void:
+	ViewMode.select("top")
+	var top: KerfRoninTop = _rig._spectral._top
+	var crest: AtlasTexture = top._crest.texture as AtlasTexture
+	var helmet: AtlasTexture = top._head.texture as AtlasTexture
+	assert_same(crest.atlas, helmet.atlas)
+	assert_eq(crest.region.end.y, helmet.region.position.y)
+	_stage.arena.tick = 40
+	_stage.arena.hit_dir = Vector2.RIGHT
+	_stage.arena.damage(_stage.arena.rivet, 0.5, 1, &"rifle")
+	for age: int in [0, 3, 8, 15]:
+		_stage.arena.tick = 40 + age
+		_rig.pose()
+		var seam: Vector2 = top._crest.offset + Vector2.DOWN * crest.region.size.y
+		assert_true(
+			top._crest.to_global(seam).is_equal_approx(top._head.to_global(top._head.offset))
+		)
+
+
 func test_a_blink_echo_disappears_on_the_first_frame_of_exit() -> void:
 	var forms: GhostForms = _stage.pilot.ghosts.forms
 	forms.selected = KerfStage.ID
