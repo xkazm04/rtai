@@ -107,7 +107,7 @@ func add(
 	if t != null:
 		_topples[serial] = t
 	if row.grind_ticks <= 0:
-		_streaks[serial] = Vector4(at.x, at.y, cut_dir.angle(), kills.tick)
+		KerfVictim.streak(row, _streaks, serial, Vector4(at.x, at.y, cut_dir.angle(), kills.tick))
 		_streak_size[serial] = Vector2(row.streak_m, row.streak_w_m)
 		return
 	var g: Grind = Grind.new()
