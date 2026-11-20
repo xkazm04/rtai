@@ -103,11 +103,11 @@ function compose(dir, p, chapters, target, ppm, speed, still) {
       return '[' + label + ']';
     });
     const card = p.ghost[0].toUpperCase() + p.ghost.slice(1);
-    const label = (action === 'move' ? 'Movement' : 'Attack') + (still === undefined ? '' : '   Ă„â€šĂ˘â‚¬ĹˇÄ‚â€šĂ‚Â·   Tick ' + still);
+    const label = (action === 'move' ? 'Movement' : 'Attack') + (still === undefined ? '' : '    /    Tick ' + still);
     filters.push(a + b + 'vstack,drawbox=x=0:y=0:w=iw:h=39:color=0x172023:t=fill,' +
-      [title(card + '   ' + speed + ' m/s max   Ă„â€šĂ˘â‚¬ĹˇÄ‚â€šĂ‚Â·   ' + ppm + ' px/m', 18, 7, 23),
-        title(label + '   Ă„â€šĂ˘â‚¬ĹˇÄ‚â€šĂ‚Â·   ' + p.look, 585, 7, 22), title('Play tilt  70Ă„â€šĂ˘â‚¬ĹˇÄ‚â€šĂ‚Â°', 17, 55, 17),
-        title('Top view  90Ă„â€šĂ˘â‚¬ĹˇÄ‚â€šĂ‚Â°', 17, 553, 17)].join(',') + '[c' + i + ']');
+      [title(card + '   ' + speed + ' m/s max    /    ' + ppm + ' px/m', 18, 7, 23),
+        title(label + '    /    ' + p.look, 585, 7, 22), title('Play tilt  70\u00b0', 17, 55, 17),
+        title('Top view  90\u00b0', 17, 553, 17)].join(',') + '[c' + i + ']');
   }
   const labels = chapters.map((_, i) => '[c' + i + ']').join('');
   filters.push(labels + (chapters.length > 1 ? 'concat=n=2:v=1:a=0' : 'null') + '[out]');

@@ -673,4 +673,4 @@ Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, Number(process.env.
 `node tools/lint/lint.mjs` names every failing tool test (`FAILED <file:line:col> <name>`); a check's issue
 lines past 40 go to `build/lint/<check>.txt`, and the last line printed says where and how many.
 
-Film a ghost in both native-scale views with `node tools/film/ghost_films.mjs --ghost=kerf --look=spectral --out=build/ghosts --takes=move,attack,close --stills=163`. Each take gets a 1920Ä‚â€”1080 movie and a JPEG poster. Turn stills use 64 px/m.
+Film a ghost in both native-scale views with `node tools/film/ghost_films.mjs --ghost=kerf --look=spectral --out=build/ghosts --takes=move,attack,close --stills=163`. Each take gets a 1920 by 1080 movie and a JPEG poster. Turn stills use 64 px/m.
