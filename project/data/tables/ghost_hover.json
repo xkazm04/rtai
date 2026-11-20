@@ -29,13 +29,13 @@
       "top_mps": 7
     },
     {
-      "bank_deg": 24,
+      "bank_deg": 12,
       "bank_per_dps": 0.1,
       "bob_m": 0.03,
       "bob_ticks": 50,
       "height_m": 0.5,
       "id": "kerf",
-      "lag_ticks": 3,
+      "lag_ticks": 1,
       "lean_deg": 17,
       "shadow": {
         "alpha": 0.26,
