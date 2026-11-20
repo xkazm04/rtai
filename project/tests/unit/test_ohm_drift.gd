@@ -65,6 +65,18 @@ func test_fork_reaches_ahead_and_bobs_against_the_flight_bob() -> void:
 		if tick in [22, 67]:
 			var fork: Vector2 = spirit._fork.points_on(spirit)[2]
 			fork *= PlayerScale.k() / 531.25
-			assert_almost_eq(fork.x, 1.46, 0.015)
+			assert_almost_eq(fork.x, 1.30, 0.015)
 			var bob_px: float = (fork.y - OhmSpirit.REST_FORK_M.y) * 32.0
 			assert_almost_eq(bob_px, -2.5 if tick == 22 else 2.5, 0.2)
+
+
+func test_resting_prongs_clear_the_flank_at_play_zoom() -> void:
+	var ink: Node2D = add_child_autofree(Node2D.new())
+	var mount: Node2D = Node2D.new()
+	ink.add_child(mount)
+	PlayerScale.fit([mount])
+	var spirit: OhmSpirit = OhmSpirit.new()
+	mount.add_child(spirit)
+	var tips: PackedVector2Array = spirit._fork.points_on(ink)
+	assert_gte(tips[0].distance_to(tips[1]), 6.0)
+	assert_almost_eq(tips[2].y, 0.70 * SimConst.PX_PER_M, 0.01)

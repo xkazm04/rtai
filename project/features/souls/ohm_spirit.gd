@@ -4,7 +4,7 @@ extends Node2D
 ## The fork and sleeve form a two-link chain with the wrist at their common joint.
 
 const ART: String = "res://features/souls/art/ohm/spectral/"
-const REST_FORK_M: Vector2 = Vector2(1.16, 0.50)
+const REST_FORK_M: Vector2 = Vector2(1.0, 0.70)
 const THRUST_M: float = 0.35
 const OUT_TICKS: int = 8
 const BACK_TICKS: int = 12
@@ -42,12 +42,16 @@ func _ready() -> void:
 	_beard = _part("beard", Vector2(154.0, 0.0))
 	_staff_arm = _part("arm_staff", Vector2(56.0, 124.0))
 	_staff = _part("staff", Vector2.ZERO)
+	_staff.scale = Vector2.ONE * 1.5
 	# Centre of the round grip hole and the end of the fork, in their untrimmed texture frames.
 	var arm_size: Vector2 = _measure("arm_staff", "size_px")
 	# Hold the shaft just behind its collar so the elbow can reach the grip with the pole ahead.
 	_staff.offset.x = -_measure("staff", "size_px").x * 0.67
 	var staff_fork: Vector2 = _measure("staff", "fork_px")
-	_lengths = Vector2(arm_size.x * 0.886 + _staff_arm.offset.x, staff_fork.x + _staff.offset.x)
+	_staff.offset.y = -staff_fork.y
+	_lengths = Vector2(
+		arm_size.x * 0.886 + _staff_arm.offset.x, (staff_fork.x + _staff.offset.x) * _staff.scale.x
+	)
 	_fork = OhmFork.new()
 	_staff.add_child(_fork)
 	var staff_part: Dictionary = _parts.staff
