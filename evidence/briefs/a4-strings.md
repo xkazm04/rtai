@@ -61,6 +61,10 @@ poster). Then measure and report, honestly:
   take; mean and p99 in microseconds; say it is CONTENDED unless under the bench lock).
 Write the numbers into `C:\Users\kazda\kiro\gtai-masters\n20\dent\scratch\a4\strings_eval.json`.
 
+## Legacy stays untouched
+Strings draw only under `--ghost-look=spectral` (like the strap since f7f8884e8). Re-run a3b's
+legacy byte compare (`build/a3b-legacy.py` / `build/a3b-compare.py`, ticks 160 and 200) and quote it.
+
 ## Checks
 `test_dent_strings.gd` (corner geometry, inside strings shorter on a left and a right turn, slack
 timeline on ticks, top view endpoints); `node tools/godot/check.mjs`; `node tools/lint/lint.mjs`;
