@@ -107,3 +107,5 @@ NEXT (session 5, after the 18:30 freeze):
 1. `export APPDATA=C:/Users/kazda/kiro/gtai-n21/appdata/kerf` + GODOT_BIN, then once: `node tools/gate/run.mjs --rev=HEAD --reels`; add its line + gate.json path to REPORT's gate paragraph.
 2. Check REPORT reads final (no PENDING), `node tools/evidence/cites.mjs REPORT.md`, pathspec commit REPORT + JOURNAL.
 3. Do not start new Astra calls; all 8 are logged (264 min, 8 accepted). Clean `%LOCALAPPDATA%\Temp\gtai-gate-118872760ea2` only after the reels gate.
+- 16:34 LOOKED re-shot `kerf_move_32.mp4` f230/f299 (`scratch/s4/move_rest.png`): at rest the tilt-70 profile HOVER now shows both crescents (far one behind the helmet) at 32 px/m; top view a swallow, no vapour thread. Cruise unchanged.
+- 16:35 END session 4. No Astra running (8 calls, all logged). NEXT as written at 16:31 (reels gate after 18:30, REPORT final check, cites, commit).
