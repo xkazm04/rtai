@@ -1,0 +1,23 @@
+The Swarf Ronin is wired into both play tilts and the overhead view. At 32 px/m, the three-quarter view shows a helmet, torso, two blade arms and a ribbon beside the guard. Kerf still defaults to legacy.
+
+| Commit | Files changed |
+|---|---|
+| `21f8714b8` | Added `kerf_ronin_drawn.gd`. Updated `kerf_spectral.gd`, `kerf_rig.gd`, `kerf_hit.gd`, `kerf_echo.gd` and their tests. Removed the beams, tilt eye and old p70 hover sheet. |
+| `da5260ebd` | Added `kerf_ronin_top.gd` and its tests. Updated Kerf’s `ghost_hover.json` row and the overhead part imports. Removed the old spectral cutouts. The p55 hover sheet remains because the HUD portrait cutter reads it. |
+| `b535c478b` | Added the `tools/art/kerf_n21_review.*` capture and board tools and recorded the flight decision in `docs/decisions.md`. |
+
+TURN triggers above **360°/s** and holds its signed pose for five ticks. HIT keeps the 12° recoil and adds a six-tick pale teal rim in tilt. The short shared wisp continues the overhead ribbon. It is hidden in both tilts, where the fixed anchor visibly detached from the drawn tip.
+
+| Verification | Result |
+|---|---|
+| `run_unit.mjs --changed` | 3,339 passed, 0 failed, 2 skipped |
+| All 30 `test_kerf_*` and `test_ghost_*` files | 197 passed, 0 failed, 2 skipped |
+| Full lint | 19/19 passed |
+| Legacy comparison, ticks 90 and 163 | Both PNGs and both traces were byte-identical. [Hashes](C:/Users/kazda/kiro/gtai-masters/n21/kerf/wire/legacy_compare.json) |
+| Changed-line mutation scores | [Spectral controller](C:/Users/kazda/kiro/gtai-masters/n21/kerf/wire/mutate_kerf_spectral.json) **14/18** killed, 2 invalid. [Tilt drawer](C:/Users/kazda/kiro/gtai-masters/n21/kerf/wire/mutate_kerf_ronin_drawn.json) **11/20** killed. |
+
+**NEED tooling: `tools/godot/check.mjs`** — the full quick gate remains red. Godot’s standalone parser could not resolve `Log` and `LaunchArgs`, and the checker retained allocator shutdown errors. Quick’s static checks passed on all ten edited project scripts. [Gate log](C:/Users/kazda/kiro/gtai-masters/n21/kerf/wire/quick_final.log)
+
+**Evidence** · [Plate beside game](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_plate_vs_game.png) · [Guard at 32 px/m](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_guard_32.png) · [Poses at 64 px/m](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_poses_64.png) · [Movement film, 300 frames at 60 fps](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_move_32.mp4) · [Poster](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_move_32.jpg) · [Before and after at tick 158](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_move_before_after_32.png)
+
+[astra: 2565s, exit 0]

@@ -4,7 +4,7 @@ Lane `kerf`, worktree `C:\Users\kazda\kiro\gtai-wt\n21-kerf`, branch `n21-kerf`.
 every timing (everything resolves on the press tick); only what is drawn changes. No sim, replay, parity or bake
 digest may move. Kerf's `look` row stays `legacy` in this package.
 
-**Wall-clock hard stop: HARDSTOP. Commit deadline: COMMITBY.** Commit in small steps. Fix lint and format
+**Wall-clock hard stop: 15:05. Commit deadline: 15:00.** Commit in small steps. Fix lint and format
 findings in your own edits and go on. Never amend, never rebase. No `git stash`, no `git add -A/./-u`, no
 `commit -a`, no `reset --hard`. Stage per path. Before every Godot run:
 `export APPDATA=C:/Users/kazda/kiro/gtai-n21/appdata/kerf`. Godot:
@@ -51,9 +51,15 @@ Re-fit it to the new body; do not redesign it.
    position, never a star or flash. Teal/aqua only (teal is for souls). Off under `--reduced-motion`. View only,
    seeded from the blink's tick (no global RNG: repo rule 9).
 5. **Plain blink** (no target): BLINK pose at arrival, the after-image in the pose he left, one slot spent.
-6. **Kerf beat.** `project/dev/ghost-powers/kerf_beat.gd` drives the attack take of the films: make sure it shows a
-   wind-up (a locked target for about half a second before the press), one slice on a human guard, and one plain
-   blink, inside 5 s.
+6. **The film takes.** The owner's `kerf_attack_32` take is driven by `GhostReviewInput`
+   (`project/dev/ghost-powers/ghost_review_input.gd`, polish's file: do NOT edit it): presses at t 28, 77, 126,
+   200 with the aim on the nearest guard (guards 5, 8, 12, 16 m out). Read what those four presses produce (slices,
+   a plain blink when nothing is in reach?) and say so; if the take has no plain blink, write
+   `NEED polish: ghost_review_input.gd kerf attack take has no plain blink` in your final message, do not edit.
+   `kerf_beat.gd` (yours) drives the all-ghosts reel's Kerf beat: check it still reads with the new body
+   (a still at the first slice), change it only if it breaks.
+   Director's finding: `kerf_stage.gd:128` sets `rivet.facing` back TOWARD the target after a slice, so item 2's
+   travel-direction rule applies: draw CUT/RECOVER along the travel line for their ticks, view only.
 
 ## Evidence (into `C:\Users\kazda\kiro\gtai-masters\n21\kerf\`)
 - `slice_strip_top_32.png`: one blink-slice from the top view at 32 px/m, frames at the press tick, +3, +15
@@ -68,7 +74,7 @@ Re-fit it to the new body; do not redesign it.
 
 ## Tests, gate, mutate
 `node tools/tests/run_unit.mjs --changed`, then `--select=` every `test_kerf_*`, then `node tools/gate/quick.mjs`.
-Check the sim did not move: run the scenarios that cover Kerf (`quest1_kerf` and the replay:
+Check the sim did not move: run the scenarios that cover Kerf (`quest1_kerf`, `ghost_attacks` and the 60 s replay:
 `"$GODOT_BIN" --headless --path project -s res://tests/run_scenarios.gd -- --only=<names>`; read the runner for the
 exact flag) and quote the replay digest before and after. After the code commit:
 `node tools/mutate/mutate.mjs --file=<your main changed file> --max=20` (changed lines); quote the score.
@@ -76,3 +82,13 @@ exact flag) and quote the replay digest before and after. After the code commit:
 ## Final message
 Files changed, commits, test/scenario results with counts and digests, mutate scores, the arrival-facing finding
 (item 2), every evidence path, and anything left undone.
+
+## Director's notes (13:48)
+- State at start: body, flight and the overhead swallow are committed (e6e5920d4). Read
+  `project/features/souls/kerf_spectral.gd`, `kerf_ronin_drawn.gd`, `kerf_ronin_top.gd`, `kerf_echo.gd`, `kerf_slot.gd`,
+  `kerf_victim.gd`, `kerf_stage.gd` first, and `docs/day/2026-11-20/kerf/REPORT.md` for how n20 made the slice read.
+- `tools/gate/quick.mjs`: run it with `--no-godot` (its standalone parse step fails on untouched scripts such as
+  `features/characters/cut_rig.gd`; tooling, not yours). Parse is checked by the unit runs.
+- `tools/film/ghost_films.mjs` is polish's file: use it, never edit it. If it cannot shoot what you need, write a NEED.
+- Order if time runs short: item 2 (slice arrival, blade forward) + item 3 (echo pose) + the top strip first, then
+  item 1 (charges), then sparks, then films. Commit each item as it lands.
