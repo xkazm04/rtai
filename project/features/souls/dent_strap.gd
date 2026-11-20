@@ -24,9 +24,10 @@ var held: bool = false
 func advance(car: VehicleBody, now: int, speed: float, blast_tick: int) -> void:
 	if car != null:
 		if held:
+			# Keep neighbouring ticks distinguishable even at full link speed and a 30 Hz display.
+			var feed: float = absf(speed) * look.strap_feed_k
 			travel_m = fposmod(
-				travel_m + absf(speed) * maxi(0, now - tick) * SimClock.TICK_DT,
-				look.strap_tick_gap_m
+				travel_m + feed * maxi(0, now - tick) * SimClock.TICK_DT, look.strap_tick_gap_m
 			)
 		else:
 			travel_m = 0.0
@@ -77,13 +78,18 @@ func point(t: float) -> Vector2:
 	return base + normal * bow * look.strap_tremble_m * shake
 
 
-func paint(canvas: CanvasItem, fill: Color, stripe: Color) -> void:
-	var fade: float = 1.0 - fray()
-	DentRoof.disc(canvas, roof_px, heading, ppm, fade)
+func belt_path(end: float) -> PackedVector2Array:
 	var path: PackedVector2Array = []
 	for i: int in SEGMENTS + 1:
 		@warning_ignore("return_value_discarded")
-		path.append(point(fade * i / SEGMENTS))
+		path.append(point(end * i / SEGMENTS))
+	return path
+
+
+func paint(canvas: CanvasItem, fill: Color, stripe: Color) -> void:
+	var fade: float = 1.0 - fray()
+	DentRoof.disc(canvas, roof_px, heading, ppm, fade)
+	var path: PackedVector2Array = belt_path(fade)
 	var edge: float = look.strap_edge_m * ppm
 	if hand_px.distance_squared_to(roof_px) > 0.01:
 		canvas.draw_polyline(path, Color(DentRoof.INK, fade), width_px(), true)
@@ -110,7 +116,7 @@ func _webbing(canvas: CanvasItem, end: float) -> void:
 		canvas.draw_line(
 			p - side,
 			p + side + axis * half * 0.5,
-			Color(DentRoof.INK, end * 0.63),
+			Color(DentRoof.INK, end * look.strap_webbing_alpha),
 			half * 0.42,
 			true
 		)

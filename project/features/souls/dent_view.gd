@@ -119,7 +119,7 @@ func _tether() -> void:
 		else:
 			_hand_offset = _anchor.rotated(rivet.facing.angle()) * ppm
 			_hand_offset += (
-				ViewMode.shared().lift_px(VehicleFire.HOOD_H_M) * ppm / SimConst.PX_PER_M
+				ViewMode.shared().lift_px(_strap.look.hand_height_m) * ppm / SimConst.PX_PER_M
 			)
 	_strap.place(at + _hand_offset, ppm, reduced_motion, ViewMode.shared())
 	var warmth: float = smoothstep(0.0, dent.num(&"arm_k"), dent.heat)

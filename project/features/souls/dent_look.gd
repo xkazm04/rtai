@@ -12,14 +12,17 @@ var tether_look: String
 var buckle_m: float
 var disc_m: float
 var disc_rim_alpha: float
+var hand_height_m: float
 var ring_edge_m: float
 var ring_fill_alpha: float
 var ring_ink_m: float
 var strap_edge_m: float
+var strap_feed_k: float
 var strap_sag_m: float
 var strap_stripe_m: float
 var strap_tick_gap_m: float
 var strap_tremble_m: float
+var strap_webbing_alpha: float
 var strap_width_m: float
 
 
@@ -39,14 +42,17 @@ func _init(table: DataTable, row: Dictionary) -> void:
 	buckle_m = table.num(row, "buckle_m")
 	disc_m = table.num(row, "disc_m")
 	disc_rim_alpha = table.num(row, "disc_rim_alpha")
+	hand_height_m = table.num(row, "hand_height_m")
 	ring_edge_m = table.num(row, "ring_edge_m")
 	ring_fill_alpha = table.num(row, "ring_fill_alpha")
 	ring_ink_m = table.num(row, "ring_ink_m")
 	strap_edge_m = table.num(row, "strap_edge_m")
+	strap_feed_k = table.num(row, "strap_feed_k")
 	strap_sag_m = table.num(row, "strap_sag_m")
 	strap_stripe_m = table.num(row, "strap_stripe_m")
 	strap_tick_gap_m = table.num(row, "strap_tick_gap_m")
 	strap_tremble_m = table.num(row, "strap_tremble_m")
+	strap_webbing_alpha = table.num(row, "strap_webbing_alpha")
 	strap_width_m = table.num(row, "strap_width_m")
 
 

@@ -5,15 +5,18 @@
       "buckle_m": 0.42,
       "disc_m": 1.1,
       "disc_rim_alpha": 0.36,
+      "hand_height_m": 1.1,
       "id": "dent",
       "ring_edge_m": 0.085,
       "ring_fill_alpha": 0.16,
       "ring_ink_m": 0.17,
       "strap_edge_m": 0.0625,
+      "strap_feed_k": 0.3,
       "strap_sag_m": 0.65,
       "strap_stripe_m": 0.065,
       "strap_tick_gap_m": 0.33,
       "strap_tremble_m": 0.018,
+      "strap_webbing_alpha": 0.63,
       "strap_width_m": 0.32,
       "tether_look": "strap"
     }

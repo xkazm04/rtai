@@ -12,8 +12,10 @@ func test_hand_and_roof_endpoints_at_both_camera_pitches() -> void:
 		ViewMode.select(view)
 		var vm: ViewMode = ViewMode.shared()
 		strap.place(hand, ppm, false, vm)
-		assert_eq(strap.point(0.0), hand)
-		assert_eq(strap.point(1.0), car.pos * ppm + vm.lift_px(1.4))
+		var path: PackedVector2Array = strap.belt_path(1.0)
+		assert_eq(path.size(), DentStrap.SEGMENTS + 1)
+		assert_eq(path[0], hand)
+		assert_eq(path[-1], car.pos * ppm + vm.lift_px(1.4))
 		assert_almost_eq(strap.width_px(), 10.24, 0.001)
 		assert_almost_eq(strap.heading, PI / 2.0, 0.0001)
 	ViewMode._shared = old_view
@@ -22,13 +24,13 @@ func test_hand_and_roof_endpoints_at_both_camera_pitches() -> void:
 func test_belt_motion_is_tick_based_and_reduced_motion_is_straight() -> void:
 	var s: DentStrap = DentStrap.new()
 	var car: VehicleBody = VehicleBody.new(1, null, Vector2.RIGHT * 3.0, Vector2.RIGHT)
-	s.advance(car, 5, 3.0, -1)
+	s.advance(car, 5, 10.0, -1)
 	assert_eq(s.travel_m, 0.0)
-	s.advance(car, 7, 3.0, -1)
+	s.advance(car, 7, 10.0, -1)
 	assert_almost_eq(s.travel_m, 0.1, 0.0001)
-	s.advance(car, 7, 3.0, -1)
+	s.advance(car, 7, 10.0, -1)
 	assert_almost_eq(s.travel_m, 0.1, 0.0001)
-	s.advance(car, 13, 3.0, -1)
+	s.advance(car, 13, 10.0, -1)
 	assert_almost_eq(s.travel_m, 0.07, 0.0001)
 	s.place(Vector2.ONE, 32.0, true, ViewMode.shared())
 	assert_almost_eq(s.point(0.5), s.hand_px.lerp(s.roof_px, 0.5), Vector2.ONE * 0.0001)
@@ -51,6 +53,7 @@ func test_slack_holds_last_roof_for_21_ticks_then_frays_back() -> void:
 	assert_almost_eq(s.point(0.5).y, s.roof_px.y * 0.5 + 0.65 * 32, 0.001)
 	s.advance(null, 35, 0.0, -1)
 	assert_almost_eq(s.fray(), 1.0 / 3.0, 0.0001)
+	assert_almost_eq(s.belt_path(1.0 - s.fray())[-1], s.point(2.0 / 3.0), Vector2.ONE * 0.001)
 	s.advance(null, 40, 0.0, -1)
 	assert_true(s.showing())
 	s.advance(null, 41, 0.0, -1)
@@ -77,3 +80,37 @@ func test_heat_colours() -> void:
 	assert_eq(DentStrap.fill_at(0.0), HaulerLook.TEAL)
 	assert_eq(DentStrap.fill_at(0.5), HaulerLook.TEAL.lerp(amber, 0.5))
 	assert_true(DentStrap.fill_at(1.0).is_equal_approx(amber))
+
+
+func test_held_roof_selects_the_mirrored_fist_and_top_arm_independently_of_rivets_aim() -> void:
+	var saved: ViewMode = ViewMode.shared()
+	ViewMode.select("tilt70")
+	GhostLook.override_for_test(GhostLook.SPECTRAL)
+	var stage: CollectCallStage = CollectCallPlay.begin().stage
+	stage.pilot = StagePilot.new(PlayerActions.shipped())
+	var host: GhostFormView = GhostFormView.make(stage, null, null)
+	add_child_autofree(host)
+	host.set_process(false)
+	var body: DentBody = host._bodies.dent
+	var rivet: Fighter = host.arena.rivet
+	rivet.facing = Vector2.RIGHT
+	var roof_m: Vector2 = rivet.pos + Vector2(-4, -4)
+	stage.pilot.dent.car = VehicleBody.new(1, null, roof_m, Vector2.DOWN)
+	body.drawn.flight.visible = true
+	body.drawn.flight.step(rivet.pos * SimConst.PX_PER_M, 0.0, 1)
+	body.step(true, Vector2.ZERO, 0.0, 1, 1)
+	var cell: Sprite2D = body._spectral.sprite
+	assert_eq(cell.frame_coords, Vector2i(2, 3))
+	assert_true(cell.flip_h)
+	var grip: Vector2 = cell.to_local(body.grip_world()) - cell.offset
+	assert_almost_eq(grip, Vector2(298 - 261, 66), Vector2.ONE * 0.001)
+	ViewMode.select("top")
+	body.step(true, Vector2.ZERO, 0.0, 1, 2)
+	assert_almost_eq(body._top.rotation, (roof_m - rivet.pos).angle(), 0.001)
+	var parts: PartLibrary = PartLibrary.of("dent/spectral")
+	var fore: Sprite2D = body._top._fore[1]
+	var tip: Vector2 = parts.pivots_b["forearm_open"] - parts.pivots_a["forearm_open"]
+	assert_almost_eq(body.grip_world(), fore.to_global(tip), Vector2.ONE * 0.001)
+	assert_eq(rivet.facing, Vector2.RIGHT)
+	ViewMode._shared = saved
+	GhostLook.reset_for_test()
