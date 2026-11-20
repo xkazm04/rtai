@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import { mkdtempSync, readdirSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { join, relative, resolve } from 'node:path';
 import { after, test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { main } from './run.mjs';
@@ -72,6 +72,25 @@ test('a failed run exits non-zero with a FAIL verdict', async () => {
   const code = await main(['reel.gd'], { ...h.opts, projectDir: FIX });
   assert.equal(code, 1);
   assert.match(h.lines.out.at(-1), /^FAIL exit 1 \(fail\); SCRIPT ERROR 1 \(first res:\/\/reel.gd:3\)/);
+});
+
+test('only an entry that declares --result receives the resolved path; freshness is always checked', async () => {
+  const h = harness();
+  const path = relative(process.cwd(), join(h.logDir, 'run result.json'));
+  const result = `--result=${resolve(path)}`;
+  for (const flags of [[], ['--seed=7']]) {
+    assert.equal(await main(['gauntlet', ...flags, `--result=${path}`], h.opts), 1);
+    const args = h.calls.at(-1).args;
+    assert.deepEqual(args.slice(args.indexOf('--')), ['--', ...flags, result]);
+    assert.match(h.lines.out.at(-1), /result missing/);
+  }
+  for (const entry of ['arena_args.gd', 'reel.gd']) {
+    assert.equal(await main([entry, `--result=${path}`], { ...h.opts, projectDir: FIX }), 1);
+    assert.ok(!h.calls.at(-1).args.includes(result));
+    assert.match(h.lines.out.at(-1), /result missing/);
+  }
+  await main(['gauntlet', result, '--', result], h.opts);
+  assert.equal(h.calls.at(-1).args.filter((arg) => arg === result).length, 1);
 });
 
 test('an unknown entry exits 2 without spawning', async () => {
