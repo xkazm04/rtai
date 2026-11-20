@@ -248,3 +248,9 @@ NEXT (supersedes (1)-(2) above): wait for PID 24112 / final-gate.out; quote its 
 NEXT (report session, after 07:30 freeze): no code change after 8b4862e1f; gate PASS there (build/gate/8b4862e1f2f9/gate.json, quoted in REPORT). (1) Once, after 07:30: `export APPDATA=C:/Users/kazda/kiro/gtai-n20/appdata/ohm; node tools/gate/run.mjs --rev=HEAD --reels` (HEAD differs only in docs) and add its line to the REPORT header; if it is still running at 07:55, say so in REPORT. (2) REPORT is final apart from that line; run `node tools/evidence/cites.mjs REPORT.md` and commit per path (`git commit -m ... -- REPORT.md JOURNAL.md`). No Astra running, no lock.
 - 06:15 END iteration 5.
 - 07:30 START iteration 6 (STABILIZE, past freeze). No Astra lock, no code change. GATE RUNNING reels `node tools/gate/run.mjs --rev=HEAD --reels` on 9958c48ac since 07:30 (detached node PID 53240, APPDATA ohm, out C:\Users\kazda\kiro\gtai-n20\logs\ohm\reels-gate.out). REPORT header says it is running.
+NEXT (Director / morning): the reels gate (PID 53240, started 07:30) on docs-only 9958c48ac is the only thing open. Read
+  C:\Users\kazda\kiro\gtai-n20\logs\ohm\reels-gate.out and build\gate\9958c48ac2b4\gate.json. If it passed, the REPORT
+  header line saying "still running" is just out of date. If it failed, the failure is in reels only: the last
+  non-reels gate PASS on 8b4862e1f stands, and no code has changed since. No Astra running, no lock, worktree clean apart
+  from this entry.
+- 07:31 END iteration 6 (waiting on the reels gate until 07:38).
