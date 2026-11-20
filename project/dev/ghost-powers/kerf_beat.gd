@@ -60,7 +60,7 @@ func hold() -> void:
 func want(stage: ArenaStage, local: int) -> Array:
 	var rivet: Vector2 = stage.arena.rivet.pos
 	var foe: Fighter = _farthest_in_reach(stage, rivet) if _line else null
-	foe = GhostReel.nearest(victims, rivet) if foe == null else foe
+	foe = _nearest(rivet) if foe == null else foe
 	var aim: Vector2 = (foe.pos - rivet).normalized() if foe != null else Vector2.RIGHT
 	if local == TAKE_AT:
 		return [Vector2.ZERO, aim, &"power_hauler"]
@@ -70,6 +70,14 @@ func want(stage: ArenaStage, local: int) -> Array:
 		return [Vector2.ZERO, aim, &""]
 	var press: bool = (local - FIRST_BLINK) % CADENCE == 0
 	return [Vector2.ZERO, aim, &"melee" if press else &""]
+
+
+func _nearest(at: Vector2) -> Fighter:
+	var best: Fighter = null
+	for f: Fighter in victims:
+		if f.alive() and (best == null or at.distance_to(f.pos) < at.distance_to(best.pos)):
+			best = f
+	return best
 
 
 func _farthest_in_reach(stage: ArenaStage, at: Vector2) -> Fighter:

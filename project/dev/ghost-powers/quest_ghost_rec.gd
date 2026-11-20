@@ -65,40 +65,29 @@ func _report(ghost: StringName, stage: CollectCallStage) -> void:
 	var p: StagePilot = stage.pilot
 	var line: String = "%s: transforms %d kills %d kerf blinks %d slices %d"
 	line += " ohm bolts %d struck %d cars_hit %d dent misses %d seizes %d strikes %d blasts %d"
-	(
-		Log
-		. info(
-			"quest_ghost",
-			(
-				line
-				% [
-					ghost,
-					p.ghosts.transforms,
-					stage.arena.kills,
-					p.kerf.blinks,
-					p.kerf.slices,
-					p.ohm.bolts,
-					p.ohm.struck,
-					p.ohm.cars_hit,
-					p.dent.misses,
-					p.dent.seizes,
-					p.dent.strikes,
-					p.dent.blasts,
-				]
-			)
-		)
-	)
+	var counts: Array = [
+		ghost,
+		p.ghosts.transforms,
+		stage.arena.kills,
+		p.kerf.blinks,
+		p.kerf.slices,
+		p.ohm.bolts,
+		p.ohm.struck,
+		p.ohm.cars_hit,
+		p.dent.misses,
+		p.dent.seizes,
+		p.dent.strikes,
+		p.dent.blasts,
+	]
+	Log.info("quest_ghost", line % counts)
 
 
 ## The right stick on the nearest standing guard (the pad aim; the viewport is off, so no mouse).
 func _aim_at(stage: CollectCallStage) -> void:
 	var rivet: Vector2 = stage.arena.rivet.pos
-	var best: Vector2 = Vector2.RIGHT
-	var near: float = INF
-	for h: Fighter in stage.arena.hostiles:
-		if h.alive() and rivet.distance_to(h.pos) < near:
-			near = rivet.distance_to(h.pos)
-			best = (h.pos - rivet).normalized()
+	var guard: Fighter = GhostReel.nearest(stage.arena.hostiles, rivet)
+	var best: Vector2 = rivet.direction_to(guard.pos) if guard != null else Vector2.RIGHT
+	var near: float = rivet.distance_to(guard.pos) if guard != null else INF
 	if near > CAR_AIM_M and _ghost == &"ohm":  # no guard in the bolt's reach: the car bolt
 		for b: VehicleBody in stage.cars():
 			if b.state != VehicleBody.State.WRECK and rivet.distance_to(b.pos) < near:
