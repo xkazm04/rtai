@@ -27,7 +27,7 @@
 - **HUD chip visor slot is faint** at 84 px (`tonnage_chip_hud.png`): hump and both striped fists read, the face does not.
 - **No voice wash in the story apparition.** Tonnage draws his own body (own_body), so flight's `GhostBridgeFade.voice` has no shared sprite to tint; it returns safely and the apparition simply has no wash. Flight lists the same gap for the other own_body forms.
 - **Thin 4 m ring is faint at 32 px/m** in the attack film poster: the reach mark is there but light against the road; the cracks and victims read more than the ring.
-- **Mutate scores are partial**: `tonnage_morph.gd` 24/(24+0) and `tonnage_spectral.gd` 12/(12+0) focused, but the broad `tonnage_spectral.gd` run was 5/(5+33) before the later tests and `tonnage_pose.gd` never finished a full run under contention (34/(34+48) at 86/158 before the survivor tests).
+- **`tonnage_spectral.gd` is weakly tested**: on the final tree, `node tools/mutate/mutate.mjs --file=features/souls/tonnage_spectral.gd --max=40` (40 of 154 sampled) scored 27.5% = 11/(11+29). The 29 survivors sit in the presentation code (lines 47-189): the combat-tick hook, the ground-shadow ink discs, the fist landing-mark placement and its width and alpha through the wind-up, the art-set choice by pitch, and the cell's roll, stretch and lift. The tests check states and poses, not where these marks are drawn. `tonnage_pose.gd` is well held: 92.5% = 37/(37+3) (40 of 161 sampled; survivors at :71, :113, :129). `tonnage_morph.gd` 24/(24+0) (session 4). Logs: `build/tonnage-mutate-spectral.txt`, `build/tonnage-mutate-pose.txt` (git-ignored).
 - **Performance unmeasured**: no bench under the lock tonight; the glow, morph and plume costs are not numbers.
 
 ## What blocked or slowed you
@@ -45,7 +45,7 @@
 
 ## Merge notes
 
-- Flight's `project/tests/unit/test_ghost_card.gd` is pinned to the legacy look on this branch (8e82e68d1, flight OK: ours wins at the merge); one guard at `test_ghost_flight_hosts.gd:114` in merge 80c27095b.
+- Flight's `project/tests/unit/test_ghost_card.gd` is pinned to the legacy look on this branch (8e82e68d1, flight OK: ours wins at the merge); one guard at `test_ghost_flight_hosts.gd:114` in merge 80c27095b (`if not drawn.own_body:`). Dent and kerf carry a different guard on the same line (a null-sprite check, f67fa2ea0 on n20-kerf): a same-file conflict at the merge. Take the null-sprite check: it covers Tonnage too (own_body Tonnage has a null sprite).
 - Flight's `project/tests/unit/test_ghost_apparition.gd:100` gets a null-sprite guard on this branch (flight OK; own_body forms have no shared sprite to wash). Flight's REPORT lists the voice-wash gap for own_body forms.
 - Named one-line call site in a flight file: `ghost_form_bodies.gd` step_tonnage `tonnage.hauler = p.hauler`.
 - `n20-flight` merged several times into this branch, last 6bb29c7a0 = flight final aa9ff166e (root JOURNAL.md/REPORT.md kept ours). The merge-clash hook warns that flight's `project/tests/unit/test_ghost_look.gd` conflicts with n20-ohm: a flight/ohm overlap carried in through the merge, no tonnage lines.
@@ -58,7 +58,7 @@
 1. Seat the smoke column under the hump (raise its root, soften the straight cone edge) in Tonnage's `ghost_hover.json` row and vapour.
 2. Ink the visor slot darker in the chip cut, or cut the chip from a 3/4 cell where the face is larger.
 3. Thicken or brighten the 4 m slam ring at 32 px/m (still a line, not a disk).
-4. Finish the `tonnage_pose.gd` and broad `tonnage_spectral.gd` mutation runs on a quiet machine and add tests for the survivors.
+4. Add tests that pin `tonnage_spectral.gd`'s draw outputs (landing-mark position, width and alpha through the wind-up; cell roll and lift; the combat-tick hook) to lift its 27.5% mutation score; then kill the 3 `tonnage_pose.gd` survivors.
 5. Bench the spectral Tonnage under the lock (crowded drive + riot) to put a number on glow, plume and morph.
 6. Retire the legacy hauler body once the owner signs off the spectral look (not tonight: legacy stays one value away).
 

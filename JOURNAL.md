@@ -117,3 +117,6 @@ NEXT (session 5, ~05:58 -> 08:00):
 - 06:10 FINAL GATE PASS on b7eeed009 (code 2d1d83ea3): lint 19/19, unit 3269/0/2, scenarios 65, parity, selftest (look goldens 11/11), export-audit 782/0. build/gate/b7eeed009cc7/gate.json. Re-filming move/attack/close/morph now.
 - 06:15 RE-FILMED at the gated HEAD (flight final merge + one ground glow): move/attack/close/morph + turn t163 via tools/film/ghost_films.mjs into build/refilm, re-encoded full -> limited range (yuv420p, tv) myself, copied over the 05:10 films in masters/n20/tonnage. LOOKED: attack poster = clap in front, car + victims visible both views; t3.5 = armed fist forward; close_64 = one teal pool, smoke behind, no leg read.
 - 06:17 REPORT: films row + reels note. Mutate tonnage_pose.gd --max=40 running (log build/tonnage-mutate-pose.txt; first try used a res-relative path wrongly, exit 2).
+- 06:19 No open NEED tonnage in other journals. Merge note added: test_ghost_flight_hosts.gd:114 guard conflict (ours own_body vs dent/kerf null-sprite); Director takes the null-sprite form.
+- 06:24 MUTATE tonnage_pose.gd --max=40 (sampled 40/161): 92.5% = 37/(37+3); survivors :71 arith -, :113 boundary >, :129 literal 1.0. Next: tonnage_spectral.gd --max=40.
+- 06:40 MUTATE tonnage_spectral.gd --max=40 (40/154): 27.5% = 11/(11+29), survivors in draw/blend paths. Into REPORT What does not + Next steps.
