@@ -204,3 +204,8 @@ NEXT: (1) logs/ohm/astra.lock = PID 12372 = ASTRA form-rest (detached, started 0
   JOURNAL/REPORT per path. Reply to flight not needed (their fade_from note: ours=0 wins).
 - 04:32 END iteration 3. ASTRA RUNNING form-rest since 04:13 (lock PID 12372).
 - 04:34 FRICTION my handover commit swept up Astra's staged ohm_spirit.gd + test_ohm_drift.gd (git add JOURNAL + commit takes the whole index); undone at once by reset --soft HEAD~1 and a path-only commit (4e67d8cdb), Astra's two files are staged again as before. While Astra runs, always commit docs with `git commit -m ... -- <path>`.
+- 04:36 LOOK form/chip_legacy_vs_spec.png: spectral chip (three lit jars, goggles, beard, copper fork) reads at
+  chip size and matches the plate; legacy shell beside it. Staged-not-committed 05 Part B: top-view hit lean in
+  ohm_spirit.gd via GhostRecoil.tilt(...) reads flight's private `drawn._hurt` (second private read after
+  `drawn._fade`): ask Astra in review to use a public accessor if flight has one, else list both as NEED flight.
+- 04:37 END iteration 3 (final). ASTRA RUNNING form-rest since 04:13 (lock PID 12372). NEXT as at 04:32.
