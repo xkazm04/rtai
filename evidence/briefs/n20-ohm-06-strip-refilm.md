@@ -17,12 +17,13 @@ the body in both views, wisps soft round puffs. In `ghost_hover.json` keep fligh
 look at one top and one tilt70 still at 32 px/m: if the tail now fights the robe (two tails, or the root floating
 off the hem), retune only the ohm row's tail numbers and say what you changed.
 
-Step 0d (gate red, FIRST priority): since 359eacb83 Ohm defaults to spectral and flight's
+Step 0d (gate red, FIRST priority, flight agreed 05:16): since 359eacb83 Ohm defaults to spectral and flight's
 `project/tests/unit/test_ghost_hitback.gd:79` (`test_ohms_windup_interrupts_a_rear_hit_then_returns_to_walk`) asserts
-the legacy act sheet without selecting a look: the unit suite is red (3251/1). The director asked flight to fix it on
-`n20-flight`. After your merge, run that file (`--select=test_ghost_hitback`). If it is still red, make the minimal edit
-in that test only (select legacy for Ohm the way `test_ohm_rig.gd` does in 359eacb83, restore afterwards), commit it
-alone with the subject naming flight's test, and say so in your report. Then the full unit run must be green.
+the legacy act sheet without selecting a look: the unit suite is red (3251/1). Flight will NOT fix it; they accepted
+this edit on n20-ohm: in that test call `GhostLook.override_for_test(GhostLook.LEGACY)` before the setup and
+`GhostLook.reset_for_test()` after (in `after_each` if the file has one; check the real names in `ghost_look.gd`).
+Nothing else in the file. Commit it alone ("Pin flight's Ohm windup hit test to the legacy look"), then the full unit
+run must be green.
 
 Order and time (now ~05:15, hard stop 06:10, last commit 06:00): 0 merge, 0d, 0b, then Part A (strip), Part B
 (films), 0c (glow) only if time remains before 05:45, Part C (mutate) last; skip what does not fit and say so.
