@@ -1,6 +1,6 @@
 # n21-kerf brief 02b (resume of 02 wire): fix the overhead blades, then finish what 02 left
 
-Same rules and allowlist as brief 02. **Wall-clock hard stop: HARDSTOP. Commit deadline: COMMITBY.** Fix lint and
+Same rules and allowlist as brief 02. **Wall-clock hard stop: 13:55. Commit deadline: 13:50.** Fix lint and
 format findings in your own edits and go on. Never amend, never rebase. Stage per path.
 `export APPDATA=C:/Users/kazda/kiro/gtai-n21/appdata/kerf` before every Godot run. Mutate `--max=20`.
 
@@ -30,3 +30,11 @@ The tilt body is right. The OVERHEAD is not yet the plate's swallow:
 ## Final message
 Commits, what the blade fix was, the tip test, test/gate counts, mutate scores, legacy compare, evidence paths,
 anything undone.
+
+## Director's notes (13:05)
+- `tools/gate/quick.mjs` fails its Godot parse step on scripts nobody touched (`res://features/characters/cut_rig.gd`
+  fails the same way: the standalone `--check-only` cannot resolve autoloads). That is tooling, not you: run
+  `node tools/gate/quick.mjs --no-godot` and rely on `run_unit.mjs --changed` + `--select=` for the parse check.
+  Do not spend time on `tools/godot/check.mjs`.
+- Priority if time runs short: item 1 (the swallow + tip test) and item 2 (the fringe) committed first; then the
+  re-shot `kerf_poses_64.png` and `kerf_guard_32.png` (overhead row); the move film last.
