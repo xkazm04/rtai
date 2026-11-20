@@ -13,3 +13,11 @@ static func grain() -> Texture2D:
 		var img: Image = noise.get_seamless_image(128, 128)
 		_grain = ImageTexture.create_from_image(img)
 	return _grain
+
+
+## In a front-facing billboard, the rising part of the column overlaps the opaque torso.
+## Let the smoke clear the hem first. The authored rise still shows in profile and from behind.
+static func hem_drop(width_px: float, rise_m: float, trail: Vector2) -> float:
+	var toward: float = maxf(0.0, -trail.normalized().y)
+	var rise_px: float = -ViewMode.shared().lift_px(maxf(rise_m, 0.0)).y
+	return width_px * 0.15 + rise_px * toward

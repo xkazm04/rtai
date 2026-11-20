@@ -185,10 +185,10 @@ func _belt_trail(k: float, up: Vector2) -> Vector2:
 	if ViewMode.shared().is_flat():
 		return (_socket + run.normalized() * _socket_width * 1.4) * k
 	var down: float = maxf(0.0, root.y + _socket_width * 1.15 - _chain[-1].y)
-	var fall: float = sin(k * PI) * _socket_width * 0.15
+	var fall: float = GhostVapour.hem_drop(_socket_width, _row.rise_m, run)
 	var head_on: float = maxf(0.0, -run.y - absf(run.x))
 	var sweep: float = (run.x * 1.1 - head_on * 1.45) * k
-	return Vector2(sweep, down * k + fall)
+	return Vector2(sweep, down * k + sin(k * PI) * fall)
 
 
 func _draw() -> void:
