@@ -120,3 +120,5 @@ NEXT (session 5, ~05:58 -> 08:00):
 - 06:19 No open NEED tonnage in other journals. Merge note added: test_ghost_flight_hosts.gd:114 guard conflict (ours own_body vs dent/kerf null-sprite); Director takes the null-sprite form.
 - 06:24 MUTATE tonnage_pose.gd --max=40 (sampled 40/161): 92.5% = 37/(37+3); survivors :71 arith -, :113 boundary >, :129 literal 1.0. Next: tonnage_spectral.gd --max=40.
 - 06:40 MUTATE tonnage_spectral.gd --max=40 (40/154): 27.5% = 11/(11+29), survivors in draw/blend paths. Into REPORT What does not + Next steps.
+- 06:45 LOOKED attack_32 contact sheet (2 fps, re-film): two slams, fists raise + thin ring through the wind-up, clap in front, body thins on the strike, car wrecked + victims visible in both views; ram armed fist forward between slams. REPORT ring line corrected (visible in wind-up, lost on the strike frame). frames.json film notes updated (15 entries, all files present).
+- Temp leftovers for the Director's cleanup: C:\Users\kazda\AppData\Local\Temp\gtai-gate-b7eeed009cc7 (gate snapshot), gtai-mutate-1daa322e (mutate worktree).
