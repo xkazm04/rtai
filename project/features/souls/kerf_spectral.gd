@@ -94,7 +94,7 @@ func pose(
 		flight.tail.visible = _top.visible and blink == KerfRoninDrawn.Pose.HOVER
 	var steps: int = maxi(0, tick - _last_tick)
 	_last_tick = tick
-	_top.pose(current, speed, yaw, steps)
+	_top.pose(current, speed, yaw, steps, _hit.flinch)
 	if _tilted.visible:
 		var oct: int = rig.drawn.octant(rig.global_rotation)
 		if blink != KerfRoninDrawn.Pose.HOVER or current == KerfRoninDrawn.Pose.COCK:

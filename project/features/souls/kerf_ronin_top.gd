@@ -12,6 +12,8 @@ const WING_FAST: Vector2 = Vector2(43, 20)
 const TAIL_ROOT_M: Vector2 = Vector2(-0.28, 0)
 ## The helmet and its trailing crest share a texture. The crest passes behind the back plate.
 const HELMET_Y: int = 138
+const HEAD_M: float = 0.46
+const FLINCH_M: float = 0.12
 
 var slots: KerfChargeSlots = KerfChargeSlots.new()
 # PartLibrary resolves its folder from features/characters/art.
@@ -21,6 +23,7 @@ var _blade: Array[Sprite2D] = []
 var _angles: Array[Vector2] = [WING_REST, WING_REST]
 var _curled: Sprite2D
 var _straight: Sprite2D
+var _crest: Sprite2D
 var _head: Sprite2D
 
 
@@ -34,8 +37,7 @@ func _init() -> void:
 	for side: String in ["left", "right"]:
 		_upper.append(_part("upperarm", side + "_upperarm"))
 		_blade.append(_part("blade", side + "_blade"))
-	@warning_ignore("return_value_discarded")
-	_head_part(true)
+	_crest = _head_part(true)
 	var torso: Sprite2D = _part("torso", "torso")
 	torso.rotation = -PI / 2
 	slots.bind(torso)
@@ -58,11 +60,15 @@ func _head_part(crest: bool) -> Sprite2D:
 	sprite.texture = atlas
 	sprite.offset += region.position
 	sprite.rotation = -PI / 2
-	sprite.position = Vector2.RIGHT * 0.46 * PPM
+	sprite.position = Vector2.RIGHT * HEAD_M * PPM
 	return sprite
 
 
-func pose(current: KerfRoninDrawn.Pose, speed: float, yaw: float, steps: int) -> void:
+func pose(
+	current: KerfRoninDrawn.Pose, speed: float, yaw: float, steps: int, flinch: bool = false
+) -> void:
+	_head.position.x = (HEAD_M - FLINCH_M if flinch and current == POSE.HIT else HEAD_M) * PPM
+	_crest.position = _head.position
 	var straight: float = clampf(speed / 12.0, 0.0, 1.0)
 	_straight.self_modulate.a = straight
 	_curled.self_modulate.a = 1.0 - straight
