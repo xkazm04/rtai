@@ -18,11 +18,13 @@ func test_plain_blink_and_slice_use_half_open_tick_windows() -> void:
 		assert_eq(KerfSpectral.blink_pose(age, false), POSE.BLINK if age in [0, 7] else POSE.HOVER)
 
 
-func test_blink_then_hurt_then_lock_then_turn_then_speed() -> void:
+func test_blink_then_stationary_windup_then_hurt_then_turn_then_speed() -> void:
 	for blink: KerfRoninDrawn.Pose in [POSE.BLINK, POSE.CUT, POSE.RECOVER]:
 		assert_eq(KerfRoninDrawn.pose(0.0, 720.0, blink, true, true), blink)
 		assert_eq(KerfRoninDrawn.pose(0.0, 720.0, blink, true, false), blink)
-	assert_eq(KerfRoninDrawn.pose(0.0, 720.0, POSE.HOVER, true, true), POSE.HIT)
+	assert_eq(KerfRoninDrawn.pose(0.0, 720.0, POSE.HOVER, true, true), POSE.COCK)
+	assert_eq(KerfRoninDrawn.pose(0.0, 720.0, POSE.HOVER, false, true), POSE.HIT)
+	assert_eq(KerfRoninDrawn.pose(3.01, 720.0, POSE.HOVER, true, true), POSE.HIT)
 	assert_eq(KerfRoninDrawn.pose(3.0, 720.0, POSE.HOVER, true, false), POSE.COCK)
 	for side: float in [-1.0, 1.0]:
 		var edge: float = KerfRoninDrawn.TURN_DPS
