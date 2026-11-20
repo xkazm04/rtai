@@ -18,9 +18,18 @@ class BeltProbe:
 		fill_color = fill
 
 
+var stage: CollectCallStage
+var dent: DentStage
+
+
+func before_each() -> void:
+	stage = CollectCallStage.new(StageLayout.shipped())
+	var bus: EventBus = autofree(EventBus.new())
+	stage.arena = CombatArena.new(CombatTuning.shipped(), bus, RngRegistry.new(3).stream(&"combat"))
+	dent = DentStage.shipped()
+
+
 func test_spokes_recover_pre_shove_contact_for_killed_and_wounded_bodies() -> void:
-	var stage: CollectCallStage = CollectCallPlay.begin().stage
-	var dent: DentStage = DentStage.shipped()
 	var view: DentOverload = DentOverload.new()
 	add_child_autofree(view)
 	view.bind(stage, dent)
@@ -63,8 +72,6 @@ func test_shock_reaches_preview_at_eight_ticks_and_ring_outlives_disc() -> void:
 
 
 func test_road_ring_tracks_the_seized_car_then_the_blast_until_tick_27() -> void:
-	var stage: CollectCallStage = CollectCallPlay.begin().stage
-	var dent: DentStage = DentStage.shipped()
 	var view: RingProbe = autofree(RingProbe.new())
 	view.bind(stage, dent)
 	dent.car = VehicleBody.new(1, null, Vector2(6, -2), Vector2.LEFT)
@@ -96,7 +103,7 @@ func test_shock_mesh_first_touches_the_ring_at_tick_eight() -> void:
 	var canvas: Node2D = autofree(Node2D.new())
 	var item: RID = canvas.get_canvas_item()
 	var centre: Vector2 = Vector2(96, -128)
-	var ring: float = DentStage.shipped().num(&"blast_radius_m") * 32.0
+	var ring: float = dent.num(&"blast_radius_m") * 32.0
 	var previous: float = 0.0
 	for age: int in range(9):
 		RenderingServer.canvas_item_clear(item)
@@ -117,8 +124,6 @@ func test_shock_mesh_first_touches_the_ring_at_tick_eight() -> void:
 
 
 func test_spokes_reach_each_struck_body_on_the_hit_tick() -> void:
-	var stage: CollectCallStage = CollectCallPlay.begin().stage
-	var dent: DentStage = DentStage.shipped()
 	var view: DentOverload = DentOverload.new()
 	add_child_autofree(view)
 	view.bind(stage, dent)
@@ -154,7 +159,7 @@ func test_the_held_belt_warms_to_amber_with_overload_heat() -> void:
 	var view: DentView = DentView.new()
 	add_child_autofree(view)
 	view.set_process(false)
-	view.stage = CollectCallPlay.begin().stage
+	view.stage = stage
 	view.stage.pilot = StagePilot.new(PlayerActions.shipped())
 	view.dent = view.stage.pilot.dent
 	view.dent.car = VehicleBody.new(1, null, Vector2(4, 2), Vector2.DOWN)
@@ -175,11 +180,10 @@ func test_the_held_belt_warms_to_amber_with_overload_heat() -> void:
 
 
 func test_amber_wash_sweeps_from_the_nose_with_heat() -> void:
-	var dent: DentStage = DentStage.shipped()
 	dent.car = VehicleBody.new(1, null, Vector2(-3, 6), Vector2.RIGHT)
 	var view: RingProbe = RingProbe.new()
 	add_child_autofree(view)
-	view.bind(CollectCallPlay.begin().stage, dent)
+	view.bind(stage, dent)
 	var c: Vector2 = dent.car.pos * 32.0
 	var r: float = dent.num(&"blast_radius_m") * 32.0
 	for heat: float in [0.0, 0.25, 0.5]:
