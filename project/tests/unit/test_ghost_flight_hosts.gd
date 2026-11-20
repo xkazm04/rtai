@@ -58,8 +58,11 @@ func test_tonnage_moves_above_the_ground_without_a_single_walking_stamp() -> voi
 func test_dents_stationary_gait_does_not_replant_steps_as_the_mount_moves() -> void:
 	_enter(&"dent")
 	var body: DentBody = _view._bodies.dent
+	var turn_dps: float = _view.pilot.ghosts.forms.table.form(&"dent").turn_dps
 	var steps: int = 0
-	for tick: int in 18:
+	for tick: int in 120:
+		var angle: float = deg_to_rad(turn_dps) * SimClock.TICK_DT * maxi(0, tick - 18)
+		_view.arena.rivet.facing = Vector2.from_angle(angle)
 		_move()
 		for child: Node in body.get_children():
 			if child is CutRig:

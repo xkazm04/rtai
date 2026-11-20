@@ -67,9 +67,11 @@ func step_dent(p: StagePilot, at: Vector2, facing: float, steps: int, tick: int)
 func _dent_spot(at: Vector2, facing: float, steps: int, shown: bool) -> Vector2:
 	if _carried_rig == null or steps <= 0 or not shown or not dent.visible:
 		return _spot(dent.drawn, at, facing, steps, shown)
-	var before: Transform2D = dent.global_transform
+	var before: Transform2D = _carried_rig.global_transform
 	var spot: Vector2 = _spot(dent.drawn, at, facing, steps, shown)
-	var travel: Transform2D = dent.global_transform * before.affine_inverse()
+	# The flight already supplies yaw lag. Carry the feet through the rig's own turn as well.
+	_carried_rig.snap_facing(facing)
+	var travel: Transform2D = _carried_rig.global_transform * before.affine_inverse()
 	for side: RigLimbs in _carried_rig.sides:
 		side.foot_w = travel * side.foot_w
 		side.foot_from = travel * side.foot_from
