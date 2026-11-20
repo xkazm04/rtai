@@ -1,12 +1,12 @@
 # n21 lane `kerf`: Kerf becomes the Swarf Ronin (REPORT)
 
-Written session 4 (16:30); the `--reels` gate line is added after the 18:30 freeze.
+Written sessions 4 to 6 (last edit 17:10); the `--reels` gate line is added after the 18:30 freeze.
 
 Branch `n21-kerf`, worktree `C:\Users\kazda\kiro\gtai-wt\n21-kerf`, cut from `int-n21` `ad87caa17`. Director: Opus 5.5;
 builder: GPT-6.2 Astra. Films and stills: `C:\Users\kazda\kiro\gtai-masters\n21\kerf\` (`frames.json`, first entry the
 game beside the plate). Plate: `C:\Users\kazda\kiro\gtai-masters\n21\concepts\kerf_b.png`.
 
-Final gate (16:30, last code commit `c14ae6f97`, gated at `118872760`): `gate: PASS` - lint 19/19 over 1805 files; unit 3368 passed / 0 failed / 2 skipped; scenarios 65 passed; parity 1200 steps bit for bit (planted mutation caught at step 629); selftest look goldens 11/11, block goldens 5/5; export-audit 816 loaded / 0 failed. `build/gate/118872760ea2/gate.json` (git-ignored, local).
+Final gate (17:07, last code commit `2b38c1353`, gated at `40378a1c7`): `gate: PASS` - lint 19/19 over 1805 files; unit 3369 passed / 0 failed / 2 skipped; scenarios 65 passed; parity 1200 steps bit for bit (planted mutation caught at step 629); selftest look goldens 11/11, block goldens 5/5; export-audit 816 loaded / 0 failed. `build/gate/40378a1c74cc/gate.json` (git-ignored, local). The earlier gate on `118872760` (code `c14ae6f97`) also passed: `build/gate/118872760ea2/gate.json`.
 
 ## What works
 
@@ -60,10 +60,12 @@ Final gate (16:30, last code commit `c14ae6f97`, gated at `118872760`): `gate: P
 | 6 | attacks / 03b (resume) | 20 | accepted | 56c31b555 |
 | 7 | form | 37 | accepted | 6a687d51a, d20712d89, 59619e7c3, 90f948645, f6a85d2f7, e5355f75a |
 | 8 | polish05 | 27 | accepted | 74304cba8, c14ae6f97 |
+| 9 | cruise06 (+ 06b resume) | 17 | accepted | 2b38c1353 |
 
-Total: 8 calls, 264 minutes, 8 accepted, 0 bounced (2 follow-ups as `--resume`: topfix, 03b).
+Total: 9 calls, 281 minutes, 9 accepted, 0 bounced (3 follow-ups as `--resume`: topfix, 03b, 06b).
 
 What I would brief differently:
 - State the overhead silhouette as a measurable rule in the first wiring brief (upper arms at most 50 degrees off the rear spine, both tips behind the shoulder line, a world-space tip test). Stated only as "swallow", it cost a second call (02b).
 - Name the shared pieces that would cross a teleport (flight tail, vapour) in the attack brief. The zigzag tail across the 9 m jump and the vapour thread were found late, one call apart.
+- Tell a brief that touches `KNOWN_FLAGS` up front that one added line trips the debt ratchet on `launch_args.gd` and how to accept it (`--accept-regression`). Without that, cruise06 stopped at a red lint and needed a second leg.
 - Ask for the owner's films in the same call as each fix. The calls that re-shot their own films (03b, polish05) saved me a Godot slot.
