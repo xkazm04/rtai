@@ -50,6 +50,7 @@ func _init(drawn: Feed) -> void:
 func _ready() -> void:
 	for i: int in 2:
 		var ink: Sprite2D = GhostRim.soft_glow(GhostShadow.INK, 0.92, 64.0)
+		ink.self_modulate.a = 0.0
 		var disc: GradientTexture2D = ink.texture as GradientTexture2D
 		disc.gradient.add_point(0.55, Color(GhostShadow.INK, 0.8))
 		if _drawn.flight != null:
@@ -152,7 +153,7 @@ func _cast_shadow(shadow: Sprite2D, road: Vector2, height: float) -> void:
 		width = lerpf(1.55, 1.0, _sample.windup)
 		alpha = lerpf(0.7, 1.0, _sample.windup)
 	shadow.global_scale = Vector2(1.45, 0.85) * (PPM / 64.0) * width
-	shadow.self_modulate.a = alpha
+	shadow.self_modulate.a = alpha * pose.fist_shadow_k
 
 
 func _show_cell(vm: ViewMode, centre: Vector2) -> void:

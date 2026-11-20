@@ -46,6 +46,7 @@ var column: int = Pose.CARRY
 var armed_k: float = 0.0
 var lean_k: float = 1.0
 var plant_k: float = 0.0
+var fist_shadow_k: float = 0.0
 var press_ahead_m: float
 var _follow: Vector2
 var _rate: Vector2
@@ -124,6 +125,7 @@ func _travel(sample: Sample, hurt: int) -> void:
 
 func _slam(windup: float, age: int) -> void:
 	if windup > 0.0:
+		fist_shadow_k = smoothstep(0.0, 0.25, windup)
 		act = true
 		column = Act.RAISE
 		lean_k *= 1.0 - smoothstep(0.0, 0.5, windup)
@@ -132,6 +134,7 @@ func _slam(windup: float, age: int) -> void:
 		right = right.lerp(Vector3(0.95, 1.5, 2.6), k)
 		return
 	var lift_end: int = _cut_ticks + _follow_ticks
+	fist_shadow_k = 1.0 - smoothstep(_cut_ticks, lift_end, age) if age >= 0 else 0.0
 	if age < 0 or age >= lift_end + RETURN_TICKS:
 		return
 	act = age < lift_end

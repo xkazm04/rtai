@@ -159,3 +159,36 @@ func test_incoming_hit_rolls_the_custom_cell_once_and_the_armed_fist_holds() -> 
 	body._present()
 	body._hit_lean(0.0, 0.0)
 	assert_almost_eq(body._cell.global_rotation, 0.0, 0.0001)
+
+
+func test_fist_shadows_fade_only_during_the_slam() -> void:
+	var body: TonnageSpectral = _mount("tilt70")._spectral
+	for speed: float in [0.0, 2.0, 3.0]:
+		body._sample.velocity = Vector2.RIGHT * speed
+		body._sample.ramming = speed == 3.0
+		assert_eq(_shadow_alpha(body), 0.0)
+	body._sample.ramming = false
+	body._sample.windup = 0.05
+	var first: float = _shadow_alpha(body)
+	assert_gt(first, 0.0)
+	body._sample.windup = 0.5
+	assert_gt(_shadow_alpha(body), first)
+	body._sample.windup = 0.0
+	var previous: float = 0.0
+	for age: int in GhostDrawn.CUT_TICKS + GhostDrawn.FOLLOW_TICKS:
+		body._sample.stomp_age = age
+		var alpha: float = _shadow_alpha(body)
+		assert_gt(alpha, 0.0)
+		if age > GhostDrawn.CUT_TICKS:
+			assert_lt(alpha, previous)
+		previous = alpha
+	body._sample.stomp_age += 1
+	assert_eq(_shadow_alpha(body), 0.0)
+
+
+func _shadow_alpha(body: TonnageSpectral) -> float:
+	body.pose.step(body._sample, 1)
+	body._present()
+	var alpha: float = body._shadows[0].self_modulate.a
+	assert_eq(body._shadows[1].self_modulate.a, alpha)
+	return alpha
