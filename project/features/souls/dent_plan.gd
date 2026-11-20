@@ -8,13 +8,16 @@ extends RefCounted
 ## against base Rivet, so Dent stands about Rivet's height, a touch broader.
 
 const ART_DIR: String = "dent"
+const RIVET_PLAN_PATH: String = "res://features/characters/rivet_plan.gd"
 const BLANK: String = "blank"
 ## Raw art, no part print (decisions.md 2026-11-05: the print greys the yellow discs at 32 px/m).
 const RAW_PARTS: bool = true
 
 
 static func build(form_size_k: float = 1.05) -> BodyPlan:
-	var p: BodyPlan = RivetPlan.build(RivetPlan.FORM_BASE)
+	# Only the legacy build needs Rivet's rig, which also depends on the ghost form views.
+	var source: GDScript = load(RIVET_PLAN_PATH) as GDScript
+	var p: BodyPlan = source.call(&"build", &"base")
 	p.name = "dent"
 	p.art_dir = ART_DIR
 	p.size_k *= form_size_k
