@@ -360,7 +360,8 @@
         "2026-11-18: n19 move: read the arena pilot motion once for the cover and vault rig feeds (files_past_soft_cap 66 -> 66)",
         "2026-11-19: Preserve the AI lane's base occluder verbatim and append the required hit field, assignment and formatted cover call. (files_past_soft_cap 66 -> 66)",
         "2026-11-19: n19 move flags (files_past_soft_cap 66 -> 66)",
-        "2026-11-19: n19 engine night: dev probes (dev/sim far-cop and zone census, dev/enemy_ai fight probe, dev/bench crowd cost, arsenal audit kit) and launch flags, all dev-only evidence tools; owner verdicts 2026-11-19 (files_past_soft_cap 66 -> 66)"
+        "2026-11-19: n19 engine night: dev probes (dev/sim far-cop and zone census, dev/enemy_ai fight probe, dev/bench crowd cost, arsenal audit kit) and launch flags, all dev-only evidence tools; owner verdicts 2026-11-19 (files_past_soft_cap 66 -> 66)",
+        "2026-11-20: n21 kerf: one KNOWN_FLAGS line --kerf-cruise-wings (owner Call, off by default) (files_past_soft_cap 66 -> 64)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -368,7 +369,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 237,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 208,
+        "project/boot/launch_args.gd": 209,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,
@@ -421,16 +422,14 @@
         "project/features/quest/quest_objective.gd": 206,
         "project/features/quest/quest_runner.gd": 228,
         "project/features/souls/dent_stage.gd": 257,
-        "project/features/souls/ghost_form_view.gd": 208,
         "project/features/souls/ghost_forms.gd": 219,
         "project/features/souls/kerf_stage.gd": 208,
-        "project/features/souls/ohm_rig.gd": 201,
         "project/tests/scenarios/scenario_vehicle_drive.gd": 213,
         "project/tests/unit/test_crowd_react.gd": 234,
         "project/tests/unit/test_gun_fx.gd": 213,
         "project/tests/unit/test_weapon_art.gd": 223
       },
-      "total": 66
+      "total": 64
     },
     "lane_named_dev_dirs": {
       "files": {

@@ -15,6 +15,8 @@ const HELMET_Y: int = 138
 const HEAD_M: float = 0.46
 const FLINCH_M: float = 0.12
 
+static var _cruise_sweep: Vector2 = Vector2.ZERO
+
 var slots: KerfChargeSlots = KerfChargeSlots.new()
 # PartLibrary resolves its folder from features/characters/art.
 var _parts: PartLibrary = PartLibrary.of("../../souls/art/kerf/ronin")
@@ -28,6 +30,8 @@ var _head: Sprite2D
 
 
 func _init() -> void:
+	if _cruise_sweep == Vector2.ZERO:
+		_cruise_sweep = cruise_sweep(LaunchArgs.value("--kerf-cruise-wings") == "open")
 	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	_curled = _part("tail_curled", "tail_curled")
 	_straight = _part("tail_straight", "tail_straight")
@@ -87,10 +91,14 @@ func pose(
 		_joint(_blade[i], "blade", elbow, _angles[i].y, side)
 
 
+static func cruise_sweep(open: bool) -> Vector2:
+	return Vector2(62, 40) if open else WING_FAST
+
+
 static func _sweep(current: KerfRoninDrawn.Pose, side: float, yaw: float) -> Vector2:
 	match current:
 		POSE.CRUISE:
-			return WING_FAST
+			return _cruise_sweep
 		POSE.BLINK:
 			return Vector2(11, 0)
 		POSE.TURN:

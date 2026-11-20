@@ -3,6 +3,11 @@ extends GutTest
 const POSE = KerfRoninDrawn.Pose
 
 
+func test_cruise_sweep_defaults_to_folded_and_can_open() -> void:
+	assert_eq(KerfRoninTop.cruise_sweep(false), Vector2(43, 20))
+	assert_eq(KerfRoninTop.cruise_sweep(true), Vector2(62, 40))
+
+
 func test_every_non_cut_pose_keeps_both_texture_tips_behind_the_shoulders() -> void:
 	var rig: KerfRoninTop = add_child_autofree(KerfRoninTop.new())
 	rig.position = Vector2(83, 105)
@@ -51,7 +56,11 @@ func _assert_sweep(rig: KerfRoninTop, current: KerfRoninDrawn.Pose, yaw: float) 
 		var elbow: Vector2 = blade.global_position
 		var tip: Vector2 = blade.to_global(blade.offset + rig._parts.pivots_b["blade"])
 		var upper_deg: float = rad_to_deg(absf(rear.angle_to(elbow - arm.global_position)))
-		assert_lte(upper_deg, 55.01 if current == POSE.HIT else 50.01)
+		if current == POSE.CRUISE:
+			var open: bool = LaunchArgs.value("--kerf-cruise-wings") == "open"
+			assert_almost_eq(upper_deg, KerfRoninTop.cruise_sweep(open).x, 0.01)
+		else:
+			assert_lte(upper_deg, 55.01 if current == POSE.HIT else 50.01)
 		if current == POSE.HOVER:
 			assert_almost_eq(upper_deg, 45.0, 0.01)
 		if current == POSE.TURN:
