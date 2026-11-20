@@ -119,13 +119,14 @@ func _turn(rate: float, tick: int) -> float:
 
 
 func _step_echoes(stage: CollectCallStage) -> void:
-	if not reduced_motion:
+	if not reduced_motion and stage.pilot.ghosts.forms.settled():
 		if _echoes == null:
 			_echoes = KerfEcho.new()
 			add_child(_echoes)
 			_echoes.bind(_top, _tilted)
 		_echoes.step(stage)
 	elif _echoes != null:
+		_echoes.hide()
 		_echoes.queue_free()
 		_echoes = null
 

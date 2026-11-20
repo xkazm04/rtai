@@ -57,6 +57,21 @@ func test_body_follows_unfold_in_both_directions() -> void:
 		assert_almost_eq(body.modulate.a, k, 0.0001)
 
 
+func test_a_blink_echo_disappears_on_the_first_frame_of_exit() -> void:
+	var forms: GhostForms = _stage.pilot.ghosts.forms
+	forms.selected = KerfStage.ID
+	assert_eq(forms.press_transform(), SoulPowers.OK)
+	for tick: int in forms.table.form(KerfStage.ID).enter_ticks:
+		forms.tick()
+	_rig.pose()
+	_press(Vector2.DOWN)
+	var echo: KerfEcho.Pose = _rig._spectral._echoes._pool[0]
+	assert_true(echo.is_visible_in_tree())
+	assert_eq(forms.press_transform(), SoulPowers.OK)
+	_rig.pose()
+	assert_false(echo.is_visible_in_tree(), "exit is drawn before queued nodes are freed")
+
+
 func _press(dir: Vector2) -> void:
 	var k: KerfStage = _stage.pilot.kerf
 	@warning_ignore("return_value_discarded")
