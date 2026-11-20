@@ -8,6 +8,7 @@ var _line: ShaderMaterial
 var _bound: Sprite2D
 var _previous: Material
 var _old_line: Material
+var _cut_cell: Vector2
 
 
 func _init(marker: StringName) -> void:
@@ -24,6 +25,7 @@ func sync(spr: Sprite2D, flight: GhostFlight) -> void:
 		_line = _material(true)
 	if not is_instance_valid(_bound) or spr != _bound:
 		_bound = spr
+		_cut_cell = Vector2.ZERO
 		_previous = spr.material
 		spr.material = _body
 		for child: Node in spr.get_children():
@@ -37,6 +39,10 @@ func sync(spr: Sprite2D, flight: GhostFlight) -> void:
 		mat.set_shader_parameter(&"fade_from", cut)
 		mat.set_shader_parameter(&"flow", flight.hover.tick / 60.0)
 	var cell: Vector2 = spr.texture.get_size() / grid
+	var signed_cell: Vector2 = Vector2(-cell.x if spr.flip_h else cell.x, cell.y)
+	if signed_cell != _cut_cell:
+		_cut_cell = signed_cell
+		GhostSoulLine.align_cut(spr, cell)
 	var belt: Vector2 = spr.offset + cell * Vector2(0.5, 1.0 - cut)
 	var width: float = cell.x * absf(spr.global_scale.x) * flight.belt_fraction()
 	flight.set_belt(spr.to_global(belt), width)
@@ -49,6 +55,7 @@ func clear(flight: GhostFlight) -> void:
 		for child: Node in _bound.get_children():
 			var copy: Sprite2D = child as Sprite2D
 			if copy != null and copy.has_meta(_marker):
+				copy.set_instance_shader_parameter(&"cut_shift", null)
 				copy.material = _old_line
 	_bound = null
 

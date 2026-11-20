@@ -4,6 +4,12 @@ extends Node2D
 
 const TEAL: Color = Color(0.18, 0.77, 0.71)
 
+var emerge: float = 1.0:
+	set(k):
+		emerge = k
+		_wisps.visible = k >= 0.95
+		_dirty = true
+		queue_redraw()
 var _row: GhostHoverRow.Tail
 var _chain: PackedVector2Array = []
 var _vertices: PackedVector2Array = []
@@ -94,7 +100,7 @@ func _shed(back: Vector2, speed_mps: float) -> void:
 		edge = _vertices[j * 2 + birth % 2]
 		drift = back * (0.5 + minf(speed_mps, 14.0) * 0.14)
 		drift += back.orthogonal() * side * (0.25 + _row.spread_m)
-	var tip: Vector2 = _centre(_row.segments, ViewMode.shared().lift_px(_height_m))
+	var tip: Vector2 = _centre(_row.segments, ViewMode.shared().lift_px(_height_m * emerge))
 	_wisps.follow_tip(tip, _row.length_m * SimConst.PX_PER_M)
 	_wisps.step(_clock, edge, drift * SimConst.PX_PER_M)
 
@@ -123,17 +129,18 @@ func half_widths() -> PackedFloat32Array:
 
 
 func _update_geometry() -> void:
-	var up: Vector2 = ViewMode.shared().lift_px(_height_m)
+	var up: Vector2 = ViewMode.shared().lift_px(_height_m * emerge)
 	if not _dirty:
 		if up == _last_up:
 			return
 		queue_redraw()  # An overlay sampled a new camera pitch between sim ticks.
 	_dirty = false
 	_last_up = up
+	var root: Vector2 = _chain[0] + up + _socket
 	var previous_edge: Vector2 = Vector2.ZERO
 	for i: int in _chain.size():
 		var k: float = float(i) / _row.segments
-		var centre: Vector2 = _centre(i, up)
+		var centre: Vector2 = root.lerp(_centre(i, up), emerge)
 		var before: int = maxi(0, i - 1)
 		var after: int = mini(_row.segments, i + 1)
 		var axis: Vector2 = _centre(after, up) - _centre(before, up)
@@ -142,7 +149,9 @@ func _update_geometry() -> void:
 		)
 		width += 1.4 * _row.spread_m * sin(k * PI) * (1.0 - k)
 		width *= (1.0 + _row.fray * 0.22 * sin(i * 2.4))
-		var edge: Vector2 = axis.normalized().orthogonal() * width * SimConst.PX_PER_M * 0.5
+		var edge: Vector2 = (
+			axis.normalized().orthogonal() * width * SimConst.PX_PER_M * 0.5 * emerge
+		)
 		if edge.dot(previous_edge) < 0.0:
 			edge = -edge
 		_vertices[2 * i] = centre - edge
@@ -173,7 +182,7 @@ func _belt_trail(k: float, up: Vector2) -> Vector2:
 	var root: Vector2 = _chain[0] + up + _socket
 	var run: Vector2 = _chain[-1] - _chain[0]
 	if ViewMode.shared().is_flat():
-		return (_socket + run.normalized() * _socket_width * 0.95) * k
+		return (_socket + run.normalized() * _socket_width * 1.4) * k
 	var down: float = maxf(0.0, root.y + _socket_width * 1.15 - _chain[-1].y)
 	var fall: float = sin(k * PI) * _socket_width * 0.15
 	var head_on: float = maxf(0.0, -run.y - absf(run.x))
@@ -182,7 +191,7 @@ func _belt_trail(k: float, up: Vector2) -> Vector2:
 
 
 func _draw() -> void:
-	if _chain.is_empty():
+	if emerge <= 0.0 or _chain.is_empty():
 		return
 	_update_geometry()
 	RenderingServer.canvas_item_add_triangle_array(

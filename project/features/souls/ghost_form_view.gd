@@ -124,6 +124,7 @@ func _process(_delta: float) -> void:
 	var r: Fighter = arena.rivet
 	var at: Vector2 = r.pos * SimConst.PX_PER_M
 	var facing: float = r.facing.angle()
+	var spectral: GhostDrawn = _bodies.emerge(forms)
 	var is_big: bool = _bodies.step_tonnage(pilot, at, facing, steps)
 	_fx.position = at
 	var with_big: bool = forms.to_id == HaulerStage.GHOST or forms.from_id == HaulerStage.GHOST
@@ -136,6 +137,7 @@ func _process(_delta: float) -> void:
 	var is_kerf: bool = _bodies.step_light(_bodies.kerf, forms, at, facing, steps)
 	GhostActs.prepare_ohm(_bodies.ohm, pilot.ohm, r, arena.tick)
 	var is_ohm: bool = _bodies.step_light(_bodies.ohm, forms, at, facing, steps)
+	_fx.pose_body(spectral if busy else null, at)
 	appear.step(at, r.facing.angle(), steps, arena.tick)
 	_hide_rivet(is_big or is_dent or is_kerf or is_ohm, r.id)
 	_bodies.feed(pilot, r, arena.tick)

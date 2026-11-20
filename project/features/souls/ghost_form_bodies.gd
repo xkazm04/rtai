@@ -39,6 +39,21 @@ func wash() -> void:
 		GhostApparition.wash(body, m, GhostApparition.ghost_material(true, 0.0))
 
 
+## Select the ghost on either side of the midpoint, including the base-to-form pre-roll.
+func emerge(forms: GhostForms) -> GhostDrawn:
+	var id: StringName = forms.to_id
+	if id == GhostForms.BASE or forms.phase == GhostForms.SWITCHING and forms.stage() == 0:
+		id = forms.from_id
+	if id == GhostForms.BASE:
+		return null
+	var body: Node2D = get(id)
+	var drawn: GhostDrawn = body.get(&"drawn")
+	if drawn.flight == null:
+		return null
+	drawn.flight.set_emerge(GhostFormView.unfold_k(forms, id))
+	return drawn
+
+
 func step_tonnage(p: StagePilot, at: Vector2, facing: float, steps: int) -> bool:
 	var forms: GhostForms = p.ghosts.forms
 	var shown: bool = GhostFormView.big(forms, HaulerStage.GHOST)
@@ -68,14 +83,13 @@ func step_dent(p: StagePilot, at: Vector2, facing: float, steps: int, tick: int)
 func _dent_spot(at: Vector2, facing: float, steps: int, shown: bool) -> Vector2:
 	if _carried_rig == null or steps <= 0 or not shown or not dent.visible:
 		return _spot(dent.drawn, at, facing, steps, shown)
-	var before: Transform2D = _carried_rig.global_transform
 	var spot: Vector2 = _spot(dent.drawn, at, facing, steps, shown)
 	# The flight already supplies yaw lag. Carry the feet through the rig's own turn as well.
 	_carried_rig.snap_facing(facing)
-	var travel: Transform2D = _carried_rig.global_transform * before.affine_inverse()
-	for side: RigLimbs in _carried_rig.sides:
-		side.foot_w = travel * side.foot_w
-		side.foot_from = travel * side.foot_from
+	RigTilt.aim_up(_carried_rig)
+	var rest: Vector2 = _carried_rig.fwd() * _carried_rig.plan.foot_fwd * CutRig.SC
+	for side: int in _carried_rig.sides.size():
+		_carried_rig.sides[side].plant(_carried_rig.hip_world(side) + rest)
 	return spot
 
 

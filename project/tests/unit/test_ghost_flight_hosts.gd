@@ -83,23 +83,73 @@ func test_four_arena_drives_keep_spectral_gaits_still_while_the_legacy_gaits_cyc
 	ViewMode.select("tilt70")
 	for look: StringName in [GhostLook.LEGACY, GhostLook.SPECTRAL]:
 		for id: StringName in [&"tonnage", &"dent", &"kerf", &"ohm"]:
-			_build(look)
-			_enter(id)
-			var body: Node2D = _view._bodies.get(id)
-			var drawn: GhostDrawn = body.get(&"drawn")
-			if id == &"tonnage":
-				watch_signals(body)
-			_view.pilot.hauler.form.vel = Vector2.RIGHT * 4.2
-			var columns: Dictionary[int, bool] = {}
-			for tick: int in 90:
-				_move()
-				columns[drawn._col] = true
-			if look == GhostLook.SPECTRAL:
-				assert_eq(columns.size(), 1, str(id))
-				assert_eq(drawn._phase, 0.0, str(id))
-				if id == &"tonnage":
-					assert_signal_not_emitted(body, "stamped")
-			else:
-				assert_gt(columns.size(), 1, str(id))
-				if id == &"tonnage":
-					assert_signal_emitted(body, "stamped")
+			_drive_arena(id, look)
+
+
+func _drive_arena(id: StringName, look: StringName) -> void:
+	GhostLook.override_for_test(look)
+	var bus: EventBus = autofree(EventBus.new())
+	var data: DataStore = autofree(DataStore.new())
+	var session: ArenaSession = ArenaSession.open(bus, data)
+	var drive: GhostReviewInput = GhostReviewInput.new(session, id, false)
+	session.world.loop().set_input(drive)
+	var view: GhostFormView = GhostFormView.make(session.stage, null, null)
+	add_child(view)
+	view.set_process(false)
+	var body: Node2D = view._bodies.get(id)
+	var drawn: GhostDrawn = body.get(&"drawn")
+	var stamps: Array[Vector2] = []
+	@warning_ignore("return_value_discarded")
+	view._bodies.tonnage.stamped.connect(stamps.append)
+	for i: int in GhostReviewInput.START:
+		session.step()
+		view._process(0.0)
+	assert_eq(session.pilot.ghosts.forms.current(), id)
+	var start: Vector2 = session.stage.arena.rivet.pos
+	var cells: Dictionary[int, bool] = {}
+	var planted: bool = false
+	for i: int in 58:
+		session.step()
+		view._process(0.0)
+		if not drawn.own_body:
+			cells[drawn.sprite().frame_coords.x] = true
+		if id == &"dent":
+			for side: RigLimbs in view._bodies.dent._rig.sides:
+				planted = planted or side.stepping
+	assert_gt(start.distance_to(session.stage.arena.rivet.pos), 1.0, str(id))
+	var grounded: bool = look == GhostLook.LEGACY
+	assert_eq(cells.size() > 1, grounded, str(id))
+	if id == &"dent":
+		assert_eq(planted, grounded, "Dent's actual IK moved a planted foot")
+	assert_eq(not stamps.is_empty(), grounded and id == &"tonnage", "walking stamps")
+	view.free()
+	session.world.loop().set_input(session.live)
+	session.close()
+
+
+func test_emergence_collapses_to_the_ground_then_restores_the_full_ribbon() -> void:
+	ViewMode.select("tilt70")
+	var flight: GhostFlight = add_child_autofree(GhostFlight.make(&"kerf"))
+	var body: Node2D = Node2D.new()
+	flight.mount(body)
+	var at: Vector2 = Vector2(320, 96)
+	flight.step(at, PI, 1)
+	var lift: Vector2 = flight.body_offset()
+	var full: PackedVector2Array = flight.tail.points()
+	assert_gt(full[0].distance_to(full[-1]), 20.0)
+	flight.set_emerge(0.0)
+	assert_eq(body.global_position, at)
+	assert_eq(flight.shadow.position, at)
+	assert_eq(flight.shadow.pool_open, 0.0)
+	var folded: PackedVector2Array = flight.tail.points()
+	for point: Vector2 in folded:
+		assert_eq(point, folded[0])
+	for width: float in flight.tail.half_widths():
+		assert_eq(width, 0.0)
+	flight.set_emerge(0.5)
+	assert_almost_eq(body.global_position, at + lift * 0.5, Vector2.ONE * 0.001)
+	assert_eq(flight.shadow._height, flight.hover.lift_m * 0.5)
+	flight.set_emerge(1.0)
+	assert_eq(flight.tail.points(), full)
+	assert_eq(body.global_position, at + lift)
+	assert_eq(flight.shadow.pool_open, 1.0)
