@@ -199,3 +199,8 @@ NEXT (session 5, supersedes the 05:47 NEXT): the final gate is running detached 
      JOURNAL.md + REPORT.md per path by 07:40.
 - 05:52 REPORT.md filled except the gate line; cites 9 paths, 8 ok, 1 pattern.
 - 06:01 Gate progress: lint + unit done, scenarios 65/65 ok; parity/bench/release next. Session 4 ends; gate still running detached (log logs/kerf/gate-final.out.txt). NEXT: see the 05:50 NEXT.
+
+## Session 5 (iteration 5, STABILIZE, 07:30)
+- 07:30 No astra.lock; last Astra call guard2 (05:50). Final gate finished: `gate: PASS` on 55c10028f (code = f67fa2ea0), lint 19/19, unit 3259/0/2, scenarios 65/65, parity exact, selftest goldens 11/11, release-compile 783/0; gate.json build/gate/55c10028f02c/gate.json. Filled REPORT gate line.
+- 07:31 DECISION: no `--reels` pass (a reel gate does not fit the 9 minutes before the report). No code change this session.
+NEXT: the Director merges n20-kerf in the morning. Merge notes in REPORT (test_ghost_flight_hosts.gd:114 null-sprite form vs tonnage's own_body form; test_ghost_look.gd flight/ohm clash). Kerf's ghost_forms row stays legacy until the owner answers Call 3.

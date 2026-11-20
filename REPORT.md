@@ -5,7 +5,11 @@ Branch `n20-kerf`, worktree `C:\Users\kazda\kiro\gtai-wt\n20-kerf`, cut from `in
 `C:\Users\kazda\kiro\gtai-masters\n20\kerf\` (frames.json first entry: game beside plate).
 Plate: `C:\Users\kazda\kiro\gtai-masters\n20\concepts\kerf_a.png`.
 
-Final gate: TBD (line + gate.json path).
+Final gate: `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n20-kerf\build\gate\55c10028f02c\gate.json` on `55c10028f`
+(code HEAD `f67fa2ea0`; later commits are JOURNAL/REPORT only). lint 19/19, unit 3259 passed / 0 failed / 2 skipped,
+scenarios 65/65, parity bit-exact over 1200 steps (mutation caught at step 629), selftest look goldens 11/11, release-compile
+783/0. The `--reels` pass was not run: the gate finished after session 4 and session 5 started at the 07:30 freeze with
+10 minutes to the report.
 
 ## What works
 
