@@ -79,3 +79,40 @@ static func voice(spr: Sprite2D, wash: ShaderMaterial, phase: float) -> void:
 		material.set_shader_parameter(&"voice_phase", phase)
 	else:
 		spr.material = wash
+
+
+## One speaking apparition owns these overrides. Native cut and mask materials keep their inputs.
+class Voice:
+	const NATIVE: Array[Shader] = [
+		GhostBridgeFade.SHADER,
+		preload("res://features/souls/dent_spectral_finish.gdshader"),
+		preload("res://features/souls/ohm_jars.gdshader"),
+	]
+	var _originals: Dictionary[int, Material] = {}
+	var _phases: Dictionary[ShaderMaterial, float] = {}
+
+	func paint(part: CanvasItem, wash: ShaderMaterial, phase: float) -> void:
+		if not part.visible:
+			return
+		var mat: ShaderMaterial = part.material as ShaderMaterial
+		if mat != null and mat.shader in NATIVE:
+			if not _phases.has(mat):
+				var previous: Variant = mat.get_shader_parameter(&"voice_phase")
+				_phases[mat] = previous if previous is float else -1.0
+			mat.set_shader_parameter(&"voice_phase", phase)
+		elif mat != wash:
+			_originals[part.get_instance_id()] = part.material
+			part.material = wash
+		for child: Node in part.get_children():
+			if child is CanvasItem:
+				paint(child as CanvasItem, wash, phase)
+
+	func clear() -> void:
+		for id: int in _originals:
+			var part: CanvasItem = instance_from_id(id) as CanvasItem
+			if part != null:
+				part.material = _originals[id]
+		for mat: ShaderMaterial in _phases:
+			mat.set_shader_parameter(&"voice_phase", _phases[mat])
+		_originals.clear()
+		_phases.clear()

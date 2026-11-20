@@ -1,6 +1,8 @@
 shader_type canvas_item;
 render_mode unshaded;
 
+#include "res://features/souls/ghost_voice.gdshaderinc"
+
 uniform vec3 fill;
 uniform vec3 top_px;
 uniform vec3 bottom_px;
@@ -27,5 +29,5 @@ void fragment() {
 	if (vent > 0.0) {
 		tint = amber.rgb;
 	}
-	COLOR = vec4(tint, mask.a * max(coverage, max(flash, vent)));
+	COLOR = ghost_voice(vec4(tint, mask.a * max(coverage, max(flash, vent))), SCREEN_UV);
 }

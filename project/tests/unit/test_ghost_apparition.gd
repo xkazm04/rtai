@@ -99,6 +99,7 @@ func test_spectral_voice_keeps_its_cut_and_only_the_speaker_has_a_shadow_and_tai
 	var rig: TonnageRig = app._rigs[HaulerStage.GHOST]
 	var flight: GhostFlight = rig.drawn.flight
 	var vapour: Material = flight.tail.material
+	var resting_cell: Material = rig._spectral._cell.material
 	app.say(HaulerStage.GHOST)
 	app.step(Vector2(350.0, 420.0), 0.0, 22, 22)
 	assert_true(flight.is_visible_in_tree())
@@ -110,20 +111,83 @@ func test_spectral_voice_keeps_its_cut_and_only_the_speaker_has_a_shadow_and_tai
 	assert_eq(flight.scale, Vector2.ONE * GhostApparition.BIG_K)
 	var tether_end: Vector2 = app._tether.to_global(app._tether.points[-1])
 	assert_almost_eq(tether_end, flight.tail.points()[0], Vector2.ONE * 0.001)
-	var spr: Sprite2D = rig.drawn.sprite()
-	if spr == null:
-		pass_test("own_body: no shared sprite to wash")
-		return
-	var cut: ShaderMaterial = spr.material
-	assert_eq(cut.shader, GhostBridgeFade.SHADER)
-	var phase: float = cut.get_shader_parameter(&"voice_phase")
-	assert_almost_eq(phase, 0.44, 0.001)
+	var cell: Sprite2D = rig._spectral._cell
+	assert_almost_eq(_phase(cell), 0.44, 0.001)
 	assert_eq(flight.tail.material, vapour)
 	app.say(KerfStage.GHOST)
+	assert_eq(cell.material, resting_cell)
+	assert_lt(_phase(cell), 0.0)
 	app.step(Vector2.ZERO, 0.0, 1, 23)
 	assert_false(flight.visible)
 	assert_true((app._rigs[KerfStage.GHOST] as KerfRig).drawn.flight.visible)
 	app.say(HaulerStage.GHOST)
 	app.step(Vector2.ZERO, 0.0, 1, 24)
-	assert_eq(rig.drawn.sprite().material, cut)
+	assert_almost_eq(_phase(cell), 0.48, 0.001)
 	assert_eq(flight.tail.material, vapour)
+
+
+func _phase(part: CanvasItem) -> float:
+	while part.use_parent_material and part.get_parent() is CanvasItem:
+		part = part.get_parent() as CanvasItem
+	var mat: ShaderMaterial = part.material as ShaderMaterial
+	if mat == null:
+		return -1.0
+	var value: Variant = mat.get_shader_parameter(&"voice_phase")
+	return value if value is float else -1.0
+
+
+func _body_parts(rig: Node2D, flat: bool) -> Array[CanvasItem]:
+	var root: CanvasItem
+	if rig is TonnageRig:
+		var tonnage: TonnageSpectral = (rig as TonnageRig)._spectral
+		root = tonnage._parts if flat else tonnage._cell
+	elif rig is DentBody:
+		var dent: DentBody = rig as DentBody
+		root = dent._top if flat else dent._spectral
+	else:
+		var ohm: OhmRig = rig as OhmRig
+		root = ohm._body if flat else ohm.drawn.sprite()
+	var parts: Array[CanvasItem] = []
+	var nodes: Array[Node] = root.find_children("*", "CanvasItem", true, false)
+	nodes.append(root)
+	for node: Node in nodes:
+		var geometry: bool = node is Line2D or node is Polygon2D or node is MeshInstance2D
+		if geometry or node is Sprite2D or node.has_method(&"_draw"):
+			var part: CanvasItem = node as CanvasItem
+			if part.is_visible_in_tree():
+				parts.append(part)
+	return parts
+
+
+func test_every_visible_spectral_body_part_loses_the_wash_at_voice_end(
+	view: String = use_parameters(["top", "tilt70"])
+) -> void:
+	ViewMode.select(view)
+	GhostLook.override_for_test(GhostLook.SPECTRAL)
+	var app: GhostApparition = _apparition()
+	for key: StringName in [HaulerStage.GHOST, OhmStage.GHOST, DentStage.GHOST]:
+		app.say(key)
+		app.step(Vector2.ZERO, 0.0, 22, 22)
+		var parts: Array[CanvasItem] = _body_parts(app._rigs[key], ViewMode.shared().is_flat())
+		assert_gt(parts.size(), 0, "%s/%s paints a body" % [key, view])
+		for part: CanvasItem in parts:
+			assert_almost_eq(_phase(part), 0.44, 0.001, "%s %s speaking" % [key, part.get_path()])
+		app.step(Vector2.ZERO, 0.0, 300, 322)
+		for part: CanvasItem in parts:
+			assert_lt(_phase(part), 0.0, "%s %s silent" % [key, part.get_path()])
+
+
+func test_a_cut_part_keeps_its_material_and_belt_during_and_after_speech() -> void:
+	var part: Sprite2D = add_child_autofree(Sprite2D.new())
+	var cut: ShaderMaterial = GhostBridgeFade._material(false)
+	cut.set_shader_parameter(&"fade_from", 0.6)
+	part.material = cut
+	var voice: GhostBridgeFade.Voice = GhostBridgeFade.Voice.new()
+	voice.paint(part, GhostApparition.ghost_material(false, 0.2), 0.44)
+	assert_eq(part.material, cut)
+	assert_almost_eq(_phase(part), 0.44, 0.001)
+	voice.clear()
+	assert_eq(part.material, cut)
+	var belt: float = cut.get_shader_parameter(&"fade_from")
+	assert_almost_eq(belt, 0.6, 0.001)
+	assert_lt(_phase(part), 0.0)

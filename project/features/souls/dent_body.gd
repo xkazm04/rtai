@@ -51,6 +51,7 @@ func setup(row: GhostFormDef) -> void:
 		add_child(_spectral)
 		_top = DentSpectralTop.new()
 		add_child(_top)
+		drawn.voice_parts.assign([_spectral, _top])
 		_glass = DentGlass.new()
 		drawn.flight.tail.add_child(_glass)
 		return

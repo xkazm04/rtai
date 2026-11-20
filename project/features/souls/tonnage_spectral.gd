@@ -66,6 +66,7 @@ func _ready() -> void:
 	_cell.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	_cell_light = TonnageGlow.on_body(_cell)
 	add_child(_cell)
+	_drawn.voice_parts.assign([_parts, _cell])
 
 
 func advance(hauler: HaulerStage, facing: float, ticks: int, unfold: float) -> void:

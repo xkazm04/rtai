@@ -11,6 +11,7 @@ uniform vec3 deep : source_color = vec3(0.04, 0.27, 0.28);
 uniform vec3 hi : source_color = vec3(0.72, 1.0, 0.95);
 uniform float silhouette = 0.0;
 uniform float band_phase = 0.0;
+uniform float voice_phase = -1.0;
 uniform float band_k = 0.2;
 
 void fragment() {
@@ -19,6 +20,7 @@ void fragment() {
 	vec3 rgb = mix(deep, hi, smoothstep(0.04, 0.62, l));
 	rgb = mix(rgb, hi, silhouette);
 	float a = c.a * mix(1.0, 0.55, silhouette);
-	float band = 1.0 - band_k * step(0.5, fract(SCREEN_UV.y * 80.0 + band_phase));
+	float phase = voice_phase >= 0.0 ? voice_phase : band_phase;
+	float band = 1.0 - band_k * step(0.5, fract(SCREEN_UV.y * 80.0 + phase));
 	COLOR = vec4(rgb, a * band);
 }
