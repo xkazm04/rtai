@@ -43,8 +43,12 @@ goldens 11/11 and block goldens 5/5, release-compile 787 loaded / 0 failed. Run 
 
 ## Calls for the owner
 1. Shock-kill X-ray over a guard killed by a spectral Ohm bolt: the skeleton starbursts cover the victims (`n20/ohm/bolt/cast_strip_top_32.png`, press +2..+6). A rim-only kill look for spectral Ohm exists as a patch (`evidence/patches/n20-ohm-kill-rim-only.patch`; touches unowned KillShockFx/KillView). Take it, or keep the X-ray.
-2. Left facings mirror the right ones, so the staff swaps hands (no `ohm_spec_hover_left.png`).
-3. The p70/p55 "away" row is three-quarter away, not straight behind.
+2. Left facings mirror the right ones, so the staff swaps hands (no `ohm_spec_hover_left.png`). Still:
+   `n20/ohm/calls/call2_right_vs_mirrored_left_p70.png` (right, mirrored left, toward-right, mirrored). The staff still
+   leads the body in both directions, so I'd keep the mirror; a drawn left cell is one image job if you want the hand fixed.
+3. The p70/p55 "away" row is three-quarter away, not straight behind. Still:
+   `n20/ohm/calls/call3_away_right_away_toward_p70.png` (away-right, away, toward). The jars and fork read in all three;
+   a straight-behind cell would hide the face and the staff behind the jars.
 4. A white impact spray beside the first victim (shared hit effect, not Ohm's files).
 
 ## Merge notes

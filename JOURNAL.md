@@ -242,3 +242,4 @@ NEXT (supersedes (1)-(2) above): wait for PID 24112 / final-gate.out; quote its 
 - 05:58 END iteration 4.
 - 06:00 START iteration 5. No Astra lock; final gate PID 24112 still running on 8b4862e1f (log build/gate/8b4862e1f2f9/evidence.log). frames.json: 14 entries, all files exist. LOOK ohm_attack_32.jpg poster: three guards down at the fork side, the shock X-ray skeletons are the kill look (Call 1). No new code tonight; REPORT only.
 - 06:08 MILESTONE final gate PASS on 8b4862e1f: build/gate/8b4862e1f2f9/gate.json (lint 19/19, unit 3259/0/2, scenarios 65, parity exact, selftest goldens 11/11 + 5/5, release-compile 787/0). Quoted in REPORT header.
+- 06:14 LOOK calls/call2_right_vs_mirrored_left_p70.png and call3_away_right_away_toward_p70.png (composed from the shipped p70 hover sheet, idle column, by a scratch PIL script outside the repo): the staff leads in both mirrored facings; the away row is three-quarter. Cited in REPORT Calls 2-3.
