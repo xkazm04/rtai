@@ -1,0 +1,174 @@
+class_name OhmSpirit
+extends Node2D
+## Straight-down cutout in master texels, with +x forward. Every part shares one scale.
+## The fork and sleeve form a two-link chain with the wrist at their common joint.
+
+const ART: String = "res://features/souls/art/ohm/spectral/"
+const REST_FORK_M: Vector2 = Vector2(1.0, 0.35)
+const THRUST_M: float = 0.35
+const OUT_TICKS: int = 8
+const BACK_TICKS: int = 12
+const AMBER: Color = Color("#ffb000")
+
+static var _textures: Dictionary[String, Texture2D] = {}
+var _parts: Dictionary
+var _texels_per_m: float
+var _hem: Sprite2D
+var _beard: Sprite2D
+var _free_arm: Sprite2D
+var _staff_arm: Sprite2D
+var _staff: Sprite2D
+var _jars: OhmJars
+var _flare: Polygon2D
+var _puffs: Array[Sprite2D] = []
+var _vents: PackedVector2Array = []
+var _lengths: Vector2
+var _last_tick: int = -1
+var _lag: float = 0.0
+
+
+func _ready() -> void:
+	var meta: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(ART + "parts.json"))
+	_parts = meta.parts
+	_texels_per_m = meta.texels_per_m
+	scale = Vector2.ONE * SimConst.PX_PER_M / _texels_per_m
+	add_child(OhmDrawn.halo(920.0, 0.22))
+	_hem = _part("hem", Vector2(-138.0, 0.0))
+	_free_arm = _part("arm_free", Vector2(-24.0, -132.0))
+	var body: Sprite2D = _part("body", Vector2.ZERO)
+	var circles: Array = meta.body_jars
+	_build_jars(body, circles)
+	_beard = _part("beard", Vector2(154.0, 0.0))
+	_staff_arm = _part("arm_staff", Vector2(56.0, 124.0))
+	_staff = _part("staff", Vector2.ZERO)
+	# Centre of the round grip hole and the end of the fork, in their untrimmed texture frames.
+	var arm_size: Vector2 = _measure("arm_staff", "size_px")
+	var staff_size: Vector2 = _measure("staff", "size_px")
+	_lengths = Vector2(arm_size.x * 0.886 + _staff_arm.offset.x, staff_size.x - 3 + _staff.offset.x)
+	_build_flare()
+	for vent: Vector2 in _vents:
+		var puff: Sprite2D = GhostRim.soft_glow(AMBER, 1.0, 96.0)
+		puff.position = vent
+		puff.hide()
+		add_child(puff)
+		_puffs.append(puff)
+	_staff_pose(REST_FORK_M)
+
+
+func _part(id: String, at: Vector2) -> Sprite2D:
+	var sprite: Sprite2D = Sprite2D.new()
+	sprite.texture = _texture(id)
+	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	sprite.centered = false
+	sprite.offset = -_measure(id, "pivot_px")
+	sprite.position = at
+	add_child(sprite)
+	return sprite
+
+
+## The master-scale cuts shrink by about eleven to one at play zoom. Filter the linework and
+## jar edges at that scale, sharing the mip chains across spectral rigs.
+static func _texture(id: String) -> Texture2D:
+	if not _textures.has(id):
+		var source: Texture2D = load(ART + id + ".png") as Texture2D
+		var image: Image = source.get_image()
+		if not image.has_mipmaps() and image.generate_mipmaps() == OK:
+			_textures[id] = ImageTexture.create_from_image(image)
+		else:
+			_textures[id] = source
+	return _textures[id]
+
+
+func _measure(id: String, field: String) -> Vector2:
+	var part: Dictionary = _parts[id]
+	return DataTable.new().vec(part, field)
+
+
+func _build_jars(body: Sprite2D, circles: Array) -> void:
+	_jars = OhmJars.new()
+	body.add_child(_jars)
+	_jars.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	_jars.match_cell(body, _texture("body_jars"))
+	var tops: Vector3 = Vector3.ZERO
+	var bottoms: Vector3 = Vector3.ZERO
+	for i: int in 3:
+		var jar: Dictionary = circles[i]
+		var centre: Vector2 = DataTable.new().vec(jar, "center_px")
+		var radius: float = jar.radius_px
+		tops[i] = centre.y - radius
+		bottoms[i] = centre.y + radius
+		@warning_ignore("return_value_discarded")
+		_vents.append(body.offset + centre + Vector2.LEFT * radius)
+	_jars.bounds(tops, bottoms)
+
+
+func _build_flare() -> void:
+	_flare = Polygon2D.new()
+	var points: PackedVector2Array = []
+	for i: int in 12:
+		var radius: float = (90.0 if i % 3 == 0 else 48.0) if i % 2 == 0 else 12.0
+		@warning_ignore("return_value_discarded")
+		points.append(Vector2.from_angle(i * TAU / 12.0) * radius)
+	_flare.polygon = points
+	_flare.color = Color("#ebfffc")
+	_flare.position.x = _lengths.y - 16.0
+	_flare.hide()
+	_staff.add_child(_flare)
+
+
+func pose(drawn: GhostDrawn, charge: OhmCharge, stage: OhmStage, calm: bool) -> void:
+	var hover: GhostHover = drawn.flight.hover if drawn.flight != null else null
+	var tick: int = drawn._tick
+	var steps: int = tick - _last_tick
+	var bank: float = hover.bank if hover != null else 0.0
+	var lean: float = hover.lean if hover != null else 0.0
+	if _last_tick < 0 or steps > 4 or steps < 0:
+		_lag = 0.0
+	elif steps > 0:
+		var yaw: float = deg_to_rad(hover.yaw_rate_dps) if hover != null else 0.0
+		_lag = clampf((_lag - yaw * steps * SimClock.TICK_DT) * exp(-steps / 8.0), -0.65, 0.65)
+	_last_tick = tick
+	var motion: float = 0.5 if calm else 1.0
+	_hem.rotation = (_lag + 0.3 * bank) * motion
+	if drawn.flight != null:
+		var tip: Vector2 = _hem.to_global(Vector2(_hem.offset.x + 32.0, 0.0))
+		OhmDrawn.pin_tail(drawn.flight, self, tip)
+	_beard.rotation = (0.7 * _lag - 0.25 * bank) * motion
+	_free_arm.rotation = -0.31 + (0.25 * _lag + bank) * motion
+	var target: Vector2 = REST_FORK_M + Vector2(lean * 1.4, bank * 1.15) * motion
+	if stage != null and stage.bolt_tick >= 0:
+		var aim: Vector2 = stage.bolt_aim.rotated(-global_rotation)
+		target += aim * THRUST_M * thrust(tick - stage.bolt_tick) * motion
+	_staff_pose(target)
+	_jars.light(Vector3(charge.jar(0), charge.jar(1), charge.jar(2)), charge.flash(), charge.vent())
+	_flare.visible = charge.flash() > 0.0
+	_flare.modulate.a = charge.flash()
+	_vent(charge.vent())
+
+
+static func thrust(age: int) -> float:
+	if age < 0 or age >= OUT_TICKS + BACK_TICKS:
+		return 0.0
+	if age <= OUT_TICKS:
+		return smoothstep(0.0, OUT_TICKS, age)
+	return 1.0 - smoothstep(OUT_TICKS, OUT_TICKS + BACK_TICKS, age)
+
+
+func _staff_pose(target_m: Vector2) -> void:
+	var target: Vector2 = target_m * _texels_per_m / PlayerScale.k()
+	var wrist: Vector2 = OhmArm.joint(_staff_arm.position, target, _lengths.x, _lengths.y, 1.0)
+	_staff_arm.rotation = _staff_arm.position.angle_to_point(wrist)
+	_staff.position = wrist
+	_staff.rotation = wrist.angle_to_point(target)
+
+
+func _vent(amount: float) -> void:
+	var age: float = (1.0 - amount) * OhmCharge.VENT_TICKS
+	for i: int in 3:
+		var puff: Sprite2D = _puffs[i]
+		var k: float = clampf(age / 16.0, 0.0, 1.0)
+		puff.visible = k < 1.0
+		if puff.visible:
+			puff.position = _vents[i] + Vector2(-130.0, (i - 1) * 70.0) * k
+			puff.scale = Vector2.ONE * lerpf(0.7, 1.8, k)
+			puff.modulate.a = 1.0 - k

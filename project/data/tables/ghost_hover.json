@@ -57,13 +57,13 @@
       "top_mps": 12
     },
     {
-      "bank_deg": 10,
+      "bank_deg": 8,
       "bank_per_dps": 0.07,
       "bob_m": 0.1,
-      "bob_ticks": 90,
+      "bob_ticks": 100,
       "height_m": 0.7,
       "id": "ohm",
-      "lag_ticks": 8,
+      "lag_ticks": 10,
       "lean_deg": 5,
       "shadow": {
         "alpha": 0.25,
@@ -72,15 +72,15 @@
       },
       "tail": {
         "anchor_m": [
-          -0.08,
+          -1.66,
           0
         ],
-        "fray": 0.25,
+        "fray": 0.78,
         "length_m": 1.45,
         "segments": 9,
         "stretch_k": 0.04,
         "swing_k": 0.73,
-        "width_m": 0.34
+        "width_m": 0.19
       },
       "top_mps": 4.5
     },

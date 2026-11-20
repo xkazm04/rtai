@@ -44,9 +44,9 @@ var unfold: float = 1.0
 var bolts: int = 0
 var reduced_motion: bool = false
 var speed_mps: float = 0.0
-## 0..1 through the cane cycle (advances with ground covered, not time).
 var phase: float = 0.0
 var drawn: GhostDrawn = GhostDrawn.new("ohm", 1.55, CYCLE_CELL, 180.0)  # n11: ohm_walk8.png
+var _spirit: OhmSpirit
 var _spectral: OhmDrawn
 var _t: float = 0.0
 var _seen_bolts: int = -1
@@ -75,6 +75,12 @@ func _process(_delta: float) -> void:
 func _ready() -> void:
 	set_process(_spectral != null)
 	process_priority = 21  # GhostFormView finishes feeding the instant cast at priority 20.
+	if _spectral != null:
+		add_child(_body)
+		_spirit = OhmSpirit.new()
+		_body.add_child(_spirit)
+		pose()
+		return
 	add_child(GhostRim.soft_glow(TEAL, GLOW_A, GLOW_M * PX_PER_M))  # teal belongs to the souls
 	add_child(_body)
 	for side: int in 2:
@@ -102,18 +108,17 @@ func _ready() -> void:
 
 func advance(dt: float) -> void:
 	_t = fmod(_t + dt, 1000.0)
+	if _spectral != null:
+		return
 	if _seen_bolts >= 0 and bolts > _seen_bolts:
 		_kick = 1.0
 	_seen_bolts = bolts
 	if _kick <= 0.0:  # the cane stays planted through the kick
 		phase = fmod(phase + speed_mps * dt / STRIDE_M, 1.0)
 	_kick = maxf(0.0, _kick - dt / KICK_S)
-	if _spectral == null:
-		pose()
+	pose()
 
 
-## The kick's reach now (metres the guard hand is thrown forward): a snap out over the first
-## fifth, an ease back over the rest. The prongs start at the data electrodes, under the hand.
 func kick_m() -> float:
 	if _kick <= 0.0:
 		return 0.0
@@ -135,11 +140,15 @@ static func cane_tip(p: float) -> Vector2:
 	return Vector2(x, CANE_SIDE_M)
 
 
-## Lays the body out for the current phase, breath and unfold.
 func pose() -> void:
 	var u: float = smoothstep(0.0, 1.0, unfold)
 	var breath: float = 1.0 + BREATH_K * sin(TAU * BREATH_HZ * _t)
 	_body.scale = Vector2.ONE * breath * lerpf(0.7, 1.0, u)
+	if _spectral != null:
+		_body.visible = not _spectral.step(self, drawn, _body.scale.x)
+		if _body.visible:
+			_spirit.pose(drawn, _spectral.charge, ohm, reduced_motion)
+		return
 	var kick: float = kick_m() / KICK_M
 	_body.rotation = LEAN * sin(TAU * phase) * u + KICK_TWIST * kick
 	_body.position = Vector2(-RECOIL_M * kick * PX_PER_M, 0.0)
@@ -152,9 +161,6 @@ func pose() -> void:
 	var sh_l: Vector2 = Vector2(SHOULDER.x, -SHOULDER.y)
 	var guard: Vector2 = GUARD_HAND + Vector2(kick_m() + RECOIL_M * kick, 0.0)
 	_arm(2, sh_l, sh_l.lerp(guard, u), -1.0)
-	if _spectral != null:
-		_body.visible = not _spectral.step(self, drawn, _body.scale.x)
-		return
 	var carded: bool = not drawn.step(self, _all, PX_PER_M, _body.scale.x)
 	_card.set_shown(carded)
 	if carded:
@@ -162,13 +168,8 @@ func pose() -> void:
 		_card.step(self, _hide, _body.position, PX_PER_M)
 
 
-## Two-bone arm from `a` to the hand `b` (body frame, metres), the elbow bent outward.
 func _arm(i: int, a: Vector2, b: Vector2, m: float) -> void:
-	var d: float = clampf(a.distance_to(b), 0.02, UPPER_M + FORE_M - 0.001)
-	var along: float = (UPPER_M * UPPER_M - FORE_M * FORE_M + d * d) / (2.0 * d)
-	var out: float = sqrt(maxf(0.0, UPPER_M * UPPER_M - along * along))
-	var dir: Vector2 = (b - a).normalized() if a.distance_to(b) > 0.001 else Vector2.RIGHT
-	var elbow: Vector2 = a + dir * along + dir.orthogonal() * out * -m
+	var elbow: Vector2 = OhmArm.joint(a, b, UPPER_M, FORE_M, m)
 	_place(_arms[i], a, elbow)
 	_place(_arms[i + 1], elbow, b)
 
