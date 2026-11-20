@@ -13,11 +13,16 @@ Branch `n20-ohm` (worktree `C:\Users\kazda\kiro\gtai-wt\n20-ohm`), cut from `int
 | Bolt from the fork, first link thin (0.6x), forks heavier, links 2 ticks apart, teal ring per stunned victim, sparks off the bodies | ba4c81c88, `n20/ohm/bolt/press4_close_64.png` | test_ohm_bolt_draw; mutate ohm_bolt_draw.gd 22/28 (78.6%) |
 | Interrupted delayed cast: jars flash amber and vent (never teal) | `n20/ohm/bolt/cancel_vent_32.png`, `n20/ohm/ohm_attack_delay_32.mp4` | delay stays off by default |
 | Old-man drift: 2.4 s sway, hem/beard follow 8/5 ticks (clamped 25 deg), staff leads, low slow bob | 080bfdd5e, `n20/ohm/drift/turn_{before,after}_*_32.png`, `n20/ohm/ohm_move_32.mp4` | test_ohm_drift |
+| Top view: copper fork held clear of the flank, reads at 32 px/m | fc6c6b3fe, `n20/ohm/drift/staff_{before,after}_top_{32,64}.png` | prong 7 -> 12 px at 32 px/m; tips >= 6 px apart (test_ohm_drift) |
+| Transform in/out: Rivet + teal orb -> spectral Ohm inside the burst ring, no legacy cell, no feet | `n20/ohm/form/{enter,exit}_{start,mid,end}_{tilt70,top}_32.png` | no code change needed |
+| Hit reaction: spectral hover body leans 12 deg with the blow (GhostRecoil), jars and fork stay on, settles by +16 | 078d91612, `n20/ohm/form/hit_{0,4,8,16}_{tilt70,top}_32.png` | test at ages 0/4/8/16 both sides |
+| HUD chip: spectral portrait with three lit jars, goggles, beard, fork | b38e571cd, `n20/ohm/form/chip_legacy_vs_spec.png` | 84 px |
+| Look switch: spectral is Ohm's default, legacy one flag away (`--ghost-look=legacy`) | 359eacb83, decisions.md line | legacy captures pixel-identical to pre-switch |
 | Films | `n20/ohm/ohm_move_32.mp4`, `ohm_attack_32.mp4`, `ohm_close_64.mp4` (+ jpg) | 5 / 5 / 10 s, 1920x1080 h264 60 fps |
 
 ## What does not
 - TODO after brief 05/06.
-- Top-view fork too small at 32 px/m (brief 05 Part 0).
+- The small red dash between Ohm and the guards in the attack film is the guard's rifle tracer (shared `fx_view.gd`), not Ohm's.
 
 ## What blocked or slowed you (minutes each)
 - Director session cuts killed an attached Astra run (01:46, ~20 min lost); every call is launched detached since 02:58.
@@ -46,4 +51,5 @@ Branch `n20-ohm` (worktree `C:\Users\kazda\kiro\gtai-wt\n20-ohm`), cut from `int
 | bolt | 24 | bounced (unowned files edited); 2 commits accepted |
 | bolt-scope (resume) | 45 | accepted (ba4c81c88) |
 | drift-films | 75 (cap) | accepted (080bfdd5e + films) |
-| form-rest | running | |
+| form-rest | 58 | accepted (078d91612, b38e571cd, 359eacb83); left flight's hitback test red |
+| strip-refilm | running | |
