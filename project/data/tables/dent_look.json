@@ -2,7 +2,7 @@
   "doc": "Ejected's seatbelt, roof marking and overload on the road. Widths and distances are in world metres.",
   "rows": [
     {
-      "buckle_m": 0.42,
+      "buckle_m": 0.58,
       "disc_m": 1.1,
       "disc_rim_alpha": 0.36,
       "hand_height_m": 1.1,
@@ -17,7 +17,7 @@
       "strap_tick_gap_m": 0.33,
       "strap_tremble_m": 0.018,
       "strap_webbing_alpha": 0.63,
-      "strap_width_m": 0.32,
+      "strap_width_m": 0.48,
       "tether_look": "strap"
     }
   ],

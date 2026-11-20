@@ -16,7 +16,7 @@ func test_hand_and_roof_endpoints_at_both_camera_pitches() -> void:
 		assert_eq(path.size(), DentStrap.SEGMENTS + 1)
 		assert_eq(path[0], hand)
 		assert_eq(path[-1], car.pos * ppm + vm.lift_px(1.4))
-		assert_almost_eq(strap.width_px(), 10.24, 0.001)
+		assert_almost_eq(strap.width_px(), 15.36, 0.001)
 		assert_almost_eq(strap.heading, PI / 2.0, 0.0001)
 	ViewMode._shared = old_view
 
