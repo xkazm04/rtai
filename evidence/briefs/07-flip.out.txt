@@ -1,0 +1,15 @@
+The RamWake fix landed. Quest 1 keeps its ram tell under either look, and the spectral arena body suppresses the wake. **Tonnage defaults to legacy** after the required rollback.
+
+| Commit | Change |
+|---|---|
+| `1858673c0` | Keep the ram wake on quest Rivet and the legacy arena body. Changed `ram_wake.gd`, `tonnage_view.gd`, and `test_ram_wake.gd`. |
+| `8c44e8b90` | Make the spectral Press Golem Tonnage's default look. Changed `ghost_forms.json` and `docs/decisions.md`. |
+| `1e85ea0a4` | Revert the default-look commit. Verified the resulting tree matches `1858673c0` exactly. |
+
+The wake fix passed 3,247 tests with 2 skipped. Lint passed 19/19 before and after the flip. With spectral as default, 5 of 3,265 tests failed, and all five failed again on rerun.
+
+**NEED flight:** `project/tests/unit/test_ghost_card.gd` has three cases that access legacy crown or hose sprites. Those sprites are absent on the spectral body. The cases need an explicit legacy look.
+
+The other failures were the legacy walking-grid case in `test_tonnage_stride.gd` and a marked-traffic count in `test_vehicle_view.gd` with prior flake history. Per the rollback rule, I stopped before scenarios, look goldens, the glow comparison, the poster recut, and mutation testing.
+
+[astra: 453s, exit 0]
