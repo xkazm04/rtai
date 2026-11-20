@@ -4,6 +4,7 @@ extends Sprite2D
 
 enum Pose { HOVER, CRUISE, TURN, HIT, COCK, CUT, RECOVER, BLINK }
 
+const SIZE_K: float = 0.75
 const CRUISE_MPS: float = 3.0
 const TURN_DPS: float = 360.0
 
@@ -60,7 +61,7 @@ func show_pose(oct: int, current: Pose, yaw: float, lean: float, flinch: bool) -
 		centre.x = get_rect().size.x - centre.x
 	offset = -centre
 	rotation = lean
-	scale = vm.ground_of(Vector2.ONE * DentSpectralDrawn.texel_scale(_art))
+	scale = vm.ground_of(Vector2.ONE * DentSpectralDrawn.texel_scale(_art) * SIZE_K)
 	_rim.visible = flinch
 	if _rim.visible:
 		sheet.show(_rim, oct, frame_coords.x)

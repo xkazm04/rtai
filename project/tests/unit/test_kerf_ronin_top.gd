@@ -103,8 +103,10 @@ func test_only_the_right_cutter_thrusts_along_facing_and_eases_back() -> void:
 
 func test_tail_parts_share_a_root_and_crossfade_across_twelve_metres_per_second() -> void:
 	var rig: KerfRoninTop = add_child_autofree(KerfRoninTop.new())
+	var px: float = KerfRoninDrawn.SIZE_K * SimConst.PX_PER_M
+	assert_almost_eq(rig._curled.scale.x, 0.96 / 270.0 * px, 0.0001)
+	assert_almost_eq(rig._curled.position.x, -0.28 * px, 0.0001)
 	assert_eq(rig._curled.position, rig._straight.position)
-	assert_lt(rig._curled.position.x, 0.0)
 	assert_lt(_far_joint(rig, rig._straight, "tail_straight").x, rig._straight.position.x)
 	for speed: float in [0.0, 3.0, 6.0, 12.0, 16.0]:
 		rig.pose(POSE.CRUISE, speed, 0.0, 1)

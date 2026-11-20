@@ -12,6 +12,7 @@ var _row: GhostHoverRow
 var _last: Vector2 = Vector2.INF
 var _facing: float = 0.0
 var _emerge: float = 1.0
+var _body_size: float = 1.0
 
 
 static func make(form_id: StringName) -> GhostFlight:
@@ -22,6 +23,9 @@ static func make(form_id: StringName) -> GhostFlight:
 	flight._row = row
 	flight.hover = GhostHover.new(row)
 	flight.shadow = GhostShadow.new(row.shadow)
+	if form_id == KerfStage.GHOST:
+		flight._body_size = KerfRoninDrawn.SIZE_K
+		flight.shadow.scale = Vector2.ONE * flight._body_size
 	flight.tail = GhostTail.new(row.tail)
 	flight.add_child(flight.shadow)
 	flight.add_child(flight.tail)
@@ -56,7 +60,7 @@ func step(at_px: Vector2, facing: float, ticks: int) -> void:
 		hover.reset(at_px, facing)
 		_last = at_px
 		_facing = facing
-		tail.reset(_anchor(at_px, facing), facing, hover.lift_m)
+		tail.reset(_anchor(at_px, facing), facing, _lift_m())
 		_place(at_px)
 	if ticks <= 0:
 		return
@@ -66,14 +70,14 @@ func step(at_px: Vector2, facing: float, ticks: int) -> void:
 		var yaw: float = lerp_angle(_facing, facing, k)
 		hover.step(spot, yaw, 1)
 		var body_yaw: float = yaw + body_rotation()
-		tail.step(_anchor(spot, body_yaw), body_yaw, hover.speed_mps, hover.lift_m, 1)
+		tail.step(_anchor(spot, body_yaw), body_yaw, hover.speed_mps, _lift_m(), 1)
 	_last = at_px
 	_facing = facing
 	_place(at_px)
 
 
 func _anchor(spot: Vector2, yaw: float) -> Vector2:
-	var local_px: Vector2 = _row.tail.anchor_m * SimConst.PX_PER_M * body_scale()
+	var local_px: Vector2 = _row.tail.anchor_m * SimConst.PX_PER_M * _body_size * body_scale()
 	return spot + hover.lag_px * _emerge + local_px.rotated(yaw)
 
 
@@ -88,7 +92,11 @@ func _place(at_px: Vector2) -> void:
 
 
 func body_offset() -> Vector2:
-	return (hover.lag_px + ViewMode.shared().lift_px(hover.lift_m)) * _emerge
+	return (hover.lag_px + ViewMode.shared().lift_px(_lift_m())) * _emerge
+
+
+func _lift_m() -> float:
+	return hover.lift_m * _body_size
 
 
 func body_scale() -> Vector2:
@@ -115,7 +123,7 @@ func set_belt(world_px: Vector2, width_px: float) -> void:
 	if _last == Vector2.INF:
 		return
 	var yaw: float = _facing + body_rotation()
-	var anchor: Vector2 = _anchor(_last, yaw) + ViewMode.shared().lift_px(hover.lift_m * _emerge)
+	var anchor: Vector2 = _anchor(_last, yaw) + ViewMode.shared().lift_px(_lift_m() * _emerge)
 	tail.align_socket(tail.to_local(world_px) - anchor, width_px / absf(tail.global_scale.x))
 
 
@@ -124,6 +132,7 @@ func set_belt(world_px: Vector2, width_px: float) -> void:
 func set_rig_belt(span_px: float, yaw: float) -> void:
 	if _last == Vector2.INF:
 		return
-	var aft: float = minf(0.0, -span_px * 0.14 - _row.tail.anchor_m.x * SimConst.PX_PER_M)
+	var anchor_x: float = _row.tail.anchor_m.x * SimConst.PX_PER_M * _body_size
+	var aft: float = minf(0.0, -span_px * 0.14 - anchor_x)
 	var width: float = span_px * maxf(0.36, belt_fraction())
 	tail.align_socket(Vector2(aft, 0.0).rotated(yaw), width)

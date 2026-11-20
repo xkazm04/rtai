@@ -5,15 +5,15 @@ extends Node2D
 const POSE = KerfRoninDrawn.Pose
 const PPM: float = SimConst.PX_PER_M
 ## Both packed overhead helmets are 165 pixels wide.
-const PART_M: float = 0.96 / 270.0
-const SHOULDER_M: Vector2 = Vector2(0.02, 0.53)
+const PART_M: float = 0.96 / 270.0 * KerfRoninDrawn.SIZE_K
+const SHOULDER_M: Vector2 = Vector2(0.02, 0.53) * KerfRoninDrawn.SIZE_K
 const WING_REST: Vector2 = Vector2(45, 34)
 const WING_FAST: Vector2 = Vector2(43, 20)
-const TAIL_ROOT_M: Vector2 = Vector2(-0.28, 0)
+const TAIL_ROOT_M: Vector2 = Vector2(-0.28, 0) * KerfRoninDrawn.SIZE_K
 ## The helmet and its trailing crest share a texture. The crest passes behind the back plate.
 const HELMET_Y: int = 138
-const HEAD_M: float = 0.46
-const FLINCH_M: float = 0.12
+const HEAD_M: float = 0.46 * KerfRoninDrawn.SIZE_K
+const FLINCH_M: float = 0.12 * KerfRoninDrawn.SIZE_K
 
 static var _cruise_sweep: Vector2 = Vector2.ZERO
 

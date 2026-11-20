@@ -51,6 +51,7 @@ func test_legacy_and_spectral_build_only_their_own_bodies() -> void:
 
 
 func test_each_pitch_uses_both_sheets_at_their_native_aspect() -> void:
+	assert_eq(KerfRoninDrawn.SIZE_K, 0.75)
 	var previous: String = ViewMode.shared().id
 	var card: KerfRoninDrawn = add_child_autofree(KerfRoninDrawn.new())
 	for view: String in ["tilt70", "tilt"]:
@@ -66,7 +67,7 @@ func test_each_pitch_uses_both_sheets_at_their_native_aspect() -> void:
 			var screen: Vector2 = card.scale * ViewMode.shared().zoom_of(1.0)
 			assert_almost_eq(screen.x, screen.y, 0.0001)
 			var height_px: float = 212.0 if view == "tilt" else 223.0
-			assert_almost_eq(screen.y * height_px, 1.45 * SimConst.PX_PER_M, 0.001)
+			assert_almost_eq(screen.y * height_px, 0.75 * 1.45 * SimConst.PX_PER_M, 0.001)
 			var anchor: Vector2 = card.offset
 			card.show_pose(4, current, 450.0, 0.0, false)
 			assert_true(card.flip_h)

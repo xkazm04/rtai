@@ -100,8 +100,9 @@ func test_reentering_on_a_paused_frame_places_the_whole_form_at_its_new_mark() -
 	assert_eq(flight.shadow.position, mark)
 	assert_eq(flight.hover.lag_px, Vector2.ZERO)
 	assert_eq(flight.hover.speed_mps, 0.0)
-	assert_eq(body.global_position, mark + ViewMode.shared().lift_px(row.height_m))
-	var local: Vector2 = row.tail.anchor_m * SimConst.PX_PER_M * flight.body_scale()
+	var body_k: float = KerfRoninDrawn.SIZE_K
+	assert_eq(body.global_position, mark + ViewMode.shared().lift_px(row.height_m * body_k))
+	var local: Vector2 = row.tail.anchor_m * SimConst.PX_PER_M * body_k * flight.body_scale()
 	var anchor: Vector2 = mark + local.rotated(PI)
 	assert_eq(flight.tail._chain[0], anchor)
 	var length_px: float = row.tail.length_m * SimConst.PX_PER_M
@@ -125,8 +126,9 @@ func test_a_banked_body_squashes_in_its_facing_frame_and_keeps_its_tail_attached
 		assert_almost_eq(pose.x.length(), scale_k.x, 0.0001, view)
 		assert_almost_eq(pose.y.length(), scale_k.y, 0.0001, view)
 		assert_almost_eq(pose.x.angle(), body.rotation + flight.body_rotation(), 0.0001, view)
-		var lifted: Vector2 = ViewMode.shared().lift_px(flight.hover.lift_m)
-		var root: Vector2 = pose * (row.tail.anchor_m * SimConst.PX_PER_M) - lifted
+		var body_k: float = KerfRoninDrawn.SIZE_K
+		var lifted: Vector2 = ViewMode.shared().lift_px(flight.hover.lift_m * body_k)
+		var root: Vector2 = pose * (row.tail.anchor_m * SimConst.PX_PER_M * body_k) - lifted
 		assert_almost_eq(flight.tail._chain[0], root, Vector2.ONE * 0.0001, view)
 
 

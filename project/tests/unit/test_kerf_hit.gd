@@ -46,7 +46,11 @@ func test_blow_tips_both_views_in_screen_space_and_flashes_the_rim() -> void:
 			assert_eq(body.current, KerfRoninDrawn.Pose.HIT if hurt else KerfRoninDrawn.Pose.HOVER)
 			if flat:
 				var head_m: float = 0.34 if hurt and age < 6 else 0.46
-				assert_almost_eq(body._top._head.position.x, head_m * SimConst.PX_PER_M, 0.001)
+				assert_almost_eq(
+					body._top._head.position.x,
+					head_m * SimConst.PX_PER_M * KerfRoninDrawn.SIZE_K,
+					0.001
+				)
 				assert_eq(body._top._crest.position, body._top._head.position)
 			else:
 				assert_eq(body._tilted.frame_coords.x, 3 if hurt else 0)

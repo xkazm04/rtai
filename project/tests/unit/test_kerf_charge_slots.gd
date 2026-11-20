@@ -82,7 +82,7 @@ func test_top_lamps_ride_the_torso_and_spend_from_its_right_edge() -> void:
 				assert_gt(mask.position.x, top.slots.masks[i - 1].position.x)
 
 
-func test_top_slot_faces_cover_at_least_three_by_five_pixels_at_play_scale() -> void:
+func test_top_slot_faces_follow_the_ronin_size_at_play_scale() -> void:
 	var top: KerfRoninTop = add_child_autofree(KerfRoninTop.new())
 	PlayerScale.fit([top])
 	for mask: Sprite2D in top.slots.masks:
@@ -90,5 +90,5 @@ func test_top_slot_faces_cover_at_least_three_by_five_pixels_at_play_scale() -> 
 		var region: Rect2i = Rect2i(mask.frame_coords * size_px, size_px)
 		var pixels: Rect2i = mask.texture.get_image().get_region(region).get_used_rect()
 		var native: Vector2 = Vector2(pixels.size) * mask.global_scale.abs()
-		assert_gte(native.x, 3.0)
-		assert_gte(native.y, 5.0)
+		assert_gte(native.x, 3.0 * KerfRoninDrawn.SIZE_K)
+		assert_gte(native.y, 5.0 * KerfRoninDrawn.SIZE_K)

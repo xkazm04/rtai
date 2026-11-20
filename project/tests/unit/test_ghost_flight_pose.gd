@@ -39,7 +39,7 @@ func test_shadow_is_a_direct_child_and_stays_at_the_ground_mark() -> void:
 	assert_true(shadow.is_visible_in_tree())
 	assert_eq(shadow.position, mark)
 	assert_eq(shadow.global_position, flight.position + mark)
-	assert_eq(shadow.scale, Vector2.ONE)
+	assert_eq(shadow.scale, Vector2.ONE * KerfRoninDrawn.SIZE_K)
 	assert_eq(shadow.modulate.a, 1.0)
 	assert_eq(shadow._height, 0.25)
 	assert_eq(shadow.pool_open, 0.5)
