@@ -35,7 +35,9 @@ func _ready() -> void:
 			Log.error("ghost_review", "unknown argument %s" % flag)
 			get_tree().quit(2)
 			return
-	if not GhostReviewInput.GUARDS.has(ghost) or take not in ["move", "attack", "morph"]:
+	var hit_take: bool = take == "hit" and ghost == &"dent"
+	var valid_take: bool = hit_take or take in ["move", "attack", "morph"]
+	if not GhostReviewInput.GUARDS.has(ghost) or not valid_take:
 		Log.error("ghost_review", "invalid ghost or take")
 		get_tree().quit(2)
 		return
@@ -44,6 +46,7 @@ func _ready() -> void:
 	_game = ArenaGame.new()
 	add_child(_game)
 	_input = GhostReviewInput.new(_game.session, ghost, take == "attack", take == "morph")
+	_input.dent_hits = hit_take
 	_game.session.world.loop().set_input(_input)
 	var offset: Vector2 = Vector2(7, 0) if _input.attacking else move_centre[ghost]
 	_game.view.focus = GhostReviewInput.MARK + (Vector2.ZERO if _input.morphing else offset)
@@ -53,19 +56,30 @@ func _ready() -> void:
 	if _panel:
 		_game.cast.ghost_view.hud.hide()
 	if args.has("--film-trace"):
-		_trace = FileAccess.open(args.text("--film-trace"), FileAccess.WRITE)
-		if _trace == null:
-			Log.error("ghost_review", "could not open trace")
-			get_tree().quit(1)
-			return
-		var arena: CombatArena = _game.session.stage.arena
-		_trace_header()
-		@warning_ignore("return_value_discarded")
-		arena.kill_landed.connect(_record.bind("killed").unbind(3))
-		@warning_ignore("return_value_discarded")
-		arena.wounded.connect(_record.bind("wounded").unbind(2))
+		_open_trace(args.text("--film-trace"))
 	process_priority = FilmProbe.PRIORITY
 	set_process(_trace != null or not _input.attacking)
+
+
+func _open_trace(path: String) -> void:
+	_trace = FileAccess.open(path, FileAccess.WRITE)
+	if _trace == null:
+		Log.error("ghost_review", "could not open trace")
+		get_tree().quit(1)
+		return
+	var arena: CombatArena = _game.session.stage.arena
+	var fields: String = "frame tick form x_m y_m facing_rad atlas_row_col slams ram_hits crushes "
+	fields += "jab_hits seizes car_hits blasts blinks slices delay_ticks bolts struck car_bolts "
+	fields += "damage_events px_per_m blast_x_m blast_y_m screen_x screen_y"
+	if _input.dent_hits:
+		fields += " arena_tick hurt_tick held"
+	var header: Dictionary = {"schema": "gtai.ghost-review/1", "columns": fields.split(" ")}
+	@warning_ignore("return_value_discarded")
+	_trace.store_line(JSON.stringify(header))
+	@warning_ignore("return_value_discarded")
+	arena.kill_landed.connect(_record.bind("killed").unbind(3))
+	@warning_ignore("return_value_discarded")
+	arena.wounded.connect(_record.bind("wounded").unbind(2))
 
 
 func _process(_delta: float) -> void:
@@ -96,6 +110,8 @@ func _trace_frame(stage: ArenaStage) -> void:
 	row.append_array([p.ohm.cast.delay_ticks, p.ohm.bolts, p.ohm.struck, p.ohm.cars_hit])
 	row.append_array([_hits, _game.view.print_stage.camera.zoom.x * SimConst.PX_PER_M])
 	row.append_array([p.dent.blast_at.x, p.dent.blast_at.y, px.x, px.y])
+	if _input.dent_hits:
+		row.append_array([stage.arena.tick, r.hurt_tick, p.dent.car != null])
 	@warning_ignore("return_value_discarded")
 	_trace.store_line(JSON.stringify(row))
 	_hits.clear()
@@ -110,15 +126,6 @@ func _gait_cell() -> String:
 	return (
 		"%s/%d/%d" % [spr.texture.resource_path.get_file(), spr.frame_coords.y, spr.frame_coords.x]
 	)
-
-
-func _trace_header() -> void:
-	var fields: String = "frame tick form x_m y_m facing_rad atlas_row_col slams ram_hits crushes "
-	fields += "jab_hits seizes car_hits blasts blinks slices delay_ticks bolts struck car_bolts "
-	fields += "damage_events px_per_m blast_x_m blast_y_m screen_x screen_y"
-	var header: Dictionary = {"schema": "gtai.ghost-review/1", "columns": fields.split(" ")}
-	@warning_ignore("return_value_discarded")
-	_trace.store_line(JSON.stringify(header))
 
 
 func _exit_tree() -> void:

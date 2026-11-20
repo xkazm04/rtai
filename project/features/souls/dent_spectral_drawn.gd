@@ -49,14 +49,14 @@ func _init() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 
 
-## Use the same strike and hurt tick windows as the standing figure. A seized car owns the hands.
+## The hit interrupts the hands until steering or the jab can resume.
 static func pose(hover: GhostHover, jab: DentJab, seized: bool, hurt_age: int) -> Pose:
+	if hurt_age >= 0 and hurt_age < GhostDrawn.HIT_TICKS:
+		return Pose.HIT
 	if seized:
 		return Pose.STEER
 	if jab != null and GhostActs.jabbing(jab):
 		return Pose.COCK if jab.winding() else Pose.JAB
-	if hurt_age >= 0 and hurt_age < GhostDrawn.HIT_TICKS:
-		return Pose.HIT
 	if absf(hover.yaw_rate_dps) >= TURN_DPS:
 		return Pose.SWING
 	return Pose.DIVE if hover.speed_mps >= DIVE_MPS else Pose.HOVER
@@ -91,6 +91,8 @@ static func swing_flip(oct: int, yaw: float) -> bool:
 
 
 func grip_world(strike: bool = false) -> Vector2:
+	if _on_hit_card():
+		return DentHit.grip(sprite, _art, 1)
 	var cell: Vector2 = (GRIP_55 if _art == "p55" else GRIP_70)[sprite.frame_coords.y]
 	if strike:
 		cell = (FIST_55 if _art == "p55" else FIST_70)[sprite.frame_coords.y]
@@ -100,7 +102,13 @@ func grip_world(strike: bool = false) -> Vector2:
 
 
 func string_grip(index: int) -> Vector2:
+	if _on_hit_card():
+		return DentHit.grip(sprite, _art, index)
 	return sprite.to_global(_grips[index])
+
+
+func _on_hit_card() -> bool:
+	return _fly != null and sprite.texture == _fly.tex and sprite.frame_coords.x == Pose.HIT
 
 
 func steer_hands(turn: float, facing: float) -> void:

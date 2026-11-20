@@ -1,7 +1,6 @@
 class_name GhostReviewInput
 extends InputSource
-## An arena take starts with a normal selection and transform during the pre-roll.
-## Actions below are relative to START. Only the starting marks and enemies are staged.
+## Each take selects and transforms normally in pre-roll, then drives actions relative to START.
 
 const START: int = 68
 const MARK: Vector2 = Vector2(91.0, -20.0)
@@ -16,6 +15,7 @@ const GUARDS: Dictionary[StringName, Array] = {
 var session: ArenaSession
 var ghost: StringName
 var morphing: bool = false
+var dent_hits: bool = false
 var attacking: bool
 var victims: Array[Fighter] = []
 var car: VehicleBody
@@ -47,7 +47,7 @@ func sample(tick: int) -> TickInput:
 		var move: Vector2 = aim * 0.22 if tick >= 125 and tick < 215 else Vector2.ZERO
 		return _pad(move, aim, &"power_hauler" if tick == end else &"")
 	if not attacking:
-		return _movement(t)
+		return _dent_hit(t) if dent_hits else _movement(t)
 	match ghost:
 		&"tonnage":
 			var go: bool = t >= 85 and t < 242
@@ -66,6 +66,19 @@ func _movement(t: int) -> TickInput:
 	var dir: Vector2 = Vector2.RIGHT.rotated(octant * PI / 4.0)
 	var move: Vector2 = dir if t >= 5 and t < 258 else Vector2.ZERO
 	return _pad(move, dir, &"melee" if ghost == &"kerf" and t == 62 else &"")
+
+
+## Two nonlethal blows on the normal fighter, once at speed and once after a real seize.
+func _dent_hit(t: int) -> TickInput:
+	var rivet: Fighter = session.stage.arena.rivet
+	if t == 22 or t == 86:
+		rivet.take(1.0, t + START, Vector2.LEFT if t == 22 else Vector2.RIGHT)
+	if t == 50:
+		car = session.stage.vehicles.spawn_parked(
+			&"police_cruiser", rivet.pos + Vector2(4.5, -1.3), Vector2.RIGHT
+		)
+	var aim: Vector2 = rivet.pos.direction_to(car.pos) if car != null and t <= 64 else Vector2.RIGHT
+	return _pad(Vector2.RIGHT if t < 45 else Vector2.ZERO, aim, &"fire" if t == 64 else &"")
 
 
 func _dent(t: int) -> TickInput:
@@ -105,13 +118,7 @@ func _cast() -> void:
 
 func _nearest() -> Vector2:
 	var at: Vector2 = session.stage.arena.rivet.pos
-	var best: Fighter = null
-	for fighter: Fighter in victims:
-		if (
-			fighter.alive()
-			and (best == null or at.distance_to(fighter.pos) < at.distance_to(best.pos))
-		):
-			best = fighter
+	var best: Fighter = GhostReel.nearest(victims, at)
 	if best != null:
 		return at.direction_to(best.pos)
 	return at.direction_to(car.pos) if car != null else Vector2.RIGHT
