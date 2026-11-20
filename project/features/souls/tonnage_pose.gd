@@ -8,6 +8,8 @@ enum Act { RAISE, POUND, LIFT }
 const CHEST_H: float = 1.55
 const BACK_X: float = -0.55
 const CARRY: Vector3 = Vector3(1.0, 0.8, 1.4)
+const ARM_FROM_MPS: float = 2.4
+const ARM_FULL_MPS: float = 3.0
 const RETURN_TICKS: int = 20
 
 
@@ -56,8 +58,6 @@ func step(sample: Sample, ticks: int) -> void:
 		var stomp: int = sample.stomp_age - before
 		var hurt: int = sample.hurt_age - before
 		_fly(sample)
-		armed_k = move_toward(armed_k, 1.0 if sample.ramming else 0.0, 0.25)
-		lean_k = 0.0 if armed_k > 0.5 else 1.0
 		if sample.ram_hits > _hits:
 			_punch_age = 0
 		_hits = sample.ram_hits
@@ -89,11 +89,14 @@ func _fly(sample: Sample) -> void:
 func _travel(sample: Sample, hurt: int) -> void:
 	act = false
 	plant_k = 0.0
-	column = Pose.CRUISE if sample.velocity.length() > 1.5 else Pose.CARRY
+	var speed: float = sample.velocity.length()
+	armed_k = 1.0 if sample.ramming else smoothstep(ARM_FROM_MPS, ARM_FULL_MPS, speed)
+	lean_k = 1.0 - armed_k
+	column = Pose.CRUISE if speed > 1.5 else Pose.CARRY
 	if armed_k > 0.5:
 		column = Pose.ARMED
-	if hurt >= 0 and hurt < _hit_ticks:
-		column = Pose.RECOIL if lean_k > 0.0 else Pose.ARMED
+	elif hurt >= 0 and hurt < _hit_ticks:
+		column = Pose.RECOIL
 	left = Vector3(CARRY.x, -CARRY.y, CARRY.z) + _fist_follow
 	right = CARRY + _fist_follow
 	left = left.lerp(Vector3(-0.25, -1.05, 1.45), armed_k)

@@ -53,3 +53,44 @@ func test_spectral_tilts_show_one_custom_rest_cell() -> void:
 				sheets.append(spr.texture.resource_path)
 		var path: String = GhostDrawn.path_of(ViewMode.shared().art, "tonnage", "spectral_pose")
 		assert_eq(sheets, [path], view)
+
+
+func test_spectral_light_tracks_the_flipped_cell_through_a_slam() -> void:
+	GhostLook.override_for_test(GhostLook.SPECTRAL)
+	var rig: TonnageRig = _rig("tilt70")
+	var spectral: TonnageSpectral = rig._spectral
+	rig.rotation = PI
+	for age: int in [-1, 0, GhostDrawn.CUT_TICKS]:
+		spectral._sample.stomp_age = age
+		spectral.pose.step(spectral._sample, 1)
+		spectral._present()
+		var ink: Sprite2D = spectral._cell
+		var light: Sprite2D = spectral._cell_light
+		assert_eq(light.get_parent(), ink)
+		assert_eq(light.texture, ink.texture)
+		assert_eq(light.frame_coords, ink.frame_coords)
+		assert_eq(light.offset, ink.offset)
+		assert_eq(light.flip_h, ink.flip_h)
+		assert_eq(light.global_transform, ink.global_transform)
+		assert_almost_eq(ink.modulate.a, 0.88 if age < 0 else 0.55, 0.0001)
+		assert_eq(
+			(light.material as CanvasItemMaterial).blend_mode, CanvasItemMaterial.BLEND_MODE_ADD
+		)
+
+
+func test_spectral_top_parts_share_the_pose_opacity_and_additive_light() -> void:
+	GhostLook.override_for_test(GhostLook.SPECTRAL)
+	var rig: TonnageRig = _rig("top")
+	var spectral: TonnageSpectral = rig._spectral
+	spectral._sample.stomp_age = 0
+	spectral.pose.step(spectral._sample, 1)
+	spectral._present()
+	assert_almost_eq(spectral._parts.modulate.a, 0.55, 0.0001)
+	assert_lt(spectral._glow.z_index, RenderLayers.z(&"blood"))
+	for part: Sprite2D in spectral._parts.get_children():
+		var light: Sprite2D = part.get_child(0) as Sprite2D
+		assert_eq(light.texture, part.texture)
+		assert_eq(light.global_transform, part.global_transform)
+		assert_eq(
+			(light.material as CanvasItemMaterial).blend_mode, CanvasItemMaterial.BLEND_MODE_ADD
+		)

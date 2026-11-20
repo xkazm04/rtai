@@ -106,10 +106,9 @@ func test_new_pose_receives_its_first_contact_on_the_first_tick() -> void:
 	assert_almost_eq(pose.right.x, TonnagePose.CARRY.x + 0.15, 0.00001)
 
 
-func test_half_brace_keeps_the_cruise_cell_until_the_fist_leads() -> void:
-	sample.ramming = true
-	sample.velocity = Vector2(2.0, 0.0)
-	pose.step(sample, 2)
-	assert_eq(pose.armed_k, 0.5)
-	assert_eq(pose.lean_k, 1.0)
+func test_partial_brace_keeps_the_cruise_cell_until_the_fist_leads() -> void:
+	sample.velocity = Vector2(2.69, 0.0)
+	pose.step(sample, 1)
+	assert_lt(pose.armed_k, 0.5)
+	assert_gt(pose.lean_k, 0.5)
 	assert_eq(pose.column, TonnagePose.Pose.CRUISE)

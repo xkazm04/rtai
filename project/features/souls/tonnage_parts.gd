@@ -32,6 +32,8 @@ func _part(id: String, bone: bool = false) -> Sprite2D:
 		spr.offset.y = -0.5 * spr.texture.get_height()
 	else:
 		spr.rotation = -PI * 0.5
+	@warning_ignore("return_value_discarded")
+	TonnageGlow.on_body(spr)
 	add_child(spr)
 	return spr
 
@@ -43,9 +45,7 @@ func update_body(pose: TonnagePose, left: Vector2, right: Vector2, contact_fit: 
 	_width(_back, 2.3, pose.torso.z)
 	_width(_hoses, 1.0, pose.torso.z)
 	_back.scale.y *= cos(pose.pitch)
-	var alpha: float = 0.55 if pose.act and pose.column != TonnagePose.Act.RAISE else 0.88
-	_back.self_modulate.a = alpha
-	_hoses.self_modulate.a = alpha
+	modulate.a = TonnageGlow.body_alpha(pose)
 	for i: int in 2:
 		var side: float = -1.0 if i == 0 else 1.0
 		var hand: Vector2 = left if i == 0 else right
@@ -53,12 +53,9 @@ func update_body(pose: TonnagePose, left: Vector2, right: Vector2, contact_fit: 
 		var shoulder: Vector2 = centre + Vector2(0.25, side * 0.95) * PPM
 		_width(_fists[i], 0.95 * contact_fit, h)
 		_fists[i].position = hand
-		_fists[i].self_modulate.a = 0.88
 		# Connect at the back of the palm; the striped face is the striking end.
 		var wrist: Vector2 = hand - Vector2(0.42 * PPM * contact_fit, 0.0)
 		_arm(i, shoulder, wrist, h)
-		_upper[i].self_modulate.a = alpha
-		_fore[i].self_modulate.a = alpha
 
 
 func _arm(i: int, shoulder: Vector2, wrist: Vector2, h: float) -> void:

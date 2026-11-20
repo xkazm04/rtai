@@ -93,3 +93,29 @@ func test_three_ticks_match_singles_including_the_slam_boundary() -> void:
 	assert_eq(_pose.left, single.left)
 	assert_eq(_pose.armed_k, single.armed_k)
 	assert_eq(_pose.column, single.column)
+
+
+func test_planar_speed_anticipates_the_ram_and_ramming_holds_the_brace() -> void:
+	_sample.velocity = Vector2(0.0, -2.3)
+	_pose.step(_sample, 1)
+	assert_eq(_pose.armed_k, 0.0)
+	assert_eq(_pose.lean_k, 1.0)
+	assert_eq(_pose.column, TonnagePose.Pose.CRUISE)
+	_sample.velocity = Vector2(0.0, -2.7)
+	_pose.step(_sample, 1)
+	assert_almost_eq(_pose.armed_k, 0.5, 0.0001)
+	assert_almost_eq(_pose.lean_k, 0.5, 0.0001)
+	_sample.velocity = Vector2(0.0, -2.8)
+	_sample.hurt_age = 0
+	_pose.step(_sample, 1)
+	assert_eq(_pose.column, TonnagePose.Pose.ARMED)
+	_sample.velocity = Vector2(0.0, -3.0)
+	_pose.step(_sample, 1)
+	assert_eq(_pose.armed_k, 1.0)
+	assert_eq(_pose.lean_k, 0.0)
+	_sample.velocity = Vector2.ZERO
+	_sample.ramming = true
+	_pose.step(_sample, 1)
+	assert_eq(_pose.armed_k, 1.0)
+	assert_eq(_pose.lean_k, 0.0)
+	assert_eq(_pose.column, TonnagePose.Pose.ARMED)

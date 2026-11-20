@@ -4,6 +4,10 @@ extends Node2D
 
 const PPM: float = SimConst.PX_PER_M
 const BASELINE: float = 315.0
+## CRUISE / RECOIL opaque heights by facing row (S to N), p70 followed by p55.
+const RECOIL_SCALE: Array[float] = [
+	1.2229, 1.2151, 1.1742, 1.2473, 1.3275, 1.1345, 1.1397, 1.1576, 1.1958, 1.2816
+]
 
 
 ## GhostFormView advances the rig, then feeds the current combat tick before drawing the frame.
@@ -25,6 +29,7 @@ var _ticks: int = 0
 var _size_k: float = 1.0
 var _parts: TonnageParts = TonnageParts.new()
 var _cell: Sprite2D = Sprite2D.new()
+var _cell_light: Sprite2D
 var _glow: Sprite2D
 var _shadows: Array[Sprite2D] = []
 var _art: String = ""
@@ -55,18 +60,13 @@ func _ready() -> void:
 			ink.z_index = RenderLayers.z(&"actors") - 1
 		_shadows.append(ink)
 		add_child(ink)
-	_glow = GhostRim.soft_glow(HaulerLook.TEAL, 0.38, 4.3 * PPM)
-	if _drawn.flight != null:
-		_glow.z_as_relative = false
-		_glow.z_index = RenderLayers.z(&"actors") - 2
-	var light: CanvasItemMaterial = CanvasItemMaterial.new()
-	light.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
-	_glow.material = light
+	_glow = TonnageGlow.halo()
 	add_child(_glow)
 	add_child(_parts)
 	_cell.name = &"ghost_drawn"
 	_cell.centered = false
 	_cell.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	_cell_light = TonnageGlow.on_body(_cell)
 	add_child(_cell)
 
 
@@ -165,7 +165,10 @@ func _show_cell(vm: ViewMode, centre: Vector2) -> void:
 		_acts = GhostSheet.of(GhostDrawn.path_of(art, "tonnage", "spectral_act"), 4)
 	var sheet: GhostSheet = _acts if pose.act else _poses
 	var look: float = global_rotation
-	sheet.show(_cell, _drawn.octant(look), pose.column)
+	var oct: int = _drawn.octant(look)
+	sheet.show(_cell, oct, pose.column)
+	sheet.show(_cell_light, oct, pose.column)
+	_cell_light.offset.y = -BASELINE
 	_cell.offset.y = -BASELINE
 	var host: Node2D = get_parent() as Node2D
 	var fit: float = absf(host.scale.x if _drawn.flight != null else host.global_scale.x)
@@ -179,11 +182,13 @@ func _show_cell(vm: ViewMode, centre: Vector2) -> void:
 	_cell.global_rotation = roll
 	if not pose.act and pose.column == TonnagePose.Pose.RECOIL:
 		# GhostActs assigns the current blow immediately after feed. Read it before the frame draws.
+		s *= RECOIL_SCALE[_cell.frame_coords.y + (GhostDrawn.ROWS if art == "p55" else 0)]
 		_hit_lean.call_deferred(look, roll)
 	_cell.global_scale = Vector2(s, s / vm.ground_k()) * stretch
 	var h: float = pose.torso.z - TonnagePose.CHEST_H - _sample.bob_m
 	_cell.global_position = to_global(centre) + vm.lift_px(h * fit * _size_k)
-	_cell.self_modulate.a = 0.55 if pose.act and pose.column != TonnagePose.Act.RAISE else 0.88
+	_glow.global_position = _cell.to_global(TonnageGlow.GLOW_CELL_CENTRE)
+	_cell.modulate.a = TonnageGlow.body_alpha(pose)
 
 
 func _hit_lean(look: float, roll: float) -> void:
