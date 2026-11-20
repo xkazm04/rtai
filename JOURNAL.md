@@ -144,3 +144,14 @@ NEXT (session 7, after the 18:30 freeze):
 2. REPORT header "last edit": update; `node tools/evidence/cites.mjs REPORT.md`; pathspec commit REPORT + JOURNAL.
 3. After the reels gate: remove this lane's `%LOCALAPPDATA%\Temp\gtai-gate-40378a1c74cc`, `gtai-gate-118872760ea2` and `gtai-mutate-75005d66` (by exact name, never a pattern across lanes).
 4. No new Astra calls, no product commits.
+
+## Session 7 (18:30, iteration 7 STABILIZE)
+- 18:30 START session 7. No Astra running (no lock; last call n=10 cruise06 at 16:55). Tree clean on b045d75e5.
+- 18:31 GATE RUNNING reels since 18:31: `node tools/gate/run.mjs --rev=HEAD --reels` on b045d75e5 (code 2b38c1353), node pid 41438, out `masters:n21/kerf/scratch/s7_gate_reels.txt`, result `build/gate/b045d75e5a2a/gate.json`.
+- 18:32 Removed this lane's temp dirs by exact name: `gtai-gate-118872760ea2`, `gtai-gate-40378a1c74cc`, `gtai-mutate-75005d66`.
+- 18:33 REPORT header updated (sessions 4 to 7; reels gate pending). No product edits this session.
+
+NEXT (session 8, REPORT phase from 18:40):
+1. Read `masters:n21/kerf/scratch/s7_gate_reels.txt`; check node pid 41438 is gone (by process name node, not number only) before any Godot run. If PASS: add its `gate:` line + gate.json path to REPORT's gate paragraph and header. If FAIL or still running at 18:55: say so in REPORT plainly; the 17:07 PASS on code 2b38c1353 stands for code.
+2. After it ends: remove `%LOCALAPPDATA%\Temp\gtai-gate-<that sha>` by exact name.
+3. `node tools/evidence/cites.mjs REPORT.md`; pathspec commit REPORT.md + JOURNAL.md. No Astra, no product commits.
