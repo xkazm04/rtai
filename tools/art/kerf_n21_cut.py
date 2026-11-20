@@ -234,6 +234,44 @@ def centre(image):
     return [round(moments[k] / moments["m00"], 2) for k in ("m10", "m01")]
 
 
+def trim_top_fringe(part, name, tip):
+    """Cut back exterior teal flames to the ink contour, retaining the luminous point and vapor."""
+    rgba = np.array(part)
+    _, green, blue, alpha = rgba.transpose(2, 0, 1).astype(np.int16)
+    ink = (alpha > 96) & ((green < 120) | (green - blue > 19))
+    close = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7))
+    joined = cv2.morphologyEx(ink.astype("uint8"), cv2.MORPH_CLOSE, close)
+    contours, _ = cv2.findContours(joined, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    matte = np.zeros_like(joined)
+    cv2.drawContours(matte, [max(contours, key=cv2.contourArea)], -1, 255, -1)
+    matte = cv2.medianBlur(matte, 7)
+    if name == "blade":
+        # The distal edge is pure lamp color. Join its measured tip to the terminal ink only.
+        ys, xs = np.nonzero(matte)
+        terminal = xs > part.width * 0.78
+        point = np.rint(tip).astype(np.int32)
+        hull = cv2.convexHull(np.vstack((np.column_stack((xs[terminal], ys[terminal])), point))
+                              .astype(np.int32))
+        cv2.fillConvexPoly(matte, hull, 255)
+        cv2.circle(matte, tuple(point), 1, 255, -1)
+    matte = cv2.GaussianBlur(matte, (0, 0), 0.9)
+    if name.startswith("tail_"):
+        # Narrow the uninked end continuously so the ribbon meets flight's trailing wisp.
+        y = np.linspace(0, 1, part.height)[:, None]
+        distance = cv2.distanceTransform((alpha > 64).astype("uint8"), cv2.DIST_L2, 5)
+        core = np.clip((distance - (1 - y) * 10) * 110, 0, 255)
+        matte = np.maximum(matte, (core * np.clip((y - 0.59) / 0.16, 0, 1)).astype("uint8"))
+    rgba[:, :, 3] = np.minimum(rgba[:, :, 3], matte)
+    # A few sparks inside the filled contour disconnect when the outer rim is removed.
+    count, labels, stats, _ = cv2.connectedComponentsWithStats((rgba[:, :, 3] > 32).astype("uint8"))
+    if count > 2:
+        body = 1 + stats[1:, cv2.CC_STAT_AREA].argmax()
+        edge = cv2.dilate((labels == body).astype("uint8"), np.ones((3, 3), "uint8"))
+        rgba[:, :, 3] *= edge
+    rgba[rgba[:, :, 3] == 0] = 0
+    return Image.fromarray(rgba)
+
+
 def top_parts(master):
     # Pixel centres on the accepted raw drawing: discs, blade tip, ribbon ends.
     joints = {
@@ -251,9 +289,10 @@ def top_parts(master):
     for name, (_, _, cut, (x, y)) in zip(PARTS, raw, strict=True):
         size = tuple(round(v * scale) for v in cut.size)
         part = cut.resize(size, FILTER)
-        part.save(RONIN / f"{name}.png")
         sx, sy = part.width/cut.width, part.height/cut.height
         a, b = ([round((px-x)*sx, 1), round((py-y)*sy, 1)] for px, py in joints[name])
+        part = trim_top_fringe(part, name, b)
+        part.save(RONIN / f"{name}.png")
         metadata[name] = {"size": list(size), "sheet": f"n21/kerf/masters/{master.name}",
                           "pivot_a": a, "pivot_b": b}
         if name == "torso":
@@ -368,7 +407,7 @@ def contact(archive, sheets):
             x, y = 840 + col*760, 20 + row*466
             path, _, status = sheets[kind, pitch]
             name = "Flight" if kind == "fly" else "Action"
-            label(board, (x, y), f"{pitch}° {name}   /   {status}", 20)
+            label(board, (x, y), f"{pitch} deg {name}   /   {status}", 20)
             poses = ("Hover", "Cruise", "Turn", "Hit") if kind == "fly" else (
                 "Cock", "Cut", "Recover", "Blink"
             )
@@ -396,7 +435,7 @@ def scale_board(archive, sheets):
         path, info, status = sheets["fly", pitch]
         kerf = atlas_cells(path)
         factor = 86.4 / info["first_pose_median_height"]
-        label(board, (10, 37+145*row), f"{pitch}°   {status}", 13)
+        label(board, (10, 37+145*row), f"{pitch} deg   {status}", 13)
         for col, face in enumerate((0, 2, 4)):
             x, y = 5+col*273, 144+row*145
             label(board, (x+87, y+8), ("Toward","Profile","Away")[col], 13)
@@ -410,7 +449,7 @@ def scale_board(archive, sheets):
     zoom = board.resize((board.width*3, board.height*3), Image.Resampling.NEAREST)
     combined = Image.new("RGB", (zoom.width, board.height+zoom.height+32), BACK)
     combined.paste(board)
-    label(combined, (8, board.height+4), "3× nearest-neighbour")
+    label(combined, (8, board.height+4), "3x nearest-neighbour")
     combined.paste(zoom, (0, board.height+32))
     combined.save(archive / "body_scale_32ppm.png")
 
@@ -422,7 +461,7 @@ def slot_board(archive, sheets, torso):
         cells = atlas_cells(path)
         for col, (face, direction) in enumerate(((0, "toward"), (4, "away"))):
             entry = next(e for e in info["cells"] if e["pose"] == 0 and e["facing"] == face)
-            panels.append((cells[0, face], entry["slots"], f"{pitch}° {direction} hover", col, row))
+            panels.append((cells[0, face], entry["slots"], f"{pitch} deg {direction} hover", col, row))
     panels.append((Image.open(RONIN / "torso.png"), torso["slots"], "Overhead torso", 2, 0))
     tiles = []
     for image, slots, caption, col, row in panels:

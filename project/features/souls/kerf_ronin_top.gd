@@ -7,7 +7,7 @@ const PPM: float = SimConst.PX_PER_M
 ## Both packed overhead helmets are 165 pixels wide.
 const PART_M: float = 0.96 / 270.0
 const SHOULDER_M: Vector2 = Vector2(0.02, 0.53)
-const WING_REST: Vector2 = Vector2(76, 50)
+const WING_REST: Vector2 = Vector2(45, 34)
 const WING_FAST: Vector2 = Vector2(43, 20)
 const TAIL_ROOT_M: Vector2 = Vector2(-0.28, 0)
 
@@ -60,15 +60,15 @@ static func _sweep(current: KerfRoninDrawn.Pose, side: float, yaw: float) -> Vec
 		POSE.BLINK:
 			return Vector2(11, 0)
 		POSE.TURN:
-			return Vector2(90, 67) if side * yaw < 0.0 else Vector2(31, 9)
+			return Vector2(50, 38) if side * yaw < 0.0 else Vector2(25, 9)
 		POSE.HIT:
-			return Vector2(115, 72)
+			return Vector2(55, 42)
 		POSE.COCK:
-			return Vector2(149, 254) if side > 0.0 else WING_REST
+			return Vector2(22, 4) if side > 0.0 else WING_REST
 		POSE.CUT:
-			return Vector2(178, 180) if side > 0.0 else WING_FAST
+			return Vector2(50, 180) if side > 0.0 else WING_FAST
 		POSE.RECOVER:
-			return Vector2(110, 102) if side > 0.0 else WING_REST
+			return Vector2(49, 37) if side > 0.0 else WING_REST
 	return WING_REST
 
 
@@ -78,7 +78,10 @@ func _joint(s: Sprite2D, id: String, at: Vector2, sweep: float, side: float) -> 
 	s.position = at
 	# The plate has a short shoulder link and a longer cutting edge.
 	var length_k: float = 0.74 if id == "upperarm" else 1.0
-	s.scale = Vector2(length_k, side) * PART_M * PPM
+	# The cutter bows below its root-to-tip chord on the page. Reflect it so the bow
+	# faces away from the spine. The node transform carries the same mirror into the echo.
+	var across: float = -side if id == "blade" else side
+	s.scale = Vector2(length_k, across) * PART_M * PPM
 	s.rotation = axis - (bone * s.scale).angle()
 	return s.transform * bone
 
