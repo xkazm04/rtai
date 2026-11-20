@@ -48,12 +48,17 @@ func _init(drawn: Feed) -> void:
 func _ready() -> void:
 	for i: int in 2:
 		var ink: Sprite2D = GhostRim.soft_glow(GhostShadow.INK, 0.92, 64.0)
+		var disc: GradientTexture2D = ink.texture as GradientTexture2D
+		disc.gradient.add_point(0.55, Color(GhostShadow.INK, 0.8))
 		if _drawn.flight != null:
 			ink.z_as_relative = false
 			ink.z_index = RenderLayers.z(&"actors") - 1
 		_shadows.append(ink)
 		add_child(ink)
 	_glow = GhostRim.soft_glow(HaulerLook.TEAL, 0.38, 4.3 * PPM)
+	if _drawn.flight != null:
+		_glow.z_as_relative = false
+		_glow.z_index = RenderLayers.z(&"actors") - 2
 	var light: CanvasItemMaterial = CanvasItemMaterial.new()
 	light.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
 	_glow.material = light
@@ -133,13 +138,21 @@ func _hand(i: int, hand: Vector3, side: float) -> Vector2:
 			road -= ViewMode.shared().lift_px(flight.hover.lift_m) * (1.0 - pose.plant_k)
 	elif pose.act and pose.column == TonnagePose.Act.RAISE:
 		road = target
-	var shadow: Sprite2D = _shadows[i]
-	var high: float = clampf(hand.z / 2.6, 0.0, 1.0)
+	_cast_shadow(_shadows[i], road, hand.z)
+	return local
+
+
+func _cast_shadow(shadow: Sprite2D, road: Vector2, height: float) -> void:
 	shadow.global_position = road
 	shadow.global_rotation = _sample.facing
-	shadow.global_scale = Vector2(1.25, 0.92) * PPM / 64.0 * lerpf(1.0, 1.55, high)
-	shadow.self_modulate.a = lerpf(0.88, 0.36, high)
-	return local
+	var high: float = clampf(height / 2.6, 0.0, 1.0)
+	var width: float = lerpf(1.0, 1.55, high)
+	var alpha: float = lerpf(0.88, 0.36, high)
+	if pose.act and pose.column == TonnagePose.Act.RAISE:
+		width = lerpf(1.55, 1.0, _sample.windup)
+		alpha = lerpf(0.7, 1.0, _sample.windup)
+	shadow.global_scale = Vector2(1.45, 0.85) * (PPM / 64.0) * width
+	shadow.self_modulate.a = alpha
 
 
 func _show_cell(vm: ViewMode, centre: Vector2) -> void:
