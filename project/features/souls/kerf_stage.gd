@@ -22,6 +22,7 @@ var activations: int = 0
 var trail_from: PackedVector2Array = PackedVector2Array()
 var trail_to: PackedVector2Array = PackedVector2Array()
 var trail_cut: PackedVector2Array = PackedVector2Array()
+var trail_radius: Array[float] = []  ## Radius at impact for the view's spark exclusion.
 var trail_tick: PackedInt32Array = PackedInt32Array()
 ## View only (n7-melee KerfView's sight): the aim of the last tick, never in write_state.
 var sight_aim: Vector2 = Vector2.ZERO
@@ -129,7 +130,7 @@ func _blink(stage: CollectCallStage, aim: Vector2) -> void:
 	charges -= 1
 	_gap = PowerDef.ticks(num(&"gap_s"))
 	blinks += 1
-	_remember(stage.tick, from, to, cut)
+	_remember(stage.tick, from, to, cut, target.radius_m if target != null else 0.0)
 
 
 ## The target: the live hostile inside the aim cone and range, nearest the aim line (by angle),
@@ -183,19 +184,18 @@ static func _walls(stage: CollectCallStage) -> ArenaWalls:
 	return arena_stage.walls if arena_stage != null else null
 
 
-func _remember(tick: int, from: Vector2, to: Vector2, cut: Vector2) -> void:
-	@warning_ignore("return_value_discarded")
+@warning_ignore("return_value_discarded")
+func _remember(tick: int, from: Vector2, to: Vector2, cut: Vector2, radius: float) -> void:
 	trail_from.push_back(from)
-	@warning_ignore("return_value_discarded")
 	trail_to.push_back(to)
-	@warning_ignore("return_value_discarded")
 	trail_cut.push_back(cut)
-	@warning_ignore("return_value_discarded")
+	trail_radius.push_back(radius)
 	trail_tick.push_back(tick)
 	if trail_tick.size() > KEEP:
 		trail_from.remove_at(0)
 		trail_to.remove_at(0)
 		trail_cut.remove_at(0)
+		trail_radius.remove_at(0)
 		trail_tick.remove_at(0)
 
 

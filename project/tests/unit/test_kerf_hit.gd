@@ -75,6 +75,7 @@ func test_cut_and_recovery_face_along_the_trail_in_all_three_views() -> void:
 	victim.pos = _stage.arena.rivet.pos + dir * 5.0
 	_press(dir)
 	assert_false(victim.alive())
+	assert_almost_eq(_stage.pilot.kerf.trail_radius[-1], victim.radius_m, 0.0001)
 	assert_lt(_stage.arena.rivet.facing.dot(dir), -0.99)
 	var body: KerfSpectral = _rig._spectral
 	for age: int in [0, 7, 8, 15, 16]:

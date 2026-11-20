@@ -51,7 +51,7 @@ func _draw() -> void:
 			continue
 		var fade: float = 1.0 - age / hang
 		if _spectral:
-			_slot.place(k, i, stage.tick - k.trail_tick[i], ppm)
+			_slot.place(k, i, stage.tick - k.trail_tick[i], ppm, reduced_motion)
 			_slot.draw(self)
 			continue
 		_path(k.trail_from[i] * ppm, k.trail_to[i] * ppm, fade)
