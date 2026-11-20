@@ -4,11 +4,10 @@ extends Node2D
 
 const TEAL: Color = HaulerLook.TEAL
 const INK: Color = Color(0.09, 0.08, 0.07)
-const WARM: Color = Color("#C9822E")
 const HOT: Color = Color(1.0, 0.97, 0.86)
 const HANDS_M: float = 0.5
 const BLAST_S: float = 0.45
-const FIRE: Color = Color("#E9A23B")
+const FIRE: Color = DentStrap.AMBER
 const BURST_POINTS: int = 9
 const MISS_S: float = 0.4
 const MISS_DASHES: int = 10
@@ -29,6 +28,7 @@ var miss_on: bool = not OS.get_cmdline_user_args().has("--no-dent-miss")
 var debris_on: bool = (
 	GhostAttacks.shipped().num(&"dent", &"blast_debris") > 0.0 and HitFeel.feel_flag() != "off"
 )
+var _overload: DentOverload
 var _strap: DentStrap
 var _body: DentBody
 var _body_group: StringName
@@ -42,6 +42,9 @@ func _ready() -> void:
 		return
 	if DentLook.shipped().resolved() == "strap":
 		_strap = DentStrap.new()
+	_overload = DentOverload.new()
+	_overload.bind(stage, dent)
+	add_child(_overload)
 	_body_group = DentBody.group_for(dent)
 	_anchor = stage.pilot.ghosts.forms.table.form(DentStage.GHOST).anchor(&"hand_r")
 
@@ -49,6 +52,10 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if _strap != null:
 		_strap.advance(dent.car, stage.tick, dent.link.speed, dent.blast_tick)
+	if _overload != null:
+		_overload.ppm = ppm
+		_overload.still = reduced_motion
+		_overload.queue_redraw()
 	if follow_cam != null and dent != null and stage != null:
 		_follow()
 	queue_redraw()
@@ -71,8 +78,6 @@ func _follow() -> void:
 func _draw() -> void:
 	if dent == null or stage == null:
 		return
-	if dent.car != null:
-		_halo(dent.car.pos * ppm, dent.heat)
 	if _strap != null and _strap.showing():
 		_tether()
 	if miss_on and dent.miss_tick >= 0 and dent.car == null:
@@ -84,6 +89,7 @@ func _draw() -> void:
 		if age <= BLAST_S:
 			_blast(dent.blast_at * ppm, age / BLAST_S)
 		_debris(stage.tick - dent.blast_tick)
+		_overload.spokes(self, stage.tick - dent.blast_tick)
 
 
 ## The blast's slabs, `age` ticks after it: WeaponFxDebris draws in Ink's 48 px/m world, so the
@@ -116,24 +122,26 @@ func _tether() -> void:
 				ViewMode.shared().lift_px(VehicleFire.HOOD_H_M) * ppm / SimConst.PX_PER_M
 			)
 	_strap.place(at + _hand_offset, ppm, reduced_motion, ViewMode.shared())
-	_strap.paint(self, DentStrap.fill_at(dent.heat), DentStrap.AQUA)
-
-
-func _halo(c: Vector2, heat: float) -> void:
-	var armed: bool = heat >= dent.num(&"arm_k")
-	var rate: float = 0.5 if armed else 0.2
-	var pulse: float = 0.5 + 0.5 * sin(stage.tick * rate) if not reduced_motion else 0.6
-	var col: Color = WARM.lerp(HOT, heat)
-	var r: float = (1.6 + 0.4 * heat) * ppm
-	draw_circle(c, r, Color(col, (0.1 + 0.3 * heat) * (0.6 + 0.4 * pulse)))
-	draw_arc(c, r, 0.0, TAU, 40, Color(col, 0.4 + 0.5 * heat), 2.0 + 2.0 * heat)
+	var warmth: float = smoothstep(0.0, dent.num(&"arm_k"), dent.heat)
+	var armed: bool = dent.heat >= dent.num(&"arm_k")
+	var pulse: float = 0.5
+	if not reduced_motion:
+		pulse += 0.5 * sin(stage.tick * (0.52 if armed else 0.18))
+	var fill: Color = DentStrap.fill_at(dent.heat).lerp(FIRE, warmth * (0.4 + 0.3 * pulse))
+	var stripe: Color = DentStrap.AQUA.lerp(FIRE.lerp(HOT, pulse * 0.6), warmth)
+	_strap.paint(self, fill, stripe)
 
 
 func _blast(c: Vector2, k: float) -> void:
-	var r: float = dent.num(&"blast_radius_m") * ppm * (1.0 - pow(1.0 - k, 3.0))
+	var radius: float = dent.num(&"blast_radius_m") * ppm
+	# The front hits the preview circle while it is still bright, then fades in place.
+	var expansion: float = 1.0 - pow(1.0 - minf(1.0, (k + 0.035) / 0.65), 2.0)
+	var r: float = radius * expansion
 	if not reduced_motion:
-		_fireball(c, r * 0.7, k)
-	draw_arc(c, r, 0.0, TAU, 48, Color(INK, 1.0 - k), lerpf(10.0, 2.0, k))
+		_fireball(c, r, k)
+	var look: DentLook = DentLook.shipped()
+	draw_arc(c, r, 0.0, TAU, 72, Color(INK, 1.0 - k), look.ring_ink_m * ppm, true)
+	draw_arc(c, r, 0.0, TAU, 72, Color(FIRE, 1.0 - k), look.ring_edge_m * ppm, true)
 
 
 ## The car bomb's fireball: a jagged ink-rimmed burst, amber outside and cream-hot inside, that
