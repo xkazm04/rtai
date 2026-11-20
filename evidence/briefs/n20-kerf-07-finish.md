@@ -45,10 +45,10 @@ frames.json (add the transform and hit strips; keep 8-15 entries, best first).
 Commits, strips and what you saw in each, test / scenario / mutate lines, whether the look row flipped and why.
 
 ## Additions at 04:45 (director)
-- Time-box: steps 1 and 2 together get at most 35 minutes. If flight's morph/emerge is not in `git log` (at 04:45
+- Time-box: steps 1 and 2 together get at most 20 minutes. If flight's morph/emerge is not in `git log` (at 04:45
   it was not: flight's effects-resume run lands it by ~05:18), film the transform with what is there, judge only
   Kerf's side (beams/echo/lens fading in, no legacy legged frame from Kerf's files), and move on.
-- Step 3 is the most valuable outcome of this brief: start it no later than 05:25.
+- Step 3 is the most valuable outcome of this brief: start it no later than 05:35 (the call starts 05:13).
 - Step 3 extra check: `node tools/gate/quick.mjs` cascade-only failures are known (combat/kills depended-scripts
   cascade); use `--no-godot` plus the full unit run and say so.
 - 05:05: the director merged n20-flight before this call (set_emerge ff370f539: body + tail + pool rise/retract with the
