@@ -34,6 +34,8 @@ The soul **trail** stays off (owner verdict, 2026-11-03): powers are not the tra
 
 ## Spectral look
 
+The spectral HUD portrait uses `features/hud/art/ghost_chips/<id>_spectral.png` when supplied and otherwise uses the original chip.
+
 `--ghost-look=legacy|spectral` overrides every form, including in `ghost_review.tscn`. Without the flag, each form uses its `look` in `ghost_forms.json`. Missing and unknown looks select `legacy`. A form lane switches its row to `spectral` only after its body, flight and all attacks are complete and filmed in both tilts (70 and 55 degrees).
 
 Use `--view=tilt70` for the 70-degree art and `--view=tilt` for the 55-degree art. For a matching pair of review PNGs, give both runs the same `--shot-tick` and a different absolute `--shot=<path.png>`. The arena saves the rendered frame and exits.
