@@ -95,6 +95,12 @@ export async function main(argv, { runner = runGodot, out = console.log, err = c
   const r = resolve(entry, rest, { ...(projectDir ? { projectDir } : {}), literals: !opts.anyFlag });
   if (!r.ok) { err(`run: ${r.error}`); return 2; }
   if (r.problems.length) return refuse(r, err);
+  // The runner checks this file after exit. An entry that declares the flag can write it.
+  // Keep an explicit entry argument after "--" verbatim, including for existing callers.
+  if (opts.result && r.spec?.includes('--result') && !r.userArgs.some((arg) => arg.split('=')[0] === '--result')) {
+    if (!r.userArgs.length) r.godotArgs.push('--');
+    r.godotArgs.push(`--result=${opts.result}`);
+  }
   if (r.needsWindow && !opts.windowed) {
     err(`run: ${r.path} renders frames (const NEEDS_WINDOW) and headless draws nothing: add --windowed (the look goldens' evidence path is node tools/selftest/run.mjs); nothing launched`);
     return 2;

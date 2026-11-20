@@ -1,0 +1,90 @@
+{
+  "boss_every": 5,
+  "budget": {
+    "base": 2,
+    "per_wave": 2
+  },
+  "schema": "gtai.gauntlet/1",
+  "segments": [
+    {
+      "id": "plain_block",
+      "length_m": 30,
+      "props": [
+        {
+          "at": [
+            15,
+            -6.5
+          ],
+          "kind": "wall_high",
+          "size": [
+            30,
+            1
+          ]
+        },
+        {
+          "at": [
+            15,
+            6.5
+          ],
+          "kind": "wall_high",
+          "size": [
+            30,
+            1
+          ]
+        },
+        {
+          "at": [
+            17,
+            -2.8
+          ],
+          "kind": "cover_high",
+          "size": [
+            3,
+            1.5
+          ]
+        },
+        {
+          "at": [
+            8,
+            3.7
+          ],
+          "kind": "cover_low",
+          "size": [
+            2.5,
+            1.2
+          ]
+        }
+      ],
+      "spawns": [
+        [
+          24,
+          0
+        ],
+        [
+          20,
+          -4.5
+        ],
+        [
+          18,
+          4.5
+        ]
+      ]
+    }
+  ],
+  "target_wave_s": 15,
+  "tier_map": {
+    "contractor": 1,
+    "patrol_cop": 1,
+    "riot_cop": 2,
+    "robot_gunner": 4,
+    "robot_thug": 3,
+    "swat": 3
+  },
+  "tier_unlock_wave": [
+    1,
+    3,
+    6,
+    9,
+    10
+  ]
+}

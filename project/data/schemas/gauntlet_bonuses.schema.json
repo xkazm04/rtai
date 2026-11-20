@@ -1,0 +1,88 @@
+{
+  "$id": "gtai.gauntlet_bonuses/1",
+  "additionalProperties": false,
+  "properties": {
+    "rows": {
+      "items": {
+        "additionalProperties": false,
+        "else": {
+          "not": {
+            "required": [
+              "k"
+            ]
+          }
+        },
+        "if": {
+          "properties": {
+            "kind": {
+              "const": "stat"
+            }
+          }
+        },
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "k": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
+          "kind": {
+            "enum": [
+              "weapon",
+              "stat",
+              "ghost"
+            ]
+          },
+          "min_wave": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "ref": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "weight": {
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "ref",
+          "min_wave",
+          "weight"
+        ],
+        "then": {
+          "properties": {
+            "ref": {
+              "enum": [
+                "hp_max",
+                "speed",
+                "damage",
+                "guard_meter",
+                "regen"
+              ]
+            }
+          },
+          "required": [
+            "k"
+          ]
+        },
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.gauntlet_bonuses/1"
+    }
+  },
+  "required": [
+    "schema",
+    "rows"
+  ],
+  "type": "object"
+}
