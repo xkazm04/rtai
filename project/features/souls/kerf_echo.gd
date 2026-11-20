@@ -53,7 +53,8 @@ class Pose:
 		var elongate: Transform2D = Transform2D.IDENTITY.scaled(Vector2(1.0 + stretch, 1))
 		global_transform = along * elongate * along.inverse()
 		global_position = anchor
-		modulate = Color(Color.WHITE, ALPHA * fade)
+		# Fade the composite once. Inherited alpha also fades its children into the group.
+		self_modulate = Color(Color.WHITE, ALPHA * fade)
 
 
 static var _wash: ShaderMaterial = _wash_material()

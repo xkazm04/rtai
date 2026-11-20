@@ -70,8 +70,7 @@ func test_one_tilted_departure_holds_the_previous_cell_scale_and_facing() -> voi
 	var echo: KerfEcho.Pose = body._echoes._pool[0]
 	var copy: Sprite2D = echo.sprites[body._echoes._sources.find(body._tilted)]
 	assert_almost_eq(echo.global_position, at, Vector2.ONE * 0.002)
-	assert_almost_eq(echo.modulate.a, 0.35, 0.001)
-	assert_lt(echo.modulate.a, 0.45)
+	assert_almost_eq(echo.self_modulate.a, 0.35, 0.001)
 	assert_eq(body.modulate.a, 1.0)
 	assert_eq(body._tilted.modulate.a, 1.0)
 	var wash: ShaderMaterial = copy.material
@@ -88,7 +87,8 @@ func test_one_tilted_departure_holds_the_previous_cell_scale_and_facing() -> voi
 	_stage.tick += 3
 	_rig.pose()
 	assert_almost_eq(echo.global_scale, Vector2.ONE, Vector2.ONE * 0.0001)
-	assert_almost_eq(echo.modulate.a, 0.35 * KerfSlot.remaining(3, _k.num(&"cut_hang_s")), 0.001)
+	var fade: float = KerfSlot.remaining(3, _k.num(&"cut_hang_s"))
+	assert_almost_eq(echo.self_modulate.a, 0.35 * fade, 0.001)
 	assert_eq(copy.frame_coords, cell)
 
 
@@ -189,6 +189,7 @@ func test_chain_reuses_three_departures_and_each_expires_on_its_own_tick() -> vo
 		_press(Vector2.RIGHT)
 		assert_eq(body._echoes._pool.size(), mini(n + 1, 3))
 		var p: KerfEcho.Pose = body._echoes._pool[n % 3]
+		assert_eq(p.modulate.a, 1.0)
 		assert_eq(p.global_position, _k.trail_from[-1] * 32)
 	_stage.tick += ceili(_k.num(&"cut_hang_s") / SimClock.TICK_DT) - 1
 	_rig.pose()
