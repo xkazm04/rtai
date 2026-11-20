@@ -13,24 +13,28 @@ var _carried_rig: CutRig
 
 func attach(host: GhostFormView, fx: GhostMorphFx) -> void:
 	PlayerScale.fit([tonnage, kerf, ohm])
-	_attach_body(host, tonnage, tonnage.drawn, HaulerStage.GHOST)
-	_attach_body(host, kerf, kerf.drawn, KerfStage.GHOST)
-	_attach_body(host, ohm, ohm.drawn, OhmStage.GHOST)
+	mount_rig(host, tonnage, HaulerStage.GHOST)
+	mount_rig(host, kerf, KerfStage.GHOST)
+	mount_rig(host, ohm, OhmStage.GHOST)
 	fx.reduced_motion = host.reduced_motion
 	host.add_child(fx)
 	dent.lurch_on = host.lurch_on
 	dent.reduced_motion = host.reduced_motion
 	ohm.reduced_motion = host.reduced_motion
-	_attach_body(host, dent, dent.drawn, DentStage.GHOST)
+	mount_rig(host, dent, DentStage.GHOST)
 
 
 func setup_dent(row: GhostFormDef) -> void:
 	dent.setup(row)
-	if dent.drawn.hover:
-		for child: Node in dent.get_children():
+	_carried_rig = standing_rig(dent)
+
+
+static func standing_rig(body: DentBody) -> CutRig:
+	if body.drawn.hover:
+		for child: Node in body.get_children():
 			if child is CutRig:
-				_carried_rig = child as CutRig
-				break
+				return child as CutRig
+	return null
 
 
 func wash() -> void:
@@ -58,7 +62,7 @@ func step_tonnage(p: StagePilot, at: Vector2, facing: float, steps: int) -> bool
 	var forms: GhostForms = p.ghosts.forms
 	var shown: bool = GhostFormView.big(forms, HaulerStage.GHOST)
 	tonnage.visible = shown
-	tonnage.position = _spot(tonnage.drawn, at, facing, steps, shown)
+	tonnage.position = place_body(tonnage.drawn, at, facing, steps, shown)
 	tonnage.rotation = facing
 	tonnage.unfold = GhostFormView.unfold_k(forms, HaulerStage.GHOST)
 	tonnage.speed_mps = (
@@ -81,15 +85,19 @@ func step_dent(p: StagePilot, at: Vector2, facing: float, steps: int, tick: int)
 ## so a moving body never asks its stationary gait to take a catch-up step.
 func _dent_spot(at: Vector2, facing: float, steps: int, shown: bool) -> Vector2:
 	if _carried_rig == null or steps <= 0 or not shown or not dent.visible:
-		return _spot(dent.drawn, at, facing, steps, shown)
-	var spot: Vector2 = _spot(dent.drawn, at, facing, steps, shown)
-	# The flight already supplies yaw lag. Carry the feet through the rig's own turn as well.
-	_carried_rig.snap_facing(facing)
-	RigTilt.aim_up(_carried_rig)
-	var rest: Vector2 = _carried_rig.fwd() * _carried_rig.plan.foot_fwd * CutRig.SC
-	for side: int in _carried_rig.sides.size():
-		_carried_rig.sides[side].plant(_carried_rig.hip_world(side) + rest)
+		return place_body(dent.drawn, at, facing, steps, shown)
+	var spot: Vector2 = place_body(dent.drawn, at, facing, steps, shown)
+	carry_feet(_carried_rig, facing)
 	return spot
+
+
+static func carry_feet(rig: CutRig, facing: float) -> void:
+	# The flight already supplies yaw lag. Carry the feet through the rig's own turn as well.
+	rig.snap_facing(facing)
+	RigTilt.aim_up(rig)
+	var rest: Vector2 = rig.fwd() * rig.plan.foot_fwd * CutRig.SC
+	for side: int in rig.sides.size():
+		rig.sides[side].plant(rig.hip_world(side) + rest)
 
 
 func step_light(rig: Node2D, forms: GhostForms, at: Vector2, facing: float, steps: int) -> bool:
@@ -99,7 +107,7 @@ func step_light(rig: Node2D, forms: GhostForms, at: Vector2, facing: float, step
 	rig.visible = shown
 	var last: Vector2 = _light_last.get(id, at)
 	_light_last[id] = at
-	var spot: Vector2 = _spot(drawn, at, facing, steps, shown)
+	var spot: Vector2 = place_body(drawn, at, facing, steps, shown)
 	if not shown:
 		return false
 	rig.position = spot
@@ -117,12 +125,19 @@ func feed(pilot: StagePilot, rivet: Fighter, tick: int) -> void:
 	GhostActs.feed(drawn, pilot, rivet, tick)
 
 
-func _spot(drawn: GhostDrawn, at: Vector2, facing: float, steps: int, shown: bool) -> Vector2:
+static func place_body(
+	drawn: GhostDrawn, at: Vector2, facing: float, steps: int, shown: bool
+) -> Vector2:
 	if drawn.flight == null:
 		return at
 	drawn.flight.visible = shown
 	drawn.flight.step(at, facing, steps)
 	return Vector2.ZERO
+
+
+static func mount_rig(parent: Node2D, rig: Node2D, id: StringName) -> void:
+	var drawn: GhostDrawn = rig.get(&"drawn")
+	_attach_body(parent, rig, drawn, id)
 
 
 static func _attach_body(parent: Node2D, body: Node2D, drawn: GhostDrawn, id: StringName) -> void:

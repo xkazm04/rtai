@@ -674,3 +674,5 @@ Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, Number(process.env.
 lines past 40 go to `build/lint/<check>.txt`, and the last line printed says where and how many.
 
 Film a ghost in both native-scale views with `node tools/film/ghost_films.mjs --ghost=kerf --look=spectral --out=build/ghosts --takes=move,attack,close --stills=163`. Each take gets a 1920 by 1080 movie and a JPEG poster. Turn stills use 64 px/m.
+
+Use `node tools/film/ghost_films.mjs --all --look=spectral --out=build/ghosts --name=all_ghosts_32` for a 40-second reel. Each form gets five seconds of movement and five seconds of attack at 32 px/m. The JPEG poster shows Tonnage at arena tick 163.

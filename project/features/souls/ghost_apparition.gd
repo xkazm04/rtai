@@ -1,11 +1,7 @@
 class_name GhostApparition
 extends Node2D
-## ghost-forms: a ghost speaking (the voice moments): the ghost's own body (its form rig) beside
-## Rivet, at his left shoulder and turned in to him, every part washed teal through
-## ghost_apparition.gdshader (its rims a pale-teal glow edge), with a thin teal tether to Rivet. It
-## flickers in, hovers while the voice speaks, and fades out. Cued by the stage's whispers_spiked
-## while Rivet is in base (the selected ghost speaks; in a form the ghost IS Rivet, so no
-## apparition), or every `dev_every` ticks (dev `--apparition`). Render-only, stepped on sim ticks.
+## A speaking ghost beside Rivet. The voice uses its form rig, with a teal wash, scan bands
+## and a tether. Whispers in base or the dev cue start its tick-driven envelope.
 
 const SHADER: Shader = preload("res://features/souls/ghost_apparition.gdshader")
 const TEAL_HI: Color = GhostMorphFx.TEAL_HI
@@ -33,6 +29,7 @@ var _hold: int = HOLD
 var _forms: GhostForms = null
 var _rigs: Dictionary[StringName, Node2D] = {}
 var _dent: DentBody = DentBody.new()
+var _dent_rig: CutRig
 var _tether: Line2D = Line2D.new()
 var _dev_slot: int = -1
 var _mat: ShaderMaterial = ghost_material(false, 0.2)
@@ -49,13 +46,12 @@ func bind(forms: GhostForms, events: EventBus) -> void:
 	_rigs[HaulerStage.GHOST] = TonnageRig.new()
 	_rigs[KerfStage.GHOST] = KerfRig.new()
 	_rigs[OhmStage.GHOST] = OhmRig.new()
-	for rig: Node2D in _rigs.values():
-		rig.visible = false
-		add_child(rig)
-	_dent.reduced_motion = reduced_motion
-	add_child(_dent)
-	_dent.setup(forms.table.form(DentStage.GHOST) if forms != null else null)
 	_rigs[DentStage.GHOST] = _dent
+	for key: StringName in _rigs:
+		GhostFormBodies.mount_rig(self, _rigs[key], key)
+	_dent.reduced_motion = reduced_motion
+	_dent.setup(forms.table.form(DentStage.GHOST) if forms != null else null)
+	_dent_rig = GhostFormBodies.standing_rig(_dent)
 	if events != null:
 		@warning_ignore("return_value_discarded")
 		events.whispers_spiked.connect(_on_whispers)
@@ -69,7 +65,12 @@ func say(p_id: StringName, hold: int = HOLD) -> void:
 	_hold = hold
 	_age = 0
 	Log.info("souls", "ghost voice: %s beside Rivet" % p_id)
-	wash(self, _mat, _rim_mat)
+	_tether.material = _mat
+	for rig: Node2D in _rigs.values():
+		var drawn: GhostDrawn = rig.get(&"drawn")
+		drawn.release_fade()
+		rig.material = _mat
+		wash(rig, _mat, _rim_mat)
 
 
 ## Every part under `n` draws through `mat` (the ghost material), its sticker rims through
@@ -124,11 +125,14 @@ func step(at: Vector2, facing: float, steps: int, tick: int) -> void:
 			_age = -1
 	visible = _age >= 0
 	for key: StringName in _rigs:
-		if key != id or not visible:
-			_rigs[key].visible = false
-	if not visible:
-		return
-	_pose(at, facing, steps, tick)
+		var rig: Node2D = _rigs[key]
+		if rig.visible and (key != id or not visible):
+			var drawn: GhostDrawn = rig.get(&"drawn")
+			@warning_ignore("return_value_discarded")
+			GhostFormBodies.place_body(drawn, at, facing, 0, false)
+			rig.visible = false
+	if visible:
+		_pose(at, facing, steps, tick)
 
 
 func _pose(at: Vector2, facing: float, steps: int, tick: int) -> void:
@@ -139,17 +143,7 @@ func _pose(at: Vector2, facing: float, steps: int, tick: int) -> void:
 	var side: Vector2 = side_of(fwd, not ViewMode.shared().art.is_empty())
 	var spot: Vector2 = at + (side * (side_m + drift) - fwd * BACK_M) * SimConst.PX_PER_M
 	var pop: float = 1.0 if reduced_motion else lerpf(0.88, 1.0, minf(1.0, _age / float(FADE_IN)))
-	var rig: Node2D = _rigs[id]
-	if rig == _dent:
-		_dent.step(true, spot, facing + TURN_IN, steps, tick)
-	else:
-		rig.visible = true
-		rig.position = spot
-		rig.rotation = facing + TURN_IN
-		rig.set(&"unfold", 1.0)
-		rig.set(&"speed_mps", 0.0)
-		rig.call(&"advance", steps * SimClock.TICK_DT)
-	rig.scale = Vector2.ONE * (BIG_K if big else 1.0) * pop
+	spot = _body(spot, facing + TURN_IN, steps, tick, (BIG_K if big else 1.0) * pop)
 	var mid: Vector2 = (at + spot) * 0.5 + fwd * (0.0 if reduced_motion else sin(tick * 0.11) * 6.0)
 	_tether.points = PackedVector2Array([at, mid, spot])
 	var flick: float = 0.35 if not reduced_motion and _age >= 4 and _age < 8 else 1.0
@@ -157,6 +151,37 @@ func _pose(at: Vector2, facing: float, steps: int, tick: int) -> void:
 	var band: float = 0.0 if reduced_motion else tick * 0.02
 	_mat.set_shader_parameter(&"band_phase", band)
 	_rim_mat.set_shader_parameter(&"band_phase", band)
+
+
+func _body(spot: Vector2, yaw: float, steps: int, tick: int, size: float) -> Vector2:
+	var rig: Node2D = _rigs[id]
+	var drawn: GhostDrawn = rig.get(&"drawn")
+	if drawn.flight != null:
+		# Scale the voice's shadow, ribbon and body about their shared ground point.
+		drawn.flight.scale = Vector2.ONE * size
+		drawn.flight.position = spot * (1.0 - size)
+		rig.scale = Vector2.ONE
+		size = 1.0
+	var local_spot: Vector2 = GhostFormBodies.place_body(drawn, spot, yaw, steps, true)
+	if rig == _dent:
+		if _dent_rig != null and _dent.visible and steps > 0:
+			GhostFormBodies.carry_feet(_dent_rig, yaw)
+		_dent.step(true, local_spot, yaw, steps, tick)
+	else:
+		rig.visible = true
+		rig.position = local_spot
+		rig.rotation = yaw
+		rig.set(&"unfold", 1.0)
+		rig.set(&"speed_mps", 0.0)
+		rig.call(&"advance", steps * SimClock.TICK_DT)
+	rig.scale = Vector2.ONE * size
+	if drawn.flight != null:
+		var phase: float = 0.0 if reduced_motion else tick * 0.02
+		GhostBridgeFade.voice(drawn.sprite(), _mat, phase)
+		if not ViewMode.shared().is_flat():
+			return to_local(drawn.flight.tail.points()[0])
+		return to_local(rig.global_position)
+	return spot
 
 
 func _dev_cue(tick: int) -> void:

@@ -32,3 +32,19 @@ test('morph has its own native 32 px/m take', () => {
   assert.deepEqual(p.takes, ['morph']);
   assert.equal(stem(p, 'morph'), 'flight_kerf_morph_32');
 });
+
+test('all selects eight ordered chapters and a single named reel', () => {
+  const base = ['--all', '--look=spectral', '--out=build/ghosts'];
+  assert.equal(plan(base).name, 'all_ghosts_32');
+  const reel = plan([...base, '--name=morning']);
+  assert.equal(reel.name, 'morning');
+  assert.equal(reel.look, 'spectral');
+  assert.deepEqual(reel.chapters.map(c => c.ghost + '/' + c.take), [
+    'tonnage/move', 'tonnage/attack', 'dent/move', 'dent/attack',
+    'kerf/move', 'kerf/attack', 'ohm/move', 'ohm/attack',
+  ]);
+  for (const arg of ['--ghost=kerf', '--takes=move', '--stills=163', '--prefix=x', '--name=../escape']) {
+    assert.throws(() => plan([...base, arg]));
+  }
+  assert.throws(() => plan([...args, '--name=morning']), /--all/);
+});

@@ -109,3 +109,39 @@ func test_hover_loads_combat_and_standing_cells_and_can_return_to_the_run_grid()
 	assert_true(tonnage.step(press, [], SimConst.PX_PER_M, 1.0))
 	assert_null(tonnage._walk._profile_mid)
 	assert_true(tonnage._walk._intervals.is_empty(), "hover skips the gait in-betweens")
+
+
+func test_a_form_can_release_the_bridge_after_its_shared_cell_was_shown() -> void:
+	ViewMode.select("tilt70")
+	var host: Node2D = add_child_autofree(Node2D.new())
+	var flight: GhostFlight = add_child_autofree(GhostFlight.make(&"kerf"))
+	var drawn: GhostDrawn = GhostDrawn.new("kerf", 1.8, 150.0, 173.0)
+	drawn.hover = true
+	drawn.release_fade()
+	drawn.flight = flight
+	flight.step(Vector2.ZERO, 0.0, 1)
+	assert_true(drawn.step(host, [], 32.0, 1.0, 0.0))
+	assert_not_null(drawn.sprite().material)
+	drawn.release_fade()
+	assert_null(drawn.sprite().material)
+	assert_eq(flight.tail._socket_width, 0.0)
+
+
+func test_last_hurt_tick_tracks_the_combat_feed() -> void:
+	var acts: GhostDrawnActs = GhostDrawnActs.new()
+	assert_eq(acts.hurt_tick(), -1)
+	acts.feed(0, 10, 12)
+	assert_eq(acts.hurt_tick(), 10)
+	acts.feed(1, 14, 17)
+	assert_eq(acts.hurt_tick(), 14)
+
+
+func test_only_a_named_spectral_aura_yields_the_ground_to_its_flight_shadow() -> void:
+	var aura: GhostAura = autofree(GhostAura.new())
+	GhostLook.override_for_test(GhostLook.SPECTRAL)
+	assert_true(aura.draws_pool())
+	aura.form_id = &"dent"
+	assert_false(aura.draws_pool())
+	GhostLook.override_for_test(GhostLook.LEGACY)
+	assert_true(aura.draws_pool())
+	GhostLook.reset_for_test()
