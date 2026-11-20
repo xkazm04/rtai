@@ -3,7 +3,10 @@
 Branch `n20-dent` (worktree `C:\Users\kazda\kiro\gtai-wt\n20-dent`), cut from `int-n20` `a3eb0bf78`;
 merges `n20-flight` only. Plate: `C:\Users\kazda\kiro\gtai-masters\n20\concepts\dent_a.png` (+ `dent_c.png`
 borrow). Evidence root: `C:\Users\kazda\kiro\gtai-masters\n20\dent\` (`frames.json` best first).
-Final gate: TODO `node tools/gate/run.mjs --rev=HEAD` line + `gate.json` path.
+Final gate: TODO quote the line from `evidence/gate-final.out.txt` (`node tools/gate/run.mjs --rev=86fad2566`,
+started 05:36) + the `build/gate/86fad256*/gate.json` path.
+
+**Dent now defaults to the spectral Ejected look** (`6d9b5e7a6`); the old body is reachable with `--ghost-look=legacy`.
 
 ## What works (item, evidence, number)
 - **Body art, legless, both tilts + top** (a1, 5 sheets, take 1 each; top parts take 1 of 3):
@@ -41,11 +44,25 @@ Final gate: TODO `node tools/gate/run.mjs --rev=HEAD` line + `gate.json` path.
 - **Overload reads as one attack** in both views: `scratch/a5/overload_heat_t234.png` (amber strap,
   dashed 4.5 m ring on the road around the car) and `scratch/a5/overload_blast_t239.png` (the blast
   fills that ring from the car, a spoke to the struck guard).
-- TODO chip / overload tests (a6).
+- **Second play tilt (55 degrees)**: `scratch/a6/tilt55_sheet.jpg` (64 px/m: dive t110, turn t163, jab t94,
+  strap t160, heat t234, blast t239): legless p55 cells, strap and ring correct.
+- **HUD chip**: `42dcad19f` `dent_spectral.png` cut from the p55 front hover cell (no new drawing),
+  still `scratch/a6/chip.png`.
+- **Overload tests**: `854d276fe`, `007c4cccd`; mutate `dent_overload.gd` 13/20 (was 4/20).
+- **Default look**: `961862cb9` (null guards in flight's host test: a ghost drawing its own body has no
+  shared sprite or legacy rig), `6d9b5e7a6` Dent's row `look: spectral`. `--changed` 3252 pass 0 fail
+  2 skip; quest1_dent, quest1_dent_lock, replay_60s pass; replay `cbeb734ff9b97c41` unchanged.
+- Mutate scores: `dent_spectral_drawn` 14/20, `dent_strap` 16/20, `dent_strings` 16/20, `dent_overload` 13/20.
 
 ## What does not
-- TODO. Known: overload mutate 4/20 at a3b (a6 item 4); the generic white hit star at blast +0
-  still dominates (shared, not Dent's); left facings are mirrors (belt diagonal flips).
+- Hit reaction (HIT cell + tail flicker) not checked tonight; the transformation is flight's shared
+  stages (filmed: `dent_morph_32.mp4`, no legs), not Dent's own roundel-by-roundel ignition.
+- Left facings are mirrors (the belt diagonal flips); not judged at 64 px/m.
+- The seized car is tinted teal in the tilt views but drawn untinted (cream) in the top view (vehicle
+  top sprite, not Dent's file); the generic white hit star at blast +0 is loud (shared).
+- Strings: 1 px core; at 32 px/m his two hands sit about 0.3 m apart.
+- The flight aura opt-out (`fa2b4dac7`) is not merged here: Dent's spectral body still draws the
+  shared aura's ground rings beside flight's light pool (see Merge notes).
 
 ## What blocked or slowed you (minutes each)
 - a2 cut off with the iteration-1 director session (background Bash dies with the session): ~10 min
@@ -70,9 +87,10 @@ Final gate: TODO `node tools/gate/run.mjs --rev=HEAD` line + `gate.json` path.
      any range, and costs less). Strings stay one data value away; worth a second pass (hands wider
      apart, 2 px core, the car tipping on the turn) only if you want the marionette.
 2. Keying on magenta instead of chroma green for Dent's sheets (DECISION 00:30).
-3. Left facings mirrored (belt diagonal flips): TODO still.
-4. Dent's `ghost_forms.json` row: TODO stays legacy-default unless body+flight+all attacks are filmed
-   in both tilts and gate-green.
+3. Left facings mirrored (belt diagonal flips): not judged tonight; new left-facing cells would be one more sheet each.
+4. Dent's `ghost_forms.json` row is now `spectral` by default (DECISION 05:17; tilt 70 + top filmed, 55
+   checked in stills, gate on the final commit). If you prefer the old body until the hit reaction and
+   his own transformation land, it is one value back to `legacy`.
 
 ## Merge notes
 - Root `JOURNAL.md`: flight's committed journal arrived through `git merge n20-flight` (8dc2b5b37);
@@ -85,10 +103,13 @@ Final gate: TODO `node tools/gate/run.mjs --rev=HEAD` line + `gate.json` path.
   merge: after merging both, add the one line `_aura.form_id = &"dent"` in
   `project/features/souls/dent_body.gd` (flight's request) so Dent's spectral body draws one ground light.
 - `project/tests/unit/test_ghost_flight_hosts.gd` (flight's): Dent added a null-sprite guard at line
-  114 (a ghost with `own_body` has no shared sprite). Flight accepted it: take n20-dent's version.
+  114 (a ghost with `own_body` has no shared sprite). Flight accepted it: take n20-dent's version. The merge preview also flags n20-tonnage touching the same
+  test: keep both lanes' guards.
 
 ## Next steps
-- TODO
+- Merge `n20-flight` again and set `_aura.form_id = &"dent"` (one line).
+- Hit reaction (HIT cell + tail flicker) in both tilts and top; Dent's own transformation detail.
+- Strings second pass only if the owner wants the marionette: hands wider apart, 2 px core, the car tipping on the turn.
 
 ## Astra ledger
 | tag | minutes | verdict | notes |
@@ -100,3 +121,12 @@ Final gate: TODO `node tools/gate/run.mjs --rev=HEAD` line + `gate.json` path.
 | a4-strings | 65 | accepted | strings, two-hand cell, side-by-side film + eval tools; full scenario run cut at 52/65 |
 | a4b-strings-hands | 0 | skipped | its main item landed in a4 (`526781c9e`) |
 | a5-films | 9 | accepted | four films + posters, plate still, frames.json; flight's film tool made it fast |
+| a6-chip-tests | 21 | accepted | chip, overload tests 13/20 |
+| a6b-tilt55-default | 9 | accepted (flip held back) | 55 stills; found the red host test |
+| a6c / a6d | 1 + 1 | bounced | stopped at each new null / lint line instead of fixing its own edit |
+| a6e-fit-and-flip | 5 | accepted | test guard + the flip |
+
+What I would brief differently: say up front "fix lint and format findings in your own edit and go on";
+the stop-on-anything wording cost two round trips (a6c, a6d). And run the whole unit suite after every
+`git merge n20-flight`, not only the selected Dent tests: the red host test came in at 04:47 and was
+found at 05:26.
