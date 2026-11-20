@@ -77,3 +77,6 @@ The clip and still paths, what you saw in each, the frames.json order, commit ha
   guard whole with the slot through it. If flight's merge brings anything that puts legs or a ground ring
   back on Kerf, report it in one NEED flight line; do not edit flight's files.
 - Keep the session under 60 minutes: if a step runs long, drop `kerf_tilt55_32.mp4` to the 55 still strip.
+- (03:33) Step 0 is DONE: the director merged n20-flight (91af03d90) and committed kerf's JOURNAL.md (d30c96ae4).
+  Do not merge again in this session. `tools/film/ghost_films.mjs` is in the tree now. Never edit, stage or
+  commit JOURNAL.md or evidence/briefs/* (the director's files).

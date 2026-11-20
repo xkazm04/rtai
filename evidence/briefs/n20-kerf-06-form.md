@@ -13,11 +13,10 @@ message, do not edit it.
 
 The plate: `C:\Users\kazda\kiro\gtai-masters\n20\concepts\kerf_a.png`. Look at it before judging any frame.
 
-## Step 0: merge
-`git log --oneline HEAD..n20-flight`; if anything is new, `git merge n20-flight` (the only merge allowed).
-Flight's package 3 brings the shared transformation (morph take + emerge), the soul line fade, the aura opt-out,
-the apparition hover, the hit lean (12 degrees for Kerf, `GhostRecoil.LEAN_BY_FORM`) and a denser tail root.
-Abort and report on conflict. Run `node tools/tests/run_unit.mjs --changed` after the merge.
+## Step 0: no merge
+The director merges n20-flight before this session starts (JOURNAL.md conflicts otherwise). Do NOT run
+`git merge`. Never edit, stage or commit JOURNAL.md or evidence/briefs/*. Note `git log --oneline -3` and whether
+flight's package 3 (morph take, emerge, hit lean) is in the tree; steps 1 and 2 need it, else skip them and say so.
 
 ## Step 1: transformation in and out, under --ghost-look=spectral
 Film strips (top view below the 70 tilt, 32 px/m, every 3 ticks across the whole enter_s and exit_s) of base Rivet
@@ -32,7 +31,25 @@ must tilt the whole spectral body (tilted cell and top-view parts alike, beams f
 flinch to the slit for a few ticks (view only: KerfSpectral reads whatever hit signal the rig already has; if there
 is none without touching a non-kerf file, skip the flinch and say so). `kerf_hit_strip.png`.
 
-## Step 3: (filled in by the director after the films)
+## Step 3: what the director saw in the films (do these FIRST, before steps 1 and 2)
+3a. ONE BODY SIZE. `kerf_plate_vs_game.png`: the 70-tilt cruise cell is about 140 px nose-to-tail against about
+    185 px for the top-view hull at the same 64 px/m (the tilt body is ~75 % of the top body). Same in
+    `kerf_turn_64_t163.png`. Measure both (hull nose tip to hull rear, not the beams) for CRUISE and POISED in
+    p70 and p55, and scale the tilted cell (KerfSpectral.GRID_PX_PER_M or a per-mood factor in kerf code) so the
+    tilted body's length along the screen x axis matches the top view within 5 %. Vertical stays foreshortened
+    by the tilt as now. Re-check that the beams start at the hull's rear in both views after the change.
+3b. COCKED ON THE AIM LINE IN PLAY TILT. `kerf_creature_32.png`: poised near a guard, the 70-tilt cell does not
+    point at the guard; `pose()` applies `_yaw` only when `_sheet == null` (top view). When a target is in sight
+    (`locked`), draw the tilted cell at the octant of `facing + yaw_to_target` (the full unclamped yaw is fine
+    for the drawn octant; view only, KerfStage aim and the sim untouched) and point the beams the same way, so
+    in play tilt his nose is on the guard and the lens is at the half/slit state like the top view. Render
+    `kerf_creature_32.png` again (same layout) and a pair: before/after of that frame.
+3c. RE-FILM after 3a/3b with the same commands you used in brief 04 (the current `kerf_close_64.mp4` idle-to-slice
+    take is the right content: keep it): `kerf_move_32`, `kerf_attack_32`, `kerf_close_64`, `kerf_tilt55_32`,
+    `kerf_plate_vs_game.png`, `kerf_creature_32.png`. `kerf_attack_32.jpg` poster: pick a press tick with one long
+    slot, the after-image and a STANDING guard (the current poster is a crowd with short slots). Keep the old
+    versions as `before/<name>` in the same folder for the pair. Update frames.json notes.
+Then steps 1 and 2 if time allows (the session ends at 75 min: commit each finished step as it lands).
 
 ## Checks before each commit
 `node tools/gate/quick.mjs` (if it fails ONLY with the "Failed to compile depended scripts" cascade on

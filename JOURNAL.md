@@ -131,3 +131,31 @@ NEXT:
 - 03:29 ASTRA RUNNING films since 03:29 (fresh; brief evidence/briefs/n20-kerf-04-films.md + additions; output logs/kerf/films.out.txt)
 - 03:29 ASTRA films 1 abandoned (merge refused: flight tracks a root JOURNAL.md, ours was untracked). FRICTION ~3 min.
 - 03:31 Merged n20-flight myself (91af03d90, clean: film tool, chip loader 4362c8109, tail 0b, own_body). Replaced flight's root JOURNAL.md with kerf's and committed it + the briefs. MERGE NOTE: root JOURNAL.md is per-lane; the Director keeps each lane's copy.
+- 03:33 ASTRA RUNNING films2 since 03:33 (fresh; brief 04 + additions; out logs/kerf/films2.out.txt)
+- 04:00 ASTRA films2 29 accepted (f0676335f decisions lines; films move/attack/close/tilt55/legacy + posters, plate_vs_game, creature, hud chip, frames.json 15). Quick: cascade only -> --no-godot; unit 3232/0/2; mutate kerf_victim 18/18 (100 %).
+  LOOKED: move_32 one legless dart both views, sharp turns; close_64 idle-to-slice: poised with aim line, long slot from after-image. WEAK: (a) 70-tilt body ~75 % of the top hull length (plate_vs_game 140 vs 185 px); (b) poised in play tilt is not turned onto the guard (_yaw only applied in the top view); (c) attack poster is a crowd with short slots. -> brief 06 step 3.
+- 04:04 ASTRA RUNNING form since 04:04 (fresh; brief evidence/briefs/n20-kerf-06-form.md: step 3a size, 3b aim in tilt, 3c re-film; steps 1-2 need flight pkg 3 (not on n20-flight yet at 04:03)).
+- 04:06 Brief 07 written (evidence/briefs/n20-kerf-07-finish.md): transform in/out + hit strips (flight pkg 3), then the
+  kerf look row -> spectral only if every listed check holds; hard stop 06:00.
+- 04:20 flight (message): tail 0b on n20-flight 5e906fd53 (dense bright root aft of body, soft round puffs near the tip, no chevrons); chip 4362c8109 (already merged). Merge before brief 07, after the form call ends.
+- 04:16 form 3a committed 7b8d88100 (tilted cell 69 px/m p70 / 72 p55, was 91.67; beams seated in the rear sockets).
+- 04:22 form 3b committed 7f009c5b0 (locked target -> tilted cell + beams take the octant of the bearing; view only).
+- 04:33 LOOKED new kerf_attack_32.jpg poster (input tick 96, 32 px/m): after-image, one slot through a STANDING guard, Kerf
+  past him, both views. Good poster. Re-films still running.
+- 04:38 Session 3 ends. ASTRA RUNNING form since 04:01 (lock pid 2348; out C:\Users\kazda\kiro\gtai-n20\logs\kerf\form.out.txt;
+  75 min cap = ends by 05:16).
+NEXT:
+  1. Wait for the form call to end (lock gone); read form.out.txt. LOOK at the re-made kerf_plate_vs_game.png (tilt hull
+     length now ~ top hull?), kerf_creature_32.png (nose on the guard in play tilt?), kerf_close_64 / move_32 frames
+     (ffmpeg tile: `ffmpeg -i X.mp4 -vf "select='not(mod(n\,24))',scale=640:-1,tile=4x3" -frames:v 1 out.png`).
+     Log `ASTRA form <min> accepted|bounced`. Steps 1-2 of brief 06 (transform/hit) were deferred to brief 07.
+  2. Merge n20-flight MYSELF (JOURNAL.md conflicts: `cp JOURNAL.md` aside, `git merge n20-flight`; on a JOURNAL.md
+     conflict `git checkout --ours JOURNAL.md`; then restore kerf's copy and commit). Flight pkg 3 so far: 5e906fd53
+     tail 0b; morph/emerge/hit lean may follow (check `git log n20-flight`).
+  3. Start brief 07 (evidence/briefs/n20-kerf-07-finish.md, ready): transform strip, hit strip, then the look row ->
+     spectral only if every check holds. HARD STOP 06:00 for code.
+  4. 06:15 final gate: `node tools/gate/run.mjs --rev=HEAD` (export APPDATA first); quote its line + gate.json path.
+     After 07:30 freeze: `--reels` once if time. REPORT.md by 07:40 (sections per the lane rules; Calls: the
+     victim one-line call sites in combat/kills (kill_marks.gd:50, kill_split_fx.gd:110, kill_view.gd:142) for the
+     Director to accept or move; quick.mjs false cascade FRICTION; JOURNAL.md merge FRICTION). Run
+     `node tools/evidence/cites.mjs REPORT.md` before the final commit; commit JOURNAL.md + REPORT.md + briefs.
