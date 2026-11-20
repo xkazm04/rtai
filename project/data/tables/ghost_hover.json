@@ -24,12 +24,18 @@
           -0.18,
           0
         ],
+        "curl_m": 0.14,
+        "flow_ticks": 43,
         "fray": 0.21,
         "length_m": 1.35,
+        "rise_m": 0.32,
         "segments": 8,
+        "spread_m": 0.53,
+        "strands": 1,
         "stretch_k": 0.06,
         "swing_k": 0.64,
-        "width_m": 0.48
+        "width_m": 0.48,
+        "wisps": 6
       },
       "top_mps": 7
     },
@@ -57,12 +63,18 @@
           -0.25,
           0
         ],
+        "curl_m": 0.035,
+        "flow_ticks": 32,
         "fray": 0.13,
         "length_m": 2.2,
+        "rise_m": 0.12,
         "segments": 12,
+        "spread_m": 0.17,
+        "strands": 3,
         "stretch_k": 0.11,
         "swing_k": 0.82,
-        "width_m": 0.28
+        "width_m": 0.28,
+        "wisps": 4
       },
       "top_mps": 12
     },
@@ -90,12 +102,18 @@
           -0.08,
           0
         ],
+        "curl_m": 0.2,
+        "flow_ticks": 116,
         "fray": 0.25,
         "length_m": 1.45,
+        "rise_m": -0.55,
         "segments": 9,
+        "spread_m": 0.54,
+        "strands": 5,
         "stretch_k": 0.04,
         "swing_k": 0.73,
-        "width_m": 0.34
+        "width_m": 0.34,
+        "wisps": 7
       },
       "top_mps": 4.5
     },
@@ -123,12 +141,18 @@
           -0.46,
           0
         ],
+        "curl_m": 0.36,
+        "flow_ticks": 95,
         "fray": 0.16,
         "length_m": 1.05,
+        "rise_m": 3,
         "segments": 7,
+        "spread_m": 0.64,
+        "strands": 2,
         "stretch_k": 0.025,
         "swing_k": 0.48,
-        "width_m": 1.04
+        "width_m": 1.04,
+        "wisps": 8
       },
       "top_mps": 4.2
     }

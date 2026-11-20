@@ -109,6 +109,16 @@
                 "minItems": 2,
                 "type": "array"
               },
+              "curl_m": {
+                "maximum": 3,
+                "minimum": 0,
+                "type": "number"
+              },
+              "flow_ticks": {
+                "maximum": 600,
+                "minimum": 1,
+                "type": "integer"
+              },
               "fray": {
                 "maximum": 1,
                 "minimum": 0,
@@ -119,9 +129,24 @@
                 "minimum": 0.05,
                 "type": "number"
               },
+              "rise_m": {
+                "maximum": 6,
+                "minimum": -3,
+                "type": "number"
+              },
               "segments": {
                 "maximum": 32,
                 "minimum": 2,
+                "type": "integer"
+              },
+              "spread_m": {
+                "maximum": 4,
+                "minimum": 0,
+                "type": "number"
+              },
+              "strands": {
+                "maximum": 5,
+                "minimum": 1,
                 "type": "integer"
               },
               "stretch_k": {
@@ -138,6 +163,11 @@
                 "maximum": 4,
                 "minimum": 0.01,
                 "type": "number"
+              },
+              "wisps": {
+                "maximum": 12,
+                "minimum": 0,
+                "type": "integer"
               }
             },
             "required": [

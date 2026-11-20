@@ -31,6 +31,12 @@ class Tail:
 	var swing_k: float
 	var segments: int
 	var fray: float
+	var strands: int
+	var spread_m: float
+	var rise_m: float
+	var wisps: int
+	var flow_ticks: int
+	var curl_m: float
 
 	func _init(t: DataTable, r: Dictionary) -> void:
 		anchor_m = t.vec(r, "anchor_m")
@@ -40,6 +46,12 @@ class Tail:
 		swing_k = t.num(r, "swing_k")
 		segments = t.integer(r, "segments")
 		fray = t.num(r, "fray")
+		strands = r.get("strands", 1)
+		spread_m = r.get("spread_m", 0.0)
+		rise_m = r.get("rise_m", 0.0)
+		wisps = r.get("wisps", 3)
+		flow_ticks = r.get("flow_ticks", 60)
+		curl_m = r.get("curl_m", 0.12)
 
 
 class Shadow:
