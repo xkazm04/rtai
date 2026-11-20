@@ -1,0 +1,110 @@
+{
+  "_doc": "Eight drawn facings, six pose-pair masters selected for comparison. Each file is the original generation; accepted records the shipping verdict.",
+  "review": {
+    "verdict": "keep_mirror",
+    "reason": "At 32 and 64 px/m the new rear jar bank reads clearly. Several left profiles hide most of the staff, recovery resembles idle and struck resembles drift. After shared idle-height calibration, 27 of 48 p70 and 22 of 48 p55 coat heights exceed the 5% tolerance. The largest increases are p70 left struck (+19.9%) and p55 away-right recovery (+12.1%).",
+    "boards": [
+      "masters:n21/polish/ohm/ohm_eight_vs_shipped_p70_32.png",
+      "masters:n21/polish/ohm/ohm_eight_vs_shipped_p70_64.png",
+      "masters:n21/polish/ohm/ohm_eight_vs_shipped_p55_32.png",
+      "masters:n21/polish/ohm/ohm_eight_vs_shipped_p55_64.png"
+    ]
+  },
+  "cut_command": "python -B tools/art/ohm_n21_eight_cut.py --masters-root C:/Users/kazda/kiro/gtai-masters --board-dir C:/Users/kazda/kiro/gtai-masters/n21/polish/ohm",
+  "masters": {
+    "ohm_eight_p55_a": {
+      "accepted": false,
+      "date": "2026-11-20",
+      "file": "masters:n21/polish/masters/ohm_eight_p55_a_t3.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n21/polish/ohm_eight_p55_a.md",
+      "references": [
+        "masters:n20/ohm/masters/ohm_spec_p55_t3.png",
+        "masters:n20/concepts/ohm_c.png",
+        "masters:n6/ghost-forms/gen/r4/out/ohm_parts.png"
+      ],
+      "seed": null,
+      "sha256": "c17cdc27418a23c1fef8035d44c082d7d239b3bc9094cd9ab94232861c30822b",
+      "tool": "codex-image"
+    },
+    "ohm_eight_p55_b": {
+      "accepted": false,
+      "date": "2026-11-20",
+      "file": "masters:n21/polish/masters/ohm_eight_p55_b_t1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n21/polish/ohm_eight_p55_b.md",
+      "references": [
+        "masters:n20/ohm/masters/ohm_spec_p55_t3.png",
+        "masters:n20/concepts/ohm_c.png",
+        "masters:n6/ghost-forms/gen/r4/out/ohm_parts.png",
+        "masters:n21/polish/masters/ohm_eight_p55_a_t3.png"
+      ],
+      "seed": null,
+      "sha256": "5241fc762e9907f588932f8901144589a4ea7b8c191cf5cc8b3492656b8000cf",
+      "tool": "codex-image"
+    },
+    "ohm_eight_p55_c": {
+      "accepted": false,
+      "date": "2026-11-20",
+      "file": "masters:n21/polish/masters/ohm_eight_p55_c_t2.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n21/polish/ohm_eight_p55_c.md",
+      "references": [
+        "masters:n20/ohm/masters/ohm_spec_p55_t3.png",
+        "masters:n20/concepts/ohm_c.png",
+        "masters:n6/ghost-forms/gen/r4/out/ohm_parts.png",
+        "masters:n21/polish/masters/ohm_eight_p55_a_t3.png"
+      ],
+      "seed": null,
+      "sha256": "6ae84b75fe3315b823e92e939f1b798883930ef87e8c87eaf9d0fd8c04965c9d",
+      "tool": "codex-image"
+    },
+    "ohm_eight_p70_a": {
+      "accepted": false,
+      "date": "2026-11-20",
+      "file": "masters:n21/polish/masters/ohm_eight_p70_a_t2.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n21/polish/ohm_eight_p70_a.md",
+      "references": [
+        "masters:n20/ohm/masters/ohm_spec_p70_t3.png",
+        "masters:n20/concepts/ohm_c.png",
+        "masters:n6/ghost-forms/gen/r4/out/ohm_parts.png"
+      ],
+      "seed": null,
+      "sha256": "eba71c8b2dea8ef3e03568ac7d378e7b9525bf36fc71ef336e62c0b9b177d099",
+      "tool": "codex-image"
+    },
+    "ohm_eight_p70_b": {
+      "accepted": false,
+      "date": "2026-11-20",
+      "file": "masters:n21/polish/masters/ohm_eight_p70_b_t3.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n21/polish/ohm_eight_p70_b.md",
+      "references": [
+        "masters:n20/ohm/masters/ohm_spec_p70_t3.png",
+        "masters:n20/concepts/ohm_c.png",
+        "masters:n6/ghost-forms/gen/r4/out/ohm_parts.png",
+        "masters:n21/polish/masters/ohm_eight_p70_a_t2.png"
+      ],
+      "seed": null,
+      "sha256": "ded75cd5b2b7da810f94e760fd7b2074f6aa5aaed32858a9ae41d384f0a2e047",
+      "tool": "codex-image"
+    },
+    "ohm_eight_p70_c": {
+      "accepted": false,
+      "date": "2026-11-20",
+      "file": "masters:n21/polish/masters/ohm_eight_p70_c_t1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n21/polish/ohm_eight_p70_c.md",
+      "references": [
+        "masters:n20/ohm/masters/ohm_spec_p70_t3.png",
+        "masters:n20/concepts/ohm_c.png",
+        "masters:n6/ghost-forms/gen/r4/out/ohm_parts.png",
+        "masters:n21/polish/masters/ohm_eight_p70_a_t2.png"
+      ],
+      "seed": null,
+      "sha256": "74db1eec93b9024af1ea4f48fbd4f3307d0afa586e1b91b4e928b667e9604e52",
+      "tool": "codex-image"
+    }
+  }
+}
