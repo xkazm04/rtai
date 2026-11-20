@@ -124,3 +124,31 @@ func _drive_arena(id: StringName, look: StringName) -> void:
 	view.free()
 	session.world.loop().set_input(session.live)
 	session.close()
+
+
+func test_emergence_collapses_to_the_ground_then_restores_the_full_ribbon() -> void:
+	ViewMode.select("tilt70")
+	var flight: GhostFlight = add_child_autofree(GhostFlight.make(&"kerf"))
+	var body: Node2D = Node2D.new()
+	flight.mount(body)
+	var at: Vector2 = Vector2(320, 96)
+	flight.step(at, PI, 1)
+	var lift: Vector2 = flight.body_offset()
+	var full: PackedVector2Array = flight.tail.points()
+	assert_gt(full[0].distance_to(full[-1]), 20.0)
+	flight.set_emerge(0.0)
+	assert_eq(body.global_position, at)
+	assert_eq(flight.shadow.position, at)
+	assert_eq(flight.shadow.pool_open, 0.0)
+	var folded: PackedVector2Array = flight.tail.points()
+	for point: Vector2 in folded:
+		assert_eq(point, folded[0])
+	for width: float in flight.tail.half_widths():
+		assert_eq(width, 0.0)
+	flight.set_emerge(0.5)
+	assert_almost_eq(body.global_position, at + lift * 0.5, Vector2.ONE * 0.001)
+	assert_eq(flight.shadow._height, flight.hover.lift_m * 0.5)
+	flight.set_emerge(1.0)
+	assert_eq(flight.tail.points(), full)
+	assert_eq(body.global_position, at + lift)
+	assert_eq(flight.shadow.pool_open, 1.0)

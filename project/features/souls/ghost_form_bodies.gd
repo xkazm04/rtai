@@ -39,6 +39,21 @@ func wash() -> void:
 		GhostApparition.wash(body, m, GhostApparition.ghost_material(true, 0.0))
 
 
+## Select the ghost on either side of the midpoint, including the base-to-form pre-roll.
+func emerge(forms: GhostForms) -> GhostDrawn:
+	var id: StringName = forms.to_id
+	if id == GhostForms.BASE or forms.phase == GhostForms.SWITCHING and forms.stage() == 0:
+		id = forms.from_id
+	if id == GhostForms.BASE:
+		return null
+	var body: Node2D = get(id)
+	var drawn: GhostDrawn = body.get(&"drawn")
+	if drawn.flight == null:
+		return null
+	drawn.flight.set_emerge(GhostFormView.unfold_k(forms, id))
+	return drawn
+
+
 func step_tonnage(p: StagePilot, at: Vector2, facing: float, steps: int) -> bool:
 	var forms: GhostForms = p.ghosts.forms
 	var shown: bool = GhostFormView.big(forms, HaulerStage.GHOST)
