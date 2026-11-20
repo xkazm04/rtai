@@ -39,7 +39,7 @@ func _draw() -> void:
 			_reach(at, form.num(&"stomp_radius_m") * ppm, form.windup_k())
 		if not _spectral:
 			_telegraph(at, form.windup_k())
-	if form.on:  # n7-melee: the bow wave while the press charges
+	if form.on and wake_on(_spectral):
 		RamWake.draw(self, stage.arena.rivet.pos * ppm, form, stage.tick, ppm)
 	if marks:
 		RamMarks.draw_all(self, hauler, stage.tick, ppm)  # n7-melee: the ram's contact marks
@@ -47,6 +47,10 @@ func _draw() -> void:
 		var age: float = (stage.tick - hauler.stomp_tick) * SimClock.TICK_DT
 		var radius: float = form.num(&"stomp_radius_m")
 		HaulerMarks.draw(self, hauler.stomp_at * ppm, age, radius, ppm, hauler.stomp_tick)
+
+
+static func wake_on(spectral: bool) -> bool:
+	return not spectral or RamWake.SPECTRAL_GAIN > 0.0
 
 
 ## The die plate's footprint at `c` (px), `k` 0..1 through the wind-up.
