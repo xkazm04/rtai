@@ -134,3 +134,14 @@ func test_last_hurt_tick_tracks_the_combat_feed() -> void:
 	assert_eq(acts.hurt_tick(), 10)
 	acts.feed(1, 14, 17)
 	assert_eq(acts.hurt_tick(), 14)
+
+
+func test_only_a_named_spectral_aura_yields_the_ground_to_its_flight_shadow() -> void:
+	var aura: GhostAura = autofree(GhostAura.new())
+	GhostLook.override_for_test(GhostLook.SPECTRAL)
+	assert_true(aura.draws_pool())
+	aura.form_id = &"dent"
+	assert_false(aura.draws_pool())
+	GhostLook.override_for_test(GhostLook.LEGACY)
+	assert_true(aura.draws_pool())
+	GhostLook.reset_for_test()
