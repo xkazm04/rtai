@@ -15,6 +15,9 @@ var bank_deg: float
 var bank_per_dps: float
 var lag_ticks: int
 var lean_deg: float
+var start_lift_m: float
+var cruise_bob_k: float
+var sway_m: float
 var top_mps: float
 var tail: Tail
 var shadow: Shadow
@@ -42,12 +45,16 @@ class Tail:
 class Shadow:
 	var radius_m: float
 	var alpha: float
+	var pool_m: float
+	var pool_alpha: float
 	var shrink_k: float
 
 	func _init(t: DataTable, r: Dictionary) -> void:
 		radius_m = t.num(r, "radius_m")
 		alpha = t.num(r, "alpha")
 		shrink_k = t.num(r, "shrink_k")
+		pool_m = r.get("pool_m", radius_m * 2.5)
+		pool_alpha = r.get("pool_alpha", 0.32)
 
 
 static func of(form_id: StringName) -> GhostHoverRow:
@@ -71,6 +78,9 @@ func _init(t: DataTable, r: Dictionary) -> void:
 	bank_per_dps = t.num(r, "bank_per_dps")
 	lag_ticks = t.integer(r, "lag_ticks")
 	lean_deg = t.num(r, "lean_deg")
+	start_lift_m = r.get("start_lift_m", 0.0)
+	cruise_bob_k = r.get("cruise_bob_k", 1.0)
+	sway_m = r.get("sway_m", 0.0)
 	top_mps = t.num(r, "top_mps")
 	tail = Tail.new(t, t.object(r, "tail"))
 	shadow = Shadow.new(t, t.object(r, "shadow"))

@@ -96,6 +96,8 @@ func step(
 	var since: int = _tick - _act_from if _act_from >= 0 else -1
 	var tilt: float = GhostRecoil.tilt(hurt, _look, GhostRecoil.lean_of(card_name), blow)
 	_spr.global_rotation = tilt + _lunge.lean(_tick, since, _windup, _look, card_name)
+	if flight != null:
+		_spr.global_rotation += cos(_look) * flight.hover.lean
 	var reach: Vector2 = GhostLunge.reach(since, _look, card_name) * SimConst.PX_PER_M * size_k
 	_spr.global_position = host.global_position + reach
 	var bank_scale: Vector2 = flight.body_scale() if flight != null else Vector2.ONE

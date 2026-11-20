@@ -5,15 +5,20 @@
       "bank_per_dps": 0.08,
       "bob_m": 0.08,
       "bob_ticks": 70,
+      "cruise_bob_k": 0.65,
       "height_m": 0.45,
       "id": "dent",
       "lag_ticks": 6,
       "lean_deg": 9,
       "shadow": {
         "alpha": 0.28,
+        "pool_alpha": 0.4,
+        "pool_m": 1.7,
         "radius_m": 0.58,
         "shrink_k": 0.22
       },
+      "start_lift_m": 0.08,
+      "sway_m": 0.025,
       "tail": {
         "anchor_m": [
           -0.18,
@@ -33,15 +38,20 @@
       "bank_per_dps": 0.1,
       "bob_m": 0.03,
       "bob_ticks": 50,
+      "cruise_bob_k": 0,
       "height_m": 0.5,
       "id": "kerf",
       "lag_ticks": 3,
       "lean_deg": 17,
       "shadow": {
         "alpha": 0.26,
+        "pool_alpha": 0.32,
+        "pool_m": 1.5,
         "radius_m": 0.49,
         "shrink_k": 0.25
       },
+      "start_lift_m": 0.015,
+      "sway_m": 0,
       "tail": {
         "anchor_m": [
           -0.25,
@@ -61,15 +71,20 @@
       "bank_per_dps": 0.07,
       "bob_m": 0.1,
       "bob_ticks": 90,
+      "cruise_bob_k": 0.9,
       "height_m": 0.7,
       "id": "ohm",
       "lag_ticks": 8,
       "lean_deg": 5,
       "shadow": {
         "alpha": 0.25,
+        "pool_alpha": 0.44,
+        "pool_m": 1.75,
         "radius_m": 0.43,
         "shrink_k": 0.27
       },
+      "start_lift_m": 0.065,
+      "sway_m": 0.14,
       "tail": {
         "anchor_m": [
           -0.08,
@@ -89,15 +104,20 @@
       "bank_per_dps": 0.05,
       "bob_m": 0.06,
       "bob_ticks": 110,
+      "cruise_bob_k": 0.8,
       "height_m": 0.6,
       "id": "tonnage",
       "lag_ticks": 10,
       "lean_deg": 4,
       "shadow": {
         "alpha": 0.35,
+        "pool_alpha": 0.45,
+        "pool_m": 2.8,
         "radius_m": 1.45,
         "shrink_k": 0.18
       },
+      "start_lift_m": 0.34,
+      "sway_m": 0.025,
       "tail": {
         "anchor_m": [
           -0.46,

@@ -26,6 +26,11 @@
             "minimum": 1,
             "type": "integer"
           },
+          "cruise_bob_k": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
           "height_m": {
             "maximum": 5,
             "minimum": 0,
@@ -53,6 +58,16 @@
                 "minimum": 0,
                 "type": "number"
               },
+              "pool_alpha": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              "pool_m": {
+                "maximum": 10,
+                "minimum": 0,
+                "type": "number"
+              },
               "radius_m": {
                 "maximum": 5,
                 "minimum": 0.05,
@@ -70,6 +85,16 @@
               "shrink_k"
             ],
             "type": "object"
+          },
+          "start_lift_m": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "sway_m": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
           },
           "tail": {
             "additionalProperties": false,

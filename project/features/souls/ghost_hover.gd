@@ -4,16 +4,19 @@ extends RefCounted
 
 var lift_m: float:
 	get:
-		return _row.height_m + _row.bob_m * sin(TAU * _phase / _row.bob_ticks)
+		var amplitude: float = _row.bob_m * lerpf(1.0, _row.cruise_bob_k, _throttle())
+		return _row.height_m + _surge + amplitude * sin(TAU * _phase / _row.bob_ticks)
 var bank: float:
 	get:
 		return _bank
 var lean: float:
 	get:
-		return deg_to_rad(_row.lean_deg) * clampf(_speed_mps / _row.top_mps, 0.0, 1.0)
+		return deg_to_rad(_row.lean_deg) * _throttle()
 var lag_px: Vector2:
 	get:
-		return _lag_px
+		var side: Vector2 = Vector2.from_angle(_facing).orthogonal()
+		var sway: float = sin(TAU * _phase / _row.bob_ticks) * _row.sway_m
+		return _lag_px + side * sway * SimConst.PX_PER_M
 var speed_mps: float:
 	get:
 		return _speed_mps
@@ -21,6 +24,8 @@ var yaw_rate_dps: float:
 	get:
 		return _yaw_rate_dps
 
+var tick: int = 0
+var _surge: float = 0.0
 var _bank: float = 0.0
 var _lag_px: Vector2 = Vector2.ZERO
 var _speed_mps: float = 0.0
@@ -41,6 +46,8 @@ func reset(at_px: Vector2, facing: float) -> void:
 	_at = at_px
 	_facing = facing
 	_phase = 0
+	tick = 0
+	_surge = 0.0
 	_bank = 0.0
 	_lag_px = Vector2.ZERO
 	_velocity = Vector2.ZERO
@@ -61,11 +68,14 @@ func step(at_px: Vector2, facing: float, ticks: int) -> void:
 
 
 func _tick(at_px: Vector2, facing: float) -> void:
+	var before: float = _throttle()
 	var moved: Vector2 = at_px - _at
 	_speed_mps = moved.length() / (SimConst.PX_PER_M * SimClock.TICK_DT)
 	_yaw_rate_dps = rad_to_deg(angle_difference(_facing, facing)) / SimClock.TICK_DT
 	var roll: float = clampf(yaw_rate_dps * _row.bank_per_dps, -_row.bank_deg, _row.bank_deg)
 	_bank = lerpf(_bank, deg_to_rad(roll), 0.25)
+	_surge = _surge * 0.92 + (_throttle() - before) * _row.start_lift_m
+	tick += 1
 	_follow(moved)
 	_phase = (_phase + 1) % _row.bob_ticks
 	_at = at_px
@@ -80,7 +90,11 @@ func _follow(moved: Vector2) -> void:
 		return
 	var omega: float = 2.0 / (_row.lag_ticks * SimClock.TICK_DT)
 	var decay: float = exp(-omega * SimClock.TICK_DT)
-	var error: Vector2 = lag_px - moved
+	var error: Vector2 = _lag_px - moved
 	var change: Vector2 = _velocity + omega * error
 	_lag_px = (error + change * SimClock.TICK_DT) * decay
 	_velocity = (_velocity - omega * change * SimClock.TICK_DT) * decay
+
+
+func _throttle() -> float:
+	return clampf(_speed_mps / _row.top_mps, 0.0, 1.0)
