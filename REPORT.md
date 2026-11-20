@@ -71,7 +71,8 @@ Checks (Astra, package 3 end): GUT 3216 passed, 0 failed, 2 skipped; 60 s replay
 - Flight's own tests that other lanes guarded on their branches (their version wins):
   `project/tests/unit/test_ghost_hitback.gd` Ohm windup test pinned to `GhostLook.LEGACY` (n20-ohm);
   `project/tests/unit/test_ghost_flight_hosts.gd` null-sprite guard for `own_body` rigs (n20-dent and n20-tonnage, the same guard; it also covers Kerf's own body, kerf's NEED);
-  `project/tests/unit/test_ghost_card.gd` Tonnage crown/hose cases pinned to legacy (n20-tonnage).
+  `project/tests/unit/test_ghost_card.gd` Tonnage crown/hose cases pinned to legacy (n20-tonnage);
+  `project/tests/unit/test_ghost_apparition.gd:100` skips the voice-cut assert when `own_body` leaves no sprite (n20-tonnage).
 - Ohm and Dent rows flip to `look: spectral` on their branches: after merging all five, run the FULL unit suite;
   any flight test that asserts a legacy sheet without selecting a look goes red the same way (fix: `override_for_test`);
   known one left: `project/tests/unit/test_ghost_card.gd:92` assumes Kerf's legacy default (fires only if Kerf's row flips).
@@ -87,7 +88,9 @@ Checks (Astra, package 3 end): GUT 3216 passed, 0 failed, 2 skipped; 60 s replay
 2. Kill the 11 surviving `ghost_flight.gd` mutants (shadow child, overhead scale).
 3. `tools/film/ghost_films.mjs` should encode limited-range `yuv420p` (it writes full-range `yuvj420p`; tonnage's
    finding; tonight's films were re-encoded after the fact).
-4. Shared tail per-form texture variants (tonnage's smoke column, ohm's robe tatters) if the lanes' own second tails
+4. The speaking-apparition voice wash (`GhostBridgeFade.voice`) does nothing for `own_body` forms (no shared sprite):
+   give rigs a hook to wash their own parts, then restore the assert in `test_ghost_apparition.gd`.
+5. Shared tail per-form texture variants (tonnage's smoke column, ohm's robe tatters) if the lanes' own second tails
    do not reach the plates.
 
 ## Astra ledger
