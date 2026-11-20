@@ -1,0 +1,21 @@
+Committed `56c31b555`. The spectral slice victim now draws above the Ronin from the press through tick +29 and returns to the normal corpse layer at +30. This keeps the officer visible through the ribbon and crescent in both views. Changed [kerf_victim.gd](C:/Users/kazda/kiro/gtai-wt/n21-kerf/project/features/souls/kerf_victim.gd) and [test_kerf_victim.gd](C:/Users/kazda/kiro/gtai-wt/n21-kerf/project/tests/unit/test_kerf_victim.gd).
+
+The two pale bars are the shared `KillCutEdge` highlights, one on each half of the officer. Hiding those nodes removed both bars at frame 111. Hiding Kerf’s slot and sparks left both visible. I kept the shared highlights as drawn. [Frame comparison](C:/Users/kazda/kiro/gtai-masters/n21/kerf/scratch/03b/reaction_isolation.png)
+
+**Verification.** `--changed` passed 3,350 tests with two skips. All 43 Kerf tests, all three scenarios, the quick gate and all 18 commit lint checks passed. Native parity matched for 1,200 steps, and all 256 bake hashes matched. Mutation testing killed **16/17 (94.1%)** with zero timeouts or invalid mutants. The survivor removed `edges.clear()` after the reveal. [Mutation results](C:/Users/kazda/kiro/gtai-masters/n21/kerf/scratch/03b/mutation-result.json)
+
+| Comparison | Identical before and after |
+|---|---|
+| `quest1_kerf` output SHA-256 | `8cab1d6643403bc8e8771cb4be9943fbdc49f59b87983c38985cdbef8277f949` |
+| `ghost_attacks` output SHA-256 | `26c0d14f1fa24422f74de70a39cf9dd5362da4528e73127c7023b25de62d4edc` |
+| 3,600-tick replay final digest | `cbeb734ff9b97c41645f735114692ea3b9e7cc6578750f32d8d9f31d69844e85` |
+| Legacy strip SHA-256 | `1a9314ef39fb65df77191a2aaa7b4b4ccd9ded390b440e3a4edebdd75020232a` |
+
+The legacy strip and full legacy attack film also passed direct byte comparison.
+
+**Final captures**
+
+- [Top strip](C:/Users/kazda/kiro/gtai-masters/n21/kerf/slice_strip_top_32.png) · [70° strip](C:/Users/kazda/kiro/gtai-masters/n21/kerf/slice_strip_70_32.png) · [n20/current comparison](C:/Users/kazda/kiro/gtai-masters/n21/kerf/slice_before_after_top_32.png) · [Legacy strip](C:/Users/kazda/kiro/gtai-masters/n21/kerf/slice_strip_legacy_32.png)
+- [Attack film](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_attack_32.mp4) · [Attack poster](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_attack_32.jpg) · [Close film](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_close_64.mp4) · [Close poster](C:/Users/kazda/kiro/gtai-masters/n21/kerf/kerf_close_64.jpg)
+
+[astra: 1186s, exit 0]
