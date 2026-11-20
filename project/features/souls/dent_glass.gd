@@ -81,8 +81,8 @@ func _draw() -> void:
 
 
 func _shard(i: int) -> void:
-	var drift: int = 41 + 3 * i
-	var phase: float = fposmod(float(_tick % drift) / drift + i * 0.618, 1.0)
+	# A common drift and staggered starts keep the splinters spread along the ribbon.
+	var phase: float = fposmod(float(_tick % 59) / 59.0 + i * 0.618034, 1.0)
 	var along: float = lerpf(0.10, 0.96, phase) * (_points.size() - 1)
 	var link: int = floori(along)
 	var centre: Vector2 = _points[link].lerp(_points[link + 1], along - link)
