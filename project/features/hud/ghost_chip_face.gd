@@ -19,10 +19,13 @@ static var _cache: Dictionary[StringName, Texture2D] = {}
 static func face(id: StringName) -> Texture2D:
 	if not FACES:
 		return null
-	if not _cache.has(id):
-		var path: String = DIR + String(id) + ".png"
-		_cache[id] = load(path) as Texture2D if ResourceLoader.exists(path) else null
-	return _cache[id]
+	var key: StringName = StringName(str(id) + "_spectral") if GhostLook.spectral(id) else id
+	if not _cache.has(key):
+		var path: String = DIR + String(key) + ".png"
+		if key != id and not ResourceLoader.exists(path):
+			path = DIR + String(id) + ".png"
+		_cache[key] = load(path) as Texture2D if ResourceLoader.exists(path) else null
+	return _cache[key]
 
 
 ## Draws ghost `id`'s avatar at `c`, `r` from centre to frame edge; false when it has none.

@@ -5,6 +5,7 @@ extends Node2D
 
 var hover: GhostHover
 var shadow: GhostShadow
+## Overlay source. Its centreline and half-widths include the ribbon's projected lift.
 var tail: GhostTail
 var _mount: Node2D
 var _row: GhostHoverRow
@@ -33,26 +34,44 @@ func mount(body: Node2D) -> void:
 	_mount.add_child(body)
 
 
+## Hidden forms have no ribbon to integrate. On re-entry, discard their old world-space trail.
 func step(at_px: Vector2, facing: float, ticks: int) -> void:
+	if not visible:
+		_last = Vector2.INF
+		return
+	if _last == Vector2.INF:
+		hover.reset(at_px, facing)
+		_last = at_px
+		_facing = facing
+		tail.reset(_anchor(at_px, facing), facing, hover.lift_m)
+		_place(at_px)
 	if ticks <= 0:
 		return
-	var start: Vector2 = at_px if _last == Vector2.INF else _last
-	var angle: float = facing if _last == Vector2.INF else _facing
 	for i: int in range(1, ticks + 1):
 		var k: float = float(i) / ticks
-		var spot: Vector2 = start.lerp(at_px, k)
-		var yaw: float = lerp_angle(angle, facing, k)
+		var spot: Vector2 = _last.lerp(at_px, k)
+		var yaw: float = lerp_angle(_facing, facing, k)
 		hover.step(spot, yaw, 1)
 		var body_yaw: float = yaw + body_rotation()
-		var anchor: Vector2 = (_row.tail.anchor_m * SimConst.PX_PER_M).rotated(body_yaw)
-		tail.step(spot + hover.lag_px + anchor, body_yaw, hover.speed_mps, hover.lift_m, 1)
-	shadow.step(at_px, hover.lift_m)
+		tail.step(_anchor(spot, body_yaw), body_yaw, hover.speed_mps, hover.lift_m, 1)
 	_last = at_px
 	_facing = facing
+	_place(at_px)
+
+
+func _anchor(spot: Vector2, yaw: float) -> Vector2:
+	var local_px: Vector2 = _row.tail.anchor_m * SimConst.PX_PER_M * body_scale()
+	return spot + hover.lag_px + local_px.rotated(yaw)
+
+
+func _place(at_px: Vector2) -> void:
+	shadow.step(at_px, hover.lift_m)
 	if _mount != null:
-		_mount.position = at_px + body_offset()
-		_mount.rotation = body_rotation()
-		_mount.scale = body_scale()
+		var pose: Transform2D = Transform2D(
+			_facing + body_rotation(), body_scale(), 0.0, at_px + body_offset()
+		)
+		# The rig supplies its own facing. Squash in its facing frame at every compass angle.
+		_mount.transform = pose * Transform2D(-_facing, Vector2.ZERO)
 
 
 func body_offset() -> Vector2:
@@ -68,3 +87,20 @@ func body_scale() -> Vector2:
 
 func body_rotation() -> float:
 	return -0.3 * hover.bank
+
+
+func fade_from() -> float:
+	return _row.fade_from
+
+
+func belt_fraction() -> float:
+	return _row.belt_width_k
+
+
+## Align the first strip cross-section with the posed belt, including the sprite's lunge.
+func set_belt(world_px: Vector2, width_px: float) -> void:
+	if _last == Vector2.INF:
+		return
+	var yaw: float = _facing + body_rotation()
+	var anchor: Vector2 = _anchor(_last, yaw) + ViewMode.shared().lift_px(hover.lift_m)
+	tail.align_socket(tail.to_local(world_px) - anchor, width_px / absf(tail.global_scale.x))

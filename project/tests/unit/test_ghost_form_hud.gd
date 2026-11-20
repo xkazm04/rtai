@@ -49,3 +49,20 @@ func test_unknown_ghost_falls_back_to_the_glyph() -> void:
 	var hud: GhostFormHud = autofree(GhostFormHud.new())
 	assert_null(GhostChipFace.face(&"no_such_ghost"))
 	assert_false(GhostChipFace.draw(hud, &"no_such_ghost", Vector2.ZERO, 26.0))
+
+
+func test_chip_uses_spectral_art_if_supplied_and_falls_back_to_the_original() -> void:
+	var id: StringName = &"chip_fixture"
+	var original: ImageTexture = ImageTexture.new()
+	var spectral: ImageTexture = ImageTexture.new()
+	original.take_over_path(GhostChipFace.DIR + str(id) + ".png")
+	spectral.take_over_path(GhostChipFace.DIR + str(id) + "_spectral.png")
+	GhostLook.override_for_test(GhostLook.LEGACY)
+	assert_same(GhostChipFace.face(id), original)
+	GhostLook.override_for_test(GhostLook.SPECTRAL)
+	assert_same(GhostChipFace.face(id), spectral)
+	var fallback: ImageTexture = ImageTexture.new()
+	fallback.take_over_path(GhostChipFace.DIR + "chip_fallback.png")
+	assert_same(GhostChipFace.face(&"chip_fallback"), fallback)
+	GhostChipFace._cache.clear()
+	GhostLook.reset_for_test()
