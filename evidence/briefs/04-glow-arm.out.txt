@@ -1,0 +1,22 @@
+Tonnage now glows in both views, shows the armed fist **88 ticks before contact**, and holds his height through recoil. The first ARMED frame moved from tick 175 to **171**. Contact stayed at **259**.
+
+**Films and stills.** All three films have synchronized p70 and top panels, matching JPG posters, and verified five-second H.264/yuv420p encodes. The close film plays one slam at half speed. The index contains 13 stills with legacy twins, including ram ticks 247, 253 and 259. [Movement](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/tonnage_move_32.mp4) · [Attack](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/tonnage_attack_32.mp4) · [Close slam](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/tonnage_close_64.mp4) · [Still index](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/frames.json)
+
+**Glow.** `GLOW_GAIN` is `1.0`, using `HaulerLook.TEAL`, fill alpha `0.42`, halo alpha `0.62`, diameter `5.6 m`, and tilted-cell centre `(0, −108)` px. Body opacity is `0.88`, falling to `0.55` during POUND/LIFT. Adjacent guards remain distinct. All 1,014 baseline red pixels in the POUND crop still read red. [Tilt comparison](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/tonnage_glow_64.png) · [Top comparison](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/tonnage_glow_top_32.png)
+
+**Recoil.** Every facing needed compensation. On the captured p70 hit, CRUISE → RECOIL went from **307 → 261 px** to **307 → 307 px**. Rest height remains 312 px against legacy’s 313 px. [Before](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/tonnage_recoil_64_before.png) · [After](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/tonnage_recoil_64.png)
+
+| Original RECOIL / CRUISE height | S | SE | E | NE | N |
+|---|---:|---:|---:|---:|---:|
+| p70 | 0.818 | 0.823 | 0.852 | 0.802 | 0.753 |
+| p55 | 0.881 | 0.877 | 0.864 | 0.836 | 0.780 |
+
+**Commits and checks**
+
+- `8042c4b7d` added `test_tonnage_pose_landmarks.gd` and its UID to cover torso follow, fist spacing, contact and lift.
+- `56f567826` added `tonnage_glow.gd` and its UID, updated `tonnage_parts.gd`, `tonnage_spectral.gd` and `tonnage_pose.gd`, and updated the three Tonnage pose and rig tests.
+- `run_unit.mjs --changed` and `lint.mjs` passed before both commits. Final run had **3,226 passed, 0 failed, 2 skipped**, with **19/19 lint checks** passing. Recorded simulation fields matched the baseline takes frame for frame. The known autoload issue in `check.mjs` was skipped as directed.
+
+**Mutation score is partial.** The director stopped the serial baseline run after 86 of 158 faults. It killed **34/(34+48) = 41.5%**, with four invalid faults. The new tests cover observed survivors. A full post-change mutation score remains unmeasured.
+
+[astra: 4353s, exit 0]

@@ -1,0 +1,15 @@
+Implemented the spectral Press Golem on `n20-tonnage` and merged `n20-flight` through `28f7e5520`. The review driver selects it with `--ghost-look=spectral`. Both fists land on tick 123, the same tick the car is crushed. Movement, damage and contact counters matched legacy across all 1,424 compared frames.
+
+| Local commit | Files changed |
+|---|---|
+| `57a77697e` — fixed-tick poses and tests | `tonnage_pose.gd`, `test_tonnage_pose.gd` |
+| `6c51cc715` — body, flight and fist shadows | `tonnage_rig.gd`, `tonnage_spectral.gd`, `tonnage_parts.gd`, the Tonnage hover row and the one-line `ghost_form_bodies.gd` feed |
+| `fa6e81fec` — slam and ram effects | `tonnage_view.gd`, `hauler_marks.gd`, `slam_debris.gd`, `ram_wake.gd` |
+
+All four new scripts include their `.uid` files.
+
+**Verification.** `run_unit.mjs --changed` finished with **3,207 passed, 0 failed, 2 skipped**. Static lint passed on all ten changed scripts. The full quick gate and standalone Godot check exited red because `--check-only` could not resolve the `Log` and `LaunchArgs` autoloads through `tonnage_parts.gd` and `hauler_marks.gd`. The review scene loaded successfully and rendered in top, 70° and 55° views. [Check log](C:/Users/kazda/kiro/gtai-wt/n20-tonnage/build/tonnage-proof/quick.log)
+
+**Visual proof.** I inspected all [48 same-tick PNGs](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/scratch/rig-review). The comparison sheets show rest, cruise, armed one tick before contact, RAISE, POUND and LIFT. [Top 32](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/scratch/rig-review/top-32-review.jpg) · [Top 64](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/scratch/rig-review/top-64-review.jpg) · [70° 32](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/scratch/rig-review/tilt70-32-review.jpg) · [70° 64](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/scratch/rig-review/tilt70-64-review.jpg)
+
+[astra: 1979s, exit 0]
