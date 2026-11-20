@@ -109,3 +109,29 @@
   lethal victims (Call, patch saved), OhmVictimRims keeps a static `_marked` dict keyed by instance id (check reset
   across sessions/tests in a later package).
 - 02:58 MILESTONE attack (bolt) done and stilled; body + cast tell done. Next: drift (flight character) + films.
+- 02:58 ASTRA RUNNING drift-films since 02:58 (brief 04: merge n20-flight, sway/late hem+beard/staff leading/drift
+  tuning, A2 strip order + top tail width + clutter source + OhmVictimRims static reset, then films via flight's
+  ghost_films.mjs). Launched DETACHED (Start-Process cmd, node PID in astra.lock = 62644) so it survives the 03:17
+  session cut (the 01:46 cut killed the wire run). A first attached launch at 02:57 was killed by me after ~1 min
+  (no edits). Raw events: logs/ohm/astra-*-drift-films.jsonl; final message: logs/ohm/director-drift-films.out.
+- 03:03 REVIEW 480f141f9 merge n20-flight (film tool, hover weight, pool, tail ribbon, bridge fade); ohm row kept,
+  flight added `fade_from` 0.41 / `cruise_bob_k` 0.9 to it. Astra drift-films continuing (Part A next).
+- 03:05 Calls collected so far for REPORT: (1) shock-kill X-ray over a falling spectral-Ohm victim (patch
+  evidence/patches/n20-ohm-kill-rim-only.patch: rim_only in KillShockFx/KillView, unowned files); (2) left facings
+  mirror (staff swaps hand); (3) p70/p55 away row is 3/4-away, not straight behind; (4) shared white impact spray
+  beside the first guard.
+NEXT: (1) Check logs/ohm/astra.lock (PID 62644 = drift-films, detached, started 02:58, stops by 04:13) and
+  director-drift-films.out; do NOT start a new call while the lock is live. If it was killed without a final
+  message, take its thread id from the first line of the newest astra-*-drift-films.jsonl, write it into
+  logs/ohm/astra-session.txt and --resume. Launch every Astra call DETACHED (PowerShell Start-Process cmd /c ...,
+  see 02:58) so it survives the 90-min session cut.
+  (2) Review its commits: Part A drift (sway, late hem/beard, staff leading, ohm row), A2 (strip order, top tail
+  width, clutter source named, OhmVictimRims static reset + test), then the films in n20/ohm/ (ohm_move_32,
+  ohm_attack_32, ohm_close_64, ohm_attack_delay_32, posters, ohm_tilt55_32.png). Look at every film frame-sampled
+  (ffmpeg -ss stills) beside the plate. Log `ASTRA drift-films <min> accepted|bounced`.
+  (3) Next package (05): frames.json (8-15, first = in-game still beside the plate ohm_c.png; the 32 px/m stoop/jars/
+  fork still; the cast strips), then transform in/out + hit reaction + HUD chip check, then if all green and filmed
+  in both tilts: set the ohm row `look` to spectral in ghost_forms.json (only our row) + decision line.
+  (4) Last new work committed by 06:00; final gate `node tools/gate/run.mjs --rev=HEAD` from 06:15; REPORT 07:40 with
+  cites.mjs. Commit JOURNAL.md (per path) when Astra is idle.
+- 03:14 END iteration 2. ASTRA RUNNING drift-films since 02:58 (detached, lock PID 62644); no commit since the merge yet (likely in tests/Part A). See NEXT above.
