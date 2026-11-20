@@ -10,6 +10,8 @@ const SCHEMA: String = "gtai.gauntlet/1"
 
 var window: Array[GauntletSegment] = []
 var index: int = 0
+## A wave can hold Rivet at its far seam without adding a prop or blocking the enemy squad.
+var forward_limit: float = INF
 var _table: DataTable
 var _rows: Array[Dictionary] = []
 var _rng: RandomNumberGenerator
@@ -62,6 +64,7 @@ func setup(stage: ArenaStage, _ctx: WorldContext) -> void:
 
 
 func step(stage: ArenaStage, _tick: int) -> void:
+	stage.arena.rivet.pos.x = minf(stage.arena.rivet.pos.x, forward_limit)
 	if advance_to(stage.arena.rivet.pos.x):
 		_install(stage)
 		window_changed.emit()

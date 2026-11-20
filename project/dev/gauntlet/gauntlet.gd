@@ -1,15 +1,16 @@
 extends Node
-## Headless and live gauntlet entry. The dev runner caps unattended runs at 60 simulated seconds.
+## Headless and live gauntlet entry. The engine cap leaves twenty simulated minutes for ten waves.
 
 const KNOWN_FLAGS: PackedStringArray = [
 	"--seed", "--bot", "--pick", "--waves", "--result", "--controls"
 ]
-const RUN_TICKS: int = 3600
+const RUN_TICKS: int = 72000
 const BOT_PATH: String = "res://features/gauntlet/bot/gauntlet_bot.gd"
 
 var run: GauntletRun = GauntletRun.new()
 var session: GauntletSession
 var pilot: GauntletPilot
+var waves: GauntletWaves
 var _result_path: String = ""
 
 
@@ -22,7 +23,7 @@ func _ready() -> void:
 		return
 	run.seed = args.text("--seed", "0").to_int()
 	run.profile = StringName(args.text("--bot", "human"))
-	run.controls = StringName(args.text("--controls", "legacy"))
+	run.controls = ControlsMode.id()
 	if args.has("--bot"):
 		pilot = _bot()
 		if pilot == null:
@@ -34,15 +35,30 @@ func _ready() -> void:
 	if session == null:
 		get_tree().quit(1)
 		return
-	if pilot != null:
-		pilot.bind(run, session)
+	var picker: GauntletPilot = pilot if pilot != null else GauntletPilot.new()
+	if pilot == null:
+		picker.configure(run.profile, StringName(args.text("--pick", "random")), run.seed)
+	picker.bind(run, session)
+	waves = GauntletWaves.attach(session, run, picker, args.text("--waves", "0").to_int())
 	_result_path = args.text("--result")
 	if DisplayServer.get_name() == "headless":
-		for _tick: int in RUN_TICKS:
-			session.step()
-		get_tree().quit(0 if _finish() else 1)
+		_run_headless()
 	else:
 		_open_view()
+
+
+func _run_headless() -> void:
+	while not waves.done and session.tick() < RUN_TICKS:
+		session.step()
+	if not waves.done:
+		Log.error("gauntlet", "headless tick cap reached before run ended")
+	var written: bool = _finish()
+	get_tree().quit(0 if waves.done and written else 1)
+
+
+func _process(_delta: float) -> void:
+	if session != null and waves != null and waves.done:
+		get_tree().quit(0 if _finish() else 1)
 
 
 func _open_view() -> void:
