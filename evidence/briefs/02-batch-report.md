@@ -1,6 +1,6 @@
 # Brief 02 (lane loop, n22): the batch tool and the report
 
-Wall-clock: you start about {START}. **Commit deadline {COMMIT}, hard stop {STOP}** (finish what you have, commit it, report). Small commits as each piece lands; never amend, never rebase.
+Wall-clock: you start about 01:00. **Commit deadline 02:05, hard stop 02:12** (finish what you have, commit it, report). Small commits as each piece lands; never amend, never rebase.
 
 ## Context (read, do not re-derive)
 Lane `loop` builds the test player (`project/features/gauntlet/bot/`, landed in the previous call: read its files and `docs/gauntlet-loop.md` first), then the batch tool, the report and the tuner for the combat gauntlet. Design: `C:\Users\kazda\kiro\gtai\.spark\Spark\ideas\combat-gauntlet.md` (read only). The gauntlet scene itself belongs to lane `street` and may or may not be merged into this branch when you start: check `ls project/dev/gauntlet/` and `git log --oneline -20`. Build everything so it runs offline on result files first.
@@ -16,6 +16,10 @@ Measured: a headless arena fight runs about 13.6 sim s per wall s per Godot (4 s
 Reuse the repo's statistics: `tools/perf/paired.mjs` (`bootCi`, `signP`, `median`, `paired`), `tools/perf/stats.mjs` (`quantile`, `mean`, `medianSpread`, `verdict`). Read them and their tests first.
 
 ## Goal (in this order)
+
+## -1. First of all: land the previous call's probe
+The previous call left `project/dev/test_player/bot_pit_probe.gd`, `bot_pit_trial.gd`, `project/tests/unit/test_gauntlet_bot_probe.gd` and their `.uid` files uncommitted because the debt ratchet saw `dev_loc` 26600 -> 26780. Accept it through the tool: `node tools/debt/debt.mjs --update --accept-regression="test player pit probe for n22 loop"`, and commit `tools/debt/baseline.json` together with the probe files (that is the only way you may touch the baseline). The director has merged `n22-guard-iface` and `n22-street-iface` into this branch: the `guard` action and `Shot.size` now exist (guard lane, read `project/features/player/controls_mode.gd`, `guard_tuning.gd`, `player_actions.gd`, `project/features/combat/shot.gd`). Re-run the probe once (average, seed 20261103, both `--controls` values if the probe can pass it, else the default) and say whether guard ticks are now above zero; if the guard bit exists but does nothing yet (the guard lane builds it later tonight), say so. Run `node tools/tests/run_unit.mjs --changed` once after the merge to see the branch is green before you add anything.
+
 
 ## 0. First: plug the test player into street's gauntlet scene (merged on this branch by the director before you start)
 Street's scene `project/dev/gauntlet/gauntlet.gd` loads `res://features/gauntlet/bot/gauntlet_bot.gd` for `--bot` and needs it to **extend `GauntletPilot`** (`project/features/gauntlet/gauntlet_pilot.gd`, read it) with a **zero-argument constructor**: `configure(profile, pick_policy, seed)`, then `bind(run: GauntletRun, session: ArenaSession)`, then `sample(tick)`, and `pick(offered: Array[StringName]) -> int` (an index into the offer). Write `gauntlet_bot.gd` (pick a class_name that does not collide with the existing `GauntletBot` in `bot_brain.gd`, e.g. `GauntletTestPlayer`) as a thin adapter: load the profile row, build the view on the bound session (reuse `BotViewArena` if the session exposes the same stage; otherwise a `BotViewGauntlet` beside it), delegate `sample` to the brain and `pick` to `BotPick` (map the returned id to its index; the bonus rows come from `project/data/tables/gauntlet_bonuses.json`). Also hand the bot's counters to the run result if `GauntletRun` offers a hook for it; if it does not, write `NEED street: GauntletRun <hook> to carry guard/roll/cover/form counters` in your report. Do not edit street's files. Street's scene may still be a skeleton (zero waves): if so, make the adapter work and prove it loads and is configured, and say what the scene does not do yet. Accept: `node tools/dev/run.mjs gauntlet --seed=3 --bot=average --pick=greedy --result=<abs json>` exits 0 with the test player driving (prove it: the result or log shows the bot's profile and its inputs moved Rivet), and the same command twice gives a byte-identical result file.
@@ -49,7 +53,7 @@ Follow the repo's chart style if `tools/` already has an HTML report you can cop
 Run `node tools/gauntlet/batch.mjs --runner=pit --seeds=3 --profile=all --pick=random --out=<lane>/evidence/loop/batch-pit-1` and the report on it; quote the summary lines.
 
 ## Files you may create or edit (allowlist; any other path: stop and report a NEED)
-`tools/gauntlet/**`, `project/features/gauntlet/bot/**`, `project/dev/test_player/**`, `project/tests/unit/test_gauntlet_bot*.gd`, `project/data/tables/test_player.json` + its schema, `docs/gauntlet-loop.md`, `evidence/loop/**`.
+`tools/gauntlet/**`, `tools/debt/baseline.json` (through the debt tool only), `project/features/gauntlet/bot/**`, `project/dev/test_player/**`, `project/tests/unit/test_gauntlet_bot*.gd`, `project/data/tables/test_player.json` + its schema, `docs/gauntlet-loop.md`, `evidence/loop/**`.
 Forbidden (other lanes): `project/dev/gauntlet/**`, `project/features/gauntlet/*` outside `bot/`, `project/features/player/**`, `project/features/combat/**`, `project/features/arena/**`, `project/data/tables/enemies.json`, `weapons.json`, `combat.json`, `input_actions.json`, `gauntlet*.json`, `project/core/replay/tick_input.gd`.
 
 ## Acceptance (quote results)
