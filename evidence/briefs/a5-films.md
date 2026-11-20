@@ -14,6 +14,16 @@ report, with its test). Evidence only.
 Godot process at a time; kill by PID only. If you need `project/override.cfg` for the movie size, it
 is temporary: delete it afterwards and never commit it. Stage per path; never push.
 
+## 0. Flight's tail-0b, then Dent's tail row (before any film)
+`git merge n20-flight` (brings 5e906fd53, 04:14: dense bright tail root anchored aft of the body,
+wider body, round puffs near the tip). Then render ONE still pair (tilt 70 + top, 64 px/m, move
+take, dive tick 110, `--ghost-look=spectral`) and compare with
+`scratch/a3/top-64ppm-move-dive-tick110-after.png` and the plate's tail (a comet tongue as wide as
+the torso at the belt, tapering over about two body lengths, brightest at the root). If the root now
+looks heavier than the torso, lower Dent's `width_m` in his `ghost_hover.json` tail row (his row
+only; one commit, quick gate, `test_ghost_hover` + `test_dent_*`) until it matches. Save the before /
+after still as `scratch/a5/tail_0b_t110.png`. At most 10 minutes on this step.
+
 ## The films (the owner judges by these)
 Flight HAS landed the film tool (n20-flight 95d914ab8 + 073237b56; a4 merged it into n20-dent: if
 `git log n20-dent..n20-flight` lists newer commits, `git merge n20-flight` first), then
