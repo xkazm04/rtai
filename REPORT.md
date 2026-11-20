@@ -28,7 +28,7 @@ Lane `polish`, branch `n21-polish`, worktree `C:\Users\kazda\kiro\gtai-wt\n21-po
 -> `gate: PASS; build/gate/4438e4b49e88/gate.json` (in the worktree, git-ignored). lint 19/19 over 1810 GDScript
 files; unit 3378 passed, 0 failed, 2 skipped; scenarios 65 passed; parity 1200 steps bit for bit, planted mutation
 caught at step 629; selftest look goldens 11/11 (worst 2.06), block goldens 5/5; export-audit 817 loaded, 0 failed.
-`--reels`: TODO after 18:30.
+`--reels`: started 18:30 on `5f0a56f9f` (`node tools/gate/run.mjs --rev=HEAD --reels`, detached), still running at the 18:40 report: no verdict yet. Its log is `build/gate-reels.out.txt` and its result will be `build/gate/5f0a56f9f2f3/gate.json` (both git-ignored). The code under it is the same `5eba115fd` that passed the plain gate above.
 
 ### The cost table (ghost_review movement take, tilt 70, 32 px/m, D3D12 1080p windowed, 300 frames per run)
 
