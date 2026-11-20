@@ -51,6 +51,27 @@ func _show(look: float = 0.0) -> Sprite2D:
 	return _drawn.sprite()
 
 
+func test_own_body_preserves_rig_parts_and_flight_then_releases_the_standing_cell() -> void:
+	var walk: Texture2D = _sheet("walk8", 8)
+	var part: Sprite2D = add_child_autofree(Sprite2D.new())
+	assert_eq(_show().texture, walk)
+	assert_eq(_drawn.sprite().frame_coords.x, GhostDrawn.STAND_COL)
+	_drawn.own_body = true
+	assert_null(_drawn.sprite())
+	_drawn.feed(0, -1, 1, true)
+	for show_part: bool in [true, false]:
+		part.visible = show_part
+		_flight.step(Vector2.RIGHT * 10, 0.0, 1)
+		assert_false(_drawn.step(_host, [part], SimConst.PX_PER_M, 1.0))
+		assert_eq(part.visible, show_part)
+		assert_null(_drawn.sprite())
+		assert_eq(_drawn.act_col(), GhostDrawn.WINDUP_COL)
+	assert_false(_flight.tail.points().is_empty())
+	_drawn.own_body = false
+	assert_eq(_show().texture, walk)
+	assert_eq(_drawn.sprite().frame_coords.x, GhostDrawn.STAND_COL)
+
+
 func test_auto_pose_uses_flight_speed_and_combat_overrides_an_explicit_pose() -> void:
 	var poses: Texture2D = _sheet("spec_hover", 2)
 	var acts: Texture2D = _sheet("spec_act", 4)

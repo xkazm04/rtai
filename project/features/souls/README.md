@@ -47,6 +47,8 @@ Use `--view=tilt70` for the 70-degree art and `--view=tilt` for the 55-degree ar
 
 ### Tilted pose sheets and overlays
 
+Set `drawn.own_body = true` when a rig supplies its own spectral body. This removes the shared sprite immediately. The rig controls its parts' visibility, combat feeds continue, and its flight mount still steps. The default is false, including for forms that use a standing legacy cell until their pose sheets arrive.
+
 In `art/view/<art>/`, a spectral form can supply `<card>_spec_hover.png`. Use five facing rows in the legacy order (toward, three-quarter toward, profile, three-quarter away, away). Pose cells are square. Their side is the PNG height divided by five, and the width divided by that side gives the column count. Two columns support idle and cruise. Four can hold Tonnage's carry, cruise, armed and recoil. The optional `<card>_spec_hover_left.png` follows the legacy left-sheet layout with three left-facing rows and the same columns. Without it, the left facings mirror.
 
 Set `drawn.pose` before the rig steps. The default `-1` selects column 0 below 0.5 m/s and column 1 at or above it, using `flight.hover.speed_mps`. An explicit zero-based index is clamped to the sheet. A one-column sheet always shows column 0. `<card>_spec_act.png` uses four columns (wind-up, strike, follow, hit) and the same five facing rows, with an optional three-row `<card>_spec_act_left.png`. Active combat cells take priority. Each missing spectral sheet falls back independently to the standing legacy walk cell or the legacy act sheet. Spectral Ohm starts an instant bolt on strike (`instant_windup == 0`), while a delayed cast displays its real wind-up.
