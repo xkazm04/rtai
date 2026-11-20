@@ -124,7 +124,7 @@ func pose(drawn: GhostDrawn, charge: OhmCharge, stage: OhmStage, calm: bool, tic
 	rotation = (OhmDrift.sway(tick, cruise) + body_lag) * motion
 	if drawn.act_col() == GhostDrawn.HIT_COL:
 		var lean: float = GhostRecoil.lean_of(drawn.card_name)
-		rotation += GhostRecoil.tilt(tick - drawn._hurt, facing, lean, drawn.blow) * motion
+		rotation += GhostRecoil.tilt(tick - drawn.hurt_tick(), facing, lean, drawn.blow) * motion
 	_hem.rotation = _drift.hem.angle * motion
 	_beard.rotation = _drift.beard.angle * motion
 	_free_arm.rotation = -0.31 + (0.25 * _drift.hem.angle + bank) * motion

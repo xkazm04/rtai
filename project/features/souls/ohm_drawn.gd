@@ -27,8 +27,7 @@ func step(host: OhmRig, drawn: GhostDrawn, size_k: float) -> bool:
 		var drift: bool = hover != null and hover.speed_mps >= GhostDrawn.SPEC_CRUISE_MPS
 		_hover.show(shown, drawn.octant(host.global_rotation), int(drift))
 		# Release the fallback cell's belt socket and material on the authored robe.
-		if drawn._fade != null:
-			drawn._fade.clear(drawn.flight)
+		drawn.release_fade()
 	shown.offset = -_anchor
 	GhostSoulLine.sync(shown)
 	if hover != null:
