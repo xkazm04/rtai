@@ -1,8 +1,8 @@
-# n20 lane dent: Dent becomes Ejected (REPORT, draft from 03:50; final at 07:40)
+# n20 lane dent: Dent becomes Ejected (REPORT, final)
 
 Branch `n20-dent` (worktree `C:\Users\kazda\kiro\gtai-wt\n20-dent`), cut from `int-n20` `a3eb0bf78`;
 merges `n20-flight` only. Plate: `C:\Users\kazda\kiro\gtai-masters\n20\concepts\dent_a.png` (+ `dent_c.png`
-borrow). Evidence root: `C:\Users\kazda\kiro\gtai-masters\n20\dent\` (`frames.json` best first).
+borrow). Evidence root: `C:/Users/kazda/kiro/gtai-masters/n20/dent/` (`M/` below); `M/frames.json` lists 13 stills and films, best first.
 Final gate: `node tools/gate/run.mjs --rev=86fad2566` (05:36-05:48) -> `gate: PASS; build/gate/86fad25665c4/gate.json`
 (lint, unit-tests, scenario-tests 65 passed, parity 1200 exact + planted mutation caught at 629, selftest look goldens
 11/11, export-audit 791 loaded 0 failed; full log `evidence/gate-final.out.txt`). Commits after it are docs only (inert).
@@ -17,15 +17,15 @@ Final gate: `node tools/gate/run.mjs --rev=86fad2566` (05:36-05:48) -> `gate: PA
 - **Flight** (a2): `e71f6d647` tilt drawer (HOVER / DIVE / SWING / HIT), `9b130ccac` top rig, `1a2d61a97`
   belt anchor + glass in the comet tail, `1a3f69a45` tail row (torso-wide root, two body lengths).
   Top view now gives a direction (crown disc ahead, shoulder discs, arms trailing, tail behind).
-  Stills: `scratch/a2/`, `scratch/a3/top-64ppm-move-dive-tick110-after.png`.
+  Stills: `M/scratch/a2/`, `M/scratch/a3/top-64ppm-move-dive-tick110-after.png`.
 - **Jab** (a3, a3b): `de8e58cc9` jab and its victim drawn above the seized car for the strike window,
-  `c654f6924` six-tick contact mark on the knuckles. Still `scratch/a3/a3b-jab-64ppm-ticks94-97.jpg`.
+  `c654f6924` six-tick contact mark on the knuckles. Still `M/scratch/a3/a3b-jab-64ppm-ticks94-97.jpg`.
 - **Seatbelt strap** (default `tether_look`): `ee665df55` DentLook table + `--dent-tether`,
   `4b9b30257` strap, `49dd0b1d7` 0.48 m belt + 0.58 m buckle, `87b14779d` weave travel.
-  Still `scratch/a3/a3b-belt-32-and-64ppm-tick160.jpg` (reads at 32 and 64, tilt and top).
+  Still `M/scratch/a3/a3b-belt-32-and-64ppm-tick160.jpg` (reads at 32 and 64, tilt and top).
 - **Overload as one attack**: `a7cd4d0ef` amber ring at the 4.5 m reach + heat wash + spokes,
   `9e0aa327b` ring kept through the blast, shock disc fills it from the car by +8 ticks.
-  Still `scratch/a3/a3b-blast-32ppm-ticks235-239-243.jpg`.
+  Still `M/scratch/a3/a3b-blast-32ppm-ticks235-239-243.jpg`.
 - **Legacy untouched**: `f7f8884e8` (facing/tether/blast spectral-only); legacy PNGs at ticks 160
   and 200 byte-identical to `9e8bc0619`.
 - Sim: replay `cbeb734ff9b97c41` unchanged, parity 1200 steps exact (a3, a3b).
@@ -34,21 +34,21 @@ Final gate: `node tools/gate/run.mjs --rev=86fad2566` (05:36-05:48) -> `gate: PA
   sags, tremble on strikes), `8a08f80c9` anchored through release, `526781c9e` both pairs on the
   palms of the STEER TWO HANDS cell. Mutate `dent_strings.gd` 16/20 (80 %). Legacy PNGs t160/t200
   byte-identical. Side-by-side film (same seed 20261103, ticks 68..367):
-  `dent_tether_strap_vs_strings_32.mp4` + `scratch/a4/dent_tether_strap_vs_strings_64.mp4`,
-  numbers in `scratch/a4/strings_eval.json`.
+  `M/dent_tether_strap_vs_strings_32.mp4` + `M/scratch/a4/dent_tether_strap_vs_strings_64.mp4`,
+  numbers in `M/scratch/a4/strings_eval.json`.
 - **Films for the owner** (a5, `--ghost-look=spectral`, tilt 70 above, top below, 1920x1080, 60 fps,
-  poster each): `dent_move_32.mp4` (5.000 s: dive, rag-doll swing on the turns, hover),
-  `dent_attack_32.mp4` (5.000 s: jab t94, strap seize t153, two car hits, overload blast t235),
-  `dent_close_64.mp4` (5.000 s), `dent_morph_32.mp4` (6.667 s, flight's real transformation stages:
-  Rivet -> teal ring -> Dent and back, no legs at any frame). `dent_vs_plate.png` (tick 110 dive,
-  64 px/m) is the first entry of `frames.json` (11 entries). Report: `evidence/ghost-powers/n20-dent-films.md`.
-- **Overload reads as one attack** in both views: `scratch/a5/overload_heat_t234.png` (amber strap,
-  dashed 4.5 m ring on the road around the car) and `scratch/a5/overload_blast_t239.png` (the blast
+  poster each): `M/dent_move_32.mp4` (5.000 s: dive, rag-doll swing on the turns, hover),
+  `M/dent_attack_32.mp4` (5.000 s: jab t94, strap seize t153, two car hits, overload blast t235),
+  `M/dent_close_64.mp4` (5.000 s), `M/dent_morph_32.mp4` (6.667 s, flight's real transformation stages:
+  Rivet -> teal ring -> Dent and back, no legs at any frame). `M/dent_vs_plate.png` (tick 110 dive,
+  64 px/m) is the first entry of `M/frames.json` (13 entries). Report: `evidence/ghost-powers/n20-dent-films.md`.
+- **Overload reads as one attack** in both views: `M/scratch/a5/overload_heat_t234.png` (amber strap,
+  dashed 4.5 m ring on the road around the car) and `M/scratch/a5/overload_blast_t239.png` (the blast
   fills that ring from the car, a spoke to the struck guard).
-- **Second play tilt (55 degrees)**: `scratch/a6/tilt55_sheet.jpg` (64 px/m: dive t110, turn t163, jab t94,
+- **Second play tilt (55 degrees)**: `M/scratch/a6/tilt55_sheet.jpg` (64 px/m: dive t110, turn t163, jab t94,
   strap t160, heat t234, blast t239): legless p55 cells, strap and ring correct.
 - **HUD chip**: `42dcad19f` `dent_spectral.png` cut from the p55 front hover cell (no new drawing),
-  still `scratch/a6/chip.png`.
+  still `M/scratch/a6/chip.png`.
 - **Overload tests**: `854d276fe`, `007c4cccd`; mutate `dent_overload.gd` 13/20 (was 4/20).
 - **Default look**: `961862cb9` (null guards in flight's host test: a ghost drawing its own body has no
   shared sprite or legacy rig), `6d9b5e7a6` Dent's row `look: spectral`. `--changed` 3252 pass 0 fail
@@ -57,7 +57,7 @@ Final gate: `node tools/gate/run.mjs --rev=86fad2566` (05:36-05:48) -> `gate: PA
 
 ## What does not
 - Hit reaction (HIT cell + tail flicker) not checked tonight; the transformation is flight's shared
-  stages (filmed: `dent_morph_32.mp4`, no legs), not Dent's own roundel-by-roundel ignition.
+  stages (filmed: `M/dent_morph_32.mp4`, no legs), not Dent's own roundel-by-roundel ignition.
 - Left facings are mirrors (the belt diagonal flips); not judged at 64 px/m.
 - The seized car is tinted teal in the tilt views but drawn untinted (cream) in the top view (vehicle
   top sprite, not Dent's file); the generic white hit star at blast +0 is loud (shared).
@@ -72,8 +72,8 @@ Final gate: `node tools/gate/run.mjs --rev=86fad2566` (05:36-05:48) -> `gate: PA
 
 ## Calls for the owner
 1. **Strap or strings** for seize-and-steer (your question: can we practically drive the car the
-   Puppeteer way?). Film: `dent_tether_strap_vs_strings_32.mp4` (strap left, strings right, same
-   seed and ticks, tilt 70 above, top below) and the 64 px/m one in `scratch/a4/`. Answer:
+   Puppeteer way?). Film: `M/dent_tether_strap_vs_strings_32.mp4` (strap left, strings right, same
+   seed and ticks, tilt 70 above, top below) and the 64 px/m one in `M/scratch/a4/`. Answer:
    - **It is practical.** Four strings read at 32 px/m at 5 m and at 20 m, in the tilt and the top
      view (1 px core + ink, 1.6-1.8 px effective at 20 m); the inside hand pulls back and its roof
      corners dip on a turn. The car itself stays level (no two-wheel tip like the plate).
