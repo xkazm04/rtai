@@ -87,9 +87,9 @@
     {
       "bank_deg": 6,
       "bank_per_dps": 0.05,
-      "bob_m": 0.14,
-      "bob_ticks": 110,
-      "height_m": 0.6,
+      "bob_m": 0.25,
+      "bob_ticks": 148,
+      "height_m": 1.05,
       "id": "tonnage",
       "lag_ticks": 10,
       "lean_deg": 4,
@@ -100,15 +100,15 @@
       },
       "tail": {
         "anchor_m": [
-          -0.46,
+          -0.35,
           0
         ],
-        "fray": 0.16,
-        "length_m": 1.05,
-        "segments": 7,
-        "stretch_k": 0.025,
-        "swing_k": 0.48,
-        "width_m": 1.04
+        "fray": 0.075,
+        "length_m": 3.6,
+        "segments": 18,
+        "stretch_k": 0.09,
+        "swing_k": 0.84,
+        "width_m": 2.15
       },
       "top_mps": 4.2
     }
