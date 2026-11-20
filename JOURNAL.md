@@ -51,3 +51,14 @@ Briefs: no amend/rebase (Astra did both in 02).
 - 02:5x flight: film tool on n20-flight (95d914ab8 + 073237b56: tools/film/ghost_films.mjs); package 3 running (dense vapour + ink edge, rise_m<=0 drags low). Brief 05 updated to use both.
 - 03:00 ASTRA glow-arm 73 accepted. 8042c4b7d survivor tests; 56f567826 glow (tonnage_glow.gd: fill a 0.42, halo a 0.62, 5.6 m) + ram anticipation (ARM_FROM 2.4 -> FULL 3.0 m/s; armed first tick 171, contact 259 = 88 ticks lead) + recoil per-row scale (p70 hit 307->261 px fixed to 307->307). Unit 3226 pass/0 fail, lint 19/19. close_64 film made (half-speed slam; brief 05 asks real speed). frames.json 13 entries. Partial mutate tonnage_pose 34/(34+48)=41.5% at 86/158 (killed by me), before the new tests.
 - 03:00 LOOKED glow_64 vs before: brighter plates/hoses, ink crisp, guards distinct; halo still faint vs plate. Revisit after the smoke tail lands.
+- 03:02 ASTRA RUNNING smoke-flight since 03:02 (brief evidence/briefs/05-smoke-flight.md; launched detached via Start-Process, node PID 49192, out evidence/briefs/05-smoke-flight.out.txt). Merge flight (own_body 12ec7bffa, weight 7948f3382, ribbon f183e88a1, film tool 95d914ab8+073237b56, pkg 3 if landed), own_body, smoke column via our row, hanging wisps 2nd GhostTail, weight fields, re-film with ghost_films.mjs at real speed, mutate --max=40 x2.
+
+NEXT (session 3):
+1. Check astra.lock (PID 49192) + astra-calls.jsonl; if smoke-flight still runs, wait. Then read 05-smoke-flight.out.txt, log `ASTRA smoke-flight <min> <verdict>`.
+2. LOOK at every new still next to the plate: smoke column thick/low/curling (not a wedge, blanket, ribbon or 3rd leg); hanging wisps not legs; one body (own_body); pool under him inside the 4 m ring; halo still faint? -> push GLOW halo in a follow-up if the tail is right. Watch the films (move/attack/close at real speed).
+3. Flight pkg 3 (dense vapour + ink edge, rise_m<=0 drags low, hit lean on hover, emerge for transformation): merge when it lands and re-tune if needed. Then transformation in/out + hit reaction check, HUD chip/card last (may be a Call).
+4. Flip tonnage `look` row to spectral ONLY when body+flight+attacks complete in both tilts, filmed, gate-green: likely ~05:00 decision. Last new work committed by 06:00; final gate `node tools/gate/run.mjs --rev=HEAD` from 06:15; REPORT 07:40 with cites.mjs.
+5. Briefs: mutate always --max=40; no amend/rebase.
+
+## Session 3 (03:02 - )
+- 03:03 START. astra.lock = 49192 alive (node), smoke-flight running since 03:02 (detached). Wait for it; no second call. No NEED tonnage in the other four journals. Flight pkg 3 (effects: HUD chip <id>_spectral.png, tail 0b dense root + ink edge, emerge, hit lean on hover, rise sign for tonnage) running since 02:57 in n20-flight.
