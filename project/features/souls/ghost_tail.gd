@@ -10,6 +10,8 @@ var _vertices: PackedVector2Array = []
 var _indices: PackedInt32Array = []
 var _colours: PackedColorArray = []
 var _height_m: float = 0.0
+var _dirty: bool = true
+var _last_up: Vector2 = Vector2.INF
 
 
 func _init(row: GhostHoverRow.Tail) -> void:
@@ -48,13 +50,41 @@ func step(root_px: Vector2, facing: float, speed_mps: float, lift_m: float, tick
 			var dir: Vector2 = back.slerp(behind, _row.swing_k) if behind != Vector2.ZERO else back
 			_chain[j] = _chain[j - 1] + dir * link
 	_height_m = lift_m
+	_dirty = true
 	queue_redraw()
 
 
-func _draw() -> void:
-	if _chain.is_empty():
-		return
+## Snapshots in world canvas pixels, including the root's height projection.
+func points() -> PackedVector2Array:
+	_update_geometry()
+	var centres: PackedVector2Array = []
+	@warning_ignore("return_value_discarded")
+	centres.resize(_chain.size())
+	for i: int in _chain.size():
+		var midpoint: Vector2 = (_vertices[2 * i] + _vertices[2 * i + 1]) * 0.5
+		centres[i] = to_global(midpoint)
+	return centres
+
+
+func half_widths() -> PackedFloat32Array:
+	_update_geometry()
+	var widths: PackedFloat32Array = []
+	@warning_ignore("return_value_discarded")
+	widths.resize(_chain.size())
+	for i: int in _chain.size():
+		var across: Vector2 = _vertices[2 * i + 1] - _vertices[2 * i]
+		widths[i] = global_transform.basis_xform(across).length() * 0.5
+	return widths
+
+
+func _update_geometry() -> void:
 	var up: Vector2 = ViewMode.shared().lift_px(_height_m)
+	if not _dirty:
+		if up == _last_up:
+			return
+		queue_redraw()  # An overlay sampled a new camera pitch between sim ticks.
+	_dirty = false
+	_last_up = up
 	var previous_edge: Vector2 = Vector2.ZERO
 	for i: int in _chain.size():
 		var k: float = float(i) / _row.segments
@@ -69,4 +99,10 @@ func _draw() -> void:
 		_vertices[2 * i] = centre - edge
 		_vertices[2 * i + 1] = centre + edge
 		previous_edge = edge
+
+
+func _draw() -> void:
+	if _chain.is_empty():
+		return
+	_update_geometry()
 	RenderingServer.canvas_item_add_triangle_array(get_canvas_item(), _indices, _vertices, _colours)
