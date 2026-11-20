@@ -203,3 +203,4 @@ NEXT: (1) logs/ohm/astra.lock = PID 12372 = ASTRA form-rest (detached, started 0
   finish REPORT.md (draft committed d468c2896; Calls 1-4 there), `node tools/evidence/cites.mjs REPORT.md`, commit
   JOURNAL/REPORT per path. Reply to flight not needed (their fade_from note: ours=0 wins).
 - 04:32 END iteration 3. ASTRA RUNNING form-rest since 04:13 (lock PID 12372).
+- 04:34 FRICTION my handover commit swept up Astra's staged ohm_spirit.gd + test_ohm_drift.gd (git add JOURNAL + commit takes the whole index); undone at once by reset --soft HEAD~1 and a path-only commit (4e67d8cdb), Astra's two files are staged again as before. While Astra runs, always commit docs with `git commit -m ... -- <path>`.
