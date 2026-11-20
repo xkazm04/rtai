@@ -70,6 +70,25 @@ func test_a_freshly_mounted_golem_starts_invisible_on_the_first_unfold_tick() ->
 	assert_almost_eq(rig._spectral.scale.x, 1.0 / 3.0, 0.00001)
 
 
+func test_carry_keeps_its_authored_height_under_a_scaled_flight_mount() -> void:
+	for view: String in ["tilt", "tilt70"]:
+		var rig: TonnageRig = _mount(view)
+		var flight: GhostFlight = rig.drawn.flight
+		flight.scale = Vector2.ONE * 1.25
+		rig.scale = Vector2.ONE * 0.8
+		var painted_height: float = 215.5 if view == "tilt70" else 216.0
+		for k: float in [1.0, 0.5]:
+			rig.unfold = k
+			rig.advance(0.0)
+			var ink: Sprite2D = rig._spectral._cell
+			var height_px: float = (
+				painted_height * ink.global_scale.y * ViewMode.shared().ground_k()
+			)
+			var body_k: float = 1.0 if k == 1.0 else 2.0 / 3.0
+			var expected_px: float = 3.3 * SimConst.PX_PER_M * 0.8 * body_k
+			assert_almost_eq(height_px / flight.body_scale().y, expected_px, 0.001, view)
+
+
 func test_morph_body_and_fists_retrace_the_same_path() -> void:
 	for view: String in ["top", "tilt70"]:
 		var rig: TonnageRig = _mount(view)
