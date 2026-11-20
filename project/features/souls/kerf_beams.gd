@@ -18,6 +18,7 @@ const SOCKETS: Array[Vector2] = [
 
 var charges: int = COUNT
 var recharge: float = 0.0
+var emerge: float = 1.0
 var fast: float = 0.0
 var tick: int = 0
 var reduced_motion: bool = false
@@ -34,7 +35,7 @@ func attach_to_cell(sprite: Sprite2D) -> void:
 
 
 func length_m(i: int) -> float:
-	var full: float = lerpf(0.9, 3.2, fast)
+	var full: float = lerpf(0.9, 3.2, fast) * emerge
 	if i < charges:
 		return full
 	return full * recharge if i == charges else 0.0

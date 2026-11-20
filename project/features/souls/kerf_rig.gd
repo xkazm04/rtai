@@ -150,6 +150,8 @@ func pose() -> void:
 
 
 func _pose_spectral() -> void:
+	_spectral.modulate.a = unfold
+	_spectral.beams.emerge = unfold
 	var since: int = 0 if echo else -1
 	var speed: float = drawn.flight.hover.speed_mps if drawn.flight != null else speed_mps
 	var oct: int = drawn.octant(global_rotation)

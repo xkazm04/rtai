@@ -36,6 +36,7 @@ var _sheet: GhostSheet
 var _art: String = "?"
 var _hull_m: float
 var _eyes: Array[Texture2D] = []
+var _hit: KerfHit = KerfHit.new()
 
 
 func _init(hull_m: float) -> void:
@@ -67,9 +68,7 @@ func _ready() -> void:
 	_tilted.name = &"ghost_drawn"
 	_tilted.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	add_child(_tilted)
-	_tilted_eye.texture = _eyes[Mood.CRUISE]
 	_tilted.add_child(_tilted_eye)
-	_tilted_eye.hide()
 
 
 func live(
@@ -91,7 +90,7 @@ func live(
 		yaw = angle_difference(facing, bearing)
 		oct = posmod(roundi(bearing / (TAU / 8.0)), 8)
 	_aim(clampf(yaw, -AIM_LIMIT, AIM_LIMIT), stage.tick)
-	position = Vector2.ZERO
+	transform = Transform2D.IDENTITY
 	if since >= 0 and since < KerfSlot.RETURN_TICKS + TUCK_TICKS:
 		var shift: Vector2 = (KerfSlot.end_m(k, -1, since) - k.trail_to[-1]) * SimConst.PX_PER_M
 		if flight != null:
@@ -101,7 +100,13 @@ func live(
 			)
 			shift -= flight.hover.lag_px * (1.0 - back)
 		global_position += shift
+	_hit.read(stage.arena, facing)
 	pose(speed, since, target != null, facing, oct)
+	_hit.apply(self)
+	_step_echoes(stage)
+
+
+func _step_echoes(stage: CollectCallStage) -> void:
 	if not beams.reduced_motion:
 		if _echoes == null:
 			_echoes = KerfEcho.new()
@@ -143,7 +148,8 @@ func pose(speed_mps: float, since: int, locked: bool, facing: float, oct: int) -
 	beams.queue_redraw()
 	if _sheet != null:
 		_sheet.show(_tilted, oct, col)
-		_tilted_eye.place(_tilted, _art, locked)
+		_tilted_eye.texture = _eyes[Mood.LUNGE if _hit.flinch else Mood.CRUISE]
+		_tilted_eye.place(_tilted, _art, locked, _hit.flinch)
 		_tilted.offset = Vector2.ZERO  # GhostSheet normally anchors at the feet.
 		var density: float = GRID_PPM_70 if _art == "p70" else GRID_PPM_55
 		# The cruise drawing already lengthens a little as the top-view arms fold back.
@@ -157,7 +163,7 @@ func pose(speed_mps: float, since: int, locked: bool, facing: float, oct: int) -
 	else:
 		_top.global_rotation = facing + _yaw
 		_top.scale = Vector2.ONE.lerp(Vector2(1.08, 0.86), beams.fast)
-		var eye: int = Mood.LUNGE if beams.charges == 0 else col
+		var eye: int = Mood.LUNGE if _hit.flinch or beams.charges == 0 else col
 		_lens.texture = _eyes[Mood.CRUISE if eye == Mood.POISED and locked else eye]
 
 
