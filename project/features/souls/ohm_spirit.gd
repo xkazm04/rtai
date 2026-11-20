@@ -118,9 +118,13 @@ func pose(drawn: GhostDrawn, charge: OhmCharge, stage: OhmStage, calm: bool, tic
 	var bank: float = hover.bank if hover != null else 0.0
 	var cruise: float = hover.speed_mps / _row.top_mps if hover != null else 0.0
 	var motion: float = 0.5 if calm else 1.0
-	_drift.step(tick, (get_parent() as Node2D).global_rotation)
+	var facing: float = (get_parent() as Node2D).global_rotation
+	_drift.step(tick, facing)
 	var body_lag: float = 0.55 * _drift.beard.angle
 	rotation = (OhmDrift.sway(tick, cruise) + body_lag) * motion
+	if drawn.act_col() == GhostDrawn.HIT_COL:
+		var lean: float = GhostRecoil.lean_of(drawn.card_name)
+		rotation += GhostRecoil.tilt(tick - drawn._hurt, facing, lean, drawn.blow) * motion
 	_hem.rotation = _drift.hem.angle * motion
 	_beard.rotation = _drift.beard.angle * motion
 	_free_arm.rotation = -0.31 + (0.25 * _drift.hem.angle + bank) * motion

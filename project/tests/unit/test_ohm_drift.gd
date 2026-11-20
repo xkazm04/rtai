@@ -80,3 +80,21 @@ func test_resting_prongs_clear_the_flank_at_play_zoom() -> void:
 	var tips: PackedVector2Array = spirit._fork.points_on(ink)
 	assert_gte(tips[0].distance_to(tips[1]), 6.0)
 	assert_almost_eq(tips[2].y, 0.70 * SimConst.PX_PER_M, 0.01)
+
+
+func test_hit_turns_the_whole_top_rig_with_the_blow_then_leaves_only_sway() -> void:
+	var mount: Node2D = add_child_autofree(Node2D.new())
+	var spirit: OhmSpirit = OhmSpirit.new()
+	mount.add_child(spirit)
+	var drawn: GhostDrawn = GhostDrawn.new("ohm", 1.55, 126.0, 180.0)
+	var charge: OhmCharge = OhmCharge.new()
+	for side: float in [-1.0, 1.0]:
+		drawn.blow = Vector2.RIGHT * side
+		for age: int in [0, 4, 8, 16]:
+			var tick: int = 72 + age
+			drawn.feed(0, 72, tick)
+			var lean: float = side * deg_to_rad(12.0) * pow(maxf(0.0, 1.0 - age / 10.0), 2.0)
+			for calm: bool in [false, true]:
+				spirit.pose(drawn, charge, null, calm, tick)
+				var expected: float = (OhmDrift.sway(tick, 0.0) + lean) * (0.5 if calm else 1.0)
+				assert_almost_eq(spirit.rotation, expected, 0.00001)
