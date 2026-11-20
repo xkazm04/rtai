@@ -159,3 +159,9 @@ NEXT:
      victim one-line call sites in combat/kills (kill_marks.gd:50, kill_split_fx.gd:110, kill_view.gd:142) for the
      Director to accept or move; quick.mjs false cascade FRICTION; JOURNAL.md merge FRICTION). Run
      `node tools/evidence/cites.mjs REPORT.md` before the final commit; commit JOURNAL.md + REPORT.md + briefs.
+
+## Session 4 (iteration 4, 04:37)
+- 04:38 ASTRA RUNNING form since 04:01 (lock pid 2348). Waiting; reading other journals for NEED kerf.
+- 04:52 LOOKED (form call's re-made stills): kerf_plate_vs_game.png cruise hull 190 px tilt70 / 191 overhead: lengths match (was 140 vs 185). kerf_creature_32.png: tilted nose + lens laid on the guard's aim line: reads as a creature with an eye. Note: two short hooked cable ends curl under the hull tail in tilt (session 1 art) -> REPORT Call, not reworked tonight.
+- 05:03 flight (message): n20-flight HEAD 5707d7198: ff370f539 set_emerge (body+tail+pool rise/retract with the transformation; film with `ghost_films.mjs --takes=morph`, 8589b0294), 5707d7198 soul line follows the fade. Their note: kerf's shared tail reads too straight at 32 px/m. DECISION: keep it straight: the plate's three beams are ruler-straight, Kerf is the one ghost with no weight; no curl in kerf's ghost_hover row.
+- 05:10 ASTRA form 69 accepted (7b8d88100 hull 137->190 px tilt70 / 191 top at 64 px/m; 7f009c5b0 lens+nose on the target). Full GUT 3249/0/2; legacy strip byte-identical; mutate kerf_spectral changed lines 15/18 (83 %), remaining-line sample 41/52 (79 %); the exhaustive 166-fault run exceeded the budget. Transform/hit were skipped (flight pkg 3 absent then) -> brief 07.
