@@ -22,6 +22,7 @@ var reduced_motion: bool = false
 var marks: bool = true
 ## False drops the reach ring (the plate only, as before iteration 8; dev `--no-tele-ring`).
 var reach_ring: bool = not OS.get_cmdline_user_args().has("--no-tele-ring")
+var _spectral: bool = GhostLook.spectral(&"tonnage")
 
 
 func _process(_delta: float) -> void:
@@ -36,8 +37,9 @@ func _draw() -> void:
 		var at: Vector2 = hauler.slam_point(stage) * ppm
 		if reach_ring:
 			_reach(at, form.num(&"stomp_radius_m") * ppm, form.windup_k())
-		_telegraph(at, form.windup_k())
-	if form.on:  # n7-melee: the bow wave while the press charges
+		if not _spectral:
+			_telegraph(at, form.windup_k())
+	if form.on and wake_on(_spectral):
 		RamWake.draw(self, stage.arena.rivet.pos * ppm, form, stage.tick, ppm)
 	if marks:
 		RamMarks.draw_all(self, hauler, stage.tick, ppm)  # n7-melee: the ram's contact marks
@@ -45,6 +47,10 @@ func _draw() -> void:
 		var age: float = (stage.tick - hauler.stomp_tick) * SimClock.TICK_DT
 		var radius: float = form.num(&"stomp_radius_m")
 		HaulerMarks.draw(self, hauler.stomp_at * ppm, age, radius, ppm, hauler.stomp_tick)
+
+
+static func wake_on(spectral: bool) -> bool:
+	return not spectral or RamWake.SPECTRAL_GAIN > 0.0
 
 
 ## The die plate's footprint at `c` (px), `k` 0..1 through the wind-up.
@@ -62,6 +68,11 @@ func _telegraph(c: Vector2, k: float) -> void:
 
 ## The shockwave's reach at `c`: radius `r` px, `k` 0..1 through the wind-up.
 func _reach(c: Vector2, r: float, k: float) -> void:
+	if _spectral:
+		var sweep: float = TAU * (1.0 if reduced_motion else k)
+		var width: float = 2.0 / get_canvas_transform().x.length()
+		draw_arc(c, r, -PI * 0.5, sweep - PI * 0.5, 96, HaulerMarks.TEAL, width, true)
+		return
 	var fill: float = r if reduced_motion else r * k
 	draw_circle(c, fill, Color(INK, 0.1 + 0.12 * k))
 	if not reduced_motion:

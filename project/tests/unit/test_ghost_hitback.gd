@@ -13,6 +13,7 @@ func before_each() -> void:
 
 
 func after_each() -> void:
+	GhostLook.reset_for_test()
 	ViewMode._shared = _saved_view
 
 
@@ -78,6 +79,7 @@ func test_switch_off_shows_the_original_hit_in_all_eight_octants() -> void:
 
 
 func test_ohms_windup_interrupts_a_rear_hit_then_returns_to_walk() -> void:
+	GhostLook.override_for_test(GhostLook.LEGACY)
 	ViewMode.select("combo")
 	var d: GhostDrawn = GhostDrawn.new("ohm", 1.55, 126.0, 180.0)
 	_check_blow(d, 0, Vector2.RIGHT, true)

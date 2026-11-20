@@ -1,0 +1,16 @@
+Committed Dent’s render-only attack changes on `n20-dent` through `87b14779d`. Dent faces the car he holds. His jab and its victim clear the car during the strike. The seatbelt runs from his fist to the roof buckle, turns amber with heat, and goes slack on release. The overload connects the wreck to the struck body and expands to the marked 4.5 m radius.
+
+**Inspected stills**
+
+- Jab before/after at tick **94** and dive-tail before/after at tick **110**, at 64 px/m. [Comparison sheet](C:/Users/kazda/kiro/gtai-masters/n20/dent/scratch/a3/comparison-64ppm-jab94-dive110.jpg)
+- Tilt and top at 32 px/m show the taut strap at **160**, heat at **234**, blast contact at **235**, and full reach at **252**. [Attack sheet](C:/Users/kazda/kiro/gtai-masters/n20/dent/scratch/a3/attack-32ppm-strap160-heat234-blast235-radius252.jpg) · [n19 tether at tick 160](C:/Users/kazda/kiro/gtai-masters/n20/dent/scratch/a3/tilt70-top-32ppm-attack-strap-tick160-n19.png)
+
+**Files.** Added `dent_look`, `dent_strap`, `dent_roof`, `dent_overload`, `dent_jab_order`, four unit-test files, and the look table and schema. Updated Dent’s body, view, spectral renderers and hover row. Merged flight’s bright tail root. Added the launch flag and decision entry, and condensed one `launch_args.gd` header comment to meet the line-count gate.
+
+**Checks.** The a2 closeout passed 8/8. Full lint passed 19/19. `run_unit --changed` reported **3,231 passed, 0 failed, 2 skipped**. All five scenarios passed (`city_replay`, `moves_replay`, `quest1_dent`, `quest1_dent_lock`, `replay_60s`). The 60-second digest stayed `cbeb734ff9b97c41`. Native parity matched for 1,200 steps and caught the planted mismatch at step 629.
+
+**Remaining gate issue.** Standalone `godot/check` and the affected quick gates flagged `dent_roof.gd` and `dent_strap.gd` with dependency and allocator-shutdown errors. All 14 changed scripts loaded in the bootstrapped project, and both final review renders exited with zero script errors.
+
+**Mutation results.** Spectral drawing killed **14/(14+6)**. The strap killed **8/(8+12)** at its first commit and **9/(9+10)** at final HEAD, with one invalid mutation. Removing the buckle draw survived the tests. The buckle is visible in both inspected views.
+
+[astra: 3869s, exit 0]

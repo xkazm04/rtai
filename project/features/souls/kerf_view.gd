@@ -1,21 +1,7 @@
 class_name KerfView
 extends Node2D
-## Kerf on the arena's actor layer (lane ghost-powers), render only; reads the pilot's KerfStage
-## (looked up each frame: the reel sets it after the views attach). While the soul is on: a thin
-## teal ring at Rivet's feet and one teal pip per blink charge behind him. Each blink leaves, for
-## cut_hang_s: the straight teal path from where he stood to where he landed with three fading
-## afterimages of the Kerf body along it (KerfRig copies, limbs swept, teal-washed, older = fainter;
-## pooled), and on a cut the hanging cut line across the target, white-hot in a
-## teal glow, at the kill row's diagonal. Reduced motion: no afterimages, no flicker.
-## n7-melee: on each cut frame, for cut_flare_s, a cut flare across the target (a long cream slash
-## edged in ink, snapping out to full length, and ink sparks thrown along the blink), so a chain of
-## three reads as three marks at 32 px/m. A world impact prints in ink and paper (teal stays the
-## soul's own marks). --feel=off or cut_flare_s 0 = none (the before clips).
-## n7-melee: the sight (anticipation): while the settled form holds a charge, the cutter's dashed
-## teal sighting line runs to the body the next press would cut (KerfStage.pick on the last aim)
-## with a white lock (two brackets outside the body, at the cut line's ends); it brightens as the
-## blink gap refills, so every cut of a chain is called before it lands. sight_k 0 or --feel=off =
-## none.
+## The legacy path, afterimages, flare and sight. Spectral blinks draw a retracting slot here;
+## the live spectral rig keeps the departure image alongside its pose buffer.
 
 const TEAL: Color = HaulerLook.TEAL
 const INK: Color = Color(0.09, 0.08, 0.07)
@@ -39,11 +25,14 @@ var stage: CollectCallStage = null
 var ppm: float = 32.0
 var reduced_motion: bool = false
 var flare: bool = HitFeel.feel_flag() != "off"
+var _spectral: bool = GhostLook.spectral(KerfStage.GHOST)
+var _slot: KerfSlot = KerfSlot.new() if _spectral else null
 var _echo: Array[KerfRig] = []
 
 
 func _process(_delta: float) -> void:
-	_place_echoes()
+	if not _spectral:
+		_place_echoes()
 	queue_redraw()
 
 
@@ -61,13 +50,18 @@ func _draw() -> void:
 		if age < 0.0 or age > hang:
 			continue
 		var fade: float = 1.0 - age / hang
+		if _spectral:
+			_slot.place(k, i, stage.tick - k.trail_tick[i], ppm)
+			_slot.draw(self)
+			continue
 		_path(k.trail_from[i] * ppm, k.trail_to[i] * ppm, fade)
 		if k.trail_cut[i] != Vector2.INF:
 			var dir: Vector2 = (k.trail_to[i] - k.trail_from[i]).normalized()
 			_cut(k.trail_cut[i] * ppm, dir.rotated(deg_to_rad(CUT_DEG)), fade, i)
 			_flare(k, k.trail_cut[i] * ppm, dir, age)
 	if k.on():
-		_aura(k)
+		if not _spectral:
+			_aura(k)
 		_sight(k)
 
 
@@ -102,6 +96,7 @@ func _place_echoes() -> void:
 func _echo_at(j: int, at: Vector2, angle: float, alpha: float) -> void:
 	while _echo.size() <= j:
 		var rig: KerfRig = KerfRig.new()
+		rig.echo = true
 		rig.show_behind_parent = true  # under the path and the cut line
 		add_child(rig)
 		rig.speed_mps = KerfRig.FAST_MPS

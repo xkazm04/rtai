@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://dev/ghost-powers/ghost_review.gd" id="1"]
+
+[node name="GhostReview" type="Node"]
+script = ExtResource("1")
+move_centre = Dictionary[StringName, Vector2]({&"tonnage": Vector2(3.4, 2), &"dent": Vector2(5.6, 3), &"kerf": Vector2(11.4, 5), &"ohm": Vector2(3.6, 2)})

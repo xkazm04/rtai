@@ -1,13 +1,6 @@
 class_name GhostSheet
 extends RefCounted
-## n15 hero h-3 (the owner's Call): one of a drawn ghost's grids (walk8, run8 or act) with its drawn
-## left rows. The grid draws 5 facings (toward, 3/4 toward right, right profile, 3/4 away right,
-## away); the screen-left octants mirror rows 2-4 unless `<name>_<sheet>_left.png` exists: 3 rows
-## (3/4 toward left, left profile, 3/4 away left), packed by tools/art/ghost_pack.py at the right
-## grid's scale, so the one-sided details (Dent's pouch) sit where they belong. A left sheet keeps
-## the right one's columns, except an act sheet, whose left rows draw the 4 phases only: a column
-## past them (Dent's jab) mirrors the right row. LEFT false = every left octant mirrored (the
-## before; so is a ghost or pitch with no left sheet yet). Render only.
+## Five facing rows with optional drawn left facings. A missing left cell mirrors the right one.
 
 const LEFT_ROWS: int = 3
 ## The left sheet's row per screen octant (RigHeadCard's octants; -1 = drawn on the right sheet).
@@ -16,6 +9,7 @@ const LEFT: bool = true
 
 var tex: Texture2D = null
 var cols: int = 8
+var poses: bool = false
 var left: Texture2D = null
 var left_cols: int = 0
 var hitback: GhostSheet = null  # optional one-column alternate on an act grid
@@ -31,28 +25,52 @@ func _init(p_tex: Texture2D, p_cols: int, p_left: Texture2D = null, p_left_cols:
 	left_cols = p_left_cols if p_left != null else 0
 
 
-## The grid at `path` (null when it is not there) and its left sheet when one is.
+## Load both facings. Zero columns selects a pose sheet with square cells in five rows.
 static func of(path: String, p_cols: int, p_left_cols: int = -1) -> GhostSheet:
 	if not ResourceLoader.exists(path):
 		return null
+	var main: Texture2D = load(path) as Texture2D
+	if main == null:
+		return null
+	var infer_pose: bool = p_cols == 0
+	if infer_pose:
+		var cell: int = floori(main.get_height() / float(GhostDrawn.ROWS))
+		if cell < 1 or main.get_height() != cell * GhostDrawn.ROWS or main.get_width() % cell != 0:
+			Log.warn("ghost_sheet", "%s needs five rows of square pose cells" % path)
+			return null
+		p_cols = floori(main.get_width() / float(cell))
 	var lp: String = path.get_basename() + "_left.png"
-	var lt: Texture2D = load(lp) as Texture2D if ResourceLoader.exists(lp) else null
-	return GhostSheet.new(
-		load(path) as Texture2D, p_cols, lt, p_cols if p_left_cols < 0 else p_left_cols
+	var lt: Texture2D = null
+	if ResourceLoader.exists(lp):
+		lt = load(lp) as Texture2D
+		if lt == null:
+			Log.warn("ghost_sheet", "could not read %s, mirroring right-facing cells" % lp)
+	var sheet: GhostSheet = GhostSheet.new(
+		main, p_cols, lt, p_cols if p_left_cols < 0 else p_left_cols
 	)
+	sheet.poses = infer_pose
+	return sheet
 
 
 ## The two measured profiles share timing and each has its own pad drawings.
-static func walk_of(path: String, steps: PackedFloat32Array) -> GhostSheet:
+static func walk_of(
+	path: String, steps: PackedFloat32Array, standing_only: bool = false
+) -> GhostSheet:
+	if standing_only:
+		var pose_sheet: GhostSheet = of(path.trim_suffix("walk8.png") + "spec_hover.png", 0)
+		if pose_sheet != null:
+			return pose_sheet
 	var sheet: GhostSheet = of(path, GhostStride.cols_of(steps))
-	if sheet != null and steps.size() == 16 and path.ends_with("/p70/tonnage_walk8.png"):
+	if sheet == null or standing_only:
+		return sheet
+	if steps.size() == 16 and path.ends_with("/p70/tonnage_walk8.png"):
 		sheet._mid_windows = GhostStride.tonnage_windows(steps)
 		sheet._profile_mid = of(path.get_basename() + "_mid.png", sheet._mid_windows.size())
 		sheet._load_detail(path, steps, [1, 3, 5, 7], ["_diag"], GhostStride.DIAGONAL_DIVISIONS)
 		sheet._load_detail(
 			path, steps, [2, 6], ["_fill_a", "_fill_b"], GhostStride.DIAGONAL_DIVISIONS
 		)
-	elif sheet != null and steps.size() == 8 and path.ends_with("/p55/tonnage_walk8.png"):
+	elif steps.size() == 8 and path.ends_with("/p55/tonnage_walk8.png"):
 		sheet._load_detail(path, steps, [0, 4], ["_detail"], GhostStride.PROFILE55_DIVISIONS)
 		sheet._load_detail(
 			path, steps, [1, 2, 3, 5, 6, 7], ["_fill_a", "_fill_b"], GhostStride.OTHER55_DIVISIONS
@@ -82,7 +100,13 @@ func _load_detail(
 
 ## An act grid (`key` "<name>/<pitch>"): its columns and its left sheet's, with Dent's jab columns
 ## where GhostDrawn.JAB_COLS / JAB_LEFT_COLS name the key.
-static func act_of(path: String, key: String) -> GhostSheet:
+static func act_of(path: String, key: String, spectral: bool = false) -> GhostSheet:
+	if spectral:
+		var acts_sheet: GhostSheet = of(
+			path.trim_suffix("act.png") + "spec_act.png", GhostDrawn.ACT_COLS
+		)
+		if acts_sheet != null:
+			return acts_sheet
 	var acts: int = GhostDrawn.JAB_COLS.get(key, GhostDrawn.ACT_COLS)
 	var lefts: int = GhostDrawn.JAB_LEFT_COLS.get(key, GhostDrawn.ACT_COLS)
 	var sheet: GhostSheet = of(path, acts, lefts)
@@ -97,9 +121,25 @@ func make_sprite() -> Sprite2D:
 	var spr: Sprite2D = Sprite2D.new()
 	spr.name = &"ghost_drawn"
 	spr.centered = false
-	show(spr, 2, GhostDrawn.STAND_COL)
+	show(spr, 2, 0 if poses else GhostDrawn.STAND_COL)
 	spr.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	GhostSoulLine.attach(spr)
+	return spr
+
+
+## Keep the live cell's name stable when the view or look changes in the middle of a frame.
+static func replace_sprite(
+	host: Node2D, old: Sprite2D, sheet: GhostSheet, parts: Array[Sprite2D] = []
+) -> Sprite2D:
+	for part: Sprite2D in parts:
+		part.visible = sheet == null
+	if old != null:
+		old.get_parent().remove_child(old)
+		old.queue_free()
+	if sheet == null:
+		return null
+	var spr: Sprite2D = sheet.make_sprite()
+	host.add_child(spr)
 	return spr
 
 
@@ -109,7 +149,10 @@ func drawn_left(oct: int, col: int) -> bool:
 
 
 ## Puts cell `col` of octant `oct` on `spr`: texture, grid, feet offset, frame and mirror.
-func show(spr: Sprite2D, oct: int, col: int, phase: float = -1.0) -> void:
+func show(spr: Sprite2D, oct: int, col: int, phase: float = -1.0, rear: bool = false) -> void:
+	if rear and hitback != null and col == GhostDrawn.HIT_COL:
+		hitback.show(spr, oct, 0)
+		return
 	if _profile_mid != null and (oct == 0 or (oct == 4 and _profile_mid.drawn_left(oct, 0))):
 		var mid: int = _profile_col(col, phase)
 		if mid >= 0:

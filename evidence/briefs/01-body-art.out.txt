@@ -1,0 +1,17 @@
+Committed five spectral rig parts and four tilted sprite sheets in five local commits on `n20-tonnage`. The `project/` diff contains nine new PNGs and their Godot import files. Gameplay wiring is deferred to the next session.
+
+| Sheet and grey contact | Accepted take | Rerolls and selection | Cell px | `fig_px` | Baseline y | Commit |
+|---|---:|---|---:|---:|---:|---|
+| [A · Top-view parts](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/scratch/parts_contact.png) | 3 | 2 for hose detail. Take 3 shows three ribbed arcs and a distinct wrist clamp. | 512×512 source | 317¹ | Individual trims | `c988ab26c` |
+| [B · p70 pose](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/scratch/p70_pose_contact.png) | 2 | 2 for rear facings and pose separation. Take 2 has the clearest cruise and recoil. | 384×320 | 215.5 | 315 | `1c3546e08` |
+| [C · p70 attack](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/scratch/p70_act_contact.png) | 1 | 2 for pound reach. Take 1 keeps the striking fists closest together. | 384×320 | 221.5 | 315 | `07b34371a` |
+| [D · p55 pose](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/scratch/p55_pose_contact.png) | 2 | 2 for carry height and camera angle. Take 2 has the clearest recoil guard. | 384×320 | 216 | 315 | `b6781ab7c` |
+| [E · p55 attack](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/scratch/p55_act_contact.png) | 2 | 1 for the rear lift turning sideways. Take 2 keeps that lift rear-facing. | 384×320 | 225.5 | 315 | `16c5ce2d2` |
+
+¹ Median visible part height. For tilted sheets, **y = 315** is the zero-based last visible row. Each attack’s final carry frame is byte-identical to the corresponding pose frame in all five facings.
+
+**Verification.** Both Python art tools ran successfully. One headless Godot import produced nine lossless textures. All 80 tilted cells passed the baseline and margin checks. The quick gate ran before every commit. An environment override caused two merge-tool tests to fail on the first hook attempt. After removing it, all five commits passed all 19 checks. All 14 raw-master hashes, nine provenance records, and five verbatim prompts with ordered references were verified. [Master manifest](C:/Users/kazda/kiro/gtai-wt/n20-tonnage/art_src/tonnage_spectral_n20.manifest.json)
+
+**Visual limits.** The p70 pound has less forward reach than the concept plate. Some side and rear poses remain oblique, and the difference between camera tilts is subtle. [Combined tilt contact sheet](C:/Users/kazda/kiro/gtai-masters/n20/tonnage/scratch/tilts_contact.png)
+
+[astra: 2008s, exit 0]

@@ -16,6 +16,10 @@ const BREATH: float = 0.3
 
 ## The form's footprint radius in px (ghost_forms.json radius_m x PX_PER_M).
 var radius_px: float = 14.0
+var form_id: StringName = &"":
+	set(id):
+		form_id = id
+		queue_redraw()
 var reduced_motion: bool = false
 var _k: float = 1.0
 
@@ -29,7 +33,13 @@ func sync(tick: int, move_k: float) -> void:
 		queue_redraw()
 
 
+func draws_pool() -> bool:
+	return form_id == &"" or not GhostLook.spectral(form_id)
+
+
 func _draw() -> void:
+	if not draws_pool():
+		return
 	var outer: float = radius_px * REACH_K
 	for i: int in RINGS:
 		var r: float = outer * (1.0 - float(i) / float(RINGS) * 0.75)

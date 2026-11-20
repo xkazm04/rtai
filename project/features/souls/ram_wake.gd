@@ -8,6 +8,8 @@ extends RefCounted
 ## TonnageView (the ghost forms) and CastView (quest 1). Data: ghost_attacks.json tonnage
 ## ram_wake_k (opacity; 0 = none); --feel=off = none. Phase from the tick: view only.
 
+## The armed press fist carries the spectral ram tell. Zero also suppresses flank dust.
+const SPECTRAL_GAIN: float = 0.0
 const INK: Color = SlamDebris.INK
 const CREAM: Color = SlamDebris.CREAM
 ## How far past the body radius the wave's nose rides and its flanks sweep: the press is drawn

@@ -1,0 +1,40 @@
+Finished at **06:06**. The [40-second all-ghosts reel](<C:/Users/kazda/kiro/gtai-masters/n20/flight/all_ghosts_32.mp4>), [poster](<C:/Users/kazda/kiro/gtai-masters/n20/flight/all_ghosts_32.jpg>), and [15-entry frames.json](<C:/Users/kazda/kiro/gtai-masters/n20/flight/frames.json>) are ready.
+
+All **40 D3D12 panels** rendered with zero script or shader errors. `ffprobe` verified `yuv420p`, `color_range=tv`, and unchanged frame counts for all nine new videos: **2,400** for the reel, **300** per movement film, and **600** per close-up. Ohm’s close-up used CRF 12 to better preserve the source. The two existing morph pairs qualified for reuse and retain their original full-range encoding.
+
+I removed **34** unreferenced scratch renders and verified the protected comparisons by hash. No repository file was edited, staged, or committed by this session.
+
+**Four frames from the reel**
+
+- **Tonnage, attack t124.** The smoke clears the chest above the slam disc. The broad overhead rig covers much of the impact.
+- **Dent, attack t95.** The car partly hides Dent in tilt. Overhead, the body and attached comet remain easy to follow.
+- **Kerf, attack t98.** Three afterimages lead into the blade impact. The charge ring and pips are still visible.
+- **Ohm, attack t96.** The bolt reaches forward while the plume streams backward. Both directions read clearly in both views.
+
+**Gallery contents**, in `frames.json` order. Each **before** link uses the matching filename in the comparison directory.
+
+| Title and files | px/m | Before | Frame judgment |
+|---|---:|---|---|
+| Four ghosts in motion · [poster](<C:/Users/kazda/kiro/gtai-masters/n20/flight/all_ghosts_32.jpg>) · [film](<C:/Users/kazda/kiro/gtai-masters/n20/flight/all_ghosts_32.mp4>) | 32 | — | Tonnage turns above a broad pool. The pale ram arc still crosses the street. |
+| Kerf overhead · [still](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_tail_kerf_top_64_t163.png>) | 64 | [package 2](<C:/Users/kazda/kiro/gtai-masters/n20/flight/package2/flight_tail_kerf_top_64_t163.png>) | The wake stays bright against the paving and splits into two thin tips behind the hull. |
+| Ohm’s vapour hem · [still](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_tail_ohm_tilt70_64_t163.png>) | 64 | [package 2](<C:/Users/kazda/kiro/gtai-masters/n20/flight/package2/flight_tail_ohm_tilt70_64_t163.png>) | A dense plume joins the torso. The small electrical spark is separate from the tail. |
+| Kerf rising through the morph · [still](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_morph_kerf_tilt70_64_t84.png>) | 64 | [legacy](<C:/Users/kazda/kiro/gtai-masters/n20/flight/before/flight_morph_kerf_tilt70_64_t84.png>) | A short ribbon emerges while the burst ring stays below the lifted body. |
+| Tonnage taking form · [poster](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_tonnage_morph_32.jpg>) · [film](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_tonnage_morph_32.mp4>) | 32 | — | The chest appears above the ring in tilt. Overhead, the ring nearly fills the body outline. |
+| Kerf at full speed · [poster](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_kerf_close_64.jpg>) · [film](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_kerf_close_64.mp4>) | 64 | [legacy](<C:/Users/kazda/kiro/gtai-masters/n20/flight/before/flight_kerf_close_64.jpg>) | The wake bends behind the hull in both views. The charge ring and pips remain visible in tilt. |
+| Tonnage banking · [still](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_tonnage_turn_64_t163.png>) | 64 | — | The heavy plume clears the chest in tilt and opens into a broad, forked wake overhead. |
+| Ohm’s close-up · [poster](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_ohm_close_64.jpg>) · [film](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_ohm_close_64.mp4>) | 64 | — | The bright root breaks into small wisps. The tilted body still reads mostly as a dome. |
+| Kerf turning in two views · [still](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_kerf_turn_64_t163.png>) | 64 | [legacy](<C:/Users/kazda/kiro/gtai-masters/n20/flight/before/flight_kerf_turn_64_t163.png>) | The slender S-curve in tilt resolves into two curling strands behind the overhead rig. |
+| Tonnage’s smoke column · [poster](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_tonnage_close_64.jpg>) · [film](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_tonnage_close_64.mp4>) | 64 | — | The bright column hangs below the broad chest. The pale ram arc competes with its outline. |
+| Ohm banking · [still](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_ohm_turn_64_t163.png>) | 64 | — | The compact plume curls to the left while a separate spark sits ahead of the overhead body. |
+| Dent’s comet turn · [still](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_dent_turn_64_t163.png>) | 64 | — | One dense tongue tapers to a point. The overhead view shows where it joins the yellow body. |
+| Dent at close range · [poster](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_dent_close_64.jpg>) · [film](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_dent_close_64.mp4>) | 64 | — | The plume stays attached in both views. In tilt the fade leaves little visible below the head. |
+| Kerf at play scale · [poster](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_kerf_move_32.jpg>) · [film](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_kerf_move_32.mp4>) | 32 | [legacy](<C:/Users/kazda/kiro/gtai-masters/n20/flight/before/flight_kerf_move_32.jpg>) | A shallow wave remains visible at 32 px/m, with an afterimage well behind it in tilt. |
+| Dent at play scale · [poster](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_dent_move_32.jpg>) · [film](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_dent_move_32.mp4>) | 32 | — | The single tail and ground pool stay distinct even when the body is small. |
+
+**Other film/poster pairs**
+
+- **Tonnage movement.** The wide wake follows the turn overhead. The pale ground arc remains prominent in tilt. [Film](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_tonnage_move_32.mp4>) · [Poster](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_tonnage_move_32.jpg>)
+- **Ohm movement.** The small torso, curling plume and forward spark remain distinguishable at play scale. [Film](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_ohm_move_32.mp4>) · [Poster](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_ohm_move_32.jpg>)
+- **Kerf morph.** The overhead blades frame the emerging body. In tilt, the ground ring remains visible as the body retracts. [Film](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_kerf_morph_32.mp4>) · [Poster](<C:/Users/kazda/kiro/gtai-masters/n20/flight/flight_kerf_morph_32.jpg>)
+
+[astra: 1047s, exit 0]

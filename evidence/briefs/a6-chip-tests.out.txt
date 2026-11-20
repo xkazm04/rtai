@@ -1,0 +1,10 @@
+Completed the spectral HUD chip and overload tests. All three commits passed the quick gate. Final HEAD was `007c4cccd` at 05:08 local, before the 05:58 cutoff.
+
+- **HUD chip — `42dcad19f`.** Added `dent_spectral.png`, its `.import`, `tools/art/dent_chip_cut.py`, and one provenance row in `steam/ai-provenance/2026-11.jsonl`. The 84 × 84 RGBA crop preserves the head roundel, shoulders, belt and plume. Both D3D12 captures saved tick 110 with zero script errors. Godot reported resources still in use at shutdown. [Legacy and spectral HUD comparison](C:/Users/kazda/kiro/gtai-wt/n20-dent/scratch/a6/chip.png)
+- **Overload — `854d276fe`, `007c4cccd`.** Strengthened `test_dent_overload.gd` to check ring radius at 32 and 64 px/m, first shock contact at tick +8, amber progression with heat, and spoke endpoints at killed and wounded bodies. All 10 overload and debris tests passed. Mutation score rose from **4/20 to 13/20**: 13 killed, 7 survived, zero timeouts or invalid mutants. [Mutation results](C:/Users/kazda/kiro/gtai-wt/n20-dent/build/mutate/features-souls-dent_overload.json)
+
+The 3,600-tick replay retained `cbeb734ff9b97c41`. Native and GDScript parity matched bit for bit over 1,200 steps.
+
+Transformation, hit reaction and left-facing changes were excluded by the final cut. The existing a5 morph still shows ticks 73, 84, 165 and 295. [Morph review still](C:/Users/kazda/kiro/gtai-wt/n20-dent/build/a5/proof-morph.jpg)
+
+[astra: 1250s, exit 0]

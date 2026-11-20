@@ -47,7 +47,7 @@ func leave(
 	m.dir = dir
 	m.scorch_m = row.scorch_radius_m
 	m.line_m = row.scorch_line_m
-	m.flash_ticks = row.flash_ticks
+	m.flash_ticks = KerfVictim.flash_ticks(row)
 	m.flash_scale = 1.0 if row.style == &"gib" else 0.55  # the big star and soot: blasts only
 	m.tick = tick
 	m.ash_m = row.ash_m

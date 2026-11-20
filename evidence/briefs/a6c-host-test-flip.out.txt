@@ -1,0 +1,9 @@
+The sprite guard cleared the `frame_coords` error. With Dent’s row set to `legacy`, the host suite recorded **3 passed, 1 failed, 0 skipped**. The automatic rerun reproduced a different error at [test_ghost_flight_hosts.gd:118](C:/Users/kazda/kiro/gtai-wt/n20-dent/project/tests/unit/test_ghost_flight_hosts.gd:118):
+
+> Invalid access to property or key 'sides' on a base object of type 'Nil'.
+
+The test loops through both looks. In the spectral Dent case, it reaches `view._bodies.dent._rig.sides`, but Dent’s spectral body has no legacy `_rig`.
+
+I stopped as directed. The three-line guard is the only edit from this brief and remains unstaged. All assertions are intact. HEAD remains `607f482fd`, and Dent still defaults to `legacy`. The spectral-default suite, scenarios and replay were not rerun.
+
+[astra: 79s, exit 0]

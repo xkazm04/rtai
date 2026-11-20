@@ -1,0 +1,149 @@
+{
+  "_doc": "Dent's spectral body. Each entry maps a shipped PNG to the raw sheet used to cut it.",
+  "masters": {
+    "project/features/characters/art/dent/spectral/forearm_fist.png": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n20/dent/masters/dent_sp_top_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/dent/dent_sp_top.txt",
+      "references": [
+        "masters:n20/concepts/dent_a.png",
+        "masters:n6/ghost-forms/gen/r2/out/dent_parts.png"
+      ],
+      "seed": null,
+      "sha256": "547b24a9eda519513b7f6f63e7cfde83f8b14dec7ad104a5bcfb366cfe97f826",
+      "tool": "codex-image"
+    },
+    "project/features/characters/art/dent/spectral/forearm_open.png": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n20/dent/masters/dent_sp_top_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/dent/dent_sp_top.txt",
+      "references": [
+        "masters:n20/concepts/dent_a.png",
+        "masters:n6/ghost-forms/gen/r2/out/dent_parts.png"
+      ],
+      "seed": null,
+      "sha256": "547b24a9eda519513b7f6f63e7cfde83f8b14dec7ad104a5bcfb366cfe97f826",
+      "tool": "codex-image"
+    },
+    "project/features/characters/art/dent/spectral/head.png": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n20/dent/masters/dent_sp_top_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/dent/dent_sp_top.txt",
+      "references": [
+        "masters:n20/concepts/dent_a.png",
+        "masters:n6/ghost-forms/gen/r2/out/dent_parts.png"
+      ],
+      "seed": null,
+      "sha256": "547b24a9eda519513b7f6f63e7cfde83f8b14dec7ad104a5bcfb366cfe97f826",
+      "tool": "codex-image"
+    },
+    "project/features/characters/art/dent/spectral/tail_root.png": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n20/dent/masters/dent_sp_top_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/dent/dent_sp_top.txt",
+      "references": [
+        "masters:n20/concepts/dent_a.png",
+        "masters:n6/ghost-forms/gen/r2/out/dent_parts.png"
+      ],
+      "seed": null,
+      "sha256": "547b24a9eda519513b7f6f63e7cfde83f8b14dec7ad104a5bcfb366cfe97f826",
+      "tool": "codex-image"
+    },
+    "project/features/characters/art/dent/spectral/torso.png": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n20/dent/masters/dent_sp_top_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/dent/dent_sp_top.txt",
+      "references": [
+        "masters:n20/concepts/dent_a.png",
+        "masters:n6/ghost-forms/gen/r2/out/dent_parts.png"
+      ],
+      "seed": null,
+      "sha256": "547b24a9eda519513b7f6f63e7cfde83f8b14dec7ad104a5bcfb366cfe97f826",
+      "tool": "codex-image"
+    },
+    "project/features/characters/art/dent/spectral/upperarm.png": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n20/dent/masters/dent_sp_top_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/dent/dent_sp_top.txt",
+      "references": [
+        "masters:n20/concepts/dent_a.png",
+        "masters:n6/ghost-forms/gen/r2/out/dent_parts.png"
+      ],
+      "seed": null,
+      "sha256": "547b24a9eda519513b7f6f63e7cfde83f8b14dec7ad104a5bcfb366cfe97f826",
+      "tool": "codex-image"
+    },
+    "project/features/souls/art/view/p55/dent_sp_act.png": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n20/dent/masters/dent_sp_act_55_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/dent/dent_sp_act_55.txt",
+      "references": [
+        "masters:n20/concepts/dent_a.png",
+        "own: gtai-art/library/rounds/20261109-2205/out/dent_act_55.png",
+        "own: gtai-art/library/refs/camera_guide_55.png"
+      ],
+      "seed": null,
+      "sha256": "b9687196b50be05f4b6084cea2c4e135094af63f871ec0f7fb06551a6ad0467a",
+      "tool": "codex-image"
+    },
+    "project/features/souls/art/view/p55/dent_sp_fly.png": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n20/dent/masters/dent_sp_fly_55_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/dent/dent_sp_fly_55.txt",
+      "references": [
+        "masters:n20/concepts/dent_a.png",
+        "own: gtai-art/library/rounds/20261109-2205/out/dent_act_55.png",
+        "own: gtai-art/library/refs/camera_guide_55.png"
+      ],
+      "seed": null,
+      "sha256": "1440c956d47d0a3fa9e234f012b90a5dc4e9ced2d728a208372ae2f395792990",
+      "tool": "codex-image"
+    },
+    "project/features/souls/art/view/p70/dent_sp_act.png": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n20/dent/masters/dent_sp_act_70_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/dent/dent_sp_act_70.txt",
+      "references": [
+        "masters:n20/concepts/dent_a.png",
+        "own: gtai-art/library/rounds/20261109-2015/out/dent_act_70.png",
+        "own: gtai-art/library/refs/camera_guide_70.png"
+      ],
+      "seed": null,
+      "sha256": "2fddde203631f9b423b5d1e145c90c8d543f61435eff3810a758a0c2b9f9e92d",
+      "tool": "codex-image"
+    },
+    "project/features/souls/art/view/p70/dent_sp_fly.png": {
+      "accepted": true,
+      "date": "2026-11-20",
+      "file": "masters:n20/dent/masters/dent_sp_fly_70_take1.png",
+      "model": "built-in image_gen (image model not reported)",
+      "prompt_ref": "docs/art/prompts/n20/dent/dent_sp_fly_70.txt",
+      "references": [
+        "masters:n20/concepts/dent_a.png",
+        "own: gtai-art/library/rounds/20261109-2015/out/dent_act_70.png",
+        "own: gtai-art/library/refs/camera_guide_70.png"
+      ],
+      "seed": null,
+      "sha256": "9cdcbf11f1dc7a33c74419b4b9f1402e2f060042615eed83b1a485f8f25d7d11",
+      "tool": "codex-image"
+    }
+  }
+}

@@ -10,7 +10,6 @@ extends Node2D
 ## left arm holds its electrodes forward (the bolt's hand). unfold (0..1) is the transformation:
 ## 0 = limbs folded under the shell.
 
-const ART: String = "res://features/souls/art/ohm/"
 const PX_PER_M: float = 32.0
 const TEAL: Color = Color(0.18, 0.77, 0.71)
 ## Part lengths (metres, the art's long side) and their spots in the body frame (x forward,
@@ -29,7 +28,6 @@ const HIP: Vector2 = Vector2(-0.04, 0.18)
 const SHOULDER: Vector2 = Vector2(0.1, 0.26)
 const UPPER_M: float = 0.36
 const FORE_M: float = 0.54
-const ARM_THICK_M: float = 0.24
 ## The guard arm (left): its electrode tips held at the bolt's hands (OhmStage.HANDS_M ahead, a
 ## little to the left), the elbow cocked out to the side as in the target.
 const GUARD_HAND: Vector2 = Vector2(0.5, -0.12)
@@ -41,8 +39,8 @@ const STRIDE_M: float = 0.7
 const SWING_K: float = 0.3
 ## Feet: fore/aft reach (metres) and steps per cane cycle; the lean onto the cane (radians).
 const FOOT_REACH_M: float = 0.1
-const STEPS_PER_CYCLE: float = 2.0
 const LEAN: float = deg_to_rad(6.0)
+const ARM_THICK_PX: float = 0.24 * PX_PER_M
 const BREATH_HZ: float = 0.6
 const BREATH_K: float = 0.025
 ## The kick per bolt (ghost-powers REQUEST 8): the guard hand snaps KICK_M out and back over KICK_S,
@@ -59,6 +57,8 @@ const CARD_ANCHOR: float = 0.8
 const CARD_HALO_A: float = 0.45
 const CYCLE_CELL: float = 126.0  # n11 it10: the profile row's stance foot, 15.7 cell px a frame
 
+var tick: int = 0
+var ohm: OhmStage
 var unfold: float = 1.0
 ## OhmStage.bolts, fed by the host: a rise kicks the guard arm (the first sight only arms it).
 var bolts: int = 0
@@ -68,6 +68,8 @@ var speed_mps: float = 0.0
 ## 0..1 through the cane cycle (advances with ground covered, not time).
 var phase: float = 0.0
 var drawn: GhostDrawn = GhostDrawn.new("ohm", 1.55, CYCLE_CELL, 180.0)  # n11: ohm_walk8.png
+var _spirit: OhmSpirit
+var _spectral: OhmDrawn
 var _t: float = 0.0
 var _seen_bolts: int = -1
 var _kick: float = 0.0  # 1 at the bolt, falling to 0 over KICK_S
@@ -79,24 +81,45 @@ var _card: GhostCard = GhostCard.new("ohm", CARD_M, CARD_ANCHOR)
 var _all: Array[Sprite2D] = []
 
 
+func _init() -> void:
+	if GhostLook.spectral(OhmStage.ID):
+		_spectral = OhmDrawn.new()
+		drawn.hover = true
+
+
+func _process(_delta: float) -> void:
+	if ohm != null:
+		_spectral.charge.step(ohm, tick)
+	if visible:
+		pose()
+
+
 func _ready() -> void:
+	set_process(_spectral != null)
+	process_priority = 21  # GhostFormView finishes feeding the instant cast at priority 20.
+	if _spectral != null:
+		add_child(_body)
+		_spirit = OhmSpirit.new()
+		_body.add_child(_spirit)
+		pose()
+		return
 	add_child(GhostRim.soft_glow(TEAL, GLOW_A, GLOW_M * PX_PER_M))  # teal belongs to the souls
 	add_child(_body)
 	for side: int in 2:
-		var foot: Sprite2D = _part("foot", FOOT_M)
+		var foot: Sprite2D = OhmParts.part(_body, "foot", FOOT_M)
 		foot.flip_v = side == 1
 		_feet.append(foot)
-	var hose: Sprite2D = _part("hose", HOSE_M)
+	var hose: Sprite2D = OhmParts.part(_body, "hose", HOSE_M)
 	hose.position = HOSE_AT * PX_PER_M
-	var beard: Sprite2D = _part("beard", BEARD_M)
+	var beard: Sprite2D = OhmParts.part(_body, "beard", BEARD_M)
 	beard.position = BEARD_AT * PX_PER_M
 	for side: int in 2:
 		for n: String in ["upper", "fore"]:
-			var s: Sprite2D = _limb(n)
+			var s: Sprite2D = OhmParts.limb(_body, n)
 			s.flip_v = side == 1
 			GhostRim.limb(s)
 			_arms.append(s)
-	var shell: Sprite2D = _part("shell", SHELL_M)  # added last: over the arms' roots
+	var shell: Sprite2D = OhmParts.part(_body, "shell", SHELL_M)  # added last: over the arms' roots
 	GhostRim.body(shell)
 	shell.add_child(OhmSeams.new())  # the soul seams and lenses, bold enough for 32 px/m
 	_hide = [shell, beard, hose]
@@ -108,6 +131,8 @@ func _ready() -> void:
 ## One step of `dt` seconds (the host passes SimClock.TICK_DT per sim tick).
 func advance(dt: float) -> void:
 	_t = fmod(_t + dt, 1000.0)
+	if _spectral != null:
+		return
 	if _seen_bolts >= 0 and bolts > _seen_bolts:
 		_kick = 1.0
 	_seen_bolts = bolts
@@ -145,16 +170,20 @@ func pose() -> void:
 	var u: float = smoothstep(0.0, 1.0, unfold)
 	var breath: float = 1.0 + BREATH_K * sin(TAU * BREATH_HZ * _t)
 	_body.scale = Vector2.ONE * breath * lerpf(0.7, 1.0, u)
+	if _spectral != null:
+		_body.visible = not _spectral.step(self, drawn, _body.scale.x)
+		if _body.visible:
+			_spirit.pose(drawn, _spectral.charge, ohm, reduced_motion, tick)
+		return
 	var kick: float = kick_m() / KICK_M
 	_body.rotation = LEAN * sin(TAU * phase) * u + KICK_TWIST * kick
 	_body.position = Vector2(-RECOIL_M * kick * PX_PER_M, 0.0)
 	for side: int in 2:
 		var m: float = 1.0 if side == 0 else -1.0
-		var step: float = sin(TAU * (phase * STEPS_PER_CYCLE + side * 0.5))
+		var step: float = sin(TAU * (phase * 2.0 + side * 0.5))
 		_feet[side].position = Vector2(HIP.x + step * FOOT_REACH_M * u, HIP.y * m) * PX_PER_M
-	var sh_r: Vector2 = SHOULDER
-	_arm(0, sh_r, sh_r.lerp(cane_tip(phase), u), 1.0)
-	var sh_l: Vector2 = Vector2(SHOULDER.x, -SHOULDER.y)
+	_arm(0, SHOULDER, SHOULDER.lerp(cane_tip(phase), u), 1.0)
+	var sh_l: Vector2 = SHOULDER * Vector2(1, -1)
 	var guard: Vector2 = GUARD_HAND + Vector2(kick_m() + RECOIL_M * kick, 0.0)
 	_arm(2, sh_l, sh_l.lerp(guard, u), -1.0)
 	var carded: bool = not drawn.step(self, _all, PX_PER_M, _body.scale.x)
@@ -166,36 +195,6 @@ func pose() -> void:
 
 ## Two-bone arm from `a` to the hand `b` (body frame, metres), the elbow bent outward.
 func _arm(i: int, a: Vector2, b: Vector2, m: float) -> void:
-	var d: float = clampf(a.distance_to(b), 0.02, UPPER_M + FORE_M - 0.001)
-	var along: float = (UPPER_M * UPPER_M - FORE_M * FORE_M + d * d) / (2.0 * d)
-	var out: float = sqrt(maxf(0.0, UPPER_M * UPPER_M - along * along))
-	var dir: Vector2 = (b - a).normalized() if a.distance_to(b) > 0.001 else Vector2.RIGHT
-	var elbow: Vector2 = a + dir * along + dir.orthogonal() * out * -m
-	_place(_arms[i], a, elbow)
-	_place(_arms[i + 1], elbow, b)
-
-
-func _place(s: Sprite2D, a: Vector2, b: Vector2) -> void:
-	GhostRim.place_limb(s, a * PX_PER_M, b * PX_PER_M, ARM_THICK_M * PX_PER_M)
-
-
-func _limb(name: String) -> Sprite2D:
-	var s: Sprite2D = _sprite(name)
-	s.centered = false
-	s.offset = Vector2(0.0, -s.texture.get_height() * 0.5)
-	return s
-
-
-func _part(name: String, length_m: float) -> Sprite2D:
-	var s: Sprite2D = _sprite(name)
-	var long_px: int = maxi(s.texture.get_width(), s.texture.get_height())
-	s.scale = Vector2.ONE * length_m * PX_PER_M / float(long_px)
-	return s
-
-
-func _sprite(name: String) -> Sprite2D:
-	var s: Sprite2D = Sprite2D.new()
-	s.texture = load(ART + name + ".png") as Texture2D
-	s.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	_body.add_child(s)
-	return s
+	var elbow: Vector2 = OhmArm.joint(a, b, UPPER_M, FORE_M, m)
+	GhostRim.place_limb(_arms[i], a * PX_PER_M, elbow * PX_PER_M, ARM_THICK_PX)
+	GhostRim.place_limb(_arms[i + 1], elbow * PX_PER_M, b * PX_PER_M, ARM_THICK_PX)
