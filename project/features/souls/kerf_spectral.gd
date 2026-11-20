@@ -12,8 +12,9 @@ const ARCH_M: float = 0.62
 const ARM_M: float = 0.82
 const KNUCKLE_M: Vector2 = Vector2(-0.34, 0.54)
 const ART: String = "res://features/souls/art/kerf/spectral/"
-## cut.json packs both tilted grids at the old 1.8 m figure's 165 pixels.
-const GRID_PX_PER_M: float = 165.0 / 1.8
+## Cell pixels per world metre, calibrated against the poised overhead profile at 64 px/m.
+const GRID_PPM_70: float = 69.0
+const GRID_PPM_55: float = 72.0
 
 var beams: KerfBeams = KerfBeams.new()
 var _top: Node2D = Node2D.new()
@@ -141,10 +142,15 @@ func pose(speed_mps: float, since: int, locked: bool, facing: float, oct: int) -
 		_sheet.show(_tilted, oct, col)
 		_tilted_eye.place(_tilted, _art, locked)
 		_tilted.offset = Vector2.ZERO  # GhostSheet normally anchors at the feet.
-		var s: float = SimConst.PX_PER_M * absf(global_scale.x) / GRID_PX_PER_M
+		var density: float = GRID_PPM_70 if _art == "p70" else GRID_PPM_55
+		# The cruise drawing already lengthens a little as the top-view arms fold back.
+		var s: float = (
+			SimConst.PX_PER_M * absf(global_scale.x) * lerpf(1, 1.05, beams.fast) / density
+		)
 		_tilted.global_transform = Transform2D(
 			0.0, Vector2(s, s / vm.ground_k()), 0.0, global_position
 		)
+		beams.attach_to_cell(_tilted)
 	else:
 		_top.global_rotation = facing + _yaw
 		_top.scale = Vector2.ONE.lerp(Vector2(1.08, 0.86), beams.fast)

@@ -7,6 +7,14 @@ const COUNT: int = 3
 const GLOW: Color = Color("#2ec4b659")
 const INK: Color = Color(0.09, 0.08, 0.07, 0.35)
 const CORE: Color = Color(0.85, 1.0, 0.96)
+## Rear cable manifold in each facing, as a fraction of the hover cell. Both pitches share it.
+const SOCKETS: Array[Vector2] = [
+	Vector2(0.50, 0.33),
+	Vector2(0.34, 0.37),
+	Vector2(0.32, 0.46),
+	Vector2(0.26, 0.58),
+	Vector2(0.50, 0.76),
+]
 
 var charges: int = COUNT
 var recharge: float = 0.0
@@ -14,6 +22,15 @@ var fast: float = 0.0
 var tick: int = 0
 var reduced_motion: bool = false
 var tail_x: float = -0.55 * SimConst.PX_PER_M
+
+
+func attach_to_cell(sprite: Sprite2D) -> void:
+	var uv: Vector2 = SOCKETS[sprite.frame_coords.y] - Vector2(0.5, 0.5)
+	if sprite.flip_h:
+		uv.x = -uv.x
+	var cell: Vector2 = sprite.texture.get_size() / Vector2(sprite.hframes, sprite.vframes)
+	tail_x = 0.0
+	global_position = sprite.to_global(uv * cell)
 
 
 func length_m(i: int) -> float:

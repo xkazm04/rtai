@@ -94,12 +94,10 @@ func test_pitch_changes_keep_the_hover_grid_centred_and_the_left_profile_mirrore
 		body.pose(12.0, -1, false, PI, 4)
 		var sprite: Sprite2D = body._tilted
 		assert_same(sprite.get_parent(), body)
-		var sx: float = SimConst.PX_PER_M / (165.0 / 1.8)
-		assert_almost_eq(
-			sprite.global_scale,
-			Vector2(sx, sx / ViewMode.shared().ground_k()),
-			Vector2.ONE * 0.0001
-		)
+		# Alpha bounds of the profile cells, excluding beams. The assembled cruise body is 2 m.
+		var width: int = 131 if view == "tilt70" else 137
+		assert_almost_eq(sprite.scale.x * width / SimConst.PX_PER_M, 2.0, 0.08)
+		assert_almost_eq(sprite.scale.y * ViewMode.shared().ground_k(), sprite.scale.x, 0.0001)
 		assert_true(sprite.visible)
 		assert_false(body._top.visible)
 		assert_eq(sprite.hframes, 3)
@@ -109,6 +107,9 @@ func test_pitch_changes_keep_the_hover_grid_centred_and_the_left_profile_mirrore
 		assert_true(sprite.centered)
 		assert_eq(sprite.offset, Vector2.ZERO)
 		assert_true(sprite.texture.resource_path.contains("/%s/" % ViewMode.shared().art))
+		body.pose(0.0, -1, false, 0.0, 0)
+		width = 127 if view == "tilt70" else 132
+		assert_almost_eq(sprite.scale.x * width / SimConst.PX_PER_M, 1.84, 0.07)
 		body.pose(12.0, 0, false, 0.0, 0)
 		assert_eq(sprite.frame_coords, Vector2i(2, 2))
 		assert_false(sprite.flip_h)
