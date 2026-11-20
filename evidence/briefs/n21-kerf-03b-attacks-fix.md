@@ -1,6 +1,6 @@
 # n21-kerf brief 03b (--resume of attacks): what the director still sees in the 14:27 strips
 
-Same rules and allowlist as brief 03. **Wall-clock hard stop: HARDSTOP. Commit deadline: COMMITBY.** Fix lint and
+Same rules and allowlist as brief 03. **Wall-clock hard stop: 15:35. Commit deadline: 15:30.** Fix lint and
 format findings in your own edits and go on. Never amend, never rebase. Stage per path. Mutate `--max=20` on
 changed lines. `export APPDATA=C:/Users/kazda/kiro/gtai-n21/appdata/kerf` before every Godot run. One Godot process
 at a time; free your own by PID. Any path outside brief 03's allowlist: stop and write `NEED <owner>: <file> <why>`.
