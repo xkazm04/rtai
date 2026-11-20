@@ -17,11 +17,27 @@ the body in both views, wisps soft round puffs. In `ghost_hover.json` keep fligh
 look at one top and one tilt70 still at 32 px/m: if the tail now fights the robe (two tails, or the root floating
 off the hem), retune only the ohm row's tail numbers and say what you changed.
 
+Step 0d (gate red, FIRST priority): since 359eacb83 Ohm defaults to spectral and flight's
+`project/tests/unit/test_ghost_hitback.gd:79` (`test_ohms_windup_interrupts_a_rear_hit_then_returns_to_walk`) asserts
+the legacy act sheet without selecting a look: the unit suite is red (3251/1). The director asked flight to fix it on
+`n20-flight`. After your merge, run that file (`--select=test_ghost_hitback`). If it is still red, make the minimal edit
+in that test only (select legacy for Ohm the way `test_ohm_rig.gd` does in 359eacb83, restore afterwards), commit it
+alone with the subject naming flight's test, and say so in your report. Then the full unit run must be green.
+
+Order and time (now ~05:15, hard stop 06:10, last commit 06:00): 0 merge, 0d, 0b, then Part A (strip), Part B
+(films), 0c (glow) only if time remains before 05:45, Part C (mutate) last; skip what does not fit and say so.
+
 Step 0b (chip name): the merge also brings flight's 4362c8109: `ghost_chip_face.gd` loads
 `features/hud/art/ghost_chips/<id>_spectral.png` when the form draws spectral, else the original chip. Our chip from
 brief 05 must therefore be `ohm_spectral.png` (with its `.import`), not `ohm_spec.png`: `git mv` it (and drop any
 call site brief 05 added in a flight file, since flight's loader now does it). Prove it with a unit test or a still
 of the HUD chip in a spectral run (`n20/ohm/form/chip_in_hud_32.png`). One commit.
+
+Step 0c (double glow, from flight's review): under the spectral look `ohm_rig.gd` still draws its own ground glow on
+top of flight's teal pool. Look at a top and a tilt70 still at 32 px/m after the merge; if the two glows stack (a
+bright doubled disc), skip Ohm's own glow when the form draws spectral (legacy unchanged) with a unit test, one commit,
+before/after stills `n20/ohm/drift/glow_{before,after}_{top,tilt70}_32.png`. Do NOT switch to flight's coming public
+accessors (`release_fade()`, `hurt_tick()`): they land after our last commit; the private reads stay as merge notes.
 
 ## Part A: the owner's judged strip (no commit needed unless a dev driver changes)
 The owner judges "a strip of one cast (jars at one, two, three, press tick, +4 frames) from the top view with all
@@ -43,7 +59,7 @@ Quote ffprobe (duration, size, codec) and the SCRIPT ERROR count of every Godot 
 --max=12`; quote killed/(killed+survived). If a surviving mutant shows a real test gap in `test_ohm_drift.gd`
 (e.g. the clamp or the settle), add the assertion (one commit).
 
-Hard stop at 06:10 wall clock (the director runs the final gate at 06:15 and it needs the only Godot slot), order A, B, C. Last commit by 06:00.
+Hard stop at 06:10 wall clock (the director runs the final gate at 06:15 and it needs the only Godot slot), order as above. Last commit by 06:00.
 
 ## Report
 Strip paths and ticks, film ffprobe lines, mutate scores, commit shas.
