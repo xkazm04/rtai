@@ -1397,3 +1397,4 @@ One dated line per decision. Deviations use `DEVIATION <RULE-ID>` and carry a re
 - [2026-11-20] DECISION souls/flight: spectral look interface (GhostLook, ghost_hover.json, GhostFlight/Hover/Tail/Shadow); legacy stays default per form; rejected per-rig flight code in each ghost's files.
 - [2026-11-20] DECISION souls/flight: each ghost lane owns its own ghost_hover.json row (as ghost_forms.json); flight owns the schema and new fields.
 - [2026-11-20] DECISION Dent attack presentation: attach the seatbelt to the posed fist and lifted roof, read the shared flight ribbon at the belt, and join the overload to its actual damage recipients so the car and victims read as one impact. All three cues use view state on sim ticks.
+- [2026-11-20] DECISION dent look: Dent's ghost_forms row defaults to spectral (body, flight, jab, strap, overload filmed in tilt 70, 55 and top); legacy stays reachable with --ghost-look=legacy; rejected: leaving the plate behind a flag.
