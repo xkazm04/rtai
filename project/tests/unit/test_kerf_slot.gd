@@ -71,7 +71,12 @@ func test_one_tilted_departure_holds_the_previous_cell_scale_and_facing() -> voi
 	var echo: KerfEcho.Pose = body._echoes._pool[0]
 	var copy: Sprite2D = echo.sprites[-2]
 	assert_almost_eq(echo.global_position, at, Vector2.ONE * 0.002)
-	assert_eq(echo.modulate, Color(KerfView.ECHO_WASH, 0.55))
+	assert_almost_eq(echo.modulate.a, 0.35, 0.001)
+	assert_lt(echo.modulate.a, 0.45)
+	assert_eq(body.modulate.a, 1.0)
+	assert_eq(body._tilted.modulate.a, 1.0)
+	var wash: ShaderMaterial = copy.material
+	assert_true(is_same(wash.get_shader_parameter(&"wash"), Color(Color("#2ec4b6"), 0.6)))
 	assert_true(copy.visible and copy.flip_h)
 	assert_true(echo.sprites[-1].visible)
 	assert_same(copy.texture, texture)
@@ -83,7 +88,7 @@ func test_one_tilted_departure_holds_the_previous_cell_scale_and_facing() -> voi
 	_stage.tick += 3
 	_rig.pose()
 	assert_almost_eq(echo.global_scale, Vector2.ONE, Vector2.ONE * 0.0001)
-	assert_lt(echo.modulate.a, 0.55)
+	assert_almost_eq(echo.modulate.a, 0.35 * KerfSlot.remaining(3, _k.num(&"cut_hang_s")), 0.001)
 	assert_eq(copy.frame_coords, cell)
 
 
