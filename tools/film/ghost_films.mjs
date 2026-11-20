@@ -70,6 +70,16 @@ function title(text, x, y, size) {
     ':fontcolor=white:box=1:boxcolor=0x172023@0.88:boxborderw=5';
 }
 
+export function encodeArgs(graph, still) {
+  // Movie Maker supplies full-range MJPEG. Keep its colour matrix and compress the range once.
+  const movie = still === undefined;
+  const output = movie ? ',scale=in_range=pc:out_range=tv,format=yuv420p[out]' : '[out]';
+  const codec = movie ? ['-c:v', 'libx264', '-preset', 'veryfast', '-crf', '17',
+    '-pix_fmt', 'yuv420p', '-color_range', 'tv', '-movflags', '+faststart'] : ['-frames:v', '1', '-update', '1'];
+  return ['-filter_complex_threads', '3', '-filter_complex', graph + output, '-map', '[out]',
+    '-an', '-threads', '4', ...codec];
+}
+
 function compose(dir, p, chapters, target, ppm, still) {
   const inputs = [], filters = [];
   for (const [i, { panels, action, ghost, speed }] of chapters.entries()) {
@@ -90,10 +100,8 @@ function compose(dir, p, chapters, target, ppm, still) {
         title('Top view  90\u00b0', 17, 553, 17)].join(',') + '[c' + i + ']');
   }
   const labels = chapters.map((_, i) => '[c' + i + ']').join('');
-  filters.push(labels + (chapters.length > 1 ? 'concat=n=' + chapters.length + ':v=1:a=0' : 'null') + '[out]');
-  const encode = still === undefined ? ['-c:v', 'libx264', '-preset', 'veryfast', '-crf', '17', '-pix_fmt', 'yuv420p',
-    '-movflags', '+faststart'] : ['-frames:v', '1', '-update', '1'];
-  ffmpeg(dir, [...inputs, '-filter_complex_threads', '3', '-filter_complex', filters.join(';'), '-map', '[out]', '-an', '-threads', '4', ...encode, target]);
+  filters.push(labels + (chapters.length > 1 ? 'concat=n=' + chapters.length + ':v=1:a=0' : 'null'));
+  ffmpeg(dir, [...inputs, ...encodeArgs(filters.join(';'), still), target]);
 }
 
 function publishMovie(dir, p, chapters, base, ppm) {

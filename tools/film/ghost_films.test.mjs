@@ -1,9 +1,23 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { resolve } from 'node:path';
-import { plan, stem } from './ghost_films.mjs';
+import { encodeArgs, plan, stem } from './ghost_films.mjs';
 
 const args = ['--ghost=kerf', '--look=spectral', '--out=build/ghosts'];
+
+test('movies convert full-range MJPEG to limited-range H.264 and tag it', () => {
+  const graph = '[c0][c1]concat=n=2:v=1:a=0';
+  const args = encodeArgs(graph);
+  const value = flag => args[args.indexOf(flag) + 1];
+  assert.equal(value('-filter_complex'), graph + ',scale=in_range=pc:out_range=tv,format=yuv420p[out]');
+  assert.equal(value('-map'), '[out]');
+  assert.equal(value('-c:v'), 'libx264');
+  assert.equal(value('-pix_fmt'), 'yuv420p');
+  assert.equal(value('-color_range'), 'tv');
+  const still = encodeArgs(graph, 163);
+  assert.equal(still[still.indexOf('-filter_complex') + 1], graph + '[out]');
+  assert.ok(!still.includes('-color_range'));
+});
 
 test('default takes and native-scale output names', () => {
   const p = plan(args);
