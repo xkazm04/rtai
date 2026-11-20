@@ -127,6 +127,13 @@
       "tool": "codex-image"
     }
   },
+  "review_poster": {
+    "file": "C:/Users/kazda/kiro/gtai-masters/n20/tonnage/tonnage_morph_32.jpg",
+    "sha256": "eb0ec2315176aa5c5bcc0e3dc2d70a8d7dd78da0f1f0b4bf13e92dd56fd831e4",
+    "source": "tonnage_morph_32.mp4",
+    "source_frame_zero_based": 101,
+    "source_sha256": "b1e149b2538de9e106e19ef6302c2e7662f2cac03e1599e5bedff8aeaed6fc22"
+  },
   "sheets": {
     "project/features/souls/art/tonnage/spectral/back.png": "parts_take3",
     "project/features/souls/art/tonnage/spectral/upper_arm.png": "parts_take3",
