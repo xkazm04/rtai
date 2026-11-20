@@ -27,7 +27,7 @@ var _cast: Array[Mark] = []
 var _cast_tick: int = -1
 
 
-func _ready() -> void:
+func _enter_tree() -> void:
 	z_as_relative = false
 	# A car card can sit behind the raised torso but above the ground actor band.
 	z_index = RenderLayers.z(&"vehicles") + 1
@@ -36,8 +36,12 @@ func _ready() -> void:
 
 
 func _exit_tree() -> void:
+	stage.arena.struck.disconnect(_struck)
 	for mark: Mark in _active:
 		_forget(mark)
+	_active.clear()
+	_cast.clear()
+	_cast_tick = -1
 
 
 static func marked(fighter: Fighter) -> bool:
@@ -99,8 +103,7 @@ func remaining(mark: Mark) -> int:
 			return 0
 		if stage.arena.areas != null:
 			var fx: FighterFx = stage.arena.areas.effect(mark.fighter)
-			if fx != null:
-				return mini(left, fx.stun_ticks)
+			return mini(left, fx.stun_ticks) if fx != null else 0
 	return left
 
 

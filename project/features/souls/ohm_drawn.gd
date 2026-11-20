@@ -11,6 +11,7 @@ var _jars: OhmJars
 var _hover: GhostSheet
 var _masks: Dictionary[Texture2D, Texture2D] = {}
 var _cells: Dictionary[Texture2D, Array] = {}
+var _row: GhostHoverRow = GhostHoverRow.of(OhmStage.ID)
 var _anchor: Vector2
 
 
@@ -25,10 +26,15 @@ func step(host: OhmRig, drawn: GhostDrawn, size_k: float) -> bool:
 		# Flight infers square pose cells. Both authored Ohm hover grids are rectangular.
 		var drift: bool = hover != null and hover.speed_mps >= GhostDrawn.SPEC_CRUISE_MPS
 		_hover.show(shown, drawn.octant(host.global_rotation), int(drift))
+		# Release the fallback cell's belt socket and material on the authored robe.
+		if drawn._fade != null:
+			drawn._fade.clear(drawn.flight)
 	shown.offset = -_anchor
 	GhostSoulLine.sync(shown)
 	if hover != null:
-		shown.global_rotation += hover.lean * cos(host.global_rotation) - 0.3 * hover.bank
+		var motion: float = 0.5 if host.reduced_motion else 1.0
+		shown.global_rotation += drawn.flight.body_rotation()
+		shown.global_rotation += OhmDrift.sway(host.tick, hover.speed_mps / _row.top_mps) * motion
 		pin_tail(drawn.flight, shown.to_global(Vector2(0.0, -9.0)))
 	_fork.stage = host.ohm
 	_fork.vent = charge.vent()

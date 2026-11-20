@@ -25,3 +25,27 @@ func test_jar_twin_tracks_the_shown_cell_on_both_sheets_and_the_mirrored_side() 
 					assert_eq(jars.flip_h, flip)
 					assert_eq(jars.offset, sprite.offset)
 					assert_eq(jars.global_transform, sprite.global_transform)
+
+
+func test_authored_hover_keeps_its_hem_and_jar_twin_at_both_tilts() -> void:
+	var saved: ViewMode = ViewMode._shared
+	GhostLook.override_for_test(GhostLook.SPECTRAL)
+	for pitch: String in ["tilt70", "tilt"]:
+		ViewMode.select(pitch)
+		var rig: OhmRig = OhmRig.new()
+		var flight: GhostFlight = add_child_autofree(GhostFlight.make(OhmStage.ID))
+		rig.drawn.flight = flight
+		flight.mount(rig)
+		flight.step(Vector2.ZERO, 0.0, 1)
+		rig.tick = 36
+		rig.pose()
+		var shown: Sprite2D = rig.drawn.sprite()
+		assert_eq(shown.texture.resource_path.get_file(), "ohm_spec_hover.png")
+		assert_null(shown.material)
+		assert_eq(shown.hframes, 2)
+		assert_almost_eq(shown.global_rotation, deg_to_rad(3.0), 0.00001)
+		for child: Node in shown.get_children():
+			if child is OhmJars:
+				assert_eq((child as OhmJars).global_transform, shown.global_transform)
+	GhostLook.reset_for_test()
+	ViewMode._shared = saved

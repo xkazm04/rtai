@@ -4,7 +4,7 @@ extends Node2D
 ## The fork and sleeve form a two-link chain with the wrist at their common joint.
 
 const ART: String = "res://features/souls/art/ohm/spectral/"
-const REST_FORK_M: Vector2 = Vector2(1.0, 0.35)
+const REST_FORK_M: Vector2 = Vector2(1.16, 0.50)
 const THRUST_M: float = 0.35
 const OUT_TICKS: int = 8
 const BACK_TICKS: int = 12
@@ -23,8 +23,8 @@ var _fork: OhmFork
 var _puffs: Array[Sprite2D] = []
 var _vents: PackedVector2Array = []
 var _lengths: Vector2
-var _last_tick: int = -1
-var _lag: float = 0.0
+var _drift: OhmDrift = OhmDrift.new()
+var _row: GhostHoverRow = GhostHoverRow.of(OhmStage.ID)
 
 
 func _ready() -> void:
@@ -111,27 +111,28 @@ func _build_jars(body: Sprite2D, circles: Array) -> void:
 
 func pose(drawn: GhostDrawn, charge: OhmCharge, stage: OhmStage, calm: bool, tick: int) -> void:
 	var hover: GhostHover = drawn.flight.hover if drawn.flight != null else null
-	var steps: int = tick - _last_tick
 	var bank: float = hover.bank if hover != null else 0.0
-	var lean: float = hover.lean if hover != null else 0.0
-	if _last_tick < 0 or steps > 4 or steps < 0:
-		_lag = 0.0
-	elif steps > 0:
-		var yaw: float = deg_to_rad(hover.yaw_rate_dps) if hover != null else 0.0
-		_lag = clampf((_lag - yaw * steps * SimClock.TICK_DT) * exp(-steps / 8.0), -0.65, 0.65)
-	_last_tick = tick
+	var cruise: float = hover.speed_mps / _row.top_mps if hover != null else 0.0
 	var motion: float = 0.5 if calm else 1.0
-	_hem.rotation = (_lag + 0.3 * bank) * motion
+	_drift.step(tick, (get_parent() as Node2D).global_rotation)
+	var body_lag: float = 0.55 * _drift.beard.angle
+	rotation = (OhmDrift.sway(tick, cruise) + body_lag) * motion
+	_hem.rotation = _drift.hem.angle * motion
+	_beard.rotation = _drift.beard.angle * motion
+	_free_arm.rotation = -0.31 + (0.25 * _drift.hem.angle + bank) * motion
 	if drawn.flight != null:
-		var tip: Vector2 = _hem.to_global(Vector2(_hem.offset.x + 32.0, 0.0))
-		OhmDrawn.pin_tail(drawn.flight, tip)
-	_beard.rotation = (0.7 * _lag - 0.25 * bank) * motion
-	_free_arm.rotation = -0.31 + (0.25 * _lag + bank) * motion
-	var target: Vector2 = REST_FORK_M + Vector2(lean * 1.4, bank * 1.15) * motion
+		# Carry the tuned socket with the cloth as its root pivots behind the shell.
+		var socket: Vector2 = _row.tail.anchor_m * _texels_per_m / PlayerScale.k()
+		OhmDrawn.pin_tail(drawn.flight, _hem.to_global(socket - _hem.position))
+	var lead: float = -body_lag * motion
+	var target: Vector2 = REST_FORK_M.rotated(lead)
+	if hover != null:
+		target.x += 0.30 * clampf(cruise, 0.0, 1.0) * motion
+		target.y -= 0.078 * sin(TAU * hover.tick / _row.bob_ticks) * motion
 	if stage != null and stage.bolt_tick >= 0:
 		var aim: Vector2 = stage.bolt_aim.rotated(-global_rotation)
 		target += aim * THRUST_M * thrust(tick - stage.bolt_tick) * motion
-	_staff_pose(target)
+	_staff_pose(target, lead)
 	_jars.light(Vector3(charge.jar(0), charge.jar(1), charge.jar(2)), 0.0, charge.vent())
 	_fork.stage = stage
 	_fork.vent = charge.vent()
@@ -146,9 +147,9 @@ static func thrust(age: int) -> float:
 	return 1.0 - smoothstep(OUT_TICKS, OUT_TICKS + BACK_TICKS, age)
 
 
-func _staff_pose(target_m: Vector2) -> void:
+func _staff_pose(target_m: Vector2, lead: float = 0.0) -> void:
 	var target: Vector2 = target_m * _texels_per_m / PlayerScale.k()
-	var wrist: Vector2 = target - Vector2.RIGHT.rotated(-0.10) * _lengths.y
+	var wrist: Vector2 = target - Vector2.RIGHT.rotated(-0.10 + lead) * _lengths.y
 	_staff_arm.scale.x = _staff_arm.position.distance_to(wrist) / _lengths.x
 	_staff_arm.rotation = _staff_arm.position.angle_to_point(wrist)
 	_staff.position = wrist
