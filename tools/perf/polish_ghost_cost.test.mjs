@@ -1,10 +1,22 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { argumentsFor, frameWindow, checkTrace, engineErrors } from './polish_ghost_cost.mjs';
+import { argumentsFor, frameWindow, checkTrace, engineErrors, otherGodotAtLaunch } from './polish_ghost_cost.mjs';
 import { FRAMES, START } from '../film/ghost_films_plan.mjs';
 
 const ticks = Array.from({ length: FRAMES }, (_, i) => START + i);
 const doc = (tick, wall_ms) => ({ schema: 'gtai.fight-frames/1', tick, wall_ms });
+
+test('launch records the last scan after at most 15 seconds or as soon as the machine clears', async () => {
+  for (const [until, clears, elapsed, remaining] of [
+    [60000, Infinity, 15000, 3], [60000, 3000, 3000, 0], [1200, Infinity, 1200, 3], [60000, 0, 0, 0],
+  ]) {
+    let time = 0;
+    const count = await otherGodotAtLaunch(until, () => time < clears ? 3 : 0,
+      () => time, async ms => { time += ms; });
+    assert.equal(time, elapsed);
+    assert.equal(count, remaining);
+  }
+});
 
 test('frame statistics are over the same active ticks even when boot wall time differs', () => {
   const stats = frameWindow(doc([START - 1, ...ticks, START + FRAMES],

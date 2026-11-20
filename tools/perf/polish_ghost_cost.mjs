@@ -12,6 +12,7 @@ import { godotProcesses, register } from '../lib/run_ledger.mjs';
 import { START, FRAMES } from '../film/ghost_films_plan.mjs';
 import { order, summarise } from './fight_gate.mjs';
 import { frameStats } from './stats.mjs';
+import { median } from './paired.mjs';
 
 const LOCK = 'C:/Users/kazda/kiro/gtai-n21/bench.lock';
 const OUT = 'C:/Users/kazda/kiro/gtai-masters/n21/polish/cost';
@@ -101,6 +102,16 @@ async function acquire(until) {
   throw Error('deadline waiting for bench.lock');
 }
 
+export async function otherGodotAtLaunch(until, scan = () => godotProcesses().length, now = Date.now, pause = sleep) {
+  const stop = Math.min(until, now() + 15000);
+  let count = scan();
+  while (count && now() < stop) {
+    await pause(Math.min(1000, stop - now()));
+    count = scan();
+  }
+  return count;
+}
+
 async function launch(ctx, ghost, arm, round, trace = false) {
   const look = arm === 'legacy-aa' ? 'legacy' : arm;
   const stem = join(ctx.raw, [ghost, arm, trace ? 'verify' : round].join('-'));
@@ -109,12 +120,7 @@ async function launch(ctx, ghost, arm, round, trace = false) {
   // cpu_run.ps1 passes ArgLine to ProcessStartInfo; all arguments here are paths or fixed tokens.
   if (args.some(a => a.includes('"'))) throw Error('unexpected quote in engine argument');
   const argLine = args.map(a => /\s/.test(a) ? '"' + a + '"' : a).join(' ');
-  let waiting = false;
-  while (godotProcesses().length && Date.now() < ctx.until) {
-    if (!waiting) console.log('Waiting for other Godot processes to finish.');
-    waiting = true;
-    await sleep(1000);
-  }
+  const atLaunch = await otherGodotAtLaunch(ctx.until);
   const timeout = Math.min(90, Math.floor((ctx.until - Date.now()) / 1000) - 3);
   if (timeout < 1 || !ctx.lock.owned()) throw Error('deadline or lock lost before launch');
   const entry = register({ kind: 'polish-ghost-cost' });
@@ -135,7 +141,7 @@ async function launch(ctx, ghost, arm, round, trace = false) {
     throw Error('invalid engine run ' + stem + ': ' + (errors[0] ?? cpu.error ?? result.out.slice(-300)));
   }
   const command = '& "' + ctx.exe + '" ' + argLine;
-  const common = { ghost, arm, round, file, command, locked: true, otherGodotAfter: godotProcesses().length,
+  const common = { ghost, arm, round, file, command, locked: true, otherGodotAtLaunch: atLaunch, otherGodotAfter: godotProcesses().length,
     exitDiagnostics: log.split(/\r?\n/).filter(line => /^(ERROR|WARNING):/.test(line)) };
   if (trace) return { ...common, verifiedFrames: checkTrace(read(file), ghost) };
   const stats = frameWindow(JSON.parse(read(file)));
@@ -148,8 +154,8 @@ function save(doc) {
     'Each run lasts 402 engine frames. Frame statistics use the 300 consecutive intervals ending at ticks ' +
     START + '–' + END + '. CPU covers process startup through exit. Verification traces run separately.', '',
     'The table shows the median of each per-run metric. Other cores are system busy CPU less engine CPU, divided by elapsed time.', '',
-    '| Ghost | Look | Runs | p50 ms | p99 ms | Worst ms | Frames >25 ms | CPU s | Other cores |',
-    '|---|---|---:|---:|---:|---:|---:|---:|---:|'];
+    '| Ghost | Look | Runs | p50 ms | p99 ms | Worst ms | Frames >25 ms | CPU s | Other cores | Other Godot at launch (median) |',
+    '|---|---|---:|---:|---:|---:|---:|---:|---:|---:|'];
   const comparisons = ['| Ghost | Metric | Spectral − legacy | Paired CI95 | A/A floor (±) | Call |',
     '|---|---|---:|---|---:|---|'];
   doc.summary = {};
@@ -159,20 +165,24 @@ function save(doc) {
     doc.summary[ghost] = s;
     for (const { name } of ARMS) {
       const row = s.medians[name];
-      lines.push('| ' + [ghost, name, runs.filter(r => r.arm === name).length,
-        ...[...METRICS, 'load'].map(m => numeric(row[m]))].join(' | ') + ' |');
+      const armRuns = runs.filter(r => r.arm === name);
+      row.otherGodotAtLaunch = median(armRuns.map(r => r.otherGodotAtLaunch));
+      lines.push('| ' + [ghost, name, armRuns.length,
+        ...[...METRICS, 'load', 'otherGodotAtLaunch'].map(m => numeric(row[m]))].join(' | ') + ' |');
     }
     for (const m of METRICS) {
       const d = s.vsBase.spectral[m];
+      const call = { LOWER: 'WIN', HIGHER: 'LOSS', WASH: 'WASH' }[d.call];
       comparisons.push('| ' + [ghost, m, numeric(d.median), d.ci95.map(numeric).join(' to '),
-        numeric(s.floor[m].halfWidth), d.n ? d.call : 'not measured'].join(' | ') + ' |');
+        numeric(s.floor[m].halfWidth), d.n ? call : 'not measured'].join(' | ') + ' |');
     }
   }
-  lines.push('', 'Paired median differences and bootstrap 95% intervals use the fight gate method. ' +
+  lines.push('', 'The machine was shared with lane kerf. The A/A floor measures the noise in the paired comparison.',
+    '', 'Paired median differences and bootstrap 95% intervals use the fight gate method. ' +
     'The floor is the larger absolute endpoint of the legacy twin’s paired interval. Frame times are in ms and CPU in s.',
     '', ...comparisons, '', 'Commit `' + doc.commit + '`. Measured runs holding the exclusive lock: ' +
       doc.runs.filter(r => r.locked).length + '/' + doc.runs.length + '. Other Godot processes visible at exit: ' +
-      doc.runs.filter(r => r.otherGodotAfter > 0).length + ' runs. All launches waited for a clear process scan. ' +
+      doc.runs.filter(r => r.otherGodotAfter > 0).length + ' runs. Each launch waited up to 15 seconds for a clear scan. ' +
       'Per-run logs retain the arena’s exit-time resource and allocator messages.',
     '', doc.error ? 'Incomplete: ' + doc.error : 'Completed ' + doc.rounds + ' paired rounds per ghost.',
     '', '## Commands', '', '```powershell', 'Set-Location "' + ROOT + '"',
