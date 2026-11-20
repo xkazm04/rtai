@@ -25,6 +25,8 @@ var cycle_cell: float = 150.0  # measured stance foot travel per cycle (cell px)
 var run_cell: float = 0.0  # the run grid's stride cycle in cell px (0 = no run grid)
 var fig_px: float = 180.0  # the figure's median height in the grid, cell px (ghost_pack prints it)
 var flight: GhostFlight
+## Spectral body roots owned by this rig. The flight's ground shadow and tail stay independent.
+var voice_parts: Array[CanvasItem] = []
 var hover: bool = false
 var own_body: bool = false:
 	set(value):
@@ -79,6 +81,16 @@ func release_fade() -> void:
 
 func sprite() -> Sprite2D:
 	return _spr
+
+
+func voice_wash(voice: GhostBridgeFade.Voice, wash: ShaderMaterial, phase: float) -> void:
+	if voice_parts.is_empty():
+		GhostBridgeFade.voice(_spr, wash, phase)
+		return
+	for part: CanvasItem in voice_parts:
+		voice.paint(part, wash, phase)
+	if _spr != null:
+		voice.paint(_spr, wash, phase)
 
 
 func step(

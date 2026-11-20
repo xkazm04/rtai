@@ -34,6 +34,7 @@ var _tether: Line2D = Line2D.new()
 var _dev_slot: int = -1
 var _mat: ShaderMaterial = ghost_material(false, 0.2)
 var _rim_mat: ShaderMaterial = ghost_material(true, 0.2)
+var _voice: GhostBridgeFade.Voice = GhostBridgeFade.Voice.new()
 
 
 ## Builds the four bodies; `events` (may be null) cues the voices.
@@ -61,6 +62,7 @@ func bind(forms: GhostForms, events: EventBus) -> void:
 func say(p_id: StringName, hold: int = HOLD) -> void:
 	if not _rigs.has(p_id):
 		return
+	_voice.clear()
 	id = p_id
 	_hold = hold
 	_age = 0
@@ -68,13 +70,14 @@ func say(p_id: StringName, hold: int = HOLD) -> void:
 	_tether.material = _mat
 	for rig: Node2D in _rigs.values():
 		var drawn: GhostDrawn = rig.get(&"drawn")
+		if not drawn.voice_parts.is_empty():
+			continue
 		drawn.release_fade()
 		rig.material = _mat
 		wash(rig, _mat, _rim_mat)
 
 
-## Every part under `n` draws through `mat` (the ghost material), its sticker rims through
-## `rim_mat` (the glow-edge variant). Parts a rig adds later are not covered: re-run (each voice).
+## Wash the legacy rig's current parts, with a separate glow material for sticker rims.
 static func wash(n: Node, mat: ShaderMaterial, rim_mat: ShaderMaterial) -> void:
 	for c: Node in n.get_children():
 		if c is CanvasItem and c.name == GhostRim.KEYLINE:
@@ -97,9 +100,7 @@ func speaking() -> bool:
 	return _age >= 0
 
 
-## n10: the ground direction of the side spot. Under a tilt, a left that points up the screen
-## lands on Rivet's own 1.65 m figure (the voice covered his head while he faced right), so it takes
-## the screen's left instead. `--ghost-voice=facing` (CastFlags) keeps the facing's own left.
+## A tilted voice uses screen left when the facing's left would cover Rivet's head.
 static func side_of(fwd: Vector2, tilted: bool) -> Vector2:
 	var side: Vector2 = fwd.orthogonal()
 	return Vector2.LEFT if clear_figure and tilted and side.y < UP_SCREEN else side
@@ -123,6 +124,7 @@ func step(at: Vector2, facing: float, steps: int, tick: int) -> void:
 		_age += steps
 		if _age >= FADE_IN + _hold + FADE_OUT:
 			_age = -1
+			_voice.clear()
 	visible = _age >= 0
 	for key: StringName in _rigs:
 		var rig: Node2D = _rigs[key]
@@ -149,7 +151,7 @@ func _pose(at: Vector2, facing: float, steps: int, tick: int) -> void:
 	var flick: float = 0.35 if not reduced_motion and _age >= 4 and _age < 8 else 1.0
 	modulate = Color(1.0, 1.0, 1.0, ALPHA * envelope(_age, _hold) * flick)
 	var band: float = 0.0 if reduced_motion else tick * 0.02
-	_mat.set_shader_parameter(&"band_phase", band)
+	_mat.set_shader_parameter(&"voice_phase", band)
 	_rim_mat.set_shader_parameter(&"band_phase", band)
 
 
@@ -157,7 +159,6 @@ func _body(spot: Vector2, yaw: float, steps: int, tick: int, size: float) -> Vec
 	var rig: Node2D = _rigs[id]
 	var drawn: GhostDrawn = rig.get(&"drawn")
 	if drawn.flight != null:
-		# Scale the voice's shadow, ribbon and body about their shared ground point.
 		drawn.flight.scale = Vector2.ONE * size
 		drawn.flight.position = spot * (1.0 - size)
 		rig.scale = Vector2.ONE
@@ -177,7 +178,7 @@ func _body(spot: Vector2, yaw: float, steps: int, tick: int, size: float) -> Vec
 	rig.scale = Vector2.ONE * size
 	if drawn.flight != null:
 		var phase: float = 0.0 if reduced_motion else tick * 0.02
-		GhostBridgeFade.voice(drawn.sprite(), _mat, phase)
+		drawn.voice_wash(_voice, _mat, phase)
 		if not ViewMode.shared().is_flat():
 			return to_local(drawn.flight.tail.points()[0])
 		return to_local(rig.global_position)

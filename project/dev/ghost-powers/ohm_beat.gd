@@ -60,7 +60,9 @@ func hold() -> void:
 ## nearest standing body, then at the cruiser once all are down.
 func want(stage: ArenaStage, local: int) -> Array:
 	var rivet: Vector2 = stage.arena.rivet.pos
-	var foe: Fighter = robot if robot != null and robot.alive() else _nearest(rivet)
+	var foe: Fighter = (
+		robot if robot != null and robot.alive() else GhostReel.nearest(victims, rivet)
+	)
 	var at: Vector2 = (
 		foe.pos if foe != null else (car.pos if car != null else rivet + Vector2.RIGHT)
 	)
@@ -74,11 +76,3 @@ func want(stage: ArenaStage, local: int) -> Array:
 		return [walk, aim, &""]
 	var press: bool = (local - FIRST_BOLT) % CADENCE == 0
 	return [walk, aim, &"melee" if press else &""]
-
-
-func _nearest(at: Vector2) -> Fighter:
-	var best: Fighter = null
-	for f: Fighter in victims:
-		if f.alive() and (best == null or at.distance_to(f.pos) < at.distance_to(best.pos)):
-			best = f
-	return best

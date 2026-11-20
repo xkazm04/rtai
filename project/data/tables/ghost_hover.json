@@ -146,14 +146,14 @@
       "sway_m": 0.055,
       "tail": {
         "anchor_m": [
-          -0.8,
+          -0.15,
           0
         ],
         "curl_m": 0.56,
         "flow_ticks": 136,
         "fray": 0.15,
         "length_m": 4.4,
-        "rise_m": -0.24,
+        "rise_m": 0.85,
         "segments": 26,
         "spread_m": 0.28,
         "strands": 2,

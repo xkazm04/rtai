@@ -5,6 +5,15 @@ var pose: TonnagePose
 var sample: TonnagePose.Sample
 
 
+class LandingTrace:
+	extends TonnagePose
+	var fist_heights: Array[float] = []
+
+	func _slam(windup: float, age: int) -> void:
+		super._slam(windup, age)
+		fist_heights.append(right.z)
+
+
 func before_each() -> void:
 	pose = TonnagePose.new(0.9, 5, 10, 10)
 	sample = TonnagePose.Sample.new()
@@ -19,6 +28,17 @@ func test_zero_ticks_hold_the_fresh_carry_pose() -> void:
 	assert_eq(pose.armed_k, 0.0)
 	assert_eq(pose.lean_k, 1.0)
 	assert_eq(pose.plant_k, 0.0)
+
+
+func test_a_batched_feed_crosses_from_pound_to_lift_on_the_last_tick() -> void:
+	var trace: LandingTrace = LandingTrace.new(0.9, 5, 10, 10)
+	sample.stomp_age = 5
+	trace.step(sample, 7)
+	var expected: Array[float] = [1.4, 0.0, 0.0, 0.0, 0.0, 0.0, 0.21]
+	assert_eq(trace.fist_heights.size(), expected.size())
+	for i: int in expected.size():
+		assert_almost_eq(trace.fist_heights[i], expected[i], 0.001)
+	assert_eq(trace.column, TonnagePose.Act.LIFT)
 
 
 func test_torso_lead_is_capped_in_the_local_facing_frame() -> void:
@@ -112,12 +132,20 @@ func test_partial_brace_keeps_the_cruise_cell_until_the_fist_leads() -> void:
 	assert_lt(pose.armed_k, 0.5)
 	assert_gt(pose.lean_k, 0.5)
 	assert_eq(pose.column, TonnagePose.Pose.CRUISE)
+	# Vector2 speed rounds across the midpoint. Pin the normalized pose at the boundary itself.
+	pose.armed_k = 0.5
+	assert_eq(pose._travel_column(2.7, -1), TonnagePose.Pose.CRUISE)
+	pose.armed_k = 0.50001
+	assert_eq(pose._travel_column(2.7, -1), TonnagePose.Pose.ARMED)
 
 
 func test_clap_braces_against_a_hit_then_releases_the_lean() -> void:
 	sample.hurt_age = 0
 	pose.step(sample, 1)
 	assert_eq(pose.lean_k, 1.0)
+	sample.windup = 0.25
+	pose.step(sample, 1)
+	assert_almost_eq(pose.lean_k, 0.5, 0.001)
 	sample.windup = 0.75
 	pose.step(sample, 1)
 	assert_lt(pose.lean_k, 0.25)

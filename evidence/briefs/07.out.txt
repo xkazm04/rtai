@@ -1,0 +1,15 @@
+**No paired frame costs were measured.** I treated “one Godot process at a time” as machine-wide. The driver acquired the exclusive bench lock, but unrelated Godot processes remained active through the measurement deadline. No timed run started, and I verified that the lock was released.
+
+| Ghost | Legacy frame and CPU cost | Spectral frame and CPU cost | Paired delta, CI95 and A/A floor |
+|---|---|---|---|
+| Tonnage | Not measured | Not measured | Not measured |
+| Dent | Not measured | Not measured | Not measured |
+| Ohm | Not measured | Not measured | Not measured |
+
+An untimed trace verified that legacy Tonnage was visible at **32 px/m for all 300 selected ticks**. During a separate 30-second sample, other work used **5.91 of 16 logical cores**. Neither four nor six paired rounds completed, so there is no component-cost attribution.
+
+Committed only the [driver](<C:/Users/kazda/kiro/gtai-wt/n21-polish/tools/perf/polish_ghost_cost.mjs>) and [tests](<C:/Users/kazda/kiro/gtai-wt/n21-polish/tools/perf/polish_ghost_cost.test.mjs>) in `713de38d3` and `48ad66ba1`. All 25 performance tests and all 19 lint checks passed. The temporary scene edit was restored.
+
+The exact commands and evidence are in [cost.md](<C:/Users/kazda/kiro/gtai-masters/n21/polish/cost/cost.md>) and [cost.json](<C:/Users/kazda/kiro/gtai-masters/n21/polish/cost/cost.json>).
+
+[astra: 2945s, exit 0]

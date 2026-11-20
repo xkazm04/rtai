@@ -9,6 +9,8 @@ var _forks: Dictionary[Texture2D, Array] = {}
 var _sprite: Sprite2D
 var _jars: OhmJars
 var _hover: GhostSheet
+var _act: Texture2D
+var _rows: Dictionary[Texture2D, int] = {}
 var _masks: Dictionary[Texture2D, Texture2D] = {}
 var _cells: Dictionary[Texture2D, Array] = {}
 var _row: GhostHoverRow = GhostHoverRow.of(OhmStage.ID)
@@ -22,12 +24,19 @@ func step(host: OhmRig, drawn: GhostDrawn, size_k: float) -> bool:
 	if not is_instance_valid(_jars) or _jars.get_parent() != shown:
 		_attach(shown)
 	var hover: GhostHover = drawn.flight.hover if drawn.flight != null else null
-	if not _masks.has(shown.texture):
+	var oct: int = drawn.octant(host.global_rotation)
+	if shown.texture != _act:
 		# Flight infers square pose cells. Both authored Ohm hover grids are rectangular.
 		var drift: bool = hover != null and hover.speed_mps >= GhostDrawn.SPEC_CRUISE_MPS
-		_hover.show(shown, drawn.octant(host.global_rotation), int(drift))
+		_hover.show(shown, oct, int(drift))
 		# Release the fallback cell's belt socket and material on the authored robe.
 		drawn.release_fade()
+	if _rows[shown.texture] == 8:
+		var col: int = shown.frame_coords.x
+		shown.vframes = 8
+		# Screen octants start at right and turn toward. The sheet starts at toward.
+		shown.frame_coords = Vector2i(col, posmod(2 - oct, 8))
+		shown.flip_h = false
 	shown.offset = -_anchor
 	GhostSoulLine.sync(shown)
 	if hover != null:
@@ -58,21 +67,23 @@ func _attach(shown: Sprite2D) -> void:
 	_masks.clear()
 	_cells.clear()
 	_forks.clear()
+	_rows.clear()
 	var dir: String = GhostDrawn.ART_DIR.path_join(ViewMode.shared().art)
 	var meta: Dictionary = JSON.parse_string(
 		FileAccess.get_file_as_string(dir.path_join("ohm_spec_cells.json"))
 	)
 	_anchor = DataTable.new().vec(meta, "anchor_px")
 	_hover = GhostSheet.of(dir.path_join("ohm_spec_hover.png"), 2)
-	_masks[_hover.tex] = load(dir.path_join("ohm_spec_hover_jars.png")) as Texture2D
-	_cells[_hover.tex] = meta.sheets.hover.jar_boxes_row_major
-	var act: Texture2D = load(dir.path_join("ohm_spec_act.png")) as Texture2D
-	_masks[act] = load(dir.path_join("ohm_spec_act_jars.png")) as Texture2D
-	_cells[act] = meta.sheets.act.jar_boxes_row_major
-	var hover_rows: Array = meta.sheets.hover.forks_row_major
-	_forks[_hover.tex] = hover_rows.map(OhmFork.unpack)
-	var act_rows: Array = meta.sheets.act.forks_row_major
-	_forks[act] = act_rows.map(OhmFork.unpack)
+	_act = load(dir.path_join("ohm_spec_act.png")) as Texture2D
+	for kind: String in ["hover", "act"]:
+		var tex: Texture2D = _hover.tex if kind == "hover" else _act
+		var sheet: Dictionary = meta.sheets[kind]
+		var rows: Array = sheet.get("rows", meta.rows)
+		_rows[tex] = rows.size()
+		_masks[tex] = load(dir.path_join("ohm_spec_%s_jars.png" % kind)) as Texture2D
+		_cells[tex] = sheet.jar_boxes_row_major
+		var forks: Array = sheet.forks_row_major
+		_forks[tex] = forks.map(OhmFork.unpack)
 	_fork = OhmFork.new()
 	_sprite.add_child(_fork)
 	var glow: Sprite2D = halo(245.0, 0.24)
@@ -85,7 +96,7 @@ func _attach(shown: Sprite2D) -> void:
 func _overlay() -> void:
 	var tex: Texture2D = _sprite.texture
 	_jars.match_cell(_sprite, _masks[tex])
-	var base_y: float = _sprite.frame_coords.y * tex.get_height() / float(GhostDrawn.ROWS)
+	var base_y: float = _sprite.frame_coords.y * tex.get_height() / float(_sprite.vframes)
 	var top: Vector3 = Vector3.ZERO
 	var bottom: Vector3 = Vector3.ONE
 	var boxes: Array = _cells[tex][_sprite.frame]

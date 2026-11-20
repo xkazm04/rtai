@@ -9,7 +9,7 @@ import { pathToFileURL } from 'node:url';
 import { ROOT } from '../lib/repo.mjs';
 import { describe, ensureImport, runGodot } from '../lib/godot.mjs';
 
-import { FRAMES, START, TURN, plan, stem } from './ghost_films_plan.mjs';
+import { FRAMES, START, TURN, chapterSettings, plan, stem } from './ghost_films_plan.mjs';
 export { plan, stem } from './ghost_films_plan.mjs';
 
 const MORPH_FRAMES = 400;
@@ -38,7 +38,7 @@ async function capture(dir, p, take, ppm, view, end) {
   const args = ['--rendering-driver', 'd3d12', '--windowed', '--position', '0,1440', '--resolution', '1920x540',
     '--disable-vsync', '--audio-driver', 'Dummy', '--fixed-fps', '60', '--write-movie', movie, '--quit-after', String(end),
     'res://dev/ghost-powers/ghost_review.tscn', '--', '--ghost=' + p.ghost, '--take=' + take, '--view=' + view,
-    '--ppm=' + ppm, '--ghost-look=' + p.look, '--clean', '--film-panel', '--film-trace=' + trace];
+    '--ppm=' + ppm, ...p.lookArgs, '--clean', '--film-panel', '--film-trace=' + trace];
   const r = await runGodot(args, { cwd: dir, name: 'ghost-film', ensure: false, headless: false,
     timeoutMs: 600000, stopOn: /SCRIPT ERROR|SHADER ERROR|Shader compilation failed/i });
   writeFileSync(base + '.log', r.out);
@@ -70,9 +70,19 @@ function title(text, x, y, size) {
     ':fontcolor=white:box=1:boxcolor=0x172023@0.88:boxborderw=5';
 }
 
-function compose(dir, p, chapters, target, ppm, still) {
+export function encodeArgs(graph, still) {
+  // Movie Maker supplies full-range MJPEG. Keep its colour matrix and compress the range once.
+  const movie = still === undefined;
+  const output = movie ? ',scale=in_range=pc:out_range=tv,format=yuv420p[out]' : '[out]';
+  const codec = movie ? ['-c:v', 'libx264', '-preset', 'veryfast', '-crf', '17',
+    '-pix_fmt', 'yuv420p', '-color_range', 'tv', '-movflags', '+faststart'] : ['-frames:v', '1', '-update', '1'];
+  return ['-filter_complex_threads', '3', '-filter_complex', graph + output, '-map', '[out]',
+    '-an', '-threads', '4', ...codec];
+}
+
+function compose(dir, chapters, target, ppm, still) {
   const inputs = [], filters = [];
-  for (const [i, { panels, action, ghost, speed }] of chapters.entries()) {
+  for (const [i, { panels, action, ghost, speed, look }] of chapters.entries()) {
     const [a, b] = panels.map((panel, j) => {
       inputs.push('-threads', '1', '-i', panel.movie);
       const start = tickIndex(panel, still ?? (action === 'morph' ? 1 : START));
@@ -86,19 +96,17 @@ function compose(dir, p, chapters, target, ppm, still) {
     const label = ({ move: 'Movement', attack: 'Attack', morph: 'Transformation' }[action]) + (still === undefined ? '' : '    /    Tick ' + still);
     filters.push(a + b + 'vstack,drawbox=x=0:y=0:w=iw:h=39:color=0x172023:t=fill,' +
       [title(card + '   ' + speed + ' m/s max    /    ' + ppm + ' px/m', 18, 7, 23),
-        title(label + '    /    ' + p.look, 585, 7, 22), title('Play tilt  70\u00b0', 17, 55, 17),
+        title(label + '    /    ' + look, 585, 7, 22), title('Play tilt  70\u00b0', 17, 55, 17),
         title('Top view  90\u00b0', 17, 553, 17)].join(',') + '[c' + i + ']');
   }
   const labels = chapters.map((_, i) => '[c' + i + ']').join('');
-  filters.push(labels + (chapters.length > 1 ? 'concat=n=' + chapters.length + ':v=1:a=0' : 'null') + '[out]');
-  const encode = still === undefined ? ['-c:v', 'libx264', '-preset', 'veryfast', '-crf', '17', '-pix_fmt', 'yuv420p',
-    '-movflags', '+faststart'] : ['-frames:v', '1', '-update', '1'];
-  ffmpeg(dir, [...inputs, '-filter_complex_threads', '3', '-filter_complex', filters.join(';'), '-map', '[out]', '-an', '-threads', '4', ...encode, target]);
+  filters.push(labels + (chapters.length > 1 ? 'concat=n=' + chapters.length + ':v=1:a=0' : 'null'));
+  ffmpeg(dir, [...inputs, ...encodeArgs(filters.join(';'), still), target]);
 }
 
-function publishMovie(dir, p, chapters, base, ppm) {
+function publishMovie(dir, chapters, base, ppm) {
   const pending = base + '.' + process.pid;
-  compose(dir, p, chapters, pending + '.mp4', ppm);
+  compose(dir, chapters, pending + '.mp4', ppm);
   ffmpeg(dir, ['-ss', String((TURN - START) / 60), '-i', pending + '.mp4', '-frames:v', '1', '-q:v', '2', '-update', '1', pending + '.jpg']);
   renameSync(pending + '.mp4', base + '.mp4');
   renameSync(pending + '.jpg', base + '.jpg');
@@ -109,7 +117,7 @@ export async function film(p) {
   mkdirSync(p.out, { recursive: true });
   const work = join(ROOT, 'build', 'ghost-films');
   mkdirSync(work, { recursive: true });
-  const dir = mkdtempSync(join(work, (p.all ? 'all' : p.ghost) + '-' + p.look + '-'));
+  const dir = mkdtempSync(join(work, (p.all ? 'all' : p.ghost) + '-' + (p.look ?? 'default') + '-'));
   console.log('Capture logs and native panels in ' + dir);
   const imported = await ensureImport();
   if (imported.status) throw Error('Godot import failed');
@@ -123,22 +131,23 @@ export async function film(p) {
     const key = [ghost, action, ppm].join('_');
     if (!pairs.has(key)) {
       const panels = [];
-      for (const view of views) panels.push(await capture(dir, { ...p, ghost }, action, ppm, view, end));
-      pairs.set(key, { panels, action, ghost, speed: table.forms.find(r => r.id === ghost).top_mps });
+      const settings = chapterSettings(table.forms.find(r => r.id === ghost), p.look);
+      for (const view of views) panels.push(await capture(dir, { all: p.all, ...settings }, action, ppm, view, end));
+      pairs.set(key, { panels, action, ...settings });
     }
     return pairs.get(key);
   }
   if (p.all) {
     const chapters = [];
     for (const { ghost, take } of p.chapters) chapters.push(await pair(ghost, take, 32));
-    publishMovie(dir, p, chapters, join(p.out, p.name), 32);
+    publishMovie(dir, chapters, join(p.out, p.name), 32);
     return;
   }
   for (const tick of p.stills) {
     const chapter = await pair(p.ghost, 'move', 64, p.takes.includes('close') ? START + FRAMES + 1 : Math.max(...p.stills) + 1);
     const target = join(p.out, stem(p, 'turn', tick) + '.png');
     const pending = target + '.' + process.pid + '.png';
-    compose(dir, p, [chapter], pending, 64, tick);
+    compose(dir, [chapter], pending, 64, tick);
     renameSync(pending, target);
     console.log('Wrote ' + target);
   }
@@ -146,7 +155,7 @@ export async function film(p) {
     const ppm = take === 'close' ? 64 : 32;
     const chapters = take === 'close' ? [await pair(p.ghost, 'move', ppm), await pair(p.ghost, 'attack', ppm)] : [await pair(p.ghost, take, ppm)];
     const base = join(p.out, stem(p, take));
-    publishMovie(dir, p, chapters, base, ppm);
+    publishMovie(dir, chapters, base, ppm);
   }
 }
 

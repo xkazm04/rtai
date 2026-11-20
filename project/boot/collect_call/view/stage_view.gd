@@ -213,7 +213,7 @@ func _car(b: VehicleBody) -> void:
 	var tex: Texture2D = CAR_ATLAS[clampi(b.state, 0, CAR_ATLAS.size() - 1)]
 	draw_set_transform(Ink.px(b.pos + shadow), b.head.angle())
 	draw_texture_rect_region(tex, r, cell, VehicleView.SHADOW)
-	if VehicleStageCards.standing(_cards):  # the body is a card: only its flat shadow here
+	if VehicleStageCards.standing(_cards) or DentCarTop.covers(self, stage, b):
 		return
 	draw_set_transform(Ink.px(b.pos), b.head.angle())
 	draw_texture_rect_region(tex, r, cell)

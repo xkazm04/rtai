@@ -4,6 +4,10 @@ extends Node2D
 
 const TEAL: Color = Color(0.18, 0.77, 0.71)
 
+var hanging_smoke: bool = false:
+	set(enabled):
+		hanging_smoke = enabled
+		_vapour.set_shader_parameter(&"billowing", enabled)
 var emerge: float = 1.0:
 	set(k):
 		emerge = k
@@ -114,8 +118,7 @@ func points() -> PackedVector2Array:
 	@warning_ignore("return_value_discarded")
 	centres.resize(_chain.size())
 	for i: int in _chain.size():
-		var midpoint: Vector2 = (_vertices[2 * i] + _vertices[2 * i + 1]) * 0.5
-		centres[i] = to_global(midpoint)
+		centres[i] = to_global((_vertices[2 * i] + _vertices[2 * i + 1]) * 0.5)
 	return centres
 
 
@@ -175,20 +178,17 @@ func _centre(i: int, up: Vector2) -> Vector2:
 	)
 
 
-## In the tilted bridge the sprite is a vertical billboard. Let the plume clear its hem
-## even when the ground trail points back into the torso in screen space.
 func _belt_trail(k: float, up: Vector2) -> Vector2:
+	var run: Vector2 = _chain[-1] - _chain[0]
+	if hanging_smoke and not ViewMode.shared().is_flat():
+		return GhostVapour.hanging_offset(k, run, maxf(0.0, -up.y - _socket.y))
 	if _socket_width <= 0.0:
 		return Vector2.ZERO
-	var root: Vector2 = _chain[0] + up + _socket
-	var run: Vector2 = _chain[-1] - _chain[0]
 	if ViewMode.shared().is_flat():
 		return (_socket + run.normalized() * _socket_width * 1.4) * k
+	var root: Vector2 = _chain[0] + up + _socket
 	var down: float = maxf(0.0, root.y + _socket_width * 1.15 - _chain[-1].y)
-	var fall: float = GhostVapour.hem_drop(_socket_width, _row.rise_m, run)
-	var head_on: float = maxf(0.0, -run.y - absf(run.x))
-	var sweep: float = (run.x * 1.1 - head_on * 1.45) * k
-	return Vector2(sweep, down * k + sin(k * PI) * fall)
+	return GhostVapour.hem_trail(k, run, down, _socket_width, _row.rise_m)
 
 
 func _draw() -> void:

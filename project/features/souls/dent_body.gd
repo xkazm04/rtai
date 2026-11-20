@@ -51,6 +51,7 @@ func setup(row: GhostFormDef) -> void:
 		add_child(_spectral)
 		_top = DentSpectralTop.new()
 		add_child(_top)
+		drawn.voice_parts.assign([_spectral, _top])
 		_glass = DentGlass.new()
 		drawn.flight.tail.add_child(_glass)
 		return
@@ -80,8 +81,7 @@ func step(show: bool, at: Vector2, facing: float, steps: int, tick: int) -> void
 			_glass.reset()
 		visible = show
 		if show:
-			position = at
-			scale = Vector2.ONE * PlayerScale.k()
+			transform = Transform2D(0.0, Vector2.ONE * PlayerScale.k(), 0.0, at)
 			_fly(facing, steps, tick)
 		return
 	if show and not visible:
@@ -130,7 +130,7 @@ func _fly(facing: float, steps: int, tick: int) -> void:
 	_glass.sync(drawn.flight, tick)
 	var jab: DentJab
 	var car: VehicleBody
-	var hurt_age: int = -1
+	var rivet: Fighter
 	if _view != null and _view.pilot != null:
 		jab = _view.pilot.ghosts.jab
 		car = _view.pilot.dent.car
@@ -138,12 +138,13 @@ func _fly(facing: float, steps: int, tick: int) -> void:
 			var to_car: Vector2 = car.pos - _view.arena.rivet.pos
 			if not to_car.is_zero_approx():
 				facing = to_car.angle()
-		if _view.arena.rivet.hurt_tick >= 0:
-			hurt_age = tick - _view.arena.rivet.hurt_tick
+		rivet = _view.arena.rivet
 		if steer != null:
 			steer.sample(car, tick, _view.pilot.dent.link.num(&"turn_dps"))
-	var hover: GhostHover = drawn.flight.hover
-	var act: DentSpectralDrawn.Pose = DentSpectralDrawn.pose(hover, jab, car != null, hurt_age)
+	var hurt_age: int = DentHit.apply(self, rivet, facing, tick)
+	var act: DentSpectralDrawn.Pose = DentSpectralDrawn.pose(
+		drawn.flight.hover, jab, car != null, hurt_age
+	)
 	_spectral.visible = ViewMode.shared().cards and ViewMode.shared().art != ""
 	_top.visible = not _spectral.visible
 	if _spectral.visible:
@@ -157,7 +158,11 @@ func _fly(facing: float, steps: int, tick: int) -> void:
 		var car_at: Vector2 = (
 			_view.to_global(car.pos * SimConst.PX_PER_M) if car != null else Vector2.ZERO
 		)
-		_top.pose(hover, act, age, car_at, steps)
+		_top.pose(drawn.flight.hover, act, age, car_at, steps)
+	_strike_mark(act, jab, facing)
+
+
+func _strike_mark(act: DentSpectralDrawn.Pose, jab: DentJab, facing: float) -> void:
 	if _jab_order != null:
 		if act == DentSpectralDrawn.Pose.JAB:
 			var fist: Vector2 = (

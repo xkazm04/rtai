@@ -96,11 +96,12 @@ func _process(_delta: float) -> void:
 
 func _ready() -> void:
 	set_process(_spectral != null)
-	process_priority = 21  # GhostFormView finishes feeding the instant cast at priority 20.
+	process_priority = 21  # After GhostFormView feeds the instant cast.
 	if _spectral != null:
 		add_child(_body)
 		_spirit = OhmSpirit.new()
 		_body.add_child(_spirit)
+		drawn.voice_parts.append(_body)
 		pose()
 		return
 	add_child(GhostRim.soft_glow(TEAL, GLOW_A, GLOW_M * PX_PER_M))  # teal belongs to the souls
@@ -165,7 +166,6 @@ static func cane_tip(p: float) -> Vector2:
 	return Vector2(x, CANE_SIDE_M)
 
 
-## Lays the body out for the current phase, breath and unfold.
 func pose() -> void:
 	var u: float = smoothstep(0.0, 1.0, unfold)
 	var breath: float = 1.0 + BREATH_K * sin(TAU * BREATH_HZ * _t)

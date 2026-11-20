@@ -51,7 +51,7 @@ func step(stage: ArenaStage, tick: int) -> void:
 		ohm_beat.hold()
 	elif kerf_beat != null:
 		kerf_beat.hold()
-	elif ghost == &"tonnage" and wave == 1 and _nearest(stage.arena.rivet.pos) == null:
+	elif ghost == &"tonnage" and wave == 1 and nearest(victims, stage.arena.rivet.pos) == null:
 		_wave_two(stage, tick)
 
 
@@ -120,7 +120,7 @@ func sample(stage: ArenaStage, tick: int) -> TickInput:
 		return _input(move, look, _bit(act, act != &""))
 	if local == LOOK_TICKS:
 		return _input(Vector2.ZERO, Vector2.RIGHT, _bit(&"power_hauler", true))
-	var foe: Fighter = _nearest(rivet.pos)
+	var foe: Fighter = nearest(victims, rivet.pos)
 	if foe == null:
 		return _input(Vector2.ZERO, rivet.facing, 0)
 	var gap: Vector2 = foe.pos - rivet.pos
@@ -191,9 +191,9 @@ func spawn(stage: ArenaStage, at: Vector2, riot: bool) -> Fighter:
 	return g
 
 
-func _nearest(at: Vector2) -> Fighter:
+static func nearest(cast: Array[Fighter], at: Vector2) -> Fighter:
 	var best: Fighter = null
-	for f: Fighter in victims:
+	for f: Fighter in cast:
 		if f.alive() and (best == null or at.distance_to(f.pos) < at.distance_to(best.pos)):
 			best = f
 	return best

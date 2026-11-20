@@ -10,6 +10,20 @@ func test_the_shipped_debris_is_on() -> void:
 	assert_gt(g.num(&"tonnage", &"slam_flash_s"), 0.0)
 
 
+func test_strike_lights_the_shipped_reach_at_both_native_zooms() -> void:
+	var reach: float = HaulerStage.shipped().form.num(&"stomp_radius_m")
+	assert_eq(reach, 4.0)
+	assert_eq(HaulerMarks.STRIKE_TEAL, Color(0.42, 0.98, 0.89))
+	for zoom: float in [1.0, 2.0]:
+		var ring: Vector3 = HaulerMarks.strike_ring(reach, SimConst.PX_PER_M, zoom, 0.0)
+		assert_eq(ring.x * zoom, reach * SimConst.PX_PER_M * zoom)
+		assert_eq(ring.y * zoom, 4.0)
+		assert_eq(ring.z, 1.0)
+		var age: float = 2.0 * SimClock.TICK_DT
+		assert_almost_eq(HaulerMarks.strike_ring(reach, 32.0, zoom, age).z, 0.648, 0.001)
+		assert_eq(HaulerMarks.strike_ring(reach, 32.0, zoom, 5.0 * SimClock.TICK_DT).z, 0.0)
+
+
 func test_the_chips_are_seeded_from_the_stomp_tick() -> void:
 	assert_eq(SlamDebris._hash(612, 3), SlamDebris._hash(612, 3), "same stomp, same chip")
 	assert_ne(SlamDebris._hash(612, 3), SlamDebris._hash(613, 3), "another stomp, another throw")

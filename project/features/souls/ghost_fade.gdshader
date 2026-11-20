@@ -6,9 +6,7 @@ uniform vec2 grid = vec2(1.0);
 uniform float fade_from = 0.0;
 uniform float flow = 0.0;
 uniform bool outline = false;
-uniform float voice_phase = -1.0;
-uniform vec3 voice_ink : source_color = vec3(0.04, 0.27, 0.28);
-uniform vec3 voice_light : source_color = vec3(0.72, 1.0, 0.95);
+#include "res://features/souls/ghost_voice.gdshaderinc"
 // The outline sprite is nudged on screen. Sample its erosion in the parent's cell coordinates.
 instance uniform vec2 cut_shift = vec2(0.0);
 
@@ -24,12 +22,7 @@ void fragment() {
 	if (outline) {
 		COLOR = vec4(0.18, 0.77, 0.71, COLOR.a * keep * 0.6);
 	} else {
-		vec4 body = COLOR;
-		if (voice_phase >= 0.0) {
-			float luma = dot(body.rgb, vec3(0.299, 0.587, 0.114));
-			body.rgb = mix(voice_ink, voice_light, smoothstep(0.04, 0.62, luma));
-			body.a *= 1.0 - 0.2 * step(0.5, fract(SCREEN_UV.y * 80.0 + voice_phase));
-		}
+		vec4 body = ghost_voice(COLOR, SCREEN_UV);
 		COLOR = vec4(mix(body.rgb, band, glow * 0.95), body.a * keep);
 	}
 }

@@ -1,7 +1,7 @@
 """Cut the 1080p spectral HUD face from Tonnage's front-facing p55 CARRY cell."""
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageDraw
 
 SIZE = 84
 AIR = 4
@@ -13,6 +13,13 @@ OUTPUT = PROJECT / "features/hud/art/ghost_chips/tonnage_spectral.png"
 def main() -> None:
     with Image.open(SHEET) as sheet:
         cell = sheet.convert("RGBA").crop((0, 0, 384, 320))
+    # Reinforce the recessed slot on the faceplate before reducing it to HUD size.
+    visor = ImageDraw.Draw(cell)
+    visor.polygon(
+        [(178, 188), (207, 188), (205, 198), (201, 201), (183, 201), (179, 198)],
+        fill="#092525",
+    )
+    visor.polygon([(181, 192), (204, 192), (202, 195), (183, 195)], fill="#91fff1")
     figure = cell.crop(cell.getchannel("A").getbbox())
     figure.thumbnail((SIZE - 2 * AIR, SIZE - 2 * AIR), Image.Resampling.LANCZOS)
     face = Image.new("RGBA", (SIZE, SIZE))

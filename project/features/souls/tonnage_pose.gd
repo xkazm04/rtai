@@ -110,17 +110,21 @@ func _travel(sample: Sample, hurt: int) -> void:
 	var speed: float = sample.velocity.length()
 	armed_k = 1.0 if sample.ramming else smoothstep(ARM_FROM_MPS, ARM_FULL_MPS, speed)
 	lean_k = 1.0 - armed_k
-	column = Pose.CRUISE if speed > 1.5 else Pose.CARRY
-	if armed_k > 0.5:
-		column = Pose.ARMED
-	elif hurt >= 0 and hurt < _hit_ticks:
-		column = Pose.RECOIL
+	column = _travel_column(speed, hurt)
 	left = Vector3(CARRY.x, -CARRY.y, CARRY.z) + _fist_follow
 	right = CARRY + _fist_follow
 	left = left.lerp(Vector3(-0.25, -1.05, 1.45), armed_k)
 	right = right.lerp(Vector3(1.2, 0.25, 1.1), armed_k)
 	var punch: float = minf(_punch_age / 4.0, (14 - _punch_age) / 10.0)
 	right.x += 0.6 * punch
+
+
+func _travel_column(speed: float, hurt: int) -> int:
+	if armed_k > 0.5:
+		return Pose.ARMED
+	if hurt >= 0 and hurt < _hit_ticks:
+		return Pose.RECOIL
+	return Pose.CRUISE if speed > 1.5 else Pose.CARRY
 
 
 func _slam(windup: float, age: int) -> void:

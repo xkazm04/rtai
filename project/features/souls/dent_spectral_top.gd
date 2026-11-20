@@ -67,7 +67,10 @@ func pose(
 		var elbow: Vector2 = Vector2(lerpf(-0.04, -0.38, sweep), side * 0.53 + 0.36 * _drag)
 		var hand: Vector2 = Vector2(lerpf(0.30, -0.77, sweep), side * 0.60 + 0.68 * _drag)
 		var grip: String = "forearm_open"
-		if steer != null and act == DentSpectralDrawn.Pose.STEER:
+		if act == DentSpectralDrawn.Pose.HIT:
+			hand = Vector2(0.64, side * 0.73)
+			elbow = Vector2(0.18, side * 0.61)
+		elif steer != null and act == DentSpectralDrawn.Pose.STEER:
 			hand = shoulder + shoulder.direction_to(to_local(car_at) / PPM) * 0.82
 			var pull_m: float = -side * steer.turn * DentStringSteer.TRAVEL_M
 			hand.x += pull_m / global_scale.x

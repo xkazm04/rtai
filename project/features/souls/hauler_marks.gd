@@ -6,6 +6,7 @@ extends RefCounted
 ## tile's own crack art at 96 px/m by tools/souls/bake_stomp_crack.py) held and faded out.
 
 const TEAL: Color = HaulerLook.TEAL
+const STRIKE_TEAL: Color = Color(0.42, 0.98, 0.89)
 const INK: Color = Color(0.09, 0.08, 0.07)
 const SHOCK_S: float = 0.4
 const VERTS: int = 48
@@ -38,6 +39,9 @@ static func draw(
 	var edge: float = 1.5
 	if GhostLook.spectral(&"tonnage"):
 		var zoom: float = ci.get_canvas_transform().x.length()
+		var ring: Vector3 = strike_ring(radius_m, ppm, zoom, age)
+		if ring.z > 0.0:
+			ci.draw_arc(c, ring.x, 0.0, TAU, 96, Color(STRIKE_TEAL, ring.z), ring.y, true)
 		width = lerpf(3.0, 1.5, k) / zoom
 		edge /= zoom
 	ci.draw_polyline(pts, Color(INK, 1.0 - k), width)
@@ -46,6 +50,14 @@ static func draw(
 		var a: float = TAU * g / GRIT + 0.4 * sin(g * 2.1)
 		var d: float = r * (0.55 + 0.5 * absf(sin(g * 3.7)))
 		ci.draw_circle(c + Vector2.from_angle(a) * d, lerpf(3.0, 1.0, k), Color(INK, 1.0 - k))
+
+
+## The wind-up circumference catches the impact light over the existing planted-fist pose.
+## Canvas radius, canvas line width and opacity. The expanding shock travels inside this line.
+static func strike_ring(radius_m: float, ppm: float, zoom: float, age: float) -> Vector3:
+	var planted_s: float = GhostDrawnActs.CUT_TICKS * SimClock.TICK_DT
+	var alpha: float = 1.0 - smoothstep(0.0, planted_s, age)
+	return Vector3(radius_m * ppm, 4.0 / zoom, alpha)
 
 
 static func _crack(ci: CanvasItem, c: Vector2, age: float, ppm: float, seed: int) -> void:
