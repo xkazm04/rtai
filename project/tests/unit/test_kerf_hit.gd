@@ -24,7 +24,7 @@ func after_each() -> void:
 	GhostLook.reset_for_test()
 
 
-func test_blow_tips_body_and_beams_together_in_screen_space_and_closes_the_lens() -> void:
+func test_blow_tips_both_views_in_screen_space_and_flashes_the_rim() -> void:
 	var body: KerfSpectral = _rig._spectral
 	_stage.arena.tick = 40
 	_stage.arena.hit_dir = Vector2.RIGHT
@@ -40,24 +40,18 @@ func test_blow_tips_body_and_beams_together_in_screen_space_and_closes_the_lens(
 			_rig.pose()  # Hitstop can render the same tick twice.
 			var k: float = 1.0 - age / 10.0
 			var angle: float = deg_to_rad(12.0) * k * k if age >= 0 and age < 10 else 0.0
-			for part: Node2D in [sprite, body.beams]:
-				assert_almost_eq((part.global_transform.x * projection).angle(), angle, 0.0001)
+			assert_almost_eq((sprite.global_transform.x * projection).angle(), angle, 0.0001)
 			assert_almost_eq(sprite.global_position, _rig.global_position, Vector2.ONE * 0.001)
-			var closed: bool = age >= 0 and age < 6
-			if flat:
-				var eye: String = "lens_slit.png" if closed else "lens_open.png"
-				assert_eq(body._lens.texture.resource_path.get_file(), eye)
-			else:
-				assert_eq(body._tilted_eye.visible, closed)
-				if closed:
-					assert_eq(body._tilted_eye.texture.resource_path.get_file(), "lens_slit.png")
+			var hurt: bool = age >= 0 and age < 10
+			assert_eq(body.current, KerfRoninDrawn.Pose.HIT if hurt else KerfRoninDrawn.Pose.HOVER)
+			if not flat:
+				assert_eq(body._tilted.frame_coords.x, 3 if hurt else 0)
+				assert_eq(body._tilted._rim.visible, hurt and age < 6)
 
 
-func test_beams_and_body_follow_unfold_in_both_directions() -> void:
+func test_body_follows_unfold_in_both_directions() -> void:
 	var body: KerfSpectral = _rig._spectral
 	for k: float in [0.0, 0.25, 1.0, 0.5, 0.0]:
 		_rig.unfold = k
 		_rig.pose()
 		assert_almost_eq(body.modulate.a, k, 0.0001)
-		for i: int in KerfBeams.COUNT:
-			assert_almost_eq(body.beams.length_m(i), k * 0.9, 0.0001)

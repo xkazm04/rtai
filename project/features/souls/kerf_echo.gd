@@ -36,6 +36,8 @@ class Pose:
 			dst.vframes = src.vframes
 			dst.frame = src.frame
 			dst.flip_h = src.flip_h
+			dst.centered = src.centered
+			dst.self_modulate = src.self_modulate
 			dst.offset = src.offset
 			dst.transform = src.global_transform
 			dst.position -= ground
@@ -64,7 +66,7 @@ var _sample_tick: int = -1
 
 
 ## Copy the original coverage into the group. The group composites its alpha once, even where
-## the lens, arch and hull overlap.
+## the helmet and shoulder plates overlap.
 static func _wash_material() -> ShaderMaterial:
 	var shader: Shader = Shader.new()
 	shader.code = """
@@ -73,7 +75,7 @@ render_mode unshaded;
 uniform vec4 wash : source_color;
 void fragment() {
 	vec4 part = texture(TEXTURE, UV);
-	COLOR = vec4(mix(part.rgb, wash.rgb, wash.a), part.a);
+	COLOR = vec4(mix(part.rgb, wash.rgb, wash.a), COLOR.a);
 }
 """
 	var mat: ShaderMaterial = ShaderMaterial.new()
@@ -82,11 +84,10 @@ void fragment() {
 	return mat
 
 
-func bind(top: Node2D, tilted: Sprite2D, eye: Sprite2D) -> void:
+func bind(top: Node2D, tilted: Sprite2D) -> void:
 	for sprite: Sprite2D in top.get_children():
 		_sources.append(sprite)
 	_sources.append(tilted)
-	_sources.append(eye)
 	_buffer = _new_pose()
 
 

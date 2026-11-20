@@ -1,9 +1,10 @@
 class_name KerfHit
 extends RefCounted
-## A spectral cutter has no hit cell. Close its lens briefly and tip the complete assembly.
+## The Ronin flinches for six ticks. The whole body follows the ten-tick recoil curve.
 
 const FLINCH_TICKS: int = 6
 
+var hurt: bool = false
 var flinch: bool = false
 var lean: float = 0.0
 
@@ -11,11 +12,12 @@ var lean: float = 0.0
 func read(arena: CombatArena, facing: float) -> void:
 	var rivet: Fighter = arena.rivet
 	var age: int = arena.tick - rivet.hurt_tick
-	flinch = age >= 0 and age < FLINCH_TICKS
+	hurt = rivet.hurt_tick >= 0 and age >= 0 and age < GhostDrawn.HIT_TICKS
+	flinch = hurt and age < FLINCH_TICKS
 	lean = GhostRecoil.tilt(age, facing, GhostRecoil.lean_of("kerf"), rivet.hurt_dir)
 
 
-## Rotate the already posed rig about its centre in screen space, carrying the beam sockets.
+## Rotate the already posed rig about its centre in screen space, carrying the blade sockets.
 func apply(body: Node2D) -> void:
 	if lean == 0.0:
 		return
