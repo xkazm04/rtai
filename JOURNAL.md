@@ -97,3 +97,6 @@ NEXT (session 4, supersedes the 15:48 line): wait for polish05 (hard stop 16:45)
 ## Session 4 (15:58)
 - 15:58 START session 4. ASTRA polish05 still running (lock pid 57124 = node.exe alive, hard stop 16:45); uncommitted Astra edits in `kerf_spectral.gd` + test + decisions (item 2, vapour thread). Not touching them.
 - 16:00 LOOKED `kerf_profile_far_blade.png` (15:55, before/after at 32 and 64 px/m, 70 and 55): the darker far crescent rises behind the helmet, both blades read as arms at 32 px/m; not pasted-looking at 64. Profile item ACCEPTED pending the call's final message.
+- 16:15 ASTRA polish05 27 accepted (74304cba8 far crescent in profile HOVER; c14ae6f97 overhead trail ends at the painted ribbon: `flight.tail.hide()` in both views; unit 3352/0/2, quest1_kerf `26fa9dc0...` / replay_60s `cbeb734f...` / parity `94b2865f7f17d778` / bake 256/256 unchanged, mutate 1/1 changed line; move + close films re-shot).
+- 16:16 LOOKED `scratch/brief05/overhead_before_after.png` tick 163 at 64 px/m: the wiggly vapour thread behind the ribbon is gone, the ribbon tip ends cleanly. OK.
+- 16:17 DECISION no further Astra call: the remaining items (ACTION sheet re-roll, distinct fly HIT cell) need image jobs with re-rolls that do not fit before the 17:00 commit line; they go to REPORT Next steps. Final gate starts now on c14ae6f97+ (journal/report only after).
