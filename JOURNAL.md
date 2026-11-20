@@ -77,3 +77,4 @@ NEXT (session 4):
 2. LOOK at every still next to the plate: tail_fix (is it a soft dense column now, no sparks, no cable line?), chip (hazard stripes + visor at 84 px), hit_slam, p55 strip, morph strip (no legged frame, no double body, not full size on frame 1). Watch move/attack/close films.
 3. Look flip decision (~05:30): set tonnage row `look` = spectral in ghost_forms.json ONLY if body + flight + slam + ram are done in both tilts, filmed, and unit/lint green. Morph/chip may stay Calls. If the tail is still not smoke, do NOT flip; Call it.
 4. A short last brief (<= 30 min) only if needed: the flip + tail polish. Last new work committed by 06:00; final gate `node tools/gate/run.mjs --rev=HEAD` from 06:15 (APPDATA set); films after; REPORT 07:40 with cites.mjs.
+- 04:24 form-rest item 0: 2f78f2583 merged n20-flight (5e906fd53 tail 0b). ASTRA RUNNING form-rest since 04:16 (PID 62796) at session-3 end.
