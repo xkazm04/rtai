@@ -88,7 +88,7 @@ func test_hard_turn_holds_its_direction_through_a_snap_then_releases() -> void:
 	assert_eq(body._turn(-720.0, 95), -720.0)
 
 
-func test_wisp_meets_the_overhead_ribbon_tip_and_hides_at_both_play_tilts() -> void:
+func test_ronin_keeps_its_painted_ribbon_without_a_second_trail() -> void:
 	var previous: String = ViewMode.shared().id
 	GhostLook.override_for_test(&"spectral")
 	var flight: GhostFlight = add_child_autofree(GhostFlight.make(&"kerf"))
@@ -100,15 +100,14 @@ func test_wisp_meets_the_overhead_ribbon_tip_and_hides_at_both_play_tilts() -> v
 		ViewMode.select(view)
 		flight.step(Vector2.ZERO, 0.0, 1)
 		rig.pose()
-		assert_eq(flight.tail.visible, view == "top")
+		assert_false(flight.tail.visible)
 	var top: KerfRoninTop = rig._spectral._top
-	var tip: Vector2 = top._curled.to_global(
-		top._parts.pivots_b["tail_curled"] + top._curled.offset
-	)
-	assert_lt(flight.tail.points()[0].distance_to(tip), 0.15 * SimConst.PX_PER_M)
-	for blink: KerfRoninDrawn.Pose in [POSE.BLINK, POSE.CUT, POSE.RECOVER]:
+	assert_true(top._curled.is_visible_in_tree())
+	assert_eq(top._curled.self_modulate.a, 1.0)
+	flight.step(Vector2.RIGHT * SimConst.PX_PER_M, 0.0, 1)
+	for blink: KerfRoninDrawn.Pose in [POSE.BLINK, POSE.CUT, POSE.RECOVER, POSE.HOVER]:
 		rig._spectral.pose(rig, blink, false, 0.0, 2)
 		assert_false(flight.tail.visible)
-	rig._spectral.pose(rig, POSE.HOVER, false, 0.0, 3)
-	assert_true(flight.tail.visible)
+	assert_true(top._straight.is_visible_in_tree())
+	assert_eq(top._straight.self_modulate.a, 1.0)
 	ViewMode.select(previous)

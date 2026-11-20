@@ -90,8 +90,8 @@ func pose(
 	_tilted.visible = ViewMode.shared().art in ["p55", "p70"]
 	_top.visible = not _tilted.visible
 	if flight != null:
-		# A teleport stretches the flight ribbon across the slot. Resume it after the attack.
-		flight.tail.visible = _top.visible and blink == KerfRoninDrawn.Pose.HOVER
+		# Both the pitched cards and the overhead rig carry their own steel ribbon.
+		flight.tail.hide()
 	var steps: int = maxi(0, tick - _last_tick)
 	_last_tick = tick
 	_top.pose(current, speed, yaw, steps, _hit.flinch)
