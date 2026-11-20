@@ -225,6 +225,7 @@
       "damage": 16,
       "melee": false,
       "reach_m": 22,
+      "round": "large",
       "speed_mps": 11
     },
     "claw": {
