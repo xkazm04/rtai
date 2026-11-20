@@ -15,7 +15,8 @@ Godot process at a time; kill by PID only. If you need `project/override.cfg` fo
 is temporary: delete it afterwards and never commit it. Stage per path; never push.
 
 ## The films (the owner judges by these)
-Flight HAS landed the film tool (n20-flight 95d914ab8 + 073237b56): `git merge n20-flight`, then
+Flight HAS landed the film tool (n20-flight 95d914ab8 + 073237b56; a4 merged it into n20-dent: if
+`git log n20-dent..n20-flight` lists newer commits, `git merge n20-flight` first), then
 `node tools/film/ghost_films.mjs --ghost=dent --look=spectral --out=C:/Users/kazda/kiro/gtai-masters/n20/dent --takes=move,attack,close --stills=163`
 (tilt 70 above the top view, 1920x1080, a poster each, named as the owner's film list wants). Read
 its usage first; if a take misses part of the attack (jab, strap, overload), say so. Fallback only if

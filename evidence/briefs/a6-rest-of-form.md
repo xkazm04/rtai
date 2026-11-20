@@ -1,7 +1,7 @@
 # Brief a6-rest (lane dent, n20): transformation, hit reaction and the HUD face for Ejected
 
 (Draft written 02:55 by the iteration-2 director; the next director re-reads it against the state of
-the branch before launching. Run it only after a4 strings and a5 films are delivered.)
+the branch before launching. Run it only after a4 strings and a5 films are delivered. Updated 03:45 by iteration 3: items 3 and 4 added.)
 
 Context: RTAI (`gtai`), ghost form **Dent**, rebuilt tonight as "Ejected" (plate
 `C:\Users\kazda\kiro\gtai-masters\n20\concepts\dent_a.png`). Body, flight, strap, strings, overload
@@ -25,9 +25,32 @@ When Dent is hit (the shared hit lean is `GhostRecoil.LEAN_BY_FORM`, 12 degrees 
 change it), his spectral cell must be the HIT column of `dent_sp_fly` (a2 packed it) and the tail
 must flicker; check it is drawn, both tilts and the top view. Stills at the hit tick and +6.
 
-## 3. Drawn left facings (only if time)
+## 3. Spectral HUD chip face (no new drawing)
+Flight's `GhostChipFace` (4362c8109, merged by a4) loads `res://features/hud/art/ghost_chips/<id>_spectral.png`
+when the form draws spectral, else the old chip. Make `dent_spectral.png` exactly the way `dent.png`
+was made (provenance line 1694 in `steam/ai-provenance/2026-11.jsonl`): run the existing
+`tools/art/ghost_chip_cut.py` (do not edit it; if it cannot take this input, write
+`tools/art/dent_chip_cut.py` beside it) on the p55 `dent_sp_fly` HOVER cell facing the camera,
+84 x 84 RGBA, keeping his own silhouette (head roundel, shoulders, belt; the plume may run off the
+foot). Commit the PNG + `.import`, one provenance line ("derived, no new drawing"), and a still of
+the HUD chip in game under `--ghost-look=spectral` next to the old one (`scratch/a6/chip.png`).
+
+## 4. Overload test strength
+`node tools/mutate/mutate.mjs --file=features/souls/dent_overload.gd` scored 4/20 at a3b: the ring,
+shock-disc and spoke geometry are barely asserted. Add assertions to the overload tests (ring
+radius = blast_radius_m * ppm, shock radius reaches the ring exactly at +8 ticks and not before,
+amber lerp with heat, spokes end at each struck body) until a re-run kills at least 10/20. Quote
+killed/(killed+survived).
+
+## 5. Drawn left facings (only if time)
 Left facings are mirrors, so the belt diagonal flips. Judge it at 64 px/m: if it reads wrong, list it
 as a Call with a still; do not generate new art in this package.
 
+## Order and time (hard)
+Work in this order: 3 (chip), 4 (overload tests), 2 (hit reaction), 1 (transformation: film and look
+first; fix only if it shows legs or the old standing body and the fix fits), 5 last. Every change
+committed (quick gate green) by **06:00 local time** whatever its state; after 06:00 make no product
+commit, only finish the report. Stop at 35 minutes or 06:00, whichever comes first.
+
 ## Report
-Files, shas, stills with ticks, what is not done. Stop at 50 minutes.
+Files, shas, stills with ticks, mutate scores, what is not done.
