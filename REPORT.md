@@ -23,7 +23,7 @@ Final gate: TBD (line + gate.json path).
 
 ## What does not
 - **The kerf look row stays `legacy`.** The spectral Kerf is complete (body, flight, blink, slice, transform, hit, chip) and filmed in both tilts. The flip failed one check: `project/tests/unit/test_ghost_card.gd:92` (flight's) asserts Kerf's legacy card as the default. With the flag `--ghost-look=spectral` everything shown here is reachable. Flipping is one value in `project/data/tables/ghost_forms.json` plus pinning that test to legacy (flight's merge note).
-- `project/tests/unit/test_ghost_flight_hosts.gd:114` (flight's, b0f2629c1) crashed on this branch after the merge (Kerf's own body has no `drawn.sprite()`); guard TBD.
+- `project/tests/unit/test_ghost_flight_hosts.gd:114` (flight's, b0f2629c1) crashed on this branch after the merge (Kerf's own body has no `drawn.sprite()`); fixed by dent's null-sprite check (f67fa2ea0, select run 13/0/0).
 
 ## What blocked or slowed you
 - quick.mjs Godot parse check false FAIL on `project/features/combat/kills/*` (depended-scripts cascade): ~6 min, worked around with `--no-godot` + `run_unit.mjs --changed`.
@@ -45,7 +45,10 @@ Final gate: TBD (line + gate.json path).
 - merge-clash warned that `project/tests/unit/test_ghost_look.gd` conflicts with n20-ohm (flight's file and ohm's lines, came in with the flight merge).
 
 ## Next steps
-- TBD
+- At the merge: flip the kerf row in `project/data/tables/ghost_forms.json` to `spectral` and pin `project/tests/unit/test_ghost_card.gd:92` to legacy (Calls 3).
+- Remove or shorten the hooked cable ends under the tilted tail if the owner reads them as legs (Calls 2).
+- Hit flinch is modest at 32 px/m: a brief teal rim pulse on the hull would read better from above.
+- The 64 px/m tilt framing in `kerf_hit_strip.png` crops the nose: re-frame when the strip is re-shot.
 
 ## Astra ledger
 | Call | Minutes | Result |
@@ -59,6 +62,10 @@ Final gate: TBD (line + gate.json path).
 | films2 | 29 | accepted |
 | form | 69 | accepted |
 | finish | 31 | accepted (row left legacy) |
-| guard | TBD | TBD |
+| guard | 1 | committed but still red (tonnage's `own_body` guard misses Kerf) |
+| guard2 | 1 | accepted (dent's null-sprite check) |
 
-What I would brief differently: TBD
+What I would brief differently:
+- Cap mutate in every brief (changed lines only, `--max=20`). The form call spent ~20 of its 69 minutes on a full-file mutate that could not finish.
+- Right after every `git merge n20-flight`, run the full unit suite myself. Flight's new arena-gait test was red on this branch from 05:13 and nobody noticed until the finish call's full run at 05:44.
+- Launch every call with `nohup` from the first one, and give each brief a wall-clock hard stop. The calls that had both ended on time.
