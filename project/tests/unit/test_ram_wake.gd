@@ -4,7 +4,17 @@ extends GutTest
 ## at which a touch starts to hurt), and ram_wake_k scales it (0 = the before).
 
 
+func after_each() -> void:
+	GhostLook.reset_for_test()
+
+
+func test_spectral_cruise_has_no_ground_wave() -> void:
+	GhostLook.override_for_test(GhostLook.SPECTRAL)
+	assert_eq(RamWake.strength(4.2, HaulerStage.shipped().form.num(&"ram_mps")), 0.0)
+
+
 func test_the_wave_grows_in_as_the_press_reaches_ram_speed() -> void:
+	GhostLook.override_for_test(GhostLook.LEGACY)
 	var ram: float = HaulerStage.shipped().form.num(&"ram_mps")
 	assert_gt(ram, 0.0, "the hauler has a ram speed")
 	assert_eq(RamWake.strength(0.0, ram), 0.0, "none standing still")

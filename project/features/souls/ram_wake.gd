@@ -8,6 +8,8 @@ extends RefCounted
 ## TonnageView (the ghost forms) and CastView (quest 1). Data: ghost_attacks.json tonnage
 ## ram_wake_k (opacity; 0 = none); --feel=off = none. Phase from the tick: view only.
 
+## The armed press fist carries the spectral ram tell. Zero also suppresses flank dust.
+const SPECTRAL_GAIN: float = 0.0
 const INK: Color = SlamDebris.INK
 const CREAM: Color = SlamDebris.CREAM
 ## How far past the body radius the wave's nose rides and its flanks sweep: the press is drawn
@@ -26,7 +28,8 @@ static func strength(speed: float, ram_mps: float) -> float:
 	_load()
 	if _k <= 0.0 or ram_mps <= 0.0:
 		return 0.0
-	return _k * clampf((speed / ram_mps - 0.8) / 0.2, 0.0, 1.0)
+	var gain: float = SPECTRAL_GAIN if GhostLook.spectral(&"tonnage") else 1.0
+	return gain * _k * clampf((speed / ram_mps - 0.8) / 0.2, 0.0, 1.0)
 
 
 ## The wave round the press at `c` (canvas px) for `form` (its speed, ram_mps and body class).

@@ -151,16 +151,16 @@
         ],
         "curl_m": 0.56,
         "flow_ticks": 136,
-        "fray": 0.82,
+        "fray": 0.15,
         "length_m": 4.4,
         "rise_m": -0.24,
         "segments": 26,
-        "spread_m": 0.45,
-        "strands": 3,
+        "spread_m": 0.28,
+        "strands": 2,
         "stretch_k": 0.09,
         "swing_k": 0.91,
-        "width_m": 1.95,
-        "wisps": 5
+        "width_m": 2.15,
+        "wisps": 1
       },
       "top_mps": 4.2
     }

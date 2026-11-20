@@ -4,12 +4,12 @@ extends RefCounted
 
 const CHEST: Dictionary = {
 	"anchor_m": [0.0, 0.0],
-	"length_m": 1.12,
-	"width_m": 0.36,
+	"length_m": 0.82,
+	"width_m": 0.44,
 	"stretch_k": 0.0,
 	"swing_k": 0.45,
 	"segments": 13,
-	"fray": 0.92,
+	"fray": 0.12,
 	"strands": 2,
 	"spread_m": 0.08,
 	"rise_m": 0.0,
