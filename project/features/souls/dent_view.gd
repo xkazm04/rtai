@@ -57,9 +57,7 @@ func _process(_delta: float) -> void:
 	if _strap != null:
 		_strap.advance(dent.car, stage.tick, dent.link.speed, dent.blast_tick)
 	if _overload != null:
-		_overload.ppm = ppm
-		_overload.still = reduced_motion
-		_overload.queue_redraw()
+		_overload.sync(ppm, reduced_motion)
 	if follow_cam != null and dent != null and stage != null:
 		_follow()
 	queue_redraw()
@@ -95,8 +93,6 @@ func _draw() -> void:
 		if age <= BLAST_S:
 			_blast(dent.blast_at * ppm, age / BLAST_S)
 		_debris(stage.tick - dent.blast_tick)
-		if _overload != null:
-			_overload.spokes(self, stage.tick - dent.blast_tick)
 
 
 ## The blast's slabs, `age` ticks after it: WeaponFxDebris draws in Ink's 48 px/m world, so the
@@ -144,11 +140,13 @@ func _blast(c: Vector2, k: float) -> void:
 		_legacy.blast(self, c, k)
 		return
 	var radius: float = dent.num(&"blast_radius_m") * ppm
+	_overload.shock(self, c, radius, stage.tick - dent.blast_tick)
+	if reduced_motion:
+		return
 	# The front hits the preview circle while it is still bright, then fades in place.
 	var expansion: float = 1.0 - pow(1.0 - minf(1.0, (k + 0.035) / 0.65), 2.0)
 	var r: float = radius * expansion
-	if not reduced_motion:
-		_fireball(c, r, k)
+	_fireball(c, r, k)
 	var look: DentLook = DentLook.shipped()
 	draw_arc(c, r, 0.0, TAU, 72, Color(INK, 1.0 - k), look.ring_ink_m * ppm, true)
 	draw_arc(c, r, 0.0, TAU, 72, Color(FIRE, 1.0 - k), look.ring_edge_m * ppm, true)
