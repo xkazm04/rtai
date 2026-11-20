@@ -1,6 +1,7 @@
 """Compare eight drawn facings with the shipped five-row sheets at game scale.
 
 python tools/art/ohm_n21_eight_cut.py --masters-root DIR --board-dir DIR
+python tools/art/ohm_n21_eight_cut.py --masters-root DIR --ship-hover
 The n21 manifest selects the raw takes. This writes review boards and the six
 1536 x 1024 green sheets alongside them. Both use the same unmirrored silhouettes.
 """
@@ -8,7 +9,9 @@ The n21 manifest selects the raw takes. This writes review boards and the six
 import argparse
 import hashlib
 import json
+import subprocess
 from dataclasses import dataclass
+from io import BytesIO
 from pathlib import Path
 from statistics import median
 
@@ -18,6 +21,8 @@ import ohm_spectral_cut as cut
 
 
 MANIFEST = cut.ROOT / "art_src/n21_polish_ohm.manifest.json"
+BASELINE = "f8a634283"  # Five-row art used for all four director boards and height calibration.
+FACINGS = (*cut.FACINGS, "away_left", "left", "toward_left")
 # First and second rows of each pose in a 4x4 master, in source column order.
 TURN_ROWS = ((1, 2, 3, 0), (7, 6, 5, 4))
 GROUPS = (("Profile", 2, 6), ("Three-quarter toward", 1, 7),
@@ -39,12 +44,17 @@ class Frame:
         return Frame(ImageOps.mirror(self.image), self.image.width - self.x, self.y, self.height)
 
 
+def baseline_bytes(path):
+    ref = f"{BASELINE}:{path.relative_to(cut.ROOT).as_posix()}"
+    return subprocess.check_output(["git", "cat-file", "--filters", ref], cwd=cut.ROOT)
+
+
 def shipped_frames(tilt, meta):
     folder = cut.ART / "view" / tilt
     frames = {}
     for name, sheet_meta in meta["sheets"].items():
-        with Image.open(folder / f"ohm_spec_{name}.png") as body, \
-                Image.open(folder / f"ohm_spec_{name}_jars.png") as mask:
+        with Image.open(BytesIO(baseline_bytes(folder / f"ohm_spec_{name}.png"))) as body, \
+                Image.open(BytesIO(baseline_bytes(folder / f"ohm_spec_{name}_jars.png"))) as mask:
             cols = sheet_meta["columns"]
             for row in range(len(meta["rows"])):
                 for col, pose in enumerate(cols):
@@ -149,24 +159,102 @@ def board(tilt, ppm, old, new, meta, dest):
     canvas.save(dest / f"ohm_eight_vs_shipped_{tilt}_{ppm}.png")
 
 
+def anatomical_jars(cell, facing):
+    if facing <= 4:
+        return cut.jars(cell, facing)
+    # The existing extractor indexes near/far windows on a right-facing view.
+    # Reflect only for segmentation; on the left view the nearest jar is anatomical left.
+    body, mask = cut.jars(ImageOps.mirror(cell), 8 - facing)
+    r, g, b, a = ImageOps.mirror(mask).split()
+    return ImageOps.mirror(body), Image.merge("RGBA", (b, g, r, a))
+
+
+def coat_bounds(body):
+    box = body.getbbox()
+    x, top, bottom = cut.coat(body.crop(box))
+    return x + box[0], bottom + box[1], bottom - top
+
+
+def calibrated(body, target):
+    _, _, height = coat_bounds(body)
+    scale = target / height
+    best = None
+    for _ in range(6):
+        resized = cut.scaled(body, scale)
+        x, y, h = coat_bounds(resized)
+        if best is None or abs(h - target) < abs(best[-1] - target):
+            best = resized, x, y, h
+        if h == target:
+            break
+        scale *= target / h
+    if abs(best[-1] - target) > target * 0.05:
+        raise ValueError(f"Coat height {best[-1]} outside tolerance of {target}")
+    return best
+
+
+def ship_hover(folder, meta, cells, old):
+    width, height = meta["cell_px"]
+    ax, ay = meta["anchor_px"]
+    frames = []
+    boxes, forks = [], []
+    for facing, label in enumerate(FACINGS):
+        for col, pose in enumerate(cut.POSES[:2]):
+            source_row = int(facing in TURN_ROWS[1])
+            source_col = TURN_ROWS[source_row].index(facing)
+            cell = cells[(2 * col + source_row) * 4 + source_col]
+            body, mask = anatomical_jars(cell, facing)
+            target = old[min(facing, 8 - facing), pose].height
+            body, x, y, h = calibrated(body, target)
+            dx, dy = ax - x, ay - y
+            if min(dx, dy) < cut.PAD:
+                raise ValueError(f"{folder.name} {label} {pose}: invalid anchor")
+            width = max(width, dx + body.width + cut.PAD)
+            height = max(height, dy + body.height + cut.PAD)
+            frames.append((body, cut.resize_mask(mask, body.size), (dx, dy)))
+            print(f"{folder.name} {label:12s} {pose:5s} {target} -> {h} ({(h-target)/target:+.2%})")
+    sheets = [Image.new("RGBA", (2 * width, 8 * height)) for _ in range(2)]
+    for i, (body, mask, pos) in enumerate(frames):
+        tile, glass = (Image.new("RGBA", (width, height)) for _ in range(2))
+        tile.paste(body, pos)
+        glass.paste(mask, pos)
+        for sheet, part in zip(sheets, (tile, glass)):
+            sheet.paste(part, (i % 2 * width, i // 2 * height))
+        boxes.append([c.getbbox() for c in glass.split()[:3]])
+        forks.append(cut.fork_points(tile))
+    for sheet, suffix in zip(sheets, ("", "_jars")):
+        sheet.save(folder / f"ohm_spec_hover{suffix}.png")
+    meta["sheets"]["hover"].update(rows=FACINGS, cell_px=[width, height],
+                                   jar_boxes_row_major=boxes, forks_row_major=forks)
+    meta["sheets"]["act"].setdefault("rows", meta["rows"])
+    cut.write_json(folder / "ohm_spec_cells.json", meta)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--masters-root", type=Path, required=True)
-    parser.add_argument("--board-dir", type=Path, required=True)
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument("--board-dir", type=Path)
+    mode.add_argument("--ship-hover", action="store_true")
     args = parser.parse_args()
-    args.board_dir.mkdir(parents=True, exist_ok=True)
+    if args.board_dir:
+        args.board_dir.mkdir(parents=True, exist_ok=True)
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))["masters"]
     for tilt in ("p70", "p55"):
         paths = []
-        for pair in "abc":
+        for pair in ("a" if args.ship_hover else "abc"):
             entry = manifest[f"ohm_eight_{tilt}_{pair}"]
             path = args.masters_root / entry["file"].removeprefix("masters:")
             if hashlib.sha256(path.read_bytes()).hexdigest() != entry["sha256"]:
                 raise ValueError(f"Master hash mismatch: {path}")
             paths.append(path)
-        meta = json.loads((cut.ART / "view" / tilt / "ohm_spec_cells.json").read_text())
+        folder = cut.ART / "view" / tilt
+        meta = json.loads(baseline_bytes(folder / "ohm_spec_cells.json"))
         old = shipped_frames(tilt, meta)
         masters = [cut.figures(path, 4, 4) for path in paths]
+        if args.ship_hover:
+            current = json.loads((folder / "ohm_spec_cells.json").read_text(encoding="utf-8"))
+            ship_hover(folder, current, masters[0], old)
+            continue
         landscape_sheets(masters, tilt, args.board_dir)
         new = new_frames(masters, meta)
         for ppm in (32, 64):

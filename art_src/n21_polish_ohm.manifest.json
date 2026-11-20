@@ -1,8 +1,8 @@
 {
   "_doc": "Eight drawn facings, six pose-pair masters selected for comparison. Each file is the original generation; accepted records the shipping verdict.",
   "review": {
-    "verdict": "keep_mirror",
-    "reason": "At 32 and 64 px/m the new rear jar bank reads clearly. Several left profiles hide most of the staff, recovery resembles idle and struck resembles drift. After shared idle-height calibration, 27 of 48 p70 and 22 of 48 p55 coat heights exceed the 5% tolerance. The largest increases are p70 left struck (+19.9%) and p55 away-right recovery (+12.1%).",
+    "verdict": "ship_eight_row_hover_keep_five_row_act",
+    "reason": "The director approved the pair A idle and drift turns at both display scales. Each shipped hover cell is calibrated to its original five-row partner. The separate act comparison showed that recovery resembled idle and struck resembled drift, with coat height increases up to 19.9%. The five-row act sheet remains in use.",
     "boards": [
       "masters:n21/polish/ohm/ohm_eight_vs_shipped_p70_32.png",
       "masters:n21/polish/ohm/ohm_eight_vs_shipped_p70_64.png",
@@ -10,10 +10,10 @@
       "masters:n21/polish/ohm/ohm_eight_vs_shipped_p55_64.png"
     ]
   },
-  "cut_command": "python -B tools/art/ohm_n21_eight_cut.py --masters-root C:/Users/kazda/kiro/gtai-masters --board-dir C:/Users/kazda/kiro/gtai-masters/n21/polish/ohm",
+  "cut_command": "python -B tools/art/ohm_n21_eight_cut.py --masters-root C:/Users/kazda/kiro/gtai-masters --ship-hover",
   "masters": {
     "ohm_eight_p55_a": {
-      "accepted": false,
+      "accepted": true,
       "date": "2026-11-20",
       "file": "masters:n21/polish/masters/ohm_eight_p55_a_t3.png",
       "model": "built-in image_gen (image model not reported)",
@@ -25,7 +25,11 @@
       ],
       "seed": null,
       "sha256": "c17cdc27418a23c1fef8035d44c082d7d239b3bc9094cd9ab94232861c30822b",
-      "tool": "codex-image"
+      "tool": "codex-image",
+      "outputs": [
+        "project/features/souls/art/view/p55/ohm_spec_hover.png",
+        "project/features/souls/art/view/p55/ohm_spec_hover_jars.png"
+      ]
     },
     "ohm_eight_p55_b": {
       "accepted": false,
@@ -60,7 +64,7 @@
       "tool": "codex-image"
     },
     "ohm_eight_p70_a": {
-      "accepted": false,
+      "accepted": true,
       "date": "2026-11-20",
       "file": "masters:n21/polish/masters/ohm_eight_p70_a_t2.png",
       "model": "built-in image_gen (image model not reported)",
@@ -72,7 +76,11 @@
       ],
       "seed": null,
       "sha256": "eba71c8b2dea8ef3e03568ac7d378e7b9525bf36fc71ef336e62c0b9b177d099",
-      "tool": "codex-image"
+      "tool": "codex-image",
+      "outputs": [
+        "project/features/souls/art/view/p70/ohm_spec_hover.png",
+        "project/features/souls/art/view/p70/ohm_spec_hover_jars.png"
+      ]
     },
     "ohm_eight_p70_b": {
       "accepted": false,
@@ -106,5 +114,6 @@
       "sha256": "74db1eec93b9024af1ea4f48fbd4f3307d0afa586e1b91b4e928b667e9604e52",
       "tool": "codex-image"
     }
-  }
+  },
+  "board_command": "python -B tools/art/ohm_n21_eight_cut.py --masters-root C:/Users/kazda/kiro/gtai-masters --board-dir C:/Users/kazda/kiro/gtai-masters/n21/polish/ohm"
 }
