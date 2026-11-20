@@ -104,3 +104,5 @@ NEXT (session 5, supersedes the earlier NEXT): (1) Check astra.lock pid 45792 is
 - 07:34 Lane journals: no open NEED flight. Ohm edited flight's test_ghost_spectral_sheets.gd on n20-ohm (8b4862e1f, Kerf fixture; ohm's wins) -> Merge notes. --reels skipped (no time after freeze), said in REPORT.
 - 07:36 REPORT final: films rows + ledger filled, cites ok. No code changes this session.
 NEXT (morning Director): merge all five, run FULL unit, re-cut all_ghosts_32 from the merged tree (REPORT Next steps 1). Nothing running on this lane.
+- 07:33 START iteration 6 (STABILIZE). Tree clean at b86634c79; no Astra lock, no Godot of ours running; cites 15/15 ok; REPORT has no TBD. Nothing to fix: no code change after the final gate (aa9ff166e PASS); later commits are docs only (inert).
+NEXT (morning Director): unchanged: merge all five, FULL unit, re-cut all_ghosts_32 from the merged tree (REPORT Next steps 1). Nothing running on this lane.
