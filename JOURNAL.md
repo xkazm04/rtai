@@ -197,3 +197,5 @@ NEXT (session 5, supersedes the 05:47 NEXT): the final gate is running detached 
      what I'd brief differently: shorter mutate scope, check merge-induced tests right after each merge), update the What
      does not line on test_ghost_flight_hosts (now fixed f67fa2ea0). `node tools/evidence/cites.mjs REPORT.md`; commit
      JOURNAL.md + REPORT.md per path by 07:40.
+- 05:52 REPORT.md filled except the gate line; cites 9 paths, 8 ok, 1 pattern.
+- 06:01 Gate progress: lint + unit done, scenarios 65/65 ok; parity/bench/release next. Session 4 ends; gate still running detached (log logs/kerf/gate-final.out.txt). NEXT: see the 05:50 NEXT.
