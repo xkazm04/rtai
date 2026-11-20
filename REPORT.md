@@ -34,7 +34,7 @@ Final gate (16:30, last code commit `c14ae6f97`, gated at `118872760`): `gate: P
 ## Calls for the owner
 - 70-degree ACTION sheet accepted as drawn: in the toward-facing COCK/RECOVER/BLINK cells the crescent tips droop (each lives at most 16 ticks with the blades moving). Re-roll is one sheet job. Kept; judge it in `kerf_attack_32.mp4`.
 - Fly HIT cells are nearly the HOVER pose; the hit reads through the 12-degree lean, the flinch and the helmet snap (`kerf_hit_strip.png`).
-- CRUISE from the top reads as an arrow more than a person (the plate's own top inset is that shape too).
+- CRUISE from the top reads as an arrow more than a person (the plate's own top inset is that shape too). Side by side: `call_cruise_top_vs_plate.png` (plate top inset, game HOVER, game CRUISE, 64 px/m). The game keeps the plate's helmet-forward wedge and two side crescents, but sweeps the tips back as the lane brief asked; the plate curves them forward and down. Opening the cruise arms wider is a rig angle in `kerf_ronin_top.gd`, no new art.
 
 ## Merge notes
 - Kerf files only, plus one view-only line set in `kerf_stage.gd` (`trail_radius`, not serialized: no digest moves) and append-only lines in `docs/decisions.md` and `steam/ai-provenance/2026-11.jsonl`.
