@@ -5,7 +5,10 @@ extends RefCounted
 const SMALL: StringName = &"small"
 const LARGE: StringName = &"large"
 
-var size: StringName = SMALL
+var size: StringName = SMALL:
+	set(value):
+		size = value
+		size_known = true
 ## A typed weapon already supplied the size, or the arena resolved a bare enemy round.
 var size_known: bool = false
 var pos: Vector2 = Vector2.ZERO
@@ -33,7 +36,6 @@ static func fire(shooter: Fighter, dir: Vector2, w: CombatTuning.Weapon) -> Shot
 	s.from_rivet = shooter.kind == Fighter.Kind.RIVET
 	s.weapon = w.id
 	s.size = w.round
-	s.size_known = true
 	s.damage = w.damage if s.from_rivet else w.damage_vs_rivet
 	s.left_m = w.range_m
 	s.shooter_id = shooter.id

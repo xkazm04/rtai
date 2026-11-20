@@ -8,6 +8,7 @@ static var _default: EnemyRounds
 var _size: StringName = Shot.SMALL
 var _radius_m: float = 0.0
 var _damage: float = 0.0
+var _melee: bool = false
 
 
 static func size_of(weapon: StringName) -> StringName:
@@ -20,6 +21,10 @@ static func splash_m(weapon: StringName) -> float:
 
 static func splash_damage(weapon: StringName) -> float:
 	return _lookup(weapon)._damage
+
+
+static func is_melee(weapon: StringName) -> bool:
+	return _lookup(weapon)._melee
 
 
 static func _lookup(weapon: StringName) -> EnemyRounds:
@@ -36,6 +41,7 @@ static func _load_table() -> void:
 		var row: Dictionary = t.object(weapons, id)
 		var entry: EnemyRounds = EnemyRounds.new()
 		entry._size = Shot.read_size(t, row, id)
+		entry._melee = row.get("melee") == true
 		if row.has("splash_radius_m"):
 			entry._radius_m = t.num(row, "splash_radius_m")
 		if row.has("splash_damage"):

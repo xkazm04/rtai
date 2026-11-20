@@ -68,6 +68,15 @@ func current() -> MeleeHit:
 	return table.hits[hit_index - 1] if hit_index > 0 else null
 
 
+func cancel() -> void:
+	hit_index = 0
+	tick_in = 0
+	buffered = false
+	holding = false
+	ground = 0
+	last_index = 0
+
+
 func phase() -> Phase:
 	var h: MeleeHit = current()
 	if h == null:

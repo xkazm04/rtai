@@ -46,6 +46,7 @@ var tick: int = 0
 var gun: GunHand = null
 ## Lane gunplay: readable contractor bursts (tell, lock, slowed rounds); null keeps GuardBrain.
 var guard_tell: GuardTell = null
+var guard: PlayerGuard = null
 ## Area effects start with the first GunHand shot, so quest 1 (no gun) keeps its goldens.
 var areas: FightAreas = null
 ## The landing hit's direction and point, set before damage() (kill_landed reads them).
@@ -172,16 +173,15 @@ func step(p_tick: int) -> void:
 		areas.step(self)
 
 
-## The one damage chokepoint (events.json: the kill payload is decided before the hit lands).
-## `kind` is the death kind: quest 1's rounds are `shot`; FightAreas passes `blown`, `burned`.
 func damage(
 	victim: Fighter, amount: float, killer_id: int, weapon: StringName, kind: StringName = &"shot"
-) -> void:
+) -> void:  # Emit the kill payload before the hit lands, including area-effect death kinds.
 	if not victim.alive() or not victim.exposed:
 		return
+	if guard != null and guard.blocks_melee(self, victim, killer_id, weapon, kind):
+		return
 	amount *= victim.damage_k
-	var lethal: bool = victim.hp - amount <= 0.0
-	if lethal and victim.kind != Fighter.Kind.RIVET:
+	if victim.hp - amount <= 0.0 and victim.kind != Fighter.Kind.RIVET:
 		_events.actor_killed.emit(killer_id, victim.id, kind)
 		kill_landed.emit(victim, weapon, hit_dir, hit_at, kind)
 		kills += 1
