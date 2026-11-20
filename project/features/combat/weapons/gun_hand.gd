@@ -54,6 +54,7 @@ func pull(shooter: Fighter, at: Vector2) -> Array[Shot]:
 		s.vel = dir * w.speed_mps
 		s.from_rivet = true
 		s.weapon = w.id
+		s.size = w.round
 		s.damage = (w.charge_damage if trigger.charged else w.damage) * _hp_scale
 		s.charged = trigger.charged
 		s.left_m = w.range_m

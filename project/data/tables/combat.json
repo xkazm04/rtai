@@ -1,5 +1,15 @@
 {
   "doc": "Combat tuning for quest collect-call (mechanics assault-rifle, robo-tazer; Gloria from the Toner Room). Owner doctrine: humans die to one hit and their bullets are weak; two Robo-tazer hits nearly kill Rivet (2 x damage leaves under near_death_frac of hp, never 0). Seconds and metres; the sim converts to 60 Hz ticks.",
+  "guard": {
+    "arc_deg": 120,
+    "drain_per_round": 12,
+    "melee_drain": 20,
+    "meter_max": 100,
+    "move_k": 0.45,
+    "refill_delay_s": 0.6,
+    "refill_per_s": 40,
+    "stagger_s": 0.8
+  },
   "human": {
     "engage_m": 12,
     "hp": 1,

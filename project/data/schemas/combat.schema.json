@@ -6,6 +6,56 @@
       "minLength": 1,
       "type": "string"
     },
+    "guard": {
+      "additionalProperties": false,
+      "properties": {
+        "arc_deg": {
+          "maximum": 360,
+          "minimum": 0,
+          "type": "number"
+        },
+        "drain_per_round": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "melee_drain": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "meter_max": {
+          "minimum": 1,
+          "type": "number"
+        },
+        "move_k": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "refill_delay_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "refill_per_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "stagger_s": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "arc_deg",
+        "drain_per_round",
+        "melee_drain",
+        "meter_max",
+        "move_k",
+        "refill_delay_s",
+        "refill_per_s",
+        "stagger_s"
+      ],
+      "type": "object"
+    },
     "human": {
       "additionalProperties": false,
       "properties": {
@@ -181,6 +231,12 @@
               "minimum": 0,
               "type": "number"
             },
+            "round": {
+              "enum": [
+                "small",
+                "large"
+              ]
+            },
             "speed_mps": {
               "minimum": 0,
               "type": "number"
@@ -234,6 +290,12 @@
               "minimum": 0,
               "type": "number"
             },
+            "round": {
+              "enum": [
+                "small",
+                "large"
+              ]
+            },
             "speed_mps": {
               "minimum": 0,
               "type": "number"
@@ -270,7 +332,8 @@
     "rivet",
     "human",
     "weapons",
-    "robo_tazer"
+    "robo_tazer",
+    "guard"
   ],
   "type": "object"
 }

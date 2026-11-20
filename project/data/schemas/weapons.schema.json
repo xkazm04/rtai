@@ -248,6 +248,12 @@
             "minimum": 0,
             "type": "number"
           },
+          "round": {
+            "enum": [
+              "small",
+              "large"
+            ]
+          },
           "shot_cue": {
             "minLength": 1,
             "type": "string"
