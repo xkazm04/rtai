@@ -187,3 +187,13 @@ NEXT (session 5, gate + report; this session ends by 06:06):
      evidence/briefs/* per path by 07:40. Film list is in frames.json (15 entries; transform + hit strips added by 2827defd9).
 - 05:49 ASTRA guard 1 accepted-but-red (a79b0b861: tonnage's own_body guard; Kerf's own_body is false, sprite() null -> still 12/1). ASTRA RUNNING guard2 since 05:49 (--resume, brief 08b: dent's null-sprite check; commit only if green).
 - 05:50 ASTRA guard2 1 accepted (f67fa2ea0: dent's null-sprite check; select run 13/0/0). The hook flags a same-file conflict with n20-tonnage (their own_body guard): Director picks the null-check form (covers all three).
+- 05:50 FINAL GATE STARTED (nohup, detached) `node tools/gate/run.mjs --rev=HEAD` on 55c10028f (code HEAD f67fa2ea0), APPDATA kerf; log C:\Users\kazda\kiro\gtai-n20\logs\kerf\gate-final.out.txt. No code commits after this.
+NEXT (session 5, supersedes the 05:47 NEXT): the final gate is running detached (started 05:50 on 55c10028f).
+  1. Wait for it: `tail C:\Users\kazda\kiro\gtai-n20\logs\kerf\gate-final.out.txt` (no node tools/gate process left = done).
+     Quote its verdict line + gate.json path in REPORT. If red: read the failure; it may only be fixed by a commit before
+     07:30 if trivial, then re-run the gate on the new HEAD.
+  2. After the 07:30 freeze: `node tools/gate/run.mjs --rev=HEAD --reels` once if time allows.
+  3. REPORT.md: fill the TBDs (grep TBD: gate line, guard row in the ledger = guard 1 red + guard2 1 accepted, Next steps,
+     what I'd brief differently: shorter mutate scope, check merge-induced tests right after each merge), update the What
+     does not line on test_ghost_flight_hosts (now fixed f67fa2ea0). `node tools/evidence/cites.mjs REPORT.md`; commit
+     JOURNAL.md + REPORT.md per path by 07:40.
