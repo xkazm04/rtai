@@ -174,23 +174,23 @@ func test_overlay_reads_this_ticks_projected_ribbon_before_draw() -> void:
 
 
 func test_legacy_cell_cut_and_tail_socket_follow_the_displayed_belt() -> void:
+	_flight = add_child_autofree(GhostFlight.make(&"kerf"))
+	_drawn.flight = _flight
+	_flight.step(Vector2.ZERO, 0.0, 1)
 	var legacy: Texture2D = _sheet("walk8", 8)
 	var stand: Sprite2D = _show()
 	assert_eq(stand.texture, legacy)
-	var cut: float = _flight.fade_from()
 	var cell: Vector2 = stand.texture.get_size() / Vector2(stand.hframes, stand.vframes)
-	var belt: Vector2 = stand.to_global(stand.offset + cell * Vector2(0.5, 1.0 - cut))
-	assert_almost_eq(_flight.tail.points()[0], belt, Vector2.ONE * 0.001)
+	var belt: Vector2 = stand.offset + cell * Vector2(0.5, 1.0 - _flight.fade_from())
+	assert_almost_eq(_flight.tail.points()[0], stand.to_global(belt), Vector2.ONE * 0.001)
 	var mat: ShaderMaterial = stand.material as ShaderMaterial
 	assert_eq(mat.shader, preload("res://features/souls/ghost_fade.gdshader"))
 	var phase: float = mat.get_shader_parameter(&"flow")
 	_flight.step(Vector2(120, 20), 2.1, 0)
-	stand = _show()
-	var held: float = mat.get_shader_parameter(&"flow")
+	var held: float = (_show().material as ShaderMaterial).get_shader_parameter(&"flow")
 	assert_eq(held, phase)
 	_flight.step(Vector2.RIGHT, 0.0, 1)
-	stand = _show()
-	held = mat.get_shader_parameter(&"flow")
+	held = (_show().material as ShaderMaterial).get_shader_parameter(&"flow")
 	assert_gt(held, phase)
 
 

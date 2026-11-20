@@ -99,7 +99,7 @@ func _draw() -> void:
 		if stunned:
 			var cap: Vector4i = StunCrowd.cap()
 			var n: Vector2i = Vector2i(cap.y, cap.z) if light.has(h.id) else Vector2i(9, 9)
-			ShockJolt.arcs(self, c, ppm, arena.tick + h.id, n)
+			ShockJolt.arcs(self, c, ppm, arena.tick + h.id, OhmVictimRims.arcs(h, n))
 			if not _drops.has(h.id) and ShockJolt.hard:
 				_drops[h.id] = _toss(c, ppm, rig.facing, h.id)
 		elif h.alive():

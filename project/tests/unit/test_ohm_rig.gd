@@ -1,6 +1,21 @@
 extends GutTest
 
 
+func before_each() -> void:
+	GhostLook.override_for_test(GhostLook.LEGACY)
+
+
+func after_each() -> void:
+	GhostLook.reset_for_test()
+
+
+func test_shipped_ohm_builds_the_spectral_body() -> void:
+	GhostLook.override_for_test(&"")
+	var rig: OhmRig = add_child_autofree(OhmRig.new())
+	assert_not_null(rig._spirit)
+	assert_true(rig._feet.is_empty())
+
+
 func test_the_cane_plants_ahead_and_slides_back_a_stride() -> void:
 	var plant: float = 1.0 - OhmRig.SWING_K
 	assert_almost_eq(OhmRig.cane_tip(0.0).x, OhmRig.CANE_AHEAD_M, 0.0001, "planted ahead")

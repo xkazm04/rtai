@@ -80,6 +80,10 @@ func on() -> bool:
 	return powers.active == ID
 
 
+func gap_left() -> int:
+	return _gap
+
+
 ## One tick: `power` takes the soul, `melee` throws a bolt, `aim` is Rivet's aim (unit).
 func drive(stage: CollectCallStage, power: bool, melee: bool, aim: Vector2) -> void:
 	var rivet: Fighter = stage.arena.rivet

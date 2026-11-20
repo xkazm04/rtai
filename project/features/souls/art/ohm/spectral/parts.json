@@ -1,0 +1,105 @@
+{
+  "front": "+x",
+  "scale": 1,
+  "parts": {
+    "body": {
+      "size_px": [
+        429,
+        363
+      ],
+      "pivot_px": [
+        214,
+        182
+      ]
+    },
+    "hem": {
+      "size_px": [
+        477,
+        327
+      ],
+      "pivot_px": [
+        456,
+        164
+      ]
+    },
+    "staff": {
+      "size_px": [
+        529,
+        93
+      ],
+      "pivot_px": [
+        207,
+        46
+      ],
+      "fork_px": [
+        520.91,
+        45.145
+      ],
+      "prongs_px": [
+        [
+          520.9,
+          18.0
+        ],
+        [
+          520.92,
+          72.29
+        ]
+      ]
+    },
+    "arm_staff": {
+      "size_px": [
+        445,
+        183
+      ],
+      "pivot_px": [
+        77,
+        88
+      ]
+    },
+    "arm_free": {
+      "size_px": [
+        481,
+        185
+      ],
+      "pivot_px": [
+        78,
+        92
+      ]
+    },
+    "beard": {
+      "size_px": [
+        390,
+        268
+      ],
+      "pivot_px": [
+        29,
+        134
+      ]
+    }
+  },
+  "body_jars": [
+    {
+      "center_px": [
+        124.4,
+        82.05
+      ],
+      "radius_px": 32.26
+    },
+    {
+      "center_px": [
+        106.32,
+        180.76
+      ],
+      "radius_px": 32.29
+    },
+    {
+      "center_px": [
+        123.55,
+        283.82
+      ],
+      "radius_px": 32.24
+    }
+  ],
+  "body_long_side_m": 0.8,
+  "texels_per_m": 531.25
+}

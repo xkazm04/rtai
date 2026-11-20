@@ -53,6 +53,14 @@ var rim_m: float = (
 	GhostAttacks.shipped().num(&"ohm", &"rim_m") if HitFeel.feel_flag() != "off" else 0.0
 )
 
+var _spectral: OhmBoltView
+
+
+func _ready() -> void:
+	if stage != null and GhostLook.spectral(OhmStage.ID):
+		_spectral = OhmBoltView.new()
+		_spectral.attach(self)
+
 
 func _process(_delta: float) -> void:
 	queue_redraw()
@@ -65,6 +73,9 @@ func ohm() -> OhmStage:
 func _draw() -> void:
 	var o: OhmStage = ohm()
 	if o == null:
+		return
+	if _spectral != null:
+		_spectral.paint(self, o)
 		return
 	if o.on():
 		_sparks()
@@ -84,12 +95,12 @@ func _draw() -> void:
 			var mid: Vector2 = (prongs[0] + prongs[1]) * 0.5
 			var reach: float = minf(PRONG_M, mid.distance_to(o.bolt_path[i + 1]) * 0.5)
 			var join: Vector2 = (mid + o.bolt_aim * reach) * ppm
-			_stroke(_jag(prongs[0] * ppm, join, beat + i), fade, PRONG_K)
-			_stroke(_jag(prongs[1] * ppm, join, beat + i + 7), fade, PRONG_K)
-			_stroke(_jag(join, rim(join, b, true), beat + i + 3), fade, 1.0)
+			stroke(jag(prongs[0] * ppm, join, beat + i), fade, PRONG_K)
+			stroke(jag(prongs[1] * ppm, join, beat + i + 7), fade, PRONG_K)
+			stroke(jag(join, rim(join, b, true), beat + i + 3), fade, 1.0)
 		else:
 			var a: Vector2 = o.bolt_path[src] * ppm
-			_stroke(_jag(rim(b, a, false), rim(a, b, true), beat + i), fade, k)
+			stroke(jag(rim(b, a, false), rim(a, b, true), beat + i), fade, k)
 		_hit(b, fade, k, beat + i)
 
 
@@ -117,25 +128,15 @@ func _hit(b: Vector2, fade: float, k: float, seed_i: int) -> void:
 		draw_arc(b, r, a0, a0 + arc * 0.6, 6, Color(WHITE, fade), 2.0 * k + 0.5, true)
 
 
-func _stroke(pts: PackedVector2Array, fade: float, k: float) -> void:
+func stroke(pts: PackedVector2Array, fade: float, k: float) -> void:
 	draw_polyline(pts, Color(INK, 0.75 * fade), INK_W * k, true)
 	draw_polyline(pts, Color(TEAL, fade), TEAL_W * k, true)
 	draw_polyline(pts, Color(WHITE, fade), CORE_W * k, true)
 
 
 ## A jagged line a -> b: kinks every STEP_M, offset across the line by a hash of (seed, kink).
-func _jag(a: Vector2, b: Vector2, seed_i: int) -> PackedVector2Array:
-	var pts: PackedVector2Array = PackedVector2Array([a])
-	var n: int = maxi(2, ceili(a.distance_to(b) / (STEP_M * ppm)))
-	var side: Vector2 = (b - a).orthogonal().normalized()
-	for k: int in range(1, n):
-		var h: float = sin(float(seed_i * 31 + k * 17) * 12.9898) * 43758.5453
-		var off: float = (h - floorf(h) - 0.5) * 2.0 * JAG_M * ppm
-		@warning_ignore("return_value_discarded")
-		pts.append(a.lerp(b, float(k) / n) + side * off)
-	@warning_ignore("return_value_discarded")
-	pts.append(b)
-	return pts
+func jag(a: Vector2, b: Vector2, seed_i: int, amplitude_m: float = JAG_M) -> PackedVector2Array:
+	return OhmBoltView.jag(a, b, seed_i, amplitude_m, ppm)
 
 
 func _sparks() -> void:
@@ -183,15 +184,11 @@ func _reach(at: Vector2, f: Vector2, side: float, k: float, beat: int) -> void:
 	if not tell or ohm().num(&"tell_glow_m") <= 0.0:
 		return
 	var tip: Vector2 = at + f.rotated(side * 0.25) * (0.25 + 0.65 * k) * ppm
-	var pts: PackedVector2Array = _jag(at, tip, beat * 5 + int(side * 3.0))
+	var pts: PackedVector2Array = jag(at, tip, beat * 5 + int(side * 3.0))
 	draw_polyline(pts, Color(INK, 0.8 * k), 4.0, true)
 	draw_polyline(pts, Color(WHITE, k), 1.8, true)
 
 
 ## n15 hero: the prongs moved together so they leave from the drawn hand (GhostHand), metres.
 func _at_hand(prongs: PackedVector2Array) -> PackedVector2Array:
-	var hand: Vector2 = GhostHand.local_to(String(OhmStage.GHOST), self)
-	if hand == Vector2.INF:
-		return prongs
-	var shift: Vector2 = hand / ppm - (prongs[0] + prongs[1]) * 0.5
-	return PackedVector2Array([prongs[0] + shift, prongs[1] + shift])
+	return OhmFork.ohm_prongs(prongs, self, ppm)

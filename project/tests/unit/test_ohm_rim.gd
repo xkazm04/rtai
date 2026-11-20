@@ -39,3 +39,32 @@ func test_rim_off_is_the_old_stroke() -> void:
 	var b: Vector2 = Vector2(3.0, 0.0) * v.ppm
 	assert_eq(v.rim(Vector2.ZERO, b, true), b)
 	assert_eq(v.rim(Vector2.ZERO, b, false), Vector2.ZERO)
+
+
+func test_rims_release_a_finished_stun_and_disconnect_when_the_session_leaves() -> void:
+	var bus: EventBus = autofree(EventBus.new())
+	var data: DataStore = autofree(DataStore.new())
+	var stage: CollectCallStage = CollectCallStage.new(StageLayout.shipped())
+	stage.setup(World.build_context(bus, data, 1))
+	stage.pilot = StagePilot.new(PlayerActions.shipped())
+	var rims: OhmVictimRims = autofree(OhmVictimRims.new())
+	rims.stage = stage
+	add_child(rims)
+	var target: Fighter = stage.arena.spawn_guard(Vector2.RIGHT)
+	var areas: FightAreas = PlayerShock.areas_of(stage.arena)
+	PlayerShock.stun_on(areas, target, 4)
+	GhostLook.override_for_test(GhostLook.SPECTRAL)
+	stage.pilot.ohm.bolt_tick = stage.tick
+	stage.arena.struck.emit(target, Vector2.RIGHT, false, OhmStage.WEAPON)
+	rims._process(0.0)
+	assert_true(OhmVictimRims.marked(target))
+	areas.effect(target).stun_ticks = 0
+	rims._process(0.0)
+	assert_false(OhmVictimRims.marked(target))
+	stage.arena.struck.emit(target, Vector2.RIGHT, true, OhmStage.WEAPON)
+	assert_true(OhmVictimRims.marked(target))
+	remove_child(rims)
+	assert_false(OhmVictimRims.marked(target))
+	stage.arena.struck.emit(target, Vector2.RIGHT, true, OhmStage.WEAPON)
+	assert_false(OhmVictimRims.marked(target))
+	GhostLook.reset_for_test()

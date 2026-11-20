@@ -26,9 +26,13 @@ var robot: Fighter = null
 var car: VehicleBody = null
 
 
+func stage_guards(reel: GhostReel, stage: ArenaStage, at: Vector2, marks: Array[Vector2]) -> void:
+	for offset: Vector2 in marks:
+		victims.append(reel.spawn(stage, at + offset, false))
+
+
 func begin(reel: GhostReel, stage: ArenaStage, anchor: Vector2) -> void:
-	for off: Vector2 in KNOT:
-		victims.append(reel.spawn(stage, anchor + off, false))
+	stage_guards(reel, stage, anchor, KNOT)
 	victims.append(reel.spawn(stage, anchor + RIOT, true))
 	robot = stage.arena.spawn_boss(anchor + ROBOT)
 	robot.max_hp = ROBOT_HP
