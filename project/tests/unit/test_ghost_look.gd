@@ -3,17 +3,20 @@ extends GutTest
 var _forms: GhostFormTable
 var _flags: Dictionary[String, String]
 var _unknown: Array[String]
+var _view: ViewMode
 
 
 func before_each() -> void:
 	_forms = GhostLook._forms
 	_flags = LaunchArgs._values.duplicate()
 	_unknown = LaunchArgs._unknown.duplicate()
+	_view = ViewMode._shared
 
 
 func after_each() -> void:
 	LaunchArgs._values = _flags
 	LaunchArgs._unknown = _unknown
+	ViewMode._shared = _view
 	GhostLook._forms = _forms
 	GhostLook.reset_for_test()
 
@@ -85,3 +88,24 @@ func test_spectral_host_keeps_the_standing_column_on_the_walk_grid() -> void:
 		assert_eq(d._column(host, 1.0, 2), stand)
 	assert_eq(d._phase, 0.0)
 	assert_false(d._running)
+
+
+func test_hover_loads_combat_and_standing_cells_and_can_return_to_the_run_grid() -> void:
+	ViewMode.select("tilt70")
+	var kerf: GhostDrawn = GhostDrawn.new("kerf", 1.8, 180.0, 173.0, 388.0)
+	var host: Node2D = add_child_autofree(Node2D.new())
+	kerf.hover = true
+	assert_true(kerf.step(host, [], SimConst.PX_PER_M, 1.0))
+	assert_not_null(kerf._walk)
+	assert_not_null(kerf._act)
+	assert_null(kerf._run)
+	kerf.hover = false
+	assert_true(kerf.step(host, [], SimConst.PX_PER_M, 1.0))
+	assert_not_null(kerf._run)
+	assert_eq(host.get_node("ghost_drawn"), kerf._spr, "the trace sees the replacement sprite")
+	var tonnage: GhostDrawn = GhostDrawn.new("tonnage", 3.3, 235.0, 190.5)
+	tonnage.hover = true
+	var press: Node2D = add_child_autofree(Node2D.new())
+	assert_true(tonnage.step(press, [], SimConst.PX_PER_M, 1.0))
+	assert_null(tonnage._walk._profile_mid)
+	assert_true(tonnage._walk._intervals.is_empty(), "hover skips the gait in-betweens")
