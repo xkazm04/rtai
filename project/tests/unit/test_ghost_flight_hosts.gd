@@ -111,7 +111,8 @@ func _drive_arena(id: StringName, look: StringName) -> void:
 	for i: int in 58:
 		session.step()
 		view._process(0.0)
-		cells[drawn.sprite().frame_coords.x] = true
+		if not drawn.own_body:
+			cells[drawn.sprite().frame_coords.x] = true
 		if id == &"dent":
 			for side: RigLimbs in view._bodies.dent._rig.sides:
 				planted = planted or side.stepping
