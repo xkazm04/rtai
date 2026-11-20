@@ -104,3 +104,13 @@ func set_belt(world_px: Vector2, width_px: float) -> void:
 	var yaw: float = _facing + body_rotation()
 	var anchor: Vector2 = _anchor(_last, yaw) + ViewMode.shared().lift_px(hover.lift_m)
 	tail.align_socket(tail.to_local(world_px) - anchor, width_px / absf(tail.global_scale.x))
+
+
+## Place the bridge on the stern of a legacy overhead rig. The published row still controls
+## any anchor that the form artist has already placed farther aft.
+func set_rig_belt(span_px: float, yaw: float) -> void:
+	if _last == Vector2.INF:
+		return
+	var aft: float = minf(0.0, -span_px * 0.38 - _row.tail.anchor_m.x * SimConst.PX_PER_M)
+	var width: float = span_px * maxf(0.36, belt_fraction())
+	tail.align_socket(Vector2(aft, 0.0).rotated(yaw), width)

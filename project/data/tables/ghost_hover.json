@@ -89,7 +89,7 @@
       "bob_m": 0.1,
       "bob_ticks": 90,
       "cruise_bob_k": 0.9,
-      "fade_from": 0.41,
+      "fade_from": 0.18,
       "height_m": 0.7,
       "id": "ohm",
       "lag_ticks": 8,
