@@ -87,6 +87,12 @@ func step(
 	if _spr == null:
 		if _fade != null and flight != null:
 			_fade.clear(flight)
+		if hover and flight != null and vm.is_flat():
+			var span: float = height_m * size_k * px_per_m * absf(host.scale.x)
+			var facing: float = (
+				host.global_rotation if is_nan(look) else look + flight.body_rotation()
+			)
+			flight.set_rig_belt(span, facing)
 		return false
 	var fit: float = absf(host.scale.x if flight != null else host.global_scale.x)
 	var s: float = height_m * size_k * px_per_m * fit / fig_px

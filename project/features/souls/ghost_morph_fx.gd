@@ -25,6 +25,8 @@ var _k: float = 1.0
 var _stage: int = 0
 var _on: bool = false
 var _flash: bool = false
+var _ground: Node2D
+var _body_at: Vector2
 
 
 ## Feeds one frame of the running transformation; on = false hides everything.
@@ -44,19 +46,72 @@ func beat() -> float:
 	return 1.0 + BEAT_ZOOM * maxf(0.0, 1.0 - d * 4.0)
 
 
+## Rims and steam share the camera's ground projection. Lift the seams onto the current
+## card's chest (or the mounted rig's centre in the overhead view).
+func pose_body(drawn: GhostDrawn, ground_at: Vector2) -> void:
+	if drawn == null:
+		if _ground != null:
+			_ground.hide()
+			z_index = 0
+		return
+	if _ground == null:
+		_ground = Node2D.new()
+		add_child(_ground)
+		_ground.z_index = -2
+		@warning_ignore("return_value_discarded")
+		_ground.draw.connect(_ground_pass)
+	z_index = 1
+	_ground.show()
+	_ground.queue_redraw()
+	_body_at = Vector2.ZERO
+	var vm: ViewMode = ViewMode.shared()
+	if not vm.is_flat():
+		var height: float = RivetFrames.HEIGHT_BY_ART.get(vm.art, RivetFrames.HEIGHT_M)
+		_body_at.y = (
+			-0.5 * height * RivetFrames.height_k * PlayerScale.k() * PX_PER_M / vm.ground_k()
+		)
+	if drawn.flight.visible:
+		_body_at = drawn.flight.body_offset()
+		var spr: Sprite2D = drawn.sprite()
+		if spr != null and spr.is_visible_in_tree():
+			_body_at = to_local(spr.to_global(spr.get_rect().get_center()))
+		else:
+			_body_at = to_local(ground_at + _body_at)
+
+
 func _draw() -> void:
 	if not _on:
 		return
 	var r: float = reach_m * PX_PER_M
-	var ring_k: float = 0.6 if reduced_motion else smoothstep(0.0, 1.0, _k)
 	var fade: float = 1.0 - smoothstep(0.6, 1.0, _k)
-	draw_circle(Vector2.ZERO, r * 0.55, Color(TEAL, 0.22 * fade))
-	draw_arc(Vector2.ZERO, r * (0.25 + 0.75 * ring_k), 0.0, TAU, 48, Color(TEAL, 0.9 * fade), 4.0)
-	draw_arc(Vector2.ZERO, r * (0.2 + 0.6 * ring_k), 0.0, TAU, 48, Color(TEAL_HI, 0.6 * fade), 1.5)
-	_seams(r)
-	if not _flash:
-		_steam(r)
+	if _ground != null and _ground.visible:
+		draw_set_transform(_body_at)
+		_seams(r)
+	else:
+		_ring(self, r, fade)
+		_seams(r)
+		if not _flash:
+			_steam(self, r)
 	_sparks(r, fade)
+
+
+func _ground_pass() -> void:
+	if _on:
+		var r: float = reach_m * PX_PER_M
+		_ring(_ground, r, 1.0 - smoothstep(0.6, 1.0, _k))
+		if not _flash:
+			_steam(_ground, r)
+
+
+func _ring(canvas: Node2D, r: float, fade: float) -> void:
+	var ring_k: float = 0.6 if reduced_motion else smoothstep(0.0, 1.0, _k)
+	canvas.draw_circle(Vector2.ZERO, r * 0.55, Color(TEAL, 0.22 * fade))
+	canvas.draw_arc(
+		Vector2.ZERO, r * (0.25 + 0.75 * ring_k), 0.0, TAU, 48, Color(TEAL, 0.9 * fade), 4.0
+	)
+	canvas.draw_arc(
+		Vector2.ZERO, r * (0.2 + 0.6 * ring_k), 0.0, TAU, 48, Color(TEAL_HI, 0.6 * fade), 1.5
+	)
 
 
 ## Teal cracks along the plate lines (the crown's own seam layout: a cross through the centre and
@@ -89,7 +144,7 @@ func _seams(r: float) -> void:
 
 ## Steam rolls out from the swap (past the midpoint): lumpy paper puffs (three lobes each) under
 ## one shared ink rim, shrinking away instead of fading (a faded puff printed as a grey disc).
-func _steam(r: float) -> void:
+func _steam(canvas: Node2D, r: float) -> void:
 	var t: float = clampf((_k - 0.4) / 0.6, 0.0, 1.0)
 	if t <= 0.0 or t >= 1.0:
 		return
@@ -103,9 +158,9 @@ func _steam(r: float) -> void:
 		for o: Vector2 in [Vector2.ZERO, side, -side * 0.9]:
 			lobes.append(Vector3(at.x + o.x, at.y + o.y, rad * (1.0 if o == Vector2.ZERO else 0.7)))
 	for l: Vector3 in lobes:
-		draw_circle(Vector2(l.x, l.y), l.z + 2.0, INK)
+		canvas.draw_circle(Vector2(l.x, l.y), l.z + 2.0, INK)
 	for l: Vector3 in lobes:
-		draw_circle(Vector2(l.x, l.y), l.z, STEAM)
+		canvas.draw_circle(Vector2(l.x, l.y), l.z, STEAM)
 
 
 ## Sparks fly out along fixed spokes as short streaks (static dots under reduced motion).
