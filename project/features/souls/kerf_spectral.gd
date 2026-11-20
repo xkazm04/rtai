@@ -6,6 +6,8 @@ enum Mood { POISED, CRUISE, LUNGE }
 
 const LUNGE_TICKS: int = 8
 const TUCK_TICKS: int = 4
+const AIM_LIMIT: float = deg_to_rad(25.0)
+const AIM_TICKS: int = 4
 const ARCH_M: float = 0.62
 const ARM_M: float = 0.82
 const KNUCKLE_M: Vector2 = Vector2(-0.34, 0.54)
@@ -20,8 +22,15 @@ var _arch_scale: Vector2
 var _arms: Array[Sprite2D] = []
 var _tuck: float = 0.0
 var _last_pose_tick: int = -1
+var _echoes: KerfEcho
+var _yaw: float = 0.0
+var _yaw_start: float = 0.0
+var _yaw_goal: float = 0.0
+var _aim_tick: int = 0
+var _sight_enabled: bool = HitFeel.feel_flag() != "off"
 var _lens: Sprite2D
 var _tilted: Sprite2D = Sprite2D.new()
+var _tilted_eye: KerfTiltEye = KerfTiltEye.new()
 var _sheet: GhostSheet
 var _art: String = "?"
 var _hull_m: float
@@ -57,6 +66,56 @@ func _ready() -> void:
 	_tilted.name = &"ghost_drawn"
 	_tilted.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	add_child(_tilted)
+	_tilted_eye.texture = _eyes[Mood.CRUISE]
+	_tilted.add_child(_tilted_eye)
+	_tilted_eye.hide()
+
+
+func live(
+	stage: CollectCallStage, flight: GhostFlight, speed: float, facing: float, oct: int
+) -> void:
+	var k: KerfStage = stage.pilot.kerf
+	var since: int = -1 if k.trail_tick.is_empty() else stage.tick - k.trail_tick[-1]
+	beams.tick = stage.tick
+	beams.charges = k.charges
+	beams.recharge = 0.0 if since == 0 else k.recharge_k()
+	var target: Fighter
+	if _sight_enabled and k.on() and k.charges > 0 and k.num(&"sight_k") > 0.0:
+		if stage.pilot.ghosts.settled_in(KerfStage.GHOST):
+			target = k.pick(stage, k.sight_aim)
+	var at: Vector2 = stage.arena.rivet.pos
+	var yaw: float = (
+		angle_difference(facing, at.direction_to(target.pos).angle()) if target else 0.0
+	)
+	_aim(clampf(yaw, -AIM_LIMIT, AIM_LIMIT), stage.tick)
+	position = Vector2.ZERO
+	if since >= 0 and since < KerfSlot.RETURN_TICKS + TUCK_TICKS:
+		var shift: Vector2 = (KerfSlot.end_m(k, -1, since) - k.trail_to[-1]) * SimConst.PX_PER_M
+		if flight != null:
+			# The flight spring sees a teleport as velocity. Keep its lift, cancel its blink lag.
+			var back: float = smoothstep(
+				KerfSlot.RETURN_TICKS, KerfSlot.RETURN_TICKS + TUCK_TICKS, since
+			)
+			shift -= flight.hover.lag_px * (1.0 - back)
+		global_position += shift
+	pose(speed, since, target != null, facing, oct)
+	if not beams.reduced_motion:
+		if _echoes == null:
+			_echoes = KerfEcho.new()
+			add_child(_echoes)
+			_echoes.bind(_top, _tilted, _tilted_eye)
+		_echoes.step(stage)
+	elif _echoes != null:
+		_echoes.queue_free()
+		_echoes = null
+
+
+func _aim(goal: float, tick: int) -> void:
+	if not is_equal_approx(goal, _yaw_goal):
+		_yaw_start = _yaw
+		_yaw_goal = goal
+		_aim_tick = tick - 1
+	_yaw = lerpf(_yaw_start, _yaw_goal, smoothstep(0, AIM_TICKS, tick - _aim_tick))
 
 
 func pose(speed_mps: float, since: int, locked: bool, facing: float, oct: int) -> void:
@@ -74,17 +133,20 @@ func pose(speed_mps: float, since: int, locked: bool, facing: float, oct: int) -
 	_fold(col)
 	beams.fast = clampf(speed_mps / 12.0, 0.0, 1.0)
 	beams.tail_x = -0.55 * SimConst.PX_PER_M * absf(global_scale.x)
-	beams.global_transform = Transform2D(facing, global_position)
+	beams.global_transform = Transform2D(
+		facing + (_yaw if _sheet == null else 0.0), global_position
+	)
 	beams.queue_redraw()
 	if _sheet != null:
 		_sheet.show(_tilted, oct, col)
+		_tilted_eye.place(_tilted, _art, locked)
 		_tilted.offset = Vector2.ZERO  # GhostSheet normally anchors at the feet.
 		var s: float = SimConst.PX_PER_M * absf(global_scale.x) / GRID_PX_PER_M
 		_tilted.global_transform = Transform2D(
 			0.0, Vector2(s, s / vm.ground_k()), 0.0, global_position
 		)
 	else:
-		_top.global_rotation = facing
+		_top.global_rotation = facing + _yaw
 		_top.scale = Vector2.ONE.lerp(Vector2(1.08, 0.86), beams.fast)
 		var eye: int = Mood.LUNGE if beams.charges == 0 else col
 		_lens.texture = _eyes[Mood.CRUISE if eye == Mood.POISED and locked else eye]

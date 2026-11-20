@@ -155,3 +155,18 @@ func _state(kerf: KerfStage) -> PackedByteArray:
 	var out: StreamPeerBuffer = StreamPeerBuffer.new()
 	kerf.write_state(out)
 	return out.data_array
+
+
+func test_legacy_draws_three_rigs_spaced_along_the_path() -> void:
+	GhostLook.override_for_test(&"legacy")
+	var view: KerfView = add_child_autofree(KerfView.new())
+	view.stage = _stage
+	_take()
+	_press(&"melee")
+	var k: KerfStage = _pilot.kerf
+	view._process(0.0)
+	assert_eq(view._echo.size(), 3)
+	for i: int in 3:
+		var at: Vector2 = k.trail_from[0].lerp(k.trail_to[0], (i + 0.5) / 3)
+		assert_true(view._echo[i].position.is_equal_approx(at * 32))
+	GhostLook.reset_for_test()

@@ -151,18 +151,12 @@ func pose() -> void:
 
 func _pose_spectral() -> void:
 	var since: int = 0 if echo else -1
-	var locked: bool = false
 	var speed: float = drawn.flight.hover.speed_mps if drawn.flight != null else speed_mps
+	var oct: int = drawn.octant(global_rotation)
 	if stage != null and stage.pilot != null:
-		var k: KerfStage = stage.pilot.kerf
-		_spectral.beams.tick = stage.tick
-		_spectral.beams.charges = k.charges
-		_spectral.beams.recharge = k.recharge_k()
-		if k.blinks > 0 and not k.trail_tick.is_empty():
-			since = stage.tick - k.trail_tick[-1]
-		if k.charges > 0 and KerfSpectral.mood(speed, since, k.charges) == KerfSpectral.Mood.POISED:
-			locked = k.pick(stage, k.sight_aim) != null
-	_spectral.pose(speed, since, locked, global_rotation, drawn.octant(global_rotation))
+		_spectral.live(stage, drawn.flight, speed, global_rotation, oct)
+	else:
+		_spectral.pose(speed, since, false, global_rotation, oct)
 
 
 func _place(s: Sprite2D, a: Vector2, b: Vector2, thick_m: float) -> void:

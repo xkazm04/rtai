@@ -65,10 +65,12 @@ func test_stage_drives_the_eye_blink_and_regrowing_beam() -> void:
 	var guard: Fighter = stage.arena.spawn_guard(stage.arena.rivet.pos)
 	guard.pos = stage.arena.rivet.pos + Vector2.RIGHT * 3.0
 	k.sight_aim = Vector2.RIGHT
-	rig.pose()
-	assert_eq(body._lens.texture.resource_path.get_file(), "lens_half.png")
+	stage.pilot.ghosts.forms.from_id = KerfStage.GHOST
+	stage.pilot.ghosts.forms.to_id = KerfStage.GHOST
 	@warning_ignore("return_value_discarded")
 	k.powers.try_activate(KerfStage.ID)
+	rig.pose()
+	assert_eq(body._lens.texture.resource_path.get_file(), "lens_half.png")
 	@warning_ignore("return_value_discarded")
 	k.drive(stage, false, true, Vector2.RIGHT, Vector2.ZERO)
 	rig.pose()
