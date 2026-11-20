@@ -62,7 +62,7 @@ var _all: Array[Sprite2D] = []
 func _init() -> void:
 	if GhostLook.spectral(OhmStage.ID):
 		_spectral = OhmDrawn.new()
-		drawn._instant_windup = 0  # Spectral jars telegraph the instant cast.
+		drawn.hover = true
 
 
 func _process(_delta: float) -> void:

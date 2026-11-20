@@ -6,37 +6,29 @@ extends RefCounted
 var charge: OhmCharge = OhmCharge.new()
 var _sprite: Sprite2D
 var _jars: OhmJars
-var _art: String = "?"
 var _hover: GhostSheet
-var _act: GhostSheet
 var _masks: Dictionary[Texture2D, Texture2D] = {}
 var _cells: Dictionary[Texture2D, Array] = {}
 var _anchor: Vector2
 
 
 func step(host: Node2D, drawn: GhostDrawn, size_k: float) -> bool:
-	var vm: ViewMode = ViewMode.shared()
-	if vm.art != _art:
-		_rebuild(host, vm)
-	if _sprite == null:
+	if not drawn.step(host, [], SimConst.PX_PER_M, size_k):
 		return false
+	var shown: Sprite2D = drawn.sprite()
+	if not is_instance_valid(_jars) or _jars.get_parent() != shown:
+		_attach(shown)
 	var hover: GhostHover = drawn.flight.hover if drawn.flight != null else null
-	var col: int = drawn.act_col()
-	var acting: bool = col >= 0
-	if not acting:
-		col = int(hover != null and hover.speed_mps > 0.5)
-	var facing: float = host.global_rotation
-	var sheet: GhostSheet = _act if acting else _hover
-	sheet.show(_sprite, drawn.octant(facing), col)
-	_sprite.offset = -_anchor
-	var fit: float = drawn.height_m * size_k * SimConst.PX_PER_M * host.scale.x / drawn.fig_px
-	_sprite.global_position = host.global_position
-	_sprite.global_rotation = hover.lean * cos(facing) - 0.3 * hover.bank if hover != null else 0.0
-	_sprite.global_scale = Vector2(fit, fit / vm.ground_k())
-	if drawn.flight != null:
-		_sprite.global_scale *= drawn.flight.body_scale()
-		pin_tail(drawn.flight, host, _sprite.to_global(Vector2(0.0, -9.0)))
-	_overlay(sheet)
+	if not _masks.has(shown.texture):
+		# Flight infers square pose cells. Both authored Ohm hover grids are rectangular.
+		var drift: bool = hover != null and hover.speed_mps >= GhostDrawn.SPEC_CRUISE_MPS
+		_hover.show(shown, drawn.octant(host.global_rotation), int(drift))
+	shown.offset = -_anchor
+	GhostSoulLine.sync(shown)
+	if hover != null:
+		shown.global_rotation += hover.lean * cos(host.global_rotation) - 0.3 * hover.bank
+		pin_tail(drawn.flight, host, shown.to_global(Vector2(0.0, -9.0)))
+	_overlay()
 	return true
 
 
@@ -48,30 +40,21 @@ static func pin_tail(flight: GhostFlight, body: Node2D, tip: Vector2) -> void:
 	flight.tail.position = flight.to_local(tip) - flight.to_local(body.global_position) - neutral
 
 
-func _rebuild(host: Node2D, vm: ViewMode) -> void:
-	if _sprite != null:
-		host.remove_child(_sprite)
-		_sprite.queue_free()
-		_sprite = null
-	_art = vm.art
+func _attach(shown: Sprite2D) -> void:
+	_sprite = shown
 	_masks.clear()
 	_cells.clear()
-	if not vm.cards or _art not in ["p55", "p70"]:
-		return
-	var dir: String = GhostDrawn.ART_DIR.path_join(_art)
+	var dir: String = GhostDrawn.ART_DIR.path_join(ViewMode.shared().art)
 	var meta: Dictionary = JSON.parse_string(
 		FileAccess.get_file_as_string(dir.path_join("ohm_spec_cells.json"))
 	)
 	_anchor = DataTable.new().vec(meta, "anchor_px")
-	var idle: Dictionary = meta.sheets.hover
-	var act: Dictionary = meta.sheets.act
-	_hover = _sheet(dir, "hover", 2, idle)
-	_act = _sheet(dir, "act", GhostDrawn.ACT_COLS, act)
-	_sprite = Sprite2D.new()
-	_sprite.name = &"ghost_drawn"
-	_sprite.centered = false
-	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-	host.add_child(_sprite)
+	_hover = GhostSheet.of(dir.path_join("ohm_spec_hover.png"), 2)
+	_masks[_hover.tex] = load(dir.path_join("ohm_spec_hover_jars.png")) as Texture2D
+	_cells[_hover.tex] = meta.sheets.hover.jar_boxes_row_major
+	var act: Texture2D = load(dir.path_join("ohm_spec_act.png")) as Texture2D
+	_masks[act] = load(dir.path_join("ohm_spec_act_jars.png")) as Texture2D
+	_cells[act] = meta.sheets.act.jar_boxes_row_major
 	var glow: Sprite2D = halo(245.0, 0.24)
 	glow.position.y = -86.0
 	_sprite.add_child(glow)
@@ -79,20 +62,13 @@ func _rebuild(host: Node2D, vm: ViewMode) -> void:
 	_sprite.add_child(_jars)
 
 
-func _sheet(dir: String, kind: String, cols: int, layout: Dictionary) -> GhostSheet:
-	var path: String = dir.path_join("ohm_spec_" + kind)
-	var sheet: GhostSheet = GhostSheet.of(path + ".png", cols)
-	_masks[sheet.tex] = load(path + "_jars.png") as Texture2D
-	_cells[sheet.tex] = layout.jar_boxes_row_major
-	return sheet
-
-
-func _overlay(sheet: GhostSheet) -> void:
-	_jars.match_cell(_sprite, _masks[sheet.tex])
-	var base_y: float = _sprite.frame_coords.y * sheet.tex.get_height() / float(GhostDrawn.ROWS)
+func _overlay() -> void:
+	var tex: Texture2D = _sprite.texture
+	_jars.match_cell(_sprite, _masks[tex])
+	var base_y: float = _sprite.frame_coords.y * tex.get_height() / float(GhostDrawn.ROWS)
 	var top: Vector3 = Vector3.ZERO
 	var bottom: Vector3 = Vector3.ONE
-	var boxes: Array = _cells[sheet.tex][_sprite.frame]
+	var boxes: Array = _cells[tex][_sprite.frame]
 	for i: int in 3:
 		if boxes[i] != null:
 			var y0: float = boxes[i][1]
