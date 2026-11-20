@@ -120,3 +120,23 @@ func test_spectral_hud_face_uses_the_front_carry_cut() -> void:
 	GhostLook.override_for_test(GhostLook.SPECTRAL)
 	var face: Texture2D = GhostChipFace.face(&"tonnage")
 	assert_eq(face.resource_path, GhostChipFace.DIR + "tonnage_spectral.png")
+
+
+func test_profile_recoil_keeps_the_cruise_footprint_at_both_pitches() -> void:
+	GhostLook.override_for_test(GhostLook.SPECTRAL)
+	for view: String in ["tilt70", "tilt"]:
+		var rig: TonnageRig = _rig(view)
+		var body: TonnageSpectral = rig._spectral
+		body._sample.velocity = Vector2.RIGHT * 2.1
+		body.pose.step(body._sample, 1)
+		body._present()
+		var cruise: Vector2 = body._cell.global_scale
+		assert_eq(body._cell.frame_coords, Vector2i(1, 2))
+		body._sample.hurt_age = 0
+		body.pose.step(body._sample, 1)
+		body._present()
+		assert_eq(body._cell.frame_coords, Vector2i(3, 2))
+		var fitted: Vector2 = body._cell.global_scale / cruise
+		var cruise_px: Vector2 = Vector2(189, 209) if view == "tilt70" else Vector2(193, 213)
+		var recoil_px: Vector2 = Vector2(213, 178) if view == "tilt70" else Vector2(222, 184)
+		assert_almost_eq(recoil_px * fitted, cruise_px, Vector2.ONE * 0.02)

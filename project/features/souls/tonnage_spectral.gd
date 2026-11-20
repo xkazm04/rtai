@@ -4,10 +4,6 @@ extends Node2D
 
 const PPM: float = SimConst.PX_PER_M
 const BASELINE: float = 315.0
-## CRUISE / RECOIL opaque heights by facing row (S to N), p70 followed by p55.
-const RECOIL_SCALE: Array[float] = [
-	1.2229, 1.2151, 1.1742, 1.2473, 1.3275, 1.1345, 1.1397, 1.1576, 1.1958, 1.2816
-]
 
 
 ## GhostFormView advances the rig, then feeds the current combat tick before drawing the frame.
@@ -184,7 +180,10 @@ func _show_cell(vm: ViewMode, centre: Vector2) -> void:
 	_cell.global_rotation = roll
 	if not pose.act and pose.column == TonnagePose.Pose.RECOIL:
 		# GhostActs assigns the current blow immediately after feed. Read it before the frame draws.
-		s *= RECOIL_SCALE[_cell.frame_coords.y + (GhostDrawn.ROWS if art == "p55" else 0)]
+		stretch *= TonnagePose.RECOIL_FIT[
+			_cell.frame_coords.y + (GhostDrawn.ROWS if art == "p55" else 0)
+		]
+	if _sample.hurt_age >= 0 and _sample.hurt_age < GhostDrawn.HIT_TICKS:
 		_hit_lean.call_deferred(look, roll)
 	_cell.global_scale = Vector2(s, s / vm.ground_k()) * stretch
 	var h: float = pose.torso.z - TonnagePose.CHEST_H - _sample.bob_m

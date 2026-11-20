@@ -5,6 +5,19 @@ extends RefCounted
 enum Pose { CARRY, CRUISE, ARMED, RECOIL }
 enum Act { RAISE, POUND, LIFT }
 
+## CRUISE / RECOIL opaque bounds (alpha >= 0.5), south to north, p70 then p55.
+const RECOIL_FIT: Array[Vector2] = [
+	Vector2(1.0419, 1.2229),
+	Vector2(1.0236, 1.2151),
+	Vector2(0.8873, 1.1742),
+	Vector2(0.8905, 1.2473),
+	Vector2(0.9682, 1.3275),
+	Vector2(1.0046, 1.1345),
+	Vector2(0.9727, 1.1397),
+	Vector2(0.8694, 1.1576),
+	Vector2(0.8727, 1.1958),
+	Vector2(0.9004, 1.2816),
+]
 const CHEST_H: float = 1.55
 const BACK_X: float = -0.55
 const CARRY: Vector3 = Vector3(1.0, 0.8, 1.4)
@@ -109,6 +122,7 @@ func _slam(windup: float, age: int) -> void:
 	if windup > 0.0:
 		act = true
 		column = Act.RAISE
+		lean_k *= 1.0 - smoothstep(0.0, 0.5, windup)
 		var k: float = smoothstep(0.0, 1.0, windup)
 		left = left.lerp(Vector3(0.95, -1.5, 2.6), k)
 		right = right.lerp(Vector3(0.95, 1.5, 2.6), k)
@@ -127,6 +141,7 @@ func _slam(windup: float, age: int) -> void:
 	else:
 		plant_k = 1.0 - smoothstep(0.0, RETURN_TICKS, age - lift_end)
 		lift = 0.8
+	lean_k *= 1.0 - plant_k
 	var hunch: Vector3 = Vector3(BACK_X + press_ahead_m * 0.4, 0.0, CHEST_H - 0.28)
 	torso = torso.lerp(hunch, plant_k * (1.0 - lift))
 	pitch = lerpf(pitch, 0.24, plant_k * (1.0 - lift))

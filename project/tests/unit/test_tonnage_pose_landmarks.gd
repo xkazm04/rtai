@@ -112,3 +112,22 @@ func test_partial_brace_keeps_the_cruise_cell_until_the_fist_leads() -> void:
 	assert_lt(pose.armed_k, 0.5)
 	assert_gt(pose.lean_k, 0.5)
 	assert_eq(pose.column, TonnagePose.Pose.CRUISE)
+
+
+func test_clap_braces_against_a_hit_then_releases_the_lean() -> void:
+	sample.hurt_age = 0
+	pose.step(sample, 1)
+	assert_eq(pose.lean_k, 1.0)
+	sample.windup = 0.75
+	pose.step(sample, 1)
+	assert_lt(pose.lean_k, 0.25)
+	sample.windup = 0.0
+	sample.stomp_age = 0
+	pose.step(sample, 1)
+	assert_lt(pose.lean_k, 0.25)
+	sample.stomp_age = 25
+	pose.step(sample, 1)
+	assert_almost_eq(pose.lean_k, 0.5, 0.0001)
+	sample.stomp_age = 35
+	pose.step(sample, 1)
+	assert_eq(pose.lean_k, 1.0)
