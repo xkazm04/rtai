@@ -69,6 +69,10 @@ func test_only_the_right_cutter_thrusts_along_facing_and_eases_back() -> void:
 	var blade: Sprite2D = rig._blade[1]
 	rig.pose(POSE.COCK, 0.0, 0.0, 60)
 	var cock: Vector2 = _far_joint(rig, blade, "blade")
+	var left: Vector2 = _far_joint(rig, rig._blade[0], "blade")
+	# Only the cutting hand draws in for the thrust.
+	assert_lt(absf(cock.y), absf(left.y))
+	assert_lt(cock.x, left.x)
 	rig.pose(POSE.CUT, 12.0, 0.0, 1)
 	var in_between: Vector2 = _far_joint(rig, blade, "blade")
 	rig.pose(POSE.CUT, 12.0, 0.0, 0)
