@@ -63,7 +63,7 @@ func test_stage_drives_the_eye_blink_and_regrowing_beam() -> void:
 	assert_eq(k.recharge_k(), 0.0)
 	assert_eq(body._lens.texture.resource_path.get_file(), "lens_open.png")
 	var guard: Fighter = stage.arena.spawn_guard(stage.arena.rivet.pos)
-	guard.pos = stage.arena.rivet.pos + Vector2.RIGHT * 3.0
+	guard.pos = stage.arena.rivet.pos + Vector2(3.0, 1.4)
 	k.sight_aim = Vector2.RIGHT
 	stage.pilot.ghosts.forms.from_id = KerfStage.GHOST
 	stage.pilot.ghosts.forms.to_id = KerfStage.GHOST
@@ -71,6 +71,7 @@ func test_stage_drives_the_eye_blink_and_regrowing_beam() -> void:
 	k.powers.try_activate(KerfStage.ID)
 	rig.pose()
 	assert_eq(body._lens.texture.resource_path.get_file(), "lens_half.png")
+	_assert_tilted_lock(rig)
 	@warning_ignore("return_value_discarded")
 	k.drive(stage, false, true, Vector2.RIGHT, Vector2.ZERO)
 	rig.pose()
@@ -84,6 +85,19 @@ func test_stage_drives_the_eye_blink_and_regrowing_beam() -> void:
 	var fraction: float = 8.0 / PowerDef.ticks(k.num(&"recharge_s"))
 	assert_almost_eq(body.beams.length_m(2), 0.9 * fraction, 0.0001)
 	ViewMode.select(previous)
+
+
+func _assert_tilted_lock(rig: KerfRig) -> void:
+	# Target at +25 degrees. Clamping its yaw to 25 degrees from -10 would still draw east.
+	rig.rotation = deg_to_rad(-10.0)
+	for view: String in ["tilt", "tilt70"]:
+		ViewMode.select(view)
+		rig.pose()
+		assert_eq(GhostSheet.oct_of(rig._spectral._tilted), 1)
+		assert_true(rig._spectral._tilted_eye.visible)
+		assert_almost_eq(rig._spectral.beams.global_rotation, PI / 4.0, 0.0001)
+	rig.rotation = 0.0
+	ViewMode.select("top")
 
 
 func test_pitch_changes_keep_the_hover_grid_centred_and_the_left_profile_mirrored() -> void:

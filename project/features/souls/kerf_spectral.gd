@@ -85,9 +85,11 @@ func live(
 		if stage.pilot.ghosts.settled_in(KerfStage.GHOST):
 			target = k.pick(stage, k.sight_aim)
 	var at: Vector2 = stage.arena.rivet.pos
-	var yaw: float = (
-		angle_difference(facing, at.direction_to(target.pos).angle()) if target else 0.0
-	)
+	var yaw: float = 0.0
+	if target != null:
+		var bearing: float = at.angle_to_point(target.pos)
+		yaw = angle_difference(facing, bearing)
+		oct = posmod(roundi(bearing / (TAU / 8.0)), 8)
 	_aim(clampf(yaw, -AIM_LIMIT, AIM_LIMIT), stage.tick)
 	position = Vector2.ZERO
 	if since >= 0 and since < KerfSlot.RETURN_TICKS + TUCK_TICKS:
@@ -134,9 +136,10 @@ func pose(speed_mps: float, since: int, locked: bool, facing: float, oct: int) -
 	_fold(col)
 	beams.fast = clampf(speed_mps / 12.0, 0.0, 1.0)
 	beams.tail_x = -0.55 * SimConst.PX_PER_M * absf(global_scale.x)
-	beams.global_transform = Transform2D(
-		facing + (_yaw if _sheet == null else 0.0), global_position
-	)
+	var heading: float = facing + _yaw
+	if _sheet != null:
+		heading = oct * TAU / 8.0 if locked else facing
+	beams.global_transform = Transform2D(heading, global_position)
 	beams.queue_redraw()
 	if _sheet != null:
 		_sheet.show(_tilted, oct, col)

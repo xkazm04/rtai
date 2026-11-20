@@ -52,9 +52,8 @@ func _target(dir: Vector2) -> Fighter:
 
 func test_one_tilted_departure_holds_the_previous_cell_scale_and_facing() -> void:
 	ViewMode.select("tilt70")
-	var victim: Fighter = _target(Vector2.RIGHT)
+	var victim: Fighter = _target(Vector2.LEFT)
 	_rig.scale = Vector2.ONE * 1.4
-	_rig.rotation = PI
 	_rig.pose()
 	var body: KerfSpectral = _rig._spectral
 	var texture: Texture2D = body._tilted.texture
@@ -63,7 +62,7 @@ func test_one_tilted_departure_holds_the_previous_cell_scale_and_facing() -> voi
 	var at: Vector2 = _rivet.pos * SimConst.PX_PER_M
 	assert_true(body._tilted_eye.is_visible_in_tree())
 	assert_true(body._tilted.flip_h)
-	_press(Vector2.RIGHT)
+	_press(Vector2.LEFT)
 	assert_false(victim.alive())
 	assert_eq(body._tilted.frame_coords.x, KerfSpectral.Mood.LUNGE)
 	assert_eq(body.beams.length_m(2), 0.0)
