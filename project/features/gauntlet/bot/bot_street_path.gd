@@ -16,6 +16,7 @@ var _step_until: int = 0
 var _shared: GuardRouteMap
 var _wide: GuardRouteMap
 var _use_wide: bool = false
+var _radius: float
 
 
 ## The shared grid admits a guard through the one-metre kiosk gap. Rivet is
@@ -24,6 +25,7 @@ func clearance(map: GuardRouteMap, boxes: Array[Rect2], radius: float, guard_rad
 	if map == _shared:
 		return
 	_shared = map
+	_radius = radius
 	_wide = null
 	_use_wide = false
 	if map != null and radius > guard_radius:
@@ -76,5 +78,28 @@ func _escape(map: GuardRouteMap, at: Vector2, direct: Vector2, side: Vector2) ->
 		return side
 	if map.clear_line(at, at - side):
 		return -side
+	if _wide != null:
+		var along: Vector2 = _along_gap(at)
+		if along != Vector2.ZERO:
+			return along
 	# Both flanks touch solids at the mouth of a narrow gap. Back out to a grid entry.
 	return -direct
+
+
+## A roll or separation can leave the body squeezed between two parallel faces.
+## Both route grids may reject its starting cell. Walk along the faces to the nearer end.
+func _along_gap(at: Vector2) -> Vector2:
+	var nearby: Array[Rect2] = _shared.boxes_near(at, _radius + GuardRouteMap.WALL_MARGIN_M)
+	for i: int in nearby.size():
+		var first: Rect2 = nearby[i]
+		for j: int in range(i + 1, nearby.size()):
+			var other: Rect2 = nearby[j]
+			var overlap: Rect2 = first.grow(_radius).intersection(other.grow(_radius))
+			if not overlap.has_area():
+				continue
+			var center: Vector2 = overlap.get_center()
+			if first.end.y <= other.position.y or other.end.y <= first.position.y:
+				return Vector2.RIGHT if at.x >= center.x else Vector2.LEFT
+			if first.end.x <= other.position.x or other.end.x <= first.position.x:
+				return Vector2.DOWN if at.y >= center.y else Vector2.UP
+	return Vector2.ZERO

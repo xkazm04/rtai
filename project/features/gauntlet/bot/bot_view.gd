@@ -21,7 +21,7 @@ class Player:
 	var settled: bool = true
 	var forms: Array[StringName] = []
 	var current_slot: int = -1
-	var wheel: bool = false
+	var wheel_size: int = 0
 	var can_roll: bool = false
 	var can_guard: bool = false
 	var shots_fired: int = 0
@@ -111,19 +111,12 @@ func weapon_for(distance: float, melee_m: float) -> Slot:
 	return best
 
 
-## The carry cycles occupied slots in index order. Read the drawn slot again on
-## the next tick, including when a grant replaced the weapon in a slot.
+## A wheel index includes hands and every retained weapon. Legacy uses grip shortcuts.
 func select_slot(want: Slot) -> StringName:
-	if not _player.wheel:
+	if _player.wheel_size == 0:
 		return want.action
-	var current: int = -1
-	for i: int in _slots.size():
-		if _slots[i].index == _player.current_slot:
-			current = i
-	if current < 0:
-		return &"weapon_next"
-	var steps: int = posmod(_slots.find(want) - current, _slots.size())
-	return &"weapon_next" if steps <= _slots.size() - steps else &"weapon_prev"
+	var steps: int = posmod(want.index - _player.current_slot, _player.wheel_size)
+	return &"weapon_next" if steps <= _player.wheel_size - steps else &"weapon_prev"
 
 
 func wave_active() -> bool:

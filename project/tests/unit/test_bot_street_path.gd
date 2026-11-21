@@ -56,3 +56,19 @@ func test_wedged_player_backs_out_when_neither_side_is_open() -> void:
 	for tick: int in BotStreetPath.STUCK_TICKS + 1:
 		move = path.toward(map, Vector2.ZERO, Vector2(8, 0), tick)
 	assert_lt(move.x, 0.0)
+
+
+func test_player_leaves_loading_bay_gap_to_reach_gunner_across_cover() -> void:
+	var walls: ArenaWalls = ArenaWalls.new()
+	walls.boxes = [Rect2(918, -7, 28, 1), Rect2(931, -5, 4, 2)]
+	var map: GuardRouteMap = GuardRouteMap.new(Rect2(918, -7, 28, 14), walls.boxes, null, 0.45)
+	var path: BotStreetPath = BotStreetPath.new()
+	path.clearance(map, walls.boxes, 0.6, 0.45)
+	var at: Vector2 = Vector2(932.5037, -5.6)
+	var gunner: Vector2 = Vector2(932.5024, -2.55)
+	for tick: int in 900:
+		var move: Vector2 = path.toward(map, at, gunner, tick)
+		at = walls.push_out(at + move * 0.09, 0.6)
+		if not walls.blocks(at, gunner):
+			break
+	assert_false(walls.blocks(at, gunner), "Rivet must recover a firing line")

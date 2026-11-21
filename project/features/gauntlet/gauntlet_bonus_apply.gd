@@ -24,13 +24,14 @@ func apply(row: Dictionary) -> bool:
 	var ref: StringName = row["ref"]
 	match str(row["kind"]):
 		"weapon":
-			# Newest grant goes in hand; guard's wheel takes over selection when it lands.
+			# Wheel controls can create the carry before the first weapon grant.
 			var carry: RivetCarry = _stage.pilot.carry
 			if carry == null:
 				return _arsenal.arm([ref], _run.profile != &"human") != null
 			var slot: int = carry.add(ref)
 			if slot < 0:
 				return false
+			carry.tap = _run.profile != &"human"
 			carry.select(slot, _stage.arena)
 		"ghost":
 			var forms: GhostForms = _stage.pilot.ghosts.forms

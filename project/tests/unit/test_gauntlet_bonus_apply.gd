@@ -110,14 +110,21 @@ func _hold_trigger(arena: CombatArena) -> int:
 
 
 func test_granted_pistol_retaps_for_a_bot_and_waits_for_a_human_press() -> void:
-	_take(&"weapon_pistol")
-	var bot_run: GauntletRun = GauntletRun.new()
-	bot_run.profile = &"average"
-	var bot: GauntletSession = _open(bot_run)
-	assert_true(bot.bonuses.apply(draw.rows[&"weapon_pistol"]))
-	assert_eq(_hold_trigger(session.stage.arena), 1)
-	assert_gt(_hold_trigger(bot.stage.arena), 1)
-	bot.close()
+	for mode: StringName in [&"legacy", &"wheel"]:
+		for profile: StringName in [&"human", &"average"]:
+			var state: GauntletRun = GauntletRun.new()
+			state.controls = mode
+			state.profile = profile
+			var player: GauntletSession = _open(state)
+			player.step()
+			assert_true(player.bonuses.apply(draw.rows[&"weapon_pistol"]))
+			var shots: int = _hold_trigger(player.stage.arena)
+			if profile == &"human":
+				assert_eq(shots, 1)
+			else:
+				assert_gt(shots, 1)
+			player.close()
+	PlayerActions.shipped().install()
 
 
 func test_sidearm_replaces_slot_zero_and_an_unknown_grant_preserves_it() -> void:

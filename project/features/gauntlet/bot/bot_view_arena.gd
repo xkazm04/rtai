@@ -18,7 +18,6 @@ func _init(stage: ArenaStage, actions: PlayerActions, street: bool = false) -> v
 	_stage = stage
 	_actions = actions
 	_street = street
-	_player.wheel = street and actions.wheel
 	_solids = stage.walls.boxes
 
 
@@ -164,6 +163,15 @@ func _read_forms() -> void:
 func _read_slots() -> void:
 	_slots.clear()
 	var carry: RivetCarry = _stage.pilot.carry if _stage.pilot != null else null
+	if _street and carry != null and _stage.pilot.wheel != null:
+		var wheel: RivetWheel = _stage.pilot.wheel
+		var order: Array[StringName] = wheel.order()
+		_player.wheel_size = order.size()
+		_player.current_slot = order.find(wheel.selected())
+		for i: int in range(1, order.size()):
+			_add_slot(i, order[i], carry.melee_ids.has(order[i]))
+		return
+	_player.wheel_size = 0
 	_player.current_slot = carry.current if carry != null else -1
 	if carry != null:
 		for i: int in carry.slots.size():
@@ -176,7 +184,8 @@ func _read_slots() -> void:
 func _add_slot(index: int, id: StringName, melee: bool) -> void:
 	var slot: Slot = Slot.new()
 	slot.index = index
-	slot.action = RivetCarry.SLOT_ACTIONS[index] if index >= 0 else &""
+	if _player.wheel_size == 0 and index >= 0:
+		slot.action = RivetCarry.SLOT_ACTIONS[index]
 	slot.melee = melee
 	if melee:
 		slot.reach = GauntletBot.MELEE_M
