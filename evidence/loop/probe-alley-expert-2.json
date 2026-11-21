@@ -1,0 +1,70 @@
+{
+  "block": "alley_neck",
+  "claw_reach_ticks": 844,
+  "cover_ticks": 28,
+  "forward_limit_m": null,
+  "guard_ticks": 20,
+  "machine_hp_lost": 60.0,
+  "machine_ticks": 4882,
+  "position_m": [
+    162.399993896484,
+    -5.40000009536743
+  ],
+  "profile": "expert",
+  "rolling_ticks": 242,
+  "schema": "gtai.street-bot-probe/1",
+  "seed": 2,
+  "ticks": 6959,
+  "touching_solids": [
+    "[P: (154.0, -7.0), S: (32.0, 1.0)]",
+    "[P: (163.0, -5.5), S: (12.0, 2.0)]"
+  ],
+  "trail": [
+    "300 p(174.2609, -2.549045) m(179.7147, -4.260627) hp60.0 stick(0, 0) target23 boss21 rawtrue",
+    "600 p(181.976, -4.51325) m(179.2476, -5.507627) hp55.0 stick(-126, -16) target21 boss21 rawtrue",
+    "900 p(173.3341, 1.039349) m(171.0184, -1.750265) hp51.0 stick(-53, -115) target21 boss21 rawtrue",
+    "1200 p(161.9051, -3.82411) m(162.2498, -3.078686) hp46.0 stick(-104, 73) target21 boss21 rawtrue",
+    "1500 p(162.4, -5.4) m(163.3403, -5.55) hp41.0 stick(125, -20) target21 boss21 rawfalse",
+    "1800 p(162.4, -5.4) m(164.4785, -5.55) hp34.5 stick(127, -9) target21 boss21 rawfalse",
+    "2100 p(162.0858, -5.375263) m(164.3456, -5.55) hp32.5 stick(-127, 10) target21 boss21 rawfalse",
+    "2400 p(162.4, -5.4) m(164.4, -5.55) hp28.5 stick(127, -9) target21 boss21 rawfalse",
+    "2700 p(162.4, -5.4) m(164.3963, -5.55) hp23.5 stick(127, -10) target21 boss21 rawfalse",
+    "3000 p(162.4, -5.4) m(164.3945, -5.55) hp21.0 stick(-127, 10) target21 boss21 rawfalse",
+    "3300 p(162.4, -5.4) m(164.411, -5.55) hp17.0 stick(127, -9) target21 boss21 rawfalse",
+    "3600 p(161.5953, -5.348668) m(163.4718, -5.55) hp15.0 stick(98, 80) target21 boss21 rawfalse",
+    "3900 p(162.4, -5.4) m(164.3954, -5.55) hp11.0 stick(127, -10) target21 boss21 rawfalse",
+    "4200 p(162.4, -5.4) m(164.4216, -5.55) hp7.0 stick(127, -9) target21 boss21 rawfalse",
+    "4500 p(160.8659, -5.284109) m(163.6963, -5.55) hp5.0 stick(126, -12) target21 boss21 rawfalse",
+    "4800 p(162.4, -5.4) m(164.3961, -5.55) hp1.0 stick(127, -10) target21 boss21 rawfalse"
+  ],
+  "wave": 5,
+  "wave_result": {
+    "cover_ticks": 28,
+    "damage_taken": 29.74,
+    "enemies": {
+      "patrol_cop": 1,
+      "riot_cop": 3,
+      "war_machine": 1
+    },
+    "form_seconds": {
+      "dent": 0.0,
+      "kerf": 0.0,
+      "ohm": 14.6166666666667,
+      "tonnage": 7.1
+    },
+    "guard_ticks": 20,
+    "hits": 74,
+    "machine": {
+      "claw_reach_ticks": 844,
+      "cover_ticks": 28,
+      "guard_ticks": 20,
+      "hp_lost": 60.0,
+      "rolling_ticks": 242,
+      "ticks": 4882
+    },
+    "n": 5,
+    "rolls": 11,
+    "seconds": 81.3666666666667,
+    "shots": 0
+  }
+}
