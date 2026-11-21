@@ -111,3 +111,7 @@ NEXT: nothing owed. If a later session runs before 08:00: re-run `node tools/evi
 - 07:30 read journal; no Astra running (last call late-film exited 06:04), no Godot for this lane. Code frozen and gated (7967a0cfa PASS with reels). NEED street grep: new loop 06:05 (on_timeout data value, conditional on owner's Call 3) -> REPORT merge note only, no code after freeze.
 - 07:32 cites REPORT.md 13/13 ok.
 NEXT: nothing owed by street. Director: merge notes in REPORT.md (guard meter wiring, wheel default in gauntlet, loop's on_timeout if the owner picks A).
+
+## Session 7 (07:31 to 07:40, STABILIZE)
+- 07:31 clean tree at a2e04ef22; no Astra (lock empty, last call late-film 05:03Z), no Godot for this lane. NEED street grep across guard/foes/loop: nothing after loop 06:05 (already a REPORT merge note). cites REPORT.md 13/13 ok. Code frozen and gated (7967a0cfa PASS with reels, build/gate/7967a0cfacfc/gate.json); no change in this session.
+NEXT: nothing owed by street. Director: merge notes in REPORT.md (guard meter wiring, wheel default in the gauntlet after guard's head, loop's on_timeout if the owner picks A).
