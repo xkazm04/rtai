@@ -66,6 +66,15 @@ func toward(map: GuardRouteMap, at: Vector2, goal: Vector2, tick: int) -> Vector
 		var side: Vector2 = direct.orthogonal()
 		if side.y * at.y > 0.0:
 			side = -side
-		_side = side if map.clear_line(at, at + side) else -side
+		_side = _escape(map, at, direct, side)
 		return _side
 	return direct
+
+
+func _escape(map: GuardRouteMap, at: Vector2, direct: Vector2, side: Vector2) -> Vector2:
+	if map.clear_line(at, at + side):
+		return side
+	if map.clear_line(at, at - side):
+		return -side
+	# Both flanks touch solids at the mouth of a narrow gap. Back out to a grid entry.
+	return -direct

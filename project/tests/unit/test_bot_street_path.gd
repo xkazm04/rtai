@@ -46,3 +46,13 @@ func test_player_backs_out_of_the_guard_width_kiosk_gap() -> void:
 		if at.distance_to(goal) < 0.2:
 			break
 	assert_lt(at.distance_to(goal), 0.2)
+
+
+func test_wedged_player_backs_out_when_neither_side_is_open() -> void:
+	var walls: Array[Rect2] = [Rect2(-4, 0.8, 9, 2), Rect2(-4, -2.8, 9, 2)]
+	var map: GuardRouteMap = GuardRouteMap.new(Rect2(-5, -5, 20, 10), walls, null, 0.45)
+	var path: BotStreetPath = BotStreetPath.new()
+	var move: Vector2
+	for tick: int in BotStreetPath.STUCK_TICKS + 1:
+		move = path.toward(map, Vector2.ZERO, Vector2(8, 0), tick)
+	assert_lt(move.x, 0.0)
