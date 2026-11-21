@@ -1,147 +1,451 @@
 {
   "enemy": "rocket_trooper",
-  "runs": [
-    {
-      "damage_to_rivet": 0.0,
-      "enemy_killed_tick": 169,
-      "seed": 1,
-      "shots_fired": 1,
-      "tells_shown": 1
+  "profiles": {
+    "average": {
+      "enemy_killed_share": 1.0,
+      "hurt_share": 0.7,
+      "mean_damage": 11.2,
+      "median_kill_tick": 165.0,
+      "runs": [
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 119,
+          "seed": 1,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 170,
+          "seed": 2,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 164,
+          "seed": 3,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 160,
+          "seed": 4,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 140,
+          "seed": 5,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 144,
+          "seed": 6,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 160,
+          "seed": 7,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 166,
+          "seed": 8,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 189,
+          "seed": 9,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 241,
+          "seed": 10,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 124,
+          "seed": 11,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 130,
+          "seed": 12,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 156,
+          "seed": 13,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 187,
+          "seed": 14,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 203,
+          "seed": 15,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 178,
+          "seed": 16,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 178,
+          "seed": 17,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 146,
+          "seed": 18,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 182,
+          "seed": 19,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 188,
+          "seed": 20,
+          "shots_fired": 1,
+          "tells_shown": 1
+        }
+      ]
     },
-    {
-      "damage_to_rivet": 0.0,
-      "enemy_killed_tick": 241,
-      "seed": 2,
-      "shots_fired": 1,
-      "tells_shown": 1
+    "novice": {
+      "enemy_killed_share": 1.0,
+      "hurt_share": 0.8,
+      "mean_damage": 12.8,
+      "median_kill_tick": 160.0,
+      "runs": [
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 119,
+          "seed": 1,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 170,
+          "seed": 2,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 164,
+          "seed": 3,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 160,
+          "seed": 4,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 139,
+          "seed": 5,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 144,
+          "seed": 6,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 160,
+          "seed": 7,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 166,
+          "seed": 8,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 141,
+          "seed": 9,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 193,
+          "seed": 10,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 124,
+          "seed": 11,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 130,
+          "seed": 12,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 156,
+          "seed": 13,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 187,
+          "seed": 14,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 203,
+          "seed": 15,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 178,
+          "seed": 16,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 178,
+          "seed": 17,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 146,
+          "seed": 18,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 182,
+          "seed": 19,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 140,
+          "seed": 20,
+          "shots_fired": 1,
+          "tells_shown": 1
+        }
+      ]
     },
-    {
-      "damage_to_rivet": 0.0,
-      "enemy_killed_tick": 214,
-      "seed": 3,
-      "shots_fired": 1,
-      "tells_shown": 1
-    },
-    {
-      "damage_to_rivet": 0.0,
-      "enemy_killed_tick": 210,
-      "seed": 4,
-      "shots_fired": 1,
-      "tells_shown": 1
-    },
-    {
-      "damage_to_rivet": 0.0,
-      "enemy_killed_tick": 188,
-      "seed": 5,
-      "shots_fired": 1,
-      "tells_shown": 1
-    },
-    {
-      "damage_to_rivet": 0.0,
-      "enemy_killed_tick": 216,
-      "seed": 6,
-      "shots_fired": 1,
-      "tells_shown": 1
-    },
-    {
-      "damage_to_rivet": 0.0,
-      "enemy_killed_tick": 208,
-      "seed": 7,
-      "shots_fired": 1,
-      "tells_shown": 1
-    },
-    {
-      "damage_to_rivet": 0.0,
-      "enemy_killed_tick": 215,
-      "seed": 8,
-      "shots_fired": 1,
-      "tells_shown": 1
-    },
-    {
-      "damage_to_rivet": 0.0,
-      "enemy_killed_tick": 190,
-      "seed": 9,
-      "shots_fired": 1,
-      "tells_shown": 1
-    },
-    {
-      "damage_to_rivet": 0.0,
-      "enemy_killed_tick": 242,
-      "seed": 10,
-      "shots_fired": 1,
-      "tells_shown": 1
-    },
-    {
-      "damage_to_rivet": 0.0,
-      "enemy_killed_tick": 195,
-      "seed": 11,
-      "shots_fired": 1,
-      "tells_shown": 1
-    },
-    {
-      "damage_to_rivet": 0.0,
-      "enemy_killed_tick": 201,
-      "seed": 12,
-      "shots_fired": 1,
-      "tells_shown": 1
-    },
-    {
-      "damage_to_rivet": 0.0,
-      "enemy_killed_tick": 206,
-      "seed": 13,
-      "shots_fired": 1,
-      "tells_shown": 1
-    },
-    {
-      "damage_to_rivet": 0.0,
-      "enemy_killed_tick": 236,
-      "seed": 14,
-      "shots_fired": 1,
-      "tells_shown": 1
-    },
-    {
-      "damage_to_rivet": 0.0,
-      "enemy_killed_tick": 274,
-      "seed": 15,
-      "shots_fired": 1,
-      "tells_shown": 1
-    },
-    {
-      "damage_to_rivet": 0.0,
-      "enemy_killed_tick": 227,
-      "seed": 16,
-      "shots_fired": 1,
-      "tells_shown": 1
-    },
-    {
-      "damage_to_rivet": 0.0,
-      "enemy_killed_tick": 227,
-      "seed": 17,
-      "shots_fired": 1,
-      "tells_shown": 1
-    },
-    {
-      "damage_to_rivet": 0.0,
-      "enemy_killed_tick": 196,
-      "seed": 18,
-      "shots_fired": 1,
-      "tells_shown": 1
-    },
-    {
-      "damage_to_rivet": 0.0,
-      "enemy_killed_tick": 253,
-      "seed": 19,
-      "shots_fired": 1,
-      "tells_shown": 1
-    },
-    {
-      "damage_to_rivet": 0.0,
-      "enemy_killed_tick": 189,
-      "seed": 20,
-      "shots_fired": 1,
-      "tells_shown": 1
+    "perfect": {
+      "enemy_killed_share": 1.0,
+      "hurt_share": 0.0,
+      "mean_damage": 0.0,
+      "median_kill_tick": 212.0,
+      "runs": [
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 169,
+          "seed": 1,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 241,
+          "seed": 2,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 214,
+          "seed": 3,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 210,
+          "seed": 4,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 188,
+          "seed": 5,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 216,
+          "seed": 6,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 208,
+          "seed": 7,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 215,
+          "seed": 8,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 190,
+          "seed": 9,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 242,
+          "seed": 10,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 195,
+          "seed": 11,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 201,
+          "seed": 12,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 206,
+          "seed": 13,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 236,
+          "seed": 14,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 274,
+          "seed": 15,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 227,
+          "seed": 16,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 227,
+          "seed": 17,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 196,
+          "seed": 18,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 253,
+          "seed": 19,
+          "shots_fired": 1,
+          "tells_shown": 1
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 189,
+          "seed": 20,
+          "shots_fired": 1,
+          "tells_shown": 1
+        }
+      ]
     }
-  ],
-  "schema": "gtai.foe-duel/1",
+  },
+  "schema": "gtai.foe-duel/2",
   "tick_hz": 60
 }

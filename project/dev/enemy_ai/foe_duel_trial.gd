@@ -13,7 +13,7 @@ func knows(id: StringName) -> bool:
 	return EnemyRoster.shipped(EnemyRoster.TABLE, true).archetype(id) != null
 
 
-func run(id: StringName, seed_value: int) -> Dictionary:
+func run(id: StringName, seed_value: int, profile: String) -> Dictionary:
 	var rng: RandomNumberGenerator = RngRegistry.new(seed_value).stream(&"combat")
 	var bus: EventBus = EventBus.new()
 	var arena: CombatArena = CombatArena.new(CombatTuning.shipped(), bus, rng)
@@ -28,20 +28,35 @@ func run(id: StringName, seed_value: int) -> Dictionary:
 		"tells_shown": 0,
 		"shots_fired": 0
 	}
-	_fight(arena, h, row)
+	_fight(arena, h, row, _reader(profile, seed_value))
 	bus.free()
 	return row
 
 
-func _fight(arena: CombatArena, h: Fighter, row: Dictionary) -> void:
+func _reader(profile: String, seed_value: int) -> PitDummy:
 	var dummy: PitDummy = PitDummy.new(PitDummy.Mode.DODGE)
+	if profile != "perfect":
+		dummy.react_ticks = 15 if profile == "average" else 25
+		dummy.read_frac = 0.75 if profile == "average" else 0.5
+		dummy.aim_err_deg = 4.0 if profile == "average" else 8.0
+		dummy.read_salt = seed_value
+		# Same human-reader convention as enemy_pit_view: a missed tell is a missed dodge.
+		dummy.watch_rounds = false
+	return dummy
+
+
+func _fight(arena: CombatArena, h: Fighter, row: Dictionary, dummy: PitDummy) -> void:
+	var nails: int = 0
 	var counter_at: int = OPENING_TICKS
 	var telling: bool = false
 	for tick: int in range(1, LIMIT_TICKS + 1):
 		_dodge(dummy, arena)
 		if tick >= counter_at and h.alive():
-			@warning_ignore("return_value_discarded")
-			arena.rivet_fire(h.pos)
+			var offset: float = (
+				(fposmod((nails + 1) * 0.618034, 1.0) * 2.0 - 1.0) * dummy.aim_err_deg
+			)
+			var aimed: Vector2 = (h.pos - arena.rivet.pos).rotated(deg_to_rad(offset))
+			nails += int(arena.rivet_fire(arena.rivet.pos + aimed))
 		var hp: float = arena.rivet.hp
 		arena.step(tick)
 		row.damage_to_rivet += maxf(0.0, hp - arena.rivet.hp)

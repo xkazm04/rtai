@@ -85,7 +85,8 @@
         "2026-11-19: Film all twelve motion-driven strides on native-scale ground rulers in the requested rivet_motion dev course. (dev_loc 23167 -> 23334)",
         "2026-11-19: Exercise the strip-matched phase only in the stride film and fail a take that falls back to the shipped rate. (dev_loc 23334 -> 23361)",
         "2026-11-19: Owner-requested reproducible ghost films: a dev-only arena input driver, camera marks and per-frame evidence for four forms, two real views and the Ohm delay comparison. (dev_loc 26341 -> 26602)",
-        "2026-11-20: --enemy for n22 foes (dev_loc 26600 -> 26712)"
+        "2026-11-20: --enemy for n22 foes (dev_loc 26600 -> 26712)",
+        "2026-11-21: foe duel player profiles and fairness evidence for n22 foes (dev_loc 26712 -> 26765)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -94,7 +95,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 496,
-        "project/dev/enemy_ai": 1618,
+        "project/dev/enemy_ai": 1671,
         "project/dev/frames": 1087,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1396,
@@ -119,7 +120,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 26712
+      "total": 26765
     },
     "direct_cmdline_reads": {
       "accepted": [

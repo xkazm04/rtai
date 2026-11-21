@@ -166,3 +166,29 @@ func test_backs_away_then_changes_firing_site_between_launches() -> void:
 	assert_eq(sites.size(), 2)
 	if sites.size() == 2:
 		assert_gt(sites[0].distance_to(sites[1]), 2.0)
+
+
+func test_tracking_cancels_when_rivet_closes_before_lock() -> void:
+	var h: Fighter = _spawn(Vector2(14, 0))
+	_until_tell(h)
+	assert_false(arena.guard_tell.locked(h))
+	arena.rivet.pos = h.pos + Vector2.LEFT * 7.5
+	_step()
+	assert_eq(h.tell_left, 0)
+	assert_eq(squad.minds[h.id].agent.state, EnemyAgent.State.ENGAGE)
+
+
+func test_cooldown_and_relocation_leave_the_firing_pose() -> void:
+	var h: Fighter = _spawn(Vector2(14, 0))
+	var shot: Shot = _until_round()
+	assert_not_null(shot)
+	var mind: SquadMind = squad.minds[h.id]
+	var launch: Vector2 = h.pos
+	_step()
+	assert_eq(mind.agent.state, EnemyAgent.State.ENGAGE)
+	assert_ne(h.pos, launch)
+	mind.rocket = FoeRocket.new()
+	h.cooldown = 10
+	mind.agent.enter(EnemyAgent.State.FIRE)
+	_step()
+	assert_eq(mind.agent.state, EnemyAgent.State.ENGAGE)
