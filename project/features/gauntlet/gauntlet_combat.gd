@@ -21,6 +21,7 @@ static func install(stage: ArenaStage, ctx: WorldContext, state: GauntletRun) ->
 	)
 	combat.rivet = initial.rivet
 	combat.metal = initial.metal
+	combat.walls = stage.walls
 	combat.run = state
 	combat._melee.append_array(
 		[PlayerMelee.WEAPON, DentJab.WEAPON, &"kerf_slice", &"stomp", &"ram"]

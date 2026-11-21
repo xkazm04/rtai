@@ -65,6 +65,11 @@ func advance() -> Vector2:
 	return from
 
 
+## End of this tick of hostile blast flight, bounded by the remaining range.
+func blast_tip() -> Vector2:
+	return pos.move_toward(pos + vel * SimClock.TICK_DT, maxf(left_m, 0.0))
+
+
 func spent() -> bool:
 	return left_m <= 0.0
 

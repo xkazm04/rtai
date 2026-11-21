@@ -33,11 +33,6 @@ static func step_shots(arena: CombatArena) -> void:
 			arena.shots.erase(s)
 
 
-## Stop at the authored range even when the last tick would carry the round past it.
-static func _blast_tip(s: Shot) -> Vector2:
-	return s.pos.move_toward(s.pos + s.vel * SimClock.TICK_DT, maxf(s.left_m, 0.0))
-
-
 ## The first point on Rivet's body along the bounded flight segment, or INF for a miss.
 static func _rivet_contact(r: Fighter, from: Vector2, to: Vector2) -> Vector2:
 	if not r.alive():
@@ -52,13 +47,11 @@ static func _rivet_contact(r: Fighter, from: Vector2, to: Vector2) -> Vector2:
 
 ## A hostile shell can be spawned after the stage culls shots. Both paths use its first impact.
 static func burst_at_wall(arena: CombatArena, s: Shot, walls: ArenaWalls) -> bool:
-	var end: Vector2 = _blast_tip(s)
+	var end: Vector2 = s.blast_tip()
 	var at: Vector2 = _first_wall(walls, s.pos, end)
 	if at == Vector2.INF or _rivet_contact(arena.rivet, s.pos, at) != Vector2.INF:
 		return false
-	arena.shots.erase(s)
-	@warning_ignore("return_value_discarded")
-	RivetBlast.burst(arena, at, s.weapon, s.shooter_id)
+	_burst(arena, s, at)
 	return true
 
 
@@ -86,15 +79,22 @@ static func _first_wall(walls: ArenaWalls, from: Vector2, to: Vector2) -> Vector
 static func _step_blast(arena: CombatArena, s: Shot) -> void:
 	if arena.walls != null and burst_at_wall(arena, s, arena.walls):
 		return
-	var tip: Vector2 = _blast_tip(s)
+	var tip: Vector2 = s.blast_tip()
 	var from: Vector2 = s.advance()
 	s.pos = tip
 	var at: Vector2 = _rivet_contact(arena.rivet, from, tip)
 	if at == Vector2.INF and not s.spent():
 		return
+	_burst(arena, s, tip if at == Vector2.INF else at)
+
+
+static func _burst(arena: CombatArena, s: Shot, at: Vector2) -> void:
 	arena.shots.erase(s)
 	@warning_ignore("return_value_discarded")
-	RivetBlast.burst(arena, tip if at == Vector2.INF else at, s.weapon, s.shooter_id)
+	RivetBlast.burst(arena, at, s.weapon, s.shooter_id)
+	if s is FoeRocketFlight.Round:
+		var shell: FoeRocketFlight.Round = s
+		shell.landed.emit(shell, at)
 
 
 static func _struck(arena: CombatArena, s: Shot, from: Vector2) -> Fighter:

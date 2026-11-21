@@ -79,10 +79,11 @@ func _windup(e: EnemyAgent, h: Fighter, arena: CombatArena, map: GuardRouteMap) 
 	e.shot_tick = arena.tick
 	e.token = false
 	if not attack.melee:
-		return arena.squad_ai.rockets.launch(h, attack, landing, arena, map)
+		return arena.squad_ai.rockets.launch(h, attack, landing, map)
 	var blast: Shot = FoeAttacks.round_from(h, attack)
 	blast.pos = h.pos
 	blast.size = EnemyRounds.size_of(attack.id)
+	PlayerShock.areas_of(arena).note_blast(h.pos, attack.splash_radius_m, arena.tick)
 	arena.squad_ai.rockets.burst.emit(h.pos, attack.splash_radius_m, blast)
 	if (
 		h.pos.distance_to(arena.rivet.pos) <= attack.splash_radius_m

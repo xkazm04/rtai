@@ -18,6 +18,7 @@ func before_each() -> void:
 	squad = ArenaSquad.new(arena.guard_map)
 	arena.squad_ai = squad
 	walls = ArenaWalls.new()
+	arena.walls = walls
 	dodges = ArenaDodges.new()
 	impacts = []
 	radii = []
@@ -108,13 +109,19 @@ func test_solid_prop_stops_a_rocket_before_rivet() -> void:
 	var shot: Shot = _until_round()
 	if shot == null:
 		return
-	walls.boxes.append(Rect2(5, -2, 1, 4))
+	walls.boxes.append(Rect2(1, -2, 0.5, 4))
+	walls.kinds.append("wall_high")
+	watch_signals(arena)
 	for i: int in 120:
 		_step()
+		if not arena.shots.has(shot):
+			break
+	assert_signal_not_emitted(arena.struck)
+	assert_eq(arena.areas.blasts.size(), 1)
 	assert_eq(dodges.blocked, 1)
 	assert_eq(impacts.size(), 1)
 	if impacts.size() == 1:
-		assert_almost_eq(impacts[0].x, 6.0, 9.0 * SimClock.TICK_DT + 0.001)
+		assert_almost_eq(impacts[0].x, 1.5, 0.001)
 		assert_eq(radii[0], 3.0)
 	assert_eq(arena.rivet.hp, arena.rivet.max_hp)
 
@@ -126,12 +133,20 @@ func test_direct_hit_lands_after_shooter_dies() -> void:
 		return
 	arena.damage(h, 1.0, arena.rivet.id, &"gloria")
 	assert_false(h.alive())
+	watch_signals(arena)
 	for i: int in 120:
 		_step()
-	assert_eq(arena.rivet.hp, arena.rivet.max_hp - shot.damage)
+		if not arena.shots.has(shot):
+			break
+	_step()
+	assert_signal_emit_count(arena, "struck", 1)
+	assert_eq(arena.areas.blasts.size(), 1)
+	assert_almost_eq(
+		arena.rivet.hp, arena.rivet.max_hp - EnemyRounds.splash_damage(shot.weapon), 0.00001
+	)
 	assert_eq(impacts.size(), 1)
 	if impacts.size() == 1:
-		assert_lte(impacts[0].distance_to(arena.rivet.pos), arena.rivet.radius_m)
+		assert_almost_eq(impacts[0].distance_to(arena.rivet.pos), arena.rivet.radius_m, 0.00001)
 
 
 func test_four_troopers_obey_the_live_rocket_limit() -> void:

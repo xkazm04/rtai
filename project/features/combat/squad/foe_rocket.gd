@@ -91,7 +91,7 @@ func _windup(
 	h.cooldown = e.arch.weapon.cooldown_ticks
 	last_launch = h.pos
 	_site = _firing_site(e, squad.pit, map)
-	return squad.rockets.launch(h, e.arch.weapon, locked_point, arena, map)
+	return squad.rockets.launch(h, e.arch.weapon, locked_point, map)
 
 
 func _reposition(e: EnemyAgent, pit: EnemyPit, map: GuardRouteMap) -> void:

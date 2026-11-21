@@ -73,7 +73,7 @@ func owns(h: Fighter) -> bool:
 ## Wave members step in ID order before station navigation can spend their route budget.
 ## Everyone outside the wave keeps the arena's original step order.
 func assign(arena: CombatArena) -> Array[Fighter]:
-	rockets.collect(arena, _map)
+	rockets.collect(arena)
 	pit.tick = arena.tick
 	pit.rivet_pos = arena.rivet.pos
 	pit.rivet_radius = arena.rivet.radius_m

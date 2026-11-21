@@ -74,7 +74,7 @@ func test_cannon_tracks_then_locks_and_a_late_sidestep_clears_its_burst() -> voi
 	assert_true(GuardTell.telling(h))
 	assert_eq(h.tell_left, arch.telegraph_ticks)
 	assert_gte(h.tell_left, 60)
-	var walk: Vector2 = Vector2.UP * 5.0 * SimClock.TICK_DT
+	var walk: Vector2 = Vector2.UP * 6.0 * SimClock.TICK_DT
 	for i: int in arch.telegraph_ticks:
 		assert_eq(mind.walker.ring_radius(mind.agent), arch.weapon.splash_radius_m)
 		assert_true(arena.shots.is_empty())
@@ -95,7 +95,9 @@ func test_cannon_tracks_then_locks_and_a_late_sidestep_clears_its_burst() -> voi
 	for i: int in 70:
 		arena.rivet.pos += walk
 		_step()
-	assert_gt(locked.distance_to(rivet_at_impact), arch.weapon.splash_radius_m)
+	assert_gt(
+		locked.distance_to(rivet_at_impact) - arena.rivet.radius_m, arch.weapon.splash_radius_m
+	)
 	assert_eq(impacts, [Vector3(locked.x, locked.y, arch.weapon.splash_radius_m)])
 	assert_eq(arena.rivet.hp, arena.rivet.max_hp)
 
@@ -123,7 +125,7 @@ func test_hits_and_stun_during_cannon_tell_do_not_cancel_or_delay_the_shell() ->
 	assert_lt(h.hp, h.max_hp)
 	for i: int in 70:
 		_step()
-	assert_eq(arena.rivet.hp, arena.rivet.max_hp - arch.weapon.damage)
+	assert_almost_eq(arena.rivet.hp, arena.rivet.max_hp - arch.weapon.splash_damage, 0.00001)
 	assert_eq(impacts.size(), 1)
 	assert_eq(impacts[0].z, arch.weapon.splash_radius_m)
 
@@ -157,6 +159,17 @@ func test_stomp_grows_to_its_full_footprint_then_recovers() -> void:
 	assert_eq(arena.rivet.hp, arena.rivet.max_hp - arch.alt_weapon.splash_damage)
 	assert_true(arena.shots.is_empty())
 	_recovery()
+
+
+func test_stomp_requires_a_clear_sight_line_at_impact() -> void:
+	h.pos = Vector2(2, 0)
+	_tell()
+	var blocks: Array[Rect2] = [Rect2(0.75, -1, 0.5, 2)]
+	squad.set_route_map(GuardRouteMap.new(Rect2(-30, -30, 60, 60), blocks, null, 0.45))
+	for i: int in h.swing_left:
+		_step()
+	assert_eq(impacts.size(), 1)
+	assert_eq(arena.rivet.hp, arena.rivet.max_hp)
 
 
 func test_walking_out_during_stomp_tell_avoids_damage() -> void:

@@ -125,7 +125,9 @@ func _install(stage: ArenaStage) -> void:
 	wall.at = Vector2(window[0].start_x - 0.5, window[0].bounds.get_center().y)
 	gate.props.append(wall)
 	stations.stations.append(gate)
-	stage.walls.boxes.assign(ArenaWalls.from_stations(stations, stage.plan.base).boxes)
+	var solids: ArenaWalls = ArenaWalls.from_stations(stations, stage.plan.base)
+	stage.walls.boxes.assign(solids.boxes)
+	stage.walls.kinds.assign(solids.kinds)
 	var road: Rect2 = window[0].road_bounds(0.0).merge(window[-1].road_bounds(0.0))
 	rest = GauntletRest.new(road, stage.walls.boxes)
 	var arena: CombatArena = stage.arena

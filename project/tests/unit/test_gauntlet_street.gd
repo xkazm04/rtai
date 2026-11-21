@@ -146,6 +146,8 @@ func test_arena_replaces_retired_collision_and_routes_over_fifty_advances() -> v
 		for segment: GauntletSegment in s.street.window:
 			count += segment.station.props.size()
 		assert_same(s.stage.walls, walls)
+		assert_same(arena.walls, walls)
+		assert_eq(walls.kinds.size(), count)
 		assert_eq(walls.boxes.size(), count)
 		assert_true(arena.guard_map.region().has_point(next))
 		var retired: Vector2 = Vector2(s.street.window[0].start_x - 8.0, 0.0)
