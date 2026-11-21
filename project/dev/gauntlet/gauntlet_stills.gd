@@ -43,7 +43,6 @@ func _ready() -> void:
 				return
 		get_tree().quit()
 		return
-	hud.hide()
 	get_tree().quit(0 if await _segments() else 1)
 
 
