@@ -33,6 +33,11 @@ static func trigger(e: EnemyAgent, h: Fighter, arena: CombatArena) -> Shot:
 
 static func round_from(h: Fighter, w: EnemyWeapon) -> Shot:
 	var shot: Shot = Shot.new()
+	equip_round(shot, h, w)
+	return shot
+
+
+static func equip_round(shot: Shot, h: Fighter, w: EnemyWeapon) -> void:
 	shot.pos = h.pos + h.facing * (h.radius_m + 0.1)
 	shot.origin = shot.pos
 	shot.vel = h.facing * w.speed_mps
@@ -41,7 +46,6 @@ static func round_from(h: Fighter, w: EnemyWeapon) -> Shot:
 	shot.damage = w.damage
 	shot.left_m = w.reach_m
 	shot.shooter_id = h.id
-	return shot
 
 
 static func melee_hit(e: EnemyAgent, arena: CombatArena, map: GuardRouteMap) -> void:

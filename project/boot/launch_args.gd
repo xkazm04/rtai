@@ -112,6 +112,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	# d9-handheld: --save-cross=write|read,<dir>[,ticks,after,idle] (dev/save_cross.gd, E14)
 	"--save-cross",
 	"--enemy-brain",
+	"--foe-mix",
 	"--squad-overlay",
 	"--ohm-bolt-delay",
 	"--vault",  # lane move n19: force low-obstacle vaults on
@@ -121,6 +122,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--car-doors",  # lane move n19: take the timed walk to and from a car door
 	"--ghost-look",  # n20-flight: override the per-form visual look
 	"--dent-tether",  # n20-dent: choose the roof tether
+	"--enemy",  # n22 foes: archetype for the single-enemy duel
 	"--controls",
 ]
 var _values: Dictionary[String, String] = {}
