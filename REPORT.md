@@ -3,7 +3,7 @@
 Every number below was checked by the director at the time noted in JOURNAL.md.
 
 Branch `n22-street`, worktree `C:\Users\kazda\kiro\gtai-wt\n22-street`. Interface tag `n22-street-iface` (4b1634334).
-Final gate on the last code commit 7967a0cfa: `node tools/gate/run.mjs --rev=HEAD --reels` -> `gate: PASS; build/gate/7967a0cfacfc/gate.json` (git-ignored, in this worktree): lint 19/19 over 1857 files, unit 3458/0/2, scenarios 65, parity bit-exact over 1200 steps with the planted mutation caught at step 629, selftest, export-audit 843/0, reels top/tilt70/combo exit 0; evidence 605 s, reels 281 s per view. Commits after it are JOURNAL/REPORT/briefs only (inert).
+Final gate on the last code commit 7967a0cfa: `node tools/gate/run.mjs --rev=HEAD --reels` -> `gate: PASS; build/gate/7967a0cfacfc/gate.json` (git-ignored, in this worktree): lint 19/19 over 1857 files, unit 3458/0/2, scenarios 65, parity bit-exact over 1200 steps with the planted mutation caught at step 629, selftest, export-audit 843/0, reels top/tilt70/combo exit 0; evidence 605 s, reels 281 s per view. Commits after it are JOURNAL, REPORT, briefs and `evidence/street/late_film.json` only (all inert to the gate).
 
 ## What works (item, evidence, number)
 - Interface: `StatMods`, `GauntletPilot` (bot hook `pick(offered) -> int`), `gauntlet.json` / `gauntlet_bonuses.json` + schemas, scene `project/dev/gauntlet/gauntlet.tscn` launched by `node tools/dev/run.mjs gauntlet` (a6b5b9702, 4b1634334).
