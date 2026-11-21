@@ -1,5 +1,7 @@
 extends GutTest
 
+const Entry = preload("res://dev/gauntlet/gauntlet.gd")
+
 var run: GauntletRun
 var session: GauntletSession
 var waves: GauntletWaves
@@ -95,6 +97,43 @@ func test_timeout_keeps_measured_counts_and_omits_time_to_clear() -> void:
 	var shots: int = run.waves[0]["shots"]
 	assert_eq(shots, 0)
 	assert_true(run.picks.is_empty())
+
+
+func test_written_wave_and_pick_match_the_result_schema() -> void:
+	_enter()
+	var arena: CombatArena = session.stage.arena
+	for member: Fighter in arena.hostiles:
+		arena.damage(member, member.max_hp * 10, arena.rivet.id, &"claw")
+	session.step()
+	var entry: Entry = Entry.new()
+	entry.run = run
+	var path: String = TestTmp.dir("gauntlet").path_join("result.json")
+	var written: bool = entry._write_result(path)
+	entry.free()
+	assert_true(written)
+	var schema: Dictionary = JSON.parse_string(
+		FileAccess.get_file_as_string("res://data/schemas/gauntlet_run.schema.json")
+	)
+	var result: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(path))
+	_check_object(result, schema)
+	var wave: Dictionary = result["waves"][0]
+	var wave_spec: Dictionary = schema["$defs"]["wave"]
+	_check_object(wave, wave_spec)
+	var pick: Dictionary = result["picks"][0]
+	var pick_spec: Dictionary = schema["properties"]["picks"]["items"]
+	_check_object(pick, pick_spec)
+	var schema_id: String = schema["properties"]["schema"]["const"]
+	var actual_id: String = result["schema"]
+	assert_eq(actual_id, schema_id)
+
+
+func _check_object(value: Dictionary, definition: Dictionary) -> void:
+	var required: Array = definition["required"]
+	var allowed: Dictionary = definition["properties"]
+	for key: String in required:
+		assert_true(value.has(key), "required field %s" % key)
+	for key: String in value:
+		assert_true(allowed.has(key), "unknown field %s" % key)
 
 
 func test_lethal_projectile_identifies_the_weapon() -> void:
