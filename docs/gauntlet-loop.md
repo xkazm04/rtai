@@ -1,5 +1,16 @@
 # Combat gauntlet loop
 
+## A night at a glance
+
+1. **Measure.** Start on a fresh `n22-tune-<n>` branch. Run `node tools/gauntlet/night.mjs --seeds=30 --out=build/gauntlet/night-2` once for steps 1–5. Average, greedy, wheel, seeds 1–30 took 12 min 54 s with one Godot job on a contended machine. [Before batch](../evidence/loop/tune2-before/batch.json)
+2. **Report.** The night runs `node tools/gauntlet/report.mjs --batch=build/gauntlet/night-2/before/batch.json`. Read the wave medians against 15 s and check how many runs contributed.
+3. **Tune.** The night runs `tune.mjs propose` to record numeric steps in `plan.json`, then `tune.mjs apply` to commit each eligible knob on the tune branch.
+4. **Confirm.** The night runs `batch.mjs` again with the same seeds, profile, pick policy and controls. This took 12 min 57 s. [Confirm batch](../evidence/loop/tune2-after/batch.json)
+5. **Revert.** The night's `tune.mjs confirm --revert` step undoes edits whose improvement failed to clear the A/A floor or lacked enough pairs. The cycle took about 40 min (05:00–05:40), including about 10 min for five apply and five revert commits through the hook. [Ledger](../evidence/loop/tune2-after/tune-ledger.md) · [Lane report](../REPORT.md)
+6. **Measure bonus choices.** Run `node tools/gauntlet/batch.mjs --pick=random --profile=all --controls=wheel --seeds=100 --jobs=1 --out=build/gauntlet/night-2/random`, then `node tools/gauntlet/report.mjs --batch=build/gauntlet/night-2/random/batch.json`. Thirty average seeds took 8 min 52 s. Matching by pick wave left 2–8 take/decline pairs for survival and 1–8 for wave time. The A/A floor needs six pairs. [Random batch](../evidence/loop/random-30/batch.json) · [Bonus comparisons](../evidence/loop/random-30/report.md)
+7. **Propose.** Give the owner a measured observation and a change to pick. Film a seed that shows the behaviour.
+8. **Morning.** Hand over the reports, ledger and films. For an eight-hour night with one job, estimate 40 min for one 30-seed tune cycle and about 30 min per profile for 100 random seeds (90 min for three), leaving time for the films.
+
 ## Speed
 
 The director measured the real street with four lanes busy (CONTENDED). Using the final `tick N, segment` in each engine log for simulation time and the manifest's `wall_s` for elapsed time, budget **10.8 s fixed plus 0.028 wall s per simulated second**. That is about 35 simulated seconds per wall second during combat. A 200-sim-second ten-wave run takes about 17 wall seconds, or roughly 210 runs per wall hour with one job. The original expert seed 4 took 17.38 wall seconds for 200 simulated seconds. Long tick-cap runs include idle time. [Street batch and engine logs](../evidence/loop/batch-street-1/batch.json)
@@ -168,6 +179,8 @@ To undo a kept change, copy its **Apply SHA** from `night.md` and run `git rever
 
 The plan ranks wave-time errors relative to the timing target, killer shares relative to their threshold and profile gaps relative to one wave. Offer survival differences are scaled by the decliners' median survival (at least one wave), and offer timing differences by the timing target. The largest eligible misses get up to `--max=6` edits. One card can generate two measured outcomes and one edit.
 
+<a id="numeric-limits"></a>
+
 **Numeric limits.** `tools/gauntlet/knobs.json` lists the table, JSON pointer, kind and bounds of each knob. The catalog covers enemy HP and damage, enemy weapon damage, player weapon damage and firing rate, guard numbers and the two wave-budget integers. Every pointer into an array names the stable row ID in `row`. Proposal and apply both check the indexed object's ID. The gun's `rof_hz` is the inverse of its firing interval. An unresolved pointer, changed array-row identity or pending knob is reported and skipped. Mechanics, skills and weapon effects need a separate proposal.
 
 On the first proposal, `tools/gauntlet/baseline.json` records the date, Git SHA and first value of every resolved knob. Later proposals append only newly available IDs. Commit a new baseline or its additions by path before applying. A value must satisfy its catalog bounds and stay within **0.8–1.25×** its current table value and **0.5–2×** its first value. Integer steps round in the proposed direction within that intersection. For example, an integer budget of 2 has no legal step. A zero baseline stays zero.
@@ -180,4 +193,69 @@ For time and offer effects, the confirming number is the median paired reduction
 
 `tune-ledger.json` and `tune-ledger.md` appear beside the **after** batch. Each row records the old, new and baseline values, original miss, measured outcomes, paired improvement, CI95, A/A floor, verdict and commit SHAs. Plain `confirm` writes verdicts. Add `--revert` to undo committed `reverted`, `noise` and `too few pairs` edits in reverse order. Undo allows its named plan, batches and ledger files alongside the evidence and build directories. Git needs a clean index. An empty apply SHA means the branch has no commit for that edit. A revert SHA identifies an executed undo. To undo one edit manually, use `git revert --no-edit <apply-sha>` on the tune branch.
 
-## Proposals (TODO)
+## Replay and film a run from its seed
+
+Choose a seed from the “Unusual winning runs” table in any report. The result file carries `seed`, `profile` and `controls`. Read the pick policy and any wave cap from the batch. On the same code and tables, replaying those settings gives a byte-identical result. All 15 repeats matched on night 1. [Unusual runs](../evidence/loop/street-final/report.md#unusual-winning-runs) · [Repeat digests](../evidence/loop/street-final/determinism.json)
+
+For average seed 5, replace the output placeholder with an absolute path and run headless from the worktree root.
+
+```powershell
+node tools/dev/run.mjs gauntlet --seed=5 --bot=average --pick=greedy --controls=wheel --result=<absolute path>.json
+```
+
+Compare the new file with the original using `cmp "<absolute path>.json" "<batch>/runs/average-5.json"`. Exit 0 means every byte matched. [Original seed 5 result](../evidence/loop/street-final/runs/average-5.json)
+
+For the five-wave film, prepare the scratch project described in the manifest's `capture_project` field. Copy `project.godot`, link the resource directories to this worktree with junctions and set the viewport to 1920 × 1080 in the scratch `override.cfg`. Run the recorded `flags` with your AVI, capture project and result paths. [Film manifest](../evidence/loop/film.json)
+
+```powershell
+& $env:GODOT_BIN --windowed --position 0,1440 --resolution 1920x1080 --rendering-driver d3d12 --fixed-fps 60 --write-movie "<source.avi>" --path "<capture project>" res://dev/test_player/gauntlet_bot_film.tscn -- --bot=average --pick=greedy --controls=wheel --seed=5 --waves=5 --pick-view "--result=<absolute result.json>"
+```
+
+The main scene uses 32 px/m. For 64 px/m, substitute the manifest's `closeup_scene`, `res://dev/test_player/gauntlet_bot_film_closeup.tscn`, and add `--quit-after 2565` before the scene. Encode with FFmpeg libx264, fast preset, CRF 18, yuv420p and AAC at 160 kbit/s. Captions read state after the tick and never feed input. Results with and without captions matched byte for byte on seeds 1 and 5. The complete seed 5 movie also matched its five-wave headless result. [Capture settings and comparisons](../evidence/loop/film.json)
+
+## What the tuner may touch
+
+Only the 69 table numbers in `tools/gauntlet/knobs.json` are eligible. On an `n22-tune*` branch, each knob gets one step per night, within 0.8–1.25× its current value and 0.5–2× its write-once value in `tools/gauntlet/baseline.json`. Code edits and switching on mechanics are outside the tuner's scope. See [Numeric limits](#numeric-limits).
+
+A tune branch has zero net table changes unless a change was kept. Only the owner or Director merges a kept change. The loop never merges the branch.
+
+## What the owner sees in the morning, and what needs their pick
+
+- Start with the lane's [REPORT.md](../REPORT.md) for the findings and open decisions.
+- Open `night.md` at the root of the night's output and `after/tune-ledger.md`. For every kept or reverted knob they give the before, after and baseline values, the paired improvement and CI95, the A/A floor, and the apply and any revert commit SHAs. [Night output layout](../tools/gauntlet/night.mjs) · [Night 1 ledger](../evidence/loop/tune2-after/tune-ledger.md)
+- Compare `before/report.html` and `after/report.html` for wave times against 15 s, deaths and killers, bonus take versus decline, rolls and time in each form. Read guard and cover use from each run's `guard_ticks` and `cover_ticks`. The reports mark missing guard deflects and list unusual runs to replay. [Before](../evidence/loop/tune2-before/report.html) · [After](../evidence/loop/tune2-after/report.html) · [Seed 5 counters](../evidence/loop/tune2-after/runs/average-5.json)
+- Open `frames.json` in `C:\Users\kazda\kiro\gtai-masters\<night>\loop\` for the films and stills. [Night 1 film manifest](../evidence/loop/film.json)
+
+Every proposal for a skill, weapon effect or combo needs the owner's pick. Flag any knob at 0.5× or 2× its baseline. The tuner stops at that bound. Changes to the loop's own rules also need the owner's decision. Night 1 left two calls open.
+
+1. **Noise floor.** Pairing different before seeds (e.g. 1 with 3) gave A/A floors of 12.57–40.95 s. Same-seed repeats were byte-identical. The loop reverted two cuts despite paired improvements towards 15 s. For `war_machine.hp` (60 → 48), wave 20 improved by 13.7 s (CI95 4.75–19.08, 12 pairs). For `shield_robot.hp` (10 → 8), wave 13 improved by 3.7 s (CI95 1.72–6.6, 25 pairs). The recommended null-perturbation floor uses the paired spread from rerunning the same seeds with a neutral change. [Ledger and seed pairs](../evidence/loop/tune2-after/tune-ledger.md)
+2. **Opening budget.** Waves 1–4 took 6.1–8.0 s against 15 s. `budget.base` is the integer 2. A 20% step gives no new integer and a rise to 3 is 50%, so the tuner cannot slow the opening waves this way. The owner can choose finer budget units or a one-unit step rule. [Wave times](../evidence/loop/tune2-before/report.md) · [Tune plan](../evidence/loop/tune2-before/plan.json)
+
+## Proposals
+
+Start with an observation in the night's report. Compare wave times with an enemy present and absent, name a frequent killer, check how a cooldown limits time in a form, or count the bonuses left late in a run. Cite the number and file, then describe what the player could do differently. The owner picks proposals. The loop never builds them. Timed parry is a non-goal in the design note.
+
+Night 1's proposals use the original nine accepted runs in the first greedy tune batch. The report at commit `ca4e452ac` gives that sample. The refreshed report includes the tenth run, which reached the tick cap alive. [Lane proposals](../REPORT.md) · [First batch](../evidence/loop/tune1-before/batch.json) · [Refreshed report](../evidence/loop/tune1-before/report.md)
+
+1. **Ohm short-circuit on machines.** Waves with a sentry turret took a median 38.3 s (99 waves), against 10.7 s without one (83 waves). Both street batches list `turret_gun` among the top killers. Let an Ohm pulse stun a sentry turret or shield robot for about 2 s. [First batch](../evidence/loop/tune1-before/batch.json) · [Street deaths](../evidence/loop/street-final/report.md#deaths-by-profile)
+2. **Tonnage armour crack.** War-machine waves took 43.8 s against 26.0 s without the machine. The seed 2 probes measured 0.7–1.9 HP/s against it. On many later waves the median time in Tonnage was 7.1 s. Let a Tonnage hit during recovery from a stomp open the machine's armour for a few seconds. [First batch](../evidence/loop/tune1-before/batch.json) · [Seed 2 machine probes](#street-measurement) · [Form times](../evidence/loop/tune1-before/report.md#combat-telemetry)
+3. **Kerf blink behind a shield.** Shield-robot waves took 41.2 s against 12.7 s without one, the widest enemy presence gap. End Kerf's blink-slice behind its target so the slice bypasses the shielded front. [First batch](../evidence/loop/tune1-before/batch.json)
+4. **Overkill carry.** Late waves put ten or more low-tier humans alongside machines. Patrol cops appeared in 89% of timed wave seconds. The bot spent time finishing crowds and deep runs hit the 90 s timer. Let damage left over from a kill jump to the nearest enemy within 3 m. [Enemy time share](../evidence/loop/tune1-before/report.md#enemy-presence-and-wave-time) · [Seed 5 rosters and timeout](../evidence/loop/tune1-before/runs/average-5.json)
+5. **Deeper bonus pool.** A clear gives one pick. By wave 25 the deepest greedy runs in the original sample had taken 24 of the 26 bonuses, leaving too few for a full three-card offer. Add second ranks of existing weapon effects. [Seed 5 picks](../evidence/loop/tune1-before/runs/average-5.json) · [Bonus table](../project/data/tables/gauntlet_bonuses.json)
+
+## Where the test player is unlike a person
+
+- The bot reads the sim directly. It knows enemy positions, tells and projectile paths. A person can misread a tell or lose sight of an enemy.
+- It has no fatigue or tunnel vision. It gives wave 20 the same attention as wave 1.
+- It has fixed habits. Greedy picks follow one value table. Tonnage's 20 s cooldown often leaves time for one cast in a wave. Longer waves can fit two (14.2 s in Tonnage on seed 5, wave 15). It never uses Dent because the street has no cars. [Seed 5 form times](../evidence/loop/tune1-before/runs/average-5.json) · [Cooldowns](../project/data/tables/powers.json)
+- It knows the street geometry. It follows a route without pausing to look around or turning back out of curiosity.
+- It rests and retreats to repair where a person might press. Most deep runs end at the 90 s wave timer. Cutting HP to help this bot may make the wave too easy for an aggressive player. [First street cycle](../evidence/loop/tune1-before/report.md#timeouts)
+
+A change kept for this bot is a hypothesis about human play. Check it in a playtest.
+
+## Known gaps after night 1
+
+- **NEED street.** The street result omits `guard_deflects`. It records how long the bot held guard. A count of deflected shots needs a street observer. [Street result](../evidence/loop/tune2-after/runs/average-5.json)
+- `hits` counts every damaging contact, including claws and blasts, and counts a killing wound again. `shots` counts gun rounds. These counters cannot give a hit rate. [Combat telemetry](../evidence/loop/tune2-after/report.md#combat-telemetry)
+- Eight of the 30 confirm runs were still alive at 72,000 ticks. The cap censors “wave reached”. Their timed waves count and their recorded depth is a lower bound on how far they could go. [Confirm report](../evidence/loop/tune2-after/report.md)
+- Mutation tests caught 18/20 faults. Flipping the view flag at `project/features/gauntlet/bot/gauntlet_bot.gd:29` and removing the street stats hook at `project/features/gauntlet/bot/gauntlet_bot.gd:34` both survived. No mapped test checks that the bot's roll, cover and form counters reach the street result. [Lane mutation record](../REPORT.md)
