@@ -9,7 +9,7 @@ import { analyze } from './analysis.mjs';
 import { BATCH_SCHEMA, validateRun } from './contract.mjs';
 import { render } from './render.mjs';
 
-function loadBatch(path) {
+export function loadBatch(path) {
   const doc = readJson(path);
   if (doc?.schema !== BATCH_SCHEMA || !Array.isArray(doc.results) || !Array.isArray(doc.runs)
     || !doc.args || !doc.git) throw new Error(path + ': expected ' + BATCH_SCHEMA);
@@ -22,7 +22,7 @@ function loadBatch(path) {
   return doc;
 }
 
-function weaponsOf(batch) {
+export function weaponsOf(batch) {
   if (batch.weapon_refs) return new Map(Object.entries(batch.weapon_refs));
   // Older/external manifests may carry only hashes. Never resolve ids against a different table.
   const file = 'gauntlet_bonuses.json';
@@ -44,6 +44,8 @@ export function generate(batchPath, baselinePath, out = dirname(batchPath)) {
   writeFileSync(join(out, 'report.html'), html);
   return model;
 }
+
+export { analyze };
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   try {
