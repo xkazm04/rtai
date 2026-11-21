@@ -1,0 +1,72 @@
+[
+  {
+    "file": "gauntlet_waves4-5_32.mp4",
+    "title": "The war machine at the crossing",
+    "ppm": 32,
+    "before": null,
+    "note": "Rivet fires across the zebra stripes as the war machine advances with its escort. The fifth offer highlights Gloria."
+  },
+  {
+    "file": "gauntlet_waves1-3_32.mp4",
+    "title": "From bare claws to the hand cannon",
+    "ppm": 32,
+    "before": null,
+    "note": "The camera tracks Rivet through the alley and loading bay. The first clear highlights the electro baton."
+  },
+  {
+    "file": "fight_cover_64.png",
+    "title": "Claw strike at cover",
+    "ppm": 64,
+    "before": null,
+    "note": "Rivet strikes a patrol cop at the corner of a black cover crate. Two fallen cops lie across the street."
+  },
+  {
+    "file": "pick_screen_32.png",
+    "title": "The first upgrade",
+    "ppm": 32,
+    "before": null,
+    "note": "The three paper cards offer speed, Kerf and the electro baton. The cleared-wave HUD stays visible at upper left."
+  },
+  {
+    "file": "segment_crosswalk_32.png",
+    "title": "Crosswalk",
+    "ppm": 32,
+    "before": null,
+    "note": "Zebra stripes span the road beside Rivet. Tall cover and a low pallet sit clear of the paint."
+  },
+  {
+    "file": "segment_alley_neck_32.png",
+    "title": "Alley neck",
+    "ppm": 32,
+    "before": null,
+    "note": "Opposing wall projections pinch the roadway. Rivet stands in the gap with high cover along the lower side."
+  },
+  {
+    "file": "segment_loading_bay_32.png",
+    "title": "Loading bay",
+    "ppm": 32,
+    "before": null,
+    "note": "Three dark crates line the upper wall opposite two small pale stacks."
+  },
+  {
+    "file": "segment_kiosk_plaza_32.png",
+    "title": "Kiosk plaza",
+    "ppm": 32,
+    "before": null,
+    "note": "Rivet stands between two pale stacks and the squat dark kiosk along the lower wall."
+  },
+  {
+    "file": "segment_barricade_line_32.png",
+    "title": "Barricade line",
+    "ppm": 32,
+    "before": null,
+    "note": "Two tall dark barricades and a pale stack interrupt opposite sides of the lane."
+  },
+  {
+    "file": "segment_plain_block_32.png",
+    "title": "Plain block",
+    "ppm": 32,
+    "before": null,
+    "note": "The open lane runs between staggered crates and a small pale stack, with the next crossing at the right edge."
+  }
+]
