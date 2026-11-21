@@ -25,6 +25,24 @@ func _ready() -> void:
 			blood.oil.solid = _street.solid_px
 
 
+## Inspection uses the actor canvas so the print pass cannot erase the thin white outlines.
+func show_solid_bounds() -> void:
+	var overlay: Node2D = Node2D.new()
+	overlay.z_index = 4095
+	print_stage.actor_layer().add_child(overlay)
+	@warning_ignore("return_value_discarded")
+	overlay.draw.connect(_draw_solids.bind(overlay))
+	@warning_ignore("return_value_discarded")
+	_street.window_changed.connect(overlay.queue_redraw)
+
+
+func _draw_solids(overlay: Node2D) -> void:
+	for box: Rect2 in (_stage as ArenaStage).walls.boxes:
+		var rect: Rect2 = Rect2(box.position * SimConst.PX_PER_M, box.size * SimConst.PX_PER_M)
+		overlay.draw_rect(rect, Ink.INK, false, 4.0)
+		overlay.draw_rect(rect, Color.WHITE, false, 2.0)
+
+
 func _locate(id: int) -> Vector2:
 	var arena: CombatArena = _stage.arena
 	if id != arena.rivet.id:

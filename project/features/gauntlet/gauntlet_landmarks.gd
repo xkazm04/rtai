@@ -58,6 +58,9 @@ static func _hatch(ci: CanvasItem, rect: Rect2) -> void:
 
 static func furniture(ci: CanvasItem, block: GauntletSegment) -> void:
 	var deck: Dictionary = block.dressing
+	for p: ArenaStation.Prop in block.station.props:
+		if p.kind == "wall_high" and p.size.x >= block.length_m:
+			_edge(ci, Rect2(p.at - p.size * 0.5, p.size))
 	for row: Dictionary in deck["fixtures"]:
 		var at: Array = row["at"]
 		var x: float = at[0]
@@ -80,7 +83,8 @@ static func furniture(ci: CanvasItem, block: GauntletSegment) -> void:
 			ArenaFloorStatic.barrier(ci, GauntletFrontage.px(r))
 			ci.draw_texture_rect(BARRIER, GauntletFrontage.px(r.grow(-0.08)), false)
 			continue
-		ci.draw_rect(GauntletFrontage.px(r), Ink.WASH)
+		# The slab beneath a standing card shows the full extent of its solid footing.
+		ArenaFloorStatic.barrier(ci, GauntletFrontage.px(r))
 		var scale_m: float = deck[entry + "_scale"]
 		_card(ci, art, Vector2(p.at.x, r.end.y), scale_m)
 
@@ -112,9 +116,21 @@ static func _viaduct(ci: CanvasItem, road: Rect2) -> void:
 		ci.draw_rect(GauntletFrontage.px(beam), Ink.WASH)
 
 
+## A capped parapet separates the playable carriageway from the pavement and upper deck.
+static func _edge(ci: CanvasItem, r: Rect2) -> void:
+	ArenaFloorStatic.barrier(ci, GauntletFrontage.px(r))
+	var coping: Rect2 = Rect2(r.position + Vector2(0.0, 0.08), Vector2(r.size.x, 0.30))
+	ci.draw_texture_rect(COPING, GauntletFrontage.px(coping), false)
+	for i: int in range(0, ceili(r.size.x), 3):
+		var post: Rect2 = Rect2(r.position + Vector2(i, 0.0), Vector2(0.30, r.size.y))
+		ci.draw_rect(GauntletFrontage.px(post), Ink.INK)
+
+
 static func _pier(ci: CanvasItem, r: Rect2) -> void:
 	ArenaFloorStatic.barrier(ci, GauntletFrontage.px(r))
 	var cap: Rect2 = Rect2(r.position - Vector2(0.2, 0.65), r.size + Vector2(0.4, -0.2))
+	var face: Rect2 = Rect2(r.position.x, cap.end.y, r.size.x, r.end.y - cap.end.y)
+	ci.draw_texture_rect(GauntletFrontage.FRONTS["masonry"], GauntletFrontage.px(face), false)
 	ci.draw_texture_rect(COPING, GauntletFrontage.px(cap), false)
 	ci.draw_rect(GauntletFrontage.px(cap), Ink.INK, false, 4.0)
 

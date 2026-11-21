@@ -13,6 +13,7 @@ var run: GauntletRun = GauntletRun.new()
 var session: GauntletSession
 var pilot: GauntletPilot
 var waves: GauntletWaves
+var view: GauntletView
 var hud: GauntletHud
 var pick_view: GauntletPickView
 var _result_path: String = ""
@@ -83,7 +84,7 @@ func _open_view(film: bool) -> void:
 	waves.manual_picks = pilot == null or film
 	session.world.set_process(not waves.manual_picks)
 	set_physics_process(waves.manual_picks)
-	var view: GauntletView = GauntletView.new(session.street)
+	view = GauntletView.new(session.street)
 	view.px_per_m = camera_ppm
 	view.bind(session.stage, CollectCallWorld.new(session.stage), null)
 	add_child(view)

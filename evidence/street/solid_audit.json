@@ -1,0 +1,84 @@
+{
+  "seed": 7,
+  "tick": 540,
+  "ppm": 32,
+  "view": "tilt70",
+  "before_commit": "a3a06df84f5b256f5097c351f8598e13f364e136",
+  "before_sha256": "e54f8a6ffe4339e11933a6aded3497473f77f4d80ef84ec095d57509fe217a1b",
+  "after_sha256": "e54f8a6ffe4339e11933a6aded3497473f77f4d80ef84ec095d57509fe217a1b",
+  "comparison": "Exact bytes, ten waves. White outlines come from live ArenaWalls.boxes. The counts below exclude the shared rear gate. Sidewalk fixtures beyond the continuous roadside walls are scenery.",
+  "segments": [
+    {
+      "id": "plain_block",
+      "solid_boxes": 4,
+      "clean": "segment_plain_block_32.png",
+      "overlay": "segment_plain_block_solids_32.png",
+      "drawn_obstacles_have_boxes": true,
+      "boxes_have_drawn_obstacles": true,
+      "note": "The bus shelter and bench sit on separate slabs, between two posted rails."
+    },
+    {
+      "id": "crosswalk",
+      "solid_boxes": 4,
+      "clean": "segment_crosswalk_32.png",
+      "overlay": "segment_crosswalk_solids_32.png",
+      "drawn_obstacles_have_boxes": true,
+      "boxes_have_drawn_obstacles": true,
+      "note": "Paint is clear across the zebra. The newsstand and low planter have separate footings."
+    },
+    {
+      "id": "barricade_line",
+      "solid_boxes": 5,
+      "clean": "segment_barricade_line_32.png",
+      "overlay": "segment_barricade_line_solids_32.png",
+      "drawn_obstacles_have_boxes": true,
+      "boxes_have_drawn_obstacles": true,
+      "note": "Three transverse barriers have visible faces and leave a slalom between the two rails."
+    },
+    {
+      "id": "loading_bay",
+      "solid_boxes": 6,
+      "clean": "segment_loading_bay_32.png",
+      "overlay": "segment_loading_bay_solids_32.png",
+      "drawn_obstacles_have_boxes": true,
+      "boxes_have_drawn_obstacles": true,
+      "note": "Three tarped loads sit at the hatched dock edge. A drum stack occupies the fourth footing."
+    },
+    {
+      "id": "alley_neck",
+      "solid_boxes": 5,
+      "clean": "segment_alley_neck_32.png",
+      "overlay": "segment_alley_neck_solids_32.png",
+      "drawn_obstacles_have_boxes": true,
+      "boxes_have_drawn_obstacles": true,
+      "note": "The short masonry wings narrow the lane. The dumpster occupies its own box."
+    },
+    {
+      "id": "kiosk_plaza",
+      "solid_boxes": 5,
+      "clean": "segment_kiosk_plaza_32.png",
+      "overlay": "segment_kiosk_plaza_solids_32.png",
+      "drawn_obstacles_have_boxes": true,
+      "boxes_have_drawn_obstacles": true,
+      "note": "Two long planters flank the square and the coffee kiosk stands on the south pad."
+    },
+    {
+      "id": "underpass",
+      "solid_boxes": 6,
+      "clean": "segment_underpass_32.png",
+      "overlay": "segment_underpass_solids_32.png",
+      "drawn_obstacles_have_boxes": true,
+      "boxes_have_drawn_obstacles": true,
+      "note": "Four masonry piers carry the viaduct. The posted rails close both apparent cross-street mouths."
+    },
+    {
+      "id": "market_stalls",
+      "solid_boxes": 7,
+      "clean": "segment_market_stalls_32.png",
+      "overlay": "segment_market_stalls_solids_32.png",
+      "drawn_obstacles_have_boxes": true,
+      "boxes_have_drawn_obstacles": true,
+      "note": "Four umbrella carts and one newsstand stand on the two paving strips. Open paving between them is passable."
+    }
+  ]
+}

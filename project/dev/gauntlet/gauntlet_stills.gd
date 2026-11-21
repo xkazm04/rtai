@@ -48,6 +48,10 @@ func _ready() -> void:
 
 func _segments() -> bool:
 	var table: DataTable = DataTable.open(GauntletStreet.TABLE, GauntletStreet.SCHEMA)
+	var suffix: String = ""
+	if OS.has_environment("GTAI_GAUNTLET_SOLIDS"):
+		view.show_solid_bounds()
+		suffix = "_solids"
 	var found: Array[StringName] = []
 	var wanted: int = table.array(table.raw, "segments").size()
 	var arena: CombatArena = session.stage.arena
@@ -56,7 +60,7 @@ func _segments() -> bool:
 		if not found.has(block.id):
 			var at: Vector2 = Vector2(block.start_x + block.length_m * 0.5, 0)
 			arena.rivet.pos = session.stage.walls.push_out(at, arena.rivet.radius_m)
-			if not await _save("segment_%s_32" % block.id):
+			if not await _save("segment_%s%s_32" % [block.id, suffix]):
 				return false
 			found.append(block.id)
 			if found.size() == wanted:
