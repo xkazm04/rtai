@@ -127,6 +127,7 @@ func _finish(stage: ArenaStage, tick: int, cleared: bool) -> void:
 		return
 	var row: Dictionary = _run.waves[-1]
 	_stats.finish(stage, row)
+	_stats.collect_pilot(_picker, row)
 	row["hits"] = _hits
 	if cleared:
 		row["seconds"] = (tick - _start) * SimClock.TICK_DT

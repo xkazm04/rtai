@@ -9,6 +9,19 @@ class Buttons:
 		return TickInput.new(mask, 0, 0)
 
 
+class Counters:
+	extends GauntletPilot
+	var deflects: int = 3
+	var resets: int = 0
+
+	func wave_counters() -> Dictionary:
+		return {"guard_deflects": deflects, "rolls": 88, "form_seconds": {"fake": 99}, "hits": 777}
+
+	func reset_wave_counters() -> void:
+		deflects = 0
+		resets += 1
+
+
 var run: GauntletRun
 var input: Buttons
 var session: GauntletSession
@@ -86,3 +99,20 @@ func test_pistol_pick_records_pulls_hits_and_incoming_damage() -> void:
 	assert_eq(shots, gun_shots)
 	assert_gt(hits, 0)
 	assert_gte(lost, 3.0)
+
+
+func test_pilot_deflects_are_merged_once_after_street_observations() -> void:
+	var pilot: Counters = Counters.new()
+	waves._picker = pilot
+	var row: Dictionary = _clear()
+	var deflects: int = row["guard_deflects"]
+	var rolls: int = row["rolls"]
+	var seconds: Dictionary = row["form_seconds"]
+	var hits: int = row["hits"]
+	assert_eq(deflects, 3)
+	assert_eq(rolls, 0)
+	assert_true(seconds.has("rivet"))
+	assert_false(seconds.has("fake"))
+	assert_ne(hits, 777)
+	assert_eq(pilot.resets, 1)
+	assert_eq(pilot.deflects, 0)
