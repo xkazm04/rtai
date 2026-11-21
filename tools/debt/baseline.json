@@ -84,7 +84,17 @@
         "2026-11-18: n19 move: film both station heights with the scripted cover course under dev/rivet_motion (dev_loc 22984 -> 23167)",
         "2026-11-19: Film all twelve motion-driven strides on native-scale ground rulers in the requested rivet_motion dev course. (dev_loc 23167 -> 23334)",
         "2026-11-19: Exercise the strip-matched phase only in the stride film and fail a take that falls back to the shipped rate. (dev_loc 23334 -> 23361)",
-        "2026-11-19: Owner-requested reproducible ghost films: a dev-only arena input driver, camera marks and per-frame evidence for four forms, two real views and the Ohm delay comparison. (dev_loc 26341 -> 26602)"
+        "2026-11-19: Owner-requested reproducible ghost films: a dev-only arena input driver, camera marks and per-frame evidence for four forms, two real views and the Ohm delay comparison. (dev_loc 26341 -> 26602)",
+        "2026-11-20: gauntlet dev scene for n22 street (dev_loc 26600 -> 26681)",
+        "2026-11-20: test player pit probe for n22 loop (dev_loc 26681 -> 26861)",
+        "2026-11-21: test player pit probe for n22 loop (dev_loc 26861 -> 26921)",
+        "2026-11-20: gauntlet dev scene streams and renders the seeded n22 street (dev_loc 26681 -> 26733)",
+        "2026-11-20: gauntlet dev scene drives measured waves for n22 street (dev_loc 26733 -> 26749)",
+        "2026-11-20: --enemy for n22 foes (dev_loc 26600 -> 26712)",
+        "2026-11-21: foe duel player profiles and fairness evidence for n22 foes (dev_loc 26712 -> 26765)",
+        "2026-11-21: Wave clock and health HUD for n22 street (dev_loc 26749 -> 26830)",
+        "2026-11-21: Human upgrade cards, selection and translated HUD for n22 street (dev_loc 26830 -> 27022)",
+        "2026-11-21: Windowed pick and segment still capture for n22 street (dev_loc 27022 -> 27110)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -93,8 +103,9 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 496,
-        "project/dev/enemy_ai": 1506,
+        "project/dev/enemy_ai": 1671,
         "project/dev/frames": 1087,
+        "project/dev/gauntlet": 503,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1396,
         "project/dev/gunplay": 674,
@@ -115,10 +126,11 @@
         "project/dev/servo": 434,
         "project/dev/showcase": 7139,
         "project/dev/sim": 1091,
+        "project/dev/test_player": 238,
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 26600
+      "total": 27506
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -307,14 +319,15 @@
         "2026-11-18: n18 police item 6/7: --sim-police in LaunchArgs.KNOWN_FLAGS (the brief names the flag there; launch_args.gd 200 -> 201) and dev/sim/heat_cost.gd (the heat 3 cost probe) (files_near_cap 14 -> 14)",
         "2026-11-18: n19 vault course and the ArenaRigs feed call (files_near_cap 14 -> 14)",
         "2026-11-18: n19 move: one CoverView feed call beside VaultView in the shared arena rig (files_near_cap 14 -> 14)",
-        "2026-11-18: n19 move: read the arena pilot motion once for the cover and vault rig feeds (files_near_cap 14 -> 14)"
+        "2026-11-18: n19 move: read the arena pilot motion once for the cover and vault rig feeds (files_near_cap 14 -> 14)",
+        "2026-11-21: --foe-mix for n22 foes (files_near_cap 13 -> 13)"
       ],
       "files": {
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/showcase/city_fight.gd": 300,
-        "project/features/arena/arena_rigs.gd": 286,
+        "project/features/arena/arena_rigs.gd": 287,
         "project/features/bosses/boss_hook.gd": 281,
         "project/features/bosses/servo/servo_rig.gd": 287,
         "project/features/combat/kills/kill_view.gd": 286,
@@ -361,7 +374,11 @@
         "2026-11-19: Preserve the AI lane's base occluder verbatim and append the required hit field, assignment and formatted cover call. (files_past_soft_cap 66 -> 66)",
         "2026-11-19: n19 move flags (files_past_soft_cap 66 -> 66)",
         "2026-11-19: n19 engine night: dev probes (dev/sim far-cop and zone census, dev/enemy_ai fight probe, dev/bench crowd cost, arsenal audit kit) and launch flags, all dev-only evidence tools; owner verdicts 2026-11-19 (files_past_soft_cap 66 -> 66)",
-        "2026-11-20: n21 kerf: one KNOWN_FLAGS line --kerf-cruise-wings (owner Call, off by default) (files_past_soft_cap 66 -> 64)"
+        "2026-11-20: n21 kerf: one KNOWN_FLAGS line --kerf-cruise-wings (owner Call, off by default) (files_past_soft_cap 66 -> 64)",
+        "2026-11-20: --controls for n22 guard (files_past_soft_cap 64 -> 64)",
+        "2026-11-20: --enemy for n22 foes (files_past_soft_cap 64 -> 64)",
+        "2026-11-21: combined --enemy and --controls interface flags (files_past_soft_cap 64 -> 64)",
+        "2026-11-21: --foe-mix for n22 foes (files_past_soft_cap 64 -> 64)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -369,7 +386,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 237,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 209,
+        "project/boot/launch_args.gd": 212,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,
@@ -387,7 +404,7 @@
         "project/dev/showcase/d5_hero_run.gd": 265,
         "project/dev/showcase/reel_director.gd": 209,
         "project/dev/weapon_art/weapon_lineup_run.gd": 210,
-        "project/features/arena/arena_rigs.gd": 286,
+        "project/features/arena/arena_rigs.gd": 287,
         "project/features/arena/prop_occlusion.gd": 206,
         "project/features/bosses/boss_bot.gd": 202,
         "project/features/bosses/boss_fight.gd": 269,

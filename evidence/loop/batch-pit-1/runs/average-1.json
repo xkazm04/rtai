@@ -1,0 +1,121 @@
+{
+  "controls": "legacy",
+  "input_sha256": "0b130c1d4d6547c5f8b2ce30306ad6e736342125ebc48e61a67e2bcfb84313bb",
+  "mods": {},
+  "picks": [],
+  "profile": "average",
+  "schema": "gtai.gauntlet-run/1",
+  "seed": 1,
+  "sim_s": 40.0,
+  "wave_reached": 5,
+  "waves": [
+    {
+      "cover_ticks": 0,
+      "damage_taken": 0.0,
+      "enemies": {
+        "patrol_cop": 1,
+        "swat": 1
+      },
+      "form_seconds": {
+        "dent": 0.0,
+        "kerf": 0.0,
+        "ohm": 0.0,
+        "tonnage": 0.0
+      },
+      "guard_ticks": 3,
+      "n": 1,
+      "rolls": 0,
+      "seconds": 2.1,
+      "shots": 4,
+      "status": "cleared"
+    },
+    {
+      "cover_ticks": 10,
+      "damage_taken": 1.1999999999999886,
+      "enemies": {
+        "riot_cop": 1,
+        "robot_thug": 1,
+        "swat": 1
+      },
+      "form_seconds": {
+        "dent": 0.0,
+        "kerf": 0.016666666666666666,
+        "ohm": 0.0,
+        "tonnage": 0.0
+      },
+      "guard_ticks": 4,
+      "n": 2,
+      "rolls": 1,
+      "seconds": 7.733333333333333,
+      "shots": 16,
+      "status": "cleared"
+    },
+    {
+      "cover_ticks": 0,
+      "damage_taken": 0.0,
+      "enemies": {
+        "contractor": 1,
+        "riot_cop": 1,
+        "robot_gunner": 1,
+        "robot_thug": 1
+      },
+      "form_seconds": {
+        "dent": 0.0,
+        "kerf": 2.716666666666667,
+        "ohm": 0.0,
+        "tonnage": 0.0
+      },
+      "guard_ticks": 0,
+      "n": 3,
+      "rolls": 0,
+      "seconds": 2.716666666666667,
+      "shots": 4,
+      "status": "cleared"
+    },
+    {
+      "cover_ticks": 11,
+      "damage_taken": 5.399999999999963,
+      "enemies": {
+        "contractor": 1,
+        "patrol_cop": 1,
+        "robot_gunner": 1,
+        "robot_thug": 1,
+        "swat": 1
+      },
+      "form_seconds": {
+        "dent": 0.0,
+        "kerf": 0.016666666666666666,
+        "ohm": 0.0,
+        "tonnage": 0.0
+      },
+      "guard_ticks": 40,
+      "n": 4,
+      "rolls": 3,
+      "seconds": 8.6,
+      "shots": 15,
+      "status": "cleared"
+    },
+    {
+      "cover_ticks": 27,
+      "damage_taken": 2.9999999999999716,
+      "enemies": {
+        "contractor": 1,
+        "patrol_cop": 1,
+        "riot_cop": 1,
+        "robot_gunner": 1,
+        "swat": 1
+      },
+      "form_seconds": {
+        "dent": 0.0,
+        "kerf": 2.9833333333333334,
+        "ohm": 0.0,
+        "tonnage": 0.0
+      },
+      "guard_ticks": 5,
+      "n": 5,
+      "rolls": 1,
+      "shots": 15,
+      "status": "tick_limit"
+    }
+  ]
+}

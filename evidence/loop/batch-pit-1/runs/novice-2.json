@@ -1,0 +1,76 @@
+{
+  "controls": "legacy",
+  "input_sha256": "1db9ad6f1ed518f6a9ab838c67c3d242a46440bcbc82e9b399bf788352cfd193",
+  "mods": {},
+  "picks": [],
+  "profile": "novice",
+  "schema": "gtai.gauntlet-run/1",
+  "seed": 2,
+  "sim_s": 40.0,
+  "wave_reached": 3,
+  "waves": [
+    {
+      "cover_ticks": 0,
+      "damage_taken": 0.5999999999999943,
+      "enemies": {
+        "patrol_cop": 1,
+        "swat": 1
+      },
+      "form_seconds": {
+        "dent": 0.0,
+        "kerf": 0.0,
+        "ohm": 0.0,
+        "tonnage": 0.0
+      },
+      "guard_ticks": 5,
+      "n": 1,
+      "rolls": 0,
+      "seconds": 2.716666666666667,
+      "shots": 5,
+      "status": "cleared"
+    },
+    {
+      "cover_ticks": 0,
+      "damage_taken": 1.7999999999999972,
+      "enemies": {
+        "riot_cop": 1,
+        "robot_thug": 1,
+        "swat": 1
+      },
+      "form_seconds": {
+        "dent": 0.0,
+        "kerf": 0.0,
+        "ohm": 0.0,
+        "tonnage": 0.0
+      },
+      "guard_ticks": 0,
+      "n": 2,
+      "rolls": 0,
+      "seconds": 9.183333333333334,
+      "shots": 20,
+      "status": "cleared"
+    },
+    {
+      "cover_ticks": 0,
+      "damage_taken": 10.199999999999974,
+      "enemies": {
+        "contractor": 1,
+        "riot_cop": 1,
+        "robot_gunner": 1,
+        "robot_thug": 1
+      },
+      "form_seconds": {
+        "dent": 0.0,
+        "kerf": 0.0,
+        "ohm": 0.0,
+        "tonnage": 7.1
+      },
+      "guard_ticks": 80,
+      "n": 3,
+      "rolls": 3,
+      "seconds": 21.066666666666666,
+      "shots": 30,
+      "status": "cleared"
+    }
+  ]
+}

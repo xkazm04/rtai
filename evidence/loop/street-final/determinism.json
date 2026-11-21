@@ -1,0 +1,80 @@
+{
+  "comparison": "Two serial wheel batches with identical seeds, profiles and greedy picks. Each pair matched byte for byte.",
+  "compared": [
+    {
+      "file": "average-1.json",
+      "bytes": 15715,
+      "sha256": "2df4cd12fd47ed6d45f6f424f2452bba40ff0fdc519002385a563fd17ac732d8"
+    },
+    {
+      "file": "average-2.json",
+      "bytes": 6481,
+      "sha256": "b883968490aa406d23357044caf20190d809c1336c401e65d811f5b3b0c9dfa9"
+    },
+    {
+      "file": "average-3.json",
+      "bytes": 14184,
+      "sha256": "a42b672327635ed0c7c39df8a7d2a291eb1ad37911c5c2485c27569e78740748"
+    },
+    {
+      "file": "average-4.json",
+      "bytes": 12224,
+      "sha256": "919cd84521507059dcc061f598514d342c02c29f24ce27882306673fa0313a3c"
+    },
+    {
+      "file": "average-5.json",
+      "bytes": 18121,
+      "sha256": "fa2346d5374a7b144acdb57669ca52cdf19ee9bb771f00932a6d8d7b2dcedae9"
+    },
+    {
+      "file": "expert-1.json",
+      "bytes": 18182,
+      "sha256": "d18f161cab4f4124ac70bb2a0b922df06b1048f6db5dd888bb67d0f40ebd2e4c"
+    },
+    {
+      "file": "expert-2.json",
+      "bytes": 18091,
+      "sha256": "e07e85bd426f5040c296a3ce0fe6af900db7a2ff72aaed4cdc2d6c8fc95cf1ab"
+    },
+    {
+      "file": "expert-3.json",
+      "bytes": 7289,
+      "sha256": "d505a8b1eade579bc96f5730345eb6c6b20ce5b8b735e51eb169785fdde6aa5a"
+    },
+    {
+      "file": "expert-4.json",
+      "bytes": 19972,
+      "sha256": "25fd7b8bb7823569fac751eb9590a9024dda35b3f98a4d09912ead37fc4a6323"
+    },
+    {
+      "file": "expert-5.json",
+      "bytes": 17993,
+      "sha256": "9a6ce177b28b57b4ed78fe8df96ca926b92a5528c3141f8581934f8f0cb551be"
+    },
+    {
+      "file": "novice-1.json",
+      "bytes": 6692,
+      "sha256": "7a848365f7931dbfb9d0814a13117f3f2fe2af6286e59515ce11979d5eb9696f"
+    },
+    {
+      "file": "novice-2.json",
+      "bytes": 8550,
+      "sha256": "4d3c5a855a87c1fc3480866fbac4e4f4850fe8d28b38f68f487020973a19b356"
+    },
+    {
+      "file": "novice-3.json",
+      "bytes": 6557,
+      "sha256": "5443658e9d38c845f6683779b3ca644df250dda9d40e43183a22c79b65f23aa0"
+    },
+    {
+      "file": "novice-4.json",
+      "bytes": 6467,
+      "sha256": "cd4e696f7a3656f85df8e2ae1445595fab53f02ca36302255845ad6a59c4705d"
+    },
+    {
+      "file": "novice-5.json",
+      "bytes": 3689,
+      "sha256": "42d0254020e30f38ee2d8658dd30c3e331175050ba0c2488bcd7db7b341844c5"
+    }
+  ]
+}

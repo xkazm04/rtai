@@ -1,0 +1,190 @@
+{
+  "$id": "gtai.test_player/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "type": "string"
+    },
+    "large_tell_bonus": {
+      "minimum": 0,
+      "type": "number"
+    },
+    "pick_values": {
+      "additionalProperties": false,
+      "properties": {
+        "ghost": {
+          "additionalProperties": false,
+          "properties": {
+            "base": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "refs": {
+              "additionalProperties": {
+                "minimum": 0,
+                "type": "number"
+              },
+              "type": "object"
+            }
+          },
+          "required": [
+            "base",
+            "refs"
+          ],
+          "type": "object"
+        },
+        "stat": {
+          "additionalProperties": false,
+          "properties": {
+            "base": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "refs": {
+              "additionalProperties": {
+                "minimum": 0,
+                "type": "number"
+              },
+              "type": "object"
+            }
+          },
+          "required": [
+            "base",
+            "refs"
+          ],
+          "type": "object"
+        },
+        "weapon": {
+          "additionalProperties": false,
+          "properties": {
+            "base": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "refs": {
+              "additionalProperties": {
+                "minimum": 0,
+                "type": "number"
+              },
+              "type": "object"
+            }
+          },
+          "required": [
+            "base",
+            "refs"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "ghost",
+        "stat",
+        "weapon"
+      ],
+      "type": "object"
+    },
+    "rows": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "aim_error_deg": {
+            "maximum": 180,
+            "minimum": 0,
+            "type": "number"
+          },
+          "cover_seek_m": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "form_use": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "guard_lead_ticks": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "id": {
+            "enum": [
+              "novice",
+              "average",
+              "expert"
+            ]
+          },
+          "reaction_ticks": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "rest_hp": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "retreat_hp": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "roll_skill": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "tells_read": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          }
+        },
+        "required": [
+          "aim_error_deg",
+          "cover_seek_m",
+          "form_use",
+          "guard_lead_ticks",
+          "id",
+          "reaction_ticks",
+          "rest_hp",
+          "retreat_hp",
+          "roll_skill",
+          "tells_read"
+        ],
+        "type": "object"
+      },
+      "maxItems": 3,
+      "minItems": 3,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.test_player/1"
+    },
+    "threat_weights": {
+      "additionalProperties": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "required": [
+        "contractor",
+        "patrol_cop",
+        "riot_cop",
+        "robot_gunner",
+        "robot_thug",
+        "rocket_trooper",
+        "sentry_turret",
+        "shield_robot",
+        "swat",
+        "war_machine"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "doc",
+    "large_tell_bonus",
+    "pick_values",
+    "rows",
+    "schema",
+    "threat_weights"
+  ],
+  "type": "object"
+}

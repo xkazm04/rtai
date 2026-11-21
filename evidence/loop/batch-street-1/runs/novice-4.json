@@ -1,0 +1,32 @@
+{
+  "controls": "wheel",
+  "mods": {},
+  "picks": [
+    {
+      "offered": [
+        "ghost_ohm",
+        "stat_hp_max_10",
+        "ghost_kerf"
+      ],
+      "taken": "ghost_ohm",
+      "wave": 1
+    }
+  ],
+  "profile": "novice",
+  "schema": "gtai.gauntlet-run/1",
+  "seed": 4,
+  "wave_reached": 1,
+  "waves": [
+    {
+      "damage_taken": 0.0,
+      "enemies": {
+        "patrol_cop": 4
+      },
+      "hits": 4,
+      "n": 1,
+      "rolls": 0,
+      "seconds": 15.95,
+      "shots": 0
+    }
+  ]
+}

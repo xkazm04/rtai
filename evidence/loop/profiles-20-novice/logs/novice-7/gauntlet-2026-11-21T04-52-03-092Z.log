@@ -1,0 +1,23 @@
+# --fixed-fps 60 --quit-after 72000 res://dev/gauntlet/gauntlet.tscn -- --seed=7 --bot=novice --pick=greedy --controls=wheel --result=C:\Users\kazda\kiro\gtai-wt\n22-loop\evidence\loop\profiles-20-novice\runs\novice-7.json
+# exit 0, 12.1 s
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] gauntlet: test player bound: novice, greedy picks, seed 7
+[INFO] gauntlet: wave 1 tick 272 block alley_neck enemies { "patrol_cop": 4 }
+[INFO] gauntlet: wave 2 tick 712 block alley_neck enemies { "patrol_cop": 6 }
+[INFO] gauntlet: wave 3 tick 1226 block loading_bay enemies { "patrol_cop": 2, "swat": 1, "contractor": 2 }
+[INFO] gauntlet: wave 4 tick 1829 block plain_block enemies { "riot_cop": 1, "rocket_trooper": 1, "swat": 1, "contractor": 2 }
+[INFO] rivet_arsenal: arena: Rivet carries [&"pistol", &"", &"", &""]
+[INFO] gauntlet: wave 5 tick 2432 block crosswalk enemies { "war_machine": 1, "patrol_cop": 1, "swat": 2, "contractor": 1 }
+[INFO] gauntlet: wave 6 tick 3710 block barricade_line enemies { "patrol_cop": 2, "contractor": 1, "rocket_trooper": 3, "riot_cop": 1, "swat": 1 }
+[INFO] gauntlet: wave 7 tick 4618 block alley_neck enemies { "rocket_trooper": 1, "robot_gunner": 2, "swat": 1, "patrol_cop": 2, "contractor": 2 }
+[INFO] gauntlet: wave 8 tick 5693 block kiosk_plaza enemies { "robot_gunner": 2, "patrol_cop": 2, "riot_cop": 1, "contractor": 1, "sentry_turret": 2 }
+[INFO] gauntlet: wave 9 tick 6814 block crosswalk enemies { "sentry_turret": 1, "shield_robot": 2, "rocket_trooper": 1, "contractor": 3, "patrol_cop": 1 }
+[INFO] gauntlet: wave 10 tick 9812 block alley_neck enemies { "war_machine": 1, "robot_gunner": 2, "patrol_cop": 1, "rocket_trooper": 2, "shield_robot": 1, "contractor": 1 }
+[INFO] gauntlet: wave 11 tick 12486 block plain_block enemies { "sentry_turret": 2, "robot_gunner": 2, "riot_cop": 2, "rocket_trooper": 2, "swat": 1, "contractor": 1 }
+[INFO] gauntlet: wave 12 tick 13455 block loading_bay enemies { "patrol_cop": 3, "sentry_turret": 3, "swat": 1, "riot_cop": 2, "rocket_trooper": 2, "shield_robot": 1 }
+[INFO] gauntlet: wave 13 tick 16354 block loading_bay enemies { "shield_robot": 3, "rocket_trooper": 2, "swat": 4, "contractor": 1, "patrol_cop": 2 }
+[INFO] gauntlet: wave 14 tick 18631 block alley_neck enemies { "shield_robot": 2, "patrol_cop": 6, "robot_gunner": 1, "rocket_trooper": 2, "swat": 3, "sentry_turret": 1 }
+[INFO] gauntlet: wave 15 tick 20038 block loading_bay enemies { "war_machine": 1, "contractor": 2, "sentry_turret": 1, "shield_robot": 2, "riot_cop": 1, "robot_gunner": 2, "patrol_cop": 2, "swat": 1 }
+[INFO] gauntlet: wave 15 ended after 1688 ticks at (491.38, -4.578843), hp 0.0
+[INFO] gauntlet: tick 21727, segment 15

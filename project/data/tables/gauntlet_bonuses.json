@@ -1,0 +1,197 @@
+{
+  "rows": [
+    {
+      "id": "ghost_dent",
+      "kind": "ghost",
+      "min_wave": 1,
+      "ref": "dent",
+      "weight": 1
+    },
+    {
+      "id": "ghost_kerf",
+      "kind": "ghost",
+      "min_wave": 1,
+      "ref": "kerf",
+      "weight": 1
+    },
+    {
+      "id": "ghost_ohm",
+      "kind": "ghost",
+      "min_wave": 1,
+      "ref": "ohm",
+      "weight": 1
+    },
+    {
+      "id": "ghost_tonnage",
+      "kind": "ghost",
+      "min_wave": 1,
+      "ref": "tonnage",
+      "weight": 1
+    },
+    {
+      "id": "stat_damage_10",
+      "k": 1.1,
+      "kind": "stat",
+      "min_wave": 1,
+      "ref": "damage",
+      "weight": 3
+    },
+    {
+      "id": "stat_damage_25",
+      "k": 1.25,
+      "kind": "stat",
+      "min_wave": 3,
+      "ref": "damage",
+      "weight": 1
+    },
+    {
+      "id": "stat_guard_meter_10",
+      "k": 1.1,
+      "kind": "stat",
+      "min_wave": 1,
+      "ref": "guard_meter",
+      "weight": 3
+    },
+    {
+      "id": "stat_guard_meter_25",
+      "k": 1.25,
+      "kind": "stat",
+      "min_wave": 3,
+      "ref": "guard_meter",
+      "weight": 1
+    },
+    {
+      "id": "stat_hp_max_10",
+      "k": 1.1,
+      "kind": "stat",
+      "min_wave": 1,
+      "ref": "hp_max",
+      "weight": 3
+    },
+    {
+      "id": "stat_hp_max_25",
+      "k": 1.25,
+      "kind": "stat",
+      "min_wave": 3,
+      "ref": "hp_max",
+      "weight": 1
+    },
+    {
+      "id": "stat_regen_10",
+      "k": 1.1,
+      "kind": "stat",
+      "min_wave": 1,
+      "ref": "regen",
+      "weight": 3
+    },
+    {
+      "id": "stat_regen_25",
+      "k": 1.25,
+      "kind": "stat",
+      "min_wave": 3,
+      "ref": "regen",
+      "weight": 1
+    },
+    {
+      "id": "stat_speed_10",
+      "k": 1.1,
+      "kind": "stat",
+      "min_wave": 1,
+      "ref": "speed",
+      "weight": 3
+    },
+    {
+      "id": "stat_speed_25",
+      "k": 1.25,
+      "kind": "stat",
+      "min_wave": 3,
+      "ref": "speed",
+      "weight": 1
+    },
+    {
+      "id": "weapon_chainsaw",
+      "kind": "weapon",
+      "min_wave": 3,
+      "ref": "chainsaw",
+      "weight": 2
+    },
+    {
+      "id": "weapon_electro_baton",
+      "kind": "weapon",
+      "min_wave": 1,
+      "ref": "electro_baton",
+      "weight": 2
+    },
+    {
+      "id": "weapon_flamethrower",
+      "kind": "weapon",
+      "min_wave": 3,
+      "ref": "flamethrower",
+      "weight": 2
+    },
+    {
+      "id": "weapon_gatling",
+      "kind": "weapon",
+      "min_wave": 6,
+      "ref": "gatling",
+      "weight": 2
+    },
+    {
+      "id": "weapon_gloria",
+      "kind": "weapon",
+      "min_wave": 1,
+      "ref": "gloria",
+      "weight": 2
+    },
+    {
+      "id": "weapon_hand_cannon",
+      "kind": "weapon",
+      "min_wave": 2,
+      "ref": "hand_cannon",
+      "weight": 2
+    },
+    {
+      "id": "weapon_katana",
+      "kind": "weapon",
+      "min_wave": 1,
+      "ref": "katana",
+      "weight": 2
+    },
+    {
+      "id": "weapon_machine_pistol",
+      "kind": "weapon",
+      "min_wave": 2,
+      "ref": "machine_pistol",
+      "weight": 2
+    },
+    {
+      "id": "weapon_pistol",
+      "kind": "weapon",
+      "min_wave": 1,
+      "ref": "pistol",
+      "weight": 2
+    },
+    {
+      "id": "weapon_plasma_rifle",
+      "kind": "weapon",
+      "min_wave": 3,
+      "ref": "plasma_rifle",
+      "weight": 2
+    },
+    {
+      "id": "weapon_plasma_sword",
+      "kind": "weapon",
+      "min_wave": 4,
+      "ref": "plasma_sword",
+      "weight": 2
+    },
+    {
+      "id": "weapon_rocket_launcher",
+      "kind": "weapon",
+      "min_wave": 5,
+      "ref": "rocket_launcher",
+      "weight": 2
+    }
+  ],
+  "schema": "gtai.gauntlet_bonuses/1"
+}

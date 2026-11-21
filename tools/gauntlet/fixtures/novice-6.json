@@ -1,0 +1,80 @@
+{
+  "schema": "gtai.gauntlet-run/1",
+  "profile": "novice",
+  "seed": 6,
+  "controls": "legacy",
+  "wave_reached": 3,
+  "waves": [
+    {
+      "n": 1,
+      "seconds": 20,
+      "enemies": {
+        "contractor": 2
+      },
+      "shots": 7,
+      "damage_taken": 0,
+      "rolls": 1,
+      "form_seconds": {
+        "kerf": 3
+      }
+    },
+    {
+      "n": 2,
+      "seconds": 28,
+      "enemies": {
+        "patrol_cop": 2,
+        "contractor": 1
+      },
+      "shots": 8,
+      "damage_taken": 0,
+      "rolls": 2,
+      "form_seconds": {
+        "kerf": 3
+      },
+      "hits": 4,
+      "guard_deflects": 0
+    },
+    {
+      "n": 3,
+      "seconds": 28,
+      "enemies": {
+        "contractor": 2
+      },
+      "shots": 9,
+      "damage_taken": 0,
+      "rolls": 0,
+      "form_seconds": {
+        "kerf": 3
+      },
+      "hits": 4,
+      "guard_deflects": 0
+    }
+  ],
+  "picks": [
+    {
+      "wave": 1,
+      "offered": [
+        "weapon_pistol",
+        "ghost_kerf",
+        "stat_damage_10"
+      ],
+      "taken": "ghost_kerf"
+    },
+    {
+      "wave": 2,
+      "offered": [
+        "stat_hp_max_10",
+        "stat_regen_10",
+        "ghost_ohm"
+      ],
+      "taken": "stat_regen_10"
+    }
+  ],
+  "mods": {
+    "regen": 1.1
+  },
+  "death": {
+    "wave": 3,
+    "by": "contractor"
+  }
+}

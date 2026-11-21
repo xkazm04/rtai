@@ -1,0 +1,129 @@
+{
+  "schema": "gtai.gauntlet-run/1",
+  "profile": "average",
+  "seed": 1,
+  "controls": "legacy",
+  "wave_reached": 6,
+  "waves": [
+    {
+      "n": 1,
+      "seconds": 12,
+      "enemies": {
+        "contractor": 2
+      },
+      "shots": 4,
+      "damage_taken": 1,
+      "rolls": 2,
+      "form_seconds": {
+        "kerf": 3
+      },
+      "hits": 2,
+      "guard_deflects": 0
+    },
+    {
+      "n": 2,
+      "seconds": 19,
+      "enemies": {
+        "patrol_cop": 2,
+        "contractor": 1
+      },
+      "shots": 3,
+      "damage_taken": 1,
+      "rolls": 0,
+      "form_seconds": {
+        "kerf": 3
+      },
+      "hits": 1,
+      "guard_deflects": 1
+    },
+    {
+      "n": 3,
+      "seconds": 19,
+      "enemies": {
+        "contractor": 2
+      },
+      "shots": 4,
+      "damage_taken": 1,
+      "rolls": 1,
+      "form_seconds": {
+        "kerf": 3
+      },
+      "hits": 2,
+      "guard_deflects": 1
+    },
+    {
+      "n": 4,
+      "seconds": 19,
+      "enemies": {
+        "patrol_cop": 2,
+        "contractor": 1
+      },
+      "shots": 5,
+      "damage_taken": 1,
+      "rolls": 2,
+      "form_seconds": {
+        "kerf": 3
+      },
+      "hits": 2,
+      "guard_deflects": 1
+    },
+    {
+      "n": 5,
+      "seconds": 19,
+      "enemies": {
+        "contractor": 2
+      },
+      "shots": 6,
+      "damage_taken": 1,
+      "rolls": 0,
+      "form_seconds": {
+        "kerf": 3
+      },
+      "hits": 3,
+      "guard_deflects": 1
+    },
+    {
+      "n": 6,
+      "seconds": 19,
+      "enemies": {
+        "patrol_cop": 2,
+        "contractor": 1
+      },
+      "shots": 7,
+      "damage_taken": 1,
+      "rolls": 1,
+      "form_seconds": {
+        "kerf": 3
+      },
+      "hits": 3,
+      "guard_deflects": 1
+    }
+  ],
+  "picks": [
+    {
+      "wave": 1,
+      "offered": [
+        "weapon_pistol",
+        "ghost_kerf",
+        "stat_damage_10"
+      ],
+      "taken": "weapon_pistol"
+    },
+    {
+      "wave": 2,
+      "offered": [
+        "stat_hp_max_10",
+        "stat_regen_10",
+        "ghost_ohm"
+      ],
+      "taken": "stat_hp_max_10"
+    }
+  ],
+  "mods": {
+    "hp_max": 1.1
+  },
+  "death": {
+    "wave": 6,
+    "by": "patrol_cop"
+  }
+}

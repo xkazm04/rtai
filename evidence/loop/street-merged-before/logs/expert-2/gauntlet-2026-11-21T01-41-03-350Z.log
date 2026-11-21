@@ -1,0 +1,17 @@
+# --fixed-fps 60 --quit-after 72000 res://dev/gauntlet/gauntlet.tscn -- --seed=2 --bot=expert --pick=greedy --controls=wheel --result=C:\Users\kazda\kiro\gtai-wt\n22-loop\evidence\loop\street-merged-before\runs\expert-2.json
+# exit 1, 19.3 s
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] gauntlet: test player bound: expert, greedy picks, seed 2
+[INFO] gauntlet: wave 1 tick 237 block crosswalk enemies { "patrol_cop": 4 }
+[INFO] gauntlet: wave 2 tick 622 block plain_block enemies { "patrol_cop": 6 }
+[INFO] gauntlet: wave 3 tick 1604 block alley_neck enemies { "riot_cop": 2, "rocket_trooper": 2 }
+[INFO] gauntlet: wave 4 tick 2303 block crosswalk enemies { "riot_cop": 2, "patrol_cop": 2, "contractor": 1, "swat": 1 }
+[INFO] gauntlet: wave 5 tick 2819 block alley_neck enemies { "war_machine": 1, "patrol_cop": 1, "riot_cop": 3 }
+[INFO] gauntlet: wave 6 tick 5866 block kiosk_plaza enemies { "robot_thug": 1, "riot_cop": 3, "sentry_turret": 1, "swat": 1 }
+[INFO] rivet_arsenal: arena: Rivet carries [&"machine_pistol", &"", &"", &""]
+[INFO] gauntlet: wave 7 tick 6671 block loading_bay enemies { "contractor": 3, "swat": 1, "robot_thug": 1, "riot_cop": 2, "patrol_cop": 1 }
+[INFO] gauntlet: wave 8 tick 7336 block alley_neck enemies { "riot_cop": 1, "robot_gunner": 3, "contractor": 3, "patrol_cop": 1 }
+[INFO] gauntlet: wave 9 tick 7985 block kiosk_plaza enemies { "contractor": 1, "patrol_cop": 2, "riot_cop": 2, "robot_thug": 2, "shield_robot": 1, "rocket_trooper": 1 }
+[ERROR] gauntlet: headless tick cap reached before run ended
+[INFO] gauntlet: tick 72000, segment 9, 3 resident

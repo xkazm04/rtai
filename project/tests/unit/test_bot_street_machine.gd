@@ -1,0 +1,142 @@
+extends GutTest
+
+
+class BlockedBlink:
+	extends BotView
+
+	func blink_clear(_aim: Vector2) -> bool:
+		return false
+
+
+func test_stomp_uses_available_time_then_roll_then_tonnage() -> void:
+	var view: BotView = BotView.new()
+	var me: BotView.Player = view.player()
+	var foe: BotView.Hostile = BotView.Hostile.new()
+	foe.stomp_m = 3.5
+	foe.pos = Vector2(2, 0)
+	me.walk_mps = 6
+	me.roll_m = 3.2
+	me.roll_ticks = 22
+	me.iframe_from = 2
+	me.iframe_to = 14
+	me.can_roll = true
+	me.forms = [&"tonnage"]
+	foe.tell_ticks = 60
+	var choice: BotDefence.Choice = BotMachineFight.stomp(view, foe, true)
+	assert_eq(choice.action, &"sprint")
+	assert_lt(choice.move.x, 0.0)
+	foe.tell_ticks = 4
+	assert_eq(BotMachineFight.stomp(view, foe, true).action, &"roll")
+	foe.tell_ticks = 1
+	assert_eq(BotMachineFight.stomp(view, foe, true).form, &"tonnage")
+	me.can_roll = false
+	assert_eq(BotMachineFight.stomp(view, foe, true).form, &"tonnage")
+	me.can_roll = true
+	view.solid_props().append(Rect2(-1, -5, 0.4, 10))
+	assert_eq(BotMachineFight.stomp(view, foe, true).form, &"tonnage")
+	me.pos = Vector2(-4, 0)
+	assert_true(BotMachineFight.stomp(view, foe, true).hold_position)
+
+
+func test_machine_closes_after_discharge_and_circles_the_armoured_face() -> void:
+	var view: BotView = BotView.new()
+	view.player().hp = 100
+	var foe: BotView.Hostile = BotView.Hostile.new()
+	foe.archetype = &"war_machine"
+	foe.stomp_m = 3.5
+	foe.pos = Vector2(7, 0)
+	foe.facing = Vector2.LEFT
+	view.hostiles().append(foe)
+	var actions: PlayerActions = PlayerActions.shipped()
+	var brain: GauntletBot = GauntletBot.new(view, actions, BotProfile.shipped(&"expert"), 3)
+	var t: TickInput = brain.sample(0)
+	assert_gt(t.move_x, 0)
+	assert_false(t.is_pressed(actions.bit(&"sprint")))
+	foe.opening = true
+	t = brain.sample(9)
+	assert_true(t.is_pressed(actions.bit(&"sprint")))
+	foe.archetype = &"sentry_turret"
+	foe.stomp_m = 0
+	foe.opening = false
+	foe.pos = Vector2(1.3, 0)
+	t = brain.sample(10)
+	assert_true(t.is_pressed(actions.bit(&"melee")))
+	assert_gt(absi(t.move_y), absi(t.move_x))
+	foe.pos.x = 1.5
+	assert_false(brain.sample(11).is_pressed(actions.bit(&"sprint")))
+	foe.pos.x = 1.7
+	assert_true(brain.sample(12).is_pressed(actions.bit(&"sprint")))
+
+
+func test_ohm_can_attack_a_lone_war_machine_between_tells() -> void:
+	var view: BotView = BotView.new()
+	view.player().forms = [&"ohm", &"tonnage"]
+	var foe: BotView.Hostile = BotView.Hostile.new()
+	foe.stomp_m = 3.5
+	foe.pos = Vector2(3, 0)
+	view.hostiles().append(foe)
+	var forms: BotForms = BotForms.new(RngRegistry.new(9))
+	assert_eq(forms.desired(view, foe, 1, &""), &"ohm")
+	assert_eq(forms.desired(view, foe, 1, &"tonnage"), &"tonnage")
+
+
+func test_aims_at_an_exposed_machine_edge_and_holds_fire_behind_solid_cover() -> void:
+	var view: BotView = BotView.new()
+	view.player().pos = Vector2(175.6, -5.4)
+	view.solid_props().append(Rect2(163, -5.5, 12, 2))
+	var foe: BotView.Hostile = BotView.Hostile.new()
+	foe.stomp_m = 3.5
+	foe.pos = Vector2(173.6, -5.55)
+	foe.radius = 0.45
+	assert_false(view.clear_line(view.player().pos, foe.pos))
+	var point: Vector2 = view.aim_point(foe)
+	assert_lt(point.distance_to(foe.pos), foe.radius)
+	assert_true(view.clear_line(view.player().pos, point))
+	view.solid_props().append(Rect2(174.8, -8, 0.3, 8))
+	assert_eq(view.aim_point(foe), Vector2.INF)
+
+
+func test_kerf_checks_the_landing_behind_the_target_at_the_street_wall() -> void:
+	var bus: EventBus = EventBus.new()
+	var data: DataStore = DataStore.new()
+	var run: GauntletRun = GauntletRun.new()
+	var session: GauntletSession = GauntletSession.open_street(bus, data, run)
+	var arena: CombatArena = session.stage.arena
+	var foe: Fighter = arena.squad_ai.spawn_member(arena, Vector2(2, -5), &"sentry_turret")
+	var view: BotViewArena = BotViewArena.new(session.stage, session.actions, true)
+	view.street_layout = session.street
+	foe.pos = Vector2(2, -5.5)
+	view.refresh()
+	assert_false(view.blink_clear(Vector2.UP))
+	foe.pos = Vector2(5, 0)
+	view.refresh()
+	assert_true(view.blink_clear(Vector2.RIGHT))
+	session.close()
+	bus.free()
+	data.free()
+
+
+func test_kerf_at_a_blocked_landing_fires_only_with_a_ranged_weapon() -> void:
+	var view: BotView = BlockedBlink.new()
+	view.player().form = &"kerf"
+	var foe: BotView.Hostile = BotView.Hostile.new()
+	foe.pos.x = 4.0
+	view.hostiles().append(foe)
+	var actions: PlayerActions = PlayerActions.shipped()
+	var skill: BotProfile = BotProfile.shipped(&"expert")
+	var brain: GauntletBot = GauntletBot.new(view, actions, skill, 1)
+	@warning_ignore("return_value_discarded")
+	brain.sample(0)
+	var t: TickInput = brain.sample(skill.reaction_ticks)
+	assert_false(t.is_pressed(actions.bit(&"melee")))
+	assert_false(t.is_pressed(actions.bit(&"fire")))
+	var slot: BotView.Slot = BotView.Slot.new()
+	slot.index = 0
+	slot.reach = 20.0
+	view.held_slots().append(slot)
+	view.player().current_slot = 0
+	t = brain.sample(skill.reaction_ticks + 1)
+	assert_true(t.is_pressed(actions.bit(&"fire")))
+	slot.melee = true
+	t = brain.sample(skill.reaction_ticks + 2)
+	assert_false(t.is_pressed(actions.bit(&"fire")))

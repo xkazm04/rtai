@@ -6,6 +6,7 @@ extends RefCounted
 
 const ROUTES_PER_TICK: int = 2
 
+var rockets: FoeRocketFlight = FoeRocketFlight.new()
 var pit: EnemyPit
 var minds: Dictionary[int, SquadMind] = {}
 var plant_no_separation: bool = false
@@ -31,6 +32,10 @@ func spawn_member(arena: CombatArena, at: Vector2, id: StringName = &"") -> Figh
 		h.max_hp = a.hp
 		h.hp = a.hp
 	h.weapon = &"" if a.weapon.melee else a.production_weapon
+	if a.explicit_spawn and not a.weapon.melee:
+		h.weapon = a.weapon.id
+	if a.weapon.id == &"rocket":
+		FoeRocket.enable_lines(arena, pit.roster)
 	h.cooldown = mini(h.cooldown, arena.tuning.weapon(a.production_weapon).cooldown_ticks)
 	return h
 
@@ -48,6 +53,7 @@ func owns(h: Fighter) -> bool:
 ## Wave members step in ID order before station navigation can spend their route budget.
 ## Everyone outside the wave keeps the arena's original step order.
 func assign(arena: CombatArena) -> Array[Fighter]:
+	rockets.collect(arena, _map)
 	pit.tick = arena.tick
 	pit.rivet_pos = arena.rivet.pos
 	pit.rivet_radius = arena.rivet.radius_m
@@ -111,6 +117,8 @@ func step(h: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
 	var e: EnemyAgent = mind.agent
 	e.pos = h.pos
 	e.sees = _map.sight_line(e.pos, pit.rivet_pos)
+	if mind.rocket != null:
+		return mind.rocket.step(mind, h, arena, self, _map)
 	var desired: Vector2 = mind.velocity(pit, _map, _fallen)
 	if h.swing_left > 0:
 		desired = Vector2.ZERO
@@ -120,9 +128,14 @@ func step(h: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
 	EnemyMotor.steer(e, desired, pit.rivet_pos, pit)
 	h.pos = e.pos
 	h.facing = e.facing
+	if e.arch.explicit_spawn and e.arch.shield_front_mult < 1.0:
+		var frontal: bool = h.facing.dot(h.pos.direction_to(pit.rivet_pos)) > e.arch.shield_cos
+		h.damage_k = e.arch.shield_front_mult if frontal else 1.0
 	if e.melee():
 		mind.swing(h, arena, _map)
 		return null
+	if e.arch.explicit_spawn:
+		return FoeAttacks.trigger(e, h, arena)
 	return _ranged(mind, h, arena, rng)
 
 

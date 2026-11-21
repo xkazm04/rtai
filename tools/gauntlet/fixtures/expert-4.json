@@ -1,0 +1,142 @@
+{
+  "schema": "gtai.gauntlet-run/1",
+  "profile": "expert",
+  "seed": 4,
+  "controls": "wheel",
+  "wave_reached": 7,
+  "waves": [
+    {
+      "n": 1,
+      "seconds": 11,
+      "enemies": {
+        "contractor": 2
+      },
+      "shots": 5,
+      "damage_taken": 1,
+      "rolls": 2,
+      "form_seconds": {
+        "tonnage": 4
+      }
+    },
+    {
+      "n": 2,
+      "seconds": 15,
+      "enemies": {
+        "patrol_cop": 2,
+        "contractor": 1
+      },
+      "shots": 6,
+      "damage_taken": 1,
+      "rolls": 0,
+      "form_seconds": {
+        "tonnage": 4
+      },
+      "hits": 3,
+      "guard_deflects": 1
+    },
+    {
+      "n": 3,
+      "seconds": 15,
+      "enemies": {
+        "contractor": 2
+      },
+      "shots": 7,
+      "damage_taken": 1,
+      "rolls": 1,
+      "form_seconds": {
+        "tonnage": 4
+      },
+      "hits": 3,
+      "guard_deflects": 1
+    },
+    {
+      "n": 4,
+      "seconds": 15,
+      "enemies": {
+        "patrol_cop": 2,
+        "contractor": 1
+      },
+      "shots": 8,
+      "damage_taken": 1,
+      "rolls": 2,
+      "form_seconds": {
+        "tonnage": 4
+      },
+      "hits": 4,
+      "guard_deflects": 1
+    },
+    {
+      "n": 5,
+      "seconds": 15,
+      "enemies": {
+        "contractor": 2
+      },
+      "shots": 9,
+      "damage_taken": 1,
+      "rolls": 0,
+      "form_seconds": {
+        "tonnage": 4
+      },
+      "hits": 4,
+      "guard_deflects": 1
+    },
+    {
+      "n": 6,
+      "seconds": 15,
+      "enemies": {
+        "patrol_cop": 2,
+        "contractor": 1
+      },
+      "shots": 10,
+      "damage_taken": 1,
+      "rolls": 1,
+      "form_seconds": {
+        "tonnage": 4
+      },
+      "hits": 5,
+      "guard_deflects": 1
+    },
+    {
+      "n": 7,
+      "seconds": 15,
+      "enemies": {
+        "contractor": 2
+      },
+      "shots": 11,
+      "damage_taken": 1,
+      "rolls": 2,
+      "form_seconds": {
+        "tonnage": 4
+      },
+      "hits": 5,
+      "guard_deflects": 1
+    }
+  ],
+  "picks": [
+    {
+      "wave": 1,
+      "offered": [
+        "weapon_pistol",
+        "ghost_kerf",
+        "stat_damage_10"
+      ],
+      "taken": "weapon_pistol"
+    },
+    {
+      "wave": 2,
+      "offered": [
+        "stat_hp_max_10",
+        "stat_regen_10",
+        "ghost_ohm"
+      ],
+      "taken": "stat_regen_10"
+    }
+  ],
+  "mods": {
+    "regen": 1.1
+  },
+  "death": {
+    "wave": 7,
+    "by": "contractor"
+  }
+}

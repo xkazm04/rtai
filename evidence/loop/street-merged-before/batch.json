@@ -1,0 +1,730 @@
+{
+  "schema": "gtai.gauntlet-batch/1",
+  "created": "2026-11-21T01:37:02.013Z",
+  "git": {
+    "sha": "2ee78e7c8c85639c79ae8e57fab19e1067be7341",
+    "branch": "n22-loop",
+    "dirty": true
+  },
+  "args": {
+    "profile": "all",
+    "pick": "greedy",
+    "runner": "gauntlet",
+    "controls": "wheel",
+    "jobs": 1,
+    "seeds": 5,
+    "seed0": 1,
+    "waves": null,
+    "out": "C:\\Users\\kazda\\kiro\\gtai-wt\\n22-loop\\evidence\\loop\\street-merged-before",
+    "from": null,
+    "dryRun": false
+  },
+  "tables": {
+    "enemies.json": "3550cc0379507b9b82694d1a02447ee2657a3a70eb331a79ac4b96fa9385d8db",
+    "weapons.json": "3fc9873ad47fde2f4efa41abbb520df386aae3ee1ce428436fb23ab895575ef5",
+    "combat.json": "41a94bdf737c16f994f83d1db71d54013af798836d1c2b1c7052956ff78bbc44",
+    "gauntlet.json": "d0d01fe34af868110797bb71f7ae09d0e221c4573ba0fb3ea400b5ececd3c99f",
+    "gauntlet_bonuses.json": "8a1696d14d937d338e4ebb1ce0d05e2b910e949824b98e5a15d8a768498b15ed",
+    "test_player.json": "f7ff9eb607528a98352c72f0ca6b507defbe8949d69a395f27c253d7dd76c51d"
+  },
+  "weapon_refs": {
+    "weapon_chainsaw": "chainsaw",
+    "weapon_electro_baton": "electro_baton",
+    "weapon_flamethrower": "flamethrower",
+    "weapon_gatling": "gatling",
+    "weapon_gloria": "gloria",
+    "weapon_hand_cannon": "hand_cannon",
+    "weapon_katana": "katana",
+    "weapon_machine_pistol": "machine_pistol",
+    "weapon_pistol": "pistol",
+    "weapon_plasma_rifle": "plasma_rifle",
+    "weapon_plasma_sword": "plasma_sword",
+    "weapon_rocket_launcher": "rocket_launcher"
+  },
+  "runs": [
+    {
+      "profile": "novice",
+      "seed": 1,
+      "pick": "greedy",
+      "controls": "wheel",
+      "file": "runs/novice-1.json",
+      "log": "logs/novice-1.log",
+      "exit": 1,
+      "wall_s": 41.2118139,
+      "ok": false,
+      "engine_log": "logs/novice-1/gauntlet-2026-11-21T01-37-03-404Z.log",
+      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)",
+      "ticks": 72000,
+      "outcome": "stalled"
+    },
+    {
+      "profile": "novice",
+      "seed": 2,
+      "pick": "greedy",
+      "controls": "wheel",
+      "file": "runs/novice-2.json",
+      "log": "logs/novice-2.log",
+      "exit": 0,
+      "wall_s": 19.5757527,
+      "ok": true,
+      "engine_log": "logs/novice-2/gauntlet-2026-11-21T01-37-44-430Z.log",
+      "ticks": 20117
+    },
+    {
+      "profile": "novice",
+      "seed": 3,
+      "pick": "greedy",
+      "controls": "wheel",
+      "file": "runs/novice-3.json",
+      "log": "logs/novice-3.log",
+      "exit": 1,
+      "wall_s": 25.410513199999993,
+      "ok": false,
+      "engine_log": "logs/novice-3/gauntlet-2026-11-21T01-38-03-638Z.log",
+      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)",
+      "ticks": 72000,
+      "outcome": "stalled"
+    },
+    {
+      "profile": "novice",
+      "seed": 4,
+      "pick": "greedy",
+      "controls": "wheel",
+      "file": "runs/novice-4.json",
+      "log": "logs/novice-4.log",
+      "exit": 1,
+      "wall_s": 22.5694335,
+      "ok": false,
+      "engine_log": "logs/novice-4/gauntlet-2026-11-21T01-38-29-499Z.log",
+      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)",
+      "ticks": 72000,
+      "outcome": "stalled"
+    },
+    {
+      "profile": "novice",
+      "seed": 5,
+      "pick": "greedy",
+      "controls": "wheel",
+      "file": "runs/novice-5.json",
+      "log": "logs/novice-5.log",
+      "exit": 1,
+      "wall_s": 25.21041089999999,
+      "ok": false,
+      "engine_log": "logs/novice-5/gauntlet-2026-11-21T01-38-51-828Z.log",
+      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)",
+      "ticks": 72000,
+      "outcome": "stalled"
+    },
+    {
+      "profile": "average",
+      "seed": 1,
+      "pick": "greedy",
+      "controls": "wheel",
+      "file": "runs/average-1.json",
+      "log": "logs/average-1.log",
+      "exit": 1,
+      "wall_s": 24.193763399999995,
+      "ok": false,
+      "engine_log": "logs/average-1/gauntlet-2026-11-21T01-39-17-499Z.log",
+      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)",
+      "ticks": 72000,
+      "outcome": "stalled"
+    },
+    {
+      "profile": "average",
+      "seed": 2,
+      "pick": "greedy",
+      "controls": "wheel",
+      "file": "runs/average-2.json",
+      "log": "logs/average-2.log",
+      "exit": 1,
+      "wall_s": 16.275129000000014,
+      "ok": false,
+      "engine_log": "logs/average-2/gauntlet-2026-11-21T01-39-41-036Z.log",
+      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)",
+      "ticks": 72000,
+      "outcome": "stalled"
+    },
+    {
+      "profile": "average",
+      "seed": 3,
+      "pick": "greedy",
+      "controls": "wheel",
+      "file": "runs/average-3.json",
+      "log": "logs/average-3.log",
+      "exit": 1,
+      "wall_s": 22.136884300000006,
+      "ok": false,
+      "engine_log": "logs/average-3/gauntlet-2026-11-21T01-39-57-344Z.log",
+      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)",
+      "ticks": 72000,
+      "outcome": "stalled"
+    },
+    {
+      "profile": "average",
+      "seed": 4,
+      "pick": "greedy",
+      "controls": "wheel",
+      "file": "runs/average-4.json",
+      "log": "logs/average-4.log",
+      "exit": 1,
+      "wall_s": 19.1699124,
+      "ok": false,
+      "engine_log": "logs/average-4/gauntlet-2026-11-21T01-40-19-478Z.log",
+      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)",
+      "ticks": 72000,
+      "outcome": "stalled"
+    },
+    {
+      "profile": "average",
+      "seed": 5,
+      "pick": "greedy",
+      "controls": "wheel",
+      "file": "runs/average-5.json",
+      "log": "logs/average-5.log",
+      "exit": 1,
+      "wall_s": 16.373097200000018,
+      "ok": false,
+      "engine_log": "logs/average-5/gauntlet-2026-11-21T01-40-38-984Z.log",
+      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)",
+      "ticks": 72000,
+      "outcome": "stalled"
+    },
+    {
+      "profile": "expert",
+      "seed": 1,
+      "pick": "greedy",
+      "controls": "wheel",
+      "file": "runs/expert-1.json",
+      "log": "logs/expert-1.log",
+      "exit": 0,
+      "wall_s": 8.405691800000001,
+      "ok": true,
+      "engine_log": "logs/expert-1/gauntlet-2026-11-21T01-40-55-170Z.log",
+      "ticks": 10167
+    },
+    {
+      "profile": "expert",
+      "seed": 2,
+      "pick": "greedy",
+      "controls": "wheel",
+      "file": "runs/expert-2.json",
+      "log": "logs/expert-2.log",
+      "exit": 1,
+      "wall_s": 19.71566559999998,
+      "ok": false,
+      "engine_log": "logs/expert-2/gauntlet-2026-11-21T01-41-03-350Z.log",
+      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)",
+      "ticks": 72000,
+      "outcome": "stalled"
+    },
+    {
+      "profile": "expert",
+      "seed": 3,
+      "pick": "greedy",
+      "controls": "wheel",
+      "file": "runs/expert-3.json",
+      "log": "logs/expert-3.log",
+      "exit": 1,
+      "wall_s": 18.304427599999997,
+      "ok": false,
+      "engine_log": "logs/expert-3/gauntlet-2026-11-21T01-41-23-141Z.log",
+      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)",
+      "ticks": 72000,
+      "outcome": "stalled"
+    },
+    {
+      "profile": "expert",
+      "seed": 4,
+      "pick": "greedy",
+      "controls": "wheel",
+      "file": "runs/expert-4.json",
+      "log": "logs/expert-4.log",
+      "exit": 1,
+      "wall_s": 19.85161070000002,
+      "ok": false,
+      "engine_log": "logs/expert-4/gauntlet-2026-11-21T01-41-41-487Z.log",
+      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)",
+      "ticks": 72000,
+      "outcome": "stalled"
+    },
+    {
+      "profile": "expert",
+      "seed": 5,
+      "pick": "greedy",
+      "controls": "wheel",
+      "file": "runs/expert-5.json",
+      "log": "logs/expert-5.log",
+      "exit": 1,
+      "wall_s": 17.151829099999972,
+      "ok": false,
+      "engine_log": "logs/expert-5/gauntlet-2026-11-21T01-42-01-356Z.log",
+      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)",
+      "ticks": 72000,
+      "outcome": "stalled"
+    }
+  ],
+  "results": [
+    {
+      "controls": "wheel",
+      "death": {
+        "by": "assault-rifle",
+        "wave": 13
+      },
+      "mods": {
+        "damage": 1.1,
+        "guard_meter": 1.1,
+        "hp_max": 1.1,
+        "speed": 1.1
+      },
+      "picks": [
+        {
+          "offered": [
+            "stat_guard_meter_10",
+            "stat_regen_10",
+            "ghost_tonnage"
+          ],
+          "taken": "ghost_tonnage",
+          "wave": 1
+        },
+        {
+          "offered": [
+            "stat_regen_10",
+            "ghost_ohm",
+            "weapon_electro_baton"
+          ],
+          "taken": "ghost_ohm",
+          "wave": 2
+        },
+        {
+          "offered": [
+            "stat_guard_meter_10",
+            "ghost_dent",
+            "stat_hp_max_10"
+          ],
+          "taken": "ghost_dent",
+          "wave": 3
+        },
+        {
+          "offered": [
+            "stat_regen_10",
+            "weapon_pistol",
+            "stat_speed_10"
+          ],
+          "taken": "stat_speed_10",
+          "wave": 4
+        },
+        {
+          "offered": [
+            "stat_hp_max_10",
+            "stat_regen_10",
+            "weapon_katana"
+          ],
+          "taken": "stat_hp_max_10",
+          "wave": 5
+        },
+        {
+          "offered": [
+            "weapon_machine_pistol",
+            "weapon_katana",
+            "weapon_gloria"
+          ],
+          "taken": "weapon_machine_pistol",
+          "wave": 6
+        },
+        {
+          "offered": [
+            "weapon_plasma_rifle",
+            "weapon_gatling",
+            "weapon_chainsaw"
+          ],
+          "taken": "weapon_gatling",
+          "wave": 7
+        },
+        {
+          "offered": [
+            "weapon_hand_cannon",
+            "stat_guard_meter_10",
+            "stat_guard_meter_25"
+          ],
+          "taken": "stat_guard_meter_10",
+          "wave": 8
+        },
+        {
+          "offered": [
+            "weapon_pistol",
+            "stat_regen_10",
+            "weapon_katana"
+          ],
+          "taken": "weapon_pistol",
+          "wave": 9
+        },
+        {
+          "offered": [
+            "weapon_katana",
+            "weapon_plasma_sword",
+            "weapon_electro_baton"
+          ],
+          "taken": "weapon_katana",
+          "wave": 10
+        },
+        {
+          "offered": [
+            "weapon_plasma_sword",
+            "weapon_gloria",
+            "weapon_hand_cannon"
+          ],
+          "taken": "weapon_plasma_sword",
+          "wave": 11
+        },
+        {
+          "offered": [
+            "stat_damage_10",
+            "stat_regen_10",
+            "weapon_plasma_rifle"
+          ],
+          "taken": "stat_damage_10",
+          "wave": 12
+        }
+      ],
+      "profile": "novice",
+      "schema": "gtai.gauntlet-run/1",
+      "seed": 2,
+      "wave_reached": 13,
+      "waves": [
+        {
+          "damage_taken": 0,
+          "enemies": {
+            "patrol_cop": 4
+          },
+          "hits": 4,
+          "n": 1,
+          "rolls": 0,
+          "seconds": 5.31666666666667,
+          "shots": 0
+        },
+        {
+          "damage_taken": 1.19999999999999,
+          "enemies": {
+            "patrol_cop": 6
+          },
+          "hits": 6,
+          "n": 2,
+          "rolls": 1,
+          "seconds": 6.31666666666667,
+          "shots": 0
+        },
+        {
+          "damage_taken": 1.2,
+          "enemies": {
+            "riot_cop": 2,
+            "rocket_trooper": 2
+          },
+          "hits": 4,
+          "n": 3,
+          "rolls": 0,
+          "seconds": 9.38333333333333,
+          "shots": 0
+        },
+        {
+          "damage_taken": 0,
+          "enemies": {
+            "contractor": 1,
+            "patrol_cop": 2,
+            "riot_cop": 2,
+            "swat": 1
+          },
+          "hits": 6,
+          "n": 4,
+          "rolls": 1,
+          "seconds": 7.01666666666667,
+          "shots": 0
+        },
+        {
+          "damage_taken": 42.4,
+          "enemies": {
+            "patrol_cop": 1,
+            "riot_cop": 3,
+            "war_machine": 1
+          },
+          "hits": 45,
+          "n": 5,
+          "rolls": 0,
+          "seconds": 24.4,
+          "shots": 0
+        },
+        {
+          "damage_taken": 62.4,
+          "enemies": {
+            "riot_cop": 3,
+            "robot_thug": 1,
+            "sentry_turret": 1,
+            "swat": 1
+          },
+          "hits": 31,
+          "n": 6,
+          "rolls": 2,
+          "seconds": 19.3166666666667,
+          "shots": 0
+        },
+        {
+          "damage_taken": 2.39999999999999,
+          "enemies": {
+            "contractor": 3,
+            "patrol_cop": 1,
+            "riot_cop": 2,
+            "robot_thug": 1,
+            "swat": 1
+          },
+          "hits": 23,
+          "n": 7,
+          "rolls": 0,
+          "seconds": 7.9,
+          "shots": 59
+        },
+        {
+          "damage_taken": 2.99999999999997,
+          "enemies": {
+            "contractor": 3,
+            "patrol_cop": 1,
+            "riot_cop": 1,
+            "robot_gunner": 3
+          },
+          "hits": 30,
+          "n": 8,
+          "rolls": 1,
+          "seconds": 15.05,
+          "shots": 76
+        },
+        {
+          "damage_taken": 29.8,
+          "enemies": {
+            "contractor": 1,
+            "patrol_cop": 2,
+            "riot_cop": 2,
+            "robot_thug": 2,
+            "rocket_trooper": 1,
+            "shield_robot": 1
+          },
+          "hits": 126,
+          "n": 9,
+          "rolls": 0,
+          "seconds": 35.1166666666667,
+          "shots": 255
+        },
+        {
+          "damage_taken": 129.76,
+          "enemies": {
+            "contractor": 1,
+            "patrol_cop": 1,
+            "robot_gunner": 1,
+            "robot_thug": 2,
+            "rocket_trooper": 1,
+            "sentry_turret": 1,
+            "war_machine": 1
+          },
+          "hits": 179,
+          "n": 10,
+          "rolls": 3,
+          "seconds": 58.8666666666667,
+          "shots": 453
+        },
+        {
+          "damage_taken": 39,
+          "enemies": {
+            "patrol_cop": 1,
+            "riot_cop": 2,
+            "robot_gunner": 4,
+            "rocket_trooper": 1,
+            "sentry_turret": 1,
+            "swat": 1
+          },
+          "hits": 78,
+          "n": 11,
+          "rolls": 0,
+          "seconds": 35.2166666666667,
+          "shots": 228
+        },
+        {
+          "damage_taken": 66.72,
+          "enemies": {
+            "contractor": 1,
+            "patrol_cop": 2,
+            "riot_cop": 1,
+            "robot_gunner": 2,
+            "robot_thug": 3,
+            "rocket_trooper": 1,
+            "sentry_turret": 1
+          },
+          "hits": 69,
+          "n": 12,
+          "rolls": 3,
+          "seconds": 32.9666666666667,
+          "shots": 147
+        },
+        {
+          "damage_taken": 130.620000000001,
+          "enemies": {
+            "patrol_cop": 2,
+            "riot_cop": 1,
+            "robot_gunner": 1,
+            "robot_thug": 3,
+            "rocket_trooper": 3,
+            "shield_robot": 1,
+            "swat": 1
+          },
+          "hits": 88,
+          "n": 13,
+          "rolls": 14,
+          "shots": 92
+        }
+      ]
+    },
+    {
+      "controls": "wheel",
+      "death": {
+        "by": "timeout",
+        "wave": 6
+      },
+      "mods": {
+        "guard_meter": 1.1,
+        "hp_max": 1.1,
+        "speed": 1.1
+      },
+      "picks": [
+        {
+          "offered": [
+            "ghost_tonnage",
+            "weapon_gloria",
+            "stat_hp_max_10"
+          ],
+          "taken": "ghost_tonnage",
+          "wave": 1
+        },
+        {
+          "offered": [
+            "stat_hp_max_10",
+            "stat_regen_10",
+            "weapon_machine_pistol"
+          ],
+          "taken": "stat_hp_max_10",
+          "wave": 2
+        },
+        {
+          "offered": [
+            "stat_guard_meter_10",
+            "weapon_chainsaw",
+            "weapon_machine_pistol"
+          ],
+          "taken": "stat_guard_meter_10",
+          "wave": 3
+        },
+        {
+          "offered": [
+            "weapon_plasma_rifle",
+            "weapon_machine_pistol",
+            "stat_speed_10"
+          ],
+          "taken": "stat_speed_10",
+          "wave": 4
+        },
+        {
+          "offered": [
+            "ghost_ohm",
+            "stat_regen_10",
+            "stat_regen_25"
+          ],
+          "taken": "ghost_ohm",
+          "wave": 5
+        }
+      ],
+      "profile": "expert",
+      "schema": "gtai.gauntlet-run/1",
+      "seed": 1,
+      "wave_reached": 6,
+      "waves": [
+        {
+          "damage_taken": 0,
+          "enemies": {
+            "patrol_cop": 4
+          },
+          "hits": 4,
+          "n": 1,
+          "rolls": 0,
+          "seconds": 8.55,
+          "shots": 0
+        },
+        {
+          "damage_taken": 0,
+          "enemies": {
+            "patrol_cop": 6
+          },
+          "hits": 6,
+          "n": 2,
+          "rolls": 0,
+          "seconds": 9.53333333333333,
+          "shots": 0
+        },
+        {
+          "damage_taken": 0.599999999999994,
+          "enemies": {
+            "contractor": 1,
+            "riot_cop": 1,
+            "swat": 2
+          },
+          "hits": 4,
+          "n": 3,
+          "rolls": 1,
+          "seconds": 5.16666666666667,
+          "shots": 0
+        },
+        {
+          "damage_taken": 0.599999999999994,
+          "enemies": {
+            "contractor": 1,
+            "riot_cop": 1,
+            "rocket_trooper": 1,
+            "swat": 2
+          },
+          "hits": 5,
+          "n": 4,
+          "rolls": 3,
+          "seconds": 10.1,
+          "shots": 0
+        },
+        {
+          "damage_taken": 65.1,
+          "enemies": {
+            "contractor": 3,
+            "patrol_cop": 1,
+            "war_machine": 1
+          },
+          "hits": 45,
+          "n": 5,
+          "rolls": 17,
+          "seconds": 35.3833333333333,
+          "shots": 0
+        },
+        {
+          "damage_taken": 1.8,
+          "enemies": {
+            "contractor": 1,
+            "patrol_cop": 1,
+            "riot_cop": 2,
+            "robot_thug": 1,
+            "rocket_trooper": 2
+          },
+          "hits": 19,
+          "n": 6,
+          "rolls": 19,
+          "shots": 0
+        }
+      ]
+    }
+  ],
+  "speed": {
+    "sim_s": 16104.733333333334,
+    "wall_s": 315.56250439999997,
+    "sim_per_wall": 51.0350029194829
+  }
+}

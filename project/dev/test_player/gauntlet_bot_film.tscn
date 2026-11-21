@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://dev/gauntlet/gauntlet.tscn" id="1"]
+[ext_resource type="Script" path="res://dev/test_player/gauntlet_bot_film.gd" id="2"]
+
+[sub_resource type="StyleBoxFlat" id="Paper"]
+content_margin_left = 16.0
+content_margin_right = 16.0
+
+[node name="GauntletBotFilm" instance=ExtResource("1")]
+script = ExtResource("2")
+
+[node name="Caption" type="CanvasLayer" parent="."]
+
+[node name="Act" type="Label" parent="Caption"]
+visible = false
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = -66.0
+offset_bottom = -18.0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("Paper")
+vertical_alignment = 1

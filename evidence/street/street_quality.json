@@ -1,0 +1,44 @@
+{
+  "seed": 7,
+  "waves": 10,
+  "dressing_comparison": {
+    "before_commit": "7baa66c58",
+    "bytes": 5213,
+    "sha256": "1d653a0795ff3c328afc6b9c9a7aa964fb952c10adaf4ce6d842183a6ca64221",
+    "byte_identical": true,
+    "after_commit": "c7e8fbe07"
+  },
+  "six_template_stills": {
+    "tick": 470,
+    "ppm": 32,
+    "tilt": 70,
+    "width": 1920,
+    "height": 1080,
+    "files": {
+      "alley_neck": {
+        "before": "67f604fea1ec668439a5835de2793a75492bc9e926f47fb43647d344c57e0847",
+        "after": "2c86acd32aca02b056c4e10446e561d9ed1d7e1aa7b5c096909c7e531dac6ac5"
+      },
+      "barricade_line": {
+        "before": "faae00ee366e77cbf921e8ea9b7cbf8ae54ac72f19064b8c560deff7f0634c91",
+        "after": "d45001322a610f23ba0003043470bac9794cc22e2befec4bd44300548b5b813f"
+      },
+      "crosswalk": {
+        "before": "2fb57efe57158e27fad0a54185c65695b81a8c1efa8e62b5aae53d593467b776",
+        "after": "55d600a56a30a363dc133fcfacaf3a852febd6fffee6cb08ca11c11d3d52b38a"
+      },
+      "kiosk_plaza": {
+        "before": "928e5bc932489887a0690d5569bbab33679ecc9e904e95cbe9bf3ab40a89bac7",
+        "after": "5ddd07ec971a001a67b9fd8a88ee649251582a7b4bd8ab5aa12b09c061d2a8d5"
+      },
+      "loading_bay": {
+        "before": "012601b1fd0529eba9c12cae85f6e49deb0760c70ef608daf813cd84918843fa",
+        "after": "21806610202004bba0666646e03a7922995aa3ec6d98a9410354135d0ffd0c82"
+      },
+      "plain_block": {
+        "before": "8f9ddd191e22004a2d05909bab6e7373545521a2f5f22b30c080cf543ff925c4",
+        "after": "2ee90b2aadd70c3c74e3dfd27adac32b8a6075ae4e6e08c525e1fc6687295710"
+      }
+    }
+  }
+}

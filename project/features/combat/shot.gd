@@ -2,6 +2,15 @@ class_name Shot
 extends RefCounted
 ## A nail or a rifle round in flight: straight line, fixed speed, a range it dies at.
 
+const SMALL: StringName = &"small"
+const LARGE: StringName = &"large"
+
+var size: StringName = SMALL:
+	set(value):
+		size = value
+		size_known = true
+## A typed weapon already supplied the size, or the arena resolved a bare enemy round.
+var size_known: bool = false
 var pos: Vector2 = Vector2.ZERO
 var vel: Vector2 = Vector2.ZERO
 var from_rivet: bool = true
@@ -26,10 +35,26 @@ static func fire(shooter: Fighter, dir: Vector2, w: CombatTuning.Weapon) -> Shot
 	s.vel = dir * w.speed_mps
 	s.from_rivet = shooter.kind == Fighter.Kind.RIVET
 	s.weapon = w.id
+	s.size = w.round
 	s.damage = w.damage if s.from_rivet else w.damage_vs_rivet
 	s.left_m = w.range_m
 	s.shooter_id = shooter.id
 	return s
+
+
+## All three weapon tables share the optional round enum and report errors through their loader.
+static func read_size(t: DataTable, row: Dictionary, id: StringName) -> StringName:
+	if not row.has("round"):
+		return SMALL
+	var value: String = t.text(row, "round")
+	match value:
+		"small":
+			return SMALL
+		"large":
+			return LARGE
+		_:
+			t._errors.append("%s.round: expected small or large, got '%s'" % [id, value])
+			return SMALL
 
 
 ## Moves one tick; returns the segment start (for the hit test along the path).

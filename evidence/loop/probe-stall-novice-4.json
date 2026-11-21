@@ -1,0 +1,34 @@
+{
+  "block": "kiosk_plaza",
+  "claw_reach_ticks": 0,
+  "cover_ticks": 0,
+  "forward_limit_m": null,
+  "guard_ticks": 0,
+  "machine_hp_lost": 0.0,
+  "machine_ticks": 0,
+  "position_m": [
+    45.5483856201172,
+    5.39502429962158
+  ],
+  "profile": "novice",
+  "rolling_ticks": 0,
+  "schema": "gtai.street-bot-probe/1",
+  "seed": 4,
+  "ticks": 72000,
+  "touching_solids": [
+    "[P: (30.0, 6.0), S: (34.0, 1.0)]",
+    "[P: (46.0, 1.0), S: (4.0, 4.0)]"
+  ],
+  "wave": 1,
+  "wave_result": {
+    "damage_taken": 0.0,
+    "enemies": {
+      "patrol_cop": 4
+    },
+    "hits": 4,
+    "n": 1,
+    "rolls": 0,
+    "seconds": 15.95,
+    "shots": 0
+  }
+}

@@ -1,0 +1,250 @@
+{
+  "schema": "gtai.mutate/1",
+  "file": "features/gauntlet/bot/bot_brain.gd",
+  "head": "aaaca74f6ac4e6314fa92b83feac14729a4d3836",
+  "tests": [
+    "test_bot_street_machine",
+    "test_bot_street_repair",
+    "test_bot_street_stats",
+    "test_bot_street_wheel",
+    "test_gauntlet_bot_arena",
+    "test_gauntlet_bot_brain",
+    "test_gauntlet_bot_probe"
+  ],
+  "counts": {
+    "killed": 18,
+    "survived": 2,
+    "timeout": 0,
+    "invalid": 0
+  },
+  "score": 0.9,
+  "mutants_total": 43,
+  "max": 20,
+  "baseline_ms": 14328,
+  "first_import_ms": null,
+  "total_ms": 357674,
+  "mutants": [
+    {
+      "id": 1,
+      "line": 17,
+      "col": 21,
+      "op": "boolean",
+      "before": "false",
+      "after": "true",
+      "verdict": "killed",
+      "via": "1 failing test(s)",
+      "ms": 15909
+    },
+    {
+      "id": 15,
+      "line": 53,
+      "col": 17,
+      "op": "boolean",
+      "before": "false",
+      "after": "true",
+      "verdict": "killed",
+      "via": "1 failing test(s)",
+      "ms": 16380
+    },
+    {
+      "id": 18,
+      "line": 59,
+      "col": 11,
+      "op": "boundary",
+      "before": ">=",
+      "after": ">",
+      "verdict": "killed",
+      "via": "1 failing test(s)",
+      "ms": 15636
+    },
+    {
+      "id": 19,
+      "line": 59,
+      "col": 31,
+      "op": "arith",
+      "before": "*",
+      "after": "/",
+      "verdict": "killed",
+      "via": "1 failing test(s)",
+      "ms": 15557
+    },
+    {
+      "id": 21,
+      "line": 61,
+      "col": 13,
+      "op": "cmp_flip",
+      "before": "<",
+      "after": ">=",
+      "verdict": "killed",
+      "via": "2 failing test(s)",
+      "ms": 15951
+    },
+    {
+      "id": 22,
+      "line": 61,
+      "col": 13,
+      "op": "boundary",
+      "before": "<",
+      "after": "<=",
+      "verdict": "killed",
+      "via": "1 failing test(s)",
+      "ms": 16219
+    },
+    {
+      "id": 26,
+      "line": 65,
+      "col": 7,
+      "op": "boolean",
+      "before": "not ",
+      "after": "",
+      "verdict": "killed",
+      "via": "6 failing test(s)",
+      "ms": 17021
+    },
+    {
+      "id": 27,
+      "line": 65,
+      "col": 18,
+      "op": "boolean",
+      "before": "and",
+      "after": "or",
+      "verdict": "killed",
+      "via": "2 failing test(s)",
+      "ms": 16855
+    },
+    {
+      "id": 29,
+      "line": 65,
+      "col": 28,
+      "op": "boundary",
+      "before": ">=",
+      "after": ">",
+      "verdict": "killed",
+      "via": "1 failing test(s)",
+      "ms": 16074
+    },
+    {
+      "id": 44,
+      "line": 85,
+      "col": 53,
+      "op": "cmp_flip",
+      "before": "!=",
+      "after": "==",
+      "verdict": "killed",
+      "via": "2 failing test(s)",
+      "ms": 16900
+    },
+    {
+      "id": 88,
+      "line": 141,
+      "col": 45,
+      "op": "cmp_flip",
+      "before": "<",
+      "after": ">=",
+      "verdict": "killed",
+      "via": "2 failing test(s)",
+      "ms": 18218
+    },
+    {
+      "id": 90,
+      "line": 141,
+      "col": 47,
+      "op": "literal",
+      "before": "30.0",
+      "after": "31.0",
+      "verdict": "killed",
+      "via": "1 failing test(s)",
+      "ms": 17555
+    },
+    {
+      "id": 93,
+      "line": 142,
+      "col": 21,
+      "op": "literal",
+      "before": "0.0",
+      "after": "1.0",
+      "verdict": "survived",
+      "via": "all tests passed",
+      "ms": 16008
+    },
+    {
+      "id": 95,
+      "line": 142,
+      "col": 42,
+      "op": "cmp_flip",
+      "before": "==",
+      "after": "!=",
+      "verdict": "killed",
+      "via": "2 failing test(s)",
+      "ms": 18395
+    },
+    {
+      "id": 97,
+      "line": 144,
+      "col": 28,
+      "op": "boundary",
+      "before": ">",
+      "after": ">=",
+      "verdict": "survived",
+      "via": "all tests passed",
+      "ms": 16238
+    },
+    {
+      "id": 98,
+      "line": 144,
+      "col": 38,
+      "op": "boolean",
+      "before": "and",
+      "after": "or",
+      "verdict": "killed",
+      "via": "1 failing test(s)",
+      "ms": 21149
+    },
+    {
+      "id": 99,
+      "line": 144,
+      "col": 55,
+      "op": "boolean",
+      "before": "or",
+      "after": "and",
+      "verdict": "killed",
+      "via": "1 failing test(s)",
+      "ms": 22862
+    },
+    {
+      "id": 104,
+      "line": 145,
+      "col": 40,
+      "op": "arith",
+      "before": "*",
+      "after": "/",
+      "verdict": "killed",
+      "via": "1 failing test(s)",
+      "ms": 16384
+    },
+    {
+      "id": 137,
+      "line": 176,
+      "col": 13,
+      "op": "cmp_flip",
+      "before": "!=",
+      "after": "==",
+      "verdict": "killed",
+      "via": "1 failing test(s)",
+      "ms": 17356
+    },
+    {
+      "id": 138,
+      "line": 176,
+      "col": 21,
+      "op": "boolean",
+      "before": "and",
+      "after": "or",
+      "verdict": "killed",
+      "via": "1 failing test(s)",
+      "ms": 16665
+    }
+  ],
+  "execution": "Tracked source archive inside this lane, with the repository mutation operators, deterministic sampler, test selection, baseline and GUT oracle. Each mutant changed only the archived file.",
+  "changed_lines": "17,27,32,53,59-62,65,76-77,85-86,133-134,136,138,140-146,152,174-177"
+}

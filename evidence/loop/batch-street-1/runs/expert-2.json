@@ -1,0 +1,118 @@
+{
+  "controls": "wheel",
+  "mods": {},
+  "picks": [
+    {
+      "offered": [
+        "stat_hp_max_10",
+        "weapon_katana",
+        "weapon_pistol"
+      ],
+      "taken": "stat_hp_max_10",
+      "wave": 1
+    },
+    {
+      "offered": [
+        "weapon_machine_pistol",
+        "weapon_hand_cannon",
+        "ghost_kerf"
+      ],
+      "taken": "ghost_kerf",
+      "wave": 2
+    },
+    {
+      "offered": [
+        "weapon_flamethrower",
+        "ghost_ohm",
+        "stat_guard_meter_10"
+      ],
+      "taken": "ghost_ohm",
+      "wave": 3
+    },
+    {
+      "offered": [
+        "stat_damage_25",
+        "stat_regen_10",
+        "weapon_katana"
+      ],
+      "taken": "stat_damage_25",
+      "wave": 4
+    },
+    {
+      "offered": [
+        "stat_regen_10",
+        "weapon_electro_baton",
+        "weapon_rocket_launcher"
+      ],
+      "taken": "weapon_rocket_launcher",
+      "wave": 5
+    }
+  ],
+  "profile": "expert",
+  "schema": "gtai.gauntlet-run/1",
+  "seed": 2,
+  "wave_reached": 5,
+  "waves": [
+    {
+      "damage_taken": 0.0,
+      "enemies": {
+        "patrol_cop": 4
+      },
+      "hits": 4,
+      "n": 1,
+      "rolls": 0,
+      "seconds": 6.21666666666667,
+      "shots": 0
+    },
+    {
+      "damage_taken": 0.0,
+      "enemies": {
+        "patrol_cop": 6
+      },
+      "hits": 6,
+      "n": 2,
+      "rolls": 3,
+      "seconds": 13.5,
+      "shots": 0
+    },
+    {
+      "damage_taken": 0.0,
+      "enemies": {
+        "riot_cop": 2,
+        "rocket_trooper": 2
+      },
+      "hits": 4,
+      "n": 3,
+      "rolls": 0,
+      "seconds": 8.31666666666667,
+      "shots": 0
+    },
+    {
+      "damage_taken": 0.599999999999994,
+      "enemies": {
+        "contractor": 1,
+        "patrol_cop": 2,
+        "riot_cop": 2,
+        "swat": 1
+      },
+      "hits": 6,
+      "n": 4,
+      "rolls": 0,
+      "seconds": 7.11666666666667,
+      "shots": 0
+    },
+    {
+      "damage_taken": 31.6,
+      "enemies": {
+        "patrol_cop": 1,
+        "riot_cop": 3,
+        "war_machine": 1
+      },
+      "hits": 51,
+      "n": 5,
+      "rolls": 20,
+      "seconds": 37.8166666666667,
+      "shots": 0
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "schema": "gtai.gauntlet-run/1",
+  "profile": "expert",
+  "seed": 8,
+  "controls": "wheel",
+  "wave_reached": 5,
+  "waves": [
+    {
+      "n": 1,
+      "shots": 9,
+      "damage_taken": 2,
+      "rolls": 0
+    },
+    {
+      "n": 2,
+      "seconds": 21,
+      "enemies": {
+        "patrol_cop": 2,
+        "contractor": 1
+      },
+      "shots": 10,
+      "damage_taken": 2,
+      "rolls": 1,
+      "form_seconds": {
+        "kerf": 3
+      },
+      "hits": 5,
+      "guard_deflects": 2
+    },
+    {
+      "n": 3,
+      "seconds": 21,
+      "enemies": {
+        "contractor": 2
+      },
+      "shots": 11,
+      "damage_taken": 2,
+      "rolls": 2,
+      "form_seconds": {
+        "kerf": 3
+      },
+      "hits": 5,
+      "guard_deflects": 2
+    },
+    {
+      "n": 4,
+      "seconds": 21,
+      "enemies": {
+        "patrol_cop": 2,
+        "contractor": 1
+      },
+      "shots": 12,
+      "damage_taken": 2,
+      "rolls": 0,
+      "form_seconds": {
+        "kerf": 3
+      },
+      "hits": 6,
+      "guard_deflects": 2
+    },
+    {
+      "n": 5,
+      "enemies": {
+        "contractor": 2
+      },
+      "shots": 13,
+      "damage_taken": 2,
+      "rolls": 1,
+      "form_seconds": {
+        "kerf": 3
+      },
+      "hits": 6,
+      "guard_deflects": 2,
+      "status": "tick_limit"
+    }
+  ],
+  "picks": [
+    {
+      "wave": 1,
+      "offered": [
+        "weapon_pistol",
+        "ghost_kerf",
+        "stat_damage_10"
+      ],
+      "taken": "stat_damage_10"
+    },
+    {
+      "wave": 2,
+      "offered": [
+        "stat_hp_max_10",
+        "stat_regen_10",
+        "ghost_ohm"
+      ],
+      "taken": "stat_regen_10"
+    }
+  ],
+  "mods": {
+    "regen": 1.1,
+    "damage": 1.1
+  }
+}

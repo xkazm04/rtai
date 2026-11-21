@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[node name="Center" type="CenterContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Stack" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Caption" type="Label" parent="Stack"]
+layout_mode = 2
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.949, 0.91, 0.835, 1)
+theme_override_font_sizes/font_size = 18
+
+[node name="Heading" type="Label" parent="Stack"]
+layout_mode = 2
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.949, 0.91, 0.835, 1)
+theme_override_font_sizes/font_size = 38
+text = "GAUNTLET__CHOOSE"
+
+[node name="Cards" type="HBoxContainer" parent="Stack"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 14

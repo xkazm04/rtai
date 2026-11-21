@@ -1,0 +1,12 @@
+# --fixed-fps 60 --quit-after 72000 res://dev/gauntlet/gauntlet.tscn -- --seed=1 --bot=novice --pick=greedy --controls=wheel --result=C:\Users\kazda\kiro\gtai-wt\n22-loop\evidence\loop\street-rest-before-fights\runs\novice-1.json
+# exit 0, 6.1 s
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] gauntlet: test player bound: novice, greedy picks, seed 1
+[INFO] gauntlet: wave 1 tick 255 block alley_neck enemies { "patrol_cop": 4 }
+[INFO] gauntlet: wave 2 tick 647 block kiosk_plaza enemies { "patrol_cop": 6 }
+[INFO] gauntlet: wave 3 tick 1177 block loading_bay enemies { "riot_cop": 1, "contractor": 1, "swat": 2 }
+[INFO] gauntlet: wave 4 tick 1535 block barricade_line enemies { "swat": 2, "rocket_trooper": 1, "contractor": 1, "riot_cop": 1 }
+[INFO] gauntlet: wave 5 tick 1931 block kiosk_plaza enemies { "war_machine": 1, "contractor": 3, "patrol_cop": 1 }
+[INFO] gauntlet: wave 5 ended after 3547 ticks at (169.6272, 5.470114), hp 0.0
+[INFO] gauntlet: tick 5479, segment 5, 3 resident
