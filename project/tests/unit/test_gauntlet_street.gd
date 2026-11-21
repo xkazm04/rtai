@@ -165,7 +165,7 @@ func test_dead_guard_stays_on_the_road_side_after_a_wall_hit_and_a_late_shove() 
 	foe.pos = hit
 	arena.damage(foe, foe.max_hp, arena.rivet.id, &"claw", &"melee")
 	assert_false(foe.alive())
-	var expected: float = wall.at.y - wall.size.y * 0.5 - 1.15
+	var expected: float = wall.at.y - wall.size.y * 0.5 - 1.65
 	assert_almost_eq(foe.pos.y, expected, 0.001)
 	foe.pos.y = wall.at.y + 5.0
 	s.step()
@@ -182,3 +182,9 @@ func test_rest_chooses_the_nearest_free_face_when_cover_meets_a_wall() -> void:
 	assert_eq(rest.nearest(Vector2(5, -3), 0.5), Vector2(3.5, 0.5))
 	assert_true(rest.solid_px(Vector2(8, 3) * SimConst.PX_PER_M))
 	assert_false(rest.solid_px(Vector2(10, 3) * SimConst.PX_PER_M))
+	# Blood can land here but there's no room for the drawn body's half-width.
+	var near: Vector2 = Vector2(9.5, 3) * SimConst.PX_PER_M
+	assert_false(rest.solid_px(near))
+	assert_true(rest.pose_solid_px(near))
+	assert_true(rest.pose_solid_px(Vector2(12, 0.5) * SimConst.PX_PER_M))
+	assert_false(rest.pose_solid_px(Vector2(12, 3) * SimConst.PX_PER_M))

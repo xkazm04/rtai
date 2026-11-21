@@ -13,18 +13,27 @@ func _init(road: Rect2, boxes: Array[Rect2]) -> void:
 
 
 func solid_px(px: Vector2) -> bool:
-	var point: Vector2 = px / SimConst.PX_PER_M
-	if not _road.has_point(point):
+	return _outside(px / SimConst.PX_PER_M, 0.0)
+
+
+## The rig's neighbour separation tests a pelvis point. Reserve the half-width of the lying
+## pose around that point so a separated body's hands cannot cross the kerb or a cover face.
+func pose_solid_px(px: Vector2) -> bool:
+	return _outside(px / SimConst.PX_PER_M, 0.9)
+
+
+func _outside(point: Vector2, margin: float) -> bool:
+	if not _road.grow(-margin).has_point(point):
 		return true
 	for box: Rect2 in _boxes:
-		if box.has_point(point):
+		if box.grow(margin).has_point(point):
 			return true
 	return false
 
 
 func place(foe: Fighter) -> void:
 	# Leave room for a recumbent human or the larger powered-down robot silhouette.
-	var radius: float = maxf(foe.radius_m, 2.0 if foe.machine else 1.15)
+	var radius: float = maxf(foe.radius_m, 2.35 if foe.machine else 1.65)
 	foe.pos = nearest(foe.pos, radius)
 
 

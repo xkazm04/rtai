@@ -10,13 +10,13 @@ var _previous_solid: Callable
 func _ready() -> void:
 	super._ready()
 	_previous_solid = StreetDeadPlan.solid
-	StreetDeadPlan.solid = street.solid_px
+	StreetDeadPlan.solid = street.pose_solid_px
 	@warning_ignore("return_value_discarded")
 	street.window_changed.connect(_window_changed)
 
 
 func _exit_tree() -> void:
-	if street != null and StreetDeadPlan.solid == street.solid_px:
+	if street != null and StreetDeadPlan.solid == street.pose_solid_px:
 		StreetDeadPlan.solid = _previous_solid
 
 

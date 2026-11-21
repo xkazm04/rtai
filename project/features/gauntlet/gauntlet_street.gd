@@ -90,6 +90,10 @@ func solid_px(px: Vector2) -> bool:
 	return rest.solid_px(px)
 
 
+func pose_solid_px(px: Vector2) -> bool:
+	return rest.pose_solid_px(px)
+
+
 func step(stage: ArenaStage, _tick: int) -> void:
 	var arena: CombatArena = stage.arena
 	arena.rivet.pos.x = minf(arena.rivet.pos.x, forward_limit)
