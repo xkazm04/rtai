@@ -4,6 +4,7 @@ extends ArenaSession
 ## to the range, so build the standard ArenaStage over an empty plan before placing the street.
 
 var street: GauntletStreet
+var bonuses: GauntletBonusApply
 
 
 static func open_street(
@@ -28,6 +29,8 @@ static func open_street(
 	s.world.add_system(s.stage)
 	s.stage.hooks.append(s.street)
 	s.street.setup(s.stage, s.world.context())
+	(s.stage.arena.squad_ai as GauntletStreet.StreetSquad).mods = run.mods
+	s.bonuses = GauntletBonusApply.new(s.stage, s.world.context(), run)
 	s.stage.arena.rivet.weapon = &""
 	var forms: GhostForms = s.pilot.ghosts.forms
 	for form: GhostFormDef in forms.table.forms.values():

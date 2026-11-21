@@ -45,19 +45,18 @@ func compose(wave: int) -> Array[StringName]:
 	var remaining: int = budget(wave)
 	var eligible: Array[StringName] = []
 	var selected: Array[StringName] = []
-	var boss: StringName = &""
+	var boss: StringName = BOSS if tiers.has(BOSS) else &""
 	for id: StringName in tiers:
 		var tier: int = tiers[id]
-		if wave < unlocks[tier - 1] or tier > remaining:
+		if id == BOSS or wave < unlocks[tier - 1] or tier > remaining:
 			continue
-		if id != BOSS:
-			eligible.append(id)
-		if boss == &"" or id == BOSS or (boss != BOSS and tier > tiers[boss]):
+		eligible.append(id)
+		if boss == &"" or (boss != BOSS and tier > tiers[boss]):
 			boss = id
 	if wave % boss_every == 0 and boss != &"":
 		selected.append(boss)
 		eligible.erase(boss)
-		remaining -= tiers[boss]
+		remaining = maxi(0, remaining - tiers[boss])
 	var wave_seed: int = RngRegistry.fnv1a32("%d:%d" % [_stream_seed, wave])
 	var rng: RandomNumberGenerator = RngRegistry.new(wave_seed).stream(&"gauntlet_waves")
 	for _slot: int in remaining:

@@ -91,7 +91,10 @@
         "2026-11-20: gauntlet dev scene streams and renders the seeded n22 street (dev_loc 26681 -> 26733)",
         "2026-11-20: gauntlet dev scene drives measured waves for n22 street (dev_loc 26733 -> 26749)",
         "2026-11-20: --enemy for n22 foes (dev_loc 26600 -> 26712)",
-        "2026-11-21: foe duel player profiles and fairness evidence for n22 foes (dev_loc 26712 -> 26765)"
+        "2026-11-21: foe duel player profiles and fairness evidence for n22 foes (dev_loc 26712 -> 26765)",
+        "2026-11-21: Wave clock and health HUD for n22 street (dev_loc 26749 -> 26830)",
+        "2026-11-21: Human upgrade cards, selection and translated HUD for n22 street (dev_loc 26830 -> 27022)",
+        "2026-11-21: Windowed pick and segment still capture for n22 street (dev_loc 27022 -> 27110)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -102,7 +105,7 @@
         "project/dev/bots": 496,
         "project/dev/enemy_ai": 1671,
         "project/dev/frames": 1087,
-        "project/dev/gauntlet": 149,
+        "project/dev/gauntlet": 510,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1396,
         "project/dev/gunplay": 674,
@@ -127,7 +130,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 27153
+      "total": 27514
     },
     "direct_cmdline_reads": {
       "accepted": [

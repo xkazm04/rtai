@@ -65,6 +65,29 @@ func test_crossing_starts_wave_and_holds_the_seam_until_the_last_kill() -> void:
 	assert_eq(session.street.forward_limit, INF)
 
 
+func test_hud_reads_the_live_wave_clock_and_reserves_a_guard_meter() -> void:
+	var overlay: GauntletHud = GauntletHud.new()
+	overlay.session = session
+	overlay.run = run
+	overlay.waves = waves
+	add_child(overlay)
+	_enter()
+	for tick: int in 30:
+		session.step()
+	session.stage.arena.rivet.hp = 75.0
+	overlay._process(0.0)
+	assert_eq(overlay._wave.text, "Wave 1")
+	assert_eq(overlay._time.text, "0.5 s")
+	assert_eq(overlay._hp.value, 0.75)
+	assert_eq(overlay.guard_meter.name, &"GuardMeter")
+	assert_false(overlay.guard_meter.visible)
+	overlay.set_guard_meter(0.65)
+	assert_true(overlay.guard_meter.visible)
+	assert_lte(overlay._hp.get_rect().end.y, overlay.guard_meter.position.y)
+	assert_almost_eq(overlay.guard_meter.value, 0.65, 0.001)
+	overlay.free()
+
+
 func test_retreating_guard_stays_on_the_road_and_in_the_squad() -> void:
 	_enter()
 	var arena: CombatArena = session.stage.arena

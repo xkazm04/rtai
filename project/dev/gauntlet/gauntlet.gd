@@ -11,6 +11,8 @@ var run: GauntletRun = GauntletRun.new()
 var session: GauntletSession
 var pilot: GauntletPilot
 var waves: GauntletWaves
+var hud: GauntletHud
+var pick_view: GauntletPickView
 var _result_path: String = ""
 
 
@@ -61,8 +63,16 @@ func _process(_delta: float) -> void:
 		get_tree().quit(0 if _finish() else 1)
 
 
+func _physics_process(_delta: float) -> void:
+	if session != null and not waves.done and waves.pending.is_empty():
+		session.world.loop().frame(SimClock.TICK_DT)
+
+
 func _open_view() -> void:
 	add_child(session.world)
+	# A human clear can occur on any tick. Check for its modal before each 60 Hz step.
+	session.world.set_process(pilot != null)
+	set_physics_process(pilot == null)
 	var view: CollectCallView = CollectCallView.new()
 	var floor_view: GauntletFloor = GauntletFloor.new()
 	floor_view.street = session.street
@@ -72,6 +82,17 @@ func _open_view() -> void:
 	view.bind(session.stage, CollectCallWorld.new(session.stage), null)
 	add_child(view)
 	view.hud_view.visible = false
+	hud = GauntletHud.new()
+	hud.session = session
+	hud.run = run
+	hud.waves = waves
+	add_child(hud)
+	if pilot == null:
+		waves.manual_picks = true
+		pick_view = GauntletPickView.new()
+		pick_view.waves = waves
+		pick_view.run = run
+		hud.add_child(pick_view)
 	var cast: ArenaRigs = ArenaRigs.new()
 	add_child(cast)
 	@warning_ignore("return_value_discarded")
@@ -82,7 +103,7 @@ func _open_view() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if session != null:
+	if session != null and waves != null and waves.pending.is_empty():
 		session.live.note_event(event)
 
 
@@ -100,6 +121,8 @@ func _finish() -> bool:
 		)
 	)
 	var ok: bool = _result_path.is_empty() or _write_result(_result_path)
+	if hud != null and is_instance_valid(hud):
+		hud.set_process(false)
 	session.close()
 	session = null
 	return ok
