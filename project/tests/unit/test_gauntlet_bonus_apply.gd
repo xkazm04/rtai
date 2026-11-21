@@ -93,3 +93,35 @@ func test_spawned_hostile_takes_scaled_damage_and_armour_still_applies() -> void
 	session.step()
 	var arch: EnemyRoster.Archetype = arena.squad_ai.pit.roster.archetype(&"shield_robot")
 	assert_eq(shield.damage_k, 1.25 * arch.shield_front_mult)
+
+
+func _hold_trigger(arena: CombatArena) -> int:
+	var target: Vector2 = arena.rivet.pos + Vector2.RIGHT * 3.0
+	for tick: int in 60:
+		@warning_ignore("return_value_discarded")
+		arena.gun.pull(arena.rivet, target)
+		arena.gun.settle()
+	return arena.gun.shots_fired
+
+
+func test_granted_pistol_retaps_for_a_bot_and_waits_for_a_human_press() -> void:
+	_take(&"weapon_pistol")
+	var bot_run: GauntletRun = GauntletRun.new()
+	bot_run.profile = &"average"
+	var bot: GauntletSession = _open(bot_run)
+	assert_true(bot.bonuses.apply(draw.rows[&"weapon_pistol"]))
+	assert_eq(_hold_trigger(session.stage.arena), 1)
+	assert_gt(_hold_trigger(bot.stage.arena), 1)
+	bot.close()
+
+
+func test_sidearm_replaces_slot_zero_and_an_unknown_grant_preserves_it() -> void:
+	_take(&"weapon_pistol")
+	_take(&"weapon_hand_cannon")
+	var carry: RivetCarry = session.pilot.carry
+	assert_eq(carry.current, 0)
+	assert_eq(carry.slots[0], &"hand_cannon")
+	assert_eq(session.stage.arena.rivet.weapon, &"hand_cannon")
+	assert_false(session.bonuses.apply({"kind": "weapon", "ref": &"unknown_sidearm"}))
+	assert_eq(carry.weapon(), &"hand_cannon")
+	assert_eq(session.stage.arena.rivet.weapon, &"hand_cannon")
