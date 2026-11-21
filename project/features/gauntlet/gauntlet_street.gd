@@ -12,6 +12,7 @@ var window: Array[GauntletSegment] = []
 var index: int = 0
 ## A wave can hold Rivet at its far seam without adding a prop or blocking the enemy squad.
 var forward_limit: float = INF
+var rest: GauntletRest
 var _table: DataTable
 var _rows: Array[Dictionary] = []
 var _rng: RandomNumberGenerator
@@ -75,17 +76,34 @@ func advance_to(x: float) -> bool:
 
 func setup(stage: ArenaStage, _ctx: WorldContext) -> void:
 	_install(stage)
+	@warning_ignore("return_value_discarded")
+	stage.arena.kill_landed.connect(_death)
+
+
+func _death(
+	foe: Fighter, _weapon: StringName, _dir: Vector2, _at: Vector2, _kind: StringName
+) -> void:
+	rest.place(foe)
+
+
+func solid_px(px: Vector2) -> bool:
+	return rest.solid_px(px)
+
+
+func pose_solid_px(px: Vector2) -> bool:
+	return rest.pose_solid_px(px)
 
 
 func step(stage: ArenaStage, _tick: int) -> void:
 	var arena: CombatArena = stage.arena
 	arena.rivet.pos.x = minf(arena.rivet.pos.x, forward_limit)
-	if is_finite(forward_limit):
-		# Claw knockback can move even a stationary turret, whose motor skips its bounds check.
-		var limits: Rect2 = arena.squad_ai.pit.bounds
-		for foe: Fighter in arena.hostiles:
-			if foe.alive() and arena.squad_ai.owns(foe):
-				foe.pos = foe.pos.clamp(limits.position, limits.end)
+	var limits: Rect2 = arena.squad_ai.pit.bounds
+	for foe: Fighter in arena.hostiles:
+		if not foe.alive():
+			# Melee shoves keep stepping after the lethal hit and after the clear.
+			rest.place(foe)
+		elif is_finite(forward_limit) and arena.squad_ai.owns(foe):
+			foe.pos = foe.pos.clamp(limits.position, limits.end)
 	if advance_to(stage.arena.rivet.pos.x):
 		_install(stage)
 		window_changed.emit()
@@ -108,6 +126,8 @@ func _install(stage: ArenaStage) -> void:
 	gate.props.append(wall)
 	stations.stations.append(gate)
 	stage.walls.boxes.assign(ArenaWalls.from_stations(stations, stage.plan.base).boxes)
+	var road: Rect2 = window[0].road_bounds(0.0).merge(window[-1].road_bounds(0.0))
+	rest = GauntletRest.new(road, stage.walls.boxes)
 	var arena: CombatArena = stage.arena
 	var map: GuardRouteMap = GuardRouteMap.new(
 		bounds, stage.walls.boxes, null, arena.tuning.human["radius_m"]

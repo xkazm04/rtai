@@ -2,10 +2,12 @@ extends Node
 ## Headless and live gauntlet entry. The engine cap leaves twenty simulated minutes for ten waves.
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--seed", "--bot", "--pick", "--waves", "--result", "--controls"
+	"--seed", "--bot", "--pick", "--waves", "--result", "--controls", "--pick-view"
 ]
 const RUN_TICKS: int = 72000
 const BOT_PATH: String = "res://features/gauntlet/bot/gauntlet_bot.gd"
+
+@export var camera_ppm: float = 32.0
 
 var run: GauntletRun = GauntletRun.new()
 var session: GauntletSession
@@ -46,7 +48,7 @@ func _ready() -> void:
 	if DisplayServer.get_name() == "headless":
 		_run_headless()
 	else:
-		_open_view()
+		_open_view(args.has("--pick-view"))
 
 
 func _run_headless() -> void:
@@ -64,35 +66,45 @@ func _process(_delta: float) -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	if session != null and not waves.done and waves.pending.is_empty():
+	if session == null or waves.done:
+		return
+	if waves.pending.is_empty():
 		session.world.loop().frame(SimClock.TICK_DT)
+	elif pick_view != null and pilot != null:
+		pick_view.advance()
 
 
-func _open_view() -> void:
+func _open_view(film: bool) -> void:
+	if film:
+		ViewMode.select("tilt70")
+		get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
 	add_child(session.world)
 	# A human clear can occur on any tick. Check for its modal before each 60 Hz step.
-	session.world.set_process(pilot != null)
-	set_physics_process(pilot == null)
+	waves.manual_picks = pilot == null or film
+	session.world.set_process(not waves.manual_picks)
+	set_physics_process(waves.manual_picks)
 	var view: CollectCallView = CollectCallView.new()
 	var floor_view: GauntletFloor = GauntletFloor.new()
 	floor_view.street = session.street
 	view.stage_view.free()
 	view.stage_view = floor_view
-	view.px_per_m = 32.0
+	view.px_per_m = camera_ppm
 	view.bind(session.stage, CollectCallWorld.new(session.stage), null)
 	add_child(view)
 	view.hud_view.visible = false
+	view.blood.solid = session.street.solid_px
 	hud = GauntletHud.new()
 	hud.session = session
 	hud.run = run
 	hud.waves = waves
 	add_child(hud)
-	if pilot == null:
-		waves.manual_picks = true
+	if waves.manual_picks:
 		pick_view = GauntletPickView.new()
 		pick_view.waves = waves
 		pick_view.run = run
+		pick_view.pilot = pilot
 		hud.add_child(pick_view)
+		hud.move_child(hud.get_node(^"Status"), -1)
 	var cast: ArenaRigs = ArenaRigs.new()
 	add_child(cast)
 	@warning_ignore("return_value_discarded")
@@ -113,13 +125,7 @@ func _exit_tree() -> void:
 
 
 func _finish() -> bool:
-	Log.info(
-		"gauntlet",
-		(
-			"tick %d, segment %d, %d resident"
-			% [session.tick(), session.street.index, session.street.window.size()]
-		)
-	)
+	Log.info("gauntlet", "tick %d, segment %d" % [session.tick(), session.street.index])
 	var ok: bool = _result_path.is_empty() or _write_result(_result_path)
 	if hud != null and is_instance_valid(hud):
 		hud.set_process(false)
@@ -141,10 +147,12 @@ func _bot() -> GauntletPilot:
 func _invalid_arg(args: ArenaArgs) -> String:
 	for flag: String in args.values:
 		var s: String = args.text(flag)
-		if not KNOWN_FLAGS.has(flag) or s.is_empty():
+		if not KNOWN_FLAGS.has(flag):
 			return flag
 		var valid: bool = true
 		match flag:
+			"--pick-view":
+				valid = s.is_empty()
 			"--seed":
 				valid = s.is_valid_int() and s.to_int() >= 0 and s.to_int() <= RngRegistry.SEED_MASK
 			"--waves":

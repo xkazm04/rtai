@@ -7,6 +7,42 @@
   "schema": "gtai.gauntlet/1",
   "segments": [
     {
+      "dressing": {
+        "fixtures": [
+          {
+            "art": "payphone",
+            "at": [
+              11,
+              -6.7
+            ],
+            "scale": 1.05
+          },
+          {
+            "art": "street_sign",
+            "at": [
+              22,
+              -6.6
+            ],
+            "scale": 1.15
+          },
+          {
+            "art": "bike_racks",
+            "at": [
+              8,
+              7.6
+            ],
+            "scale": 1.1
+          }
+        ],
+        "front": "retail",
+        "high": "bus_stop",
+        "high_scale": 1.35,
+        "landmark": "bus",
+        "lots": 2,
+        "low": "bench",
+        "low_scale": 1.25,
+        "sidewalk_m": 2.7
+      },
       "id": "plain_block",
       "length_m": 30,
       "props": [
@@ -81,6 +117,42 @@
           11
         ]
       },
+      "dressing": {
+        "fixtures": [
+          {
+            "art": "traffic_light",
+            "at": [
+              13,
+              -6.35
+            ],
+            "scale": 1.35
+          },
+          {
+            "art": "traffic_light",
+            "at": [
+              19,
+              7.25
+            ],
+            "scale": 1.35
+          },
+          {
+            "art": "down_bollards",
+            "at": [
+              9,
+              7.35
+            ],
+            "scale": 1.2
+          }
+        ],
+        "front": "glass",
+        "high": "newsstand",
+        "high_scale": 1.25,
+        "landmark": "signals",
+        "lots": 2,
+        "low": "down_planter_bed",
+        "low_scale": 0.85,
+        "sidewalk_m": 2
+      },
       "id": "crosswalk",
       "length_m": 32,
       "props": [
@@ -145,6 +217,50 @@
       ]
     },
     {
+      "dressing": {
+        "fixtures": [
+          {
+            "art": "traffic_cone",
+            "at": [
+              9,
+              -6.45
+            ],
+            "scale": 1.1
+          },
+          {
+            "art": "traffic_cone",
+            "at": [
+              22,
+              -6.45
+            ],
+            "scale": 1.1
+          },
+          {
+            "art": "traffic_cone",
+            "at": [
+              15,
+              6.95
+            ],
+            "scale": 1.1
+          },
+          {
+            "art": "barricade",
+            "at": [
+              14,
+              7.35
+            ],
+            "scale": 1.2
+          }
+        ],
+        "front": "office",
+        "high": "police_barrier",
+        "high_scale": 1.1,
+        "landmark": "barriers",
+        "lots": 2,
+        "low": "barricade",
+        "low_scale": 1.05,
+        "sidewalk_m": 1.65
+      },
       "id": "barricade_line",
       "length_m": 30,
       "props": [
@@ -220,6 +336,42 @@
       ]
     },
     {
+      "dressing": {
+        "fixtures": [
+          {
+            "art": "container2",
+            "at": [
+              6,
+              -6.5
+            ],
+            "scale": 1
+          },
+          {
+            "art": "dock_scrap_skip",
+            "at": [
+              24,
+              -6.55
+            ],
+            "scale": 1
+          },
+          {
+            "art": "barrel_cluster",
+            "at": [
+              18,
+              7.5
+            ],
+            "scale": 1
+          }
+        ],
+        "front": "depot",
+        "high": "dock_cargo_tarp",
+        "high_scale": 1.25,
+        "landmark": "dock",
+        "lots": 1,
+        "low": "dock_oil_drums",
+        "low_scale": 1.3,
+        "sidewalk_m": 1.7
+      },
       "id": "loading_bay",
       "length_m": 28,
       "props": [
@@ -306,6 +458,42 @@
       ]
     },
     {
+      "dressing": {
+        "fixtures": [
+          {
+            "art": "down_litter_bins",
+            "at": [
+              5,
+              -6.45
+            ],
+            "scale": 1.25
+          },
+          {
+            "art": "lamp_post",
+            "at": [
+              26,
+              -6.5
+            ],
+            "scale": 1.15
+          },
+          {
+            "art": "bike_racks",
+            "at": [
+              25,
+              7
+            ],
+            "scale": 1
+          }
+        ],
+        "front": "masonry",
+        "high": "dumpster",
+        "high_scale": 1.45,
+        "landmark": "neck",
+        "lots": 3,
+        "low": "trash_can",
+        "low_scale": 1,
+        "sidewalk_m": 1.15
+      },
       "id": "alley_neck",
       "length_m": 32,
       "props": [
@@ -381,6 +569,50 @@
       ]
     },
     {
+      "dressing": {
+        "fixtures": [
+          {
+            "art": "down_street_clock",
+            "at": [
+              10,
+              -6.6
+            ],
+            "scale": 1.4
+          },
+          {
+            "art": "down_plaza_steps",
+            "at": [
+              17,
+              -6.85
+            ],
+            "scale": 1.05
+          },
+          {
+            "art": "bench",
+            "at": [
+              23,
+              7.4
+            ],
+            "scale": 1.2
+          },
+          {
+            "art": "down_chess_tables",
+            "at": [
+              8,
+              7.5
+            ],
+            "scale": 1.2
+          }
+        ],
+        "front": "arcade",
+        "high": "coffee_kiosk",
+        "high_scale": 1.7,
+        "landmark": "square",
+        "lots": 2,
+        "low": "down_planter_bed",
+        "low_scale": 0.85,
+        "sidewalk_m": 3.4
+      },
       "id": "kiosk_plaza",
       "length_m": 34,
       "props": [

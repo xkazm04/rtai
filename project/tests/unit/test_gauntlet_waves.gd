@@ -176,3 +176,15 @@ func test_lethal_projectile_identifies_the_weapon() -> void:
 	var damage: float = run.waves[0]["damage_taken"]
 	assert_eq(damage, arena.rivet.max_hp)
 	assert_false(run.waves[0].has("seconds"))
+
+
+func test_a_patrol_cops_lethal_hit_names_its_row() -> void:
+	_enter()
+	var arena: CombatArena = session.stage.arena
+	var cop: Fighter = arena.hostiles[0]
+	assert_eq(cop.archetype, &"patrol_cop")
+	arena.damage(arena.rivet, arena.rivet.max_hp, cop.id, &"baton", &"melee")
+	arena.damage(arena.rivet, 1.0, -1, &"later")
+	session.step()
+	var death: Dictionary = run.to_result()["death"]
+	assert_eq(death, {"wave": 1, "by": "patrol_cop"})

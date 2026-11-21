@@ -19,9 +19,7 @@ var _composer: GauntletComposer
 var _limit: int
 var _block: int = 0
 var _start: int = -1
-var _start_shots: int
-var _start_rolls: int
-var _start_damage: float
+var _stats: GauntletWaveStats = GauntletWaveStats.new()
 var _hits: int
 var _members: Array[Fighter] = []
 
@@ -47,13 +45,13 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	stage.arena.wounded.connect(_wounded)
 	@warning_ignore("return_value_discarded")
 	stage.arena.kill_landed.connect(_killed)
-	@warning_ignore("return_value_discarded")
-	stage.arena.struck.connect(_struck)
 
 
 func step(stage: ArenaStage, tick: int) -> void:
 	if done or not pending.is_empty():
 		return
+	if _start >= 0:
+		_stats.sample(stage)
 	if not stage.arena.rivet.alive():
 		_finish(stage, tick, false)
 		done = true
@@ -74,6 +72,7 @@ func step(stage: ArenaStage, tick: int) -> void:
 
 func _spawn(stage: ArenaStage, tick: int) -> void:
 	var arena: CombatArena = stage.arena
+	(arena as GauntletCombat).retire_wave()
 	for dead: Fighter in _members:
 		arena.hostiles.erase(dead)
 	_members.clear()
@@ -99,9 +98,7 @@ func _spawn(stage: ArenaStage, tick: int) -> void:
 		enemies[id] = previous + 1
 	_run.begin_wave(enemies)
 	_start = tick
-	_start_shots = stage.shots_fired
-	_start_rolls = stage.pilot.motion.rolls
-	_start_damage = stage.telemetry.damage_taken
+	_stats.begin(stage)
 	_hits = 0
 	arena.announce_wave(&"gauntlet", _run.wave)
 	Log.info(
@@ -129,10 +126,9 @@ func _finish(stage: ArenaStage, tick: int, cleared: bool) -> void:
 	if _start < 0:
 		return
 	var row: Dictionary = _run.waves[-1]
-	row["shots"] = stage.shots_fired - _start_shots
-	row["rolls"] = stage.pilot.motion.rolls - _start_rolls
+	_stats.finish(stage, row)
+	_stats.collect_pilot(_picker, row)
 	row["hits"] = _hits
-	row["damage_taken"] = stage.telemetry.damage_taken - _start_damage
 	if cleared:
 		row["seconds"] = (tick - _start) * SimClock.TICK_DT
 	else:
@@ -191,8 +187,3 @@ func _killed(
 	victim: Fighter, weapon: StringName, _dir: Vector2, _at: Vector2, _kind: StringName
 ) -> void:
 	_wounded(victim, weapon)
-
-
-func _struck(victim: Fighter, _dir: Vector2, lethal: bool, weapon: StringName) -> void:
-	if victim.kind == Fighter.Kind.RIVET and lethal and not done:
-		_run.death_by = weapon

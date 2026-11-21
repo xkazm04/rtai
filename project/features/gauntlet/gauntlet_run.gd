@@ -12,7 +12,7 @@ var alive: bool = true
 var profile: StringName = &"human"
 var controls: StringName = &"legacy"
 var waves: Array[Dictionary] = []
-var death_by: StringName = &""
+var death_by: StringName = &"unknown"
 
 
 func begin_wave(enemies: Dictionary) -> void:
@@ -32,8 +32,5 @@ func to_result() -> Dictionary:
 		"mods": mods.to_dict(),
 	}
 	if not alive:
-		var death: Dictionary = {"wave": wave}
-		if death_by != &"":
-			death["by"] = String(death_by)
-		result["death"] = death
+		result["death"] = {"wave": wave, "by": String(death_by) if death_by != &"" else "unknown"}
 	return result

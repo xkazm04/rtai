@@ -27,6 +27,7 @@ static func open_street(
 	s.pilot = StagePilot.new(s.actions)
 	s.stage.pilot = s.pilot
 	s.world.add_system(s.stage)
+	GauntletCombat.install(s.stage, s.world.context(), run)
 	s.stage.hooks.append(s.street)
 	s.street.setup(s.stage, s.world.context())
 	(s.stage.arena.squad_ai as GauntletStreet.StreetSquad).mods = run.mods

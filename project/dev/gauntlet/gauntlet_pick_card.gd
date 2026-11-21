@@ -2,8 +2,7 @@ class_name GauntletPickCard
 extends Button
 ## A keyboard-focusable offer on the HUD's memo paper, using the arena's ghost and weapon art.
 
-const INK: Color = Color("#272329")
-const LEAF: Color = Color("#28584e")
+const INK: Color = HudArt.INK
 
 var row: Dictionary
 var number: int
@@ -56,7 +55,7 @@ func _draw() -> void:
 	HudView.nine(self, paper, box, art.memo_margin_px, art.memo_scale)
 	var font: Font = ThemeDB.fallback_font
 	var left: Vector2 = Vector2(23, 50)
-	draw_string(font, left, _kind.to_upper(), HORIZONTAL_ALIGNMENT_LEFT, size.x - 88, 15, LEAF)
+	draw_string(font, left, _kind.to_upper(), HORIZONTAL_ALIGNMENT_LEFT, size.x - 88, 15, INK)
 	var key: Rect2 = Rect2(size.x - 51, 25, 28, 27)
 	draw_rect(key, INK)
 	draw_string(
@@ -70,7 +69,7 @@ func _draw() -> void:
 	)
 	draw_line(Vector2(23, 60), Vector2(size.x - 23, 60), Color(INK, 0.4), 1.0)
 	if not _number.is_empty():
-		draw_string(font, Vector2(0, 148), _number, HORIZONTAL_ALIGNMENT_CENTER, size.x, 49, LEAF)
+		draw_string(font, Vector2(0, 148), _number, HORIZONTAL_ALIGNMENT_CENTER, size.x, 49, INK)
 	elif _illustration != null and (_ghost == null or not _ghost.is_drawn()):
 		var band: Vector2 = Vector2(size.x - 70, 91)
 		var tex: Vector2 = _illustration.get_size()
@@ -84,4 +83,4 @@ func _draw() -> void:
 
 func _draw_focus() -> void:
 	if has_focus() or is_hovered():
-		draw_rect(Rect2(Vector2(8, 9), size - Vector2(16, 17)), LEAF, false, 2.0)
+		draw_rect(Rect2(Vector2(8, 9), size - Vector2(16, 17)), INK, false, 2.0)

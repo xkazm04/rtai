@@ -44,3 +44,16 @@ func test_seed_and_history_repeat_without_duplicates() -> void:
 		assert_eq(offered.size(), 3)
 		for id: StringName in offered:
 			assert_eq(offered.count(id), 1)
+
+
+func test_seeded_offers_consume_one_ticket_per_remaining_weighted_pool() -> void:
+	var draw: GauntletDraw = _draw(19)
+	var tickets: RandomNumberGenerator = RngRegistry.new(19).stream(&"gauntlet_offers")
+	for sample: int in 40:
+		var swift_first: bool = tickets.randi_range(1, 4) <= 3
+		var first: StringName = &"swift" if swift_first else &"fast"
+		var second: StringName = &"fast" if swift_first else &"swift"
+		# Only the other row remains for slot two. The next offer starts after this ticket.
+		@warning_ignore("return_value_discarded")
+		tickets.randi_range(1, 1 if swift_first else 3)
+		assert_eq(draw.offer(1, [], []), [first, second])
