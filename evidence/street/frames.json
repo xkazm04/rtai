@@ -28,6 +28,20 @@
     "note": "The three paper cards offer speed, Kerf and the electro baton. The cleared-wave HUD stays visible at upper left."
   },
   {
+    "file": "segment_underpass_32.png",
+    "title": "Under the viaduct",
+    "ppm": 32,
+    "before": null,
+    "note": "Rivet stands between four concrete piers. The elevated road ends and girder shadows frame the lane."
+  },
+  {
+    "file": "segment_market_stalls_32.png",
+    "title": "Market stalls",
+    "ppm": 32,
+    "before": null,
+    "note": "Two pale paved islands hold four umbrella carts and a newsstand. The centre lane stays open."
+  },
+  {
     "file": "segment_crosswalk_32.png",
     "title": "Crosswalk",
     "ppm": 32,

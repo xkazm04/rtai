@@ -32,9 +32,11 @@
             "barriers",
             "bus",
             "dock",
+            "market",
             "neck",
             "signals",
-            "square"
+            "square",
+            "viaduct"
           ]
         },
         "lots": {

@@ -686,6 +686,281 @@
           4.5
         ]
       ]
+    },
+    {
+      "dressing": {
+        "fixtures": [
+          {
+            "art": "lamp_post",
+            "at": [
+              6,
+              -6.5
+            ],
+            "scale": 1
+          },
+          {
+            "art": "lamp_post",
+            "at": [
+              28,
+              -6.5
+            ],
+            "scale": 1
+          },
+          {
+            "art": "bike_racks",
+            "at": [
+              27,
+              7.2
+            ],
+            "scale": 1.1
+          }
+        ],
+        "front": "masonry",
+        "high": "sculpture_plinth",
+        "high_scale": 1,
+        "landmark": "viaduct",
+        "lots": 2,
+        "low": "down_stone_ledges",
+        "low_scale": 1,
+        "sidewalk_m": 2.5
+      },
+      "id": "underpass",
+      "length_m": 32,
+      "props": [
+        {
+          "at": [
+            16,
+            -6.5
+          ],
+          "kind": "wall_high",
+          "size": [
+            32,
+            1
+          ]
+        },
+        {
+          "at": [
+            16,
+            6.5
+          ],
+          "kind": "wall_high",
+          "size": [
+            32,
+            1
+          ]
+        },
+        {
+          "at": [
+            11,
+            -4.1
+          ],
+          "kind": "cover_high",
+          "size": [
+            2.3,
+            2
+          ]
+        },
+        {
+          "at": [
+            11,
+            4.1
+          ],
+          "kind": "cover_high",
+          "size": [
+            2.3,
+            2
+          ]
+        },
+        {
+          "at": [
+            21,
+            -4.1
+          ],
+          "kind": "cover_high",
+          "size": [
+            2.3,
+            2
+          ]
+        },
+        {
+          "at": [
+            21,
+            4.1
+          ],
+          "kind": "cover_high",
+          "size": [
+            2.3,
+            2
+          ]
+        }
+      ],
+      "spawns": [
+        [
+          27,
+          0
+        ],
+        [
+          25,
+          -3.6
+        ],
+        [
+          28,
+          3.7
+        ],
+        [
+          6,
+          -4.2
+        ],
+        [
+          6,
+          4.2
+        ]
+      ]
+    },
+    {
+      "dressing": {
+        "fixtures": [
+          {
+            "art": "down_flower_crates",
+            "at": [
+              8,
+              -6.8
+            ],
+            "scale": 1.25
+          },
+          {
+            "art": "dock_cargo_tarp",
+            "at": [
+              20,
+              7.5
+            ],
+            "scale": 0.9
+          },
+          {
+            "art": "down_flower_crates",
+            "at": [
+              26,
+              -7.1
+            ],
+            "scale": 1.15
+          },
+          {
+            "art": "bench",
+            "at": [
+              10,
+              7.7
+            ],
+            "scale": 1.15
+          }
+        ],
+        "front": "retail",
+        "high": "newsstand",
+        "high_scale": 1.35,
+        "landmark": "market",
+        "lots": 3,
+        "low": "food_cart",
+        "low_scale": 0.98,
+        "sidewalk_m": 2.9
+      },
+      "id": "market_stalls",
+      "length_m": 34,
+      "props": [
+        {
+          "at": [
+            17,
+            -6.5
+          ],
+          "kind": "wall_high",
+          "size": [
+            34,
+            1
+          ]
+        },
+        {
+          "at": [
+            17,
+            6.5
+          ],
+          "kind": "wall_high",
+          "size": [
+            34,
+            1
+          ]
+        },
+        {
+          "at": [
+            18,
+            -3.8
+          ],
+          "kind": "cover_high",
+          "size": [
+            3.2,
+            2
+          ]
+        },
+        {
+          "at": [
+            9,
+            -3.7
+          ],
+          "kind": "cover_low",
+          "size": [
+            2.3,
+            1.8
+          ]
+        },
+        {
+          "at": [
+            25,
+            -3.7
+          ],
+          "kind": "cover_low",
+          "size": [
+            2.3,
+            1.8
+          ]
+        },
+        {
+          "at": [
+            12,
+            3.8
+          ],
+          "kind": "cover_low",
+          "size": [
+            2.3,
+            1.8
+          ]
+        },
+        {
+          "at": [
+            23,
+            3.8
+          ],
+          "kind": "cover_low",
+          "size": [
+            2.3,
+            1.8
+          ]
+        }
+      ],
+      "spawns": [
+        [
+          30,
+          0
+        ],
+        [
+          29,
+          -4.3
+        ],
+        [
+          27,
+          4.2
+        ],
+        [
+          5,
+          4
+        ]
+      ]
     }
   ],
   "target_wave_s": 15,

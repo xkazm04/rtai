@@ -6,7 +6,8 @@
     "bytes": 5213,
     "sha256": "1d653a0795ff3c328afc6b9c9a7aa964fb952c10adaf4ce6d842183a6ca64221",
     "byte_identical": true,
-    "after_commit": "c7e8fbe07"
+    "after_commit": "c7e8fbe07",
+    "first_50_segment_ids_sha256": "fd28ee9616019e1334dc605853107a8822ae456580671925e1421dc1b5a162d4"
   },
   "six_template_stills": {
     "tick": 470,
@@ -38,6 +39,25 @@
       "plain_block": {
         "before": "8f9ddd191e22004a2d05909bab6e7373545521a2f5f22b30c080cf543ff925c4",
         "after": "2ee90b2aadd70c3c74e3dfd27adac32b8a6075ae4e6e08c525e1fc6687295710"
+      }
+    }
+  },
+  "eight_templates": {
+    "byte_identical": true,
+    "bytes": 5238,
+    "cleared_waves": 10,
+    "result_sha256": "e54f8a6ffe4339e11933a6aded3497473f77f4d80ef84ec095d57509fe217a1b",
+    "first_50_segment_ids_sha256": "7905b43ee7d07e8626ce7ff04ead53a03c0dc34e5284e158465e16413e7ed632",
+    "order_encoding": "UTF-8 segment IDs separated by LF, no final LF",
+    "stills": {
+      "ppm": 32,
+      "tilt": 70,
+      "width": 1920,
+      "height": 1080,
+      "tick": 540,
+      "sha256": {
+        "underpass": "da8e3d5bebc09db1e79ada57004d4edcb1af3d766c647875c16c551d2fcf4a78",
+        "market_stalls": "1fa73d85717d46a75be05b485fa7375695a568851d7d324569ecaa3282e447db"
       }
     }
   }
