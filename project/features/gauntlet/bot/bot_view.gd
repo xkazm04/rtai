@@ -30,6 +30,7 @@ class Player:
 class Hostile:
 	var id: int
 	var pos: Vector2
+	var radius: float
 	var archetype: StringName
 	var alive: bool = true
 	var facing: Vector2
@@ -91,6 +92,22 @@ func held_slots() -> Array[Slot]:
 	return _slots
 
 
+## Shortest gun which reaches, or the longest one while closing in. Prefer a
+## carried melee tool at claw range. With no slots the quick hands strike remains.
+func weapon_for(distance: float, melee_m: float) -> Slot:
+	var best: Slot = null
+	for slot: Slot in _slots:
+		if slot.melee and distance <= melee_m:
+			return slot
+		if best == null:
+			best = slot
+		elif best.reach < distance and slot.reach > best.reach:
+			best = slot
+		elif slot.reach >= distance and slot.reach < best.reach:
+			best = slot
+	return best
+
+
 ## The carry cycles occupied slots in index order. Read the drawn slot again on
 ## the next tick, including when a grant replaced the weapon in a slot.
 func select_slot(want: Slot) -> StringName:
@@ -132,6 +149,20 @@ func clear_line(a: Vector2, b: Vector2) -> bool:
 		if crosses(box, a, b):
 			return false
 	return true
+
+
+## A machine can expose a shoulder around a prop while its centre is hidden.
+## Require a clear segment to a point inside the actual hit circle.
+func aim_point(foe: Hostile) -> Vector2:
+	var at: Vector2 = _player.pos
+	if clear_line(at, foe.pos):
+		return foe.pos
+	if foe.stomp_m > 0.0 or foe.archetype == &"sentry_turret":
+		var edge: Vector2 = at.direction_to(foe.pos).orthogonal() * foe.radius * 0.9
+		for point: Vector2 in [foe.pos + edge, foe.pos - edge]:
+			if clear_line(at, point):
+				return point
+	return Vector2.INF
 
 
 func walk_clear(a: Vector2, b: Vector2) -> bool:

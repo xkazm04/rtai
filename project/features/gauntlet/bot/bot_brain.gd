@@ -130,11 +130,12 @@ func _engage(foe: BotView.Hostile, tick: int) -> Intent:
 	var me: BotView.Player = _view.player()
 	var dir: Vector2 = me.pos.direction_to(foe.pos)
 	var distance: float = me.pos.distance_to(foe.pos)
-	intent.aim = dir
+	var visible: Vector2 = _view.aim_point(foe)
+	intent.aim = me.pos.direction_to(visible) if visible.is_finite() else dir
 	intent.reach = distance
-	var slot: BotView.Slot = _weapon(distance)
+	var slot: BotView.Slot = _view.weapon_for(distance, MELEE_M)
 	var reach: float = slot.reach if slot != null else MELEE_M
-	var blocked: bool = not _view.clear_line(me.pos, foe.pos)
+	var blocked: bool = not visible.is_finite()
 	var side: float = 1.0 if tick % (2 * STRAFE_TICKS) < STRAFE_TICKS else -1.0
 	if _recovering:
 		intent.move = _view.retreat() if distance < 30.0 else Vector2.ZERO
@@ -173,22 +174,6 @@ func _attack(intent: Intent, foe: BotView.Hostile, slot: BotView.Slot) -> void:
 		intent.attack = &"melee"
 	elif slot != null and not slot.melee and distance <= slot.reach:
 		intent.attack = &"fire"
-
-
-## Shortest gun which reaches, or the longest one while closing in. Prefer a
-## carried melee tool at claw range. With no slots the quick hands strike remains.
-func _weapon(distance: float) -> BotView.Slot:
-	var best: BotView.Slot = null
-	for slot: BotView.Slot in _view.held_slots():
-		if slot.melee and distance <= MELEE_M:
-			return slot
-		if best == null:
-			best = slot
-		elif best.reach < distance and slot.reach > best.reach:
-			best = slot
-		elif slot.reach >= distance and slot.reach < best.reach:
-			best = slot
-	return best
 
 
 func _bit(action: StringName) -> int:

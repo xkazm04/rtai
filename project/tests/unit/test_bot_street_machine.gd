@@ -50,3 +50,31 @@ func test_machine_closes_after_discharge_and_circles_the_armoured_face() -> void
 	t = brain.sample(10)
 	assert_true(t.is_pressed(actions.bit(&"melee")))
 	assert_gt(absi(t.move_y), absi(t.move_x))
+
+
+func test_ohm_can_attack_a_lone_war_machine_between_tells() -> void:
+	var view: BotView = BotView.new()
+	view.player().forms = [&"ohm", &"tonnage"]
+	var foe: BotView.Hostile = BotView.Hostile.new()
+	foe.stomp_m = 3.5
+	foe.pos = Vector2(3, 0)
+	view.hostiles().append(foe)
+	var forms: BotForms = BotForms.new(RngRegistry.new(9))
+	assert_eq(forms.desired(view, foe, 1, &""), &"ohm")
+	assert_eq(forms.desired(view, foe, 1, &"tonnage"), &"tonnage")
+
+
+func test_aims_at_an_exposed_machine_edge_and_holds_fire_behind_solid_cover() -> void:
+	var view: BotView = BotView.new()
+	view.player().pos = Vector2(175.6, -5.4)
+	view.solid_props().append(Rect2(163, -5.5, 12, 2))
+	var foe: BotView.Hostile = BotView.Hostile.new()
+	foe.stomp_m = 3.5
+	foe.pos = Vector2(173.6, -5.55)
+	foe.radius = 0.45
+	assert_false(view.clear_line(view.player().pos, foe.pos))
+	var point: Vector2 = view.aim_point(foe)
+	assert_lt(point.distance_to(foe.pos), foe.radius)
+	assert_true(view.clear_line(view.player().pos, point))
+	view.solid_props().append(Rect2(174.8, -8, 0.3, 8))
+	assert_eq(view.aim_point(foe), Vector2.INF)

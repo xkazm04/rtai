@@ -7,6 +7,7 @@ static func read(fighter: Fighter, arena: CombatArena) -> BotView.Hostile:
 	var foe: BotView.Hostile = BotView.Hostile.new()
 	foe.id = fighter.id
 	foe.pos = fighter.pos
+	foe.radius = fighter.radius_m
 	foe.facing = fighter.facing
 	foe.archetype = fighter.archetype if fighter.archetype != &"" else &"contractor"
 	foe.alive = fighter.alive()

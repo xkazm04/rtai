@@ -66,7 +66,7 @@ static func _offensive(view: BotView, target: BotView.Hostile) -> StringName:
 	for other: BotView.Hostile in view.hostiles():
 		if other.alive and target.pos.distance_to(other.pos) <= CLUSTER_M:
 			neighbors += 1
-	if neighbors >= 3 and distance <= OHM_M and me.forms.has(&"ohm"):
+	if (neighbors >= 3 or target.stomp_m > 0.0) and distance <= OHM_M and me.forms.has(&"ohm"):
 		return &"ohm"
 	if me.pos.distance_to(me.car_pos) <= DENT_M and me.forms.has(&"dent"):
 		return &"dent"
