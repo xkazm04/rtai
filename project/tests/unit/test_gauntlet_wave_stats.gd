@@ -101,6 +101,62 @@ func test_pistol_pick_records_pulls_hits_and_incoming_damage() -> void:
 	assert_gte(lost, 3.0)
 
 
+func test_one_round_and_one_claw_contact_are_counted_separately() -> void:
+	var arena: CombatArena = session.stage.arena
+	assert_true(session.bonuses.apply(waves.draw.rows[&"weapon_pistol"]))
+	var target: Fighter = arena.hostiles[0]
+	target.pos = arena.rivet.pos + Vector2.RIGHT * 1.3
+	target.hp = 50.0
+	assert_true(arena.rivet_fire(target.pos))
+	for tick: int in 4:
+		arena._step_shots()
+	assert_lt(target.hp, 50.0)
+	var claw: PlayerMelee = PlayerMelee.new()
+	for tick: int in 18:
+		arena.rivet.pos += claw.step(arena, tick == 0, Vector2.RIGHT)
+	assert_eq(claw.landed, 1)
+	# Other damage still belongs in the original all-source hits total.
+	for foe: Fighter in arena.hostiles:
+		arena.damage(foe, 1000.0, target.id, &"enemy_rifle")
+	session.step()
+	var row: Dictionary = run.waves[0]
+	var rounds: int = row["hits_gun"]
+	var melee: int = row["hits_melee"]
+	var total: int = row["hits"]
+	assert_eq(rounds, 1)
+	assert_eq(melee, 1)
+	assert_eq(total, 2 + arena.hostiles.size())
+
+
+func test_splash_and_a_returned_enemy_round_do_not_score_another_gun_hit() -> void:
+	var arena: CombatArena = session.stage.arena
+	assert_true(session.bonuses.apply(waves.draw.rows[&"weapon_rocket_launcher"]))
+	var direct: Fighter = arena.hostiles[0]
+	var nearby: Fighter = arena.hostiles[1]
+	direct.pos = arena.rivet.pos + Vector2(2.0, 0.0)
+	nearby.pos = direct.pos + Vector2(0.0, 1.5)
+	direct.hp = 50.0
+	nearby.hp = 50.0
+	assert_true(arena.rivet_fire(direct.pos))
+	for tick: int in 12:
+		arena._step_shots()
+	assert_lt(direct.hp, 50.0)
+	assert_lt(nearby.hp, 50.0)
+	var rebound: Shot = Shot.fire(direct, Vector2.LEFT, arena.tuning.weapon(&"assault-rifle"))
+	rebound.pos = arena.rivet.pos + Vector2.RIGHT
+	arena.shots.append(rebound)
+	assert_eq(PlayerDeflect.bat(arena, Vector2.RIGHT, 2.0), 1)
+	var hp: float = direct.hp
+	for tick: int in 12:
+		arena._step_shots()
+	assert_lt(direct.hp, hp)
+	for foe: Fighter in arena.hostiles:
+		arena.damage(foe, 1000.0, nearby.id, &"enemy_rifle")
+	session.step()
+	var gun_hits: int = run.waves[0]["hits_gun"]
+	assert_eq(gun_hits, 1)
+
+
 func test_pilot_deflects_are_merged_once_after_street_observations() -> void:
 	var pilot: Counters = Counters.new()
 	waves._picker = pilot
