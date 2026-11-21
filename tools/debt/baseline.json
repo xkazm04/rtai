@@ -87,7 +87,9 @@
         "2026-11-19: Owner-requested reproducible ghost films: a dev-only arena input driver, camera marks and per-frame evidence for four forms, two real views and the Ohm delay comparison. (dev_loc 26341 -> 26602)",
         "2026-11-20: gauntlet dev scene for n22 street (dev_loc 26600 -> 26681)",
         "2026-11-20: test player pit probe for n22 loop (dev_loc 26681 -> 26861)",
-        "2026-11-21: test player pit probe for n22 loop (dev_loc 26861 -> 26921)"
+        "2026-11-21: test player pit probe for n22 loop (dev_loc 26861 -> 26921)",
+        "2026-11-20: gauntlet dev scene streams and renders the seeded n22 street (dev_loc 26681 -> 26733)",
+        "2026-11-20: gauntlet dev scene drives measured waves for n22 street (dev_loc 26733 -> 26749)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -98,7 +100,7 @@
         "project/dev/bots": 496,
         "project/dev/enemy_ai": 1506,
         "project/dev/frames": 1087,
-        "project/dev/gauntlet": 81,
+        "project/dev/gauntlet": 149,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1396,
         "project/dev/gunplay": 674,
@@ -123,7 +125,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 26920
+      "total": 26988
     },
     "direct_cmdline_reads": {
       "accepted": [

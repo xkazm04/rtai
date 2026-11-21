@@ -171,7 +171,7 @@ func swing(e: EnemyAgent) -> void:
 func hurt(e: EnemyAgent, dmg: float, from_dir: Vector2) -> void:
 	if not e.alive():
 		return
-	if e.facing.dot(-from_dir.normalized()) > 0.5:
+	if e.facing.dot(-from_dir.normalized()) > e.arch.shield_cos:
 		dmg *= e.arch.shield_front_mult
 	e.hp -= dmg
 	e.hurt_tick = tick

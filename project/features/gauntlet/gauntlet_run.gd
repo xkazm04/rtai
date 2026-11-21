@@ -15,6 +15,11 @@ var waves: Array[Dictionary] = []
 var death_by: StringName = &""
 
 
+func begin_wave(enemies: Dictionary) -> void:
+	wave += 1
+	waves.append({"n": wave, "enemies": enemies})
+
+
 func to_result() -> Dictionary:
 	var result: Dictionary = {
 		"schema": SCHEMA,

@@ -12,7 +12,7 @@ var _swing_start: Dictionary[int, int] = {}
 ## human-reactions' patrol/riot/SWAT mix by actor id; under --riot the shield is worn only by
 ## the pit's armored riot cops (the mix's other riot picks dress as patrol).
 static func look(h: Fighter, riot_enabled: bool, armored: bool) -> int:
-	if h.archetype == &"swat":
+	if FoeLooks.wears_swat(h.archetype):
 		return RigVariant.SWAT
 	if h.archetype == &"riot_cop":
 		return RIOT_LOOK

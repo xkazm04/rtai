@@ -1,15 +1,17 @@
 extends Node
-## Headless and live gauntlet entry. The dev runner caps unattended runs at 60 simulated seconds.
+## Headless and live gauntlet entry. The engine cap leaves twenty simulated minutes for ten waves.
 
 const KNOWN_FLAGS: PackedStringArray = [
 	"--seed", "--bot", "--pick", "--waves", "--result", "--controls"
 ]
-const RUN_TICKS: int = 3600
+const RUN_TICKS: int = 72000
 const BOT_PATH: String = "res://features/gauntlet/bot/gauntlet_bot.gd"
 
 var run: GauntletRun = GauntletRun.new()
-var session: ArenaSession
+var session: GauntletSession
 var pilot: GauntletPilot
+var waves: GauntletWaves
+var _result_path: String = ""
 
 
 func _ready() -> void:
@@ -21,7 +23,7 @@ func _ready() -> void:
 		return
 	run.seed = args.text("--seed", "0").to_int()
 	run.profile = StringName(args.text("--bot", "human"))
-	run.controls = StringName(args.text("--controls", "legacy"))
+	run.controls = ControlsMode.id()
 	if args.has("--bot"):
 		pilot = _bot()
 		if pilot == null:
@@ -29,12 +31,78 @@ func _ready() -> void:
 			get_tree().quit(1)
 			return
 		pilot.configure(run.profile, StringName(args.text("--pick", "random")), run.seed)
-	session = ArenaSession.open_with_args(Events, Data, run.seed, pilot, args)
-	if pilot != null:
-		pilot.bind(run, session)
-	var ok: bool = not args.has("--result") or _write_result(args.text("--result"))
+	session = GauntletSession.open_street(Events, Data, run, pilot)
+	if session == null:
+		get_tree().quit(1)
+		return
+	var picker: GauntletPilot = pilot if pilot != null else GauntletPilot.new()
+	if pilot == null:
+		picker.configure(run.profile, StringName(args.text("--pick", "random")), run.seed)
+	picker.bind(run, session)
+	waves = GauntletWaves.attach(session, run, picker, args.text("--waves", "0").to_int())
+	_result_path = args.text("--result")
+	if DisplayServer.get_name() == "headless":
+		_run_headless()
+	else:
+		_open_view()
+
+
+func _run_headless() -> void:
+	while not waves.done and session.tick() < RUN_TICKS:
+		session.step()
+	if not waves.done:
+		Log.error("gauntlet", "headless tick cap reached before run ended")
+	var written: bool = _finish()
+	get_tree().quit(0 if waves.done and written else 1)
+
+
+func _process(_delta: float) -> void:
+	if session != null and waves != null and waves.done:
+		get_tree().quit(0 if _finish() else 1)
+
+
+func _open_view() -> void:
+	add_child(session.world)
+	var view: CollectCallView = CollectCallView.new()
+	var floor_view: GauntletFloor = GauntletFloor.new()
+	floor_view.street = session.street
+	view.stage_view.free()
+	view.stage_view = floor_view
+	view.px_per_m = 32.0
+	view.bind(session.stage, CollectCallWorld.new(session.stage), null)
+	add_child(view)
+	view.hud_view.visible = false
+	var cast: ArenaRigs = ArenaRigs.new()
+	add_child(cast)
+	@warning_ignore("return_value_discarded")
+	cast.attach(session.stage, view, session.world.context())
+	session.live.viewport = get_viewport()
+	session.live.origin_px = func() -> Vector2: return get_viewport().get_visible_rect().size * 0.5
+	session.live.px_per_m = func() -> float: return view.px_per_m
+
+
+func _input(event: InputEvent) -> void:
+	if session != null:
+		session.live.note_event(event)
+
+
+func _exit_tree() -> void:
+	if session != null and not _finish():
+		get_tree().quit(1)
+
+
+func _finish() -> bool:
+	Log.info(
+		"gauntlet",
+		(
+			"tick %d, segment %d, %d resident"
+			% [session.tick(), session.street.index, session.street.window.size()]
+		)
+	)
+	var ok: bool = _result_path.is_empty() or _write_result(_result_path)
 	session.close()
-	get_tree().quit(0 if ok else 1)
+	session = null
+	return ok
 
 
 func _bot() -> GauntletPilot:
