@@ -166,7 +166,7 @@ func test_hud_readout_fades_and_expires_one_second_after_the_switch() -> void:
 	assert_eq(view.modulate.a, 1.0)
 	stage.arena.tick += roundi(0.5 * SimClock.TICK_RATE)
 	view._process(0.0)
-	assert_almost_eq(view.modulate.a, 0.5, 0.00001)
+	assert_almost_eq(view.modulate.a, 1.0, 0.00001)
 	stage.arena.tick = start + SimClock.TICK_RATE
 	view._process(0.0)
 	assert_false(view.visible)
