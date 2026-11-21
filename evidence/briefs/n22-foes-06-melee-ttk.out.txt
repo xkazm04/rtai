@@ -1,0 +1,25 @@
+Committed `90902c90e` — `foes: time to kill with the claw at its reach`. Started at 05:10:55 and committed at 05:15:45.
+
+The benchmark measured the claw at **1.84 m**: the shortest combo strike reaches 1.40 m, each spawned target has a 0.45 m radius, and the trial leaves a 0.01 m margin. All 200 claw trials finished within 30 seconds. Every swing landed, and every tier 1–2 human died on the first hit. All 260 gun results at 8 m matched the previous commit.
+
+| Tier | Enemy | Claw front / rear, median seconds |
+|---:|---|---:|
+| 1 | Patrol cop | 0.08 / 0.08 |
+| 2 | Contractor | 0.08 / 0.08 |
+| 2 | Riot cop | 0.08 / 0.08 |
+| 2 | Rocket trooper | 0.08 / 0.08 |
+| 2 | SWAT | 0.08 / 0.08 |
+| 3 | Robot gunner | 0.53 / 0.53 |
+| 3 | Robot thug | 1.20 / 1.20 |
+| 3 | Sentry turret | 7.07 / 1.47 |
+| 4 | Shield robot | 11.47 / 2.13 |
+| 5 | War machine | 11.73 / 4.00 |
+
+Changed `foe_ttk_trial.gd` and `foe_ttk_run.gd` and regenerated both evidence files. The JSON records the distance for each weapon and bearing. [TTK table](C:/Users/kazda/kiro/gtai-wt/n22-foes/evidence/foes/ttk.md) · [TTK JSON](C:/Users/kazda/kiro/gtai-wt/n22-foes/evidence/foes/ttk.json)
+
+```text
+lint: all 19 checks pass over 1854 GDScript files
+quick: ok, 2 file(s), 9.1 s
+```
+
+[astra: 358s, exit 0]

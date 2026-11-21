@@ -1,0 +1,31 @@
+The arena now accepts `--foe-mix=<id[,id...]>`. The rocket trooper met its fairness target without tuning. The sentry stayed at one position throughout its film, swept a 50° lane, cooled for 90 ticks, and took a lethal rear hit at tick 581. Both parts were committed before their deadlines.
+
+[ Rocket trooper film](C:/Users/kazda/kiro/gtai-masters/n22/foes/rocket_trooper/arena.mp4) · [Sentry turret film](C:/Users/kazda/kiro/gtai-masters/n22/foes/sentry_turret/arena.mp4) · [Seven indexed stills, including the 64 px/m kneel](C:/Users/kazda/kiro/gtai-masters/n22/foes/frames.json). Both movies passed verification at 1920×1080, 32 px/m, 60 fps and 15 seconds.
+
+**Duels.** Each profile ran 20 seeds. Median kill tick uses the seeds where the enemy died.
+
+| Enemy | Player | Rivet hurt | Mean damage | Enemy killed | Median kill tick |
+|---|---|---:|---:|---:|---:|
+| Rocket trooper | Perfect | 0% | 0 | 100% | 212 |
+| | Average | 70% | 11.2 | 100% | 165 |
+| | Novice | 80% | 12.8 | 100% | 160 |
+| Sentry turret | Perfect | 5% | 0.2 | 100% | 856 |
+| | Average | 100% | 9.2 | 60% | 1517.5 |
+| | Novice | 100% | 13.0 | 40% | 1772 |
+
+**Verification.** Lint passed all 19 checks. The changed suite passed 3,409 tests with two skipped. The final seven turret tests and the 13-file quick gate passed. All 65 scenarios passed after the merge and again after implementation. All 27 logged hash values matched, including quest 1 and the 60-second replay (`cbeb734ff9b97c41`).
+
+**Mutation.** Rocket coverage improved from **10/19 to 18/19** on the same sample. The survivor divides by a strafe sign of ±1 instead of multiplying by it, which yields the same value. One mutant was invalid. The turret run reached **15 killed / 17 judged** before the hard stop. Its two survivors changed initial values that get overwritten before firing. Three cases remain unjudged.
+
+**Commits**
+
+- `e3b115826` Merge tag `n22-guard-iface` into `n22-foes`
+- `cb0aad246` foes: --foe-mix puts chosen enemies in the arena pit
+- `0b29f2cb5` foes: rocket hurts 16 of 20 novices and no perfect readers in the arena duel
+- `8bf86a60c` foes: sentry turret holds its spot, sweeps a lane, cools, armoured in front
+
+The shared call sites are `launch_args.gd:115` for the flag, `arena_stage.gd:73` for encounter selection, `arena_rigs.gd:75` for rocket and turret effects, and `combat_arena.gd:182` for directional armour. The turret publishes `placement=far`. `FoeArmor` applies 0.25× front damage and full rear or blast damage.
+
+**NEED guard:** `project/features/combat/arena_projectiles.gd` for guard blocking and hostile splash damage. The merged interface classifies actual trooper rockets as `large` and sentry rounds as `small`. The rocket retains its burst signal. The merge checker also flagged `combat_arena.gd` for reconciliation with `n22-guard` and `n22-loop`.
+
+[astra: 4232s, exit 0]

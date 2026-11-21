@@ -1,0 +1,30 @@
+Completed all three parts on `n22-foes` within the deadlines. Started at 02:27:37 CET and finished verification at 03:25:45 CET. All tracked changes are committed locally.
+
+| Commit | Subject |
+|---|---|
+| `f42cbddd9` | foes: sentry turret placeholder reads at 32 px/m |
+| `73df7e6c5` | foes: ArenaSquad.set_route_map for the gauntlet street |
+| `dec85d2b4` | foes: shield robot advances behind its shield, shoves with a tell, covers its squad |
+| `812b763f0` | foes: test shield shove timing, reach and wall contact |
+
+The turret now has a filled base, striped apron, rotating head and barrel. `ArenaSquad.set_route_map` updates existing members, invalidates cached routes and applies the new map to future spawns. The shield robot advances at up to 1.6 m/s, locks its shove direction for a 48-tick tell and gives nearby squadmates moving cover. Detonating rounds bypass the shield even when their weapon reports a `shot` or `burned` death kind.
+
+The main changes are in `foe_turret_view.gd`, `arena_squad.gd`, `squad_mind.gd`, `foe_shield*.gd`, `foe_armor.gd`, the duel and film drivers, and the two new unit-test files. The only production call sites outside the owned folders were [arena_robot_rigs.gd:69](C:/Users/kazda/kiro/gtai-wt/n22-foes/project/features/arena/arena_robot_rigs.gd:69) and [combat_arena.gd:182](C:/Users/kazda/kiro/gtai-wt/n22-foes/project/features/combat/combat_arena.gd:182). The interface tag remains `245c0e6f1`.
+
+**Verification.** Lint passed all 19 checks. Quick gate passed. The final changed-test run passed 3,420 tests with two skipped. All 65 scenarios passed. The 60-second replay, quest 1 input replay and checkpoint matched their pre-brief files byte for byte. Godot reported resource leaks during scenario teardown and exited 0.
+
+**Mutation score improved from 12/20 to 19/20**, with zero invalid mutations or timeouts. The sole survivor allows a shove at one remaining cooldown tick. `ArenaSquad` grants the required attack token only at zero cooldown. [Mutation results](C:/Users/kazda/kiro/gtai-wt/n22-foes/build/mutate/features-combat-squad-foe_shield.json)
+
+**Shield duel, 20 seeds per profile**
+
+| Rivet profile | Rivet hurt | Mean damage taken | Robot killed | Median kill tick | Damage dealt from rear |
+|---|---:|---:|---:|---:|---:|
+| Perfect | 0% | 0.0 | 100% | 636 | 71.2% |
+| Average | 75% | 24.5 | 100% | 710.5 | 65.3% |
+| Novice | 100% | 39.9 | 100% | 1,044 | 52.9% |
+
+In the mixed duel, the carrier moved 8.39 m. The two SWAT members followed it for 177 and 359 of 360 ticks. Five pistol hits on a sheltered SWAT member dealt 0.2 HP each. [Duel evidence](C:/Users/kazda/kiro/gtai-wt/n22-foes/evidence/foes/duel-shield_robot.json)
+
+**Films.** All three are 15 seconds at 1920×1080, 60 fps and 32 px/m. The turret starts 10.53 m from Rivet. The capture clears station fighters and delays the next wave until after the cut. The frame index includes the 64 px/m turret tell and the shield’s front hit, raised-shield tell and full-damage rear hit. [Turret film](C:/Users/kazda/kiro/gtai-masters/n22/foes/sentry_turret/arena.mp4) · [Shield duel film](C:/Users/kazda/kiro/gtai-masters/n22/foes/shield_robot/arena.mp4) · [Shield and SWAT film](C:/Users/kazda/kiro/gtai-masters/n22/foes/shield_robot/squad/arena.mp4) · [Frame index](C:/Users/kazda/kiro/gtai-masters/n22/foes/frames.json)
+
+[astra: 3522s, exit 0]
