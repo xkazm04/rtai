@@ -90,7 +90,8 @@
         "2026-11-21: sentry turret armour call and duel kill-side evidence for n22 foes (dev_loc 26765 -> 26774)",
         "2026-11-21: bolted turret and flanking player in the n22 foe duel (dev_loc 26774 -> 26801)",
         "2026-11-21: measured turret flank in the arena film and duel (dev_loc 26801 -> 26850)",
-        "2026-11-21: n22 foes capture driver stages the requested isolated turret fight and records its sweep phases (dev_loc 26850 -> 26861)"
+        "2026-11-21: n22 foes capture driver stages the requested isolated turret fight and records its sweep phases (dev_loc 26850 -> 26861)",
+        "2026-11-21: n22 foes shield duel profiles, mixed-squad cover measurements and isolated arena capture at master resolution (dev_loc 26861 -> 27022)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -99,7 +100,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 496,
-        "project/dev/enemy_ai": 1767,
+        "project/dev/enemy_ai": 1928,
         "project/dev/frames": 1087,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1396,
@@ -124,7 +125,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 26861
+      "total": 27022
     },
     "direct_cmdline_reads": {
       "accepted": [

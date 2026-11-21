@@ -11,15 +11,17 @@ const OPENING_TICKS: int = 3 * SimClock.TICK_RATE
 class Reader:
 	extends PitDummy
 
+	var flank_until: int = -1
+
 	func _init() -> void:
 		super(Mode.DODGE)
 
-	func advance_flank(pit: EnemyPit, h: Fighter) -> void:
+	func advance_flank(pit: EnemyPit, h: Fighter, ring_m: float = 3.0) -> void:
 		var radial: Vector2 = h.pos.direction_to(pit.rivet_pos)
 		var distance: float = h.pos.distance_to(pit.rivet_pos)
 		var turn: float = clampf(radial.angle_to(-h.facing) * 2.0, -1.0, 1.0)
 		var side: Vector2 = radial.rotated(PI * 0.5) * turn
-		var walk: Vector2 = side + radial * clampf((3.0 - distance) / 3.0, -1.0, 1.0)
+		var walk: Vector2 = side + radial * clampf((ring_m - distance) / ring_m, -1.0, 1.0)
 		pit.rivet_vel = pit.rivet_vel.move_toward(
 			walk.limit_length(1.0) * RUN_MPS, ACCEL_MPS2 * SimClock.TICK_DT
 		)
@@ -41,10 +43,13 @@ func run(id: StringName, seed_value: int, profile: String) -> Dictionary:
 	arena.guard_map = GuardRouteMap.new(Rect2(-30, -30, 60, 60), [], null, 0.45)
 	arena.squad_ai = ArenaSquad.new(arena.guard_map)
 	arena.rivet.weapon = &"gloria"
-	var h: Fighter = arena.squad_ai.spawn_member(arena, Vector2(14, 0), id)
+	var start_m: float = 5.0 if id == &"shield_robot" else 14.0
+	var h: Fighter = arena.squad_ai.spawn_member(arena, Vector2(start_m, 0), id)
 	var row: Dictionary = {
 		"seed": seed_value,
 		"damage_to_rivet": 0.0,
+		"damage_to_enemy": 0.0,
+		"rear_damage": 0.0,
 		"enemy_killed_tick": null,
 		"kill_side": null,
 		"kill_armoured": null,
@@ -88,9 +93,7 @@ func _fight(arena: CombatArena, h: Fighter, row: Dictionary, dummy: Reader) -> v
 			)
 			var aimed: Vector2 = (h.pos - arena.rivet.pos).rotated(deg_to_rad(offset))
 			nails += int(arena.rivet_fire(arena.rivet.pos + aimed))
-		var hp: float = arena.rivet.hp
-		arena.step(tick)
-		row.damage_to_rivet += maxf(0.0, hp - arena.rivet.hp)
+		_damage_step(arena, h, row, tick)
 		var mind: SquadMind = arena.squad_ai.minds.get(h.id)
 		if mind != null:
 			var windup: bool = h.tell_left > 0 or h.swing_left > 0
@@ -110,13 +113,28 @@ func _fight(arena: CombatArena, h: Fighter, row: Dictionary, dummy: Reader) -> v
 	row.player_shots = nails
 
 
+func _damage_step(arena: CombatArena, h: Fighter, row: Dictionary, tick: int) -> void:
+	var player_hp: float = arena.rivet.hp
+	var enemy_hp: float = h.hp
+	arena.step(tick)
+	row.damage_to_rivet += maxf(0.0, player_hp - arena.rivet.hp)
+	var dealt: float = enemy_hp - h.hp
+	row.damage_to_enemy += dealt
+	if dealt > 0.0 and h.facing.dot(-h.hurt_dir) < 0.0:
+		row.rear_damage += dealt
+
+
 func _dodge(dummy: Reader, arena: CombatArena, h: Fighter) -> void:
 	var pit: EnemyPit = arena.squad_ai.pit
 	pit.rivet_pos = arena.rivet.pos
 	pit.shots = arena.shots
 	var mind: SquadMind = arena.squad_ai.minds.get(h.id)
 	var turret: FoeTurret = mind.turret if mind != null else null
-	if turret != null and turret.phase in [FoeTurret.Phase.COOL, FoeTurret.Phase.IDLE]:
+	if mind != null and mind.shield != null and dummy._reads(mind.agent, pit):
+		dummy.flank_until = pit.tick + 24
+	if pit.tick <= dummy.flank_until:
+		dummy.advance_flank(pit, h, 1.25)
+	elif turret != null and turret.phase in [FoeTurret.Phase.COOL, FoeTurret.Phase.IDLE]:
 		dummy.advance_flank(pit, h)
 	else:
 		dummy.step(pit)

@@ -7,6 +7,7 @@ extends RefCounted
 const ROUTES_PER_TICK: int = 2
 
 var mounts: FoeMounts = FoeMounts.new()
+var shield_cover: FoeShieldCover = FoeShieldCover.new()
 var rockets: FoeRocketFlight = FoeRocketFlight.new()
 var pit: EnemyPit
 var minds: Dictionary[int, SquadMind] = {}
@@ -50,11 +51,15 @@ func spawn_member(arena: CombatArena, at: Vector2, id: StringName = &"") -> Figh
 	if a.id == &"sentry_turret":
 		h.body_class = &"robot"
 		mounts.pin(h)
+	elif a.id == &"shield_robot":
+		h.body_class = &"robot"
+		shield_cover.carriers.append(h)
 	h.cooldown = mini(h.cooldown, arena.tuning.weapon(a.production_weapon).cooldown_ticks)
 	return h
 
 
 func clear_wave() -> void:
+	shield_cover.carriers.clear()
 	mounts.anchors.clear()
 	_wave.clear()
 	minds.clear()
@@ -136,10 +141,13 @@ func step(h: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
 		return mind.turret.step(e, h, arena)
 	if mind.rocket != null:
 		return mind.rocket.step(mind, h, arena, self, _map)
-	var desired: Vector2 = mind.velocity(pit, _map, _fallen)
+	if mind.shield != null:
+		mind.shield.step(mind, h, arena, _map)
+		return null
+	var desired: Vector2 = shield_cover.velocity(mind, pit, _map, _fallen)
 	if h.swing_left > 0:
 		desired = Vector2.ZERO
-	if not plant_no_separation:
+	if not plant_no_separation and not mind.mobile_goal.is_finite():
 		var gap: float = EnemyMotor.SEPARATION_GAP_M if e.melee() else SquadMind.SPACING_GAP_M
 		desired += EnemyMotor.separation(e, pit.agents, pit, gap, true)
 	EnemyMotor.steer(e, desired, pit.rivet_pos, pit)

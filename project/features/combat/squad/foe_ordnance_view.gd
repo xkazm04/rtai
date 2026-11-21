@@ -41,6 +41,9 @@ func _draw() -> void:
 	for h: Fighter in arena.hostiles:
 		if h.archetype == &"sentry_turret" and (h.alive() or arena.tick - h.hurt_tick < 90):
 			FoeTurretView.draw_mount(self, h, _heat(h))
+		elif h.archetype == &"shield_robot" and h.alive():
+			var mind: SquadMind = arena.squad_ai.minds.get(h.id)
+			FoeShieldView.draw_plate(self, h, mind.shield if mind != null else null, arena.tick)
 
 
 func _heat(h: Fighter) -> float:

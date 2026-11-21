@@ -1,7 +1,7 @@
 extends SceneTree
 ## node tools/dev/run.mjs foe_duel --enemy=rocket_trooper --seeds=20 --out=<absolute.json>
 
-const KNOWN_FLAGS: PackedStringArray = ["--enemy", "--seeds", "--out", "--player"]
+const KNOWN_FLAGS: PackedStringArray = ["--enemy", "--seeds", "--out", "--player", "--foe-mix"]
 const PROFILES: Array[String] = ["perfect", "average", "novice"]
 
 
@@ -31,14 +31,27 @@ func _run() -> void:
 		printerr("foe_duel: unknown enemy ", enemy)
 		quit(2)
 		return
+	_measure(runner, enemy, seeds.to_int(), args)
+
+
+func _measure(runner: Object, enemy: StringName, seeds: int, args: ArenaArgs) -> void:
+	var profile: String = args.text("--player")
 	var profiles: Dictionary = {}
 	for profile_name: String in PROFILES:
 		if profile.is_empty() or profile == profile_name:
-			profiles[profile_name] = _profile(runner, enemy, seeds.to_int(), profile_name)
+			profiles[profile_name] = _profile(runner, enemy, seeds, profile_name)
 	var out: Dictionary = {
 		"schema": "gtai.foe-duel/2", "enemy": enemy, "tick_hz": 60, "profiles": profiles
 	}
-	_write(path, out)
+	if args.has("--foe-mix"):
+		var formation: GDScript = load("res://dev/enemy_ai/foe_duel_formation.gd")
+		var mixed: Dictionary = formation.call("run", args.text("--foe-mix"))
+		if mixed.is_empty():
+			printerr("foe_duel: formation needs at least two known foes")
+			quit(2)
+			return
+		out.formation = mixed
+	_write(args.text("--out"), out)
 
 
 func _write(path: String, out: Dictionary) -> void:
@@ -57,6 +70,8 @@ func _profile(runner: Object, enemy: StringName, seeds: int, profile: String) ->
 	var runs: Array[Dictionary] = []
 	var hurt: int = 0
 	var damage: float = 0.0
+	var dealt: float = 0.0
+	var rear: float = 0.0
 	var kills: Array[int] = []
 	for i: int in seeds:
 		var row: Dictionary = runner.call("run", enemy, i + 1, profile)
@@ -64,6 +79,10 @@ func _profile(runner: Object, enemy: StringName, seeds: int, profile: String) ->
 		var lost: float = row.damage_to_rivet
 		hurt += int(lost > 0.0)
 		damage += lost
+		var actual: float = row.damage_to_enemy
+		var behind: float = row.rear_damage
+		dealt += actual
+		rear += behind
 		if row.enemy_killed_tick != null:
 			kills.append(row.enemy_killed_tick)
 	kills.sort()
@@ -75,5 +94,6 @@ func _profile(runner: Object, enemy: StringName, seeds: int, profile: String) ->
 		"hurt_share": float(hurt) / seeds,
 		"mean_damage": damage / seeds,
 		"enemy_killed_share": float(kills.size()) / seeds,
-		"median_kill_tick": median
+		"median_kill_tick": median,
+		"rear_damage_share": rear / dealt if dealt > 0.0 else null
 	}

@@ -8,6 +8,8 @@ const COVER_RADIUS_M: float = 8.0
 const SPACING_GAP_M: float = 1.5
 
 var turret: FoeTurret
+var shield: FoeShield
+var mobile_goal: Vector2 = Vector2.INF
 var rocket: FoeRocket
 var agent: EnemyAgent
 ## Rounds remaining when a token, range or sight interrupted the production trigger.
@@ -30,6 +32,7 @@ var _plan_offset: int = 0
 
 
 func _init(h: Fighter, arch: EnemyRoster.Archetype) -> void:
+	shield = FoeShield.new() if arch.id == &"shield_robot" else null
 	turret = FoeTurret.new() if arch.weapon.id == &"turret_gun" else null
 	rocket = FoeRocket.new() if arch.weapon.id == &"rocket" else null
 	agent = EnemyAgent.make(h.id, arch, h.pos)
@@ -45,6 +48,8 @@ func available(h: Fighter, arena: CombatArena) -> bool:
 
 
 func destination() -> Vector2:
+	if mobile_goal.is_finite():
+		return mobile_goal
 	return agent.goal if _destination.is_finite() else Vector2.INF
 
 
@@ -175,6 +180,9 @@ func swing(h: Fighter, arena: CombatArena, map: GuardRouteMap) -> void:
 
 
 func forget_route() -> void:
+	if rocket != null:
+		rocket.forget_site()
+	mobile_goal = Vector2.INF
 	_route.clear()
 	_next = 0
 	_destination = Vector2.INF
