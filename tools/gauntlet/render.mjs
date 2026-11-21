@@ -17,6 +17,7 @@ function introduction(batch, model, before) {
     (batch.args.from ? 'Imported files' : 'Live ' + batch.args.runner + ' batch') + ' · ' + caption(batch)
       + ' · ' + batch.created + '.'];
   lines.push('Stalled runs by profile: ' + model.deaths.map((d) => d.profile + ' ' + d.stalled).join(', ') + '.');
+  lines.push('Capped alive by profile: ' + model.deaths.map((d) => d.profile + ' ' + d.capped).join(', ') + '.');
   if (before) lines.push('Baseline ' + caption(before) + ' · ' + before.created + ' · ' + before.results.length + ' accepted runs.');
   return lines;
 }

@@ -110,7 +110,7 @@ function fixtureBatch() {
 
 function robotBatch() {
   const ids = ['shield_robot', 'war_machine', 'sentry_turret'];
-  return manifest(Array.from({ length: 8 }, (_, i) => ({
+  return manifest(Array.from({ length: 12 }, (_, i) => ({
     schema: RUN_SCHEMA, seed: i + 1, profile: 'average', controls: 'wheel', wave_reached: 3, picks: [], mods: {},
     waves: ids.map((id, w) => ({ n: w + 1, seconds: [30, 24, 23][w], enemies: { [id]: 2 } }))
   })));
@@ -197,10 +197,17 @@ test('confirmation pairs seed, profile, controls and pick, and respects a measur
   after.results.reverse();
   for (const r of after.results) r.waves[0].seconds -= 2;
   const result = confirmChange(pairRuns(before, after), c);
-  assert.equal(result.pairs, 8);
+  assert.equal(result.pairs, 12);
   assert.equal(result.improvement, 2);
   assert.equal(result.floor, 10);
   assert.equal(result.verdict, 'noise');
+  const rows = pairRuns(before, after);
+  const small = confirmChange(rows, c, rows.slice(0, 11));
+  assert.equal(small.verdict, 'too few pairs');
+  assert.ok(Number.isNaN(small.floor));
+  assert.equal(small.aa_pairs, 5);
+  assert.deepEqual(result.aa_groups, [{ stratum: '["average","wheel","random"]',
+    left: [1, 3, 5, 7, 9, 11], right: [2, 4, 6, 8, 10, 12] }]);
   after.runs.forEach((r) => { r.pick = 'greedy'; });
   assert.equal(pairRuns(before, after).length, 0);
   after.runs.forEach((r) => { r.pick = 'random'; r.controls = 'legacy'; });
@@ -222,7 +229,7 @@ test('confirmation keeps the same taker and decliner seeds on both sides of a bo
   for (const r of after.results) r.picks[0].taken = 'ghost_kerf';
   const switched = confirmChange(pairRuns(before, after), change);
   assert.equal(switched.pairs, 0);
-  assert.equal(switched.verdict, 'noise');
+  assert.equal(switched.verdict, 'too few pairs');
 });
 
 test('apply preflights bounds, canonical bytes and schemas for the whole plan before its first commit', (t) => {
@@ -262,7 +269,7 @@ test('apply commits each knob alone and confirm selectively reverts regression a
   const before = robotBatch(), after = structuredClone(before);
   const plan = prepare(root, before);
   assert.deepEqual(plan.changes.map((c) => c.id), ['shield_robot.hp', 'war_machine.hp', 'sentry_turret.hp']);
-  assert.match(plan.changes[0].miss, /median 30 s over 8 timed runs.*15 s, shield_robot present in 8\/8/);
+  assert.match(plan.changes[0].miss, /median 30 s over 12 timed runs.*15 s, shield_robot present in 12\/12/);
   const file = TABLES + 'enemies.json';
   const original = readJson(join(root, file));
   // Evidence staged by someone else must stay staged and out of all three table commits.
@@ -304,6 +311,8 @@ test('apply commits each knob alone and confirm selectively reverts regression a
   assert.equal(readFileSync(join(root, file), 'utf8'), canonicalJson(original));
   const md = readFileSync(join(root, 'build/after/tune-ledger.md'), 'utf8');
   assert.ok(md.includes('shield_robot.hp') && md.includes('14 (14 to 14)') && md.includes(receipts[0]));
+  assert.match(md, /Left seeds \| Right seeds/);
+  assert.match(md, /1, 3, 5, 7, 9, 11 \| 2, 4, 6, 8, 10, 12/);
   const reverted = git(root, 'rev-parse', 'HEAD');
   ok(cli(root, 'confirm', ...confirmArgs, '--revert'));
   assert.equal(git(root, 'rev-parse', 'HEAD'), reverted);

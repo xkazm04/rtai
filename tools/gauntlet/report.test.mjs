@@ -6,8 +6,9 @@ import { ROOT, readJson } from '../lib/repo.mjs';
 import { analyze } from './analysis.mjs';
 import { BATCH_SCHEMA, validateRun } from './contract.mjs';
 import { offerEffects } from './offers.mjs';
-import { generate } from './report.mjs';
+import { generate, loadBatch } from './report.mjs';
 import { render } from './render.mjs';
+import { confirmChange, pairRuns } from './tune_confirm.mjs';
 
 const dir = join(ROOT, 'tools/gauntlet/fixtures');
 const all = readdirSync(dir).filter((name) => name.endsWith('.json')).map((name) => readJson(join(dir, name)));
@@ -53,6 +54,37 @@ test('historical tick-cap evidence counts by profile in the header and deaths', 
   const md = readFileSync(join(dir, 'report.md'), 'utf8');
   assert.match(md, /Stalled runs by profile: novice 1, expert 1/);
   assert.match(md, /\| expert \| 2 \| 0 \| 1 \| 0 \|/);
+});
+
+test('archived alive caps count in reports and paired confirmation, only for measured waves', (t) => {
+  mkdirSync(join(ROOT, 'build'), { recursive: true });
+  const dir = mkdtempSync(join(ROOT, 'build', 'cap-report-'));
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  const rows = Array.from({ length: 16 }, (_, i) => ({ profile: 'average', controls: 'wheel', seed: i,
+    ok: false, file: i + '.json', exit: 1, outcome: 'stalled',
+    reason: 'FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh' }));
+  for (const row of rows) {
+    const run = { ...all[0], profile: row.profile, controls: row.controls, seed: row.seed, wave_reached: 2,
+      waves: [{ n: 1, seconds: 24 }, { n: 2 }], picks: [] };
+    delete run.death;
+    if (row.seed === 12) run.death = { wave: 2 };
+    if (row.seed === 13) run.seed = 100;
+    if (row.seed === 14) row.reason = row.reason.replace('fresh', 'stale');
+    if (row.seed === 15) row.reason = row.reason.replace('SCRIPT ERROR 0', 'SCRIPT ERROR 1');
+    writeFileSync(join(dir, row.file), JSON.stringify(run));
+  }
+  const file = join(dir, 'batch.json');
+  writeFileSync(file, JSON.stringify({ ...batch, results: [], runs: rows }));
+  const before = loadBatch(file), after = structuredClone(before);
+  assert.equal(before.results.length, 12);
+  for (const run of after.results) run.waves[0].seconds = 15;
+  const pairs = pairRuns(before, after);
+  const measure = (wave) => confirmChange(pairs, { metric: { type: 'wave', profile: 'average', wave, target: 15 } });
+  assert.deepEqual([measure(1).pairs, measure(1).verdict, measure(2).pairs], [12, 'kept', 0]);
+  const model = analyze(before);
+  assert.deepEqual(model.waves.map((w) => w.timed), [12, 0]);
+  assert.deepEqual([model.deaths[0].capped, model.deaths[0].total], [12, 0]);
+  assert.match(render(before, model).markdown, /Capped alive by profile: average 12/);
 });
 
 test('a shared gun identifies a carrier only when the death-wave roster singles it out', () => {

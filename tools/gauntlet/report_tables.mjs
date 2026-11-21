@@ -14,7 +14,7 @@ const method = 'Each run contributes once per item. Takers start at their first 
   + 'Within the same profile, controls and pick wave, pair runs by seed rank without replacement. '
   + 'The difference is the median of take minus decline across matched pairs. CI95 uses 4,000 paired bootstrap resamples. '
   + 'The A/A floor is the larger absolute CI endpoint for even versus odd decliner seeds, falling back to all offered runs. '
-  + 'A CI touching zero or a difference within the floor earns “noise”. At least two pairs are needed for each interval. '
+  + 'A CI touching zero or a difference within the floor earns “noise”. The effect needs two matched pairs and the floor needs six A/A pairs. '
   + 'These observational comparisons can reflect the rest of the loadout.';
 
 export function sections(batch, report, baseline) {
@@ -33,8 +33,8 @@ export function sections(batch, report, baseline) {
   };
   const deaths = {
     title: 'Deaths by profile', note: 'Each wave and killer is followed by its recorded death count. Killers are ordered by frequency.',
-    columns: ['Profile', 'Runs', 'Deaths', 'Stalled', 'Accepted without death', 'Death wave × count', 'Top killers × count', 'Unattributed deaths'],
-    rows: report.deaths.map((d) => [d.profile, d.runs, d.total, d.stalled, d.accepted - d.total, listCounts(d.waves) || '—',
+    columns: ['Profile', 'Runs', 'Deaths', 'Stalled', 'Capped alive', 'Other accepted without death', 'Death wave × count', 'Top killers × count', 'Unattributed deaths'],
+    rows: report.deaths.map((d) => [d.profile, d.runs, d.total, d.stalled, d.capped, d.accepted - d.total - d.capped, listCounts(d.waves) || '—',
       listCounts(d.killers) || (d.total ? missing : '—'), d.unknown])
   };
   const timeouts = {
@@ -58,7 +58,7 @@ export function sections(batch, report, baseline) {
     rows: report.effects.filter((e) => e.kind === kind).map((e) => [e.id,
       e.metric === 'seconds' ? 'wave s' : 'waves survived', counted({ n: e.took, median: e.takeMedian }),
       counted({ n: e.declined, median: e.declineMedian }), e.pairs, fmt(e.delta), range(...e.ci),
-      Number.isFinite(e.floor) ? fmt(e.floor) + ' (' + e.aaPairs + ', ' + e.aaSource + ')' : missing, e.label]),
+      fmt(e.floor) + ' (' + e.aaPairs + ', ' + e.aaSource + ')', e.label]),
     empty: kind === 'bonus' ? 'No bonus offers were recorded.' : 'No offers mapped to a weapon ref.'
   }));
   const telemetry = {

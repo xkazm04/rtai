@@ -1,5 +1,6 @@
 // Each run appears once per offered item. Effects and A/A controls use disjoint run pairs.
 import { bootCi, median } from '../perf/paired.mjs';
+import { MIN_AA_PAIRS } from './contract.mjs';
 
 function afterPick(run, pick) {
   const last = run.wave_reached;
@@ -69,15 +70,15 @@ function compare(exposure, metric) {
     pool.filter((r) => r.seed % 2 === 1), metric);
   let aa = aaSplit(declined);
   let aaSource = 'decliners';
-  if (aa.length < 2) {
+  if (aa.length < MIN_AA_PAIRS) {
     aa = aaSplit([...took, ...declined]);
     aaSource = 'all offered';
   }
   const delta = median(deltas);
   const ci = deltas.length >= 2 ? bootCi(deltas) : [NaN, NaN];
-  const floor = aa.length >= 2 ? Math.max(...bootCi(aa).map(Math.abs)) : NaN;
-  let label = 'insufficient data';
-  if (deltas.length >= 2) {
+  const floor = aa.length >= MIN_AA_PAIRS ? Math.max(...bootCi(aa).map(Math.abs)) : NaN;
+  let label = aa.length < MIN_AA_PAIRS ? 'too few pairs' : 'insufficient data';
+  if (deltas.length >= 2 && Number.isFinite(floor)) {
     if ((ci[0] <= 0 && ci[1] >= 0) || Math.abs(delta) <= floor) label = 'noise';
     else if (Number.isFinite(floor)) label = delta > 0 ? 'higher' : 'lower';
   }

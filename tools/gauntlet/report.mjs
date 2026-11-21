@@ -5,7 +5,8 @@ import { dirname, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
 import { PROJECT, readJson } from '../lib/repo.mjs';
-import { streetLog } from './street_log.mjs';
+import { batchFile, streetLog } from './street_log.mjs';
+import { capExit, readResult } from './run_result.mjs';
 import { enemyWeapons } from './enemy_weapons.mjs';
 import { analyze } from './analysis.mjs';
 import { BATCH_SCHEMA, validateRun } from './contract.mjs';
@@ -23,6 +24,14 @@ export function loadBatch(path) {
     throw new Error(path + ': successful runs and result count differ');
   for (const row of doc.runs) {
     if (!row.ok && !row.outcome) Object.assign(row, streetLog(dirname(path), row));
+    // Earlier batches excluded the result on every nonzero exit. Recover only a
+    // matching, validated local sidecar with the launcher's original freshness verdict.
+    if (!row.ok && capExit(row, row.reason)) {
+      const file = batchFile(dirname(path), row.file);
+      if (!file) continue;
+      const { result } = readResult(file, row, true, true);
+      if (result) doc.results.push(result);
+    }
   }
   if (!doc.enemy_weapons && doc.tables?.['enemies.json']) {
     const bytes = readFileSync(join(PROJECT, 'data', 'tables', 'enemies.json'));

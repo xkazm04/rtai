@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
 import { canonicalJson } from '../lib/canonical_json.mjs';
 import { readJson } from '../lib/repo.mjs';
-import { PROFILES } from './contract.mjs';
+import { MIN_AA_PAIRS, PROFILES } from './contract.mjs';
 import { loadBatch } from './report.mjs';
 import { fmt } from './report_tables.mjs';
 import { confirmChange, pairRuns } from './tune_confirm.mjs';
@@ -66,6 +66,16 @@ function markdown(ledger) {
       c.verdict, [c.commit, c.revert_commit].filter(Boolean).join(' / ') || '—'].map(cell).join(' | ') + ' |');
   }
   if (!ledger.changes.length) lines.push('', 'The plan contained no changes.');
+  else {
+    lines.push('', '## A/A seed pairs', '',
+      'Within each eligible before-batch group, sort by seed and pair adjacent ranks. Read the two lists in matching order. '
+      + 'The floor is the larger absolute CI95 endpoint for right minus left, with at least ' + MIN_AA_PAIRS
+      + ' pairs. Offer entries show take/decline seed pairs.', '',
+      '| Knob | Before group | Left seeds | Right seeds |', '|---|---|---|---|');
+    const seedList = (side) => side.map((s) => Array.isArray(s) ? s.join('/') : s).join(', ');
+    for (const c of ledger.changes) for (const group of c.aa_groups)
+      lines.push('| ' + [c.id, group.stratum, seedList(group.left), seedList(group.right)].map(cell).join(' | ') + ' |');
+  }
   return lines.join('\n') + '\n';
 }
 

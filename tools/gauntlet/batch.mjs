@@ -4,12 +4,13 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, statSync,
 import { basename, join, relative, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { main as devRun } from '../dev/run.mjs';
-import { dirtyLines, git, PROJECT, readJson } from '../lib/repo.mjs';
+import { dirtyLines, git, PROJECT } from '../lib/repo.mjs';
 import { median } from '../perf/paired.mjs';
 import { commandLine, parseArgs, plan } from './commands.mjs';
 import { BATCH_SCHEMA, PROFILES, validateRun } from './contract.mjs';
 import { enemyWeapons } from './enemy_weapons.mjs';
 import { streetLog } from './street_log.mjs';
+import { capExit, readResult } from './run_result.mjs';
 
 export { parseArgs, plan, validateRun };
 const portable = (out, path) => relative(out, path).split(sep).join('/');
@@ -31,26 +32,6 @@ function tableSnapshot() {
     }
   }
   return { tables, weapon_refs, enemy_weapons };
-}
-
-function readResult(file, row, checkIdentity = false) {
-  let result;
-  try {
-    result = readJson(file);
-    if (!checkIdentity) {
-      if ([...PROFILES, 'human'].includes(result?.profile)) row.profile = result.profile;
-      if (Number.isSafeInteger(result?.seed)) row.seed = result.seed;
-    }
-    const reason = validateRun(result);
-    if (reason) throw new Error(reason);
-    if (checkIdentity && (row.profile !== result.profile || row.seed !== result.seed || row.controls !== result.controls))
-      throw new Error('result profile, seed or controls do not match the command');
-    row.ok = true;
-  } catch (err) {
-    row.reason = err.message;
-    row.ok = false;
-  }
-  return { row, result: row.ok ? result : null };
 }
 
 function offline(args) {
@@ -87,11 +68,12 @@ async function liveRun(args, job, launch) {
     const engineLog = lines.find((line) => line.startsWith('run: log '));
     if (engineLog) row.engine_log = portable(args.out, engineLog.slice('run: log '.length));
     Object.assign(row, streetLog(args.out, row));
-    if (row.exit !== 0) throw new Error(lines.at(-1));
+    const capped = capExit(row, lines.at(-1));
+    if (row.exit !== 0 && !capped) throw new Error(lines.at(-1));
     const after = statSync(job.file, { bigint: true });
     if (before && after.mtimeNs === before.mtimeNs && after.ctimeNs === before.ctimeNs)
       throw new Error('result was not rewritten by this run');
-    return readResult(job.file, row, true);
+    return readResult(job.file, row, true, capped);
   } catch (err) {
     row.reason = err.message;
     return { row, result: null };
@@ -133,8 +115,9 @@ export function summary(batch) {
   return [...new Set([...profiles, ...batch.runs.map((r) => r.profile)])].map((p) => {
     const runs = batch.results.filter((r) => r.profile === p);
     const times = runs.flatMap((r) => r.waves.map((w) => w.seconds)).filter(Number.isFinite);
+    const capped = batch.runs.filter((r) => r.profile === p && r.outcome === 'capped').length;
     return p + ': ' + runs.length + '/' + batch.runs.filter((r) => r.profile === p).length
-      + ' ok, median wave reached ' + fmt(median(runs.map((r) => r.wave_reached)))
+      + ' ok' + (capped ? ' (' + capped + ' capped alive)' : '') + ', median wave reached ' + fmt(median(runs.map((r) => r.wave_reached)))
       + ', median seconds per wave ' + fmt(median(times));
   });
 }

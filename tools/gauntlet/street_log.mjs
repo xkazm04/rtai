@@ -1,12 +1,17 @@
 import { readFileSync } from 'node:fs';
 import { isAbsolute, relative, resolve, sep } from 'node:path';
 
+export function batchFile(directory, name) {
+  if (typeof name !== 'string') return null;
+  const file = resolve(directory, name);
+  const local = relative(directory, file);
+  return local === '..' || local.startsWith('..' + sep) || isAbsolute(local) ? null : file;
+}
+
 // The street prints the final clock after every termination, including a tick-cap exit.
 export function streetLog(directory, row) {
-  if (typeof row.engine_log !== 'string') return {};
-  const file = resolve(directory, row.engine_log);
-  const local = relative(directory, file);
-  if (local === '..' || local.startsWith('..' + sep) || isAbsolute(local)) return {};
+  const file = batchFile(directory, row.engine_log);
+  if (!file) return {};
   let log;
   try { log = readFileSync(file, 'utf8'); }
   catch (error) { if (error.code === 'ENOENT') return {}; throw error; }

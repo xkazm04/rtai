@@ -63,9 +63,10 @@ function deathStats(profile, runs, attempts) {
   const deaths = runs.filter((r) => r.death).map((r) => r.death);
   const by = frequency(deaths.map((d) => d.by).filter(Boolean));
   const stalled = attempts.filter((r) => r.outcome === 'stalled').length;
+  const capped = attempts.filter((r) => r.outcome === 'capped').length;
   const timeouts = by.get('timeout') ?? 0;
   by.delete('timeout');
-  return { profile, runs: attempts.length, accepted: runs.length, stalled, timeouts, total: deaths.length, unknown: deaths.filter((d) => !d.by).length,
+  return { profile, runs: attempts.length, accepted: runs.length, capped, stalled, timeouts, total: deaths.length, unknown: deaths.filter((d) => !d.by).length,
     waves: [...frequency(deaths.map((d) => d.wave))].sort(([a], [b]) => a - b),
     killers: [...by].sort(([a, n], [b, m]) => m - n || a.localeCompare(b)) };
 }

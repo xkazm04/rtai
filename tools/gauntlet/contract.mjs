@@ -3,6 +3,7 @@ export const PROFILES = ['novice', 'average', 'expert'];
 export const RUN_SCHEMA = 'gtai.gauntlet-run/1';
 export const BATCH_SCHEMA = 'gtai.gauntlet-batch/1';
 export const MAX_SEED = 0xffffffff;
+export const MIN_AA_PAIRS = 6;
 const object = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
 const count = (value) => Number.isSafeInteger(value) && value >= 0;
 const magnitude = (value) => Number.isFinite(value) && value >= 0;

@@ -12,17 +12,19 @@ const fixtureDir = join(ROOT, 'tools', 'gauntlet', 'fixtures');
 const skeleton = { schema: RUN_SCHEMA, seed: 1, profile: 'average', controls: 'legacy',
   wave_reached: 0, waves: [], picks: [], mods: {} };
 
-test('street speed uses result ticks then final engine clock, including stalled time', async (t) => {
+test('a fresh alive cap contributes timed waves, its final clock and a successful manifest row', async (t) => {
   const out = workspace(t);
   const launch = (argv, io) => {
     const n = Number(argv.find((arg) => arg.startsWith('--seed=')).slice(7));
     const file = argv.find((arg) => arg.startsWith('--result=')).slice(9);
-    writeFileSync(file, JSON.stringify({ ...skeleton, seed: n, ...(n === 1 && { ticks: 120 }) }));
+    writeFileSync(file, JSON.stringify({ ...skeleton, seed: n, wave_reached: 2,
+      waves: [{ n: 1, seconds: 12 }, { n: 2 }], ...(n === 1 && { ticks: 120 }) }));
     const log = join(out, 'engine-' + n + '.log');
     writeFileSync(log, '[INFO] gauntlet: tick 60, segment 0\n'
       + '[INFO] gauntlet: tick 180, segment 2\n'
       + (n === 3 ? '[ERROR] gauntlet: headless tick cap reached before run ended\n' : ''));
     io.out('run: log ' + log);
+    if (n === 3) io.out('FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh');
     return n === 3 ? 1 : 0;
   };
   const doc = await batch(parseArgs(['--seeds=3', '--profile=average', '--pick=greedy', '--out=' + out]), {
@@ -30,7 +32,9 @@ test('street speed uses result ticks then final engine clock, including stalled 
   });
   assert.equal(doc.speed.sim_s, 2 + 3 + 3);
   assert.ok(doc.speed.sim_per_wall > 0);
-  assert.equal(doc.runs[2].outcome, 'stalled');
+  assert.equal(doc.runs[2].outcome, 'capped');
+  assert.ok(doc.runs.every((r) => r.ok));
+  assert.deepEqual(doc.results[2].waves, [{ n: 1, seconds: 12 }, { n: 2 }]);
 });
 
 function workspace(t) {

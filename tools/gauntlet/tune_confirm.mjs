@@ -1,5 +1,6 @@
 import { median, paired } from '../perf/paired.mjs';
 import { quantile } from '../perf/stats.mjs';
+import { MIN_AA_PAIRS } from './contract.mjs';
 import { matchObservations, offerObservation } from './offers.mjs';
 
 function indexedRuns(batch) {
@@ -42,7 +43,7 @@ function offerSamples(rows, metric) {
       stratum: JSON.stringify([pick, left.stratum]) });
   }
   const matches = matchObservations(observations.filter((r) => r.took), observations.filter((r) => !r.took));
-  return matches.map(([take, decline]) => ({ seed: take.seed, stratum: take.stratum,
+  return matches.map(([take, decline]) => ({ seed: take.seed, declineSeed: decline.seed, stratum: take.stratum,
     a: take.a - decline.a, b: take.b - decline.b }));
 }
 
@@ -113,16 +114,24 @@ function interval(rows, measure) {
 }
 
 function noiseFloor(samples, metric) {
-  const aa = [];
-  for (const group of Map.groupBy(samples, (r) => r.stratum).values()) {
+  const aa = [], groups = [];
+  for (const [stratum, group] of Map.groupBy(samples, (r) => r.stratum)) {
     group.sort((x, y) => x.seed - y.seed);
-    for (let i = 1; i < group.length; i += 2) aa.push({ a: group[i - 1].a, b: group[i].a });
+    const left = [], right = [];
+    const seeds = (r) => r.declineSeed === undefined ? r.seed : [r.seed, r.declineSeed];
+    for (let i = 1; i < group.length; i += 2) {
+      aa.push({ a: group[i - 1].a, b: group[i].a });
+      left.push(seeds(group[i - 1]));
+      right.push(seeds(group[i]));
+    }
+    if (left.length) groups.push({ stratum, left, right });
   }
-  if (aa.length < 2) return { floor: NaN, aa_pairs: aa.length };
+  const split = { aa_pairs: aa.length, aa_groups: groups };
+  if (aa.length < MIN_AA_PAIRS) return { ...split, floor: NaN };
   const ci = ['killer', 'spread'].includes(metric.type)
     ? interval(aa, (v) => measured(metric.type, v))
     : paired(aa).ci95;
-  return { floor: Math.max(...ci.map(Math.abs)), aa_pairs: aa.length };
+  return { ...split, floor: Math.max(...ci.map(Math.abs)) };
 }
 
 export function confirmChange(rows, change, beforeRows = rows) {
@@ -131,7 +140,8 @@ export function confirmChange(rows, change, beforeRows = rows) {
   const before = measured(metric.type, samples.map((s) => s.a));
   const after = measured(metric.type, samples.map((s) => s.b));
   const aggregate = distance(metric, before) - distance(metric, after);
-  const { floor, aa_pairs } = noiseFloor(beforeRows === rows ? samples : samplesFor(beforeRows, metric), metric);
+  const noise = noiseFloor(beforeRows === rows ? samples : samplesFor(beforeRows, metric), metric);
+  const { floor } = noise;
   let improvement = aggregate, ci, statistic;
   if (metric.type === 'wave' || metric.type === 'offer') {
     // Orient paired() so a reduction in distance from the target is positive.
@@ -145,9 +155,9 @@ export function confirmChange(rows, change, beforeRows = rows) {
     ci = interval(samples, (v) => -distance(metric, measured(metric.type, v)));
     statistic = 'paired reduction in aggregate miss';
   }
-  let verdict = 'noise';
+  let verdict = samples.length < 2 || noise.aa_pairs < MIN_AA_PAIRS ? 'too few pairs' : 'noise';
   if (samples.length >= 2 && aggregate > floor && ci[0] > floor) verdict = 'kept';
   if (samples.length >= 2 && aggregate < -floor && ci[1] < -floor) verdict = 'reverted';
   return { ...change, measured_before: before, measured_after: after, pairs: samples.length,
-    improvement, statistic, aggregate_improvement: aggregate, ci95: ci, floor, aa_pairs, verdict };
+    improvement, statistic, aggregate_improvement: aggregate, ci95: ci, ...noise, verdict };
 }
