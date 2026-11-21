@@ -18,6 +18,7 @@ func _init(stage: ArenaStage, actions: PlayerActions, street: bool = false) -> v
 	_stage = stage
 	_actions = actions
 	_street = street
+	_player.wheel = street and ControlsMode.wheel()
 	_solids = stage.walls.boxes
 
 
@@ -89,39 +90,7 @@ func _read_hostiles() -> void:
 	for fighter: Fighter in roster:
 		if not fighter.alive():
 			continue
-		var foe: Hostile = Hostile.new()
-		foe.id = fighter.id
-		foe.pos = fighter.pos
-		foe.facing = fighter.facing
-		foe.archetype = fighter.archetype if fighter.archetype != &"" else &"contractor"
-		foe.alive = fighter.alive()
-		foe.hp = fighter.hp
-		foe.robot = fighter.machine
-		foe.shooter = fighter.weapon != &""
-		_read_tell(fighter, foe)
-		_hostiles.append(foe)
-
-
-func _read_tell(fighter: Fighter, foe: Hostile) -> void:
-	var winding: bool = fighter.tell_left > 0 or fighter.swing_left > 0
-	var squad: ArenaSquad = _stage.arena.squad_ai
-	if squad != null and squad.minds.has(fighter.id):
-		var agent: EnemyAgent = squad.minds[fighter.id].agent
-		winding = winding or agent.state == EnemyAgent.State.WINDUP
-		foe.tier = agent.arch.tier
-		foe.front_cos = agent.arch.shield_cos
-		if agent.arch.alt_weapon != null:
-			foe.stomp_m = agent.arch.alt_weapon.splash_radius_m
-			foe.tell_ticks = fighter.swing_left
-			var cooldown: int = mini(
-				agent.arch.weapon.cooldown_ticks, agent.arch.alt_weapon.cooldown_ticks
-			)
-			foe.opening = _stage.arena.tick - agent.shot_tick < cooldown
-	if winding:
-		if foe.archetype in [&"rocket_trooper", &"war_machine", &"robot_gunner"]:
-			foe.tell = &"large"
-		else:
-			foe.tell = &"small" if foe.shooter else &"melee"
+		_hostiles.append(BotArenaFoe.read(fighter, _stage.arena))
 
 
 func _read_rounds() -> void:
