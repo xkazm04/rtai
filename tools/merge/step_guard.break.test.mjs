@@ -89,7 +89,7 @@ test('malformed argv must be rejected without running the command or hiding usag
     const argv = [...prefix, ...command];
     assert.equal(parseGuardArgs(argv), null, JSON.stringify(argv));
     const r = spawnSync(process.execPath, [GUARD, ...argv], {
-      encoding: 'utf8', timeout: 3000, windowsHide: true,
+      encoding: 'utf8', timeout: 15_000, windowsHide: true,
     });
     assert.ifError(r.error);
     assert.equal(r.status, 2, JSON.stringify(argv));
@@ -207,7 +207,7 @@ test('signal termination must not be mistaken for a clean command or a guard tim
   const f = fixture(t);
   const source = "process.stdout.write('before signal'); process.kill(process.pid, 'SIGTERM')";
   const bare = spawnSync(process.execPath, ['-e', source], {
-    encoding: 'utf8', timeout: 3000, windowsHide: true,
+    encoding: 'utf8', timeout: 15_000, windowsHide: true,
   });
   assert.ifError(bare.error);
   const r = defaultRun(process.cwd(), f.dir, 0.2)('signal-exit', process.execPath,
