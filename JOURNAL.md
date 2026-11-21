@@ -112,3 +112,4 @@ NEXT (if a session follows; nothing is owed):
 2. Do not start new code. If the display is back to 1080p (check with a short `tools/film/film.mjs` run; it judges the drawn size), the mixed-wave film is the one optional extra: `--foe-mix=shield_robot,swat,rocket_trooper,sentry_turret`, seed 20261109, 32 px/m, 25 s, to `gtai-masters/n22/foes/mixed/`, then a frames.json entry and a REPORT line.
 3. Before 07:40: re-run `node tools/evidence/cites.mjs REPORT.md`, commit REPORT.md + JOURNAL.md per path.
 - 06:33 session 5 work done; REPORT final (cites ok), committed.
+- 06:33 display still clamped (film.mjs 120-tick probe: drew 1422x800); mixed-wave film stays out. Session 5 closes; nothing running.
