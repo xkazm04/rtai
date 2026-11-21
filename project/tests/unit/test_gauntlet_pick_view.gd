@@ -2,6 +2,16 @@ extends GutTest
 
 const Entry = preload("res://dev/gauntlet/gauntlet.gd")
 
+
+class ThirdCard:
+	extends GauntletPilot
+	var choices: int = 0
+
+	func pick(_offered: Array[StringName]) -> int:
+		choices += 1
+		return 2
+
+
 var entry: Entry
 var view: GauntletPickView
 
@@ -104,3 +114,36 @@ func test_empty_draw_finishes_without_showing_the_screen() -> void:
 	assert_true(entry.waves.done)
 	assert_false(view.visible)
 	assert_true(entry.run.picks.is_empty())
+
+
+func test_film_holds_the_clear_for_90_ticks_then_highlights_one_choice_for_30() -> void:
+	var bot: ThirdCard = ThirdCard.new()
+	entry.waves._limit = 2
+	entry.pilot = bot
+	entry.pick_view = view
+	view.pilot = bot
+	_clear()
+	var offers: Array[StringName] = entry.waves.pending.duplicate()
+	var tick: int = entry.session.tick()
+	var first: Button = view._cards.get_child(0) as Button
+	var chosen: Button = view._cards.get_child(2) as Button
+	first.pressed.emit()
+	for i: int in 89:
+		entry._physics_process(SimClock.TICK_DT)
+	assert_eq(bot.choices, 0)
+	assert_eq(first.modulate, Color.WHITE)
+	entry._physics_process(SimClock.TICK_DT)
+	assert_eq(bot.choices, 1)
+	assert_lt(first.modulate.a, chosen.modulate.a)
+	for i: int in 29:
+		entry._physics_process(SimClock.TICK_DT)
+	assert_true(view.visible)
+	assert_true(entry.run.picks.is_empty())
+	assert_eq(entry.session.tick(), tick)
+	entry._physics_process(SimClock.TICK_DT)
+	assert_false(view.visible)
+	assert_eq(bot.choices, 1)
+	var taken: StringName = entry.run.picks[0]["taken"]
+	assert_eq(taken, offers[2])
+	entry._physics_process(SimClock.TICK_DT)
+	assert_eq(entry.session.tick(), tick + 1)
