@@ -1,6 +1,6 @@
 # Brief 06 (lane loop, n22): the film of the test player and the report page image
 
-Wall-clock: you start about {START}. **Commit deadline {COMMIT}, hard stop {STOP}**. Small commits, one per change; never amend, never rebase. Fix lint and format findings in your own edit and go on.
+Wall-clock: you start about 04:05. **Commit deadline 05:00, hard stop 05:08**. Small commits, one per change; never amend, never rebase. Fix lint and format findings in your own edit and go on.
 
 ## Context (read, do not re-derive)
 - The test player (`project/features/gauntlet/bot/`, `GauntletTestPlayer` at `gauntlet_bot.gd`, brain `bot_brain.gd`, `BotDefence`, `BotForms`, `BotCover`) plays street's gauntlet scene `project/dev/gauntlet/gauntlet.tscn` (flags: `--seed --bot --pick --waves --result --controls --pick-view`; `--pick-view` holds the three offer cards on screen 90 ticks before the bot picks and highlights its choice; `camera_ppm` export 32, `gauntlet_closeup.tscn` is the same scene at 64 px/m; the view is tilt 70).

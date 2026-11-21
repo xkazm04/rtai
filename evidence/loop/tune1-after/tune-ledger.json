@@ -1,0 +1,166 @@
+{
+  "after_runs": 8,
+  "after_sha256": "83335e781ac4d94531376154fc607ad34224db80e06eaea940b09a18658f7281",
+  "before_runs": 9,
+  "before_sha256": "293ee10f810d1ae6e79f97e6285cc0846d1ff7f5d05fc939955fa0cc6faa188a",
+  "changes": [
+    {
+      "aa_pairs": 2,
+      "after": 3.2,
+      "aggregate_improvement": 14.658333333333346,
+      "baseline": 4,
+      "before": 4,
+      "ci95": [
+        12.616666666666703,
+        16.699999999999996
+      ],
+      "commit": "c8fb30f8531964803f58f9502fc6c16ce8175f1c",
+      "file": "project/data/tables/enemies.json",
+      "floor": 46.8,
+      "id": "robot_gunner.hp",
+      "improvement": 14.65833333333335,
+      "measured_after": 47.775000000000006,
+      "measured_before": 62.43333333333335,
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 23
+      },
+      "miss": "average wave 23 median 62.43 s over 4 timed runs against 15 s, robot_gunner present in 4/4 timed rosters",
+      "pairs": 2,
+      "pointer": "/archetypes/4/hp",
+      "revert_commit": "9c019401e4d47de007b75e03a31f9b6963183dfc",
+      "severity": 3.1622222222222236,
+      "statistic": "median paired reduction in miss",
+      "verdict": "noise"
+    },
+    {
+      "aa_pairs": 3,
+      "after": 8,
+      "aggregate_improvement": 40.51666666666671,
+      "baseline": 10,
+      "before": 10,
+      "ci95": [
+        19.0833333333333,
+        49.75000000000001
+      ],
+      "commit": "9f908b18f0d95b8e2805cf3899edc7ff6b69ec5a",
+      "file": "project/data/tables/enemies.json",
+      "floor": 42.566666666666706,
+      "id": "shield_robot.hp",
+      "improvement": 20.5833333333333,
+      "measured_after": 38.55,
+      "measured_before": 79.0666666666667,
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 20
+      },
+      "miss": "average wave 20 median 62.32 s over 6 timed runs against 15 s, shield_robot present in 6/6 timed rosters",
+      "pairs": 3,
+      "pointer": "/archetypes/8/hp",
+      "revert_commit": "1dc8f016141ecbb7faa5d0897f3afd40104f8893",
+      "severity": 3.154444444444443,
+      "statistic": "median paired reduction in miss",
+      "verdict": "noise"
+    },
+    {
+      "aa_pairs": 4,
+      "after": 48,
+      "aggregate_improvement": 24.05,
+      "baseline": 60,
+      "before": 60,
+      "ci95": [
+        5.899999999999999,
+        25.4333333333333
+      ],
+      "commit": "114775bfa95dcf0dcb4cddf7c7b5806d52e97b3e",
+      "file": "project/data/tables/enemies.json",
+      "floor": 43.0333333333333,
+      "id": "war_machine.hp",
+      "improvement": 16.366666666666596,
+      "measured_after": 29.55,
+      "measured_before": 53.6,
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 10
+      },
+      "miss": "average wave 10 median 47.81 s over 8 timed runs against 15 s, war_machine present in 8/8 timed rosters",
+      "pairs": 7,
+      "pointer": "/archetypes/9/hp",
+      "revert_commit": "7e2bf625c264ef3070476efa80463a6fe56acc43",
+      "severity": 2.1872222222222235,
+      "statistic": "median paired reduction in miss",
+      "verdict": "noise"
+    },
+    {
+      "aa_pairs": 4,
+      "after": 4.8,
+      "aggregate_improvement": 6.758333333333297,
+      "baseline": 6,
+      "before": 6,
+      "ci95": [
+        0.6833333333333016,
+        12.1666666666667
+      ],
+      "commit": "5dfbcd18f86b93a361ec964369611b2361130487",
+      "file": "project/data/tables/enemies.json",
+      "floor": 19.133333333333297,
+      "id": "robot_thug.hp",
+      "improvement": 3.2749999999999986,
+      "measured_after": 43.23333333333335,
+      "measured_before": 49.991666666666646,
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 13
+      },
+      "miss": "average wave 13 median 43.71 s over 8 timed runs against 15 s, robot_thug present in 7/8 timed rosters",
+      "pairs": 6,
+      "pointer": "/archetypes/3/hp",
+      "revert_commit": "609ba37d3352f3b19defe20974e5985aeb53c01f",
+      "severity": 1.9138888888888865,
+      "statistic": "median paired reduction in miss",
+      "verdict": "noise"
+    },
+    {
+      "aa_pairs": 3,
+      "after": 6.4,
+      "aggregate_improvement": 5.375,
+      "baseline": 8,
+      "before": 8,
+      "ci95": [
+        -15.3333333333334,
+        38.8833333333334
+      ],
+      "commit": "cc5f44ffc28415095a6f8029799b696a5b9a93a8",
+      "file": "project/data/tables/enemies.json",
+      "floor": 29.883333333333397,
+      "id": "sentry_turret.hp",
+      "improvement": 0.17500000000005045,
+      "measured_after": 42.45,
+      "measured_before": 47.825,
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 19
+      },
+      "miss": "average wave 19 median 39.28 s over 7 timed runs against 15 s, sentry_turret present in 7/7 timed rosters",
+      "pairs": 4,
+      "pointer": "/archetypes/7/hp",
+      "revert_commit": "33ad79efba86c19e5f45c4740bc0d5965b6cd8cf",
+      "severity": 1.618888888888887,
+      "statistic": "median paired reduction in miss",
+      "verdict": "noise"
+    }
+  ],
+  "matched_runs": 8,
+  "plan_sha256": "8732036a7ad64ab9c4ff2fe529c151bc032c1c1cc6e5cc3e31df5e34404a0783",
+  "schema": "gtai.gauntlet-tune-ledger/1"
+}

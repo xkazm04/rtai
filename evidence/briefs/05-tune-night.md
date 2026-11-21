@@ -11,7 +11,12 @@ average wave 9 median 20.43 s over 1 timed runs ... robot_gunner.hp 4 -> 3.2
 turret_gun recorded as killer in 5/8 deaths ...: enemy_weapon.turret_gun.damage 4 -> 3.2
 ```
 
+
+### The first real cycle (director, 03:45-03:57, read before item 1)
+Measure `evidence/loop/tune1-before/` (average, seeds 1-10, greedy, wheel) -> propose 5 HP cuts (robot_gunner, shield_robot, war_machine, robot_thug, sentry_turret, each 0.8x) -> apply on `n22-tune` -> confirm `evidence/loop/tune1-after/` same seeds -> all five **noise**, reverted (`evidence/loop/tune1-after/tune-ledger.md`). Every wave got faster (war_machine wave 10: 53.6 -> 29.6 s over 7 pairs, CI95 5.9..25.4), but the A/A floor came from **2 to 4 pairs** (19-47 s), so nothing can clear it at 10 seeds. Seeds 6 and 10 ended at the 72000-tick run cap while still alive (wave 32): counted as failed, not as long runs.
+
 ## Goal, in order (commit each)
+0. **A usable noise floor**: (a) the A/A floor needs at least 6 pairs, else the verdict is "too few pairs" (not "noise") and the doc says how many seeds a night needs at the measured speed for 6+ pairs per knob; (b) explain in the ledger how the floor is built (which halves of which seeds); (c) a run that ends at the run tick cap while Rivet is alive is "capped" (alive), kept for every wave it timed, not dropped as failed (batch + report + confirm). Tests for each.
 1. **Sample floor**: a wave miss needs at least `--min-n=3` timed runs (default 3); a killer-share miss at least 5 deaths. Below it the miss is listed as "too few runs" and proposes nothing. Test.
 2. **Too fast is a miss too**: waves whose average median is under 12 s (the report's band) are misses in the other direction. Map them to `budget.base` (early waves) / `budget.per_wave` (if the under-target waves span the run) so more enemies come; never lower a weapon or Rivet's numbers for it. One sentence with the numbers, as for the slow misses. Test with a planted fast fixture.
 3. **Knob row identity**: every knob into an array row carries the row's id (`"row": "war_machine"`); read and apply check that the object at the pointer's row has that `id` and otherwise skip it with one line ("knob war_machine.hp: row 13 is shield_robot, skipped"). Regenerate knobs.json from the tables with that field. Test with a reordered copy of a table.

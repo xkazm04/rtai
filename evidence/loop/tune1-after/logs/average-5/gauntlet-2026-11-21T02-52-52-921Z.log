@@ -1,0 +1,20 @@
+# --fixed-fps 60 --quit-after 72000 res://dev/gauntlet/gauntlet.tscn -- --seed=5 --bot=average --pick=greedy --controls=wheel --result=C:\Users\kazda\kiro\gtai-wt\n22-loop\evidence\loop\tune1-after\runs\average-5.json
+# exit 0, 12.2 s
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] gauntlet: test player bound: average, greedy picks, seed 5
+[INFO] gauntlet: wave 1 tick 255 block loading_bay enemies { "patrol_cop": 4 }
+[INFO] gauntlet: wave 2 tick 628 block crosswalk enemies { "patrol_cop": 6 }
+[INFO] gauntlet: wave 3 tick 1002 block plain_block enemies { "swat": 2, "patrol_cop": 2, "rocket_trooper": 1 }
+[INFO] gauntlet: wave 4 tick 1484 block loading_bay enemies { "rocket_trooper": 2, "patrol_cop": 2, "riot_cop": 2 }
+[INFO] gauntlet: wave 5 tick 2084 block kiosk_plaza enemies { "war_machine": 1, "patrol_cop": 1, "contractor": 2, "rocket_trooper": 1 }
+[INFO] gauntlet: wave 6 tick 3727 block alley_neck enemies { "riot_cop": 1, "sentry_turret": 2, "swat": 1, "rocket_trooper": 2 }
+[INFO] rivet_arsenal: arena: Rivet carries [&"", &"", &"flamethrower", &""]
+[INFO] gauntlet: wave 7 tick 4989 block plain_block enemies { "robot_thug": 1, "robot_gunner": 1, "rocket_trooper": 1, "patrol_cop": 2, "swat": 2, "contractor": 1 }
+[INFO] gauntlet: wave 8 tick 5820 block kiosk_plaza enemies { "rocket_trooper": 4, "patrol_cop": 2, "robot_thug": 1, "swat": 1, "sentry_turret": 1 }
+[INFO] gauntlet: wave 9 tick 7176 block barricade_line enemies { "contractor": 1, "riot_cop": 3, "sentry_turret": 1, "rocket_trooper": 1, "robot_thug": 2, "patrol_cop": 1 }
+[INFO] gauntlet: wave 10 tick 7934 block barricade_line enemies { "war_machine": 1, "patrol_cop": 3, "sentry_turret": 1, "contractor": 1, "swat": 2, "riot_cop": 1, "robot_gunner": 1 }
+[INFO] gauntlet: wave 11 tick 9863 block alley_neck enemies { "swat": 2, "contractor": 4, "robot_thug": 1, "robot_gunner": 2, "rocket_trooper": 1, "patrol_cop": 1 }
+[INFO] gauntlet: wave 12 tick 10961 block barricade_line enemies { "robot_gunner": 1, "rocket_trooper": 2, "riot_cop": 2, "sentry_turret": 1, "shield_robot": 2, "swat": 1, "patrol_cop": 2 }
+[INFO] gauntlet: wave 12 ended after 5400 ticks at (377.775, -5.4), hp 137.5
+[INFO] gauntlet: tick 16362, segment 12, 3 resident
