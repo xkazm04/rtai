@@ -1,0 +1,225 @@
+{
+  "commit": "c78f76d5cae6d318e433daf4262efc585e76b7ff",
+  "profile": "average",
+  "pilot": "GauntletWalker",
+  "controls": "legacy",
+  "target_wave_seconds": 15,
+  "timebase_hz": 60,
+  "requested_waves": 10,
+  "interval": "From spawn to clear or death. The median and worst include every attempted wave.",
+  "runs": [
+    {
+      "seed": 7,
+      "death": null,
+      "waves": [
+        {
+          "wave": 1,
+          "cleared": true,
+          "ticks": 265,
+          "seconds": 4.417
+        },
+        {
+          "wave": 2,
+          "cleared": true,
+          "ticks": 469,
+          "seconds": 7.817
+        },
+        {
+          "wave": 3,
+          "cleared": true,
+          "ticks": 394,
+          "seconds": 6.567
+        },
+        {
+          "wave": 4,
+          "cleared": true,
+          "ticks": 153,
+          "seconds": 2.55
+        },
+        {
+          "wave": 5,
+          "cleared": true,
+          "ticks": 829,
+          "seconds": 13.817
+        },
+        {
+          "wave": 6,
+          "cleared": true,
+          "ticks": 243,
+          "seconds": 4.05
+        },
+        {
+          "wave": 7,
+          "cleared": true,
+          "ticks": 317,
+          "seconds": 5.283
+        },
+        {
+          "wave": 8,
+          "cleared": true,
+          "ticks": 1746,
+          "seconds": 29.1
+        },
+        {
+          "wave": 9,
+          "cleared": true,
+          "ticks": 2420,
+          "seconds": 40.333
+        },
+        {
+          "wave": 10,
+          "cleared": true,
+          "ticks": 3953,
+          "seconds": 65.883
+        }
+      ],
+      "median_seconds": 7.192,
+      "worst_wave": 10,
+      "worst_seconds": 65.883,
+      "result_sha256": "1d653a0795ff3c328afc6b9c9a7aa964fb952c10adaf4ce6d842183a6ca64221",
+      "verdict": "ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)"
+    },
+    {
+      "seed": 8,
+      "death": null,
+      "waves": [
+        {
+          "wave": 1,
+          "cleared": true,
+          "ticks": 293,
+          "seconds": 4.883
+        },
+        {
+          "wave": 2,
+          "cleared": true,
+          "ticks": 503,
+          "seconds": 8.383
+        },
+        {
+          "wave": 3,
+          "cleared": true,
+          "ticks": 163,
+          "seconds": 2.717
+        },
+        {
+          "wave": 4,
+          "cleared": true,
+          "ticks": 149,
+          "seconds": 2.483
+        },
+        {
+          "wave": 5,
+          "cleared": true,
+          "ticks": 1140,
+          "seconds": 19.0
+        },
+        {
+          "wave": 6,
+          "cleared": true,
+          "ticks": 962,
+          "seconds": 16.033
+        },
+        {
+          "wave": 7,
+          "cleared": true,
+          "ticks": 506,
+          "seconds": 8.433
+        },
+        {
+          "wave": 8,
+          "cleared": true,
+          "ticks": 1218,
+          "seconds": 20.3
+        },
+        {
+          "wave": 9,
+          "cleared": true,
+          "ticks": 819,
+          "seconds": 13.65
+        },
+        {
+          "wave": 10,
+          "cleared": true,
+          "ticks": 2309,
+          "seconds": 38.483
+        }
+      ],
+      "median_seconds": 11.042,
+      "worst_wave": 10,
+      "worst_seconds": 38.483,
+      "result_sha256": "1d55d54ce05beffe64bd2595efd92859db29de198ebcf492c6fce1014ceb0756",
+      "verdict": "ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)"
+    },
+    {
+      "seed": 9,
+      "death": null,
+      "waves": [
+        {
+          "wave": 1,
+          "cleared": true,
+          "ticks": 285,
+          "seconds": 4.75
+        },
+        {
+          "wave": 2,
+          "cleared": true,
+          "ticks": 358,
+          "seconds": 5.967
+        },
+        {
+          "wave": 3,
+          "cleared": true,
+          "ticks": 359,
+          "seconds": 5.983
+        },
+        {
+          "wave": 4,
+          "cleared": true,
+          "ticks": 774,
+          "seconds": 12.9
+        },
+        {
+          "wave": 5,
+          "cleared": true,
+          "ticks": 1950,
+          "seconds": 32.5
+        },
+        {
+          "wave": 6,
+          "cleared": true,
+          "ticks": 481,
+          "seconds": 8.017
+        },
+        {
+          "wave": 7,
+          "cleared": true,
+          "ticks": 606,
+          "seconds": 10.1
+        },
+        {
+          "wave": 8,
+          "cleared": true,
+          "ticks": 4610,
+          "seconds": 76.833
+        },
+        {
+          "wave": 9,
+          "cleared": true,
+          "ticks": 2252,
+          "seconds": 37.533
+        },
+        {
+          "wave": 10,
+          "cleared": true,
+          "ticks": 2336,
+          "seconds": 38.933
+        }
+      ],
+      "median_seconds": 11.5,
+      "worst_wave": 8,
+      "worst_seconds": 76.833,
+      "result_sha256": "2872221066f5cd88a8cec65aea81ff0957a881cdb82e37b6944e4a3624df33c7",
+      "verdict": "ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)"
+    }
+  ]
+}
