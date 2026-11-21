@@ -316,1257 +316,218 @@
     ],
     "threat": "Cover decision source, including decisions while a higher-priority roll pose is visible. Large is a large round or a large windup. Deflects is the cumulative PlayerGuard counter.",
     "changes": [
-      [
-        0,
-        0,
-        0,
-        "ADVANCE",
-        "",
-        0,
-        false
-      ],
-      [
-        255,
-        255,
-        1,
-        "ADVANCE",
-        "",
-        0,
-        false
-      ],
-      [
-        359,
-        359,
-        1,
-        "GUARD",
-        "",
-        0,
-        false
-      ],
-      [
-        368,
-        368,
-        1,
-        "GUARD",
-        "",
-        1,
-        false
-      ],
-      [
-        369,
-        373,
-        1,
-        "ADVANCE",
-        "",
-        1,
-        false
-      ],
-      [
-        398,
-        402,
-        1,
-        "ATTACK CLAW",
-        "",
-        1,
-        false
-      ],
-      [
-        421,
-        431,
-        1,
-        "GUARD",
-        "",
-        1,
-        false
-      ],
-      [
-        429,
-        439,
-        1,
-        "GUARD",
-        "",
-        2,
-        false
-      ],
-      [
-        436,
-        450,
-        1,
-        "GUARD",
-        "",
-        3,
-        false
-      ],
-      [
-        442,
-        456,
-        1,
-        "GUARD",
-        "",
-        4,
-        false
-      ],
-      [
-        443,
-        457,
-        1,
-        "ADVANCE",
-        "",
-        4,
-        false
-      ],
-      [
-        475,
-        491,
-        1,
-        "GUARD",
-        "",
-        4,
-        false
-      ],
-      [
-        481,
-        497,
-        1,
-        "GUARD",
-        "",
-        5,
-        false
-      ],
-      [
-        489,
-        509,
-        1,
-        "GUARD",
-        "",
-        6,
-        false
-      ],
-      [
-        490,
-        510,
-        1,
-        "ADVANCE",
-        "",
-        6,
-        false
-      ],
-      [
-        601,
-        621,
-        1,
-        "ATTACK CLAW",
-        "",
-        6,
-        false
-      ],
-      [
-        605,
-        625,
-        1,
-        "ATTACK CLAW",
-        "",
-        6,
-        true
-      ],
-      [
-        605,
-        745,
-        1,
-        "ATTACK CLAW",
-        "",
-        6,
-        false
-      ],
-      [
-        628,
-        774,
-        2,
-        "ATTACK CLAW",
-        "",
-        6,
-        false
-      ],
-      [
-        629,
-        775,
-        2,
-        "ADVANCE",
-        "",
-        6,
-        false
-      ],
-      [
-        705,
-        851,
-        2,
-        "GUARD",
-        "",
-        6,
-        false
-      ],
-      [
-        714,
-        860,
-        2,
-        "GUARD",
-        "",
-        7,
-        false
-      ],
-      [
-        715,
-        865,
-        2,
-        "ADVANCE",
-        "",
-        7,
-        false
-      ],
-      [
-        732,
-        882,
-        2,
-        "GUARD",
-        "",
-        7,
-        false
-      ],
-      [
-        741,
-        897,
-        2,
-        "GUARD",
-        "",
-        8,
-        false
-      ],
-      [
-        748,
-        904,
-        2,
-        "GUARD",
-        "",
-        9,
-        false
-      ],
-      [
-        749,
-        907,
-        2,
-        "ADVANCE",
-        "",
-        9,
-        false
-      ],
-      [
-        812,
-        970,
-        2,
-        "GUARD",
-        "",
-        9,
-        false
-      ],
-      [
-        813,
-        971,
-        2,
-        "GUARD",
-        "",
-        10,
-        false
-      ],
-      [
-        814,
-        976,
-        2,
-        "ADVANCE",
-        "",
-        10,
-        false
-      ],
-      [
-        885,
-        1047,
-        2,
-        "GUARD",
-        "",
-        10,
-        false
-      ],
-      [
-        891,
-        1053,
-        2,
-        "GUARD",
-        "",
-        11,
-        false
-      ],
-      [
-        898,
-        1064,
-        2,
-        "GUARD",
-        "",
-        12,
-        false
-      ],
-      [
-        899,
-        1065,
-        2,
-        "ADVANCE",
-        "",
-        12,
-        false
-      ],
-      [
-        929,
-        1095,
-        2,
-        "ATTACK CLAW",
-        "",
-        12,
-        false
-      ],
-      [
-        962,
-        1134,
-        2,
-        "ATTACK CLAW",
-        "",
-        12,
-        true
-      ],
-      [
-        962,
-        1254,
-        2,
-        "ATTACK CLAW",
-        "",
-        12,
-        false
-      ],
-      [
-        986,
-        1284,
-        2,
-        "ADVANCE",
-        "",
-        12,
-        false
-      ],
-      [
-        1002,
-        1300,
-        3,
-        "ADVANCE",
-        "",
-        12,
-        false
-      ],
-      [
-        1087,
-        1385,
-        3,
-        "GUARD",
-        "",
-        12,
-        false
-      ],
-      [
-        1095,
-        1393,
-        3,
-        "GUARD",
-        "",
-        13,
-        false
-      ],
-      [
-        1103,
-        1405,
-        3,
-        "GUARD",
-        "",
-        14,
-        false
-      ],
-      [
-        1110,
-        1412,
-        3,
-        "GUARD",
-        "",
-        15,
-        false
-      ],
-      [
-        1111,
-        1413,
-        3,
-        "ADVANCE",
-        "",
-        15,
-        false
-      ],
-      [
-        1144,
-        1452,
-        3,
-        "REST",
-        "",
-        15,
-        false
-      ],
-      [
-        1147,
-        1455,
-        3,
-        "ATTACK CLAW",
-        "",
-        15,
-        false
-      ],
-      [
-        1175,
-        1485,
-        3,
-        "ADVANCE",
-        "",
-        15,
-        false
-      ],
-      [
-        1224,
-        1534,
-        3,
-        "ATTACK CLAW",
-        "",
-        15,
-        false
-      ],
-      [
-        1252,
-        1568,
-        3,
-        "ADVANCE",
-        "",
-        15,
-        false
-      ],
-      [
-        1291,
-        1607,
-        3,
-        "ATTACK CLAW",
-        "",
-        15,
-        false
-      ],
-      [
-        1319,
-        1641,
-        3,
-        "ADVANCE",
-        "",
-        15,
-        false
-      ],
-      [
-        1325,
-        1647,
-        3,
-        "ATTACK CLAW",
-        "",
-        15,
-        false
-      ],
-      [
-        1333,
-        1655,
-        3,
-        "ATTACK CLAW",
-        "",
-        15,
-        true
-      ],
-      [
-        1333,
-        1775,
-        3,
-        "ATTACK CLAW",
-        "",
-        15,
-        false
-      ],
-      [
-        1357,
-        1805,
-        3,
-        "ADVANCE",
-        "",
-        15,
-        false
-      ],
-      [
-        1484,
-        1932,
-        4,
-        "ADVANCE",
-        "",
-        15,
-        false
-      ],
-      [
-        1593,
-        2041,
-        4,
-        "GUARD",
-        "",
-        15,
-        false
-      ],
-      [
-        1601,
-        2049,
-        4,
-        "GUARD",
-        "",
-        16,
-        false
-      ],
-      [
-        1605,
-        2057,
-        4,
-        "GUARD",
-        "",
-        17,
-        false
-      ],
-      [
-        1606,
-        2058,
-        4,
-        "ROLL",
-        "",
-        17,
-        false
-      ],
-      [
-        1608,
-        2060,
-        4,
-        "ROLL",
-        "small",
-        17,
-        false
-      ],
-      [
-        1611,
-        2063,
-        4,
-        "ROLL",
-        "",
-        17,
-        false
-      ],
-      [
-        1628,
-        2086,
-        4,
-        "GUARD",
-        "",
-        17,
-        false
-      ],
-      [
-        1630,
-        2088,
-        4,
-        "GUARD",
-        "",
-        18,
-        false
-      ],
-      [
-        1631,
-        2089,
-        4,
-        "ADVANCE",
-        "",
-        18,
-        false
-      ],
-      [
-        1635,
-        2093,
-        4,
-        "COVER",
-        "large",
-        18,
-        false
-      ],
-      [
-        1679,
-        2137,
-        4,
-        "ADVANCE",
-        "",
-        18,
-        false
-      ],
-      [
-        1716,
-        2174,
-        4,
-        "ROLL",
-        "",
-        18,
-        false
-      ],
-      [
-        1738,
-        2196,
-        4,
-        "ADVANCE",
-        "",
-        18,
-        false
-      ],
-      [
-        1757,
-        2215,
-        4,
-        "ATTACK CLAW",
-        "",
-        18,
-        false
-      ],
-      [
-        1785,
-        2249,
-        4,
-        "ADVANCE",
-        "",
-        18,
-        false
-      ],
-      [
-        1899,
-        2363,
-        4,
-        "ATTACK CLAW",
-        "",
-        18,
-        false
-      ],
-      [
-        1918,
-        2388,
-        4,
-        "ROLL",
-        "",
-        18,
-        false
-      ],
-      [
-        1940,
-        2410,
-        4,
-        "TONNAGE",
-        "",
-        18,
-        false
-      ],
-      [
-        1958,
-        2428,
-        4,
-        "ROLL",
-        "",
-        18,
-        false
-      ],
-      [
-        1980,
-        2450,
-        4,
-        "TONNAGE",
-        "",
-        18,
-        false
-      ],
-      [
-        1998,
-        2468,
-        4,
-        "ROLL",
-        "",
-        18,
-        false
-      ],
-      [
-        2020,
-        2490,
-        4,
-        "TONNAGE",
-        "",
-        18,
-        false
-      ],
-      [
-        2060,
-        2530,
-        4,
-        "TONNAGE",
-        "",
-        18,
-        true
-      ],
-      [
-        2060,
-        2650,
-        4,
-        "TONNAGE",
-        "",
-        18,
-        false
-      ],
-      [
-        2084,
-        2682,
-        5,
-        "TONNAGE",
-        "",
-        18,
-        false
-      ],
-      [
-        2234,
-        2832,
-        5,
-        "ROLL",
-        "",
-        18,
-        false
-      ],
-      [
-        2242,
-        2840,
-        5,
-        "ROLL",
-        "small",
-        18,
-        false
-      ],
-      [
-        2243,
-        2841,
-        5,
-        "ROLL",
-        "",
-        18,
-        false
-      ],
-      [
-        2256,
-        2854,
-        5,
-        "TONNAGE",
-        "",
-        18,
-        false
-      ],
-      [
-        2398,
-        2996,
-        5,
-        "ATTACK CLAW",
-        "",
-        18,
-        false
-      ],
-      [
-        2447,
-        3045,
-        5,
-        "ADVANCE",
-        "",
-        18,
-        false
-      ],
-      [
-        2483,
-        3081,
-        5,
-        "REST",
-        "",
-        18,
-        false
-      ],
-      [
-        2495,
-        3093,
-        5,
-        "ADVANCE",
-        "",
-        18,
-        false
-      ],
-      [
-        2506,
-        3104,
-        5,
-        "REST",
-        "",
-        18,
-        false
-      ],
-      [
-        2513,
-        3111,
-        5,
-        "GUARD",
-        "",
-        18,
-        false
-      ],
-      [
-        2516,
-        3114,
-        5,
-        "GUARD",
-        "",
-        19,
-        false
-      ],
-      [
-        2517,
-        3119,
-        5,
-        "ADVANCE",
-        "",
-        19,
-        false
-      ],
-      [
-        2520,
-        3122,
-        5,
-        "GUARD",
-        "",
-        19,
-        false
-      ],
-      [
-        2523,
-        3125,
-        5,
-        "GUARD",
-        "",
-        20,
-        false
-      ],
-      [
-        2524,
-        3126,
-        5,
-        "ADVANCE",
-        "",
-        20,
-        false
-      ],
-      [
-        2527,
-        3129,
-        5,
-        "GUARD",
-        "",
-        20,
-        false
-      ],
-      [
-        2531,
-        3133,
-        5,
-        "GUARD",
-        "",
-        21,
-        false
-      ],
-      [
-        2532,
-        3134,
-        5,
-        "ADVANCE",
-        "",
-        21,
-        false
-      ],
-      [
-        2556,
-        3164,
-        5,
-        "COVER",
-        "large",
-        21,
-        false
-      ],
-      [
-        2566,
-        3174,
-        5,
-        "ADVANCE",
-        "",
-        21,
-        false
-      ],
-      [
-        2606,
-        3214,
-        5,
-        "ATTACK CLAW",
-        "",
-        21,
-        false
-      ],
-      [
-        2661,
-        3275,
-        5,
-        "ADVANCE",
-        "",
-        21,
-        false
-      ],
-      [
-        2678,
-        3292,
-        5,
-        "ATTACK CLAW",
-        "",
-        21,
-        false
-      ],
-      [
-        2733,
-        3353,
-        5,
-        "ADVANCE",
-        "",
-        21,
-        false
-      ],
-      [
-        2744,
-        3364,
-        5,
-        "ATTACK CLAW",
-        "",
-        21,
-        false
-      ],
-      [
-        2799,
-        3425,
-        5,
-        "ADVANCE",
-        "",
-        21,
-        false
-      ],
-      [
-        2813,
-        3439,
-        5,
-        "ATTACK CLAW",
-        "",
-        21,
-        false
-      ],
-      [
-        2868,
-        3500,
-        5,
-        "ADVANCE",
-        "",
-        21,
-        false
-      ],
-      [
-        2884,
-        3516,
-        5,
-        "ATTACK CLAW",
-        "",
-        21,
-        false
-      ],
-      [
-        2939,
-        3577,
-        5,
-        "ADVANCE",
-        "",
-        21,
-        false
-      ],
-      [
-        2950,
-        3588,
-        5,
-        "ATTACK CLAW",
-        "",
-        21,
-        false
-      ],
-      [
-        2978,
-        3619,
-        5,
-        "RETREAT",
-        "",
-        21,
-        false
-      ],
-      [
-        2982,
-        3623,
-        5,
-        "REST",
-        "",
-        21,
-        false
-      ],
-      [
-        3011,
-        3652,
-        5,
-        "ADVANCE",
-        "",
-        21,
-        false
-      ],
-      [
-        3048,
-        3689,
-        5,
-        "ATTACK CLAW",
-        "",
-        21,
-        false
-      ],
-      [
-        3103,
-        3750,
-        5,
-        "ADVANCE",
-        "",
-        21,
-        false
-      ],
-      [
-        3119,
-        3766,
-        5,
-        "ATTACK CLAW",
-        "",
-        21,
-        false
-      ],
-      [
-        3174,
-        3827,
-        5,
-        "ADVANCE",
-        "",
-        21,
-        false
-      ],
-      [
-        3175,
-        3828,
-        5,
-        "ATTACK CLAW",
-        "",
-        21,
-        false
-      ],
-      [
-        3230,
-        3889,
-        5,
-        "ADVANCE",
-        "",
-        21,
-        false
-      ],
-      [
-        3237,
-        3896,
-        5,
-        "ATTACK CLAW",
-        "",
-        21,
-        false
-      ],
-      [
-        3292,
-        3957,
-        5,
-        "ADVANCE",
-        "",
-        21,
-        false
-      ],
-      [
-        3295,
-        3960,
-        5,
-        "RETREAT",
-        "",
-        21,
-        false
-      ],
-      [
-        3306,
-        3971,
-        5,
-        "ADVANCE",
-        "",
-        21,
-        false
-      ],
-      [
-        3402,
-        4067,
-        5,
-        "ATTACK CLAW",
-        "",
-        21,
-        false
-      ],
-      [
-        3457,
-        4128,
-        5,
-        "ADVANCE",
-        "",
-        21,
-        false
-      ],
-      [
-        3459,
-        4130,
-        5,
-        "ATTACK CLAW",
-        "",
-        21,
-        false
-      ],
-      [
-        3514,
-        4191,
-        5,
-        "ADVANCE",
-        "",
-        21,
-        false
-      ],
-      [
-        3526,
-        4203,
-        5,
-        "ATTACK CLAW",
-        "",
-        21,
-        false
-      ],
-      [
-        3581,
-        4264,
-        5,
-        "ADVANCE",
-        "",
-        21,
-        false
-      ],
-      [
-        3587,
-        4270,
-        5,
-        "RETREAT",
-        "",
-        21,
-        false
-      ],
-      [
-        3620,
-        4303,
-        5,
-        "REST",
-        "",
-        21,
-        false
-      ],
-      [
-        3643,
-        4326,
-        5,
-        "ADVANCE",
-        "",
-        21,
-        false
-      ],
-      [
-        3678,
-        4361,
-        5,
-        "ATTACK CLAW",
-        "",
-        21,
-        false
-      ],
-      [
-        3733,
-        4422,
-        5,
-        "ADVANCE",
-        "",
-        21,
-        false
-      ],
-      [
-        3734,
-        4423,
-        5,
-        "ATTACK CLAW",
-        "",
-        21,
-        false
-      ],
-      [
-        3749,
-        4441,
-        5,
-        "ATTACK CLAW",
-        "",
-        21,
-        true
-      ],
-      [
-        3749,
-        4561,
-        5,
-        "ATTACK CLAW",
-        "",
-        21,
-        false
-      ]
+      [0, 0, 0, "ADVANCE", "", 0, false],
+      [255, 255, 1, "ADVANCE", "", 0, false],
+      [359, 359, 1, "GUARD", "", 0, false],
+      [368, 368, 1, "GUARD", "", 1, false],
+      [369, 373, 1, "ADVANCE", "", 1, false],
+      [398, 402, 1, "ATTACK CLAW", "", 1, false],
+      [421, 431, 1, "GUARD", "", 1, false],
+      [429, 439, 1, "GUARD", "", 2, false],
+      [436, 450, 1, "GUARD", "", 3, false],
+      [442, 456, 1, "GUARD", "", 4, false],
+      [443, 457, 1, "ADVANCE", "", 4, false],
+      [475, 491, 1, "GUARD", "", 4, false],
+      [481, 497, 1, "GUARD", "", 5, false],
+      [489, 509, 1, "GUARD", "", 6, false],
+      [490, 510, 1, "ADVANCE", "", 6, false],
+      [601, 621, 1, "ATTACK CLAW", "", 6, false],
+      [605, 625, 1, "ATTACK CLAW", "", 6, true],
+      [605, 745, 1, "ATTACK CLAW", "", 6, false],
+      [628, 774, 2, "ATTACK CLAW", "", 6, false],
+      [629, 775, 2, "ADVANCE", "", 6, false],
+      [705, 851, 2, "GUARD", "", 6, false],
+      [714, 860, 2, "GUARD", "", 7, false],
+      [715, 865, 2, "ADVANCE", "", 7, false],
+      [732, 882, 2, "GUARD", "", 7, false],
+      [741, 897, 2, "GUARD", "", 8, false],
+      [748, 904, 2, "GUARD", "", 9, false],
+      [749, 907, 2, "ADVANCE", "", 9, false],
+      [812, 970, 2, "GUARD", "", 9, false],
+      [813, 971, 2, "GUARD", "", 10, false],
+      [814, 976, 2, "ADVANCE", "", 10, false],
+      [885, 1047, 2, "GUARD", "", 10, false],
+      [891, 1053, 2, "GUARD", "", 11, false],
+      [898, 1064, 2, "GUARD", "", 12, false],
+      [899, 1065, 2, "ADVANCE", "", 12, false],
+      [929, 1095, 2, "ATTACK CLAW", "", 12, false],
+      [962, 1134, 2, "ATTACK CLAW", "", 12, true],
+      [962, 1254, 2, "ATTACK CLAW", "", 12, false],
+      [986, 1284, 2, "ADVANCE", "", 12, false],
+      [1002, 1300, 3, "ADVANCE", "", 12, false],
+      [1087, 1385, 3, "GUARD", "", 12, false],
+      [1095, 1393, 3, "GUARD", "", 13, false],
+      [1103, 1405, 3, "GUARD", "", 14, false],
+      [1110, 1412, 3, "GUARD", "", 15, false],
+      [1111, 1413, 3, "ADVANCE", "", 15, false],
+      [1144, 1452, 3, "REST", "", 15, false],
+      [1147, 1455, 3, "ATTACK CLAW", "", 15, false],
+      [1175, 1485, 3, "ADVANCE", "", 15, false],
+      [1224, 1534, 3, "ATTACK CLAW", "", 15, false],
+      [1252, 1568, 3, "ADVANCE", "", 15, false],
+      [1291, 1607, 3, "ATTACK CLAW", "", 15, false],
+      [1319, 1641, 3, "ADVANCE", "", 15, false],
+      [1325, 1647, 3, "ATTACK CLAW", "", 15, false],
+      [1333, 1655, 3, "ATTACK CLAW", "", 15, true],
+      [1333, 1775, 3, "ATTACK CLAW", "", 15, false],
+      [1357, 1805, 3, "ADVANCE", "", 15, false],
+      [1484, 1932, 4, "ADVANCE", "", 15, false],
+      [1593, 2041, 4, "GUARD", "", 15, false],
+      [1601, 2049, 4, "GUARD", "", 16, false],
+      [1605, 2057, 4, "GUARD", "", 17, false],
+      [1606, 2058, 4, "ROLL", "", 17, false],
+      [1608, 2060, 4, "ROLL", "small", 17, false],
+      [1611, 2063, 4, "ROLL", "", 17, false],
+      [1628, 2086, 4, "GUARD", "", 17, false],
+      [1630, 2088, 4, "GUARD", "", 18, false],
+      [1631, 2089, 4, "ADVANCE", "", 18, false],
+      [1635, 2093, 4, "COVER", "large", 18, false],
+      [1679, 2137, 4, "ADVANCE", "", 18, false],
+      [1716, 2174, 4, "ROLL", "", 18, false],
+      [1738, 2196, 4, "ADVANCE", "", 18, false],
+      [1757, 2215, 4, "ATTACK CLAW", "", 18, false],
+      [1785, 2249, 4, "ADVANCE", "", 18, false],
+      [1899, 2363, 4, "ATTACK CLAW", "", 18, false],
+      [1918, 2388, 4, "ROLL", "", 18, false],
+      [1940, 2410, 4, "TONNAGE", "", 18, false],
+      [1958, 2428, 4, "ROLL", "", 18, false],
+      [1980, 2450, 4, "TONNAGE", "", 18, false],
+      [1998, 2468, 4, "ROLL", "", 18, false],
+      [2020, 2490, 4, "TONNAGE", "", 18, false],
+      [2060, 2530, 4, "TONNAGE", "", 18, true],
+      [2060, 2650, 4, "TONNAGE", "", 18, false],
+      [2084, 2682, 5, "TONNAGE", "", 18, false],
+      [2234, 2832, 5, "ROLL", "", 18, false],
+      [2242, 2840, 5, "ROLL", "small", 18, false],
+      [2243, 2841, 5, "ROLL", "", 18, false],
+      [2256, 2854, 5, "TONNAGE", "", 18, false],
+      [2398, 2996, 5, "ATTACK CLAW", "", 18, false],
+      [2447, 3045, 5, "ADVANCE", "", 18, false],
+      [2483, 3081, 5, "REST", "", 18, false],
+      [2495, 3093, 5, "ADVANCE", "", 18, false],
+      [2506, 3104, 5, "REST", "", 18, false],
+      [2513, 3111, 5, "GUARD", "", 18, false],
+      [2516, 3114, 5, "GUARD", "", 19, false],
+      [2517, 3119, 5, "ADVANCE", "", 19, false],
+      [2520, 3122, 5, "GUARD", "", 19, false],
+      [2523, 3125, 5, "GUARD", "", 20, false],
+      [2524, 3126, 5, "ADVANCE", "", 20, false],
+      [2527, 3129, 5, "GUARD", "", 20, false],
+      [2531, 3133, 5, "GUARD", "", 21, false],
+      [2532, 3134, 5, "ADVANCE", "", 21, false],
+      [2556, 3164, 5, "COVER", "large", 21, false],
+      [2566, 3174, 5, "ADVANCE", "", 21, false],
+      [2606, 3214, 5, "ATTACK CLAW", "", 21, false],
+      [2661, 3275, 5, "ADVANCE", "", 21, false],
+      [2678, 3292, 5, "ATTACK CLAW", "", 21, false],
+      [2733, 3353, 5, "ADVANCE", "", 21, false],
+      [2744, 3364, 5, "ATTACK CLAW", "", 21, false],
+      [2799, 3425, 5, "ADVANCE", "", 21, false],
+      [2813, 3439, 5, "ATTACK CLAW", "", 21, false],
+      [2868, 3500, 5, "ADVANCE", "", 21, false],
+      [2884, 3516, 5, "ATTACK CLAW", "", 21, false],
+      [2939, 3577, 5, "ADVANCE", "", 21, false],
+      [2950, 3588, 5, "ATTACK CLAW", "", 21, false],
+      [2978, 3619, 5, "RETREAT", "", 21, false],
+      [2982, 3623, 5, "REST", "", 21, false],
+      [3011, 3652, 5, "ADVANCE", "", 21, false],
+      [3048, 3689, 5, "ATTACK CLAW", "", 21, false],
+      [3103, 3750, 5, "ADVANCE", "", 21, false],
+      [3119, 3766, 5, "ATTACK CLAW", "", 21, false],
+      [3174, 3827, 5, "ADVANCE", "", 21, false],
+      [3175, 3828, 5, "ATTACK CLAW", "", 21, false],
+      [3230, 3889, 5, "ADVANCE", "", 21, false],
+      [3237, 3896, 5, "ATTACK CLAW", "", 21, false],
+      [3292, 3957, 5, "ADVANCE", "", 21, false],
+      [3295, 3960, 5, "RETREAT", "", 21, false],
+      [3306, 3971, 5, "ADVANCE", "", 21, false],
+      [3402, 4067, 5, "ATTACK CLAW", "", 21, false],
+      [3457, 4128, 5, "ADVANCE", "", 21, false],
+      [3459, 4130, 5, "ATTACK CLAW", "", 21, false],
+      [3514, 4191, 5, "ADVANCE", "", 21, false],
+      [3526, 4203, 5, "ATTACK CLAW", "", 21, false],
+      [3581, 4264, 5, "ADVANCE", "", 21, false],
+      [3587, 4270, 5, "RETREAT", "", 21, false],
+      [3620, 4303, 5, "REST", "", 21, false],
+      [3643, 4326, 5, "ADVANCE", "", 21, false],
+      [3678, 4361, 5, "ATTACK CLAW", "", 21, false],
+      [3733, 4422, 5, "ADVANCE", "", 21, false],
+      [3734, 4423, 5, "ATTACK CLAW", "", 21, false],
+      [3749, 4441, 5, "ATTACK CLAW", "", 21, true],
+      [3749, 4561, 5, "ATTACK CLAW", "", 21, false]
     ]
-  }
+  },
+  "reports": [
+    {
+      "file": "report.png",
+      "title": "The wave-time report",
+      "html": "evidence/loop/tune1-before/report.html",
+      "html_sha256": "da05c6acd5c61c8ff9f058a501eac627e7e50ed79fd2ca1c2fd6cab8a14df10b",
+      "renderer": "Google Chrome, headless",
+      "resolution": [
+        1400,
+        2400
+      ],
+      "ppm": null,
+      "sha256": "342450fa33d3f7873da2ea5d00212a86656e16ea4451a6e021b4b0ce7da5d08a",
+      "note": "The report opens with nine of ten runs accepted. A dot-and-quartile chart shows wave times against a dashed 15-second target, followed by the wave table and deaths summary."
+    },
+    {
+      "file": "report-full.png",
+      "title": "The complete batch report",
+      "html": "evidence/loop/tune1-before/report.html",
+      "html_sha256": "da05c6acd5c61c8ff9f058a501eac627e7e50ed79fd2ca1c2fd6cab8a14df10b",
+      "renderer": "Google Chrome, headless",
+      "resolution": [
+        1400,
+        8607
+      ],
+      "ppm": null,
+      "sha256": "50360903d80b17800a7c278302d63ed1be14c924d156d10b4d5f06cfbe8b4f92",
+      "note": "The entire batch page continues through deaths, timeouts, enemy presence, offered bonuses and weapons, combat telemetry, unusual runs and the excluded seed 10 row."
+    }
+  ],
+  "frames_index": "frames.json",
+  "verification": {
+    "unit_tests": {
+      "passed": 3525,
+      "failed": 0,
+      "skipped": 2
+    },
+    "lint_checks_passed": 19,
+    "pit_probe_output": "cmp exit 0 for both the 2400-tick probe and the two-wave result before and after moving the BotCounters formatting helpers.",
+    "mutation": {
+      "mode": "The stock launcher refuses the lane worktree and requires another Git worktree. Used physical copies of the four source files inside masters scratch, the repository’s generateMutants, filterMutantsByLines, sampleMutants (max 20 per file), pickTests and headless GUT. The original bytes were restored and checked after each file.",
+      "counts": {
+        "killed": 38
+      },
+      "killed_over_killed_plus_survived": [
+        38,
+        38
+      ],
+      "by_file": {
+        "bot_brain.gd": {
+          "killed": 6
+        },
+        "bot_counters.gd": {
+          "killed": 12
+        },
+        "bot_defence.gd": {},
+        "gauntlet_bot.gd": {
+          "killed": 20
+        }
+      },
+      "no_eligible_mutants": [
+        "bot_defence.gd"
+      ],
+      "before_regression_tests": {
+        "killed": 27,
+        "survived": 11
+      }
+    },
+    "test_commit": "00f7598b9",
+    "clips": "All four H.264/AAC files fully decoded with ffmpeg -v error -xerror. ffprobe confirmed 1920x1080 at 60 fps, frame counts and clip ranges.",
+    "lint": "All 19 lint checks passed on the feature commit. The regression-test commit passed all 18 applicable scoped lint checks."
+  },
+  "report_source_note": "batch-street-2/report.html was absent. tune1-before/report.html was the most recently committed batch report in evidence/loop."
 }
