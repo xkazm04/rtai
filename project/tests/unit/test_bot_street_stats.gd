@@ -39,3 +39,41 @@ func test_last_machine_hit_and_settled_form_are_measured_on_the_kill_tick() -> v
 	session.close()
 	bus.free()
 	data.free()
+
+
+func test_wave_counters_subtract_the_snapshot_and_omit_unchanged_forms() -> void:
+	var counts: BotCounters = BotCounters.new()
+	counts.guard_ticks = 2
+	counts.form_ticks[&"tonnage"] = 2
+	counts.form_ticks[&"kerf"] = 4
+	var before: Dictionary = counts.report()
+	counts.guard_ticks += 3
+	counts.form_ticks[&"tonnage"] += 3
+	counts.form_ticks[&"ohm"] = 1
+	var delta: Dictionary = counts.since(before)
+	var guard_ticks: int = delta.guard_ticks
+	var form_ticks: Dictionary = delta.form_ticks
+	assert_eq(guard_ticks, 3)
+	assert_eq(form_ticks, {&"tonnage": 3, &"ohm": 1})
+
+
+func test_wave_row_reports_elapsed_seconds_and_every_form_in_order() -> void:
+	var counts: BotCounters = BotCounters.new()
+	counts.form_ticks[&"tonnage"] = 3
+	var attempt: Dictionary = {
+		"n": 2,
+		"status": "cleared",
+		"enemies": {},
+		"damage_taken": 1.0,
+		"counters": counts.report(),
+		"start_tick": 120,
+		"end_tick": 180
+	}
+	var order: Array[StringName] = [&"tonnage", &"kerf"]
+	var row: Dictionary = BotCounters.wave_row(attempt, order)
+	var seconds: float = row.seconds
+	var form_seconds: Dictionary = row.form_seconds
+	assert_eq(seconds, 1.0)
+	assert_eq(form_seconds, {&"tonnage": 3 * SimClock.TICK_DT, &"kerf": 0.0})
+	attempt.status = "tick_limit"
+	assert_false(BotCounters.wave_row(attempt, order).has("seconds"))
