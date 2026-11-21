@@ -24,15 +24,19 @@ var turn_dps: float = 720.0
 var strafe_scale: float = 0.85
 var rows: Array[Dictionary] = []
 var errors: Array[String] = []
-var _wheel: bool = ControlsMode.wheel()
+var wheel: bool
 
 
-static func shipped() -> PlayerActions:
-	return from_table(DataTable.open(TABLE, SCHEMA))
+func _init(use_wheel: bool = ControlsMode.wheel()) -> void:
+	wheel = use_wheel
 
 
-static func from_table(t: DataTable) -> PlayerActions:
-	var a: PlayerActions = PlayerActions.new()
+static func shipped(use_wheel: bool = ControlsMode.wheel()) -> PlayerActions:
+	return from_table(DataTable.open(TABLE, SCHEMA), use_wheel)
+
+
+static func from_table(t: DataTable, use_wheel: bool = ControlsMode.wheel()) -> PlayerActions:
+	var a: PlayerActions = PlayerActions.new(use_wheel)
 	var aim: Dictionary = t.object(t.raw, "aim")
 	a.aim_shift = t.integer(aim, "aim_shift")
 	a.aim_steps = t.integer(aim, "aim_steps")
@@ -53,7 +57,7 @@ static func from_table(t: DataTable) -> PlayerActions:
 			a.button_mask |= 1 << b
 	a.live_mask = a.button_mask
 	var guard: int = a.bit(&"guard")
-	if not a._wheel and guard >= 0:
+	if not a.wheel and guard >= 0:
 		a.live_mask &= ~(1 << guard)
 	a.enable_cover_input(false)
 	a.errors = t.errors()
@@ -81,12 +85,12 @@ func install() -> void:
 		if InputMap.has_action(id):
 			InputMap.erase_action(id)
 		InputMap.add_action(id, ACTION_DEADZONE)
-		if id == &"guard" and not _wheel:
+		if id == &"guard" and not wheel:
 			continue
 		for ev: InputEvent in events_of(row):
 			var mouse: InputEventMouseButton = ev as InputEventMouseButton
 			if (
-				_wheel
+				wheel
 				and id == &"melee"
 				and mouse != null
 				and mouse.button_index == MOUSE_BUTTON_RIGHT

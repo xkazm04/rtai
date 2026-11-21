@@ -49,7 +49,7 @@ var _melees: Dictionary[StringName, PlayerMelee] = {}
 
 func _init(p_actions: PlayerActions) -> void:
 	actions = p_actions
-	if ControlsMode.wheel():
+	if actions.wheel:
 		guard = PlayerGuard.new()
 		wheel = RivetWheel.new()
 	actions.enable_cover_input(motion.cover.enabled)

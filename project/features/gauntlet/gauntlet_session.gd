@@ -22,7 +22,7 @@ static func open_street(
 	var options: ArenaArgs = ArenaArgs.new()
 	options.values["--enemy-brain"] = "guard"  # the street installs its rolling squad map
 	s.stage = ArenaStage.new(s.plan, s.stations, options)
-	s.actions = PlayerActions.shipped()
+	s.actions = PlayerActions.shipped(run.controls == &"wheel")
 	s.actions.install()
 	s.pilot = StagePilot.new(s.actions)
 	s.stage.pilot = s.pilot

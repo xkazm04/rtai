@@ -27,6 +27,21 @@ func test_entry_validates_the_launch_contract() -> void:
 	entry.free()
 
 
+func test_scene_hands_its_control_mode_to_the_live_pilot() -> void:
+	var entry: Entry = Entry.new()
+	for flag: String in ["", "--controls=legacy", "--controls=wheel"]:
+		var args: ArenaArgs = ArenaArgs.parse([] if flag.is_empty() else [flag])
+		var session: GauntletSession = entry._open_street(args)
+		var wheel: bool = flag != "--controls=legacy"
+		assert_eq(entry.run.controls, &"wheel" if wheel else &"legacy")
+		assert_eq(session.stage.pilot.guard != null, wheel)
+		assert_eq(session.stage.pilot.wheel != null, wheel)
+		assert_eq(bool(session.actions.live_mask & (1 << session.actions.bit(&"guard"))), wheel)
+		session.close()
+	entry.free()
+	PlayerActions.shipped().install()
+
+
 func test_fresh_human_run_has_only_observed_fields() -> void:
 	var run: GauntletRun = GauntletRun.new()
 	run.seed = 7

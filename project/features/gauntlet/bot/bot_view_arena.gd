@@ -18,7 +18,7 @@ func _init(stage: ArenaStage, actions: PlayerActions, street: bool = false) -> v
 	_stage = stage
 	_actions = actions
 	_street = street
-	_player.wheel = street and ControlsMode.wheel()
+	_player.wheel = street and actions.wheel
 	_solids = stage.walls.boxes
 
 

@@ -9,7 +9,7 @@ import { RUN_SCHEMA, validateRun } from './contract.mjs';
 
 const args = ['--profile=all', '--pick=random', '--seeds=2'];
 const fixtureDir = join(ROOT, 'tools', 'gauntlet', 'fixtures');
-const skeleton = { schema: RUN_SCHEMA, seed: 1, profile: 'average', controls: 'legacy',
+const skeleton = { schema: RUN_SCHEMA, seed: 1, profile: 'average', controls: 'wheel',
   wave_reached: 0, waves: [], picks: [], mods: {} };
 
 test('a fresh alive cap contributes timed waves, its final clock and a successful manifest row', async (t) => {
@@ -55,6 +55,9 @@ test('job cap, unsigned seed range, human imports and profile expansion', () => 
   assert.deepEqual([...plan(options)].map((j) => [j.profile, j.seed]),
     [['novice', 0], ['novice', 1], ['average', 0], ['average', 1], ['expert', 0], ['expert', 1]]);
   assert.equal(parseArgs(args).jobs, 1);
+  assert.equal(parseArgs(args).controls, 'wheel');
+  assert.equal(parseArgs([...args, '--runner=pit']).controls, 'legacy');
+  assert.equal(parseArgs([...args, '--controls=legacy']).controls, 'legacy');
   assert.equal(validateRun({ ...skeleton, profile: 'human' }), null);
 });
 

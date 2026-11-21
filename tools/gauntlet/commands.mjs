@@ -23,7 +23,8 @@ export function parseArgs(argv) {
   const profile = choice('profile', v.profile, [...PROFILES, 'all']);
   const pick = choice('pick', v.pick, ['random', 'greedy']);
   const runner = choice('runner', v.runner ?? 'gauntlet', ['gauntlet', 'pit']);
-  const controls = v.from && !v.controls ? null : choice('controls', v.controls ?? 'legacy', ['wheel', 'legacy']);
+  const defaultControls = runner === 'gauntlet' ? 'wheel' : 'legacy';
+  const controls = v.from && !v.controls ? null : choice('controls', v.controls ?? defaultControls, ['wheel', 'legacy']);
   if (runner === 'pit' && controls === 'wheel') throw new Error('the pit probe supports --controls=legacy only');
   const jobs = integer('jobs', v.jobs ?? '1', 1);
   if (jobs > 2) throw new Error('--jobs maximum is 2; the machine is shared by four lanes');

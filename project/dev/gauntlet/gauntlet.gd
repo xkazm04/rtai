@@ -28,7 +28,6 @@ func _ready() -> void:
 		return
 	run.seed = args.text("--seed", "0").to_int()
 	run.profile = StringName(args.text("--bot", "human"))
-	run.controls = ControlsMode.id()
 	if args.has("--bot"):
 		pilot = _bot()
 		if pilot == null:
@@ -36,7 +35,7 @@ func _ready() -> void:
 			get_tree().quit(1)
 			return
 		pilot.configure(run.profile, StringName(args.text("--pick", "random")), run.seed)
-	session = GauntletSession.open_street(Events, Data, run, pilot)
+	session = _open_street(args)
 	if session == null:
 		get_tree().quit(1)
 		return
@@ -50,6 +49,11 @@ func _ready() -> void:
 		_run_headless()
 	else:
 		_open_view(args.has("--pick-view"))
+
+
+func _open_street(args: ArenaArgs) -> GauntletSession:
+	run.controls = StringName(args.text("--controls", "wheel"))
+	return GauntletSession.open_street(Events, Data, run, pilot)
 
 
 func _run_headless() -> void:
