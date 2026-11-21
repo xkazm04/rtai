@@ -1,0 +1,206 @@
+{
+  "seed": 11,
+  "code_commit": "a42e4292306b8bb4df9059978b5d916d03d1e8d3",
+  "masters_directory": "C:\\Users\\kazda\\kiro\\gtai-masters\\n22\\loop",
+  "capture_project": "Scratch copy of project.godot with junctions to this worktree's resources, a private .godot cache directory and a viewport override of 1920x1080.",
+  "godot": "Godot 4.7.2 Movie Maker AVI",
+  "appdata": "C:/Users/kazda/kiro/gtai-n22/appdata/loop",
+  "view": "tilt70",
+  "ppm": 32,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "fps": 60,
+  "crf": 23,
+  "encoding": "FFmpeg libx264, fast preset, yuv420p, AAC 160k.",
+  "frame_convention": "Zero-based frames in each profile's AVI. Clip starts are inclusive and ends are exclusive. Simulation ticks omit pauses for hit-stop and upgrade picks.",
+  "window_client_origin": [
+    0,
+    1440
+  ],
+  "stills_source": "Full-resolution PNGs decoded from the indexed Movie Maker MJPEG frames.",
+  "verification": {
+    "comparison_method": "cmp.exe compared each complete filmed JSON file with its named batch file. Each wave and pick row was also compared directly as an original UTF-8 byte slice.",
+    "clips": "Both final MP4s were fully decoded with ffmpeg -xerror. Frames sampled from each final encode were checked against the corresponding AVI frames and inspected visually.",
+    "capture_scheduling": "The novice and expert captures ran sequentially. An external Godot started during the novice capture at 06:28:21 local time. The novice renderer was paused at 06:29:37 until that process exited and paused again for two subsequent external runs. The novice result matched the headless reference byte for byte.",
+    "shutdown_warnings": "Godot reported 59 ObjectDB instances at novice shutdown and 60 at expert shutdown. Both results and both Movie Maker completion summaries were written."
+  },
+  "runs": {
+    "novice": {
+      "flags": [
+        "--windowed",
+        "--position",
+        "0,1440",
+        "--resolution",
+        "1920x1080",
+        "--rendering-driver",
+        "d3d12",
+        "--fixed-fps",
+        "60",
+        "--write-movie",
+        "C:\\Users\\kazda\\kiro\\gtai-wt\\n22-loop\\build\\film-profiles-09/novice.avi",
+        "--path",
+        "C:\\Users\\kazda\\kiro\\gtai-wt\\n22-loop\\build\\film-profiles-09\\capture",
+        "res://dev/test_player/gauntlet_bot_film.tscn",
+        "--",
+        "--bot=novice",
+        "--pick=greedy",
+        "--controls=wheel",
+        "--seed=11",
+        "--waves=7",
+        "--pick-view",
+        "--result=C:\\Users\\kazda\\kiro\\gtai-wt\\n22-loop\\build\\film-profiles-09/novice.json"
+      ],
+      "block": "crosswalk",
+      "wave_7_start_tick": 5222,
+      "wave_7_start_frame": 6220,
+      "final_tick": 6350,
+      "source_frames": 7420,
+      "pick_screen_start_frame": null,
+      "wave_7_enemies": {
+        "patrol_cop": 2,
+        "riot_cop": 1,
+        "robot_thug": 1,
+        "sentry_turret": 3
+      },
+      "wave_7_clear_seconds": null,
+      "comparison": {
+        "reference": "evidence/loop/profiles-20/runs/novice-11.json",
+        "cmp_exit": 0,
+        "byte_identical": true,
+        "film_result_bytes": 3907,
+        "reference_bytes": 3907,
+        "film_result_sha256": "c4fdcfbfa49c2dcf93cf016225f10c53b588bea4cde0adf5d2173331b4d3a424",
+        "reference_sha256": "c4fdcfbfa49c2dcf93cf016225f10c53b588bea4cde0adf5d2173331b4d3a424",
+        "film_wave_reached": 7,
+        "reference_wave_reached": 7,
+        "film_death": {
+          "by": "sentry_turret",
+          "wave": 7
+        },
+        "reference_death": {
+          "by": "sentry_turret",
+          "wave": 7
+        },
+        "waves_1_to_7_equal": true,
+        "picks_through_wave_7_equal": true,
+        "waves_rows_compared": 7,
+        "waves_row_bytes_identical": true,
+        "picks_rows_compared": 6,
+        "picks_row_bytes_identical": true
+      },
+      "clip": {
+        "file": "novice-11-wave-7.mp4",
+        "source_frame_start": 6220,
+        "source_frame_end_exclusive": 7420,
+        "frames": 1200,
+        "seconds": 20.0,
+        "sha256": "a8a53976eec91342e0dd7b3ab1e55b20481da376cf05032b5a38590cc6410cfa",
+        "ffprobe": {
+          "duration_seconds": 20.0,
+          "width": 1920,
+          "height": 1080,
+          "fps": "60/1",
+          "container_bit_rate_bps": 61328586,
+          "video_bit_rate_bps": 61312987
+        },
+        "shows": "Rivet crosses the striped street, rolls past gunfire and ends at the upper curb as the action caption changes to REST."
+      },
+      "still": {
+        "file": "novice-11-death-32.png",
+        "source_frame": 7419,
+        "ppm": 32,
+        "sha256": "f593afea1f031a56a2c4bb3c46d6287baf3d57891ceb797e860db4dc44dc6c0a",
+        "shows": "Rivet lies at the curb at the top of the striped crossing, with REST on screen and the wave-7 HUD at 18.8 s and 3/110 health."
+      },
+      "limitation": "Frame 7419 is the last rendered frame. The simulation logged 0.0 HP and the result names sentry_turret. The last HUD sample still reads 3/110 and the scene exits without a separate death screen."
+    },
+    "expert": {
+      "flags": [
+        "--windowed",
+        "--position",
+        "0,1440",
+        "--resolution",
+        "1920x1080",
+        "--rendering-driver",
+        "d3d12",
+        "--fixed-fps",
+        "60",
+        "--write-movie",
+        "C:\\Users\\kazda\\kiro\\gtai-wt\\n22-loop\\build\\film-profiles-09/expert.avi",
+        "--path",
+        "C:\\Users\\kazda\\kiro\\gtai-wt\\n22-loop\\build\\film-profiles-09\\capture",
+        "res://dev/test_player/gauntlet_bot_film.tscn",
+        "--",
+        "--bot=expert",
+        "--pick=greedy",
+        "--controls=wheel",
+        "--seed=11",
+        "--waves=7",
+        "--pick-view",
+        "--result=C:\\Users\\kazda\\kiro\\gtai-wt\\n22-loop\\build\\film-profiles-09/expert.json"
+      ],
+      "block": "crosswalk",
+      "wave_7_start_tick": 5347,
+      "wave_7_start_frame": 6350,
+      "final_tick": 8097,
+      "source_frames": 9391,
+      "pick_screen_start_frame": 9270,
+      "wave_7_enemies": {
+        "patrol_cop": 2,
+        "riot_cop": 1,
+        "robot_thug": 1,
+        "sentry_turret": 3
+      },
+      "wave_7_clear_seconds": 45.8166666666667,
+      "comparison": {
+        "reference": "evidence/loop/profiles-20/runs/expert-11.json",
+        "cmp_exit": 1,
+        "byte_identical": false,
+        "film_result_bytes": 4076,
+        "reference_bytes": 7316,
+        "film_result_sha256": "1a465ba51b7fea83cbc61512891575880ffcf34c64f240d3c94d59f49abd0269",
+        "reference_sha256": "dc8c5c424d1ca426ee3f26054f0f755856832ec1b32b65a9f68ed7f52f177a02",
+        "film_wave_reached": 7,
+        "reference_wave_reached": 12,
+        "film_death": null,
+        "reference_death": {
+          "by": "timeout",
+          "wave": 12
+        },
+        "waves_1_to_7_equal": true,
+        "picks_through_wave_7_equal": true,
+        "waves_rows_compared": 7,
+        "waves_row_bytes_identical": true,
+        "picks_rows_compared": 7,
+        "picks_row_bytes_identical": true
+      },
+      "clip": {
+        "file": "expert-11-wave-7.mp4",
+        "source_frame_start": 6990,
+        "source_frame_end_exclusive": 9390,
+        "frames": 2400,
+        "seconds": 40.0,
+        "sha256": "012c4debfbaddcff17d54593d065db48524006891d12554d44906bf962cc9278",
+        "ffprobe": {
+          "duration_seconds": 40.0,
+          "width": 1920,
+          "height": 1080,
+          "fps": "60/1",
+          "container_bit_rate_bps": 54829838,
+          "video_bit_rate_bps": 54814587
+        },
+        "shows": "Rivet fights across the striped street. The final overlay reads Wave 7 cleared and Choose an upgrade. Ohm stays bright as the Plasma Rifle and health-repair cards dim."
+      },
+      "still": {
+        "file": "expert-11-wave-7-32.png",
+        "source_frame": 9163,
+        "ppm": 32,
+        "sha256": "157472f82c0482780ada2612a6f48482805227f5a07bedca2b344940238921d8",
+        "shows": "Rivet faces the outlined turret beside the striped crossing with a white impact flash between them, GUARD on screen and 87/110 health."
+      },
+      "limitation": "The requested seven-wave cap ends the filmed result after the Ohm pick. The uncapped batch continues to wave 12. Frame 9390 returns to the street, so the cut ends on frame 9389, the last visible pick screen."
+    }
+  }
+}
