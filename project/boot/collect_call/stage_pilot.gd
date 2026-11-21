@@ -1,7 +1,13 @@
 class_name StagePilot
 extends RefCounted
-## Turns live or recorded tick input into movement, attacks and interactions in quest 1,
-## the arena and the city. Vaults and station cover take ownership of movement and fire.
+## The player at quest 1's stage (and the arena's, and the city block's): each tick's TickInput
+## (live devices or a replay log, never raw keys) decoded into StageIntent. The move stick drives
+## PlayerMotion (rivet_motion.json over TopDownMover: the walk, the held sprint, the dodge roll
+## with its i-frames), a held fire shoots along the aim heading, an interact press uses whatever
+## is in reach (StageActions), melee is the claw combo (PlayerMelee over rivet_melee.json), and
+## the car key is a stub until the vehicles lane's enter/exit API lands.
+## Vaults own the stage position and attack input through their landing tick.
+## Station cover holds the fighter on the face and releases fire at a full corner peek.
 
 var actions: PlayerActions
 var guard: PlayerGuard = null
@@ -88,7 +94,8 @@ func _attacks(stage: CollectCallStage, c: PlayerCommand, rivet: Fighter) -> void
 			Log.info("pilot", "enter/exit car pressed (stub until the vehicles lane's API lands)")
 
 
-## Returns true when a ghost form owns the melee press.
+## The ghost forms (features/souls GhostPilot); true when a form owns the melee press this tick
+## (the pilot skips the claw).
 func _ghosts(stage: CollectCallStage, c: PlayerCommand, press: bool) -> bool:
 	if ghosts == null:
 		return false
@@ -100,6 +107,7 @@ func facing() -> Vector2:
 	return motion.facing()
 
 
+## Kept for the dev arena's teleport and older hosts: the walk under PlayerMotion.
 func stop() -> void:
 	motion.stop()
 
@@ -119,7 +127,9 @@ func write_state(out: StreamPeerBuffer) -> void:
 		guard.write_state(out)
 
 
-## Drive locomotion and expose the fighter outside the roll's invulnerable ticks.
+## The walk, sprint and roll; a claw hit slows the walk (move_mult), so do spinning barrels (the
+## gatling's fire_move_mult), and the roll's i-frames close
+## Rivet to damage (CombatArena.damage skips a fighter that is not exposed).
 func _move(stage: CollectCallStage, c: PlayerCommand) -> void:
 	var rivet: Fighter = stage.arena.rivet
 	var walk: float = stage.arena.tuning.rivet["walk_mps"] * melee.move_scale()
@@ -143,7 +153,8 @@ func wielding() -> bool:
 	return carry != null and carry.melee_ids.has(hold.held)
 
 
-## Change melee weapons between hits.
+## The melee combo follows the weapon in the claw (the bare claw otherwise); it changes between
+## hits only, never inside one.
 func _pick_melee() -> void:
 	var want: StringName = hold.held if wielding() else MeleeTable.CLAW
 	if want == melee.weapon_id or melee.busy():

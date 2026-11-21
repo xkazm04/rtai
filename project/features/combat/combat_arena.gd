@@ -173,9 +173,11 @@ func step(p_tick: int) -> void:
 		areas.step(self)
 
 
+## The one damage chokepoint (events.json: the kill payload is decided before the hit lands).
+## `kind` is the death kind: quest 1's rounds are `shot`; FightAreas passes `blown`, `burned`.
 func damage(
 	victim: Fighter, amount: float, killer_id: int, weapon: StringName, kind: StringName = &"shot"
-) -> void:  # Emit the kill payload before the hit lands, including area-effect death kinds.
+) -> void:
 	if not victim.alive() or not victim.exposed:
 		return
 	if guard != null and guard.blocks_melee(self, victim, killer_id, weapon, kind):
