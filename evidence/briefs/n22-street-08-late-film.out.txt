@@ -1,0 +1,13 @@
+Commit `1bcbc6695`. [Wave eight drags](C:/Users/kazda/kiro/gtai-masters/n22/street/gauntlet_wave8_32.mp4) runs **38.083 seconds** at 60 fps.  
+SHA-256 `455f3110d56184814525519233032a7c3a6c11a0a79475efd9cc452f945770df`
+
+Wave 8 took **34.8833 seconds** in both the recording and the headless run. All eight wave rows and picks matched.
+
+| Clip frame | What’s visible |
+|---|---|
+| [130](C:/Users/kazda/kiro/gtai-masters/n22/street/wave8_130.png) | Rivet fires the Gatling across the zebra crossing at blue-uniformed officers, with four grey machines to their right. |
+| [520](C:/Users/kazda/kiro/gtai-masters/n22/street/wave8_520.png) | At 39/100 health, Rivet has pulled back to the left of the crossing while red rounds pass over the stripes. |
+| [1450](C:/Users/kazda/kiro/gtai-masters/n22/street/wave8_1450.png) | Rivet swings his claw at the sentry in the middle of the road, with a fallen riot officer and shield beside the kerb. |
+| [2220](C:/Users/kazda/kiro/gtai-masters/n22/street/wave8_2220.png) | Back at 100/100 health, Rivet fires the Gatling across the crossing at the last sentry. |
+
+[astra: 517s, exit 0]
