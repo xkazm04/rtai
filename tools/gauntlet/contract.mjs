@@ -44,8 +44,9 @@ export function validateRun(run) {
     const prefix = 'picks[' + i + '].';
     if (!object(pick) || !count(pick.wave) || pick.wave < 1 || pick.wave > run.wave_reached)
       return prefix + 'wave: expected reached wave number';
-    if (!Array.isArray(pick.offered) || pick.offered.length !== 3 || !pick.offered.every(id)
-      || new Set(pick.offered).size !== 3) return prefix + 'offered: expected three distinct ids';
+    if (!Array.isArray(pick.offered) || pick.offered.length < 1 || pick.offered.length > 3
+      || !pick.offered.every(id) || new Set(pick.offered).size !== pick.offered.length)
+      return prefix + 'offered: expected one to three distinct ids';
     if (!pick.offered.includes(pick.taken)) return prefix + 'taken: not in offer';
   }
   return null;
