@@ -8,6 +8,7 @@ const TIMEOUT_TICKS: int = 90 * SimClock.TICK_RATE
 var done: bool = false
 var draw: GauntletDraw
 var _run: GauntletRun
+var _bonuses: GauntletBonusApply
 var _street: GauntletStreet
 var _picker: GauntletPilot
 var _composer: GauntletComposer
@@ -26,6 +27,7 @@ static func attach(
 ) -> GauntletWaves:
 	var w: GauntletWaves = GauntletWaves.new()
 	w._run = run
+	w._bonuses = session.bonuses
 	w._street = session.street
 	w._picker = picker
 	w._limit = limit
@@ -145,7 +147,7 @@ func _pick(stage: ArenaStage) -> void:
 	if offered.is_empty():
 		return
 	var choice: int = _picker.pick(offered)
-	if choice >= 0 and choice < offered.size():
+	if choice >= 0 and choice < offered.size() and _bonuses.apply(draw.rows[offered[choice]]):
 		_run.picks.append({"wave": _run.wave, "offered": offered, "taken": offered[choice]})
 
 

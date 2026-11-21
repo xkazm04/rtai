@@ -1425,3 +1425,4 @@ One dated line per decision. Deviations use `DEVIATION <RULE-ID>` and carry a re
 - [2026-11-21] DECISION dev-runner: Forward the runner's absolute result path to entries that declare the flag so one argument selects the output and checks its freshness.
 - [2026-11-21] DECISION guard: select bindings at InputMap install so legacy keeps right mouse on melee and masks guard from live ticks. Wheel binds right mouse and left trigger to guard, with Space still bound to melee.
 - [2026-11-21] DECISION gauntlet-draw: Each bonus row can be taken once per run. Different strengths of a stat stack, and a held weapon or unlocked ghost cannot be offered through a second row.
+- [2026-11-21] DECISION gauntlet-weapon: The newest weapon grant goes straight into Rivet's hand through the arena carry slots until guard's wheel takes over selection.
