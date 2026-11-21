@@ -7,6 +7,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 const RUN_TICKS: int = 72000
 const BOT_PATH: String = "res://features/gauntlet/bot/gauntlet_bot.gd"
 
+@export var camera_ppm: float = 32.0
+
 var run: GauntletRun = GauntletRun.new()
 var session: GauntletSession
 var pilot: GauntletPilot
@@ -86,7 +88,7 @@ func _open_view(film: bool) -> void:
 	floor_view.street = session.street
 	view.stage_view.free()
 	view.stage_view = floor_view
-	view.px_per_m = 32.0
+	view.px_per_m = camera_ppm
 	view.bind(session.stage, CollectCallWorld.new(session.stage), null)
 	add_child(view)
 	view.hud_view.visible = false

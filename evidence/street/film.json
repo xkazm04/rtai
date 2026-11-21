@@ -1,0 +1,105 @@
+{
+  "seed": 7,
+  "profile": "average",
+  "pilot": "GauntletWalker",
+  "flags": [
+    "--waves=5",
+    "--pick-view"
+  ],
+  "view": "tilt70",
+  "ppm": 32,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "fps": 60,
+  "crf": 18,
+  "wave_start_frames": [
+    204,
+    671,
+    1300,
+    1927,
+    2299
+  ],
+  "wave_seconds": [
+    4.417,
+    7.817,
+    6.567,
+    2.55,
+    13.817
+  ],
+  "source_frames": 3315,
+  "boss_wave": {
+    "contractor": 1,
+    "patrol_cop": 1,
+    "swat": 2,
+    "war_machine": 1
+  },
+  "recorded_picks": [
+    "weapon_electro_baton",
+    "stat_damage_10",
+    "weapon_hand_cannon",
+    "weapon_pistol",
+    "weapon_gloria"
+  ],
+  "matches_headless_first_five": true,
+  "clips": [
+    {
+      "file": "gauntlet_waves1-3_32.mp4",
+      "sha256": "3d16ae9b094c59d6b4142886cb5cbcc306cba79996695a674c57917d83e83545",
+      "source_frame_start": 204,
+      "source_frame_end_exclusive": 1927,
+      "seconds": 28.717,
+      "inspected": [
+        {
+          "frame": 165,
+          "note": "Rivet claws a patrol cop as two more wait beside the crate."
+        },
+        {
+          "frame": 386,
+          "note": "The electro baton stays bright while Speed and Kerf dim."
+        },
+        {
+          "frame": 700,
+          "note": "Rivet fights at the south wall, with blue uniforms closing from both sides."
+        },
+        {
+          "frame": 1362,
+          "note": "A pale melee arc sweeps over the last of three loading-bay crates."
+        }
+      ]
+    },
+    {
+      "file": "gauntlet_waves4-5_32.mp4",
+      "sha256": "bcb6665a0fa11b49c8bc35588d22e21f018c83f9ae1e349cd742d096a288ea53",
+      "source_frame_start": 1927,
+      "source_frame_end_exclusive": 3315,
+      "seconds": 23.133,
+      "inspected": [
+        {
+          "frame": 90,
+          "note": "Rivet and the wave-four squad exchange fire across separated cover."
+        },
+        {
+          "frame": 215,
+          "note": "Three legible weapon cards offer Pistol, Plasma Rifle and Flamethrower."
+        },
+        {
+          "frame": 452,
+          "note": "The grey war machine and its escort face Rivet across the crossing."
+        },
+        {
+          "frame": 1358,
+          "note": "Gloria is highlighted between Max health and Ohm after wave five."
+        }
+      ]
+    }
+  ],
+  "closeup": {
+    "file": "fight_cover_64.png",
+    "ppm": 64,
+    "wave": 1,
+    "source_frame": 466,
+    "sha256": "087c5463a82cb84d7f61acab5efd2b7cfff9452e9554d532003ef0bdb76d5b8b"
+  }
+}
