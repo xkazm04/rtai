@@ -25,6 +25,7 @@ class Archetype:
 	var alt_weapon: Weapon
 	var tier: int = 1
 	var explicit_spawn: bool = false
+	var placement: StringName = &"any"
 	var shield_cos: float = 0.5
 	var hp: float = 1.0
 	var speed_mps: float = 3.0
@@ -167,6 +168,8 @@ func _read_foe(t: DataTable, row: Dictionary, a: Archetype) -> void:
 	if tier != a.tier or a.tier < 1 or a.tier > 5:
 		_errors.append("%s: tier must be an integer from 1 to 5" % a.id)
 	a.explicit_spawn = row.get("explicit_spawn", false) == true
+	if row.has("placement"):
+		a.placement = StringName(t.text(row, "placement"))
 	if row.has("alt_weapon"):
 		a.alt_weapon = weapons.get(StringName(t.text(row, "alt_weapon")))
 		if a.alt_weapon == null:

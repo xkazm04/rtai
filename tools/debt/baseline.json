@@ -86,7 +86,10 @@
         "2026-11-19: Exercise the strip-matched phase only in the stride film and fail a take that falls back to the shipped rate. (dev_loc 23334 -> 23361)",
         "2026-11-19: Owner-requested reproducible ghost films: a dev-only arena input driver, camera marks and per-frame evidence for four forms, two real views and the Ohm delay comparison. (dev_loc 26341 -> 26602)",
         "2026-11-20: --enemy for n22 foes (dev_loc 26600 -> 26712)",
-        "2026-11-21: foe duel player profiles and fairness evidence for n22 foes (dev_loc 26712 -> 26765)"
+        "2026-11-21: foe duel player profiles and fairness evidence for n22 foes (dev_loc 26712 -> 26765)",
+        "2026-11-21: sentry turret armour call and duel kill-side evidence for n22 foes (dev_loc 26765 -> 26774)",
+        "2026-11-21: bolted turret and flanking player in the n22 foe duel (dev_loc 26774 -> 26801)",
+        "2026-11-21: measured turret flank in the arena film and duel (dev_loc 26801 -> 26850)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -95,7 +98,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 496,
-        "project/dev/enemy_ai": 1671,
+        "project/dev/enemy_ai": 1756,
         "project/dev/frames": 1087,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1396,
@@ -120,7 +123,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 26765
+      "total": 26850
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -368,7 +371,8 @@
         "2026-11-20: --enemy for n22 foes (files_past_soft_cap 64 -> 64)",
         "2026-11-20: --controls for n22 guard (files_past_soft_cap 64 -> 64)",
         "2026-11-21: combined --enemy and --controls interface flags (files_past_soft_cap 64 -> 64)",
-        "2026-11-21: --foe-mix for n22 foes (files_past_soft_cap 64 -> 64)"
+        "2026-11-21: --foe-mix for n22 foes (files_past_soft_cap 64 -> 64)",
+        "2026-11-21: sentry turret armour call and duel kill-side evidence for n22 foes (files_past_soft_cap 64 -> 64)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -408,7 +412,7 @@
         "project/features/city/sim/sim_people.gd": 202,
         "project/features/city/view/city_view.gd": 259,
         "project/features/combat/ai/enemy_pit.gd": 244,
-        "project/features/combat/combat_arena.gd": 251,
+        "project/features/combat/combat_arena.gd": 252,
         "project/features/combat/hit_feel/hit_feel.gd": 220,
         "project/features/combat/kills/kill_char_fx.gd": 203,
         "project/features/combat/kills/kill_lab.gd": 213,

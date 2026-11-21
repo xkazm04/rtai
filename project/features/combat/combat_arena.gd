@@ -179,6 +179,7 @@ func damage(
 ) -> void:
 	if not victim.alive() or not victim.exposed:
 		return
+	amount *= FoeArmor.k(victim, hit_dir, kind, squad_ai)
 	amount *= victim.damage_k
 	var lethal: bool = victim.hp - amount <= 0.0
 	if lethal and victim.kind != Fighter.Kind.RIVET:

@@ -70,7 +70,7 @@ func setup(ctx: WorldContext) -> void:
 				if rules.has("contractor_speed_mps"):
 					roster.archetype(&"contractor").speed_mps = rules["contractor_speed_mps"]
 			var mix: Array = rules.get("squad_mix_full" if pit.mixed else "squad_mix", [])
-			pit.squad_mix.assign(FoeMix.choose(_options, roster, pit, mix))
+			pit.squad_mix.assign(FoeMix.configure(self, _options, mix))
 			var slots: float = rules.get("max_shooters", roster.max_shooters)
 			roster.max_shooters = roundi(slots)
 	arena.rivet.weapon = WEAPON

@@ -1,0 +1,631 @@
+{
+  "enemy": "sentry_turret",
+  "profiles": {
+    "average": {
+      "enemy_killed_share": 0.6,
+      "hurt_share": 1.0,
+      "mean_damage": 9.2,
+      "median_kill_tick": 1517.5,
+      "runs": [
+        {
+          "damage_to_rivet": 8.0,
+          "enemy_killed_tick": null,
+          "kill_armoured": null,
+          "kill_side": null,
+          "player_shots": 68,
+          "seed": 1,
+          "shots_fired": 63,
+          "tells_shown": 7
+        },
+        {
+          "damage_to_rivet": 12.0,
+          "enemy_killed_tick": 1638,
+          "kill_armoured": false,
+          "kill_side": "rear",
+          "player_shots": 61,
+          "seed": 2,
+          "shots_fired": 45,
+          "tells_shown": 5
+        },
+        {
+          "damage_to_rivet": 8.0,
+          "enemy_killed_tick": 1659,
+          "kill_armoured": false,
+          "kill_side": "front",
+          "player_shots": 62,
+          "seed": 3,
+          "shots_fired": 49,
+          "tells_shown": 6
+        },
+        {
+          "damage_to_rivet": 4.0,
+          "enemy_killed_tick": 1662,
+          "kill_armoured": false,
+          "kill_side": "rear",
+          "player_shots": 62,
+          "seed": 4,
+          "shots_fired": 54,
+          "tells_shown": 6
+        },
+        {
+          "damage_to_rivet": 12.0,
+          "enemy_killed_tick": 1395,
+          "kill_armoured": true,
+          "kill_side": "front",
+          "player_shots": 51,
+          "seed": 5,
+          "shots_fired": 36,
+          "tells_shown": 5
+        },
+        {
+          "damage_to_rivet": 12.0,
+          "enemy_killed_tick": 1399,
+          "kill_armoured": true,
+          "kill_side": "front",
+          "player_shots": 51,
+          "seed": 6,
+          "shots_fired": 36,
+          "tells_shown": 5
+        },
+        {
+          "damage_to_rivet": 8.0,
+          "enemy_killed_tick": null,
+          "kill_armoured": null,
+          "kill_side": null,
+          "player_shots": 68,
+          "seed": 7,
+          "shots_fired": 54,
+          "tells_shown": 7
+        },
+        {
+          "damage_to_rivet": 8.0,
+          "enemy_killed_tick": null,
+          "kill_armoured": null,
+          "kill_side": null,
+          "player_shots": 68,
+          "seed": 8,
+          "shots_fired": 63,
+          "tells_shown": 7
+        },
+        {
+          "damage_to_rivet": 4.0,
+          "enemy_killed_tick": 1587,
+          "kill_armoured": false,
+          "kill_side": "front",
+          "player_shots": 59,
+          "seed": 9,
+          "shots_fired": 45,
+          "tells_shown": 6
+        },
+        {
+          "damage_to_rivet": 8.0,
+          "enemy_killed_tick": 1403,
+          "kill_armoured": false,
+          "kill_side": "front",
+          "player_shots": 51,
+          "seed": 10,
+          "shots_fired": 36,
+          "tells_shown": 5
+        },
+        {
+          "damage_to_rivet": 8.0,
+          "enemy_killed_tick": null,
+          "kill_armoured": null,
+          "kill_side": null,
+          "player_shots": 68,
+          "seed": 11,
+          "shots_fired": 54,
+          "tells_shown": 6
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 1639,
+          "kill_armoured": false,
+          "kill_side": "rear",
+          "player_shots": 61,
+          "seed": 12,
+          "shots_fired": 45,
+          "tells_shown": 5
+        },
+        {
+          "damage_to_rivet": 12.0,
+          "enemy_killed_tick": 1476,
+          "kill_armoured": true,
+          "kill_side": "front",
+          "player_shots": 55,
+          "seed": 13,
+          "shots_fired": 37,
+          "tells_shown": 5
+        },
+        {
+          "damage_to_rivet": 8.0,
+          "enemy_killed_tick": 1517,
+          "kill_armoured": true,
+          "kill_side": "front",
+          "player_shots": 56,
+          "seed": 14,
+          "shots_fired": 45,
+          "tells_shown": 6
+        },
+        {
+          "damage_to_rivet": 4.0,
+          "enemy_killed_tick": null,
+          "kill_armoured": null,
+          "kill_side": null,
+          "player_shots": 68,
+          "seed": 15,
+          "shots_fired": 63,
+          "tells_shown": 7
+        },
+        {
+          "damage_to_rivet": 4.0,
+          "enemy_killed_tick": null,
+          "kill_armoured": null,
+          "kill_side": null,
+          "player_shots": 68,
+          "seed": 16,
+          "shots_fired": 63,
+          "tells_shown": 7
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 1410,
+          "kill_armoured": true,
+          "kill_side": "front",
+          "player_shots": 52,
+          "seed": 17,
+          "shots_fired": 42,
+          "tells_shown": 5
+        },
+        {
+          "damage_to_rivet": 12.0,
+          "enemy_killed_tick": 1518,
+          "kill_armoured": false,
+          "kill_side": "rear",
+          "player_shots": 56,
+          "seed": 18,
+          "shots_fired": 45,
+          "tells_shown": 5
+        },
+        {
+          "damage_to_rivet": 8.0,
+          "enemy_killed_tick": null,
+          "kill_armoured": null,
+          "kill_side": null,
+          "player_shots": 68,
+          "seed": 19,
+          "shots_fired": 63,
+          "tells_shown": 7
+        },
+        {
+          "damage_to_rivet": 12.0,
+          "enemy_killed_tick": null,
+          "kill_armoured": null,
+          "kill_side": null,
+          "player_shots": 68,
+          "seed": 20,
+          "shots_fired": 54,
+          "tells_shown": 7
+        }
+      ]
+    },
+    "novice": {
+      "enemy_killed_share": 0.4,
+      "hurt_share": 1.0,
+      "mean_damage": 13.0,
+      "median_kill_tick": 1772.0,
+      "runs": [
+        {
+          "damage_to_rivet": 12.0,
+          "enemy_killed_tick": 1286,
+          "kill_armoured": true,
+          "kill_side": "front",
+          "player_shots": 47,
+          "seed": 1,
+          "shots_fired": 29,
+          "tells_shown": 4
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": null,
+          "kill_armoured": null,
+          "kill_side": null,
+          "player_shots": 68,
+          "seed": 2,
+          "shots_fired": 45,
+          "tells_shown": 6
+        },
+        {
+          "damage_to_rivet": 12.0,
+          "enemy_killed_tick": 1774,
+          "kill_armoured": true,
+          "kill_side": "front",
+          "player_shots": 67,
+          "seed": 3,
+          "shots_fired": 45,
+          "tells_shown": 6
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 1785,
+          "kill_armoured": false,
+          "kill_side": "rear",
+          "player_shots": 67,
+          "seed": 4,
+          "shots_fired": 54,
+          "tells_shown": 6
+        },
+        {
+          "damage_to_rivet": 12.0,
+          "enemy_killed_tick": 1783,
+          "kill_armoured": true,
+          "kill_side": "front",
+          "player_shots": 67,
+          "seed": 5,
+          "shots_fired": 45,
+          "tells_shown": 6
+        },
+        {
+          "damage_to_rivet": 12.0,
+          "enemy_killed_tick": null,
+          "kill_armoured": null,
+          "kill_side": null,
+          "player_shots": 68,
+          "seed": 6,
+          "shots_fired": 54,
+          "tells_shown": 6
+        },
+        {
+          "damage_to_rivet": 8.0,
+          "enemy_killed_tick": null,
+          "kill_armoured": null,
+          "kill_side": null,
+          "player_shots": 68,
+          "seed": 7,
+          "shots_fired": 54,
+          "tells_shown": 6
+        },
+        {
+          "damage_to_rivet": 8.0,
+          "enemy_killed_tick": 1465,
+          "kill_armoured": false,
+          "kill_side": "rear",
+          "player_shots": 54,
+          "seed": 8,
+          "shots_fired": 36,
+          "tells_shown": 5
+        },
+        {
+          "damage_to_rivet": 12.0,
+          "enemy_killed_tick": null,
+          "kill_armoured": null,
+          "kill_side": null,
+          "player_shots": 68,
+          "seed": 9,
+          "shots_fired": 50,
+          "tells_shown": 6
+        },
+        {
+          "damage_to_rivet": 12.0,
+          "enemy_killed_tick": 1770,
+          "kill_armoured": true,
+          "kill_side": "front",
+          "player_shots": 67,
+          "seed": 10,
+          "shots_fired": 45,
+          "tells_shown": 6
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": 1239,
+          "kill_armoured": true,
+          "kill_side": "front",
+          "player_shots": 45,
+          "seed": 11,
+          "shots_fired": 30,
+          "tells_shown": 4
+        },
+        {
+          "damage_to_rivet": 12.0,
+          "enemy_killed_tick": null,
+          "kill_armoured": null,
+          "kill_side": null,
+          "player_shots": 68,
+          "seed": 12,
+          "shots_fired": 54,
+          "tells_shown": 6
+        },
+        {
+          "damage_to_rivet": 12.0,
+          "enemy_killed_tick": null,
+          "kill_armoured": null,
+          "kill_side": null,
+          "player_shots": 68,
+          "seed": 13,
+          "shots_fired": 45,
+          "tells_shown": 6
+        },
+        {
+          "damage_to_rivet": 8.0,
+          "enemy_killed_tick": null,
+          "kill_armoured": null,
+          "kill_side": null,
+          "player_shots": 68,
+          "seed": 14,
+          "shots_fired": 51,
+          "tells_shown": 6
+        },
+        {
+          "damage_to_rivet": 12.0,
+          "enemy_killed_tick": 1779,
+          "kill_armoured": false,
+          "kill_side": "rear",
+          "player_shots": 67,
+          "seed": 15,
+          "shots_fired": 45,
+          "tells_shown": 6
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": null,
+          "kill_armoured": null,
+          "kill_side": null,
+          "player_shots": 68,
+          "seed": 16,
+          "shots_fired": 45,
+          "tells_shown": 6
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": null,
+          "kill_armoured": null,
+          "kill_side": null,
+          "player_shots": 68,
+          "seed": 17,
+          "shots_fired": 45,
+          "tells_shown": 6
+        },
+        {
+          "damage_to_rivet": 12.0,
+          "enemy_killed_tick": null,
+          "kill_armoured": null,
+          "kill_side": null,
+          "player_shots": 68,
+          "seed": 18,
+          "shots_fired": 45,
+          "tells_shown": 6
+        },
+        {
+          "damage_to_rivet": 16.0,
+          "enemy_killed_tick": null,
+          "kill_armoured": null,
+          "kill_side": null,
+          "player_shots": 68,
+          "seed": 19,
+          "shots_fired": 45,
+          "tells_shown": 6
+        },
+        {
+          "damage_to_rivet": 20.0,
+          "enemy_killed_tick": null,
+          "kill_armoured": null,
+          "kill_side": null,
+          "player_shots": 68,
+          "seed": 20,
+          "shots_fired": 54,
+          "tells_shown": 6
+        }
+      ]
+    },
+    "perfect": {
+      "enemy_killed_share": 1.0,
+      "hurt_share": 0.05,
+      "mean_damage": 0.2,
+      "median_kill_tick": 856.0,
+      "runs": [
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 855,
+          "kill_armoured": false,
+          "kill_side": "front",
+          "player_shots": 29,
+          "seed": 1,
+          "shots_fired": 27,
+          "tells_shown": 4
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 928,
+          "kill_armoured": false,
+          "kill_side": "front",
+          "player_shots": 32,
+          "seed": 2,
+          "shots_fired": 27,
+          "tells_shown": 4
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 783,
+          "kill_armoured": true,
+          "kill_side": "front",
+          "player_shots": 26,
+          "seed": 3,
+          "shots_fired": 18,
+          "tells_shown": 3
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 711,
+          "kill_armoured": true,
+          "kill_side": "front",
+          "player_shots": 23,
+          "seed": 4,
+          "shots_fired": 18,
+          "tells_shown": 3
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 904,
+          "kill_armoured": false,
+          "kill_side": "front",
+          "player_shots": 31,
+          "seed": 5,
+          "shots_fired": 27,
+          "tells_shown": 4
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 928,
+          "kill_armoured": true,
+          "kill_side": "front",
+          "player_shots": 32,
+          "seed": 6,
+          "shots_fired": 27,
+          "tells_shown": 4
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 880,
+          "kill_armoured": false,
+          "kill_side": "front",
+          "player_shots": 30,
+          "seed": 7,
+          "shots_fired": 27,
+          "tells_shown": 3
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 785,
+          "kill_armoured": true,
+          "kill_side": "front",
+          "player_shots": 26,
+          "seed": 8,
+          "shots_fired": 21,
+          "tells_shown": 3
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 856,
+          "kill_armoured": false,
+          "kill_side": "front",
+          "player_shots": 29,
+          "seed": 9,
+          "shots_fired": 27,
+          "tells_shown": 4
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 711,
+          "kill_armoured": false,
+          "kill_side": "front",
+          "player_shots": 23,
+          "seed": 10,
+          "shots_fired": 18,
+          "tells_shown": 2
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 931,
+          "kill_armoured": true,
+          "kill_side": "front",
+          "player_shots": 32,
+          "seed": 11,
+          "shots_fired": 27,
+          "tells_shown": 4
+        },
+        {
+          "damage_to_rivet": 4.0,
+          "enemy_killed_tick": 929,
+          "kill_armoured": true,
+          "kill_side": "front",
+          "player_shots": 32,
+          "seed": 12,
+          "shots_fired": 27,
+          "tells_shown": 4
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 859,
+          "kill_armoured": true,
+          "kill_side": "front",
+          "player_shots": 29,
+          "seed": 13,
+          "shots_fired": 27,
+          "tells_shown": 3
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 711,
+          "kill_armoured": false,
+          "kill_side": "front",
+          "player_shots": 23,
+          "seed": 14,
+          "shots_fired": 18,
+          "tells_shown": 3
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 784,
+          "kill_armoured": true,
+          "kill_side": "front",
+          "player_shots": 26,
+          "seed": 15,
+          "shots_fired": 18,
+          "tells_shown": 3
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 711,
+          "kill_armoured": false,
+          "kill_side": "front",
+          "player_shots": 23,
+          "seed": 16,
+          "shots_fired": 18,
+          "tells_shown": 3
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 711,
+          "kill_armoured": false,
+          "kill_side": "front",
+          "player_shots": 23,
+          "seed": 17,
+          "shots_fired": 18,
+          "tells_shown": 3
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 880,
+          "kill_armoured": false,
+          "kill_side": "front",
+          "player_shots": 30,
+          "seed": 18,
+          "shots_fired": 27,
+          "tells_shown": 3
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 859,
+          "kill_armoured": true,
+          "kill_side": "front",
+          "player_shots": 29,
+          "seed": 19,
+          "shots_fired": 27,
+          "tells_shown": 3
+        },
+        {
+          "damage_to_rivet": 0.0,
+          "enemy_killed_tick": 856,
+          "kill_armoured": false,
+          "kill_side": "front",
+          "player_shots": 29,
+          "seed": 20,
+          "shots_fired": 27,
+          "tells_shown": 3
+        }
+      ]
+    }
+  },
+  "schema": "gtai.foe-duel/2",
+  "tick_hz": 60
+}

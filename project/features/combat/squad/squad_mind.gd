@@ -1,6 +1,5 @@
 class_name SquadMind
 extends RefCounted
-## Cover and flank plans are staggered by fighter ID. The motor follows cached route bends.
 
 const S := EnemyAgent.State
 const PLAN_TICKS: int = 12
@@ -8,6 +7,7 @@ const BLIND_LIMIT: int = 6 * SimClock.TICK_RATE
 const COVER_RADIUS_M: float = 8.0
 const SPACING_GAP_M: float = 1.5
 
+var turret: FoeTurret
 var rocket: FoeRocket
 var agent: EnemyAgent
 ## Rounds remaining when a token, range or sight interrupted the production trigger.
@@ -30,6 +30,7 @@ var _plan_offset: int = 0
 
 
 func _init(h: Fighter, arch: EnemyRoster.Archetype) -> void:
+	turret = FoeTurret.new() if arch.weapon.id == &"turret_gun" else null
 	rocket = FoeRocket.new() if arch.weapon.id == &"rocket" else null
 	agent = EnemyAgent.make(h.id, arch, h.pos)
 	agent.facing = h.facing
@@ -162,7 +163,6 @@ func retry_route(map: GuardRouteMap) -> void:
 
 
 func _walk() -> Vector2:
-	# A queued route keeps its last bends, then steers directly until its search slot.
 	if _next < _route.size() and agent.pos.distance_to(_route[_next]) < 0.4:
 		_next += 1
 	if _next < _route.size():

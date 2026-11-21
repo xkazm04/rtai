@@ -108,6 +108,14 @@
             "minimum": 0,
             "type": "number"
           },
+          "placement": {
+            "enum": [
+              "any",
+              "far",
+              "flank"
+            ],
+            "type": "string"
+          },
           "preferred_m": {
             "maximum": 60,
             "minimum": 0.5,

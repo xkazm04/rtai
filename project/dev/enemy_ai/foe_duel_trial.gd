@@ -6,6 +6,27 @@ const LIMIT_TICKS: int = 1800
 const COUNTER_DELAY: int = 18
 const OPENING_TICKS: int = 3 * SimClock.TICK_RATE
 
+
+## A player who sees the hot barrel can close and circle at PitDummy's normal run speed.
+class Reader:
+	extends PitDummy
+
+	func _init() -> void:
+		super(Mode.DODGE)
+
+	func advance_flank(pit: EnemyPit, h: Fighter) -> void:
+		var radial: Vector2 = h.pos.direction_to(pit.rivet_pos)
+		var distance: float = h.pos.distance_to(pit.rivet_pos)
+		var turn: float = clampf(radial.angle_to(-h.facing) * 2.0, -1.0, 1.0)
+		var side: Vector2 = radial.rotated(PI * 0.5) * turn
+		var walk: Vector2 = side + radial * clampf((3.0 - distance) / 3.0, -1.0, 1.0)
+		pit.rivet_vel = pit.rivet_vel.move_toward(
+			walk.limit_length(1.0) * RUN_MPS, ACCEL_MPS2 * SimClock.TICK_DT
+		)
+		pit.rivet_pos += pit.rivet_vel * SimClock.TICK_DT
+		_home = pit.rivet_pos
+
+
 var enemy: StringName = StringName(LaunchArgs.value("--enemy"))
 
 
@@ -25,16 +46,26 @@ func run(id: StringName, seed_value: int, profile: String) -> Dictionary:
 		"seed": seed_value,
 		"damage_to_rivet": 0.0,
 		"enemy_killed_tick": null,
+		"kill_side": null,
+		"kill_armoured": null,
 		"tells_shown": 0,
 		"shots_fired": 0
 	}
+	var squad: ArenaSquad = arena.squad_ai
+	@warning_ignore("return_value_discarded")
+	arena.kill_landed.connect(
+		func(victim: Fighter, _w: StringName, dir: Vector2, _at: Vector2, kind: StringName) -> void:
+			var bearing: float = victim.facing.dot(-dir)
+			row.kill_side = "rear" if bearing < 0.0 else "front"
+			row.kill_armoured = FoeArmor.k(victim, dir, kind, squad) < 1.0
+	)
 	_fight(arena, h, row, _reader(profile, seed_value))
 	bus.free()
 	return row
 
 
-func _reader(profile: String, seed_value: int) -> PitDummy:
-	var dummy: PitDummy = PitDummy.new(PitDummy.Mode.DODGE)
+func _reader(profile: String, seed_value: int) -> Reader:
+	var dummy: Reader = Reader.new()
 	if profile != "perfect":
 		dummy.react_ticks = 15 if profile == "average" else 25
 		dummy.read_frac = 0.75 if profile == "average" else 0.5
@@ -45,12 +76,12 @@ func _reader(profile: String, seed_value: int) -> PitDummy:
 	return dummy
 
 
-func _fight(arena: CombatArena, h: Fighter, row: Dictionary, dummy: PitDummy) -> void:
+func _fight(arena: CombatArena, h: Fighter, row: Dictionary, dummy: Reader) -> void:
 	var nails: int = 0
 	var counter_at: int = OPENING_TICKS
 	var telling: bool = false
 	for tick: int in range(1, LIMIT_TICKS + 1):
-		_dodge(dummy, arena)
+		_dodge(dummy, arena, h)
 		if tick >= counter_at and h.alive():
 			var offset: float = (
 				(fposmod((nails + 1) * 0.618034, 1.0) * 2.0 - 1.0) * dummy.aim_err_deg
@@ -76,11 +107,17 @@ func _fight(arena: CombatArena, h: Fighter, row: Dictionary, dummy: PitDummy) ->
 			row.enemy_killed_tick = tick
 		if not arena.rivet.alive() or (not h.alive() and arena.shots.is_empty()):
 			break
+	row.player_shots = nails
 
 
-func _dodge(dummy: PitDummy, arena: CombatArena) -> void:
+func _dodge(dummy: Reader, arena: CombatArena, h: Fighter) -> void:
 	var pit: EnemyPit = arena.squad_ai.pit
 	pit.rivet_pos = arena.rivet.pos
 	pit.shots = arena.shots
-	dummy.step(pit)
+	var mind: SquadMind = arena.squad_ai.minds.get(h.id)
+	var turret: FoeTurret = mind.turret if mind != null else null
+	if turret != null and turret.phase in [FoeTurret.Phase.COOL, FoeTurret.Phase.IDLE]:
+		dummy.advance_flank(pit, h)
+	else:
+		dummy.step(pit)
 	arena.rivet.pos = pit.rivet_pos
