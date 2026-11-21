@@ -99,5 +99,6 @@ Timed parry is a non-goal in the design note, so none of these is a parry.
 | bot-film | 50 | accepted | act caption, 12-seed scan, 4 clips + 11 stills, mutate 38/38 on scratch copies; would brief a CRF target (clips came out at 98-140 Mbit/s) and a required "blast hits cover" still |
 | tune-night | 23 | accepted | 7 commits: alive caps, 6-pair floor, min-n, fast waves -> budget, knob row ids, `night.mjs`; 39/39 tests. Would brief the floor from a null perturbation, not cross-seed pairs (Call 1) |
 | procedure-doc | 5 | accepted | docs only: finished `docs/gauntlet-loop.md`; corrected two of my numbers from the files (random batch 8 min 52 s, not 55; Tonnage can reach 14.2 s in a long wave) |
+| decisions | 1 | accepted | appended my four drafted decision lines to `docs/decisions.md` verbatim (57dde9cdd) |
 
-Seven calls, 266 minutes, all accepted, none bounced. What I would brief differently: the acceptance checks should name the statistical design (a deterministic paired design needs a null-perturbation floor) and a film brief should name a bitrate and the one still that proves each claim.
+Eight calls, 267 minutes, all accepted, none bounced. What I would brief differently: the acceptance checks should name the statistical design (a deterministic paired design needs a null-perturbation floor) and a film brief should name a bitrate and the one still that proves each claim.
