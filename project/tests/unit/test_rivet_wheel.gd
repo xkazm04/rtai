@@ -159,3 +159,42 @@ func test_wheel_state_distinguishes_same_grip_acquisitions_and_selection() -> vo
 	var c: StreamPeerBuffer = StreamPeerBuffer.new()
 	wheel.write_state(c)
 	assert_ne(b.data_array, c.data_array)
+
+
+func test_first_pilot_tick_and_imported_stow_count() -> void:
+	arena.tick = 12
+	arena.rivet.weapon = &"pistol"
+	wheel.step(PlayerCommand.new(), actions, arena)
+	assert_eq(carry.switches, 1, "the story pistol was drawn before a grip was selected")
+	var c: PlayerCommand = PlayerCommand.decode(
+		TickInput.new(1 << actions.bit(&"weapon_next")), 0, actions
+	)
+	wheel.step(c, actions, arena, 0)
+	assert_eq(wheel.selected(), &"pistol")
+	assert_eq(wheel.switched_tick, 0, "the pilot supplied tick zero")
+
+
+func test_story_drawing_a_known_rifle_keeps_the_latest_grip_shortcut() -> void:
+	carry.take(RivetCarry.RIFLE, arena)
+	carry.take(&"katana", arena)
+	_press()
+	arena.rivet.weapon = RivetCarry.RIFLE
+	_press()
+	assert_eq(wheel.selected(), RivetCarry.RIFLE)
+	assert_eq(carry.slots[1], &"katana")
+
+
+func test_wheel_state_records_selection_spent_rifle_and_absent_magazine() -> void:
+	carry.take(&"katana", arena)
+	_press(&"weapon_next")
+	carry.rifle_spent = true
+	var tape: StreamPeerBuffer = StreamPeerBuffer.new()
+	wheel.write_state(tape)
+	tape.seek(0)
+	assert_eq(tape.get_utf8_string(), "katana")
+	assert_eq(tape.get_u8(), 0)
+	assert_eq(tape.get_u8(), 1)
+	assert_eq(tape.get_32(), 1)
+	assert_eq(tape.get_utf8_string(), "katana")
+	assert_eq(tape.get_32(), -1, "a blade has no magazine")
+	assert_eq(tape.get_32(), -1, "a blade has no reload timer")
