@@ -68,6 +68,7 @@ func _ready() -> void:
 	add_child(layer)
 	layer.add_child(DeathVeil.over(_stage))  # the death beat's ink, under the HUD
 	layer.add_child(hud_view)
+	WheelReadoutView.attach(hud_view, _stage)
 	if objective_view != null:
 		objective_view.stage = _stage
 		objective_view.system = _system

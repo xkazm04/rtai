@@ -365,13 +365,14 @@
         "2026-11-20: n21 kerf: one KNOWN_FLAGS line --kerf-cruise-wings (owner Call, off by default) (files_past_soft_cap 66 -> 64)",
         "2026-11-20: --controls for n22 guard (files_past_soft_cap 64 -> 64)",
         "2026-11-21: restore doc comments deleted in 8a8a0d93c/123ec794d (n22 guard) (files_past_soft_cap 64 -> 65)",
-        "2026-11-21: n22 hostile blasts: combat_arena.gd holds the station walls and fight_areas.gd records shared blast rings (files_past_soft_cap 65 -> 65)"
+        "2026-11-21: n22 hostile blasts: combat_arena.gd holds the station walls and fight_areas.gd records shared blast rings (files_past_soft_cap 65 -> 65)",
+        "2026-11-21: stage_pilot.gd wheel input and collect_call_view.gd HUD attachment for n22 guard wheel (files_past_soft_cap 65 -> 65)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
-        "project/boot/collect_call/stage_pilot.gd": 209,
+        "project/boot/collect_call/stage_pilot.gd": 234,
         "project/boot/collect_call/view/cast_view.gd": 230,
-        "project/boot/collect_call/view/collect_call_view.gd": 237,
+        "project/boot/collect_call/view/collect_call_view.gd": 238,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
         "project/boot/launch_args.gd": 210,
