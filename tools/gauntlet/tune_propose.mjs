@@ -159,8 +159,8 @@ export function propose(batch, state, baseline, { target = 15, profile = 'averag
         break;
       }
       if (changes.length >= max) { result.reason = 'plan limit'; break; }
-      changes.push({ id, file: entry.knob.file, pointer: entry.knob.pointer, before, after, baseline: first,
-        metric, miss, severity: observation.severity });
+      changes.push({ id, file: entry.knob.file, pointer: entry.knob.pointer, ...(entry.knob.row && { row: entry.knob.row }),
+        before, after, baseline: first, metric, miss, severity: observation.severity });
       chosen.add(id);
       if (metric.type === 'offer') selectedOffers.add(metric.id);
       result.reason = id + ' ' + before + ' -> ' + after;

@@ -440,3 +440,24 @@ test('a vanished pointer is reported and skipped while another planned knob stil
   assert.ok(ledger.changes[1].revert_commit);
   assert.equal(readJson(join(root, TABLES + 'combat.json')).guard.meter_max, plan.changes[1].before);
 });
+
+test('read and apply skip reordered array rows by their catalog id while other knobs apply', (t) => {
+  const root = repository(t, 'n22-tune-reorder'), before = robotBatch();
+  const plan = prepare(root, before);
+  assert.deepEqual(plan.changes.map((c) => c.row), ['shield_robot', 'war_machine', 'sentry_turret']);
+  const file = TABLES + 'enemies.json', table = readJson(join(root, file));
+  const i = table.archetypes.findIndex((r) => r.id === 'war_machine');
+  const j = table.archetypes.findIndex((r) => r.id === 'shield_robot');
+  [table.archetypes[i], table.archetypes[j]] = [table.archetypes[j], table.archetypes[i]];
+  writeFileSync(join(root, file), canonicalJson(table));
+  git(root, 'commit', '-m', 'reorder fixture archetypes', '--', file);
+  const warning = 'knob war_machine.hp: row ' + i + ' is shield_robot, skipped';
+  const warnings = [], state = inventory(root, (s) => warnings.push(s));
+  assert.equal(state.entries.has('war_machine.hp'), false);
+  assert.ok(warnings.includes(warning));
+  const result = cli(root, 'apply', '--plan=' + planFile);
+  ok(result);
+  assert.deepEqual(result.stderr.trim().split(/\r?\n/).filter((s) => s.startsWith('knob war_machine.hp:')), [warning]);
+  table.archetypes.find((r) => r.id === 'sentry_turret').hp = plan.changes[2].after;
+  assert.deepEqual(readJson(join(root, file)), table);
+});

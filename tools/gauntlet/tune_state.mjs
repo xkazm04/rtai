@@ -44,10 +44,19 @@ export function numericSlot(table, knob) {
   const keys = knob.pointer.slice(1).split('/').map((k) => k.replaceAll('~1', '/').replaceAll('~0', '~'));
   const key = keys.pop();
   let parent = table;
+  let matchedRow = false;
   for (const k of keys) {
     if (!parent || !Object.hasOwn(parent, k)) return null;
+    if (Array.isArray(parent)) {
+      const actual = parent[k]?.id;
+      if (!knob.row) return { error: 'knob ' + knob.id + ': missing catalog row id for row ' + k + ', skipped' };
+      if (knob.row !== actual)
+        return { error: 'knob ' + knob.id + ': row ' + k + ' is ' + (actual ?? '(no id)') + ', skipped' };
+      matchedRow = true;
+    }
     parent = parent[k];
   }
+  if (knob.row && !matchedRow) return { error: 'knob ' + knob.id + ': expected an array row, skipped' };
   if (!parent || !Object.hasOwn(parent, key) || !Number.isFinite(parent[key])) return null;
   // Array indices in a JSON pointer are positional. Never silently tune a different row after a reorder.
   if (keys[0] === 'archetypes' && knob.id !== parent.id + '.' + key) return null;
@@ -68,9 +77,9 @@ export function inventory(root, warn = console.error) {
     if (!tables.has(file) && existsSync(path)) tables.set(file, readJson(path));
     const table = tables.get(file);
     const slot = table && numericSlot(table, knob);
-    if (!slot || knob.pending) {
+    if (!slot || slot.error || knob.pending) {
       skipped.add(id);
-      warn(id + (knob.pending ? ' pending' : ' unresolved') + ': ' + file + '#' + knob.pointer + ' skipped');
+      warn(slot?.error ?? (id + (knob.pending ? ' pending' : ' unresolved') + ': ' + file + '#' + knob.pointer + ' skipped'));
       continue;
     }
     entries.set(id, { knob, value: slot.parent[slot.key] });

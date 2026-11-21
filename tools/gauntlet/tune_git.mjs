@@ -64,6 +64,7 @@ function edit(text, knob, before, after, schema) {
   const table = JSON.parse(text);
   if (canonicalJson(table) !== text) throw new Error(knob.file + ': canonical round-trip changed bytes');
   const slot = numericSlot(table, knob);
+  if (slot?.error) throw new Error(slot.error);
   if (!slot || slot.parent[slot.key] !== before) throw new Error('stale or unresolved knob: ' + knob.id);
   slot.parent[slot.key] = after;
   const errors = validate(schema, table);
@@ -86,7 +87,8 @@ function preflight(root, plan, receipts) {
     const entry = entries.get(id);
     if (!entry) throw new Error('knob unavailable: ' + id);
     const { knob, value } = entry;
-    if (change.file !== knob.file || change.pointer !== knob.pointer) throw new Error('plan differs from knob catalog: ' + id);
+    if (change.file !== knob.file || change.pointer !== knob.pointer || (change.row !== undefined && change.row !== knob.row))
+      throw new Error('plan differs from knob catalog: ' + id);
     const first = baseline.values[id];
     if (first !== change.baseline || !Number.isFinite(first)) throw new Error('baseline mismatch: ' + id);
     if (receipts.has(id) && value === after) continue;
