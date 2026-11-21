@@ -29,6 +29,9 @@ Final gate: TODO (`node tools/gate/run.mjs --rev=HEAD` line + `gate.json` path).
 
 ## What blocked or slowed you (minutes each)
 - `tools/dev/run.mjs` swallowed `--result` (fixed in 4b1634334): ~10 min.
+- First Astra call stopped at the debt ratchet and asked for authorisation instead of accepting the KNOWN_FLAGS line: ~11 min (one resume).
+- `tools/godot/check.mjs` fails standalone on two foes files after the foes iface merge (autoloads unresolved; project-load tests pass): ~5 min to rule out, not ours.
+- Waiting on Astra while it holds the lane's one Godot: my own seed checks and the gate had to queue behind each call (~10 min a session).
 
 ## Calls for the owner
 - **The five-wave film is bot-driven, not a human at the keys.** No human was present tonight; the film runs street's fallback walker with the dev-only `--pick-view` flag (offers held 90 ticks on screen, the bot's choice highlighted). `--pick-view` off is byte-identical. The human path (keys 1-3 / click, sim paused) is the same pick screen (`pick_screen_32.png`). Call: accept the bot film as the pick-screen evidence, or ask for a human take.
@@ -38,6 +41,7 @@ Final gate: TODO (`node tools/gate/run.mjs --rev=HEAD` line + `gate.json` path).
 
 ## Merge notes
 - Wire guard's meter: `GauntletHud.set_guard_meter(session.pilot.guard.meter(), session.pilot.guard.broken())` and `PlayerGuard.meter_k = run.mods.value(&"guard_meter")` once guard's head is merged.
+- Guard's NEED (04:32): the gauntlet should run the wheel controls by default. After guard's head is merged, make an absent `--controls` mean `wheel` inside the gauntlet scene only (`project/dev/gauntlet/gauntlet.gd:31`, `run.controls = ControlsMode.id()`), legacy still selectable; outside the gauntlet legacy stays the default. Not done on street's branch (guard iface only, no live guard; it would only move every seed's sha). Until then launch with `--controls=wheel`.
 - Optional: 161c32453 recolours the shipped ghost HUD's Madness notch from teal to ink inside the gauntlet (a colour-predicate shader). Teal is lawful there (ghosts are souls); the Director may drop the commit, which changes only the film's look.
 - Loop: `GauntletPilot.wave_counters()` / `reset_wave_counters()` (cd77c6507) carry the bot's rolls/deflects per wave; `death.by` always names the killer or `unknown`/`timeout` (d1d2a9ce1); `hits_gun` / `hits_melee` (88fbbac62).
 - Loop's bot: a zero-arg `GauntletPilot` subclass at `res://features/gauntlet/bot/gauntlet_bot.gd` is picked up by the scene.
@@ -58,3 +62,5 @@ Final gate: TODO (`node tools/gate/run.mjs --rev=HEAD` line + `gate.json` path).
 | street-quality | 62 | accepted |
 | refilm | 48 | accepted |
 | contact-tests | 4 | accepted |
+
+Total 8 calls, about 310 minutes of builder time (11+14+70+45+55+62+48+4), 7 accepted, 1 bounced. What I would brief differently: put the paint-vs-collision audit inside the dressing brief (it came one call later and found the underpass mouths); state the colour-law exemption for the shipped ghost HUD explicitly (Astra recoloured the Madness notch on an over-reading of "no teal"); ask for the per-source hit split in the first telemetry brief (loop needed it at 04:00); give the debt-ratchet acceptance line in the very first brief.
