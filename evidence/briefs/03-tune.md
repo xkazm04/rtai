@@ -1,6 +1,6 @@
 # Brief 03 (lane loop, n22): the tuner
 
-Wall-clock: you start about 01:50. **Commit deadline 02:55, hard stop 03:05**. Small commits; never amend, never rebase.
+Wall-clock: you start about 02:06. **Commit deadline 03:10, hard stop 03:20**. Small commits; never amend, never rebase.
 
 ## Context (read, do not re-derive)
 Read first: `docs/gauntlet-loop.md`, `tools/gauntlet/batch.mjs`, `tools/gauntlet/report.mjs` and their tests (landed in the previous call), `project/features/gauntlet/bot/` (the test player). Design: `C:\Users\kazda\kiro\gtai\.spark\Spark\ideas\combat-gauntlet.md` (read only).

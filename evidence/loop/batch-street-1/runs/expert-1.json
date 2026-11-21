@@ -1,0 +1,119 @@
+{
+  "controls": "wheel",
+  "mods": {},
+  "picks": [
+    {
+      "offered": [
+        "stat_damage_10",
+        "stat_hp_max_10",
+        "stat_guard_meter_10"
+      ],
+      "taken": "stat_damage_10",
+      "wave": 1
+    },
+    {
+      "offered": [
+        "weapon_electro_baton",
+        "weapon_gloria",
+        "ghost_kerf"
+      ],
+      "taken": "ghost_kerf",
+      "wave": 2
+    },
+    {
+      "offered": [
+        "weapon_hand_cannon",
+        "weapon_electro_baton",
+        "stat_hp_max_25"
+      ],
+      "taken": "stat_hp_max_25",
+      "wave": 3
+    },
+    {
+      "offered": [
+        "stat_guard_meter_10",
+        "weapon_katana",
+        "weapon_electro_baton"
+      ],
+      "taken": "stat_guard_meter_10",
+      "wave": 4
+    },
+    {
+      "offered": [
+        "weapon_plasma_rifle",
+        "stat_damage_25",
+        "ghost_ohm"
+      ],
+      "taken": "ghost_ohm",
+      "wave": 5
+    }
+  ],
+  "profile": "expert",
+  "schema": "gtai.gauntlet-run/1",
+  "seed": 1,
+  "wave_reached": 5,
+  "waves": [
+    {
+      "damage_taken": 0.0,
+      "enemies": {
+        "patrol_cop": 4
+      },
+      "hits": 4,
+      "n": 1,
+      "rolls": 0,
+      "seconds": 8.55,
+      "shots": 0
+    },
+    {
+      "damage_taken": 0.0,
+      "enemies": {
+        "patrol_cop": 6
+      },
+      "hits": 6,
+      "n": 2,
+      "rolls": 0,
+      "seconds": 9.53333333333333,
+      "shots": 0
+    },
+    {
+      "damage_taken": 0.599999999999994,
+      "enemies": {
+        "contractor": 1,
+        "riot_cop": 1,
+        "swat": 2
+      },
+      "hits": 4,
+      "n": 3,
+      "rolls": 1,
+      "seconds": 5.16666666666667,
+      "shots": 0
+    },
+    {
+      "damage_taken": 0.599999999999994,
+      "enemies": {
+        "contractor": 1,
+        "riot_cop": 1,
+        "rocket_trooper": 1,
+        "swat": 2
+      },
+      "hits": 5,
+      "n": 4,
+      "rolls": 3,
+      "seconds": 10.1,
+      "shots": 0
+    },
+    {
+      "damage_taken": 76.0,
+      "enemies": {
+        "contractor": 3,
+        "patrol_cop": 1,
+        "war_machine": 1
+      },
+      "hits": 51,
+      "n": 5,
+      "rolls": 13,
+      "seconds": 29.65,
+      "shots": 0
+    }
+  ]
+}

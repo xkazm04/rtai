@@ -1,0 +1,119 @@
+{
+  "controls": "wheel",
+  "mods": {},
+  "picks": [
+    {
+      "offered": [
+        "ghost_tonnage",
+        "stat_speed_10",
+        "weapon_gloria"
+      ],
+      "taken": "ghost_tonnage",
+      "wave": 1
+    },
+    {
+      "offered": [
+        "ghost_tonnage",
+        "ghost_kerf",
+        "weapon_pistol"
+      ],
+      "taken": "ghost_tonnage",
+      "wave": 2
+    },
+    {
+      "offered": [
+        "weapon_hand_cannon",
+        "weapon_chainsaw",
+        "stat_regen_10"
+      ],
+      "taken": "stat_regen_10",
+      "wave": 3
+    },
+    {
+      "offered": [
+        "weapon_plasma_sword",
+        "stat_hp_max_25",
+        "stat_guard_meter_25"
+      ],
+      "taken": "stat_hp_max_25",
+      "wave": 4
+    },
+    {
+      "offered": [
+        "weapon_rocket_launcher",
+        "ghost_dent",
+        "stat_hp_max_25"
+      ],
+      "taken": "weapon_rocket_launcher",
+      "wave": 5
+    }
+  ],
+  "profile": "expert",
+  "schema": "gtai.gauntlet-run/1",
+  "seed": 5,
+  "wave_reached": 5,
+  "waves": [
+    {
+      "damage_taken": 0.599999999999994,
+      "enemies": {
+        "patrol_cop": 4
+      },
+      "hits": 4,
+      "n": 1,
+      "rolls": 0,
+      "seconds": 6.3,
+      "shots": 0
+    },
+    {
+      "damage_taken": 0.0,
+      "enemies": {
+        "patrol_cop": 6
+      },
+      "hits": 6,
+      "n": 2,
+      "rolls": 0,
+      "seconds": 6.88333333333333,
+      "shots": 0
+    },
+    {
+      "damage_taken": 1.19999999999999,
+      "enemies": {
+        "patrol_cop": 2,
+        "rocket_trooper": 1,
+        "swat": 2
+      },
+      "hits": 5,
+      "n": 3,
+      "rolls": 1,
+      "seconds": 7.81666666666667,
+      "shots": 0
+    },
+    {
+      "damage_taken": 0.0,
+      "enemies": {
+        "patrol_cop": 2,
+        "riot_cop": 2,
+        "rocket_trooper": 2
+      },
+      "hits": 6,
+      "n": 4,
+      "rolls": 5,
+      "seconds": 13.6833333333333,
+      "shots": 0
+    },
+    {
+      "damage_taken": 28.6,
+      "enemies": {
+        "contractor": 2,
+        "patrol_cop": 1,
+        "rocket_trooper": 1,
+        "war_machine": 1
+      },
+      "hits": 51,
+      "n": 5,
+      "rolls": 15,
+      "seconds": 41.1,
+      "shots": 0
+    }
+  ]
+}

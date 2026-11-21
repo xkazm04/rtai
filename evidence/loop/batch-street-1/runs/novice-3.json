@@ -1,0 +1,113 @@
+{
+  "controls": "wheel",
+  "death": {
+    "by": "timeout",
+    "wave": 5
+  },
+  "mods": {},
+  "picks": [
+    {
+      "offered": [
+        "ghost_tonnage",
+        "ghost_dent",
+        "stat_guard_meter_10"
+      ],
+      "taken": "ghost_tonnage",
+      "wave": 1
+    },
+    {
+      "offered": [
+        "ghost_dent",
+        "ghost_ohm",
+        "weapon_katana"
+      ],
+      "taken": "ghost_ohm",
+      "wave": 2
+    },
+    {
+      "offered": [
+        "stat_damage_25",
+        "stat_hp_max_25",
+        "stat_guard_meter_25"
+      ],
+      "taken": "stat_damage_25",
+      "wave": 3
+    },
+    {
+      "offered": [
+        "weapon_plasma_sword",
+        "stat_regen_10",
+        "stat_guard_meter_25"
+      ],
+      "taken": "stat_guard_meter_25",
+      "wave": 4
+    }
+  ],
+  "profile": "novice",
+  "schema": "gtai.gauntlet-run/1",
+  "seed": 3,
+  "wave_reached": 5,
+  "waves": [
+    {
+      "damage_taken": 1.79999999999998,
+      "enemies": {
+        "patrol_cop": 4
+      },
+      "hits": 4,
+      "n": 1,
+      "rolls": 1,
+      "seconds": 11.8166666666667,
+      "shots": 0
+    },
+    {
+      "damage_taken": 0.599999999999994,
+      "enemies": {
+        "patrol_cop": 6
+      },
+      "hits": 6,
+      "n": 2,
+      "rolls": 0,
+      "seconds": 6.78333333333333,
+      "shots": 0
+    },
+    {
+      "damage_taken": 0.599999999999994,
+      "enemies": {
+        "riot_cop": 1,
+        "swat": 3
+      },
+      "hits": 4,
+      "n": 3,
+      "rolls": 0,
+      "seconds": 6.43333333333333,
+      "shots": 0
+    },
+    {
+      "damage_taken": 1.19999999999999,
+      "enemies": {
+        "patrol_cop": 2,
+        "riot_cop": 1,
+        "rocket_trooper": 2,
+        "swat": 1
+      },
+      "hits": 6,
+      "n": 4,
+      "rolls": 1,
+      "seconds": 11.4666666666667,
+      "shots": 0
+    },
+    {
+      "damage_taken": 233.2,
+      "enemies": {
+        "patrol_cop": 3,
+        "riot_cop": 1,
+        "rocket_trooper": 1,
+        "war_machine": 1
+      },
+      "hits": 44,
+      "n": 5,
+      "rolls": 19,
+      "shots": 0
+    }
+  ]
+}

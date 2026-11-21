@@ -1,0 +1,13 @@
+# --fixed-fps 60 --quit-after 72000 res://dev/gauntlet/gauntlet.tscn -- --seed=2 --bot=average --pick=greedy --controls=wheel --result=C:\Users\kazda\kiro\gtai-wt\n22-loop\evidence\loop\batch-street-1\runs\average-2.json
+# exit 0, 12.6 s
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] gauntlet: test player bound: average, greedy picks, seed 2
+[INFO] gauntlet: wave 1 tick 237 block crosswalk enemies { "patrol_cop": 4 }
+[INFO] gauntlet: wave 2 tick 589 block plain_block enemies { "patrol_cop": 6 }
+[INFO] gauntlet: wave 3 tick 997 block alley_neck enemies { "riot_cop": 2, "rocket_trooper": 2 }
+[INFO] gauntlet: wave 4 tick 1476 block crosswalk enemies { "riot_cop": 2, "patrol_cop": 2, "contractor": 1, "swat": 1 }
+[INFO] gauntlet: wave 5 tick 1872 block alley_neck enemies { "war_machine": 1, "patrol_cop": 1, "riot_cop": 3 }
+[INFO] gauntlet: wave 6 tick 3867 block kiosk_plaza enemies { "robot_thug": 1, "riot_cop": 3, "sentry_turret": 1, "swat": 1 }
+[INFO] gauntlet: wave 6 ended after 728 ticks at (218.7918, 5.33251), hp 0.0
+[INFO] gauntlet: tick 4596, segment 6, 3 resident
