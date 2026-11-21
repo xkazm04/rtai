@@ -61,6 +61,12 @@ The tuner keeps a change only when its paired improvement clears an A/A floor. T
 ### Call 2: the wave budget cannot rise by 20 %
 Waves 1-4 take 6.1-8.0 s against 15 s (30 of 30 runs). The tuner wants more enemies, but `budget.base` is the integer 2, and the next integer step (+50 %) is past the 1.25x clamp. The choice: budget in finer units (street's table, for example cost x10), or allow integer knobs one unit per night. Not built; street owns the table.
 
+### Call 3: the 90 s wave timer ends most deep runs (the owner said "endless until death")
+Street ends a run `by: timeout` when a wave lasts 90 s (`project/features/gauntlet/gauntlet_waves.gd`, an anti-stall rule from its first session). On the same 20 seeds it ends 3 of 20 novice runs, 10 of 20 average and 17 of 20 expert (`evidence/loop/profiles-20/report.md`). So past about wave 20 the score "wave reached" measures kill speed against late tanky enemies, and the expert cannot pull away from the average (median 24 vs 21, deeper on only 11 of 20 seeds). The tuner then reads every slow late wave as "too slow" and cuts enemy HP, which pushes toward longer runs rather than harder ones.
+- **A (recommended):** a timed-out wave does not end the run; the next wave starts on top of what is left, so pressure stacks until Rivet dies. "Endless until death" holds, stalls stay impossible, and the score separates the profiles by survival again. One data value in street's table (`on_timeout: "next_wave" | "end_run"`). Street's to build; the loop's report already counts timeouts on their own line.
+- **B:** keep the timer as a run end and score by waves cleared plus time. Simpler, but "until death" no longer holds.
+- Side-by-side: `C:\Users\kazda\kiro\gtai-masters\n22\loop\profiles-20-report.png`: average and expert wave times climb to 50-80 s past wave 20; the novice's runs end by wave 22.
+
 ### Proposals (from `evidence/loop/street-final` and `evidence/loop/tune1-before`; nothing built)
 Timed parry is a non-goal in the design note, so none of these is a parry.
 1. **Ohm short-circuit on machines**: an Ohm pulse that stuns a sentry turret or shield robot for about 2 s. Observation: waves with a sentry turret take a median 38.3 s against 10.7 s without one (99 vs 83 waves), and `turret_gun` is a top killer in both street batches.
