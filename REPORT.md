@@ -89,7 +89,7 @@ Numbers below are from Astra's reports and my own reruns, as logged in `JOURNAL.
 
 ## Merge notes
 
-- Measured at 06:02 with `git merge-tree` against the lane heads. **Code conflict with n22-foes** in
+- Measured at 05:59 with `git merge-tree` against the lane heads. **Code conflict with n22-foes** in
   `project/features/combat/combat_arena.gd` `damage()`: guard adds `if guard != null and guard.blocks_melee(self, victim,
   killer_id, weapon, kind): return`, and foes adds `amount *= FoeArmor.impact(self, victim, kind, killer_id, weapon)` on the same
   line. Keep both, guard first: a blocked melee hit returns before any armour maths, then foes' armour scales what is left,
