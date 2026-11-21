@@ -81,10 +81,17 @@ func test_hud_reads_the_live_wave_clock_and_reserves_a_guard_meter() -> void:
 	assert_eq(overlay._hp.value, 0.75)
 	assert_eq(overlay.guard_meter.name, &"GuardMeter")
 	assert_false(overlay.guard_meter.visible)
-	overlay.set_guard_meter(0.65)
+	var guard: PlayerGuard = PlayerGuard.new()
+	session.pilot.guard = guard
+	guard._drain(guard.tuning.meter_max * 0.35)
+	overlay._process(0.0)
 	assert_true(overlay.guard_meter.visible)
 	assert_lte(overlay._hp.get_rect().end.y, overlay.guard_meter.position.y)
 	assert_almost_eq(overlay.guard_meter.value, 0.65, 0.001)
+	guard._drain(guard.tuning.meter_max)
+	overlay._process(0.0)
+	assert_eq(overlay.guard_meter.modulate, Color.GRAY)
+	assert_eq(overlay.guard_meter.value, 0.0)
 	overlay.free()
 
 

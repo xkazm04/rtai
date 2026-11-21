@@ -60,6 +60,11 @@ func _process(_delta: float) -> void:
 		{"hp": ceili(rivet.hp), "max_hp": roundi(rivet.max_hp)}
 	)
 	_hp.value = clampf(rivet.hp / rivet.max_hp, 0.0, 1.0)
+	var guard: PlayerGuard = session.pilot.guard
+	if guard != null:
+		set_guard_meter(guard.meter(), guard.broken())
+	else:
+		guard_meter.hide()
 
 
 func set_guard_meter(fraction: float, broken: bool = false) -> void:

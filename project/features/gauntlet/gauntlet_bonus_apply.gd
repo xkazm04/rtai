@@ -58,3 +58,5 @@ func _stats() -> void:
 	rivet.max_hp = max_hp
 	arena.tuning.rivet["walk_mps"] = _walk * _run.mods.value(&"speed")
 	arena.tuning.rivet["repair_per_s"] = _repair * _run.mods.value(&"regen")
+	if _stage.pilot.guard != null:
+		_stage.pilot.guard.meter_k = _run.mods.value(&"guard_meter")

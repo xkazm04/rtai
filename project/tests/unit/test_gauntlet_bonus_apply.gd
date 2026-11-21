@@ -55,6 +55,8 @@ func test_speed_and_repair_apply_from_base_and_are_private_to_the_run() -> void:
 
 
 func test_hp_grants_preserve_existing_wounds_and_guard_meter_is_recorded() -> void:
+	var guard: PlayerGuard = PlayerGuard.new()
+	session.pilot.guard = guard
 	var rivet: Fighter = session.stage.arena.rivet
 	rivet.hp -= 8.0
 	_take(&"stat_hp_max_25")
@@ -63,6 +65,9 @@ func test_hp_grants_preserve_existing_wounds_and_guard_meter_is_recorded() -> vo
 	_take(&"stat_guard_meter_10")
 	assert_eq(rivet.hp, 117.0)
 	assert_eq(run.mods.value(&"guard_meter"), 1.1)
+	guard._drain(guard.tuning.meter_max)
+	assert_almost_eq(guard.meter(), 1.0 - 1.0 / 1.1, 0.00001)
+	assert_false(guard.broken())
 
 
 func test_latest_weapon_is_drawn_and_the_ghost_lock_opens() -> void:
