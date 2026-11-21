@@ -52,7 +52,9 @@ func _await_tell() -> void:
 
 func test_readable_locked_shove_can_be_sidestepped() -> void:
 	arena.rivet.pos = Vector2(1.6, 0)
+	watch_signals(Events)
 	_await_tell()
+	assert_signal_emitted_with_parameters(Events, "attack_telegraphed", [arch.weapon.id])
 	var plant: Vector2 = robot.pos
 	var aim: Vector2 = robot.facing
 	arena.rivet.pos += aim.orthogonal() * 1.35
@@ -62,7 +64,11 @@ func test_readable_locked_shove_can_be_sidestepped() -> void:
 		assert_eq(robot.pos, plant)
 		assert_eq(robot.facing, aim)
 		assert_eq(robot.swing_left, arch.telegraph_ticks - i - 1)
+		if robot.swing_left > 0:
+			assert_eq(mind.agent.state, EnemyAgent.State.WINDUP)
+			assert_eq(mind.agent.state_ticks, i + 1)
 	assert_eq(mind.shield.lunge_left, FoeShield.LUNGE_TICKS)
+	assert_eq(mind.agent.state, EnemyAgent.State.FIRE)
 	for i: int in FoeShield.LUNGE_TICKS:
 		_tick()
 		assert_eq(robot.facing, aim)
@@ -88,17 +94,54 @@ func test_slow_advance_and_lunge_hit_once_with_row_knockback() -> void:
 		arena.rivet.pos, start + Vector2.RIGHT * arch.weapon.knockback_m, Vector2.ONE * 0.001
 	)
 	var mind: SquadMind = arena.squad_ai.minds[robot.id]
+	assert_eq(mind.agent.state, EnemyAgent.State.RECOVER)
 	assert_eq(mind.agent.cooldown, arch.weapon.cooldown_ticks)
 	assert_eq(mind.agent.shot_tick, now)
 	assert_false(mind.agent.token)
+	arena.rivet.pos = robot.pos + Vector2.RIGHT * arch.preferred_m
+	for left: int in range(arch.weapon.cooldown_ticks - 1, -1, -1):
+		_tick()
+		assert_eq(mind.agent.cooldown, left)
+		assert_eq(robot.swing_left, 0)
+	_tick()
+	assert_eq(robot.swing_left, arch.telegraph_ticks)
 
 
 func test_carrier_turns_at_the_rows_rate_when_rivet_crosses_behind() -> void:
 	arena.rivet.pos = Vector2(-2, 0)
 	var old: Vector2 = robot.facing
 	_tick()
+	assert_eq(robot.pos, Vector2.ZERO, "Plants its feet while turning away from its old heading")
 	assert_almost_eq(absf(old.angle_to(robot.facing)), arch.turn_rad_per_tick, 0.0001)
 	assert_eq(robot.swing_left, 0)
+
+
+func test_a_wall_in_the_lunge_path_stops_the_carrier_and_the_shove() -> void:
+	arena.rivet.pos = Vector2(1.6, 0)
+	_await_tell()
+	var plant: Vector2 = robot.pos
+	var wall: Rect2 = Rect2(plant + Vector2(0.55, -2), Vector2(1, 4))
+	var map: GuardRouteMap = GuardRouteMap.new(Rect2(-20, -20, 40, 40), [wall], null, 0.45)
+	arena.squad_ai.set_route_map(map)
+	for i: int in arch.telegraph_ticks + FoeShield.LUNGE_TICKS:
+		_tick()
+	assert_gt(robot.pos.x, plant.x)
+	assert_true(map.clear_line(plant, robot.pos), "A locked lunge still respects the wall")
+	assert_eq(arena.rivet.hp, arena.rivet.max_hp)
+
+
+func test_shove_connects_when_rivets_near_edge_just_touches_its_reach() -> void:
+	arena.rivet.pos = Vector2(1.6, 0)
+	_await_tell()
+	for i: int in arch.telegraph_ticks + FoeShield.LUNGE_TICKS - 1:
+		_tick()
+	# Make contact at exactly 2.5 m, representable in both Vector2 and the row's floats.
+	arena.rivet.radius_m = 2.5 - arch.weapon.reach_m
+	robot.pos = -Vector2.RIGHT * arch.speed_mps * SimClock.TICK_DT
+	arena.rivet.pos = Vector2(2.5, 0)
+	_tick()
+	assert_eq(robot.pos, Vector2.ZERO)
+	assert_eq(arena.rivet.hp, arena.rivet.max_hp - arch.production_damage)
 
 
 func test_small_detonation_bypasses_both_plates_through_the_real_area_damage_path() -> void:
