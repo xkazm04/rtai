@@ -20,6 +20,12 @@ Lane `loop`: the test player, the batch tool, the report, the tuner and the many
 
 ## Calls for the owner
 
+### Proposals (draft from batch-street-1; refresh from the final batches)
+Timed parry is a non-goal in the design note, so none of these is a parry.
+1. **Ohm short-circuit on machines**: an Ohm pulse that stuns a sentry turret or shield robot for about 2 s. Observation: `turret_gun` killed 5 of 8 bot deaths in batch-street-1 while turrets sat in only 5 % of wave time.
+2. **Tonnage armour crack**: a Tonnage hit landed in the war machine's recovery after a stomp opens its armour (more damage for a few seconds). Observation: the war-machine wave took 30-82 s against the 15 s target for every profile.
+3. **Kerf blink behind a shield**: Kerf's blink-slice ends behind its target, so a shield robot's front shield is skipped. Observation: waves with a shield robot took a median 34 s (n=2, too few to tune on).
+
 ## Merge notes
 
 - `n22-loop` contains merges of `n22-street` (1b52bf0e6), `n22-guard` (123ec794d), `n22-foes` (0b29f2cb5) heads; `tools/debt/baseline.json` conflicts resolved with `merge_baseline.mjs`.

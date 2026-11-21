@@ -1,6 +1,6 @@
 # Brief 04 (lane loop, n22): the test player on the real street
 
-Wall-clock: you start about {START}. **Commit deadline {COMMIT}, hard stop {STOP}**. Small commits, one per change; never amend, never rebase. Fix lint and format findings in your own edit and go on.
+Wall-clock: you start about 02:37. **Commit deadline 03:42, hard stop 03:50**. Small commits, one per change; never amend, never rebase. Fix lint and format findings in your own edit and go on.
 
 ## Context (read, do not re-derive)
 - Your previous work: `project/features/gauntlet/bot/` (GauntletTestPlayer at `gauntlet_bot.gd`, brain `bot_brain.gd`, `BotViewArena`, `BotDefence`, `BotForms`, `BotCover`, `BotPick`), `project/data/tables/test_player.json` (+ schema), `project/dev/test_player/` (pit probe), `tools/gauntlet/` (batch, report; a tuner is being added by another call that ended before yours), `docs/gauntlet-loop.md`.
