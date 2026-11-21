@@ -108,3 +108,30 @@ func test_plasma_sword_still_returns_a_large_round() -> void:
 	assert_eq(PlayerDeflect.bat(arena, Vector2.RIGHT, 2.0), 1)
 	assert_true(s.from_rivet)
 	assert_eq(guard.meter(), 1.0)
+
+
+func test_melee_arc_is_relative_to_rivet_and_needs_an_incoming_direction() -> void:
+	arena.rivet.pos = Vector2(10, 8)
+	var hp: float = arena.rivet.hp
+	for offset: Vector2 in [Vector2.LEFT, Vector2.ZERO]:
+		foe.pos = arena.rivet.pos + offset
+		arena.damage(arena.rivet, 1.0, foe.id, &"baton", &"melee")
+	assert_eq(guard.melee_blocks, 0)
+	assert_eq(arena.rivet.hp, hp - 2.0)
+	foe.pos = arena.rivet.pos + Vector2.RIGHT
+	arena.damage(arena.rivet, 1.0, foe.id, &"baton", &"melee")
+	assert_eq(guard.melee_blocks, 1)
+	assert_eq(arena.rivet.hp, hp - 2.0)
+
+
+func test_lowered_guard_and_another_victim_take_front_melee_damage() -> void:
+	foe.pos = arena.rivet.pos + Vector2.RIGHT
+	var other: Fighter = arena.spawn_guard(foe.pos)
+	var hp: float = other.hp
+	arena.damage(other, 0.5, foe.id, &"baton", &"melee")
+	assert_eq(other.hp, hp - 0.5)
+	guard.lower()
+	hp = arena.rivet.hp
+	arena.damage(arena.rivet, 1.0, foe.id, &"baton", &"melee")
+	assert_eq(arena.rivet.hp, hp - 1.0)
+	assert_eq(guard.melee_blocks, 0)

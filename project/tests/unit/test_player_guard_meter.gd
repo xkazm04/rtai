@@ -92,3 +92,22 @@ func test_capacity_multiplier_and_lowering_without_breaking() -> void:
 	for tick: int in 240:
 		guard.step(false, true)
 	assert_eq(guard.meter(), 1.0)
+
+
+func test_zero_capacity_lowers_guard_and_reports_an_empty_meter() -> void:
+	guard.meter_k = 0.0
+	assert_false(guard.up())
+	assert_false(guard.broken())
+	assert_eq(guard.meter(), 0.0)
+	guard.step(true, true)
+	assert_false(guard.up())
+	assert_eq(guard.meter(), 0.0)
+
+
+func test_serialized_guard_distinguishes_up_from_just_lowered() -> void:
+	var raised: StreamPeerBuffer = StreamPeerBuffer.new()
+	guard.write_state(raised)
+	guard.lower()
+	var lowered: StreamPeerBuffer = StreamPeerBuffer.new()
+	guard.write_state(lowered)
+	assert_ne(raised.data_array, lowered.data_array)
