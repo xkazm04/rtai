@@ -132,3 +132,4 @@ NEXT (session 5, from about 05:54):
 - 06:05 FRICTION loop decisions were only in JOURNAL, not docs/decisions.md (the rule says both). Brief 08 appends four exact lines (test player table, tuner, batch jobs, profiles/score).
 - 06:05 ASTRA RUNNING decisions since 06:05 (brief evidence/briefs/08-decisions.md, out C:/Users/kazda/kiro/gtai-n22/logs/loop/astra-decisions.out, lock pid 63524, commit 06:30, stop 06:35). Gate on 9ec8ba4e3 running alongside (Astra uses no Godot).
 - 06:06 ASTRA decisions 1 accepted. 57dde9cdd: 4 lines appended to docs/decisions.md, 0 deletions (checked).
+- 06:14 MILESTONE gate PASS on 9ec8ba4e3 (10 min): lint 19, unit 3541/0/2, scenarios 65, parity bit-exact + mutation caught at 629, selftest, export-audit 864/0. build/gate/9ec8ba4e3f64/gate.json. Covers the debt-baseline commit. REPORT header updated. Removed my snapshot worktree gtai-gate-9ec8ba4e3f64 from Temp.

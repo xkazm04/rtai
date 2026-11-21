@@ -2,7 +2,7 @@
 
 Lane `loop`: the test player, the batch tool, the report, the tuner and the many-night procedure for the combat gauntlet. Branch `n22-loop`, worktree `C:\Users\kazda\kiro\gtai-wt\n22-loop`. Tune branches `n22-tune` (10 seeds) and `n22-tune-2` (30 seeds), both net zero tonight: two cycles of five HP cuts, all ten reverted as under the noise floor (see Call 1 on that floor).
 
-Gate: `node tools/gate/run.mjs --rev=3cc9334c3` (the last code-bearing commit; later commits are JOURNAL, REPORT, evidence and one debt-baseline tightening): **gate: PASS** (unit-tests 3541 passed, 0 failed, 2 skipped; scenario-tests 65 passed; parity bit for bit over 1200 steps, planted mutation caught; selftest; export-audit 864 loaded, 0 failed), `build/gate/3cc9334c3d56/gate.json` (git-ignored, in this worktree). The `--reels` gate on the final commit runs after the 07:30 freeze.
+Gate: `node tools/gate/run.mjs --rev=HEAD` on 9ec8ba4e3 (06:04-06:14; it covers the debt-baseline tightening 3f9a8b9e2, the last non-inert commit; every commit since is docs, JOURNAL, REPORT or evidence): **gate: PASS** (lint 19 checks over 1901 GDScript files; unit-tests 3541 passed, 0 failed, 2 skipped; scenario-tests 65 passed; parity bit for bit over 1200 steps, planted mutation caught at step 629; selftest; export-audit 864 loaded, 0 failed), `build/gate/9ec8ba4e3f64/gate.json` (git-ignored, in this worktree). The earlier PASS on 3cc9334c3 is `build/gate/3cc9334c3d56/gate.json`. The `--reels` gate on the final commit runs after the 07:30 freeze.
 
 ## What works (item, evidence, number)
 
