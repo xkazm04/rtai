@@ -3,6 +3,11 @@
     "wave": {
       "additionalProperties": false,
       "properties": {
+        "cover_ticks": {
+          "description": "Simulation ticks during this wave when the bot chose cover.",
+          "minimum": 0,
+          "type": "integer"
+        },
         "damage_taken": {
           "minimum": 0,
           "type": "number"
@@ -34,6 +39,11 @@
           "minimum": 0,
           "type": "integer"
         },
+        "guard_ticks": {
+          "description": "Simulation ticks during this wave when the bot issued the guard input.",
+          "minimum": 0,
+          "type": "integer"
+        },
         "hits": {
           "description": "All wounding or lethal damage events against wave members, including melee, area effects and damage from other sources.",
           "minimum": 0,
@@ -48,6 +58,51 @@
           "description": "Contacts on wave members from Rivet using his hands, a held melee weapon or a direct physical form attack. Each body struck counts once.",
           "minimum": 0,
           "type": "integer"
+        },
+        "machine": {
+          "additionalProperties": false,
+          "description": "Bot measurements for the first war machine in this wave. Omitted when no war machine is tracked.",
+          "properties": {
+            "claw_reach_ticks": {
+              "description": "Observed ticks when the machine was within Rivet's claw reach.",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "cover_ticks": {
+              "description": "Observed ticks when the bot chose cover.",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "guard_ticks": {
+              "description": "Observed ticks when the bot issued the guard input.",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "hp_lost": {
+              "description": "Total HP lost by the tracked machine during observed ticks.",
+              "minimum": 0,
+              "type": "number"
+            },
+            "rolling_ticks": {
+              "description": "Observed ticks when Rivet was rolling.",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "ticks": {
+              "description": "Simulation ticks when the bot observed the tracked machine.",
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "claw_reach_ticks",
+            "cover_ticks",
+            "guard_ticks",
+            "hp_lost",
+            "rolling_ticks",
+            "ticks"
+          ],
+          "type": "object"
         },
         "n": {
           "minimum": 1,
