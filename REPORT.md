@@ -42,6 +42,7 @@ Existing rows' and weapons' numbers are unchanged. After every brief: unit (last
 - **Blast area damage on Rivet** is not dealt on this branch: a rocket or a cannon shell hurts Rivet only on a direct hit; its burst is drawn, not dealt. Guard's `RivetBlast.burst` (guard head `97352761e`) deals it once merged (the rows already carry `splash_radius_m` / `splash_damage`). The war machine's stomp deals its own area damage (foes code, line of sight on the route map).
 - **War machine vs the 15 s wave target**: an average player needs about 27 s alone with it (plus its escort). See Calls.
 - **Not every gun kills a human with its first hit**: machine pistol, gatling, electro, flamethrower and molotov do less than 1 human hp per round by their shipped `weapons.json` numbers (two pistol-class rounds per cop). The doctrine "humans die to one hit" holds per hit of a full round, not per pellet; nothing changed tonight (guard's file, existing numbers).
+- The shield robot's shove mark is a short vermilion arrowhead at its feet (64 px/m close-up `C:\Users\kazda\kiro\gtai-masters\n22\foes\shield_robot\shove64\t405.png`, tick 405): it shows the locked direction, and the reel bot reads it and steps clear with no damage, but it does not draw the 1.8 m reach. Drawing the reach is a view-only change in `foe_shield_view.gd` (next steps).
 - At 32 px/m the bigger walker's hull nearly fills its own stomp ring (`C:\Users\kazda\kiro\gtai-masters\n22\foes\war_machine\t368.png`): the ring still reads, but the visible margin between hull and ring edge is thin. A wider ring is one number (`splash_radius_m` on the stomp row) for the tuner or the owner.
 - `combat_arena.gd:213` names `war_machine` by id (fight areas never hold it); a row flag would be cleaner.
 - The held guard (right-click block) and the wheel are guard's and are not on this branch beyond `n22-guard-iface`: the duels use `PitDummy` profiles (perfect / average / novice dodging and aim), not the held guard, so "guard through the turret's sweep" is not measured here.
@@ -72,6 +73,7 @@ Existing rows' and weapons' numbers are unchanged. After every brief: unit (last
 - Merge guard's blast and re-run the four duels: the rocket and shell hurt shares should rise (today direct hits only).
 - Run the gauntlet bot against tier 4-5 waves and let the tuner move war machine hp and tell lengths inside its clamp.
 - A row flag (`holdable: false`) instead of the war machine id in `combat_arena.gd:213`.
+- Draw the shield robot's shove mark out to its full 1.8 m reach, and widen the war machine's stomp ring read (both view-only).
 - Final looks for the four (owner's direction first).
 
 ## Astra ledger
