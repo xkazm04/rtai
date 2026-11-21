@@ -29,3 +29,10 @@ NEXT (session 2, from about 01:38):
 - 01:37 NEED street: `project/features/gauntlet/gauntlet_run.gd` a wave-close hook (or a counters field the pilot can fill) so the result's `guard_deflects`, `rolls`, `form_seconds` carry the test player's counters per wave.
 - 01:37 NEED director/owner: add `"tools/gauntlet/*.test.mjs"` to the Node tooling test glob list in `AGENTS.md:36` (not a loop file).
 NEXT (session 2): items 1-5 of the NEXT above still stand, minus "wait for batch-report" (done). Start with: review `evidence/loop/batch-pit-1/report.html` (look at it), `git merge --no-edit n22-foes-iface`, then launch brief 03 (tuner).
+
+## Session 2 (01:38 - 03:07)
+- 01:38 START. No Astra lock; last call batch-report (n=2) ended clean. No `NEED loop` in street/guard/foes journals.
+- 01:40 Reviewed `evidence/loop/batch-pit-1/report.md` (+ .html, 18 KB): wave time per profile with target flags, deaths, enemy presence, offers, telemetry; honest "not measured" cells (guard deflects, hit rate). Pit records no deaths (40 s cap), offers none (pit). ASTRA batch-report 37 accepted (confirmed).
+- 01:45 MERGE n22-street head 1b52bf0e6 -> 6b48ba513 (baseline conflict, `merge_baseline.mjs`). Street now runs real waves (composer, squads, 90 s timeout, war_machine on 5/10).
+- 01:52 FRICTION botched concurrent merge (8 min): my background commit loop also ran the guard and foes merges while I started a second guard merge by hand; ended with a half merge. `git merge --abort`, restored only merge artifacts under project/ (I author nothing there), compared every leftover untracked file byte-for-byte with n22-guard before removing it. Rule: one git command at a time, never a merge inside a backgrounded command.
+- 01:58 MERGE n22-guard head 123ec794d -> 9012fa092 (clean). 02:02 MERGE n22-foes head 0b29f2cb5 -> 0018ddec1 (baseline conflict, merge_baseline; merge-clash: no new code conflict with the three lanes). `debt.mjs --update` no change.

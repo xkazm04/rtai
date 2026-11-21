@@ -1,6 +1,6 @@
 # Brief 03 (lane loop, n22): the tuner
 
-Wall-clock: you start about {START}. **Commit deadline {COMMIT}, hard stop {STOP}**. Small commits; never amend, never rebase.
+Wall-clock: you start about 01:50. **Commit deadline 02:55, hard stop 03:05**. Small commits; never amend, never rebase.
 
 ## Context (read, do not re-derive)
 Read first: `docs/gauntlet-loop.md`, `tools/gauntlet/batch.mjs`, `tools/gauntlet/report.mjs` and their tests (landed in the previous call), `project/features/gauntlet/bot/` (the test player). Design: `C:\Users\kazda\kiro\gtai\.spark\Spark\ideas\combat-gauntlet.md` (read only).
@@ -28,3 +28,9 @@ Forbidden: everything under `project/` (other lanes own the tables and code), ev
 
 ## Repo law
 Stage per path; no `git add -A/./-u`, no stash, no `reset --hard`, no `commit -a`, no amend, no rebase, never push, do not merge or switch branches in this worktree. No network. End with a short report: files, commits, numbers, NEEDs, what you could not do.
+
+## Machine and state notes (added 01:50)
+- Before any Godot or gate run: `export APPDATA=C:/Users/kazda/kiro/gtai-n22/appdata/loop`. You should not need Godot in this call at all: the director runs Godot batches in this lane meanwhile, so **do not start Godot** (one Godot per lane). Node tests and lint only.
+- n22-street, n22-guard and n22-foes heads are merged into this branch now (street runs real waves; `gauntlet.json` budget, `enemies.json` tiers and the four new rows `rocket_trooper`, `shield_robot`, `sentry_turret`, `war_machine` exist). Fill knobs.json from the tables as they are now.
+- The director may commit merge or journal commits on this branch while you run; never stage a path you did not edit (`git add <path>` only), and before each commit run `git status --short` and stage only your own files.
+- If `node tools/mutate/mutate.mjs` applies to a .mjs file it does not: mutate is for GDScript; skip it.
