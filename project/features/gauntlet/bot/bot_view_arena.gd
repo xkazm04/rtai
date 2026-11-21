@@ -59,6 +59,9 @@ func chase(foe: Hostile) -> Vector2:
 
 
 func _toward(goal: Vector2) -> Vector2:
+	_path.clearance(
+		_stage.arena.guard_map, _solids, _player.radius, _stage.arena.tuning.human["radius_m"]
+	)
 	return _path.toward(_stage.arena.guard_map, _player.pos, goal, _stage.arena.tick)
 
 

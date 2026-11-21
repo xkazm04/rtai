@@ -30,3 +30,19 @@ func test_no_progress_for_two_seconds_commits_a_sidestep() -> void:
 	assert_gt(absf(side.y), 0.9)
 	assert_eq(path.toward(map, side * 0.1, goal, tick + 1), side)
 	assert_eq(path.toward(map, Vector2.ZERO, goal, tick + 60), Vector2.RIGHT)
+
+
+func test_player_backs_out_of_the_guard_width_kiosk_gap() -> void:
+	var walls: ArenaWalls = ArenaWalls.new()
+	walls.boxes = [Rect2(0, 6, 34, 1), Rect2(16, 1, 4, 4), Rect2(0, -7, 34, 1)]
+	var map: GuardRouteMap = GuardRouteMap.new(Rect2(0, -7, 34, 14), walls.boxes, null, 0.45)
+	var path: BotStreetPath = BotStreetPath.new()
+	path.clearance(map, walls.boxes, 0.6, 0.45)
+	var at: Vector2 = Vector2(15.627, 5.47)
+	var goal: Vector2 = Vector2(33, 0)
+	for tick: int in 900:
+		var move: Vector2 = path.toward(map, at, goal, tick)
+		at = walls.push_out(at + move * 0.09, 0.6)
+		if at.distance_to(goal) < 0.2:
+			break
+	assert_lt(at.distance_to(goal), 0.2)

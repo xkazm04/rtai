@@ -13,6 +13,24 @@ var _last: int = -2
 var _side: Vector2
 var _last_bend: Vector2
 var _step_until: int = 0
+var _shared: GuardRouteMap
+var _wide: GuardRouteMap
+var _use_wide: bool = false
+
+
+## The shared grid admits a guard through the one-metre kiosk gap. Rivet is
+## wider. Inflate the solids before rasterizing so A* can exclude that cell.
+func clearance(map: GuardRouteMap, boxes: Array[Rect2], radius: float, guard_radius: float) -> void:
+	if map == _shared:
+		return
+	_shared = map
+	_wide = null
+	_use_wide = false
+	if map != null and radius > guard_radius:
+		var wider: Array[Rect2] = []
+		for box: Rect2 in boxes:
+			wider.append(box.grow(radius - guard_radius))
+		_wide = GuardRouteMap.new(map.region(), wider, null, guard_radius)
 
 
 func toward(map: GuardRouteMap, at: Vector2, goal: Vector2, tick: int) -> Vector2:
@@ -27,6 +45,10 @@ func toward(map: GuardRouteMap, at: Vector2, goal: Vector2, tick: int) -> Vector
 	if tick < _step_until:
 		return _side
 	var stuck: bool = tick - _since >= STUCK_TICKS
+	if stuck and _wide != null:
+		_use_wide = true
+	if _use_wide:
+		map = _wide
 	var direct: Vector2 = at.direction_to(goal)
 	if stuck or not map.clear_line(at, goal):
 		for corner: Vector2 in map.route(at, goal):
