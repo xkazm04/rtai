@@ -39,19 +39,12 @@ func _draw() -> void:
 	for i: int in _marks.size():
 		FightAreasArt._blast(self, _marks[i], arena.tick - _ticks[i])
 	for h: Fighter in arena.hostiles:
-		if h.alive() and h.archetype == &"sentry_turret":
-			_barrel(h)
+		if h.archetype == &"sentry_turret" and (h.alive() or arena.tick - h.hurt_tick < 90):
+			FoeTurretView.draw_mount(self, h, _heat(h))
 
 
-func _barrel(h: Fighter) -> void:
+func _heat(h: Fighter) -> float:
 	var mind: SquadMind = arena.squad_ai.minds.get(h.id)
-	var base: Vector2 = Ink.px(h.pos + h.facing * 0.2)
-	var tip: Vector2 = base + Ink.px(h.facing * 0.95)
-	draw_line(base, tip, Ink.INK, 13.0, true)
-	draw_line(base, tip, Ink.CREAM, 5.0, true)
 	if mind == null or mind.turret.phase != FoeTurret.Phase.COOL:
-		return
-	var heat: float = float(h.cooldown) / mind.agent.arch.weapon.cooldown_ticks
-	var amber: Color = Color(Color("#edab42"), heat)
-	draw_circle(tip, 11.0, Color(amber, heat * 0.35))
-	draw_line(base, tip, amber, 8.0, true)
+		return 0.0
+	return float(h.cooldown) / mind.agent.arch.weapon.cooldown_ticks

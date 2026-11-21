@@ -7,12 +7,11 @@ static func wears_swat(id: StringName) -> bool:
 	return id in [&"swat", &"rocket_trooper"]
 
 
-static func robot_plan(id: StringName, plan: BodyPlan) -> BodyPlan:
+static func robot_plan(id: StringName, plan: BodyPlan, rig: CanvasItem = null) -> BodyPlan:
 	match id:
 		&"sentry_turret":
-			plan.size_k = 0.88
-			plan.thigh_len *= 0.5
-			plan.shin_len *= 0.5
+			if rig != null:
+				rig.modulate.a = 0.0
 		&"shield_robot":
 			plan.size_k = 1.18
 			plan.arm_w *= 1.45
