@@ -13,6 +13,9 @@ class Player:
 	var street_max_hp: float = 0.0
 	var walk_mps: float = 0.0
 	var roll_m: float = 0.0
+	var roll_ticks: int = 1
+	var iframe_from: int = 0
+	var iframe_to: int = -1
 	var form: StringName = &"base"
 	var selected: StringName = &""
 	var settled: bool = true
@@ -134,6 +137,10 @@ func forward() -> Vector2:
 
 func retreat() -> Vector2:
 	return Vector2.LEFT
+
+
+func blink_clear(_aim: Vector2) -> bool:
+	return true
 
 
 func chase(foe: Hostile) -> Vector2:

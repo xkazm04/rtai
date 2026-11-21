@@ -171,7 +171,10 @@ func _attack(intent: Intent, foe: BotView.Hostile, slot: BotView.Slot) -> void:
 	elif me.form == &"dent" and me.seized_car_pos.distance_to(foe.pos) <= BotForms.HEAVY_M:
 		intent.attack = &"melee"
 	elif distance <= maxf(MELEE_M, BotForms.reach(me.form)):
-		intent.attack = &"melee"
+		if me.form != &"kerf" or _view.blink_clear(intent.aim):
+			intent.attack = &"melee"
+		elif slot != null and not slot.melee:
+			intent.attack = &"fire"
 	elif slot != null and not slot.melee and distance <= slot.reach:
 		intent.attack = &"fire"
 

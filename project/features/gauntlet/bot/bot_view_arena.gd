@@ -30,7 +30,12 @@ func refresh() -> void:
 	_player.hp = rivet.hp
 	_player.street_max_hp = rivet.max_hp if _street else 0.0
 	_player.walk_mps = _stage.arena.tuning.rivet["walk_mps"]
-	_player.roll_m = _stage.pilot.motion.roll_m if _stage.pilot != null else 0.0
+	if _stage.pilot != null:
+		var motion: PlayerMotion = _stage.pilot.motion
+		_player.roll_m = motion.roll_m
+		_player.roll_ticks = motion.roll_ticks
+		_player.iframe_from = motion.iframe_from
+		_player.iframe_to = motion.iframe_to
 	_player.can_roll = _stage.pilot != null and _stage.pilot.motion.can_roll()
 	_player.can_guard = _actions.bit(&"guard") >= 0
 	if _street:
@@ -68,6 +73,21 @@ func forward() -> Vector2:
 
 func chase(foe: Hostile) -> Vector2:
 	return _toward(foe.pos) if _street else super.chase(foe)
+
+
+func blink_clear(aim: Vector2) -> bool:
+	if street_layout == null:
+		return true
+	var kerf: KerfStage = _stage.pilot.kerf
+	var at: Vector2 = _player.pos
+	var hit: Fighter = kerf.pick(_stage, aim)
+	var landing: Vector2 = at + aim * kerf.num(&"dash_m")
+	if hit != null:
+		landing = hit.pos + at.direction_to(hit.pos) * (kerf.num(&"behind_m") + hit.radius_m)
+	return (
+		_stage.arena.squad_ai.pit.bounds.has_point(landing)
+		and _stage.arena.guard_map.clear_line(at, landing)
+	)
 
 
 func retreat() -> Vector2:

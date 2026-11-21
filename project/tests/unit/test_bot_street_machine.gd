@@ -9,6 +9,9 @@ func test_stomp_uses_available_time_then_roll_then_tonnage() -> void:
 	foe.pos = Vector2(2, 0)
 	me.walk_mps = 6
 	me.roll_m = 3.2
+	me.roll_ticks = 22
+	me.iframe_from = 2
+	me.iframe_to = 14
 	me.can_roll = true
 	me.forms = [&"tonnage"]
 	foe.tell_ticks = 60
@@ -17,6 +20,8 @@ func test_stomp_uses_available_time_then_roll_then_tonnage() -> void:
 	assert_lt(choice.move.x, 0.0)
 	foe.tell_ticks = 4
 	assert_eq(BotMachineFight.stomp(view, foe, true).action, &"roll")
+	foe.tell_ticks = 1
+	assert_eq(BotMachineFight.stomp(view, foe, true).form, &"tonnage")
 	me.can_roll = false
 	assert_eq(BotMachineFight.stomp(view, foe, true).form, &"tonnage")
 	me.can_roll = true
@@ -78,3 +83,23 @@ func test_aims_at_an_exposed_machine_edge_and_holds_fire_behind_solid_cover() ->
 	assert_true(view.clear_line(view.player().pos, point))
 	view.solid_props().append(Rect2(174.8, -8, 0.3, 8))
 	assert_eq(view.aim_point(foe), Vector2.INF)
+
+
+func test_kerf_checks_the_landing_behind_the_target_at_the_street_wall() -> void:
+	var bus: EventBus = EventBus.new()
+	var data: DataStore = DataStore.new()
+	var run: GauntletRun = GauntletRun.new()
+	var session: GauntletSession = GauntletSession.open_street(bus, data, run)
+	var arena: CombatArena = session.stage.arena
+	var foe: Fighter = arena.squad_ai.spawn_member(arena, Vector2(2, -5), &"sentry_turret")
+	var view: BotViewArena = BotViewArena.new(session.stage, session.actions, true)
+	view.street_layout = session.street
+	foe.pos = Vector2(2, -5.5)
+	view.refresh()
+	assert_false(view.blink_clear(Vector2.UP))
+	foe.pos = Vector2(5, 0)
+	view.refresh()
+	assert_true(view.blink_clear(Vector2.RIGHT))
+	session.close()
+	bus.free()
+	data.free()
