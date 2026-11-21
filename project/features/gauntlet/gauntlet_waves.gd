@@ -3,10 +3,14 @@ extends ArenaHook
 ## Runs after street streaming on each simulation tick. The first block is the approach.
 ## A live cohort holds the far seam. The squad keeps its fighters until every member falls.
 
+signal pick_offered(ids: Array[StringName])
+
 const TIMEOUT_TICKS: int = 90 * SimClock.TICK_RATE
 
 var done: bool = false
 var draw: GauntletDraw
+var manual_picks: bool = false
+var pending: Array[StringName] = []
 var _run: GauntletRun
 var _bonuses: GauntletBonusApply
 var _street: GauntletStreet
@@ -48,7 +52,7 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 
 
 func step(stage: ArenaStage, tick: int) -> void:
-	if done:
+	if done or not pending.is_empty():
 		return
 	if not stage.arena.rivet.alive():
 		_finish(stage, tick, false)
@@ -60,7 +64,7 @@ func step(stage: ArenaStage, tick: int) -> void:
 	elif _cleared():
 		_finish(stage, tick, true)
 		_pick(stage)
-		done = _limit > 0 and _run.wave >= _limit
+		done = pending.is_empty() and _at_limit()
 	elif tick - _start >= TIMEOUT_TICKS:
 		_finish(stage, tick, false)
 		_run.death_by = &"timeout"
@@ -152,12 +156,29 @@ func _pick(stage: ArenaStage) -> void:
 	for id: StringName in forms.table.order:
 		if forms.locks.allows(forms.table, id):
 			owned.append(id)
-	var offered: Array[StringName] = draw.offer(_run.wave, _run.picks, owned)
-	if offered.is_empty():
+	pending = draw.offer(_run.wave, _run.picks, owned)
+	if pending.is_empty():
 		return
-	var choice: int = _picker.pick(offered)
-	if choice >= 0 and choice < offered.size() and _bonuses.apply(draw.rows[offered[choice]]):
-		_run.picks.append({"wave": _run.wave, "offered": offered, "taken": offered[choice]})
+	if manual_picks:
+		pick_offered.emit(pending)
+	elif not choose(_picker.pick(pending)):
+		pending = []
+
+
+func choose(index: int) -> bool:
+	if index < 0 or index >= pending.size():
+		return false
+	var id: StringName = pending[index]
+	if not _bonuses.apply(draw.rows[id]):
+		return false
+	_run.picks.append({"wave": _run.wave, "offered": pending, "taken": id})
+	pending = []
+	done = _at_limit()
+	return true
+
+
+func _at_limit() -> bool:
+	return _limit > 0 and _run.wave >= _limit
 
 
 ## Count damaging contacts against wave members. A claw strike can hit several bodies.

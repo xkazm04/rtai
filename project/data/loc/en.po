@@ -1,0 +1,106 @@
+msgid ""
+msgstr ""
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "GAUNTLET__CARD_NAME"
+msgstr "{kind}, {title}"
+
+msgid "GAUNTLET__CHOOSE"
+msgstr "Choose an upgrade"
+
+msgid "GAUNTLET__CLEARED"
+msgstr "Wave {wave} cleared"
+
+msgid "GAUNTLET__GAIN"
+msgstr "+{percent} %"
+
+msgid "GAUNTLET__GAIN_TITLE"
+msgstr "{gain} {title}"
+
+msgid "GAUNTLET__GHOST__DENT"
+msgstr "Dent"
+
+msgid "GAUNTLET__GHOST__KERF"
+msgstr "Kerf"
+
+msgid "GAUNTLET__GHOST__OHM"
+msgstr "Ohm"
+
+msgid "GAUNTLET__GHOST__TONNAGE"
+msgstr "Tonnage"
+
+msgid "GAUNTLET__HEALTH"
+msgstr "Health  {hp} / {max_hp}"
+
+msgid "GAUNTLET__KIND__GHOST"
+msgstr "Ghost form"
+
+msgid "GAUNTLET__KIND__STAT"
+msgstr "Stat"
+
+msgid "GAUNTLET__KIND__WEAPON"
+msgstr "Weapon"
+
+msgid "GAUNTLET__SLOT"
+msgstr "{slot}"
+
+msgid "GAUNTLET__STAT__DAMAGE"
+msgstr "Damage"
+
+msgid "GAUNTLET__STAT__GUARD_METER"
+msgstr "Guard meter"
+
+msgid "GAUNTLET__STAT__HP_MAX"
+msgstr "Max health"
+
+msgid "GAUNTLET__STAT__REGEN"
+msgstr "Health repair"
+
+msgid "GAUNTLET__STAT__SPEED"
+msgstr "Speed"
+
+msgid "GAUNTLET__TIMER"
+msgstr "{seconds} s"
+
+msgid "GAUNTLET__WAVE"
+msgstr "Wave {wave}"
+
+msgid "GAUNTLET__WEAPON__CHAINSAW"
+msgstr "Chainsaw"
+
+msgid "GAUNTLET__WEAPON__ELECTRO_BATON"
+msgstr "Electro Baton"
+
+msgid "GAUNTLET__WEAPON__FLAMETHROWER"
+msgstr "Flamethrower"
+
+msgid "GAUNTLET__WEAPON__GATLING"
+msgstr "Gatling"
+
+msgid "GAUNTLET__WEAPON__GLORIA"
+msgstr "Gloria"
+
+msgid "GAUNTLET__WEAPON__HAND_CANNON"
+msgstr "Hand Cannon"
+
+msgid "GAUNTLET__WEAPON__KATANA"
+msgstr "Katana"
+
+msgid "GAUNTLET__WEAPON__MACHINE_PISTOL"
+msgstr "Machine Pistol"
+
+msgid "GAUNTLET__WEAPON__PISTOL"
+msgstr "Pistol"
+
+msgid "GAUNTLET__WEAPON__PLASMA_RIFLE"
+msgstr "Plasma Rifle"
+
+msgid "GAUNTLET__WEAPON__PLASMA_SWORD"
+msgstr "Plasma Sword"
+
+msgid "GAUNTLET__WEAPON__ROCKET_LAUNCHER"
+msgstr "Rocket Launcher"
