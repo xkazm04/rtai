@@ -1,7 +1,7 @@
 # REPORT lane foes (n22, 2026-11-21): four new enemies and a tier on every enemy
 
 Branch `n22-foes`, worktree `C:\Users\kazda\kiro\gtai-wt\n22-foes`. Interface tag `n22-foes-iface` = `245c0e6f1`.
-Final gate (06:00, HEAD `90902c90e`): `node tools/gate/run.mjs --rev=HEAD` -> `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n22-foes\build\gate\90902c90e94e\gate.json` (lint 19/19 over 1854 files, unit 3448 passed / 0 failed / 2 skipped, scenarios 65 passed, parity bit for bit over 1200 steps with the planted mutation caught at step 629, selftest, export-audit 839 loaded / 0 failed).
+Final gate (06:00, HEAD `90902c90e`): `node tools/gate/run.mjs --rev=HEAD` -> `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n22-foes\build\gate\90902c90e94e\gate.json` (lint 19/19 over 1854 files, unit 3448 passed / 0 failed / 2 skipped, scenarios 65 passed, parity bit for bit over 1200 steps with the planted mutation caught at step 629, selftest, export-audit 839 loaded / 0 failed). Reels gate (06:27, HEAD `d73b3224a`, inert-only commits on top of `90902c90e`, run before the freeze because no code lands after 06:00 and my session ends at 07:19): `node tools/gate/run.mjs --rev=HEAD --reels` -> the same six PASS plus `PASS reels: exit 0` (top, tilt70, combo OK) -> `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n22-foes\build\gate\d73b3224ab9b\gate.json`.
 
 Each enemy asks for a different answer: the **rocket trooper** for movement or a wall, the **sentry turret** for guarding through the sweep or getting behind it, the **shield robot** for a flank, a roll past it or a blast, and the **war machine** for reading two tells and hitting it during its pause. Every enemy row has a `tier`. Numbers on existing rows and weapons did not change.
 
@@ -87,5 +87,7 @@ Existing rows' and weapons' numbers are unchanged. After every brief: unit (last
 | war-machine | 51 | accepted (size of the look sent on) | `42a0e5632`, `0841836cf`, `f617df7b5` |
 | ttk-polish | 53 | accepted (claw column sent on) | `8d93e6b33`, `2a1873199`, `95ef7e82a`, `02fa4eae5`, `f1f8fc6f2`, `f326e45eb` |
 | melee-ttk | 6 | accepted | `90902c90e` |
+
+Total: 7 calls, about 303 min of builder time (301 min over the 6 calls in the lane's Astra call log, plus the 2 min abandoned call); 6 accepted, 1 abandoned, 0 bounced outright (two looks sent on into the next brief).
 
 What I would brief differently: give the other lanes' contract key names verbatim in the first brief (cost one abandoned call); require a 32 px/m still checked against Rivet's size before any film (three looks came back too small or too thin); say the distance for melee when asking for a weapon table (the claw was measured at 8 m); ask for a whole-file mutation run in the same brief as the behaviour, not later (the turret's run was cut by a hard stop).
