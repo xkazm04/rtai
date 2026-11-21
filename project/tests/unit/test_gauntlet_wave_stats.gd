@@ -128,6 +128,28 @@ func test_one_round_and_one_claw_contact_are_counted_separately() -> void:
 	assert_eq(total, 2 + arena.hostiles.size())
 
 
+func test_only_rivets_hits_on_live_exposed_foes_emit_contact(
+	exclusion: String = use_parameters(
+		["hostile attacker", "self hit", "dead foe", "unexposed foe"]
+	)
+) -> void:
+	var arena: GauntletCombat = session.stage.arena as GauntletCombat
+	var attacker: Fighter = arena.rivet
+	var victim: Fighter = arena.hostiles[0]
+	match exclusion:
+		"hostile attacker":
+			attacker = arena.hostiles[1]
+		"self hit":
+			victim = arena.rivet
+		"dead foe":
+			victim.hp = 0.0
+		"unexposed foe":
+			victim.exposed = false
+	watch_signals(arena)
+	arena.damage(victim, 1.0, attacker.id, &"claw")
+	assert_signal_not_emitted(arena.rivet_contact)
+
+
 func test_splash_and_a_returned_enemy_round_do_not_score_another_gun_hit() -> void:
 	var arena: CombatArena = session.stage.arena
 	assert_true(session.bonuses.apply(waves.draw.rows[&"weapon_rocket_launcher"]))
