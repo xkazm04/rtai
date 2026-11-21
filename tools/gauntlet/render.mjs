@@ -31,7 +31,8 @@ function htmlTable(s) {
   const rows = s.rows.map((row) => '<tr>' + row.map((v, i) => {
     let value = esc(v);
     if (v === 'miss') value = '<strong class="miss">miss</strong>';
-    if (s.key === 'telemetry' && i >= 6 && v !== 'not measured') value = '<span class="form">' + value + '</span>';
+    const ghostColumn = /^(dent|kerf|ohm|tonnage) s \(n\)$/.test(s.columns[i]);
+    if (s.key === 'telemetry' && ghostColumn && v !== 'not measured') value = '<span class="form">' + value + '</span>';
     if (s.columns[i] === 'Replay command') value = '<code>' + value + '</code>';
     return '<td>' + value + '</td>';
   }).join('') + '</tr>').join('\n');
