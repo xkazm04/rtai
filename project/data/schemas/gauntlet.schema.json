@@ -1,5 +1,95 @@
 {
   "$defs": {
+    "dressing": {
+      "additionalProperties": false,
+      "properties": {
+        "fixtures": {
+          "items": {
+            "$ref": "#/$defs/fixture"
+          },
+          "type": "array"
+        },
+        "front": {
+          "enum": [
+            "arcade",
+            "depot",
+            "glass",
+            "masonry",
+            "office",
+            "retail"
+          ]
+        },
+        "high": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "high_scale": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "landmark": {
+          "enum": [
+            "barriers",
+            "bus",
+            "dock",
+            "neck",
+            "signals",
+            "square"
+          ]
+        },
+        "lots": {
+          "maximum": 4,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "low": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "low_scale": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "sidewalk_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "front",
+        "landmark",
+        "sidewalk_m",
+        "lots",
+        "high",
+        "low",
+        "high_scale",
+        "low_scale",
+        "fixtures"
+      ],
+      "type": "object"
+    },
+    "fixture": {
+      "additionalProperties": false,
+      "properties": {
+        "art": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "at": {
+          "$ref": "#/$defs/point"
+        },
+        "scale": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "art",
+        "at",
+        "scale"
+      ],
+      "type": "object"
+    },
     "point": {
       "items": {
         "type": "number"
@@ -63,6 +153,9 @@
           ],
           "type": "object"
         },
+        "dressing": {
+          "$ref": "#/$defs/dressing"
+        },
         "id": {
           "pattern": "^[a-z][a-z0-9_]*$",
           "type": "string"
@@ -90,7 +183,8 @@
         "id",
         "length_m",
         "props",
-        "spawns"
+        "spawns",
+        "dressing"
       ],
       "type": "object"
     }

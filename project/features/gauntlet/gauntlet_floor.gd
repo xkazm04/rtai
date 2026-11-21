@@ -25,22 +25,18 @@ func _window_changed() -> void:
 		_static.queue_redraw()
 
 
-func _ground(ci: CanvasItem, arena: ArenaStage) -> void:
+func _ground(ci: CanvasItem, _arena: ArenaStage) -> void:
+	var first: GauntletSegment = street.window[0]
+	if is_zero_approx(first.start_x):
+		# Beyond the street's closed west gate, the city still fills the camera at spawn.
+		ci.draw_set_transform(Ink.px(Vector2(-first.length_m, 0.0)))
+		GauntletFrontage.draw(ci, first)
+		ci.draw_set_transform(Vector2.ZERO)
+		var road: Rect2 = first.road_bounds(0.0)
+		var gate: Rect2 = Rect2(-1.0, road.position.y, 1.0, road.size.y)
+		ArenaFloorStatic.barrier(ci, GauntletFrontage.px(gate))
 	for block: GauntletSegment in street.window:
-		var road: Rect2 = Rect2(Ink.px(block.bounds.position), Ink.px(block.bounds.size))
-		ci.draw_rect(road, Ink.CREAM.darkened(0.28))
-		for x: int in range(2, int(block.length_m), 5):
-			var at: Vector2 = Vector2(block.start_x + x, 0.0)
-			var dash: Rect2 = Rect2(at - Vector2(0, 0.07), Vector2(2.0, 0.14))
-			if not block.crossing.intersects(dash):
-				ci.draw_rect(Rect2(Ink.px(dash.position), Ink.px(dash.size)), Ink.CREAM)
-		_crossing(ci, block.crossing)
-	_props(ci, arena)
-
-
-func _crossing(ci: CanvasItem, paint: Rect2) -> void:
-	var y: float = paint.position.y
-	while y < paint.end.y:
-		var stripe: Vector2 = Vector2(paint.size.x, minf(0.5, paint.end.y - y))
-		ci.draw_rect(Rect2(Ink.px(Vector2(paint.position.x, y)), Ink.px(stripe)), Ink.CREAM)
-		y += 1.0
+		GauntletFrontage.draw(ci, block)
+		GauntletLandmarks.ground(ci, block)
+	for block: GauntletSegment in street.window:
+		GauntletLandmarks.furniture(ci, block)

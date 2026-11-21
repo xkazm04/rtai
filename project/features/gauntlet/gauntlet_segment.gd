@@ -7,6 +7,7 @@ var start_x: float
 var length_m: float
 var bounds: Rect2
 var crossing: Rect2
+var dressing: Dictionary
 var station: ArenaStation = ArenaStation.new()
 var spawns: Array[Vector2] = []
 
@@ -16,6 +17,7 @@ func _init(table: DataTable, row: Dictionary, x: float) -> void:
 	start_x = x
 	length_m = table.num(row, "length_m")
 	var origin: Vector2 = Vector2(x, 0.0)
+	dressing = table.object(row, "dressing")
 	station.id = String(id)
 	for prop: Dictionary in table.array(row, "props"):
 		var p: ArenaStation.Prop = ArenaStation.Prop.new()
