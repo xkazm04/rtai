@@ -105,6 +105,15 @@ func _spawn(stage: ArenaStage, tick: int) -> void:
 	)
 
 
+func wave_seconds(tick: int) -> float:
+	if _start >= 0:
+		return (tick - _start) * SimClock.TICK_DT
+	if _run.waves.is_empty():
+		return 0.0
+	var seconds: float = _run.waves[-1].get("seconds", 0.0)
+	return seconds
+
+
 func _cleared() -> bool:
 	for member: Fighter in _members:
 		if member.alive():

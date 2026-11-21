@@ -11,6 +11,7 @@ var run: GauntletRun = GauntletRun.new()
 var session: GauntletSession
 var pilot: GauntletPilot
 var waves: GauntletWaves
+var hud: GauntletHud
 var _result_path: String = ""
 
 
@@ -72,6 +73,11 @@ func _open_view() -> void:
 	view.bind(session.stage, CollectCallWorld.new(session.stage), null)
 	add_child(view)
 	view.hud_view.visible = false
+	hud = GauntletHud.new()
+	hud.session = session
+	hud.run = run
+	hud.waves = waves
+	add_child(hud)
 	var cast: ArenaRigs = ArenaRigs.new()
 	add_child(cast)
 	@warning_ignore("return_value_discarded")
@@ -100,6 +106,8 @@ func _finish() -> bool:
 		)
 	)
 	var ok: bool = _result_path.is_empty() or _write_result(_result_path)
+	if hud != null and is_instance_valid(hud):
+		hud.set_process(false)
 	session.close()
 	session = null
 	return ok
