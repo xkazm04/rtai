@@ -53,6 +53,10 @@ The machine observer counts ticks while the boss lives. Damage per second divide
 
 The original probes and final per-wave `machine` counters provide the tick counts for these comparisons. [Average before](../evidence/loop/probe-before-average-2.json) · [Expert before](../evidence/loop/probe-before-expert-2.json) · [Average after](../evidence/loop/street-final/runs/average-2.json) · [Expert after](../evidence/loop/street-final/runs/expert-2.json)
 
+The changed-test run selected the full GUT suite and passed 3,509 tests, with two skipped. All 65 scenarios passed. The 60-second replay checked 3,600 ticks and 60 checkpoints and ended at `cbeb734ff9b97c41`.
+
+On changed lines in `bot_brain.gd`, the seven mapped test files caught 18 of 20 valid mutations, up from 11 of 20. The repository's deterministic sampler selected the same 20 of 43 candidates in both runs. The operators and GUT oracle ran on a disposable source archive inside this lane because the standard CLI requires a second Git worktree. [Initial mutations](../evidence/loop/street-final/mutation-initial.json) / [Final mutations](../evidence/loop/street-final/mutation.json)
+
 ### Pit measurement
 
 Run from the worktree root in PowerShell. Use a different output name for each seed/profile pair.
