@@ -84,7 +84,9 @@
         "2026-11-18: n19 move: film both station heights with the scripted cover course under dev/rivet_motion (dev_loc 22984 -> 23167)",
         "2026-11-19: Film all twelve motion-driven strides on native-scale ground rulers in the requested rivet_motion dev course. (dev_loc 23167 -> 23334)",
         "2026-11-19: Exercise the strip-matched phase only in the stride film and fail a take that falls back to the shipped rate. (dev_loc 23334 -> 23361)",
-        "2026-11-19: Owner-requested reproducible ghost films: a dev-only arena input driver, camera marks and per-frame evidence for four forms, two real views and the Ohm delay comparison. (dev_loc 26341 -> 26602)"
+        "2026-11-19: Owner-requested reproducible ghost films: a dev-only arena input driver, camera marks and per-frame evidence for four forms, two real views and the Ohm delay comparison. (dev_loc 26341 -> 26602)",
+        "2026-11-21: guard film dev scene (n22 guard) (dev_loc 26600 -> 26991)",
+        "2026-11-21: guard film dev scene (n22 guard) (dev_loc 26991 -> 26997)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -97,6 +99,7 @@
         "project/dev/frames": 1087,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1396,
+        "project/dev/guard": 397,
         "project/dev/gunplay": 674,
         "project/dev/handheld": 247,
         "project/dev/held": 103,
@@ -118,7 +121,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 26600
+      "total": 26997
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -438,15 +441,19 @@
       "total": 65
     },
     "lane_named_dev_dirs": {
+      "accepted": [
+        "2026-11-21: guard film dev scene (n22 guard) (lane_named_dev_dirs 6 -> 7)"
+      ],
       "files": {
         "project/dev/audio": 1,
         "project/dev/cheats": 1,
+        "project/dev/guard": 1,
         "project/dev/gunplay": 1,
         "project/dev/held": 1,
         "project/dev/overlays": 1,
         "project/dev/weapon_art": 1
       },
-      "total": 6
+      "total": 7
     },
     "unused_class_names": {
       "files": {
