@@ -18,7 +18,7 @@
     "files": {
       "alley_neck": {
         "before": "67f604fea1ec668439a5835de2793a75492bc9e926f47fb43647d344c57e0847",
-        "after": "2c86acd32aca02b056c4e10446e561d9ed1d7e1aa7b5c096909c7e531dac6ac5"
+        "after": "53a3c9f689d503110a36d86ce548728608d1050eb61b1c1b8740181b3f4146d8"
       },
       "barricade_line": {
         "before": "faae00ee366e77cbf921e8ea9b7cbf8ae54ac72f19064b8c560deff7f0634c91",
@@ -56,9 +56,77 @@
       "height": 1080,
       "tick": 540,
       "sha256": {
-        "underpass": "da8e3d5bebc09db1e79ada57004d4edcb1af3d766c647875c16c551d2fcf4a78",
+        "underpass": "e456d5445d94fb211ea67cdfe93741ab536e77beff72530300bcd7722650ffe4",
         "market_stalls": "1fa73d85717d46a75be05b485fa7375695a568851d7d324569ecaa3282e447db"
       }
+    },
+    "commit": "10daf2bcb48388930b1fdb650931a7692936e310"
+  },
+  "street_mutation": {
+    "file": "features/gauntlet/gauntlet_street.gd",
+    "commit": "10daf2bcb48388930b1fdb650931a7692936e310",
+    "changed_lines": "15,79-94,100-106,129-130",
+    "max": 20,
+    "tests": [
+      "test_gauntlet_street",
+      "test_gauntlet_rest"
+    ],
+    "first_counts": {
+      "killed": 4,
+      "survived": 4,
+      "invalid": 1,
+      "timeout": 0
+    },
+    "counts": {
+      "invalid": 1,
+      "killed": 6,
+      "survived": 2,
+      "timeout": 0
+    },
+    "surviving_changes": [
+      {
+        "line": 129,
+        "column": 42,
+        "before": "0.0",
+        "after": "1.0"
+      },
+      {
+        "line": 129,
+        "column": 76,
+        "before": "0.0",
+        "after": "1.0"
+      }
+    ],
+    "note": "Shrinking either outer road vertically leaves the union unchanged because the other has the full width in all eight templates."
+  },
+  "verification": {
+    "lint_checks": 19,
+    "tests": {
+      "passed": 3439,
+      "failed": 0,
+      "skipped": 2
+    },
+    "scenarios": {
+      "ran": 65,
+      "failed": 0,
+      "sixty_second_replay": "cbeb734ff9b97c41"
+    },
+    "health_bar": {
+      "file": "health_100_50_10.png",
+      "track_px": 210,
+      "fill_px_by_hp": {
+        "100": 210,
+        "50": 105,
+        "10": 21
+      }
+    },
+    "machine_wall_check": {
+      "hit_y_m": 6.5,
+      "south_kerb_y_m": 6,
+      "rest_y_m": 3.65,
+      "settle_ticks": 90,
+      "before": "c8284b639d6edff5a783a1e36bb2f6e45faa5f41b3970e5ab700e06fd28cfe19",
+      "after": "022e380b3f04df547f6019fa02421d8a99d71e22e69303603d0aef0c2267e8d6"
     }
   }
 }

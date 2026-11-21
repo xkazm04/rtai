@@ -83,16 +83,11 @@ func _open_view(film: bool) -> void:
 	waves.manual_picks = pilot == null or film
 	session.world.set_process(not waves.manual_picks)
 	set_physics_process(waves.manual_picks)
-	var view: CollectCallView = CollectCallView.new()
-	var floor_view: GauntletFloor = GauntletFloor.new()
-	floor_view.street = session.street
-	view.stage_view.free()
-	view.stage_view = floor_view
+	var view: GauntletView = GauntletView.new(session.street)
 	view.px_per_m = camera_ppm
 	view.bind(session.stage, CollectCallWorld.new(session.stage), null)
 	add_child(view)
 	view.hud_view.visible = false
-	view.blood.solid = session.street.solid_px
 	hud = GauntletHud.new()
 	hud.session = session
 	hud.run = run

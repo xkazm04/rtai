@@ -28,8 +28,11 @@ func test_cop_and_war_machine_rest_on_the_road_side_after_a_wall_hit() -> void:
 	assert_almost_eq(foe.pos.x, hit.x, 0.001)
 	var boss: Fighter = arena.squad_ai.spawn_member(arena, hit, &"war_machine")
 	boss.pos = hit
+	var oil_origin: Vector2 = s.street.rest.body_position(boss)
+	assert_eq(boss.pos, hit)
 	arena.damage(boss, boss.max_hp * 2.0, arena.rivet.id, &"claw", &"melee")
 	assert_false(boss.alive())
+	assert_eq(boss.pos, oil_origin)
 	assert_almost_eq(boss.pos.y, wall.at.y - wall.size.y * 0.5 - 2.35, 0.001)
 	s.close()
 

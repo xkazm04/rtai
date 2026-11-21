@@ -101,7 +101,7 @@ static func _viaduct(ci: CanvasItem, road: Rect2) -> void:
 			var mark: Rect2 = Rect2(mid - 0.075, y + i * 5.0 + 1.0, 0.15, 2.6)
 			ci.draw_rect(GauntletFrontage.px(mark), Ink.CREAM)
 	# Show the deck's thickness and transverse beams over the pier ends at each portal.
-	for y: float in [road.position.y, road.end.y - 1.1]:
+	for y: float in [road.position.y - 1.1, road.end.y]:
 		var lip: Rect2 = Rect2(left - 0.15, y, width + 0.3, 1.1)
 		ArenaFloorStatic.barrier(ci, GauntletFrontage.px(lip))
 		ci.draw_texture_rect(COPING, GauntletFrontage.px(lip.grow(-0.12)), false)
