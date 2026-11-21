@@ -77,6 +77,9 @@ Numbers below are from Astra's reports and my own reruns, as logged in `JOURNAL.
    `37bf8deacaad2f48` unchanged in all three columns. The 5 left (rifle rack, rivet chainsaw / katana / pickup / switch) are real
    behaviour changes their tapes must learn (Space = claw, no auto-equip on pickup, hands in the cycle).
    Still: `gtai-masters/n22/guard/wheel-hands-t441.png`.
+   No side-by-side for `drawn`: the film scene `project/dev/guard/guard_film.gd` re-parses launch args with `--controls` only,
+   so `--wheel-start` does not reach it, and changing that came after the 06:00 code deadline. The evidence for this Call is the
+   measured scenario table, not a picture.
 2. **Make wheel the default** once the tapes are re-pinned (list in `evidence/guard-flip/blockers.md`) and the quest 1 help
    card is rewritten per control mode.
 3. Rivet's own blasts never hurt him (self-damage off). One flag value away if you want rocket-jump risk.
@@ -108,6 +111,8 @@ Numbers below are from Astra's reports and my own reruns, as logged in `JOURNAL.
 
 ## Next steps
 
+0. Run `node tools/gate/run.mjs --rev=HEAD --reels` once (not run tonight: this session ended at 07:10, before the freeze), and let the
+   guard film scene pass `--wheel-start` through, so Call 1 gets a still pair.
 1. Owner's Call 1 (wheel's opening selection), then re-pin the 16 tapes per `evidence/guard-flip/blockers.md`, rewrite the
    quest 1 help card per control mode, teach `run_unit.mjs` / `run_scenarios.gd` to pass `--controls=wheel`, flip the default.
 2. Clip a wall-stopped blast's drawing to the launcher's side (`fight_areas_art.gd:45`, `weapon_fx_art.gd:149`).
