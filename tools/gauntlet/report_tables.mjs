@@ -33,16 +33,21 @@ export function sections(batch, report, baseline) {
   };
   const deaths = {
     title: 'Deaths by profile', note: 'Each wave and killer is followed by its recorded death count. Killers are ordered by frequency.',
-    columns: ['Profile', 'Runs', 'Deaths', 'No death recorded', 'Death wave × count', 'Top killers × count', 'Unattributed deaths'],
-    rows: report.deaths.map((d) => [d.profile, d.runs, d.total, d.runs - d.total, listCounts(d.waves) || '—',
+    columns: ['Profile', 'Runs', 'Deaths', 'Stalled', 'Accepted without death', 'Death wave × count', 'Top killers × count', 'Unattributed deaths'],
+    rows: report.deaths.map((d) => [d.profile, d.runs, d.total, d.stalled, d.accepted - d.total, listCounts(d.waves) || '—',
       listCounts(d.killers) || (d.total ? missing : '—'), d.unknown])
+  };
+  const timeouts = {
+    title: 'Timeouts', note: 'Runs that reached the wave time limit.',
+    columns: ['Outcome', ...report.deaths.map((d) => d.profile)],
+    rows: [['timeout', ...report.deaths.map((d) => d.timeouts)]]
   };
   const enemies = {
     title: 'Enemy presence and wave time',
     note: 'Confirmed kills count only named death records. Time share divides seconds in waves containing the enemy by all timed waves '
       + 'with a measured roster. Several enemies can share a wave. Parentheses give the timed wave count.',
-    columns: ['Enemy', 'Confirmed kills', 'Share of wave time', 'Present median s (n)', 'Absent median s (n)'],
-    rows: report.enemies.map((e) => [e.id, e.kills, pct(e.share), counted(e.present), counted(e.absent)]),
+    columns: ['Enemy', 'Confirmed kills', 'Killer weapon × count', 'Share of wave time', 'Present median s (n)', 'Absent median s (n)'],
+    rows: report.enemies.map((e) => [e.id, e.kills, listCounts(e.weapons) || '—', pct(e.share), counted(e.present), counted(e.absent)]),
     empty: 'No enemy rosters or killer ids were recorded.'
   };
   const effects = ['bonus', 'weapon'].map((kind) => ({
@@ -82,7 +87,7 @@ export function sections(batch, report, baseline) {
     empty: 'No deepest run had a measured signature that differed within its profile.'
   };
   const failed = batch.runs.filter((r) => !r.ok);
-  return [timing, deaths, enemies, ...effects, telemetry, winners, ...(failed.length ? [{
+  return [timing, deaths, timeouts, enemies, ...effects, telemetry, winners, ...(failed.length ? [{
     title: 'Excluded runs', note: 'These inputs are retained in the batch manifest.',
     columns: ['File', 'Profile', 'Seed', 'Reason'],
     rows: failed.map((r) => [r.file, r.profile, r.seed ?? 'unknown', r.reason ?? 'run failed'])

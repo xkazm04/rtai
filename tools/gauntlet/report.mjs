@@ -5,6 +5,8 @@ import { dirname, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
 import { PROJECT, readJson } from '../lib/repo.mjs';
+import { streetLog } from './street_log.mjs';
+import { enemyWeapons } from './enemy_weapons.mjs';
 import { analyze } from './analysis.mjs';
 import { BATCH_SCHEMA, validateRun } from './contract.mjs';
 import { render } from './render.mjs';
@@ -19,6 +21,14 @@ export function loadBatch(path) {
   }
   if (doc.runs.filter((r) => r.ok).length !== doc.results.length)
     throw new Error(path + ': successful runs and result count differ');
+  for (const row of doc.runs) {
+    if (!row.ok && !row.outcome) Object.assign(row, streetLog(dirname(path), row));
+  }
+  if (!doc.enemy_weapons && doc.tables?.['enemies.json']) {
+    const bytes = readFileSync(join(PROJECT, 'data', 'tables', 'enemies.json'));
+    if (createHash('sha256').update(bytes).digest('hex') === doc.tables['enemies.json'])
+      doc.enemy_weapons = enemyWeapons(JSON.parse(bytes));
+  }
   return doc;
 }
 

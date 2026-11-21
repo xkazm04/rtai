@@ -18,6 +18,56 @@ const batch = { schema: BATCH_SCHEMA, created: '2026-11-21T00:00:00Z', git: { sh
     pick: 'random', file: r.profile + '-' + r.seed + '.json' })), results: all.filter((r) => !validateRun(r)) };
 const model = analyze(batch);
 
+test('weapon deaths count for their carrier and preserve the attack that killed', () => {
+  const roster = { war_machine: ['war_cannon', 'stomp'], sentry_turret: ['turret_gun'] };
+  const causes = ['turret_gun', 'war_cannon', 'stomp', 'timeout', null];
+  const runs = causes.map((by, seed) => ({ ...batch.results[0], seed, profile: 'average',
+    waves: [{ n: 1, enemies: { sentry_turret: 1, war_machine: 1 } }], wave_reached: 1,
+    picks: [], death: by ? { wave: 1, by } : { wave: 1 } }));
+  const fixture = { ...batch, enemy_weapons: roster, results: runs,
+    runs: runs.map((r) => ({ ok: true, seed: r.seed, profile: r.profile })) };
+  const report = analyze(fixture);
+  assert.deepEqual(report.enemies.map((e) => [e.id, e.kills, e.weapons]), [
+    ['sentry_turret', 1, [['turret_gun', 1]]],
+    ['war_machine', 2, [['stomp', 1], ['war_cannon', 1]]]
+  ]);
+  assert.equal(report.deaths[0].timeouts, 1);
+  assert.equal(report.deaths[0].unknown, 1);
+  assert.match(render(fixture, report).markdown, /\| timeout \| 1 \|/);
+});
+
+test('historical tick-cap evidence counts by profile in the header and deaths', (t) => {
+  mkdirSync(join(ROOT, 'build'), { recursive: true });
+  const dir = mkdtempSync(join(ROOT, 'build', 'stall-report-'));
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  const rows = ['novice', 'expert', 'expert'].map((profile, i) => ({
+    profile, seed: i, ok: false, file: profile + i + '.json', exit: 1, engine_log: i + '.log'
+  }));
+  for (const [i, row] of rows.entries()) writeFileSync(join(dir, row.engine_log),
+    i < 2 ? '[ERROR] gauntlet: headless tick cap reached before run ended\n' : 'SCRIPT ERROR\n');
+  const path = join(dir, 'batch.json');
+  writeFileSync(path, JSON.stringify({ ...batch, results: [], runs: rows }));
+  const report = generate(path, null, dir);
+  assert.deepEqual(report.deaths.map((d) => [d.profile, d.runs, d.stalled, d.total]),
+    [['novice', 1, 1, 0], ['expert', 2, 1, 0]]);
+  const md = readFileSync(join(dir, 'report.md'), 'utf8');
+  assert.match(md, /Stalled runs by profile: novice 1, expert 1/);
+  assert.match(md, /\| expert \| 2 \| 0 \| 1 \| 0 \|/);
+});
+
+test('a shared gun identifies a carrier only when the death-wave roster singles it out', () => {
+  const enemy_weapons = { cop: ['rifle'], contractor: ['rifle'] };
+  const runs = [{ cop: 1 }, { cop: 1, contractor: 1 }].map((enemies, seed) => ({
+    ...batch.results[0], seed, waves: [{ n: 1, enemies }], wave_reached: 1, picks: [],
+    death: { by: 'rifle', wave: 1 }
+  }));
+  const report = analyze({ ...batch, results: runs, enemy_weapons });
+  assert.equal(report.enemies.find((e) => e.id === 'cop').kills, 1);
+  assert.equal(report.enemies.find((e) => e.id === 'contractor').kills, 0);
+  assert.ok(!report.enemies.some((e) => e.id === 'rifle'));
+  assert.equal(report.deaths.find((d) => d.profile === runs[0].profile).total, 2);
+});
+
 test('fixture medians, coverage and pooled accuracy count only observed numerators and denominators', () => {
   const w = model.waves.find((r) => r.profile === 'average' && r.n === 1);
   assert.deepEqual([w.observed, w.timed, w.min, w.p25, w.median, w.p75, w.max], [8, 7, 12, 13, 15, 17, 18]);

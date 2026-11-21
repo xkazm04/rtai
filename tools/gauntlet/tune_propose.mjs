@@ -59,7 +59,10 @@ function spreadMiss(runs, roster, street) {
 function killerMisses(report, runs, roster, threshold) {
   const total = report.deaths.reduce((sum, r) => sum + r.total, 0);
   const misses = [];
-  for (const e of report.enemies) {
+  // Tune the recorded cause directly, including the war machine's separate shell and stomp.
+  const causes = Map.groupBy(runs.filter((r) => r.death?.by), (r) => r.death.by);
+  for (const [id, victims] of causes) {
+    const e = { id, kills: victims.length };
     if (!total || e.kills / total <= threshold || e.id === 'timeout') continue;
     const archetype = roster?.archetypes?.find((r) => r.id === e.id);
     const weaponId = archetype?.weapon ?? e.id;
@@ -73,7 +76,6 @@ function killerMisses(report, runs, roster, threshold) {
     if (owners.some((r) => r.explicit_spawn) && !weapon?.melee) choices.push(['enemy_weapon.' + weaponId + '.damage', factor]);
     let miss = e.id + ' recorded as killer in ' + e.kills + '/' + total + ' deaths (' + fmt(100 * e.kills / total)
       + '% against ' + fmt(100 * threshold) + '%)';
-    const victims = runs.filter((r) => r.death?.by === e.id);
     const guarded = victims.filter((r) => r.waves.some((w) => w.guard_deflects > 0)).length;
     if (guarded && (weapon || e.id === 'assault-rifle') && weapon?.round !== 'large' && !weapon?.melee) {
       miss += ', ' + guarded + '/' + victims.length + ' victim runs recorded a deflection';

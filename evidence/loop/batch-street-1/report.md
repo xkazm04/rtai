@@ -4,6 +4,8 @@
 
 Live gauntlet batch · n22-loop @ 0e4bebafea5e (dirty) · 2026-11-21T00:53:06.124Z.
 
+Stalled runs by profile: novice 2, average 1, expert 4.
+
 ## Wave time
 
 Seconds per observed wave. The target is 15 s. Average medians below 12 s or above 18 s are flagged. Timed / observed shows the coverage of the seconds field. Quartiles use the repository’s quantile function.
@@ -41,31 +43,36 @@ Seconds per observed wave. The target is 15 s. Average medians below 12 s or abo
 
 Each wave and killer is followed by its recorded death count. Killers are ordered by frequency.
 
-| Profile | Runs | Deaths | No death recorded | Death wave × count | Top killers × count | Unattributed deaths |
-| --- | --- | --- | --- | --- | --- | --- |
-| novice | 3 | 3 | 0 | 5 × 1, 6 × 2 | turret_gun × 2, timeout × 1 | 0 |
-| average | 4 | 4 | 0 | 5 × 1, 6 × 1, 9 × 1, 11 × 1 | turret_gun × 2, war_cannon × 1 | 1 |
-| expert | 1 | 1 | 0 | 9 × 1 | turret_gun × 1 | 0 |
+| Profile | Runs | Deaths | Stalled | Accepted without death | Death wave × count | Top killers × count | Unattributed deaths |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| novice | 5 | 3 | 2 | 0 | 5 × 1, 6 × 2 | turret_gun × 2 | 0 |
+| average | 5 | 4 | 1 | 0 | 5 × 1, 6 × 1, 9 × 1, 11 × 1 | turret_gun × 2, war_cannon × 1 | 1 |
+| expert | 5 | 1 | 4 | 0 | 9 × 1 | turret_gun × 1 | 0 |
+
+## Timeouts
+
+Runs that reached the wave time limit.
+
+| Outcome | novice | average | expert |
+| --- | --- | --- | --- |
+| timeout | 1 | 0 | 0 |
 
 ## Enemy presence and wave time
 
 Confirmed kills count only named death records. Time share divides seconds in waves containing the enemy by all timed waves with a measured roster. Several enemies can share a wave. Parentheses give the timed wave count.
 
-| Enemy | Confirmed kills | Share of wave time | Present median s (n) | Absent median s (n) |
-| --- | --- | --- | --- | --- |
-| contractor | 0 | 53.21% | 14.12 (17) | 8.14 (32) |
-| patrol_cop | 0 | 82.24% | 9.88 (39) | 8.18 (10) |
-| riot_cop | 0 | 50.97% | 9.38 (23) | 8.27 (26) |
-| robot_gunner | 0 | 17.33% | 15.44 (8) | 8.18 (41) |
-| robot_thug | 0 | 23.32% | 16.27 (9) | 8.14 (40) |
-| rocket_trooper | 0 | 50.75% | 11.47 (17) | 7.8 (32) |
-| sentry_turret | 0 | 5.06% | 18.32 (2) | 8.6 (47) |
-| shield_robot | 0 | 9.42% | 34.08 (2) | 8.6 (47) |
-| swat | 0 | 31.07% | 8.39 (18) | 9.18 (31) |
-| timeout | 1 | 0% | not measured | 8.68 (49) |
-| turret_gun | 5 | 0% | not measured | 8.68 (49) |
-| war_cannon | 1 | 0% | not measured | 8.68 (49) |
-| war_machine | 0 | 44.27% | 40.7 (7) | 8.14 (42) |
+| Enemy | Confirmed kills | Killer weapon × count | Share of wave time | Present median s (n) | Absent median s (n) |
+| --- | --- | --- | --- | --- | --- |
+| contractor | 0 | — | 53.21% | 14.12 (17) | 8.14 (32) |
+| patrol_cop | 0 | — | 82.24% | 9.88 (39) | 8.18 (10) |
+| riot_cop | 0 | — | 50.97% | 9.38 (23) | 8.27 (26) |
+| robot_gunner | 0 | — | 17.33% | 15.44 (8) | 8.18 (41) |
+| robot_thug | 0 | — | 23.32% | 16.27 (9) | 8.14 (40) |
+| rocket_trooper | 0 | — | 50.75% | 11.47 (17) | 7.8 (32) |
+| sentry_turret | 5 | turret_gun × 5 | 5.06% | 18.32 (2) | 8.6 (47) |
+| shield_robot | 0 | — | 9.42% | 34.08 (2) | 8.6 (47) |
+| swat | 0 | — | 31.07% | 8.39 (18) | 9.18 (31) |
+| war_machine | 1 | war_cannon × 1 | 44.27% | 40.7 (7) | 8.14 (42) |
 
 ## Offered bonuses
 

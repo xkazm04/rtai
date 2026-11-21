@@ -2,6 +2,7 @@ import { resolve } from 'node:path';
 import { median } from '../perf/paired.mjs';
 import { quantile, mean } from '../perf/stats.mjs';
 import { entryArgs, commandLine } from './commands.mjs';
+import { killerEnemy } from './enemy_weapons.mjs';
 import { offerEffects } from './offers.mjs';
 
 export const TARGET_S = 15;
@@ -35,24 +36,36 @@ function waveStats(profile, n, waves, before) {
     forms: [...forms].sort(([a], [b]) => a.localeCompare(b)).map(([id, v]) => ({ id, ...measured(v) })) };
 }
 
-function enemyStats(runs) {
+function enemyStats(runs, catalog) {
   const waves = runs.flatMap((r) => r.waves);
-  const killers = frequency(runs.map((r) => r.death?.by).filter(Boolean));
-  const ids = new Set([...killers.keys(), ...waves.flatMap((w) => Object.keys(w.enemies ?? {}))]);
+  const ids = new Set(waves.flatMap((w) => Object.keys(w.enemies ?? {})));
+  const attributed = new Map();
+  for (const run of runs) {
+    const id = killerEnemy(run, catalog, ids);
+    if (!id) continue;
+    ids.add(id);
+    if (!attributed.has(id)) attributed.set(id, []);
+    attributed.get(id).push(run.death.by);
+  }
   const timed = waves.filter((w) => w.enemies && Number.isFinite(w.seconds));
   const elapsed = total(vals(timed, 'seconds'));
   return [...ids].sort().map((id) => {
     const withEnemy = vals(timed.filter((w) => w.enemies[id] > 0), 'seconds');
     const without = vals(timed.filter((w) => !(w.enemies[id] > 0)), 'seconds');
-    return { id, kills: killers.get(id) ?? 0, share: elapsed ? total(withEnemy) / elapsed : NaN,
+    const causes = attributed.get(id) ?? [];
+    const weapons = [...frequency(causes.filter((weapon) => weapon !== id))].sort();
+    return { id, kills: causes.length, weapons, share: elapsed ? total(withEnemy) / elapsed : NaN,
       present: measured(withEnemy), absent: measured(without) };
   });
 }
 
-function deathStats(profile, runs) {
+function deathStats(profile, runs, attempts) {
   const deaths = runs.filter((r) => r.death).map((r) => r.death);
   const by = frequency(deaths.map((d) => d.by).filter(Boolean));
-  return { profile, runs: runs.length, total: deaths.length, unknown: deaths.filter((d) => !d.by).length,
+  const stalled = attempts.filter((r) => r.outcome === 'stalled').length;
+  const timeouts = by.get('timeout') ?? 0;
+  by.delete('timeout');
+  return { profile, runs: attempts.length, accepted: runs.length, stalled, timeouts, total: deaths.length, unknown: deaths.filter((d) => !d.by).length,
     waves: [...frequency(deaths.map((d) => d.wave))].sort(([a], [b]) => a - b),
     killers: [...by].sort(([a, n], [b, m]) => m - n || a.localeCompare(b)) };
 }
@@ -107,8 +120,8 @@ export function analyze(batch, baseline = null, weapons = new Map(Object.entries
     const before = Map.groupBy((baseline?.results ?? []).filter((r) => r.profile === p).flatMap((r) => r.waves), (w) => w.n);
     const ordinals = [...new Set([...current.keys(), ...before.keys()])].sort((a, b) => a - b);
     for (const n of ordinals) waves.push(waveStats(p, n, current.get(n) ?? [], before.get(n) ?? []));
-    deaths.push(deathStats(p, runs));
+    deaths.push(deathStats(p, runs, batch.runs.filter((r) => r.profile === p)));
     winners.push(...unusual(runs, batch, weapons));
   }
-  return { waves, deaths, enemies: enemyStats(batch.results), effects: offerEffects(batch.results, weapons), winners };
+  return { waves, deaths, enemies: enemyStats(batch.results, batch.enemy_weapons ?? {}), effects: offerEffects(batch.results, weapons), winners };
 }

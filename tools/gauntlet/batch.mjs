@@ -8,6 +8,8 @@ import { dirtyLines, git, PROJECT, readJson } from '../lib/repo.mjs';
 import { median } from '../perf/paired.mjs';
 import { commandLine, parseArgs, plan } from './commands.mjs';
 import { BATCH_SCHEMA, PROFILES, validateRun } from './contract.mjs';
+import { enemyWeapons } from './enemy_weapons.mjs';
+import { streetLog } from './street_log.mjs';
 
 export { parseArgs, plan, validateRun };
 const portable = (out, path) => relative(out, path).split(sep).join('/');
@@ -16,17 +18,19 @@ const sum = (values) => values.reduce((total, n) => total + n, 0);
 function tableSnapshot() {
   const tables = {};
   const weapon_refs = {};
+  let enemy_weapons = {};
   for (const name of ['enemies', 'weapons', 'combat', 'gauntlet', 'gauntlet_bonuses', 'test_player']) {
     const file = name + '.json';
     const path = join(PROJECT, 'data', 'tables', file);
     if (!existsSync(path)) continue;
     const bytes = readFileSync(path);
+    if (name === 'enemies') enemy_weapons = enemyWeapons(JSON.parse(bytes));
     tables[file] = createHash('sha256').update(bytes).digest('hex');
     if (name === 'gauntlet_bonuses') {
       for (const row of JSON.parse(bytes).rows) if (row.kind === 'weapon') weapon_refs[row.id] = row.ref;
     }
   }
-  return { tables, weapon_refs };
+  return { tables, weapon_refs, enemy_weapons };
 }
 
 function readResult(file, row, checkIdentity = false) {
@@ -82,6 +86,7 @@ async function liveRun(args, job, launch) {
     row.exit = await launch(job.argv, { out: note, err: note, logDir: join(args.out, 'logs', stem) });
     const engineLog = lines.find((line) => line.startsWith('run: log '));
     if (engineLog) row.engine_log = portable(args.out, engineLog.slice('run: log '.length));
+    Object.assign(row, streetLog(args.out, row));
     if (row.exit !== 0) throw new Error(lines.at(-1));
     const after = statSync(job.file, { bigint: true });
     if (before && after.mtimeNs === before.mtimeNs && after.ctimeNs === before.ctimeNs)
