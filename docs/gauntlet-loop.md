@@ -2,25 +2,56 @@
 
 ## Speed
 
-The shared-machine pit measurement was **13.6 simulated seconds per wall second per Godot**, CONTENDED, with about **4 seconds of boot time**. Use this as a pit planning estimate. Record contention, tick budget and boot time separately when measuring the seeded street.
+The director measured the real street with four lanes busy (CONTENDED). Using the final `tick N, segment` in each engine log for simulation time and the manifest's `wall_s` for elapsed time, budget **10.8 s fixed plus 0.028 wall s per simulated second**. That is about 35 simulated seconds per wall second during combat. A 200-sim-second ten-wave run takes about 17 wall seconds, or roughly 210 runs per wall hour with one job. The original expert seed 4 took 17.38 wall seconds for 200 simulated seconds. Long tick-cap runs include idle time. [Street batch and engine logs](../evidence/loop/batch-street-1/batch.json)
+
+The pit measured 13.6 simulated seconds per wall second with about 4 seconds of boot time under contention.
 
 ## Test player
 
 The same `GauntletBot` emits packed `TickInput` for a live simulation or recording. Give it a `BotView`, the session's `PlayerActions`, a shipped `BotProfile` and the run seed. It creates a private RNG registry so playing back the recorded input without the bot preserves the world's RNG checkpoints.
 
-| Profile | Reaction ticks | Aim error ±° | Large tells read | Guard lead ticks | Roll chance | Cover reach (m) | Offensive form chance |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| Novice | 30 | 14 | 30% | 5 | 30% | 2 | 25% |
-| Average | 16 | 7 | 65% | 10 | 60% | 4 | 55% |
-| Expert | 8 | 3 | 90% | 18 | 95% | 7 | 90% |
+| Profile | Reaction ticks | Aim error ±° | Large tells read | Guard lead ticks | Roll chance | Cover reach (m) | Offensive form chance | Rest HP | Retreat HP |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Novice | 30 | 14 | 30% | 5 | 30% | 2 | 25% | 40% | 0% |
+| Average | 16 | 7 | 65% | 10 | 60% | 4 | 55% | 75% | 25% |
+| Expert | 8 | 3 | 90% | 18 | 95% | 7 | 90% | 95% | 45% |
 
 The brain reads Rivet's position, facing, health, settled form, form selection and availability, roll readiness, held slots and their reach. The adapter supplies wave state, forward movement, nearby cars, solid rectangles, hostiles and incoming enemy rounds. Positions, radii and reach use metres. Each body and round keeps its id while visible. An empty tell means idle. The other tell values are `small`, `large` and `melee`.
 
 A target's score is its archetype weight divided by distance, with an additive bonus during a large windup. Acquiring a new target costs the profile's reaction time. A small incoming round can trigger a held guard when it will intersect Rivet from the front. A large round takes priority. The bot rolls across its path or moves behind reachable solid cover. A nearby heavy or an unavoidable blast can trigger Tonnage. Kerf targets isolated shooters, Ohm targets groups and Dent uses nearby cars. The bot cycles and transforms with the same press edges the player uses.
 
-The pit adapter follows the west-door waypoints from the hub and reads the pit's standing wave members. The street pilot `GauntletTestPlayer` binds the same view to the session's hostile roster and advances east between fights. Both read the current ghost locks, cooldowns and madness budget each tick. The adapter reads round size from `Shot.size`. Guard input is available when its action bit exists.
+The pit follows the west-door waypoints. On the street, the bot walks to the next block seam and chases an opponent along the guard map's corners when a prop blocks the approach. After two seconds without positional progress it can take a different corner, sidestep, or back out of a gap. A guard can pass the one-metre kiosk gap. Rivet needs 1.2 m, so a jam can trigger a route with his body clearance. After a clear the bot waits for its profile's rest fraction of current maximum HP. Below the retreat fraction it runs back along the retained street and resumes fighting at the rest threshold. Novice never retreats for repair.
+
+A sentry's facing determines which side gets its armour reduction. The bot circles it in one direction, changing sides at a wall. A shell or completed stomp opens a sprint toward the war machine. On reading a new stomp it tries to leave the damage radius, rolls on a late read, or requests Tonnage when it cannot escape. Small shots can trigger guard while the stance is available. At range it selects the shortest carried gun that reaches and fires it. At close range it can draw a carried melee weapon. Ghost choices use the actual grants, cooldowns and madness budget.
+
+Unlike a human player, the bot knows every living hostile's position, the exact velocity of each incoming round, the stomp clock and the street geometry. It can score an enemy behind a wall. Its reaction delay, missed reads and aim error come from a profile and seeded draws. It makes its card choice immediately. The results measure these three policies under combat pressure.
 
 Bonus ids are opaque. Pass the offered ids to `BotPick.pick(offered, wave)` and supply the catalog indexed by id when constructing the picker. Random mode draws from a separate seeded stream. Greedy mode adds the kind base and its ref preference from `test_player.json`. For example, Tonnage scores 9 (ghost 5 plus 4), damage scores 7 (stat 4 plus 3) and pistol scores 4 (weapon 3 plus 1). Ties keep offer order.
+
+### Street measurement
+
+Seeds 1 through 5 each played once per profile with greedy picks, wheel controls and one job. Depth includes the last wave reached by a stalled run. Wave 5 seconds include completed waves only, with the clear count in parentheses. The merged baseline already granted equipment.
+
+| Street bot | Stalls / 15 | Median wave reached, novice / average / expert | Average wave 5, s | Expert wave 5, s | Wave 5 timeouts / all timeouts |
+|---|---:|---|---:|---:|---:|
+| Merged baseline | 13 | 4 / 5 / 5 | 47.24 (4) | 37.74 (4) | 0 / 1 |
+| Routing and repair | 0 | 5 / 16 / 16 | 54.65 (5) | 39.40 (4) | 2 / 8 |
+| Machine tactics and wheel selection | 0 | 10 / 20 / 25 | 33.15 (5) | 35.10 (5) | 0 / 10 |
+
+Average seed 1 advanced from a stall at wave 8 to a wave 22 timeout. All 15 final runs cleared the first war machine. All 14 runs that took a gun fired it, for 15,188 shots in total. Novice seed 5 reached wave 6 without taking a gun. Later waves still reached the 90-second limit, including wave 25 for three experts. [Merged baseline](../evidence/loop/street-merged-before/batch.json) · [Routing and repair](../evidence/loop/street-rest-before-fights/batch.json) · [Final batch](../evidence/loop/street-final/batch.json)
+
+The second five-seed batch reproduced all 15 result files byte for byte. The average seed 1 result was 15,715 bytes with SHA-256 `2df4cd12fd47ed6d45f6f424f2452bba40ff0fdc519002385a563fd17ac732d8`. [Pairwise result digests](../evidence/loop/street-final/determinism.json) · [Independent average seed 1 result](../evidence/loop/repeat-average-1.json)
+
+The machine observer counts ticks while the boss lives. Damage per second divides observed HP loss by that interval. Claw reach, held guard, active roll and cover decisions are independent fractions of the same ticks. On seed 2 the average bot got within claw reach more often. The expert spent much of this seed pursuing a machine wedged beside an alley wall, despite faster median wave clears across all five seeds. [Alley position and damage trace](../evidence/loop/probe-alley-expert-2.json)
+
+| Seed 2, first machine | HP/s | In claw reach | Guard | Rolling | Cover |
+|---|---:|---:|---:|---:|---:|
+| Average before | 0.72 | 12.65% | 0.46% | 7.47% | 0.10% |
+| Average after | 1.94 | 42.60% | 2.58% | 9.47% | 0.65% |
+| Expert before | 1.50 | 26.31% | 0.12% | 11.89% | 0.91% |
+| Expert after | 0.74 | 17.29% | 0.41% | 4.96% | 0.57% |
+
+The original probes and final per-wave `machine` counters provide the tick counts for these comparisons. [Average before](../evidence/loop/probe-before-average-2.json) · [Expert before](../evidence/loop/probe-before-expert-2.json) · [Average after](../evidence/loop/street-final/runs/average-2.json) · [Expert after](../evidence/loop/street-final/runs/expert-2.json)
 
 ### Pit measurement
 
@@ -63,27 +94,19 @@ node --test "tools/gauntlet/*.test.mjs"
 
 `--seeds` counts consecutive seeds **per profile** from `--seed0` (default 1). The three bot profiles give nine jobs for three seeds. The default launcher is the street scene with legacy controls. Jobs default to one and are capped at two. The dry run prints the exact commands. Live runs write `runs/<profile>-<seed>.json` and per-job logs. The pit takes legacy controls, observes at most 2,400 ticks (40 simulated seconds), and stops at the first death or requested number of cleared waves. It makes no card offers. For the original input digest and detailed attempt logs, use the probe's `--out` option. The batch uses its `--result` option for the street wire format.
 
-Wave seconds in the pit run from spawn to clear or death. A tick-limited attempt retains its status and observed counters and omits its final duration. The pit measures the enemy roster at spawn, damage, actual shots, rolls, held guard and cover decisions, and settled seconds in each ghost form. Hit counts, deflections and killer attribution require other observers. The current street interface binds the pilot, writes a wave-zero result and exits before the first step.
+Wave seconds in the pit run from spawn to clear or death. A tick-limited attempt retains its status and observed counters and omits its final duration. The pit measures the enemy roster at spawn, damage, actual shots, rolls, held guard and cover decisions, and settled seconds in each ghost form. Hit counts, deflections and killer attribution require other observers. The street starts a cohort on entry to each block. It records completed wave durations, actual discharges, damaging contacts, damage taken and roll starts. A live cohort has a 90-second limit.
 
 `--from` reads the JSON files in a directory or its `runs/` subdirectory without launching Godot. It applies the selected profiles and any explicit seed range or controls filter. With `--profile=all` it also accepts human runs. Supply the original runner, pick policy and wave cap when importing loose files for replay. The wire format carries the seed, profile and controls. Offline Git metadata and table hashes describe the importing checkout.
 
 The committed fixtures are synthetic. Their pistol takers survive two more waves and have six-second shorter later waves in the matched comparison. A deliberately incomplete average run exercises rejection. For a human trajectory the seed reopens the same initial world and replay also needs the original inputs.
 
-`batch.json` records the revision, branch, dirty flag, CLI settings, SHA-256 of each available input table, and the weapon refs used to interpret offers. Its manifest retains every attempted run, including invalid or failed files and their reasons. Live entries carry elapsed wall time, launcher exit and log paths. Raw imported files have no launch timings. Only valid results feed the report. A mixed offline import succeeds and lists rejections. A live failure sets a nonzero exit after every remaining job finishes.
+`batch.json` records the revision, branch, dirty flag, CLI settings, SHA-256 of each available input table, and the weapon refs used to interpret offers. Its manifest retains every attempted run, including invalid or failed files and their reasons. Live entries carry elapsed wall time, launcher exit and log paths. Raw imported files have no launch timings. Successful results supply combat statistics. The report counts confirmed tick-cap exits from the manifest or historical engine logs. A mixed offline import succeeds and lists rejections. A live failure sets a nonzero exit after every remaining job finishes.
 
-The summary pools measured wave seconds per profile and takes the median. Each run contributes one deepest-wave value. For speed, the pit records the full run's simulated time including travel. When a producer supplies only wave durations, a complete set of reached-wave durations gives observed combat seconds. The batch sums available run times. Live wall time covers the whole batch including boot and failures. The ratio needs a timed result for every job and a measured wall interval.
+The summary pools measured wave seconds per profile and takes the median. Each run contributes one deepest-wave value. For speed, the batch uses producer ticks at 60 Hz, explicit simulated seconds, or the final street clock in the engine log. These include approaches and rests. A completed set of wave durations is a last fallback for loose results. The manifest sums measured simulation time and calculates throughput when it has a time for every job, including confirmed stalls with a final clock.
 
 ### Seeds per night
 
-At the measured 13.6 simulated seconds per wall second, a run lasting `W` waves of 15 s takes about `4 + 15 × W / 13.6` wall seconds including boot. With one serial job, an eight-hour night gives the following planning ceilings. Divide available wall seconds by three run times for complete three-profile seed sets.
-
-| Target waves per run | Wall s per run | Single-profile runs in 8 h | Seeds run on all three profiles in 8 h |
-|---:|---:|---:|---:|
-| 5 | 9.51 | 3,026 | 1,008 |
-| 10 | 15.03 | 1,916 | 638 |
-| 20 | 26.06 | 1,105 | 368 |
-
-The 2,400-tick pit window takes an estimated `4 + 40 / 13.6 = 6.94` wall seconds per full run. At the ten-wave target, one hour buys about 239 single-profile runs or 79 complete seed sets. These are extrapolations from the pit measurement. Street travel, imports, launcher checks, contention and early deaths change observed throughput.
+At the street estimate above, one serial job can play roughly 1,680 runs or 560 complete three-profile seed sets in eight hours if runs average 200 simulated seconds. Deaths, timeouts, loading and machine contention change that figure. The 2,400-tick pit window takes about `4 + 40 / 13.6 = 6.94` wall seconds.
 
 ## Report
 
@@ -95,7 +118,7 @@ node tools/gauntlet/report.mjs --batch=build/gauntlet/street/batch.json --baseli
 The command writes Markdown and a self-contained HTML file with inline SVG timing charts. The default output directory is beside the batch. A baseline adds the earlier median, its measured sample count, and the change to each profile/wave row, including waves seen in only one batch.
 
 - **Wave time.** Each dot is a median. Bars span p25 to p75 and the table also shows the minimum and maximum. The median averages the middle pair for even counts. Quartiles use the repo's sorted rank at `floor(n × q)`. The average profile misses its 15 s target below 12 s or above 18 s. Counts show timed and observed waves separately.
-- **Deaths and enemy presence.** Death frequencies include the wave and the attributed killer when available. Unknown killers have their own count. Enemy time share uses waves with both a duration and a measured roster. A wave counts toward every enemy present, so shares can exceed 100% in total. Compare the median seconds in measured waves containing each enemy with the median in measured waves without it.
+- **Deaths and enemy presence.** Death frequencies include the wave and the attributed killer when available. A weapon identifies its carrier through the batch enemy catalog and, for shared weapons, the death-wave roster when it identifies one carrier. The enemy row retains the weapon and confirmed count. Timeouts and stalled runs have separate counts. A death missing its killer stays unattributed. Enemy time share uses waves with both a duration and a measured roster. A wave counts toward every enemy present, so shares can exceed 100% in total. Compare the median seconds in measured waves containing each enemy with the median in measured waves without it.
 - **Offers.** Each card or weapon ref compares runs that took it to runs that received an offer and never took it. Index each run at its first take or, for decliners, first offer. Measure confirmed later waves survived and the median of later measured wave durations. Entering the next wave confirms a clear. Counting the final wave needs a clear status or a post-wave offer and no death. One run has one observation per item and outcome. The two group medians use all eligible observations.
 - **Paired differences.** Match takers and decliners within profile, controls and pick wave. Sort each side by seed and select evenly spaced ranks from the larger side without replacement. Bootstrap the median of take-minus-decline differences with the repo's seeded `bootCi` (4,000 samples). The A/A comparison repeats the matching on even versus odd decliner seeds, falling back to all exposed seeds if necessary. Its floor is the larger absolute CI95 endpoint. An interval touching zero or a difference no larger than the floor earns `noise`. Each interval needs at least two matched pairs. A `higher` or `lower` label describes an association in these runs.
 - **Combat telemetry.** Deflects, rolls, shots and form seconds are per-wave medians with a count of measured observations. Hit rate is total hits divided by total shots from rows measuring both. Missing observations and undefined rates display as `not measured`. Measured zeroes contribute normally.
