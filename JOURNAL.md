@@ -118,3 +118,8 @@ NEXT (if a session follows; nothing is owed):
 - 07:30 read JOURNAL; no astra.lock, last call melee-ttk (n=7) ended. Tree clean. Since the reels gate `d73b3224a` only JOURNAL.md and REPORT.md changed (inert), so the gates stand: final `build/gate/90902c90e94e/gate.json`, reels `build/gate/d73b3224ab9b/gate.json`.
 - 07:31 cites REPORT.md: 21 paths, 21 ok. No new code, no new film (past freeze; report due 07:40).
 NEXT: nothing owed. Director merges `n22-foes`; merge notes are in REPORT.md. Temp snapshots `gtai-gate-90902c90e94e` / `gtai-gate-d73b3224ab9b` are for the post-merge Temp cleanup.
+
+## Session 7 (07:30 to 07:32, STABILIZE)
+- 07:30 read JOURNAL; no astra.lock, last Astra call melee-ttk (n=7) ended. Tree clean at `99ada49fa`. No new `NEED foes` (street line 15 served in 73df7e6c5). cites REPORT.md: 21 paths, 21 ok.
+- Since the reels gate `d73b3224a` only JOURNAL.md / REPORT.md changed (inert); gates stand: final `build/gate/90902c90e94e/gate.json`, reels `build/gate/d73b3224ab9b/gate.json`. No code, no film (past freeze).
+NEXT: nothing owed. Director merges `n22-foes` (merge notes in REPORT.md); Temp snapshots `gtai-gate-90902c90e94e` / `gtai-gate-d73b3224ab9b` go with the post-merge cleanup.
