@@ -92,6 +92,7 @@ func _open_view(film: bool) -> void:
 	view.bind(session.stage, CollectCallWorld.new(session.stage), null)
 	add_child(view)
 	view.hud_view.visible = false
+	view.blood.solid = session.street.solid_px
 	hud = GauntletHud.new()
 	hud.session = session
 	hud.run = run

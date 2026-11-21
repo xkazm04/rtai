@@ -4,12 +4,20 @@ extends ArenaFloorView
 ## the floor between view-mode changes. The camera and actors use the same metre coordinates.
 
 var street: GauntletStreet
+var _previous_solid: Callable
 
 
 func _ready() -> void:
 	super._ready()
+	_previous_solid = StreetDeadPlan.solid
+	StreetDeadPlan.solid = street.solid_px
 	@warning_ignore("return_value_discarded")
 	street.window_changed.connect(_window_changed)
+
+
+func _exit_tree() -> void:
+	if street != null and StreetDeadPlan.solid == street.solid_px:
+		StreetDeadPlan.solid = _previous_solid
 
 
 func _window_changed() -> void:

@@ -152,3 +152,33 @@ func test_arena_replaces_retired_collision_and_routes_over_fifty_advances() -> v
 		assert_false(s.stage.walls.blocks(retired, retired + Vector2(0.0, 9.0)))
 		assert_false(arena.guard_map.region().has_point(retired))
 	s.close()
+
+
+func test_dead_guard_stays_on_the_road_side_after_a_wall_hit_and_a_late_shove() -> void:
+	var s: GauntletSession = _session(GauntletWalker.new())
+	var arena: CombatArena = s.stage.arena
+	var block: GauntletSegment = s.street.current()
+	var wall: ArenaStation.Prop = block.station.props[1]
+	assert_eq(wall.kind, "wall_high")
+	var hit: Vector2 = Vector2(block.start_x + 3.0, wall.at.y)
+	var foe: Fighter = arena.squad_ai.spawn_member(arena, hit, &"patrol_cop")
+	foe.pos = hit
+	arena.damage(foe, foe.max_hp, arena.rivet.id, &"claw", &"melee")
+	assert_false(foe.alive())
+	var expected: float = wall.at.y - wall.size.y * 0.5 - 1.15
+	assert_almost_eq(foe.pos.y, expected, 0.001)
+	foe.pos.y = wall.at.y + 5.0
+	s.step()
+	assert_almost_eq(foe.pos.y, expected, 0.001)
+	assert_almost_eq(foe.pos.x, hit.x, 0.001)
+	s.close()
+
+
+func test_rest_chooses_the_nearest_free_face_when_cover_meets_a_wall() -> void:
+	var boxes: Array[Rect2] = [Rect2(4, 0, 4, 2), Rect2(7, 2, 2, 3)]
+	var rest: GauntletRest = GauntletRest.new(Rect2(0, 0, 20, 12), boxes)
+	assert_eq(rest.nearest(Vector2(7, 2), 0.5), Vector2(6.5, 2.5))
+	assert_eq(rest.nearest(Vector2(7, 6), 0.5), Vector2(7, 6))
+	assert_eq(rest.nearest(Vector2(5, -3), 0.5), Vector2(3.5, 0.5))
+	assert_true(rest.solid_px(Vector2(8, 3) * SimConst.PX_PER_M))
+	assert_false(rest.solid_px(Vector2(10, 3) * SimConst.PX_PER_M))
