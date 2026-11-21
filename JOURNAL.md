@@ -109,3 +109,9 @@ NEXT (session 5, from about 05:54):
 - 05:45 REPORT: 'where the test player plays unlike a person' section, Astra ledger in time order with totals (6 calls, 261 min, all accepted). NEXT item 4 is done except the gate line and Merge notes.
 - 05:36 `debt.mjs --check` said tighten (dev_loc 27514 -> 27506); `--update` committed 3f9a8b9e2 (pre-commit lint 19/19). Not in the gate's snapshot (3cc9334c3); the post-freeze `--reels` gate on the final HEAD covers it.
 - 05:43 MILESTONE gate PASS on 3cc9334c3 (11 min): unit 3541/0/2 skipped, scenarios 65, parity bit-exact + planted mutation caught, selftest, export-audit 864/0. `build/gate/3cc9334c3d56/gate.json`. Gate line in REPORT header.
+- 05:43 MUTATE RUNNING `node tools/mutate/mutate.mjs --file=features/gauntlet/bot/gauntlet_bot.gd --max=20` (detached, started 05:43, out build/director/mutate-gauntlet_bot.out, 20/23 mutants at b9ea7e56, temp worktree C:\Users\kazda\AppData\Local\Temp\gtai-mutate-99a5fc37 reused). It holds the lane's Godot until it ends.
+NEXT (session 5, from about 05:54):
+1. Wait for the mutate run to end (no other Godot meanwhile); quote killed/(killed+survived) in REPORT next to the test player line (Astra's 38/38 was its own sampler on scratch copies; this is the CLI). Remove `gtai-mutate-*` from AppData\Local\Temp afterwards if the tool does not.
+2. No new code (the 06:00 cut-off has passed). The gate PASS on 3cc9334c3 is in REPORT; everything since then is inert plus 3f9a8b9e2 (debt tighten).
+3. After the 07:30 freeze: `node tools/gate/run.mjs --rev=HEAD --reels` once, detached; quote its line + gate.json path in REPORT; delete `gtai-gate-*` in Temp afterwards.
+4. 07:40 REPORT: drop "DRAFT" from the title, `node tools/evidence/cites.mjs REPORT.md`, commit per path. Optional while waiting (Node only): a third proposal pass is not needed; better to re-read REPORT top to bottom for stale numbers (header line 3 still says only `n22-tune`).
