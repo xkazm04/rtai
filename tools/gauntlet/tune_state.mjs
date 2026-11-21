@@ -1,6 +1,6 @@
 import { execFileSync } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
-import { closeSync, existsSync, mkdirSync, openSync, readFileSync, renameSync, unlinkSync, writeFileSync } from 'node:fs';
+import { closeSync, existsSync, linkSync, mkdirSync, openSync, renameSync, unlinkSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { canonicalJson } from '../lib/canonical_json.mjs';
 import { readJson } from '../lib/repo.mjs';
@@ -15,17 +15,21 @@ export function git(root, ...args) {
   return execFileSync('git', args, { cwd: root, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
 }
 
-export function atomicWrite(file, contents) {
+export function atomicWrite(file, contents, createOnly = false) {
   mkdirSync(dirname(file), { recursive: true });
   const tmp = file + '.' + randomUUID() + '.tmp';
-  writeFileSync(tmp, contents, { flag: 'wx' });
-  try { renameSync(tmp, file); }
+  try {
+    writeFileSync(tmp, contents, { flag: 'wx' });
+    if (createOnly) linkSync(tmp, file);
+    else renameSync(tmp, file);
+  }
   finally { if (existsSync(tmp)) unlinkSync(tmp); }
 }
 
 // Shared by propose, apply and revert in this worktree. An interrupted owner leaves a visible lock.
 export function withLock(root, action) {
-  const path = join(git(root, 'rev-parse', '--absolute-git-dir').trim(), 'gauntlet-tune.lock');
+  const path = join(root, 'build/gauntlet/tuner.lock');
+  mkdirSync(dirname(path), { recursive: true });
   let fd;
   try { fd = openSync(path, 'wx'); }
   catch (err) {
@@ -53,7 +57,7 @@ export function numericSlot(table, knob) {
 
 export function inventory(root, warn = console.error) {
   const knobs = readJson(join(root, 'tools/gauntlet/knobs.json'));
-  const tables = new Map(), entries = new Map(), seen = new Set();
+  const tables = new Map(), entries = new Map(), seen = new Set(), skipped = new Set();
   for (const knob of knobs) {
     const { id, file, kind, min, max } = knob;
     if (!/^project\/data\/tables\/(combat|enemies|gauntlet|weapons)\.json$/.test(file) || seen.has(id)
@@ -65,12 +69,13 @@ export function inventory(root, warn = console.error) {
     const table = tables.get(file);
     const slot = table && numericSlot(table, knob);
     if (!slot || knob.pending) {
+      skipped.add(id);
       warn(id + (knob.pending ? ' pending' : ' unresolved') + ': ' + file + '#' + knob.pointer + ' skipped');
       continue;
     }
     entries.set(id, { knob, value: slot.parent[slot.key] });
   }
-  return { entries, tables };
+  return { entries, tables, skipped };
 }
 
 export function readBaseline(root) {
@@ -90,23 +95,23 @@ export function ensureBaseline(root, entries) {
   };
   const additions = [...entries].filter(([id]) => !Object.hasOwn(baseline.values, id));
   for (const [id, { value }] of additions) baseline.values[id] = value;
-  if (!existing || additions.length) atomicWrite(path, canonicalJson(baseline));
+  if (!existing || additions.length) atomicWrite(path, canonicalJson(baseline), !existing);
   return baseline;
 }
 
 export function clamped(knob, current, baseline, requested) {
   if (![current, baseline, requested].every(Number.isFinite)) return current;
-  let lo = Math.max(knob.min, current * 0.8, baseline * 0.5);
-  let hi = Math.min(knob.max, current * 1.25, baseline * 2);
+  let lo = Math.max(knob.min, current * 4 / 5, baseline / 2);
+  let hi = Math.min(knob.max, current * 5 / 4, baseline * 2);
   let value = requested;
   if (knob.kind === 'int') {
     lo = Math.ceil(lo);
     hi = Math.floor(hi);
     value = requested > current ? Math.ceil(value) : Math.floor(value);
-  } else value = Number(value.toPrecision(12));
+  } else value = Number(value.toPrecision(6));
   if (lo > hi) return current;
   const next = Math.min(hi, Math.max(lo, value));
   // Avoid long decimal tails from multiplying binary floats where the decimal bound is exact.
-  const short = Number(next.toPrecision(12));
+  const short = Number(next.toPrecision(6));
   return short >= lo && short <= hi ? short : next;
 }

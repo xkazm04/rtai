@@ -61,9 +61,9 @@ function killerMisses(report, runs, roster, threshold) {
   const misses = [];
   for (const e of report.enemies) {
     if (!total || e.kills / total <= threshold || e.id === 'timeout') continue;
-    const archetype = roster?.archetypes.find((r) => r.id === e.id);
+    const archetype = roster?.archetypes?.find((r) => r.id === e.id);
     const weaponId = archetype?.weapon ?? e.id;
-    const weapon = roster?.weapons[weaponId];
+    const weapon = roster?.weapons?.[weaponId];
     const choices = [];
     const factor = threshold / (e.kills / total);
     // Street death.by can be a weapon id. Shared weapon names do not identify a particular shooter.
@@ -135,7 +135,8 @@ export function propose(batch, state, baseline, { target = 15, profile = 'averag
         break;
       }
       if (changes.length >= max) { result.reason = 'plan limit'; break; }
-      changes.push({ id, before, after, baseline: first, metric, miss, severity: observation.severity });
+      changes.push({ id, file: entry.knob.file, pointer: entry.knob.pointer, before, after, baseline: first,
+        metric, miss, severity: observation.severity });
       chosen.add(id);
       if (metric.type === 'offer') selectedOffers.add(metric.id);
       result.reason = id + ' ' + before + ' -> ' + after;
