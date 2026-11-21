@@ -1,0 +1,1284 @@
+{
+  "scene": "res://dev/test_player/gauntlet_bot_film.tscn",
+  "profile": "average",
+  "pick": "greedy",
+  "controls": "wheel",
+  "wave_limit": 5,
+  "headless": true,
+  "chosen_seed": 5,
+  "selection": "Only seed 5 cleared all five waves with guard deflections, rolls, a visible COVER caption against a large threat, and positive Tonnage time.",
+  "measurement": "Wave counters come from the result JSON. Deflects are changes in PlayerGuard.deflects. Caption counts and inclusive tick ranges are derived from post-step act transitions, confined to the measured fight. Large cover requires COVER on screen and a cover decision against an incoming large round or a large windup.",
+  "seeds": [
+    {
+      "seed": 1,
+      "qualifies": false,
+      "longest_large_cover_ticks": 0,
+      "waves": [
+        {
+          "wave": 1,
+          "block": "alley_neck",
+          "cleared": true,
+          "start_tick": 255,
+          "end_tick": 658,
+          "guard_ticks": 36,
+          "guard_deflects": 4,
+          "rolls": 1,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 301,
+            "GUARD": 36,
+            "ROLL": 22,
+            "ATTACK CLAW": 44
+          }
+        },
+        {
+          "wave": 2,
+          "block": "kiosk_plaza",
+          "cleared": true,
+          "start_tick": 721,
+          "end_tick": 1215,
+          "guard_ticks": 24,
+          "guard_deflects": 3,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 381,
+            "GUARD": 24,
+            "ATTACK CLAW": 89
+          }
+        },
+        {
+          "wave": 3,
+          "block": "loading_bay",
+          "cleared": true,
+          "start_tick": 1271,
+          "end_tick": 1482,
+          "guard_ticks": 35,
+          "guard_deflects": 4,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 160,
+            "GUARD": 35,
+            "ATTACK CLAW": 16
+          }
+        },
+        {
+          "wave": 4,
+          "block": "barricade_line",
+          "cleared": true,
+          "start_tick": 1582,
+          "end_tick": 1822,
+          "guard_ticks": 37,
+          "guard_deflects": 7,
+          "rolls": 1,
+          "cover_ticks": 7,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 174,
+            "ATTACK CLAW": 7,
+            "ROLL": 22,
+            "GUARD": 37
+          }
+        },
+        {
+          "wave": 5,
+          "block": "kiosk_plaza",
+          "cleared": true,
+          "start_tick": 1936,
+          "end_tick": 4037,
+          "guard_ticks": 55,
+          "guard_deflects": 9,
+          "rolls": 7,
+          "cover_ticks": 0,
+          "tonnage_seconds": 7.1,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 610,
+            "GUARD": 55,
+            "ROLL": 154,
+            "TONNAGE": 348,
+            "RETREAT": 135,
+            "REST": 89,
+            "ATTACK CLAW": 710
+          }
+        }
+      ]
+    },
+    {
+      "seed": 2,
+      "qualifies": false,
+      "longest_large_cover_ticks": 0,
+      "waves": [
+        {
+          "wave": 1,
+          "block": "crosswalk",
+          "cleared": true,
+          "start_tick": 237,
+          "end_tick": 544,
+          "guard_ticks": 10,
+          "guard_deflects": 1,
+          "rolls": 1,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 220,
+            "GUARD": 10,
+            "ROLL": 22,
+            "ATTACK CLAW": 44,
+            "REST": 11
+          }
+        },
+        {
+          "wave": 2,
+          "block": "plain_block",
+          "cleared": true,
+          "start_tick": 607,
+          "end_tick": 1107,
+          "guard_ticks": 36,
+          "guard_deflects": 4,
+          "rolls": 1,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 353,
+            "GUARD": 36,
+            "ATTACK CLAW": 89,
+            "ROLL": 22
+          }
+        },
+        {
+          "wave": 3,
+          "block": "alley_neck",
+          "cleared": true,
+          "start_tick": 1129,
+          "end_tick": 1581,
+          "guard_ticks": 0,
+          "guard_deflects": 0,
+          "rolls": 2,
+          "cover_ticks": 0,
+          "tonnage_seconds": 4.8,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ATTACK CLAW": 1,
+            "ADVANCE": 109,
+            "ROLL": 44,
+            "TONNAGE": 298
+          }
+        },
+        {
+          "wave": 4,
+          "block": "crosswalk",
+          "cleared": true,
+          "start_tick": 1616,
+          "end_tick": 2088,
+          "guard_ticks": 32,
+          "guard_deflects": 6,
+          "rolls": 2,
+          "cover_ticks": 0,
+          "tonnage_seconds": 1.72,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "TONNAGE": 89,
+            "ROLL": 44,
+            "ADVANCE": 254,
+            "ATTACK CLAW": 42,
+            "GUARD": 32,
+            "REST": 11
+          }
+        },
+        {
+          "wave": 5,
+          "block": "alley_neck",
+          "cleared": true,
+          "start_tick": 2100,
+          "end_tick": 4089,
+          "guard_ticks": 71,
+          "guard_deflects": 8,
+          "rolls": 8,
+          "cover_ticks": 12,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ATTACK CLAW": 777,
+            "ADVANCE": 485,
+            "GUARD": 71,
+            "REST": 33,
+            "ROLL": 176,
+            "OHM": 413,
+            "RETREAT": 34
+          }
+        }
+      ]
+    },
+    {
+      "seed": 3,
+      "qualifies": false,
+      "longest_large_cover_ticks": 20,
+      "waves": [
+        {
+          "wave": 1,
+          "block": "alley_neck",
+          "cleared": true,
+          "start_tick": 237,
+          "end_tick": 613,
+          "guard_ticks": 0,
+          "guard_deflects": 0,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 315,
+            "ATTACK CLAW": 61
+          }
+        },
+        {
+          "wave": 2,
+          "block": "crosswalk",
+          "cleared": true,
+          "start_tick": 644,
+          "end_tick": 1034,
+          "guard_ticks": 71,
+          "guard_deflects": 11,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 303,
+            "GUARD": 70,
+            "REST": 1,
+            "ATTACK CLAW": 16
+          }
+        },
+        {
+          "wave": 3,
+          "block": "alley_neck",
+          "cleared": true,
+          "start_tick": 1060,
+          "end_tick": 1215,
+          "guard_ticks": 20,
+          "guard_deflects": 2,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 45,
+            "ATTACK 1": 90,
+            "GUARD": 20
+          }
+        },
+        {
+          "wave": 4,
+          "block": "plain_block",
+          "cleared": true,
+          "start_tick": 1407,
+          "end_tick": 2035,
+          "guard_ticks": 16,
+          "guard_deflects": 2,
+          "rolls": 1,
+          "cover_ticks": 20,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [
+            [
+              1476,
+              1495
+            ]
+          ],
+          "caption_ticks": {
+            "ADVANCE": 375,
+            "COVER": 20,
+            "GUARD": 16,
+            "ROLL": 22,
+            "REST": 11,
+            "ATTACK 1": 184
+          }
+        },
+        {
+          "wave": 5,
+          "block": "alley_neck",
+          "cleared": true,
+          "start_tick": 2266,
+          "end_tick": 4803,
+          "guard_ticks": 0,
+          "guard_deflects": 0,
+          "rolls": 13,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 736,
+            "REST": 11,
+            "ATTACK 1": 1504,
+            "ROLL": 286
+          }
+        }
+      ]
+    },
+    {
+      "seed": 4,
+      "qualifies": false,
+      "longest_large_cover_ticks": 1,
+      "waves": [
+        {
+          "wave": 1,
+          "block": "kiosk_plaza",
+          "cleared": true,
+          "start_tick": 255,
+          "end_tick": 741,
+          "guard_ticks": 38,
+          "guard_deflects": 4,
+          "rolls": 1,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 365,
+            "GUARD": 38,
+            "ROLL": 22,
+            "ATTACK CLAW": 61
+          }
+        },
+        {
+          "wave": 2,
+          "block": "barricade_line",
+          "cleared": true,
+          "start_tick": 767,
+          "end_tick": 1235,
+          "guard_ticks": 14,
+          "guard_deflects": 2,
+          "rolls": 1,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 382,
+            "ATTACK CLAW": 50,
+            "GUARD": 14,
+            "ROLL": 22
+          }
+        },
+        {
+          "wave": 3,
+          "block": "kiosk_plaza",
+          "cleared": true,
+          "start_tick": 1247,
+          "end_tick": 1654,
+          "guard_ticks": 52,
+          "guard_deflects": 6,
+          "rolls": 0,
+          "cover_ticks": 1,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ATTACK CLAW": 67,
+            "ADVANCE": 287,
+            "GUARD": 52,
+            "COVER": 1
+          }
+        },
+        {
+          "wave": 4,
+          "block": "alley_neck",
+          "cleared": true,
+          "start_tick": 1682,
+          "end_tick": 2072,
+          "guard_ticks": 0,
+          "guard_deflects": 0,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 162,
+            "ATTACK 1": 228
+          }
+        },
+        {
+          "wave": 5,
+          "block": "kiosk_plaza",
+          "cleared": true,
+          "start_tick": 2170,
+          "end_tick": 3263,
+          "guard_ticks": 23,
+          "guard_deflects": 3,
+          "rolls": 0,
+          "cover_ticks": 6,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [
+            [
+              2394,
+              2394
+            ]
+          ],
+          "caption_ticks": {
+            "ADVANCE": 106,
+            "ATTACK 1": 391,
+            "GUARD": 23,
+            "COVER": 6,
+            "ATTACK CLAW": 516,
+            "RETREAT": 51
+          }
+        }
+      ]
+    },
+    {
+      "seed": 5,
+      "qualifies": true,
+      "longest_large_cover_ticks": 44,
+      "waves": [
+        {
+          "wave": 1,
+          "block": "loading_bay",
+          "cleared": true,
+          "start_tick": 255,
+          "end_tick": 605,
+          "guard_ticks": 47,
+          "guard_deflects": 6,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 275,
+            "GUARD": 47,
+            "ATTACK CLAW": 28
+          }
+        },
+        {
+          "wave": 2,
+          "block": "crosswalk",
+          "cleared": true,
+          "start_tick": 628,
+          "end_tick": 962,
+          "guard_ticks": 43,
+          "guard_deflects": 6,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 257,
+            "GUARD": 43,
+            "ATTACK CLAW": 34
+          }
+        },
+        {
+          "wave": 3,
+          "block": "plain_block",
+          "cleared": true,
+          "start_tick": 1002,
+          "end_tick": 1333,
+          "guard_ticks": 24,
+          "guard_deflects": 3,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 211,
+            "GUARD": 24,
+            "REST": 3,
+            "ATTACK CLAW": 93
+          }
+        },
+        {
+          "wave": 4,
+          "block": "loading_bay",
+          "cleared": true,
+          "start_tick": 1484,
+          "end_tick": 2060,
+          "guard_ticks": 16,
+          "guard_deflects": 3,
+          "rolls": 5,
+          "cover_ticks": 47,
+          "tonnage_seconds": 1.48,
+          "large_cover_tick_ranges_inclusive": [
+            [
+              1635,
+              1678
+            ]
+          ],
+          "caption_ticks": {
+            "ADVANCE": 282,
+            "GUARD": 16,
+            "ROLL": 110,
+            "COVER": 44,
+            "ATTACK CLAW": 47,
+            "TONNAGE": 77
+          }
+        },
+        {
+          "wave": 5,
+          "block": "kiosk_plaza",
+          "cleared": true,
+          "start_tick": 2084,
+          "end_tick": 3749,
+          "guard_ticks": 13,
+          "guard_deflects": 3,
+          "rolls": 1,
+          "cover_ticks": 11,
+          "tonnage_seconds": 5.22,
+          "large_cover_tick_ranges_inclusive": [
+            [
+              2556,
+              2565
+            ]
+          ],
+          "caption_ticks": {
+            "TONNAGE": 291,
+            "ROLL": 22,
+            "ATTACK CLAW": 808,
+            "ADVANCE": 402,
+            "REST": 71,
+            "GUARD": 13,
+            "COVER": 10,
+            "RETREAT": 48
+          }
+        }
+      ]
+    },
+    {
+      "seed": 6,
+      "qualifies": false,
+      "longest_large_cover_ticks": 0,
+      "waves": [
+        {
+          "wave": 1,
+          "block": "kiosk_plaza",
+          "cleared": true,
+          "start_tick": 272,
+          "end_tick": 667,
+          "guard_ticks": 24,
+          "guard_deflects": 4,
+          "rolls": 1,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 314,
+            "GUARD": 24,
+            "ROLL": 22,
+            "ATTACK CLAW": 35
+          }
+        },
+        {
+          "wave": 2,
+          "block": "crosswalk",
+          "cleared": true,
+          "start_tick": 718,
+          "end_tick": 1111,
+          "guard_ticks": 37,
+          "guard_deflects": 6,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 312,
+            "GUARD": 37,
+            "ATTACK CLAW": 44
+          }
+        },
+        {
+          "wave": 3,
+          "block": "plain_block",
+          "cleared": true,
+          "start_tick": 1140,
+          "end_tick": 1783,
+          "guard_ticks": 23,
+          "guard_deflects": 4,
+          "rolls": 1,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 509,
+            "GUARD": 23,
+            "ATTACK CLAW": 89,
+            "ROLL": 22
+          }
+        },
+        {
+          "wave": 4,
+          "block": "plain_block",
+          "cleared": true,
+          "start_tick": 1958,
+          "end_tick": 2657,
+          "guard_ticks": 10,
+          "guard_deflects": 2,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 457,
+            "REST": 13,
+            "ATTACK 3": 219,
+            "GUARD": 10
+          }
+        },
+        {
+          "wave": 5,
+          "block": "plain_block",
+          "cleared": true,
+          "start_tick": 2831,
+          "end_tick": 5148,
+          "guard_ticks": 28,
+          "guard_deflects": 3,
+          "rolls": 8,
+          "cover_ticks": 1,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 604,
+            "GUARD": 28,
+            "ROLL": 176,
+            "ATTACK 3": 1409,
+            "REST": 100
+          }
+        }
+      ]
+    },
+    {
+      "seed": 7,
+      "qualifies": false,
+      "longest_large_cover_ticks": 0,
+      "waves": [
+        {
+          "wave": 1,
+          "block": "alley_neck",
+          "cleared": true,
+          "start_tick": 272,
+          "end_tick": 630,
+          "guard_ticks": 17,
+          "guard_deflects": 3,
+          "rolls": 1,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 314,
+            "GUARD": 17,
+            "ROLL": 22,
+            "ATTACK CLAW": 5
+          }
+        },
+        {
+          "wave": 2,
+          "block": "alley_neck",
+          "cleared": true,
+          "start_tick": 647,
+          "end_tick": 994,
+          "guard_ticks": 54,
+          "guard_deflects": 6,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ATTACK CLAW": 11,
+            "ADVANCE": 232,
+            "GUARD": 54,
+            "KERF": 50
+          }
+        },
+        {
+          "wave": 3,
+          "block": "loading_bay",
+          "cleared": true,
+          "start_tick": 1062,
+          "end_tick": 1343,
+          "guard_ticks": 0,
+          "guard_deflects": 0,
+          "rolls": 1,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "KERF": 219,
+            "ROLL": 22,
+            "ATTACK CLAW": 40
+          }
+        },
+        {
+          "wave": 4,
+          "block": "plain_block",
+          "cleared": true,
+          "start_tick": 1468,
+          "end_tick": 1958,
+          "guard_ticks": 35,
+          "guard_deflects": 4,
+          "rolls": 3,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 315,
+            "ROLL": 66,
+            "GUARD": 35,
+            "REST": 16,
+            "ATTACK CLAW": 58
+          }
+        },
+        {
+          "wave": 5,
+          "block": "crosswalk",
+          "cleared": true,
+          "start_tick": 2094,
+          "end_tick": 3052,
+          "guard_ticks": 44,
+          "guard_deflects": 6,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 21,
+            "ATTACK 1": 291,
+            "GUARD": 44,
+            "ATTACK CLAW": 566,
+            "RETREAT": 36
+          }
+        }
+      ]
+    },
+    {
+      "seed": 8,
+      "qualifies": false,
+      "longest_large_cover_ticks": 20,
+      "waves": [
+        {
+          "wave": 1,
+          "block": "plain_block",
+          "cleared": true,
+          "start_tick": 255,
+          "end_tick": 613,
+          "guard_ticks": 23,
+          "guard_deflects": 3,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 270,
+            "GUARD": 23,
+            "ATTACK CLAW": 65
+          }
+        },
+        {
+          "wave": 2,
+          "block": "crosswalk",
+          "cleared": true,
+          "start_tick": 666,
+          "end_tick": 1135,
+          "guard_ticks": 33,
+          "guard_deflects": 5,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 354,
+            "GUARD": 33,
+            "ATTACK CLAW": 82
+          }
+        },
+        {
+          "wave": 3,
+          "block": "barricade_line",
+          "cleared": true,
+          "start_tick": 1163,
+          "end_tick": 1426,
+          "guard_ticks": 11,
+          "guard_deflects": 2,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 203,
+            "GUARD": 11,
+            "REST": 16,
+            "ATTACK CLAW": 33
+          }
+        },
+        {
+          "wave": 4,
+          "block": "loading_bay",
+          "cleared": true,
+          "start_tick": 1487,
+          "end_tick": 1839,
+          "guard_ticks": 43,
+          "guard_deflects": 6,
+          "rolls": 1,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 282,
+            "GUARD": 43,
+            "ROLL": 22,
+            "ATTACK CLAW": 5
+          }
+        },
+        {
+          "wave": 5,
+          "block": "plain_block",
+          "cleared": true,
+          "start_tick": 1867,
+          "end_tick": 4038,
+          "guard_ticks": 55,
+          "guard_deflects": 8,
+          "rolls": 6,
+          "cover_ticks": 20,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [
+            [
+              2070,
+              2089
+            ]
+          ],
+          "caption_ticks": {
+            "ADVANCE": 487,
+            "GUARD": 55,
+            "ROLL": 132,
+            "COVER": 20,
+            "ATTACK 1": 1412,
+            "REST": 32,
+            "RETREAT": 33
+          }
+        }
+      ]
+    },
+    {
+      "seed": 9,
+      "qualifies": false,
+      "longest_large_cover_ticks": 0,
+      "waves": [
+        {
+          "wave": 1,
+          "block": "barricade_line",
+          "cleared": true,
+          "start_tick": 272,
+          "end_tick": 601,
+          "guard_ticks": 0,
+          "guard_deflects": 0,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 240,
+            "ATTACK CLAW": 89
+          }
+        },
+        {
+          "wave": 2,
+          "block": "barricade_line",
+          "cleared": true,
+          "start_tick": 619,
+          "end_tick": 1358,
+          "guard_ticks": 26,
+          "guard_deflects": 4,
+          "rolls": 1,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ATTACK CLAW": 94,
+            "ADVANCE": 597,
+            "ROLL": 22,
+            "GUARD": 26
+          }
+        },
+        {
+          "wave": 3,
+          "block": "crosswalk",
+          "cleared": true,
+          "start_tick": 1609,
+          "end_tick": 2101,
+          "guard_ticks": 0,
+          "guard_deflects": 0,
+          "rolls": 3,
+          "cover_ticks": 1,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 332,
+            "ROLL": 66,
+            "ATTACK CLAW": 89,
+            "REST": 5
+          }
+        },
+        {
+          "wave": 4,
+          "block": "loading_bay",
+          "cleared": true,
+          "start_tick": 2293,
+          "end_tick": 2895,
+          "guard_ticks": 17,
+          "guard_deflects": 3,
+          "rolls": 3,
+          "cover_ticks": 20,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 394,
+            "GUARD": 17,
+            "ROLL": 66,
+            "COVER": 8,
+            "ATTACK CLAW": 117
+          }
+        },
+        {
+          "wave": 5,
+          "block": "alley_neck",
+          "cleared": true,
+          "start_tick": 2910,
+          "end_tick": 6303,
+          "guard_ticks": 51,
+          "guard_deflects": 7,
+          "rolls": 10,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ATTACK CLAW": 843,
+            "ADVANCE": 1774,
+            "GUARD": 51,
+            "OHM": 457,
+            "ROLL": 220,
+            "RETREAT": 27,
+            "REST": 21
+          }
+        }
+      ]
+    },
+    {
+      "seed": 10,
+      "qualifies": false,
+      "longest_large_cover_ticks": 0,
+      "waves": [
+        {
+          "wave": 1,
+          "block": "crosswalk",
+          "cleared": true,
+          "start_tick": 272,
+          "end_tick": 644,
+          "guard_ticks": 24,
+          "guard_deflects": 4,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 260,
+            "GUARD": 24,
+            "ATTACK CLAW": 88
+          }
+        },
+        {
+          "wave": 2,
+          "block": "crosswalk",
+          "cleared": true,
+          "start_tick": 727,
+          "end_tick": 1189,
+          "guard_ticks": 32,
+          "guard_deflects": 5,
+          "rolls": 2,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 325,
+            "GUARD": 32,
+            "ROLL": 44,
+            "ATTACK CLAW": 61
+          }
+        },
+        {
+          "wave": 3,
+          "block": "plain_block",
+          "cleared": true,
+          "start_tick": 1213,
+          "end_tick": 1429,
+          "guard_ticks": 46,
+          "guard_deflects": 5,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 147,
+            "GUARD": 46,
+            "ATTACK CLAW": 23
+          }
+        },
+        {
+          "wave": 4,
+          "block": "crosswalk",
+          "cleared": true,
+          "start_tick": 1580,
+          "end_tick": 2025,
+          "guard_ticks": 47,
+          "guard_deflects": 6,
+          "rolls": 1,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 343,
+            "ROLL": 22,
+            "ATTACK CLAW": 33,
+            "GUARD": 47
+          }
+        },
+        {
+          "wave": 5,
+          "block": "crosswalk",
+          "cleared": true,
+          "start_tick": 2160,
+          "end_tick": 3700,
+          "guard_ticks": 99,
+          "guard_deflects": 12,
+          "rolls": 4,
+          "cover_ticks": 40,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 560,
+            "GUARD": 99,
+            "ATTACK CLAW": 676,
+            "ROLL": 88,
+            "COVER": 38,
+            "RETREAT": 54,
+            "REST": 25
+          }
+        }
+      ]
+    },
+    {
+      "seed": 11,
+      "qualifies": false,
+      "longest_large_cover_ticks": 22,
+      "waves": [
+        {
+          "wave": 1,
+          "block": "kiosk_plaza",
+          "cleared": true,
+          "start_tick": 272,
+          "end_tick": 1077,
+          "guard_ticks": 42,
+          "guard_deflects": 5,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 707,
+            "GUARD": 42,
+            "ATTACK CLAW": 56
+          }
+        },
+        {
+          "wave": 2,
+          "block": "crosswalk",
+          "cleared": true,
+          "start_tick": 1174,
+          "end_tick": 1519,
+          "guard_ticks": 73,
+          "guard_deflects": 10,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 266,
+            "GUARD": 72,
+            "REST": 2,
+            "ATTACK CLAW": 5
+          }
+        },
+        {
+          "wave": 3,
+          "block": "crosswalk",
+          "cleared": true,
+          "start_tick": 1610,
+          "end_tick": 2094,
+          "guard_ticks": 14,
+          "guard_deflects": 2,
+          "rolls": 1,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 355,
+            "ROLL": 22,
+            "GUARD": 14,
+            "ATTACK CLAW": 93
+          }
+        },
+        {
+          "wave": 4,
+          "block": "crosswalk",
+          "cleared": true,
+          "start_tick": 2106,
+          "end_tick": 2967,
+          "guard_ticks": 49,
+          "guard_deflects": 6,
+          "rolls": 7,
+          "cover_ticks": 23,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [
+            [
+              2551,
+              2572
+            ]
+          ],
+          "caption_ticks": {
+            "ATTACK CLAW": 95,
+            "ADVANCE": 525,
+            "GUARD": 49,
+            "ROLL": 154,
+            "COVER": 22,
+            "REST": 16
+          }
+        },
+        {
+          "wave": 5,
+          "block": "plain_block",
+          "cleared": true,
+          "start_tick": 3080,
+          "end_tick": 4969,
+          "guard_ticks": 1,
+          "guard_deflects": 1,
+          "rolls": 7,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 728,
+            "ROLL": 154,
+            "ATTACK CLAW": 782,
+            "RETREAT": 132,
+            "REST": 92,
+            "GUARD": 1
+          }
+        }
+      ]
+    },
+    {
+      "seed": 12,
+      "qualifies": false,
+      "longest_large_cover_ticks": 0,
+      "waves": [
+        {
+          "wave": 1,
+          "block": "kiosk_plaza",
+          "cleared": true,
+          "start_tick": 272,
+          "end_tick": 757,
+          "guard_ticks": 35,
+          "guard_deflects": 4,
+          "rolls": 1,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 363,
+            "GUARD": 35,
+            "ROLL": 22,
+            "ATTACK CLAW": 65
+          }
+        },
+        {
+          "wave": 2,
+          "block": "loading_bay",
+          "cleared": true,
+          "start_tick": 789,
+          "end_tick": 1415,
+          "guard_ticks": 52,
+          "guard_deflects": 6,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 500,
+            "GUARD": 52,
+            "ATTACK CLAW": 74
+          }
+        },
+        {
+          "wave": 3,
+          "block": "plain_block",
+          "cleared": true,
+          "start_tick": 1648,
+          "end_tick": 1923,
+          "guard_ticks": 40,
+          "guard_deflects": 6,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 215,
+            "GUARD": 40,
+            "ATTACK CLAW": 20
+          }
+        },
+        {
+          "wave": 4,
+          "block": "alley_neck",
+          "cleared": true,
+          "start_tick": 2019,
+          "end_tick": 2318,
+          "guard_ticks": 18,
+          "guard_deflects": 2,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 0,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 140,
+            "ATTACK 1": 141,
+            "GUARD": 18
+          }
+        },
+        {
+          "wave": 5,
+          "block": "alley_neck",
+          "cleared": true,
+          "start_tick": 2428,
+          "end_tick": 4030,
+          "guard_ticks": 10,
+          "guard_deflects": 1,
+          "rolls": 0,
+          "cover_ticks": 0,
+          "tonnage_seconds": 7.1,
+          "large_cover_tick_ranges_inclusive": [],
+          "caption_ticks": {
+            "ADVANCE": 58,
+            "ATTACK 1": 200,
+            "GUARD": 10,
+            "ATTACK CLAW": 376,
+            "TONNAGE": 479,
+            "OHM": 479
+          }
+        }
+      ]
+    }
+  ]
+}
