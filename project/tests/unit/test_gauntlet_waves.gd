@@ -63,6 +63,24 @@ func test_crossing_starts_wave_and_holds_the_seam_until_the_last_kill() -> void:
 	assert_eq(session.street.forward_limit, INF)
 
 
+func test_retreating_guard_stays_on_the_road_and_in_the_squad() -> void:
+	_enter()
+	var arena: CombatArena = session.stage.arena
+	var guard_fighter: Fighter = arena.hostiles[0]
+	var block: GauntletSegment = session.street.current()
+	var turret: Fighter = arena.squad_ai.spawn_member(arena, block.spawns[0], &"sentry_turret")
+	turret.pos.x = block.end_x() + turret.radius_m
+	guard_fighter.pos.y = block.bounds.end.y + guard_fighter.radius_m
+	session.step()
+	var road: Rect2 = block.road_bounds(guard_fighter.radius_m)
+	assert_between(guard_fighter.pos.y, road.position.y, road.end.y)
+	assert_almost_eq(turret.pos.x, session.street.forward_limit, 0.00001)
+	assert_true(arena.squad_ai.owns(turret))
+	assert_true(arena.squad_ai.owns(guard_fighter))
+	assert_true(arena.squad_ai.minds.has(guard_fighter.id))
+	assert_false(waves.done)
+
+
 func test_timeout_keeps_measured_counts_and_omits_time_to_clear() -> void:
 	_enter()
 	var start: int = session.stage.arena.tick

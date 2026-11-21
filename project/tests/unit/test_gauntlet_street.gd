@@ -65,8 +65,9 @@ func test_every_template_has_cover_clear_spawns_and_clear_crossings() -> void:
 	assert_true(t.ok())
 
 
-func _session(bot: GauntletPilot) -> GauntletSession:
-	var run: GauntletRun = GauntletRun.new()
+func _session(bot: GauntletPilot, run: GauntletRun = null) -> GauntletSession:
+	if run == null:
+		run = GauntletRun.new()
 	run.seed = 7
 	var bus: EventBus = autofree(EventBus.new())
 	var data: DataStore = autofree(DataStore.new())
@@ -93,6 +94,23 @@ func test_walker_crosses_blocks_on_the_sim_clock_starting_with_only_hands() -> v
 	assert_eq(s.street.window.size(), 3)
 	assert_true(s.street.current().bounds.has_point(arena.rivet.pos))
 	assert_false(s.stage.walls.blocks(Vector2(12, -9), Vector2(12, 9)))
+	s.close()
+
+
+func test_fallback_clears_three_waves_through_player_input() -> void:
+	var run: GauntletRun = GauntletRun.new()
+	run.seed = 7
+	var walker: GauntletWalker = GauntletWalker.new()
+	walker.configure(&"average", &"random", run.seed)
+	var s: GauntletSession = _session(walker, run)
+	var waves: GauntletWaves = GauntletWaves.attach(s, run, walker, 3)
+	while not waves.done and s.tick() < 3 * (GauntletWaves.TIMEOUT_TICKS + 600):
+		s.step()
+	assert_true(waves.done)
+	assert_true(run.alive)
+	assert_eq(run.picks.size(), 3)
+	assert_eq(run.wave, 3)
+	assert_gt(s.pilot.melee.landed, 0)
 	s.close()
 
 

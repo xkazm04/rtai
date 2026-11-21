@@ -15,6 +15,7 @@ var _limit: int
 var _block: int = 0
 var _start: int = -1
 var _start_shots: int
+var _start_rolls: int
 var _start_damage: float
 var _hits: int
 var _members: Array[Fighter] = []
@@ -78,12 +79,18 @@ func _spawn(stage: ArenaStage, tick: int) -> void:
 	var block: GauntletSegment = _street.current()
 	_block = _street.index
 	_street.forward_limit = block.end_x() - arena.rivet.radius_m
+	# The same invisible seam bounds a retreating guard; its brain still pursues across the block.
+	arena.squad_ai.pit.bounds.end.x = _street.forward_limit
 	var enemies: Dictionary[String, int] = {}
 	var roster: Array[StringName] = _composer.compose(_run.wave + 1)
 	for i: int in roster.size():
 		var at: Vector2 = block.spawns[i % block.spawns.size()]
 		var foe: Fighter = arena.squad_ai.spawn_member(arena, at, roster[i])
-		foe.pos = at
+		# Reused anchors keep the arena spawner's seeded spread, constrained to this block.
+		var offset: Vector2 = (
+			(foe.pos - at).limit_length(1.2) if i >= block.spawns.size() else Vector2.ZERO
+		)
+		foe.pos = stage.walls.push_out(at + offset, foe.radius_m)
 		_members.append(foe)
 		var id: String = String(foe.archetype)
 		var previous: int = enemies.get(id, 0)
@@ -91,6 +98,7 @@ func _spawn(stage: ArenaStage, tick: int) -> void:
 	_run.begin_wave(enemies)
 	_start = tick
 	_start_shots = stage.shots_fired
+	_start_rolls = stage.pilot.motion.rolls
 	_start_damage = stage.telemetry.damage_taken
 	_hits = 0
 	arena.announce_wave(&"gauntlet", _run.wave)
@@ -111,10 +119,20 @@ func _finish(stage: ArenaStage, tick: int, cleared: bool) -> void:
 		return
 	var row: Dictionary = _run.waves[-1]
 	row["shots"] = stage.shots_fired - _start_shots
+	row["rolls"] = stage.pilot.motion.rolls - _start_rolls
 	row["hits"] = _hits
 	row["damage_taken"] = stage.telemetry.damage_taken - _start_damage
 	if cleared:
 		row["seconds"] = (tick - _start) * SimClock.TICK_DT
+	else:
+		Log.info(
+			"gauntlet",
+			(
+				"wave %d ended after %d ticks at %s, hp %.1f"
+				% [_run.wave, tick - _start, stage.arena.rivet.pos, stage.arena.rivet.hp]
+			)
+		)
+
 	_street.forward_limit = INF
 	_start = -1
 

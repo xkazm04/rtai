@@ -23,7 +23,6 @@ class StreetSquad:
 
 	func follow_map(map: GuardRouteMap) -> void:
 		_map = map
-		pit.bounds = map.region().grow(-GuardRouteMap.WALL_MARGIN_M)
 
 
 func _init(registry: RngRegistry) -> void:
@@ -64,7 +63,14 @@ func setup(stage: ArenaStage, _ctx: WorldContext) -> void:
 
 
 func step(stage: ArenaStage, _tick: int) -> void:
-	stage.arena.rivet.pos.x = minf(stage.arena.rivet.pos.x, forward_limit)
+	var arena: CombatArena = stage.arena
+	arena.rivet.pos.x = minf(arena.rivet.pos.x, forward_limit)
+	if is_finite(forward_limit):
+		# Claw knockback can move even a stationary turret, whose motor skips its bounds check.
+		var limits: Rect2 = arena.squad_ai.pit.bounds
+		for foe: Fighter in arena.hostiles:
+			if foe.alive() and arena.squad_ai.owns(foe):
+				foe.pos = foe.pos.clamp(limits.position, limits.end)
 	if advance_to(stage.arena.rivet.pos.x):
 		_install(stage)
 		window_changed.emit()
@@ -96,6 +102,8 @@ func _install(stage: ArenaStage) -> void:
 		(arena.squad_ai as StreetSquad).follow_map(map)
 	else:
 		arena.squad_ai = StreetSquad.new(map)
+	var radius: float = arena.tuning.human["radius_m"]
+	arena.squad_ai.pit.bounds = window[0].road_bounds(radius).merge(window[-1].road_bounds(radius))
 	for fighter: Fighter in arena.hostiles:
 		if fighter.alive() and fighter.pursuit != null:
 			fighter.pursuit = GuardPursuit.new(map)

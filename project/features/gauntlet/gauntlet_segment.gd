@@ -33,5 +33,19 @@ func _init(table: DataTable, row: Dictionary, x: float) -> void:
 		crossing = Rect2(origin + table.vec(paint, "at") - size * 0.5, size)
 
 
+## Inside faces of the full-length side walls, inset by the moving body's radius.
+func road_bounds(radius: float) -> Rect2:
+	var top: float = bounds.position.y
+	var bottom: float = bounds.end.y
+	for prop: ArenaStation.Prop in station.props:
+		if prop.kind != "wall_high" or prop.size.x < length_m:
+			continue
+		if prop.at.y < bounds.get_center().y:
+			top = maxf(top, prop.at.y + prop.size.y * 0.5)
+		else:
+			bottom = minf(bottom, prop.at.y - prop.size.y * 0.5)
+	return Rect2(start_x, top + radius, length_m, bottom - top - 2 * radius)
+
+
 func end_x() -> float:
 	return start_x + length_m
