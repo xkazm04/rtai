@@ -64,7 +64,7 @@
   },
   "street_mutation": {
     "file": "features/gauntlet/gauntlet_street.gd",
-    "commit": "10daf2bcb48388930b1fdb650931a7692936e310",
+    "commit": "4ea7a3fe374709c0f548e2aadf716428f1426893",
     "changed_lines": "15,79-94,100-106,129-130",
     "max": 20,
     "tests": [
@@ -127,6 +127,9 @@
       "settle_ticks": 90,
       "before": "c8284b639d6edff5a783a1e36bb2f6e45faa5f41b3970e5ab700e06fd28cfe19",
       "after": "022e380b3f04df547f6019fa02421d8a99d71e22e69303603d0aef0c2267e8d6"
-    }
+    },
+    "commit": "4ea7a3fe374709c0f548e2aadf716428f1426893",
+    "seed_7_result_sha256": "e54f8a6ffe4339e11933a6aded3497473f77f4d80ef84ec095d57509fe217a1b",
+    "shutdown_diagnostics": "After 65 passing scenarios, ObjectDB reported 83043 instances and 179 resources in use, matching the previous baseline."
   }
 }
