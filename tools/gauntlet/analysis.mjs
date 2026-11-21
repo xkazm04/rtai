@@ -17,8 +17,6 @@ function measured(values) {
 function waveStats(profile, n, waves, before) {
   const times = vals(waves, 'seconds');
   const time = median(times);
-  const both = waves.filter((w) => Number.isFinite(w.hits) && Number.isFinite(w.shots));
-  const shots = total(vals(both, 'shots'));
   const forms = new Map();
   for (const w of waves) {
     for (const [id, seconds] of Object.entries(w.form_seconds ?? {})) {
@@ -31,8 +29,7 @@ function waveStats(profile, n, waves, before) {
     p25: quantile(times, 0.25), p75: quantile(times, 0.75), min: quantile(times, 0), max: quantile(times, 1),
     miss: profile === 'average' && (time < TARGET_S * 0.8 || time > TARGET_S * 1.2),
     guard: measured(vals(waves, 'guard_deflects')), rolls: measured(vals(waves, 'rolls')),
-    shots: measured(vals(waves, 'shots')), hitRate: shots ? total(vals(both, 'hits')) / shots : NaN,
-    hitRows: both.length, hitShots: shots,
+    shots: measured(vals(waves, 'shots')), hits: measured(vals(waves, 'hits')),
     forms: [...forms].sort(([a], [b]) => a.localeCompare(b)).map(([id, v]) => ({ id, ...measured(v) })) };
 }
 

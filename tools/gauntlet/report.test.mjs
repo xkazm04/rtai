@@ -100,12 +100,16 @@ test('a shared gun identifies a carrier only when the death-wave roster singles 
   assert.equal(report.deaths.find((d) => d.profile === runs[0].profile).total, 2);
 });
 
-test('fixture medians, coverage and pooled accuracy count only observed numerators and denominators', () => {
+test('wave telemetry reports independent medians and coverage for rounds and contacts', () => {
   const w = model.waves.find((r) => r.profile === 'average' && r.n === 1);
   assert.deepEqual([w.observed, w.timed, w.min, w.p25, w.median, w.p75, w.max], [8, 7, 12, 13, 15, 17, 18]);
   assert.deepEqual(w.guard, { median: 2, n: 2 });
-  assert.equal(w.hitRate, 11 / 16);
-  assert.equal(w.hitRows, 2);
+  assert.deepEqual(w.shots, { median: 6.5, n: 8 });
+  assert.deepEqual(w.hits, { median: 5.5, n: 2 });
+  const { markdown, html } = render(batch, model);
+  assert.match(markdown, /gun rounds \| damaging contacts \(all sources\)/);
+  assert.match(html, /There is no rate because/);
+  assert.doesNotMatch(markdown + html, /hit rate/i);
   assert.deepEqual(w.forms, [{ id: 'kerf', median: 3, n: 6 }, { id: 'tonnage', median: 4, n: 1 }]);
   assert.deepEqual(model.waves.filter((row) => row.miss).map((r) => r.n), [2, 3, 4, 5, 6]);
 });
@@ -183,7 +187,8 @@ test('partial street counters stay unmeasured, report text is escaped, human inp
   const result = analyze(partial);
   const w = result.waves[0];
   assert.equal(w.timed, 0);
-  assert.ok(Number.isNaN(w.hitRate));
+  assert.equal(w.hits.n, 0);
+  assert.equal(w.shots.n, 0);
   assert.equal(w.guard.n, 0);
   assert.equal(result.winners.length, 0);
   const { html, markdown } = render(partial, result);

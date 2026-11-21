@@ -63,12 +63,12 @@ export function sections(batch, report, baseline) {
   }));
   const telemetry = {
     title: 'Combat telemetry', key: 'telemetry',
-    note: 'Deflects, rolls, shots and seconds in each form are medians. Parentheses count observations. '
-      + 'Hit rate pools hits and shots only across rows measuring both. A zero denominator has no rate.',
-    columns: ['Profile', 'Wave', 'Guard deflects (n)', 'Rolls (n)', 'Shots (n)', 'Hit rate (shots)',
+    note: 'Values are per-wave medians, with measured observations in parentheses. '
+      + 'There is no rate because rounds count gunfire while contacts include claws, melee and blasts and count a killing wound again.',
+    columns: ['Profile', 'Wave', 'Guard deflects (n)', 'Rolls (n)', 'gun rounds', 'damaging contacts (all sources)',
       ...(formIds.length ? formIds.map((id) => id + ' s (n)') : ['Ghost form s (n)'])],
     rows: report.waves.filter((w) => w.observed).map((w) => [w.profile, w.n, counted(w.guard), counted(w.rolls), counted(w.shots),
-      Number.isFinite(w.hitRate) ? pct(w.hitRate) + ' (' + w.hitShots + ')' : missing,
+      counted(w.hits),
       ...(formIds.length ? formIds.map((id) => {
         const form = w.forms.find((f) => f.id === id);
         return form ? counted(form) : missing;
