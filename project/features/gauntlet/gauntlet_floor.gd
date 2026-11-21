@@ -25,16 +25,15 @@ func _window_changed() -> void:
 		_static.queue_redraw()
 
 
-func _ground(ci: CanvasItem, _arena: ArenaStage) -> void:
+func _ground(ci: CanvasItem, arena: ArenaStage) -> void:
 	var first: GauntletSegment = street.window[0]
 	if is_zero_approx(first.start_x):
 		# Beyond the street's closed west gate, the city still fills the camera at spawn.
 		ci.draw_set_transform(Ink.px(Vector2(-first.length_m, 0.0)))
 		GauntletFrontage.draw(ci, first)
 		ci.draw_set_transform(Vector2.ZERO)
-		var road: Rect2 = first.road_bounds(0.0)
-		var gate: Rect2 = Rect2(-1.0, road.position.y, 1.0, road.size.y)
-		ArenaFloorStatic.barrier(ci, GauntletFrontage.px(gate))
+	# _install appends the west gate after all retained station props.
+	ArenaFloorStatic.barrier(ci, GauntletFrontage.px(arena.walls.boxes[-1]))
 	for block: GauntletSegment in street.window:
 		GauntletFrontage.draw(ci, block)
 		GauntletLandmarks.ground(ci, block)

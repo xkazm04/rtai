@@ -13,6 +13,7 @@ var run: GauntletRun = GauntletRun.new()
 var session: GauntletSession
 var pilot: GauntletPilot
 var waves: GauntletWaves
+var view: GauntletView
 var hud: GauntletHud
 var pick_view: GauntletPickView
 var _result_path: String = ""
@@ -83,16 +84,11 @@ func _open_view(film: bool) -> void:
 	waves.manual_picks = pilot == null or film
 	session.world.set_process(not waves.manual_picks)
 	set_physics_process(waves.manual_picks)
-	var view: CollectCallView = CollectCallView.new()
-	var floor_view: GauntletFloor = GauntletFloor.new()
-	floor_view.street = session.street
-	view.stage_view.free()
-	view.stage_view = floor_view
+	view = GauntletView.new(session.street)
 	view.px_per_m = camera_ppm
 	view.bind(session.stage, CollectCallWorld.new(session.stage), null)
 	add_child(view)
 	view.hud_view.visible = false
-	view.blood.solid = session.street.solid_px
 	hud = GauntletHud.new()
 	hud.session = session
 	hud.run = run
@@ -109,6 +105,8 @@ func _open_view(film: bool) -> void:
 	add_child(cast)
 	@warning_ignore("return_value_discarded")
 	cast.attach(session.stage, view, session.world.context())
+	if cast.ghost_view != null:
+		view.style_ghost_meter(cast.ghost_view.hud)
 	session.live.viewport = get_viewport()
 	session.live.origin_px = func() -> Vector2: return get_viewport().get_visible_rect().size * 0.5
 	session.live.px_per_m = func() -> float: return view.px_per_m

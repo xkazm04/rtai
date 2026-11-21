@@ -32,9 +32,13 @@ func _outside(point: Vector2, margin: float) -> bool:
 
 
 func place(foe: Fighter) -> void:
+	foe.pos = body_position(foe)
+
+
+func body_position(foe: Fighter) -> Vector2:
 	# Leave room for a recumbent human or the larger powered-down robot silhouette.
 	var radius: float = maxf(foe.radius_m, 2.35 if foe.machine else 1.65)
-	foe.pos = nearest(foe.pos, radius)
+	return nearest(foe.pos, radius)
 
 
 func nearest(at: Vector2, radius: float) -> Vector2:

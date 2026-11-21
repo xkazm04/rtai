@@ -1,0 +1,110 @@
+{
+  "seed": 7,
+  "tick": 540,
+  "ppm": 32,
+  "view": "tilt70",
+  "before_commit": "a3a06df84f5b256f5097c351f8598e13f364e136",
+  "before_sha256": "e54f8a6ffe4339e11933a6aded3497473f77f4d80ef84ec095d57509fe217a1b",
+  "after_sha256": "e54f8a6ffe4339e11933a6aded3497473f77f4d80ef84ec095d57509fe217a1b",
+  "comparison": "Exact bytes, ten waves. White outlines come from live ArenaWalls.boxes. The counts below exclude the shared rear gate. Sidewalk fixtures beyond the continuous roadside walls are scenery.",
+  "segments": [
+    {
+      "id": "plain_block",
+      "solid_boxes": 4,
+      "clean": "segment_plain_block_32.png",
+      "overlay": "segment_plain_block_solids_32.png",
+      "drawn_obstacles_have_boxes": true,
+      "boxes_have_drawn_obstacles": true,
+      "note": "The bus shelter and bench sit on separate slabs, between two posted rails.",
+      "clean_sha256": "85db8555c22ec272983ef7a504c2ded47a30085e26c826770e0ff118c4701b51",
+      "overlay_sha256": "e33c65ca84a6be5ee9c0ec7b074d64edc7b03871b69f48f40dafc0d115b51fd6"
+    },
+    {
+      "id": "crosswalk",
+      "solid_boxes": 4,
+      "clean": "segment_crosswalk_32.png",
+      "overlay": "segment_crosswalk_solids_32.png",
+      "drawn_obstacles_have_boxes": true,
+      "boxes_have_drawn_obstacles": true,
+      "note": "Paint is clear across the zebra. The newsstand and low planter have separate footings.",
+      "clean_sha256": "e586615be211ac2180313fc1ec9b5044d06d7f8256381f8ff90972fded4af841",
+      "overlay_sha256": "39dfe9f1852719f2f2a6b9f5243a6f61ab343420bbfffa4d8ae02c587e15101f"
+    },
+    {
+      "id": "barricade_line",
+      "solid_boxes": 5,
+      "clean": "segment_barricade_line_32.png",
+      "overlay": "segment_barricade_line_solids_32.png",
+      "drawn_obstacles_have_boxes": true,
+      "boxes_have_drawn_obstacles": true,
+      "note": "Three transverse barriers have visible faces and leave a slalom between the two rails.",
+      "clean_sha256": "ca21b0f78f4aa05b844713bdb25bae8ce0ab5b24c864db86a46483e376c452f9",
+      "overlay_sha256": "082e76d521f5abe51f9dfc508bad054b5663650442c93038c64cfee124cdf8a7"
+    },
+    {
+      "id": "loading_bay",
+      "solid_boxes": 6,
+      "clean": "segment_loading_bay_32.png",
+      "overlay": "segment_loading_bay_solids_32.png",
+      "drawn_obstacles_have_boxes": true,
+      "boxes_have_drawn_obstacles": true,
+      "note": "Three tarped loads sit at the hatched dock edge. A drum stack occupies the fourth footing.",
+      "clean_sha256": "08811ed160d3f9f687a5162175a9ab460493d9119dc90e9b258c3830063ea069",
+      "overlay_sha256": "d9216afd775be5ea5a4bf47eaad787511bed4f7583ada01d3781762ac94aaeef"
+    },
+    {
+      "id": "alley_neck",
+      "solid_boxes": 5,
+      "clean": "segment_alley_neck_32.png",
+      "overlay": "segment_alley_neck_solids_32.png",
+      "drawn_obstacles_have_boxes": true,
+      "boxes_have_drawn_obstacles": true,
+      "note": "The short masonry wings narrow the lane. The dumpster occupies its own box.",
+      "clean_sha256": "125f98b5a3d9a7b5675888e69fc1f4a6be7c07c3309c70e1f304a7269651ab50",
+      "overlay_sha256": "84fdaa096f9e051484f373cb033ab36d2e6d9a4d7cf49bafb7265fc04f392261"
+    },
+    {
+      "id": "kiosk_plaza",
+      "solid_boxes": 5,
+      "clean": "segment_kiosk_plaza_32.png",
+      "overlay": "segment_kiosk_plaza_solids_32.png",
+      "drawn_obstacles_have_boxes": true,
+      "boxes_have_drawn_obstacles": true,
+      "note": "Two long planters flank the square and the coffee kiosk stands on the south pad.",
+      "clean_sha256": "5c893d8645c37741d94d7b7d6b24c951cbafe72bf6a930231765c33be24cfe94",
+      "overlay_sha256": "a917fe5bb5f23fc202a04f8c6afc65d603e0502c85d544da1aab7bcce82650d2"
+    },
+    {
+      "id": "underpass",
+      "solid_boxes": 6,
+      "clean": "segment_underpass_32.png",
+      "overlay": "segment_underpass_solids_32.png",
+      "drawn_obstacles_have_boxes": true,
+      "boxes_have_drawn_obstacles": true,
+      "note": "Four masonry piers carry the viaduct. The posted rails close both apparent cross-street mouths.",
+      "clean_sha256": "fc69cb154a11623a28ddec9db782f0c50d5b8a2f5ece505905c764bda804f74c",
+      "overlay_sha256": "a0a3baf5e9879061aadd7d773465d561793da7395ac5af0ea1f68b017e55b6b0"
+    },
+    {
+      "id": "market_stalls",
+      "solid_boxes": 7,
+      "clean": "segment_market_stalls_32.png",
+      "overlay": "segment_market_stalls_solids_32.png",
+      "drawn_obstacles_have_boxes": true,
+      "boxes_have_drawn_obstacles": true,
+      "note": "Four umbrella carts and one newsstand stand on the two paving strips. Open paving between them is passable.",
+      "clean_sha256": "4290cb283badac8e157d9c36b89e5ba4190fc209a124b9e04158a9cc81325e89",
+      "overlay_sha256": "d7d00379899c91a5528326547f055d534851105e6e22a0ed6033125e19606fee"
+    }
+  ],
+  "moving_camera_findings": [
+    "The bus shelter canopy in the first filmed pass extended beyond its solid. A patrol officer standing behind it appeared to stand on its roof.",
+    "The visible cover faces now fit the solid footings. Pavement fixtures sit behind the rail, and the four piers and two alley wings keep their caps inside their boxes."
+  ],
+  "final_paint_check": {
+    "baseline_commit": "88fbbac62",
+    "before_sha256": "808cd831c557743d02ca210a86621ffeb8503fcb8b18c507ef05cd5c431620f0",
+    "after_sha256": "808cd831c557743d02ca210a86621ffeb8503fcb8b18c507ef05cd5c431620f0",
+    "identical_bytes": 5688
+  }
+}

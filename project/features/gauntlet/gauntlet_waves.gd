@@ -21,6 +21,7 @@ var _block: int = 0
 var _start: int = -1
 var _stats: GauntletWaveStats = GauntletWaveStats.new()
 var _hits: int
+var _contacts: Dictionary[StringName, int] = {}
 var _members: Array[Fighter] = []
 
 
@@ -45,6 +46,8 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	stage.arena.wounded.connect(_wounded)
 	@warning_ignore("return_value_discarded")
 	stage.arena.kill_landed.connect(_killed)
+	@warning_ignore("return_value_discarded")
+	(stage.arena as GauntletCombat).rivet_contact.connect(_contact)
 
 
 func step(stage: ArenaStage, tick: int) -> void:
@@ -100,6 +103,7 @@ func _spawn(stage: ArenaStage, tick: int) -> void:
 	_start = tick
 	_stats.begin(stage)
 	_hits = 0
+	_contacts = {&"hits_gun": 0, &"hits_melee": 0}
 	arena.announce_wave(&"gauntlet", _run.wave)
 	Log.info(
 		"gauntlet", "wave %d tick %d block %s enemies %s" % [_run.wave, tick, block.id, enemies]
@@ -129,6 +133,7 @@ func _finish(stage: ArenaStage, tick: int, cleared: bool) -> void:
 	_stats.finish(stage, row)
 	_stats.collect_pilot(_picker, row)
 	row["hits"] = _hits
+	row.merge(_contacts)
 	if cleared:
 		row["seconds"] = (tick - _start) * SimClock.TICK_DT
 	else:
@@ -175,6 +180,11 @@ func choose(index: int) -> bool:
 
 func _at_limit() -> bool:
 	return _limit > 0 and _run.wave >= _limit
+
+
+func _contact(victim: Fighter, counter: StringName) -> void:
+	if _start >= 0 and _members.has(victim):
+		_contacts[counter] += 1
 
 
 ## Count damaging contacts against wave members. A claw strike can hit several bodies.

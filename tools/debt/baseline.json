@@ -94,7 +94,8 @@
         "2026-11-21: foe duel player profiles and fairness evidence for n22 foes (dev_loc 26712 -> 26765)",
         "2026-11-21: Wave clock and health HUD for n22 street (dev_loc 26749 -> 26830)",
         "2026-11-21: Human upgrade cards, selection and translated HUD for n22 street (dev_loc 26830 -> 27022)",
-        "2026-11-21: Windowed pick and segment still capture for n22 street (dev_loc 27022 -> 27110)"
+        "2026-11-21: Windowed pick and segment still capture for n22 street (dev_loc 27022 -> 27110)",
+        "2026-11-21: n22 merge: street head adds 2 lines to project/dev/gauntlet over the copy loop measured (dev_loc 27506 -> 27508)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -105,7 +106,7 @@
         "project/dev/bots": 496,
         "project/dev/enemy_ai": 1671,
         "project/dev/frames": 1087,
-        "project/dev/gauntlet": 503,
+        "project/dev/gauntlet": 505,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1396,
         "project/dev/gunplay": 674,
@@ -130,7 +131,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 27506
+      "total": 27508
     },
     "direct_cmdline_reads": {
       "accepted": [

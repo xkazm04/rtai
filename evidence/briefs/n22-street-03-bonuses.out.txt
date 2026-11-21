@@ -1,0 +1,54 @@
+Seeds 7 and 8 each cleared **10 waves and took 10 bonuses**. Both seed-7 runs produced identical 4,660-byte JSON files. Seed 8 drew a different offer set on every wave. All three results validated against the schema.
+
+### Commits
+
+```text
+9159b0d85 gauntlet composer: reserve the war machine regardless of tier or budget
+6ac380558 gauntlet draw: offer weighted distinct eligible bonuses on a dedicated stream
+26c606322 gauntlet bonuses: grant weapons, ghost forms and session-local stat effects
+7a3ce0bc1 gauntlet hud: display wave time and health with a guard meter slot
+ec142944f gauntlet picks: pause the human run for keyboard and pointer upgrade cards
+36cbb7405 gauntlet evidence: capture the pick and all six street templates at 32 px/m
+```
+
+Changed the gauntlet `composer`, `draw`, `bonus_apply`, `session`, `street`, and `waves` scripts. Dev files cover the scene driver, HUD, pick card, pick view, and still-capture scene. Also changed five matching unit-test files, `gauntlet_run.schema.json`, [English translations](C:/Users/kazda/kiro/gtai-wt/n22-street/project/data/loc/en.po), `docs/decisions.md`, and the authorized debt baseline. New scripts include their `.uid` files.
+
+### Verification
+
+- Lint **19/19**. Quick gate passed all **16** changed scripts. GUT **3,426 passed, 0 failed, 2 skipped**. Scenarios **65/65**. The 60-second replay matched the prior digest `cbeb734ff9b97c41`.
+- Draw mutation score **93.8%**. Fifteen killed, one survived, four timed out.
+- Over 60 ticks, the speed pick increased travel from **6.046 to 7.321 m**. Max HP rose **100 → 125**, wounded HP **92 → 117**, repair **10 → 12.5 HP/s**, and a **2-point hit dealt 2.5**. The weapon test equipped pistol then katana, and the ghost test unlocked Ohm.
+- Taken bonus rows retire for the run. The newest weapon goes straight into Rivet’s hand.
+
+| Result | Runner verdict |
+|---|---|
+| [Seed 7a](C:/Users/kazda/kiro/gtai-wt/n22-street/build/dev/b03-s7a.json) | `ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh` |
+| [Seed 7b](C:/Users/kazda/kiro/gtai-wt/n22-street/build/dev/b03-s7b.json) | `ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh` |
+| [Seed 8](C:/Users/kazda/kiro/gtai-wt/n22-street/build/dev/b03-s8.json) | `ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh` |
+
+Seed 7 took **199.88 simulated seconds**, **13.5 seconds wall time** on run A. Wave-clear times in simulated seconds follow.
+
+| Wave | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Before | 4.42 | 6.77 | 12.87 | 5.88 | 20.15 | 8.72 | 8.97 | 16.17 | 50.22 | 75.12 |
+| With bonuses | 4.42 | 7.82 | 6.57 | 2.55 | 13.82 | 4.05 | 5.28 | 29.10 | 40.33 | 65.88 |
+
+### Reviewed stills
+
+All seven captures are **1920×1080, tilt 70°, 32 px/m**, rendered on the secondary display.
+
+| Still | What it shows |
+|---|---|
+| [pick_screen_32.png](C:/Users/kazda/kiro/gtai-masters/n22/street/pick_screen_32.png) | Wave 1 paused with three numbered cards offering +10% speed, Kerf, and the Electro Baton. |
+| [segment_alley_neck_32.png](C:/Users/kazda/kiro/gtai-masters/n22/street/segment_alley_neck_32.png) | Opposing walls narrow the passage around Rivet, with fallen patrol officers ahead. |
+| [segment_barricade_line_32.png](C:/Users/kazda/kiro/gtai-masters/n22/street/segment_barricade_line_32.png) | Two dark barriers and a pale crate stack form a staggered line. |
+| [segment_crosswalk_32.png](C:/Users/kazda/kiro/gtai-masters/n22/street/segment_crosswalk_32.png) | Rivet stands on an unobstructed zebra crossing. |
+| [segment_kiosk_plaza_32.png](C:/Users/kazda/kiro/gtai-masters/n22/street/segment_kiosk_plaza_32.png) | A square cover prop faces two low crate stacks across the road. |
+| [segment_loading_bay_32.png](C:/Users/kazda/kiro/gtai-masters/n22/street/segment_loading_bay_32.png) | Three dark cover props line the upper curb, with low cover opposite. |
+| [segment_plain_block_32.png](C:/Users/kazda/kiro/gtai-masters/n22/street/segment_plain_block_32.png) | Offset high and low cover leave the dashed center lane open. |
+
+**NEED guard: read StatMods guard_meter for meter_max.** The reserved control is `GauntletHud/Status/GuardMeter`. When `session.pilot.guard` exists, feed it with `hud.set_guard_meter(session.pilot.guard.meter(), session.pilot.guard.broken())`.
+
+The capture exited successfully. Godot reported an Ohm sprite-sheet warning and 63 ObjectDB instances at shutdown.
+
+[astra: 2673s, exit 0]

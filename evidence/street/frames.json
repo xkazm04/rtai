@@ -1,79 +1,107 @@
 [
   {
     "file": "gauntlet_waves4-5_32.mp4",
-    "title": "The war machine at the crossing",
+    "title": "The war machine in the market",
     "ppm": 32,
-    "before": null,
-    "note": "Rivet fires across the zebra stripes as the war machine advances with its escort. The fifth offer highlights Gloria."
+    "before": "gauntlet_waves4-5_before_32.mp4",
+    "note": "Rivet draws the hand cannon in wave four, chooses the pistol and fights the war machine between the market stalls. The final cards highlight Gloria."
+  },
+  {
+    "file": "pair_wave2_32.png",
+    "title": "Wave two at the south rail",
+    "ppm": 32,
+    "before": "gauntlet_waves1-3_before_32.mp4",
+    "note": "Source frame 995. At left a body lies beyond the old wall. At right Rivet swings the electro baton beside the alley dumpster and the bodies lie on the asphalt."
+  },
+  {
+    "file": "fight_cover_64.png",
+    "title": "A claw strike at the shelter",
+    "ppm": 64,
+    "before": "fight_cover_before_64.png",
+    "note": "Rivet's bare claw crosses a patrol officer's face at the bus shelter, beside the northern rail. Two fallen officers lie on the road."
   },
   {
     "file": "gauntlet_waves1-3_32.mp4",
     "title": "From bare claws to the hand cannon",
     "ppm": 32,
-    "before": null,
-    "note": "The camera tracks Rivet through the alley and loading bay. The first clear highlights the electro baton."
+    "before": "gauntlet_waves1-3_before_32.mp4",
+    "note": "The camera follows Rivet from the bus bay into the alley and the loading dock. He starts with his claws, chooses the electro baton, then earns the hand cannon."
   },
   {
-    "file": "fight_cover_64.png",
-    "title": "Claw strike at cover",
-    "ppm": 64,
-    "before": null,
-    "note": "Rivet strikes a patrol cop at the corner of a black cover crate. Two fallen cops lie across the street."
+    "file": "pair_war_machine_32.png",
+    "title": "One boss, two streets",
+    "ppm": 32,
+    "before": "gauntlet_waves4-5_before_32.mp4",
+    "note": "Source frame 2440. Rivet holds the pistol in both views. The war machine faces him by the old zebra at left and by the market carts at right."
+  },
+  {
+    "file": "pair_pick_32.png",
+    "title": "The first offer, side by side",
+    "ppm": 32,
+    "before": "gauntlet_waves1-3_before_32.mp4",
+    "note": "Source frame 572. Both panels offer Speed, Kerf and the Electro Baton. The bus bay and building fronts are visible behind the new cards."
   },
   {
     "file": "pick_screen_32.png",
     "title": "The first upgrade",
     "ppm": 32,
-    "before": null,
-    "note": "The three paper cards offer speed, Kerf and the electro baton. The cleared-wave HUD stays visible at upper left."
+    "before": "gauntlet_waves1-3_before_32.mp4",
+    "note": "The three cards offer +10% Speed, Kerf and the Electro Baton over the dimmed bus bay after Rivet's first bare-handed clear. The three health-bar fills are shown in health_100_50_10.png."
   },
   {
-    "file": "segment_crosswalk_32.png",
-    "title": "Crosswalk",
+    "file": "segment_underpass_32.png",
+    "title": "The underpass",
     "ppm": 32,
-    "before": "segment_crosswalk_before_32.png",
-    "note": "The zebra runs between paired traffic signals. Opposing stop lines and a newsstand flank the crossing."
+    "before": null,
+    "note": "Four piers mark the cutaway deck. The posted rail closes both mouths of the street above. The matching collision overlay is segment_underpass_solids_32.png. The wreck comparison is in war_machine_rest_before_32.png and war_machine_rest_32.png."
+  },
+  {
+    "file": "segment_market_stalls_32.png",
+    "title": "The market",
+    "ppm": 32,
+    "before": null,
+    "note": "Four umbrella carts and a newsstand face two cream paving strips. The centre lane remains open. The matching collision overlay is segment_market_stalls_solids_32.png."
   },
   {
     "file": "segment_alley_neck_32.png",
-    "title": "Alley neck",
+    "title": "The alley neck",
     "ppm": 32,
     "before": "segment_alley_neck_before_32.png",
-    "note": "Short masonry wings narrow the asphalt. Four fallen cops lie on the road, including the pair beside the lower kerb."
+    "note": "Two brick wings narrow the lane beside a dumpster and the loading doors. The matching collision overlay is segment_alley_neck_solids_32.png."
   },
   {
     "file": "segment_loading_bay_32.png",
-    "title": "Loading bay",
+    "title": "The loading dock",
     "ppm": 32,
     "before": "segment_loading_bay_before_32.png",
-    "note": "Three tied cargo loads occupy a hatched apron in front of warehouse doors. Oil drums stand across the road."
+    "note": "Three tarped loads line the hatched dock. A drum stack sits on the other side of the road. The matching collision overlay is segment_loading_bay_solids_32.png."
   },
   {
     "file": "segment_kiosk_plaza_32.png",
-    "title": "Kiosk plaza",
+    "title": "The kiosk square",
     "ppm": 32,
     "before": "segment_kiosk_plaza_before_32.png",
-    "note": "A coffee kiosk stands on a broad flagstone square, with planted beds and a street clock along the shopfront."
+    "note": "A cream-paved square holds the coffee kiosk and two long planters. The matching collision overlay is segment_kiosk_plaza_solids_32.png."
+  },
+  {
+    "file": "segment_crosswalk_32.png",
+    "title": "The crossing",
+    "ppm": 32,
+    "before": "segment_crosswalk_before_32.png",
+    "note": "The zebra runs between the signals. The planter and newsstand leave the crossing clear. The matching collision overlay is segment_crosswalk_solids_32.png."
   },
   {
     "file": "segment_barricade_line_32.png",
-    "title": "Barricade line",
+    "title": "The barricades",
     "ppm": 32,
     "before": "segment_barricade_line_before_32.png",
-    "note": "Three striped barriers stagger the route between the office frontage and the southern pavement."
+    "note": "Three striped barriers make a slalom through the dark carriageway. The matching collision overlay is segment_barricade_line_solids_32.png."
   },
   {
     "file": "segment_plain_block_32.png",
-    "title": "Plain block",
+    "title": "The bus bay",
     "ppm": 32,
     "before": "segment_plain_block_before_32.png",
-    "note": "A bus shelter occupies a painted pull-in beneath the shopfronts. A bench faces it across the dashed road."
-  },
-  {
-    "file": "health_100_50_10.png",
-    "title": "Health at 100, 50 and 10",
-    "ppm": 32,
-    "before": null,
-    "note": "Three live HUD crops show 210, 105 and 21 cream pixels against the same 210-pixel ink track."
+    "note": "The striped shelter and low bench occupy separate pads beside the marked bus bay. The matching collision overlay is segment_plain_block_solids_32.png."
   }
 ]

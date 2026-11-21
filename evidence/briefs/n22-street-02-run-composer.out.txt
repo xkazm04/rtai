@@ -1,0 +1,35 @@
+**Both seeds cleared all 10 waves** with the fallback walker. All three results validated against `gauntlet_run.schema.json` and recorded 10 picks with no death. The two seed-7 files were byte-identical. Seed 8 produced a different street order and wave composition.
+
+| Result | Dev-runner verdict | Simulated time | Command wall time |
+|---|---|---:|---:|
+| [s7a.json](C:/Users/kazda/kiro/gtai-wt/n22-street/evidence/street/s7a.json) | `ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh` | 237.33 s | 14.433 s |
+| [s7b.json](C:/Users/kazda/kiro/gtai-wt/n22-street/evidence/street/s7b.json) | `ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh` | 237.33 s | 14.047 s |
+| [s8.json](C:/Users/kazda/kiro/gtai-wt/n22-street/evidence/street/s8.json) | `ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh` | 188.00 s | 13.424 s |
+
+Seed-7 wave times run from first spawn to last kill. The headless cap is 72,000 ticks, or 1,200 simulated seconds. Full verdicts, logs, street orders and hashes are in [runs.json](C:/Users/kazda/kiro/gtai-wt/n22-street/evidence/street/runs.json).
+
+| Wave | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Seconds | 4.42 | 6.77 | 12.87 | 5.88 | 20.15 | 8.72 | 8.97 | 16.17 | 50.22 | 75.12 |
+
+**Commits and files**
+
+| SHA | Subject | Files or merge resolution |
+|---|---|---|
+| `932ad0903` | Merge tag 'n22-guard-iface' into n22-street | Clean merge. The scene uses `ControlsMode.id()`. |
+| `f81c937d6` | gauntlet run: drive segment waves, picks and death on simulation ticks | `gauntlet.gd`, `gauntlet_run.gd`, `gauntlet_street.gd`, `gauntlet_waves.gd`, result schema, wave tests and debt baseline |
+| `e20355396` | Merge tag 'n22-foes-iface' into n22-street | Took the foes version of `enemies.schema.json` for the sole conflict. |
+| `14076ccc8` | gauntlet waves: compose seeded tier budgets and boss escorts | Composer, wave driver, composer tests, `gauntlet.json` and schema. Tier five opens on wave five for the first `war_machine`. |
+| `c84baf3a5` | gauntlet street: fight real squads and keep knocked-back foes reachable | Walker, street, segment, wave driver, street and wave tests |
+| `1b52bf0e6` | gauntlet evidence: validate and record three ten-wave street runs | Result-writing test and four JSON files under `evidence/street/` |
+
+**Verification**
+
+- Final lint passed all 19 checks. Changed-unit run passed **3,412**, with **0 failed and 2 skipped**. The quick gate passed for every gauntlet implementation commit. The separate `--controls=wheel` smoke run wrote `"controls": "wheel"`.
+- Composer mutation score was **19/20, 95%**, with no timeouts or invalid mutants. The survivor changed which equally ranked fallback boss wins a tie.
+- The full scenario run reported **65 ran, 2 failed**. Both timing failures passed on isolated rerun. `city_chase` measured 0.319 ms against 2 ms, and `rig_stress` measured 0.958 ms against 1 ms.
+- The replay matched the existing golden: `replay_60s: 3600 ticks, 184 events, 142 input changes, 60 checkpoints, final cbeb734ff9b97c41`.
+
+**NEED tooling:** `tools/godot/check.mjs` — the foes merge’s standalone quick check failed on `arena_robot_rigs.gd` and `arena_squad_looks.gd` after unresolved autoloads and allocator shutdown errors. Both passed the project-load tests.
+
+[astra: 4201s, exit 0]

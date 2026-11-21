@@ -1,0 +1,23 @@
+Committed the interface, runner fix, and seeded street before the deadlines. The seed-7 walker reached segment 13 in 3,600 ticks with three segments resident. All tracked changes are committed locally.
+
+| Commit | Subject | Files |
+|---|---|---|
+| `a6b5b9702` | `gauntlet iface: define seeded pilot, run result and bonus tables` | Gauntlet scene, pilot, walker, run state, stat modifiers, two tables, three schemas, unit tests, UIDs, and debt baseline |
+| `4b1634334` | `dev runner: forward --result to entries that declare it` | `tools/dev/run.mjs`, `tools/dev/run.test.mjs`, `docs/decisions.md` |
+| `01a3671db` | `gauntlet street: stream six seeded blocks through the arena` | Street, segment, session, and floor scripts, scene wiring, six templates in `gauntlet.json`, street tests, UIDs, and debt baseline |
+
+**Verification**
+
+- Lint passed all 19 checks. Changed-unit ran the full suite with **3,390 passed, 0 failed, 2 skipped**. Quick gate passed. All 122 dev-runner tests passed.
+- The exact single-`--result` command produced byte-identical [street-a.json](C:/Users/kazda/kiro/gtai-wt/n22-street/build/dev/street-a.json) and [street-b.json](C:/Users/kazda/kiro/gtai-wt/n22-street/build/dev/street-b.json). Both runs ended with `ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)`.
+- Tests covered 50 advances, retired collision and routing, clear crossings and spawns, shot blocking, bare hands, and all four ghost locks. Human and bot D3D12 runs exited 0. Both the gauntlet and stock arena logged Ohm sprite-sheet and ObjectDB shutdown warnings.
+
+**Pilot contract for lane loop**
+
+1. Place a zero-argument `GauntletPilot` subclass at `res://features/gauntlet/bot/gauntlet_bot.gd`. The scene falls back to `GauntletWalker` when absent.
+2. The scene calls `configure(profile, pick_policy, seed)`, then `bind(run, session)`. `sample(tick)` supplies each `TickInput`.
+3. `pick(offered)` returns a zero-based index. The base random policy uses the seed, and greedy returns `0`.
+
+**NEED foes: `project/features/combat/squad/arena_squad.gd`** — a public route-map setter would replace the working street subclass adapter. This does not block integration. Wave composition remains outside this brief, so the verified results report `wave_reached: 0`.
+
+[astra: 865s, exit 0]

@@ -1,8 +1,11 @@
 {
+  "commit": "f2c53044bdc10381b0603c8edce3f3b9a0e9ae39",
   "seed": 7,
   "profile": "average",
   "pilot": "GauntletWalker",
   "flags": [
+    "--seed=7",
+    "--bot=average",
     "--waves=5",
     "--pick-view"
   ],
@@ -14,21 +17,51 @@
   ],
   "fps": 60,
   "crf": 18,
+  "source_frames": 3381,
+  "recording_wall_time": "00:02:20",
   "wave_start_frames": [
     204,
-    671,
-    1300,
-    1927,
-    2299
+    697,
+    1297,
+    1892,
+    2267
+  ],
+  "wave_start_ticks": [
+    204,
+    553,
+    1009,
+    1464,
+    1695
   ],
   "wave_seconds": [
-    4.417,
-    7.817,
-    6.567,
-    2.55,
-    13.817
+    5.583,
+    7.317,
+    6.717,
+    2.567,
+    15.25
   ],
-  "source_frames": 3315,
+  "pick_frame_ranges": [
+    [
+      557,
+      677
+    ],
+    [
+      1160,
+      1280
+    ],
+    [
+      1720,
+      1840
+    ],
+    [
+      2070,
+      2190
+    ],
+    [
+      3260,
+      3380
+    ]
+  ],
   "boss_wave": {
     "contractor": 1,
     "patrol_cop": 1,
@@ -46,11 +79,36 @@
   "clips": [
     {
       "file": "gauntlet_waves1-3_32.mp4",
-      "sha256": "3d16ae9b094c59d6b4142886cb5cbcc306cba79996695a674c57917d83e83545",
+      "sha256": "cbc76f53a9fadb2e560a47f1c0f637f8b0b5a0978de99dcbba56f3956acffdc4",
+      "before": "gauntlet_waves1-3_before_32.mp4",
+      "before_sha256": "3d16ae9b094c59d6b4142886cb5cbcc306cba79996695a674c57917d83e83545",
       "source_frame_start": 204,
-      "source_frame_end_exclusive": 1927,
-      "seconds": 28.717,
+      "source_frame_end_exclusive": 1892,
+      "frames": 1688,
+      "seconds": 28.133333,
       "inspected": [
+        {
+          "frame": 120,
+          "source_frame": 324,
+          "note": "Rivet lands a bare-claw hit in the bus bay. A patrol officer stands between the rail and the shelter."
+        },
+        {
+          "frame": 368,
+          "source_frame": 572,
+          "note": "Speed, Kerf and the Electro Baton are readable on the first offer. The nearly full health bar reads 99/100."
+        },
+        {
+          "frame": 791,
+          "source_frame": 995,
+          "note": "Rivet swings the electro baton by the alley dumpster. Fallen officers lie inside the south rail."
+        },
+        {
+          "frame": 1326,
+          "source_frame": 1530,
+          "note": "The baton sweeps beside the drum stack as the loading dock and its tarped cargo move past."
+        }
+      ],
+      "before_inspected": [
         {
           "frame": 165,
           "note": "Rivet claws a patrol cop as two more wait beside the crate."
@@ -71,11 +129,36 @@
     },
     {
       "file": "gauntlet_waves4-5_32.mp4",
-      "sha256": "bcb6665a0fa11b49c8bc35588d22e21f018c83f9ae1e349cd742d096a288ea53",
-      "source_frame_start": 1927,
-      "source_frame_end_exclusive": 3315,
-      "seconds": 23.133,
+      "sha256": "96d7ab1a264734b7022a8fb407eebfc08efc061c37f036dfca5f41a67fd19417",
+      "before": "gauntlet_waves4-5_before_32.mp4",
+      "before_sha256": "bcb6665a0fa11b49c8bc35588d22e21f018c83f9ae1e349cd742d096a288ea53",
+      "source_frame_start": 1892,
+      "source_frame_end_exclusive": 3380,
+      "frames": 1488,
+      "seconds": 24.8,
       "inspected": [
+        {
+          "frame": 58,
+          "source_frame": 1950,
+          "note": "Rivet aims the hand cannon toward the wave-four squad. The bench and bus shelter bracket the line of fire."
+        },
+        {
+          "frame": 230,
+          "source_frame": 2122,
+          "note": "The fourth clear offers Pistol, Plasma Rifle and Flamethrower. The full cream health bar reads 100/100."
+        },
+        {
+          "frame": 508,
+          "source_frame": 2400,
+          "note": "Rivet holds the pistol and the grey war machine advances through the market carts. Fallen escorts lie on the road."
+        },
+        {
+          "frame": 1472,
+          "source_frame": 3364,
+          "note": "Gloria stays highlighted between Max health and Ohm after wave five."
+        }
+      ],
+      "before_inspected": [
         {
           "frame": 90,
           "note": "Rivet and the wave-four squad exchange fire across separated cover."
@@ -95,11 +178,140 @@
       ]
     }
   ],
+  "pairs": [
+    {
+      "file": "pair_wave2_32.png",
+      "sha256": "8c716f37218f8481b0e9c258ce5be3f42067fa46341b244101035abacc08f664",
+      "source_frame": 995,
+      "left_file": "gauntlet_waves1-3_before_32.mp4",
+      "left_clip_frame": 791,
+      "right_file": "gauntlet_waves1-3_32.mp4",
+      "right_clip_frame": 791
+    },
+    {
+      "file": "pair_war_machine_32.png",
+      "sha256": "cfc89d60c35aebcd37de27d31d3fe574439e270b5f98cc7f5870465b00bba98e",
+      "source_frame": 2440,
+      "left_file": "gauntlet_waves4-5_before_32.mp4",
+      "left_clip_frame": 513,
+      "right_file": "gauntlet_waves4-5_32.mp4",
+      "right_clip_frame": 548
+    },
+    {
+      "file": "pair_pick_32.png",
+      "sha256": "9df9def1dc4ed0a661bf9ac789c3184d17a5a0fefdfe6bde82948efcd149f34e",
+      "source_frame": 572,
+      "left_file": "gauntlet_waves1-3_before_32.mp4",
+      "left_clip_frame": 368,
+      "right_file": "gauntlet_waves1-3_32.mp4",
+      "right_clip_frame": 368
+    }
+  ],
   "closeup": {
     "file": "fight_cover_64.png",
+    "before": "fight_cover_before_64.png",
+    "sha256": "b98984245beea7bf76f37ff5be643cfdee9a7f0868e87e81353ff240b84931b9",
+    "before_sha256": "087c5463a82cb84d7f61acab5efd2b7cfff9452e9554d532003ef0bdb76d5b8b",
     "ppm": 64,
     "wave": 1,
-    "source_frame": 466,
-    "sha256": "087c5463a82cb84d7f61acab5efd2b7cfff9452e9554d532003ef0bdb76d5b8b"
-  }
+    "source_frame": 405,
+    "note": "Rivet strikes a patrol officer with his bare claw at the bus stop.",
+    "source_sha256": "de7a8190487cb63612d9cc6929132aa727ea693ac67450904a6b09a3ea3953d9"
+  },
+  "procedure": {
+    "project": "Use a scratch project.godot with a 1920x1080 base viewport and junctions to the resource directories in this worktree. The movie writer renders the base viewport.",
+    "engine": [
+      "--windowed",
+      "--rendering-driver",
+      "d3d12",
+      "--position",
+      "0,1440",
+      "--resolution",
+      "1920x1080",
+      "--audio-driver",
+      "Dummy",
+      "--fixed-fps",
+      "60",
+      "--write-movie",
+      "<scratch>.avi"
+    ],
+    "main_scene": "res://dev/gauntlet/gauntlet.tscn",
+    "closeup_scene": "res://dev/gauntlet/gauntlet_closeup.tscn",
+    "cut": "Zero-based source frames with exclusive ends. Wave starts use the visible HUD digit. Each pick holds for 120 rendered frames. End the second cut on highlighted Gloria, before the single post-choice frame.",
+    "video": "FFmpeg trim by source frame, reset timestamps, libx264 CRF 18, yuv420p, original 60 fps. Full-range camera pixels are converted to limited-range YUV. AAC stereo audio is trimmed to the same interval. Playback speed is 1x.",
+    "pairs": "Decode the same absolute 60 Hz source frame in each before/after clip. Each half is 960x540. The eight-template seed-7 route changes the encounters. The old and new simulation timers can differ."
+  },
+  "checks": {
+    "headless_seed7_sha256": "808cd831c557743d02ca210a86621ffeb8503fcb8b18c507ef05cd5c431620f0",
+    "headless_seed7_before_contacts_sha256": "e54f8a6ffe4339e11933a6aded3497473f77f4d80ef84ec095d57509fe217a1b",
+    "two_ten_wave_runs_byte_identical": true,
+    "removing_only_contact_keys_restores_previous_bytes": true,
+    "schema": "Both the ten-wave headless result and five-wave movie result passed Draft 2020-12 validation.",
+    "five_wave_result_sha256": "d13ebb3acca818619d44c59a4f4f59b103990effaf5b6fceb3ecbaa3f5403cca",
+    "readable_health_samples": [
+      99,
+      99,
+      95,
+      98,
+      98,
+      100,
+      100,
+      100
+    ],
+    "rail_blood_comparison": [
+      {
+        "source_frame": 2990,
+        "rect_xywh": [
+          900,
+          580,
+          380,
+          24
+        ],
+        "before_pixels": 198,
+        "after_pixels": 0
+      },
+      {
+        "source_frame": 3160,
+        "rect_xywh": [
+          900,
+          692,
+          380,
+          24
+        ],
+        "before_pixels": 197,
+        "after_pixels": 0
+      }
+    ],
+    "rail_blood_threshold": "R > 80, R > 2.4*G and R > 2*B on the raw MJPEG source.",
+    "palette": "On the 32 px/m bus-stop still the Madness notch changed from RGB 46/196/181 to 79/71/79. Locked ghost portraits remain visible.",
+    "audit": "solid_audit.json",
+    "master_index": "frames.json",
+    "replay_60s": {
+      "ticks": 3600,
+      "events": 184,
+      "input_changes": 142,
+      "checkpoints": 60,
+      "final": "cbeb734ff9b97c41"
+    },
+    "committed_captures_byte_identical_to_reviewed_sources": true,
+    "headless_runs": [
+      {
+        "waves": 10,
+        "seed": 7,
+        "verdict": "ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh",
+        "sha256": "808cd831c557743d02ca210a86621ffeb8503fcb8b18c507ef05cd5c431620f0"
+      },
+      {
+        "waves": 10,
+        "seed": 7,
+        "verdict": "ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh",
+        "sha256": "808cd831c557743d02ca210a86621ffeb8503fcb8b18c507ef05cd5c431620f0"
+      }
+    ]
+  },
+  "warnings": [
+    "The renderer logged the shipped Ohm hover-sheet five-row warning. Ohm remains locked in these five waves.",
+    "The windowed capture reported ObjectDB instances at shutdown. The generated result and video passed the checks above."
+  ],
+  "source_sha256": "99649d82f03874d9375de8e55da4e8bf8e284ede5cd8102f56af6994533d1127"
 }

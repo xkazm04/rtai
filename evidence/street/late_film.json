@@ -1,0 +1,117 @@
+{
+  "commit": "cd2f1d98e86b71cf33484f55c4d827ea5af9f359",
+  "gated_code_commit": "7967a0cfacfc004a60ed9ea082f52741c3678296",
+  "seed": 7,
+  "profile": "average",
+  "pilot": "GauntletWalker",
+  "flags": [
+    "--seed=7",
+    "--bot=average",
+    "--waves=8",
+    "--pick-view"
+  ],
+  "engine_flags": [
+    "--windowed",
+    "--rendering-driver",
+    "d3d12",
+    "--position",
+    "0,1440",
+    "--resolution",
+    "1920x1080",
+    "--audio-driver",
+    "Dummy",
+    "--fixed-fps",
+    "60",
+    "--write-movie",
+    "<scratch>.avi"
+  ],
+  "scene": "res://dev/gauntlet/gauntlet.tscn",
+  "view": "tilt70",
+  "ppm": 32,
+  "block": "crosswalk",
+  "clip": {
+    "file": "gauntlet_wave8_32.mp4",
+    "sha256": "455f3110d56184814525519233032a7c3a6c11a0a79475efd9cc452f945770df",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "frames": 2285,
+    "seconds": 38.083333,
+    "encoding": "H.264, CRF 18, yuv420p, AAC stereo",
+    "playback_speed": 1
+  },
+  "source_frames": 6695,
+  "source_frame_start": 4349,
+  "source_frame_end_exclusive": 6634,
+  "wave_8_first_hud_frame": 4409,
+  "wave_8_first_clear_screen_frame": 6574,
+  "pre_roll_frames": 60,
+  "post_roll_frames": 60,
+  "headless_reference": "build/director/s7a.json",
+  "headless_sha256": "808cd831c557743d02ca210a86621ffeb8503fcb8b18c507ef05cd5c431620f0",
+  "recorded_result_sha256": "55f1356a232a5639972642b03d7a376ea3c7f04e15ef5fbc29b8673246d85890",
+  "wave_8_seconds": {
+    "recorded": 34.8833333333333,
+    "headless": 34.8833333333333
+  },
+  "enemies": {
+    "contractor": 1,
+    "patrol_cop": 2,
+    "riot_cop": 1,
+    "robot_gunner": 2,
+    "sentry_turret": 2
+  },
+  "matches_headless_first_eight": true,
+  "comparison": "All eight complete wave rows and all eight pick rows, including offer order, matched the headless reference.",
+  "wave_seconds": [
+    5.58333333333333,
+    7.31666666666667,
+    6.71666666666667,
+    2.56666666666667,
+    15.25,
+    4.36666666666667,
+    5.4,
+    34.8833333333333
+  ],
+  "recorded_picks": [
+    "weapon_electro_baton",
+    "stat_damage_10",
+    "weapon_hand_cannon",
+    "weapon_pistol",
+    "weapon_gloria",
+    "stat_regen_10",
+    "weapon_gatling",
+    "stat_regen_25"
+  ],
+  "note": "Rivet twice retreats to recover health while the last sentry holds its ground beyond the crossing.",
+  "inspected": [
+    {
+      "file": "wave8_130.png",
+      "frame": 130,
+      "source_frame": 4479,
+      "sha256": "05260ce57f94deed370e3e52498a04d247dd39ad63ce3154db30caceb78dfd65",
+      "note": "Rivet fires the Gatling across the zebra crossing at blue-uniformed officers, with four grey machines to their right."
+    },
+    {
+      "file": "wave8_520.png",
+      "frame": 520,
+      "source_frame": 4869,
+      "sha256": "2d01c4f61553f823505d253f926e8bc1c1b3039d6f728af769d00d5b3e058fd4",
+      "note": "At 39/100 health, Rivet has pulled back to the left of the crossing while red rounds pass over the stripes."
+    },
+    {
+      "file": "wave8_1450.png",
+      "frame": 1450,
+      "source_frame": 5799,
+      "sha256": "2c323e8cef14ca19cbe14817454d135e19a7ba74155fb399b9e476c10c8c2ba3",
+      "note": "Rivet swings his claw at the sentry in the middle of the road, with a fallen riot officer and shield beside the kerb."
+    },
+    {
+      "file": "wave8_2220.png",
+      "frame": 2220,
+      "source_frame": 6569,
+      "sha256": "be420b74facbc57200759ec768b3642b9b2daf669cadbdc95940d35be013a455",
+      "note": "Back at 100/100 health, Rivet fires the Gatling across the crossing at the last sentry."
+    }
+  ]
+}
