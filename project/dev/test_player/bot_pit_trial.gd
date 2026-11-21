@@ -39,27 +39,22 @@ func run(
 	_sync()
 	if not current.is_empty():
 		_end("tick_limit")
-	var digest: String = sha.finish().hex_encode()
-	var result: Dictionary = (
-		_wire_result(profile_id, run_seed, digest)
-		if wire
-		else _probe_result(profile_id, run_seed, digest)
-	)
+	var result: Dictionary = _wire_result() if wire else _probe_result()
+	result["profile"] = profile_id
+	result["seed"] = run_seed
+	result["input_sha256"] = sha.finish().hex_encode()
 	session.close()
 	bus.free()
 	data.free()
 	return result if ok else {}
 
 
-func _probe_result(profile_id: StringName, run_seed: int, digest: String) -> Dictionary:
+func _probe_result() -> Dictionary:
 	return {
 		"schema": "gtai.bot-pit-probe/1",
-		"profile": profile_id,
-		"seed": run_seed,
 		"enemy_brain": "mixed",
 		"ticks": session.tick(),
 		"tick_hz": SimClock.TICK_RATE,
-		"input_sha256": digest,
 		"waves": waves,
 		"waves_cleared": cleared,
 		"damage_taken": damage_taken,
@@ -68,37 +63,16 @@ func _probe_result(profile_id: StringName, run_seed: int, digest: String) -> Dic
 	}
 
 
-func _wire_result(profile_id: StringName, run_seed: int, digest: String) -> Dictionary:
+func _wire_result() -> Dictionary:
 	var run_state: GauntletRun = GauntletRun.new()
-	run_state.seed = run_seed
-	run_state.profile = profile_id
 	run_state.alive = deaths == 0
 	for attempt: Dictionary in waves:
 		run_state.wave = attempt.n
-		var counts: Dictionary = attempt.counters
-		var form_ticks: Dictionary = counts.form_ticks
-		var forms: Dictionary[StringName, float] = {}
-		for id: StringName in session.stage.pilot.ghosts.forms.table.order:
-			var ticks: int = form_ticks.get(id, 0)
-			forms[id] = ticks * SimClock.TICK_DT
-		var row: Dictionary = {
-			"n": attempt.n,
-			"status": attempt.status,
-			"enemies": attempt.enemies,
-			"damage_taken": attempt.damage_taken,
-			"shots": counts.shots,
-			"rolls": counts.rolls,
-			"form_seconds": forms,
-			"guard_ticks": counts.guard_ticks,
-			"cover_ticks": counts.cover_ticks
-		}
-		if attempt.status != "tick_limit":
-			var duration: int = attempt.end_tick - attempt.start_tick
-			row.seconds = duration * SimClock.TICK_DT
-		run_state.waves.append(row)
+		run_state.waves.append(
+			BotCounters.wave_row(attempt, session.pilot.ghosts.forms.table.order)
+		)
 	var result: Dictionary = run_state.to_result()
 	result["sim_s"] = session.tick() * SimClock.TICK_DT
-	result["input_sha256"] = digest
 	return result
 
 
@@ -165,21 +139,5 @@ func _end(status: String) -> void:
 		current.clear_s = (session.stage.tick - start) * SimClock.TICK_DT
 	current.damage_taken = damage_taken - start_damage
 	current.deaths = deaths - start_deaths
-	current.counters = _changes(brain.counters.report(), start_counts)
+	current.counters = brain.counters.since(start_counts)
 	current = {}
-
-
-func _changes(now: Dictionary, before: Dictionary) -> Dictionary:
-	var out: Dictionary = {}
-	for key: String in now:
-		if key == "form_ticks":
-			var forms: Dictionary = {}
-			var earlier: Dictionary = before[key]
-			for id: StringName in now[key]:
-				var count: int = now[key][id] - earlier.get(id, 0)
-				if count > 0:
-					forms[id] = count
-			out[key] = forms
-		else:
-			out[key] = now[key] - before[key]
-	return out

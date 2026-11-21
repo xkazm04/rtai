@@ -12,6 +12,7 @@ class Choice:
 	var move: Vector2
 	var aim: Vector2
 	var cover: bool
+	var threat: StringName = &""
 	var hold_position: bool
 	var form: StringName = &""
 
@@ -119,6 +120,7 @@ func _notice(view: BotView, tick: int) -> BotView.Hostile:
 
 func _evade(view: BotView, source: Vector2, line: Vector2, dodge: bool, blast: bool) -> Choice:
 	var choice: Choice = Choice.new()
+	choice.threat = &"large" if blast else &"small"
 	var me: BotView.Player = view.player()
 	var cover: BotCover.Route = BotCover.seek(view, source, _profile.cover_seek_m)
 	if cover.length == 0.0:

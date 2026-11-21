@@ -18,6 +18,8 @@ class Intent:
 
 
 var counters: BotCounters = BotCounters.new()
+var travel: StringName = &"REST"
+var cover_threat: StringName = &""
 var _view: BotView
 var _actions: PlayerActions
 var _profile: BotProfile
@@ -48,6 +50,8 @@ func sample(tick: int) -> TickInput:
 	counters.observe_totals(me)
 	counters.sample_form(me)
 	if me.hp <= 0.0:
+		travel = &"REST"
+		cover_threat = &""
 		_target_id = -1
 		_previous = 0
 		_recovering = false
@@ -90,6 +94,10 @@ func _pack(intent: Intent, defend: BotDefence.Choice, want: StringName) -> TickI
 			attack = _edge(intent.attack)
 		buttons |= attack
 	_previous = buttons
+	cover_threat = defend.threat if defend.cover else &""
+	travel = &"REST"
+	if intent.move != Vector2.ZERO:
+		travel = &"RETREAT" if _recovering or defend.action == &"sprint" else &"ADVANCE"
 	var move: Vector2 = intent.move.limit_length(1.0) * TickInput.AXIS_MAX
 	return TickInput.new(
 		buttons | PlayerCommand.pack_aim(intent.aim, _actions, intent.reach),
@@ -182,6 +190,10 @@ func _attack(intent: Intent, foe: BotView.Hostile, slot: BotView.Slot) -> void:
 func _bit(action: StringName) -> int:
 	var bit: int = _actions.bit(action)
 	return 1 << bit if bit >= 0 else 0
+
+
+func firing() -> bool:
+	return (_previous & _bit(&"fire")) != 0
 
 
 func _edge(action: StringName) -> int:
