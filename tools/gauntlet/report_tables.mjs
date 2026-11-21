@@ -74,7 +74,8 @@ export function sections(batch, report, baseline) {
     title: 'Unusual winning runs',
     note: 'At the deepest observed wave per profile, rank up to three runs with positive rarity. '
       + 'Rarity is the mean of log₂(measured runs / runs sharing the signature) for the ordered picks, set of acquired weapons '
-      + 'and dominant measured ghost form. Missing signatures are skipped. Ties use ascending seed. Commands use the recorded controls and batch settings.',
+      + 'and dominant measured ghost form. Missing signatures are skipped. Ties use ascending seed. Commands use the recorded controls '
+      + 'and batch settings. Replaying a human trajectory also requires its recorded inputs.',
     columns: ['Profile', 'Seed', 'Wave', 'Rarity (bits)', 'Picks in order', 'Weapon refs', 'Dominant form', 'Replay command'],
     rows: report.winners.map(({ run, score, signature, command }) => [run.profile, run.seed, run.wave_reached, fmt(score),
       signature.picks.join(' → ') || 'none', signature.refs.join(', ') || 'none', signature.form ?? missing, command]),

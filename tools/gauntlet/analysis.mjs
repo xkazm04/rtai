@@ -67,8 +67,8 @@ function signatures(run, weapons) {
       forms.set(id, (forms.get(id) ?? 0) + seconds);
   }
   const positive = [...forms].filter(([, s]) => s > 0).sort(([a, n], [b, m]) => m - n || a.localeCompare(b));
-  const dominant = positive[0]?.[0] ?? (forms.size ? '(no ghost time)' : null);
-  return { sequence: picks.length ? JSON.stringify(picks) : null, weapons: refs.length ? JSON.stringify(refs) : null,
+  const dominant = positive[0]?.[0] ?? (forms.size ? '(no positive measured time)' : null);
+  return { sequence: JSON.stringify(picks), weapons: weapons.size ? JSON.stringify(refs) : null,
     form: dominant, picks, refs };
 }
 

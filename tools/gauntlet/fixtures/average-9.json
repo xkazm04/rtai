@@ -1,0 +1,9 @@
+{
+  "schema": "gtai.gauntlet-run/1",
+  "seed": 9,
+  "profile": "average",
+  "controls": "legacy",
+  "wave_reached": 1,
+  "picks": [],
+  "mods": {}
+}

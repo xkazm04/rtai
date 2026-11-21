@@ -116,7 +116,7 @@ async function live(args, launch) {
 function simulationSeconds(run) {
   if ('sim_s' in run) return run.sim_s;
   const times = run.waves.map((w) => w.seconds).filter(Number.isFinite);
-  return times.length ? sum(times) : null;
+  return times.length > 0 && times.length === run.wave_reached ? sum(times) : null;
 }
 
 export function summary(batch) {
@@ -145,7 +145,8 @@ export async function batch(args, { launch = devRun, out = console.log, err = co
   const results = entries.map((entry) => entry.result).filter(Boolean);
   const times = results.map(simulationSeconds).filter(Number.isFinite);
   const sim_s = times.length ? sum(times) : null;
-  const speed = { sim_s, wall_s, sim_per_wall: wall_s > 0 && sim_s !== null ? sim_s / wall_s : null };
+  const complete = entries.length > 0 && times.length === entries.length;
+  const speed = { sim_s, wall_s, sim_per_wall: complete && wall_s > 0 ? sim_s / wall_s : null };
   const doc = { schema: BATCH_SCHEMA, created, git: revision, args, ...snapshot,
     runs: entries.map((entry) => entry.row), results, speed };
   mkdirSync(args.out, { recursive: true });
