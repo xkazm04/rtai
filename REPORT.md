@@ -86,6 +86,14 @@ Numbers below are from Astra's reports and my own reruns, as logged in `JOURNAL.
 
 ## Merge notes
 
+- Measured at 06:02 with `git merge-tree` against the lane heads. **Code conflict with n22-foes** in
+  `project/features/combat/combat_arena.gd` `damage()`: guard adds `if guard != null and guard.blocks_melee(self, victim,
+  killer_id, weapon, kind): return`, and foes adds `amount *= FoeArmor.impact(self, victim, kind, killer_id, weapon)` on the same
+  line. Keep both, guard first: a blocked melee hit returns before any armour maths, then foes' armour scales what is left,
+  then `victim.damage_k`. `tools/debt/baseline.json` conflicts with all three lanes: `node tools/debt/merge_baseline.mjs`, commit,
+  then `--update`. `JOURNAL.md` / `REPORT.md` add/add with street and loop: keep each lane's own. Auto-merged, worth
+  a look: `project/boot/launch_args.gd` (KNOWN_FLAGS lines from several lanes), `project/features/arena/arena_rigs.gd`,
+  `project/features/arena/arena_stage.gd`, `project/data/tables/enemies.json` (guard's `round` on the existing `cannon`).
 - Street: street's project/dev/gauntlet/gauntlet.gd (on n22-street, not on this branch) must pass `--controls=wheel` itself (at street `a3a06df84` it only reads
   `ControlsMode.id()`), otherwise `StagePilot.guard` is null in the gauntlet. `GauntletWaveStats.append_guard_deflects`: snapshot
   `stage.pilot.guard.deflects` at wave start, write the delta at finish, omit under legacy.
