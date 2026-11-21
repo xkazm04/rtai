@@ -53,7 +53,9 @@
       "wall_s": 30.3502503,
       "ok": false,
       "engine_log": "logs/novice-1/gauntlet-2026-11-21T00-53-08-111Z.log",
-      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)"
+      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)",
+      "ticks": 72000,
+      "outcome": "stalled"
     },
     {
       "profile": "novice",
@@ -65,7 +67,8 @@
       "exit": 0,
       "wall_s": 10.827808999999997,
       "ok": true,
-      "engine_log": "logs/novice-2/gauntlet-2026-11-21T00-53-38-184Z.log"
+      "engine_log": "logs/novice-2/gauntlet-2026-11-21T00-53-38-184Z.log",
+      "ticks": 4088
     },
     {
       "profile": "novice",
@@ -77,7 +80,8 @@
       "exit": 0,
       "wall_s": 13.6397342,
       "ok": true,
-      "engine_log": "logs/novice-3/gauntlet-2026-11-21T00-53-48-910Z.log"
+      "engine_log": "logs/novice-3/gauntlet-2026-11-21T00-53-48-910Z.log",
+      "ticks": 8236
     },
     {
       "profile": "novice",
@@ -90,7 +94,9 @@
       "wall_s": 25.592960599999998,
       "ok": false,
       "engine_log": "logs/novice-4/gauntlet-2026-11-21T00-54-02-396Z.log",
-      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)"
+      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)",
+      "ticks": 72000,
+      "outcome": "stalled"
     },
     {
       "profile": "novice",
@@ -102,7 +108,8 @@
       "exit": 0,
       "wall_s": 11.241333,
       "ok": true,
-      "engine_log": "logs/novice-5/gauntlet-2026-11-21T00-54-28-097Z.log"
+      "engine_log": "logs/novice-5/gauntlet-2026-11-21T00-54-28-097Z.log",
+      "ticks": 7472
     },
     {
       "profile": "average",
@@ -115,7 +122,9 @@
       "wall_s": 30.364044699999997,
       "ok": false,
       "engine_log": "logs/average-1/gauntlet-2026-11-21T00-54-39-448Z.log",
-      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)"
+      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)",
+      "ticks": 72000,
+      "outcome": "stalled"
     },
     {
       "profile": "average",
@@ -127,7 +136,8 @@
       "exit": 0,
       "wall_s": 13.897561099999992,
       "ok": true,
-      "engine_log": "logs/average-2/gauntlet-2026-11-21T00-55-10-141Z.log"
+      "engine_log": "logs/average-2/gauntlet-2026-11-21T00-55-10-141Z.log",
+      "ticks": 4596
     },
     {
       "profile": "average",
@@ -139,7 +149,8 @@
       "exit": 0,
       "wall_s": 16.837786200000004,
       "ok": true,
-      "engine_log": "logs/average-3/gauntlet-2026-11-21T00-55-23-627Z.log"
+      "engine_log": "logs/average-3/gauntlet-2026-11-21T00-55-23-627Z.log",
+      "ticks": 12753
     },
     {
       "profile": "average",
@@ -151,7 +162,8 @@
       "exit": 0,
       "wall_s": 15.747940999999992,
       "ok": true,
-      "engine_log": "logs/average-4/gauntlet-2026-11-21T00-55-40-930Z.log"
+      "engine_log": "logs/average-4/gauntlet-2026-11-21T00-55-40-930Z.log",
+      "ticks": 8741
     },
     {
       "profile": "average",
@@ -163,7 +175,8 @@
       "exit": 0,
       "wall_s": 12.491353099999978,
       "ok": true,
-      "engine_log": "logs/average-5/gauntlet-2026-11-21T00-55-56-213Z.log"
+      "engine_log": "logs/average-5/gauntlet-2026-11-21T00-55-56-213Z.log",
+      "ticks": 3631
     },
     {
       "profile": "expert",
@@ -176,7 +189,9 @@
       "wall_s": 31.010949599999993,
       "ok": false,
       "engine_log": "logs/expert-1/gauntlet-2026-11-21T00-56-08-833Z.log",
-      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)"
+      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)",
+      "ticks": 72000,
+      "outcome": "stalled"
     },
     {
       "profile": "expert",
@@ -189,7 +204,9 @@
       "wall_s": 31.398138399999997,
       "ok": false,
       "engine_log": "logs/expert-2/gauntlet-2026-11-21T00-56-40-209Z.log",
-      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)"
+      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)",
+      "ticks": 72000,
+      "outcome": "stalled"
     },
     {
       "profile": "expert",
@@ -202,7 +219,9 @@
       "wall_s": 32.76610219999999,
       "ok": false,
       "engine_log": "logs/expert-3/gauntlet-2026-11-21T00-57-11-501Z.log",
-      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)"
+      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)",
+      "ticks": 72000,
+      "outcome": "stalled"
     },
     {
       "profile": "expert",
@@ -214,7 +233,8 @@
       "exit": 0,
       "wall_s": 17.3781483,
       "ok": true,
-      "engine_log": "logs/expert-4/gauntlet-2026-11-21T00-57-44-314Z.log"
+      "engine_log": "logs/expert-4/gauntlet-2026-11-21T00-57-44-314Z.log",
+      "ticks": 12000
     },
     {
       "profile": "expert",
@@ -227,7 +247,9 @@
       "wall_s": 27.670718400000013,
       "ok": false,
       "engine_log": "logs/expert-5/gauntlet-2026-11-21T00-58-01-815Z.log",
-      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)"
+      "reason": "FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)",
+      "ticks": 72000,
+      "outcome": "stalled"
     }
   ],
   "results": [
@@ -1538,8 +1560,8 @@
     }
   ],
   "speed": {
-    "sim_s": null,
+    "sim_s": 9425.283333333333,
     "wall_s": 321.22250399999996,
-    "sim_per_wall": null
+    "sim_per_wall": 29.341914766137723
   }
 }

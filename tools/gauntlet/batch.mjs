@@ -118,8 +118,11 @@ async function live(args, launch) {
   return entries;
 }
 
-function simulationSeconds(run) {
-  if ('sim_s' in run) return run.sim_s;
+function simulationSeconds({ row, result: run }) {
+  if (Number.isSafeInteger(run?.ticks) && run.ticks >= 0) return run.ticks / 60;
+  if (Number.isFinite(run?.sim_s)) return run.sim_s;
+  if (Number.isSafeInteger(row.ticks) && row.ticks >= 0) return row.ticks / 60;
+  if (!run) return null;
   const times = run.waves.map((w) => w.seconds).filter(Number.isFinite);
   return times.length > 0 && times.length === run.wave_reached ? sum(times) : null;
 }
@@ -148,7 +151,7 @@ export async function batch(args, { launch = devRun, out = console.log, err = co
   const entries = args.from ? offline(args) : await live(args, launch);
   const wall_s = args.from ? null : (performance.now() - start) / 1000;
   const results = entries.map((entry) => entry.result).filter(Boolean);
-  const times = results.map(simulationSeconds).filter(Number.isFinite);
+  const times = entries.map(simulationSeconds).filter(Number.isFinite);
   const sim_s = times.length ? sum(times) : null;
   const complete = entries.length > 0 && times.length === entries.length;
   const speed = { sim_s, wall_s, sim_per_wall: complete && wall_s > 0 ? sim_s / wall_s : null };
