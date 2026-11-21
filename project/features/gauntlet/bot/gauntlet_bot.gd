@@ -28,6 +28,8 @@ func bind(run: GauntletRun, session: ArenaSession) -> void:
 	if session is GauntletSession:
 		view.street_layout = (session as GauntletSession).street
 	_brain = GauntletBot.new(view, session.actions, _skill, _seed)
+	if session is GauntletSession:
+		session.stage.hooks.append(BotStreetStats.new(run, view, _brain.counters))
 	Log.info(
 		"gauntlet", "test player bound: %s, %s picks, seed %d" % [_profile, _pick_policy, _seed]
 	)
