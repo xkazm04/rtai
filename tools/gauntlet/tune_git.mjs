@@ -24,19 +24,27 @@ export function checkPlan(plan) {
   }
 }
 
+export const isTuneBranch = (branch) => branch.startsWith('n22-tune');
+
 export function ownBranch(root) {
-  if (!git(root, 'branch', '--show-current').trim().startsWith('n22-tune'))
+  if (!isTuneBranch(git(root, 'branch', '--show-current').trim()))
     throw new Error('tuner applies only on its own branch');
 }
 
-function clean(root, artifacts = []) {
+function clean(root, artifacts = [], nightDir = null) {
   ownBranch(root);
   const outputs = artifacts.map((file) => relative(root, resolve(file))).filter((file) =>
     file && !isAbsolute(file) && file !== '..' && !file.startsWith('..' + sep));
   const exclude = outputs.map((file) => ':(exclude,top,literal)' + file.split(sep).join('/'));
   const status = git(root, 'status', '--short', '-z', '--no-renames', '--untracked-files=all', '--', '.',
     ':(exclude)evidence/**', ':(exclude)build/**', ...exclude);
-  if (status) throw new Error('dirty tree outside evidence/ and build/: ' + status.split('\0')[0]);
+  const prefix = nightDir && relative(root, nightDir).split(sep).join('/') + '/';
+  const dirty = status.split('\0').filter(Boolean).find((line) => {
+    if (!prefix || !line.startsWith('?? ' + prefix)) return true;
+    const file = line.slice(3 + prefix.length);
+    return file !== 'plan.json' && !file.startsWith('before/') && !file.startsWith('after/');
+  });
+  if (dirty) throw new Error('dirty tree outside evidence/ and build/: ' + dirty);
 }
 
 function history(root, trailer, value) {
@@ -106,13 +114,13 @@ function preflight(root, plan, receipts) {
   return writes;
 }
 
-export function applyPlan(root, plan) {
-  clean(root);
+export function applyPlan(root, plan, nightDir = null) {
+  clean(root, [], nightDir);
   checkPlan(plan);
   const hash = planId(plan), receipts = commitsFor(root, plan);
   const writes = preflight(root, plan, receipts);
   for (const { change, file, path, prior, next, schema } of writes) {
-    clean(root);
+    clean(root, [], nightDir);
     if (tableText(path) !== prior) throw new Error('table changed since preflight: ' + file);
     const head = git(root, 'rev-parse', 'HEAD').trim();
     const { id, before, after, miss } = change;
@@ -165,8 +173,8 @@ function undoCommit(root, change, knob) {
   }
 }
 
-export function revertChanges(root, ledger, save, artifacts) {
-  clean(root, artifacts);
+export function revertChanges(root, ledger, save, artifacts, nightDir = null) {
+  clean(root, artifacts, nightDir);
   const rejected = [...ledger.changes].reverse().filter((c) => c.verdict !== 'kept');
   const { entries } = inventory(root);
   const undo = [];
@@ -179,7 +187,7 @@ export function revertChanges(root, ledger, save, artifacts) {
   }
   save();
   for (const change of undo) {
-    clean(root, artifacts);
+    clean(root, artifacts, nightDir);
     // git revert needs a clean index. Keep the operator's staged evidence out of its commit.
     if (git(root, 'diff', '--cached', '--name-only').trim()) throw new Error('git revert needs a clean index');
     undoCommit(root, change, entries.get(change.id).knob);

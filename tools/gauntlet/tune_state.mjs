@@ -27,13 +27,13 @@ export function atomicWrite(file, contents, createOnly = false) {
 }
 
 // Shared by propose, apply and revert in this worktree. An interrupted owner leaves a visible lock.
-export function withLock(root, action) {
-  const path = join(root, 'build/gauntlet/tuner.lock');
+export function withLock(root, action, name = 'tuner') {
+  const path = join(root, 'build/gauntlet', name + '.lock');
   mkdirSync(dirname(path), { recursive: true });
   let fd;
   try { fd = openSync(path, 'wx'); }
   catch (err) {
-    if (err.code === 'EEXIST') throw new Error('tuner lock held: ' + path);
+    if (err.code === 'EEXIST') throw new Error(name + ' lock held: ' + path);
     throw err;
   }
   try { writeFileSync(fd, String(process.pid)); return action(); }

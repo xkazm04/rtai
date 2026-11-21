@@ -24,10 +24,20 @@ function options(argv, required, optional, flags = []) {
   return values;
 }
 
-function artifact(root, file) {
+export function artifact(root, file) {
   const name = relative(root, resolve(file)).replaceAll('\\', '/').toLowerCase();
   if (name === BASELINE) throw new Error('tuner baseline is write-once');
   if (/^(project|tools|\.git|\.githooks)\//.test(name)) throw new Error('choose an artifact output outside ' + name.split('/')[0]);
+}
+
+// Only a night with a dedicated plan.json can own its untracked before/after output.
+function nightOutput(root, v) {
+  if (!v['night-output']) return null;
+  const dir = resolve(v['night-output']);
+  if (dir === resolve(root) || resolve(v.plan) !== join(dir, 'plan.json'))
+    throw new Error('--night-output must be the dedicated directory containing plan.json');
+  artifact(root, v.plan);
+  return dir;
 }
 
 function writePlan(root, v) {
@@ -109,7 +119,7 @@ function confirmation(root, v) {
     save();
     throw new Error('no matching seeds, profiles, controls and pick modes to confirm');
   }
-  if (v.revert) revertChanges(root, ledger, save, [v.before, v.after, v.plan, stem + '.json', stem + '.md']);
+  if (v.revert) revertChanges(root, ledger, save, [v.before, v.after, v.plan, stem + '.json', stem + '.md'], nightOutput(root, v));
   else save();
   for (const c of ledger.changes) console.log(c.id + ' ' + c.verdict + ', improvement ' + fmt(c.improvement)
     + ', CI95 ' + c.ci95.map(fmt).join(' to ') + ', A/A floor ' + fmt(c.floor));
@@ -126,15 +136,15 @@ export function main([command, ...argv]) {
   }
   if (command === 'apply') {
     ownBranch(root);
-    const v = options(argv, ['plan'], []);
+    const v = options(argv, ['plan'], ['night-output']);
     return withLock(root, () => {
-      const receipts = applyPlan(root, readJson(v.plan));
+      const receipts = applyPlan(root, readJson(v.plan), nightOutput(root, v));
       for (const [id, sha] of receipts) console.log(id + ' ' + sha);
       return receipts;
     });
   }
   if (command === 'confirm') {
-    const v = options(argv, ['before', 'after', 'plan'], [], ['revert']);
+    const v = options(argv, ['before', 'after', 'plan'], ['night-output'], ['revert']);
     return withLock(root, () => confirmation(root, v));
   }
   throw new Error('usage: tune.mjs propose|apply|confirm [options]');

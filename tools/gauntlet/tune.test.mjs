@@ -7,6 +7,7 @@ import { test } from 'node:test';
 import { canonicalJson } from '../lib/canonical_json.mjs';
 import { ROOT, readJson } from '../lib/repo.mjs';
 import { BATCH_SCHEMA, RUN_SCHEMA, validateRun } from './contract.mjs';
+import { night } from './night.mjs';
 import { confirmChange, pairRuns } from './tune_confirm.mjs';
 import { nightOf } from './tune_git.mjs';
 import { propose } from './tune_propose.mjs';
@@ -460,4 +461,41 @@ test('read and apply skip reordered array rows by their catalog id while other k
   assert.deepEqual(result.stderr.trim().split(/\r?\n/).filter((s) => s.startsWith('knob war_machine.hp:')), [warning]);
   table.archetypes.find((r) => r.id === 'sentry_turret').hp = plan.changes[2].after;
   assert.deepEqual(readJson(join(root, file)), table);
+});
+
+test('a night with synthetic batches drives the real report, propose, apply and selective revert CLIs', (t) => {
+  const root = repository(t, 'n22-tune-night');
+  ensureBaseline(root, inventory(root).entries);
+  git(root, 'add', '--', BASELINE);
+  git(root, 'commit', '-m', 'first-night baseline', '--', BASELINE);
+  const dir = join(root, 'night output'), jobs = [];
+  function run([script, ...args]) {
+    if (script.endsWith('/batch.mjs')) {
+      const data = robotBatch();
+      if (jobs.length) for (const r of data.results) r.waves[0].seconds = 15;
+      const dest = args.find((arg) => arg.startsWith('--out=')).slice(6);
+      write(root, join(dest, 'batch.json'), data);
+      jobs.push(args.filter((arg) => !arg.startsWith('--out=')));
+      return;
+    }
+    const invoke = () => spawnSync(process.execPath, [join(ROOT, script), ...args], { cwd: root, encoding: 'utf8' });
+    if (args[0] === 'apply') {
+      const note = join(dir, 'owner-note');
+      writeFileSync(note, 'outside the generated evidence');
+      assert.match(invoke().stderr, /dirty tree.*owner-note/);
+      rmSync(note);
+    }
+    ok(invoke());
+  }
+  night(['--seeds=12', '--pick=random', '--out=' + dir], { root, run, log() {} });
+  assert.deepEqual(jobs[0], jobs[1]);
+  const ledger = readJson(join(dir, 'after/tune-ledger.json'));
+  assert.deepEqual(ledger.changes.map((c) => c.verdict), ['kept', 'noise', 'noise']);
+  const md = readFileSync(join(dir, 'night.md'), 'utf8');
+  for (const c of ledger.changes) {
+    assert.ok(md.includes(c.commit));
+    if (c.revert_commit) assert.ok(md.includes(c.revert_commit));
+  }
+  for (const arm of ['before', 'after']) for (const ext of ['md', 'html'])
+    assert.ok(existsSync(join(dir, arm, 'report.' + ext)));
 });

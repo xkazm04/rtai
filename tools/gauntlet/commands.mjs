@@ -63,7 +63,9 @@ export function* plan(args) {
 }
 
 // Single quotes also preserve spaces and literal dollar signs in the lane's PowerShell.
-export function commandLine(argv) {
+export function nodeCommand(argv) {
   const quote = (arg) => /^[\w./:=\\-]+$/.test(arg) ? arg : "'" + arg.replaceAll("'", "''") + "'";
-  return ['node', 'tools/dev/run.mjs', ...argv].map(quote).join(' ');
+  return ['node', ...argv].map(quote).join(' ');
 }
+
+export const commandLine = (argv) => nodeCommand(['tools/dev/run.mjs', ...argv]);
