@@ -13,9 +13,13 @@ var start_deaths: int
 var start_counts: Dictionary
 var wave_n: int = 0
 var cleared: int = 0
+var _wire: bool
 
 
-func run(profile_id: StringName, run_seed: int, ticks: int) -> Dictionary:
+func run(
+	profile_id: StringName, run_seed: int, ticks: int, wire: bool = false, wave_cap: int = 0
+) -> Dictionary:
+	_wire = wire
 	var profile: BotProfile = BotProfile.shipped(profile_id)
 	var sha: HashingContext = HashingContext.new()
 	if profile == null or sha.start(HashingContext.HASH_SHA256) != OK:
@@ -31,31 +35,74 @@ func run(profile_id: StringName, run_seed: int, ticks: int) -> Dictionary:
 	session.world.loop().set_input(tape)
 	@warning_ignore("return_value_discarded")
 	bus.wave_started.connect(_started)
-	var ok: bool = _play(ticks, tape, sha)
+	var ok: bool = _play(ticks, tape, sha, wave_cap)
 	_sync()
 	if not current.is_empty():
 		_end("tick_limit")
-	var result: Dictionary = {
-		"schema": "gtai.bot-pit-probe/1",
-		"profile": profile_id,
-		"seed": run_seed,
-		"enemy_brain": "mixed",
-		"ticks": ticks,
-		"tick_hz": SimClock.TICK_RATE,
-		"input_sha256": sha.finish().hex_encode(),
-		"waves": waves,
-		"waves_cleared": cleared,
-		"damage_taken": damage_taken,
-		"deaths": deaths,
-		"counters": brain.counters.report()
-	}
+	var digest: String = sha.finish().hex_encode()
+	var result: Dictionary = (
+		_wire_result(profile_id, run_seed, digest)
+		if wire
+		else _probe_result(profile_id, run_seed, digest)
+	)
 	session.close()
 	bus.free()
 	data.free()
 	return result if ok else {}
 
 
-func _play(ticks: int, tape: InputTape, sha: HashingContext) -> bool:
+func _probe_result(profile_id: StringName, run_seed: int, digest: String) -> Dictionary:
+	return {
+		"schema": "gtai.bot-pit-probe/1",
+		"profile": profile_id,
+		"seed": run_seed,
+		"enemy_brain": "mixed",
+		"ticks": session.tick(),
+		"tick_hz": SimClock.TICK_RATE,
+		"input_sha256": digest,
+		"waves": waves,
+		"waves_cleared": cleared,
+		"damage_taken": damage_taken,
+		"deaths": deaths,
+		"counters": brain.counters.report()
+	}
+
+
+func _wire_result(profile_id: StringName, run_seed: int, digest: String) -> Dictionary:
+	var run_state: GauntletRun = GauntletRun.new()
+	run_state.seed = run_seed
+	run_state.profile = profile_id
+	run_state.alive = deaths == 0
+	for attempt: Dictionary in waves:
+		run_state.wave = attempt.n
+		var counts: Dictionary = attempt.counters
+		var form_ticks: Dictionary = counts.form_ticks
+		var forms: Dictionary[StringName, float] = {}
+		for id: StringName in session.stage.pilot.ghosts.forms.table.order:
+			var ticks: int = form_ticks.get(id, 0)
+			forms[id] = ticks * SimClock.TICK_DT
+		var row: Dictionary = {
+			"n": attempt.n,
+			"status": attempt.status,
+			"enemies": attempt.enemies,
+			"damage_taken": attempt.damage_taken,
+			"shots": counts.shots,
+			"rolls": counts.rolls,
+			"form_seconds": forms,
+			"guard_ticks": counts.guard_ticks,
+			"cover_ticks": counts.cover_ticks
+		}
+		if attempt.status != "tick_limit":
+			var duration: int = attempt.end_tick - attempt.start_tick
+			row.seconds = duration * SimClock.TICK_DT
+		run_state.waves.append(row)
+	var result: Dictionary = run_state.to_result()
+	result["sim_s"] = session.tick() * SimClock.TICK_DT
+	result["input_sha256"] = digest
+	return result
+
+
+func _play(ticks: int, tape: InputTape, sha: HashingContext, wave_cap: int) -> bool:
 	var word: PackedByteArray = PackedByteArray()
 	if word.resize(8) != OK:
 		return false
@@ -79,6 +126,8 @@ func _play(ticks: int, tape: InputTape, sha: HashingContext) -> bool:
 				_end("cleared")
 			elif deaths > start_deaths:
 				_end("death")
+		if _wire and (deaths > 0 or (wave_cap > 0 and cleared >= wave_cap)):
+			break
 	return true
 
 
@@ -95,6 +144,11 @@ func _sync() -> void:
 func _begin() -> void:
 	_sync()
 	current = {"n": wave_n, "start_tick": session.stage.tick, "clear_s": null}
+	if _wire:
+		var enemies: Dictionary[StringName, int] = {}
+		for foe: BotView.Hostile in view.hostiles():
+			enemies[foe.archetype] = enemies.get(foe.archetype, 0) + 1
+		current["enemies"] = enemies
 	waves.append(current)
 	start_damage = damage_taken
 	start_deaths = deaths

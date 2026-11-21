@@ -1,9 +1,13 @@
 extends GutTest
 
 
-func test_tick_limit_preserves_unfinished_wave_and_per_wave_counters() -> void:
+func _trial() -> RefCounted:
 	var script: GDScript = load("res://dev/test_player/bot_pit_trial.gd")
-	var trial: RefCounted = script.new()
+	return script.new()
+
+
+func test_tick_limit_preserves_unfinished_wave_and_per_wave_counters() -> void:
+	var trial: RefCounted = _trial()
 	var result: Dictionary = trial.call("run", &"novice", 20261103, 128)
 	var waves: Array = result.waves
 	assert_eq(waves.size(), 1)
@@ -30,3 +34,26 @@ func test_tick_limit_preserves_unfinished_wave_and_per_wave_counters() -> void:
 	assert_eq(cleared, 0)
 	var digest: String = result.input_sha256
 	assert_eq(digest.length(), 64)
+
+
+func test_wire_result_records_cap_and_omits_unobserved_telemetry() -> void:
+	var trial: RefCounted = _trial()
+	var result: Dictionary = trial.call("run", &"average", 20261103, 2400, true, 1)
+	assert_eq(str(result.schema), "gtai.gauntlet-run/1")
+	assert_eq(str(result.controls), "legacy")
+	var reached: int = result.wave_reached
+	var sim_s: float = result.sim_s
+	assert_eq(reached, 1)
+	assert_lt(sim_s, 40.0)
+	assert_false(result.has("death"))
+	var picks: Array = result.picks
+	assert_eq(picks.size(), 0)
+	var row: Dictionary = result.waves[0]
+	assert_eq(str(row.status), "cleared")
+	var seconds: float = row.seconds
+	assert_gt(seconds, 0.0)
+	var enemies: Dictionary = row.enemies
+	assert_gt(enemies.size(), 0)
+	assert_true(row.has("shots"))
+	assert_false(row.has("hits"))
+	assert_false(row.has("guard_deflects"))
