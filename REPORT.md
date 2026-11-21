@@ -1,6 +1,6 @@
 # REPORT - lane loop (n22, 2026-11-21) - DRAFT, completed at 07:40
 
-Lane `loop`: the test player, the batch tool, the report, the tuner and the many-night procedure for the combat gauntlet. Branch `n22-loop`, worktree `C:\Users\kazda\kiro\gtai-wt\n22-loop`. Tune branch `n22-tune` (net zero tonight: five changes applied, all five reverted as noise).
+Lane `loop`: the test player, the batch tool, the report, the tuner and the many-night procedure for the combat gauntlet. Branch `n22-loop`, worktree `C:\Users\kazda\kiro\gtai-wt\n22-loop`. Tune branches `n22-tune` (10 seeds) and `n22-tune-2` (30 seeds), both net zero tonight: two cycles of five HP cuts, all ten reverted as under the noise floor (see Call 1 on that floor).
 
 Gate: `node tools/gate/run.mjs --rev=3cc9334c3` (the last code-bearing commit; later commits are JOURNAL, REPORT, evidence and one debt-baseline tightening): **gate: PASS** (unit-tests 3541 passed, 0 failed, 2 skipped; scenario-tests 65 passed; parity bit for bit over 1200 steps, planted mutation caught; selftest; export-audit 864 loaded, 0 failed), `build/gate/3cc9334c3d56/gate.json` (git-ignored, in this worktree). The `--reels` gate on the final commit runs after the 07:30 freeze.
 
