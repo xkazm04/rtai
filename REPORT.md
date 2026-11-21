@@ -15,7 +15,7 @@ Lane `loop`: the test player, the batch tool, the report, the tuner and the many
 - **One-command night** `tools/gauntlet/night.mjs` (measure -> report -> propose -> apply on `n22-tune*` only -> confirm on the same seeds -> revert -> report -> `night.md`), `--dry-run` prints the seven commands; procedure in `docs/gauntlet-loop.md`. Node tests 39/39.
 
 - **Film** (owner judges by these), `C:\Users\kazda\kiro\gtai-masters\n22\loop\` with `frames.json` (15 entries, best first): the `average` test player, seed 5 (picked from a 12-seed scan, `evidence/loop/film-seed-scan.json`: the only seed of 1-12 that showed guard, roll, cover and Tonnage within five waves), wheel, greedy, 32 px/m, 1080p60: `waves-1-2.mp4` 21.7 s, `waves-3-4.mp4` 23.0 s, `wave-5.mp4` 31.3 s (war machine), `closeup-wave-4.mp4` 10.0 s at 64 px/m; a caption names the act each frame (ADVANCE, GUARD, ROLL, COVER, TONNAGE, ATTACK CLAW, ...). In that run: 21 guard deflects, 6 rolls, 54 cover ticks against a large threat, 6.70 s in Tonnage. Captions read sim state after the tick and never feed input: results with and without captions `cmp` identical (seeds 1, 5), the filmed result identical to headless (`evidence/loop/film.json`). Stills I looked at: `guard-64.png`, `tonnage-32.png`, `five-cleared-32.png` (Ohm pick), plus four frames extracted from the clips.
-- **Report page**: `report.png` / `report-full.png` in the same folder (the `tune1-before` batch rendered through Chrome headless).
+- **Report page**: `tune2-report.png` (the second tune cycle, before against after) and `report-full.png` (the whole `tune1-before` page) in the same folder, rendered through Chrome headless.
 
 ## What does not (yet)
 
@@ -32,6 +32,7 @@ Lane `loop`: the test player, the batch tool, the report, the tuner and the many
 
 - Botched concurrent merge, 8 min (a backgrounded commit ran merges while a second merge ran by hand).
 - Shared index with a running builder, 5 min (session 1).
+- A pre-commit flake during the second apply, 2 min (`tools/merge/step_guard.break.test.mjs:79` spawnSync timeout on the contended machine; re-running apply resumed).
 - Tune apply through the pre-commit hook, about 1 min per commit (5 applies + 5 reverts = 10 min of a 12 min cycle).
 
 ## Calls for the owner
@@ -40,6 +41,7 @@ Lane `loop`: the test player, the batch tool, the report, the tuner and the many
 The tuner keeps a change only when its paired improvement clears an A/A floor. Tonight that floor pairs **different seeds** of the before batch (seed 1 against 3, 4 against 5, ...; table "A/A seed pairs" in `evidence/loop/tune2-after/tune-ledger.md`). That measures how much two different runs differ. A same-seed pair carries no measurement noise: the sim is deterministic and a re-run is byte-identical. So the floor is 12-41 s and nothing short of a huge change clears it. War machine HP 60 -> 48 shortened its wave by 13.7 s (CI95 4.75 to 19.08 over 12 same-seed pairs), and shield robot HP 10 -> 8 by 3.7 s (CI95 1.72 to 6.6 over 25 pairs). Neither CI touches zero, and both were reverted.
 - **A (recommended):** the floor comes from a null change: re-run the before seeds with a neutral perturbation (an RNG salt on a stream that does not touch balance) and take the paired spread. Keep a change when its paired CI95 clears that floor. One data value in the tuner (`floor: "null-salt" | "cross-seed"`).
 - **B:** keep the cross-seed floor and buy power with seeds: roughly 150+ seeds per cycle (about 45 min per Godot job), which makes a night one or two cycles.
+- Side-by-side: `C:\Users\kazda\kiro\gtai-masters\n22\loop\tune2-report.png` (before against after per wave). Waves 1-4 hold none of the changed enemies, and their paired change is exactly 0.00 s on all 30 seeds. Same-seed noise is zero until a change touches the run, so a pair's difference is the change's effect plus the chaos it sets off. That chaos is what a null-salt floor measures.
 - Tonight's ledger is the side-by-side: the same five rows under both rules would keep war_machine.hp and shield_robot.hp under A and nothing under B.
 
 ### Call 2: the wave budget cannot rise by 20 %
@@ -73,4 +75,5 @@ Timed parry is a non-goal in the design note, so none of these is a parry.
 | batch-report | 37 | accepted | |
 | tune | 40 | accepted | knob pointers by array index (row-id check in brief 05) |
 | bot-street | 65 | accepted | 0 stalls, profiles ordered 10 / 20 / 25, 18/20 mutate on bot_brain |
+| tune-night | 23 | accepted | 7 commits: alive caps, 6-pair floor, min-n, fast waves -> budget, knob row ids, `night.mjs`; 39/39 tests. Would brief the floor from a null perturbation, not cross-seed pairs (Call 1) |
 | bot-film | 50 | accepted | act caption, 12-seed scan, 4 clips + 11 stills, mutate 38/38 on scratch copies; would brief a CRF target (clips came out at 98-140 Mbit/s) and a required "blast hits cover" still |
