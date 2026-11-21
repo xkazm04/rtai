@@ -53,6 +53,18 @@ func test_war_machine_has_exactly_one_reserved_place_every_fifth_wave() -> void:
 			assert_eq(roster[0], &"war_machine")
 
 
+func test_boss_ignores_unlock_and_can_exceed_the_whole_budget() -> void:
+	var rules: DataTable = DataTable.open(GauntletStreet.TABLE, GauntletStreet.SCHEMA)
+	rules.raw["budget"] = {"base": 2, "per_wave": 0}
+	rules.raw["tier_unlock_wave"] = [1, 3, 6, 9, 20]
+	var rows: Array = [{"id": "patrol_cop", "tier": 1}, {"id": "war_machine", "tier": 5}]
+	var composer: GauntletComposer = GauntletComposer.new(RngRegistry.new(7), rules, rows)
+	for wave: int in [5, 10]:
+		assert_eq(composer.compose(wave), [&"war_machine"])
+	for wave: int in range(1, 5):
+		assert_eq(composer.compose(wave), [&"patrol_cop", &"patrol_cop"])
+
+
 func test_seed_and_wave_identify_the_draw_independent_of_other_waves() -> void:
 	var a: GauntletComposer = GauntletComposer.shipped(RngRegistry.new(7))
 	var b: GauntletComposer = GauntletComposer.shipped(RngRegistry.new(7))
