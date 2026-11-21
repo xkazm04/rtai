@@ -127,10 +127,25 @@ func test_burst_reports_remaining_hp_on_lethal_damage_and_spares_hostiles() -> v
 	var other: Fighter = arena.spawn_guard(arena.rivet.pos)
 	var hp: float = other.hp
 	arena.rivet.hp = 1.25
+	watch_signals(arena)
 	assert_eq(RivetBlast.burst(arena, arena.rivet.pos, WEAPON, other.id), 1.25)
 	assert_eq(arena.rivet.hp, 0.0)
 	assert_eq(other.hp, hp)
+	assert_signal_emitted_with_parameters(
+		arena, "struck", [arena.rivet, Vector2.ZERO, true, WEAPON]
+	)
 	assert_eq(RivetBlast.burst(arena, arena.rivet.pos, WEAPON, other.id), 0.0)
+	assert_signal_emit_count(arena, "struck", 1)
+
+
+func test_a_grazing_blast_signals_even_a_fractional_hp_hit() -> void:
+	# At 0.125 m inside the blast edge Rivet takes 0.625 hp.
+	var at: Vector2 = Vector2.LEFT * (arena.rivet.radius_m + RADIUS - 0.125)
+	watch_signals(arena)
+	assert_eq(RivetBlast.burst(arena, at, WEAPON, 8), 0.625)
+	assert_signal_emitted_with_parameters(
+		arena, "struck", [arena.rivet, Vector2.RIGHT, false, WEAPON]
+	)
 
 
 func test_rivets_own_rocket_can_land_at_his_feet() -> void:
