@@ -179,15 +179,14 @@ func test_splash_and_a_returned_enemy_round_do_not_score_another_gun_hit() -> vo
 	assert_eq(gun_hits, 1)
 
 
-func test_pilot_deflects_are_merged_once_after_street_observations() -> void:
+func test_pilot_cannot_supply_guard_deflects_under_legacy_controls() -> void:
 	var pilot: Counters = Counters.new()
 	waves._picker = pilot
 	var row: Dictionary = _clear()
-	var deflects: int = row["guard_deflects"]
 	var rolls: int = row["rolls"]
 	var seconds: Dictionary = row["form_seconds"]
 	var hits: int = row["hits"]
-	assert_eq(deflects, 3)
+	assert_false(row.has("guard_deflects"))
 	assert_eq(rolls, 0)
 	assert_true(seconds.has("rivet"))
 	assert_false(seconds.has("fake"))

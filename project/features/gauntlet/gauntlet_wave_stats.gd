@@ -7,6 +7,7 @@ var _rolls: int
 var _forms: Dictionary[StringName, int] = {}
 var _shots: int
 var _damage: float
+var _deflects: int
 
 
 func begin(stage: ArenaStage) -> void:
@@ -15,6 +16,8 @@ func begin(stage: ArenaStage) -> void:
 	_forms.clear()
 	_shots = stage.shots_fired
 	_damage = stage.telemetry.damage_taken
+	if stage.pilot.guard != null:
+		_deflects = stage.pilot.guard.deflects
 
 
 func sample(stage: ArenaStage) -> void:
@@ -40,21 +43,19 @@ func finish(stage: ArenaStage, row: Dictionary) -> void:
 	append_guard_deflects(stage, row)
 
 
-## Guard's cumulative deflect counter will supply the measured wave delta here.
-func append_guard_deflects(_stage: ArenaStage, _row: Dictionary) -> void:
-	pass
+func append_guard_deflects(stage: ArenaStage, row: Dictionary) -> void:
+	if stage.pilot.guard != null:
+		row["guard_deflects"] = stage.pilot.guard.deflects - _deflects
 
 
 func collect_pilot(pilot: GauntletPilot, row: Dictionary) -> void:
 	var counters: Dictionary = pilot.wave_counters()
-	for key: String in ["guard_deflects", "rolls"]:
-		if row.has(key) or not counters.has(key):
-			continue
-		var count: Variant = counters[key]
+	if not row.has("rolls") and counters.has("rolls"):
+		var count: Variant = counters["rolls"]
 		if count is int or count is float:
 			var value: float = count
 			if is_finite(value) and value >= 0.0 and value == floorf(value):
-				row[key] = int(value)
+				row["rolls"] = int(value)
 	if not row.has("form_seconds") and counters.get("form_seconds") is Dictionary:
 		var form_times: Dictionary = counters["form_seconds"]
 		var seconds: Dictionary[String, float] = {}

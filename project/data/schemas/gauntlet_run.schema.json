@@ -30,6 +30,7 @@
           "type": "object"
         },
         "guard_deflects": {
+          "description": "Hostile rounds deflected by Rivet's guard during this wave. Recorded under wheel controls, including zero. Omitted under legacy controls.",
           "minimum": 0,
           "type": "integer"
         },

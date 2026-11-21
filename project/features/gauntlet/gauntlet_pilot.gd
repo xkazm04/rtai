@@ -4,7 +4,7 @@ extends InputSource
 ## otherwise GauntletWalker. Both extend this class and have a zero-argument constructor.
 ## configure(profile, pick_policy, seed) precedes bind(run, session), then sample(tick) drives
 ## the session and pick(offered) returns an index into the offer. Without --bot input is live.
-## At wave close, wave_counters() supplies guard_deflects and optional rolls/form_seconds
+## At wave close, wave_counters() supplies optional rolls/form_seconds
 ## when the street has no measurement. reset_wave_counters() then starts a fresh interval.
 
 var _profile: StringName = &"average"

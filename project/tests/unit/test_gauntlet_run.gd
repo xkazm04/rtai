@@ -96,3 +96,26 @@ func test_pilot_picks_are_seeded_and_greedy_starts_at_zero() -> void:
 	a.configure(&"expert", &"greedy", 7)
 	assert_eq(a.profile(), &"expert")
 	assert_eq(a.pick(offers), 0)
+
+
+func test_wheel_result_measures_deflects_inside_each_wave_including_zero() -> void:
+	var entry: Entry = Entry.new()
+	var session: GauntletSession = entry._open_street(ArenaArgs.new())
+	var waves: GauntletWaves = GauntletWaves.attach(session, entry.run, GauntletPilot.new(), 2)
+	var guard: PlayerGuard = session.pilot.guard
+	guard.deflects = 4
+	for delta: int in [2, 0]:
+		session.stage.arena.rivet.pos.x = session.street.current().end_x() + 0.1
+		session.step()
+		guard.deflects += delta
+		for foe: Fighter in session.stage.arena.hostiles:
+			session.stage.arena.damage(foe, foe.max_hp * 10, session.stage.arena.rivet.id, &"claw")
+		session.step()
+		var row: Dictionary = entry.run.to_result()["waves"][-1]
+		var measured: int = row.get("guard_deflects", -1)
+		assert_eq(measured, delta)
+		guard.deflects += 1  # Outside the interval, on the approach to the next block.
+	assert_true(waves.done)
+	session.close()
+	entry.free()
+	PlayerActions.shipped().install()
