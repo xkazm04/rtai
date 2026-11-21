@@ -22,6 +22,8 @@ class Archetype:
 	var body: StringName = &"human"
 	var hit_fx: StringName = &"blood"
 	var weapon: Weapon = null
+	var rear_mult: float = 1.0
+	var alt_telegraph_ticks: int = 0
 	var alt_weapon: Weapon
 	var tier: int = 1
 	var explicit_spawn: bool = false
@@ -174,5 +176,9 @@ func _read_foe(t: DataTable, row: Dictionary, a: Archetype) -> void:
 		a.alt_weapon = weapons.get(StringName(t.text(row, "alt_weapon")))
 		if a.alt_weapon == null:
 			_errors.append("%s: unknown alt_weapon" % a.id)
+	if row.has("alt_telegraph_s"):
+		a.alt_telegraph_ticks = CombatTuning.ticks(t.num(row, "alt_telegraph_s"))
+	if row.has("rear_mult"):
+		a.rear_mult = t.num(row, "rear_mult")
 	if row.has("shield_arc_deg"):
 		a.shield_cos = cos(deg_to_rad(t.num(row, "shield_arc_deg") * 0.5))

@@ -46,13 +46,13 @@ func spawn_member(arena: CombatArena, at: Vector2, id: StringName = &"") -> Figh
 	h.weapon = &"" if a.weapon.melee else a.production_weapon
 	if a.explicit_spawn and not a.weapon.melee:
 		h.weapon = a.weapon.id
-	if a.weapon.id in [&"rocket", &"turret_gun"]:
+	if a.weapon.id in [&"rocket", &"turret_gun", &"war_cannon"]:
 		FoeRocket.enable_lines(arena, pit.roster)
-	if a.id == &"sentry_turret":
+	if a.explicit_spawn and h.machine:
 		h.body_class = &"robot"
+	if a.id == &"sentry_turret":
 		mounts.pin(h)
 	elif a.id == &"shield_robot":
-		h.body_class = &"robot"
 		shield_cover.carriers.append(h)
 	h.cooldown = mini(h.cooldown, arena.tuning.weapon(a.production_weapon).cooldown_ticks)
 	return h
@@ -94,7 +94,7 @@ func assign(arena: CombatArena) -> Array[Fighter]:
 			mind = SquadMind.new(h, pit.roster.archetype(h.archetype))
 		active[h.id] = mind
 		var fx: FighterFx = arena.areas.effect(h) if arena.areas != null else null
-		if fx != null and fx.holds():
+		if fx != null and mind.walker == null and fx.holds():
 			mind.agent.token = false
 			mind.paused_rounds = 0
 			h.swing_left = 0
@@ -137,6 +137,8 @@ func step(h: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
 	var e: EnemyAgent = mind.agent
 	e.pos = h.pos
 	e.sees = _map.sight_line(e.pos, pit.rivet_pos)
+	if mind.walker != null:
+		return mind.walker.step(mind, h, arena, _map)
 	if mind.turret != null:
 		return mind.turret.step(e, h, arena)
 	if mind.rocket != null:
@@ -156,13 +158,13 @@ func step(h: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
 	if e.melee():
 		mind.swing(h, arena, _map)
 		return null
-	if e.arch.explicit_spawn:
-		return FoeAttacks.trigger(e, h, arena)
 	return _ranged(mind, h, arena, rng)
 
 
 func _ranged(mind: SquadMind, h: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
 	var e: EnemyAgent = mind.agent
+	if e.arch.explicit_spawn:
+		return FoeAttacks.trigger(e, h, arena)
 	var ready: bool = e.token and e.has_shot_at(pit.rivet_pos)
 	if not ready or not _map.sight_line(h.pos, pit.rivet_pos):
 		if h.burst_left > 0:

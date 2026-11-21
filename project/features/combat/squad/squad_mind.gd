@@ -7,6 +7,7 @@ const BLIND_LIMIT: int = 6 * SimClock.TICK_RATE
 const COVER_RADIUS_M: float = 8.0
 const SPACING_GAP_M: float = 1.5
 
+var walker: FoeWalker
 var turret: FoeTurret
 var shield: FoeShield
 var mobile_goal: Vector2 = Vector2.INF
@@ -32,6 +33,7 @@ var _plan_offset: int = 0
 
 
 func _init(h: Fighter, arch: EnemyRoster.Archetype) -> void:
+	walker = FoeWalker.new() if arch.id == &"war_machine" else null
 	shield = FoeShield.new() if arch.id == &"shield_robot" else null
 	turret = FoeTurret.new() if arch.weapon.id == &"turret_gun" else null
 	rocket = FoeRocket.new() if arch.weapon.id == &"rocket" else null

@@ -49,6 +49,11 @@
             "minimum": 0,
             "type": "number"
           },
+          "alt_telegraph_s": {
+            "maximum": 3,
+            "minimum": 0.1,
+            "type": "number"
+          },
           "alt_weapon": {
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
@@ -141,6 +146,11 @@
           "reaction_s": {
             "maximum": 3,
             "minimum": 0,
+            "type": "number"
+          },
+          "rear_mult": {
+            "description": "Damage multiplier inside the rear 90 degrees. Defaults to 1.",
+            "minimum": 1,
             "type": "number"
           },
           "shield_arc_deg": {

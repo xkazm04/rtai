@@ -1,6 +1,8 @@
 class_name FoeArmor
 extends RefCounted
 
+const REAR_COS: float = -0.70710678
+
 static var _blast_weapons: Dictionary[StringName, bool] = {}
 
 
@@ -9,6 +11,8 @@ static func impact(
 ) -> float:
 	var squad: ArenaSquad = arena.squad_ai
 	var ray: Vector2 = arena.hit_dir
+	if h.archetype == &"war_machine" and _detonates(weapon):
+		return 1.0
 	var own_plate: float = k(h, ray, kind, squad)
 	if squad == null or squad.shield_cover.carriers.is_empty() or not squad.owns(h):
 		return own_plate
@@ -24,7 +28,8 @@ static func impact(
 			mind.shield.block_tick = arena.tick
 			mind.shield.block_dir = ray.normalized()
 	var row: EnemyRoster.Archetype = squad.pit.roster.archetype(&"shield_robot")
-	return minf(own_plate, squad.shield_cover.multiplier(h, ray.normalized(), arena.rivet, row))
+	var cover: float = squad.shield_cover.multiplier(h, ray.normalized(), arena.rivet, row)
+	return minf(cover, own_plate) if cover < 1.0 else own_plate
 
 
 static func _detonates(weapon: StringName) -> bool:
@@ -41,10 +46,9 @@ static func k(h: Fighter, hit_dir: Vector2, kind: StringName, squad: ArenaSquad)
 	if squad == null or h.archetype == &"" or kind == &"blown" or hit_dir.is_zero_approx():
 		return 1.0
 	var arch: EnemyRoster.Archetype = squad.pit.roster.archetype(h.archetype)
-	if (
-		arch != null
-		and arch.explicit_spawn
-		and h.facing.dot(-hit_dir.normalized()) >= arch.shield_cos
-	):
+	if arch == null or not arch.explicit_spawn:
+		return 1.0
+	var bearing: float = h.facing.dot(-hit_dir.normalized())
+	if bearing >= arch.shield_cos:
 		return arch.shield_front_mult
-	return 1.0
+	return arch.rear_mult if bearing <= REAR_COS else 1.0

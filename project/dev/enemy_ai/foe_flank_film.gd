@@ -74,11 +74,16 @@ func _install(game: ArenaGame) -> void:
 	if stage.pit.squad_mix.size() > 1:
 		stage.pit.points.assign([anchor + Vector2(2, 2), anchor, anchor + Vector2(2, -2)])
 	stage.pit.gap_ticks = 1800
-	session.world.loop().set_input(FlankInput.new(session.stage, session.actions, 9.0))
+	var driver: GunplayBot = (
+		FoeWalkerFilm.new(stage, session.actions, 9.0)
+		if stage.pit.squad_mix.has(&"war_machine")
+		else FlankInput.new(stage, session.actions, 9.0)
+	)
+	session.world.loop().set_input(driver)
 	@warning_ignore("return_value_discarded")
 	session.stage.arena.struck.connect(_hit.bind(session.stage.arena))
 
 
 func _hit(h: Fighter, dir: Vector2, dead: bool, _weapon: StringName, arena: CombatArena) -> void:
-	if h.archetype in [&"sentry_turret", &"shield_robot"]:
+	if h.archetype in [&"sentry_turret", &"shield_robot", &"war_machine"]:
 		Log.info("foe-film", "hit %d dot %.3f dead %s" % [arena.tick, h.facing.dot(-dir), dead])

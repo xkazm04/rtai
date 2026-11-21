@@ -12,6 +12,7 @@ class Reader:
 	extends PitDummy
 
 	var flank_until: int = -1
+	var read_shell: bool = false
 
 	func _init() -> void:
 		super(Mode.DODGE)
@@ -26,6 +27,17 @@ class Reader:
 			walk.limit_length(1.0) * RUN_MPS, ACCEL_MPS2 * SimClock.TICK_DT
 		)
 		pit.rivet_pos += pit.rivet_vel * SimClock.TICK_DT
+		_home = pit.rivet_pos
+
+	func escape_ring(pit: EnemyPit, centre: Vector2, fallback: Vector2) -> void:
+		var away: Vector2 = centre.direction_to(pit.rivet_pos)
+		var direction: Vector2 = fallback if away.is_zero_approx() else away
+		pit.rivet_vel = pit.rivet_vel.move_toward(
+			direction * RUN_MPS, ACCEL_MPS2 * SimClock.TICK_DT
+		)
+		pit.rivet_pos = (pit.rivet_pos + pit.rivet_vel * SimClock.TICK_DT).clamp(
+			pit.bounds.position, pit.bounds.end
+		)
 		_home = pit.rivet_pos
 
 
@@ -50,6 +62,7 @@ func run(id: StringName, seed_value: int, profile: String) -> Dictionary:
 		"damage_to_rivet": 0.0,
 		"damage_to_enemy": 0.0,
 		"rear_damage": 0.0,
+		"recover_damage": 0.0,
 		"enemy_killed_tick": null,
 		"kill_side": null,
 		"kill_armoured": null,
@@ -102,6 +115,8 @@ func _fight(arena: CombatArena, h: Fighter, row: Dictionary, dummy: Reader) -> v
 			var swung: bool = (
 				h.swing_tick >= 0 and tick == h.swing_tick + mind.agent.arch.telegraph_ticks
 			)
+			if mind.walker != null:
+				swung = mind.agent.shot_tick == tick and mind.walker.attack.melee
 			var fired: bool = mind.agent.shot_tick == tick and not swung and not mind.agent.melee()
 			row.shots_fired += int(fired)
 			if swung or fired:
@@ -111,6 +126,7 @@ func _fight(arena: CombatArena, h: Fighter, row: Dictionary, dummy: Reader) -> v
 		if not arena.rivet.alive() or (not h.alive() and arena.shots.is_empty()):
 			break
 	row.player_shots = nails
+	row.rivet_survived = arena.rivet.alive()
 
 
 func _damage_step(arena: CombatArena, h: Fighter, row: Dictionary, tick: int) -> void:
@@ -120,7 +136,14 @@ func _damage_step(arena: CombatArena, h: Fighter, row: Dictionary, tick: int) ->
 	row.damage_to_rivet += maxf(0.0, player_hp - arena.rivet.hp)
 	var dealt: float = enemy_hp - h.hp
 	row.damage_to_enemy += dealt
-	if dealt > 0.0 and h.facing.dot(-h.hurt_dir) < 0.0:
+	if dealt <= 0.0:
+		return
+	var mind: SquadMind = arena.squad_ai.minds[h.id]
+	if mind.walker != null and mind.agent.state == EnemyAgent.State.RECOVER:
+		row.recover_damage += dealt
+	var bearing: float = h.facing.dot(-h.hurt_dir)
+	var rear: bool = bearing <= FoeArmor.REAR_COS if mind.walker != null else bearing < 0.0
+	if rear:
 		row.rear_damage += dealt
 
 
@@ -130,6 +153,10 @@ func _dodge(dummy: Reader, arena: CombatArena, h: Fighter) -> void:
 	pit.shots = arena.shots
 	var mind: SquadMind = arena.squad_ai.minds.get(h.id)
 	var turret: FoeTurret = mind.turret if mind != null else null
+	if mind != null and mind.walker != null:
+		_walker_dodge(dummy, pit, h, mind)
+		arena.rivet.pos = pit.rivet_pos
+		return
 	if mind != null and mind.shield != null and dummy._reads(mind.agent, pit):
 		dummy.flank_until = pit.tick + 24
 	if pit.tick <= dummy.flank_until:
@@ -139,3 +166,29 @@ func _dodge(dummy: Reader, arena: CombatArena, h: Fighter) -> void:
 	else:
 		dummy.step(pit)
 	arena.rivet.pos = pit.rivet_pos
+
+
+## Walk a missed tell straight into the attack. A reader who notices the stomp backs
+## out of its footprint. Between attacks both use the same run speed to flank the chassis.
+func _walker_dodge(dummy: Reader, pit: EnemyPit, h: Fighter, mind: SquadMind) -> void:
+	var e: EnemyAgent = mind.agent
+	if mind.walker.attack == null:
+		dummy.step(pit)
+		return
+	if e.state == EnemyAgent.State.WINDUP:
+		var noticed: bool = dummy._reads(e, pit)
+		if mind.walker.attack.melee and (dummy.react_ticks < 0 or noticed):
+			dummy.escape_ring(pit, h.pos, -h.facing)
+		else:
+			dummy.read_shell = noticed and not mind.walker.attack.melee
+			dummy.step(pit)
+		return
+	for shot: Shot in pit.shots:
+		if shot is FoeRocketFlight.Round:
+			var shell: FoeRocketFlight.Round = shot
+			if dummy.read_shell and pit.rivet_pos.distance_to(shell.target) <= shell.radius_m:
+				dummy.escape_ring(pit, shell.target, shell.vel.normalized().orthogonal())
+			else:
+				dummy.step(pit)
+			return
+	dummy.advance_flank(pit, h, 2.0)

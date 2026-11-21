@@ -72,6 +72,7 @@ func _profile(runner: Object, enemy: StringName, seeds: int, profile: String) ->
 	var damage: float = 0.0
 	var dealt: float = 0.0
 	var rear: float = 0.0
+	var recover: float = 0.0
 	var kills: Array[int] = []
 	for i: int in seeds:
 		var row: Dictionary = runner.call("run", enemy, i + 1, profile)
@@ -83,6 +84,8 @@ func _profile(runner: Object, enemy: StringName, seeds: int, profile: String) ->
 		var behind: float = row.rear_damage
 		dealt += actual
 		rear += behind
+		var during_recover: float = row.recover_damage
+		recover += during_recover
 		if row.enemy_killed_tick != null:
 			kills.append(row.enemy_killed_tick)
 	kills.sort()
@@ -95,5 +98,6 @@ func _profile(runner: Object, enemy: StringName, seeds: int, profile: String) ->
 		"mean_damage": damage / seeds,
 		"enemy_killed_share": float(kills.size()) / seeds,
 		"median_kill_tick": median,
-		"rear_damage_share": rear / dealt if dealt > 0.0 else null
+		"rear_damage_share": rear / dealt if dealt > 0.0 else null,
+		"recover_damage_share": recover / dealt if dealt > 0.0 else null
 	}

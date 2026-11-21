@@ -67,7 +67,7 @@ func test_war_machine_stomps_at_close_range() -> void:
 		arena.step(tick)
 		if arena.rivet.hurt_tick == tick:
 			assert_eq(arena.rivet.hp, arena.rivet.max_hp - arch.alt_weapon.splash_damage)
-			assert_eq(tick - h.swing_tick, arch.telegraph_ticks)
+			assert_eq(tick - h.swing_tick, arch.alt_telegraph_ticks)
 			return
 	fail_test("no close-range stomp landed")
 

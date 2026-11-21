@@ -33,6 +33,9 @@ func _process(_delta: float) -> void:
 func _draw() -> void:
 	for shot: Shot in arena.shots:
 		if shot is FoeRocketFlight.Round:
+			var shell: FoeRocketFlight.Round = shot
+			if shell.weapon == &"war_cannon" and not shell.from_rivet:
+				FoeWalkerView.danger_ring(self, shell.target, shell.radius_m)
 			FightAreasArt._rocket(
 				self, shot.pos, shot.vel.normalized(), shot.origin.distance_to(shot.pos), arena.tick
 			)
@@ -41,6 +44,10 @@ func _draw() -> void:
 	for h: Fighter in arena.hostiles:
 		if h.archetype == &"sentry_turret" and (h.alive() or arena.tick - h.hurt_tick < 90):
 			FoeTurretView.draw_mount(self, h, _heat(h))
+		elif h.archetype == &"war_machine" and h.alive():
+			var mind: SquadMind = arena.squad_ai.minds.get(h.id)
+			if mind != null:
+				FoeWalkerView.draw_machine(self, h, mind)
 		elif h.archetype == &"shield_robot" and h.alive():
 			var mind: SquadMind = arena.squad_ai.minds.get(h.id)
 			FoeShieldView.draw_plate(self, h, mind.shield if mind != null else null, arena.tick)

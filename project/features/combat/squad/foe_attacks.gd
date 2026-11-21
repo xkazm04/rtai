@@ -9,10 +9,6 @@ static func trigger(e: EnemyAgent, h: Fighter, arena: CombatArena) -> Shot:
 		h.burst_left = 0
 		h.swing_left = 0
 		return null
-	var alt: EnemyWeapon = e.arch.alt_weapon
-	if alt != null and (h.swing_left > 0 or h.pos.distance_to(arena.rivet.pos) <= alt.reach_m):
-		_stomp(e, h, arena, alt)
-		return null
 	var w: EnemyWeapon = e.arch.weapon
 	if h.burst_left == 0:
 		if h.cooldown > 0:
@@ -56,29 +52,6 @@ static func melee_hit(e: EnemyAgent, arena: CombatArena, map: GuardRouteMap) -> 
 		var end: Vector2 = arena.rivet.pos + e.aim * e.arch.weapon.knockback_m
 		if map.region().has_point(end) and map.clear_line(arena.rivet.pos, end):
 			arena.rivet.pos = end
-
-
-static func _stomp(e: EnemyAgent, h: Fighter, arena: CombatArena, w: EnemyWeapon) -> void:
-	if h.swing_left == 0:
-		if h.cooldown > 0:
-			return
-		h.swing_tick = arena.tick
-		h.swing_left = e.arch.telegraph_ticks
-		e.state = EnemyAgent.State.WINDUP
-		arena.announce_tell(w.id)
-		return
-	h.swing_left -= 1
-	e.state = EnemyAgent.State.WINDUP
-	if h.swing_left > 0:
-		return
-	e.shot_tick = arena.tick
-	e.state = EnemyAgent.State.FIRE
-	h.cooldown = w.cooldown_ticks
-	e.token = false
-	if h.pos.distance_to(arena.rivet.pos) <= w.splash_radius_m:
-		arena.hit_dir = h.pos.direction_to(arena.rivet.pos)
-		arena.hit_at = arena.rivet.pos
-		arena.damage(arena.rivet, w.splash_damage, h.id, w.id, &"blown")
 
 
 ## Plant for the row's tell, then resolve the locked arc against Rivet's current position.

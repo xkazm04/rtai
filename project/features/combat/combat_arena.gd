@@ -210,7 +210,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 
 
 func _step_hostile(h: Fighter) -> void:
-	if h.brain_owned or (areas != null and areas.holds(self, h)):
+	if h.brain_owned or (areas != null and h.archetype != &"war_machine" and areas.holds(self, h)):
 		return
 	if h.kind == Fighter.Kind.BOSS:
 		var ball: ArcBall = BossBrain.step(h, tazer, rivet.pos, boss_anchor, tuning)
