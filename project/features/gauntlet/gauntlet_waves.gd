@@ -4,9 +4,9 @@ extends ArenaHook
 ## A live cohort holds the far seam. The squad keeps its fighters until every member falls.
 
 const TIMEOUT_TICKS: int = 90 * SimClock.TICK_RATE
-const BONUSES: String = "res://data/tables/gauntlet_bonuses.json"
 
 var done: bool = false
+var draw: GauntletDraw
 var _run: GauntletRun
 var _street: GauntletStreet
 var _picker: GauntletPilot
@@ -19,8 +19,6 @@ var _start_rolls: int
 var _start_damage: float
 var _hits: int
 var _members: Array[Fighter] = []
-var _offers: Array[Dictionary] = []
-var _rng: RandomNumberGenerator
 
 
 static func attach(
@@ -38,9 +36,7 @@ static func attach(
 
 func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	_composer = GauntletComposer.shipped(ctx.rng)
-	_rng = ctx.rng.stream(&"gauntlet_offers")
-	var t: DataTable = DataTable.open(BONUSES, "gtai.gauntlet_bonuses/1")
-	_offers.assign(t.array(t.raw, "rows"))
+	draw = GauntletDraw.new(ctx.rng)
 	@warning_ignore("return_value_discarded")
 	stage.arena.wounded.connect(_wounded)
 	@warning_ignore("return_value_discarded")
@@ -61,7 +57,7 @@ func step(stage: ArenaStage, tick: int) -> void:
 			_spawn(stage, tick)
 	elif _cleared():
 		_finish(stage, tick, true)
-		_pick()
+		_pick(stage)
 		done = _limit > 0 and _run.wave >= _limit
 	elif tick - _start >= TIMEOUT_TICKS:
 		_finish(stage, tick, false)
@@ -137,25 +133,20 @@ func _finish(stage: ArenaStage, tick: int, cleared: bool) -> void:
 	_start = -1
 
 
-func _pick() -> void:
-	var offered: Array[StringName] = _draw()
+func _pick(stage: ArenaStage) -> void:
+	var owned: Array[StringName] = [stage.arena.rivet.weapon]
+	if stage.pilot.carry != null:
+		owned.append_array(stage.pilot.carry.slots)
+	var forms: GhostForms = stage.pilot.ghosts.forms
+	for id: StringName in forms.table.order:
+		if forms.locks.allows(forms.table, id):
+			owned.append(id)
+	var offered: Array[StringName] = draw.offer(_run.wave, _run.picks, owned)
+	if offered.is_empty():
+		return
 	var choice: int = _picker.pick(offered)
-	_run.picks.append({"wave": _run.wave, "offered": offered, "taken": offered[choice]})
-
-
-## The initial draw is uniform without replacement among cards unlocked on this wave.
-func _draw() -> Array[StringName]:
-	var pool: Array[StringName] = []
-	for row: Dictionary in _offers:
-		var min_wave: float = row["min_wave"]
-		if min_wave <= _run.wave:
-			pool.append(StringName(str(row["id"])))
-	var offered: Array[StringName] = []
-	for i: int in 3:
-		var index: int = _rng.randi_range(0, pool.size() - 1)
-		offered.append(pool[index])
-		pool.remove_at(index)
-	return offered
+	if choice >= 0 and choice < offered.size():
+		_run.picks.append({"wave": _run.wave, "offered": offered, "taken": offered[choice]})
 
 
 ## Count damaging contacts against wave members. A claw strike can hit several bodies.
