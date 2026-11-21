@@ -1,0 +1,98 @@
+{
+  "controls": "legacy",
+  "input_sha256": "8a6fc773b6ba303908acb3c10dcf5ed4f5e0258bcdfed3899cf25745f8e12e62",
+  "mods": {},
+  "picks": [],
+  "profile": "novice",
+  "schema": "gtai.gauntlet-run/1",
+  "seed": 1,
+  "sim_s": 40.0,
+  "wave_reached": 4,
+  "waves": [
+    {
+      "cover_ticks": 0,
+      "damage_taken": 1.799999999999983,
+      "enemies": {
+        "patrol_cop": 1,
+        "swat": 1
+      },
+      "form_seconds": {
+        "dent": 0.0,
+        "kerf": 0.016666666666666666,
+        "ohm": 0.0,
+        "tonnage": 0.0
+      },
+      "guard_ticks": 14,
+      "n": 1,
+      "rolls": 0,
+      "seconds": 4.566666666666666,
+      "shots": 8,
+      "status": "cleared"
+    },
+    {
+      "cover_ticks": 0,
+      "damage_taken": 1.799999999999983,
+      "enemies": {
+        "riot_cop": 1,
+        "robot_thug": 1,
+        "swat": 1
+      },
+      "form_seconds": {
+        "dent": 0.0,
+        "kerf": 2.9833333333333334,
+        "ohm": 0.0,
+        "tonnage": 0.0
+      },
+      "guard_ticks": 13,
+      "n": 2,
+      "rolls": 0,
+      "seconds": 4.966666666666667,
+      "shots": 9,
+      "status": "cleared"
+    },
+    {
+      "cover_ticks": 0,
+      "damage_taken": 0.0,
+      "enemies": {
+        "contractor": 1,
+        "riot_cop": 1,
+        "robot_gunner": 1,
+        "robot_thug": 1
+      },
+      "form_seconds": {
+        "dent": 0.0,
+        "kerf": 0.0,
+        "ohm": 0.0,
+        "tonnage": 6.55
+      },
+      "guard_ticks": 0,
+      "n": 3,
+      "rolls": 0,
+      "seconds": 11.416666666666666,
+      "shots": 17,
+      "status": "cleared"
+    },
+    {
+      "cover_ticks": 1,
+      "damage_taken": 5.999999999999957,
+      "enemies": {
+        "contractor": 1,
+        "patrol_cop": 1,
+        "robot_gunner": 1,
+        "robot_thug": 1,
+        "swat": 1
+      },
+      "form_seconds": {
+        "dent": 0.0,
+        "kerf": 0.0,
+        "ohm": 0.0,
+        "tonnage": 0.0
+      },
+      "guard_ticks": 27,
+      "n": 4,
+      "rolls": 2,
+      "shots": 20,
+      "status": "tick_limit"
+    }
+  ]
+}

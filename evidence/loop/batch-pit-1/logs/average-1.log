@@ -1,0 +1,4 @@
+node tools/dev/run.mjs bot_pit_probe --profile=average --seed=1 --result=C:\Users\kazda\kiro\gtai-wt\n22-loop\evidence\loop\batch-pit-1\runs\average-1.json
+run: godot --headless --path project -s res://dev/test_player/bot_pit_probe.gd -- --profile=average --seed=1 --result=C:\Users\kazda\kiro\gtai-wt\n22-loop\evidence\loop\batch-pit-1\runs\average-1.json
+run: log C:\Users\kazda\kiro\gtai-wt\n22-loop\evidence\loop\batch-pit-1\logs\average-1\bot_pit_probe-2026-11-21T00-34-41-406Z.log
+ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 2 against KNOWN_FLAGS (res://dev/test_player/bot_pit_probe.gd)

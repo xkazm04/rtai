@@ -1,0 +1,99 @@
+{
+  "controls": "legacy",
+  "input_sha256": "2b14038279c44ebdbf64f37c64c85c5226b489042d65dbc9190b3147edbbd799",
+  "mods": {},
+  "picks": [],
+  "profile": "average",
+  "schema": "gtai.gauntlet-run/1",
+  "seed": 2,
+  "sim_s": 40.0,
+  "wave_reached": 4,
+  "waves": [
+    {
+      "cover_ticks": 0,
+      "damage_taken": 0.5999999999999943,
+      "enemies": {
+        "patrol_cop": 1,
+        "swat": 1
+      },
+      "form_seconds": {
+        "dent": 0.0,
+        "kerf": 0.0,
+        "ohm": 0.0,
+        "tonnage": 0.0
+      },
+      "guard_ticks": 9,
+      "n": 1,
+      "rolls": 0,
+      "seconds": 2.8166666666666664,
+      "shots": 6,
+      "status": "cleared"
+    },
+    {
+      "cover_ticks": 0,
+      "damage_taken": 0.5999999999999943,
+      "enemies": {
+        "riot_cop": 1,
+        "robot_thug": 1,
+        "swat": 1
+      },
+      "form_seconds": {
+        "dent": 0.0,
+        "kerf": 0.0,
+        "ohm": 0.0,
+        "tonnage": 0.0
+      },
+      "guard_ticks": 1,
+      "n": 2,
+      "rolls": 0,
+      "seconds": 6.716666666666667,
+      "shots": 16,
+      "status": "cleared"
+    },
+    {
+      "cover_ticks": 0,
+      "damage_taken": 2.9999999999999716,
+      "enemies": {
+        "contractor": 1,
+        "riot_cop": 1,
+        "robot_gunner": 1,
+        "robot_thug": 1
+      },
+      "form_seconds": {
+        "dent": 0.0,
+        "kerf": 0.0,
+        "ohm": 0.0,
+        "tonnage": 0.0
+      },
+      "guard_ticks": 39,
+      "n": 3,
+      "rolls": 0,
+      "seconds": 9.333333333333334,
+      "shots": 18,
+      "status": "cleared"
+    },
+    {
+      "cover_ticks": 0,
+      "damage_taken": 2.3999999999999773,
+      "enemies": {
+        "contractor": 1,
+        "patrol_cop": 1,
+        "robot_gunner": 1,
+        "robot_thug": 1,
+        "swat": 1
+      },
+      "form_seconds": {
+        "dent": 0.0,
+        "kerf": 5.5,
+        "ohm": 0.0,
+        "tonnage": 0.0
+      },
+      "guard_ticks": 27,
+      "n": 4,
+      "rolls": 0,
+      "seconds": 9.6,
+      "shots": 18,
+      "status": "cleared"
+    }
+  ]
+}
