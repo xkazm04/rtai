@@ -105,7 +105,7 @@
         "project/dev/bots": 496,
         "project/dev/enemy_ai": 1671,
         "project/dev/frames": 1087,
-        "project/dev/gauntlet": 510,
+        "project/dev/gauntlet": 503,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1396,
         "project/dev/gunplay": 674,
@@ -126,11 +126,11 @@
         "project/dev/servo": 434,
         "project/dev/showcase": 7139,
         "project/dev/sim": 1091,
-        "project/dev/test_player": 239,
+        "project/dev/test_player": 238,
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 27514
+      "total": 27506
     },
     "direct_cmdline_reads": {
       "accepted": [
