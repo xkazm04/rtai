@@ -28,6 +28,7 @@ Gate: `node tools/gate/run.mjs --rev=HEAD` on 9ec8ba4e3 (06:04-06:14; it covers 
 
 - **The film does not show a large round stopped by cover**: `cover-32.png` shows Rivet at the pallet under an aiming line, and `blast-dodge-32.png` shows the rocket that followed it bursting on an officer beside him (a dodge, health 100). No frame shows a round hitting the prop itself. That needs a seed scan for a large-round impact on a prop, which is a cheap addition to the film scan.
 
+- **Cover is not always between Rivet and the shooter.** In the filmed run's wave 5 (`wave-5.mp4` 7.7-8.4 s, the second large-cover window in `evidence/loop/film.json`, ticks 2556-2565) the bot shows COVER at the plaza planter while the war machine stands in the plaza on the same side of it; health goes 100 -> 72 at 8.3 s. The cover search does check that the prop blocks the line from the threat, but from one source at a time (`project/features/gauntlet/bot/bot_cover.gd:12`, `BotView.crosses(box, source, goal)`). So either the cover was taken against another threat while the war machine stood on the open side, or the 28 HP came from a hit that props do not stop (a stomp or blast). Not diagnosed tonight; the film scene's act log for seed 5 around tick 2560 would tell.
 - **Waves miss 15 s in both directions** (average, `evidence/loop/street-final/report.md`): waves 1-4 at 5.5-7.9 s, the war-machine wave 5 at 33 s, waves 9-24 at 30-83 s. Most runs end at the 90 s wave timer, not a death (5 of 9 ended runs in `tune1-before`).
 - **No change has been kept yet**: at 10 seeds the A/A floor had 2-4 pairs; at 30 seeds it has 6-13 pairs but is built across seeds (Call 1), so two changes whose CI95 excludes zero were still reverted.
 - **Bonus take vs decline shows no effect beyond noise yet.** Greedy runs take nearly every bonus (no decliners), so I ran `--pick=random` for 30 seeds (`evidence/loop/random-30/report.md`, average, 8 min 52 s wall): of 26 bonuses x 2 outcomes, 28 rows are "noise" and 24 "too few pairs" (pairing by pick wave leaves 2-8 pairs; the A/A floor needs 6). A night that wants bonus verdicts needs about 100 random seeds per profile (about 30 min per Godot job). The random runs reach a median wave 15.
@@ -88,7 +89,8 @@ Timed parry is a non-goal in the design note, so none of these is a parry.
 4. A test that a bot-played street run writes rolls and cover from `BotStreetStats` into the result (kills both mutate survivors).
 5. Street: `guard_deflects` in the result (still absent), and finer budget units (Call 2).
 6. Decide Call 3 (wave timer) before tuning late waves: with timeouts ending most deep runs, the tuner's late-wave HP cuts optimise kill speed, not difficulty. Then re-measure the three profiles on the same seeds; if average and expert still overlap, widen the expert's profile row (aim error, tells read) in `project/data/tables/test_player.json`.
-7. Offline import (`batch.mjs --from`) should keep the capped-alive status (it is read from the live exit line today, so a combined report says 0).
+7. Bot cover: diagnose wave 5 of the film (cover at the planter, 28 HP lost with the war machine on the open side) from the act log around tick 2560; if it is a second shooter, make `BotCover.seek` test every live large threat, not one source.
+8. Offline import (`batch.mjs --from`) should keep the capped-alive status (it is read from the live exit line today, so a combined report says 0).
 
 ## Astra ledger
 
