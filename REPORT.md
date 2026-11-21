@@ -11,11 +11,16 @@ Lane `loop`: the test player, the batch tool, the report, the tuner and the many
 - **Batch** `tools/gauntlet/batch.mjs` and **report** `tools/gauntlet/report.mjs` (Markdown + one HTML page): wave time per profile against 15 s, deaths and killers mapped from weapon to enemy, stalls and timeouts on their own lines, offered bonuses paired take vs decline with an A/A floor, telemetry per wave, the most unusual deep runs with a replay command. Node tests: 30 of 30 (`node --test "tools/gauntlet/*.test.mjs"`).
 - **Tuner** `tools/gauntlet/tune.mjs` (propose / apply / confirm, `knobs.json` 69 knobs, write-once `baseline.json`, clamps 0.8..1.25 per night and 0.5..2.0 of baseline, applies only on `n22-tune*`). **One full cycle on the real street** (03:45-03:57): measure average seeds 1-10 -> 5 HP cuts proposed, each tied to a wave median 39-62 s against 15 s -> applied on `n22-tune` (c8fb30f85..cc5f44ffc) -> confirm batch on the same seeds -> **all five noise** (improvement 0.2-20.6 s, A/A floor 19-47 s from only 2-4 pairs) -> reverted (33ad79efb..9c019401e). Ledger `evidence/loop/tune1-after/tune-ledger.md`.
 
+- **Film** (owner judges by these), `C:\Users\kazda\kiro\gtai-masters\n22\loop\` with `frames.json` (15 entries, best first): the `average` test player, seed 5 (picked from a 12-seed scan, `evidence/loop/film-seed-scan.json`: the only seed of 1-12 that showed guard, roll, cover and Tonnage within five waves), wheel, greedy, 32 px/m, 1080p60: `waves-1-2.mp4` 21.7 s, `waves-3-4.mp4` 23.0 s, `wave-5.mp4` 31.3 s (war machine), `closeup-wave-4.mp4` 10.0 s at 64 px/m; a caption names the act each frame (ADVANCE, GUARD, ROLL, COVER, TONNAGE, ATTACK CLAW, ...). In that run: 21 guard deflects, 6 rolls, 54 cover ticks against a large threat, 6.70 s in Tonnage. Captions read sim state after the tick and never feed input: results with and without captions `cmp` identical (seeds 1, 5), the filmed result identical to headless (`evidence/loop/film.json`). Stills I looked at: `guard-64.png`, `tonnage-32.png`, `five-cleared-32.png` (Ohm pick), plus four frames extracted from the clips.
+- **Report page**: `report.png` / `report-full.png` in the same folder (the `tune1-before` batch rendered through Chrome headless).
+
 ## What does not (yet)
+
+- **The film does not show a large round actually stopped by cover**: `cover-32.png` shows Rivet at the pallet under an aiming line, but no impact on the prop.
 
 - **Waves miss 15 s in both directions** (average, `evidence/loop/street-final/report.md`): waves 1-4 at 5.5-7.9 s, the war-machine wave 5 at 33 s, waves 9-24 at 30-83 s. Most runs end at the 90 s wave timer, not a death (5 of 9 ended runs in `tune1-before`).
 - **10 seeds cannot confirm a change**: the A/A floor is built from 2-4 pairs. A night needs 30+ seeds per profile for a confirmable cycle (brief 05 item 0).
-- **Bonus take vs decline is "insufficient data"** for every bonus: deep greedy runs take nearly every bonus, so there are almost no decliners. Bonus evaluation needs `--pick=random` batches.
+- **Bonus take vs decline shows no effect beyond noise yet.** Greedy runs take nearly every bonus (no decliners), so I ran `--pick=random` for 30 seeds (`evidence/loop/random-30/report.md`, average, 8 min 55 s wall): of 26 bonuses x 2 outcomes, 28 rows are "noise" and 24 "too few pairs" (pairing by pick wave leaves 2-8 pairs; the A/A floor needs 6). A night that wants bonus verdicts needs about 100 random seeds per profile (about 30 min per Godot job). The random runs reach a median wave 15.
 - **Hit rate** in the report (100-1165 %) is meaningless: street's `hits` counts every damaging contact, claws and kills included, `shots` only gun rounds (`project/features/gauntlet/gauntlet_waves.gd:181`). Brief 05 drops the ratio.
 - **Guard deflects not measured** in any wave: guard's deflect signal is not counted in the result (NEED street). Dent never used (no cars on the street).
 - Runs that reach the 72000-tick run cap alive (seeds 6 and 10, wave 32) are counted as failed runs.
@@ -51,3 +56,4 @@ Timed parry is a non-goal in the design note, so none of these is a parry.
 | batch-report | 37 | accepted | |
 | tune | 40 | accepted | knob pointers by array index (row-id check in brief 05) |
 | bot-street | 65 | accepted | 0 stalls, profiles ordered 10 / 20 / 25, 18/20 mutate on bot_brain |
+| bot-film | 50 | accepted | act caption, 12-seed scan, 4 clips + 11 stills, mutate 38/38 on scratch copies; would brief a CRF target (clips came out at 98-140 Mbit/s) and a required "blast hits cover" still |

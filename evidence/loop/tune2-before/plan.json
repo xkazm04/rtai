@@ -1,0 +1,440 @@
+{
+  "batch_sha256": "1802fed39c42da0217868dd3f5e623f1dffafa87c1808c375e216454d579862c",
+  "changes": [
+    {
+      "after": 4.8,
+      "baseline": 6,
+      "before": 6,
+      "file": "project/data/tables/enemies.json",
+      "id": "robot_thug.hp",
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 26
+      },
+      "miss": "average wave 26 median 58.53 s over 5 timed runs against 15 s, robot_thug present in 5/5 timed rosters",
+      "pointer": "/archetypes/3/hp",
+      "row": "robot_thug",
+      "severity": 2.9022222222222203
+    },
+    {
+      "after": 48,
+      "baseline": 60,
+      "before": 60,
+      "file": "project/data/tables/enemies.json",
+      "id": "war_machine.hp",
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 20
+      },
+      "miss": "average wave 20 median 54.77 s over 16 timed runs against 15 s, war_machine present in 16/16 timed rosters",
+      "pointer": "/archetypes/9/hp",
+      "row": "war_machine",
+      "severity": 2.6511111111111103
+    },
+    {
+      "after": 3.2,
+      "baseline": 4,
+      "before": 4,
+      "file": "project/data/tables/enemies.json",
+      "id": "robot_gunner.hp",
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 23
+      },
+      "miss": "average wave 23 median 51.8 s over 13 timed runs against 15 s, robot_gunner present in 13/13 timed rosters",
+      "pointer": "/archetypes/4/hp",
+      "row": "robot_gunner",
+      "severity": 2.453333333333333
+    },
+    {
+      "after": 6.4,
+      "baseline": 8,
+      "before": 8,
+      "file": "project/data/tables/enemies.json",
+      "id": "sentry_turret.hp",
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 19
+      },
+      "miss": "average wave 19 median 39.22 s over 20 timed runs against 15 s, sentry_turret present in 19/20 timed rosters",
+      "pointer": "/archetypes/7/hp",
+      "row": "sentry_turret",
+      "severity": 1.6144444444444437
+    },
+    {
+      "after": 8,
+      "baseline": 10,
+      "before": 10,
+      "file": "project/data/tables/enemies.json",
+      "id": "shield_robot.hp",
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 13
+      },
+      "miss": "average wave 13 median 32.61 s over 26 timed runs against 15 s, shield_robot present in 20/26 timed rosters",
+      "pointer": "/archetypes/8/hp",
+      "row": "shield_robot",
+      "severity": 1.1738888888888899
+    }
+  ],
+  "killer_share": 0.5,
+  "max": 6,
+  "min_n": 3,
+  "misses": [
+    {
+      "metric": {
+        "id": "stat_guard_meter_10",
+        "outcome": "survived",
+        "target": 0,
+        "type": "offer"
+      },
+      "miss": "stat_guard_meter_10 took 14 vs declined 4 waves survived, paired difference 17 (CI95 16 to 18, A/A floor 6, 2 pairs)",
+      "reason": "no eligible numeric change within bounds",
+      "severity": 4.25
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 28
+      },
+      "miss": "average wave 28 median 72.03 s over 2 timed runs against 15 s, robot_gunner present in 2/2 timed rosters",
+      "reason": "too few runs (need 3 timed runs)",
+      "severity": 3.802222222222224
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 31
+      },
+      "miss": "average wave 31 median 66.38 s over 1 timed runs against 15 s, robot_gunner present in 1/1 timed rosters",
+      "reason": "too few runs (need 3 timed runs)",
+      "severity": 3.425555555555553
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 26
+      },
+      "miss": "average wave 26 median 58.53 s over 5 timed runs against 15 s, robot_thug present in 5/5 timed rosters",
+      "reason": "robot_thug.hp 6 -> 4.8",
+      "severity": 2.9022222222222203
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 30
+      },
+      "miss": "average wave 30 median 58.22 s over 1 timed runs against 15 s, robot_gunner present in 1/1 timed rosters",
+      "reason": "too few runs (need 3 timed runs)",
+      "severity": 2.881111111111113
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 20
+      },
+      "miss": "average wave 20 median 54.77 s over 16 timed runs against 15 s, war_machine present in 16/16 timed rosters",
+      "reason": "war_machine.hp 60 -> 48",
+      "severity": 2.6511111111111103
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 29
+      },
+      "miss": "average wave 29 median 54.46 s over 2 timed runs against 15 s, robot_gunner present in 2/2 timed rosters",
+      "reason": "too few runs (need 3 timed runs)",
+      "severity": 2.630555555555557
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 23
+      },
+      "miss": "average wave 23 median 51.8 s over 13 timed runs against 15 s, robot_gunner present in 13/13 timed rosters",
+      "reason": "robot_gunner.hp 4 -> 3.2",
+      "severity": 2.453333333333333
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 16
+      },
+      "miss": "average wave 16 median 49.8 s over 23 timed runs against 15 s, robot_gunner present in 19/23 timed rosters",
+      "reason": "knob or offer already selected this night",
+      "severity": 2.32
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 25
+      },
+      "miss": "average wave 25 median 47.58 s over 6 timed runs against 15 s, robot_thug present in 6/6 timed rosters",
+      "reason": "knob or offer already selected this night",
+      "severity": 2.171666666666667
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 15
+      },
+      "miss": "average wave 15 median 47.47 s over 23 timed runs against 15 s, war_machine present in 23/23 timed rosters",
+      "reason": "knob or offer already selected this night",
+      "severity": 2.1644444444444466
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 22
+      },
+      "miss": "average wave 22 median 45.22 s over 14 timed runs against 15 s, robot_gunner present in 13/14 timed rosters",
+      "reason": "knob or offer already selected this night",
+      "severity": 2.0149999999999997
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 24
+      },
+      "miss": "average wave 24 median 44.49 s over 10 timed runs against 15 s, robot_gunner present in 10/10 timed rosters",
+      "reason": "knob or offer already selected this night",
+      "severity": 1.9661111111111134
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 21
+      },
+      "miss": "average wave 21 median 41.97 s over 16 timed runs against 15 s, robot_thug present in 16/16 timed rosters",
+      "reason": "knob or offer already selected this night",
+      "severity": 1.7977777777777764
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 19
+      },
+      "miss": "average wave 19 median 39.22 s over 20 timed runs against 15 s, sentry_turret present in 19/20 timed rosters",
+      "reason": "sentry_turret.hp 8 -> 6.4",
+      "severity": 1.6144444444444437
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 10
+      },
+      "miss": "average wave 10 median 38.63 s over 26 timed runs against 15 s, war_machine present in 26/26 timed rosters",
+      "reason": "knob or offer already selected this night",
+      "severity": 1.5750000000000002
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 18
+      },
+      "miss": "average wave 18 median 38.37 s over 20 timed runs against 15 s, robot_thug present in 19/20 timed rosters",
+      "reason": "knob or offer already selected this night",
+      "severity": 1.5577777777777766
+    },
+    {
+      "metric": {
+        "id": "stat_guard_meter_10",
+        "outcome": "seconds",
+        "target": 0,
+        "type": "offer"
+      },
+      "miss": "stat_guard_meter_10 took 34.75 vs declined 14.99 s, paired difference 23.29 (CI95 22.37 to 24.22, A/A floor 9.16, 2 pairs)",
+      "reason": "no eligible numeric change within bounds",
+      "severity": 1.5527777777777734
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 17
+      },
+      "miss": "average wave 17 median 38 s over 22 timed runs against 15 s, sentry_turret present in 20/22 timed rosters",
+      "reason": "knob or offer already selected this night",
+      "severity": 1.5333333333333332
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 27
+      },
+      "miss": "average wave 27 median 35.28 s over 4 timed runs against 15 s, robot_gunner present in 4/4 timed rosters",
+      "reason": "knob or offer already selected this night",
+      "severity": 1.3522222222222235
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 13
+      },
+      "miss": "average wave 13 median 32.61 s over 26 timed runs against 15 s, shield_robot present in 20/26 timed rosters",
+      "reason": "shield_robot.hp 10 -> 8",
+      "severity": 1.1738888888888899
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 5
+      },
+      "miss": "average wave 5 median 31.12 s over 30 timed runs against 15 s, war_machine present in 30/30 timed rosters",
+      "reason": "knob or offer already selected this night",
+      "severity": 1.0744444444444468
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 12
+      },
+      "miss": "average wave 12 median 30.84 s over 26 timed runs against 15 s, shield_robot present in 22/26 timed rosters",
+      "reason": "knob or offer already selected this night",
+      "severity": 1.0561111111111132
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 14
+      },
+      "miss": "average wave 14 median 29.31 s over 24 timed runs against 15 s, sentry_turret present in 20/24 timed rosters",
+      "reason": "knob or offer already selected this night",
+      "severity": 0.9538888888888901
+    },
+    {
+      "metric": {
+        "id": "stat_regen_10",
+        "outcome": "seconds",
+        "target": 0,
+        "type": "offer"
+      },
+      "miss": "stat_regen_10 took 40.51 vs declined 19.48 s, paired difference 13.43 (CI95 7 to 19.85, A/A floor 8.91, 2 pairs)",
+      "reason": "no eligible numeric change within bounds",
+      "severity": 0.895
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 11
+      },
+      "miss": "average wave 11 median 28.08 s over 26 timed runs against 15 s, robot_gunner present in 22/26 timed rosters",
+      "reason": "knob or offer already selected this night",
+      "severity": 0.8722222222222233
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 9
+      },
+      "miss": "average wave 9 median 25.13 s over 29 timed runs against 15 s, robot_thug present in 21/29 timed rosters",
+      "reason": "knob or offer already selected this night",
+      "severity": 0.6755555555555535
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 3
+      },
+      "miss": "average wave 3 median 6.13 s over 30 timed runs against 15 s, below the 12 s lower bound, raise budget.base to add enemies",
+      "reason": "budget.base at 2 has no legal upward step within bounds",
+      "severity": 0.5911111111111114
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 1
+      },
+      "miss": "average wave 1 median 6.17 s over 30 timed runs against 15 s, below the 12 s lower bound, raise budget.base to add enemies",
+      "reason": "budget.base at 2 has no legal upward step within bounds",
+      "severity": 0.588888888888889
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 2
+      },
+      "miss": "average wave 2 median 6.75 s over 30 timed runs against 15 s, below the 12 s lower bound, raise budget.base to add enemies",
+      "reason": "budget.base at 2 has no legal upward step within bounds",
+      "severity": 0.55
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 15,
+        "type": "wave",
+        "wave": 4
+      },
+      "miss": "average wave 4 median 7.96 s over 30 timed runs against 15 s, below the 12 s lower bound, raise budget.base to add enemies",
+      "reason": "budget.base at 2 has no legal upward step within bounds",
+      "severity": 0.46944444444444433
+    }
+  ],
+  "night": "2026-11-21",
+  "profile": "average",
+  "schema": "gtai.gauntlet-tune-plan/1",
+  "target_s": 15
+}
