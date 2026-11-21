@@ -14,6 +14,7 @@ class Intent:
 	var reach: float
 	var attack: StringName = &""
 	var slot: StringName = &""
+	var sprint: bool = false
 
 
 var counters: BotCounters = BotCounters.new()
@@ -23,6 +24,7 @@ var _profile: BotProfile
 var _aim_rng: RandomNumberGenerator
 var _defence: BotDefence
 var _forms: BotForms
+var _machines: BotMachineFight = BotMachineFight.new()
 var _target_id: int = -1
 var _last_enemy: int = -1
 var _ready: int = 0
@@ -71,6 +73,8 @@ func sample(tick: int) -> TickInput:
 func _pack(intent: Intent, defend: BotDefence.Choice, want: StringName) -> TickInput:
 	var me: BotView.Player = _view.player()
 	var buttons: int = _edge(BotForms.transform(me, want))
+	if defend.hold_position:
+		intent.move = Vector2.ZERO
 	if defend.cover or defend.action != &"":
 		intent.move = defend.move
 		intent.aim = defend.aim if defend.aim != Vector2.ZERO else intent.aim
@@ -78,7 +82,7 @@ func _pack(intent: Intent, defend: BotDefence.Choice, want: StringName) -> TickI
 		counters.guard_ticks += int(defend.action == &"guard" and _bit(&"guard") != 0)
 		counters.cover_ticks += int(defend.cover)
 	elif buttons == 0:
-		if _recovering and intent.move != Vector2.ZERO:
+		if (_recovering or intent.sprint) and intent.move != Vector2.ZERO:
 			buttons |= _bit(&"sprint")
 		buttons |= _edge(intent.slot)
 		var attack: int = _bit(intent.attack)
@@ -134,6 +138,9 @@ func _engage(foe: BotView.Hostile, tick: int) -> Intent:
 	var side: float = 1.0 if tick % (2 * STRAFE_TICKS) < STRAFE_TICKS else -1.0
 	if _recovering:
 		intent.move = _view.retreat() if distance < 30.0 else Vector2.ZERO
+	elif foe.stomp_m > 0.0 or foe.archetype == &"sentry_turret":
+		intent.move = _machines.advance(_view, foe)
+		intent.sprint = distance > MELEE_M and (foe.opening or foe.archetype == &"sentry_turret")
 	elif blocked or distance > minf(reach * 0.88, ENGAGE_M):
 		intent.move = _view.chase(foe)
 	elif distance > MELEE_M:

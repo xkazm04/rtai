@@ -28,8 +28,18 @@ func refresh() -> void:
 	_player.radius = rivet.radius_m
 	_player.hp = rivet.hp
 	_player.street_max_hp = rivet.max_hp if _street else 0.0
+	_player.walk_mps = _stage.arena.tuning.rivet["walk_mps"]
+	_player.roll_m = _stage.pilot.motion.roll_m if _stage.pilot != null else 0.0
 	_player.can_roll = _stage.pilot != null and _stage.pilot.motion.can_roll()
 	_player.can_guard = _actions.bit(&"guard") >= 0
+	if _street:
+		var pilot: StagePilot = _stage.pilot
+		_player.can_guard = (
+			pilot != null
+			and pilot.guard != null
+			and not pilot.guard.broken()
+			and PlayerGuardInput.available(pilot, _stage.arena)
+		)
 	_player.shots_fired = _stage.shots_fired
 	_player.rolls_started = _stage.pilot.motion.rolls if _stage.pilot != null else 0
 	if _deaths != _stage.deaths:
@@ -98,8 +108,15 @@ func _read_tell(fighter: Fighter, foe: Hostile) -> void:
 	if squad != null and squad.minds.has(fighter.id):
 		var agent: EnemyAgent = squad.minds[fighter.id].agent
 		winding = winding or agent.state == EnemyAgent.State.WINDUP
-		if &"tier" in agent.arch:
-			foe.tier = agent.arch.get(&"tier")
+		foe.tier = agent.arch.tier
+		foe.front_cos = agent.arch.shield_cos
+		if agent.arch.alt_weapon != null:
+			foe.stomp_m = agent.arch.alt_weapon.splash_radius_m
+			foe.tell_ticks = fighter.swing_left
+			var cooldown: int = mini(
+				agent.arch.weapon.cooldown_ticks, agent.arch.alt_weapon.cooldown_ticks
+			)
+			foe.opening = _stage.arena.tick - agent.shot_tick < cooldown
 	if winding:
 		if foe.archetype in [&"rocket_trooper", &"war_machine", &"robot_gunner"]:
 			foe.tell = &"large"

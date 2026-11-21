@@ -49,6 +49,8 @@ static func transform(me: BotView.Player, want: StringName) -> StringName:
 
 static func _heavy_near(view: BotView) -> bool:
 	for foe: BotView.Hostile in view.hostiles():
+		if foe.stomp_m > 0.0 or foe.archetype == &"sentry_turret":
+			continue
 		if foe.alive and foe.pos.distance_to(view.player().pos) <= HEAVY_M:
 			if foe.tier >= 5 or foe.archetype == &"war_machine" or (foe.robot and foe.hp >= 6.0):
 				return true

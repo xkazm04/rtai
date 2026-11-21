@@ -11,6 +11,8 @@ class Player:
 	var hp: float = 1.0
 	## A positive value enables repair decisions on a street with a cleared approach.
 	var street_max_hp: float = 0.0
+	var walk_mps: float = 0.0
+	var roll_m: float = 0.0
 	var form: StringName = &"base"
 	var selected: StringName = &""
 	var settled: bool = true
@@ -36,6 +38,10 @@ class Hostile:
 	var shooter: bool
 	## Empty while idle, otherwise small, large or melee.
 	var tell: StringName = &""
+	var tell_ticks: int = 0
+	var stomp_m: float = 0.0
+	var front_cos: float = 0.5
+	var opening: bool = false
 
 
 class Round:
@@ -108,6 +114,13 @@ func chase(foe: Hostile) -> Vector2:
 func clear_line(a: Vector2, b: Vector2) -> bool:
 	for box: Rect2 in solid_props():
 		if crosses(box, a, b):
+			return false
+	return true
+
+
+func walk_clear(a: Vector2, b: Vector2) -> bool:
+	for box: Rect2 in solid_props():
+		if crosses(box.grow(_player.radius - 0.01), a, b):
 			return false
 	return true
 

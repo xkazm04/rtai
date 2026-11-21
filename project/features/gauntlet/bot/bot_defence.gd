@@ -12,6 +12,7 @@ class Choice:
 	var move: Vector2
 	var aim: Vector2
 	var cover: bool
+	var hold_position: bool
 	var form: StringName = &""
 
 
@@ -57,6 +58,8 @@ func choose(view: BotView, tick: int) -> Choice:
 	if large != null:
 		return _evade(view, large.pos, large.vel, _dodges[large.id], true)
 	if tell != null:
+		if tell.stomp_m > 0.0 and tell.tell_ticks > 0:
+			return BotMachineFight.stomp(view, tell, _tells[tell.id].dodge)
 		return _evade(view, tell.pos, tell.facing, _tells[tell.id].dodge, true)
 	if small != null:
 		return _small(view, small, small_eta)

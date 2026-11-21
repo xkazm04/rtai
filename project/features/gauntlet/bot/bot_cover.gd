@@ -52,7 +52,7 @@ static func _faces(box: Rect2, at: Vector2) -> PackedVector2Array:
 static func _route(view: BotView, outer: Rect2, goal: Vector2) -> Route:
 	var at: Vector2 = view.player().pos
 	var best: Route = Route.new()
-	if _can_walk(view, at, goal):
+	if view.walk_clear(at, goal):
 		best.length = at.distance_to(goal)
 		best.step = (goal - at).limit_length(1.0)
 		return best
@@ -64,14 +64,7 @@ static func _route(view: BotView, outer: Rect2, goal: Vector2) -> Route:
 	]
 	for bend: Vector2 in corners:
 		var length: float = at.distance_to(bend) + bend.distance_to(goal)
-		if length < best.length and _can_walk(view, at, bend) and _can_walk(view, bend, goal):
+		if length < best.length and view.walk_clear(at, bend) and view.walk_clear(bend, goal):
 			best.length = length
 			best.step = (bend - at).limit_length(1.0)
 	return best
-
-
-static func _can_walk(view: BotView, a: Vector2, b: Vector2) -> bool:
-	for box: Rect2 in view.solid_props():
-		if BotView.crosses(box.grow(view.player().radius - 0.01), a, b):
-			return false
-	return true
