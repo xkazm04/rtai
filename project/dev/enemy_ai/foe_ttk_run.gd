@@ -17,7 +17,6 @@ func run(path: String) -> int:
 		"trials": SEEDS,
 		"first_seed": 1,
 		"tick_hz": SimClock.TICK_RATE,
-		"distance_m": FoeTtkTrial.DISTANCE_M,
 		"limit_ticks": FoeTtkTrial.LIMIT,
 		"weapons": weapons,
 		"enemies": {}
@@ -47,31 +46,22 @@ func run(path: String) -> int:
 
 func _sample(id: StringName, weapon: StringName, rear: bool, table: WeaponTable) -> Dictionary:
 	var ticks: Array[int] = []
-	var attempts: int = 0
-	var hits: int = 0
-	var kills: int = 0
-	var first: int = 0
+	var sample: Dictionary = {"attempts": 0, "hits": 0, "kills": 0, "first_hit_kills": 0}
 	for seed_id: int in range(1, SEEDS + 1):
-		var row: Dictionary = FoeTtkTrial.new().measure(
-			id, weapon, rear, RngRegistry.new(seed_id), table
-		)
+		var rng: RngRegistry = RngRegistry.new(seed_id)
+		var row: Dictionary = FoeTtkTrial.new().measure(id, weapon, rear, rng, table)
 		ticks.append(row.tick)
-		kills += int(ticks[-1] <= FoeTtkTrial.LIMIT)
-		attempts += row.attempts
-		hits += row.hits
-		first += 1 if row.first else 0
+		sample.kills += int(ticks[-1] <= FoeTtkTrial.LIMIT)
+		sample.attempts += row.attempts
+		sample.hits += row.hits
+		sample.first_hit_kills += 1 if row.first else 0
+		sample.distance_m = row.distance_m
 	ticks.sort()
-	var median: Variant = null
+	sample.median_s = null
 	if ticks[SEEDS / 2] <= FoeTtkTrial.LIMIT:
-		median = 0.5 * (ticks[SEEDS / 2 - 1] + ticks[SEEDS / 2]) * SimClock.TICK_DT
-	return {
-		"median_s": median,
-		"kills": kills,
-		"first_hit_kills": first,
-		"attempts": attempts,
-		"hits": hits,
-		"hit_share": float(hits) / attempts if attempts > 0 else null
-	}
+		sample.median_s = 0.5 * (ticks[SEEDS / 2 - 1] + ticks[SEEDS / 2]) * SimClock.TICK_DT
+	sample.hit_share = 1.0 * sample.hits / sample.attempts if sample.attempts > 0 else null
+	return sample
 
 
 func _seconds(row: Dictionary) -> String:
@@ -80,11 +70,11 @@ func _seconds(row: Dictionary) -> String:
 
 func _header(weapons: Array[StringName]) -> Array[String]:
 	return [
-		"# Enemy time to kill at 8 m",
+		"# Enemy time to kill",
 		"",
 		"Median seconds from first input to death, front / rear. A dash means timeout at 30 s.",
 		"Ten paired seeds (1 to 10), centre aim, shipped spread, cadence and reloads.",
-		"Both fighters stay 8 m apart, including for bare-claw swings.",
+		"Guns fire at 8 m. Claw distance is the shortest combo reach plus target radius, less 1 cm.",
 		"Each column is one playable weapon. Hit class describes impact effects.",
 		"Hit share counts direct and splash strikes per round fired, or landed swings per swing.",
 		"Lingering fire contributes to TTK. First-hit kills require death on the first damage event.",
