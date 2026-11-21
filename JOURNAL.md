@@ -115,3 +115,7 @@ NEXT: nothing owed by street. Director: merge notes in REPORT.md (guard meter wi
 ## Session 7 (07:31 to 07:40, STABILIZE)
 - 07:31 clean tree at a2e04ef22; no Astra (lock empty, last call late-film 05:03Z), no Godot for this lane. NEED street grep across guard/foes/loop: nothing after loop 06:05 (already a REPORT merge note). cites REPORT.md 13/13 ok. Code frozen and gated (7967a0cfa PASS with reels, build/gate/7967a0cfacfc/gate.json); no change in this session.
 NEXT: nothing owed by street. Director: merge notes in REPORT.md (guard meter wiring, wheel default in the gauntlet after guard's head, loop's on_timeout if the owner picks A).
+
+## Session 8 (07:40, REPORT)
+- 07:40 clean tree at 76964277c; no Astra (lock empty, last call late-film exited 05:03Z), no Godot for this lane. NEED street grep (guard, foes, loop): nothing after loop 06:05 (already a REPORT merge note). REPORT.md re-read: final, all sections present; cites REPORT.md 13/13 ok. Code frozen and gated (7967a0cfa PASS with reels, build/gate/7967a0cfacfc/gate.json). No change to REPORT.
+NEXT: nothing owed by street. Director: merge notes in REPORT.md (guard meter wiring, wheel default in the gauntlet after guard's head, loop's on_timeout if the owner picks A).
