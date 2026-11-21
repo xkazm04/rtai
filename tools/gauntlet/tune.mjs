@@ -33,6 +33,8 @@ function artifact(root, file) {
 function writePlan(root, v) {
   const target = Number(v['target-s'] ?? 15), profile = v.profile ?? 'average';
   const max = Number(v.max ?? 6), killerShare = Number(v['killer-share'] ?? 0.5);
+  const minN = Number(v['min-n'] ?? 3);
+  if (!Number.isSafeInteger(minN) || minN < 1) throw new Error('--min-n must be a positive integer');
   if (!(target > 0 && Number.isFinite(target))) throw new Error('--target-s must be positive');
   if (![...PROFILES, 'human'].includes(profile)) throw new Error('unknown profile ' + profile);
   if (!Number.isSafeInteger(max) || max < 0) throw new Error('--max must be a nonnegative integer');
@@ -43,10 +45,10 @@ function writePlan(root, v) {
   const batch = loadBatch(v.batch);
   const state = inventory(root);
   const baseline = ensureBaseline(root, state.entries);
-  const plan = propose(batch, state, baseline, { target, profile, max, killerShare, batchHash: hashFile(v.batch),
+  const plan = propose(batch, state, baseline, { target, profile, max, killerShare, minN, batchHash: hashFile(v.batch),
     night: nightOf(), used: new Set(nightly(root).keys()) });
   atomicWrite(v.out, canonicalJson(plan));
-  for (const c of plan.changes) console.log(c.miss + ': ' + c.id + ' ' + c.before + ' -> ' + c.after);
+  for (const m of plan.misses) console.log(m.miss + ': ' + m.reason);
   console.log(plan.changes.length + ' changes from ' + plan.misses.length + ' measured misses in ' + v.out);
   return plan;
 }
@@ -119,7 +121,7 @@ export function main([command, ...argv]) {
   const root = git(process.cwd(), 'rev-parse', '--show-toplevel').trim();
   if (command === 'propose') {
     if (argv.includes('--overwrite-baseline')) throw new Error('tuner baseline is write-once');
-    const v = options(argv, ['batch', 'out'], ['target-s', 'profile', 'max', 'killer-share']);
+    const v = options(argv, ['batch', 'out'], ['target-s', 'profile', 'max', 'killer-share', 'min-n']);
     return withLock(root, () => writePlan(root, v));
   }
   if (command === 'apply') {

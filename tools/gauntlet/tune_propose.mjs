@@ -6,8 +6,8 @@ import { clamped, TABLES } from './tune_state.mjs';
 export const PLAN_SCHEMA = 'gtai.gauntlet-tune-plan/1';
 const ratio = (target, observed) => observed > 0 ? target / observed : 1.25;
 
-function measuredMiss(metric, severity, miss, choices) {
-  return { metric, severity, miss, choices };
+function measuredMiss(metric, severity, miss, choices, reason) {
+  return { metric, severity, miss, choices, reason };
 }
 
 // HP on the production street is read from the archetype only for robot bodies (ArenaSquad.spawn_member).
@@ -18,7 +18,7 @@ function robotIn(waves, roster) {
   })).filter((r) => r.count > 0).sort((a, b) => b.count - a.count || a.id.localeCompare(b.id))[0];
 }
 
-function waveMisses(report, runs, roster, { target, profile, street }) {
+function waveMisses(report, runs, roster, { target, profile, street, minN }) {
   const byWave = Map.groupBy(runs.filter((r) => r.profile === profile).flatMap((r) => r.waves), (w) => w.n);
   const misses = [];
   for (const row of report.waves) {
@@ -33,7 +33,8 @@ function waveMisses(report, runs, roster, { target, profile, street }) {
       choices.push([robot.id + '.hp', factor]);
     }
     if (street) choices.push([row.n === 1 ? 'budget.base' : 'budget.per_wave', factor]);
-    misses.push(measuredMiss({ type: 'wave', profile, wave: row.n, target }, Math.abs(row.median / target - 1), miss, choices));
+    const reason = row.timed < minN ? 'too few runs (need ' + minN + ' timed runs)' : undefined;
+    misses.push(measuredMiss({ type: 'wave', profile, wave: row.n, target }, Math.abs(row.median / target - 1), miss, choices, reason));
   }
   return misses;
 }
@@ -81,7 +82,8 @@ function killerMisses(report, runs, roster, threshold) {
       miss += ', ' + guarded + '/' + victims.length + ' victim runs recorded a deflection';
       choices.push(['guard.meter_max', 1 / factor]);
     }
-    misses.push(measuredMiss({ type: 'killer', id: e.id, target: threshold }, e.kills / total / threshold - 1, miss, choices));
+    const reason = total < 5 ? 'too few runs (need 5 recorded deaths)' : undefined;
+    misses.push(measuredMiss({ type: 'killer', id: e.id, target: threshold }, e.kills / total / threshold - 1, miss, choices, reason));
   }
   return misses;
 }
@@ -106,14 +108,14 @@ function bonusMisses(report, weapons, target) {
   return misses;
 }
 
-export function propose(batch, state, baseline, { target = 15, profile = 'average', max = 6, killerShare = 0.5,
+export function propose(batch, state, baseline, { target = 15, profile = 'average', max = 6, killerShare = 0.5, minN = 3,
   used = new Set(), batchHash, night } = {}) {
   const weapons = weaponsOf(batch);
   const report = analyze(batch, null, weapons);
   const roster = state.tables.get(TABLES + 'enemies.json');
   const street = batch.args.runner !== 'pit';
   const observations = [
-    ...waveMisses(report, batch.results, roster, { target, profile, street }),
+    ...waveMisses(report, batch.results, roster, { target, profile, street, minN }),
     ...spreadMiss(batch.results, roster, street),
     ...killerMisses(report, batch.results, roster, killerShare),
     ...bonusMisses(report, weapons, target)
@@ -122,8 +124,12 @@ export function propose(batch, state, baseline, { target = 15, profile = 'averag
   const chosen = new Set(used);
   // The two outcomes of one offer can describe the same advantage. Don't turn both knobs for it.
   const selectedOffers = new Set();
-  for (const { choices, ...observation } of observations) {
+  for (const { choices, reason, ...observation } of observations) {
     const { metric, miss } = observation;
+    if (reason) {
+      misses.push({ ...observation, reason });
+      continue;
+    }
     const result = { ...observation, reason: 'no eligible numeric change within bounds' };
     for (const [id, factor] of choices) {
       const entry = state.entries.get(id);
@@ -147,5 +153,5 @@ export function propose(batch, state, baseline, { target = 15, profile = 'averag
     misses.push(result);
   }
   return { schema: PLAN_SCHEMA, night, batch_sha256: batchHash, profile, target_s: target,
-    killer_share: killerShare, max, changes, misses };
+    killer_share: killerShare, min_n: minN, max, changes, misses };
 }

@@ -151,6 +151,29 @@ test('propose uses measured fixture effects, records untunable misses and respec
   assert.match(custom.changes[0].miss, /expert wave 1 median 30 s.*against 20 s/);
 });
 
+test('propose counts timed runs per wave and requires five deaths before acting on killer share', (t) => {
+  const root = repository(t), runs = robotBatch().results.slice(0, 6);
+  for (const [i, run] of runs.entries()) {
+    if (i >= 3) delete run.waves[0].seconds;
+    if (i >= 2) delete run.waves[1].seconds;
+    if (i < 4) run.death = { wave: 3, by: 'turret_gun' };
+    run.waves[2].seconds = 15;
+  }
+  write(root, beforeFile, manifest(runs));
+  const output = ok(cli(root, 'propose', ...proposeArgs));
+  assert.match(output, /wave 2 median 24 s over 2 timed runs.*too few runs/);
+  assert.match(output, /4\/4 deaths.*too few runs/);
+  assert.deepEqual(readJson(join(root, planFile)).changes.map((c) => c.id), ['shield_robot.hp']);
+  runs[4].death = { wave: 3 }; // An unattributed death counts toward the denominator.
+  write(root, beforeFile, manifest(runs));
+  ok(cli(root, 'propose', ...proposeArgs, '--min-n=4'));
+  const plan = readJson(join(root, planFile));
+  assert.equal(plan.min_n, 4);
+  assert.deepEqual(plan.changes.map((c) => c.id), ['enemy_weapon.turret_gun.damage']);
+  assert.match(plan.changes[0].miss, /4\/5 deaths/);
+  assert.match(cli(root, 'propose', ...proposeArgs, '--min-n=0').stderr, /positive integer/);
+});
+
 test('a collapsed profile gap and a dominant enemy weapon each select a measured table knob', (t) => {
   const root = repository(t), state = inventory(root), base = ensureBaseline(root, state.entries);
   const runs = ['novice', 'expert'].flatMap((profile) => robotBatch().results.map((r) => ({
