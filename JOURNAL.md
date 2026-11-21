@@ -123,3 +123,8 @@ NEXT: nothing owed. Director merges `n22-foes`; merge notes are in REPORT.md. Te
 - 07:30 read JOURNAL; no astra.lock, last Astra call melee-ttk (n=7) ended. Tree clean at `99ada49fa`. No new `NEED foes` (street line 15 served in 73df7e6c5). cites REPORT.md: 21 paths, 21 ok.
 - Since the reels gate `d73b3224a` only JOURNAL.md / REPORT.md changed (inert); gates stand: final `build/gate/90902c90e94e/gate.json`, reels `build/gate/d73b3224ab9b/gate.json`. No code, no film (past freeze).
 NEXT: nothing owed. Director merges `n22-foes` (merge notes in REPORT.md); Temp snapshots `gtai-gate-90902c90e94e` / `gtai-gate-d73b3224ab9b` go with the post-merge cleanup.
+
+## Session 8 (07:40 to 07:42, REPORT)
+- 07:40 read JOURNAL; no astra.lock, no Astra running. Tree clean at `903c0186c`. No new `NEED foes` (street line 15 served in 73df7e6c5).
+- 07:41 REPORT.md already final (header, What works, What does not, What blocked, Calls for the owner, Merge notes, Next steps, Astra ledger); `node tools/evidence/cites.mjs REPORT.md` -> 21 paths, 21 ok. Gates stand (inert-only commits since): final `build/gate/90902c90e94e/gate.json`, reels `build/gate/d73b3224ab9b/gate.json`.
+NEXT: nothing owed. Director merges `n22-foes` (merge notes in REPORT.md); Temp snapshots `gtai-gate-90902c90e94e` / `gtai-gate-d73b3224ab9b` go with the post-merge cleanup.
