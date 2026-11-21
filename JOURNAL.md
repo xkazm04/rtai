@@ -113,3 +113,8 @@ NEXT (if a session follows; nothing is owed):
 3. Before 07:40: re-run `node tools/evidence/cites.mjs REPORT.md`, commit REPORT.md + JOURNAL.md per path.
 - 06:33 session 5 work done; REPORT final (cites ok), committed.
 - 06:33 display still clamped (film.mjs 120-tick probe: drew 1422x800); mixed-wave film stays out. Session 5 closes; nothing running.
+
+## Session 6 (07:30 to 07:35, STABILIZE)
+- 07:30 read JOURNAL; no astra.lock, last call melee-ttk (n=7) ended. Tree clean. Since the reels gate `d73b3224a` only JOURNAL.md and REPORT.md changed (inert), so the gates stand: final `build/gate/90902c90e94e/gate.json`, reels `build/gate/d73b3224ab9b/gate.json`.
+- 07:31 cites REPORT.md: 21 paths, 21 ok. No new code, no new film (past freeze; report due 07:40).
+NEXT: nothing owed. Director merges `n22-foes`; merge notes are in REPORT.md. Temp snapshots `gtai-gate-90902c90e94e` / `gtai-gate-d73b3224ab9b` are for the post-merge Temp cleanup.
