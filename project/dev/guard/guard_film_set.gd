@@ -24,7 +24,7 @@ func build(beat: String) -> void:
 	for at: Vector2 in [Vector2(-11, -6), Vector2(13, -6), Vector2(13, 10)]:
 		_prop(station, "cone", at, Vector2.ONE * 0.7)
 	if beat == "wall":
-		_prop(station, "wall_high", Vector2(-0.6, 0), Vector2(1.1, 4.4))
+		_prop(station, "wall_high", Vector2.ZERO, Vector2(4.5, 4.4))
 	var stations: ArenaStations = ArenaStations.new()
 	stations.stations.append(station)
 	ctx = World.build_context(Events, Data, 22)
@@ -93,7 +93,7 @@ func _place(beat: String) -> void:
 				_cop(START + ray * (9.0 + i * 0.4), &"pistol", 48 + i * 19)
 		"rocket", "wall":
 			carry.take(&"pistol", stage.arena)
-			var at: Vector2 = Vector2(7, 0) if beat == "wall" else START + AIM * 11.0
+			var at: Vector2 = Vector2(9.3, 0) if beat == "wall" else START + AIM * 11.0
 			_cop(at, ROCKET, ArenaTargets.NEVER)
 		"wheel":
 			carry.take(&"katana", stage.arena)
