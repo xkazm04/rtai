@@ -132,27 +132,43 @@ The command writes Markdown and a self-contained HTML file with inline SVG timin
 
 ## Tune
 
-Run `propose` anywhere in the checkout. Run `apply` and `confirm --revert` on the dedicated branch whose name starts with `n22-tune`. Keep one output directory per batch. The before batch and the plan can travel together to the tune checkout.
+### Run a night
+
+Run from the dedicated `n22-tune*` checkout to measure, apply and confirm in one command. The default recipe uses the average profile, greedy picks, wheel controls and one job. Both batches run seeds 1 through N for every selected profile.
 
 ```powershell
-node tools/gauntlet/tune.mjs propose --batch=build/gauntlet/before/batch.json --out=build/gauntlet/before/plan.json
-node tools/gauntlet/tune.mjs apply --plan=build/gauntlet/before/plan.json
-# Run the same batch recipe, seeds, profiles, controls and pick mode into build/gauntlet/after.
-node tools/gauntlet/tune.mjs confirm --before=build/gauntlet/before/batch.json --after=build/gauntlet/after/batch.json --plan=build/gauntlet/before/plan.json
+node tools/gauntlet/night.mjs --seeds=40
 ```
 
-**Measurements.** The default timing target is 15 s for `average`. A median strictly below 12 s or above 18 s is a miss. Set `--target-s` and `--profile` to change that timing comparison. The other comparisons use all available profiles. The plan records every miss, its measurements and either the selected edit or the reason it was skipped.
+Add `--dry-run` to print the commands. Choose a fresh directory with `--out=<dir>` to retain evidence. The default is `build/gauntlet/night-<date>/` using the tuner's night date. Override the recipe with `--profile`, `--pick` and `--controls`. With `--profile=all`, the proposal uses average timings and can also compare novice and expert depth.
+
+| Step | What it writes |
+|---|---|
+| Measure | `before/runs/` holds each result and `before/logs/` holds the launch and engine logs. `before/batch.json` records accepted runs, caps, failures, timing and table hashes. |
+| Report | `before/report.md` and `before/report.html` summarize the measured batch. |
+| Propose | `plan.json` records the misses, skipped reasons, bounded edits and the before-batch hash. On other branches the night stops here. |
+| Apply | One Git commit per eligible knob on the tune branch, with the measured reason and plan identifier. |
+| Measure again | The same recipe writes `after/runs/`, `after/logs/` and `after/batch.json` with the tested values. |
+| Confirm and revert | `after/tune-ledger.json` and `after/tune-ledger.md` record the paired evidence, seed splits and verdicts. Each rejected or inconclusive applied change gets a revert commit. |
+| Compare and summarize | `after/report.md` and `after/report.html` compare timings with the before batch. `night.md` lists each action, knob values, first-night baseline, measured evidence and commit SHAs. |
+
+To undo a kept change, copy its **Apply SHA** from `night.md` and run `git revert <sha>` on the tune branch. If a step fails, the command stops and preserves the earlier evidence and commits. A dry run with the same options prints the individual commands for recovery.
+
+### How a proposal selects edits
+
+**Measurements.** The default timing target is 15 s for `average`. A median strictly below 12 s or above 18 s is a miss. The standalone `tune.mjs propose` accepts `--target-s`, `--profile` and `--min-n`. A wave needs at least three timed runs by default. A killer share needs at least five recorded deaths. Smaller samples appear in the plan and console as `too few runs`. The other comparisons use all available profiles.
 
 | Measured miss | Candidate edit |
 |---|---|
-| Wave time outside the band | Scale HP for the robot most often present in timed rosters of that wave. Street timing can also adjust the opening budget or its per-wave growth. The production spawner takes archetype HP for robot bodies. The timing measures the whole wave. |
+| Wave median above the upper bound | Reduce HP for the robot most often present in timed rosters of that wave. Street timing can also reduce the opening budget or its per-wave growth. The production spawner takes archetype HP for robot bodies. |
+| Wave median below the lower bound | Increase the street's `budget.base` when eligible fast waves are confined to the opening half. If any eligible fast wave falls beyond half the deepest timed wave number (rounded up), increase `budget.per_wave`. Both edits give the spawner more budget for enemies and must fit the integer bounds. |
 | Expert median depth at or below novice depth | Aim for a gap of at least one wave. Ease pressure if both profiles recorded deaths, otherwise increase it. Try the budget or a robot observed in the final wave. |
 | A named killer accounts for over half of all recorded deaths | Reduce the matching attack damage. For a small ranged attack, victim runs recording deflections can support raising guard capacity. Unknown attributions remain in the denominator. A timeout cannot identify an attacker. Set the fraction with `--killer-share=0.5`. |
 | A take-versus-decline difference clears the report's CI and A/A floor | Use the card's recorded weapon ref. A stronger pick gets lower cadence or damage, a weaker pick gets higher cadence or damage. Cards without an eligible knob remain in the miss list. |
 
 The plan ranks wave-time errors relative to the timing target, killer shares relative to their threshold and profile gaps relative to one wave. Offer survival differences are scaled by the decliners' median survival (at least one wave), and offer timing differences by the timing target. The largest eligible misses get up to `--max=6` edits. One card can generate two measured outcomes and one edit.
 
-**Numeric limits.** `tools/gauntlet/knobs.json` lists the table, JSON pointer, kind and bounds of each knob. It covers enemy HP and damage, enemy weapon damage, player weapon damage and firing rate, guard numbers and the two wave-budget integers. The gun's `rof_hz` is the inverse of its firing interval. An unresolved pointer, changed array-row identity or pending knob is reported and skipped. Mechanics, skills and weapon effects need a separate proposal.
+**Numeric limits.** `tools/gauntlet/knobs.json` lists the table, JSON pointer, kind and bounds of each knob. The catalog covers enemy HP and damage, enemy weapon damage, player weapon damage and firing rate, guard numbers and the two wave-budget integers. Every pointer into an array names the stable row ID in `row`. Proposal and apply both check the indexed object's ID. The gun's `rof_hz` is the inverse of its firing interval. An unresolved pointer, changed array-row identity or pending knob is reported and skipped. Mechanics, skills and weapon effects need a separate proposal.
 
 On the first proposal, `tools/gauntlet/baseline.json` records the date, Git SHA and first value of every resolved knob. Later proposals append only newly available IDs. Commit a new baseline or its additions by path before applying. A value must satisfy its catalog bounds and stay within **0.8–1.25×** its current table value and **0.5–2×** its first value. Integer steps round in the proposed direction within that intersection. For example, an integer budget of 2 has no legal step. A zero baseline stays zero.
 
