@@ -86,6 +86,7 @@ func test_plants_for_full_tell_and_fires_once_at_the_locked_point() -> void:
 	assert_eq(h.pos, at)
 	assert_eq(h.facing, locked_facing)
 	assert_eq(shot.weapon, &"rocket")
+	assert_eq(shot.size, &"large")
 	assert_almost_eq(shot.vel.length(), 9.0, 0.001)
 	assert_true(shot.vel.normalized().dot(at.direction_to(lock_at)) > 0.99999)
 	for i: int in 120:

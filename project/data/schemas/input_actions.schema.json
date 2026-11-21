@@ -20,7 +20,7 @@
         "additionalProperties": false,
         "properties": {
           "bit": {
-            "maximum": 16,
+            "maximum": 17,
             "minimum": -1,
             "type": "integer"
           },

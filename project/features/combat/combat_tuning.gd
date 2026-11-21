@@ -10,6 +10,7 @@ const SCHEMA: String = "gtai.combat/1"
 class Weapon:
 	extends RefCounted
 	var id: StringName = &""
+	var round: StringName = Shot.SMALL
 	var burst: int = 1
 	var burst_gap_ticks: int = 0
 	var cooldown_ticks: int = 1
@@ -65,6 +66,7 @@ static func _floats(t: DataTable, row: Dictionary) -> Dictionary[String, float]:
 static func _weapon(t: DataTable, id: StringName, row: Dictionary) -> Weapon:
 	var w: Weapon = Weapon.new()
 	w.id = id
+	w.round = Shot.read_size(t, row, id)
 	w.burst = t.integer(row, "burst")
 	w.burst_gap_ticks = ticks(t.num(row, "burst_gap_s"))
 	w.cooldown_ticks = ticks(t.num(row, "cooldown_s"))

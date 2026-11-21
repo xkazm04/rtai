@@ -375,6 +375,22 @@
       ],
       "mouse": [],
       "wire_bit": 29
+    },
+    {
+      "bit": 17,
+      "id": "guard",
+      "joy_axes": [
+        [
+          4,
+          1
+        ]
+      ],
+      "joy_buttons": [],
+      "keys": [],
+      "mouse": [
+        2
+      ],
+      "wire_bit": 30
     }
   ],
   "schema": "gtai.input-actions/1"

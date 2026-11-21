@@ -14,6 +14,7 @@ const KINDS: Dictionary[String, Kind] = {
 }
 
 var id: StringName = &""
+var round: StringName = Shot.SMALL
 var tier: StringName = &""
 var kind: Kind = Kind.BULLET
 var enabled: bool = true
@@ -97,7 +98,7 @@ static func from_row(t: DataTable, row: Dictionary) -> WeaponSpec:
 	w.min_lob_m = t.num(row, "min_lob_m") if row.has("min_lob_m") else 0.0
 	w.charge_ticks = ticks(t.num(row, "charge_s")) if row.has("charge_s") else 0
 	w.charge_damage = t.num(row, "charge_damage") if row.has("charge_damage") else w.damage
-	_cues(w, t, row)
+	_round_and_cues(w, t, row)
 	w.spin_ticks = ticks(t.num(row, "spin_s")) if row.has("spin_s") else 0
 	w.fire_move_mult = t.num(row, "fire_move_mult") if row.has("fire_move_mult") else 1.0
 	return w
@@ -107,7 +108,8 @@ static func ticks(seconds: float) -> int:
 	return ceili(seconds * SimClock.TICK_RATE - SimClock.EPSILON)
 
 
-## The sound hooks: the shot as a round leaves, the end cue where it stops (&"" = none).
-static func _cues(w: WeaponSpec, t: DataTable, row: Dictionary) -> void:
+## The round size and the sound cues for launch and impact.
+static func _round_and_cues(w: WeaponSpec, t: DataTable, row: Dictionary) -> void:
+	w.round = Shot.read_size(t, row, w.id)
 	w.shot_cue = StringName(t.text(row, "shot_cue")) if row.has("shot_cue") else &""
 	w.end_cue = StringName(t.text(row, "end_cue")) if row.has("end_cue") else &""
