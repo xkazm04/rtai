@@ -25,6 +25,16 @@ func _ready() -> void:
 			blood.oil.solid = _street.solid_px
 
 
+## The shipped ghost strip draws the selected cost in teal even with all ghosts locked.
+## Keep its portraits, cost and timing while rendering the separate gauge notch in ink.
+func style_ghost_meter(hud: GhostFormHud) -> void:
+	var ink: ShaderMaterial = ShaderMaterial.new()
+	ink.shader = preload("res://features/gauntlet/gauntlet_meter.gdshader")
+	var layout: GhostFormLayout = hud.layout
+	ink.set_shader_parameter(&"meter_band_px", layout.margin + layout.card_h - layout.bar_y + 6.0)
+	hud.material = ink
+
+
 ## Inspection uses the actor canvas so the print pass cannot erase the thin white outlines.
 func show_solid_bounds() -> void:
 	var overlay: Node2D = Node2D.new()

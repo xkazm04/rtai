@@ -105,6 +105,8 @@ func _open_view(film: bool) -> void:
 	add_child(cast)
 	@warning_ignore("return_value_discarded")
 	cast.attach(session.stage, view, session.world.context())
+	if cast.ghost_view != null:
+		view.style_ghost_meter(cast.ghost_view.hud)
 	session.live.viewport = get_viewport()
 	session.live.origin_px = func() -> Vector2: return get_viewport().get_visible_rect().size * 0.5
 	session.live.px_per_m = func() -> float: return view.px_per_m
