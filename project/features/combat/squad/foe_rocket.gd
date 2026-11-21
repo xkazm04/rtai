@@ -11,6 +11,10 @@ var last_launch: Vector2 = Vector2.INF
 var _site: Vector2 = Vector2.INF
 
 
+func forget_site() -> void:
+	_site = Vector2.INF
+
+
 ## The bare arena's FX draws tells through GuardTell. Station guards keep their usual trigger.
 class AimLines:
 	extends GuardTell

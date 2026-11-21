@@ -1,0 +1,32 @@
+Both parts landed on `n22-foes` before their deadlines. The four new enemies spawn and fight in both the arena and the pit. The rocket trooper plants for 60 ticks, fires one 9 m/s rocket at Rivet’s locked position, then relocates.
+
+| Commit | Subject |
+|---|---|
+| `245c0e6f1` | `foes: tier on every enemy row and four new spawnable enemies (interface)` |
+| `8e522de76` | `foes: rocket trooper keeps range, kneels, fires one slow rocket, relocates` |
+
+Tag `n22-foes-iface` points to `245c0e6f15f5a8b35c043ab2119fa129a8785707`.
+
+| Verification | Part A | Part B |
+|---|---:|---:|
+| Lint | 19/19 | 19/19 |
+| `run_unit --changed` | 3,383 passed, 2 skipped | 3,388 passed, 2 skipped |
+| Scenarios | 65/65 | 65/65 |
+| Runtime resource load | 1,878/1,878 | 1,884/1,884 |
+| Quick gate | Exit 1 | Exit 1 on retry |
+
+The 60-second replay and quest 1 produced identical hashes across both commits. **Mutation score was 10/19 (52.6%)** on `foe_rocket.gd`, with nine survivors, one invalid mutation, and zero timeouts. [Mutation report](C:/Users/kazda/kiro/gtai-wt/n22-foes/build/mutate/features-combat-squad-foe_rocket.json)
+
+**Duel:** Rivet killed all 20 troopers and took zero damage. Each trooper showed one tell and fired once. Kills occurred on ticks 169–274, median 212. The generic runner also completed a sentry-turret duel. [20-seed evidence](C:/Users/kazda/kiro/gtai-wt/n22-foes/evidence/foes/duel-rocket_trooper.json)
+
+**Files and decisions.** Changes cover the enemy table and schema, roster and weapon loading, pit and squad combat, `foe_looks.gd`, the three `foe_rocket*.gd` files, both requested tests, and the duel runner. The contractor is tier 2. Existing encounter selections retain their roster. The trooper reuses the blue SWAT rig and the cover-crouch projection.
+
+The three one-line arena call sites are [ArenaSquadLooks.look](C:/Users/kazda/kiro/gtai-wt/n22-foes/project/features/arena/arena_squad_looks.gd:15), [ArenaRobotRigs._rig](C:/Users/kazda/kiro/gtai-wt/n22-foes/project/features/arena/arena_robot_rigs.gd:69), and [ArenaRigs._process](C:/Users/kazda/kiro/gtai-wt/n22-foes/project/features/arena/arena_rigs.gd:158). The duel adds `--enemy` to `launch_args.gd` and updates the debt baseline.
+
+**Handoff**
+
+- **NEED guard:** Connect splash damage to `ArenaSquad.rockets.burst(at, radius_m, shot)`. Direct hits already damage Rivet. A dynamically added wall outside the route map reports the last clear position, within 0.15 m of impact.
+- **NEED tools:** `tools/godot/check.mjs` reports dependency cascades and Godot’s `PagedAllocator` shutdown error on rig scripts. This kept the quick gate red. All verification was headless, so the kneeling pose has no visual sign-off.
+- Merge preview flagged `enemies.schema.json` against guard and street, and `launch_args.gd` against guard, loop, and street. The design note was available only in the excluded main checkout, so I used the supplied brief.
+
+[astra: 3768s, exit 0]

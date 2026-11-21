@@ -183,6 +183,7 @@ func damage(
 		return
 	if guard != null and guard.blocks_melee(self, victim, killer_id, weapon, kind):
 		return
+	amount *= FoeArmor.impact(self, victim, kind, killer_id, weapon)
 	amount *= victim.damage_k
 	if victim.hp - amount <= 0.0 and victim.kind != Fighter.Kind.RIVET:
 		_events.actor_killed.emit(killer_id, victim.id, kind)
@@ -212,7 +213,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 
 
 func _step_hostile(h: Fighter) -> void:
-	if h.brain_owned or (areas != null and areas.holds(self, h)):
+	if h.brain_owned or (areas != null and h.archetype != &"war_machine" and areas.holds(self, h)):
 		return
 	if h.kind == Fighter.Kind.BOSS:
 		var ball: ArcBall = BossBrain.step(h, tazer, rivet.pos, boss_anchor, tuning)

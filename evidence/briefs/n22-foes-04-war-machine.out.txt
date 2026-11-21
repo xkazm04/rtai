@@ -1,0 +1,33 @@
+The war machine and tier sanity test landed on `n22-foes` before both deadlines. **Average Rivet won all 20 duels in 19.5–29.8 seconds and took damage in 19.** Perfect Rivet won all 20 without taking damage.
+
+| Player | Rivet hurt | Mean HP lost | Walker killed | Median kill tick | Damage during recovery | Damage from rear |
+|---|---:|---:|---:|---:|---:|---:|
+| Perfect | 0/20 | 0 | 20/20 | 1,408 | 40.9% | 1.2% |
+| Average | 19/20 | 53 | 20/20 | 1,609.5 | 45.1% | 22.9% |
+| Novice | 20/20 | 100.35 | 11/20 | 1,405 | 51.4% | 45.6% |
+
+Mean HP lost is cumulative across repairs. Median kill ticks use successful kills. [Per-seed duel evidence](C:/Users/kazda/kiro/gtai-wt/n22-foes/evidence/foes/duel-war_machine.json)
+
+**Implementation and tuning.** The walker seeks an 8–14 m band, locks its shell target on the firing tick, and uses the rocket’s existing flight and wall stop. Its cannon and stomp tells last 72 and 48 ticks. Both attacks leave a 72-tick pause with fixed facing and lit rear vents. Changes cover the enemy table, schema and roster, squad behaviour and rendering, duel and film drivers, and walker and tier tests. The only production call site changed outside the owned folders keeps control effects from interrupting the walker. [Walker](C:/Users/kazda/kiro/gtai-wt/n22-foes/project/features/combat/squad/foe_walker.gd) · [CombatArena call site](C:/Users/kazda/kiro/gtai-wt/n22-foes/project/features/combat/combat_arena.gd:213)
+
+| Gameplay value | Old → new |
+|---|---|
+| Walker HP and stagger | 60 → 26 HP, 0.25 → 0 s |
+| Front armour | 1× → 0.5×, default 120° arc made explicit |
+| Rear armour | 1× → 1.5× within the rear 90° |
+| Stomp tell | Shared 1.2 s → dedicated 0.8 s |
+| Recovery via weapon cooldown | Cannon 2.2 → 1.2 s, stomp 3 → 1.2 s |
+
+**Verification.** Lint passed 19/19 checks. Quick gate passed all 18 changed GDScript files. The changed suite passed 3,429 tests with two skipped. All 65 scenarios passed, and all seven scenario scratch files matched the pre-brief run byte-for-byte, including the 60-second replay and quest checkpoint. Godot reported resource leaks during teardown and exited 0. Mutation improved from **17/20 to 19/20** with zero invalid mutations or timeouts. The sole survivor divides by a direction sign that is always ±1, equivalent to multiplying by it. [Mutation results](C:/Users/kazda/kiro/gtai-wt/n22-foes/build/mutate/features-combat-squad-foe_walker.json)
+
+**Film.** Verified 20 seconds at 1920×1080, 60 fps and 32 px/m with two SWAT escorts. Five indexed stills cover both tells, recovery, a logged rear hit and the 64 px/m walker. [Film](C:/Users/kazda/kiro/gtai-masters/n22/foes/war_machine/arena.mp4) · [Frame index](C:/Users/kazda/kiro/gtai-masters/n22/foes/frames.json) · [64 px/m still](C:/Users/kazda/kiro/gtai-masters/n22/foes/war_machine/walker64/t175.png)
+
+**Commits**
+
+- `42a0e5632` — foes: war machine walks, shells at range, stomps up close, pauses after each attack
+- `0841836cf` — foes: show the walker stance and test its attack timers
+- `f617df7b5` — foes: tier sanity test over every enemy row
+
+**Integration remaining.** `NEED guard: project/features/combat/arena_projectiles.gd` for hostile cannon splash damage to Rivet. Direct hits, the 5 m burst event and stomp damage passed. `NEED street: project/features/gauntlet/` to verify every-fifth-wave placement in the wave composer, which is absent from this branch. The merge preview also flagged an `enemies.json` conflict with `n22-tune`.
+
+[astra: 3051s, exit 0]

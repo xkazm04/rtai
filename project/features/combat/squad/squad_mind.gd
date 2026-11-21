@@ -1,6 +1,5 @@
 class_name SquadMind
 extends RefCounted
-## Cover and flank plans are staggered by fighter ID. The motor follows cached route bends.
 
 const S := EnemyAgent.State
 const PLAN_TICKS: int = 12
@@ -8,6 +7,10 @@ const BLIND_LIMIT: int = 6 * SimClock.TICK_RATE
 const COVER_RADIUS_M: float = 8.0
 const SPACING_GAP_M: float = 1.5
 
+var walker: FoeWalker
+var turret: FoeTurret
+var shield: FoeShield
+var mobile_goal: Vector2 = Vector2.INF
 var rocket: FoeRocket
 var agent: EnemyAgent
 ## Rounds remaining when a token, range or sight interrupted the production trigger.
@@ -30,6 +33,9 @@ var _plan_offset: int = 0
 
 
 func _init(h: Fighter, arch: EnemyRoster.Archetype) -> void:
+	walker = FoeWalker.new() if arch.id == &"war_machine" else null
+	shield = FoeShield.new() if arch.id == &"shield_robot" else null
+	turret = FoeTurret.new() if arch.weapon.id == &"turret_gun" else null
 	rocket = FoeRocket.new() if arch.weapon.id == &"rocket" else null
 	agent = EnemyAgent.make(h.id, arch, h.pos)
 	agent.facing = h.facing
@@ -44,6 +50,8 @@ func available(h: Fighter, arena: CombatArena) -> bool:
 
 
 func destination() -> Vector2:
+	if mobile_goal.is_finite():
+		return mobile_goal
 	return agent.goal if _destination.is_finite() else Vector2.INF
 
 
@@ -162,7 +170,6 @@ func retry_route(map: GuardRouteMap) -> void:
 
 
 func _walk() -> Vector2:
-	# A queued route keeps its last bends, then steers directly until its search slot.
 	if _next < _route.size() and agent.pos.distance_to(_route[_next]) < 0.4:
 		_next += 1
 	if _next < _route.size():
@@ -170,31 +177,22 @@ func _walk() -> Vector2:
 	return EnemyMotor.arrive(agent, agent.goal, agent.arch.speed_mps)
 
 
-## Plant for the row's tell, then resolve the locked arc against Rivet's current position.
 func swing(h: Fighter, arena: CombatArena, map: GuardRouteMap) -> void:
-	var e: EnemyAgent = agent
-	e.cooldown = maxi(0, e.cooldown - 1)
-	if not e.token or motion == S.PANIC:
-		h.swing_left = 0
-		return
-	var to: Vector2 = arena.rivet.pos - h.pos
-	var reach: float = e.arch.weapon.reach_m + arena.rivet.radius_m
-	if h.swing_left == 0:
-		if not e.sees or to.length() > reach or e.cooldown > 0:
-			return
-		h.swing_tick = arena.tick
-		h.swing_left = e.arch.telegraph_ticks
-		e.aim = to.normalized()
-		arena.announce_tell(e.arch.weapon.id)
-	else:
-		h.swing_left -= 1
-	e.state = S.WINDUP
-	h.facing = e.aim
-	if h.swing_left > 0:
-		return
-	e.state = S.FIRE
-	e.cooldown = e.arch.weapon.cooldown_ticks
-	e.token = false
-	if to.length() <= reach and e.aim.dot(to.normalized()) >= EnemyPit.MELEE_ARC_COS:
-		if map.sight_line(h.pos, arena.rivet.pos):
-			FoeAttacks.melee_hit(e, arena, map)
+	FoeAttacks.swing(self, h, arena, map)
+
+
+func forget_route() -> void:
+	if rocket != null:
+		rocket.forget_site()
+	mobile_goal = Vector2.INF
+	_route.clear()
+	_next = 0
+	_destination = Vector2.INF
+	_hide = Vector2.INF
+	_return_until = -1
+	_peek = -1
+	_strafe = false
+	_blind = 0
+	agent.goal = agent.pos
+	route_pending = false
+	plan_pending = true

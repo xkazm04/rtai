@@ -44,6 +44,7 @@ func launch(
 	if h.pos.distance_to(s.target) < h.pos.distance_to(s.pos):
 		s.pos = h.pos
 		s.origin = h.pos
+	s.vel = s.pos.direction_to(s.target) * w.speed_mps
 	s.previous = s.pos
 	s.radius_m = w.splash_radius_m
 	s.left_m = s.pos.distance_to(s.target)
@@ -75,11 +76,12 @@ func collect(arena: CombatArena, map: GuardRouteMap) -> void:
 
 ## Resolve direct impacts in the same tick, including the shot that kills Rivet.
 func _struck(victim: Fighter, _dir: Vector2, _lethal: bool, weapon: StringName) -> void:
-	if victim.kind != Fighter.Kind.RIVET or weapon != &"rocket":
+	if victim.kind != Fighter.Kind.RIVET:
 		return
 	for s: Round in _live:
 		if (
-			not s.from_rivet
+			s.weapon == weapon
+			and not s.from_rivet
 			and s.previous != s.pos
 			and s.crossed(s.previous, victim.pos, victim.radius_m)
 		):

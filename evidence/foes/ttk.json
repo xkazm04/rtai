@@ -1,0 +1,2875 @@
+{
+  "enemies": {
+    "contractor": {
+      "tier": 2,
+      "weapons": {
+        "claw": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 1.84,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.0833333333333333
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 1.84,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.0833333333333333
+          }
+        },
+        "electro_gun": {
+          "front": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.683333333333333
+          },
+          "rear": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.683333333333333
+          }
+        },
+        "flamethrower": {
+          "front": {
+            "attempts": 392,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.191326530612245,
+            "hits": 75,
+            "kills": 10,
+            "median_s": 1.975
+          },
+          "rear": {
+            "attempts": 392,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.191326530612245,
+            "hits": 75,
+            "kills": 10,
+            "median_s": 1.975
+          }
+        },
+        "gatling": {
+          "front": {
+            "attempts": 33,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.606060606060606,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.633333333333333
+          },
+          "rear": {
+            "attempts": 33,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.606060606060606,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.633333333333333
+          }
+        },
+        "gloria": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.166666666666667
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.166666666666667
+          }
+        },
+        "hand_cannon": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.1
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.1
+          }
+        },
+        "homing_shard": {
+          "front": {
+            "attempts": 40,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 0.25,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.433333333333333
+          },
+          "rear": {
+            "attempts": 40,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 0.25,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.433333333333333
+          }
+        },
+        "machine_pistol": {
+          "front": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.2
+          },
+          "rear": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.2
+          }
+        },
+        "mini_nuke": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 1.1
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 1.1
+          }
+        },
+        "molotov": {
+          "front": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 1.76666666666667
+          },
+          "rear": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 1.76666666666667
+          }
+        },
+        "pistol": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.116666666666667
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.116666666666667
+          }
+        },
+        "plasma_rifle": {
+          "front": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 0.5,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.233333333333333
+          },
+          "rear": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 0.5,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.233333333333333
+          }
+        },
+        "ray_gun": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.0833333333333333
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.0833333333333333
+          }
+        },
+        "rocket_launcher": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.383333333333333
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.383333333333333
+          }
+        }
+      }
+    },
+    "patrol_cop": {
+      "tier": 1,
+      "weapons": {
+        "claw": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 1.84,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.0833333333333333
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 1.84,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.0833333333333333
+          }
+        },
+        "electro_gun": {
+          "front": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.683333333333333
+          },
+          "rear": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.683333333333333
+          }
+        },
+        "flamethrower": {
+          "front": {
+            "attempts": 392,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.191326530612245,
+            "hits": 75,
+            "kills": 10,
+            "median_s": 1.975
+          },
+          "rear": {
+            "attempts": 392,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.191326530612245,
+            "hits": 75,
+            "kills": 10,
+            "median_s": 1.975
+          }
+        },
+        "gatling": {
+          "front": {
+            "attempts": 33,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.606060606060606,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.633333333333333
+          },
+          "rear": {
+            "attempts": 33,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.606060606060606,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.633333333333333
+          }
+        },
+        "gloria": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.166666666666667
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.166666666666667
+          }
+        },
+        "hand_cannon": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.1
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.1
+          }
+        },
+        "homing_shard": {
+          "front": {
+            "attempts": 40,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 0.25,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.433333333333333
+          },
+          "rear": {
+            "attempts": 40,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 0.25,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.433333333333333
+          }
+        },
+        "machine_pistol": {
+          "front": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.2
+          },
+          "rear": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.2
+          }
+        },
+        "mini_nuke": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 1.1
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 1.1
+          }
+        },
+        "molotov": {
+          "front": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 1.76666666666667
+          },
+          "rear": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 1.76666666666667
+          }
+        },
+        "pistol": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.116666666666667
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.116666666666667
+          }
+        },
+        "plasma_rifle": {
+          "front": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 0.5,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.233333333333333
+          },
+          "rear": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 0.5,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.233333333333333
+          }
+        },
+        "ray_gun": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.0833333333333333
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.0833333333333333
+          }
+        },
+        "rocket_launcher": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.383333333333333
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.383333333333333
+          }
+        }
+      }
+    },
+    "riot_cop": {
+      "tier": 2,
+      "weapons": {
+        "claw": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 1.84,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.0833333333333333
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 1.84,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.0833333333333333
+          }
+        },
+        "electro_gun": {
+          "front": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.683333333333333
+          },
+          "rear": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.683333333333333
+          }
+        },
+        "flamethrower": {
+          "front": {
+            "attempts": 392,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.191326530612245,
+            "hits": 75,
+            "kills": 10,
+            "median_s": 1.975
+          },
+          "rear": {
+            "attempts": 392,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.191326530612245,
+            "hits": 75,
+            "kills": 10,
+            "median_s": 1.975
+          }
+        },
+        "gatling": {
+          "front": {
+            "attempts": 33,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.606060606060606,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.633333333333333
+          },
+          "rear": {
+            "attempts": 33,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.606060606060606,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.633333333333333
+          }
+        },
+        "gloria": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.166666666666667
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.166666666666667
+          }
+        },
+        "hand_cannon": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.1
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.1
+          }
+        },
+        "homing_shard": {
+          "front": {
+            "attempts": 40,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 0.25,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.433333333333333
+          },
+          "rear": {
+            "attempts": 40,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 0.25,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.433333333333333
+          }
+        },
+        "machine_pistol": {
+          "front": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.2
+          },
+          "rear": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.2
+          }
+        },
+        "mini_nuke": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 1.1
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 1.1
+          }
+        },
+        "molotov": {
+          "front": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 1.76666666666667
+          },
+          "rear": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 1.76666666666667
+          }
+        },
+        "pistol": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.116666666666667
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.116666666666667
+          }
+        },
+        "plasma_rifle": {
+          "front": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 0.5,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.233333333333333
+          },
+          "rear": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 0.5,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.233333333333333
+          }
+        },
+        "ray_gun": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.0833333333333333
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.0833333333333333
+          }
+        },
+        "rocket_launcher": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.383333333333333
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.383333333333333
+          }
+        }
+      }
+    },
+    "robot_gunner": {
+      "tier": 3,
+      "weapons": {
+        "claw": {
+          "front": {
+            "attempts": 30,
+            "distance_m": 1.84,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 30,
+            "kills": 10,
+            "median_s": 0.533333333333333
+          },
+          "rear": {
+            "attempts": 30,
+            "distance_m": 1.84,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 30,
+            "kills": 10,
+            "median_s": 0.533333333333333
+          }
+        },
+        "electro_gun": {
+          "front": {
+            "attempts": 70,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 70,
+            "kills": 10,
+            "median_s": 3.18333333333333
+          },
+          "rear": {
+            "attempts": 70,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 70,
+            "kills": 10,
+            "median_s": 3.18333333333333
+          }
+        },
+        "flamethrower": {
+          "front": {
+            "attempts": 1164,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.254295532646048,
+            "hits": 296,
+            "kills": 10,
+            "median_s": 6.26666666666667
+          },
+          "rear": {
+            "attempts": 1164,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.254295532646048,
+            "hits": 296,
+            "kills": 10,
+            "median_s": 6.26666666666667
+          }
+        },
+        "gatling": {
+          "front": {
+            "attempts": 95,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.842105263157895,
+            "hits": 80,
+            "kills": 10,
+            "median_s": 0.933333333333333
+          },
+          "rear": {
+            "attempts": 95,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.842105263157895,
+            "hits": 80,
+            "kills": 10,
+            "median_s": 0.933333333333333
+          }
+        },
+        "gloria": {
+          "front": {
+            "attempts": 40,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 40,
+            "kills": 10,
+            "median_s": 1.36666666666667
+          },
+          "rear": {
+            "attempts": 40,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 40,
+            "kills": 10,
+            "median_s": 1.36666666666667
+          }
+        },
+        "hand_cannon": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.1
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.1
+          }
+        },
+        "homing_shard": {
+          "front": {
+            "attempts": 70,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.571428571428571,
+            "hits": 40,
+            "kills": 10,
+            "median_s": 0.841666666666667
+          },
+          "rear": {
+            "attempts": 70,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.571428571428571,
+            "hits": 40,
+            "kills": 10,
+            "median_s": 0.841666666666667
+          }
+        },
+        "machine_pistol": {
+          "front": {
+            "attempts": 90,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.888888888888889,
+            "hits": 80,
+            "kills": 10,
+            "median_s": 0.6
+          },
+          "rear": {
+            "attempts": 90,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.888888888888889,
+            "hits": 80,
+            "kills": 10,
+            "median_s": 0.6
+          }
+        },
+        "mini_nuke": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 1.1
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 1.1
+          }
+        },
+        "molotov": {
+          "front": {
+            "attempts": 80,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.9375,
+            "hits": 75,
+            "kills": 10,
+            "median_s": 6.40833333333333
+          },
+          "rear": {
+            "attempts": 80,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.9375,
+            "hits": 75,
+            "kills": 10,
+            "median_s": 6.40833333333333
+          }
+        },
+        "pistol": {
+          "front": {
+            "attempts": 40,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 40,
+            "kills": 10,
+            "median_s": 0.866666666666667
+          },
+          "rear": {
+            "attempts": 40,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 40,
+            "kills": 10,
+            "median_s": 0.866666666666667
+          }
+        },
+        "plasma_rifle": {
+          "front": {
+            "attempts": 40,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.75,
+            "hits": 30,
+            "kills": 10,
+            "median_s": 0.566666666666667
+          },
+          "rear": {
+            "attempts": 40,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.75,
+            "hits": 30,
+            "kills": 10,
+            "median_s": 0.566666666666667
+          }
+        },
+        "ray_gun": {
+          "front": {
+            "attempts": 40,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 40,
+            "kills": 10,
+            "median_s": 0.383333333333333
+          },
+          "rear": {
+            "attempts": 40,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 40,
+            "kills": 10,
+            "median_s": 0.383333333333333
+          }
+        },
+        "rocket_launcher": {
+          "front": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 2.18333333333333
+          },
+          "rear": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 2.18333333333333
+          }
+        }
+      }
+    },
+    "robot_thug": {
+      "tier": 3,
+      "weapons": {
+        "claw": {
+          "front": {
+            "attempts": 50,
+            "distance_m": 1.84,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 50,
+            "kills": 10,
+            "median_s": 1.2
+          },
+          "rear": {
+            "attempts": 50,
+            "distance_m": 1.84,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 50,
+            "kills": 10,
+            "median_s": 1.2
+          }
+        },
+        "electro_gun": {
+          "front": {
+            "attempts": 90,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 90,
+            "kills": 10,
+            "median_s": 5.76666666666667
+          },
+          "rear": {
+            "attempts": 90,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 90,
+            "kills": 10,
+            "median_s": 5.76666666666667
+          }
+        },
+        "flamethrower": {
+          "front": {
+            "attempts": 1579,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.251424952501583,
+            "hits": 397,
+            "kills": 10,
+            "median_s": 10.0916666666667
+          },
+          "rear": {
+            "attempts": 1579,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.251424952501583,
+            "hits": 397,
+            "kills": 10,
+            "median_s": 10.0916666666667
+          }
+        },
+        "gatling": {
+          "front": {
+            "attempts": 136,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.882352941176471,
+            "hits": 120,
+            "kills": 10,
+            "median_s": 1.13333333333333
+          },
+          "rear": {
+            "attempts": 136,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.882352941176471,
+            "hits": 120,
+            "kills": 10,
+            "median_s": 1.13333333333333
+          }
+        },
+        "gloria": {
+          "front": {
+            "attempts": 60,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 60,
+            "kills": 10,
+            "median_s": 2.16666666666667
+          },
+          "rear": {
+            "attempts": 60,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 60,
+            "kills": 10,
+            "median_s": 2.16666666666667
+          }
+        },
+        "hand_cannon": {
+          "front": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.933333333333333
+          },
+          "rear": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.933333333333333
+          }
+        },
+        "homing_shard": {
+          "front": {
+            "attempts": 90,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 60,
+            "kills": 10,
+            "median_s": 1.10833333333333
+          },
+          "rear": {
+            "attempts": 90,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 60,
+            "kills": 10,
+            "median_s": 1.10833333333333
+          }
+        },
+        "machine_pistol": {
+          "front": {
+            "attempts": 130,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.923076923076923,
+            "hits": 120,
+            "kills": 10,
+            "median_s": 0.866666666666667
+          },
+          "rear": {
+            "attempts": 130,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.923076923076923,
+            "hits": 120,
+            "kills": 10,
+            "median_s": 0.866666666666667
+          }
+        },
+        "mini_nuke": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 1.1
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 1.1
+          }
+        },
+        "molotov": {
+          "front": {
+            "attempts": 110,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 110,
+            "kills": 10,
+            "median_s": 8.91666666666667
+          },
+          "rear": {
+            "attempts": 110,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 110,
+            "kills": 10,
+            "median_s": 8.91666666666667
+          }
+        },
+        "pistol": {
+          "front": {
+            "attempts": 60,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 60,
+            "kills": 10,
+            "median_s": 1.36666666666667
+          },
+          "rear": {
+            "attempts": 60,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 60,
+            "kills": 10,
+            "median_s": 1.36666666666667
+          }
+        },
+        "plasma_rifle": {
+          "front": {
+            "attempts": 50,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.8,
+            "hits": 40,
+            "kills": 10,
+            "median_s": 0.733333333333333
+          },
+          "rear": {
+            "attempts": 50,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.8,
+            "hits": 40,
+            "kills": 10,
+            "median_s": 0.733333333333333
+          }
+        },
+        "ray_gun": {
+          "front": {
+            "attempts": 60,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 60,
+            "kills": 10,
+            "median_s": 0.583333333333333
+          },
+          "rear": {
+            "attempts": 60,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 60,
+            "kills": 10,
+            "median_s": 0.583333333333333
+          }
+        },
+        "rocket_launcher": {
+          "front": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 2.18333333333333
+          },
+          "rear": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 2.18333333333333
+          }
+        }
+      }
+    },
+    "rocket_trooper": {
+      "tier": 2,
+      "weapons": {
+        "claw": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 1.84,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.0833333333333333
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 1.84,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.0833333333333333
+          }
+        },
+        "electro_gun": {
+          "front": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.683333333333333
+          },
+          "rear": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.683333333333333
+          }
+        },
+        "flamethrower": {
+          "front": {
+            "attempts": 392,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.191326530612245,
+            "hits": 75,
+            "kills": 10,
+            "median_s": 1.975
+          },
+          "rear": {
+            "attempts": 392,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.191326530612245,
+            "hits": 75,
+            "kills": 10,
+            "median_s": 1.975
+          }
+        },
+        "gatling": {
+          "front": {
+            "attempts": 33,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.606060606060606,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.633333333333333
+          },
+          "rear": {
+            "attempts": 33,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.606060606060606,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.633333333333333
+          }
+        },
+        "gloria": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.166666666666667
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.166666666666667
+          }
+        },
+        "hand_cannon": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.1
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.1
+          }
+        },
+        "homing_shard": {
+          "front": {
+            "attempts": 40,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 0.25,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.433333333333333
+          },
+          "rear": {
+            "attempts": 40,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 0.25,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.433333333333333
+          }
+        },
+        "machine_pistol": {
+          "front": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.2
+          },
+          "rear": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.2
+          }
+        },
+        "mini_nuke": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 1.1
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 1.1
+          }
+        },
+        "molotov": {
+          "front": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 1.76666666666667
+          },
+          "rear": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 1.76666666666667
+          }
+        },
+        "pistol": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.116666666666667
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.116666666666667
+          }
+        },
+        "plasma_rifle": {
+          "front": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 0.5,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.233333333333333
+          },
+          "rear": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 0.5,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.233333333333333
+          }
+        },
+        "ray_gun": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.0833333333333333
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.0833333333333333
+          }
+        },
+        "rocket_launcher": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.383333333333333
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.383333333333333
+          }
+        }
+      }
+    },
+    "sentry_turret": {
+      "tier": 3,
+      "weapons": {
+        "claw": {
+          "front": {
+            "attempts": 240,
+            "distance_m": 1.84,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 240,
+            "kills": 10,
+            "median_s": 7.06666666666667
+          },
+          "rear": {
+            "attempts": 60,
+            "distance_m": 1.84,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 60,
+            "kills": 10,
+            "median_s": 1.46666666666667
+          }
+        },
+        "electro_gun": {
+          "front": {
+            "attempts": 450,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.977777777777778,
+            "hits": 440,
+            "kills": 0,
+            "median_s": null
+          },
+          "rear": {
+            "attempts": 120,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 120,
+            "kills": 10,
+            "median_s": 7.26666666666667
+          }
+        },
+        "flamethrower": {
+          "front": {
+            "attempts": 4710,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.261571125265393,
+            "hits": 1232,
+            "kills": 0,
+            "median_s": null
+          },
+          "rear": {
+            "attempts": 2157,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.249884098284655,
+            "hits": 539,
+            "kills": 10,
+            "median_s": 12.8166666666667
+          }
+        },
+        "gatling": {
+          "front": {
+            "attempts": 696,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.919540229885057,
+            "hits": 640,
+            "kills": 10,
+            "median_s": 3.93333333333333
+          },
+          "rear": {
+            "attempts": 183,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.87431693989071,
+            "hits": 160,
+            "kills": 10,
+            "median_s": 1.38333333333333
+          }
+        },
+        "gloria": {
+          "front": {
+            "attempts": 320,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 320,
+            "kills": 10,
+            "median_s": 12.5666666666667
+          },
+          "rear": {
+            "attempts": 80,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 80,
+            "kills": 10,
+            "median_s": 2.96666666666667
+          }
+        },
+        "hand_cannon": {
+          "front": {
+            "attempts": 80,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 80,
+            "kills": 10,
+            "median_s": 6.9
+          },
+          "rear": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.933333333333333
+          }
+        },
+        "homing_shard": {
+          "front": {
+            "attempts": 350,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.914285714285714,
+            "hits": 320,
+            "kills": 10,
+            "median_s": 6.23333333333333
+          },
+          "rear": {
+            "attempts": 110,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.727272727272727,
+            "hits": 80,
+            "kills": 10,
+            "median_s": 1.36666666666667
+          }
+        },
+        "machine_pistol": {
+          "front": {
+            "attempts": 650,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.984615384615385,
+            "hits": 640,
+            "kills": 10,
+            "median_s": 7.4
+          },
+          "rear": {
+            "attempts": 170,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.941176470588235,
+            "hits": 160,
+            "kills": 10,
+            "median_s": 1.13333333333333
+          }
+        },
+        "mini_nuke": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 1.1
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 1.1
+          }
+        },
+        "molotov": {
+          "front": {
+            "attempts": 150,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.96,
+            "hits": 144,
+            "kills": 10,
+            "median_s": 12.2333333333333
+          },
+          "rear": {
+            "attempts": 360,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 360,
+            "kills": 0,
+            "median_s": null
+          }
+        },
+        "pistol": {
+          "front": {
+            "attempts": 320,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 320,
+            "kills": 10,
+            "median_s": 9.56666666666667
+          },
+          "rear": {
+            "attempts": 80,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 80,
+            "kills": 10,
+            "median_s": 1.86666666666667
+          }
+        },
+        "plasma_rifle": {
+          "front": {
+            "attempts": 230,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.956521739130435,
+            "hits": 220,
+            "kills": 10,
+            "median_s": 3.73333333333333
+          },
+          "rear": {
+            "attempts": 70,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.857142857142857,
+            "hits": 60,
+            "kills": 10,
+            "median_s": 1.06666666666667
+          }
+        },
+        "ray_gun": {
+          "front": {
+            "attempts": 320,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 320,
+            "kills": 10,
+            "median_s": 3.18333333333333
+          },
+          "rear": {
+            "attempts": 80,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 80,
+            "kills": 10,
+            "median_s": 0.783333333333333
+          }
+        },
+        "rocket_launcher": {
+          "front": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 30,
+            "kills": 10,
+            "median_s": 3.98333333333333
+          },
+          "rear": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 30,
+            "kills": 10,
+            "median_s": 3.98333333333333
+          }
+        }
+      }
+    },
+    "shield_robot": {
+      "tier": 4,
+      "weapons": {
+        "claw": {
+          "front": {
+            "attempts": 380,
+            "distance_m": 1.84,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 380,
+            "kills": 10,
+            "median_s": 11.4666666666667
+          },
+          "rear": {
+            "attempts": 80,
+            "distance_m": 1.84,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 80,
+            "kills": 10,
+            "median_s": 2.13333333333333
+          }
+        },
+        "electro_gun": {
+          "front": {
+            "attempts": 450,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.977777777777778,
+            "hits": 440,
+            "kills": 0,
+            "median_s": null
+          },
+          "rear": {
+            "attempts": 160,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 160,
+            "kills": 10,
+            "median_s": 9.26666666666667
+          }
+        },
+        "flamethrower": {
+          "front": {
+            "attempts": 4710,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.261571125265393,
+            "hits": 1232,
+            "kills": 0,
+            "median_s": null
+          },
+          "rear": {
+            "attempts": 2527,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.255243371586862,
+            "hits": 645,
+            "kills": 10,
+            "median_s": 16.9166666666667
+          }
+        },
+        "gatling": {
+          "front": {
+            "attempts": 1103,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.915684496826836,
+            "hits": 1010,
+            "kills": 10,
+            "median_s": 5.94166666666667
+          },
+          "rear": {
+            "attempts": 230,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.869565217391304,
+            "hits": 200,
+            "kills": 10,
+            "median_s": 1.63333333333333
+          }
+        },
+        "gloria": {
+          "front": {
+            "attempts": 510,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 510,
+            "kills": 10,
+            "median_s": 20.1666666666667
+          },
+          "rear": {
+            "attempts": 100,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 100,
+            "kills": 10,
+            "median_s": 3.76666666666667
+          }
+        },
+        "hand_cannon": {
+          "front": {
+            "attempts": 130,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 130,
+            "kills": 10,
+            "median_s": 12.0333333333333
+          },
+          "rear": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 30,
+            "kills": 10,
+            "median_s": 1.76666666666667
+          }
+        },
+        "homing_shard": {
+          "front": {
+            "attempts": 130,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.769230769230769,
+            "hits": 100,
+            "kills": 10,
+            "median_s": 1.63333333333333
+          },
+          "rear": {
+            "attempts": 130,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.769230769230769,
+            "hits": 100,
+            "kills": 10,
+            "median_s": 1.63333333333333
+          }
+        },
+        "machine_pistol": {
+          "front": {
+            "attempts": 1020,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.990196078431373,
+            "hits": 1010,
+            "kills": 10,
+            "median_s": 11.4
+          },
+          "rear": {
+            "attempts": 210,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.952380952380952,
+            "hits": 200,
+            "kills": 10,
+            "median_s": 1.4
+          }
+        },
+        "mini_nuke": {
+          "front": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.85,
+            "hits": 17,
+            "kills": 10,
+            "median_s": 5.08333333333333
+          },
+          "rear": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 5.1
+          }
+        },
+        "molotov": {
+          "front": {
+            "attempts": 180,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 180,
+            "kills": 10,
+            "median_s": 14.75
+          },
+          "rear": {
+            "attempts": 276,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.978260869565217,
+            "hits": 270,
+            "kills": 10,
+            "median_s": 22.6833333333333
+          }
+        },
+        "pistol": {
+          "front": {
+            "attempts": 510,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 510,
+            "kills": 10,
+            "median_s": 16.0166666666667
+          },
+          "rear": {
+            "attempts": 100,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 100,
+            "kills": 10,
+            "median_s": 2.36666666666667
+          }
+        },
+        "plasma_rifle": {
+          "front": {
+            "attempts": 350,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.971428571428571,
+            "hits": 340,
+            "kills": 10,
+            "median_s": 5.73333333333333
+          },
+          "rear": {
+            "attempts": 80,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.875,
+            "hits": 70,
+            "kills": 10,
+            "median_s": 1.23333333333333
+          }
+        },
+        "ray_gun": {
+          "front": {
+            "attempts": 510,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 510,
+            "kills": 10,
+            "median_s": 6.98333333333333
+          },
+          "rear": {
+            "attempts": 100,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 100,
+            "kills": 10,
+            "median_s": 0.983333333333333
+          }
+        },
+        "rocket_launcher": {
+          "front": {
+            "attempts": 40,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 40,
+            "kills": 10,
+            "median_s": 5.78333333333333
+          },
+          "rear": {
+            "attempts": 40,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 40,
+            "kills": 10,
+            "median_s": 5.78333333333333
+          }
+        }
+      }
+    },
+    "swat": {
+      "tier": 2,
+      "weapons": {
+        "claw": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 1.84,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.0833333333333333
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 1.84,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.0833333333333333
+          }
+        },
+        "electro_gun": {
+          "front": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.683333333333333
+          },
+          "rear": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.683333333333333
+          }
+        },
+        "flamethrower": {
+          "front": {
+            "attempts": 392,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.191326530612245,
+            "hits": 75,
+            "kills": 10,
+            "median_s": 1.975
+          },
+          "rear": {
+            "attempts": 392,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.191326530612245,
+            "hits": 75,
+            "kills": 10,
+            "median_s": 1.975
+          }
+        },
+        "gatling": {
+          "front": {
+            "attempts": 33,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.606060606060606,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.633333333333333
+          },
+          "rear": {
+            "attempts": 33,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.606060606060606,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.633333333333333
+          }
+        },
+        "gloria": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.166666666666667
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.166666666666667
+          }
+        },
+        "hand_cannon": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.1
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.1
+          }
+        },
+        "homing_shard": {
+          "front": {
+            "attempts": 40,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 0.25,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.433333333333333
+          },
+          "rear": {
+            "attempts": 40,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 0.25,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.433333333333333
+          }
+        },
+        "machine_pistol": {
+          "front": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.2
+          },
+          "rear": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 0.2
+          }
+        },
+        "mini_nuke": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 1.1
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 1.1
+          }
+        },
+        "molotov": {
+          "front": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 1.76666666666667
+          },
+          "rear": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.666666666666667,
+            "hits": 20,
+            "kills": 10,
+            "median_s": 1.76666666666667
+          }
+        },
+        "pistol": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.116666666666667
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.116666666666667
+          }
+        },
+        "plasma_rifle": {
+          "front": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 0.5,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.233333333333333
+          },
+          "rear": {
+            "attempts": 20,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 0.5,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.233333333333333
+          }
+        },
+        "ray_gun": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.0833333333333333
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.0833333333333333
+          }
+        },
+        "rocket_launcher": {
+          "front": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.383333333333333
+          },
+          "rear": {
+            "attempts": 10,
+            "distance_m": 8.0,
+            "first_hit_kills": 10,
+            "hit_share": 1.0,
+            "hits": 10,
+            "kills": 10,
+            "median_s": 0.383333333333333
+          }
+        }
+      }
+    },
+    "war_machine": {
+      "tier": 5,
+      "weapons": {
+        "claw": {
+          "front": {
+            "attempts": 390,
+            "distance_m": 1.84,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 390,
+            "kills": 10,
+            "median_s": 11.7333333333333
+          },
+          "rear": {
+            "attempts": 140,
+            "distance_m": 1.84,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 140,
+            "kills": 10,
+            "median_s": 4.0
+          }
+        },
+        "electro_gun": {
+          "front": {
+            "attempts": 450,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.977777777777778,
+            "hits": 440,
+            "kills": 0,
+            "median_s": null
+          },
+          "rear": {
+            "attempts": 250,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 250,
+            "kills": 10,
+            "median_s": 16.9333333333333
+          }
+        },
+        "flamethrower": {
+          "front": {
+            "attempts": 4710,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.261571125265393,
+            "hits": 1232,
+            "kills": 0,
+            "median_s": null
+          },
+          "rear": {
+            "attempts": 4364,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.25916590284143,
+            "hits": 1131,
+            "kills": 10,
+            "median_s": 28.7416666666667
+          }
+        },
+        "gatling": {
+          "front": {
+            "attempts": 1137,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.914687774846086,
+            "hits": 1040,
+            "kills": 10,
+            "median_s": 6.08333333333333
+          },
+          "rear": {
+            "attempts": 391,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.895140664961637,
+            "hits": 350,
+            "kills": 10,
+            "median_s": 2.41666666666667
+          }
+        },
+        "gloria": {
+          "front": {
+            "attempts": 520,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 520,
+            "kills": 10,
+            "median_s": 20.5666666666667
+          },
+          "rear": {
+            "attempts": 180,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 180,
+            "kills": 10,
+            "median_s": 6.96666666666667
+          }
+        },
+        "hand_cannon": {
+          "front": {
+            "attempts": 130,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 130,
+            "kills": 10,
+            "median_s": 12.0333333333333
+          },
+          "rear": {
+            "attempts": 50,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 50,
+            "kills": 10,
+            "median_s": 3.43333333333333
+          }
+        },
+        "homing_shard": {
+          "front": {
+            "attempts": 290,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.896551724137931,
+            "hits": 260,
+            "kills": 10,
+            "median_s": 5.43333333333333
+          },
+          "rear": {
+            "attempts": 290,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.896551724137931,
+            "hits": 260,
+            "kills": 10,
+            "median_s": 5.43333333333333
+          }
+        },
+        "machine_pistol": {
+          "front": {
+            "attempts": 1050,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.990476190476191,
+            "hits": 1040,
+            "kills": 10,
+            "median_s": 11.6
+          },
+          "rear": {
+            "attempts": 360,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.972222222222222,
+            "hits": 350,
+            "kills": 10,
+            "median_s": 3.93333333333333
+          }
+        },
+        "mini_nuke": {
+          "front": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 30,
+            "kills": 10,
+            "median_s": 9.09166666666667
+          },
+          "rear": {
+            "attempts": 30,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 30,
+            "kills": 10,
+            "median_s": 9.09166666666667
+          }
+        },
+        "molotov": {
+          "front": {
+            "attempts": 360,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 360,
+            "kills": 0,
+            "median_s": null
+          },
+          "rear": {
+            "attempts": 360,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 360,
+            "kills": 0,
+            "median_s": null
+          }
+        },
+        "pistol": {
+          "front": {
+            "attempts": 520,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 520,
+            "kills": 10,
+            "median_s": 16.2666666666667
+          },
+          "rear": {
+            "attempts": 180,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 180,
+            "kills": 10,
+            "median_s": 5.21666666666667
+          }
+        },
+        "plasma_rifle": {
+          "front": {
+            "attempts": 360,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.972222222222222,
+            "hits": 350,
+            "kills": 10,
+            "median_s": 5.9
+          },
+          "rear": {
+            "attempts": 130,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 0.923076923076923,
+            "hits": 120,
+            "kills": 10,
+            "median_s": 2.06666666666667
+          }
+        },
+        "ray_gun": {
+          "front": {
+            "attempts": 520,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 520,
+            "kills": 10,
+            "median_s": 7.08333333333333
+          },
+          "rear": {
+            "attempts": 180,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 180,
+            "kills": 10,
+            "median_s": 1.78333333333333
+          }
+        },
+        "rocket_launcher": {
+          "front": {
+            "attempts": 90,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 90,
+            "kills": 10,
+            "median_s": 14.7833333333333
+          },
+          "rear": {
+            "attempts": 90,
+            "distance_m": 8.0,
+            "first_hit_kills": 0,
+            "hit_share": 1.0,
+            "hits": 90,
+            "kills": 10,
+            "median_s": 14.7833333333333
+          }
+        }
+      }
+    }
+  },
+  "first_seed": 1,
+  "limit_ticks": 1800,
+  "schema": "gtai.foe-ttk/1",
+  "tick_hz": 60,
+  "trials": 10,
+  "weapons": [
+    "pistol",
+    "machine_pistol",
+    "flamethrower",
+    "rocket_launcher",
+    "electro_gun",
+    "molotov",
+    "gloria",
+    "plasma_rifle",
+    "hand_cannon",
+    "ray_gun",
+    "homing_shard",
+    "mini_nuke",
+    "gatling",
+    "claw"
+  ]
+}

@@ -1,0 +1,43 @@
+Committed the TTK benchmark, enemy look changes, capture fixes, and rocket relocation tests on `n22-foes`. Part A landed at 04:25, eight minutes after start. The last code commit landed at 04:53. The tracked worktree is clean.
+
+**Verification:** 3,448 unit tests passed, 0 failed, 2 skipped. All 65 scenarios and all 19 lint checks passed. The quick gate passed on all 13 changed GDScripts. The 60-second replay, quest 1 replay, and quest checkpoint matched their prior hashes byte for byte.
+
+### Time to kill at 8 m
+
+Median seconds over ten paired seeds per cell, 2,800 trials total. A single value means front and rear were equal. Pairs are **front / rear**. A dash means the median kill time exceeded 30 seconds. Bare claw could not reach from 8 m. A second run reproduced both evidence files byte for byte. [Full table](C:/Users/kazda/kiro/gtai-wt/n22-foes/evidence/foes/ttk.md) · [JSON with hit shares and first-hit kills](C:/Users/kazda/kiro/gtai-wt/n22-foes/evidence/foes/ttk.json)
+
+| Tier | Enemy | Pistol | Machine pistol | Flame | Rocket | Electro | Molotov | Gloria | Plasma | Hand cannon | Ray | Shard | Mini-nuke | Gatling | Claw |
+|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | Patrol cop | 0.12 | 0.20 | 1.97 | 0.38 | 0.68 | 1.77 | 0.17 | 0.23 | 0.10 | 0.08 | 0.43 | 1.10 | 0.63 | — |
+| 2 | Contractor | 0.12 | 0.20 | 1.97 | 0.38 | 0.68 | 1.77 | 0.17 | 0.23 | 0.10 | 0.08 | 0.43 | 1.10 | 0.63 | — |
+| 2 | Riot cop | 0.12 | 0.20 | 1.97 | 0.38 | 0.68 | 1.77 | 0.17 | 0.23 | 0.10 | 0.08 | 0.43 | 1.10 | 0.63 | — |
+| 2 | Rocket trooper | 0.12 | 0.20 | 1.97 | 0.38 | 0.68 | 1.77 | 0.17 | 0.23 | 0.10 | 0.08 | 0.43 | 1.10 | 0.63 | — |
+| 2 | SWAT | 0.12 | 0.20 | 1.97 | 0.38 | 0.68 | 1.77 | 0.17 | 0.23 | 0.10 | 0.08 | 0.43 | 1.10 | 0.63 | — |
+| 3 | Robot gunner | 0.87 | 0.60 | 6.27 | 2.18 | 3.18 | 6.41 | 1.37 | 0.57 | 0.10 | 0.38 | 0.84 | 1.10 | 0.93 | — |
+| 3 | Robot thug | 1.37 | 0.87 | 10.09 | 2.18 | 5.77 | 8.92 | 2.17 | 0.73 | 0.93 | 0.58 | 1.11 | 1.10 | 1.13 | — |
+| 3 | Sentry turret | 9.57 / 1.87 | 7.40 / 1.13 | — / 12.82 | 3.98 | — / 7.27 | 12.23 / — | 12.57 / 2.97 | 3.73 / 1.07 | 6.90 / 0.93 | 3.18 / 0.78 | 6.23 / 1.37 | 1.10 | 3.93 / 1.38 | — |
+| 4 | Shield robot | 16.02 / 2.37 | 11.40 / 1.40 | — / 16.92 | 5.78 | — / 9.27 | 14.75 / 22.68 | 20.17 / 3.77 | 5.73 / 1.23 | 12.03 / 1.77 | 6.98 / 0.98 | 1.63 | 5.08 / 5.10 | 5.94 / 1.63 | — |
+| 5 | War machine | 16.27 / 5.22 | 11.60 / 3.93 | — / 28.74 | 14.78 | — / 16.93 | — | 20.57 / 6.97 | 5.90 / 2.07 | 12.03 / 3.43 | 7.08 / 1.78 | 5.43 | 9.09 | 6.08 / 2.42 | — |
+
+**One acceptance condition remains open.** Eight of the thirteen guns killed every human on the first damage event. The machine pistol, Gatling, electro tap, flamethrower, and Molotov required further damage. The shipped weapon table explicitly specifies two hits per human for the machine pistol and Gatling. The benchmark reports the observed behavior. `NEED gunplay: project/features/combat/weapons/fight_areas.gd` for a universal first-hit rule. [Weapon definitions](C:/Users/kazda/kiro/gtai-wt/n22-foes/project/data/tables/weapons.json:80)
+
+### Films and stills
+
+The rocket trooper now carries a striped steel launcher and visibly braces during its tell. Its 15-second film keeps Rivet and one trooper inside the pit. The 64 px/m still centres the kneel. The shield robot has a larger silhouette and shows its 1.8 m shove path. The larger walker has separate cannon, stomp, recovery-vent, and rear-hit stills. All five films verified at 1080p60 and 32 px/m. The index contains exactly 15 stills. [Best-first still index](C:/Users/kazda/kiro/gtai-masters/n22/foes/frames.json) · [Centred kneel](C:/Users/kazda/kiro/gtai-masters/n22/foes/rocket_trooper/kneel64/t130.png)
+
+[Rocket trooper](C:/Users/kazda/kiro/gtai-masters/n22/foes/rocket_trooper/arena.mp4) · [Sentry turret](C:/Users/kazda/kiro/gtai-masters/n22/foes/sentry_turret/arena.mp4) · [Shield robot](C:/Users/kazda/kiro/gtai-masters/n22/foes/shield_robot/arena.mp4) · [Shield squad](C:/Users/kazda/kiro/gtai-masters/n22/foes/shield_robot/squad/arena.mp4) · [War machine](C:/Users/kazda/kiro/gtai-masters/n22/foes/war_machine/arena.mp4)
+
+### Mutation tests and commits
+
+Three new tests cover rocket relocation clearance, arrival, and fallback. On the same 20 planted faults, the focused score rose from **12/19 to 17/19**. Two survived and one was invalid. The earlier whole-file sample repeated at **18/19** with its original six test files. [Before](C:/Users/kazda/kiro/gtai-wt/n22-foes/build/foes-review/rocket-relocation-before.json) · [After](C:/Users/kazda/kiro/gtai-wt/n22-foes/build/foes-review/rocket-relocation-after.json)
+
+| Commit | Subject | Files changed |
+|---|---|---|
+| `8d93e6b33` | docs: n22 foes decisions | `docs/decisions.md`. Recorded all five decisions, including the verified line-of-sight splash from the walker’s stomp. |
+| `2a1873199` | foes: time to kill per enemy and player weapon, front and rear | `foe_ttk.gd`, `foe_ttk_run.gd`, `foe_ttk_trial.gd`, their UIDs, both TTK evidence files, debt baseline |
+| `95ef7e82a` | foes: rocket trooper carries a launcher and kneels visibly | Launcher, rocket pose, ordnance, shield, turret, walker, and shared foe look scripts, flank and walker film drivers, debt baseline |
+| `02fa4eae5` | foes: circle the shield after stepping clear of its shove | `foe_flank_film.gd` |
+| `f1f8fc6f2` | foes: keep the helmet and hands visible over the launcher | Rocket launcher drawing order |
+| `f326e45eb` | foes: cover rocket relocation clearance, arrival and fallback | `test_foe_rocket_sites.gd` |
+
+[astra: 3157s, exit 0]
