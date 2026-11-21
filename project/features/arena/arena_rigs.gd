@@ -155,7 +155,7 @@ func _process(_delta: float) -> void:
 		var i: int = f.count
 		_put(i, h, look.x as BodyPlan.Kind)
 		f.looks[i] = look.y
-		_squad_looks.swing(h, f, i)
+		FoeRocketPose.pose(h, rigs, i, _squad_looks)
 		if _looks.has(h.id):  # the reaction line stands still facing east: the four sides differ
 			f.face[i] = 0.0
 			f.aim[i] = f.pos[i] + Vector2.RIGHT * 4.0 * SimConst.PX_PER_M
