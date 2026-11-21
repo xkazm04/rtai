@@ -1,6 +1,6 @@
 # REPORT lane street, n22 (2026-11-21): the gauntlet street, the run and the bonuses
 
-DRAFT (session 4, 05:25). Fill at 07:40; every number below was checked by the director at the time noted in JOURNAL.md.
+Every number below was checked by the director at the time noted in JOURNAL.md.
 
 Branch `n22-street`, worktree `C:\Users\kazda\kiro\gtai-wt\n22-street`. Interface tag `n22-street-iface` (4b1634334).
 Final gate on the last code commit 7967a0cfa: `node tools/gate/run.mjs --rev=HEAD --reels` -> `gate: PASS; build/gate/7967a0cfacfc/gate.json` (git-ignored, in this worktree): lint 19/19 over 1857 files, unit 3458/0/2, scenarios 65, parity bit-exact over 1200 steps with the planted mutation caught at step 629, selftest, export-audit 843/0, reels top/tilt70/combo exit 0; evidence 605 s, reels 281 s per view. Commits after it are JOURNAL/REPORT/briefs only (inert).
@@ -20,9 +20,11 @@ Final gate on the last code commit 7967a0cfa: `node tools/gate/run.mjs --rev=HEA
 - Pacing measured (`evidence/street/pacing.json`, 1997f94a9): seeds 7/8/9 median 7.19 / 11.04 / 11.50 s per wave against the 15 s target.
 - Contact counter mutate (`gauntlet_combat.gd` lines 32-75, sampled 12): 9/12, then after 7967a0cfa line 71 5/5 (100 %); the remaining survivor (`:37` set_meta true -> false) is equivalent (`has_meta` tests presence).
 - Determinism (director, 05:22, final code): seed 7 ten waves twice byte-identical, sha256 808cd831c557743d..., `ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh`; seed 8 sha256 cbb1bd891053af9a..., different street order, offers and rosters. Earlier: seed 7 four runs byte-identical (5213 B, sha256 1d653a07..., with and without `--pick-view`); earlier seed 7 twice byte-identical (4660 B); seed 8 differs in street order, rosters and offers. 60 s replay `cbeb734ff9b97c41` unchanged; scenarios 65/65.
+- Result validates (director, 05:56, final code): `build/director/s7a.json` and `s8.json` pass `project/data/schemas/gauntlet_run.schema.json` under an independent validator (every keyword incl. `uniqueItems`); seed 7: `wave_reached` 10, 10 waves, 10 picks, `mods` damage 1.1 / regen 1.375 / speed 1.1, `death` omitted (no death inside `--waves=10`).
+- Two seeds, two streets (final code, run logs in `build/dev/`): seed 7 blocks per wave plain_block, alley_neck, loading_bay, plain_block, market_stalls, alley_neck, barricade_line, crosswalk, crosswalk, plain_block; seed 8 plain_block, market_stalls, underpass, crosswalk, barricade_line, underpass, market_stalls, underpass, underpass, plain_block (the first block is always plain_block). Picks differ from wave 2 (seed 7 stat_damage_10, seed 8 weapon_gloria).
 
 ## What does not
-- Late waves are far over the 15 s target with street's fallback walker (seed 7: waves 8-10 at 29, 40, 66 s; seed 9 wave 8 at 76.8 s); no death in 10 waves on seeds 7-9, so the run never ends on its own before wave 10. Loop's tuner owns the numbers.
+- Late waves are far over the 15 s target with street's fallback walker. Final code: seed 7 waves 1-10 at 5.6 7.3 6.7 2.6 15.3 4.4 5.4 34.9 49.6 66.9 s (median 7.0), seed 8 at 5.1 6.5 2.2 2.9 22.8 25.9 9.5 20.8 17.7 40.8 s (median 13.6); earlier code, seed 9 wave 8 at 76.8 s (`evidence/street/pacing.json`); no death in 10 waves on seeds 7-9, so the run never ends on its own before wave 10. Loop's tuner owns the numbers.
 - `guard_deflects` omitted (guard's deflect code is not on this branch); street counts it through `GauntletPilot.wave_counters()` / `GauntletWaveStats` once merged.
 - The guard meter does not yet scale with the `guard_meter` stat (guard's `meter_k` is on guard's head, not its iface tag): recorded in `mods` only.
 - Street mutate `gauntlet_street.gd` 6/8 (75 %): two equivalent survivors (road union unchanged in all eight templates).
