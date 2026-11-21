@@ -5,6 +5,7 @@ extends RefCounted
 
 const THIGH: Texture2D = preload("res://features/characters/art/thug/l_thigh.png")
 const FOOT: Texture2D = preload("res://features/characters/art/thug/l_foot.png")
+const LOOK_SCALE: float = 1.72
 
 
 static func draw_machine(view: Node2D, h: Fighter, mind: SquadMind, tick: int) -> void:
@@ -13,9 +14,9 @@ static func draw_machine(view: Node2D, h: Fighter, mind: SquadMind, tick: int) -
 	var radius: float = walker.ring_radius(e)
 	if radius > 0.0:
 		danger_ring(view, walker.landing, radius)
-	var at: Vector2 = Ink.px(h.pos + Vector2.UP * 1.02)
+	var at: Vector2 = Ink.px(h.pos + Vector2.UP * 1.02 * LOOK_SCALE)
 	_legs(view, h, e.vel.length(), tick)
-	view.draw_set_transform(at, h.facing.angle())
+	view.draw_set_transform(at, h.facing.angle(), Vector2.ONE * LOOK_SCALE)
 	Ink.box(view, Vector2(1.12, 0), Vector2(2.12, 0.41), FoeTurretView.STEEL)
 	Ink.box(view, Vector2(2.06, 0), Vector2(0.42, 0.55), FoeTurretView.DARK)
 	Ink.box(view, Vector2(-0.12, 0), Vector2(1.54, 1.5), FoeTurretView.STEEL)
@@ -41,7 +42,8 @@ static func draw_machine(view: Node2D, h: Fighter, mind: SquadMind, tick: int) -
 ## Two loaded knees carry the chassis. Tread and thigh stay planted during the tells.
 static func _legs(view: Node2D, h: Fighter, speed: float, tick: int) -> void:
 	var stride: float = sin(float(tick) * 0.12) * speed * 8.0
-	view.draw_set_transform(Ink.px(h.pos + Vector2.UP * 0.38), h.facing.angle())
+	var at: Vector2 = Ink.px(h.pos + Vector2.UP * 0.38 * LOOK_SCALE)
+	view.draw_set_transform(at, h.facing.angle(), Vector2.ONE * LOOK_SCALE)
 	for side: int in [-1, 1]:
 		var x: float = side * stride
 		var y: float = side * 44.0

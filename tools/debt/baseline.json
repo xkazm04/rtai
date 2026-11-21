@@ -93,7 +93,8 @@
         "2026-11-21: n22 foes capture driver stages the requested isolated turret fight and records its sweep phases (dev_loc 26850 -> 26861)",
         "2026-11-21: n22 foes shield duel profiles, mixed-squad cover measurements and isolated arena capture at master resolution (dev_loc 26861 -> 27022)",
         "2026-11-21: Measure walker recovery and rear damage in foe_duel and film both attacks with ordinary arena inputs for n22 foes. (dev_loc 27022 -> 27151)",
-        "2026-11-21: Registry-seeded front and rear enemy TTK benchmark and report for n22 foes (dev_loc 27151 -> 27350)"
+        "2026-11-21: Registry-seeded front and rear enemy TTK benchmark and report for n22 foes (dev_loc 27151 -> 27350)",
+        "2026-11-21: Isolated rocket capture and legible shield and walker flanking inputs for n22 foes (dev_loc 27350 -> 27380)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -102,7 +103,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 496,
-        "project/dev/enemy_ai": 2256,
+        "project/dev/enemy_ai": 2286,
         "project/dev/frames": 1087,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1396,
@@ -127,7 +128,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 27350
+      "total": 27380
     },
     "direct_cmdline_reads": {
       "accepted": [

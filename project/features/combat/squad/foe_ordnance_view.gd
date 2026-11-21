@@ -42,7 +42,9 @@ func _draw() -> void:
 	for i: int in _marks.size():
 		FightAreasArt._blast(self, _marks[i], arena.tick - _ticks[i])
 	for h: Fighter in arena.hostiles:
-		if h.archetype == &"sentry_turret" and (h.alive() or arena.tick - h.hurt_tick < 90):
+		if h.archetype == &"rocket_trooper" and h.alive():
+			FoeLauncherView.draw_launcher(self, h)
+		elif h.archetype == &"sentry_turret" and (h.alive() or arena.tick - h.hurt_tick < 90):
 			FoeTurretView.draw_mount(self, h, _heat(h))
 		elif h.archetype == &"war_machine" and h.alive():
 			var mind: SquadMind = arena.squad_ai.minds.get(h.id)
@@ -50,7 +52,7 @@ func _draw() -> void:
 				FoeWalkerView.draw_machine(self, h, mind, arena.tick)
 		elif h.archetype == &"shield_robot" and h.alive():
 			var mind: SquadMind = arena.squad_ai.minds.get(h.id)
-			FoeShieldView.draw_plate(self, h, mind.shield if mind != null else null, arena.tick)
+			FoeShieldView.draw_plate(self, h, mind, arena.tick)
 
 
 func _heat(h: Fighter) -> float:

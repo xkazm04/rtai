@@ -2,8 +2,7 @@ class_name FoeRocketPose
 extends RefCounted
 
 
-## The cop rig has no kneeling clip. Compress its aimed pose around the planted boots
-## using the same projection as the cover crouch, after the rig pool has drawn this frame.
+## Project the cop's aimed pose around the planted boots after the rig pool draws it.
 static func pose(h: Fighter, rigs: CharacterRigs, i: int, looks: ArenaSquadLooks) -> void:
 	looks.swing(h, rigs.feed, i)
 	if h.archetype == &"rocket_trooper":
@@ -19,7 +18,7 @@ static func _kneel(h: Fighter, rigs: CharacterRigs) -> void:
 	var tucked: bool = h.alive() and h.tell_left > 0
 	if tucked:
 		rig.set_meta(&"rocket_kneel", true)
-		var k: Vector2 = CoverView.scale_for(0.78, 1.0, ViewMode.shared().is_flat())
+		var k: Vector2 = Vector2(1.32, 0.60)
 		MotionRigPose.place(rig, Transform2D(0.0, k, 0.0, Vector2.ZERO))
 	elif rig.has_meta(&"rocket_kneel"):
 		rig.remove_meta(&"rocket_kneel")

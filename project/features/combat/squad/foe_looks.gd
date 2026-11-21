@@ -13,10 +13,10 @@ static func robot_plan(id: StringName, plan: BodyPlan, rig: CanvasItem = null) -
 			if rig != null:
 				rig.modulate.a = 0.0
 		&"shield_robot":
-			plan.size_k = 1.18
+			plan.size_k = 1.18 * FoeShieldView.LOOK_SCALE
 			plan.arm_w *= 1.45
 		&"war_machine":
-			plan.size_k = 1.65
+			plan.size_k = 1.65 * FoeWalkerView.LOOK_SCALE
 			# Tuck the thug's long claw arms into the cannon cradle.
 			plan.upper_len *= 0.65
 			plan.upper_draw *= 0.65

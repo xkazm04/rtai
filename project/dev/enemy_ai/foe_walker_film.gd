@@ -58,7 +58,8 @@ func _move(walker: Fighter, mind: SquadMind, radial: Vector2) -> Vector2:
 			else radial.orthogonal()
 		)
 	var side: float = clampf(radial.angle_to(-walker.facing) * 2.0, -1.0, 1.0)
-	var approach: float = clampf(1.8 - rivet.distance_to(walker.pos), -1.0, 1.0)
+	var orbit_m: float = 3.9 if mind.agent.state == EnemyAgent.State.RECOVER else 2.5
+	var approach: float = clampf(orbit_m - rivet.distance_to(walker.pos), -1.0, 1.0)
 	return radial * approach + radial.rotated(PI * 0.5) * side
 
 
