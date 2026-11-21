@@ -2,9 +2,11 @@ class_name BotViewArena
 extends BotView
 ## The pit supplies only its wave members. The street uses the session's hostile roster.
 
+var street_layout: GauntletStreet
 var _stage: ArenaStage
 var _actions: PlayerActions
 var _street: bool
+var _path: BotStreetPath = BotStreetPath.new()
 var _guns: WeaponTable = WeaponTable.shipped()
 var _next_waypoint: int = 0
 var _deaths: int = 0
@@ -40,13 +42,24 @@ func refresh() -> void:
 
 func forward() -> Vector2:
 	if _street:
-		return Vector2.RIGHT
+		var x: float = (
+			street_layout.current().end_x() + 1.0 if street_layout != null else _player.pos.x + 8.0
+		)
+		return _toward(Vector2(x, 0.0))
 	var last: int = ArenaPitBot.ENTRY.size() - 1
 	var to: Vector2 = _stage.plan.base + ArenaPitBot.ENTRY[_next_waypoint] - _player.pos
 	if to.length() <= ArenaPitBot.REACH_M and _next_waypoint < last:
 		_next_waypoint += 1
 		to = _stage.plan.base + ArenaPitBot.ENTRY[_next_waypoint] - _player.pos
 	return to.limit_length(1.0)
+
+
+func chase(foe: Hostile) -> Vector2:
+	return _toward(foe.pos) if _street else super.chase(foe)
+
+
+func _toward(goal: Vector2) -> Vector2:
+	return _path.toward(_stage.arena.guard_map, _player.pos, goal, _stage.arena.tick)
 
 
 func _read_hostiles() -> void:

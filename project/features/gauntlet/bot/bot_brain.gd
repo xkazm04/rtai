@@ -124,12 +124,8 @@ func _engage(foe: BotView.Hostile, tick: int) -> Intent:
 	var reach: float = slot.reach if slot != null else MELEE_M
 	var blocked: bool = not _view.clear_line(me.pos, foe.pos)
 	var side: float = 1.0 if tick % (2 * STRAFE_TICKS) < STRAFE_TICKS else -1.0
-	if blocked:
-		# Keep the same side until the sight line opens, even at a long wall.
-		var flank: float = 1.0 if foe.id % 2 == 0 else -1.0
-		intent.move = (dir * 0.4 + dir.orthogonal() * flank).normalized()
-	elif distance > minf(reach * 0.88, ENGAGE_M):
-		intent.move = dir
+	if blocked or distance > minf(reach * 0.88, ENGAGE_M):
+		intent.move = _view.chase(foe)
 	elif distance > MELEE_M:
 		intent.move = dir.orthogonal() * side * 0.55
 	if tick < _ready or not me.settled:

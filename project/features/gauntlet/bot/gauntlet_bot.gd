@@ -25,6 +25,8 @@ func configure(p_profile: StringName, pick_policy: StringName, seed: int) -> voi
 func bind(run: GauntletRun, session: ArenaSession) -> void:
 	_run = run
 	var view: BotViewArena = BotViewArena.new(session.stage, session.actions, true)
+	if session is GauntletSession:
+		view.street_layout = (session as GauntletSession).street
 	_brain = GauntletBot.new(view, session.actions, _skill, _seed)
 	Log.info(
 		"gauntlet", "test player bound: %s, %s picks, seed %d" % [_profile, _pick_policy, _seed]

@@ -91,6 +91,14 @@ func forward() -> Vector2:
 	return Vector2.RIGHT
 
 
+func chase(foe: Hostile) -> Vector2:
+	var dir: Vector2 = _player.pos.direction_to(foe.pos)
+	if clear_line(_player.pos, foe.pos):
+		return dir
+	var flank: float = 1.0 if foe.id % 2 == 0 else -1.0
+	return (dir * 0.4 + dir.orthogonal() * flank).normalized()
+
+
 func clear_line(a: Vector2, b: Vector2) -> bool:
 	for box: Rect2 in solid_props():
 		if crosses(box, a, b):
