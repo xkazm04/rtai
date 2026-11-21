@@ -52,6 +52,7 @@ Existing rows' and weapons' numbers are unchanged. After every brief: unit (last
 - 00:12 first Astra call abandoned after 2 min: my brief named a foes-only blast key; guard's brief used `splash_radius_m` / `splash_damage`. About 3 min.
 - Turret look bounced once (a thin white scribble at 32 px/m), fixed in `f42cbddd9`: about 20 min of a brief.
 - Machines first drawn at Rivet's size (shield robot, war machine) and the launcher first hid the trooper's body: one more polish pass (`95ef7e82a`, `f1f8fc6f2`), about 25 min.
+- 06:29 a mixed-wave film (all three non-boss new enemies plus SWAT) could not be made at 1080p: `tools/film/film.mjs` reported `the run drew 1422x800, not the asked 1920x1080`. From about 06:30 the machine's display clamps a Godot window to 800 px high (my 06:01-06:03 stills are 1920x1080, since they come from the viewport). Dropped, about 8 min. Any lane filming after 06:30 may hit the same.
 - My own final runs: the turret's whole-file mutation (349 s) and the gate (11 min) ran one after the other with no Astra in between: about 20 min of waiting, by design.
 
 ## Calls for the owner
