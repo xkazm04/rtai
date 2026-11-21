@@ -106,3 +106,8 @@ NEXT (session 5, supersedes 05:48): code is frozen and gated (7967a0cfa PASS wit
 - 06:04 ASTRA late-film 9 accepted. 1bcbc6695 (only `evidence/street/late_film.json`, inert). `gauntlet_wave8_32.mp4` 38.08 s 1920x1080 60 fps (ffprobe), sha256 455f3110...; recorded wave 8 34.8833 s = headless; frames.json 15 entries, clip at position 3. Looked at wave8_520 and wave8_1450: crossings clear of walls, cops blue, blood red, health readable (39, 64), the drag = bot backs off to regen while turrets/robots hold. FINDING (not ours): enemy rounds drawn as red streaks; red is blood only -> REPORT "What does not" (shipped projectile art).
 - 06:07 REPORT final (header notes the inert commits after the gate). Session 5 work done; no Astra running, no Godot running for this lane.
 NEXT: nothing owed. If a later session runs before 08:00: re-run `node tools/evidence/cites.mjs REPORT.md` only; no code, no Godot.
+
+## Session 6 (07:30 to 07:40, STABILIZE)
+- 07:30 read journal; no Astra running (last call late-film exited 06:04), no Godot for this lane. Code frozen and gated (7967a0cfa PASS with reels). NEED street grep: new loop 06:05 (on_timeout data value, conditional on owner's Call 3) -> REPORT merge note only, no code after freeze.
+- 07:32 cites REPORT.md 13/13 ok.
+NEXT: nothing owed by street. Director: merge notes in REPORT.md (guard meter wiring, wheel default in gauntlet, loop's on_timeout if the owner picks A).

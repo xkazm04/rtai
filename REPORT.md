@@ -48,6 +48,7 @@ Final gate on the last code commit 7967a0cfa: `node tools/gate/run.mjs --rev=HEA
 - Guard's NEED (04:32): the gauntlet should run the wheel controls by default. After guard's head is merged, make an absent `--controls` mean `wheel` inside the gauntlet scene only (`project/dev/gauntlet/gauntlet.gd:31`, `run.controls = ControlsMode.id()`), legacy still selectable; outside the gauntlet legacy stays the default. Not done on street's branch (guard iface only, no live guard; it would only move every seed's sha). Until then launch with `--controls=wheel`.
 - Optional: 161c32453 recolours the shipped ghost HUD's Madness notch from teal to ink inside the gauntlet (a colour-predicate shader). Teal is lawful there (ghosts are souls); the Director may drop the commit, which changes only the film's look.
 - Loop: `GauntletPilot.wave_counters()` / `reset_wave_counters()` (cd77c6507) carry the bot's rolls/deflects per wave; `death.by` always names the killer or `unknown`/`timeout` (d1d2a9ce1); `hits_gun` / `hits_melee` (88fbbac62).
+- Loop's NEED (06:05, after street's freeze, not built): the 90 s wave timer ends a wave `by: timeout`, which ends many bot runs before death (loop's Call 3). If the owner picks loop's option A, add `on_timeout: next_wave | end_run` to `gauntlet.json` (plus its schema) and read it where `GauntletWaves` ends a timed-out wave; `end_run` keeps today's behaviour byte-identical.
 - Loop's bot: a zero-arg `GauntletPilot` subclass at `res://features/gauntlet/bot/gauntlet_bot.gd` is picked up by the scene.
 
 ## Next steps
