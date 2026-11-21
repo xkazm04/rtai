@@ -47,7 +47,7 @@ func _draw() -> void:
 		elif h.archetype == &"war_machine" and h.alive():
 			var mind: SquadMind = arena.squad_ai.minds.get(h.id)
 			if mind != null:
-				FoeWalkerView.draw_machine(self, h, mind)
+				FoeWalkerView.draw_machine(self, h, mind, arena.tick)
 		elif h.archetype == &"shield_robot" and h.alive():
 			var mind: SquadMind = arena.squad_ai.minds.get(h.id)
 			FoeShieldView.draw_plate(self, h, mind.shield if mind != null else null, arena.tick)

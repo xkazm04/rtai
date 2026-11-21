@@ -143,6 +143,7 @@ func test_stomp_grows_to_its_full_footprint_then_recovers() -> void:
 	_tell()
 	assert_eq(h.swing_left, arch.alt_telegraph_ticks)
 	assert_gte(h.swing_left, 45)
+	assert_eq(mind.agent.timer, h.swing_left)
 	var previous: float = 0.0
 	for i: int in arch.alt_telegraph_ticks:
 		var radius: float = mind.walker.ring_radius(mind.agent)
@@ -193,5 +194,6 @@ func test_walks_into_the_band_from_both_sides_at_row_speed_and_turn_rate() -> vo
 			_step()
 			assert_lte(h.pos.distance_to(at), arch.speed_mps * SimClock.TICK_DT + 0.00001)
 			assert_lte(absf(facing.angle_to(h.facing)), arch.turn_rad_per_tick + 0.00001)
+		assert_eq(h.cooldown, 0)
 		assert_between(h.pos.x, 8.0, 14.0)
 		assert_null(mind.walker.attack)
