@@ -10,6 +10,7 @@ var switched_tick: int = -1
 var _selected: StringName = HANDS
 var _fresh: bool = true
 var _touched: bool = false
+var _start_drawn: bool = ControlsMode.start_drawn()
 
 
 func _init(inventory: RivetCarry = null) -> void:
@@ -86,7 +87,12 @@ func step(c: PlayerCommand, actions: PlayerActions, arena: CombatArena, tick: in
 	if carry == null:
 		bind(carry_for(arena))
 	var previous: StringName = _selected
-	_sync(arena)
+	if _fresh and _start_drawn:
+		_selected = RivetWheelStory.initial(carry, arena)
+		_fresh = false
+		previous = _selected
+	else:
+		_sync(arena)
 	var want: StringName = _selected
 	for i: int in RivetCarry.SLOTS:
 		if c.was_pressed(actions, RivetCarry.SLOT_ACTIONS[i]):

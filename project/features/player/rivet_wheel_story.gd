@@ -7,6 +7,18 @@ var _equipped: StringName = &""
 var _shortcuts: Dictionary[int, StringName] = {}
 
 
+## A launch loadout has already selected its grip. An external grant keeps its stage-owned
+## magazine and defers the grip change until the player actually uses the wheel.
+static func initial(carry: RivetCarry, arena: CombatArena) -> StringName:
+	var id: StringName = arena.rivet.weapon
+	if carry.story == null and carry.weapon() == id:
+		carry.remember_hand(arena.gun, true)
+		return RivetWheel.HANDS if id == &"" else id
+	if carry.story == null:
+		carry.story = RivetWheelStory.new()
+	return carry.story.follow(carry, arena, RivetWheel.HANDS)
+
+
 func follow(carry: RivetCarry, arena: CombatArena, previous: StringName) -> StringName:
 	var id: StringName = arena.rivet.weapon
 	if previous == RivetCarry.RIFLE and arena.rifle_ammo <= 0:

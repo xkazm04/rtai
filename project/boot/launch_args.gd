@@ -122,6 +122,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--ghost-look",  # n20-flight: override the per-form visual look
 	"--dent-tether",  # n20-dent: choose the roof tether
 	"--controls",
+	"--wheel-start",
 ]
 var _values: Dictionary[String, String] = {}
 var _unknown: Array[String] = []
