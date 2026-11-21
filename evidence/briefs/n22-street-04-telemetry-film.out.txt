@@ -1,0 +1,55 @@
+Completed brief 04 in seven commits on `n22-street`. Seeds 7, 8 and 9 all cleared ten waves and produced schema-valid results. The seed-7 film shows five waves, all five pick screens and the wave-five war machine at normal speed.
+
+### Verification
+
+- Full lint passed **19/19** checks. The final unit run passed **3,432 tests**, with 0 failures and 2 skips. The quick gate passed.
+- Seeds **7, 8 and 9** each returned `ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 3 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)`. The headless `--pick-view` run returned the same verdict with 4 flags checked.
+- Four seed-7 results were **byte-identical** at 5,213 bytes, covering the run before the film flag, the runs with it off and on, and the final pacing run. SHA-256 `1d653a0795ff3c328afc6b9c9a7aa964fb952c10adaf4ce6d842183a6ca64221`.
+- The five filmed wave records and picks matched headless. Wave five recorded **2 rolls, 13.82 s as Rivet, 26 shots and 51 damaging contacts**. A separate test forced a transformation and verified time in both forms.
+- Mutation scores improved from **15/16 to 16/16** for draw, with 4 timeouts, and **14/18 to 18/18** for bonus application, with 2 invalid mutants. All five original survivors were killed on the repeat.
+
+### Pacing
+
+Seconds from spawn to clear, measured at `c78f76d5c`. The target is 15 s. [Pacing evidence](<C:/Users/kazda/kiro/gtai-wt/n22-street/evidence/street/pacing.json>)
+
+| Seed | Seconds for waves 1–10 | Median | Worst | Death |
+|---|---|---:|---|---|
+| 7 | 4.42, 7.82, 6.57, 2.55, 13.82, 4.05, 5.28, 29.10, 40.33, 65.88 | 7.19 | W10 · 65.88 s | None |
+| 8 | 4.88, 8.38, 2.72, 2.48, 19.00, 16.03, 8.43, 20.30, 13.65, 38.48 | 11.04 | W10 · 38.48 s | None |
+| 9 | 4.75, 5.97, 5.98, 12.90, 32.50, 8.02, 10.10, 76.83, 37.53, 38.93 | 11.50 | W8 · 76.83 s | None |
+
+### Reviewed masters
+
+Both clips are 1920×1080 at 60 fps, tilt 70, with the fallback `GauntletWalker`. The camera follows Rivet, the HUD and cards remain readable, and neither clip contained a black frame. [Masters folder](<C:/Users/kazda/kiro/gtai-masters/n22/street/>) · [Frame numbers and checksums](<C:/Users/kazda/kiro/gtai-wt/n22-street/evidence/street/film.json>)
+
+| File | What I saw |
+|---|---|
+| `gauntlet_waves1-3_32.mp4` | **28.717 s.** Four inspected frames show a claw strike beside cover, the electro baton highlighted, a fight at the south wall, and a melee arc over the loading-bay crates. |
+| `gauntlet_waves4-5_32.mp4` | **23.133 s.** Four frames show the wave-four firefight, three weapon cards, the war machine and escort across the zebra stripes, and Gloria highlighted after the clear. |
+| `fight_cover_64.png` | Rivet’s claw strike catches a patrol cop at the corner of a dark crate. |
+| `pick_screen_32.png` | Speed, Kerf and Electro Baton appear on cream cards with the wave timer and health visible. |
+| `segment_alley_neck_32.png` | Opposing walls narrow the road around Rivet. |
+| `segment_barricade_line_32.png` | Two tall barricades face a low stack across the lane. |
+| `segment_crosswalk_32.png` | Rivet stands on unobstructed zebra stripes, with cover clear of the paint. |
+| `segment_kiosk_plaza_32.png` | A squat kiosk sits below Rivet, opposite two pale stacks. |
+| `segment_loading_bay_32.png` | Three dark crates line the upper wall opposite two low stacks. |
+| `segment_plain_block_32.png` | Staggered crates leave an open lane toward the next crossing. |
+| `frames.json` | Best-first index of all ten media files. The tracked copy is byte-identical. |
+
+### Commits and files
+
+| Commit | Subject | Files |
+|---|---|---|
+| `ed6f8ab6e` | gauntlet hud: use shipped ink on cream for health and upgrade cards | `gauntlet_hud.gd`, `gauntlet_pick_card.gd`, `gauntlet_pick_view.gd` |
+| `56868b5ae` | gauntlet telemetry: measure roll starts and time spent in each form | `gauntlet_waves.gd`, `gauntlet_wave_stats.gd`, `test_gauntlet_wave_stats.gd` and both new UIDs |
+| `8fb423338` | gauntlet picks: hold the film on offers and highlight the bot choice | `gauntlet.gd`, HUD and pick view, `gauntlet_offers_layout.tscn`, `gauntlet_status.tscn`, `test_gauntlet_pick_view.gd` |
+| `380877aa2` | gauntlet film: capture five live waves and a 64 px/m cover strike | `gauntlet.gd`, `gauntlet_hud.gd`, `gauntlet_closeup.tscn`, `evidence/street/film.json` |
+| `cc33fbfdf` | gauntlet evidence: index ten reviewed street masters | `evidence/street/frames.json` |
+| `c78f76d5c` | gauntlet tests: pin seeded offers and exercise weapon grant boundaries | `test_gauntlet_draw.gd`, `test_gauntlet_bonus_apply.gd` |
+| `1997f94a9` | gauntlet evidence: measure ten-wave pacing for seeds 7 through 9 | `evidence/street/pacing.json` |
+
+**NEED guard:** expose the cumulative deflect count to `GauntletWaveStats.append_guard_deflects(stage, row)`. Results omit `guard_deflects` until that counter is available.
+
+The windowed captures exited successfully. Godot logged an Ohm sprite-sheet warning and reported 60–63 leaked ObjectDB instances at shutdown.
+
+[astra: 3301s, exit 0]

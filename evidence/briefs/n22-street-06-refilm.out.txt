@@ -1,0 +1,59 @@
+Completed brief 06 in six commits. The dressed-street films cover all five waves and all five pick screens at **1080p60, normal speed**. Seed 7 used the fallback `GauntletWalker`. The wave-five war machine appears in the market. [Waves 1–3, 28.13 s](C:/Users/kazda/kiro/gtai-masters/n22/street/gauntlet_waves1-3_32.mp4) · [Waves 4–5, 24.80 s](C:/Users/kazda/kiro/gtai-masters/n22/street/gauntlet_waves4-5_32.mp4)
+
+### Fixes and verification
+
+- Audited **42 solid boxes across eight templates**. The underpass now reads as closed at both kerbs. Cover art fits its footprint, including the bus shelter where a cop previously appeared to stand on the roof. Both paint changes preserved the seed-7 result byte for byte. [Collision audit](C:/Users/kazda/kiro/gtai-wt/n22-street/evidence/street/solid_audit.json)
+- Fixed a blood smear on the south rail and a teal notch below the ghost icons. At source frames 2990 and 3160, the affected rail area went from **198 and 197 blood-coloured pixels to zero**. I inspected four frames per clip in both generations, plus the final cut boundaries. The camera follows Rivet, the cards and health fill are readable, and the cuts open on gameplay. [Film evidence and frame notes](C:/Users/kazda/kiro/gtai-wt/n22-street/evidence/street/film.json)
+- Added optional `hits_gun` and `hits_melee`. The integration test records one pistol hit and one claw contact. A second test excludes splash damage and a reflected enemy round from gun hits. Both ten-wave runs returned `ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh`. Their SHA-256 was `808cd831c557743d02ca210a86621ffeb8503fcb8b18c507ef05cd5c431620f0`. Removing only the two new keys restored the previous result exactly. Both five- and ten-wave results passed schema validation. [Seed-7 result](C:/Users/kazda/kiro/gtai-wt/n22-street/evidence/street/seed7_contacts.json)
+- Lint passed all **19 checks**. Quick gate passed. Unit tests reported **3,441 passed, 0 failed, 2 skipped**. The 60-second replay passed with digest `cbeb734ff9b97c41`. The final committed source reproduced both reviewed raw captures byte for byte.
+
+### Commits
+
+| SHA | Subject |
+|---|---|
+| `235a117ce` | gauntlet street: show solid footings and close the painted viaduct mouths |
+| `88fbbac62` | gauntlet telemetry: report direct round and melee contacts per wave |
+| `161c32453` | gauntlet HUD: print the Madness gauge notch in ink |
+| `1186109a4` | gauntlet film: keep blood and oil smears on the road side of cover |
+| `f2c53044b` | gauntlet street: fit drawn cover and sidewalk fixtures to their footprints |
+| `1f520b13b` | gauntlet evidence: index the dressed five-wave film and same-frame comparisons |
+
+Changed the gauntlet scene and stills runner, combat and wave counters, floor, landmarks, view, meter shader and prop-art loader, plus their new UIDs. Updated the result schema, wave-stat tests and four street evidence files. The tracked worktree is clean.
+
+### Masters
+
+The [15-entry index](C:/Users/kazda/kiro/gtai-masters/n22/street/frames.json) references all 36 master files, including the preserved comparisons. Scratch renders were removed.
+
+| File | What it shows |
+|---|---|
+| `gauntlet_waves1-3_32.mp4` | Rivet starts bare-handed at the bus bay, takes the electro baton and fights through the loading dock. |
+| `gauntlet_waves1-3_before_32.mp4` | The same opening progression on pale pavement between black walls. |
+| `gauntlet_waves4-5_32.mp4` | Hand-cannon fire, the pistol pick, the market boss and the final Gloria highlight. |
+| `gauntlet_waves4-5_before_32.mp4` | The war machine advances across the old zebra crossing. |
+| `pair_wave2_32.png` | Frame 995. A body crosses the old wall at left. The dressed alley keeps the bodies on the asphalt. |
+| `pair_war_machine_32.png` | Frame 2440. Rivet faces the machine at the old crossing and beside the new market carts. |
+| `pair_pick_32.png` | Frame 572. Both panels offer Speed, Kerf and the Electro Baton. |
+| `fight_cover_64.png` | Rivet’s bare claw strikes a patrol officer beside the shelter. |
+| `fight_cover_before_64.png` | Rivet swings beside a dumpster in the undressed corridor. |
+| `pick_screen_32.png` | Three readable upgrade cards over the dimmed bus bay. |
+| `health_100_50_10.png` | The cream health fill reads full, half and nearly empty. |
+| `war_machine_rest_before_32.png` | Wreck debris extends past the underpass kerb. |
+| `war_machine_rest_32.png` | The wreck and debris rest on the carriageway. |
+| `frames.json` | Ranked selection with before-file links and companion overlays. |
+
+Each row below accounts for the template’s `segment_<id>_32.png`, `segment_<id>_solids_32.png` and, where present, `segment_<id>_before_32.png`.
+
+| Template ID | Dressed still | Solids overlay | Undressed before |
+|---|---|---|---|
+| `plain_block` | Striped bus shelter and separate bench | Both pads and both rails align | Generic boxes on pale road |
+| `crosswalk` | Zebra, newsstand and planter | Four boxes leave the stripes clear | Zebra between dark walls |
+| `barricade_line` | Three striped barriers make a slalom | All three barriers and both rails align | Scattered blocks in the corridor |
+| `loading_bay` | Three tarped loads at a hatched dock, drums opposite | Six footprints align | Three crate stacks against the wall |
+| `alley_neck` | Brick wings narrow the lane beside a dumpster | Five boxes align with the masonry and cover | Black slabs narrow the lane, with a body across the lower wall |
+| `kiosk_plaza` | Coffee kiosk and two planters on a paved square | Five boxes align, with open paving between them | Crates and a dumpster on pale road |
+| `underpass` | Four piers beneath the cutaway deck | Six boxes show both cross-street mouths closed | No undressed capture exists |
+| `market_stalls` | Four umbrella carts and a newsstand | Seven boxes leave the centre lane open | No undressed capture exists |
+
+All requested deliverables are present. Godot still logged a five-row pose-sheet warning for `project/features/souls/art/view/p70/ohm_spec_hover.png` and 60 live ObjectDB instances at windowed shutdown. Ohm remained locked throughout the film.
+
+[astra: 2872s, exit 0]

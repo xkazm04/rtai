@@ -1,0 +1,20 @@
+**Part A is staged. No commit was created.** The pre-commit hook passed 18 of 19 checks. Its only failure was `dev_loc`, which rose from 26,600 to 26,681 for the required scene. Part B remains unstarted because the brief requires the interface commit first.
+
+**NEED director: `tools/debt/baseline.json`** — authorize the 81-line increase for `project/dev/gauntlet`. The brief permits a baseline update for a necessary global flag. The scene’s own flags work.
+
+**Files staged** — the gauntlet scene and root script, `StatMods`, `GauntletPilot`, `GauntletWalker`, `GauntletRun`, both tables, all three schemas, both requested unit tests, and all seven generated `.uid` files. The headless cap is 3,600 ticks.
+
+**Verification**
+
+- Godot import passed. Quick gate passed all seven scripts. Changed-unit ran the full suite: **3,384 passed, 0 failed, 2 skipped**.
+- Both tables and the result passed schema validation. All 26 bonus IDs are unique and their references resolve. An invalid bot profile exited 2 with one diagnostic.
+- Both seed-7 runs produced the same verdict: `ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)`.
+- Binary comparison found no differences between [iface-a.json](C:/Users/kazda/kiro/gtai-wt/n22-street/build/dev/iface-a.json) and [iface-b.json](C:/Users/kazda/kiro/gtai-wt/n22-street/build/dev/iface-b.json). I repeated `--result=<path>` after `--` because the runner consumes the first occurrence for its freshness check.
+
+**Pilot contract for lane loop**
+
+1. Place a zero-argument `GauntletPilot` subclass at `res://features/gauntlet/bot/gauntlet_bot.gd`. The scene uses `GauntletWalker` when that file is absent.
+2. The scene calls `configure(profile, pick_policy, seed)`, then `bind(run, session)`. `sample(tick)` supplies each `TickInput`.
+3. `pick(offered)` returns a zero-based index. The base pilot uses a seeded draw for `random` and index `0` for `greedy`.
+
+[astra: 665s, exit 0]

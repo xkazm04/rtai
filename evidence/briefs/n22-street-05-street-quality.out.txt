@@ -1,0 +1,41 @@
+Completed brief 05 on `n22-street`, including `underpass` and `market_stalls`. The final commit landed at **04:28:36**, before the 04:33 deadline. No open NEEDs or unfinished items.
+
+### Commits and files
+
+| Commit | Change |
+|---|---|
+| `d1d2a9ce1` | Recorded the lethal hostile, weapon, or `unknown` in `death.by`. Changed `gauntlet_combat.gd`, `gauntlet_session.gd`, `gauntlet_run.gd`, and `gauntlet_waves.gd`. A lethal cop hit records `patrol_cop`. |
+| `cd77c6507` | Added `wave_counters()` and `reset_wave_counters()` to `gauntlet_pilot.gd`. `gauntlet_wave_stats.gd` merges known counters at wave close. The stub pilot recorded three deflects and the default pilot omitted the field. |
+| `f7f0ab15b` | Fixed the health fill in `gauntlet_hud.gd` and added the three-HP capture in `gauntlet_stills.gd`. |
+| `4ff9fc1a7`, `7baa66c58` | Kept fallen fighters and their drawn poses clear of solids, including after a late shove. Changed `gauntlet_street.gd`, `gauntlet_rest.gd`, `gauntlet_floor.gd`, and the dev scene driver. |
+| `c7e8fbe07`, `bddea101e` | Dressed the six original blocks with shipped city art and captured matched HUD stills. Changed `gauntlet_segment.gd`, `gauntlet_frontage.gd`, `gauntlet_landmarks.gd`, the gauntlet table and schema, and the frame index. |
+| `10daf2bcb` | Added the underpass and market stalls. All eight templates passed the high-cover, spawn-clearance, and crossing tests. |
+| `4ea7a3fe3`, `a3a06df84` | Added `gauntlet_view.gd` so blood and machine oil use the corrected resting position. Recorded final verification in `evidence/street/street_quality.json`. |
+
+Updated unit tests cover waves, pilot counters, street geometry, resting bodies, and dressing. All new GDScripts include their `.uid` files.
+
+### Verification
+
+- **Lint and tests:** 19/19 lint checks passed. Quick gate passed. GUT reported **3,439 passed, 0 failed, 2 marked pending**.
+- **Replay:** 65 scenarios ran, 0 failed. The 3,600-tick replay retained digest `cbeb734ff9b97c41`. Godot repeated the baseline’s resource-cleanup diagnostics after the suite finished.
+- **Seed 7:** All compared runs cleared ten waves and returned `ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh`. The six-template results before and after dressing were byte-identical at 5,213 bytes. The two final eight-template results were byte-identical at 5,238 bytes, SHA-256 `e54f8a6ffe4339e11933a6aded3497473f77f4d80ef84ec095d57509fe217a1b`. The first block changed from `alley_neck` to `underpass`. [Final run A](C:/Users/kazda/kiro/gtai-wt/n22-street/build/dev/05oil-a.json) · [Final run B](C:/Users/kazda/kiro/gtai-wt/n22-street/build/dev/05oil-b.json)
+- **Mutation:** `gauntlet_street.gd` scored **6/(6+2), 75%**, with one invalid mutant and no timeouts. Both survivors shrink one end’s road bounds before merging them with an equally wide road. [Verification and full hashes](C:/Users/kazda/kiro/gtai-wt/n22-street/evidence/street/street_quality.json)
+
+### Stills
+
+The six original pairs use **tick 470, 1080p, tilt 70, and 32 px/m**. The two new templates use the first clear of the eight-template run at tick 540. [Frame index with before and after filenames](C:/Users/kazda/kiro/gtai-masters/n22/street/frames.json)
+
+| Still | What I saw |
+|---|---|
+| `alley_neck` | Masonry wings narrow the lane. The fallen cops beside the lower kerb lie on the asphalt. |
+| `barricade_line` | Three striped barriers stagger the route past office fronts. |
+| `crosswalk` | Signals and opposing stop lines frame an unobstructed zebra. |
+| `kiosk_plaza` | A coffee kiosk, planted beds, and a clock identify the paved square. |
+| `loading_bay` | Three tied cargo loads sit on a hatched apron in front of warehouse doors. |
+| `plain_block` | A bus shelter and painted pull-in face a bench across the dashed road. |
+| `underpass` | Four concrete piers and girder shadows frame Rivet beneath the elevated road. |
+| `market_stalls` | Four umbrella carts and a newsstand flank the open centre lane. |
+| [Health proof](C:/Users/kazda/kiro/gtai-masters/n22/street/health_100_50_10.png) | At 100, 50, and 10 HP, cream fills 210, 105, and 21 pixels of the 210-pixel track. |
+| [War-machine wall proof](C:/Users/kazda/kiro/gtai-masters/n22/street/war_machine_rest_32.png) | A lethal hit at `y=6.5 m` settles the machine at `y=3.65 m`. Its oil stops on the road side of the `y=6 m` kerb. |
+
+[astra: 3736s, exit 0]
