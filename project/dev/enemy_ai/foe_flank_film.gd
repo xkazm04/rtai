@@ -63,7 +63,7 @@ class FlankInput:
 			flank = true
 		var move: Vector2 = Vector2.ZERO
 		if flank:
-			move = radial.rotated(PI * 0.5) + radial * clampf(3.5 - distance, -1.0, 1.0)
+			move = radial.rotated(PI * 0.5) + radial * clampf(1.45 - distance, -1.0, 1.0)
 			if h.swing_left > 20:
 				move = radial
 		var rear: bool = radial.dot(h.facing) < -0.4
