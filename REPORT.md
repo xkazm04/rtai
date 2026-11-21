@@ -87,6 +87,8 @@ Timed parry is a non-goal in the design note, so none of these is a parry.
 3. Raise the 72000-tick run cap or treat capped runs as a ceiling: 8 of 30 confirm runs hit it alive, which censors "wave reached".
 4. A test that a bot-played street run writes rolls and cover from `BotStreetStats` into the result (kills both mutate survivors).
 5. Street: `guard_deflects` in the result (still absent), and finer budget units (Call 2).
+6. Decide Call 3 (wave timer) before tuning late waves: with timeouts ending most deep runs, the tuner's late-wave HP cuts optimise kill speed, not difficulty. Then re-measure the three profiles on the same seeds; if average and expert still overlap, widen the expert's profile row (aim error, tells read) in `project/data/tables/test_player.json`.
+7. Offline import (`batch.mjs --from`) should keep the capped-alive status (it is read from the live exit line today, so a combined report says 0).
 
 ## Astra ledger
 
