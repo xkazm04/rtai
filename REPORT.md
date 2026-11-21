@@ -1,9 +1,15 @@
 # REPORT - lane `guard`, run n22 (2026-11-21): the held guard, the weapon wheel, round sizes, blasts
 
-DRAFT (session 4, 04:35). Numbers below are from Astra's reports and my own reruns as logged in `JOURNAL.md`; the final gate line
-and film list are filled after the freeze.
+Branch `n22-guard`, interface tag `n22-guard-iface` (82bb7a4f5). Last code commit 13d97df81; everything after it is
+`JOURNAL.md`, `REPORT.md` and briefs (inert).
 
-Branch `n22-guard`, interface tag `n22-guard-iface` (82bb7a4f5).
+**Final gate** (`node tools/gate/run.mjs --rev=HEAD` on 13d97df81, 05:39 to 05:49): `gate: PASS;
+build/gate/13d97df81258/gate.json` (git-ignored, on this worktree). Lint 19/19 over 1844 GDScript files; unit 3481 passed /
+0 failed / 2 skipped; scenarios 65 passed; parity bit for bit over 1200 steps, planted mutation caught at step 629; selftest
+pass; export audit (release compile) 829 loaded / 0 failed. `--reels` was not run: this session ends at 07:10, before the
+07:30 freeze.
+
+Numbers below are from Astra's reports and my own reruns, as logged in `JOURNAL.md`.
 
 ## What works
 
@@ -11,7 +17,7 @@ Branch `n22-guard`, interface tag `n22-guard-iface` (82bb7a4f5).
 |---|---|---|
 | Interface: action `guard` (wire bit 30), `Shot.size` (`Shot.SMALL` / `Shot.LARGE`), `"round"` key (absent = small), `combat.json` `guard` block (7 keys + `melee_drain`), `--controls=wheel\|legacy` (legacy default) | 82bb7a4f5, `project/features/player/controls_mode.gd`, `project/features/combat/shot.gd` | scenarios 65 passed, 60 s replay `cbeb734ff9b97c41` unchanged |
 | Round sizes: rockets, thrown weapons, the enemy cannon are `large`; everything else small; the plasma sword's `bat()` still deflects all | e3d5799e8, `project/features/combat/enemy_rounds.gd` | |
-| Held guard with a meter: front arc, walk at `move_k`, no attack while up, roll drops it, small rounds deflected back as Rivet's, large rounds pass, break -> stagger -> refill after a delay, front melee drains `melee_drain` | 8a8a0d93c, 57a72ca0f, `project/features/player/player_guard.gd` | mutate `player_guard.gd` 15/20 = 75.0 %, all 5 survivors then covered by tests |
+| Held guard with a meter: front arc, walk at `move_k`, no attack while up, roll drops it, small rounds deflected back as Rivet's, large rounds pass, break -> stagger -> refill after a delay, front melee drains `melee_drain` | 8a8a0d93c, 57a72ca0f, `project/features/player/player_guard.gd` | mutate `player_guard.gd` on HEAD (05:50, `--max=20`, sampled from 97): 19/20 = 95.0 %; the one survivor is the initial `_up = false` -> `true` (line 22), which the first tick overwrites. (Was 15/20 = 75.0 % before the survivor tests.) |
 | Guard pose, deflect spark, amber break flash, meter readout | 123ec794d, `project/features/player/player_guard_view.gd` | |
 | Hostile blasts hurt Rivet with falloff through `CombatArena.damage()`, stopped by `wall_high` / `cover_high` on the segment, `cover_low` only in the cover stance, roll i-frames, Tonnage 0.3x | 97352761e, 7445d8fd5, `project/features/combat/rivet_blast.gd` | 18 blast tests; mutate `rivet_blast.gd` 18/20 = 90.0 % (both survivors then killed) |
 | Weapon wheel (wheel controls only): hands first, melee then guns in pick-up order, scroll cycles, 1-4 jump, LMB uses the slot, RMB guard only, Space a claw strike keeping the selection, readout | 35b75625e, 19eec5c03, `project/features/player/rivet_wheel.gd` | mutate `rivet_wheel.gd` 14/20 = 70.0 % before survivor tests |
