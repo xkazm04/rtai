@@ -18,9 +18,10 @@ class Meter:
 		value_changed.connect(func(_sample: float) -> void: queue_redraw())
 
 	func _draw() -> void:
-		draw_rect(Rect2(Vector2.ZERO, size).grow(2.0), PAPER)
-		draw_rect(Rect2(Vector2.ZERO, Vector2(size.x * ratio, size.y)), PLATE)
-		draw_rect(Rect2(Vector2.ZERO, size), PLATE, false, 1.0)
+		var track: Rect2 = Rect2(Vector2.ZERO, size)
+		draw_rect(track, PLATE)
+		draw_rect(Rect2(Vector2.ZERO, Vector2(size.x * ratio, size.y)), PAPER)
+		draw_rect(track.grow(1.0), PAPER.darkened(0.45), false, 1.0)
 
 
 var session: GauntletSession

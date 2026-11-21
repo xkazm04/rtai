@@ -35,22 +35,16 @@ func _ready() -> void:
 		return
 	# Activate the real UI button, just as a pointer release does.
 	(pick_view._cards.get_child(0) as Button).pressed.emit()
+	if OS.has_environment("GTAI_GAUNTLET_HEALTH"):
+		for hp: int in [100, 50, 10]:
+			session.stage.arena.rivet.hp = hp
+			if not await _save("health_%d_32" % hp):
+				get_tree().quit(1)
+				return
+		get_tree().quit()
+		return
 	hud.hide()
-	var captured: bool = await _segments()
-	await _close_capture(captured)
-
-
-func _close_capture(captured: bool) -> void:
-	# Retire rendered rigs and their canvases while the renderer can still drain a frame.
-	set_process(false)
-	for child: Node in get_children():
-		if child != session.world:
-			child.queue_free()
-	await get_tree().process_frame
-	await RenderingServer.frame_post_draw
-	var closed: bool = _finish()
-	await get_tree().process_frame
-	get_tree().quit(0 if captured and closed else 1)
+	get_tree().quit(0 if await _segments() else 1)
 
 
 func _segments() -> bool:
