@@ -83,8 +83,7 @@ func attach(p_stage: CollectCallStage, view: CollectCallView, ctx: WorldContext)
 	return true
 
 
-## Rivet's held weapon (rivet-arsenal) and reload magazine (weapon-art) over the rigs, on the
-## rigs' own layer (showcase glue: the city view has no print stage).
+## Attach Rivet's held equipment and combat readouts on the cast layer.
 func _add_hand_views(layer: CanvasLayer, p_stage: CollectCallStage) -> void:
 	var held: RivetHeldView = RivetHeldView.new()  # rivet-arsenal: the weapon in his claw
 	held.rigs = rigs
@@ -93,6 +92,7 @@ func _add_hand_views(layer: CanvasLayer, p_stage: CollectCallStage) -> void:
 	held.rivet_id = p_stage.arena.rivet.id
 	held.z_index = rigs.z_index + 60  # above every rig part (they stack their own z offsets)
 	layer.add_child(held)  # showcase glue: the city view has no print stage
+	PlayerGuardView.attach(layer, p_stage, rigs)
 	var mag: WeaponMagView = WeaponMagView.new()  # weapon-art: the reload magazine in the off claw
 	mag.rigs = rigs
 	mag.pilot = p_stage.pilot
@@ -234,8 +234,7 @@ static func fired(before: Vector2i, now: Vector2i) -> bool:
 	return now.y == 0 and before.y == 0 and now.x > before.x
 
 
-## rivet-arsenal: the live pilot's claw strikes and dodge rolls on Rivet's rig (row 0). While a
-## claw hit or the roll (n10: not its recovery) plays the gun is put away, so the strike reads.
+## Row zero carries the pilot's attack or roll clip, with the gun stowed during the action.
 func _rivet_clips(f: RigFeed) -> void:
 	var pilot: StagePilot = stage.pilot
 	if pilot == null or not stage.arena.rivet.alive():
@@ -275,8 +274,9 @@ func _rivet_clips(f: RigFeed) -> void:
 		f.flags[0] = 0
 
 
-## The gun is in the claw from halfway through the draw until halfway through the stow.
 static func _gun_shown(pilot: StagePilot) -> bool:
+	if pilot.guard != null and pilot.guard.blocks_attack():
+		return false
 	var h: WeaponHold = pilot.hold
 	match h.state:
 		WeaponHold.State.DRAWING:

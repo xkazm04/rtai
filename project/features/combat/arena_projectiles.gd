@@ -7,7 +7,6 @@ static func step_shots(arena: CombatArena) -> void:
 	for s: Shot in arena.shots.duplicate():
 		if not s.from_rivet and s.spec == null and not s.size_known:
 			s.size = EnemyRounds.size_of(s.weapon)
-			s.size_known = true
 		var lands: bool = s.spec != null and arena.areas != null
 		if lands and s.spec.homing_rad_per_tick > 0.0:
 			FightReach.home(arena, s)
@@ -15,6 +14,8 @@ static func step_shots(arena: CombatArena) -> void:
 		# A thrown bottle flies over bodies and lands at the aimed point.
 		var over: bool = lands and s.spec.kind == WeaponSpec.Kind.THROWN
 		var victim: Fighter = null if over else _struck(arena, s, from)
+		if victim == arena.rivet and arena.guard != null and arena.guard.deflect(arena, s, from):
+			continue
 		var ends: bool = victim != null or s.spent() or _blocked(arena, s, from)
 		if victim != null:
 			arena.hit_at = Geometry2D.get_closest_point_to_segment(victim.pos, from, s.pos)

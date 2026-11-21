@@ -24,21 +24,25 @@ static func bat(arena: CombatArena, facing: Vector2, reach_m: float) -> int:
 			continue
 		if to.length() > 0.001 and to.normalized().dot(facing) < FRONT_DOT:
 			continue
-		var speed: float = s.vel.length()
-		var back: Vector2 = -s.vel.normalized() if speed > 0.0 else facing
-		var shooter: Fighter = _fighter(arena, s.shooter_id)
-		if shooter != null and shooter.alive():
-			back = (shooter.pos - s.pos).normalized()
-		s.vel = back * speed
-		s.from_rivet = true
-		s.shooter_id = arena.rivet.id
-		s.damage = BACK_DAMAGE
-		s.left_m = BACK_RANGE_M
-		s.origin = s.pos
-		_spark(arena, s.pos, back)
-		arena.deflected.emit(s.pos, back)
+		send_back(arena, s, facing)
 		n += 1
 	return n
+
+
+static func send_back(arena: CombatArena, s: Shot, facing: Vector2) -> void:
+	var speed: float = s.vel.length()
+	var back: Vector2 = -s.vel.normalized() if speed > 0.0 else facing
+	var shooter: Fighter = _fighter(arena, s.shooter_id)
+	if shooter != null and shooter.alive():
+		back = (shooter.pos - s.pos).normalized()
+	s.vel = back * speed
+	s.from_rivet = true
+	s.shooter_id = arena.rivet.id
+	s.damage = BACK_DAMAGE
+	s.left_m = BACK_RANGE_M
+	s.origin = s.pos
+	_spark(arena, s.pos, back)
+	arena.deflected.emit(s.pos, back)
 
 
 static func _spark(arena: CombatArena, at: Vector2, back: Vector2) -> void:
