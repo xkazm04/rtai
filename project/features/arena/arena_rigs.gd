@@ -72,6 +72,7 @@ func attach(p_stage: CollectCallStage, view: CollectCallView, ctx: WorldContext)
 	RigCarry.wire(view.fx_view.gun_fx().follow, rigs)  # n15: a body hit's burst rides the body
 	if arena_stage == null:
 		return true
+	FoeOrdnanceView.attach(view.fx_view, p_stage.arena)
 	_pit = arena_stage.pit
 	_add_robots(layer, p_stage.arena, view.blood)
 	wave_cards = ArenaWaveCards.attach(rigs, _pit.standing)

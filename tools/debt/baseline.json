@@ -308,14 +308,15 @@
         "2026-11-18: n18 police item 6/7: --sim-police in LaunchArgs.KNOWN_FLAGS (the brief names the flag there; launch_args.gd 200 -> 201) and dev/sim/heat_cost.gd (the heat 3 cost probe) (files_near_cap 14 -> 14)",
         "2026-11-18: n19 vault course and the ArenaRigs feed call (files_near_cap 14 -> 14)",
         "2026-11-18: n19 move: one CoverView feed call beside VaultView in the shared arena rig (files_near_cap 14 -> 14)",
-        "2026-11-18: n19 move: read the arena pilot motion once for the cover and vault rig feeds (files_near_cap 14 -> 14)"
+        "2026-11-18: n19 move: read the arena pilot motion once for the cover and vault rig feeds (files_near_cap 14 -> 14)",
+        "2026-11-21: --foe-mix for n22 foes (files_near_cap 13 -> 13)"
       ],
       "files": {
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/showcase/city_fight.gd": 300,
-        "project/features/arena/arena_rigs.gd": 286,
+        "project/features/arena/arena_rigs.gd": 287,
         "project/features/bosses/boss_hook.gd": 281,
         "project/features/bosses/servo/servo_rig.gd": 287,
         "project/features/combat/kills/kill_view.gd": 286,
@@ -365,7 +366,8 @@
         "2026-11-20: n21 kerf: one KNOWN_FLAGS line --kerf-cruise-wings (owner Call, off by default) (files_past_soft_cap 66 -> 64)",
         "2026-11-20: --enemy for n22 foes (files_past_soft_cap 64 -> 64)",
         "2026-11-20: --controls for n22 guard (files_past_soft_cap 64 -> 64)",
-        "2026-11-21: combined --enemy and --controls interface flags (files_past_soft_cap 64 -> 64)"
+        "2026-11-21: combined --enemy and --controls interface flags (files_past_soft_cap 64 -> 64)",
+        "2026-11-21: --foe-mix for n22 foes (files_past_soft_cap 64 -> 64)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -373,7 +375,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 237,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 211,
+        "project/boot/launch_args.gd": 212,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,
@@ -391,7 +393,7 @@
         "project/dev/showcase/d5_hero_run.gd": 265,
         "project/dev/showcase/reel_director.gd": 209,
         "project/dev/weapon_art/weapon_lineup_run.gd": 210,
-        "project/features/arena/arena_rigs.gd": 286,
+        "project/features/arena/arena_rigs.gd": 287,
         "project/features/arena/prop_occlusion.gd": 206,
         "project/features/bosses/boss_bot.gd": 202,
         "project/features/bosses/boss_fight.gd": 269,

@@ -112,6 +112,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	# d9-handheld: --save-cross=write|read,<dir>[,ticks,after,idle] (dev/save_cross.gd, E14)
 	"--save-cross",
 	"--enemy-brain",
+	"--foe-mix",
 	"--squad-overlay",
 	"--ohm-bolt-delay",
 	"--vault",  # lane move n19: force low-obstacle vaults on
