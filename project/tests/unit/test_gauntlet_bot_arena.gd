@@ -1,6 +1,28 @@
 extends GutTest
 
 
+func test_street_pilot_drives_bound_session_and_returns_greedy_offer_index() -> void:
+	var pilot: GauntletTestPlayer = GauntletTestPlayer.new()
+	var bus: EventBus = EventBus.new()
+	var data: DataStore = DataStore.new()
+	var run: GauntletRun = GauntletRun.new()
+	pilot.configure(&"average", &"greedy", 3)
+	var session: ArenaSession = ArenaSession.open_with_args(bus, data, 3, pilot, ArenaArgs.new())
+	pilot.bind(run, session)
+	var before: Vector2 = session.stage.arena.rivet.pos
+	for tick: int in 60:
+		session.step()
+	var after: Vector2 = session.stage.arena.rivet.pos
+	assert_ne(after, before)
+	assert_eq(pilot.profile(), &"average")
+	assert_eq(pilot.pick([&"weapon_pistol", &"stat_damage_10", &"ghost_tonnage"]), 2)
+	assert_eq(pilot.pick([]), -1)
+	Log.info("gauntlet", "seed 3 average: Rivet moved %s to %s in 60 ticks" % [before, after])
+	session.close()
+	bus.free()
+	data.free()
+
+
 func test_recorded_pit_inputs_replay_without_sampling_the_brain() -> void:
 	var events: EventBus = EventBus.new()
 	var data: DataStore = DataStore.new()

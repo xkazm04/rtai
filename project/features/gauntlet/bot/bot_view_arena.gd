@@ -1,9 +1,10 @@
 class_name BotViewArena
 extends BotView
-## The pit supplies wave members only. Station dummies have separate owners.
+## The pit supplies only its wave members. The street uses the session's hostile roster.
 
 var _stage: ArenaStage
 var _actions: PlayerActions
+var _street: bool
 var _guns: WeaponTable = WeaponTable.shipped()
 var _next_waypoint: int = 0
 var _deaths: int = 0
@@ -11,9 +12,10 @@ var _round_ids: Dictionary[Shot, int] = {}
 var _next_round: int = 0
 
 
-func _init(stage: ArenaStage, actions: PlayerActions) -> void:
+func _init(stage: ArenaStage, actions: PlayerActions, street: bool = false) -> void:
 	_stage = stage
 	_actions = actions
+	_street = street
 	_solids = stage.walls.boxes
 
 
@@ -37,6 +39,8 @@ func refresh() -> void:
 
 
 func forward() -> Vector2:
+	if _street:
+		return Vector2.RIGHT
 	var last: int = ArenaPitBot.ENTRY.size() - 1
 	var to: Vector2 = _stage.plan.base + ArenaPitBot.ENTRY[_next_waypoint] - _player.pos
 	if to.length() <= ArenaPitBot.REACH_M and _next_waypoint < last:
@@ -47,7 +51,10 @@ func forward() -> Vector2:
 
 func _read_hostiles() -> void:
 	_hostiles.clear()
-	for fighter: Fighter in _stage.pit.standing:
+	var roster: Array[Fighter] = _stage.arena.hostiles if _street else _stage.pit.standing
+	for fighter: Fighter in roster:
+		if not fighter.alive():
+			continue
 		var foe: Hostile = Hostile.new()
 		foe.id = fighter.id
 		foe.pos = fighter.pos
@@ -91,8 +98,7 @@ func _read_rounds() -> void:
 		round_in.pos = shot.pos
 		round_in.vel = shot.vel
 		round_in.remaining_m = shot.left_m
-		if &"size" in shot:
-			round_in.size = shot.get(&"size")
+		round_in.size = shot.size
 		_rounds.append(round_in)
 	_round_ids = live
 
