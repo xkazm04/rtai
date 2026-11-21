@@ -18,6 +18,13 @@ const SLOT_ACTIONS: Array[StringName] = [
 var slots: Array[StringName] = [&"", &"", &"", &""]
 ## The slot in the claw (-1 = none yet).
 var current: int = -1
+## In wheel controls the grip slots are shortcuts. Retain acquisition order across shared grips.
+var wheel_inventory: bool = ControlsMode.wheel()
+var first_seen: Array[StringName] = []
+var rifle_spent: bool = false
+var wheel_only: bool = false
+var picked_up: bool = false
+var story: RivetWheelStory = null
 var switches: int = 0
 ## A bot holds the trigger: a semi gun re-taps (GunHand.tap).
 var tap: bool = false
@@ -30,6 +37,7 @@ var melee_ids: Array[StringName] = MeleeTable.weapon_ids()
 ## drawn blade's slot puts it away and gives back the weapon it replaced; when the story swaps the
 ## weapon (Brass's Gloria, a picked-up rifle) the blade counts as put away. false = the arena's.
 var sheathe: bool = false
+var _drawn_id: StringName = &""
 var _stowed: StringName = &""
 var _hands: Dictionary[StringName, GunHand] = {}
 var _table: WeaponTable
@@ -53,6 +61,12 @@ func add(id: StringName) -> int:
 	var grip: ArsenalTable.Grip = _arsenal.grip_of(id)
 	if grip == null or not carries(id):
 		return -1
+	if story != null:
+		story.apply(self)
+	if id not in first_seen:
+		first_seen.append(id)
+	if id == RIFLE:
+		rifle_spent = false
 	slots[grip.slot - 1] = id
 	return grip.slot - 1
 
@@ -83,6 +97,11 @@ func step(c: PlayerCommand, actions: PlayerActions, arena: CombatArena) -> void:
 		switches += 1
 	elif want != current and want >= 0:
 		select(want, arena)
+	service(c, actions, arena)
+
+
+## Pickups and reload are shared by the grip-slot and hands-first controls.
+func service(c: PlayerCommand, actions: PlayerActions, arena: CombatArena) -> void:
 	if c.was_pressed(actions, &"reload") and arena.gun != null:
 		arena.gun.trigger.start_reload()
 	ground.step(c, actions, arena, self)
@@ -100,6 +119,7 @@ func carries(id: StringName) -> bool:
 
 
 ## A picked-up gun into its slot and into the claw; the same gun again refills its magazine.
+## Wheel controls keep the current selection until the player switches.
 func take(id: StringName, arena: CombatArena) -> void:
 	if id == RIFLE:
 		arena.rifle_ammo = arena.tuning.weapon(RIFLE).magazine
@@ -108,13 +128,14 @@ func take(id: StringName, arena: CombatArena) -> void:
 		hand.trigger.ammo = hand.trigger.spec.magazine
 		hand.trigger.reload_left = 0
 	var slot: int = add(id)
-	if slot >= 0 and (slot != current or arena.rivet.weapon != id):
+	picked_up = picked_up or slot >= 0
+	if not wheel_inventory and slot >= 0 and (slot != current or arena.rivet.weapon != id):
 		select(slot, arena)
 
 
 ## Puts the gun in slot `i` in the claw (the fight's GunHand and rivet.weapon).
-func select(i: int, arena: CombatArena) -> void:
-	var id: StringName = slots[i]
+func select(i: int, arena: CombatArena, wheel_id: StringName = &"") -> void:
+	var id: StringName = slots[i] if wheel_id == &"" else wheel_id
 	if id == &"":
 		return
 	if _table.weapons.has(id):
@@ -129,12 +150,29 @@ func select(i: int, arena: CombatArena) -> void:
 			_stowed = arena.rivet.weapon
 		arena.gun = null
 	arena.rivet.weapon = id
-	current = i
+	record_drawn(i, id)
 	switches += 1
 
 
+func record_drawn(slot: int, id: StringName) -> void:
+	current = slot
+	_drawn_id = id
+
+
 func weapon() -> StringName:
+	if wheel_inventory:
+		return _drawn_id if current >= 0 else &""
 	return slots[current] if current >= 0 else &""
+
+
+## Keep the exact hand (magazine, cooldown and spread stream) supplied by a launch or story grant.
+func remember_hand(hand: GunHand, replace: bool = false) -> void:
+	if hand != null and (replace or not _hands.has(hand.trigger.spec.id)):
+		_hands[hand.trigger.spec.id] = hand
+
+
+func hand_for(id: StringName) -> GunHand:
+	return _hands.get(id, null)
 
 
 func write_state(out: StreamPeerBuffer) -> void:

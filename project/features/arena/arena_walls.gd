@@ -7,7 +7,10 @@ extends RefCounted
 
 const SOLID: Array[String] = ["wall_high", "cover_high", "cover_low"]
 
+const FACE_NUDGE_M: float = 0.05
+
 var boxes: Array[Rect2] = []
+var kinds: Array[String] = []
 
 
 static func from_stations(stations: ArenaStations, base: Vector2) -> ArenaWalls:
@@ -16,6 +19,7 @@ static func from_stations(stations: ArenaStations, base: Vector2) -> ArenaWalls:
 		for p: ArenaStation.Prop in s.props:
 			if p.kind in SOLID:
 				w.boxes.append(Rect2(base + p.at - p.size * 0.5, p.size))
+				w.kinds.append(p.kind)
 	return w
 
 
@@ -33,6 +37,35 @@ func blocks(a: Vector2, b: Vector2) -> bool:
 		if _crosses(box, a, b):
 			return true
 	return false
+
+
+## Blast sight line. A burst inside a prop ignores that prop. On a face, move a short way
+## toward the victim to distinguish entering the solid from leaving it on the near side.
+func blocks_kinds(a: Vector2, b: Vector2, accepted: Array[String]) -> bool:
+	for i: int in boxes.size():
+		var kind: String = kinds[i] if i < kinds.size() else "wall_high"
+		if kind not in accepted:
+			continue
+		var box: Rect2 = boxes[i]
+		if _inside(box, a):
+			continue
+		if a == a.clamp(box.position, box.end):
+			var probe: Vector2 = a.move_toward(b, FACE_NUDGE_M).clamp(box.position, box.end)
+			# The midpoint remains inside even when the probe exits through a nearby corner.
+			if _inside(box, a.lerp(probe, 0.5)):
+				return true
+		elif _crosses(box, a, b):
+			return true
+	return false
+
+
+static func _inside(box: Rect2, point: Vector2) -> bool:
+	return (
+		point.x > box.position.x
+		and point.x < box.end.x
+		and point.y > box.position.y
+		and point.y < box.end.y
+	)
 
 
 static func eject_circle(p: Vector2, b: Rect2, r: float) -> Vector2:

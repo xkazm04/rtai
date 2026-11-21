@@ -95,7 +95,9 @@
         "2026-11-21: Wave clock and health HUD for n22 street (dev_loc 26749 -> 26830)",
         "2026-11-21: Human upgrade cards, selection and translated HUD for n22 street (dev_loc 26830 -> 27022)",
         "2026-11-21: Windowed pick and segment still capture for n22 street (dev_loc 27022 -> 27110)",
-        "2026-11-21: n22 merge: street head adds 2 lines to project/dev/gauntlet over the copy loop measured (dev_loc 27506 -> 27508)"
+        "2026-11-21: n22 merge: street head adds 2 lines to project/dev/gauntlet over the copy loop measured (dev_loc 27506 -> 27508)",
+        "2026-11-21: guard film dev scene (n22 guard) (dev_loc 26600 -> 26991)",
+        "2026-11-21: guard film dev scene (n22 guard) (dev_loc 26991 -> 26997)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -109,6 +111,7 @@
         "project/dev/gauntlet": 505,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1396,
+        "project/dev/guard": 397,
         "project/dev/gunplay": 674,
         "project/dev/handheld": 247,
         "project/dev/held": 103,
@@ -131,7 +134,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 27508
+      "total": 27905
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -321,14 +324,16 @@
         "2026-11-18: n19 vault course and the ArenaRigs feed call (files_near_cap 14 -> 14)",
         "2026-11-18: n19 move: one CoverView feed call beside VaultView in the shared arena rig (files_near_cap 14 -> 14)",
         "2026-11-18: n19 move: read the arena pilot motion once for the cover and vault rig feeds (files_near_cap 14 -> 14)",
-        "2026-11-21: --foe-mix for n22 foes (files_near_cap 13 -> 13)"
+        "2026-11-21: --foe-mix for n22 foes (files_near_cap 13 -> 13)",
+        "2026-11-21: restore doc comments deleted in 8a8a0d93c/123ec794d (n22 guard) (files_near_cap 13 -> 13)",
+        "2026-11-21: n22 merge: flag and rig lines from several lanes add up in launch_args.gd and arena_rigs.gd (files_near_cap 13 -> 13)"
       ],
       "files": {
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/showcase/city_fight.gd": 300,
-        "project/features/arena/arena_rigs.gd": 287,
+        "project/features/arena/arena_rigs.gd": 290,
         "project/features/bosses/boss_hook.gd": 281,
         "project/features/bosses/servo/servo_rig.gd": 287,
         "project/features/combat/kills/kill_view.gd": 286,
@@ -379,15 +384,21 @@
         "2026-11-20: --controls for n22 guard (files_past_soft_cap 64 -> 64)",
         "2026-11-20: --enemy for n22 foes (files_past_soft_cap 64 -> 64)",
         "2026-11-21: combined --enemy and --controls interface flags (files_past_soft_cap 64 -> 64)",
-        "2026-11-21: --foe-mix for n22 foes (files_past_soft_cap 64 -> 64)"
+        "2026-11-21: --foe-mix for n22 foes (files_past_soft_cap 64 -> 64)",
+        "2026-11-21: restore doc comments deleted in 8a8a0d93c/123ec794d (n22 guard) (files_past_soft_cap 64 -> 65)",
+        "2026-11-21: n22 hostile blasts: combat_arena.gd holds the station walls and fight_areas.gd records shared blast rings (files_past_soft_cap 65 -> 65)",
+        "2026-11-21: stage_pilot.gd wheel input and collect_call_view.gd HUD attachment for n22 guard wheel (files_past_soft_cap 65 -> 65)",
+        "2026-11-21: --wheel-start for n22 guard (files_past_soft_cap 65 -> 65)",
+        "2026-11-21: n22 merge: flag and rig lines from several lanes add up in launch_args.gd and arena_rigs.gd (files_past_soft_cap 65 -> 65)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
+        "project/boot/collect_call/stage_pilot.gd": 234,
         "project/boot/collect_call/view/cast_view.gd": 230,
-        "project/boot/collect_call/view/collect_call_view.gd": 237,
+        "project/boot/collect_call/view/collect_call_view.gd": 238,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 212,
+        "project/boot/launch_args.gd": 213,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,
@@ -405,7 +416,7 @@
         "project/dev/showcase/d5_hero_run.gd": 265,
         "project/dev/showcase/reel_director.gd": 209,
         "project/dev/weapon_art/weapon_lineup_run.gd": 210,
-        "project/features/arena/arena_rigs.gd": 287,
+        "project/features/arena/arena_rigs.gd": 290,
         "project/features/arena/prop_occlusion.gd": 206,
         "project/features/bosses/boss_bot.gd": 202,
         "project/features/bosses/boss_fight.gd": 269,
@@ -419,7 +430,7 @@
         "project/features/city/sim/sim_people.gd": 202,
         "project/features/city/view/city_view.gd": 259,
         "project/features/combat/ai/enemy_pit.gd": 244,
-        "project/features/combat/combat_arena.gd": 251,
+        "project/features/combat/combat_arena.gd": 254,
         "project/features/combat/hit_feel/hit_feel.gd": 220,
         "project/features/combat/kills/kill_char_fx.gd": 203,
         "project/features/combat/kills/kill_lab.gd": 213,
@@ -429,7 +440,7 @@
         "project/features/combat/react/react_link.gd": 288,
         "project/features/combat/weapons/art/weapon_art.gd": 274,
         "project/features/combat/weapons/art/weapon_fx_art.gd": 287,
-        "project/features/combat/weapons/fight_areas.gd": 222,
+        "project/features/combat/weapons/fight_areas.gd": 226,
         "project/features/combat/weapons/fight_areas_art.gd": 253,
         "project/features/combat/weapons/gun_fx.gd": 223,
         "project/features/combat/weapons/gun_fx_art.gd": 231,
@@ -447,18 +458,22 @@
         "project/tests/unit/test_gun_fx.gd": 213,
         "project/tests/unit/test_weapon_art.gd": 223
       },
-      "total": 64
+      "total": 65
     },
     "lane_named_dev_dirs": {
+      "accepted": [
+        "2026-11-21: guard film dev scene (n22 guard) (lane_named_dev_dirs 6 -> 7)"
+      ],
       "files": {
         "project/dev/audio": 1,
         "project/dev/cheats": 1,
+        "project/dev/guard": 1,
         "project/dev/gunplay": 1,
         "project/dev/held": 1,
         "project/dev/overlays": 1,
         "project/dev/weapon_art": 1
       },
-      "total": 6
+      "total": 7
     },
     "unused_class_names": {
       "files": {

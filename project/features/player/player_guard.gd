@@ -11,11 +11,13 @@ var melee_blocks: int = 0
 var meter_k: float = 1.0:
 	set(value):
 		var fraction: float = meter()
+		_touched = _touched or meter_k != maxf(value, 0.0)
 		meter_k = maxf(value, 0.0)
 		_charge = fraction * _capacity()
 		if _charge == 0.0:
 			lower()
 
+var _touched: bool = false
 var _charge: float
 var _up: bool = false
 var _stagger: int = 0
@@ -33,6 +35,7 @@ func step(held: bool, can_guard: bool) -> void:
 		return
 	_up = held and can_guard and _charge > 0.0
 	if _up:
+		_touched = true
 		_delay = CombatTuning.ticks(tuning.refill_delay_s)
 	elif _delay > 0:
 		_delay -= 1
@@ -90,6 +93,8 @@ func blocks_melee(
 
 
 func write_state(out: StreamPeerBuffer) -> void:
+	if not _touched:
+		return
 	out.put_double(meter_k)
 	out.put_double(_charge)
 	out.put_u8(int(up()))

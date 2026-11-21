@@ -17,6 +17,10 @@ var _near: Dictionary[Shot, bool] = {}
 ## of vanishing.
 func cull(arena: CombatArena, walls: ArenaWalls) -> void:
 	for s: Shot in arena.shots.duplicate():
+		if not s.from_rivet and EnemyRounds.splash_m(s.weapon) > 0.0:
+			if ArenaProjectiles.burst_at_wall(arena, s, walls):
+				blocked += 1
+			continue
 		var kind: int = s.spec.kind if s.spec != null else -1
 		if kind == WeaponSpec.Kind.THROWN:
 			continue

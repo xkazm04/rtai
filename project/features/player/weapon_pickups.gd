@@ -5,6 +5,7 @@ extends RefCounted
 ## magazine). A gun for a slot that holds another gun stays down until `interact` is pressed over
 ## it: then the held one is dropped behind Rivet and the new one drawn (the swap is the drop).
 ## Deterministic: positions in metres, items in drop order.
+## On the wheel an occupied grip still takes interact, and the previous item stays carried.
 
 const REACH_M: float = 0.9
 const DROP_BEHIND_M: float = 0.7
@@ -45,11 +46,14 @@ func collect(id: StringName, interact: bool, arena: CombatArena, carry: RivetCar
 	if slot < 0:
 		return false
 	var held: StringName = carry.slots[slot]
-	if held == &"" or held == id:
+	if held == &"" or held == id or (carry.wheel_inventory and id in carry.first_seen):
 		picked += 1
 	elif interact:
-		drop(held, arena.rivet.pos - arena.rivet.facing * DROP_BEHIND_M)
-		swapped += 1
+		if carry.wheel_inventory:
+			picked += 1  # the shortcut changes, but the previous weapon stays on the wheel
+		else:
+			drop(held, arena.rivet.pos - arena.rivet.facing * DROP_BEHIND_M)
+			swapped += 1
 	else:
 		return false
 	carry.take(id, arena)

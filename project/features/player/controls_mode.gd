@@ -19,3 +19,7 @@ static func id() -> StringName:
 
 static func wheel() -> bool:
 	return id() == &"wheel"
+
+
+static func start_drawn() -> bool:
+	return LaunchArgs.value("--wheel-start") == "drawn"

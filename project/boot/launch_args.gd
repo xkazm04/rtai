@@ -124,6 +124,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--dent-tether",  # n20-dent: choose the roof tether
 	"--enemy",  # n22 foes: archetype for the single-enemy duel
 	"--controls",
+	"--wheel-start",
 ]
 var _values: Dictionary[String, String] = {}
 var _unknown: Array[String] = []

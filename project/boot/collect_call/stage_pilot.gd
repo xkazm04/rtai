@@ -1,10 +1,17 @@
 class_name StagePilot
 extends RefCounted
-## Turns live or recorded tick input into movement, attacks and interactions in quest 1,
-## the arena and the city. Vaults and station cover take ownership of movement and fire.
+## The player at quest 1's stage (and the arena's, and the city block's): each tick's TickInput
+## (live devices or a replay log, never raw keys) decoded into StageIntent. The move stick drives
+## PlayerMotion (rivet_motion.json over TopDownMover: the walk, the held sprint, the dodge roll
+## with its i-frames), a held fire shoots along the aim heading, an interact press uses whatever
+## is in reach (StageActions), melee is the claw combo (PlayerMelee over rivet_melee.json), and
+## the car key is a stub until the vehicles lane's enter/exit API lands.
+## Vaults own the stage position and attack input through their landing tick.
+## Station cover holds the fighter on the face and releases fire at a full corner peek.
 
 var actions: PlayerActions
 var guard: PlayerGuard = null
+var wheel: RivetWheel = null
 var motion: PlayerMotion = PlayerMotion.shipped()
 var melee: PlayerMelee = PlayerMelee.new()
 ## rivet-arsenal: hold melee after the jab to charge the electroshock, release to discharge.
@@ -13,7 +20,11 @@ var shock: PlayerShock = PlayerShock.shipped()
 ## (rivet_arsenal.json); no shot leaves before the draw ends.
 var hold: WeaponHold = WeaponHold.new()
 ## rivet-arsenal: the carried guns and the switch keys (null: quest 1 keeps its own weapons).
-var carry: RivetCarry = null
+var carry: RivetCarry = null:
+	set(value):
+		carry = value
+		if wheel != null:
+			wheel.bind(value)
 ## rivet-arsenal: this tick's sway of the fire line off the aim (rad; the flamer's hose, else 0).
 var sway_rad: float = 0.0
 ## rivet-arsenal: the molotov's wind-up before the bottle leaves.
@@ -40,6 +51,7 @@ func _init(p_actions: PlayerActions) -> void:
 	actions = p_actions
 	if ControlsMode.wheel():
 		guard = PlayerGuard.new()
+		wheel = RivetWheel.new()
 	actions.enable_cover_input(motion.cover.enabled)
 
 
@@ -50,12 +62,17 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 	if c.pressed != 0:
 		last_press_tick = stage.tick
 	var rivet: Fighter = stage.arena.rivet
-	if carry != null and rivet.alive():
-		carry.step(c, actions, stage.arena)
+	if rivet.alive():
+		if wheel != null:
+			if carry == null:
+				carry = RivetWheel.carry_for(stage.arena)
+			wheel.step(c, actions, stage.arena, stage.tick)
+		elif carry != null:
+			carry.step(c, actions, stage.arena)
 	hold.follow_weapon(rivet.weapon)
-	_pick_melee()
 	if guard != null:
 		PlayerGuardInput.prepare(self, stage, c)
+	_pick_melee(c)
 	if stage.hidden_in != "" and c.move == Vector2.ZERO:
 		motion.stop()
 	if rivet.alive():
@@ -88,7 +105,8 @@ func _attacks(stage: CollectCallStage, c: PlayerCommand, rivet: Fighter) -> void
 			Log.info("pilot", "enter/exit car pressed (stub until the vehicles lane's API lands)")
 
 
-## Returns true when a ghost form owns the melee press.
+## The ghost forms (features/souls GhostPilot); true when a form owns the melee press this tick
+## (the pilot skips the claw).
 func _ghosts(stage: CollectCallStage, c: PlayerCommand, press: bool) -> bool:
 	if ghosts == null:
 		return false
@@ -100,6 +118,7 @@ func facing() -> Vector2:
 	return motion.facing()
 
 
+## Kept for the dev arena's teleport and older hosts: the walk under PlayerMotion.
 func stop() -> void:
 	motion.stop()
 
@@ -109,7 +128,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 	melee.write_state(out)
 	shock.write_state(out)
 	hold.write_state(out)
-	if carry != null:
+	if carry != null and (wheel == null or wheel.writes_carry()):
 		carry.write_state(out)
 		throw.write_state(out)
 	out.put_32(_previous)
@@ -117,9 +136,13 @@ func write_state(out: StreamPeerBuffer) -> void:
 		ghosts.write_state(out)
 	if guard != null:
 		guard.write_state(out)
+	if wheel != null:
+		wheel.write_state(out)
 
 
-## Drive locomotion and expose the fighter outside the roll's invulnerable ticks.
+## The walk, sprint and roll; a claw hit slows the walk (move_mult), so do spinning barrels (the
+## gatling's fire_move_mult), and the roll's i-frames close
+## Rivet to damage (CombatArena.damage skips a fighter that is not exposed).
 func _move(stage: CollectCallStage, c: PlayerCommand) -> void:
 	var rivet: Fighter = stage.arena.rivet
 	var walk: float = stage.arena.tuning.rivet["walk_mps"] * melee.move_scale()
@@ -140,12 +163,20 @@ func _move(stage: CollectCallStage, c: PlayerCommand) -> void:
 
 ## rivet-arsenal: a carried melee weapon (katana, baton) is in the claw.
 func wielding() -> bool:
+	if wheel != null and melee.busy() and melee.weapon_id == MeleeTable.CLAW:
+		return false
 	return carry != null and carry.melee_ids.has(hold.held)
 
 
-## Change melee weapons between hits.
-func _pick_melee() -> void:
+## The melee combo follows the weapon in the claw (the bare claw otherwise); it changes between
+## hits only, never inside one.
+## Wheel controls also allow a quick claw press to interrupt a blade hit.
+func _pick_melee(c: PlayerCommand) -> void:
 	var want: StringName = hold.held if wielding() else MeleeTable.CLAW
+	if wheel != null and c.was_pressed(actions, &"melee"):
+		want = MeleeTable.CLAW
+		if melee.weapon_id != want and melee.busy():
+			melee.combo.cancel()
 	if want == melee.weapon_id or melee.busy():
 		return
 	_melees[melee.weapon_id] = melee
@@ -157,6 +188,8 @@ func _pick_melee() -> void:
 ## The melee key's press; with a melee weapon drawn, a held fire swings too (held = the combo
 ## chains, as a mash does). Nothing swings while the weapon is still being drawn.
 func _melee_press(c: PlayerCommand) -> bool:
+	if wheel != null:
+		return wheel.swing_pressed(c, actions, hold, melee, ghosts)
 	if not wielding():
 		return c.was_pressed(actions, &"melee")
 	if not hold.can_fire():
@@ -166,7 +199,8 @@ func _melee_press(c: PlayerCommand) -> bool:
 
 ## The attack is held down: melee, or a held fire with a melee weapon drawn (the chainsaw grinds).
 func _attack_held(c: PlayerCommand) -> bool:
-	return c.is_held(actions, &"melee") or (wielding() and c.is_held(actions, &"fire"))
+	var primary: bool = wheel.melee_selected() if wheel != null else wielding()
+	return c.is_held(actions, &"melee") or (primary and c.is_held(actions, &"fire"))
 
 
 ## A held fire shoots along the aim; the flamer's hose sways the line (ArsenalTable.Grip.sway).
@@ -175,6 +209,8 @@ func _fire(stage: CollectCallStage, c: PlayerCommand) -> void:
 	var armed: bool = (
 		hold.can_fire() and not melee.busy() and not shock.busy() and not wielding() and not rolling
 	)
+	if wheel != null:
+		armed = armed and not wheel.melee_selected() and not c.was_pressed(actions, &"melee")
 	var grip: ArsenalTable.Grip = hold.table.grip_of(hold.held)
 	var firing: bool = c.is_held(actions, &"fire") and c.aim != Vector2.ZERO and armed
 	if grip != null and grip.windup_ticks > 0:  # the molotov: wind up, then the bottle leaves
