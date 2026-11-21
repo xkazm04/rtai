@@ -45,8 +45,6 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	stage.arena.wounded.connect(_wounded)
 	@warning_ignore("return_value_discarded")
 	stage.arena.kill_landed.connect(_killed)
-	@warning_ignore("return_value_discarded")
-	stage.arena.struck.connect(_struck)
 
 
 func step(stage: ArenaStage, tick: int) -> void:
@@ -74,6 +72,7 @@ func step(stage: ArenaStage, tick: int) -> void:
 
 func _spawn(stage: ArenaStage, tick: int) -> void:
 	var arena: CombatArena = stage.arena
+	(arena as GauntletCombat).retire_wave()
 	for dead: Fighter in _members:
 		arena.hostiles.erase(dead)
 	_members.clear()
@@ -187,8 +186,3 @@ func _killed(
 	victim: Fighter, weapon: StringName, _dir: Vector2, _at: Vector2, _kind: StringName
 ) -> void:
 	_wounded(victim, weapon)
-
-
-func _struck(victim: Fighter, _dir: Vector2, lethal: bool, weapon: StringName) -> void:
-	if victim.kind == Fighter.Kind.RIVET and lethal and not done:
-		_run.death_by = weapon
