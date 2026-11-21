@@ -59,13 +59,17 @@ func land(arena: CombatArena, s: Shot, victim: Fighter, at: Vector2) -> void:
 	if victim != null:
 		_strike(arena, s, victim, s.damage, s.vel.normalized())
 	if w.splash_radius_m > 0.0:
-		blasts.append(Vector3(at.x, at.y, w.splash_radius_m))
-		blast_ticks.append(arena.tick)
+		note_blast(at, w.splash_radius_m, arena.tick)
 		_splash(arena, s, victim, at)
 	if w.chain_hops > 0 and victim != null and CHAIN_THROUGH_HUMANS:
 		_chain(arena, s, victim)
 	if w.patch_ticks > 0 and (w.kind == WeaponSpec.Kind.THROWN or victim == null):
 		add_patch(at, w.patch_radius_m, w.patch_ticks, w.dot_dps * hp_scale)
+
+
+func note_blast(at: Vector2, radius: float, tick: int) -> void:
+	blasts.append(Vector3(at.x, at.y, radius))
+	blast_ticks.append(tick)
 
 
 ## Once per tick after the shots: the timers, burning, the patches.

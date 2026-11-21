@@ -27,6 +27,24 @@ static func is_melee(weapon: StringName) -> bool:
 	return _lookup(weapon)._melee
 
 
+## Install a synthetic weapon row without changing the shipped table. Reset reloads the table.
+static func override_for_test(
+	id: StringName, round_size: StringName, radius: float, damage: float
+) -> void:
+	if _default == null:
+		_load_table()
+	var row: EnemyRounds = EnemyRounds.new()
+	row._size = round_size
+	row._radius_m = radius
+	row._damage = damage
+	_rows[id] = row
+
+
+static func reset() -> void:
+	_rows.clear()
+	_default = null
+
+
 static func _lookup(weapon: StringName) -> EnemyRounds:
 	if _default == null:
 		_load_table()

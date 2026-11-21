@@ -364,7 +364,8 @@
         "2026-11-19: n19 engine night: dev probes (dev/sim far-cop and zone census, dev/enemy_ai fight probe, dev/bench crowd cost, arsenal audit kit) and launch flags, all dev-only evidence tools; owner verdicts 2026-11-19 (files_past_soft_cap 66 -> 66)",
         "2026-11-20: n21 kerf: one KNOWN_FLAGS line --kerf-cruise-wings (owner Call, off by default) (files_past_soft_cap 66 -> 64)",
         "2026-11-20: --controls for n22 guard (files_past_soft_cap 64 -> 64)",
-        "2026-11-21: restore doc comments deleted in 8a8a0d93c/123ec794d (n22 guard) (files_past_soft_cap 64 -> 65)"
+        "2026-11-21: restore doc comments deleted in 8a8a0d93c/123ec794d (n22 guard) (files_past_soft_cap 64 -> 65)",
+        "2026-11-21: n22 hostile blasts: combat_arena.gd holds the station walls and fight_areas.gd records shared blast rings (files_past_soft_cap 65 -> 65)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -405,7 +406,7 @@
         "project/features/city/sim/sim_people.gd": 202,
         "project/features/city/view/city_view.gd": 259,
         "project/features/combat/ai/enemy_pit.gd": 244,
-        "project/features/combat/combat_arena.gd": 253,
+        "project/features/combat/combat_arena.gd": 254,
         "project/features/combat/hit_feel/hit_feel.gd": 220,
         "project/features/combat/kills/kill_char_fx.gd": 203,
         "project/features/combat/kills/kill_lab.gd": 213,
@@ -415,7 +416,7 @@
         "project/features/combat/react/react_link.gd": 288,
         "project/features/combat/weapons/art/weapon_art.gd": 274,
         "project/features/combat/weapons/art/weapon_fx_art.gd": 287,
-        "project/features/combat/weapons/fight_areas.gd": 222,
+        "project/features/combat/weapons/fight_areas.gd": 226,
         "project/features/combat/weapons/fight_areas_art.gd": 253,
         "project/features/combat/weapons/gun_fx.gd": 223,
         "project/features/combat/weapons/gun_fx_art.gd": 231,

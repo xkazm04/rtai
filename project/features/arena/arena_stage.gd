@@ -50,15 +50,14 @@ static func cleared_layout(p_plan: ArenaPlan) -> StageLayout:
 
 func setup(ctx: WorldContext) -> void:
 	super.setup(ctx)
+	arena.walls = walls
 	if cells != null:
 		pit = ArenaPit.from_plan(plan, stations, cells)
 	if ROUTE_GUARDS:
 		var bounds: Rect2 = pit.zone
 		for area: ArenaPlan.Area in plan.areas:
 			bounds = bounds.merge(area.rect)
-		arena.guard_map = GuardRouteMap.new(
-			bounds, walls.boxes, cells, arena.tuning.human["radius_m"]
-		)
+		arena.guard_map = GuardRouteMap.new(bounds, walls.boxes, cells, arena.tuning.human.radius_m)
 		var brain: String = _options.text("--enemy-brain", SquadChoice.DEFAULT_BRAIN)
 		if brain in ["squad", "mixed"]:
 			arena.squad_ai = ArenaSquad.new(arena.guard_map)

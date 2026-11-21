@@ -5,6 +5,8 @@ extends RefCounted
 
 enum Phase { OFF, SNAP, IN, PEEK, LEAVE }
 
+const STANCE: StringName = &"station_cover_stance"
+
 var enabled: bool = false
 var drawn_cells: bool = true
 var silhouette_enabled: bool
@@ -47,6 +49,15 @@ func configure(t: DataTable) -> void:
 	edge_m = t.num(row, "edge_m")
 	leave_dot = t.num(row, "leave_dot")
 	leave_ticks = maxi(1, t.integer(row, "leave_ticks"))
+
+
+## A blast can read this fighter's live stance even when it lands before the pilot steps.
+static func active_on(fighter: Fighter) -> bool:
+	if not fighter.has_meta(STANCE):
+		return false
+	var owner: WeakRef = fighter.get_meta(STANCE)
+	var cover: PlayerCover = owner.get_ref()
+	return cover != null and cover.spot != null
 
 
 func interrupt() -> void:
@@ -117,6 +128,7 @@ func _enter(stage: CollectCallStage, motion: PlayerMotion) -> bool:
 			continue
 		motion.stop()
 		spot = s
+		stage.arena.rivet.set_meta(STANCE, weakref(self))
 		_frame = 0
 		_end = 0
 		_away = 0

@@ -47,6 +47,7 @@ var gun: GunHand = null
 ## Lane gunplay: readable contractor bursts (tell, lock, slowed rounds); null keeps GuardBrain.
 var guard_tell: GuardTell = null
 var guard: PlayerGuard = null
+var walls: ArenaWalls = null
 ## Area effects start with the first GunHand shot, so quest 1 (no gun) keeps its goldens.
 var areas: FightAreas = null
 ## The landing hit's direction and point, set before damage() (kill_landed reads them).
