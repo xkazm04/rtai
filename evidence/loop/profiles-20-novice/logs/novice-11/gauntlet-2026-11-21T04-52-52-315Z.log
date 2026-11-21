@@ -1,0 +1,15 @@
+# --fixed-fps 60 --quit-after 72000 res://dev/gauntlet/gauntlet.tscn -- --seed=11 --bot=novice --pick=greedy --controls=wheel --result=C:\Users\kazda\kiro\gtai-wt\n22-loop\evidence\loop\profiles-20-novice\runs\novice-11.json
+# exit 0, 5.8 s
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] gauntlet: test player bound: novice, greedy picks, seed 11
+[INFO] gauntlet: wave 1 tick 272 block kiosk_plaza enemies { "patrol_cop": 4 }
+[INFO] gauntlet: wave 2 tick 1157 block crosswalk enemies { "patrol_cop": 6 }
+[INFO] gauntlet: wave 3 tick 1598 block crosswalk enemies { "contractor": 1, "riot_cop": 1, "rocket_trooper": 1, "patrol_cop": 2 }
+[INFO] gauntlet: wave 4 tick 2317 block crosswalk enemies { "rocket_trooper": 3, "swat": 1, "patrol_cop": 2 }
+[INFO] gauntlet: wave 5 tick 3000 block plain_block enemies { "war_machine": 1, "patrol_cop": 1, "riot_cop": 2, "swat": 1 }
+[INFO] gauntlet: wave 6 tick 4640 block crosswalk enemies { "rocket_trooper": 1, "patrol_cop": 3, "robot_thug": 3 }
+[INFO] rivet_arsenal: arena: Rivet carries [&"", &"", &"gatling", &""]
+[INFO] gauntlet: wave 7 tick 5222 block crosswalk enemies { "robot_thug": 1, "patrol_cop": 2, "riot_cop": 1, "sentry_turret": 3 }
+[INFO] gauntlet: wave 7 ended after 1127 ticks at (241.9949, -5.149287), hp 0.0
+[INFO] gauntlet: tick 6350, segment 7
