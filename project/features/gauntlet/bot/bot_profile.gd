@@ -7,6 +7,8 @@ const SCHEMA: String = "gtai.test_player/1"
 
 var id: StringName
 var reaction_ticks: int
+var rest_hp: float
+var retreat_hp: float
 var aim_error_deg: float
 var tells_read: float
 var guard_lead_ticks: int
@@ -26,6 +28,8 @@ static func shipped(profile_id: StringName) -> BotProfile:
 		var profile: BotProfile = BotProfile.new()
 		profile.id = profile_id
 		profile.reaction_ticks = table.integer(row, "reaction_ticks")
+		profile.rest_hp = table.num(row, "rest_hp")
+		profile.retreat_hp = table.num(row, "retreat_hp")
 		profile.aim_error_deg = table.num(row, "aim_error_deg")
 		profile.tells_read = table.num(row, "tells_read")
 		profile.guard_lead_ticks = table.integer(row, "guard_lead_ticks")

@@ -27,6 +27,7 @@ func refresh() -> void:
 	_player.facing = rivet.facing
 	_player.radius = rivet.radius_m
 	_player.hp = rivet.hp
+	_player.street_max_hp = rivet.max_hp if _street else 0.0
 	_player.can_roll = _stage.pilot != null and _stage.pilot.motion.can_roll()
 	_player.can_guard = _actions.bit(&"guard") >= 0
 	_player.shots_fired = _stage.shots_fired
@@ -56,6 +57,13 @@ func forward() -> Vector2:
 
 func chase(foe: Hostile) -> Vector2:
 	return _toward(foe.pos) if _street else super.chase(foe)
+
+
+func retreat() -> Vector2:
+	if street_layout == null:
+		return super.retreat()
+	var goal: Vector2 = Vector2(street_layout.window[0].start_x + 2.0, 0.0)
+	return _toward(goal) if _player.pos.distance_to(goal) > 0.3 else Vector2.ZERO
 
 
 func _toward(goal: Vector2) -> Vector2:

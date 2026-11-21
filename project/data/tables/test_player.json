@@ -37,6 +37,8 @@
       "guard_lead_ticks": 5,
       "id": "novice",
       "reaction_ticks": 30,
+      "rest_hp": 0.4,
+      "retreat_hp": 0,
       "roll_skill": 0.3,
       "tells_read": 0.3
     },
@@ -47,6 +49,8 @@
       "guard_lead_ticks": 10,
       "id": "average",
       "reaction_ticks": 16,
+      "rest_hp": 0.75,
+      "retreat_hp": 0.25,
       "roll_skill": 0.6,
       "tells_read": 0.65
     },
@@ -57,6 +61,8 @@
       "guard_lead_ticks": 18,
       "id": "expert",
       "reaction_ticks": 8,
+      "rest_hp": 0.95,
+      "retreat_hp": 0.45,
       "roll_skill": 0.95,
       "tells_read": 0.9
     }

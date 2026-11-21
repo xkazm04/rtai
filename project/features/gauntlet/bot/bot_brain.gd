@@ -27,6 +27,7 @@ var _target_id: int = -1
 var _last_enemy: int = -1
 var _ready: int = 0
 var _previous: int = 0
+var _recovering: bool = false
 
 
 func _init(view: BotView, actions: PlayerActions, profile: BotProfile, run_seed: int) -> void:
@@ -47,14 +48,19 @@ func sample(tick: int) -> TickInput:
 	if me.hp <= 0.0:
 		_target_id = -1
 		_previous = 0
+		_recovering = false
 		return TickInput.new()
 	var active: bool = _view.wave_active()
 	var target: BotView.Hostile = priority_target() if active else null
 	_acquire(target, tick)
 	var intent: Intent = Intent.new()
+	if me.hp >= me.street_max_hp * _profile.rest_hp:
+		_recovering = false
+	elif me.hp < me.street_max_hp * _profile.retreat_hp:
+		_recovering = true
 	if target != null:
 		intent = _engage(target, tick)
-	elif not active:
+	elif not active and me.hp >= me.street_max_hp * _profile.rest_hp:
 		intent.move = _view.forward()
 		intent.aim = intent.move
 	var defend: BotDefence.Choice = _defence.choose(_view, tick)
@@ -72,6 +78,8 @@ func _pack(intent: Intent, defend: BotDefence.Choice, want: StringName) -> TickI
 		counters.guard_ticks += int(defend.action == &"guard" and _bit(&"guard") != 0)
 		counters.cover_ticks += int(defend.cover)
 	elif buttons == 0:
+		if _recovering and intent.move != Vector2.ZERO:
+			buttons |= _bit(&"sprint")
 		buttons |= _edge(intent.slot)
 		var attack: int = _bit(intent.attack)
 		if intent.attack == &"melee" or (me.form == &"dent" and intent.attack == &"fire"):
@@ -124,7 +132,9 @@ func _engage(foe: BotView.Hostile, tick: int) -> Intent:
 	var reach: float = slot.reach if slot != null else MELEE_M
 	var blocked: bool = not _view.clear_line(me.pos, foe.pos)
 	var side: float = 1.0 if tick % (2 * STRAFE_TICKS) < STRAFE_TICKS else -1.0
-	if blocked or distance > minf(reach * 0.88, ENGAGE_M):
+	if _recovering:
+		intent.move = _view.retreat() if distance < 30.0 else Vector2.ZERO
+	elif blocked or distance > minf(reach * 0.88, ENGAGE_M):
 		intent.move = _view.chase(foe)
 	elif distance > MELEE_M:
 		intent.move = dir.orthogonal() * side * 0.55

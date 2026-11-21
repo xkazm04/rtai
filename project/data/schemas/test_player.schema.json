@@ -116,6 +116,16 @@
             "minimum": 0,
             "type": "integer"
           },
+          "rest_hp": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "retreat_hp": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
           "roll_skill": {
             "maximum": 1,
             "minimum": 0,
@@ -134,6 +144,8 @@
           "guard_lead_ticks",
           "id",
           "reaction_ticks",
+          "rest_hp",
+          "retreat_hp",
           "roll_skill",
           "tells_read"
         ],

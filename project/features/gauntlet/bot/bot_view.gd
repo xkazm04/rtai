@@ -9,6 +9,8 @@ class Player:
 	var facing: Vector2 = Vector2.RIGHT
 	var radius: float = 0.45
 	var hp: float = 1.0
+	## A positive value enables repair decisions on a street with a cleared approach.
+	var street_max_hp: float = 0.0
 	var form: StringName = &"base"
 	var selected: StringName = &""
 	var settled: bool = true
@@ -89,6 +91,10 @@ func wave_active() -> bool:
 ## Movement intent between waves, including approach waypoints if the scene has them.
 func forward() -> Vector2:
 	return Vector2.RIGHT
+
+
+func retreat() -> Vector2:
+	return Vector2.LEFT
 
 
 func chase(foe: Hostile) -> Vector2:
