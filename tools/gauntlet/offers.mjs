@@ -31,9 +31,9 @@ function collect(runs, identify) {
   return exposures;
 }
 
-function differences(a, b, metric) {
+export function matchObservations(a, b) {
   const strata = Map.groupBy(b, (r) => r.stratum);
-  const deltas = [];
+  const matches = [];
   for (const [stratum, left] of Map.groupBy(a, (r) => r.stratum)) {
     const right = strata.get(stratum);
     if (!right?.length) continue;
@@ -44,10 +44,21 @@ function differences(a, b, metric) {
     for (let i = 0; i < n; i++) {
       const l = left[Math.floor((i + 0.5) * left.length / n)];
       const r = right[Math.floor((i + 0.5) * right.length / n)];
-      deltas.push(l[metric] - r[metric]);
+      matches.push([l, r]);
     }
   }
-  return deltas;
+  return matches;
+}
+
+function differences(a, b, metric) {
+  return matchObservations(a, b).map(([left, right]) => left[metric] - right[metric]);
+}
+
+/** One card's report observation, including whether this run ever took it. */
+export function offerObservation(run, id) {
+  const exposure = collect([run], (card) => card === id ? id : null).get(id);
+  if (!exposure) return null;
+  return exposure.took.length ? { ...exposure.took[0], took: true } : { ...exposure.declined[0], took: false };
 }
 
 function compare(exposure, metric) {
