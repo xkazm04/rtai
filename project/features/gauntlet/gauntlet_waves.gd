@@ -10,6 +10,7 @@ var done: bool = false
 var _run: GauntletRun
 var _street: GauntletStreet
 var _picker: GauntletPilot
+var _composer: GauntletComposer
 var _limit: int
 var _block: int = 0
 var _start: int = -1
@@ -35,6 +36,7 @@ static func attach(
 
 
 func setup(stage: ArenaStage, ctx: WorldContext) -> void:
+	_composer = GauntletComposer.shipped(ctx.rng)
 	_rng = ctx.rng.stream(&"gauntlet_offers")
 	var t: DataTable = DataTable.open(BONUSES, "gtai.gauntlet_bonuses/1")
 	_offers.assign(t.array(t.raw, "rows"))
@@ -77,7 +79,7 @@ func _spawn(stage: ArenaStage, tick: int) -> void:
 	_block = _street.index
 	_street.forward_limit = block.end_x() - arena.rivet.radius_m
 	var enemies: Dictionary[String, int] = {}
-	var roster: Array[StringName] = [&"patrol_cop"]
+	var roster: Array[StringName] = _composer.compose(_run.wave + 1)
 	for i: int in roster.size():
 		var at: Vector2 = block.spawns[i % block.spawns.size()]
 		var foe: Fighter = arena.squad_ai.spawn_member(arena, at, roster[i])

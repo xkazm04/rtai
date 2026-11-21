@@ -148,6 +148,7 @@
       "type": "object"
     },
     "tier_unlock_wave": {
+      "description": "First allowed wave by tier. The tier-five war machine occupies the boss slot from wave five. Regular tiers three and four unlock later.",
       "items": {
         "minimum": 1,
         "type": "integer"
