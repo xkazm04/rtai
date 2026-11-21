@@ -170,31 +170,19 @@ func _walk() -> Vector2:
 	return EnemyMotor.arrive(agent, agent.goal, agent.arch.speed_mps)
 
 
-## Plant for the row's tell, then resolve the locked arc against Rivet's current position.
 func swing(h: Fighter, arena: CombatArena, map: GuardRouteMap) -> void:
-	var e: EnemyAgent = agent
-	e.cooldown = maxi(0, e.cooldown - 1)
-	if not e.token or motion == S.PANIC:
-		h.swing_left = 0
-		return
-	var to: Vector2 = arena.rivet.pos - h.pos
-	var reach: float = e.arch.weapon.reach_m + arena.rivet.radius_m
-	if h.swing_left == 0:
-		if not e.sees or to.length() > reach or e.cooldown > 0:
-			return
-		h.swing_tick = arena.tick
-		h.swing_left = e.arch.telegraph_ticks
-		e.aim = to.normalized()
-		arena.announce_tell(e.arch.weapon.id)
-	else:
-		h.swing_left -= 1
-	e.state = S.WINDUP
-	h.facing = e.aim
-	if h.swing_left > 0:
-		return
-	e.state = S.FIRE
-	e.cooldown = e.arch.weapon.cooldown_ticks
-	e.token = false
-	if to.length() <= reach and e.aim.dot(to.normalized()) >= EnemyPit.MELEE_ARC_COS:
-		if map.sight_line(h.pos, arena.rivet.pos):
-			FoeAttacks.melee_hit(e, arena, map)
+	FoeAttacks.swing(self, h, arena, map)
+
+
+func forget_route() -> void:
+	_route.clear()
+	_next = 0
+	_destination = Vector2.INF
+	_hide = Vector2.INF
+	_return_until = -1
+	_peek = -1
+	_strafe = false
+	_blind = 0
+	agent.goal = agent.pos
+	route_pending = false
+	plan_pending = true

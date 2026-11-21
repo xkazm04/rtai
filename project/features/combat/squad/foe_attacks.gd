@@ -79,3 +79,33 @@ static func _stomp(e: EnemyAgent, h: Fighter, arena: CombatArena, w: EnemyWeapon
 		arena.hit_dir = h.pos.direction_to(arena.rivet.pos)
 		arena.hit_at = arena.rivet.pos
 		arena.damage(arena.rivet, w.splash_damage, h.id, w.id, &"blown")
+
+
+## Plant for the row's tell, then resolve the locked arc against Rivet's current position.
+static func swing(mind: SquadMind, h: Fighter, arena: CombatArena, map: GuardRouteMap) -> void:
+	var e: EnemyAgent = mind.agent
+	e.cooldown = maxi(0, e.cooldown - 1)
+	if not e.token or mind.motion == EnemyAgent.State.PANIC:
+		h.swing_left = 0
+		return
+	var to: Vector2 = arena.rivet.pos - h.pos
+	var reach: float = e.arch.weapon.reach_m + arena.rivet.radius_m
+	if h.swing_left == 0:
+		if not e.sees or to.length() > reach or e.cooldown > 0:
+			return
+		h.swing_tick = arena.tick
+		h.swing_left = e.arch.telegraph_ticks
+		e.aim = to.normalized()
+		arena.announce_tell(e.arch.weapon.id)
+	else:
+		h.swing_left -= 1
+	e.state = EnemyAgent.State.WINDUP
+	h.facing = e.aim
+	if h.swing_left > 0:
+		return
+	e.state = EnemyAgent.State.FIRE
+	e.cooldown = e.arch.weapon.cooldown_ticks
+	e.token = false
+	if to.length() <= reach and e.aim.dot(to.normalized()) >= EnemyPit.MELEE_ARC_COS:
+		if map.sight_line(h.pos, arena.rivet.pos):
+			FoeAttacks.melee_hit(e, arena, map)

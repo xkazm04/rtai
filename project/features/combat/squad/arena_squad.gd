@@ -17,14 +17,24 @@ var _fallen: float = 0.0
 
 
 func _init(map: GuardRouteMap) -> void:
-	_map = map
 	pit = EnemyPit.new(EnemyRoster.shipped(EnemyRoster.TABLE, true), null)
+	set_route_map(map)
+
+
+func set_route_map(map: GuardRouteMap) -> void:
+	_map = map
 	pit.bounds = map.region().grow(-GuardRouteMap.WALL_MARGIN_M)
+	for h: Fighter in _wave:
+		h.pursuit = GuardPursuit.new(map)
+	for mind: SquadMind in minds.values():
+		mind.forget_route()
 
 
 ## Only the encounter spawner enrolls guards. Station spawns retain their own guard behaviour.
 func spawn_member(arena: CombatArena, at: Vector2, id: StringName = &"") -> Fighter:
 	var h: Fighter = arena.spawn_guard(at)
+	if arena.guard_map != _map:
+		h.pursuit = GuardPursuit.new(_map)
 	_wave[h] = true
 	var a: EnemyRoster.Archetype = pit.roster.archetype(id)
 	h.archetype = a.id
