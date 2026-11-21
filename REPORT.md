@@ -6,8 +6,8 @@ Branch `n22-guard`, interface tag `n22-guard-iface` (82bb7a4f5). Last code commi
 **Final gate** (`node tools/gate/run.mjs --rev=HEAD` on 13d97df81, 05:39 to 05:49): `gate: PASS;
 build/gate/13d97df81258/gate.json` (git-ignored, on this worktree). Lint 19/19 over 1844 GDScript files; unit 3481 passed /
 0 failed / 2 skipped; scenarios 65 passed; parity bit for bit over 1200 steps, planted mutation caught at step 629; selftest
-pass; export audit (release compile) 829 loaded / 0 failed. `--reels` was not run: this session ends at 07:10, before the
-07:30 freeze.
+pass; export audit (release compile) 829 loaded / 0 failed. `--reels` was not run: the post-freeze session (07:30) had 10 minutes to
+REPORT and a reels gate takes 30 to 40 minutes; started detached it would outlive the 08:00 end with nobody to read it.
 
 Numbers below are from Astra's reports and my own reruns, as logged in `JOURNAL.md`.
 
@@ -111,7 +111,7 @@ Numbers below are from Astra's reports and my own reruns, as logged in `JOURNAL.
 
 ## Next steps
 
-0. Run `node tools/gate/run.mjs --rev=HEAD --reels` once (not run tonight: this session ended at 07:10, before the freeze), and let the
+0. Run `node tools/gate/run.mjs --rev=HEAD --reels` once (not run tonight: it does not fit the 07:30 to 07:40 window), and let the
    guard film scene pass `--wheel-start` through, so Call 1 gets a still pair.
 1. Owner's Call 1 (wheel's opening selection), then re-pin the 16 tapes per `evidence/guard-flip/blockers.md`, rewrite the
    quest 1 help card per control mode, teach `run_unit.mjs` / `run_scenarios.gd` to pass `--controls=wheel`, flip the default.
