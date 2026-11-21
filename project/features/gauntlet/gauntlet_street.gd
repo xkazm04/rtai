@@ -29,16 +29,9 @@ class StreetSquad:
 
 	func spawn_member(arena: CombatArena, at: Vector2, id: StringName = &"") -> Fighter:
 		var foe: Fighter = super.spawn_member(arena, at, id)
+		# Snapshot the run bonus here. FoeArmor applies the directional plate at impact.
 		foe.damage_k *= mods.value(&"damage")
 		return foe
-
-	func step(foe: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
-		var shot: Shot = super.step(foe, arena, rng)
-		var arch: EnemyRoster.Archetype = pit.roster.archetype(foe.archetype)
-		if arch.explicit_spawn and arch.shield_front_mult < 1.0:
-			# ArenaSquad just recalculated directional armour. Keep that fresh factor.
-			foe.damage_k *= mods.value(&"damage")
-		return shot
 
 
 func _init(registry: RngRegistry) -> void:

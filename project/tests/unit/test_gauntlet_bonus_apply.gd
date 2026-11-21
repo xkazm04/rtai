@@ -97,7 +97,25 @@ func test_spawned_hostile_takes_scaled_damage_and_armour_still_applies() -> void
 	shield.facing = shield.pos.direction_to(arena.rivet.pos)
 	session.step()
 	var arch: EnemyRoster.Archetype = arena.squad_ai.pit.roster.archetype(&"shield_robot")
-	assert_eq(shield.damage_k, 1.25 * arch.shield_front_mult)
+	before = shield.hp
+	arena.hit_dir = -shield.facing
+	arena.damage(shield, 1.0, arena.rivet.id, &"pistol")
+	assert_eq(before - shield.hp, 1.25 * arch.shield_front_mult)
+
+
+func test_shield_keeps_its_spawn_damage_multiplier_across_squad_ticks() -> void:
+	var arena: CombatArena = session.stage.arena
+	_take(&"stat_damage_25")
+	var shield: Fighter = arena.squad_ai.spawn_member(arena, Vector2(7, 0), &"shield_robot")
+	assert_eq(shield.damage_k, 1.25)
+	_take(&"stat_damage_25")
+	for tick: int in 180:
+		session.step()
+		assert_eq(shield.damage_k, 1.25)
+	var before: float = shield.hp
+	arena.hit_dir = shield.facing
+	arena.damage(shield, 1.0, arena.rivet.id, &"pistol")
+	assert_eq(before - shield.hp, 1.25)
 
 
 func _hold_trigger(arena: CombatArena) -> int:
