@@ -1,0 +1,8 @@
+# --fixed-fps 60 --quit-after 72000 res://dev/gauntlet/gauntlet.tscn -- --seed=4 --bot=novice --pick=greedy --controls=wheel --result=C:\Users\kazda\kiro\gtai-wt\n22-loop\evidence\loop\street-merged-before\runs\novice-4.json
+# exit 1, 21.7 s
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] gauntlet: test player bound: novice, greedy picks, seed 4
+[INFO] gauntlet: wave 1 tick 255 block kiosk_plaza enemies { "patrol_cop": 4 }
+[ERROR] gauntlet: headless tick cap reached before run ended
+[INFO] gauntlet: tick 72000, segment 1, 3 resident

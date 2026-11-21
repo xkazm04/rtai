@@ -1,0 +1,371 @@
+{
+  "controls": "wheel",
+  "death": {
+    "by": "timeout",
+    "wave": 15
+  },
+  "mods": {
+    "damage": 1.1,
+    "guard_meter": 1.1,
+    "hp_max": 1.375,
+    "regen": 1.375,
+    "speed": 1.1
+  },
+  "picks": [
+    {
+      "offered": [
+        "weapon_pistol",
+        "stat_speed_10",
+        "weapon_gloria"
+      ],
+      "taken": "stat_speed_10",
+      "wave": 1
+    },
+    {
+      "offered": [
+        "weapon_pistol",
+        "weapon_katana",
+        "stat_guard_meter_10"
+      ],
+      "taken": "stat_guard_meter_10",
+      "wave": 2
+    },
+    {
+      "offered": [
+        "stat_regen_10",
+        "ghost_tonnage",
+        "ghost_dent"
+      ],
+      "taken": "ghost_tonnage",
+      "wave": 3
+    },
+    {
+      "offered": [
+        "stat_damage_10",
+        "weapon_gloria",
+        "stat_regen_10"
+      ],
+      "taken": "stat_damage_10",
+      "wave": 4
+    },
+    {
+      "offered": [
+        "weapon_chainsaw",
+        "weapon_rocket_launcher",
+        "ghost_ohm"
+      ],
+      "taken": "ghost_ohm",
+      "wave": 5
+    },
+    {
+      "offered": [
+        "weapon_flamethrower",
+        "weapon_hand_cannon",
+        "weapon_chainsaw"
+      ],
+      "taken": "weapon_flamethrower",
+      "wave": 6
+    },
+    {
+      "offered": [
+        "weapon_gloria",
+        "stat_hp_max_10",
+        "weapon_katana"
+      ],
+      "taken": "stat_hp_max_10",
+      "wave": 7
+    },
+    {
+      "offered": [
+        "ghost_kerf",
+        "weapon_chainsaw",
+        "weapon_gatling"
+      ],
+      "taken": "weapon_gatling",
+      "wave": 8
+    },
+    {
+      "offered": [
+        "stat_hp_max_25",
+        "weapon_rocket_launcher",
+        "weapon_plasma_rifle"
+      ],
+      "taken": "stat_hp_max_25",
+      "wave": 9
+    },
+    {
+      "offered": [
+        "stat_regen_25",
+        "weapon_plasma_sword",
+        "weapon_gloria"
+      ],
+      "taken": "stat_regen_25",
+      "wave": 10
+    },
+    {
+      "offered": [
+        "weapon_katana",
+        "weapon_gloria",
+        "stat_regen_10"
+      ],
+      "taken": "stat_regen_10",
+      "wave": 11
+    },
+    {
+      "offered": [
+        "weapon_hand_cannon",
+        "weapon_plasma_rifle",
+        "weapon_plasma_sword"
+      ],
+      "taken": "weapon_hand_cannon",
+      "wave": 12
+    },
+    {
+      "offered": [
+        "weapon_electro_baton",
+        "weapon_plasma_sword",
+        "weapon_machine_pistol"
+      ],
+      "taken": "weapon_electro_baton",
+      "wave": 13
+    },
+    {
+      "offered": [
+        "weapon_machine_pistol",
+        "weapon_rocket_launcher",
+        "ghost_kerf"
+      ],
+      "taken": "weapon_rocket_launcher",
+      "wave": 14
+    }
+  ],
+  "profile": "expert",
+  "schema": "gtai.gauntlet-run/1",
+  "seed": 5,
+  "wave_reached": 15,
+  "waves": [
+    {
+      "damage_taken": 0.599999999999994,
+      "enemies": {
+        "patrol_cop": 4
+      },
+      "hits": 4,
+      "n": 1,
+      "rolls": 0,
+      "seconds": 6.13333333333333,
+      "shots": 0
+    },
+    {
+      "damage_taken": 0.0,
+      "enemies": {
+        "patrol_cop": 6
+      },
+      "hits": 6,
+      "n": 2,
+      "rolls": 0,
+      "seconds": 6.83333333333333,
+      "shots": 0
+    },
+    {
+      "damage_taken": 0.0,
+      "enemies": {
+        "patrol_cop": 2,
+        "rocket_trooper": 1,
+        "swat": 2
+      },
+      "hits": 5,
+      "n": 3,
+      "rolls": 1,
+      "seconds": 5.66666666666667,
+      "shots": 0
+    },
+    {
+      "damage_taken": 1.8,
+      "enemies": {
+        "patrol_cop": 2,
+        "riot_cop": 2,
+        "rocket_trooper": 2
+      },
+      "hits": 6,
+      "n": 4,
+      "rolls": 2,
+      "seconds": 11.3833333333333,
+      "shots": 0
+    },
+    {
+      "damage_taken": 40.8,
+      "enemies": {
+        "contractor": 2,
+        "patrol_cop": 1,
+        "rocket_trooper": 1,
+        "war_machine": 1
+      },
+      "hits": 42,
+      "n": 5,
+      "rolls": 20,
+      "seconds": 41.9,
+      "shots": 0
+    },
+    {
+      "damage_taken": 150.4,
+      "enemies": {
+        "riot_cop": 1,
+        "rocket_trooper": 2,
+        "sentry_turret": 2,
+        "swat": 1
+      },
+      "hits": 54,
+      "n": 6,
+      "rolls": 14,
+      "seconds": 57.4666666666667,
+      "shots": 0
+    },
+    {
+      "damage_taken": 4.32000000000005,
+      "enemies": {
+        "contractor": 1,
+        "patrol_cop": 2,
+        "robot_gunner": 1,
+        "robot_thug": 1,
+        "rocket_trooper": 1,
+        "swat": 2
+      },
+      "hits": 973,
+      "n": 7,
+      "rolls": 8,
+      "seconds": 22.2,
+      "shots": 120
+    },
+    {
+      "damage_taken": 37.3999999999999,
+      "enemies": {
+        "patrol_cop": 2,
+        "robot_thug": 1,
+        "rocket_trooper": 4,
+        "sentry_turret": 1,
+        "swat": 1
+      },
+      "hits": 1430,
+      "n": 8,
+      "rolls": 12,
+      "seconds": 30.5833333333333,
+      "shots": 152
+    },
+    {
+      "damage_taken": 0.0,
+      "enemies": {
+        "contractor": 1,
+        "patrol_cop": 1,
+        "riot_cop": 3,
+        "robot_thug": 2,
+        "rocket_trooper": 1,
+        "sentry_turret": 1
+      },
+      "hits": 59,
+      "n": 9,
+      "rolls": 1,
+      "seconds": 21.35,
+      "shots": 64
+    },
+    {
+      "damage_taken": 31.6,
+      "enemies": {
+        "contractor": 1,
+        "patrol_cop": 3,
+        "riot_cop": 1,
+        "robot_gunner": 1,
+        "sentry_turret": 1,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "hits": 160,
+      "n": 10,
+      "rolls": 11,
+      "seconds": 37.45,
+      "shots": 292
+    },
+    {
+      "damage_taken": 4.80000000000013,
+      "enemies": {
+        "contractor": 4,
+        "patrol_cop": 1,
+        "robot_gunner": 2,
+        "robot_thug": 1,
+        "rocket_trooper": 1,
+        "swat": 2
+      },
+      "hits": 42,
+      "n": 11,
+      "rolls": 0,
+      "seconds": 18.2333333333333,
+      "shots": 40
+    },
+    {
+      "damage_taken": 127.06,
+      "enemies": {
+        "patrol_cop": 2,
+        "riot_cop": 2,
+        "robot_gunner": 1,
+        "rocket_trooper": 2,
+        "sentry_turret": 1,
+        "shield_robot": 2,
+        "swat": 1
+      },
+      "hits": 210,
+      "n": 12,
+      "rolls": 21,
+      "seconds": 61.7833333333333,
+      "shots": 204
+    },
+    {
+      "damage_taken": 36.2,
+      "enemies": {
+        "contractor": 2,
+        "patrol_cop": 1,
+        "riot_cop": 2,
+        "robot_thug": 3,
+        "rocket_trooper": 3,
+        "swat": 2
+      },
+      "hits": 25,
+      "n": 13,
+      "rolls": 8,
+      "seconds": 19.9833333333333,
+      "shots": 30
+    },
+    {
+      "damage_taken": 83.0800000000003,
+      "enemies": {
+        "contractor": 3,
+        "patrol_cop": 2,
+        "riot_cop": 2,
+        "robot_gunner": 1,
+        "rocket_trooper": 1,
+        "sentry_turret": 1,
+        "shield_robot": 2,
+        "swat": 1
+      },
+      "hits": 229,
+      "n": 14,
+      "rolls": 0,
+      "seconds": 56.0166666666667,
+      "shots": 306
+    },
+    {
+      "damage_taken": 71.9600000000011,
+      "enemies": {
+        "contractor": 2,
+        "patrol_cop": 2,
+        "riot_cop": 2,
+        "robot_gunner": 1,
+        "shield_robot": 3,
+        "swat": 1,
+        "war_machine": 1
+      },
+      "hits": 168,
+      "n": 15,
+      "rolls": 22,
+      "shots": 38
+    }
+  ]
+}

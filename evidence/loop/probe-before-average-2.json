@@ -1,0 +1,36 @@
+{
+  "block": "alley_neck",
+  "claw_reach_ticks": 633,
+  "cover_ticks": 5,
+  "forward_limit_m": null,
+  "guard_ticks": 23,
+  "machine_hp_lost": 60.0,
+  "machine_ticks": 5004,
+  "position_m": [
+    154.452728271484,
+    5.40000009536743
+  ],
+  "profile": "average",
+  "rolling_ticks": 374,
+  "schema": "gtai.street-bot-probe/1",
+  "seed": 2,
+  "ticks": 7083,
+  "touching_solids": [
+    "[P: (122.0, 6.0), S: (32.0, 1.0)]",
+    "[P: (154.0, 6.0), S: (32.0, 1.0)]"
+  ],
+  "wave": 5,
+  "wave_result": {
+    "damage_taken": 65.3199999999999,
+    "enemies": {
+      "patrol_cop": 1,
+      "riot_cop": 3,
+      "war_machine": 1
+    },
+    "hits": 47,
+    "n": 5,
+    "rolls": 17,
+    "seconds": 83.4,
+    "shots": 0
+  }
+}

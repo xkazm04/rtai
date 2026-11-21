@@ -1,0 +1,11 @@
+# --fixed-fps 60 --quit-after 72000 res://dev/gauntlet/gauntlet.tscn -- --seed=3 --bot=expert --pick=greedy --controls=wheel --result=C:\Users\kazda\kiro\gtai-wt\n22-loop\evidence\loop\street-merged-before\runs\expert-3.json
+# exit 1, 17.8 s
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] gauntlet: test player bound: expert, greedy picks, seed 3
+[INFO] gauntlet: wave 1 tick 237 block alley_neck enemies { "patrol_cop": 4 }
+[INFO] gauntlet: wave 2 tick 951 block crosswalk enemies { "patrol_cop": 6 }
+[INFO] rivet_arsenal: arena: Rivet carries [&"pistol", &"", &"", &""]
+[INFO] gauntlet: wave 3 tick 1532 block alley_neck enemies { "swat": 3, "riot_cop": 1 }
+[ERROR] gauntlet: headless tick cap reached before run ended
+[INFO] gauntlet: tick 72000, segment 3, 3 resident

@@ -1,0 +1,100 @@
+{
+  "controls": "wheel",
+  "mods": {
+    "damage": 1.1,
+    "guard_meter": 1.1,
+    "speed": 1.1
+  },
+  "picks": [
+    {
+      "offered": [
+        "weapon_pistol",
+        "stat_speed_10",
+        "weapon_gloria"
+      ],
+      "taken": "stat_speed_10",
+      "wave": 1
+    },
+    {
+      "offered": [
+        "weapon_pistol",
+        "weapon_katana",
+        "stat_guard_meter_10"
+      ],
+      "taken": "stat_guard_meter_10",
+      "wave": 2
+    },
+    {
+      "offered": [
+        "stat_regen_10",
+        "ghost_tonnage",
+        "ghost_dent"
+      ],
+      "taken": "ghost_tonnage",
+      "wave": 3
+    },
+    {
+      "offered": [
+        "stat_damage_10",
+        "weapon_gloria",
+        "stat_regen_10"
+      ],
+      "taken": "stat_damage_10",
+      "wave": 4
+    }
+  ],
+  "profile": "novice",
+  "schema": "gtai.gauntlet-run/1",
+  "seed": 5,
+  "wave_reached": 4,
+  "waves": [
+    {
+      "damage_taken": 0.0,
+      "enemies": {
+        "patrol_cop": 4
+      },
+      "hits": 4,
+      "n": 1,
+      "rolls": 0,
+      "seconds": 4.91666666666667,
+      "shots": 0
+    },
+    {
+      "damage_taken": 0.599999999999994,
+      "enemies": {
+        "patrol_cop": 6
+      },
+      "hits": 6,
+      "n": 2,
+      "rolls": 1,
+      "seconds": 7.75,
+      "shots": 0
+    },
+    {
+      "damage_taken": 0.599999999999994,
+      "enemies": {
+        "patrol_cop": 2,
+        "rocket_trooper": 1,
+        "swat": 2
+      },
+      "hits": 5,
+      "n": 3,
+      "rolls": 0,
+      "seconds": 6.53333333333333,
+      "shots": 0
+    },
+    {
+      "damage_taken": 0.0,
+      "enemies": {
+        "patrol_cop": 2,
+        "riot_cop": 2,
+        "rocket_trooper": 2
+      },
+      "hits": 6,
+      "n": 4,
+      "rolls": 0,
+      "seconds": 9.38333333333333,
+      "shots": 0
+    }
+  ]
+}
