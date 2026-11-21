@@ -20,9 +20,10 @@ func _ready() -> void:
 		# The quest's pool hook reads the victim again before the fighter is moved.
 		# With no second lookup, both human blood and machine oil use _locate's free point.
 		blood.pool_at = Callable()
-		blood.solid = _street.solid_px
+		# A wall smear spreads around its contact. Reserve the same road-side margin as a pose.
+		blood.solid = _street.pose_solid_px
 		if blood.oil != null:
-			blood.oil.solid = _street.solid_px
+			blood.oil.solid = _street.pose_solid_px
 
 
 ## The shipped ghost strip draws the selected cost in teal even with all ghosts locked.
