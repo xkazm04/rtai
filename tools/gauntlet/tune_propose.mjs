@@ -20,19 +20,32 @@ function robotIn(waves, roster) {
 
 function waveMisses(report, runs, roster, { target, profile, street, minN }) {
   const byWave = Map.groupBy(runs.filter((r) => r.profile === profile).flatMap((r) => r.waves), (w) => w.n);
+  const timed = report.waves.filter((row) => row.profile === profile && row.timed);
+  const midpoint = Math.ceil((timed.at(-1)?.n ?? 0) / 2);
+  const lower = target * 0.8, upper = target * 1.2;
+  const fastBudget = timed.some((row) => row.n > midpoint && row.median < lower && row.timed >= minN)
+    ? 'budget.per_wave' : 'budget.base';
   const misses = [];
-  for (const row of report.waves) {
-    if (row.profile !== profile || !row.timed || (row.median >= target * 0.8 && row.median <= target * 1.2)) continue;
-    const robot = robotIn(byWave.get(row.n), roster);
+  for (const row of timed) {
+    if (row.median >= lower && row.median <= upper) continue;
     const factor = ratio(target, row.median);
     let miss = profile + ' wave ' + row.n + ' median ' + fmt(row.median) + ' s over ' + row.timed
       + ' timed runs against ' + target + ' s';
     const choices = [];
-    if (robot) {
-      miss += ', ' + robot.id + ' present in ' + robot.count + '/' + robot.total + ' timed rosters';
-      choices.push([robot.id + '.hp', factor]);
+    if (row.median < lower) {
+      miss += ', below the ' + fmt(lower) + ' s lower bound';
+      if (street && row.timed >= minN) {
+        miss += ', raise ' + fastBudget + ' to add enemies';
+        choices.push([fastBudget, factor]);
+      }
+    } else {
+      const robot = robotIn(byWave.get(row.n), roster);
+      if (robot) {
+        miss += ', ' + robot.id + ' present in ' + robot.count + '/' + robot.total + ' timed rosters';
+        choices.push([robot.id + '.hp', factor]);
+      }
+      if (street) choices.push([row.n === 1 ? 'budget.base' : 'budget.per_wave', factor]);
     }
-    if (street) choices.push([row.n === 1 ? 'budget.base' : 'budget.per_wave', factor]);
     const reason = row.timed < minN ? 'too few runs (need ' + minN + ' timed runs)' : undefined;
     misses.push(measuredMiss({ type: 'wave', profile, wave: row.n, target }, Math.abs(row.median / target - 1), miss, choices, reason));
   }
@@ -137,7 +150,10 @@ export function propose(batch, state, baseline, { target = 15, profile = 'averag
       const before = entry.value;
       const first = baseline.values[id];
       const after = clamped(entry.knob, before, first, before * factor);
-      if (after === before || Math.sign(after - before) !== Math.sign(factor - 1)) continue;
+      if (after === before || Math.sign(after - before) !== Math.sign(factor - 1)) {
+        result.reason = id + ' at ' + before + ' has no legal ' + (factor > 1 ? 'upward' : 'downward') + ' step within bounds';
+        continue;
+      }
       if (chosen.has(id) || (metric.type === 'offer' && selectedOffers.has(metric.id))) {
         result.reason = 'knob or offer already selected this night';
         break;

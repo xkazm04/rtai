@@ -174,6 +174,31 @@ test('propose counts timed runs per wave and requires five deaths before acting 
   assert.match(cli(root, 'propose', ...proposeArgs, '--min-n=0').stderr, /positive integer/);
 });
 
+test('fast street medians raise only the opening or growing budget, according to their extent', (t) => {
+  const root = repository(t);
+  const file = TABLES + 'gauntlet.json';
+  const table = readJson(join(root, file));
+  table.budget = { base: 8, per_wave: 8 };
+  write(root, file, table);
+  const state = inventory(root), baseline = ensureBaseline(root, state.entries), batch = robotBatch();
+  for (const run of batch.results) {
+    run.wave_reached = 6;
+    run.waves = [9, 10, 12, 15, 15, 15].map((seconds, i) => ({
+      n: i + 1, seconds, enemies: { robot_thug: 2 }
+    }));
+  }
+  const edits = () => propose(batch, state, baseline).changes;
+  const opening = edits();
+  assert.deepEqual(opening.map((c) => [c.id, c.before, c.after]), [['budget.base', 8, 10]]);
+  assert.match(opening[0].miss, /wave 1 median 9 s over 12 timed runs.*below the 12 s lower bound/);
+  for (const run of batch.results) run.waves[5].seconds = 8;
+  const spanning = edits();
+  assert.deepEqual(spanning.map((c) => [c.id, c.after]), [['budget.per_wave', 10]]);
+  assert.equal(spanning[0].metric.wave, 6);
+  batch.args.runner = 'pit';
+  assert.deepEqual(edits(), []);
+});
+
 test('a collapsed profile gap and a dominant enemy weapon each select a measured table knob', (t) => {
   const root = repository(t), state = inventory(root), base = ensureBaseline(root, state.entries);
   const runs = ['novice', 'expert'].flatMap((profile) => robotBatch().results.map((r) => ({
