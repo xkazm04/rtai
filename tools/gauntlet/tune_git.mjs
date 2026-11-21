@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { basename, join } from 'node:path';
+import { basename, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { canonicalJson } from '../lib/canonical_json.mjs';
 import { validate } from '../lib/mini_schema.mjs';
 import { readJson } from '../lib/repo.mjs';
@@ -29,10 +29,13 @@ export function ownBranch(root) {
     throw new Error('tuner applies only on its own branch');
 }
 
-function clean(root) {
+function clean(root, artifacts = []) {
   ownBranch(root);
+  const outputs = artifacts.map((file) => relative(root, resolve(file))).filter((file) =>
+    file && !isAbsolute(file) && file !== '..' && !file.startsWith('..' + sep));
+  const exclude = outputs.map((file) => ':(exclude,top,literal)' + file.split(sep).join('/'));
   const status = git(root, 'status', '--short', '-z', '--no-renames', '--untracked-files=all', '--', '.',
-    ':(exclude)evidence/**', ':(exclude)build/**');
+    ':(exclude)evidence/**', ':(exclude)build/**', ...exclude);
   if (status) throw new Error('dirty tree outside evidence/ and build/: ' + status.split('\0')[0]);
 }
 
@@ -52,6 +55,10 @@ export const commitsFor = (root, plan) => history(root, 'Gauntlet-Plan', planId(
 
 export const revertFor = (root, sha) => sha && git(root, 'log', '-1', '--format=%H', '--fixed-strings',
   '--grep=This reverts commit ' + sha + '.').trim() || null;
+
+// Lossy UTF-8 decoding could otherwise make distinct byte sequences compare equal.
+const decoder = new TextDecoder('utf-8', { fatal: true, ignoreBOM: true });
+const tableText = (path) => decoder.decode(readFileSync(path));
 
 function edit(text, knob, before, after, schema) {
   const table = JSON.parse(text);
@@ -88,7 +95,7 @@ function preflight(root, plan, receipts) {
     if (before === after || clamped(knob, before, first, after) !== after) throw new Error('outside tuner bounds: ' + id);
     const file = knob.file, path = join(root, file);
     git(root, 'ls-files', '--error-unmatch', '--', file);
-    const prior = inputs.get(file) ?? readFileSync(path, 'utf8');
+    const prior = inputs.get(file) ?? tableText(path);
     const schema = schemaOf(root, knob);
     const next = edit(prior, knob, before, after, schema);
     inputs.set(file, next);
@@ -104,7 +111,7 @@ export function applyPlan(root, plan) {
   const writes = preflight(root, plan, receipts);
   for (const { change, file, path, prior, next, schema } of writes) {
     clean(root);
-    if (readFileSync(path, 'utf8') !== prior) throw new Error('table changed since preflight: ' + file);
+    if (tableText(path) !== prior) throw new Error('table changed since preflight: ' + file);
     const head = git(root, 'rev-parse', 'HEAD').trim();
     const { id, before, after, miss } = change;
     const title = 'tune(n22): ' + id + ' ' + before + ' -> ' + after + ': ' + miss;
@@ -117,7 +124,7 @@ export function applyPlan(root, plan) {
         + nightOf() + '\nGauntlet-Knob: ' + id, '--', file);
     } catch (err) {
       // Restore only our failed edit. Preserve other staged files and any concurrent edit.
-      if (readFileSync(path, 'utf8') === next && git(root, 'rev-parse', 'HEAD').trim() === head)
+      if (tableText(path) === next && git(root, 'rev-parse', 'HEAD').trim() === head)
         git(root, 'restore', '--source=HEAD', '--staged', '--worktree', '--', file);
       throw err;
     }
@@ -136,7 +143,7 @@ function verifyCommit(root, sha, knob, change) {
 
 function undoCommit(root, change, knob) {
   const path = join(root, knob.file);
-  const expected = edit(readFileSync(path, 'utf8'), knob, change.after, change.before, schemaOf(root, knob));
+  const expected = edit(tableText(path), knob, change.after, change.before, schemaOf(root, knob));
   try { git(root, 'revert', '--no-edit', change.commit); }
   catch (err) {
     let reverting;
@@ -156,23 +163,21 @@ function undoCommit(root, change, knob) {
   }
 }
 
-export function revertChanges(root, ledger, save) {
-  clean(root);
+export function revertChanges(root, ledger, save, artifacts) {
+  clean(root, artifacts);
   const rejected = [...ledger.changes].reverse().filter((c) => c.verdict !== 'kept');
   const { entries } = inventory(root);
   const undo = [];
   for (const change of rejected) {
     const { id, commit } = change, entry = entries.get(id);
-    if (!commit || !entry) throw new Error('no applied tuner commit for ' + id);
+    if (!commit || change.revert_commit) continue; // Skipped, interrupted or already undone.
+    if (!entry || entry.value !== change.after) throw new Error('knob has changed since apply: ' + id);
     verifyCommit(root, commit, entry.knob, change);
-    const prior = change.revert_commit;
-    if (prior && entry.value === change.before) change.revert_commit = prior;
-    else if (!prior && entry.value === change.after) undo.push(change);
-    else throw new Error('knob has changed since apply: ' + id);
+    undo.push(change);
   }
   save();
   for (const change of undo) {
-    clean(root);
+    clean(root, artifacts);
     // git revert needs a clean index. Keep the operator's staged evidence out of its commit.
     if (git(root, 'diff', '--cached', '--name-only').trim()) throw new Error('git revert needs a clean index');
     undoCommit(root, change, entries.get(change.id).knob);

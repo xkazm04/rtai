@@ -55,7 +55,7 @@ const cell = (s) => String(s).replaceAll('|', '\\|').replace(/[\r\n]+/g, ' ');
 function markdown(ledger) {
   const lines = ['# Gauntlet tune ledger', '', 'Plan ' + ledger.plan_sha256 + '. Matched ' + ledger.matched_runs + ' of '
     + ledger.before_runs + ' before and ' + ledger.after_runs + ' after runs.', '',
-    'Positive improvement means the measured miss shrank. A revert SHA records an executed undo.', '',
+    'Positive improvement means the measured miss shrank. An empty apply SHA means this branch has no commit for that edit. A revert SHA records an executed undo.', '',
     '| Knob | Before → after | Baseline | Measured miss | Confirmation before → after | Pairs | Improvement (CI95) | A/A floor (pairs) | Verdict | Apply / revert SHA |',
     '|---|---:|---:|---|---:|---:|---:|---:|---|---|'];
   for (const c of ledger.changes) {
@@ -93,8 +93,11 @@ function confirmation(root, v) {
     atomicWrite(stem + '.json', canonicalJson(ledger));
     atomicWrite(stem + '.md', markdown(ledger));
   };
-  if (v.revert && !rows.length) throw new Error('no matching seeds, profiles, controls and pick modes to confirm');
-  if (v.revert) revertChanges(root, ledger, save);
+  if (v.revert && plan.changes.length && !rows.length) {
+    save();
+    throw new Error('no matching seeds, profiles, controls and pick modes to confirm');
+  }
+  if (v.revert) revertChanges(root, ledger, save, [v.before, v.after, v.plan, stem + '.json', stem + '.md']);
   else save();
   for (const c of ledger.changes) console.log(c.id + ' ' + c.verdict + ', improvement ' + fmt(c.improvement)
     + ', CI95 ' + c.ci95.map(fmt).join(' to ') + ', A/A floor ' + fmt(c.floor));

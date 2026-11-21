@@ -101,6 +101,38 @@ The command writes Markdown and a self-contained HTML file with inline SVG timin
 - **Combat telemetry.** Deflects, rolls, shots and form seconds are per-wave medians with a count of measured observations. Hit rate is total hits divided by total shots from rows measuring both. Missing observations and undefined rates display as `not measured`. Measured zeroes contribute normally.
 - **Unusual winning runs.** Within each profile's deepest wave, rank up to three runs by the rarity of their ordered card sequence, acquired weapon set and dominant measured ghost form. Each available signature scores `log2(measured runs / runs sharing the signature)` bits. Average its scores, keep positive values and break ties by seed. The report includes the picks and a paste-ready command with the run's controls and batch settings.
 
-## Tune (TODO)
+## Tune
+
+Run `propose` anywhere in the checkout. Run `apply` and `confirm --revert` on the dedicated branch whose name starts with `n22-tune`. Keep one output directory per batch. The before batch and the plan can travel together to the tune checkout.
+
+```powershell
+node tools/gauntlet/tune.mjs propose --batch=build/gauntlet/before/batch.json --out=build/gauntlet/before/plan.json
+node tools/gauntlet/tune.mjs apply --plan=build/gauntlet/before/plan.json
+# Run the same batch recipe, seeds, profiles, controls and pick mode into build/gauntlet/after.
+node tools/gauntlet/tune.mjs confirm --before=build/gauntlet/before/batch.json --after=build/gauntlet/after/batch.json --plan=build/gauntlet/before/plan.json
+```
+
+**Measurements.** The default timing target is 15 s for `average`. A median strictly below 12 s or above 18 s is a miss. Set `--target-s` and `--profile` to change that timing comparison. The other comparisons use all available profiles. The plan records every miss, its measurements and either the selected edit or the reason it was skipped.
+
+| Measured miss | Candidate edit |
+|---|---|
+| Wave time outside the band | Scale HP for the robot most often present in timed rosters of that wave. Street timing can also adjust the opening budget or its per-wave growth. The production spawner takes archetype HP for robot bodies. The timing measures the whole wave. |
+| Expert median depth at or below novice depth | Aim for a gap of at least one wave. Ease pressure if both profiles recorded deaths, otherwise increase it. Try the budget or a robot observed in the final wave. |
+| A named killer accounts for over half of all recorded deaths | Reduce the matching attack damage. For a small ranged attack, victim runs recording deflections can support raising guard capacity. Unknown attributions remain in the denominator. A timeout cannot identify an attacker. Set the fraction with `--killer-share=0.5`. |
+| A take-versus-decline difference clears the report's CI and A/A floor | Use the card's recorded weapon ref. A stronger pick gets lower cadence or damage, a weaker pick gets higher cadence or damage. Cards without an eligible knob remain in the miss list. |
+
+The plan ranks wave-time errors relative to the timing target, killer shares relative to their threshold and profile gaps relative to one wave. Offer survival differences are scaled by the decliners' median survival (at least one wave), and offer timing differences by the timing target. The largest eligible misses get up to `--max=6` edits. One card can generate two measured outcomes and one edit.
+
+**Numeric limits.** `tools/gauntlet/knobs.json` lists the table, JSON pointer, kind and bounds of each knob. It covers enemy HP and damage, enemy weapon damage, player weapon damage and firing rate, guard numbers and the two wave-budget integers. The gun's `rof_hz` is the inverse of its firing interval. An unresolved pointer, changed array-row identity or pending knob is reported and skipped. Mechanics, skills and weapon effects need a separate proposal.
+
+On the first proposal, `tools/gauntlet/baseline.json` records the date, Git SHA and first value of every resolved knob. Later proposals append only newly available IDs. Commit a new baseline or its additions by path before applying. A value must satisfy its catalog bounds and stay within **0.8–1.25×** its current table value and **0.5–2×** its first value. Integer steps round in the proposed direction within that intersection. For example, an integer budget of 2 has no legal step. A zero baseline stays zero.
+
+**Apply and undo.** Apply checks the working tree and index for changes outside `evidence/` and `build/`. It checks the starting values, byte-identical canonical JSON round trip and table schemas, then commits one numeric edit per commit. Commit trailers identify the plan, knob and night. A night runs from noon UTC to the next noon, so a run crossing midnight uses one allowance. A second plan on the same branch cannot change that knob again that night, even after a revert. Repeating an interrupted apply recognizes its existing commits.
+
+Confirmation matches the before batch to the plan by SHA-256. It pairs successful runs by seed, profile, controls and pick mode. Wave timing needs seconds in both runs. Offer confirmation keeps the same takers, decliners and offer waves across both batches. For each change, the A/A floor comes from pairing adjacent seed ranks within the before-batch groups and taking the larger absolute endpoint of their CI95.
+
+For time and offer effects, the confirming number is the median paired reduction in absolute distance from target. Its CI95 uses the repo's 4,000-resample paired bootstrap. For killer share and profile spread, 2,000 seeded bootstrap draws resample whole before/after pairs and recompute the proportions or profile medians. Improvement is positive. Both the aggregate change and the entire interval must clear the A/A floor in the same direction for `kept` or `reverted`. A weaker signal or fewer than two comparison or A/A pairs yields `noise`. Several edits confirmed by one batch share the same experiment.
+
+`tune-ledger.json` and `tune-ledger.md` appear beside the **after** batch. Each row records the old, new and baseline values, original miss, measured outcomes, paired improvement, CI95, A/A floor, verdict and commit SHAs. Plain `confirm` writes verdicts. Add `--revert` to undo committed `reverted` and `noise` edits in reverse order. Undo allows its named plan, batches and ledger files alongside the evidence and build directories. Git needs a clean index. An empty apply SHA means the branch has no commit for that edit. A revert SHA identifies an executed undo. To undo one edit manually, use `git revert --no-edit <apply-sha>` on the tune branch.
 
 ## Proposals (TODO)
