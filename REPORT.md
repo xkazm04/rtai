@@ -28,6 +28,13 @@ Lane `loop`: the test player, the batch tool, the report, the tuner and the many
 - **Guard deflects not measured** in any wave: guard's deflect signal is not counted in the result (NEED street). Dent never used (no cars on the street).
 - Runs that reach the 72000-tick run cap alive (seeds 6 and 10, wave 32) are counted as failed runs.
 
+### Where the test player plays unlike a person (the tuner optimises this bot, not a human)
+- **It reads the sim, not the screen.** Tells, projectile size and path, and every enemy's position come from sim state. The profiles add reaction ticks, aim error and a share of tells read, but a person also misreads the art, loses enemies off screen and panics in a crowd.
+- **No fatigue, no tunnel vision.** Its 20th wave is played like its 1st, so late-wave times are likely shorter than a person's and deaths later.
+- **Fixed habits.** Greedy picks follow one value table: every greedy run builds a similar kit, which is why bonus verdicts need random-pick batches. It casts Tonnage at most once per wave (the 20 s cooldown) and never uses Dent (no cars on the street).
+- **Street knowledge.** After the routing fix it never gets lost or backtracks out of curiosity, and it never stops to look around.
+- **Conservative late game.** Most deep runs end at the 90 s wave timer, not a death: it rests and retreats to repair where a person might press. So "too slow" late waves are partly the bot's caution, and HP cuts proposed from them may overshoot for an aggressive player.
+
 ## What blocked or slowed you (minutes each)
 
 - Botched concurrent merge, 8 min (a backgrounded commit ran merges while a second merge ran by hand).
@@ -75,5 +82,7 @@ Timed parry is a non-goal in the design note, so none of these is a parry.
 | batch-report | 37 | accepted | |
 | tune | 40 | accepted | knob pointers by array index (row-id check in brief 05) |
 | bot-street | 65 | accepted | 0 stalls, profiles ordered 10 / 20 / 25, 18/20 mutate on bot_brain |
-| tune-night | 23 | accepted | 7 commits: alive caps, 6-pair floor, min-n, fast waves -> budget, knob row ids, `night.mjs`; 39/39 tests. Would brief the floor from a null perturbation, not cross-seed pairs (Call 1) |
 | bot-film | 50 | accepted | act caption, 12-seed scan, 4 clips + 11 stills, mutate 38/38 on scratch copies; would brief a CRF target (clips came out at 98-140 Mbit/s) and a required "blast hits cover" still |
+| tune-night | 23 | accepted | 7 commits: alive caps, 6-pair floor, min-n, fast waves -> budget, knob row ids, `night.mjs`; 39/39 tests. Would brief the floor from a null perturbation, not cross-seed pairs (Call 1) |
+
+Six calls, 261 minutes, all accepted, none bounced. What I would brief differently: the acceptance checks should name the statistical design (a deterministic paired design needs a null-perturbation floor) and a film brief should name a bitrate and the one still that proves each claim.
