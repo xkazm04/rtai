@@ -1,6 +1,13 @@
 extends GutTest
 
 
+class BlockedBlink:
+	extends BotView
+
+	func blink_clear(_aim: Vector2) -> bool:
+		return false
+
+
 func test_stomp_uses_available_time_then_roll_then_tonnage() -> void:
 	var view: BotView = BotView.new()
 	var me: BotView.Player = view.player()
@@ -55,6 +62,10 @@ func test_machine_closes_after_discharge_and_circles_the_armoured_face() -> void
 	t = brain.sample(10)
 	assert_true(t.is_pressed(actions.bit(&"melee")))
 	assert_gt(absi(t.move_y), absi(t.move_x))
+	foe.pos.x = 1.5
+	assert_false(brain.sample(11).is_pressed(actions.bit(&"sprint")))
+	foe.pos.x = 1.7
+	assert_true(brain.sample(12).is_pressed(actions.bit(&"sprint")))
 
 
 func test_ohm_can_attack_a_lone_war_machine_between_tells() -> void:
@@ -103,3 +114,29 @@ func test_kerf_checks_the_landing_behind_the_target_at_the_street_wall() -> void
 	session.close()
 	bus.free()
 	data.free()
+
+
+func test_kerf_at_a_blocked_landing_fires_only_with_a_ranged_weapon() -> void:
+	var view: BotView = BlockedBlink.new()
+	view.player().form = &"kerf"
+	var foe: BotView.Hostile = BotView.Hostile.new()
+	foe.pos.x = 4.0
+	view.hostiles().append(foe)
+	var actions: PlayerActions = PlayerActions.shipped()
+	var skill: BotProfile = BotProfile.shipped(&"expert")
+	var brain: GauntletBot = GauntletBot.new(view, actions, skill, 1)
+	@warning_ignore("return_value_discarded")
+	brain.sample(0)
+	var t: TickInput = brain.sample(skill.reaction_ticks)
+	assert_false(t.is_pressed(actions.bit(&"melee")))
+	assert_false(t.is_pressed(actions.bit(&"fire")))
+	var slot: BotView.Slot = BotView.Slot.new()
+	slot.index = 0
+	slot.reach = 20.0
+	view.held_slots().append(slot)
+	view.player().current_slot = 0
+	t = brain.sample(skill.reaction_ticks + 1)
+	assert_true(t.is_pressed(actions.bit(&"fire")))
+	slot.melee = true
+	t = brain.sample(skill.reaction_ticks + 2)
+	assert_false(t.is_pressed(actions.bit(&"fire")))

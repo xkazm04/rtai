@@ -29,3 +29,21 @@ func test_range_choice_cycles_the_occupied_wheel_slots_in_both_directions() -> v
 	view.player().current_slot = 0
 	turn = brain.sample(skill.reaction_ticks + 2)
 	assert_false(turn.is_pressed(actions.bit(&"weapon_next")))
+
+
+func test_approach_leaves_a_margin_inside_the_selected_weapons_range() -> void:
+	var view: BotView = BotView.new()
+	var gun: BotView.Slot = BotView.Slot.new()
+	gun.reach = 10.0
+	view.held_slots().append(gun)
+	var foe: BotView.Hostile = BotView.Hostile.new()
+	foe.pos.x = 9.0
+	view.hostiles().append(foe)
+	var brain: GauntletBot = GauntletBot.new(
+		view, PlayerActions.shipped(), BotProfile.shipped(&"average"), 1
+	)
+	assert_gt(brain.sample(0).move_x, 0)
+	foe.pos.x = 8.7
+	var strafing: TickInput = brain.sample(1)
+	assert_eq(strafing.move_x, 0)
+	assert_gt(absi(strafing.move_y), 0)

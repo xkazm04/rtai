@@ -35,3 +35,27 @@ func test_retreat_lasts_until_repaired_while_novice_keeps_chasing() -> void:
 	brain = GauntletBot.new(view, actions, BotProfile.shipped(&"novice"), 1)
 	view.player().hp = 1
 	assert_gt(brain.sample(0).move_x, 0)
+
+
+func test_retreat_starts_below_the_threshold_and_stops_at_a_safe_distance() -> void:
+	var view: BotView = BotView.new()
+	var actions: PlayerActions = PlayerActions.shipped()
+	var skill: BotProfile = BotProfile.shipped(&"expert")
+	var brain: GauntletBot = GauntletBot.new(view, actions, skill, 1)
+	var foe: BotView.Hostile = BotView.Hostile.new()
+	foe.pos.x = 10.0
+	view.hostiles().append(foe)
+	view.player().street_max_hp = 100.0
+	view.player().hp = 100.0 * skill.retreat_hp
+	var chasing: TickInput = brain.sample(0)
+	assert_gt(chasing.move_x, 0)
+	assert_false(chasing.is_pressed(actions.bit(&"sprint")))
+	view.player().hp -= 1.0
+	foe.pos.x = 29.9
+	assert_lt(brain.sample(1).move_x, 0)
+	foe.pos.x = 30.0
+	assert_eq(brain.sample(2).move_x, 0)
+	view.player().hp = 0.0
+	assert_eq(brain.sample(3).move_x, 0)
+	view.player().hp = 100.0 * skill.retreat_hp + 1.0
+	assert_gt(brain.sample(4).move_x, 0)
