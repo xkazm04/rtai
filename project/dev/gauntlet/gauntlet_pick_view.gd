@@ -22,7 +22,7 @@ func _ready() -> void:
 	stack.add_theme_constant_override(&"separation", 12)
 	center.add_child(stack)
 	_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_caption.add_theme_color_override(&"font_color", GauntletHud.TEAL)
+	_caption.add_theme_color_override(&"font_color", GauntletHud.PAPER)
 	_caption.add_theme_font_size_override(&"font_size", 18)
 	stack.add_child(_caption)
 	var heading: Label = Label.new()

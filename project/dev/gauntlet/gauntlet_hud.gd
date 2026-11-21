@@ -2,9 +2,8 @@ class_name GauntletHud
 extends CanvasLayer
 ## Screen-space meters. GuardMeter has reserved space even when guard has no sample.
 
-const PAPER: Color = Color("#f6edd8")
-const PLATE: Color = Color("#242127")
-const TEAL: Color = Color("#83d7ba")
+const PAPER: Color = Ink.CREAM
+const PLATE: Color = HudArt.INK
 const ENGLISH: Translation = preload("res://data/loc/en.po")
 
 
@@ -19,8 +18,9 @@ class Meter:
 		value_changed.connect(func(_sample: float) -> void: queue_redraw())
 
 	func _draw() -> void:
-		draw_rect(Rect2(Vector2.ZERO, size), PLATE.lightened(0.2))
-		draw_rect(Rect2(Vector2.ZERO, Vector2(size.x * ratio, size.y)), TEAL)
+		draw_rect(Rect2(Vector2.ZERO, size), PAPER)
+		draw_rect(Rect2(Vector2.ZERO, Vector2(size.x * ratio, size.y)), PLATE)
+		draw_rect(Rect2(Vector2.ZERO, size), PLATE, false, 1.0)
 
 
 var session: GauntletSession
@@ -68,7 +68,7 @@ func _process(_delta: float) -> void:
 func set_guard_meter(fraction: float, broken: bool = false) -> void:
 	guard_meter.show()
 	guard_meter.value = clampf(fraction, 0.0, 1.0)
-	guard_meter.modulate = Color.SALMON if broken else Color.WHITE
+	guard_meter.modulate = Color.GRAY if broken else Color.WHITE
 
 
 func _text(parent: Control, label: Label, pos: Vector2, font_size: int) -> void:
