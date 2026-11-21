@@ -128,7 +128,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 	melee.write_state(out)
 	shock.write_state(out)
 	hold.write_state(out)
-	if carry != null:
+	if carry != null and (wheel == null or wheel.writes_carry()):
 		carry.write_state(out)
 		throw.write_state(out)
 	out.put_32(_previous)
@@ -189,7 +189,7 @@ func _pick_melee(c: PlayerCommand) -> void:
 ## chains, as a mash does). Nothing swings while the weapon is still being drawn.
 func _melee_press(c: PlayerCommand) -> bool:
 	if wheel != null:
-		return wheel.swing_pressed(c, actions, hold, melee)
+		return wheel.swing_pressed(c, actions, hold, melee, ghosts)
 	if not wielding():
 		return c.was_pressed(actions, &"melee")
 	if not hold.can_fire():

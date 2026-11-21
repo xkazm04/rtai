@@ -22,6 +22,9 @@ var current: int = -1
 var wheel_inventory: bool = ControlsMode.wheel()
 var first_seen: Array[StringName] = []
 var rifle_spent: bool = false
+var wheel_only: bool = false
+var picked_up: bool = false
+var story: RivetWheelStory = null
 var switches: int = 0
 ## A bot holds the trigger: a semi gun re-taps (GunHand.tap).
 var tap: bool = false
@@ -58,6 +61,8 @@ func add(id: StringName) -> int:
 	var grip: ArsenalTable.Grip = _arsenal.grip_of(id)
 	if grip == null or not carries(id):
 		return -1
+	if story != null:
+		story.apply(self)
 	if id not in first_seen:
 		first_seen.append(id)
 	if id == RIFLE:
@@ -123,6 +128,7 @@ func take(id: StringName, arena: CombatArena) -> void:
 		hand.trigger.ammo = hand.trigger.spec.magazine
 		hand.trigger.reload_left = 0
 	var slot: int = add(id)
+	picked_up = picked_up or slot >= 0
 	if not wheel_inventory and slot >= 0 and (slot != current or arena.rivet.weapon != id):
 		select(slot, arena)
 
@@ -144,9 +150,13 @@ func select(i: int, arena: CombatArena, wheel_id: StringName = &"") -> void:
 			_stowed = arena.rivet.weapon
 		arena.gun = null
 	arena.rivet.weapon = id
-	current = i
-	_drawn_id = id
+	record_drawn(i, id)
 	switches += 1
+
+
+func record_drawn(slot: int, id: StringName) -> void:
+	current = slot
+	_drawn_id = id
 
 
 func weapon() -> StringName:
@@ -156,8 +166,8 @@ func weapon() -> StringName:
 
 
 ## Keep the exact hand (magazine, cooldown and spread stream) supplied by a launch or story grant.
-func remember_hand(hand: GunHand) -> void:
-	if hand != null and not _hands.has(hand.trigger.spec.id):
+func remember_hand(hand: GunHand, replace: bool = false) -> void:
+	if hand != null and (replace or not _hands.has(hand.trigger.spec.id)):
 		_hands[hand.trigger.spec.id] = hand
 
 

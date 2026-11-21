@@ -9,6 +9,7 @@ var carry: RivetCarry
 var switched_tick: int = -1
 var _selected: StringName = HANDS
 var _fresh: bool = true
+var _touched: bool = false
 
 
 func _init(inventory: RivetCarry = null) -> void:
@@ -16,9 +17,12 @@ func _init(inventory: RivetCarry = null) -> void:
 
 
 func bind(inventory: RivetCarry) -> void:
+	_touched = _used()
 	carry = inventory
 	if carry != null:
 		carry.wheel_inventory = true
+		if (carry.sheathe or carry.wheel_only) and carry.story == null:
+			carry.story = RivetWheelStory.new()
 	_selected = HANDS
 	_fresh = true
 	switched_tick = -1
@@ -29,6 +33,7 @@ static func carry_for(arena: CombatArena) -> RivetCarry:
 	var c: RivetCarry = RivetCarry.new(
 		WeaponTable.shipped(), ArsenalTable.shipped(), arena._rng, arena.gun
 	)
+	c.wheel_only = true
 	if arena.gun != null:
 		c.tap = arena.gun.tap
 	return c
@@ -59,10 +64,16 @@ func melee_selected() -> bool:
 ## The quick melee action always starts a claw strike. Primary follows the selected combo
 ## after its stow/draw has finished (the bare claw is READY with an empty held id).
 func swing_pressed(
-	c: PlayerCommand, actions: PlayerActions, hold: WeaponHold, melee: PlayerMelee
+	c: PlayerCommand,
+	actions: PlayerActions,
+	hold: WeaponHold,
+	melee: PlayerMelee,
+	ghosts: GhostPilot
 ) -> bool:
 	if c.was_pressed(actions, &"melee"):
 		return true
+	if ghosts != null and ghosts.owns_melee():
+		return false
 	var id: StringName = MeleeTable.CLAW if _selected == HANDS else _selected
 	return (
 		hold.state == WeaponHold.State.READY
@@ -78,14 +89,17 @@ func step(c: PlayerCommand, actions: PlayerActions, arena: CombatArena, tick: in
 	_sync(arena)
 	var want: StringName = _selected
 	for i: int in RivetCarry.SLOTS:
-		if c.was_pressed(actions, RivetCarry.SLOT_ACTIONS[i]) and carry.slots[i] != &"":
-			want = carry.slots[i]
+		if c.was_pressed(actions, RivetCarry.SLOT_ACTIONS[i]):
+			_activate()
+			if carry.slots[i] != &"":
+				want = carry.slots[i]
 	var dir: int = 0
 	if c.was_pressed(actions, &"weapon_next"):
 		dir = 1
 	elif c.was_pressed(actions, &"weapon_prev"):
 		dir = -1
 	if dir != 0:
+		_activate()
 		var ids: Array[StringName] = order()
 		want = ids[posmod(ids.find(_selected) + dir, ids.size())]
 	if want != _selected:
@@ -100,6 +114,10 @@ func step(c: PlayerCommand, actions: PlayerActions, arena: CombatArena, tick: in
 func _sync(arena: CombatArena) -> void:
 	var id: StringName = arena.rivet.weapon
 	var actual: StringName = HANDS if id == &"" else id
+	if not _fresh and carry.story != null and not _used():
+		if actual != _selected:
+			_selected = carry.story.follow(carry, arena, _selected)
+		return
 	if not _fresh and actual == _selected:
 		# Quest 1's gun sync can replace a just-selected hand. The carry owns its magazine.
 		arena.gun = carry.hand_for(_selected)
@@ -124,10 +142,7 @@ func _spend_rifle() -> void:
 	carry.rifle_spent = true
 	var slot: int = carry.slot_of(RivetCarry.RIFLE)
 	if carry.slots[slot] == RivetCarry.RIFLE:
-		carry.slots[slot] = &""
-		for id: StringName in carry.first_seen:
-			if id != RivetCarry.RIFLE and carry.slot_of(id) == slot:
-				carry.slots[slot] = id
+		carry.slots[slot] = RivetWheelStory.rifle_fallback(carry, slot)
 
 
 func _choose(id: StringName, arena: CombatArena) -> void:
@@ -146,7 +161,23 @@ func _stow(arena: CombatArena) -> void:
 	arena.gun = null
 
 
+func _activate() -> void:
+	_touched = true
+	if carry.story != null:
+		carry.story.apply(carry)
+
+
+func _used() -> bool:
+	return _touched or (carry != null and carry.picked_up)
+
+
+func writes_carry() -> bool:
+	return carry != null and (not carry.wheel_only or _used() or not carry.ground.items.is_empty())
+
+
 func write_state(out: StreamPeerBuffer) -> void:
+	if not _used():
+		return
 	out.put_utf8_string(_selected)
 	out.put_u8(int(_fresh))
 	if carry != null:
