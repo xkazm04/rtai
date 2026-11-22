@@ -1,7 +1,7 @@
 # Brief n24-melee P6: the chainsaw holds its victim without an electric stun look
 
 Lane `melee`, branch `n24-melee`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-street` (your cwd).
-**Hard stop HARDSTOP wall clock** (check `date`). **Commit deadline COMMITBY.** One small change, one commit.
+**Hard stop 00:05 wall clock** (check `date`). **Commit deadline 23:59 (no commit after 00:00).** One small change, one commit.
 
 ## The defect (director, from your P4 chainsaw-64.png)
 During the chainsaw's grind a white zigzag / star crackle sits on the victim (ticks 42 to 57 of the `melee:chainsaw`

@@ -198,3 +198,16 @@ JOURNAL/REPORT/briefs per path with `git commit -- <paths>`.
   a busy click is dropped, a one-press buffer after recovery is one value away if the owner finds it sluggish), and
   put it in REPORT Calls for the owner.
 - 22:34 session 4 end. ASTRA RUNNING p5-films since 22:16 (lock pid 55724, hard stop 23:35). NEXT: see 22:25 NEXT above.
+- 22:36 session 5 start. astra.lock pid 55724 alive (node, p5-films since 22:16, out file empty). grep `NEED melee`
+  in the four other journals: only pressure 18:30 (served in session 2). CHECKED chainsaw 0.60 in swings.json: shipped
+  trial starts 0/81/161 on clicks every 40-41 ticks, held starts 0/74/148 against row_ticks 34: a grind on the cop runs
+  about 74 ticks (the contact hold), and the click at 41 falls inside it and is dropped, never buffered. Every dropped
+  click lies inside a running swing, so 0.60 comes from the rule and is not a second hit. DECISION goes in with P5's
+  review: a busy click is dropped; a one-press buffer after recovery is one value away (Calls for the owner).
+- 22:36 LOOKED P5 draft films (still in progress; ffprobe: all six 1920x1080, 60/1, 16.0 s), review sheets
+  `n24/melee/films/review/*.jpg`. katana, chainsaw, baton and plasma: one swing per type and the body down with its own
+  look (cut + blood, saw grind + spray, charred black shock body, hot cut + blood). hands: the claw rakes, humans take
+  ordinary damage (matches the 7144b8a1a decision), last tile shows the black void at the bottom right. electric_robots:
+  BAD framing: from tick ~294 the war machine stands over Rivet, the gunner and the shield robot, so the shield
+  overload and the shield robot's shutdown are hidden under its chassis. Follow-up to Astra if P5 does not fix it:
+  stage each robot alone (war machine last, at its own spot), as the human films do.
