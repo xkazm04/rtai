@@ -14,7 +14,7 @@ Every Godot run: `export APPDATA=C:/Users/kazda/kiro/gtai-n24/appdata/motion`,
 into a new `grid_stride` block of `project/data/tables/rivet_motion.json` (+ its schema), read once and cached the
 way the file already reads `walk_grid`; keep the family defaults (pistol/plasma_rifle/katana/gatling/flamethrower)
 where they are if moving them would change their numbers. Restore the dropped doc comments. Proof: the five
-pre-existing drawn grids and gloria/rocket_launher/chainsaw (and any newer) pick the identical cell on every tick
+pre-existing drawn grids and gloria/rocket_launcher/chainsaw (and any newer) pick the identical cell on every tick
 (the byte-identical check from brief 01 over 1440 frames), `run_unit --changed` green. Add `project/features/characters/rivet_walk.gd`,
 `rivet_stride.gd`, `project/tests/unit/test_rivet_walk*.gd`, `test_rivet_stride*.gd` to the allowlist for this item.
 
