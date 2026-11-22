@@ -1,9 +1,9 @@
 class_name PlayerMotion
 extends RefCounted
-## Rivet's locomotion on the fixed tick, on top of TopDownMover (rivet_motion.json): the held
-## sprint (above the 7.5 m/s tackle line; the facing follows the walk, at a slower turn) and the
-## dodge roll (a press: roll_m on an ease-out curve, invulnerable on a window of its ticks, then
-## a recovery with a damped stick and a cooldown). Free movement is TopDownMover unchanged.
+## Rivet's fixed-tick movement on TopDownMover. Held sprint clears the tackle threshold
+## (originally 5.0 m/s, now 7.5 m/s) and turns more slowly toward travel. A
+## dodge-roll press covers roll_m on an ease-out curve, with i-frames, damped-stick recovery
+## and a cooldown. TopDownMover handles free movement.
 ## A roll press can start a vault, with its own path and i-frames before shared recovery.
 ## Station cover owns the grounded snap, slide and corner peek while its flag is enabled.
 ## Dash commits to a ground direction on a press; holding the key then maintains sprint.
