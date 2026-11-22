@@ -49,11 +49,11 @@ func _ready() -> void:
 		get_tree().quit(1)
 		return
 	lines = PrologueLines.new()
-	var opening: Dictionary = beats[0]
-	if not show_line(data.text(opening, "first_line")):
+	if not lines.begin(1, 0):
 		Log.error("prologue", "missing opening line")
 		get_tree().quit(1)
 		return
+	stage.hooks.append(PrologueEncounter.new(lines))
 	if DisplayServer.get_name() != "headless":
 		_open_view(plan)
 
@@ -132,6 +132,7 @@ func _exit_tree() -> void:
 		"schema": "gtai.prologue-run/1",
 		"seed": _seed,
 		"lines_shown": lines.shown,
+		"line_events": lines.events,
 		"beats_reached": lines.beats,
 		"ticks": world.context().clock.tick(),
 	}

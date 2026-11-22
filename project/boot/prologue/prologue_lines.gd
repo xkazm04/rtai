@@ -7,7 +7,13 @@ const SCHEMA: String = "gtai.prologue_lines/1"
 
 var shown: Array[String] = []
 var beats: Array[int] = []
+var events: Array[Dictionary] = []
 var subtitle: HudState = HudState.new()
+var current: String = ""
+var voice: String = ""
+var _order: Array[String] = []
+var _index: int = 0
+var _due: int = 0
 var _spoken: Dictionary[String, Dictionary] = {}
 var _places: Dictionary[String, String] = {}
 
@@ -25,7 +31,53 @@ func _init() -> void:
 		Log.error("prologue", str(data.errors()))
 
 
-func show_line(id: String) -> bool:
+func begin(beat: int, tick: int) -> bool:
+	_order.clear()
+	for id: String in _spoken:
+		if _spoken[id]["beat"] == beat:
+			_order.append(id)
+	_index = 0
+	return not _order.is_empty() and show_line(_order[0], tick)
+
+
+## Hold the last subtitle for its reading time, then leave the scene waiting for the player.
+func advance(tick: int, skip: bool) -> void:
+	if current.is_empty() or (not skip and tick < _due):
+		return
+	if skip:
+		events.back()["skipped"] = true
+		events.back()["skip_tick"] = tick
+	_index += 1
+	if _index < _order.size():
+		@warning_ignore("return_value_discarded")
+		show_line(_order[_index], tick)
+	else:
+		_silence()
+
+
+## Dale fell. Keep a record of the cut and of every spoken row the player never saw.
+func interrupt(tick: int) -> void:
+	if not current.is_empty() and tick < _due:
+		events.back()["skipped"] = true
+		events.back()["skip_tick"] = tick
+	for i: int in range(_index + 1, _order.size()):
+		var entry: Dictionary = _event(_order[i], tick, false)
+		entry["skipped"] = true
+		events.append(entry)
+	_silence()
+
+
+func _silence() -> void:
+	subtitle.silent()
+	current = ""
+	voice = ""
+
+
+func _event(id: String, tick: int, displayed: bool) -> Dictionary:
+	return {"id": id, "tick": tick, "shown": displayed, "draft": _spoken[id].get("draft", false)}
+
+
+func show_line(id: String, tick: int = 0) -> bool:
 	if not _spoken.has(id):
 		return false
 	var row: Dictionary = _spoken[id]
@@ -36,7 +88,16 @@ func show_line(id: String) -> bool:
 	var words: String = _text.resolve(id, source)
 	for placeholder: String in _places:
 		words = words.replace(placeholder, _places[placeholder])
-	subtitle.say(_text.resolve(QuestText.cast_key(speaker), speaker), words)
+	var name_en: String = speaker.replace("-", " ").capitalize()
+	if speaker == "winnick":
+		name_en = "Lieutenant Dale Winnick"
+	subtitle.say(_text.resolve(QuestText.cast_key(speaker), name_en), words)
+	current = id
+	voice = speaker
+	var line: QuestLine = QuestLine.new()
+	line.text = source
+	_due = tick + line.duration_ticks(QuestRules.shipped())
+	events.append(_event(id, tick, true))
 	shown.append(id)
 	if not beats.has(beat):
 		beats.append(beat)
@@ -45,3 +106,9 @@ func show_line(id: String) -> bool:
 
 func fill(state: HudState, _stage: CollectCallStage, _system: QuestSystem) -> void:
 	state.say(subtitle.speaker, subtitle.words)
+	state.portrait_key = voice
+
+
+func fill_view(view: CollectCallView, stage: CollectCallStage, system: QuestSystem) -> void:
+	super.fill_view(view, stage, system)
+	view.hud_view.dialogue.modulate = Color("91d9cb") if voice == "ghosts" else Color.WHITE
