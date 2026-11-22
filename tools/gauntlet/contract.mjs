@@ -33,6 +33,11 @@ export function validateRun(run) {
     if (!object(wave) || !count(wave.n) || wave.n < 1 || wave.n > run.wave_reached || seen.has(wave.n))
       return prefix + 'n: expected unique reached wave number';
     seen.add(wave.n);
+    if ('hp' in wave) {
+      const keys = ['start', 'min', 'end', 'max', 'repaired'];
+      if (!object(wave.hp) || Object.keys(wave.hp).length !== keys.length
+        || !keys.every((key) => magnitude(wave.hp[key]))) return prefix + 'hp: invalid health sample';
+    }
     for (const key of ['seconds', 'damage_taken'])
       if (key in wave && !magnitude(wave[key])) return prefix + key + ': expected nonnegative number';
     for (const key of ['guard_deflects', 'rolls', 'shots', 'hits', 'guard_ticks', 'cover_ticks'])

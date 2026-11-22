@@ -59,6 +59,40 @@
           "minimum": 0,
           "type": "integer"
         },
+        "hp": {
+          "additionalProperties": false,
+          "description": "Rivet HP at wave start, lowest HP, final sampled HP, highest HP capacity, and sum of positive HP steps within the wave.",
+          "properties": {
+            "end": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "max": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "min": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "repaired": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "start": {
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "end",
+            "max",
+            "min",
+            "repaired",
+            "start"
+          ],
+          "type": "object"
+        },
         "machine": {
           "additionalProperties": false,
           "description": "Bot measurements for the first war machine in this wave. Omitted when no war machine is tracked.",

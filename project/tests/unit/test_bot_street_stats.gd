@@ -1,6 +1,48 @@
 extends GutTest
 
 
+func test_hp_cover_and_rolls_reach_the_closed_result_row() -> void:
+	var run: GauntletRun = GauntletRun.new()
+	var pilot: GauntletTestPlayer = GauntletTestPlayer.new()
+	pilot.configure(&"average", &"greedy", 3)
+	var bus: EventBus = autofree(EventBus.new())
+	var data: DataStore = autofree(DataStore.new())
+	var session: GauntletSession = GauntletSession.open_street(bus, data, run, pilot)
+	pilot.bind(run, session)
+	var waves: GauntletWaves = GauntletWaves.attach(session, run, pilot, 1)
+	var arena: CombatArena = session.stage.arena
+	arena.rivet.pos.x = session.street.current().end_x() + 0.1
+	session.step()
+	pilot._brain._view.refresh()
+	var start: float = arena.rivet.hp
+	var capacity: float = arena.rivet.max_hp
+	arena.rivet.hp -= 15.0
+	arena.rivet.hurt_tick = arena.tick
+	pilot._brain.counters.cover_ticks += 3
+	var stats: BotStreetStats = session.stage.hooks[-2] as BotStreetStats
+	stats.step(session.stage, 2)
+	arena.rivet.hp += 4.0
+	stats.step(session.stage, 3)
+	arena.rivet.hp += 2.0
+	stats.step(session.stage, 4)
+	for foe: Fighter in arena.hostiles:
+		arena.damage(foe, foe.max_hp, arena.rivet.id, &"claw")
+	session.pilot.motion._start_roll(Vector2.RIGHT)
+	session.step()
+	var rows: Array = run.to_result().waves
+	var row: Dictionary = rows[0]
+	var cover: int = row.cover_ticks
+	var rolls: int = row.rolls
+	var hp: Dictionary = row.hp
+	assert_eq(cover, 3)
+	assert_true(waves.done)
+	assert_eq(rolls, 1)
+	var expected: Dictionary = {"start": start, "min": start - 15, "end": start - 9}
+	expected.merge({"max": capacity, "repaired": 6.0})
+	assert_eq(hp, expected)
+	session.close()
+
+
 func test_last_machine_hit_and_settled_form_are_measured_on_the_kill_tick() -> void:
 	var bus: EventBus = EventBus.new()
 	var data: DataStore = DataStore.new()
