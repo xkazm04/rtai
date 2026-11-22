@@ -17,6 +17,7 @@ DRAFT written 05:25 in session 4; TODO markers are filled by the session that ga
 | 3. Enemy rounds not red | `90bad0b11`; stills `C:/Users/kazda/kiro/gtai-masters/n23/street/rounds/`, `rounds-review.jpg`; `evidence/street/rounds.md` | small `#FFE6A8` on `#E08A1E` amber, large `#E8F7FF` on `#92C9F5` ice blue, enemy muzzle `#FFDC8C`; seed 7 average 10 waves cmp identical, 60 s replay `cbeb734ff9b97c41` unchanged |
 | 3. Enemy rounds while Rivet is on hands | `29d3080e4` (one line in `project/boot/collect_call/view/fx_view.gd`); stills `rounds/rounds-hands-{before,after}-32.png` | `cc205aac9` (`ShotDraw.bare`): was a vermilion dash, now the amber rim + light core of the gun path at tick 306 seed 7 (4x crop `build/street/crop/hands-pair-2.png`, scratch) |
 | 4. Shove wedge at full reach | `a6135a129`; `project/features/combat/squad/foe_shove_zone.gd`, `project/tests/unit/test_foe_shove_zone.gd`; `evidence/street/shove-wedge.md`; stills `wedge/shove-{before,after}-{32,64}.png` | 2.20 m x 0.64 m strip from the planted tell (0.40 m lunge + 1.80 m reach), one source with the hit test (`FoeShoveZone.connects`); body 0.05 m in/out of rails and tip tested over 3 aims x 3 speeds x 2 reaches; seed 7 cmp identical, replay `cbeb734ff9b97c41` |
+| Mutation scores (killed / decided, 0 timeouts) | `evidence/street/brief06-mutations.md` | `gauntlet_composer.gd` 20/20; `gauntlet_waves.gd` changed lines 15/16, the first-owed-pick line 1/1 after `a51a6b1b9`; `foe_shove_zone.gd` 19/20, the survivor's line 4/4 after `1818deb63`; `gauntlet_draw.gd` offer_count/_eligible 15/16 -> 16/16 after `79844f671`; `foe_shield.gd` hit line 1/1; `shot_draw.gd` 5/20 (15 survivors are draw calls: checked by the stills, not by tests) |
 | NEEDs served | `c48fe5489` (prologue: `roster_exclude`), `cdacafe98` (loop: gauntlet `rivet{repair_per_s, repair_delay_s}`) | seed 7 average 10 waves cmp identical across both |
 
 ## What does not
@@ -49,7 +50,11 @@ Previewed at 05:50 with `git merge-tree --write-tree n23-street n23-<lane>` (no 
 
 ## Next steps
 
-TODO
+1. Stacking only ends runs when the bots cannot clear a wave in 90 s; on the real timer that almost never happens (loop: 1 timed-out wave in 29 runs). Tune toward it with loop's levers (gauntlet `rivet.repair_*`, `enemy_damage_k`) before touching the timer; if it still never fires, offer the owner a timer that shortens with the wave (call 6).
+2. Opening waves: 11.67 s median against the 15 s target, with wave 1 = 13 patrol cops. A per-wave budget curve (more in waves 2-5, less in wave 1) or a cap on how many of one row a wave may hold would fix the shape; loop's tuner reads `budget.unit` = 10 and the `cost{}` map.
+3. `shot_draw.gd` drawing calls survive mutation (5/20): a pixel probe of one tracer on ShotDraw's canvas would pin the rim and core widths.
+4. The shove slab is drawn ~2.5 m across but hits a 0.64 m lane (call 5): the enemy lanes decide whether the hit widens or the slab art narrows.
+5. Plate-stopped enemy rounds in `plate_sparks.gd` still draw vermilion (`NEED moves` 04:43): check after the merge.
 
 ## Astra ledger
 
@@ -60,4 +65,5 @@ TODO
 | 3 | rounds | 65 | accepted (gap: stills staged with a pistol, not on hands) | name the state the owner sees (Rivet on hands) |
 | 4 | stackfilm | 63 | accepted | ask for a forced short timer from the start instead of a 90 s search |
 | 5 | wedge | 30 | accepted (Part 0 rim gap, sent to call 6) | ask for the crop of the changed pixels, not only the full frame |
-| 6 | decisions | TODO | | |
+| 6 | decisions | 73 | accepted | give the mutate `--file=` in the runner's form (`features/...`, no `project/`): the briefed form exits 2 |
+| 7 | edmg | TODO | | |
