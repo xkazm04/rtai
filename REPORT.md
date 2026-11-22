@@ -1,4 +1,4 @@
-# REPORT - n24 lane `ghost` (branch `n24-ghost`, worktree n23-moves) - DRAFT, filled at 01:40
+# REPORT - n24 lane `ghost` (branch `n24-ghost`, worktree n23-moves)
 
 Owner's note 7: "Ghost powers: First level ability would be to hold 'Q' key for ghost deployment range. Player remains as Rivet, ghost is deployed, performs signature attack and disappears. Ghost full transition would be evolutionary level mastering the ghost skill."
 
@@ -36,6 +36,9 @@ Caveat: in this run every seed starts from the same formation (the seed reaches 
 | expert | Tonnage | 19 | 37 | 1.95 | - |
 
 Kerf and Dent: 0 uses (picked only at wave 4 or 8 and no fitting target before the run ended). Outcomes: average seed 2 died on wave 7 -> cleared 8; expert seed 1 tick cap on wave 8 -> cleared 8; the other four pairs unchanged (expert seed 2 dies on 5 in both).
+
+## Gate
+`node tools/gate/run.mjs --rev=ba7ac5163` (the last code commit; every later commit touches only JOURNAL.md / REPORT.md, which are inert): `gate: PASS`, `C:/Users/kazda/kiro/gtai-wt/n23-moves/build/gate/ba7ac5163972/gate.json` (git-ignored). Lines: `lint: all 19 checks pass over 2065 GDScript files`; `unit-tests: 3825 passed, 0 failed, 2 skipped`; `scenario-tests: 67 ran`, with 2 wall-clock budgets CONTENDED (city_chase nav 2805 us > 2000 and rig_stress p50 1.012 ms > 1.000 with 4 other runs on the machine; not judged, since it never went quiet); parity bit for bit over 1200 steps, planted mutation caught; selftest pass; `release-compile: 939 loaded, 0 failed`. The reels gate (`--reels`) was not run.
 
 ## What does not
 - The bot never deploys Kerf or Dent in 8 waves: it picks Dent after wave 4 and Kerf after the last fight, and a Dent ram needs 2 or more hostiles on one line within 8 m, which the bot never set up (`evidence/ghost/gauntlet-deploys.md`). Their worth comes from the probe only. Novice was not measured (two profiles, three seeds).
