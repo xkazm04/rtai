@@ -145,7 +145,7 @@ The command writes Markdown and a self-contained HTML file with inline SVG timin
 
 ### Run a night
 
-Run from the dedicated `n22-tune*` checkout to measure, apply and confirm in one command. The default recipe uses the average profile, greedy picks, wheel controls and one job. Both batches run seeds 1 through N for every selected profile.
+Run from the dedicated `n22-tune*` checkout to measure, apply and confirm in one command. The default recipe uses the average profile, greedy picks, wheel controls and one job. All three batches run seeds 1 through N for every selected profile.
 
 ```powershell
 node tools/gauntlet/night.mjs --seeds=40
@@ -187,7 +187,11 @@ On the first proposal, `tools/gauntlet/baseline.json` records the date, Git SHA 
 
 **Apply and undo.** Apply checks the working tree and index for changes outside `evidence/` and `build/`. It checks the starting values, byte-identical canonical JSON round trip and table schemas, then commits one numeric edit per commit. Commit trailers identify the plan, knob and night. A night runs from noon UTC to the next noon, so a run crossing midnight uses one allowance. A second plan on the same branch cannot change that knob again that night, even after a revert. Repeating an interrupted apply recognizes its existing commits.
 
-Confirmation matches the before batch to the plan by SHA-256. It pairs accepted runs, including alive caps, by seed, profile, controls and pick mode. Wave timing needs seconds in both runs. Offer confirmation keeps the same takers, decliners and offer waves across both batches. For each change, the A/A floor comes from pairing adjacent seed ranks within the before-batch groups and taking the larger absolute endpoint of their CI95.
+Confirmation matches the before batch to the plan by SHA-256. It pairs accepted runs, including alive caps, by seed, profile, controls and pick mode. Wave timing needs seconds in both runs. Offer confirmation keeps the same takers, decliners and offer waves across both batches.
+
+With the default `--floor-mode=null-salt`, `night.mjs` immediately repeats the before batch on the same seeds with `--salt=1`. The bot resamples aim, defence, form use and random picks from the same distributions, preserving expected difficulty. Greedy picks keep their fixed ranking and the world keeps its seed. The batch records `args.salt` and forwards nonzero values as `--bot-salt=<n>`. Zero reproduces the original streams.
+
+To measure the floor separately, repeat the before `batch.mjs` command with `--salt=1 --out=null`, then run `node tools/gauntlet/tune.mjs floor --before=before/batch.json --null=null/batch.json --out=floors.md`. Pass the same `--null` to `tune.mjs confirm`. The ledger shows both floors and the mode deciding each change. `--floor-mode=cross-seed` selects the original adjacent-seed comparison within each before group. Each floor uses the larger absolute CI95 endpoint.
 
 For time and offer effects, the confirming number is the median paired reduction in absolute distance from target. Its CI95 uses the repo's 4,000-resample paired bootstrap. For killer share and profile spread, 2,000 seeded bootstrap draws resample whole before/after pairs and recompute the proportions or profile medians. Improvement is positive. Both the aggregate change and the entire interval must clear the A/A floor in the same direction for `kept` or `reverted`. Fewer than six A/A pairs or two comparison pairs yields `too few pairs`. With adequate coverage, an interval that fails to clear the floor yields `noise`. The ledger gives the actual left and right seed lists for each before-batch group. Several edits confirmed by one batch share the same experiment.
 
