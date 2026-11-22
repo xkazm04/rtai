@@ -1,0 +1,13 @@
+Committed both changes before 07:05.
+
+- `29d3080e4` changed one line in `fx_view.gd`. At tick 306, with Rivet on hands, the patrol cop’s round changed from vermilion to warm cream. [Before](<C:/Users/kazda/kiro/gtai-masters/n23/street/rounds/rounds-hands-before-32.png>) · [After](<C:/Users/kazda/kiro/gtai-masters/n23/street/rounds/rounds-hands-after-32.png>)
+- `a6135a129` updated `foe_shield_view.gd` and the hit condition in `foe_shield.gd`, and added `foe_shove_zone.gd`, its unit tests and both UIDs. The tell now covers **2.20 m × 0.64 m**. At 64 px/m its tip stayed on the same pixel while the carrier moved 0.347 m. The full strip covers wall-shortened lunges, and the hit still resolves at the carrier’s actual endpoint. [Report and paired 32/64 px/m stills](<C:/Users/kazda/kiro/gtai-wt/n23-street/evidence/street/shove-wedge.md>)
+
+**Verification**
+
+- Seed 7, average bot, ten waves: both `cmp` comparisons exited 0.
+- Baseline and both post-change scenario runs: `65 ran, 0 failed`. All three 60-second replays ended at `cbeb734ff9b97c41`.
+- Quick gate, Godot import and debt check passed. Changed suite: **3,642 passed, 0 failed, 2 skipped**.
+- Mutation score on line 67: **1/(1+0) killed**, zero timeouts or invalid mutants. The runner required the file path relative to `project/`.
+
+[astra: 1786s, exit 0]

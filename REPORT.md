@@ -1,7 +1,7 @@
 # REPORT - lane `street`, run n23 (2026-11-22)
 
 Branch `n23-street`, cut from `main` `76111adec`. Director: Opus (this lane's sessions 1-6); builder: GPT-6.2 Astra.
-DRAFT written 05:25 in session 4; TODO markers are filled by the session that gates.
+Final, 08:40. Seven product calls and one film call; every change below is on `n23-street`, and the final gate passed on its code.
 
 ## What works
 
@@ -19,6 +19,7 @@ DRAFT written 05:25 in session 4; TODO markers are filled by the session that ga
 | 4. Shove wedge at full reach | `a6135a129`; `project/features/combat/squad/foe_shove_zone.gd`, `project/tests/unit/test_foe_shove_zone.gd`; `evidence/street/shove-wedge.md`; stills `wedge/shove-{before,after}-{32,64}.png` | 2.20 m x 0.64 m strip from the planted tell (0.40 m lunge + 1.80 m reach), one source with the hit test (`FoeShoveZone.connects`); body 0.05 m in/out of rails and tip tested over 3 aims x 3 speeds x 2 reaches; seed 7 cmp identical, replay `cbeb734ff9b97c41` |
 | Mutation scores (killed / decided, 0 timeouts) | `evidence/street/brief06-mutations.md` | `gauntlet_composer.gd` 20/20; `gauntlet_waves.gd` changed lines 15/16, the first-owed-pick line 1/1 after `a51a6b1b9`; `foe_shove_zone.gd` 19/20, the survivor's line 4/4 after `1818deb63`; `gauntlet_draw.gd` offer_count/_eligible 15/16 -> 16/16 after `79844f671`; `foe_shield.gd` hit line 1/1; `shot_draw.gd` 5/20 (15 survivors are draw calls: checked by the stills, not by tests) |
 | NEEDs served | `c48fe5489` (prologue: `roster_exclude`), `cdacafe98` (loop: gauntlet `rivet{repair_per_s, repair_delay_s}`), `574e313a2` (loop: gauntlet `enemy_damage_k`, applied to damage foes deal to Rivet; `evidence/street/enemy-damage.md`; k 2.0 on seed 7 average: death on wave 10 instead of surviving 20) | seed 7 average 10 waves cmp identical across both |
+| Films (32 px/m, tilt 70, 1080p60) | `evidence/street/films.md`; `C:/Users/kazda/kiro/gtai-masters/n23/street/wedge/shove-32.mp4`, `C:/Users/kazda/kiro/gtai-masters/n23/street/rounds/rounds-32.mp4`, `C:/Users/kazda/kiro/gtai-masters/n23/street/frames.json` (15 entries) | shove film 15.6 s: the same carrier misses at 9.58 s (Rivet 0.67 m outside the mark), then hits at 12.97 s (125 -> 111). Rounds film 20.2 s on hands: amber rounds over blood at 10.6 s, ice-blue rockets at 15.57 s and 18.87 s. I checked frames of both myself |
 
 **Gate** (`node tools/gate/run.mjs --rev=HEAD` on `7277e1f8`; the code matches the last product commit `574e313a2`, since the later commits touch only JOURNAL and REPORT): `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n23-street\build\gate\7277e1f8575f\gate.json`. Lint 19/19 checks over 1951 files. Unit 3662 passed, 0 failed, 2 skipped. Scenarios 65 passed. Parity was bit for bit over 1200 steps and caught the planted mutation. Selftest goldens 11/11 and 5/5. Release compile 884 loaded, 0 failed.
 
@@ -72,3 +73,4 @@ Previewed at 05:50 with `git merge-tree --write-tree n23-street n23-<lane>` (no 
 | 5 | wedge | 30 | accepted (Part 0 rim gap, sent to call 6) | ask for the crop of the changed pixels, not only the full frame |
 | 6 | decisions | 73 | accepted | give the mutate `--file=` in the runner's form (`features/...`, no `project/`): the briefed form exits 2 |
 | 7 | edmg | 25 | accepted (mutate `gauntlet_combat.gd` changed lines 5/5) | name the semantics of a field before quoting a NEED's suggested spot (loop's spot scaled damage TAKEN) |
+| 8 | films | 17 | accepted | nothing: a no-code film call with named seconds to check works |

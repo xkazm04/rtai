@@ -1,0 +1,10 @@
+| Film | What to watch | 64 px/m still |
+|---|---|---|
+| [Shield shove · 15.60 s](<C:/Users/kazda/kiro/gtai-masters/n23/street/wedge/shove-32.mp4>) | In wave 9, the same carrier misses Rivet at **9.58 s**, then lands a shove at **12.97 s**. Health drops from 125 to 111. | [Shove tell](<C:/Users/kazda/kiro/gtai-masters/n23/street/wedge/shove-film-64.png>) |
+| [Enemy rounds · 20.20 s](<C:/Users/kazda/kiro/gtai-masters/n23/street/rounds/rounds-32.mp4>) | Rivet stays on hands. Amber rounds cross blood and asphalt at **10.60 s**. Two ice-blue rockets launch at **15.57 s** and **18.87 s**. | [Rounds on hands](<C:/Users/kazda/kiro/gtai-masters/n23/street/rounds/rounds-film-64.png>) |
+
+Captured both films in Godot Movie Maker. FFmpeg decoded both H.264 masters end to end at 1920 × 1080 and 60 fps. I inspected four frames per film and verified both stills against their movie ticks.
+
+Commit `0eba13123` contains only [the evidence notes](<C:/Users/kazda/kiro/gtai-wt/n23-street/evidence/street/films.md>).
+
+[astra: 1043s, exit 0]
