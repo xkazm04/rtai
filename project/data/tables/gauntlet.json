@@ -4,6 +4,8 @@
     "base": 2,
     "per_wave": 2
   },
+  "max_alive": 40,
+  "on_timeout": "next_wave",
   "schema": "gtai.gauntlet/1",
   "segments": [
     {
@@ -978,5 +980,6 @@
     6,
     9,
     5
-  ]
+  ],
+  "wave_timeout_s": 90
 }

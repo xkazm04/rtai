@@ -216,6 +216,15 @@
       ],
       "type": "object"
     },
+    "max_alive": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "on_timeout": {
+      "enum": [
+        "next_wave"
+      ]
+    },
     "schema": {
       "const": "gtai.gauntlet/1"
     },
@@ -252,6 +261,10 @@
       "maxItems": 5,
       "minItems": 5,
       "type": "array"
+    },
+    "wave_timeout_s": {
+      "minimum": 1,
+      "type": "integer"
     }
   },
   "required": [
@@ -261,7 +274,10 @@
     "target_wave_s",
     "budget",
     "tier_unlock_wave",
-    "tier_map"
+    "tier_map",
+    "max_alive",
+    "on_timeout",
+    "wave_timeout_s"
   ],
   "type": "object"
 }

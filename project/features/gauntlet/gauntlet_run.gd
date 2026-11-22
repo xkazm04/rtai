@@ -9,6 +9,8 @@ var wave: int = 0
 var picks: Array[Dictionary] = []
 var mods: StatMods = StatMods.new()
 var alive: bool = true
+var capped: bool = false
+var death_wave: int = -1
 var profile: StringName = &"human"
 var controls: StringName = &"legacy"
 var waves: Array[Dictionary] = []
@@ -31,6 +33,11 @@ func to_result() -> Dictionary:
 		"picks": picks.duplicate(true),
 		"mods": mods.to_dict(),
 	}
+	if capped:
+		result["capped"] = true
 	if not alive:
-		result["death"] = {"wave": wave, "by": String(death_by) if death_by != &"" else "unknown"}
+		result["death"] = {
+			"wave": death_wave if death_wave >= 0 else wave,
+			"by": String(death_by) if death_by != &"" else "unknown"
+		}
 	return result

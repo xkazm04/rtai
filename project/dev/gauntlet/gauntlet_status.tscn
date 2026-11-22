@@ -3,7 +3,7 @@
 [node name="Status" type="ColorRect"]
 offset_left = 18.0
 offset_top = 18.0
-offset_right = 256.0
+offset_right = 334.0
 offset_bottom = 116.0
 mouse_filter = 2
 color = Color(0.0902, 0.0745, 0.1059, 1)
@@ -16,7 +16,7 @@ theme_override_colors/font_color = Color(0.949, 0.91, 0.835, 1)
 theme_override_font_sizes/font_size = 22
 
 [node name="Time" type="Label" parent="."]
-offset_left = 148.0
+offset_left = 223.0
 offset_top = 10.0
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.949, 0.91, 0.835, 1)
