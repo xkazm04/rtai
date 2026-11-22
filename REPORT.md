@@ -205,6 +205,8 @@ Merged game: novice dies at 12 (10..13), average and expert both `>= 40`; separa
 - **Targets out of reach at this rate.** The game is too easy by 26+ waves for average (>= 40 vs 12) and 20+ for expert;
   at one x0.8 step a night on repair the x0.5 floor (5 HP/s) is reached after 4 nights, and the ablation says even
   3 HP/s after 6 s only brings average to wave 20. PENDING: the stack-clamp arm gives the one-night number.
+- **Soft-lock after a timed-out wave** on the merged game: 4 of 30 runs froze until the tick cap (`NEED street`, JOURNAL
+  07:08); the bot's part (it cannot finish a turret or shield robot it keeps blinking at) is loop's next item.
 - `bot_brain.gd` mutation 5/12 killed (Astra call 5): the moves logic is under-tested.
 - The 216000-tick cap on the street merge makes uncapped runs cost 8-10 min; tonight's tuning ran bounded at 40 waves.
 
@@ -235,6 +237,19 @@ Merged game: novice dies at 12 (10..13), average and expert both `>= 40`; separa
 5. **Kerf's slice against bosses** (proposal 4): the owner's boss design, not the tuner's: the slice row is in
    `ghost_attacks.json`, shared, and one slice ends the war machine.
 
+## Where the bot plays unlike a person (the honest limit)
+
+The tuner optimises a bot. Measured tonight (details in `docs/gauntlet-loop.md` "Where the test player is unlike a person"):
+- It keeps its own blast clearance by rule (`project/data/tables/test_player.json` `blast_margin_m`): 0 self damage; a
+  person will hit himself with his own rocket.
+- It waits to repair: repair undid 100 % of each wave's damage on every tree tonight (compare page, "Repair share"); a
+  person presses on, so repair is worth less to a person than to the bot, and the game is harder for people than these
+  numbers say.
+- Its move openings are rolled once per target; it almost never cracks the war machine's armour with Tonnage (7 uses
+  in 10 runs), so Tonnage's move is unmeasured, not useless.
+- It can stall: 4 of 30 merged runs froze on leftovers it could not finish (soft-lock above); a person would walk over.
+- Expert and average differ in aim and timing only; while nothing threatens a careful player, that buys no waves.
+
 ## Merge notes
 
 - `n23-loop` contains merges of `n23-street` @ `cdacafe98` (`2b2ff79d4`), `n23-controls` @ `61c382e3f` (`895a4964a`) and
@@ -264,4 +279,11 @@ Merged game: novice dies at 12 (10..13), average and expert both `>= 40`; separa
 | 3 | street-score | 73 | accepted | point/strict verdict, enemy_damage group, street merge, budget-unit/cost/repair knobs, death-wave score, targets |
 | 4 | tune-worktree | 35 | accepted | censored wave-limit score, night worktree, batch reuse, `tune.mjs sets`, three-profile cycle, night.md |
 | 5 | controls-moves | 49 | accepted | controls + moves merges, bot blast clearance, bot uses the four moves, `--set` booleans, move table, 12 knobs |
-| 6 | tuner-shared | running | | shared-table guard, `rivet_repair` group, `ablate --rev`, docs |
+| 6 | tuner-shared | 23 | accepted | shared-table guard (79 knobs), `rivet_repair` group, `ablate --rev`, docs, 4 decision lines |
+| 7 | compare-page | 14 | accepted | `tools/gauntlet/compare.mjs` (md + HTML before/after page), 8 tests |
+| 8 | doc-pass | 11 | accepted | compare tick-cap header, doc sections after night 2 (its sandbox ran 68/84 tests; 84/84 in the lane) |
+
+What I would brief differently: give the off/on arms and the tuning batches their tree by SHA from the first call
+(`--rev` came at call 6; before it, one scratch checkout and three waits on a moving HEAD); ask for the wave limit and
+censoring before the first street batch (two batches were thrown away); and make every Node-only brief say so in its
+title, so its Godot slot is visibly free for the director's batches.
