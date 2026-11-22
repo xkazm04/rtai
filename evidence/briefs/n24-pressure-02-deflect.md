@@ -3,13 +3,13 @@
 You build for lane `pressure` of RTAI (Godot 4, internal id `gtai`) in this worktree, branch `n24-pressure`.
 Read `AGENTS.md` (commands, top rules) before you start. STANDARDS.md binds.
 
-**Wall clock: hard stop HARDSTOP. Last commit by COMMITBY.** Commit each task as it lands; an unfinished task is left
+**Wall clock: hard stop 22:20. Last commit by 22:08.** Commit each task as it lands; an unfinished task is left
 uncommitted and described in your final report.
-The pre-commit hook takes about 10 minutes on a table commit: start your last commit no later than COMMITBY.
+The pre-commit hook takes about 10 minutes on a table commit: start your last commit no later than 22:08.
 
-**Godot is the director's until GODOTFREE.** The director runs one gauntlet batch (a Godot process of this lane) from
-your start until GODOTFREE. Until then: read, design, write the code and the tests, but launch no Godot, no unit run,
-no gate (the lane gets one Godot at a time). After GODOTFREE Godot is yours alone. If you finish the design early, write
+**Godot is the director's until 21:30.** The director runs one gauntlet batch (a Godot process of this lane) from
+your start until 21:30. Until then: read, design, write the code and the tests, but launch no Godot, no unit run,
+no gate (the lane gets one Godot at a time). After 21:30 Godot is yours alone. If you finish the design early, write
 the tests first.
 
 Lane motion's `n24-motion` was merged into this branch just before you started (`git log --oneline -3`): Shift is now
@@ -99,6 +99,33 @@ A headless dev measurement `project/dev/gauntlet/deflect_share.gd` (runnable via
 in the harness, the bat) for N rounds each (N >= 300): share passed, share sent back, share of sent-back rounds that hit
 their shooter, at `spread_deg` 6, 12 and 20. JSON + markdown to `evidence/n24-pressure/deflect/`. Commit with the tool.
 If 12 degrees still hits the shooter at 6 m almost always, say so and propose a value.
+
+## Task 0 - commit the sight-loss test (5 minutes, first, no Godot needed to read it)
+
+Your previous session left an uncommitted regression in `project/tests/unit/test_foe_rocket_sites.gd` (the `forget_site()`
+survivor). Allowed path for this task only. Run it (`node tools/tests/run_unit.mjs --select=test_foe_rocket_sites`)
+after 21:30; if green, commit it (`pressure: rocket trooper forgets its site on sight loss (test)`); if red, drop
+your edit to that file with `git checkout -- project/tests/unit/test_foe_rocket_sites.gd` and say why.
+
+## Task 4 - five scenarios went red with the shorter fire gaps (after tasks 1-3; stop at 22:08)
+
+At `56b0caa1c` the full scenario run is 67 ran / 5 failed; after `db2043604` (damage x2) it was 67 / 0. Red:
+`arena_squad` (no flank tick), `gunplay_fire` (standing Rivet took 17/30 machine-pistol rounds, floor 60%),
+`prologue_checkpoint` (death at tick 6207), `prologue_pilot` (budget expired in encounter 2), `rivet_city_melee`
+(the faulty-bot control still drops five). Re-run them with `--only=<names>` (the scenario runner's flag) and find for
+each the change that turned it red (01b rifle cadence 1.4 -> 0.5 s + `aim_lead` 0.9 + `damage_vs_rivet` x2, turret,
+`rest_s`, 01c rocket): try the single number back in a scratch edit, never committed.
+Decision rules (the owner asked for harder enemies everywhere; keep that):
+- A real defect in our change (e.g. lead aiming off a Rivet that stands still because of knockback velocity): fix it in
+  the AI code you own (`guard_brain.gd`, `features/combat/ai/**`, `foe_rocket.gd` are allowed for this task).
+- A scenario whose claim still holds but whose bound was set for the old cadence (a flank tick that now does not happen
+  because they shoot instead, a control bot that now dies before it can "drop five"): change the scenario's setup or
+  bound so it still tests its claim, and say in one line why the claim holds. Scenario files under
+  `project/tests/scenarios/` named in this list are allowed for this task.
+- The prologue: the pilot is a test bot, not a player. Its script and lines do not change. If the pilot now dies from
+  the harder rifles, do NOT soften the game: report the cause (which enemy, how much damage per second the pilot takes,
+  where) and stop that scenario there; write `NEED director: prologue pilot dies at <where> because <why>`.
+One commit per scenario fix, each with the before/after result line.
 
 ## After each code commit
 
