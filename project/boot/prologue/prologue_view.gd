@@ -32,18 +32,9 @@ func _process(_dt: float) -> void:
 	var lean_m: float = get_viewport_rect().size.y * 0.18 / k
 	focus = _stage.arena.rivet.pos + Vector2.DOWN * lean_m * weight
 	if encounter.phase == PrologueEncounter.Phase.BEAT_TWO:
-		var commander: Vector2 = encounter.battle.formation.boss.pos
-		var player: Vector2 = _stage.arena.rivet.pos
-		focus = player.lerp(commander, 0.5) + Vector2.DOWN * lean_m * 0.75
-		# Leave the lower subtitle strip clear of the rear rank, with Rivet in the upper frame.
-		focus.y = maxf(focus.y, minf(commander.y, player.y + lean_m * 2.15))
+		focus = _battle_focus(k, lean_m)
 	super._process(SimClock.TICK_DT)
-	var hint: String = _hint()
-	var ranged: bool = (
-		encounter.phase == PrologueEncounter.Phase.BEAT_TWO and encounter.battle.ranged
-	)
-	hud_view.state.notice = "" if ranged else hint
-	_lesson_text = hint if ranged else ""
+	_lesson_text = _hint()
 	_lesson.queue_redraw()
 	_bell.visible = (
 		encounter.phase == PrologueEncounter.Phase.STREET
@@ -58,12 +49,30 @@ func _process(_dt: float) -> void:
 		_channel.queue_redraw()
 
 
+func _battle_focus(k: float, lean_m: float) -> Vector2:
+	var player: Vector2 = _stage.arena.rivet.pos
+	var commander: Vector2 = encounter.battle.formation.boss.pos
+	var at: Vector2 = player.lerp(commander, 0.5) + Vector2.DOWN * lean_m * 0.75
+	at.y = maxf(at.y, minf(commander.y, player.y + lean_m * 2.15))
+	var screen: Vector2 = get_viewport_rect().size
+	# Allow for the overhead order mark as well as the paper below the boss bar.
+	var top: float = BossBar.TOP + BossBar.BAR_H + BossBar.PAPER_GROW.z + 3.0 * px_per_m
+	var bottom: float = screen.y - px_per_m
+	if encounter.lines.busy() or hud_view.dialogue.showing():
+		bottom = HudDialogue.box_of(screen).position.y - 28.0 - px_per_m
+	var above: float = (screen.y * 0.5 - top) / k
+	var below: float = (bottom - screen.y * 0.5) / k
+	at.y = clampf(at.y, commander.y - below, commander.y + above)
+	at.y = clampf(at.y, player.y - below, player.y + above)
+	return at
+
+
 func _paint_lesson(card: HudCorner) -> void:
 	if _lesson_text.is_empty():
 		return
 	var font: Font = ThemeDB.fallback_font
 	var size_px: int = 21
-	var max_width: float = get_viewport_rect().size.x - 72.0
+	var max_width: float = get_viewport_rect().size.x * 0.32
 	var text_size: Vector2 = font.get_multiline_string_size(
 		_lesson_text, HORIZONTAL_ALIGNMENT_LEFT, max_width - 36, size_px
 	)
