@@ -107,12 +107,20 @@ func _kerf() -> String:
 		if take.second
 		else tr("Shield carrier  /  Head-on")
 	)
+	if take.compare_slice:
+		var enabled: bool = take.stage.arena.squad_ai.moves.kerf_blink_behind.enabled
+		status.text = tr("Move on") if enabled else tr("Move off")
+		status.text += (
+			tr("     Carrier %.2f / %.0f HP     Probe slice ×%s")
+			% [take.subject.hp, take.subject.max_hp, take.slice_k]
+		)
 	if take.stage.pilot.kerf.slices == 0:
 		return ""
 	var h: Fighter = take.subject
 	var side: float = h.facing.dot(h.pos.direction_to(take.stage.arena.rivet.pos))
+	var hit: String = "" if take.last_hit.is_empty() else "     " + take.last_hit
 	if side <= FoeArmor.REAR_COS:
-		return tr("Behind the plate") + "     " + take.last_hit
+		return tr("Behind the plate") + hit
 	if side >= take.mind.agent.arch.shield_cos:
-		return tr("Inside the shield arc") + "     " + take.last_hit
-	return tr("Oblique landing") + "     " + take.last_hit
+		return tr("Inside the shield arc") + hit
+	return tr("Oblique landing") + hit

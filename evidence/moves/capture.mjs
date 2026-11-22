@@ -11,13 +11,15 @@ import { ensureImport, runGodot } from '../../tools/lib/godot.mjs';
 
 const [destination, move, ...flags] = process.argv.slice(2);
 if (!destination || !isAbsolute(destination) || !/^[a-z_]+$/.test(move ?? '')
-    || flags.some((flag) => !/^(--off|--(?:ppm|stills)=.+)$/.test(flag))) {
-  throw Error('usage: node evidence/moves/capture.mjs <absolute masters dir> <move id> [--off] [--ppm=64] [--stills=109,110]');
+    || flags.some((flag) => !/^(--off|--(?:ppm|stills|slice-k)=.+)$/.test(flag))) {
+  throw Error('usage: node evidence/moves/capture.mjs <absolute masters dir> <move id> [--off] [--ppm=64] [--stills=109,110] [--slice-k=0.1]');
 }
 const out = resolve(destination);
 mkdirSync(out, { recursive: true });
 const stills = flags.some((s) => s.startsWith('--stills='));
-const basename = move + (flags.includes('--off') ? '-off' : '');
+const scale = flags.find((flag) => flag.startsWith('--slice-k='))?.slice('--slice-k='.length);
+const variant = scale === undefined ? '' : Number(scale) === 0.1 ? '-alive' : '-slice-k-' + Number(scale);
+const basename = move + variant + (flags.includes('--off') ? '-off' : '');
 const avi = join(out, basename + '.avi');
 const scratch = mkdtempSync(join(out, '.capture-'));
 const project = join(scratch, 'project');

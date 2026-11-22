@@ -11,6 +11,7 @@ const WEAPONS: Dictionary[StringName, StringName] = {
 
 var move: StringName
 var second: bool
+var compare_slice: bool = false
 var subject: Fighter
 var mind: SquadMind
 var elapsed: int = 0
@@ -39,6 +40,8 @@ func open(id: StringName, off: bool, second_take: bool) -> bool:
 		_cluster()
 	if move == MoveTable.BLINK_BEHIND and second:
 		subject.pos = Vector2(1.7, 0)
+		if compare_slice:
+			stage.arena.rivet.pos = Vector2(0.7, 0)
 	mind = stage.arena.squad_ai.mind_for(subject)
 	@warning_ignore("return_value_discarded")
 	stage.arena.struck.connect(_hit)
@@ -81,7 +84,7 @@ func _cluster() -> void:
 func advance() -> void:
 	elapsed += 1
 	var command: TickInput = TickInput.new()
-	if subject.alive():
+	if subject.alive() and not (compare_slice and stage.pilot.kerf.slices > 0):
 		command = controller.sample(subject)
 		_direct(command)
 	elif move == MoveTable.BLINK_BEHIND:
@@ -139,7 +142,7 @@ func _direct(cmd: TickInput) -> void:
 			if second:
 				# Sidestep the planted shield tell, then cut across its armoured front.
 				var wind: int = mind.agent.arch.telegraph_ticks - subject.swing_left
-				press = subject.swing_left > 0 and wind >= 33
+				press = subject.swing_left > 0 and wind >= (20 if compare_slice else 33)
 				if subject.swing_left > 0 and not press:
 					cmd.move_y = -TickInput.AXIS_MAX
 			if not press:

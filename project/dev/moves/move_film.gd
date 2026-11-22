@@ -3,7 +3,7 @@ extends Node
 ## Film-frame numbers run from 1; --stills uses the same clock as the movie and both arms.
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--move", "--off", "--ppm", "--stills", "--out", "--kerf-glide"
+	"--move", "--off", "--ppm", "--stills", "--out", "--kerf-glide", "--slice-k"
 ]
 const FIXED_FPS: int = 60
 const NEEDS_WINDOW: bool = true
@@ -14,6 +14,8 @@ var take: MoveFilmTake
 var screen: MoveFilmView
 var move: StringName
 var off: bool
+var compare_slice: bool
+var slice_k: float = 1.0
 var ppm: int
 var stills: Array[int] = []
 var out_dir: String
@@ -26,6 +28,15 @@ func _ready() -> void:
 	var args: ArenaArgs = ArenaArgs.parse()
 	move = StringName(args.text("--move"))
 	off = args.has("--off")
+	compare_slice = args.has("--slice-k")
+	var scale: String = args.text("--slice-k", "1.0")
+	slice_k = scale.to_float()
+	if not scale.is_valid_float() or not is_finite(slice_k) or slice_k < 0.0:
+		_fail("use a finite, nonnegative --slice-k")
+		return
+	if compare_slice and move != MoveTable.BLINK_BEHIND:
+		_fail("--slice-k requires the Kerf take")
+		return
 	var zoom: String = args.text("--ppm", "32")
 	if not MoveFilmTake.WEAPONS.has(move) or zoom not in ["32", "64"]:
 		_fail("supply a move id and --ppm=32 or 64")
@@ -58,8 +69,9 @@ func _parse_stills(raw: String) -> bool:
 
 
 func _open(second: bool) -> bool:
-	take = MoveFilmTake.new()
-	if not take.open(move, off, second):
+	take = MoveFilmTake.new(false, slice_k)
+	take.compare_slice = compare_slice
+	if not take.open(move, off or (compare_slice and not second), second or compare_slice):
 		return false
 	screen = MoveFilmView.new()
 	add_child(screen)
@@ -127,7 +139,7 @@ func _pace() -> int:
 			return 2 if take.first_stomp < 0 else 1
 		MoveTable.BLINK_BEHIND:
 			if take.second:
-				return 5
+				return 4 if compare_slice else 5
 			return 4 if take.elapsed >= 88 else 1
 		MoveTable.OVERKILL:
 			return 8 if take.second else 4
@@ -138,8 +150,12 @@ func _save_frame() -> bool:
 	var img: Image = get_viewport().get_texture().get_image()
 	if img == null or img.get_size() != RESOLUTION:
 		return false
-	var file: String = "%s-%s-%d-f%04d.png" % [move, "off" if off else "on", ppm, frame]
-	take.mark(file)
+	var name_base: String = String(move)
+	if compare_slice:
+		name_base += "-alive" if slice_k == 0.1 else "-slice-k-%s" % slice_k
+	var enabled: bool = take.stage.arena.squad_ai.moves.get(move).enabled
+	var file: String = "%s-%s-%d-f%04d.png" % [name_base, "on" if enabled else "off", ppm, frame]
+	take.mark("%s hp=%.2f windup=%d" % [file, take.subject.hp, take.subject.swing_left])
 	return img.save_png(out_dir.path_join(file)) == OK
 
 
