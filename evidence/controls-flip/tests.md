@@ -41,7 +41,7 @@
 |---|---|
 | `tools/tests/` | `run_unit.mjs`, `run_unit_controls.test.mjs` |
 | `project/tests/` | `run_scenarios.gd` |
-| `project/addons/gut/cli/` | `gut_cli.gd` registers the forwarded option in GUT's own parser. |
+| `project/tests/support/` | `gut_pre_run.gd` reads `GTAI_CONTROLS` from the unit runner and restores the requested mode after each test. |
 | `project/features/player/` | `controls_mode.gd`, `controls_replay.gd` and its UID, `player_actions.gd`, `rivet_carry.gd`, `rivet_wheel.gd`, `arena_rivet_bot.gd` |
 | `project/features/arena/` | `arena_pit_bot.gd` and `arena_range_bot.gd` call the opening sidearm selection. `arena_session.gd` binds the recorder to the session's controls. |
 | `project/features/combat/react/` | `react_line_bot.gd` calls the opening sidearm selection. |
