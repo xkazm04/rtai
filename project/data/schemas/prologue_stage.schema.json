@@ -1,0 +1,224 @@
+{
+  "$defs": {
+    "beat": {
+      "additionalProperties": false,
+      "properties": {
+        "beat": {
+          "maximum": 3,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "checkpoint": {
+          "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "first_line": {
+          "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "last_line": {
+          "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "beat",
+        "checkpoint",
+        "first_line",
+        "id",
+        "last_line"
+      ],
+      "type": "object"
+    },
+    "group": {
+      "additionalProperties": false,
+      "properties": {
+        "archetype": {
+          "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "count": {
+          "maximum": 10,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "equipment": {
+          "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "role": {
+          "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "archetype",
+        "count",
+        "equipment",
+        "id",
+        "role"
+      ],
+      "type": "object"
+    },
+    "wave": {
+      "additionalProperties": false,
+      "properties": {
+        "approach_lines": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "beat": {
+          "maximum": 3,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "groups": {
+          "items": {
+            "$ref": "#/$defs/group"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "beat",
+        "groups",
+        "id"
+      ],
+      "type": "object"
+    },
+    "weapon": {
+      "additionalProperties": false,
+      "properties": {
+        "archetype": {
+          "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "burst": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "burst_gap_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "cooldown_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "damage": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "knockback_m": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "melee": {
+          "type": "boolean"
+        },
+        "reach_m": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "speed_mps": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "archetype",
+        "burst",
+        "burst_gap_s",
+        "cooldown_s",
+        "damage",
+        "id",
+        "melee",
+        "reach_m",
+        "speed_mps"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "gtai.prologue_stage/1",
+  "additionalProperties": false,
+  "properties": {
+    "beats": {
+      "items": {
+        "$ref": "#/$defs/beat"
+      },
+      "maxItems": 3,
+      "minItems": 3,
+      "type": "array"
+    },
+    "pistol_pickup_id": {
+      "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+      "type": "string"
+    },
+    "rivet_start": {
+      "items": {
+        "type": "number"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.prologue_stage/1"
+    },
+    "waves": {
+      "items": {
+        "$ref": "#/$defs/wave"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "weapons": {
+      "items": {
+        "$ref": "#/$defs/weapon"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "yard_size_m": {
+      "items": {
+        "exclusiveMinimum": 0,
+        "type": "number"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    }
+  },
+  "required": [
+    "beats",
+    "pistol_pickup_id",
+    "rivet_start",
+    "schema",
+    "waves",
+    "weapons",
+    "yard_size_m"
+  ],
+  "type": "object"
+}

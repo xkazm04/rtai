@@ -125,6 +125,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--enemy",  # n22 foes: archetype for the single-enemy duel
 	"--controls",
 	"--wheel-start",
+	"--bot",
+	"--result",
 ]
 var _values: Dictionary[String, String] = {}
 var _unknown: Array[String] = []

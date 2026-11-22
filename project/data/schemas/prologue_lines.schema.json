@@ -1,0 +1,112 @@
+{
+  "$defs": {
+    "place": {
+      "additionalProperties": false,
+      "properties": {
+        "draft": {
+          "const": true
+        },
+        "fills": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "t": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "why": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "draft",
+        "fills",
+        "id",
+        "t",
+        "why"
+      ],
+      "type": "object"
+    },
+    "row": {
+      "additionalProperties": false,
+      "properties": {
+        "beat": {
+          "maximum": 3,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "cue": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "draft": {
+          "const": true
+        },
+        "for_direction": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "k": {
+          "enum": [
+            "beat",
+            "line",
+            "dir",
+            "stage"
+          ]
+        },
+        "t": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "who": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "beat",
+        "id",
+        "k",
+        "t"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "gtai.prologue_lines/1",
+  "additionalProperties": false,
+  "properties": {
+    "places": {
+      "items": {
+        "$ref": "#/$defs/place"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "rows": {
+      "items": {
+        "$ref": "#/$defs/row"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.prologue_lines/1"
+    }
+  },
+  "required": [
+    "places",
+    "rows",
+    "schema"
+  ],
+  "type": "object"
+}
