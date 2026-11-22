@@ -21,6 +21,8 @@ step 629; selftest look goldens 11/11; export-audit 933 loaded, 0 failed).
 | `dashes` per gauntlet wave (`ca2ada5f2`) | `project/data/schemas/gauntlet_run.schema.json` | counted dash starts; omitted when unmeasured |
 | Tapes byte-identical | dash wire bit 31, dash state written only once a dash was used | gate scenarios 67 passed (incl. the 60 s replay), parity 1200 steps bit for bit; no file under `project/tests/golden`, `scenarios`, `parity`, `saves` or `native/` differs from `b3f4727c0` |
 
+| Mutation, `rivet_walk.gd` (after the gate, HEAD `441a8d5a3`) | `build/mutate-rivet-walk.log` (git-ignored) | 78.9 % = killed 15 / (15 + survived 4), 1 invalid, 20 sampled of 114. Survivors: the `armed` static default (line 82, tests set it), two boundaries on the moving threshold and the dip age (lines 88, 93: equal-value edges no test pins), `frame_of`'s `n - 1` clamp (line 156: unreachable while `fposmod < 1.0`, equivalent) |
+
 ## What does not
 - p55 (tilt 55) grids stay on the fallback for every new weapon (gloria's p55 candidate drifted 9.1 cm walk / 18 cm run).
 - On the fallback legs at p70 (they step, holding the thin held part, no slide): electro_gun, homing_shard, mini_nuke, molotov, plasma_sword, ray_gun. Drawn at p70: pistol, plasma_rifle, katana, gatling, flamethrower (shipped) + gloria, rocket_launcher, chainsaw, electro_baton, assault_rifle, hand_cannon, machine_pistol (tonight).
