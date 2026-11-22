@@ -11,6 +11,7 @@ class Player:
 	var hp: float = 1.0
 	## A positive value enables repair decisions on a street with a cleared approach.
 	var street_max_hp: float = 0.0
+	var repair_available: bool = true
 	var blast_margin: float
 	var stomp_reach: float
 	var walk_mps: float = 0.0

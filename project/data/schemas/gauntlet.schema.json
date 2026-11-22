@@ -255,6 +255,10 @@
           "minimum": 0,
           "type": "number"
         },
+        "repair_in_wave": {
+          "default": false,
+          "type": "boolean"
+        },
         "repair_per_s": {
           "minimum": 0,
           "type": "number"

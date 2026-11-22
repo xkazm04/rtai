@@ -72,8 +72,9 @@ func advance_to(x: float) -> bool:
 
 
 func setup(stage: ArenaStage, _ctx: WorldContext) -> void:
-	(stage.arena as GauntletCombat).enemy_damage_k = enemy_damage_multiplier(_table)
-	apply_repair(_table, stage.arena.tuning)
+	var combat: GauntletCombat = stage.arena as GauntletCombat
+	combat.enemy_damage_k = enemy_damage_multiplier(_table)
+	combat.configure_repair(_table)
 	_install(stage)
 	@warning_ignore("return_value_discarded")
 	stage.arena.kill_landed.connect(_death)
@@ -83,13 +84,6 @@ static func enemy_damage_multiplier(rules: DataTable) -> float:
 	if rules.raw.has("enemy_damage_k"):
 		return rules.num(rules.raw, "enemy_damage_k")
 	return 1.0
-
-
-static func apply_repair(rules: DataTable, tuning: CombatTuning) -> void:
-	var rivet: Dictionary = rules.raw.get("rivet", {})
-	for key: String in ["repair_per_s", "repair_delay_s"]:
-		if rivet.has(key):
-			tuning.rivet[key] = rules.num(rivet, key)
 
 
 func _death(

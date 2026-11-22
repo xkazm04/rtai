@@ -14,6 +14,7 @@
   "on_timeout": "next_wave",
   "rivet": {
     "repair_delay_s": 3,
+    "repair_in_wave": false,
     "repair_per_s": 10
   },
   "roster_exclude": [

@@ -45,7 +45,7 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	@warning_ignore("return_value_discarded")
 	stage.arena.wounded.connect(_wounded)
 	@warning_ignore("return_value_discarded")
-	stage.arena.kill_landed.connect(_killed)
+	stage.arena.kill_landed.connect(_wounded.unbind(3))
 	@warning_ignore("return_value_discarded")
 	(stage.arena as GauntletCombat).rivet_contact.connect(_contact)
 
@@ -72,6 +72,7 @@ func step(stage: ArenaStage, tick: int) -> void:
 		return
 	if _live.is_empty():
 		if is_finite(_street.forward_limit):
+			(stage.arena as GauntletCombat).wave_live = false
 			_clear_block()
 		elif _street.index > _block:
 			_block = _street.index
@@ -131,6 +132,7 @@ func _fill(stage: ArenaStage, tick: int) -> void:
 		var starting: bool = wave.start_tick < 0
 		slots -= wave.spawn(stage, _street.current(), slots, tick, _run)
 		if starting:
+			(stage.arena as GauntletCombat).wave_live = true
 			# Keep this deadline if a younger roster falls before an older survivor.
 			_next_wave_tick = tick + _street.timeout_ticks
 			stage.arena.announce_wave(&"gauntlet", _run.wave)
@@ -192,9 +194,3 @@ func _contact(victim: Fighter, counter: StringName) -> void:
 
 func _wounded(victim: Fighter, _weapon: StringName) -> void:
 	_contact(victim, &"hits")
-
-
-func _killed(
-	victim: Fighter, weapon: StringName, _dir: Vector2, _at: Vector2, _kind: StringName
-) -> void:
-	_wounded(victim, weapon)

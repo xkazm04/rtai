@@ -27,6 +27,8 @@ func refresh() -> void:
 	_player.facing = rivet.facing
 	_player.radius = rivet.radius_m
 	_player.hp = rivet.hp
+	var street_combat: GauntletCombat = _stage.arena as GauntletCombat
+	_player.repair_available = street_combat == null or street_combat.can_repair()
 	_player.street_max_hp = rivet.max_hp if _street else 0.0
 	_player.walk_mps = _stage.arena.tuning.rivet["walk_mps"]
 	if _stage.pilot != null:

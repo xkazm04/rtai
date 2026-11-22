@@ -66,13 +66,14 @@ func sample(tick: int) -> TickInput:
 		target = _moves.foe
 	_acquire(target, tick)
 	var intent: Intent = Intent.new()
-	if me.hp >= me.street_max_hp * _profile.rest_hp:
+	var ready: bool = not me.repair_available or me.hp >= me.street_max_hp * _profile.rest_hp
+	if ready:
 		_recovering = false
 	elif me.hp < me.street_max_hp * _profile.retreat_hp:
 		_recovering = true
 	if target != null:
 		intent = _engage(target, tick)
-	elif not active and me.hp >= me.street_max_hp * _profile.rest_hp:
+	elif not active and ready:
 		intent.move = _view.forward()
 		intent.aim = intent.move
 	if active and _moves.foe != null:

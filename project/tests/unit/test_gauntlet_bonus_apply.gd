@@ -60,7 +60,7 @@ func test_street_repair_overrides_only_supplied_values_before_regen_grants() -> 
 	rules.raw["rivet"] = {"repair_per_s": 4}
 	var tuning: CombatTuning = session.stage.arena.tuning
 	var delay: float = tuning.rivet["repair_delay_s"]
-	GauntletStreet.apply_repair(rules, tuning)
+	(session.stage.arena as GauntletCombat).configure_repair(rules)
 	var bonuses: GauntletBonusApply = GauntletBonusApply.new(
 		session.stage, session.world.context(), run
 	)
@@ -69,7 +69,7 @@ func test_street_repair_overrides_only_supplied_values_before_regen_grants() -> 
 	assert_true(bonuses.apply(draw.rows[&"stat_regen_25"]))
 	assert_eq(tuning.rivet["repair_per_s"], 5.0)
 	rules.raw["rivet"] = {"repair_delay_s": 0}
-	GauntletStreet.apply_repair(rules, tuning)
+	(session.stage.arena as GauntletCombat).configure_repair(rules)
 	assert_eq(tuning.rivet["repair_delay_s"], 0.0)
 	assert_eq(tuning.rivet["repair_per_s"], 5.0)
 	assert_eq(CombatTuning.shipped().rivet["repair_per_s"], 10.0)
