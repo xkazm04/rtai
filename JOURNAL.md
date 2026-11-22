@@ -188,3 +188,13 @@ JOURNAL/REPORT/briefs per path with `git commit -- <paths>`.
 - 22:23 LOOKED kills/p4/plasma_sword-64.png: the cut streak and the cooling edges read; the airborne blood at +0/+4
   is a chain of identical round beads (vector-trail look) and the +36 pool is one flat blob wider than the halves.
   Added as optional item 2 to the P6 brief.
+- 22:33 P5 in progress (pid 55724 alive): uncommitted `project/dev/melee/swing_measure.*`, `owner_take.*`,
+  `tools/film/swing_table.mjs`, `owner_cursor.*`, `owner_takes.mjs`, `owner_review.py`. First telemetry
+  (`n24/melee/telemetry/swings.md`, not yet reviewed against its log): 40-tick clicks old -> shipped: hands 1.60 -> 1.00,
+  baton 2.00 -> 1.00, katana 1.60 -> 1.00, plasma 2.00 -> 1.00, chainsaw 1.00 -> 0.60; held starts/s close to the
+  row's 1/(w+a+r) (hands 3.00 vs 2.86, plasma 2.00 vs 1.82). CHECK for session 5: chainsaw 0.60 means 2 of 5 clicks
+  start no swing (a click landing inside a still-running grind is dropped, never buffered). Confirm from swings.json
+  that every dropped click fell inside a running swing (then it is the rule: no second hit; record a DECISION that
+  a busy click is dropped, a one-press buffer after recovery is one value away if the owner finds it sluggish), and
+  put it in REPORT Calls for the owner.
+- 22:34 session 4 end. ASTRA RUNNING p5-films since 22:16 (lock pid 55724, hard stop 23:35). NEXT: see 22:25 NEXT above.
