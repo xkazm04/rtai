@@ -1,4 +1,4 @@
-# REPORT - lane loop (n23, 2026-11-22), final 09:12
+# REPORT - lane loop (n23, 2026-11-22), final 09:35
 
 Gate (snapshot, final code commit `900443274`; every later commit is REPORT, JOURNAL and evidence only):
 `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n23-loop\build\gate\9004432743f1\gate.json` (08:12): lint 19/19, unit 3738 passed / 0 failed /
@@ -84,9 +84,12 @@ Batch `evidence/n23-loop/moves/on/` (controls @ `61c382e3f` + moves @ `73eec563c
 - Boss waves (each has a war machine now; average, median): main 39.3 s, street merge 32.8 s, merged game **26.0 s**: the
   owner's 25-30 s boss wave is met on the merged game.
 - **Soft-lock** (new): 4 of 30 merged runs (average 8, 9; expert 1, 9) and 1 of 30 cycle-1 runs freeze after a timed-out
-  wave: the next wave is announced in the held block with 2-3 leftovers alive, nothing spawns, no timer fires, no damage
-  until the 216000-tick cap (`evidence/n23-loop/moves/on/logs/expert-1/`). 0 of 60 on the street merge. `NEED street`
-  in JOURNAL 07:08 with the replay command.
+  wave until the 216000-tick cap (`evidence/n23-loop/moves/on/logs/expert-1/`). 0 of 60 on the street merge. My 07:08
+  reading (2-3 leftovers, no timer) was wrong; street's diagnosis (its JOURNAL 08:00, from
+  `evidence/n23-loop/moves/on/runs/expert-1.json`): waves 32 and 33 both timed out as built, wave 34's whole roster
+  waits on the 40-alive cap, and from then on about 40 hostiles and Rivet deal no damage to each other (wave 33 hp min =
+  max 137.5, guard 0, cover 0). A combat freeze, not a wave-rule bug; street filed `NEED moves` (a move state that
+  holds the squad's attack slots). Capped runs stay lower bounds.
 - Rivet's own blasts: 0 self damage measured in 84 smoke waves (Astra controls-moves smoke) after the bot's blast clearance.
 
 ## The noise floor by a neutral change
@@ -227,8 +230,10 @@ the tile and the page film were assembled by the director with FFmpeg from the c
   once, 6 seeds) moved novice 12 -> 11 and average from 0/6 to 1/6 deaths (wave 22). At that rate, with the x0.5 floor
   reached after about four nights on each knob, the clamped tuner alone does not reach average 12: it needs the shared
   tables (enemy damage, quest 1 and replays read them) or the owner's larger step (Call 2).
-- **Soft-lock after a timed-out wave** on the merged game: 4 of 30 runs froze until the tick cap (`NEED street`, JOURNAL
-  07:08); the bot's part (it cannot finish a turret or shield robot it keeps blinking at) is loop's next item.
+- **Combat freeze on a full street** on the merged game: 4 of 30 runs froze until the tick cap with about 40 alive and
+  no damage either way (street's diagnosis, its JOURNAL 08:00; `NEED moves` filed there). Loop's next item, from
+  street's suggestion: the bot stops a run on "no damage either way for N s" and marks it, so a freeze is never read
+  as a long survival.
 - `bot_brain.gd` mutation 5/12 killed (Astra call 5): the moves logic is under-tested.
 - HUD shows `Health 111 / 110` in Tonnage form (film still `average-wave-9-at-10s.png`, average seed 1 wave 9; the run's
   telemetry says max 110): `NEED street` in JOURNAL, not investigated.
