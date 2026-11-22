@@ -1,6 +1,6 @@
 # REPORT - lane loop (n23, 2026-11-22)
 
-DRAFT (session 3, 03:45). Sections fill in as items land; the final version is written at 09:40.
+DRAFT (session 5, 06:50). PENDING marks what the running batches still fill in; the final version is written at 09:40.
 
 Branch `n23-loop`, cut from `main` `76111adec`. Evidence under `evidence/n23-loop/`.
 
@@ -65,6 +65,21 @@ the tick cap to 216000 and an uncapped average run took 8-10 min). Null salt 1 r
 - Average and expert are still not separated (both censored at 40); novice is (14).
 - Damage taken 0.4-1.1 HP/s per wave against the gauntlet repair of 10 HP/s after 3 s (unchanged values).
 
+### After the controls and moves merges (the merged game, `548989d7e`)
+
+Batch `evidence/n23-loop/moves/on/` (controls @ `61c382e3f` + moves @ `73eec563c` merged on the street merge, every move
+`enabled`, the bot keeps its own blast clearance and uses the four moves), greedy wheel, 10 seeds x 3, `--waves=40`.
+
+| Profile | Runs | Median death wave | P25..P75 | Lethal deaths | Censored at 40 | Killers |
+|---|---:|---:|---|---:|---:|---|
+| novice | 10 | 12 | 10..13 | 10 | 0 | rocket 5, shield_robot 3, patrol_cop 1, stomp 1 |
+| average | 10 | >= 40 | 40..40 | 0 | 10 | none |
+| expert | PENDING | | | | | |
+
+- Average wave seconds (median): 11.4 / 14.4 (wave 5 boss) / 21.5 / 28.0 / 29.8 / 37.9 in bands 1-4 / 5 / 6-10 / 11-20 /
+  21-30 / 31-40. Damage taken 0.08-0.93 HP/s against the 10 HP/s repair; the boss wave 5 hurts most (2.97 HP/s, 47 HP).
+- Rivet's own blasts: 0 self damage measured in 84 smoke waves (Astra controls-moves smoke) after the bot's blast clearance.
+
 ## The noise floor by a neutral change
 
 DECISION: the neutral change is a **bot salt** (`--bot-salt=<n>`) on the test player's private streams (aim, defence,
@@ -86,11 +101,99 @@ Re-judged n22's reverted cuts: `war_machine.hp` 60 -> 48 (gain 13.67 s, CI95 4.7
 null floor of 11.48 s with its mean, not with its CI low; `shield_robot.hp` 10 -> 8 (3.67 s, CI95 1.72..6.6 at wave 13)
 stays under the 6.73 s floor: noise either way.
 
+## The tuning ledger (death wave score, null-salt floor, point verdict)
+
+Before = `evidence/n23-loop/base-street/` (street tree `ccfc29df0`), null = `base-street-salt1/`, after = same seeds and tree
+with the plan's edit (`tools/gauntlet/ablate.mjs`, a temp worktree), 10 seeds x 3 profiles, `--waves=40`. Clamps stand
+(x0.8..1.25 a night, x0.5..2.0 from `tools/gauntlet/baseline.json`). Shared tables (`enemies.json`, `combat.json`,
+`weapons.json`: quest 1 and the replays read them) are off limits by default; the gauntlet-only knobs are `gauntlet.json`.
+
+| Cycle | Change | Profile: before -> after median death wave | Improvement (CI95) | Null floor (pairs) | Verdict | Ledger |
+|---:|---|---|---:|---:|---|---|
+| 1 | `rivet.repair_per_s` 10 -> 8 | novice 14 -> 16; average >= 40 -> >= 40 (8 -> 8 censored); expert >= 40 -> >= 40 | average 1.56 waves (-5.22..8.33) | 6 (9) | **noise, reverted (never applied)** | `evidence/n23-loop/cycle1/tune-ledger.md` |
+| 2 | `rivet_repair` f 1.25: per_s 10 -> 8 and delay 3 -> 3.75 | PENDING | | | | `evidence/n23-loop/cycle2/` |
+
+The tuner's first proposal was `enemy_damage` x1.25 (23 numbers in `enemies.json`); the director replaced it by hand
+because the table is shared and a kept change would move shipped replays (`evidence/n23-loop/cycle1/plan.json` `miss`).
+
+**One night's full clamp at once** (diagnostic, not a tuner cycle, `evidence/n23-loop/stack-clamp/`): every gauntlet-only
+knob at its night limit toward harder (repair 8 HP/s after 3.75 s, budget base 180 -> 225 and per_wave 16 -> 20,
+`max_alive` 40 -> 50, cost patrol_cop 15 -> 12 and war_machine 200 -> 160), merged game, novice + average 8 seeds, against
+`moves/on`. PENDING.
+
+## The four moves, off and on (merged game, average, same seeds)
+
+On arm `evidence/n23-loop/moves/on/`, off arms `evidence/n23-loop/moves/<id>-off/` (the row's `enabled` = false through
+`ablate.mjs --set`, everything else equal), 10 seeds, `--waves=40`. Uses with an effect over the 10 on runs
+(`moves{}` per wave): average Kerf blink 672, Ohm short-circuit 340, overkill carry 2250, Tonnage armour crack **7**
+(novice 62 / 62 / 38 / 9). Tonnage has no off arm: 7 uses in 400 waves cannot move a wave time, and that is the finding
+(the bot is rarely in Tonnage beside a war machine in its stomp recovery). n22's gaps (waves with the enemy vs without):
+turret 38.3 vs 10.7 s, war machine 43.8 vs 26.0 s, shield robot 41.2 vs 12.7 s.
+
+PENDING: `node tools/gauntlet/move_table.mjs --off=... --on=... --move=<id>` per move.
+
+## The before and after page
+
+`tools/gauntlet/compare.mjs` (Astra call 7) puts the batches side by side as markdown + one self-contained HTML page:
+PENDING (`evidence/n23-loop/compare.md` / `.html`, filmed for the owner).
+
+## Proposals (for the owner's pick; nothing built)
+
+1. **A wave timer that shortens with depth.** The 90 s timer started the next wave on 1 of 919 waves on the street merge
+   (`evidence/n23-loop/base-street/`): from wave 11 a wave lasts 28-48 s (median), so "the next wave starts on top" almost
+   never happens and stacking cannot kill. Proposal: 45 s from wave 6, or 3x the wave's median clear time; street's dev
+   `--wave-timeout=12` already showed 2-3 waves alive and a death on wave 16 (street JOURNAL 05:44).
+2. **Repair that does not refill inside a wave.** Repair is the first cause of survival (ablation: 3 HP/s after 6 s
+   killed both average seeds at wave 20; control alive at 35-37). Damage taken is 0.6-1.2 HP/s against 10 HP/s repair.
+   Proposal: repair only between waves (or a repair pool per wave), so damage adds up across a wave.
+3. **Enemies that punish a moving player.** Average and expert are not separated (both censored at 40 on every merge
+   tonight): the expert bot's better aim and timing buy nothing when nothing threatens it. In the owner's words, an
+   enemy should be harder by what it does to a moving player: a leading shot (aim at the predicted position), a fast
+   lunge with a short tell, or area denial (a slow zone or a burning patch) that forces a choice. Novice dies to rocket
+   troopers (5 of 10) and shield robots (3): the moves that hurt are the ones that reach.
+4. **Kerf's slice one-shots every new enemy, the war machine included** (moves lane 05:56: kerf GUARD-row slice 99 vs
+   war_machine hp 26 at front 0.5). The boss wave of 25-30 s is not reachable while one slice ends it; the boss wave
+   ran 14.4 s (median, average, merged game, wave 5). Proposal: a per-enemy cap on slice damage (bosses take a fraction),
+   or the boss hp scaled with wave depth.
+5. **A gauntlet-only enemy damage multiplier** (`gauntlet.json` `enemy_damage_k`, street brief 08 is building it from my
+   NEED of 05:53). Enemy damage is the third cause (x2 ablation: 1 of 2 average seeds died, median wave 28.5 vs 36); today
+   it is reachable only in `enemies.json`, which is shared with quest 1 and the replays, so the tuner may not move it.
+
 ## What works
+
+- **The noise floor by a neutral change** (item 2): the bot salt, proven different (20/20 result files) and proven
+  neutral (`--bot-salt=0` byte-identical); the null floor is about half the cross-seed floor with twice the pairs
+  (`evidence/n23-loop/base-null-salt1/floors.md`); every tuner ledger row carries both.
+- **The before page** (item 1): 60 + 20 runs on main, why nobody dies with numbers (repair, stat picks, enemy damage;
+  `evidence/n23-loop/ablate/summary.md`).
+- **The tuner on the combined game** (items 3, 5): death-wave score with censoring at the wave limit, targets in
+  `tools/gauntlet/targets.json`, budget units read from `budget.unit` (10), the `cost` map, `max_alive`, the gauntlet
+  `rivet` repair override, the `rivet_repair` group, shared tables off by default, `ablate.mjs --rev`; Node tests
+  `node --test "tools/gauntlet/*.test.mjs"` 75/75 at `3c379596f`.
+- **The bot on the merged game** (item 6): blast clearance (0 self damage in 84 smoke waves) and all four moves used
+  (`evidence/n23-loop/moves/on/`).
+- Mutation: `bot_street_stats.gd` 100 % = killed 5 / (5 + 0) (`build` log quoted in JOURNAL 03:51).
 
 ## What does not
 
+- **The profiles are not separated beyond novice.** Novice dies (median wave 12-16 on every tree tonight), average and
+  expert are censored at wave 40 on every merge: no tuning step tonight could separate them, because the tuner can only
+  read a difference where runs die.
+- **No change was kept tonight.** Cycle 1 (`repair_per_s` 10 -> 8) is noise against a floor of 6 waves; with average
+  and expert all censored, a 20 % step on one number cannot show. Cycle 2: PENDING.
+- **Targets out of reach at this rate.** The game is too easy by 26+ waves for average (>= 40 vs 12) and 20+ for expert;
+  at one x0.8 step a night on repair the x0.5 floor (5 HP/s) is reached after 4 nights, and the ablation says even
+  3 HP/s after 6 s only brings average to wave 20. PENDING: the stack-clamp arm gives the one-night number.
+- `bot_brain.gd` mutation 5/12 killed (Astra call 5): the moves logic is under-tested.
+- The 216000-tick cap on the street merge makes uncapped runs cost 8-10 min; tonight's tuning ran bounded at 40 waves.
+
 ## What blocked or slowed you
+
+- 45 min: capped runs. The street merge raised the tick cap to 216000; two batches were stopped and re-run with
+  `--waves=40` (JOURNAL 04:12, 05:00).
+- 20 min: `ablate.mjs` snapshot the moving lane HEAD; a scratch checkout carried cycle 1 until `--rev` landed (05:54).
+- 10 min: the git index lock held by Astra's commit hook blocked three JOURNAL commits.
+- 15 min: the tuner's first proposal touched a shared table (`enemies.json`); replaced by hand, then guarded in code.
 
 ## Calls for the owner
 
@@ -98,17 +201,38 @@ stays under the 6.73 s floor: noise either way.
    picks; an ordinary average wave 15 s; a boss wave 25-30 s every fifth wave; two profiles are separated when the deeper
    one's median is at least 3 waves deeper AND it dies later on at least 75 % of shared seeds.
 2. **One larger step on in-wave repair.** The night clamp (x0.8 per night, x0.5 floor from the first value) lets
-   `rivet.repair_per_s` go 10 -> 8 tonight and reach 5 only after three nights. The ablation with 3 HP/s after 6 s killed
+   `rivet.repair_per_s` go 10 -> 8 tonight and reach its 5 HP/s floor only on the fourth night (10 -> 8 -> 6.4 -> 5.1 -> 5). The ablation with 3 HP/s after 6 s killed
    both average seeds (death wave 20, on target's side of 12-20). Asked: allow `repair_per_s` 10 -> 3 and
    `repair_delay_s` 3 -> 6 in one step for the gauntlet only (street's `gauntlet.json` `rivet` block; quest 1 keeps
    `combat.json`).
 3. **The verdict rule.** Keep a change when its paired mean clears the same-seed null floor AND its CI95 excludes zero
    (`--verdict=point`, tonight's default), instead of n22's CI-low-above-the-floor (`--verdict=strict`), which counted
    the noise twice and rejected every realistic step. Both verdicts are in every ledger row.
+4. **The wave limit for tuning batches.** Tonight every tuning batch stops a run at wave 40 and counts a survivor as a
+   lower bound (`--waves=40`, decision line of 2026-11-22). The alternative is the full 216000-tick cap (8-10 min a
+   run). Asked: keep 40 until the average profile dies before it.
+5. **Kerf's slice against bosses** (proposal 4): the owner's boss design, not the tuner's: the slice row is in
+   `ghost_attacks.json`, shared, and one slice ends the war machine.
 
 ## Merge notes
 
+- `n23-loop` contains merges of `n23-street` @ `cdacafe98` (`2b2ff79d4`), `n23-controls` @ `61c382e3f` (`895a4964a`) and
+  `n23-moves` @ `73eec563c` (`620fb288e`). Those lanes moved on afterwards (at 06:50: street `1cccf5d96` +34, controls
+  `1599978eb` +9, moves `f5b32cfe7` +2); loop did not re-merge them so that tonight's batches measure one tree. Merge
+  the three lanes first, then loop: loop's own changes are `project/features/gauntlet/bot/**`, `tools/gauntlet/**`,
+  `docs/gauntlet-loop.md`, `project/data/tables/test_player.json`, plus one-line call sites `project/dev/gauntlet/gauntlet.gd`
+  KNOWN (`--bot-salt`) and `project/boot/launch_args.gd` KNOWN_FLAGS (+1, debt accepted).
+- No tuned number is kept, so loop moves no balance number in any table.
+- `JOURNAL.md` / `REPORT.md` are per lane: keep each lane's own on an add/add conflict.
+
 ## Next steps
+
+1. Merge street's `enemy_damage_k` (street brief 08) and add it to `rivet_repair`'s neighbour group in the tuner; it is the
+   lever that does not need a shared table.
+2. With the owner's larger repair step (Call 2) the average profile should start dying before 40; then the tuner's
+   one-number cycles become readable, and separation of average vs expert can be measured at all.
+3. Raise `bot_brain.gd` mutation (5/12) with tests for the move openings.
+4. Cycles cost ~45-50 min a 30-run batch at one Godot slot; two slots and 10 seeds give 3-4 cycles a night once runs die.
 
 ## Astra ledger
 
