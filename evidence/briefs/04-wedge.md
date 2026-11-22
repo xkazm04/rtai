@@ -1,6 +1,6 @@
 # Brief 04 (street lane, n23): the shove wedge at full reach
 
-Hard stop: HARDSTOP wall clock (check `date`). Commit deadline: COMMITBY. Write your final report BEFORE the mutate run; mutate is last and capped.
+Hard stop: 07:15 wall clock (check `date`). Commit deadline: 07:05. Write your final report BEFORE the mutate run; mutate is last and capped.
 
 ## Setup for every Godot run
 `export APPDATA=C:/Users/kazda/kiro/gtai-n23/appdata/street` and
