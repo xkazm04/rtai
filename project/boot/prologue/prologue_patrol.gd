@@ -97,6 +97,9 @@ func _spawn(arena: CombatArena, arch: StringName, formation: Dictionary, i: int)
 	var spacing: float = _data.num(_arrival, "spacing_m")
 	var file_x: float = (n % rank_size - (rank_size - 1) * 0.5) * spacing
 	var rank_y: float = (floorf(float(n) / rank_size) + 1.0) * spacing
+	if n == 0:
+		file_x = 0.0
+		rank_y = spacing * 0.25
 	var start: Vector2 = _gate + Vector2(file_x, rank_y)
 	var officer: Officer = Officer.new()
 	officer.body = squad.spawn_member(arena, start, arch)
