@@ -1,6 +1,5 @@
 extends Node
-## A continuous, eight-release gauntlet take and four single-form, slow-motion inserts.
-## Movie and stills sample the same frames. The source supplies ordinary 60 Hz TickInputs.
+## Movies and stills share a 60 Hz input source, with an optional slow close-up on release.
 
 const KNOWN_FLAGS: PackedStringArray = [
 	"--form", "--ppm", "--out", "--stills", "--position", "--real-speed"
@@ -139,12 +138,11 @@ func _framed() -> bool:
 func _save_still() -> bool:
 	var image: Image = get_viewport().get_texture().get_image()
 	var ghost: GhostDeploy = session.pilot.ghosts.deploy
-	var label: String = "aim" if ghost.phase == GhostDeploy.Phase.AIMING else String(input.cue)
+	var label: String = String(input.cue)
+	if ghost.phase == GhostDeploy.Phase.AIMING:
+		label = "aim" if input.single == &"all" else "hold_" + label
 	var file: String = "deploy_%s-%d-f%04d.png" % [label, ppm, frame]
-	Log.info(
-		"deploy-film",
-		"%s: phase=%s spot=%s left=%d" % [file, ghost.phase, ghost.spot, ghost.ticks_left]
-	)
+	Log.info("deploy-film", "%s: phase=%d spot=%s" % [file, ghost.phase, ghost.spot])
 	return image.get_size() == RESOLUTION and image.save_png(out_dir.path_join(file)) == OK
 
 
@@ -156,6 +154,7 @@ func _finish() -> void:
 	)
 	if (
 		input.casts != wanted
+		or (input.single == &"all" and input.live_holds != wanted)
 		or input.hits_on_marks != wanted
 		or input.fired_while_active < 1
 		or session.pilot.ghosts.transforms != 0
