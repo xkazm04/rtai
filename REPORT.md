@@ -2,7 +2,7 @@
 
 Branch `n23-controls`, cut from `main` `76111adec`. Director: Opus; builder: Astra (all product edits).
 Final gate on `9880acfdb` (07:38 to 07:58), wheel as the default: `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n23-controls\build\gate\9880acfdb77c\gate.json`
-(PASS lint 19 checks over 1958 GDScript files; PASS unit-tests 3666 passed, 0 failed, 2 skipped; PASS scenario-tests 65 passed; PASS parity 1200 steps bit for bit, planted mutation caught at step 629; PASS selftest; PASS export-audit 883 loaded, 0 failed).
+(PASS lint 19 checks over 1958 GDScript files; PASS unit-tests 3666 passed, 0 failed, 2 skipped; PASS scenario-tests 65 passed; PASS parity 1200 steps bit for bit, planted mutation caught at step 629; PASS selftest; PASS export-audit 883 loaded, 0 failed). Commits after `9880acfdb` touch only inert paths (`REPORT.md`, `JOURNAL.md`, `docs/decisions.md`).
 
 | Suite on `9880acfdb` | Wheel (default) | Legacy (`--controls=legacy`) |
 |---|---|---|
@@ -55,6 +55,9 @@ Films and stills named below are in `C:\Users\kazda\kiro\gtai-masters\n23\contro
 ## Merge notes
 - `combat.json`: only the new `blast` block (moves adds `moves`; both are new top-level keys, sorted).
 - One-line call site in `project/features/combat/weapons/fight_areas.gd` (`RivetSelfBlast.land`).
+- Files outside this lane's list, all small call sites (`git diff 76111adec --stat`): `project/features/gauntlet/gauntlet_wave_stats.gd` (+1, `self_damage`; street owns the folder, expect a nearby edit), `project/boot/collect_call/stage_pilot.gd` (4 lines, the swing counter the brief asked for), `project/boot/collect_call/quest1_session.gd`, `project/boot/quest1_game.gd`, `project/boot/world.gd`, `project/features/arena/arena_session.gd`, `project/features/arena/arena_stage.gd`, `project/core/clock/sim_loop.gd`, `project/core/replay/replay_log.gd` (tape gains optional `controls`), the arena and react-line test bots (+1 each, a weapon selection), `project/features/characters/rivet_res.gd` (+2, the guard strip), `project/dev/showcase/reel_director.gd` / `reel_arsenal.gd` (reels select their weapon under the wheel).
+- `tools/debt/baseline.json` moved through the debt tool only (dev-line debt for the film drivers under `project/dev/controls/`); after a conflict run `node tools/debt/merge_baseline.mjs`.
+- Shared append-only: four `docs/decisions.md` lines, two `steam/ai-provenance/2026-11.jsonl` lines (the guard paintings).
 - `loop` must expect `self_damage` per wave and that the bot can now kill itself with rockets (`NEED loop` in JOURNAL 04:32).
 - Root `JOURNAL.md` / `REPORT.md`: keep each lane's own.
 
@@ -75,7 +78,8 @@ Films and stills named below are in `C:\Users\kazda\kiro\gtai-masters\n23\contro
 | b5-films | 37 | accepted | quest 1 + arena films on hands, wheel card detail, tests.md fix; found that the opening had no wheel on screen |
 | b6-readout-scale | 2 | bounced | stopped before any edit to ask for one old-contract test (`test_rivet_wheel_pilot.gd:159`); granted |
 | b6b-readout-scale | 50 | accepted | wheel at the opening and on a hands-only scroll, first HUD frame, helmet-scale recut |
+| b7-decisions | 1 | accepted | two missing `docs/decisions.md` lines (pickup stowed, Use-grab draws, self damage can kill) |
 
-Total: 8 calls, 393 minutes; 6 accepted, 1 partly accepted, 1 bounced before any edit.
+Total: 9 calls, 394 minutes; 7 accepted, 1 partly accepted, 1 bounced before any edit.
 
 What I would brief differently: (1) name the debt-ratchet route (`node tools/debt/debt.mjs --update --accept-regression=...`) in every brief that adds dev or film code, so no call stops on it (b3, b4); (2) put a number on "hurt" in the brief (HP lost at point blank) instead of letting the builder reuse the hostile conversion (b3); (3) give a standing grant for tests that assert the old contract of an allowed file, from the first brief (b6); (4) ask for the opening frame of every film to be checked for the HUD element the film is about (b5 missed that the wheel was not on screen at the opening).

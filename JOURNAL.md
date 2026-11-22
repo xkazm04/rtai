@@ -70,3 +70,5 @@ NEXT: (1) look at quest1_wheel_opening.png, arena_wheel_hands.png, guard_phases_
 - 08:03 legacy scenarios on the same tree: 65 ran, 0 failed (build/dev/scen_legacy_final.log). 08:06 legacy unit: 3666/0/2 (build/dev/unit_legacy_final.log).
 - 08:10 mutate features/player/controls_mode.gd: 5/5 killed (100%), 186 s (closes the b1 incomplete 1/1 of 5).
 - 08:10 REPORT filled: gate line, both-mode counts table, b6b rows, ledger (8 calls, 393 min), brief-differently notes. cites: all ok.
+- 08:11 ASTRA RUNNING b7-decisions since 08:11 (docs/decisions.md: two missing DECISION lines from 01:00 and 06:41; hard stop 08:40; out evidence/briefs/b7-decisions.out).
+- 08:13 ASTRA b7-decisions 1 accepted. Commit 1eff22637: two lines appended to docs/decisions.md (pickup stowed / hands-only readout / self damage can kill; Use-grab draws). Diff checked: docs/decisions.md only.
