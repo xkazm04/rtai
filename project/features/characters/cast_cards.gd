@@ -13,6 +13,7 @@ class Sheets:
 	extends RefCounted
 	var walk: String
 	var attack: String
+	var stomp: String
 	var hit: String
 	var fall: String
 
@@ -38,7 +39,11 @@ static func from_table(table: DataTable) -> CastCards:
 			return CastCards.new()
 		var pitches: Dictionary[String, Sheets] = {}
 		for pitch: String in ["p55", "p70"]:
-			pitches[pitch] = _sheets(table, table.object(row, pitch), pitch)
+			var paths: Dictionary = table.object(row, pitch)
+			var sheets: Sheets = _sheets(table, paths, pitch)
+			if key == "war_machine":
+				sheets.stomp = RigHeadCard.ART_DIR + pitch + "/" + table.text(paths, "stomp")
+			pitches[pitch] = sheets
 		if row.enabled:
 			result._by_id[StringName(key)] = pitches
 	if not table.ok():

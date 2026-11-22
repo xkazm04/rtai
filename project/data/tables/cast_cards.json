@@ -47,6 +47,24 @@
         "fall": "shield_robot_fall.png",
         "hit": "shield_robot_hit.png"
       }
+    },
+    "war_machine": {
+      "enabled": true,
+      "id": "war_machine",
+      "p55": {
+        "armed_walk": "war_machine_armed_walk.png",
+        "attack": "war_machine_attack.png",
+        "fall": "war_machine_fall.png",
+        "hit": "war_machine_hit.png",
+        "stomp": "war_machine_stomp.png"
+      },
+      "p70": {
+        "armed_walk": "war_machine_armed_walk.png",
+        "attack": "war_machine_attack.png",
+        "fall": "war_machine_fall.png",
+        "hit": "war_machine_hit.png",
+        "stomp": "war_machine_stomp.png"
+      }
     }
   },
   "schema": "gtai.cast_cards/1"

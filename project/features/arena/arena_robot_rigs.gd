@@ -56,6 +56,7 @@ func _process(_delta: float) -> void:
 		rig.visible = not consumed.has(h.id) and not gone.has(h.id)
 		rig.visible = FoeShieldCardView.show_rig(self, h, rig, rig.visible)
 		rig.visible = FoeTurretCardView.show_rig(self, h, rig, rig.visible)
+		rig.visible = FoeWarCardView.show_rig(self, h, rig, rig.visible)
 		_row(h)
 		RigInput.apply(rig, _feed, 0)
 		_react(h, rig)

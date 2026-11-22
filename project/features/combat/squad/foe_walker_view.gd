@@ -14,6 +14,8 @@ static func draw_machine(view: Node2D, h: Fighter, mind: SquadMind, arena: Comba
 	var radius: float = walker.ring_radius(e)
 	if radius > 0.0:
 		danger_ring(view, walker.landing, radius)
+	if ArenaRobotRigs.takes(h) and CastCards.current(h.archetype) != null:
+		return
 	var at: Vector2 = Ink.px(h.pos + Vector2.UP * 1.02 * LOOK_SCALE)
 	var row: MoveTable.ArmourCrack = arena.squad_ai.moves.tonnage_armour_crack
 	var sag: bool = row.enabled and TonnageCrack.post_stomp(mind)

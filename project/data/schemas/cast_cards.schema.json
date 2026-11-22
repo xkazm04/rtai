@@ -18,6 +18,10 @@
         "hit": {
           "pattern": "^[a-z][a-z0-9_]*_hit[.]png$",
           "type": "string"
+        },
+        "stomp": {
+          "pattern": "^[a-z][a-z0-9_]*_stomp[.]png$",
+          "type": "string"
         }
       },
       "required": [
@@ -35,6 +39,31 @@
     "archetypes": {
       "additionalProperties": {
         "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "id": {
+                  "const": "war_machine"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "p55": {
+                  "required": [
+                    "stomp"
+                  ]
+                },
+                "p70": {
+                  "required": [
+                    "stomp"
+                  ]
+                }
+              }
+            }
+          }
+        ],
         "properties": {
           "enabled": {
             "type": "boolean"
