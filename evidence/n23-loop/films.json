@@ -146,7 +146,7 @@
   "films": [
     {
       "file": "C:/Users/kazda/kiro/gtai-masters/n23/loop/novice-seed-1-wave-9.mp4",
-      "sha256": "d5d00a24e3f41c173dd56348ab961171d8905f2469017c5a96e92703571c99e2",
+      "sha256": "5f6afd1a8e48cf3dcbc7210b9d6d681fba32605c17ce4f276f620906c1576392",
       "profile": "novice",
       "ppm": 32,
       "seed": 1,
@@ -236,7 +236,7 @@
         "-i",
         "C:\\Users\\kazda\\kiro\\gtai-wt\\n23-loop\\build\\n23\\films\\novice-seed-1-wave-9-outcome.png",
         "-filter_complex",
-        "[0:v]trim=start_frame=0:end_frame=1498,setpts=PTS-STARTPTS,tpad=stop_mode=clone:stop=90[b];[b][1:v]overlay=W-w-28:H-h-24[v1];[v1][2:v]overlay=W-w-28:H-h-24:enable='gte(n,1497)',format=yuv420p[v];[0:a]atrim=start=0.000000000:end=24.966666667,asetpts=PTS-STARTPTS,apad,atrim=end=26.466666667[a]",
+        "[0:v]trim=start_frame=0:end_frame=1498,setpts=PTS-STARTPTS,tpad=stop_mode=clone:stop=90[b];[b][1:v]overlay=W-w-28:24[v1];[v1][2:v]overlay=W-w-28:24:enable='gte(n,1497)',format=yuv420p[v];[0:a]atrim=start=0.000000000:end=24.966666667,asetpts=PTS-STARTPTS,apad,atrim=end=26.466666667[a]",
         "-map",
         "[v]",
         "-map",
