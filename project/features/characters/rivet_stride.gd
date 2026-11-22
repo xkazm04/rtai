@@ -5,6 +5,14 @@ extends RefCounted
 ## across the ground. This is RigHips for a strip: past RigHips.BACKPEDAL_RAD the walk folds and
 ## the grid plays backwards, and the row turns toward the walk by at most TWIST_ROWS (a whole
 ## turn would point the drawn gun off the aim; the fire cells still draw the aim's own octant).
+## Drawn locomotion steps by ground distance. Eight walk columns show contact/down/passing/up for
+## each foot in base-octant order (evidence/n9/rivet_walk8_measure.md). --rivet-walk=4 uses gait
+## phase, =bob the facing card and =walk8 keeps walking above RUN_FROM_MPS. Run8 adds flight.
+## Native grids paint the weapon. The fallback adds a held sprite. Fire, strikes and
+## --rivet-walk-armed=off use the equipped pose. A missing armed run keeps its native walk.
+## ARMED_CYCLE_CELL doubles the mean of both profile rows' contact-to-contact stance travel over
+## two of four frames (evidence/n9/rivet_walk_armed_cycle.md). The flamer shuffles using CYCLE_CELL.
+## RUN_ROW_K shortens a run where its row travels less than bare run8 (62-67 px at p70, 53 at p55).
 
 ## P55 front-right/front-left vs bare (54.5/55): pistol 43/49, rifle 41.5/49, blade 46/53,
 ## heavy 42/45.5, flamer 37/51. Left profiles vs 50: heavy 46, flamer 50. At p70, heavy left
@@ -12,6 +20,7 @@ extends RefCounted
 const OCT_RAD: float = PI * 0.25
 ## Contact-to-passing travel of the two stance boots in a four-column armed walk, packed texels.
 const WALK_PROFILE_TRAVEL: Dictionary[String, Vector2] = {
+	StrideMatch.ROOT + "p70/rivet_walk_eq_electro_baton.png": Vector2(16.5, 31.5),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_chainsaw.png": Vector2(18.5, 28.0),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_rocket_launcher.png": Vector2(23.0, 36.5),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_gloria.png": Vector2(26.0, 32.5),

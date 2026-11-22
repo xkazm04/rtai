@@ -1,14 +1,6 @@
 class_name RivetWalk
 extends RefCounted
-## Drawn locomotion steps by ground distance. Eight walk columns show contact/down/passing/up for
-## each foot in base-octant order (evidence/n9/rivet_walk8_measure.md). --rivet-walk=4 uses gait
-## phase, =bob the facing card and =walk8 keeps walking above RUN_FROM_MPS. Run8 adds flight.
-## Native grids paint the weapon. The fallback adds a held sprite. Fire, strikes and
-## --rivet-walk-armed=off use the equipped pose. A missing armed run keeps its native walk.
-## ARMED_CYCLE_CELL doubles the mean of both profile rows' contact-to-contact stance travel over
-## two of four frames (evidence/n9/rivet_walk_armed_cycle.md). The flamer shuffles using CYCLE_CELL.
-## RUN_ROW_K shortens a run where its row travels less than bare run8 (62-67 px at p70, 53 at p55).
-
+## Locomotion follows ground distance. RivetStride documents gait modes and stride calibration.
 const STRIP: String = "rivet_walk8.png"
 const STRIP4: String = "rivet_walk.png"
 const ARMED: String = "rivet_walk_eq_"
@@ -22,6 +14,11 @@ const RUN_FROM_MPS: float = 2.5
 const MAX_RUN_CYCLES_S: float = 3.5
 ## Packed run-row comparisons follow the octant notes in RivetStride.
 const RUN_ROW_K: Dictionary[String, float] = {
+	"p70/electro_baton/0": 0.96,
+	"p70/electro_baton/1": 0.90,
+	"p70/electro_baton/3": 0.87,
+	"p70/electro_baton/4": 0.98,
+	"p70/electro_baton/5": 0.97,
 	"p70/chainsaw/0": 0.89,
 	"p70/chainsaw/1": 0.82,
 	"p70/chainsaw/3": 0.89,
@@ -52,6 +49,7 @@ const ROWS: int = 8
 const RES: float = 1.5
 const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
 const ARMED_CYCLE_CELL: Dictionary[String, float] = {
+	"p70/electro_baton": 67.3,
 	"p70/chainsaw": 64.3,
 	"p70/rocket_launcher": 84.0,
 	"p70/gloria": 86.7,
