@@ -27,6 +27,7 @@ var _aim_rng: RandomNumberGenerator
 var _defence: BotDefence
 var _moves: BotMovePlan
 var _forms: BotForms
+var _deploy: GhostDeployBot
 var _machines: BotMachineFight = BotMachineFight.new()
 var _target_id: int = -1
 var _last_enemy: int = -1
@@ -44,6 +45,7 @@ func _init(view: BotView, actions: PlayerActions, profile: BotProfile, run_seed:
 	_aim_rng = registry.stream(&"test_player_aim")
 	_defence = BotDefence.new(profile, registry)
 	_forms = BotForms.new(registry)
+	_deploy = GhostDeployBot.new(view, actions, registry)
 	_moves = BotMovePlan.new(registry)
 
 
@@ -105,6 +107,7 @@ func _pack(intent: Intent, defend: BotDefence.Choice, want: StringName) -> TickI
 		if intent.attack == &"melee" or (me.form == &"dent" and intent.attack == &"fire"):
 			attack = _edge(intent.attack)
 		buttons |= attack
+	buttons = _deploy.steer(intent, buttons, _profile.form_use)
 	_previous = buttons
 	cover_threat = defend.threat if defend.cover else &""
 	travel = &"REST"
