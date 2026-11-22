@@ -14,6 +14,11 @@ const RUN_FROM_MPS: float = 2.5
 const MAX_RUN_CYCLES_S: float = 3.5
 ## Packed run-row comparisons follow the octant notes in RivetStride.
 const RUN_ROW_K: Dictionary[String, float] = {
+	"p70/assault_rifle/0": 0.87,
+	"p70/assault_rifle/1": 0.95,
+	"p70/assault_rifle/3": 0.82,
+	"p70/assault_rifle/4": 0.85,
+	"p70/assault_rifle/5": 0.96,
 	"p70/electro_baton/0": 0.96,
 	"p70/electro_baton/1": 0.90,
 	"p70/electro_baton/3": 0.87,
@@ -49,6 +54,7 @@ const ROWS: int = 8
 const RES: float = 1.5
 const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
 const ARMED_CYCLE_CELL: Dictionary[String, float] = {
+	"p70/assault_rifle": 78.0,
 	"p70/electro_baton": 67.3,
 	"p70/chainsaw": 64.3,
 	"p70/rocket_launcher": 84.0,
@@ -71,9 +77,7 @@ static var armed: bool = true
 static var run: bool = true
 
 
-## True while he walks, or a reversal carried his speed through zero within DIP_TICKS (n10: that
-## tick drew the standing or reload cell inside the walk). A real stop stands DIP_TICKS later.
-## The age is checked both ways: CutRig.reset restarts t_alive and the meta survives the pool.
+## A reversal stays walking for DIP_TICKS. Reject stale ages after a pooled rig resets.
 static func moving(rig: CutRig) -> bool:
 	if rig.speed_now > RivetFrames.MOVING:
 		rig.set_meta(MOVED, rig.t_alive)
@@ -121,8 +125,7 @@ static func is_grid(card: Sprite2D) -> bool:
 	return card != null and card.vframes == ROWS
 
 
-## Texture px per 110-space cell px of the strip `card` shows (RES on a packed grid, a one-row
-## strip's own RivetRes.of off one).
+## Texture pixels per 110-space pixel. Packed grids use RES and a one-row strip uses RivetRes.
 static func res_of(card: Sprite2D) -> float:
 	var on: String = str(card.get_meta(RivetFrames.ON, ""))
 	return RES if is_grid(card) else RivetRes.of(on)
