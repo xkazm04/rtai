@@ -1,6 +1,6 @@
 # Brief g5-deploy-bot (lane `ghost`, n24): the gauntlet bot deploys ghosts, and the gauntlet result shows it
 
-Hard stop: HH:MM_STOP wall clock (check `date`; killed at 75 minutes). Last commit by HH:MM_COMMIT. Commit each part as it goes green; fix lint and format findings in your own edit and go on.
+Hard stop: 23:37 wall clock (check `date`; killed at 75 minutes). Last commit by 23:30. Commit each part as it goes green; fix lint and format findings in your own edit and go on.
 
 ## Context
 Your calls g1-g4 built, filmed and measured the ghost deploy (`git log --oneline -25`). The owner judges the deploy partly by "uses and effect per deploy from the gauntlet result": per wave `deploys{<form>}`, `deploy_kills{<form>}`, `deploy_stun_s{<form>}` (`GhostDeployTally`, wired in g1). Today no gauntlet run carries them: the test player (`GauntletBot`, `project/features/gauntlet/bot/bot_brain.gd`, pressure's lane) still presses `power_hauler` to transform, which does nothing while `ghost_forms.json` `transform_unlocked` is false. Pressure asked ghost for the rule; the Director told pressure that ghost builds it (our JOURNAL, 21:16 NEED pressure).
@@ -24,3 +24,8 @@ Typed GDScript, warnings are errors; ~200 lines per file (hard 300), functions <
 
 ## Report
 Commits (sha + subject), the three bot_brain lines verbatim, check lines (lint, unit, scenarios with replay_60s), mutate score, the per-form gauntlet table with before/after death waves.
+
+## Director's notes after g4 (read first)
+- g4 accepted. Part 6 of g4 (formation jitter) is dropped: the real gauntlet result from part 4 here replaces it as the worth evidence.
+- Order of value: parts 1-3 committed first (the bot and its call site), then part 4 (the gauntlet numbers are what the owner judges), then part 5. If part 4's batch fails to start in 10 minutes, use the `tools/dev/run.mjs gauntlet` fallback and go on.
+- `bot_brain.gd` is pressure's file and pressure merges our branch: exactly the three named lines, no reformat of neighbouring lines.
