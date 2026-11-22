@@ -140,3 +140,18 @@ NEXT: (session 4) check logs/cast/astra.lock (pid alive by process name) + astra
   RULE CHECK for session 4: the door carrier ships ON only when its film (door_wave_32.mp4 / door_close_64.mp4) exists
   and is watched; if 04 ends without it, film it in brief 05 before the freeze or set the row `enabled: false`.
   Same for the clamshell row. Session 3 ends 21:33; ASTRA RUNNING clamshell since 20:44 (pid 71768, hard stop ~21:59).
+
+## Session 4 (21:34)
+- 21:34 start. ASTRA clamshell (pid 71768, node, started 20:43) still running, hard stop ~21:59. No `NEED cast` in the
+  four other journals.
+- 21:40 films watched (4 stills each): door_wave_32.mp4 + door_close_64.mp4 (1920x1080, 60 fps, 16.0 s) ACCEPTED: the
+  carrier walks in, shoves with the slab, falls as a wreck with the slab beside it; at 32 px/m it is small but reads.
+  lancer_wave_32.mp4 retaken (1920x1080, 60 fps, 16.0 s) ACCEPTED: tell, ice-blue enemy rocket with smoke, hit, death.
+  The door carrier's `enabled: true` stands (films exist and are watched). Gap: all films are a staged street, not a
+  gauntlet wave: brief 05 asks for one real gauntlet wave clip with the redrawn enemies.
+- 21:45 Astra committed 1343b32fe (standing rule in docs/art/cast-checklist.md "Wave admission" + audit). Staged
+  clamshell call site reviewed: `rig.visible = FoeTurretCardView.show_rig(self, h, rig, rig.visible)` in
+  arena_robot_rigs.gd; foe_turret_view.gd returns from draw_mount when the card is on. ACCEPTED as a diff.
+  Brief 05 written (evidence/briefs/n24-cast-05-pile-driver.md): leftovers commit, pile-driver wire/stills/films, one
+  real gauntlet wave film, per-enemy beside clips + before/after pairs, frames.json, after-table, the decisions line
+  (Astra writes it). Launches when `clamshell` ends.
