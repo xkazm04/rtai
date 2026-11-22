@@ -9,6 +9,7 @@ extends RefCounted
 const OCT_RAD: float = PI * 0.25
 ## Contact-to-passing travel of the two stance boots in a four-column armed walk, packed texels.
 const WALK_PROFILE_TRAVEL: Dictionary[String, Vector2] = {
+	StrideMatch.ROOT + "p70/rivet_walk_eq_rocket_launcher.png": Vector2(23.0, 36.5),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_gloria.png": Vector2(26.0, 32.5),
 }
 ## How far the legs' row may turn off the aim, in rows of 45 degrees; 0 = the row is the aim's.

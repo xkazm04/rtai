@@ -1,17 +1,13 @@
 class_name RivetWalk
 extends RefCounted
-## Drawn locomotion steps by distance. The eight walk columns are contact, down, passing and up
-## for each foot. Rows follow RivetFrames' base octants. For the measured stance travel see
-## evidence/n9/rivet_walk8_measure.md. --rivet-walk=4 uses gait phase; =bob uses the facing card.
-## A native armed grid contains its weapon. Borrowed movement uses a bare grid and a held sprite.
-## Fire, strike and --rivet-walk-armed=off keep their equipped poses.
-## Above RUN_FROM_MPS a run has eight columns including flight; --rivet-walk=walk8 retains walk.
-## Profile travel over two run columns is 62-67 cell px at p70 and 53 at p55. Cadence is capped.
-## it6: each armed grid has its own cycle (ARMED_CYCLE_CELL, "<art>/<weapon>"): the profile
-## rows' stance boot from contact to the next contact (two of the 4 frame steps) x 2, mean of
-## the right and left rows (evidence/n9/rivet_walk_armed_cycle.md); the flamer shuffles: CYCLE_CELL.
-## Armed runs use run8 legs and armed walk arms. RUN_ROW_K shortens the cycle for a row whose
-## measured stride is shorter than the bare run. A missing armed run keeps its native armed walk.
+## Drawn locomotion steps by ground distance. Eight walk columns show contact/down/passing/up for
+## each foot in base-octant order (evidence/n9/rivet_walk8_measure.md). --rivet-walk=4 uses gait
+## phase, =bob the facing card and =walk8 keeps walking above RUN_FROM_MPS. Run8 adds flight.
+## Native grids paint the weapon. The fallback adds a held sprite. Fire, strikes and
+## --rivet-walk-armed=off use the equipped pose. A missing armed run keeps its native walk.
+## ARMED_CYCLE_CELL doubles the mean of both profile rows' contact-to-contact stance travel over
+## two of four frames (evidence/n9/rivet_walk_armed_cycle.md). The flamer shuffles using CYCLE_CELL.
+## RUN_ROW_K shortens a run where its row travels less than bare run8 (62-67 px at p70, 53 at p55).
 
 const STRIP: String = "rivet_walk8.png"
 const STRIP4: String = "rivet_walk.png"
@@ -24,14 +20,14 @@ const DIP_TICKS: int = 3
 const MOVED: StringName = &"rivet_walk_moved"
 const RUN_FROM_MPS: float = 2.5
 const MAX_RUN_CYCLES_S: float = 3.5
-## measured on the packed grids (cell px of stance travel, the row's vs run8's same row): the
-## heavy left profile 59 / 63; the one-hand 55 3/4 toward right (row 2 B) 43 / 54.5, toward
-## left 49 / 55; the two-hand 55 3/4 toward right (row 2 B) 41.5 / 54.5, toward left 49 / 55;
-## the blade 55 3/4 toward right (row 2 B) 46 / 54.5 (its toward left 53 / 55: within 5 %, none);
-## the heavy 55 3/4 toward right 42 / 54.5, 3/4 toward left 45.5 / 55, left profile (L2 B) 46 / 50;
-## the flamer 70 3/4 toward left 42 / 46, left profile (L2 B) 58 / 63; the flamer 55 3/4 toward
-## right (row 2 B) 37 / 54.5, toward left 51 / 55 (its left profile 50 / 50: none)
+## Measured stance travel relative to bare run8, in cell px. At p55, front-right / front-left:
+## pistol 43/54.5 and 49/55, rifle 41.5/54.5 and 49/55, blade 46/54.5 and 53/55,
+## heavy 42/54.5 and 45.5/55, flamer 37/54.5 and 51/55. Left profiles: heavy 46/50, flamer 50/50.
+## At p70 the heavy left profile is 59/63, flamer front-left 42/46 and flamer left profile 58/63.
 const RUN_ROW_K: Dictionary[String, float] = {
+	"p70/rocket_launcher/0": 0.91,
+	"p70/rocket_launcher/3": 0.94,
+	"p70/rocket_launcher/4": 0.93,
 	"p70/gloria/0": 0.98,
 	"p70/gloria/3": 0.97,
 	"p70/gloria/4": 0.92,
@@ -54,6 +50,7 @@ const ROWS: int = 8
 const RES: float = 1.5
 const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
 const ARMED_CYCLE_CELL: Dictionary[String, float] = {
+	"p70/rocket_launcher": 84.0,
 	"p70/gloria": 86.7,
 	"p70/pistol": 76.0,
 	"p70/plasma_rifle": 76.0,
