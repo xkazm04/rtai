@@ -66,6 +66,11 @@
   {"id": "guard.refill_delay_s", "file": "project/data/tables/combat.json", "pointer": "/guard/refill_delay_s", "kind": "float", "min": 0, "max": 1000},
   {"id": "guard.refill_per_s", "file": "project/data/tables/combat.json", "pointer": "/guard/refill_per_s", "kind": "float", "min": 0, "max": 1000},
   {"id": "guard.stagger_s", "file": "project/data/tables/combat.json", "pointer": "/guard/stagger_s", "kind": "float", "min": 0, "max": 1000},
-  {"id": "budget.base", "file": "project/data/tables/gauntlet.json", "pointer": "/budget/base", "kind": "int", "min": 1, "max": 1000},
-  {"id": "budget.per_wave", "file": "project/data/tables/gauntlet.json", "pointer": "/budget/per_wave", "kind": "int", "min": 0, "max": 1000}
+  {"id": "budget.base", "file": "project/data/tables/gauntlet.json", "pointer": "/budget/base", "scale": "budget.unit", "kind": "int", "min": 1, "max": 1000},
+  {"id": "budget.per_wave", "file": "project/data/tables/gauntlet.json", "pointer": "/budget/per_wave", "scale": "budget.unit", "kind": "int", "min": 0, "max": 1000},
+  {"id": "max_alive", "file": "project/data/tables/gauntlet.json", "pointer": "/max_alive", "kind": "int", "min": 1, "max": 1000},
+  {"id": "cost.patrol_cop", "file": "project/data/tables/gauntlet.json", "pointer": "/cost/patrol_cop", "kind": "int", "min": 1, "max": 1000, "scale": "budget.unit"},
+  {"id": "cost.war_machine", "file": "project/data/tables/gauntlet.json", "pointer": "/cost/war_machine", "kind": "int", "min": 1, "max": 1000, "scale": "budget.unit"},
+  {"id": "rivet.repair_per_s", "file": "project/data/tables/gauntlet.json", "pointer": "/rivet/repair_per_s", "kind": "float", "min": 0, "max": 1000, "direction": "down"},
+  {"id": "rivet.repair_delay_s", "file": "project/data/tables/gauntlet.json", "pointer": "/rivet/repair_delay_s", "kind": "float", "min": 0, "max": 1000, "direction": "up"}
 ]

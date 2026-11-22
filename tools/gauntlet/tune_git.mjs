@@ -5,7 +5,7 @@ import { validate } from '../lib/mini_schema.mjs';
 import { readJson } from '../lib/repo.mjs';
 import { DAMAGE_GROUP, memberIds, occupied } from './tune_groups.mjs';
 import { PLAN_SCHEMA } from './tune_propose.mjs';
-import { atomicWrite, clamped, digest, git, inventory, numericSlot, readBaseline } from './tune_state.mjs';
+import { atomicWrite, baselineValue, clamped, digest, git, inventory, numericSlot, readBaseline } from './tune_state.mjs';
 
 // Label the night by its morning. A batch run on both sides of midnight gets one allowance.
 export const nightOf = (time = Date.now()) => new Date(time + 12 * 3600_000).toISOString().slice(0, 10);
@@ -88,13 +88,12 @@ function schemaOf(root, knob) {
 }
 
 function preflight(root, plan, receipts) {
-  const { entries, skipped } = inventory(root);
+  const { entries } = inventory(root);
   const baseline = readBaseline(root);
   const used = nightly(root);
   const inputs = new Map(), writes = [];
   for (const change of plan.changes) {
     const { id } = change;
-    if (skipped.has(id)) continue;
     const members = change.members ?? [change];
     const keys = memberIds(id, entries);
     if (change.members && (keys.length !== members.length || !keys.every((key, i) => key === members[i].id)))
@@ -109,7 +108,7 @@ function preflight(root, plan, receipts) {
       const { knob, value } = entry;
       if (m.file !== knob.file || m.pointer !== knob.pointer || (m.row !== undefined && m.row !== knob.row))
         throw new Error('plan differs from knob catalog: ' + m.id);
-      const first = baseline.values[m.id];
+      const first = baselineValue(entry, baseline);
       if (first !== m.baseline || !Number.isFinite(first)) throw new Error('baseline mismatch: ' + m.id);
       if (value !== (applied ? m.after : m.before)) throw new Error('stale plan: ' + m.id);
       const requested = change.members ? m.before * change.factor : m.after;

@@ -12,7 +12,7 @@ import { confirmChange, pairNullRuns, pairRuns, verdictFor } from './tune_confir
 import { knobStep, occupied } from './tune_groups.mjs';
 import { nightOf } from './tune_git.mjs';
 import { propose } from './tune_propose.mjs';
-import { BASELINE, clamped, digest, ensureBaseline, git, inventory, TABLES, withLock } from './tune_state.mjs';
+import { BASELINE, baselineValue, budgetUnit, clamped, digest, ensureBaseline, git, inventory, TABLES, withLock } from './tune_state.mjs';
 
 const catalog = 'tools/gauntlet/knobs.json';
 
@@ -53,8 +53,8 @@ test('nightly and first-night bounds intersect in both directions, including int
   assert.equal(clamped({ ...k, max: 11 }, 10, 10, 99), 11);
   assert.equal(clamped(k, 0, 0, 1), 0);
   k.kind = 'int';
-  assert.equal(clamped(k, 12, 12, 11.9), 11);
-  assert.equal(clamped(k, 12, 12, 12.1), 13);
+  assert.equal(clamped(k, 12, 12, 11.9), 12);
+  assert.equal(clamped(k, 12, 12, 12.1), 12);
   assert.equal(clamped(k, 12, 12, 1), 10);
   assert.equal(clamped(k, 11, 11, 99), 13);
   assert.equal(clamped(k, 2, 2, 9), 2);
@@ -72,21 +72,64 @@ test('first-night values and provenance survive reruns and additions', (t) => {
   assert.deepEqual(added, { ...baseline, values: { a: 10, b: 4 } });
 });
 
-test('shipped pointers resolve and missing, reordered or pending rows are reported and skipped', (t) => {
+test('the catalog fails on an unresolved pointer or mismatched row id', (t) => {
   const root = repository(t);
   const rows = readJson(join(root, catalog));
-  assert.equal(inventory(root, assert.fail).entries.size, rows.length);
+  assert.equal(inventory(root).entries.size, rows.length);
   const a = rows.find((k) => k.id === 'war_machine.hp');
-  write(root, catalog, [{ ...a, pointer: '/archetypes/999/hp' },
-    { ...a, id: 'new_robot.hp' }, { ...a, id: 'new_robot.damage', pending: true }]);
-  const warnings = [];
-  assert.equal(inventory(root, (s) => warnings.push(s)).entries.size, 0);
-  assert.equal(warnings.length, 3);
-  assert.match(warnings[0], /war_machine.hp unresolved.*999/);
-  assert.match(warnings[1], /new_robot.hp unresolved/);
-  assert.match(warnings[2], /pending/);
+  for (const invalid of [{ ...a, pointer: '/archetypes/999/hp' }, { ...a, id: 'new_robot.hp' }]) {
+    write(root, catalog, [invalid]);
+    assert.throws(() => inventory(root), /unresolved/);
+  }
 });
 
+test('budget units preserve first-night tier bounds and round steps to the nearest table integer', (t) => {
+  const root = repository(t);
+  const file = TABLES + 'gauntlet.json', table = readJson(join(root, file));
+  for (const unit of [1, 10, 4]) {
+    table.budget = { base: 2 * unit, per_wave: 2 * unit };
+    if (unit !== 1) table.budget.unit = unit;
+    write(root, file, table);
+    const { entries } = inventory(root), entry = entries.get('budget.per_wave');
+    const baseline = ensureBaseline(root, entries);
+    assert.equal(budgetUnit(table), unit);
+    assert.equal(baseline.values['budget.per_wave'], 2);
+    assert.equal(baselineValue(entry, baseline), 2 * unit);
+    assert.equal(knobStep('budget.per_wave', 1.01, entries, baseline), null);
+    const after = knobStep('budget.per_wave', 1.21, entries, baseline)?.after ?? entry.value;
+    assert.equal(after, Math.round(2 * unit * 1.21));
+  }
+  assert.throws(() => budgetUnit({ budget: { unit: 0 } }), /positive integer/);
+  table.budget = { base: 1, per_wave: 1 };
+  write(root, file, table);
+  const state = inventory(root), batch = robotBatch();
+  for (const r of batch.results) r.waves = [{ n: 1, enemies: { patrol_cop: 1 }, seconds: 19 }];
+  const plan = propose(batch, state, ensureBaseline(root, state.entries));
+  assert.equal(plan.changes.length, 0);
+  assert.match(plan.misses[0].reason, /budget.base rounds to the current integer 1/);
+
+  for (const [direction, requested, expected] of [['down', 12, 10], ['down', 9, 9], ['up', 9, 10], ['up', 12, 12]]) {
+    assert.equal(clamped({ direction, kind: 'float', min: 0, max: 100 }, 10, 10, requested), expected);
+  }
+});
+
+test('street cost knobs follow named overrides and the cap resolves in table units', (t) => {
+  const root = repository(t), { entries, tables } = inventory(root);
+  const street = tables.get(TABLES + 'gauntlet.json');
+  assert.equal(entries.get('max_alive').value, street.max_alive);
+  const knobs = [...entries.keys()].filter((id) => id.startsWith('cost.'));
+  assert.deepEqual(knobs.sort(), Object.keys(street.cost).map((id) => 'cost.' + id).sort());
+  for (const [id, value] of Object.entries(street.cost)) {
+    const entry = entries.get('cost.' + id);
+    assert.equal(entry.knob.pointer, '/cost/' + id);
+    assert.equal(entry.value, value);
+    assert.equal(entry.unit, budgetUnit(street));
+  }
+  if (street.rivet) {
+    assert.equal(entries.get('rivet.repair_delay_s').knob.direction, 'up');
+    assert.equal(entries.get('rivet.repair_per_s').knob.direction, 'down');
+  }
+});
 
 function cli(root, command, ...args) {
   return spawnSync(process.execPath, [join(ROOT, 'tools/gauntlet/tune.mjs'), command, ...args], { cwd: root, encoding: 'utf8' });
@@ -461,7 +504,7 @@ test('a selective Git revert preserves a later kept edit on the adjacent budget 
   const root = repository(t, 'n23-tune-adjacent');
   const file = TABLES + 'gauntlet.json';
   const table = readJson(join(root, file));
-  table.budget = { base: 10, per_wave: 10 };
+  table.budget = { ...table.budget, base: 10, per_wave: 10 };
   write(root, file, table);
   git(root, 'commit', '-m', 'fixture with adjustable integer budget', '--', file);
   const before = robotBatch();
@@ -477,54 +520,29 @@ test('a selective Git revert preserves a later kept edit on the adjacent budget 
   for (const r of after.results) r.waves[1].seconds = 15;
   write(root, afterFile, after);
   ok(cli(root, 'confirm', ...confirmArgs, '--revert'));
-  assert.deepEqual(readJson(join(root, file)).budget, { base: 10, per_wave: 8 });
+  assert.deepEqual(readJson(join(root, file)).budget, { ...table.budget, per_wave: 8 });
   const ledger = readJson(join(root, 'build/after/tune-ledger.json'));
   assert.equal(ledger.changes[0].revert_commit, git(root, 'rev-parse', 'HEAD').trim());
   assert.equal(ledger.changes[1].verdict, 'kept');
 });
 
 
-test('a vanished pointer is reported and skipped while another planned knob still applies', (t) => {
+test('apply refuses a dead or reordered pointer before writing another change', (t) => {
   const root = repository(t, 'n23-tune-missing');
-  const plan = prepare(root, fixtureBatch());
+  prepare(root, fixtureBatch());
   const rows = readJson(join(root, catalog));
-  rows.find((k) => k.id === 'weapon.pistol.rof_hz').pointer = '/weapons/999/rof_hz';
-  write(root, catalog, rows);
-  git(root, 'commit', '-m', 'unresolved fixture pointer', '--', catalog);
-  const result = cli(root, 'apply', '--plan=' + planFile);
-  ok(result);
-  assert.match(result.stderr, /weapon\.pistol\.rof_hz unresolved.*skipped/);
-  assert.equal(readJson(join(root, TABLES + 'weapons.json')).weapons[0].rof_hz, 4);
-  assert.equal(readJson(join(root, TABLES + 'combat.json')).guard.meter_max, plan.changes[1].after);
-  // The confirm input and the ledger beside it can live outside the ignored build directory.
-  const after = 'night-output/after.json';
-  write(root, after, fixtureBatch());
-  ok(cli(root, 'confirm', '--floor-mode=cross-seed', '--before=' + beforeFile, '--after=' + after, '--plan=' + planFile, '--revert'));
-  const ledger = readJson(join(root, 'night-output/tune-ledger.json'));
-  assert.equal(ledger.changes[0].commit, null);
-  assert.ok(ledger.changes[1].revert_commit);
-  assert.equal(readJson(join(root, TABLES + 'combat.json')).guard.meter_max, plan.changes[1].before);
-});
-
-test('read and apply skip reordered array rows by their catalog id while other knobs apply', (t) => {
-  const root = repository(t, 'n23-tune-reorder'), before = robotBatch();
-  const plan = prepare(root, before);
-  assert.deepEqual(plan.changes.map((c) => c.row), ['shield_robot', 'war_machine', 'sentry_turret']);
-  const file = TABLES + 'enemies.json', table = readJson(join(root, file));
-  const i = table.archetypes.findIndex((r) => r.id === 'war_machine');
-  const j = table.archetypes.findIndex((r) => r.id === 'shield_robot');
-  [table.archetypes[i], table.archetypes[j]] = [table.archetypes[j], table.archetypes[i]];
-  writeFileSync(join(root, file), canonicalJson(table));
-  git(root, 'commit', '-m', 'reorder fixture archetypes', '--', file);
-  const warning = 'knob war_machine.hp: row ' + i + ' is shield_robot, skipped';
-  const warnings = [], state = inventory(root, (s) => warnings.push(s));
-  assert.equal(state.entries.has('war_machine.hp'), false);
-  assert.ok(warnings.includes(warning));
-  const result = cli(root, 'apply', '--plan=' + planFile);
-  ok(result);
-  assert.deepEqual(result.stderr.trim().split(/\r?\n/).filter((s) => s.startsWith('knob war_machine.hp:')), [warning]);
-  table.archetypes.find((r) => r.id === 'sentry_turret').hp = plan.changes[2].after;
-  assert.deepEqual(readJson(join(root, file)), table);
+  const knob = rows.find((k) => k.id === 'weapon.pistol.rof_hz');
+  for (const pointer of ['/weapons/999/rof_hz', '/weapons/1/rof_hz']) {
+    knob.pointer = pointer;
+    write(root, catalog, rows);
+    git(root, 'commit', '-m', 'unresolved fixture pointer', '--', catalog);
+    const head = git(root, 'rev-parse', 'HEAD');
+    const result = cli(root, 'apply', '--plan=' + planFile);
+    assert.equal(result.status, 1);
+    assert.match(result.stderr, /weapon\.pistol\.rof_hz/);
+    assert.equal(git(root, 'rev-parse', 'HEAD'), head);
+    assert.equal(git(root, 'diff', '--', TABLES), '');
+  }
 });
 
 test('a night with synthetic batches drives the real report, propose, apply and selective revert CLIs', (t) => {

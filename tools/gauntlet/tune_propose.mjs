@@ -148,7 +148,10 @@ export function propose(batch, state, baseline, { target = 15, profile = 'averag
     for (const [id, factor] of choices) {
       const step = knobStep(id, factor, state.entries, baseline);
       if (!step) {
-        result.reason = id + ' has no legal ' + (factor > 1 ? 'upward' : 'downward') + ' step within bounds';
+        const entry = state.entries.get(id);
+        result.reason = entry?.knob.kind === 'int' && Math.round(entry.value * factor) === entry.value
+          ? id + ' rounds to the current integer ' + entry.value
+          : id + ' has no legal ' + (factor > 1 ? 'upward' : 'downward') + ' step within bounds';
         continue;
       }
       if (occupied(id, chosen) || (metric.type === 'offer' && selectedOffers.has(metric.id))) {

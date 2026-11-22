@@ -1,4 +1,4 @@
-import { clamped } from './tune_state.mjs';
+import { baselineValue, clamped } from './tune_state.mjs';
 
 export const DAMAGE_GROUP = 'enemy_damage';
 const damageKnob = (id) => /^enemy_weapon\.[^.]+\.(damage|splash_damage)$/.test(id)
@@ -15,7 +15,7 @@ export function knobStep(id, requestedFactor, entries, baseline) {
     const entry = entries.get(member);
     if (!entry) return null;
     const { knob, value: before } = entry;
-    const first = baseline.values[member];
+    const first = baselineValue(entry, baseline);
     const after = clamped(knob, before, first, before * factor);
     members.push({ id: member, file: knob.file, pointer: knob.pointer, ...(knob.row && { row: knob.row }),
       before, after, baseline: first });
