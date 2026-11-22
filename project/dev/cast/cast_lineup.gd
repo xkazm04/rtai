@@ -12,7 +12,7 @@ var _scene: Node
 var _view: CollectCallView
 var _clock: SimClock
 var _arena: CombatArena
-var _board: CastPlate
+var _board: CastPlate = CastPlate.new()
 var _shadow: RigCastShadows
 var _ppm: int
 var _pitch: int
@@ -31,13 +31,13 @@ func _ready() -> void:
 	var mode: ViewMode = ViewMode.shared()
 	mode.set_pitch(float(_pitch))
 	mode.art = "p%d" % _pitch
-	_board = CastPlate.new()
 	add_child(_board)
-	if not _open_wave():
+	var host: ArenaRigs = _open_wave()
+	if host == null:
 		_fail("could not open wave cast")
 		return
 	if OS.get_environment("GTAI_CAST_LANCER") == "1":
-		await CastLancerStills.capture(_scene, _session, MARK, _ppm, _out)
+		await CastLancerStills.capture(host, _session, MARK, _ppm, _out)
 		return
 	if not await _capture_wave():
 		_fail("wave capture failed")
@@ -56,14 +56,14 @@ func _ready() -> void:
 	get_tree().quit()
 
 
-func _open_wave() -> bool:
+func _open_wave() -> ArenaRigs:
 	_scene = Node.new()
 	add_child(_scene)
 	var run: GauntletRun = GauntletRun.new()
 	run.controls = &"wheel"
 	_session = GauntletSession.open_street(Events, Data, run)
 	if _session == null:
-		return false
+		return null
 	_scene.add_child(_session.world)
 	_session.world.set_process(false)
 	_arena = _session.stage.arena
@@ -74,8 +74,8 @@ func _open_wave() -> bool:
 	var cast: ArenaRigs = ArenaRigs.new()
 	_scene.add_child(cast)
 	if not cast.attach(_session.stage, _view, _session.world.context()):
-		return false
-	return _studio()
+		return null
+	return cast if _studio() else null
 
 
 func _studio() -> bool:

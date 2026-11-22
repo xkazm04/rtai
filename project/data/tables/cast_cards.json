@@ -15,6 +15,22 @@
         "fall": "rocket_trooper_fall.png",
         "hit": "rocket_trooper_hit.png"
       }
+    },
+    "shield_robot": {
+      "enabled": true,
+      "id": "shield_robot",
+      "p55": {
+        "armed_walk": "shield_robot_armed_walk.png",
+        "attack": "shield_robot_attack.png",
+        "fall": "shield_robot_fall.png",
+        "hit": "shield_robot_hit.png"
+      },
+      "p70": {
+        "armed_walk": "shield_robot_armed_walk.png",
+        "attack": "shield_robot_attack.png",
+        "fall": "shield_robot_fall.png",
+        "hit": "shield_robot_hit.png"
+      }
     }
   },
   "schema": "gtai.cast_cards/1"

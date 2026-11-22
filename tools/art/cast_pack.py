@@ -64,6 +64,19 @@ def register_boots(grid, action, pitch):
     result.save(grid)
 
 
+def fit_prone(source, target):
+    """Keep the registered boot point. The paired p70 still measured 121 vs 146 px."""
+    im = Image.open(source).convert("RGBA")
+    w, h = im.width // 5, im.height // 3
+    for col in range(5):
+        left, top = col * w, 2 * h
+        bounds = (left, top, left + w, top + h)
+        tile = im.crop(bounds).resize((round(w * 0.83), round(h * 0.83)), Image.Resampling.LANCZOS)
+        im.paste((0, 0, 0, 0), bounds)
+        im.paste(tile, (left + (w - tile.width) // 2, top + (h - tile.height) // 2))
+    im.save(target)
+
+
 def run(script, *args):
     subprocess.run([sys.executable, "-B", str(script), *map(str, args)], check=True)
 
@@ -126,7 +139,12 @@ def main():
     toned = work / "toned.png"
     run(TOOLS / "street_tone.py", raw, dest / "cop_patrol_card.png", toned)
     check_cells(toned, {"armed_walk": 4, "attack": 4, "hit": 1, "fall": 3}[args.action])
-    shutil.copyfile(toned, dest / (stem + ".png"))
+    target = dest / (stem + ".png")
+    if args.action == "fall":
+        fit_prone(toned, target)
+        check_cells(target, 3)
+    else:
+        shutil.copyfile(toned, target)
 
 
 if __name__ == "__main__":

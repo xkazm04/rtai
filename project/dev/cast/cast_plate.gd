@@ -91,18 +91,22 @@ func save_sheet(path: String, ppm: int, pitch: int) -> bool:
 			return false
 	_ppm = ppm
 	_pitch = pitch
+	return await save_canvas(path, EXTENT, _draw_sheet)
+
+
+func save_canvas(path: String, size: Vector2i, paint: Callable) -> bool:
 	layer = RenderLayers.canvas(&"hud") + 1
 	_canvas = Node2D.new()
 	add_child(_canvas)
 	@warning_ignore("return_value_discarded")
-	_canvas.draw.connect(_draw_sheet)
+	_canvas.draw.connect(paint)
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
 	var sheet: Image = get_viewport().get_texture().get_image()
 	return (
 		sheet.get_size() == EXTENT
 		and DirAccess.make_dir_recursive_absolute(path.get_base_dir()) == OK
-		and sheet.save_png(path) == OK
+		and sheet.get_region(Rect2i(Vector2i.ZERO, size)).save_png(path) == OK
 	)
 
 
@@ -119,7 +123,9 @@ func _dimensions(facing: int) -> Vector3i:
 func _draw_sheet() -> void:
 	_canvas.draw_rect(Rect2(Vector2.ZERO, Vector2(EXTENT)), _matte)
 	_text(Vector2(24, 47), tr("RTAI / Wave cast"), 32)
-	_text(Vector2(1380, 44), tr("%d px/m   ·   %d° pitch   ·   1920 × 1080") % [_ppm, _pitch], 22)
+	_text(
+		Vector2(1380, 44), tr("%d px/m   Â·   %dÂ° pitch   Â·   1920 Ă— 1080") % [_ppm, _pitch], 22
+	)
 	for i: int in 2:
 		_draw_row(i)
 	_text(
