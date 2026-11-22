@@ -77,3 +77,5 @@ NEXT (Director / next night): (1) merge per REPORT "Merge notes" (gauntlet_draw 
 - 09:31 session 7 (STABILIZE, past freeze) start. No Astra (lock free, 8 lines in astra-calls.jsonl), no Godot of mine. New NEED street: loop 08:51, gauntlet HUD `Health 111 / 110` on the merged game (Tonnage form). After the freeze and too late for an Astra call plus a new gate (report 09:40): not fixed, recorded in REPORT Next steps 8 with the first places to check.
 - 09:33 REPORT cites 24/24 ok. Final code stays 574e313a2; gate PASS (7277e1f8) and --reels PASS (3b446472) cover it.
 NEXT (Director / next night): as the 09:10 NEXT, plus (6) loop's NEED 08:51: HUD hp above max in Tonnage form (REPORT Next steps 8).
+- 09:31 session 8 (STABILIZE) check: tree clean, no Astra, no Godot of mine; no NEED street newer than loop 08:51 (already in REPORT Next steps 8); REPORT cites 24/24 ok. Nothing to change after the freeze.
+NEXT (Director): as the 09:10 and 09:33 NEXT lines; lane closed at final code 574e313a2.
