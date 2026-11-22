@@ -105,3 +105,7 @@ NEXT: (session 3) check logs/cast/astra.lock + astra-calls.jsonl; when film-door
 - 20:58 round 04 pile-driver review: walk/attack/fall_70_front3 (2 front columns) ACCEPTED; walk_70_v2 rows 2/4 and
   fall_70_v2 row 2 have mirrored cols 3-4 (cannon left): flip or take from other rows. Notes in brief 05 draft section 0.
   Takes so far: pile-driver walk_70 3 (v1 rej, v2 part, front3 acc), attack_70 2 (front3 acc), fall_70 3 (front3 acc).
+- 21:12 packed clamshell sheets (working tree, uncommitted) reviewed on a light matte: p55/p70 attack and fall ACCEPTED
+  (wisps erased, plate still and square, rows idle/glow/fire/cool, wreck row clear). Minor: p55 stack caps a little
+  ragged where the wisps were cut (sub-pixel at 32 px/m). Astra is wiring foe_turret_card_view.gd; the 11 leftover
+  staged paths from brief 03 are still uncommitted at 21:08.
