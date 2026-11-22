@@ -8,6 +8,8 @@ const COPY: Dictionary[String, String] = {
 	"claw": "Quick claw [melee]",
 	"guard": "Hold [guard] to guard",
 	"roll": "Roll clear [roll]",
+	"wheel": "Select pistol [wheel]",
+	"fire": "Aim [aim] and fire [fire]",
 }
 const HOLD_TICKS: int = 2 * SimClock.TICK_RATE
 
@@ -51,4 +53,13 @@ func words(pad: bool) -> String:
 	for action: StringName in [&"guard", &"roll"]:
 		var key: String = ObjectiveHint.pad_name(action) if pad else ObjectiveHint.key_name(action)
 		copy = copy.replace("[%s]" % action, "[%s]" % key)
-	return ObjectiveHint.with_keys(copy, pad)
+	return ObjectiveHint.with_keys(copy.replace("[wheel]", "[%s]" % _wheel_key(pad)), pad)
+
+
+func _wheel_key(pad: bool) -> String:
+	if pad:
+		return ObjectiveHint.pad_name(&"weapon_next")
+	for event: InputEvent in InputMap.action_get_events(&"weapon_next"):
+		if event is InputEventMouseButton:
+			return event.as_text()
+	return ObjectiveHint.key_name(&"weapon_next")
