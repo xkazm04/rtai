@@ -7,7 +7,24 @@ You are the builder for lane `cast` of an unattended night run on RTAI (Godot 4,
 At stop-minus-10 commit what is finished, write the report, stop. Fix lint and format findings in your own edit and go on.
 
 ## 0. FIRST (before anything else, 15 minutes max): commit what is already done
-Run `git status --short`. If the previous call left finished work uncommitted, commit it now. Commit it in small commits, staged per path:
+Run `git status --short`. The previous call (`clamshell`, report `evidence/briefs/n24-cast-04-clamshell.out.txt`
+and `C:\Users\kazda\kiro\gtai-art\foes-n24\04-build-report.md`) left the clamshell uncommitted: its files are on disk
+but NOT staged any more (a director commit attempt dropped the index; nothing was lost, the director will not commit
+while you run). Also uncommitted: the pile-driver hunks in `cast_cards.json` / schema / provenance (keep its row
+`enabled: false` until section 1 is done), the untracked pile-driver sheets and `tools/art/cast_walker_splice.py`.
+Known open faults from that report, fix them here:
+- `node tools/gate/quick.mjs` full run was exit 1 with "dependency compile cascades on the arena and turret scripts".
+  Find the originating parse error with `node tools/godot/check.mjs project/features/combat/squad/foe_turret_card_view.gd
+  project/features/arena/arena_robot_rigs.gd project/features/combat/squad/foe_turret_view.gd` (after a Godot
+  `--import`) and fix it. Do not commit the clamshell until quick is green, or the failure is shown on main
+  `b3f4727c0` too (then quote it).
+- Door mutation scored 0/(0+2) with 2 survivors (`foes-n24/04-mutate-door.log`): read the surviving mutants and add
+  assertions to the shield card test that kill them; re-run mutate on `foe_shield_card_view.gd` (--max=20).
+- The turret mutation never ran: run it after the clamshell commit.
+- The scenario `rig_stress` miss (1.073 / 1.000 ms) was under load: use `node tools/tests/run_scenarios.mjs` (it
+  re-runs contended misses alone) and quote its summary.
+- The clamshell stills patch (`04-clamshell-stills.patch`) was rejected by the dev-code debt budget: the stills already
+  exist and are accepted; do not re-apply it. Commit it in small commits, staged per path:
 1. Clamshell (sentry turret): `project/features/characters/art/view/{p55,p70}/sentry_turret_{attack,fall,hit}.png` +
    `.import`; `project/features/combat/squad/foe_turret_card_view.gd` + `.uid`; `foe_turret_view.gd`;
    `project/features/arena/arena_robot_rigs.gd` (one-line call site); `project/data/tables/cast_cards.json` + schema;
