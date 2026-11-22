@@ -59,7 +59,7 @@ const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
 const ARMED_CYCLE_CELL: Dictionary[String, float] = {
 	"p70/hand_cannon": 69.7,
 	"p70/assault_rifle": 78.0,
-	"p70/electro_baton": 67.3,
+	"p70/electro_baton": 68.7,
 	"p70/chainsaw": 64.3,
 	"p70/rocket_launcher": 84.0,
 	"p70/gloria": 86.7,
