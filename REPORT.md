@@ -45,7 +45,10 @@ DRAFT (05:25): sections marked PENDING are filled after b4 (guard pose), b5 (fil
 - Root `JOURNAL.md` / `REPORT.md`: keep each lane's own.
 
 ## Next steps
-PENDING
+- Scale pass on the painted guard strips (`tools/art/rivet_guard.py` cut scale) so the held figure matches the rig rest pose height.
+- Store the controls mode in quest checkpoints (`gtai.checkpoint/1` -> an optional field, as the replay tape got) so a cross-mode resume replays on the mode it was saved in.
+- Loop lane: teach the test player to keep rockets >= 3.5 m and the nuke >= 12 m from Rivet now that his splash hurts him; re-measure with `self_damage` per wave.
+- Owner verdict on `blast.rivet_hp_per_table_hp` (0.1 shipped, 0.01 the alternative) after watching `self_blast.mp4`.
 
 ## Astra ledger
 | Call | Minutes | Verdict | Note |
