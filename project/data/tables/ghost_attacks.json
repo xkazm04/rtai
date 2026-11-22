@@ -25,7 +25,7 @@
     "dent": {
       "cooldown_ticks": 480,
       "enabled": true,
-      "life_ticks": 18,
+      "life_ticks": 42,
       "ram_half_m": 0.9,
       "range_m": 8
     },
@@ -33,21 +33,21 @@
     "kerf": {
       "cooldown_ticks": 600,
       "enabled": true,
-      "life_ticks": 15,
+      "life_ticks": 45,
       "range_m": 9,
       "snap_m": 2
     },
     "ohm": {
       "cooldown_ticks": 480,
       "enabled": true,
-      "life_ticks": 24,
+      "life_ticks": 48,
       "radius_m": 3.5,
       "range_m": 9
     },
     "tonnage": {
       "cooldown_ticks": 480,
       "enabled": true,
-      "life_ticks": 30,
+      "life_ticks": 54,
       "range_m": 6
     }
   },
