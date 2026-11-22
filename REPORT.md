@@ -1,6 +1,9 @@
 # REPORT - lane loop (n23, 2026-11-22)
 
-DRAFT (session 5, 06:50). PENDING marks what the running batches still fill in; the final version is written at 09:40.
+Gate (snapshot, final code commit `900443274`; every later commit is REPORT, JOURNAL and evidence only):
+`gate: PASS; C:\Users\kazda\kiro\gtai-wt\n23-loop\build\gate\9004432743f1\gate.json` (08:12): lint 19/19, unit 3738 passed / 0 failed /
+2 skipped, scenarios 65 passed, parity bit for bit (1200 steps, planted mutation caught at step 629), selftest, export-audit 903/0.
+The `--reels` gate was not run: the films held the lane's one Godot slot until the freeze and this session stops at 09:23.
 
 Branch `n23-loop`, cut from `main` `76111adec`. Evidence under `evidence/n23-loop/`.
 
