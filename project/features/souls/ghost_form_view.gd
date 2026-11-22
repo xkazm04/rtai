@@ -48,6 +48,7 @@ static func attach(
 	var v: GhostFormView = make(stage, p_rigs, p_camera)
 	if v != null:
 		layer.add_child(v)
+		GhostDeployView.attach(layer, stage, v.reduced_motion)
 	return v
 
 

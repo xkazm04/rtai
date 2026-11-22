@@ -29,6 +29,7 @@ static func attach(
 	if layer == null or stage == null or stage.pilot == null or stage.pilot.hauler == null:
 		return null
 	var v: GhostAttackViews = GhostAttackViews.new()
+	GhostDeployView.attach(layer, stage, reduced_motion)
 	v.tonnage = TonnageView.new()
 	v.tonnage.hauler = stage.pilot.hauler
 	v.tonnage.marks = marks
