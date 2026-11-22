@@ -233,6 +233,12 @@
       },
       "type": "object"
     },
+    "enemy_damage_k": {
+      "default": 1,
+      "description": "Multiplies the damage gauntlet foes deal to Rivet. Rivet's own blast and quest 1 are unaffected.",
+      "exclusiveMinimum": 0,
+      "type": "number"
+    },
     "max_alive": {
       "minimum": 1,
       "type": "integer"

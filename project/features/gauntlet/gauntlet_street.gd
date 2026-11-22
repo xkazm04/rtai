@@ -72,10 +72,17 @@ func advance_to(x: float) -> bool:
 
 
 func setup(stage: ArenaStage, _ctx: WorldContext) -> void:
+	(stage.arena as GauntletCombat).enemy_damage_k = enemy_damage_multiplier(_table)
 	apply_repair(_table, stage.arena.tuning)
 	_install(stage)
 	@warning_ignore("return_value_discarded")
 	stage.arena.kill_landed.connect(_death)
+
+
+static func enemy_damage_multiplier(rules: DataTable) -> float:
+	if rules.raw.has("enemy_damage_k"):
+		return rules.num(rules.raw, "enemy_damage_k")
+	return 1.0
 
 
 static func apply_repair(rules: DataTable, tuning: CombatTuning) -> void:
