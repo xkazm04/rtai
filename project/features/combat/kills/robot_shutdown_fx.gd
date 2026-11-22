@@ -26,6 +26,7 @@ var ppm: float
 var side: float
 var still: bool
 var shake_ticks: int
+var exposed_steel: bool = false
 var fold_ticks: int
 var joint_m: float
 var fall_deg: float
@@ -89,9 +90,26 @@ func _process(_delta: float) -> void:
 	pivot.rotation = jerk + side * deg_to_rad(fall_deg) * fall
 	pivot.position = Vector2(jerk * ppm, -fall * 0.08 * ppm)
 	pivot.scale.y = lerpf(1.0, 0.56, fall)
-	chassis.modulate = Color.WHITE.lerp(Color("#4c5055"), fall)
+	if fall > 0.0 and not exposed_steel:
+		exposed_steel = true
+		_expose_steel()
+	chassis.modulate = Color.WHITE.lerp(Color("#bcb3a4"), fall)
 	(pivot.get_child(1) as Node2D).queue_redraw()
 	queue_redraw()
+
+
+## The live print uses a flat sticker at 32 px/m and thresholds the dark metal at 64.
+## On collapse use the copied plates' original gunmetal texture, then smoke-tint the chassis.
+func _expose_steel() -> void:
+	var halo: ShaderMaterial = PartMaterials.get_mat(PartMaterials.PartKind.HALO, false, 0)
+	for node: Node in chassis.find_children("*", "Sprite2D", true, false):
+		var plate: Sprite2D = node as Sprite2D
+		if plate.material == halo:
+			plate.hide()
+		elif plate.material is ShaderMaterial:
+			var print_mat: ShaderMaterial = plate.material as ShaderMaterial
+			if print_mat.shader == halo.shader:
+				plate.material = null
 
 
 func _lights(ci: Node2D) -> void:
@@ -111,7 +129,20 @@ static func crackle(ci: CanvasItem, at: Vector2, pixels: float, tick: int, power
 		var joint: Vector2 = at + Vector2(sign_x * 0.27, -0.04) * pixels
 		ci.draw_circle(joint, (0.11 + 0.06 * power) * pixels, Color(AMBER, 0.23 + power * 0.25))
 		ci.draw_circle(joint, 0.07 * pixels, AMBER)
-	ShockJolt.arcs(ci, at, pixels, tick, Vector2i(3, 2))
+		if not ShockJolt.hard:
+			continue
+		var kink: float = ShockJolt.step(tick * SimClock.TICK_DT, sign_x, 0) * 0.12
+		var arc: PackedVector2Array = PackedVector2Array(
+			[
+				joint + Vector2(-sign_x * 0.18, -0.33) * pixels,
+				joint + Vector2(sign_x * (0.30 + kink), -0.12) * pixels,
+				joint,
+				joint + Vector2(sign_x * (0.19 - kink), 0.22) * pixels,
+				joint + Vector2(-sign_x * 0.14, 0.42) * pixels
+			]
+		)
+		ci.draw_polyline(arc, Color(AMBER, 0.74), maxf(2.0, 0.14 * pixels), true)
+		ci.draw_polyline(arc, Color.WHITE, maxf(1.35, 0.052 * pixels), true)
 
 
 func _draw() -> void:
