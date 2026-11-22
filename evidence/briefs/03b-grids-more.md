@@ -1,6 +1,6 @@
 # Brief 03b `grids` (resume): the next weapons' drawn grids, and the dash decision lines (lane motion, n24)
 
-Hard stop: HARDSTOP wall clock (check `date`). Commit deadline: COMMITBY. Whatever is not committed by then,
+Hard stop: 22:22 wall clock (check `date`). Commit deadline: 22:12 (one weapon committed by 21:55 at the latest, even if alone). Whatever is not committed by then,
 describe in your final report. Fix lint and format findings in your own edit and go on. No amend, no rebase,
 no `git stash`, no `git add -A/./-u`, no `commit -a`, no reset --hard, never push. Stage per path.
 mutate: `--max=20`, changed lines only. Everything from brief 03 still binds (pipeline, accept rule, allowlist,
@@ -48,3 +48,10 @@ weapon that landed (gloria first). Into `C:/Users/kazda/kiro/gtai-masters/n24/mo
 ## Report
 Per weapon: done / partial / fallback kept, row grades, stride numbers, stills, commit sha; decision lines' commit;
 the film path and its ffprobe line; image_gen count and minutes.
+
+## Known: quick's Godot check is red for reasons outside this lane
+`tools/gate/quick.mjs` FAILs with ~475 "Identifier not found: Log / LaunchArgs" and "Failed to compile depended
+scripts": `--check-only -s` does not register autoloads, so every unchanged file that uses `Log` fails the same way
+(the director reproduced it on unmodified `cut_rig.gd` at d50add33b). Do not chase it and do not let it hold a
+commit: the compile check that counts is `node tools/tests/run_unit.mjs --changed` (plus lint in pre-commit). Quote
+quick's lint/format lines only. Gloria p70 was committed by the director as d50add33b.
