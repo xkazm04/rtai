@@ -116,3 +116,10 @@ NEXT (session 2 end, 20:1x; Astra `rocket-gap` running until <= 20:45):
 3. Then launch brief 02 (deflect; fill HARDSTOP/COMMITBY = start + 75 min / start + 65 min; last commit 10 min before
    the stop because of the hook). Then 03, then 04 (after merging n24-motion at `MILESTONE dash` and n24-ghost
    `8d1d6fef1`). Brief 05 (not written): films (deflect, rocket/nail, average fight punished) + tuning knobs.
+- 20:08 read motion `MILESTONE dash 9f4ce27a9` (18:50: `dash` bit 18 / wire 31 on Shift, sprint keys [], mask 48 bits,
+  `rivet_motion.json` dash {distance_m 4.5, ticks 10, cooldown_ticks 40, iframe_ticks 0, enabled true}; gauntlet
+  `dashes` per wave `ca2ada5f2`). Their director still owes a review (double `rest_tick`?). Merge plan: after
+  `rocket-gap` ends and before brief 02 starts: `git merge --no-edit n24-motion` (record the sha; JOURNAL/REPORT
+  add/add: keep ours), then unit `--changed` + scenarios once. The after-gaps batch goes through ablate `--rev=<pre-merge
+  HEAD>` in a temp worktree, so the merge does not leak into it. Ghost: merge `n24-ghost` (>= 8d1d6fef1) before brief 04.
+NEXT (unchanged order): rocket-gap review -> merge n24-motion -> after-gaps batch (rev = pre-merge HEAD) -> brief 02.
