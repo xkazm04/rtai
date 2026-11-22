@@ -7,6 +7,12 @@ const MATCHUPS: Dictionary = {
 	MoveTable.OVERKILL: [&"patrol_cop", &"robot_thug"],
 }
 
+var _slice_k: float
+
+
+func _init(slice_k: float = 1.0) -> void:
+	_slice_k = slice_k
+
 
 func run(path: String, selected: String, seeds: int) -> int:
 	if selected != "" and not MATCHUPS.has(selected):
@@ -37,6 +43,7 @@ func _write(path: String, cases: Array[Dictionary], seeds: int) -> int:
 		"schema": "gtai.move-ttk/1",
 		"first_seed": 1,
 		"seeds": seeds,
+		"slice_k": _slice_k,
 		"tick_hz": SimClock.TICK_RATE,
 		"limit_ticks": FoeTtkTrial.LIMIT,
 		"cases": cases,
@@ -66,12 +73,14 @@ func _sample(
 	if move == MoveTable.OVERKILL:
 		arms = ["rank_1", "rank_2"]
 	for seed_id: int in range(1, seeds + 1):
-		var off: Dictionary = MoveTtkTrial.new(flank).measure(move, enemy, weapon, seed_id, 0)
+		var off: Dictionary = MoveTtkTrial.new(flank, _slice_k).measure(
+			move, enemy, weapon, seed_id, 0
+		)
 		if off.is_empty():
 			return {}
 		var pair: Dictionary = {"seed": seed_id, "off": off}
 		for index: int in arms.size():
-			var on: Dictionary = MoveTtkTrial.new(flank).measure(
+			var on: Dictionary = MoveTtkTrial.new(flank, _slice_k).measure(
 				move, enemy, weapon, seed_id, index + 1
 			)
 			if on.is_empty():
@@ -97,7 +106,7 @@ func _sample(
 
 func _slice_damage(pair: Dictionary, enemy: StringName, seed_id: int) -> bool:
 	for arm: String in ["off", "on"]:
-		var gauge: MoveTtkSliceGauge = MoveTtkSliceGauge.new()
+		var gauge: MoveTtkSliceGauge = MoveTtkSliceGauge.new(false, _slice_k)
 		var impact: Dictionary = gauge.measure(
 			MoveTable.BLINK_BEHIND, enemy, &"", seed_id, int(arm == "on")
 		)

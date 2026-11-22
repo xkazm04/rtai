@@ -34,11 +34,10 @@ func sample(target: Fighter) -> TickInput:
 			melee = TonnageCrack.post_stomp(mind) and pilot.hauler.form.stomp_ready()
 			fire = pilot.hauler.stomp_hits > 0
 		MoveTable.BLINK_BEHIND:
-			var blinks: PackedInt32Array = pilot.kerf.trail_tick
-			var gap: int = PowerDef.ticks(pilot.kerf.num(&"gap_s"))
-			melee = (
-				pilot.kerf.charges > 0 and (blinks.is_empty() or stage.tick + 1 >= blinks[-1] + gap)
-			)
+			if stage.arena.rivet.pos.distance_to(target.pos) > pilot.kerf.num(&"range_m"):
+				walk = aim
+			else:
+				melee = _blink_ready(pilot.kerf)
 		MoveTable.OVERKILL:
 			fire = true
 	var actions: PlayerActions = pilot.actions
@@ -50,6 +49,12 @@ func sample(target: Fighter) -> TickInput:
 	return TickInput.new(
 		buttons, roundi(walk.x * TickInput.AXIS_MAX), roundi(walk.y * TickInput.AXIS_MAX)
 	)
+
+
+func _blink_ready(kerf: KerfStage) -> bool:
+	var blinks: PackedInt32Array = kerf.trail_tick
+	var gap: int = PowerDef.ticks(kerf.num(&"gap_s"))
+	return kerf.charges > 0 and (blinks.is_empty() or stage.tick + 1 >= blinks[-1] + gap)
 
 
 func _walker_move(target: Fighter, mind: SquadMind) -> Vector2:

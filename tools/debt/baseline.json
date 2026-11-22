@@ -110,7 +110,8 @@
         "2026-11-21: Exercise the scene control selection through the same street entry used by live play (dev_loc 28525 -> 28529)",
         "2026-11-22: move_ttk kill-time probe for n23 moves (dev_loc 28529 -> 28927)",
         "2026-11-22: move_ttk kill-time probe for n23 moves (dev_loc 28927 -> 29010)",
-        "2026-11-22: move_film scene for n23 moves (dev_loc 29010 -> 29516)"
+        "2026-11-22: move_film scene for n23 moves (dev_loc 29010 -> 29516)",
+        "2026-11-22: move_ttk slice-k what-if for n23 moves (dev_loc 29516 -> 29543)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -129,7 +130,7 @@
         "project/dev/handheld": 247,
         "project/dev/held": 103,
         "project/dev/human_react": 412,
-        "project/dev/moves": 987,
+        "project/dev/moves": 1014,
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
         "project/dev/quest1_city_fit.gd": 18,
@@ -148,7 +149,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 29516
+      "total": 29543
     },
     "direct_cmdline_reads": {
       "accepted": [

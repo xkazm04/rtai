@@ -14,11 +14,13 @@ var rounds_during_stun: int = 0
 var partial_carries: int = 0
 var front_gun_k: Array[float] = []
 var flank: bool = false
+var slice_k: float
 var rear_gun_hits: int = 0
 
 
-func _init(turret_flank: bool = false) -> void:
+func _init(turret_flank: bool = false, damage_scale: float = 1.0) -> void:
 	flank = turret_flank
+	slice_k = damage_scale
 
 
 func measure(
@@ -65,6 +67,11 @@ func _configure(move: StringName, rank: int) -> bool:
 		return false
 	var row: MoveTable.Row = table.get(move)
 	row.enabled = rank > 0
+	if move == MoveTable.BLINK_BEHIND:
+		var kerf: KerfStage = stage.pilot.kerf
+		var attack: Dictionary = kerf.attacks.block(KerfStage.GHOST)
+		for key: StringName in [&"human_damage", &"robot_damage"]:
+			attack[key] = kerf.num(key) * slice_k
 	if move == MoveTable.OVERKILL:
 		for grant: int in range(1, rank + 1):
 			if not MoveCarry.grant(stage, grant):

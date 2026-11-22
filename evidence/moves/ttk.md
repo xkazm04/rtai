@@ -48,3 +48,20 @@ The changed-unit run reported 3,680 passed, 0 failed and 2 skipped. The stats he
 The changed Ohm line generated one deletion mutant. Removing the call leaves `legacy_ticks` unused, which fails compilation in this project. The mutation score is undefined (0 killed, 0 survived, 1 invalid). As a separate control, the two current Ohm test files passed on the fix and rejected the compiling pre-fix implementation (9 passed, 2 failed). The missing ordinary stun left the expected area effect absent.
 
 Both mutation runs used the repository's operators and GUT oracle on committed source bytes in a scratch project under `build/dev`. The stock mutation CLI requires a separate worktree outside the lane.
+
+## Kerf at a lower slice (probe-only what-if)
+
+Each trial scaled Kerf’s damage in its own loaded attack row so the timed targets kept their shipped HP and armour rules. Both arms used the same pilot on seeds 1–10, blinking on cooldown and walking back into reach if needed. All 120 fights ended in kills. Times and slice counts are medians. Δ is the median paired on-minus-off time. [Per-seed results](ttk-kerf-whatif.json)
+
+| Slice scale | Target | Off (s) | On (s) | Paired Δ (s) | Faster | Slices to kill off/on |
+|---:|---|---:|---:|---:|---:|---:|
+| 0.1 | Shield robot | 0.32 | 0.32 | 0.00 | 0/10 | 2/2 |
+| 0.1 | War machine (plate closed) | 1.03 | 0.32 | -0.72 | 10/10 | 4/2 |
+| 0.1 | Sentry turret | 0.32 | 0.02 | -0.30 | 10/10 | 2/1 |
+| 0.2 | Shield robot | 0.32 | 0.02 | -0.30 | 10/10 | 2/1 |
+| 0.2 | War machine (plate closed) | 0.32 | 0.02 | -0.30 | 10/10 | 2/1 |
+| 0.2 | Sentry turret | 0.32 | 0.02 | -0.30 | 10/10 | 2/1 |
+
+- At 9.9 base damage, the shield robot survived either opening hit (1.98 front, 9.9 rear) on its 10 HP. Blink behind saved two slices against the war machine and one against the turret.
+- At 19.8 base damage, blink behind killed all three targets on the first slice, saving one 18-tick blink interval on every seed.
+- The shipped 99-damage slice still one-shots all three targets with blink behind either off or on.
