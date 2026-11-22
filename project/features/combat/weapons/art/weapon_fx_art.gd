@@ -227,7 +227,7 @@ static func _rocket(ci: CanvasItem, at: Vector2, dir: Vector2, went: float, tick
 			ci, &"smoke", (k + tick / 4) % 3, at - dir * back + wob, float(k), grow, 1.0 - 0.13 * k
 		)
 	var tail: Vector2 = at - dir * 1.15
-	_cell(ci, &"flame", tick % 3, tail, dir.angle(), 0.42 + 0.08 * float(tick % 2), 1.0)
+	ShotDraw.launcher_exhaust(ci, tail, dir, tick)
 	_cell(ci, &"rocket", 0, at, dir.angle(), 1.0, 1.0)
 
 

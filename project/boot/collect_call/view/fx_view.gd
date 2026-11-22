@@ -265,7 +265,7 @@ func _shots(arena: CombatArena) -> void:
 			if s.spec == null or not FightAreasArt.shot(self, s, stage.tick):
 				GunFxArt.tracer(self, _gun_fx, s, ENEMY_TAIL_M)
 			continue
-		if BareGunFx.shot(self, s, arena):  # n7-ranged: the picked-up rifle's flash and tracer
+		if WeaponFxArt.shot(self, s, stage.tick) or BareGunFx.shot(self, s, arena):
 			continue
 		var tail: Vector2 = s.pos - s.vel.normalized() * (0.5 if s.from_rivet else 0.25)
 		ShotDraw.bare(self, s, tail)
