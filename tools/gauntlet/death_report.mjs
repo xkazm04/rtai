@@ -9,7 +9,7 @@ function activeAtDeath(run) {
   return run.waves.filter((w) => !Number.isFinite(w.seconds) || w.hp?.end === 0).length;
 }
 
-function separation(a, b) {
+export function separation(a, b, limits = targets.separation) {
   const key = (s) => JSON.stringify([s.run.seed, s.run.controls, s.pick]);
   const left = new Map(a.scores.map((s) => [key(s), s]));
   let shared = 0, later = 0, unknown = 0;
@@ -21,7 +21,7 @@ function separation(a, b) {
     if (sb.wave > lastA) later++;
     else if (lastB > sa.wave) unknown++;
   }
-  const { min_wave_gap: gap, min_seed_share: share } = targets.separation;
+  const { min_wave_gap: gap, min_seed_share: share } = limits;
   const observedGap = b.median - a.median;
   const lowerGap = b.median - a.upper, upperGap = b.upper - a.median;
   let verdict = 'undetermined';

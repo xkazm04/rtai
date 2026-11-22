@@ -62,7 +62,7 @@ function enemyStats(runs, catalog) {
   });
 }
 
-function deathStats(profile, runs, attempts) {
+export function deathStats(profile, runs, attempts) {
   const deaths = runs.filter((r) => r.death).map((r) => r.death);
   const by = frequency(deaths.map((d) => d.by).filter(Boolean));
   const stalled = attempts.filter((r) => r.outcome === 'stalled').length;

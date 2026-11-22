@@ -22,6 +22,9 @@ function waveSamples(run, tuning) {
   });
 }
 
+export const damagePerSecond = (wave) => wave.seconds > 0 ? wave.damage_taken / wave.seconds : NaN;
+export const repairShare = (wave) => wave.damage_taken > 0 ? 100 * wave.hp?.repaired / wave.damage_taken : NaN;
+
 export function survivalSection(batch, fmt) {
   const rows = [];
   const tuning = batch.survival_tuning ?? {};
@@ -33,11 +36,11 @@ export function survivalSection(batch, fmt) {
       const mid = (get) => fmt(value(get));
       const hp = group.filter(({ wave }) => wave.hp).length;
       rows.push([profile, band, hp + ' / ' + group.length, mid(({ wave }) => wave.damage_taken),
-        mid(({ wave }) => wave.seconds > 0 ? wave.damage_taken / wave.seconds : null),
+        mid(({ wave }) => damagePerSecond(wave)),
         mid(({ repair, mods }) => Number.isFinite(mods.regen) ? repair : null),
         mid(({ wave }) => wave.hp?.max > 0 ? 100 * wave.hp.min / wave.hp.max : null),
         mid(({ wave }) => wave.hp?.repaired),
-        mid(({ wave }) => wave.damage_taken > 0 ? 100 * wave.hp?.repaired / wave.damage_taken : null),
+        mid(({ wave }) => repairShare(wave)),
         ...['guard_deflects', 'cover_ticks', 'rolls'].map((key) => mid(({ wave }) => wave[key])),
         ...stats.map((stat) => {
           const multiplier = value(({ mods }) => mods[stat]);

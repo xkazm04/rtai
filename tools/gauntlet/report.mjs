@@ -13,7 +13,7 @@ import { BATCH_SCHEMA, validateRun } from './contract.mjs';
 import { render } from './render.mjs';
 import { statCards } from './survival.mjs';
 
-export function loadBatch(path) {
+export function loadBatch(path, { lookupTables = true } = {}) {
   const doc = readJson(path);
   if (doc?.schema !== BATCH_SCHEMA || !Array.isArray(doc.results) || !Array.isArray(doc.runs)
     || !doc.args || !doc.git) throw new Error(path + ': expected ' + BATCH_SCHEMA);
@@ -34,6 +34,7 @@ export function loadBatch(path) {
       if (result) doc.results.push(result);
     }
   }
+  if (!lookupTables) return doc;
   if (!doc.enemy_weapons && doc.tables?.['enemies.json']) {
     const bytes = readFileSync(join(PROJECT, 'data', 'tables', 'enemies.json'));
     if (createHash('sha256').update(bytes).digest('hex') === doc.tables['enemies.json'])
