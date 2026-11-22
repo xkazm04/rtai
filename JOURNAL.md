@@ -78,3 +78,14 @@ NEXT: (session 3) check logs/cast/astra.lock + astra-calls.jsonl; when film-door
   standing-rule docs) and launch it detached. Last code commit by 00:00, gate `node tools/gate/run.mjs --rev=HEAD` by 00:15.
 - 20:12 sentry_turret_fall_70_v2 ACCEPTED at sheet level except translucent smoke wisps in row 2 (erase in the cut or retake; noted in brief 04 draft). Session 2 ends; ASTRA RUNNING film-door since 19:37 (pid 51876, hard stop 20:52).
 - 20:19 Astra committed 0228d57fe (lancer attack cols 4-5 spliced; review it in-game next session). No lancer film yet. ASTRA RUNNING film-door since 19:37 (pid 51876, hard stop 20:52). NEXT as written at 20:06.
+
+## Session 3 (20:20)
+- 20:20 start. ASTRA film-door (pid 51876) still running, hard stop 20:52. No `NEED cast` in the other four journals.
+- 20:25 sheet review: clamshell hit_70_v2 ACCEPTED (5+3 band, facings right). attack/fall/hit_55_v2 ACCEPTED with one
+  fault: translucent green-white smoke wisps above the twin stacks in EVERY 55 cell (+ plumes in fall rows 2): erase in
+  the cut. Pile-driver attack_70 / stomp_70 / hit_70 REJECTED (col 1 plan view, col 2 shows the back louvres; cols 3-5
+  ok); walk_55 col 1 is the only good front view. Root cause: the concept plate war-machine-b.png carries a top-down
+  inset the generator copies for col 1: crop the concept to the hero view. Takes: pile-driver walk 1, attack 1, stomp 1,
+  hit 1, fall 1 (all rej), clamshell attack/fall/hit 2 each (v2 accepted with wisp cleanup).
+- 20:30 brief 04 written (evidence/briefs/n24-cast-04-clamshell.md): 03 leftovers + door film, clamshell cut/wire/stills/
+  clip, pile-driver retake (cropped concept, per-column facing words, front-column splice fallback), standing rule docs.
