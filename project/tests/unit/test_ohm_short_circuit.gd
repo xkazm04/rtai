@@ -20,9 +20,7 @@ func before_each() -> void:
 	ohm = OhmStage.shipped()
 
 
-func _spawn(id: StringName, at: Vector2, machine: bool = true) -> Fighter:
-	if machine:
-		squad.pit.roster.archetype(id).machine = true
+func _spawn(id: StringName, at: Vector2) -> Fighter:
 	var h: Fighter = squad.spawn_member(arena, at, id)
 	h.pos = at
 	h.facing = Vector2.LEFT
@@ -94,7 +92,7 @@ func test_shield_drops_for_carrier_and_rifleman_then_covers_both_again() -> void
 	var plate: float = squad.pit.roster.archetype(shield.archetype).shield_front_mult
 	assert_almost_eq(_frontal_hit(shield), plate, 0.00001)
 	_tick(true)
-	var mate: Fighter = _spawn(&"swat", shield.pos + Vector2.RIGHT, false)
+	var mate: Fighter = _spawn(&"swat", shield.pos + Vector2.RIGHT)
 	mate.hp = 5.0
 	assert_eq(_frontal_hit(shield), 1.0)
 	assert_eq(_frontal_hit(mate), 1.0)

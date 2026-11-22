@@ -60,7 +60,7 @@ func test_robot_row_without_machine_flag_uses_the_ordinary_bolt() -> void:
 
 func test_disabled_move_leaves_flagged_machines_on_the_original_bolt_path() -> void:
 	var h: Fighter = squad.spawn_member(arena, Vector2.ZERO, &"sentry_turret")
-	squad.pit.roster.archetype(h.archetype).machine = true
+	assert_true(squad.pit.roster.archetype(h.archetype).machine)
 	squad.moves.ohm_short_circuit.enabled = false
 	arena.step(10)
 	_ordinary_hit(h)
@@ -69,7 +69,7 @@ func test_disabled_move_leaves_flagged_machines_on_the_original_bolt_path() -> v
 
 func test_only_stunned_members_append_their_two_deadlines_to_replay_state() -> void:
 	var h: Fighter = squad.spawn_member(arena, Vector2.ZERO, &"war_machine")
-	squad.pit.roster.archetype(h.archetype).machine = true
+	assert_true(squad.pit.roster.archetype(h.archetype).machine)
 	var out: StreamPeerBuffer = StreamPeerBuffer.new()
 	OhmShortCircuit.write_state(squad, h, out)
 	assert_eq(out.get_size(), 0)
