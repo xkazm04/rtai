@@ -17,9 +17,11 @@ def assemble(before, after, master):
     captions = []
     for i, (start, end, item) in enumerate(segments):
         for revision, track in enumerate(tracks):
-            _, selected, arrow, _ = track[(start + end) // 2]
-            if selected != item or arrow != (revision == 1 and item != 'pistol'):
-                raise ValueError(f'cursor {revision}: expected {item}, got {selected}, arrow={arrow}')
+            expected_arrow = revision == 1 and item != 'pistol'
+            for tick, selected, arrow, _ in track[start:end]:
+                if selected != item or arrow != expected_arrow:
+                    raise ValueError(f'tick {tick}, revision {revision}: expected {item}, '
+                                     f'got {selected}, arrow={arrow}')
         captions.append(f'{i+1}\n{timestamp(start)} --> {timestamp(end-1)}\n'
                         f'{item.title()}   |   Left: b3f4727c0     Right: shipped melee cursor')
     srt = after / 'wheel.srt'
@@ -55,4 +57,3 @@ def timestamp(frame):
 
 if __name__ == '__main__':
     assemble(*(Path(arg) for arg in sys.argv[1:]))
-
