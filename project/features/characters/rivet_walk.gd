@@ -6,8 +6,7 @@ extends RefCounted
 ## A native armed grid contains its weapon. Borrowed movement uses a bare grid and a held sprite.
 ## Fire, strike and --rivet-walk-armed=off keep their equipped poses.
 ## Above RUN_FROM_MPS a run has eight columns including flight; --rivet-walk=walk8 retains walk.
-## At p70 the profile stance foot travels 62-67 cell px over two steps, about 32 per column.
-## At p55 it travels 53 over two steps, or 212 per cycle. MAX_RUN_CYCLES_S caps the cadence.
+## Profile travel over two run columns is 62-67 cell px at p70 and 53 at p55. Cadence is capped.
 ## it6: each armed grid has its own cycle (ARMED_CYCLE_CELL, "<art>/<weapon>"): the profile
 ## rows' stance boot from contact to the next contact (two of the 4 frame steps) x 2, mean of
 ## the right and left rows (evidence/n9/rivet_walk_armed_cycle.md); the flamer shuffles: CYCLE_CELL.
@@ -33,6 +32,9 @@ const MAX_RUN_CYCLES_S: float = 3.5
 ## the flamer 70 3/4 toward left 42 / 46, left profile (L2 B) 58 / 63; the flamer 55 3/4 toward
 ## right (row 2 B) 37 / 54.5, toward left 51 / 55 (its left profile 50 / 50: none)
 const RUN_ROW_K: Dictionary[String, float] = {
+	"p70/gloria/0": 0.98,
+	"p70/gloria/3": 0.97,
+	"p70/gloria/4": 0.92,
 	"p70/gatling/4": 0.94,
 	"p70/flamethrower/3": 0.91,
 	"p70/flamethrower/4": 0.92,
@@ -48,11 +50,11 @@ const RUN_ROW_K: Dictionary[String, float] = {
 	"p55/flamethrower/3": 0.93,
 }
 const ROWS: int = 8
-## n11: all walk and run grids are packed at RES x the 110 px figure, so the x1.5 player size
-## draws them near 1:1; cell-px tables stay in 110 px space, only the card's scale divides by it.
+## n11 grids pack at 1.5x for the larger player. Cycle values stay in 110 px figure space.
 const RES: float = 1.5
 const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
 const ARMED_CYCLE_CELL: Dictionary[String, float] = {
+	"p70/gloria": 86.7,
 	"p70/pistol": 76.0,
 	"p70/plasma_rifle": 76.0,
 	"p70/katana": 66.0,
@@ -163,7 +165,7 @@ static func phase_of(rig: CutRig, art: String, scale: float) -> float:
 	if (frames != 8 and not is_armed(rig.head_card)) or cycle <= 0.0:
 		return rig.phase
 	if not running:
-		cycle = StrideMatch.profile_cycle(card, scale / RES, cycle)
+		cycle = RivetStride.profile_cycle(card, scale / RES, cycle)
 	cycle = maxf(cycle, rig.speed_now / (MAX_RUN_CYCLES_S if running else MAX_CYCLES_S))
 	var was: float = rig.get_meta(META_PH, 0.0)
 	var step: float = rig.global_position.distance_to(at) / cycle

@@ -93,7 +93,7 @@
     "by_weapon": {
       "katana": "katana"
     },
-    "doc": "A family owns the weapon painted into its walk and run. by_grip selects that family and by_weapon overrides it for an individual weapon. A different weapon uses borrowed_grid: bare_claw draws the bare stride plus the actual held part. palm_percent marks its grip, measured from the top left of each bare grid cell, as eight x,y pairs per facing row. Walk4 uses the even walk8 columns.",
+    "doc": "At each pitch Rivet first uses the weapon's own drawn movement grid when available. by_grip names the family and by_weapon overrides it for an individual weapon. For a weapon without its own drawing, borrowed_grid bare_claw adds the actual held part to the bare stride. palm_percent marks its grip, measured from the top left of each bare grid cell, as eight x,y pairs per facing row. Walk4 uses the even walk8 columns.",
     "palm_percent": {
       "p55": {
         "run": [

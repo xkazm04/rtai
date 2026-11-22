@@ -7,6 +7,10 @@ extends RefCounted
 ## turn would point the drawn gun off the aim; the fire cells still draw the aim's own octant).
 
 const OCT_RAD: float = PI * 0.25
+## Contact-to-passing travel of the two stance boots in a four-column armed walk, packed texels.
+const WALK_PROFILE_TRAVEL: Dictionary[String, Vector2] = {
+	StrideMatch.ROOT + "p70/rivet_walk_eq_gloria.png": Vector2(26.0, 32.5),
+}
 ## How far the legs' row may turn off the aim, in rows of 45 degrees; 0 = the row is the aim's.
 const TWIST_ROWS: int = 1
 ## Rows past the halfway point a walk must lean before the row changes (a flicker guard).
@@ -23,6 +27,15 @@ const META_BACK: StringName = &"rivet_stride_back"
 const OCT_HOLD_RAD: float = deg_to_rad(4.0)
 const OCT_AT: StringName = &"rivet_oct_at"
 static var enabled: bool = true
+
+
+static func profile_cycle(card: Sprite2D, px_per_texel: float, fallback: float) -> float:
+	if card != null and card.texture != null and card.frame_coords.y == StrideMatch.PROFILE_ROW:
+		var travel: Vector2 = WALK_PROFILE_TRAVEL.get(card.texture.resource_path, Vector2.ZERO)
+		if travel != Vector2.ZERO and card.hframes == 4:
+			var sole: float = travel.x if card.frame_coords.x < 2 else travel.y
+			return StrideMatch.cycle_length(sole, 1, card.hframes, px_per_texel)
+	return StrideMatch.profile_cycle(card, px_per_texel, fallback)
 
 
 ## The drawn octant of the look (0 = screen right, +1 = 45 deg toward the camera): the aim the feed

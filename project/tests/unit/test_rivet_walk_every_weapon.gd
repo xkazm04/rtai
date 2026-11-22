@@ -1,6 +1,7 @@
 extends GutTest
 
 const PITCHES: Array[String] = ["p55", "p70"]
+const UNPAINTED: StringName = &"test_unpainted_weapon"
 var rig: CutRig
 
 
@@ -77,25 +78,25 @@ func test_every_named_grid_exists_in_both_art_directories() -> void:
 func test_borrowed_grid_respects_the_armed_flag_and_shot_latch() -> void:
 	rig.speed_now = 3.2 * CharacterRigs.PX_PER_M
 	RivetWalk.armed = false
-	assert_eq(RivetWalk.motion_path(rig, "p70", &"gloria"), "")
+	assert_eq(RivetWalk.motion_path(rig, "p70", UNPAINTED), "")
 	assert_true(RivetWalk.motion_path(rig, "p70", &"").ends_with("/" + RivetWalk.RUN))
 	RivetWalk.armed = true
 	rig.set_meta(RivetFrames.FIRE, true)
-	assert_eq(RivetWalk.motion_path(rig, "p70", &"gloria"), "")
+	assert_eq(RivetWalk.motion_path(rig, "p70", UNPAINTED), "")
 	rig.set_meta(RivetFrames.FIRE, false)
 	RivetWalk.run = false
-	assert_true(RivetWalk.motion_path(rig, "p70", &"gloria").ends_with("/" + RivetWalk.STRIP))
+	assert_true(RivetWalk.motion_path(rig, "p70", UNPAINTED).ends_with("/" + RivetWalk.STRIP))
 	RivetWalk.frames = 4
-	assert_true(RivetWalk.motion_path(rig, "p70", &"gloria").ends_with("/" + RivetWalk.STRIP4))
+	assert_true(RivetWalk.motion_path(rig, "p70", UNPAINTED).ends_with("/" + RivetWalk.STRIP4))
 	RivetWalk.enabled = false
-	assert_eq(RivetWalk.motion_path(rig, "p70", &"gloria"), "")
+	assert_eq(RivetWalk.motion_path(rig, "p70", UNPAINTED), "")
 
 
 func test_run_starts_above_the_threshold_and_only_in_a_drawn_pitch() -> void:
 	rig.speed_now = 2.5 * CharacterRigs.PX_PER_M
-	assert_true(RivetWalk.motion_path(rig, "p55", &"gloria").ends_with(RivetWalk.STRIP))
+	assert_true(RivetWalk.motion_path(rig, "p55", UNPAINTED).ends_with(RivetWalk.STRIP))
 	rig.speed_now += 0.01
-	assert_true(RivetWalk.motion_path(rig, "p55", &"gloria").ends_with(RivetWalk.RUN))
+	assert_true(RivetWalk.motion_path(rig, "p55", UNPAINTED).ends_with(RivetWalk.RUN))
 	assert_eq(RivetWalk.motion_path(rig, "", &"gloria"), "")
 
 
