@@ -1,0 +1,32 @@
+Committed both changes on `n24-melee` before the deadline. Nothing was pushed.
+
+- `e2f881f42` changed `melee_weapons.json`, `melee_swing.gd` and two swing tests. Plasma now hits and draws a **203° forward sweep**. Its six-tick deflect window is intact.
+- `2dfefbbc7` added `MeleeLethal`, `MeleeContact`, weapon and victim data, kill rendering, reaction handling, tests and the dated decision. `PlayerMelee` resolves each target in the arc. The damage hooks are `CombatArena.damage` and the one-line `MeleeLethal.pit_damage(...)` call in `EnemyPit.hurt`.
+
+All four weapons kill every eligible human caught by one swing. A frontal katana hit sparks, shoves the riot cop and opens his shield for **40 ticks**. The next cut kills. Plasma and baton go through immediately. Chainsaw goes through at the end of its committed grind. Claw, robots, machines, Mulroney and boss-owned fighters retain ordinary damage. Reduced gore uses the standard death.
+
+| Victim | Katana cut | Plasma cut | Saw chunks / visual grind ticks | Baton collapse |
+|---|---|---|---|---|
+| Patrol cop | 7° neck cut, cap flies | 16° waist cut | 7 / 40 | Pitches forward |
+| Riot cop | 31° torso cut, helmet and shield halves fly | 5° cut through shield and chest | 11 / 66 | Falls sideways, drops whole shield |
+| SWAT | 55° diagonal, rifle flies | 41° diagonal | 14 / 58 | Drops to knees, then forward |
+| Contractor | 4° waist cut, pistol flies | 62° diagonal | 9 / 46 | Thrown back 1.65 m |
+| Rocket trooper | 68° shoulder cut, tube flies | 9° high cut | 12 / 52 | Falls sideways and slides 0.75 m |
+
+**Verification.** Changed-unit runs passed with 3,774 tests for P1 and 3,783 for P2. All 67 scenarios passed. Katana’s fixed-input scenario moved from three kills to six, and chainsaw’s from one to five. Only those expectations moved. No replay tape, parity, sim or bake digest changed.
+
+P1’s quick gate and P2’s 19 pre-commit lint checks passed. **P2’s standalone quick gate stayed red.** I reproduced the same `PagedAllocator` shutdown error on P1’s untouched `kill_styles.gd`. The mutation run killed **3/3 completed faults**. The 20-fault score is incomplete. Each fault took 42–62 seconds, and I stopped the run for the hard stop.
+
+**Films.** All eight patrol reel captures passed at 32 and 64 px/m. All four live 32 px/m, tilt-70 clips passed, with kills at tick 37 for katana, 38 for plasma, 62 for saw and 34 for baton. I inspected the frames. Supplemental 32 px/m captures cover all four weapons against riot cops and contractors, plus katana against SWAT. The remaining SWAT and rocket-trooper combinations lack visual verification. I added no character frames. The right-facing baton contact remains the deferred frame issue. [Kill reel and sheets](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/reel.md) · [Live clips](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/live) · [Victim sheets](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/variants)
+
+**Pressure-lane timings** use 60 Hz ticks. Reach adds the target’s radius.
+
+| Weapon | Reach | Windup / active / recovery | Additional timing |
+|---|---:|---:|---|
+| Claw | 1.40 m | 5 / 3 / 13 | Ordinary damage |
+| Chainsaw | 1.65 m | 12 / 4 / 18 | 0.60 m lunge, 16-tick committed grind, bite every 8 |
+| Electro baton | 1.55 m | 4 / 3 / 14 | 90-tick stun on surviving targets |
+| Katana | 2.10 m | 7 / 4 / 16 | 0.55 m lunge, 40-tick shield break |
+| Plasma sword | 2.20 m | 8 / 6 / 19 | Deflects throughout all 6 active ticks |
+
+[astra: 4276s, exit 0]

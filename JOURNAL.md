@@ -53,3 +53,42 @@ weapon (P1 table: claw 5/3/13 1.40 m, chainsaw 12/4/18 1.65 m, baton 4/3/14 1.55
   crackle marks like the shock arcs at t42-t57: check in P2's films whether that is saw spark or a misplaced shock
   arc (sparks should be warm/amber, not the electric white). 
 NEXT (session 2): see the NEXT above; P2 running since 18:39 (pid 70312).
+
+## Session 2 (18:40 to 20:10)
+
+- 18:40 start. astra.lock pid 70312 alive (node, p2-one-shot since 18:39). Uncommitted Astra edits in progress
+  (melee_weapons.json, melee_swing.gd, two tests: the plasma cone follow-up). grep `NEED melee`: one, pressure 18:30.
+- 18:43 DECISION melee (answers pressure NEED 18:30): `combat.json` `robo_tazer.damage` 46 is NOT doubled. It is
+  Quartermaster Mertz's enemy-only boss weapon (`robo_tazer.gd` header; quest 1 / collect call), not a wave enemy:
+  boss designs and quest 1's script do not change tonight. The owner's "double their damage" is served by pressure's
+  wave numbers. One value away if the owner wants it (REPORT, Calls for the owner).
+- 18:50 LOOKED compare/chainsaw/64/t46.png: the white zigzag between Rivet's chest and the cop during the grind is
+  on main too (before = after), so not a P1 regression; the blade sparks themselves are warm yellow (ok). Still reads
+  as a shock arc on a saw: a later quality package (find which mark draws it: melee_feel / melee_marks).
+- 18:46 Astra P2 `e2f881f42`: plasma sweep cone_dot -1 -> -0.2 (203 deg front), drawn sweep shape +-1.0 of the
+  cone (matches). Deflect active 6 kept. Reviewed: ok.
+- 19:20 Astra P2 `2dfefbbc7`: `MeleeLethal` + `MeleeContact` (player/), `kills_human`/`vs_shield`/`shield_break_ticks`
+  in weapon rows, per-victim kill variants in `signature_kills.json` (lookup weapon x archetype, falls back to the
+  weapon row), hooks: `CombatArena.damage` + one-line `MeleeLethal.pit_damage(...)` in `EnemyPit.hurt`. Katana vs
+  raised riot shield front: blocked, shoved, shield open 40 ticks, next cut kills; plasma/baton through; chainsaw
+  through at the end of its committed grind. Claw, robots, machines, Mulroney, boss-owned: normal damage.
+  GUT 3783 pass, 67 scenarios pass (rivet_katana 3 -> 6 kills, rivet_chainsaw 1 -> 5: expectation moves, decision
+  line), no tape/parity/bake digest moved. Mutate melee_lethal 3/3 killed, INCOMPLETE (stopped for hard stop).
+  Quick gate red on the pre-existing PagedAllocator shutdown lines only (as P1).
+- 19:52 REVIEW P2: BOUNCED in part -> P3 follow-up 1: Astra rewrote the shared `combat_arena.gd` header doc
+  (6 doc lines deleted to fit the cap) and added a 6-line branch in `damage()`; must be restored and reduced to
+  one-line call sites (<= 2 changed lines vs b3f4727c0). The `kind = shot` on a FINISH matches the default kind
+  (melee kills were already `shot`): fine. SWAT + rocket trooper variants of plasma/saw/baton unrendered -> P3 fu 3.
+- 19:53 ASTRA p2-one-shot 71 accepted (with follow-ups carried into P3).
+- 19:53 ASTRA RUNNING p3-electric since 19:53 (--resume of p2's thread; lock pid 41356; brief
+  evidence/briefs/n24-p3-electric.md, hard stop 21:05, commit by 21:00; out evidence/briefs/n24-p3-electric.out.txt).
+- 19:55 LOOKED kills/katana_64.png (patrol): cut flash at the kill tick, blood spray, halves fall apart and the cap
+  flies; reads. variants/review_katana_32.png (contractor): reads as a cut, but at 32 px/m the halves are small and
+  the "contractor" is drawn as a blue cop body (that is cast's art, not ours). Red only for blood: ok.
+
+NEXT (session 3): check astra.lock (pid 41356) + out file; when P3 ends review its diff: combat_arena.gd net diff vs
+b3f4727c0 <= 2 lines and header restored; robot rule (thug/gunner one swing, shield_robot overload 150 + execute,
+war_machine never); LOOK at n24/melee/electric films + 64 close-ups (amber, no teal/red); mutate scores. Then a P4
+quality package: the white zigzag on the chainsaw grind (18:50), the right-facing baton contact frame, telemetry of
+swings per click in a live fight (1.0), films for the owner (each weapon's swing + kill per type, cursor before/after)
+with frames.json. Commit last new work by 00:00, final gate by 00:15. REPORT: robo_tazer call (18:43), hands call.

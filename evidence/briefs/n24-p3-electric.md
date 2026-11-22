@@ -1,7 +1,7 @@
 # Brief n24-melee P3: robots, electric weapons finish a machine the way a blade finishes a human
 
 Lane `melee`, branch `n24-melee`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-street` (your cwd).
-**Hard stop HARDSTOP wall clock** (check `date`). **Commit deadline COMMITBY**.
+**Hard stop 21:05 wall clock** (check `date`). **Commit deadline 21:00**.
 
 ## The owner's words (verbatim)
 "For robot enemies we will need electric weapons to have similar effect" (similar to the melee one-shot
@@ -71,3 +71,22 @@ reset --hard, never push. Fix lint and format findings in your own edit and go o
 ## Report (final message)
 The rule as built, commits (sha + files), tests / quick gate / mutate score, film paths, moved tapes,
 which other weapons should count as electric (electro_gun, the claw's charged shock, ...) and why.
+
+## Follow-ups from the P2 review (do FIRST, their own commit, before the electric rule)
+1. `2dfefbbc7` rewrote the header doc comment of `project/features/combat/combat_arena.gd` (6 lines of
+   documentation deleted to make room) and added a 6-line branch in `damage()`. That file is shared by all
+   five lanes and capped: restore the header comment EXACTLY as on `b3f4727c0`
+   (`git show b3f4727c0:project/features/combat/combat_arena.gd`), and move the branch into your own file so
+   `damage()` changes by one-line call sites only, e.g. replace the two lines
+   `amount *= FoeArmor.impact(...)` / `amount *= victim.damage_k` with one line
+   `amount = MeleeLethal.arena_amount(self, victim, amount, kind, killer_id, weapon)` (FINISH skips armour
+   and damage_k) and keep the event kind `&"shot"` the same way (the default kind is already `shot`, so a
+   FINISH kill can simply pass `&"shot"` with a separate bypass flag or a one-line `kind =
+   MeleeLethal.death_kind(kind)`). Net diff of `combat_arena.gd` against `b3f4727c0`: at most 2 changed lines.
+   Same tests stay green.
+2. P2's mutate run on `melee_lethal.gd` stopped at 3/3. Finish it on the changed lines only:
+   `node tools/mutate/mutate.mjs --file=project/features/player/melee_lethal.gd --max=12` (after your commit)
+   and quote killed/(killed+survived). Do it at the end if time is short; electric first.
+3. The SWAT and rocket-trooper kills of plasma, chainsaw and baton have no visual check yet: render them
+   with the same kill-reel/variant tooling into `C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/variants`
+   and look at them (one line each in your report: what reads, what does not).
