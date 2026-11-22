@@ -1,0 +1,10 @@
+Both commits landed on `n23-moves` before the deadline.
+
+- `77a73eed1` committed the film scene, scripts and UIDs, shared TTK fixture change, capture helper, film report, and authorized 506-line debt baseline increase.
+- `468ca8730` appended all six requested decisions to [docs/decisions.md](<C:/Users/kazda/kiro/gtai-wt/n23-moves/docs/decisions.md:1444>).
+
+`lint: all 19 checks pass over 1978 GDScript files`
+
+The quick gate passed all five changed scripts. One timeout test failed on the first commit attempt, then passed in isolation and during the full hook retry. The index and tracked working tree are clean.
+
+[astra: 569s, exit 0]

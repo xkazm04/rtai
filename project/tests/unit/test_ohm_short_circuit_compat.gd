@@ -29,6 +29,7 @@ func _ordinary_hit(h: Fighter) -> void:
 	assert_eq(ohm.struck, 1)
 	assert_almost_eq(h.hp, hp - damage, 0.00001)
 	assert_eq(arena.areas.effect(h).stun_ticks, ticks)
+	assert_false(OhmShortCircuit.held(squad, h))
 	var row: Dictionary = {}
 	arena.move_tally.append_wave(row)
 	assert_false(row.has("moves"))
@@ -77,6 +78,7 @@ func test_only_stunned_members_append_their_two_deadlines_to_replay_state() -> v
 	OhmShortCircuit.write_state(squad, h, out)
 	assert_eq(out.get_size(), 0)
 	assert_true(OhmShortCircuit.strike(arena, h, 11, 72))
+	assert_eq(arena.areas.effect(h).stun_ticks, 72)
 	OhmShortCircuit.write_state(squad, h, out)
 	assert_eq(out.get_size(), 8)
 	out.seek(0)

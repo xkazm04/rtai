@@ -1,0 +1,30 @@
+Committed `29bd06ce8`. At 9.9 base damage, blink behind saved two slices against the closed-plate war machine and one against the turret. The shield robot survived either opening hit. At 19.8, blink behind saved one slice on every target and seed. The shipped 99-damage slice still one-shots all three targets in both arms.
+
+| Slice scale | Target | Median off (s) | Median on (s) | Paired Δ (s) | Faster | Slices off/on |
+|---:|---|---:|---:|---:|---:|---:|
+| 0.1 | Shield robot | 0.32 | 0.32 | 0.00 | 0/10 | 2/2 |
+| 0.1 | War machine, plate closed | 1.03 | 0.32 | −0.72 | 10/10 | 4/2 |
+| 0.1 | Sentry turret | 0.32 | 0.02 | −0.30 | 10/10 | 2/1 |
+| 0.2 | Shield robot | 0.32 | 0.02 | −0.30 | 10/10 | 2/1 |
+| 0.2 | War machine, plate closed | 0.32 | 0.02 | −0.30 | 10/10 | 2/1 |
+| 0.2 | Sentry turret | 0.32 | 0.02 | −0.30 | 10/10 | 2/1 |
+
+Five `move_ttk*.gd` probe files now support in-memory slice scaling and re-approach. All 120 timed fights ended in kills at shipped HP. The default-scale run reproduced all 30 archived Kerf pairs. The commit includes the authorized debt baseline update, [report](./evidence/moves/ttk.md), and [per-seed JSON](./evidence/moves/ttk-kerf-whatif.json).
+
+**Checks**
+
+- `node tools/lint/lint.mjs` → `lint: all 19 checks pass over 1978 GDScript files`
+- `node tools/gate/quick.mjs` → `quick: ok, 5 file(s), 13.6 s`
+- `node tools/tests/run_unit.mjs --changed` → 3,680 passed, 0 failed, 2 skipped
+
+**Exact probe command** from the worktree, with the supplied `APPDATA` and `GODOT_BIN`:
+
+```powershell
+foreach ($k in '0.1', '0.2') {
+    $out = "$($PWD.Path)/build/dev/kerf-k$k.json"
+    node tools/dev/run.mjs move_ttk --move=kerf_blink_behind --seeds=10 "--slice-k=$k" "--out=$out" "--result=$out"
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+}
+```
+
+[astra: 917s, exit 0]

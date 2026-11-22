@@ -1,0 +1,1483 @@
+{
+  "schema": "gtai.move-ttk-kerf-whatif/1",
+  "runs": [
+    {
+      "cases": [
+        {
+          "enemy": "shield_robot",
+          "move": "kerf_blink_behind",
+          "pairs": [
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 1.98000000000002,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": 0,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 1,
+                "slices": 2
+              },
+              "seed": 1
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 1.98000000000002,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": 0,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 1,
+                "slices": 2
+              },
+              "seed": 2
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 1.98000000000002,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": 0,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 1,
+                "slices": 2
+              },
+              "seed": 3
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 1.98000000000002,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": 0,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 1,
+                "slices": 2
+              },
+              "seed": 4
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 1.98000000000002,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": 0,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 1,
+                "slices": 2
+              },
+              "seed": 5
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 1.98000000000002,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": 0,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 1,
+                "slices": 2
+              },
+              "seed": 6
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 1.98000000000002,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": 0,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 1,
+                "slices": 2
+              },
+              "seed": 7
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 1.98000000000002,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": 0,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 1,
+                "slices": 2
+              },
+              "seed": 8
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 1.98000000000002,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": 0,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 1,
+                "slices": 2
+              },
+              "seed": 9
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 1.98000000000002,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": 0,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 1,
+                "slices": 2
+              },
+              "seed": 10
+            }
+          ],
+          "pilot": "standard",
+          "summary": {
+            "on": {
+              "off_median_damage": 0,
+              "off_median_s": 0.316666666666667,
+              "off_total_uses": 0,
+              "on_median_damage": 0,
+              "on_median_s": 0.316666666666667,
+              "on_total_uses": 10,
+              "paired_median_delta_s": 0,
+              "seeds_faster": 0,
+              "off_median_slices_to_kill": 2,
+              "on_median_slices_to_kill": 2
+            }
+          },
+          "target_count": 1,
+          "weapon": "kerf_slice"
+        },
+        {
+          "enemy": "war_machine",
+          "move": "kerf_blink_behind",
+          "pairs": [
+            {
+              "off": {
+                "damage_to_rivet": 24,
+                "first_slice_damage": 4.95000000000005,
+                "gun_shots": 0,
+                "kill_tick": 62,
+                "move_uses": 0,
+                "slices": 4
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -43,
+                "first_slice_damage": 14.85,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 1,
+                "slices": 2
+              },
+              "seed": 1
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 4.95000000000005,
+                "gun_shots": 0,
+                "kill_tick": 62,
+                "move_uses": 0,
+                "slices": 4
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -43,
+                "first_slice_damage": 14.85,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 1,
+                "slices": 2
+              },
+              "seed": 2
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 4.95000000000005,
+                "gun_shots": 0,
+                "kill_tick": 62,
+                "move_uses": 0,
+                "slices": 4
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -43,
+                "first_slice_damage": 14.85,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 1,
+                "slices": 2
+              },
+              "seed": 3
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 4.95000000000005,
+                "gun_shots": 0,
+                "kill_tick": 62,
+                "move_uses": 0,
+                "slices": 4
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -43,
+                "first_slice_damage": 14.85,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 1,
+                "slices": 2
+              },
+              "seed": 4
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 4.95000000000005,
+                "gun_shots": 0,
+                "kill_tick": 62,
+                "move_uses": 0,
+                "slices": 4
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -43,
+                "first_slice_damage": 14.85,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 1,
+                "slices": 2
+              },
+              "seed": 5
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 4.95000000000005,
+                "gun_shots": 0,
+                "kill_tick": 62,
+                "move_uses": 0,
+                "slices": 4
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -43,
+                "first_slice_damage": 14.85,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 1,
+                "slices": 2
+              },
+              "seed": 6
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 4.95000000000005,
+                "gun_shots": 0,
+                "kill_tick": 62,
+                "move_uses": 0,
+                "slices": 4
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -43,
+                "first_slice_damage": 14.85,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 1,
+                "slices": 2
+              },
+              "seed": 7
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 4.95000000000005,
+                "gun_shots": 0,
+                "kill_tick": 62,
+                "move_uses": 0,
+                "slices": 4
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -43,
+                "first_slice_damage": 14.85,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 1,
+                "slices": 2
+              },
+              "seed": 8
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 4.95000000000005,
+                "gun_shots": 0,
+                "kill_tick": 62,
+                "move_uses": 0,
+                "slices": 4
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -43,
+                "first_slice_damage": 14.85,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 1,
+                "slices": 2
+              },
+              "seed": 9
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 4.95000000000005,
+                "gun_shots": 0,
+                "kill_tick": 62,
+                "move_uses": 0,
+                "slices": 4
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -43,
+                "first_slice_damage": 14.85,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 1,
+                "slices": 2
+              },
+              "seed": 10
+            }
+          ],
+          "pilot": "standard",
+          "summary": {
+            "on": {
+              "off_median_damage": 0,
+              "off_median_s": 1.03333333333333,
+              "off_total_uses": 0,
+              "on_median_damage": 0,
+              "on_median_s": 0.316666666666667,
+              "on_total_uses": 10,
+              "paired_median_delta_s": -0.716666666666667,
+              "seeds_faster": 10,
+              "off_median_slices_to_kill": 4,
+              "on_median_slices_to_kill": 2
+            }
+          },
+          "target_count": 1,
+          "weapon": "kerf_slice"
+        },
+        {
+          "enemy": "sentry_turret",
+          "move": "kerf_blink_behind",
+          "pairs": [
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 2.47500000000002,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 2,
+                "turret_rounds": 0
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 1,
+                "turret_rounds": 0
+              },
+              "seed": 1
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 2.47500000000002,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 2,
+                "turret_rounds": 0
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 1,
+                "turret_rounds": 0
+              },
+              "seed": 2
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 2.47500000000002,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 2,
+                "turret_rounds": 0
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 1,
+                "turret_rounds": 0
+              },
+              "seed": 3
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 2.47500000000002,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 2,
+                "turret_rounds": 0
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 1,
+                "turret_rounds": 0
+              },
+              "seed": 4
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 2.47500000000002,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 2,
+                "turret_rounds": 0
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 1,
+                "turret_rounds": 0
+              },
+              "seed": 5
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 2.47500000000002,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 2,
+                "turret_rounds": 0
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 1,
+                "turret_rounds": 0
+              },
+              "seed": 6
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 2.47500000000002,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 2,
+                "turret_rounds": 0
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 1,
+                "turret_rounds": 0
+              },
+              "seed": 7
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 2.47500000000002,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 2,
+                "turret_rounds": 0
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 1,
+                "turret_rounds": 0
+              },
+              "seed": 8
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 2.47500000000002,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 2,
+                "turret_rounds": 0
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 1,
+                "turret_rounds": 0
+              },
+              "seed": 9
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 2.47500000000002,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 2,
+                "turret_rounds": 0
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 1,
+                "turret_rounds": 0
+              },
+              "seed": 10
+            }
+          ],
+          "pilot": "standard",
+          "summary": {
+            "on": {
+              "off_median_damage": 0,
+              "off_median_s": 0.316666666666667,
+              "off_total_uses": 0,
+              "on_median_damage": 0,
+              "on_median_s": 0.0166666666666667,
+              "on_total_uses": 10,
+              "paired_median_delta_s": -0.3,
+              "seeds_faster": 10,
+              "off_median_slices_to_kill": 2,
+              "on_median_slices_to_kill": 1
+            }
+          },
+          "target_count": 1,
+          "weapon": "kerf_slice"
+        }
+      ],
+      "first_seed": 1,
+      "limit_ticks": 1800,
+      "schema": "gtai.move-ttk/1",
+      "seeds": 10,
+      "slice_k": 0.1,
+      "tick_hz": 60
+    },
+    {
+      "cases": [
+        {
+          "enemy": "shield_robot",
+          "move": "kerf_blink_behind",
+          "pairs": [
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 3.96000000000004,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 19.8,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "slices": 1
+              },
+              "seed": 1
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 3.96000000000004,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 19.8,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "slices": 1
+              },
+              "seed": 2
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 3.96000000000004,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 19.8,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "slices": 1
+              },
+              "seed": 3
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 3.96000000000004,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 19.8,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "slices": 1
+              },
+              "seed": 4
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 3.96000000000004,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 19.8,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "slices": 1
+              },
+              "seed": 5
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 3.96000000000004,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 19.8,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "slices": 1
+              },
+              "seed": 6
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 3.96000000000004,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 19.8,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "slices": 1
+              },
+              "seed": 7
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 3.96000000000004,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 19.8,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "slices": 1
+              },
+              "seed": 8
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 3.96000000000004,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 19.8,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "slices": 1
+              },
+              "seed": 9
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 3.96000000000004,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 19.8,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "slices": 1
+              },
+              "seed": 10
+            }
+          ],
+          "pilot": "standard",
+          "summary": {
+            "on": {
+              "off_median_damage": 0,
+              "off_median_s": 0.316666666666667,
+              "off_total_uses": 0,
+              "on_median_damage": 0,
+              "on_median_s": 0.0166666666666667,
+              "on_total_uses": 10,
+              "paired_median_delta_s": -0.3,
+              "seeds_faster": 10,
+              "off_median_slices_to_kill": 2,
+              "on_median_slices_to_kill": 1
+            }
+          },
+          "target_count": 1,
+          "weapon": "kerf_slice"
+        },
+        {
+          "enemy": "war_machine",
+          "move": "kerf_blink_behind",
+          "pairs": [
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 29.7,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "slices": 1
+              },
+              "seed": 1
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 29.7,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "slices": 1
+              },
+              "seed": 2
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 29.7,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "slices": 1
+              },
+              "seed": 3
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 29.7,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "slices": 1
+              },
+              "seed": 4
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 29.7,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "slices": 1
+              },
+              "seed": 5
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 29.7,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "slices": 1
+              },
+              "seed": 6
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 29.7,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "slices": 1
+              },
+              "seed": 7
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 29.7,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "slices": 1
+              },
+              "seed": 8
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 29.7,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "slices": 1
+              },
+              "seed": 9
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 9.89999999999998,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "slices": 2
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 29.7,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "slices": 1
+              },
+              "seed": 10
+            }
+          ],
+          "pilot": "standard",
+          "summary": {
+            "on": {
+              "off_median_damage": 0,
+              "off_median_s": 0.316666666666667,
+              "off_total_uses": 0,
+              "on_median_damage": 0,
+              "on_median_s": 0.0166666666666667,
+              "on_total_uses": 10,
+              "paired_median_delta_s": -0.3,
+              "seeds_faster": 10,
+              "off_median_slices_to_kill": 2,
+              "on_median_slices_to_kill": 1
+            }
+          },
+          "target_count": 1,
+          "weapon": "kerf_slice"
+        },
+        {
+          "enemy": "sentry_turret",
+          "move": "kerf_blink_behind",
+          "pairs": [
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 4.95000000000005,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 2,
+                "turret_rounds": 0
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 19.8,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 1,
+                "turret_rounds": 0
+              },
+              "seed": 1
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 4.95000000000005,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 2,
+                "turret_rounds": 0
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 19.8,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 1,
+                "turret_rounds": 0
+              },
+              "seed": 2
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 4.95000000000005,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 2,
+                "turret_rounds": 0
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 19.8,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 1,
+                "turret_rounds": 0
+              },
+              "seed": 3
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 4.95000000000005,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 2,
+                "turret_rounds": 0
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 19.8,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 1,
+                "turret_rounds": 0
+              },
+              "seed": 4
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 4.95000000000005,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 2,
+                "turret_rounds": 0
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 19.8,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 1,
+                "turret_rounds": 0
+              },
+              "seed": 5
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 4.95000000000005,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 2,
+                "turret_rounds": 0
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 19.8,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 1,
+                "turret_rounds": 0
+              },
+              "seed": 6
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 4.95000000000005,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 2,
+                "turret_rounds": 0
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 19.8,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 1,
+                "turret_rounds": 0
+              },
+              "seed": 7
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 4.95000000000005,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 2,
+                "turret_rounds": 0
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 19.8,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 1,
+                "turret_rounds": 0
+              },
+              "seed": 8
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 4.95000000000005,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 2,
+                "turret_rounds": 0
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 19.8,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 1,
+                "turret_rounds": 0
+              },
+              "seed": 9
+            },
+            {
+              "off": {
+                "damage_to_rivet": 0,
+                "first_slice_damage": 4.95000000000005,
+                "gun_shots": 0,
+                "kill_tick": 19,
+                "move_uses": 0,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 2,
+                "turret_rounds": 0
+              },
+              "on": {
+                "damage_to_rivet": 0,
+                "delta_ticks": -18,
+                "first_slice_damage": 19.8,
+                "gun_shots": 0,
+                "kill_tick": 1,
+                "move_uses": 1,
+                "rear_gun_hits": 0,
+                "rounds_during_short_circuit": 0,
+                "slices": 1,
+                "turret_rounds": 0
+              },
+              "seed": 10
+            }
+          ],
+          "pilot": "standard",
+          "summary": {
+            "on": {
+              "off_median_damage": 0,
+              "off_median_s": 0.316666666666667,
+              "off_total_uses": 0,
+              "on_median_damage": 0,
+              "on_median_s": 0.0166666666666667,
+              "on_total_uses": 10,
+              "paired_median_delta_s": -0.3,
+              "seeds_faster": 10,
+              "off_median_slices_to_kill": 2,
+              "on_median_slices_to_kill": 1
+            }
+          },
+          "target_count": 1,
+          "weapon": "kerf_slice"
+        }
+      ],
+      "first_seed": 1,
+      "limit_ticks": 1800,
+      "schema": "gtai.move-ttk/1",
+      "seeds": 10,
+      "slice_k": 0.2,
+      "tick_hz": 60
+    }
+  ]
+}

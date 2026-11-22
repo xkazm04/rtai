@@ -138,7 +138,7 @@ func test_short_circuit_cancels_the_stomp_tell_for_36_ticks() -> void:
 	_interrupt_walker(1.5)
 
 
-func test_immune_bolts_do_damage_without_extending_the_stun_or_counting() -> void:
+func test_immune_bolts_refresh_electro_stun_without_extending_the_short_circuit() -> void:
 	var h: Fighter = _spawn(&"sentry_turret", Vector2(8, 0))
 	# Allow the two presses at 3.9 s and 4.1 s: this test isolates the machine's immunity.
 	ohm.attacks.block(OhmStage.GHOST)["bolt_gap_s"] = 0.1
@@ -154,7 +154,7 @@ func test_immune_bolts_do_damage_without_extending_the_stun_or_counting() -> voi
 		assert_eq(mind.stun_until, start + 120)
 		assert_eq(mind.immune_until, start + 240)
 		assert_eq(OhmShortCircuit.held(squad, h), offset < 120)
-		assert_true(arena.areas == null or arena.areas.effect(h) == null)
+		assert_eq(arena.areas.effect(h).stun_ticks, PowerDef.ticks(ohm.num(&"stun_s")) - 1)
 	_before(start + 246)
 	_tick(true)
 	assert_eq(_uses(), 2)
