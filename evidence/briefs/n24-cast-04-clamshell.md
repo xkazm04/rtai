@@ -30,14 +30,31 @@ baseline as the rest) and SPLICE them into the good columns 3-5 of the round-03 
 splice tool (measured heights and baselines, as you did for the lancer). Count takes per sheet. Sheets: walk, attack,
 stomp, hit, fall at 70 and 55 (layouts as brief 03 section 0c). Size: 2.6 m tall, ~1.8 m wide.
 
-## 1. Brief 03 leftovers (fill these before anything new)
-Read `evidence/briefs/n24-cast-03-film-door.out.txt` (your own report) and `git status`. Finish and commit what 03
-left: the door carrier wired behind `cast_cards.json` (check: slab drawn width = 0.64 m within 15%, body ~2.0 m;
-switch off = main), the lancer films `C:\Users\kazda\kiro\gtai-masters\n24\cast\lancer_wave_32.mp4` and
-`lancer_close_64.mp4` (32 / 64 px/m, tilt 70, 1080p60, 15-40 s by `ffprobe`; walk, kneel tell, fire, hit, death; watch
-6 stills you extract), the door stills `door_{32,64}ppm_tilt{70,55}.png`, the `_kneel` error, the unit `--changed`
-pass line and the scenarios exit code. Then a **door carrier film** the same way (`door_wave_32.mp4`,
-`door_close_64.mp4`: walk, braced tell, shove, hit, death).
+## 1. Brief 03 leftovers (do these right after starting the round)
+Your brief-03 report is in `evidence/briefs/n24-cast-03-film-door.out.txt`. Director's review (20:45):
+ACCEPTED: f87537d4b (door cards; the single `arena_robot_rigs.gd` call site; shove lane still drawn), the door stills
+(slab 41/46 px vs 40.96, body 1.98/2.04 m), `lancer_close_64.mp4` (1080p60, 16 s, all five beats), the spliced attack.
+Left, in this order:
+a. **11 staged paths** (cast_cards.json row, both lancer fall PNGs at 83%, `cast_pack.py`, provenance, the
+   `project/dev/cast/*` capture files, `cast_lineup.mjs`): `--import`, restill the lancer beside a dead cop, measure
+   both lying lengths (lancer within 10% of the cop), then commit. The hook failed on a tooling timeout test
+   (`tools/merge/morning_run.break.test.mjs:134`) under machine load: retry the commit once; if it fails again on that
+   same timeout, run that test file alone (`node --test tools/merge/morning_run.break.test.mjs`), quote both results
+   and report it. Never `--no-verify`.
+b. **`lancer_wave_32.mp4` retake**: 1920x1080 (`--resolution 1920x1080` and a window that size on the secondary screen,
+   `--position 0,1440`; verify with ffprobe), 60 fps, 15-40 s, 32 px/m tilt 70, and the lancer must live long enough to
+   show walk, kneel tell, at least one shot, a non-fatal hit, then death (weaker Rivet weapon, a longer approach, or a
+   scripted delay in your own dev scene). Overwrite the partial take.
+c. **Door stills**: at 70 the dead patrol lies on top of the dead door carrier in the "At rest" panel: space them so
+   both read. Restill all four.
+d. **Scenarios** missed two wall-clock budgets (city_chase 4.3 ms / 2 ms, rig_stress 1.2 ms / 1 ms) while five lanes
+   load the machine. Run `node tools/tests/run_scenarios.mjs` (it marks CONTENDED and re-runs those alone when quiet;
+   `--quiet-wait=5`) and quote its summary. A non-budget failure is a real fault: fix it.
+e. `node tools/tests/run_unit.mjs --select=test_cast_cards,test_cast_door,test_cast_card_pose` (or `--changed` with a
+   longer timeout) and quote the pass line; `node tools/mutate/mutate.mjs --file=project/features/combat/squad/foe_shield_card_view.gd --max=20`
+   from a clean commit, quote killed/(killed+survived).
+f. **Door carrier film** the same way as the lancer: `door_wave_32.mp4` (1080p60, 15-40 s) and `door_close_64.mp4`:
+   walk, braced tell with the shove lane, shove, hit, death. Extract 6 stills and look.
 
 ## 2. The clamshell (sentry turret) in the game
 Use the v2 sheets `foes-n24/out/sentry_turret_{attack,hit,fall}_{70,55}_v2.png`. Director's review (sheet level):

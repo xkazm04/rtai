@@ -89,3 +89,16 @@ NEXT: (session 3) check logs/cast/astra.lock + astra-calls.jsonl; when film-door
   hit 1, fall 1 (all rej), clamshell attack/fall/hit 2 each (v2 accepted with wisp cleanup).
 - 20:30 brief 04 written (evidence/briefs/n24-cast-04-clamshell.md): 03 leftovers + door film, clamshell cut/wire/stills/
   clip, pile-driver retake (cropped concept, per-column facing words, front-column splice fallback), standing rule docs.
+- 20:42 ASTRA film-door 66 accepted (commits 705b6a205, 0228d57fe, f87537d4b). Reviewed: f87537d4b door carrier cards
+  (one call site in arena_robot_rigs.gd: `rig.visible = FoeShieldCardView.show_rig(...)`; foe_shield_view.gd returns
+  after the shove lane when the card is on, so the danger read stays; foe_cast_view.gd skips machines) ACCEPTED.
+  Door stills ACCEPTED (slab 41 px p55 / 46 px p70 vs shove 40.96 px at 64 ppm; body 1.98 / 2.04 m) except the 70
+  "At rest" panel puts the dead cop on top of the dead carrier. Spliced lancer attack cols 4-5 ACCEPTED by eye (rear
+  three-quarter, tube up-right / up, backblast toward the viewer). lancer_close_64.mp4 ACCEPTED (1920x1080, 60 fps,
+  16.0 s; walk, tell, fire, hit, death). lancer_wave_32.mp4 REJECTED: 1280x800 and the lancer dies on the first hit.
+  Open: 11 staged paths (lancer fall rescaled to 83% after a 20% too-long corpse), hook timeout in
+  tools/merge/morning_run.break.test.mjs, scenarios city_chase 4.3/2 ms + rig_stress 1.2/1 ms under load (CONTENDED,
+  to re-run via run_scenarios.mjs), no unit pass line, no mutate score. MILESTONE door-cards f87537d4b.
+  Takes: door carrier 1 per sheet (8 sheets, all accepted); lancer attack 3 (cols 4-5 from take 3).
+- 20:44 ASTRA RUNNING clamshell since 20:44 (pid 71768; brief evidence/briefs/n24-cast-04-clamshell.md: 03 leftovers a-f,
+  clamshell cut/wire/stills/clip, pile-driver retake with the cropped concept, standing-rule docs). Hard stop ~21:59.
