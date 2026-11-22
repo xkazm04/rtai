@@ -35,7 +35,7 @@ function recipe(argv, root) {
   const report = (arm) => [tool('report'), '--batch=' + arm + '/batch.json'];
   const neutral = out + '/null';
   const steps = [batches(before), [...batches(neutral), '--salt=1'], report(before),
-    [tool('tune'), 'propose', '--batch=' + before + '/batch.json', '--out=' + plan, '--profile=' + (profile === 'all' ? 'average' : profile)],
+    [tool('tune'), 'propose', '--batch=' + before + '/batch.json', '--out=' + plan, '--profile=' + profile],
     [tool('tune'), 'apply', '--plan=' + plan, ...scope], batches(after),
     [tool('tune'), 'confirm', '--before=' + before + '/batch.json', '--after=' + after + '/batch.json',
       '--null=' + neutral + '/batch.json', '--floor-mode=' + mode, '--plan=' + plan, '--revert', ...scope],

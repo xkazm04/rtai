@@ -1,4 +1,5 @@
-import { median } from '../perf/paired.mjs';
+import { timeBounds } from './analysis.mjs';
+import { profileScores, targets } from './death_score.mjs';
 import { analyze, weaponsOf } from './report.mjs';
 import { fmt } from './report_tables.mjs';
 import { knobStep, occupied } from './tune_groups.mjs';
@@ -23,15 +24,16 @@ function waveMisses(report, runs, roster, { target, profile, street, minN }) {
   const byWave = Map.groupBy(runs.filter((r) => r.profile === profile).flatMap((r) => r.waves), (w) => w.n);
   const timed = report.waves.filter((row) => row.profile === profile && row.timed);
   const midpoint = Math.ceil((timed.at(-1)?.n ?? 0) / 2);
-  const lower = target * 0.8, upper = target * 1.2;
-  const fastBudget = timed.some((row) => row.n > midpoint && row.median < lower && row.timed >= minN)
+  const fastBudget = timed.some((row) => row.n > midpoint && row.median < timeBounds(row.n, target)[0] && row.timed >= minN)
     ? 'budget.per_wave' : 'budget.base';
   const misses = [];
   for (const row of timed) {
+    const [lower, upper] = timeBounds(row.n, target);
     if (row.median >= lower && row.median <= upper) continue;
-    const factor = ratio(target, row.median);
+    const goal = row.n % targets.boss_every === 0 ? (row.median < lower ? lower : upper) : target;
+    const factor = ratio(goal, row.median);
     let miss = profile + ' wave ' + row.n + ' median ' + fmt(row.median) + ' s over ' + row.timed
-      + ' timed runs against ' + target + ' s';
+      + ' timed runs against ' + goal + ' s';
     const choices = [];
     if (row.median < lower) {
       miss += ', below the ' + fmt(lower) + ' s lower bound';
@@ -48,27 +50,27 @@ function waveMisses(report, runs, roster, { target, profile, street, minN }) {
       if (street) choices.push([row.n === 1 ? 'budget.base' : 'budget.per_wave', factor]);
     }
     const reason = row.timed < minN ? 'too few runs (need ' + minN + ' timed runs)' : undefined;
-    misses.push(measuredMiss({ type: 'wave', profile, wave: row.n, target }, Math.abs(row.median / target - 1), miss, choices, reason));
+    misses.push(measuredMiss({ type: 'wave', profile, wave: row.n, target: goal }, Math.abs(row.median / goal - 1), miss, choices, reason));
   }
   return misses;
 }
 
-function spreadMiss(runs, roster, street) {
-  const depth = (profile) => median(runs.filter((r) => r.profile === profile).map((r) => r.wave_reached));
-  const novice = depth('novice'), expert = depth('expert');
-  if (!(expert <= novice)) return [];
-  const profiles = runs.filter((r) => ['novice', 'expert'].includes(r.profile));
-  // Ease a shared bottleneck when both profiles die. Increase pressure when they both survive.
-  const blocked = ['novice', 'expert'].every((p) => profiles.some((r) => r.profile === p && r.death));
-  const factor = blocked ? 0.8 : 1.25;
-  const choices = street ? [['budget.per_wave', factor], ['budget.base', factor]] : [];
-  const waves = profiles.flatMap((r) => r.waves.filter((w) => w.n === r.wave_reached));
-  const robot = robotIn(waves, roster);
-  if (robot) choices.push([robot.id + '.hp', factor]);
-  const miss = 'novice median wave ' + fmt(novice) + ', expert ' + fmt(expert)
-    + ' against a gap of at least 1 wave, ' + profiles.filter((r) => r.death).length + '/' + profiles.length
-    + ' runs ended in death' + (robot ? ', ' + robot.id + ' in ' + robot.count + '/' + robot.total + ' timed final rosters' : '');
-  return [measuredMiss({ type: 'spread', target: 1 }, 1 - (expert - novice), miss, choices)];
+function deathMisses(batch, profile, minN) {
+  const observations = [];
+  for (const row of profileScores(batch)) {
+    if (row.profile !== profile && profile !== 'all') continue;
+    const { median, upper, target, scores, capped } = row;
+    if (!scores.length || median === target) continue;
+    const metric = { type: 'death', profile: row.profile, target };
+    const miss = row.profile + ' median death wave ' + fmt(median) + ' against target ' + target
+      + ' (' + row.deaths + ' deaths, ' + capped + ' capped as lower bounds)';
+    const reason = scores.length < minN ? 'too few runs (need ' + minN + ' scored runs)'
+      : median < target && upper >= target ? 'censoring leaves an early death-wave miss unresolved' : undefined;
+    const factor = Math.min(1.25, Math.max(0.8, median / target));
+    observations.push(measuredMiss(metric, Math.abs(median / target - 1), miss,
+      [['enemy_damage', factor], ['budget.per_wave', factor]], reason));
+  }
+  return observations.sort((a, b) => b.severity - a.severity);
 }
 
 function killerMisses(report, runs, roster, threshold) {
@@ -122,18 +124,18 @@ function bonusMisses(report, weapons, target) {
   return misses;
 }
 
-export function propose(batch, state, baseline, { target = 15, profile = 'average', max = 6, killerShare = 0.5, minN = 3,
+export function propose(batch, state, baseline, { target = targets.wave_seconds.average, profile = 'average', max = 6, killerShare = 0.5, minN = 3,
   used = new Set(), batchHash, night } = {}) {
   const weapons = weaponsOf(batch);
   const report = analyze(batch, null, weapons);
   const roster = state.tables.get(TABLES + 'enemies.json');
   const street = batch.args.runner !== 'pit';
   const observations = [
-    ...waveMisses(report, batch.results, roster, { target, profile, street, minN }),
-    ...spreadMiss(batch.results, roster, street),
+    ...waveMisses(report, batch.results, roster, { target, profile: profile === 'all' ? 'average' : profile, street, minN }),
     ...killerMisses(report, batch.results, roster, killerShare),
     ...bonusMisses(report, weapons, target)
   ].sort((a, b) => b.severity - a.severity);
+  if (street) observations.unshift(...deathMisses(batch, profile, minN));
   const changes = [], misses = [];
   const chosen = new Set(used);
   // The two outcomes of one offer can describe the same advantage. Don't turn both knobs for it.
@@ -156,6 +158,7 @@ export function propose(batch, state, baseline, { target = 15, profile = 'averag
       }
       if (occupied(id, chosen) || (metric.type === 'offer' && selectedOffers.has(metric.id))) {
         result.reason = 'knob or offer already selected this night';
+        if (metric.type === 'death') continue;
         break;
       }
       if (changes.length >= max) { result.reason = 'plan limit'; break; }

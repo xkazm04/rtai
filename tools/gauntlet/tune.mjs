@@ -6,6 +6,7 @@ import { parseArgs } from 'node:util';
 import { canonicalJson } from '../lib/canonical_json.mjs';
 import { readJson } from '../lib/repo.mjs';
 import { MIN_AA_PAIRS, PROFILES } from './contract.mjs';
+import { targets } from './death_score.mjs';
 import { loadBatch } from './report.mjs';
 import { fmt } from './report_tables.mjs';
 import { confirmChange, pairNullRuns, pairRuns, verdictMode } from './tune_confirm.mjs';
@@ -43,12 +44,12 @@ function nightOutput(root, v) {
 }
 
 function writePlan(root, v) {
-  const target = Number(v['target-s'] ?? 15), profile = v.profile ?? 'average';
+  const target = Number(v['target-s'] ?? targets.wave_seconds.average), profile = v.profile ?? 'all';
   const max = Number(v.max ?? 6), killerShare = Number(v['killer-share'] ?? 0.5);
   const minN = Number(v['min-n'] ?? 3);
   if (!Number.isSafeInteger(minN) || minN < 1) throw new Error('--min-n must be a positive integer');
   if (!(target > 0 && Number.isFinite(target))) throw new Error('--target-s must be positive');
-  if (![...PROFILES, 'human'].includes(profile)) throw new Error('unknown profile ' + profile);
+  if (![...PROFILES, 'human', 'all'].includes(profile)) throw new Error('unknown profile ' + profile);
   if (!Number.isSafeInteger(max) || max < 0) throw new Error('--max must be a nonnegative integer');
   if (!(killerShare > 0 && killerShare < 1)) throw new Error('--killer-share must be between 0 and 1');
   artifact(root, v.out);
@@ -71,17 +72,18 @@ function markdown(ledger) {
     + ledger.before_runs + ' before and ' + ledger.after_runs + ' after runs. The ' + ledger.floor_mode
     + ' floor decides each verdict.' + (ledger.null_sha256 ? ' Matched ' + ledger.matched_null_runs + ' null runs.' : ''), '',
     'Positive improvement means the measured miss shrank. An empty apply SHA means this branch has no commit for that edit. A revert SHA records an executed undo.', '',
-    '| Knob | Before → after | Baseline | Measured miss | Confirmation before → after | Pairs | Improvement (CI95) | Null-salt floor (pairs) | Cross-seed floor (pairs) | Deciding mode | Verdict | Deciding rule | Point | Strict | Apply / revert SHA |',
-    '|---|---:|---:|---|---:|---:|---:|---:|---:|---|---|---|---|---|---|'];
+    '| Knob | Before → after | Baseline | Measured miss | Target | Confirmation before → after | Pairs | Improvement (CI95) | Null-salt floor (pairs) | Cross-seed floor (pairs) | Deciding mode | Verdict | Deciding rule | Point | Strict | Apply / revert SHA |',
+    '|---|---:|---:|---|---:|---:|---:|---:|---:|---:|---|---|---|---|---|---|'];
   const floorCell = (f) => {
     if (!f) return 'not measured';
     const value = Number.isFinite(f.estimate) && !Number.isFinite(f.floor) ? fmt(f.estimate) + '*' : fmt(f.floor);
     return value + ' (' + f.aa_pairs + ')';
   };
   for (const c of ledger.changes) {
-    const unit = { wave: 's', spread: 'waves', killer: 'death share', offer: c.metric.outcome === 'seconds' ? 's' : 'waves' }[c.metric.type];
-    lines.push('| ' + [c.id, c.members ? '× ' + c.factor + ' (' + c.members.length + ' knobs)' : c.before + ' → ' + c.after, c.members ? 'per knob' : c.baseline, c.miss,
-      fmt(c.measured_before) + ' → ' + fmt(c.measured_after) + ' ' + unit, c.pairs,
+    const unit = { death: 'waves', wave: 's', spread: 'waves', killer: 'death share', offer: c.metric.outcome === 'seconds' ? 's' : 'waves' }[c.metric.type];
+    lines.push('| ' + [c.id, c.members ? '× ' + c.factor + ' (' + c.members.length + ' knobs)' : c.before + ' → ' + c.after, c.members ? 'per knob' : c.baseline, c.miss, c.metric.target,
+      fmt(c.measured_before) + ' → ' + fmt(c.measured_after) + ' ' + unit
+        + (c.metric.type === 'death' ? ' (' + c.censored_before + ' → ' + c.censored_after + ' capped, median uses lower bounds)' : ''), c.pairs,
       fmt(c.improvement) + ' (' + c.ci95.map(fmt).join(' to ') + ')',
       floorCell(c.floors['null-salt']), floorCell(c.floors['cross-seed']), c.floor_mode,
       c.verdict, c.verdict_mode, c.verdicts.point, c.verdicts.strict, [c.commit, c.revert_commit].filter(Boolean).join(' / ') || '—'].map(cell).join(' | ') + ' |');

@@ -21,7 +21,8 @@ export function checkPlan(plan) {
       || typeof c.miss !== 'string' || (c.id === DAMAGE_GROUP ? !Number.isFinite(c.factor) || c.factor < 0.8 || c.factor > 1.25
         || !Array.isArray(c.members) || !c.members.length : c.members !== undefined)
       || !(c.members ?? [c]).every((m) => m && [m.before, m.after, m.baseline].every(Number.isFinite))
-      || !['wave', 'killer', 'spread', 'offer'].includes(c.metric?.type) || !Number.isFinite(c.metric.target))
+      || !['death', 'wave', 'killer', 'spread', 'offer'].includes(c.metric?.type) || !Number.isFinite(c.metric.target)
+      || (c.metric.type === 'death' && !['novice', 'average', 'expert'].includes(c.metric.profile)))
       throw new Error('invalid or duplicate change: ' + c?.id);
     seen.add(c.id);
   }

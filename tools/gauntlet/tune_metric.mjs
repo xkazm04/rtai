@@ -1,5 +1,6 @@
+import { deathScore } from './death_score.mjs';
 import { median } from '../perf/paired.mjs';
-import { quantile } from '../perf/stats.mjs';
+import { mean, quantile } from '../perf/stats.mjs';
 import { matchObservations, offerObservation } from './offers.mjs';
 
 function offerSamples(rows, metric) {
@@ -32,6 +33,10 @@ function spreadSamples(rows) {
 
 export function samplesFor(rows, metric) {
   switch (metric.type) {
+    case 'death': return rows.filter((r) => r.a.profile === metric.profile).flatMap((r) => {
+      const a = deathScore(r.a), b = deathScore(r.b);
+      return a && b ? [{ ...r, a: a.wave, b: b.wave, censoredA: a.censored, censoredB: b.censored }] : [];
+    });
     case 'reached': return rows.map((r) => ({ ...r, a: r.a.wave_reached, b: r.b.wave_reached }));
     case 'offer': return offerSamples(rows, metric);
     case 'spread': return spreadSamples(rows);
@@ -75,4 +80,10 @@ export function interval(rows, measure) {
     if (Number.isFinite(delta)) deltas.push(delta);
   }
   return deltas.length < 1900 ? [NaN, NaN] : [quantile(deltas, 0.025), quantile(deltas, 0.975)];
+}
+
+export function pairedMean(rows, direction = 1) {
+  const deltas = rows.map((r) => direction * (r.b - r.a));
+  const ci = interval(deltas.map((b) => ({ a: 0, b })), mean);
+  return { gain: mean(deltas), ci };
 }

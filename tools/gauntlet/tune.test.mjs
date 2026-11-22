@@ -150,7 +150,9 @@ function manifest(results) {
 function fixtureBatch() {
   const dir = join(ROOT, 'tools/gauntlet/fixtures');
   const runs = readdirSync(dir).filter((n) => n.endsWith('.json')).map((n) => readJson(join(dir, n)));
-  return manifest(runs.filter((r) => !validateRun(r)));
+  const batch = manifest(runs.filter((r) => !validateRun(r)));
+  batch.args.runner = 'pit'; // Historical bonus/guard fixtures exercise their independent metrics.
+  return batch;
 }
 
 function robotBatch() {
@@ -209,14 +211,14 @@ test('propose counts timed runs per wave and requires five deaths before acting 
   const output = ok(cli(root, 'propose', ...proposeArgs));
   assert.match(output, /wave 2 median 24 s over 2 timed runs.*too few runs/);
   assert.match(output, /4\/4 deaths.*too few runs/);
-  assert.deepEqual(readJson(join(root, planFile)).changes.map((c) => c.id), ['shield_robot.hp']);
+  assert.deepEqual(readJson(join(root, planFile)).changes.map((c) => c.id), ['enemy_damage', 'shield_robot.hp']);
   runs[4].death = { wave: 3 }; // An unattributed death counts toward the denominator.
   write(root, beforeFile, manifest(runs));
   ok(cli(root, 'propose', ...proposeArgs, '--min-n=4'));
   const plan = readJson(join(root, planFile));
   assert.equal(plan.min_n, 4);
-  assert.deepEqual(plan.changes.map((c) => c.id), ['enemy_weapon.turret_gun.damage']);
-  assert.match(plan.changes[0].miss, /4\/5 deaths/);
+  assert.deepEqual(plan.changes.map((c) => c.id), ['enemy_damage']);
+  assert.ok(plan.misses.some((m) => /4\/5 deaths/.test(m.miss) && /already selected/.test(m.reason)));
   assert.match(cli(root, 'propose', ...proposeArgs, '--min-n=0').stderr, /positive integer/);
 });
 
@@ -229,7 +231,7 @@ test('fast street medians raise only the opening or growing budget, according to
   const state = inventory(root), baseline = ensureBaseline(root, state.entries), batch = robotBatch();
   for (const run of batch.results) {
     run.wave_reached = 6;
-    run.waves = [9, 10, 12, 15, 15, 15].map((seconds, i) => ({
+    run.waves = [9, 10, 12, 15, 27, 15].map((seconds, i) => ({
       n: i + 1, seconds, enemies: { robot_thug: 2 }
     }));
   }
@@ -245,22 +247,68 @@ test('fast street medians raise only the opening or growing budget, according to
   assert.deepEqual(edits(), []);
 });
 
-test('a collapsed profile gap and a dominant enemy weapon each select a measured table knob', (t) => {
-  const root = repository(t), state = inventory(root), base = ensureBaseline(root, state.entries);
-  const runs = ['novice', 'expert'].flatMap((profile) => robotBatch().results.map((r) => ({
-    ...r, profile, death: { wave: r.wave_reached, by: 'turret_gun' }
-  })));
-  const batch = manifest(runs);
-  const plan = propose(batch, state, base);
-  assert.match(plan.changes.find((c) => c.metric.type === 'spread').miss, /novice median wave 3, expert 3/);
-  assert.equal(plan.changes.find((c) => c.metric.type === 'killer').id, 'enemy_weapon.turret_gun.damage');
-  const after = structuredClone(batch);
-  for (const r of after.results) {
-    if (r.profile === 'expert') r.wave_reached = r.death.wave = 5;
-    r.death.by = 'other';
+test('early and late death-wave misses prefer the group then the budget; a cap can leave direction unknown', (t) => {
+  const root = repository(t);
+  const file = TABLES + 'gauntlet.json', table = readJson(join(root, file));
+  table.budget.per_wave = 20;
+  write(root, file, table);
+  const state = inventory(root), base = ensureBaseline(root, state.entries);
+  const batch = robotBatch();
+  for (const [wave, factor] of [[6, 0.8], [24, 1.25]]) {
+    for (const run of batch.results) {
+      run.death = { wave, by: 'turret_gun' };
+      run.wave_reached = wave + 1; // A younger roster can clear before the last survivor.
+    }
+    const plan = propose(batch, state, base);
+    assert.equal(plan.changes[0].id, 'enemy_damage');
+    assert.equal(plan.changes[0].factor, factor);
+    assert.deepEqual(plan.changes[0].metric, { type: 'death', profile: 'average', target: 12 });
+    const fallback = propose(batch, state, base, { used: new Set(['enemy_damage']) });
+    assert.equal(fallback.changes[0].id, 'budget.per_wave');
   }
-  const paired = pairRuns(batch, after);
-  for (const c of plan.changes) assert.equal(confirmChange(paired, c, crossSeed).verdict, 'kept', c.id);
+  for (const r of batch.results) { delete r.death; r.capped = true; r.wave_reached = 3; }
+  const censored = propose(batch, state, base);
+  assert.match(censored.misses[0].reason, /censoring/);
+  assert.ok(!censored.changes.some((c) => c.metric.type === 'death'));
+});
+
+test('death-wave confirm pairs the recorded death or cap per seed with its null-salt floor', (t) => {
+  const root = repository(t), before = robotBatch();
+  for (const r of before.results) {
+    r.death = { wave: r.seed + 13 };
+    r.wave_reached = r.death.wave + 1;
+  }
+  delete before.results[0].death;
+  before.runs[0].outcome = 'capped';
+  const plan = prepare(root, before);
+  assert.equal(plan.changes[0].id, 'enemy_damage');
+  const neutral = structuredClone(before), after = structuredClone(before);
+  neutral.args.salt = 1;
+  for (const batch of [neutral, after]) {
+    const delta = batch === neutral ? 1 : -3;
+    for (const r of batch.results) {
+      r.wave_reached += delta;
+      if (r.death) r.death.wave += delta;
+    }
+    batch.results.reverse();
+  }
+  const nullFile = 'build/null/batch.json';
+  write(root, nullFile, neutral);
+  write(root, afterFile, after);
+  assert.match(cli(root, 'confirm', ...confirmArgs).stderr, /death-wave.*--null/);
+  const args = ['--before=' + beforeFile, '--after=' + afterFile, '--plan=' + planFile, '--null=' + nullFile];
+  for (const mode of ['point', 'strict']) {
+    ok(cli(root, 'confirm', ...args, '--verdict=' + mode));
+    const c = readJson(join(root, 'build/after/tune-ledger.json')).changes[0];
+    assert.deepEqual([c.metric.target, c.measured_before, c.measured_after, c.pairs, c.floor, c.improvement],
+      [12, 19.5, 16.5, 12, 1, 3]);
+    assert.deepEqual(c.ci95, [3, 3]);
+    assert.deepEqual(c.verdicts, { point: 'kept', strict: 'kept' });
+    assert.equal(c.verdict_mode, mode);
+    assert.equal(c.censored_before, 1);
+    assert.equal(c.censored_after, 1);
+    assert.match(readFileSync(join(root, 'build/after/tune-ledger.md'), 'utf8'), /median uses lower bounds/);
+  }
 });
 
 test('apply refuses on the wrong branch before reading a plan; the baseline refuses overwrite', (t) => {
@@ -613,7 +661,7 @@ test('enemy damage uses one factor, one commit and one reversible receipt', (t) 
   const capped = structuredClone(baseline);
   capped.values['enemy_weapon.cannon.damage'] = 8;
   assert.equal(knobStep(group.id, 1.25, entries, capped).members.find((m) => m.id === 'enemy_weapon.cannon.damage').after, 16);
-  plan.changes = [{ ...group, metric: plan.changes[0].metric, miss: 'fixture wave time' }];
+  plan.changes = [{ ...group, metric: { type: 'wave', profile: 'average', wave: 1, target: 15 }, miss: 'fixture wave time' }];
   const apply = () => cli(root, 'apply', '--plan=' + planFile);
   const invalid = structuredClone(plan);
   invalid.changes[0].members.pop();
@@ -633,4 +681,16 @@ test('enemy damage uses one factor, one commit and one reversible receipt', (t) 
   assert.equal(ledger.changes[0].verdict, 'noise');
   assert.ok(ledger.changes[0].revert_commit);
   assert.equal(git(root, 'diff', head, '--', TABLES), '');
+});
+
+test('changing the verdict threshold uses the same mean and interval on skewed pairs', () => {
+  const before = robotBatch(), after = structuredClone(before);
+  for (const r of after.results) r.waves[0].seconds -= r.seed === 1 ? 12 : 0;
+  const rows = pairRuns(before, after), change = { metric: { type: 'wave', profile: 'average', wave: 1, target: 15 } };
+  const point = confirmChange(rows, change, crossSeed);
+  const strict = confirmChange(rows, change, { ...crossSeed, verdict: 'strict' });
+  assert.equal(point.improvement, 1);
+  assert.equal(strict.improvement, point.improvement);
+  assert.deepEqual(strict.ci95, point.ci95);
+  assert.deepEqual(strict.verdicts, point.verdicts);
 });

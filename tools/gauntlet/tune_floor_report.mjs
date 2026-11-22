@@ -43,11 +43,11 @@ export function floorReport(before, neutral) {
     const matched = nullGroups.get(stratum) ?? [];
     const profile = base[0].a.profile;
     const waves = [...new Set(base.flatMap((row) => row.a.waves.map((w) => w.n)))].sort((a, b) => a - b);
-    const metrics = [...waves.map((wave) => ({ type: 'wave', wave, profile })), { type: 'reached' }];
+    const metrics = [...waves.map((wave) => ({ type: 'wave', wave, profile })), { type: 'reached' }, { type: 'death', profile }];
     for (const metric of metrics) {
       const floors = floorsFor(base, matched, metric);
       const same = floors['null-salt'], cross = floors['cross-seed'];
-      const label = metric.type === 'wave' ? 'Wave ' + metric.wave + ' (s)' : 'Wave reached';
+      const label = metric.type === 'wave' ? 'Wave ' + metric.wave + ' (s)' : metric.type === 'death' ? 'Death wave (including cap lower bounds)' : 'Wave reached';
       lines.push('| ' + [JSON.parse(stratum).join(' / '), label, value(same), same.aa_pairs,
         value(cross), cross.aa_pairs].join(' | ') + ' |');
     }

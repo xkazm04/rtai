@@ -1,20 +1,14 @@
 import { isDeepStrictEqual } from 'node:util';
-import { paired } from '../perf/paired.mjs';
 import { MAX_SEED, MIN_AA_PAIRS } from './contract.mjs';
 import { floorMode, floorsFor } from './tune_floor.mjs';
-import { interval, measured, samplesFor } from './tune_metric.mjs';
+import { recordedRuns } from './death_score.mjs';
+import { interval, measured, pairedMean, samplesFor } from './tune_metric.mjs';
 
 function indexedRuns(batch) {
-  const recorded = batch.runs.filter((r) => r.ok);
-  const key = (r) => JSON.stringify([r.seed, r.profile]);
-  const byIdentity = Map.groupBy(recorded, key);
   const index = new Map();
-  for (const [i, run] of batch.results.entries()) {
-    const candidates = (byIdentity.get(key(run)) ?? []).filter((r) => !r.controls || r.controls === run.controls);
-    const row = candidates.length === 1 ? candidates[0] : candidates.includes(recorded[i]) ? recorded[i] : null;
-    if (!row) throw new Error('ambiguous run manifest for ' + key(run));
+  for (const { run, row } of recordedRuns(batch)) {
     const pick = row.pick ?? batch.args.pick;
-    if (!['random', 'greedy'].includes(pick)) throw new Error('missing pick policy for ' + key(run));
+    if (!['random', 'greedy'].includes(pick)) throw new Error('missing pick policy for seed ' + run.seed);
     const stratum = JSON.stringify([run.profile, run.controls, pick]);
     const id = JSON.stringify([stratum, run.seed]);
     if (index.has(id)) throw new Error('duplicate run identity ' + id);
@@ -65,13 +59,13 @@ export function verdictFor(gain, ci, floor, mode) {
   return 'noise';
 }
 
-const mean = (values) => values.reduce((sum, value) => sum + value, 0) / values.length;
-
 export function confirmChange(rows, change, { beforeRows = rows, nullRows = null, mode = 'null-salt', verdict = 'point' } = {}) {
   floorMode(mode);
   verdictMode(verdict);
   if (mode === 'null-salt' && !nullRows) throw new Error('null-salt needs matched null runs');
   const { metric } = change;
+  if (metric.type === 'death' && (mode !== 'null-salt' || !nullRows))
+    throw new Error('death-wave confirmation requires --null and the null-salt floor');
   const samples = samplesFor(rows, metric);
   const before = measured(metric.type, samples.map((s) => s.a));
   const after = measured(metric.type, samples.map((s) => s.b));
@@ -79,25 +73,27 @@ export function confirmChange(rows, change, { beforeRows = rows, nullRows = null
   const floors = floorsFor(beforeRows, nullRows, metric);
   const noise = floors[mode];
   const { floor } = noise;
-  let point = aggregate, strictCi, pointCi, statistic;
-  if (metric.type === 'wave' || metric.type === 'offer') {
+  let improvement = aggregate, ci, statistic;
+  if (metric.type === 'death') {
+    const direction = Math.sign(metric.target - before);
+    ({ gain: improvement, ci } = pairedMean(samples, direction));
+    statistic = 'mean paired death-wave change toward target';
+  } else if (metric.type === 'wave' || metric.type === 'offer') {
     const gains = samples.map((r) => ({ a: -distance(metric, r.a), b: -distance(metric, r.b) }));
-    point = mean(gains.map((r) => r.b - r.a));
-    pointCi = interval(gains, mean);
-    strictCi = paired(gains).ci95;
+    ({ gain: improvement, ci } = pairedMean(gains));
     statistic = 'mean paired reduction in miss';
   } else {
-    pointCi = interval(samples, (v) => -distance(metric, measured(metric.type, v)));
-    strictCi = pointCi;
+    ci = interval(samples, (v) => -distance(metric, measured(metric.type, v)));
     statistic = 'paired reduction in aggregate miss';
   }
   const enough = samples.length >= 2 && noise.aa_pairs >= MIN_AA_PAIRS;
   const verdicts = {
-    point: enough ? verdictFor(point, pointCi, floor, 'point') : 'too few pairs',
-    strict: enough ? verdictFor(aggregate, strictCi, floor, 'strict') : 'too few pairs'
+    point: enough ? verdictFor(improvement, ci, floor, 'point') : 'too few pairs',
+    strict: enough ? verdictFor(improvement, ci, floor, 'strict') : 'too few pairs'
   };
   return { ...change, measured_before: before, measured_after: after, pairs: samples.length,
-    improvement: verdict === 'point' ? point : aggregate, statistic: verdict === 'point' ? statistic : 'aggregate reduction in miss',
-    aggregate_improvement: aggregate, ci95: verdict === 'point' ? pointCi : strictCi, floor_mode: mode, floors,
+    ...(metric.type === 'death' && { censored_before: samples.filter((r) => r.censoredA).length,
+      censored_after: samples.filter((r) => r.censoredB).length, median_uses_censored_lower_bounds: true }),
+    improvement, statistic, aggregate_improvement: aggregate, ci95: ci, floor_mode: mode, floors,
     floor, aa_pairs: noise.aa_pairs, aa_groups: noise.aa_groups, verdict_mode: verdict, verdicts, verdict: verdicts[verdict] };
 }

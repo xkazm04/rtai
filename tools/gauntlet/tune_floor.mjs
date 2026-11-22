@@ -1,6 +1,6 @@
 import { paired } from '../perf/paired.mjs';
 import { MIN_AA_PAIRS } from './contract.mjs';
-import { interval, measured, samplesFor } from './tune_metric.mjs';
+import { interval, measured, pairedMean, samplesFor } from './tune_metric.mjs';
 
 export function floorMode(mode = 'null-salt') {
   if (!['null-salt', 'cross-seed'].includes(mode)) throw new Error('--floor-mode must be null-salt or cross-seed');
@@ -27,7 +27,7 @@ function noiseFloor(rows, metric, mode) {
     }
     if (left.length) groups.push({ stratum, left, right });
   }
-  const ci = ['killer', 'spread'].includes(metric.type)
+  const ci = metric.type === 'death' ? pairedMean(pairs).ci : ['killer', 'spread'].includes(metric.type)
     ? interval(pairs, (values) => measured(metric.type, values))
     : paired(pairs).ci95;
   const estimate = Math.max(...ci.map(Math.abs));

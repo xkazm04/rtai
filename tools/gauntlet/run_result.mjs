@@ -22,7 +22,7 @@ export function readResult(file, row, checkIdentity = false, capped = false) {
     if (reason) throw new Error(reason);
     if (checkIdentity && (row.profile !== result.profile || row.seed !== result.seed || row.controls !== result.controls))
       throw new Error('result profile, seed or controls do not match the command');
-    if (capped) {
+    if (capped || result.capped) {
       if (result.death) throw new Error('tick-cap result records a death');
       row.outcome = 'capped';
       delete row.reason;
