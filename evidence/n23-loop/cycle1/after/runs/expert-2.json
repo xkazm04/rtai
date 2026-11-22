@@ -1,0 +1,1722 @@
+{
+  "controls": "wheel",
+  "mods": {
+    "damage": 1.375,
+    "guard_meter": 1.375,
+    "hp_max": 1.375,
+    "regen": 1.375,
+    "speed": 1.375
+  },
+  "picks": [
+    {
+      "offered": [
+        "stat_guard_meter_10",
+        "stat_regen_10",
+        "ghost_tonnage"
+      ],
+      "taken": "ghost_tonnage",
+      "wave": 1
+    },
+    {
+      "offered": [
+        "stat_regen_10",
+        "ghost_ohm",
+        "weapon_electro_baton"
+      ],
+      "taken": "ghost_ohm",
+      "wave": 2
+    },
+    {
+      "offered": [
+        "stat_guard_meter_10",
+        "ghost_dent",
+        "stat_hp_max_10"
+      ],
+      "taken": "ghost_dent",
+      "wave": 3
+    },
+    {
+      "offered": [
+        "stat_regen_10",
+        "weapon_pistol",
+        "stat_speed_10"
+      ],
+      "taken": "stat_speed_10",
+      "wave": 4
+    },
+    {
+      "offered": [
+        "stat_hp_max_10",
+        "stat_regen_10",
+        "weapon_katana"
+      ],
+      "taken": "stat_hp_max_10",
+      "wave": 5
+    },
+    {
+      "offered": [
+        "weapon_machine_pistol",
+        "weapon_katana",
+        "weapon_gloria"
+      ],
+      "taken": "weapon_machine_pistol",
+      "wave": 6
+    },
+    {
+      "offered": [
+        "weapon_plasma_rifle",
+        "weapon_gatling",
+        "weapon_chainsaw"
+      ],
+      "taken": "weapon_gatling",
+      "wave": 7
+    },
+    {
+      "offered": [
+        "weapon_hand_cannon",
+        "stat_guard_meter_10",
+        "stat_guard_meter_25"
+      ],
+      "taken": "stat_guard_meter_10",
+      "wave": 8
+    },
+    {
+      "offered": [
+        "weapon_pistol",
+        "stat_regen_10",
+        "weapon_katana"
+      ],
+      "taken": "weapon_pistol",
+      "wave": 9
+    },
+    {
+      "offered": [
+        "weapon_katana",
+        "weapon_plasma_sword",
+        "weapon_electro_baton"
+      ],
+      "taken": "weapon_katana",
+      "wave": 10
+    },
+    {
+      "offered": [
+        "weapon_plasma_sword",
+        "weapon_gloria",
+        "weapon_hand_cannon"
+      ],
+      "taken": "weapon_plasma_sword",
+      "wave": 11
+    },
+    {
+      "offered": [
+        "stat_damage_10",
+        "stat_regen_10",
+        "weapon_plasma_rifle"
+      ],
+      "taken": "stat_damage_10",
+      "wave": 12
+    },
+    {
+      "offered": [
+        "weapon_gloria",
+        "stat_hp_max_25",
+        "stat_regen_10"
+      ],
+      "taken": "stat_hp_max_25",
+      "wave": 13
+    },
+    {
+      "offered": [
+        "ghost_kerf",
+        "weapon_electro_baton",
+        "weapon_flamethrower"
+      ],
+      "taken": "ghost_kerf",
+      "wave": 14
+    },
+    {
+      "offered": [
+        "stat_guard_meter_25",
+        "weapon_flamethrower",
+        "stat_regen_25"
+      ],
+      "taken": "stat_guard_meter_25",
+      "wave": 15
+    },
+    {
+      "offered": [
+        "weapon_hand_cannon",
+        "weapon_gloria",
+        "stat_speed_25"
+      ],
+      "taken": "stat_speed_25",
+      "wave": 16
+    },
+    {
+      "offered": [
+        "stat_regen_25",
+        "stat_regen_10",
+        "weapon_chainsaw"
+      ],
+      "taken": "stat_regen_25",
+      "wave": 17
+    },
+    {
+      "offered": [
+        "weapon_flamethrower",
+        "weapon_hand_cannon",
+        "weapon_gloria"
+      ],
+      "taken": "weapon_flamethrower",
+      "wave": 18
+    },
+    {
+      "offered": [
+        "weapon_plasma_rifle",
+        "weapon_rocket_launcher",
+        "weapon_gloria"
+      ],
+      "taken": "weapon_rocket_launcher",
+      "wave": 19
+    },
+    {
+      "offered": [
+        "weapon_chainsaw",
+        "weapon_plasma_rifle",
+        "weapon_gloria"
+      ],
+      "taken": "weapon_chainsaw",
+      "wave": 20
+    },
+    {
+      "offered": [
+        "weapon_gloria",
+        "weapon_electro_baton",
+        "weapon_hand_cannon"
+      ],
+      "taken": "weapon_gloria",
+      "wave": 21
+    },
+    {
+      "offered": [
+        "weapon_electro_baton",
+        "weapon_plasma_rifle",
+        "stat_damage_25"
+      ],
+      "taken": "stat_damage_25",
+      "wave": 22
+    },
+    {
+      "offered": [
+        "stat_regen_10",
+        "weapon_plasma_rifle",
+        "weapon_hand_cannon"
+      ],
+      "taken": "stat_regen_10",
+      "wave": 23
+    },
+    {
+      "offered": [
+        "weapon_electro_baton",
+        "weapon_plasma_rifle",
+        "weapon_hand_cannon"
+      ],
+      "taken": "weapon_electro_baton",
+      "wave": 24
+    },
+    {
+      "offered": [
+        "weapon_plasma_rifle",
+        "weapon_hand_cannon"
+      ],
+      "taken": "weapon_plasma_rifle",
+      "wave": 25
+    },
+    {
+      "offered": [
+        "weapon_hand_cannon"
+      ],
+      "taken": "weapon_hand_cannon",
+      "wave": 26
+    }
+  ],
+  "profile": "expert",
+  "schema": "gtai.gauntlet-run/1",
+  "seed": 2,
+  "wave_reached": 40,
+  "waves": [
+    {
+      "cover_ticks": 10,
+      "damage_taken": 1.19999999999999,
+      "enemies": {
+        "patrol_cop": 13
+      },
+      "form_seconds": {
+        "rivet": 9.33
+      },
+      "guard_deflects": 4,
+      "guard_ticks": 60,
+      "hits": 13,
+      "hits_gun": 0,
+      "hits_melee": 9,
+      "hp": {
+        "end": 100.0,
+        "max": 100.0,
+        "min": 98.8,
+        "repaired": 1.19999999999999,
+        "start": 100.0
+      },
+      "n": 1,
+      "rolls": 1,
+      "seconds": 9.33333333333333,
+      "shots": 0,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 0,
+      "damage_taken": 0.0,
+      "enemies": {
+        "patrol_cop": 14
+      },
+      "form_seconds": {
+        "rivet": 16.97
+      },
+      "guard_deflects": 7,
+      "guard_ticks": 61,
+      "hits": 14,
+      "hits_gun": 0,
+      "hits_melee": 13,
+      "hp": {
+        "end": 100.0,
+        "max": 100.0,
+        "min": 100.0,
+        "repaired": 0.0,
+        "start": 100.0
+      },
+      "n": 2,
+      "rolls": 1,
+      "seconds": 16.9666666666667,
+      "shots": 0,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 106,
+      "damage_taken": 6.75346180597941,
+      "enemies": {
+        "contractor": 3,
+        "patrol_cop": 1,
+        "riot_cop": 5,
+        "rocket_trooper": 2
+      },
+      "form_seconds": {
+        "ohm": 6.08,
+        "rivet": 5.05
+      },
+      "guard_deflects": 2,
+      "guard_ticks": 19,
+      "hits": 20,
+      "hits_gun": 0,
+      "hits_melee": 1,
+      "hp": {
+        "end": 100.0,
+        "max": 100.0,
+        "min": 93.2465381940206,
+        "repaired": 6.75346180597941,
+        "start": 100.0
+      },
+      "n": 3,
+      "rolls": 6,
+      "seconds": 11.1333333333333,
+      "shots": 0,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 5,
+      "damage_taken": 0.599999999999994,
+      "enemies": {
+        "contractor": 3,
+        "patrol_cop": 2,
+        "riot_cop": 3,
+        "rocket_trooper": 2,
+        "swat": 2
+      },
+      "form_seconds": {
+        "rivet": 14.35
+      },
+      "guard_deflects": 8,
+      "guard_ticks": 83,
+      "hits": 12,
+      "hits_gun": 0,
+      "hits_melee": 8,
+      "hp": {
+        "end": 100.0,
+        "max": 100.0,
+        "min": 99.4,
+        "repaired": 0.599999999999994,
+        "start": 100.0
+      },
+      "n": 4,
+      "rolls": 2,
+      "seconds": 14.35,
+      "shots": 0,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 153,
+      "damage_taken": 92.4018946781158,
+      "enemies": {
+        "patrol_cop": 1,
+        "riot_cop": 2,
+        "war_machine": 1
+      },
+      "form_seconds": {
+        "ohm": 9.15,
+        "rivet": 25.48,
+        "tonnage": 14.2
+      },
+      "guard_deflects": 4,
+      "guard_ticks": 49,
+      "hits": 28,
+      "hits_gun": 0,
+      "hits_melee": 18,
+      "hp": {
+        "end": 96.9333333333341,
+        "max": 100.0,
+        "min": 31.4380304641724,
+        "repaired": 89.3352280114499,
+        "start": 100.0
+      },
+      "machine": {
+        "claw_reach_ticks": 206,
+        "cover_ticks": 153,
+        "guard_ticks": 49,
+        "hp_lost": 26.0,
+        "rolling_ticks": 396,
+        "ticks": 2930
+      },
+      "n": 5,
+      "rolls": 18,
+      "seconds": 48.8333333333333,
+      "shots": 0,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 80,
+      "damage_taken": 7.83149741490681,
+      "enemies": {
+        "riot_cop": 2,
+        "robot_thug": 3,
+        "rocket_trooper": 2,
+        "sentry_turret": 2,
+        "swat": 2
+      },
+      "form_seconds": {
+        "ohm": 7.3,
+        "rivet": 15.75
+      },
+      "guard_deflects": 2,
+      "guard_ticks": 19,
+      "hits": 59,
+      "hits_gun": 0,
+      "hits_melee": 32,
+      "hp": {
+        "end": 110.0,
+        "max": 110.0,
+        "min": 104.568502585093,
+        "repaired": 7.83149741490681,
+        "start": 110.0
+      },
+      "n": 6,
+      "rolls": 7,
+      "seconds": 23.05,
+      "shots": 0,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 5,
+      "damage_taken": 0.599999999999994,
+      "enemies": {
+        "contractor": 6,
+        "patrol_cop": 2,
+        "riot_cop": 2,
+        "robot_thug": 1,
+        "swat": 3
+      },
+      "form_seconds": {
+        "rivet": 10.52
+      },
+      "guard_deflects": 2,
+      "guard_ticks": 15,
+      "hits": 38,
+      "hits_gun": 38,
+      "hits_melee": 0,
+      "hp": {
+        "end": 110.0,
+        "max": 110.0,
+        "min": 109.4,
+        "repaired": 0.599999999999994,
+        "start": 110.0
+      },
+      "n": 7,
+      "rolls": 1,
+      "seconds": 10.5166666666667,
+      "shots": 78,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 3,
+      "damage_taken": 5.79117638270058,
+      "enemies": {
+        "contractor": 2,
+        "patrol_cop": 2,
+        "riot_cop": 2,
+        "robot_gunner": 3,
+        "rocket_trooper": 2,
+        "sentry_turret": 2
+      },
+      "form_seconds": {
+        "rivet": 17.55
+      },
+      "guard_deflects": 10,
+      "guard_ticks": 140,
+      "hits": 65,
+      "hits_gun": 51,
+      "hits_melee": 9,
+      "hp": {
+        "end": 110.0,
+        "max": 110.0,
+        "min": 106.008823617299,
+        "repaired": 5.79117638270058,
+        "start": 110.0
+      },
+      "n": 8,
+      "rolls": 4,
+      "seconds": 17.55,
+      "shots": 84,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 118,
+      "damage_taken": 19.3463150660197,
+      "enemies": {
+        "contractor": 1,
+        "patrol_cop": 2,
+        "riot_cop": 3,
+        "robot_gunner": 2,
+        "robot_thug": 3,
+        "rocket_trooper": 1,
+        "shield_robot": 1
+      },
+      "form_seconds": {
+        "ohm": 7.07,
+        "rivet": 12.95,
+        "tonnage": 7.1
+      },
+      "guard_deflects": 1,
+      "guard_ticks": 10,
+      "hits": 132,
+      "hits_gun": 92,
+      "hits_melee": 4,
+      "hp": {
+        "end": 96.0,
+        "max": 110.0,
+        "min": 96.0,
+        "repaired": 5.34631506601968,
+        "start": 110.0
+      },
+      "n": 9,
+      "rolls": 7,
+      "seconds": 27.1166666666667,
+      "shots": 104,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 121,
+      "damage_taken": 55.2449476553599,
+      "enemies": {
+        "riot_cop": 1,
+        "robot_gunner": 1,
+        "robot_thug": 1,
+        "rocket_trooper": 1,
+        "sentry_turret": 1,
+        "war_machine": 1
+      },
+      "form_seconds": {
+        "ohm": 7.3,
+        "rivet": 13.6,
+        "tonnage": 7.1
+      },
+      "guard_deflects": 0,
+      "guard_ticks": 0,
+      "hits": 70,
+      "hits_gun": 45,
+      "hits_melee": 12,
+      "hp": {
+        "end": 69.9550523446409,
+        "max": 110.0,
+        "min": 69.9550523446409,
+        "repaired": 15.2000000000008,
+        "start": 110.0
+      },
+      "machine": {
+        "claw_reach_ticks": 287,
+        "cover_ticks": 121,
+        "guard_ticks": 0,
+        "hp_lost": 26.0,
+        "rolling_ticks": 374,
+        "ticks": 1609
+      },
+      "n": 10,
+      "rolls": 17,
+      "seconds": 28.0,
+      "shots": 61,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 65,
+      "damage_taken": 13.8,
+      "enemies": {
+        "contractor": 1,
+        "patrol_cop": 3,
+        "riot_cop": 4,
+        "robot_gunner": 4,
+        "rocket_trooper": 2,
+        "sentry_turret": 1,
+        "swat": 1
+      },
+      "form_seconds": {
+        "ohm": 7.3,
+        "rivet": 11.17
+      },
+      "guard_deflects": 5,
+      "guard_ticks": 73,
+      "hits": 63,
+      "hits_gun": 28,
+      "hits_melee": 6,
+      "hp": {
+        "end": 102.0,
+        "max": 110.0,
+        "min": 102.0,
+        "repaired": 5.79999999999998,
+        "start": 110.0
+      },
+      "n": 11,
+      "rolls": 6,
+      "seconds": 18.4666666666667,
+      "shots": 41,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 25,
+      "damage_taken": 2.88000000000002,
+      "enemies": {
+        "contractor": 1,
+        "patrol_cop": 2,
+        "riot_cop": 2,
+        "robot_gunner": 2,
+        "robot_thug": 2,
+        "rocket_trooper": 2,
+        "sentry_turret": 2,
+        "shield_robot": 1,
+        "swat": 1
+      },
+      "form_seconds": {
+        "ohm": 0.02,
+        "rivet": 25.83,
+        "tonnage": 7.1
+      },
+      "guard_deflects": 21,
+      "guard_ticks": 209,
+      "hits": 167,
+      "hits_gun": 136,
+      "hits_melee": 16,
+      "hp": {
+        "end": 110.0,
+        "max": 110.0,
+        "min": 108.32,
+        "repaired": 2.88000000000002,
+        "start": 110.0
+      },
+      "n": 12,
+      "rolls": 4,
+      "seconds": 32.95,
+      "shots": 175,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 257,
+      "damage_taken": 21.2989609940846,
+      "enemies": {
+        "patrol_cop": 3,
+        "riot_cop": 1,
+        "robot_gunner": 1,
+        "robot_thug": 3,
+        "rocket_trooper": 4,
+        "shield_robot": 2,
+        "swat": 2
+      },
+      "form_seconds": {
+        "ohm": 14.6,
+        "rivet": 18.47,
+        "tonnage": 7.1
+      },
+      "guard_deflects": 11,
+      "guard_ticks": 86,
+      "hits": 201,
+      "hits_gun": 120,
+      "hits_melee": 9,
+      "hp": {
+        "end": 110.0,
+        "max": 110.0,
+        "min": 95.9010390059153,
+        "repaired": 21.2989609940846,
+        "start": 110.0
+      },
+      "n": 13,
+      "rolls": 21,
+      "seconds": 40.1666666666667,
+      "shots": 136,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 179,
+      "damage_taken": 6.37077575683591,
+      "enemies": {
+        "contractor": 2,
+        "patrol_cop": 1,
+        "riot_cop": 2,
+        "robot_gunner": 3,
+        "robot_thug": 2,
+        "rocket_trooper": 2,
+        "sentry_turret": 1,
+        "shield_robot": 1,
+        "swat": 2
+      },
+      "form_seconds": {
+        "ohm": 6.75,
+        "rivet": 23.27,
+        "tonnage": 7.1
+      },
+      "guard_deflects": 2,
+      "guard_ticks": 29,
+      "hits": 158,
+      "hits_gun": 127,
+      "hits_melee": 11,
+      "hp": {
+        "end": 137.5,
+        "max": 137.5,
+        "min": 134.729224243164,
+        "repaired": 6.37077575683591,
+        "start": 137.5
+      },
+      "n": 14,
+      "rolls": 18,
+      "seconds": 37.1166666666667,
+      "shots": 162,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 193,
+      "damage_taken": 30.0641881637573,
+      "enemies": {
+        "contractor": 2,
+        "patrol_cop": 1,
+        "robot_thug": 1,
+        "rocket_trooper": 1,
+        "sentry_turret": 3,
+        "swat": 1,
+        "war_machine": 1
+      },
+      "form_seconds": {
+        "kerf": 5.1,
+        "ohm": 1.83,
+        "rivet": 5.13,
+        "tonnage": 7.1
+      },
+      "guard_deflects": 0,
+      "guard_ticks": 0,
+      "hits": 54,
+      "hits_gun": 35,
+      "hits_melee": 10,
+      "hp": {
+        "end": 107.435811836243,
+        "max": 137.5,
+        "min": 107.435811836243,
+        "repaired": 0.0,
+        "start": 137.5
+      },
+      "machine": {
+        "claw_reach_ticks": 0,
+        "cover_ticks": 193,
+        "guard_ticks": 0,
+        "hp_lost": 26.0,
+        "rolling_ticks": 264,
+        "ticks": 1022
+      },
+      "n": 15,
+      "rolls": 12,
+      "seconds": 19.1666666666667,
+      "shots": 50,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 77,
+      "damage_taken": 51.0000000000002,
+      "enemies": {
+        "patrol_cop": 5,
+        "riot_cop": 1,
+        "robot_gunner": 2,
+        "robot_thug": 3,
+        "rocket_trooper": 2,
+        "sentry_turret": 1,
+        "shield_robot": 2,
+        "swat": 2
+      },
+      "form_seconds": {
+        "kerf": 5.5,
+        "ohm": 14.6,
+        "rivet": 22.58
+      },
+      "guard_deflects": 22,
+      "guard_ticks": 84,
+      "hits": 216,
+      "hits_gun": 107,
+      "hits_melee": 21,
+      "hp": {
+        "end": 137.5,
+        "max": 137.5,
+        "min": 87.1000000000001,
+        "repaired": 50.9999999999999,
+        "start": 137.5
+      },
+      "n": 16,
+      "rolls": 17,
+      "seconds": 42.6833333333333,
+      "shots": 132,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 108,
+      "damage_taken": 77.6000000000002,
+      "enemies": {
+        "patrol_cop": 1,
+        "riot_cop": 5,
+        "robot_gunner": 2,
+        "robot_thug": 4,
+        "sentry_turret": 1,
+        "shield_robot": 3
+      },
+      "form_seconds": {
+        "kerf": 3.05,
+        "ohm": 7.3,
+        "rivet": 20.6
+      },
+      "guard_deflects": 7,
+      "guard_ticks": 62,
+      "hits": 189,
+      "hits_gun": 91,
+      "hits_melee": 46,
+      "hp": {
+        "end": 93.7000000000016,
+        "max": 137.5,
+        "min": 75.433333333334,
+        "repaired": 33.8000000000016,
+        "start": 137.5
+      },
+      "n": 17,
+      "rolls": 10,
+      "seconds": 30.95,
+      "shots": 99,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 177,
+      "damage_taken": 69.4417487144471,
+      "enemies": {
+        "contractor": 3,
+        "patrol_cop": 3,
+        "riot_cop": 3,
+        "robot_thug": 2,
+        "rocket_trooper": 5,
+        "sentry_turret": 1,
+        "shield_robot": 2,
+        "swat": 1
+      },
+      "form_seconds": {
+        "kerf": 0.03,
+        "ohm": 7.3,
+        "rivet": 29.43
+      },
+      "guard_deflects": 7,
+      "guard_ticks": 60,
+      "hits": 206,
+      "hits_gun": 149,
+      "hits_melee": 18,
+      "hp": {
+        "end": 118.824917952221,
+        "max": 137.5,
+        "min": 89.2616480191547,
+        "repaired": 50.7666666666678,
+        "start": 137.5
+      },
+      "n": 18,
+      "rolls": 9,
+      "seconds": 36.7666666666667,
+      "shots": 159,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 103,
+      "damage_taken": 3.96000000000015,
+      "enemies": {
+        "patrol_cop": 1,
+        "riot_cop": 1,
+        "robot_gunner": 5,
+        "robot_thug": 3,
+        "rocket_trooper": 1,
+        "sentry_turret": 2,
+        "shield_robot": 2,
+        "swat": 2
+      },
+      "form_seconds": {
+        "kerf": 0.82,
+        "ohm": 7.3,
+        "rivet": 31.0,
+        "tonnage": 7.1
+      },
+      "guard_deflects": 8,
+      "guard_ticks": 72,
+      "hits": 3177,
+      "hits_gun": 119,
+      "hits_melee": 11,
+      "hp": {
+        "end": 137.5,
+        "max": 137.5,
+        "min": 134.158251285554,
+        "repaired": 7.30174871444603,
+        "start": 134.158251285554
+      },
+      "n": 19,
+      "rolls": 11,
+      "seconds": 46.2166666666667,
+      "shots": 281,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 341,
+      "damage_taken": 80.2897762041094,
+      "enemies": {
+        "contractor": 2,
+        "patrol_cop": 2,
+        "riot_cop": 1,
+        "robot_gunner": 1,
+        "robot_thug": 2,
+        "rocket_trooper": 1,
+        "sentry_turret": 2,
+        "shield_robot": 1,
+        "war_machine": 1
+      },
+      "form_seconds": {
+        "kerf": 4.23,
+        "ohm": 7.43,
+        "rivet": 22.5,
+        "tonnage": 7.1
+      },
+      "guard_deflects": 6,
+      "guard_ticks": 45,
+      "hits": 1735,
+      "hits_gun": 75,
+      "hits_melee": 23,
+      "hp": {
+        "end": 137.5,
+        "max": 137.5,
+        "min": 93.6178132886887,
+        "repaired": 80.2897762041092,
+        "start": 137.5
+      },
+      "machine": {
+        "claw_reach_ticks": 220,
+        "cover_ticks": 341,
+        "guard_ticks": 45,
+        "hp_lost": 25.9999999999998,
+        "rolling_ticks": 572,
+        "ticks": 2112
+      },
+      "n": 20,
+      "rolls": 26,
+      "seconds": 41.2666666666667,
+      "shots": 149,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 79,
+      "damage_taken": 31.8144875844322,
+      "enemies": {
+        "contractor": 1,
+        "patrol_cop": 1,
+        "riot_cop": 4,
+        "robot_gunner": 2,
+        "robot_thug": 4,
+        "rocket_trooper": 1,
+        "sentry_turret": 1,
+        "shield_robot": 3,
+        "swat": 2
+      },
+      "form_seconds": {
+        "kerf": 2.4,
+        "ohm": 7.3,
+        "rivet": 21.87
+      },
+      "guard_deflects": 22,
+      "guard_ticks": 201,
+      "hits": 3009,
+      "hits_gun": 73,
+      "hits_melee": 26,
+      "hp": {
+        "end": 137.5,
+        "max": 137.5,
+        "min": 113.518845748902,
+        "repaired": 31.8144875844319,
+        "start": 137.5
+      },
+      "n": 21,
+      "rolls": 13,
+      "seconds": 31.5666666666667,
+      "shots": 118,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 80,
+      "damage_taken": 58.2000000000006,
+      "enemies": {
+        "contractor": 3,
+        "riot_cop": 1,
+        "robot_gunner": 1,
+        "robot_thug": 2,
+        "rocket_trooper": 4,
+        "sentry_turret": 1,
+        "shield_robot": 5,
+        "swat": 2
+      },
+      "form_seconds": {
+        "kerf": 2.82,
+        "ohm": 7.3,
+        "rivet": 26.87
+      },
+      "guard_deflects": 25,
+      "guard_ticks": 108,
+      "hits": 4142,
+      "hits_gun": 70,
+      "hits_melee": 50,
+      "hp": {
+        "end": 137.5,
+        "max": 137.5,
+        "min": 81.7000000000001,
+        "repaired": 58.1999999999998,
+        "start": 137.5
+      },
+      "n": 22,
+      "rolls": 16,
+      "seconds": 36.9833333333333,
+      "shots": 148,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 125,
+      "damage_taken": 28.2142985343937,
+      "enemies": {
+        "contractor": 1,
+        "patrol_cop": 1,
+        "riot_cop": 1,
+        "robot_gunner": 1,
+        "robot_thug": 2,
+        "rocket_trooper": 2,
+        "sentry_turret": 2,
+        "shield_robot": 6,
+        "swat": 3
+      },
+      "form_seconds": {
+        "kerf": 3.42,
+        "ohm": 14.6,
+        "rivet": 47.83,
+        "tonnage": 7.1
+      },
+      "guard_deflects": 7,
+      "guard_ticks": 97,
+      "hits": 4554,
+      "hits_gun": 83,
+      "hits_melee": 36,
+      "hp": {
+        "end": 137.5,
+        "max": 137.5,
+        "min": 118.970289293925,
+        "repaired": 28.2142985343933,
+        "start": 137.5
+      },
+      "n": 23,
+      "rolls": 18,
+      "seconds": 72.95,
+      "shots": 275,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 21,
+      "damage_taken": 3.00000000000011,
+      "enemies": {
+        "contractor": 3,
+        "patrol_cop": 8,
+        "riot_cop": 3,
+        "robot_gunner": 1,
+        "robot_thug": 4,
+        "rocket_trooper": 1,
+        "sentry_turret": 3,
+        "shield_robot": 1,
+        "swat": 1
+      },
+      "form_seconds": {
+        "kerf": 5.5,
+        "ohm": 7.3,
+        "rivet": 12.33
+      },
+      "guard_deflects": 8,
+      "guard_ticks": 54,
+      "hits": 1530,
+      "hits_gun": 32,
+      "hits_melee": 11,
+      "hp": {
+        "end": 137.5,
+        "max": 137.5,
+        "min": 135.7,
+        "repaired": 2.99999999999997,
+        "start": 137.5
+      },
+      "n": 24,
+      "rolls": 8,
+      "seconds": 25.1333333333333,
+      "shots": 71,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 250,
+      "damage_taken": 39.3984755611423,
+      "enemies": {
+        "contractor": 2,
+        "patrol_cop": 3,
+        "robot_gunner": 3,
+        "rocket_trooper": 3,
+        "sentry_turret": 2,
+        "shield_robot": 1,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "form_seconds": {
+        "kerf": 5.5,
+        "ohm": 7.3,
+        "rivet": 14.5
+      },
+      "guard_deflects": 2,
+      "guard_ticks": 22,
+      "hits": 1067,
+      "hits_gun": 26,
+      "hits_melee": 12,
+      "hp": {
+        "end": 137.5,
+        "max": 137.5,
+        "min": 115.900082054138,
+        "repaired": 39.3984755611419,
+        "start": 137.5
+      },
+      "machine": {
+        "claw_reach_ticks": 72,
+        "cover_ticks": 238,
+        "guard_ticks": 22,
+        "hp_lost": 26.0,
+        "rolling_ticks": 344,
+        "ticks": 1097
+      },
+      "n": 25,
+      "rolls": 17,
+      "seconds": 27.3,
+      "shots": 50,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 79,
+      "damage_taken": 9.38799123764068,
+      "enemies": {
+        "contractor": 4,
+        "patrol_cop": 3,
+        "riot_cop": 2,
+        "robot_gunner": 3,
+        "robot_thug": 1,
+        "rocket_trooper": 3,
+        "sentry_turret": 3,
+        "shield_robot": 3,
+        "swat": 2
+      },
+      "form_seconds": {
+        "kerf": 4.55,
+        "ohm": 7.3,
+        "rivet": 13.9
+      },
+      "guard_deflects": 10,
+      "guard_ticks": 141,
+      "hits": 1431,
+      "hits_gun": 46,
+      "hits_melee": 13,
+      "hp": {
+        "end": 136.3,
+        "max": 137.5,
+        "min": 132.7,
+        "repaired": 8.18799123764035,
+        "start": 137.5
+      },
+      "n": 26,
+      "rolls": 11,
+      "seconds": 25.75,
+      "shots": 63,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 30,
+      "damage_taken": 6.60000000000014,
+      "enemies": {
+        "contractor": 3,
+        "patrol_cop": 4,
+        "riot_cop": 3,
+        "robot_gunner": 2,
+        "robot_thug": 4,
+        "rocket_trooper": 1,
+        "sentry_turret": 2,
+        "shield_robot": 3,
+        "swat": 2
+      },
+      "form_seconds": {
+        "kerf": 0.52,
+        "ohm": 7.3,
+        "rivet": 34.78,
+        "tonnage": 7.1
+      },
+      "guard_deflects": 15,
+      "guard_ticks": 173,
+      "hits": 5323,
+      "hits_gun": 118,
+      "hits_melee": 11,
+      "hp": {
+        "end": 137.5,
+        "max": 137.5,
+        "min": 133.3,
+        "repaired": 7.79999999999995,
+        "start": 136.3
+      },
+      "n": 27,
+      "rolls": 13,
+      "seconds": 49.7,
+      "shots": 273,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 178,
+      "damage_taken": 32.3023090298981,
+      "enemies": {
+        "contractor": 8,
+        "riot_cop": 2,
+        "robot_gunner": 2,
+        "robot_thug": 3,
+        "rocket_trooper": 2,
+        "sentry_turret": 3,
+        "shield_robot": 2,
+        "swat": 3
+      },
+      "form_seconds": {
+        "kerf": 4.07,
+        "ohm": 7.3,
+        "rivet": 19.03,
+        "tonnage": 7.1
+      },
+      "guard_deflects": 5,
+      "guard_ticks": 54,
+      "hits": 1730,
+      "hits_gun": 36,
+      "hits_melee": 28,
+      "hp": {
+        "end": 117.597690970103,
+        "max": 137.5,
+        "min": 111.197690970103,
+        "repaired": 12.4000000000001,
+        "start": 137.5
+      },
+      "n": 28,
+      "rolls": 28,
+      "seconds": 37.5,
+      "shots": 60,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 21,
+      "damage_taken": 73.9999999999999,
+      "enemies": {
+        "contractor": 4,
+        "patrol_cop": 1,
+        "riot_cop": 2,
+        "robot_gunner": 3,
+        "robot_thug": 5,
+        "rocket_trooper": 1,
+        "sentry_turret": 4,
+        "shield_robot": 1,
+        "swat": 4
+      },
+      "form_seconds": {
+        "kerf": 5.5,
+        "ohm": 7.3,
+        "rivet": 26.4
+      },
+      "guard_deflects": 23,
+      "guard_ticks": 166,
+      "hits": 2517,
+      "hits_gun": 51,
+      "hits_melee": 42,
+      "hp": {
+        "end": 117.083333333334,
+        "max": 137.5,
+        "min": 100.7,
+        "repaired": 53.5833333333336,
+        "start": 137.5
+      },
+      "n": 29,
+      "rolls": 7,
+      "seconds": 39.2,
+      "shots": 98,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 238,
+      "damage_taken": 34.4922771546047,
+      "enemies": {
+        "patrol_cop": 2,
+        "riot_cop": 2,
+        "robot_gunner": 2,
+        "robot_thug": 1,
+        "rocket_trooper": 2,
+        "sentry_turret": 2,
+        "shield_robot": 4,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "form_seconds": {
+        "ohm": 21.9,
+        "rivet": 33.42,
+        "tonnage": 7.1
+      },
+      "guard_deflects": 14,
+      "guard_ticks": 145,
+      "hits": 3404,
+      "hits_gun": 80,
+      "hits_melee": 43,
+      "hp": {
+        "end": 137.5,
+        "max": 137.5,
+        "min": 122.3,
+        "repaired": 34.4922771546046,
+        "start": 137.5
+      },
+      "machine": {
+        "claw_reach_ticks": 239,
+        "cover_ticks": 238,
+        "guard_ticks": 109,
+        "hp_lost": 26.0000000000002,
+        "rolling_ticks": 440,
+        "ticks": 2709
+      },
+      "n": 30,
+      "rolls": 20,
+      "seconds": 62.4166666666667,
+      "shots": 151,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 33,
+      "damage_taken": 4.20000000000016,
+      "enemies": {
+        "contractor": 5,
+        "patrol_cop": 3,
+        "riot_cop": 5,
+        "robot_gunner": 3,
+        "robot_thug": 3,
+        "rocket_trooper": 6,
+        "sentry_turret": 2,
+        "shield_robot": 1,
+        "swat": 1
+      },
+      "form_seconds": {
+        "kerf": 8.35,
+        "rivet": 14.78
+      },
+      "guard_deflects": 8,
+      "guard_ticks": 62,
+      "hits": 2516,
+      "hits_gun": 52,
+      "hits_melee": 14,
+      "hp": {
+        "end": 137.5,
+        "max": 137.5,
+        "min": 133.3,
+        "repaired": 4.19999999999996,
+        "start": 137.5
+      },
+      "n": 31,
+      "rolls": 8,
+      "seconds": 23.1333333333333,
+      "shots": 110,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 112,
+      "damage_taken": 9.55024197896341,
+      "enemies": {
+        "contractor": 2,
+        "patrol_cop": 6,
+        "riot_cop": 3,
+        "robot_gunner": 3,
+        "robot_thug": 4,
+        "rocket_trooper": 2,
+        "sentry_turret": 3,
+        "shield_robot": 2,
+        "swat": 4
+      },
+      "form_seconds": {
+        "kerf": 2.5,
+        "ohm": 14.6,
+        "rivet": 30.18
+      },
+      "guard_deflects": 28,
+      "guard_ticks": 228,
+      "hits": 3908,
+      "hits_gun": 80,
+      "hits_melee": 7,
+      "hp": {
+        "end": 137.5,
+        "max": 137.5,
+        "min": 132.149758021037,
+        "repaired": 9.55024197896319,
+        "start": 137.5
+      },
+      "n": 32,
+      "rolls": 12,
+      "seconds": 47.2833333333333,
+      "shots": 153,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 194,
+      "damage_taken": 46.4361960013707,
+      "enemies": {
+        "contractor": 4,
+        "patrol_cop": 2,
+        "riot_cop": 3,
+        "robot_gunner": 3,
+        "robot_thug": 3,
+        "rocket_trooper": 3,
+        "sentry_turret": 3,
+        "shield_robot": 4,
+        "swat": 2
+      },
+      "form_seconds": {
+        "kerf": 9.3,
+        "ohm": 7.3,
+        "rivet": 37.87
+      },
+      "guard_deflects": 12,
+      "guard_ticks": 116,
+      "hits": 4709,
+      "hits_gun": 100,
+      "hits_melee": 38,
+      "hp": {
+        "end": 137.5,
+        "max": 137.5,
+        "min": 93.4638039986293,
+        "repaired": 46.4361960013707,
+        "start": 137.5
+      },
+      "n": 33,
+      "rolls": 15,
+      "seconds": 54.4666666666667,
+      "shots": 182,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 81,
+      "damage_taken": 8.48491820653339,
+      "enemies": {
+        "contractor": 4,
+        "patrol_cop": 8,
+        "riot_cop": 1,
+        "robot_gunner": 2,
+        "robot_thug": 4,
+        "rocket_trooper": 3,
+        "shield_robot": 4,
+        "swat": 5
+      },
+      "form_seconds": {
+        "ohm": 7.3,
+        "rivet": 21.23,
+        "tonnage": 7.1
+      },
+      "guard_deflects": 9,
+      "guard_ticks": 61,
+      "hits": 4336,
+      "hits_gun": 91,
+      "hits_melee": 8,
+      "hp": {
+        "end": 137.5,
+        "max": 137.5,
+        "min": 130.275081793467,
+        "repaired": 8.48491820653283,
+        "start": 137.5
+      },
+      "n": 34,
+      "rolls": 10,
+      "seconds": 35.6333333333333,
+      "shots": 206,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 260,
+      "damage_taken": 65.9314618539812,
+      "enemies": {
+        "contractor": 4,
+        "patrol_cop": 1,
+        "riot_cop": 2,
+        "robot_gunner": 6,
+        "robot_thug": 4,
+        "shield_robot": 2,
+        "swat": 1,
+        "war_machine": 1
+      },
+      "form_seconds": {
+        "kerf": 5.5,
+        "ohm": 7.3,
+        "rivet": 13.55
+      },
+      "guard_deflects": 14,
+      "guard_ticks": 147,
+      "hits": 276,
+      "hits_gun": 11,
+      "hits_melee": 14,
+      "hp": {
+        "end": 95.9518714793529,
+        "max": 137.5,
+        "min": 83.0852048126859,
+        "repaired": 24.3833333333338,
+        "start": 137.5
+      },
+      "machine": {
+        "claw_reach_ticks": 0,
+        "cover_ticks": 260,
+        "guard_ticks": 66,
+        "hp_lost": 26.0,
+        "rolling_ticks": 330,
+        "ticks": 1207
+      },
+      "n": 35,
+      "rolls": 16,
+      "seconds": 26.35,
+      "shots": 13,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 147,
+      "damage_taken": 79.4250425910958,
+      "enemies": {
+        "contractor": 3,
+        "patrol_cop": 3,
+        "riot_cop": 3,
+        "robot_gunner": 1,
+        "robot_thug": 8,
+        "rocket_trooper": 3,
+        "sentry_turret": 1,
+        "shield_robot": 4,
+        "swat": 3
+      },
+      "form_seconds": {
+        "kerf": 0.03,
+        "ohm": 7.3,
+        "rivet": 32.48,
+        "tonnage": 7.1
+      },
+      "guard_deflects": 18,
+      "guard_ticks": 120,
+      "hits": 654,
+      "hits_gun": 43,
+      "hits_melee": 65,
+      "hp": {
+        "end": 137.5,
+        "max": 137.5,
+        "min": 58.074957408905,
+        "repaired": 79.425042591095,
+        "start": 137.5
+      },
+      "n": 36,
+      "rolls": 15,
+      "seconds": 46.9166666666667,
+      "shots": 107,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 125,
+      "damage_taken": 41.2395794232646,
+      "enemies": {
+        "contractor": 6,
+        "patrol_cop": 2,
+        "riot_cop": 3,
+        "robot_gunner": 5,
+        "robot_thug": 4,
+        "rocket_trooper": 2,
+        "sentry_turret": 1,
+        "shield_robot": 4,
+        "swat": 3
+      },
+      "form_seconds": {
+        "kerf": 10.78,
+        "ohm": 7.3,
+        "rivet": 18.53
+      },
+      "guard_deflects": 19,
+      "guard_ticks": 106,
+      "hits": 3085,
+      "hits_gun": 57,
+      "hits_melee": 21,
+      "hp": {
+        "end": 105.243753910065,
+        "max": 137.5,
+        "min": 97.1770872433983,
+        "repaired": 8.98333333333352,
+        "start": 137.5
+      },
+      "n": 37,
+      "rolls": 22,
+      "seconds": 36.6166666666667,
+      "shots": 105,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 143,
+      "damage_taken": 13.7999999999988,
+      "enemies": {
+        "contractor": 3,
+        "patrol_cop": 3,
+        "riot_cop": 5,
+        "robot_gunner": 2,
+        "robot_thug": 6,
+        "rocket_trooper": 3,
+        "sentry_turret": 2,
+        "shield_robot": 3,
+        "swat": 5
+      },
+      "form_seconds": {
+        "kerf": 6.52,
+        "ohm": 7.3,
+        "rivet": 22.1
+      },
+      "guard_deflects": 18,
+      "guard_ticks": 95,
+      "hits": 2293,
+      "hits_gun": 46,
+      "hits_melee": 39,
+      "hp": {
+        "end": 137.5,
+        "max": 137.5,
+        "min": 128.5,
+        "repaired": 13.8,
+        "start": 137.5
+      },
+      "n": 38,
+      "rolls": 17,
+      "seconds": 35.9166666666667,
+      "shots": 108,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 261,
+      "damage_taken": 45.8519922892235,
+      "enemies": {
+        "contractor": 1,
+        "patrol_cop": 3,
+        "riot_cop": 3,
+        "robot_gunner": 1,
+        "robot_thug": 6,
+        "rocket_trooper": 3,
+        "sentry_turret": 6,
+        "shield_robot": 4,
+        "swat": 3
+      },
+      "form_seconds": {
+        "kerf": 9.35,
+        "ohm": 14.6,
+        "rivet": 31.17
+      },
+      "guard_deflects": 11,
+      "guard_ticks": 107,
+      "hits": 2353,
+      "hits_gun": 61,
+      "hits_melee": 80,
+      "hp": {
+        "end": 137.5,
+        "max": 137.5,
+        "min": 104.388495699565,
+        "repaired": 45.8519922892252,
+        "start": 137.5
+      },
+      "n": 39,
+      "rolls": 28,
+      "seconds": 55.1166666666667,
+      "shots": 93,
+      "spawn_delayed": 0
+    },
+    {
+      "cover_ticks": 78,
+      "damage_taken": 30.0230978965753,
+      "enemies": {
+        "contractor": 5,
+        "patrol_cop": 4,
+        "robot_gunner": 3,
+        "robot_thug": 4,
+        "rocket_trooper": 5,
+        "sentry_turret": 1,
+        "shield_robot": 2,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "form_seconds": {
+        "kerf": 4.13,
+        "rivet": 23.38,
+        "tonnage": 7.1
+      },
+      "guard_deflects": 14,
+      "guard_ticks": 101,
+      "hits": 2239,
+      "hits_gun": 41,
+      "hits_melee": 39,
+      "hp": {
+        "end": 137.5,
+        "max": 137.5,
+        "min": 114.016902103424,
+        "repaired": 30.0230978965759,
+        "start": 137.5
+      },
+      "machine": {
+        "claw_reach_ticks": 248,
+        "cover_ticks": 78,
+        "guard_ticks": 101,
+        "hp_lost": 26.0000000000001,
+        "rolling_ticks": 308,
+        "ticks": 1676
+      },
+      "n": 40,
+      "rolls": 14,
+      "seconds": 34.6166666666667,
+      "shots": 109,
+      "spawn_delayed": 0
+    }
+  ]
+}
