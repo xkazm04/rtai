@@ -103,8 +103,9 @@ func wave_seconds(tick: int) -> float:
 
 
 func seconds_left(tick: int) -> float:
-	var running: bool = not _live.is_empty() and _live[-1].start_tick >= 0 and not _at_limit()
-	return maxi(0, _next_wave_tick - tick) * SimClock.TICK_DT if running else -1.0
+	if _live.is_empty() or _live[-1].start_tick < 0 or _at_limit() or _next_wave_tick < 0:
+		return -1.0
+	return maxi(0, _next_wave_tick - tick) * SimClock.TICK_DT
 
 
 func _slots(arena: CombatArena) -> int:
@@ -134,7 +135,8 @@ func _fill(stage: ArenaStage, tick: int) -> void:
 		if starting:
 			(stage.arena as GauntletCombat).wave_live = true
 			# Keep this deadline if a younger roster falls before an older survivor.
-			_next_wave_tick = tick + _street.timeout_ticks
+			var duration: int = _street.wave_timeout_ticks(_run.wave)
+			_next_wave_tick = tick + duration if duration > 0 else -1
 			stage.arena.announce_wave(&"gauntlet", _run.wave)
 			Log.info(
 				"gauntlet",

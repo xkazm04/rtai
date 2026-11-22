@@ -4,7 +4,7 @@
 
 The targets are the owner’s call. [targets.json](../tools/gauntlet/targets.json) sets the novice, average and expert death waves to 6, 12 and 20. An ordinary average-profile wave aims for 15 seconds. Every fifth wave is a boss wave and aims for 25–30 seconds. The report compares each pair of profiles. The pair is separated when the higher profile’s median is at least three waves deeper and it dies later on at least 75% of shared seeds.
 
-**Score.** Record the wave Rivet dies on. A wave can reach its timer and call another roster into the same fight. The report gives the median, spread, counts of deaths and censored runs, and the stopping reason for each seed.
+**Score.** Record the wave Rivet dies on. Waves 1–5 call another roster into the same fight after 90 seconds. From wave 6 the delay is 45 seconds. A zero `wave_timeout_late_s` disables late reinforcements, and `--wave-timeout` overrides both timers for that run. The report gives the median, spread, counts of deaths and censored runs, and the stopping reason for each seed.
 
 ## Censored runs
 

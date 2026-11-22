@@ -12,6 +12,8 @@ var window: Array[GauntletSegment] = []
 var index: int = 0
 var max_alive: int
 var timeout_ticks: int
+var late_timeout_ticks: int
+var late_timeout_from: int
 ## A wave can hold Rivet at its far seam without adding a prop or blocking the enemy squad.
 var forward_limit: float = INF
 var rest: GauntletRest
@@ -41,6 +43,8 @@ func _init(registry: RngRegistry) -> void:
 	_table = DataTable.open(TABLE, SCHEMA)
 	max_alive = _table.integer(_table.raw, "max_alive")
 	timeout_ticks = _table.integer(_table.raw, "wave_timeout_s") * SimClock.TICK_RATE
+	late_timeout_ticks = _table.integer(_table.raw, "wave_timeout_late_s") * SimClock.TICK_RATE
+	late_timeout_from = _table.integer(_table.raw, "wave_timeout_late_from")
 	for row: Dictionary in _table.array(_table.raw, "segments"):
 		if _table.num(row, "length_m") > 0.0:
 			_rows.append(row)
@@ -49,6 +53,15 @@ func _init(registry: RngRegistry) -> void:
 		return
 	_append(0.0)
 	_append(window[-1].end_x())
+
+
+func override_timeout(seconds: int) -> void:
+	timeout_ticks = seconds * SimClock.TICK_RATE
+	late_timeout_ticks = timeout_ticks
+
+
+func wave_timeout_ticks(wave: int) -> int:
+	return late_timeout_ticks if wave >= late_timeout_from else timeout_ticks
 
 
 func current() -> GauntletSegment:

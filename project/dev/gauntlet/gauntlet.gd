@@ -63,7 +63,7 @@ func _open_street(args: ArenaArgs) -> GauntletSession:
 	run.wave_timeout_s = args.text("--wave-timeout", "0").to_int()
 	var street_session: GauntletSession = GauntletSession.open_street(Events, Data, run, pilot)
 	if street_session != null and run.wave_timeout_s > 0:
-		street_session.street.timeout_ticks = run.wave_timeout_s * SimClock.TICK_RATE
+		street_session.street.override_timeout(run.wave_timeout_s)
 	return street_session
 
 

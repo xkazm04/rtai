@@ -996,5 +996,7 @@
     9,
     5
   ],
+  "wave_timeout_late_from": 6,
+  "wave_timeout_late_s": 45,
   "wave_timeout_s": 90
 }
