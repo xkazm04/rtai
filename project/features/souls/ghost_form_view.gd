@@ -134,7 +134,7 @@ func _process(_delta: float) -> void:
 	var busy: bool = not forms.settled()
 	_fx.show_progress(busy, forms.k(), forms.stage(), forms.phase == GhostForms.SWITCHING)
 	_beat(forms.stage() if busy else 0, with_big)
-	hud.sync(forms, arena.rivet.weapon)
+	hud.sync(forms, arena.rivet.weapon, pilot.ghosts)
 	var is_dent: bool = _bodies.step_dent(pilot, at, facing, steps, arena.tick)
 	var is_kerf: bool = _bodies.step_light(_bodies.kerf, forms, at, facing, steps)
 	GhostActs.prepare_ohm(_bodies.ohm, pilot.ohm, r, arena.tick)

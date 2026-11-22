@@ -51,6 +51,43 @@ func test_unknown_ghost_falls_back_to_the_glyph() -> void:
 	assert_false(GhostChipFace.draw(hud, &"no_such_ghost", Vector2.ZERO, 26.0))
 
 
+func test_first_level_marks_the_loaded_ghost_and_uses_its_own_cooldown() -> void:
+	var pilot: GhostPilot = GhostPilot.shipped()
+	var hud: GhostFormHud = autofree(GhostFormHud.new())
+	pilot.forms.selected = &"kerf"
+	pilot.forms.apply_locks([])
+	var total: int = pilot.deploy.strike.attacks.deploy[&"kerf"].cooldown_ticks
+	pilot.deploy.cooldowns[&"kerf"] = roundi(total * 0.5)
+	hud.sync(pilot.forms, &"", pilot)
+	assert_eq(hud.selected, &"kerf")
+	assert_eq(hud.next_chip, &"ohm")
+	assert_almost_eq(hud.cooling[&"kerf"], 0.5, 0.0001)
+	assert_eq(hud.cooling[&"ohm"], 0.0)
+	pilot.transform_unlocked = true
+	hud.sync(pilot.forms, &"", pilot)
+	assert_eq(hud.cooling[&"kerf"], 0.0)
+
+
+func test_deploy_hint_follows_the_rebound_key() -> void:
+	var pilot: GhostPilot = GhostPilot.shipped()
+	var hud: GhostFormHud = autofree(GhostFormHud.new())
+	var existed: bool = InputMap.has_action(&"ghost_deploy")
+	if not existed:
+		InputMap.add_action(&"ghost_deploy")
+	var saved: Array[InputEvent] = InputMap.action_get_events(&"ghost_deploy")
+	PlayerSettings.new().rebind(&"ghost_deploy", "V")
+	hud.sync(pilot.forms, &"", pilot)
+	var hint: String = (
+		PadGlyphArt.action_hint(&"ghost_deploy", "V") if PadGlyphArt.active() else "V"
+	)
+	assert_eq(hud.key_hint, hint)
+	InputMap.action_erase_events(&"ghost_deploy")
+	for event: InputEvent in saved:
+		InputMap.action_add_event(&"ghost_deploy", event)
+	if not existed:
+		InputMap.erase_action(&"ghost_deploy")
+
+
 func test_chip_uses_spectral_art_if_supplied_and_falls_back_to_the_original() -> void:
 	var id: StringName = &"chip_fixture"
 	var original: ImageTexture = ImageTexture.new()

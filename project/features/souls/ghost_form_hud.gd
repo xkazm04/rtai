@@ -37,12 +37,9 @@ var madness_k: float = 0.0
 var cost_k: float = 0.0
 ## 0..1 through a running transformation (the current avatar pulses while it plays).
 var morph_k: float = 1.0
-## The key hint under the selected avatar ("Q"); the caller passes the bound key's label.
-var key_hint: String = "Q"
-## The hint under the chevron in base (Q enters it) and in a form (G switches to it); the caller
-## may replace them with the bound keys' glyphs.
-var enter_hint: String = "Q"
-var next_hint: String = "G"
+var key_hint: String
+var next_hint: String
+var next_chip: StringName
 ## true while a story line is up (StoryForms: quest 1's subtitle box takes the bottom centre): the
 ## strip folds to the one avatar that matters, the current form (in base the selected ghost).
 var compact: bool = false
@@ -53,22 +50,26 @@ var _cursor: WeaponCursor = WeaponCursor.new()
 
 
 ## Fills the plain values from the state machine (once per frame); the cursor follows `weapon`.
-func sync(g: GhostForms, weapon: StringName = &"") -> void:
-	if PadGlyphArt.active() and enter_hint == "Q":  # n9-handheld: the pad's buttons, once
-		enter_hint = PadGlyphArt.action_hint(&"power_hauler", enter_hint)
-		next_hint = PadGlyphArt.action_hint(&"power_gearbox", next_hint)
+func sync(g: GhostForms, weapon: StringName = &"", pilot: GhostPilot = null) -> void:
+	next_hint = GhostHudHints.binding(&"power_gearbox")
 	order = g.table.order
 	current = g.current() if g.settled() else g.to_id
 	selected = g.selected
 	if current != GhostForms.BASE:  # in a form the chevron marks G's switch target
 		selected = g.locks.next_after(g.table, current)
-	key_hint = next_hint if current != GhostForms.BASE else enter_hint
+	key_hint = next_hint if current != GhostForms.BASE else GhostHudHints.binding(&"ghost_deploy")
+	next_chip = g.locks.next_after(g.table, selected) if current == GhostForms.BASE else &""
 	morph_k = g.k()
 	madness_k = g.powers.madness / maxf(1.0, g.powers.table.madness_max)
 	for id: StringName in order:
 		var p: PowerDef = g.powers.table.row(g.table.form(id).power)
 		var total: float = float(maxi(1, p.cooldown_ticks)) if p != null else 1.0
 		cooling[id] = float(g.powers.cooldown_left(g.table.form(id).power)) / total
+		if pilot != null and not pilot.transform_unlocked and current == GhostForms.BASE:
+			var deploy_row: GhostAttacks.DeployRow = pilot.deploy.strike.attacks.deploy.get(id)
+			if deploy_row != null:
+				var left: int = pilot.deploy.cooldowns.get(id, 0)
+				cooling[id] = float(left) / maxi(1, deploy_row.cooldown_ticks)
 		locked[id] = not g.locks.allows(g.table, id)
 	var sel: GhostFormDef = g.table.form(selected)
 	var row: PowerDef = g.powers.table.row(sel.power) if sel != null else null
@@ -130,7 +131,9 @@ func _chip(id: StringName, c: Vector2) -> void:
 	if layout.all_names or id == _named:
 		_name(id, c, font)
 	if id == selected and not on:
-		_chevron(c, r, font)
+		_chevron(c, r)
+	elif id == next_chip and not compact:
+		GhostHudHints.cycle(self, c + Vector2(0.0, r + 8.0), next_hint)
 
 
 ## The ghost's name above its avatar, ink on a paper outline (the grown avatar clips none).
@@ -165,20 +168,14 @@ func _locked_chip(id: StringName, c: Vector2) -> void:
 
 
 ## The chevron and the key hint under the selected (next) ghost, paper on an ink edge.
-func _chevron(c: Vector2, r: float, font: Font) -> void:
+func _chevron(c: Vector2, r: float) -> void:
 	var y: float = c.y + r + 8.0
 	var tip: Vector2 = Vector2(c.x, y + 6.0)
 	var a: Vector2 = c + Vector2(-8, r + 4)
 	var b: Vector2 = c + Vector2(8, r + 4)
 	draw_colored_polygon(PackedVector2Array([a, b, tip]), PAPER)
 	draw_polyline(PackedVector2Array([a, b, tip, a]), INK, 2.0, true)
-	var ts: int = layout.text_size
-	if PadGlyphArt.active():  # n9-handheld: the pad button's drawn glyph
-		var gw: float = PadGlyphArt.line_size(key_hint, ts).x
-		PadGlyphArt.draw_line(self, Vector2(c.x - gw * 0.5, y + 6.0 + float(ts)), key_hint, ts, INK)
-		return
-	var kw: float = font.get_string_size(key_hint, HORIZONTAL_ALIGNMENT_LEFT, -1, ts).x
-	_text(font, Vector2(c.x - kw * 0.5, y + 6.0 + float(ts)), key_hint)
+	GhostHudHints.label(self, Vector2(c.x, y), key_hint)
 
 
 ## The time left to cool: a teal arc on an ink arc round the dimmed avatar, `k` of the circle.
