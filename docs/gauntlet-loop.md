@@ -288,44 +288,55 @@ A tune branch has zero net table changes unless a change was kept. Only the owne
 
 ## What the owner sees in the morning, and what needs their pick
 
-- Start with the lane's [REPORT.md](../REPORT.md) for the findings and open decisions.
-- Open `night.md` at the root of the night's output and `after/tune-ledger.md`. For every kept or reverted knob they give the before, after and baseline values, the paired improvement and CI95, the A/A floor, and the apply and any revert commit SHAs. [Night output layout](../tools/gauntlet/night.mjs) · [Night 1 ledger](../evidence/loop/tune2-after/tune-ledger.md)
-- Compare `before/report.html` and `after/report.html` for wave times against 15 s, deaths and killers, bonus take versus decline, rolls and time in each form. Read guard and cover use from each run's `guard_ticks` and `cover_ticks`. The reports mark missing guard deflects and list unusual runs to replay. [Before](../evidence/loop/tune2-before/report.html) · [After](../evidence/loop/tune2-after/report.html) · [Seed 5 counters](../evidence/loop/tune2-after/runs/average-5.json)
-- Open `frames.json` in `C:\Users\kazda\kiro\gtai-masters\<night>\loop\` for the films and stills. [Night 1 film manifest](../evidence/loop/film.json)
+- Start with the lane report for the findings, proposals and calls for the owner. The owner picks new moves and changes to the tuning rules, including whether to move a knob past its baseline bound. [REPORT.md](../REPORT.md#calls-for-the-owner)
+- Compare death waves, profile separation and repair share across main (`base-greedy`), street (`base-street`), merged (`moves/on`), cycle1 (`cycle1/after`) and cycle2 (`cycle2/after`). Regenerate the page with each arm that has a batch manifest. [Compare page](../build/n23/compare.html) · [Markdown tables](../build/n23/compare.md) · [Compare tool](../tools/gauntlet/compare.mjs)
+- Read each completed cycle's `evidence/n23-loop/cycle<k>/tune-ledger.md` for the knob values, paired change, noise floor and verdict. The ablation summary shows what happened when repair, stat picks, guard or enemy damage changed in isolation. [Cycle 1 ledger](../evidence/n23-loop/cycle1/tune-ledger.md) · [Ablation summary](../evidence/n23-loop/ablate/summary.md)
+- For films and stills, open `C:\Users\kazda\kiro\gtai-masters\n23\loop\frames.json`.
 
-Every proposal for a skill, weapon effect or combo needs the owner's pick. Flag any knob at 0.5× or 2× its baseline. The tuner stops at that bound. Changes to the loop's own rules also need the owner's decision. Night 1 left two calls open.
+**Noise floor.** On 2026-11-21, the cross-seed floors for the shield robot and war machine were 12.57 s and 40.95 s. Both HP cuts were reverted. The loop now holds the world seed fixed and changes only the bot salt. [Night 1 ledger](../evidence/loop/tune2-after/tune-ledger.md) · [How the null-salt floor works](#the-noise-floor-by-a-neutral-change)
 
-1. **Noise floor.** Pairing different before seeds (e.g. 1 with 3) gave A/A floors of 12.57–40.95 s. Same-seed repeats were byte-identical. The loop reverted two cuts despite paired improvements towards 15 s. For `war_machine.hp` (60 → 48), wave 20 improved by 13.7 s (CI95 4.75–19.08, 12 pairs). For `shield_robot.hp` (10 → 8), wave 13 improved by 3.7 s (CI95 1.72–6.6, 25 pairs). The recommended null-perturbation floor uses the paired spread from rerunning the same seeds with a neutral change. [Ledger and seed pairs](../evidence/loop/tune2-after/tune-ledger.md)
-2. **Opening budget.** Waves 1–4 took 6.1–8.0 s against 15 s. `budget.base` is the integer 2. A 20% step gives no new integer and a rise to 3 is 50%, so the tuner cannot slow the opening waves this way. The owner can choose finer budget units or a one-unit step rule. [Wave times](../evidence/loop/tune2-before/report.md) · [Tune plan](../evidence/loop/tune2-before/plan.json)
+**Opening budget.** On 2026-11-21, waves 1–4 took 6.1–8.0 s against a 15 s target, and the integer budget left no legal step. Street now counts the budget in tenths of a tier (`budget.unit` is 10), so the tuner can take a smaller step. [Night 1 budget call](day/2026-11-21/n22-loop/REPORT.md) · [Street budget](../project/data/tables/gauntlet.json)
 
 ## Proposals
 
-Start with an observation in the night's report. Compare wave times with an enemy present and absent, name a frequent killer, check how a cooldown limits time in a form, or count the bonuses left late in a run. Cite the number and file, then describe what the player could do differently. The owner picks proposals. The loop never builds them. Timed parry is a non-goal in the design note.
+Each proposal cites a measured problem and describes what the player could do differently. Timed parry remains outside the design. The owner picks from tonight's proposals in the lane report. [REPORT.md](../REPORT.md#proposals-for-the-owners-pick-nothing-built)
 
-Night 1's proposals use the original nine accepted runs in the first greedy tune batch. The report at commit `ca4e452ac` gives that sample. The refreshed report includes the tenth run, which reached the tick cap alive. [Lane proposals](../REPORT.md) · [First batch](../evidence/loop/tune1-before/batch.json) · [Refreshed report](../evidence/loop/tune1-before/report.md)
+### 2026-11-21 · Night 1 proposals
+
+The moves lane built all five proposals on night 2 as four combat moves and second ranks for weapon effects. [Original proposals](day/2026-11-21/n22-loop/REPORT.md) · [Move results](../evidence/n23-loop/moves-smoke/report.md) · [Bonus table](../project/data/tables/gauntlet_bonuses.json)
+
+The figures below use the first nine accepted greedy runs. The refreshed report includes the tenth, which reached the tick cap alive. [Original report](day/2026-11-21/n22-loop/REPORT.md) · [Refreshed report](../evidence/loop/tune1-before/report.md)
 
 1. **Ohm short-circuit on machines.** Waves with a sentry turret took a median 38.3 s (99 waves), against 10.7 s without one (83 waves). Both street batches list `turret_gun` among the top killers. Let an Ohm pulse stun a sentry turret or shield robot for about 2 s. [First batch](../evidence/loop/tune1-before/batch.json) · [Street deaths](../evidence/loop/street-final/report.md#deaths-by-profile)
 2. **Tonnage armour crack.** War-machine waves took 43.8 s against 26.0 s without the machine. The seed 2 probes measured 0.7–1.9 HP/s against it. On many later waves the median time in Tonnage was 7.1 s. Let a Tonnage hit during recovery from a stomp open the machine's armour for a few seconds. [First batch](../evidence/loop/tune1-before/batch.json) · [Seed 2 machine probes](#street-measurement) · [Form times](../evidence/loop/tune1-before/report.md#combat-telemetry)
 3. **Kerf blink behind a shield.** Shield-robot waves took 41.2 s against 12.7 s without one, the widest enemy presence gap. End Kerf's blink-slice behind its target so the slice bypasses the shielded front. [First batch](../evidence/loop/tune1-before/batch.json)
 4. **Overkill carry.** Late waves put ten or more low-tier humans alongside machines. Patrol cops appeared in 89% of timed wave seconds. The bot spent time finishing crowds and deep runs hit the 90 s timer. Let damage left over from a kill jump to the nearest enemy within 3 m. [Enemy time share](../evidence/loop/tune1-before/report.md#enemy-presence-and-wave-time) · [Seed 5 rosters and timeout](../evidence/loop/tune1-before/runs/average-5.json)
-5. **Deeper bonus pool.** A clear gives one pick. By wave 25 the deepest greedy runs in the original sample had taken 24 of the 26 bonuses, leaving too few for a full three-card offer. Add second ranks of existing weapon effects. [Seed 5 picks](../evidence/loop/tune1-before/runs/average-5.json) · [Bonus table](../project/data/tables/gauntlet_bonuses.json)
+5. **Deeper bonus pool.** A clear gives one pick. By wave 25 the deepest greedy runs in the original sample had taken 24 of the 26 bonuses, leaving too few for a full three-card offer. Add second ranks of existing weapon effects. [Seed 5 picks](../evidence/loop/tune1-before/runs/average-5.json) · [Night 1 bonus count](day/2026-11-21/n22-loop/REPORT.md)
 
 ## Where the test player is unlike a person
 
 - The bot reads the sim directly. It knows enemy positions, tells and projectile paths. A person can misread a tell or lose sight of an enemy.
-- It has no fatigue or tunnel vision. It gives wave 20 the same attention as wave 1.
+- It has no fatigue or tunnel vision. It gives late waves the same attention as the opening wave.
 - It has fixed habits. Greedy picks follow one value table. Tonnage's 20 s cooldown often leaves time for one cast in a wave. Longer waves can fit two (14.2 s in Tonnage on seed 5, wave 15). It never uses Dent because the street has no cars. [Seed 5 form times](../evidence/loop/tune1-before/runs/average-5.json) · [Cooldowns](../project/data/tables/powers.json)
 - It knows the street geometry. It follows a route without pausing to look around or turning back out of curiosity.
-- It rests and retreats to repair where a person might press. Most deep runs end at the 90 s wave timer. Cutting HP to help this bot may make the wave too easy for an aggressive player. [First street cycle](../evidence/loop/tune1-before/report.md#timeouts)
+- It checks its own blast clearance before firing. A person can misjudge the distance and hit themselves. Rivet took 0 HP of self-damage in the controls-and-moves smoke. [Blast margin by profile (`blast_margin_m`)](../project/data/tables/test_player.json) · [Smoke results](../evidence/n23-loop/moves-smoke/summary.md)
+- It rolls once per target for each move opening from its salted stream. It is rarely in Tonnage beside a war machine recovering from a stomp. Across 10 average runs, the per-wave `moves` counts totalled 7 armour cracks, 672 Kerf blinks, 340 Ohm short-circuits and 2,250 overkill carries. [BotMovePlan](../project/features/gauntlet/bot/bot_move_plan.gd) · [Merged runs](../evidence/n23-loop/moves/on/runs/)
+- It waits to repair where a person might press on. With repair off, average seed 1 cleared wave 8 and waited for HP until the tick cap. With repair on, the median share of wave damage repaired was 100% on every merge measured tonight. [Repair-off ablation](../evidence/n23-loop/ablate/summary.md) · [Repair share](../build/n23/compare.html#health)
+- Average and expert usually both survive to the wave limit of 40 on the merged game. Better aim and timing buy little measurable survival while both are safe. Across main, street and cycle1, their observed median gap was 0–1 wave. Expert was confirmed to outlast average on 1/15, 1/9 and 2/10 shared seeds respectively. [Profile separation](../build/n23/compare.html#separation)
+
+On 2026-11-21, most deep runs ended at the 90 s wave timer. [First street cycle](../evidence/loop/tune1-before/report.md#timeouts)
 
 A change kept for this bot is a hypothesis about human play. Check it in a playtest.
 
-## Known gaps after night 1
+## Known gaps after night 2
 
-- **NEED street.** The street result omits `guard_deflects`. It records how long the bot held guard. A count of deflected shots needs a street observer. [Street result](../evidence/loop/tune2-after/runs/average-5.json)
 - `hits` counts every damaging contact, including claws and blasts, and counts a killing wound again. `shots` counts gun rounds. These counters cannot give a hit rate. [Combat telemetry](../evidence/loop/tune2-after/report.md#combat-telemetry)
-- Eight of the 30 confirm runs were still alive at 72,000 ticks. The cap censors “wave reached”. Their timed waves count and their recorded depth is a lower bound on how far they could go. [Confirm report](../evidence/loop/tune2-after/report.md)
-- Mutation tests caught 18/20 faults. Flipping the view flag at `project/features/gauntlet/bot/gauntlet_bot.gd:29` and removing the street stats hook at `project/features/gauntlet/bot/gauntlet_bot.gd:34` both survived. No mapped test checks that the bot's roll, cover and form counters reach the street result. [Lane mutation record](../REPORT.md)
+- Tests killed 5 of 12 mutations in `bot_brain.gd` on night 2. The bot's move logic still lacks coverage. [Night 2 mutation result](../REPORT.md#what-does-not)
+- With no wave limit, an average run took 8–10 minutes on the street merge with its 216,000-tick cap. [Street run times](../REPORT.md#after-the-street-merge-stacked-waves-budget-in-tenths-gauntlet-repair-override)
+- The tuner can reach enemy damage only through `enemies.json`, shared with the quest and replays. Gauntlet-only tuning needs street's `enemy_damage_k` to merge. [Cycle 1 ledger](../evidence/n23-loop/cycle1/tune-ledger.md) · [Lane report](../REPORT.md)
+- The moves lane found that one Kerf slice kills the war machine. When it lands, boss-wave time measures how quickly Kerf can deliver the slice. It tells us little about fighting the boss through its attacks. [Moves lane finding](../REPORT.md#calls-for-the-owner)
+
+On 2026-11-21, tests killed 18 of 20 mutations in `gauntlet_bot.gd`. Flipping the view flag and removing the street stats hook both survived that run. [Night 1 mutation result](day/2026-11-21/n22-loop/REPORT.md)
 
 ## Measuring combat moves
 
