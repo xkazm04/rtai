@@ -128,6 +128,7 @@ func test_empty_draw_finishes_without_showing_the_screen() -> void:
 
 func test_three_stacked_picks_count_in_order_without_resuming_play() -> void:
 	_clear(3)
+	assert_eq([entry.waves.owed_index, entry.waves.owed_total], [1, 3])
 	var tick: int = entry.session.tick()
 	for index: int in range(1, 4):
 		assert_true(view.visible)
