@@ -39,7 +39,7 @@ func test_gate_and_entire_crossing_are_clear_in_both_directions() -> void:
 	var radius: float = stage.arena.rivet.radius_m
 	for side: float in [-1.0, 0.0, 1.0]:
 		var x: float = plan.gate.x + side * (plan.gate_width_m * 0.5 - radius)
-		var outside: Vector2 = Vector2(x, plan.street.end.y - radius)
+		var outside: Vector2 = Vector2(x, plan.far_sidewalk.get_center().y)
 		var inside: Vector2 = Vector2(x, plan.gate.y - 3.0)
 		assert_false(stage.walls.blocks(outside, inside))
 		assert_false(stage.walls.blocks(inside, outside))
@@ -47,4 +47,26 @@ func test_gate_and_entire_crossing_are_clear_in_both_directions() -> void:
 			var p: Vector2 = Vector2(x, metre)
 			assert_eq(stage.collide_preview(p), p)
 	assert_true(stage.walls.blocks(plan.gate + Vector2(-6, 2), plan.gate + Vector2(-6, -2)))
+	PlayerActions.shipped().install()
+
+
+func test_gate_to_payphone_route_and_live_interact() -> void:
+	var game: PrologueGame = ENTRY.instantiate() as PrologueGame
+	add_child_autofree(game)
+	var stage: ArenaStage = game.stage
+	var phone: String = stage.layout.phones.keys()[0]
+	var at: Vector2 = stage.layout.phones[phone]
+	var plan: PrologueYard = stage.plan as PrologueYard
+	assert_true(plan.sidewalk.has_point(at))
+	var street_side: Vector2 = Vector2(plan.gate.x, at.y)
+	assert_true(stage.arena.guard_map.clear_line(plan.gate + Vector2.UP * 2.0, street_side))
+	assert_true(stage.arena.guard_map.clear_line(street_side, at))
+	assert_eq(stage.router.state(phone), PayphoneRouter.Phone.QUIET)
+	stage.router.queue_call(phone)
+	stage.arena.rivet.pos = at
+	stage.step(0, TickInput.new())
+	assert_true(stage.router.ringing(phone))
+	var interact: int = stage.pilot.actions.bit(&"interact")
+	stage.step(1, TickInput.new(1 << interact))
+	assert_true(stage.router.connected(phone))
 	PlayerActions.shipped().install()

@@ -13,6 +13,7 @@ class Wreck:
 var yard: Rect2
 var sidewalk: Rect2
 var street: Rect2
+var far_sidewalk: Rect2
 var gate: Vector2
 var gate_width_m: float
 var fences: Array[Rect2] = []
@@ -48,15 +49,16 @@ func _perimeter(data: DataTable, layout: Dictionary) -> void:
 	var depth: float = data.num(layout, "fence_depth_m")
 	sidewalk = Rect2(0.0, yard.end.y, width, data.num(layout, "sidewalk_depth_m"))
 	street = Rect2(0.0, sidewalk.end.y, width, data.num(layout, "street_depth_m"))
+	far_sidewalk = Rect2(0.0, street.end.y, width, sidewalk.size.y)
 	gate = Vector2(data.num(layout, "gate_x_m"), yard.end.y)
 	gate_width_m = data.num(layout, "gate_width_m")
 	var left: float = gate.x - gate_width_m * 0.5
 	var right: float = gate.x + gate_width_m * 0.5
 	fences = [
 		Rect2(-depth, -depth, width + depth * 2.0, depth),
-		Rect2(-depth, 0.0, depth, street.end.y),
-		Rect2(width, 0.0, depth, street.end.y),
-		Rect2(-depth, street.end.y, width + depth * 2.0, depth),
+		Rect2(-depth, 0.0, depth, far_sidewalk.end.y),
+		Rect2(width, 0.0, depth, far_sidewalk.end.y),
+		Rect2(-depth, far_sidewalk.end.y, width + depth * 2.0, depth),
 		Rect2(0.0, gate.y - depth, left, depth),
 		Rect2(right, gate.y - depth, width - right, depth),
 	]
@@ -66,7 +68,7 @@ func _perimeter(data: DataTable, layout: Dictionary) -> void:
 	fences.append(Rect2(right, gate.y - leaf, depth, leaf))
 	var area_row: ArenaPlan.Area = ArenaPlan.Area.new()
 	area_row.id = "yard"
-	area_row.rect = yard.merge(street)
+	area_row.rect = yard.merge(far_sidewalk)
 	areas.append(area_row)
 
 

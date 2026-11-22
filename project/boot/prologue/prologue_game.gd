@@ -67,6 +67,8 @@ func _open(plan: PrologueYard, data: DataTable) -> void:
 	actions.install()
 	stage.pilot = StagePilot.new(actions)
 	stage.pilot.ghosts.forms.apply_locks([])
+	var phone: Dictionary = data.object(data.raw, "payphone")
+	stage.layout.phones[data.text(phone, "id")] = data.vec(phone, "at")
 	world.add_system(stage)
 	_equip_squad(data)
 	stage.arena.rivet.weapon = &""

@@ -20,6 +20,9 @@ func _draw() -> void:
 	_tiled(plan.yard, "dock_floor", 8.0)
 	_kerb(plan.sidewalk)
 	_road(plan.street)
+	draw_set_transform(Ink.px(plan.far_sidewalk.end), PI)
+	_kerb(Rect2(Vector2.ZERO, plan.far_sidewalk.size))
+	draw_set_transform(Vector2.ZERO)
 	_crossing()
 	for stain: Rect2 in plan.scorch_marks:
 		draw_texture_rect(SCORCH, _pixels(stain), false)
@@ -28,6 +31,8 @@ func _draw() -> void:
 	for fence: Rect2 in plan.fences:
 		draw_rect(_pixels(fence), Ink.INK)
 		_tiled(fence, "cage_mesh", 2.0)
+	for phone: String in stage.layout.phones:
+		_phone(phone, stage.layout.phones[phone])
 
 
 ## The shipped stripe strip runs along its local x axis. Cross the street north to south
