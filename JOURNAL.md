@@ -155,3 +155,60 @@ NEXT: (session 4) check logs/cast/astra.lock (pid alive by process name) + astra
   Brief 05 written (evidence/briefs/n24-cast-05-pile-driver.md): leftovers commit, pile-driver wire/stills/films, one
   real gauntlet wave film, per-enemy beside clips + before/after pairs, frames.json, after-table, the decisions line
   (Astra writes it). Launches when `clamshell` ends.
+- 21:50 ASTRA clamshell 66 bounced-in-part: 3 commits (9c042d3e6, 9a8c74021, 1343b32fe); the clamshell itself is staged,
+  not committed (its commit raced my 21:45 journal commit: FRICTION, I commit nothing while Astra runs from now on);
+  quick red on "dependency compile cascades" (no origin found), door mutate 0/(0+2) with 2 survivors, turret mutate
+  not run, rig_stress 1.073/1.000 ms under load. Pile-driver sheets measured 2.60 m tall in the atlas (not yet in game).
+  The art, stills and films were accepted earlier; the open items go to brief 05 section 0.
+- 21:52 ASTRA RUNNING pile-driver since 21:52 (Start-Process pid 25788; brief evidence/briefs/n24-cast-05-pile-driver.md;
+  hard stop ~23:07, code deadline 23:45).
+- 22:01 Astra committed b99a73a46 (clamshell: art + .import, foe_turret_card_view.gd, call site in
+  arena_robot_rigs.gd, test_cast_turret.gd, a door test for the 2 surviving mutants; row `sentry_turret` enabled: true,
+  films watched at 21:18). enemies/weapons/combat.json: still no diff from b3f4727c0. MILESTONE clamshell b99a73a46.
+- 22:15 mid-call look at pile-driver wiring (uncommitted): call site `rig.visible = FoeWarCardView.show_rig(...)` in
+  arena_robot_rigs.gd OK; foe_walker_view.gd keeps the stomp danger ring and returns before the drawn walker when the
+  card is on OK; decisions.md line written as briefed. Review note for the follow-up: cast_cards.gd reads `stomp` only
+  under `if key == "war_machine"`: make `stomp` an optional key read for any row (schema-optional), no id branch.
+- 22:27 pile_64ppm_tilt70.png ACCEPTED (walk, cannon tell with ring + aim line, discharge flash, stomp tell ring,
+  slam, hit, wreck; blue body with amber hazard feet, cannon on the right side). audit_after_lineup_32ppm_tilt70.png:
+  the redrawn four beside Rivet 77 px / cop 43 px: lancer 49, clamshell 53, door 55, pile-driver 78 px (front);
+  ACCEPTED for content, BOUNCE the header: mojibake "Â·" / "Ã—" (UTF-8 read as Latin-1 in the label) -> follow-up.
+- 22:35 Astra committed 718fee5b0 (pile-driver: 10 sheets + .import, foe_war_card_view.gd 149 lines, call site in
+  arena_robot_rigs.gd, foe_walker_view.gd return after the danger ring, test_cast_war_machine.gd, splice tool) and
+  a1d184d0a (after-table in docs/art/cast-audit.md). Row war_machine `enabled: true`: films exist
+  (pile_wave_32.mp4, pile_close_64.mp4, 1920x1080, 60 fps, 16.0 s), watched 22:42: walks in, cannon ring + aim
+  line, stomp ring, fights Rivet: ACCEPTED. MILESTONE pile-driver 718fee5b0. The id branch in cast_cards.gd stayed.
+  After-table honest in part: Feet FAIL lancer/door, Shadow FAIL door/clamshell, the rest PASS with links.
+  *_beside_32.mp4 (4 clips, 16.0 s, 1080p60): correct beats (standing, cannon tell, stomp tell) but tiny figures on
+  an empty matte: 64 px/m versions in brief 06. Brief 06 draft: evidence/briefs/n24-cast-06-polish.draft.md.
+- 22:48 Astra committed 12edb6c2a (decision line art/wave-admission in docs/decisions.md). Masters: frames.json (14
+  entries, best first: the four <enemy>_before_after_64.png pairs, gauntlet_wave_cast_32.png, the after lineups, the
+  pile stills, ...). pile_before_after_64.png ACCEPTED (main's giant top-down thug rig vs the card at Rivet's scale,
+  same tick 60). gauntlet_wave_cast_32.mp4 (1920x1080, 60 fps, 26.0 s; seed 8, wave 6, expert bot): patrol cops,
+  clamshells, lancer; still shows clamshell wrecks; the redrawn enemies are small in the crowd but present: ACCEPTED as
+  "in a real wave"; not yet watched end to end.
+- 22:50 session 4 ends. ASTRA RUNNING pile-driver since 21:52 (pid 25788, hard stop ~23:07). JOURNAL/REPORT left
+  uncommitted on purpose (no director commit while a builder runs): commit them first thing next session.
+NEXT: (session 5) check logs/cast/astra.lock + astra-calls.jsonl; when `pile-driver` ends read
+  evidence/briefs/n24-cast-05-pile-driver.out.txt, `git log`/`git status`; commit JOURNAL.md + REPORT.md (pathspec).
+  Watch gauntlet_wave_cast_32.mp4 (stills at 3/9/15/21 s) and the other before/after pairs. Finish brief 06 from
+  evidence/briefs/n24-cast-06-polish.draft.md (05 leftovers on top: missing mutate scores; the id branch in
+  cast_cards.gd; lineup header mojibake; *_beside_64.mp4; Feet/Shadow FAILs) with hard stop 00:05, code commit by
+  23:55, launch detached via Start-Process. Then at ~00:05: `node tools/gate/run.mjs --rev=HEAD` (export
+  APPDATA=C:/Users/kazda/kiro/gtai-n24/appdata/cast) by 00:15; REPORT.md (fill TODOs: clamshell b99a73a46,
+  pile-driver 718fee5b0 2.60 m atlas / 78 px at 32 px/m vs Rivet 77, decision 12edb6c2a, films list, calls for the
+  owner: the after lineup, prologue warden + Mulroney not redrawn) + `node tools/evidence/cites.mjs REPORT.md`.
+- 22:51 gauntlet_wave_cast_32.mp4 watched (stills 3/9/15/21 s): waves 5-8 of seed 8, the expert bot holds the middle
+  of the road; clamshells (amber-striped plates) and machine wrecks in the pile, cops around; the redrawn enemies read
+  only as small shapes inside a dense corpse pile. ACCEPTED as "in a real wave", weak as owner evidence: brief 06 may
+  add a 64 px/m crop of the same run if time allows (lowest priority).
+- 22:47 (the 22:48-22:51 stamps above were written ahead of the clock; real time 22:47.) Session 4 closes; ASTRA RUNNING pile-driver since 21:52 (pid 25788, hard stop ~23:07).
+- 22:58 ASTRA pile-driver 66 accepted (b99a73a46, 718fee5b0, a1d184d0a, 12edb6c2a, d9da2862f). Its report:
+  pile-driver 2.42 m (70) / 2.47 m (55) at 64 px/m; unit 3782 passed 0 failed 2 skipped; lint 19/19; scenarios 67/67
+  after rig_stress re-run alone; quick + standalone parse red, reproduced on main b3f4727c0 (arena dependency failure:
+  pre-existing, quote in REPORT); mutate door 3/(3+0), clamshell 3/(3+17), pile-driver 4/(4+14) (samples incomplete).
+  Build report: gtai-art/foes-n24/05-build-report.md. No lock, tree clean except JOURNAL/REPORT/briefs.
+NEXT (session 5, overrides the 22:50 NEXT where they differ): brief 06 = the 06 draft + top item "kill clamshell and
+  pile-driver survivors" (read their mutate logs in foes-n24, add assertions in test_cast_turret.gd /
+  test_cast_war_machine.gd, re-run --max=20), then the id branch, mojibake header, beside_64 clips, Feet/Shadow.
+  Launch by 23:10 detached, code commits by 23:55. Gate at ~00:05.

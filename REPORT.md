@@ -36,8 +36,11 @@ At the start of the run, at 32 px/m tilt 70 (Rivet 77 px, patrol cop 43 px):
 | Item | Evidence | Number |
 |---|---|---|
 | The lancer (rocket trooper) drawn from the owner's pick: walk, attack with kneel tell and backblast, hit, fall, 5 facings, both pitches | commits 0c7c09e39, f61bf1e09, 0228d57fe; `gtai-masters/n24/cast/lancer_{32,64}ppm_tilt{70,55}.png`, `lancer_close_64.mp4` | 1920x1080, 60 fps, 16.0 s; attack 3 takes, fall 2, walk 1, hit 1 |
-| The door carrier (shield robot), bare slab with striped edges, slab as wide as the shove hit | commit f87537d4b; `gtai-masters/n24/cast/door_{32,64}ppm_tilt{70,55}.png` | slab 41 px (p55) / 46 px (p70) vs the shove's 40.96 px at 64 px/m; body 1.98 / 2.04 m |
-| TODO clamshell, pile-driver, films, standing rule | | |
+| The door carrier (shield robot), bare slab with striped edges, slab as wide as the shove hit; on by default | commits f87537d4b, 9c042d3e6, 9a8c74021; `gtai-masters/n24/cast/door_{32,64}ppm_tilt{70,55}.png`, `door_wave_32.mp4`, `door_close_64.mp4` | slab 41 px (p55) / 46 px (p70) vs the shove's 40.96 px at 64 px/m; body 1.98 / 2.04 m; films 1920x1080, 60 fps, 16.0 s |
+| The lancer at 32 px/m in a street fight: tell, enemy rocket (ice blue, the owner's keep), hit, death | `gtai-masters/n24/cast/lancer_wave_32.mp4` | 1920x1080, 60 fps, 16.0 s |
+| The clamshell (sentry turret): bolted plate, dome turns, tell glow, fire, hit, wreck, both pitches; on by default | commit b99a73a46; `gtai-masters/n24/cast/clamshell_{32,64}ppm_tilt{70,55}.png`, `clamshell_wave_32.mp4`, `clamshell_close_64.mp4` | plate 1.41 m wide, dome 1.16 / 1.19 m (70 / 55); films 1920x1080, 60 fps, 16.0 s; 2 takes per sheet |
+| The standing rule: a character enters a wave only when it passes the checklist | commits 1343b32fe, 12edb6c2a; `docs/art/cast-checklist.md` section "Wave admission", `docs/decisions.md` line art/wave-admission | 15 items, patrol cop numbers per item |
+| The pile-driver (war machine): walk, cannon tell + fire, stomp tell + slam, hit, wreck, both pitches; on by default | commit 718fee5b0; `gtai-masters/n24/cast/pile_{32,64}ppm_tilt{70,55}.png`, `pile_wave_32.mp4`, `pile_close_64.mp4`, `pile_before_after_64.png` | 2.42 m (70) / 2.47 m (55) beside Rivet 1.65 m; 78 px vs Rivet 77 px at 32 px/m; films 1920x1080, 60 fps, 16.0 s |
 
 ## 3. What does not
 TODO
@@ -64,4 +67,5 @@ TODO
 | audit | 54 | accepted | - |
 | lancer | 72 | accepted (attack cols 4-5 bounced to round 03) | ask for a per-column facing check against the cop, not only the cut |
 | film-door | 66 | accepted, the 32 px/m film bounced (1280x800) | name the window resolution flag and a survival condition for the filmed enemy |
-| clamshell | TODO | TODO | |
+| clamshell | 66 | accepted in part: art, stills, films, standing rule; the clamshell commit lost a race with my journal commit, quick red, door mutate 0/2 | never commit (even pathspec) while a builder runs; ask for the commit before the films |
+| pile-driver | 66 | accepted (5 commits; mutate scores low on the new card views: clamshell 3/20, pile-driver 4/18) | ask for mutation-killing assertions in the same brief as the view, not after |
