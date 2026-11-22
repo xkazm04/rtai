@@ -484,7 +484,7 @@
       "reach_m": 24,
       "relocate_after_shots": 2,
       "round": "large",
-      "speed_mps": 16,
+      "speed_mps": 13,
       "splash_damage": 20,
       "splash_radius_m": 3
     },

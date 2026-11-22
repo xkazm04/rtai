@@ -86,7 +86,7 @@
       "aim_lead": 0.9,
       "burst": 4,
       "burst_gap_s": 0.09,
-      "cooldown_s": 0.5,
+      "cooldown_s": 0.61,
       "damage": 1,
       "damage_vs_rivet": 1.2,
       "magazine": 30,
