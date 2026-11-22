@@ -22,6 +22,29 @@
       "last_line": "b3_l11_fax_location"
     }
   ],
+  "opening_bodies": [
+    {
+      "at": [
+        18.55,
+        17.15
+      ],
+      "id": "west_officer"
+    },
+    {
+      "at": [
+        20.55,
+        15.6
+      ],
+      "id": "north_officer"
+    },
+    {
+      "at": [
+        21.35,
+        17.95
+      ],
+      "id": "east_officer"
+    }
+  ],
   "payphone": {
     "at": [
       43,

@@ -70,3 +70,60 @@ func test_gate_to_payphone_route_and_live_interact() -> void:
 	stage.step(1, TickInput.new(1 << interact))
 	assert_true(stage.router.connected(phone))
 	PlayerActions.shipped().install()
+
+
+func test_three_opening_officers_are_dead_walkable_and_released_by_decay() -> void:
+	var game: PrologueGame = ENTRY.instantiate() as PrologueGame
+	add_child_autofree(game)
+	var stage: ArenaStage = game.stage
+	var arena: CombatArena = stage.arena
+	var start: Vector2 = arena.rivet.pos
+	assert_eq(arena.hostiles.size(), 3)
+	assert_eq(arena.hostiles_alive(), 0)
+	assert_eq(stage.heat.level, 0)
+	var bodies: Array[Fighter] = arena.hostiles.duplicate()
+	for officer: Fighter in bodies:
+		assert_eq(officer.archetype, &"patrol_cop")
+		assert_eq(ArenaBodies.class_of(officer), RivetBody.PERSON)
+		assert_false(officer.alive())
+		assert_lt(start.distance_to(officer.pos), 2.5)
+		arena.rivet.pos = officer.pos
+		assert_eq(ArenaBodies.resolve(arena, Vector2.ZERO), 0)
+		arena.rivet.pos = start
+	game.world.loop().step()
+	var decay: CorpseDecayHook = game.bodies
+	assert_eq(decay.decay.bodies.count(), 3)
+	for tick: int in decay.decay.bodies.linger_ticks + decay.decay.bodies.fade_ticks + 1:
+		game.world.loop().step()
+	assert_eq(decay.pruned, 3)
+	assert_true(arena.hostiles.is_empty())
+	assert_eq(decay.decay.stains.count(), 3)
+	PlayerActions.shipped().install()
+
+
+func test_opening_cast_feeds_rivet_and_three_downed_cops_to_the_shared_rigs() -> void:
+	var game: PrologueGame = ENTRY.instantiate() as PrologueGame
+	add_child_autofree(game)
+	if DisplayServer.get_name() == "headless":
+		game._open_view(game.stage.plan as PrologueYard)
+	var rigs: ArenaRigs
+	var view: CollectCallView
+	for child: Node in game.get_children():
+		if child is ArenaRigs:
+			rigs = child as ArenaRigs
+		if child is CollectCallView:
+			view = child as CollectCallView
+	assert_not_null(rigs)
+	assert_not_null(view)
+	if rigs == null or view == null:
+		return
+	rigs._process(0.0)
+	assert_eq(view.px_per_m, 32.0)
+	var feed: RigFeed = rigs.rigs.feed
+	assert_eq(feed.count, 4)
+	assert_eq(feed.kinds[0], BodyPlan.Kind.RIVET)
+	for i: int in range(1, feed.count):
+		assert_eq(feed.kinds[i], BodyPlan.Kind.COP)
+		assert_true(feed.has_flag(i, RigFeed.Flag.DEAD))
+		assert_true(feed.has_flag(i, RigFeed.Flag.DOWN))
+	PlayerActions.shipped().install()

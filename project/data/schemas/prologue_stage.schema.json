@@ -240,6 +240,33 @@
       "minItems": 3,
       "type": "array"
     },
+    "opening_bodies": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "at": {
+            "items": {
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "at",
+          "id"
+        ],
+        "type": "object"
+      },
+      "maxItems": 3,
+      "minItems": 3,
+      "type": "array"
+    },
     "payphone": {
       "additionalProperties": false,
       "properties": {
@@ -353,6 +380,7 @@
   },
   "required": [
     "beats",
+    "opening_bodies",
     "payphone",
     "pistol_pickup_id",
     "rivet_start",

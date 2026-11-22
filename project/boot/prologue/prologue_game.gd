@@ -17,6 +17,7 @@ class WalkPilot:
 
 var world: World
 var stage: ArenaStage
+var bodies: CorpseDecayHook
 var live: LiveInput
 var lines: PrologueLines
 var _result_path: String
@@ -71,6 +72,7 @@ func _open(plan: PrologueYard, data: DataTable) -> void:
 	stage.layout.phones[data.text(phone, "id")] = data.vec(phone, "at")
 	world.add_system(stage)
 	_equip_squad(data)
+	bodies = PrologueBodies.place(stage, data, world.context())
 	stage.arena.rivet.weapon = &""
 	live = PadAimAssist.wired(LiveInput.new(actions), stage.get.bind(&"arena"))
 	var input: InputSource = live
@@ -104,6 +106,7 @@ func _open_view(plan: PrologueYard) -> void:
 	add_child(rigs)
 	@warning_ignore("return_value_discarded")
 	rigs.attach(stage, view, world.context())
+	bodies.attach_view(view)
 	live.viewport = get_viewport()
 	live.origin_px = func() -> Vector2: return get_viewport().get_visible_rect().size * 0.5
 	live.px_per_m = func() -> float: return view.px_per_m
