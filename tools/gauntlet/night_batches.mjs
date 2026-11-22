@@ -9,7 +9,7 @@ import { planEdits } from './plan_sets.mjs';
 import { loadBatch } from './report.mjs';
 import { SNAPSHOT_TABLES } from './table_snapshot.mjs';
 import { pairNullRuns, pairRuns } from './tune_confirm.mjs';
-import { commitsFor, revertFor } from './tune_git.mjs';
+import { commitsFor, planId, revertFor } from './tune_git.mjs';
 import { digest, TABLES } from './tune_state.mjs';
 
 function checkRoster(batch, design) {
@@ -79,15 +79,27 @@ export function checkAfterPlan(tree, job) {
     throw new Error('plan differs from requested profile or metric');
   const edits = planEdits(plan);
   const receipts = commitsFor(tree, plan);
-  const applied = plan.changes.length > 0 && plan.changes.every((c) => receipts.has(c.id));
-  if ((receipts.size && !applied) || [...receipts.values()].some((sha) => revertFor(tree, sha)))
-    throw new Error('after-from needs a fresh or fully applied plan');
-  const current = tableHashes(tree);
-  const other = tableHashes(tree, edits, applied);
+  const active = new Set();
+  let reverted = false;
+  for (const change of plan.changes) {
+    const commit = receipts.get(change.id);
+    if (!commit) continue;
+    if (revertFor(tree, commit)) reverted = true;
+    else for (const m of change.members ?? [change]) active.add(m.id);
+  }
+  if (reverted) verifyRevertedLedger(job, plan);
   const before = loadBatch(job.files.before), after = loadBatch(job.files.after);
   checkRoster(before, job.batch);
   checkPair(before, after, false);
-  checkTables(before, applied ? other : current, 'before');
-  checkTables(after, applied ? current : other, 'after');
-  return applied;
+  checkTables(before, tableHashes(tree, edits.filter((m) => active.has(m.id)), true), 'before');
+  checkTables(after, tableHashes(tree, edits.filter((m) => !active.has(m.id))), 'after');
+  return plan.changes.length > 0 && plan.changes.every((c) => receipts.has(c.id));
+}
+
+function verifyRevertedLedger(job, plan) {
+  const path = join(job.dir, 'after/tune-ledger.json');
+  const ledger = existsSync(path) && readJson(path);
+  if (ledger?.plan_sha256 !== planId(plan) || ['before', 'null', 'after'].some((arm) =>
+    ledger[arm + '_sha256'] !== digest(readFileSync(job.files[arm]))))
+    throw new Error('resuming a reverted plan needs its original ledger and measurements');
 }

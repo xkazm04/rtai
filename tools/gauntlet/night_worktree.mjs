@@ -17,8 +17,12 @@ function checkBranch(root, path, branch) {
   const entries = git(root, 'worktree', 'list', '--porcelain', '-z').split('\0\0');
   const fields = entries.map((entry) => entry.split('\0')).find(([line]) =>
     line.startsWith('worktree ') && relative(path, line.slice(9)) === '');
-  if (!fields?.includes('branch refs/heads/' + branch))
-    throw new Error('expected a worktree of this repo on ' + branch + ': ' + path);
+  const refused = 'expected a worktree of this repo on ' + branch + ': ' + path;
+  if (!fields?.includes('branch refs/heads/' + branch)) throw new Error(refused);
+  const commonDir = (dir) => git(dir, 'rev-parse', '--path-format=absolute', '--git-common-dir').trim();
+  if (relative(path, git(path, 'rev-parse', '--show-toplevel').trim()) !== ''
+    || relative(commonDir(root), commonDir(path)) !== '' || git(path, 'branch', '--show-current').trim() !== branch)
+    throw new Error(refused);
 }
 
 export function requireClean(path) {

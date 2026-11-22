@@ -38,7 +38,11 @@ test('each profile has its own floor; harm beyond it or an unmeasured profile ve
   };
   assert.equal(decision(sample([6, 12, 22])), 'kept');
   assert.equal(decision(sample([6, 12, 23])), 'reverted');
-  assert.equal(decision(sample([2, 12, 20])), 'reverted'); // Overshot novice target 6.
+  const overshoot = sample([2, 12, 20]);
+  const novice = deathProfiles(pairRuns(before, overshoot), 'all', settings)[0];
+  assert.equal(novice.paired_verdicts.point, 'kept');
+  assert.equal(novice.verdict, 'reverted');
+  assert.equal(decision(overshoot), 'reverted'); // Overshot novice target 6.
   assert.equal(decision(sample([9, 15, 20])), 'noise');
   const missing = sample([6, 12, 20]);
   missing.results = missing.results.filter((r) => r.profile !== 'expert');
@@ -117,4 +121,32 @@ test('a hand-measured cycle resumes at confirmation and chains its kept after in
   const batches = lines.filter((line) => line.startsWith('node ') && line.includes('/batch.mjs'));
   assert.equal(batches.length, 2);
   assert.ok(batches.every((line) => line.includes('--jobs=2') && line.includes('--profile=all') && line.includes('--waves=30')));
+});
+
+test('an interrupted final report resumes a reverted plan using its original measurements', (t) => {
+  const { root, tree, table } = lane(t);
+  const dir = join(root, 'evidence/n23-loop/rejected');
+  const arm = (name) => join(root, 'evidence', name, 'batch.json');
+  const before = tableHashes(root);
+  const after = tableHashes(root, [{ file: table, pointer: '/budget/per_wave', before: 20, after: 25 }]);
+  save(arm('before'), sample([9, 15, 20], before));
+  save(arm('null'), sample([9, 16, 22], before, 1));
+  save(arm('after'), sample([6, 12, 23], after));
+  const args = ['--worktree=' + tree, '--branch=n23-tune-2', '--out=' + dir, '--metric=death',
+    '--before=' + arm('before'), '--null=' + arm('null'), '--after-from=' + arm('after')];
+  let interrupt = true;
+  const run = ([script, ...flags], cwd) => {
+    if (interrupt && flags.includes('--baseline=' + arm('before'))) throw new Error('interrupted final report');
+    const r = spawnSync(process.execPath, [join(ROOT, script), ...flags], { cwd, encoding: 'utf8' });
+    assert.equal(r.status, 0, r.stderr);
+  };
+  assert.throws(() => night(args, { root, run, log() {} }), /interrupted final report/);
+  assert.equal(readJson(join(tree, table)).budget.per_wave, 20);
+  const tip = git(tree, 'rev-parse', 'HEAD');
+  interrupt = false;
+  night(args, { root, run, log() {} });
+  assert.equal(git(tree, 'rev-parse', 'HEAD'), tip);
+  assert.match(readFileSync(join(dir, 'night.md'), 'utf8'), /^cycle 2: reverted budget.per_wave 20 -> 25/);
+  save(arm('after'), sample([6, 12, 20], after));
+  assert.throws(() => night(args, { root, run, log() {} }), /original ledger and measurements/);
 });

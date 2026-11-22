@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
@@ -85,4 +85,27 @@ test('a failed after batch preserves output and leaves the checkout available fo
   assert.equal(existsSync(join(tree, 'build/gauntlet/tuner.lock')), false);
   assert.equal(git(root, 'branch', '--show-current').trim(), 'lane');
   assert.throws(() => night(args, io), /output must be empty/);
+});
+
+test('a stale registration cannot adopt a replacement repository at the same path', (t) => {
+  const { tree, args, io } = setup(t);
+  night([...args, '--dry-run'], io);
+  renameSync(tree, tree + '-original');
+  mkdirSync(tree);
+  git(tree, 'init', '-b', 'n23-tune-test');
+  assert.throws(() => night([...args, '--dry-run'], io), /worktree of this repo/);
+  assert.deepEqual(readFileSync(join(tree + '-original', '.gtai-mutate-worktree'), 'utf8'),
+    JSON.stringify({ root: io.root }));
+  assert.equal(existsSync(join(tree, '.gtai-mutate-worktree')), false);
+});
+
+test('two tune branches cannot run into the same evidence directory', (t) => {
+  const { tree, args, io } = setup(t);
+  const run = () => {
+    const other = [...args, '--branch=n23-tune-other', '--worktree=' + tree + '-other'];
+    assert.throws(() => night(other, io), /night-output-.*lock held/);
+    assert.equal(existsSync(tree + '-other'), false);
+    throw new Error('finished collision test');
+  };
+  assert.throws(() => night(args, { ...io, run }), /finished collision test/);
 });

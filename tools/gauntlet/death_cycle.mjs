@@ -8,7 +8,12 @@ export function deathProfiles(rows, selection, options) {
     const metric = { type: 'death', profile, target: targets.death_wave[profile] };
     const result = confirmChange(rows, { metric }, options);
     const away = result.aggregate_improvement < -result.floor || result.improvement < -result.floor;
-    return { ...result, profile, beyond_floor_away: away };
+    const verdicts = { ...result.verdicts };
+    if (away) {
+      for (const mode of Object.keys(verdicts)) if (verdicts[mode] !== 'too few pairs') verdicts[mode] = 'reverted';
+    }
+    return { ...result, profile, beyond_floor_away: away, paired_verdicts: result.verdicts,
+      verdicts, verdict: verdicts[result.verdict_mode] };
   });
 }
 

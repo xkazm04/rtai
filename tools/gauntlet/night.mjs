@@ -7,9 +7,10 @@ import { ROOT, readJson } from '../lib/repo.mjs';
 import { nodeCommand } from './commands.mjs';
 import { checkAfterPlan, checkInputs } from './night_batches.mjs';
 import { parseNight, recipe, tool } from './night_args.mjs';
+import { physical } from './night_paths.mjs';
 import { summary } from './night_summary.mjs';
 import { inWorktree, requireClean } from './night_worktree.mjs';
-import { atomicWrite, git, withLock } from './tune_state.mjs';
+import { atomicWrite, digest, git, withLock } from './tune_state.mjs';
 
 function runNode(argv, cwd) {
   const result = spawnSync(process.execPath, argv, { cwd, stdio: 'inherit', windowsHide: true });
@@ -50,8 +51,16 @@ function execute(job, tree, run, log) {
 
 export function night(argv, { root = ROOT, run = runNode, log = console.log } = {}) {
   const job = parseNight(argv, root);
-  inWorktree(root, job, (tree) => execute(job, tree, run, log));
-  if (job.remove) log('Removed ' + job.path + ' and ' + job.branch);
+  if (job.remove) {
+    inWorktree(root, job);
+    log('Removed ' + job.path + ' and ' + job.branch);
+    return;
+  }
+  // Different tune branches can run concurrently, but cannot write the same cycle directory.
+  const dir = physical(job.dir);
+  const outputKey = process.platform === 'win32' ? dir.toLowerCase() : dir;
+  withLock(root, () => inWorktree(root, job, (tree) => execute(job, tree, run, log)),
+    'night-output-' + digest(outputKey).slice(0, 16));
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
