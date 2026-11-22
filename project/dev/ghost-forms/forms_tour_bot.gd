@@ -1,9 +1,8 @@
 class_name FormsTourBot
 extends InputSource
 ## `--bot=forms [--form=<id>|all]` (ghost-forms proof clips): Rivet walks a square in base, picks
-## the form with G, transforms with Q while walking, walks the square in the form, and Q takes him
-## back to base; `--form=all` goes base -> Tonnage, then G switches through Dent, Kerf and Ohm
-## (the teal flash) before Q back; `--form=voices` only walks (base: for `--apparition`).
+## the form with G and transforms with T. `--form=all` tours all four before returning to base.
+## `--form=voices` only walks in base for `--apparition`.
 ## `--side=<ticks>` widens the square (120 on `--arena=city` puts the second and third legs on
 ## the pale south kerb). Input only (the live GhostPilot does the rest).
 
@@ -26,6 +25,7 @@ func _init(p_stage: ArenaStage, p_actions: PlayerActions, p_form: StringName) ->
 	stage = p_stage
 	actions = p_actions
 	form = p_form
+	stage.pilot.ghosts.transform_unlocked = true
 	_plan()
 
 

@@ -159,6 +159,7 @@ func test_clear_ground_roll_is_identical_in_both_modes() -> void:
 
 func test_committed_ticks_own_the_intent_even_with_a_melee_lunge() -> void:
 	_course("cover_low")
+	pilot.ghosts.transform_unlocked = true
 	pilot.melee.combo.press()
 	for i: int in motion.vault.ticks:
 		stage.intent.clear()

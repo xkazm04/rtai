@@ -25,6 +25,7 @@ func _init(
 	p_session: ArenaSession, p_ghost: StringName, p_attacking: bool, p_morph: bool = false
 ) -> void:
 	session = p_session
+	session.pilot.ghosts.transform_unlocked = true
 	ghost = p_ghost
 	attacking = p_attacking
 	morphing = p_morph
@@ -62,7 +63,6 @@ func sample(tick: int) -> TickInput:
 
 
 func _movement(t: int) -> TickInput:
-	# A long profile, seven 45-degree turns, back to east, then enough time to coast to rest.
 	var octant: int = 0 if t < 87 else mini(8, 1 + floori((t - 87) / 21.0))
 	var dir: Vector2 = Vector2.RIGHT.rotated(octant * PI / 4.0)
 	var move: Vector2 = dir if t >= 5 and t < 258 else Vector2.ZERO
