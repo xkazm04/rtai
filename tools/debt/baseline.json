@@ -138,7 +138,7 @@
         "project/dev/controls": 712,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
-        "project/dev/gauntlet": 923,
+        "project/dev/gauntlet": 919,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1396,
         "project/dev/guard": 397,
@@ -166,7 +166,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 31109
+      "total": 31105
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -498,12 +498,11 @@
         "project/features/souls/kerf_stage.gd": 208,
         "project/tests/scenarios/scenario_vehicle_drive.gd": 213,
         "project/tests/unit/test_crowd_react.gd": 234,
-        "project/tests/unit/test_foe_rocket.gd": 209,
         "project/tests/unit/test_foe_walker.gd": 212,
         "project/tests/unit/test_gun_fx.gd": 213,
         "project/tests/unit/test_weapon_art.gd": 223
       },
-      "total": 67
+      "total": 66
     },
     "lane_named_dev_dirs": {
       "accepted": [

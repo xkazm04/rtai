@@ -44,12 +44,8 @@ func before(h: Fighter, mind: SquadMind, arena: CombatArena) -> void:
 	var pit: EnemyPit = arena.squad_ai.pit
 	slots_full = not token and EnemySquad.holders(pit.agents, false) >= pit.roster.max_shooters
 	if mind.rocket != null:
-		var rocket: FoeRocket = mind.rocket
-		rocket_moving = (
-			h.pos.distance_to(arena.rivet.pos) < FoeRocket.MIN_RANGE_M
-			or rocket._site.is_finite()
-			or h.pos.distance_to(rocket.last_launch) < FoeRocket.NEW_SITE_M
-		)
+		var visible: bool = arena.guard_map.clear_line(h.pos, arena.rivet.pos)
+		rocket_moving = mind.rocket.needs_relocation(e, arena.rivet.pos, visible)
 
 
 func reason(h: Fighter, mind: SquadMind, arena: CombatArena) -> String:

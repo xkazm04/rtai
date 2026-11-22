@@ -63,6 +63,11 @@ func test_hit_flights_overlap_once_and_misses_contribute_no_ticks() -> void:
 
 func test_rocket_uses_a_real_lock_and_circle_preserves_sprint_speed() -> void:
 	var arena: FireGapArena = _trial(&"rocket_trooper", "circle")
+	var still: FireGapArena = _trial(&"rocket_trooper", "standing")
+	assert_gte(still.fire_ticks.size(), 15)
+	assert_gte(arena.fire_ticks.size(), 15)
+	assert_gt(arena.hit_ticks.size(), 0)
+	assert_gt(still.hit_ticks.size(), arena.hit_ticks.size())
 	var parts: Dictionary[String, int] = arena.result().gap_parts_ticks
 	assert_gt(parts.tell, 0)
 	assert_gt(parts.aim_lock, 0)

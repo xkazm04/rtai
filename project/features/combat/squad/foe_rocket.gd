@@ -9,6 +9,10 @@ const SITE_ANGLES: Array[float] = [0.36, -0.36, 0.72, -0.72, 1.3, -1.3]
 var locked_point: Vector2 = Vector2.INF
 var last_launch: Vector2 = Vector2.INF
 var _site: Vector2 = Vector2.INF
+var _shots_here: int = 0
+var _site_origin: Vector2 = Vector2.INF
+var _observed_tick: int = -2
+var _observed_target: Vector2
 
 
 func forget_site() -> void:
@@ -39,16 +43,15 @@ func step(
 	h.cooldown = maxi(0, h.cooldown - 1)
 	if h.tell_left > 0:
 		return _windup(e, h, arena, squad, map)
-	var dist: float = h.pos.distance_to(pit.rivet_pos)
-	var displaced: bool = last_launch.is_finite() and h.pos.distance_to(last_launch) < NEW_SITE_M
-	if dist < MIN_RANGE_M or displaced or _site.is_finite():
+	if needs_relocation(e, pit.rivet_pos, e.sees):
 		_reposition(e, pit, map)
 	elif not e.has_shot_at(pit.rivet_pos):
 		EnemyMotor.steer(e, mind.velocity(pit, map, 0.0), pit.rivet_pos, pit)
 	elif e.token and h.cooldown == 0 and squad.rockets.count() < pit.roster.max_shooters:
 		e.vel = Vector2.ZERO
 		h.tell_left = e.arch.telegraph_ticks
-		locked_point = pit.rivet_pos
+		forget_site()
+		_track(e, pit)
 		e.aim = h.pos.direction_to(locked_point)
 		e.facing = e.aim
 		e.enter(EnemyAgent.State.WINDUP, h.tell_left)
@@ -73,7 +76,7 @@ func _windup(
 		e.enter(EnemyAgent.State.ENGAGE)
 		return null
 	if tracking:
-		locked_point = arena.rivet.pos
+		_track(e, squad.pit)
 	e.aim = e.pos.direction_to(locked_point)
 	h.facing = e.aim
 	e.facing = e.aim
@@ -89,9 +92,35 @@ func _windup(
 	e.enter(EnemyAgent.State.FIRE)
 	e.shot_tick = arena.tick
 	h.cooldown = e.arch.weapon.cooldown_ticks
+	if h.pos.distance_to(_site_origin) >= NEW_SITE_M:
+		_site_origin = h.pos
+		_shots_here = 0
+	_shots_here += 1
 	last_launch = h.pos
-	_site = _firing_site(e, squad.pit, map)
+	if _shots_here >= maxi(1, e.arch.weapon.relocate_after_shots):
+		_site = _firing_site(e, squad.pit, map)
 	return squad.rockets.launch(h, e.arch.weapon, locked_point, map)
+
+
+func needs_relocation(e: EnemyAgent, target: Vector2, visible: bool) -> bool:
+	if e.pos.distance_to(target) < MIN_RANGE_M:
+		return true
+	var limit: int = e.arch.weapon.relocate_after_shots
+	if limit == 0:
+		return e.pos.distance_to(last_launch) < NEW_SITE_M or _site.is_finite()
+	return not visible or (_shots_here >= limit and e.pos.distance_to(_site_origin) < NEW_SITE_M)
+
+
+## Only consecutive visible samples contribute velocity. The last tracking sample owns the lock.
+func _track(e: EnemyAgent, pit: EnemyPit) -> void:
+	var velocity: Vector2 = Vector2.ZERO
+	if pit.tick == _observed_tick + 1:
+		velocity = (pit.rivet_pos - _observed_target) * SimClock.TICK_RATE
+	_observed_tick = pit.tick
+	_observed_target = pit.rivet_pos
+	var flight: float = e.pos.distance_to(pit.rivet_pos) / maxf(1.0, e.arch.weapon.speed_mps)
+	var seconds: float = pit.roster.aim_lock_ticks * SimClock.TICK_DT + flight
+	locked_point = EnemyBrain.led_offset(pit.rivet_pos, velocity, seconds, e.arch.weapon.aim_lead)
 
 
 func _reposition(e: EnemyAgent, pit: EnemyPit, map: GuardRouteMap) -> void:

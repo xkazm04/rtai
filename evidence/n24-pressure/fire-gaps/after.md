@@ -21,9 +21,9 @@ Under fire counts ticks with at least one airborne round that later hits Rivet.
 | contractor | assault-rifle | standing | 121 | 4.033 | 0.246 | 0.633 | 59 | 0.488 | 43.2% |
 | contractor | assault-rifle | circle | 121 | 4.033 | 0.246 | 0.633 | 25 | 0.207 | 23.5% |
 | contractor | assault-rifle | strafe | 121 | 4.033 | 0.246 | 0.633 | 37 | 0.306 | 28.7% |
-| rocket_trooper | rocket | standing | 10 | 0.333 | 2.861 | 3.100 | 10 | 1.000 | 46.2% |
-| rocket_trooper | rocket | circle | 10 | 0.333 | 3.100 | 3.100 | 0 | 0.000 | 0.0% |
-| rocket_trooper | rocket | strafe | 9 | 0.300 | 3.219 | 4.100 | 5 | 0.556 | 25.9% |
+| rocket_trooper | rocket | standing | 18 | 0.600 | 1.593 | 1.867 | 18 | 1.000 | 44.6% |
+| rocket_trooper | rocket | circle | 18 | 0.600 | 1.593 | 1.867 | 9 | 0.500 | 21.5% |
+| rocket_trooper | rocket | strafe | 18 | 0.600 | 1.605 | 2.050 | 2 | 0.111 | 3.9% |
 | sentry_turret | turret_gun | standing | 117 | 3.900 | 0.242 | 2.383 | 18 | 0.154 | 13.5% |
 | sentry_turret | turret_gun | circle | 78 | 2.600 | 0.330 | 4.700 | 0 | 0.000 | 0.0% |
 | sentry_turret | turret_gun | strafe | 117 | 3.900 | 0.247 | 2.833 | 17 | 0.145 | 10.9% |
@@ -54,9 +54,9 @@ Street riflemen use GuardBrain. EnemyGunner volley rest applies to the range dri
 | contractor | standing | 0.00 | 0.00 | 12.00 | 15.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.50 | 2.00 |
 | contractor | circle | 0.00 | 0.00 | 12.00 | 15.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.50 | 2.00 |
 | contractor | strafe | 0.00 | 0.00 | 12.00 | 15.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.50 | 2.00 |
-| rocket_trooper | standing | 7.20 | 1.65 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 16.60 | 0.00 | 0.15 | 0.15 |
-| rocket_trooper | circle | 7.20 | 1.65 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 18.75 | 0.00 | 0.15 | 0.15 |
-| rocket_trooper | strafe | 6.40 | 1.47 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 17.62 | 0.00 | 0.13 | 0.13 |
+| rocket_trooper | standing | 10.20 | 3.12 | 0.00 | 4.80 | 0.00 | 0.00 | 0.00 | 8.40 | 0.00 | 0.28 | 0.28 |
+| rocket_trooper | circle | 10.20 | 3.12 | 0.00 | 4.80 | 0.00 | 0.00 | 0.00 | 8.40 | 0.00 | 0.28 | 0.28 |
+| rocket_trooper | strafe | 10.33 | 3.12 | 0.00 | 4.80 | 0.00 | 0.00 | 0.00 | 8.45 | 0.00 | 0.30 | 0.28 |
 | sentry_turret | standing | 0.00 | 4.80 | 7.20 | 6.00 | 0.00 | 0.00 | 0.00 | 0.00 | 7.87 | 0.27 | 1.93 |
 | sentry_turret | circle | 0.00 | 3.00 | 4.80 | 3.75 | 0.00 | 0.00 | 0.00 | 0.00 | 12.42 | 0.17 | 1.28 |
 | sentry_turret | strafe | 0.00 | 4.80 | 7.20 | 6.00 | 0.00 | 0.00 | 0.00 | 0.00 | 8.40 | 0.27 | 1.93 |
