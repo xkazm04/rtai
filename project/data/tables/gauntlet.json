@@ -1,9 +1,11 @@
 {
   "boss_every": 5,
   "budget": {
-    "base": 2,
-    "per_wave": 2
+    "base": 20,
+    "per_wave": 20,
+    "unit": 10
   },
+  "cost": {},
   "max_alive": 40,
   "on_timeout": "next_wave",
   "schema": "gtai.gauntlet/1",

@@ -208,12 +208,29 @@
         "per_wave": {
           "minimum": 0,
           "type": "integer"
+        },
+        "unit": {
+          "description": "Number of budget units in one tier of default enemy cost.",
+          "minimum": 1,
+          "type": "integer"
         }
       },
       "required": [
         "base",
-        "per_wave"
+        "per_wave",
+        "unit"
       ],
+      "type": "object"
+    },
+    "cost": {
+      "additionalProperties": {
+        "minimum": 1,
+        "type": "integer"
+      },
+      "description": "Cost in budget units by enemy id. Omitted enemies cost their tier multiplied by budget.unit.",
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9_]*$"
+      },
       "type": "object"
     },
     "max_alive": {
