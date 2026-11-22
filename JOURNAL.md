@@ -46,3 +46,4 @@ NEXT (session 4): (1) on 03b's exit: read its report (03b-grids.out), LOOK at gr
 - 21:45 brief 04 item 1 dropped (decision lines landed c32c08b31).
 - 21:46 LOOK legs_game_32.mp4 (1920x1080 60/1 33.0 s, Astra 03b item 2, rendered 21:35): King's Boulevard tilt 70, fallback left | drawn right, gloria then rocket_launcher at 6.75 and 9.3 m/s. Reads: the drawn ones hold their weapon across the body, the fallback's thin stick and hanging tube visible beside them. Accepted for gloria + rocket; re-render with chainsaw + baton in 03c.
 - 21:46 brief 03c-grids-baton.md written (electro_baton, assault_rifle, film re-render, scratch cleanup); times filled at launch after 03b ends.
+- 21:52 LOOK chainsaw p70 sheets (uncommitted, Astra 03b in progress): walk 4x8 and run8 8x8 rows all hold the bar forward in both hands (never blade down), legs step, collar rigid bands, cut clean on grey. Pre-accepted; in-game 32/64 stills still to check on its commit.
