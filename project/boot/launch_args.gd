@@ -126,6 +126,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--controls",
 	"--wheel-start",
 	"--bot-salt",  # n23-loop: resample the gauntlet test player's luck
+	"--pick-filter",
 ]
 var _values: Dictionary[String, String] = {}
 var _unknown: Array[String] = []

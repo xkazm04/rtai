@@ -2,7 +2,15 @@ extends Node
 ## Headless and live gauntlet entry. The engine cap leaves twenty simulated minutes for ten waves.
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--seed", "--bot", "--pick", "--waves", "--result", "--controls", "--pick-view", "--bot-salt"
+	"--seed",
+	"--bot",
+	"--pick",
+	"--waves",
+	"--result",
+	"--controls",
+	"--pick-view",
+	"--bot-salt",
+	"--pick-filter"
 ]
 const RUN_TICKS: int = 72000
 const BOT_PATH: String = "res://features/gauntlet/bot/gauntlet_bot.gd"

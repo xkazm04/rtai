@@ -22,6 +22,7 @@ func configure(p_profile: StringName, pick_policy: StringName, seed: int) -> voi
 	for row: Dictionary in table.array(table.raw, "rows"):
 		catalog[StringName(table.text(row, "id"))] = row
 	_picker = BotPick.new(pick_policy, _skill, RngRegistry.new(_bot_seed), catalog)
+	_picker.excluded_prefix = LaunchArgs.value("--pick-filter")
 
 
 func bind(run: GauntletRun, session: ArenaSession) -> void:

@@ -42,6 +42,16 @@ func test_default_and_zero_draw_from_the_original_streams() -> void:
 	assert_eq(_draws(["--bot-salt=0"]), original)
 
 
+func test_pick_filter_prefers_allowed_cards_and_takes_lowest_when_all_match() -> void:
+	LaunchArgs.parse(["--pick-filter=stat_"])
+	var pilot: GauntletTestPlayer = GauntletTestPlayer.new()
+	pilot.configure(&"average", &"greedy", WORLD_SEED)
+	var picker: BotPick = pilot._picker
+	assert_eq(picker.pick([&"stat_damage_10", &"weapon_pistol", &"ghost_dent"], 3), &"ghost_dent")
+	assert_eq(picker.pick([&"stat_damage_10", &"stat_regen_10"], 3), &"stat_regen_10")
+	assert_eq(picker.pick([&"stat_hp_max_25"], 3), &"stat_hp_max_25")
+
+
 func test_salt_one_resamples_each_private_stream_reproducibly() -> void:
 	var original: Array[int] = _draws([])
 	var salted: Array[int] = _draws(["--bot-salt=1"])
