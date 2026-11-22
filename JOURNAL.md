@@ -41,3 +41,19 @@ NEXT: (session 2) wait for / read the `lancer` call result; review the staged di
   switch; no sim change: run `node tools/tests/run_unit.mjs --changed` and a scenarios run if arena_rigs changed); look at the
   lancer stills; then brief 03 as written above (lancer film in a wave + door carrier cut/wire + clamshell round).
 - 18:51 session 1 end: ASTRA RUNNING lancer since 18:22 (pid 41084), its hard stop is 75 min from its start (~19:37). HEAD 0c7c09e39.
+
+## Session 2 (18:52)
+- 18:52 start. ASTRA lancer (pid 41084) still running; it committed f61bf1e09 (lancer combat cards behind cast_cards.json).
+  Reviewed the staged/committed shared-file edits: arena_rigs (ReactLink.make moved into FoeCastView.attach, FoeRocketPose
+  call -> _cast.feed), arena_wave_cards (skip covered), street_walker_cards (strip/row via CastCardPose), street_walker_fall
+  (rest_row), foe_launcher_view (draws_launcher): all render-side call sites. No `NEED cast` lines (checked at 18:25).
+- 18:58 reviewed the packed lancer sheets: walk p70/p55 accepted. ATTACK FAILS facings: column 4 (up-right) shows his face
+  and aims right, column 5 (up) aims right (both pitches, p70 worst). Retake in round 03. Dead lancer at 64 ppm lies ~155 px
+  (~2.4 m) in lancer_64ppm_tilt70.png: measure against a dead cop. Hit sheet ok. Lancer takes: attack 2 (retake ordered).
+- 18:59 door carrier sheets (round 02, 8 sheets) reviewed on door-v1.jpg: accepted at sheet level; hit sheets have small
+  yellow-green spark ticks (cutter risk). Brief 03 written (evidence/briefs/n24-cast-03-film-door.md).
+- 19:34 ASTRA lancer 72 accepted (commits 895cf34c1, 0c7c09e39, f61bf1e09, 4c874cc89, 01defddab; mutate cast_card_pose
+  16/20). Open from it: a deferred `_kneel` error at placeholder teardown, full unit run timed out (both in brief 03), and it
+  accepted attack columns 4-5 the director rejects. MILESTONE lancer-cards 01defddab (behind cast_cards.json enabled).
+- 19:37 ASTRA RUNNING film-door since 19:37 (pid 51876; brief evidence/briefs/n24-cast-03-film-door.md: round 03 =
+  lancer attack retake + clamshell + pile-driver sheets; _kneel error; lancer film 32/64; door carrier cut + wire + stills).

@@ -1,0 +1,19 @@
+The lancer now uses his own walk, attack, hit and fall sheets at both pitches, on near rigs and far cards. The fighter’s shot tick selects the discharge frame. Setting `archetypes.rocket_trooper.enabled` to `false` restores the SWAT placeholder. Projectile and simulation code stayed unchanged. [Cast table](C:/Users/kazda/kiro/gtai-wt/n23-prologue/project/data/tables/cast_cards.json) · [Four in-game stills](C:/Users/kazda/kiro/gtai-art/foes-n24/lancer-game-stills-review.jpg)
+
+| Commit | Files and change |
+|---|---|
+| `895cf34c1` `cast: lineup dev scene for the wave cast` | `project/dev/cast/`, including the finished stride script, lineup runner and debt baseline |
+| `0c7c09e39` `cast: pack the lancer at both game pitches` | Eight `rocket_trooper_*.png` atlases and imports, `cast_pack.py` and eight provenance entries |
+| `f61bf1e09` `cast: draw the lancer from his combat cards` | `cast_cards.gd`, `cast_card_pose.gd`, `cast_far_card.gd`, `foe_cast_view.gd`, table, schema and two unit-test files |
+| `4c874cc89` `cast: capture the lancer beside Rivet and patrol` | `cast_lancer_stills.gd`, lineup integration, runner and debt baseline |
+| `01defddab` `cast: verify packed cells and inspect the first tell frame` | Packer validation and assertions for the shoulder frame and first rig binding |
+
+**Shared one-line call sites** were `arena_rigs.gd` lines 29, 70 and 160 for the view field, attachment and feed; `arena_wave_cards.gd` line 82 for far-card ownership; `street_walker_cards.gd` lines 46, 135 and 174 for sheet, grid and row selection; `street_walker_fall.gd` line 158 for the resting corpse; and `foe_launcher_view.gd` line 24 for the placeholder tube and knees.
+
+**Art review.** I inspected all 120 lancer cells at 32 and 64 px/m. Of 11 takes, I rejected both prone-aiming falls and the 55° hit with the wrong rear facing. Both replacement falls shipped. All eight atlases repacked byte-for-byte. The detached receiver, PID `70560`, finished with no pending jobs. All eight door-carrier drafts are ready for review. Their in-game slab width remains unverified. [Round log](C:/Users/kazda/kiro/gtai-art/foes-n24/round02.log) · [Door-carrier sheets](C:/Users/kazda/kiro/gtai-art/foes-n24/door-v1.jpg)
+
+**Verification.** Godot imported the art and loaded 2,129 resources with zero failures. Full lint passed 19/19. Two `--changed` runs each passed 3,773 tests with two skips. The standalone quick parser failed on five scripts, with the same autoload failure reproduced on the original street-card and fall scripts. The final full-suite rerun timed out after ten minutes. Both cast test files had reported 4/4 before the timeout, and the placeholder teardown logged a deferred `_kneel` error.
+
+**Mutation score was 16/20 (80%)**, with four survivors and no invalid mutations or timeouts. The final commit added assertions for two survivors. Their focused mutation rerun and a separate parity run remained unverified at the stop time. Nothing was pushed. [Mutation report](C:/Users/kazda/kiro/gtai-wt/n23-prologue/build/mutate/features-characters-cast_card_pose.json)
+
+[astra: 4330s, exit 0]
