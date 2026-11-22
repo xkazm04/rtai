@@ -28,7 +28,7 @@ func _bytes(writer: Callable) -> PackedByteArray:
 
 
 func test_absent_and_explicit_hands_start_identically_with_a_stage_gun() -> void:
-	var absent: CollectCallStage = _stage(["--controls=wheel"])
+	var absent: CollectCallStage = _stage([])
 	var hands: CollectCallStage = _stage(["--controls=wheel", "--wheel-start=hands"])
 	for stage: CollectCallStage in [absent, hands]:
 		stage.step(0, TickInput.new())
@@ -60,6 +60,16 @@ func test_drawn_adopts_the_stage_pistol_silently_and_prev_reaches_hands() -> voi
 	assert_eq(wheel.switched_tick, 2)
 	assert_eq(stage.pilot.carry.switches, 1)
 	assert_null(stage.arena.gun)
+
+
+func test_drawing_the_arena_sidearm_keeps_its_builtin_trigger() -> void:
+	var stage: CollectCallStage = _stage(["--controls=wheel"], false)
+	stage.arena.rivet.weapon = &"gloria"
+	stage.step(0, TickInput.new())
+	assert_eq(stage.pilot.wheel.selected(), &"hands")
+	stage.step(1, TickInput.new(1 << stage.pilot.actions.bit(&"weapon_slot_1")))
+	assert_eq(stage.arena.rivet.weapon, &"gloria")
+	assert_null(stage.arena.gun, "the original sidearm uses the arena's held-fire cooldown")
 
 
 func test_first_tick_scroll_from_an_armed_loadout_counts_just_the_scroll() -> void:

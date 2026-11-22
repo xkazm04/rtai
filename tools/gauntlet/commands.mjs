@@ -2,7 +2,7 @@ import { join, resolve } from 'node:path';
 import { parseArgs as parseOptions } from 'node:util';
 import { MAX_SEED, PROFILES } from './contract.mjs';
 
-const textFlags = ['seeds', 'seed0', 'profile', 'pick', 'waves', 'jobs', 'out', 'runner', 'controls', 'from'];
+const textFlags = ['seeds', 'seed0', 'salt', 'profile', 'pick', 'pick-filter', 'waves', 'jobs', 'out', 'runner', 'controls', 'from'];
 
 function integer(name, value, min, max = Number.MAX_SAFE_INTEGER) {
   const n = Number(value);
@@ -31,21 +31,29 @@ export function parseArgs(argv) {
   if (!v.from && !v.seeds) throw new Error('--seeds=N is required for a live batch');
   const seeds = v.seeds === undefined ? null : integer('seeds', v.seeds, 1);
   const seed0 = integer('seed0', v.seed0 ?? '1', 0, MAX_SEED);
+  const salt = integer('salt', v.salt ?? '0', 0, MAX_SEED);
+  const pickFilter = v['pick-filter'];
+  if (pickFilter !== undefined && (!pickFilter || runner === 'pit' || pick !== 'greedy'))
+    throw new Error('--pick-filter requires a nonempty prefix and the greedy gauntlet picker');
+  if (salt && runner === 'pit') throw new Error('nonzero --salt requires the gauntlet runner');
   if (seeds !== null && seeds - 1 > MAX_SEED - seed0) throw new Error('last seed exceeds uint32');
   if (v.from && v['dry-run']) throw new Error('--from and --dry-run select different input modes');
   if (v.from && v.seed0 !== undefined && seeds === null) throw new Error('--seed0 needs --seeds in offline mode');
-  return { profile, pick, runner, controls, jobs, seeds, seed0,
+  return { profile, pick, runner, controls, jobs, seeds, seed0, salt,
+    ...(pickFilter && { pickFilter }),
     waves: v.waves === undefined ? null : integer('waves', v.waves, 1),
     out: resolve(v.out ?? 'build/gauntlet/batch'), from: v.from ? resolve(v.from) : null,
     dryRun: v['dry-run'] ?? false };
 }
 
 /** Exact dev entry arguments for running or replaying one seed. */
-export function entryArgs({ runner, profile, seed, pick, controls, waves }, result) {
+export function entryArgs({ runner, profile, seed, pick, controls, waves, salt = 0, pickFilter }, result) {
   const args = runner === 'pit' ? ['bot_pit_probe', '--profile=' + profile, '--seed=' + seed]
     : ['gauntlet', '--seed=' + seed];
   if (runner !== 'pit') {
     if (profile !== 'human') args.push('--bot=' + profile, '--pick=' + pick);
+    if (salt && profile !== 'human') args.push('--bot-salt=' + salt);
+    if (pickFilter && profile !== 'human') args.push('--pick-filter=' + pickFilter);
     args.push('--controls=' + controls);
   }
   if (waves != null) args.push('--waves=' + waves);

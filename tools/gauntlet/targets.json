@@ -1,0 +1,20 @@
+{
+  "boss_every": 5,
+  "boss_wave_seconds": [
+    25,
+    30
+  ],
+  "death_wave": {
+    "average": 12,
+    "expert": 20,
+    "novice": 6
+  },
+  "schema": "gtai.gauntlet-targets/1",
+  "separation": {
+    "min_seed_share": 0.75,
+    "min_wave_gap": 3
+  },
+  "wave_seconds": {
+    "average": 15
+  }
+}

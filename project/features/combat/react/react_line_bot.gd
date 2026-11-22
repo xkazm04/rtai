@@ -91,6 +91,7 @@ static func look_of(spawn_id: String) -> Vector2i:
 func _input(move: Vector2, aim: Vector2, fire: bool) -> TickInput:
 	var m: Vector2 = move.limit_length(1.0) * TickInput.AXIS_MAX
 	var buttons: int = PlayerCommand.pack_aim(aim, actions)
+	buttons |= actions.draw_sidearm(stage.tick)
 	if fire:
 		buttons |= 1 << actions.bit(&"fire")
 	return TickInput.new(buttons, roundi(m.x), roundi(m.y))

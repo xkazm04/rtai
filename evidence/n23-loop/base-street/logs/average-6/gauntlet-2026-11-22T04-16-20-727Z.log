@@ -1,0 +1,39 @@
+# --fixed-fps 60 --quit-after 216000 res://dev/gauntlet/gauntlet.tscn -- --seed=6 --bot=average --pick=greedy --controls=wheel --waves=40 --result=C:\Users\kazda\kiro\gtai-wt\n23-loop\evidence\n23-loop\base-street\runs\average-6.json
+# TIMED OUT after 602 s
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] gauntlet: test player bound: average, greedy picks, seed 6
+[INFO] gauntlet: wave 1 tick 272 block 1, 1 alive
+[INFO] gauntlet: wave 2 tick 975 block 2, 1 alive
+[INFO] gauntlet: wave 3 tick 1855 block 3, 1 alive
+[INFO] gauntlet: wave 4 tick 3005 block 4, 1 alive
+[INFO] gauntlet: wave 5 tick 3562 block 5, 1 alive
+[INFO] gauntlet: wave 6 tick 5209 block 6, 1 alive
+[INFO] gauntlet: wave 7 tick 6296 block 7, 1 alive
+[INFO] gauntlet: wave 8 tick 11696 block 7, 2 alive
+[INFO] gauntlet: wave 9 tick 17096 block 7, 3 alive
+[INFO] gauntlet: wave 10 tick 22496 block 7, 3 alive
+[INFO] gauntlet: wave 11 tick 27896 block 7, 4 alive
+[INFO] gauntlet: wave 12 tick 33296 block 7, 5 alive
+[INFO] gauntlet: wave 13 tick 38696 block 7, 5 alive
+[INFO] gauntlet: wave 14 tick 44096 block 7, 6 alive
+[INFO] gauntlet: wave 15 tick 49496 block 7, 5 alive
+[INFO] gauntlet: wave 16 tick 54896 block 7, 6 alive
+[INFO] gauntlet: wave 17 tick 60296 block 7, 6 alive
+[INFO] gauntlet: wave 18 tick 65696 block 7, 6 alive
+[INFO] gauntlet: wave 19 tick 71096 block 7, 7 alive
+[INFO] gauntlet: wave 20 tick 76496 block 7, 8 alive
+[INFO] gauntlet: wave 21 tick 81896 block 7, 9 alive
+[INFO] gauntlet: wave 22 tick 87296 block 7, 9 alive
+[INFO] gauntlet: wave 23 tick 92696 block 7, 10 alive
+[INFO] gauntlet: wave 24 tick 98096 block 7, 11 alive
+[INFO] gauntlet: wave 25 tick 103496 block 7, 8 alive
+[INFO] gauntlet: wave 26 tick 108896 block 7, 8 alive
+[INFO] gauntlet: wave 27 tick 114296 block 7, 9 alive
+[INFO] gauntlet: wave 28 tick 119696 block 7, 10 alive
+[INFO] gauntlet: wave 29 tick 125096 block 7, 11 alive
+[INFO] gauntlet: wave 30 tick 130496 block 7, 12 alive
+[INFO] gauntlet: wave 31 tick 135896 block 7, 13 alive
+[INFO] gauntlet: wave 32 tick 161995 block 7, 14 alive
+
+[timeout: killed the process tree after 600000 ms]

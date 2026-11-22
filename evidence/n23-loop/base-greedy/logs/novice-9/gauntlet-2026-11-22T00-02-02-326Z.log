@@ -1,0 +1,12 @@
+# --fixed-fps 60 --quit-after 72000 res://dev/gauntlet/gauntlet.tscn -- --seed=9 --bot=novice --pick=greedy --controls=wheel --result=C:\Users\kazda\kiro\gtai-wt\n23-loop\evidence\n23-loop\base-greedy\runs\novice-9.json
+# exit 0, 12.6 s
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] gauntlet: test player bound: novice, greedy picks, seed 9
+[INFO] gauntlet: wave 1 tick 272 block plain_block enemies { "patrol_cop": 4 }
+[INFO] gauntlet: wave 2 tick 688 block underpass enemies { "patrol_cop": 6 }
+[INFO] gauntlet: wave 3 tick 1169 block crosswalk enemies { "riot_cop": 2, "rocket_trooper": 2 }
+[INFO] gauntlet: wave 4 tick 1581 block loading_bay enemies { "contractor": 3, "swat": 1, "patrol_cop": 2 }
+[INFO] gauntlet: wave 5 tick 2218 block alley_neck enemies { "war_machine": 1, "patrol_cop": 3, "swat": 2 }
+[INFO] gauntlet: wave 5 ended after 954 ticks at (180.7888, 0.254596), hp 0.0
+[INFO] gauntlet: tick 3173, segment 5

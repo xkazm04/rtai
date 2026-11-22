@@ -28,8 +28,7 @@ func _carry(id: StringName) -> void:
 	)
 	var slot: int = carry.add(id)
 	assert_gte(slot, 0, "%s rides in a slot" % id)
-	carry.select(slot, _stage.arena)
-	_pilot.carry = carry
+	PilotWeaponFixture.draw(_stage, carry, slot)
 
 
 func _cop(offset: Vector2) -> Fighter:

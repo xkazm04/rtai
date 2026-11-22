@@ -79,6 +79,19 @@ func test_recorded_wave_keeps_a_measured_zero_and_omits_unobserved_counters() ->
 	assert_eq(mods, {"hp_max": 1.25})
 
 
+func test_unfinished_run_at_the_one_hour_cap_records_capped_without_a_death() -> void:
+	var entry: Entry = Entry.new()
+	entry.session = entry._open_street(ArenaArgs.new())
+	entry.waves = GauntletWaves.attach(entry.session, entry.run, GauntletPilot.new(), 0)
+	entry.session.world.context().clock._tick = 60 * 60 * SimClock.TICK_RATE
+	assert_true(entry._finish())
+	var result: Dictionary = entry.run.to_result()
+	var capped: bool = result.get("capped", false)
+	assert_true(capped)
+	assert_false(result.has("death"))
+	entry.free()
+
+
 func test_pilot_picks_are_seeded_and_greedy_starts_at_zero() -> void:
 	var a: GauntletPilot = GauntletPilot.new()
 	var b: GauntletPilot = GauntletPilot.new()

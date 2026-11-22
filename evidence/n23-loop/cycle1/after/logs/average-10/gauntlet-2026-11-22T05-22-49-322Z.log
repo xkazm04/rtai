@@ -1,0 +1,46 @@
+# --fixed-fps 60 --quit-after 216000 res://dev/gauntlet/gauntlet.tscn -- --seed=10 --bot=average --pick=greedy --controls=wheel --waves=40 --result=C:\Users\kazda\kiro\gtai-wt\n23-loop\evidence\n23-loop\cycle1\after\runs\average-10.json
+# exit 0, 80.4 s
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] gauntlet: test player bound: average, greedy picks, seed 10
+[INFO] gauntlet: wave 1 tick 290 block 1, 1 alive
+[INFO] gauntlet: wave 2 tick 926 block 2, 1 alive
+[INFO] gauntlet: wave 3 tick 1833 block 3, 1 alive
+[INFO] gauntlet: wave 4 tick 2985 block 4, 1 alive
+[INFO] gauntlet: wave 5 tick 3634 block 5, 1 alive
+[INFO] gauntlet: wave 6 tick 4780 block 6, 1 alive
+[INFO] gauntlet: wave 7 tick 6021 block 7, 1 alive
+[INFO] gauntlet: wave 8 tick 7314 block 8, 1 alive
+[INFO] gauntlet: wave 9 tick 8519 block 9, 1 alive
+[INFO] gauntlet: wave 10 tick 9989 block 10, 1 alive
+[INFO] gauntlet: wave 11 tick 11576 block 11, 1 alive
+[INFO] gauntlet: wave 12 tick 13226 block 12, 1 alive
+[INFO] gauntlet: wave 13 tick 15743 block 13, 1 alive
+[INFO] gauntlet: wave 14 tick 17696 block 14, 1 alive
+[INFO] gauntlet: wave 15 tick 19352 block 15, 1 alive
+[INFO] gauntlet: wave 16 tick 20653 block 16, 1 alive
+[INFO] gauntlet: wave 17 tick 22269 block 17, 1 alive
+[INFO] gauntlet: wave 18 tick 24974 block 18, 1 alive
+[INFO] gauntlet: wave 19 tick 27859 block 19, 1 alive
+[INFO] gauntlet: wave 20 tick 29866 block 20, 1 alive
+[INFO] gauntlet: wave 21 tick 31735 block 21, 1 alive
+[INFO] gauntlet: wave 22 tick 34162 block 22, 1 alive
+[INFO] gauntlet: wave 23 tick 37145 block 23, 1 alive
+[INFO] gauntlet: wave 24 tick 39313 block 24, 1 alive
+[INFO] gauntlet: wave 25 tick 43119 block 25, 1 alive
+[INFO] gauntlet: wave 26 tick 46760 block 26, 1 alive
+[INFO] gauntlet: wave 27 tick 49473 block 27, 1 alive
+[INFO] gauntlet: wave 28 tick 51395 block 28, 1 alive
+[INFO] gauntlet: wave 29 tick 54892 block 29, 1 alive
+[INFO] gauntlet: wave 30 tick 58044 block 30, 1 alive
+[INFO] gauntlet: wave 31 tick 60724 block 31, 1 alive
+[INFO] gauntlet: wave 32 tick 63865 block 32, 1 alive
+[INFO] gauntlet: wave 33 tick 67525 block 33, 1 alive
+[INFO] gauntlet: wave 34 tick 69570 block 34, 1 alive
+[INFO] gauntlet: wave 35 tick 72128 block 35, 1 alive
+[INFO] gauntlet: wave 36 tick 74292 block 36, 1 alive
+[INFO] gauntlet: wave 37 tick 78246 block 37, 1 alive
+[INFO] gauntlet: wave 38 tick 81000 block 38, 1 alive
+[INFO] gauntlet: wave 39 tick 84030 block 39, 1 alive
+[INFO] gauntlet: wave 40 tick 87713 block 40, 1 alive
+[INFO] gauntlet: tick 90331, segment 40

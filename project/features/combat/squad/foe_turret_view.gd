@@ -9,7 +9,7 @@ const HEAD: Texture2D = preload("res://features/characters/art/thug/helmet.png")
 const LOOK_SCALE: float = 1.8
 
 
-static func draw_mount(view: Node2D, h: Fighter, heat: float) -> void:
+static func draw_mount(view: Node2D, h: Fighter, heat: float, stunned: bool = false) -> void:
 	var at: Vector2 = Ink.px(h.pos)
 	view.draw_set_transform(at, 0.0, Vector2.ONE * LOOK_SCALE)
 	Ink.box(view, Vector2(0, 0.08), Vector2(1.48, 1.22), DARK)
@@ -19,9 +19,7 @@ static func draw_mount(view: Node2D, h: Fighter, heat: float) -> void:
 		view.draw_line(Vector2(x, 15), Vector2(x - 5, 23), Ink.INK, 5.0)
 	for x: int in [-26, 26]:
 		view.draw_circle(Vector2(x, -19), 3.0, Ink.CREAM)
-	view.draw_set_transform(
-		at + Vector2.UP * 6.0 * LOOK_SCALE, h.facing.angle(), Vector2.ONE * LOOK_SCALE
-	)
+	FoeStunView.place_gun(view, at, h.facing, stunned)
 	Ink.box(view, Vector2(0.69, 0), Vector2(1.26, 0.29), STEEL)
 	Ink.box(view, Vector2(1.19, 0), Vector2(0.28, 0.37), DARK)
 	Ink.disc(view, Vector2.ZERO, 0.46, DARK)

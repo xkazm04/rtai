@@ -31,6 +31,14 @@ const KILLS: Dictionary[StringName, StringName] = {
 }
 
 
+class DrawWeapon:
+	extends InputSource
+	var shortcut: int
+
+	func sample(tick: int) -> TickInput:
+		return TickInput.new(shortcut if tick == 0 else 0)
+
+
 func run(_tree: SceneTree) -> String:
 	var out: Dictionary = {}
 	for weapon: StringName in KILLS:
@@ -106,6 +114,13 @@ func _open(bus: EventBus, data: DataStore, weapon: StringName) -> ArenaSession:
 	var s: ArenaSession = ArenaSession.open(bus, data)
 	var hook: BrutalityHook = _hook(s)
 	hook.arm(s.stage, s.world.context(), weapon)
+	if weapon != PlayerShock.WEAPON:
+		# The lab gives the arena its seeded gun. Bind that exact weapon to its real shortcut.
+		s.stage.arena.rivet.weapon = weapon
+		var grip: ArsenalTable.Grip = ArsenalTable.shipped().grip_of(weapon)
+		var draw: DrawWeapon = DrawWeapon.new()
+		draw.shortcut = 1 << s.actions.bit(RivetCarry.SLOT_ACTIONS[grip.slot - 1])
+		s.world.loop().set_input(draw)
 	hook.open_lab(s.stage, weapon)
 	return s
 

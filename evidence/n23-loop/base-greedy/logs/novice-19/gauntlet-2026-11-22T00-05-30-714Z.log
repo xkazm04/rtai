@@ -1,0 +1,17 @@
+# --fixed-fps 60 --quit-after 72000 res://dev/gauntlet/gauntlet.tscn -- --seed=19 --bot=novice --pick=greedy --controls=wheel --result=C:\Users\kazda\kiro\gtai-wt\n23-loop\evidence\n23-loop\base-greedy\runs\novice-19.json
+# exit 0, 15.1 s
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] gauntlet: test player bound: novice, greedy picks, seed 19
+[INFO] gauntlet: wave 1 tick 272 block underpass enemies { "patrol_cop": 4 }
+[INFO] gauntlet: wave 2 tick 658 block loading_bay enemies { "patrol_cop": 6 }
+[INFO] gauntlet: wave 3 tick 1259 block market_stalls enemies { "riot_cop": 2, "rocket_trooper": 1, "patrol_cop": 2 }
+[INFO] gauntlet: wave 4 tick 1650 block barricade_line enemies { "riot_cop": 2, "contractor": 2, "rocket_trooper": 1 }
+[INFO] gauntlet: wave 5 tick 2211 block plain_block enemies { "war_machine": 1, "patrol_cop": 1, "swat": 2, "contractor": 1 }
+[INFO] gauntlet: wave 6 tick 3125 block kiosk_plaza enemies { "sentry_turret": 2, "robot_thug": 1, "robot_gunner": 1, "swat": 1 }
+[INFO] gauntlet: wave 7 tick 4203 block barricade_line enemies { "swat": 3, "robot_gunner": 1, "contractor": 1, "robot_thug": 1, "riot_cop": 1 }
+[INFO] gauntlet: wave 8 tick 4917 block barricade_line enemies { "contractor": 1, "riot_cop": 1, "sentry_turret": 3, "rocket_trooper": 1, "robot_thug": 1 }
+[INFO] gauntlet: wave 9 tick 6540 block crosswalk enemies { "rocket_trooper": 1, "sentry_turret": 1, "patrol_cop": 1, "robot_gunner": 1, "robot_thug": 1, "swat": 1, "contractor": 2, "riot_cop": 1 }
+[INFO] gauntlet: wave 10 tick 7357 block alley_neck enemies { "war_machine": 1, "rocket_trooper": 2, "sentry_turret": 1, "robot_thug": 1, "swat": 1, "shield_robot": 1, "patrol_cop": 1 }
+[INFO] gauntlet: wave 10 ended after 1036 ticks at (340.2191, -1.948222), hp 0.0
+[INFO] gauntlet: tick 8394, segment 10

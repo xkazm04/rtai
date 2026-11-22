@@ -1,0 +1,3 @@
+failed runs/average-6.json: FAIL timeout after 600 s; SCRIPT ERROR 0; unknown arg 0; result missing; flags checked: 5 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)
+average: 9/10 ok (1 capped alive), median wave reached 40, median seconds per wave 29.8
+ablate: batch failed: 1

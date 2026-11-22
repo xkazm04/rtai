@@ -22,10 +22,11 @@ class SwitchInput:
 
 	func sample(tick: int) -> TickInput:
 		var b: int = PlayerCommand.pack_aim(Vector2.DOWN, actions)
+		b |= actions.draw_sidearm(tick)
 		b |= 1 << actions.bit(&"fire")
 		if tick == SWITCH_TICK:
 			b |= 1 << actions.bit(&"weapon_slot_3")
-		if NEXT_TICKS.has(tick):
+		if NEXT_TICKS.has(tick) or (actions.wheel and tick == 260):
 			b |= 1 << actions.bit(&"weapon_next")
 		return TickInput.new(b)
 
@@ -85,8 +86,9 @@ static func _judge(tel: Dictionary) -> String:
 	var expect: int = tel["expected_tick"]
 	if first < expect or first > expect + 2:
 		return "rocket left at tick %d, the stow+draw ends at %d: %s" % [first, expect, tel]
-	if tel["slot_order"] != [0, 2, 3, 0]:
-		return "the switch order is not 1 -> 3 -> 4 -> 1: %s" % [tel["slot_order"]]
+	var order: Array = [0, 2, 3, -1, 0] if ControlsMode.wheel() else [0, 2, 3, 0]
+	if tel["slot_order"] != order:
+		return "expected slot order %s, got %s" % [order, tel["slot_order"]]
 	return ""
 
 

@@ -10,6 +10,8 @@ const SCHEMA: String = "gtai.gauntlet/1"
 
 var window: Array[GauntletSegment] = []
 var index: int = 0
+var max_alive: int
+var timeout_ticks: int
 ## A wave can hold Rivet at its far seam without adding a prop or blocking the enemy squad.
 var forward_limit: float = INF
 var rest: GauntletRest
@@ -37,6 +39,8 @@ class StreetSquad:
 func _init(registry: RngRegistry) -> void:
 	_rng = registry.stream(&"gauntlet")
 	_table = DataTable.open(TABLE, SCHEMA)
+	max_alive = _table.integer(_table.raw, "max_alive")
+	timeout_ticks = _table.integer(_table.raw, "wave_timeout_s") * SimClock.TICK_RATE
 	for row: Dictionary in _table.array(_table.raw, "segments"):
 		if _table.num(row, "length_m") > 0.0:
 			_rows.append(row)
@@ -68,15 +72,33 @@ func advance_to(x: float) -> bool:
 
 
 func setup(stage: ArenaStage, _ctx: WorldContext) -> void:
+	apply_repair(_table, stage.arena.tuning)
 	_install(stage)
 	@warning_ignore("return_value_discarded")
 	stage.arena.kill_landed.connect(_death)
+
+
+static func apply_repair(rules: DataTable, tuning: CombatTuning) -> void:
+	var rivet: Dictionary = rules.raw.get("rivet", {})
+	for key: String in ["repair_per_s", "repair_delay_s"]:
+		if rivet.has(key):
+			tuning.rivet[key] = rules.num(rivet, key)
 
 
 func _death(
 	foe: Fighter, _weapon: StringName, _dir: Vector2, _at: Vector2, _kind: StringName
 ) -> void:
 	rest.place(foe)
+
+
+func hold_block(arena: CombatArena) -> void:
+	(arena as GauntletCombat).retire_wave()
+	for i: int in range(arena.hostiles.size() - 1, -1, -1):
+		if arena.squad_ai.owns(arena.hostiles[i]) and not arena.hostiles[i].alive():
+			arena.hostiles.remove_at(i)
+	arena.squad_ai.clear_wave()
+	forward_limit = current().end_x() - arena.rivet.radius_m
+	arena.squad_ai.pit.bounds.end.x = forward_limit
 
 
 func solid_px(px: Vector2) -> bool:

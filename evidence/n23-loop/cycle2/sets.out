@@ -1,0 +1,1 @@
+sets: --set=project/data/tables/gauntlet.json#/rivet/repair_per_s=8 --set=project/data/tables/gauntlet.json#/rivet/repair_delay_s=3.75

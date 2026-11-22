@@ -1,0 +1,10 @@
+{
+  "schema": "gtai.gauntlet-hp-comparison/1",
+  "baseline": "evidence/n23-loop/base-greedy/runs/average-3.json",
+  "instrumented": "evidence/n23-loop/ablate/telemetry-check/runs/average-3.json",
+  "wave_hp_objects_stripped": 37,
+  "instrumented_sha256": "e1d979aeb5e84df9b531fe8443971f79b5b3efbf26ba69cdcbe9ade4b1712e8b",
+  "baseline_sha256": "ca8dccd93339cde0257d285b675f2c9329d61f1cca5970477238a06450f7380f",
+  "stripped_sha256": "ca8dccd93339cde0257d285b675f2c9329d61f1cca5970477238a06450f7380f",
+  "bytes_compared": 27003
+}

@@ -67,7 +67,7 @@ func _off_control() -> String:
 		if LaunchArgs.has(flag):
 			@warning_ignore("return_value_discarded")
 			saved.append("%s=%s" % [flag, LaunchArgs.value(flag)])
-	LaunchArgs.parse(PackedStringArray(["--no-vault", "--no-cover"]))
+	LaunchArgs.parse(saved + PackedStringArray(["--no-vault", "--no-cover"]))
 	var tape: MovesFuzzTape = MovesFuzzTape.new(SEED)
 	var raw: Trace = _run(tape, false, 360)
 	var reason: String = raw.failure

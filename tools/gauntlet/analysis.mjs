@@ -5,7 +5,12 @@ import { entryArgs, commandLine } from './commands.mjs';
 import { killerEnemy } from './enemy_weapons.mjs';
 import { offerEffects } from './offers.mjs';
 
-export const TARGET_S = 15;
+import { targets } from './death_score.mjs';
+
+export const TARGET_S = targets.wave_seconds.average;
+export function timeBounds(n, target = TARGET_S) {
+  return n % targets.boss_every === 0 ? targets.boss_wave_seconds : [target * 0.8, target * 1.2];
+}
 const vals = (rows, key) => rows.map((r) => r[key]).filter(Number.isFinite);
 const total = (rows) => rows.reduce((s, n) => s + n, 0);
 const frequency = (rows) => new Map([...Map.groupBy(rows, (v) => v)].map(([id, hits]) => [id, hits.length]));
@@ -25,9 +30,10 @@ function waveStats(profile, n, waves, before) {
     }
   }
   const baseline = measured(vals(before, 'seconds'));
+  const [lower, upper] = timeBounds(n);
   return { n, profile, observed: waves.length, timed: times.length, median: time, baseline,
     p25: quantile(times, 0.25), p75: quantile(times, 0.75), min: quantile(times, 0), max: quantile(times, 1),
-    miss: profile === 'average' && (time < TARGET_S * 0.8 || time > TARGET_S * 1.2),
+    miss: profile === 'average' && (time < lower || time > upper),
     guard: measured(vals(waves, 'guard_deflects')), rolls: measured(vals(waves, 'rolls')),
     shots: measured(vals(waves, 'shots')), hits: measured(vals(waves, 'hits')),
     forms: [...forms].sort(([a], [b]) => a.localeCompare(b)).map(([id, v]) => ({ id, ...measured(v) })) };
@@ -56,11 +62,13 @@ function enemyStats(runs, catalog) {
   });
 }
 
-function deathStats(profile, runs, attempts) {
+export function deathStats(profile, runs, attempts) {
   const deaths = runs.filter((r) => r.death).map((r) => r.death);
   const by = frequency(deaths.map((d) => d.by).filter(Boolean));
   const stalled = attempts.filter((r) => r.outcome === 'stalled').length;
-  const capped = attempts.filter((r) => r.outcome === 'capped').length;
+  const cappedRows = attempts.filter((r) => r.ok && r.outcome === 'capped');
+  const capped = cappedRows.length + runs.filter((r) => r.capped && !cappedRows.some((row) =>
+    row.seed === r.seed && (!row.controls || row.controls === r.controls))).length;
   const timeouts = by.get('timeout') ?? 0;
   by.delete('timeout');
   return { profile, runs: attempts.length, accepted: runs.length, capped, stalled, timeouts, total: deaths.length, unknown: deaths.filter((d) => !d.by).length,
@@ -103,7 +111,8 @@ function unusual(runs, batch, weapons) {
     const runner = batch.args.runner ?? 'gauntlet';
     const result = runner === 'pit' ? resolve('build/gauntlet/replay', run.profile + '-' + run.seed + '.json') : null;
     const replay = entryArgs({ runner, profile: run.profile, seed: run.seed, controls: run.controls,
-      pick: recorded?.pick ?? batch.args.pick, waves: batch.args.waves }, result);
+      pick: recorded?.pick ?? batch.args.pick, waves: batch.args.waves, salt: batch.args.salt,
+      pickFilter: batch.args.pickFilter }, result);
     scores.push({ run, score, signature, command: commandLine(replay) });
   }
   return scores.sort((a, b) => b.score - a.score || a.run.seed - b.run.seed).slice(0, 3);

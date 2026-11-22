@@ -32,10 +32,12 @@
   "rows": [
     {
       "aim_error_deg": 14,
+      "blast_margin_m": 0.25,
       "cover_seek_m": 2,
       "form_use": 0.25,
       "guard_lead_ticks": 5,
       "id": "novice",
+      "move_use": 0.25,
       "reaction_ticks": 30,
       "rest_hp": 0.4,
       "retreat_hp": 0,
@@ -44,10 +46,12 @@
     },
     {
       "aim_error_deg": 7,
+      "blast_margin_m": 0.6,
       "cover_seek_m": 4,
       "form_use": 0.55,
       "guard_lead_ticks": 10,
       "id": "average",
+      "move_use": 0.6,
       "reaction_ticks": 16,
       "rest_hp": 0.75,
       "retreat_hp": 0.25,
@@ -56,10 +60,12 @@
     },
     {
       "aim_error_deg": 3,
+      "blast_margin_m": 1,
       "cover_seek_m": 7,
       "form_use": 0.9,
       "guard_lead_ticks": 18,
       "id": "expert",
+      "move_use": 1,
       "reaction_ticks": 8,
       "rest_hp": 0.95,
       "retreat_hp": 0.45,

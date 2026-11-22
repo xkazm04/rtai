@@ -1,0 +1,120 @@
+{
+  "beats": [
+    {
+      "beat": 1,
+      "checkpoint": "yard_arrival",
+      "first_line": "b1_l01_warden_three_down",
+      "id": "yard_arrival",
+      "last_line": "b1_l08_rivet_shut_up"
+    },
+    {
+      "beat": 2,
+      "checkpoint": "squad_arrival",
+      "first_line": "b2_l01_mulroney_line_up",
+      "id": "squad_arrival",
+      "last_line": "b2_l05_mulroney_shoot"
+    },
+    {
+      "beat": 3,
+      "checkpoint": "street_call",
+      "first_line": "b3_l01_rivet_voices",
+      "id": "street_call",
+      "last_line": "b3_l11_fax_location"
+    }
+  ],
+  "pistol_pickup_id": "pistol",
+  "rivet_start": [
+    20,
+    17
+  ],
+  "schema": "gtai.prologue_stage/1",
+  "waves": [
+    {
+      "approach_lines": [
+        "b1_l04_winnick_dale",
+        "draft_winnick_closer"
+      ],
+      "beat": 1,
+      "groups": [
+        {
+          "archetype": "patrol_cop",
+          "count": 1,
+          "equipment": "pistol",
+          "id": "winnick",
+          "role": "approach_during_lines"
+        },
+        {
+          "archetype": "patrol_cop",
+          "count": 6,
+          "equipment": "pistol",
+          "id": "frightened_patrol",
+          "role": "panic_fire"
+        },
+        {
+          "archetype": "appliance_warden",
+          "count": 3,
+          "equipment": "catch_pole",
+          "id": "catchers",
+          "role": "hold_at_reach"
+        }
+      ],
+      "id": "dale_patrol"
+    },
+    {
+      "beat": 2,
+      "groups": [
+        {
+          "archetype": "riot_cop",
+          "count": 3,
+          "equipment": "riot_shield",
+          "id": "shield_line",
+          "role": "front_line"
+        },
+        {
+          "archetype": "swat",
+          "count": 4,
+          "equipment": "rifle",
+          "id": "rifle_line",
+          "role": "ranged_line"
+        },
+        {
+          "archetype": "sergeant_mulroney",
+          "count": 1,
+          "equipment": "shotgun",
+          "id": "commander",
+          "role": "behind_line"
+        }
+      ],
+      "id": "mulroney_squad"
+    }
+  ],
+  "weapons": [
+    {
+      "archetype": "sergeant_mulroney",
+      "burst": 1,
+      "burst_gap_s": 0,
+      "cooldown_s": 1.3,
+      "damage": 8,
+      "id": "shotgun",
+      "melee": false,
+      "reach_m": 16,
+      "speed_mps": 20
+    },
+    {
+      "archetype": "appliance_warden",
+      "burst": 1,
+      "burst_gap_s": 0,
+      "cooldown_s": 1.4,
+      "damage": 1.2,
+      "id": "catch_pole",
+      "knockback_m": 0.45,
+      "melee": true,
+      "reach_m": 2.2,
+      "speed_mps": 0
+    }
+  ],
+  "yard_size_m": [
+    60,
+    34
+  ]
+}

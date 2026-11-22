@@ -1,0 +1,4 @@
+novice: 10/10 ok, median wave reached 12, median seconds per wave 19.93
+average: 10/10 ok (2 capped alive), median wave reached 40, median seconds per wave 29.1
+expert: 10/10 ok (2 capped alive), median wave reached 40, median seconds per wave 26.71
+{"attempted":30,"accepted":30,"deaths":10,"median_wave_reached":40,"median_death_wave":12,"capped_alive":4,"wave_timeouts":0}

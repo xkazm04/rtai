@@ -1,10 +1,18 @@
 extends Node
-## Headless and live gauntlet entry. The engine cap leaves twenty simulated minutes for ten waves.
+## Headless and live gauntlet entry. The engine cap allows one simulated hour of street fighting.
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--seed", "--bot", "--pick", "--waves", "--result", "--controls", "--pick-view"
+	"--seed",
+	"--bot",
+	"--pick",
+	"--waves",
+	"--result",
+	"--controls",
+	"--pick-view",
+	"--bot-salt",
+	"--pick-filter"
 ]
-const RUN_TICKS: int = 72000
+const RUN_TICKS: int = 216000
 const BOT_PATH: String = "res://features/gauntlet/bot/gauntlet_bot.gd"
 
 @export var camera_ppm: float = 32.0
@@ -34,14 +42,12 @@ func _ready() -> void:
 			Log.error("gauntlet", "cannot instantiate %s as GauntletPilot" % BOT_PATH)
 			get_tree().quit(1)
 			return
-		pilot.configure(run.profile, StringName(args.text("--pick", "random")), run.seed)
 	session = _open_street(args)
 	if session == null:
 		get_tree().quit(1)
 		return
 	var picker: GauntletPilot = pilot if pilot != null else GauntletPilot.new()
-	if pilot == null:
-		picker.configure(run.profile, StringName(args.text("--pick", "random")), run.seed)
+	picker.configure(run.profile, StringName(args.text("--pick", "random")), run.seed)
 	picker.bind(run, session)
 	waves = GauntletWaves.attach(session, run, picker, args.text("--waves", "0").to_int())
 	_result_path = args.text("--result")
@@ -101,7 +107,6 @@ func _open_view(film: bool) -> void:
 	if waves.manual_picks:
 		pick_view = GauntletPickView.new()
 		pick_view.waves = waves
-		pick_view.run = run
 		pick_view.pilot = pilot
 		hud.add_child(pick_view)
 		hud.move_child(hud.get_node(^"Status"), -1)
@@ -128,6 +133,7 @@ func _exit_tree() -> void:
 
 func _finish() -> bool:
 	Log.info("gauntlet", "tick %d, segment %d" % [session.tick(), session.street.index])
+	run.capped = not waves.done and maxi(session.tick(), Engine.get_process_frames()) >= RUN_TICKS
 	var ok: bool = _result_path.is_empty() or _write_result(_result_path)
 	if hud != null and is_instance_valid(hud):
 		hud.set_process(false)

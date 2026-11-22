@@ -87,10 +87,20 @@ func _verdict(s: Quest1Session, log: ReplayLog, out: Dictionary) -> String:
 		return "not paid: state %s at beat %s, tick %d" % at
 	if log.input_changes() < 100:
 		return "too few input changes (%d): the input path was idle" % log.input_changes()
+	if log.final_hash != "37bf8deacaad2f480055af695e77aa9296bb08c4f6b681c57344832333d4664a":
+		return "quest 1 input final hash changed: " + log.final_hash
+	LaunchArgs.parse(["--controls=legacy" if s.actions.wheel else "--controls=wheel"])
+	var loaded: ReplayLog = ControlsReplay.load_for_playback(_log_path) if out.log_saved else null
+	if loaded == null:
+		LaunchArgs.parse()
+		return "cannot reopen the quest input tape"
 	var bus: EventBus = EventBus.new()
 	var data: DataStore = DataStore.new()
 	var again: Quest1Session = Quest1Session.open(bus, data)
-	var divergence: String = again.world.verify_replay(log)
+	var divergence: String = again.world.verify_replay(loaded)
+	if again.actions.wheel != s.actions.wheel:
+		divergence = "quest replay opened with different controls from the recording"
+	LaunchArgs.parse()
 	out["replay"] = "identical" if divergence == "" else divergence
 	again.world.free()
 	bus.free()

@@ -45,6 +45,7 @@ static func load_file(path: String) -> ReplayLog:
 		Log.error("replay", "%s: input_ticks and inputs differ in length" % path)
 		return null
 	var log: ReplayLog = ReplayLog.new(_int(d.get("master_seed")), str(d.get("build", "")))
+	log.set_meta(&"record_options", {"controls": d.controls} if d.has("controls") else {})
 	log.ticks = _int(d.get("ticks"))
 	log.final_hash = str(d.get("final_hash", ""))
 	var saved_checkpoints: Array = d.get("checkpoints", [])
@@ -126,7 +127,7 @@ func first_divergence(other: ReplayLog) -> String:
 
 
 func to_dict() -> Dictionary:
-	return {
+	var tape: Dictionary = {
 		"schema": SCHEMA,
 		"master_seed": master_seed,
 		"build": build,
@@ -139,6 +140,8 @@ func to_dict() -> Dictionary:
 		"input_ticks": _change_ticks,
 		"inputs": _change_inputs,
 	}
+	var options: Dictionary = get_meta(&"record_options", {})
+	return tape.merged(options)
 
 
 func save(path: String) -> Error:

@@ -202,19 +202,66 @@
       "additionalProperties": false,
       "properties": {
         "base": {
-          "minimum": 1,
+          "minimum": 0,
           "type": "integer"
         },
         "per_wave": {
           "minimum": 0,
           "type": "integer"
+        },
+        "unit": {
+          "description": "Number of budget units in one tier of default enemy cost.",
+          "minimum": 1,
+          "type": "integer"
         }
       },
       "required": [
         "base",
-        "per_wave"
+        "per_wave",
+        "unit"
       ],
       "type": "object"
+    },
+    "cost": {
+      "additionalProperties": {
+        "minimum": 1,
+        "type": "integer"
+      },
+      "description": "Cost in budget units by enemy id. Omitted enemies cost their tier multiplied by budget.unit.",
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9_]*$"
+      },
+      "type": "object"
+    },
+    "max_alive": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "on_timeout": {
+      "enum": [
+        "next_wave"
+      ]
+    },
+    "rivet": {
+      "additionalProperties": false,
+      "properties": {
+        "repair_delay_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "repair_per_s": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "roster_exclude": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
     },
     "schema": {
       "const": "gtai.gauntlet/1"
@@ -252,6 +299,10 @@
       "maxItems": 5,
       "minItems": 5,
       "type": "array"
+    },
+    "wave_timeout_s": {
+      "minimum": 1,
+      "type": "integer"
     }
   },
   "required": [
@@ -261,7 +312,10 @@
     "target_wave_s",
     "budget",
     "tier_unlock_wave",
-    "tier_map"
+    "tier_map",
+    "max_alive",
+    "on_timeout",
+    "wave_timeout_s"
   ],
   "type": "object"
 }

@@ -1,0 +1,22 @@
+Five commits landed on `n23-controls` before 03:15. The quest card follows the active controls, the swing counter counts actual combo starts, and the blast ring now appears on the impact tick. **No replay digest or scenario tape changed.**
+
+| Commit | Files and changes |
+|---|---|
+| `f1d5e915f` | Restored `gut_cli.gd` byte-for-byte to `76111adec`. Updated `run_unit.mjs`, `gut_pre_run.gd`, `run_unit_controls.test.mjs`, and `test_runner_controls.gd` to pass and verify the mode through the GUT child’s environment. This keeps the test hook out of release code. |
+| `5f2ccceff` | Recorded the wheel default, legacy override, replay compatibility, and full-suite counts in `docs/decisions.md` and `evidence/controls-flip/counts.md`. |
+| `b8ed9d480` | Updated `quest1_card.gd`, added `quest1_controls_text.gd` and `test_quest1_card.gd`. Wheel help covers keyboard, mouse, and the actual pad bindings. Legacy wording is unchanged. |
+| `f14c7cc13` | Fixed `_attacks` in `stage_pilot.gd` and added held and deferred-press coverage in `test_player_guard_pilot.gd`. Verified all four telemetry readers and confirmed `melee_swings` is outside replay state. |
+| `b0bdcdc2e` | Updated `arena_stage.gd`, `rivet_blast.gd`, and `test_rivet_blast_flight.gd`. The film probe observed both impact and ring birth on tick 113. |
+
+**Verification**
+
+- Quick gates passed. Part 0 full unit runs in both modes each finished **3,641 passed, 0 failed, 2 skipped**. The runner-mode test passed separately with and without `--controls=legacy`.
+- Card and settings tests passed **12/12 in each mode**. Mutation score for `quest1_controls_text.gd` was **1/(1+0), 100%**, with one eligible mutant.
+- Swing and blast focused runs each passed **19/19**. Six replay artifacts and 34 digest fields matched before and after in each mode, including the 60-second replay and Quest 1.
+- Part 0 scenarios passed **65/65 in both modes**. After the blast fix, legacy passed **65/65** and wheel passed **64/65**. Only `rig_stress` exceeded its 1 ms timing budget. An isolated rerun also exceeded budget. The contention-aware recheck had no confirmed result at the hard stop.
+
+**D3D12 stills:** [Wheel card](C:/Users/kazda/kiro/gtai-masters/n23/controls/card_wheel.png) · [Legacy card](C:/Users/kazda/kiro/gtai-masters/n23/controls/card_legacy.png)
+
+Windows left `%TEMP%\gtai-precommit-YALUPk` after an `EPERM` error. Automatic approval blocked the cleanup retry.
+
+[astra: 4160s, exit 0]

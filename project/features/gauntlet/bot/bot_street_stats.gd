@@ -10,6 +10,7 @@ var _wave: int = 0
 var _guard: int = 0
 var _cover: int = 0
 var _forms: Dictionary[StringName, int] = {}
+var _hp: Dictionary[String, float] = {}
 var _machine: Fighter
 var _claw_m: float = MeleeTable.shipped().hits[0].reach_m
 
@@ -33,6 +34,7 @@ func step(stage: ArenaStage, _tick: int) -> void:
 	row.guard_ticks += guarding
 	row.cover_ticks += covering
 	var me: BotView.Player = _view.player()
+	_sample_hp(stage.arena.rivet)
 	if me.settled and _forms.has(me.form):
 		_forms[me.form] += 1
 		row.form_seconds[me.form] = _forms[me.form] * SimClock.TICK_DT
@@ -44,6 +46,15 @@ func step(stage: ArenaStage, _tick: int) -> void:
 func _begin(row: Dictionary, stage: ArenaStage) -> void:
 	_wave = _run.wave
 	_forms.clear()
+	var player: BotView.Player = _view.player()
+	_hp = {
+		"start": player.hp,
+		"min": player.hp,
+		"end": player.hp,
+		"max": player.street_max_hp,
+		"repaired": 0.0
+	}
+	row["hp"] = _hp
 	row["form_seconds"] = {}
 	row["guard_ticks"] = 0
 	row["cover_ticks"] = 0
@@ -63,6 +74,13 @@ func _begin(row: Dictionary, stage: ArenaStage) -> void:
 				"cover_ticks": 0
 			}
 			break
+
+
+func _sample_hp(rivet: Fighter) -> void:
+	_hp.repaired += maxf(rivet.hp - _hp.end, 0.0)
+	_hp.end = rivet.hp
+	_hp.min = minf(_hp.min, rivet.hp)
+	_hp.max = maxf(_hp.max, rivet.max_hp)
 
 
 func _measure(stats: Dictionary, stage: ArenaStage, guarding: int, covering: int) -> void:

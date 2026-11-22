@@ -55,6 +55,7 @@ static func open(events: EventBus, data: DataStore, seed: int = MASTER_SEED) -> 
 	s.actions.install()
 	s.world.name = "Quest1World"
 	s.world.start(events, data, seed)
+	ControlsReplay.bind(s.world.loop(), s.actions)
 	s.stage = CollectCallStage.new(StageLayout.shipped(on_city))
 	if table_guns:
 		s.stage.guns = StageGuns.make(s.world.context().rng.stream(&"quest_guns"))

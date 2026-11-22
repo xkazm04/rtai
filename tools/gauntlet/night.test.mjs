@@ -1,81 +1,111 @@
 import assert from 'node:assert/strict';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
-import { ROOT } from '../lib/repo.mjs';
 import { night } from './night.mjs';
+import { parseNight } from './night_args.mjs';
+import { git } from './tune_state.mjs';
 
 function setup(t) {
-  mkdirSync(join(ROOT, 'build'), { recursive: true });
-  const root = mkdtempSync(join(ROOT, 'build/night-test-'));
-  t.after(() => rmSync(root, { recursive: true, force: true }));
-  const dir = join(root, 'night output'), calls = [], lines = [];
-  const io = { root, run: (args) => calls.push(args), branch: () => 'n22-tune-test', log: (line) => lines.push(line) };
-  return { root, dir, calls, lines, io, args: ['--seeds=3', '--out=' + dir] };
+  const temp = mkdtempSync(join(tmpdir(), 'gtai-night-test-'));
+  t.after(() => rmSync(temp, { recursive: true, force: true }));
+  const root = join(temp, 'lane'), tree = join(temp, 'tune');
+  mkdirSync(root);
+  git(root, 'init', '-b', 'lane');
+  git(root, 'config', 'user.name', 'Night test');
+  git(root, 'config', 'user.email', 'night@example.invalid');
+  writeFileSync(join(root, '.gitignore'), '/build/\n.godot/\n/project/native/bin/\n');
+  git(root, 'add', '--', '.gitignore');
+  git(root, 'commit', '-m', 'fixture');
+  const dir = join(root, 'evidence/n23-loop/night output'), calls = [], lines = [];
+  const io = { root, run: (cmd, cwd) => { assert.equal(cwd, tree); calls.push(cmd); }, log: (line) => lines.push(line) };
+  const location = ['--branch=n23-tune-test', '--worktree=' + tree];
+  return { root, tree, dir, calls, lines, io, location, args: [...location, '--seeds=3', '--out=' + dir] };
 }
 
-test('dry run previews the full conditional recipe without writes or a runner', (t) => {
-  const { dir, io, args, calls, lines } = setup(t);
-  night([...args, '--dry-run'], io);
+test('dry run prepares and reuses a private worktree, shows absolute paths and removes it', (t) => {
+  const { root, tree, dir, io, args, location, calls, lines } = setup(t);
+  for (const [folder, file] of [['native/bin', 'sim.dll'], ['.godot/imported', 'test.ctex']]) {
+    mkdirSync(join(root, 'project', folder), { recursive: true });
+    writeFileSync(join(root, 'project', folder, file), 'seed');
+  }
+  night([...args, '--dry-run', '--waves=24', '--jobs=2', '--profile=all', '--metric=death'], io);
   assert.equal(calls.length, 0);
   assert.equal(existsSync(dir), false);
-  assert.equal(lines.filter((s) => s.startsWith('node ')).length, 7);
-  assert.match(lines[0], /--seeds=3 --profile=average --pick=greedy --controls=wheel.*'--out=night output\/before'/);
-  assert.match(lines[3], /n22-tune\*/);
+  assert.equal(readFileSync(join(tree, 'project/native/bin/sim.dll'), 'utf8'), 'seed');
+  assert.equal(readFileSync(join(tree, 'project/.godot/imported/test.ctex'), 'utf8'), 'seed');
+  assert.equal(lines.filter((s) => s.startsWith('node ')).length, 8);
+  assert.ok(lines[0].includes(tree) && lines[0].includes(dir));
+  assert.equal(lines.filter((s) => s.includes('batch.mjs') && s.includes('--waves=24') && s.includes('--jobs=2') && s.includes('--profile=all')).length, 3);
   assert.match(lines.at(-1), /night\.md/);
-  for (const bad of ['--seeds=0', '--profile=unknown', '--pick=x', '--controls=x', '--jobs=2'])
-    assert.throws(() => night([...args, bad, '--dry-run'], io));
+  night([...args, '--dry-run'], io);
+  night([...location, '--remove'], io);
+  assert.equal(existsSync(tree), false);
+  assert.equal(git(root, 'branch', '--list', 'n23-tune-test'), '');
 });
 
-test('an ordinary branch finishes its measure, report and proposal then stops', (t) => {
-  const { dir, io, args, calls, lines } = setup(t);
-  night(args, { ...io, branch: () => 'n22-loop' });
-  assert.deepEqual(calls.map((cmd) => cmd[0]), ['tools/gauntlet/batch.mjs', 'tools/gauntlet/report.mjs', 'tools/gauntlet/tune.mjs']);
-  assert.equal(calls[2][1], 'propose');
-  assert.match(lines.at(-1), /Stopped after propose on n22-loop/);
-  assert.equal(existsSync(join(dir, 'night.md')), false);
+test('argument and ownership refusals leave other directories and branches alone', (t) => {
+  const { root, tree, args, io } = setup(t);
+  for (const bad of ['--waves=0', '--seeds=0', '--profile=unknown', '--pick=x', '--controls=x',
+    '--jobs=0', '--jobs=3', '--metric=unknown', '--floor-mode=unknown', '--worktree=relative', '--worktree=' + join(root, 'child'),
+    '--branch=n23-tuner', '--branch=n23-tune-', '--out=relative', '--out=' + join(root, 'evidence/unrelated')])
+    assert.throws(() => parseNight([...args, bad], root));
+  mkdirSync(tree);
+  assert.throws(() => night(args, io), /worktree of this repo/);
+  assert.ok(existsSync(tree));
 });
 
-test('the tune branch repeats the seed recipe, reverts, reports against the baseline and summarizes receipts', (t) => {
-  const { dir, io, args, calls } = setup(t);
-  const run = (cmd) => {
-    calls.push(cmd);
-    if (cmd[1] !== 'confirm') return;
-    const change = { id: 'war_machine.hp', before: 60, after: 48, baseline: 60, miss: 'wave 10 median 29 s',
-      pairs: 12, measured_before: 29, measured_after: 22, improvement: 7, ci95: [4, 9], floor: 2, aa_pairs: 6,
-      commit: 'apply-a', revert_commit: null, verdict: 'kept' };
-    const changes = [change, { ...change, id: 'robot_gunner.hp', verdict: 'too few pairs', aa_pairs: 4, floor: null, commit: 'apply-b', revert_commit: 'undo-b' },
-      { ...change, id: 'shield_robot.hp', commit: null }];
-    mkdirSync(join(dir, 'after'));
-    writeFileSync(join(dir, 'after/tune-ledger.json'), JSON.stringify({ matched_runs: 12, before_runs: 12, after_runs: 12, changes }));
-  };
-  night(['--seeds=12', '--out=' + dir, '--profile=expert', '--pick=random', '--controls=legacy'], { ...io, run });
-  assert.equal(calls.length, 7);
-  assert.deepEqual(calls[0].slice(0, -1), calls[4].slice(0, -1));
-  assert.ok(calls[2].includes('--profile=expert'));
-  assert.equal(calls[3][1], 'apply');
-  assert.ok(calls[5].includes('--revert'));
-  assert.ok(calls[6].includes('--baseline=night output/before/batch.json'));
-  const md = readFileSync(join(dir, 'night.md'), 'utf8');
-  assert.match(md, /Kept \| war_machine.hp \| 60 \| 48 \| 60 \|.*7 \(4 to 9\).*apply-a/);
-  assert.match(md, /Reverted \| robot_gunner.hp.*too few pairs.*apply-b \| undo-b/);
-  assert.match(md, /Skipped \| shield_robot.hp/);
-  for (const path of ['before/batch.json', 'after/batch.json', 'plan.json', 'after/tune-ledger.md'])
-    assert.ok(md.includes('](' + path + ')'));
-  assert.throws(() => night(args, io), /output must be empty/);
-  assert.equal(readFileSync(join(dir, 'night.md'), 'utf8'), md);
+test('removal refuses uncommitted work, a mismatched branch and unmerged commits', (t) => {
+  const { root, tree, args, location, io } = setup(t);
+  night([...args, '--dry-run'], io);
+  assert.throws(() => night([...args, '--branch=n23-tune-other', '--dry-run'], io), /worktree of this repo/);
+  writeFileSync(join(tree, 'note'), 'keep me');
+  assert.throws(() => night([...location, '--remove'], io), /dirty/);
+  git(tree, 'add', '--', 'note');
+  git(tree, 'commit', '-m', 'keep this change');
+  assert.throws(() => night([...location, '--remove'], io), /commits beyond/);
+  night([...args, '--dry-run'], io);
+  git(root, 'merge', '--ff-only', 'n23-tune-test');
+  night([...location, '--remove'], io);
+  assert.equal(readFileSync(join(root, 'note'), 'utf8'), 'keep me');
 });
 
-test('a failed confirm batch stops before revert and preserves evidence for recovery', (t) => {
-  const { root, dir, io, args, calls } = setup(t);
-  const run = (cmd) => {
-    calls.push(cmd);
+test('a failed after batch preserves output and leaves the checkout available for recovery', (t) => {
+  const { root, tree, dir, io, args, calls } = setup(t);
+  const run = (cmd, cwd) => {
+    io.run(cmd, cwd);
     if (calls.length === 1) writeFileSync(join(dir, 'record'), 'before evidence');
-    if (calls.length === 5) throw new Error('confirm batch failed');
+    if (calls.length === 6) throw new Error('confirm batch failed');
   };
   assert.throws(() => night(args, { ...io, run }), /confirm batch failed/);
-  assert.equal(calls.length, 5);
+  assert.equal(calls.length, 6);
   assert.equal(readFileSync(join(dir, 'record'), 'utf8'), 'before evidence');
   assert.equal(existsSync(join(dir, 'night.md')), false);
-  assert.equal(existsSync(join(root, 'build/gauntlet/night.lock')), false);
+  assert.equal(existsSync(join(tree, 'build/gauntlet/tuner.lock')), false);
+  assert.equal(git(root, 'branch', '--show-current').trim(), 'lane');
+  assert.throws(() => night(args, io), /output must be empty/);
+});
+
+test('a stale registration cannot adopt a replacement repository at the same path', (t) => {
+  const { tree, args, io } = setup(t);
+  night([...args, '--dry-run'], io);
+  renameSync(tree, tree + '-original');
+  mkdirSync(tree);
+  git(tree, 'init', '-b', 'n23-tune-test');
+  assert.throws(() => night([...args, '--dry-run'], io), /worktree of this repo/);
+  assert.deepEqual(readFileSync(join(tree + '-original', '.gtai-mutate-worktree'), 'utf8'),
+    JSON.stringify({ root: io.root }));
+  assert.equal(existsSync(join(tree, '.gtai-mutate-worktree')), false);
+});
+
+test('two tune branches cannot run into the same evidence directory', (t) => {
+  const { tree, args, io } = setup(t);
+  const run = () => {
+    const other = [...args, '--branch=n23-tune-other', '--worktree=' + tree + '-other'];
+    assert.throws(() => night(other, io), /night-output-.*lock held/);
+    assert.equal(existsSync(tree + '-other'), false);
+    throw new Error('finished collision test');
+  };
+  assert.throws(() => night(args, { ...io, run }), /finished collision test/);
 });

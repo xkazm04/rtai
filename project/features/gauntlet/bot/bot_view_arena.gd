@@ -7,7 +7,7 @@ var _stage: ArenaStage
 var _actions: PlayerActions
 var _street: bool
 var _path: BotStreetPath = BotStreetPath.new()
-var _guns: WeaponTable = WeaponTable.shipped()
+var _arsenal: BotArsenal = BotArsenal.new()
 var _next_waypoint: int = 0
 var _deaths: int = 0
 var _round_ids: Dictionary[Shot, int] = {}
@@ -51,7 +51,7 @@ func refresh() -> void:
 		_next_waypoint = 0
 		_deaths = _stage.deaths
 	_read_forms()
-	_read_slots()
+	_arsenal.observe(self, _stage, _street)
 	_read_hostiles()
 	_read_rounds()
 
@@ -109,7 +109,9 @@ func _read_hostiles() -> void:
 	for fighter: Fighter in roster:
 		if not fighter.alive():
 			continue
-		_hostiles.append(BotArenaFoe.read(fighter, _stage.arena))
+		var foe: Hostile = BotArenaFoe.read(fighter, _stage.arena)
+		BotArenaMoves.observe(_stage, fighter, foe, _player)
+		_hostiles.append(foe)
 
 
 func _read_rounds() -> void:
@@ -142,6 +144,7 @@ func _read_forms() -> void:
 		_player.settled = true
 		_player.selected = &""
 		return
+	_player.stomp_reach = ghosts.hauler.form.num(&"stomp_radius_m")
 	var forms: GhostForms = ghosts.forms
 	_player.form = forms.current()
 	_player.settled = forms.settled()
@@ -158,41 +161,3 @@ func _read_forms() -> void:
 		if car.state != VehicleBody.State.WRECK and not car.soul_hijacked:
 			if _player.pos.distance_to(car.pos) < _player.pos.distance_to(_player.car_pos):
 				_player.car_pos = car.pos
-
-
-func _read_slots() -> void:
-	_slots.clear()
-	var carry: RivetCarry = _stage.pilot.carry if _stage.pilot != null else null
-	if _street and carry != null and _stage.pilot.wheel != null:
-		var wheel: RivetWheel = _stage.pilot.wheel
-		var order: Array[StringName] = wheel.order()
-		_player.wheel_size = order.size()
-		_player.current_slot = order.find(wheel.selected())
-		for i: int in range(1, order.size()):
-			_add_slot(i, order[i], carry.melee_ids.has(order[i]))
-		return
-	_player.wheel_size = 0
-	_player.current_slot = carry.current if carry != null else -1
-	if carry != null:
-		for i: int in carry.slots.size():
-			if carry.slots[i] != &"":
-				_add_slot(i, carry.slots[i], carry.melee_ids.has(carry.slots[i]))
-	if _player.current_slot < 0 and _stage.arena.rivet.weapon != &"":
-		_add_slot(-1, _stage.arena.rivet.weapon, false)
-
-
-func _add_slot(index: int, id: StringName, melee: bool) -> void:
-	var slot: Slot = Slot.new()
-	slot.index = index
-	if _player.wheel_size == 0 and index >= 0:
-		slot.action = RivetCarry.SLOT_ACTIONS[index]
-	slot.melee = melee
-	if melee:
-		slot.reach = GauntletBot.MELEE_M
-	elif _stage.arena.tuning.weapons.has(id):
-		slot.reach = _stage.arena.tuning.weapon(id).range_m
-	elif _guns.weapons.has(id):
-		slot.reach = _guns.weapon(id).range_m
-	else:
-		return
-	_slots.append(slot)

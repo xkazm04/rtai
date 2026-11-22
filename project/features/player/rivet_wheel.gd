@@ -131,7 +131,8 @@ func _sync(arena: CombatArena) -> void:
 	if _selected == RivetCarry.RIFLE and arena.rifle_ammo <= 0:
 		_spend_rifle()
 	if id != &"" and carry.slot_of(id) >= 0:
-		carry.remember_hand(arena.gun)
+		var builtin: StringName = id if id in arena.tuning.weapons else &""
+		carry.remember_hand(arena.gun, false, builtin)
 		if id not in carry.first_seen or (id == RivetCarry.RIFLE and carry.rifle_spent):
 			@warning_ignore("return_value_discarded")
 			carry.add(id)

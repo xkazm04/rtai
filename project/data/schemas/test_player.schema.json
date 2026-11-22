@@ -92,6 +92,10 @@
             "minimum": 0,
             "type": "number"
           },
+          "blast_margin_m": {
+            "minimum": 0,
+            "type": "number"
+          },
           "cover_seek_m": {
             "minimum": 0,
             "type": "number"
@@ -111,6 +115,11 @@
               "average",
               "expert"
             ]
+          },
+          "move_use": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
           },
           "reaction_ticks": {
             "minimum": 0,
@@ -139,10 +148,12 @@
         },
         "required": [
           "aim_error_deg",
+          "blast_margin_m",
           "cover_seek_m",
           "form_use",
           "guard_lead_ticks",
           "id",
+          "move_use",
           "reaction_ticks",
           "rest_hp",
           "retreat_hp",

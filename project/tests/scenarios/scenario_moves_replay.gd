@@ -35,6 +35,7 @@ class PilotTape:
 				aim = Vector2.RIGHT
 				action = &"fire"
 		var bits: int = PlayerCommand.pack_aim(aim, session.actions)
+		bits |= session.actions.draw_sidearm(tick)
 		if action != &"":
 			bits |= 1 << session.actions.bit(action)
 		var axes: Vector2 = move * TickInput.AXIS_MAX
@@ -82,13 +83,14 @@ func _round_trip(log: ReplayLog) -> String:
 	var path: String = TestTmp.dir("replay").path_join("arena-moves.json")
 	if log.save(path) != OK:
 		return "could not save the move replay"
-	var loaded: ReplayLog = ReplayLog.load_file(path)
+	var loaded: ReplayLog = ControlsReplay.load_for_playback(path)
 	if loaded == null:
 		return "could not reopen the move replay"
 	var divergence: String = _replay(loaded, true)
+	var off: String = _replay(loaded, false)
+	LaunchArgs.parse()
 	if divergence != "":
 		return "arena replay: " + divergence
-	var off: String = _replay(loaded, false)
 	if off == "":
 		return "move flags off reproduced the move-on tape"
 	Log.info("move-replay", "off control: " + off)

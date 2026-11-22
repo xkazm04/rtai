@@ -90,7 +90,7 @@ func _off(tape: StreetMovesTape) -> String:
 		if LaunchArgs.has(flag):
 			@warning_ignore("return_value_discarded")
 			saved.append("%s=%s" % [flag, LaunchArgs.value(flag)])
-	LaunchArgs.parse(PackedStringArray(["--no-vault", "--no-cover"]))
+	LaunchArgs.parse(saved + PackedStringArray(["--no-vault", "--no-cover"]))
 	var off: StreetMovesTrace = StreetMovesTrace.record(tape)
 	var station: String = _station_control(tape, false)
 	LaunchArgs.parse(saved)

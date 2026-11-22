@@ -1,10 +1,14 @@
 import { readFileSync } from 'node:fs';
 import { basename, isAbsolute, join, relative, resolve, sep } from 'node:path';
+import { MARKER } from '../mutate/worktree.mjs';
 import { canonicalJson } from '../lib/canonical_json.mjs';
 import { validate } from '../lib/mini_schema.mjs';
 import { readJson } from '../lib/repo.mjs';
+import { PROFILES } from './contract.mjs';
+import { targets } from './death_score.mjs';
+import { isGroup, memberIds, occupied, scaledValue } from './tune_groups.mjs';
 import { PLAN_SCHEMA } from './tune_propose.mjs';
-import { atomicWrite, clamped, digest, git, inventory, numericSlot, readBaseline } from './tune_state.mjs';
+import { atomicWrite, baselineValue, clamped, digest, git, inventory, numericSlot, readBaseline } from './tune_state.mjs';
 
 // Label the night by its morning. A batch run on both sides of midnight gets one allowance.
 export const nightOf = (time = Date.now()) => new Date(time + 12 * 3600_000).toISOString().slice(0, 10);
@@ -14,17 +18,28 @@ export function checkPlan(plan) {
   if (plan?.schema !== PLAN_SCHEMA || !Array.isArray(plan.changes) || !Number.isSafeInteger(plan.max)
     || plan.max < 0 || plan.changes.length > plan.max || !/^[a-f0-9]{64}$/.test(plan.batch_sha256))
     throw new Error('invalid tuner plan');
+  if (plan.metric !== undefined) {
+    const profiles = plan.profile === 'all' ? PROFILES : [plan.profile];
+    if (plan.metric !== 'death' || !profiles.every((p) => PROFILES.includes(p)) || plan.max > 1
+      || plan.changes.some((c) => c?.metric?.type !== 'death' || !profiles.includes(c.metric.profile)
+        || c.metric.target !== targets.death_wave[c.metric.profile] || !Array.isArray(c.profiles)
+        || !c.profiles.includes(c.metric.profile) || !c.profiles.every((p) => profiles.includes(p))))
+      throw new Error('invalid death cycle plan');
+  }
   const seen = new Set();
   for (const c of plan.changes) {
-    if (!c || typeof c.id !== 'string' || !c.id || seen.has(c.id) || !c.miss || /[\r\n\0]/.test(c.miss)
-      || typeof c.miss !== 'string' || ![c.before, c.after, c.baseline].every(Number.isFinite)
-      || !['wave', 'killer', 'spread', 'offer'].includes(c.metric?.type) || !Number.isFinite(c.metric.target))
+    if (!c || typeof c.id !== 'string' || !c.id || occupied(c.id, seen) || !c.miss || /[\r\n\0]/.test(c.miss)
+      || typeof c.miss !== 'string' || (isGroup(c.id) ? !Number.isFinite(c.factor) || c.factor < 0.8 || c.factor > 1.25
+        || !Array.isArray(c.members) || !c.members.length : c.members !== undefined)
+      || !(c.members ?? [c]).every((m) => m && [m.before, m.after, m.baseline].every(Number.isFinite))
+      || !['death', 'wave', 'killer', 'spread', 'offer'].includes(c.metric?.type) || !Number.isFinite(c.metric.target)
+      || (c.metric.type === 'death' && !['novice', 'average', 'expert'].includes(c.metric.profile)))
       throw new Error('invalid or duplicate change: ' + c?.id);
     seen.add(c.id);
   }
 }
 
-export const isTuneBranch = (branch) => branch.startsWith('n22-tune');
+export const isTuneBranch = (branch) => branch.startsWith('n23-tune');
 
 export function ownBranch(root) {
   if (!isTuneBranch(git(root, 'branch', '--show-current').trim()))
@@ -40,9 +55,10 @@ function clean(root, artifacts = [], nightDir = null) {
     ':(exclude)evidence/**', ':(exclude)build/**', ...exclude);
   const prefix = nightDir && relative(root, nightDir).split(sep).join('/') + '/';
   const dirty = status.split('\0').filter(Boolean).find((line) => {
+    if (line === '?? ' + MARKER) return false;
     if (!prefix || !line.startsWith('?? ' + prefix)) return true;
     const file = line.slice(3 + prefix.length);
-    return file !== 'plan.json' && !file.startsWith('before/') && !file.startsWith('after/');
+    return file !== 'plan.json' && !/^(before|null|after)\//.test(file);
   });
   if (dirty) throw new Error('dirty tree outside evidence/ and build/: ' + dirty);
 }
@@ -85,29 +101,39 @@ function schemaOf(root, knob) {
 }
 
 function preflight(root, plan, receipts) {
-  const { entries, skipped } = inventory(root);
+  const { entries } = inventory(root);
   const baseline = readBaseline(root);
   const used = nightly(root);
   const inputs = new Map(), writes = [];
   for (const change of plan.changes) {
-    const { id, before, after } = change;
-    if (skipped.has(id)) continue;
-    const entry = entries.get(id);
-    if (!entry) throw new Error('knob unavailable: ' + id);
-    const { knob, value } = entry;
-    if (change.file !== knob.file || change.pointer !== knob.pointer || (change.row !== undefined && change.row !== knob.row))
-      throw new Error('plan differs from knob catalog: ' + id);
-    const first = baseline.values[id];
-    if (first !== change.baseline || !Number.isFinite(first)) throw new Error('baseline mismatch: ' + id);
-    if (receipts.has(id) && value === after) continue;
-    if (used.has(id)) throw new Error('knob already tuned this night: ' + id);
-    if (receipts.has(id) || value !== before) throw new Error('stale plan: ' + id);
-    if (before === after || clamped(knob, before, first, after) !== after) throw new Error('outside tuner bounds: ' + id);
-    const file = knob.file, path = join(root, file);
+    const { id } = change;
+    const members = change.members ?? [change];
+    const keys = memberIds(id, entries);
+    if (change.members && (keys.length !== members.length || !keys.every((key, i) => key === members[i].id)))
+      throw new Error('plan differs from group catalog: ' + id);
+    const file = members[0].file;
+    if (!members.every((m) => m.file === file)) throw new Error('group spans multiple tables: ' + id);
+    const applied = receipts.has(id);
+    if (!applied && occupied(id, used)) throw new Error('knob already tuned this night: ' + id);
+    for (const m of members) {
+      const entry = entries.get(m.id);
+      if (!entry) throw new Error('knob unavailable: ' + m.id);
+      const { knob, value } = entry;
+      if (m.file !== knob.file || m.pointer !== knob.pointer || (m.row !== undefined && m.row !== knob.row))
+        throw new Error('plan differs from knob catalog: ' + m.id);
+      const first = baselineValue(entry, baseline);
+      if (first !== m.baseline || !Number.isFinite(first)) throw new Error('baseline mismatch: ' + m.id);
+      if (value !== (applied ? m.after : m.before)) throw new Error('stale plan: ' + m.id);
+      const expected = change.members ? scaledValue(id, knob, m.before, first, change.factor)
+        : clamped(knob, m.before, first, m.after);
+      if (expected !== m.after) throw new Error('outside tuner bounds: ' + m.id);
+    }
+    if (applied) continue;
     git(root, 'ls-files', '--error-unmatch', '--', file);
-    const prior = inputs.get(file) ?? tableText(path);
-    const schema = schemaOf(root, knob);
-    const next = edit(prior, knob, before, after, schema);
+    const path = join(root, file), prior = inputs.get(file) ?? tableText(path);
+    const schema = schemaOf(root, members[0]);
+    const next = editedMembers(prior, change, entries, schema);
+    if (next === prior) throw new Error('outside tuner bounds: ' + id + ' would not change');
     inputs.set(file, next);
     writes.push({ change, file, path, prior, next, schema });
   }
@@ -124,7 +150,8 @@ export function applyPlan(root, plan, nightDir = null) {
     if (tableText(path) !== prior) throw new Error('table changed since preflight: ' + file);
     const head = git(root, 'rev-parse', 'HEAD').trim();
     const { id, before, after, miss } = change;
-    const title = 'tune(n22): ' + id + ' ' + before + ' -> ' + after + ': ' + miss;
+    const step = change.members ? ' x ' + change.factor : ' ' + before + ' -> ' + after;
+    const title = 'tune(n23): ' + id + step + ': ' + miss;
     atomicWrite(path, next);
     try {
       const errors = validate(schema, readJson(path));
@@ -143,17 +170,27 @@ export function applyPlan(root, plan, nightDir = null) {
   return receipts;
 }
 
-function verifyCommit(root, sha, knob, change) {
-  const files = git(root, 'diff-tree', '--no-commit-id', '--name-only', '--no-renames', '-r', sha).trim();
-  if (files !== knob.file) throw new Error('unexpected paths in tuner commit ' + sha);
-  const original = git(root, 'show', sha + '^:' + knob.file);
-  const expected = edit(original, knob, change.before, change.after, schemaOf(root, knob));
-  if (expected !== git(root, 'show', sha + ':' + knob.file)) throw new Error('unexpected edits in tuner commit ' + sha);
+function editedMembers(text, change, entries, schema, reverse = false) {
+  for (const m of change.members ?? [change]) {
+    const knob = entries.get(m.id)?.knob;
+    if (!knob) throw new Error('knob unavailable: ' + m.id);
+    text = edit(text, knob, reverse ? m.after : m.before, reverse ? m.before : m.after, schema);
+  }
+  return text;
 }
 
-function undoCommit(root, change, knob) {
-  const path = join(root, knob.file);
-  const expected = edit(tableText(path), knob, change.after, change.before, schemaOf(root, knob));
+function verifyCommit(root, sha, file, change, entries) {
+  const files = git(root, 'diff-tree', '--no-commit-id', '--name-only', '--no-renames', '-r', sha).trim();
+  if (files !== file) throw new Error('unexpected paths in tuner commit ' + sha);
+  const original = git(root, 'show', sha + '^:' + file);
+  const expected = editedMembers(original, change, entries, schemaOf(root, { file }));
+  if (expected !== git(root, 'show', sha + ':' + file)) throw new Error('unexpected edits in tuner commit ' + sha);
+}
+
+function undoCommit(root, change, entries) {
+  const file = (change.members ?? [change])[0].file;
+  const path = join(root, file);
+  const expected = editedMembers(tableText(path), change, entries, schemaOf(root, { file }), true);
   try { git(root, 'revert', '--no-edit', change.commit); }
   catch (err) {
     let reverting;
@@ -162,9 +199,9 @@ function undoCommit(root, change, knob) {
     try {
       // Adjacent JSON numbers can conflict textually. The verified single-slot inverse above
       // preserves every other value, including kept changes made after this commit.
-      if (git(root, 'diff', '--name-only', '--diff-filter=U').trim() !== knob.file) throw err;
+      if (git(root, 'diff', '--name-only', '--diff-filter=U').trim() !== file) throw err;
       atomicWrite(path, expected);
-      git(root, 'add', '--', knob.file);
+      git(root, 'add', '--', file);
       git(root, '-c', 'core.editor=true', 'revert', '--continue');
     } catch (failure) {
       git(root, 'revert', '--abort');
@@ -179,10 +216,11 @@ export function revertChanges(root, ledger, save, artifacts, nightDir = null) {
   const { entries } = inventory(root);
   const undo = [];
   for (const change of rejected) {
-    const { id, commit } = change, entry = entries.get(id);
+    const { id, commit } = change;
+    const members = change.members ?? [change];
     if (!commit || change.revert_commit) continue; // Skipped, interrupted or already undone.
-    if (!entry || entry.value !== change.after) throw new Error('knob has changed since apply: ' + id);
-    verifyCommit(root, commit, entry.knob, change);
+    if (members.some((m) => entries.get(m.id)?.value !== m.after)) throw new Error('knob has changed since apply: ' + id);
+    verifyCommit(root, commit, members[0].file, change, entries);
     undo.push(change);
   }
   save();
@@ -190,7 +228,7 @@ export function revertChanges(root, ledger, save, artifacts, nightDir = null) {
     clean(root, artifacts, nightDir);
     // git revert needs a clean index. Keep the operator's staged evidence out of its commit.
     if (git(root, 'diff', '--cached', '--name-only').trim()) throw new Error('git revert needs a clean index');
-    undoCommit(root, change, entries.get(change.id).knob);
+    undoCommit(root, change, entries);
     change.revert_commit = git(root, 'rev-parse', 'HEAD').trim();
     save();
   }

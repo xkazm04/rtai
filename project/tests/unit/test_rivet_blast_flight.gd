@@ -92,6 +92,33 @@ func test_wall_impact_bursts_at_first_face_and_shields_the_far_side() -> void:
 	assert_eq(dodges.blocked, 1)
 
 
+func test_stage_wall_cull_dates_only_new_rings_with_the_impact_tick() -> void:
+	var stage: ArenaStage = VaultTrial.stage_for(false)
+	arena = stage.arena
+	arena.tick = 113
+	arena.rivet.pos = Vector2(-1.5, -1)
+	arena.rivet.hp = 100.0
+	stage.walls.boxes.assign([Rect2(0, -1, 0.5, 2)])
+	stage.walls.kinds.assign(["wall_high"])
+	PlayerShock.areas_of(arena).note_blast(Vector2.LEFT, RADIUS, 100)
+	var at_strike: Array[int] = []
+	@warning_ignore("return_value_discarded")
+	arena.struck.connect(
+		func(_target: Fighter, _dir: Vector2, _fatal: bool, _weapon: StringName) -> void:
+			at_strike.append(arena.tick)
+			at_strike.append(arena.areas.blast_ticks[-1])
+	)
+	var shot: Shot = _fire(Vector2.LEFT, Vector2.RIGHT * 4)
+	stage.step(114, TickInput.new())
+	assert_false(arena.shots.has(shot))
+	assert_eq(stage.dodges.blocked, 1)
+	assert_eq(at_strike, [113, 114], "damage clock and visible impact at the strike")
+	assert_eq(arena.areas.blast_ticks, [100, 114])
+	arena.tick = 115
+	assert_eq(RivetBlast.burst(arena, Vector2(20, 20), WEAPON, 8), 0.0)
+	assert_eq(arena.areas.blast_ticks[-1], 115, "the next burst uses the combat clock")
+
+
 func test_wall_face_exposes_a_near_side_bystander_beside_the_flight_path() -> void:
 	arena.walls.boxes.append(Rect2(0, -1, 0.5, 2))
 	arena.walls.kinds.append("wall_high")

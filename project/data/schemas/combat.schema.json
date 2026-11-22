@@ -2,6 +2,24 @@
   "$id": "gtai.combat/1",
   "additionalProperties": false,
   "properties": {
+    "blast": {
+      "additionalProperties": false,
+      "properties": {
+        "rivet_hp_per_table_hp": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "self_k": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "rivet_hp_per_table_hp",
+        "self_k"
+      ],
+      "type": "object"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"
@@ -81,6 +99,135 @@
         "radius_m",
         "walk_mps",
         "engage_m"
+      ],
+      "type": "object"
+    },
+    "moves": {
+      "additionalProperties": false,
+      "properties": {
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "kerf_blink_behind": {
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "enabled"
+          ],
+          "type": "object"
+        },
+        "ohm_short_circuit": {
+          "additionalProperties": false,
+          "properties": {
+            "boss_stun_s": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "enabled": {
+              "type": "boolean"
+            },
+            "immune_s": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "stun_s": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "boss_stun_s",
+            "enabled",
+            "immune_s",
+            "stun_s"
+          ],
+          "type": "object"
+        },
+        "overkill_carry": {
+          "additionalProperties": false,
+          "properties": {
+            "arc_s": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "carry_k": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "enabled": {
+              "type": "boolean"
+            },
+            "hops": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "radius_m": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "rank_2": {
+              "additionalProperties": false,
+              "properties": {
+                "hops": {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "radius_m": {
+                  "exclusiveMinimum": 0,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "hops",
+                "radius_m"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "arc_s",
+            "carry_k",
+            "enabled",
+            "hops",
+            "radius_m",
+            "rank_2"
+          ],
+          "type": "object"
+        },
+        "tonnage_armour_crack": {
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "open_front_k": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "open_s": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "enabled",
+            "open_front_k",
+            "open_s"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "doc",
+        "kerf_blink_behind",
+        "ohm_short_circuit",
+        "overkill_carry",
+        "tonnage_armour_crack"
       ],
       "type": "object"
     },
@@ -327,13 +474,15 @@
     }
   },
   "required": [
+    "blast",
     "schema",
     "doc",
     "rivet",
     "human",
     "weapons",
     "robo_tazer",
-    "guard"
+    "guard",
+    "moves"
   ],
   "type": "object"
 }

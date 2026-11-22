@@ -1,4 +1,8 @@
+import { targets } from './death_score.mjs';
+import { moveSection } from './move_stats.mjs';
 import { TARGET_S } from './analysis.mjs';
+import { scoreSections } from './death_report.mjs';
+import { survivalSection } from './survival.mjs';
 
 export const missing = 'not measured';
 export function fmt(n) {
@@ -21,14 +25,15 @@ export function sections(batch, report, baseline) {
   const formIds = [...new Set(report.waves.flatMap((w) => w.forms.map((f) => f.id)))].sort();
   const timing = {
     title: 'Wave time', key: 'time',
-    note: 'Seconds per observed wave. The target is ' + TARGET_S + ' s. Average medians below 12 s or above 18 s are flagged. '
+    note: 'Seconds per observed wave. The target is ' + TARGET_S + ' s ±20% for ordinary average-profile waves. Every '
+      + targets.boss_every + 'th wave targets ' + targets.boss_wave_seconds.join('–') + ' s. '
       + 'Timed / observed shows the coverage of the seconds field. Quartiles use the repository’s quantile function.',
     columns: ['Profile', 'Wave', 'Timed / observed', ...(baseline ? ['Before s (n)', 'After s', 'Change s'] : ['Median s']),
       'P25…P75 s', 'Min…max s', 'Target'],
     rows: report.waves.map((w) => [w.profile, w.n, w.timed + ' / ' + w.observed,
       ...(baseline ? [counted(w.baseline), fmt(w.median), fmt(w.median - w.baseline.median)] : [fmt(w.median)]),
       range(w.p25, w.p75), range(w.min, w.max),
-      w.profile !== 'average' ? '—' : !w.timed ? missing : w.miss ? 'miss' : 'within 20%']),
+      w.profile !== 'average' ? '—' : !w.timed ? missing : w.miss ? 'miss' : 'within target']),
     empty: 'No wave rows were recorded.'
   };
   const deaths = {
@@ -87,7 +92,7 @@ export function sections(batch, report, baseline) {
     empty: 'No deepest run had a measured signature that differed within its profile.'
   };
   const failed = batch.runs.filter((r) => !r.ok);
-  return [timing, deaths, timeouts, enemies, ...effects, telemetry, winners, ...(failed.length ? [{
+  return [...scoreSections(batch, fmt), timing, deaths, timeouts, survivalSection(batch, fmt), enemies, moveSection(batch, fmt), ...effects, telemetry, winners, ...(failed.length ? [{
     title: 'Excluded runs', note: 'These inputs are retained in the batch manifest.',
     columns: ['File', 'Profile', 'Seed', 'Reason'],
     rows: failed.map((r) => [r.file, r.profile, r.seed ?? 'unknown', r.reason ?? 'run failed'])

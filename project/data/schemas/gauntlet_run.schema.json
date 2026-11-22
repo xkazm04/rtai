@@ -59,6 +59,40 @@
           "minimum": 0,
           "type": "integer"
         },
+        "hp": {
+          "additionalProperties": false,
+          "description": "Rivet HP at wave start, lowest HP, final sampled HP, highest HP capacity, and sum of positive HP steps within the wave.",
+          "properties": {
+            "end": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "max": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "min": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "repaired": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "start": {
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "end",
+            "max",
+            "min",
+            "repaired",
+            "start"
+          ],
+          "type": "object"
+        },
         "machine": {
           "additionalProperties": false,
           "description": "Bot measurements for the first war machine in this wave. Omitted when no war machine is tracked.",
@@ -104,6 +138,19 @@
           ],
           "type": "object"
         },
+        "moves": {
+          "additionalProperties": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "description": "Uses of each move that had an effect during this wave. Omitted when none did.",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "type": "object"
+        },
         "n": {
           "minimum": 1,
           "type": "integer"
@@ -116,10 +163,24 @@
           "minimum": 0,
           "type": "number"
         },
+        "self_damage": {
+          "description": "HP Rivet lost to his own splash during this wave, after armour and limited to his remaining HP.",
+          "minimum": 0,
+          "type": "number"
+        },
         "shots": {
           "description": "Successful Rivet trigger pulls during the wave. A volley counts once even when it fires several pellets.",
           "minimum": 0,
           "type": "integer"
+        },
+        "spawn_delayed": {
+          "description": "Roster members held back by the live hostile cap when this wave was scheduled.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "timed_out": {
+          "const": true,
+          "description": "This wave was still fighting when its timer called the next wave into the same block."
         }
       },
       "required": [
@@ -131,6 +192,10 @@
   "$id": "gtai.gauntlet-run/1",
   "additionalProperties": false,
   "properties": {
+    "capped": {
+      "const": true,
+      "description": "The simulation reached the gauntlet tick cap before the run ended."
+    },
     "controls": {
       "enum": [
         "legacy",

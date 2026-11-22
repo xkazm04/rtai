@@ -1,9 +1,24 @@
 {
   "boss_every": 5,
   "budget": {
-    "base": 2,
-    "per_wave": 2
+    "base": 180,
+    "per_wave": 16,
+    "unit": 10
   },
+  "cost": {
+    "patrol_cop": 15,
+    "war_machine": 200
+  },
+  "max_alive": 40,
+  "on_timeout": "next_wave",
+  "rivet": {
+    "repair_delay_s": 3,
+    "repair_per_s": 10
+  },
+  "roster_exclude": [
+    "appliance_warden",
+    "sergeant_mulroney"
+  ],
   "schema": "gtai.gauntlet/1",
   "segments": [
     {
@@ -978,5 +993,6 @@
     6,
     9,
     5
-  ]
+  ],
+  "wave_timeout_s": 90
 }

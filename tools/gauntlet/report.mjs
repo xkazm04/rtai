@@ -11,8 +11,9 @@ import { enemyWeapons } from './enemy_weapons.mjs';
 import { analyze } from './analysis.mjs';
 import { BATCH_SCHEMA, validateRun } from './contract.mjs';
 import { render } from './render.mjs';
+import { statCards } from './survival.mjs';
 
-export function loadBatch(path) {
+export function loadBatch(path, { lookupTables = true } = {}) {
   const doc = readJson(path);
   if (doc?.schema !== BATCH_SCHEMA || !Array.isArray(doc.results) || !Array.isArray(doc.runs)
     || !doc.args || !doc.git) throw new Error(path + ': expected ' + BATCH_SCHEMA);
@@ -33,10 +34,24 @@ export function loadBatch(path) {
       if (result) doc.results.push(result);
     }
   }
+  if (!lookupTables) return doc;
   if (!doc.enemy_weapons && doc.tables?.['enemies.json']) {
     const bytes = readFileSync(join(PROJECT, 'data', 'tables', 'enemies.json'));
     if (createHash('sha256').update(bytes).digest('hex') === doc.tables['enemies.json'])
       doc.enemy_weapons = enemyWeapons(JSON.parse(bytes));
+  }
+  if (!doc.survival_tuning) {
+    doc.survival_tuning = {};
+    for (const file of ['combat.json', 'gauntlet.json', 'gauntlet_bonuses.json']) {
+      if (!doc.tables?.[file]) continue;
+      const bytes = readFileSync(join(PROJECT, 'data', 'tables', file));
+      if (createHash('sha256').update(bytes).digest('hex') !== doc.tables[file]) continue;
+      const table = JSON.parse(bytes);
+      if (file === 'combat.json') doc.survival_tuning.repair_per_s = table.rivet.repair_per_s;
+      if (file === 'gauntlet.json' && doc.args.runner === 'gauntlet' && table.rivet)
+        doc.survival_tuning.repair_per_s = table.rivet.repair_per_s;
+      if (file === 'gauntlet_bonuses.json') doc.survival_tuning.stat_cards = statCards(table);
+    }
   }
   return doc;
 }

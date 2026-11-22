@@ -102,6 +102,11 @@
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
           },
+          "machine": {
+            "default": false,
+            "description": "Susceptible to Ohm's short circuit.",
+            "type": "boolean"
+          },
           "morale": {
             "maximum": 1,
             "minimum": 0,

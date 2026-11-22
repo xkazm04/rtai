@@ -79,7 +79,8 @@ test('archived alive caps count in reports and paired confirmation, only for mea
   assert.equal(before.results.length, 12);
   for (const run of after.results) run.waves[0].seconds = 15;
   const pairs = pairRuns(before, after);
-  const measure = (wave) => confirmChange(pairs, { metric: { type: 'wave', profile: 'average', wave, target: 15 } });
+  const measure = (wave) => confirmChange(pairs, { metric: { type: 'wave', profile: 'average', wave, target: 15 } },
+    { mode: 'cross-seed' });
   assert.deepEqual([measure(1).pairs, measure(1).verdict, measure(2).pairs], [12, 'kept', 0]);
   const model = analyze(before);
   assert.deepEqual(model.waves.map((w) => w.timed), [12, 0]);
@@ -195,4 +196,26 @@ test('partial street counters stay unmeasured, report text is escaped, human inp
   assert.match(markdown, /not measured/);
   assert.match(html, /&lt;img onerror/);
   assert.doesNotMatch(html, /<img\b/);
+});
+
+test('score report counts cleared timeouts, simultaneous live rosters and paired censored seeds', () => {
+  const results = ['novice', 'average', 'expert'].flatMap((profile, i) =>
+    [1, 2, 3, 4].map((seed) => {
+      const depth = (i + 1) * 4 + (i === 1 && seed === 4 ? -5 : 0);
+      return { ...batch.results[0], profile, seed, controls: 'wheel', wave_reached: depth,
+        death: { wave: depth }, waves: [{ n: 1, timed_out: true, spawn_delayed: 0, seconds: 100 },
+          { n: 2, timed_out: true, spawn_delayed: 1 }, { n: 3, spawn_delayed: 0 }] };
+    }));
+  delete results.at(-1).death;
+  results.at(-1).capped = true;
+  const sample = { ...batch, results, runs: results.map(({ seed, profile }) => ({ seed, profile, ok: true })) };
+  const { markdown, html } = render(sample, analyze(sample));
+  assert.match(markdown, /novice → average \| 4 \| 3 \/ 4 \| 75% \| 0 \| separated/);
+  assert.match(markdown, /expert \| 20 \| 12 \| 12–12 \| 12–12 \| 3 \/ 1/);
+  assert.match(markdown, /average \| 1 \| died on 8 \| 2 \| 2/);
+  assert.match(markdown, /expert \| 4 \| censored at the tick cap \(≥ 12\) \| 2 \| —/);
+  assert.match(html, /Active waves at death/);
+  delete results.at(-1).capped;
+  const bounded = { ...sample, args: { ...sample.args, waves: 12 } };
+  assert.match(render(bounded, analyze(bounded)).markdown, /expert \| 4 \| censored at the wave limit 12/);
 });

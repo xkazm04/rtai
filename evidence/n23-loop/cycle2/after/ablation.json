@@ -1,0 +1,39 @@
+{
+  "schema": "gtai.gauntlet-ablation/1",
+  "name": "cycle2",
+  "head": "ccfc29df081aba6f92fa61ec2c5e5d39f7378550",
+  "edits": [
+    {
+      "file": "project/data/tables/gauntlet.json",
+      "pointer": "/rivet/repair_per_s",
+      "value": 8,
+      "before": 10
+    },
+    {
+      "file": "project/data/tables/gauntlet.json",
+      "pointer": "/rivet/repair_delay_s",
+      "value": 3.75,
+      "before": 3
+    }
+  ],
+  "pick_filter": null,
+  "batch_args": [
+    "--profile=all",
+    "--pick=greedy",
+    "--controls=wheel",
+    "--seeds=8",
+    "--jobs=1",
+    "--waves=40",
+    "--out=C:\\Users\\kazda\\kiro\\gtai-wt\\n23-loop\\evidence\\n23-loop\\cycle2\\after"
+  ],
+  "batch_exit": 0,
+  "summary": {
+    "attempted": 24,
+    "accepted": 24,
+    "deaths": 9,
+    "median_wave_reached": 40,
+    "median_death_wave": 14,
+    "capped_alive": 0,
+    "wave_timeouts": 0
+  }
+}

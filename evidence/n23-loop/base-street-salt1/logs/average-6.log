@@ -1,0 +1,4 @@
+node tools/dev/run.mjs gauntlet --seed=6 --bot=average --pick=greedy --bot-salt=1 --controls=wheel --waves=40 --result=C:\Users\kazda\kiro\gtai-wt\n23-loop\evidence\n23-loop\base-street-salt1\runs\average-6.json
+run: godot --headless --path project --fixed-fps 60 --quit-after 216000 res://dev/gauntlet/gauntlet.tscn -- --seed=6 --bot=average --pick=greedy --bot-salt=1 --controls=wheel --waves=40 --result=C:\Users\kazda\kiro\gtai-wt\n23-loop\evidence\n23-loop\base-street-salt1\runs\average-6.json
+run: log C:\Users\kazda\kiro\gtai-wt\n23-loop\evidence\n23-loop\base-street-salt1\logs\average-6\gauntlet-2026-11-22T04-16-54-144Z.log
+ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 6 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)

@@ -49,14 +49,14 @@ export function numericSlot(table, knob) {
     if (!parent || !Object.hasOwn(parent, k)) return null;
     if (Array.isArray(parent)) {
       const actual = parent[k]?.id;
-      if (!knob.row) return { error: 'knob ' + knob.id + ': missing catalog row id for row ' + k + ', skipped' };
+      if (!knob.row) return { error: 'knob ' + knob.id + ': missing catalog row id for row ' + k };
       if (knob.row !== actual)
-        return { error: 'knob ' + knob.id + ': row ' + k + ' is ' + (actual ?? '(no id)') + ', skipped' };
+        return { error: 'knob ' + knob.id + ': row ' + k + ' is ' + (actual ?? '(no id)') };
       matchedRow = true;
     }
     parent = parent[k];
   }
-  if (knob.row && !matchedRow) return { error: 'knob ' + knob.id + ': expected an array row, skipped' };
+  if (knob.row && !matchedRow) return { error: 'knob ' + knob.id + ': expected an array row' };
   if (!parent || !Object.hasOwn(parent, key) || !Number.isFinite(parent[key])) return null;
   // Array indices in a JSON pointer are positional. Never silently tune a different row after a reorder.
   if (keys[0] === 'archetypes' && knob.id !== parent.id + '.' + key) return null;
@@ -64,9 +64,21 @@ export function numericSlot(table, knob) {
   return { parent, key };
 }
 
-export function inventory(root, warn = console.error) {
+// First-night baselines for budgets and enemy costs use tiers. Catalog bounds and edits use raw table units.
+export function budgetUnit(table) {
+  if (!Object.hasOwn(table.budget, 'unit')) return 1;
+  const unit = table.budget.unit;
+  if (!Number.isSafeInteger(unit) || unit < 1) throw new Error('budget.unit must be a positive integer');
+  return unit;
+}
+
+export function baselineValue(entry, baseline) {
+  return baseline.values[entry.knob.id] * (entry.unit ?? 1);
+}
+
+export function inventory(root) {
   const knobs = readJson(join(root, 'tools/gauntlet/knobs.json'));
-  const tables = new Map(), entries = new Map(), seen = new Set(), skipped = new Set();
+  const tables = new Map(), entries = new Map(), seen = new Set();
   for (const knob of knobs) {
     const { id, file, kind, min, max } = knob;
     if (!/^project\/data\/tables\/(combat|enemies|gauntlet|weapons)\.json$/.test(file) || seen.has(id)
@@ -77,14 +89,12 @@ export function inventory(root, warn = console.error) {
     if (!tables.has(file) && existsSync(path)) tables.set(file, readJson(path));
     const table = tables.get(file);
     const slot = table && numericSlot(table, knob);
-    if (!slot || slot.error || knob.pending) {
-      skipped.add(id);
-      warn(slot?.error ?? (id + (knob.pending ? ' pending' : ' unresolved') + ': ' + file + '#' + knob.pointer + ' skipped'));
-      continue;
-    }
-    entries.set(id, { knob, value: slot.parent[slot.key] });
+    if (!slot || slot.error || knob.pending)
+      throw new Error(slot?.error ?? (id + ' unresolved: ' + file + '#' + knob.pointer));
+    const unit = knob.scale === 'budget.unit' ? budgetUnit(table) : 1;
+    entries.set(id, { knob, value: slot.parent[slot.key], unit });
   }
-  return { entries, tables, skipped };
+  return { entries, tables };
 }
 
 export function readBaseline(root) {
@@ -103,7 +113,7 @@ export function ensureBaseline(root, entries) {
     schema: BASE_SCHEMA, created: new Date().toISOString(), git_sha: git(root, 'rev-parse', 'HEAD').trim(), values: {}
   };
   const additions = [...entries].filter(([id]) => !Object.hasOwn(baseline.values, id));
-  for (const [id, { value }] of additions) baseline.values[id] = value;
+  for (const [id, { value, unit = 1 }] of additions) baseline.values[id] = value / unit;
   if (!existing || additions.length) atomicWrite(path, canonicalJson(baseline), !existing);
   return baseline;
 }
@@ -112,15 +122,19 @@ export function clamped(knob, current, baseline, requested) {
   if (![current, baseline, requested].every(Number.isFinite)) return current;
   let lo = Math.max(knob.min, current * 4 / 5, baseline / 2);
   let hi = Math.min(knob.max, current * 5 / 4, baseline * 2);
+  if (knob.direction === 'down') hi = Math.min(hi, current);
+  if (knob.direction === 'up') lo = Math.max(lo, current);
   let value = requested;
   if (knob.kind === 'int') {
     lo = Math.ceil(lo);
     hi = Math.floor(hi);
-    value = requested > current ? Math.ceil(value) : Math.floor(value);
+    value = Math.round(value);
+    if (value === current) return current;
   } else value = Number(value.toPrecision(6));
   if (lo > hi) return current;
   const next = Math.min(hi, Math.max(lo, value));
   // Avoid long decimal tails from multiplying binary floats where the decimal bound is exact.
+  if (next !== current && Math.sign(next - current) !== Math.sign(requested - current)) return current;
   const short = Number(next.toPrecision(6));
   return short >= lo && short <= hi ? short : next;
 }

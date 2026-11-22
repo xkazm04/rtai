@@ -115,11 +115,11 @@ func _blink(stage: CollectCallStage, aim: Vector2) -> void:
 	var to: Vector2 = from + aim * num(&"dash_m")
 	var cut: Vector2 = Vector2.INF
 	if target != null:
-		var dir: Vector2 = (target.pos - from).normalized()
-		to = target.pos + dir * (num(&"behind_m") + target.radius_m)
+		var blink: KerfBehind = KerfBehind.resolve(stage, target, num(&"behind_m"), _walls(stage))
+		to = blink.landing
 		cut = target.pos
-		_slice(stage, target, dir)
-		_cut_path(stage, from, to, target, dir)
+		_slice(stage, target, blink.hit_dir)
+		_cut_path(stage, from, to, target, blink.path_dir)
 	var walls: ArenaWalls = _walls(stage)
 	if walls != null:
 		to = walls.push_out(to, rivet.radius_m)

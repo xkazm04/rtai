@@ -142,7 +142,8 @@ func select(i: int, arena: CombatArena, wheel_id: StringName = &"") -> void:
 		if not _hands.has(id):
 			_hands[id] = GunHand.make(_table, id, _rng)
 		arena.gun = _hands[id]
-		arena.gun.tap = tap
+		if arena.gun != null:
+			arena.gun.tap = tap
 	else:
 		if id == RIFLE and arena.rifle_ammo == 0:
 			arena.rifle_ammo = arena.tuning.weapon(RIFLE).magazine
@@ -165,10 +166,12 @@ func weapon() -> StringName:
 	return slots[current] if current >= 0 else &""
 
 
-## Keep the exact hand (magazine, cooldown and spread stream) supplied by a launch or story grant.
-func remember_hand(hand: GunHand, replace: bool = false) -> void:
+## Keep the stage's trigger, including a built-in weapon fired without a GunHand.
+func remember_hand(hand: GunHand, replace: bool = false, builtin: StringName = &"") -> void:
 	if hand != null and (replace or not _hands.has(hand.trigger.spec.id)):
 		_hands[hand.trigger.spec.id] = hand
+	elif hand == null and builtin != &"":
+		_hands[builtin] = null
 
 
 func hand_for(id: StringName) -> GunHand:

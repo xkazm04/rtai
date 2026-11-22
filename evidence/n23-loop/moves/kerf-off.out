@@ -1,0 +1,2 @@
+average: 10/10 ok (2 capped alive), median wave reached 40, median seconds per wave 34.77
+{"attempted":10,"accepted":10,"deaths":0,"median_wave_reached":40,"median_death_wave":null,"capped_alive":2,"wave_timeouts":0}

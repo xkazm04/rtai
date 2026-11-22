@@ -25,6 +25,7 @@ var _actions: PlayerActions
 var _profile: BotProfile
 var _aim_rng: RandomNumberGenerator
 var _defence: BotDefence
+var _moves: BotMovePlan
 var _forms: BotForms
 var _machines: BotMachineFight = BotMachineFight.new()
 var _target_id: int = -1
@@ -38,10 +39,12 @@ func _init(view: BotView, actions: PlayerActions, profile: BotProfile, run_seed:
 	_view = view
 	_actions = actions
 	_profile = profile
+	view.player().blast_margin = profile.blast_margin_m
 	var registry: RngRegistry = RngRegistry.new(run_seed)
 	_aim_rng = registry.stream(&"test_player_aim")
 	_defence = BotDefence.new(profile, registry)
 	_forms = BotForms.new(registry)
+	_moves = BotMovePlan.new(registry)
 
 
 func sample(tick: int) -> TickInput:
@@ -58,6 +61,9 @@ func sample(tick: int) -> TickInput:
 		return TickInput.new()
 	var active: bool = _view.wave_active()
 	var target: BotView.Hostile = priority_target() if active else null
+	_moves.choose(_view, _profile.move_use)
+	if active and _moves.foe != null:
+		target = _moves.foe
 	_acquire(target, tick)
 	var intent: Intent = Intent.new()
 	if me.hp >= me.street_max_hp * _profile.rest_hp:
@@ -69,6 +75,9 @@ func sample(tick: int) -> TickInput:
 	elif not active and me.hp >= me.street_max_hp * _profile.rest_hp:
 		intent.move = _view.forward()
 		intent.aim = intent.move
+	if active and _moves.foe != null:
+		_moves.drive(_view, intent, tick >= _ready)
+		return _pack(intent, BotDefence.Choice.new(), _moves.form())
 	var defend: BotDefence.Choice = _defence.choose(_view, tick)
 	var want: StringName = _forms.desired(_view, target, _profile.form_use, defend.form)
 	return _pack(intent, defend, want)
@@ -76,6 +85,9 @@ func sample(tick: int) -> TickInput:
 
 func _pack(intent: Intent, defend: BotDefence.Choice, want: StringName) -> TickInput:
 	var me: BotView.Player = _view.player()
+	if intent.attack == &"fire" and me.form != &"dent":
+		if not BotArsenal.clear_shot(_view, intent, _actions, _profile.blast_margin_m):
+			intent.attack = &""
 	var buttons: int = _edge(BotForms.transform(me, want))
 	if defend.hold_position:
 		intent.move = Vector2.ZERO
@@ -160,31 +172,9 @@ func _engage(foe: BotView.Hostile, tick: int) -> Intent:
 		intent.slot = _view.select_slot(slot)
 	if blocked:
 		return intent
-	_attack(intent, foe, slot)
-	return intent
-
-
-func _attack(intent: Intent, foe: BotView.Hostile, slot: BotView.Slot) -> void:
-	var me: BotView.Player = _view.player()
-	var distance: float = intent.reach
 	var error: float = _aim_rng.randf_range(-_profile.aim_error_deg, _profile.aim_error_deg)
-	intent.aim = intent.aim.rotated(deg_to_rad(error))
-	if (
-		me.form == &"dent"
-		and me.seized_car_pos == Vector2.INF
-		and me.pos.distance_to(me.car_pos) <= BotForms.DENT_M
-	):
-		intent.aim = me.pos.direction_to(me.car_pos)
-		intent.attack = &"fire"
-	elif me.form == &"dent" and me.seized_car_pos.distance_to(foe.pos) <= BotForms.HEAVY_M:
-		intent.attack = &"melee"
-	elif distance <= maxf(MELEE_M, BotForms.reach(me.form)):
-		if me.form != &"kerf" or _view.blink_clear(intent.aim):
-			intent.attack = &"melee"
-		elif slot != null and not slot.melee:
-			intent.attack = &"fire"
-	elif slot != null and not slot.melee and distance <= slot.reach:
-		intent.attack = &"fire"
+	BotArsenal.attack(_view, intent, foe, slot, error)
+	return intent
 
 
 func _bit(action: StringName) -> int:

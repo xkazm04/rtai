@@ -1,0 +1,26 @@
+{
+  "schema": "gtai.gauntlet-ablation/1",
+  "name": "on",
+  "head": "548989d7e2334b7486efb6e14a5cca2d9a3caec8",
+  "edits": [],
+  "pick_filter": null,
+  "batch_args": [
+    "--profile=all",
+    "--pick=greedy",
+    "--controls=wheel",
+    "--seeds=10",
+    "--jobs=1",
+    "--waves=40",
+    "--out=C:\\Users\\kazda\\kiro\\gtai-wt\\n23-loop\\evidence\\n23-loop\\moves\\on"
+  ],
+  "batch_exit": 0,
+  "summary": {
+    "attempted": 30,
+    "accepted": 30,
+    "deaths": 10,
+    "median_wave_reached": 40,
+    "median_death_wave": 12,
+    "capped_alive": 4,
+    "wave_timeouts": 0
+  }
+}

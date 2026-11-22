@@ -29,7 +29,7 @@ static func press(stage: ArenaStage, actions: PlayerActions, turn: int) -> int:
 	for i: int in RivetCarry.SLOTS:
 		if carry.slots[i] != &"":
 			filled.append(i)
-	if filled.size() < 2:
+	if filled.is_empty():
 		return 0
 	var want: int = filled[turn % filled.size()]
 	if want == carry.current:

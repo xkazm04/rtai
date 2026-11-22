@@ -6,7 +6,11 @@ var actions: PlayerActions
 
 
 func before_each() -> void:
-	stage = VaultTrial.stage_for(false)
+	_setup(ControlsMode.wheel())
+
+
+func _setup(use_wheel: bool) -> void:
+	stage = VaultTrial.stage_for(false, null, use_wheel)
 	stage.pilot.motion.vault.enabled = false
 	actions = stage.pilot.actions
 	body = stage.arena.rivet
@@ -16,6 +20,7 @@ func before_each() -> void:
 
 
 func test_disabled_script_matches_pre_cover_stage_bytes() -> void:
+	_setup(false)  # This stage-byte fixture predates the wheel.
 	stage.pilot.motion.cover.enabled = false
 	var out: StreamPeerBuffer = StreamPeerBuffer.new()
 	for i: int in 70:
@@ -93,6 +98,7 @@ func _hostile_shot(at: Vector2) -> void:
 
 
 func test_both_sides_shoot_past_the_end_and_mid_face_fire_is_refused() -> void:
+	_tick(Vector2.ZERO, &"weapon_slot_1")
 	var cover: PlayerCover = _snap()
 	var hp: float = body.hp
 	_hostile_shot(body.pos)

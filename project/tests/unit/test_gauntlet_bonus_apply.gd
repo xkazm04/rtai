@@ -35,6 +35,7 @@ func _take(id: StringName) -> void:
 
 func test_speed_and_repair_apply_from_base_and_are_private_to_the_run() -> void:
 	var control: GauntletSession = _open(GauntletRun.new())
+	var base_repair: float = control.stage.arena.tuning.rivet["repair_per_s"]
 	_take(&"stat_speed_25")
 	_take(&"stat_regen_25")
 	var arena: CombatArena = session.stage.arena
@@ -48,10 +49,30 @@ func test_speed_and_repair_apply_from_base_and_are_private_to_the_run() -> void:
 	assert_gt(boosted, ordinary * 1.15)
 	assert_ne(arena.tuning, control.stage.arena.tuning)
 	assert_eq(arena.tuning.rivet["walk_mps"], 8.4375)
-	assert_eq(arena.tuning.rivet["repair_per_s"], 12.5)
+	assert_eq(arena.tuning.rivet["repair_per_s"], base_repair * 1.25)
 	assert_eq(control.stage.arena.tuning.rivet["walk_mps"], 6.75)
-	assert_eq(control.stage.arena.tuning.rivet["repair_per_s"], 10.0)
+	assert_eq(control.stage.arena.tuning.rivet["repair_per_s"], base_repair)
 	control.close()
+
+
+func test_street_repair_overrides_only_supplied_values_before_regen_grants() -> void:
+	var rules: DataTable = DataTable.new()
+	rules.raw["rivet"] = {"repair_per_s": 4}
+	var tuning: CombatTuning = session.stage.arena.tuning
+	var delay: float = tuning.rivet["repair_delay_s"]
+	GauntletStreet.apply_repair(rules, tuning)
+	var bonuses: GauntletBonusApply = GauntletBonusApply.new(
+		session.stage, session.world.context(), run
+	)
+	assert_eq(tuning.rivet["repair_per_s"], 4.0)
+	assert_eq(tuning.rivet["repair_delay_s"], delay)
+	assert_true(bonuses.apply(draw.rows[&"stat_regen_25"]))
+	assert_eq(tuning.rivet["repair_per_s"], 5.0)
+	rules.raw["rivet"] = {"repair_delay_s": 0}
+	GauntletStreet.apply_repair(rules, tuning)
+	assert_eq(tuning.rivet["repair_delay_s"], 0.0)
+	assert_eq(tuning.rivet["repair_per_s"], 5.0)
+	assert_eq(CombatTuning.shipped().rivet["repair_per_s"], 10.0)
 
 
 func test_hp_grants_preserve_existing_wounds_and_guard_meter_is_recorded() -> void:

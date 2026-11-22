@@ -1,7 +1,10 @@
-import { median } from '../perf/paired.mjs';
+import { PROFILES } from './contract.mjs';
+import { timeBounds } from './analysis.mjs';
+import { profileScores, targets } from './death_score.mjs';
 import { analyze, weaponsOf } from './report.mjs';
 import { fmt } from './report_tables.mjs';
-import { clamped, TABLES } from './tune_state.mjs';
+import { DAMAGE_GROUP, knobStep, memberIds, occupied, REPAIR_GROUP } from './tune_groups.mjs';
+import { TABLES } from './tune_state.mjs';
 
 export const PLAN_SCHEMA = 'gtai.gauntlet-tune-plan/1';
 const ratio = (target, observed) => observed > 0 ? target / observed : 1.25;
@@ -22,15 +25,16 @@ function waveMisses(report, runs, roster, { target, profile, street, minN }) {
   const byWave = Map.groupBy(runs.filter((r) => r.profile === profile).flatMap((r) => r.waves), (w) => w.n);
   const timed = report.waves.filter((row) => row.profile === profile && row.timed);
   const midpoint = Math.ceil((timed.at(-1)?.n ?? 0) / 2);
-  const lower = target * 0.8, upper = target * 1.2;
-  const fastBudget = timed.some((row) => row.n > midpoint && row.median < lower && row.timed >= minN)
+  const fastBudget = timed.some((row) => row.n > midpoint && row.median < timeBounds(row.n, target)[0] && row.timed >= minN)
     ? 'budget.per_wave' : 'budget.base';
   const misses = [];
   for (const row of timed) {
+    const [lower, upper] = timeBounds(row.n, target);
     if (row.median >= lower && row.median <= upper) continue;
-    const factor = ratio(target, row.median);
+    const goal = row.n % targets.boss_every === 0 ? (row.median < lower ? lower : upper) : target;
+    const factor = ratio(goal, row.median);
     let miss = profile + ' wave ' + row.n + ' median ' + fmt(row.median) + ' s over ' + row.timed
-      + ' timed runs against ' + target + ' s';
+      + ' timed runs against ' + goal + ' s';
     const choices = [];
     if (row.median < lower) {
       miss += ', below the ' + fmt(lower) + ' s lower bound';
@@ -47,27 +51,28 @@ function waveMisses(report, runs, roster, { target, profile, street, minN }) {
       if (street) choices.push([row.n === 1 ? 'budget.base' : 'budget.per_wave', factor]);
     }
     const reason = row.timed < minN ? 'too few runs (need ' + minN + ' timed runs)' : undefined;
-    misses.push(measuredMiss({ type: 'wave', profile, wave: row.n, target }, Math.abs(row.median / target - 1), miss, choices, reason));
+    misses.push(measuredMiss({ type: 'wave', profile, wave: row.n, target: goal }, Math.abs(row.median / goal - 1), miss, choices, reason));
   }
   return misses;
 }
 
-function spreadMiss(runs, roster, street) {
-  const depth = (profile) => median(runs.filter((r) => r.profile === profile).map((r) => r.wave_reached));
-  const novice = depth('novice'), expert = depth('expert');
-  if (!(expert <= novice)) return [];
-  const profiles = runs.filter((r) => ['novice', 'expert'].includes(r.profile));
-  // Ease a shared bottleneck when both profiles die. Increase pressure when they both survive.
-  const blocked = ['novice', 'expert'].every((p) => profiles.some((r) => r.profile === p && r.death));
-  const factor = blocked ? 0.8 : 1.25;
-  const choices = street ? [['budget.per_wave', factor], ['budget.base', factor]] : [];
-  const waves = profiles.flatMap((r) => r.waves.filter((w) => w.n === r.wave_reached));
-  const robot = robotIn(waves, roster);
-  if (robot) choices.push([robot.id + '.hp', factor]);
-  const miss = 'novice median wave ' + fmt(novice) + ', expert ' + fmt(expert)
-    + ' against a gap of at least 1 wave, ' + profiles.filter((r) => r.death).length + '/' + profiles.length
-    + ' runs ended in death' + (robot ? ', ' + robot.id + ' in ' + robot.count + '/' + robot.total + ' timed final rosters' : '');
-  return [measuredMiss({ type: 'spread', target: 1 }, 1 - (expert - novice), miss, choices)];
+function deathMisses(batch, profile, minN) {
+  const observations = [];
+  for (const row of profileScores(batch)) {
+    if (row.profile !== profile && profile !== 'all') continue;
+    const { median, upper, target, scores, capped } = row;
+    if (!scores.length || median === target) continue;
+    const metric = { type: 'death', profile: row.profile, target };
+    const miss = row.profile + ' median death wave ' + fmt(median) + ' against target ' + target
+      + ' (' + row.deaths + ' deaths, ' + capped + ' censored as lower bounds)';
+    const reason = scores.length < minN ? 'too few runs (need ' + minN + ' scored runs)'
+      : median < target && upper >= target ? 'censoring leaves an early death-wave miss unresolved' : undefined;
+    const proportional = Math.min(1.25, Math.max(0.8, median / target));
+    const factor = Math.abs(median - target) > 3 ? (median > target ? 1.25 : 0.8) : proportional;
+    observations.push(measuredMiss(metric, Math.abs(median / target - 1), miss,
+      [[DAMAGE_GROUP, proportional], [REPAIR_GROUP, factor], ['budget.per_wave', proportional]], reason));
+  }
+  return observations.sort((a, b) => b.severity - a.severity);
 }
 
 function killerMisses(report, runs, roster, threshold) {
@@ -121,19 +126,37 @@ function bonusMisses(report, weapons, target) {
   return misses;
 }
 
-export function propose(batch, state, baseline, { target = 15, profile = 'average', max = 6, killerShare = 0.5, minN = 3,
-  used = new Set(), batchHash, night } = {}) {
+export function deathMetric(value) {
+  if (value !== undefined && value !== 'death') throw new Error('--metric must be death');
+  return value;
+}
+
+function observationsFor(batch, state, { target, profile, killerShare, minN, metric }) {
+  if (metric === 'death') {
+    if (profile !== 'all' && !PROFILES.includes(profile)) throw new Error('unknown death profile: ' + profile);
+    if (batch.args.runner === 'pit') throw new Error('death-wave tuning requires the street');
+    return deathMisses(batch, profile, minN);
+  }
   const weapons = weaponsOf(batch);
   const report = analyze(batch, null, weapons);
   const roster = state.tables.get(TABLES + 'enemies.json');
   const street = batch.args.runner !== 'pit';
   const observations = [
-    ...waveMisses(report, batch.results, roster, { target, profile, street, minN }),
-    ...spreadMiss(batch.results, roster, street),
+    ...waveMisses(report, batch.results, roster, { target, profile: profile === 'all' ? 'average' : profile, street, minN }),
     ...killerMisses(report, batch.results, roster, killerShare),
     ...bonusMisses(report, weapons, target)
   ].sort((a, b) => b.severity - a.severity);
+  if (street) observations.unshift(...deathMisses(batch, profile, minN));
+  return observations;
+}
+
+export function propose(batch, state, baseline, { target = targets.wave_seconds.average, profile = 'average', max = 6, killerShare = 0.5, minN = 3,
+  used = new Set(), batchHash, night, metric: selection, allowShared = false } = {}) {
+  const metricName = deathMetric(selection);
+  if (metricName) max = Math.min(max, 1);
+  const observations = observationsFor(batch, state, { target, profile, killerShare, minN, metric: metricName });
   const changes = [], misses = [];
+  const skipped = new Map();
   const chosen = new Set(used);
   // The two outcomes of one offer can describe the same advantage. Don't turn both knobs for it.
   const selectedOffers = new Set();
@@ -145,29 +168,36 @@ export function propose(batch, state, baseline, { target = 15, profile = 'averag
     }
     const result = { ...observation, reason: 'no eligible numeric change within bounds' };
     for (const [id, factor] of choices) {
-      const entry = state.entries.get(id);
-      if (!entry) continue;
-      const before = entry.value;
-      const first = baseline.values[id];
-      const after = clamped(entry.knob, before, first, before * factor);
-      if (after === before || Math.sign(after - before) !== Math.sign(factor - 1)) {
-        result.reason = id + ' at ' + before + ' has no legal ' + (factor > 1 ? 'upward' : 'downward') + ' step within bounds';
+      if (!allowShared && memberIds(id, state.entries).some((key) => state.entries.get(key)?.knob.shared)) {
+        result.reason = 'shared with quest 1 / replays';
+        skipped.set(id, { id, reason: result.reason });
         continue;
       }
-      if (chosen.has(id) || (metric.type === 'offer' && selectedOffers.has(metric.id))) {
+      const step = knobStep(id, factor, state.entries, baseline);
+      if (!step) {
+        const entry = state.entries.get(id);
+        result.reason = entry?.knob.kind === 'int' && Math.round(entry.value * factor) === entry.value
+          ? id + ' rounds to the current integer ' + entry.value
+          : id + ' has no legal ' + (factor > 1 ? 'upward' : 'downward') + ' step within bounds';
+        continue;
+      }
+      if (occupied(id, chosen) || (metric.type === 'offer' && selectedOffers.has(metric.id))) {
         result.reason = 'knob or offer already selected this night';
+        if (metric.type === 'death') continue;
         break;
       }
       if (changes.length >= max) { result.reason = 'plan limit'; break; }
-      changes.push({ id, file: entry.knob.file, pointer: entry.knob.pointer, ...(entry.knob.row && { row: entry.knob.row }),
-        before, after, baseline: first, metric, miss, severity: observation.severity });
+      const profiles = metricName && observations.filter((o) => !o.reason && o.choices.some(([knob, f]) =>
+        knob === id && Math.sign(f - 1) === Math.sign(factor - 1))).map((o) => o.metric.profile);
+      changes.push({ ...step, metric, miss, severity: observation.severity, ...(profiles && { profiles }) });
       chosen.add(id);
       if (metric.type === 'offer') selectedOffers.add(metric.id);
-      result.reason = id + ' ' + before + ' -> ' + after;
+      result.reason = id + (step.members ? ' x ' + step.factor : ' ' + step.before + ' -> ' + step.after);
       break;
     }
+    if (metricName && changes[0]?.profiles.includes(metric.profile)) result.reason = 'served by ' + changes[0].id;
     misses.push(result);
   }
-  return { schema: PLAN_SCHEMA, night, batch_sha256: batchHash, profile, target_s: target,
-    killer_share: killerShare, min_n: minN, max, changes, misses };
+  return { schema: PLAN_SCHEMA, night, batch_sha256: batchHash, profile, ...(metricName && { metric: metricName }), target_s: target,
+    killer_share: killerShare, min_n: minN, max, changes, misses, skipped: [...skipped.values()] };
 }

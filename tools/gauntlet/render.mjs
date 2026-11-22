@@ -1,4 +1,5 @@
-import { TARGET_S } from './analysis.mjs';
+import { targets } from './death_score.mjs';
+import { TARGET_S, timeBounds } from './analysis.mjs';
 import { fmt, sections } from './report_tables.mjs';
 
 const esc = (s) => String(s).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
@@ -10,9 +11,10 @@ const caption = (batch) => (batch.git?.branch || 'detached') + ' @ ' + (batch.gi
 function introduction(batch, model, before) {
   const average = model.waves.filter((w) => w.profile === 'average' && w.timed);
   const misses = average.filter((w) => w.miss).map((w) => w.n + ' (' + fmt(w.median) + ' s)');
+  const timing = timeBounds(1).join('–') + ' s for ordinary waves and ' + targets.boss_wave_seconds.join('–') + ' s for boss waves';
   const finding = !average.length ? 'Average-profile wave time was not measured.'
-    : misses.length ? 'Average-profile waves ' + misses.join(', ') + ' fell outside 12–18 s.'
-    : 'All measured average-profile wave medians were within 12–18 s.';
+    : misses.length ? 'Average-profile waves ' + misses.join(', ') + ' fell outside ' + timing + '.'
+    : 'All measured average-profile wave medians met their timing targets.';
   const lines = [batch.results.length + ' of ' + batch.runs.length + ' runs accepted. ' + finding,
     (batch.args.from ? 'Imported files' : 'Live ' + batch.args.runner + ' batch') + ' · ' + caption(batch)
       + ' · ' + batch.created + '.'];
@@ -110,7 +112,7 @@ export function render(batch, model, baseline) {
     + '<title>Gauntlet run report</title><style>' + styles + '</style></head><body><header><h1>Gauntlet run report</h1>'
     + intro.map((p, i) => '<p' + (i ? ' class="meta"' : '') + '>' + esc(p) + '</p>').join('') + '</header><main>'
     + parts.map((s) => '<section><h2>' + esc(s.title) + '</h2><p>' + esc(s.note) + '</p>'
-      + (s.key === 'time' && charts ? '<p>Dots show medians by wave, bars show the middle half, and the dashed line marks 15 seconds.</p><div class="charts">' + charts + '</div>' : '')
+      + (s.key === 'time' && charts ? '<p>Dots show medians by wave, bars show the middle half, and the dashed line marks the ordinary-wave target.</p><div class="charts">' + charts + '</div>' : '')
       + htmlTable(s) + '</section>').join('\n') + '</main></body></html>\n';
   return { markdown, html };
 }

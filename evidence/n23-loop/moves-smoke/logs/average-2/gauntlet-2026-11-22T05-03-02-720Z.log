@@ -1,0 +1,59 @@
+# --fixed-fps 60 --quit-after 216000 res://dev/gauntlet/gauntlet.tscn -- --seed=2 --bot=average --pick=greedy --controls=wheel --waves=15 --result=C:\Users\kazda\kiro\gtai-wt\n23-loop\evidence\n23-loop\moves-smoke\runs\average-2.json
+# exit 0, 17.9 s
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] gauntlet: test player bound: average, greedy picks, seed 2
+[INFO] gauntlet: wave 1 tick 272 block 1, 1 alive
+[INFO] gauntlet: wave 2 tick 976 block 2, 1 alive
+[INFO] gauntlet: wave 3 tick 2199 block 3, 1 alive
+[INFO] gauntlet: wave 4 tick 3362 block 4, 1 alive
+[INFO] gauntlet: wave 5 tick 4292 block 5, 1 alive
+[INFO] gauntlet: move opening CRACK on war_machine #51, accepted false
+[INFO] gauntlet: move opening CRACK on war_machine #51, accepted true
+[INFO] gauntlet: move opening CRACK on war_machine #51, accepted true
+[INFO] gauntlet: move opening SHORT on war_machine #51, accepted true
+[INFO] gauntlet: move opening SHORT on war_machine #51, accepted false
+[INFO] gauntlet: move opening SHORT on war_machine #51, accepted true
+[INFO] gauntlet: move opening CRACK on war_machine #51, accepted true
+[INFO] gauntlet: wave 6 tick 7135 block 6, 1 alive
+[INFO] gauntlet: move opening SHORT on sentry_turret #57, accepted false
+[INFO] gauntlet: move opening SHORT on sentry_turret #61, accepted true
+[INFO] gauntlet: wave 7 tick 8222 block 7, 1 alive
+[INFO] gauntlet: wave 8 tick 8982 block 8, 1 alive
+[INFO] gauntlet: wave 9 tick 10448 block 9, 1 alive
+[INFO] gauntlet: move opening SHORT on shield_robot #99, accepted false
+[INFO] gauntlet: move opening SHORT on shield_robot #99, accepted false
+[INFO] gauntlet: move opening SHORT on shield_robot #99, accepted false
+[INFO] gauntlet: move opening SHORT on shield_robot #99, accepted false
+[INFO] gauntlet: move opening SHORT on shield_robot #99, accepted false
+[INFO] gauntlet: move opening SHORT on shield_robot #99, accepted true
+[INFO] gauntlet: wave 10 tick 11941 block 10, 1 alive
+[INFO] gauntlet: move opening SHORT on sentry_turret #109, accepted false
+[INFO] gauntlet: move opening SHORT on war_machine #106, accepted true
+[INFO] gauntlet: wave 11 tick 13138 block 11, 1 alive
+[INFO] gauntlet: move opening SHORT on sentry_turret #117, accepted false
+[INFO] gauntlet: move opening SHORT on sentry_turret #117, accepted true
+[INFO] gauntlet: wave 12 tick 14307 block 12, 1 alive
+[INFO] gauntlet: move opening BLINK on shield_robot #141, accepted true
+[INFO] gauntlet: wave 13 tick 15254 block 13, 1 alive
+[INFO] gauntlet: move opening SHORT on shield_robot #158, accepted true
+[INFO] gauntlet: move opening BLINK on shield_robot #151, accepted false
+[INFO] gauntlet: move opening BLINK on shield_robot #158, accepted true
+[INFO] gauntlet: move opening BLINK on shield_robot #151, accepted false
+[INFO] gauntlet: move opening BLINK on shield_robot #158, accepted false
+[INFO] gauntlet: move opening BLINK on shield_robot #158, accepted true
+[INFO] gauntlet: wave 14 tick 16668 block 14, 1 alive
+[INFO] gauntlet: move opening SHORT on shield_robot #161, accepted false
+[INFO] gauntlet: move opening BLINK on shield_robot #161, accepted false
+[INFO] gauntlet: move opening SHORT on shield_robot #161, accepted true
+[INFO] gauntlet: move opening SHORT on shield_robot #161, accepted false
+[INFO] gauntlet: move opening SHORT on shield_robot #161, accepted true
+[INFO] gauntlet: move opening SHORT on shield_robot #161, accepted true
+[INFO] gauntlet: wave 15 tick 18080 block 15, 1 alive
+[INFO] gauntlet: move opening SHORT on sentry_turret #176, accepted false
+[INFO] gauntlet: move opening SHORT on sentry_turret #176, accepted true
+[INFO] gauntlet: move opening SHORT on sentry_turret #179, accepted true
+[INFO] gauntlet: move opening BLINK on war_machine #175, accepted true
+[INFO] gauntlet: move opening BLINK on war_machine #175, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #184, accepted true
+[INFO] gauntlet: tick 18863, segment 15
