@@ -111,7 +111,8 @@
         "2026-11-22: RivetSelfBlast call site in fight_areas + dev/controls film for n23 controls (dev_loc 28529 -> 28704)",
         "2026-11-22: n23 controls refilm: visible range target, firing-port wall, production HP meter and 64 px/m capture (dev_loc 28704 -> 28803)",
         "2026-11-22: guard and controls film drivers for n23 controls (dev_loc 28803 -> 28929)",
-        "2026-11-22: guard and controls film drivers for n23 controls (dev_loc 28929 -> 29208)"
+        "2026-11-22: guard and controls film drivers for n23 controls (dev_loc 28929 -> 29208)",
+        "2026-11-22: guard and controls film drivers for n23 controls (dev_loc 29208 -> 29210)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -120,7 +121,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 496,
-        "project/dev/controls": 679,
+        "project/dev/controls": 681,
         "project/dev/enemy_ai": 2286,
         "project/dev/frames": 1087,
         "project/dev/gauntlet": 514,
@@ -149,7 +150,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 29208
+      "total": 29210
     },
     "direct_cmdline_reads": {
       "accepted": [

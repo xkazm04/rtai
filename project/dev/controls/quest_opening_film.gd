@@ -57,6 +57,8 @@ func _opening() -> void:
 	OpeningFilmPad.button(&"melee", float(age in [205, 277]))
 	if age >= 330:
 		driver.act()
+		# Walk to the first objective. The cut covers the time spent hidden in the dumpster.
+		Input.action_release(&"interact")
 	session.step()
 	if age in [0, 155, 290]:
 		_note("opening")
