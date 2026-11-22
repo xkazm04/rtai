@@ -13,7 +13,7 @@ video = master / 'films' / (stem + '.mp4')
 dest = take_dir / 'review'
 dest.mkdir(exist_ok=True)
 if cursor:
-    samples = [(24, 'Pistol'), (174, 'Before wheel'), (222, 'Katana'), (414, 'Chainsaw'),
+    samples = [(24, 'Pistol'), (150, 'Pistol before scroll'), (222, 'Katana'), (414, 'Chainsaw'),
                (595, 'Hands'), (811, 'Pistol again')]
 else:
     result = json.loads((take_dir / 'take.json').read_text())
