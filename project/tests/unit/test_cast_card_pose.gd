@@ -56,6 +56,10 @@ func test_near_and_far_show_same_facing_attack_and_standing_row() -> void:
 		assert_eq(card.texture.resource_path, _sheets.walk)
 		assert_eq(card.frame_coords, Vector2i(2, StreetWalkerCards.STAND_FRAME))
 		assert_true(card.flip_h)
+		_trooper.tell_left = _arena.guard_tell.lock_ticks + 1
+		_step()
+		assert_eq(card.texture.resource_path, _sheets.attack)
+		assert_eq(card.frame_coords.y, 0)
 		_trooper.tell_left = 1
 		_step()
 		assert_eq(card.texture.resource_path, _sheets.attack)
@@ -127,6 +131,8 @@ func test_pose_ownership_and_unsupported_pitch_use_the_placeholder() -> void:
 	var rig: CutRig = _host.rigs.rig_for(_trooper.id)
 	var pose: CastCardPose = CastCardPose.of(rig)
 	assert_not_null(pose)
+	rig.head_card.remove_meta(CastCardPose.META)
+	assert_true(pose.bind(rig))
 	assert_false(pose.bind(rig))
 	rig.actor_id += 1
 	assert_null(CastCardPose.of(rig))

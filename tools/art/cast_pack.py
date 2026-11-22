@@ -4,6 +4,7 @@ python -B tools/art/cast_pack.py <round> <library/tools> <action> <pitch>
 Review intermediates in the round's pack/ directory before recording provenance.
 """
 import argparse
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -77,6 +78,25 @@ def pack_hit(source, work, library, raw):
     grid.save(raw)
 
 
+def check_cells(grid, rows):
+    with Image.open(grid) as image:
+        pixels = np.asarray(image.convert("RGBA"), dtype=np.int16)
+    height, width, _ = pixels.shape
+    if height % rows or width % 5:
+        raise ValueError(f"{grid}: expected five columns and {rows} equal rows")
+    for row, cells in enumerate(np.split(pixels, rows)):
+        for col, cell in enumerate(np.split(cells, 5, axis=1)):
+            solid = cell[:, :, 3] > 127
+            name = f"{grid}, row {row + 1}, facing {col + 1}"
+            if not solid.any():
+                raise ValueError(f"{name}: empty silhouette")
+            if solid[[0, -1], :].any() or solid[:, [0, -1]].any():
+                raise ValueError(f"{name}: opaque silhouette reaches the cell boundary")
+            spill = cell[:, :, 1] - np.maximum(cell[:, :, 0], cell[:, :, 2])
+            if (solid & (spill > 50)).any():
+                raise ValueError(f"{name}: opaque green key spill")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("round", type=Path)
@@ -103,9 +123,11 @@ def main():
         cutter = "street_fall.py" if args.action == "fall" else "street_walk.py"
         run(TOOLS / cutter, keyed, raw)
         register_boots(raw, args.action, args.pitch)
-    run(TOOLS / "street_tone.py", raw, dest / "cop_patrol_card.png", dest / (stem + ".png"))
+    toned = work / "toned.png"
+    run(TOOLS / "street_tone.py", raw, dest / "cop_patrol_card.png", toned)
+    check_cells(toned, {"armed_walk": 4, "attack": 4, "hit": 1, "fall": 3}[args.action])
+    shutil.copyfile(toned, dest / (stem + ".png"))
 
 
 if __name__ == "__main__":
     main()
-
