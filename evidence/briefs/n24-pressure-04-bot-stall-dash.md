@@ -5,6 +5,13 @@ Read `AGENTS.md` and `docs/gauntlet-loop.md` (the "Test player" section) before 
 
 **Wall clock: hard stop HARDSTOP. Last commit by COMMITBY.**
 
+The pre-commit hook takes about 10 minutes on a table commit: start your last commit no later than COMMITBY.
+
+**Godot is the director's until GODOTFREE.** The director runs one gauntlet batch (a Godot process of this lane) from
+your start until GODOTFREE. Until then: read, design, write the code and the tests, but launch no Godot, no unit run,
+no gate, no render (the lane gets one Godot at a time). After GODOTFREE Godot is yours alone.
+
+
 ## Machine rules, git law
 
 As in `evidence/briefs/n24-pressure-02-deflect.md` sections "Machine rules" and "Git law" (read them). No merges: the
@@ -35,8 +42,7 @@ Add a no-progress guard: when no hostile loses hp for 20 s of live wave, the res
 that wave (`{"wave", "tick", "left": {<archetype>: n}}`, optional field, schema) and the run ends with outcome
 `stalled` instead of hanging to the cap, so a batch never burns 8 minutes on one stuck run. Unit test for the guard.
 
-## Task 2 - dash (one commit; only after the director has merged `n24-motion`: check `git log --oneline -5` for a merge
-of `n24-motion`; if there is none, skip this task and say so)
+## Task 2 - dash (one commit; `n24-motion` is merged at `b0a9c4c09`)
 
 Lane motion adds input action `dash` (Shift; row bit 18, wire bit 31 per motion's JOURNAL `MILESTONE iface`) with
 numbers in `project/data/tables/rivet_motion.json` block `dash` (`distance_m`, `ticks`, `cooldown_ticks`,
@@ -48,7 +54,7 @@ dashing sideways to the round's path when the roll is on cooldown or the round i
 wave in the result file as `dashes` (the contract's name; optional; omitted when 0 was not measured). Unit test with a
 fake view: a rocket on a collision course -> a dash press within `dash_read_ticks` sideways to its path.
 
-## Task 2b - ghost deploy (one commit; only after the director has merged `n24-ghost`; else skip and say so)
+## Task 2b - ghost deploy (lowest priority: only if tasks 1 and 2 are committed with 25 minutes left) (one commit; only after the director has merged `n24-ghost`; else skip and say so)
 
 Lane ghost's `NEED pressure` (its JOURNAL `C:/Users/kazda/kiro/gtai-wt/n23-moves/JOURNAL.md` line 23, read it whole):
 from n24-ghost on `ghost_forms.json` `transform_unlocked` is false, so the bot's `power_hauler` presses

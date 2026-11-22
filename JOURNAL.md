@@ -139,3 +139,18 @@ NEXT (unchanged order): rocket-gap review -> merge n24-motion -> after-gaps batc
   (death at tick 6207), prologue_pilot (budget expired encounter 2), rivet_city_melee (faulty bot control still drops
   five). Suspects: 01b rifle cadence 1.4 -> 0.5 s + lead + x2 rifle damage (prologue deaths), lead on a near-still Rivet
   (gunplay_fire). Goes into brief 02 as task 4 (after deflect) with decision rules.
+- 20:50 merge `n24-motion` (6ab9195d2) into the lane: only JOURNAL.md add/add (kept ours). The hook failed 2 tool tests
+  (`tools/merge/clash.test.mjs` :110, :125, "string argument undefined"); alone they pass 7/7 (261 s): the hook's git
+  env during a merge. FRICTION ~15 min. Retried the merge commit through the hook at 21:03.
+- 21:02 MILESTONE after-gaps batch started (detached): `ablate.mjs --name=after-gaps --rev=032f6de91` (pre-merge HEAD:
+  x2 damage, no in-wave repair, 45 s timer, gaps, rocket) same args as base-main -> `evidence/n24-pressure/after-gaps/`,
+  log `evidence/n24-pressure/after-gaps.out`. This is the lane's Godot until it ends (~21:25); brief 02 says GODOTFREE.
+- 21:06 MILESTONE merge n24-motion `b0a9c4c09` (motion head 6ab9195d2, dash `9f4ce27a9` + `099db00f4` one cooldown
+  step per tick); retried hook passed 19/19. Unit/scenarios on the merge: Astra runs them in brief 02 (after 21:30).
+- 21:09 ASTRA RUNNING deflect since 21:09 (brief `evidence/briefs/n24-pressure-02-deflect.md`: task 0 commit the
+  rocket sight-loss test, 1 deflect block + rule, 2 passed-round spark, 3 hit-share tool/table, 4 the five red
+  scenarios; lock pid 62596, hard stop 22:20, commit by 22:08, Godot free for it from 21:30).
+- 21:09 FRICTION the first launch (Git Bash `nohup ... &` followed by a slow `ls $TEMP`) hung the tool call; its
+  timeout would tree-kill nohup -> Astra. Killed my own tree by PID at 3 min (no edits made), removed the dead lock,
+  relaunched with PowerShell `Start-Process node ... -RedirectStandardOutput <out> -WindowStyle Hidden -PassThru`
+  (parent = nobody of the tool). Use that form for every launch. ~6 min lost.
