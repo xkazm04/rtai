@@ -62,6 +62,9 @@ func _dodge(table: WeaponTable, w: StringName) -> Dictionary:
 	}
 	for key: String in cases:
 		var s: DodgeDrill.Setup = DodgeDrill.Setup.new()
+		# Use a sustained lane inside effective machine-pistol range for the dodge comparison.
+		s.distance_m = 10.0
+		s.seconds = 30.0
 		s.weapon = w
 		s.policy = cases[key][0]
 		s.no_lock = cases[key][1]
