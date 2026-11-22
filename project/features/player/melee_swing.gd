@@ -18,7 +18,7 @@ const SHAPES: Dictionary[StringName, Vector3] = {
 	&"drive": Vector3(0.24, -0.38, 0.48),
 	&"crack": Vector3(1.12, -0.42, 0.18),
 	&"cut": Vector3(-1.18, 1.04, 0.32),
-	&"sweep": Vector3(0.84, -0.94, 0.42),
+	&"sweep": Vector3(1.0, -1.0, 0.42),
 }
 ## Ticks of the cut before the hit tick (the blade's travel into the target).
 const CUT_TICKS: float = 2.0

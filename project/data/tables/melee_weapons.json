@@ -223,7 +223,7 @@
       "chain_radius_m": 0,
       "combo_window_ticks": 12,
       "deflect_m": 1.6,
-      "doc": "Wind the blade across the body, sweep all around Rivet and hold the far shoulder before lowering. The six active ticks retain the deflect.",
+      "doc": "Wind the blade across the body, sweep across Rivet's front and hold the far shoulder before lowering. The six active ticks retain the deflect.",
       "grip": "two_hand",
       "hits": [
         {
@@ -276,9 +276,9 @@
       "swing": {
         "active_ticks": 6,
         "chain_hops": 0,
-        "cone_dot": -1,
+        "cone_dot": -0.2,
         "damage": 3,
-        "doc": "Wind the blade across the body, sweep all around Rivet and hold the far shoulder before lowering. The six active ticks retain the deflect.",
+        "doc": "Wind the blade across the body, sweep across Rivet's front and hold the far shoulder before lowering. The six active ticks retain the deflect.",
         "id": "plasma_sword_sweep",
         "knockback_m": 0.5,
         "lunge_m": 0,

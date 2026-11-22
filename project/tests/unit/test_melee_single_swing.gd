@@ -22,7 +22,12 @@ func test_katana_click_and_repeat() -> void:
 func test_plasma_sword_click_and_repeat() -> void:
 	var table: MeleeTable = MeleeTable.weapon(&"plasma_sword")
 	_check_weapon(table)
-	assert_gte(table.hits[0].active, 6)
+	var h: MeleeHit = table.hits[0]
+	var ph: Vector3 = Vector3(h.windup, h.active, h.recovery) * SimClock.TICK_DT
+	var arc: float = acos(h.cone_dot)
+	assert_eq(h.active, 6)
+	assert_almost_eq(MeleeSwing.angle(MeleeSwing.cut_start(ph), ph, 1.0, arc, &"sweep"), arc, 1e-4)
+	assert_almost_eq(MeleeSwing.angle(ph.x + ph.y, ph, 1.0, arc, &"sweep"), -arc, 1e-4)
 	assert_eq(table.deflect_m, 1.6)
 
 
