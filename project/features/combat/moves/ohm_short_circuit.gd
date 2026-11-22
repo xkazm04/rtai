@@ -1,16 +1,16 @@
 class_name OhmShortCircuit
 extends RefCounted
-## Only a flagged squad member replaces the bolt's ordinary electro stun. Both deadlines are
-## exclusive and measured from the release tick, including when the bolt lands before assign().
+## Every bolt applies electro stun. A flagged machine can also take a short circuit.
+## Its exclusive stun and immunity deadlines both run from the bolt's release tick.
 
 
 static func strike(arena: CombatArena, h: Fighter, tick: int, legacy_ticks: int) -> bool:
+	PlayerShock.stun_on(PlayerShock.areas_of(arena), h, legacy_ticks)
 	var squad: ArenaSquad = arena.squad_ai
 	if squad != null and squad.moves.ohm_short_circuit.enabled and squad.owns(h):
 		var arch: EnemyRoster.Archetype = squad.pit.roster.archetype(h.archetype)
 		if arch.machine:
 			return _apply(squad.mind_for(h), h, tick, squad.moves.ohm_short_circuit)
-	PlayerShock.stun_on(PlayerShock.areas_of(arena), h, legacy_ticks)
 	return false
 
 

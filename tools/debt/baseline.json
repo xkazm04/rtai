@@ -108,7 +108,8 @@
         "2026-11-21: Isolated rocket capture and legible shield and walker flanking inputs for n22 foes (dev_loc 27350 -> 27380)",
         "2026-11-21: Read the live guard fraction and break state in the gauntlet HUD (dev_loc 28520 -> 28525)",
         "2026-11-21: Exercise the scene control selection through the same street entry used by live play (dev_loc 28525 -> 28529)",
-        "2026-11-22: move_ttk kill-time probe for n23 moves (dev_loc 28529 -> 28927)"
+        "2026-11-22: move_ttk kill-time probe for n23 moves (dev_loc 28529 -> 28927)",
+        "2026-11-22: move_ttk kill-time probe for n23 moves (dev_loc 28927 -> 29010)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -127,7 +128,7 @@
         "project/dev/handheld": 247,
         "project/dev/held": 103,
         "project/dev/human_react": 412,
-        "project/dev/moves": 398,
+        "project/dev/moves": 481,
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
         "project/dev/quest1_city_fit.gd": 18,
@@ -146,7 +147,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 28927
+      "total": 29010
     },
     "direct_cmdline_reads": {
       "accepted": [
