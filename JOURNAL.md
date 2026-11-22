@@ -132,3 +132,4 @@ COMMITBY; product code closed by 00:00): live swings-per-click telemetry + owner
 robo_tazer not doubled (18:43), claw not a one-shot, cursor = system arrow (PLAIN_DOT one const away), which weapons
 count electric (electro gun direct hit, claw full charge), riot-shield rule per weapon (katana blocked + opens 40
 ticks, others through). Merge note: enemy_pit.gd hurt() signature (pressure's ai/**).
+- 21:08 NEED pressure: since `e04b93990` the electro_baton shuts down robot_thug / robot_gunner in one landed swing and overloads shield_robot / sentry_turret (150 ticks, no move or fire) with the second swing executing; war_machine only a 30-tick stun. A test player that carries the baton clears robot waves faster: re-measure. Blades on robots unchanged.
