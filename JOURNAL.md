@@ -241,3 +241,24 @@ edits are UNCOMMITTED: commit them with `git commit -- <paths>` when Astra's ind
 4. REPORT: fill final row, Calls (deflect 12 deg vs 20; rocket cooldown 1.4 vs 0.55; prologue rifle cadence; expert
    far below 20 = the bot, not the game?), bonus rows (e.g. `deflect_plating` pass_ratio_k 0.8, `mirror_edge` spread
    x0.5, `reflex_servo` guard drain x0.75), ledger; `node tools/evidence/cites.mjs REPORT.md`.
+
+## Session 5 (22:41 - 00:11)
+
+- 22:43 start. rocket-nail still running (pid 46936 = node, hard stop 23:26; at 22:42 on task 0b, prologue rifle
+  cadence, 0a staged not yet committed). No `MILESTONE ready` from melee. Ghost: g5 builds `GhostDeployBot` + one
+  `_pack` call site (MILESTONE ready by 23:40); brief 04 keeps `_pack` stable. Plan unchanged (session 4 NEXT).
+- 23:00 ASTRA rocket-nail 47 accepted (partial). 35341ab19 (0a deflect probe + share evidence; mutate 0/20: a dev probe
+  no test maps, accepted as evidence code), e160b1eb1 (0b quest/prologue `assault_rifle.cooldown_s` 0.61 = 37 ticks, the
+  shortest at which both prologue scenarios pass (30-36 fail); 0c rocket 13 m/s: the dash after a 15-tick reaction clears
+  the 5 m blast by 0.18 m, 14 m/s deals 1.5). Quest 1 digest a113296dbccc -> c211ee9720fc (Dock 9 kill of actor 3 tick
+  13301 -> 13302; still 1500 paid, 49 kills, 0 deaths; new tape replays identical). Rocket look + nail NOT done: Astra's
+  arena fixture shows Rivet's rocket grey with a vermilion tip (no blue), and Gloria's nail is 47.2 x 12.8 px at 32 px/m
+  (bigger than the Gatling's 48.6 x 6.7 by width): `evidence/n24-pressure/rounds/sizes-before.md`. I looked at
+  `gloria-64ppm-t46-before.png`: the nail is a big dagger-like spike; the "64" still looks like 32 (sent back).
+- 23:07 DECISION pressure: quest 1 digest move accepted (enemy rifle cadence is the changed behaviour; owner note 10);
+  pin `scenario_quest1_input.gd:90` updated as a one-line change by pressure. `weapon_fx_art.gd` and `weapon_art.json`
+  are owned by no lane and touched by no lane branch (git diff b3f4727c0..n24-{motion,melee,ghost,cast} empty, 23:07):
+  pressure edits them for notes 1 and 2 (the round's drawn look). fx_view.gd: one call-site line allowed if needed.
+- 23:02 ASTRA RUNNING finish since 23:02 (pid 54604, --resume, hard stop 00:08, last commit start 23:55; brief
+  `evidence/briefs/n24-pressure-06-finish.md`: 0 rocket cooldown 1.4 + quest pin, R1 rocket look (find the blue in the
+  real gauntlet), R2 nail smallest, D bot dash, E damage_by if time). Brief 04's stall task dropped.
