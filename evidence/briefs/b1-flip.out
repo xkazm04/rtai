@@ -1,0 +1,26 @@
+The wheel is now the default for Quest 1 and the arena, matching the gauntlet. It starts on slot 0, hands. `--wheel-start=drawn` and `--controls=legacy` still work.
+
+| Suite | Before passed | After passed |
+|---|---:|---:|
+| Scenarios, wheel | 49/65 | 65/65 across sweep and rerun |
+| Scenarios, legacy | 65/65 | 65/65 |
+| Scenarios, no flag | 65/65 | 65/65 |
+| Unit and integration, no flag | 3,637 | 3,640 |
+| Unit and integration, legacy | 3,637 | 3,640 |
+
+Both final GUT runs had zero failures and the same two existing skips. The scenario baselines come from the guard-flip evidence. The explicit-wheel sweep passed 62/65 initially. A fresh process passed all three failures. The full legacy and no-flag sweeps each passed in one run. The runner Node tests passed, `arena_course` accepted wheel, and invalid controls exited 2.
+
+**Commits**
+
+- `c9499ca02` added validation and forwarding in `run_scenarios.gd`, `run_unit.mjs`, GUT’s `gut_cli.gd` option registration, and `run_unit_controls.test.mjs`.
+- `a01c1e530` flipped the default, preserved the built-in sidearm trigger, stored player controls with replays, and updated the weapon fixtures and pickup twins. All 19 pre-commit checks passed.
+- `1d500862b` records the changed files, call sites, and reason for each pinned, twinned, or re-selected test. [Fixture inventory](<C:/Users/kazda/kiro/gtai-wt/n23-controls/evidence/controls-flip/tests.md>)
+- `65081954c` records the suite counts and full replay digests. The final legacy GUT tally arrived after 02:05 and is a one-line uncommitted update. [Counts and digests](<C:/Users/kazda/kiro/gtai-wt/n23-controls/evidence/controls-flip/counts.md>)
+
+**No golden moved.** The 60-second replay retained `cbeb734ff9b97c41…` and Quest 1 retained `37bf8deacaad2f48…`.
+
+**Mutation was partial at the hard stop.** The 74-file baseline passed. One of five mutants finished and was killed, giving **1/(1+0)** among completed mutants. Four received no verdict.
+
+**NEED:** Standalone `gtai.replay/1` tapes restore their recorded controls, with legacy as the fallback for old tapes. Cross-mode resume for the separate quest checkpoint format remains open because it requires a save-format change outside this lane.
+
+[astra: 4467s, exit 0]
