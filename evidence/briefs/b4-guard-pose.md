@@ -1,7 +1,7 @@
 # Brief b4-guard-pose: Rivet's held guard reads without the spark
 
 Lane `controls`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-controls`, branch `n23-controls`. Owner: "Redraw the guard pose so it reads without the spark."
-**Hard stop: HARDSTOP wall clock (check `date`). Commit deadline: COMMITBY.**
+**Hard stop: 06:35 wall clock (check `date`). Commit deadline: 06:30.**
 Read `evidence/briefs/n23-controls-common.md` first: environment and repo law bind this brief.
 
 ## Today
