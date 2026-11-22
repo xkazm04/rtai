@@ -193,9 +193,13 @@ Merged game: novice dies at 12 (10..13), average and expert both `>= 40`; separa
 - **The tuner on the combined game** (items 3, 5): death-wave score with censoring at the wave limit, targets in
   `tools/gauntlet/targets.json`, budget units read from `budget.unit` (10), the `cost` map, `max_alive`, the gauntlet
   `rivet` repair override, the `rivet_repair` group, shared tables off by default, `ablate.mjs --rev`; Node tests
-  `node --test "tools/gauntlet/*.test.mjs"` 75/75 at `3c379596f`.
+  `node --test "tools/gauntlet/*.test.mjs"` 84/84 at `37c90de2f` (code final since `78a0cc5b5`).
 - **The bot on the merged game** (item 6): blast clearance (0 self damage in 84 smoke waves) and all four moves used
   (`evidence/n23-loop/moves/on/`).
+- **The moves off and on** (item 6): Kerf's blink cuts shield-robot waves by 5.1 s (CI95 -7.89..-2.32) and the boss wave
+  from 34.0 to 26.0 s; Ohm (pre-fix) cuts turret waves by 0.7 s; the carry shows no measurable effect (9 pairs); Tonnage's
+  crack is used 7 times in 10 runs.
+- **The before and after page**: `evidence/n23-loop/compare.html` (main, street, cycle1, cycle2, merged arms).
 - Mutation: `bot_street_stats.gd` 100 % = killed 5 / (5 + 0) (`build` log quoted in JOURNAL 03:51).
 
 ## What does not
