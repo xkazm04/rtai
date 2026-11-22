@@ -1,6 +1,13 @@
 class_name PlayerMotion
 extends RefCounted
-## Fixed-tick walk, sprint, roll, vault, cover and dash. Stage attacks read the same mover.
+## Rivet's locomotion on the fixed tick, on top of TopDownMover (rivet_motion.json): the held
+## sprint (above the 7.5 m/s tackle line; the facing follows the walk, at a slower turn) and the
+## dodge roll (a press: roll_m on an ease-out curve, invulnerable on a window of its ticks, then
+## a recovery with a damped stick and a cooldown). Free movement is TopDownMover unchanged.
+## A roll press can start a vault, with its own path and i-frames before shared recovery.
+## Station cover owns the grounded snap, slide and corner peek while its flag is enabled.
+## Dash commits to a ground direction on a press; holding the key then maintains sprint.
+
 enum Phase { FREE, ROLL, RECOVER, VAULT, DASH }
 
 const TABLE: String = "res://data/tables/rivet_motion.json"
@@ -27,14 +34,14 @@ var recovery_ticks: int = 10
 var recovery_move_scale: float = 0.35
 var cooldown_ticks: int = 8
 var exit_speed_k: float = 0.5
-## When aiming, the cursor supplies the look direction even during a sprint.
+## n11 (the owner's "direction of player should follow cursor"; rivet_motion.json face_aim): the
+## look is the aim wherever a device aims, a sprint included; false = the turned, walking facing.
 var face_aim: bool = true
 var errors: Array[String] = []
 var _phase_tick: int = 0
 var _cooldown: int = 0
 ## The roll tick executed by the last step (-1 outside a roll): the i-frame window reads it.
 var _roll_tick: int = -1
-var _sprint_actions: PlayerActions = null
 
 
 static func shipped() -> PlayerMotion:
@@ -53,11 +60,12 @@ func drive(stage: CollectCallStage, pilot: StagePilot, c: PlayerCommand, walk: f
 		vault.drive(stage, pilot, c, walk)
 		if dash.frame >= 0:
 			stage.intent.move_by = dash.clip_move(stage, self, stage.intent.move_by)
-	else:
+	elif cover.spot != null:  # A roll exit released its spot and already called step().
 		@warning_ignore("return_value_discarded")
 		dash.rest_tick()
 
 
+## The displacement for one tick. `aim` Vector2.ZERO faces the walk direction.
 func step(c: PlayerCommand, walk_mps: float, actions: PlayerActions) -> Vector2:
 	_cooldown = maxi(_cooldown - 1, 0)
 	_roll_tick = -1
@@ -105,7 +113,8 @@ func facing() -> Vector2:
 	return mover.facing
 
 
-## Roll and vault keep their movement heading.
+## The look: the aim while a device aims (not during a roll, which faces its roll), else the turned
+## facing. Turning and the sprint's own heading stay in the mover (speed, strafe).
 func heading(aim: Vector2) -> Vector2:
 	if face_aim and aim != Vector2.ZERO and phase != Phase.ROLL and vault.frame < 0:
 		return aim.normalized()
@@ -150,7 +159,7 @@ func _free_step(c: PlayerCommand, walk_mps: float, actions: PlayerActions) -> Ve
 		return mover.step(c.move, c.aim, walk_mps, actions)
 	var aligned: bool = push.normalized().dot(mover.facing) >= min_forward_dot
 	var top: float = sprint_mps if aligned else walk_mps
-	return mover.step(c.move, Vector2.ZERO, top, _sprint_feel(actions))
+	return mover.sprint(c.move, top, actions, sprint_accel_mps2, sprint_turn_dps)
 
 
 func _start_roll(stick: Vector2) -> void:
@@ -186,14 +195,3 @@ func _recover_step(c: PlayerCommand, walk_mps: float, actions: PlayerActions) ->
 		_phase_tick = 0
 		_cooldown = cooldown_ticks
 	return mover.step(c.move * recovery_move_scale, c.aim, walk_mps, actions)
-
-
-## The sprint's feel: the table's accel and turn rate over the walk's brake and strafe.
-func _sprint_feel(actions: PlayerActions) -> PlayerActions:
-	if _sprint_actions == null:
-		_sprint_actions = PlayerActions.new()
-	_sprint_actions.accel_mps2 = sprint_accel_mps2
-	_sprint_actions.brake_mps2 = actions.brake_mps2
-	_sprint_actions.turn_dps = sprint_turn_dps
-	_sprint_actions.strafe_scale = actions.strafe_scale
-	return _sprint_actions

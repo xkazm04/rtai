@@ -87,6 +87,36 @@ func test_unused_dash_preserves_exact_legacy_motion_bytes() -> void:
 	assert_eq(actual.data_array, old.data_array)
 
 
+func test_cooldown_advances_once_on_ground_in_cover_on_roll_exit_and_in_vault() -> void:
+	for vaulting: bool in [false, true]:
+		before_each()
+		_tick(Vector2.DOWN, &"dash")
+		for i: int in motion.dash.ticks - 1:
+			_tick(Vector2.ZERO)
+		var start: int = motion.dash.cooldown
+		assert_eq(start, motion.dash.cooldown_ticks)
+		_tick(Vector2.ZERO)
+		assert_eq(motion.dash.cooldown, start - 1, "free ground")
+		if vaulting:
+			VaultTrial.approach_crate(stage)
+			_tick(Vector2.DOWN, &"roll")
+			assert_eq(motion.phase, PlayerMotion.Phase.VAULT)
+			assert_eq(motion.dash.cooldown, start - 2, "takeoff")
+			_tick(Vector2.DOWN)
+			assert_eq(motion.dash.cooldown, start - 3, "airborne")
+		else:
+			body.pos = Vector2(4, 11.65)
+			_tick(Vector2.ZERO, &"cover")
+			for i: int in motion.cover.snap_ticks:
+				assert_eq(motion.dash.cooldown, start - 2 - i, "cover")
+				_tick(Vector2.ZERO)
+			assert_eq(motion.cover.phase, PlayerCover.Phase.IN)
+			var before_exit: int = motion.dash.cooldown
+			_tick(Vector2.RIGHT, &"roll")
+			assert_eq(motion.phase, PlayerMotion.Phase.ROLL)
+			assert_eq(motion.dash.cooldown, before_exit - 1, "roll out of cover")
+
+
 func test_recorded_dash_stream_replays_the_stage_digest_twice() -> void:
 	var recording: ReplayLog = ReplayLog.new(1918)
 	var out: StreamPeerBuffer = StreamPeerBuffer.new()
