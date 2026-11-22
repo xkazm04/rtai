@@ -1,7 +1,7 @@
 # REPORT - lane `controls` (n23, 2026-11-22)
 
 Branch `n23-controls`, cut from `main` `76111adec`. Director: Opus; builder: Astra (all product edits).
-DRAFT (05:25): sections marked PENDING are filled after b4 (guard pose), b5 (films) and the final gate.
+DRAFT (06:45): sections marked PENDING are filled after b6 and the final gate.
 
 ## What works
 
@@ -17,7 +17,8 @@ DRAFT (05:25): sections marked PENDING are filled after b4 (guard pose), b5 (fil
 | Rivet's own blasts hurt him | `12d548bf6`, `93d0d5b49`, `4f175c24a`, `b765422a1`; `project/features/combat/rivet_self_blast.gd`; `evidence/controls-flip/self-blast-radii.md` | own rocket 22 HP at point blank, 0 at 3.5 m; nuke lethal within 4.0 m of the body edge; film 100 -> 88.2 in the open, 100 -> 100 behind a high wall; mutate 15/17 (88.2%) |
 | Per-wave `self_damage` in the gauntlet result | `gauntlet_run.schema.json` (own optional field) | seed 7 average: 0.0 x5 (measured, the bot did not self-hit) |
 | Guard pose reads without the spark | `5b46a21f1`: painted `rivet_guard.png` per pitch (p70, p55), cut by `tools/art/rivet_guard.py`; `project/features/player/player_guard_pose.gd`; stills `guard_pose_32.png`, `guard_pose_64.png` (old beside new, 8 facings, both pitches, no spark), `guard_phases_64.png`, film `guard_pose.mp4` | 2 in-betweens of 3 ticks + held + stagger held while broken; flat rig lowers its body; replay_60s, quest1_input, rivet_deflect byte-identical; mutate 19/20 (95%) |
-| Quest 1 and arena films on hands with the wheel | PENDING b5 | |
+| Quest 1 and arena films on hands with the wheel | `9f47d79a7`, `979ca87d0`, `1599978eb`; `evidence/controls-flip/films.md`; films `quest1_wheel.mp4` (24 s), `arena_wheel.mp4` (16 s), before `quest1_legacy.mp4` (12 s); stills `quest1_wheel_pickup.png`, `quest1_wheel_select.png`, `arena_wheel_select.png`, `wheel_hands_64.png` | no `--controls` flag given; each take `ok exit 0; SCRIPT ERROR 0; unknown arg 0` |
+| Wheel card names the pad and the use detail again | `dda3339d4`, `project/boot/quest1_controls_text.gd`; still `card_wheel.png` | 4 lines; card tests per mode green |
 
 ## What does not
 - The painted held guard figure is about 10 to 15% smaller than the rig rest pose (head and shoulders at 32 px/m, `guard_pose_32.png`), so Rivet visibly shrinks as the guard rises; the crouch explains part of it, not all. A scale pass in `tools/art/rivet_guard.py` (cut scale) is the fix.
@@ -36,7 +37,7 @@ DRAFT (05:25): sections marked PENDING are filled after b4 (guard pose), b5 (fil
 ## Calls for the owner
 1. **How much Rivet's own rocket hurts.** Shipped: `combat.json` `blast.rivet_hp_per_table_hp` 0.1 (own rocket 22 HP at point blank, close to an enemy lancer rocket's 24). The alternative is 0.01 (2.2 HP, which you would not notice). `self_k` 1.0 stays as the knob for "how much his own blasts count". Film `self_blast.mp4`, stills `self_blast_hit.png` / `self_blast_wall.png`.
 2. Self damage can kill (you said "hurt", not "spared"). A mini-nuke kills a full-health Rivet within 4 m of his body.
-3. A pickup under the wheel does not auto-select the new weapon (as last night); scroll or the grip key draws it.
+3. A walk-over pickup under the wheel does not auto-select the new weapon (as last night); scroll or the grip key draws it. But quest 1's scripted rifle grab at Dock 9 (Use, through `project/boot/collect_call/stage_actions.gd` -> `CombatArena.grab_rifle`) equips the rifle at once (`quest1_wheel_pickup.png`, film frame 1084). Kept: an explicit Use-grab reads as taking it in hand. The alternative (stow it like a floor pickup) is one call in the quest's stage actions, not this lane's file.
 
 ## Merge notes
 - `combat.json`: only the new `blast` block (moves adds `moves`; both are new top-level keys, sorted).
