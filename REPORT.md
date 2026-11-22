@@ -136,12 +136,27 @@ On arm `evidence/n23-loop/moves/on/`, off arms `evidence/n23-loop/moves/<id>-off
 (the bot is rarely in Tonnage beside a war machine in its stomp recovery). n22's gaps (waves with the enemy vs without):
 turret 38.3 vs 10.7 s, war machine 43.8 vs 26.0 s, shield robot 41.2 vs 12.7 s.
 
-PENDING: `node tools/gauntlet/move_table.mjs --off=... --on=... --move=<id>` per move.
+Paired on minus off (`node tools/gauntlet/move_table.mjs --off=<off batch> --on=evidence/n23-loop/moves/on/batch.json --move=<id>`:
+mean of per-seed median matched-wave deltas, paired bootstrap CI95, 10 pairs), and the enemy's wave medians (average,
+non-boss waves with the enemy vs without; boss waves alone; scratch `build/n23/gaps.mjs`):
+
+| Move | Enemy | On minus off, waves with the enemy | Waves without it | With / without the enemy, on | Same, off | n22 gap (main before the moves) |
+|---|---|---:|---:|---|---|---|
+| Ohm short-circuit | sentry turret | **-0.67 s** (-1.21..-0.18) | 0 | 32.3 / 15.5 s | 33.7 / 15.5 s | 38.3 / 10.7 s |
+| Kerf blink behind | shield robot | **-5.13 s** (-7.89..-2.32) | 0 | 33.0 / 18.2 s | 40.2 / 17.8 s | 41.2 / 12.7 s |
+| Kerf blink behind | war machine (boss waves) | | | 26.0 s | 34.0 s | 43.8 / 26.0 s |
+| Tonnage armour crack | war machine | no off arm: 7 uses in 10 runs | | | | 43.8 / 26.0 s |
+| Overkill carry | crowds | PENDING (`moves/carry-off/`) | | | | |
+
+- Kerf's blink does its job: shield-robot waves are 5.1 s shorter with it, and the boss wave 8 s shorter (the slice
+  one-shots the war machine, moves lane finding). Ohm's short-circuit is real but small (0.7 s on turret waves).
+- The gaps are still wide: a wave with a turret or a shield robot lasts about twice one without (32-33 s vs 16-18 s).
 
 ## The before and after page
 
 `tools/gauntlet/compare.mjs` (Astra call 7) puts the batches side by side as markdown + one self-contained HTML page:
-PENDING (`evidence/n23-loop/compare.md` / `.html`, filmed for the owner).
+`evidence/n23-loop/compare.md` / `evidence/n23-loop/compare.html` (arms main, street, merged, cycle1, cycle2), filmed for the owner.
+Merged game: novice dies at 12 (10..13), average and expert both `>= 40`; separation novice -> average yes (+28, 10/10 seeds), average -> expert no (gap 0, 0/10).
 
 ## Proposals (for the owner's pick; nothing built)
 

@@ -1,0 +1,33 @@
+{
+  "schema": "gtai.gauntlet-ablation/1",
+  "name": "kerf-off",
+  "head": "f998b36f02a5da701350274c43c7ef6f26869891",
+  "edits": [
+    {
+      "file": "project/data/tables/combat.json",
+      "pointer": "/moves/kerf_blink_behind/enabled",
+      "value": false,
+      "before": true
+    }
+  ],
+  "pick_filter": null,
+  "batch_args": [
+    "--profile=average",
+    "--pick=greedy",
+    "--controls=wheel",
+    "--seeds=10",
+    "--jobs=1",
+    "--waves=40",
+    "--out=C:\\Users\\kazda\\kiro\\gtai-wt\\n23-loop\\evidence\\n23-loop\\moves\\kerf-off"
+  ],
+  "batch_exit": 0,
+  "summary": {
+    "attempted": 10,
+    "accepted": 10,
+    "deaths": 0,
+    "median_wave_reached": 40,
+    "median_death_wave": null,
+    "capped_alive": 2,
+    "wave_timeouts": 0
+  }
+}
