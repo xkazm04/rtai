@@ -3,7 +3,9 @@ extends RefCounted
 ## Shared arena and street setup for replay, fuzz and guarded landings.
 
 
-static func stage_for(city: bool, ctx: WorldContext = null) -> ArenaStage:
+static func stage_for(
+	city: bool, ctx: WorldContext = null, use_wheel: bool = ControlsMode.wheel()
+) -> ArenaStage:
 	var stations: ArenaStations = ArenaStations.new()
 	if not city:
 		stations.add_file(ArenaStations.DIR + "/arena.json")
@@ -13,7 +15,7 @@ static func stage_for(city: bool, ctx: WorldContext = null) -> ArenaStage:
 	var stage: ArenaStage = ArenaStage.new(ArenaPlan.shipped(), stations)
 	stage.cells = StageCells.shipped() if city else null
 	stage.setup(ctx if ctx != null else World.build_context(Events, Data, 1918))
-	stage.pilot = StagePilot.new(PlayerActions.shipped())
+	stage.pilot = StagePilot.new(PlayerActions.shipped(use_wheel))
 	stage.pilot.motion.vault.enabled = true
 	stage.pilot.motion.vault.prepare(stage)
 	return stage

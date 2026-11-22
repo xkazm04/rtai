@@ -17,7 +17,7 @@ func run(_tree: SceneTree) -> String:
 func _cast() -> Dictionary:
 	var bus: EventBus = EventBus.new()
 	var data: DataStore = DataStore.new()
-	LaunchArgs.parse(PackedStringArray(["--ohm-bolt-delay=on"]))
+	LaunchArgs.parse(["--ohm-bolt-delay=on", "--controls=" + String(ControlsMode.id())])
 	var s: ArenaSession = ArenaSession.open(bus, data, SEED)
 	LaunchArgs.parse()
 	var input: GhostReelInput = GhostReelInput.attach(s.stage, s.actions)

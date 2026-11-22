@@ -24,9 +24,8 @@ func _carry(table: ArsenalTable) -> void:
 	var carry: RivetCarry = RivetCarry.new(
 		WeaponTable.shipped(), table, _ctx.rng.stream(&"gunplay")
 	)
-	carry.select(carry.add(&"molotov"), _stage.arena)
-	_pilot.carry = carry
 	_pilot.hold = WeaponHold.new(table)
+	PilotWeaponFixture.draw(_stage, carry, carry.add(&"molotov"))
 
 
 func _bits(fire: bool) -> int:

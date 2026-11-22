@@ -18,8 +18,7 @@ func before_each() -> void:
 	var carry: RivetCarry = RivetCarry.new(
 		WeaponTable.shipped(), ArsenalTable.shipped(), ctx.rng.stream(&"gunplay")
 	)
-	carry.select(carry.add(&"pistol"), _stage.arena)
-	_pilot.carry = carry
+	PilotWeaponFixture.draw(_stage, carry, carry.add(&"pistol"))
 
 
 ## Holds fire aimed right for `ticks`, the motion phase pinned; how many ticks sent a shot.

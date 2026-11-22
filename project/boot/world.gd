@@ -33,7 +33,7 @@ func _ready() -> void:
 		return
 	var replay: ReplayLog = null
 	if LaunchArgs.has("--replay"):
-		replay = ReplayLog.load_file(LaunchArgs.value("--replay"))
+		replay = ControlsReplay.load_for_playback(LaunchArgs.value("--replay"))
 		if replay == null:
 			get_tree().quit(2)
 			return

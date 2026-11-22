@@ -25,6 +25,8 @@ func run(_tree: SceneTree) -> String:
 
 
 func _check_substance(log: ReplayLog) -> String:
+	if log.final_hash != "cbeb734ff9b97c41645f735114692ea3b9e7cc6578750f32d8d9f31d69844e85":
+		return "60 s replay final hash changed: " + log.final_hash
 	if log.ticks < SECONDS * SimClock.TICK_RATE:
 		return "recorded only %d ticks" % log.ticks
 	if log.timeline.size() < 60 or log.input_changes() < 60:

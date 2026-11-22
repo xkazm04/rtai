@@ -17,6 +17,7 @@ class WalkInput:
 	var stage: ArenaStage
 	var stop_x: float
 	var interact_tick: int = INTERACT_TICK
+	var draw: bool = false
 
 	func _init(p_actions: PlayerActions, p_stage: ArenaStage) -> void:
 		actions = p_actions
@@ -27,11 +28,46 @@ class WalkInput:
 		var b: int = PlayerCommand.pack_aim(Vector2.RIGHT, actions)
 		if tick == interact_tick:
 			b |= 1 << actions.bit(&"interact")
+		if draw and tick == LIMIT_TICKS:
+			b |= 1 << actions.bit(&"weapon_slot_1")
+		if draw and tick in [LIMIT_TICKS + 1, LIMIT_TICKS + 3]:
+			b |= 1 << actions.bit(&"weapon_next")
 		var walk: int = TickInput.AXIS_MAX if stage.arena.rivet.pos.x < stop_x else 0
 		return TickInput.new(b, walk, 0)
 
 
 func run(_tree: SceneTree) -> String:
+	LaunchArgs.parse(["--controls=legacy"])
+	var reason: String = _legacy()
+	if reason == "":
+		LaunchArgs.parse(["--controls=wheel"])
+		reason = _wheel()
+	LaunchArgs.parse()
+	return reason
+
+
+func _wheel() -> String:
+	var s: ArenaSession = _open(Events, Data)
+	var tel: Dictionary = _play(s)
+	var wheel: RivetWheel = s.pilot.wheel
+	var inventory: Array[StringName] = [&"hands", &"pistol", &"rocket_launcher", &"machine_pistol"]
+	var kept: bool = wheel.order() == inventory and tel.ground == []
+	var walk: Dictionary = tel.after_walk
+	var hands: bool = wheel.selected() == &"hands" and tel.weapon == "" and walk.weapon == ""
+	s.step()  # The first shortcut now draws the machine pistol.
+	var drew: bool = (
+		wheel.selected() == &"machine_pistol" and s.stage.arena.rivet.weapon == wheel.selected()
+	)
+	for i: int in 3:
+		s.step()
+	drew = drew and wheel.selected() == &"pistol" and s.stage.arena.rivet.weapon == &"pistol"
+	s.world.free()
+	if not kept or tel.picked != 2 or tel.swapped != 0:
+		return "the wheel pickup lost a carried gun or dropped it on the floor: %s" % tel
+	return "" if hands and drew else "the pickup must stay on hands until the shortcut draws it"
+
+
+func _legacy() -> String:
 	var s: ArenaSession = _open(Events, Data)
 	s.world.loop().start_recording()
 	var tel: Dictionary = _play(s)
@@ -74,6 +110,7 @@ static func _open(bus: EventBus, data: DataStore, interact: int = INTERACT_TICK)
 			c.ground.drop(&"rocket_launcher", r + Vector2(1.5, 0.0))
 			c.ground.drop(&"machine_pistol", r + Vector2(3.0, 0.0))
 	var input: WalkInput = WalkInput.new(s.actions, s.stage)
+	input.draw = s.actions.wheel
 	input.interact_tick = interact
 	s.world.loop().set_input(input)
 	return s
@@ -85,7 +122,9 @@ static func _play(s: ArenaSession) -> Dictionary:
 	while s.tick() < LIMIT_TICKS:
 		s.step()
 		if s.tick() == INTERACT_TICK - 1:
-			after_walk = {"slots": _names(c.slots), "ground": _ground(c)}
+			after_walk = {
+				"slots": _names(c.slots), "ground": _ground(c), "weapon": String(c.weapon())
+			}
 	return {
 		"after_walk": after_walk,
 		"slots": _names(c.slots),

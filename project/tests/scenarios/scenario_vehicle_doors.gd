@@ -90,7 +90,7 @@ func run(_tree: SceneTree) -> String:
 		if LaunchArgs.has(flag):
 			@warning_ignore("return_value_discarded")
 			saved.append("%s=%s" % [flag, LaunchArgs.value(flag)])
-	LaunchArgs.parse(PackedStringArray(["--car-doors"]))
+	LaunchArgs.parse(saved + PackedStringArray(["--car-doors"]))
 	var first: Drive = Drive.new()
 	first.start()
 	first.drive(VehicleDoorRoute.new())

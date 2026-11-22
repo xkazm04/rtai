@@ -52,7 +52,9 @@ func test_low_cover_commits_until_landing_with_iframes_and_no_shots() -> void:
 	pilot.hold.state = WeaponHold.State.READY
 	var previous: Vector2 = body.pos
 	for i: int in 18:
-		stage.step(i, _command(i == 0))
+		var command: TickInput = _command(i == 0)
+		command.buttons |= pilot.actions.draw_sidearm(i)
+		stage.step(i, command)
 		if i == 0:
 			assert_eq(motion.phase, PlayerMotion.Phase.VAULT, "vault starts on the roll edge")
 		assert_eq(body.exposed, not (i >= 3 and i <= 12))

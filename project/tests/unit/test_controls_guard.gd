@@ -16,13 +16,15 @@ func after_each() -> void:
 	PlayerActions.shipped().install()
 
 
-func test_controls_default_and_unknown_values_use_legacy() -> void:
+func test_controls_default_and_unknown_values_use_wheel() -> void:
 	LaunchArgs.parse([])
-	assert_eq(ControlsMode.id(), &"legacy")
+	assert_eq(ControlsMode.id(), &"wheel")
 	LaunchArgs.parse(["--controls=typo"])
-	assert_false(ControlsMode.wheel())
+	assert_true(ControlsMode.wheel())
 	assert_string_contains(Log.recent()[-1], "[WARN]")
 	assert_string_contains(Log.recent()[-1], "typo")
+	LaunchArgs.parse(["--controls=legacy"])
+	assert_eq(ControlsMode.id(), &"legacy")
 
 
 func test_only_wheel_records_guard_and_moves_the_right_mouse_binding() -> void:
@@ -51,3 +53,30 @@ func test_only_wheel_records_guard_and_moves_the_right_mouse_binding() -> void:
 			actions.enable_cover_input(cover)
 			assert_eq(input.sample(0).is_pressed(actions.bit(&"guard")), wheel)
 		Input.action_release(&"guard")
+
+
+func test_saved_player_controls_override_the_playback_launch_options() -> void:
+	var path: String = TestTmp.dir("controls_replay").path_join("player.json")
+	for mode: String in ["legacy", "wheel"]:
+		LaunchArgs.parse(["--controls=" + mode, "--wheel-start=drawn"])
+		var world: World = autofree(World.new())
+		var bus: EventBus = autofree(EventBus.new())
+		var data: DataStore = autofree(DataStore.new())
+		world.start(bus, data, 7)
+		ControlsReplay.bind(world.loop(), PlayerActions.shipped())
+		world.loop().start_recording()
+		var tape: ReplayLog = world.loop().finish_recording()
+		LaunchArgs.parse(["--controls=wheel" if mode == "legacy" else "--controls=legacy"])
+		assert_eq(tape.save(path), OK)
+		assert_not_null(ControlsReplay.load_for_playback(path))
+		assert_eq(String(ControlsMode.id()), mode)
+		assert_eq(ControlsMode.start_drawn(), mode == "wheel")
+
+
+func test_replay_without_controls_metadata_uses_legacy() -> void:
+	var path: String = TestTmp.dir("controls_replay").path_join("old.json")
+	assert_eq(ReplayLog.new(7).save(path), OK)
+	LaunchArgs.parse(["--controls=wheel", "--wheel-start=drawn"])
+	assert_not_null(ControlsReplay.load_for_playback(path))
+	assert_eq(ControlsMode.id(), &"legacy")
+	assert_false(ControlsMode.start_drawn())

@@ -31,6 +31,11 @@ func _init(use_wheel: bool = ControlsMode.wheel()) -> void:
 	wheel = use_wheel
 
 
+## The opening sidearm shortcut for a scripted shooter starting on hands.
+func draw_sidearm(tick: int) -> int:
+	return 1 << bit(&"weapon_slot_1") if wheel and tick == 0 else 0
+
+
 static func shipped(use_wheel: bool = ControlsMode.wheel()) -> PlayerActions:
 	return from_table(DataTable.open(TABLE, SCHEMA), use_wheel)
 

@@ -24,8 +24,7 @@ func _carry(id: StringName) -> void:
 	var carry: RivetCarry = RivetCarry.new(
 		WeaponTable.shipped(), ArsenalTable.shipped(), _ctx.rng.stream(&"gunplay")
 	)
-	carry.select(carry.add(id), _stage.arena)
-	_pilot.carry = carry
+	PilotWeaponFixture.draw(_stage, carry, carry.add(id))
 
 
 ## A cop 8 m below Rivet and his round 1 m in front of Rivet, flying at him.

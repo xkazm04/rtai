@@ -28,8 +28,7 @@ func _carry_katana() -> void:
 		WeaponTable.shipped(), ArsenalTable.shipped(), _ctx.rng.stream(&"gunplay")
 	)
 	assert_eq(carry.add(&"katana"), 1, "the katana rides in the long slot")
-	carry.select(1, _stage.arena)
-	_pilot.carry = carry
+	PilotWeaponFixture.draw(_stage, carry, 1)
 
 
 ## Holds fire (aimed down at the cop) for `ticks`; returns the first tick a hit landed (-1: none).
@@ -84,8 +83,7 @@ func test_the_baton_locks_the_cop_it_hits() -> void:
 		WeaponTable.shipped(), ArsenalTable.shipped(), _ctx.rng.stream(&"gunplay")
 	)
 	assert_eq(carry.add(&"electro_baton"), 0, "the baton rides in the sidearm slot")
-	carry.select(0, _stage.arena)
-	_pilot.carry = carry
+	PilotWeaponFixture.draw(_stage, carry, 0)
 	var cop: Fighter = _cop()
 	cop.pos = _stage.arena.rivet.pos + Vector2.DOWN * 1.2
 	var first: int = _hold_fire(60)

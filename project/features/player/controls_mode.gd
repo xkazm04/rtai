@@ -5,7 +5,7 @@ extends RefCounted
 
 static func id() -> StringName:
 	if not LaunchArgs.has("--controls"):
-		return &"legacy"
+		return &"wheel"
 	var mode: String = LaunchArgs.value("--controls")
 	match mode:
 		"wheel":
@@ -13,8 +13,8 @@ static func id() -> StringName:
 		"legacy":
 			return &"legacy"
 		_:
-			Log.warn("input", "Unknown --controls value '%s', using legacy" % mode)
-			return &"legacy"
+			Log.warn("input", "Unknown --controls value '%s', using wheel" % mode)
+			return &"wheel"
 
 
 static func wheel() -> bool:
