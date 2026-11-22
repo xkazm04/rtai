@@ -159,7 +159,7 @@ func test_a_weapon_out_runs_on_its_drawn_armed_run_above_the_run_speed() -> void
 		assert_eq(RivetWalk.path_of(rig, "p55", w), p55, "%s runs drawn at 55" % w)
 		var tex55: Texture2D = load(p55) as Texture2D
 		assert_eq(tex55.get_width() % 8 + tex55.get_height() % RivetWalk.ROWS, 0, "whole cells")
-	var cannon: String = RivetWalk.path_of(rig, "p70", &"hand_cannon")
+	var cannon: String = RivetWalk.path_of(rig, "p55", &"hand_cannon")
 	assert_false(cannon.get_file().begins_with(RivetWalk.ARMED_RUN), "no drawn armed run")
 	RivetWalk.run = false
 	assert_true(RivetWalk.path_of(rig, "p70", &"pistol").get_file().begins_with(RivetWalk.ARMED))

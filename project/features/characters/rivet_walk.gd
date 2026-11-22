@@ -12,8 +12,11 @@ const DIP_TICKS: int = 3
 const MOVED: StringName = &"rivet_walk_moved"
 const RUN_FROM_MPS: float = 2.5
 const MAX_RUN_CYCLES_S: float = 3.5
-## Packed run-row comparisons follow the octant notes in RivetStride.
 const RUN_ROW_K: Dictionary[String, float] = {
+	"p70/hand_cannon/0": 0.91,
+	"p70/hand_cannon/3": 0.91,
+	"p70/hand_cannon/4": 0.84,
+	"p70/hand_cannon/5": 0.96,
 	"p70/assault_rifle/0": 0.87,
 	"p70/assault_rifle/1": 0.95,
 	"p70/assault_rifle/3": 0.82,
@@ -54,6 +57,7 @@ const ROWS: int = 8
 const RES: float = 1.5
 const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
 const ARMED_CYCLE_CELL: Dictionary[String, float] = {
+	"p70/hand_cannon": 69.7,
 	"p70/assault_rifle": 78.0,
 	"p70/electro_baton": 67.3,
 	"p70/chainsaw": 64.3,
@@ -148,14 +152,12 @@ static func is_run(path: String) -> bool:
 	return path.ends_with("/" + RUN) or path.get_file().begins_with(ARMED_RUN)
 
 
-## The grid frame for octant `o` at stride phase `phase` (one cycle = a full stride, two steps).
 static func frame_of(o: int, phase: float, n: int = frames) -> int:
 	var col: int = mini(int(fposmod(phase, 1.0) * n), n - 1)
 	return RivetFrames.BASE_OCT[o] * n + col
 
 
-## The drawn stride phase: by the ground walked since the last call (`scale`: the card's), the
-## 4-frame grid by the gait phase. Called every pose step (the phase carries between grids).
+## Each pose step carries the ground-distance phase between grids. Walk4 uses the gait phase.
 static func phase_of(rig: CutRig, art: String, scale: float) -> float:
 	var at: Vector2 = rig.get_meta(META_AT, rig.global_position)
 	rig.set_meta(META_AT, rig.global_position)
@@ -179,7 +181,6 @@ static func _direction(rig: CutRig) -> float:
 	return RivetStride.direction(rig, RivetFrames.oct_of(rig)) if rig.head != null else 1.0
 
 
-## The drawn cycle in cell px of the grid `card` shows under `art` (it6: per armed grid).
 static func cycle_cell(card: Sprite2D, art: String, running: bool) -> float:
 	if running:
 		return RUN_CYCLE_CELL.get(art, 0.0)
@@ -189,7 +190,6 @@ static func cycle_cell(card: Sprite2D, art: String, running: bool) -> float:
 	return CYCLE_CELL.get(art, 0.0)
 
 
-## The stride ratio of the drawn run row `card` shows for `rig`'s octant (RUN_ROW_K, else 1).
 static func row_k(card: Sprite2D, art: String, rig: CutRig) -> float:
 	var file: String = str(card.get_meta(RivetFrames.ON, "")).get_file() if card != null else ""
 	if not file.begins_with(ARMED_RUN):

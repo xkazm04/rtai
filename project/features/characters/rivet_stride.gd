@@ -13,6 +13,10 @@ extends RefCounted
 ## ARMED_CYCLE_CELL doubles the mean of both profile rows' contact-to-contact stance travel over
 ## two of four frames (evidence/n9/rivet_walk_armed_cycle.md). The flamer shuffles using CYCLE_CELL.
 ## RUN_ROW_K shortens a run where its row travels less than bare run8 (62-67 px at p70, 53 at p55).
+## RivetWalk.RUN_ROW_K uses the per-octant comparisons below.
+## RivetWalk.cycle_cell returns the active grid's drawn cycle in cell pixels.
+## RivetWalk.row_k looks up the run's measured octant and defaults to 1.
+## RivetWalk.frame_of takes one full stride, or two steps, as a phase cycle.
 
 ## P55 front-right/front-left vs bare (54.5/55): pistol 43/49, rifle 41.5/49, blade 46/53,
 ## heavy 42/45.5, flamer 37/51. Left profiles vs 50: heavy 46, flamer 50. At p70, heavy left
@@ -20,6 +24,7 @@ extends RefCounted
 const OCT_RAD: float = PI * 0.25
 ## Contact-to-passing travel of the two stance boots in a four-column armed walk, packed texels.
 const WALK_PROFILE_TRAVEL: Dictionary[String, Vector2] = {
+	StrideMatch.ROOT + "p70/rivet_walk_eq_hand_cannon.png": Vector2(25.0, 30.0),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_assault_rifle.png": Vector2(20.5, 29.5),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_electro_baton.png": Vector2(16.5, 31.5),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_chainsaw.png": Vector2(18.5, 28.0),
