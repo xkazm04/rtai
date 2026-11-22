@@ -264,3 +264,14 @@ JOURNAL/REPORT/briefs per path with `git commit -- <paths>`.
 - 23:37 ASTRA p6b-saw-look 17 accepted.
 - 23:38 FINAL GATE started on 9da9442bb: `node tools/gate/run.mjs --rev=HEAD` detached (Start-Process pid 74924,
   out build/final-gate.out.txt). No product commit after this (it is 23:38; the 00:00 cut holds).
+- 23:40 REPORT P6 rows + Next steps; frames.json now 13 entries (the p6 saw pair at #3).
+
+NEXT (session 6, from about 00:05): no Astra running (P6b done 23:37, lock gone). FINAL GATE on 9da9442bb running
+(pid 74924, out `build/final-gate.out.txt`, gate dir `build/gate/9da9442bb509/`, about 21 min, so done about 00:00).
+Read its PASS/FAIL line + `build/gate/9da9442bb509/gate.json` and put both in REPORT (replace the f6978fc2f gate row,
+drop the DRAFT header line). If it FAILS on our code: say so in REPORT with the line; a fix needs a commit after
+00:00, which the run forbids: report it, do not fix. After 01:30 (freeze): `node tools/gate/run.mjs --rev=HEAD --reels`
+once (lane's one Godot). Optional, before 01:30, films only (no product code): a 32 px/m clip of the saw hold after
+P6b (`tools/film/owner_take.gd` via Astra or by hand with the kill_reel tools), only if time and one Godot allow.
+REPORT final at 01:40: `node tools/evidence/cites.mjs REPORT.md` clean, commit JOURNAL/REPORT per path with
+`git commit -- <paths>`. Clean Temp: `gtai-gate-9da9442bb509` after the gate (memory: clean Temp after merge).
