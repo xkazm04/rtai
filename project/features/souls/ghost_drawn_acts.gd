@@ -15,6 +15,8 @@ const FOLLOW_TICKS: int = 10
 const HIT_TICKS: int = 10
 
 var instant_windup: int = 0
+## Age of the one-shot pose on a separately rendered deployment rig.
+var deploy_age: int = -1
 var _windup: bool = false
 var _seq: int = 0
 var _fed: bool = false

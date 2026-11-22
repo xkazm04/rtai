@@ -112,13 +112,17 @@ func _echo_at(j: int, at: Vector2, angle: float, alpha: float) -> void:
 
 ## The hanging cut: a thin white line across the target with a teal glow, shrinking to its middle.
 func _cut(c: Vector2, along: Vector2, fade: float, salt: int) -> void:
-	var half: float = CUT_HALF_M * ppm * (0.6 + 0.4 * fade)
 	var flick: float = 1.0 if reduced_motion else 0.85 + 0.15 * sin(stage.tick * 1.3 + salt)
+	draw_cut(self, c, along * ppm, fade, flick)
+
+
+static func draw_cut(canvas: Node2D, c: Vector2, along: Vector2, fade: float, flick: float) -> void:
+	var half: float = CUT_HALF_M * (0.6 + 0.4 * fade)
 	var a: Vector2 = c - along * half
 	var b: Vector2 = c + along * half
-	draw_line(a, b, Color(TEAL, 0.45 * fade * flick), 7.0, true)
-	draw_line(a, b, Color(WHITE, fade), 2.0, true)
-	draw_circle(c, 2.5, Color(WHITE, fade))
+	canvas.draw_line(a, b, Color(TEAL, 0.45 * fade * flick), 7.0, true)
+	canvas.draw_line(a, b, Color(WHITE, fade), 2.0, true)
+	canvas.draw_circle(c, 2.5, Color(WHITE, fade))
 
 
 ## The cut flare: full length within 2 ticks, then thinning out over cut_flare_s.

@@ -129,9 +129,7 @@ func _hit(b: Vector2, fade: float, k: float, seed_i: int) -> void:
 
 
 func stroke(pts: PackedVector2Array, fade: float, k: float) -> void:
-	draw_polyline(pts, Color(INK, 0.75 * fade), INK_W * k, true)
-	draw_polyline(pts, Color(TEAL, fade), TEAL_W * k, true)
-	draw_polyline(pts, Color(WHITE, fade), CORE_W * k, true)
+	OhmBoltDraw.stroke(self, pts, fade, k)
 
 
 ## A jagged line a -> b: kinks every STEP_M, offset across the line by a hash of (seed, kink).

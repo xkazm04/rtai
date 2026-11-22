@@ -151,6 +151,14 @@ func _pose_spectral() -> void:
 	_spectral.modulate.a = unfold
 	if stage != null and stage.pilot != null:
 		_spectral.live(stage, self)
+	elif drawn.deploy_age >= 0:
+		_spectral.pose(
+			self,
+			KerfSpectral.blink_pose(drawn.deploy_age, true),
+			false,
+			global_rotation,
+			_pose_tick
+		)
 	else:
 		var blink: KerfRoninDrawn.Pose = (
 			KerfRoninDrawn.Pose.BLINK if echo else KerfRoninDrawn.Pose.HOVER

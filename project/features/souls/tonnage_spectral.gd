@@ -6,7 +6,6 @@ const PPM: float = SimConst.PX_PER_M
 const BASELINE: float = 315.0
 
 
-## GhostFormView advances the rig, then feeds the current combat tick before drawing the frame.
 class Feed:
 	extends GhostDrawn
 	signal sampled(tick: int, hurt: int)
@@ -75,6 +74,7 @@ func advance(hauler: HaulerStage, facing: float, ticks: int, unfold: float) -> v
 	_ticks = ticks
 	_morph.set_progress(unfold, self, _cell, _cell_light)
 	if hauler == null:
+		_sample.stomp_age = _drawn.deploy_age
 		_combat_tick(0, -1)
 
 
