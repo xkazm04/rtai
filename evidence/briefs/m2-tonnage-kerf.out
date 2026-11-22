@@ -1,0 +1,20 @@
+Both moves are committed on `n23-moves` before the deadline. The tracked tree is clean. Nothing was pushed.
+
+| Commit | Changed tests | Full lint | Quick gate | Mutants killed / judged |
+|---|---:|---:|---|---:|
+| `5361551b0` `combat: crack the war machine's armour with a Tonnage recovery hit` | 3,649 passed, 2 skipped | 19/19 | Passed | 7/7 |
+| `228ca9765` `combat: land Kerf behind a blocking front plate when the rear is clear` | 3,663 passed, 2 skipped | 19/19 | Passed | 10/11 |
+
+**Tonnage** opens the walker once per post-stomp recovery for 240 ticks. The opening hit and subsequent frontal shots use 1.0, up from 0.5. Rear damage stays at 1.5. I verified the sag, lifted plates, and amber seam at gameplay scale. [32 px/m preview](C:/Users/kazda/kiro/gtai-wt/n23-moves/build/test-results/n23-tonnage-32ppm.png)
+
+**Kerf** bypasses a raised shield robot, sentry turret, or closed war-machine front plate when the rear landing is clear. The riot cop already takes full slice damage. Squad cover does not protect the carrier from the rear slice. Both moves count successful uses in the existing wave `moves` field.
+
+**Files and call sites.** Both commits update `combat.json`, `combat.schema.json`, and `move_table.gd`. Tonnage adds `tonnage_crack.gd`, `move_state.gd`, `foe_walker_crack_view.gd`, and `test_tonnage_crack.gd`. It updates `foe_armor.gd`, `foe_walker.gd`, `foe_walker_view.gd`, and `foe_ordnance_view.gd`. The sole `combat_arena.gd` edit calls `MoveState.write_fighter()` from `write_state()`. Kerf adds `kerf_behind.gd` and `test_kerf_behind.gd`; `KerfStage._blink()` uses the resolved landing and strike directions. All new scripts include their `.uid`.
+
+**Replay.** With both rows on and with both off, the scenario tape matched the historical file byte for byte: `3600 ticks, 184 events, 142 input changes, 60 checkpoints, final cbeb734ff9b97c41`. The only matching scenario setup was `ghost_attacks`, where Kerf encounters a riot-cop stand-in. Its output was byte-identical in both runs. No scenario uses Tonnage against the war machine.
+
+The requested bare `--replay` command exited 1 at tick 60 in both configurations because it starts the city simulation and the scenario tape records dummy systems. A separate 3,600-tick city tape passed that command in both configurations, exit 0, final hash `fc3bec610545ddfc`.
+
+**Mutation coverage is partial.** I stopped both runs to meet the hard stop. Kerf’s one survivor changed target-minus-origin to target-plus-origin. The fixture starts Rivet at zero, so it missed that fault.
+
+[astra: 4361s, exit 0]

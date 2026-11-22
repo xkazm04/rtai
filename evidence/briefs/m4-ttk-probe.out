@@ -1,0 +1,35 @@
+**NEED moves — authorize `tools/debt/baseline.json` for the probe’s 398 dev lines.** Full lint passed 18 of 19 checks. The sole failure was `dev_loc: 28529 -> 28927`. The brief allows a baseline update only for a new global flag, and the probe uses its own `KNOWN_FLAGS`. I stopped at that boundary. The probe and test are staged, the evidence is written, and neither commit was made. Mutation testing remains pending because the repo requires committing the helper first.
+
+All **200 trials** ended in a kill. A second full probe run produced byte-identical JSON. The delta below is the median paired **on minus off** time. Damage is median cumulative HP lost by Rivet, and uses are totals across ten seeds.
+
+| Move | Target | Weapon | Off (s) | On (s) | Paired Δ (s) | Faster | Rivet HP lost off/on | Uses off/on |
+|---|---|---|---:|---:|---:|---:|---:|---:|
+| Ohm short circuit | sentry turret | pistol | 7.83 | 7.83 | 0.00 | 0/10 | 0.0/4.0 | 0/20 |
+| Ohm short circuit | shield robot | pistol | 13.18 | 1.88 | -11.30 | 10/10 | 0.0/0.0 | 0/10 |
+| Tonnage armour crack | war machine | pistol | 17.53 | 11.83 | -5.70 | 10/10 | 77.4/41.4 | 0/10 |
+| Kerf blink behind | shield robot | kerf slice | 0.02 | 0.02 | 0.00 | 0/10 | 0.0/0.0 | 0/10 |
+| Overkill carry R1 | 3 × patrol cop | hand cannon | 1.82 | 0.98 | -0.83 | 10/10 | 1.2/0.0 | 0/10 |
+| Overkill carry R2 | 3 × patrol cop | hand cannon | 1.82 | 0.10 | -1.72 | 10/10 | 1.2/0.0 | 0/20 |
+| Overkill carry R1 | 3 × patrol cop | pistol | 0.65 | 0.65 | 0.00 | 0/10 | 0.0/0.0 | 0/0 |
+| Overkill carry R2 | 3 × patrol cop | pistol | 0.65 | 0.65 | 0.00 | 0/10 | 0.0/0.0 | 0/0 |
+| Overkill carry R1 | 3 × robot thug | hand cannon | 4.20 | 3.37 | -0.83 | 10/10 | 0.0/0.0 | 0/10 |
+| Overkill carry R2 | 3 × robot thug | hand cannon | 4.20 | 3.37 | -0.83 | 10/10 | 0.0/0.0 | 0/10 |
+| Overkill carry R1 | 3 × robot thug | pistol | 5.12 | 5.12 | 0.00 | 0/10 | 1.8/1.8 | 0/0 |
+| Overkill carry R2 | 3 × robot thug | pistol | 5.12 | 5.12 | 0.00 | 0/10 | 1.8/1.8 | 0/0 |
+
+Ohm’s ordinary bolt repeatedly stunned the turret with the move off. With it on, the turret fired zero rounds during short circuits but 8–10 rounds in the immunity gaps. Its frontal pistol multiplier stayed at 0.25. Kerf killed the 10 HP shield robot on tick 1 either way because even the blocked slice dealt 19.8 damage. Pistol kills left zero damage to carry. Against a 6 HP robot thug, the hand cannon carried 2 HP to a surviving neighbour, so rank 2 had no second kill to chain from.
+
+**Byte identity and checks**
+
+| Seed-7 average gauntlet, 10 waves | SHA-256 |
+|---|---|
+| Same-roster baseline `c7f139b95` | `2d60b987de723daafb7cb3424c334c8a42ae0f4cd776b478aeb14e7ca414555f` |
+| HEAD `73eec563c`, all four moves off | `2d60b987de723daafb7cb3424c334c8a42ae0f4cd776b478aeb14e7ca414555f` |
+
+Both gauntlets reached wave 10. Their 7,072-byte results matched directly. Both `replay_60s` runs passed with `3600 ticks, 184 events, 142 input changes, 60 checkpoints, final cbeb734ff9b97c41`.
+
+The full suite reported **`run_scenarios: 65 ran, 0 failed`** and exited 0. Godot logged cleanup diagnostics after the summary. All six new scripts passed Godot parse checks and the quick gate. GUT reported **2 passed, 0 failed, 0 skipped**.
+
+**Files.** Added the [probe entry and four helpers](C:/Users/kazda/kiro/gtai-wt/n23-moves/project/dev/moves), the [statistics test](C:/Users/kazda/kiro/gtai-wt/n23-moves/project/tests/unit/test_move_ttk_stats.gd), and their `.uid` files. The evidence includes the [TTK table and n22 comparisons](C:/Users/kazda/kiro/gtai-wt/n23-moves/evidence/moves/ttk.md), [per-seed JSON](C:/Users/kazda/kiro/gtai-wt/n23-moves/evidence/moves/ttk.json), and [byte-identity report](C:/Users/kazda/kiro/gtai-wt/n23-moves/evidence/moves/byte-identity.md).
+
+[astra: 1390s, exit 0]

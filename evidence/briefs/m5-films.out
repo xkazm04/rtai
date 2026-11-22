@@ -1,0 +1,14 @@
+**Four films and 11 matched before/after pairs are ready.** Each film is 16.00 seconds at 32 px/m, 70° tilt, and 1920×1080 at 60 fps. The [review index](<C:/Users/kazda/kiro/gtai-masters/n23/moves/frames.json>) names every still and its matching disabled frame.
+
+| Film | What to watch | Paired frames at 32 / 64 px/m |
+|---|---|---|
+| [Ohm short circuit](<C:/Users/kazda/kiro/gtai-masters/n23/moves/ohm_short_circuit.mp4>) | At 1.80 s the shield drops with two SWAT behind it. Rivet lands six full-damage frontal shots. At 9.58 s the turret’s sweep stops and its barrel drops. | 171 / 113, 580 |
+| [Tonnage armour crack](<C:/Users/kazda/kiro/gtai-masters/n23/moves/tonnage_armour_crack.mp4>) | Stomp at 1.63 s, split at 2.67 s, full-damage frontal hit at 3.53 s. The split closes at 6.67 s. The next shot deals half damage. | 213 / 155, 164 |
+| [Kerf blink behind](<C:/Users/kazda/kiro/gtai-masters/n23/moves/kerf_blink_behind.mp4>) | Head-on blink at 1.80 s. At the crate corner, Kerf lands 1.35 m behind the carrier at 10.92 s. The disabled take lands inside the shield arc. Kerf visibly faces back at 12.25 s. | 655, 656 / 736 |
+| [Overkill carry](<C:/Users/kazda/kiro/gtai-masters/n23/moves/overkill_carry.mp4>) | At 2.33 s, rank 1 carries one hand-cannon kill to a second cop. At 12.67 s, rank 2 chains twice and kills all three. | 765 / 793 |
+
+Kerf’s last pre-slice pair is byte-identical. The game resolves landing and damage together on the next tick, so frame 656 is the first visible difference. The [cut pose](<C:/Users/kazda/kiro/gtai-wt/n23-moves/project/features/souls/kerf_spectral.gd:52>) briefly faces along the travel path, and the [ordnance view](<C:/Users/kazda/kiro/gtai-wt/n23-moves/project/features/combat/squad/foe_ordnance_view.gd:42>) removes the shield on the lethal tick.
+
+**NEED to commit.** The film scene, four scripts and their UIDs, the shared `move_ttk_trial.gd` fixture change, the capture helper, and the [capture report](<C:/Users/kazda/kiro/gtai-wt/n23-moves/evidence/moves/film.md>) are staged. Godot resource checks and the quick gate passed. All four MP4s decoded fully, and the ten-seed TTK rerun reproduced m4b byte for byte. Full lint passed 18 of 19 checks. The sole failure is the 506-line increase in `project/dev/moves`. Recording that increase requires permission to edit `tools/debt/baseline.json`, outside the m5 allowlist. The source remains uncommitted.
+
+[astra: 2478s, exit 0]

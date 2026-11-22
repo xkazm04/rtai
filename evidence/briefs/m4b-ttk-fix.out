@@ -1,0 +1,51 @@
+Fixed Ohm’s turret regression. Across ten seeds, the stationary turret fired **0/85 rounds off/on before the fix and 0/0 after it**. Median Rivet HP lost fell from 4 to 0 with the move enabled. The flanking turret also fired **0/0**. Flanking cut kill time from 7.83 s to 4.02 s in both arms because ordinary bolts already kept the turret stunned.
+
+**Commits** landed by 05:54.
+
+| Commit | Subject |
+|---|---|
+| `b3d996956` | Measure paired kill times for the four combat moves |
+| `a8a060feb` | Preserve Ohm electro stun and measure turret flanks and Kerf slices |
+| `f5b32cfe7` | Record paired move kill times and all-off byte identity |
+
+Changed the six probe scripts under `project/dev/moves/`, their UIDs, `ohm_short_circuit.gd`, the stats and Ohm unit tests, and the debt baseline. The three evidence files contain the [kill-time report](C:/Users/kazda/kiro/gtai-wt/n23-moves/evidence/moves/ttk.md), [per-seed results](C:/Users/kazda/kiro/gtai-wt/n23-moves/evidence/moves/ttk.json), and [byte comparison](C:/Users/kazda/kiro/gtai-wt/n23-moves/evidence/moves/byte-identity.md).
+
+### Kill times
+
+All 260 timed fights ended in a kill. Times and HP are medians. Δ is the paired on-minus-off difference. Uses are totals across ten seeds.
+
+| Move | Target | Weapon | Off (s) | On (s) | Paired Δ (s) | Faster | Rivet HP lost off/on | Uses off/on | First slice HP off/on | Slices to kill off/on |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Ohm short circuit | sentry turret (stationary, before fix) | pistol | 7.83 | 7.83 | 0.00 | 0/10 | 0.0/4.0 | 0/20 | — | — |
+| Ohm short circuit | sentry turret (stationary) | pistol | 7.83 | 7.83 | 0.00 | 0/10 | 0.0/0.0 | 0/20 | — | — |
+| Ohm short circuit | sentry turret (flanking) | pistol | 4.02 | 4.02 | 0.00 | 0/10 | 0.0/0.0 | 0/17 | — | — |
+| Ohm short circuit | shield robot | pistol | 13.18 | 1.88 | -11.30 | 10/10 | 0.0/0.0 | 0/10 | — | — |
+| Tonnage armour crack | war machine | pistol | 17.53 | 11.83 | -5.70 | 10/10 | 77.4/41.4 | 0/10 | — | — |
+| Kerf blink behind | shield robot | kerf slice | 0.02 | 0.02 | 0.00 | 0/10 | 0.0/0.0 | 0/10 | 19.8/99 | 1/1 |
+| Kerf blink behind | war machine | kerf slice | 0.02 | 0.02 | 0.00 | 0/10 | 0.0/0.0 | 0/10 | 49.5/148.5 | 1/1 |
+| Kerf blink behind | sentry turret | kerf slice | 0.02 | 0.02 | 0.00 | 0/10 | 0.0/0.0 | 0/10 | 24.75/99 | 1/1 |
+| Overkill carry R1 | 3 × patrol cop | hand cannon | 1.82 | 0.98 | -0.83 | 10/10 | 1.2/0.0 | 0/10 | — | — |
+| Overkill carry R2 | 3 × patrol cop | hand cannon | 1.82 | 0.10 | -1.72 | 10/10 | 1.2/0.0 | 0/20 | — | — |
+| Overkill carry R1 | 3 × patrol cop | pistol | 0.65 | 0.65 | 0.00 | 0/10 | 0.0/0.0 | 0/0 | — | — |
+| Overkill carry R2 | 3 × patrol cop | pistol | 0.65 | 0.65 | 0.00 | 0/10 | 0.0/0.0 | 0/0 | — | — |
+| Overkill carry R1 | 3 × robot thug | hand cannon | 4.20 | 3.37 | -0.83 | 10/10 | 0.0/0.0 | 0/10 | — | — |
+| Overkill carry R2 | 3 × robot thug | hand cannon | 4.20 | 3.37 | -0.83 | 10/10 | 0.0/0.0 | 0/10 | — | — |
+| Overkill carry R1 | 3 × robot thug | pistol | 5.12 | 5.12 | 0.00 | 0/10 | 1.8/1.8 | 0/0 | — | — |
+| Overkill carry R2 | 3 × robot thug | pistol | 5.12 | 5.12 | 0.00 | 0/10 | 1.8/1.8 | 0/0 | — | — |
+
+Kerf’s frontal slice already killed each target on tick 1 at shipped HP. Sixty separate first-hit trials with 1,000 target HP measured the additional damage from bypassing each plate. Pistol kills left zero excess damage for either carry rank.
+
+### Byte identity and checks
+
+| Seed-7, wave-10 gauntlet result | SHA-256 |
+|---|---|
+| Same-roster baseline `c7f139b95` | `2d60b987de723daafb7cb3424c334c8a42ae0f4cd776b478aeb14e7ca414555f` |
+| Fixed build `a8a060feb`, all four moves off | `2d60b987de723daafb7cb3424c334c8a42ae0f4cd776b478aeb14e7ca414555f` |
+
+- Both 7,072-byte result files matched byte for byte. `replay_60s` passed all-on and all-off with final hash `cbeb734ff9b97c41`.
+- `ghost_attacks` passed. The full suite reported **`run_scenarios: 65 ran, 0 failed`**. Godot logged resource cleanup diagnostics after both successful runs.
+- Lint passed all 19 checks. Godot parsed the changed scripts, and quick ran before each commit. Changed-unit testing reported **3,680 passed, 0 failed, 2 skipped**. Both skips were missing card-art fixtures.
+- **Stats mutation score: 19/20 (95%).** Subtracting disabled-arm uses survived because every fixture records zero disabled-arm uses.
+- **Ohm mutation score: undefined.** The only generated mutant left `legacy_ticks` unused and failed compilation. A separate control ran the current Ohm tests against the compiling pre-fix implementation and produced **9 passed, 2 failed**. Both mutation runs used the repository’s operators and GUT oracle under `build/dev` because the stock CLI requires a worktree outside this lane.
+
+[astra: 2477s, exit 0]
