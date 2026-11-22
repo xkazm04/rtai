@@ -66,10 +66,13 @@ func test_life_and_cooldown_start_on_release_and_expire_on_the_exact_tick() -> v
 	for age: int in range(1, row.life_ticks):
 		_drive()
 		assert_eq(ghost.ticks_left, row.life_ticks - age)
+		assert_eq(ghost.last_refusal, &"", "an idle tick never retries the consumed release")
 		assert_eq(ghost.phase, GhostDeploy.Phase.ACTIVE)
 	assert_ne(_state(), started)
 	_drive()
 	assert_eq(ghost.phase, GhostDeploy.Phase.IDLE)
+	assert_eq(ghost.form, &"")
+	assert_eq(ghost.spot, Vector2.ZERO)
 	assert_false(_state().is_empty(), "cooldown still affects the replay state")
 	while stage.tick < released + row.cooldown_ticks - 4:
 		_drive()
@@ -78,6 +81,7 @@ func test_life_and_cooldown_start_on_release_and_expire_on_the_exact_tick() -> v
 	assert_eq(ghost.last_refusal, &"cooldown")
 	assert_eq(ghost.cooldowns[&"tonnage"], 2)
 	_drive(q)
+	assert_true(ghost.cooldowns.has(&"tonnage"), "one cooldown tick remains before release")
 	_drive()
 	assert_eq(stage.tick - released, row.cooldown_ticks)
 	assert_eq(ghost.last_refusal, &"")
