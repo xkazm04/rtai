@@ -20,7 +20,7 @@ var _picker: GauntletPilot
 var _composer: GauntletComposer
 var _limit: int
 var _block: int = 0
-var _first_wave: int
+var _pick_wave: int
 var _next_wave_tick: int
 var _live: Array[GauntletLiveWave] = []
 
@@ -75,7 +75,7 @@ func step(stage: ArenaStage, tick: int) -> void:
 			_clear_block()
 		elif _street.index > _block:
 			_block = _street.index
-			_first_wave = _run.wave + 1
+			_pick_wave = _run.wave
 			_street.hold_block(stage.arena)
 			_schedule(stage, tick)
 		return
@@ -138,7 +138,7 @@ func _fill(stage: ArenaStage, tick: int) -> void:
 
 func _clear_block() -> void:
 	_street.forward_limit = INF
-	owed_total = _run.wave - _first_wave + 1
+	owed_total = 0
 	owed_index = 0
 	_next_offer()
 	while not manual_picks and not pending.is_empty():
@@ -148,14 +148,17 @@ func _clear_block() -> void:
 
 
 func pick_wave() -> int:
-	return _first_wave + owed_index - 1
+	return _pick_wave
 
 
 func _next_offer() -> void:
-	while owed_index < owed_total:
-		owed_index += 1
-		pending = draw.offer(pick_wave(), _run.picks, _bonuses.owned())
+	var held: Array[StringName] = _bonuses.owned()
+	while _pick_wave < _run.wave:
+		_pick_wave += 1
+		pending = draw.offer(_pick_wave, _run.picks, held)
 		if not pending.is_empty():
+			owed_total = owed_index + draw.offer_count(_pick_wave, _run.wave, _run.picks, held)
+			owed_index += 1
 			if manual_picks:
 				pick_offered.emit(pending)
 			return

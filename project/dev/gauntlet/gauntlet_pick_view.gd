@@ -5,12 +5,11 @@ extends ColorRect
 var waves: GauntletWaves
 var pilot: GauntletPilot
 var _frames: int
-var _choice: int
 var _cards: HBoxContainer
 var _caption: Label
 var _art: HudArt = HudArt.new()
 var _feed: HudFeed = HudFeed.new()
-var _pressed_slot: int = -1
+var _selected_slot: int = -1
 
 
 func _ready() -> void:
@@ -31,14 +30,16 @@ func _present(ids: Array[StringName]) -> void:
 		_cards.remove_child(child)
 		child.queue_free()
 	_frames = 0
-	_pressed_slot = -1
+	_selected_slot = -1
 	_caption.text = tr("GAUNTLET__CLEARED").format({"wave": waves.pick_wave()})
+	if waves.owed_total > 1:
+		var count: Dictionary = {"index": waves.owed_index, "total": waves.owed_total}
+		_caption.text += "\n" + tr("GAUNTLET__PICK_OF").format(count)
 	for index: int in ids.size():
 		var card: GauntletPickCard = GauntletPickCard.new()
 		card.art = _art
 		card.feed = _feed
 		card.row = waves.draw.rows[ids[index]]
-		card.number = index + 1
 		_cards.add_child(card)
 		if pilot == null:
 			@warning_ignore("return_value_discarded")
@@ -54,11 +55,11 @@ func _present(ids: Array[StringName]) -> void:
 func advance() -> void:
 	_frames += 1
 	if _frames == 90:
-		_choice = pilot.pick(waves.pending)
+		_selected_slot = pilot.pick(waves.pending)
 		for i: int in _cards.get_child_count():
-			(_cards.get_child(i) as Button).modulate.a = 1.0 if i == _choice else 0.48
+			(_cards.get_child(i) as Button).modulate.a = 1.0 if i == _selected_slot else 0.48
 	elif _frames == 120:
-		_choose(_choice)
+		_choose(_selected_slot)
 
 
 func _choose(index: int) -> void:
@@ -72,8 +73,8 @@ func _input(event: InputEvent) -> void:
 	for i: int in _cards.get_child_count():
 		var action: StringName = RivetCarry.SLOT_ACTIONS[i]
 		if event.is_action_pressed(action):
-			_pressed_slot = i
-		elif event.is_action_released(action) and _pressed_slot == i:
+			_selected_slot = i
+		elif event.is_action_released(action) and _selected_slot == i:
 			_choose(i)
 		else:
 			continue

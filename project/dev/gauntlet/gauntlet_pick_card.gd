@@ -5,7 +5,6 @@ extends Button
 const INK: Color = HudArt.INK
 
 var row: Dictionary
-var number: int
 var art: HudArt
 var feed: HudFeed
 var _kind: String
@@ -61,7 +60,7 @@ func _draw() -> void:
 	draw_string(
 		font,
 		key.position + Vector2(0, 20),
-		tr("GAUNTLET__SLOT").format({"slot": number}),
+		tr("GAUNTLET__SLOT").format({"slot": get_index() + 1}),
 		HORIZONTAL_ALIGNMENT_CENTER,
 		key.size.x,
 		17,

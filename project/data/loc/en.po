@@ -45,6 +45,9 @@ msgstr "Stat"
 msgid "GAUNTLET__KIND__WEAPON"
 msgstr "Weapon"
 
+msgid "GAUNTLET__PICK_OF"
+msgstr "Pick {index} of {total}"
+
 msgid "GAUNTLET__SLOT"
 msgstr "{slot}"
 

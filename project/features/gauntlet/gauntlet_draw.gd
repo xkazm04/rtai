@@ -18,23 +18,9 @@ func _init(registry: RngRegistry, table: DataTable = null) -> void:
 
 
 func offer(wave: int, history: Array[Dictionary], held: Array[StringName]) -> Array[StringName]:
-	var taken: Array[StringName] = []
-	var owned: Array[StringName] = held.duplicate()
-	for pick: Dictionary in history:
-		var id: StringName = pick["taken"]
-		taken.append(id)
-		if rows.has(id) and rows[id]["kind"] != "stat":
-			owned.append(StringName(str(rows[id]["ref"])))
-	var pool: Array[StringName] = []
+	var pool: Array[StringName] = _eligible(wave, history, held)
 	var total: int = 0
-	for id: StringName in rows:
-		var row: Dictionary = rows[id]
-		var first: float = row["min_wave"]
-		if first > wave or taken.has(id):
-			continue
-		if row["kind"] != "stat" and owned.has(StringName(str(row["ref"]))):
-			continue
-		pool.append(id)
+	for id: StringName in pool:
 		total += _weight(id)
 	var offered: Array[StringName] = []
 	while offered.size() < 3 and not pool.is_empty():
@@ -48,6 +34,37 @@ func offer(wave: int, history: Array[Dictionary], held: Array[StringName]) -> Ar
 				pool.erase(id)
 				break
 	return offered
+
+
+## Eligibility only grows with wave number. Taking any eligible grant retires one grant,
+## including its weapon/ghost aliases. Count future offers without spending a random ticket.
+func offer_count(first: int, last: int, history: Array[Dictionary], held: Array[StringName]) -> int:
+	var projected: Array[Dictionary] = history.duplicate()
+	for wave: int in range(first, last + 1):
+		var pool: Array[StringName] = _eligible(wave, projected, held)
+		if not pool.is_empty():
+			projected.append({"taken": pool[0]})
+	return projected.size() - history.size()
+
+
+func _eligible(wave: int, history: Array[Dictionary], held: Array[StringName]) -> Array[StringName]:
+	var taken: Array[StringName] = []
+	var owned: Array[StringName] = held.duplicate()
+	for pick: Dictionary in history:
+		var id: StringName = pick["taken"]
+		taken.append(id)
+		if rows.has(id) and rows[id]["kind"] != "stat":
+			owned.append(StringName(str(rows[id]["ref"])))
+	var pool: Array[StringName] = []
+	for id: StringName in rows:
+		var row: Dictionary = rows[id]
+		var first: float = row["min_wave"]
+		if first > wave or taken.has(id):
+			continue
+		if row["kind"] != "stat" and owned.has(StringName(str(row["ref"]))):
+			continue
+		pool.append(id)
+	return pool
 
 
 func _weight(id: StringName) -> int:

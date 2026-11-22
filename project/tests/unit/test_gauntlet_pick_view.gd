@@ -36,13 +36,20 @@ func after_each() -> void:
 	entry.free()
 
 
-func _clear() -> void:
+func _clear(wave_count: int = 1) -> void:
 	var s: GauntletSession = entry.session
+	if wave_count > 1:
+		entry.waves._limit = wave_count
+		s.street.timeout_ticks = 1
 	s.stage.arena.rivet.pos.x = s.street.current().end_x() + 0.1
-	s.step()
-	for foe: Fighter in s.stage.arena.hostiles:
-		s.stage.arena.damage(foe, foe.max_hp * 10, s.stage.arena.rivet.id, &"claw")
-	s.step()
+	for wave: int in wave_count:
+		s.step()
+	for batch: int in wave_count:
+		for foe: Fighter in s.stage.arena.hostiles:
+			s.stage.arena.damage(foe, foe.max_hp * 10, s.stage.arena.rivet.id, &"claw")
+		s.step()
+		if entry.waves.live_wave_count() == 0:
+			break
 
 
 func test_last_clear_freezes_at_its_tick_until_a_number_key_is_released() -> void:
@@ -54,6 +61,7 @@ func test_last_clear_freezes_at_its_tick_until_a_number_key_is_released() -> voi
 	assert_false(entry.waves.done)
 	assert_true(entry.run.picks.is_empty())
 	assert_true(view.visible)
+	assert_eq(view._caption.text, "Wave 1 cleared")
 	var offers: Array[StringName] = entry.waves.pending.duplicate()
 	assert_eq(view._cards.get_child_count(), offers.size())
 	var event: InputEventAction = InputEventAction.new()
@@ -82,12 +90,15 @@ func test_a_pick_resumes_the_next_tick_without_reapplying_the_bonus() -> void:
 	assert_eq(entry.run.picks.size(), 1)
 
 
-func test_click_applies_the_only_eligible_card() -> void:
+func test_empty_opening_waves_leave_one_card_and_no_counter() -> void:
 	var rows: Dictionary[StringName, Dictionary] = entry.waves.draw.rows
 	var row: Dictionary = rows[&"stat_speed_10"]
+	row["min_wave"] = 3
 	rows.clear()
 	rows[&"stat_speed_10"] = row
-	_clear()
+	_clear(3)
+	assert_eq(view._caption.text, "Wave 3 cleared")
+	assert_eq(entry.waves.owed_total, 1)
 	assert_eq(view._cards.get_child_count(), 1)
 	assert_false(entry.waves.choose(1))
 	(view._cards.get_child(0) as Button).pressed.emit()
@@ -115,27 +126,33 @@ func test_empty_draw_finishes_without_showing_the_screen() -> void:
 	assert_true(entry.run.picks.is_empty())
 
 
-func test_taking_one_stacked_pick_presents_the_next_card_without_resuming_play() -> void:
-	var s: GauntletSession = entry.session
-	entry.waves._limit = 2
-	s.street.timeout_ticks = 1
-	s.stage.arena.rivet.pos.x = s.street.current().end_x()
-	s.step()
-	s.step()
+func test_three_stacked_picks_count_in_order_without_resuming_play() -> void:
+	_clear(3)
+	var tick: int = entry.session.tick()
+	for index: int in range(1, 4):
+		assert_true(view.visible)
+		assert_eq(view._caption.text, "Wave %d cleared\nPick %d of 3" % [index, index])
+		entry._physics_process(SimClock.TICK_DT)
+		assert_eq(entry.session.tick(), tick)
+		(view._cards.get_child(0) as Button).pressed.emit()
 	assert_false(view.visible)
-	for foe: Fighter in s.stage.arena.hostiles:
-		s.stage.arena.damage(foe, foe.max_hp * 10, s.stage.arena.rivet.id, &"claw")
-	s.step()
-	var tick: int = s.tick()
-	assert_eq(view._caption.text, "Wave 1 cleared")
+	assert_true(entry.waves.done)
+
+
+func test_counter_excludes_empty_offers_between_and_after_grants() -> void:
+	var rows: Dictionary[StringName, Dictionary] = entry.waves.draw.rows
+	for id: StringName in rows.keys():
+		if id not in [&"stat_speed_10", &"stat_damage_25"]:
+			assert_true(rows.erase(id))
+	_clear(4)
+	assert_eq(view._caption.text, "Wave 1 cleared\nPick 1 of 2")
 	(view._cards.get_child(0) as Button).pressed.emit()
-	assert_true(view.visible)
-	assert_eq(view._caption.text, "Wave 2 cleared")
-	entry._physics_process(SimClock.TICK_DT)
-	assert_eq(s.tick(), tick)
+	assert_eq(view._caption.text, "Wave 3 cleared\nPick 2 of 2")
 	(view._cards.get_child(0) as Button).pressed.emit()
 	assert_false(view.visible)
 	assert_true(entry.waves.done)
+	assert_eq(entry.waves.owed_index, 2)
+	assert_eq(entry.waves.owed_remaining, 0)
 
 
 func test_film_holds_the_clear_for_90_ticks_then_highlights_one_choice_for_30() -> void:
