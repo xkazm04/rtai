@@ -1,6 +1,6 @@
 # Brief 04b `dash-close` (short, pre-freeze): mutate survivors, then the film scenes (lane motion, n24)
 
-Hard stop: HARDSTOP wall clock (check `date` often). Commit deadline: COMMITBY, hard: the lane freezes new code then.
+Hard stop: 00:02 wall clock (check `date` often). Commit deadline: 23:57, hard: the lane freezes new code then.
 Whatever is not committed by then: leave it uncommitted, describe it in your final report, do not commit late.
 Fix lint and format findings in your own edit and go on. No amend, no rebase, no `git stash`, no `git add -A/./-u`,
 no `commit -a`, no reset --hard, never push. Stage per path. Every Godot run:
@@ -18,14 +18,14 @@ Read the five survivors; for each, kill it with a test in `project/tests/unit/te
 or new file with that prefix, with its `.uid`) or say in the report why it is equivalent. Commit the tests, then
 re-run mutate with `--max=20` and quote the new score.
 
-## 2. The film scenes into the repo (only if 25+ minutes remain before COMMITBY)
+## 2. The film scenes into the repo (only if 25+ minutes remain before 23:57)
 The scenes behind the owner's films live only at `C:/Users/kazda/kiro/gtai-masters/n24/motion/capture-source/`
 (`dash_take.*`, `dash_take_view.*`, `legs_film.*`, `legs_tile.*`). Commit them under `project/dev/motion/` (each with
 its `.uid`; run one `--import`), each declaring `const KNOWN_FLAGS`, runnable through `node tools/dev/run.mjs <name> ...`
 (quote the `dev_verdict` line of one short headless or `--quit-after` run of each). If the debt ratchet objects, accept
 with `node tools/debt/debt.mjs --update --accept-regression="dash and legs film scenes for n24 motion"` and commit the
 baseline in the same commit. Lint must pass (layers: nothing in boot/core/features may name these classes). If it
-does not go green by COMMITBY, leave it uncommitted and say so.
+does not go green by 23:57, leave it uncommitted and say so.
 
 ## Allowlist
 `project/dev/motion/**`, `project/tests/unit/test_player_motion_dash*.gd` (+ `.uid`), `tools/debt/baseline.json`
