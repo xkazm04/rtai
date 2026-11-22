@@ -45,6 +45,10 @@ func test_hit_uses_the_final_rear_plane_and_includes_square_corner_contact() -> 
 	assert_false(FoeShoveZone.connects(Vector2(-CLEARANCE, 0), Vector2.RIGHT, reach, radius))
 	assert_true(FoeShoveZone.connects(Vector2.ZERO, Vector2.RIGHT, reach, radius))
 	assert_true(FoeShoveZone.connects(Vector2(reach + radius, 0), Vector2.RIGHT, reach, radius))
+	# Make the expanded rail exactly one metre so Vector2 rounding preserves contact.
+	assert_true(
+		FoeShoveZone.connects(Vector2.ONE, Vector2.RIGHT, reach, 1.0 - FoeShield.SLAB_HALF_M)
+	)
 	assert_true(
 		FoeShoveZone.connects(Vector2(reach + radius, side - 0.001), Vector2.RIGHT, reach, radius)
 	)
