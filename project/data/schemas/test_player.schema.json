@@ -116,6 +116,11 @@
               "expert"
             ]
           },
+          "move_use": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
           "reaction_ticks": {
             "minimum": 0,
             "type": "integer"
@@ -148,6 +153,7 @@
           "form_use",
           "guard_lead_ticks",
           "id",
+          "move_use",
           "reaction_ticks",
           "rest_hp",
           "retreat_hp",

@@ -53,6 +53,21 @@ static func attack(
 		intent.attack = &"fire"
 
 
+static func best_gun(view: BotView, distance: float) -> BotView.Slot:
+	var best: BotView.Slot = null
+	for slot: BotView.Slot in view.held_slots():
+		if slot.melee or slot.reach < distance:
+			continue
+		if (
+			slot.splash_m > 0.0
+			and distance <= slot.splash_m + view.player().radius + view.player().blast_margin
+		):
+			continue
+		if best == null or slot.damage_per_tick > best.damage_per_tick:
+			best = slot
+	return best
+
+
 func _add_slot(view: BotView, stage: ArenaStage, index: int, id: StringName, melee: bool) -> void:
 	var slot: BotView.Slot = BotView.Slot.new()
 	slot.index = index
@@ -62,13 +77,18 @@ func _add_slot(view: BotView, stage: ArenaStage, index: int, id: StringName, mel
 	if melee:
 		slot.reach = GauntletBot.MELEE_M
 	elif stage.arena.tuning.weapons.has(id):
-		slot.reach = stage.arena.tuning.weapon(id).range_m
+		var gun: CombatTuning.Weapon = stage.arena.tuning.weapon(id)
+		slot.reach = gun.range_m
+		slot.damage_per_tick = gun.damage * gun.burst / maxi(gun.cooldown_ticks, 1)
 	elif _guns.weapons.has(id):
 		slot.reach = _guns.weapon(id).range_m
 	else:
 		return
 	if not melee and _guns.weapons.has(id):
-		slot.splash_m = _guns.weapon(id).splash_radius_m
+		var spec: WeaponSpec = _guns.weapon(id)
+		slot.splash_m = spec.splash_radius_m
+		var human_hp: float = _guns.target_hp[&"human"]
+		slot.damage_per_tick = spec.damage * spec.pellets / (spec.interval_ticks * human_hp)
 	view.held_slots().append(slot)
 
 

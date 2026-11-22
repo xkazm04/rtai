@@ -109,7 +109,9 @@ func _read_hostiles() -> void:
 	for fighter: Fighter in roster:
 		if not fighter.alive():
 			continue
-		_hostiles.append(BotArenaFoe.read(fighter, _stage.arena))
+		var foe: Hostile = BotArenaFoe.read(fighter, _stage.arena)
+		BotArenaMoves.observe(_stage, fighter, foe, _player)
+		_hostiles.append(foe)
 
 
 func _read_rounds() -> void:
@@ -142,6 +144,7 @@ func _read_forms() -> void:
 		_player.settled = true
 		_player.selected = &""
 		return
+	_player.stomp_reach = ghosts.hauler.form.num(&"stomp_radius_m")
 	var forms: GhostForms = ghosts.forms
 	_player.form = forms.current()
 	_player.settled = forms.settled()

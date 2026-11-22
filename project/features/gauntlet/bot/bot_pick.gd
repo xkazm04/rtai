@@ -6,6 +6,7 @@ var excluded_prefix: String = ""
 var _mode: StringName
 var _profile: BotProfile
 var _rng: RandomNumberGenerator
+var _moves_rng: RandomNumberGenerator
 var _bonuses: Dictionary
 
 
@@ -15,10 +16,11 @@ func _init(
 	_mode = mode
 	_profile = profile
 	_rng = registry.stream(&"test_player_pick")
+	_moves_rng = registry.stream(&"test_player_move_picks")
 	_bonuses = bonuses
 
 
-func pick(offered: Array[StringName], _wave: int) -> StringName:
+func pick(offered: Array[StringName], wave: int, carry_ref: StringName = &"") -> StringName:
 	if offered.is_empty():
 		return &""
 	if excluded_prefix.is_empty() and _mode == &"random":
@@ -37,6 +39,13 @@ func pick(offered: Array[StringName], _wave: int) -> StringName:
 				fallback = id
 				low = value
 			continue
+		if kind == &"effect" and ref in [MoveTable.OVERKILL, MoveBonus.OVERKILL_2]:
+			var min_wave: float = row.get("min_wave", 3)
+			if ref != carry_ref or wave < min_wave:
+				continue
+			if _profile.move_use < 1.0 and _moves_rng.randf() >= _profile.move_use:
+				continue
+			return id
 		if value > high:
 			best = id
 			high = value

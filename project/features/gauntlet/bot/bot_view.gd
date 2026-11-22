@@ -11,6 +11,8 @@ class Player:
 	var hp: float = 1.0
 	## A positive value enables repair decisions on a street with a cleared approach.
 	var street_max_hp: float = 0.0
+	var blast_margin: float
+	var stomp_reach: float
 	var walk_mps: float = 0.0
 	var roll_m: float = 0.0
 	var roll_ticks: int = 1
@@ -47,6 +49,11 @@ class Hostile:
 	var stomp_m: float = 0.0
 	var front_cos: float = 0.5
 	var opening: bool = false
+	var can_short: bool
+	var short_held: bool
+	var can_crack: bool
+	var cracked: bool
+	var can_blink: bool
 
 
 class Round:
@@ -62,6 +69,7 @@ class Slot:
 	var index: int
 	var reach: float
 	var melee: bool
+	var damage_per_tick: float
 	var splash_m: float
 
 

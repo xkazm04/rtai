@@ -6,6 +6,7 @@ const BONUSES: String = "res://data/tables/gauntlet_bonuses.json"
 
 var _bot_seed: int
 var _skill: BotProfile
+var _carry_pick: BotCarryPick = BotCarryPick.new()
 var _picker: BotPick
 var _brain: GauntletBot
 var _run: GauntletRun
@@ -40,6 +41,7 @@ func bind(run: GauntletRun, session: ArenaSession) -> void:
 
 
 func sample(tick: int) -> TickInput:
+	_carry_pick.observe(_stage.arena, _run.wave)
 	return _brain.sample(tick)
 
 
@@ -75,4 +77,4 @@ func _attack_or_travel(pilot: StagePilot) -> StringName:
 
 
 func pick(offered: Array[StringName]) -> int:
-	return offered.find(_picker.pick(offered, _run.wave))
+	return offered.find(_picker.pick(offered, _run.wave, _carry_pick.desired(_stage, _run.wave)))

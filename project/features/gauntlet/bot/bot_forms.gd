@@ -40,6 +40,8 @@ func desired(
 
 
 static func transform(me: BotView.Player, want: StringName) -> StringName:
+	if want == &"base" and me.form != &"base" and me.settled:
+		return &"power_hauler"
 	if want == &"" or not me.settled or me.form == want or not me.forms.has(want):
 		return &""
 	if me.form != &"base" or me.selected == want:
