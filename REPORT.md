@@ -12,7 +12,7 @@ Gate: TODO `node tools/gate/run.mjs --rev=HEAD` line + `gate.json` path.
 |---|---|---|
 | Slide confirmed on main | `evidence/n24-motion/slide_before.md`, `before/legs_32.mp4` | gloria, rocket_launcher, assault-rifle, chainsaw, electro_baton held one card (boot drift 2.39-2.41 m per second = the whole travel); bare hands and the five drawn weapons stepped. Second cause on hands: run frames hold 13-14 ticks (67 cm in-drawing excursion at 64 px/m) |
 | Nothing slides: every weapon walks and runs (`8b5f4d96e`) | `evidence/n24-motion/slide_after.md`, `project/tests/unit/test_rivet_walk_every_weapon.gd` | every `rivet_arsenal.json` id gets a non-empty walk and run grid; a weapon without its own grid walks on the bare-claw legs with its held part on the painted palm (`rivet_motion.json` `walk_grid`) |
-| Drawn grids, p70 | `evidence/n24-motion/grid_gloria.md`, `grid_rocket_launcher.md`, `grid_chainsaw.md`; `legs_game_32.mp4` | gloria `d50add33b` (walk cycle 86.7 cell px, RUN_ROW_K 0.98/0.97/0.92, sole drift walk 1.1 cm run 4.6-5.8 cm); rocket_launcher `4a8cfd7d4` (ARMED_CYCLE_CELL 84.0, RUN_ROW_K 0.91/0.94/0.93); chainsaw `aa9c2bddb` (cycle 64.3, RUN_ROW_K 0.82-0.89, sole drift at 32 px/m walk 1.44 / run 3.89 cm mean); electro_baton `1990dddbb` (cycle 67.3, drift walk 2.95 / run 6.79 cm mean; tone fix pending, brief 03d); assault_rifle `43e964b2c`; film `legs_game_32.mp4` 38.0 s with all five, fallback beside drawn |
+| Drawn grids, p70 | `evidence/n24-motion/grid_gloria.md`, `grid_rocket_launcher.md`, `grid_chainsaw.md`; `legs_game_32.mp4` | gloria `d50add33b` (walk cycle 86.7 cell px, RUN_ROW_K 0.98/0.97/0.92, sole drift walk 1.1 cm run 4.6-5.8 cm); rocket_launcher `4a8cfd7d4` (ARMED_CYCLE_CELL 84.0, RUN_ROW_K 0.91/0.94/0.93); chainsaw `aa9c2bddb` (cycle 64.3, RUN_ROW_K 0.82-0.89, sole drift at 32 px/m walk 1.44 / run 3.89 cm mean); electro_baton `1990dddbb` (cycle 67.3, drift walk 2.95 / run 6.79 cm mean; tone fix pending, brief 03d); assault_rifle `43e964b2c` (cycle 78.0); hand_cannon `0be2bb3e0` (cycle 69.7); film `legs_game_32.mp4` 38.0 s with all six, fallback beside drawn |
 | Dash on Shift (`9f4ce27a9`, `099db00f4`) | `evidence/n24-motion/dash_dodge.md`, `dash_rocket_32.mp4`, `dash_chase_32.mp4` | 4.5 m in 10 ticks, cooldown 40 ticks, 0 i-frames; rocket at 5/8/12 m cleared by +1.30/+1.41/+1.41 m after a 15-tick reaction (standing: hit, 10 HP); war machine stomp cleared at 1.8-3.5 m; closes 10 m on a fleeing cop (3.2 m/s) in 0.95 s vs 3.02 s running |
 | Dash trail (`b364b48e6`) | `dash_afterimage_64.png` | posed run-card copies in Rivet's own warm colours, no teal |
 | `dashes` per gauntlet wave (`ca2ada5f2`) | `project/data/schemas/gauntlet_run.schema.json` | counted dash starts; omitted when unmeasured |
@@ -50,6 +50,8 @@ Gate: TODO `node tools/gate/run.mjs --rev=HEAD` line + `gate.json` path.
 | dash (02) | 1 | bounced: schema bit cap |
 | dash resume (02b) | 71 | accepted |
 | grids (03) | 72 | accepted (gloria p70) |
-| grids resume (03b) | TODO | TODO |
+| grids resume (03b) | 54 | accepted (decision lines, rocket_launcher; chainsaw staged, stopped on a test NEED) |
+| grids resume (03c) | 47 | accepted (chainsaw, electro_baton, assault_rifle, hand_cannon, six-weapon film, 19.4 GB scratch freed) |
+| grids resume (03d) | TODO | baton tone, started 22:49 |
 
 What I would brief differently: name the game-speed film in the first brief (the first films were a lab board); fill the input schema maxima in the dash brief.
