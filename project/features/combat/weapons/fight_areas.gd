@@ -61,6 +61,7 @@ func land(arena: CombatArena, s: Shot, victim: Fighter, at: Vector2) -> void:
 	if w.splash_radius_m > 0.0:
 		note_blast(at, w.splash_radius_m, arena.tick)
 		_splash(arena, s, victim, at)
+		RivetSelfBlast.land(arena, s, at, hp_scale)
 	if w.chain_hops > 0 and victim != null and CHAIN_THROUGH_HUMANS:
 		_chain(arena, s, victim)
 	if w.patch_ticks > 0 and (w.kind == WeaponSpec.Kind.THROWN or victim == null):
