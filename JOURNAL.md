@@ -211,3 +211,28 @@ JOURNAL/REPORT/briefs per path with `git commit -- <paths>`.
   BAD framing: from tick ~294 the war machine stands over Rivet, the gunner and the shield robot, so the shield
   overload and the shield robot's shutdown are hidden under its chassis. Follow-up to Astra if P5 does not fix it:
   stage each robot alone (war machine last, at its own spot), as the human films do.
+- 22:48 REVIEW P5 commits so far: `314024a7d` (owner_take.gd + owner_takes.mjs + owner_review.py: live arena takes,
+  review sheets) and `5a02c1ae7` (swing_measure: click edges against real swing starts, swing_table.mjs). Tools and dev
+  only. LOOKED closeups/katana_64.png (star flash at contact, halves separate at +20 under the blade: reads) and
+  closeups/chainsaw_64.png (grind spray at the kill, body opened at +20; the held cop is drawn over Rivet's chest
+  with Rivet's striped collar painted over the cop: a draw-order read worth a REPORT "does not" line, not tonight).
+- 22:59 LOOKED electric_robots.mp4 re-take (22:52, review sheet): the robots are now staged apart. Katana bounces off
+  the thug at 115; baton shutdown of the thug at 324 and the gunner at 536; shield overload at 750 and the execute at
+  804; war machine at 960 only stunned (amber/white arcs on its chassis). The war machine still fills the tile (its
+  size is cast's and the owner's "few humongous" rule, not ours). Reads.
+- 22:59 REVIEW `890c59a68` + LOOKED cursor_before_after.mp4 (1920x1080, 60/1, 16.0 s; stills at 2/6/10/14 s): left
+  main, right this branch, an enlarged cursor inset at the top left of each half. Gun = crosshair on both sides; melee
+  = the crescent claw cursor (before) against the system arrow (after). Reads. Weak: half of each half is black void
+  below the street (framing, not a bug).
+- 23:11 P5 ended (3289 s, exit 0). Final: swings per 40-tick click old -> shipped: hands 1.60 -> 1.00, chainsaw
+  1.00 -> 0.60 (busy grind drops the click, checked 22:36), baton 2.00 -> 1.00, katana 1.60 -> 1.00, plasma 2.00 -> 1.00;
+  reruns tick-identical. Seven films 1920x1080 60 fps (six 16 s, electric_robots 18 s). Plasma tests 5/5, mutate
+  kill_plasma_art 1/19 -> 5/19 (26.3%, 14 drawing mutants survive). Scratch removed: 2112 PNGs (`build/p5-removed.json`).
+  Commits 314024a7d 5a02c1ae7 890c59a68 d4904c1ab 6e7868bce 8387f4ed9 ed1332dae: tools/film, dev/melee, one test.
+  Astra's own "does not": the white zigzag on the saw (P6 item 1), the baton's right-facing strike looks horizontal
+  (NEED director 22:16), plasma contractor reads like a patrol cop (cast's art).
+- 23:11 ASTRA p5-films 55 accepted.
+- 23:12 DECISION n24 melee: a click that lands while a swing (or a chainsaw grind) is still running is dropped, not
+  buffered: one click never yields a later automatic swing. A one-press buffer after recovery stays a Call for the owner.
+- 23:12 ASTRA RUNNING p6-saw-hold since 23:12 (--resume; Start-Process pid 17452; out evidence/briefs/n24-p6-saw-hold.out.txt;
+  hard stop 00:05, commit by 23:59).
