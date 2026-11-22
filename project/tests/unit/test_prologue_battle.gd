@@ -21,6 +21,11 @@ func _contact() -> PrologueGame:
 		officer.body.pos = stage.arena.rivet.pos + Vector2.LEFT * 2.0
 		stage.arena.damage(officer.body, 1.0, 0, &"claw")
 	stage.step(3, TickInput.new())
+	var battle: PrologueBattle = game.encounter.battle
+	assert_false(battle.ranged)
+	assert_lt(battle.last_action_tick, 0)
+	assert_lt(battle.exposed_until, 0)
+	assert_lt(battle.died_tick, 0)
 	return game
 
 
@@ -74,16 +79,29 @@ func test_authored_contact_orders_the_flank_and_the_volley_after_their_tells() -
 
 
 func _check_volley(stage: ArenaStage, battle: PrologueBattle) -> void:
-	assert_eq(battle.due_tick, stage.tick + battle.spec.attacks[&"volley"].windup)
+	var volley: BossAttack = battle.spec.attacks[&"volley"]
+	assert_eq(battle.due_tick, stage.tick + volley.windup)
 	var due: int = battle.due_tick
 	for tick: int in range(stage.tick + 1, due):
 		stage.step(tick, TickInput.new())
 	assert_eq(battle.fire.volleys, 0)
 	stage.step(due, TickInput.new())
+	assert_eq(battle.last_action_tick, due)
+	assert_eq(battle.exposed_until, due + volley.punish)
+	assert_eq(battle.due_tick, -1)
 	assert_eq(battle.fire.volleys, 1)
 	assert_eq(stage.arena.shots.size(), battle.formation.rifles.size())
 	for shot: Shot in stage.arena.shots:
 		assert_eq(shot.weapon, &"rifle")
+	stage.arena.rivet.pos = Vector2(4, 4)
+	var again: int = due + volley.recovery + battle.spec.phases[0].gap
+	for tick: int in range(due + 1, again):
+		stage.step(tick, TickInput.new())
+	assert_eq(battle.orders.size(), 2, "No second tell during recovery or the inter-order gap")
+	stage.step(again, TickInput.new())
+	var order: Dictionary = battle.orders.back()
+	assert_eq(order, {"line": "b2_l01_mulroney_line_up", "tick": again})
+	assert_eq(battle.due_tick, again + battle.spec.attacks[&"line_up"].windup)
 
 
 func test_cover_full_damage_last_man_gate_and_pistol_handoff() -> void:
@@ -118,6 +136,10 @@ func test_cover_full_damage_last_man_gate_and_pistol_handoff() -> void:
 	assert_true(battle.pistol.left)
 	assert_eq(battle.died_tick, stage.tick)
 	assert_eq(stage.pilot.wheel.order(), [&"hands"])
+	assert_true(stage.pilot.carry.first_seen.is_empty())
+	assert_true(stage.pilot.carry.ground.items.is_empty())
+	assert_null(stage.arena.gun)
+	assert_false(game.encounter.prompts.active("fire"))
 	arena.rivet.pos = yard.gate + Vector2.UP * (arena.rivet.radius_m + 0.1)
 	for tick: int in range(stage.tick + 1, stage.tick + 50):
 		stage.step(tick, TickInput.new(0, 0, TickInput.AXIS_MAX))
@@ -168,6 +190,10 @@ func test_death_rebuilds_the_eight_and_returns_the_picked_pistol_to_its_mark() -
 	assert_eq(beat, 2)
 	assert_eq(game.lines.current, "b2_l01_mulroney_line_up")
 	assert_eq(stage.arena.hostiles_alive(), 8)
+	assert_eq(battle.last_action_tick, -1)
+	assert_eq(battle.exposed_until, -1)
+	assert_eq(battle.fire.volleys, 0)
+	assert_false(battle.ranged)
 	assert_false(stage.arena.hostiles.has(previous))
 	assert_eq(carry.ground.items.size(), 1)
 	assert_eq(carry.ground.items[0].pos, mark)

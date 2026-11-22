@@ -23,7 +23,12 @@ func _ready() -> void:
 
 
 func boot() -> void:
-	if world != null or not _read_args():
+	if world != null:
+		return
+	var problem: String = _read_args()
+	if problem != "":
+		Log.error("prologue", problem)
+		get_tree().quit(2)
 		return
 	var data: DataTable = DataTable.open(TABLE, SCHEMA)
 	var plan: PrologueYard = PrologueYard.from_stage(data)
@@ -56,19 +61,15 @@ func boot() -> void:
 		_open_view(plan)
 
 
-func _read_args() -> bool:
+func _read_args() -> String:
 	result_path = LaunchArgs.value("--result")
 	var seed_arg: String = LaunchArgs.value("--seed")
 	if LaunchArgs.has("--seed") and not seed_arg.is_valid_int():
-		Log.error("prologue", "invalid seed %s" % seed_arg)
-		get_tree().quit(2)
-		return false
+		return "invalid seed %s" % seed_arg
 	if LaunchArgs.has("--result") and not result_path.is_absolute_path():
-		Log.error("prologue", "result path must be absolute")
-		get_tree().quit(2)
-		return false
+		return "result path must be absolute"
 	_seed = seed_arg.to_int() if seed_arg != "" else World.DEFAULT_SEED
-	return true
+	return ""
 
 
 func _open(plan: PrologueYard, data: DataTable) -> void:

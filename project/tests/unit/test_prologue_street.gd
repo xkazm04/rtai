@@ -1,11 +1,26 @@
 extends GutTest
 
 const ENTRY: PackedScene = preload("res://boot/prologue/prologue.tscn")
+const PHASE_ORDER: Array[String] = [
+	"TALK",
+	"HANDS",
+	"SQUAD_TALK",
+	"SQUAD_FIGHT",
+	"OUT",
+	"VOICES",
+	"PHONE",
+	"CALL",
+	"REQUEST",
+	"RING",
+	"RADIO",
+	"END"
+]
 var _game: PrologueGame
 var _stage: PrologueStage
 var _yard: PrologueYard
 var _street: PrologueStreet
 var _use: int
+var _phases: Array[String] = []
 
 
 func before_each() -> void:
@@ -16,6 +31,8 @@ func before_each() -> void:
 	_yard = _stage.plan as PrologueYard
 	_street = _game.encounter.street
 	_use = 1 << _stage.pilot.actions.bit(&"interact")
+	_phases.clear()
+	_note_phase()
 	var patrol: ProloguePatrol = _game.encounter.patrol
 	_stage.arena.damage(patrol.dale, 1.0, 0, &"claw")
 	_step()
@@ -43,6 +60,17 @@ func after_each() -> void:
 
 func _step(buttons: int = 0, dx: int = 0) -> void:
 	_stage.step(_stage.tick + 1, TickInput.new(buttons, dx, 0))
+	_note_phase()
+
+
+func _note_phase() -> void:
+	var phase: String = PrologueEncounter.Phase.keys()[_game.encounter.phase]
+	if _game.encounter.phase == PrologueEncounter.Phase.BEAT_TWO:
+		phase = "SQUAD_FIGHT" if _game.encounter.battle.ranged else "SQUAD_TALK"
+	elif _game.encounter.phase == PrologueEncounter.Phase.STREET:
+		phase = PrologueStreet.Phase.keys()[_street.phase]
+	if _phases.is_empty() or _phases.back() != phase:
+		_phases.append(phase)
 
 
 func _ring() -> void:
@@ -111,6 +139,7 @@ func test_channel_waits_for_fresh_press_releases_movement_and_writes_end_card() 
 	_game.result_path = TestTmp.dir("prologue").path_join("end.json")
 	_step(_use)
 	assert_eq(_street.end_tick, _stage.tick)
+	assert_eq(_phases, PHASE_ORDER)
 	var saved: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(_game.result_path))
 	var ended: bool = saved.get("ended", false)
 	var end_tick: float = saved.get("end_tick", -1.0)
