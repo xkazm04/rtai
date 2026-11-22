@@ -1,6 +1,6 @@
 # Quest 1 and arena control films
 
-The films use the committed game and dev drivers at `979ca87d0`. The 64 px/m still uses its parent `9f47d79a7`, which has the same arena driver. The two wheel films omit the controls flag. The comparison passes `--controls=legacy`. Each film uses D3D12, 1920 × 1080, 60 fixed frames per second, tilt 70 and 32 px/m. Frame numbers below start at zero.
+The two wheel films and their 32 px/m stills use `7847148d9`. The legacy take uses `979ca87d0`, and the separate 64 px/m arena take uses `9f47d79a7`. The two wheel films omit the controls flag. The comparison passes `--controls=legacy`. Each film uses D3D12, 1920 × 1080, 60 fixed frames per second, tilt 70 and 32 px/m. Frame numbers below start at zero.
 
 ## What the game shows
 
@@ -8,7 +8,7 @@ Quest 1 starts on hands. Its first story gun comes from Brass’s dialogue. Its 
 
 The pickup and the wheel update run at different points in the tick. `project/boot/collect_call/stage_actions.gd` passes the use press to `CombatArena.grab_rifle`, which equips the rifle. On the following tick the wheel follows the equipped weapon. A regular `WeaponPickups` floor item uses a different path and stays stowed under wheel controls. Quest 1’s shipped rifle pickup therefore cannot demonstrate the requested stowed pickup.
 
-The opening wheel readout also has a product limit. `project/features/player/wheel_readout_view.gd` draws owned entries for 60 ticks after a selection change. At launch the switch tick is -1. A scroll with only hands available leaves that tick alone. Hands and the pistol can both be seen in the arena readout after a real switch.
+The readout opens at simulation tick 0. It holds full opacity through tick 36, fades over the next 24 ticks and disappears at tick 60. A cycle press restarts the timer even when Hands is the only entry. Quest 1 opens with Hands alone. The arena opens with Hands highlighted above its carried pistol.
 
 ## Films and stills
 
@@ -16,8 +16,8 @@ All filenames in the tables resolve under `C:/Users/kazda/kiro/gtai-masters/n23/
 
 | File | Capture arguments | Length and frames | Verbatim film.log status |
 |---|---|---|---|
-| `quest1_wheel.mp4` | `quest1_wheel --rev=HEAD` | 24.083 s, 1,445 | `# exit 0, 144.1 s` |
-| `arena_wheel.mp4` | `arena_wheel --rev=HEAD` | 16.183 s, 971 | `# exit 0, 95.1 s` |
+| `quest1_wheel.mp4` | `quest1_wheel --rev=HEAD` | 24.083 s, 1,445 | `# exit 0, 142.2 s` |
+| `arena_wheel.mp4` | `arena_wheel --rev=HEAD` | 16.183 s, 971 | `# exit 0, 94.9 s` |
 | `quest1_legacy.mp4` | `quest1_legacy --rev=HEAD` | 12.017 s, 721 | `# exit 0, 73.4 s` |
 | `wheel_hands_64.png` source take | `wheel_hands_64 --rev=HEAD` | 16.183 s, 971 | `# exit 0, 94.2 s` |
 
@@ -32,12 +32,12 @@ ok exit 0; SCRIPT ERROR 0; unknown arg 0; flags checked: 4 against KNOWN_FLAGS (
 
 | Still | Source frame | What is visible |
 |---|---:|---|
-| `quest1_wheel_opening.png` | Quest 280 | Factory Row spawn. Rivet is empty-handed and the upper-right HUD says unarmed. |
+| `quest1_wheel_opening.png` | Quest 271 | Factory Row, 31 frames after the card. Hands is the sole highlighted entry beside the weapon ticket. |
 | `quest1_wheel_hands.png` | Quest 829 | After holstering Brass's gift, Hands is highlighted and Gloria is listed below. |
 | `quest1_wheel_approach.png` | Quest 1060 | Rivet approaches on hands. The Dock 9 objective prompts him to grab the rifle with E. |
 | `quest1_wheel_pickup.png` | Quest 1096 | The pickup has already selected Assault Rifle. Rivet has yet to scroll again. |
 | `quest1_wheel_select.png` | Quest 1375 | A manual scroll has returned to Assault Rifle. The muzzle flashes with 29 rounds left. |
-| `arena_wheel_hands.png` | Arena 274 | The first claw swing at the five-metre dummy. |
+| `arena_wheel_hands.png` | Arena 30 | Rivet stands at the range entrance. Hands is highlighted above the dimmed Pistol entry. |
 | `arena_wheel_select.png` | Arena 621 | The first pistol muzzle flash and the Pistol highlight share the frame. |
 | `wheel_hands_64.png` | Arena at 64 px/m, 877 | Rivet is empty-handed after holstering. Hands is highlighted above the carried pistol. |
 | `card_wheel.png` | Title 4 | The four-line desktop card at the original 1280 × 800. Movie writer reported `5 frames at 60 FPS`, exit 0. |
@@ -49,19 +49,31 @@ ok exit 0; SCRIPT ERROR 0; unknown arg 0; flags checked: 4 against KNOWN_FLAGS (
 | Film frames | Simulation ticks | Action |
 |---|---|---|
 | 0–239 | Before the first tick | Hold the wheel help card for four seconds. |
-| 240–719 | 0–479 | Start on Hands. Primary is held on ticks 110–154 for three swings. Two quick claws follow on ticks 205 and 277. Rivet walks toward the first objective. |
+| 240–719 | 0–479 | Start with Hands highlighted, then let the opening readout fade. Primary is held on ticks 110–154 for three swings. Two quick claws follow on ticks 205 and 277. Rivet walks toward the first objective. |
 | 720–1029 | 8379–8689 | The quest pad plays through to Brass handing Rivet Gloria, which equips immediately. Scroll to Hands at frame 815, back to Gloria at 907 and fire at 958. |
 | 1030–1083 | 13270–13324 | The second travel cut ends at the first contractor drop. Scroll to Hands and approach the rifle. |
 | 1084–1085 | 13325–13326 | Use equips the assault rifle while the wheel still reports Hands. On the next tick the wheel highlights Assault Rifle. |
 | 1179–1444 | 13420–13685 | Scroll to Hands at frame 1179, Gloria at 1254 and Assault Rifle at 1329. Fire at 1374, 1389, 1404, 1419 and 1434. |
 
-**Arena, default wheel.** The range opens on Hands at tick 0, with the reel's pistol in inventory. Rivet walks at tick 45, holds primary on ticks 270–379 and taps quick claw at 422. Seven hits land. The scroll at tick 580 draws the pistol. It fires at 620, 655, 700, 745, 790 and 825. The scroll at tick 864 holsters the pistol and highlights Hands. Film frames and simulation ticks coincide.
+**Arena, default wheel.** The range opens on Hands at tick 0, with Hands highlighted and the carried pistol listed below. Rivet walks at tick 45, holds primary on ticks 270–379 and taps quick claw at 422. Seven hits land. The scroll at tick 580 draws the pistol. It fires at 620, 655, 700, 745, 790 and 825. The scroll at tick 864 holsters the pistol and highlights Hands. Film frames and simulation ticks coincide.
 
 **Quest 1, legacy.** Frames 0–239 show the legacy card. The same opening inputs run from frame 240 through 719. At frame 395 the primary press has produced zero swings. At frame 530 the two quick claws have produced two. Frame 720 ends the take on Factory Row.
 
 ## Verification and changes
 
-The quest and arena each reported zero hidden body-frames. I reviewed contact sheets covering every decoded frame of the three MP4s and inspected the selected stills individually. Each delivered gameplay still matches its indicated source frame pixel for pixel. FFprobe confirmed H.264 at 1920 × 1080 and 60/1 fps with AAC audio in all three masters. Godot logged resource leaks during shutdown. The quest also logged a ghost-sheet asset warning. The master index contains 15 entries and all named media and before-image references resolve.
+The quest and arena each reported zero hidden body-frames. I reviewed consecutive-frame contact sheets covering all 1,445 quest frames and 971 arena frames in the replacement films. I also inspected the opening at full opacity, the fade boundary and the selected stills. The legacy film retains its earlier review. Each delivered gameplay still matches its indicated source frame pixel for pixel. FFprobe confirmed H.264 at 1920 × 1080 and 60/1 fps with AAC audio in all three masters. Godot logged resource leaks during shutdown. The quest also logged a ghost-sheet asset warning. The master index contains 15 entries and all named media and before-image references resolve.
+
+At `755ff6c26`, `node tools/tests/run_unit.mjs --changed` ran the full suite and reported 3,649 passed, zero failed and two skipped. The opening fade test checks ticks −1 through 61 and both cycle directions with Hands alone. The pilot HUD test now expects the readout at tick 1. The wheel stores the scroll tick alongside its existing switch tick, outside replay serialization. Reviewing quest frame 240 revealed a one-frame delay when the HUD was attached mid-frame. Commit `7847148d9` applies the same opacity before the first draw. A new test covers attachment at ticks 0, 48 and 60. The final changed suite reported 3,650 passed, zero failed and two skipped.
+
+The three scenario runs passed. Their complete serialized tapes matched the captures from before the wheel change.
+
+| Scenario | Ticks | Final state digest | SHA-256 of replay file, before and after |
+|---|---:|---|---|
+| `replay_60s` | 3,600 | `cbeb734ff9b97c41645f735114692ea3b9e7cc6578750f32d8d9f31d69844e85` | `73e204a23a6b82a9fcc2cfcf0bc2f025e647b1a0001c86df9499099510d318ed` |
+| `quest1_input` | 19,024 | `37bf8deacaad2f480055af695e77aa9296bb08c4f6b681c57344832333d4664a` | `20561e3c8181bf05eca4cc61610fe651bd139399d196ac2f7f24dfcbb4a2391a` |
+| `rivet_deflect` | 2,400 | `4352a44470140d68f6ba237fb842cfb9745b557caefca284a81da77f039fd7ae` | `e733e3db2a689694c3a482f4110a9f2870b0b23032214c1d51e76108372a26b4` |
+
+The deflect scenario keeps its tape in memory. An inspection script saved the log passed into its replay check, then called the original check. The other two files came directly from the scenarios. On the changed readout lines at `755ff6c26`, mutation testing killed 8/(8+0) (`--lines=29,31`). On the additional draw callbacks at `7847148d9` it killed 2/(2+0) (`--lines=30,34`). Both runs used `node tools/mutate/mutate.mjs --file=features/player/wheel_readout_view.gd --max=20 --tests=test_wheel_readout_fade`.
 
 The quest card and its unit test changed at `dda3339d4`. The existing `SLICE__CONTROLS_WHEEL` and `SLICE__CONTROLS_WHEEL_PAD` keys resolve their source through `QuestText`. Their English strings live in `project/boot/quest1_controls_text.gd`. Gamepad weapon cycling uses Back (button 4 on `weapon_next`, defined at line 292 of `project/data/tables/input_actions.json`). The GUT inventory correction is in `evidence/controls-flip/tests.md` at `95b58b7dc`.
 
@@ -162,12 +174,12 @@ foreach ($take in @('quest1_wheel','arena_wheel','quest1_legacy')) {
 function Still($film,$frame,$name) {
   ffmpeg -y -loglevel error -i $film -vf "select=eq(n\,$frame)" -fps_mode passthrough -frames:v 1 "$masters/$name.png"
 }
-Still "$masters/quest1_wheel.mp4" 280 quest1_wheel_opening
+Still "$masters/quest1_wheel.mp4" 271 quest1_wheel_opening
 Still "$masters/quest1_wheel.mp4" 829 quest1_wheel_hands
 Still "$masters/quest1_wheel.mp4" 1060 quest1_wheel_approach
 Still "$masters/quest1_wheel.mp4" 1096 quest1_wheel_pickup
 Still "$masters/quest1_wheel.mp4" 1375 quest1_wheel_select
-Still "$masters/arena_wheel.mp4" 274 arena_wheel_hands
+Still "$masters/arena_wheel.mp4" 30 arena_wheel_hands
 Still "$masters/arena_wheel.mp4" 621 arena_wheel_select
 Still "build/b5-films/wheel_hands_64/wheel_hands_64.avi" 877 wheel_hands_64
 ```
