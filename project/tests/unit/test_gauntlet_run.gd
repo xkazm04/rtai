@@ -9,6 +9,7 @@ func test_entry_validates_the_launch_contract() -> void:
 		"--seed=7",
 		"--bot=average",
 		"--waves=1",
+		"--wave-timeout=12",
 		"--pick=random",
 		"--controls=wheel",
 		"--result=C:/temp/run.json",
@@ -19,12 +20,31 @@ func test_entry_validates_the_launch_contract() -> void:
 		"--bot=test",
 		"--pick=last",
 		"--waves=x",
+		"--wave-timeout=0",
+		"--wave-timeout=banana",
 		"--controls=x",
 		"--result=relative.json",
 		"--unused=yes"
 	]:
 		assert_string_contains(entry._invalid_arg(ArenaArgs.parse([arg])), arg.get_slice("=", 0))
 	entry.free()
+
+
+func test_timeout_override_is_per_run_and_only_reported_when_given() -> void:
+	var entry: Entry = Entry.new()
+	var session: GauntletSession = entry._open_street(ArenaArgs.parse(["--wave-timeout=12"]))
+	assert_eq(session.street.timeout_ticks, 12 * SimClock.TICK_RATE)
+	var recorded: int = entry.run.to_result()["wave_timeout_s"]
+	assert_eq(recorded, 12)
+	session.close()
+	session = entry._open_street(ArenaArgs.new())
+	var table: DataTable = DataTable.open(GauntletStreet.TABLE, GauntletStreet.SCHEMA)
+	var seconds: int = table.integer(table.raw, "wave_timeout_s")
+	assert_eq(session.street.timeout_ticks, seconds * SimClock.TICK_RATE)
+	assert_false(entry.run.to_result().has("wave_timeout_s"))
+	session.close()
+	entry.free()
+	PlayerActions.shipped().install()
 
 
 func test_scene_hands_its_control_mode_to_the_live_pilot() -> void:

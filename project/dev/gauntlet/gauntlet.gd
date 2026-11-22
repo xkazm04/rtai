@@ -2,7 +2,14 @@ extends Node
 ## Headless and live gauntlet entry. The engine cap allows one simulated hour of street fighting.
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--seed", "--bot", "--pick", "--waves", "--result", "--controls", "--pick-view"
+	"--seed",
+	"--bot",
+	"--pick",
+	"--waves",
+	"--result",
+	"--controls",
+	"--pick-view",
+	"--wave-timeout"
 ]
 const RUN_TICKS: int = 216000
 const BOT_PATH: String = "res://features/gauntlet/bot/gauntlet_bot.gd"
@@ -51,7 +58,11 @@ func _ready() -> void:
 
 func _open_street(args: ArenaArgs) -> GauntletSession:
 	run.controls = StringName(args.text("--controls", "wheel"))
-	return GauntletSession.open_street(Events, Data, run, pilot)
+	run.wave_timeout_s = args.text("--wave-timeout", "0").to_int()
+	var street_session: GauntletSession = GauntletSession.open_street(Events, Data, run, pilot)
+	if street_session != null and run.wave_timeout_s > 0:
+		street_session.street.timeout_ticks = run.wave_timeout_s * SimClock.TICK_RATE
+	return street_session
 
 
 func _run_headless() -> void:
@@ -155,7 +166,7 @@ func _invalid_arg(args: ArenaArgs) -> String:
 				valid = s.is_empty()
 			"--seed":
 				valid = s.is_valid_int() and s.to_int() >= 0 and s.to_int() <= RngRegistry.SEED_MASK
-			"--waves":
+			"--waves", "--wave-timeout":
 				valid = s.is_valid_int() and s.to_int() >= 1
 			"--bot":
 				valid = s in ["novice", "average", "expert"]
