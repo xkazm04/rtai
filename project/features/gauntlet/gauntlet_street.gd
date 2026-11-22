@@ -61,7 +61,9 @@ func override_timeout(seconds: int) -> void:
 
 
 func wave_timeout_ticks(wave: int) -> int:
-	return late_timeout_ticks if wave >= late_timeout_from else timeout_ticks
+	if late_timeout_ticks > 0 and wave >= late_timeout_from:
+		return late_timeout_ticks
+	return timeout_ticks
 
 
 func current() -> GauntletSegment:

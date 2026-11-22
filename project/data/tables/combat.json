@@ -78,7 +78,7 @@
       "burst_gap_s": 0.09,
       "cooldown_s": 1.4,
       "damage": 1,
-      "damage_vs_rivet": 0.6,
+      "damage_vs_rivet": 1.2,
       "magazine": 30,
       "range_m": 16,
       "speed_mps": 30,
