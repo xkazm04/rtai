@@ -1,0 +1,5 @@
+**NEED one Part A allowlist addition.** [test_rivet_wheel_pilot.gd](C:/Users/kazda/kiro/gtai-wt/n23-controls/project/tests/unit/test_rivet_wheel_pilot.gd:159) asserts that the readout is hidden at tick 1. The brief requires Hands to be visible on that tick. Making both the feature and the suite pass requires changing that assertion to `assert_true(view.visible)`.
+
+I checked the clock at 06:42 local and traced the test through the stage tick. No files changed, no tests or captures ran, and no commits were made. Part B remains pending behind Part A.
+
+[astra: 87s, exit 0]
