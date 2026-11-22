@@ -21,6 +21,9 @@ Director's review of round 03 (19:55, files in `foes-n24/incoming/`):
   row 2 has the muzzle flash and row 3 the glow, i.e. the drawn order may be idle, fire, glow, idle: map rows to
   idle/tell/fire/recover by what is drawn, not by position. Review the other v2 sheets (fall_70_v2, hit_*_v2, 55s)
   the same way; the separate base-plate idea above is then not needed if the plate is still in every v2 cell.
+- 20:12 `sentry_turret_fall_70_v2` ACCEPTED at sheet level (facings right, plate still, row 3 a clear wreck) with one
+  fault: row 2 has translucent smoke wisps over the dome. Erase them in the cut (they are not part of the body) or
+  retake row 2; never ship a half-keyed wisp.
 - `war_machine_walk_70` ALSO REJECTED take 1: column 1 (down) shows the BACK louvres toward the viewer, column 5 (up)
   is a plan view with the lamps; columns 2-4 all show the louvres at the left with the cannon right.
 - `war_machine_fall_70` REJECTED take 1: column 1 (down) is a plan view from straight above, column 2 (down-right)
