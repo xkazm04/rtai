@@ -1,6 +1,6 @@
 # Brief g6-deploy-linger (lane `ghost`, n24): the ghost stays long enough to be seen
 
-Hard stop: HH:MM_STOP wall clock (check `date`). Last CODE commit by 00:00 sharp (the run's code freeze for new work); films and stills may be committed-free work after it until the hard stop. Commit each part as it goes green; fix lint and format findings in your own edit and go on.
+Hard stop: 00:12 wall clock (check `date`), because the Director runs the snapshot gate at 00:15 and the lane allows one Godot at a time. Last CODE commit by 23:58. Then films in this order until the hard stop: (a) deploy_kerf-64 close-up (keep the old one as before-linger), (b) deploy_all.mp4 at 32 px/m, (c) the other three close-ups, (d) stills. Whatever is not filmed by 00:12: stop, say so, leave no Godot running. Commit each part as it goes green; fix lint and format findings in your own edit and go on.
 
 ## What the Director saw
 A 10 fps strip of `C:/Users/kazda/kiro/gtai-masters/n24/ghost/deploy_kerf-64.mp4` (real speed): Kerf is on screen for 2 frames (~0.2 s), a teal slash streak, then gone. In the 32 px/m `deploy_all.mp4` at 4 fps he shows in one sample. The cause is the table: `ghost_attacks.json` `deploy.<form>.life_ticks` = kerf 15, dent 18, ohm 24, tonnage 30 (0.25-0.5 s), and `GhostDeployBody._wash_body` fades over the last third of that. The owner's words: "ghost is deployed, performs signature attack and disappears": the player must SEE a ghost, not a streak.
