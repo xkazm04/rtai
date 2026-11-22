@@ -221,6 +221,8 @@ Merged game: novice dies at 12 (10..13), average and expert both `>= 40`; separa
 - **Soft-lock after a timed-out wave** on the merged game: 4 of 30 runs froze until the tick cap (`NEED street`, JOURNAL
   07:08); the bot's part (it cannot finish a turret or shield robot it keeps blinking at) is loop's next item.
 - `bot_brain.gd` mutation 5/12 killed (Astra call 5): the moves logic is under-tested.
+- HUD shows `Health 111 / 110` in Tonnage form (film still `average-wave-9-at-10s.png`, average seed 1 wave 9; the run's
+  telemetry says max 110): `NEED street` in JOURNAL, not investigated.
 - The 216000-tick cap on the street merge makes uncapped runs cost 8-10 min; tonight's tuning ran bounded at 40 waves.
 
 ## What blocked or slowed you
@@ -230,6 +232,8 @@ Merged game: novice dies at 12 (10..13), average and expert both `>= 40`; separa
 - 20 min: `ablate.mjs` snapshot the moving lane HEAD; a scratch checkout carried cycle 1 until `--rev` landed (05:54).
 - 10 min: the git index lock held by Astra's commit hook blocked three JOURNAL commits.
 - 15 min: the tuner's first proposal touched a shared table (`enemies.json`); replaced by hand, then guarded in code.
+- 70 min: the films (Astra call 9) waited for the final gate (07:52-08:12, the lane's one Godot slot), then one windowed
+  capture per profile took 15-20 min each; the `--reels` gate after the freeze did not fit.
 
 ## Calls for the owner
 
