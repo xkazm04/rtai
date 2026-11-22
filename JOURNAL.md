@@ -90,3 +90,6 @@ NEXT: none for this lane; REPORT complete. Director merges n23-controls in the m
 - 09:31 session 8 (STABILIZE) start: tree clean at 2922d84c6, no Astra running (no lock; last call b8), cites 36/36 ok, both gate.json files present. Nothing to fix; no product work.
 
 NEXT: none for this lane. Director merges n23-controls (REPORT "Merge notes") and runs the `--reels` gate on the merged tree.
+- 09:41 session 9 (REPORT) start: tree clean at 5d1f6e589, no Astra running (no lock), no `NEED controls` in the other four journals. REPORT.md re-read: complete; cites 36/36 ok; masters frames.json 15 entries, every file and before present; cited build/dev logs present. No product work.
+
+NEXT: none for this lane. Director merges n23-controls (REPORT "Merge notes") and runs the `--reels` gate on the merged tree.
