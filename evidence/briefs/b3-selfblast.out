@@ -1,0 +1,23 @@
+Rivet’s own blasts can kill him in the tested worktree. **The gameplay activation is staged and uncommitted.** The commit hook passed 18 of 19 checks. Its debt ratchet rejected the required one-line increase in `fight_areas.gd` and the new film directory. **NEED:** permission to update `tools/debt/baseline.json`, which is outside the allowlist.
+
+`12d548bf6` committed the shared blast rules, `blast.self_k`, per-wave `self_damage`, schemas, and unit tests. `fb3710246` and `721263edc` committed the radii and replay evidence. The staged files contain the `FightAreas.land()` call immediately after `_splash`, the integration tests, and the film harness.
+
+Only `shot.from_rivet` triggers self-damage. `hp_scale` applies because player splash converts 100 table HP to one fighter HP. Tests verified wall cover, roll immunity, Tonnage reduction, and damage through guard. A lethal rocket credited Rivet’s ID and `rocket_launcher`, showed zero HP on the HUD, and recorded the weapon in the gauntlet death row.
+
+| Weapon | Radius | Splash damage (table HP) |
+|---|---:|---:|
+| Rocket launcher | 3.5 m | 220 |
+| Molotov | 2.2 m | 40 |
+| Homing shard | 1.2 m | 30 |
+| Mini-nuke | 12 m | 1,500 |
+
+The player arsenal values come from `weapons.json`. [Radii and damage evidence](C:/Users/kazda/kiro/gtai-wt/n23-controls/evidence/controls-flip/self-blast-radii.md)
+
+- **Tests:** 64/64 targeted unit tests passed. Both full scenario suites passed 65/65. The first default run missed two timing budgets that passed in isolation and on the full rerun.
+- **Mutation:** 15/(15+2) killed, **88.2%**. One mutant was invalid. None timed out.
+- **Seed-7 average gauntlet:** wave `self_damage` was **0.0, 0.0, 0.0, 0.0, 0.0**. The lethal integration test recorded **0.25** actual HP lost.
+- **Replays:** `replay_60s`, all six persisted tapes, and all 61 archived digest fields matched in both modes. In `brutality_kills`, self-hits at ticks **66 and 396** changed six intermediate checkpoints per mode. The final digests matched. No goldens needed repinning. [Old and new digests](C:/Users/kazda/kiro/gtai-wt/n23-controls/evidence/controls-flip/self-blast-digests.md)
+
+The 16-second 1080p60 film shows the same rocket taking Rivet from **100 to 99.21 HP** in the open and leaving him at **100 HP** behind the wall. [Film](C:/Users/kazda/kiro/gtai-masters/n23/controls/self_blast.mp4) · [Hit still](C:/Users/kazda/kiro/gtai-masters/n23/controls/self_blast_hit.png) · [Wall still](C:/Users/kazda/kiro/gtai-masters/n23/controls/self_blast_wall.png)
+
+[astra: 4122s, exit 0]

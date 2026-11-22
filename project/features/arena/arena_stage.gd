@@ -92,7 +92,7 @@ func setup(ctx: WorldContext) -> void:
 func step(p_tick: int, tick_input: TickInput) -> void:
 	var from: Vector2 = arena.rivet.pos
 	var hp: float = arena.rivet.hp
-	dodges.cull(arena, walls)
+	RivetBlast.cull_at_tick(dodges, arena, walls, p_tick)
 	super.step(p_tick, tick_input)
 	if shots_fired > _shots_before:
 		targets.engage(from, arena.rivet.facing, p_tick)

@@ -2,6 +2,7 @@
 // Unit + integration tests headless (TST-01 layers 1-2): import, load every script, then GUT.
 //   node tools/tests/run_unit.mjs [--select=<name|glob>[,..]]... [--test=<test function>]
 //                                 [--changed[=<git ref>]] [--fast] [--all] [--no-rerun] | --failed
+//                                 [--controls=wheel|legacy]
 // No args = EVERYTHING (the gate). --fast skips the slow tier (tools/tests/tiers.json). --select
 // takes test file basenames (test_x, x or a glob); a name that matches nothing is said with the
 // nearest stem, the rest still run, and a green run exits 3 UNVERIFIABLE, never 0 (none matched:
@@ -47,6 +48,7 @@ export function parseArgs(argv) {
     const v = a.includes('=') ? a.slice(a.indexOf('=') + 1) : null;
     if (k === '--select' && v) o.select.push(...v.split(',').filter(Boolean));
     else if (k === '--test' && v) o.test = v;
+    else if (k === '--controls' && ['wheel', 'legacy'].includes(v)) o.controls = v;
     else if (k === '--changed') o.changed = v || true;
     else if (a === '--no-rerun') o.rerun = false;
     else if (a === '--failed') o.failed = true;
@@ -152,13 +154,17 @@ export function scriptErrors(out) {
 
 const NONE = { passed: 0, failed: 0, skipped: 0 };
 
+export function gutEnv(controls) {
+  return { ...process.env, GTAI_CONTROLS: controls ?? '' };
+}
+
 /** One GUT pass over `files` (null = the config's own dirs). */
-async function gutPass(outDir, files, testName, junitName) {
+async function gutPass(outDir, files, testName, junitName, controls) {
   const junit = join(outDir, junitName).replace(/\\/g, '/');
   removeStale(join(outDir, junitName)); // never read a previous run's tally
   const config = files ? writeConfig(outDir, files, testName) : 'res://.gutconfig.json';
-  const r = await godot('gut', ['-s', 'res://addons/gut/gut_cmdln.gd', `-gconfig=${config}`,
-    `-gjunit_xml_file=${junit}`]);
+  const args = ['-s', 'res://addons/gut/gut_cmdln.gd', `-gconfig=${config}`, `-gjunit_xml_file=${junit}`];
+  const r = await godot('gut', args, { env: gutEnv(controls) });
   let parsed = { counts: NONE, cases: [] };
   let missing = false;
   try { parsed = parseJunit(readFileSync(junit, 'utf8')); } catch { missing = true; }
@@ -182,10 +188,10 @@ export async function runUnit(outDir, opts = {}) {
   }
   const steps = [['import', await godot('import', ['--import'])]];
   if (!plan.targeted) steps.push(['load_all', await godot('load_all', ['-s', 'res://tests/load_all.gd'])]);
-  const gut = await gutPass(outDir, plan.files, plan.testName, JUNIT_NAME);
+  const gut = await gutPass(outDir, plan.files, plan.testName, JUNIT_NAME, o.controls);
   steps.push(['gut', gut.r]);
   const failed = gut.cases.filter((c) => c.status === 'fail');
-  const flake = failed.length && opts.rerun !== false ? await rerunFailures(outDir, failed) : { flaky: [], failing: failed, log: '', notes: [] };
+  const flake = failed.length && opts.rerun !== false ? await rerunFailures(outDir, failed, o.controls) : { flaky: [], failing: failed, log: '', notes: [] };
   if (flake.rerun) steps.push(['gut rerun', flake.rerun]);
   const log = steps.map(([name, r]) => `===== ${name} (${describe(r)})\n${r.out}`).join('\n');
   writeFileSync(join(outDir, LOG_NAME), log, 'utf8');
@@ -234,9 +240,9 @@ function triageFor(outDir, ok, { failing, gut, steps, o, index }) {
 
 /** Re-runs each failing test file once in isolation. -> {flaky, failing, rerun (godot result), notes};
  *  every flaky test is appended to the machine-wide ledger. */
-async function rerunFailures(outDir, failed) {
+async function rerunFailures(outDir, failed, controls) {
   const files = [...new Set(failed.map((c) => c.file.slice('res://'.length)))].sort();
-  const pass = await gutPass(outDir, files, null, RERUN_JUNIT);
+  const pass = await gutPass(outDir, files, null, RERUN_JUNIT, controls);
   const { flaky, failing } = classifyRerun(failed, pass.cases);
   const notes = [];
   for (const c of flaky) {

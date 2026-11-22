@@ -94,12 +94,12 @@ func _attacks(stage: CollectCallStage, c: PlayerCommand, rivet: Fighter) -> void
 		var down: bool = c.is_held(actions, &"melee") and rivet.alive()
 		@warning_ignore("return_value_discarded")
 		shock.step(stage.arena, down, free and not melee.busy(), rivet.facing)
+		var before: int = melee.combo.starts
 		if press and free and not shock.busy():
-			var before: int = melee.combo.starts
 			melee.combo.press()
-			melee_swings += 1 if melee.combo.starts != before or melee.combo.buffered else 0
 		melee.combo.holding = _attack_held(c) and rivet.alive()
 		stage.intent.move_by += melee.step(stage.arena, false, rivet.facing)
+		melee_swings += melee.combo.starts - before
 		if c.was_pressed(actions, &"car"):
 			car_presses += 1
 			Log.info("pilot", "enter/exit car pressed (stub until the vehicles lane's API lands)")

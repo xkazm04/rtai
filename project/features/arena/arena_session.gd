@@ -49,6 +49,7 @@ static func open_with_args(
 	s.actions.install()
 	s.world.name = "ArenaWorld"
 	s.world.start(events, data, seed)
+	ControlsReplay.bind(s.world.loop(), s.actions)
 	s.plan = ArenaPlan.shipped()
 	s.stations = ArenaStations.shipped(ArenaStations.DIR, on_city)
 	if on_city:

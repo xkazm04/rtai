@@ -36,6 +36,7 @@ func finish(stage: ArenaStage, row: Dictionary) -> void:
 	row["rolls"] = _rolls
 	row["shots"] = stage.shots_fired - _shots
 	row["damage_taken"] = stage.telemetry.damage_taken - _damage
+	row["self_damage"] = RivetSelfBlast.finish_wave(stage.arena)
 	var seconds: Dictionary[String, float] = {}
 	for form: StringName in _forms:
 		seconds[String(form)] = roundf(_forms[form] * SimClock.TICK_DT * 100.0) / 100.0

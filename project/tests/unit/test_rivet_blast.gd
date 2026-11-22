@@ -153,5 +153,5 @@ func test_rivets_own_rocket_can_land_at_his_feet() -> void:
 	var rocket: Shot = Shot.new()
 	rocket.spec = WeaponTable.shipped().weapon(&"rocket_launcher")
 	arena.areas.land(arena, rocket, null, arena.rivet.pos)
-	assert_eq(arena.rivet.hp, 100.0)
+	assert_almost_eq(arena.rivet.hp, 78.0, 0.00001)
 	assert_eq(arena.areas.blasts.size(), 1)

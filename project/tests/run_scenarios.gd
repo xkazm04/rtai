@@ -9,7 +9,7 @@ extends SceneTree
 ## name exits 2. The tools runner uses it to re-judge budget scenarios on a quiet machine.
 
 const SCENARIO_DIR: String = "res://tests/scenarios"
-const KNOWN_FLAGS: PackedStringArray = ["--filter", "--only", "--evidence-dir"]
+const KNOWN_FLAGS: PackedStringArray = ["--filter", "--only", "--evidence-dir", "--controls"]
 
 
 func _initialize() -> void:
@@ -21,6 +21,10 @@ func _initialize() -> void:
 			quit(2)
 			return
 		values[flag] = arg.substr(flag.length() + 1)
+		if flag == "--controls" and values[flag] not in ["wheel", "legacy"]:
+			printerr("run_scenarios: expected --controls=wheel|legacy, got %s" % arg)
+			quit(2)
+			return
 	var filter: String = values.get("--filter", "")
 	Scenario.evidence_dir = values.get("--evidence-dir", "")
 	var only_text: String = values.get("--only", "")

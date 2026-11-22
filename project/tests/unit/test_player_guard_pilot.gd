@@ -51,6 +51,26 @@ func _drive(ids: Array[StringName], aim: Vector2 = Vector2.RIGHT) -> void:
 	pilot.drive(stage, TickInput.new(bits, 127, 0))
 
 
+func test_held_primary_counts_only_one_swing_in_the_first_ten_ticks() -> void:
+	_start("wheel")
+	for tick: int in 10:
+		stage.step(tick, TickInput.new(1 << actions.bit(&"fire")))
+		assert_eq(pilot.melee_swings, 1, "held tick %d" % tick)
+
+
+func test_second_press_counts_when_its_buffered_swing_starts() -> void:
+	_start("wheel")
+	stage.step(0, TickInput.new(1 << actions.bit(&"fire")))
+	stage.step(1, TickInput.new())
+	stage.step(2, TickInput.new(1 << actions.bit(&"fire")))
+	assert_true(pilot.melee.combo.buffered)
+	assert_eq(pilot.melee_swings, 1)
+	for tick: int in pilot.melee.combo.current().length():
+		stage.step(3 + tick, TickInput.new())
+	assert_eq(pilot.melee.combo.starts, 2)
+	assert_eq(pilot.melee_swings, 2)
+
+
 func test_guard_walk_facing_attacks_and_roll_exit() -> void:
 	_start("wheel")
 	var walk: float = stage.arena.tuning.rivet["walk_mps"]

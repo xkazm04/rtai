@@ -2,6 +2,24 @@
   "$id": "gtai.combat/1",
   "additionalProperties": false,
   "properties": {
+    "blast": {
+      "additionalProperties": false,
+      "properties": {
+        "rivet_hp_per_table_hp": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "self_k": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "rivet_hp_per_table_hp",
+        "self_k"
+      ],
+      "type": "object"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"
@@ -327,6 +345,7 @@
     }
   },
   "required": [
+    "blast",
     "schema",
     "doc",
     "rivet",

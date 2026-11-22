@@ -209,7 +209,7 @@ func _end() -> void:
 ## `-- --replay=<file>` (SIM-05): re-runs a recorded slice log on a fresh session and quits
 ## 0 identical, 1 diverged, 2 unreadable. `-- --record=<file>` is saved by the World on exit.
 func _replay(path: String) -> void:
-	var log: ReplayLog = ReplayLog.load_file(path)
+	var log: ReplayLog = ControlsReplay.load_for_playback(path)
 	var again: Quest1Session = Quest1Session.open(Events, Data, log.master_seed) if log else null
 	if again == null:
 		get_tree().quit(2)

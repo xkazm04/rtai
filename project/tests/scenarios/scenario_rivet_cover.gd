@@ -95,7 +95,7 @@ func _scripted() -> Trace:
 
 func _script_tick(i: int) -> void:
 	if i < 22:
-		_tick(Vector2.DOWN)
+		_tick(Vector2.DOWN, &"weapon_slot_1" if i == 0 else &"")
 	elif i == 22 or i == 80:
 		_tick(Vector2.ZERO, &"cover")
 	elif i >= 28 and i < 58:

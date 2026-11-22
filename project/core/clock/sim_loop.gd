@@ -26,6 +26,7 @@ func set_input(source: InputSource) -> void:
 ## Starts recording into a fresh log seeded like this world.
 func start_recording() -> void:
 	_recording = ReplayLog.new(_ctx.rng.master_seed())
+	_recording.set_meta(&"record_options", get_meta(&"record_options", {}))
 	_timeline = EventLog.new()
 	_timeline.attach(_ctx.events, _ctx.clock.tick)
 

@@ -1,20 +1,16 @@
 class_name ReelDirector
 extends ArenaHook
 ## The showcase's director cut (`--bot=reel --reel=director --loadout=pistol`): a directed
-## sequence, not a wave fight. Each ReelChapters chapter stands Rivet on one open mark in the
-## course, hands him the chapter's weapon through rivet-arsenal's carry (RivetCarry.take, the
-## pickup path a player uses), spawns the chapter's victims singly in front of him and lets the
-## real fight code kill them: CombatArena, the signature kills, the reactions, the blood.
+## sequence. Each chapter places Rivet on an open mark, gives him its weapon via RivetCarry.take
+## and spawns victims for the live combat, signature kills, reactions and blood.
 ## The chapter state moves on the 60 Hz tick as a hook (sim side, after the stage's step); the
 ## inputs (CombatReel.sample delegates here) only read it, so a director run replays.
 
-## The open mark (2 m east of brutality's solo-lab spot (-36, 2): the course's west edge stays
-## out of the 48 px/m frame; checked on the 05:20 chapter frames).
+## The open mark keeps the course's west edge out of the 48 px/m frame.
 const MARK: Vector2 = Vector2(-34.0, 2.0)
 ## The last chapter's dead move here (print and blood stay: cut.sh films one chapter per run).
 const MORGUE: Vector2 = Vector2(-400.0, -400.0)
 const HOLD_FIRE: int = 100000
-## Ticks Rivet faces the new victims before the first shot (the beat reads).
 const LOOK_TICKS: int = 45
 const RUN_M: float = 1.8
 const CLAW_M: float = 1.3
@@ -119,7 +115,11 @@ func sample(stage: ArenaStage, tick: int) -> TickInput:
 	var aim: Vector2 = gap.normalized()
 	var local: int = tick - started_tick
 	if local < LOOK_TICKS:
-		return _input(Vector2.ZERO, aim, 0)
+		var carry: RivetCarry = stage.pilot.carry
+		var draw: bool = actions.wheel and local == 1 and c.mode != &"claw" and carry != null
+		var slot: int = carry.slot_of(c.weapon) if draw else -1
+		var shortcut: int = 1 << actions.bit(RivetCarry.SLOT_ACTIONS[slot]) if slot >= 0 else 0
+		return _input(Vector2.ZERO, aim, shortcut)
 	match c.mode:
 		&"claw":
 			var walk: Vector2 = aim if gap.length() > CLAW_M else Vector2.ZERO

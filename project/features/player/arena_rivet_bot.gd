@@ -70,6 +70,9 @@ func sample(tick: int) -> TickInput:
 	if ticks < 0:
 		move = arrive(stage.plan.base + move - at, stage.arena.tuning.rivet["walk_mps"], actions)
 	var buttons: int = _buttons(s, ticks < 0)
+	var carry: RivetCarry = stage.pilot.carry if stage.pilot != null else null
+	if tick == 0 and carry != null and carry.weapon() in carry.melee_ids:
+		buttons |= 1 << actions.bit(RivetCarry.SLOT_ACTIONS[carry.current])
 	if s[2] != null:
 		var mark: Vector2 = s[2]
 		var aim: Vector2 = (stage.plan.base + mark - at).normalized()
@@ -99,13 +102,15 @@ static func arrive(to: Vector2, walk_mps: float, p_actions: PlayerActions) -> Ve
 ## Held buttons; a roll is a press on the step's first tick; a mash taps melee every MASH_EVERY.
 func _buttons(s: Array, goto: bool) -> int:
 	var b: int = 0
+	var blade: bool = stage.pilot != null and stage.pilot.wielding()
+	var strike: StringName = &"fire" if blade else &"melee"
 	for n: String in s[3]:
-		var bit: int = 1 << actions.bit(StringName(n))
+		var bit: int = 1 << actions.bit(strike if n == "melee" else StringName(n))
 		if n != "roll" or _in_step == 0:
 			b |= bit
 	var mash: bool = s[4]
 	if mash and not goto and _in_step % MASH_EVERY == 0:
-		b |= 1 << actions.bit(&"melee")
+		b |= 1 << actions.bit(strike)
 	return b
 
 
