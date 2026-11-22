@@ -1,6 +1,6 @@
 # Brief 08 (street lane, n23): a gauntlet-only enemy damage multiplier (loop's NEED)
 
-Hard stop: HARDSTOP wall clock (check `date`). Commit deadline: COMMITBY. Short call: one data knob, one test, one proof. No films. Write your final report BEFORE the mutate run; mutate is last and capped.
+Hard stop: 08:05 wall clock (check `date`). Commit deadline: 07:58. If you are short of time, the order is: the step 4 BEFORE run first (at HEAD, ~2 min), then steps 1-3 and the quick check, commit, then step 4 proof, then step 6 mutate (drop it if past 07:55). Short call: one data knob, one test, one proof. No films. Write your final report BEFORE the mutate run; mutate is last and capped.
 
 ## Setup for every Godot run
 `export APPDATA=C:/Users/kazda/kiro/gtai-n23/appdata/street` and
