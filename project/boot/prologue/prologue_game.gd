@@ -14,6 +14,7 @@ var live: LiveInput
 var lines: PrologueLines
 var encounter: PrologueEncounter
 var result_path: String
+var with_view: bool = true
 var _seed: int
 
 
@@ -51,7 +52,7 @@ func boot() -> void:
 	stage.hooks.append(encounter)
 	if LaunchArgs.has("--bot"):
 		_attach_bot()
-	if DisplayServer.get_name() != "headless":
+	if with_view and DisplayServer.get_name() != "headless":
 		_open_view(plan)
 
 

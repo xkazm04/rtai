@@ -110,7 +110,8 @@
         "2026-11-21: Exercise the scene control selection through the same street entry used by live play (dev_loc 28525 -> 28529)",
         "2026-11-22: n23 prologue: deterministic hands pilot and viewport captures of the yard and first kill (dev_loc 28529 -> 28682)",
         "2026-11-22: --prologue-stills for n23 prologue (dev_loc 28682 -> 28772)",
-        "2026-11-22: --bot and --prologue-stills for n23 prologue (dev_loc 28772 -> 28848)"
+        "2026-11-22: --bot and --prologue-stills for n23 prologue (dev_loc 28772 -> 28848)",
+        "2026-11-22: --clip for n23 prologue (dev_loc 28848 -> 28948)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -131,7 +132,7 @@
         "project/dev/human_react": 412,
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
-        "project/dev/prologue": 120,
+        "project/dev/prologue": 220,
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 1096,
@@ -148,7 +149,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 28848
+      "total": 28948
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -408,7 +409,8 @@
         "2026-11-21: n22 merge: damage() keeps both the guard block and the armour line (files_past_soft_cap 65 -> 65)",
         "2026-11-21: Pin a single squad rocket burst, high-wall occlusion and the stomp sight line in the existing foe tests (files_past_soft_cap 65 -> 67)",
         "2026-11-22: --bot and --result for n23 prologue (files_past_soft_cap 67 -> 67)",
-        "2026-11-22: --prologue-stills for n23 prologue (files_past_soft_cap 67 -> 67)"
+        "2026-11-22: --prologue-stills for n23 prologue (files_past_soft_cap 67 -> 67)",
+        "2026-11-22: --clip for n23 prologue (files_past_soft_cap 67 -> 67)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -417,7 +419,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 238,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 216,
+        "project/boot/launch_args.gd": 217,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,
