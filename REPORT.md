@@ -1,6 +1,6 @@
 # REPORT - n23 lane `prologue` (2026-11-22)
 
-Branch `n23-prologue`, cut from `main` `76111adec`. Last code commit `c9271f037` (07:06). Gate: GATE-TODO.
+Branch `n23-prologue`, cut from `main` `76111adec`. Last code commit `c9271f037` (07:06). Gate: `node tools/gate/run.mjs --rev=HEAD` at `c9271f037` (07:52): `gate: PASS` (lint 19/19 over 1982 files, unit 3671 passed 0 failed 2 skipped, scenarios 67 passed, parity bit for bit + planted mutation caught at step 629, selftest, export-audit 906 loaded 0 failed); `build/gate/c9271f0378db/gate.json`. `--reels` after the freeze: REELS-TODO.
 Films and stills: `C:\Users\kazda\kiro\gtai-masters\n23\prologue\` (`frames.json`, best first). Film entry: `project/dev/prologue/capture/film.ps1` (seed-7 pilot, 1920x1080, 60 fps, 32 px/m, tilt 70, `--write-movie`).
 
 The prologue plays from the first line to the end card: talk, a hands wave of ten police, the first gun from a fallen cop, Mulroney's squad, the walk out, the payphone, the Operation Dethrone channel and Don Fax's last line, then the end card. A deterministic pilot plays all of it headless in 173.8 s of game time with 0 deaths, and two runs are byte-identical.
