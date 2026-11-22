@@ -236,3 +236,19 @@ JOURNAL/REPORT/briefs per path with `git commit -- <paths>`.
   buffered: one click never yields a later automatic swing. A one-press buffer after recovery stays a Call for the owner.
 - 23:12 ASTRA RUNNING p6-saw-hold since 23:12 (--resume; Start-Process pid 17452; out evidence/briefs/n24-p6-saw-hold.out.txt;
   hard stop 00:05, commit by 23:59).
+- 23:16 LOOKED closeups/electro_baton_64.png: the contact flash + white/blue bolts on the cop at the kill tick, the
+  seizure with current at +20; Rivet's baton points away from the cop (the right-facing strike frame, NEED director
+  22:16), so the hit reads by the flash, not by the arm. closeups/plasma_sword_64.png: the glowing blade, the pale hot
+  streak across the cop, blood under; at +20 the halves part. Reads.
+- 23:16 REPORT P5 rows `ff9b42cda`; M/ paths in REPORT all exist (checked by hand: cites.mjs reads only backticked repo paths).
+- 23:19 P6 ended (415 s): Astra stopped at the allowlist with a NEED: the filmed cop runs `GuardBrain` (no squad
+  mind), so `mind.stun_until` would not hold it; its proposal was a new physical hold timer in `fighter_fx.gd` + a
+  movement check in `fight_areas.gd:97` (sim change). Before frames made: M/kills/p6/chainsaw-{32,64}-before.png,
+  electro_baton-{32,64}-before.png. Probe `build/p6-hold-probe.log`: the shipped stun holds the cop all 16 ticks.
+- 23:19 ASTRA p6-saw-hold 7 accepted (a correct NEED stop, no commit).
+- 23:20 DECISION n24 melee: the saw's hold keeps its shipped `stun_ticks` (sim byte-identical); only the look
+  changes: a view-only `FighterFx.hold_look_until` (NOT in write_state) set by our melee contact from a row value
+  `stun_look: "hold"`, read by a one-line call site at `fight_areas_art.gd:36` and our own react views. Rejected
+  Astra's physical timer (moves the sim and two unowned files for a look defect). Plasma blood item cancelled tonight.
+- 23:20 ASTRA RUNNING p6b-saw-look since 23:20 (--resume; pid 36424; brief evidence/briefs/n24-p6b-saw-look.md;
+  hard stop 00:05, commit by 23:59).

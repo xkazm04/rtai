@@ -1,0 +1,9 @@
+**NEED — extend the P6 allowlist to two simulation files.** The filmed cop uses `GuardBrain` and has no squad mind. In the live probe, the shipped saw held a burning cop for all 16 ticks. Both the proposed squad timer and the existing rise timer let it move on tick 1. [Probe log](<C:/Users/kazda/kiro/gtai-wt/n23-street/build/p6-hold-probe.log>)
+
+The proposed fix adds a physical hold timer to [fighter_fx.gd:23](<C:/Users/kazda/kiro/gtai-wt/n23-street/project/features/combat/weapons/fighter_fx.gd:23>) and makes the burn-panic movement check respect it in [fight_areas.gd:97](<C:/Users/kazda/kiro/gtai-wt/n23-street/project/features/combat/weapons/fight_areas.gd:97>). The renderer can continue reading electrical stun at its existing line 36.
+
+**Baseline evidence:** The saw’s white zigzag is visible at ticks 42, 46, 50 and 57 at both scales. The baton shows its contact flash and sustained arcs. [Saw 32](<C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p6/chainsaw-32-before.png>) · [Saw 64](<C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p6/chainsaw-64-before.png>) · [Baton 32](<C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p6/electro_baton-32-before.png>) · [Baton 64](<C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p6/electro_baton-64-before.png>)
+
+Baseline validation passed **19 unit tests and 3 scenarios**. Quick found no changed GDScript. No tracked source changes or commit. After frames, mutation scoring and the conditional plasma item remain pending.
+
+[astra: 415s, exit 0]
