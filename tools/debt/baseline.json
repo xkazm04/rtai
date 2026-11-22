@@ -111,7 +111,9 @@
         "2026-11-22: --pick-filter for n23 loop (dev_loc 28529 -> 28537)",
         "2026-11-22: RivetSelfBlast call site in fight_areas + dev/controls film for n23 controls (dev_loc 28529 -> 28704)",
         "2026-11-22: n23 controls refilm: visible range target, firing-port wall, production HP meter and 64 px/m capture (dev_loc 28704 -> 28803)",
-        "2026-11-22: move_ttk kill-time probe for n23 moves (dev_loc 28529 -> 28927)"
+        "2026-11-22: move_ttk kill-time probe for n23 moves (dev_loc 28529 -> 28927)",
+        "2026-11-22: --wave-timeout for n23 street (dev_loc 28527 -> 28538)",
+        "2026-11-22: n23 merge: gauntlet dev entry keeps the union of loop's and street's flags (dev_loc 29211 -> 29212)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -121,9 +123,9 @@
         "project/dev/bosses": 55,
         "project/dev/bots": 496,
         "project/dev/controls": 274,
-        "project/dev/enemy_ai": 2286,
+        "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
-        "project/dev/gauntlet": 521,
+        "project/dev/gauntlet": 526,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1396,
         "project/dev/guard": 397,
@@ -150,7 +152,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 29208
+      "total": 29212
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -467,7 +469,7 @@
         "project/features/combat/weapons/fight_areas.gd": 227,
         "project/features/combat/weapons/fight_areas_art.gd": 253,
         "project/features/combat/weapons/gun_fx.gd": 223,
-        "project/features/combat/weapons/gun_fx_art.gd": 231,
+        "project/features/combat/weapons/gun_fx_art.gd": 215,
         "project/features/fx/combat_blood.gd": 297,
         "project/features/fx/corpse_stains.gd": 245,
         "project/features/fx/noir/blood_fx.gd": 269,

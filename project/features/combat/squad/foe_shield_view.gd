@@ -23,7 +23,7 @@ static var _plate: PackedVector2Array = PackedVector2Array(
 static func draw_plate(view: Node2D, h: Fighter, mind: SquadMind, tick: int) -> void:
 	var shield: FoeShield = mind.shield if mind != null else null
 	if shield != null and (h.swing_left > 0 or shield.lunge_left > 0):
-		_shove_lane(view, h.pos, mind.agent.aim, mind.agent.arch.weapon.reach_m)
+		_shove_lane(view, h, mind)
 	var chest: Vector2 = Ink.px(h.pos + Vector2.UP * 0.76 * LOOK_SCALE)
 	view.draw_set_transform(chest, h.facing.angle(), Vector2.ONE * LOOK_SCALE)
 	view.draw_texture_rect(TORSO, Rect2(-23, -24, 46, 48), false)
@@ -45,26 +45,35 @@ static func draw_plate(view: Node2D, h: Fighter, mind: SquadMind, tick: int) -> 
 		_sparks(view, at, shield, tick)
 
 
-static func _shove_lane(view: Node2D, pos: Vector2, aim: Vector2, reach: float) -> void:
-	view.draw_set_transform(Ink.px(pos), aim.angle())
-	var end: float = reach * Ink.PX_PER_M
-	var lane: PackedVector2Array = PackedVector2Array(
-		[
-			Vector2(0, -13),
-			Vector2(end * 0.68, -23),
-			Vector2(end, 0),
-			Vector2(end * 0.68, 23),
-			Vector2(0, 13)
-		]
+static func _shove_lane(view: Node2D, h: Fighter, mind: SquadMind) -> void:
+	var e: EnemyAgent = mind.agent
+	var lane: PackedVector2Array = FoeShoveZone.polygon(
+		_tell_start(h, mind), e.aim, e.arch.speed_mps, e.arch.weapon.reach_m
 	)
-	view.draw_colored_polygon(lane, Color(Ink.VERMILION, 0.46))
-	for side: int in [-1, 1]:
-		var rail: PackedVector2Array = PackedVector2Array(
-			[Vector2(0, side * 13), Vector2(end * 0.68, side * 23), Vector2(end, 0)]
-		)
-		view.draw_polyline(rail, Ink.INK, 8.0, true)
-		view.draw_polyline(rail, Ink.VERMILION, 4.5, true)
+	for i: int in lane.size():
+		lane[i] = Ink.px(lane[i])
 	view.draw_set_transform(Vector2.ZERO, 0.0)
+	view.draw_colored_polygon(lane, Color(Ink.VERMILION, 0.46))
+	var inset: Vector2 = (lane[3] - lane[0]).normalized() * 2.0
+	view.draw_line(lane[0] + inset, lane[1] + inset, Ink.VERMILION, 4.0, true)
+	view.draw_line(lane[3] - inset, lane[2] - inset, Ink.VERMILION, 4.0, true)
+	var tip: Vector2 = (lane[1] + lane[2]) * 0.5 - e.aim * 3.0
+	var upper: Vector2 = lane[1].lerp(lane[0], 0.20) + inset
+	var lower: Vector2 = lane[2].lerp(lane[3], 0.20) - inset
+	view.draw_polyline(PackedVector2Array([upper, tip, lower]), Ink.VERMILION, 3.0, true)
+
+
+static func _tell_start(h: Fighter, mind: SquadMind) -> Vector2:
+	# Keep the first observed plant even if a wall blocks subsequent lunge steps.
+	# On a first draw mid-lunge, backtrack all elapsed steps. If blocked, this still
+	# covers the current position through every remaining step and the full reach.
+	var shield: FoeShield = mind.shield
+	if shield.get_meta(&"shove_view_tick", -2) != h.swing_tick:
+		var elapsed: int = 0 if h.swing_left > 0 else FoeShield.LUNGE_TICKS - shield.lunge_left
+		var travel: float = elapsed * SimClock.TICK_DT * mind.agent.arch.speed_mps
+		shield.set_meta(&"shove_view_start", h.pos - mind.agent.aim * travel)
+		shield.set_meta(&"shove_view_tick", h.swing_tick)
+	return shield.get_meta(&"shove_view_start")
 
 
 static func _sparks(view: Node2D, at: Vector2, shield: FoeShield, tick: int) -> void:

@@ -294,6 +294,11 @@
       "minimum": 0,
       "type": "integer"
     },
+    "wave_timeout_s": {
+      "description": "Seconds before another wave can stack. Present only when the dev launch flag overrides the street timer.",
+      "minimum": 1,
+      "type": "integer"
+    },
     "waves": {
       "items": {
         "$ref": "#/$defs/wave"

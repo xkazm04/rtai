@@ -27,7 +27,7 @@ func _draw() -> void:
 			if shell.weapon == &"war_cannon" and not shell.from_rivet:
 				FoeWalkerView.danger_ring(self, shell.target, shell.radius_m)
 			FightAreasArt._rocket(
-				self, shot.pos, shot.vel.normalized(), shot.origin.distance_to(shot.pos), arena.tick
+				self, shot, shot.vel.normalized(), shot.origin.distance_to(shot.pos), arena.tick
 			)
 	for h: Fighter in arena.hostiles:
 		var stunned: bool = h.alive() and OhmShortCircuit.held(arena.squad_ai, h)

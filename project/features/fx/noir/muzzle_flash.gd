@@ -1,12 +1,13 @@
 class_name MuzzleFlash
 extends Node2D
-## D-Noir muzzle flash (lane noir): every new round leaves a white starburst at the muzzle for
+## D-Noir muzzle flash (lane noir): every new round leaves a starburst at the muzzle for
 ## `ticks` ticks, ink-rimmed so it reads on paper too, and the first tick "lights the scene":
 ## lit() is true, and the caller drops the noir threshold for that frame (more of the frame
 ## prints as paper). Fed shot positions and directions in world px; stepped on the fixed tick.
 
 const SPIKES: int = 8
 const MAX_FLASHES: int = 16
+const PAPER: Color = Color(0.97, 0.96, 0.93)
 ## Photosensitivity guard: at most one lit frame per LIT_GAP ticks (0.33 s, under 3 flashes a
 ## second) however many rounds are fired; the starbursts themselves are not capped.
 const LIT_GAP: int = 20
@@ -20,12 +21,13 @@ var radius_px: float = 26.0
 var _at: PackedVector2Array = PackedVector2Array()
 var _dir: PackedVector2Array = PackedVector2Array()
 var _age: PackedInt32Array = PackedInt32Array()
+var _fill: PackedColorArray = PackedColorArray()
 var _lit: bool = false
 var _lit_at: Vector2 = Vector2.ZERO
 var _since_lit: int = LIT_GAP
 
 
-func fire(at_px: Vector2, dir: Vector2) -> void:
+func fire(at_px: Vector2, dir: Vector2, hostile: bool = false) -> void:
 	if _at.size() >= MAX_FLASHES:
 		return
 	@warning_ignore("return_value_discarded")
@@ -34,6 +36,8 @@ func fire(at_px: Vector2, dir: Vector2) -> void:
 	_dir.append(dir.normalized())
 	@warning_ignore("return_value_discarded")
 	_age.append(0)
+	@warning_ignore("return_value_discarded")
+	_fill.append(EnemyRoundLook.MUZZLE if hostile else PAPER)
 	if _since_lit >= LIT_GAP and (budget == null or budget.spend_light()):
 		_lit = true
 		_lit_at = at_px
@@ -60,13 +64,14 @@ func step_ticks(n: int) -> void:
 			_at.remove_at(i)
 			_dir.remove_at(i)
 			_age.remove_at(i)
+			_fill.remove_at(i)
 	queue_redraw()
 
 
 func _draw() -> void:
 	var ink: Color = Color(0.03, 0.03, 0.035)
-	var paper: Color = Color(0.97, 0.96, 0.93)
 	for i: int in _at.size():
+		var paper: Color = _fill[i]
 		var r: float = radius_px * (1.0 if _age[i] == 0 else 0.6)
 		var base: float = _dir[i].angle()
 		draw_circle(_at[i], r * 0.36, ink)

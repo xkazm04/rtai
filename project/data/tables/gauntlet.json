@@ -9,6 +9,7 @@
     "patrol_cop": 15,
     "war_machine": 200
   },
+  "enemy_damage_k": 1,
   "max_alive": 40,
   "on_timeout": "next_wave",
   "rivet": {

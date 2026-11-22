@@ -1,11 +1,10 @@
 class_name EnemyFightFx
 extends Node2D
 ## The pit fight's in-flight layer over the cast rigs (enemy-ai evidence, render only): rounds as
-## tracers (enemy rounds warm paper, Rivet's nails steel), the gun tell (a thin vermilion aim line
+## tracers (size-coloured enemy rounds, steel nails), the gun tell (a thin vermilion aim line
 ## from the muzzle while the aim tracks, a thick one once it locks: dodge now), the melee windup
 ## arc, and a two-tick paper muzzle star on every shot. Positions in world px (the actors space).
 
-const TRACER: Color = Color(1.0, 0.93, 0.7)
 const NAIL: Color = Color(0.8, 0.85, 0.9)
 const DANGER: Color = Color(0.93, 0.33, 0.16)
 const FLASH: Color = Color(1.0, 0.97, 0.86)
@@ -25,8 +24,9 @@ func _draw() -> void:
 		return
 	for s: Shot in pit.shots:
 		var tail: Vector2 = s.pos - s.vel.normalized() * TAIL_M
-		var c: Color = NAIL if s.from_rivet else TRACER
-		draw_line(tail * ppm, s.pos * ppm, Color(c, 0.35), 4.0)
+		var c: Color = NAIL if s.from_rivet else ShotDraw.core(s)
+		var rim: Color = NAIL if s.from_rivet else ShotDraw.rim(s)
+		draw_line(tail * ppm, s.pos * ppm, Color(rim, 0.35), 4.0)
 		draw_line((s.pos - s.vel.normalized() * TAIL_M * 0.5) * ppm, s.pos * ppm, c, 2.0)
 	for e: EnemyAgent in pit.agents:
 		if not e.alive():
@@ -35,7 +35,7 @@ func _draw() -> void:
 		if e.state == EnemyAgent.State.WINDUP:
 			_tell(e, at)
 		if pit.tick - e.shot_tick < FLASH_TICKS and not e.melee():
-			_star(at, e.aim)
+			_star(at, e.aim, EnemyRoundLook.MUZZLE)
 	if rivet_rig != null and pit.tick - rivet_shot_tick < FLASH_TICKS:
 		_star(rivet_rig.muzzle_local(), Vector2.from_angle(rivet_rig.facing))
 
@@ -52,11 +52,11 @@ func _tell(e: EnemyAgent, at: Vector2) -> void:
 	draw_line(at, at + e.aim * reach, Color(DANGER, 0.9 if locked else 0.55), w)
 
 
-func _star(at: Vector2, dir: Vector2) -> void:
+func _star(at: Vector2, dir: Vector2, fill: Color = FLASH) -> void:
 	var d: Vector2 = dir.normalized()
-	draw_circle(at + d * 3.0, 4.0, FLASH)
-	draw_line(at, at + d * 13.0, FLASH, 3.0)
-	draw_line(at + d * 4.0 - d.orthogonal() * 5.0, at + d * 4.0 + d.orthogonal() * 5.0, FLASH, 2.0)
+	draw_circle(at + d * 3.0, 4.0, fill)
+	draw_line(at, at + d * 13.0, fill, 3.0)
+	draw_line(at + d * 4.0 - d.orthogonal() * 5.0, at + d * 4.0 + d.orthogonal() * 5.0, fill, 2.0)
 
 
 func _muzzle(id: int, pos_m: Vector2) -> Vector2:

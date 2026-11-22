@@ -39,7 +39,6 @@ func _ready() -> void:
 	name = &"GauntletHud"
 	layer = RenderLayers.canvas(&"hud")
 	var panel: ColorRect = preload("gauntlet_status.tscn").instantiate() as ColorRect
-	panel.color = PLATE
 	add_child(panel)
 	_wave = panel.get_node(^"Wave") as Label
 	_time = panel.get_node(^"Time") as Label
@@ -55,9 +54,10 @@ func _process(_delta: float) -> void:
 	var alive: int = waves.live_wave_count()
 	var label_key: String = "GAUNTLET__WAVE_STACK" if alive > 1 else "GAUNTLET__WAVE"
 	_wave.text = tr(label_key).format({"wave": run.wave, "alive": alive})
-	_time.text = tr("GAUNTLET__TIMER").format(
-		{"seconds": "%.1f" % waves.wave_seconds(session.stage.tick)}
-	)
+	var tick: int = session.stage.tick
+	var left: float = waves.seconds_left(tick)
+	_time.text = tr("GAUNTLET__TIMER").format({"seconds": "%.1f" % waves.wave_seconds(tick)})
+	_time.self_modulate = PlayerGuardView.AMBER if left >= 0.0 and left <= 10.0 else PAPER
 	_health.text = tr("GAUNTLET__HEALTH").format(
 		{"hp": ceili(rivet.hp), "max_hp": roundi(rivet.max_hp)}
 	)

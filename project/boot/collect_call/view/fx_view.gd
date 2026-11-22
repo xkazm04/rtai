@@ -268,4 +268,4 @@ func _shots(arena: CombatArena) -> void:
 		if BareGunFx.shot(self, s, arena):  # n7-ranged: the picked-up rifle's flash and tracer
 			continue
 		var tail: Vector2 = s.pos - s.vel.normalized() * (0.5 if s.from_rivet else 0.25)
-		draw_line(Ink.px(tail), Ink.px(s.pos), Ink.INK if s.from_rivet else Ink.VERMILION, 4.0)
+		ShotDraw.bare(self, s, tail)

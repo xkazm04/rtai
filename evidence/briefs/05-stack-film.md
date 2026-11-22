@@ -1,6 +1,6 @@
 # Brief 05 (street lane, n23): stacked waves on film, the owed-pick counter, the timer warning
 
-Hard stop: HARDSTOP wall clock (check `date`). Commit deadline: COMMITBY. Parts A, B, C in order, each committed before the next. Write your final report BEFORE any mutate run; mutate is the last step and capped (`--max=20`, changed lines). Never run more than 5 full gauntlet runs in this call; a sweep that does not fit is reported, not waited on.
+Hard stop: 05:55 wall clock (check `date`). Commit deadline: 05:45 (Part A first; if B or C cannot be committed by then, report them unfinished). Parts A, B, C in order, each committed before the next. Write your final report BEFORE any mutate run; mutate is the last step and capped (`--max=20`, changed lines). Never run more than 5 full gauntlet runs in this call; a sweep that does not fit is reported, not waited on.
 
 ## Setup for every Godot run
 `export APPDATA=C:/Users/kazda/kiro/gtai-n23/appdata/street` and
@@ -40,3 +40,8 @@ Staged per path (`git add <path>`; never `-A`, `.`, `-u`, `commit -a`, stash, am
 ## Allowlist (edit only these)
 `project/dev/gauntlet/**`, `project/features/gauntlet/**` except `bot/`, `project/data/loc/en.po` (your keys only), `project/data/schemas/gauntlet_run.schema.json` (your optional field only), one appended line in `project/boot/launch_args.gd` `KNOWN_FLAGS` if needed, `project/tests/unit/test_gauntlet_*.gd`, `evidence/street/**`, `C:/Users/kazda/kiro/gtai-masters/n23/street/**`, `tools/debt/baseline.json` through the debt tool, `.uid` files of new scripts.
 Forbidden: `project/features/player/**`, `project/features/gauntlet/bot/**`, `tools/gauntlet/**` (run its test, never edit it), `project/data/tables/enemies.json`, `combat.json`, `gauntlet_bonuses.json`, `project/data/tables/gauntlet.json` numbers, `project/features/combat/**`, `project/features/souls/**`, tapes and goldens, JOURNAL.md, REPORT.md. Any other path: stop and report a NEED.
+
+## Notes from the director (n23 03:34-04:40 call)
+- `C:/Users/kazda/kiro/gtai-masters/n23/street/` holds only films, stills and `frames.json`. Put capture scripts, logs, patches and JSON results under `build/street/` (git-ignored) or `evidence/street/` (committed notes), never in gtai-masters.
+- Mutate: run it from this worktree exactly as `node tools/mutate/mutate.mjs --file=<project-relative .gd> --max=20 --lines=<a-b>`; it makes its own temp worktree at HEAD (commit first). Do not pass a scratch or root directory; the last call failed with "is the repo root" that way.
+- Never run more than 5 full gauntlet runs; prefer `--wave-timeout` short runs for the stacking proof once one real 90 s novice attempt (seed 1) has been tried.

@@ -12,7 +12,6 @@ const ORIGIN: Vector2 = Vector2(640.0, 448.0)
 const COP: Color = Color(0.22, 0.42, 0.85)
 const ROBOT: Color = Color(0.62, 0.66, 0.7)
 const DANGER: Color = Color(0.93, 0.33, 0.16)
-const TRACER: Color = Color(1.0, 0.93, 0.7)
 const NAIL: Color = Color(0.8, 0.85, 0.9)
 
 var _pit: EnemyPit = null
@@ -88,7 +87,7 @@ func _draw() -> void:
 		draw_rect(_r(b), Color(0.36, 0.33, 0.28))
 	for s: Shot in _pit.shots:
 		var tail: Vector2 = s.pos - s.vel.normalized() * 0.9
-		draw_line(_p(tail), _p(s.pos), NAIL if s.from_rivet else TRACER, 3.0)
+		draw_line(_p(tail), _p(s.pos), NAIL if s.from_rivet else ShotDraw.core(s), 3.0)
 	for e: EnemyAgent in _pit.agents:
 		_draw_enemy(e)
 	var rp: Vector2 = _p(_pit.rivet_pos)

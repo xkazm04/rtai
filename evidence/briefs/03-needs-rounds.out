@@ -1,0 +1,12 @@
+Committed the gauntlet roster exclusions and zero-budget guard (`c48fe5489`), stage-local repair tuning (`cdacafe98`), and hostile-round recolour (`90bad0b11`). Small and unknown rounds use amber, large rounds use ice blue. [File-by-file report](<C:/Users/kazda/kiro/gtai-wt/n23-street/evidence/street/rounds.md>)
+
+**Two renderers still draw vermilion.** The unarmed/melee fallback and Tonnage’s plate-clipped tracer are in explicitly forbidden directories. [Unarmed fallback](<C:/Users/kazda/kiro/gtai-wt/n23-street/project/boot/collect_call/view/fx_view.gd:271>) · [Plate tracer](<C:/Users/kazda/kiro/gtai-wt/n23-street/project/features/souls/plate_sparks.gd:116>)
+
+- Seed 7, average bot, ten waves: all three `cmp` comparisons exited **0**. Each result was 7,372 bytes.
+- Before and after: **65 scenarios ran, 0 failed**. All 75 compared fingerprints matched, including the 60-second replay ending `cbeb734ff9b97c41`. An earlier baseline rig timing miss passed on retry.
+- Changed tests: **3,634 passed, 0 failed, 2 skipped**. All 19 commit lint checks passed. Debt passed after tightening, and Godot generated both new UIDs.
+- The default quick gate still failed on `arena_combat_lights.gd`. Its original and final standalone Godot checks produced byte-identical allocator shutdown errors. The mutation runner rejected this worktree as its scratch directory, so there is no mutation score.
+
+I inspected all eight stills, staged at tick 901. The amber tip stays visible over blood and asphalt, and the rocket’s pale-blue casing and smoke distinguish it from the small round. The pick overlay dims both substantially, but each remains visible beside the cards. [Before-and-after comparison](<C:/Users/kazda/kiro/gtai-masters/n23/street/rounds-review.jpg>)
+
+[astra: 3902s, exit 0]

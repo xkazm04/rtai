@@ -64,10 +64,7 @@ func _lunge(e: EnemyAgent, h: Fighter, arena: CombatArena, map: GuardRouteMap) -
 	e.token = false
 	e.shot_tick = arena.tick
 	var delta: Vector2 = arena.rivet.pos - h.pos
-	var forward: float = delta.dot(e.aim)
-	if forward < 0.0 or forward > e.arch.weapon.reach_m + arena.rivet.radius_m:
-		return
-	if absf(delta.cross(e.aim)) > arena.rivet.radius_m + SLAB_HALF_M:
+	if not FoeShoveZone.connects(delta, e.aim, e.arch.weapon.reach_m, arena.rivet.radius_m):
 		return
 	if map.sight_line(h.pos, arena.rivet.pos):
 		FoeAttacks.melee_hit(e, arena, map)

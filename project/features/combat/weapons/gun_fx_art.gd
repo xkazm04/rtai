@@ -82,14 +82,12 @@ static func draw_over(
 	FightShardArt.stuck(ci, fx, arena)
 
 
-## A table bullet's tracer at its weapon's weight: ink casing, cream core, a cream head; an enemy
-## round keeps the vermilion core (danger) and its short tail.
+## A table bullet uses its weapon's weight. Hostile rounds have a short tail in their size's ink.
 static func tracer(ci: CanvasItem, fx: GunFx, s: Shot, enemy_tail_m: float) -> void:
 	var row: Dictionary = fx.look(s.spec.id if s.spec != null else &"")
 	var tail_m: float = s.spec.tracer_len_m if s.from_rivet and s.spec != null else enemy_tail_m
 	var w: float = row.get("tracer_px", 9.0) if s.from_rivet else 9.0
 	var core_w: float = row.get("tracer_core_px", 4.0) if s.from_rivet else 4.0
-	var core: Color = Ink.CREAM if s.from_rivet else Ink.VERMILION
 	var dir: Vector2 = s.vel.normalized()
 	var head: Vector2 = s.pos + ShotLift.line(ci, s.pos - dir * tail_m, s.pos)  # d8: gun height
 	if s.from_rivet:
@@ -103,9 +101,7 @@ static func tracer(ci: CanvasItem, fx: GunFx, s: Shot, enemy_tail_m: float) -> v
 	if bolt > 0.0:
 		_bolt(ci, tail, head, bolt, s.origin.distance_to(s.pos))
 		return
-	ci.draw_line(Ink.px(tail), Ink.px(head), Ink.INK, w)
-	ci.draw_line(Ink.px(tail.lerp(head, 0.3)), Ink.px(head), core, core_w)
-	ci.draw_circle(Ink.px(head), core_w + 1.0, core)
+	ShotDraw.tracer(ci, s, tail, head, Vector2(w, core_w))
 
 
 ## A heavy single shot (spikes 3): a long forward flare, two side jets, a short back lip. An
@@ -145,11 +141,11 @@ static func _muzzle(ci: CanvasItem, fx: GunFx, r: Fighter, row: Dictionary, age:
 	for a: Vector2 in star:
 		@warning_ignore("return_value_discarded")
 		pts.append(Ink.px(at + Vector2.from_angle(f.angle() + a.x) * a.y))
-	_flash(ci, pts, 3.5)
+	ShotDraw.flash(ci, pts, 3.5)
 	ci.draw_circle(Ink.px(at), 0.16 * Ink.PX_PER_M, Ink.CREAM)
 
 
-## A hostile's muzzle: a small cream 4-point star in an ink rim along its aim.
+## A hostile's muzzle flashes a four-point amber star along its aim.
 static func _star(ci: CanvasItem, at: Vector2, ang: float, r: float, tick: int) -> void:
 	var pts: PackedVector2Array = PackedVector2Array()
 	for i: int in 8:
@@ -158,19 +154,7 @@ static func _star(ci: CanvasItem, at: Vector2, ang: float, r: float, tick: int) 
 		pts.append(
 			Ink.px(at + Vector2.from_angle(ang + TAU * float(i) / 8.0 + 0.1 * float(tick % 2)) * k)
 		)
-	_flash(ci, pts, 3.0)
-
-
-## A cream flash polygon in an ink rim of `rim` px.
-## A flare shrunk to a sliver (snapped points collapse) draws nothing (showcase REQUEST 18).
-static func _flash(ci: CanvasItem, pts: PackedVector2Array, rim: float) -> void:
-	if Geometry2D.triangulate_polygon(pts).is_empty():
-		return
-	var ring: PackedVector2Array = pts.duplicate()
-	@warning_ignore("return_value_discarded")
-	ring.append(pts[0])
-	ci.draw_colored_polygon(pts, Ink.CREAM)
-	ci.draw_polyline(ring, Ink.INK, rim, true)
+	ShotDraw.flash(ci, pts, 3.0, true)
 
 
 ## A plasma bolt: a cream teardrop (fat hot head, tail tapering back to a point) in an ink rim
@@ -211,7 +195,7 @@ static func _sun(ci: CanvasItem, at: Vector2, fwd: float, count: int) -> void:
 		var a: float = TAU * float(i) / 20.0 + 0.3 * float(count % 3)
 		@warning_ignore("return_value_discarded")
 		sun.append(Ink.px(at + Vector2.from_angle(a) * k))
-	_flash(ci, sun, 3.0)
+	ShotDraw.flash(ci, sun, 3.0)
 	ci.draw_circle(Ink.px(at), fwd * 0.12 * Ink.PX_PER_M, Ink.INK)
 
 

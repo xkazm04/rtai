@@ -1,0 +1,15 @@
+Committed `574e313a2` — **Add a gauntlet-only enemy damage multiplier**. Updated the gauntlet table, schema, street setup and combat handler. Added `test_gauntlet_enemy_damage.gd` and its UID. Only foe hits on Rivet scale. The runtime default is `1.0`, stored as `1` to pass canonical JSON lint.
+
+**Seed-7 proof:** The average bot’s 10-wave result matched HEAD byte for byte. With 20 waves requested, Rivet survived wave 20 at `1.0` and died to `war_cannon` on wave 10 at `2.0`. [Commands and SHA-256 hashes](C:/Users/kazda/kiro/gtai-wt/n23-street/evidence/street/enemy-damage.md)
+
+| Check | Result |
+| --- | --- |
+| Quick gate and commit hook | 3 GDScript files clean, all 19 hook checks passed |
+| Changed unit tests | 3,646 passed, 0 failed, 2 skipped |
+| Scenarios | 65 ran, 0 failed |
+| 60-second replay | Byte-identical, final digest `cbeb734ff9b97c41` |
+| Mutation | 5/5 killed, 0 survivors, 0 timeouts, 0 invalid |
+
+Co-Authored-By: GPT-6.2 Astra <noreply@openai.com>
+
+[astra: 1513s, exit 0]

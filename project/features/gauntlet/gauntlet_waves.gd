@@ -20,7 +20,7 @@ var _picker: GauntletPilot
 var _composer: GauntletComposer
 var _limit: int
 var _block: int = 0
-var _first_wave: int
+var _pick_wave: int
 var _next_wave_tick: int
 var _live: Array[GauntletLiveWave] = []
 
@@ -75,14 +75,13 @@ func step(stage: ArenaStage, tick: int) -> void:
 			_clear_block()
 		elif _street.index > _block:
 			_block = _street.index
-			_first_wave = _run.wave + 1
+			_pick_wave = _run.wave
 			_street.hold_block(stage.arena)
 			_schedule(stage, tick)
 		return
 	_fill(stage, tick)
-	var newest: GauntletLiveWave = _live[-1]
-	if newest.start_tick >= 0 and tick >= _next_wave_tick and not _at_limit():
-		newest.row["timed_out"] = true
+	if seconds_left(tick) == 0.0:
+		_live[-1].row["timed_out"] = true
 		_schedule(stage, tick)
 
 
@@ -100,6 +99,11 @@ func wave_seconds(tick: int) -> float:
 	if wave != null:
 		return wave.seconds(tick)
 	return _run.waves[-1].get("seconds", 0.0) if not _run.waves.is_empty() else 0.0
+
+
+func seconds_left(tick: int) -> float:
+	var running: bool = not _live.is_empty() and _live[-1].start_tick >= 0 and not _at_limit()
+	return maxi(0, _next_wave_tick - tick) * SimClock.TICK_DT if running else -1.0
 
 
 func _slots(arena: CombatArena) -> int:
@@ -138,7 +142,7 @@ func _fill(stage: ArenaStage, tick: int) -> void:
 
 func _clear_block() -> void:
 	_street.forward_limit = INF
-	owed_total = _run.wave - _first_wave + 1
+	owed_total = 0
 	owed_index = 0
 	_next_offer()
 	while not manual_picks and not pending.is_empty():
@@ -148,14 +152,17 @@ func _clear_block() -> void:
 
 
 func pick_wave() -> int:
-	return _first_wave + owed_index - 1
+	return _pick_wave
 
 
 func _next_offer() -> void:
-	while owed_index < owed_total:
-		owed_index += 1
-		pending = draw.offer(pick_wave(), _run.picks, _bonuses.owned())
+	var held: Array[StringName] = _bonuses.owned()
+	while _pick_wave < _run.wave:
+		_pick_wave += 1
+		pending = draw.offer(_pick_wave, _run.picks, held)
 		if not pending.is_empty():
+			owed_total = owed_index + draw.offer_count(_pick_wave, _run.wave, _run.picks, held)
+			owed_index += 1
 			if manual_picks:
 				pick_offered.emit(pending)
 			return

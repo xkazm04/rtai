@@ -1,0 +1,19 @@
+Committed all changes by **07:18:30**. `shot_draw.gd` now draws bare-hands enemy rounds with the gun tracer’s rim and core widths. `fx_view.gd` changed by one line. I appended the four decisions to `docs/decisions.md` and added assertions for the first stacked pick, tracer colours and cleanup, shove contact, and retired bonus IDs.
+
+The tick-306 capture matched the original camera and state hash. The 4× crop shows an **amber rim `#e08a1e` around a pale-gold core `#ffe6a8`**. [Before/after crop](C:/Users/kazda/kiro/gtai-wt/n23-street/build/street/crop/hands-pair-2.png)
+
+`quick.mjs` passed on every edited script. The final `--changed` run reported **3,644 passed, 0 failed, 2 skipped**. Seed 7’s ten-wave results were byte-identical. All **65 scenarios passed**, and the 60-second replay retained digest `cbeb734ff9b97c41`.
+
+| Mutation target | Killed / decided | Follow-up |
+|---|---:|---|
+| First stacked pick | **1/1** | Killed `owed_index = 0 → 1` at line 146 |
+| Wave composer | **20/20** | |
+| Shot drawing | **0/20 → 5/20** | 15 survivors, including deletion of the rim draw at line 59 |
+| Shove zone | **19/20** | The line-23 recheck killed **4/4**, including the sole survivor |
+| Offer count and eligibility | **15/16 → 16/16** | Full sample repeated after the retired-ID assertion |
+
+Every run had **zero timeouts and zero invalid mutants**. The archived counter survivor was `owed_total` at line 145. The requested line-146 mutation was measured separately. The literal `project/features/...` commands exited 2 because the runner prepends `project/`. Retrying with `features/...` produced the scores above.
+
+[Change and acceptance report](C:/Users/kazda/kiro/gtai-wt/n23-street/evidence/street/brief06.md) · [Every survivor by file, line, and mutation](C:/Users/kazda/kiro/gtai-wt/n23-street/evidence/street/brief06-mutations.md) · [Final 16/16 run](C:/Users/kazda/kiro/gtai-wt/n23-street/build/street/brief06/draw-final.log)
+
+[astra: 4382s, exit 0]

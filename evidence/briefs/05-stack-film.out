@@ -1,0 +1,17 @@
+All three parts were committed in order before 05:45.
+
+| Part | Commit | Result |
+|---|---|---|
+| A | `04401dd23` | Added the dev-only timeout flag, optional result field, schema coverage and stacking evidence. [Film](<C:/Users/kazda/kiro/gtai-masters/n23/street/stack/stack-seed7-32.mp4>) · [Seed results and three stills](<C:/Users/kazda/kiro/gtai-wt/n23-street/evidence/street/stacking-seeds.md>) |
+| B | `e95cf7b5f` | Updated the offer logic and pick view. The counter skips empty offers and disappears for a single pick. [Pick 2 of 3](<C:/Users/kazda/kiro/gtai-masters/n23/street/stack/pick-counter.png>) |
+| C | `f0ac04fe5` | Updated the wave clock and HUD. The timer turns amber at exactly ten seconds remaining. [Warning still](<C:/Users/kazda/kiro/gtai-masters/n23/street/stack/timer-warning.png>) |
+
+Novice seeds 1–3 never stacked at 90 seconds. **Average seed 7 used the 12-second override**, reaching two live waves at tick **6107** and three at **6827**. The 26.5-second film shows readable HUD counts and fighters from all three waves on screen. The run ended in a schema-valid death on wave 16 by `shield_robot`. Both death results were byte-identical (`cmp` exit 0).
+
+**Verification:** Quick gate, schema test and debt check passed. Changed-unit tests reported **3,639 passed, 0 failed, 2 skipped** for unavailable tilt art. Scenarios reported **65 ran, 0 failed**, including quest 1 and the 60-second replay. Godot emitted resource diagnostics during shutdown.
+
+**Mutation:** **15 / (15 + 1) = 93.8%**, with 4 timeouts and 0 invalid. The surviving change set the owed-pick reset value to one.
+
+Merge previews flagged `gauntlet.gd` against `n23-loop` and `gauntlet_draw.gd` against `n23-moves`. [File-by-file report written before mutation](<C:/Users/kazda/kiro/gtai-wt/n23-street/build/street/final-report.md>)
+
+[astra: 3803s, exit 0]

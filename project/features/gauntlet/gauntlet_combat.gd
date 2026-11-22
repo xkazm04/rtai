@@ -8,6 +8,7 @@ signal rivet_contact(victim: Fighter, counter: StringName)
 const FIRED: StringName = &"gauntlet_fired"
 
 var run: GauntletRun
+var enemy_damage_k: float = 1.0
 var _round_starts: Dictionary[Shot, Vector2] = {}
 var _melee: Array[StringName] = MeleeTable.weapon_ids()
 var _departed: Dictionary[int, StringName] = {}
@@ -75,6 +76,8 @@ func damage(
 		elif not _round_starts.is_empty() and _direct_round(victim):
 			rivet_contact.emit(victim, &"hits_gun")
 	var was_alive: bool = victim == rivet and victim.alive()
+	if victim == rivet and killer_id != rivet.id:
+		amount *= enemy_damage_k
 	super.damage(victim, amount, killer_id, weapon, kind)
 	if was_alive and not victim.alive():
 		var by: StringName = weapon if weapon != &"" else &"unknown"

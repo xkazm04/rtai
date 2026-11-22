@@ -78,3 +78,23 @@ func test_a_rig_burning_over_its_body_is_skipped_on_the_fx_layer() -> void:
 	assert_false(FightBurnArt.drawn_over(902, 50), "a fighter with no rig keeps the fx flames")
 	@warning_ignore("return_value_discarded")
 	FightBurnArt.over_ids.erase(901)
+
+
+func test_untyped_enemy_round_uses_the_small_rim_and_core() -> void:
+	var shot: Shot = Shot.new()
+	shot.from_rivet = false
+	assert_eq(
+		[ShotDraw.rim(shot), ShotDraw.core(shot)],
+		[EnemyRoundLook.SMALL_RIM, EnemyRoundLook.SMALL_CORE]
+	)
+
+
+func test_bare_enemy_round_registers_its_canvas_for_the_next_redraw() -> void:
+	var host: Node2D = autofree(Node2D.new())
+	var shot: Shot = Shot.new()
+	shot.from_rivet = false
+	ShotDraw.bare(host, shot, Vector2.LEFT)
+	var layer: ShotDraw = host.get_meta(ShotDraw.LAYER) if host.has_meta(ShotDraw.LAYER) else null
+	assert_true(
+		layer != null and host.draw.is_connected(RenderingServer.canvas_item_clear.bind(layer._rid))
+	)

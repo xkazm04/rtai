@@ -27,6 +27,7 @@ func test_first_slot_follows_the_three_to_one_weights() -> void:
 func test_history_ownership_unlocks_and_exhaustion() -> void:
 	var draw: GauntletDraw = _draw(7)
 	var history: Array[Dictionary] = [{"taken": &"swift"}, {"taken": &"blade"}]
+	assert_eq(draw.offer(1, [{"taken": &"retired_bonus"}], []).size(), 2)
 	assert_eq(draw.offer(0, [], []), [])
 	assert_eq(draw.offer(1, history, []), [&"fast"])
 	assert_eq(draw.offer(3, history, [&"ohm"]), [&"fast"])

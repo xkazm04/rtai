@@ -1,10 +1,6 @@
 class_name FightAreasArt
 extends RefCounted
-## The real fight's area effects and table projectiles in the D5 ink (drawn by quest 1's FxView
-## onto the print layer, world pixels via Ink.px): fire patches (the fx_fire loop over an ink
-## scorch), burning humans, stunned sparks, blasts (cream flash, ink ring, smoke), chain arcs,
-## and per kind the rocket (wobbling body, smoke trail), the flame puff (grows and fades), the
-## electro bolt (a jumping zigzag) and the molotov (an arc over its ground shadow). Lane gunplay.
+## Draws area effects and table projectiles for FxView. Rocket smoke and casing follow the round.
 
 const ARC_TICKS: int = 12
 const BLAST_TICKS: int = 30
@@ -62,7 +58,7 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 		return true
 	match s.spec.kind:
 		WeaponSpec.Kind.ROCKET:
-			_rocket(ci, s.pos, dir, went, tick)
+			_rocket(ci, s, dir, went, tick)
 		WeaponSpec.Kind.CONE:
 			var k: float = clampf(went / maxf(s.spec.range_m, 0.1), 0.0, 1.0)
 			fire(ci, s.pos, 0.4 + 0.75 * k, tick + int(went * 10.0), 1.0 - k * 0.5)
@@ -84,30 +80,30 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 	return true
 
 
-static func _rocket(ci: CanvasItem, at: Vector2, dir: Vector2, went: float, tick: int) -> void:
+static func _rocket(ci: CanvasItem, s: Shot, dir: Vector2, went: float, tick: int) -> void:
+	var rim: Color = ShotDraw.rim(s)
 	var side: Vector2 = dir.orthogonal()
-	var head: Vector2 = at + side * sin(float(tick) * 0.9) * 0.1
+	var head: Vector2 = s.pos + side * sin(float(tick) * 0.9) * 0.1
 	for k: int in 9:
 		var back: float = 0.9 + float(k) * 0.5
 		if back > minf(went, TRAIL_M):
 			break
 		var wob: Vector2 = side * sin(float(tick - k * 3) * 0.9) * 0.1 * float(k)
 		var r: float = (0.16 + 0.08 * float(k)) * Ink.PX_PER_M
-		var c: Color = SMOKE
+		var c: Color = SMOKE if s.from_rivet else Color(rim, SMOKE.a)
 		c.a *= 1.0 - float(k) / 9.0
-		ci.draw_circle(Ink.px(at - dir * back + wob), r, c)
-	fire(ci, head - dir * 0.95, 0.2 + 0.04 * float(tick % 3), tick, 1.0)
-	ci.draw_line(Ink.px(head - dir * 0.9), Ink.px(head - dir * 0.05), Ink.INK, 20.0)
-	ci.draw_line(Ink.px(head - dir * 0.8), Ink.px(head - dir * 0.25), Ink.CREAM, 9.0)
-	var fins: PackedVector2Array = PackedVector2Array(
-		[
-			Ink.px(head - dir * 0.95 + side * 0.22),
-			Ink.px(head - dir * 0.6),
-			Ink.px(head - dir * 0.95 - side * 0.22)
-		]
-	)
-	ci.draw_polyline(fins, Ink.INK, 6.0, true)
-	ci.draw_circle(Ink.px(head), 9.0, Ink.INK)
+		ci.draw_circle(Ink.px(s.pos - dir * back + wob), r, c)
+	var tint: Color = Color.WHITE if s.from_rivet else Color.from_hsv(rim.h, 0.9, 1.0)
+	_fire_ink(ci, head - dir * 0.95, 0.2 + 0.04 * float(tick % 3), tick, tint)
+	ci.draw_line(Ink.px(head - dir * 0.9), Ink.px(head - dir * 0.05), rim, 20.0)
+	ci.draw_line(Ink.px(head - dir * 0.8), Ink.px(head - dir * 0.25), ShotDraw.core(s), 9.0)
+	var fins: PackedVector2Array = [
+		Ink.px(head - dir * 0.95 + side * 0.22),
+		Ink.px(head - dir * 0.6),
+		Ink.px(head - dir * 0.95 - side * 0.22)
+	]
+	ci.draw_polyline(fins, rim, 6.0, true)
+	ci.draw_circle(Ink.px(head), 9.0, rim)
 
 
 static func _bottle(ci: CanvasItem, s: Shot, went: float, tick: int) -> void:
@@ -219,16 +215,20 @@ static func _stun(ci: CanvasItem, at: Vector2, tick: int) -> void:
 ## One frame of quest 1's fire loop (features/fx/art/fx_fire.png, 4 cells of 2.5 m), `scale` x;
 ## in colour (WeaponFxColour.ground_fire) while the FX colour canvas is attached.
 static func fire(ci: CanvasItem, at: Vector2, scale: float, tick: int, alpha: float) -> void:
+	_fire_ink(ci, at, scale, tick, Color(1, 1, 1, alpha))
+
+
+static func _fire_ink(ci: CanvasItem, at: Vector2, scale: float, tick: int, tint: Color) -> void:
 	var size: Vector2 = Vector2.ONE * 2.5 * scale * Ink.PX_PER_M
 	var rect: Rect2 = Rect2(Ink.px(at) - size * 0.5, size)
 	var src: Rect2 = Rect2(Vector2(float((tick / 5) % 4), 0.0) * 256.0, Vector2(256.0, 256.0))
 	var hue: Texture2D = WeaponFxColour.ground_fire() if WeaponFxArt.colour != null else null
 	if hue != null:  # n5-look: r2_w4's flame colours on the FX colour canvas
-		WeaponFxArt.colour.region(hue, rect, src, Color(1, 1, 1, alpha))
+		WeaponFxArt.colour.region(hue, rect, src, tint)
 		return
 	var tex: Texture2D = QuestArt.shared().texture(&"fx_fire")
 	if tex != null:
-		ci.draw_texture_rect_region(tex, rect, src, Color(1, 1, 1, alpha))
+		ci.draw_texture_rect_region(tex, rect, src, tint)
 
 
 ## An electric zigzag of `width` px (kinks every ~0.27 m alternating sides, re-jagged every tick

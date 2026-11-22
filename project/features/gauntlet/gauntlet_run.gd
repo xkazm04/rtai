@@ -6,6 +6,7 @@ const SCHEMA: String = "gtai.gauntlet-run/1"
 
 var seed: int = 0
 var wave: int = 0
+var wave_timeout_s: int = 0
 var picks: Array[Dictionary] = []
 var mods: StatMods = StatMods.new()
 var alive: bool = true
@@ -33,6 +34,8 @@ func to_result() -> Dictionary:
 		"picks": picks.duplicate(true),
 		"mods": mods.to_dict(),
 	}
+	if wave_timeout_s > 0:
+		result["wave_timeout_s"] = wave_timeout_s
 	if capped:
 		result["capped"] = true
 	if not alive:
