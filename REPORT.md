@@ -22,7 +22,6 @@ Final, 08:40. Seven product calls and one film call; every change below is on `n
 | Films (32 px/m, tilt 70, 1080p60) | `evidence/street/films.md`; `C:/Users/kazda/kiro/gtai-masters/n23/street/wedge/shove-32.mp4`, `C:/Users/kazda/kiro/gtai-masters/n23/street/rounds/rounds-32.mp4`, `C:/Users/kazda/kiro/gtai-masters/n23/street/frames.json` (15 entries) | shove film 15.6 s: the same carrier misses at 9.58 s (Rivet 0.67 m outside the mark), then hits at 12.97 s (125 -> 111). Rounds film 20.2 s on hands: amber rounds over blood at 10.6 s, ice-blue rockets at 15.57 s and 18.87 s. I checked frames of both myself |
 
 **Gate** (`node tools/gate/run.mjs --rev=HEAD` on `7277e1f8`; the code matches the last product commit `574e313a2`, since the later commits touch only JOURNAL and REPORT): `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n23-street\build\gate\7277e1f8575f\gate.json`. Lint 19/19 checks over 1951 files. Unit 3662 passed, 0 failed, 2 skipped. Scenarios 65 passed. Parity was bit for bit over 1200 steps and caught the planted mutation. Selftest goldens 11/11 and 5/5. Release compile 884 loaded, 0 failed. Reels gate after the last commit (`node tools/gate/run.mjs --rev=HEAD --reels` on `3b446472`, same code): `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n23-street\build\gate\3b446472c539\gate.json`. Every stage passed again, plus `reels: exit 0`.
-23-streetuildgateb446472c539gate.json`. Every stage passed again, plus `reels: exit 0`.
 
 ## What does not
 
