@@ -3,13 +3,11 @@
 You build for lane `pressure` of RTAI (Godot 4, internal id `gtai`) in this worktree, branch `n24-pressure`.
 Read `AGENTS.md` and `docs/gauntlet-loop.md` (the "Test player" section) before you start. STANDARDS.md binds.
 
-**Wall clock: hard stop HARDSTOP. Last commit by COMMITBY.**
+**Wall clock: hard stop 00:08. Last commit by 23:55.**
 
-The pre-commit hook takes about 10 minutes on a table commit: start your last commit no later than COMMITBY.
+The pre-commit hook takes about 10 minutes on a table commit: start your last commit no later than 23:55.
 
-**Godot is the director's until GODOTFREE.** The director runs one gauntlet batch (a Godot process of this lane) from
-your start until GODOTFREE. Until then: read, design, write the code and the tests, but launch no Godot, no unit run,
-no gate, no render (the lane gets one Godot at a time). After GODOTFREE Godot is yours alone.
+**Godot is yours alone from your start** (the director runs none while you work).
 
 
 ## Machine rules, git law
@@ -25,6 +23,21 @@ director merges other lanes.
 `docs/gauntlet-loop.md`, tests named for these files, `docs/decisions.md` append-only.
 Forbidden: `project/features/player/**` (motion and melee own the player), `rivet_motion.json`,
 `input_actions.json`, souls, characters, art, `combat.json`.
+
+## Task 0 - the rocket's rest (first, one table commit, 2 minutes + hook)
+
+Director's measurement (`evidence/n24-pressure/arm-rocket14/report.md` vs `evidence/n24-pressure/after-deflect/report.md`,
+same seeds): `enemies.json` `weapons.rocket.cooldown_s` 0.55 -> 1.4 cut rocket deaths 6 -> 1 of 15 and moved the average
+median death wave 5 -> 6. Set `cooldown_s` 1.4 (keep the speed the previous call chose in its task 0c, the lead and
+`relocate_after_shots`), check `test_foe_rocket_sites` and `test_player_motion_dash_dodge` pass, commit, one
+`docs/decisions.md` line at the END ("rocket cooldown 1.4: 0.55 overshot, rocket killed 6 of 15 runs before wave 6").
+
+## Priority (this call is short: about 40 minutes)
+
+In this order, each committed before the next: Task 1b (damage by source), Task 2 + 2c (dash out of rocket and stomp),
+Task 1 (ONLY the no-progress guard and its test; the stall's cause: read and report in two sentences, fix only if it is
+small). Task 3 is dropped: the director's final batch replaces it. Whatever is not committed by 23:55 is reported, not
+committed.
 
 ## Task 1 - the stall (one commit)
 
@@ -77,9 +90,8 @@ for the field, a node test for the table. It must not change the replay digest (
 
 The after-gaps batch (`evidence/n24-pressure/after-gaps/report.md`) lost 10 of 15 runs to the wave-5 war machine
 (stomp 7, war_cannon 3); every novice died to the stomp. `enemies.json` `weapons.stomp`: `damage` 48 and
-`splash_damage` 48 in 3.5 m (Rivet max_hp 100). Check in the code whether one stomp lands BOTH on Rivet (96). If it
-does, that is a double count: report it with file:line as `NEED director: stomp double count` (the fix is in combat
-code; do not change the boss's design numbers). Either way the bot must read the stomp's 0.8 s tell
+`splash_damage` 48 in 3.5 m (Rivet max_hp 100). The director checked: one stomp lands only `splash_damage` (48, `foe_walker.gd:96`), no double count. Two stomps kill
+Rivet, so stepping out is the whole lever: the bot must read the stomp's 0.8 s tell
 (`alt_telegraph_s`) and step or dash out of 3.5 m at the skill levels where a player would (part of task 2).
 
 ## Task 3 - a smoke batch (no commit needed beyond evidence)

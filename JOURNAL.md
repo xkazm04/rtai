@@ -210,3 +210,34 @@ NEXT (session 3 end 21:3x; Astra `deflect` RUNNING since 21:09, lock pid 62596, 
   shortest `assault_rifle.cooldown_s` (0.8 / 1.0 / 1.2) at which both prologue scenarios pass; damage x2 and lead stay.
 - 22:13 ASTRA RUNNING rocket-nail since 22:12 (pid 46936, --resume, hard stop 23:26, commit by 23:14; tasks 0a probe commit, 0b prologue rifle cooldown, 0c rocket speed for motion's 5 m dash test, 1 rocket look, 2 nail). MILESTONE after-deflect batch started 22:13 (pid 24268, ablate --rev=a9e8adc78 -> evidence/n24-pressure/after-deflect/), Godot handed to Astra at 22:34.
 - 22:12 unit --changed after deflect: 3814 passed, 1 failed: motion's test_player_motion_dash_dodge.gd:60 (rocket from 5 m: our 16 m/s rocket lands in 19 ticks, before reaction 15 + dash). DECISION pressure: the rocket must stay dashable after a human reaction (owner: dash dodges major projectiles): highest speed at which motion's test passes (brief 03 task 0c); motion's test is not edited.
+- 22:20 MILESTONE after-deflect batch (rev a9e8adc78, 7 min, 15/15 deaths): median death wave novice 5 (target 6),
+  average 5 (12; P25-P75 3-5), expert 7 (20; 5-9). Censored 0/15. Killers: rocket 6, stomp 5, sentry, contractor,
+  shield_robot, swat 1 each. Average dies at waves 3-5: the 01c rocket (cooldown 0.55, 16 m/s, 32 + 20 splash, lead 0.8)
+  plus deflect at 50% overshoot. `evidence/n24-pressure/after-deflect/report.md`.
+- 22:21 arm-rocket14 started (ablate --set rocket cooldown_s 1.4, speed_mps 13; same seeds; pid 46028) inside my Godot
+  window (to 22:34): does a slower rocket bring average back toward 12 before the bot learns to dash?
+- 22:27 arm-rocket14 (rocket cooldown 1.4, speed 13): median death novice 5, average 6 (P25-P75 5-11), expert 5 (5-10,
+  max 25). Rocket deaths 6 -> 1. Wave 5 (war machine) is now the wall: stomp 6 of 15, + sentry/contractor. The stomp is
+  NOT a double count: `foe_walker.gd:96` lands `splash_damage` 48 only (two stomps kill). DECISION pressure: rocket
+  cooldown 1.4 (brief 04 task 0; speed from brief 03 task 0c); the stomp lever is the bot stepping/dashing out of the
+  0.8 s tell (brief 04 task 2/2c), not the boss's numbers. Expert at 5 < novice is noise of 5 seeds + no dash.
+- 22:32 REPORT.md drafted (before/after table so far, RPS table, deflect share). Brief 04 times set: hard stop 00:08,
+  commit by 23:55, Godot Astra's from its start (adjust if 03 ends early: launch = 03 end + review; hard stop never
+  later than 00:08).
+
+NEXT (session 4 end; ASTRA RUNNING rocket-nail since 22:12, pid 46936, hard stop 23:26, out
+`evidence/briefs/n24-pressure-03-rocket-nail.out.txt`; Astra was committing 0a at 22:30, so my JOURNAL/REPORT/brief 04
+edits are UNCOMMITTED: commit them with `git commit -- <paths>` when Astra's index is clean):
+1. On rocket-nail's end: review 0a (probe + baseline), 0b (assault_rifle.cooldown_s value, prologue scenarios pass,
+   quest 1 digest), 0c (rocket speed, motion's dash test green), rocket look (no ice blue on Rivet's rocket; enemy large
+   stays `EnemyRoundLook.LARGE_*`), Gloria smallest round + `evidence/n24-pressure/rounds/sizes-{before,after}.md`;
+   LOOK at the stills in `C:\Users\kazda\kiro\gtai-masters\n24\pressure\` at 32 and 64 px/m. Mutate scores quoted?
+2. Launch brief 04 (`evidence/briefs/n24-pressure-04-bot-stall-dash.md`, `--resume`, PowerShell Start-Process as in
+   22:12) right after: task 0 rocket cooldown 1.4, 1b damage_by, 2/2c dash + stomp step-out, 1 no-progress guard.
+3. ~23:55-00:10 when 04 commits: `node tools/gate/run.mjs --rev=HEAD` (Godot is mine; Astra must be done). Then the final
+   batch `ablate.mjs --name=final --rev=<HEAD> -- <same args> --out=<abs>/evidence/n24-pressure/final` (+ report.mjs
+   --out=<dir>), then brief 05 (films; fill HARDSTOP 01:25, COMMITBY 01:15, GODOTNOTE "Godot is yours alone") with
+   `--resume`. Merge n24-melee if `MILESTONE ready` appears before 23:30 only (else Merge notes: not merged).
+4. REPORT: fill final row, Calls (deflect 12 deg vs 20; rocket cooldown 1.4 vs 0.55; prologue rifle cadence; expert
+   far below 20 = the bot, not the game?), bonus rows (e.g. `deflect_plating` pass_ratio_k 0.8, `mirror_edge` spread
+   x0.5, `reflex_servo` guard drain x0.75), ledger; `node tools/evidence/cites.mjs REPORT.md`.
