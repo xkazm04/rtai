@@ -121,7 +121,11 @@
         "2026-11-22: move_ttk kill-time probe for n23 moves (dev_loc 28927 -> 29010)",
         "2026-11-22: move_film scene for n23 moves (dev_loc 29010 -> 29516)",
         "2026-11-22: move_ttk slice-k what-if for n23 moves (dev_loc 29516 -> 29543)",
-        "2026-11-22: move_film slice-k for n23 moves (dev_loc 29543 -> 29570)"
+        "2026-11-22: move_film slice-k for n23 moves (dev_loc 29543 -> 29570)",
+        "2026-11-22: n23 prologue: deterministic hands pilot and viewport captures of the yard and first kill (dev_loc 28529 -> 28682)",
+        "2026-11-22: --prologue-stills for n23 prologue (dev_loc 28682 -> 28772)",
+        "2026-11-22: --bot and --prologue-stills for n23 prologue (dev_loc 28772 -> 28848)",
+        "2026-11-22: --clip for n23 prologue (dev_loc 28848 -> 28948)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -129,7 +133,7 @@
         "project/dev/bake_city.gd": 32,
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
-        "project/dev/bots": 496,
+        "project/dev/bots": 695,
         "project/dev/controls": 712,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
@@ -144,6 +148,7 @@
         "project/dev/moves": 1041,
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
+        "project/dev/prologue": 220,
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 1096,
@@ -160,7 +165,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 30293
+      "total": 30712
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -423,7 +428,10 @@
         "2026-11-22: --pick-filter for n23 loop (files_past_soft_cap 67 -> 67)",
         "2026-11-22: RivetSelfBlast call site in fight_areas + dev/controls film for n23 controls (files_past_soft_cap 67 -> 67)",
         "2026-11-22: --bot and --result for n23 prologue (files_past_soft_cap 67 -> 67)",
-        "2026-11-22: Merge of controls, moves and loop requires their distinct KNOWN_FLAGS in launch_args.gd (+2 lines). (files_past_soft_cap 67 -> 67)"
+        "2026-11-22: Merge of controls, moves and loop requires their distinct KNOWN_FLAGS in launch_args.gd (+2 lines). (files_past_soft_cap 67 -> 67)",
+        "2026-11-22: --prologue-stills for n23 prologue (files_past_soft_cap 67 -> 67)",
+        "2026-11-22: --clip for n23 prologue (files_past_soft_cap 67 -> 67)",
+        "2026-11-22: n23 merge: launch_args KNOWN_FLAGS holds both the loop's and the prologue's flags (files_past_soft_cap 67 -> 67)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -432,7 +440,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 238,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 217,
+        "project/boot/launch_args.gd": 219,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,

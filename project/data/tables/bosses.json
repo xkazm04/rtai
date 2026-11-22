@@ -249,6 +249,61 @@
       "radius_m": 0.5,
       "rng": "boss_king_gang"
     },
+    "mulroney": {
+      "arena": "depot",
+      "attacks": {
+        "line_up": {
+          "active_s": 0.1,
+          "aim_lock_s": 0.25,
+          "cooldown_s": 0,
+          "damage": 0,
+          "doc": "Hold the centre while the outside shields push around Rivet.",
+          "max_m": 35,
+          "min_m": 0,
+          "punish_k": 1,
+          "punish_s": 1.6,
+          "range_m": 26,
+          "recovery_s": 1.6,
+          "shape": "none",
+          "weight": 1,
+          "windup_s": 1.5
+        },
+        "volley": {
+          "active_s": 0.1,
+          "aim_lock_s": 0.25,
+          "cooldown_s": 0,
+          "damage": 0,
+          "doc": "The rifle line fires a synchronized burst.",
+          "max_m": 35,
+          "min_m": 0,
+          "punish_k": 1,
+          "punish_s": 1.6,
+          "range_m": 26,
+          "recovery_s": 1.6,
+          "shape": "none",
+          "weight": 1,
+          "windup_s": 1.5
+        }
+      },
+      "doc": "The standalone boss preview uses the depot. In the factory yard the human sergeant commands the prologue squad through these timed orders.",
+      "hp": 2,
+      "move_mps": 3.2,
+      "phases": [
+        {
+          "attacks": [
+            "line_up",
+            "volley"
+          ],
+          "doc": "Alternate the shield flank and the rifle volley, exposing Mulroney after each order.",
+          "gap_s": 3.5,
+          "hp_below": 1,
+          "id": "command",
+          "transition_s": 0
+        }
+      ],
+      "radius_m": 0.45,
+      "rng": "boss_mulroney"
+    },
     "servo": {
       "arena": "depot",
       "attacks": {

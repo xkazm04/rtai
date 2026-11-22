@@ -1,4 +1,95 @@
 {
+  "arrival": {
+    "checkpoint": "dale_patrol",
+    "dale_first_gap_m": 3.2,
+    "dale_last_gap_m": 1.35,
+    "fan_line": "b1_l03_cop_gary",
+    "first_warden_at": [
+      23.2,
+      19.4
+    ],
+    "formations": [
+      {
+        "first": [
+          26,
+          22
+        ],
+        "id": "winnick",
+        "step": [
+          0,
+          0
+        ]
+      },
+      {
+        "first": [
+          26,
+          23.8
+        ],
+        "id": "frightened_patrol",
+        "step": [
+          0.95,
+          0.46
+        ]
+      },
+      {
+        "first": [
+          20,
+          21
+        ],
+        "id": "catchers",
+        "step": [
+          2.7,
+          -0.3
+        ]
+      }
+    ],
+    "gate_exit_m": 4.5,
+    "max_melee": 2,
+    "max_shooters": 2,
+    "panic_burst": 3,
+    "panic_burst_gap_s": 0.13,
+    "panic_cooldown_s": 1.7,
+    "panic_morale": 0.08,
+    "panic_s": 1.7,
+    "panic_spread_deg": 34,
+    "patrol_offsets_m": [
+      [
+        -3.1,
+        1.1
+      ],
+      [
+        0.3,
+        -1.8
+      ],
+      [
+        2.6,
+        0.9
+      ],
+      [
+        -2.3,
+        -1.3
+      ],
+      [
+        1.8,
+        2.1
+      ],
+      [
+        3.4,
+        -1.2
+      ]
+    ],
+    "pole_pin_s": 0.7,
+    "rank_size": 3,
+    "reinforce_s": 27,
+    "retreat_gap_m": 8.8,
+    "retreat_mps": 6.65,
+    "rivet_at": [
+      20,
+      17
+    ],
+    "spacing_m": 1.25,
+    "walk_mps": 3.8
+  },
   "beats": [
     {
       "beat": 1,
@@ -22,6 +113,58 @@
       "last_line": "b3_l11_fax_location"
     }
   ],
+  "command": {
+    "displace_m": 16,
+    "file_spacing_m": 2.2,
+    "flank_m": 3.6,
+    "front_at": [
+      34,
+      24
+    ],
+    "last_stand_hp": 0.25,
+    "line_standoff_m": 8,
+    "rank_spacing_m": 2.3,
+    "rifle_bound_mps": 6,
+    "rifle_clearance_m": 1.6,
+    "rifle_dodge_m": 2.2,
+    "rifle_posts": [
+      "burnt_pickup",
+      "press_carcass",
+      "fuel_vessel",
+      "scrap_skip"
+    ],
+    "shotgun_half_deg": 9
+  },
+  "opening_bodies": [
+    {
+      "at": [
+        18.55,
+        17.15
+      ],
+      "id": "west_officer"
+    },
+    {
+      "at": [
+        20.55,
+        15.6
+      ],
+      "id": "north_officer"
+    },
+    {
+      "at": [
+        21.35,
+        17.95
+      ],
+      "id": "east_officer"
+    }
+  ],
+  "payphone": {
+    "at": [
+      43,
+      36.25
+    ],
+    "id": "factory_gate_phone"
+  },
   "pistol_pickup_id": "pistol",
   "rivet_start": [
     20,
@@ -97,7 +240,7 @@
       "damage": 8,
       "id": "shotgun",
       "melee": false,
-      "reach_m": 16,
+      "reach_m": 8,
       "speed_mps": 20
     },
     {
@@ -113,6 +256,401 @@
       "speed_mps": 0
     }
   ],
+  "yard": {
+    "cover": [
+      {
+        "art": "res://features/city/art/vehicles/van_wreck.png",
+        "at": [
+          11,
+          15
+        ],
+        "id": "burnt_van",
+        "size_m": [
+          5.6,
+          2.65
+        ]
+      },
+      {
+        "art": "res://features/city/art/roofs/roof_charging.png",
+        "at": [
+          29,
+          18
+        ],
+        "crop": {
+          "origin": [
+            0.06,
+            0.12
+          ],
+          "size": [
+            0.51,
+            0.6
+          ]
+        },
+        "id": "press_carcass",
+        "size_m": [
+          2.6,
+          4
+        ]
+      },
+      {
+        "art": "res://features/city/art/props/dock_propeller.png",
+        "at": [
+          18,
+          8
+        ],
+        "id": "broken_impeller",
+        "size_m": [
+          3.3,
+          3.3
+        ]
+      },
+      {
+        "art": "res://features/city/art/props/dock_fuel_tank.png",
+        "at": [
+          43,
+          11
+        ],
+        "id": "fuel_vessel",
+        "size_m": [
+          5,
+          3
+        ]
+      },
+      {
+        "art": "res://features/city/art/props/dock_scrap_skip.png",
+        "at": [
+          46,
+          26
+        ],
+        "id": "scrap_skip",
+        "size_m": [
+          4.4,
+          2.4
+        ]
+      },
+      {
+        "art": "res://features/city/art/vehicles/pickup_wreck.png",
+        "at": [
+          12,
+          26
+        ],
+        "id": "burnt_pickup",
+        "size_m": [
+          4.8,
+          2.4
+        ]
+      },
+      {
+        "art": "res://features/city/art/roofs/roof_sawtooth.png",
+        "at": [
+          6.1,
+          5
+        ],
+        "crop": {
+          "origin": [
+            0.08,
+            0.26
+          ],
+          "size": [
+            0.66,
+            0.66
+          ]
+        },
+        "id": "west_saw_bay",
+        "shell": true,
+        "size_m": [
+          11,
+          9.7
+        ]
+      },
+      {
+        "art": "res://features/city/art/roofs/roof_sawtooth.png",
+        "at": [
+          24,
+          5.5
+        ],
+        "crop": {
+          "origin": [
+            0.32,
+            0.19
+          ],
+          "size": [
+            0.49,
+            0.72
+          ]
+        },
+        "id": "middle_saw_bay",
+        "shell": true,
+        "size_m": [
+          6.8,
+          10.4
+        ]
+      },
+      {
+        "art": "res://features/city/art/roofs/building_warehouse.png",
+        "at": [
+          46,
+          4
+        ],
+        "crop": {
+          "origin": [
+            0.12,
+            0.25
+          ],
+          "size": [
+            0.83,
+            0.67
+          ]
+        },
+        "id": "east_plant_wall",
+        "shell": true,
+        "size_m": [
+          18.4,
+          7.5
+        ]
+      },
+      {
+        "art": "res://features/city/art/roofs/roof_skylights.png",
+        "at": [
+          5.8,
+          21.3
+        ],
+        "crop": {
+          "origin": [
+            0.1,
+            0.71
+          ],
+          "size": [
+            0.34,
+            0.2
+          ]
+        },
+        "id": "fallen_cooling_bank",
+        "size_m": [
+          3.5,
+          1.9
+        ]
+      },
+      {
+        "art": "res://features/city/art/roofs/roof_charging.png",
+        "at": [
+          34.3,
+          13
+        ],
+        "crop": {
+          "origin": [
+            0.055,
+            0.43
+          ],
+          "size": [
+            0.61,
+            0.42
+          ]
+        },
+        "id": "split_transformer",
+        "size_m": [
+          3.35,
+          2.7
+        ]
+      }
+    ],
+    "debris": [
+      {
+        "art": "res://features/city/art/decals/cracks.png",
+        "at": [
+          6.2,
+          13
+        ],
+        "id": "west_slab",
+        "size_m": [
+          10.5,
+          8.5
+        ]
+      },
+      {
+        "art": "res://features/city/art/decals/scorch_b.png",
+        "at": [
+          23.8,
+          10.7
+        ],
+        "id": "bay_soot",
+        "size_m": [
+          12,
+          6.8
+        ]
+      },
+      {
+        "art": "res://features/city/art/decals/oil_slick.png",
+        "at": [
+          26.8,
+          19.3
+        ],
+        "id": "press_oil",
+        "size_m": [
+          6.3,
+          4.5
+        ]
+      },
+      {
+        "art": "res://features/city/art/decals/glass_shards.png",
+        "at": [
+          31.5,
+          17.2
+        ],
+        "id": "press_shards",
+        "size_m": [
+          3.4,
+          3.4
+        ]
+      },
+      {
+        "art": "res://features/city/art/decals/scorch_b.png",
+        "at": [
+          34.4,
+          13.3
+        ],
+        "id": "transformer_fire",
+        "size_m": [
+          6.8,
+          5.2
+        ]
+      },
+      {
+        "art": "res://features/city/art/decals/gouge.png",
+        "at": [
+          20.7,
+          13
+        ],
+        "id": "feeder_spall",
+        "size_m": [
+          8.3,
+          3.3
+        ]
+      },
+      {
+        "art": "res://features/city/art/decals/glass_shards.png",
+        "at": [
+          14.5,
+          10.8
+        ],
+        "id": "bay_shards",
+        "size_m": [
+          4.1,
+          3.8
+        ]
+      },
+      {
+        "art": "res://features/city/art/decals/oil_splash.png",
+        "at": [
+          6.6,
+          21.8
+        ],
+        "id": "coolant_oil",
+        "size_m": [
+          7.5,
+          5.2
+        ]
+      },
+      {
+        "art": "res://features/city/art/decals/scorch_b.png",
+        "at": [
+          45.8,
+          8.3
+        ],
+        "id": "east_bay_soot",
+        "size_m": [
+          9.2,
+          6.4
+        ]
+      },
+      {
+        "art": "res://features/city/art/decals/cracks.png",
+        "at": [
+          36.2,
+          25.8
+        ],
+        "id": "broken_apron",
+        "size_m": [
+          7.1,
+          5.8
+        ]
+      },
+      {
+        "art": "res://features/city/art/decals/oil_stain.png",
+        "at": [
+          41.3,
+          12.2
+        ],
+        "id": "leaking_vessel",
+        "size_m": [
+          6.3,
+          4.4
+        ]
+      }
+    ],
+    "fence_depth_m": 0.65,
+    "gate_width_m": 6,
+    "gate_x_m": 36,
+    "scorch_marks": [
+      {
+        "at": [
+          29,
+          18
+        ],
+        "id": "press_fire",
+        "size_m": [
+          9.5,
+          8.5
+        ]
+      },
+      {
+        "at": [
+          11,
+          15
+        ],
+        "id": "van_fire",
+        "size_m": [
+          8.5,
+          6.5
+        ]
+      },
+      {
+        "at": [
+          21.5,
+          16.5
+        ],
+        "id": "floor_flash",
+        "size_m": [
+          6,
+          4.5
+        ]
+      },
+      {
+        "at": [
+          43,
+          11
+        ],
+        "id": "vessel_fire",
+        "size_m": [
+          8,
+          6
+        ]
+      },
+      {
+        "at": [
+          16,
+          25.5
+        ],
+        "id": "west_blast",
+        "size_m": [
+          7.5,
+          5
+        ]
+      }
+    ],
+    "sidewalk_depth_m": 4,
+    "street_depth_m": 7
+  },
   "yard_size_m": [
     60,
     34
