@@ -104,7 +104,7 @@ func test_fallback_clears_three_waves_through_player_input() -> void:
 	walker.configure(&"average", &"random", run.seed)
 	var s: GauntletSession = _session(walker, run)
 	var waves: GauntletWaves = GauntletWaves.attach(s, run, walker, 3)
-	while not waves.done and s.tick() < 3 * (GauntletWaves.TIMEOUT_TICKS + 600):
+	while not waves.done and s.tick() < 3 * (s.street.timeout_ticks + 600):
 		s.step()
 	assert_true(waves.done)
 	assert_true(run.alive)

@@ -52,7 +52,9 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	var rivet: Fighter = session.stage.arena.rivet
-	_wave.text = tr("GAUNTLET__WAVE").format({"wave": run.wave})
+	var alive: int = waves.live_wave_count()
+	var label_key: String = "GAUNTLET__WAVE_STACK" if alive > 1 else "GAUNTLET__WAVE"
+	_wave.text = tr(label_key).format({"wave": run.wave, "alive": alive})
 	_time.text = tr("GAUNTLET__TIMER").format(
 		{"seconds": "%.1f" % waves.wave_seconds(session.stage.tick)}
 	)

@@ -1,16 +1,18 @@
 class_name GauntletWaves
 extends ArenaHook
-## Runs after street streaming on each simulation tick. The first block is the approach.
-## A live cohort holds the far seam. The squad keeps its fighters until every member falls.
+## Street streaming runs first. Overlapping waves share the block and squad until it is clear.
 
 signal pick_offered(ids: Array[StringName])
-
-const TIMEOUT_TICKS: int = 90 * SimClock.TICK_RATE
 
 var done: bool = false
 var draw: GauntletDraw
 var manual_picks: bool = false
 var pending: Array[StringName] = []
+var owed_total: int = 0
+var owed_index: int = 0
+var owed_remaining: int:
+	get:
+		return owed_total - owed_index + int(not pending.is_empty())
 var _run: GauntletRun
 var _bonuses: GauntletBonusApply
 var _street: GauntletStreet
@@ -18,11 +20,9 @@ var _picker: GauntletPilot
 var _composer: GauntletComposer
 var _limit: int
 var _block: int = 0
-var _start: int = -1
-var _stats: GauntletWaveStats = GauntletWaveStats.new()
-var _hits: int
-var _contacts: Dictionary[StringName, int] = {}
-var _members: Array[Fighter] = []
+var _first_wave: int
+var _next_wave_tick: int
+var _live: Array[GauntletLiveWave] = []
 
 
 static func attach(
@@ -53,117 +53,113 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 func step(stage: ArenaStage, tick: int) -> void:
 	if done or not pending.is_empty():
 		return
-	if _start >= 0:
-		_stats.sample(stage)
-	if not stage.arena.rivet.alive():
-		_finish(stage, tick, false)
-		done = true
+	var dead: bool = not stage.arena.rivet.alive()
+	if dead:
 		_run.alive = false
-	elif _start < 0:
-		if _street.index > _block:
-			_spawn(stage, tick)
-	elif _cleared():
-		_finish(stage, tick, true)
-		_pick(stage)
-		done = pending.is_empty() and _at_limit()
-	elif tick - _start >= TIMEOUT_TICKS:
-		_finish(stage, tick, false)
-		_run.death_by = &"timeout"
-		_run.alive = false
+		var newest: GauntletLiveWave = _newest_started()
+		_run.death_wave = _run.wave if newest == null else newest.row["n"]
 		done = true
+	for i: int in range(_live.size() - 1, -1, -1):
+		var wave: GauntletLiveWave = _live[i]
+		if wave.start_tick < 0:
+			continue
+		wave.stats.sample(stage)
+		var cleared: bool = wave.cleared()
+		if cleared or dead:
+			wave.finish(stage, _picker, tick, cleared)
+			_live.remove_at(i)
+	if dead:
+		return
+	if _live.is_empty():
+		if is_finite(_street.forward_limit):
+			_clear_block()
+		elif _street.index > _block:
+			_block = _street.index
+			_first_wave = _run.wave + 1
+			_street.hold_block(stage.arena)
+			_schedule(stage, tick)
+		return
+	_fill(stage, tick)
+	var newest: GauntletLiveWave = _live[-1]
+	if newest.start_tick >= 0 and tick >= _next_wave_tick and not _at_limit():
+		newest.row["timed_out"] = true
+		_schedule(stage, tick)
 
 
-func _spawn(stage: ArenaStage, tick: int) -> void:
-	var arena: CombatArena = stage.arena
-	(arena as GauntletCombat).retire_wave()
-	for dead: Fighter in _members:
-		arena.hostiles.erase(dead)
-	_members.clear()
-	arena.squad_ai.clear_wave()
-	var block: GauntletSegment = _street.current()
-	_block = _street.index
-	_street.forward_limit = block.end_x() - arena.rivet.radius_m
-	# The same invisible seam bounds a retreating guard; its brain still pursues across the block.
-	arena.squad_ai.pit.bounds.end.x = _street.forward_limit
-	var enemies: Dictionary[String, int] = {}
-	var roster: Array[StringName] = _composer.compose(_run.wave + 1)
-	for i: int in roster.size():
-		var at: Vector2 = block.spawns[i % block.spawns.size()]
-		var foe: Fighter = arena.squad_ai.spawn_member(arena, at, roster[i])
-		# Reused anchors keep the arena spawner's seeded spread, constrained to this block.
-		var offset: Vector2 = (
-			(foe.pos - at).limit_length(1.2) if i >= block.spawns.size() else Vector2.ZERO
-		)
-		foe.pos = stage.walls.push_out(at + offset, foe.radius_m)
-		_members.append(foe)
-		var id: String = String(foe.archetype)
-		var previous: int = enemies.get(id, 0)
-		enemies[id] = previous + 1
-	_run.begin_wave(enemies)
-	_start = tick
-	_stats.begin(stage)
-	_hits = 0
-	_contacts = {&"hits_gun": 0, &"hits_melee": 0}
-	arena.announce_wave(&"gauntlet", _run.wave)
-	Log.info(
-		"gauntlet", "wave %d tick %d block %s enemies %s" % [_run.wave, tick, block.id, enemies]
-	)
+func live_wave_count() -> int:
+	return _live.size() - int(not _live.is_empty() and _live[-1].start_tick < 0)
+
+
+func _newest_started() -> GauntletLiveWave:
+	var count: int = live_wave_count()
+	return _live[count - 1] if count > 0 else null
 
 
 func wave_seconds(tick: int) -> float:
-	if _start >= 0:
-		return (tick - _start) * SimClock.TICK_DT
-	if _run.waves.is_empty():
-		return 0.0
-	var seconds: float = _run.waves[-1].get("seconds", 0.0)
-	return seconds
+	var wave: GauntletLiveWave = _newest_started()
+	if wave != null:
+		return wave.seconds(tick)
+	return _run.waves[-1].get("seconds", 0.0) if not _run.waves.is_empty() else 0.0
 
 
-func _cleared() -> bool:
-	for member: Fighter in _members:
-		if member.alive():
-			return false
-	return true
+func _slots(arena: CombatArena) -> int:
+	var slots: int = _street.max_alive
+	for foe: Fighter in arena.hostiles:
+		slots -= int(foe.alive())
+	return maxi(0, slots)
 
 
-func _finish(stage: ArenaStage, tick: int, cleared: bool) -> void:
-	if _start < 0:
-		return
-	var row: Dictionary = _run.waves[-1]
-	_stats.finish(stage, row)
-	_stats.collect_pilot(_picker, row)
-	row["hits"] = _hits
-	row.merge(_contacts)
-	if cleared:
-		row["seconds"] = (tick - _start) * SimClock.TICK_DT
-	else:
-		Log.info(
-			"gauntlet",
-			(
-				"wave %d ended after %d ticks at %s, hp %.1f"
-				% [_run.wave, tick - _start, stage.arena.rivet.pos, stage.arena.rivet.hp]
+func _schedule(stage: ArenaStage, tick: int) -> void:
+	var roster: Array[StringName] = _composer.compose(_run.wave + 1)
+	_live.append(GauntletLiveWave.new(roster, _slots(stage.arena)))
+	_fill(stage, tick)
+
+
+func _fill(stage: ArenaStage, tick: int) -> void:
+	var slots: int = -1
+	for wave: GauntletLiveWave in _live:
+		if wave.remaining() == 0:
+			continue
+		if slots < 0:
+			slots = _slots(stage.arena)
+		if slots == 0:
+			break
+		var starting: bool = wave.start_tick < 0
+		slots -= wave.spawn(stage, _street.current(), slots, tick, _run)
+		if starting:
+			# Keep this deadline if a younger roster falls before an older survivor.
+			_next_wave_tick = tick + _street.timeout_ticks
+			stage.arena.announce_wave(&"gauntlet", _run.wave)
+			Log.info(
+				"gauntlet",
+				"wave %d tick %d block %d, %d alive" % [_run.wave, tick, _block, live_wave_count()]
 			)
-		)
 
+
+func _clear_block() -> void:
 	_street.forward_limit = INF
-	_start = -1
+	owed_total = _run.wave - _first_wave + 1
+	owed_index = 0
+	_next_offer()
+	while not manual_picks and not pending.is_empty():
+		if not choose(_picker.pick(pending)):
+			Log.error("gauntlet", "bot could not take its offered upgrade")
+			break
 
 
-func _pick(stage: ArenaStage) -> void:
-	var owned: Array[StringName] = [stage.arena.rivet.weapon]
-	if stage.pilot.carry != null:
-		owned.append_array(stage.pilot.carry.slots)
-	var forms: GhostForms = stage.pilot.ghosts.forms
-	for id: StringName in forms.table.order:
-		if forms.locks.allows(forms.table, id):
-			owned.append(id)
-	pending = draw.offer(_run.wave, _run.picks, owned)
-	if pending.is_empty():
-		return
-	if manual_picks:
-		pick_offered.emit(pending)
-	elif not choose(_picker.pick(pending)):
-		pending = []
+func pick_wave() -> int:
+	return _first_wave + owed_index - 1
+
+
+func _next_offer() -> void:
+	while owed_index < owed_total:
+		owed_index += 1
+		pending = draw.offer(pick_wave(), _run.picks, _bonuses.owned())
+		if not pending.is_empty():
+			if manual_picks:
+				pick_offered.emit(pending)
+			return
+	done = _at_limit()
 
 
 func choose(index: int) -> bool:
@@ -172,9 +168,9 @@ func choose(index: int) -> bool:
 	var id: StringName = pending[index]
 	if not _bonuses.apply(draw.rows[id]):
 		return false
-	_run.picks.append({"wave": _run.wave, "offered": pending, "taken": id})
+	_run.picks.append({"wave": pick_wave(), "offered": pending, "taken": id})
 	pending = []
-	done = _at_limit()
+	_next_offer()
 	return true
 
 
@@ -183,14 +179,12 @@ func _at_limit() -> bool:
 
 
 func _contact(victim: Fighter, counter: StringName) -> void:
-	if _start >= 0 and _members.has(victim):
-		_contacts[counter] += 1
+	for wave: GauntletLiveWave in _live:
+		wave.contact(victim, counter)
 
 
-## Count damaging contacts against wave members. A claw strike can hit several bodies.
 func _wounded(victim: Fighter, _weapon: StringName) -> void:
-	if _start >= 0 and _members.has(victim):
-		_hits += 1
+	_contact(victim, &"hits")
 
 
 func _killed(

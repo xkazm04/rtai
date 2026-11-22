@@ -1,0 +1,42 @@
+# Brief 03 (street lane, n23): two lane requests, then enemy rounds not red
+
+Hard stop: 04:50 wall clock (check `date`). Commit deadline: 04:40. Parts 0 then A, each committed before the next. If you are not done, commit what is green and report what is left. Write your final report BEFORE any mutate run; mutate is the last step and capped (`--max=20`, changed lines).
+
+## Setup for every Godot run
+`export APPDATA=C:/Users/kazda/kiro/gtai-n23/appdata/street` and
+`export GODOT_BIN=C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe`.
+Anything that renders: `--rendering-driver d3d12`; any window `--position 0,1440` (secondary screen, never the main display). One Godot process at a time. Never kill processes by name; only a PID you started. Read `tools/README.md` for the film kit (`tools/film/film.mjs`, `compare.mjs --a=<commit> --b=<commit>` for same-tick before/after, `sheet.mjs`).
+
+## Part 0: two requests from other lanes (do these first, ~20 min, one commit each)
+0a. Lane `prologue` adds rows `appliance_warden` (tier 1) and `sergeant_mulroney` (tier 2) to `enemies.json`; the composer builds its pool from every row with a tier, so they would enter gauntlet waves once merged. Add to `project/data/tables/gauntlet.json` an optional list `"roster_exclude": ["appliance_warden", "sergeant_mulroney"]` (schema: optional array of unique strings), and `project/features/gauntlet/gauntlet_composer.gd` skips any row whose id is in it (absent list = skip nothing). Those rows do not exist on this branch, so seed 7 average result must stay byte-identical to before (cmp; quote it). Unit test in `project/tests/unit/test_gauntlet_composer.gd`: a synthetic rows list with an excluded tier-1 id never appears in 50 composed waves; without the list it can.
+0b. Lane `loop` wants the gauntlet's own repair numbers so its tuner can move them without touching quest 1's `combat.json`. Add to `gauntlet.json` an optional object `"rivet": {"repair_per_s": 10, "repair_delay_s": 3}` (schema: optional, both numbers >= 0, no other keys). Where the gauntlet sets up its stage (`project/features/gauntlet/gauntlet_bonus_apply.gd` `_init` captures `_repair` from `arena.tuning.rivet["repair_per_s"]`; find where the gauntlet stage's `CombatTuning` is made), write the block's values into that stage's own `arena.tuning.rivet["repair_per_s"]` / `["repair_delay_s"]` before `_repair` is captured, each defaulting to the combat.json value when absent. Never write `combat.json`; quest 1 and bosses (`boss_spec.gd` sets its own delay) must not change. Since the values equal combat.json's, seed 7 average must stay byte-identical (cmp; quote). Unit test: a table with `rivet.repair_per_s = 4` gives the stage 4 and leaves a fresh `CombatTuning` from combat.json at 10.
+0c. In `gauntlet_composer.gd` `compose()`, `remaining / cheapest` divides by zero when the budget is 0 and nothing is eligible (`base` 0 and `per_wave` 0 are schema-legal): guard with `maxi(1, cheapest)` and add a unit test with a zero budget table returning an empty roster. Fold this into 0a's commit.
+Commit 0a and 0b separately.
+
+## Merge note for Part A
+The `moves` lane edits `project/features/combat/squad/foe_ordnance_view.gd` `_draw()` (stun arcs for each hostile) tonight. If a hostile round colour lives there, change only the colour constants/expressions, not the loop lines of `_draw()`; prefer reading colours from `EnemyRoundLook` in the functions that draw the round itself.
+
+## Part A: enemy rounds are not red (owner: "recolour enemy rounds away from red")
+Colour law: red is blood only; cops are blue; vermilion only for danger, objectives and Rivet's collar; **teal only for souls**; amber allowed for heat, overload and a cancelled cast. Rivet's own hits read red-ish on bodies. Enemy rounds must read as a threat against blood, asphalt and the pick screen.
+
+Today `project/features/combat/weapons/gun_fx_art.gd` `tracer()` gives an enemy round `Ink.VERMILION` as core (line ~92). Find every place a HOSTILE round, its trail and its muzzle flash is drawn (grep `from_rivet`, `foe_ordnance_view.gd` for rockets/shells/war cannon, the hostile muzzle flash in `gun_fx_art.gd` / `gun_fx.gd`, large-round drawing). Do not touch Rivet's own rounds.
+1. Put the new colours in one new file `project/features/combat/enemy_round_look.gd` (class `EnemyRoundLook`, consts only: small core, small glow/casing, large core, large rim, muzzle). Small rounds: a hot amber-white core (e.g. near `#FFE6A8` core on a deep amber `#E08A1E` rim). Large rounds (the ones to dodge): a cyan-white / ice core (e.g. `#E8FBFF` core, `#7FD8F0`-ish rim) that is clearly NOT soul teal: compare against the soul teal constant in the code (grep `TEAL` in `Ink` / ghost views) and keep the hue distance obvious (lean blue-white, high lightness, low saturation). So the two sizes also differ by colour.
+2. Use `Shot.size` (`SMALL`/`LARGE`; `size_known`) to pick; an unknown size draws as small.
+3. Colour only: no hitbox, speed, timing, spawn or RNG change. Prove it: the 60 s replay and the scenario suite stay green (`"$GODOT_BIN" --headless --path project -s res://tests/run_scenarios.gd`), and no sim digest moves. If a pixel golden under `project/tests/golden/` or a reel compares these pixels and fails, do not re-pin it: report it.
+4. Stills before and after at 32 px/m, tilt 70, 1080p, at the same tick: enemy small rounds and a large round (rocket trooper or war machine) in flight, (a) over a blood-covered floor, (b) on plain asphalt, (c) behind the gauntlet pick screen. Use the gauntlet (`project/dev/gauntlet/gauntlet.tscn`, `--pick-view` films the pick screen; `project/dev/gauntlet/gauntlet_stills.gd` exists, read it) or a `tools/film/film.mjs` shot, whichever gives the same tick before/after (`compare.mjs`). Plus one 64 px/m close-up of each size after. Output to `C:/Users/kazda/kiro/gtai-masters/n23/street/rounds/` with names `rounds-<scene>-<before|after>-<ppm>.png`. Look at every still yourself and say in your report what you see (is the round visible on blood? on asphalt? does large differ from small?).
+Commit A.
+
+## Acceptance checks (quote results in your report)
+- `node tools/gate/quick.mjs` clean. Fix lint and format findings in your own edit and go on.
+- `node tools/tests/run_unit.mjs --changed` green.
+- scenario suite summary line, unchanged pass count.
+- `node tools/debt/debt.mjs --check`; on `tighten:` run `--update` and commit the baseline.
+- New `.gd` files: run `"$GODOT_BIN" --headless --path project --import` once and commit the `.uid`.
+
+## Commit
+Staged per path (`git add <path>`; never `-A`, `.`, `-u`, `commit -a`, stash, amend, rebase, reset --hard, push). End messages with
+`Co-Authored-By: GPT-6.2 Astra <noreply@openai.com>`.
+
+## Allowlist (edit only these)
+Part 0: `project/data/tables/gauntlet.json`, `project/data/schemas/gauntlet.schema.json`, `project/features/gauntlet/gauntlet_composer.gd`, `project/features/gauntlet/gauntlet_bonus_apply.gd` and the gauntlet stage setup file under `project/features/gauntlet/` (not `bot/`), their unit tests. Part A: `project/features/combat/weapons/gun_fx_art.gd` and the other files that DRAW hostile rounds / their trails / their muzzle flash (name each in your report; colour lines only), `project/features/combat/squad/foe_ordnance_view.gd` (colour only), new `project/features/combat/enemy_round_look.gd`, `project/features/combat/shot*.gd` (drawing only). Both: `C:/Users/kazda/kiro/gtai-masters/n23/street/**`, `evidence/street/**`, `tools/debt/baseline.json` through the debt tool, `.uid` files of new scripts.
+Forbidden: `project/features/player/**`, `project/features/gauntlet/bot/**`, `tools/gauntlet/**`, `project/data/tables/enemies.json`, `combat.json`, `gauntlet_bonuses.json`, `project/features/combat/combat_arena.gd`, `project/features/combat/ai/**`, `project/features/souls/**`, `project/boot/**`, tapes and goldens, JOURNAL.md, REPORT.md. Any other path: stop and report a NEED.

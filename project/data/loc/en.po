@@ -69,6 +69,9 @@ msgstr "{seconds} s"
 msgid "GAUNTLET__WAVE"
 msgstr "Wave {wave}"
 
+msgid "GAUNTLET__WAVE_STACK"
+msgstr "Wave {wave} - {alive} alive"
+
 msgid "GAUNTLET__WEAPON__CHAINSAW"
 msgstr "Chainsaw"
 

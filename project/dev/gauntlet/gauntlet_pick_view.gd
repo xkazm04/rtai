@@ -3,7 +3,6 @@ extends ColorRect
 ## Modal between-wave selection. Commit on release so a held slot key cannot switch the grant.
 
 var waves: GauntletWaves
-var run: GauntletRun
 var pilot: GauntletPilot
 var _frames: int
 var _choice: int
@@ -33,7 +32,7 @@ func _present(ids: Array[StringName]) -> void:
 		child.queue_free()
 	_frames = 0
 	_pressed_slot = -1
-	_caption.text = tr("GAUNTLET__CLEARED").format({"wave": run.wave})
+	_caption.text = tr("GAUNTLET__CLEARED").format({"wave": waves.pick_wave()})
 	for index: int in ids.size():
 		var card: GauntletPickCard = GauntletPickCard.new()
 		card.art = _art
@@ -63,7 +62,7 @@ func advance() -> void:
 
 
 func _choose(index: int) -> void:
-	if waves.choose(index):
+	if waves.choose(index) and waves.pending.is_empty():
 		hide()
 
 

@@ -27,7 +27,6 @@ func before_each() -> void:
 	entry.waves.manual_picks = true
 	view = GauntletPickView.new()
 	view.waves = entry.waves
-	view.run = entry.run
 	add_child(view)
 
 
@@ -114,6 +113,29 @@ func test_empty_draw_finishes_without_showing_the_screen() -> void:
 	assert_true(entry.waves.done)
 	assert_false(view.visible)
 	assert_true(entry.run.picks.is_empty())
+
+
+func test_taking_one_stacked_pick_presents_the_next_card_without_resuming_play() -> void:
+	var s: GauntletSession = entry.session
+	entry.waves._limit = 2
+	s.street.timeout_ticks = 1
+	s.stage.arena.rivet.pos.x = s.street.current().end_x()
+	s.step()
+	s.step()
+	assert_false(view.visible)
+	for foe: Fighter in s.stage.arena.hostiles:
+		s.stage.arena.damage(foe, foe.max_hp * 10, s.stage.arena.rivet.id, &"claw")
+	s.step()
+	var tick: int = s.tick()
+	assert_eq(view._caption.text, "Wave 1 cleared")
+	(view._cards.get_child(0) as Button).pressed.emit()
+	assert_true(view.visible)
+	assert_eq(view._caption.text, "Wave 2 cleared")
+	entry._physics_process(SimClock.TICK_DT)
+	assert_eq(s.tick(), tick)
+	(view._cards.get_child(0) as Button).pressed.emit()
+	assert_false(view.visible)
+	assert_true(entry.waves.done)
 
 
 func test_film_holds_the_clear_for_90_ticks_then_highlights_one_choice_for_30() -> void:

@@ -154,6 +154,15 @@
           "description": "Successful Rivet trigger pulls during the wave. A volley counts once even when it fires several pellets.",
           "minimum": 0,
           "type": "integer"
+        },
+        "spawn_delayed": {
+          "description": "Roster members held back by the live hostile cap when this wave was scheduled.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "timed_out": {
+          "const": true,
+          "description": "This wave was still fighting when its timer called the next wave into the same block."
         }
       },
       "required": [
@@ -165,6 +174,10 @@
   "$id": "gtai.gauntlet-run/1",
   "additionalProperties": false,
   "properties": {
+    "capped": {
+      "const": true,
+      "description": "The simulation reached the gauntlet tick cap before the run ended."
+    },
     "controls": {
       "enum": [
         "legacy",

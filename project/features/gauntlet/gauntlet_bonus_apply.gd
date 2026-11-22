@@ -20,6 +20,17 @@ func _init(stage: ArenaStage, ctx: WorldContext, run: GauntletRun) -> void:
 	_arsenal.setup(stage, ctx)
 
 
+func owned() -> Array[StringName]:
+	var ids: Array[StringName] = [_stage.arena.rivet.weapon]
+	if _stage.pilot.carry != null:
+		ids.append_array(_stage.pilot.carry.slots)
+	var forms: GhostForms = _stage.pilot.ghosts.forms
+	for id: StringName in forms.table.order:
+		if forms.locks.allows(forms.table, id):
+			ids.append(id)
+	return ids
+
+
 func apply(row: Dictionary) -> bool:
 	var ref: StringName = row["ref"]
 	match str(row["kind"]):

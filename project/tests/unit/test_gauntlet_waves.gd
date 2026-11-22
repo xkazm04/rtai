@@ -113,19 +113,22 @@ func test_retreating_guard_stays_on_the_road_and_in_the_squad() -> void:
 	assert_false(waves.done)
 
 
-func test_timeout_keeps_measured_counts_and_omits_time_to_clear() -> void:
+func test_reinforcements_keep_their_cadence_when_the_older_wave_outlives_the_newest() -> void:
+	waves._limit = 0
 	_enter()
-	var start: int = session.stage.arena.tick
-	waves.step(session.stage, start + GauntletWaves.TIMEOUT_TICKS - 1)
-	assert_false(waves.done)
-	waves.step(session.stage, start + GauntletWaves.TIMEOUT_TICKS)
-	assert_true(waves.done)
-	var death: Dictionary = run.to_result()["death"]
-	assert_eq(death, {"wave": 1, "by": "timeout"})
-	assert_false(run.waves[0].has("seconds"))
-	assert_false(run.waves[0].has("guard_deflects"))
-	var shots: int = run.waves[0]["shots"]
-	assert_eq(shots, 0)
+	var arena: CombatArena = session.stage.arena
+	var tick: int = arena.tick + session.street.timeout_ticks
+	waves.step(session.stage, tick)
+	for foe: Fighter in waves._live[-1].members:
+		arena.damage(foe, foe.max_hp * 10, arena.rivet.id, &"claw")
+	waves.step(session.stage, tick + 1)
+	waves.step(session.stage, tick + session.street.timeout_ticks - 1)
+	assert_eq(waves.live_wave_count(), 1)
+	assert_eq(run.wave, 2)
+	waves.step(session.stage, tick + session.street.timeout_ticks)
+	assert_eq(waves.live_wave_count(), 2)
+	assert_eq(run.wave, 3)
+	assert_false(run.waves[1].has("timed_out"))
 	assert_true(run.picks.is_empty())
 
 
