@@ -1,13 +1,14 @@
 class_name WeaponCursor
 extends RefCounted
-## The mouse cursor styled per weapon (n11, owner note "Cursor icon should be styled per weapon
-## equipped"): one ink mark per weapon class, a teal rim for the ghost forms. A hardware cursor
-## (Input.set_custom_mouse_cursor), so it does not lag the mouse. Art: tools/art/cursor_draw.py.
-## Melee weapons come from MeleeTable, every other unknown gun id reads as a rifle.
+## The system arrow for melee, a weapon-class mark for guns and a teal rim for ghost forms.
+## These are hardware pointers (Input.set_custom_mouse_cursor). Gun art: tools/art/cursor_draw.py.
 
 const DIR: String = "res://features/hud/art/cursors/"
 const HOTSPOT: Vector2 = Vector2(24.0, 24.0)
-const STYLE_MELEE: StringName = &"melee"
+const SYSTEM_ARROW: StringName = &"system_arrow"
+const PLAIN_DOT: StringName = &"plain_dot"
+## Set to PLAIN_DOT to use the small outlined dot for all melee selections.
+const STYLE_MELEE: StringName = SYSTEM_ARROW
 const STYLE_RIFLE: StringName = &"rifle"
 ## Gun ids by cursor class.
 const GUNS: Dictionary[StringName, StringName] = {
@@ -34,6 +35,7 @@ const FORMS: Dictionary[StringName, StringName] = {
 }
 
 static var _melee: Array[StringName] = []
+static var _dot: ImageTexture = null
 
 var _shown: StringName = &""
 
@@ -45,7 +47,7 @@ static func style_of(weapon: StringName, form: StringName) -> StringName:
 		return FORMS[form]
 	if GUNS.has(weapon):
 		return GUNS[weapon]
-	if weapon == &"" or _is_melee(weapon):
+	if weapon in [&"", &"hands", &"claw"] or _is_melee(weapon):
 		return STYLE_MELEE
 	return STYLE_RIFLE
 
@@ -62,8 +64,26 @@ func show_for(weapon: StringName, form: StringName) -> void:
 	if style == _shown:
 		return
 	_shown = style
-	var tex: Resource = load(DIR + String(style) + ".png")
-	Input.set_custom_mouse_cursor(tex, Input.CURSOR_ARROW, HOTSPOT)
+	var hotspot: Vector2 = Vector2.ZERO if style == SYSTEM_ARROW else HOTSPOT
+	if style == PLAIN_DOT:
+		hotspot = Vector2(4, 4)
+	Input.set_custom_mouse_cursor(texture_for(style), Input.CURSOR_ARROW, hotspot)
+
+
+static func texture_for(style: StringName) -> Texture2D:
+	if style == SYSTEM_ARROW:
+		return null
+	if style != PLAIN_DOT:
+		return load(DIR + String(style) + ".png") as Texture2D
+	if _dot == null:
+		var img: Image = Image.create_empty(9, 9, false, Image.FORMAT_RGBA8)
+		for y: int in 9:
+			for x: int in 9:
+				var d: int = Vector2i(x - 4, y - 4).length_squared()
+				if d <= 9:
+					img.set_pixel(x, y, Color.WHITE if d <= 4 else Color.BLACK)
+		_dot = ImageTexture.create_from_image(img)
+	return _dot
 
 
 ## Back to the system arrow (menus, pause, leaving the fight).
