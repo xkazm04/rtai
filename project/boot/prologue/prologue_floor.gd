@@ -33,6 +33,11 @@ func _draw() -> void:
 		_tiled(fence, "cage_mesh", 2.0)
 	for phone: String in stage.layout.phones:
 		_phone(phone, stage.layout.phones[phone])
+	if not plan.exit_open:
+		var size_m: Vector2 = Vector2(plan.gate_width_m, 0.22)
+		var barrier: Rect2 = _pixels(Rect2(plan.gate - size_m * 0.5, size_m))
+		draw_rect(barrier.grow(1.5), Ink.INK)
+		draw_rect(barrier, Color("57758e"))
 
 
 ## The shipped stripe strip runs along its local x axis. Cross the street north to south

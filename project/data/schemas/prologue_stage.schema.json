@@ -357,6 +357,43 @@
       "minItems": 3,
       "type": "array"
     },
+    "command": {
+      "additionalProperties": false,
+      "properties": {
+        "file_spacing_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "flank_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "front_at": {
+          "$ref": "#/$defs/point"
+        },
+        "last_stand_hp": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "rank_spacing_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "shotgun_half_deg": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "file_spacing_m",
+        "flank_m",
+        "front_at",
+        "last_stand_hp",
+        "rank_spacing_m",
+        "shotgun_half_deg"
+      ],
+      "type": "object"
+    },
     "opening_bodies": {
       "items": {
         "additionalProperties": false,
@@ -498,6 +535,7 @@
   "required": [
     "arrival",
     "beats",
+    "command",
     "opening_bodies",
     "payphone",
     "pistol_pickup_id",

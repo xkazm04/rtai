@@ -104,9 +104,17 @@ func show_line(id: String, tick: int = 0) -> bool:
 	return true
 
 
-func fill(state: HudState, _stage: CollectCallStage, _system: QuestSystem) -> void:
+func fill(state: HudState, stage: CollectCallStage, _system: QuestSystem) -> void:
 	state.say(subtitle.speaker, subtitle.words)
 	state.portrait_key = voice
+	if stage != null:
+		var weapon: StringName = stage.arena.rivet.weapon
+		state.weapon = ""
+		if weapon != &"":
+			var key: StringName = StringName("WEAPON__%s" % QuestText.symbol(String(weapon)))
+			state.weapon = _text.resolve(key, String(weapon).capitalize())
+		state.weapon_icon = icon_of(weapon)
+		state.ammo = ammo_of(stage.arena, weapon)
 
 
 func fill_view(view: CollectCallView, stage: CollectCallStage, system: QuestSystem) -> void:

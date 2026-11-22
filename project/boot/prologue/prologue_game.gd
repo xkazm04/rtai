@@ -63,7 +63,7 @@ func _open(plan: PrologueYard, data: DataTable) -> void:
 	world.start(Events, Data, _seed)
 	var options: ArenaArgs = ArenaArgs.new()
 	options.values["--enemy-brain"] = "squad"
-	stage = ArenaStage.new(plan, plan.stations, options)
+	stage = PrologueStage.new(plan, plan.stations, options)
 	var actions: PlayerActions = PlayerActions.shipped(true)
 	actions.install()
 	stage.pilot = StagePilot.new(actions)
@@ -75,6 +75,7 @@ func _open(plan: PrologueYard, data: DataTable) -> void:
 	_equip_squad(data)
 	bodies = PrologueBodies.place(stage, data, world.context())
 	stage.arena.rivet.weapon = &""
+	stage.pilot.carry = RivetWheel.carry_for(stage.arena)
 	live = PadAimAssist.wired(LiveInput.new(actions), stage.get.bind(&"arena"))
 	world.loop().set_input(live)
 	add_child(world)
@@ -123,6 +124,7 @@ func _open_view(plan: PrologueYard) -> void:
 	props.z_index = rigs.rigs.z_index + 60
 	view.print_stage.actor_layer().add_child(props)
 	bodies.attach_view(view)
+	PrologueCommandView.new().attach(view, stage)
 	live.viewport = get_viewport()
 	live.origin_px = view.rivet_screen
 	live.px_per_m = func() -> float: return view.px_per_m
@@ -138,8 +140,8 @@ func show_line(id: String) -> bool:
 
 
 func _finished() -> void:
-	world.set_process(false)
 	if LaunchArgs.has("--bot"):
+		world.set_process(false)
 		get_tree().quit()
 
 
@@ -150,6 +152,14 @@ func _exit_tree() -> void:
 		stage.hooks.clear()
 	if encounter == null or _result_path.is_empty():
 		return
+	var err: Error = DirAccess.make_dir_recursive_absolute(_result_path.get_base_dir())
+	var file: FileAccess = FileAccess.open(_result_path, FileAccess.WRITE) if err == OK else null
+	if file == null or not file.store_string(JSON.stringify(_result(), "  ", true) + "\n"):
+		Log.error("prologue", "cannot write result to %s" % _result_path)
+		get_tree().quit(1)
+
+
+func _result() -> Dictionary:
 	var result: Dictionary = {
 		"schema": "gtai.prologue-run/1",
 		"seed": _seed,
@@ -157,22 +167,26 @@ func _exit_tree() -> void:
 		"line_events": lines.events,
 		"beats_reached": lines.beats,
 		"beat_checkpoints": encounter.spans,
-		"dale_died_tick": encounter.dale_died,
 		"deaths": encounter.deaths + int(not stage.arena.rivet.alive()),
 		"prompts": encounter.prompts.history,
-		"wave_one_cleared_tick": encounter.done_tick,
 		"wave_one":
-		{
-			"spawned": encounter.patrol.officers.size(),
-			"standing": stage.arena.hostiles_alive(),
-			"pistol_rounds": encounter.patrol.squad.pistol_rounds,
-			"player_shots": stage.shots_fired,
-			"wheel": stage.pilot.wheel.order(),
-		},
+		encounter.wave_one if encounter.done_tick >= 0 else encounter.wave_one_result(stage),
 		"ticks": world.context().clock.tick(),
 	}
-	var err: Error = DirAccess.make_dir_recursive_absolute(_result_path.get_base_dir())
-	var file: FileAccess = FileAccess.open(_result_path, FileAccess.WRITE) if err == OK else null
-	if file == null or not file.store_string(JSON.stringify(result, "  ", true) + "\n"):
-		Log.error("prologue", "cannot write result to %s" % _result_path)
-		get_tree().quit(1)
+	if encounter.dale_died >= 0:
+		result["dale_died_tick"] = encounter.dale_died
+	if encounter.done_tick >= 0:
+		result["wave_one_cleared_tick"] = encounter.done_tick
+		var battle: PrologueBattle = encounter.battle
+		var down: bool = (
+			encounter.phase == PrologueEncounter.Phase.BEAT_TWO and not stage.arena.rivet.alive()
+		)
+		result["beat_two_deaths"] = battle.deaths + int(down)
+		result["mulroney_orders"] = battle.orders
+		if battle.pistol.picked_tick >= 0:
+			result["pistol_picked_tick"] = battle.pistol.picked_tick
+		if battle.died_tick >= 0:
+			result["pistol_left"] = battle.pistol.left
+			result["mulroney_died_tick"] = battle.died_tick
+			result["wave_two_cleared_tick"] = battle.died_tick
+	return result

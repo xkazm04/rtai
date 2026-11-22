@@ -15,6 +15,7 @@ var sidewalk: Rect2
 var street: Rect2
 var far_sidewalk: Rect2
 var gate: Vector2
+var exit_open: bool = false
 var gate_width_m: float
 var fences: Array[Rect2] = []
 var wrecks: Array[Wreck] = []

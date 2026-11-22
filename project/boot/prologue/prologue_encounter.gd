@@ -5,10 +5,12 @@ extends ArenaHook
 signal finished
 signal opening_restarted(tick: int)
 
-enum Phase { TALK, HANDS, BEAT_TWO }
+enum Phase { TALK, HANDS, BEAT_TWO, STREET }
 
 var lines: PrologueLines
 var patrol: ProloguePatrol
+var battle: PrologueBattle
+var wave_one: Dictionary = {}
 var prompts: ProloguePrompts = ProloguePrompts.new()
 var phase: Phase = Phase.TALK
 var spans: Array[Dictionary] = []
@@ -19,30 +21,44 @@ var strike_ready: bool = false
 var _talk_checkpoint: String
 var _wave_checkpoint: String
 var _last_line: String
-var _next_line: String
 var _next_checkpoint: String
+var _street_checkpoint: String
 
 
 func _init(feed: PrologueLines, stage: ArenaStage, data: DataTable) -> void:
 	lines = feed
 	patrol = ProloguePatrol.new(stage, data)
+	battle = PrologueBattle.new(stage.plan as PrologueYard, data, feed, prompts)
 	var beats: Array = data.array(data.raw, "beats")
 	var first: Dictionary = beats[0]
 	_talk_checkpoint = data.text(first, "checkpoint")
 	_last_line = data.text(first, "last_line")
 	var second: Dictionary = beats[1]
-	_next_line = data.text(second, "first_line")
 	_next_checkpoint = data.text(second, "checkpoint")
+	var street: Dictionary = beats[2]
+	_street_checkpoint = data.text(street, "checkpoint")
 	_wave_checkpoint = data.text(data.object(data.raw, "arrival"), "checkpoint")
 	patrol.place(stage.arena, false)
 	_start(_talk_checkpoint, 1, 0)
 
 
 func step(stage: ArenaStage, tick: int) -> void:
+	if phase == Phase.STREET:
+		return
 	if stage.deaths != deaths:
 		_restart(stage, tick)
 		return
-	if not stage.arena.rivet.alive() or phase == Phase.BEAT_TWO:
+	if not stage.arena.rivet.alive():
+		return
+	if phase == Phase.BEAT_TWO:
+		if battle.step(stage, tick):
+			_end(tick, "cleared")
+			phase = Phase.STREET
+			(stage.plan as PrologueYard).exit_open = true
+			_start(_street_checkpoint, 3, tick)
+			@warning_ignore("return_value_discarded")
+			lines.begin(3, tick)
+			finished.emit()
 		return
 	if phase == Phase.TALK:
 		if not patrol.dale.alive():
@@ -75,9 +91,8 @@ func _fight(stage: ArenaStage, tick: int) -> void:
 		prompts.clear()
 		stage.arena.shots.clear()
 		_start(_next_checkpoint, 2, tick)
-		@warning_ignore("return_value_discarded")
-		lines.show_line(_next_line, tick)
-		finished.emit()
+		wave_one = wave_one_result(stage)
+		battle.enter(stage, patrol, tick)
 		return
 	if patrol.squad.shot_tick == tick:
 		prompts.offer("guard", tick)
@@ -89,6 +104,16 @@ func _fight(stage: ArenaStage, tick: int) -> void:
 		if not shot.from_rivet and to_player.dot(shot.vel) > 0.0 and to_player.length() < 5.0:
 			prompts.offer("roll", tick)
 	prompts.step(tick)
+
+
+func wave_one_result(stage: ArenaStage) -> Dictionary:
+	return {
+		"spawned": patrol.officers.size(),
+		"standing": stage.arena.hostiles_alive(),
+		"pistol_rounds": patrol.squad.pistol_rounds,
+		"player_shots": stage.shots_fired,
+		"wheel": stage.pilot.wheel.order(),
+	}
 
 
 func _start(id: String, beat: int, tick: int) -> void:
@@ -116,6 +141,11 @@ func _restart(stage: ArenaStage, tick: int) -> void:
 	stage.pilot.shock = PlayerShock.shipped()
 	stage.pilot.guard = PlayerGuard.new()
 	arena.guard = stage.pilot.guard
+	if phase == Phase.BEAT_TWO:
+		prompts.clear()
+		_start(_next_checkpoint, 2, tick)
+		battle.enter(stage, patrol, tick)
+		return
 	patrol.place(arena, wave)
 	prompts.clear()
 	if wave:

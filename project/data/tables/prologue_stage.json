@@ -80,6 +80,17 @@
       "last_line": "b3_l11_fax_location"
     }
   ],
+  "command": {
+    "file_spacing_m": 2.2,
+    "flank_m": 3.6,
+    "front_at": [
+      34,
+      24
+    ],
+    "last_stand_hp": 0.25,
+    "rank_spacing_m": 2.3,
+    "shotgun_half_deg": 9
+  },
   "opening_bodies": [
     {
       "at": [
@@ -185,7 +196,7 @@
       "damage": 8,
       "id": "shotgun",
       "melee": false,
-      "reach_m": 16,
+      "reach_m": 8,
       "speed_mps": 20
     },
     {
