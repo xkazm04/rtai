@@ -63,6 +63,8 @@ func _rig(form: StringName) -> void:
 		dent.setup(stage.pilot.ghosts.forms.table.form(form))
 	else:
 		PlayerScale.fit([_body])
+		if _body is OhmRig:
+			_body.scale *= stage.pilot.ghosts.forms.table.form(form).size_k
 	_shown = form
 
 
@@ -126,9 +128,10 @@ func dismiss() -> void:
 func bolt_tip(fallback: Vector2) -> Vector2:
 	if _shown != OhmStage.GHOST:
 		return fallback
-	if _fork == null:
+	if _fork == null or not _fork.is_visible_in_tree():
+		_fork = null
 		for node: Node in get_tree().get_nodes_in_group(OhmFork.GROUP):
-			if _mount.is_ancestor_of(node):
+			if _mount.is_ancestor_of(node) and (node as OhmFork).is_visible_in_tree():
 				_fork = node as OhmFork
 				break
 	if _fork != null:

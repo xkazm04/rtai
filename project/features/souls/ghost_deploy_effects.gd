@@ -68,6 +68,8 @@ func _draw() -> void:
 
 func _bolt(ghost: GhostDeploy, target: Vector2, index: int, age: int) -> void:
 	var start: Vector2 = body.bolt_tip((ghost.spot + ghost.facing * 0.42) * PPM)
+	if index == 0 and age < OhmBoltDraw.FLARE_TICKS and not calm:
+		OhmFork.flash(self, start, ghost.facing, (0.22 - 0.035 * age) * PPM)
 	var fade: float = OhmBoltDraw.fade(age, 0, calm)
 	# The bolt lands even on a victim at the origin; the ring shows the short hop.
 	var seed_i: int = index if calm else index + floori(age / 3.0)

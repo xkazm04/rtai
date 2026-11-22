@@ -12,7 +12,9 @@ var _tick: int = -1
 static func attach(layer: CanvasLayer, source: CollectCallStage, calm: bool) -> void:
 	if layer == null or source == null or source.pilot == null or source.pilot.ghosts == null:
 		return
-	if layer.has_node(^"GhostDeployView"):
+	var existing: GhostDeployView = layer.get_node_or_null(^"GhostDeployView") as GhostDeployView
+	if existing != null:
+		existing.reduced_motion = existing.reduced_motion or calm
 		return
 	var view: GhostDeployView = GhostDeployView.new()
 	view.name = &"GhostDeployView"
@@ -27,11 +29,8 @@ func _ready() -> void:
 	marker.z_index = RenderLayers.z(&"actors") - GhostFormView.Z_OVER_RIGS
 	add_child(marker)
 	_body.stage = stage
-	_body.calm = reduced_motion
-	_body.z_index = RenderLayers.z(&"actors") + GhostFormView.Z_OVER_RIGS
 	add_child(_body)
 	_fx.stage = stage
-	_fx.calm = reduced_motion
 	_fx.body = _body
 	add_child(_fx)
 	process_priority = 23
@@ -48,11 +47,16 @@ func _process(_delta: float) -> void:
 		_fx.hide()
 		return
 	var age: int = stage.tick - ghost.strike.release_tick
+	_body.calm = reduced_motion
+	_fx.calm = reduced_motion
+	_body.z_index = RenderLayers.z(&"actors") + GhostFormView.Z_OVER_RIGS
+	_fx.z_index = RenderLayers.z(&"vehicles") + 1
+	if ghost.form == OhmStage.GHOST:
+		# The squad paints its turret and shield on the FX band, including during the short.
+		_body.z_index = RenderLayers.z(&"fx") + 1
+		_fx.z_index = _body.z_index + 1
+	elif ghost.form == HaulerStage.GHOST:
+		_fx.z_index = RenderLayers.z(&"actors") - 2
 	_body.show_strike(ghost, age, mini(age + 1, steps))
-	_fx.z_index = (
-		RenderLayers.z(&"vehicles") + 1
-		if ghost.form != HaulerStage.GHOST
-		else RenderLayers.z(&"actors") - 2
-	)
 	_fx.show()
 	_fx.queue_redraw()
