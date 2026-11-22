@@ -77,6 +77,18 @@ stays under the 6.73 s floor: noise either way.
 
 ## Calls for the owner
 
+1. **The targets** (`tools/gauntlet/targets.json`, tuned toward tonight): death wave novice 6 / average 12 / expert 20 with greedy
+   picks; an ordinary average wave 15 s; a boss wave 25-30 s every fifth wave; two profiles are separated when the deeper
+   one's median is at least 3 waves deeper AND it dies later on at least 75 % of shared seeds.
+2. **One larger step on in-wave repair.** The night clamp (x0.8 per night, x0.5 floor from the first value) lets
+   `rivet.repair_per_s` go 10 -> 8 tonight and reach 5 only after three nights. The ablation with 3 HP/s after 6 s killed
+   both average seeds (death wave 20, on target's side of 12-20). Asked: allow `repair_per_s` 10 -> 3 and
+   `repair_delay_s` 3 -> 6 in one step for the gauntlet only (street's `gauntlet.json` `rivet` block; quest 1 keeps
+   `combat.json`).
+3. **The verdict rule.** Keep a change when its paired mean clears the same-seed null floor AND its CI95 excludes zero
+   (`--verdict=point`, tonight's default), instead of n22's CI-low-above-the-floor (`--verdict=strict`), which counted
+   the noise twice and rejected every realistic step. Both verdicts are in every ledger row.
+
 ## Merge notes
 
 ## Next steps
