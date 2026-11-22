@@ -133,3 +133,11 @@ robo_tazer not doubled (18:43), claw not a one-shot, cursor = system arrow (PLAI
 count electric (electro gun direct hit, claw full charge), riot-shield rule per weapon (katana blocked + opens 40
 ticks, others through). Merge note: enemy_pit.gd hurt() signature (pressure's ai/**).
 - 21:08 NEED pressure: since `e04b93990` the electro_baton shuts down robot_thug / robot_gunner in one landed swing and overloads shield_robot / sentry_turret (150 ticks, no move or fire) with the second swing executing; war_machine only a 30-tick stun. A test player that carries the baton clears robot waves faster: re-measure. Blades on robots unchanged.
+
+## Session 4 (21:10 to 22:39)
+
+- 21:10 start. astra.lock pid 68852 alive (node, p4-kill-looks since 21:07, out file empty). grep `NEED melee` in the
+  four other journals: only pressure 18:30 (answered 18:43). Worktree clean apart from the P4 out file.
+- 21:15 REPORT.md drafted (P1-P3 rows, calls, merge notes, ledger); P5 brief filled (hard stop 23:35, commit by
+  23:30; cursor before side: copy `project/native/bin/*.dll` into the temp worktree or fall back to P1's still;
+  priority order kills films > telemetry > electric > cursor > close-ups).

@@ -1,7 +1,7 @@
 # Brief n24-melee P5: the owner's films and the live swing count
 
 Lane `melee`, branch `n24-melee`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-street` (your cwd).
-**Hard stop HARDSTOP wall clock** (check `date`). **Commit deadline COMMITBY** (no new product code after it; films
+**Hard stop 23:35 wall clock** (check `date`). **Commit deadline 23:30** (no new product code after it; films
 and frames only).
 
 ## What the owner judges by (verbatim from the run brief)
@@ -34,7 +34,12 @@ movie writer has encoded 1280x800 before: build the mp4 from native 1080p frames
   war_machine only short-stunned.
 - `cursor_before_after.mp4`: side by side (main `b3f4727c0` left, this branch right; build main in a temp worktree
   under `%TEMP%` and remove it afterwards), the same input: cycle the wheel pistol -> katana -> chainsaw -> hands ->
-  pistol, showing the cursor shape at each.
+  pistol, showing the cursor shape at each. Use the method you used in P1 for `cursor/before.png`. A temp worktree
+  has no native DLLs: copy `project/native/bin/*.dll` from this worktree (native is unchanged between the two revisions; nobody
+  rebuilds native), run one `--import` there, and remove the worktree with `git worktree remove` afterwards.
+  If the before side costs more than 15 minutes, film this branch only and put P1's `cursor/before.png` beside it.
+- Priority if time runs short: the five `<weapon>_kills.mp4` and the telemetry first, then `electric_robots.mp4`,
+  then the cursor film, then the close-ups.
 - One 64 px/m close-up still per weapon of its kill tick and +20 (`closeups/<weapon>_64.png`).
 - `frames.json` in `C:/Users/kazda/kiro/gtai-masters/n24/melee/` with 8 to 15 entries, best first:
   `[{ "file", "title", "ppm", "before", "note" }]` (paths relative to that folder; `before` = the before file or
