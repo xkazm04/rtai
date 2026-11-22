@@ -130,16 +130,29 @@ func _open_view(plan: PrologueYard) -> void:
 	add_child(rigs)
 	@warning_ignore("return_value_discarded")
 	rigs.attach(stage, view, world.context())
+	@warning_ignore("return_value_discarded")
+	ArenaWaveCards.attach(rigs.rigs, stage.arena.hostiles)
 	var props: PrologueProps = PrologueProps.new()
 	props.patrol = encounter.patrol
 	props.rigs = rigs.rigs
 	props.z_index = rigs.rigs.z_index + 60
 	view.print_stage.actor_layer().add_child(props)
 	bodies.attach_view(view)
-	PrologueCommandView.new().attach(view, stage)
+	PrologueCommandView.new().attach(view, stage, _dress_boss.bind(rigs.rigs))
 	live.viewport = get_viewport()
 	live.origin_px = view.rivet_screen
 	live.px_per_m = func() -> float: return view.px_per_m
+
+
+func _dress_boss(dress: PrologueCommanderDress, h: Fighter, rigs: CharacterRigs) -> void:
+	var at: Vector2 = h.pos * SimConst.PX_PER_M
+	var chest: Vector2 = Vector2.UP * 11
+	var head: Vector2 = Vector2.UP * 16 + h.facing * 2
+	var rig: CutRig = rigs.rig_for(h.id)
+	if rig != null and rig.is_visible_in_tree():
+		chest = rigs.to_local(rig.torso_spr.global_position) - at
+		head = rigs.to_local(rig.head_spr.global_position) - at + Vector2.UP * 2
+	dress.pose(at, chest, head, h.facing, RigHeadCard.frame_of(h.facing.angle()))
 
 
 func _input(event: InputEvent) -> void:

@@ -9,11 +9,14 @@ const PP: float = SimConst.PX_PER_M
 
 var _battle: PrologueBattle
 var _stage: ArenaStage
+var _pose: Callable
+var _dress: PrologueCommanderDress = PrologueCommanderDress.new()
 var _bar: BossBar
 var _meter: BossFight
 
 
-func attach(view: PrologueView, stage: ArenaStage) -> void:
+func attach(view: PrologueView, stage: ArenaStage, pose: Callable) -> void:
+	_pose = pose
 	_stage = stage
 	_battle = view.encounter.battle
 	_meter = BossFight.new(_battle.spec, null, Vector2.ZERO)
@@ -29,12 +32,16 @@ func attach(view: PrologueView, stage: ArenaStage) -> void:
 	view.print_stage.actor_layer().add_child(drops)
 	z_index = RenderLayers.z(&"actors") + 61
 	view.print_stage.actor_layer().add_child(self)
+	_dress.visible = false
+	add_child(_dress)
 
 
 func _process(_dt: float) -> void:
 	var boss: Fighter = _battle.formation.boss
 	_bar.visible = boss != null and boss.alive()
+	_dress.visible = _bar.visible
 	if _bar.visible:
+		_pose.call(_dress, boss)
 		_meter.body = boss
 		_meter.state = BossFight.State.IDLE if boss.exposed else BossFight.State.TRANSITION
 		_bar.fight = _meter
@@ -51,10 +58,13 @@ func _draw() -> void:
 		if h in line.shields:
 			var size_m: Vector2 = Vector2(0.84, 1.05 / ViewMode.shared().ground_k())
 			draw_set_transform(at + h.facing * 0.42 * PP, h.facing.x * 0.25)
+			if not line.braced(h):
+				size_m *= Vector2(0.42, 0.76)
+				draw_set_transform(at + h.facing.orthogonal() * 0.38 * PP, h.facing.x * 0.6)
 			draw_texture_rect(
 				SHIELD, Rect2(-size_m * 0.5 * PP, size_m * PP), false, Color("afc7df")
 			)
-		else:
+		elif h != line.boss:
 			draw_texture_rect(RIFLE, Rect2(0, -0.13 * PP, 1.0 * PP, 0.26 * PP), false)
 	draw_set_transform(Vector2.ZERO)
 	if line.boss != null and line.boss.alive():
@@ -62,26 +72,32 @@ func _draw() -> void:
 
 
 func _marker(boss: Fighter) -> void:
-	var at: Vector2 = boss.pos * PP
-	var radius: float = 0.91 * PP
-	if _battle.due_tick >= 0:
+	var ordering: bool = _battle.due_tick >= 0
+	var open: bool = _stage.tick < _battle.exposed_until
+	if not ordering and not open:
+		return
+	var at: Vector2 = boss.pos * PP + Vector2.UP * 2.1 * PP
+	draw_line(at + Vector2.DOWN * 15, at + Vector2.DOWN * 27, Ink.INK, 4, true)
+	draw_line(at + Vector2.DOWN * 15, at + Vector2.DOWN * 27, Ink.CREAM, 1.5, true)
+	draw_circle(at, 17, Ink.INK, true, -1, true)
+	if ordering:
 		var issued: int = _battle.orders.back()["tick"]
-		var since: int = _stage.tick - issued
-		var span: int = since + _battle.due_tick - _stage.tick
-		var progress: float = float(since + 1) / maxi(span, 1)
-		draw_arc(at, radius, 0, TAU, 48, Ink.INK, 0.16 * PP, true)
-		draw_arc(at, radius, -PI / 2, -PI / 2 + TAU * progress, 48, Ink.VERMILION, 0.10 * PP, true)
-		var above: Vector2 = at + Vector2.UP * 1.60 * PP
-		draw_circle(above, 0.48 * PP, Ink.INK, true, -1, true)
-		draw_circle(above, 0.39 * PP, Ink.VERMILION, true, -1, true)
-		draw_line(
-			above - Vector2.DOWN * 0.24 * PP,
-			above + Vector2.DOWN * 0.06 * PP,
-			Ink.CREAM,
-			0.10 * PP,
-			true
-		)
-		draw_circle(above + Vector2.DOWN * 0.20 * PP, 0.06 * PP, Ink.CREAM)
-	elif boss.exposed:
-		for i: int in 4:
-			draw_arc(at, radius, i * PI / 2, i * PI / 2 + 0.6, 8, Ink.CREAM, 0.07 * PP, true)
+		var progress: float = float(_stage.tick - issued + 1) / (_battle.due_tick - issued)
+		draw_arc(at, 14, 0, TAU, 48, Color("#735955"), 3, true)
+		draw_arc(at, 14, -PI / 2, -PI / 2 + TAU * minf(progress, 1.0), 48, Ink.VERMILION, 4, true)
+		draw_line(at + Vector2.UP * 8, at + Vector2.DOWN, Ink.CREAM, 4, true)
+		draw_circle(at + Vector2.DOWN * 6, 2.4, Ink.CREAM, true, -1, true)
+	else:
+		for side: int in [-1, 1]:
+			var tip: Vector2 = at + Vector2.RIGHT * side * 12
+			draw_line(tip + Vector2(-side * 3, -7), tip, Ink.CREAM, 2.4, true)
+			draw_line(tip, tip + Vector2(-side * 3, 7), Ink.CREAM, 2.4, true)
+		draw_circle(at, 3.2, Ink.CREAM, true, -1, true)
+	var font: Font = ThemeDB.fallback_font
+	var name_text: String = tr("Mulroney")
+	var size_px: Vector2 = font.get_string_size(name_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 15)
+	var box: Rect2 = Rect2(at + Vector2(16, -10), Vector2(size_px.x + 12, 21))
+	draw_rect(box, Ink.INK)
+	draw_string(
+		font, box.position + Vector2(6, 16), name_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, Ink.CREAM
+	)

@@ -73,7 +73,7 @@ func _squad_event(battle: PrologueBattle, tick: int) -> String:
 	if not _captured.has("pistol-marked") and not floor_guns.is_empty():
 		if _game.stage.arena.rivet.pos.distance_to(floor_guns[0].pos) <= 4.5:
 			return "pistol-marked"
-	if battle.ranged and battle.due_tick - tick == 30:
+	if battle.pistol.picked_tick >= 0 and battle.due_tick - tick == 30:
 		return "mulroney-order"
 	if battle.ranged and battle.formation.boss.hurt_tick == tick and tick < battle.exposed_until:
 		return "mulroney-hit"

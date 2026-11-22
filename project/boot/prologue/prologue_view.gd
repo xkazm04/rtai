@@ -25,7 +25,10 @@ func _process(_dt: float) -> void:
 	focus = _stage.arena.rivet.pos + Vector2.DOWN * lean_m * weight
 	if encounter.phase == PrologueEncounter.Phase.BEAT_TWO:
 		var commander: Vector2 = encounter.battle.formation.boss.pos
-		focus = _stage.arena.rivet.pos.lerp(commander, 0.48) + Vector2.DOWN * lean_m * 0.75
+		var player: Vector2 = _stage.arena.rivet.pos
+		focus = player.lerp(commander, 0.5) + Vector2.DOWN * lean_m * 0.75
+		# Leave the lower subtitle strip clear of the rear rank, with Rivet in the upper frame.
+		focus.y = maxf(focus.y, minf(commander.y, player.y + lean_m * 2.15))
 	super._process(SimClock.TICK_DT)
 	hud_view.state.notice = _hint()
 	if encounter.phase == PrologueEncounter.Phase.STREET:

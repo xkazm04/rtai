@@ -49,7 +49,8 @@ func enter(arena: CombatArena) -> void:
 	posts.reset()
 	_relief = 0
 	open_file = -1
-	_front = _contact
+	_front = arena.rivet.pos.move_toward(_gate, _stand_off)
+	_front.y = minf(_front.y, _contact.y)
 	var squad: PrologueSquad = arena.squad_ai as PrologueSquad
 	squad.talking = true
 	squad.clear_wave()
@@ -116,7 +117,7 @@ func march(arena: CombatArena, fighting: bool, hold_boss: bool) -> void:
 func _mark(h: Fighter, player: Vector2, facing: Vector2) -> Vector2:
 	var across: Vector2 = facing.orthogonal()
 	if h == boss:
-		return _front - facing * (2.0 * _rank_gap)
+		return _front - facing * (3.0 * _rank_gap) + across * (_spacing * 0.5)
 	if posts.deployed and h in rifles:
 		return posts.mark(rifles.find(h), player)
 	var front_rank: bool = h in shields
