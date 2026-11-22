@@ -53,6 +53,18 @@ test('wave-limit and historic tick-cap scores retain their median and miss lower
   assert.match(html, /&gt;= 40/);
 });
 
+test('arm headers use their own recorded cap even when both arms share a revision', (t) => {
+  const street = manifest([result('average', 1, 40)]);
+  street.runs[0].ticks = 68000;
+  const declared = manifest(street.results, { tick_cap: 216000 });
+  const { md, html } = workspace(t).render(street, declared);
+  for (const page of [md, html]) {
+    assert.match(page, /--waves=40 · tick cap not recorded · pick greedy/);
+    assert.match(page, /--waves=40 · 216000-tick cap · pick greedy/);
+    assert.doesNotMatch(page, /68000-tick cap/);
+  }
+});
+
 test('HP medians use measured per-wave ratios, including genuine zero repair', (t) => {
   const a = result('average', 1, 10, 'stomp');
   a.waves = [{ n: 1, damage_taken: 30, seconds: 3 }, { n: 5, seconds: 25 }, { n: 10, seconds: 35 }];
@@ -97,7 +109,7 @@ test('two arms produce two ordered HTML columns with their own settings and safe
   const html = readFileSync(out + '.html', 'utf8');
   const headers = [...html.matchAll(/<th class="arm" scope="col">([^<]*)<\/th>/g)].map((m) => m[1]);
   assert.deepEqual(headers, ['A &amp; B', '&lt;after&gt;']);
-  assert.match(html, /123456789012 \(dirty\).*1 seed \(1\) · expert · --waves=40 · pick greedy · controls legacy/);
+  assert.match(html, /123456789012 \(dirty\).*1 seed \(1\) · expert · --waves=40 · tick cap not recorded · pick greedy · controls legacy/);
   assert.match(html, /<tr class="data"><th scope="row">expert<\/th><td>.*?<\/td><td>.*?<\/td><\/tr>/);
   assert.doesNotMatch(html, /<script|<img|<link|https?:\/\//i);
 });

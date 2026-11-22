@@ -28,7 +28,7 @@ function metadata(batch, profiles) {
     (git.sha?.slice(0, 12) ?? missing) + (git.dirty ? ' (dirty)' : ''),
     seeds.length + (seeds.length === 1 ? ' seed' : ' seeds') + (span ? ' (' + span + ')' : ''),
     profiles.join(', ') || missing, waveLimit,
-    ...(cap ? [cap + '-tick cap'] : []),
+    cap == null ? 'tick cap not recorded' : cap + '-tick cap',
     'pick ' + settings(runs.map((r) => r.pick), args.pick),
     'controls ' + settings([...runs, ...results].map((r) => r.controls), args.controls)
   ];
