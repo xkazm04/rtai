@@ -35,3 +35,20 @@
   `transform_unlocked` false; the bot must hold/release `ghost_deploy`. Served as task 2b of brief 04 (after the
   n24-ghost merge). Without it the post-ghost-merge batches measure a bot with no ghost powers: do not merge
   n24-ghost before brief 04 can run.
+- 18:30 ASTRA numbers-gaps 64 accepted (tasks 1-3 committed; task 4 built, uncommitted: the debt ratchet,
+  `dev/gauntlet` 526 -> 923 lines; task 5 not started). Its fire-gap table (`evidence/n24-pressure/fire-gaps/before.md`,
+  uncommitted until 01b task A): a Rivet CIRCLING at 10 m takes 0 hits from every enemy type in 30 s (standing: rifles
+  27-36 of 64, rocket 10/10). Riflemen (patrol_cop, swat, robot_gunner, contractor) fire `combat.json`
+  `weapons.assault-rifle` through `GuardBrain` (21 of 30 s in its 1.4 s cooldown, no lead); rocket trooper 18.75 of 30 s
+  repositioning; turret 8.6 s traverse; war machine 15 s aligning.
+- 18:30 FRICTION brief 01: the riflemen's damage to Rivet is `combat.json` `weapons.assault-rifle.damage_vs_rivet` 0.6,
+  outside `enemies.json`, so task 1's doubling missed the most common enemy. Fixed in 01b task B.
+- 18:30 DECISION pressure: the street rifle row in `combat.json` `weapons` (`damage_vs_rivet`, `cooldown_s`, new
+  `aim_lead`) and `features/combat/guard_brain.gd` fire timing are pressure's tonight: they are the riflemen's enemy
+  fire numbers (the contract gives pressure enemy fire), no other lane lists them; `robo_tazer` stays melee's.
+- 18:30 NEED melee: `combat.json` `robo_tazer.damage` 46 is an enemy attack on Rivet (Astra's reading); the owner's
+  "double their damage" would make it 92: your call, it is your block.
+- 18:30 not doubled, recorded for REPORT: `prologue_stage.json` shotgun / catch pole (prologue), `bosses.json`,
+  `servo.json` (boss designs), `impact.gd` range-drill splash/burn.
+- 18:31 ASTRA RUNNING gaps since 18:31 (resume of numbers-gaps, brief `evidence/briefs/n24-pressure-01b-gaps.md`, lock
+  pid 9736, hard stop 19:45, commit by 19:40).
