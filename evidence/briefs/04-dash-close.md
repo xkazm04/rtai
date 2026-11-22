@@ -7,6 +7,17 @@ Every Godot run: `export APPDATA=C:/Users/kazda/kiro/gtai-n24/appdata/motion`,
 `export GODOT_BIN=C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe`,
 `--rendering-driver d3d12` for anything that renders, `--position 0,1440` on any windowed run. One Godot at a time.
 
+## 0. Stride numbers out of code (first, one commit)
+`project/features/characters/rivet_walk.gd` is at ~200 lines and every drawn weapon adds rows to `RUN_ROW_K`,
+`ARMED_CYCLE_CELL` (and `rivet_stride.gd` `WALK_PROFILE_TRAVEL`), so doc comments were squeezed out to fit
+(`is_run`'s doc, the p55 stance-travel note moved into `rivet_stride.gd` above `OCT_RAD`). Move the per-weapon stride numbers
+into a new `grid_stride` block of `project/data/tables/rivet_motion.json` (+ its schema), read once and cached the
+way the file already reads `walk_grid`; keep the family defaults (pistol/plasma_rifle/katana/gatling/flamethrower)
+where they are if moving them would change their numbers. Restore the dropped doc comments. Proof: the five
+pre-existing drawn grids and gloria/rocket_launher/chainsaw (and any newer) pick the identical cell on every tick
+(the byte-identical check from brief 01 over 1440 frames), `run_unit --changed` green. Add `project/features/characters/rivet_walk.gd`,
+`rivet_stride.gd`, `project/tests/unit/test_rivet_walk*.gd`, `test_rivet_stride*.gd` to the allowlist for this item.
+
 ## 1. (done in c32c08b31: the four decision lines landed; skip)
 
 ## 2. The film scenes into the repo
