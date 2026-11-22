@@ -38,7 +38,7 @@ func _draw() -> void:
 		draw_rect(_pixels(fence), Ink.INK)
 		_tiled(fence, "cage_mesh", 2.0)
 	for phone: String in stage.layout.phones:
-		_phone(phone, stage.layout.phones[phone])
+		_sprite("payphone", stage.layout.phones[phone], Vector2(1.3, 1.3))
 	if not plan.exit_open:
 		var size_m: Vector2 = Vector2(plan.gate_width_m, 0.22)
 		var barrier: Rect2 = _pixels(Rect2(plan.gate - size_m * 0.5, size_m))

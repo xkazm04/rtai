@@ -6,11 +6,15 @@ var live: LiveInput
 var _lesson: HudCorner = HudCorner.new()
 var _lesson_text: String
 var _text: QuestText = QuestText.new()
+var _bell: ProloguePhoneRing = ProloguePhoneRing.new()
 var _channel: PrologueChannelCard = PrologueChannelCard.new()
 
 
 func _ready() -> void:
 	super._ready()
+	_bell.visible = false
+	_bell.position = _stage.layout.phones[encounter.street.phone] * SimConst.PX_PER_M
+	print_stage.markers.add_child(_bell)
 	_channel.street = encounter.street
 	_channel.lines = encounter.lines
 	hud_view.add_child(_channel)
@@ -41,6 +45,13 @@ func _process(_dt: float) -> void:
 	hud_view.state.notice = "" if ranged else hint
 	_lesson_text = hint if ranged else ""
 	_lesson.queue_redraw()
+	_bell.visible = (
+		encounter.phase == PrologueEncounter.Phase.STREET
+		and _stage.router.ringing(encounter.street.phone)
+	)
+	if _bell.visible:
+		_bell.tick = _stage.tick
+		_bell.queue_redraw()
 	if encounter.phase == PrologueEncounter.Phase.STREET:
 		_channel.tick = _stage.tick
 		_channel.pad = live.pad_last
