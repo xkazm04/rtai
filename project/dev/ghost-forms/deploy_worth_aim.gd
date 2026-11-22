@@ -10,8 +10,7 @@ var attacks: GhostAttacks
 var row: GhostAttacks.DeployRow
 var held: bool = false
 var last_aim: Vector2
-var ahead: float
-var radius: float
+var spots: GhostDeployBotSpot
 
 
 func _init(host: ArenaStage, id: StringName) -> void:
@@ -20,9 +19,7 @@ func _init(host: ArenaStage, id: StringName) -> void:
 	actions = stage.pilot.actions
 	attacks = stage.pilot.ghosts.deploy.strike.attacks
 	row = attacks.deploy[form]
-	if form == HaulerStage.GHOST:
-		ahead = attacks.num(form, &"press_ahead_m")
-		radius = stage.pilot.hauler.form.num(&"stomp_radius_m")
+	spots = GhostDeployBotSpot.new(host, actions)
 
 
 func sample(enabled: bool) -> TickInput:
@@ -67,73 +64,8 @@ func _nearest(from: Vector2) -> Vector2:
 
 
 func _best(gun: Vector2) -> Vector2:
-	if form == KerfStage.GHOST:
-		return _kerf()
-	var margin: float = maxf(row.radius_m, row.ram_half_m) + ahead + radius
-	if gun.length() > row.range_m + margin + stage.arena.rivet.radius_m:
-		return Vector2.ZERO
-	var best: Vector2 = Vector2.ZERO
-	var high: int = 0
-	var first: int = roundi(gun.angle() * actions.aim_steps / TAU)
-	var reaches: int = mini(PlayerCommand.REACH_MAX, ceili(row.range_m / actions.aim_reach_step_m))
-	for i: int in actions.aim_steps:
-		var offset: int = ceili(i * 0.5) * (1 if i % 2 == 1 else -1)
-		var face: Vector2 = Vector2.from_angle((first + offset) * TAU / actions.aim_steps)
-		for step: int in range(1, reaches + 1):
-			var dist: float = minf(row.range_m, step * actions.aim_reach_step_m)
-			var score: int = _score(face, dist)
-			if score > high:
-				high = score
-				best = face * dist
-	return best
-
-
-func _score(face: Vector2, dist: float) -> int:
-	var rivet: Fighter = stage.arena.rivet
-	var spot: Vector2 = rivet.pos + face * dist
-	var side: Vector2 = rivet.pos + face.orthogonal() * rivet.radius_m
-	var score: int = 0
-	for foe: Fighter in stage.arena.hostiles:
-		if not foe.alive():
-			continue
-		match form:
-			OhmStage.GHOST:
-				if spot.distance_to(foe.pos) <= row.radius_m:
-					score += 1 + (10 if foe.machine else 0)
-			HaulerStage.GHOST:
-				if (
-					(foe.pos - spot).dot(face) >= 0.0
-					and (spot + face * ahead).distance_to(foe.pos) <= radius
-				):
-					score += 1
-			DentStage.GHOST:
-				var near: Vector2 = Geometry2D.get_closest_point_to_segment(foe.pos, side, spot)
-				if foe.exposed and near.distance_to(foe.pos) <= row.ram_half_m:
-					score += 1
-	return score
-
-
-func _kerf() -> Vector2:
-	var best: Vector2 = Vector2.ZERO
-	var high: float = 0.0
-	var rivet: Fighter = stage.arena.rivet
-	for foe: Fighter in stage.arena.hostiles:
-		var cursor: Vector2 = foe.pos - rivet.pos
-		if not foe.alive() or cursor.length() > row.range_m:
-			continue
-		var word: TickInput = TickInput.new(
-			PlayerCommand.pack_aim(cursor, actions, cursor.length())
-		)
-		var c: PlayerCommand = PlayerCommand.decode(word, 0, actions)
-		var at: Vector2 = rivet.pos + c.aim * minf(row.range_m, c.aim_m)
-		var victim: Fighter = GhostDeploySpot.kerf_target(stage, at, c.aim, attacks)
-		if victim == null:
-			continue
-		var damage: float = attacks.num(
-			form, &"robot_damage" if victim.machine else &"human_damage"
-		)
-		var score: float = minf(victim.hp, damage) + (1000.0 if victim.hp <= damage else 0.0)
-		if score > high:
-			best = cursor
-			high = score
-	return best
+	var seen: Array[BotView.Hostile] = []
+	for fighter: Fighter in stage.arena.hostiles:
+		if fighter.alive() and (form != DentStage.GHOST or fighter.exposed):
+			seen.append(BotArenaFoe.read(fighter, stage.arena))
+	return spots.best(form, gun, seen, false)
