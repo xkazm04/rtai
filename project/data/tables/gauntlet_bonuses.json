@@ -1,6 +1,21 @@
 {
   "rows": [
     {
+      "id": "effect_overkill_carry",
+      "kind": "effect",
+      "min_wave": 3,
+      "ref": "overkill_carry",
+      "weight": 2
+    },
+    {
+      "id": "effect_overkill_carry_2",
+      "kind": "effect",
+      "min_wave": 6,
+      "ref": "overkill_carry_2",
+      "requires": "effect_overkill_carry",
+      "weight": 2
+    },
+    {
       "id": "ghost_dent",
       "kind": "ghost",
       "min_wave": 1,

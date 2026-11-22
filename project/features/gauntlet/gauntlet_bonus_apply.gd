@@ -23,6 +23,8 @@ func _init(stage: ArenaStage, ctx: WorldContext, run: GauntletRun) -> void:
 func apply(row: Dictionary) -> bool:
 	var ref: StringName = row["ref"]
 	match str(row["kind"]):
+		"effect":
+			return MoveBonus.apply(_stage, row)
 		"weapon":
 			# Wheel controls can create the carry before the first weapon grant.
 			var carry: RivetCarry = _stage.pilot.carry

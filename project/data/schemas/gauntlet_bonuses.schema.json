@@ -32,7 +32,8 @@
             "enum": [
               "weapon",
               "stat",
-              "ghost"
+              "ghost",
+              "effect"
             ]
           },
           "min_wave": {
@@ -40,6 +41,10 @@
             "type": "integer"
           },
           "ref": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "requires": {
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
           },
