@@ -9,18 +9,18 @@ signal resume_pressed
 signal continue_pressed
 signal quit_pressed
 
-const CONTROLS: String = (
-	"WASD / arrows move    mouse aims    left click fires\n"
-	+ "Space / right click: electroshock    E: use (phones, hiding, allies, torch)\n"
-	+ "F: car (soon)    Esc: pause    Gamepad: sticks, RT fire, A use, X shock"
-)
-## d9-handheld: the controls on a handheld tier, pad first ([action] -> the pad's own button).
-const CONTROLS_PAD: String = (
-	"[move] move    [aim] aims    [fire] fires\n"
-	+ "[melee]: electroshock    [use]: use (phones, hiding, allies, torch)    [pause]: pause"
-)
 ## d9-handheld: the focus mark on a handheld tier (a 7-inch panel at arm's length).
 const FOCUS_BORDER: int = 4
+
+# Preserve the original public names for callers reading the English source of the current card.
+# gdlint: disable=class-variable-name
+static var CONTROLS: String:
+	get:
+		return Quest1ControlsText.source(false)
+static var CONTROLS_PAD: String:
+	get:
+		return Quest1ControlsText.source(true)
+# gdlint: enable=class-variable-name
 
 var start_button: Button = null
 ## d9-handheld: the pause card is up (B on a pad resumes, the handheld convention).
@@ -163,11 +163,7 @@ func _button(text: String, pressed: Signal) -> Button:
 
 ## The controls line: pad first on a handheld tier, the shipped keyboard line elsewhere.
 func controls_text() -> String:
-	if DeviceProfile.shared().is_handheld():
-		return ObjectiveHint.with_keys(_t(&"SLICE__CONTROLS_PAD", CONTROLS_PAD), true)
-	if PadGlyphArt.active():  # n9-handheld: the keyboard glyphs (a glyphs: kb study row)
-		return ObjectiveHint.with_keys(_t(&"SLICE__CONTROLS_PAD", CONTROLS_PAD), false)
-	return _t(&"SLICE__CONTROLS", CONTROLS)
+	return Quest1ControlsText.resolve(_text)
 
 
 ## On a handheld tier the focused button gets a thick ink border (the default mark is a faint
