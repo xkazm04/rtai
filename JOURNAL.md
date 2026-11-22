@@ -48,3 +48,8 @@ weapon (P1 table: claw 5/3/13 1.40 m, chainsaw 12/4/18 1.65 m, baton 4/3/14 1.55
   katana 7/4/16 2.10 m 0.32 (lunge 0.55 m); plasma_sword 8/6/19 2.20 m (cone being narrowed from -1 to ~-0.2 in P2).
   Coming in P2: a melee weapon (not the claw) kills any human in one landed swing (not Mulroney/bosses; katana is
   blocked by a raised riot shield from the front). Expect melee to clear humans much faster: re-measure.
+- 18:45 LOOKED after-study-64.jpg (n24/melee/compare): five swings read as five different motions; hands kill with
+  blood, katana cut leaves the cop standing hurt (P2), baton stuns. Doubt: the chainsaw's grind draws white
+  crackle marks like the shock arcs at t42-t57: check in P2's films whether that is saw spark or a misplaced shock
+  arc (sparks should be warm/amber, not the electric white). 
+NEXT (session 2): see the NEXT above; P2 running since 18:39 (pid 70312).
