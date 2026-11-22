@@ -1,0 +1,1401 @@
+{
+  "budget_ticks": 1800,
+  "cases": {
+    "dent": {
+      "encounter": [
+        {
+          "archetype": "patrol_cop",
+          "position_m": [
+            3.59999990463257,
+            0.150000005960464
+          ]
+        },
+        {
+          "archetype": "patrol_cop",
+          "position_m": [
+            4.69999980926514,
+            -0.200000002980232
+          ]
+        },
+        {
+          "archetype": "patrol_cop",
+          "position_m": [
+            5.80000019073486,
+            0.280000001192093
+          ]
+        },
+        {
+          "archetype": "patrol_cop",
+          "position_m": [
+            6.90000009536743,
+            -0.300000011920929
+          ]
+        },
+        {
+          "archetype": "patrol_cop",
+          "position_m": [
+            8.0,
+            0.150000005960464
+          ]
+        }
+      ],
+      "pairs": [
+        {
+          "off": {
+            "clear_s": 1.16666666666667,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 1.79999999999998,
+            "shots": 5,
+            "ticks": 70
+          },
+          "on": {
+            "clear_s": 0.0333333333333333,
+            "cooldown_ticks": 480,
+            "damage": 5.0,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "kills": 5,
+            "release_ticks": [
+              2
+            ],
+            "shots": 1,
+            "stun_s": 0.0,
+            "ticks": 2,
+            "uses": 1
+          },
+          "seed": 1
+        },
+        {
+          "off": {
+            "clear_s": 1.16666666666667,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 1.19999999999999,
+            "shots": 5,
+            "ticks": 70
+          },
+          "on": {
+            "clear_s": 0.0333333333333333,
+            "cooldown_ticks": 480,
+            "damage": 5.0,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "kills": 5,
+            "release_ticks": [
+              2
+            ],
+            "shots": 1,
+            "stun_s": 0.0,
+            "ticks": 2,
+            "uses": 1
+          },
+          "seed": 2
+        },
+        {
+          "off": {
+            "clear_s": 1.16666666666667,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "shots": 5,
+            "ticks": 70
+          },
+          "on": {
+            "clear_s": 0.0333333333333333,
+            "cooldown_ticks": 480,
+            "damage": 5.0,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "kills": 5,
+            "release_ticks": [
+              2
+            ],
+            "shots": 1,
+            "stun_s": 0.0,
+            "ticks": 2,
+            "uses": 1
+          },
+          "seed": 3
+        },
+        {
+          "off": {
+            "clear_s": 1.16666666666667,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "shots": 5,
+            "ticks": 70
+          },
+          "on": {
+            "clear_s": 0.0333333333333333,
+            "cooldown_ticks": 480,
+            "damage": 5.0,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "kills": 5,
+            "release_ticks": [
+              2
+            ],
+            "shots": 1,
+            "stun_s": 0.0,
+            "ticks": 2,
+            "uses": 1
+          },
+          "seed": 4
+        },
+        {
+          "off": {
+            "clear_s": 1.16666666666667,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "shots": 5,
+            "ticks": 70
+          },
+          "on": {
+            "clear_s": 0.0333333333333333,
+            "cooldown_ticks": 480,
+            "damage": 5.0,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "kills": 5,
+            "release_ticks": [
+              2
+            ],
+            "shots": 1,
+            "stun_s": 0.0,
+            "ticks": 2,
+            "uses": 1
+          },
+          "seed": 5
+        },
+        {
+          "off": {
+            "clear_s": 1.16666666666667,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "shots": 5,
+            "ticks": 70
+          },
+          "on": {
+            "clear_s": 0.0333333333333333,
+            "cooldown_ticks": 480,
+            "damage": 5.0,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "kills": 5,
+            "release_ticks": [
+              2
+            ],
+            "shots": 1,
+            "stun_s": 0.0,
+            "ticks": 2,
+            "uses": 1
+          },
+          "seed": 6
+        },
+        {
+          "off": {
+            "clear_s": 1.16666666666667,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "shots": 5,
+            "ticks": 70
+          },
+          "on": {
+            "clear_s": 0.0333333333333333,
+            "cooldown_ticks": 480,
+            "damage": 5.0,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "kills": 5,
+            "release_ticks": [
+              2
+            ],
+            "shots": 1,
+            "stun_s": 0.0,
+            "ticks": 2,
+            "uses": 1
+          },
+          "seed": 7
+        },
+        {
+          "off": {
+            "clear_s": 1.16666666666667,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "shots": 5,
+            "ticks": 70
+          },
+          "on": {
+            "clear_s": 0.0333333333333333,
+            "cooldown_ticks": 480,
+            "damage": 5.0,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "kills": 5,
+            "release_ticks": [
+              2
+            ],
+            "shots": 1,
+            "stun_s": 0.0,
+            "ticks": 2,
+            "uses": 1
+          },
+          "seed": 8
+        },
+        {
+          "off": {
+            "clear_s": 1.16666666666667,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "shots": 5,
+            "ticks": 70
+          },
+          "on": {
+            "clear_s": 0.0333333333333333,
+            "cooldown_ticks": 480,
+            "damage": 5.0,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "kills": 5,
+            "release_ticks": [
+              2
+            ],
+            "shots": 1,
+            "stun_s": 0.0,
+            "ticks": 2,
+            "uses": 1
+          },
+          "seed": 9
+        },
+        {
+          "off": {
+            "clear_s": 1.16666666666667,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 2.39999999999998,
+            "shots": 5,
+            "ticks": 70
+          },
+          "on": {
+            "clear_s": 0.0333333333333333,
+            "cooldown_ticks": 480,
+            "damage": 5.0,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "kills": 5,
+            "release_ticks": [
+              2
+            ],
+            "shots": 1,
+            "stun_s": 0.0,
+            "ticks": 2,
+            "uses": 1
+          },
+          "seed": 10
+        }
+      ],
+      "summary": {
+        "clear_delta_s": {
+          "ci95": [
+            -1.13333333333333,
+            -1.13333333333333
+          ],
+          "mean": -1.13333333333333,
+          "pairs": 10
+        },
+        "complete_pairs": 10,
+        "cooldown_ticks": 480,
+        "damage_per_use": 5.0,
+        "empty": 0,
+        "faster": 10,
+        "kills_per_use": 5.0,
+        "max_uses_in_30_s": 4,
+        "mean_hp_lost": {
+          "off": 0.539999999999995,
+          "on": 0.0
+        },
+        "off_clears": 10,
+        "on_clears": 10,
+        "restricted_delta_s": {
+          "ci95": [
+            -1.13333333333333,
+            -1.13333333333333
+          ],
+          "mean": -1.13333333333333,
+          "pairs": 10
+        },
+        "stun_s_per_use": 0.0,
+        "uses": 10
+      }
+    },
+    "kerf": {
+      "encounter": [
+        {
+          "archetype": "shield_robot",
+          "position_m": [
+            6.5,
+            0.0
+          ]
+        },
+        {
+          "archetype": "patrol_cop",
+          "position_m": [
+            5.09999990463257,
+            -1.60000002384186
+          ]
+        },
+        {
+          "archetype": "patrol_cop",
+          "position_m": [
+            6.19999980926514,
+            1.60000002384186
+          ]
+        },
+        {
+          "archetype": "patrol_cop",
+          "position_m": [
+            7.69999980926514,
+            -1.0
+          ]
+        }
+      ],
+      "pairs": [
+        {
+          "off": {
+            "clear_s": 16.7833333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 11.9999999999999,
+            "shots": 54,
+            "ticks": 1007
+          },
+          "on": {
+            "clear_s": 10.3166666666667,
+            "cooldown_ticks": 600,
+            "damage": 4.6,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 6.59999999999994,
+            "kills": 2,
+            "release_ticks": [
+              2,
+              602
+            ],
+            "shots": 35,
+            "stun_s": 0.0,
+            "ticks": 619,
+            "uses": 2
+          },
+          "seed": 1
+        },
+        {
+          "off": {
+            "clear_s": 16.7833333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 10.1999999999999,
+            "shots": 54,
+            "ticks": 1007
+          },
+          "on": {
+            "clear_s": 10.3166666666667,
+            "cooldown_ticks": 600,
+            "damage": 4.6,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 6.59999999999994,
+            "kills": 2,
+            "release_ticks": [
+              2,
+              602
+            ],
+            "shots": 35,
+            "stun_s": 0.0,
+            "ticks": 619,
+            "uses": 2
+          },
+          "seed": 2
+        },
+        {
+          "off": {
+            "clear_s": 16.7833333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 5.99999999999994,
+            "shots": 54,
+            "ticks": 1007
+          },
+          "on": {
+            "clear_s": 10.3166666666667,
+            "cooldown_ticks": 600,
+            "damage": 4.6,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 2.39999999999998,
+            "kills": 2,
+            "release_ticks": [
+              2,
+              602
+            ],
+            "shots": 35,
+            "stun_s": 0.0,
+            "ticks": 619,
+            "uses": 2
+          },
+          "seed": 3
+        },
+        {
+          "off": {
+            "clear_s": 16.7833333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 16.1999999999998,
+            "shots": 54,
+            "ticks": 1007
+          },
+          "on": {
+            "clear_s": 10.3166666666667,
+            "cooldown_ticks": 600,
+            "damage": 4.6,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 10.7999999999999,
+            "kills": 2,
+            "release_ticks": [
+              2,
+              602
+            ],
+            "shots": 35,
+            "stun_s": 0.0,
+            "ticks": 619,
+            "uses": 2
+          },
+          "seed": 4
+        },
+        {
+          "off": {
+            "clear_s": 16.7833333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 13.1999999999999,
+            "shots": 54,
+            "ticks": 1007
+          },
+          "on": {
+            "clear_s": 10.3166666666667,
+            "cooldown_ticks": 600,
+            "damage": 4.6,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 9.59999999999991,
+            "kills": 2,
+            "release_ticks": [
+              2,
+              602
+            ],
+            "shots": 35,
+            "stun_s": 0.0,
+            "ticks": 619,
+            "uses": 2
+          },
+          "seed": 5
+        },
+        {
+          "off": {
+            "clear_s": 16.7833333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 13.7999999999999,
+            "shots": 54,
+            "ticks": 1007
+          },
+          "on": {
+            "clear_s": 10.3166666666667,
+            "cooldown_ticks": 600,
+            "damage": 4.6,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 8.39999999999992,
+            "kills": 2,
+            "release_ticks": [
+              2,
+              602
+            ],
+            "shots": 35,
+            "stun_s": 0.0,
+            "ticks": 619,
+            "uses": 2
+          },
+          "seed": 6
+        },
+        {
+          "off": {
+            "clear_s": 16.7833333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 13.1999999999999,
+            "shots": 54,
+            "ticks": 1007
+          },
+          "on": {
+            "clear_s": 10.3166666666667,
+            "cooldown_ticks": 600,
+            "damage": 4.6,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 7.79999999999993,
+            "kills": 2,
+            "release_ticks": [
+              2,
+              602
+            ],
+            "shots": 35,
+            "stun_s": 0.0,
+            "ticks": 619,
+            "uses": 2
+          },
+          "seed": 7
+        },
+        {
+          "off": {
+            "clear_s": 16.7833333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 9.59999999999991,
+            "shots": 54,
+            "ticks": 1007
+          },
+          "on": {
+            "clear_s": 10.3166666666667,
+            "cooldown_ticks": 600,
+            "damage": 4.6,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 4.19999999999996,
+            "kills": 2,
+            "release_ticks": [
+              2,
+              602
+            ],
+            "shots": 35,
+            "stun_s": 0.0,
+            "ticks": 619,
+            "uses": 2
+          },
+          "seed": 8
+        },
+        {
+          "off": {
+            "clear_s": 16.7833333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 7.79999999999993,
+            "shots": 54,
+            "ticks": 1007
+          },
+          "on": {
+            "clear_s": 10.3166666666667,
+            "cooldown_ticks": 600,
+            "damage": 4.6,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 4.79999999999995,
+            "kills": 2,
+            "release_ticks": [
+              2,
+              602
+            ],
+            "shots": 35,
+            "stun_s": 0.0,
+            "ticks": 619,
+            "uses": 2
+          },
+          "seed": 9
+        },
+        {
+          "off": {
+            "clear_s": 16.7833333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 11.9999999999999,
+            "shots": 54,
+            "ticks": 1007
+          },
+          "on": {
+            "clear_s": 10.3166666666667,
+            "cooldown_ticks": 600,
+            "damage": 4.6,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 9.59999999999991,
+            "kills": 2,
+            "release_ticks": [
+              2,
+              602
+            ],
+            "shots": 35,
+            "stun_s": 0.0,
+            "ticks": 619,
+            "uses": 2
+          },
+          "seed": 10
+        }
+      ],
+      "summary": {
+        "clear_delta_s": {
+          "ci95": [
+            -6.46666666666667,
+            -6.46666666666667
+          ],
+          "mean": -6.46666666666667,
+          "pairs": 10
+        },
+        "complete_pairs": 10,
+        "cooldown_ticks": 600,
+        "damage_per_use": 2.3,
+        "empty": 0,
+        "faster": 10,
+        "kills_per_use": 1.0,
+        "max_uses_in_30_s": 3,
+        "mean_hp_lost": {
+          "off": 11.3999999999999,
+          "on": 7.07999999999993
+        },
+        "off_clears": 10,
+        "on_clears": 10,
+        "restricted_delta_s": {
+          "ci95": [
+            -6.46666666666667,
+            -6.46666666666667
+          ],
+          "mean": -6.46666666666667,
+          "pairs": 10
+        },
+        "stun_s_per_use": 0.0,
+        "uses": 20
+      }
+    },
+    "ohm": {
+      "encounter": [
+        {
+          "archetype": "sentry_turret",
+          "position_m": [
+            6.59999990463257,
+            0.0
+          ]
+        },
+        {
+          "archetype": "shield_robot",
+          "position_m": [
+            5.0,
+            -1.5
+          ]
+        },
+        {
+          "archetype": "swat",
+          "position_m": [
+            7.80000019073486,
+            1.29999995231628
+          ]
+        },
+        {
+          "archetype": "swat",
+          "position_m": [
+            6.69999980926514,
+            -2.0
+          ]
+        }
+      ],
+      "pairs": [
+        {
+          "off": {
+            "clear_s": 21.1333333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 11.3999999999999,
+            "shots": 68,
+            "ticks": 1268
+          },
+          "on": {
+            "clear_s": 8.03333333333333,
+            "cooldown_ticks": 480,
+            "damage": 7.2,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "kills": 3,
+            "release_ticks": [
+              2,
+              482
+            ],
+            "shots": 26,
+            "stun_s": 4.0,
+            "ticks": 482,
+            "uses": 2
+          },
+          "seed": 1
+        },
+        {
+          "off": {
+            "clear_s": 21.1333333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 11.9999999999999,
+            "shots": 68,
+            "ticks": 1268
+          },
+          "on": {
+            "clear_s": 8.03333333333333,
+            "cooldown_ticks": 480,
+            "damage": 7.4,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "kills": 3,
+            "release_ticks": [
+              2,
+              482
+            ],
+            "shots": 26,
+            "stun_s": 4.0,
+            "ticks": 482,
+            "uses": 2
+          },
+          "seed": 2
+        },
+        {
+          "off": {
+            "clear_s": 20.8833333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 7.79999999999993,
+            "shots": 67,
+            "ticks": 1253
+          },
+          "on": {
+            "clear_s": 8.03333333333333,
+            "cooldown_ticks": 480,
+            "damage": 7.2,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "kills": 3,
+            "release_ticks": [
+              2,
+              482
+            ],
+            "shots": 26,
+            "stun_s": 4.0,
+            "ticks": 482,
+            "uses": 2
+          },
+          "seed": 3
+        },
+        {
+          "off": {
+            "clear_s": 21.1333333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 14.9999999999999,
+            "shots": 68,
+            "ticks": 1268
+          },
+          "on": {
+            "clear_s": 8.03333333333333,
+            "cooldown_ticks": 480,
+            "damage": 7.2,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "kills": 3,
+            "release_ticks": [
+              2,
+              482
+            ],
+            "shots": 26,
+            "stun_s": 4.0,
+            "ticks": 482,
+            "uses": 2
+          },
+          "seed": 4
+        },
+        {
+          "off": {
+            "clear_s": 21.1333333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 11.9999999999999,
+            "shots": 68,
+            "ticks": 1268
+          },
+          "on": {
+            "clear_s": 8.03333333333333,
+            "cooldown_ticks": 480,
+            "damage": 7.2,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "kills": 3,
+            "release_ticks": [
+              2,
+              482
+            ],
+            "shots": 26,
+            "stun_s": 4.0,
+            "ticks": 482,
+            "uses": 2
+          },
+          "seed": 5
+        },
+        {
+          "off": {
+            "clear_s": 21.1333333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 15.5999999999999,
+            "shots": 68,
+            "ticks": 1268
+          },
+          "on": {
+            "clear_s": 8.03333333333333,
+            "cooldown_ticks": 480,
+            "damage": 7.2,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "kills": 3,
+            "release_ticks": [
+              2,
+              482
+            ],
+            "shots": 26,
+            "stun_s": 4.0,
+            "ticks": 482,
+            "uses": 2
+          },
+          "seed": 6
+        },
+        {
+          "off": {
+            "clear_s": 20.8833333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 13.1999999999999,
+            "shots": 67,
+            "ticks": 1253
+          },
+          "on": {
+            "clear_s": 8.03333333333333,
+            "cooldown_ticks": 480,
+            "damage": 7.4,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "kills": 3,
+            "release_ticks": [
+              2,
+              482
+            ],
+            "shots": 26,
+            "stun_s": 4.0,
+            "ticks": 482,
+            "uses": 2
+          },
+          "seed": 7
+        },
+        {
+          "off": {
+            "clear_s": 20.8833333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 10.1999999999999,
+            "shots": 67,
+            "ticks": 1253
+          },
+          "on": {
+            "clear_s": 8.03333333333333,
+            "cooldown_ticks": 480,
+            "damage": 7.2,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "kills": 3,
+            "release_ticks": [
+              2,
+              482
+            ],
+            "shots": 26,
+            "stun_s": 4.0,
+            "ticks": 482,
+            "uses": 2
+          },
+          "seed": 8
+        },
+        {
+          "off": {
+            "clear_s": 20.8833333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 7.79999999999993,
+            "shots": 67,
+            "ticks": 1253
+          },
+          "on": {
+            "clear_s": 8.03333333333333,
+            "cooldown_ticks": 480,
+            "damage": 7.2,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "kills": 3,
+            "release_ticks": [
+              2,
+              482
+            ],
+            "shots": 26,
+            "stun_s": 4.0,
+            "ticks": 482,
+            "uses": 2
+          },
+          "seed": 9
+        },
+        {
+          "off": {
+            "clear_s": 20.8833333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 11.9999999999999,
+            "shots": 67,
+            "ticks": 1253
+          },
+          "on": {
+            "clear_s": 8.03333333333333,
+            "cooldown_ticks": 480,
+            "damage": 7.2,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 0.0,
+            "kills": 3,
+            "release_ticks": [
+              2,
+              482
+            ],
+            "shots": 26,
+            "stun_s": 4.0,
+            "ticks": 482,
+            "uses": 2
+          },
+          "seed": 10
+        }
+      ],
+      "summary": {
+        "clear_delta_s": {
+          "ci95": [
+            -13.0692583333333,
+            -12.8807416666667
+          ],
+          "mean": -12.975,
+          "pairs": 10
+        },
+        "complete_pairs": 10,
+        "cooldown_ticks": 480,
+        "damage_per_use": 3.62,
+        "empty": 0,
+        "faster": 10,
+        "kills_per_use": 1.5,
+        "max_uses_in_30_s": 4,
+        "mean_hp_lost": {
+          "off": 11.6999999999999,
+          "on": 0.0
+        },
+        "off_clears": 10,
+        "on_clears": 10,
+        "restricted_delta_s": {
+          "ci95": [
+            -13.0692583333333,
+            -12.8807416666667
+          ],
+          "mean": -12.975,
+          "pairs": 10
+        },
+        "stun_s_per_use": 2.0,
+        "uses": 20
+      }
+    },
+    "tonnage": {
+      "encounter": [
+        {
+          "archetype": "war_machine",
+          "position_m": [
+            7.0,
+            0.0
+          ]
+        }
+      ],
+      "pairs": [
+        {
+          "off": {
+            "clear_s": 9.5,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 42.6500273895264,
+            "shots": 32,
+            "ticks": 570
+          },
+          "on": {
+            "clear_s": 6.48333333333333,
+            "cooldown_ticks": 480,
+            "damage": 3.0,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 10.3005618667602,
+            "kills": 0,
+            "release_ticks": [
+              2
+            ],
+            "shots": 23,
+            "stun_s": 0.0,
+            "ticks": 389,
+            "uses": 1
+          },
+          "seed": 1
+        },
+        {
+          "off": {
+            "clear_s": 9.48333333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 24.7614955615997,
+            "shots": 32,
+            "ticks": 569
+          },
+          "on": {
+            "clear_s": 5.73333333333333,
+            "cooldown_ticks": 480,
+            "damage": 3.0,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 13.7145259952545,
+            "kills": 0,
+            "release_ticks": [
+              2
+            ],
+            "shots": 20,
+            "stun_s": 0.0,
+            "ticks": 344,
+            "uses": 1
+          },
+          "seed": 2
+        },
+        {
+          "off": {
+            "clear_s": 9.48333333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 24.0417022418976,
+            "shots": 32,
+            "ticks": 569
+          },
+          "on": {
+            "clear_s": 5.73333333333333,
+            "cooldown_ticks": 480,
+            "damage": 3.0,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 13.3447030162811,
+            "kills": 0,
+            "release_ticks": [
+              2
+            ],
+            "shots": 20,
+            "stun_s": 0.0,
+            "ticks": 344,
+            "uses": 1
+          },
+          "seed": 3
+        },
+        {
+          "off": {
+            "clear_s": 9.48333333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 23.3433734607697,
+            "shots": 32,
+            "ticks": 569
+          },
+          "on": {
+            "clear_s": 5.73333333333333,
+            "cooldown_ticks": 480,
+            "damage": 3.0,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 12.9889888858795,
+            "kills": 0,
+            "release_ticks": [
+              2
+            ],
+            "shots": 20,
+            "stun_s": 0.0,
+            "ticks": 344,
+            "uses": 1
+          },
+          "seed": 4
+        },
+        {
+          "off": {
+            "clear_s": 9.76666666666667,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 20.2525455665588,
+            "shots": 33,
+            "ticks": 586
+          },
+          "on": {
+            "clear_s": 6.23333333333333,
+            "cooldown_ticks": 480,
+            "damage": 3.0,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 11.2399195289612,
+            "kills": 0,
+            "release_ticks": [
+              2
+            ],
+            "shots": 22,
+            "stun_s": 0.0,
+            "ticks": 374,
+            "uses": 1
+          },
+          "seed": 5
+        },
+        {
+          "off": {
+            "clear_s": 9.75,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 20.6067928504944,
+            "shots": 33,
+            "ticks": 585
+          },
+          "on": {
+            "clear_s": 5.98333333333333,
+            "cooldown_ticks": 480,
+            "damage": 3.0,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 11.5847674942017,
+            "kills": 0,
+            "release_ticks": [
+              2
+            ],
+            "shots": 21,
+            "stun_s": 0.0,
+            "ticks": 359,
+            "uses": 1
+          },
+          "seed": 6
+        },
+        {
+          "off": {
+            "clear_s": 9.48333333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 23.3574145030975,
+            "shots": 32,
+            "ticks": 569
+          },
+          "on": {
+            "clear_s": 5.98333333333333,
+            "cooldown_ticks": 480,
+            "damage": 3.0,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 12.9892369365692,
+            "kills": 0,
+            "release_ticks": [
+              2
+            ],
+            "shots": 21,
+            "stun_s": 0.0,
+            "ticks": 359,
+            "uses": 1
+          },
+          "seed": 7
+        },
+        {
+          "off": {
+            "clear_s": 9.48333333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 24.3990900707245,
+            "shots": 32,
+            "ticks": 569
+          },
+          "on": {
+            "clear_s": 5.73333333333333,
+            "cooldown_ticks": 480,
+            "damage": 3.0,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 13.7125553226471,
+            "kills": 0,
+            "release_ticks": [
+              2
+            ],
+            "shots": 20,
+            "stun_s": 0.0,
+            "ticks": 344,
+            "uses": 1
+          },
+          "seed": 8
+        },
+        {
+          "off": {
+            "clear_s": 9.5,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 20.2501826477051,
+            "shots": 32,
+            "ticks": 570
+          },
+          "on": {
+            "clear_s": 5.98333333333333,
+            "cooldown_ticks": 480,
+            "damage": 3.0,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 11.2322213745117,
+            "kills": 0,
+            "release_ticks": [
+              2
+            ],
+            "shots": 21,
+            "stun_s": 0.0,
+            "ticks": 359,
+            "uses": 1
+          },
+          "seed": 9
+        },
+        {
+          "off": {
+            "clear_s": 9.73333333333333,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 42.0,
+            "shots": 33,
+            "ticks": 584
+          },
+          "on": {
+            "clear_s": 6.01666666666667,
+            "cooldown_ticks": 480,
+            "damage": 3.0,
+            "empty": 0,
+            "end": "clear",
+            "hostiles_left": 0,
+            "hp_lost": 18.0,
+            "kills": 0,
+            "release_ticks": [
+              2
+            ],
+            "shots": 21,
+            "stun_s": 0.0,
+            "ticks": 361,
+            "uses": 1
+          },
+          "seed": 10
+        }
+      ],
+      "summary": {
+        "clear_delta_s": {
+          "ci95": [
+            -3.77239695003125,
+            -3.43760304996875
+          ],
+          "mean": -3.605,
+          "pairs": 10
+        },
+        "complete_pairs": 10,
+        "cooldown_ticks": 480,
+        "damage_per_use": 3.0,
+        "empty": 0,
+        "faster": 10,
+        "kills_per_use": 0.0,
+        "max_uses_in_30_s": 4,
+        "mean_hp_lost": {
+          "off": 26.5662624292374,
+          "on": 12.9107480421066
+        },
+        "off_clears": 10,
+        "on_clears": 10,
+        "restricted_delta_s": {
+          "ci95": [
+            -3.77239695003125,
+            -3.43760304996875
+          ],
+          "mean": -3.605,
+          "pairs": 10
+        },
+        "stun_s_per_use": 0.0,
+        "uses": 10
+      }
+    }
+  },
+  "schema": "gtai.deploy-worth/1",
+  "tick_hz": 60
+}
