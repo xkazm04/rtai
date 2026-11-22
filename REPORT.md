@@ -117,7 +117,7 @@ with the plan's edit (`tools/gauntlet/ablate.mjs`, a temp worktree), 10 seeds x 
 | Cycle | Change | Profile: before -> after median death wave | Improvement (CI95) | Null floor (pairs) | Verdict | Ledger |
 |---:|---|---|---:|---:|---|---|
 | 1 | `rivet.repair_per_s` 10 -> 8 | novice 14 -> 16; average >= 40 -> >= 40 (8 -> 8 censored); expert >= 40 -> >= 40 | average 1.56 waves (-5.22..8.33) | 6 (9) | **noise, reverted (never applied)** | `evidence/n23-loop/cycle1/tune-ledger.md` |
-| 2 | `rivet_repair` f 1.25: per_s 10 -> 8 and delay 3 -> 3.75 | PENDING | | | | `evidence/n23-loop/cycle2/` |
+| 2 | `rivet_repair` f 1.25: per_s 10 -> 8 and delay 3 -> 3.75 (8 seeds) | novice 14 -> 13; average >= 40 -> >= 40 (6 -> 7 censored, 1 death at 23); expert >= 40 -> >= 40 | average -2.57 waves (-7.71..0), 7 pairs | 6 (9) | **noise, reverted (never applied)** | `evidence/n23-loop/cycle2/tune-ledger.md` |
 
 The tuner's first proposal was `enemy_damage` x1.25 (23 numbers in `enemies.json`); the director replaced it by hand
 because the table is shared and a kept change would move shipped replays (`evidence/n23-loop/cycle1/plan.json` `miss`).
@@ -186,7 +186,7 @@ PENDING (`evidence/n23-loop/compare.md` / `.html`, filmed for the owner).
   expert are censored at wave 40 on every merge: no tuning step tonight could separate them, because the tuner can only
   read a difference where runs die.
 - **No change was kept tonight.** Cycle 1 (`repair_per_s` 10 -> 8) is noise against a floor of 6 waves; with average
-  and expert all censored, a 20 % step on one number cannot show. Cycle 2: PENDING.
+  and expert all censored, a 20 % step on one number cannot show. Cycle 2 (the repair group, both numbers at the night clamp) is noise as well.
 - **Targets out of reach at this rate.** The game is too easy by 26+ waves for average (>= 40 vs 12) and 20+ for expert;
   at one x0.8 step a night on repair the x0.5 floor (5 HP/s) is reached after 4 nights, and the ablation says even
   3 HP/s after 6 s only brings average to wave 20. PENDING: the stack-clamp arm gives the one-night number.

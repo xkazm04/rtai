@@ -1,0 +1,6 @@
+godot: class cache stale (class BotArenaMoves points at res://features/gauntlet/bot/bot_arena_moves.gd, which no longer exists): running --import first
+godot: --import done in 98.2 s
+novice: 8/8 ok, median wave reached 13, median seconds per wave 22.87
+average: 8/8 ok, median wave reached 40, median seconds per wave 36.43
+expert: 8/8 ok, median wave reached 40, median seconds per wave 36.5
+{"attempted":24,"accepted":24,"deaths":9,"median_wave_reached":40,"median_death_wave":14,"capped_alive":0,"wave_timeouts":0}
