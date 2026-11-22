@@ -63,6 +63,25 @@ func test_hold_aims_at_sentry_then_releases_there_even_while_g_wants_to_cycle() 
 	assert_lt(sentry.hp, sentry.max_hp)
 
 
+func test_cycle_loads_the_new_ghost_before_aiming_its_strike() -> void:
+	var forms: GhostForms = stage.pilot.ghosts.forms
+	forms.selected = &"kerf"
+	var first: Fighter = _spawn(&"shield_robot", Vector2(5, 0))
+	var second: Fighter = _spawn(&"shield_robot", Vector2(6, 0))
+	var cycle: int = 1 << actions.bit(&"power_gearbox")
+	var select: TickInput = _word(bot, 1.0, cycle)
+	assert_eq(select.buttons & (q | cycle), cycle)
+	_drive(select)
+	assert_eq(forms.selected, &"ohm")
+	assert_eq(ghost.phase, GhostDeploy.Phase.IDLE)
+	_drive(_word(bot, 1.0))
+	assert_eq(ghost.phase, GhostDeploy.Phase.AIMING)
+	_drive(_word(bot, 1.0))
+	assert_eq(ghost.form, &"ohm")
+	assert_lt(first.hp, first.max_hp)
+	assert_lt(second.hp, second.max_hp)
+
+
 func test_cooldown_active_ghost_and_zero_eagerness_leave_the_gun_aim_alone() -> void:
 	var sentry: Fighter = _spawn(&"sentry_turret", Vector2(8, 0))
 	var normal: int = PlayerCommand.pack_aim(Vector2.LEFT, actions, 12.0)
