@@ -35,16 +35,18 @@ export function scoreSections(batch, fmt) {
   const profiles = profileScores(batch, records);
   const comparisons = profiles.flatMap((a, i) => profiles.slice(i + 1).map((b) => separation(a, b)));
   const rows = records.map(({ run }) => {
-    const score = deathScore(run);
+    const score = deathScore(run, batch.args.waves);
     let outcome = run.death?.by === 'timeout' ? 'wave timer' : 'finished alive';
-    if (score) outcome = score.censored ? 'capped ≥ ' + score.wave : 'died on ' + score.wave;
+    if (score?.censored) outcome = 'censored ' + (run.capped ? 'at the tick cap' : 'at the wave limit ' + batch.args.waves)
+      + ' (≥ ' + score.wave + ')';
+    else if (score) outcome = 'died on ' + score.wave;
     const active = activeAtDeath(run);
     return [run.profile, run.seed, outcome, run.waves.filter((w) => w.timed_out).length, active ?? '—'];
   });
   const limits = targets.separation;
   return [{
-    title: 'Death-wave score', note: 'Capped runs contribute their last reached wave as a lower bound to the median and spread.',
-    columns: ['Profile', 'Target', 'Median wave', 'P25–P75', 'Min–max', 'Deaths / capped'],
+    title: 'Death-wave score', note: 'Censored runs contribute their last reached wave as a lower bound to the median and spread.',
+    columns: ['Profile', 'Target', 'Median wave', 'P25–P75', 'Min–max', 'Deaths / censored'],
     rows: profiles.filter((p) => p.scores.length).map((p) => {
       const waves = p.scores.map((s) => s.wave);
       const range = (lo, hi) => fmt(quantile(waves, lo)) + '–' + fmt(quantile(waves, hi));

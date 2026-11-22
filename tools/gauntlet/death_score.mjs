@@ -4,10 +4,11 @@ import targets from './targets.json' with { type: 'json' };
 
 export { targets };
 
-// A legacy timer death was an administrative end. A wave-limited clear also has no death score.
-export function deathScore(run) {
+// A live observation at either stopping boundary is a lower bound on the death wave.
+export function deathScore(run, waves) {
   if (run.death && run.death.by !== 'timeout') return { wave: run.death.wave, censored: false };
-  if (run.capped) return { wave: run.wave_reached, censored: true };
+  if (run.capped || (!run.death && Number.isInteger(waves) && waves > 0 && run.wave_reached >= waves))
+    return { wave: run.wave_reached, censored: true };
   return null;
 }
 
@@ -27,7 +28,7 @@ export function recordedRuns(batch) {
 
 export function profileScores(batch, records = recordedRuns(batch)) {
   const observations = records.flatMap(({ run, row }) => {
-    const score = deathScore(run);
+    const score = deathScore(run, batch.args.waves);
     return score ? [{ ...score, run, pick: row.pick ?? batch.args.pick }] : [];
   });
   const groups = Map.groupBy(observations, (s) => s.run.profile);

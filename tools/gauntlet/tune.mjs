@@ -83,7 +83,7 @@ function markdown(ledger) {
     const unit = { death: 'waves', wave: 's', spread: 'waves', killer: 'death share', offer: c.metric.outcome === 'seconds' ? 's' : 'waves' }[c.metric.type];
     lines.push('| ' + [c.id, c.members ? '× ' + c.factor + ' (' + c.members.length + ' knobs)' : c.before + ' → ' + c.after, c.members ? 'per knob' : c.baseline, c.miss, c.metric.target,
       fmt(c.measured_before) + ' → ' + fmt(c.measured_after) + ' ' + unit
-        + (c.metric.type === 'death' ? ' (' + c.censored_before + ' → ' + c.censored_after + ' capped, median uses lower bounds)' : ''), c.pairs,
+        + (c.metric.type === 'death' ? ' (' + c.censored_before + ' → ' + c.censored_after + ' censored, median uses lower bounds)' : ''), c.pairs,
       fmt(c.improvement) + ' (' + c.ci95.map(fmt).join(' to ') + ')',
       floorCell(c.floors['null-salt']), floorCell(c.floors['cross-seed']), c.floor_mode,
       c.verdict, c.verdict_mode, c.verdicts.point, c.verdicts.strict, [c.commit, c.revert_commit].filter(Boolean).join(' / ') || '—'].map(cell).join(' | ') + ' |');

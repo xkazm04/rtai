@@ -16,12 +16,13 @@ const tool = (name) => 'tools/gauntlet/' + name + '.mjs';
 const portable = (path) => path.split(sep).join('/');
 
 function recipe(argv, root) {
-  const strings = ['out', 'profile', 'pick', 'controls', 'seeds', 'floor-mode'].map((key) => [key, { type: 'string' }]);
+  const strings = ['out', 'profile', 'pick', 'controls', 'seeds', 'waves', 'floor-mode'].map((key) => [key, { type: 'string' }]);
   const { values } = parseArgs({ args: argv, options: { ...Object.fromEntries(strings), 'dry-run': { type: 'boolean' } } });
   if (!values.seeds) throw new Error('--seeds=N is required');
   const mode = floorMode(values['floor-mode']);
   const profile = values.profile ?? 'average', pick = values.pick ?? 'greedy', controls = values.controls ?? 'wheel';
   const flags = ['--seeds=' + values.seeds, '--profile=' + profile, '--pick=' + pick, '--controls=' + controls, '--seed0=1', '--jobs=1'];
+  if (values.waves !== undefined) flags.push('--waves=' + values.waves);
   batchArgs(flags); // Validate the identical seed range and policy used for both runs.
   const dir = resolve(values.out ?? join(root, 'build/gauntlet/night-' + nightOf()));
   artifact(root, join(dir, 'plan.json'));

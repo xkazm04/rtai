@@ -34,7 +34,7 @@ function spreadSamples(rows) {
 export function samplesFor(rows, metric) {
   switch (metric.type) {
     case 'death': return rows.filter((r) => r.a.profile === metric.profile).flatMap((r) => {
-      const a = deathScore(r.a), b = deathScore(r.b);
+      const a = deathScore(r.a, r.waves), b = deathScore(r.b, r.waves);
       return a && b ? [{ ...r, a: a.wave, b: b.wave, censoredA: a.censored, censoredB: b.censored }] : [];
     });
     case 'reached': return rows.map((r) => ({ ...r, a: r.a.wave_reached, b: r.b.wave_reached }));

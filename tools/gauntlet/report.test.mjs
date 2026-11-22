@@ -213,6 +213,9 @@ test('score report counts cleared timeouts, simultaneous live rosters and paired
   assert.match(markdown, /novice → average \| 4 \| 3 \/ 4 \| 75% \| 0 \| separated/);
   assert.match(markdown, /expert \| 20 \| 12 \| 12–12 \| 12–12 \| 3 \/ 1/);
   assert.match(markdown, /average \| 1 \| died on 8 \| 2 \| 2/);
-  assert.match(markdown, /expert \| 4 \| capped ≥ 12 \| 2 \| —/);
+  assert.match(markdown, /expert \| 4 \| censored at the tick cap \(≥ 12\) \| 2 \| —/);
   assert.match(html, /Active waves at death/);
+  delete results.at(-1).capped;
+  const bounded = { ...sample, args: { ...sample.args, waves: 12 } };
+  assert.match(render(bounded, analyze(bounded)).markdown, /expert \| 4 \| censored at the wave limit 12/);
 });

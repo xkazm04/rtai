@@ -63,7 +63,7 @@ function deathMisses(batch, profile, minN) {
     if (!scores.length || median === target) continue;
     const metric = { type: 'death', profile: row.profile, target };
     const miss = row.profile + ' median death wave ' + fmt(median) + ' against target ' + target
-      + ' (' + row.deaths + ' deaths, ' + capped + ' capped as lower bounds)';
+      + ' (' + row.deaths + ' deaths, ' + capped + ' censored as lower bounds)';
     const reason = scores.length < minN ? 'too few runs (need ' + minN + ' scored runs)'
       : median < target && upper >= target ? 'censoring leaves an early death-wave miss unresolved' : undefined;
     const factor = Math.min(1.25, Math.max(0.8, median / target));

@@ -24,7 +24,7 @@ export function pairRuns(before, after) {
   const rows = [];
   for (const [key, { run, sha, ...identity }] of left) {
     const match = right.get(key);
-    if (match) rows.push({ ...identity, a: run, b: match.run, shaA: sha, shaB: match.sha });
+    if (match) rows.push({ ...identity, waves: before.args.waves, a: run, b: match.run, shaA: sha, shaB: match.sha });
   }
   return rows;
 }

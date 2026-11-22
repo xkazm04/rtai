@@ -24,7 +24,10 @@ test('dry run previews the full conditional recipe without writes or a runner', 
   assert.match(lines[1], /null'.*--salt=1/);
   assert.match(lines[4], /n23-tune\*/);
   assert.match(lines.at(-1), /night\.md/);
-  for (const bad of ['--seeds=0', '--profile=unknown', '--pick=x', '--controls=x', '--jobs=2', '--floor-mode=unknown'])
+  lines.length = 0;
+  night([...args, '--dry-run', '--waves=24'], io);
+  assert.equal(lines.filter((s) => s.includes('batch.mjs') && s.includes('--waves=24')).length, 3);
+  for (const bad of ['--waves=0', '--seeds=0', '--profile=unknown', '--pick=x', '--controls=x', '--jobs=2', '--floor-mode=unknown'])
     assert.throws(() => night([...args, bad, '--dry-run'], io));
 });
 
