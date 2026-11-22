@@ -48,6 +48,16 @@ dashing sideways to the round's path when the roll is on cooldown or the round i
 wave in the result file as `dashes` (the contract's name; optional; omitted when 0 was not measured). Unit test with a
 fake view: a rocket on a collision course -> a dash press within `dash_read_ticks` sideways to its path.
 
+## Task 2b - ghost deploy (one commit; only after the director has merged `n24-ghost`; else skip and say so)
+
+Lane ghost's `NEED pressure` (its JOURNAL `C:/Users/kazda/kiro/gtai-wt/n23-moves/JOURNAL.md` line 23, read it whole):
+from n24-ghost on `ghost_forms.json` `transform_unlocked` is false, so the bot's `power_hauler` presses
+(`project/features/gauntlet/bot/bot_forms.gd`) do nothing. Teach the bot the first-level power: `ghost_deploy` (row bit
+19, wire bit 32) HOLD >= 2 ticks aimed at the spot, RELEASE to deploy the loaded ghost (cycled with `power_gearbox`),
+per form `range_m` / `cooldown_ticks` from `ghost_attacks.json` `deploy.<form>`, with ghost's suggested target rule
+(in that journal line). Keep the transform path for `transform_unlocked: true`. Result `deploys{<form>: count}` is
+ghost's field: write it only if ghost's code does not already. Unit test with a fake view.
+
 ## Task 3 - a smoke batch (no commit needed beyond evidence)
 
 `node tools/gauntlet/batch.mjs --profile=all --pick=greedy --controls=wheel --seed0=1 --seeds=2 --waves=40 --jobs=1
