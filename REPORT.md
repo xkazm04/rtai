@@ -145,7 +145,7 @@ non-boss waves with the enemy vs without; boss waves alone; scratch `build/n23/g
 
 | Move | Enemy | On minus off, waves with the enemy | Waves without it | With / without the enemy, on | Same, off | n22 gap (main before the moves) |
 |---|---|---:|---:|---|---|---|
-| Ohm short-circuit | sentry turret | **-0.67 s** (-1.21..-0.18) | 0 | 32.3 / 15.5 s | 33.7 / 15.5 s | 38.3 / 10.7 s |
+| Ohm short-circuit (pre-fix Ohm: moves `a8a060feb` not merged) | sentry turret | **-0.67 s** (-1.21..-0.18) | 0 | 32.3 / 15.5 s | 33.7 / 15.5 s | 38.3 / 10.7 s |
 | Kerf blink behind | shield robot | **-5.13 s** (-7.89..-2.32) | 0 | 33.0 / 18.2 s | 40.2 / 17.8 s | 41.2 / 12.7 s |
 | Kerf blink behind | war machine (boss waves) | | | 26.0 s | 34.0 s | 43.8 / 26.0 s |
 | Tonnage armour crack | war machine | no off arm: 7 uses in 10 runs | | | | 43.8 / 26.0 s |
@@ -264,6 +264,11 @@ The tuner optimises a bot. Measured tonight (details in `docs/gauntlet-loop.md` 
   the three lanes first, then loop: loop's own changes are `project/features/gauntlet/bot/**`, `tools/gauntlet/**`,
   `docs/gauntlet-loop.md`, `project/data/tables/test_player.json`, plus one-line call sites `project/dev/gauntlet/gauntlet.gd`
   KNOWN (`--bot-salt`) and `project/boot/launch_args.gd` KNOWN_FLAGS (+1, debt accepted).
+- Moves wrote `NEED loop` at 07:44: loop holds `n23-moves` only to `73eec563c` and lacks `a8a060feb` (the Ohm fix). Not
+  merged tonight (decision JOURNAL 07:55: past the code line, the final gate ran on `900443274`). The Ohm off/on row is the
+  pre-fix Ohm; re-measure it after the Director's merge (`node tools/gauntlet/ablate.mjs --name=ohm-off --rev=<merged sha>
+  --set=project/data/tables/combat.json#/moves/ohm_short_circuit/enabled=false -- --profile=average --pick=greedy
+  --controls=wheel --seeds=10 --waves=40 --jobs=1 --out=<dir>`).
 - No tuned number is kept, so loop moves no balance number in any table.
 - `JOURNAL.md` / `REPORT.md` are per lane: keep each lane's own on an add/add conflict.
 
