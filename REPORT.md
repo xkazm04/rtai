@@ -111,3 +111,12 @@ stays under the 6.73 s floor: noise either way.
 ## Next steps
 
 ## Astra ledger
+
+| # | Tag | Minutes | Verdict | What landed |
+|---:|---|---:|---|---|
+| 1 | null-floor | 65 | accepted | bot salt, batch `--salt`, null-salt floor mode, `tune.mjs floor` |
+| 2 | why-alive | 76 (cap) | accepted | HP telemetry per wave, survival section, `ablate.mjs`, 5 ablations (2 seeds, not 10) |
+| 3 | street-score | 73 | accepted | point/strict verdict, enemy_damage group, street merge, budget-unit/cost/repair knobs, death-wave score, targets |
+| 4 | tune-worktree | 35 | accepted | censored wave-limit score, night worktree, batch reuse, `tune.mjs sets`, three-profile cycle, night.md |
+| 5 | controls-moves | 49 | accepted | controls + moves merges, bot blast clearance, bot uses the four moves, `--set` booleans, move table, 12 knobs |
+| 6 | tuner-shared | running | | shared-table guard, `rivet_repair` group, `ablate --rev`, docs |
