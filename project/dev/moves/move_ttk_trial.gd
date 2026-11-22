@@ -4,6 +4,7 @@ extends RefCounted
 ## Timing starts with weapon drawn and form settled, immediately before the first combat input.
 
 var stage: ArenaStage
+var ctx: WorldContext
 var controller: MoveTtkPilot
 var bus: EventBus = EventBus.new()
 var data: DataStore = DataStore.new()
@@ -40,8 +41,8 @@ func _open(move: StringName, weapon: StringName, seed_id: int) -> void:
 	plan.areas.append(floor_area)
 	var args: ArenaArgs = ArenaArgs.new()
 	args.values["--enemy-brain"] = "squad"
-	stage = ArenaStage.new(plan, ArenaStations.new(), args)
-	var ctx: WorldContext = World.build_context(bus, data, seed_id)
+	stage = ArenaStage.new(plan, _stations(), args)
+	ctx = World.build_context(bus, data, seed_id)
 	stage.setup(ctx)
 	stage.pilot = StagePilot.new(PlayerActions.shipped(false))
 	stage.arena.rivet.weapon = weapon
@@ -52,6 +53,10 @@ func _open(move: StringName, weapon: StringName, seed_id: int) -> void:
 	stage.arena.struck.connect(_observe_impact)
 	@warning_ignore("return_value_discarded")
 	stage.arena.wounded.connect(_observe_wound)
+
+
+func _stations() -> ArenaStations:
+	return ArenaStations.new()
 
 
 func _configure(move: StringName, rank: int) -> bool:
