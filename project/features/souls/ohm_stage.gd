@@ -1,14 +1,8 @@
 class_name OhmStage
 extends RefCounted
-## Ohm (the elder spot-welding robot, the mage), lane ghost-powers, for the bound player on quest
-## 1's stage or an arena stage. power `ohm` (powers.json) puts the soul on; while on, the melee
-## press throws a forked bolt every bolt_gap_s (ghost_attacks.json `ohm`): the live hostile
-## nearest the aim inside the cone and range is struck, then the bolt forks on to up to `forks`
-## more within fork_radius_m (MeleeShock.chain_path, the claw shock's walk). Each body is stunned
-## (the electro gun's FightAreas stun) and takes human_damage, or bolt_damage x machine_k on a
-## robot (weapon ohm_bolt: a human's kill is the electro X-ray shock). Nothing in the cone: the
-## car nearest the aim burns (car_damage x machine_k). upgrade_tier >= 1: the mass arc
-## (mass_targets, radius).
+## The settled Ohm form throws a forked bolt on melee. ghost_attacks.json sets its reach, damage
+## and mass-arc upgrade. Flagged machines can short-circuit. Other bodies take the electro stun.
+## With no body in the cone, the car nearest the aim burns.
 
 const ID: StringName = &"ohm"
 const GHOST: StringName = &"ohm"
@@ -111,9 +105,7 @@ func owns_melee() -> bool:
 
 func _bolt(stage: CollectCallStage, aim: Vector2) -> void:
 	var arena: CombatArena = stage.arena
-	var hands: Vector2 = (
-		arena.rivet.pos + ((electrodes[0] + electrodes[1]) * 0.5).rotated(aim.angle())
-	)
+	var hands: Vector2 = (electrodes[0] + electrodes[1]) * 0.5
 	var bodies: Array[Fighter] = []
 	var pos: PackedVector2Array = PackedVector2Array()
 	var first: int = -1
@@ -131,7 +123,7 @@ func _bolt(stage: CollectCallStage, aim: Vector2) -> void:
 	bolts += 1
 	bolt_tick = stage.tick
 	bolt_aim = aim
-	bolt_path = PackedVector2Array([hands])
+	bolt_path = PackedVector2Array([arena.rivet.pos + hands.rotated(aim.angle())])
 	bolt_from = PackedInt32Array([-1])
 	if first < 0:
 		_burn_car(stage, aim)
@@ -143,17 +135,22 @@ func _bolt(stage: CollectCallStage, aim: Vector2) -> void:
 	var mass: bool = int(num(&"upgrade_tier")) >= 1
 	var hops: int = int(num(&"mass_targets")) - 1 if mass else int(num(&"forks"))
 	var reach: float = num(&"mass_radius_m") if mass else num(&"fork_radius_m")
+	var applied: bool = false
 	for i: int in MeleeShock.chain_path(pos, metal, first, hops, reach):
-		_strike(arena, bodies[i], mini(1, bolt_path.size() - 1) if mass else bolt_path.size() - 1)
+		var last: int = bolt_path.size() - 1
+		if _strike(arena, bodies[i], mini(1, last) if mass else last):
+			applied = true
+	if applied:
+		arena.move_tally.record(MoveTable.SHORT_CIRCUIT)
 
 
 ## Strikes `f` from bolt_path[src] (the chain's last point, or the mass arc's first body).
-func _strike(arena: CombatArena, f: Fighter, src: int) -> void:
+func _strike(arena: CombatArena, f: Fighter, src: int) -> bool:
 	@warning_ignore("return_value_discarded")
 	bolt_path.append(f.pos)
 	@warning_ignore("return_value_discarded")
 	bolt_from.append(src)
-	PlayerShock.stun_on(PlayerShock.areas_of(arena), f, PowerDef.ticks(num(&"stun_s")))
+	var applied: bool = OhmShortCircuit.strike(arena, f, bolt_tick, PowerDef.ticks(num(&"stun_s")))
 	var from: Vector2 = bolt_path[src]
 	var dir: Vector2 = (f.pos - from).normalized() if f.pos != from else arena.rivet.facing
 	arena.hit_dir = dir
@@ -163,6 +160,7 @@ func _strike(arena: CombatArena, f: Fighter, src: int) -> void:
 	arena.damage(f, dmg, arena.rivet.id, WEAPON, KILL_KIND)
 	arena.struck.emit(f, dir, not f.alive(), WEAPON)
 	struck += 1
+	return applied
 
 
 ## Machines burn out: with no body in the cone, the live car nearest the aim (inside the cone and

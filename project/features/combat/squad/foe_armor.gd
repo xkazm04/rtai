@@ -28,7 +28,7 @@ static func impact(
 			mind.shield.block_tick = arena.tick
 			mind.shield.block_dir = ray.normalized()
 	var row: EnemyRoster.Archetype = squad.pit.roster.archetype(&"shield_robot")
-	var cover: float = squad.shield_cover.multiplier(h, ray.normalized(), arena.rivet, row)
+	var cover: float = squad.shield_cover.multiplier(h, ray.normalized(), arena, row)
 	return minf(cover, own_plate) if cover < 1.0 else own_plate
 
 
@@ -47,6 +47,8 @@ static func k(h: Fighter, hit_dir: Vector2, kind: StringName, squad: ArenaSquad)
 		return 1.0
 	var arch: EnemyRoster.Archetype = squad.pit.roster.archetype(h.archetype)
 	if arch == null or not arch.explicit_spawn:
+		return 1.0
+	if OhmShortCircuit.held(squad, h) and squad.shield_cover.carriers.has(h):
 		return 1.0
 	var bearing: float = h.facing.dot(-hit_dir.normalized())
 	if bearing >= arch.shield_cos:

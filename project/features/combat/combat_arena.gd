@@ -50,7 +50,6 @@ var guard: PlayerGuard = null
 var walls: ArenaWalls = null
 ## Area effects start with the first GunHand shot, so quest 1 (no gun) keeps its goldens.
 var areas: FightAreas = null
-## The landing hit's direction and point, set before damage() (kill_landed reads them).
 var hit_dir: Vector2 = Vector2.ZERO
 var hit_at: Vector2 = Vector2.ZERO
 ## Lane gunplay: the round being landed is a charge gun's full charge (HitLink lands it heavy).
@@ -202,6 +201,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(hostiles.size())
 	for h: Fighter in hostiles:
 		h.write_state(out)
+		OhmShortCircuit.write_state(squad_ai, h, out)
 	out.put_32(shots.size())
 	out.put_32(balls.size())
 	out.put_32(kills)

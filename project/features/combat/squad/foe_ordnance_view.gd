@@ -30,10 +30,11 @@ func _draw() -> void:
 				self, shot.pos, shot.vel.normalized(), shot.origin.distance_to(shot.pos), arena.tick
 			)
 	for h: Fighter in arena.hostiles:
+		var stunned: bool = h.alive() and OhmShortCircuit.held(arena.squad_ai, h)
 		if h.archetype == &"rocket_trooper" and _launchers == null:
 			_mount_launchers()
 		elif h.archetype == &"sentry_turret" and (h.alive() or arena.tick - h.hurt_tick < 90):
-			FoeTurretView.draw_mount(self, h, _heat(h))
+			FoeTurretView.draw_mount(self, h, _heat(h), stunned)
 		elif h.archetype == &"war_machine" and h.alive():
 			var mind: SquadMind = arena.squad_ai.minds.get(h.id)
 			if mind != null:
@@ -41,6 +42,8 @@ func _draw() -> void:
 		elif h.archetype == &"shield_robot" and h.alive():
 			var mind: SquadMind = arena.squad_ai.minds.get(h.id)
 			FoeShieldView.draw_plate(self, h, mind, arena.tick)
+		if stunned:
+			FoeStunView.arcs(self, h, arena.squad_ai.minds[h.id], arena.tick)
 
 
 func _mount_launchers() -> void:

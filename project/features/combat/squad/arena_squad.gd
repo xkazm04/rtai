@@ -7,6 +7,7 @@ extends RefCounted
 const ROUTES_PER_TICK: int = 2
 
 var mounts: FoeMounts = FoeMounts.new()
+var moves: MoveTable = MoveTable.shipped()
 var shield_cover: FoeShieldCover = FoeShieldCover.new()
 var rockets: FoeRocketFlight = FoeRocketFlight.new()
 var pit: EnemyPit
@@ -70,6 +71,13 @@ func owns(h: Fighter) -> bool:
 	return _wave.has(h)
 
 
+## A bolt can land on a newly spawned member before the first squad assignment.
+func mind_for(h: Fighter) -> SquadMind:
+	if not minds.has(h.id):
+		minds[h.id] = SquadMind.new(h, pit.roster.archetype(h.archetype))
+	return minds[h.id]
+
+
 ## Wave members step in ID order before station navigation can spend their route budget.
 ## Everyone outside the wave keeps the arena's original step order.
 func assign(arena: CombatArena) -> Array[Fighter]:
@@ -89,9 +97,7 @@ func assign(arena: CombatArena) -> Array[Fighter]:
 			others.append(h)
 	ordered.sort_custom(func(a: Fighter, b: Fighter) -> bool: return a.id < b.id)
 	for h: Fighter in ordered:
-		var mind: SquadMind = minds.get(h.id)
-		if mind == null:
-			mind = SquadMind.new(h, pit.roster.archetype(h.archetype))
+		var mind: SquadMind = mind_for(h)
 		active[h.id] = mind
 		var fx: FighterFx = arena.areas.effect(h) if arena.areas != null else null
 		if fx != null and mind.walker == null and fx.holds():
@@ -101,7 +107,7 @@ func assign(arena: CombatArena) -> Array[Fighter]:
 			continue
 		mind.agent.pos = h.pos
 		pit.agents.append(mind.agent)
-		if mind.available(h, arena):
+		if arena.tick >= mind.stun_until and mind.available(h, arena):
 			shooters.append(mind.agent)
 		else:
 			mind.agent.token = false
@@ -134,6 +140,8 @@ func _update_morale() -> void:
 
 func step(h: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
 	var mind: SquadMind = minds[h.id]
+	if arena.tick < mind.stun_until:
+		return null
 	var e: EnemyAgent = mind.agent
 	e.pos = h.pos
 	e.sees = _map.sight_line(e.pos, pit.rivet_pos)
@@ -146,7 +154,7 @@ func step(h: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
 	if mind.shield != null:
 		mind.shield.step(mind, h, arena, _map)
 		return null
-	var desired: Vector2 = shield_cover.velocity(mind, pit, _map, _fallen)
+	var desired: Vector2 = shield_cover.velocity(mind, self, _map, _fallen)
 	if h.swing_left > 0:
 		desired = Vector2.ZERO
 	if not plant_no_separation and not mind.mobile_goal.is_finite():
@@ -155,10 +163,12 @@ func step(h: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
 	EnemyMotor.steer(e, desired, pit.rivet_pos, pit)
 	h.pos = e.pos
 	h.facing = e.facing
+	var shot: Shot
 	if e.melee():
 		mind.swing(h, arena, _map)
-		return null
-	return _ranged(mind, h, arena, rng)
+	else:
+		shot = _ranged(mind, h, arena, rng)
+	return shot
 
 
 func _ranged(mind: SquadMind, h: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
