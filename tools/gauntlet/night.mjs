@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT, readJson } from '../lib/repo.mjs';
 import { nodeCommand } from './commands.mjs';
-import { checkAfterPlan, checkInputs } from './night_batches.mjs';
+import { checkAfterPlan, checkInputs, checkMeasuredTables } from './night_batches.mjs';
 import { parseNight, recipe, tool } from './night_args.mjs';
 import { physical } from './night_paths.mjs';
 import { summary } from './night_summary.mjs';
@@ -34,11 +34,12 @@ function execute(job, tree, run, log) {
     if (git(tree, 'branch', '--show-current').trim() !== job.branch) throw new Error('branch changed during the night');
     if (args[1] === 'apply' && job.inputs.after && !job.resume) checkAfterPlan(tree, job);
     log(nodeCommand(args));
-    if (args[0] === tool('batch')) {
+    if (args[0] === tool('batch') || args[0] === tool('ablate')) {
       withLock(tree, () => {
         requireClean(tree);
         const head = git(tree, 'rev-parse', 'HEAD');
         run(args, tree);
+        if (job.rev) checkMeasuredTables(tree, job, args[1].slice('--name='.length));
         requireClean(tree);
         if (head !== git(tree, 'rev-parse', 'HEAD')) throw new Error('HEAD changed during batch');
       });

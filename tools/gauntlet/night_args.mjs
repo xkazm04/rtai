@@ -5,6 +5,7 @@ import { readJson } from '../lib/repo.mjs';
 import { parseArgs as batchArgs } from './commands.mjs';
 import { lanePath } from './night_paths.mjs';
 import { checkLocation } from './night_worktree.mjs';
+import { commitRevision } from './revision.mjs';
 import { deathMetric } from './tune_propose.mjs';
 import { floorMode } from './tune_floor.mjs';
 
@@ -39,13 +40,14 @@ function design(v, arms) {
 
 export function parseNight(argv, root) {
   const strings = ['worktree', 'branch', 'out', 'profile', 'pick', 'controls', 'seeds', 'waves', 'floor-mode',
-    'before', 'null', 'after-from', 'metric', 'jobs'];
+    'before', 'null', 'after-from', 'metric', 'jobs', 'rev'];
   const options = Object.fromEntries(strings.map((key) => [key, { type: 'string' }]));
   options['dry-run'] = options.remove = { type: 'boolean' };
   const { values: v } = parseArgs({ args: argv, options });
   const job = { path: v.worktree, branch: v.branch, remove: v.remove, dryRun: v['dry-run'] };
   checkLocation(root, job.path, job.branch);
   if (v.remove) return job;
+  const rev = commitRevision(root, v.rev);
   const previewBuild = job.dryRun && v.out && v.out.replaceAll('\\', '/').includes('/build/n23/');
   const dir = lanePath(root, v.out, previewBuild ? 'build/n23' : 'evidence/n23-loop');
   const arms = armPaths(root, dir, v);
@@ -53,17 +55,23 @@ export function parseNight(argv, root) {
   const metric = deathMetric(v.metric);
   const mode = floorMode(v['floor-mode']);
   if (metric && (mode !== 'null-salt' || batch.runner !== 'gauntlet')) throw new Error('death needs the street and null-salt floor');
-  return { ...job, ...arms, dir, batch, flags, metric, mode };
+  return { ...job, ...arms, dir, batch, flags, metric, mode, rev };
 }
 
 export function recipe(job) {
   const { dir, batch, flags, mode, files, inputs, plan } = job;
-  const measure = (arm) => [tool('batch'), ...flags, '--out=' + join(dir, arm)];
-  const neutral = measure('null').filter((arg) => !arg.startsWith('--salt='));
+  const measure = (arm, settings = flags) => {
+    const out = '--out=' + join(dir, arm);
+    if (!job.rev) return [tool('batch'), ...settings, out];
+    const filter = (arg) => arg.startsWith('--pick-filter=');
+    return [tool('ablate'), '--name=' + arm, '--rev=' + job.rev, ...settings.filter(filter),
+      ...(arm === 'after' ? ['--plan=' + plan] : []), '--', ...settings.filter((arg) => !filter(arg)), out];
+  };
+  const neutral = flags.filter((arg) => !arg.startsWith('--salt='));
   const report = (arm) => [tool('report'), '--batch=' + files[arm], '--out=' + join(dir, arm)];
   return [
     ...(!inputs.before ? [measure('before')] : []),
-    ...(!inputs.null ? [[...neutral, '--salt=' + (batch.salt === 1 ? 0 : 1)]] : []),
+    ...(!inputs.null ? [measure('null', [...neutral, '--salt=' + (batch.salt === 1 ? 0 : 1)])] : []),
     ...(!job.resume || !existsSync(join(dir, 'before/report.md')) ? [report('before')] : []),
     ...(!job.resume ? [[tool('tune'), 'propose', '--batch=' + files.before, '--out=' + plan, '--profile=' + batch.profile,
       ...(job.metric ? ['--metric=' + job.metric] : [])]] : []),

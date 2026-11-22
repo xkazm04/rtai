@@ -73,6 +73,22 @@ test('refuse stale tables and nulls with partial, extra or different seeds, prof
   assert.throws(() => checkInputs(tree, job), /before batch table hashes/);
 });
 
+test('a pinned night distinguishes revisions with identical table hashes', (t) => {
+  const { args, root, tree, batch, neutral, file } = fixture(t);
+  const rev = git(tree, 'rev-parse', 'HEAD').trim();
+  batch.args.pickFilter = neutral.args.pickFilter = 'stat_';
+  save(file('base'), batch);
+  const job = { ...parseNight(args, root), rev };
+  const after = recipe(job).find((cmd) => cmd[0].endsWith('/ablate.mjs'));
+  assert.ok(after.slice(0, after.indexOf('--')).includes('--pick-filter=stat_'));
+  assert.ok(!after.slice(after.indexOf('--')).includes('--pick-filter=stat_'));
+  assert.throws(() => checkInputs(tree, job), /before batch revision differs/);
+  save(file('base'), { ...batch, git: { sha: rev } });
+  assert.throws(() => checkInputs(tree, job), /null batch revision differs/);
+  save(file('neutral'), { ...neutral, git: { sha: rev } });
+  checkInputs(tree, job);
+});
+
 test('external after must reproduce the exact planned bytes before apply; sources remain read-only', (t) => {
   const { args, root, tree, batch, file, table } = fixture(t);
   save(file('after'), batch);

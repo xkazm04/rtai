@@ -1,6 +1,9 @@
 import { isAbsolute, win32 } from 'node:path';
 import { parseArgs as parseOptions } from 'node:util';
+import { ROOT, readJson } from '../lib/repo.mjs';
 import { parseArgs as parseBatch } from './commands.mjs';
+import { setArguments } from './plan_sets.mjs';
+import { commitRevision } from './revision.mjs';
 
 function parseEdit(arg) {
   const match = /^([^#]+)#(\/.*)=(true|false|-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?)$/.exec(arg);
@@ -16,13 +19,15 @@ function parseEdit(arg) {
   return { file: parts.join('/'), pointer, value };
 }
 
-export function parseAblation(argv) {
+export function parseAblation(argv, root = ROOT) {
   const split = argv.indexOf('--');
   if (split < 0) throw new Error('expected -- followed by batch arguments');
   const { values } = parseOptions({ args: argv.slice(0, split), options: {
-    name: { type: 'string' }, set: { type: 'string', multiple: true }, 'pick-filter': { type: 'string' }
+    name: { type: 'string' }, rev: { type: 'string' }, plan: { type: 'string' },
+    set: { type: 'string', multiple: true }, 'pick-filter': { type: 'string' }
   } });
   if (!/^[a-z0-9][a-z0-9_-]*$/.test(values.name ?? '')) throw new Error('expected --name=<id>');
+  const rev = commitRevision(root, values.rev);
   const batchArgs = argv.slice(split + 1);
   if (!batchArgs.some((a) => a.startsWith('--out=') || a === '--out')) throw new Error('a batch --out is required');
   if (batchArgs.some((a) => a.split('=')[0] === '--pick-filter')) throw new Error('place --pick-filter before --');
@@ -30,7 +35,8 @@ export function parseAblation(argv) {
   const batch = parseBatch(batchArgs);
   if (batch.from || batch.dryRun) throw new Error('ablation requires a live batch');
   const forwarded = batchArgs.filter((arg, i) => arg.split('=')[0] !== '--out' && batchArgs[i - 1] !== '--out');
-  return { name: values.name, edits: (values.set ?? []).map(parseEdit), pickFilter: batch.pickFilter ?? null,
+  const sets = values.plan === undefined ? [] : setArguments(readJson(values.plan)).map((arg) => arg.slice('--set='.length));
+  return { name: values.name, rev, edits: [...sets, ...(values.set ?? [])].map(parseEdit), pickFilter: batch.pickFilter ?? null,
     out: batch.out, batchArgs: [...forwarded, '--out=' + batch.out] };
 }
 

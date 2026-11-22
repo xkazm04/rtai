@@ -1,15 +1,17 @@
 #!/usr/bin/env node
-import { execFileSync, spawnSync } from 'node:child_process';
+import { spawnSync } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
-import { mkdirSync, readFileSync, realpathSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, realpathSync, statSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { isAbsolute, join, relative, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT, readJson } from '../lib/repo.mjs';
-import { assertSafe, ensureWorktree, removeWorktree } from '../mutate/worktree.mjs';
+import { assertSafe, copyRuntime, MARKER, removeWorktree } from '../mutate/worktree.mjs';
 import { seedImportCache } from './prepare_worktree.mjs';
 import { median } from '../perf/paired.mjs';
 import { editScalar, parseAblation } from './ablate_args.mjs';
+import { commitRevision } from './revision.mjs';
+import { git } from './tune_state.mjs';
 
 export function applyEdit(root, tree, edit) {
   const safe = assertSafe(tree, { root, requireMarker: true });
@@ -17,7 +19,7 @@ export function applyEdit(root, tree, edit) {
   const rel = relative(safe, target);
   if (isAbsolute(rel) || !rel || rel === '..' || rel.startsWith('..' + sep))
     throw new Error('edit escapes ablation worktree: ' + edit.file);
-  execFileSync('git', ['--literal-pathspecs', 'ls-files', '--error-unmatch', '--', rel], { cwd: tree, windowsHide: true });
+  git(tree, '--literal-pathspecs', 'ls-files', '--error-unmatch', '--', rel);
   const table = JSON.parse(readFileSync(target, 'utf8'));
   const before = editScalar(table, edit);
   writeFileSync(target, JSON.stringify(table, null, 2) + '\n');
@@ -33,12 +35,16 @@ export function summarize(batch) {
     wave_timeouts: batch.results.filter((r) => r.death?.by === 'timeout').length };
 }
 
-export function runAblation(options) {
-  const path = join(tmpdir(), 'gtai-ablate-' + randomUUID().slice(0, 12));
-  const wt = ensureWorktree({ root: ROOT, path });
+export function runAblation(options, { root = ROOT, path = join(tmpdir(), 'gtai-ablate-' + randomUUID().slice(0, 12)) } = {}) {
+  const head = commitRevision(root, options.rev) ?? git(root, 'rev-parse', 'HEAD').trim();
+  assertSafe(path, { root });
+  if (existsSync(path)) throw new Error('ablation worktree already exists: ' + path);
+  git(root, 'worktree', 'add', '--quiet', '--detach', path, head);
+  writeFileSync(join(path, MARKER), JSON.stringify({ root, head }), { flag: 'wx' });
   try {
-    seedImportCache(ROOT, path);
-    const edits = options.edits.map((edit) => applyEdit(ROOT, path, edit));
+    copyRuntime(root, path);
+    seedImportCache(root, path);
+    const edits = options.edits.map((edit) => applyEdit(root, path, edit));
     const manifest = join(options.out, 'ablation.json');
     const batchPath = join(options.out, 'batch.json');
     const previous = statSync(batchPath, { throwIfNoEntry: false, bigint: true });
@@ -49,15 +55,14 @@ export function runAblation(options) {
     const fresh = current && (!previous || previous.ino !== current.ino || previous.mtimeNs !== current.mtimeNs);
     const batch = fresh ? readJson(batchPath) : null;
     mkdirSync(options.out, { recursive: true });
-    const receipt = { schema: 'gtai.gauntlet-ablation/1', name: options.name, head: wt.head,
+    const receipt = { schema: 'gtai.gauntlet-ablation/1', name: options.name, head,
       edits, pick_filter: options.pickFilter, batch_args: options.batchArgs, batch_exit: child.status,
       summary: batch ? summarize(batch) : null };
     writeFileSync(manifest, JSON.stringify(receipt, null, 2) + '\n');
     if (child.status !== 0 || !batch) throw new Error('batch failed: ' + (child.signal ?? child.status));
     return receipt;
   } finally {
-    wt.release();
-    removeWorktree({ root: ROOT, path });
+    removeWorktree({ root, path });
   }
 }
 

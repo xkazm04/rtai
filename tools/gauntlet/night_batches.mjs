@@ -57,18 +57,28 @@ function checkTables(batch, expected, role) {
     throw new Error(role + ' batch table hashes do not match the tune worktree');
 }
 
+function inputBatch(job, arm) {
+  const batch = loadBatch(job.files[arm]);
+  if (job.rev && batch.git?.sha !== job.rev) throw new Error(arm + ' batch revision differs from --rev');
+  return batch;
+}
+
+export function checkMeasuredTables(tree, job, arm) {
+  checkTables(inputBatch(job, arm), tableHashes(tree), arm);
+}
+
 export function checkInputs(tree, job) {
   if (!job.inputs.before) return;
-  const before = loadBatch(job.files.before);
+  const before = inputBatch(job, 'before');
   checkRoster(before, job.batch);
   // A resumed plan can already be applied. Its exact inverse reconstructs the before hashes.
   if (!job.resume) checkTables(before, tableHashes(tree), 'before');
   if (job.inputs.null) {
-    const neutral = loadBatch(job.files.null);
+    const neutral = inputBatch(job, 'null');
     checkPair(before, neutral, true);
     checkTables(neutral, before.tables, 'null');
   }
-  if (job.inputs.after) checkPair(before, loadBatch(job.files.after), false);
+  if (job.inputs.after) checkPair(before, inputBatch(job, 'after'), false);
 }
 
 // Validate external measurements before applying a single edit, including when resuming after apply.
@@ -88,7 +98,7 @@ export function checkAfterPlan(tree, job) {
     else for (const m of change.members ?? [change]) active.add(m.id);
   }
   if (reverted) verifyRevertedLedger(job, plan);
-  const before = loadBatch(job.files.before), after = loadBatch(job.files.after);
+  const before = inputBatch(job, 'before'), after = inputBatch(job, 'after');
   checkRoster(before, job.batch);
   checkPair(before, after, false);
   checkTables(before, tableHashes(tree, edits.filter((m) => active.has(m.id)), true), 'before');
