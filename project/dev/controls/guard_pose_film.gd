@@ -2,9 +2,10 @@ extends Node
 ## One take for comparison stills and the film. The same input goes through StagePilot in
 ## both modes. The shots start after the full turn, so none of the held stills has a flash.
 
-const KNOWN_FLAGS: PackedStringArray = ["--out", "--ppm", "--view", "--movie"]
-const SIZE: Vector2i = Vector2i(640, 360)
-const END: int = 12 * SimClock.TICK_RATE
+const KNOWN_FLAGS: PackedStringArray = [
+	"--out", "--ppm", "--view", "--movie", "--size", "--seconds"
+]
+const DEFAULT_SECONDS: int = 12
 const RAISE: int = 60
 const TURN: int = 120
 const OCTANT_TICKS: int = 30
@@ -17,6 +18,8 @@ var tick: int = 0
 var broken_at: int = -1
 var directory: String
 var movie: bool
+var capture_size: Vector2i = Vector2i(640, 360)
+var end_tick: int = DEFAULT_SECONDS * SimClock.TICK_RATE
 var ppm: int
 var capturing: bool = false
 var tape: StreamPeerBuffer = StreamPeerBuffer.new()
@@ -29,13 +32,15 @@ func _ready() -> void:
 	directory = args.text("--out")
 	ppm = int(args.number("--ppm", 32))
 	movie = args.has("--movie")
+	if movie and not _movie_settings(args):
+		return
 	if not directory.is_absolute_path() or DirAccess.make_dir_recursive_absolute(directory) != OK:
 		_fail("Expected a writable absolute --out directory")
 		return
 	LaunchArgs.parse(["--controls=wheel"])
 	ViewMode.select(args.text("--view", "tilt70"))
 	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
-	get_window().size = SIZE
+	get_window().size = capture_size
 	dock.build("pose")
 	view.stage_view = ArenaFloorView.new()
 	view.px_per_m = ppm
@@ -53,6 +58,29 @@ func _ready() -> void:
 			if item is PlayerGuardView:
 				(item as CanvasItem).self_modulate.a = 0.0
 	process_priority = -1000
+
+
+func _movie_settings(args: ArenaArgs) -> bool:
+	var dimensions: PackedStringArray = args.text("--size", "640x360").split("x")
+	if (
+		dimensions.size() != 2
+		or not dimensions[0].is_valid_int()
+		or not dimensions[1].is_valid_int()
+	):
+		_fail("Expected --size=<width>x<height>")
+		return false
+	capture_size = Vector2i(dimensions[0].to_int(), dimensions[1].to_int())
+	var seconds: String = args.text("--seconds", str(DEFAULT_SECONDS))
+	if (
+		capture_size.x <= 0
+		or capture_size.y <= 0
+		or not seconds.is_valid_int()
+		or seconds.to_int() <= 0
+	):
+		_fail("Expected positive movie dimensions and seconds")
+		return false
+	end_tick = seconds.to_int() * SimClock.TICK_RATE
+	return true
 
 
 func _process(_delta: float) -> void:
@@ -80,9 +108,12 @@ func _process(_delta: float) -> void:
 			_fail("Could not save frame at tick %d" % tick)
 			return
 	capturing = false
-	if tick >= END:
+	if tick >= end_tick:
 		set_process(false)
-		if guard.breaks != 1 or guard.deflects != rounds:
+		if (
+			tick >= DEFAULT_SECONDS * SimClock.TICK_RATE
+			and (guard.breaks != 1 or guard.deflects != rounds)
+		):
 			_fail("Expected one break after %d deflected rounds" % rounds)
 			return
 		Log.info(
@@ -113,7 +144,7 @@ func _still_name() -> String:
 
 func _capture(still: String) -> bool:
 	var img: Image = get_viewport().get_texture().get_image()
-	if img == null or img.get_size() != SIZE:
+	if img == null or img.get_size() != capture_size:
 		return false
 	if not still.is_empty() and img.save_png(directory.path_join(still + ".png")) != OK:
 		return false

@@ -191,3 +191,31 @@ $cardDir=(New-Item -ItemType Directory -Force build/b5-films/card).FullName
 & $env:GODOT_BIN --path project --rendering-driver d3d12 --position 0,1440 --resolution 1280x800 --fixed-fps 60 --write-movie "$cardDir/wheel.png" --quit-after 5 res://boot/quest1.tscn -- --view=tilt70
 Copy-Item "$cardDir/wheel00000004.png" "$masters/card_wheel.png"
 ```
+
+## Guard film (1080p)
+
+The gameplay take is `guard_pose.mp4` at 32 px/m. The close-up is `guard_pose_64.mp4` at 64 px/m. From the controls worktree, use the lane environment above and a separate PNG sequence for each take.
+
+```powershell
+$b8 = Join-Path (Get-Location) 'build/dev/b8'
+& $env:GODOT_BIN --path project --windowed --rendering-driver d3d12 --position 0,1440 --resolution 1920x1080 --audio-driver Dummy --fixed-fps 60 res://dev/controls/guard_pose_film.tscn -- "--out=$b8/32" --ppm=32 --view=tilt70 --movie --size=1920x1080 --seconds=20
+& $env:GODOT_BIN --path project --windowed --rendering-driver d3d12 --position 0,1440 --resolution 1920x1080 --audio-driver Dummy --fixed-fps 60 res://dev/controls/guard_pose_film.tscn -- "--out=$b8/64" --ppm=64 --view=tilt70 --movie --size=1920x1080 --seconds=20
+foreach ($ppm in 32,64) {
+  $film = if ($ppm -eq 32) { 'guard_pose' } else { 'guard_pose_64' }
+  ffmpeg -framerate 60 -start_number 1 -i "$b8/$ppm/t%04d.png" -frames:v 1200 -c:v libx264 -threads 4 -preset fast -crf 16 -pix_fmt yuv420p -movflags +faststart "$b8/$film.mp4"
+  ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height,pix_fmt,avg_frame_rate,duration,nb_frames -of compact=p=0 "$b8/$film.mp4"
+}
+```
+
+```text
+guard_pose.mp4    codec_name=h264|width=1920|height=1080|pix_fmt=yuv420p|avg_frame_rate=60/1|duration=20.000000|nb_frames=1200
+guard_pose_64.mp4 codec_name=h264|width=1920|height=1080|pix_fmt=yuv420p|avg_frame_rate=60/1|duration=20.000000|nb_frames=1200
+```
+
+| Beat | Simulation tick | MP4 frame (zero-based) |
+|---|---:|---:|
+| Guard starts to rise | 60 | 59 |
+| Guard held, arms crossed at the start of the eight-facing turn | 120 | 119 |
+| Ninth deflection breaks the meter and Rivet staggers | 646 | 645 |
+
+The guard drops at tick 420 and rises again at 480. The volley starts at 510. After the break, Rivet recovers to standing with guard down through tick 1200. I inspected all six decoded stills in `build/dev/b8/`. Rivet stays centered in both takes, with the guard meter below him and no dialogue covering the action. Both captures exited 0 with the same stage tape. Godot logged a ghost-sheet warning during setup and resource leaks at shutdown.
