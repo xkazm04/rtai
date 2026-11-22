@@ -1,4 +1,42 @@
 {
+  "$defs": {
+    "family": {
+      "minLength": 1,
+      "pattern": "^[a-z][a-z0-9_-]*$",
+      "type": "string"
+    },
+    "palm_gaits": {
+      "additionalProperties": false,
+      "properties": {
+        "run": {
+          "$ref": "#/$defs/palm_rows"
+        },
+        "walk": {
+          "$ref": "#/$defs/palm_rows"
+        }
+      },
+      "required": [
+        "run",
+        "walk"
+      ],
+      "type": "object"
+    },
+    "palm_rows": {
+      "items": {
+        "items": {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "maxItems": 16,
+        "minItems": 16,
+        "type": "array"
+      },
+      "maxItems": 8,
+      "minItems": 8,
+      "type": "array"
+    }
+  },
   "$id": "gtai.rivet-motion/1",
   "additionalProperties": false,
   "properties": {
@@ -267,6 +305,84 @@
         "top_scale"
       ],
       "type": "object"
+    },
+    "walk_grid": {
+      "additionalProperties": false,
+      "properties": {
+        "borrowed_grid": {
+          "const": "bare_claw"
+        },
+        "by_grip": {
+          "additionalProperties": false,
+          "properties": {
+            "backpack_hose": {
+              "$ref": "#/$defs/family"
+            },
+            "heavy_two_hand": {
+              "$ref": "#/$defs/family"
+            },
+            "hip_belt": {
+              "$ref": "#/$defs/family"
+            },
+            "one_hand": {
+              "$ref": "#/$defs/family"
+            },
+            "shoulder": {
+              "$ref": "#/$defs/family"
+            },
+            "thrown": {
+              "$ref": "#/$defs/family"
+            },
+            "two_hand_long": {
+              "$ref": "#/$defs/family"
+            }
+          },
+          "required": [
+            "backpack_hose",
+            "heavy_two_hand",
+            "hip_belt",
+            "one_hand",
+            "shoulder",
+            "thrown",
+            "two_hand_long"
+          ],
+          "type": "object"
+        },
+        "by_weapon": {
+          "additionalProperties": {
+            "$ref": "#/$defs/family"
+          },
+          "type": "object"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "palm_percent": {
+          "additionalProperties": false,
+          "properties": {
+            "p55": {
+              "$ref": "#/$defs/palm_gaits"
+            },
+            "p70": {
+              "$ref": "#/$defs/palm_gaits"
+            }
+          },
+          "required": [
+            "p55",
+            "p70"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "borrowed_grid",
+        "by_grip",
+        "by_weapon",
+        "doc",
+        "palm_percent"
+      ],
+      "type": "object"
     }
   },
   "required": [
@@ -275,7 +391,8 @@
     "roll",
     "schema",
     "sprint",
-    "vault"
+    "vault",
+    "walk_grid"
   ],
   "type": "object"
 }
