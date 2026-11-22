@@ -9,29 +9,37 @@ script = ExtResource("1")
 layer = 100
 
 [node name="Plate" type="ColorRect" parent="Readout"]
-offset_left = 48.0
-offset_top = 42.0
-offset_right = 433.0
-offset_bottom = 195.0
+offset_left = 52.0
+offset_top = 63.0
+offset_right = 421.0
+offset_bottom = 112.0
 mouse_filter = 2
 color = Color(0.086, 0.075, 0.106, 0.96)
 
 [node name="Heading" type="Label" parent="Readout/Plate"]
 unique_name_in_owner = true
 offset_left = 22.0
-offset_top = 14.0
+offset_top = 8.0
 theme_override_colors/font_color = Color(1, 0.71, 0.44, 1)
 theme_override_font_sizes/font_size = 19
 
-[node name="Health" type="Label" parent="Readout/Plate"]
+[node name="Result" type="ColorRect" parent="Readout"]
+offset_left = 52.0
+offset_top = 176.0
+offset_right = 421.0
+offset_bottom = 272.0
+mouse_filter = 2
+color = Color(0.086, 0.075, 0.106, 0.96)
+
+[node name="Health" type="Label" parent="Readout/Result"]
 unique_name_in_owner = true
 offset_left = 21.0
-offset_top = 44.0
+offset_top = 8.0
 theme_override_font_sizes/font_size = 31
 
-[node name="Impact" type="Label" parent="Readout/Plate"]
+[node name="Impact" type="Label" parent="Readout/Result"]
 unique_name_in_owner = true
 offset_left = 22.0
-offset_top = 98.0
+offset_top = 52.0
 theme_override_colors/font_color = Color(0.94, 0.91, 0.85, 1)
 theme_override_font_sizes/font_size = 23

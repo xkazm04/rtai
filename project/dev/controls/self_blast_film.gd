@@ -1,12 +1,12 @@
 extends Node
-## Two matched 8 s takes. Walk across the muzzle line and fire past the end of the wall.
-## The rocket hits the same range dummy in both takes. Rivet keeps walking during its flight.
+## A live range dummy across a firing port. The same sidestep carries Rivet behind concrete
+## while the rocket is in flight. Both takes use the same input tape and the same target.
 ## Run at --fixed-fps 60 with -- --beat=hit|wall --out=<absolute frame directory>.
 
-const KNOWN_FLAGS: PackedStringArray = ["--beat", "--out"]
+const KNOWN_FLAGS: PackedStringArray = ["--beat", "--out", "--ppm", "--still-only", "--still-age"]
 const RUN_TICKS: int = 480
-const START: Vector2 = Vector2(-1.2, -7.5)
-const TARGET: Vector2 = Vector2(1.9, -0.65)
+const START: Vector2 = Vector2(-4.5, 1.05)
+const TARGET: Vector2 = Vector2(0.0, -1.32)
 const RESOLUTION: Vector2i = Vector2i(1920, 1080)
 
 var stage: ArenaStage
@@ -20,6 +20,9 @@ var hp_before: float
 var hp_lost: float
 var shielded: bool
 var in_range: bool
+var ppm: float
+var still_only: bool
+var still_age: int
 var out_dir: String
 var capturing: bool = false
 @onready var heading: Label = %Heading
@@ -34,6 +37,10 @@ func _ready() -> void:
 		_fail("Use --beat=hit or --beat=wall.")
 		return
 	wall = beat == "wall"
+	ppm = args.number("--ppm", 32.0)
+	still_only = args.has("--still-only")
+	# The fireball contracts before these frames. The dummy and Rivet read through the ring.
+	still_age = int(args.number("--still-age", 24 if wall else 23))
 	out_dir = args.text("--out")
 	if not out_dir.is_empty():
 		if not out_dir.is_absolute_path() or DirAccess.make_dir_recursive_absolute(out_dir) != OK:
@@ -45,7 +52,7 @@ func _ready() -> void:
 	_build_arena()
 	if DisplayServer.get_name() != "headless":
 		_build_view()
-	heading.text = tr("Rocket launcher · High wall") if wall else tr("Rocket launcher · Open floor")
+	heading.text = tr("Rocket launcher / High wall") if wall else tr("Rocket launcher / Open floor")
 	process_priority = -1000
 
 
@@ -62,10 +69,11 @@ func _build_arena() -> void:
 	dummy.kind = "target"
 	dummy.at = TARGET
 	station.spawns.append(dummy)
-	for at: Vector2 in [Vector2(-8, -4), Vector2(7, -4), Vector2(-8, 5), Vector2(7, 5)]:
+	for at: Vector2 in [Vector2(-6, -4), Vector2(6, -4), Vector2(-6, 4), Vector2(6, 4)]:
 		_prop(station, "cone", at, Vector2.ONE * 0.7)
 	if wall:
-		_prop(station, "wall_high", Vector2(-0.2, 2.72), Vector2(0.4, 6.0))
+		_prop(station, "wall_high", Vector2(-4.17, -0.34), Vector2(8, 0.36))
+		_prop(station, "wall_high", Vector2(4.17, -0.34), Vector2(8, 0.36))
 	var stations: ArenaStations = ArenaStations.new()
 	stations.stations.append(station)
 	ctx = World.build_context(Events, Data, 7)
@@ -89,9 +97,9 @@ func _prop(station: ArenaStation, kind: String, at: Vector2, size_m: Vector2) ->
 
 func _build_view() -> void:
 	var view: CollectCallView = CollectCallView.new()
-	view.stage_view = ArenaFloorView.new()
-	view.px_per_m = 32
-	view.focus = Vector2(0, -1)
+	view.stage_view = preload("self_blast_range.gd").new()
+	view.px_per_m = ppm
+	view.focus = Vector2(0, 0.2)
 	view.bind(stage, CollectCallWorld.new(stage), null)
 	add_child(view)
 	view.hud_view.hide()
@@ -99,7 +107,10 @@ func _build_view() -> void:
 	add_child(cast)
 	@warning_ignore("return_value_discarded")
 	cast.attach(stage, view, ctx)
+	cast.ghost_view.hud.hide()
+	cast.hidden[stage.targets.targets[0].fighter.id] = true
 	PropOcclusion.for_view(view)
+	add_child(preload("self_blast_status.gd").new(stage))
 
 
 func _process(_delta: float) -> void:
@@ -110,30 +121,25 @@ func _process(_delta: float) -> void:
 	if tick == RUN_TICKS:
 		set_process(false)
 	var r: Fighter = stage.arena.rivet
-	var aim: Vector2 = TARGET - r.pos
-	var input: TickInput = TickInput.new(
-		PlayerCommand.pack_aim(aim.normalized(), actions, aim.length())
-	)
-	if tick == 28:
-		input.buttons |= 1 << actions.bit(&"weapon_slot_3")
-	if tick >= 180 and r.pos.y < 1.15:
-		input.move_y = TickInput.AXIS_MAX
-	if fire_tick < 0 and r.pos.y >= -0.7:
-		input.buttons |= 1 << actions.bit(&"fire")
-		fire_tick = tick
-		hp_before = r.hp
-	stage.step(tick, input)
+	stage.step(tick, _shot_input(r))
 	var areas: FightAreas = stage.arena.areas
 	if impact_tick < 0 and areas != null and not areas.blasts.is_empty():
 		_measure(areas.blasts[-1])
-	health.text = tr("Health   %.2f / %.0f") % [r.hp, r.max_hp]
-	if not out_dir.is_empty():
+	health.text = (
+		tr("Target   %.1f m") % r.pos.distance_to(TARGET)
+		if impact_tick < 0
+		else tr("%.1f → %.1f HP") % [hp_before, hp_before - hp_lost]
+	)
+	if (
+		not out_dir.is_empty()
+		and (not still_only or (impact_tick >= 0 and tick == impact_tick + still_age))
+	):
 		await RenderingServer.frame_post_draw
 		if not _save_frame():
 			_fail("Could not capture the full 1920 by 1080 viewport.")
 			return
 	capturing = false
-	if tick >= RUN_TICKS:
+	if tick >= RUN_TICKS or (still_only and impact_tick >= 0 and tick == impact_tick + still_age):
 		var hit_target: bool = stage.targets.total_hits() == 1 and stage.shots_fired == 1
 		var correct: bool = hp_lost == 0.0 if wall else hp_lost > 0.0
 		if not in_range or not hit_target or shielded != wall or not correct:
@@ -142,14 +148,30 @@ func _process(_delta: float) -> void:
 			get_tree().quit()
 
 
+func _shot_input(r: Fighter) -> TickInput:
+	var aim: Vector2 = TARGET - r.pos
+	var input: TickInput = TickInput.new(
+		PlayerCommand.pack_aim(aim.normalized(), actions, aim.length())
+	)
+	if tick == 28:
+		input.buttons |= 1 << actions.bit(&"weapon_slot_3")
+	if tick >= 194 and r.pos.x < 1.05:
+		input.move_x = TickInput.AXIS_MAX
+	if fire_tick < 0 and r.pos.x >= -0.12:
+		input.buttons |= 1 << actions.bit(&"fire")
+		fire_tick = tick
+		hp_before = r.hp
+	return input
+
+
 func _save_frame() -> bool:
 	var img: Image = get_viewport().get_texture().get_image()
 	if img == null or img.get_size() != RESOLUTION:
 		return false
-	if impact_tick >= 0 and tick == impact_tick + 4:
+	if impact_tick >= 0 and tick == impact_tick + still_age:
 		if img.save_png(out_dir.path_join("impact.png")) != OK:
 			return false
-	return img.save_jpg(out_dir.path_join("frame-%04d.jpg" % tick), 0.97) == OK
+	return still_only or img.save_jpg(out_dir.path_join("frame-%04d.jpg" % tick), 0.97) == OK
 
 
 func _measure(blast: Vector3) -> void:
