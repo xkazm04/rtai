@@ -1,6 +1,6 @@
 # Brief 03d `grids` (resume): the electro baton's tone and run row 3 (lane motion, n24)
 
-Hard stop: HARDSTOP wall clock (check `date`). Commit deadline: COMMITBY. Whatever is not committed by then, describe in
+Hard stop: 23:58 wall clock (check `date`). Commit deadline: 23:50. Whatever is not committed by then, describe in
 your final report. Fix lint and format findings in your own edit and go on. No amend, no rebase, no `git stash`, no
 `git add -A/./-u`, no `commit -a`, no reset --hard, never push. Stage per path. Everything from briefs 03-03c still binds
 (pipeline, accept rule, allowlist, forbidden list, environment, the quick-gate note): same session, continued.
@@ -23,4 +23,4 @@ lighter than the rows beside them.
 2. Fix run row 3's scale pulse (re-pack with a per-row fixed scale from the row's tallest column, as the gloria script
    did), re-measure its RUN_ROW_K.
 3. Re-render `grid_electro_baton_<32|64>.png` at the same ticks; update `grid_electro_baton.md` (tone table before/after).
-One commit. Then, if time is left, go back to where 03c stopped.
+One commit. Then, only if 35 minutes or more remain before the hard stop: machine_pistol p70 as in 03c (committed by 23:50, else left untracked and described). No other new work: the lane freezes new code at 00:00.
