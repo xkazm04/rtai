@@ -1,0 +1,69 @@
+{
+  "schema": "gtai.gauntlet-ablation/1",
+  "name": "stack-average",
+  "head": "548989d7e2334b7486efb6e14a5cca2d9a3caec8",
+  "edits": [
+    {
+      "file": "project/data/tables/gauntlet.json",
+      "pointer": "/rivet/repair_per_s",
+      "value": 8,
+      "before": 10
+    },
+    {
+      "file": "project/data/tables/gauntlet.json",
+      "pointer": "/rivet/repair_delay_s",
+      "value": 3.75,
+      "before": 3
+    },
+    {
+      "file": "project/data/tables/gauntlet.json",
+      "pointer": "/budget/base",
+      "value": 225,
+      "before": 180
+    },
+    {
+      "file": "project/data/tables/gauntlet.json",
+      "pointer": "/budget/per_wave",
+      "value": 20,
+      "before": 16
+    },
+    {
+      "file": "project/data/tables/gauntlet.json",
+      "pointer": "/max_alive",
+      "value": 50,
+      "before": 40
+    },
+    {
+      "file": "project/data/tables/gauntlet.json",
+      "pointer": "/cost/patrol_cop",
+      "value": 12,
+      "before": 15
+    },
+    {
+      "file": "project/data/tables/gauntlet.json",
+      "pointer": "/cost/war_machine",
+      "value": 160,
+      "before": 200
+    }
+  ],
+  "pick_filter": null,
+  "batch_args": [
+    "--profile=average",
+    "--pick=greedy",
+    "--controls=wheel",
+    "--seeds=6",
+    "--jobs=1",
+    "--waves=40",
+    "--out=C:\\Users\\kazda\\kiro\\gtai-wt\\n23-loop\\evidence\\n23-loop\\stack-clamp\\average"
+  ],
+  "batch_exit": 0,
+  "summary": {
+    "attempted": 6,
+    "accepted": 6,
+    "deaths": 1,
+    "median_wave_reached": 40,
+    "median_death_wave": 22,
+    "capped_alive": 0,
+    "wave_timeouts": 0
+  }
+}
