@@ -11,6 +11,7 @@ import { enemyWeapons } from './enemy_weapons.mjs';
 import { analyze } from './analysis.mjs';
 import { BATCH_SCHEMA, validateRun } from './contract.mjs';
 import { render } from './render.mjs';
+import { statCards } from './survival.mjs';
 
 export function loadBatch(path) {
   const doc = readJson(path);
@@ -37,6 +38,17 @@ export function loadBatch(path) {
     const bytes = readFileSync(join(PROJECT, 'data', 'tables', 'enemies.json'));
     if (createHash('sha256').update(bytes).digest('hex') === doc.tables['enemies.json'])
       doc.enemy_weapons = enemyWeapons(JSON.parse(bytes));
+  }
+  if (!doc.survival_tuning) {
+    doc.survival_tuning = {};
+    for (const file of ['combat.json', 'gauntlet_bonuses.json']) {
+      if (!doc.tables?.[file]) continue;
+      const bytes = readFileSync(join(PROJECT, 'data', 'tables', file));
+      if (createHash('sha256').update(bytes).digest('hex') !== doc.tables[file]) continue;
+      const table = JSON.parse(bytes);
+      if (file === 'combat.json') doc.survival_tuning.repair_per_s = table.rivet.repair_per_s;
+      else doc.survival_tuning.stat_cards = statCards(table);
+    }
   }
   return doc;
 }

@@ -1,4 +1,5 @@
 import { TARGET_S } from './analysis.mjs';
+import { survivalSection } from './survival.mjs';
 
 export const missing = 'not measured';
 export function fmt(n) {
@@ -87,7 +88,7 @@ export function sections(batch, report, baseline) {
     empty: 'No deepest run had a measured signature that differed within its profile.'
   };
   const failed = batch.runs.filter((r) => !r.ok);
-  return [timing, deaths, timeouts, enemies, ...effects, telemetry, winners, ...(failed.length ? [{
+  return [timing, deaths, timeouts, survivalSection(batch, fmt), enemies, ...effects, telemetry, winners, ...(failed.length ? [{
     title: 'Excluded runs', note: 'These inputs are retained in the batch manifest.',
     columns: ['File', 'Profile', 'Seed', 'Reason'],
     rows: failed.map((r) => [r.file, r.profile, r.seed ?? 'unknown', r.reason ?? 'run failed'])
