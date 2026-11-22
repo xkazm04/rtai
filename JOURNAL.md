@@ -31,3 +31,7 @@
   `GauntletStreet.wave_timeout_ticks(wave)`, stacked-wave test (wave 5 90 s, stacked wave 6 45 s), `--wave-timeout`
   overrides both. Read: accepted, with one fix sent forward: a late value of 0 means "no timer at all" in Astra's
   build, my brief meant "late rule off, 90 s": task 0 of brief 02, together with the three missing decisions lines.
+- 18:14 read ghost's `NEED pressure` (n23-moves JOURNAL 17:35): the bot's `power_hauler` transform presses go dead with
+  `transform_unlocked` false; the bot must hold/release `ghost_deploy`. Served as task 2b of brief 04 (after the
+  n24-ghost merge). Without it the post-ghost-merge batches measure a bot with no ghost powers: do not merge
+  n24-ghost before brief 04 can run.
