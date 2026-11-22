@@ -17,7 +17,7 @@ export { parseArgs, plan, validateRun };
 const portable = (out, path) => relative(out, path).split(sep).join('/');
 const sum = (values) => values.reduce((total, n) => total + n, 0);
 
-function tableSnapshot() {
+function tableSnapshot(runner) {
   const tables = {};
   const weapon_refs = {};
   const survival_tuning = {};
@@ -29,6 +29,10 @@ function tableSnapshot() {
     const bytes = readFileSync(path);
     if (name === 'enemies') enemy_weapons = enemyWeapons(JSON.parse(bytes));
     if (name === 'combat') survival_tuning.repair_per_s = JSON.parse(bytes).rivet.repair_per_s;
+    if (name === 'gauntlet' && runner === 'gauntlet') {
+      const repair = JSON.parse(bytes).rivet;
+      if (repair) survival_tuning.repair_per_s = repair.repair_per_s;
+    }
     tables[file] = createHash('sha256').update(bytes).digest('hex');
     if (name === 'gauntlet_bonuses') {
       const bonuses = JSON.parse(bytes);
@@ -134,7 +138,7 @@ export async function batch(args, { launch = devRun, out = console.log, err = co
   }
   const created = new Date().toISOString();
   const revision = { sha: git('rev-parse', 'HEAD'), branch: git('branch', '--show-current'), dirty: dirtyLines().length > 0 };
-  const snapshot = tableSnapshot();
+  const snapshot = tableSnapshot(args.runner);
   const start = performance.now();
   const entries = args.from ? offline(args) : await live(args, launch);
   const wall_s = args.from ? null : (performance.now() - start) / 1000;

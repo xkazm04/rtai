@@ -41,13 +41,15 @@ export function loadBatch(path) {
   }
   if (!doc.survival_tuning) {
     doc.survival_tuning = {};
-    for (const file of ['combat.json', 'gauntlet_bonuses.json']) {
+    for (const file of ['combat.json', 'gauntlet.json', 'gauntlet_bonuses.json']) {
       if (!doc.tables?.[file]) continue;
       const bytes = readFileSync(join(PROJECT, 'data', 'tables', file));
       if (createHash('sha256').update(bytes).digest('hex') !== doc.tables[file]) continue;
       const table = JSON.parse(bytes);
       if (file === 'combat.json') doc.survival_tuning.repair_per_s = table.rivet.repair_per_s;
-      else doc.survival_tuning.stat_cards = statCards(table);
+      if (file === 'gauntlet.json' && doc.args.runner === 'gauntlet' && table.rivet)
+        doc.survival_tuning.repair_per_s = table.rivet.repair_per_s;
+      if (file === 'gauntlet_bonuses.json') doc.survival_tuning.stat_cards = statCards(table);
     }
   }
   return doc;
