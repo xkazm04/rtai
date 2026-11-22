@@ -705,3 +705,24 @@ test('changing the verdict threshold uses the same mean and interval on skewed p
   assert.deepEqual(strict.ci95, point.ci95);
   assert.deepEqual(strict.verdicts, point.verdicts);
 });
+
+test('the catalog bounds every numeric combat move and blast self damage', () => {
+  const combat = readJson(join(ROOT, 'project/data/tables/combat.json'));
+  const { entries } = inventory(ROOT);
+  function verify(value, id) {
+    if (typeof value === 'object') {
+      for (const [key, member] of Object.entries(value)) verify(member, id + '.' + key);
+    } else if (typeof value === 'number') {
+      const entry = entries.get(id);
+      assert.ok(entry, id);
+      assert.equal(entry.knob.pointer, '/' + id.replaceAll('.', '/'));
+      assert.equal(entry.value, value);
+      assert.ok(entry.knob.min <= value && value <= entry.knob.max, id);
+      assert.equal(entry.knob.kind, id.endsWith('.hops') ? 'int' : 'float');
+    } else {
+      assert.equal(entries.has(id), false, id);
+    }
+  }
+  verify(combat.moves, 'moves');
+  verify(combat.blast.self_k, 'blast.self_k');
+});

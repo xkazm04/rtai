@@ -72,5 +72,17 @@
   {"id": "cost.patrol_cop", "file": "project/data/tables/gauntlet.json", "pointer": "/cost/patrol_cop", "kind": "int", "min": 1, "max": 1000, "scale": "budget.unit"},
   {"id": "cost.war_machine", "file": "project/data/tables/gauntlet.json", "pointer": "/cost/war_machine", "kind": "int", "min": 1, "max": 1000, "scale": "budget.unit"},
   {"id": "rivet.repair_per_s", "file": "project/data/tables/gauntlet.json", "pointer": "/rivet/repair_per_s", "kind": "float", "min": 0, "max": 1000, "direction": "down"},
-  {"id": "rivet.repair_delay_s", "file": "project/data/tables/gauntlet.json", "pointer": "/rivet/repair_delay_s", "kind": "float", "min": 0, "max": 1000, "direction": "up"}
+  {"id": "rivet.repair_delay_s", "file": "project/data/tables/gauntlet.json", "pointer": "/rivet/repair_delay_s", "kind": "float", "min": 0, "max": 1000, "direction": "up"},
+  {"id": "blast.self_k", "file": "project/data/tables/combat.json", "pointer": "/blast/self_k", "kind": "float", "min": 0, "max": 3},
+  {"id": "moves.ohm_short_circuit.boss_stun_s", "file": "project/data/tables/combat.json", "pointer": "/moves/ohm_short_circuit/boss_stun_s", "kind": "float", "min": 0.05, "max": 5},
+  {"id": "moves.ohm_short_circuit.immune_s", "file": "project/data/tables/combat.json", "pointer": "/moves/ohm_short_circuit/immune_s", "kind": "float", "min": 0, "max": 30},
+  {"id": "moves.ohm_short_circuit.stun_s", "file": "project/data/tables/combat.json", "pointer": "/moves/ohm_short_circuit/stun_s", "kind": "float", "min": 0.05, "max": 10},
+  {"id": "moves.tonnage_armour_crack.open_front_k", "file": "project/data/tables/combat.json", "pointer": "/moves/tonnage_armour_crack/open_front_k", "kind": "float", "min": 0, "max": 3},
+  {"id": "moves.tonnage_armour_crack.open_s", "file": "project/data/tables/combat.json", "pointer": "/moves/tonnage_armour_crack/open_s", "kind": "float", "min": 0.05, "max": 15},
+  {"id": "moves.overkill_carry.arc_s", "file": "project/data/tables/combat.json", "pointer": "/moves/overkill_carry/arc_s", "kind": "float", "min": 0.05, "max": 3},
+  {"id": "moves.overkill_carry.carry_k", "file": "project/data/tables/combat.json", "pointer": "/moves/overkill_carry/carry_k", "kind": "float", "min": 0.05, "max": 3},
+  {"id": "moves.overkill_carry.hops", "file": "project/data/tables/combat.json", "pointer": "/moves/overkill_carry/hops", "kind": "int", "min": 1, "max": 8},
+  {"id": "moves.overkill_carry.radius_m", "file": "project/data/tables/combat.json", "pointer": "/moves/overkill_carry/radius_m", "kind": "float", "min": 0.1, "max": 15},
+  {"id": "moves.overkill_carry.rank_2.hops", "file": "project/data/tables/combat.json", "pointer": "/moves/overkill_carry/rank_2/hops", "kind": "int", "min": 1, "max": 8},
+  {"id": "moves.overkill_carry.rank_2.radius_m", "file": "project/data/tables/combat.json", "pointer": "/moves/overkill_carry/rank_2/radius_m", "kind": "float", "min": 0.1, "max": 20}
 ]
