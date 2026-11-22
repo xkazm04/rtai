@@ -1,4 +1,62 @@
 {
+  "arrival": {
+    "checkpoint": "dale_patrol",
+    "dale_first_gap_m": 3.2,
+    "dale_last_gap_m": 1.35,
+    "fan_line": "b1_l03_cop_gary",
+    "first_warden_at": [
+      23.2,
+      19.4
+    ],
+    "formations": [
+      {
+        "first": [
+          26,
+          22
+        ],
+        "id": "winnick",
+        "step": [
+          0,
+          0
+        ]
+      },
+      {
+        "first": [
+          26,
+          23.8
+        ],
+        "id": "frightened_patrol",
+        "step": [
+          0.95,
+          0.46
+        ]
+      },
+      {
+        "first": [
+          20,
+          21
+        ],
+        "id": "catchers",
+        "step": [
+          2.7,
+          -0.3
+        ]
+      }
+    ],
+    "gate_exit_m": 4.5,
+    "max_melee": 2,
+    "max_shooters": 2,
+    "panic_morale": 0.08,
+    "panic_s": 1.7,
+    "panic_spread_deg": 34,
+    "rank_size": 3,
+    "rivet_at": [
+      20,
+      17
+    ],
+    "spacing_m": 1.25,
+    "walk_mps": 3.8
+  },
   "beats": [
     {
       "beat": 1,

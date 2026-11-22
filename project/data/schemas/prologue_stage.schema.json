@@ -105,6 +105,14 @@
       ],
       "type": "object"
     },
+    "point": {
+      "items": {
+        "type": "number"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
     "scorch": {
       "additionalProperties": false,
       "properties": {
@@ -232,6 +240,115 @@
   "$id": "gtai.prologue_stage/1",
   "additionalProperties": false,
   "properties": {
+    "arrival": {
+      "additionalProperties": false,
+      "properties": {
+        "checkpoint": {
+          "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "dale_first_gap_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "dale_last_gap_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "fan_line": {
+          "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "first_warden_at": {
+          "$ref": "#/$defs/point"
+        },
+        "formations": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "first": {
+                "$ref": "#/$defs/point"
+              },
+              "id": {
+                "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+                "type": "string"
+              },
+              "step": {
+                "$ref": "#/$defs/point"
+              }
+            },
+            "required": [
+              "first",
+              "id",
+              "step"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "gate_exit_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "max_melee": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "max_shooters": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "panic_morale": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "panic_s": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "panic_spread_deg": {
+          "maximum": 90,
+          "minimum": 0,
+          "type": "number"
+        },
+        "rank_size": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "rivet_at": {
+          "$ref": "#/$defs/point"
+        },
+        "spacing_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "walk_mps": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "checkpoint",
+        "dale_first_gap_m",
+        "dale_last_gap_m",
+        "fan_line",
+        "first_warden_at",
+        "formations",
+        "gate_exit_m",
+        "max_melee",
+        "max_shooters",
+        "panic_morale",
+        "panic_s",
+        "panic_spread_deg",
+        "rank_size",
+        "rivet_at",
+        "spacing_m",
+        "walk_mps"
+      ],
+      "type": "object"
+    },
     "beats": {
       "items": {
         "$ref": "#/$defs/beat"
@@ -379,6 +496,7 @@
     }
   },
   "required": [
+    "arrival",
     "beats",
     "opening_bodies",
     "payphone",

@@ -78,10 +78,13 @@ func test_three_opening_officers_are_dead_walkable_and_released_by_decay() -> vo
 	var stage: ArenaStage = game.stage
 	var arena: CombatArena = stage.arena
 	var start: Vector2 = arena.rivet.pos
-	assert_eq(arena.hostiles.size(), 3)
-	assert_eq(arena.hostiles_alive(), 0)
+	assert_eq(arena.hostiles_alive(), 10)
 	assert_eq(stage.heat.level, 0)
-	var bodies: Array[Fighter] = arena.hostiles.duplicate()
+	var bodies: Array[Fighter] = []
+	for actor: Fighter in arena.hostiles:
+		if not actor.alive():
+			bodies.append(actor)
+	assert_eq(bodies.size(), 3)
 	for officer: Fighter in bodies:
 		assert_eq(officer.archetype, &"patrol_cop")
 		assert_eq(ArenaBodies.class_of(officer), RivetBody.PERSON)
@@ -96,7 +99,7 @@ func test_three_opening_officers_are_dead_walkable_and_released_by_decay() -> vo
 	for tick: int in decay.decay.bodies.linger_ticks + decay.decay.bodies.fade_ticks + 1:
 		game.world.loop().step()
 	assert_eq(decay.pruned, 3)
-	assert_true(arena.hostiles.is_empty())
+	assert_eq(arena.hostiles.size(), 10)
 	assert_eq(decay.decay.stains.count(), 3)
 	PlayerActions.shipped().install()
 
@@ -120,10 +123,13 @@ func test_opening_cast_feeds_rivet_and_three_downed_cops_to_the_shared_rigs() ->
 	rigs._process(0.0)
 	assert_eq(view.px_per_m, 32.0)
 	var feed: RigFeed = rigs.rigs.feed
-	assert_eq(feed.count, 4)
+	assert_eq(feed.count, 14)
 	assert_eq(feed.kinds[0], BodyPlan.Kind.RIVET)
+	var down: int = 0
 	for i: int in range(1, feed.count):
 		assert_eq(feed.kinds[i], BodyPlan.Kind.COP)
-		assert_true(feed.has_flag(i, RigFeed.Flag.DEAD))
-		assert_true(feed.has_flag(i, RigFeed.Flag.DOWN))
+		if feed.has_flag(i, RigFeed.Flag.DEAD):
+			assert_true(feed.has_flag(i, RigFeed.Flag.DOWN))
+			down += 1
+	assert_eq(down, 3)
 	PlayerActions.shipped().install()

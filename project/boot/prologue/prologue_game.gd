@@ -17,9 +17,10 @@ class WalkPilot:
 
 var world: World
 var stage: ArenaStage
-var bodies: CorpseDecayHook
+var bodies: PrologueBodies
 var live: LiveInput
 var lines: PrologueLines
+var encounter: PrologueEncounter
 var _result_path: String
 var _seed: int
 
@@ -53,7 +54,12 @@ func _ready() -> void:
 		Log.error("prologue", "missing opening line")
 		get_tree().quit(1)
 		return
-	stage.hooks.append(PrologueEncounter.new(lines))
+	encounter = PrologueEncounter.new(lines, stage, data)
+	@warning_ignore("return_value_discarded")
+	encounter.finished.connect(_finished)
+	@warning_ignore("return_value_discarded")
+	encounter.opening_restarted.connect(bodies.restore_opening)
+	stage.hooks.append(encounter)
 	if DisplayServer.get_name() != "headless":
 		_open_view(plan)
 
@@ -71,6 +77,7 @@ func _open(plan: PrologueYard, data: DataTable) -> void:
 	var phone: Dictionary = data.object(data.raw, "payphone")
 	stage.layout.phones[data.text(phone, "id")] = data.vec(phone, "at")
 	world.add_system(stage)
+	stage.arena.squad_ai = PrologueSquad.new(stage.arena.guard_map)
 	_equip_squad(data)
 	bodies = PrologueBodies.place(stage, data, world.context())
 	stage.arena.rivet.weapon = &""
@@ -93,7 +100,9 @@ func _equip_squad(data: DataTable) -> void:
 
 
 func _open_view(plan: PrologueYard) -> void:
-	var view: CollectCallView = CollectCallView.new()
+	var view: PrologueView = PrologueView.new()
+	view.encounter = encounter
+	view.live = live
 	var floor_view: PrologueFloor = PrologueFloor.new()
 	floor_view.plan = plan
 	view.stage_view.free()
@@ -106,6 +115,11 @@ func _open_view(plan: PrologueYard) -> void:
 	add_child(rigs)
 	@warning_ignore("return_value_discarded")
 	rigs.attach(stage, view, world.context())
+	var props: PrologueProps = PrologueProps.new()
+	props.patrol = encounter.patrol
+	props.rigs = rigs.rigs
+	props.z_index = rigs.rigs.z_index + 60
+	view.print_stage.actor_layer().add_child(props)
 	bodies.attach_view(view)
 	live.viewport = get_viewport()
 	live.origin_px = func() -> Vector2: return get_viewport().get_visible_rect().size * 0.5
@@ -121,12 +135,18 @@ func show_line(id: String) -> bool:
 	return lines.show_line(id)
 
 
+func _finished() -> void:
+	world.set_process(false)
+	if LaunchArgs.has("--bot"):
+		get_tree().quit()
+
+
 func _exit_tree() -> void:
 	if live != null:
 		live.cursor_px = Callable()
 	if stage != null:
 		stage.hooks.clear()
-	if lines == null or _result_path.is_empty():
+	if encounter == null or _result_path.is_empty():
 		return
 	var result: Dictionary = {
 		"schema": "gtai.prologue-run/1",
@@ -134,6 +154,11 @@ func _exit_tree() -> void:
 		"lines_shown": lines.shown,
 		"line_events": lines.events,
 		"beats_reached": lines.beats,
+		"beat_checkpoints": encounter.spans,
+		"dale_died_tick": encounter.dale_died,
+		"deaths": encounter.deaths,
+		"prompts": encounter.prompts.history,
+		"wave_one_cleared_tick": encounter.done_tick,
 		"ticks": world.context().clock.tick(),
 	}
 	var err: Error = DirAccess.make_dir_recursive_absolute(_result_path.get_base_dir())
