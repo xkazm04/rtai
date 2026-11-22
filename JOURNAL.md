@@ -87,3 +87,6 @@ NEXT (session 7): REPORT is complete and committed; only if time after the 09:30
 - 09:34 session 7 end. No Astra running. No product work after the freeze.
 
 NEXT: none for this lane; REPORT complete. Director merges n23-controls in the morning (see REPORT "Merge notes"); run the `--reels` gate on the merged tree.
+- 09:31 session 8 (STABILIZE) start: tree clean at 2922d84c6, no Astra running (no lock; last call b8), cites 36/36 ok, both gate.json files present. Nothing to fix; no product work.
+
+NEXT: none for this lane. Director merges n23-controls (REPORT "Merge notes") and runs the `--reels` gate on the merged tree.
