@@ -4,11 +4,57 @@
 
 The targets are the owner’s call. [targets.json](../tools/gauntlet/targets.json) sets the novice, average and expert death waves to 6, 12 and 20. An ordinary average-profile wave aims for 15 seconds. Every fifth wave is a boss wave and aims for 25–30 seconds. The report compares each pair of profiles. The pair is separated when the higher profile’s median is at least three waves deeper and it dies later on at least 75% of shared seeds.
 
-**Score.** Record the wave Rivet dies on. A wave can reach its timer and call another roster into the same fight. A run alive at the tick cap contributes its last reached wave as a censored lower bound. The report gives the median, spread, and separate counts of deaths and caps. Confirmation uses paired death-wave differences and their same-seed null-salt floor. The ledger records both verdicts and identifies the deciding rule.
+**Score.** Record the wave Rivet dies on. A wave can reach its timer and call another roster into the same fight. A survivor at the 216,000-tick cap or the requested wave limit contributes its last reached wave as a censored lower bound. The report gives the median, spread, counts of deaths and censored runs, and the stopping reason for each seed. Confirmation uses paired death-wave differences and their same-seed null-salt floor. The ledger records both verdicts and identifies the deciding rule.
 
-## A night at a glance
+## A night with runs that end in death
 
-1. **Measure.** Start on a fresh `n23-tune-<n>` branch. Run `node tools/gauntlet/night.mjs --seeds=30 --out=build/gauntlet/night-2` once for steps 1–5. Average, greedy, wheel, seeds 1–30 took 12 min 54 s with one Godot job on a contended machine. [Before batch](../evidence/loop/tune2-before/batch.json)
+Run the cycle from the lane. The tuner checks out the lane HEAD on a new tune branch in the OS temp directory. The director can keep working in the lane while the batches run. Kept commits stay on the tune branch for the director to merge.
+
+```powershell
+$lane = (Get-Location).Path
+$tuneTree = Join-Path $env:TEMP 'gtai-n23-tune-1'
+$cycleOut = Join-Path $lane 'evidence/n23-loop/cycle-1'
+$cycle = @("--worktree=$tuneTree", '--branch=n23-tune-1', "--out=$cycleOut", '--profile=all', '--metric=death')
+node tools/gauntlet/night.mjs @cycle --seeds=10 --jobs=1
+```
+
+Add `--waves=N` to bound all three batches at wave N. Set `--jobs=2` when the director allocates both slots. Each profile has its own same-seed, different-bot-salt floor, which needs at least six pairs. A death cycle proposes one edit and names the profiles it is intended to help. To keep the edit, at least one intended profile must clear the deciding improvement rule. Every selected profile needs a measurable floor. A paired change away from target or an increase in median distance from target greater than that profile’s floor vetoes the edit, including a move past the target.
+
+To reuse the director’s measured controls, pass the two absolute manifest paths. The before manifest supplies seeds, first seed, pick policy, controls and wave limit. A kept after manifest can supply the next before on a worktree containing the kept tables. A fresh null batch is needed when those table hashes change.
+
+```powershell
+$before = Join-Path $lane 'evidence/n23-loop/base-street/batch.json'
+$nullBatch = Join-Path $lane 'evidence/n23-loop/base-street-salt1/batch.json'
+node tools/gauntlet/night.mjs @cycle "--before=$before" "--null=$nullBatch" --jobs=1
+```
+
+For a separately measured after, propose against the same before on the checkout with matching tables. Capture the set arguments as a PowerShell array. Each argument contains one final table value, including each member of a grouped edit.
+
+```powershell
+$plan = Join-Path $cycleOut 'plan.json'
+$armOut = Join-Path $lane 'evidence/n23-loop/candidate-1'
+node tools/gauntlet/tune.mjs propose "--batch=$before" "--out=$plan" --profile=all --metric=death
+$sets = @(node tools/gauntlet/tune.mjs sets "--plan=$plan")
+node tools/gauntlet/ablate.mjs --name=candidate-1 @sets -- --profile=all --pick=greedy --controls=wheel --seed0=1 --seeds=10 --jobs=1 "--out=$armOut"
+node tools/gauntlet/night.mjs @cycle "--before=$before" "--null=$nullBatch" "--after-from=$(Join-Path $armOut 'batch.json')"
+```
+
+Match the original seed range, controls, pick, salt and wave limit. The cycle uses that exact plan, checks the predicted table hashes and applies it. If the tune branch already carries its apply receipt, the cycle goes straight to confirmation. An empty output directory also works when the tuner can reproduce the same edit from the before batch. Reports, the change ledger and `night.md` go under the cycle output. Source manifests stay in their original directories.
+
+**Wall time on the merged street.** The serial smoke ran without a wave limit. For seeds 1 and 2, the measured engine wall times were 55.3 and 12.9 s for novice, 462.5 and 50.4 s for average, and 295.3 and 278.9 s for expert. The six runs total **19 min 15 s**. The checkpoint was assembled offline, so its batch wall field is empty. The individual launcher logs record elapsed time on their second line. [Smoke checkpoint](../evidence/n23-loop/street-smoke/completed-at-cutoff/batch.json) · [Per-seed timings](../evidence/n23-loop/street-smoke/logs/)
+
+| Ten seeds × three profiles, one job | Batches to measure | Projected engine wall time |
+|---|---:|---:|
+| Fresh cycle | Before, null, after | 4 h 49 min |
+| Kept after reused as before | Null, after | 3 h 13 min |
+| Matching before and null supplied | After | 1 h 36 min |
+| All three supplied | 0 | 0 engine minutes |
+
+These projections scale the measured six-run total by five per 30-run batch. On that sample, an eight-hour night fits **one fresh cycle**, or **two cycles** starting with both controls measured and chaining a kept result. The latter schedule uses about 4 h 49 min of engine time. A third chained cycle brings engine time alone to just over eight hours. Allow extra time for imports, reporting and Git hooks. For a different wave limit or two jobs, use the completed manifests’ `speed.wall_s`. The cycle summary prints each measured batch duration and marks reused batches.
+
+## Earlier timing-based night
+
+1. **Measure.** The earlier timing cycle used a dedicated tune branch. Average, greedy, wheel, seeds 1–30 took 12 min 54 s with one Godot job on a contended machine. [Before batch](../evidence/loop/tune2-before/batch.json)
 2. **Report.** The night runs `node tools/gauntlet/report.mjs --batch=build/gauntlet/night-2/before/batch.json`. Read the wave medians against 15 s and check how many runs contributed.
 3. **Tune.** The night runs `tune.mjs propose` to record numeric steps in `plan.json`, then `tune.mjs apply` to commit each eligible knob on the tune branch.
 4. **Confirm.** The night runs `batch.mjs` again with the same seeds, profile, pick policy and controls. This took 12 min 57 s. [Confirm batch](../evidence/loop/tune2-after/batch.json)
@@ -151,25 +197,20 @@ The command writes Markdown and a self-contained HTML file with inline SVG timin
 
 ### Run a night
 
-Run from the dedicated `n23-tune*` checkout to measure, apply and confirm in one command. The default recipe uses the average profile, greedy picks, wheel controls and one job. All three batches run seeds 1 through N for every selected profile.
-
-```powershell
-node tools/gauntlet/night.mjs --seeds=40
-```
-
-Add `--dry-run` to print the commands. Choose a fresh directory with `--out=<dir>` to retain evidence. The default is `build/gauntlet/night-<date>/` using the tuner's night date. Override the recipe with `--profile`, `--pick` and `--controls`. With `--profile=all`, the proposal uses average timings and can also compare novice and expert depth.
+Use the lane command in [A night with runs that end in death](#a-night-with-runs-that-end-in-death). Add `--dry-run` to prepare the worktree and print the steps and absolute paths. Use a fresh output directory under the lane’s `evidence/n23-loop/`. A preview also accepts `build/n23/`. Omitting `--metric=death` selects the existing mixed-metric proposal. The default batch uses average, greedy, wheel and one job.
 
 | Step | What it writes |
 |---|---|
 | Measure | `before/runs/` holds each result and `before/logs/` holds the launch and engine logs. `before/batch.json` records accepted runs, caps, failures, timing and table hashes. |
+| Measure null | `null/batch.json` measures the same seeds with a different bot salt. |
 | Report | `before/report.md` and `before/report.html` summarize the measured batch. |
-| Propose | `plan.json` records the misses, skipped reasons, bounded edits and the before-batch hash. On other branches the night stops here. |
+| Propose | `plan.json` records the misses, skipped reasons, bounded edits and the before-batch hash. The plan names each proposed edit and its target. |
 | Apply | One Git commit per eligible knob on the tune branch, with the measured reason and plan identifier. |
 | Measure again | The same recipe writes `after/runs/`, `after/logs/` and `after/batch.json` with the tested values. |
 | Confirm and revert | `after/tune-ledger.json` and `after/tune-ledger.md` record the paired evidence, seed splits and verdicts. Each rejected or inconclusive applied change gets a revert commit. |
 | Compare and summarize | `after/report.md` and `after/report.html` compare timings with the before batch. `night.md` lists each action, knob values, first-night baseline, measured evidence and commit SHAs. |
 
-To undo a kept change, copy its **Apply SHA** from `night.md` and run `git revert <sha>` on the tune branch. If a step fails, the command stops and preserves the earlier evidence and commits. A dry run with the same options prints the individual commands for recovery.
+To undo a kept change, copy its **Apply SHA** from `night.md` and run `git revert <sha>` on the tune branch. If a step fails, the command stops and preserves the earlier evidence and commits. A dry run with the same options prints the individual commands for recovery. To remove a clean worktree after a preview or merge, run `node tools/gauntlet/night.mjs "--worktree=$tuneTree" --branch=n23-tune-1 --remove`. Removal requires the branch tip to be reachable from the current lane HEAD. It removes the worktree, prunes its registration and deletes the branch.
 
 ### How a proposal selects edits
 
@@ -201,7 +242,7 @@ To measure the floor separately, repeat the before `batch.mjs` command with `--s
 
 Death-wave confirmation compares the mean paired wave difference, oriented toward the target, with the same-seed null-salt floor. Time and offer effects use the mean paired reduction in absolute distance from target. For killer share and historical spread metrics the bootstrap resamples whole pairs and recomputes the aggregate. The default point verdict keeps a gain when it exceeds the floor and the CI95 low exceeds zero. A loss uses the mirrored rule. Select the historical interval-above-floor rule with `--verdict=strict`. Fewer than six A/A pairs or two comparison pairs yields `too few pairs`. With adequate coverage, an inconclusive change yields `noise`. The ledger gives the actual left and right seed lists for each before-batch group. Several edits confirmed by one batch share the same experiment.
 
-`tune-ledger.json` and `tune-ledger.md` appear beside the **after** batch. Each row records the old, new and baseline values, original miss, measured outcomes, paired improvement, CI95, A/A floor, verdict and commit SHAs. Plain `confirm` writes verdicts. Add `--revert` to undo committed `reverted`, `noise` and `too few pairs` edits in reverse order. Undo allows its named plan, batches and ledger files alongside the evidence and build directories. Git needs a clean index. An empty apply SHA means the branch has no commit for that edit. A revert SHA identifies an executed undo. To undo one edit manually, use `git revert --no-edit <apply-sha>` on the tune branch.
+`tune-ledger.json` and `tune-ledger.md` appear beside the **after** batch for standalone confirmation. A night writes them under its own `after/` directory, including when it reuses an external after batch. Each row records the old, new and baseline values, original miss, measured outcomes, paired improvement, CI95, A/A floor, verdict and commit SHAs. Plain `confirm` writes verdicts. Add `--revert` to undo committed `reverted`, `noise` and `too few pairs` edits in reverse order. Undo allows its named plan, batches and ledger files alongside the evidence and build directories. Git needs a clean index. An empty apply SHA means the branch has no commit for that edit. A revert SHA identifies an executed undo. To undo one edit manually, use `git revert --no-edit <apply-sha>` on the tune branch.
 
 ## Replay and film a run from its seed
 
