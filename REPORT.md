@@ -47,3 +47,5 @@ Each ghost earns its own mastery, so the transformation arrives one ghost at a t
 |---|---|---|---|
 | g1-deploy-sim | 71 | accepted | 8 commits d07607db6..8d1d6fef1 |
 | g2-deploy-views | 73 | accepted, partly | 5 commits 1608d8bce..f2a54bdb7; leftovers carried into g3 part 0 |
+| g3-deploy-worth | 73 | accepted, partly | 3 commits f04829845..82dd30c77 (Ohm view, film entry, worth evidence); probe left staged at the hard stop, committed in g4 |
+| g4-deploy-polish | 74 | accepted | 7 commits 850233008..a671deded (probe, Ohm placement, HUD plate, cost decision, tests, live fire in the film); formation jitter dropped |
