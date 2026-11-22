@@ -40,7 +40,11 @@ func run(_tree: SceneTree) -> String:
 
 func _open(brain: String = "mixed", seed: int = ArenaSession.MASTER_SEED) -> ArenaSession:
 	var options: ArenaArgs = ArenaArgs.parse(["--arena=city", "--enemy-brain=" + brain])
-	return ArenaSession.open_with_args(Events, Data, seed, null, options)
+	var s: ArenaSession = ArenaSession.open_with_args(Events, Data, seed, null, options)
+	# Reserve one run for a squad with more ranged fighters than shooting tokens.
+	if seed == ArenaSession.MASTER_SEED + SEEDS - 1:
+		s.stage.arena.squad_ai.pit.roster.max_shooters = 1
+	return s
 
 
 func _fight(plant: bool, seed: int = ArenaSession.MASTER_SEED) -> Dictionary:
