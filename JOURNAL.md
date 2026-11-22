@@ -92,3 +92,7 @@ war_machine never); LOOK at n24/melee/electric films + 64 close-ups (amber, no t
 quality package: the white zigzag on the chainsaw grind (18:50), the right-facing baton contact frame, telemetry of
 swings per click in a live fight (1.0), films for the owner (each weapon's swing + kill per type, cursor before/after)
 with frames.json. Commit last new work by 00:00, final gate by 00:15. REPORT: robo_tazer call (18:43), hands call.
+- 19:58 LOOKED variants/review_electro_baton_32.png (contractor): WEAK. At the kill tick and +4 nothing shows the
+  shock (no arcs, no seizure, no flash): the man is just standing, then at +16..+36 he is thrown back and lies as a
+  charred body. For P4: the baton kill needs visible arcs and a tick-locked seizure on the victim over the first
+  ~20 ticks (white/amber arcs, not teal), then the throw. Same check for the P3 robot shut-down.
