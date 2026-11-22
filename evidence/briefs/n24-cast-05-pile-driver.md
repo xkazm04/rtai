@@ -8,9 +8,9 @@ At stop-minus-10 commit what is finished, write the report, stop. Fix lint and f
 
 ## 0. FIRST (before anything else, 15 minutes max): commit what is already done
 Run `git status --short`. The previous call (`clamshell`, report `evidence/briefs/n24-cast-04-clamshell.out.txt`
-and `C:\Users\kazda\kiro\gtai-art\foes-n24\04-build-report.md`) left the clamshell uncommitted: its files are on disk
-but NOT staged any more (a director commit attempt dropped the index; nothing was lost, the director will not commit
-while you run). Also uncommitted: the pile-driver hunks in `cast_cards.json` / schema / provenance (keep its row
+and `C:\Users\kazda\kiro\gtai-art\foes-n24\04-build-report.md`) left the clamshell staged but uncommitted (its commit lost a race with a
+director journal commit; the director will not commit while you run). Check `git status`: commit it per path.
+Also uncommitted: the pile-driver hunks in `cast_cards.json` / schema / provenance (keep its row
 `enabled: false` until section 1 is done), the untracked pile-driver sheets and `tools/art/cast_walker_splice.py`.
 Known open faults from that report, fix them here:
 - `node tools/gate/quick.mjs` full run was exit 1 with "dependency compile cascades on the arena and turret scripts".
