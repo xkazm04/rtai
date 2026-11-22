@@ -100,6 +100,17 @@
             "minimum": 0,
             "type": "number"
           },
+          "dash_chance": {
+            "description": "Chance of reading a distinct large round or stomp for a dash.",
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "dash_read_ticks": {
+            "description": "Simulation ticks after first sight before a dash decision.",
+            "minimum": 0,
+            "type": "integer"
+          },
           "form_use": {
             "maximum": 1,
             "minimum": 0,
@@ -150,6 +161,8 @@
           "aim_error_deg",
           "blast_margin_m",
           "cover_seek_m",
+          "dash_chance",
+          "dash_read_ticks",
           "form_use",
           "guard_lead_ticks",
           "id",

@@ -57,7 +57,15 @@ func choose(view: BotView, tick: int) -> Choice:
 			small_eta = eta
 	_dodges = live
 	if large != null:
-		return _evade(view, large.pos, large.vel, _dodges[large.id], true)
+		var roll: bool = _dodges[large.id]
+		if me.can_dash:
+			roll = (
+				roll
+				and BotMachineFight.roll_in_time(
+					me, maxf(me.radius, large.splash_m), maxi(1, ceili(large_eta))
+				)
+			)
+		return _evade(view, large.pos, large.vel, roll, true)
 	if tell != null:
 		if tell.stomp_m > 0.0 and tell.tell_ticks > 0:
 			return BotMachineFight.stomp(view, tell, _tells[tell.id].dodge)
