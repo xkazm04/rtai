@@ -35,3 +35,26 @@ func test_a_reversal_after_the_lock_still_dodges() -> void:
 	var led: float = _strafe_hits(0.8, false)
 	var juked: float = _strafe_hits(0.8, true)
 	assert_lt(juked, led * 0.5, "juked %.2f vs steady %.2f" % [juked, led])
+
+
+func test_street_rifle_holds_its_burst_line_and_reacquires_after_one_paused_round() -> void:
+	var pit: EnemyPit = EnemyPit.new(EnemyRoster.shipped(), null)
+	var rifle: CombatTuning.Weapon = CombatTuning.shipped().weapon(&"assault-rifle")
+	var guard: Fighter = Fighter.new()
+	guard.pos = Vector2(4, 2)
+	guard.facing = Vector2.RIGHT
+	var mind: SquadMind = SquadMind.new(guard, pit.roster.archetype(&"patrol_cop"))
+	pit.rivet_pos = guard.pos + Vector2(10, 0)
+	pit.rivet_vel = Vector2.DOWN * rifle.speed_mps
+	var down: Vector2 = Vector2(10, 5).normalized()
+	var up: Vector2 = Vector2(10, -5).normalized()
+	assert_almost_eq(GuardBrain.street_aim(guard, rifle, mind, pit, 0.5), down, Vector2.ONE * 0.001)
+	guard.burst_left = rifle.burst
+	pit.rivet_vel = -pit.rivet_vel
+	assert_almost_eq(GuardBrain.street_aim(guard, rifle, mind, pit, 0.5), up, Vector2.ONE * 0.001)
+	guard.burst_left = 1
+	pit.rivet_vel = -pit.rivet_vel
+	assert_almost_eq(GuardBrain.street_aim(guard, rifle, mind, pit, 0.5), up, Vector2.ONE * 0.001)
+	assert_eq(GuardBrain.street_aim(guard, rifle, mind, pit, 0.0), guard.facing)
+	mind.paused_rounds = 1
+	assert_almost_eq(GuardBrain.street_aim(guard, rifle, mind, pit, 0.5), down, Vector2.ONE * 0.001)
