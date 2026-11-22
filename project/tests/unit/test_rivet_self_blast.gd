@@ -26,7 +26,6 @@ class Attribution:
 
 var arena: Attribution
 var shot: Shot
-
 var original_conversion: float
 var original_k: float
 var bus: EventBus
@@ -69,6 +68,32 @@ func test_grazing_the_body_falls_to_zero_at_the_outer_edge() -> void:
 		var offset: float = arena.rivet.radius_m + shot.spec.splash_radius_m * fraction
 		_land(arena, arena.rivet.pos + Vector2.LEFT * offset)
 		assert_almost_eq(hp - arena.rivet.hp, FULL * maxf(1.0 - fraction, 0.0), EPS)
+
+
+func test_point_blank_self_damage_for_each_blast_weapon() -> void:
+	var point_blank: Dictionary[StringName, float] = {
+		&"rocket_launcher": 22.0, &"molotov": 4.0, &"homing_shard": 3.0, &"mini_nuke": 150.0
+	}
+	var table: WeaponTable = WeaponTable.shipped()
+	arena.rivet.max_hp = 200.0
+	for weapon: StringName in point_blank:
+		shot.spec = table.weapon(weapon)
+		arena.rivet.hp = arena.rivet.max_hp
+		_land(arena, arena.rivet.pos)
+		assert_almost_eq(arena.rivet.max_hp - arena.rivet.hp, point_blank[weapon], EPS, weapon)
+
+
+func test_rocket_ten_hp_and_mini_nuke_lethal_distances() -> void:
+	var body_edge: Vector2 = arena.rivet.pos + Vector2.RIGHT * arena.rivet.radius_m
+	_land(arena, body_edge + Vector2.RIGHT * (21.0 / 11.0))
+	assert_almost_eq(arena.rivet.hp, 90.0, EPS)
+	shot.spec = WeaponTable.shipped().weapon(&"mini_nuke")
+	arena.rivet.hp = arena.rivet.max_hp
+	_land(arena, body_edge + Vector2.RIGHT * 4.01)
+	assert_gt(arena.rivet.hp, 0.0)
+	arena.rivet.hp = arena.rivet.max_hp
+	_land(arena, body_edge + Vector2.RIGHT * 4.0)
+	assert_false(arena.rivet.alive())
 
 
 func test_wall_stops_own_blast_between_impact_and_rivet() -> void:
