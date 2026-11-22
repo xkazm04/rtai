@@ -47,6 +47,15 @@ Forbidden: `project/features/player/player_melee.gd` and every `melee_*.gd` (lan
   including large ones today).
 - The rule on large rounds: the guard never takes them; the bat does. Keep that.
 
+## Task 0 - two follow-ups from brief 01 (one small commit, first)
+
+- `gauntlet_street.gd` `wave_timeout_ticks`: a `wave_timeout_late_s` of 0 must mean "the late rule is off: the wave keeps
+  `wave_timeout_s`", not "no timer" (`624e58248` made it no timer; fix it and its test
+  `test_zero_late_timeout_leaves_wave_six_open_without_reinforcements` in `test_gauntlet_wave_timer.gd`).
+- `docs/decisions.md`: append one dated `DECISION pressure:` line each for the enemy damage x2 (`db2043604`, game-wide in
+  `enemies.json`/`enemy_fire.damage_scale`, `enemy_damage_k` stays 1, no digest moved), no in-wave repair (`02bec2b14`,
+  `repair_in_wave`), and the 45 s late timer (`624e58248`), format in AGENTS.md "A decision line".
+
 ## Task 1 - the `deflect` block and the rule (one commit)
 
 Owner, verbatim: "Deflecting seems to be too OP, spread angle of deflected bullets so they won't always hit the
