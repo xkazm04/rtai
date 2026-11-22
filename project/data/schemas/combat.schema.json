@@ -84,6 +84,47 @@
       ],
       "type": "object"
     },
+    "moves": {
+      "additionalProperties": false,
+      "properties": {
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "ohm_short_circuit": {
+          "additionalProperties": false,
+          "properties": {
+            "boss_stun_s": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "enabled": {
+              "type": "boolean"
+            },
+            "immune_s": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "stun_s": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "boss_stun_s",
+            "enabled",
+            "immune_s",
+            "stun_s"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "doc",
+        "ohm_short_circuit"
+      ],
+      "type": "object"
+    },
     "rivet": {
       "additionalProperties": false,
       "properties": {
@@ -333,7 +374,8 @@
     "human",
     "weapons",
     "robo_tazer",
-    "guard"
+    "guard",
+    "moves"
   ],
   "type": "object"
 }

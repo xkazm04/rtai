@@ -16,6 +16,15 @@
     "radius_m": 0.45,
     "walk_mps": 3
   },
+  "moves": {
+    "doc": "Optional combat moves. Each row enables its own move and supplies its tuning in seconds.",
+    "ohm_short_circuit": {
+      "boss_stun_s": 0.6,
+      "enabled": true,
+      "immune_s": 4,
+      "stun_s": 2
+    }
+  },
   "rivet": {
     "death_beat_s": 1,
     "hp": 100,

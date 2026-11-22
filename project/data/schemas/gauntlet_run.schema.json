@@ -104,6 +104,19 @@
           ],
           "type": "object"
         },
+        "moves": {
+          "additionalProperties": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "description": "Uses of each move that had an effect during this wave. Omitted when none did.",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "type": "object"
+        },
         "n": {
           "minimum": 1,
           "type": "integer"
