@@ -96,8 +96,10 @@ func test_a_mash_and_a_short_hold_never_discharge() -> void:
 	_cop(_stage.arena.rivet.pos + Vector2.DOWN * 1.2, 100.0)
 	for t: int in 120:
 		_drive(t % 4 == 0)
-	assert_eq(_pilot.shock.discharges, 0, "the combo keeps the taps")
-	assert_eq(_pilot.melee.landed, 3, "the mash chained the claw combo")
+	assert_eq(_pilot.shock.discharges, 0, "short taps never charge the shock")
+	assert_eq(
+		_pilot.melee.landed, 2, "two rakes connect before knockback puts the cop out of reach"
+	)
 	assert_eq(_hold(_jab + _pilot.shock.shock.charge_min - 2), -1, "under the threshold")
 
 

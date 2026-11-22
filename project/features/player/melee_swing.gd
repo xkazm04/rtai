@@ -11,6 +11,15 @@ extends RefCounted
 const ANTIC: float = 1.3
 const FOLLOW: float = 1.35
 const HOLD: float = 0.35
+## Signed anticipation and follow-through as shares of the hit cone, then the recovery
+## share spent extended. The saw stays close to the drive line and lifts on the way out.
+const SHAPES: Dictionary[StringName, Vector3] = {
+	&"rake": Vector3(-0.82, 0.65, 0.12),
+	&"drive": Vector3(0.24, -0.38, 0.48),
+	&"crack": Vector3(1.12, -0.42, 0.18),
+	&"cut": Vector3(-1.18, 1.04, 0.32),
+	&"sweep": Vector3(0.84, -0.94, 0.42),
+}
 ## Ticks of the cut before the hit tick (the blade's travel into the target).
 const CUT_TICKS: float = 2.0
 ## The held chainsaw's idle shake (rad at the extreme step).
@@ -24,22 +33,21 @@ static var sharp: bool = not OS.get_cmdline_user_args().has("--soft-swing")
 ## (windup, active, recovery, s) and half-arc `arc`. The cut starts CUT_TICKS before the
 ## windup ends, so the blade crosses the aim line on the hit tick (the sim lands the hit on the
 ## first active tick; its hit-stop then holds the blade in the target, the smear behind it).
-static func angle(t: float, ph: Vector3, side: float, arc: float) -> float:
+static func angle(t: float, ph: Vector3, side: float, arc: float, style: StringName = &"") -> float:
 	if not sharp:
 		return _night(t, ph, side, arc)
+	var shape: Vector3 = SHAPES.get(style, Vector3(side * ANTIC, -side * FOLLOW, HOLD))
 	var c0: float = cut_start(ph)
 	if t < c0:  # anticipation: cock back fast, settle past the arc
 		var w: float = t / maxf(c0, 0.001)
-		return side * arc * ANTIC * (1.0 - (1.0 - w) * (1.0 - w))
+		return shape.x * arc * (1.0 - (1.0 - w) * (1.0 - w))
 	if t < ph.x:  # the cut, into the target: on the aim line at the hit tick
-		return side * arc * ANTIC * (1.0 - (t - c0) / maxf(ph.x - c0, 0.001))
+		return shape.x * arc * (1.0 - (t - c0) / maxf(ph.x - c0, 0.001))
 	if t < ph.x + ph.y:  # through it, easing out to the overshoot
 		var k: float = (t - ph.x) / maxf(ph.y, 0.001)
-		return -side * arc * FOLLOW * (1.0 - (1.0 - k) * (1.0 - k))
+		return shape.y * arc * (1.0 - (1.0 - k) * (1.0 - k))
 	var r: float = (t - ph.x - ph.y) / maxf(ph.z, 0.001)
-	if r < HOLD:  # follow-through: the blade stays out past the target
-		return -side * arc * FOLLOW
-	return -side * arc * FOLLOW * (1.0 - smoothstep(0.0, 1.0, (r - HOLD) / (1.0 - HOLD)))
+	return shape.y * arc * (1.0 - smoothstep(shape.z, 1.0, r))
 
 
 ## The chainsaw's idle judder while it is held and not biting (the engine running): a

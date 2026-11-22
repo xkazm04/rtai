@@ -17,6 +17,7 @@ func before_each() -> void:
 	_stage = CollectCallStage.new(StageLayout.shipped())
 	_stage.setup(World.build_context(bus, data, 1))
 	_pilot = StagePilot.new(PlayerActions.shipped())
+	_pilot.melee.combo.table.single_swing = false  # these fixtures exercise the old finisher
 	_stage.pilot = _pilot
 	_stage.arena.rivet.pos = Vector2(200.0, 200.0)
 
@@ -74,6 +75,7 @@ func test_the_combo_connects_through_its_own_knockback() -> void:
 
 func test_planted_no_step_in_whiffs_the_backhand() -> void:
 	var t: MeleeTable = MeleeTable.shipped()
+	t.single_swing = false
 	for h: MeleeHit in t.hits:
 		h.lunge_m = 0.0
 	_pilot.melee = PlayerMelee.new(t)
@@ -89,6 +91,7 @@ func test_combo_cadence_is_the_tables() -> void:
 	_cop_ahead(1.2)
 	var finisher_at: int = _mash(60)
 	var t: MeleeTable = MeleeTable.shipped()
+	t.single_swing = false
 	var h1: MeleeHit = t.hits[0]
 	var h2: MeleeHit = t.hits[1]
 	var h3: MeleeHit = t.hits[2]
@@ -101,6 +104,7 @@ func test_combo_cadence_is_the_tables() -> void:
 
 func test_planted_zero_reach_never_lands() -> void:
 	var t: MeleeTable = MeleeTable.shipped()
+	t.single_swing = false
 	for h: MeleeHit in t.hits:
 		h.reach_m = 0.0
 	_pilot.melee = PlayerMelee.new(t)

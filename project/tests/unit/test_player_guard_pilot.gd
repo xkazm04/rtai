@@ -22,6 +22,7 @@ func _start(mode: String) -> void:
 
 func test_legacy_pilot_state_matches_the_pre_guard_tape() -> void:
 	_start("legacy")
+	pilot.melee.combo.table.single_swing = false
 	assert_null(pilot.guard)
 	var tape: StreamPeerBuffer = StreamPeerBuffer.new()
 	var aim: int = PlayerCommand.pack_aim(Vector2.RIGHT, actions)
@@ -58,17 +59,17 @@ func test_held_primary_counts_only_one_swing_in_the_first_ten_ticks() -> void:
 		assert_eq(pilot.melee_swings, 1, "held tick %d" % tick)
 
 
-func test_second_press_counts_when_its_buffered_swing_starts() -> void:
+func test_second_press_during_the_claw_swing_is_discarded() -> void:
 	_start("wheel")
 	stage.step(0, TickInput.new(1 << actions.bit(&"fire")))
 	stage.step(1, TickInput.new())
 	stage.step(2, TickInput.new(1 << actions.bit(&"fire")))
-	assert_true(pilot.melee.combo.buffered)
+	assert_false(pilot.melee.combo.buffered)
 	assert_eq(pilot.melee_swings, 1)
 	for tick: int in pilot.melee.combo.current().length():
 		stage.step(3 + tick, TickInput.new())
-	assert_eq(pilot.melee.combo.starts, 2)
-	assert_eq(pilot.melee_swings, 2)
+	assert_eq(pilot.melee.combo.starts, 1)
+	assert_eq(pilot.melee_swings, 1)
 
 
 func test_guard_walk_facing_attacks_and_roll_exit() -> void:

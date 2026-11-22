@@ -1,9 +1,7 @@
 class_name MeleeTable
 extends RefCounted
-## One melee combo as timing data: the hits as windup / active / recovery ticks, the cancel point
-## and the combo window. The bare claw (data/tables/rivet_melee.json, with the charged shock) and
-## each melee weapon (data/tables/melee_weapons.json: electro_baton, katana) load into the same
-## shape, so MeleeCombo plays any of them. A broken row is an error, never a crash.
+## The claw and carried weapons use the same hit model. The mode selects either the weapon's
+## single swing or its original chain. Version-one tables without a mode keep their chain.
 
 const TABLE: String = "res://data/tables/rivet_melee.json"
 const SCHEMA: String = "gtai.rivet-melee/1"
@@ -12,7 +10,11 @@ const WEAPONS_SCHEMA: String = "gtai.melee-weapons/1"
 const CLAW: StringName = &"claw"
 
 var id: StringName = CLAW
-var hits: Array[MeleeHit] = []
+var single_swing: bool = false
+var swing_style: StringName = &""
+var hits: Array[MeleeHit]:
+	get:
+		return _single if single_swing else _chain
 var cancel_ticks: int = 4
 var combo_window_ticks: int = 12
 var shock: Dictionary = {}
@@ -30,6 +32,8 @@ var deflect_m: float = 0.0
 var lean_back_deg: float = 0.0
 var lean_in_deg: float = 0.0
 var errors: Array[String] = []
+var _single: Array[MeleeHit] = []
+var _chain: Array[MeleeHit] = []
 
 
 static func shipped() -> MeleeTable:
@@ -40,7 +44,7 @@ static func from_table(t: DataTable) -> MeleeTable:
 	var m: MeleeTable = MeleeTable.new()
 	_read_combo(t, t.object(t.raw, "claw"), m)
 	m.shock = t.object(t.raw, "shock")
-	m.errors = t.errors()
+	m.errors.append_array(t.errors())
 	if m.hits.is_empty():
 		m.errors.append("rivet_melee.json: claw.hits is empty")
 	return m
@@ -56,7 +60,7 @@ static func weapon_from(t: DataTable, weapon_id: StringName) -> MeleeTable:
 	m.id = weapon_id
 	var rows: Dictionary = t.object(t.raw, "weapons")
 	if not rows.has(String(weapon_id)):
-		m.errors = t.errors()
+		m.errors.append_array(t.errors())
 		m.errors.append("melee_weapons.json: no weapon %s" % weapon_id)
 		return m
 	var row: Dictionary = t.object(rows, String(weapon_id))
@@ -70,7 +74,11 @@ static func weapon_from(t: DataTable, weapon_id: StringName) -> MeleeTable:
 	if row.has("lean_in_deg"):
 		m.lean_back_deg = t.num(row, "lean_back_deg")
 		m.lean_in_deg = t.num(row, "lean_in_deg")
-	m.errors = t.errors()
+	if m.single_swing and row.has("swing_lean_deg"):
+		var lean: Vector2 = t.vec(row, "swing_lean_deg")
+		m.lean_back_deg = lean.x
+		m.lean_in_deg = lean.y
+	m.errors.append_array(t.errors())
 	if m.hits.is_empty():
 		m.errors.append("melee_weapons.json: %s.hits is empty" % weapon_id)
 	return m
@@ -94,30 +102,42 @@ static func weapon_ids() -> Array[StringName]:
 static func _read_combo(t: DataTable, combo: Dictionary, m: MeleeTable) -> void:
 	m.cancel_ticks = t.integer(combo, "cancel_ticks")
 	m.combo_window_ticks = t.integer(combo, "combo_window_ticks")
+	var mode: Variant = t.raw.get("single_swing", false)
+	if mode is bool:
+		m.single_swing = mode
+	else:
+		m.errors.append("single_swing must be a boolean")
+	if combo.has("swing") or m.single_swing:
+		m.swing_style = StringName(t.text(combo, "swing_style"))
+		m._single.append(_read_hit(t, t.object(combo, "swing")))
 	for raw: Variant in t.array(combo, "hits"):
 		var row: Dictionary = raw if raw is Dictionary else {}
-		var h: MeleeHit = MeleeHit.new()
-		h.id = StringName(t.text(row, "id"))
-		h.windup = t.integer(row, "windup_ticks")
-		h.active = t.integer(row, "active_ticks")
-		h.recovery = t.integer(row, "recovery_ticks")
-		h.reach_m = t.num(row, "reach_m")
-		h.cone_dot = t.num(row, "cone_dot")
-		h.damage = t.num(row, "damage")
-		h.knockback_m = t.num(row, "knockback_m")
-		# Weapon-only fields: the claw rows omit them and keep 0 (the claw may lunge: it steps in).
-		if row.has("stun_ticks"):
-			h.stun_ticks = t.integer(row, "stun_ticks")
-			h.chain_hops = t.integer(row, "chain_hops")
-		if row.has("lunge_m"):
-			h.lunge_m = t.num(row, "lunge_m")
-		if row.has("lunge_ticks"):
-			h.lunge_ticks = mini(t.integer(row, "lunge_ticks"), maxi(h.windup - 1, 0))
-		if row.has("grind_ticks"):
-			h.grind_ticks = t.integer(row, "grind_ticks")
-		if row.has("grind_min_ticks"):
-			h.grind_min_ticks = t.integer(row, "grind_min_ticks")
-		m.hits.append(h)
+		m._chain.append(_read_hit(t, row))
+
+
+static func _read_hit(t: DataTable, row: Dictionary) -> MeleeHit:
+	var h: MeleeHit = MeleeHit.new()
+	h.id = StringName(t.text(row, "id"))
+	h.windup = t.integer(row, "windup_ticks")
+	h.active = t.integer(row, "active_ticks")
+	h.recovery = t.integer(row, "recovery_ticks")
+	h.reach_m = t.num(row, "reach_m")
+	h.cone_dot = t.num(row, "cone_dot")
+	h.damage = t.num(row, "damage")
+	h.knockback_m = t.num(row, "knockback_m")
+	# Weapon-only fields: the claw rows omit them and keep 0 (the claw may lunge: it steps in).
+	if row.has("stun_ticks"):
+		h.stun_ticks = t.integer(row, "stun_ticks")
+		h.chain_hops = t.integer(row, "chain_hops")
+	if row.has("lunge_m"):
+		h.lunge_m = t.num(row, "lunge_m")
+	if row.has("lunge_ticks"):
+		h.lunge_ticks = mini(t.integer(row, "lunge_ticks"), maxi(h.windup - 1, 0))
+	if row.has("grind_ticks"):
+		h.grind_ticks = t.integer(row, "grind_ticks")
+	if row.has("grind_min_ticks"):
+		h.grind_min_ticks = t.integer(row, "grind_min_ticks")
+	return h
 
 
 ## True when a hit of this combo grinds (the chainsaw): its hold counter is replay state.

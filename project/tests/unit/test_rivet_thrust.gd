@@ -5,7 +5,15 @@ extends GutTest
 const DT: float = SimClock.TICK_DT
 
 
+func before_each() -> void:
+	# The katana thrust sheets still serve the original combo when selected in its table.
+	var legacy: MeleeTable = MeleeTable.weapon(&"katana")
+	legacy.single_swing = false
+	RivetThrust._hits[&"katana"] = legacy.hits
+
+
 func after_each() -> void:
+	RivetThrust._hits.clear()
 	RivetThrust.enabled = true
 	RivetThrust.recover = true
 

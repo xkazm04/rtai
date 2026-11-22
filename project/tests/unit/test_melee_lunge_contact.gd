@@ -76,7 +76,9 @@ func test_lunge_ticks_are_capped_inside_the_windup() -> void:
 func test_katana_thrust_and_saw_rev_in_land_on_contact() -> void:
 	var rows: Dictionary[StringName, int] = {&"katana": 2, &"chainsaw": 0}
 	for id: StringName in rows:
-		var h: MeleeHit = MeleeTable.weapon(id).hits[rows[id]]
+		var weapon: MeleeTable = MeleeTable.weapon(id)
+		weapon.single_swing = false  # the original thrust and rev-in rows
+		var h: MeleeHit = weapon.hits[rows[id]]
 		assert_gt(h.lunge_ticks, 0, "%s lunges onto contact" % h.id)
 		var steps: PackedFloat32Array = _lunges(h)
 		assert_almost_eq(_before_contact(steps, h.windup), h.lunge_m, 1e-4, str(h.id))

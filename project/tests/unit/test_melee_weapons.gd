@@ -13,13 +13,16 @@ func test_shipped_weapons_load() -> void:
 	for wid: StringName in MeleeTable.weapon_ids():
 		var w: MeleeTable = MeleeTable.weapon(wid)
 		assert_true(w.ok(), "%s: %s" % [wid, w.errors])
+		assert_true(w.single_swing)
+		assert_eq(w.hits.size(), 1)
+		w.single_swing = false
 		var n: int = 2 if wid == &"chainsaw" else 3
 		assert_eq(w.hits.size(), n, "%s is a %d-hit combo" % [wid, n])
 		assert_eq(w.id, wid)
 
 
 func test_claw_keeps_weapon_fields_at_zero() -> void:
-	var claw: MeleeTable = MeleeTable.shipped()
+	var claw: MeleeTable = _legacy(&"claw")
 	assert_true(claw.ok(), str(claw.errors))
 	for h: MeleeHit in claw.hits:
 		assert_eq([h.stun_ticks, h.chain_hops], [0, 0], str(h.id))
@@ -30,8 +33,8 @@ func test_claw_keeps_weapon_fields_at_zero() -> void:
 
 
 func test_baton_is_the_fast_stun_stick() -> void:
-	var baton: MeleeTable = MeleeTable.weapon(&"electro_baton")
-	assert_lt(_mashed_chain_ticks(baton), _mashed_chain_ticks(MeleeTable.shipped()), "faster")
+	var baton: MeleeTable = _legacy(&"electro_baton")
+	assert_lt(_mashed_chain_ticks(baton), _mashed_chain_ticks(_legacy(&"claw")), "faster")
 	for h: MeleeHit in baton.hits:
 		assert_gt(h.stun_ticks, 0, "%s stuns" % h.id)
 	assert_gt(baton.hits[2].chain_hops, 0, "the finisher chains to metal")
@@ -39,8 +42,8 @@ func test_baton_is_the_fast_stun_stick() -> void:
 
 
 func test_katana_reaches_and_lunges() -> void:
-	var katana: MeleeTable = MeleeTable.weapon(&"katana")
-	var claw: MeleeTable = MeleeTable.shipped()
+	var katana: MeleeTable = _legacy(&"katana")
+	var claw: MeleeTable = _legacy(&"claw")
 	for i: int in 3:
 		assert_gt(katana.hits[i].reach_m, claw.hits[i].reach_m, "katana hit %d out-reaches" % i)
 	var c: MeleeCombo = _combo_at_hit(katana, 3)
@@ -58,7 +61,7 @@ func test_katana_reaches_and_lunges() -> void:
 
 
 func test_move_scale_only_while_a_hit_plays() -> void:
-	var katana: MeleeTable = MeleeTable.weapon(&"katana")
+	var katana: MeleeTable = _legacy(&"katana")
 	var c: MeleeCombo = MeleeCombo.new(katana)
 	assert_eq(c.move_scale(), 1.0)
 	c.press()
@@ -67,7 +70,7 @@ func test_move_scale_only_while_a_hit_plays() -> void:
 
 
 func test_view_sweeps_slashes_and_never_a_thrust() -> void:
-	var katana: MeleeTable = MeleeTable.weapon(&"katana")
+	var katana: MeleeTable = _legacy(&"katana")
 	var view: MeleeWeaponView = MeleeWeaponView.new()
 	var c: MeleeCombo = MeleeCombo.new(katana)
 	assert_eq(view.sweep_of(c), 0.0, "idle: on the forearm line")
@@ -99,7 +102,7 @@ func test_planted_fault_broken_row_is_caught() -> void:
 
 
 func test_planted_fault_lunge_into_recovery_is_caught() -> void:
-	var katana: MeleeTable = MeleeTable.weapon(&"katana")
+	var katana: MeleeTable = _legacy(&"katana")
 	var c: MeleeCombo = _combo_at_hit(katana, 3)
 	var h: MeleeHit = katana.hits[2]
 	h.lunge_ticks = 0  # the even spread (the before): the fault below stretches it
@@ -113,7 +116,7 @@ func test_planted_fault_lunge_into_recovery_is_caught() -> void:
 
 func test_baton_finisher_arcs_through_the_metal_line() -> void:
 	# The station's metal dummies sit at x 6/8/10 plus 14 (past the chain radius); a human at 4.
-	var baton: MeleeTable = MeleeTable.weapon(&"electro_baton")
+	var baton: MeleeTable = _legacy(&"electro_baton")
 	var pos: PackedVector2Array = [
 		Vector2(6, 0), Vector2(8, 0), Vector2(10, 0), Vector2(14, 0), Vector2(4, 0)
 	]
@@ -129,7 +132,7 @@ func test_baton_finisher_arcs_through_the_metal_line() -> void:
 
 
 func test_planted_fault_baton_without_radius_does_not_arc() -> void:
-	var baton: MeleeTable = MeleeTable.weapon(&"electro_baton")
+	var baton: MeleeTable = _legacy(&"electro_baton")
 	var pos: PackedVector2Array = [Vector2(6, 0), Vector2(8, 0)]
 	var metal: PackedByteArray = [1, 1]
 	assert_eq(baton.chain_for(baton.hits[2], pos, metal, 0).size(), 2)
@@ -153,7 +156,17 @@ func _mashed_chain_ticks(table: MeleeTable) -> int:
 func _combo_at_hit(table: MeleeTable, index: int) -> MeleeCombo:
 	var c: MeleeCombo = MeleeCombo.new(table)
 	c.press()
-	while c.hit_index < index:
+	for _tick_in: int in 120:
+		if c.hit_index == index:
+			break
 		c.press()
 		c.step()
+	assert_eq(c.hit_index, index, "the requested combo hit started")
 	return c
+
+
+## The alternate rows remain playable when the table selects the old combo.
+func _legacy(id: StringName) -> MeleeTable:
+	var t: MeleeTable = MeleeTable.shipped() if id == MeleeTable.CLAW else MeleeTable.weapon(id)
+	t.single_swing = false
+	return t

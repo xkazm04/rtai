@@ -15,7 +15,6 @@ const GRIP: Color = Color("2b2622")
 const SHAFT: Color = Color("7d8794")
 const SPARK: Color = Color("e6eeff")
 const CREAM: Color = Color("f4ecd8")
-const SMEAR_TICKS: int = 4
 const INK_PX: float = 1.5
 
 var kind: StringName = &"katana"
@@ -53,7 +52,7 @@ func track_at(grip: Vector2, forearm: Vector2, combo: MeleeCombo) -> void:
 	if hot:
 		@warning_ignore("return_value_discarded")
 		_smear.append(_tip)
-		if _smear.size() > SMEAR_TICKS:
+		if _smear.size() > MeleeSmearView.trail_frames(combo.table):
 			_smear.remove_at(0)
 	else:
 		_smear.clear()
@@ -70,7 +69,13 @@ func zap(at: Vector2, ticks: int) -> void:
 ## The sweep angle off the forearm for `combo`'s current hit (0 when idle or on a thrust).
 func sweep_of(combo: MeleeCombo) -> float:
 	var h: MeleeHit = combo.current()
-	if h == null or h.lunge_m > 0.0:
+	if h == null:
+		return 0.0
+	if combo.table.single_swing:
+		var ph: Vector3 = Vector3(h.windup, h.active, h.recovery) * SimClock.TICK_DT
+		var t_s: float = combo.tick_in * SimClock.TICK_DT
+		return MeleeSwing.angle(t_s, ph, 1.0, acos(h.cone_dot), combo.table.swing_style)
+	if h.lunge_m > 0.0:
 		return 0.0
 	var side: float = sweep_rad * (1.0 if combo.hit_index % 2 == 1 else -1.0)
 	var t: float = float(combo.tick_in)

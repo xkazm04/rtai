@@ -1,6 +1,7 @@
 class_name MeleeCombo
 extends RefCounted
-## The claw combo on the fixed tick: press() starts hit 1, or buffers the next hit while one
+## Shipped swings ignore presses until recovery ends. With single_swing off, the legacy combo
+## runs on the fixed tick: press() starts hit 1, or buffers the next hit while one
 ## plays; a buffered hit starts `cancel_ticks` into the current hit's recovery. After the last
 ## hit's recovery, a press within the combo window continues the chain; later, it restarts at
 ## hit 1, and the finisher (the last row) always ends the chain. lands() is true on exactly one
@@ -31,6 +32,10 @@ func _init(p_table: MeleeTable) -> void:
 
 
 func press() -> void:
+	if table.single_swing:
+		if hit_index == 0:
+			_start(1)
+		return
 	if hit_index > 0:
 		buffered = true
 		return

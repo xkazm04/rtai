@@ -1,6 +1,97 @@
 {
+  "$defs": {
+    "hit": {
+      "additionalProperties": false,
+      "properties": {
+        "active_ticks": {
+          "maximum": 60,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "cone_dot": {
+          "maximum": 1,
+          "minimum": -1,
+          "type": "number"
+        },
+        "damage": {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "knockback_m": {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        },
+        "lunge_m": {
+          "maximum": 3,
+          "minimum": 0,
+          "type": "number"
+        },
+        "reach_m": {
+          "maximum": 6,
+          "minimum": 0.3,
+          "type": "number"
+        },
+        "recovery_ticks": {
+          "maximum": 120,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "windup_ticks": {
+          "maximum": 120,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "active_ticks",
+        "cone_dot",
+        "damage",
+        "doc",
+        "id",
+        "knockback_m",
+        "reach_m",
+        "recovery_ticks",
+        "windup_ticks"
+      ],
+      "type": "object"
+    }
+  },
   "$id": "gtai.rivet-melee/1",
   "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "single_swing": {
+            "const": true
+          }
+        },
+        "required": [
+          "single_swing"
+        ]
+      },
+      "then": {
+        "properties": {
+          "claw": {
+            "required": [
+              "swing",
+              "swing_style"
+            ]
+          }
+        }
+      }
+    }
+  ],
   "properties": {
     "claw": {
       "additionalProperties": false,
@@ -17,73 +108,19 @@
         },
         "hits": {
           "items": {
-            "additionalProperties": false,
-            "properties": {
-              "active_ticks": {
-                "maximum": 60,
-                "minimum": 1,
-                "type": "integer"
-              },
-              "cone_dot": {
-                "maximum": 1,
-                "minimum": -1,
-                "type": "number"
-              },
-              "damage": {
-                "maximum": 100,
-                "minimum": 0,
-                "type": "number"
-              },
-              "doc": {
-                "minLength": 1,
-                "type": "string"
-              },
-              "id": {
-                "pattern": "^[a-z][a-z0-9_]*$",
-                "type": "string"
-              },
-              "knockback_m": {
-                "maximum": 20,
-                "minimum": 0,
-                "type": "number"
-              },
-              "lunge_m": {
-                "maximum": 3,
-                "minimum": 0,
-                "type": "number"
-              },
-              "reach_m": {
-                "maximum": 6,
-                "minimum": 0.3,
-                "type": "number"
-              },
-              "recovery_ticks": {
-                "maximum": 120,
-                "minimum": 0,
-                "type": "integer"
-              },
-              "windup_ticks": {
-                "maximum": 120,
-                "minimum": 1,
-                "type": "integer"
-              }
-            },
-            "required": [
-              "active_ticks",
-              "cone_dot",
-              "damage",
-              "doc",
-              "id",
-              "knockback_m",
-              "reach_m",
-              "recovery_ticks",
-              "windup_ticks"
-            ],
-            "type": "object"
+            "$ref": "#/$defs/hit"
           },
           "maxItems": 6,
           "minItems": 1,
           "type": "array"
+        },
+        "swing": {
+          "$ref": "#/$defs/hit"
+        },
+        "swing_style": {
+          "enum": [
+            "rake"
+          ]
         }
       },
       "required": [
@@ -170,6 +207,9 @@
         "recovery_ticks"
       ],
       "type": "object"
+    },
+    "single_swing": {
+      "type": "boolean"
     }
   },
   "required": [

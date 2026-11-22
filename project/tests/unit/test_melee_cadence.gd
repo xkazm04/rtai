@@ -34,6 +34,7 @@ func test_planted_fault_no_cancel_slows_the_finisher() -> void:
 
 func _table(id: StringName) -> MeleeTable:
 	var t: MeleeTable = MeleeTable.shipped() if id == &"" else MeleeTable.weapon(id)
+	t.single_swing = false  # legacy buffered-combo cadence
 	assert_true(t.ok(), str(t.errors))
 	return t
 
