@@ -193,7 +193,7 @@ func damage(
 		_drop(victim)
 	elif victim.kind != Fighter.Kind.RIVET:
 		wounded.emit(victim, weapon)
-	victim.take(amount, tick, hit_dir)
+	MoveCarry.take(self, victim, amount, killer_id, weapon)
 
 
 func write_state(out: StreamPeerBuffer) -> void:

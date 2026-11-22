@@ -130,6 +130,57 @@
           ],
           "type": "object"
         },
+        "overkill_carry": {
+          "additionalProperties": false,
+          "properties": {
+            "arc_s": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "carry_k": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "enabled": {
+              "type": "boolean"
+            },
+            "hops": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "radius_m": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "rank_2": {
+              "additionalProperties": false,
+              "properties": {
+                "hops": {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "radius_m": {
+                  "exclusiveMinimum": 0,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "hops",
+                "radius_m"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "arc_s",
+            "carry_k",
+            "enabled",
+            "hops",
+            "radius_m",
+            "rank_2"
+          ],
+          "type": "object"
+        },
         "tonnage_armour_crack": {
           "additionalProperties": false,
           "properties": {
@@ -157,6 +208,7 @@
         "doc",
         "kerf_blink_behind",
         "ohm_short_circuit",
+        "overkill_carry",
         "tonnage_armour_crack"
       ],
       "type": "object"

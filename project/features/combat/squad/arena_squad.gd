@@ -8,6 +8,7 @@ const ROUTES_PER_TICK: int = 2
 
 var mounts: FoeMounts = FoeMounts.new()
 var moves: MoveTable = MoveTable.shipped()
+var carry: MoveCarry
 var shield_cover: FoeShieldCover = FoeShieldCover.new()
 var rockets: FoeRocketFlight = FoeRocketFlight.new()
 var pit: EnemyPit

@@ -27,6 +27,17 @@
       "immune_s": 4,
       "stun_s": 2
     },
+    "overkill_carry": {
+      "arc_s": 0.2,
+      "carry_k": 1,
+      "enabled": true,
+      "hops": 1,
+      "radius_m": 3,
+      "rank_2": {
+        "hops": 2,
+        "radius_m": 4.5
+      }
+    },
     "tonnage_armour_crack": {
       "enabled": true,
       "open_front_k": 1,

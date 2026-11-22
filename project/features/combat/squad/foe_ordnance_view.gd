@@ -44,6 +44,7 @@ func _draw() -> void:
 			FoeShieldView.draw_plate(self, h, mind, arena.tick)
 		if stunned:
 			FoeStunView.arcs(self, h, arena.squad_ai.minds[h.id], arena.tick)
+	MoveCarryView.paint(self, arena)
 
 
 func _mount_launchers() -> void:
