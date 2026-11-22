@@ -8,6 +8,10 @@ Owner's note 7: "Ghost powers: First level ability would be to hold 'Q' key for 
 - Hold Q / LB: the range ring and the form's target mark on the ground, in soul teal over an ink rim. Release: the loaded ghost appears at the spot, strikes once, fades. Rivet keeps walking, guarding and firing in his own body. Input `ghost_deploy` bit 19 / wire bit 32; old tapes carry no bit >= 31.
 - Which ghost: G (power_gearbox, unchanged) cycles the loaded ghost; the HUD chevron marks it with the Q hint and the next chip carries the G hint; a cooling ghost shows the deploy cooldown arc.
 - Cost: cooldown only, per form (`ghost_attacks.json` `deploy.<form>.cooldown_ticks`: 480, Kerf 600).
+- The ghost is seen: it fades in over 6 ticks, holds its signature follow-through at 0.95 alpha and fades out. It stays 0.70 to 0.90 s (`ghost_attacks.json` `deploy.<form>.life_ticks`: Kerf 45, Dent 42, Ohm 48, Tonnage 54; fully washed 25 / 23 / 27 / 31 ticks), against 0.25 to 0.5 s before g6. The strike still lands once, on the release tick: 40 paired worth trials re-ran byte-identical. Before/after: `C:/Users/kazda/kiro/gtai-masters/n24/ghost/deploy_kerf-64-linger-before-after-f0134.png`.
+- Films (`C:/Users/kazda/kiro/gtai-masters/n24/ghost/`, `frames.json` 13 entries): `deploy_all.mp4` at 32 px/m, 1920x1080, 60 fps, 1440 frames = 24.0 s (ffprobe), each ghost deployed twice while Rivet strafes and fires; four 64 px/m real-speed close-ups `deploy_<form>-64.mp4` of 420 frames = 7.0 s each; hold-ring stills per form; HUD before/after.
+- Tape identity: `run_scenarios: 67 ran, 0 failed`, `replay_60s` final `cbeb734ff9b97c41` (the same as main) after every call g1 to g6; no tape digest moved, no tape re-recorded. The deploy is a new bit (19 / wire 32) that no shipped tape carries.
+- Checks on the last code commit `ba7ac5163`: lint 19/19; unit 3809 passed, 0 failed, 2 skipped. Mutate: `ghost_deploy.gd` 19/20, strike 17/20, spot 19/20, `ghost_deploy_bot.gd` 18/20, `ghost_deploy_body.gd` 11/13 (changed lines).
 - Mastery: the transformation is kept behind `ghost_forms.json` `transform_unlocked` (false), on key T; story mode keeps it for quest 1's beats.
 
 ### What one deploy is worth (`evidence/ghost/deploy-worth.md`, probe `project/dev/ghost-forms/deploy_worth_run.gd`)
@@ -37,6 +41,7 @@ Kerf and Dent: 0 uses (picked only at wave 4 or 8 and no fitting target before t
 - The bot never deploys Kerf or Dent in 8 waves: it picks Dent after wave 4 and Kerf after the last fight, and a Dent ram needs 2 or more hostiles on one line within 8 m, which the bot never set up (`evidence/ghost/gauntlet-deploys.md`). Their worth comes from the probe only. Novice was not measured (two profiles, three seeds).
 - The worth probe starts every seed from one formation (the seed reaches only the RNG context), so the Kerf and Dent confidence intervals collapse to a single value. The formation jitter that would fix it was dropped in g4.
 - Mastery is switched on by launch args read inside a souls class (`GhostPilot.shipped()` parses `--film-form`, `--sweep-form`, `--bot=boss --ghost`) and through the private `stage._quest`. Tests and tapes are green, but it belongs to the caller (StagePilot / the dev entries).
+- `ghost_deploy_effects.gd` (Ohm's afterglow) mutate 0/7 on the changed lines: no headless test reads the bolt's fade; it is checked by eye only (`deploy_ohm-64-f0121.png`).
 - Before g6 a ghost was on screen for only 0.25 to 0.5 s (`life_ticks` 15 to 30), a teal streak at real speed. g6 lengthens it (see below).
 
 ## What blocked or slowed me
@@ -79,3 +84,4 @@ Each ghost earns its own mastery, so the transformation arrives one ghost at a t
 | g3-deploy-worth | 73 | accepted, partly | 3 commits f04829845..82dd30c77 (Ohm view, film entry, worth evidence); probe left staged at the hard stop, committed in g4 |
 | g4-deploy-polish | 74 | accepted | 7 commits 850233008..a671deded (probe, Ohm placement, HUD plate, cost decision, tests, live fire in the film); formation jitter dropped |
 | g5-deploy-bot | 47 | accepted | 5 commits c84deef09..a4503612a (GhostDeployBot, 3-line `bot_brain.gd` call site, tests, paired gauntlet evidence); mutate 18/20 |
+| g6-deploy-linger | 27 | accepted | 2 commits 9a9bc4f78, ba7ac5163 (life_ticks, fade-in + hold), re-shot films and stills |
