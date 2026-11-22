@@ -53,6 +53,10 @@
 - 18:31 ASTRA RUNNING gaps since 18:31 (resume of numbers-gaps, brief `evidence/briefs/n24-pressure-01b-gaps.md`, lock
   pid 9736, hard stop 19:45, commit by 19:40).
 
+- 18:37 MILESTONE fire-gap tool `ace15ca16` (01b task A): `project/dev/gauntlet/fire_gaps.gd` (+ arena, clock, test),
+  `evidence/n24-pressure/fire-gaps/before.{json,md}`, debt baseline through the tool (dev_loc 30712 -> 31109, reason
+  recorded). Read: accepted. Astra `gaps` still running on tasks B and C.
+
 NEXT (session 1 end, 18:3x; Astra `gaps` is running until <= 19:45):
 1. Check `C:\Users\kazda\kiro\gtai-n24\logs\pressure\astra.lock` and the last line of `astra-calls.jsonl`; read
    `evidence/briefs/n24-pressure-01b-gaps.out.txt` when it ends. Review tasks A (fire-gap tool + debt), B (rifle
