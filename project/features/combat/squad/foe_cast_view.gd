@@ -43,7 +43,7 @@ static func draws_launcher(h: Fighter) -> bool:
 
 ## Called during normal arena feed construction, before the pool poses this tick.
 func feed(h: Fighter, i: int) -> void:
-	var sheets: CastCards.Sheets = CastCards.current(h.archetype)
+	var sheets: CastCards.Sheets = null if h.machine else CastCards.current(h.archetype)
 	if sheets == null:
 		if _poses.has(h):
 			var previous: CutRig = _rigs.rig_for(h.id)
@@ -129,7 +129,7 @@ func _near(rig: CutRig, pose: CastCardPose) -> void:
 
 
 func _wounded(h: Fighter, weapon: StringName) -> void:
-	if CastCards.current(h.archetype) == null:
+	if h.machine or CastCards.current(h.archetype) == null:
 		return
 	var table: ReactTable = _react.pipe.table
 	var cls: StringName = _react.hit_class_of(weapon)
@@ -142,7 +142,7 @@ func _wounded(h: Fighter, weapon: StringName) -> void:
 
 
 func _killed(h: Fighter, weapon: StringName, _dir: Vector2, _at: Vector2, kind: StringName) -> void:
-	if CastCards.current(h.archetype) == null:
+	if h.machine or CastCards.current(h.archetype) == null:
 		return
 	var cls: StringName = ReactLink.KILL_KIND_CLASS.get(kind, _react.hit_class_of(weapon))
 	var family: StringName = _react.pipe.table.death_for(cls)

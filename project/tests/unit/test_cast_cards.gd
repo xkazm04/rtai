@@ -67,3 +67,30 @@ func test_live_firing_tick_selects_the_discharge() -> void:
 		if saw[3]:
 			break
 	assert_eq(saw, [true, true, true, true])
+
+
+func test_carrier_steps_from_windup_to_shove_to_recovery() -> void:
+	var arena: CombatArena = CombatArena.new(
+		CombatTuning.shipped(), Events, RngRegistry.new(9).stream(&"combat")
+	)
+	arena.guard_map = GuardRouteMap.new(Rect2(-30, -30, 60, 60), [], null, 0.45)
+	arena.squad_ai = ArenaSquad.new(arena.guard_map)
+	var h: Fighter = arena.squad_ai.spawn_member(arena, Vector2.ONE, &"shield_robot")
+	var mind: SquadMind = arena.squad_ai.mind_for(h)
+	h.swing_left = mind.agent.arch.telegraph_ticks
+	assert_eq(FoeShieldCardView.attack_row(h, arena), 0)
+	h.swing_left = 1
+	assert_eq(FoeShieldCardView.attack_row(h, arena), 1)
+	h.swing_left = 0
+	mind.shield.lunge_left = FoeShield.LUNGE_TICKS
+	assert_eq(FoeShieldCardView.attack_row(h, arena), 2)
+	mind.shield.lunge_left = 0
+	mind.agent.shot_tick = arena.tick
+	assert_eq(FoeShieldCardView.attack_row(h, arena), 2)
+	arena.tick += 1
+	assert_eq(FoeShieldCardView.attack_row(h, arena), 3)
+	for pitch: String in ["p55", "p70"]:
+		var sheets: CastCards.Sheets = CastCards.shipped().lookup(h.archetype, pitch)
+		assert_not_null(sheets)
+		for path: String in [sheets.walk, sheets.attack, sheets.hit, sheets.fall]:
+			assert_true(ResourceLoader.exists(path))
