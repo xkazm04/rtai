@@ -4,7 +4,7 @@
 
 The isolated 60-second replay finished at `cbeb734ff9b97c41645f735114692ea3b9e7cc6578750f32d8d9f31d69844e85`. All six saved or embedded tapes and all 61 archived digest fields matched the previous conversion in each control mode. No golden needed an update.
 
-The full default suite passed 65/65. The initial legacy run passed 64/65. Its 50-person rig timing reached 1.035 ms against a 1.000 ms limit. The isolated legacy rerun passed at 0.907 ms.
+The full default suite passed 65/65. The initial legacy run passed 64/65. Its 50-person rig timing reached 1.035 ms against a 1.000 ms limit. The isolated legacy rerun passed at 0.907 ms. The full legacy suite then passed 65/65, with all 61 archived digest fields still identical.
 
 In the `brutality_kills` rocket replay, the shots at ticks **66** and **396** each took **10.057143 HP**, up from 1.005714. The larger loss lasted one more checkpoint before repair restored full health. The previous scale reproduced the archived checkpoints exactly in each control mode. The two tick-700 finals still match. The scenario generates this tape in memory.
 
