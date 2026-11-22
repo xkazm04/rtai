@@ -22,6 +22,17 @@ Pistol Rivet on a 5.5 m strafe circle, seeds 1..10, 30 s budget, `off` (no deplo
 
 Caveat: in this run every seed starts from the same formation (the seed reaches only the RNG context), so the ten pairs are near copies and the Kerf and Dent intervals collapse to one value. Dent's encounter is trivial (pistol alone clears it in 1.17 s).
 
+### What the deploy does in the gauntlet (`evidence/ghost/gauntlet-deploys.md`, test player `GhostDeployBot`)
+8-wave street gauntlet, greedy picks, wheel controls, seeds 1-3, paired: before = the bot without deploys (parent of a3ebfcd2d), after = the bot deploying the loaded ghost.
+
+| profile | ghost | uses | kills | kills / use | machine-s stunned |
+|---|---|---:|---:|---:|---:|
+| average | Tonnage | 20 | 45 | 2.25 | - |
+| average | Ohm | 5 | 3 | 0.60 | 9.38 |
+| expert | Tonnage | 19 | 37 | 1.95 | - |
+
+Kerf and Dent: 0 uses (picked only at wave 4 or 8 and no fitting target before the run ended). Outcomes: average seed 2 died on wave 7 -> cleared 8; expert seed 1 tick cap on wave 8 -> cleared 8; the other four pairs unchanged (expert seed 2 dies on 5 in both).
+
 ## What does not
 
 ## What blocked or slowed me
