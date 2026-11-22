@@ -75,6 +75,7 @@ Stills and clips: `C:\Users\kazda\kiro\gtai-masters\n23\moves\` (`frames.json`, 
 - One-line call sites in shared files: `combat_arena.gd` (`var move_tally`, `MoveState.write_fighter` in write_state, `MoveCarry.take` at :196; two doc-comment lines trimmed to stay under the cap), `gauntlet_wave_stats.gd` (`begin_wave`, `append_wave`), `foe_shield_view.gd` (`FoeStunView.place_shield`), `foe_ordnance_view.gd:47` (`MoveCarryView.paint`), `gauntlet_draw.gd:9,34`, `gauntlet_bonus_apply.gd:26-27`.
 - `project/data/loc/en.po`: three appended entries (`GAUNTLET__KIND__EFFECT`, `GAUNTLET__EFFECT__OVERKILL_CARRY`, `_2`), `73eec563c`; an append conflict with another lane keeps both sides.
 - `project/features/souls/plate_sparks.gd` `tracer()` enemy-round colour: left to street (needs `ShotDraw`, which exists only on `n23-street`).
+- street's `NEED moves` 08:00 (merged-game combat freeze, about 40 alive, no damage either way; `n23-loop/evidence/n23-loop/moves/on/runs/expert-1.json` wave 33): not investigated in code tonight (it reached moves after the last code commit). Read-only check at 09:33: the Ohm short-circuit stun and immunity are absolute-tick deadlines (`project/features/combat/moves/ohm_short_circuit.gd:21-22`, `stun_until = tick + duration`), so a stun cannot stay on forever by itself. Not ruled out: a move state holding a squad attack slot, or the freeze having nothing to do with the moves. First step next night: re-run loop's expert-1 seed with all four `enabled: false`; if it still freezes, it is not a moves fault.
 
 ## Next steps
 
