@@ -1,0 +1,13 @@
+{
+  "doc": "Drafted by the Director on 2026-11-21 for the four directions in the owner's sheet that have no spoken line, and the two blank place names. NOT approved by the owner: shown in the game tonight with draft: true and listed as Calls in REPORT. Each names the direction row it stands for (the row's text in dialog.owner.json).",
+  "lines": [
+    {"id": "draft-mulroney-radio", "draft": true, "who": "mulroney", "for_direction": "Mulroney through radio tells to keep him busy, reinforcements are on the way", "t": "Keep it busy! Nobody plays hero. I'm two minutes out with everybody we got!", "cue": "over the radio"},
+    {"id": "draft-cop-power-down", "draft": true, "who": "metro-cop", "for_direction": "Scared cop tries to engage with Rivet and requests to turn off its power system for anyone safety", "t": "Sir... unit... for everyone's safety, power down your system. Please. Just power down.", "cue": "hands shaking"},
+    {"id": "draft-rivet-why", "draft": true, "who": "rivet", "for_direction": "Rivet questions why he should do that, thinks they destroyed the factory and now they want to kill him to clear evidence", "t": "Power down? So you can finish it? You blew the plant and now you clean up the witness!"},
+    {"id": "draft-winnick-closer", "draft": true, "who": "winnick", "for_direction": "Dale comes closer, telling they are here to help him, that he understand the loss", "t": "We're here to help you, Rivet. I understand the loss. I really do.", "cue": "stepping closer"}
+  ],
+  "places": [
+    {"id": "draft-hideout", "draft": true, "fills": "<locality name>", "t": "the skip on Harbor Road", "why": "quest 1's stage already has the hide spot harbor-skip"},
+    {"id": "draft-don-waits", "draft": true, "fills": "<location>", "t": "the Toner Room", "why": "Don Fax's place in quest 1's places table"}
+  ]
+}

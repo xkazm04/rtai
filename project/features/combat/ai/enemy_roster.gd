@@ -20,6 +20,7 @@ class Archetype:
 	extends RefCounted
 	var id: StringName = &""
 	var body: StringName = &"human"
+	var machine: bool = false
 	var hit_fx: StringName = &"blood"
 	var weapon: Weapon = null
 	var rear_mult: float = 1.0
@@ -170,6 +171,7 @@ func _read_foe(t: DataTable, row: Dictionary, a: Archetype) -> void:
 	if tier != a.tier or a.tier < 1 or a.tier > 5:
 		_errors.append("%s: tier must be an integer from 1 to 5" % a.id)
 	a.explicit_spawn = row.get("explicit_spawn", false) == true
+	a.machine = row.get("machine", false) == true
 	if row.has("placement"):
 		a.placement = StringName(t.text(row, "placement"))
 	if row.has("alt_weapon"):

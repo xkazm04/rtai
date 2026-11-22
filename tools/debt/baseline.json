@@ -110,7 +110,8 @@
         "2026-11-21: Exercise the scene control selection through the same street entry used by live play (dev_loc 28525 -> 28529)",
         "2026-11-22: --pick-filter for n23 loop (dev_loc 28529 -> 28537)",
         "2026-11-22: RivetSelfBlast call site in fight_areas + dev/controls film for n23 controls (dev_loc 28529 -> 28704)",
-        "2026-11-22: n23 controls refilm: visible range target, firing-port wall, production HP meter and 64 px/m capture (dev_loc 28704 -> 28803)"
+        "2026-11-22: n23 controls refilm: visible range target, firing-port wall, production HP meter and 64 px/m capture (dev_loc 28704 -> 28803)",
+        "2026-11-22: move_ttk kill-time probe for n23 moves (dev_loc 28529 -> 28927)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -130,6 +131,7 @@
         "project/dev/handheld": 247,
         "project/dev/held": 103,
         "project/dev/human_react": 412,
+        "project/dev/moves": 398,
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
         "project/dev/quest1_city_fit.gd": 18,
@@ -148,7 +150,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 28810
+      "total": 29208
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -409,7 +411,9 @@
         "2026-11-21: Pin a single squad rocket burst, high-wall occlusion and the stomp sight line in the existing foe tests (files_past_soft_cap 65 -> 67)",
         "2026-11-22: --bot-salt for n23 loop (files_past_soft_cap 67 -> 67)",
         "2026-11-22: --pick-filter for n23 loop (files_past_soft_cap 67 -> 67)",
-        "2026-11-22: RivetSelfBlast call site in fight_areas + dev/controls film for n23 controls (files_past_soft_cap 67 -> 67)"
+        "2026-11-22: RivetSelfBlast call site in fight_areas + dev/controls film for n23 controls (files_past_soft_cap 67 -> 67)",
+        "2026-11-22: --bot and --result for n23 prologue (files_past_soft_cap 67 -> 67)",
+        "2026-11-22: Merge of controls, moves and loop requires their distinct KNOWN_FLAGS in launch_args.gd (+2 lines). (files_past_soft_cap 67 -> 67)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -418,7 +422,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 238,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 215,
+        "project/boot/launch_args.gd": 217,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,
@@ -485,7 +489,8 @@
     "lane_named_dev_dirs": {
       "accepted": [
         "2026-11-21: guard film dev scene (n22 guard) (lane_named_dev_dirs 6 -> 7)",
-        "2026-11-22: RivetSelfBlast call site in fight_areas + dev/controls film for n23 controls (lane_named_dev_dirs 7 -> 8)"
+        "2026-11-22: RivetSelfBlast call site in fight_areas + dev/controls film for n23 controls (lane_named_dev_dirs 7 -> 8)",
+        "2026-11-22: --bot and --result for n23 prologue (lane_named_dev_dirs 7 -> 8)"
       ],
       "files": {
         "project/dev/audio": 1,
@@ -495,9 +500,10 @@
         "project/dev/gunplay": 1,
         "project/dev/held": 1,
         "project/dev/overlays": 1,
+        "project/dev/prologue": 1,
         "project/dev/weapon_art": 1
       },
-      "total": 8
+      "total": 9
     },
     "unused_class_names": {
       "files": {

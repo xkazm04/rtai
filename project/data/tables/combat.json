@@ -20,6 +20,34 @@
     "radius_m": 0.45,
     "walk_mps": 3
   },
+  "moves": {
+    "doc": "Optional combat moves. Each row enables its own move. Durations are in seconds.",
+    "kerf_blink_behind": {
+      "enabled": true
+    },
+    "ohm_short_circuit": {
+      "boss_stun_s": 0.6,
+      "enabled": true,
+      "immune_s": 4,
+      "stun_s": 2
+    },
+    "overkill_carry": {
+      "arc_s": 0.2,
+      "carry_k": 1,
+      "enabled": true,
+      "hops": 1,
+      "radius_m": 3,
+      "rank_2": {
+        "hops": 2,
+        "radius_m": 4.5
+      }
+    },
+    "tonnage_armour_crack": {
+      "enabled": true,
+      "open_front_k": 1,
+      "open_s": 4
+    }
+  },
   "rivet": {
     "death_beat_s": 1,
     "hp": 100,

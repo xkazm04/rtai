@@ -13,6 +13,8 @@ var shield: FoeShield
 var mobile_goal: Vector2 = Vector2.INF
 var rocket: FoeRocket
 var agent: EnemyAgent
+var stun_until: int = 0
+var immune_until: int = 0
 ## Rounds remaining when a token, range or sight interrupted the production trigger.
 var paused_rounds: int = 0
 var cover_ceiling: int = 0

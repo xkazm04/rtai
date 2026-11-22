@@ -8,9 +8,8 @@ extends RefCounted
 
 ## A round landed (after damage): the hit-feel hook (features/combat/hit_feel, lane gunplay).
 signal struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName)
-## A lethal hit on a non-Rivet fighter, from the chokepoint right after Events.actor_killed: the
-## kill payload for brutality and human-reactions (weapon id or &"burn", hit direction, hit point
-## in metres, the events.json death kind). Lane gunplay, night JOURNAL REQUEST 1.
+## Lethal non-Rivet hit, after Events.actor_killed. Includes weapon (or burn), direction, impact
+## in metres and the events.json death kind for brutality and human reactions.
 signal kill_landed(victim: Fighter, weapon: StringName, dir: Vector2, at: Vector2, kind: StringName)
 ## A non-lethal hit on a non-Rivet fighter, from the chokepoint (view only: MeleeWound, n7-melee).
 signal wounded(victim: Fighter, weapon: StringName)
@@ -22,6 +21,7 @@ const SPAWN_SPREAD_M: float = 2.5
 var tuning: CombatTuning
 var guard_map: GuardRouteMap
 var squad_ai: ArenaSquad = null
+var move_tally: MoveTally = MoveTally.new()
 var rivet: Fighter
 var hostiles: Array[Fighter] = []
 var shots: Array[Shot] = []
@@ -50,7 +50,6 @@ var guard: PlayerGuard = null
 var walls: ArenaWalls = null
 ## Area effects start with the first GunHand shot, so quest 1 (no gun) keeps its goldens.
 var areas: FightAreas = null
-## The landing hit's direction and point, set before damage() (kill_landed reads them).
 var hit_dir: Vector2 = Vector2.ZERO
 var hit_at: Vector2 = Vector2.ZERO
 ## Lane gunplay: the round being landed is a charge gun's full charge (HitLink lands it heavy).
@@ -194,7 +193,7 @@ func damage(
 		_drop(victim)
 	elif victim.kind != Fighter.Kind.RIVET:
 		wounded.emit(victim, weapon)
-	victim.take(amount, tick, hit_dir)
+	MoveCarry.take(self, victim, amount, killer_id, weapon)
 
 
 func write_state(out: StreamPeerBuffer) -> void:
@@ -202,6 +201,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(hostiles.size())
 	for h: Fighter in hostiles:
 		h.write_state(out)
+		MoveState.write_fighter(self, h, out)
 	out.put_32(shots.size())
 	out.put_32(balls.size())
 	out.put_32(kills)

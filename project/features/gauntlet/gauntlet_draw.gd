@@ -6,6 +6,7 @@ const TABLE: String = "res://data/tables/gauntlet_bonuses.json"
 const SCHEMA: String = "gtai.gauntlet_bonuses/1"
 
 var rows: Dictionary[StringName, Dictionary] = {}
+var moves: MoveTable = MoveTable.shipped()
 var _rng: RandomNumberGenerator
 
 
@@ -30,7 +31,7 @@ func offer(wave: int, history: Array[Dictionary], held: Array[StringName]) -> Ar
 	for id: StringName in rows:
 		var row: Dictionary = rows[id]
 		var first: float = row["min_wave"]
-		if first > wave or taken.has(id):
+		if first > wave or taken.has(id) or not MoveBonus.offerable(row, taken, moves):
 			continue
 		if row["kind"] != "stat" and owned.has(StringName(str(row["ref"]))):
 			continue

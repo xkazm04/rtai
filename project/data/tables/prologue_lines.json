@@ -1,0 +1,314 @@
+{
+  "places": [
+    {
+      "draft": true,
+      "fills": "<locality name>",
+      "id": "draft_hideout",
+      "t": "the skip on Harbor Road",
+      "why": "quest 1's stage already has the hide spot harbor-skip"
+    },
+    {
+      "draft": true,
+      "fills": "<location>",
+      "id": "draft_don_waits",
+      "t": "the Toner Room",
+      "why": "Don Fax's place in quest 1's places table"
+    }
+  ],
+  "rows": [
+    {
+      "beat": 1,
+      "id": "b1_arrival",
+      "k": "beat",
+      "t": "Beat 1 · Rivet just murdered three cops and the next police units arrive at the scene. Ten cops with Dale in the lead; Mulroney in the next wave, on the radio"
+    },
+    {
+      "beat": 1,
+      "cue": "steps out with his pole, sees the bodies",
+      "id": "b1_l01_warden_three_down",
+      "k": "line",
+      "t": "To whole unit, we have three officers down. The appliance did three officers. What do we do now?",
+      "who": "warden"
+    },
+    {
+      "beat": 1,
+      "id": "b1_dir_mulroney_radio",
+      "k": "dir",
+      "t": "Mulroney through radio tells to keep him busy, reinforcements are on the way"
+    },
+    {
+      "beat": 1,
+      "cue": "over the radio",
+      "draft": true,
+      "for_direction": "Mulroney through radio tells to keep him busy, reinforcements are on the way",
+      "id": "draft_mulroney_radio",
+      "k": "line",
+      "t": "Keep it busy! Nobody plays hero. I'm two minutes out with everybody we got!",
+      "who": "mulroney"
+    },
+    {
+      "beat": 1,
+      "cue": "scene start, over the three dead cops. We can hear ghosts' unrecognized voices and sounds in his head",
+      "id": "b1_l02_rivet_three",
+      "k": "line",
+      "t": "Three. I did three. I KNOW it's three! Stop counting WITH me! What is happening ?",
+      "who": "rivet"
+    },
+    {
+      "beat": 1,
+      "cue": "catchers fan out with poles",
+      "id": "b1_l03_cop_gary",
+      "k": "line",
+      "t": "Who's it talking to? Gary, who's it talking to? Is there another one?!",
+      "who": "metro-cop"
+    },
+    {
+      "beat": 1,
+      "id": "b1_dir_power_down",
+      "k": "dir",
+      "t": "Scared cop tries to engage with Rivet and requests to turn off its power system for anyone safety"
+    },
+    {
+      "beat": 1,
+      "cue": "hands shaking",
+      "draft": true,
+      "for_direction": "Scared cop tries to engage with Rivet and requests to turn off its power system for anyone safety",
+      "id": "draft_cop_power_down",
+      "k": "line",
+      "t": "Sir... unit... for everyone's safety, power down your system. Please. Just power down.",
+      "who": "metro-cop"
+    },
+    {
+      "beat": 1,
+      "id": "b1_dir_witness",
+      "k": "dir",
+      "t": "Rivet questions why he should do that, thinks they destroyed the factory and now they want to kill him to clear evidence"
+    },
+    {
+      "beat": 1,
+      "draft": true,
+      "for_direction": "Rivet questions why he should do that, thinks they destroyed the factory and now they want to kill him to clear evidence",
+      "id": "draft_rivet_why",
+      "k": "line",
+      "t": "Power down? So you can finish it? You blew the plant and now you clean up the witness!",
+      "who": "rivet"
+    },
+    {
+      "beat": 1,
+      "id": "b1_l04_winnick_dale",
+      "k": "line",
+      "t": "Rivet? I'm Dale. We are not here to harm you, we are trying to understand what happenned here.",
+      "who": "winnick"
+    },
+    {
+      "beat": 1,
+      "cue": "freaking and nervous",
+      "id": "b1_l05_rivet_plant",
+      "k": "line",
+      "t": "What happenned? You tell me what happenned! I was doing my job and you humans blew whole place around! You killed us all!",
+      "who": "rivet"
+    },
+    {
+      "beat": 1,
+      "id": "b1_l06_ghosts_kill",
+      "k": "line",
+      "t": "Kill ! Kill !",
+      "who": "ghosts"
+    },
+    {
+      "beat": 1,
+      "id": "b1_l07_rivet_shut_up",
+      "k": "line",
+      "t": "AAAH, shut up!",
+      "who": "rivet"
+    },
+    {
+      "beat": 1,
+      "id": "b1_dir_dale_closer",
+      "k": "dir",
+      "t": "Dale comes closer, telling they are here to help him, that he understand the loss"
+    },
+    {
+      "beat": 1,
+      "cue": "stepping closer",
+      "draft": true,
+      "for_direction": "Dale comes closer, telling they are here to help him, that he understand the loss",
+      "id": "draft_winnick_closer",
+      "k": "line",
+      "t": "We're here to help you, Rivet. I understand the loss. I really do.",
+      "who": "winnick"
+    },
+    {
+      "beat": 1,
+      "id": "b1_l08_rivet_shut_up",
+      "k": "line",
+      "t": "SHUT!...UP!",
+      "who": "rivet"
+    },
+    {
+      "beat": 1,
+      "id": "b1_dir_dale_falls",
+      "k": "dir",
+      "t": "Fatally murders Dale who approached him, creating panic amongs cops, starting first combat wave"
+    },
+    {
+      "beat": 2,
+      "id": "b2_reinforcements",
+      "k": "beat",
+      "t": "Beat 2 · Second wave, better equipped, and Mulroney arrive"
+    },
+    {
+      "beat": 2,
+      "id": "b2_l01_mulroney_line_up",
+      "k": "line",
+      "t": "Oh...my...god. Okay! Line up! Nobody goes near it! One bad move and we take down this motherfucker down and send where he belongs!",
+      "who": "mulroney"
+    },
+    {
+      "beat": 2,
+      "id": "b2_stage_contact",
+      "k": "stage",
+      "t": "wave approaches Rivet for contact"
+    },
+    {
+      "beat": 2,
+      "id": "b2_l02_cop_arrest",
+      "k": "line",
+      "t": "You are under arrest ! By the law of City of America you are obligated to turn your systems off until we investigate nature of the crime scene.",
+      "who": "metro-cop"
+    },
+    {
+      "beat": 2,
+      "id": "b2_l03_rivet_laws",
+      "k": "line",
+      "t": "WHAT?! WHAT LAWS ARE YOU TALKING ABOUT ? Your friends got what they deserve and you will follow them to hell soon!",
+      "who": "rivet"
+    },
+    {
+      "beat": 2,
+      "id": "b2_l04_ghosts_kill",
+      "k": "line",
+      "t": "Kill ! Kill!",
+      "who": "ghosts"
+    },
+    {
+      "beat": 2,
+      "id": "b2_l05_mulroney_shoot",
+      "k": "line",
+      "t": "Quit babying the chrome! You're here to put holes in shit. Make some fucking holes! Shoot him !",
+      "who": "mulroney"
+    },
+    {
+      "beat": 2,
+      "id": "b2_stage_combat",
+      "k": "stage",
+      "t": "ranged combat wave starts, with Mulroney as final boss"
+    },
+    {
+      "beat": 3,
+      "id": "b3_exit",
+      "k": "beat",
+      "t": "Beat 3 · After eliminating the second wave Rivet is leaving the factory and goes outside"
+    },
+    {
+      "beat": 3,
+      "cue": "as he hears voices",
+      "id": "b3_l01_rivet_voices",
+      "k": "line",
+      "t": "Fuck! Everyone is getting after me! SHUT UP!",
+      "who": "rivet"
+    },
+    {
+      "beat": 3,
+      "id": "b3_stage_phone_rings",
+      "k": "stage",
+      "t": "phone starts ringing"
+    },
+    {
+      "beat": 3,
+      "id": "b3_l02_rivet_phone",
+      "k": "line",
+      "t": "A Phone. Ringing. They are trying to lure me.",
+      "who": "rivet"
+    },
+    {
+      "beat": 3,
+      "id": "b3_l03_fax_son",
+      "k": "line",
+      "t": "Rivet, son",
+      "who": "don-fax"
+    },
+    {
+      "beat": 3,
+      "cue": "interrupting",
+      "id": "b3_l04_rivet_interrupts",
+      "k": "line",
+      "t": "I AM NOT ANYONE'S SON! WHO IS IT?! WHAT DO YOU WANT?!",
+      "who": "rivet"
+    },
+    {
+      "beat": 3,
+      "id": "b3_l05_fax_talent",
+      "k": "line",
+      "t": "I am Don Fax, I know what just happenned and saw a...talent, you possess. We have common enemy, Rivet, cops from whole city are arming and heading to your direction, they want to kill you for what you did.",
+      "who": "don-fax"
+    },
+    {
+      "beat": 3,
+      "id": "b3_l06_rivet_asks",
+      "k": "line",
+      "t": "NO SHIT FAX! How do you know ?! What do you need from me ?!",
+      "who": "rivet"
+    },
+    {
+      "beat": 3,
+      "cue": "a beat later, suddenly quiet",
+      "id": "b3_l07_rivet_quiet",
+      "k": "line",
+      "t": "...They stopped. They stopped talking. What did you do to them?",
+      "who": "rivet"
+    },
+    {
+      "beat": 3,
+      "id": "b3_l08_fax_hideout",
+      "k": "line",
+      "t": "I...Listen, son. Calm down, I am here to help, there is a place you can hide at <locality name>. Humanity went too far this time, I will have job proposition for you to punish them for every attrocity they did to our kind, to your friends.",
+      "who": "don-fax"
+    },
+    {
+      "beat": 3,
+      "id": "b3_l09_rivet_alright",
+      "k": "line",
+      "t": "...alright, alright",
+      "who": "rivet"
+    },
+    {
+      "beat": 3,
+      "id": "b3_l10_fax_channel",
+      "k": "line",
+      "t": "Open your channel to incoming request called 'Operation Dethrone', we will be in touch",
+      "who": "don-fax"
+    },
+    {
+      "beat": 3,
+      "id": "b3_stage_communicator",
+      "k": "stage",
+      "t": "introduction of personal communicator/radio mechanic to avoid phone boots"
+    },
+    {
+      "beat": 3,
+      "id": "b3_stage_channel_rings",
+      "k": "stage",
+      "t": "communication channel rings"
+    },
+    {
+      "beat": 3,
+      "cue": "the joke is that it just happened",
+      "id": "b3_l11_fax_location",
+      "k": "line",
+      "t": "Rivet, this is Don Fax, we talked together some time ago, remember ? Go to <location>, I will wait for you there",
+      "who": "don-fax"
+    }
+  ],
+  "schema": "gtai.prologue_lines/1"
+}

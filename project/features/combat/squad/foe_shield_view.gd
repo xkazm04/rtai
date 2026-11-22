@@ -32,7 +32,7 @@ static func draw_plate(view: Node2D, h: Fighter, mind: SquadMind, tick: int) -> 
 	var front: float = 0.58 if raised else 0.85
 	var lift: float = 1.12 if raised else 0.67
 	var at: Vector2 = Ink.px(h.pos + (h.facing * front + Vector2.UP * lift) * LOOK_SCALE)
-	view.draw_set_transform(at, h.facing.angle(), Vector2.ONE * LOOK_SCALE)
+	FoeStunView.place_shield(view, at, h, mind, tick)
 	view.draw_colored_polygon(_plate, FoeTurretView.STEEL)
 	view.draw_polyline(_plate, Ink.INK, 3.5, true)
 	view.draw_line(_plate[-1], _plate[0], Ink.INK, 3.5, true)

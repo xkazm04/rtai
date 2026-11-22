@@ -7,6 +7,8 @@ const BAND_HALF_M: float = 3.0
 
 var landing: Vector2
 var attack: EnemyWeapon
+## Combat tick of the last effective Tonnage hit. The stomp's shot_tick identifies its recovery.
+var cracked_at: int = -1
 
 
 func step(mind: SquadMind, h: Fighter, arena: CombatArena, map: GuardRouteMap) -> Shot:

@@ -107,3 +107,12 @@ msgstr "Plasma Sword"
 
 msgid "GAUNTLET__WEAPON__ROCKET_LAUNCHER"
 msgstr "Rocket Launcher"
+
+msgid "GAUNTLET__KIND__EFFECT"
+msgstr "Weapon effect"
+
+msgid "GAUNTLET__EFFECT__OVERKILL_CARRY"
+msgstr "Overkill Carry"
+
+msgid "GAUNTLET__EFFECT__OVERKILL_CARRY_2"
+msgstr "Overkill Carry II"
