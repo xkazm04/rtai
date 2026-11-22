@@ -31,8 +31,11 @@ func _init(registry: RngRegistry, rules: DataTable, rows: Array) -> void:
 	for first_wave: float in rules.array(rules.raw, "tier_unlock_wave"):
 		unlocks.append(roundi(first_wave))
 	var fallback: Dictionary = rules.object(rules.raw, "tier_map")
+	var excluded: Array = rules.raw.get("roster_exclude", [])
 	for row: Dictionary in rows:
 		var id: String = rules.text(row, "id")
+		if id in excluded:
+			continue
 		var tier: int = (
 			rules.integer(row, "tier") if row.has("tier") else rules.integer(fallback, id)
 		)
@@ -68,7 +71,7 @@ func compose(wave: int) -> Array[StringName]:
 	var wave_seed: int = RngRegistry.fnv1a32("%d:%d" % [_stream_seed, wave])
 	var rng: RandomNumberGenerator = RngRegistry.new(wave_seed).stream(&"gauntlet_waves")
 	@warning_ignore("integer_division")
-	for _slot: int in remaining / cheapest:
+	for _slot: int in remaining / maxi(1, cheapest):
 		var affordable: Array[StringName] = []
 		for id: StringName in eligible:
 			if costs[id] <= remaining:

@@ -202,7 +202,7 @@
       "additionalProperties": false,
       "properties": {
         "base": {
-          "minimum": 1,
+          "minimum": 0,
           "type": "integer"
         },
         "per_wave": {
@@ -241,6 +241,13 @@
       "enum": [
         "next_wave"
       ]
+    },
+    "roster_exclude": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
     },
     "schema": {
       "const": "gtai.gauntlet/1"

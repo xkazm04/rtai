@@ -11,6 +11,10 @@
   },
   "max_alive": 40,
   "on_timeout": "next_wave",
+  "roster_exclude": [
+    "appliance_warden",
+    "sergeant_mulroney"
+  ],
   "schema": "gtai.gauntlet/1",
   "segments": [
     {

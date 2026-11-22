@@ -81,6 +81,29 @@ func test_seed_and_wave_identify_the_draw_independent_of_other_waves() -> void:
 	assert_ne(c.compose(10), expected)
 
 
+func test_roster_exclude_removes_tiered_enemies_from_every_wave() -> void:
+	var rules: DataTable = DataTable.open(GauntletStreet.TABLE, GauntletStreet.SCHEMA)
+	var rows: Array[Dictionary] = [{"id": "visitor", "tier": 1}, {"id": "regular", "tier": 1}]
+	rules.raw["roster_exclude"] = ["visitor"]
+	var filtered: GauntletComposer = GauntletComposer.new(RngRegistry.new(7), rules, rows)
+	for wave: int in range(1, 51):
+		var roster: Array[StringName] = filtered.compose(wave)
+		assert_has(roster, &"regular")
+		assert_does_not_have(roster, &"visitor")
+	@warning_ignore("return_value_discarded")
+	rules.raw.erase("roster_exclude")
+	var unfiltered: GauntletComposer = GauntletComposer.new(RngRegistry.new(7), rules, rows)
+	assert_has(unfiltered.compose(1), &"visitor")
+
+
+func test_zero_budget_with_no_affordable_enemy_returns_an_empty_roster() -> void:
+	var rules: DataTable = DataTable.open(GauntletStreet.TABLE, GauntletStreet.SCHEMA)
+	rules.raw["budget"] = {"base": 0, "per_wave": 0, "unit": 1}
+	var rows: Array[Dictionary] = [{"id": "regular", "tier": 1}]
+	var composer: GauntletComposer = GauntletComposer.new(RngRegistry.new(7), rules, rows)
+	assert_true(composer.compose(1).is_empty())
+
+
 func test_tier_enters_on_its_exact_unlock_and_only_if_affordable() -> void:
 	var rules: DataTable = DataTable.open(GauntletStreet.TABLE, GauntletStreet.SCHEMA)
 	rules.raw["budget"] = {"base": 3, "per_wave": 0, "unit": 1}
