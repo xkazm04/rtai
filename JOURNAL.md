@@ -107,3 +107,28 @@ with frames.json. Commit last new work by 00:00, final gate by 00:15. REPORT: ro
   apart, NO blood at all (cauterised?) and the burst is a cartoon star: weakest of the cuts at 32 px/m. P4 item.
 - 20:05 REVIEW P3 fu1 `4832ca100`: combat_arena.gd net diff vs b3f4727c0 = 2 lines (damage_scale + death_kind call sites), header restored: ok. P4 brief written (evidence/briefs/n24-p4-kill-looks.md: baton shock on humans, plasma blood + cut streak, chainsaw zigzag, right-facing baton frame, three decision lines: cursor, claw, robo_tazer).
 - 20:06 NOTE merge: P3 changes `project/features/combat/ai/enemy_pit.gd` hurt() (optional `melee` param + 2 call-site lines into MeleeShutdown); ai/** fire timing is pressure's: a conflict there is possible at merge, keep both.
+- 21:05 Astra P3 `e04b93990`: `melee_shutdown.gd` (+ `robot_shutdown_fx.gd`): baton one-swing shut-down of
+  robot_thug / robot_gunner; shield_robot + sentry_turret overloaded 150 ticks, second swing executes (through the
+  front shield); war_machine normal damage + 30-tick stun; bosses never. Blades: normal robot damage. GUT 3792 pass,
+  10 selected scenarios/replays pass, no tape moved. Mutate melee_shutdown 15/20 (75%), melee_lethal 8/12 (66.7%).
+  Films n24/melee/electric (4 clips 1920x1080 60 fps 15.2 s). Astra proposes electro gun direct hit + the claw's full
+  charge as the next electric weapons (REPORT).
+- 21:05 LOOKED electric/shutdown-review.jpg: reads at 64 (arcs at contact, sensor dark, fold, charred heap for the
+  shield robot); at 32 the arcs are tiny yellow ticks and the dead thug turns into a pale grey cut-out (64: a black
+  silhouette). Good enough to keep; strengthen in P4 item 6.
+- 21:06 CHECK `tools/godot/check.mjs` on kill_styles.gd / signature_kills.gd: FAIL, only "Failed to compile depended
+  scripts" cascades (P3 quick gate red on these too). The game and GUT run them, so likely a standalone-load cycle;
+  P4 item 0 compares with b3f4727c0 and fixes ours. Final gate must be green.
+- 21:06 ASTRA p3-electric 72 accepted.
+- 21:07 ASTRA RUNNING p4-kill-looks since 21:07 (--resume of the P3 thread; lock pid 68852; brief
+  evidence/briefs/n24-p4-kill-looks.md, hard stop 22:22, commit by 22:15; out evidence/briefs/n24-p4-kill-looks.out.txt).
+
+NEXT (session 4): check astra.lock (pid 68852) + its out file. When P4 ends: review the diff (no change to
+combat_arena.gd, enemies/weapons/combat.json), confirm item 0 (check.mjs on kill_styles.gd + signature_kills.gd PASS,
+or the same failure proven on b3f4727c0), LOOK at n24/melee/kills/p4 before/after (baton shock on humans, plasma
+blood + streak, chainsaw sparks warm, robots at 32). Then launch P5 (evidence/briefs/n24-p5-films.md: fill HARDSTOP /
+COMMITBY; product code closed by 00:00): live swings-per-click telemetry + owner films + frames.json. Final gate
+`node tools/gate/run.mjs --rev=HEAD` by 00:15 (it needs the lane's one Godot: do not overlap with Astra). REPORT calls:
+robo_tazer not doubled (18:43), claw not a one-shot, cursor = system arrow (PLAIN_DOT one const away), which weapons
+count electric (electro gun direct hit, claw full charge), riot-shield rule per weapon (katana blocked + opens 40
+ticks, others through). Merge note: enemy_pit.gd hurt() signature (pressure's ai/**).

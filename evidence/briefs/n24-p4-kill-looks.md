@@ -1,7 +1,7 @@
 # Brief n24-melee P4: the kills must read as brutal on screen (quality package)
 
 Lane `melee`, branch `n24-melee`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-street` (your cwd).
-**Hard stop HARDSTOP wall clock** (check `date`). **Commit deadline COMMITBY**. Commit each item as it lands.
+**Hard stop 22:22 wall clock** (check `date`). **Commit deadline 22:15**. Commit each item as it lands.
 
 ## The owner's words (verbatim)
 "we need on unique swing per weapon, with unique brutal animation per human enemies as it should one-shot them.
@@ -11,6 +11,14 @@ P1 to P3 on this branch built the rule (one swing per click, `MeleeLethal`, per-
 `signature_kills.json`, the electric shut-down on robots). This package is about what the owner SEES. The director
 looked at the P2 and P3 sheets and found these weak (in priority order):
 
+0. **First: the quick gate is red on this branch beyond the old PagedAllocator lines.**
+   `node tools/godot/check.mjs res://features/combat/kills/kill_styles.gd` (and `signature_kills.gd`) FAIL with only
+   "Failed to compile depended scripts" cascades (no root parse error shown; your P3 log `build/p3-quick-final2.log`).
+   Run the same check on `b3f4727c0` in a temp worktree under `%TEMP%` (`git worktree add`, remove it afterwards).
+   If main passes, it is ours (P2/P3): find the cycle or the script that fails alone (check each script in the
+   chain, e.g. `kill_marks.gd`, `kill_cut_edge.gd`, `kerf_victim.gd`, `react_pose.gd`, `street_ped_shock.gd`,
+   `robot_shutdown_fx.gd`, `melee_shutdown.gd`) and fix it in our files; if main fails the same way, say so with
+   the line. The final gate (`node tools/gate/run.mjs --rev=HEAD`) must be green tonight.
 1. **Electro baton on a human shows no shock.** `n24/melee/kills/variants/review_electro_baton_32.png` (contractor):
    at the kill tick and +4 nothing shows the shock (no arcs, no seizure, no flash); the man just stands, then at
    +16..+36 he is thrown back and lies charred. Wanted: from the kill tick, white-blue-white and amber arcs crawl over
@@ -41,6 +49,11 @@ looked at the P2 and P3 sheets and found these weak (in priority order):
      damage); one value away (`rivet_melee.json` `kills_human`, false).
    - `combat.json` `robo_tazer.damage` 46 is not doubled: it is Quartermaster Mertz's boss weapon, not a wave enemy;
      boss designs do not change tonight; one value away.
+
+6. If time remains: the robot shut-down (`n24/melee/electric/shutdown-review.jpg`) reads at 64 px/m but at 32 the
+   arcs are tiny yellow ticks and the dead thug turns into a pale grey cut-out at rest (tick 545, 32 px/m) while
+   at 64 it is a black silhouette: make the arcs bigger and brighter (white core, amber glow) during the seizure,
+   and the wreck a darkened, scorched version of its own colours (not a flat pale or black cut-out).
 
 ## Acceptance
 - For each item, a before/after pair at the same tick and zoom (32 px/m sheet + 64 px/m close-up), rendered with

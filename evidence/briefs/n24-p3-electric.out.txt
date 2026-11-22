@@ -1,0 +1,26 @@
+Committed the electric melee rule on `n24-melee`. A direct electro-baton swing shuts down a `robot_thug` or `robot_gunner`. Against a `shield_robot` or `sentry_turret`, the first swing holds it alive and unable to move or fire for **150 ticks**. A second swing during that window executes it, including through a front-facing shield. The `war_machine` takes normal damage and a **30-tick** stun. Bosses and boss-owned fighters retain their protection. Blades retain normal robot damage.
+
+**Commits**
+
+- `4832ca100` restored the original `combat_arena.gd` header and moved the armour bypass and death-kind handling into `melee_lethal.gd`. The shared arena differs from `b3f4727c0` by two replaced lines.
+- `e04b93990` added the rule in `melee_shutdown.gd`, called from `melee_contact.gd` and `EnemyPit.hurt`. The 25 changed files cover melee state and tuning, the weapon and signature-kill tables and schemas, shutdown rendering, nine unit tests, and the decision entry. [Rule](C:/Users/kazda/kiro/gtai-wt/n23-street/project/features/player/melee_shutdown.gd) · [Tests](C:/Users/kazda/kiro/gtai-wt/n23-street/project/tests/unit/test_melee_shutdown.gd)
+
+**Verification**
+
+- Changed unit suite: **3,792 passed, 0 failed, 2 skipped**. **10 selected scenarios and replays passed**. No tapes or goldens moved.
+- Mutation scores: **15/20 (75%)** for electric shutdown and **8/12 (66.7%)** for the P2 lethal rule. Both runs completed without invalid mutations or timeouts.
+- Both commit hooks passed. The P3 static quick gate passed all 15 scripts. The full quick gate remained red in Godot’s standalone checks of `kill_styles.gd` and `signature_kills.gd`, which reported dependency cascades and an allocator error at exit. Both scripts ran in the filmed encounters. [Quick-gate log](C:/Users/kazda/kiro/gtai-wt/n23-street/build/p3-quick-final2.log)
+
+**Films.** All four tilt-70 clips verified at **1920×1080, 60 fps, 15.2 seconds**. The thug died at tick 304. The shield robot held position after overload at tick 303 and died on the second swing at tick 424. The existing rigs show the fold and darkened sensor most clearly at 64 px/m. [Four films](C:/Users/kazda/kiro/gtai-masters/n24/melee/electric) · [Inspected frames](C:/Users/kazda/kiro/gtai-masters/n24/melee/electric/shutdown-review.jpg)
+
+I also inspected all six P2 variants at 32 and 64 px/m. [Variant sheets](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/variants)
+
+| Weapon | SWAT | Rocket trooper |
+|---|---|---|
+| Plasma sword | Diagonal split reads clearly. The dropped rifle is small at 32. | The higher cut and departing launcher are distinct. |
+| Chainsaw | The sustained grind reads. Debris obscures the rifle. | The tube identifies the trooper before impact and becomes hard to track afterward. |
+| Electro-baton | The heavy fold reads at 64. The knee drop is subtle at 32. | The sideways collapse and separate tube remain visible. |
+
+For the next electric weapons, I’d count the **electro gun’s direct hit** and the **claw’s fully charged discharge**. Both deliver a deliberate electrical strike to a primary target. Secondary arcs can keep their existing stun.
+
+[astra: 4281s, exit 0]
