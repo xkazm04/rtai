@@ -1,11 +1,13 @@
+import { relative, sep } from 'node:path';
 import { fmt } from './report_tables.mjs';
 
 export function summary(job, branch, ledger) {
-  const lines = ['# Gauntlet night', '', branch + ', ' + job.profile + ', ' + job.pick + ', ' + job.controls
-    + ', seeds 1 through ' + job.seeds + '. Matched ' + ledger.matched_runs + ' of ' + ledger.before_runs
+  const link = (role) => relative(job.dir, job.files[role]).split(sep).join('/').replaceAll(' ', '%20');
+  const lines = ['# Gauntlet night', '', branch + ', ' + job.batch.profile + ', ' + job.batch.pick + ', ' + job.batch.controls
+    + ', seeds ' + job.batch.seed0 + ' through ' + (job.batch.seed0 + job.batch.seeds - 1) + '. Matched ' + ledger.matched_runs + ' of ' + ledger.before_runs
     + ' before and ' + ledger.after_runs + ' after runs.', '',
-    '[Before batch](before/batch.json) · [Null batch](null/batch.json) · [Before report](before/report.md) · [Plan](plan.json) · '
-    + '[Confirm batch](after/batch.json) · [Confirm report](after/report.md) · [Seed pairs and verdicts](after/tune-ledger.md)', ''];
+    '[Before batch](' + link('before') + ') · [Null batch](' + link('null') + ') · [Before report](before/report.md) · [Plan](plan.json) · '
+    + '[Confirm batch](' + link('after') + ') · [Confirm report](after/report.md) · [Seed pairs and verdicts](after/tune-ledger.md)', ''];
   if (ledger.changes.length) {
     lines.push('| Action | Knob | Before | After | Baseline | Measured miss | Confirmed before → after (pairs) | Improvement (CI95) | A/A floor (pairs) | Verdict | Apply SHA | Revert SHA |',
       '|---|---|---:|---:|---:|---|---:|---:|---:|---|---|---|');

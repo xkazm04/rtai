@@ -1,48 +1,20 @@
 #!/usr/bin/env node
-import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, statSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readdirSync, renameSync, statSync, writeFileSync } from 'node:fs';
 import { basename, join, relative, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { main as devRun } from '../dev/run.mjs';
-import { dirtyLines, git, PROJECT } from '../lib/repo.mjs';
+import { dirtyLines, git } from '../lib/repo.mjs';
 import { MARKER } from '../mutate/worktree.mjs';
 import { median } from '../perf/paired.mjs';
 import { commandLine, parseArgs, plan } from './commands.mjs';
 import { BATCH_SCHEMA, PROFILES, validateRun } from './contract.mjs';
-import { enemyWeapons } from './enemy_weapons.mjs';
-import { statCards } from './survival.mjs';
+import { tableSnapshot } from './table_snapshot.mjs';
 import { streetLog } from './street_log.mjs';
 import { capExit, readResult } from './run_result.mjs';
 
 export { parseArgs, plan, validateRun };
 const portable = (out, path) => relative(out, path).split(sep).join('/');
 const sum = (values) => values.reduce((total, n) => total + n, 0);
-
-function tableSnapshot(runner) {
-  const tables = {};
-  const weapon_refs = {};
-  const survival_tuning = {};
-  let enemy_weapons = {};
-  for (const name of ['enemies', 'weapons', 'combat', 'gauntlet', 'gauntlet_bonuses', 'test_player']) {
-    const file = name + '.json';
-    const path = join(PROJECT, 'data', 'tables', file);
-    if (!existsSync(path)) continue;
-    const bytes = readFileSync(path);
-    if (name === 'enemies') enemy_weapons = enemyWeapons(JSON.parse(bytes));
-    if (name === 'combat') survival_tuning.repair_per_s = JSON.parse(bytes).rivet.repair_per_s;
-    if (name === 'gauntlet' && runner === 'gauntlet') {
-      const repair = JSON.parse(bytes).rivet;
-      if (repair) survival_tuning.repair_per_s = repair.repair_per_s;
-    }
-    tables[file] = createHash('sha256').update(bytes).digest('hex');
-    if (name === 'gauntlet_bonuses') {
-      const bonuses = JSON.parse(bytes);
-      for (const row of bonuses.rows) if (row.kind === 'weapon') weapon_refs[row.id] = row.ref;
-      survival_tuning.stat_cards = statCards(bonuses);
-    }
-  }
-  return { tables, weapon_refs, enemy_weapons, survival_tuning };
-}
 
 function offline(args) {
   const child = join(args.from, 'runs');

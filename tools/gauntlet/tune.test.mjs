@@ -668,6 +668,11 @@ test('enemy damage uses one factor, one commit and one reversible receipt', (t) 
   capped.values['enemy_weapon.cannon.damage'] = 8;
   assert.equal(knobStep(group.id, 1.25, entries, capped).members.find((m) => m.id === 'enemy_weapon.cannon.damage').after, 16);
   plan.changes = [{ ...group, metric: { type: 'wave', profile: 'average', wave: 1, target: 15 }, miss: 'fixture wave time' }];
+  const budget = knobStep('budget.base', 1.25, entries, baseline);
+  write(root, planFile, { ...plan, changes: [...plan.changes, { ...budget, metric: plan.changes[0].metric, miss: 'late death' }] });
+  const lines = ok(cli(root, 'sets', '--plan=' + planFile)).trimEnd().split(/\r?\n/);
+  assert.deepEqual(lines, [...group.members, budget].map((m) => '--set=' + m.file + '#' + m.pointer + '=' + m.after));
+  assert.equal(budget.after, Math.round(entries.get('budget.base').value * 1.25));
   const apply = () => cli(root, 'apply', '--plan=' + planFile);
   const invalid = structuredClone(plan);
   invalid.changes[0].members.pop();

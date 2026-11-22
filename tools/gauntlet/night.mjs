@@ -5,6 +5,7 @@ import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT, readJson } from '../lib/repo.mjs';
 import { nodeCommand } from './commands.mjs';
+import { checkAfterPlan, checkInputs } from './night_batches.mjs';
 import { parseNight, recipe, tool } from './night_args.mjs';
 import { summary } from './night_summary.mjs';
 import { inWorktree, requireClean } from './night_worktree.mjs';
@@ -17,7 +18,9 @@ function runNode(argv, cwd) {
 }
 
 function execute(job, tree, run, log) {
-  const steps = recipe(job);
+  checkInputs(tree, job);
+  const applied = job.resume && checkAfterPlan(tree, job);
+  const steps = recipe(job).filter((args) => !(applied && args[1] === 'apply'));
   log('Worktree ' + tree + ' on ' + job.branch + '. Output ' + job.dir);
   if (job.dryRun) {
     for (const cmd of steps) log(nodeCommand(cmd));
@@ -25,9 +28,10 @@ function execute(job, tree, run, log) {
     return;
   }
   mkdirSync(job.dir, { recursive: true });
-  if (readdirSync(job.dir).length) throw new Error('night output must be empty: ' + job.dir);
+  if (!job.resume && readdirSync(job.dir).length) throw new Error('night output must be empty: ' + job.dir);
   for (const args of steps) {
     if (git(tree, 'branch', '--show-current').trim() !== job.branch) throw new Error('branch changed during the night');
+    if (args[1] === 'apply' && job.inputs.after && !job.resume) checkAfterPlan(tree, job);
     log(nodeCommand(args));
     if (args[0] === tool('batch')) {
       withLock(tree, () => {

@@ -7,6 +7,7 @@ import { canonicalJson } from '../lib/canonical_json.mjs';
 import { readJson } from '../lib/repo.mjs';
 import { MIN_AA_PAIRS, PROFILES } from './contract.mjs';
 import { targets } from './death_score.mjs';
+import { setArguments } from './plan_sets.mjs';
 import { loadBatch } from './report.mjs';
 import { fmt } from './report_tables.mjs';
 import { confirmChange, pairNullRuns, pairRuns, verdictMode } from './tune_confirm.mjs';
@@ -125,7 +126,7 @@ function confirmation(root, v) {
       const commit = receipts.get(c.id) ?? null;
       return { ...confirmChange(rows, c, { beforeRows, nullRows, mode, verdict }), commit, revert_commit: revertFor(root, commit) };
     }) };
-  const stem = join(dirname(resolve(v.after)), 'tune-ledger');
+  const stem = join(resolve(v['ledger-dir'] ?? dirname(resolve(v.after))), 'tune-ledger');
   artifact(root, stem);
   if (existsSync(stem + '.json') && readJson(stem + '.json').schema !== LEDGER)
     throw new Error('ledger path already holds a different artifact');
@@ -147,6 +148,12 @@ function confirmation(root, v) {
 
 export function main([command, ...argv]) {
   const root = git(process.cwd(), 'rev-parse', '--show-toplevel').trim();
+  if (command === 'sets') {
+    const v = options(argv, ['plan'], []);
+    const args = setArguments(readJson(v.plan));
+    for (const arg of args) console.log(arg);
+    return args;
+  }
   if (command === 'floor') {
     const v = options(argv, ['before', 'null'], ['out']);
     const report = floorReport(loadFloorBatch(v.before), loadFloorBatch(v.null));
@@ -173,10 +180,10 @@ export function main([command, ...argv]) {
     });
   }
   if (command === 'confirm') {
-    const v = options(argv, ['before', 'after', 'plan'], ['night-output', 'floor-mode', 'verdict', 'null'], ['revert']);
+    const v = options(argv, ['before', 'after', 'plan'], ['night-output', 'floor-mode', 'verdict', 'null', 'ledger-dir'], ['revert']);
     return withLock(root, () => confirmation(root, v));
   }
-  throw new Error('usage: tune.mjs propose|apply|confirm|floor [options]');
+  throw new Error('usage: tune.mjs propose|sets|apply|confirm|floor [options]');
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
