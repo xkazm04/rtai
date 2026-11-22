@@ -28,8 +28,8 @@ function stamp(tick) {
 function subtitles(dir, take) {
   const file = join(dir, 'victims.srt');
   const segments = take.opponents.map((o, i) => {
-    const begin = i === 0 ? 0 : 105 + i * 182 - 96;
-    const end = i === 4 ? take.frames : 105 + (i + 1) * 182 - 96;
+    const begin = o.cue;
+    const end = take.opponents[i + 1]?.cue ?? take.frames;
     const words = s => s.replaceAll('_', ' ');
     return [i + 1, stamp(begin) + ' --> ' + stamp(end - 1), words(o.selected) + '  /  ' + words(o.victim)].join('\n');
   });
@@ -69,8 +69,9 @@ function closeup(dir, id, take) {
 for (const id of items) {
   const dir = mkdtempSync(join(scratch, id + '-' + ppm + '-'));
   const loadout = id === 'electric_robots' ? 'katana,electro_baton' : id;
+  const expectedFrames = ppm === 64 ? 180 : (id === 'electric_robots' ? 1080 : 960);
   const args = ['--rendering-driver', 'd3d12', '--position', '0,1440', '--resolution', '1920x1080',
-    '--fixed-fps', '60', '--quit-after', '990', fileURLToPath(new URL('./owner_take.tscn', import.meta.url)), '--',
+    '--fixed-fps', '60', '--quit-after', String(expectedFrames + 30), fileURLToPath(new URL('./owner_take.tscn', import.meta.url)), '--',
     '--loadout=' + loadout, '--enemy-brain=squad', '--seed=20261109', '--view=tilt70', '--ppm=' + ppm,
     '--rigs', '--clean', '--silent', '--feel=off'];
   const env = { ...process.env, GTAI_MELEE_TAKE: dir, GTAI_MELEE_NATIVE: '1', GTAI_MELEE_CLOSE: ppm === 64 ? '1' : '0' };
@@ -78,7 +79,7 @@ for (const id of items) {
   writeFileSync(join(dir, 'film.log'), r.out);
   if (r.status !== 0 || r.timedOut || /SCRIPT ERROR:|\[ERROR\] owner_take/.test(r.out)) throw Error('see ' + dir);
   const take = JSON.parse(readFileSync(join(dir, 'take.json'), 'utf8'));
-  if (take.frames !== (ppm === 64 ? 180 : 960)) throw Error('incomplete take: ' + dir);
+  if (take.frames !== expectedFrames) throw Error('incomplete take: ' + dir);
   const path = ppm === 64 ? closeup(dir, id, take) : film(dir, id, take);
   console.log(path, take.frames, 'native frames;', take.starts.length, 'starts;', dir);
 }

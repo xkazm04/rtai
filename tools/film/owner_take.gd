@@ -9,8 +9,8 @@ const ROBOT: Array[StringName] = [
 	&"robot_thug", &"robot_thug", &"robot_gunner", &"shield_robot", &"war_machine"
 ]
 const FIRST: int = 105
-const GAP: int = 182
-const END: int = 960
+const HUMAN_GAP: int = 182
+const MACHINE_GAP: int = 212
 
 var opponents: Array[Fighter] = []
 var marks: Array[Vector2] = []
@@ -20,9 +20,9 @@ var contacts: Array[int] = []
 var weapon: StringName
 var robots: bool
 var destination: String
-var native: bool
+var gap: int = HUMAN_GAP
 var last_frame: int = 0
-var stop_tick: int = END
+var stop_tick: int = 960
 
 
 func _ready() -> void:
@@ -35,11 +35,13 @@ func _ready() -> void:
 	robots = loadout.contains(",")
 	weapon = StringName(loadout.get_slice(",", 0))
 	destination = OS.get_environment("GTAI_MELEE_TAKE")
-	native = OS.get_environment("GTAI_MELEE_NATIVE") == "1"
+	if robots:
+		gap = MACHINE_GAP
+		stop_tick += (gap - HUMAN_GAP) * (ROBOT.size() - 1)
 	if OS.get_environment("GTAI_MELEE_CLOSE") == "1":
 		stop_tick = FIRST + 75
 	session.stage.arena.rivet.pos = session.plan.base + Vector2(5, -38)
-	if native:
+	if OS.get_environment("GTAI_MELEE_NATIVE") == "1":
 		@warning_ignore("return_value_discarded")
 		RenderingServer.frame_post_draw.connect(_capture)
 
@@ -51,19 +53,27 @@ func _place() -> void:
 	arena.hostiles.clear()
 	arena.rivet.hp = 10000.0
 	arena.rivet.max_hp = arena.rivet.hp
-	var cast_ids: Array[StringName] = ROBOT if robots else HUMAN
-	for i: int in cast_ids.size():
-		var at: Vector2 = session.plan.base + Vector2(9.0 + 4.3 * i, -38.0)
-		var foe: Fighter = arena.squad_ai.spawn_member(arena, at, cast_ids[i])
-		# Use the wave archetype's own health on every take, including the normal-damage claw.
-		foe.max_hp = arena.squad_ai.pit.roster.archetype(cast_ids[i]).hp
-		foe.hp = foe.max_hp
-		opponents.append(foe)
-		marks.append(at)
-		observations.append({"victim": cast_ids[i], "initial_hp": foe.hp})
-		session.stage.pit.standing.append(foe)
+	if robots:
+		_spawn(ROBOT[0], 0)
+	else:
+		for i: int in HUMAN.size():
+			_spawn(HUMAN[i], i)
 	if weapon != RivetWheel.HANDS:
 		OpeningFilmPad.scroll(session.live)
+
+
+func _spawn(id: StringName, i: int) -> void:
+	var arena: CombatArena = session.stage.arena
+	var at: Vector2 = session.plan.base + Vector2(9.0 + 4.3 * i, -38.0)
+	var foe: Fighter = arena.squad_ai.spawn_member(arena, at, id)
+	foe.max_hp = arena.squad_ai.pit.roster.archetype(id).hp
+	foe.hp = foe.max_hp
+	opponents.append(foe)
+	marks.append(at)
+	observations.append(
+		{"victim": id, "initial_hp": foe.hp, "cue": 0 if i == 0 else FIRST + i * gap - 96}
+	)
+	session.stage.pit.standing.append(foe)
 
 
 func _process(_delta: float) -> void:
@@ -76,8 +86,10 @@ func _process(_delta: float) -> void:
 	if tick < 4:
 		session.step()
 		return
-	var idx: int = clampi(floori(float(tick - FIRST + 96) / GAP), 0, opponents.size() - 1)
-	var age: int = tick - FIRST - idx * GAP
+	var idx: int = clampi(floori(float(tick - FIRST + 96) / gap), 0, HUMAN.size() - 1)
+	if robots and idx == opponents.size():
+		_spawn(ROBOT[idx], idx)
+	var age: int = tick - FIRST - idx * gap
 	_waiting(tick)
 	if robots and idx == 1 and age == -65:
 		OpeningFilmPad.scroll(session.live)
@@ -111,7 +123,7 @@ func _waiting(tick: int) -> void:
 		var foe: Fighter = opponents[i]
 		if not foe.alive():
 			continue
-		var age: int = tick - FIRST - i * GAP
+		var age: int = tick - FIRST - i * gap
 		var mind: SquadMind = squad.mind_for(foe)
 		if age < 0 or (age < 16 and not observations[i].has("hit_tick")):
 			foe.pos = marks[i]
@@ -141,18 +153,13 @@ func _observe(i: int, age: int) -> void:
 		row["selected"] = session.pilot.wheel.selected()
 		row["distance_m"] = snappedf(foe.pos.distance_to(arena.rivet.pos), 0.01)
 	var initial: float = row["initial_hp"]
-	if (
-		not row.has("hit_tick")
-		and (
-			foe.hp != initial
-			or foe.has_meta(MeleeLethal.OPEN_UNTIL)
-			or MeleeShutdown.primed(foe, arena.tick)
-		)
-	):
+	var opened: bool = foe.has_meta(MeleeLethal.OPEN_UNTIL)
+	var overloaded: bool = MeleeShutdown.primed(foe, arena.tick)
+	if not row.has("hit_tick") and (foe.hp != initial or opened or overloaded):
 		row["hit_tick"] = session.tick()
-	if foe.has_meta(MeleeLethal.OPEN_UNTIL) and not row.has("shield_break"):
+	if opened and not row.has("shield_break"):
 		row["shield_break"] = session.tick()
-	if MeleeShutdown.primed(foe, arena.tick) and not row.has("overloaded"):
+	if overloaded and not row.has("overloaded"):
 		row["overloaded"] = session.tick()
 	if foe.archetype == &"war_machine" and foe.alive():
 		var until: int = arena.squad_ai.mind_for(foe).stun_until
@@ -185,13 +192,8 @@ func _finish() -> void:
 	if f == null:
 		get_tree().quit(1)
 		return
-	var result: Dictionary = {
-		"weapon": weapon,
-		"starts": starts,
-		"contacts": contacts,
-		"opponents": observations,
-		"frames": last_frame
-	}
+	var result: Dictionary = {"starts": starts, "contacts": contacts, "opponents": observations}
+	result.merge({"weapon": weapon, "frames": last_frame})
 	@warning_ignore("return_value_discarded")
 	f.store_line(JSON.stringify(result, "\t"))
 	f.close()
