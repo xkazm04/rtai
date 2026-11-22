@@ -1,8 +1,14 @@
 # Combat gauntlet loop
 
+## Targets
+
+The targets are the owner’s call. [targets.json](../tools/gauntlet/targets.json) sets the novice, average and expert death waves to 6, 12 and 20. An ordinary average-profile wave aims for 15 seconds. Every fifth wave is a boss wave and aims for 25–30 seconds. The report compares each pair of profiles. The pair is separated when the higher profile’s median is at least three waves deeper and it dies later on at least 75% of shared seeds.
+
+**Score.** Record the wave Rivet dies on. A wave can reach its timer and call another roster into the same fight. A run alive at the tick cap contributes its last reached wave as a censored lower bound. The report gives the median, spread, and separate counts of deaths and caps. Confirmation uses paired death-wave differences and their same-seed null-salt floor. The ledger records both verdicts and identifies the deciding rule.
+
 ## A night at a glance
 
-1. **Measure.** Start on a fresh `n22-tune-<n>` branch. Run `node tools/gauntlet/night.mjs --seeds=30 --out=build/gauntlet/night-2` once for steps 1–5. Average, greedy, wheel, seeds 1–30 took 12 min 54 s with one Godot job on a contended machine. [Before batch](../evidence/loop/tune2-before/batch.json)
+1. **Measure.** Start on a fresh `n23-tune-<n>` branch. Run `node tools/gauntlet/night.mjs --seeds=30 --out=build/gauntlet/night-2` once for steps 1–5. Average, greedy, wheel, seeds 1–30 took 12 min 54 s with one Godot job on a contended machine. [Before batch](../evidence/loop/tune2-before/batch.json)
 2. **Report.** The night runs `node tools/gauntlet/report.mjs --batch=build/gauntlet/night-2/before/batch.json`. Read the wave medians against 15 s and check how many runs contributed.
 3. **Tune.** The night runs `tune.mjs propose` to record numeric steps in `plan.json`, then `tune.mjs apply` to commit each eligible knob on the tune branch.
 4. **Confirm.** The night runs `batch.mjs` again with the same seeds, profile, pick policy and controls. This took 12 min 57 s. [Confirm batch](../evidence/loop/tune2-after/batch.json)
@@ -145,7 +151,7 @@ The command writes Markdown and a self-contained HTML file with inline SVG timin
 
 ### Run a night
 
-Run from the dedicated `n22-tune*` checkout to measure, apply and confirm in one command. The default recipe uses the average profile, greedy picks, wheel controls and one job. All three batches run seeds 1 through N for every selected profile.
+Run from the dedicated `n23-tune*` checkout to measure, apply and confirm in one command. The default recipe uses the average profile, greedy picks, wheel controls and one job. All three batches run seeds 1 through N for every selected profile.
 
 ```powershell
 node tools/gauntlet/night.mjs --seeds=40
@@ -167,25 +173,25 @@ To undo a kept change, copy its **Apply SHA** from `night.md` and run `git rever
 
 ### How a proposal selects edits
 
-**Measurements.** The default timing target is 15 s for `average`. A median strictly below 12 s or above 18 s is a miss. The standalone `tune.mjs propose` accepts `--target-s`, `--profile` and `--min-n`. A wave needs at least three timed runs by default. A killer share needs at least five recorded deaths. Smaller samples appear in the plan and console as `too few runs`. The other comparisons use all available profiles.
+**Measurements.** The default timing target is 15 s for `average`. An ordinary-wave median strictly below 12 s or above 18 s is a miss. Boss waves use the interval in the targets file. The standalone `tune.mjs propose` accepts `--target-s`, `--profile` and `--min-n`. A wave needs at least three timed runs by default. A killer share needs at least five recorded deaths. Smaller samples appear in the plan and console as `too few runs`. The other comparisons use all available profiles.
 
 | Measured miss | Candidate edit |
 |---|---|
 | Wave median above the upper bound | Reduce HP for the robot most often present in timed rosters of that wave. Street timing can also reduce the opening budget or its per-wave growth. The production spawner takes archetype HP for robot bodies. |
 | Wave median below the lower bound | Increase the street's `budget.base` when eligible fast waves are confined to the opening half. If any eligible fast wave falls beyond half the deepest timed wave number (rounded up), increase `budget.per_wave`. Both edits give the spawner more budget for enemies and must fit the integer bounds. |
-| Expert median depth at or below novice depth | Aim for a gap of at least one wave. Ease pressure if both profiles recorded deaths, otherwise increase it. Try the budget or a robot observed in the final wave. |
+| Median death wave misses the profile target | Increase enemy damage when the median is too deep, or decrease it when deaths occur too early. Try the per-wave budget if the damage group is unavailable. A censored median below target needs enough observed deaths to establish the direction. |
 | A named killer accounts for over half of all recorded deaths | Reduce the matching attack damage. For a small ranged attack, victim runs recording deflections can support raising guard capacity. Unknown attributions remain in the denominator. A timeout cannot identify an attacker. Set the fraction with `--killer-share=0.5`. |
 | A take-versus-decline difference clears the report's CI and A/A floor | Use the card's recorded weapon ref. A stronger pick gets lower cadence or damage, a weaker pick gets higher cadence or damage. Cards without an eligible knob remain in the miss list. |
 
-The plan ranks wave-time errors relative to the timing target, killer shares relative to their threshold and profile gaps relative to one wave. Offer survival differences are scaled by the decliners' median survival (at least one wave), and offer timing differences by the timing target. The largest eligible misses get up to `--max=6` edits. One card can generate two measured outcomes and one edit.
+Death-wave misses have first choice of knobs. The remaining observations rank wave-time errors relative to the timing target and killer shares relative to their threshold. Offer survival differences are scaled by the decliners' median survival (at least one wave), and offer timing differences by the timing target. The largest eligible misses get up to `--max=6` edits. One card can generate two measured outcomes and one edit.
 
 <a id="numeric-limits"></a>
 
-**Numeric limits.** `tools/gauntlet/knobs.json` lists the table, JSON pointer, kind and bounds of each knob. The catalog covers enemy HP and damage, enemy weapon damage, player weapon damage and firing rate, guard numbers and the two wave-budget integers. Every pointer into an array names the stable row ID in `row`. Proposal and apply both check the indexed object's ID. The gun's `rof_hz` is the inverse of its firing interval. An unresolved pointer, changed array-row identity or pending knob is reported and skipped. Mechanics, skills and weapon effects need a separate proposal.
+**Numeric limits.** `tools/gauntlet/knobs.json` lists the table, JSON pointer, kind and bounds of each knob. The catalog covers enemy HP and damage, enemy weapon damage, player weapon damage and firing rate, guard numbers and the street budget, enemy cost overrides and live cap. Every pointer into an array names the stable row ID in `row`. Proposal and apply both check the indexed object's ID. The gun's `rof_hz` is the inverse of its firing interval. An unresolved pointer or changed array-row identity stops proposal and apply. Budget and cost baseline values are expressed in tiers. The tuner reads the table’s units per tier, rounds a step to the nearest table integer and reports a refused step when rounding leaves it unchanged. Mechanics, skills and weapon effects need a separate proposal.
 
-On the first proposal, `tools/gauntlet/baseline.json` records the date, Git SHA and first value of every resolved knob. Later proposals append only newly available IDs. Commit a new baseline or its additions by path before applying. A value must satisfy its catalog bounds and stay within **0.8–1.25×** its current table value and **0.5–2×** its first value. Integer steps round in the proposed direction within that intersection. For example, an integer budget of 2 has no legal step. A zero baseline stays zero.
+On the first proposal, `tools/gauntlet/baseline.json` records the date, Git SHA and first value of every resolved knob. Later proposals append only newly available IDs. Commit a new baseline or its additions by path before applying. A value must satisfy its catalog bounds and stay within **0.8–1.25×** its current table value and **0.5–2×** its first value. Integer steps round to the nearest integer inside that intersection. For example, an integer budget of 2 has no legal step. A zero baseline stays zero.
 
-**Apply and undo.** Apply checks the working tree and index for changes outside `evidence/` and `build/`. It checks the starting values, byte-identical canonical JSON round trip and table schemas, then commits one numeric edit per commit. Commit trailers identify the plan, knob and night. A night runs from noon UTC to the next noon, so a run crossing midnight uses one allowance. A second plan on the same branch cannot change that knob again that night, even after a revert. Repeating an interrupted apply recognizes its existing commits.
+**Apply and undo.** Apply checks the working tree and index for changes outside `evidence/` and `build/`. It checks the starting values, byte-identical canonical JSON round trip and table schemas, then commits each knob or named group once. The enemy damage group scales every catalogued enemy weapon damage, splash damage and production damage number, with limits checked for each member. Commit trailers identify the plan, knob and night. A night runs from noon UTC to the next noon, so a run crossing midnight uses one allowance. A second plan on the same branch cannot change that knob again that night, even after a revert. Repeating an interrupted apply recognizes its existing commits.
 
 Confirmation matches the before batch to the plan by SHA-256. It pairs accepted runs, including alive caps, by seed, profile, controls and pick mode. Wave timing needs seconds in both runs. Offer confirmation keeps the same takers, decliners and offer waves across both batches.
 
@@ -193,7 +199,7 @@ With the default `--floor-mode=null-salt`, `night.mjs` immediately repeats the b
 
 To measure the floor separately, repeat the before `batch.mjs` command with `--salt=1 --out=null`, then run `node tools/gauntlet/tune.mjs floor --before=before/batch.json --null=null/batch.json --out=floors.md`. Pass the same `--null` to `tune.mjs confirm`. The ledger shows both floors and the mode deciding each change. `--floor-mode=cross-seed` selects the original adjacent-seed comparison within each before group. Each floor uses the larger absolute CI95 endpoint.
 
-For time and offer effects, the confirming number is the median paired reduction in absolute distance from target. Its CI95 uses the repo's 4,000-resample paired bootstrap. For killer share and profile spread, 2,000 seeded bootstrap draws resample whole before/after pairs and recompute the proportions or profile medians. Improvement is positive. Both the aggregate change and the entire interval must clear the A/A floor in the same direction for `kept` or `reverted`. Fewer than six A/A pairs or two comparison pairs yields `too few pairs`. With adequate coverage, an interval that fails to clear the floor yields `noise`. The ledger gives the actual left and right seed lists for each before-batch group. Several edits confirmed by one batch share the same experiment.
+Death-wave confirmation compares the mean paired wave difference, oriented toward the target, with the same-seed null-salt floor. Time and offer effects use the mean paired reduction in absolute distance from target. For killer share and historical spread metrics the bootstrap resamples whole pairs and recomputes the aggregate. The default point verdict keeps a gain when it exceeds the floor and the CI95 low exceeds zero. A loss uses the mirrored rule. Select the historical interval-above-floor rule with `--verdict=strict`. Fewer than six A/A pairs or two comparison pairs yields `too few pairs`. With adequate coverage, an inconclusive change yields `noise`. The ledger gives the actual left and right seed lists for each before-batch group. Several edits confirmed by one batch share the same experiment.
 
 `tune-ledger.json` and `tune-ledger.md` appear beside the **after** batch. Each row records the old, new and baseline values, original miss, measured outcomes, paired improvement, CI95, A/A floor, verdict and commit SHAs. Plain `confirm` writes verdicts. Add `--revert` to undo committed `reverted`, `noise` and `too few pairs` edits in reverse order. Undo allows its named plan, batches and ledger files alongside the evidence and build directories. Git needs a clean index. An empty apply SHA means the branch has no commit for that edit. A revert SHA identifies an executed undo. To undo one edit manually, use `git revert --no-edit <apply-sha>` on the tune branch.
 
@@ -219,7 +225,7 @@ The main scene uses 32 px/m. For 64 px/m, substitute the manifest's `closeup_sce
 
 ## What the tuner may touch
 
-Only the 69 table numbers in `tools/gauntlet/knobs.json` are eligible. On an `n22-tune*` branch, each knob gets one step per night, within 0.8–1.25× its current value and 0.5–2× its write-once value in `tools/gauntlet/baseline.json`. Code edits and switching on mechanics are outside the tuner's scope. See [Numeric limits](#numeric-limits).
+Only the table numbers in `tools/gauntlet/knobs.json` are eligible. On an `n23-tune*` branch, each knob gets one step per night, within 0.8–1.25× its current value and 0.5–2× its write-once value in `tools/gauntlet/baseline.json`. Code edits and switching on mechanics are outside the tuner's scope. See [Numeric limits](#numeric-limits).
 
 A tune branch has zero net table changes unless a change was kept. Only the owner or Director merges a kept change. The loop never merges the branch.
 
