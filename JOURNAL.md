@@ -135,3 +135,8 @@ NEXT: (session 4) check logs/cast/astra.lock (pid alive by process name) + astra
   as he turns: the same limit the game's mirrored left facings already have. Not yet seen in game or measured (2.6 m).
   Takes: pile-driver walk_70 3, attack_70 2, stomp_70 2, hit_70 2, fall_70 3; the 55 sheets 2 each.
 - 21:30 session 3 ends. ASTRA RUNNING clamshell since 20:44 (pid 71768, hard stop ~21:59). NEXT as written above.
+- 21:33 Astra committed 9c042d3e6 (door carrier row `enabled: true`, prone lancer at 83% matched to patrol, capture
+  scenes) and 9a8c74021 (door rest exposure spaced). enemies.json / weapons.json / combat.json: no diff from b3f4727c0.
+  RULE CHECK for session 4: the door carrier ships ON only when its film (door_wave_32.mp4 / door_close_64.mp4) exists
+  and is watched; if 04 ends without it, film it in brief 05 before the freeze or set the row `enabled: false`.
+  Same for the clamshell row. Session 3 ends 21:33; ASTRA RUNNING clamshell since 20:44 (pid 71768, hard stop ~21:59).
