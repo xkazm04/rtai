@@ -9,7 +9,7 @@ Each mode was compared with its own pre-change `b2-impact` run in this worktree.
 
 The isolated `replay_60s` run and both full suites reproduced `cbeb734ff9b97c41645f735114692ea3b9e7cc6578750f32d8d9f31d69844e85` over 3,600 ticks and 60 checkpoints. The quest 1 input final digest was `37bf8deacaad2f480055af695e77aa9296bb08c4f6b681c57344832333d4664a` in both modes.
 
-The full legacy suite passed 65/65. The default suite passed 63/65 on its first run. The `corpse_horde` step-time check and the `rig_stress` 200-person budget missed. Both passed when rerun together in isolation. The 200-person rig p50 was 1.052 ms in the suite and 0.738 ms in the rerun against a 1.000 ms limit.
+The full legacy suite passed 65/65. The default suite passed 63/65 on its first run. The `corpse_horde` step-time check and the `rig_stress` 200-person budget missed. Both passed when rerun together in isolation. The 200-person rig p50 was 1.052 ms in the suite and 0.738 ms in the rerun against a 1.000 ms limit. A second full default run then passed 65/65.
 
 ## In-memory rocket replay
 
