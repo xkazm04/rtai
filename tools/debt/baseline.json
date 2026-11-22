@@ -108,7 +108,8 @@
         "2026-11-21: Isolated rocket capture and legible shield and walker flanking inputs for n22 foes (dev_loc 27350 -> 27380)",
         "2026-11-21: Read the live guard fraction and break state in the gauntlet HUD (dev_loc 28520 -> 28525)",
         "2026-11-21: Exercise the scene control selection through the same street entry used by live play (dev_loc 28525 -> 28529)",
-        "2026-11-22: n23 prologue: deterministic hands pilot and viewport captures of the yard and first kill (dev_loc 28529 -> 28682)"
+        "2026-11-22: n23 prologue: deterministic hands pilot and viewport captures of the yard and first kill (dev_loc 28529 -> 28682)",
+        "2026-11-22: --prologue-stills for n23 prologue (dev_loc 28682 -> 28772)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -116,7 +117,7 @@
         "project/dev/bake_city.gd": 32,
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
-        "project/dev/bots": 592,
+        "project/dev/bots": 650,
         "project/dev/enemy_ai": 2286,
         "project/dev/frames": 1087,
         "project/dev/gauntlet": 514,
@@ -129,7 +130,7 @@
         "project/dev/human_react": 412,
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
-        "project/dev/prologue": 57,
+        "project/dev/prologue": 89,
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 1096,
@@ -146,7 +147,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 28682
+      "total": 28772
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -405,7 +406,8 @@
         "2026-11-21: sentry turret armour call and duel kill-side evidence for n22 foes (files_past_soft_cap 64 -> 64)",
         "2026-11-21: n22 merge: damage() keeps both the guard block and the armour line (files_past_soft_cap 65 -> 65)",
         "2026-11-21: Pin a single squad rocket burst, high-wall occlusion and the stomp sight line in the existing foe tests (files_past_soft_cap 65 -> 67)",
-        "2026-11-22: --bot and --result for n23 prologue (files_past_soft_cap 67 -> 67)"
+        "2026-11-22: --bot and --result for n23 prologue (files_past_soft_cap 67 -> 67)",
+        "2026-11-22: --prologue-stills for n23 prologue (files_past_soft_cap 67 -> 67)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -414,7 +416,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 238,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 215,
+        "project/boot/launch_args.gd": 216,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,

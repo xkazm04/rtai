@@ -19,8 +19,10 @@ func _init(stage: ArenaStage, encounter: PrologueEncounter) -> void:
 
 func sample(tick: int) -> TickInput:
 	var arena: CombatArena = _stage.arena
-	if not arena.rivet.alive() or _encounter.phase == PrologueEncounter.Phase.BEAT_TWO:
+	if not arena.rivet.alive() or _encounter.phase == PrologueEncounter.Phase.STREET:
 		return TickInput.new()
+	if _encounter.phase == PrologueEncounter.Phase.BEAT_TWO:
+		return _ranged(tick)
 	var patrol: ProloguePatrol = _encounter.patrol
 	if _encounter.phase == PrologueEncounter.Phase.TALK:
 		if patrol.approaching == 0:
@@ -71,6 +73,62 @@ func _nearest() -> Fighter:
 			best = h
 			distance = d
 	return best
+
+
+func _ranged(tick: int) -> TickInput:
+	var battle: PrologueBattle = _encounter.battle
+	if not battle.ranged:
+		return TickInput.new()
+	var arena: CombatArena = _stage.arena
+	var carry: RivetCarry = _stage.pilot.carry
+	var at: Vector2 = arena.rivet.pos
+	if not carry.ground.items.is_empty():
+		var walk: Vector2 = at.direction_to(_waypoint(carry.ground.items[0].pos))
+		return _command(walk, walk, 0)
+	if _stage.pilot.wheel.selected() != battle.pistol.id:
+		return _command(Vector2.ZERO, Vector2.ZERO, _bit(&"weapon_next"))
+	var line: PrologueFormation = battle.formation
+	var target: Fighter = _gun_target(line, at)
+	var window: bool = tick + 8 < battle.exposed_until
+	if target == null or (window and line.boss.hurt_tick < 0):
+		target = line.boss
+	var aim: Vector2 = target.pos - at
+	var walk: Vector2 = _strafe(at, target.pos)
+	var buttons: int = 0
+	if arena.gun != null and arena.gun.trigger.ammo == 0:
+		buttons = _bit(&"reload") if tick % 2 == 0 else 0
+	elif tick % 17 == 0 and (target != line.boss or window):
+		buttons = _bit(&"fire")
+	return _command(aim, walk, buttons)
+
+
+func _gun_target(line: PrologueFormation, at: Vector2) -> Fighter:
+	var best: Fighter
+	var distance: float = INF
+	for h: Fighter in line.members:
+		if not h.alive() or h == line.boss:
+			continue
+		var cost: float = at.distance_to(h.pos)
+		if h in line.shields:
+			cost += 7.0
+		if not _stage.arena.guard_map.sight_line(at, h.pos):
+			cost += 12.0
+		if cost < distance:
+			best = h
+			distance = cost
+	return best
+
+
+func _strafe(at: Vector2, target: Vector2) -> Vector2:
+	var map: GuardRouteMap = _stage.arena.guard_map
+	var to: Vector2 = at.direction_to(target)
+	if at.distance_to(target) > 8.0 or not map.sight_line(at, target):
+		return at.direction_to(_waypoint(target))
+	var radial: float = clampf((at.distance_to(target) - 5.0) / 2.0, -0.8, 0.8)
+	var side: Vector2 = to.orthogonal()
+	if not map.clear_line(at, at + side * 2.0):
+		side = -side
+	return (side + to * radial).normalized()
 
 
 func _waypoint(goal: Vector2) -> Vector2:
