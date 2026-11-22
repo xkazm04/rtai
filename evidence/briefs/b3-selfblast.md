@@ -1,7 +1,7 @@
 # Brief b3-selfblast: Rivet's own blasts hurt him
 
 Lane `controls`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-controls`, branch `n23-controls`. Owner: "let his own blasts hurt him". Decided: self damage can kill (hurt, not spared).
-**Hard stop: HARDSTOP wall clock (check `date`). Commit deadline: COMMITBY.**
+**Hard stop: 04:35 wall clock (check `date`). Commit deadline: 04:30.**
 Read `evidence/briefs/n23-controls-common.md` first: environment and repo law bind this brief.
 
 ## What exists
