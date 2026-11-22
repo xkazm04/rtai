@@ -6,6 +6,7 @@ extends Sprite2D
 const PIXELS: Vector2i = Vector2i(768, 768)
 const FOOT: Vector2 = Vector2(384, 480)
 const RES: float = 2.0
+const APPEAR_TICKS: int = 6
 
 var source: SubViewport
 var stage: CollectCallStage
@@ -79,9 +80,10 @@ func show_strike(ghost: GhostDeploy, age: int, steps: int) -> void:
 	scale = Vector2(1.0 / RES, 1.0 / (RES * pitch))
 	var yaw: float = ghost.facing.angle()
 	var drawn: GhostDrawn = _body.get(&"drawn")
-	drawn.deploy_age = age
+	# Keep the authored follow-through cell while the apparition lingers.
+	drawn.deploy_age = mini(age, GhostDrawn.CUT_TICKS + GhostDrawn.FOLLOW_TICKS - 1)
 	drawn.jab = ghost.form == DentStage.GHOST
-	drawn.feed(1, -1, stage.tick, false, stage.tick - age)
+	drawn.feed(1, -1, stage.tick, false, stage.tick - drawn.deploy_age)
 	position = ghost.spot * SimConst.PX_PER_M
 	if ghost.form == OhmStage.GHOST:
 		var short_radius: float = ghost.strike.attacks.deploy[ghost.form].radius_m
@@ -100,14 +102,15 @@ func show_strike(ghost: GhostDeploy, age: int, steps: int) -> void:
 		_body.rotation = yaw
 		_body.set(&"unfold", 1.0)
 		_body.call(&"advance", steps * SimClock.TICK_DT)
-	_wash_body(ghost)
+	_wash_body(ghost, age)
 	source.render_target_update_mode = SubViewport.UPDATE_ONCE
 
 
-func _wash_body(ghost: GhostDeploy) -> void:
+func _wash_body(ghost: GhostDeploy, age: int) -> void:
 	var life: int = ghost.strike.attacks.deploy[ghost.form].life_ticks
 	var fade_ticks: int = maxi(2, ceili(life / 3.0))
-	var k: float = clampf(1.0 - float(ghost.ticks_left) / fade_ticks, 0.0, 1.0)
+	var appear: float = maxf(0.0, 1.0 - float(age) / APPEAR_TICKS)
+	var k: float = maxf(appear, 1.0 - float(ghost.ticks_left) / fade_ticks)
 	var mat: ShaderMaterial = _fade if k > 0.0 else _wash
 	material = mat
 	mat.set_shader_parameter(&"voice_phase", 0.0 if calm else stage.tick * 0.008)
