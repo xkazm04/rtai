@@ -1,6 +1,6 @@
 # Brief 02 `dash`: the dash on Shift (lane motion, n24)
 
-Hard stop: HARDSTOP wall clock (check `date`). Commit deadline: COMMITBY. Whatever is not committed by then,
+Hard stop: 19:44 wall clock (check `date`). Commit deadline: 19:35 (commit 1, the MILESTONE, as early as you can: another lane waits on it). Whatever is not committed by then,
 describe in your final report. Fix lint and format findings in your own edit and go on.
 
 ## Why
