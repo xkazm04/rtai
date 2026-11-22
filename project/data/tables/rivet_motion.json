@@ -14,7 +14,15 @@
     "snap_reach_m": 0.85,
     "snap_ticks": 5
   },
-  "doc": "Rivet's sprint and dodge roll as data (rivet-motion, 2026-11-03 eve). Ticks are 60 Hz frames. Sprint (owner call C19: a held key) raises the top speed above the 7.5 m/s tackle line (bodies.json rivet run_mps; the owner's 2026-11-04 baseline, 1.5x the evening's 6.2 sprint over a 6.75 m/s walk) while the stick points within min_forward_dot of the facing; the facing then follows the walk at turn_dps, not the aim. The roll is a press: roll_m covered in roll_ticks on an ease-out curve along the stick (or the facing), invulnerable from iframe_from to iframe_to (inclusive), then recovery_ticks with the stick scaled by recovery_move_scale; no new roll until cooldown_ticks after the recovery. The live tuning panel edits these rows. With vault enabled, a roll press at speed commits to a low obstacle and a clear landing. Depth follows travel, reach and landing clearance are measured from Rivet's edge, and the vault shares roll recovery. Heights are gameplay metres keyed by station kind or city texture name. Unlisted solids cannot be vaulted.",
+  "dash": {
+    "cooldown_ticks": 40,
+    "distance_m": 4.5,
+    "enabled": true,
+    "hold_sprints": true,
+    "iframe_ticks": 0,
+    "ticks": 10
+  },
+  "doc": "Rivet's sprint and dodge roll as data (rivet-motion, 2026-11-03 eve). Ticks are 60 Hz frames. Sprint (owner call C19: a held key) raises the top speed above the 7.5 m/s tackle line (bodies.json rivet run_mps; the owner's 2026-11-04 baseline, 1.5x the evening's 6.2 sprint over a 6.75 m/s walk) while the stick points within min_forward_dot of the facing; the facing then follows the walk at turn_dps, not the aim. The roll is a press: roll_m covered in roll_ticks on an ease-out curve along the stick (or the facing), invulnerable from iframe_from to iframe_to (inclusive), then recovery_ticks with the stick scaled by recovery_move_scale; no new roll until cooldown_ticks after the recovery. The live tuning panel edits these rows. With vault enabled, a roll press at speed commits to a low obstacle and a clear landing. Depth follows travel, reach and landing clearance are measured from Rivet's edge, and the vault shares roll recovery. Heights are gameplay metres keyed by station kind or city texture name. Unlisted solids cannot be vaulted. Dash covers distance_m in ticks on a quadratic ease-out in the held move direction, or the facing at rest. After the burst, cooldown_ticks must elapse before a new press. Holding the key with hold_sprints enabled uses the ordinary sprint. The dash relies on displacement to dodge and grants zero invulnerability ticks.",
   "face_aim": true,
   "roll": {
     "cooldown_ticks": 8,

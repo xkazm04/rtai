@@ -116,6 +116,42 @@
       ],
       "type": "object"
     },
+    "dash": {
+      "additionalProperties": false,
+      "properties": {
+        "cooldown_ticks": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "distance_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "hold_sprints": {
+          "type": "boolean"
+        },
+        "iframe_ticks": {
+          "const": 0,
+          "type": "integer"
+        },
+        "ticks": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "cooldown_ticks",
+        "distance_m",
+        "enabled",
+        "hold_sprints",
+        "iframe_ticks",
+        "ticks"
+      ],
+      "type": "object"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"
@@ -387,6 +423,7 @@
   },
   "required": [
     "cover",
+    "dash",
     "doc",
     "roll",
     "schema",

@@ -13,7 +13,7 @@ var move_y: int = 0
 
 
 func _init(p_buttons: int = 0, p_move_x: int = 0, p_move_y: int = 0) -> void:
-	buttons = p_buttons & 0xFFFFFFFF
+	buttons = p_buttons & 0xFFFFFFFFFFFF
 	move_x = clampi(p_move_x, -AXIS_MAX, AXIS_MAX)
 	move_y = clampi(p_move_y, -AXIS_MAX, AXIS_MAX)
 
