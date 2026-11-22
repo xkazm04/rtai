@@ -7,12 +7,14 @@ const ARMED: String = "rivet_walk_eq_"
 const RUN: String = "rivet_run8.png"
 const ARMED_RUN: String = "rivet_run8_eq_"
 const RUN_CYCLE_CELL: Dictionary[String, float] = {"p70": 258.0, "p55": 212.0}
-## How long a speed dip keeps the walk grid (0 = the old one-tick stand in a reversal).
-const DIP_TICKS: int = 3
+const DIP_TICKS: int = 3  ## Keep the grid through speed dips. Zero restores the one-tick stand.
 const MOVED: StringName = &"rivet_walk_moved"
 const RUN_FROM_MPS: float = 2.5
 const MAX_RUN_CYCLES_S: float = 3.5
 const RUN_ROW_K: Dictionary[String, float] = {
+	"p70/machine_pistol/0": 0.86,
+	"p70/machine_pistol/1": 0.95,
+	"p70/machine_pistol/4": 0.91,
 	"p70/hand_cannon/0": 0.91,
 	"p70/hand_cannon/3": 0.91,
 	"p70/hand_cannon/4": 0.84,
@@ -52,11 +54,11 @@ const RUN_ROW_K: Dictionary[String, float] = {
 	"p55/flamethrower/1": 0.68,
 	"p55/flamethrower/3": 0.93,
 }
-const ROWS: int = 8
-## n11 grids pack at 1.5x for the larger player. Cycle values stay in 110 px figure space.
-const RES: float = 1.5
+const ROWS: int = 8  ## is_grid recognizes eight-row walk and run grids. Other strips have one row.
+const RES: float = 1.5  ## n11 grid texels per 110-space pixel. One-row strips use RivetRes.
 const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
 const ARMED_CYCLE_CELL: Dictionary[String, float] = {
+	"p70/machine_pistol": 73.7,
 	"p70/hand_cannon": 69.7,
 	"p70/assault_rifle": 78.0,
 	"p70/electro_baton": 68.7,
@@ -124,12 +126,10 @@ static func _grid(dir: String, id: StringName, fast: bool) -> String:
 	return path if RivetStrips.has_file(path) else ""
 
 
-## True when `card` shows a walk grid (8 rows; every other strip is one row).
 static func is_grid(card: Sprite2D) -> bool:
 	return card != null and card.vframes == ROWS
 
 
-## Texture pixels per 110-space pixel. Packed grids use RES and a one-row strip uses RivetRes.
 static func res_of(card: Sprite2D) -> float:
 	var on: String = str(card.get_meta(RivetFrames.ON, ""))
 	return RES if is_grid(card) else RivetRes.of(on)
