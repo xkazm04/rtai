@@ -190,7 +190,7 @@ func _show_cell(vm: ViewMode, centre: Vector2) -> void:
 	var h: float = pose.torso.z - TonnagePose.CHEST_H - _sample.bob_m
 	_cell.global_position = to_global(centre) + vm.lift_px(h * fit * _morph.size_k)
 	_glow.global_position = _cell.to_global(TonnageGlow.GLOW_CELL_CENTRE)
-	_cell.modulate.a = TonnageGlow.body_alpha(pose)
+	_cell.modulate.a = 1.0 if _drawn.deploy_age >= 0 else TonnageGlow.body_alpha(pose)
 
 
 func _hit_lean(look: float, roll: float) -> void:

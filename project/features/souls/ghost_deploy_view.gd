@@ -32,6 +32,7 @@ func _ready() -> void:
 	add_child(_body)
 	_fx.stage = stage
 	_fx.calm = reduced_motion
+	_fx.body = _body
 	add_child(_fx)
 	process_priority = 23
 
@@ -49,7 +50,9 @@ func _process(_delta: float) -> void:
 	var age: int = stage.tick - ghost.strike.release_tick
 	_body.show_strike(ghost, age, mini(age + 1, steps))
 	_fx.z_index = (
-		_body.z_index + 1 if ghost.form != HaulerStage.GHOST else RenderLayers.z(&"actors") - 2
+		RenderLayers.z(&"vehicles") + 1
+		if ghost.form != HaulerStage.GHOST
+		else RenderLayers.z(&"actors") - 2
 	)
 	_fx.show()
 	_fx.queue_redraw()

@@ -8,6 +8,7 @@ const CONTACTS: Array[StringName] = [&"deploy_kerf", &"deploy_ohm", &"deploy_den
 
 var stage: CollectCallStage
 var calm: bool
+var body: GhostDeployBody
 var _hit_tick: int = -1
 var _hits: PackedVector2Array = []
 
@@ -66,7 +67,7 @@ func _draw() -> void:
 
 
 func _bolt(ghost: GhostDeploy, target: Vector2, index: int, age: int) -> void:
-	var start: Vector2 = (ghost.spot + ghost.facing * 0.42) * PPM
+	var start: Vector2 = body.bolt_tip((ghost.spot + ghost.facing * 0.42) * PPM)
 	var fade: float = OhmBoltDraw.fade(age, 0, calm)
 	# The bolt lands even on a victim at the origin; the ring shows the short hop.
 	var seed_i: int = index if calm else index + floori(age / 3.0)

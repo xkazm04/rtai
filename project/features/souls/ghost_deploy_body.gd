@@ -12,6 +12,7 @@ var stage: CollectCallStage
 var calm: bool
 var _mount: Node2D
 var _body: Node2D
+var _fork: OhmFork
 var _shown: StringName
 var _wash: ShaderMaterial = GhostApparition.ghost_material(false, 0.15)
 var _fade: ShaderMaterial = ShaderMaterial.new()
@@ -41,6 +42,7 @@ func _open() -> void:
 
 
 func _rig(form: StringName) -> void:
+	_fork = null
 	if _mount.get_child_count() > 0:
 		_mount.get_child(0).free()
 	match form:
@@ -117,3 +119,20 @@ func dismiss() -> void:
 	GhostFormBodies.place_body(drawn, Vector2.ZERO, 0.0, 0, false)
 	_body.hide()
 	source.render_target_update_mode = SubViewport.UPDATE_DISABLED
+
+
+## The real spectral rig places these sockets in its current painted cell. The compositor
+## cancels the capture scale and camera pitch, leaving the same local world-pixel offset.
+func bolt_tip(fallback: Vector2) -> Vector2:
+	if _shown != OhmStage.GHOST:
+		return fallback
+	if _fork == null:
+		for node: Node in get_tree().get_nodes_in_group(OhmFork.GROUP):
+			if _mount.is_ancestor_of(node):
+				_fork = node as OhmFork
+				break
+	if _fork != null:
+		var tips: PackedVector2Array = _fork.points_on(_mount)
+		if tips.size() == 3:
+			return position + tips[2]
+	return fallback
