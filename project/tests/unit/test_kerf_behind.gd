@@ -103,6 +103,14 @@ func test_sentry_turret_has_a_blocking_front() -> void:
 	_rear(_spawn(&"sentry_turret"), 1.0)
 
 
+func test_blink_from_east_lands_behind_and_faces_the_target() -> void:
+	var h: Fighter = _spawn(&"shield_robot")
+	arena.rivet.pos = h.pos + Vector2(3, 0)
+	h.facing = Vector2.RIGHT
+	_rear(h, 1.0)
+	assert_eq(arena.rivet.facing, arena.rivet.pos.direction_to(h.pos))
+
+
 func test_war_machine_takes_its_existing_rear_multiplier() -> void:
 	_rear(_spawn(&"war_machine"), 1.5)
 
