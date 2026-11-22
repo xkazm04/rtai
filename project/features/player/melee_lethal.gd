@@ -78,3 +78,15 @@ static func pit_damage(
 	if hit.grind_ticks > 0 and swing.ground < hit.grind_min_ticks:
 		return 0.0
 	return e.hp
+
+
+static func damage_scale(
+	arena: CombatArena, victim: Fighter, kind: StringName, killer_id: int, weapon: StringName
+) -> float:
+	if kind == FINISH:
+		return 1.0
+	return FoeArmor.impact(arena, victim, kind, killer_id, weapon) * victim.damage_k
+
+
+static func death_kind(kind: StringName) -> StringName:
+	return &"shot" if kind == FINISH else kind
