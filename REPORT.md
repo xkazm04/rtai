@@ -59,7 +59,7 @@ Previewed at 05:50 with `git merge-tree --write-tree n23-street n23-<lane>` (no 
 3. `shot_draw.gd` drawing calls survive mutation (5/20): a pixel probe of one tracer on ShotDraw's canvas would pin the rim and core widths.
 4. The shove slab is drawn ~2.5 m across but hits a 0.64 m lane (call 5): the enemy lanes decide whether the hit widens or the slab art narrows.
 5. Plate-stopped enemy rounds in `plate_sparks.gd` still draw vermilion (`NEED moves` 04:43): check after the merge.
-6. The merged-game freeze (What does not): find which move or AI state stops damage either way, then re-run loop's `expert-1` (seed 1, expert, greedy, `--waves=40`).
+6. The merged-game freeze (What does not): find which move or AI state stops damage either way, then re-run loop's `expert-1` (seed 1, expert, greedy, `--waves=40`). Loop's runs had n23-moves only up to `73eec563c`, without moves' Ohm fix `a8a060feb` (moves journal 07:44); merge `n23-moves` at `81723e268` first, so the re-run says whether that fix already ends the freeze.
 7. Moves' NEED 06:42 (not built tonight: after the last-code line): the bonus card view reads `<name>__DESC` when that loc key exists and shows it as one line under the name, so a rank 2 card says in plain words what it adds.
 8. Loop's NEED 08:51 (found at 09:31, after the freeze; not investigated): the gauntlet HUD showed `Health 111 / 110` on the merged game (average seed 1, wave 9, Tonnage form; still `C:/Users/kazda/kiro/gtai-masters/n23/loop/average-wave-9-at-10s.png`), while the telemetry says hp max 110. Check first whether a regen or repair tick adds hp without clamping to `rivet.max_hp` in Tonnage form, then whether the HUD rounds hp and max differently. `gauntlet_bonus_apply.gd:69` clamps the hp_max bonus correctly.
 

@@ -79,3 +79,5 @@ NEXT (Director / next night): (1) merge per REPORT "Merge notes" (gauntlet_draw 
 NEXT (Director / next night): as the 09:10 NEXT, plus (6) loop's NEED 08:51: HUD hp above max in Tonnage form (REPORT Next steps 8).
 - 09:31 session 8 (STABILIZE) check: tree clean, no Astra, no Godot of mine; no NEED street newer than loop 08:51 (already in REPORT Next steps 8); REPORT cites 24/24 ok. Nothing to change after the freeze.
 NEXT (Director): as the 09:10 and 09:33 NEXT lines; lane closed at final code 574e313a2.
+- 09:42 session 9 (REPORT) start. No Astra (no lock), no Godot of mine, tree clean. No NEED street newer than loop 08:51. REPORT Next steps 6 gained one fact from the moves journal 07:44: loop's freeze runs lacked moves' Ohm fix `a8a060feb`; merge n23-moves at `81723e268` before re-running `expert-1`. Cites ok. Nothing else changed.
+NEXT (Director): as the 09:10 and 09:33 NEXT lines; lane closed at final code 574e313a2 (gate PASS 7277e1f8, --reels PASS 3b446472).
