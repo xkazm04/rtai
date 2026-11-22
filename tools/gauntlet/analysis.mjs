@@ -103,7 +103,7 @@ function unusual(runs, batch, weapons) {
     const runner = batch.args.runner ?? 'gauntlet';
     const result = runner === 'pit' ? resolve('build/gauntlet/replay', run.profile + '-' + run.seed + '.json') : null;
     const replay = entryArgs({ runner, profile: run.profile, seed: run.seed, controls: run.controls,
-      pick: recorded?.pick ?? batch.args.pick, waves: batch.args.waves }, result);
+      pick: recorded?.pick ?? batch.args.pick, waves: batch.args.waves, salt: batch.args.salt }, result);
     scores.push({ run, score, signature, command: commandLine(replay) });
   }
   return scores.sort((a, b) => b.score - a.score || a.run.seed - b.run.seed).slice(0, 3);

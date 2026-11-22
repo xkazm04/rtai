@@ -1,4 +1,5 @@
-import { readJson } from '../lib/repo.mjs';
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
 import { PROFILES, validateRun } from './contract.mjs';
 
 // A cap is a legitimate live observation only if the launcher diagnosed the exit and
@@ -11,7 +12,8 @@ export function capExit(row, verdict) {
 export function readResult(file, row, checkIdentity = false, capped = false) {
   let result;
   try {
-    result = readJson(file);
+    const bytes = readFileSync(file);
+    result = JSON.parse(bytes.toString('utf8'));
     if (!checkIdentity) {
       if ([...PROFILES, 'human'].includes(result?.profile)) row.profile = result.profile;
       if (Number.isSafeInteger(result?.seed)) row.seed = result.seed;
@@ -25,6 +27,7 @@ export function readResult(file, row, checkIdentity = false, capped = false) {
       row.outcome = 'capped';
       delete row.reason;
     }
+    row.result_sha256 = createHash('sha256').update(bytes).digest('hex');
     row.ok = true;
   } catch (err) {
     row.reason = err.message;

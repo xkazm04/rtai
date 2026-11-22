@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { test } from 'node:test';
@@ -59,6 +60,27 @@ test('job cap, unsigned seed range, human imports and profile expansion', () => 
   assert.equal(parseArgs([...args, '--runner=pit']).controls, 'legacy');
   assert.equal(parseArgs([...args, '--controls=legacy']).controls, 'legacy');
   assert.equal(validateRun({ ...skeleton, profile: 'human' }), null);
+});
+
+test('salt is recorded in the manifest and forwarded to every bot only when nonzero', async (t) => {
+  const out = workspace(t);
+  for (const salt of [undefined, 0, 1, 4294967295]) {
+    const options = parseArgs([...args, '--out=' + out, ...(salt === undefined ? [] : ['--salt=' + salt])]);
+    const commandSalts = [...plan(options)].map((job) => job.argv.filter((arg) => arg.startsWith('--bot-salt=')));
+    assert.deepEqual(commandSalts, Array(6).fill(salt ? ['--bot-salt=' + salt] : []));
+  }
+  await batch(parseArgs([...args, '--salt=1', '--out=' + out]), { out() {}, err: assert.fail, launch(argv) {
+    assert.ok(argv.includes('--bot-salt=1'));
+    const value = (key) => argv.find((arg) => arg.startsWith('--' + key + '=')).slice(key.length + 3);
+    writeFileSync(value('result'), JSON.stringify({ ...skeleton, profile: value('bot'), seed: Number(value('seed')) }));
+    return 0;
+  } });
+  const doc = JSON.parse(readFileSync(join(out, 'batch.json'), 'utf8'));
+  assert.equal(doc.args.salt, 1);
+  for (const row of doc.runs) assert.equal(row.result_sha256,
+    createHash('sha256').update(readFileSync(join(out, row.file))).digest('hex'));
+  for (const bad of ['-1', '1.5', '4294967296', '']) assert.throws(() => parseArgs([...args, '--salt=' + bad]), /--salt/);
+  assert.throws(() => parseArgs([...args, '--salt=1', '--runner=pit']), /gauntlet runner/);
 });
 
 test('wire validation preserves unavailable metrics and measured zeroes', () => {
