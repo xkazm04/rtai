@@ -266,7 +266,8 @@
               "shred",
               "cook",
               "torch",
-              "throw"
+              "throw",
+              "shutdown"
             ]
           },
           "track": {

@@ -8,7 +8,9 @@ var _swing: int = -1
 
 func land(
 	arena: CombatArena, f: Fighter, combo: MeleeCombo, dir: Vector2, outcome: MeleeLethal.Contact
-) -> void:
+) -> bool:
+	if MeleeShutdown.land(arena, f, combo):
+		return false
 	match outcome:
 		MeleeLethal.Contact.NORMAL:
 			arena.damage(f, combo.current().damage, arena.rivet.id, combo.table.id)
@@ -19,6 +21,9 @@ func land(
 			arena.wounded.emit(f, combo.table.id)
 		MeleeLethal.Contact.LETHAL:
 			arena.damage(f, f.hp, arena.rivet.id, combo.table.id, MeleeLethal.FINISH)
+	if f.alive() and combo.current().stun_ticks > 0:
+		PlayerShock.stun_on(PlayerShock.areas_of(arena), f, combo.current().stun_ticks)
+	return true
 
 
 ## Once the teeth catch someone the committed grind runs to its end and the saw pulls free.

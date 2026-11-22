@@ -19,11 +19,11 @@ static func human(f: Fighter) -> bool:
 		return false
 	if f.archetype == &"":
 		return true
-	var arch: EnemyRoster.Archetype = _arch(f.archetype)
+	var arch: EnemyRoster.Archetype = archetype(f.archetype)
 	return arch == null or _eligible(arch)
 
 
-static func _arch(id: StringName) -> EnemyRoster.Archetype:
+static func archetype(id: StringName) -> EnemyRoster.Archetype:
 	if _roster == null:
 		_roster = EnemyRoster.shipped(EnemyRoster.TABLE, true)
 	return _roster.archetype(id)
@@ -54,7 +54,7 @@ static func contact(
 ) -> Contact:
 	if not combo.table.kills_human or f == boss or not human(f):
 		return Contact.NORMAL
-	var arch: EnemyRoster.Archetype = _arch(f.archetype)
+	var arch: EnemyRoster.Archetype = archetype(f.archetype)
 	if _blocks(f, arch, f.facing.dot(-dir), now, combo.table):
 		return Contact.BLOCKED
 	return Contact.GRIND if combo.current().grind_ticks > 0 else Contact.LETHAL

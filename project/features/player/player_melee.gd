@@ -97,16 +97,14 @@ func _land(arena: CombatArena, h: MeleeHit, facing: Vector2) -> void:
 			arena.hit_dir = dir
 			arena.hit_at = f.pos
 		var result: MeleeLethal.Contact = MeleeLethal.contact(f, arena.boss, combo, dir, arena.tick)
-		_contact.land(arena, f, combo, dir, result)
-		if h.stun_ticks > 0 and f.alive():  # the electro baton's lock
-			PlayerShock.stun_on(PlayerShock.areas_of(arena), f, h.stun_ticks)
+		var shove: bool = _contact.land(arena, f, combo, dir, result)
 		if combo.table.single_swing and h.chain_hops > 0 and (f.machine or arena.metal.has(f.pos)):
 			if (
 				conductor == null
 				or at.distance_squared_to(f.pos) < at.distance_squared_to(conductor.pos)
 			):
 				conductor = f
-		_shoves[f.id] = dir * h.knockback_m
+		_shoves[f.id] = dir * h.knockback_m if shove else Vector2.ZERO
 		hit_any = true
 	if conductor != null:
 		_arc_from_metal(arena, conductor, h)
@@ -140,7 +138,10 @@ func _arc_from_metal(arena: CombatArena, first: Fighter, h: MeleeHit) -> void:
 		areas.chain_arcs.append(PackedVector2Array([points[path[i - 1]], to]))
 		areas.arc_ticks.append(arena.tick)
 		if bodies.has(to):
-			PlayerShock.stun_on(areas, bodies[to], h.stun_ticks)
+			var ticks: int = h.stun_ticks
+			if combo.table.electric and combo.table.never_finish.has(bodies[to].archetype):
+				ticks = combo.table.heavy_stun_ticks
+			PlayerShock.stun_on(areas, bodies[to], ticks)
 
 
 ## Eases every shove out: each tick slides a share of what is left (by id order: deterministic).

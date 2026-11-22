@@ -177,7 +177,7 @@ func _push_out(p: Vector2) -> Vector2:
 
 func _rig_of(victim_id: int) -> CutRig:
 	var rigs: RigHost = _find_rigs()
-	return rigs.rigs.rig_for(victim_id) if rigs != null else null
+	return RobotShutdownFx.rig_for(rigs, victim_id)
 
 
 func _hide(victim_id: int) -> void:

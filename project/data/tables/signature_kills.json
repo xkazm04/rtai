@@ -1843,6 +1843,59 @@
         0
       ],
       "weapon": "claw_shock"
+    },
+    {
+      "blot_m": 0,
+      "bounce": 0,
+      "crumble_ticks": 30,
+      "doc": "The frame seizes, joint capacitors flare amber, then its sensor goes dark and the chassis folds onto a scorch. Mechanical, bloodless at both gore levels.",
+      "id": "electric_shutdown",
+      "launch_mps": [
+        0,
+        0
+      ],
+      "pieces": [
+        "body"
+      ],
+      "scorch_radius_m": 0.63,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "spray": 0,
+      "stand_ticks": 25,
+      "style": "shutdown",
+      "up_mps": [
+        0,
+        0
+      ],
+      "variants": {
+        "robot_gunner": {
+          "fx": {
+            "fold_deg": 62,
+            "joint_m": 0.69
+          }
+        },
+        "robot_thug": {
+          "fx": {
+            "fold_deg": 78,
+            "joint_m": 0.62
+          }
+        },
+        "sentry_turret": {
+          "fx": {
+            "fold_deg": 24,
+            "joint_m": 0.34
+          }
+        },
+        "shield_robot": {
+          "fx": {
+            "fold_deg": 47,
+            "joint_m": 0.87
+          }
+        }
+      },
+      "weapon": "electric_shutdown"
     }
   ],
   "leftover_budget": 12,

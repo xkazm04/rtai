@@ -106,6 +106,9 @@
           "minimum": 0,
           "type": "integer"
         },
+        "electric": {
+          "type": "boolean"
+        },
         "hits": {
           "items": {
             "$ref": "#/$defs/hit"

@@ -95,6 +95,27 @@
     },
     "weapon": {
       "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "electric": {
+                "const": true
+              }
+            },
+            "required": [
+              "electric"
+            ]
+          },
+          "then": {
+            "required": [
+              "machine_stun_ticks",
+              "heavy_stun_ticks",
+              "never_finish"
+            ]
+          }
+        }
+      ],
       "properties": {
         "cancel_ticks": {
           "maximum": 60,
@@ -120,11 +141,18 @@
           "minLength": 1,
           "type": "string"
         },
+        "electric": {
+          "type": "boolean"
+        },
         "grip": {
           "enum": [
             "one_hand",
             "two_hand"
           ]
+        },
+        "heavy_stun_ticks": {
+          "minimum": 1,
+          "type": "integer"
         },
         "hits": {
           "items": {
@@ -152,10 +180,22 @@
           "minimum": 0.1,
           "type": "number"
         },
+        "machine_stun_ticks": {
+          "minimum": 1,
+          "type": "integer"
+        },
         "move_mult": {
           "maximum": 1.5,
           "minimum": 0.1,
           "type": "number"
+        },
+        "never_finish": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
         },
         "shield_break_ticks": {
           "minimum": 1,

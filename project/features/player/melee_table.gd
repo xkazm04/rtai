@@ -10,6 +10,10 @@ const WEAPONS_SCHEMA: String = "gtai.melee-weapons/1"
 const CLAW: StringName = &"claw"
 
 var id: StringName = CLAW
+var electric: bool = false
+var machine_stun_ticks: int = 0
+var heavy_stun_ticks: int = 0
+var never_finish: Array[StringName] = []
 var kills_human: bool = false
 var vs_shield: StringName = &"blocked"
 var shield_break_ticks: int = 0
@@ -103,6 +107,15 @@ static func weapon_ids() -> Array[StringName]:
 
 
 static func _read_combo(t: DataTable, combo: Dictionary, m: MeleeTable) -> void:
+	m.electric = combo.get("electric", false) == true
+	m.machine_stun_ticks = (
+		t.integer(combo, "machine_stun_ticks") if combo.has("machine_stun_ticks") else 0
+	)
+	m.heavy_stun_ticks = (
+		t.integer(combo, "heavy_stun_ticks") if combo.has("heavy_stun_ticks") else 0
+	)
+	for enemy_id: String in combo.get("never_finish", []):
+		m.never_finish.append(StringName(enemy_id))
 	m.kills_human = combo.get("kills_human", false) == true
 	m.vs_shield = StringName(str(combo.get("vs_shield", "blocked")))
 	if combo.has("shield_break_ticks"):

@@ -71,6 +71,15 @@ static func gore_from_args(value: String) -> bool:
 func for_weapon(weapon: StringName, victim: StringName = &"") -> SignatureKill:
 	if not gore_full:
 		return null
+	return _lookup(weapon, victim)
+
+
+## Mechanical shutdown leaves the chassis whole at either gore setting.
+func shutdown(victim: StringName) -> SignatureKill:
+	return _lookup(&"electric_shutdown", victim)
+
+
+func _lookup(weapon: StringName, victim: StringName) -> SignatureKill:
 	var base: SignatureKill = _by_weapon.get(weapon)
 	if base != null and _by_victim.has(base.weapon):
 		return _by_victim[base.weapon].get(victim, base)

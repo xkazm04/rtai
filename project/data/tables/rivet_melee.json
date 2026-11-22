@@ -2,6 +2,7 @@
   "claw": {
     "cancel_ticks": 4,
     "combo_window_ticks": 12,
+    "electric": false,
     "hits": [
       {
         "active_ticks": 3,

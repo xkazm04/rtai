@@ -8,6 +8,7 @@
       "chain_radius_m": 0,
       "combo_window_ticks": 16,
       "doc": "Rev for twelve ticks, drive forward on the last four, grind in place while held, then rip free during recovery.",
+      "electric": false,
       "grip": "two_hand",
       "hits": [
         {
@@ -77,7 +78,9 @@
       "chain_radius_m": 2.5,
       "combo_window_ticks": 12,
       "doc": "Lift the baton, crack down over three active ticks and withdraw. Contact stuns for 90 ticks and can arc two hops along metal.",
+      "electric": true,
       "grip": "one_hand",
+      "heavy_stun_ticks": 30,
       "hits": [
         {
           "active_ticks": 3,
@@ -126,7 +129,11 @@
       "lean_back_deg": 4,
       "lean_in_deg": 7,
       "length_m": 0.7,
+      "machine_stun_ticks": 150,
       "move_mult": 0.85,
+      "never_finish": [
+        "war_machine"
+      ],
       "shield_break_ticks": 40,
       "swing": {
         "active_ticks": 3,
@@ -154,6 +161,7 @@
       "chain_radius_m": 0,
       "combo_window_ticks": 14,
       "doc": "Draw from low guard with a short advancing step, cut diagonally across the target, then settle the blade.",
+      "electric": false,
       "grip": "two_hand",
       "hits": [
         {
@@ -233,6 +241,7 @@
       "combo_window_ticks": 12,
       "deflect_m": 1.6,
       "doc": "Wind the blade across the body, sweep across Rivet's front and hold the far shoulder before lowering. The six active ticks retain the deflect.",
+      "electric": false,
       "grip": "two_hand",
       "hits": [
         {

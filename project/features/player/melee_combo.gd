@@ -21,6 +21,8 @@ var since_end: int = 1 << 20
 var last_index: int = 0
 ## Counts hit starts: a host that poses the rig compares it with the count it last saw.
 var starts: int = 0
+## Direct electric contacts during this swing, cleared before the next hit starts.
+var electric_hits: Dictionary[Object, bool] = {}
 ## Set by the host each tick: the attack is held down (a grinding hit keeps grinding).
 var holding: bool = false
 ## Ticks the current hit has held its grind (0 = not grinding yet).
@@ -141,6 +143,7 @@ func move_scale() -> float:
 func _start(index: int) -> void:
 	hit_index = index
 	starts += 1
+	electric_hits.clear()
 	tick_in = 0
 	buffered = false
 	ground = 0

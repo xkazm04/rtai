@@ -172,7 +172,7 @@ func swing(e: EnemyAgent) -> void:
 func hurt(e: EnemyAgent, dmg: float, from_dir: Vector2, melee: MeleeCombo = null) -> void:
 	if not e.alive():
 		return
-	dmg = MeleeLethal.pit_damage(e, dmg, from_dir, tick, melee)
+	dmg = MeleeShutdown.pit_damage(self, e, dmg, from_dir, melee)
 	e.hp -= dmg
 	e.hurt_tick = tick
 	e.hurt_dir = from_dir.normalized()
@@ -181,7 +181,7 @@ func hurt(e: EnemyAgent, dmg: float, from_dir: Vector2, melee: MeleeCombo = null
 		e.token = false
 		e.died_tick = tick
 		stats["kills"] += 1.0
-	elif e.arch.stagger_ticks > 0:
+	elif e.arch.stagger_ticks > 0 and not MeleeShutdown.holding_pit(e, tick):
 		stun(e, e.arch.stagger_ticks)
 	elif e.state == EnemyAgent.State.PATROL:
 		e.last_seen = rivet_pos
