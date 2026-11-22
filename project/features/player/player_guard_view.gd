@@ -1,16 +1,20 @@
 class_name PlayerGuardView
 extends Node2D
-## The live guard's articulated forearms, charge at his feet and flash on the break tick.
+## The live guard pose, charge at Rivet's feet and flash on the break tick.
 
 const STEEL: Color = Color("#b8c1c9")
 const AMBER: Color = Color("#ffc15b")
 const INK: Color = Color("#171920")
 const FLASH_TICKS: int = 12
+const PHASE_TICKS: int = roundi(0.05 * SimClock.TICK_RATE)
+const FULL_LIFT: int = 2 * PHASE_TICKS + 1
 const METER: Rect2 = Rect2(-12, 15, 24, 4)
 
 var _guard: PlayerGuard
 var _arena: CombatArena
 var _rigs: CharacterRigs
+var _last_tick: int = -1
+var _lift: int = 0
 var _breaks: int
 var _flash_tick: int = -FLASH_TICKS
 
@@ -30,8 +34,9 @@ static func attach(layer: CanvasLayer, stage: CollectCallStage, rigs: CharacterR
 
 func _process(_delta: float) -> void:
 	var rig: CutRig = _rigs.rig_for(_arena.rivet.id)
+	var phase: PlayerGuardPose.Phase = phase_at(_guard, _arena.tick)
 	if rig != null:
-		pose(rig, _guard.up())
+		pose(rig, phase)
 	position = _arena.rivet.pos * SimConst.PX_PER_M
 	if _guard.breaks != _breaks:
 		_breaks = _guard.breaks
@@ -41,41 +46,46 @@ func _process(_delta: float) -> void:
 		queue_redraw()
 
 
-static func pose(rig: CutRig, raised: bool) -> void:
+## Advance on arena ticks, including skipped render frames. Reversing partway retraces the lift.
+func phase_at(guard: PlayerGuard, tick: int) -> PlayerGuardPose.Phase:
+	var elapsed: int = maxi(tick - _last_tick, 0) if _last_tick >= 0 else 1
+	_last_tick = tick
+	if guard.broken():
+		_lift = 0
+		return PlayerGuardPose.Phase.STAGGER
+	_lift = clampi(_lift + (elapsed if guard.up() else -elapsed), 0, FULL_LIFT)
+	if _lift == FULL_LIFT:
+		return PlayerGuardPose.Phase.HELD
+	if _lift > PHASE_TICKS:
+		return PlayerGuardPose.Phase.MID
+	return PlayerGuardPose.Phase.LOW if _lift > 0 else PlayerGuardPose.Phase.REST
+
+
+static func pose(rig: CutRig, phase: PlayerGuardPose.Phase) -> void:
+	if rig.dead or rig.clips.rolling() or (rig.react != null and rig.react.dying):
+		phase = PlayerGuardPose.Phase.REST
 	if RivetFrames.drawn(rig):
-		_pitched(rig, raised)
-		return
-	if not raised:
-		return
-	var previous: float = rig.c_hands_up
-	rig.c_hands_up = 1.0
-	RigPose.solve_arms(rig)
-	rig.c_hands_up = previous
+		PlayerGuardPose.apply(rig.head_card, ViewMode.shared().art, phase, RivetFrames.oct_of(rig))
+	elif phase != PlayerGuardPose.Phase.REST:
+		_flat(rig, phase)
 
 
-static func _pitched(rig: CutRig, raised: bool) -> void:
-	var card: Sprite2D = rig.head_card
-	var art: String = ViewMode.shared().art
-	var guard_pose: PlayerGuardPose = PlayerGuardPose.for_card(card, art, raised)
-	if guard_pose == null:
-		return
-	var path: String = RivetStrips.DIR + art + "/" + RivetStrips.BASE
-	if guard_pose.art_id != art:
-		guard_pose.strip(
-			art, StreetStrips.get_tex(path), RivetFrames.BASE_CELLS, RivetStrips.foot_px(path)
-		)
-	var octant: int = RivetFrames.oct_of(rig)
-	var height: float = RivetFrames.HEIGHT_BY_ART.get(art, RivetFrames.HEIGHT_M)
-	var scale_px: float = height * RivetFrames.height_k * PlayerScale.k() * CharacterRigs.PX_PER_M
-	scale_px /= RivetFrames.FIG_PX * RivetRes.of(path)
-	var stride: float = sin(TAU * rig.phase) * clampf(rig.speed_now / CutRig.WALK_SPEED, 0.0, 1.0)
-	guard_pose.face(
-		RigHeadCard.OCT_FRAME[octant],
-		RigHeadCard.OCT_FLIP[octant] == 1,
-		scale_px,
-		stride,
-		card.global_position
-	)
+static func _flat(rig: CutRig, phase: PlayerGuardPose.Phase) -> void:
+	var previous: Vector3 = Vector3(rig.c_tuck, rig.c_hands_up, rig.c_sprawl)
+	if phase == PlayerGuardPose.Phase.STAGGER:
+		rig.c_sprawl = maxf(rig.c_sprawl, 0.65)
+	else:
+		var lift: float = (phase + 1.0) / (PlayerGuardPose.Phase.HELD + 1.0)
+		rig.c_hands_up = maxf(rig.c_hands_up, lift)
+		rig.c_tuck = maxf(rig.c_tuck, 0.45 * lift)
+	RigPose.step(rig)
+	RigGait.solve_legs(rig)
+	if rig.tilt_up != Vector2.ZERO:
+		RigTilt.lift_upper(rig)
+		RigHeadCard.step(rig)
+	rig.c_tuck = previous.x
+	rig.c_hands_up = previous.y
+	rig.c_sprawl = previous.z
 
 
 func _draw() -> void:
