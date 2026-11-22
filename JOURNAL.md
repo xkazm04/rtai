@@ -57,3 +57,22 @@ NEXT: (session 2) wait for / read the `lancer` call result; review the staged di
   accepted attack columns 4-5 the director rejects. MILESTONE lancer-cards 01defddab (behind cast_cards.json enabled).
 - 19:37 ASTRA RUNNING film-door since 19:37 (pid 51876; brief evidence/briefs/n24-cast-03-film-door.md: round 03 =
   lancer attack retake + clamshell + pile-driver sheets; _kneel error; lancer film 32/64; door carrier cut + wire + stills).
+- 19:51 round 03 review (foes-n24/incoming): lancer attack v2 cols 4-5 facings RIGHT (accept for splice; v2 rows 1/2/4 near
+  identical so keep the old cols 1-3). Clamshell take 1 REJECTED (base plate rotates to a diamond in diagonals; translucent
+  green-grey smoke; fall col 4 aims left): retake as dome-only cells + one still base-plate sheet. Pile-driver fall_70 take 1
+  REJECTED (col 1 plan view, col 2 shows the back, col 4 cannon left, smoke). Notes are in brief 04 draft
+  (evidence/briefs/n24-cast-04-clamshell.draft.md). Takes: lancer attack 2, clamshell 1 (rej), pile-driver fall 1 (rej).
+  FRICTION: image gen keeps mixing up the diagonal facings for machines; per-column "what faces the viewer" wording next.
+- 20:05 Astra retook the clamshell itself (out/sentry_turret_*_v2): attack_70_v2 ACCEPTED at sheet level (plate square and
+  still in every cell, no smoke, facings right; row order to verify). war_machine_walk_70 take 1 REJECTED too (col 1 shows
+  the back, col 5 plan view, cols 2-4 back-left). Pile-driver needs per-column facing prompts (in the brief 04 draft).
+  Takes: clamshell attack 2 (v2 accepted), pile-driver walk 1 (rej), fall 1 (rej).
+- 20:06 ASTRA RUNNING film-door since 19:37 (pid 51876; hard stop 20:52). Its tree is mid-work (attack splice, door carrier
+  in arena_robot_rigs/foe_shield_view, lancer film scene): do not commit its paths; commit director files with pathspec.
+NEXT: (session 3) check logs/cast/astra.lock + astra-calls.jsonl; when film-door ends read
+  evidence/briefs/n24-cast-03-film-door.out.txt, review every diff (call sites only in shared files: arena_robot_rigs.gd,
+  foe_shield_view.gd; switch off = main), run `node tools/tests/run_unit.mjs --changed`, watch the lancer films
+  (gtai-masters/n24/cast/lancer_wave_32.mp4, lancer_close_64.mp4: ffprobe 15-40 s, extract stills and look), check the
+  spliced attack cols 4-5 in-game and the door stills (slab ~41 px wide at 64 ppm, ~2.0 m tall). Then finish brief 04 from
+  evidence/briefs/n24-cast-04-clamshell.draft.md (pile-driver retake with per-column facing words; clamshell v2 cut + wire;
+  standing-rule docs) and launch it detached. Last code commit by 00:00, gate `node tools/gate/run.mjs --rev=HEAD` by 00:15.
