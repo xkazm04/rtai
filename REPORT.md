@@ -66,4 +66,4 @@ Previewed at 05:50 with `git merge-tree --write-tree n23-street n23-<lane>` (no 
 | 4 | stackfilm | 63 | accepted | ask for a forced short timer from the start instead of a 90 s search |
 | 5 | wedge | 30 | accepted (Part 0 rim gap, sent to call 6) | ask for the crop of the changed pixels, not only the full frame |
 | 6 | decisions | 73 | accepted | give the mutate `--file=` in the runner's form (`features/...`, no `project/`): the briefed form exits 2 |
-| 7 | edmg | ~35 | accepted | name the semantics of a field before quoting a NEED's suggested spot (loop's spot scaled damage TAKEN) |
+| 7 | edmg | 25 | accepted (mutate `gauntlet_combat.gd` changed lines 5/5) | name the semantics of a field before quoting a NEED's suggested spot (loop's spot scaled damage TAKEN) |
