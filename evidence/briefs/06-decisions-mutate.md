@@ -1,6 +1,6 @@
 # Brief 06 (street lane, n23): decision lines, one pinned counter, mutation scores
 
-Hard stop: HARDSTOP wall clock (check `date`). Commit deadline: COMMITBY. This is a short call: no new behaviour, no films. Order: 0, A, B, then C. Write your final report BEFORE the mutate runs; mutate is last and capped.
+Hard stop: 07:30 wall clock (check `date`). Commit deadline: 07:20. This is a short call: no new behaviour, no films. Order: 0, A, B, then C. Write your final report BEFORE the mutate runs; mutate is last and capped.
 
 ## Setup for every Godot run
 `export APPDATA=C:/Users/kazda/kiro/gtai-n23/appdata/street` and
@@ -27,8 +27,9 @@ Mutation of `project/features/gauntlet/gauntlet_waves.gd` left one survivor: `ow
 Commit first (it mutates HEAD in its own temp worktree). Run each, from this worktree, exactly in this form, and quote killed/(killed+survived), timeouts and survivors (file:line, mutation) in your report:
 1. `node tools/mutate/mutate.mjs --file=project/features/gauntlet/gauntlet_composer.gd --max=20`
 2. `node tools/mutate/mutate.mjs --file=project/features/combat/shot_draw.gd --max=20`
-3. `node tools/mutate/mutate.mjs --file=project/features/gauntlet/gauntlet_draw.gd --max=20 --lines=<the lines of offer_count and _eligible>`
-If a survivor is a real gap and a one-assertion test kills it in under 10 minutes and before COMMITBY, add it (test files for those classes only), commit, and say so. Otherwise just report it.
+3. `node tools/mutate/mutate.mjs --file=project/features/combat/squad/foe_shove_zone.gd --max=20` (new tonight; its test is `test_foe_shove_zone.gd`, which you may extend)
+4. `node tools/mutate/mutate.mjs --file=project/features/gauntlet/gauntlet_draw.gd --max=20 --lines=<the lines of offer_count and _eligible>`
+If a survivor is a real gap and a one-assertion test kills it in under 10 minutes and before 07:20, add it (test files for those classes only), commit, and say so. Otherwise just report it.
 
 ## Acceptance checks (quote results in your report)
 - `node tools/gate/quick.mjs` clean. Fix lint and format findings in your own edit and go on.
@@ -39,7 +40,7 @@ Staged per path (`git add <path>`; never `-A`, `.`, `-u`, `commit -a`, stash, am
 `Co-Authored-By: GPT-6.2 Astra <noreply@openai.com>`.
 
 ## Allowlist (edit only these)
-Part 0 only: `project/features/combat/shot_draw.gd` (one new static) and the one enemy-round line in `project/boot/collect_call/view/fx_view.gd`, `C:/Users/kazda/kiro/gtai-masters/n23/street/rounds/rounds-hands-after-32.png`, `build/street/**`; the end of `docs/decisions.md` (append four lines), `project/tests/unit/test_gauntlet_pick_view.gd`, `project/tests/unit/test_gauntlet_wave_timer.gd`, the existing unit tests of `GauntletComposer`, `ShotDraw` and `GauntletDraw` (find them with `node tools/tests/test_map.mjs <path>`), `evidence/street/**`.
+Part 0 only: `project/features/combat/shot_draw.gd` (one new static) and the one enemy-round line in `project/boot/collect_call/view/fx_view.gd`, `C:/Users/kazda/kiro/gtai-masters/n23/street/rounds/rounds-hands-after-32.png`, `build/street/**`; the end of `docs/decisions.md` (append four lines), `project/tests/unit/test_gauntlet_pick_view.gd`, `project/tests/unit/test_gauntlet_wave_timer.gd`, `project/tests/unit/test_foe_shove_zone.gd`, the existing unit tests of `GauntletComposer`, `ShotDraw` and `GauntletDraw` (find them with `node tools/tests/test_map.mjs <path>`), `evidence/street/**`.
 Forbidden: every other product file (`project/features/**`, `project/dev/**`, `project/boot/**`, `project/data/**`), `tools/**`, tapes and goldens, JOURNAL.md, REPORT.md. Any other path: stop and report a NEED.
 
 ## Notes from the director
