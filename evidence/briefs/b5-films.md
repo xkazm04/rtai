@@ -1,12 +1,13 @@
 # Brief b5-films: quest 1 and the arena open on hands with the wheel
 
 Lane `controls`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-controls`, branch `n23-controls`. The wheel is the default and opens on slot 0 `hands` (earlier commits on this branch).
-**Hard stop: HARDSTOP wall clock (check `date`). Commit deadline: COMMITBY.**
+**Hard stop: 07:22 wall clock (check `date`). Commit deadline: 07:15.**
 Read `evidence/briefs/n23-controls-common.md` first: environment and repo law bind this brief.
 
 The owner judges this lane by films. He wants to SEE: quest 1 and the arena opening on hands with the wheel (no flag given, i.e. the new default).
 
 ## Part 0 (small, first, own commits)
+0. Already staged from the previous call: `project/dev/controls/guard_pose_film.{gd,gd.uid,tscn}` (the guard film driver). The debt ratchet refuses it on dev lines (274 -> 400). Raise it through the debt tool only: `node tools/debt/debt.mjs --update --accept-regression="guard and controls film drivers for n23 controls"`, then commit the three files + `tools/debt/baseline.json` through the hook. Do the same for your own dev drivers below if they trip it (never hand-edit the baseline).
 1. `evidence/controls-flip/tests.md` line 44 still says `gut_cli.gd` registers the forwarded option; that edit was reverted in `f1d5e915f` (the mode now goes through env `GTAI_CONTROLS` and `project/tests/support/gut_pre_run.gd`). Correct that row.
 2. The wheel quest card (`project/boot/quest1_controls_text.gd` `WHEEL`) dropped two things the legacy card shows: the gamepad summary line and the use detail "(phones, hiding, allies, torch)". Add them back in the wheel's terms (pad: left stick move, right stick aim, RT swing or fire, LT guard, bumpers change weapon, X quick claw, A use; use the real bindings from `project/data/tables/input_actions.json`, do not guess), keep both strings through `tr()`/`QuestText` keys as today, keep the card at 4 lines or fewer, and update the card's test (`--changed`). Re-shoot `card_wheel.png` at the same place the earlier still was made.
 
