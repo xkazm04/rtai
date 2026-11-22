@@ -4,7 +4,11 @@
 
 The targets are the owner’s call. [targets.json](../tools/gauntlet/targets.json) sets the novice, average and expert death waves to 6, 12 and 20. An ordinary average-profile wave aims for 15 seconds. Every fifth wave is a boss wave and aims for 25–30 seconds. The report compares each pair of profiles. The pair is separated when the higher profile’s median is at least three waves deeper and it dies later on at least 75% of shared seeds.
 
-**Score.** Record the wave Rivet dies on. A wave can reach its timer and call another roster into the same fight. A survivor at the 216,000-tick cap or the requested wave limit contributes its last reached wave as a censored lower bound. The report gives the median, spread, counts of deaths and censored runs, and the stopping reason for each seed. Confirmation uses paired death-wave differences and their same-seed null-salt floor. The ledger records both verdicts and identifies the deciding rule.
+**Score.** Record the wave Rivet dies on. A wave can reach its timer and call another roster into the same fight. The report gives the median, spread, counts of deaths and censored runs, and the stopping reason for each seed.
+
+## Censored runs
+
+A run still alive at the wave limit or the 216,000-tick cap contributes its last reached wave as a lower bound. An expert alive at wave 40 therefore scores **at least 40**. The median includes that lower bound. If every before and null run for a profile survives to wave 40, all paired differences are zero and the measured death-wave floor is zero. While the after runs also survive to 40, the cap hides any change in their death waves. Judging that profile at this limit requires a harder game that produces deaths within it. All ten expert pairs reached 40 alive on the merged street. [Street floors](../evidence/n23-loop/base-street-salt1/floors.md)
 
 ## A night with runs that end in death
 
@@ -15,42 +19,36 @@ $lane = (Get-Location).Path
 $tuneTree = Join-Path $env:TEMP 'gtai-n23-tune-1'
 $cycleOut = Join-Path $lane 'evidence/n23-loop/cycle-1'
 $cycle = @("--worktree=$tuneTree", '--branch=n23-tune-1', "--out=$cycleOut", '--profile=all', '--metric=death')
-node tools/gauntlet/night.mjs @cycle --seeds=10 --jobs=1
+node tools/gauntlet/night.mjs @cycle --seeds=10 --waves=40 --jobs=1
 ```
 
 Add `--waves=N` to bound all three batches at wave N. Set `--jobs=2` when the director allocates both slots. Each profile has its own same-seed, different-bot-salt floor, which needs at least six pairs. A death cycle proposes one edit and names the profiles it is intended to help. To keep the edit, at least one intended profile must clear the deciding improvement rule. Every selected profile needs a measurable floor. A paired change away from target or an increase in median distance from target greater than that profile’s floor vetoes the edit, including a move past the target.
 
-To reuse the director’s measured controls, pass the two absolute manifest paths. The before manifest supplies seeds, first seed, pick policy, controls and wave limit. A kept after manifest can supply the next before on a worktree containing the kept tables. A fresh null batch is needed when those table hashes change.
+To reuse the director’s measured controls, pass the two absolute manifest paths. The before manifest supplies seeds, first seed, pick policy, controls and wave limit. When the before used the committed tables, pass its Git SHA with `--rev` to pin every newly measured arm to that commit. A full SHA or an unambiguous hexadecimal prefix works. The night checks the manifest revisions and table hashes, and measures the after arm with the plan’s edits.
 
 ```powershell
 $before = Join-Path $lane 'evidence/n23-loop/base-street/batch.json'
 $nullBatch = Join-Path $lane 'evidence/n23-loop/base-street-salt1/batch.json'
-node tools/gauntlet/night.mjs @cycle "--before=$before" "--null=$nullBatch" --jobs=1
+$rev = (Get-Content -Raw $before | ConvertFrom-Json).git.sha
+node tools/gauntlet/night.mjs @cycle "--rev=$rev" "--before=$before" "--null=$nullBatch" --jobs=1
 ```
 
-For a separately measured after, propose against the same before on the checkout with matching tables. Capture the set arguments as a PowerShell array. Each argument contains one final table value, including each member of a grouped edit.
+For a separately measured after, propose against the same before on the checkout with matching tables. Capture the set arguments as a PowerShell array. Each argument contains one final table value, including each member of a grouped edit. Pass the before manifest’s Git SHA to ablation so the simulation code stays fixed as the lane advances. The ablation receipt records the full commit in `head`.
 
 ```powershell
 $plan = Join-Path $cycleOut 'plan.json'
 $armOut = Join-Path $lane 'evidence/n23-loop/candidate-1'
 node tools/gauntlet/tune.mjs propose "--batch=$before" "--out=$plan" --profile=all --metric=death
 $sets = @(node tools/gauntlet/tune.mjs sets "--plan=$plan")
-node tools/gauntlet/ablate.mjs --name=candidate-1 @sets -- --profile=all --pick=greedy --controls=wheel --seed0=1 --seeds=10 --jobs=1 "--out=$armOut"
-node tools/gauntlet/night.mjs @cycle "--before=$before" "--null=$nullBatch" "--after-from=$(Join-Path $armOut 'batch.json')"
+node tools/gauntlet/ablate.mjs --name=candidate-1 "--rev=$rev" @sets -- --profile=all --pick=greedy --controls=wheel --seed0=1 --seeds=10 --waves=40 --jobs=1 "--out=$armOut"
+node tools/gauntlet/night.mjs @cycle "--rev=$rev" "--before=$before" "--null=$nullBatch" "--after-from=$(Join-Path $armOut 'batch.json')"
 ```
 
 Match the original seed range, controls, pick, salt and wave limit. The cycle uses that exact plan, checks the predicted table hashes and applies it. If the tune branch already carries its apply receipt, the cycle goes straight to confirmation. An empty output directory also works when the tuner can reproduce the same edit from the before batch. Reports, the change ledger and `night.md` go under the cycle output. Source manifests stay in their original directories.
 
-**Wall time on the merged street.** The serial smoke ran without a wave limit. For seeds 1 and 2, the measured engine wall times were 55.3 and 12.9 s for novice, 462.5 and 50.4 s for average, and 295.3 and 278.9 s for expert. The six runs total **19 min 15 s**. The checkpoint was assembled offline, so its batch wall field is empty. The individual launcher logs record elapsed time on their second line. [Smoke checkpoint](../evidence/n23-loop/street-smoke/completed-at-cutoff/batch.json) · [Per-seed timings](../evidence/n23-loop/street-smoke/logs/)
+To chain a kept ablation into the next cycle, supply its after manifest as `--before` on the tune branch containing the kept edits. Run the next arms directly on that branch by omitting `--rev`. The old ablation receipt’s `head` identifies the commit *before* those edits. Measure a fresh null for the kept tables.
 
-| Ten seeds × three profiles, one job | Batches to measure | Projected engine wall time |
-|---|---:|---:|
-| Fresh cycle | Before, null, after | 4 h 49 min |
-| Kept after reused as before | Null, after | 3 h 13 min |
-| Matching before and null supplied | After | 1 h 36 min |
-| All three supplied | 0 | 0 engine minutes |
-
-These projections scale the measured six-run total by five per 30-run batch. On that sample, an eight-hour night fits **one fresh cycle**, or **two cycles** starting with both controls measured and chaining a kept result. The latter schedule uses about 4 h 49 min of engine time. A third chained cycle brings engine time alone to just over eight hours. Allow extra time for imports, reporting and Git hooks. For a different wave limit or two jobs, use the completed manifests’ `speed.wall_s`. The cycle summary prints each measured batch duration and marks reused batches.
+**Wall time on the merged street.** With `--waves=40`, a novice run took about 0.8 minutes and an average or expert run took about 1.5 minutes. Allow **45–50 minutes per 30-run batch** at `--jobs=1` for ten seeds across all three profiles. The before batch recorded 48 min 56 s and the salt-1 batch recorded 41 min 4 s. A fresh cycle needs three batches. Reusing a kept after as the next before needs two, and supplying matching before and null batches leaves one after to measure. [Street before manifest](../evidence/n23-loop/base-street/batch.json) · [Street salt-1 manifest](../evidence/n23-loop/base-street-salt1/batch.json)
 
 ## Earlier timing-based night
 
@@ -212,17 +210,23 @@ Use the lane command in [A night with runs that end in death](#a-night-with-runs
 
 To undo a kept change, copy its **Apply SHA** from `night.md` and run `git revert <sha>` on the tune branch. If a step fails, the command stops and preserves the earlier evidence and commits. A dry run with the same options prints the individual commands for recovery. To remove a clean worktree after a preview or merge, run `node tools/gauntlet/night.mjs "--worktree=$tuneTree" --branch=n23-tune-1 --remove`. Removal requires the branch tip to be reachable from the current lane HEAD. It removes the worktree, prunes its registration and deletes the branch.
 
+### Shared tables
+
+Default proposals use gauntlet-only tables. The street reads `gauntlet.json`, and the gauntlet draw and bot read `gauntlet_bonuses.json`. Three catalogued tables also feed other game modes. The enemy roster loads `enemies.json` for arena combat and scenario tapes. Quest 1 constructs its arena from `combat.json` and equips guns from `weapons.json`. Every knob in those three tables carries `"shared": true`, including the combat moves. Changing a shared table can move Quest 1 or its replay results. [Knob catalog](../tools/gauntlet/knobs.json) · [Enemy roster](../project/features/combat/ai/enemy_roster.gd) · [Quest 1 arena](../project/boot/collect_call/collect_call_stage.gd) · [Quest 1 guns](../project/boot/collect_call/stage_guns.gd)
+
+The plan’s `skipped` list identifies each shared candidate considered, with the reason `shared with quest 1 / replays`. One shared member excludes its whole group. Explicitly passing `tune.mjs propose --allow-shared` makes those candidates eligible, including the historical first choice of `enemy_damage` for death-wave tuning.
+
 ### How a proposal selects edits
 
 **Measurements.** The default timing target is 15 s for `average`. An ordinary-wave median strictly below 12 s or above 18 s is a miss. Boss waves use the interval in the targets file. The standalone `tune.mjs propose` accepts `--target-s`, `--profile` and `--min-n`. A wave needs at least three timed runs by default. A killer share needs at least five recorded deaths. Smaller samples appear in the plan and console as `too few runs`. The other comparisons use all available profiles.
 
 | Measured miss | Candidate edit |
 |---|---|
-| Wave median above the upper bound | Reduce HP for the robot most often present in timed rosters of that wave. Street timing can also reduce the opening budget or its per-wave growth. The production spawner takes archetype HP for robot bodies. |
+| Wave median above the upper bound | Reduce the opening budget or its per-wave growth on the street. With shared knobs enabled, the tuner first tries reducing HP for the robot most often present in that wave’s timed rosters. |
 | Wave median below the lower bound | Increase the street's `budget.base` when eligible fast waves are confined to the opening half. If any eligible fast wave falls beyond half the deepest timed wave number (rounded up), increase `budget.per_wave`. Both edits give the spawner more budget for enemies and must fit the integer bounds. |
-| Median death wave misses the profile target | Increase enemy damage when the median is too deep, or decrease it when deaths occur too early. Try the per-wave budget if the damage group is unavailable. A censored median below target needs enough observed deaths to establish the direction. |
-| A named killer accounts for over half of all recorded deaths | Reduce the matching attack damage. For a small ranged attack, victim runs recording deflections can support raising guard capacity. Unknown attributions remain in the denominator. A timeout cannot identify an attacker. Set the fraction with `--killer-share=0.5`. |
-| A take-versus-decline difference clears the report's CI and A/A floor | Use the card's recorded weapon ref. A stronger pick gets lower cadence or damage, a weaker pick gets higher cadence or damage. Cards without an eligible knob remain in the miss list. |
+| Median death wave misses the profile target | Try `rivet_repair` first, then `budget.per_wave`. One repair edit divides `rivet.repair_per_s` by the factor and multiplies `rivet.repair_delay_s` by it. More than three waves too deep uses 1.25. More than three waves too early uses 0.8. Each field keeps its own bounds. A censored median below target needs enough observed deaths to establish the direction. |
+| A named killer accounts for over half of all recorded deaths | With shared knobs enabled, reduce the matching attack damage. For a small ranged attack, victim runs recording deflections can support raising guard capacity. Unknown attributions remain in the denominator. A timeout cannot identify an attacker. Set the fraction with `--killer-share=0.5`. |
+| A take-versus-decline difference clears the report's CI and A/A floor | With shared knobs enabled, use the card’s recorded weapon ref. A stronger pick gets lower cadence or damage, a weaker pick gets higher cadence or damage. Cards without an eligible knob remain in the miss list. |
 
 Death-wave misses have first choice of knobs. The remaining observations rank wave-time errors relative to the timing target and killer shares relative to their threshold. Offer survival differences are scaled by the decliners' median survival (at least one wave), and offer timing differences by the timing target. The largest eligible misses get up to `--max=6` edits. One card can generate two measured outcomes and one edit.
 
@@ -236,9 +240,17 @@ On the first proposal, `tools/gauntlet/baseline.json` records the date, Git SHA 
 
 Confirmation matches the before batch to the plan by SHA-256. It pairs accepted runs, including alive caps, by seed, profile, controls and pick mode. Wave timing needs seconds in both runs. Offer confirmation keeps the same takers, decliners and offer waves across both batches.
 
-With the default `--floor-mode=null-salt`, `night.mjs` immediately repeats the before batch on the same seeds with `--salt=1`. The bot resamples aim, defence, form use and random picks from the same distributions, preserving expected difficulty. Greedy picks keep their fixed ranking and the world keeps its seed. The batch records `args.salt` and forwards nonzero values as `--bot-salt=<n>`. Zero reproduces the original streams.
+### The noise floor by a neutral change
 
-To measure the floor separately, repeat the before `batch.mjs` command with `--salt=1 --out=null`, then run `node tools/gauntlet/tune.mjs floor --before=before/batch.json --null=null/batch.json --out=floors.md`. Pass the same `--null` to `tune.mjs confirm`. The ledger shows both floors and the mode deciding each change. `--floor-mode=cross-seed` selects the original adjacent-seed comparison within each before group. Each floor uses the larger absolute CI95 endpoint.
+Repeat the before batch with the same world seeds, tables, controls, pick policy and wave limit. Change the bot salt from 0 to 1. The bot redraws aim, defence, form use and random picks from the same distributions. Greedy picks keep their ranking. At the default `--floor-mode=null-salt`, the night pairs each before run with its other-salt run and takes the larger absolute endpoint of the paired difference’s 95% interval. The cross-seed comparison pairs adjacent before seeds within each profile, control scheme and pick policy.
+
+To reproduce the floors from the two recorded street batches, run the following from the lane. Pass the same null manifest to `tune.mjs confirm`.
+
+```powershell
+node tools/gauntlet/tune.mjs floor --before=evidence/n23-loop/base-street/batch.json --null=evidence/n23-loop/base-street-salt1/batch.json --out=build/n23/street-floors.md
+```
+
+On the street merge, the death-wave floors were **8.5 waves for novice** (10 pairs), **6 for average** (9 pairs) and **0 for expert** (10 pairs censored at 40). On main, the average profile’s wave 5 time floor was **3.38 s** with bot salt and **24.35 s** across seeds. At wave 20 those floors were **11.48 s** and **22.47 s**. [Street death-wave floors](../evidence/n23-loop/base-street-salt1/floors.md) · [Main wave-time floors](../evidence/n23-loop/base-null-salt1/floors.md)
 
 Death-wave confirmation compares the mean paired wave difference, oriented toward the target, with the same-seed null-salt floor. Time and offer effects use the mean paired reduction in absolute distance from target. For killer share and historical spread metrics the bootstrap resamples whole pairs and recomputes the aggregate. The default point verdict keeps a gain when it exceeds the floor and the CI95 low exceeds zero. A loss uses the mirrored rule. Select the historical interval-above-floor rule with `--verdict=strict`. Fewer than six A/A pairs or two comparison pairs yields `too few pairs`. With adequate coverage, an inconclusive change yields `noise`. The ledger gives the actual left and right seed lists for each before-batch group. Several edits confirmed by one batch share the same experiment.
 
