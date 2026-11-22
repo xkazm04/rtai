@@ -10,6 +10,10 @@ The targets are the owner’s call. [targets.json](../tools/gauntlet/targets.jso
 
 A run still alive at the wave limit or the 216,000-tick cap contributes its last reached wave as a lower bound. An expert alive at wave 40 therefore scores **at least 40**. The median includes that lower bound. If every before and null run for a profile survives to wave 40, all paired differences are zero and the measured death-wave floor is zero. While the after runs also survive to 40, the cap hides any change in their death waves. Judging that profile at this limit requires a harder game that produces deaths within it. All ten expert pairs reached 40 alive on the merged street. [Street floors](../evidence/n23-loop/base-street-salt1/floors.md)
 
+## Comparing batches
+
+From the lane root in PowerShell, run `node tools/gauntlet/compare.mjs "--arm=main=$PWD/evidence/n23-loop/base-greedy/batch.json" "--arm=street=$PWD/evidence/n23-loop/base-street/batch.json" "--out=$PWD/build/n23/compare"`. Open `build/n23/compare.html` for the side-by-side page or `build/n23/compare.md` for the tables. Repeat `--arm=<label>=<absolute batch.json path>` for each additional batch. Use `--targets=<file>` to compare against a different target set.
+
 ## A night with runs that end in death
 
 Run the cycle from the lane. The tuner checks out the lane HEAD on a new tune branch in the OS temp directory. The director can keep working in the lane while the batches run. Kept commits stay on the tune branch for the director to merge.
