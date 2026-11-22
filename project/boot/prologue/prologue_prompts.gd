@@ -29,13 +29,18 @@ func offer(id: String, tick: int) -> void:
 
 func step(tick: int) -> void:
 	for id: String in _until.keys():
-		if id != "strike" and tick >= _until[id]:
+		if id not in ["strike", "wheel"] and tick >= _until[id]:
 			@warning_ignore("return_value_discarded")
 			_until.erase(id)
 
 
 func active(id: String) -> bool:
 	return _until.has(id)
+
+
+func dismiss(id: String) -> void:
+	@warning_ignore("return_value_discarded")
+	_until.erase(id)
 
 
 func clear() -> void:

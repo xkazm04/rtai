@@ -3,6 +3,8 @@ extends CollectCallView
 
 var encounter: PrologueEncounter
 var live: LiveInput
+var _lesson: HudCorner = HudCorner.new()
+var _lesson_text: String
 var _text: QuestText = QuestText.new()
 var _channel: PrologueChannelCard = PrologueChannelCard.new()
 
@@ -12,6 +14,8 @@ func _ready() -> void:
 	_channel.street = encounter.street
 	_channel.lines = encounter.lines
 	hud_view.add_child(_channel)
+	_lesson.paint = _paint_lesson
+	hud_view.add_child(_lesson)
 
 
 func _process(_dt: float) -> void:
@@ -30,11 +34,45 @@ func _process(_dt: float) -> void:
 		# Leave the lower subtitle strip clear of the rear rank, with Rivet in the upper frame.
 		focus.y = maxf(focus.y, minf(commander.y, player.y + lean_m * 2.15))
 	super._process(SimClock.TICK_DT)
-	hud_view.state.notice = _hint()
+	var hint: String = _hint()
+	var ranged: bool = (
+		encounter.phase == PrologueEncounter.Phase.BEAT_TWO and encounter.battle.ranged
+	)
+	hud_view.state.notice = "" if ranged else hint
+	_lesson_text = hint if ranged else ""
+	_lesson.queue_redraw()
 	if encounter.phase == PrologueEncounter.Phase.STREET:
 		_channel.tick = _stage.tick
 		_channel.pad = live.pad_last
 		_channel.queue_redraw()
+
+
+func _paint_lesson(card: HudCorner) -> void:
+	if _lesson_text.is_empty():
+		return
+	var font: Font = ThemeDB.fallback_font
+	var size_px: int = 21
+	var max_width: float = get_viewport_rect().size.x - 72.0
+	var text_size: Vector2 = font.get_multiline_string_size(
+		_lesson_text, HORIZONTAL_ALIGNMENT_LEFT, max_width - 36, size_px
+	)
+	var box: Rect2 = Rect2(
+		Vector2(36, 135), Vector2(minf(max_width, text_size.x + 36), text_size.y + 22)
+	)
+	var art: HudArt = hud_view.art
+	HudView.nine(
+		card, art.texture(art.memo_art), HudView.paper_of(box), art.memo_margin_px, art.memo_scale
+	)
+	card.draw_multiline_string(
+		font,
+		box.position + Vector2(18, 11 + font.get_ascent(size_px)),
+		_lesson_text,
+		HORIZONTAL_ALIGNMENT_LEFT,
+		box.size.x - 36,
+		size_px,
+		-1,
+		HudView.INK
+	)
 
 
 func _hint() -> String:

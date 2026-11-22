@@ -23,6 +23,8 @@ func observe(carry: RivetCarry, prompts: ProloguePrompts, tick: int) -> void:
 	if picked_tick < 0:
 		picked_tick = tick
 		prompts.offer("wheel", tick)
+	if carry.weapon() == id:
+		prompts.dismiss("wheel")
 		prompts.offer("fire", tick)
 
 

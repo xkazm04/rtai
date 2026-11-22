@@ -74,6 +74,11 @@ func _squad_event(battle: PrologueBattle, tick: int) -> String:
 		return "mulroney-order" if order == "b2_l05_mulroney_shoot" else "mulroney-flank"
 	if battle.ranged and battle.formation.boss.hurt_tick == tick and tick < battle.exposed_until:
 		return "mulroney-hit"
+	if (
+		_game.encounter.prompts.active("fire")
+		and _game.stage.pilot.wheel.selected() == battle.pistol.id
+	):
+		return "pistol-lesson"
 	return ""
 
 
@@ -110,6 +115,6 @@ func _capture(shot: String, tick: int) -> void:
 	Log.info("prologue-film", "tick %d, %s px, %s" % [tick, frame.get_size(), path])
 	_captured[shot] = true
 	set_process(true)
-	var wanted: int = 5 if _target == "street" else 4
+	var wanted: int = 5 if _target in ["street", "squad"] else 4
 	if _captured.size() == wanted:
 		get_tree().quit()
