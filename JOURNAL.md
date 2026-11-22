@@ -105,18 +105,18 @@ NEXT: (session 3) check logs/cast/astra.lock + astra-calls.jsonl; when film-door
 - 20:58 round 04 pile-driver review: walk/attack/fall_70_front3 (2 front columns) ACCEPTED; walk_70_v2 rows 2/4 and
   fall_70_v2 row 2 have mirrored cols 3-4 (cannon left): flip or take from other rows. Notes in brief 05 draft section 0.
   Takes so far: pile-driver walk_70 3 (v1 rej, v2 part, front3 acc), attack_70 2 (front3 acc), fall_70 3 (front3 acc).
-- 21:12 packed clamshell sheets (working tree, uncommitted) reviewed on a light matte: p55/p70 attack and fall ACCEPTED
+- 21:10 packed clamshell sheets (working tree, uncommitted) reviewed on a light matte: p55/p70 attack and fall ACCEPTED
   (wisps erased, plate still and square, rows idle/glow/fire/cool, wreck row clear). Minor: p55 stack caps a little
   ragged where the wisps were cut (sub-pixel at 32 px/m). Astra is wiring foe_turret_card_view.gd; the 11 leftover
   staged paths from brief 03 are still uncommitted at 21:08.
-- 21:25 clamshell evidence reviewed (uncommitted work of the clamshell call): stills
+- 21:18 clamshell evidence reviewed (uncommitted work of the clamshell call): stills
   gtai-masters/n24/cast/clamshell_{32,64}ppm_tilt{70,55}.png ACCEPTED (idle/tell/fire/cool/hit/wreck beside Rivet and
   the cop; the vermilion aim line stays on tell and fire; about cop height). clamshell_wave_32.mp4 and
   clamshell_close_64.mp4: 1920x1080, 60 fps, 16.0 s each; the 32 film shows tracking, aim line, muzzle, wreck at
   ~40 px: ACCEPTED. Pile-driver sheets are packed in the tree (war_machine_{armed_walk,attack,stomp,hit,fall}, no
-  .import yet): NOT yet reviewed. FRICTION: no Astra commit since f87537d4b (20:37) at 21:25: the 11 brief-03 paths and
+  .import yet): NOT yet reviewed. FRICTION: no Astra commit since f87537d4b (20:37) at 21:18: the 11 brief-03 paths and
   all clamshell work are uncommitted; brief 05 must start with "commit what is done".
-- 21:40 session 3 ends. ASTRA RUNNING clamshell since 20:44 (pid 71768, hard stop ~21:59).
+- 21:21 (first session-end note; the times above were stamped ahead and are corrected) ASTRA RUNNING clamshell since 20:44 (pid 71768, hard stop ~21:59).
 NEXT: (session 4) check logs/cast/astra.lock (pid alive by process name) + astra-calls.jsonl; when `clamshell` ends,
   read evidence/briefs/n24-cast-04-clamshell.out.txt and `git log`/`git status`. If its work is uncommitted, send a
   short `--resume` brief: commit each finished step (11 brief-03 paths; clamshell art+card view+one-line call sites
@@ -128,3 +128,10 @@ NEXT: (session 4) check logs/cast/astra.lock (pid alive by process name) + astra
   before/after pairs, frames.json, after-table in cast-audit.md) and launch it detached with code deadline 23:45.
   Append the standing-rule decision line to docs/decisions.md yourself (director-owned append, one line).
   Last code commit by 00:00; `node tools/gate/run.mjs --rev=HEAD` by 00:15; REPORT.md (draft committed) + cites.
+- 21:28 packed pile-driver sheets reviewed on a light matte (p70 + p55: armed_walk, attack, stomp, hit, fall): ACCEPTED
+  at sheet level. Front columns spliced from the front3 takes; no plan view, no mirrored cannon, no smoke; stride
+  alternates; breech glows (tell) then flashes; stomp row 2 has an opaque dust ring; fall row 3 a clear wreck. Minor
+  (not a fault for this run): the cannon sits screen-right in both the front and the back column, so it changes sides
+  as he turns: the same limit the game's mirrored left facings already have. Not yet seen in game or measured (2.6 m).
+  Takes: pile-driver walk_70 3, attack_70 2, stomp_70 2, hit_70 2, fall_70 3; the 55 sheets 2 each.
+- 21:30 session 3 ends. ASTRA RUNNING clamshell since 20:44 (pid 71768, hard stop ~21:59). NEXT as written above.
