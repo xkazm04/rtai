@@ -5,6 +5,7 @@ extends ArenaSquad
 
 var talking: bool = true
 var shot_tick: int = -1
+var pistol_rounds: int = 0
 
 
 func assign(arena: CombatArena) -> Array[Fighter]:
@@ -17,6 +18,7 @@ func step(h: Fighter, arena: CombatArena, rng: RandomNumberGenerator) -> Shot:
 	var shot: Shot = super.step(h, arena, rng)
 	if shot != null and shot.weapon == &"pistol":
 		shot_tick = arena.tick
+		pistol_rounds += 1
 	return shot
 
 

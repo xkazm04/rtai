@@ -43,6 +43,7 @@ func test_boot_scene_uses_wheel_input_and_the_prologue_loadout() -> void:
 	add_child_autofree(game)
 	assert_true(game.stage.pilot.actions.wheel)
 	assert_not_null(game.stage.pilot.guard)
+	assert_null(game.stage.pilot.ghosts)
 	assert_eq(game.stage.arena.rivet.weapon, &"")
 	var roster: EnemyRoster = game.stage.arena.squad_ai.pit.roster
 	assert_eq(roster.archetype(&"sergeant_mulroney").weapon.id, &"shotgun")
@@ -51,8 +52,7 @@ func test_boot_scene_uses_wheel_input_and_the_prologue_loadout() -> void:
 	assert_eq(pole.reach_m, 2.2)
 	assert_gt(pole.knockback_m, 0.0)
 	var start: Vector2 = game.stage.arena.rivet.pos
-	game.world.loop().set_input(PrologueGame.WalkPilot.new())
 	for tick: int in SimClock.TICK_RATE:
-		game.world.loop().step()
+		game.stage.step(tick, TickInput.new(0, TickInput.AXIS_MAX, 0))
 	assert_gt(game.stage.arena.rivet.pos.x, start.x)
 	PlayerActions.shipped().install()

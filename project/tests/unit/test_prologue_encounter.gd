@@ -126,3 +126,29 @@ func test_prompts_show_once_even_when_triggers_overlap_or_repeat() -> void:
 		assert_eq(str(hints.history[i]["id"]), ids[i])
 		var shown: int = hints.history[i]["tick"]
 		assert_eq(shown, 0 if i == 0 else 801)
+
+
+func test_an_unanswered_pistol_and_pole_wave_can_kill_rivet() -> void:
+	var game: PrologueGame = _game()
+	var stage: ArenaStage = game.stage
+	var encounter: PrologueEncounter = game.encounter
+	# Start with the actual cast on their marks, as after an unskipped conversation.
+	for tick: int in 2400:
+		stage.step(tick, TickInput.new())
+		if encounter.strike_ready:
+			break
+	assert_true(encounter.strike_ready)
+	var first: int = stage.tick + 1
+	stage.arena.damage(encounter.patrol.dale, 1.0, stage.arena.rivet.id, &"claw")
+	for tick: int in range(first, first + 120 * SimClock.TICK_RATE):
+		stage.step(tick, TickInput.new())
+		if stage.deaths > 0:
+			break
+	assert_eq(stage.deaths, 1)
+	assert_eq(encounter.phase, PrologueEncounter.Phase.HANDS)
+	assert_eq(stage.arena.hostiles_alive(), 9)
+	var taught: Array[String] = []
+	for hint: Dictionary in encounter.prompts.history:
+		taught.append(str(hint["id"]))
+	for id: String in ["strike", "claw", "guard", "roll"]:
+		assert_true(taught.has(id), id)

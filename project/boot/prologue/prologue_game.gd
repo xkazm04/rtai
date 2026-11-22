@@ -7,14 +7,6 @@ const FIXED_FPS: int = 60
 const TABLE: String = "res://data/tables/prologue_stage.json"
 const SCHEMA: String = "gtai.prologue_stage/1"
 
-
-class WalkPilot:
-	extends InputSource
-
-	func sample(tick: int) -> TickInput:
-		return TickInput.new(0, TickInput.AXIS_MAX if tick < SimClock.TICK_RATE else 0, 0)
-
-
 var world: World
 var stage: ArenaStage
 var bodies: PrologueBodies
@@ -60,6 +52,8 @@ func _ready() -> void:
 	@warning_ignore("return_value_discarded")
 	encounter.opening_restarted.connect(bodies.restore_opening)
 	stage.hooks.append(encounter)
+	if LaunchArgs.has("--bot"):
+		_attach_bot()
 	if DisplayServer.get_name() != "headless":
 		_open_view(plan)
 
@@ -73,7 +67,7 @@ func _open(plan: PrologueYard, data: DataTable) -> void:
 	var actions: PlayerActions = PlayerActions.shipped(true)
 	actions.install()
 	stage.pilot = StagePilot.new(actions)
-	stage.pilot.ghosts.forms.apply_locks([])
+	stage.pilot.ghosts = null
 	var phone: Dictionary = data.object(data.raw, "payphone")
 	stage.layout.phones[data.text(phone, "id")] = data.vec(phone, "at")
 	world.add_system(stage)
@@ -82,11 +76,19 @@ func _open(plan: PrologueYard, data: DataTable) -> void:
 	bodies = PrologueBodies.place(stage, data, world.context())
 	stage.arena.rivet.weapon = &""
 	live = PadAimAssist.wired(LiveInput.new(actions), stage.get.bind(&"arena"))
-	var input: InputSource = live
-	if LaunchArgs.has("--bot"):
-		input = WalkPilot.new()
-	world.loop().set_input(input)
+	world.loop().set_input(live)
 	add_child(world)
+
+
+func _attach_bot() -> void:
+	if OS.is_debug_build() or OS.has_feature("devtools"):
+		var script: GDScript = load("res://dev/bots/prologue_bot.gd") as GDScript
+		if script != null and script.can_instantiate():
+			var source: InputSource = script.new(stage, encounter)
+			world.loop().set_input(source)
+			return
+	Log.error("prologue", "--bot requires the dev prologue pilot")
+	get_tree().quit(2)
 
 
 ## These two weapons belong to this encounter. The common enemy table uses its existing
@@ -122,7 +124,7 @@ func _open_view(plan: PrologueYard) -> void:
 	view.print_stage.actor_layer().add_child(props)
 	bodies.attach_view(view)
 	live.viewport = get_viewport()
-	live.origin_px = func() -> Vector2: return get_viewport().get_visible_rect().size * 0.5
+	live.origin_px = view.rivet_screen
 	live.px_per_m = func() -> float: return view.px_per_m
 
 
@@ -156,9 +158,17 @@ func _exit_tree() -> void:
 		"beats_reached": lines.beats,
 		"beat_checkpoints": encounter.spans,
 		"dale_died_tick": encounter.dale_died,
-		"deaths": encounter.deaths,
+		"deaths": encounter.deaths + int(not stage.arena.rivet.alive()),
 		"prompts": encounter.prompts.history,
 		"wave_one_cleared_tick": encounter.done_tick,
+		"wave_one":
+		{
+			"spawned": encounter.patrol.officers.size(),
+			"standing": stage.arena.hostiles_alive(),
+			"pistol_rounds": encounter.patrol.squad.pistol_rounds,
+			"player_shots": stage.shots_fired,
+			"wheel": stage.pilot.wheel.order(),
+		},
 		"ticks": world.context().clock.tick(),
 	}
 	var err: Error = DirAccess.make_dir_recursive_absolute(_result_path.get_base_dir())

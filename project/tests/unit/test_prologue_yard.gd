@@ -23,9 +23,8 @@ func test_yard_loads_and_wrecks_stop_rivet_and_shots() -> void:
 	var first: Rect2 = plan.wrecks[0].footprint
 	var west: Vector2 = Vector2(first.position.x - 1.0, first.get_center().y)
 	stage.arena.rivet.pos = west
-	game.world.loop().set_input(PrologueGame.WalkPilot.new())
 	for tick: int in SimClock.TICK_RATE:
-		game.world.loop().step()
+		stage.step(tick, TickInput.new(0, TickInput.AXIS_MAX, 0))
 	assert_gt(stage.arena.rivet.pos.x, west.x)
 	assert_almost_eq(stage.arena.rivet.pos.x, first.position.x - stage.arena.rivet.radius_m, 0.001)
 	PlayerActions.shipped().install()

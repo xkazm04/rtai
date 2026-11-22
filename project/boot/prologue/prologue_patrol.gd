@@ -90,7 +90,8 @@ func _spawn(arena: CombatArena, arch: StringName, formation: Dictionary, i: int)
 	officer.body.pos = start
 	officer.body.facing = Vector2.UP
 	officer.gate_exit = _gate + Vector2(file_x, -_data.num(_arrival, "gate_exit_m"))
-	officer.mark = _data.vec(formation, "first") + _data.vec(formation, "step") * i
+	officer.mark = _data.vec(formation, "first") + _data.vec(formation, "step") * (i % rank_size)
+	officer.mark.y += floorf(float(i) / rank_size) * spacing
 	officers.append(officer)
 	return officer
 
