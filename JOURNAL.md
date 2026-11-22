@@ -276,3 +276,24 @@ edits are UNCOMMITTED: commit them with `git commit -- <paths>` when Astra's ind
   LOOKED at `gauntlet-gloria-{32,64}ppm-flight-t91-pair.png`: at 64 px/m a small clean nail; at 32 px/m a speck that is
   hard to read in a fight. DECISION pressure: ship 0.68 (the owner asked for small), Call for the owner: 1.0 (about 24 x 6
   px, still the smallest in both axes) if it vanishes in play. No more commits for it tonight (00:00 rule).
+- 23:41 802d01351 D: `BotDash` (dash out of a large round's path and a telegraphed stomp; `test_player.json`
+  dash_chance 0.2/0.6/0.9, dash_read_ticks 30/16/8; `dashes` per wave via `gauntlet_wave_stats.gd`; `test_bot_dash.gd`).
+  `_pack` / `_view` / `intent` / `_profile` kept (ghost's one line still fits). Astra goes on to E (damage_by).
+- DECISION pressure: n24-melee and n24-ghost NOT merged by pressure tonight (melee wrote no `MILESTONE ready`; ghost's
+  deploy bot lands on its own branch with its one `_pack` line; a merge now would put an unreviewed sim into the final
+  gate). Merge notes say so; the final batch is pressure + motion only.
+
+NEXT (session 5 end; ASTRA RUNNING finish since 23:02, pid 54604, hard stop 00:08, out
+`evidence/briefs/n24-pressure-06-finish.out.txt`):
+1. Wait for pid 54604 to exit (`tasklist //FI "PID eq 54604"`). Review E (damage_by) if committed: schema field, report
+   section, digest untouched. Read Astra's report for mutate scores (D, R1, R2) and NEEDs; log `ASTRA finish <min> <verdict>`.
+2. At once (Godot is yours): final batch, 7 min:
+   `export APPDATA=C:/Users/kazda/kiro/gtai-n24/appdata/pressure; node tools/gauntlet/ablate.mjs --name=final --rev=HEAD -- --profile=all --pick=greedy --controls=wheel --seed0=1 --seeds=5 --waves=40 --jobs=1 --out=C:/Users/kazda/kiro/gtai-wt/n23-loop/evidence/n24-pressure/final`
+   (detached, out file `evidence/n24-pressure/final.out`). Fill the REPORT "final" row from `evidence/n24-pressure/final/report.md`
+   (median death wave per level, P25-P75, censored, killers, dashes per wave, damage by source if E landed).
+3. Then `node tools/gate/run.mjs --rev=HEAD` (start by 00:20 at the latest); quote its line + gate.json path in REPORT.
+4. Then fill brief 05 (already timed 01:25 / 01:15) and launch it `--resume`, tag `films`, via PowerShell Start-Process as
+   at 23:02. Look at its stills; check ffprobe lines. Still 3 (rocket pair) feeds Call 1.
+5. REPORT: remaining TODOs (gate, final row, rocket RPS at 1.4, Call 1 pair, Call 6 expert after final, What does not,
+   Next steps, ledger rows rocket-nail 47 accepted-partial / finish / films), then `node tools/evidence/cites.mjs REPORT.md`,
+   commit JOURNAL + REPORT with `git commit -- <paths>`.
