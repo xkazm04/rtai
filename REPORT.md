@@ -10,6 +10,18 @@ Owner's note 7: "Ghost powers: First level ability would be to hold 'Q' key for 
 - Cost: cooldown only, per form (`ghost_attacks.json` `deploy.<form>.cooldown_ticks`: 480, Kerf 600).
 - Mastery: the transformation is kept behind `ghost_forms.json` `transform_unlocked` (false), on key T; story mode keeps it for quest 1's beats.
 
+### What one deploy is worth (`evidence/ghost/deploy-worth.md`, probe `project/dev/ghost-forms/deploy_worth_run.gd`)
+Pistol Rivet on a 5.5 m strafe circle, seeds 1..10, 30 s budget, `off` (no deploy) vs `on` (deploy whenever off cooldown and a target fits). 60 releases, 0 empty.
+
+| ghost | encounter | kills / use | stun body-s / use | damage / use | clear time on - off (CI95) | seeds faster | Rivet HP lost off -> on |
+|---|---|---:|---:|---:|---:|---:|---:|
+| Ohm | sentry turret, shield robot, 2 SWAT | 1.50 | 2.00 | 3.62 | -12.98 s [-13.07, -12.88] | 10/10 | 11.7 -> 0.0 |
+| Kerf | shield robot, 3 patrol cops | 1.00 | 0 | 2.30 | -6.47 s | 10/10 | 11.4 -> 7.1 |
+| Tonnage | war machine | 0 | 0 | 3.00 | -3.60 s [-3.77, -3.44] | 10/10 | 26.6 -> 12.9 |
+| Dent | 5 patrol cops in a line | 5.00 | 0 | 5.00 | -1.13 s | 10/10 | 0.5 -> 0.0 |
+
+Caveat: in this run every seed starts from the same formation (the seed reaches only the RNG context), so the ten pairs are near copies and the Kerf and Dent intervals collapse to one value. Dent's encounter is trivial (pistol alone clears it in 1.17 s).
+
 ## What does not
 
 ## What blocked or slowed me
@@ -24,6 +36,9 @@ Each ghost earns its own mastery, so the transformation arrives one ghost at a t
 4. After mastery: Q still deploys; T transforms into that mastered ghost only. The transformation keeps its Madness cost and cooldown, the deploy keeps its own.
 
 ## Merge notes
+- `merge-tree` HEAD vs each lane (21:12): n24-motion and n24-pressure conflict in `project/data/tables/input_actions.json` (keep BOTH new rows: `dash` bit 18 / wire 31, then `ghost_deploy` bit 19 / wire 32; keep ghost's `power_hauler` on key T with no pad button, LB belongs to `ghost_deploy`) and `project/data/schemas/gauntlet_run.schema.json` (keep motion's `dashes` and ghost's `deploys` / `deploy_kills` / `deploy_stun_s`, sorted). `tools/debt/baseline.json`: `node tools/debt/merge_baseline.mjs`, then `--update`. JOURNAL.md / REPORT.md add/add: keep each lane's own.
+- The schema maxima for `input_actions` rows are 19 / 32 on both ghost and motion (identical edits). TickInput's mask is 48 bits on both.
+- `stage_pilot.gd:134` hashes the previous button word with `put_32`; wire bit 32 is not in it, but `GhostDeploy.write_state` hashes the hold every tick, so no widening (it would move every shipped digest).
 
 ## Next steps
 
