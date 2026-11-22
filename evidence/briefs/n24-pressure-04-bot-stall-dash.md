@@ -64,6 +64,15 @@ per form `range_m` / `cooldown_ticks` from `ghost_attacks.json` `deploy.<form>`,
 (in that journal line). Keep the transform path for `transform_unlocked: true`. Result `deploys{<form>: count}` is
 ghost's field: write it only if ghost's code does not already. Unit test with a fake view.
 
+## Task 2c - the stomp (read first, small)
+
+The after-gaps batch (`evidence/n24-pressure/after-gaps/report.md`) lost 10 of 15 runs to the wave-5 war machine
+(stomp 7, war_cannon 3); every novice died to the stomp. `enemies.json` `weapons.stomp`: `damage` 48 and
+`splash_damage` 48 in 3.5 m (Rivet max_hp 100). Check in the code whether one stomp lands BOTH on Rivet (96). If it
+does, that is a double count: report it with file:line as `NEED director: stomp double count` (the fix is in combat
+code; do not change the boss's design numbers). Either way the bot must read the stomp's 0.8 s tell
+(`alt_telegraph_s`) and step or dash out of 3.5 m at the skill levels where a player would (part of task 2).
+
 ## Task 3 - a smoke batch (no commit needed beyond evidence)
 
 `node tools/gauntlet/batch.mjs --profile=all --pick=greedy --controls=wheel --seed0=1 --seeds=2 --waves=40 --jobs=1
