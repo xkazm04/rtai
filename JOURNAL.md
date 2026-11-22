@@ -16,3 +16,5 @@ NEXT: (1) dash call running since 18:31 (hard stop 19:44): on its report, read t
 - 18:36 ASTRA RUNNING dash since 18:31 (lock pid 70968; out evidence/briefs/02-dash.out). Session 1 ends.
 - 18:32 ASTRA dash 1 bounced (stopped at a scope check: input_actions.schema.json caps bit at 17). Served ghost's `NEED motion` (n23-moves JOURNAL 17:47): the schema maxima become bit 19 / wire_bit 32, identical to ghost's d07607db6.
 - 18:33 ASTRA RUNNING dash (resume, brief evidence/briefs/02b-dash-schema.md) since 18:33, hard stop 19:44.
+- 18:36 brief 03-grids updated with the legs look and the game-speed film rule; still needs HARDSTOP/COMMITBY filled at launch.
+NEXT (session 2): dash resume running since 18:33 (pid in logs/motion/astra.lock; out evidence/briefs/02b-dash.out). On its report: review diff, run tests + scenarios, write `MILESTONE dash <sha>`. Then launch 03-grids (fill the times). Then the dash film and the game-speed legs film if Astra did not make them.

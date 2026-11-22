@@ -12,6 +12,17 @@ chainsaw, electro_baton, hand_cannon, machine_pistol, then the rest. p70 (tilt 7
 each weapon, then p55. One weapon fully done (walk + run at p70, cut, packed, measured, wired, looked at) beats
 three half-done. A grid that fails your own look stays on the fallback and is listed in the report.
 
+What brief 01 actually shipped (commit 8b5f4d96e): option (b), the bare-claw walk8/run8 legs with weapon-art's held
+part placed on the painted palm (`rivet_frames_grip.gd`, `walk_grid.palm_percent`). The director's look at
+`C:/Users/kazda/kiro/gtai-masters/n24/motion/legs_<w>_64.png`: the legs step, but (1) the held part reads much
+thinner than the equipped card's drawn weapon (gloria becomes a thin grey stick; the rocket tube hangs down at his
+side in the 3/4 toward view; the chainsaw dangles blade down), (2) the bare body is lighter and redder than the
+armed cards, so the tone jumps on start and stop. Your own grids must fix both: the weapon drawn as on
+`rivet_eq_<w>.png`, the grid tone-matched to it (`--tone`).
+Films for the owner are the real game, not a lab board: Rivet in the arena or gauntlet with the wheel, at his
+real walk (6.75 m/s) and sprint, 32 px/m tilt 70 1080p60, 15 to 40 s, before (fallback) beside after (own grid).
+A one-line or two-number edit in a schema your own new data needs is allowed: name it in the report, do not stop.
+
 ## The pipeline the five shipped grids came from (use it, do not invent another)
 - Read first: `C:/Users/kazda/kiro/gtai-art/library/deliveries/rivet_armed_run_onehand_it128.md` (the method:
   one generated sheet per row, combining two examples; the hand rule; the layer rule; fixes by example),
