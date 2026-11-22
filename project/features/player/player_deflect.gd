@@ -40,6 +40,7 @@ static func send_back(
 		if size in rule.basic_rounds:
 			if rule.passes():
 				s.set_meta(PASSED, true)
+				rule.passed.emit(s.pos if contact == Vector2.INF else contact, s.vel.normalized())
 				return false
 			turn = rule.turn()
 	if contact != Vector2.INF:
