@@ -1,0 +1,8 @@
+Commit `1eff226379a0865af3d98e34aa86c9625efc900e`. `git show -U0` verified exactly two lines appended to `docs/decisions.md`. The pre-commit hook passed and skipped lint for the docs-only change.
+
+```text
+- [2026-11-22] DECISION controls: under the wheel a walk-over weapon pickup is stowed, not drawn (scroll or the grip key draws it); with only hands the wheel readout shows Hands lit; Rivet's own blast damage can kill him (owner: "hurt", not "spared"). Rejected: auto-select on pickup (it would change the weapon under the player's thumb mid-fight). Re-check: owner verdict on the n23 controls REPORT.
+- [2026-11-22] DECISION controls: an explicit Use-grab of a weapon (quest 1's Dock 9 rifle, collect_call stage_actions -> CombatArena.grab_rifle) draws it at once, unlike a walk-over pickup. Rejected tonight: stowing it (collect_call is not this lane's; one call in stage_actions is the alternative). Re-check: owner verdict on the n23 controls REPORT.
+```
+
+[astra: 38s, exit 0]
