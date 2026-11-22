@@ -1,7 +1,15 @@
 # Brief 03 `grids`: drawn walk and run grids for the weapons that borrow one (lane motion, n24)
 
-Hard stop: HARDSTOP wall clock (check `date`). Commit deadline: COMMITBY. Whatever is not committed by then,
+Hard stop: 20:57 wall clock (check `date`). Commit deadline: 20:50. Whatever is not committed by then,
 describe in your final report. Fix lint and format findings in your own edit and go on.
+
+## 0. First, ten minutes at most: doc comments the dash commit 9f4ce27a9 stripped
+In `project/features/player/player_motion.gd` restore the comments 9f4ce27a9 removed (see `git show 9f4ce27a9 --
+project/features/player/player_motion.gd`): the class header (sprint above the 5.0 m/s tackle line, its slower turn;
+the roll as a press with i-frames, recovery, cooldown; the vault; station cover), the `step` doc line, the `face_aim`
+n11 owner-call history, the `heading` doc; add one header line for the dash. Comments only, no code change. If lint's
+size check objects, shorten the header to point at the `rivet_motion.json` `doc` instead. One commit, then go on.
+This file is allowed for this item only.
 
 ## Why
 Owner: "Rivet is now flying instead of using his legs for movement, looking buggy". Brief 01 shipped a rule that
