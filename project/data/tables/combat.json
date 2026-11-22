@@ -17,7 +17,10 @@
     "walk_mps": 3
   },
   "moves": {
-    "doc": "Optional combat moves. Each row enables its own move and supplies its tuning in seconds.",
+    "doc": "Optional combat moves. Each row enables its own move. Durations are in seconds.",
+    "kerf_blink_behind": {
+      "enabled": true
+    },
     "ohm_short_circuit": {
       "boss_stun_s": 0.6,
       "enabled": true,

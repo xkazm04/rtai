@@ -2,25 +2,30 @@ class_name MoveTable
 extends RefCounted
 ## Combat move tuning. Convert seconds to simulation ticks when loading the row.
 
+const BLINK_BEHIND: StringName = &"kerf_blink_behind"
 const SHORT_CIRCUIT: StringName = &"ohm_short_circuit"
 const ARMOUR_CRACK: StringName = &"tonnage_armour_crack"
 
 
-class ShortCircuit:
+class Row:
 	extends RefCounted
 	var enabled: bool
+
+
+class ShortCircuit:
+	extends Row
 	var stun_ticks: int
 	var boss_stun_ticks: int
 	var immune_ticks: int
 
 
 class ArmourCrack:
-	extends RefCounted
-	var enabled: bool
+	extends Row
 	var open_ticks: int
 	var open_front_k: float
 
 
+var kerf_blink_behind: Row = Row.new()
 var tonnage_armour_crack: ArmourCrack = ArmourCrack.new()
 var ohm_short_circuit: ShortCircuit = ShortCircuit.new()
 var errors: Array[String] = []
@@ -33,10 +38,14 @@ static func shipped() -> MoveTable:
 static func from_table(table: DataTable) -> MoveTable:
 	var moves: MoveTable = MoveTable.new()
 	var block: Dictionary = table.object(table.raw, "moves")
+	moves.kerf_blink_behind.enabled = moves._enabled(
+		table.object(block, BLINK_BEHIND), BLINK_BEHIND
+	)
 	moves._read_ohm(table, table.object(block, SHORT_CIRCUIT))
 	moves._read_crack(table, table.object(block, ARMOUR_CRACK))
 	moves.errors.append_array(table.errors())
 	if not moves.errors.is_empty():
+		moves.kerf_blink_behind.enabled = false
 		moves.ohm_short_circuit.enabled = false
 		moves.tonnage_armour_crack.enabled = false
 	return moves
