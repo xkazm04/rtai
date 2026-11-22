@@ -8,10 +8,12 @@ var _forms: Dictionary[StringName, int] = {}
 var _shots: int
 var _damage: float
 var _deflects: int
+var _deploys: GhostDeployTally = GhostDeployTally.new()
 
 
 func begin(stage: ArenaStage) -> void:
 	stage.arena.move_tally.begin_wave()
+	_deploys.begin(stage.tick)
 	_rolling = stage.pilot.motion.roll_progress() > 0.0
 	_rolls = 0
 	_forms.clear()
@@ -22,6 +24,7 @@ func begin(stage: ArenaStage) -> void:
 
 
 func sample(stage: ArenaStage) -> void:
+	_deploys.sample(stage)
 	var rolling: bool = stage.pilot.motion.roll_progress() > 0.0
 	if rolling and not _rolling:
 		_rolls += 1
@@ -44,6 +47,7 @@ func finish(stage: ArenaStage, row: Dictionary) -> void:
 	row["form_seconds"] = seconds
 	append_guard_deflects(stage, row)
 	stage.arena.move_tally.append_wave(row)
+	_deploys.append_wave(row)
 
 
 func append_guard_deflects(stage: ArenaStage, row: Dictionary) -> void:

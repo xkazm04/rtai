@@ -5,6 +5,11 @@ extends RefCounted
 
 var attacks: GhostAttacks
 var press: HaulerForm
+## Wave statistics sample after combat, including the tick of a wave's last kill.
+var release_tick: int = -1
+var release_form: StringName = &""
+var release_kills: int = 0
+var _shorts: Dictionary[Fighter, int] = {}
 
 
 func _init(p_attacks: GhostAttacks, p_press: HaulerForm) -> void:
@@ -13,6 +18,9 @@ func _init(p_attacks: GhostAttacks, p_press: HaulerForm) -> void:
 
 
 func land(stage: CollectCallStage, ghost: GhostDeploy) -> void:
+	release_tick = stage.tick
+	release_form = ghost.form
+	release_kills = 0
 	match ghost.form:
 		KerfStage.GHOST:
 			_kerf(stage, ghost)
@@ -43,11 +51,15 @@ func _kerf(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 func _ohm(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 	var arena: CombatArena = stage.arena
 	var radius: float = attacks.deploy[ghost.form].radius_m
+	# Discard expired references even outside a measured wave.
+	@warning_ignore("return_value_discarded")
+	stunned_count(arena, stage.tick)
 	var applied: bool = false
 	for foe: Fighter in arena.hostiles:
 		if not foe.alive() or ghost.spot.distance_to(foe.pos) > radius:
 			continue
 		if OhmShortCircuit.short_machine(arena, foe, stage.tick):
+			_shorts[foe] = arena.squad_ai.mind_for(foe).stun_until
 			applied = true
 		var dir: Vector2 = ghost.spot.direction_to(foe.pos)
 		_hit(arena, foe, dir, attacks.num(ghost.form, &"bolt_damage"), &"deploy_ohm")
@@ -92,7 +104,20 @@ func _dent(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 		foe.pos = DentStage.push_out(stage, pushed, foe.radius_m)
 
 
-static func _hit(
+## Count living machines still held by this deployment's stun deadline.
+func stunned_count(arena: CombatArena, tick: int) -> int:
+	if _shorts.is_empty():
+		return 0
+	for foe: Fighter in _shorts.keys():
+		var mind: SquadMind = arena.squad_ai.minds.get(foe.id) if arena.squad_ai != null else null
+		var until: int = _shorts[foe]
+		if not foe.alive() or tick >= until or mind == null or mind.stun_until != until:
+			@warning_ignore("return_value_discarded")
+			_shorts.erase(foe)
+	return _shorts.size()
+
+
+func _hit(
 	arena: CombatArena, foe: Fighter, dir: Vector2, damage: float, weapon: StringName
 ) -> void:
 	arena.hit_dir = dir
@@ -103,3 +128,5 @@ static func _hit(
 	elif weapon == &"deploy_ohm":
 		kind = OhmStage.KILL_KIND
 	arena.damage(foe, damage, arena.rivet.id, weapon, kind)
+	if not foe.alive():
+		release_kills += 1
