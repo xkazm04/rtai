@@ -36,6 +36,9 @@ func _ready() -> void:
 	if not _open_wave():
 		_fail("could not open wave cast")
 		return
+	if OS.get_environment("GTAI_CAST_LANCER") == "1":
+		await CastLancerStills.capture(_scene, _session, MARK, _ppm, _out)
+		return
 	if not await _capture_wave():
 		_fail("wave capture failed")
 		return

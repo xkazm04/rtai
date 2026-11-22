@@ -4,8 +4,9 @@ import { join, resolve } from 'node:path';
 import { describe, runGodot, SCRIPT_ERROR } from '../lib/godot.mjs';
 
 const out = process.argv[2];
-if (process.argv.length !== 3 || !out) {
-  console.error('usage: node tools/art/cast_lineup.mjs <output directory>');
+const lancer = process.argv[3] === '--lancer';
+if (process.argv.length !== (lancer ? 4 : 3) || !out) {
+  console.error('usage: node tools/art/cast_lineup.mjs <output directory> [--lancer]');
   process.exit(2);
 }
 const directory = resolve(out);
@@ -14,10 +15,10 @@ const args = ['--rendering-driver', 'd3d12', '--windowed', '--position', '0,1440
   'res://dev/cast/cast_lineup.tscn'];
 for (const pitch of [70, 55]) {
   for (const ppm of [32, 64]) {
-    const image = join(directory, `audit_lineup_${ppm}ppm_tilt${pitch}.png`);
+    const image = join(directory, `${lancer ? 'lancer' : 'audit_lineup'}_${ppm}ppm_tilt${pitch}.png`);
     const start = Date.now();
     const env = { ...process.env, GTAI_CAST_OUT: directory, GTAI_CAST_PITCH: String(pitch),
-      GTAI_CAST_PPM: String(ppm) };
+      GTAI_CAST_PPM: String(ppm), GTAI_CAST_LANCER: lancer ? '1' : '0' };
     const result = await runGodot(args, { env, name: 'cast-lineup', headless: false, timeoutMs: 180_000 });
     const file = statSync(image, { throwIfNoEntry: false });
     console.log(result.out.trimEnd());
