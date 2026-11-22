@@ -107,3 +107,34 @@ func test_ohm_wounding_only_humans_records_no_short_circuit() -> void:
 	arena.move_tally.append_wave(row)
 	assert_eq(10.0 - human.hp, pilot.ohm.num(&"bolt_damage"))
 	assert_false(row.has("moves"))
+	var kills: Dictionary = _finish(wave)["deploy_kills"]
+	assert_eq(kills, {&"ohm": 0})
+
+
+func test_a_second_ohm_release_frees_expired_references_without_a_wave_sampler() -> void:
+	var arena: CombatArena = stage.arena
+	var gun: Fighter = arena.squad_ai.spawn_member(arena, Vector2(6, 1), &"sentry_turret")
+	gun.pos = Vector2(6, 1)
+	pilot.ghosts.forms.selected = OhmStage.GHOST
+	_tick(true)
+	_tick()
+	var ghost: GhostDeploy = pilot.ghosts.deploy
+	assert_true(ghost.strike._shorts.has(gun))
+	stage.tick += ghost.strike.attacks.deploy[OhmStage.GHOST].cooldown_ticks
+	gun.pos = Vector2(19, 1)
+	ghost.strike.land(stage, ghost)
+	assert_true(ghost.strike._shorts.is_empty())
+
+
+func test_tonnage_credits_a_stomp_in_an_arena_without_squad_ai() -> void:
+	var arena: CombatArena = stage.arena
+	arena.squad_ai = null
+	var guard: Fighter = arena.spawn_guard(Vector2(7, 0))
+	guard.pos = Vector2(7, 0)
+	guard.hp = 1.0
+	pilot.ghosts.forms.selected = HaulerStage.GHOST
+	_tick(true)
+	_tick()
+	assert_false(guard.alive())
+	var kills: Dictionary = _finish(wave)["deploy_kills"]
+	assert_eq(kills, {&"tonnage": 1})

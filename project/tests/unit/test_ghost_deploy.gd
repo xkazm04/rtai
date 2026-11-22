@@ -47,7 +47,7 @@ func test_cursor_uses_wire_32_tracks_the_mouse_and_stops_at_the_wall() -> void:
 	stage.arena.walls.boxes.append(Rect2(3, -1, 0.2, 2))
 	_drive(q, 18.0)
 	assert_lt(ghost.spot.x, 3.0)
-	assert_gt(ghost.spot.x, 2.99)
+	assert_eq(ghost.spot, Vector2(2.99853515625, 0), "the clipped position enters the replay hash")
 	_drive(0, 18.0)
 	assert_eq(ghost.phase, GhostDeploy.Phase.ACTIVE)
 	assert_false(stage.arena.walls.blocks(stage.arena.rivet.pos, ghost.spot))
