@@ -83,7 +83,12 @@ func show_strike(ghost: GhostDeploy, age: int, steps: int) -> void:
 	drawn.jab = ghost.form == DentStage.GHOST
 	drawn.feed(1, -1, stage.tick, false, stage.tick - age)
 	position = ghost.spot * SimConst.PX_PER_M
-	if drawn.jab:
+	if ghost.form == OhmStage.GHOST:
+		var short_radius: float = ghost.strike.attacks.deploy[ghost.form].radius_m
+		# Use the near quadrant so the fork and Rivet's gun both have a clear outline.
+		var angle: float = deg_to_rad(-30.0 if ghost.facing.x >= 0.0 else 30.0)
+		position -= ghost.facing.rotated(angle) * short_radius * SimConst.PX_PER_M
+	elif drawn.jab:
 		var travel: float = smoothstep(0.0, 7.0, age)
 		position = ghost.origin.lerp(ghost.spot, travel) * SimConst.PX_PER_M
 	var at: Vector2 = GhostFormBodies.place_body(drawn, Vector2.ZERO, yaw, steps, true)

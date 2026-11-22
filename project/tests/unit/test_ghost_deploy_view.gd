@@ -8,6 +8,7 @@ func test_rig_and_attack_hosts_share_one_quiet_view_without_changing_the_replay(
 	stage.setup(World.build_context(bus, data, 24))
 	var actions: PlayerActions = PlayerActions.shipped(false)
 	stage.pilot = StagePilot.new(actions)
+	stage.pilot.ghosts.forms.selected = OhmStage.GHOST
 	var layer: CanvasLayer = add_child_autofree(CanvasLayer.new())
 	GhostDeployView.attach(layer, stage, false)
 	GhostDeployView.attach(layer, stage, true)
@@ -28,5 +29,8 @@ func test_rig_and_attack_hosts_share_one_quiet_view_without_changing_the_replay(
 	var after: StreamPeerBuffer = StreamPeerBuffer.new()
 	ghost.write_state(after)
 	assert_true(view._body.is_visible_in_tree())
+	var edge: Vector2 = view._body.position / SimConst.PX_PER_M - ghost.spot
+	assert_almost_eq(edge.length(), ghost.strike.attacks.deploy[OhmStage.GHOST].radius_m, 0.001)
+	assert_lt(edge.dot(ghost.facing), 0.0, "Ohm stands on the side nearest the caster")
 	assert_eq(before.data_array, after.data_array)
 	assert_eq(stage.pilot.ghosts.forms.current(), GhostForms.BASE)
