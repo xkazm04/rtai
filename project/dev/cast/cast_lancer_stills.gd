@@ -38,7 +38,7 @@ func save(host: ArenaRigs, clock: SimClock, mark: Vector2, ppm: int, path: Strin
 	_panel = Vector2i(12 * ppm, 4 * ppm)
 	for h: Fighter in _arena.hostiles:
 		h.pos = mark + Vector2(80, 80)
-	_arena.rivet.pos = mark + Vector2.LEFT * 2.8
+	_arena.rivet.pos = mark + Vector2.LEFT * (3.8 if _door else 2.8)
 	_arena.rivet.facing = Vector2(1, 1).normalized()
 	_patrol = _arena.squad_ai.spawn_member(_arena, mark, &"patrol_cop")
 	_patrol.pos = mark + Vector2.LEFT * 0.5 if _door else mark
@@ -107,7 +107,7 @@ func _reaction() -> bool:
 	var reference: Vector2 = _patrol.pos
 	_arena.damage(_patrol, _patrol.hp + 100, _arena.rivet.id, &"pistol")
 	_arena.struck.emit(_patrol, Vector2.RIGHT, true, &"pistol")
-	_patrol.pos = reference
+	_patrol.pos = reference + Vector2.LEFT * 0.75 if _door else reference
 	_arena.damage(_h, 300, _arena.rivet.id, &"pistol")
 	_arena.struck.emit(_h, Vector2.RIGHT, true, &"pistol")
 	_h.pos = mark
