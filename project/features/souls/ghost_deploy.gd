@@ -46,9 +46,20 @@ func step(
 		if phase == Phase.AIMING:
 			_clear()
 		return
-	if c.aim != Vector2.ZERO or phase != Phase.AIMING or form != forms.selected:
-		_aim(stage, c, forms.selected)
-	var row: GhostAttacks.DeployRow = strike.attacks.deploy[form]
+	_release(stage, c, forms.selected)
+
+
+func _release(stage: CollectCallStage, c: PlayerCommand, selected: StringName) -> void:
+	var row: GhostAttacks.DeployRow = strike.attacks.deploy[selected]
+	if c.aim != Vector2.ZERO or phase != Phase.AIMING or form != selected:
+		_aim(stage, c, selected)
+	else:
+		# A pad can centre its aim stick on release after Rivet's last movement tick.
+		var from: Vector2 = stage.arena.rivet.pos
+		var to: Vector2 = from + (spot - from).limit_length(row.range_m)
+		spot = GhostDeploySpot.clip(stage, from, to)
+		if spot != from:
+			facing = from.direction_to(spot)
 	phase = Phase.ACTIVE
 	ticks_left = row.life_ticks
 	cooldowns[form] = row.cooldown_ticks

@@ -37,12 +37,11 @@ func _kerf(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 	if foe == null:
 		return
 	var behind: float = attacks.num(ghost.form, &"behind_m")
-	var rear: Vector2 = KerfBehind.rear_spot(stage, foe, behind, stage.arena.walls)
-	if not rear.is_finite():
-		return
+	var rear: Vector2 = KerfBehind.rear_spot(stage, foe, behind, stage.arena.walls, true)
 	ghost.spot = rear
 	ghost.origin = rear
-	ghost.facing = rear.direction_to(foe.pos)
+	if rear != foe.pos:
+		ghost.facing = rear.direction_to(foe.pos)
 	var robot: bool = foe.machine or foe.kind == Fighter.Kind.BOSS
 	var damage: float = attacks.num(ghost.form, &"robot_damage" if robot else &"human_damage")
 	_hit(stage.arena, foe, ghost.facing, damage, &"deploy_kerf")

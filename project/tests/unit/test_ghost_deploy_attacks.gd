@@ -81,6 +81,27 @@ func test_kerf_falls_back_to_clear_aim_line_within_range_and_uses_robot_damage()
 	assert_eq(hidden.hp, hidden.max_hp)
 
 
+func test_kerf_still_cuts_when_a_wall_shortens_the_rear_landing() -> void:
+	var target: Fighter = _spawn(Vector2(6, 0), &"contractor", 1.0)
+	arena.walls = ArenaWalls.new()
+	arena.walls.boxes.append(Rect2(5, 1, 2, 0.3))
+	_release(&"kerf")
+	assert_eq(last_weapon, &"deploy_kerf")
+	assert_false(target.alive())
+	assert_gt(ghost.spot.y, target.pos.y)
+	assert_lt(ghost.spot.y, 1.0)
+	assert_false(arena.walls.blocks(target.pos, ghost.spot))
+
+
+func test_centring_the_stick_at_release_rechecks_reach_from_moving_rivet() -> void:
+	var aim: int = PlayerCommand.pack_aim(Vector2.RIGHT, pilot.actions, 6.0)
+	pilot.drive(stage, TickInput.new(aim | (1 << pilot.actions.bit(&"ghost_deploy"))))
+	arena.rivet.pos = Vector2(-0.1, 0)
+	pilot.drive(stage, TickInput.new())
+	assert_almost_eq(ghost.spot.x, 5.9, 0.00001)
+	assert_eq(ghost.phase, GhostDeploy.Phase.ACTIVE)
+
+
 func test_ohm_damages_every_hostile_in_radius_and_only_shorts_flagged_machines() -> void:
 	var human: Fighter = _spawn(Vector2(5, 0), &"contractor", 1.0)
 	var turret: Fighter = _spawn(Vector2(6, 3.5), &"sentry_turret")
