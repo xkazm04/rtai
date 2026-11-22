@@ -45,7 +45,7 @@ Kerf and Dent: 0 uses (picked only at wave 4 or 8 and no fitting target before t
 - Before g6 a ghost was on screen for only 0.25 to 0.5 s (`life_ticks` 15 to 30), a teal streak at real speed. g6 lengthens it (see below).
 
 ## What blocked or slowed me
-- 10 min: my g2 brief named a `project/dev/ghost-deploy/` folder; lint LAY-02 rejects new hyphenated dirs, so g3 moved the film entry into `project/dev/ghost-forms/`.
+- 10 min: my g2 brief named a new dev folder ghost-deploy (hyphenated); lint LAY-02 rejects new hyphenated dirs, so g3 moved the film entry into `project/dev/ghost-forms/`.
 - 15 min: in g3 and g4 the pre-commit hook ran full lint under five-lane load and held the index lock (the g3 probe was left staged at the hard stop and committed in g4).
 - 10 min: the g3 to g4 handover (the probe left staged, mastery cleanup outside the allowlist).
 - 0 min blocked on other lanes: motion's `NEED ghost` (`put_32`) was answered with no change; pressure accepted ghost's 3-line bot call site.
