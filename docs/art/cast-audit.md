@@ -70,7 +70,7 @@ The comparison pairs use tick 60, a 70° camera and 64 px/m. Each left panel dis
 | Ink | [PASS][cast-after-9] | [PASS][cast-after-10] | [PASS][cast-after-11] | [PASS][cast-after-19] |
 | Palette | [PASS][cast-after-20] | [PASS][cast-after-21] | [PASS][cast-after-22] | [PASS][cast-after-23] |
 | Cut | [PASS][cast-after-9] | [PASS][cast-after-10] | [PASS][cast-after-11] | [PASS][cast-after-13] |
-| Feet | FAIL · no equipped sole track | FAIL · no equipped sole track | [PASS][cast-after-24] | [PASS][cast-after-25] |
+| Feet | [FAIL · boot slides 10 px][cast-after-26] | [FAIL · boot slides 11 px][cast-after-26] | [PASS][cast-after-24] | [PASS · boot holds at 0 px][cast-after-26] |
 | Contact shadow | [PASS][cast-after-9] | FAIL · no separate ground contact demonstrated | FAIL · no separate ground contact demonstrated | [PASS][cast-after-18] |
 | Provenance | [PASS][cast-after-13] | [PASS][cast-after-13] | [PASS][cast-after-13] | [PASS][cast-after-13] |
 
@@ -85,7 +85,7 @@ Inclusive body-and-gear bounds come from the 64 px/m front three-quarter standin
 
 The walker uses the patrol facing order. The cell boards contain all 16 action rows in all eight directions at both pitches and zooms. The foot test follows motion across a held cell and the following contact. The two live pile-driver films use the arena's own cannon and stomp decisions. The cast film sets health only in the capture process.
 
-The lancer and door carrier still lack a measured equipped support-foot cycle. The door carrier and clamshell lack a demonstrated separate contact shadow. The clamshell's locomotion check follows the fixed apron through the rotating sweep.
+The 32 px/m owner films keep the camera fixed while each walker travels at 0.84 m/s. Across four held drawings, the equipped lancer's boot moved 10 px per hold, the door carrier's 11 px and the pile-driver's 0 px. The measurement tracks a patch around the lowest five percent of the boot, with the same result at two ink thresholds. The pile-driver's [unit test][cast-after-25] checks that the next contact advances. The door carrier and clamshell lack a demonstrated separate contact shadow. The clamshell's locomotion check follows the fixed apron through the rotating sweep.
 
 [cast-after-1]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/lancer_before_after_64.png>
 [cast-after-2]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/door_before_after_64.png>
@@ -112,3 +112,4 @@ The lancer and door carrier still lack a measured equipped support-foot cycle. T
 [cast-after-23]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/pile_32ppm_tilt70.png>
 [cast-after-24]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/clamshell_close_64.mp4>
 [cast-after-25]: <../../project/tests/unit/test_cast_war_machine.gd>
+[cast-after-26]: <C:/Users/kazda/kiro/gtai-art/foes-n24/05-sole-track.json>
