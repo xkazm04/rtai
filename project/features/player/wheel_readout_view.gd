@@ -25,7 +25,16 @@ static func attach(hud: HudView, stage: CollectCallStage) -> void:
 	hud.add_sibling(view)
 
 
+## A quest can attach its HUD mid-frame, before this view receives its first process callback.
+func _ready() -> void:
+	_refresh()
+
+
 func _process(_delta: float) -> void:
+	_refresh()
+
+
+func _refresh() -> void:
 	var age: int = _arena.tick - maxi(_wheel.readout_scroll_tick, _wheel.switched_tick)
 	modulate.a = clampf(1.0 - float(age - HOLD_TICKS) / FADE_TICKS, 0.0, 1.0)
 	visible = age >= 0 and modulate.a > 0.0

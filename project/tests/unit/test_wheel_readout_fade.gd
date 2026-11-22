@@ -65,3 +65,21 @@ func test_hud_attaches_a_hidden_readout_only_when_a_wheel_exists() -> void:
 	var view: WheelReadoutView = layer.get_child(1) as WheelReadoutView
 	assert_not_null(view)
 	assert_false(view.visible)
+
+
+func test_hud_applies_the_current_fade_before_its_first_draw() -> void:
+	var stage: CollectCallStage = CollectCallStage.new(StageLayout.shipped())
+	var ctx: WorldContext = World.build_context(Events, Data, 22)
+	stage.arena = CombatArena.new(CombatTuning.shipped(), Events, ctx.rng.stream(&"combat"))
+	stage.pilot = StagePilot.new(PlayerActions.shipped())
+	stage.pilot.wheel = RivetWheel.new()
+	var layer: Node2D = autofree(Node2D.new())
+	add_child(layer)
+	var hud: HudView = HudView.new()
+	layer.add_child(hud)
+	for tick: int in [0, 48, 60]:
+		stage.arena.tick = tick
+		WheelReadoutView.attach(hud, stage)
+		var view: WheelReadoutView = layer.get_child(hud.get_index() + 1) as WheelReadoutView
+		assert_eq(view.visible, tick < 60)
+		assert_almost_eq(view.modulate.a, minf(1.0, (60 - tick) / 24.0), 0.00001)
