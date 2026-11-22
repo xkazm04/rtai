@@ -1,11 +1,14 @@
 {
   "boss_every": 5,
   "budget": {
-    "base": 20,
-    "per_wave": 20,
+    "base": 180,
+    "per_wave": 16,
     "unit": 10
   },
-  "cost": {},
+  "cost": {
+    "patrol_cop": 15,
+    "war_machine": 200
+  },
   "max_alive": 40,
   "on_timeout": "next_wave",
   "schema": "gtai.gauntlet/1",
