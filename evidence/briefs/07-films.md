@@ -1,6 +1,6 @@
 # Brief 07 (street lane, n23): two short films for the owner (no code)
 
-Hard stop: HARDSTOP wall clock (check `date`). This call changes NO product file and makes NO commit except evidence notes under `evidence/street/`. Films and their notes only.
+Hard stop: 09:20 wall clock (check `date`). This call changes NO product file and makes NO commit except evidence notes under `evidence/street/`. Films and their notes only.
 
 ## Setup for every Godot run
 `export APPDATA=C:/Users/kazda/kiro/gtai-n23/appdata/street` and
