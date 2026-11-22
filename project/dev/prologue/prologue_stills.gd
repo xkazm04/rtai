@@ -9,7 +9,7 @@ const FIXED_FPS: int = 60
 
 var _game: PrologueGame
 var _out: String
-var _squad: bool
+var _target: String
 var _captured: Dictionary[String, bool] = {}
 var _saving: bool = false
 
@@ -17,12 +17,11 @@ var _saving: bool = false
 func _ready() -> void:
 	_game = $Prologue as PrologueGame
 	_out = ArenaArgs.parse().text("--film-dir")
-	var target: String = LaunchArgs.value("--prologue-stills")
-	if target not in ["", "patrol", "squad"]:
-		Log.error("prologue-film", "--prologue-stills expects patrol or squad")
+	_target = LaunchArgs.value("--prologue-stills")
+	if _target not in ["", "patrol", "squad", "street"]:
+		Log.error("prologue-film", "--prologue-stills expects patrol, squad or street")
 		get_tree().quit(2)
 		return
-	_squad = target == "squad"
 	if (
 		DisplayServer.get_name() == "headless"
 		or not LaunchArgs.has("--bot")
@@ -40,8 +39,9 @@ func _process(_dt: float) -> void:
 	if _saving:
 		return
 	var battle: PrologueBattle = _game.encounter.battle
-	# Skip rendering the patrol warm-up when filming only the second squad.
-	var steps: int = 20 if _squad and not battle.ranged else 1
+	var warmup: bool = _target == "squad" and not battle.ranged
+	warmup = warmup or (_target == "street" and battle.died_tick < 0)
+	var steps: int = 20 if warmup else 1
 	for i: int in steps:
 		_game.world.loop().step()
 		var tick: int = _game.stage.tick
@@ -50,7 +50,7 @@ func _process(_dt: float) -> void:
 			_saving = true
 			_capture.call_deferred(shot, tick)
 			return
-		if battle.died_tick >= 0 or tick >= 12000:
+		if (_target != "street" and battle.died_tick >= 0) or tick >= 12000:
 			Log.error(
 				"prologue-film", "missing frame at tick %d, captured %s" % [tick, _captured.keys()]
 			)
@@ -59,10 +59,16 @@ func _process(_dt: float) -> void:
 
 
 func _event(battle: PrologueBattle, tick: int) -> String:
-	if not _squad:
+	if _target == "street":
+		return _street_event(tick) if battle.died_tick >= 0 else ""
+	if _target != "squad":
 		if tick == 300:
 			return "yard"
 		return "dale-first-kill" if tick == _game.encounter.dale_died else ""
+	return _squad_event(battle, tick)
+
+
+func _squad_event(battle: PrologueBattle, tick: int) -> String:
 	var floor_guns: Array[WeaponPickups.Item] = _game.stage.pilot.carry.ground.items
 	if not _captured.has("pistol-marked") and not floor_guns.is_empty():
 		if _game.stage.arena.rivet.pos.distance_to(floor_guns[0].pos) <= 4.5:
@@ -71,6 +77,30 @@ func _event(battle: PrologueBattle, tick: int) -> String:
 		return "mulroney-order"
 	if battle.ranged and battle.formation.boss.hurt_tick == tick and tick < battle.exposed_until:
 		return "mulroney-hit"
+	return ""
+
+
+func _street_event(tick: int) -> String:
+	var street: PrologueStreet = _game.encounter.street
+	var at: Vector2 = _game.stage.arena.rivet.pos
+	var gate: Vector2 = (_game.stage.plan as PrologueYard).gate
+	if not _captured.has("gate-exit") and at.y >= gate.y + 0.18 and at.y <= gate.y + 0.9:
+		return "gate-exit"
+	match street.phase:
+		PrologueStreet.Phase.PHONE:
+			if (
+				_game.stage.router.ringing(street.phone)
+				and at.distance_to(_game.stage.layout.phones[street.phone]) < 4.5
+			):
+				return "payphone-ringing"
+		PrologueStreet.Phase.CALL:
+			var line_tick: int = _game.lines.events.back()["tick"]
+			if _game.lines.current == "b3_l05_fax_talent" and tick - line_tick >= 18:
+				return "payphone-call"
+		PrologueStreet.Phase.REQUEST:
+			return "channel-request"
+		PrologueStreet.Phase.END:
+			return "end-card"
 	return ""
 
 
@@ -85,5 +115,6 @@ func _capture(shot: String, tick: int) -> void:
 	Log.info("prologue-film", "tick %d, %s px, %s" % [tick, frame.get_size(), path])
 	_captured[shot] = true
 	_saving = false
-	if _captured.size() == (3 if _squad else 2):
+	var wanted: int = 5 if _target == "street" else (3 if _target == "squad" else 2)
+	if _captured.size() == wanted:
 		get_tree().quit()

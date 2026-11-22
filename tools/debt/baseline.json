@@ -109,7 +109,8 @@
         "2026-11-21: Read the live guard fraction and break state in the gauntlet HUD (dev_loc 28520 -> 28525)",
         "2026-11-21: Exercise the scene control selection through the same street entry used by live play (dev_loc 28525 -> 28529)",
         "2026-11-22: n23 prologue: deterministic hands pilot and viewport captures of the yard and first kill (dev_loc 28529 -> 28682)",
-        "2026-11-22: --prologue-stills for n23 prologue (dev_loc 28682 -> 28772)"
+        "2026-11-22: --prologue-stills for n23 prologue (dev_loc 28682 -> 28772)",
+        "2026-11-22: --bot and --prologue-stills for n23 prologue (dev_loc 28772 -> 28848)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -117,7 +118,7 @@
         "project/dev/bake_city.gd": 32,
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
-        "project/dev/bots": 650,
+        "project/dev/bots": 695,
         "project/dev/enemy_ai": 2286,
         "project/dev/frames": 1087,
         "project/dev/gauntlet": 514,
@@ -130,7 +131,7 @@
         "project/dev/human_react": 412,
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
-        "project/dev/prologue": 89,
+        "project/dev/prologue": 120,
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 1096,
@@ -147,7 +148,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 28772
+      "total": 28848
     },
     "direct_cmdline_reads": {
       "accepted": [

@@ -10,6 +10,7 @@ var _guard_until: int = -1
 var _guarded: bool = false
 var _rolled: bool = false
 var _clawed: bool = false
+var _skip_lines: bool = LaunchArgs.value("--bot") == "skipper"
 
 
 func _init(stage: ArenaStage, encounter: PrologueEncounter) -> void:
@@ -18,9 +19,23 @@ func _init(stage: ArenaStage, encounter: PrologueEncounter) -> void:
 
 
 func sample(tick: int) -> TickInput:
+	var input: TickInput = _decide(tick)
+	if _skip_lines and _encounter.lines.current != "" and tick % 2 == 0:
+		var opened: int = _encounter.lines.events.back()["tick"]
+		if (
+			_encounter.phase == PrologueEncounter.Phase.STREET
+			or tick - opened >= SimClock.TICK_RATE
+		):
+			input.buttons |= _bit(&"interact")
+	return input
+
+
+func _decide(tick: int) -> TickInput:
 	var arena: CombatArena = _stage.arena
-	if not arena.rivet.alive() or _encounter.phase == PrologueEncounter.Phase.STREET:
+	if not arena.rivet.alive():
 		return TickInput.new()
+	if _encounter.phase == PrologueEncounter.Phase.STREET:
+		return _street(tick)
 	if _encounter.phase == PrologueEncounter.Phase.BEAT_TWO:
 		return _ranged(tick)
 	var patrol: ProloguePatrol = _encounter.patrol
@@ -31,9 +46,39 @@ func sample(tick: int) -> TickInput:
 		var gap: float = STRIKE_M if patrol.approaching >= 2 else 3.8
 		if to.length() > gap:
 			_stage.intent.move_to = _waypoint(patrol.dale.pos)
-		var strike: bool = _encounter.strike_ready and to.length() <= STRIKE_M
+		var strike: bool = (
+			_encounter.strike_ready and not _encounter.lines.busy() and to.length() <= STRIKE_M
+		)
 		return _command(to, Vector2.ZERO, _bit(&"fire") if strike else 0)
 	return _fight(tick)
+
+
+func _street(tick: int) -> TickInput:
+	var street: PrologueStreet = _encounter.street
+	var yard: PrologueYard = _stage.plan as PrologueYard
+	var at: Vector2 = _stage.arena.rivet.pos
+	var phone: Vector2 = _stage.layout.phones[street.phone]
+	var goal: Vector2 = yard.gate + Vector2.DOWN * 1.4
+	var buttons: int = 0
+	match street.phase:
+		PrologueStreet.Phase.OUT, PrologueStreet.Phase.VOICES:
+			pass
+		PrologueStreet.Phase.PHONE:
+			if at.y >= yard.gate.y + 0.8:
+				goal = phone + Vector2.LEFT * 0.9
+			if at.distance_to(goal) < 0.2 and not _encounter.lines.busy():
+				buttons = _bit(&"interact")
+		PrologueStreet.Phase.REQUEST:
+			buttons = _bit(&"interact") if tick - street.request_tick > SimClock.TICK_RATE else 0
+			return _command(Vector2.ZERO, Vector2.ZERO, buttons)
+		PrologueStreet.Phase.RADIO:
+			goal = phone + Vector2.RIGHT * 4.0
+		_:
+			return TickInput.new()
+	var walk: Vector2 = (
+		at.direction_to(_waypoint(goal)) if at.distance_to(goal) > 0.12 else Vector2.ZERO
+	)
+	return _command(walk, walk, buttons)
 
 
 func _fight(tick: int) -> TickInput:
