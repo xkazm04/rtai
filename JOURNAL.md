@@ -217,3 +217,11 @@ NEXT (session 5, overrides the 22:50 NEXT where they differ): brief 06 = the 06 
 - 23:33 Astra committed 6f37fe7fc (tests pin turret + walker card views). Mutate (gtai-art/foes-n24/06-mutate-*.log): turret 20/(20+0) (was 3/(3+17)), pile-driver 20/(20+0) (was 4/(4+14)). Staged-in-tree: stomp read for any row in cast_cards.gd _sheets (no id branch) + war view skips an empty action: diff ACCEPTED.
 - 23:44 ACCEPTED 6aeed9768 (stomp optional per row, no id branch), bf9a9f796 (ASCII plate header; audit_after_lineup_64ppm_tilt70.png re-rendered, clean). *_beside_64.mp4 x4: 1920x1080, 60/1, 16.0 s (ffprobe); lancer + door stills at 3/9/15 s: walk, lock with aim line / brace with shove lane, down / wreck; Rivet 118 px wide vs 58 px in the 32 clip (true 64 px/m). ACCEPTED.
 - 00:00 ASTRA polish 60 accepted (6f37fe7fc, 6aeed9768, bf9a9f796, 79c0c434b): mutate turret 20/(20+0), pile-driver 20/(20+0); stomp optional per row; ASCII plate header; 4 beside_64 clips 1920x1080 60 fps 16.0 s; door Feet PASS 11 -> 0 px (06-door-sole.json); lancer Feet FAIL 10 px; door + clamshell Shadow FAIL (0 separate shadow px). Gate next.
+- 00:06 GATE RUNNING since 00:01: `node tools/gate/run.mjs --rev=HEAD` on 6129b8f69 (last code commit 79c0c434b; the rest
+  inert), log `C:\Users\kazda\kiro\gtai-art\foes-n24\gate-final.log`. REPORT updated with call 06 (what works rows,
+  feet/shadow/slab lines, ledger row); `node tools/evidence/cites.mjs REPORT.md`: 13 paths, 13 ok.
+NEXT (session 6, report pass): no new code (freeze 01:30). Read gate-final.log (tail) and the gate.json path it prints;
+  fill REPORT line 12 (final commit + gate line + gate.json path). If the gate is red, check whether the red step is the
+  pre-existing arena dependency cascade (reproduces on main b3f4727c0, see REPORT section 3) and say so with its quote;
+  any new red caused by cast: brief one short Astra fix only if before 01:00. Then `--reels` once after 01:30 if time
+  allows. Re-run `node tools/evidence/cites.mjs REPORT.md`, commit JOURNAL.md + REPORT.md by pathspec.

@@ -1,6 +1,6 @@
 # REPORT - lane cast, run n24 (2026-11-22), branch `n24-cast`
 
-DRAFT (session 3, 20:50): sections marked TODO are filled at the report pass after the freeze.
+Written by the cast director, session 5 (2026-11-23 00:05); the report pass after the freeze may add the gate line.
 
 Owner's note 5: "Design of new characters when added to waves should be always finetuned from start to have cop-level
 quality (animations, clean cut and shape), assume we will use all characters in some form in the game". This lane
@@ -41,18 +41,23 @@ At the start of the run, at 32 px/m tilt 70 (Rivet 77 px, patrol cop 43 px):
 | The clamshell (sentry turret): bolted plate, dome turns, tell glow, fire, hit, wreck, both pitches; on by default | commit b99a73a46; `gtai-masters/n24/cast/clamshell_{32,64}ppm_tilt{70,55}.png`, `clamshell_wave_32.mp4`, `clamshell_close_64.mp4` | plate 1.41 m wide, dome 1.16 / 1.19 m (70 / 55); films 1920x1080, 60 fps, 16.0 s; 2 takes per sheet |
 | The standing rule: a character enters a wave only when it passes the checklist | commits 1343b32fe, 12edb6c2a; `docs/art/cast-checklist.md` section "Wave admission", `docs/decisions.md` line art/wave-admission | 15 items, patrol cop numbers per item |
 | The pile-driver (war machine): walk, cannon tell + fire, stomp tell + slam, hit, wreck, both pitches; on by default | commit 718fee5b0; `gtai-masters/n24/cast/pile_{32,64}ppm_tilt{70,55}.png`, `pile_wave_32.mp4`, `pile_close_64.mp4`, `pile_before_after_64.png` | 2.42 m (70) / 2.47 m (55) beside Rivet 1.65 m; 78 px vs Rivet 77 px at 32 px/m; films 1920x1080, 60 fps, 16.0 s |
+| Mutation-killing tests for the clamshell and pile-driver card views | commit 6f37fe7fc; `gtai-art/foes-n24/06-mutate-turret.log`, `06-mutate-war.log` | `foe_turret_card_view.gd` 20/(20+0) (was 3/(3+17)); `foe_war_card_view.gd` 20/(20+0) (was 4/(4+14)) |
+| The door carrier's boot plants through each held walk cell | commit 79c0c434b; `gtai-art/foes-n24/06-door-sole.json`; `docs/art/cast-audit.md` Feet row | slide 11 px -> 0 px per held drawing at 32 px/m, at ink thresholds 100, 125 and 145 |
+| `stomp` is an optional sheet key for any cast row (no id branch) | commit 6aeed9768 | - |
+| Owner comparison clips at 64 px/m: each redrawn enemy beside the patrol cop and Rivet, walk, attack with tell, hit, death | `gtai-masters/n24/cast/{lancer,door,clamshell,pile}_beside_64.mp4` (+ the `_beside_32.mp4` set); `frames.json` (13 entries) | 1920x1080, 60 fps, 16.0 s each (ffprobe); Rivet 118 px wide in the 64 clip, 58 px in the 32 clip |
+| After lineup: the redrawn four beside every archetype, Rivet and the cop | commit bf9a9f796 (ASCII header); `gtai-masters/n24/cast/audit_after_lineup_{32,64}ppm_tilt70.png` | at 64 px/m: Rivet 154 px, cop 85, lancer 98, clamshell 107, door carrier 109, pile-driver 155 |
 
 ## 3. What does not
-- **Feet**: the lancer's boot slides 10 px and the door carrier's 11 px per held drawing at 32 px/m (`docs/art/cast-audit.md`,
-  after-table). That is the same 10.24 px the shipped patrol cop itself slides (audit, "Original rig ground-contact
-  measurements"): the reference fails this item too, so "cop quality" does not yet include planted feet. The
-  pile-driver holds at 0 px; the clamshell does not walk.
-- **Contact shadow**: the door carrier and clamshell draw no separate ground shadow (visible in
+- **Feet**: the lancer's boot slides 10 px per held drawing at 32 px/m (`docs/art/cast-audit.md`, after-table; the
+  door carrier's hold trick did not plant it in a trial). That is the same 10.24 px the shipped patrol cop itself
+  slides (audit, "Original rig ground-contact measurements"): the reference fails this item too. The door carrier and
+  pile-driver hold at 0 px; the clamshell does not walk.
+- **Contact shadow**: the door carrier and clamshell draw no separate ground shadow, 0 separate shadow px in both
+  measured facings (visible in
   `gtai-masters/n24/cast/door_before_after_64.png` and `clamshell_before_after_64.png`).
 - **Not redrawn**: the prologue's appliance warden and Sergeant Mulroney (audit: 11 fails each), and the other wave
   archetypes that fail the checklist on main (robot_gunner 10, contractor 8, robot_thug 6). They keep main's look.
-- **Mutation scores on the card views** were low after call 05: clamshell 3/(3+17), pile-driver 4/(4+14) (call 06
-  result below).
+- The door carrier's slab at tilt 70 is 46 px against the shove's 40.96 px at 64 px/m (12% wider; p55 41 px matches).
 - The real gauntlet film (`gauntlet_wave_cast_32.mp4`, seed 8, waves 5-8) shows the redrawn enemies only as small
   shapes in a dense crowd at 32 px/m; the door carrier and pile-driver do not spawn in it.
 - The standalone parse check and `tools/gate/quick.mjs` are red on an arena dependency cascade that reproduces on main
@@ -88,8 +93,8 @@ At the start of the run, at 32 px/m tilt 70 (Rivet 77 px, patrol cop 43 px):
 - `cast_cards.json` `enabled` per row: false = everything as on main.
 
 ## 7. Next steps
-1. Plant the feet of the lancer and door carrier (and the patrol cop, if the owner wants the stricter standard):
-   match card playback to ground speed or re-cut the contact frames.
+1. Plant the lancer's feet (and the patrol cop's, if the owner wants the stricter standard): the door carrier's
+   cell-hold did not carry over to the lancer's sheet in a trial; re-cut its contact frames.
 2. Contact shadows for the door carrier and clamshell cards.
 3. Redraw the appliance warden and Sergeant Mulroney, then robot_gunner and the contractor, worst first, under
    `docs/art/cast-checklist.md`.
@@ -104,3 +109,4 @@ At the start of the run, at 32 px/m tilt 70 (Rivet 77 px, patrol cop 43 px):
 | film-door | 66 | accepted, the 32 px/m film bounced (1280x800) | name the window resolution flag and a survival condition for the filmed enemy |
 | clamshell | 66 | accepted in part: art, stills, films, standing rule; the clamshell commit lost a race with my journal commit, quick red, door mutate 0/2 | never commit (even pathspec) while a builder runs; ask for the commit before the films |
 | pile-driver | 66 | accepted (5 commits; mutate scores low on the new card views: clamshell 3/20, pile-driver 4/18) | ask for mutation-killing assertions in the same brief as the view, not after |
+| polish | 60 | accepted (4 commits: tests to 20/20 on both card views, stomp key, ASCII header, door feet 0 px; 4 clips at 64 px/m) | ask for the 64 px/m owner clips in the same call as the 32 px/m ones |
