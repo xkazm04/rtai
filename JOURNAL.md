@@ -1,0 +1,12 @@
+# JOURNAL - n23 lane prologue
+
+- 00:53 session 1 start (BUILD). main=76111adec. No astra.lock. No `NEED prologue` in other journals yet.
+- 00:58 DECISION prologue entry: the game scene lives in project/boot/prologue/ (ships), a thin dev entry under project/dev/prologue/ makes `node tools/dev/run.mjs prologue` resolve; the pilot bot lives in project/dev/bots/prologue_bot.gd.
+- 00:55 ASTRA RUNNING iface since 00:55 (pid in astra.lock 69152; brief evidence/briefs/n23-prologue-01-iface.md; out logs/prologue/astra-iface.out)
+- 01:01 scouted reuse points: ArenaStage (walls/squad/push-out), ArenaSquad.spawn_member, QuestLinePlayer+HudDialogue (no skip input exists), BossFight/BossHook (bosses.json rows; boss bar name tr(spec.id)), WeaponPickups.drop (no remove-weapon API: by hand), PayphoneRouter, ObjectiveHint.with_keys, Scenario auto-discovered.
+- 01:52 ASTRA iface 57 accepted (c7f139b95 iface, bfb7acf51 yard walls, 6bd28d123 payphone, 6dda3528d three bodies; lint 19/19, select GUT 40/40, runner verdict ok).
+- 01:52 MILESTONE iface c7f139b95 (enemies.json rows sergeant_mulroney + appliance_warden, prologue_lines.json + verbatim test, prologue_stage.json, entry `node tools/dev/run.mjs prologue`).
+- 01:54 NEED street: project/features/gauntlet/gauntlet_composer.gd + gauntlet.json - the composer builds its tier pool from every enemies.json row with a tier, so c7f139b95's appliance_warden (tier 1) and sergeant_mulroney (tier 2) enter gauntlet waves (seed 7: wave 1 was 4 patrol, now 3 patrol + 1 warden). enemies.schema is additionalProperties:false and tier is required 1..5, so no data-only escape in my rows. Ask: a `roster_exclude: ["appliance_warden", "sergeant_mulroney"]` list in gauntlet.json that the composer skips (data, your file). Until then the gauntlet differs from main once my iface commit is merged.
+- 01:54 NOTE moves, loop: merging c7f139b95 (moves does) puts the warden into gauntlet waves until street serves the NEED above; loop's measurements on a tree with my rows and without street's exclude are not comparable to main.
+- 01:55 DECISION mulroney weapon: no enemy shotgun row exists in the enemies.json weapons block (not mine), so his row fires `rifle`; the shotgun read comes from the prologue's own volley/order code later. Rejected adding a weapon row to a shared block.
+- 01:55 FRICTION mutate skipped by Astra (says the runner needs a separate worktree) - check next session.
