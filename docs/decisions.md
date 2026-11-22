@@ -1489,3 +1489,4 @@ One dated line per decision. Deviations use `DEVIATION <RULE-ID>` and carry a re
 - [2026-11-22] DECISION deflect: one roll per basic round on guard or blade contact, a pass costs half guard drain and keeps full incoming damage, a return scatters uniformly around its shooter. Only contacts consume the named RNG stream so idle tapes keep their bytes.
 - [2026-11-22] DECISION pressure: Set the trooper rocket to 13 m/s so a dash after a 15-tick reaction clears the 5 m blast by 0.180 m. At 14 m/s the blast lands one tick earlier and deals 1.50 damage.
 - [2026-11-22] DECISION pressure: Set the quest assault rifle cooldown to 0.61 s (37 ticks). Both prologue scenarios finish here, while 30 through 36 ticks fail at least one. The faster rifle keeps its 0.9 aim lead and 1.2 damage to Rivet. Quest 1's Dock 9 kill of actor 3 moves from tick 13301 to 13302.
+- [2026-11-22] DECISION pressure: rocket cooldown 1.4: 0.55 overshot, the rocket killed 6 of 15 runs before wave 6.

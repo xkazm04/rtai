@@ -478,7 +478,7 @@
       "aim_lead": 0.8,
       "burst": 1,
       "burst_gap_s": 0,
-      "cooldown_s": 0.55,
+      "cooldown_s": 1.4,
       "damage": 32,
       "melee": false,
       "reach_m": 24,
