@@ -21,7 +21,7 @@ var arena: CombatArena
 
 func _draw() -> void:
 	for h: Fighter in arena.hostiles:
-		if h.archetype == &"rocket_trooper" and h.alive():
+		if FoeCastView.draws_launcher(h):
 			_launcher(h)
 
 

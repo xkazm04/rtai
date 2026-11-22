@@ -155,7 +155,7 @@ static func draw(rig: CutRig, card: Sprite2D, k: float) -> void:
 	if living:  # n17: a knockdown lies as its own grid's frame, never the plan-view dead
 		StreetDeadPlan.drop(card)
 		return
-	StreetDeadPlan.draw(rig, card, StreetWalkerCards.row_of(rig), ks, p)  # n9: the plan-view dead
+	StreetDeadPlan.draw(rig, card, CastCardPose.rest_row(rig), ks, p)
 
 
 ## The corpse decay's sink (CorpseFade shrinks the rig): 1 while it lies, down to 1 - sink.

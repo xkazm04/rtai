@@ -79,7 +79,7 @@ func card_for(id: int) -> Sprite2D:
 func _process(_delta: float) -> void:
 	var keep: Dictionary[int, bool] = {}
 	for h: Fighter in _standing:
-		if not h.alive():
+		if not h.alive() or FoeCastView.covers(_rigs, h):
 			continue
 		var card: Card = _cards.get(h.id)
 		var i: int = _rigs.feed.ids.find(h.id)

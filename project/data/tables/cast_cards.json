@@ -1,0 +1,21 @@
+{
+  "archetypes": {
+    "rocket_trooper": {
+      "enabled": true,
+      "id": "rocket_trooper",
+      "p55": {
+        "armed_walk": "rocket_trooper_armed_walk.png",
+        "attack": "rocket_trooper_attack.png",
+        "fall": "rocket_trooper_fall.png",
+        "hit": "rocket_trooper_hit.png"
+      },
+      "p70": {
+        "armed_walk": "rocket_trooper_armed_walk.png",
+        "attack": "rocket_trooper_attack.png",
+        "fall": "rocket_trooper_fall.png",
+        "hit": "rocket_trooper_hit.png"
+      }
+    }
+  },
+  "schema": "gtai.cast_cards/1"
+}

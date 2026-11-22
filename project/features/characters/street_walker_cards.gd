@@ -43,7 +43,7 @@ const WAS: StringName = &"street_walker_was"
 static func step(rig: CutRig) -> void:
 	if rig.head_card != null and not rig.head_card.has_meta(StreetStrips.PREF):
 		StreetStrips.prefetch_fall(rig, ViewMode.shared().art, row_of(rig))
-	var path: String = strip_of(rig)
+	var path: String = CastCardPose.strip(rig)
 	if path.is_empty():
 		release(rig)
 		return
@@ -132,7 +132,7 @@ static func release(rig: CutRig) -> void:
 static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 	card.texture = StreetStrips.get_tex(path)
 	var fall: bool = path.ends_with("_fall.png")
-	var walk: bool = path.ends_with("_walk.png")
+	var walk: bool = path.ends_with("_walk.png") or path.ends_with("_attack.png")
 	card.vframes = StreetFallBetween.rows_of(path) if fall else (STRIDE_FRAMES if walk else 1)
 	var cell: Vector2 = Vector2(
 		card.texture.get_width() / float(RigHeadCard.FRAMES),
@@ -171,7 +171,7 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	if card.vframes > 1:
 		var moving: bool = rig.speed_now > MOVING
 		card.frame_coords = Vector2i(
-			card.frame % RigHeadCard.FRAMES, stride_frame(rig.phase, moving)
+			card.frame % RigHeadCard.FRAMES, CastCardPose.row(rig, stride_frame(rig.phase, moving))
 		)
 		walk = 0.0
 	var stride: float = sin(TAU * rig.phase)

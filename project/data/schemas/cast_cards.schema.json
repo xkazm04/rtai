@@ -1,0 +1,75 @@
+{
+  "$defs": {
+    "pitch": {
+      "additionalProperties": false,
+      "properties": {
+        "armed_walk": {
+          "pattern": "^[a-z][a-z0-9_]*_armed_walk[.]png$",
+          "type": "string"
+        },
+        "attack": {
+          "pattern": "^[a-z][a-z0-9_]*_attack[.]png$",
+          "type": "string"
+        },
+        "fall": {
+          "pattern": "^[a-z][a-z0-9_]*_fall[.]png$",
+          "type": "string"
+        },
+        "hit": {
+          "pattern": "^[a-z][a-z0-9_]*_hit[.]png$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "armed_walk",
+        "attack",
+        "fall",
+        "hit"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "gtai.cast_cards/1",
+  "additionalProperties": false,
+  "properties": {
+    "archetypes": {
+      "additionalProperties": {
+        "additionalProperties": false,
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "p55": {
+            "$ref": "#/$defs/pitch"
+          },
+          "p70": {
+            "$ref": "#/$defs/pitch"
+          }
+        },
+        "required": [
+          "enabled",
+          "id",
+          "p55",
+          "p70"
+        ],
+        "type": "object"
+      },
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9_]*$"
+      },
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.cast_cards/1"
+    }
+  },
+  "required": [
+    "archetypes",
+    "schema"
+  ],
+  "type": "object"
+}
