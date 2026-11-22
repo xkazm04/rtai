@@ -1,6 +1,6 @@
 # Wave cast audit against the patrol cop
 
-Reviewed 2026-11-22. The gauntlet has ten spawnable archetypes and the prologue adds two officers. The equipped lancer, door carrier and clamshell now have dedicated cast cards. The pile-driver still uses the original walker renderer. The patrol reference measured 43 px and Rivet 77 px in the 32 px/m, 70-degree lineup.
+Reviewed 2026-11-22. The gauntlet has ten spawnable archetypes and the prologue adds two officers. The first review covered the equipped lancer, door carrier and clamshell cards and the original walker renderer. The [after table](#after-the-four-redraws) records the four completed redraws. The patrol reference measured 43 px and Rivet 77 px in the 32 px/m, 70-degree lineup.
 
 ## Which renderer receives the spawn
 
@@ -51,3 +51,64 @@ The masters directory also holds `cast_lineup_source.patch`, the capture scene, 
 ```powershell
 & $env:GODOT_BIN --rendering-driver d3d12 --windowed --position 0,1440 --resolution 1920x1080 --path project --fixed-fps 60 --quit-after 4000 res://dev/cast/cast_lineup.tscn
 ```
+
+## After the four redraws
+
+The comparison pairs use tick 60, a 70° camera and 64 px/m. Each left panel disables only the named cast row. Each right panel enables it. Rivet and the patrol cop share the same positions, poses and actor IDs in both exposures. Every PASS links to its evidence.
+
+| Checklist item | Lancer | Door carrier | Clamshell | Pile-driver |
+|---|---|---|---|---|
+| Identity | [PASS][cast-after-1] | [PASS][cast-after-2] | [PASS][cast-after-3] | [PASS][cast-after-4] |
+| Walk or fixed mount | [PASS][cast-after-5] | [PASS][cast-after-6] | [PASS][cast-after-7] | [PASS][cast-after-8] |
+| Attack and tell | [PASS][cast-after-5] | [PASS][cast-after-6] | [PASS][cast-after-7] | [PASS][cast-after-8] |
+| Hit | [PASS][cast-after-5] | [PASS][cast-after-6] | [PASS][cast-after-7] | [PASS][cast-after-8] |
+| Death or wreck | [PASS][cast-after-5] | [PASS][cast-after-6] | [PASS][cast-after-7] | [PASS][cast-after-8] |
+| Facings | [PASS][cast-after-9] | [PASS][cast-after-10] | [PASS][cast-after-11] | [PASS][cast-after-12] |
+| Grid | [PASS][cast-after-13] | [PASS][cast-after-13] | [PASS][cast-after-13] | [PASS][cast-after-13] |
+| Pitches | [PASS][cast-after-14] | [PASS][cast-after-15] | [PASS][cast-after-16] | [PASS][cast-after-17] |
+| Scale | [PASS][cast-after-1] | [PASS][cast-after-2] | [PASS][cast-after-3] | [PASS][cast-after-18] |
+| Ink | [PASS][cast-after-9] | [PASS][cast-after-10] | [PASS][cast-after-11] | [PASS][cast-after-19] |
+| Palette | [PASS][cast-after-20] | [PASS][cast-after-21] | [PASS][cast-after-22] | [PASS][cast-after-23] |
+| Cut | [PASS][cast-after-9] | [PASS][cast-after-10] | [PASS][cast-after-11] | [PASS][cast-after-13] |
+| Feet | FAIL · no equipped sole track | FAIL · no equipped sole track | [PASS][cast-after-24] | [PASS][cast-after-25] |
+| Contact shadow | [PASS][cast-after-9] | FAIL · no separate ground contact demonstrated | FAIL · no separate ground contact demonstrated | [PASS][cast-after-18] |
+| Provenance | [PASS][cast-after-13] | [PASS][cast-after-13] | [PASS][cast-after-13] | [PASS][cast-after-13] |
+
+### Standing scale and ground contact
+
+Inclusive body-and-gear bounds come from the 64 px/m front three-quarter standing exposure. The shadow was hidden and the walker was then hidden for a background subtraction at the same position. The threshold is 12/255 in any channel. Rivet's design height is 1.65 m. His shipped visual multiplier is visible in each plate.
+
+| Pitch | Walker body | Drawn height | Visible shadow pixels |
+|---|---:|---:|---:|
+| 70° | 155 px | 2.42 m | 4243 |
+| 55° | 158 px | 2.47 m | 4535 |
+
+The walker uses the patrol facing order. The cell boards contain all 16 action rows in all eight directions at both pitches and zooms. The foot test follows motion across a held cell and the following contact. The two live pile-driver films use the arena's own cannon and stomp decisions. The cast film sets health only in the capture process.
+
+The lancer and door carrier still lack a measured equipped support-foot cycle. The door carrier and clamshell lack a demonstrated separate contact shadow. The clamshell's locomotion check follows the fixed apron through the rotating sweep.
+
+[cast-after-1]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/lancer_before_after_64.png>
+[cast-after-2]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/door_before_after_64.png>
+[cast-after-3]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/clamshell_before_after_64.png>
+[cast-after-4]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/pile_before_after_64.png>
+[cast-after-5]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/lancer_wave_32.mp4>
+[cast-after-6]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/door_wave_32.mp4>
+[cast-after-7]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/clamshell_wave_32.mp4>
+[cast-after-8]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/pile_wave_32.mp4>
+[cast-after-9]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/lancer_64ppm_tilt70.png>
+[cast-after-10]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/door_64ppm_tilt70.png>
+[cast-after-11]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/clamshell_64ppm_tilt70.png>
+[cast-after-12]: <C:/Users/kazda/kiro/gtai-art/foes-n24/05-takes/cells_64_70.png>
+[cast-after-13]: <C:/Users/kazda/kiro/gtai-art/foes-n24/05-art-metrics.log>
+[cast-after-14]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/lancer_32ppm_tilt55.png>
+[cast-after-15]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/door_32ppm_tilt55.png>
+[cast-after-16]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/clamshell_32ppm_tilt55.png>
+[cast-after-17]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/pile_32ppm_tilt55.png>
+[cast-after-18]: <C:/Users/kazda/kiro/gtai-art/foes-n24/05-scale.json>
+[cast-after-19]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/pile_64ppm_tilt70.png>
+[cast-after-20]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/lancer_32ppm_tilt70.png>
+[cast-after-21]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/door_32ppm_tilt70.png>
+[cast-after-22]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/clamshell_32ppm_tilt70.png>
+[cast-after-23]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/pile_32ppm_tilt70.png>
+[cast-after-24]: <C:/Users/kazda/kiro/gtai-masters/n24/cast/clamshell_close_64.mp4>
+[cast-after-25]: <../../project/tests/unit/test_cast_war_machine.gd>
