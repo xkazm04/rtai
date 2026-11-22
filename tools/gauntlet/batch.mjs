@@ -5,6 +5,7 @@ import { basename, join, relative, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { main as devRun } from '../dev/run.mjs';
 import { dirtyLines, git, PROJECT } from '../lib/repo.mjs';
+import { MARKER } from '../mutate/worktree.mjs';
 import { median } from '../perf/paired.mjs';
 import { commandLine, parseArgs, plan } from './commands.mjs';
 import { BATCH_SCHEMA, PROFILES, validateRun } from './contract.mjs';
@@ -137,7 +138,7 @@ export async function batch(args, { launch = devRun, out = console.log, err = co
     return null;
   }
   const created = new Date().toISOString();
-  const revision = { sha: git('rev-parse', 'HEAD'), branch: git('branch', '--show-current'), dirty: dirtyLines().length > 0 };
+  const revision = { sha: git('rev-parse', 'HEAD'), branch: git('branch', '--show-current'), dirty: dirtyLines().some((line) => line !== '?? ' + MARKER) };
   const snapshot = tableSnapshot(args.runner);
   const start = performance.now();
   const entries = args.from ? offline(args) : await live(args, launch);

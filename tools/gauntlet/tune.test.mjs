@@ -594,31 +594,37 @@ test('apply refuses a dead or reordered pointer before writing another change', 
 });
 
 test('a night with synthetic batches drives the real report, propose, apply and selective revert CLIs', (t) => {
-  const root = repository(t, 'n23-tune-night');
+  const root = repository(t, 'lane');
+  const tree = join(tmpdir(), 'night-' + root.split(/[\\/]/).at(-1));
+  t.after(() => rmSync(tree, { recursive: true, force: true }));
+  writeFileSync(join(root, '.gitignore'), '/build/\n');
+  git(root, 'add', '--', '.gitignore');
+  git(root, 'commit', '-m', 'ignore runner output');
   ensureBaseline(root, inventory(root).entries);
   git(root, 'add', '--', BASELINE);
   git(root, 'commit', '-m', 'first-night baseline', '--', BASELINE);
-  const dir = join(root, 'night output'), jobs = [];
-  function run([script, ...args]) {
+  const dir = join(root, 'evidence/n23-loop/night output'), jobs = [];
+  function run([script, ...args], cwd) {
+    assert.equal(cwd, tree);
     if (script.endsWith('/batch.mjs')) {
       const data = robotBatch();
       data.args.salt = args.includes('--salt=1') ? 1 : 0;
       if (jobs.length === 2) for (const r of data.results) r.waves[0].seconds = 15;
       const dest = args.find((arg) => arg.startsWith('--out=')).slice(6);
-      write(root, join(dest, 'batch.json'), data);
+      write(dest, 'batch.json', data);
       jobs.push(args.filter((arg) => !arg.startsWith('--out=')));
       return;
     }
-    const invoke = () => spawnSync(process.execPath, [join(ROOT, script), ...args], { cwd: root, encoding: 'utf8' });
+    const invoke = () => spawnSync(process.execPath, [join(ROOT, script), ...args], { cwd, encoding: 'utf8' });
     if (args[0] === 'apply') {
-      const note = join(dir, 'owner-note');
+      const note = join(tree, 'owner-note');
       writeFileSync(note, 'outside the generated evidence');
       assert.match(invoke().stderr, /dirty tree.*owner-note/);
       rmSync(note);
     }
     ok(invoke());
   }
-  night(['--seeds=12', '--pick=random', '--out=' + dir], { root, run, log() {} });
+  night(['--worktree=' + tree, '--branch=n23-tune-night', '--seeds=12', '--pick=random', '--out=' + dir], { root, run, log() {} });
   assert.deepEqual(jobs[1], [...jobs[0], '--salt=1']);
   assert.deepEqual(jobs[0], jobs[2]);
   const ledger = readJson(join(dir, 'after/tune-ledger.json'));

@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { basename, isAbsolute, join, relative, resolve, sep } from 'node:path';
+import { MARKER } from '../mutate/worktree.mjs';
 import { canonicalJson } from '../lib/canonical_json.mjs';
 import { validate } from '../lib/mini_schema.mjs';
 import { readJson } from '../lib/repo.mjs';
@@ -44,6 +45,7 @@ function clean(root, artifacts = [], nightDir = null) {
     ':(exclude)evidence/**', ':(exclude)build/**', ...exclude);
   const prefix = nightDir && relative(root, nightDir).split(sep).join('/') + '/';
   const dirty = status.split('\0').filter(Boolean).find((line) => {
+    if (line === '?? ' + MARKER) return false;
     if (!prefix || !line.startsWith('?? ' + prefix)) return true;
     const file = line.slice(3 + prefix.length);
     return file !== 'plan.json' && !/^(before|null|after)\//.test(file);

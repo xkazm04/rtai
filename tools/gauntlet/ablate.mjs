@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 import { execFileSync, spawnSync } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
-import { cpSync, existsSync, mkdirSync, readFileSync, realpathSync, statSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, realpathSync, statSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { isAbsolute, join, relative, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT, readJson } from '../lib/repo.mjs';
 import { assertSafe, ensureWorktree, removeWorktree } from '../mutate/worktree.mjs';
+import { seedImportCache } from './prepare_worktree.mjs';
 import { median } from '../perf/paired.mjs';
 import { editNumber, parseAblation } from './ablate_args.mjs';
 
@@ -21,18 +22,6 @@ export function applyEdit(root, tree, edit) {
   const before = editNumber(table, edit);
   writeFileSync(target, JSON.stringify(table, null, 2) + '\n');
   return { ...edit, before };
-}
-
-// Copy the portable imported resources into a private cache. The dev runner checks
-// asset hashes and class declarations here and imports missing or stale inputs.
-function seedImportCache(root, tree) {
-  const source = join(root, 'project/.godot');
-  const target = join(tree, 'project/.godot');
-  mkdirSync(target, { recursive: true });
-  for (const entry of ['.gdignore', 'imported', 'global_script_class_cache.cfg', 'uid_cache.bin', 'extension_list.cfg']) {
-    const path = join(source, entry);
-    if (existsSync(path)) cpSync(path, join(target, entry), { recursive: true, dereference: true });
-  }
 }
 
 export function summarize(batch) {
