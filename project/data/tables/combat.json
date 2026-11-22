@@ -23,6 +23,11 @@
       "enabled": true,
       "immune_s": 4,
       "stun_s": 2
+    },
+    "tonnage_armour_crack": {
+      "enabled": true,
+      "open_front_k": 1,
+      "open_s": 4
     }
   },
   "rivet": {

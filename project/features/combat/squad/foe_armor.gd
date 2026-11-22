@@ -11,9 +11,11 @@ static func impact(
 ) -> float:
 	var squad: ArenaSquad = arena.squad_ai
 	var ray: Vector2 = arena.hit_dir
-	if h.archetype == &"war_machine" and _detonates(weapon):
-		return 1.0
-	var own_plate: float = k(h, ray, kind, squad)
+	if h.archetype == &"war_machine":
+		TonnageCrack.on_hit(arena, h, killer, weapon)
+		if _detonates(weapon):
+			return 1.0
+	var own_plate: float = k(h, ray, kind, squad, arena.tick)
 	if squad == null or squad.shield_cover.carriers.is_empty() or not squad.owns(h):
 		return own_plate
 	# FightAreas classifies small detonations by their weapon's death kind. The
@@ -42,7 +44,9 @@ static func _detonates(weapon: StringName) -> bool:
 
 
 ## hit_dir follows the projectile into the victim. Blasts and directionless damage bypass plates.
-static func k(h: Fighter, hit_dir: Vector2, kind: StringName, squad: ArenaSquad) -> float:
+static func k(
+	h: Fighter, hit_dir: Vector2, kind: StringName, squad: ArenaSquad, tick: int = -1
+) -> float:
 	if squad == null or h.archetype == &"" or kind == &"blown" or hit_dir.is_zero_approx():
 		return 1.0
 	var arch: EnemyRoster.Archetype = squad.pit.roster.archetype(h.archetype)
@@ -52,5 +56,10 @@ static func k(h: Fighter, hit_dir: Vector2, kind: StringName, squad: ArenaSquad)
 		return 1.0
 	var bearing: float = h.facing.dot(-hit_dir.normalized())
 	if bearing >= arch.shield_cos:
+		if h.archetype == &"war_machine":
+			var row: MoveTable.ArmourCrack = squad.moves.tonnage_armour_crack
+			var mind: SquadMind = squad.minds.get(h.id)
+			if TonnageCrack.is_open(mind, row, squad.pit.tick if tick < 0 else tick):
+				return row.open_front_k
 		return arch.shield_front_mult
 	return arch.rear_mult if bearing <= REAR_COS else 1.0

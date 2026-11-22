@@ -117,11 +117,34 @@
             "stun_s"
           ],
           "type": "object"
+        },
+        "tonnage_armour_crack": {
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "open_front_k": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "open_s": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "enabled",
+            "open_front_k",
+            "open_s"
+          ],
+          "type": "object"
         }
       },
       "required": [
         "doc",
-        "ohm_short_circuit"
+        "ohm_short_circuit",
+        "tonnage_armour_crack"
       ],
       "type": "object"
     },

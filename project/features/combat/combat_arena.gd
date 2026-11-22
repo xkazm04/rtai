@@ -201,7 +201,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(hostiles.size())
 	for h: Fighter in hostiles:
 		h.write_state(out)
-		OhmShortCircuit.write_state(squad_ai, h, out)
+		MoveState.write_fighter(self, h, out)
 	out.put_32(shots.size())
 	out.put_32(balls.size())
 	out.put_32(kills)
