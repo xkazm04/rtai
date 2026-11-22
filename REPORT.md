@@ -2,7 +2,8 @@
 
 Branch `n23-controls`, cut from `main` `76111adec`. Director: Opus; builder: Astra (all product edits).
 Final gate on `9880acfdb` (07:38 to 07:58), wheel as the default: `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n23-controls\build\gate\9880acfdb77c\gate.json`
-(PASS lint 19 checks over 1958 GDScript files; PASS unit-tests 3666 passed, 0 failed, 2 skipped; PASS scenario-tests 65 passed; PASS parity 1200 steps bit for bit, planted mutation caught at step 629; PASS selftest; PASS export-audit 883 loaded, 0 failed). Commits after `9880acfdb` touch only inert paths (`REPORT.md`, `JOURNAL.md`, `docs/decisions.md`).
+(PASS lint 19 checks over 1958 GDScript files; PASS unit-tests 3666 passed, 0 failed, 2 skipped; PASS scenario-tests 65 passed; PASS parity 1200 steps bit for bit, planted mutation caught at step 629; PASS selftest; PASS export-audit 883 loaded, 0 failed). Second full gate on `d8c597dfc` (08:39 to 08:57, after the dev-only guard film flags): `gate: PASS; C:Userskazdakirogtai-wt
+23-controlsuildgated8c597dfc90cgate.json` (same six PASS lines: lint 19/19, unit 3666/0/2, scenarios 65, parity, selftest, export-audit 883/0). Commits after `d8c597dfc` touch only inert paths (`REPORT.md`, `JOURNAL.md`, `evidence/briefs/`).
 
 | Suite on `9880acfdb` | Wheel (default) | Legacy (`--controls=legacy`) |
 |---|---|---|

@@ -77,3 +77,7 @@ NEXT: (1) look at quest1_wheel_opening.png, arena_wheel_hands.png, guard_phases_
 - 08:39 Second full gate on d8c597dfc started (the dev change came after the 07:58 gate); out build/dev/final_gate2.out.
 
 NEXT (session 7, if any): (1) read build/dev/final_gate2.out (gate on d8c597dfc, started 08:39). If PASS: replace the REPORT header gate line with it (`gate: PASS; ...build\gate\d8c597dfc...\gate.json`) and drop the "Commits after 9880acfdb" sentence's scope note to name d8c597dfc; if FAIL: read build/gate/<sha>/evidence.log, report it in REPORT "What does not" (the 9880acfdb gate stays the product gate; d8c597dfc is dev-only). (2) After the 09:30 freeze, if time: `node tools/gate/run.mjs --rev=HEAD --reels` once and quote it. (3) `node tools/evidence/cites.mjs REPORT.md`, commit REPORT + JOURNAL with a pathspec. (4) %TEMP%\gtai-precommit-YALUPk still busy; leave it. No Astra running after b8 (exited 08:38). No product work left.
+- 08:57 MILESTONE second gate PASS on d8c597dfc: lint 19/19, unit 3666/0/2, scenarios 65, parity, selftest, export-audit 883/0; build/gate/d8c597dfc90c/gate.json. REPORT header updated.
+- 08:58 session 6 end. No Astra running.
+
+NEXT (session 7): REPORT is complete and committed; only if time after the 09:30 freeze: `node tools/gate/run.mjs --rev=HEAD --reels` once (about 25 min, so only if started by 09:30) and quote it; then cites + commit REPORT/JOURNAL with a pathspec. Do not start product work.
