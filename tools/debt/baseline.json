@@ -402,7 +402,8 @@
         "2026-11-21: n22 merge: flag and rig lines from several lanes add up in launch_args.gd and arena_rigs.gd (files_past_soft_cap 65 -> 65)",
         "2026-11-21: sentry turret armour call and duel kill-side evidence for n22 foes (files_past_soft_cap 64 -> 64)",
         "2026-11-21: n22 merge: damage() keeps both the guard block and the armour line (files_past_soft_cap 65 -> 65)",
-        "2026-11-21: Pin a single squad rocket burst, high-wall occlusion and the stomp sight line in the existing foe tests (files_past_soft_cap 65 -> 67)"
+        "2026-11-21: Pin a single squad rocket burst, high-wall occlusion and the stomp sight line in the existing foe tests (files_past_soft_cap 65 -> 67)",
+        "2026-11-22: --bot-salt for n23 loop (files_past_soft_cap 67 -> 67)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -411,7 +412,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 238,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 213,
+        "project/boot/launch_args.gd": 214,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,
