@@ -1,6 +1,6 @@
 # REPORT lane melee (n24, 2026-11-22), branch `n24-melee`, worktree `n23-street`
 
-DRAFT (session 5, 23:15): P6 (saw hold) and the final gate line land later.
+DRAFT (session 5, 23:40): the final gate line lands later (gate on `9da9442bb` running since 23:38).
 
 Owner, verbatim: "Melee weapons double-attack on one click look horrible, we need on unique swing per weapon, with
 unique brutal animation per human enemies as it should one-shot them. For robot enemies we will need electric
@@ -30,6 +30,7 @@ Root for film paths: M = `C:/Users/kazda/kiro/gtai-masters/n24/melee`.
 | Cursor before/after film | `890c59a68`, `ed1332dae`; M/films/cursor_before_after.mp4 (main left, branch right, 16 s) | pistol crosshair on both; melee: crescent claw cursor -> system arrow |
 | 64 px/m kill close-ups | M/closeups (kill tick and +20 per weapon); index M/frames.json (12 entries) | 5 weapons |
 | Plasma kill tests | `6e7868bce` `test_kill_plasma_art.gd` | 5/5; mutate `kill_plasma_art` 1/19 -> 5/19 (26.3%, the survivors are drawing constants) |
+| The chainsaw's grind no longer looks electric | `22654f6d3`: row `stun_look: "hold"`, view-only `FighterFx.hold_look_until` (not hashed), `StunCrowd.electric`; M/kills/p6/chainsaw-64-before.png against M/kills/p6/chainsaw-64-after.png, baton unchanged M/kills/p6/electro_baton-32-after.png | hold still 16 ticks; telemetry, parity, bake, 60 s replay identical; mutate `melee_contact` 8/8 |
 | Decision lines | `7144b8a1a` docs/decisions.md: cursor, claw, robo_tazer | |
 | Gate on `f6978fc2f` | `node tools/gate/run.mjs --rev=f6978fc2f` PASS, `build/gate/f6978fc2f8fe/gate.json` | lint 19/19, GUT 3811/0, 67 scenarios, parity 1200, release-compile 934/0 |
 | Shared arena kept to call sites | `4832ca100` | `combat_arena.gd` 2 changed lines vs `b3f4727c0` |
@@ -37,9 +38,9 @@ Root for film paths: M = `C:/Users/kazda/kiro/gtai-masters/n24/melee`.
 
 ## What does not
 
-- The chainsaw grind still draws a white electric zigzag on its victim (also on main): the saw's `stun_ticks` 16
-  goes through the electric stun, drawn by the shared `fight_areas_art.gd`. Fix brief written (P6,
-  `evidence/briefs/n24-p6-saw-hold.md`); still: M/kills/p4/chainsaw-64.png.
+- During the saw's 16-tick hold the victim is drawn in his own stance (standing, aiming) a step off the bar, so the
+  hold reads as a near miss until the kill at tick 62 (M/kills/p6/chainsaw-64-after.png; on main too). Next: a held
+  pose for the victim (react/**, ours).
 - The right-facing baton contact frame: needs `rivet_windup.gd` routing or new strip art (not this lane's files);
   still: M/kills/p4/baton_strike-64.png.
 - Mutate `kill_plasma_art.gd` only 5/19 (26.3%) after P5's tests: 14 surviving mutants change drawing constants
@@ -79,13 +80,19 @@ Root for film paths: M = `C:/Users/kazda/kiro/gtai-masters/n24/melee`.
 - `project/features/combat/ai/enemy_pit.gd` `hurt()` gains an optional `melee: MeleeCombo = null` and its
   front-shield multiplier moved into `MeleeShutdown.pit_damage(...)` (2 call-site lines). ai/** fire timing is
   pressure's: a conflict there is likely; keep both (pressure's timing, this call).
+- `fighter_fx.gd:18` (one view-only field) and `fight_areas_art.gd:36` (one-line call site to `StunCrowd.electric`):
+  shared weapon files; keep the line if another lane touched the file.
 - `combat_arena.gd`: 2 lines in `damage()` (`MeleeLethal.damage_scale`, `MeleeLethal.death_kind`).
 - Scenario expectations moved: rivet_katana 3 -> 6 kills, rivet_chainsaw 1 -> 5 (decision lines).
 - NEED pressure (JOURNAL 18:39, 21:08): the test player's melee numbers and the baton vs robots.
 
 ## Next steps
 
-- (filled at the end)
+- A held pose for the saw's victim during the 16-tick grind (react/**, ours), so the hold reads as caught.
+- The right-facing baton contact frame (`rivet_windup.gd` routing or new strip art: director).
+- Plasma kill blood: varied droplets and a pool no wider than the shoulders (cancelled tonight for time).
+- The test player's melee numbers (NEED pressure): reach and ticks per weapon are in `melee_weapons.json` `swing`.
+- Which other weapons count as electric (Call 6).
 
 ## Astra ledger
 
@@ -96,3 +103,5 @@ Root for film paths: M = `C:/Users/kazda/kiro/gtai-masters/n24/melee`.
 | p3-electric | 72 | accepted | ask for the 32 px/m look check before committing a look |
 | p4-kill-looks | 69 | accepted (2 items stopped at the allowlist) | trace a mark to its data row before naming the file to fix |
 | p5-films | 55 | accepted | stage each robot apart from the start (first take hid two under the war machine) |
+| p6-saw-hold | 7 | accepted (a correct NEED stop) | name the view-only route up front; my brief guessed `mind.stun_until`, which GuardBrain cops do not have |
+| p6b-saw-look | 17 | accepted | |
