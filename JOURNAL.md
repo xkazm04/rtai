@@ -102,3 +102,6 @@ NEXT: (session 3) check logs/cast/astra.lock + astra-calls.jsonl; when film-door
   Takes: door carrier 1 per sheet (8 sheets, all accepted); lancer attack 3 (cols 4-5 from take 3).
 - 20:44 ASTRA RUNNING clamshell since 20:44 (pid 71768; brief evidence/briefs/n24-cast-04-clamshell.md: 03 leftovers a-f,
   clamshell cut/wire/stills/clip, pile-driver retake with the cropped concept, standing-rule docs). Hard stop ~21:59.
+- 20:58 round 04 pile-driver review: walk/attack/fall_70_front3 (2 front columns) ACCEPTED; walk_70_v2 rows 2/4 and
+  fall_70_v2 row 2 have mirrored cols 3-4 (cannon left): flip or take from other rows. Notes in brief 05 draft section 0.
+  Takes so far: pile-driver walk_70 3 (v1 rej, v2 part, front3 acc), attack_70 2 (front3 acc), fall_70 3 (front3 acc).
