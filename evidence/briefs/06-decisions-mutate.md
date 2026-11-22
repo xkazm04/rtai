@@ -1,11 +1,16 @@
 # Brief 06 (street lane, n23): decision lines, one pinned counter, mutation scores
 
-Hard stop: HARDSTOP wall clock (check `date`). Commit deadline: COMMITBY. This is a short call: no new behaviour, no films. Write your final report BEFORE the mutate runs; mutate is last and capped.
+Hard stop: HARDSTOP wall clock (check `date`). Commit deadline: COMMITBY. This is a short call: no new behaviour, no films. Order: 0, A, B, then C. Write your final report BEFORE the mutate runs; mutate is last and capped.
 
 ## Setup for every Godot run
 `export APPDATA=C:/Users/kazda/kiro/gtai-n23/appdata/street` and
 `export GODOT_BIN=C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe`.
 One Godot process at a time. Never kill processes by name; only a PID you started.
+
+## Part 0 (first, ~20 min): the on-hands enemy round gets its amber rim
+`29d3080e4` made the bare-hands fallback in `project/boot/collect_call/view/fx_view.gd` `_shots()` (last line) draw an enemy round with `ShotDraw.core(s)`. The director's 4x crop of `rounds-hands-after-32.png` (`build/street/crop/hands-pair.png`) shows a pale cream dash with no amber rim: `draw_line` on the view goes through the normal item print, which `ShotDraw`'s header says maps the colours back, and the rim is not drawn at all. With a gun the same round is the amber rim + core on `ShotDraw`'s own canvas.
+Fix: add one static in `project/features/combat/shot_draw.gd`, e.g. `static func bare(ci: CanvasItem, s: Shot, tail: Vector2) -> void`, that draws Rivet's round exactly as today (`ci.draw_line(Ink.px(tail), Ink.px(s.pos), Ink.INK, 4.0)`) and an enemy round through `tracer(ci, s, tail, s.pos, Vector2(<rim width>, <core width>))` (pick widths so the 32 px/m dash is about as wide as the gun-path tracer: read the gun-path caller of `ShotDraw.tracer` for its widths). Then replace that one `fx_view.gd` line by one call: `ShotDraw.bare(self, s, tail)`. Only that line changes in `fx_view.gd`.
+Prove: (a) seed 7 average gauntlet `--waves=10` result cmp identical to before; (b) scenario suite unchanged pass count and the 60 s replay digest `cbeb734ff9b97c41`; (c) re-shoot `C:/Users/kazda/kiro/gtai-masters/n23/street/rounds/rounds-hands-after-32.png` at the SAME tick and camera as `rounds-hands-before-32.png` (reuse the capture of `29d3080e4`, under `build/street/`), plus a 4x crop pair of the round, before / after, to `build/street/crop/hands-pair-2.png`; look at it and say what colours the round shows (rim and core). Commit 0.
 
 ## Part A (~5 min): decision lines
 Append these four lines at the END of `docs/decisions.md`, one line each, exactly in the house form (`- [YYYY-MM-DD] DECISION <area>: what was chosen, why, what was rejected.`). Append only; touch no other line.
@@ -34,9 +39,9 @@ Staged per path (`git add <path>`; never `-A`, `.`, `-u`, `commit -a`, stash, am
 `Co-Authored-By: GPT-6.2 Astra <noreply@openai.com>`.
 
 ## Allowlist (edit only these)
-the end of `docs/decisions.md` (append four lines), `project/tests/unit/test_gauntlet_pick_view.gd`, `project/tests/unit/test_gauntlet_wave_timer.gd`, the existing unit tests of `GauntletComposer`, `ShotDraw` and `GauntletDraw` (find them with `node tools/tests/test_map.mjs <path>`), `evidence/street/**`.
-Forbidden: every product file (`project/features/**`, `project/dev/**`, `project/boot/**`, `project/data/**`), `tools/**`, tapes and goldens, JOURNAL.md, REPORT.md. Any other path: stop and report a NEED.
+Part 0 only: `project/features/combat/shot_draw.gd` (one new static) and the one enemy-round line in `project/boot/collect_call/view/fx_view.gd`, `C:/Users/kazda/kiro/gtai-masters/n23/street/rounds/rounds-hands-after-32.png`, `build/street/**`; the end of `docs/decisions.md` (append four lines), `project/tests/unit/test_gauntlet_pick_view.gd`, `project/tests/unit/test_gauntlet_wave_timer.gd`, the existing unit tests of `GauntletComposer`, `ShotDraw` and `GauntletDraw` (find them with `node tools/tests/test_map.mjs <path>`), `evidence/street/**`.
+Forbidden: every other product file (`project/features/**`, `project/dev/**`, `project/boot/**`, `project/data/**`), `tools/**`, tapes and goldens, JOURNAL.md, REPORT.md. Any other path: stop and report a NEED.
 
 ## Notes from the director
-- Scratch (logs, mutate progress) goes under `build/street/` (git-ignored). Nothing goes to gtai-masters in this call.
+- Scratch (logs, mutate progress) goes under `build/street/` (git-ignored). Only the Part 0 still goes to gtai-masters in this call.
 - Mutate: do not pass a scratch or root directory; it makes its own temp worktree at HEAD.
