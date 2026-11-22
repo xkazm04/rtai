@@ -52,6 +52,38 @@ func test_body_contacts_use_the_existing_tackle_rules() -> void:
 			assert_eq(motion.dash.cooldown, motion.dash.cooldown_ticks)
 
 
+func test_zero_displacement_still_clears_a_wall_overlap() -> void:
+	var top: float = body.pos.y + body.radius_m - 0.125
+	stage.walls.boxes.append(Rect2(body.pos.x - 2.0, top, 4.0, 1.0))
+	var correction: Vector2 = motion.dash.clip_move(stage, motion, Vector2.ZERO)
+	assert_almost_eq(correction.y, -0.125, 0.0001)
+	assert_eq(correction.x, 0.0)
+
+
+func test_dash_stays_on_approach_side_at_exact_sideways_contact() -> void:
+	var move: Vector2 = Vector2.RIGHT * 0.25
+	var target: Vector2 = body.pos + move + Vector2.DOWN * 0.25
+	stage.arena.hostiles.append(Fighter.make(Fighter.Kind.GUARD, 94, target, 5.0))
+	motion.dash.direction = Vector2.RIGHT
+	assert_eq(motion.dash.clip_move(stage, motion, move), Vector2.ZERO)
+
+
+func test_contact_rule_uses_dash_speed_in_metres_per_second() -> void:
+	var target: Vector2 = body.pos + Vector2.RIGHT * 0.5
+	stage.arena.hostiles.append(Fighter.make(Fighter.Kind.GUARD, 94, target, 5.0))
+	motion.dash.direction = Vector2.RIGHT
+	# Give walking and running different clipping outcomes for the same body pair.
+	var rule: BodyRule = ArenaBodies.table().rule(RivetBody.CLASS, RivetBody.PERSON)
+	var old_walk: StringName = rule.walk
+	rule.walk = &"blocked"
+	var fast_move: Vector2 = Vector2.RIGHT * 0.25
+	var fast: Vector2 = motion.dash.clip_move(stage, motion, fast_move)
+	var slow: Vector2 = motion.dash.clip_move(stage, motion, fast_move * 0.25)
+	rule.walk = old_walk
+	assert_eq(fast, fast_move)
+	assert_lt(slow.x, 0.0)
+
+
 func test_cover_vault_and_death_own_movement() -> void:
 	body.pos = Vector2(4, 11.65)
 	_tick(Vector2.ZERO, &"cover")

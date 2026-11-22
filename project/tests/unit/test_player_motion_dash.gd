@@ -58,9 +58,11 @@ func test_all_cooldown_ticks_reject_an_edge_then_the_next_edge_works() -> void:
 
 
 func test_holding_shift_sprints_only_when_enabled_and_never_repeats_the_dash() -> void:
+	var table: DataTable = DataTable.open(PlayerMotion.TABLE, PlayerMotion.SCHEMA)
+	var row: Dictionary = table.object(table.raw, "dash")
 	for hold: bool in [true, false]:
-		motion = PlayerMotion.shipped()
-		motion.dash.hold_sprints = hold
+		row["hold_sprints"] = hold
+		motion = PlayerMotion.from_table(table)
 		previous = 0
 		for i: int in 100:
 			_step_taken = _press(Vector2.DOWN, &"dash")
@@ -69,6 +71,14 @@ func test_holding_shift_sprints_only_when_enabled_and_never_repeats_the_dash() -
 		assert_almost_eq(motion.velocity().length(), motion.sprint_mps if hold else WALK, 0.0001)
 		_step_taken = _press(Vector2.ZERO, &"dash")
 		assert_false(motion.sprinting)
+
+
+func test_zero_configured_ticks_still_gives_one_tick_for_the_burst() -> void:
+	var table: DataTable = DataTable.open(PlayerMotion.TABLE, PlayerMotion.SCHEMA)
+	var row: Dictionary = table.object(table.raw, "dash")
+	row["ticks"] = 0
+	motion = PlayerMotion.from_table(table)
+	assert_eq(motion.dash.ticks, 1)
 
 
 func test_disabled_dash_is_an_ordinary_walk_and_pad_sprint_still_works() -> void:
