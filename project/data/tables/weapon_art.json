@@ -1019,6 +1019,7 @@
       },
       "pickup": "res://features/combat/weapons/art/gloria/pickup.png",
       "projectile_fx": "nail",
+      "projectile_k": 0.68,
       "size_px": [
         488,
         122
