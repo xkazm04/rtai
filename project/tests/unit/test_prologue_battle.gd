@@ -134,7 +134,7 @@ func _finish_line(game: PrologueGame) -> void:
 	assert_eq(stage.arena.rivet.weapon, &"pistol")
 	stage.arena.rivet.pos = from
 	for shield: Fighter in line.shields:
-		stage.arena.damage(shield, 99.0, 0, &"claw")
+		stage.arena.damage(shield, 99.0, 0, &"claw", &"melee")
 	assert_true(line.boss.exposed)
 	stage.arena.damage(line.boss, 10.0, 0, &"pistol")
 	assert_true(line.boss.alive())

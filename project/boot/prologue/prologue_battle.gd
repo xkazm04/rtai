@@ -122,6 +122,7 @@ func command_hint() -> String:
 
 func _order(arena: CombatArena, line: String, tick: int) -> void:
 	_attack = spec.attacks[&"line_up" if line == _line_up else &"volley"]
+	formation.posts.order(_attack.id == &"volley")
 	orders.append({"line": line, "tick": tick})
 	due_tick = tick + _attack.windup
 	_again = due_tick + _attack.recovery + spec.phases[0].gap
@@ -132,6 +133,8 @@ func _execute(arena: CombatArena, tick: int) -> void:
 	due_tick = -1
 	last_action_tick = tick
 	exposed_until = tick + _attack.punish
+	formation.relieve()
 	formation.pushing = _attack.id == &"line_up"
 	if not formation.pushing:
 		fire.volley(arena, formation, tick)
+		formation.posts.volley(tick, arena.squad_ai.pit.roster.weapons[&"rifle"])

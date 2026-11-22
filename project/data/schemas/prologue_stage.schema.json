@@ -299,6 +299,18 @@
           "minimum": 1,
           "type": "integer"
         },
+        "panic_burst": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "panic_burst_gap_s": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "panic_cooldown_s": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
         "panic_morale": {
           "maximum": 1,
           "minimum": 0,
@@ -313,9 +325,33 @@
           "minimum": 0,
           "type": "number"
         },
+        "patrol_offsets_m": {
+          "items": {
+            "$ref": "#/$defs/point"
+          },
+          "maxItems": 6,
+          "minItems": 6,
+          "type": "array"
+        },
+        "pole_pin_s": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
         "rank_size": {
           "minimum": 1,
           "type": "integer"
+        },
+        "reinforce_s": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "retreat_gap_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "retreat_mps": {
+          "exclusiveMinimum": 0,
+          "type": "number"
         },
         "rivet_at": {
           "$ref": "#/$defs/point"
@@ -339,10 +375,18 @@
         "gate_exit_m",
         "max_melee",
         "max_shooters",
+        "panic_burst",
+        "panic_burst_gap_s",
+        "panic_cooldown_s",
         "panic_morale",
         "panic_s",
         "panic_spread_deg",
+        "patrol_offsets_m",
+        "pole_pin_s",
         "rank_size",
+        "reinforce_s",
+        "retreat_gap_m",
+        "retreat_mps",
         "rivet_at",
         "spacing_m",
         "walk_mps"
@@ -360,6 +404,10 @@
     "command": {
       "additionalProperties": false,
       "properties": {
+        "displace_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
         "file_spacing_m": {
           "exclusiveMinimum": 0,
           "type": "number"
@@ -375,9 +423,35 @@
           "exclusiveMinimum": 0,
           "type": "number"
         },
+        "line_standoff_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
         "rank_spacing_m": {
           "exclusiveMinimum": 0,
           "type": "number"
+        },
+        "rifle_bound_mps": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "rifle_clearance_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "rifle_dodge_m": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "rifle_posts": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array",
+          "uniqueItems": true
         },
         "shotgun_half_deg": {
           "exclusiveMinimum": 0,
@@ -385,11 +459,17 @@
         }
       },
       "required": [
+        "displace_m",
         "file_spacing_m",
         "flank_m",
         "front_at",
         "last_stand_hp",
+        "line_standoff_m",
         "rank_spacing_m",
+        "rifle_bound_mps",
+        "rifle_clearance_m",
+        "rifle_dodge_m",
+        "rifle_posts",
         "shotgun_half_deg"
       ],
       "type": "object"

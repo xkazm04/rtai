@@ -56,3 +56,72 @@ func test_boot_scene_uses_wheel_input_and_the_prologue_loadout() -> void:
 		game.stage.step(tick, TickInput.new(0, TickInput.AXIS_MAX, 0))
 	assert_gt(game.stage.arena.rivet.pos.x, start.x)
 	PlayerActions.shipped().install()
+
+
+func test_front_patrol_and_reinforcements_cross_the_same_gate_in_order() -> void:
+	var game: PrologueGame = ENTRY.instantiate() as PrologueGame
+	add_child_autofree(game)
+	game.world.set_process(false)
+	var stage: ArenaStage = game.stage
+	var patrol: ProloguePatrol = game.encounter.patrol
+	var yard: PrologueYard = stage.plan as PrologueYard
+	for tick: int in 500:
+		game.world.loop().step()
+	var front: int = 0
+	var rear: int = 0
+	for h: Fighter in patrol.squad.panic.members:
+		if patrol.squad.panic.members[h].reserve:
+			assert_gt(h.pos.y, yard.gate.y)
+			rear += 1
+		else:
+			assert_lt(h.pos.y, yard.gate.y)
+			front += 1
+	assert_eq(front, 3)
+	assert_eq(rear, 3)
+	_check_reserves(game, stage, patrol)
+	PlayerActions.shipped().install()
+
+
+func _check_reserves(game: PrologueGame, stage: ArenaStage, patrol: ProloguePatrol) -> void:
+	var yard: PrologueYard = stage.plan as PrologueYard
+	stage.arena.damage(patrol.dale, 1.0, 0, &"claw", &"melee")
+	game.world.loop().step()
+	var data: DataTable = DataTable.open(PrologueGame.TABLE, PrologueGame.SCHEMA)
+	var arrival: Dictionary = data.object(data.raw, "arrival")
+	var delay: int = CombatTuning.ticks(data.num(arrival, "reinforce_s"))
+	var due: int = stage.arena.tick + delay
+	stage.arena.tick = due - 1
+	var rng: RandomNumberGenerator = game.world.context().rng.stream(&"combat")
+	patrol.squad.panic.regroup()
+	for h: Fighter in patrol.squad.panic.members:
+		@warning_ignore("return_value_discarded")
+		patrol.squad.panic.step(h, stage.arena, rng, false)
+	for h: Fighter in patrol.squad.panic.members:
+		if patrol.squad.panic.members[h].reserve:
+			assert_gt(h.pos.y, yard.gate.y)
+	for tick: int in range(due, due + 2 * SimClock.TICK_RATE):
+		stage.arena.tick = tick
+		for h: Fighter in patrol.squad.panic.members:
+			@warning_ignore("return_value_discarded")
+			patrol.squad.panic.step(h, stage.arena, rng, false)
+	for h: Fighter in patrol.squad.panic.members:
+		assert_lt(h.pos.y, yard.gate.y)
+
+
+func test_frightened_officer_opens_a_gap_from_an_approaching_player() -> void:
+	var game: PrologueGame = ENTRY.instantiate() as PrologueGame
+	add_child_autofree(game)
+	game.world.set_process(false)
+	var arena: CombatArena = game.stage.arena
+	var patrol: ProloguePatrol = game.encounter.patrol
+	patrol.place(arena, true)
+	var h: Fighter = patrol.officers[1].body
+	h.pos = Vector2(18.0, 12.0)
+	arena.rivet.pos = h.pos + Vector2.RIGHT * 3.0
+	var start: float = h.pos.distance_to(arena.rivet.pos)
+	for tick: int in 30:
+		arena.rivet.pos += Vector2.LEFT * SimClock.TICK_DT
+		arena.step(tick)
+	assert_gt(h.pos.distance_to(arena.rivet.pos), start + 1.0)
+	assert_true(h.facing.dot(h.pos.direction_to(arena.rivet.pos)) > 0.9)
+	PlayerActions.shipped().install()

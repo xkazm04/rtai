@@ -8,13 +8,17 @@ var shields: Array[Fighter] = []
 var rifles: Array[Fighter] = []
 var boss: Fighter
 var last_stand_hp: float
+var posts: PrologueRiflePosts
+var open_file: int = -1
 var pushing: bool = false
+var _relief: int = 0
 var _inside: Dictionary[int, bool] = {}
 var _gate: Vector2
 var _front: Vector2
 var _contact: Vector2
 var _spacing: float
 var _rank_gap: float
+var _stand_off: float
 var _flank_m: float
 var _wave: Dictionary
 var _data: DataTable
@@ -24,10 +28,12 @@ func _init(yard: PrologueYard, data: DataTable) -> void:
 	_data = data
 	_wave = data.array(data.raw, "waves")[1]
 	var command: Dictionary = data.object(data.raw, "command")
+	posts = PrologueRiflePosts.new(yard, data, command)
 	_gate = yard.gate
 	_contact = data.vec(command, "front_at")
 	_spacing = data.num(command, "file_spacing_m")
 	_rank_gap = data.num(command, "rank_spacing_m")
+	_stand_off = data.num(command, "line_standoff_m")
 	_flank_m = data.num(command, "flank_m")
 	last_stand_hp = data.num(command, "last_stand_hp")
 
@@ -40,6 +46,9 @@ func enter(arena: CombatArena) -> void:
 	rifles.clear()
 	_inside.clear()
 	pushing = false
+	posts.reset()
+	_relief = 0
+	open_file = -1
 	_front = _contact
 	var squad: PrologueSquad = arena.squad_ai as PrologueSquad
 	squad.talking = true
@@ -72,12 +81,15 @@ func engage(arena: CombatArena) -> void:
 
 
 func march(arena: CombatArena, fighting: bool, hold_boss: bool) -> void:
+	posts.step(arena.tick)
+	if not hold_boss:
+		open_file = -1
 	var player: Vector2 = arena.rivet.pos
 	var facing: Vector2 = _gate.direction_to(player)
 	if facing.is_zero_approx():
 		facing = Vector2.UP
 	if fighting:
-		var want: Vector2 = player - facing * _flank_m
+		var want: Vector2 = player - facing * _stand_off
 		want.y = minf(want.y, _contact.y)
 		var pace: float = arena.squad_ai.pit.roster.archetype(&"riot_cop").speed_mps
 		_front = _front.move_toward(want, pace * SimClock.TICK_DT)
@@ -93,6 +105,9 @@ func march(arena: CombatArena, fighting: bool, hold_boss: bool) -> void:
 			h.facing = h.pos.direction_to(player)
 			continue
 		var speed: float = arena.squad_ai.pit.roster.archetype(h.archetype).speed_mps
+		if posts.deployed and h in rifles:
+			mark = posts.evade(h, arena, mark)
+			speed = posts.bound_mps
 		if not h.pursuit.advance(h, mark, speed):
 			h.pos = h.pos.move_toward(mark, speed * SimClock.TICK_DT)
 		h.facing = h.pos.direction_to(player)
@@ -102,12 +117,28 @@ func _mark(h: Fighter, player: Vector2, facing: Vector2) -> Vector2:
 	var across: Vector2 = facing.orthogonal()
 	if h == boss:
 		return _front - facing * (2.0 * _rank_gap)
+	if posts.deployed and h in rifles:
+		return posts.mark(rifles.find(h), player)
 	var front_rank: bool = h in shields
 	var rank: Array[Fighter] = shields if front_rank else rifles
 	var file: float = rank.find(h) - (rank.size() - 1) * 0.5
 	if pushing and front_rank and not is_zero_approx(file):
 		return player - facing * 0.7 + across * signf(file) * _flank_m
 	return _front + across * file * _spacing - facing * (0.0 if front_rank else _rank_gap)
+
+
+## The front turns a shield edge-on to open a firing lane after each command.
+## Side and rear shots can get past the other shields throughout the fight.
+func relieve() -> void:
+	for i: int in shields.size():
+		open_file = _relief
+		_relief = (_relief + 1) % shields.size()
+		if shields[open_file].alive():
+			return
+
+
+func braced(h: Fighter) -> bool:
+	return h.swing_left == 0 and shields.find(h) != open_file
 
 
 func men_standing() -> bool:

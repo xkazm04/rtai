@@ -32,7 +32,16 @@ func step(p_tick: int, tick_input: TickInput) -> void:
 
 func _move() -> void:
 	interacted = intent.interact
-	if at_receiver:
+	var combat: PrologueCombat = arena as PrologueCombat
+	if combat.catcher != null:
+		if (
+			tick >= combat.pinned_until
+			or not combat.catcher.alive()
+			or pilot.motion.phase == PlayerMotion.Phase.ROLL
+			or pilot.melee.busy()
+		):
+			combat.catcher = null
+	if at_receiver or combat.catcher != null:
 		intent.move_by = Vector2.ZERO
 		intent.move_to = Vector2.INF
 	super._move()

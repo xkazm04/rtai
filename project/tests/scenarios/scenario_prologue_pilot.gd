@@ -4,7 +4,7 @@ extends Scenario
 
 const ENTRY: PackedScene = preload("res://boot/prologue/prologue.tscn")
 const PILOT: GDScript = preload("res://dev/bots/prologue_bot.gd")
-const BUDGET: int = 200 * SimClock.TICK_RATE
+const BUDGET: int = 300 * SimClock.TICK_RATE
 
 
 func run(tree: SceneTree) -> String:

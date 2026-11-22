@@ -10,6 +10,8 @@ class Officer:
 	var mark: Vector2
 	var gate_exit: Vector2
 	var inside: bool
+	var offset: Vector2
+	var reserve: bool
 	var lead_warden: bool
 
 
@@ -50,6 +52,7 @@ func _init(stage: ArenaStage, data: DataTable) -> void:
 		_marks[data.text(row, "id")] = row
 	squad = stage.arena.squad_ai as PrologueSquad
 	squad.configure(stage.arena, data)
+	squad.panic = ProloguePanic.new(data, (stage.plan as PrologueYard).yard)
 
 
 func place(arena: CombatArena, at_wave: bool) -> void:
@@ -57,6 +60,9 @@ func place(arena: CombatArena, at_wave: bool) -> void:
 		arena.hostiles.erase(officer.body)
 	officers.clear()
 	squad.clear_wave()
+	squad.panic.members.clear()
+	squad.panic.begin(arena.tick)
+	squad.pistol_rounds = 0
 	squad.talking = not at_wave
 	squad.shot_tick = -1
 	approaching = 0
@@ -68,10 +74,17 @@ func place(arena: CombatArena, at_wave: bool) -> void:
 		for i: int in _data.integer(group, "count"):
 			var officer: Officer = _spawn(arena, arch, mark, i)
 			officer.lead_warden = id == "catchers" and i == 0
+			if id == "frightened_patrol":
+				var offsets: Array = _data.array(_arrival, "patrol_offsets_m")
+				officer.offset = _data.vec({"offset": offsets[i]}, "offset")
+				officer.mark = _data.vec(mark, "first") + officer.offset
+				officer.reserve = i >= _data.integer(_arrival, "rank_size")
+				squad.panic.members[officer.body] = officer
 			if id == "winnick":
 				dale = officer.body
 			officer.body.exposed = at_wave or officer.body == dale
-			if at_wave:
+			if at_wave and not officer.reserve:
+				officer.inside = true
 				officer.body.pos = officer.mark
 	if at_wave:
 		dale.pos = wave_start + Vector2.RIGHT * _last_gap
@@ -100,6 +113,8 @@ func direct(arena: CombatArena, line: String) -> void:
 	fanned = fanned or line == _fan_line
 	approaching = maxi(approaching, _approach_lines.find(line) + 1)
 	for officer: Officer in officers:
+		if officer.reserve:
+			continue
 		if not officer.inside and officer.body.pos.distance_to(officer.gate_exit) < 0.2:
 			officer.inside = true
 		var target: Vector2 = _mark(officer, arena.rivet.pos)
@@ -127,6 +142,7 @@ func _walk(body: Fighter, target: Vector2, look_at: Vector2) -> void:
 
 func panic(arena: CombatArena) -> void:
 	squad.talking = false
+	squad.panic.begin(arena.tick)
 	for officer: Officer in officers:
 		officer.body.exposed = true
 	arena.announce_wave(StringName(wave_id), 1)
