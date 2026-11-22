@@ -1,6 +1,6 @@
 # REPORT - n23 lane `prologue` (2026-11-22)
 
-Branch `n23-prologue`, cut from `main` `76111adec`. Last code commit `c9271f037` (07:06). Gate: `node tools/gate/run.mjs --rev=HEAD` at `c9271f037` (07:52): `gate: PASS` (lint 19/19 over 1982 files, unit 3671 passed 0 failed 2 skipped, scenarios 67 passed, parity bit for bit + planted mutation caught at step 629, selftest, export-audit 906 loaded 0 failed); `build/gate/c9271f0378db/gate.json`. `--reels` after the freeze: REELS-TODO.
+Branch `n23-prologue`, cut from `main` `76111adec`. Last code commit `c9271f037` (07:06). Gate: `node tools/gate/run.mjs --rev=HEAD` at `c9271f037` (07:52): `gate: PASS` (lint 19/19 over 1982 files, unit 3671 passed 0 failed 2 skipped, scenarios 67 passed, parity bit for bit + planted mutation caught at step 629, selftest, export-audit 906 loaded 0 failed); `build/gate/c9271f0378db/gate.json`. `--reels` after the freeze: **not run** (the freeze-to-report window was 10 min, the gate takes ~20; the code is unchanged since the passing gate at `c9271f037`).
 Films and stills: `C:\Users\kazda\kiro\gtai-masters\n23\prologue\` (`frames.json`, best first). Film entry: `project/dev/prologue/capture/film.ps1` (seed-7 pilot, 1920x1080, 60 fps, 32 px/m, tilt 70, `--write-movie`).
 
 The prologue plays from the first line to the end card: talk, a hands wave of ten police, the first gun from a fallen cop, Mulroney's squad, the walk out, the payphone, the Operation Dethrone channel and Don Fax's last line, then the end card. A deterministic pilot plays all of it headless in 173.8 s of game time with 0 deaths, and two runs are byte-identical.
@@ -52,6 +52,7 @@ Mutation (call 06, at `c9271f037`): `boot/prologue/prologue_battle.gd` 11/(11+9)
 - Call 02's wrapper hung on an open pipe for 20 min after Astra finished (02:50 -> 03:11): I killed it by PID and removed the stale lock. ~20 min.
 - Waiting on Astra is most of the director's night: one call at a time, 54-73 min each, with no Godot of my own while one runs. ~0 min lost, but reviews happen in batches.
 - Mutate infrastructure failures (three times, on different mutants) kept the game file's score partial. ~10 min of Astra time each.
+- The four event clips were written to one wrong path (a bash quoting slip in my film script: `"$O\$c.avi"` made `prologue$c.avi`), so each overwrote the last; only `mulroney_order` survived. Found at 09:30; `first_kill`, `guard_lesson` and `pistol_pickup` were re-recorded detached from 09:31 with the same entry at the same build (`build/films2.status` says when each landed and was transcoded to mp4). If one of those three is missing from `gtai-masters/n23/prologue/` in the morning, that re-take did not finish. ~10 min.
 - The machine was busy with the loop lane's batches in the first half of the night: pilot runs took 2m44s wall at 03:16 against ~30 s at 07:31.
 
 ## Calls for the owner
