@@ -42,3 +42,9 @@ NEXT: next session: check astra.lock (pid 70312) and logs/melee/astra-calls.json
 diff, look at the kill reel sheets yourself (n24/melee/kills), write `NEED pressure` with the new reach/ticks per
 weapon (P1 table: claw 5/3/13 1.40 m, chainsaw 12/4/18 1.65 m, baton 4/3/14 1.55 m, katana 7/4/16 2.10 m, plasma
 8/6/19 2.20 m) into this JOURNAL, then launch P3. Commit JOURNAL + briefs (per path) at a quiet moment.
+- 18:41 NEED pressure: test player melee (`n24-melee` 5e4b69c76): one click = one swing now, no chained 2nd hit; a held
+  fire repeats only after recovery. Single swing per weapon (windup/active/recovery ticks, reach, cone_dot): claw
+  5/3/13 1.40 m 0.5; chainsaw 12/4/18 1.65 m 0.8 (grind while held, bite every 8); electro_baton 4/3/14 1.55 m 0.6;
+  katana 7/4/16 2.10 m 0.32 (lunge 0.55 m); plasma_sword 8/6/19 2.20 m (cone being narrowed from -1 to ~-0.2 in P2).
+  Coming in P2: a melee weapon (not the claw) kills any human in one landed swing (not Mulroney/bosses; katana is
+  blocked by a raised riot shield from the front). Expect melee to clear humans much faster: re-measure.
