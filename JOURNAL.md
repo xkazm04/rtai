@@ -189,3 +189,24 @@ NEXT (session 3 end 21:3x; Astra `deflect` RUNNING since 21:09, lock pid 62596, 
   replay digest moves (check `replay_60s` digest and quest 1 `a113296dbccc` unchanged in Astra's scenario line).
   Also touched: `gauntlet_combat.gd`, guard tests, `test_gauntlet_wave_stats.gd`, `test_live_deflect.gd`.
 - 21:25 ASTRA RUNNING deflect since 21:09 (lock pid 62596, hard stop 22:20). Session 3 ends; NEXT above (21:20) stands.
+
+## Session 4 (21:24 - 22:54)
+
+- 21:25 start. `deflect` still running (pid 62596 = node, hard stop 22:20). NEED pressure grep: ghost 21:16 (ghost
+  builds the deploy bot itself, `GhostDeployBot` + ONE call site in `bot_brain.gd` `_pack`: ACCEPTED, brief 04 task 2b
+  replaced by "not yours, keep `_pack` stable"); melee 18:39 / 21:08 (one swing per click, melee one-shots humans,
+  electro baton shuts robots down: re-measure after merging n24-melee; no `MILESTONE ready` from melee yet).
+- 22:08 ASTRA deflect 59 accepted. fcbe724b5 (rocket sight-loss test), 45acfc887 (deflect block pass_ratio 0.5 /
+  pass_ratio_k 1 / spread_deg 12 / basic_rounds [small]; `DeflectRule` on registry stream `&"deflect"`, both guard and
+  plasma bat; guard pass = half drain + full damage; bat still returns large rounds exactly = today's rule; mutate
+  12/14), e1dba38eb (passed round: rim splits into two white fragments, 2/2), 41bf76e7d arena_squad, d314d9861
+  gunplay_fire, a9e8adc78 rivet_city_melee (bounds re-set for the new cadence, each claim argued). Hit share of RETURNED
+  rounds on the shooter, guard/bat: 6 m 42/52% at 12 deg (84/96% at 6 deg, 24/31% at 20), 12 m 19/20%, 20 m 10/10%.
+  Keep 12 deg. Replay digests unchanged (legacy guard tape pinned, replay_60s pass). Probe `deflect_share.gd` and
+  `evidence/n24-pressure/deflect/` uncommitted (debt metric dev/gauntlet 919 -> 1087): brief 03 task 0a commits it with
+  `--accept-regression`. Still red: prologue_pilot, prologue_checkpoint (SWAT + Mulroney 34-39 HP/s; combat.json
+  `assault_rifle.cooldown_s` 1.4 -> 0.5 from 01b is the cause; 1.4 passes).
+- 22:10 DECISION pressure: the prologue's fights must keep passing (its script is not ours); brief 03 task 0b finds the
+  shortest `assault_rifle.cooldown_s` (0.8 / 1.0 / 1.2) at which both prologue scenarios pass; damage x2 and lead stay.
+- 22:13 ASTRA RUNNING rocket-nail since 22:12 (pid 46936, --resume, hard stop 23:26, commit by 23:14; tasks 0a probe commit, 0b prologue rifle cooldown, 0c rocket speed for motion's 5 m dash test, 1 rocket look, 2 nail). MILESTONE after-deflect batch started 22:13 (pid 24268, ablate --rev=a9e8adc78 -> evidence/n24-pressure/after-deflect/), Godot handed to Astra at 22:34.
+- 22:12 unit --changed after deflect: 3814 passed, 1 failed: motion's test_player_motion_dash_dodge.gd:60 (rocket from 5 m: our 16 m/s rocket lands in 19 ticks, before reaction 15 + dash). DECISION pressure: the rocket must stay dashable after a human reaction (owner: dash dodges major projectiles): highest speed at which motion's test passes (brief 03 task 0c); motion's test is not edited.

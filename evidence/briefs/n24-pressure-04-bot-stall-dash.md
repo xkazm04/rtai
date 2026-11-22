@@ -54,15 +54,24 @@ dashing sideways to the round's path when the roll is on cooldown or the round i
 wave in the result file as `dashes` (the contract's name; optional; omitted when 0 was not measured). Unit test with a
 fake view: a rocket on a collision course -> a dash press within `dash_read_ticks` sideways to its path.
 
-## Task 2b - ghost deploy (lowest priority: only if tasks 1 and 2 are committed with 25 minutes left) (one commit; only after the director has merged `n24-ghost`; else skip and say so)
+## Task 2b - ghost deploy: NOT yours
 
-Lane ghost's `NEED pressure` (its JOURNAL `C:/Users/kazda/kiro/gtai-wt/n23-moves/JOURNAL.md` line 23, read it whole):
-from n24-ghost on `ghost_forms.json` `transform_unlocked` is false, so the bot's `power_hauler` presses
-(`project/features/gauntlet/bot/bot_forms.gd`) do nothing. Teach the bot the first-level power: `ghost_deploy` (row bit
-19, wire bit 32) HOLD >= 2 ticks aimed at the spot, RELEASE to deploy the loaded ghost (cycled with `power_gearbox`),
-per form `range_m` / `cooldown_ticks` from `ghost_attacks.json` `deploy.<form>`, with ghost's suggested target rule
-(in that journal line). Keep the transform path for `transform_unlocked: true`. Result `deploys{<form>: count}` is
-ghost's field: write it only if ghost's code does not already. Unit test with a fake view.
+Lane ghost builds the bot's deploy policy itself (its JOURNAL 21:16: class `GhostDeployBot` in
+`project/features/souls/ghost_deploy_bot.gd` and ONE call site in `project/features/gauntlet/bot/bot_brain.gd` `_pack`
+plus its member and `_init` line). Do not write a deploy bot. Keep `bot_brain.gd` `_pack` easy to add one line to (no
+rename of `_pack`, `_view`, `intent`, `_profile`).
+
+## Task 1b - damage taken by source (one commit, before task 2)
+
+The judging table needs "damage taken per wave by source"; a wave today only carries `damage_taken` (a total). Add an
+optional per-wave `damage_by` object to the result (`{<source>: hp}`, source = the enemy weapon id from `enemies.json`
+`weapons` (`pistol`, `rifle`, `rocket`, `stomp`, `war_cannon`, ...), or the archetype id for a melee contact, `self` for
+Rivet's own blasts; sorted keys; a wave with no damage omits it), described in `gauntlet_run.schema.json`, written from
+the same place `damage_taken` is summed (the gauntlet's own code, `project/features/gauntlet/**`; if the source id is only
+known in combat code outside the allowlist, read it there through an existing signal or field, never edit that file:
+NEED). Teach `tools/gauntlet/report.mjs` (or its tables module) a "Damage taken by source" section: per profile, the
+median per wave of each source over the waves that were played, plus each source's share of all damage taken. Unit test
+for the field, a node test for the table. It must not change the replay digest (results are not hashed: check).
 
 ## Task 2c - the stomp (read first, small)
 

@@ -1,0 +1,32 @@
+Six commits landed on `n24-pressure`. At the shipped 12° spread and 6 m, **42.3% of guard returns and 51.6% of sword returns hit the shooter**. The measurement tool and results are uncommitted, pending one out-of-scope baseline change.
+
+| Task | Result |
+|---|---|
+| 0 · Sight loss | **Done** · `fcbe724b5`. Committed `test_foe_rocket_sites.gd`. **11 tests passed.** |
+| 1 · Deflect rule | **Done** · `45acfc887`. Changed the combat table and schema, `player_deflect`, `player_guard`, `deflect_rule`, `enemy_rounds`, `gauntlet_combat`, six unit-test files, and `docs/decisions.md`. The arena replay call is at [combat_arena.gd:199](C:/Users/kazda/kiro/gtai-wt/n23-loop/project/features/combat/combat_arena.gd:199). A passed guard round costs half drain and deals full damage. The bat returns large rounds directly. **62 tests and both replay scenarios passed.** Mutation score **12/14**. The survivors changed the spec-null comparison and the value of a presence-only marker. |
+| 2 · Contact feedback | **Done** · `e1dba38eb`. Changed `player_deflect`, `player_guard_view`, `deflect_pass_view`, and `test_deflect_pass_view`. A pass splits the rim into two white fragments. **2 tests passed**, mutation score **2/2**. Verified both 64 px/m frames. [Passed](C:/Users/kazda/kiro/gtai-masters/n24/pressure/guard-passed-64ppm.png) · [Deflected](C:/Users/kazda/kiro/gtai-masters/n24/pressure/guard-deflected-64ppm.png) |
+| 3 · Measurement | **Measured, uncommitted.** `deflect_share.gd`, its UID and scene ran headless with exit 0. Verified all 18,000 rounds and denominators. **NEED director:** `tools/debt/baseline.json` is outside the allowlist. The required probe raises `project/dev/gauntlet` from 919 to 1,087 lines. [Markdown](C:/Users/kazda/kiro/gtai-wt/n23-loop/evidence/n24-pressure/deflect/share.md) · [JSON](C:/Users/kazda/kiro/gtai-wt/n23-loop/evidence/n24-pressure/deflect/share.json) |
+
+**Hit share.** Every cell used the same seed and recorded **494 passed / 506 returned**. Entries below are the percentage of returned rounds that hit the shooter, shown as **guard / bat**.
+
+| Distance | 6° | 12° | 20° |
+|---|---:|---:|---:|
+| 6 m | 83.8% / 95.7% | 42.3% / 51.6% | 24.3% / 30.6% |
+| 12 m | 40.5% / 43.9% | 18.6% / 19.8% | 9.7% / 10.9% |
+| 20 m | 22.5% / 23.3% | 9.5% / 9.9% | 6.7% / 6.9% |
+
+**Replay digests.** No committed expected digest moved. The legacy guard tape retained its pinned digest, `replay_60s` passed, and the live sword tape replayed identically with its first return at tick 637.
+
+**Task 4 · Three scenario fixes committed.** All five original failures reproduced. Every commit passed its quick gate and pre-commit hook.
+
+| Scenario file | Before → after |
+|---|---|
+| `scenario_arena_squad.gd` · `41bf76e7d` | Zero flank ticks across five seeds → **416** when one run reserves a single shooting slot. All five wave clears and replays passed. Restoring only the old rifle cooldown also made the original test pass. |
+| `scenario_gunplay_fire.gd` · `d314d9861` | Standing target took **17/30** at 12 m → **57/86** over 30 s at 10 m. Both dodge policies took **0/86**. Tracking through lock hit **49/86**. Restoring only the old gunner rest also passed. |
+| `scenario_rivet_city_melee.gd` · `a9e8adc78` | The stand-off control killed five guards, all with the katana. The live approach killed eight using all three carried weapons. The revised scenario checks that distinction and replay passed. Restoring only the old rifle cooldown also passed the original test. |
+
+**NEED director:** The prologue pilot dies at squad arrival, `(25.83, 29.29)`. SWAT and Mulroney removed 100 HP between ticks 11824 and 12002, **33.7 HP/s**. Mulroney landed the final hit. The pilot exhausted its 18,000-tick budget in encounter 2.
+
+**NEED director:** In `prologue_checkpoint`, SWAT and Mulroney removed 100 HP between ticks 5995 and 6148, **39.2 HP/s**. SWAT landed the lethal hit at `(28.48, 24.25)`. The scenario reported the unexpected respawn at tick 6207. Restoring only the old assault-rifle cooldown before patrol spawn made both prologue scenarios pass. Both scratch overrides were removed.
+
+[astra: 3537s, exit 0]
