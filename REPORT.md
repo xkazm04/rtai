@@ -13,7 +13,7 @@ Gate: TODO (`node tools/gate/run.mjs --rev=HEAD` line + `gate.json` path).
 | after-gaps (x2 damage, no in-wave repair, 45 s timer, gaps, rocket) | `032f6de91` | 5 | 10 (5-15) | 12 (3-32) | 0 / 15 |
 | after-deflect (+ 50 % pass, 12 deg) | `a9e8adc78` | 5 (5-5) | 5 (3-5) | 7 (5-9) | 0 / 15 |
 | arm-rocket14 (+ rocket cooldown 1.4, 13 m/s) | `a9e8adc78` + 2 sets | 5 (5-5) | 6 (5-11) | 5 (5-10) | 0 / 15 |
-| final | TODO | | | | |
+| final (+ rocket 1.4 / 13 m/s, nail, bot dash; median WAVE REACHED, report.mjs owed) | `a02dbf26c` | 5 | 8 | 23 | 1 alive of 15 (TODO from report) |
 
 Median death wave (P25-P75); targets in brackets. Reports: `evidence/n24-pressure/base-main/report.md`,
 `evidence/n24-pressure/after-gaps/report.md`, `evidence/n24-pressure/after-deflect/report.md`,

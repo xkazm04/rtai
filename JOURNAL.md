@@ -305,3 +305,16 @@ NEXT (session 5 end; ASTRA RUNNING finish since 23:02, pid 54604, hard stop 00:0
   (`evidence/n24-pressure/final/`, out `evidence/n24-pressure/final.out`) THEN `node tools/gate/run.mjs --rev=HEAD`
   (out `C:/Users/kazda/kiro/gtai-n24/logs/pressure/gate-final.out`); chain log `.../final-chain.log`. Do not start Godot
   while it runs. NEXT (23:41) stands, steps 2 and 3 are this chain: read its outputs, then brief 05 films.
+- 00:05 MILESTONE final batch (rev a02dbf26c, 9.5 min, 15/15 accepted, 14 deaths, 0 timeouts): median wave REACHED
+  novice 5, average 8, expert 23 (targets 6 / 12 / 20). `evidence/n24-pressure/final/` (no report.md yet: run
+  `node tools/gauntlet/report.mjs` on it, see how after-deflect's was made). Dash + rocket 1.4 lifted average 5 -> 8 and
+  expert 7 -> 23. FRICTION: ablate wants a SHA (`--rev=HEAD` refused, 1 min); my killed first gate left a markerless
+  snapshot `%TEMP%/gtai-gate-a02dbf26cfe9` that broke the next gate: removed with `git worktree remove --force --force` (3 min).
+- 00:07 gate RUNNING: `node tools/gate/run.mjs --rev=HEAD` (rev a02dbf26c) pid 43956 (node), out
+  `C:/Users/kazda/kiro/gtai-n24/logs/pressure/gate-final.out`. Godot is the gate's until it exits.
+
+NEXT (session 6): (1) wait for gate pid 43956; quote its last line + gate.json path in REPORT (if red: read the failing
+check; a fix after 00:00 only if it is the gate's own breakage, else report it). (2) report.mjs on
+`evidence/n24-pressure/final/` -> fill the final row (median death wave, P25-P75, censored, killers, dashes per wave).
+(3) launch brief 05 films (`--resume`, tag films, Start-Process as at 23:02; times inside 01:25 / 01:15). (4) REPORT
+TODOs, Astra ledger (rocket-nail 47 partial, finish 51 accepted), cites, commit JOURNAL + REPORT by 01:30.
