@@ -310,3 +310,26 @@ A change kept for this bot is a hypothesis about human play. Check it in a playt
 - `hits` counts every damaging contact, including claws and blasts, and counts a killing wound again. `shots` counts gun rounds. These counters cannot give a hit rate. [Combat telemetry](../evidence/loop/tune2-after/report.md#combat-telemetry)
 - Eight of the 30 confirm runs were still alive at 72,000 ticks. The cap censors “wave reached”. Their timed waves count and their recorded depth is a lower bound on how far they could go. [Confirm report](../evidence/loop/tune2-after/report.md)
 - Mutation tests caught 18/20 faults. Flipping the view flag at `project/features/gauntlet/bot/gauntlet_bot.gd:29` and removing the street stats hook at `project/features/gauntlet/bot/gauntlet_bot.gd:34` both survived. No mapped test checks that the bot's roll, cover and form counters reach the street result. [Lane mutation record](../REPORT.md)
+
+## Measuring combat moves
+
+Use the same seeds, profile, pick policy, controls, bot salt and wave limit in both batches.
+For example, these arms change only the Ohm short-circuit flag in the ablation scratch tree.
+
+```powershell
+node tools/gauntlet/ablate.mjs --name=ohm-off --set=project/data/tables/combat.json#/moves/ohm_short_circuit/enabled=false -- --profile=all --pick=greedy --seeds=2 --jobs=1 --controls=wheel --waves=15 --out=build/gauntlet/ohm-off
+node tools/gauntlet/ablate.mjs --name=ohm-on --set=project/data/tables/combat.json#/moves/ohm_short_circuit/enabled=true -- --profile=all --pick=greedy --seeds=2 --jobs=1 --controls=wheel --waves=15 --out=build/gauntlet/ohm-on
+node tools/gauntlet/move_table.mjs --off=build/gauntlet/ohm-off/batch.json --on=build/gauntlet/ohm-on/batch.json --move=ohm_short_circuit
+```
+
+The Moves report gives recorded uses per observed wave and median wave seconds with and without
+each move’s reference enemy. Overkill carry includes all waves. The off/on comparison matches
+wave ordinals with the same enemy-presence classification in both runs. Each seed contributes
+its median on-minus-off change. The table reports the mean across seeds and a paired bootstrap
+95% interval when at least two seeds contribute. Each profile, control scheme and pick policy has
+its own row. Death-wave comparisons require a lethal death in both arms. The output counts
+pairs excluded from that comparison, including timeouts and runs still alive at the cap.
+
+Run `node tools/gauntlet/test_bot.mjs` for the GUT fixtures covering safe rocket fire, the three
+form openings and both carry ranks. Each opportunity gets one profile roll while it stays open.
+A wave’s `moves` tally counts actual combat effects. The bot’s opening log records its decision.

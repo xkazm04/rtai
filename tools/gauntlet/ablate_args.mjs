@@ -3,16 +3,16 @@ import { parseArgs as parseOptions } from 'node:util';
 import { parseArgs as parseBatch } from './commands.mjs';
 
 function parseEdit(arg) {
-  const match = /^([^#]+)#(\/.*)=(-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?)$/.exec(arg);
-  if (!match) throw new Error('expected --set=<repo-relative.json>#<pointer>=<number>');
+  const match = /^([^#]+)#(\/.*)=(true|false|-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?)$/.exec(arg);
+  if (!match) throw new Error('expected --set=<repo-relative.json>#<pointer>=<number|true|false>');
   const [, file, pointer, raw] = match;
   const parts = file.split(/[\\/]/);
   if (isAbsolute(file) || win32.isAbsolute(file) || /[:\0]/.test(file) || !file.endsWith('.json')
     || parts.some((p) => !p || p === '.' || p === '..' || p.toLowerCase() === '.git'))
     throw new Error('unsafe JSON path: ' + file);
   if (/~(?![01])/.test(pointer)) throw new Error('invalid JSON pointer: ' + pointer);
-  const value = Number(raw);
-  if (!Number.isFinite(value)) throw new Error('nonfinite number: ' + raw);
+  const value = JSON.parse(raw);
+  if (typeof value === 'number' && !Number.isFinite(value)) throw new Error('nonfinite number: ' + raw);
   return { file: parts.join('/'), pointer, value };
 }
 
@@ -35,7 +35,7 @@ export function parseAblation(argv) {
 }
 
 /** Resolve only existing object members or array indices. Never create a slot. */
-export function editNumber(doc, { pointer, value }) {
+export function editScalar(doc, { pointer, value }) {
   const keys = pointer.slice(1).split('/').map((key) => key.replaceAll('~1', '/').replaceAll('~0', '~'));
   let parent = doc;
   for (const [i, key] of keys.entries()) {
@@ -44,10 +44,17 @@ export function editNumber(doc, { pointer, value }) {
       throw new Error('missing JSON pointer: ' + pointer);
     if (i === keys.length - 1) {
       const before = parent[key];
-      if (!Number.isFinite(before) || !Number.isFinite(value)) throw new Error('expected numeric field: ' + pointer);
+      if (typeof before !== typeof value || !(typeof before === 'boolean' || (Number.isFinite(before) && Number.isFinite(value))))
+        throw new Error('expected a value matching the numeric or boolean field: ' + pointer);
       parent[key] = value;
       return before;
     }
     parent = parent[key];
   }
+}
+
+// Existing numeric callers use the same pointer resolver.
+export function editNumber(doc, edit) {
+  if (!Number.isFinite(edit.value)) throw new Error('expected numeric edit');
+  return editScalar(doc, edit);
 }

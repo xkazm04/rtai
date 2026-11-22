@@ -44,6 +44,7 @@ export function validateRun(run) {
       if (key in wave && !magnitude(wave[key])) return prefix + key + ': expected nonnegative number';
     for (const key of ['guard_deflects', 'rolls', 'shots', 'hits', 'guard_ticks', 'cover_ticks'])
       if (key in wave && !count(wave[key])) return prefix + key + ': expected nonnegative integer';
+    if ('moves' in wave && !dictionary(wave.moves, count)) return prefix + 'moves: invalid counts';
     if ('enemies' in wave && !dictionary(wave.enemies, count)) return prefix + 'enemies: invalid counts';
     if ('form_seconds' in wave && !dictionary(wave.form_seconds, magnitude))
       return prefix + 'form_seconds: invalid seconds';

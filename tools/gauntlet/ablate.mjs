@@ -9,7 +9,7 @@ import { ROOT, readJson } from '../lib/repo.mjs';
 import { assertSafe, ensureWorktree, removeWorktree } from '../mutate/worktree.mjs';
 import { seedImportCache } from './prepare_worktree.mjs';
 import { median } from '../perf/paired.mjs';
-import { editNumber, parseAblation } from './ablate_args.mjs';
+import { editScalar, parseAblation } from './ablate_args.mjs';
 
 export function applyEdit(root, tree, edit) {
   const safe = assertSafe(tree, { root, requireMarker: true });
@@ -19,7 +19,7 @@ export function applyEdit(root, tree, edit) {
     throw new Error('edit escapes ablation worktree: ' + edit.file);
   execFileSync('git', ['--literal-pathspecs', 'ls-files', '--error-unmatch', '--', rel], { cwd: tree, windowsHide: true });
   const table = JSON.parse(readFileSync(target, 'utf8'));
-  const before = editNumber(table, edit);
+  const before = editScalar(table, edit);
   writeFileSync(target, JSON.stringify(table, null, 2) + '\n');
   return { ...edit, before };
 }

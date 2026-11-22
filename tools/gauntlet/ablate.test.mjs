@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 import { test } from 'node:test';
 import { ROOT } from '../lib/repo.mjs';
 import { applyEdit, summarize } from './ablate.mjs';
-import { editNumber, parseAblation } from './ablate_args.mjs';
+import { editScalar, parseAblation } from './ablate_args.mjs';
 import { parseArgs, plan } from './commands.mjs';
 
 const batch = ['--', '--profile=average', '--pick=greedy', '--seeds=2', '--jobs=1', '--out=evidence/arm'];
@@ -25,10 +25,10 @@ test('control takes no edits; repeatable sets and filter are passed to the inten
 
 test('numeric edits support arrays and escaped JSON pointer tokens', () => {
   const data = { 'a/b': [{ '~rate': 10, intact: 2 }] };
-  assert.equal(editNumber(data, { pointer: '/a~1b/0/~0rate', value: 0 }), 10);
+  assert.equal(editScalar(data, { pointer: '/a~1b/0/~0rate', value: 0 }), 10);
   assert.deepEqual(data, { 'a/b': [{ '~rate': 0, intact: 2 }] });
   for (const pointer of ['/a~1b/length', '/a~1b/00', '/missing', '/toString', '/a~1b/0'])
-    assert.throws(() => editNumber(data, { pointer, value: 1 }));
+    assert.throws(() => editScalar(data, { pointer, value: 1 }));
 });
 
 test('edit refuses the caller checkout before it reads or writes the target', () => {
@@ -41,4 +41,17 @@ test('a timeout with living HP is distinguished from a lethal hit', () => {
   assert.deepEqual(summarize({ results, runs: [{ ok: true, outcome: 'capped' }, { ok: true }, { ok: true }] }),
     { attempted: 3, accepted: 3, deaths: 1, median_wave_reached: 5, median_death_wave: 5,
       capped_alive: 1, wave_timeouts: 1 });
+});
+
+test('boolean edits preserve JSON types and reject cross-type writes', () => {
+  const doc = { move: { enabled: true, seconds: 1 } };
+  for (const flag of [false, true]) {
+    const edit = parseAblation(['--name=flag', '--set=x.json#/move/enabled=' + flag, ...batch]).edits[0];
+    assert.equal(editScalar(doc, edit), !flag);
+    assert.equal(doc.move.enabled, flag);
+    assert.throws(() => editScalar(doc, { pointer: '/move/seconds', value: flag }));
+  }
+  assert.throws(() => editScalar(doc, { pointer: '/move/enabled', value: 0 }));
+  assert.throws(() => parseAblation(['--name=flag', '--set=x.json#/v="true"', ...batch]));
+  assert.deepEqual(doc, { move: { enabled: true, seconds: 1 } });
 });
