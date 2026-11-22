@@ -1,7 +1,7 @@
 # Brief n23-prologue-05 - make it read and make it last: the yard, the cast at a glance, wave pacing
 
 Lane `prologue`, night run n23. Same worktree and branch. The prologue is playable end to end after calls 01-04. This call raises the weakest parts the director saw in the stills and the pilot numbers.
-**Hard stop: <HH:MM>. Last commit by <HH:MM>.** Check `date` as you go.
+**Hard stop: 06:45. Last commit by 06:40.** Check `date` as you go.
 
 ## Environment (every Godot run)
 - `export APPDATA=C:/Users/kazda/kiro/gtai-n23/appdata/prologue` and `export GODOT_BIN='C:\Users\kazda\kiro\gtai-spike\tools\godot\Godot_v4.7.2-stable_win64_console.exe'`.
@@ -44,3 +44,14 @@ Commits (sha + subject), files, commands with result lines, seconds per beat and
 
 ## Added after call 04 (stills payphone-ringing-t5034, channel-request-t6814, end-card-t7151)
 7. The payphone's ring arcs are grey and thin: make the ring read as the objective (vermilion pulse is allowed for objectives) at 32 px/m. The channel card and end card read well: keep them.
+
+## Order of work (time is short: commit each item as it lands, one commit per item)
+1. Item 3 + 4 (pacing: the 2-5 minute target is a requirement of the owner's brief; total for the pilot 120-300 s).
+2. Item 5 (Mulroney found at a glance, his order tell above him, the exposed read): the owner's clip depends on it.
+3. Item 1 (the yard reads as a burnt factory, the King-torso carcass replaced).
+4. Item 2 (Dale's megaphone, wardens' overalls), item 6 (prompt overlap), item 7 (payphone ring).
+If the hard stop comes first, stop at a committed item and report what is left. Never leave uncommitted work at the hard stop: a half item is reverted with `git checkout -- <its paths>` (your own uncommitted edits only), not committed.
+
+## Numbers at HEAD ca84bf492 (director, seed 7, two runs cmp 0)
+Dale down 2193, wave 1 cleared 2581 (388 ticks = 6.5 s), wave 2 cleared 4781, end card 7151 (119 s total), 0 deaths. Target after this call: wave 1 40-70 s, wave 2 40-90 s, total 120-300 s, still 0 deaths for the pilot and still deterministic.
+Mutate needs a project-relative path: `node tools/mutate/mutate.mjs --file=boot/prologue/prologue_game.gd --max=20` (call 04 hit an infrastructure failure on mutant 74; not this call's job).
