@@ -15,6 +15,7 @@ func before_each() -> void:
 	_stage = CollectCallStage.new(StageLayout.shipped())
 	_ctx = World.build_context(bus, data, 1)
 	_stage.setup(_ctx)
+	DeflectRule.of(_stage.arena).pass_ratio_k = 0.0
 	_pilot = StagePilot.new(PlayerActions.shipped())
 	_stage.pilot = _pilot
 	_stage.arena.rivet.pos = Vector2(200.0, 200.0)

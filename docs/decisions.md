@@ -1486,3 +1486,4 @@ One dated line per decision. Deviations use `DEVIATION <RULE-ID>` and carry a re
 - [2026-11-22] DECISION dash: Reload timers continue during the dash so a player can reposition while changing magazines.
 - [2026-11-22] DECISION dash: Rivet can fire during the dash under the weapon's usual firing rules.
 - [2026-11-22] DECISION dash: A melee swing already in progress advances during the burst, including its ordinary lunge.
+- [2026-11-22] DECISION deflect: one roll per basic round on guard or blade contact, a pass costs half guard drain and keeps full incoming damage, a return scatters uniformly around its shooter. Only contacts consume the named RNG stream so idle tapes keep their bytes.

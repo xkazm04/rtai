@@ -20,6 +20,46 @@
       ],
       "type": "object"
     },
+    "deflect": {
+      "additionalProperties": false,
+      "properties": {
+        "basic_rounds": {
+          "items": {
+            "enum": [
+              "small"
+            ]
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "pass_ratio": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "pass_ratio_k": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "spread_deg": {
+          "maximum": 180,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "basic_rounds",
+        "doc",
+        "pass_ratio",
+        "pass_ratio_k",
+        "spread_deg"
+      ],
+      "type": "object"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"
@@ -480,6 +520,7 @@
   },
   "required": [
     "blast",
+    "deflect",
     "schema",
     "doc",
     "rivet",

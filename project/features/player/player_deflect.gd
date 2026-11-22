@@ -1,12 +1,9 @@
 class_name PlayerDeflect
 extends RefCounted
-## rivet-arsenal: the plasma sword's timed deflect. During a deflecting weapon's active ticks
-## (MeleeTable.deflect_m > 0), every hostile round within deflect_m of Rivet and in front of him
-## goes back: it flies at its shooter (or straight back if the shooter is gone) at its own speed,
-## now Rivet's round (it hits hostiles, BACK_DAMAGE: a human drops) with a fresh range. Each bat
-## leaves a spark (two short crossing arcs on FightAreas' VFX list, as the shock's crackle; view
-## only, not replay state) where the blade met the round.
+## The guard and the active plasma blade roll once per incoming basic round. A returned round
+## keeps its speed, gets a fresh range and belongs to Rivet. Heavy rounds keep their exact return.
 
+const PASSED: StringName = &"deflect_passed"
 const BACK_DAMAGE: float = 1.0
 const BACK_RANGE_M: float = 20.0
 ## In front: the round's offset from Rivet within this of his facing (dot).
@@ -14,7 +11,7 @@ const FRONT_DOT: float = 0.0
 const SPARK_M: float = 0.45
 
 
-## Bats every hostile round in reach back; returns how many.
+## Returns the number of rounds actually turned during this active tick.
 static func bat(arena: CombatArena, facing: Vector2, reach_m: float) -> int:
 	var at: Vector2 = arena.rivet.pos
 	var n: int = 0
@@ -24,17 +21,35 @@ static func bat(arena: CombatArena, facing: Vector2, reach_m: float) -> int:
 			continue
 		if to.length() > 0.001 and to.normalized().dot(facing) < FRONT_DOT:
 			continue
-		send_back(arena, s, facing)
-		n += 1
+		if send_back(arena, s, facing):
+			n += 1
 	return n
 
 
-static func send_back(arena: CombatArena, s: Shot, facing: Vector2) -> void:
+static func send_back(
+	arena: CombatArena, s: Shot, facing: Vector2, contact: Vector2 = Vector2.INF
+) -> bool:
+	if s.has_meta(PASSED):
+		return false
+	var turn: float = 0.0
+	var size: StringName = (
+		s.size if s.size_known or s.spec != null else EnemyRounds.size_of(s.weapon)
+	)
+	if size == Shot.SMALL and not EnemyRounds.is_blast(s):
+		var rule: DeflectRule = DeflectRule.of(arena)
+		if size in rule.basic_rounds:
+			if rule.passes():
+				s.set_meta(PASSED, true)
+				return false
+			turn = rule.turn()
+	if contact != Vector2.INF:
+		s.pos = contact
 	var speed: float = s.vel.length()
 	var back: Vector2 = -s.vel.normalized() if speed > 0.0 else facing
 	var shooter: Fighter = _fighter(arena, s.shooter_id)
 	if shooter != null and shooter.alive():
 		back = (shooter.pos - s.pos).normalized()
+	back = back.rotated(turn)
 	s.vel = back * speed
 	s.from_rivet = true
 	s.shooter_id = arena.rivet.id
@@ -43,6 +58,7 @@ static func send_back(arena: CombatArena, s: Shot, facing: Vector2) -> void:
 	s.origin = s.pos
 	_spark(arena, s.pos, back)
 	arena.deflected.emit(s.pos, back)
+	return true
 
 
 static func _spark(arena: CombatArena, at: Vector2, back: Vector2) -> void:

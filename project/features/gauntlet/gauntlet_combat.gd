@@ -22,6 +22,7 @@ static func install(stage: ArenaStage, ctx: WorldContext, state: GauntletRun) ->
 	var combat: GauntletCombat = GauntletCombat.new(
 		initial.tuning, ctx.events, ctx.rng.stream(&"combat")
 	)
+	DeflectRule.bind(combat, ctx.rng)
 	combat.rivet = initial.rivet
 	combat.metal = initial.metal
 	combat.walls = stage.walls

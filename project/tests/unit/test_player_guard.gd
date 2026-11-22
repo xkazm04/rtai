@@ -10,6 +10,7 @@ func before_each() -> void:
 	arena = CombatArena.new(CombatTuning.shipped(), bus, RngRegistry.new(22).stream(&"combat"))
 	guard = PlayerGuard.new()
 	arena.guard = guard
+	DeflectRule.of(arena).pass_ratio_k = 0.0
 	arena.rivet.facing = Vector2.RIGHT
 	foe = arena.spawn_guard(Vector2.RIGHT * 8.0)
 	guard.step(true, true)
@@ -39,7 +40,7 @@ func test_front_crossing_returns_one_round_and_emits_one_spark() -> void:
 	assert_eq(s.shooter_id, arena.rivet.id)
 	assert_almost_eq(s.pos.x, arena.rivet.radius_m, 0.00001)
 	assert_almost_eq(s.vel.length(), speed, 0.0001)
-	assert_almost_eq(s.vel.normalized(), s.pos.direction_to(foe.pos), Vector2.ONE * 0.0001)
+	assert_lte(absf(rad_to_deg(s.vel.angle_to(s.pos.direction_to(foe.pos)))), 12.0001)
 	assert_eq(guard.deflects, 1)
 	assert_almost_eq(
 		guard.meter(), 1.0 - guard.tuning.drain_per_round / guard.tuning.meter_max, 0.0001
