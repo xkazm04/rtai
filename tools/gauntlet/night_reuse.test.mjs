@@ -79,7 +79,7 @@ test('external after must reproduce the exact planned bytes before apply; source
   const job = parseNight([...args, '--after-from=' + file('after')], root);
   const change = { id: 'budget.base', file: table, pointer: '/budget/base', before: 20, after: 25,
     baseline: 20, metric: { type: 'death', profile: 'average', target: 12 }, miss: 'late death' };
-  const plan = { schema: PLAN_SCHEMA, max: 1, changes: [change], batch_sha256: digest(readFileSync(file('base'))) };
+  const plan = { schema: PLAN_SCHEMA, profile: 'average', max: 1, changes: [change], batch_sha256: digest(readFileSync(file('base'))) };
   save(job.plan, plan);
   assert.throws(() => checkAfterPlan(tree, job), /after batch table hashes/);
   save(file('after'), { ...batch, tables: tableHashes(tree, [change]) });

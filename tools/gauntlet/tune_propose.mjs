@@ -1,3 +1,4 @@
+import { PROFILES } from './contract.mjs';
 import { timeBounds } from './analysis.mjs';
 import { profileScores, targets } from './death_score.mjs';
 import { analyze, weaponsOf } from './report.mjs';
@@ -124,8 +125,17 @@ function bonusMisses(report, weapons, target) {
   return misses;
 }
 
-export function propose(batch, state, baseline, { target = targets.wave_seconds.average, profile = 'average', max = 6, killerShare = 0.5, minN = 3,
-  used = new Set(), batchHash, night } = {}) {
+export function deathMetric(value) {
+  if (value !== undefined && value !== 'death') throw new Error('--metric must be death');
+  return value;
+}
+
+function observationsFor(batch, state, { target, profile, killerShare, minN, metric }) {
+  if (metric === 'death') {
+    if (profile !== 'all' && !PROFILES.includes(profile)) throw new Error('unknown death profile: ' + profile);
+    if (batch.args.runner === 'pit') throw new Error('death-wave tuning requires the street');
+    return deathMisses(batch, profile, minN);
+  }
   const weapons = weaponsOf(batch);
   const report = analyze(batch, null, weapons);
   const roster = state.tables.get(TABLES + 'enemies.json');
@@ -136,6 +146,14 @@ export function propose(batch, state, baseline, { target = targets.wave_seconds.
     ...bonusMisses(report, weapons, target)
   ].sort((a, b) => b.severity - a.severity);
   if (street) observations.unshift(...deathMisses(batch, profile, minN));
+  return observations;
+}
+
+export function propose(batch, state, baseline, { target = targets.wave_seconds.average, profile = 'average', max = 6, killerShare = 0.5, minN = 3,
+  used = new Set(), batchHash, night, metric: selection } = {}) {
+  const metricName = deathMetric(selection);
+  if (metricName) max = Math.min(max, 1);
+  const observations = observationsFor(batch, state, { target, profile, killerShare, minN, metric: metricName });
   const changes = [], misses = [];
   const chosen = new Set(used);
   // The two outcomes of one offer can describe the same advantage. Don't turn both knobs for it.
@@ -162,14 +180,17 @@ export function propose(batch, state, baseline, { target = targets.wave_seconds.
         break;
       }
       if (changes.length >= max) { result.reason = 'plan limit'; break; }
-      changes.push({ ...step, metric, miss, severity: observation.severity });
+      const profiles = metricName && observations.filter((o) => !o.reason && o.choices.some(([knob, f]) =>
+        knob === id && Math.sign(f - 1) === Math.sign(factor - 1))).map((o) => o.metric.profile);
+      changes.push({ ...step, metric, miss, severity: observation.severity, ...(profiles && { profiles }) });
       chosen.add(id);
       if (metric.type === 'offer') selectedOffers.add(metric.id);
       result.reason = id + (step.members ? ' x ' + step.factor : ' ' + step.before + ' -> ' + step.after);
       break;
     }
+    if (metricName && changes[0]?.profiles.includes(metric.profile)) result.reason = 'served by ' + changes[0].id;
     misses.push(result);
   }
-  return { schema: PLAN_SCHEMA, night, batch_sha256: batchHash, profile, target_s: target,
+  return { schema: PLAN_SCHEMA, night, batch_sha256: batchHash, profile, ...(metricName && { metric: metricName }), target_s: target,
     killer_share: killerShare, min_n: minN, max, changes, misses };
 }

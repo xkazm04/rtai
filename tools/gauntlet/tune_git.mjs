@@ -4,6 +4,8 @@ import { MARKER } from '../mutate/worktree.mjs';
 import { canonicalJson } from '../lib/canonical_json.mjs';
 import { validate } from '../lib/mini_schema.mjs';
 import { readJson } from '../lib/repo.mjs';
+import { PROFILES } from './contract.mjs';
+import { targets } from './death_score.mjs';
 import { DAMAGE_GROUP, memberIds, occupied } from './tune_groups.mjs';
 import { PLAN_SCHEMA } from './tune_propose.mjs';
 import { atomicWrite, baselineValue, clamped, digest, git, inventory, numericSlot, readBaseline } from './tune_state.mjs';
@@ -16,6 +18,14 @@ export function checkPlan(plan) {
   if (plan?.schema !== PLAN_SCHEMA || !Array.isArray(plan.changes) || !Number.isSafeInteger(plan.max)
     || plan.max < 0 || plan.changes.length > plan.max || !/^[a-f0-9]{64}$/.test(plan.batch_sha256))
     throw new Error('invalid tuner plan');
+  if (plan.metric !== undefined) {
+    const profiles = plan.profile === 'all' ? PROFILES : [plan.profile];
+    if (plan.metric !== 'death' || !profiles.every((p) => PROFILES.includes(p)) || plan.max > 1
+      || plan.changes.some((c) => c?.metric?.type !== 'death' || !profiles.includes(c.metric.profile)
+        || c.metric.target !== targets.death_wave[c.metric.profile] || !Array.isArray(c.profiles)
+        || !c.profiles.includes(c.metric.profile) || !c.profiles.every((p) => profiles.includes(p))))
+      throw new Error('invalid death cycle plan');
+  }
   const seen = new Set();
   for (const c of plan.changes) {
     if (!c || typeof c.id !== 'string' || !c.id || occupied(c.id, seen) || !c.miss || /[\r\n\0]/.test(c.miss)

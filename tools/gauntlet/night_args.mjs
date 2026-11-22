@@ -5,6 +5,7 @@ import { readJson } from '../lib/repo.mjs';
 import { parseArgs as batchArgs } from './commands.mjs';
 import { lanePath } from './night_paths.mjs';
 import { checkLocation } from './night_worktree.mjs';
+import { deathMetric } from './tune_propose.mjs';
 import { floorMode } from './tune_floor.mjs';
 
 export const tool = (name) => 'tools/gauntlet/' + name + '.mjs';
@@ -28,7 +29,7 @@ function design(v, arms) {
   const base = arms.inputs.before ? readJson(arms.files.before).args : {};
   const flag = (key, fallback) => '--' + key + '=' + (v[key] ?? base[key] ?? fallback);
   const flags = [flag('seeds', ''), flag('profile', 'average'), flag('pick', 'greedy'),
-    flag('controls', 'wheel'), flag('seed0', 1), '--jobs=1'];
+    flag('controls', 'wheel'), flag('seed0', 1), '--jobs=' + (v.jobs ?? 1)];
   if (v.waves !== undefined || base.waves != null) flags.push(flag('waves'));
   if (base.runner) flags.push('--runner=' + base.runner);
   if (base.pickFilter) flags.push('--pick-filter=' + base.pickFilter);
@@ -38,7 +39,7 @@ function design(v, arms) {
 
 export function parseNight(argv, root) {
   const strings = ['worktree', 'branch', 'out', 'profile', 'pick', 'controls', 'seeds', 'waves', 'floor-mode',
-    'before', 'null', 'after-from'];
+    'before', 'null', 'after-from', 'metric', 'jobs'];
   const options = Object.fromEntries(strings.map((key) => [key, { type: 'string' }]));
   options['dry-run'] = options.remove = { type: 'boolean' };
   const { values: v } = parseArgs({ args: argv, options });
@@ -49,7 +50,10 @@ export function parseNight(argv, root) {
   const dir = lanePath(root, v.out, previewBuild ? 'build/n23' : 'evidence/n23-loop');
   const arms = armPaths(root, dir, v);
   const { flags, batch } = design(v, arms);
-  return { ...job, ...arms, dir, batch, flags, mode: floorMode(v['floor-mode']) };
+  const metric = deathMetric(v.metric);
+  const mode = floorMode(v['floor-mode']);
+  if (metric && (mode !== 'null-salt' || batch.runner !== 'gauntlet')) throw new Error('death needs the street and null-salt floor');
+  return { ...job, ...arms, dir, batch, flags, metric, mode };
 }
 
 export function recipe(job) {
@@ -61,7 +65,8 @@ export function recipe(job) {
     ...(!inputs.before ? [measure('before')] : []),
     ...(!inputs.null ? [[...neutral, '--salt=' + (batch.salt === 1 ? 0 : 1)]] : []),
     ...(!job.resume || !existsSync(join(dir, 'before/report.md')) ? [report('before')] : []),
-    ...(!job.resume ? [[tool('tune'), 'propose', '--batch=' + files.before, '--out=' + plan, '--profile=' + batch.profile]] : []),
+    ...(!job.resume ? [[tool('tune'), 'propose', '--batch=' + files.before, '--out=' + plan, '--profile=' + batch.profile,
+      ...(job.metric ? ['--metric=' + job.metric] : [])]] : []),
     [tool('tune'), 'apply', '--plan=' + plan],
     ...(!inputs.after ? [measure('after')] : []),
     [tool('tune'), 'confirm', '--before=' + files.before, '--after=' + files.after, '--null=' + files.null,

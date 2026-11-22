@@ -75,6 +75,8 @@ export function checkInputs(tree, job) {
 export function checkAfterPlan(tree, job) {
   const plan = readJson(job.plan);
   if (digest(readFileSync(job.files.before)) !== plan.batch_sha256) throw new Error('before does not match plan');
+  if (plan.profile !== job.batch.profile || plan.metric !== job.metric)
+    throw new Error('plan differs from requested profile or metric');
   const edits = planEdits(plan);
   const receipts = commitsFor(tree, plan);
   const applied = plan.changes.length > 0 && plan.changes.every((c) => receipts.has(c.id));

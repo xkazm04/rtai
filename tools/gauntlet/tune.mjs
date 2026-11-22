@@ -6,6 +6,7 @@ import { parseArgs } from 'node:util';
 import { canonicalJson } from '../lib/canonical_json.mjs';
 import { readJson } from '../lib/repo.mjs';
 import { MIN_AA_PAIRS, PROFILES } from './contract.mjs';
+import { deathChange, deathProfiles } from './death_cycle.mjs';
 import { targets } from './death_score.mjs';
 import { setArguments } from './plan_sets.mjs';
 import { loadBatch } from './report.mjs';
@@ -60,7 +61,7 @@ function writePlan(root, v) {
   const state = inventory(root);
   const baseline = ensureBaseline(root, state.entries);
   const plan = propose(batch, state, baseline, { target, profile, max, killerShare, minN, batchHash: hashFile(v.batch),
-    night: nightOf(), used: new Set(nightly(root).keys()) });
+    metric: v.metric, night: nightOf(), used: new Set(nightly(root).keys()) });
   atomicWrite(v.out, canonicalJson(plan));
   for (const m of plan.misses) console.log(m.miss + ': ' + m.reason);
   console.log(plan.changes.length + ' changes from ' + plan.misses.length + ' measured misses in ' + v.out);
@@ -118,13 +119,17 @@ function confirmation(root, v) {
   const nullRows = v.null ? pairNullRuns(before, loadBatch(v.null)) : null;
   const rows = pairRuns(before, after);
   const beforeRows = pairRuns(before, before);
+  const settings = { beforeRows, nullRows, mode, verdict };
+  const profiles = plan.metric === 'death' ? deathProfiles(rows, plan.profile, settings) : null;
   const receipts = commitsFor(root, plan);
   const ledger = { schema: LEDGER, plan_sha256: planId(plan), before_sha256: beforeHash, after_sha256: hashFile(v.after),
     floor_mode: mode, verdict_mode: verdict, null_sha256: v.null ? hashFile(v.null) : null, matched_null_runs: nullRows?.length ?? 0,
     before_runs: before.results.length, after_runs: after.results.length, matched_runs: rows.length,
+    ...(profiles && { profiles }),
     changes: plan.changes.map((c) => {
       const commit = receipts.get(c.id) ?? null;
-      return { ...confirmChange(rows, c, { beforeRows, nullRows, mode, verdict }), commit, revert_commit: revertFor(root, commit) };
+      const result = profiles ? deathChange(c, profiles, verdict) : confirmChange(rows, c, settings);
+      return { ...result, commit, revert_commit: revertFor(root, commit) };
     }) };
   const stem = join(resolve(v['ledger-dir'] ?? dirname(resolve(v.after))), 'tune-ledger');
   artifact(root, stem);
@@ -167,7 +172,7 @@ export function main([command, ...argv]) {
   }
   if (command === 'propose') {
     if (argv.includes('--overwrite-baseline')) throw new Error('tuner baseline is write-once');
-    const v = options(argv, ['batch', 'out'], ['target-s', 'profile', 'max', 'killer-share', 'min-n']);
+    const v = options(argv, ['batch', 'out'], ['target-s', 'profile', 'max', 'killer-share', 'min-n', 'metric']);
     return withLock(root, () => writePlan(root, v));
   }
   if (command === 'apply') {

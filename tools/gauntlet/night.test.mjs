@@ -30,14 +30,14 @@ test('dry run prepares and reuses a private worktree, shows absolute paths and r
     mkdirSync(join(root, 'project', folder), { recursive: true });
     writeFileSync(join(root, 'project', folder, file), 'seed');
   }
-  night([...args, '--dry-run', '--waves=24'], io);
+  night([...args, '--dry-run', '--waves=24', '--jobs=2', '--profile=all', '--metric=death'], io);
   assert.equal(calls.length, 0);
   assert.equal(existsSync(dir), false);
   assert.equal(readFileSync(join(tree, 'project/native/bin/sim.dll'), 'utf8'), 'seed');
   assert.equal(readFileSync(join(tree, 'project/.godot/imported/test.ctex'), 'utf8'), 'seed');
   assert.equal(lines.filter((s) => s.startsWith('node ')).length, 8);
   assert.ok(lines[0].includes(tree) && lines[0].includes(dir));
-  assert.equal(lines.filter((s) => s.includes('batch.mjs') && s.includes('--waves=24')).length, 3);
+  assert.equal(lines.filter((s) => s.includes('batch.mjs') && s.includes('--waves=24') && s.includes('--jobs=2') && s.includes('--profile=all')).length, 3);
   assert.match(lines.at(-1), /night\.md/);
   night([...args, '--dry-run'], io);
   night([...location, '--remove'], io);
@@ -48,7 +48,7 @@ test('dry run prepares and reuses a private worktree, shows absolute paths and r
 test('argument and ownership refusals leave other directories and branches alone', (t) => {
   const { root, tree, args, io } = setup(t);
   for (const bad of ['--waves=0', '--seeds=0', '--profile=unknown', '--pick=x', '--controls=x',
-    '--jobs=3', '--floor-mode=unknown', '--worktree=relative', '--worktree=' + join(root, 'child'),
+    '--jobs=0', '--jobs=3', '--metric=unknown', '--floor-mode=unknown', '--worktree=relative', '--worktree=' + join(root, 'child'),
     '--branch=n23-tuner', '--branch=n23-tune-', '--out=relative', '--out=' + join(root, 'evidence/unrelated')])
     assert.throws(() => parseNight([...args, bad], root));
   mkdirSync(tree);
