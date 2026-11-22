@@ -80,9 +80,8 @@ func step(stage: ArenaStage, tick: int) -> void:
 			_schedule(stage, tick)
 		return
 	_fill(stage, tick)
-	var newest: GauntletLiveWave = _live[-1]
-	if newest.start_tick >= 0 and tick >= _next_wave_tick and not _at_limit():
-		newest.row["timed_out"] = true
+	if seconds_left(tick) == 0.0:
+		_live[-1].row["timed_out"] = true
 		_schedule(stage, tick)
 
 
@@ -100,6 +99,11 @@ func wave_seconds(tick: int) -> float:
 	if wave != null:
 		return wave.seconds(tick)
 	return _run.waves[-1].get("seconds", 0.0) if not _run.waves.is_empty() else 0.0
+
+
+func seconds_left(tick: int) -> float:
+	var running: bool = not _live.is_empty() and _live[-1].start_tick >= 0 and not _at_limit()
+	return maxi(0, _next_wave_tick - tick) * SimClock.TICK_DT if running else -1.0
 
 
 func _slots(arena: CombatArena) -> int:
