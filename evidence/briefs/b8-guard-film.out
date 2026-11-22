@@ -1,0 +1,12 @@
+Committed `d8c597dfc` before 08:45. Added `--size` and `--seconds` to `guard_pose_film.gd`, updated `tools/debt/baseline.json`, and recorded the capture commands and verification in [films.md](C:/Users/kazda/kiro/gtai-wt/n23-controls/evidence/controls-flip/films.md).
+
+| Master | Scale | ffprobe result |
+|---|---:|---|
+| [guard_pose.mp4](C:/Users/kazda/kiro/gtai-masters/n23/controls/guard_pose.mp4) | 32 px/m | H.264 · yuv420p · 1920×1080 · 60/1 fps · 20.000000 s · 1,200 frames |
+| [guard_pose_64.mp4](C:/Users/kazda/kiro/gtai-masters/n23/controls/guard_pose_64.mp4) | 64 px/m | H.264 · yuv420p · 1920×1080 · 60/1 fps · 20.000000 s · 1,200 frames |
+
+**Verified ticks:** raise **60**, held **120**, break and stagger **646**. I inspected all six decoded frames. Rivet is centered, the guard pose is readable, and no dialogue covers the meter. Both takes show him recover with guard down. `frames.json` retains exactly 15 entries, with only the gameplay take’s note updated.
+
+The Godot parse check and all 19 lint checks passed. The standard commit hook passed on retry. Default stills mode reproduced all 13 reference PNGs byte for byte. Both captures exited 0 with the existing ghost-sheet and shutdown resource warnings. Nothing remains.
+
+[astra: 1509s, exit 0]

@@ -7,6 +7,8 @@ extends RefCounted
 const X15: PackedStringArray = [
 	"p70/rivet_frames.png",
 	"p55/rivet_frames.png",
+	"p70/rivet_guard.png",
+	"p55/rivet_guard.png",
 	"p70/rivet_eq_assault_rifle.png",
 	"p70/rivet_eq_assault_rifle_diag.png",
 	"p70/rivet_eq_assault_rifle_left.png",

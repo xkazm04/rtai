@@ -1,0 +1,15 @@
+Quest 1 and the arena both open on **Hands** with no `--controls` flag. All three films are 1080p60 and reported `ok exit 0; SCRIPT ERROR 0; unknown arg 0`.
+
+| Film | Length | What it shows |
+|---|---:|---|
+| [Quest 1 · default wheel](C:/Users/kazda/kiro/gtai-masters/n23/controls/quest1_wheel.mp4) | 24.08 s | Revised card, five opening swings, the first rifle pickup, manual selection and five rifle shots. |
+| [Arena · default wheel](C:/Users/kazda/kiro/gtai-masters/n23/controls/arena_wheel.mp4) | 16.18 s | Seven claw hits, a scroll to Pistol and six shots. The first muzzle flash and Pistol highlight share the frame. |
+| [Quest 1 · legacy](C:/Users/kazda/kiro/gtai-masters/n23/controls/quest1_legacy.mp4) | 12.02 s | The same opening inputs with the legacy card and electroshock controls. |
+
+**Two requested moments require product changes.** The HUD shows owned slots for 60 ticks after a selection change, so the opening has no lit Hands readout or dim empty slots. Quest 1 also equips its first dropped rifle on Use at frame 1084. The wheel highlights it at frame 1085, before another scroll. The films preserve both behaviors.
+
+Committed the guard and opening film drivers, debt baseline, GUT inventory correction, quest card and test, and film evidence through `1599978eb`. The card names **Back** for weapon cycling, matching the binding. The unit runner reported 3,648 passed, zero failed and two skipped, with one pass flagged risky by GUT. Four focused scenarios passed and the replay digest stayed `cbeb734ff9b97c41`. Godot logged shutdown resource leaks.
+
+I reviewed all 3,137 film frames and verified every delivered gameplay still against its source frame. [Film and still commands, ticks and verdicts](C:/Users/kazda/kiro/gtai-wt/n23-controls/evidence/controls-flip/films.md) · [15-entry master index](C:/Users/kazda/kiro/gtai-masters/n23/controls/frames.json) · [64 px/m Hands close-up](C:/Users/kazda/kiro/gtai-masters/n23/controls/wheel_hands_64.png)
+
+[astra: 2200s, exit 0]

@@ -1,0 +1,12 @@
+Rivet’s own rocket now costs **22 HP at point blank**. The molotov costs **4 HP**, the homing shard **3 HP**, and the mini-nuke **150 HP**. `combat.json` sets `rivet_hp_per_table_hp` to `0.1` and keeps `self_k` at `1.0`. Measured from Rivet’s body edge, a rocket deals at least 10 HP through **1.91 m**, and a mini-nuke kills a full-health Rivet through **4.00 m**. [Damage and radii](C:/Users/kazda/kiro/gtai-wt/n23-controls/evidence/controls-flip/self-blast-radii.md)
+
+The refilmed rocket took Rivet from **100 to 88.22 HP** in the open and **100 to 100 HP** behind the high wall. I inspected all three stills and verified the 16-second, 1080p60 master. [Film](C:/Users/kazda/kiro/gtai-masters/n23/controls/self_blast.mp4) · [Open, 32 px/m](C:/Users/kazda/kiro/gtai-masters/n23/controls/self_blast_hit.png) · [Wall, 32 px/m](C:/Users/kazda/kiro/gtai-masters/n23/controls/self_blast_wall.png) · [Open, 64 px/m](C:/Users/kazda/kiro/gtai-masters/n23/controls/self_blast_hit_64.png) · [Frame index](C:/Users/kazda/kiro/gtai-masters/n23/controls/frames.json)
+
+- **Tests:** 59/59 targeted tests passed. Full scenarios passed **65/65 default** and **65/65 legacy**. The first legacy run missed one rig timing budget, which passed in isolation and on the full rerun.
+- **Replays:** `replay_60s` stayed identical. In `brutality_kills`, self-hits at ticks **66** and **396** changed eight intermediate checkpoints per mode. Both final digests matched. No golden needed repinning. [Digest comparisons](C:/Users/kazda/kiro/gtai-wt/n23-controls/evidence/controls-flip/self-blast-digests.md)
+- **Gauntlet:** The seed-7 average bot survived all five waves. Per-wave `self_damage` was **0.0, 0.0, 0.0, 0.0, 0.0**.
+- **Mutation:** **15/17 killed (88.2%)**. Two survived, one was invalid, and none timed out.
+
+All requested work was committed before 05:30. `93d0d5b49` landed the staged activation and debt baseline. `4f175c24a` and `b765422a1` updated the combat helper, call site, schema, decision, and tests. `fdfa16e5a` landed the film source. `61c382e3f` and `172f6e4e5` recorded the evidence.
+
+[astra: 2775s, exit 0]

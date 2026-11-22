@@ -12,15 +12,16 @@ const LEGACY_PAD: String = (
 	+ "[melee]: electroshock    [use]: use (phones, hiding, allies, torch)    [pause]: pause"
 )
 const WHEEL: String = (
-	"WASD / arrows move    mouse aims\n"
-	+ "Left mouse: swing or fire    Right mouse: guard\n"
-	+ "Mouse wheel: change weapon    Space: quick claw\n"
-	+ "E: use    Esc: pause"
+	"WASD / arrows move    mouse aims    Left mouse: swing or fire    Right mouse: guard\n"
+	+ "Mouse wheel: change weapon    Space: quick claw    "
+	+ "E: use (phones, hiding, allies, torch)    Esc: pause\n"
+	+ "Gamepad: left stick move, right stick aim, RT swing or fire, LT guard\n"
+	+ "Back change weapon, X quick claw, A use"
 )
 const WHEEL_PAD: String = (
 	"[move] move    [aim] aims    [fire]: swing or fire\n"
 	+ "[guard]: guard    [weapon_next]: change weapon    [melee]: quick claw\n"
-	+ "[use]: use    [pause]: pause"
+	+ "[use]: use (phones, hiding, allies, torch)    [pause]: pause"
 )
 
 

@@ -113,7 +113,11 @@
         "2026-11-22: n23 controls refilm: visible range target, firing-port wall, production HP meter and 64 px/m capture (dev_loc 28704 -> 28803)",
         "2026-11-22: move_ttk kill-time probe for n23 moves (dev_loc 28529 -> 28927)",
         "2026-11-22: --wave-timeout for n23 street (dev_loc 28527 -> 28538)",
-        "2026-11-22: n23 merge: gauntlet dev entry keeps the union of loop's and street's flags (dev_loc 29211 -> 29212)"
+        "2026-11-22: n23 merge: gauntlet dev entry keeps the union of loop's and street's flags (dev_loc 29211 -> 29212)",
+        "2026-11-22: guard and controls film drivers for n23 controls (dev_loc 28803 -> 28929)",
+        "2026-11-22: guard and controls film drivers for n23 controls (dev_loc 28929 -> 29208)",
+        "2026-11-22: guard and controls film drivers for n23 controls (dev_loc 29208 -> 29210)",
+        "2026-11-22: guard film size flags for n23 controls (dev_loc 29210 -> 29241)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -122,7 +126,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 496,
-        "project/dev/controls": 274,
+        "project/dev/controls": 712,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
         "project/dev/gauntlet": 526,
@@ -152,7 +156,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 29212
+      "total": 29650
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -498,14 +502,13 @@
         "project/dev/audio": 1,
         "project/dev/cheats": 1,
         "project/dev/controls": 1,
-        "project/dev/guard": 1,
         "project/dev/gunplay": 1,
         "project/dev/held": 1,
         "project/dev/overlays": 1,
         "project/dev/prologue": 1,
         "project/dev/weapon_art": 1
       },
-      "total": 9
+      "total": 8
     },
     "unused_class_names": {
       "files": {

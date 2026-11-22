@@ -1,0 +1,74 @@
+{
+  "cut_command": "python -B tools/art/rivet_guard.py C:/Users/kazda/kiro/gtai-masters/n23/controls/masters",
+  "layout": "Twenty cells. Five facings from front to back for each of low guard, mid guard, held guard and broken guard. Three left octants mirror their right-facing cell.",
+  "masters": {
+    "guard_p55": {
+      "accepted": true,
+      "date": "2026-11-22",
+      "file": "masters:n23/controls/masters/guard_p55.png",
+      "model": "built-in image_gen (image model not reported)",
+      "outputs": [
+        "project/features/characters/art/view/p55/rivet_guard.png"
+      ],
+      "prompt_ref": "docs/art/prompts/n23/controls/guard_p55.md",
+      "references": [
+        "project/features/characters/art/view/p55/rivet_frames.png"
+      ],
+      "seed": null,
+      "selection": "All twenty cells.",
+      "sha256": "7821fc8d314749fe1446eb2e3e38b166c0075b8300af999a34951e394b46e0cb",
+      "tool": "codex-image"
+    },
+    "guard_p70": {
+      "accepted": true,
+      "date": "2026-11-22",
+      "file": "masters:n23/controls/masters/guard_p70.png",
+      "model": "built-in image_gen (image model not reported)",
+      "outputs": [
+        "project/features/characters/art/view/p70/rivet_guard.png"
+      ],
+      "prompt_ref": "docs/art/prompts/n23/controls/guard_p70.md",
+      "references": [
+        "project/features/characters/art/view/p70/rivet_frames.png"
+      ],
+      "seed": null,
+      "selection": "Low, mid and stagger rows.",
+      "sha256": "39e7bff894cc73e3d5096226b175ed2148856a7a80a3c733f40bd05f7e75378d",
+      "tool": "codex-image"
+    },
+    "guard_p70_front": {
+      "accepted": true,
+      "date": "2026-11-22",
+      "file": "masters:n23/controls/masters/guard_p70_front.png",
+      "model": "built-in image_gen (image model not reported)",
+      "outputs": [
+        "project/features/characters/art/view/p70/rivet_guard.png"
+      ],
+      "prompt_ref": "docs/art/prompts/n23/controls/guard_p70_front.md",
+      "references": [
+        "project/features/characters/art/view/p70/rivet_frames.png"
+      ],
+      "seed": null,
+      "selection": "Held front and front three-quarter, with the striped collar visible above the forearms.",
+      "sha256": "e0ed9695935b3f596ab72ac8c5326b626b3e206fa3b4116b3cc8953d90093f91",
+      "tool": "codex-image"
+    },
+    "guard_p70_held": {
+      "accepted": true,
+      "date": "2026-11-22",
+      "file": "masters:n23/controls/masters/guard_p70_held.png",
+      "model": "built-in image_gen (image model not reported)",
+      "outputs": [
+        "project/features/characters/art/view/p70/rivet_guard.png"
+      ],
+      "prompt_ref": "docs/art/prompts/n23/controls/guard_p70_held.md",
+      "references": [
+        "project/features/characters/art/view/p70/rivet_frames.png"
+      ],
+      "seed": null,
+      "selection": "Held right profile, rear three-quarter and straight back.",
+      "sha256": "066426a117704c558ff975c2e987c645cd2eed346ba99c931c935e7b94632b66",
+      "tool": "codex-image"
+    }
+  }
+}

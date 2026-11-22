@@ -1,0 +1,15 @@
+Committed `5b46a21f1` on `n23-controls`. Rivet now crouches behind crossed forearms with the rigid hazard collar visible. Both pitches have two three-tick transitions and a distinct stagger held until the guard recovers. The flat rig also lowers its body.
+
+The commit includes `player_guard_pose.gd`, `player_guard_view.gd`, `test_guard_view.gd`, both painted strips and their imports, prompts, manifest and provenance. The strip registrations are at [rivet_res.gd lines 10–11](C:/Users/kazda/kiro/gtai-wt/n23-controls/project/features/characters/rivet_res.gd:10), and the cutter starts at [rivet_guard.py line 40](C:/Users/kazda/kiro/gtai-wt/n23-controls/tools/art/rivet_guard.py:40). All five p70 held facings were rerolled once. Front and front three-quarter were rerolled twice for collar visibility. P55 passed on the first sheet.
+
+**Evidence** · [32 px/m spark-free comparison](C:/Users/kazda/kiro/gtai-masters/n23/controls/guard_pose_32.png) · [64 px/m comparison](C:/Users/kazda/kiro/gtai-masters/n23/controls/guard_pose_64.png) · [Phase sheet](C:/Users/kazda/kiro/gtai-masters/n23/controls/guard_phases_64.png) · [12-second film](C:/Users/kazda/kiro/gtai-masters/n23/controls/guard_pose.mp4) · [Frame index](C:/Users/kazda/kiro/gtai-masters/n23/controls/frames.json)
+
+**Verification**
+
+- `run_unit.mjs --changed` passed with 3,648 passing, zero failures and two skips. All 19 commit-hook lint checks passed. The standalone quick parse still reported autoload dependency and allocator-shutdown errors.
+- `replay_60s`, `quest1_input` and `rivet_deflect` passed before and after. Both replay tapes and the deflect telemetry were byte-identical. The 60-second replay’s final digest stayed `cbeb734ff9b97c41645f735114692ea3b9e7cc6578750f32d8d9f31d69844e85`.
+- Mutation score was **19 / (19 + 1) = 95%**, with zero timeouts or invalid mutants. Removing the overlay’s initial `hide()` survived.
+
+**NEED** — The film is delivered. Its three driver files under `project/dev/controls/` are staged. Committing them requires raising the dev-line baseline from 274 to 400 in `tools/debt/baseline.json`, outside the b4 allowlist.
+
+[astra: 2748s, exit 0]

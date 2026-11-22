@@ -156,7 +156,7 @@ func test_hud_readout_fades_and_expires_one_second_after_the_switch() -> void:
 	var view: WheelReadoutView = layer.get_child(1) as WheelReadoutView
 	assert_not_null(view)
 	view._process(0.0)
-	assert_false(view.visible)
+	assert_true(view.visible)
 	pilot.carry.take(&"pistol", stage.arena)
 	_tick([&"weapon_next"])
 	var start: int = pilot.wheel.switched_tick

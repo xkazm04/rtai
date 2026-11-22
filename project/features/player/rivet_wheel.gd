@@ -7,6 +7,7 @@ const HANDS: StringName = &"hands"
 
 var carry: RivetCarry
 var switched_tick: int = -1
+var readout_scroll_tick: int = 0  ## Opening or latest cycle press. Presentation only.
 var _selected: StringName = HANDS
 var _fresh: bool = true
 var _touched: bool = false
@@ -27,6 +28,7 @@ func bind(inventory: RivetCarry) -> void:
 	_selected = HANDS
 	_fresh = true
 	switched_tick = -1
+	readout_scroll_tick = 0
 
 
 ## Stages without a loadout already own a seeded combat stream and may have a story gun.
@@ -99,12 +101,11 @@ func step(c: PlayerCommand, actions: PlayerActions, arena: CombatArena, tick: in
 			_activate()
 			if carry.slots[i] != &"":
 				want = carry.slots[i]
-	var dir: int = 0
-	if c.was_pressed(actions, &"weapon_next"):
-		dir = 1
-	elif c.was_pressed(actions, &"weapon_prev"):
+	var dir: int = int(c.was_pressed(actions, &"weapon_next"))
+	if dir == 0 and c.was_pressed(actions, &"weapon_prev"):
 		dir = -1
 	if dir != 0:
+		readout_scroll_tick = arena.tick if tick < 0 else tick
 		_activate()
 		var ids: Array[StringName] = order()
 		want = ids[posmod(ids.find(_selected) + dir, ids.size())]
