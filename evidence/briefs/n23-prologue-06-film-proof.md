@@ -1,7 +1,7 @@
 # Brief n23-prologue-06 - the film entry, the death proof, and the tests that catch faults
 
 Lane `prologue`, night run n23. Same worktree and branch. The prologue plays end to end (calls 01-05). This is the last code call of the night: **the last commit is by 08:00, hard**. After that the director runs the gate and the films.
-**Hard stop: <HH:MM>. Last commit by <HH:MM>.** Check `date` as you go.
+**Hard stop: 08:00. Last commit by 07:55.** Check `date` as you go.
 
 ## Environment (every Godot run)
 - `export APPDATA=C:/Users/kazda/kiro/gtai-n23/appdata/prologue` and `export GODOT_BIN='C:\Users\kazda\kiro\gtai-spike\tools\godot\Godot_v4.7.2-stable_win64_console.exe'`.
@@ -37,3 +37,9 @@ Mutation on `project/boot/prologue/prologue_game.gd` scored 1 killed / 10 sample
 
 ## Report at the end
 Commits (sha + subject), files, commands with result lines, mutate scores, the film and clip command lines, what is left, any NEED.
+
+## Order of work and what is already there
+1. A (film entry + clip mode), committed first: the owner judges by it.
+2. B (scenario_prologue_checkpoint): death restore already exists (decisions line "Death restores the active checkpoint within the current beat"); this call proves it.
+3. C only with time left; mutate needs a project-relative path: `--file=boot/prologue/prologue_game.gd` (`project/boot/...` is rejected). Call 04 hit `infrastructure failure on mutant 74 (line 175): exit 1 with no test result`: if it repeats, quote the line and stop, do not debug the mutate tool (not yours).
+Never leave uncommitted work at the hard stop: revert your own half item with `git checkout -- <its paths>`.
