@@ -4,13 +4,27 @@ extends RefCounted
 ## ring for an occluded burst as for a hit. The damage chokepoint owns armour and roll i-frames.
 
 const HIGH: Array[String] = ["wall_high", "cover_high"]
+const WALL_IMPACT_TICK: StringName = &"rivet_blast_wall_impact_tick"
+
+
+## Wall hits can burst before CombatArena.step advances the combat clock. Supply the visual
+## timestamp for the duration of this arena's cull, including synchronous impact listeners.
+static func cull_at_tick(
+	dodges: ArenaDodges, arena: CombatArena, walls: ArenaWalls, impact_tick: int
+) -> void:
+	if arena.shots.is_empty():
+		return
+	arena.set_meta(WALL_IMPACT_TICK, impact_tick)
+	dodges.cull(arena, walls)
+	arena.remove_meta(WALL_IMPACT_TICK)
 
 
 static func burst(arena: CombatArena, at: Vector2, weapon: StringName, by_id: int) -> float:
 	var radius: float = EnemyRounds.splash_m(weapon)
 	if radius <= 0.0:
 		return 0.0
-	PlayerShock.areas_of(arena).note_blast(at, radius, arena.tick)
+	var impact_tick: int = arena.get_meta(WALL_IMPACT_TICK, arena.tick)
+	PlayerShock.areas_of(arena).note_blast(at, radius, impact_tick)
 	var r: Fighter = arena.rivet
 	var distance: float = maxf(at.distance_to(r.pos) - r.radius_m, 0.0)
 	if distance >= radius:
