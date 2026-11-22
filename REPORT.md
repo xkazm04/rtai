@@ -1,6 +1,6 @@
 # REPORT lane melee (n24, 2026-11-22), branch `n24-melee`, worktree `n23-street`
 
-DRAFT (session 4, 21:15): P4 and P5 rows, the gate line and the films are filled in when they land.
+DRAFT (session 4, 22:25): P5 rows (live telemetry, owner films), the final gate line and frames.json land later.
 
 Owner, verbatim: "Melee weapons double-attack on one click look horrible, we need on unique swing per weapon, with
 unique brutal animation per human enemies as it should one-shot them. For robot enemies we will need electric
@@ -20,13 +20,24 @@ Root for film paths: M = `C:/Users/kazda/kiro/gtai-masters/n24/melee`.
 | Riot shield rule per weapon | `2dfefbbc7`, row fields `vs_shield`, `shield_break_ticks` | katana: blocked from the front, shield shoved open 40 ticks, next cut kills; plasma and baton: through; chainsaw: through at the end of its committed grind |
 | Electric finisher on robots | `e04b93990` `melee_shutdown.gd` + `robot_shutdown_fx.gd`; M/electric (4 clips 1920x1080 60 fps 15.2 s) | baton: robot_thug / robot_gunner shut down in one swing; shield_robot / sentry_turret overloaded 150 ticks then executed by the second swing; war_machine normal damage + 30-tick stun; bosses never |
 | No melee cursor | `5a40e1370`, M/cursor/compare.png | hands + melee weapons show the system arrow; plain dot one const away (`WeaponCursor.PLAIN_DOT`) |
+| Baton kill on a human shows the shock | `9f8d6c8f8` `kill_cook_art.gd`: contact flash, 20-tick seizure, white/blue/amber current over the body, then the throw; M/kills/p4/electro_baton-32.png, -64.png | before: nothing visible until +16 |
+| Plasma kill is hot and bloody | `4bdda2843` `kill_plasma_art.gd`: hot streak on the cut (comic star off), edges white-hot -> amber over 40 ticks, blood fan + pool (view only, no combat RNG); M/kills/p4/plasma_sword-32.png, -64.png | 5 human types before/after |
+| Robot wreck reads at 32 px/m | `f6978fc2f` `robot_shutdown_fx.gd`: bigger white-core amber arcs, wreck keeps its gunmetal plates; M/kills/p4/robot-shutdown-32.png, -64.png | before: pale cut-out |
+| Decision lines | `7144b8a1a` docs/decisions.md: cursor, claw, robo_tazer | |
+| Gate on `f6978fc2f` | `node tools/gate/run.mjs --rev=f6978fc2f` PASS, `build/gate/f6978fc2f8fe/gate.json` | lint 19/19, GUT 3811/0, 67 scenarios, parity 1200, release-compile 934/0 |
 | Shared arena kept to call sites | `4832ca100` | `combat_arena.gd` 2 changed lines vs `b3f4727c0` |
 | Tests | GUT 3792 pass / 0 fail (P3); mutate `melee_combo` 4/4, `melee_lethal` 8/12 (66.7%), `melee_shutdown` 15/20 (75%) | parity 1200 exact, bake + pinned 60 s replay held (P1) |
 
 ## What does not
 
-- (P4 pending) baton kill on a human showed no shock until the throw; plasma kill had no blood and a comic star;
-  chainsaw grind drew a white zigzag (also on main); robot wreck at 32 px/m read as a pale cut-out.
+- The chainsaw grind still draws a white electric zigzag on its victim (also on main): the saw's `stun_ticks` 16
+  goes through the electric stun, drawn by the shared `fight_areas_art.gd`. Fix brief written (P6,
+  `evidence/briefs/n24-p6-saw-hold.md`); still: M/kills/p4/chainsaw-64.png.
+- The right-facing baton contact frame: needs `rivet_windup.gd` routing or new strip art (not this lane's files);
+  still: M/kills/p4/baton_strike-64.png.
+- Mutate `kill_plasma_art.gd` 1/19 (5.3%) after P4: tests follow in P5.
+- `tools/godot/check.mjs` on `kill_styles.gd` / `signature_kills.gd` fails standalone ("Failed to compile depended
+  scripts" at `rig_clips.gd:0`) on `b3f4727c0` too (`build/p4-base-check.log`): pre-existing; the gate is green.
 - The "contractor" is drawn as a blue cop body: cast's art, not this lane's.
 - Seven archived quest tapes diverge at tick 60 on BOTH `b3f4727c0` and this branch (pre-existing).
 
@@ -68,3 +79,4 @@ Root for film paths: M = `C:/Users/kazda/kiro/gtai-masters/n24/melee`.
 | p1-one-swing | 73 | accepted | ask for 1080p frames from the start (movie writer) |
 | p2-one-shot | 71 | accepted, follow-ups into P3 | name the size-capped shared file's line budget up front |
 | p3-electric | 72 | accepted | ask for the 32 px/m look check before committing a look |
+| p4-kill-looks | 69 | accepted (2 items stopped at the allowlist) | trace a mark to its data row before naming the file to fix |

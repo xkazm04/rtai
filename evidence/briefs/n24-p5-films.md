@@ -71,3 +71,14 @@ no rebase, no reset --hard, never push. Fix lint and format findings in your own
 
 ## Report (final message)
 The swings table; per film: path, duration, resolution (ffprobe), what reads / does not; frames.json path; commits.
+
+## 3. Lowest priority, only after 1 and 2: the plasma kill's tests (tests only, no product change)
+Your P4 mutate on `kill_plasma_art.gd` scored 1/19 (5.3%). Add unit tests (new file
+`project/tests/unit/test_kill_plasma_art.gd`) that pin its rule-bearing parts: `drop(i, line, seed)` (deterministic,
+within the fan's angle and length, radius range), `ground_print` (DROPS drops, blot, clipped by push_out),
+`heat(age)` endpoints, and that `attach` collects only the two halves' `KillCutEdge` children. Then
+`node tools/mutate/mutate.mjs --file=project/features/combat/kills/kill_plasma_art.gd --max=20` and quote the score.
+Commit by 23:30.
+
+## Note from P4 review
+The final gate on `f6978fc2f` was green: keep it green (run `node tools/gate/quick.mjs` before each commit).

@@ -141,3 +141,47 @@ ticks, others through). Merge note: enemy_pit.gd hurt() signature (pressure's ai
 - 21:15 REPORT.md drafted (P1-P3 rows, calls, merge notes, ledger); P5 brief filled (hard stop 23:35, commit by
   23:30; cursor before side: copy `project/native/bin/*.dll` into the temp worktree or fall back to P1's still;
   priority order kills films > telemetry > electric > cursor > close-ups).
+- 21:20 REVIEW P4 `9f8d6c8f8` (baton shock on humans, kill_cook_art.gd): 20-tick seizure about the planted feet,
+  3-tick contact flash, two white/blue/amber current paths (hash, not RNG), render only. Ok on read; frames pending.
+- 21:31 REVIEW P4 `4bdda2843` (plasma kill): star flash off (flash_ticks 0), hot streak `kill_plasma_art.gd`, cut
+  edges white-hot -> amber over 40 ticks, a view-only blood fan + pool (patterned drops, no combat RNG). Ok on read.
+- 21:36 LOOKED kills/p4/electro_baton-64.png (contractor before/after): after shows the contact flash at +0 and
+  white/blue/amber arcs over the body at +4 and +16 (before: nothing until the throw). Reads. The arcs are regular
+  zigzag "icons" on both flanks; acceptable. Chainsaw-64 diagnostic: the white star/zigzag at t42-57 is a drawn
+  sprite in the shipped path (shapes fallback draws zigzags); item 3 in progress.
+- 21:37 `7144b8a1a` decision lines (cursor, claw, robo_tazer): match the director's calls. Ok.
+- 21:41 REVIEW P4 `f6978fc2f` (item 6, robot wreck): on collapse the plates drop the printed sticker for their own
+  gunmetal texture, halo hidden, chassis smoke-tinted; joint arcs white core + amber. Unit test added. Ok.
+- 21:44 LOOKED kills/p4/plasma_sword-32.png (5 types before/after): star gone, hot streak along the cut, blood
+  fan at +0/+4, pool by +16..+60; reads brutal on all five. Pool is a flat saturated blob (acceptable; red = blood).
+  robot-shutdown-32.png: after = bigger amber/white arcs at 305/317, wreck dark gunmetal at 338/545 (before: pale
+  cut-out). Reads.
+- 22:16 P4 ended (4144 s, exit 0). Item 0 CONFIRMED pre-existing: `build/p4-base-check.log` (UTF-16) shows
+  `check.mjs res://features/combat/kills/kill_styles.gd` FAIL on b3f4727c0 too, "Failed to compile depended scripts"
+  at `rig_clips.gd:0`. The full gate is green regardless: `node tools/gate/run.mjs --rev=f6978fc2f` PASS
+  (`build/gate/f6978fc2f8fe/gate.json`: lint 19/19, GUT 3811/0/2 skipped, 67 scenarios, parity 1200, selftest,
+  release-compile 934/0). Mutate kill_plasma_art 1/19 (5.3%): weak, tests go into P5 item 3.
+- 22:16 NEED director (unowned shared file, also on main): the chainsaw grind's white zigzag is the shared stun
+  renderer `project/features/combat/weapons/fight_areas_art.gd` drawing `WeaponFxElectro.stun` sparks on any stunned
+  victim, the grind's hold included. Fix: a non-electric stun look for a melee hold (or the grind holds without the
+  stun flag; that half is ours, next session). Still: M/kills/p4/chainsaw-64.png.
+- 22:16 NEED director: the right-facing baton contact frame needs `project/features/characters/rivet_windup.gd`
+  routing (only the left-facing strike has its own sheet) or new base strip art. Still: M/kills/p4/baton_strike-64.png.
+- 22:16 ASTRA p4-kill-looks 69 accepted (2 items stopped at the allowlist as asked).
+- 22:17 ASTRA RUNNING p5-films since 22:16 (--resume of the P2-P4 thread; lock pid 55724; brief
+  evidence/briefs/n24-p5-films.md, hard stop 23:35, commit by 23:30; out evidence/briefs/n24-p5-films.out.txt).
+- 22:24 CORRECTION to 22:16 chainsaw NEED: the trigger is ours. `melee_weapons.json` `chainsaw_drive` (and
+  `chainsaw_1`) carry `stun_ticks: 16`; `melee_contact.gd:24-25` applies it through `PlayerShock.stun_on`, which
+  sets `FighterFx.stun_ticks`, and `fight_areas_art.gd:36` draws `WeaponFxElectro.stun` on any stunned hostile.
+  Fix in our files: a non-electric hold (`mind.stun_until`, as `MeleeShutdown._hold` does). Brief written:
+  `evidence/briefs/n24-p6-saw-hold.md` (fill HARDSTOP/COMMITBY). The NEED director stands only as a fallback.
+- 22:25 REPORT.md updated with the P4 rows, the gate on f6978fc2f, what does not, the ledger.
+
+NEXT (session 5): check astra.lock (pid 55724, p5-films since 22:16, hard stop 23:35) + its out file. Review P5:
+`n24/melee/telemetry/swings.md` (1.0 per click at all three cadences after; before = single_swing false), each film
+with ffprobe (1920x1080, 60 fps, 15-40 s) and 6 stills per film LOOKED by you, frames.json 8-15 entries, plasma
+tests + mutate. If P5 ends by about 23:40: launch P6 (saw hold, brief ready; hard stop 00:05, commit by 23:59), and
+review it. No product commit after 00:00. Final gate `node tools/gate/run.mjs --rev=HEAD` started by 00:15 (lane's
+one Godot: Astra must be done). After the freeze (01:30): `--reels` once. REPORT final at 01:40: the gate line + path,
+films, swings table, the P5/P6 ledger rows, `node tools/evidence/cites.mjs REPORT.md` clean, then commit
+JOURNAL/REPORT/briefs per path with `git commit -- <paths>`.
