@@ -183,3 +183,9 @@ NEXT (session 3 end 21:3x; Astra `deflect` RUNNING since 21:09, lock pid 62596, 
    <= 00:05, commit by 23:52; add to it: "check whether a stomp lands damage AND splash on Rivet (96 of 100)".
 4. 00:00 last new work; 00:15 final gate `node tools/gate/run.mjs --rev=HEAD`; then films (deflect, rocket/nail, average
    fight punished) and REPORT. The after-* batches give the before/after table (base-main vs final).
+- 21:24 peek at `deflect` (uncommitted, in progress): new `DeflectRule` called from `combat_arena.gd` `write_state`
+  first line (one-line call site; the class doc line "only the `combat` RNG stream" was removed to stay at the cap: it
+  is no longer true, fine). REVIEW: `DeflectRule.write_state` must write NOTHING on a tape with no deflect, else every
+  replay digest moves (check `replay_60s` digest and quest 1 `a113296dbccc` unchanged in Astra's scenario line).
+  Also touched: `gauntlet_combat.gd`, guard tests, `test_gauntlet_wave_stats.gd`, `test_live_deflect.gd`.
+- 21:25 ASTRA RUNNING deflect since 21:09 (lock pid 62596, hard stop 22:20). Session 3 ends; NEXT above (21:20) stands.
