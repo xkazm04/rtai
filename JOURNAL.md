@@ -74,3 +74,45 @@ NEXT (session 1 end, 18:3x; Astra `gaps` is running until <= 19:45):
    (`git merge --no-edit n24-motion`, record it), never while an Astra call runs.
 4. Films (pressure): deflect half through / rest scattered; Rivet's rocket and Gloria's nail before beside after;
    an average fight where standing still is punished. Commit the last new work by 00:00, final gate by 00:15.
+
+## Session 2 (18:47 - 20:17)
+
+- 18:47 start. astra.lock pid 9736 alive (node, `gaps` since 18:31, hard stop 19:45); out file empty until it ends.
+  Uncommitted Astra edits (task B): `combat.json` rifle 1.2, `gauntlet_street.gd`, two tests, decisions, gauntlet-loop.
+  grep `NEED pressure`: ghost 17:35 (served in brief 04 task 2b), melee 18:39 (info: n24-melee one swing per click,
+  melee kills humans in one landed swing from P2: re-measure after merging n24-melee; nothing for the bot to change
+  unless its melee relied on the chained 2nd hit). Ghost `MILESTONE ready 8d1d6fef1` (18:38). Motion: no
+  `MILESTONE dash` yet (dash resume running since 18:33).
+- 18:47 review note on task B: `test_dock_waves.gd` "weak rounds" (`< max_hp * 0.25`) replaced by an exact 36.0:
+  that drops the test's meaning. Ask for a bound that still says "weaker than Rivet" instead of a pinned value.
+- 18:52 DECISION pressure: `project/features/combat/squad/foe_rocket.gd` (the rocket trooper's trigger and
+  reposition, logic not view) is pressure's tonight: it is enemy fire timing; cast owns only the `foe_*view*.gd` files
+  in squad/, and no lane has touched `foe_rocket.gd` since main (`git log main..HEAD` in all four worktrees: empty).
+  Granted to Astra in the follow-up when it reports the NEED.
+- 19:46 ASTRA gaps 75 accepted (tasks A `ace15ca16`, B `4e516c297`; C staged, hook cut at 19:40). Read C's diff:
+  rifle `cooldown_s` 1.4 -> 0.5 + `aim_lead` 0.9 (gauntlet `StreetSquad._ranged` -> `GuardBrain.street_aim`, lead held
+  through the 4-round burst), `turret_gun` cooldown 1.5 -> 0.75 / burst gap 0.065, turret `telegraph_s` 0.9 -> 0.6,
+  `rocket` cooldown 2.2 -> 0.85, `enemy_fire.rest_s` 1 -> 0.5; quest 1 input digest 37bf8deacaad -> a113296dbccc (the
+  shared rifle cooldown; decisions line present). Accepted.
+- 19:50 MILESTONE gaps `eb5e0600e` (director committed Astra's staged C through the hook: lint 19/19, tool-tests ok,
+  ~10 min). Rounds/s per type before -> after (`evidence/n24-pressure/fire-gaps/{before,after}.md`): patrol_cop / swat /
+  robot_gunner / contractor 2.13 -> 4.03; turret 2.10 -> 3.90 standing (circling 1.50 -> 2.60); rocket trooper 0.33 ->
+  0.33; war machine 0.40 (boss design, unchanged). Hits on a Rivet circling at 10 m in 30 s: rifles 0 -> 25-38, rocket
+  0 -> 0, turret 0 -> 0. Standing still is hit about twice as often as circling (patrol_cop 60 vs 27 hits).
+  Tells: rifle none (bursts), turret 0.6 s, rocket 1.0 s, drill `tell_s` 0.35 kept.
+- 19:50 FRICTION the pre-commit hook takes ~10 min on a table commit (tool-tests read the tables): Astra's 19:40 cutoff
+  cut it. Briefs: last commit 10 min before the hard stop.
+- 20:00 ASTRA RUNNING rocket-gap since 20:00 (resume; brief `evidence/briefs/n24-pressure-01c-rocket-gap.md`: rocket
+  trooper fires from where it stands + lead, dock test bound, mutate guard_brain; lock pid 63052, hard stop 20:45).
+
+NEXT (session 2 end, 20:1x; Astra `rocket-gap` running until <= 20:45):
+1. Check `astra.lock` / last line of `astra-calls.jsonl`; read `evidence/briefs/n24-pressure-01c-rocket-gap.out.txt`.
+   Review task D (foe_rocket.gd: fire from where it stands, `relocate_after_shots`, rocket lead; rocket rounds/s >= 0.5,
+   circling hits > 0) and E (dock bound, mutate scores). Bounce short work into brief 02 as task 0 rather than a new call.
+2. Right after it ends: the after-gaps batch (Godot is free between calls; ~20 min):
+   `node tools/gauntlet/ablate.mjs --name=after-gaps --rev=HEAD -- --profile=all --pick=greedy --controls=wheel --seed0=1 --seeds=5 --waves=40 --jobs=1 --out=<abs>/evidence/n24-pressure/after-gaps`
+   (check ablate's own usage first). Compare with base-main: if average dies before wave 6, keep the owner's doubling
+   and plan budget/count knobs (brief 05).
+3. Then launch brief 02 (deflect; fill HARDSTOP/COMMITBY = start + 75 min / start + 65 min; last commit 10 min before
+   the stop because of the hook). Then 03, then 04 (after merging n24-motion at `MILESTONE dash` and n24-ghost
+   `8d1d6fef1`). Brief 05 (not written): films (deflect, rocket/nail, average fight punished) + tuning knobs.

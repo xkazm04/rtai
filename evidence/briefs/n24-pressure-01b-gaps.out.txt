@@ -1,0 +1,29 @@
+**Tasks A and B are committed. Task C is staged across 13 files.** Its pre-commit hook was still running at the 19:40 cutoff, so I stopped it. `HEAD` is `4e516c297`.
+
+| Task | Result | Checks |
+|---|---|---|
+| A | `ace15ca16` — committed the fire-gap probe, scene, arena and clock scripts, unit test, UIDs, before measurements, and debt baseline. | Quick gate passed. All 19 lint checks passed. Mutation **10/20** killed. |
+| B | `4e516c297` — doubled hostile rifle damage from 0.6 to 1.2 and fixed a zero late timer to use the regular deadline. Changed `combat.json`, `gauntlet_street.gd`, `test_dock_waves.gd`, `test_gauntlet_wave_timer.gd`, `gauntlet-loop.md`, and `decisions.md`. | Changed suite **3,773 passed**, full suite **3,789 passed**, two skips each. Scenarios **67 ran, 0 failed**. No digest moved. Mutation **5/6** killed. |
+| C | Staged the combat schema, `combat.json`, `enemies.json`, `weapons.json`, `enemy_brain.gd`, `guard_brain.gd`, `gauntlet_street.gd`, two unit tests, the quest replay expectation, `decisions.md`, and both after measurements. | All **21** measurement partitions and **5** table hashes verified. Static quick checks passed. The engine-backed quick check was interrupted. An intermediate targeted run passed **29/29**. The final targeted run reached the hard stop. Mutation requires a commit, so there is no C score. |
+
+### Fire rate and circling hits
+
+Each trial lasted 30 seconds and started at 10 m. Standing Rivet took more hits than circling Rivet for every type. [Before measurements](<C:/Users/kazda/kiro/gtai-wt/n23-loop/evidence/n24-pressure/fire-gaps/before.md>) · [After measurements](<C:/Users/kazda/kiro/gtai-wt/n23-loop/evidence/n24-pressure/fire-gaps/after.md>)
+
+| Enemy | Standing rounds/s | Circling rounds/s | Strafing rounds/s | Circling hits |
+|---|---:|---:|---:|---:|
+| Patrol cop | 2.13 → 4.03 | 2.13 → 4.03 | 2.13 → 4.03 | 0 → **27** |
+| SWAT | 2.13 → 4.03 | 2.13 → 4.03 | 2.13 → 4.03 | 0 → 38 |
+| Robot gunner | 2.13 → 4.03 | 2.13 → 4.03 | 2.13 → 4.03 | 0 → 30 |
+| Contractor | 2.13 → 4.03 | 2.13 → 4.03 | 2.13 → 4.03 | 0 → 25 |
+| Rocket trooper | 0.33 → 0.33 | 0.33 → 0.33 | 0.33 → 0.30 | 0 → **0** |
+| Sentry turret | 2.10 → 3.90 | 1.50 → 2.60 | 2.10 → 3.90 | 0 → 0 |
+| War machine | 0.40 → 0.40 | 0.17 → 0.17 | 0.37 → 0.37 | 0 → 0 |
+
+The rifle spent about 21 seconds between bursts in `GuardBrain.trigger` at baseline. A **0.5 s cooldown** and **0.9 linear lead share**, held through each four-round burst, brought the patrol cop’s longest hit-free interval to **2.95 s**. Range-drill rest fell to 0.5 s. The turret retains a 0.6 s tell before its sweep. War-machine alignment still dominates its circling gap. Its shared guard-spawn cooldown shifted the first shot and strafing hits went from six to five.
+
+**One replay digest moved.** The shorter hostile rifle cooldown changed Quest 1’s final hash from `37bf8deacaad` to `a113296dbccc`. With the updated expectation, the replay was identical, all six beats completed, Rivet earned $1,500 with zero deaths, and the scenario reported **1 ran, 0 failed**. The full C scenario suite was not rerun.
+
+**NEED pressure: `project/features/combat/squad/foe_rocket.gd`** owns the mandatory 3 m relocation. It consumed about 19 seconds of the circling trial and absorbed the shorter cooldown. The rocket retained its 1.0 s visible tell and missed the circling-hit target.
+
+[astra: 4433s, exit 0]
