@@ -96,3 +96,14 @@ with frames.json. Commit last new work by 00:00, final gate by 00:15. REPORT: ro
   shock (no arcs, no seizure, no flash): the man is just standing, then at +16..+36 he is thrown back and lies as a
   charred body. For P4: the baton kill needs visible arcs and a tick-locked seizure on the victim over the first
   ~20 ticks (white/amber arcs, not teal), then the throw. Same check for the P3 robot shut-down.
+
+## Session 3 (19:57 to 21:27)
+
+- 19:58 start. astra.lock pid 41356 alive (node, p3-electric since 19:53, out file still empty). grep `NEED melee`
+  in the four other journals: only pressure 18:30 (answered 18:43). Uncommitted combat_arena.gd / melee_lethal.gd =
+  P3 follow-up 1 in progress (Astra's).
+- 20:02 LOOKED kills/chainsaw_64.png (patrol): saw bites at the kill tick, blood fan, body down in pieces by +80;
+  reads brutal. variants/review_plasma_sword_32.png (contractor): white flash at the kill tick, halves and gear fly
+  apart, NO blood at all (cauterised?) and the burst is a cartoon star: weakest of the cuts at 32 px/m. P4 item.
+- 20:05 REVIEW P3 fu1 `4832ca100`: combat_arena.gd net diff vs b3f4727c0 = 2 lines (damage_scale + death_kind call sites), header restored: ok. P4 brief written (evidence/briefs/n24-p4-kill-looks.md: baton shock on humans, plasma blood + cut streak, chainsaw zigzag, right-facing baton frame, three decision lines: cursor, claw, robo_tazer).
+- 20:06 NOTE merge: P3 changes `project/features/combat/ai/enemy_pit.gd` hurt() (optional `melee` param + 2 call-site lines into MeleeShutdown); ai/** fire timing is pressure's: a conflict there is possible at merge, keep both.
