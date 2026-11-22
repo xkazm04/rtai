@@ -19,6 +19,14 @@ walk or shoot during the hold (prove it with a unit test). Warm sparks and blood
 If the hold cannot be separated from the FighterFx stun without touching `fight_areas_art.gd` (not ours): stop and
 report a NEED with the exact line.
 
+## Item 2 (only if item 1 is committed and 15 minutes remain): the plasma blood beads
+Director, `n24/melee/kills/p4/plasma_sword-64.png` (contractor): at the contact and +4 the airborne blood is a chain
+of identical round beads in a neat arc (reads as a vector trail, not a spray), and by +36 the pool is one flat
+saturated blob larger than the halves. Wanted: the same droplet look the katana's kill uses (`kills/katana_64.png`:
+varied sizes, smears, darker red where it pools), a pool no wider than about the body's shoulders. Files:
+`project/features/combat/kills/kill_plasma_art.gd`, `kill_ground.gd` (add both to the allowlist for this item only).
+Before/after 32 + 64 to `n24/melee/kills/p6/`. Separate commit.
+
 ## Acceptance
 - Before/after at the same ticks (42, 46, 50, 57) at 32 and 64 px/m: `C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p6/`.
   Look at them: no white zigzag on the saw's victim; the baton still shows its arcs (render the baton shot too).

@@ -185,3 +185,6 @@ review it. No product commit after 00:00. Final gate `node tools/gate/run.mjs --
 one Godot: Astra must be done). After the freeze (01:30): `--reels` once. REPORT final at 01:40: the gate line + path,
 films, swings table, the P5/P6 ledger rows, `node tools/evidence/cites.mjs REPORT.md` clean, then commit
 JOURNAL/REPORT/briefs per path with `git commit -- <paths>`.
+- 22:23 LOOKED kills/p4/plasma_sword-64.png: the cut streak and the cooling edges read; the airborne blood at +0/+4
+  is a chain of identical round beads (vector-trail look) and the +36 pool is one flat blob wider than the halves.
+  Added as optional item 2 to the P6 brief.
