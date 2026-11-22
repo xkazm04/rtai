@@ -8,10 +8,10 @@ import { canonicalJson } from '../lib/canonical_json.mjs';
 import { ROOT, readJson } from '../lib/repo.mjs';
 import { BATCH_SCHEMA, RUN_SCHEMA, validateRun } from './contract.mjs';
 import { night } from './night.mjs';
-import { confirmChange, pairRuns } from './tune_confirm.mjs';
+import { confirmChange, pairNullRuns, pairRuns } from './tune_confirm.mjs';
 import { nightOf } from './tune_git.mjs';
 import { propose } from './tune_propose.mjs';
-import { BASELINE, clamped, ensureBaseline, git, inventory, TABLES, withLock } from './tune_state.mjs';
+import { BASELINE, clamped, digest, ensureBaseline, git, inventory, TABLES, withLock } from './tune_state.mjs';
 
 const catalog = 'tools/gauntlet/knobs.json';
 
@@ -119,7 +119,8 @@ function robotBatch() {
 
 const beforeFile = 'build/before/batch.json', planFile = 'build/before/plan.json', afterFile = 'build/after/batch.json';
 const proposeArgs = ['--batch=' + beforeFile, '--out=' + planFile];
-const confirmArgs = ['--before=' + beforeFile, '--after=' + afterFile, '--plan=' + planFile];
+const crossSeed = { mode: 'cross-seed' };
+const confirmArgs = ['--floor-mode=cross-seed', '--before=' + beforeFile, '--after=' + afterFile, '--plan=' + planFile];
 
 function prepare(root, batch) {
   write(root, beforeFile, batch);
@@ -215,7 +216,7 @@ test('a collapsed profile gap and a dominant enemy weapon each select a measured
     r.death.by = 'other';
   }
   const paired = pairRuns(batch, after);
-  for (const c of plan.changes) assert.equal(confirmChange(paired, c).verdict, 'kept', c.id);
+  for (const c of plan.changes) assert.equal(confirmChange(paired, c, crossSeed).verdict, 'kept', c.id);
 });
 
 test('apply refuses on the wrong branch before reading a plan; the baseline refuses overwrite', (t) => {
@@ -245,13 +246,13 @@ test('confirmation pairs seed, profile, controls and pick, and respects a measur
   const after = structuredClone(before);
   after.results.reverse();
   for (const r of after.results) r.waves[0].seconds -= 2;
-  const result = confirmChange(pairRuns(before, after), c);
+  const result = confirmChange(pairRuns(before, after), c, crossSeed);
   assert.equal(result.pairs, 12);
   assert.equal(result.improvement, 2);
   assert.equal(result.floor, 10);
   assert.equal(result.verdict, 'noise');
   const rows = pairRuns(before, after);
-  const small = confirmChange(rows, c, rows.slice(0, 11));
+  const small = confirmChange(rows, c, { ...crossSeed, beforeRows: rows.slice(0, 11) });
   assert.equal(small.verdict, 'too few pairs');
   assert.ok(Number.isNaN(small.floor));
   assert.equal(small.aa_pairs, 5);
@@ -264,6 +265,68 @@ test('confirmation pairs seed, profile, controls and pick, and respects a measur
   assert.equal(pairRuns(before, after).length, 0);
 });
 
+test('null-salt pairs matching seeds, measures byte changes and decides independently of cross-seed', (t) => {
+  const root = repository(t), before = robotBatch();
+  for (const run of before.results) run.waves[0].seconds = run.seed % 2 ? 40 : 50;
+  // The legacy before manifest has no digests. Keep its original bytes next to it.
+  for (const [i, row] of before.runs.entries()) {
+    row.file = 'runs/' + row.seed + '.json';
+    write(root, 'build/before/' + row.file, before.results[i]);
+  }
+  prepare(root, before);
+  const neutral = structuredClone(before), after = structuredClone(before);
+  neutral.args.salt = 1;
+  for (const [i, r] of neutral.results.entries()) {
+    if (r.seed > 2) r.waves[0].seconds++;
+    // Seed 2 differs only by its trailing newline, so a parsed-value comparison would miss it.
+    neutral.runs[i].result_sha256 = digest(JSON.stringify(r, null, 2) + (r.seed === 2 ? '' : '\n'));
+  }
+  for (const r of after.results) r.waves[0].seconds -= 2;
+  neutral.results.reverse();
+  const nullFile = 'build/null/batch.json';
+  write(root, nullFile, neutral);
+  write(root, afterFile, after);
+  const args = ['--before=' + beforeFile, '--null=' + nullFile];
+  const report = ok(cli(root, 'floor', ...args, '--out=build/floors.md'));
+  assert.equal(readFileSync(join(root, 'build/floors.md'), 'utf8'), report);
+  assert.match(report, /differ in 11 of 12 matched/);
+  assert.match(report, /Wave 1 \(s\) \| 1 \| 12 \| 10 \| 6/);
+  assert.match(report, /Wave reached \| 0 \| 12 \| 0 \| 6/);
+  for (const [mode, verdict] of [['null-salt', 'kept'], ['cross-seed', 'noise']]) {
+    ok(cli(root, 'confirm', ...args, '--after=' + afterFile, '--plan=' + planFile,
+      ...(mode === 'null-salt' ? [] : ['--floor-mode=' + mode])));
+    const ledger = readJson(join(root, 'build/after/tune-ledger.json'));
+    const change = ledger.changes.find((c) => c.metric.wave === 1);
+    assert.equal(change.floor_mode, mode);
+    assert.equal(change.verdict, verdict);
+    assert.equal(change.floor, mode === 'null-salt' ? 1 : 10);
+    assert.equal(change.floors['null-salt'].floor, 1);
+    assert.equal(change.floors['cross-seed'].floor, 10);
+    const group = change.floors['null-salt'].aa_groups[0];
+    assert.deepEqual(group.left, before.results.map((r) => r.seed));
+    assert.deepEqual(group.right, group.left);
+    const md = readFileSync(join(root, 'build/after/tune-ledger.md'), 'utf8');
+    assert.match(md, /Null-salt floor \(pairs\) \| Cross-seed floor \(pairs\) \| Deciding mode/);
+    assert.ok(md.includes('1 (12) | 10 (6) | ' + mode + ' | ' + verdict));
+  }
+  assert.match(cli(root, 'confirm', '--before=' + beforeFile, '--after=' + afterFile, '--plan=' + planFile).stderr, /--null/);
+  assert.match(cli(root, 'floor', '--before=' + beforeFile, '--null=' + beforeFile).stderr, /different bot salts/);
+});
+
+test('a missing null wave reduces only its own floor coverage', () => {
+  const before = robotBatch(), neutral = structuredClone(before);
+  neutral.args.salt = 1;
+  for (const run of neutral.results.slice(5)) delete run.waves[0].seconds;
+  const rows = pairRuns(before, before);
+  const metric = { type: 'wave', profile: 'average', wave: 1, target: 15 };
+  const result = confirmChange(rows, { metric }, { beforeRows: rows, nullRows: pairNullRuns(before, neutral) });
+  assert.equal(result.verdict, 'too few pairs');
+  assert.equal(result.aa_pairs, 5);
+  assert.ok(Number.isNaN(result.floor));
+  assert.equal(result.floors['cross-seed'].aa_pairs, 6);
+  assert.equal(result.floors['cross-seed'].floor, 0);
+});
+
 test('confirmation keeps the same taker and decliner seeds on both sides of a bonus comparison', () => {
   const before = fixtureBatch(), after = structuredClone(before);
   for (const r of after.results) {
@@ -273,10 +336,10 @@ test('confirmation keeps the same taker and decliner seeds on both sides of a bo
     r.waves = r.waves.filter((w) => w.n <= r.wave_reached);
   }
   const change = { metric: { type: 'offer', id: 'weapon_pistol', outcome: 'survived', target: 0 } };
-  const result = confirmChange(pairRuns(before, after), change);
+  const result = confirmChange(pairRuns(before, after), change, crossSeed);
   assert.deepEqual([result.pairs, result.measured_before, result.measured_after, result.verdict], [12, 2, 0, 'kept']);
   for (const r of after.results) r.picks[0].taken = 'ghost_kerf';
-  const switched = confirmChange(pairRuns(before, after), change);
+  const switched = confirmChange(pairRuns(before, after), change, crossSeed);
   assert.equal(switched.pairs, 0);
   assert.equal(switched.verdict, 'too few pairs');
 });
@@ -435,7 +498,7 @@ test('a vanished pointer is reported and skipped while another planned knob stil
   // The confirm input and the ledger beside it can live outside the ignored build directory.
   const after = 'night-output/after.json';
   write(root, after, fixtureBatch());
-  ok(cli(root, 'confirm', '--before=' + beforeFile, '--after=' + after, '--plan=' + planFile, '--revert'));
+  ok(cli(root, 'confirm', '--floor-mode=cross-seed', '--before=' + beforeFile, '--after=' + after, '--plan=' + planFile, '--revert'));
   const ledger = readJson(join(root, 'night-output/tune-ledger.json'));
   assert.equal(ledger.changes[0].commit, null);
   assert.ok(ledger.changes[1].revert_commit);
@@ -472,7 +535,8 @@ test('a night with synthetic batches drives the real report, propose, apply and 
   function run([script, ...args]) {
     if (script.endsWith('/batch.mjs')) {
       const data = robotBatch();
-      if (jobs.length) for (const r of data.results) r.waves[0].seconds = 15;
+      data.args.salt = args.includes('--salt=1') ? 1 : 0;
+      if (jobs.length === 2) for (const r of data.results) r.waves[0].seconds = 15;
       const dest = args.find((arg) => arg.startsWith('--out=')).slice(6);
       write(root, join(dest, 'batch.json'), data);
       jobs.push(args.filter((arg) => !arg.startsWith('--out=')));
@@ -488,7 +552,8 @@ test('a night with synthetic batches drives the real report, propose, apply and 
     ok(invoke());
   }
   night(['--seeds=12', '--pick=random', '--out=' + dir], { root, run, log() {} });
-  assert.deepEqual(jobs[0], jobs[1]);
+  assert.deepEqual(jobs[1], [...jobs[0], '--salt=1']);
+  assert.deepEqual(jobs[0], jobs[2]);
   const ledger = readJson(join(dir, 'after/tune-ledger.json'));
   assert.deepEqual(ledger.changes.map((c) => c.verdict), ['kept', 'noise', 'noise']);
   const md = readFileSync(join(dir, 'night.md'), 'utf8');

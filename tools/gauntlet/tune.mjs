@@ -8,7 +8,9 @@ import { readJson } from '../lib/repo.mjs';
 import { MIN_AA_PAIRS, PROFILES } from './contract.mjs';
 import { loadBatch } from './report.mjs';
 import { fmt } from './report_tables.mjs';
-import { confirmChange, pairRuns } from './tune_confirm.mjs';
+import { confirmChange, pairNullRuns, pairRuns } from './tune_confirm.mjs';
+import { floorMode } from './tune_floor.mjs';
+import { floorReport, loadFloorBatch } from './tune_floor_report.mjs';
 import { applyPlan, checkPlan, commitsFor, nightly, nightOf, ownBranch, planId, revertChanges, revertFor } from './tune_git.mjs';
 import { PLAN_SCHEMA, propose } from './tune_propose.mjs';
 import { atomicWrite, BASELINE, digest, ensureBaseline, git, inventory, withLock } from './tune_state.mjs';
@@ -66,46 +68,59 @@ function writePlan(root, v) {
 const cell = (s) => String(s).replaceAll('|', '\\|').replace(/[\r\n]+/g, ' ');
 function markdown(ledger) {
   const lines = ['# Gauntlet tune ledger', '', 'Plan ' + ledger.plan_sha256 + '. Matched ' + ledger.matched_runs + ' of '
-    + ledger.before_runs + ' before and ' + ledger.after_runs + ' after runs.', '',
+    + ledger.before_runs + ' before and ' + ledger.after_runs + ' after runs. The ' + ledger.floor_mode
+    + ' floor decides each verdict.' + (ledger.null_sha256 ? ' Matched ' + ledger.matched_null_runs + ' null runs.' : ''), '',
     'Positive improvement means the measured miss shrank. An empty apply SHA means this branch has no commit for that edit. A revert SHA records an executed undo.', '',
-    '| Knob | Before → after | Baseline | Measured miss | Confirmation before → after | Pairs | Improvement (CI95) | A/A floor (pairs) | Verdict | Apply / revert SHA |',
-    '|---|---:|---:|---|---:|---:|---:|---:|---|---|'];
+    '| Knob | Before → after | Baseline | Measured miss | Confirmation before → after | Pairs | Improvement (CI95) | Null-salt floor (pairs) | Cross-seed floor (pairs) | Deciding mode | Verdict | Apply / revert SHA |',
+    '|---|---:|---:|---|---:|---:|---:|---:|---:|---|---|---|'];
+  const floorCell = (f) => {
+    if (!f) return 'not measured';
+    const value = Number.isFinite(f.estimate) && !Number.isFinite(f.floor) ? fmt(f.estimate) + '*' : fmt(f.floor);
+    return value + ' (' + f.aa_pairs + ')';
+  };
   for (const c of ledger.changes) {
     const unit = { wave: 's', spread: 'waves', killer: 'death share', offer: c.metric.outcome === 'seconds' ? 's' : 'waves' }[c.metric.type];
     lines.push('| ' + [c.id, c.before + ' → ' + c.after, c.baseline, c.miss,
       fmt(c.measured_before) + ' → ' + fmt(c.measured_after) + ' ' + unit, c.pairs,
-      fmt(c.improvement) + ' (' + c.ci95.map(fmt).join(' to ') + ')', fmt(c.floor) + ' (' + c.aa_pairs + ')',
+      fmt(c.improvement) + ' (' + c.ci95.map(fmt).join(' to ') + ')',
+      floorCell(c.floors['null-salt']), floorCell(c.floors['cross-seed']), c.floor_mode,
       c.verdict, [c.commit, c.revert_commit].filter(Boolean).join(' / ') || '—'].map(cell).join(' | ') + ' |');
   }
   if (!ledger.changes.length) lines.push('', 'The plan contained no changes.');
   else {
     lines.push('', '## A/A seed pairs', '',
-      'Within each eligible before-batch group, sort by seed and pair adjacent ranks. Read the two lists in matching order. '
+      'Null-salt pairs each before seed with its null run. Cross-seed pairs adjacent before seeds in each group. '
       + 'The floor is the larger absolute CI95 endpoint for right minus left, with at least ' + MIN_AA_PAIRS
-      + ' pairs. Offer entries show take/decline seed pairs.', '',
-      '| Knob | Before group | Left seeds | Right seeds |', '|---|---|---|---|');
+      + ' pairs. An asterisk marks an estimate below that minimum. Offer entries show take/decline seed pairs.', '',
+      '| Knob | Floor mode | Group | Left seeds | Right seeds |', '|---|---|---|---|---|');
     const seedList = (side) => side.map((s) => Array.isArray(s) ? s.join('/') : s).join(', ');
-    for (const c of ledger.changes) for (const group of c.aa_groups)
-      lines.push('| ' + [c.id, group.stratum, seedList(group.left), seedList(group.right)].map(cell).join(' | ') + ' |');
+    for (const c of ledger.changes) for (const [mode, floor] of Object.entries(c.floors))
+      for (const group of floor?.aa_groups ?? [])
+        lines.push('| ' + [c.id, mode, group.stratum, seedList(group.left), seedList(group.right)].map(cell).join(' | ') + ' |');
   }
   return lines.join('\n') + '\n';
 }
 
 function confirmation(root, v) {
   if (v.revert) ownBranch(root);
+  const mode = floorMode(v['floor-mode']);
+  if (mode === 'null-salt' && !v.null) throw new Error('--null=<batch.json> is required for null-salt');
   const plan = readJson(v.plan);
   checkPlan(plan);
   const beforeHash = hashFile(v.before);
   if (plan.batch_sha256 !== beforeHash) throw new Error('before batch does not match the plan');
   const before = loadBatch(v.before), after = loadBatch(v.after);
+  if ((before.args.salt ?? 0) !== (after.args.salt ?? 0)) throw new Error('before and after need the same bot salt');
+  const nullRows = v.null ? pairNullRuns(before, loadBatch(v.null)) : null;
   const rows = pairRuns(before, after);
   const beforeRows = pairRuns(before, before);
   const receipts = commitsFor(root, plan);
   const ledger = { schema: LEDGER, plan_sha256: planId(plan), before_sha256: beforeHash, after_sha256: hashFile(v.after),
+    floor_mode: mode, null_sha256: v.null ? hashFile(v.null) : null, matched_null_runs: nullRows?.length ?? 0,
     before_runs: before.results.length, after_runs: after.results.length, matched_runs: rows.length,
     changes: plan.changes.map((c) => {
       const commit = receipts.get(c.id) ?? null;
-      return { ...confirmChange(rows, c, beforeRows), commit, revert_commit: revertFor(root, commit) };
+      return { ...confirmChange(rows, c, { beforeRows, nullRows, mode }), commit, revert_commit: revertFor(root, commit) };
     }) };
   const stem = join(dirname(resolve(v.after)), 'tune-ledger');
   artifact(root, stem);
@@ -119,16 +134,27 @@ function confirmation(root, v) {
     save();
     throw new Error('no matching seeds, profiles, controls and pick modes to confirm');
   }
-  if (v.revert) revertChanges(root, ledger, save, [v.before, v.after, v.plan, stem + '.json', stem + '.md'], nightOutput(root, v));
+  if (v.revert) revertChanges(root, ledger, save, [v.before, v.after, v.null, v.plan, stem + '.json', stem + '.md'].filter(Boolean), nightOutput(root, v));
   else save();
   for (const c of ledger.changes) console.log(c.id + ' ' + c.verdict + ', improvement ' + fmt(c.improvement)
-    + ', CI95 ' + c.ci95.map(fmt).join(' to ') + ', A/A floor ' + fmt(c.floor));
+    + ', CI95 ' + c.ci95.map(fmt).join(' to ') + ', ' + mode + ' floor ' + fmt(c.floor));
   console.log('wrote ' + stem + '.json and .md');
   return ledger;
 }
 
 export function main([command, ...argv]) {
   const root = git(process.cwd(), 'rev-parse', '--show-toplevel').trim();
+  if (command === 'floor') {
+    const v = options(argv, ['before', 'null'], ['out']);
+    const report = floorReport(loadFloorBatch(v.before), loadFloorBatch(v.null));
+    if (v.out) {
+      artifact(root, v.out);
+      if (!v.out.toLowerCase().endsWith('.md')) throw new Error('--out must name a Markdown file');
+      atomicWrite(v.out, report);
+    }
+    process.stdout.write(report);
+    return report;
+  }
   if (command === 'propose') {
     if (argv.includes('--overwrite-baseline')) throw new Error('tuner baseline is write-once');
     const v = options(argv, ['batch', 'out'], ['target-s', 'profile', 'max', 'killer-share', 'min-n']);
@@ -144,10 +170,10 @@ export function main([command, ...argv]) {
     });
   }
   if (command === 'confirm') {
-    const v = options(argv, ['before', 'after', 'plan'], ['night-output'], ['revert']);
+    const v = options(argv, ['before', 'after', 'plan'], ['night-output', 'floor-mode', 'null'], ['revert']);
     return withLock(root, () => confirmation(root, v));
   }
-  throw new Error('usage: tune.mjs propose|apply|confirm [options]');
+  throw new Error('usage: tune.mjs propose|apply|confirm|floor [options]');
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

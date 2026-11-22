@@ -79,7 +79,8 @@ test('archived alive caps count in reports and paired confirmation, only for mea
   assert.equal(before.results.length, 12);
   for (const run of after.results) run.waves[0].seconds = 15;
   const pairs = pairRuns(before, after);
-  const measure = (wave) => confirmChange(pairs, { metric: { type: 'wave', profile: 'average', wave, target: 15 } });
+  const measure = (wave) => confirmChange(pairs, { metric: { type: 'wave', profile: 'average', wave, target: 15 } },
+    { mode: 'cross-seed' });
   assert.deepEqual([measure(1).pairs, measure(1).verdict, measure(2).pairs], [12, 'kept', 0]);
   const model = analyze(before);
   assert.deepEqual(model.waves.map((w) => w.timed), [12, 0]);

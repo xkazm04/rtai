@@ -42,7 +42,7 @@ function clean(root, artifacts = [], nightDir = null) {
   const dirty = status.split('\0').filter(Boolean).find((line) => {
     if (!prefix || !line.startsWith('?? ' + prefix)) return true;
     const file = line.slice(3 + prefix.length);
-    return file !== 'plan.json' && !file.startsWith('before/') && !file.startsWith('after/');
+    return file !== 'plan.json' && !/^(before|null|after)\//.test(file);
   });
   if (dirty) throw new Error('dirty tree outside evidence/ and build/: ' + dirty);
 }

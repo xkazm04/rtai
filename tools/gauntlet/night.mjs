@@ -8,6 +8,7 @@ import { ROOT, readJson } from '../lib/repo.mjs';
 import { nodeCommand, parseArgs as batchArgs } from './commands.mjs';
 import { fmt } from './report_tables.mjs';
 import { artifact } from './tune.mjs';
+import { floorMode } from './tune_floor.mjs';
 import { isTuneBranch, nightOf } from './tune_git.mjs';
 import { atomicWrite, git, withLock } from './tune_state.mjs';
 
@@ -15,9 +16,10 @@ const tool = (name) => 'tools/gauntlet/' + name + '.mjs';
 const portable = (path) => path.split(sep).join('/');
 
 function recipe(argv, root) {
-  const strings = ['out', 'profile', 'pick', 'controls', 'seeds'].map((key) => [key, { type: 'string' }]);
+  const strings = ['out', 'profile', 'pick', 'controls', 'seeds', 'floor-mode'].map((key) => [key, { type: 'string' }]);
   const { values } = parseArgs({ args: argv, options: { ...Object.fromEntries(strings), 'dry-run': { type: 'boolean' } } });
   if (!values.seeds) throw new Error('--seeds=N is required');
+  const mode = floorMode(values['floor-mode']);
   const profile = values.profile ?? 'average', pick = values.pick ?? 'greedy', controls = values.controls ?? 'wheel';
   const flags = ['--seeds=' + values.seeds, '--profile=' + profile, '--pick=' + pick, '--controls=' + controls, '--seed0=1', '--jobs=1'];
   batchArgs(flags); // Validate the identical seed range and policy used for both runs.
@@ -31,10 +33,12 @@ function recipe(argv, root) {
   const before = out + '/before', after = out + '/after', plan = out + '/plan.json';
   const batches = (arm) => [tool('batch'), ...flags, '--out=' + arm];
   const report = (arm) => [tool('report'), '--batch=' + arm + '/batch.json'];
-  const steps = [batches(before), report(before),
+  const neutral = out + '/null';
+  const steps = [batches(before), [...batches(neutral), '--salt=1'], report(before),
     [tool('tune'), 'propose', '--batch=' + before + '/batch.json', '--out=' + plan, '--profile=' + (profile === 'all' ? 'average' : profile)],
     [tool('tune'), 'apply', '--plan=' + plan, ...scope], batches(after),
-    [tool('tune'), 'confirm', '--before=' + before + '/batch.json', '--after=' + after + '/batch.json', '--plan=' + plan, '--revert', ...scope],
+    [tool('tune'), 'confirm', '--before=' + before + '/batch.json', '--after=' + after + '/batch.json',
+      '--null=' + neutral + '/batch.json', '--floor-mode=' + mode, '--plan=' + plan, '--revert', ...scope],
     [...report(after), '--baseline=' + before + '/batch.json']];
   return { dir, out, steps, profile, pick, controls, seeds: Number(values.seeds), dryRun: values['dry-run'] };
 }
@@ -43,7 +47,7 @@ function summary(job, branch, ledger) {
   const lines = ['# Gauntlet night', '', branch + ', ' + job.profile + ', ' + job.pick + ', ' + job.controls
     + ', seeds 1 through ' + job.seeds + '. Matched ' + ledger.matched_runs + ' of ' + ledger.before_runs
     + ' before and ' + ledger.after_runs + ' after runs.', '',
-    '[Before batch](before/batch.json) · [Before report](before/report.md) · [Plan](plan.json) · '
+    '[Before batch](before/batch.json) · [Null batch](null/batch.json) · [Before report](before/report.md) · [Plan](plan.json) · '
     + '[Confirm batch](after/batch.json) · [Confirm report](after/report.md) · [Seed pairs and verdicts](after/tune-ledger.md)', ''];
   if (ledger.changes.length) {
     lines.push('| Action | Knob | Before | After | Baseline | Measured miss | Confirmed before → after (pairs) | Improvement (CI95) | A/A floor (pairs) | Verdict | Apply SHA | Revert SHA |',
@@ -69,8 +73,8 @@ export function night(argv, { root = ROOT, run = runNode, log = console.log,
   branch = () => git(root, 'branch', '--show-current').trim() } = {}) {
   const job = recipe(argv, root);
   if (job.dryRun) {
-    for (const [i, args] of job.steps.entries()) {
-      if (i === 3) log('Only n22-tune* branches continue after propose.');
+    for (const args of job.steps) {
+      if (args[1] === 'apply') log('Only n22-tune* branches continue after propose.');
       log(nodeCommand(args));
     }
     log('Writes ' + job.out + '/night.md on completion.');
@@ -80,8 +84,10 @@ export function night(argv, { root = ROOT, run = runNode, log = console.log,
     mkdirSync(job.dir, { recursive: true });
     if (readdirSync(job.dir).length) throw new Error('night output must be empty: ' + job.dir);
     const current = branch();
-    for (const [i, args] of job.steps.entries()) {
-      if (i === 3 && !isTuneBranch(current)) {
+    let applying = false;
+    for (const args of job.steps) {
+      if (args[1] === 'apply') applying = true;
+      if (applying && !isTuneBranch(current)) {
         log('Stopped after propose on ' + (current || 'detached HEAD') + '. Apply requires n22-tune*.');
         return;
       }
@@ -89,7 +95,7 @@ export function night(argv, { root = ROOT, run = runNode, log = console.log,
       log(nodeCommand(args));
       try { run(args, root); }
       catch (err) {
-        if (i >= 3) log('Check apply commits on ' + current + '. Evidence is in ' + job.out
+        if (applying) log('Check apply commits on ' + current + '. Evidence is in ' + job.out
           + '. Use --dry-run with the same options to see the remaining commands.');
         throw err;
       }
