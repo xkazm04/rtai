@@ -65,7 +65,9 @@ func test_both_pitches_follow_weapon_recovery_hit_and_wreck() -> void:
 		_expect(sheets.hit, 0)
 		_h.hp = 0
 		_expect(sheets.fall, 0)
-		_host.arena.tick += 24
+		_host.arena.tick += 5
+		_expect(sheets.fall, 1)
+		_host.arena.tick += 5
 		_expect(sheets.fall, 2)
 
 
@@ -84,6 +86,62 @@ func test_held_walk_cell_plants_its_foot_and_next_contact_advances() -> void:
 	assert_eq(card._shadow.get_child_count(), RigCastShadows.CONTACT_RINGS.size())
 
 
+func test_walker_card_projects_the_boot_line_and_two_point_six_metre_body() -> void:
+	for deg: int in [55, 70]:
+		ViewMode.shared().pitch_deg = deg
+		ViewMode.shared().art = "p%d" % deg
+		_expect(CastCards.current(WALKER).walk, StreetWalkerCards.STAND_FRAME)
+		var card: FoeWarCardView = _host.rig_for(_h.id).get_meta(FoeWarCardView.CARD)
+		assert_false(card.centered)
+		assert_eq(card.offset, Vector2(-144, -264))
+		var projected: Vector2 = card.scale * Vector2(1.0, sin(deg_to_rad(deg))) * 200.0
+		assert_almost_eq(projected, Vector2.ONE * 2.6 * SimConst.PX_PER_M, Vector2.ONE * 0.001)
+
+
+func test_recovery_glow_tracks_the_printed_grille_at_both_pitches() -> void:
+	for deg: int in [55, 70]:
+		ViewMode.shared().art = "p%d" % deg
+		var cannon: Array[Vector2i] = [Vector2i(104, 148), Vector2i(104, 168), Vector2i(142, 170)]
+		var stomp: Array[Vector2i] = [Vector2i(100, 140), Vector2i(120, 156), Vector2i(144, 176)]
+		if deg == 55:
+			cannon = [Vector2i(98, 126), Vector2i(108, 148), Vector2i(144, 154)]
+			stomp = [Vector2i(92, 136), Vector2i(94, 146), Vector2i(142, 160)]
+		_check_grilles(false, cannon)
+		_check_grilles(true, stomp)
+
+
+func _check_grilles(stomp: bool, centres: Array[Vector2i]) -> void:
+	var sheets: CastCards.Sheets = CastCards.current(WALKER)
+	var e: EnemyAgent = _mind.agent
+	_mind.walker.attack = e.arch.alt_weapon if stomp else e.arch.weapon
+	e.enter(EnemyAgent.State.RECOVER)
+	e.shot_tick = _host.arena.tick - CastCardPose.RECOVERY_TICKS
+	var directions: Array[Vector2] = [Vector2.LEFT, Vector2(-1, -1), Vector2.UP]
+	var path: String = sheets.stomp if stomp else sheets.attack
+	_h.cooldown = 1
+	for i: int in directions.size():
+		_h.facing = directions[i]
+		_expect(path, 3, i + 2)
+		var card: FoeWarCardView = _host.rig_for(_h.id).get_meta(FoeWarCardView.CARD)
+		var vent: Sprite2D = card._vent
+		assert_not_null(vent)
+		if vent == null:
+			return
+		assert_true(vent.visible)
+		assert_eq(vent.texture, card.texture)
+		assert_almost_eq(vent.modulate.a, 1.0 / _mind.walker.attack.cooldown_ticks, 0.001)
+		var centre: Vector2 = Vector2(centres[i])
+		var origin: Vector2 = Vector2(i + 2, 3) * 288.0
+		assert_eq(vent.region_rect, Rect2(origin + centre - Vector2(9, 10.5), Vector2(18, 21)))
+		var mount: Vector2 = card.offset + centre
+		assert_eq(vent.flip_h, i < 2)
+		assert_eq(vent.position, Vector2(-mount.x if i < 2 else mount.x, mount.y))
+	_h.cooldown = 0
+	_expect(path, 3, 4)
+	var cold: FoeWarCardView = _host.rig_for(_h.id).get_meta(FoeWarCardView.CARD)
+	assert_false(cold._vent.visible)
+
+
 func _check_attack(sheets: CastCards.Sheets, stomp: bool) -> void:
 	var e: EnemyAgent = _mind.agent
 	var path: String = sheets.stomp if stomp else sheets.attack
@@ -92,7 +150,9 @@ func _check_attack(sheets: CastCards.Sheets, stomp: bool) -> void:
 		EnemyAgent.State.WINDUP, e.arch.alt_telegraph_ticks if stomp else e.arch.telegraph_ticks
 	)
 	_expect(path, 3 if stomp else 0)
-	e.timer = 1
+	e.timer = floori(e.timer * 0.5) + 1
+	_expect(path, 3 if stomp else 0)
+	e.timer -= 1
 	_expect(path, 0 if stomp else 1)
 	e.enter(EnemyAgent.State.RECOVER)
 	e.shot_tick = _host.arena.tick
@@ -100,12 +160,17 @@ func _check_attack(sheets: CastCards.Sheets, stomp: bool) -> void:
 	_expect(path, 1 if stomp else 2)
 	_host.arena.tick += 1
 	_expect(path, 2 if stomp else 3)
-	_host.arena.tick += CastCardPose.RECOVERY_TICKS
+	_host.arena.tick += CastCardPose.RECOVERY_TICKS - 2
+	_expect(path, 2 if stomp else 3)
+	_host.arena.tick += 1
 	_expect(path, 3)
 
 
-func _expect(path: String, row: int) -> void:
+func _expect(path: String, row: int, column: int = 2) -> void:
 	_host._process(0.0)
 	var card: FoeWarCardView = _host.rig_for(_h.id).get_meta(FoeWarCardView.CARD)
 	assert_eq(card.texture.resource_path, path)
-	assert_eq(card.frame_coords, Vector2i(2, row))
+	assert_eq(card.frame_coords, Vector2i(column, row))
+	assert_eq(Vector2i(card.hframes, card.vframes) * 288, Vector2i(card.texture.get_size()))
+	if _mind.agent.state == EnemyAgent.State.WINDUP:
+		assert_true(card._vent == null or not card._vent.visible)
