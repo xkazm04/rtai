@@ -4,6 +4,14 @@ extends CollectCallView
 var encounter: PrologueEncounter
 var live: LiveInput
 var _text: QuestText = QuestText.new()
+var _channel: PrologueChannelCard = PrologueChannelCard.new()
+
+
+func _ready() -> void:
+	super._ready()
+	_channel.street = encounter.street
+	_channel.lines = encounter.lines
+	hud_view.add_child(_channel)
 
 
 func _process(_dt: float) -> void:
@@ -20,9 +28,15 @@ func _process(_dt: float) -> void:
 		focus = _stage.arena.rivet.pos.lerp(commander, 0.48) + Vector2.DOWN * lean_m * 0.75
 	super._process(SimClock.TICK_DT)
 	hud_view.state.notice = _hint()
+	if encounter.phase == PrologueEncounter.Phase.STREET:
+		_channel.tick = _stage.tick
+		_channel.pad = live.pad_last
+		_channel.queue_redraw()
 
 
 func _hint() -> String:
+	if encounter.phase == PrologueEncounter.Phase.STREET:
+		return _street_hint()
 	var hint: String = encounter.prompts.words(live.pad_last)
 	if hint != "":
 		return hint
@@ -39,7 +53,21 @@ func _hint() -> String:
 	return ""
 
 
+func _street_hint() -> String:
+	match encounter.street.phase:
+		PrologueStreet.Phase.OUT:
+			return tr("Leave through the gate")
+		PrologueStreet.Phase.PHONE:
+			return ObjectiveHint.with_keys(tr("Answer the payphone [use]"), live.pad_last)
+	if encounter.lines.current != "":
+		return ObjectiveHint.with_keys(tr("Skip line [use]"), live.pad_last)
+	return ""
+
+
 func _objective(line: PrologueFormation) -> String:
+	var order: String = encounter.battle.command_hint()
+	if order != "":
+		return order
 	if not _stage.pilot.carry.ground.items.is_empty():
 		return _text.resolve(&"PROLOGUE__PICK_UP", "Pick up the marked pistol")
 	if line.boss.hp <= line.last_stand_hp and line.men_standing():

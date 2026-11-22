@@ -46,3 +46,24 @@ func test_interrupted_lines_record_what_was_seen_and_what_was_missed() -> void:
 		assert_true(skipped)
 		assert_eq(shown, i == 0)
 	assert_eq(feed.subtitle.words, "")
+
+
+func test_draft_places_fill_at_show_time_and_leave_owner_words_verbatim() -> void:
+	var data: DataTable = DataTable.open(PrologueLines.TABLE, PrologueLines.SCHEMA)
+	var feed: PrologueLines = PrologueLines.new()
+	for row: Dictionary in data.array(data.raw, "rows"):
+		for place: Dictionary in data.array(data.raw, "places"):
+			var token: String = place["fills"]
+			var source: String = row["t"]
+			if not source.contains(token):
+				continue
+			assert_true(feed.show_line(str(row["id"])))
+			assert_eq(feed.subtitle.words, source.replace(token, str(place["t"])))
+			var event: Dictionary = feed.events.back()
+			var has_place: bool = event.get("draft_place", false)
+			var draft: bool = event.get("draft", false)
+			assert_true(has_place)
+			assert_true(draft)
+			assert_eq(str(event.get("place_id", "")), str(place["id"]))
+	assert_eq(feed.shown, ["b3_l08_fax_hideout", "b3_l11_fax_location"])
+	assert_eq(feed.owner_calls.size(), 6)

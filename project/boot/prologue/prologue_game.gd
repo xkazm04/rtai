@@ -13,22 +13,17 @@ var bodies: PrologueBodies
 var live: LiveInput
 var lines: PrologueLines
 var encounter: PrologueEncounter
-var _result_path: String
+var result_path: String
 var _seed: int
 
 
 func _ready() -> void:
-	_result_path = LaunchArgs.value("--result")
-	var seed_arg: String = LaunchArgs.value("--seed")
-	if LaunchArgs.has("--seed") and not seed_arg.is_valid_int():
-		Log.error("prologue", "invalid seed %s" % seed_arg)
-		get_tree().quit(2)
+	boot()
+
+
+func boot() -> void:
+	if world != null or not _read_args():
 		return
-	if LaunchArgs.has("--result") and not _result_path.is_absolute_path():
-		Log.error("prologue", "result path must be absolute")
-		get_tree().quit(2)
-		return
-	_seed = seed_arg.to_int() if seed_arg != "" else World.DEFAULT_SEED
 	var data: DataTable = DataTable.open(TABLE, SCHEMA)
 	var plan: PrologueYard = PrologueYard.from_stage(data)
 	var beats: Array = data.array(data.raw, "beats")
@@ -50,12 +45,29 @@ func _ready() -> void:
 	@warning_ignore("return_value_discarded")
 	encounter.finished.connect(_finished)
 	@warning_ignore("return_value_discarded")
+	encounter.end_card_reached.connect(_save_result)
+	@warning_ignore("return_value_discarded")
 	encounter.opening_restarted.connect(bodies.restore_opening)
 	stage.hooks.append(encounter)
 	if LaunchArgs.has("--bot"):
 		_attach_bot()
 	if DisplayServer.get_name() != "headless":
 		_open_view(plan)
+
+
+func _read_args() -> bool:
+	result_path = LaunchArgs.value("--result")
+	var seed_arg: String = LaunchArgs.value("--seed")
+	if LaunchArgs.has("--seed") and not seed_arg.is_valid_int():
+		Log.error("prologue", "invalid seed %s" % seed_arg)
+		get_tree().quit(2)
+		return false
+	if LaunchArgs.has("--result") and not result_path.is_absolute_path():
+		Log.error("prologue", "result path must be absolute")
+		get_tree().quit(2)
+		return false
+	_seed = seed_arg.to_int() if seed_arg != "" else World.DEFAULT_SEED
+	return true
 
 
 func _open(plan: PrologueYard, data: DataTable) -> void:
@@ -140,53 +152,34 @@ func show_line(id: String) -> bool:
 
 
 func _finished() -> void:
-	if LaunchArgs.has("--bot"):
-		world.set_process(false)
+	world.set_process(false)
+	if LaunchArgs.has("--bot") or not result_path.is_empty():
 		get_tree().quit()
 
 
 func _exit_tree() -> void:
+	release()
+	_save_result()
+
+
+## The synchronous scenario boots before SceneTree enters its root. Release the same
+## stage hooks there as on a normal scene exit (the corpse hook retains its stage).
+func release() -> void:
 	if live != null:
 		live.cursor_px = Callable()
 	if stage != null:
 		stage.hooks.clear()
-	if encounter == null or _result_path.is_empty():
+
+
+func _save_result() -> void:
+	if encounter == null or result_path.is_empty():
 		return
-	var err: Error = DirAccess.make_dir_recursive_absolute(_result_path.get_base_dir())
-	var file: FileAccess = FileAccess.open(_result_path, FileAccess.WRITE) if err == OK else null
-	if file == null or not file.store_string(JSON.stringify(_result(), "  ", true) + "\n"):
-		Log.error("prologue", "cannot write result to %s" % _result_path)
+	var err: Error = DirAccess.make_dir_recursive_absolute(result_path.get_base_dir())
+	var file: FileAccess = FileAccess.open(result_path, FileAccess.WRITE) if err == OK else null
+	if file == null or not file.store_string(JSON.stringify(result(), "  ", true) + "\n"):
+		Log.error("prologue", "cannot write result to %s" % result_path)
 		get_tree().quit(1)
 
 
-func _result() -> Dictionary:
-	var result: Dictionary = {
-		"schema": "gtai.prologue-run/1",
-		"seed": _seed,
-		"lines_shown": lines.shown,
-		"line_events": lines.events,
-		"beats_reached": lines.beats,
-		"beat_checkpoints": encounter.spans,
-		"deaths": encounter.deaths + int(not stage.arena.rivet.alive()),
-		"prompts": encounter.prompts.history,
-		"wave_one":
-		encounter.wave_one if encounter.done_tick >= 0 else encounter.wave_one_result(stage),
-		"ticks": world.context().clock.tick(),
-	}
-	if encounter.dale_died >= 0:
-		result["dale_died_tick"] = encounter.dale_died
-	if encounter.done_tick >= 0:
-		result["wave_one_cleared_tick"] = encounter.done_tick
-		var battle: PrologueBattle = encounter.battle
-		var down: bool = (
-			encounter.phase == PrologueEncounter.Phase.BEAT_TWO and not stage.arena.rivet.alive()
-		)
-		result["beat_two_deaths"] = battle.deaths + int(down)
-		result["mulroney_orders"] = battle.orders
-		if battle.pistol.picked_tick >= 0:
-			result["pistol_picked_tick"] = battle.pistol.picked_tick
-		if battle.died_tick >= 0:
-			result["pistol_left"] = battle.pistol.left
-			result["mulroney_died_tick"] = battle.died_tick
-			result["wave_two_cleared_tick"] = battle.died_tick
-	return result
+func result() -> Dictionary:
+	return PrologueRunResult.collect(stage, encounter, _seed, world.context().clock.tick())

@@ -3,6 +3,7 @@ extends ArenaHook
 ## Runs after combat and reads the interact edge StagePilot decoded for this tick.
 
 signal finished
+signal end_card_reached
 signal opening_restarted(tick: int)
 
 enum Phase { TALK, HANDS, BEAT_TWO, STREET }
@@ -10,6 +11,7 @@ enum Phase { TALK, HANDS, BEAT_TWO, STREET }
 var lines: PrologueLines
 var patrol: ProloguePatrol
 var battle: PrologueBattle
+var street: PrologueStreet
 var wave_one: Dictionary = {}
 var prompts: ProloguePrompts = ProloguePrompts.new()
 var phase: Phase = Phase.TALK
@@ -35,20 +37,27 @@ func _init(feed: PrologueLines, stage: ArenaStage, data: DataTable) -> void:
 	_last_line = data.text(first, "last_line")
 	var second: Dictionary = beats[1]
 	_next_checkpoint = data.text(second, "checkpoint")
-	var street: Dictionary = beats[2]
-	_street_checkpoint = data.text(street, "checkpoint")
+	var third: Dictionary = beats[2]
+	_street_checkpoint = data.text(third, "checkpoint")
+	street = PrologueStreet.new(feed, data.text(data.object(data.raw, "payphone"), "id"))
 	_wave_checkpoint = data.text(data.object(data.raw, "arrival"), "checkpoint")
 	patrol.place(stage.arena, false)
 	_start(_talk_checkpoint, 1, 0)
 
 
 func step(stage: ArenaStage, tick: int) -> void:
-	if phase == Phase.STREET:
-		return
 	if stage.deaths != deaths:
 		_restart(stage, tick)
 		return
 	if not stage.arena.rivet.alive():
+		return
+	if phase == Phase.STREET:
+		street.step(stage as PrologueStage, tick)
+		if street.end_tick == tick:
+			_end(tick, "ended")
+			end_card_reached.emit()
+		elif street.end_tick >= 0 and tick == street.end_tick + PrologueStreet.END_TICKS:
+			finished.emit()
 		return
 	if phase == Phase.BEAT_TWO:
 		if battle.step(stage, tick):
@@ -56,9 +65,7 @@ func step(stage: ArenaStage, tick: int) -> void:
 			phase = Phase.STREET
 			(stage.plan as PrologueYard).exit_open = true
 			_start(_street_checkpoint, 3, tick)
-			@warning_ignore("return_value_discarded")
-			lines.begin(3, tick)
-			finished.emit()
+			street.enter(stage as PrologueStage, tick)
 		return
 	if phase == Phase.TALK:
 		if not patrol.dale.alive():
@@ -141,6 +148,11 @@ func _restart(stage: ArenaStage, tick: int) -> void:
 	stage.pilot.shock = PlayerShock.shipped()
 	stage.pilot.guard = PlayerGuard.new()
 	arena.guard = stage.pilot.guard
+	if phase == Phase.STREET:
+		arena.rivet.pos = (stage.plan as PrologueYard).gate
+		street.enter(stage as PrologueStage, tick)
+		_start(_street_checkpoint, 3, tick)
+		return
 	if phase == Phase.BEAT_TWO:
 		prompts.clear()
 		_start(_next_checkpoint, 2, tick)
