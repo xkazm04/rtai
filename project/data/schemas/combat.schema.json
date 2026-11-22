@@ -2,6 +2,19 @@
   "$id": "gtai.combat/1",
   "additionalProperties": false,
   "properties": {
+    "blast": {
+      "additionalProperties": false,
+      "properties": {
+        "self_k": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "self_k"
+      ],
+      "type": "object"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"
@@ -327,6 +340,7 @@
     }
   },
   "required": [
+    "blast",
     "schema",
     "doc",
     "rivet",

@@ -116,6 +116,11 @@
           "minimum": 0,
           "type": "number"
         },
+        "self_damage": {
+          "description": "HP Rivet lost to his own splash during this wave, after armour and limited to his remaining HP.",
+          "minimum": 0,
+          "type": "number"
+        },
         "shots": {
           "description": "Successful Rivet trigger pulls during the wave. A volley counts once even when it fires several pellets.",
           "minimum": 0,

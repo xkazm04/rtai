@@ -1,6 +1,6 @@
 class_name RivetBlast
 extends RefCounted
-## A hostile weapon's blast reaches Rivet from its point of impact. The view gets the same
+## A weapon's blast reaches Rivet from its point of impact. The view gets the same
 ## ring for an occluded burst as for a hit. The damage chokepoint owns armour and roll i-frames.
 
 const HIGH: Array[String] = ["wall_high", "cover_high"]
@@ -25,6 +25,11 @@ static func burst(arena: CombatArena, at: Vector2, weapon: StringName, by_id: in
 		return 0.0
 	var impact_tick: int = arena.get_meta(WALL_IMPACT_TICK, arena.tick)
 	PlayerShock.areas_of(arena).note_blast(at, radius, impact_tick)
+	var amount: float = EnemyRounds.splash_damage(weapon) * falloff(arena, at, radius)
+	return hit(arena, at, amount, weapon, by_id)
+
+
+static func falloff(arena: CombatArena, at: Vector2, radius: float) -> float:
 	var r: Fighter = arena.rivet
 	var distance: float = maxf(at.distance_to(r.pos) - r.radius_m, 0.0)
 	if distance >= radius:
@@ -33,9 +38,15 @@ static func burst(arena: CombatArena, at: Vector2, weapon: StringName, by_id: in
 		var solids: Array[String] = ArenaWalls.SOLID if PlayerCover.active_on(r) else HIGH
 		if arena.walls.blocks_kinds(at, r.pos, solids):
 			return 0.0
-	var amount: float = EnemyRounds.splash_damage(weapon) * (1.0 - distance / radius)
+	return 1.0 - distance / radius
+
+
+static func hit(
+	arena: CombatArena, at: Vector2, amount: float, weapon: StringName, by_id: int
+) -> float:
 	if amount <= 0.0:
 		return 0.0
+	var r: Fighter = arena.rivet
 	var before: float = r.hp
 	arena.hit_dir = at.direction_to(r.pos)
 	arena.hit_at = r.pos - arena.hit_dir * r.radius_m
