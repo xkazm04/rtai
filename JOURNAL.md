@@ -77,3 +77,4 @@ NEXT: (session 3) check logs/cast/astra.lock + astra-calls.jsonl; when film-door
   evidence/briefs/n24-cast-04-clamshell.draft.md (pile-driver retake with per-column facing words; clamshell v2 cut + wire;
   standing-rule docs) and launch it detached. Last code commit by 00:00, gate `node tools/gate/run.mjs --rev=HEAD` by 00:15.
 - 20:12 sentry_turret_fall_70_v2 ACCEPTED at sheet level except translucent smoke wisps in row 2 (erase in the cut or retake; noted in brief 04 draft). Session 2 ends; ASTRA RUNNING film-door since 19:37 (pid 51876, hard stop 20:52).
+- 20:19 Astra committed 0228d57fe (lancer attack cols 4-5 spliced; review it in-game next session). No lancer film yet. ASTRA RUNNING film-door since 19:37 (pid 51876, hard stop 20:52). NEXT as written at 20:06.
