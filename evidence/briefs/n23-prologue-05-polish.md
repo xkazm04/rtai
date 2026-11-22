@@ -41,3 +41,6 @@ Lane `prologue`, night run n23. Same worktree and branch. The prologue is playab
 
 ## Report at the end
 Commits (sha + subject), files, commands with result lines, seconds per beat and total, deaths, still paths (before/after), what is left, any NEED.
+
+## Added after call 04 (stills payphone-ringing-t5034, channel-request-t6814, end-card-t7151)
+7. The payphone's ring arcs are grey and thin: make the ring read as the objective (vermilion pulse is allowed for objectives) at 32 px/m. The channel card and end card read well: keep them.
