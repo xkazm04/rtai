@@ -33,6 +33,17 @@ Dying in beat 3 is unlikely (no enemies), but the beat-3 checkpoint restores to 
 ### G. Stills
 32 px/m tilt 70 stills of: Rivet walking out the gate, the payphone ringing, the call, the channel request card, the end card -> `C:\Users\kazda\kiro\gtai-masters\n23\prologue\scratch\` (extend `project/dev/prologue/prologue_stills.gd`). Never fake a frame.
 
+### H. Decision lines (append to `docs/decisions.md`, one line each, format `- [2026-11-22] DECISION prologue: ...`)
+1. The prologue game scene lives in `project/boot/prologue/` (ships); `project/dev/prologue/` holds the dev entry and stills; the pilot is `project/dev/bots/prologue_bot.gd`. Rejected: forking quest 1's stage.
+2. Dale can be killed before his lines end; the remaining beat-1 lines are recorded as skipped and wave 1 starts. Rejected: locking Rivet until the lines end.
+3. Wave 1's patrol cops carry pistols fired in panic (low accuracy, bursts), so the guard lesson has rounds to stop. Rejected: unarmed cops.
+4. Mulroney's row fires `rifle` (no enemy shotgun row exists in `enemies.json` weapons; not the prologue's block); his shotgun read is prologue code (state what call 03 chose).
+5. The way out to the street opens only after Mulroney falls.
+6. The four draft lines and two place names from the Director's drafts are shown with `draft: true` and listed as owner calls; the table text stays verbatim with the placeholders, the names are filled at show time.
+7. The channel request ('Operation Dethrone') is the prologue's own mechanic in `project/boot/prologue/`; a later quest may adopt it.
+8. Beat checkpoints: dying restarts the current beat, not the prologue.
+Add any further decision call 03/04 made (Mulroney's last-to-fall rule, the order delay).
+
 ## Tests
 Unit tests `project/tests/unit/test_prologue_*.gd` for: gate shut while Mulroney stands, place-name fill (table stays verbatim), phone answer needs interact at the phone, channel accept needs the key, end reached writes `ended: true`. `node tools/tests/run_unit.mjs --select=<basenames>`; `node tools/lint/lint.mjs`; `node tools/gate/quick.mjs` before each commit.
 
