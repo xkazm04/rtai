@@ -13,6 +13,7 @@ var aim_error_deg: float
 var tells_read: float
 var guard_lead_ticks: int
 var roll_skill: float
+var blast_margin_m: float
 var cover_seek_m: float
 var form_use: float
 var large_tell_bonus: float
@@ -34,6 +35,7 @@ static func shipped(profile_id: StringName) -> BotProfile:
 		profile.tells_read = table.num(row, "tells_read")
 		profile.guard_lead_ticks = table.integer(row, "guard_lead_ticks")
 		profile.roll_skill = table.num(row, "roll_skill")
+		profile.blast_margin_m = table.num(row, "blast_margin_m")
 		profile.cover_seek_m = table.num(row, "cover_seek_m")
 		profile.form_use = table.num(row, "form_use")
 		profile.large_tell_bonus = table.num(table.raw, "large_tell_bonus")

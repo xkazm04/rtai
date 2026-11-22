@@ -62,6 +62,7 @@ class Slot:
 	var index: int
 	var reach: float
 	var melee: bool
+	var splash_m: float
 
 
 var _player: Player = Player.new()

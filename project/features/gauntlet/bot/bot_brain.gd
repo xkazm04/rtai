@@ -160,31 +160,12 @@ func _engage(foe: BotView.Hostile, tick: int) -> Intent:
 		intent.slot = _view.select_slot(slot)
 	if blocked:
 		return intent
-	_attack(intent, foe, slot)
-	return intent
-
-
-func _attack(intent: Intent, foe: BotView.Hostile, slot: BotView.Slot) -> void:
-	var me: BotView.Player = _view.player()
-	var distance: float = intent.reach
 	var error: float = _aim_rng.randf_range(-_profile.aim_error_deg, _profile.aim_error_deg)
-	intent.aim = intent.aim.rotated(deg_to_rad(error))
-	if (
-		me.form == &"dent"
-		and me.seized_car_pos == Vector2.INF
-		and me.pos.distance_to(me.car_pos) <= BotForms.DENT_M
-	):
-		intent.aim = me.pos.direction_to(me.car_pos)
-		intent.attack = &"fire"
-	elif me.form == &"dent" and me.seized_car_pos.distance_to(foe.pos) <= BotForms.HEAVY_M:
-		intent.attack = &"melee"
-	elif distance <= maxf(MELEE_M, BotForms.reach(me.form)):
-		if me.form != &"kerf" or _view.blink_clear(intent.aim):
-			intent.attack = &"melee"
-		elif slot != null and not slot.melee:
-			intent.attack = &"fire"
-	elif slot != null and not slot.melee and distance <= slot.reach:
-		intent.attack = &"fire"
+	BotArsenal.attack(_view, intent, foe, slot, error)
+	if intent.attack == &"fire" and me.form != &"dent":
+		if not BotArsenal.clear_shot(_view, intent, _actions, _profile.blast_margin_m):
+			intent.attack = &""
+	return intent
 
 
 func _bit(action: StringName) -> int:

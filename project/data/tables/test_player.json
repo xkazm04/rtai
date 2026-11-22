@@ -32,6 +32,7 @@
   "rows": [
     {
       "aim_error_deg": 14,
+      "blast_margin_m": 0.25,
       "cover_seek_m": 2,
       "form_use": 0.25,
       "guard_lead_ticks": 5,
@@ -44,6 +45,7 @@
     },
     {
       "aim_error_deg": 7,
+      "blast_margin_m": 0.6,
       "cover_seek_m": 4,
       "form_use": 0.55,
       "guard_lead_ticks": 10,
@@ -56,6 +58,7 @@
     },
     {
       "aim_error_deg": 3,
+      "blast_margin_m": 1,
       "cover_seek_m": 7,
       "form_use": 0.9,
       "guard_lead_ticks": 18,

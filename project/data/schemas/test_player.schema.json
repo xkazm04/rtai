@@ -92,6 +92,10 @@
             "minimum": 0,
             "type": "number"
           },
+          "blast_margin_m": {
+            "minimum": 0,
+            "type": "number"
+          },
           "cover_seek_m": {
             "minimum": 0,
             "type": "number"
@@ -139,6 +143,7 @@
         },
         "required": [
           "aim_error_deg",
+          "blast_margin_m",
           "cover_seek_m",
           "form_use",
           "guard_lead_ticks",
