@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { test } from 'node:test';
@@ -103,7 +103,13 @@ test('a hand-measured cycle resumes at confirmation and chains its kept after in
   assert.deepEqual(ledger.profiles.map((p) => p.floor), [0, 1, 2]);
   assert.equal(readJson(join(tree, table)).budget.per_wave, 25);
   assert.equal(readJson(join(root, table)).budget.per_wave, 20);
-  assert.ok(existsSync(join(dir, 'night.md')));
+  const md = readFileSync(join(dir, 'night.md'), 'utf8');
+  assert.equal(md.split('\n')[0], 'cycle 1: kept budget.per_wave 20 -> 25');
+  assert.match(md, /novice \| 6 \| 9 \| 9–9 \(9–9\) \| 6 \| 6–6 \(6–6\) \| 0 → 0 \| 0 \(8\)/);
+  assert.match(md, /expert \| 20 \| 20 .* 2 \(8\) \| noise/);
+  assert.match(md, /novice → average \| 6 \| 8\/8 \(100%\) \| 0 \| separated \| 6/);
+  assert.ok(md.includes(ledger.changes[0].commit));
+  assert.ok(!existsSync(join(tree, 'night.md')));
   for (const name of ['base', 'null', 'external-after']) assert.deepEqual(readdirSync(dirname(arm(name))), ['batch.json']);
   const lines = [];
   night([...location, '--out=' + dir + '-next', '--before=' + arm('external-after'), '--jobs=2', '--metric=death', '--dry-run'],

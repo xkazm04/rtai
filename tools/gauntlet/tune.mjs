@@ -6,6 +6,7 @@ import { parseArgs } from 'node:util';
 import { canonicalJson } from '../lib/canonical_json.mjs';
 import { readJson } from '../lib/repo.mjs';
 import { MIN_AA_PAIRS, PROFILES } from './contract.mjs';
+import { deathOverview } from './death_report.mjs';
 import { deathChange, deathProfiles } from './death_cycle.mjs';
 import { targets } from './death_score.mjs';
 import { setArguments } from './plan_sets.mjs';
@@ -116,7 +117,8 @@ function confirmation(root, v) {
   if (plan.batch_sha256 !== beforeHash) throw new Error('before batch does not match the plan');
   const before = loadBatch(v.before), after = loadBatch(v.after);
   if ((before.args.salt ?? 0) !== (after.args.salt ?? 0)) throw new Error('before and after need the same bot salt');
-  const nullRows = v.null ? pairNullRuns(before, loadBatch(v.null)) : null;
+  const neutral = v.null ? loadBatch(v.null) : null;
+  const nullRows = neutral ? pairNullRuns(before, neutral) : null;
   const rows = pairRuns(before, after);
   const beforeRows = pairRuns(before, before);
   const settings = { beforeRows, nullRows, mode, verdict };
@@ -125,7 +127,8 @@ function confirmation(root, v) {
   const ledger = { schema: LEDGER, plan_sha256: planId(plan), before_sha256: beforeHash, after_sha256: hashFile(v.after),
     floor_mode: mode, verdict_mode: verdict, null_sha256: v.null ? hashFile(v.null) : null, matched_null_runs: nullRows?.length ?? 0,
     before_runs: before.results.length, after_runs: after.results.length, matched_runs: rows.length,
-    ...(profiles && { profiles }),
+    ...(profiles && { profiles, death_wave: { before: deathOverview(before), after: deathOverview(after) },
+      batch_wall_s: { before: before.speed?.wall_s, null: neutral?.speed?.wall_s, after: after.speed?.wall_s } }),
     changes: plan.changes.map((c) => {
       const commit = receipts.get(c.id) ?? null;
       const result = profiles ? deathChange(c, profiles, verdict) : confirmChange(rows, c, settings);

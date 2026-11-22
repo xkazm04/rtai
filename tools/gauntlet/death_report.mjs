@@ -30,10 +30,20 @@ function separation(a, b) {
   return { a: a.profile, b: b.profile, observedGap, shared, later, unknown, verdict };
 }
 
+export function deathOverview(batch, records = recordedRuns(batch)) {
+  const scores = profileScores(batch, records);
+  const comparisons = scores.flatMap((a, i) => scores.slice(i + 1).map((b) => separation(a, b)));
+  const profiles = scores.map((p) => {
+    const waves = p.scores.map((s) => s.wave);
+    return { profile: p.profile, target: p.target, median: p.median, deaths: p.deaths, censored: p.capped,
+      p25: quantile(waves, 0.25), p75: quantile(waves, 0.75), min: quantile(waves, 0), max: quantile(waves, 1) };
+  });
+  return { profiles, comparisons };
+}
+
 export function scoreSections(batch, fmt) {
   const records = recordedRuns(batch);
-  const profiles = profileScores(batch, records);
-  const comparisons = profiles.flatMap((a, i) => profiles.slice(i + 1).map((b) => separation(a, b)));
+  const { profiles, comparisons } = deathOverview(batch, records);
   const rows = records.map(({ run }) => {
     const score = deathScore(run, batch.args.waves);
     let outcome = run.death?.by === 'timeout' ? 'wave timer' : 'finished alive';
@@ -47,11 +57,8 @@ export function scoreSections(batch, fmt) {
   return [{
     title: 'Death-wave score', note: 'Censored runs contribute their last reached wave as a lower bound to the median and spread.',
     columns: ['Profile', 'Target', 'Median wave', 'P25–P75', 'Min–max', 'Deaths / censored'],
-    rows: profiles.filter((p) => p.scores.length).map((p) => {
-      const waves = p.scores.map((s) => s.wave);
-      const range = (lo, hi) => fmt(quantile(waves, lo)) + '–' + fmt(quantile(waves, hi));
-      return [p.profile, p.target, fmt(p.median), range(0.25, 0.75), range(0, 1), p.deaths + ' / ' + p.capped];
-    })
+    rows: profiles.filter((p) => p.deaths + p.censored).map((p) => [p.profile, p.target, fmt(p.median),
+      fmt(p.p25) + '–' + fmt(p.p75), fmt(p.min) + '–' + fmt(p.max), p.deaths + ' / ' + p.censored])
   }, {
     title: 'Profile separation', note: 'Targets require a median gap of ' + limits.min_wave_gap
       + ' waves and a later death on at least ' + fmt(100 * limits.min_seed_share)
