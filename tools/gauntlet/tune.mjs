@@ -8,7 +8,7 @@ import { readJson } from '../lib/repo.mjs';
 import { MIN_AA_PAIRS, PROFILES } from './contract.mjs';
 import { loadBatch } from './report.mjs';
 import { fmt } from './report_tables.mjs';
-import { confirmChange, pairNullRuns, pairRuns } from './tune_confirm.mjs';
+import { confirmChange, pairNullRuns, pairRuns, verdictMode } from './tune_confirm.mjs';
 import { floorMode } from './tune_floor.mjs';
 import { floorReport, loadFloorBatch } from './tune_floor_report.mjs';
 import { applyPlan, checkPlan, commitsFor, nightly, nightOf, ownBranch, planId, revertChanges, revertFor } from './tune_git.mjs';
@@ -71,8 +71,8 @@ function markdown(ledger) {
     + ledger.before_runs + ' before and ' + ledger.after_runs + ' after runs. The ' + ledger.floor_mode
     + ' floor decides each verdict.' + (ledger.null_sha256 ? ' Matched ' + ledger.matched_null_runs + ' null runs.' : ''), '',
     'Positive improvement means the measured miss shrank. An empty apply SHA means this branch has no commit for that edit. A revert SHA records an executed undo.', '',
-    '| Knob | Before → after | Baseline | Measured miss | Confirmation before → after | Pairs | Improvement (CI95) | Null-salt floor (pairs) | Cross-seed floor (pairs) | Deciding mode | Verdict | Apply / revert SHA |',
-    '|---|---:|---:|---|---:|---:|---:|---:|---:|---|---|---|'];
+    '| Knob | Before → after | Baseline | Measured miss | Confirmation before → after | Pairs | Improvement (CI95) | Null-salt floor (pairs) | Cross-seed floor (pairs) | Deciding mode | Verdict | Deciding rule | Point | Strict | Apply / revert SHA |',
+    '|---|---:|---:|---|---:|---:|---:|---:|---:|---|---|---|---|---|---|'];
   const floorCell = (f) => {
     if (!f) return 'not measured';
     const value = Number.isFinite(f.estimate) && !Number.isFinite(f.floor) ? fmt(f.estimate) + '*' : fmt(f.floor);
@@ -84,7 +84,7 @@ function markdown(ledger) {
       fmt(c.measured_before) + ' → ' + fmt(c.measured_after) + ' ' + unit, c.pairs,
       fmt(c.improvement) + ' (' + c.ci95.map(fmt).join(' to ') + ')',
       floorCell(c.floors['null-salt']), floorCell(c.floors['cross-seed']), c.floor_mode,
-      c.verdict, [c.commit, c.revert_commit].filter(Boolean).join(' / ') || '—'].map(cell).join(' | ') + ' |');
+      c.verdict, c.verdict_mode, c.verdicts.point, c.verdicts.strict, [c.commit, c.revert_commit].filter(Boolean).join(' / ') || '—'].map(cell).join(' | ') + ' |');
   }
   if (!ledger.changes.length) lines.push('', 'The plan contained no changes.');
   else {
@@ -104,6 +104,7 @@ function markdown(ledger) {
 function confirmation(root, v) {
   if (v.revert) ownBranch(root);
   const mode = floorMode(v['floor-mode']);
+  const verdict = verdictMode(v.verdict);
   if (mode === 'null-salt' && !v.null) throw new Error('--null=<batch.json> is required for null-salt');
   const plan = readJson(v.plan);
   checkPlan(plan);
@@ -116,11 +117,11 @@ function confirmation(root, v) {
   const beforeRows = pairRuns(before, before);
   const receipts = commitsFor(root, plan);
   const ledger = { schema: LEDGER, plan_sha256: planId(plan), before_sha256: beforeHash, after_sha256: hashFile(v.after),
-    floor_mode: mode, null_sha256: v.null ? hashFile(v.null) : null, matched_null_runs: nullRows?.length ?? 0,
+    floor_mode: mode, verdict_mode: verdict, null_sha256: v.null ? hashFile(v.null) : null, matched_null_runs: nullRows?.length ?? 0,
     before_runs: before.results.length, after_runs: after.results.length, matched_runs: rows.length,
     changes: plan.changes.map((c) => {
       const commit = receipts.get(c.id) ?? null;
-      return { ...confirmChange(rows, c, { beforeRows, nullRows, mode }), commit, revert_commit: revertFor(root, commit) };
+      return { ...confirmChange(rows, c, { beforeRows, nullRows, mode, verdict }), commit, revert_commit: revertFor(root, commit) };
     }) };
   const stem = join(dirname(resolve(v.after)), 'tune-ledger');
   artifact(root, stem);
@@ -170,7 +171,7 @@ export function main([command, ...argv]) {
     });
   }
   if (command === 'confirm') {
-    const v = options(argv, ['before', 'after', 'plan'], ['night-output', 'floor-mode', 'null'], ['revert']);
+    const v = options(argv, ['before', 'after', 'plan'], ['night-output', 'floor-mode', 'verdict', 'null'], ['revert']);
     return withLock(root, () => confirmation(root, v));
   }
   throw new Error('usage: tune.mjs propose|apply|confirm|floor [options]');

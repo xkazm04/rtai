@@ -52,8 +52,24 @@ function distance(metric, value) {
   return Math.abs(value - metric.target);
 }
 
-export function confirmChange(rows, change, { beforeRows = rows, nullRows = null, mode = 'null-salt' } = {}) {
+export function verdictMode(value = 'point') {
+  if (!['point', 'strict'].includes(value)) throw new Error('--verdict must be point or strict');
+  return value;
+}
+
+export function verdictFor(gain, ci, floor, mode) {
+  if (!Number.isFinite(floor) || !ci.every(Number.isFinite)) return 'too few pairs';
+  const threshold = verdictMode(mode) === 'strict' ? floor : 0;
+  if (gain > floor && ci[0] > threshold) return 'kept';
+  if (gain < -floor && ci[1] < -threshold) return 'reverted';
+  return 'noise';
+}
+
+const mean = (values) => values.reduce((sum, value) => sum + value, 0) / values.length;
+
+export function confirmChange(rows, change, { beforeRows = rows, nullRows = null, mode = 'null-salt', verdict = 'point' } = {}) {
   floorMode(mode);
+  verdictMode(verdict);
   if (mode === 'null-salt' && !nullRows) throw new Error('null-salt needs matched null runs');
   const { metric } = change;
   const samples = samplesFor(rows, metric);
@@ -63,23 +79,25 @@ export function confirmChange(rows, change, { beforeRows = rows, nullRows = null
   const floors = floorsFor(beforeRows, nullRows, metric);
   const noise = floors[mode];
   const { floor } = noise;
-  let improvement = aggregate, ci, statistic;
+  let point = aggregate, strictCi, pointCi, statistic;
   if (metric.type === 'wave' || metric.type === 'offer') {
-    // Orient paired() so a reduction in distance from the target is positive.
-    const comparison = paired(samples.map((r) => ({
-      a: -distance(metric, r.a), b: -distance(metric, r.b)
-    })), { floor });
-    improvement = comparison.median;
-    ci = comparison.ci95;
-    statistic = 'median paired reduction in miss';
+    const gains = samples.map((r) => ({ a: -distance(metric, r.a), b: -distance(metric, r.b) }));
+    point = mean(gains.map((r) => r.b - r.a));
+    pointCi = interval(gains, mean);
+    strictCi = paired(gains).ci95;
+    statistic = 'mean paired reduction in miss';
   } else {
-    ci = interval(samples, (v) => -distance(metric, measured(metric.type, v)));
+    pointCi = interval(samples, (v) => -distance(metric, measured(metric.type, v)));
+    strictCi = pointCi;
     statistic = 'paired reduction in aggregate miss';
   }
-  let verdict = samples.length < 2 || noise.aa_pairs < MIN_AA_PAIRS ? 'too few pairs' : 'noise';
-  if (samples.length >= 2 && aggregate > floor && ci[0] > floor) verdict = 'kept';
-  if (samples.length >= 2 && aggregate < -floor && ci[1] < -floor) verdict = 'reverted';
+  const enough = samples.length >= 2 && noise.aa_pairs >= MIN_AA_PAIRS;
+  const verdicts = {
+    point: enough ? verdictFor(point, pointCi, floor, 'point') : 'too few pairs',
+    strict: enough ? verdictFor(aggregate, strictCi, floor, 'strict') : 'too few pairs'
+  };
   return { ...change, measured_before: before, measured_after: after, pairs: samples.length,
-    improvement, statistic, aggregate_improvement: aggregate, ci95: ci, floor_mode: mode, floors,
-    floor, aa_pairs: noise.aa_pairs, aa_groups: noise.aa_groups, verdict };
+    improvement: verdict === 'point' ? point : aggregate, statistic: verdict === 'point' ? statistic : 'aggregate reduction in miss',
+    aggregate_improvement: aggregate, ci95: verdict === 'point' ? pointCi : strictCi, floor_mode: mode, floors,
+    floor, aa_pairs: noise.aa_pairs, aa_groups: noise.aa_groups, verdict_mode: verdict, verdicts, verdict: verdicts[verdict] };
 }

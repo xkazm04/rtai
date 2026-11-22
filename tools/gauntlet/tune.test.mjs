@@ -8,7 +8,7 @@ import { canonicalJson } from '../lib/canonical_json.mjs';
 import { ROOT, readJson } from '../lib/repo.mjs';
 import { BATCH_SCHEMA, RUN_SCHEMA, validateRun } from './contract.mjs';
 import { night } from './night.mjs';
-import { confirmChange, pairNullRuns, pairRuns } from './tune_confirm.mjs';
+import { confirmChange, pairNullRuns, pairRuns, verdictFor } from './tune_confirm.mjs';
 import { nightOf } from './tune_git.mjs';
 import { propose } from './tune_propose.mjs';
 import { BASELINE, clamped, digest, ensureBaseline, git, inventory, TABLES, withLock } from './tune_state.mjs';
@@ -563,4 +563,18 @@ test('a night with synthetic batches drives the real report, propose, apply and 
   }
   for (const arm of ['before', 'after']) for (const ext of ['md', 'html'])
     assert.ok(existsSync(join(dir, arm, 'report.' + ext)));
+});
+
+test('point and strict verdicts reproduce the n22 gains and their mirrored losses', () => {
+  for (const [gain, ci, floor, point, strict] of [
+    [13.67, [4.75, 19.08], 11.48, 'kept', 'noise'],
+    [3.67, [1.72, 6.6], 6.73, 'noise', 'noise'],
+    [13, [12, 16], 11, 'kept', 'kept'],
+    [13, [0, 16], 11, 'noise', 'noise']
+  ]) {
+    for (const [mode, expected] of [['point', point], ['strict', strict]]) {
+      assert.equal(verdictFor(gain, ci, floor, mode), expected);
+      assert.equal(verdictFor(-gain, [-ci[1], -ci[0]], floor, mode), expected === 'kept' ? 'reverted' : 'noise');
+    }
+  }
 });
