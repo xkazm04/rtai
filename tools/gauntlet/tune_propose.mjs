@@ -70,7 +70,7 @@ function deathMisses(batch, profile, minN) {
     const proportional = Math.min(1.25, Math.max(0.8, median / target));
     const factor = Math.abs(median - target) > 3 ? (median > target ? 1.25 : 0.8) : proportional;
     observations.push(measuredMiss(metric, Math.abs(median / target - 1), miss,
-      [[DAMAGE_GROUP, proportional], [REPAIR_GROUP, factor], ['budget.per_wave', factor]], reason));
+      [[DAMAGE_GROUP, proportional], [REPAIR_GROUP, factor], ['budget.per_wave', proportional]], reason));
   }
   return observations.sort((a, b) => b.severity - a.severity);
 }

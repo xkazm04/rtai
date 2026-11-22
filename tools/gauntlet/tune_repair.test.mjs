@@ -45,7 +45,8 @@ test('either repair member occupies the whole group and leaves the per-wave budg
     const used = new Map([[id, 'receipt']]);
     for (const other of ['rivet_repair', rate, delay]) assert.ok(occupied(other, used));
     assert.equal(occupied('budget.per_wave', used), false);
-    assert.equal(deathPlan(24, catalog(), new Set(used.keys())).changes[0].id, 'budget.per_wave');
+    const [budget] = deathPlan(24, catalog(), new Set(used.keys())).changes;
+    assert.deepEqual([budget.id, budget.before, budget.after], ['budget.per_wave', 16, 19]); // 16 × 24/20, rounded.
   }
 });
 
