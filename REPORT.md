@@ -1,7 +1,7 @@
-# REPORT - n23 lane `moves` (2026-11-22) - DRAFT, finished at 09:40
+# REPORT - n23 lane `moves` (2026-11-22)
 
 Branch `n23-moves`, cut from `main` `76111adec`, merged the prologue interface `c7f139b95` (enemies.json rows) before the machine flags. Ready for loop at `73eec563c` (`MILESTONE ready`); final code commit `81723e268` (`MILESTONE ready` 07:44, carries the Ohm fix `a8a060feb`).
-Gate on the last code commit `81723e268` (07:42): `gate: PASS` (lint 19/19, unit 3696 passed 0 failed 2 skipped, scenarios 65 passed, parity bit-exact over 1200 steps with the planted mutation caught, selftest, release-compile 895 loaded 0 failed); `build/gate/81723e2682c8/gate.json` (git-ignored, in the lane). `--reels` owed after the 09:30 freeze.
+Gate on the last code commit `81723e268` (07:42): `gate: PASS` (lint 19/19, unit 3696 passed 0 failed 2 skipped, scenarios 65 passed, parity bit-exact over 1200 steps with the planted mutation caught, selftest, release-compile 895 loaded 0 failed); `build/gate/81723e2682c8/gate.json` (git-ignored, in the lane). Reels gate on the same commit (`--reels`, evidence half re-run, reel gate 08:01 onward): `PASS reels: exit 0`, `gate: PASS; build/gate/81723e2682c8/gate.json`.
 
 ## What works
 
@@ -69,6 +69,8 @@ Stills and clips: `C:\Users\kazda\kiro\gtai-masters\n23\moves\` (`frames.json`, 
 
 ## Merge notes
 
+- loop's in-game arms (merged game 548989d7e, 10 average seeds each, from n23-loop's JOURNAL 07:03 to 07:52): Ohm on minus off turret waves -0.67 s (CI95 -1.21..-0.18), pre-fix Ohm; Kerf on minus off shield-robot waves -5.13 s (CI95 -7.89..-2.32); overkill carry -0.57 s per matched wave (CI95 -1.81..0.32, 9 pairs) = no measurable effect; Tonnage crack had 7 effective uses in 400 waves, so no off arm was run. loop decided (its 07:55) not to merge `a8a060feb` tonight.
+- loop found a stacked-wave soft-lock on the merged game (its `NEED street` 07:08): leftovers the bot cannot finish hold Rivet in a block after a timed-out wave; the bot repeats Kerf's blink on a sentry turret there. That is street's rule; moves changes nothing for it.
 - loop merged `n23-moves` at `73eec563c` (its `620fb288e`), before the Ohm fix `a8a060feb`; its Ohm on/off arm measured the pre-fix rule unless it merged again (`NEED loop` 07:44). The Director's merge of `n23-moves` at its head carries the fix.
 - One-line call sites in shared files: `combat_arena.gd` (`var move_tally`, `MoveState.write_fighter` in write_state, `MoveCarry.take` at :196; two doc-comment lines trimmed to stay under the cap), `gauntlet_wave_stats.gd` (`begin_wave`, `append_wave`), `foe_shield_view.gd` (`FoeStunView.place_shield`), `foe_ordnance_view.gd:47` (`MoveCarryView.paint`), `gauntlet_draw.gd:9,34`, `gauntlet_bonus_apply.gd:26-27`.
 - `project/data/loc/en.po`: three appended entries (`GAUNTLET__KIND__EFFECT`, `GAUNTLET__EFFECT__OVERKILL_CARRY`, `_2`), `73eec563c`; an append conflict with another lane keeps both sides.
