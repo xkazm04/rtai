@@ -1,6 +1,6 @@
 class_name WheelReadoutView
 extends Node2D
-## The current wheel beside the weapon ticket for one simulation second after a switch.
+## The wheel beside the weapon ticket for one second on opening, cycling or switching.
 
 const PAD: float = 8.0
 const FONT_PX: int = 20
@@ -26,9 +26,9 @@ static func attach(hud: HudView, stage: CollectCallStage) -> void:
 
 
 func _process(_delta: float) -> void:
-	var age: int = _arena.tick - _wheel.switched_tick
+	var age: int = _arena.tick - maxi(_wheel.readout_scroll_tick, _wheel.switched_tick)
 	modulate.a = clampf(1.0 - float(age - HOLD_TICKS) / FADE_TICKS, 0.0, 1.0)
-	visible = _wheel.switched_tick >= 0 and age >= 0 and modulate.a > 0.0
+	visible = age >= 0 and modulate.a > 0.0
 	if visible:
 		queue_redraw()
 
