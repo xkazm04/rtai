@@ -154,3 +154,32 @@ NEXT (unchanged order): rocket-gap review -> merge n24-motion -> after-gaps batc
   timeout would tree-kill nohup -> Astra. Killed my own tree by PID at 3 min (no edits made), removed the dead lock,
   relaunched with PowerShell `Start-Process node ... -RedirectStandardOutput <out> -WindowStyle Hidden -PassThru`
   (parent = nobody of the tool). Use that form for every launch. ~6 min lost.
+- 21:18 MILESTONE after-gaps batch done (16 min, 15/15 ok, rev 032f6de91: x2 damage, no in-wave repair, 45 s timer,
+  shorter gaps, rocket; deflect still 100%, no dash in the bot). `evidence/n24-pressure/after-gaps/report.md`.
+  Median death wave before (base-main) -> after-gaps: novice 13 -> 5 (target 6), average 40 (4 censored) -> 10 (target
+  12, P25-P75 5-15), expert 40 (5 censored) -> 12 (target 20, 3-32). Censored 9/15 -> 0/15. Separation: avg->expert gap
+  2 (below target). Killers: war machine (wave-5 boss) 10 of 15 deaths (stomp 7, war_cannon 3), rocket 4, patrol_cop 1.
+  Every novice dies at wave 5 to the stomp. Stomp row: damage 48 AND splash 48 in 3.5 m (Rivet max_hp 100): check
+  whether one stomp lands both (96): if so it is a double count, not design. Expert's losses are stomp/rocket = things
+  a skilled player steps or dashes out of: brief 04 (bot dash out of rocket path and stomp radius) is the main lever
+  for expert; then knobs. Deflect at 50% (brief 02) will push all three down further.
+- 21:20 DECISION pressure: keep the owner's doubling. If after deflect + bot dash the average still dies before 6 or
+  expert sits far below 20, move non-owner knobs (war machine wave slot or stomp tell/radius are boss design: NOT ours;
+  ours: street budget, counts, `enemy_fire`, rocket cooldown/relocate, rifle `aim_lead`) and say so in REPORT.
+
+NEXT (session 3 end 21:3x; Astra `deflect` RUNNING since 21:09, lock pid 62596, hard stop 22:20, out
+`evidence/briefs/n24-pressure-02-deflect.out.txt`; launched with PowerShell Start-Process: do the same):
+1. Wait for `deflect` (do not start another call while pid 62596 is node). Review: `deflect` block (pass_ratio 0.5,
+   pass_ratio_k 1.0, spread_deg 12, basic_rounds [small]), RNG stream `&"deflect"`, both paths (guard + bat), the
+   passed-round spark (not teal/red), hit-share table `evidence/n24-pressure/deflect/`, task 4 (five red scenarios:
+   arena_squad, gunplay_fire, prologue_checkpoint, prologue_pilot, rivet_city_melee) and any `NEED director` on the
+   prologue pilot. Run `node tools/tests/run_unit.mjs --changed` yourself; mutate score on player_deflect.gd.
+2. Launch brief 03 (rocket + nail; fill HARDSTOP = start+60, COMMITBY = start+48, GODOTFREE = start+20) and in its
+   first 20 min run the re-measure batch on HEAD (after deflect): `ablate.mjs --name=after-deflect --rev=<HEAD>` same
+   args -> `evidence/n24-pressure/after-deflect/` (then `report.mjs --batch=... --out=<dir>` writes into `<dir>/report.md/`:
+   pass the DIRECTORY, then it is `<dir>/report.md`; this session passed a file path and had to move it).
+3. Before brief 04: `git merge --no-edit n24-ghost` (JOURNAL add/add: keep ours; if the hook fails on
+   tools/merge/clash.test.mjs, run that test alone, then retry: it is the hook's env in a merge). Brief 04 hard stop
+   <= 00:05, commit by 23:52; add to it: "check whether a stomp lands damage AND splash on Rivet (96 of 100)".
+4. 00:00 last new work; 00:15 final gate `node tools/gate/run.mjs --rev=HEAD`; then films (deflect, rocket/nail, average
+   fight punished) and REPORT. The after-* batches give the before/after table (base-main vs final).
