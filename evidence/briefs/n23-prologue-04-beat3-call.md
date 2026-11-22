@@ -1,7 +1,7 @@
 # Brief n23-prologue-04 - beat 3 (out, the payphone, the channel), the end card, the full pilot and the scenario
 
 Lane `prologue`, night run n23. Same worktree and branch. Builds on calls 01 (interface, yard), 02 (beat 1, wave 1, line player, prompts, checkpoints) and 03 (pistol, wave 2, Mulroney).
-**Hard stop: <HH:MM>. Last commit by <HH:MM>.** Check `date` as you go.
+**Hard stop: 05:45. Last commit by 05:40.** Check `date` as you go.
 
 ## Environment (every Godot run)
 - `export APPDATA=C:/Users/kazda/kiro/gtai-n23/appdata/prologue` and `export GODOT_BIN='C:\Users\kazda\kiro\gtai-spike\tools\godot\Godot_v4.7.2-stable_win64_console.exe'`.
