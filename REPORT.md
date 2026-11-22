@@ -11,12 +11,12 @@ DRAFT written 05:25 in session 4; TODO markers are filled by the session that ga
 | 1. Seed 7 average, real 90 s timer, no wave limit, ends in death | `evidence/street/s7a.json`, `evidence/street/s7b.json` | death wave 35 by stomp; the two runs byte-identical (cmp) |
 | 1. Stacking on film (2 and 3 waves alive) | `C:/Users/kazda/kiro/gtai-masters/n23/street/stack/stack-seed7-32.mp4` (26.5 s, 32 px/m, tilt 70, 1080p60); stills `stack-1-alive.png`, `stack-2-alive.png`, `stack-3-alive.png` | HUD "Wave 9 - 2 alive", "Wave 10 - 3 alive" (war machine arriving on top) |
 | 1. Owed picks after a stacked block, one after another, with a counter | `e95cf7b5f`; still `stack/pick-counter.png` | "Wave 2 cleared / Pick 2 of 3"; the total counts only waves with a non-empty offer |
-| 1. Wave timer turns amber in its last 10 s | TODO (stackfilm Part C) | |
+| 1. Wave timer turns amber in its last 10 s | `f0ac04fe5`; `project/tests/unit/test_gauntlet_wave_timer.gd`; still `stack/timer-warning.png` | amber at exactly 10 s left (`GauntletWaves.seconds_left`); the readout counts elapsed seconds, so amber from 80 s on the real timer; mutate `gauntlet_waves.gd` changed lines 15/(15+1) = 93.8 % |
 | 2. Budget in tenths, one to one | `fc06b8e4f`; `evidence/street/budget-one-to-one.md` | seeds 1-3 average 10 waves: 3/3 results byte-identical before/after (cmp re-run by the director) |
 | 2. Opening waves longer | `b98480af1`; `evidence/street/budget-opening.md` | `budget{base:180, per_wave:16}`, `cost{patrol_cop:15, war_machine:200}`: waves 1-5 pooled median 7.10 s -> 11.67 s over 5 seeds x 5 waves |
 | 3. Enemy rounds not red | `90bad0b11`; stills `C:/Users/kazda/kiro/gtai-masters/n23/street/rounds/`, `rounds-review.jpg`; `evidence/street/rounds.md` | small `#FFE6A8` on `#E08A1E` amber, large `#E8F7FF` on `#92C9F5` ice blue, enemy muzzle `#FFDC8C`; seed 7 average 10 waves cmp identical, 60 s replay `cbeb734ff9b97c41` unchanged |
-| 3. Enemy rounds while Rivet is on hands | TODO (brief 04 Part 0) | |
-| 4. Shove wedge at full reach | TODO (brief 04) | |
+| 3. Enemy rounds while Rivet is on hands | `29d3080e4` (one line in `project/boot/collect_call/view/fx_view.gd`); stills `rounds/rounds-hands-{before,after}-32.png` | was vermilion, now warm cream at tick 306 seed 7; amber rim on this path: TODO (brief 06 Part 0) |
+| 4. Shove wedge at full reach | `a6135a129`; `project/features/combat/squad/foe_shove_zone.gd`, `project/tests/unit/test_foe_shove_zone.gd`; `evidence/street/shove-wedge.md`; stills `wedge/shove-{before,after}-{32,64}.png` | 2.20 m x 0.64 m strip from the planted tell (0.40 m lunge + 1.80 m reach), one source with the hit test (`FoeShoveZone.connects`); body 0.05 m in/out of rails and tip tested over 3 aims x 3 speeds x 2 reaches; seed 7 cmp identical, replay `cbeb734ff9b97c41` |
 | NEEDs served | `c48fe5489` (prologue: `roster_exclude`), `cdacafe98` (loop: gauntlet `rivet{repair_per_s, repair_delay_s}`) | seed 7 average 10 waves cmp identical across both |
 
 ## What does not
@@ -34,8 +34,9 @@ DRAFT written 05:25 in session 4; TODO markers are filled by the session that ga
 1. **Large enemy rounds are ice blue** (`#92C9F5` / `#E8F7FF`). Cops are a saturated darker blue (`#3870D9`); on the stills they read apart, but blue means "cop" by the colour law. Alternative = one constant in `project/features/combat/enemy_round_look.gd`. Still: `rounds-review.jpg`.
 2. **The boss wave may arrive on top of an unfinished wave** (decided yes: that is the pressure asked for). Alternative = one data value. Still: `stack/stack-3-alive.png` (war machine arriving over waves 8 and 9).
 3. **`max_alive` = 40** live hostiles across all waves; extra members wait and spawn in roster order.
+5. **The shove slab looks wider than it hits.** The mark now draws the real hit lane (0.64 m + Rivet's radius each side); the drawn door slab is about 2.5 m across. Stills `wedge/shove-after-32.png`, `wedge/shove-after-64.png`. The shove's numbers belong to the enemy lanes.
 4. **The opening shape**: wave 1 = 13 patrol cops, wave 5 = boss + 3. Loop's tuner moves it.
-5. **A timer that shortens with the wave number** would make stacking the run-ender for strong players; not built (owner said 90 s).
+6. **A timer that shortens with the wave number** would make stacking the run-ender for strong players; not built (owner said 90 s).
 
 ## Merge notes
 
@@ -57,5 +58,6 @@ TODO
 | 1 | stack | 75 | accepted | half the size; mutate last; report before mutate |
 | 2 | budget | 75 | accepted | no 20-run sweep in a code call |
 | 3 | rounds | 65 | accepted (gap: stills staged with a pistol, not on hands) | name the state the owner sees (Rivet on hands) |
-| 4 | stackfilm | TODO | | |
-| 5 | wedge | TODO | | |
+| 4 | stackfilm | 63 | accepted | ask for a forced short timer from the start instead of a 90 s search |
+| 5 | wedge | 30 | accepted (Part 0 rim gap, sent to call 6) | ask for the crop of the changed pixels, not only the full frame |
+| 6 | decisions | TODO | | |
