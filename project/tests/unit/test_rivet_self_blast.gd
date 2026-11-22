@@ -1,6 +1,7 @@
 extends GutTest
 
 const EPS: float = 0.00001
+const FULL: float = 22.0
 const ROCKET: StringName = &"rocket_launcher"
 
 
@@ -25,7 +26,8 @@ class Attribution:
 
 var arena: Attribution
 var shot: Shot
-var full: float
+
+var original_conversion: float
 var original_k: float
 var bus: EventBus
 
@@ -39,24 +41,26 @@ func before_each() -> void:
 	shot = arena.gun.pull(arena.rivet, arena.rivet.pos + Vector2.RIGHT)[0]
 	arena.areas = FightAreas.new()
 	arena.areas.hp_scale = arena.gun.hp_scale()
-	full = shot.spec.splash_damage * arena.areas.hp_scale
+	original_conversion = RivetSelfBlast.rivet_hp_per_table_hp
 	original_k = RivetSelfBlast.self_k
 
 
 func after_each() -> void:
 	RivetSelfBlast.self_k = original_k
+	RivetSelfBlast.rivet_hp_per_table_hp = original_conversion
 
 
-func test_point_blank_matches_hostile_splash_and_the_configured_multiplier() -> void:
+func test_table_rocket_uses_separate_conversions_for_rivet_and_hostiles() -> void:
 	assert_eq(original_k, 1.0)
+	assert_eq(original_conversion, 0.1)
 	var foe: Fighter = arena.spawn_guard(arena.rivet.pos)
 	foe.pos = arena.rivet.pos
 	foe.hp = 10.0
 	RivetSelfBlast.self_k = 0.4
 	arena.areas._splash(arena, shot, null, foe.pos)
 	_land(arena, foe.pos)
-	assert_almost_eq(10.0 - foe.hp, full, EPS)
-	assert_almost_eq(arena.rivet.max_hp - arena.rivet.hp, full * 0.4, EPS)
+	assert_almost_eq(10.0 - foe.hp, 2.2, EPS)
+	assert_almost_eq(arena.rivet.max_hp - arena.rivet.hp, FULL * 0.4, EPS)
 
 
 func test_grazing_the_body_falls_to_zero_at_the_outer_edge() -> void:
@@ -64,7 +68,7 @@ func test_grazing_the_body_falls_to_zero_at_the_outer_edge() -> void:
 		var hp: float = arena.rivet.hp
 		var offset: float = arena.rivet.radius_m + shot.spec.splash_radius_m * fraction
 		_land(arena, arena.rivet.pos + Vector2.LEFT * offset)
-		assert_almost_eq(hp - arena.rivet.hp, full * maxf(1.0 - fraction, 0.0), EPS)
+		assert_almost_eq(hp - arena.rivet.hp, FULL * maxf(1.0 - fraction, 0.0), EPS)
 
 
 func test_wall_stops_own_blast_between_impact_and_rivet() -> void:
@@ -85,7 +89,13 @@ func test_tonnage_plates_reduce_own_blast() -> void:
 	assert_eq(arena.rivet.damage_k, k)
 	assert_lt(k, 1.0)
 	_land(arena, arena.rivet.pos)
-	assert_almost_eq(arena.rivet.max_hp - arena.rivet.hp, full * k, EPS)
+	assert_almost_eq(arena.rivet.max_hp - arena.rivet.hp, FULL * k, EPS)
+
+
+func test_zero_rivet_hp_per_table_hp_gives_no_damage() -> void:
+	RivetSelfBlast.rivet_hp_per_table_hp = 0.0
+	_land(arena, arena.rivet.pos)
+	assert_eq(arena.rivet.hp, arena.rivet.max_hp)
 
 
 func test_zero_multiplier_gives_no_hit() -> void:
@@ -101,7 +111,7 @@ func test_guard_up_takes_the_blast_and_roll_iframes_avoid_it() -> void:
 	arena.guard.step(true, true)
 	assert_true(arena.guard.up())
 	_land(arena, arena.rivet.pos)
-	assert_almost_eq(arena.rivet.max_hp - arena.rivet.hp, full, EPS)
+	assert_almost_eq(arena.rivet.max_hp - arena.rivet.hp, FULL, EPS)
 	assert_eq(arena.guard.meter(), 1.0)
 	arena.rivet.exposed = false
 	var hp: float = arena.rivet.hp
@@ -136,7 +146,7 @@ func test_wave_damage_excludes_approach_and_intermission_and_counts_actual_loss(
 		_land(stage.arena, r.pos)
 	stats.finish(stage, run.waves[-1])
 	var first_loss: float = run.waves[0].self_damage
-	assert_almost_eq(first_loss, 2.0 * full, EPS)
+	assert_almost_eq(first_loss, 2.0 * FULL, EPS)
 	_land(stage.arena, r.pos)
 	run.begin_wave({})
 	stats.begin(stage)
@@ -160,4 +170,4 @@ func test_non_player_round_cannot_deal_self_damage() -> void:
 
 
 func _land(target: CombatArena, at: Vector2) -> void:
-	RivetSelfBlast.land(target, shot, at, arena.areas.hp_scale)
+	RivetSelfBlast.land(target, shot, at)

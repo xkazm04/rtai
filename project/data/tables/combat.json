@@ -1,5 +1,6 @@
 {
   "blast": {
+    "rivet_hp_per_table_hp": 0.1,
     "self_k": 1
   },
   "doc": "Combat tuning for quest collect-call (mechanics assault-rifle, robo-tazer; Gloria from the Toner Room). Owner doctrine: humans die to one hit and their bullets are weak; two Robo-tazer hits nearly kill Rivet (2 x damage leaves under near_death_frac of hp, never 0). Seconds and metres; the sim converts to 60 Hz ticks.",

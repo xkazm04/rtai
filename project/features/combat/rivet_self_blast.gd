@@ -1,17 +1,18 @@
 class_name RivetSelfBlast
 extends RefCounted
-## Rivet's rounds use the same table-to-fighter HP conversion as their splash against hostiles.
+## Converts the weapon table's splash to Rivet HP before armour and wave accounting.
 
 const WAVE_DAMAGE: StringName = &"rivet_self_blast_wave_damage"
 
-static var self_k: float = _load_multiplier()
+static var rivet_hp_per_table_hp: float = _load_scale("rivet_hp_per_table_hp")
+static var self_k: float = _load_scale("self_k")
 
 
-static func land(arena: CombatArena, shot: Shot, at: Vector2, hp_scale: float) -> void:
+static func land(arena: CombatArena, shot: Shot, at: Vector2) -> void:
 	if not shot.from_rivet:
 		return
 	var w: WeaponSpec = shot.spec
-	var base: float = w.splash_damage * hp_scale
+	var base: float = w.splash_damage * rivet_hp_per_table_hp
 	var amount: float = base * RivetBlast.falloff(arena, at, w.splash_radius_m) * self_k
 	var lost: float = RivetBlast.hit(arena, at, amount, w.id, arena.rivet.id)
 	if lost > 0.0 and arena is GauntletCombat:
@@ -33,9 +34,9 @@ static func finish_wave(arena: CombatArena) -> float:
 	return 0.0
 
 
-static func _load_multiplier() -> float:
+static func _load_scale(key: String) -> float:
 	var table: DataTable = DataTable.open(CombatTuning.TABLE, CombatTuning.SCHEMA)
-	var value: float = table.num(table.object(table.raw, "blast"), "self_k")
+	var value: float = table.num(table.object(table.raw, "blast"), key)
 	if not table.ok():
 		Log.error("rivet_self_blast", str(table.errors()))
 	return value
