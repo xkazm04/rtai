@@ -145,7 +145,12 @@ static func _tracked_aim(e: EnemyAgent, pit: EnemyPit) -> Vector2:
 		return to.normalized()
 	var flight: float = to.length() / maxf(e.arch.weapon.speed_mps, 1.0)
 	var t: float = pit.roster.aim_lock_ticks * SimClock.TICK_DT + flight
-	return (to + pit.rivet_vel * t * pit.roster.aim_lead).normalized()
+	return led_offset(to, pit.rivet_vel, t, pit.roster.aim_lead).normalized()
+
+
+## Linear target travel over the tracking weapon's lock and flight time.
+static func led_offset(to: Vector2, velocity: Vector2, seconds: float, share: float) -> Vector2:
+	return to + velocity * seconds * share
 
 
 static func _windup(e: EnemyAgent, pit: EnemyPit) -> void:

@@ -1,13 +1,15 @@
 extends GutTest
 
 
-func _trial(id: StringName, motion: String) -> FireGapArena:
+func _trial(id: StringName, motion: String, rifle_lead: float = -1.0) -> FireGapArena:
 	var bus: EventBus = autofree(EventBus.new())
 	var registry: RngRegistry = RngRegistry.new(1)
 	var arena: FireGapArena = FireGapArena.new(
 		CombatTuning.shipped(), bus, registry.stream(&"combat")
 	)
 	arena.prepare(id, motion, 9.3)
+	if rifle_lead >= 0.0:
+		(arena.squad_ai as GauntletStreet.StreetSquad).rifle_lead = rifle_lead
 	assert_true(arena.measure())
 	return arena
 
@@ -71,3 +73,17 @@ func test_rocket_uses_a_real_lock_and_circle_preserves_sprint_speed() -> void:
 		arena._move_target(i + 1)
 		assert_almost_eq(arena.rivet.pos.distance_to(prev), 9.3 * SimClock.TICK_DT, 0.0001)
 		assert_almost_eq(arena.rivet.pos.distance_to(arena.foe.pos), 10.0, 0.00001)
+
+
+func test_patrol_rifle_hits_a_circling_runner_with_lead_enabled() -> void:
+	var led: FireGapArena = _trial(&"patrol_cop", "circle")
+	var flat: FireGapArena = _trial(&"patrol_cop", "circle", 0.0)
+	assert_gte(led.hit_ticks.size(), 10)
+	assert_eq(flat.hit_ticks.size(), 0)
+	assert_eq(led.fire_ticks, flat.fire_ticks)
+	var last_hit: int = 0
+	for tick: int in led.hit_ticks:
+		if tick <= FireGapArena.TICKS:
+			assert_lte(tick - last_hit, 3 * SimClock.TICK_RATE)
+			last_hit = tick
+	assert_lte(FireGapArena.TICKS - last_hit, 3 * SimClock.TICK_RATE)

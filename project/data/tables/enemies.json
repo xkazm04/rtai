@@ -262,7 +262,7 @@
       "speed_mps": 0,
       "stagger_s": 0.25,
       "strafe_mps": 0,
-      "telegraph_s": 0.9,
+      "telegraph_s": 0.6,
       "tier": 3,
       "turn_deg_s": 50,
       "uses_cover": false,
@@ -477,7 +477,7 @@
     "rocket": {
       "burst": 1,
       "burst_gap_s": 0,
-      "cooldown_s": 2.2,
+      "cooldown_s": 0.85,
       "damage": 32,
       "melee": false,
       "reach_m": 24,
@@ -511,8 +511,8 @@
     },
     "turret_gun": {
       "burst": 4,
-      "burst_gap_s": 0.1,
-      "cooldown_s": 1.5,
+      "burst_gap_s": 0.065,
+      "cooldown_s": 0.75,
       "damage": 8,
       "melee": false,
       "reach_m": 26,

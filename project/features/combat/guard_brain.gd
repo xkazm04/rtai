@@ -26,6 +26,28 @@ static func space_partner(g: Fighter, hostiles: Array[Fighter]) -> void:
 			g.pursuit.push_body(g, push)
 
 
+## A street squad reads the optional weapon setting once when its firing line is installed.
+static func street_rifle_lead() -> float:
+	var table: DataTable = DataTable.open(CombatTuning.TABLE, CombatTuning.SCHEMA)
+	var row: Dictionary = table.object(table.object(table.raw, "weapons"), "assault-rifle")
+	return table.num(row, "aim_lead") if row.has("aim_lead") else 0.0
+
+
+## Track until the first round, then keep that firing line through the four-round burst.
+## A returning shooter acquires a fresh line after a sight or squad-slot interruption.
+static func street_aim(
+	g: Fighter, w: CombatTuning.Weapon, mind: SquadMind, pit: EnemyPit, share: float
+) -> Vector2:
+	if share <= 0.0:
+		return g.facing
+	if g.burst_left == 0 or g.burst_left == w.burst or mind.paused_rounds > 0:
+		var to: Vector2 = pit.rivet_pos - g.pos
+		var flight_s: float = to.length() / maxf(w.speed_mps, 1.0)
+		var predicted: Vector2 = EnemyBrain.led_offset(to, pit.rivet_vel, flight_s, share)
+		mind.agent.aim = g.facing.rotated(to.angle_to(predicted))
+	return mind.agent.aim
+
+
 static func trigger(g: Fighter, tuning: CombatTuning, rng: RandomNumberGenerator) -> Shot:
 	var w: CombatTuning.Weapon = tuning.weapon(g.weapon)
 	if g.burst_left > 0:

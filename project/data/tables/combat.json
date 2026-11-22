@@ -74,9 +74,10 @@
   "schema": "gtai.combat/1",
   "weapons": {
     "assault-rifle": {
+      "aim_lead": 0.9,
       "burst": 4,
       "burst_gap_s": 0.09,
-      "cooldown_s": 1.4,
+      "cooldown_s": 0.5,
       "damage": 1,
       "damage_vs_rivet": 1.2,
       "magazine": 30,

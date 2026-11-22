@@ -27,6 +27,22 @@ class StreetSquad:
 	extends ArenaSquad
 
 	var mods: StatMods
+	var rifle_lead: float = GuardBrain.street_rifle_lead()
+
+	func assign(arena: CombatArena) -> Array[Fighter]:
+		pit.rivet_vel = Vector2.ZERO
+		if pit.tick > 0 and arena.tick == pit.tick + 1:
+			pit.rivet_vel = (arena.rivet.pos - pit.rivet_pos) * SimClock.TICK_RATE
+		return super.assign(arena)
+
+	func _ranged(
+		mind: SquadMind, h: Fighter, arena: CombatArena, rng: RandomNumberGenerator
+	) -> Shot:
+		if h.weapon == &"assault-rifle" and mind.agent.token and mind.agent.sees:
+			h.facing = GuardBrain.street_aim(
+				h, arena.tuning.weapon(h.weapon), mind, pit, rifle_lead
+			)
+		return super._ranged(mind, h, arena, rng)
 
 	func follow_map(map: GuardRouteMap) -> void:
 		_map = map

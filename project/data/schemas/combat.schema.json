@@ -350,6 +350,11 @@
         "assault-rifle": {
           "additionalProperties": false,
           "properties": {
+            "aim_lead": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
             "burst": {
               "minimum": 0,
               "type": "number"
