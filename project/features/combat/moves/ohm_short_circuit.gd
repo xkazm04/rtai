@@ -6,6 +6,10 @@ extends RefCounted
 
 static func strike(arena: CombatArena, h: Fighter, tick: int, legacy_ticks: int) -> bool:
 	PlayerShock.stun_on(PlayerShock.areas_of(arena), h, legacy_ticks)
+	return short_machine(arena, h, tick)
+
+
+static func short_machine(arena: CombatArena, h: Fighter, tick: int) -> bool:
 	var squad: ArenaSquad = arena.squad_ai
 	if squad != null and squad.moves.ohm_short_circuit.enabled and squad.owns(h):
 		var arch: EnemyRoster.Archetype = squad.pit.roster.archetype(h.archetype)

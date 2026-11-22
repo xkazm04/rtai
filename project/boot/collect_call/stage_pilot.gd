@@ -32,9 +32,8 @@ var throw: PlayerThrow = PlayerThrow.new()
 ## Claw hits started (a press that started or chained a hit; the Hauler's stomp is not one).
 var melee_swings: int = 0
 var car_presses: int = 0
-## features/souls: the four ghost forms for the bound player (GhostPilot: Q / LB transforms, G / RB
-## picks or switches the ghost); the bot never builds a pilot. hauler (Tonnage), dent, kerf and ohm
-## are its attack stages (lane ghost-powers), kept here for the views and the tests.
+## GhostPilot handles deployment (Q / LB), selection (G / RB) and mastery (T).
+## The four form stages also feed the views and tests.
 var ghosts: GhostPilot = GhostPilot.shipped()
 var hauler: HaulerStage = ghosts.hauler
 var dent: DentStage = ghosts.dent
@@ -89,7 +88,8 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 func _attacks(stage: CollectCallStage, c: PlayerCommand, rivet: Fighter) -> void:
 	_fire(stage, c)
 	var press: bool = _melee_press(c)
-	if motion.cover.spot == null and not motion.vault.owns_move and not _ghosts(stage, c, press):
+	var free_to_attack: bool = motion.cover.spot == null and not motion.vault.owns_move
+	if not _ghosts(stage, c, press, free_to_attack) and free_to_attack:
 		var free: bool = motion.phase == PlayerMotion.Phase.FREE
 		var down: bool = c.is_held(actions, &"melee") and rivet.alive()
 		@warning_ignore("return_value_discarded")
@@ -107,10 +107,10 @@ func _attacks(stage: CollectCallStage, c: PlayerCommand, rivet: Fighter) -> void
 
 ## The ghost forms (features/souls GhostPilot); true when a form owns the melee press this tick
 ## (the pilot skips the claw).
-func _ghosts(stage: CollectCallStage, c: PlayerCommand, press: bool) -> bool:
+func _ghosts(stage: CollectCallStage, c: PlayerCommand, press: bool, free: bool) -> bool:
 	if ghosts == null:
 		return false
-	stage.intent.move_by = ghosts.drive(stage, c, actions, press)
+	stage.intent.move_by = ghosts.drive(stage, c, actions, press, free)
 	return ghosts.owns_melee()
 
 
