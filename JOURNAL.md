@@ -57,6 +57,10 @@
   `evidence/n24-pressure/fire-gaps/before.{json,md}`, debt baseline through the tool (dev_loc 30712 -> 31109, reason
   recorded). Read: accepted. Astra `gaps` still running on tasks B and C.
 
+- 18:46 Astra `gaps` on task B (uncommitted: `combat.json`, `gauntlet_street.gd`, `test_gauntlet_wave_timer.gd`,
+  `docs/decisions.md`, and `project/tests/unit/test_dock_waves.gd`: check WHY a dock test moved with the rifle damage
+  before accepting). ASTRA RUNNING gaps since 18:31, lock pid 9736, hard stop 19:45.
+
 NEXT (session 1 end, 18:3x; Astra `gaps` is running until <= 19:45):
 1. Check `C:\Users\kazda\kiro\gtai-n24\logs\pressure\astra.lock` and the last line of `astra-calls.jsonl`; read
    `evidence/briefs/n24-pressure-01b-gaps.out.txt` when it ends. Review tasks A (fire-gap tool + debt), B (rifle
