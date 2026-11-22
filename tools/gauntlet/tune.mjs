@@ -62,7 +62,7 @@ function writePlan(root, v) {
   const state = inventory(root);
   const baseline = ensureBaseline(root, state.entries);
   const plan = propose(batch, state, baseline, { target, profile, max, killerShare, minN, batchHash: hashFile(v.batch),
-    metric: v.metric, night: nightOf(), used: new Set(nightly(root).keys()) });
+    metric: v.metric, allowShared: v['allow-shared'], night: nightOf(), used: new Set(nightly(root).keys()) });
   atomicWrite(v.out, canonicalJson(plan));
   for (const m of plan.misses) console.log(m.miss + ': ' + m.reason);
   console.log(plan.changes.length + ' changes from ' + plan.misses.length + ' measured misses in ' + v.out);
@@ -175,7 +175,7 @@ export function main([command, ...argv]) {
   }
   if (command === 'propose') {
     if (argv.includes('--overwrite-baseline')) throw new Error('tuner baseline is write-once');
-    const v = options(argv, ['batch', 'out'], ['target-s', 'profile', 'max', 'killer-share', 'min-n', 'metric']);
+    const v = options(argv, ['batch', 'out'], ['target-s', 'profile', 'max', 'killer-share', 'min-n', 'metric'], ['allow-shared']);
     return withLock(root, () => writePlan(root, v));
   }
   if (command === 'apply') {

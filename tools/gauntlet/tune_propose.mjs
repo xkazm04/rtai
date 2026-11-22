@@ -3,7 +3,7 @@ import { timeBounds } from './analysis.mjs';
 import { profileScores, targets } from './death_score.mjs';
 import { analyze, weaponsOf } from './report.mjs';
 import { fmt } from './report_tables.mjs';
-import { knobStep, occupied } from './tune_groups.mjs';
+import { knobStep, memberIds, occupied } from './tune_groups.mjs';
 import { TABLES } from './tune_state.mjs';
 
 export const PLAN_SCHEMA = 'gtai.gauntlet-tune-plan/1';
@@ -150,11 +150,12 @@ function observationsFor(batch, state, { target, profile, killerShare, minN, met
 }
 
 export function propose(batch, state, baseline, { target = targets.wave_seconds.average, profile = 'average', max = 6, killerShare = 0.5, minN = 3,
-  used = new Set(), batchHash, night, metric: selection } = {}) {
+  used = new Set(), batchHash, night, metric: selection, allowShared = false } = {}) {
   const metricName = deathMetric(selection);
   if (metricName) max = Math.min(max, 1);
   const observations = observationsFor(batch, state, { target, profile, killerShare, minN, metric: metricName });
   const changes = [], misses = [];
+  const skipped = new Map();
   const chosen = new Set(used);
   // The two outcomes of one offer can describe the same advantage. Don't turn both knobs for it.
   const selectedOffers = new Set();
@@ -166,6 +167,11 @@ export function propose(batch, state, baseline, { target = targets.wave_seconds.
     }
     const result = { ...observation, reason: 'no eligible numeric change within bounds' };
     for (const [id, factor] of choices) {
+      if (!allowShared && memberIds(id, state.entries).some((key) => state.entries.get(key)?.knob.shared)) {
+        result.reason = 'shared with quest 1 / replays';
+        skipped.set(id, { id, reason: result.reason });
+        continue;
+      }
       const step = knobStep(id, factor, state.entries, baseline);
       if (!step) {
         const entry = state.entries.get(id);
@@ -192,5 +198,5 @@ export function propose(batch, state, baseline, { target = targets.wave_seconds.
     misses.push(result);
   }
   return { schema: PLAN_SCHEMA, night, batch_sha256: batchHash, profile, ...(metricName && { metric: metricName }), target_s: target,
-    killer_share: killerShare, min_n: minN, max, changes, misses };
+    killer_share: killerShare, min_n: minN, max, changes, misses, skipped: [...skipped.values()] };
 }

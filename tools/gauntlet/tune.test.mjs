@@ -168,18 +168,42 @@ const proposeArgs = ['--batch=' + beforeFile, '--out=' + planFile];
 const crossSeed = { mode: 'cross-seed' };
 const confirmArgs = ['--floor-mode=cross-seed', '--before=' + beforeFile, '--after=' + afterFile, '--plan=' + planFile];
 
-function prepare(root, batch) {
+function prepare(root, batch, ...flags) {
   write(root, beforeFile, batch);
-  ok(cli(root, 'propose', ...proposeArgs));
+  ok(cli(root, 'propose', ...proposeArgs, ...flags));
   git(root, 'add', '--', BASELINE);
   git(root, 'commit', '-m', 'first-night baseline', '--', BASELINE);
   return readJson(join(root, planFile));
 }
 
+test('shared knobs need an opt-in and a single shared member excludes the whole damage group', (t) => {
+  const root = repository(t), batch = robotBatch();
+  batch.args.waves = 40;
+  for (const run of batch.results) run.wave_reached = 40;
+  write(root, beforeFile, batch);
+  const rows = readJson(join(root, catalog));
+  for (const knob of rows) {
+    const privateTable = ['gauntlet.json', 'gauntlet_bonuses.json'].some((table) => knob.file === TABLES + table);
+    assert.equal(knob.shared === true, !privateTable, knob.id);
+  }
+  for (const knob of rows.filter((k) => k.file.endsWith('/enemies.json')))
+    knob.shared = knob.id === 'enemy_weapon.cannon.damage';
+  write(root, catalog, rows);
+  const plan = (...flags) => {
+    ok(cli(root, 'propose', ...proposeArgs, '--metric=death', ...flags));
+    return readJson(join(root, planFile));
+  };
+  const guarded = plan();
+  assert.equal(guarded.changes.length, 1);
+  assert.deepEqual(guarded.skipped, [{ id: 'enemy_damage', reason: 'shared with quest 1 / replays' }]);
+  assert.ok(guarded.changes.every((c) => (c.members ?? [c]).every((m) => m.file === TABLES + 'gauntlet.json')));
+  assert.equal(plan('--allow-shared').changes[0].id, 'enemy_damage');
+});
+
 test('propose uses measured fixture effects, records untunable misses and respects the plan limit', (t) => {
   const root = repository(t), batch = fixtureBatch();
   const state = inventory(root), baseline = ensureBaseline(root, state.entries);
-  const plan = propose(batch, state, baseline, { max: 1 });
+  const plan = propose(batch, state, baseline, { max: 1, allowShared: true });
   assert.equal(plan.changes.length, 1);
   const pistol = plan.changes[0];
   assert.equal(pistol.id, 'weapon.pistol.rof_hz');
@@ -192,7 +216,7 @@ test('propose uses measured fixture effects, records untunable misses and respec
     const pick = r.picks.find((p) => p.wave === 1);
     pick.taken = pick.taken === 'weapon_pistol' ? 'ghost_kerf' : 'weapon_pistol';
   }
-  assert.ok(propose(opposite, state, baseline).changes.find((c) => c.id === pistol.id).after > pistol.before);
+  assert.ok(propose(opposite, state, baseline, { allowShared: true }).changes.find((c) => c.id === pistol.id).after > pistol.before);
   const expert = manifest(robotBatch().results.map((r) => ({ ...r, profile: 'expert' })));
   const custom = propose(expert, state, baseline, { target: 20, profile: 'expert' });
   assert.deepEqual(custom.changes.map((c) => c.metric.wave), [1]); // 24 s is exactly on the upper boundary.
@@ -208,13 +232,13 @@ test('propose counts timed runs per wave and requires five deaths before acting 
     run.waves[2].seconds = 15;
   }
   write(root, beforeFile, manifest(runs));
-  const output = ok(cli(root, 'propose', ...proposeArgs));
+  const output = ok(cli(root, 'propose', ...proposeArgs, '--allow-shared'));
   assert.match(output, /wave 2 median 24 s over 2 timed runs.*too few runs/);
   assert.match(output, /4\/4 deaths.*too few runs/);
   assert.deepEqual(readJson(join(root, planFile)).changes.map((c) => c.id), ['enemy_damage', 'shield_robot.hp']);
   runs[4].death = { wave: 3 }; // An unattributed death counts toward the denominator.
   write(root, beforeFile, manifest(runs));
-  ok(cli(root, 'propose', ...proposeArgs, '--min-n=4'));
+  ok(cli(root, 'propose', ...proposeArgs, '--min-n=4', '--allow-shared'));
   const plan = readJson(join(root, planFile));
   assert.equal(plan.min_n, 4);
   assert.deepEqual(plan.changes.map((c) => c.id), ['enemy_damage']);
@@ -259,7 +283,7 @@ test('early and late death-wave misses prefer the group then the budget; a cap c
       run.death = { wave, by: 'turret_gun' };
       run.wave_reached = wave + 1; // A younger roster can clear before the last survivor.
     }
-    const plan = propose(batch, state, base);
+    const plan = propose(batch, state, base, { allowShared: true });
     assert.equal(plan.changes[0].id, 'enemy_damage');
     assert.equal(plan.changes[0].factor, factor);
     assert.deepEqual(plan.changes[0].metric, { type: 'death', profile: 'average', target: 12 });
@@ -280,7 +304,7 @@ test('death-wave confirm pairs the recorded death or cap per seed with its null-
   }
   delete before.results[0].death;
   before.runs[0].outcome = 'capped';
-  const plan = prepare(root, before);
+  const plan = prepare(root, before, '--allow-shared');
   assert.equal(plan.changes[0].id, 'enemy_damage');
   const neutral = structuredClone(before), after = structuredClone(before);
   neutral.args.salt = 1;
@@ -438,7 +462,7 @@ test('confirmation keeps the same taker and decliner seeds on both sides of a bo
 
 test('apply preflights bounds, canonical bytes and schemas for the whole plan before its first commit', (t) => {
   const root = repository(t, 'n23-tune-test');
-  const plan = prepare(root, fixtureBatch());
+  const plan = prepare(root, fixtureBatch(), '--allow-shared');
   const apply = () => cli(root, 'apply', '--plan=' + planFile);
   const tampered = structuredClone(plan);
   tampered.changes.at(-1).after *= 2;
@@ -471,7 +495,7 @@ test('apply preflights bounds, canonical bytes and schemas for the whole plan be
 test('apply commits each knob alone and confirm selectively reverts regression and noise, once', (t) => {
   const root = repository(t, 'n23-tune-robot');
   const before = robotBatch(), after = structuredClone(before);
-  const plan = prepare(root, before);
+  const plan = prepare(root, before, '--allow-shared');
   assert.deepEqual(plan.changes.map((c) => c.id), ['shield_robot.hp', 'war_machine.hp', 'sentry_turret.hp']);
   assert.match(plan.changes[0].miss, /median 30 s over 12 timed runs.*15 s, shield_robot present in 12\/12/);
   const file = TABLES + 'enemies.json';
@@ -498,7 +522,7 @@ test('apply commits each knob alone and confirm selectively reverts regression a
   ok(cli(root, 'apply', '--plan=' + planFile));
   assert.equal(git(root, 'rev-parse', 'HEAD'), head);
   const nextPlan = 'build/next-plan.json';
-  ok(cli(root, 'propose', '--batch=' + beforeFile, '--out=' + nextPlan));
+  ok(cli(root, 'propose', '--batch=' + beforeFile, '--out=' + nextPlan, '--allow-shared'));
   assert.equal(readJson(join(root, nextPlan)).changes.length, 0);
   for (const r of after.results) {
     r.waves[0].seconds = 16;
@@ -526,7 +550,7 @@ test('apply commits each knob alone and confirm selectively reverts regression a
 
 test('a failed second commit restores that table and retry resumes from the first receipt', (t) => {
   const root = repository(t, 'n23-tune-retry');
-  const plan = prepare(root, fixtureBatch());
+  const plan = prepare(root, fixtureBatch(), '--allow-shared');
   const combat = TABLES + 'combat.json';
   const original = readFileSync(join(root, combat));
   git(root, 'config', 'core.hooksPath', '.git/hooks');
@@ -577,7 +601,7 @@ test('a selective Git revert preserves a later kept edit on the adjacent budget 
 
 test('apply refuses a dead or reordered pointer before writing another change', (t) => {
   const root = repository(t, 'n23-tune-missing');
-  prepare(root, fixtureBatch());
+  prepare(root, fixtureBatch(), '--allow-shared');
   const rows = readJson(join(root, catalog));
   const knob = rows.find((k) => k.id === 'weapon.pistol.rof_hz');
   for (const pointer of ['/weapons/999/rof_hz', '/weapons/1/rof_hz']) {
@@ -628,7 +652,7 @@ test('a night with synthetic batches drives the real report, propose, apply and 
   assert.deepEqual(jobs[1], [...jobs[0], '--salt=1']);
   assert.deepEqual(jobs[0], jobs[2]);
   const ledger = readJson(join(dir, 'after/tune-ledger.json'));
-  assert.deepEqual(ledger.changes.map((c) => c.verdict), ['kept', 'noise', 'noise']);
+  assert.deepEqual(ledger.changes.map((c) => [c.id, c.verdict]), [['budget.base', 'kept'], ['budget.per_wave', 'noise']]);
   const md = readFileSync(join(dir, 'night.md'), 'utf8');
   for (const c of ledger.changes) {
     assert.ok(md.includes(c.commit));
