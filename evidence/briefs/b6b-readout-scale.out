@@ -1,0 +1,18 @@
+Both parts landed on `n23-controls` before the 07:45 deadline. The final commit was `425ec8894` at 07:34.
+
+**Part A.** The wheel shows Hands on ticks 0–59, hides at tick 60, and restarts its existing fade on either cycle press, including when Hands is the only entry. `755ff6c26` changed `rivet_wheel.gd`, `wheel_readout_view.gd`, and the two tests below. Reviewing the quest film exposed a one-frame delay when the HUD first attached, fixed in `7847148d9`. Evidence landed in `4a5548421`. Both films and the `frames.json` notes were refreshed. [Film report](C:/Users/kazda/kiro/gtai-wt/n23-controls/evidence/controls-flip/films.md) · [Quest opening, frame 271](C:/Users/kazda/kiro/gtai-masters/n23/controls/quest1_wheel_opening.png) · [Arena opening, frame 30](C:/Users/kazda/kiro/gtai-masters/n23/controls/arena_wheel_hands.png)
+
+The two old-contract tests updated were `test_rivet_wheel_pilot.gd::test_hud_readout_fades_and_expires_one_second_after_the_switch` and `test_wheel_readout_fade.gd::test_readout_holds_then_fades_from_the_most_recent_switch`.
+
+**Part B.** `425ec8894` changed `rivet_guard.py`, both `rivet_guard.png` strips, and the measurement report. All **40/40** helmet widths are within 5% of rest. The worst error fell from **−21.82%** on p55 front-right stagger (43/55 px, now 55/55) to **−4.44%** on p70 front-right held (86/90 px). P55 uses uniform scaling. P70 retains a shallower crouch with at most 10% vertical compression. All 40 boot lines match rest. [Full measurement table](C:/Users/kazda/kiro/gtai-wt/n23-controls/evidence/controls-flip/guard-scale.md)
+
+I reviewed all 52 guard frames and preserved the previous stills as `*_b4.png`. [Guard phases](C:/Users/kazda/kiro/gtai-masters/n23/controls/guard_phases_64.png) · [32 px/m](C:/Users/kazda/kiro/gtai-masters/n23/controls/guard_pose_32.png) · [64 px/m](C:/Users/kazda/kiro/gtai-masters/n23/controls/guard_pose_64.png)
+
+**Verification**
+
+- `run_unit.mjs --changed` — 3,650 passed, 0 failed, 2 skipped. `test_guard_view` — 5/5 passed.
+- Wheel mutation testing killed **10/10** mutants across the two code commits.
+- All three replay files were byte-identical. Final digests began `cbeb734ff9b97c41` for `replay_60s`, `37bf8deacaad2f48` for `quest1_input`, and `4352a44470140d68` for `rivet_deflect`.
+- Headless import succeeded. Both tracked `.import` files retained their existing settings. The final commit hook passed all 18 checks.
+
+[astra: 3026s, exit 0]
