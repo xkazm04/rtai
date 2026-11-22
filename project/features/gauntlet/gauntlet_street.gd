@@ -72,9 +72,17 @@ func advance_to(x: float) -> bool:
 
 
 func setup(stage: ArenaStage, _ctx: WorldContext) -> void:
+	apply_repair(_table, stage.arena.tuning)
 	_install(stage)
 	@warning_ignore("return_value_discarded")
 	stage.arena.kill_landed.connect(_death)
+
+
+static func apply_repair(rules: DataTable, tuning: CombatTuning) -> void:
+	var rivet: Dictionary = rules.raw.get("rivet", {})
+	for key: String in ["repair_per_s", "repair_delay_s"]:
+		if rivet.has(key):
+			tuning.rivet[key] = rules.num(rivet, key)
 
 
 func _death(

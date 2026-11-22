@@ -11,6 +11,10 @@
   },
   "max_alive": 40,
   "on_timeout": "next_wave",
+  "rivet": {
+    "repair_delay_s": 3,
+    "repair_per_s": 10
+  },
   "roster_exclude": [
     "appliance_warden",
     "sergeant_mulroney"

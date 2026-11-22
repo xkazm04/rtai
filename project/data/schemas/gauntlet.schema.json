@@ -242,6 +242,20 @@
         "next_wave"
       ]
     },
+    "rivet": {
+      "additionalProperties": false,
+      "properties": {
+        "repair_delay_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "repair_per_s": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "roster_exclude": {
       "items": {
         "type": "string"
