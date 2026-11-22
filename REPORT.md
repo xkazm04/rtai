@@ -1,4 +1,4 @@
-# REPORT - lane loop (n23, 2026-11-22)
+# REPORT - lane loop (n23, 2026-11-22), final 09:12
 
 Gate (snapshot, final code commit `900443274`; every later commit is REPORT, JOURNAL and evidence only):
 `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n23-loop\build\gate\9004432743f1\gate.json` (08:12): lint 19/19, unit 3738 passed / 0 failed /
@@ -186,6 +186,15 @@ Merged game: novice dies at 12 (10..13), average and expert both `>= 40`; separa
    NEED of 05:53). Enemy damage is the third cause (x2 ablation: 1 of 2 average seeds died, median wave 28.5 vs 36); today
    it is reachable only in `enemies.json`, which is shared with quest 1 and the replays, so the tuner may not move it.
 
+## Films (`C:/Users/kazda/kiro/gtai-masters/n23/loop/`, `frames.json` 6 entries)
+
+Merged game (this branch), seed 1, greedy picks, wheel, 32 px/m, 1080p60, the same wave 9 for all three profiles:
+`novice-seed-1-wave-9.mp4` (26.5 s, ends at 3/110 HP just before the novice's death), `average-seed-1-wave-9.mp4` (27.0 s),
+`expert-seed-1-wave-9.mp4` (22.5 s), the three tiled `three-profiles-seed-1-wave-9-tiled.mp4` (22.5 s), and the before and
+after page as a scroll film `compare-page-scroll.mp4` (22 s) with two stills. Headless results and commands per clip:
+`evidence/n23-loop/films.json`. Not made: the 64 px/m close-up of the novice's death (the capture call hit its 75 min cap);
+the tile and the page film were assembled by the director with FFmpeg from the call's clips and a headless Chrome render.
+
 ## What works
 
 - **The noise floor by a neutral change** (item 2): the bot salt, proven different (20/20 result files) and proven
@@ -304,8 +313,10 @@ The tuner optimises a bot. Measured tonight (details in `docs/gauntlet-loop.md` 
 | 6 | tuner-shared | 23 | accepted | shared-table guard (79 knobs), `rivet_repair` group, `ablate --rev`, docs, 4 decision lines |
 | 7 | compare-page | 14 | accepted | `tools/gauntlet/compare.mjs` (md + HTML before/after page), 8 tests |
 | 8 | doc-pass | 11 | accepted | compare tick-cap header, doc sections after night 2 (its sandbox ran 68/84 tests; 84/84 in the lane) |
+| 9 | films | 75 (cap) | accepted in part | three 32 px/m clips + stills, `films.json`; no tile, close-up, page film or frames.json (cap) |
 
 What I would brief differently: give the off/on arms and the tuning batches their tree by SHA from the first call
 (`--rev` came at call 6; before it, one scratch checkout and three waits on a moving HEAD); ask for the wave limit and
 censoring before the first street batch (two batches were thrown away); and make every Node-only brief say so in its
-title, so its Godot slot is visibly free for the director's batches.
+title, so its Godot slot is visibly free for the director's batches; and give a film call its own hour before the gate,
+not after it: one windowed capture per profile took 15-20 min.
