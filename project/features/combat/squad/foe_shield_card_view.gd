@@ -7,8 +7,12 @@ const HEIGHT_M: float = 2.0
 ## The down-facing walk spans 158 source pixels at 55 degrees and 163 at 70.
 const BODY_PX: float = 160.0
 const HIT_HOLD_S: float = 0.20
+const STEP_PX: float = (
+	StreetQuestCards.STRIDE_M * SimConst.PX_PER_M / StreetWalkerCards.STRIDE_FRAMES
+)
 
 var pose: CastCardPose = CastCardPose.new()
+var _walk_cell: int = -1
 
 
 static func enabled(h: Fighter) -> bool:
@@ -43,7 +47,19 @@ func update_fighter(h: Fighter, arena: CombatArena) -> void:
 	pose.hit_hold = HIT_HOLD_S
 	pose.opens_on_hit = false
 	pose.attack = attack_row(h, arena)
+	var last_ground: Vector2 = position
 	draw_pose(pose, h, moved, arena.tick)
+	if texture.resource_path == pose.sheets.walk:
+		var cell: int = frame * 2 + int(flip_h)
+		if (
+			moved
+			and cell == _walk_cell
+			and position.distance_squared_to(last_ground) <= STEP_PX * STEP_PX
+		):
+			position = last_ground
+		_walk_cell = cell
+	else:
+		_walk_cell = -1
 	scale = Vector2.ONE * HEIGHT_M * SimConst.PX_PER_M / BODY_PX
 
 

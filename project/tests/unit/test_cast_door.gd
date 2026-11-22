@@ -37,9 +37,7 @@ func test_robot_card_uses_ground_position_damage_ticks_and_the_render_switch() -
 	assert_true(card.flip_h)
 	assert_eq(card.position, h.pos * SimConst.PX_PER_M)
 	assert_eq(card.texture.resource_path, card.pose.sheets.walk)
-	h.pos += Vector2.RIGHT * (StreetQuestCards.STRIDE_M * 0.5 + 0.01)
-	card.update_fighter(h, host.arena)
-	assert_eq(card.frame_coords, Vector2i(2, 2))
+	_check_walk_contact(card, h, host.arena)
 	h.hurt_tick = host.arena.tick
 	card.update_fighter(h, host.arena)
 	assert_eq(card.texture.resource_path, card.pose.sheets.hit)
@@ -54,3 +52,16 @@ func test_robot_card_uses_ground_position_damage_ticks_and_the_render_switch() -
 	assert_true(FoeShieldCardView.show_rig(host, h, rig, true))
 	assert_false(card.visible)
 	ViewMode._shared = previous
+
+
+func _check_walk_contact(card: FoeShieldCardView, h: Fighter, arena: CombatArena) -> void:
+	h.pos.x += 0.04
+	card.update_fighter(h, arena)
+	var planted: Vector2 = card.position
+	h.pos.x += 0.04
+	card.update_fighter(h, arena)
+	assert_eq(card.position, planted)
+	h.pos += Vector2.RIGHT * (StreetQuestCards.STRIDE_M * 0.5 + 0.01)
+	card.update_fighter(h, arena)
+	assert_eq(card.frame_coords, Vector2i(2, 2))
+	assert_eq(card.position, h.pos * SimConst.PX_PER_M)
