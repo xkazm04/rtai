@@ -16,6 +16,8 @@ var story_voice: bool = false
 var story_forms: bool = false
 ## story_lift: the shipped story's camera lifts a big form clear of the subtitle box (view only).
 var story_lift: bool = false
+var transform_unlocked: bool = false
+var story_transform: bool = false
 var _errors: Array[String] = []
 
 
@@ -35,6 +37,8 @@ static func from_table(t: DataTable) -> GhostFormTable:
 	g.story_voice = t.raw.get("story_voice", false) == true
 	g.story_forms = t.raw.get("story_forms", false) == true
 	g.story_lift = t.raw.get("story_lift", false) == true
+	g.transform_unlocked = t.raw.get("transform_unlocked", false) == true
+	g.story_transform = t.raw.get("story_transform", false) == true
 	g._errors = t.errors()
 	for id: StringName in g.order:
 		if not g.forms.has(id):

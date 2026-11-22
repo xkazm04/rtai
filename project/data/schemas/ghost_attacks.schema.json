@@ -119,6 +119,146 @@
       ],
       "type": "object"
     },
+    "deploy": {
+      "additionalProperties": false,
+      "properties": {
+        "dent": {
+          "additionalProperties": false,
+          "properties": {
+            "cooldown_ticks": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "enabled": {
+              "type": "boolean"
+            },
+            "life_ticks": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "ram_half_m": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "range_m": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "cooldown_ticks",
+            "enabled",
+            "life_ticks",
+            "ram_half_m",
+            "range_m"
+          ],
+          "type": "object"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "kerf": {
+          "additionalProperties": false,
+          "properties": {
+            "cooldown_ticks": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "enabled": {
+              "type": "boolean"
+            },
+            "life_ticks": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "range_m": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "snap_m": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "cooldown_ticks",
+            "enabled",
+            "life_ticks",
+            "range_m",
+            "snap_m"
+          ],
+          "type": "object"
+        },
+        "ohm": {
+          "additionalProperties": false,
+          "properties": {
+            "cooldown_ticks": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "enabled": {
+              "type": "boolean"
+            },
+            "life_ticks": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "radius_m": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "range_m": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "cooldown_ticks",
+            "enabled",
+            "life_ticks",
+            "radius_m",
+            "range_m"
+          ],
+          "type": "object"
+        },
+        "tonnage": {
+          "additionalProperties": false,
+          "properties": {
+            "cooldown_ticks": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "enabled": {
+              "type": "boolean"
+            },
+            "life_ticks": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "range_m": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "cooldown_ticks",
+            "enabled",
+            "life_ticks",
+            "range_m"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "dent",
+        "doc",
+        "kerf",
+        "ohm",
+        "tonnage"
+      ],
+      "type": "object"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"
@@ -433,6 +573,7 @@
   },
   "required": [
     "dent",
+    "deploy",
     "doc",
     "kerf",
     "ohm",
