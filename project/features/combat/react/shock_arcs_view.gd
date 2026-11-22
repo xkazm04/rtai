@@ -88,7 +88,6 @@ func _draw() -> void:
 				_lay(_drops[h.id], h.id)
 			continue
 		var e: FighterFx = arena.areas.effect(h)
-		var stunned: bool = e != null and h.alive() and e.stun_ticks > 0
 		var c: Vector2 = to_local(rig.torso.global_position)
 		var ppm: float = Ink.PX_PER_M * rig.global_transform.get_scale().x / CutRig.SC
 		if e != null and h.alive() and e.burn_ticks > 0 and FightBurnArt.OVER:  # it32: over the body
@@ -96,10 +95,11 @@ func _draw() -> void:
 				FightBurnArt.over_ids[h.id] = arena.tick
 			else:
 				FightBurnArt.over(self, c, ppm, e.flee, h.id, arena.tick)
-		if stunned:
+		if h.alive() and StunCrowd.electric(e, arena.tick):
 			var cap: Vector4i = StunCrowd.cap()
 			var n: Vector2i = Vector2i(cap.y, cap.z) if light.has(h.id) else Vector2i(9, 9)
 			ShockJolt.arcs(self, c, ppm, arena.tick + h.id, OhmVictimRims.arcs(h, n))
+		if e != null and h.alive() and e.stun_ticks > 0:
 			if not _drops.has(h.id) and ShockJolt.hard:
 				_drops[h.id] = _toss(c, ppm, rig.facing, h.id)
 		elif h.alive():

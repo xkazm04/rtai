@@ -21,8 +21,10 @@ func land(
 			arena.wounded.emit(f, combo.table.id)
 		MeleeLethal.Contact.LETHAL:
 			arena.damage(f, f.hp, arena.rivet.id, combo.table.id, MeleeLethal.FINISH)
-	if f.alive() and combo.current().stun_ticks > 0:
-		PlayerShock.stun_on(PlayerShock.areas_of(arena), f, combo.current().stun_ticks)
+	var hit: MeleeHit = combo.current()
+	if f.alive() and hit.stun_ticks > 0:
+		var until: int = arena.tick + hit.stun_ticks if hit.stun_look == &"hold" else -1
+		PlayerShock.stun_on(PlayerShock.areas_of(arena), f, hit.stun_ticks, until)
 	return true
 
 

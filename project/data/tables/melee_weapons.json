@@ -25,6 +25,7 @@
           "lunge_ticks": 4,
           "reach_m": 1.6,
           "recovery_ticks": 16,
+          "stun_look": "hold",
           "stun_ticks": 16,
           "windup_ticks": 12
         },
@@ -63,6 +64,7 @@
         "lunge_ticks": 4,
         "reach_m": 1.65,
         "recovery_ticks": 18,
+        "stun_look": "hold",
         "stun_ticks": 16,
         "windup_ticks": 12
       },

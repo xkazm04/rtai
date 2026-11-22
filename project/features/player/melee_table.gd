@@ -145,7 +145,9 @@ static func _read_hit(t: DataTable, row: Dictionary) -> MeleeHit:
 	h.cone_dot = t.num(row, "cone_dot")
 	h.damage = t.num(row, "damage")
 	h.knockback_m = t.num(row, "knockback_m")
-	# Weapon-only fields: the claw rows omit them and keep 0 (the claw may lunge: it steps in).
+	# The claw omits weapon stun and chain fields, but its hits can still lunge.
+	if row.has("stun_look"):
+		h.stun_look = StringName(t.text(row, "stun_look"))
 	if row.has("stun_ticks"):
 		h.stun_ticks = t.integer(row, "stun_ticks")
 		h.chain_hops = t.integer(row, "chain_hops")

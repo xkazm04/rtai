@@ -66,6 +66,13 @@
           "minimum": 0,
           "type": "integer"
         },
+        "stun_look": {
+          "default": "electric",
+          "enum": [
+            "electric",
+            "hold"
+          ]
+        },
         "stun_ticks": {
           "maximum": 900,
           "minimum": 0,

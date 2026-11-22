@@ -15,6 +15,7 @@ var burn_by: int = 0
 ## The way a burning human runs (away from the fire that caught him).
 var flee: Vector2 = Vector2.RIGHT
 var stun_ticks: int = 0
+var hold_look_until: int = -1  ## Last arena tick to hide electric stun marks. View only.
 var down_ticks: int = 0
 var rise_ticks: int = 0
 
