@@ -10,7 +10,7 @@ function setup(t) {
   const root = mkdtempSync(join(ROOT, 'build/night-test-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   const dir = join(root, 'night output'), calls = [], lines = [];
-  const io = { root, run: (args) => calls.push(args), branch: () => 'n22-tune-test', log: (line) => lines.push(line) };
+  const io = { root, run: (args) => calls.push(args), branch: () => 'n23-tune-test', log: (line) => lines.push(line) };
   return { root, dir, calls, lines, io, args: ['--seeds=3', '--out=' + dir] };
 }
 
@@ -22,7 +22,7 @@ test('dry run previews the full conditional recipe without writes or a runner', 
   assert.equal(lines.filter((s) => s.startsWith('node ')).length, 8);
   assert.match(lines[0], /--seeds=3 --profile=average --pick=greedy --controls=wheel.*'--out=night output\/before'/);
   assert.match(lines[1], /null'.*--salt=1/);
-  assert.match(lines[4], /n22-tune\*/);
+  assert.match(lines[4], /n23-tune\*/);
   assert.match(lines.at(-1), /night\.md/);
   for (const bad of ['--seeds=0', '--profile=unknown', '--pick=x', '--controls=x', '--jobs=2', '--floor-mode=unknown'])
     assert.throws(() => night([...args, bad, '--dry-run'], io));

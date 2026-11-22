@@ -80,7 +80,7 @@ function markdown(ledger) {
   };
   for (const c of ledger.changes) {
     const unit = { wave: 's', spread: 'waves', killer: 'death share', offer: c.metric.outcome === 'seconds' ? 's' : 'waves' }[c.metric.type];
-    lines.push('| ' + [c.id, c.before + ' → ' + c.after, c.baseline, c.miss,
+    lines.push('| ' + [c.id, c.members ? '× ' + c.factor + ' (' + c.members.length + ' knobs)' : c.before + ' → ' + c.after, c.members ? 'per knob' : c.baseline, c.miss,
       fmt(c.measured_before) + ' → ' + fmt(c.measured_after) + ' ' + unit, c.pairs,
       fmt(c.improvement) + ' (' + c.ci95.map(fmt).join(' to ') + ')',
       floorCell(c.floors['null-salt']), floorCell(c.floors['cross-seed']), c.floor_mode,

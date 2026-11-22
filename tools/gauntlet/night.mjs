@@ -55,7 +55,7 @@ function summary(job, branch, ledger) {
     for (const c of ledger.changes) {
       const action = c.revert_commit ? 'Reverted' : !c.commit ? 'Skipped' : c.verdict === 'kept' ? 'Kept' : 'Awaiting revert';
       const measured = fmt(c.measured_before) + ' → ' + fmt(c.measured_after) + ' (' + c.pairs + ')';
-      const cells = [action, c.id, c.before, c.after, c.baseline, c.miss, measured, fmt(c.improvement) + ' (' + c.ci95.map(fmt).join(' to ') + ')',
+      const cells = [action, c.id, c.members ? 1 : c.before, c.members ? c.factor : c.after, c.members ? 'per knob' : c.baseline, c.miss, measured, fmt(c.improvement) + ' (' + c.ci95.map(fmt).join(' to ') + ')',
         fmt(c.floor) + ' (' + c.aa_pairs + ')', c.verdict, c.commit ?? '—', c.revert_commit ?? '—'];
       lines.push('| ' + cells.map((s) => String(s).replaceAll('|', '\\|').replace(/[\r\n]+/g, ' ')).join(' | ') + ' |');
     }
@@ -74,7 +74,7 @@ export function night(argv, { root = ROOT, run = runNode, log = console.log,
   const job = recipe(argv, root);
   if (job.dryRun) {
     for (const args of job.steps) {
-      if (args[1] === 'apply') log('Only n22-tune* branches continue after propose.');
+      if (args[1] === 'apply') log('Only n23-tune* branches continue after propose.');
       log(nodeCommand(args));
     }
     log('Writes ' + job.out + '/night.md on completion.');
@@ -88,7 +88,7 @@ export function night(argv, { root = ROOT, run = runNode, log = console.log,
     for (const args of job.steps) {
       if (args[1] === 'apply') applying = true;
       if (applying && !isTuneBranch(current)) {
-        log('Stopped after propose on ' + (current || 'detached HEAD') + '. Apply requires n22-tune*.');
+        log('Stopped after propose on ' + (current || 'detached HEAD') + '. Apply requires n23-tune*.');
         return;
       }
       if (branch() !== current) throw new Error('branch changed during the night');

@@ -1,7 +1,8 @@
 import { median } from '../perf/paired.mjs';
 import { analyze, weaponsOf } from './report.mjs';
 import { fmt } from './report_tables.mjs';
-import { clamped, TABLES } from './tune_state.mjs';
+import { knobStep, occupied } from './tune_groups.mjs';
+import { TABLES } from './tune_state.mjs';
 
 export const PLAN_SCHEMA = 'gtai.gauntlet-tune-plan/1';
 const ratio = (target, observed) => observed > 0 ? target / observed : 1.25;
@@ -145,25 +146,20 @@ export function propose(batch, state, baseline, { target = 15, profile = 'averag
     }
     const result = { ...observation, reason: 'no eligible numeric change within bounds' };
     for (const [id, factor] of choices) {
-      const entry = state.entries.get(id);
-      if (!entry) continue;
-      const before = entry.value;
-      const first = baseline.values[id];
-      const after = clamped(entry.knob, before, first, before * factor);
-      if (after === before || Math.sign(after - before) !== Math.sign(factor - 1)) {
-        result.reason = id + ' at ' + before + ' has no legal ' + (factor > 1 ? 'upward' : 'downward') + ' step within bounds';
+      const step = knobStep(id, factor, state.entries, baseline);
+      if (!step) {
+        result.reason = id + ' has no legal ' + (factor > 1 ? 'upward' : 'downward') + ' step within bounds';
         continue;
       }
-      if (chosen.has(id) || (metric.type === 'offer' && selectedOffers.has(metric.id))) {
+      if (occupied(id, chosen) || (metric.type === 'offer' && selectedOffers.has(metric.id))) {
         result.reason = 'knob or offer already selected this night';
         break;
       }
       if (changes.length >= max) { result.reason = 'plan limit'; break; }
-      changes.push({ id, file: entry.knob.file, pointer: entry.knob.pointer, ...(entry.knob.row && { row: entry.knob.row }),
-        before, after, baseline: first, metric, miss, severity: observation.severity });
+      changes.push({ ...step, metric, miss, severity: observation.severity });
       chosen.add(id);
       if (metric.type === 'offer') selectedOffers.add(metric.id);
-      result.reason = id + ' ' + before + ' -> ' + after;
+      result.reason = id + (step.members ? ' x ' + step.factor : ' ' + step.before + ' -> ' + step.after);
       break;
     }
     misses.push(result);

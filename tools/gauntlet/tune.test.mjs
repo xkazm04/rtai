@@ -9,6 +9,7 @@ import { ROOT, readJson } from '../lib/repo.mjs';
 import { BATCH_SCHEMA, RUN_SCHEMA, validateRun } from './contract.mjs';
 import { night } from './night.mjs';
 import { confirmChange, pairNullRuns, pairRuns, verdictFor } from './tune_confirm.mjs';
+import { knobStep, occupied } from './tune_groups.mjs';
 import { nightOf } from './tune_git.mjs';
 import { propose } from './tune_propose.mjs';
 import { BASELINE, clamped, digest, ensureBaseline, git, inventory, TABLES, withLock } from './tune_state.mjs';
@@ -345,7 +346,7 @@ test('confirmation keeps the same taker and decliner seeds on both sides of a bo
 });
 
 test('apply preflights bounds, canonical bytes and schemas for the whole plan before its first commit', (t) => {
-  const root = repository(t, 'n22-tune-test');
+  const root = repository(t, 'n23-tune-test');
   const plan = prepare(root, fixtureBatch());
   const apply = () => cli(root, 'apply', '--plan=' + planFile);
   const tampered = structuredClone(plan);
@@ -377,7 +378,7 @@ test('apply preflights bounds, canonical bytes and schemas for the whole plan be
 });
 
 test('apply commits each knob alone and confirm selectively reverts regression and noise, once', (t) => {
-  const root = repository(t, 'n22-tune-robot');
+  const root = repository(t, 'n23-tune-robot');
   const before = robotBatch(), after = structuredClone(before);
   const plan = prepare(root, before);
   assert.deepEqual(plan.changes.map((c) => c.id), ['shield_robot.hp', 'war_machine.hp', 'sentry_turret.hp']);
@@ -398,7 +399,7 @@ test('apply commits each knob alone and confirm selectively reverts regression a
   for (const [i, c] of plan.changes.entries()) {
     assert.equal(git(root, 'diff-tree', '--no-commit-id', '--name-only', '-r', receipts[i]).trim(), file);
     assert.equal(git(root, 'show', '-s', '--format=%s', receipts[i]).trim(),
-      'tune(n22): ' + c.id + ' ' + c.before + ' -> ' + c.after + ': ' + c.miss);
+      'tune(n23): ' + c.id + ' ' + c.before + ' -> ' + c.after + ': ' + c.miss);
     expected.archetypes.find((r) => c.id === r.id + '.hp').hp = c.after;
     assert.equal(git(root, 'show', receipts[i] + ':' + file), canonicalJson(expected));
   }
@@ -433,7 +434,7 @@ test('apply commits each knob alone and confirm selectively reverts regression a
 
 
 test('a failed second commit restores that table and retry resumes from the first receipt', (t) => {
-  const root = repository(t, 'n22-tune-retry');
+  const root = repository(t, 'n23-tune-retry');
   const plan = prepare(root, fixtureBatch());
   const combat = TABLES + 'combat.json';
   const original = readFileSync(join(root, combat));
@@ -457,7 +458,7 @@ test('a failed second commit restores that table and retry resumes from the firs
 });
 
 test('a selective Git revert preserves a later kept edit on the adjacent budget line', (t) => {
-  const root = repository(t, 'n22-tune-adjacent');
+  const root = repository(t, 'n23-tune-adjacent');
   const file = TABLES + 'gauntlet.json';
   const table = readJson(join(root, file));
   table.budget = { base: 10, per_wave: 10 };
@@ -484,7 +485,7 @@ test('a selective Git revert preserves a later kept edit on the adjacent budget 
 
 
 test('a vanished pointer is reported and skipped while another planned knob still applies', (t) => {
-  const root = repository(t, 'n22-tune-missing');
+  const root = repository(t, 'n23-tune-missing');
   const plan = prepare(root, fixtureBatch());
   const rows = readJson(join(root, catalog));
   rows.find((k) => k.id === 'weapon.pistol.rof_hz').pointer = '/weapons/999/rof_hz';
@@ -506,7 +507,7 @@ test('a vanished pointer is reported and skipped while another planned knob stil
 });
 
 test('read and apply skip reordered array rows by their catalog id while other knobs apply', (t) => {
-  const root = repository(t, 'n22-tune-reorder'), before = robotBatch();
+  const root = repository(t, 'n23-tune-reorder'), before = robotBatch();
   const plan = prepare(root, before);
   assert.deepEqual(plan.changes.map((c) => c.row), ['shield_robot', 'war_machine', 'sentry_turret']);
   const file = TABLES + 'enemies.json', table = readJson(join(root, file));
@@ -527,7 +528,7 @@ test('read and apply skip reordered array rows by their catalog id while other k
 });
 
 test('a night with synthetic batches drives the real report, propose, apply and selective revert CLIs', (t) => {
-  const root = repository(t, 'n22-tune-night');
+  const root = repository(t, 'n23-tune-night');
   ensureBaseline(root, inventory(root).entries);
   git(root, 'add', '--', BASELINE);
   git(root, 'commit', '-m', 'first-night baseline', '--', BASELINE);
@@ -577,4 +578,41 @@ test('point and strict verdicts reproduce the n22 gains and their mirrored losse
       assert.equal(verdictFor(-gain, [-ci[1], -ci[0]], floor, mode), expected === 'kept' ? 'reverted' : 'noise');
     }
   }
+});
+
+test('enemy damage uses one factor, one commit and one reversible receipt', (t) => {
+  const root = repository(t, 'n23-tune-damage'), batch = robotBatch();
+  const plan = prepare(root, batch);
+  const { entries } = inventory(root), baseline = readJson(join(root, BASELINE));
+  const group = knobStep('enemy_damage', 3, entries, baseline);
+  assert.equal(group.factor, 1.25);
+  assert.deepEqual(group.members.map((m) => m.id), [...entries.keys()].filter((id) =>
+    id.endsWith('.production_damage') || (id.startsWith('enemy_weapon.') && id.endsWith('damage'))));
+  const overlap = new Set([group.members[0].id]);
+  assert.equal(occupied(group.id, overlap), true);
+  assert.equal(occupied(group.members[0].id, new Set([group.id])), true);
+  for (const m of group.members) assert.equal(m.after, Math.min(entries.get(m.id).knob.max, m.before * 1.25));
+  const capped = structuredClone(baseline);
+  capped.values['enemy_weapon.cannon.damage'] = 8;
+  assert.equal(knobStep(group.id, 1.25, entries, capped).members.find((m) => m.id === 'enemy_weapon.cannon.damage').after, 16);
+  plan.changes = [{ ...group, metric: plan.changes[0].metric, miss: 'fixture wave time' }];
+  const apply = () => cli(root, 'apply', '--plan=' + planFile);
+  const invalid = structuredClone(plan);
+  invalid.changes[0].members.pop();
+  write(root, planFile, invalid);
+  assert.match(apply().stderr, /group catalog/);
+  write(root, planFile, plan);
+  const head = git(root, 'rev-parse', 'HEAD').trim();
+  ok(apply());
+  ok(apply());
+  assert.equal(git(root, 'rev-list', '--count', head + '..HEAD').trim(), '1');
+  const updated = inventory(root).entries;
+  for (const m of group.members) assert.equal(updated.get(m.id).value, m.after);
+  write(root, afterFile, batch);
+  ok(cli(root, 'confirm', ...confirmArgs, '--revert'));
+  const ledger = readJson(join(root, 'build/after/tune-ledger.json'));
+  assert.equal(ledger.changes.length, 1);
+  assert.equal(ledger.changes[0].verdict, 'noise');
+  assert.ok(ledger.changes[0].revert_commit);
+  assert.equal(git(root, 'diff', head, '--', TABLES), '');
 });
