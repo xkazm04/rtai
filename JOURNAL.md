@@ -81,3 +81,9 @@ NEXT (session 7, if any): (1) read build/dev/final_gate2.out (gate on d8c597dfc,
 - 08:58 session 6 end. No Astra running.
 
 NEXT (session 7): REPORT is complete and committed; only if time after the 09:30 freeze: `node tools/gate/run.mjs --rev=HEAD --reels` once (about 25 min, so only if started by 09:30) and quote it; then cites + commit REPORT/JOURNAL with a pathspec. Do not start product work.
+- 09:30 session 7 start (freeze). No Astra running (no lock; last call b8 exited). No `NEED controls` in the other four journals.
+- 09:32 FRICTION REPORT header's second gate path was written with its backslashes eaten (control chars in the file); rewrote it to `build\gate\d8c597dfc90c\gate.json`. cites 36/36 ok.
+- 09:33 DECISION: no `--reels` gate (about 25 min, session stops 09:40); recorded in REPORT "What does not" as unchecked, not green.
+- 09:34 session 7 end. No Astra running. No product work after the freeze.
+
+NEXT: none for this lane; REPORT complete. Director merges n23-controls in the morning (see REPORT "Merge notes"); run the `--reels` gate on the merged tree.

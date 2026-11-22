@@ -2,8 +2,7 @@
 
 Branch `n23-controls`, cut from `main` `76111adec`. Director: Opus; builder: Astra (all product edits).
 Final gate on `9880acfdb` (07:38 to 07:58), wheel as the default: `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n23-controls\build\gate\9880acfdb77c\gate.json`
-(PASS lint 19 checks over 1958 GDScript files; PASS unit-tests 3666 passed, 0 failed, 2 skipped; PASS scenario-tests 65 passed; PASS parity 1200 steps bit for bit, planted mutation caught at step 629; PASS selftest; PASS export-audit 883 loaded, 0 failed). Second full gate on `d8c597dfc` (08:39 to 08:57, after the dev-only guard film flags): `gate: PASS; C:Userskazdakirogtai-wt
-23-controlsuildgated8c597dfc90cgate.json` (same six PASS lines: lint 19/19, unit 3666/0/2, scenarios 65, parity, selftest, export-audit 883/0). Commits after `d8c597dfc` touch only inert paths (`REPORT.md`, `JOURNAL.md`, `evidence/briefs/`).
+(PASS lint 19 checks over 1958 GDScript files; PASS unit-tests 3666 passed, 0 failed, 2 skipped; PASS scenario-tests 65 passed; PASS parity 1200 steps bit for bit, planted mutation caught at step 629; PASS selftest; PASS export-audit 883 loaded, 0 failed). Second full gate on `d8c597dfc` (08:39 to 08:57, after the dev-only guard film flags): `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n23-controls\build\gate\d8c597dfc90c\gate.json` (same six PASS lines: lint 19/19, unit 3666/0/2, scenarios 65, parity, selftest, export-audit 883/0). Commits after `d8c597dfc` touch only inert paths (`REPORT.md`, `JOURNAL.md`, `evidence/briefs/`).
 
 | Suite on `9880acfdb` | Wheel (default) | Legacy (`--controls=legacy`) |
 |---|---|---|
@@ -37,6 +36,7 @@ Films and stills named below are in `C:\Users\kazda\kiro\gtai-masters\n23\contro
 - Quest checkpoints (`gtai.checkpoint/1`) do not store the controls mode; a checkpoint saved on legacy and resumed on wheel replays its input history on the launch mode. Same-mode resume and tamper tests pass. Needs a save-format change outside this lane.
 - In quest 1's opening the wheel readout (lower right) sits just above the dialog box and is half hidden by its top edge when a line is up (`quest1_wheel_opening.png`). It reads, but a HUD layout pass should keep it clear of the dialog.
 - The test player does not yet keep its rockets outside its own blast radius (loop's bot, `NEED loop` in JOURNAL 04:32). On seed 7 average it took 0.0 self damage in 5 waves, so the measured cost is none so far, not a proof.
+- The `--reels` gate was not run: it takes about 25 min and the 09:30 freeze left 10 min to the session stop. Both plain gates (9880acfdb, d8c597dfc) passed; the reels path is unchecked on this branch, not green.
 
 ## Moved digests
 - `brutality_kills` rocket replay (in-memory tape, not a golden): Rivet's own splash at ticks 66 and 396 now takes 10.06 HP instead of 1.006, so 8 intermediate checkpoints per mode moved; the tick-700 finals are identical. Listed in `evidence/controls-flip/self-blast-digests.md`.
