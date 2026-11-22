@@ -34,6 +34,43 @@
       ],
       "type": "object"
     },
+    "cover": {
+      "additionalProperties": false,
+      "properties": {
+        "art": {
+          "pattern": "^res://features/[a-z0-9_/]+\\.png$",
+          "type": "string"
+        },
+        "at": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "size_m": {
+          "items": {
+            "minimum": 0.01,
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "art",
+        "at",
+        "id",
+        "size_m"
+      ],
+      "type": "object"
+    },
     "group": {
       "additionalProperties": false,
       "properties": {
@@ -65,6 +102,38 @@
         "equipment",
         "id",
         "role"
+      ],
+      "type": "object"
+    },
+    "scorch": {
+      "additionalProperties": false,
+      "properties": {
+        "at": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "size_m": {
+          "items": {
+            "minimum": 0.01,
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "at",
+        "id",
+        "size_m"
       ],
       "type": "object"
     },
@@ -201,9 +270,58 @@
       "minItems": 1,
       "type": "array"
     },
+    "yard": {
+      "additionalProperties": false,
+      "properties": {
+        "cover": {
+          "items": {
+            "$ref": "#/$defs/cover"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "fence_depth_m": {
+          "minimum": 0.01,
+          "type": "number"
+        },
+        "gate_width_m": {
+          "minimum": 0.01,
+          "type": "number"
+        },
+        "gate_x_m": {
+          "minimum": 0.01,
+          "type": "number"
+        },
+        "scorch_marks": {
+          "items": {
+            "$ref": "#/$defs/scorch"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "sidewalk_depth_m": {
+          "minimum": 0.01,
+          "type": "number"
+        },
+        "street_depth_m": {
+          "minimum": 0.01,
+          "type": "number"
+        }
+      },
+      "required": [
+        "cover",
+        "fence_depth_m",
+        "gate_width_m",
+        "gate_x_m",
+        "scorch_marks",
+        "sidewalk_depth_m",
+        "street_depth_m"
+      ],
+      "type": "object"
+    },
     "yard_size_m": {
       "items": {
-        "exclusiveMinimum": 0,
+        "minimum": 0.01,
         "type": "number"
       },
       "maxItems": 2,
@@ -218,6 +336,7 @@
     "schema",
     "waves",
     "weapons",
+    "yard",
     "yard_size_m"
   ],
   "type": "object"

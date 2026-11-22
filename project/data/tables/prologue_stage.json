@@ -113,6 +113,144 @@
       "speed_mps": 0
     }
   ],
+  "yard": {
+    "cover": [
+      {
+        "art": "res://features/city/art/vehicles/van_wreck.png",
+        "at": [
+          11,
+          15
+        ],
+        "id": "burnt_van",
+        "size_m": [
+          5.6,
+          2.65
+        ]
+      },
+      {
+        "art": "res://features/characters/art/king/torso.png",
+        "at": [
+          29,
+          18
+        ],
+        "id": "press_carcass",
+        "size_m": [
+          2.6,
+          4
+        ]
+      },
+      {
+        "art": "res://features/city/art/props/dock_propeller.png",
+        "at": [
+          18,
+          8
+        ],
+        "id": "broken_impeller",
+        "size_m": [
+          3.3,
+          3.3
+        ]
+      },
+      {
+        "art": "res://features/city/art/props/dock_fuel_tank.png",
+        "at": [
+          43,
+          11
+        ],
+        "id": "fuel_vessel",
+        "size_m": [
+          5,
+          3
+        ]
+      },
+      {
+        "art": "res://features/city/art/props/dock_scrap_skip.png",
+        "at": [
+          46,
+          26
+        ],
+        "id": "scrap_skip",
+        "size_m": [
+          4.4,
+          2.4
+        ]
+      },
+      {
+        "art": "res://features/city/art/vehicles/pickup_wreck.png",
+        "at": [
+          12,
+          26
+        ],
+        "id": "burnt_pickup",
+        "size_m": [
+          4.8,
+          2.4
+        ]
+      }
+    ],
+    "fence_depth_m": 0.65,
+    "gate_width_m": 6,
+    "gate_x_m": 36,
+    "scorch_marks": [
+      {
+        "at": [
+          29,
+          18
+        ],
+        "id": "press_fire",
+        "size_m": [
+          9.5,
+          8.5
+        ]
+      },
+      {
+        "at": [
+          11,
+          15
+        ],
+        "id": "van_fire",
+        "size_m": [
+          8.5,
+          6.5
+        ]
+      },
+      {
+        "at": [
+          21.5,
+          16.5
+        ],
+        "id": "floor_flash",
+        "size_m": [
+          6,
+          4.5
+        ]
+      },
+      {
+        "at": [
+          43,
+          11
+        ],
+        "id": "vessel_fire",
+        "size_m": [
+          8,
+          6
+        ]
+      },
+      {
+        "at": [
+          16,
+          25.5
+        ],
+        "id": "west_blast",
+        "size_m": [
+          7.5,
+          5
+        ]
+      }
+    ],
+    "sidewalk_depth_m": 4,
+    "street_depth_m": 7
+  },
   "yard_size_m": [
     60,
     34

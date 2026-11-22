@@ -36,18 +36,12 @@ func _ready() -> void:
 		return
 	_seed = seed_arg.to_int() if seed_arg != "" else World.DEFAULT_SEED
 	var data: DataTable = DataTable.open(TABLE, SCHEMA)
-	var plan: ArenaPlan = ArenaPlan.new()
-	plan.rivet_start = data.vec(data.raw, "rivet_start")
-	var size_m: Vector2 = data.vec(data.raw, "yard_size_m")
+	var plan: PrologueYard = PrologueYard.from_stage(data)
 	var beats: Array = data.array(data.raw, "beats")
 	if not data.ok() or beats.is_empty():
 		Log.error("prologue", str(data.errors()))
 		get_tree().quit(1)
 		return
-	var yard: ArenaPlan.Area = ArenaPlan.Area.new()
-	yard.id = "yard"
-	yard.rect = Rect2(Vector2.ZERO, size_m)
-	plan.areas.append(yard)
 	_open(plan, data)
 	if not data.ok():
 		Log.error("prologue", str(data.errors()))
@@ -60,15 +54,15 @@ func _ready() -> void:
 		get_tree().quit(1)
 		return
 	if DisplayServer.get_name() != "headless":
-		_open_view(size_m)
+		_open_view(plan)
 
 
-func _open(plan: ArenaPlan, data: DataTable) -> void:
+func _open(plan: PrologueYard, data: DataTable) -> void:
 	world = World.new()
 	world.start(Events, Data, _seed)
 	var options: ArenaArgs = ArenaArgs.new()
 	options.values["--enemy-brain"] = "squad"
-	stage = ArenaStage.new(plan, ArenaStations.new(), options)
+	stage = ArenaStage.new(plan, plan.stations, options)
 	var actions: PlayerActions = PlayerActions.shipped(true)
 	actions.install()
 	stage.pilot = StagePilot.new(actions)
@@ -94,10 +88,10 @@ func _equip_squad(data: DataTable) -> void:
 		foe.weapon = EnemyRoster.Weapon.from_row(data, weapon_id, row)
 
 
-func _open_view(size_m: Vector2) -> void:
+func _open_view(plan: PrologueYard) -> void:
 	var view: CollectCallView = CollectCallView.new()
 	var floor_view: PrologueFloor = PrologueFloor.new()
-	floor_view.yard_size_m = size_m
+	floor_view.plan = plan
 	view.stage_view.free()
 	view.stage_view = floor_view
 	view.hud_feed = lines
