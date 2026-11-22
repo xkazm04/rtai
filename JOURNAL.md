@@ -262,3 +262,11 @@ edits are UNCOMMITTED: commit them with `git commit -- <paths>` when Astra's ind
 - 23:02 ASTRA RUNNING finish since 23:02 (pid 54604, --resume, hard stop 00:08, last commit start 23:55; brief
   `evidence/briefs/n24-pressure-06-finish.md`: 0 rocket cooldown 1.4 + quest pin, R1 rocket look (find the blue in the
   real gauntlet), R2 nail smallest, D bot dash, E damage_by if time). Brief 04's stall task dropped.
+- 23:10 4a1305bef task 0 (rocket cooldown 1.4; quest pin c211ee9720fc). 23:17 a5332156f R1: amber exhaust drawn on the
+  round-colour canvas (`ShotDraw.launcher_exhaust`, the ink shader maps amber to vermilion otherwise), and fx_view.gd:268
+  one line: the bare-hands path now tries `WeaponFxArt.shot` first (before: after a wheel switch to hands a rocket in
+  flight drew as a thin black dash). LOOKED at `gauntlet-rocket_launcher-{32,64}ppm-flight-t91-pair.png` and the hands
+  pair: the casing is warm grey (RGB 159,144,146, a red tip), NOT blue, before and after; no ice blue on Rivet's rocket
+  anywhere (Astra searched every path). DECISION pressure: Rivet's rocket stays steel + amber exhaust; the owner's "blue
+  rocket" may be the trooper's ice-blue enemy rocket (kept by the n23 verdict): Call for the owner with a side-by-side still
+  (brief 05 Still 3 added). Brief 05 times filled (hard stop 01:25, commit by 01:15).

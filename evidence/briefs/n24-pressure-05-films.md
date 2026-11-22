@@ -3,11 +3,11 @@
 You build for lane `pressure` of RTAI (Godot 4, internal id `gtai`) in this worktree, branch `n24-pressure`.
 Read `AGENTS.md` and `tools/README.md` (the `tools/film/` section) before you start. STANDARDS.md binds.
 
-**Wall clock: hard stop HARDSTOP. Last commit by COMMITBY.** After the freeze (01:30) nothing is committed.
+**Wall clock: hard stop 01:25. Last commit by 01:15.** After the freeze (01:30) nothing is committed.
 The code is frozen: this call makes films and evidence only. If a film needs a code change (a new dev shot, a probe),
-it lives under `project/dev/gauntlet/**` only, and only if it is committed by COMMITBY; otherwise film with what exists.
+it lives under `project/dev/gauntlet/**` only, and only if it is committed by 01:15; otherwise film with what exists.
 
-GODOTNOTE
+**Godot is yours alone** (the director's gate has finished before your start).
 
 ## Machine rules, git law
 
@@ -41,6 +41,13 @@ side cannot be made, three files `punish_still.mp4`, `punish_circle.mp4`, `punis
 If brief 02 already delivered a deflect clip at 32 px/m (look in the masters folder and `evidence/n24-pressure/deflect/`),
 check it against "Every film" and keep it; otherwise film Rivet guarding against a rifle squad for 15 to 25 s with the
 passed rounds (their spark + Rivet's hit reaction) and the scattered returns readable, plus a 64 px/m close-up.
+
+## Still 3 - the two rockets (for an owner call)
+
+Rivet's rocket (after a5332156f: steel casing, amber exhaust) and the `rocket_trooper`'s rocket (enemy large round,
+`EnemyRoundLook.LARGE_*` ice blue) in flight, same tick and zoom, at 32 and 64 px/m, as one side-by-side pair:
+`rockets_rivet_vs_trooper-<ppm>.png`. The owner wrote "Blue rocket does not fit style of the weapon"; no blue was found on
+Rivet's own rocket, so the owner may mean the trooper's. The pair lets the owner say which.
 
 ## frames.json
 
