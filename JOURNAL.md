@@ -212,3 +212,4 @@ NEXT (session 5, overrides the 22:50 NEXT where they differ): brief 06 = the 06 
   pile-driver survivors" (read their mutate logs in foes-n24, add assertions in test_cast_turret.gd /
   test_cast_war_machine.gd, re-run --max=20), then the id branch, mojibake header, beside_64 clips, Feet/Shadow.
   Launch by 23:10 detached, code commits by 23:55. Gate at ~00:05.
+- 23:05 session 5 start. No astra.lock; call 05 logged (3931 s, exit 0). No NEED cast in the other four journals. Brief 06 written (evidence/briefs/n24-cast-06-polish.md): survivors first, stomp id branch, mojibake plates, beside_64 clips, Feet/Shadow; hard stop 00:00, code commit 23:55.
