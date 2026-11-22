@@ -1,0 +1,5 @@
+**NEED — authorize a one-line edit to [input_actions.schema.json](C:/Users/kazda/kiro/gtai-wt/n23-controls/project/data/schemas/input_actions.schema.json:23).** The schema caps `bit` at 17, so the required dash row with `bit: 18` would fail validation. Raising that maximum to 18 is sufficient for dash. The schema already accepts `wire_bit: 31`.
+
+This file is outside the allowlist, so I stopped at the scope check. I inspected the input and replay code. I changed no files, ran no tests, and created no milestone commit.
+
+[astra: 55s, exit 0]

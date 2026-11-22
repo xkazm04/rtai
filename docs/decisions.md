@@ -1477,3 +1477,12 @@ One dated line per decision. Deviations use `DEVIATION <RULE-ID>` and carry a re
 - [2026-11-22] DECISION pressure: Repair Rivet between gauntlet waves so surviving a live wave costs health (02bec2b14). The rivet.repair_in_wave switch restores continuous repair for comparison.
 - [2026-11-22] DECISION pressure: Call reinforcements after 90 seconds on waves 1 through 5 and 45 seconds from wave 6 to increase pressure at depth (624e58248). A zero late timer falls back to the regular deadline.
 - [2026-11-22] DECISION pressure: Re-record the quest 1 input final digest from 37bf8deacaad to a113296dbccc. The shared assault rifle starts and repeats hostile bursts on the shorter cooldown. The original paid objective, input tape, checkpoint and replay checks stay in place.
+- [2026-11-22] DECISION n24 motion: Use the bare-claw gait with the actual held part at the painted palm for borrowed movement. At 64 px/m masking the pistol exposed the floor through the wrist and torso. Weapons with their own grids use their painted carry.
+- [2026-11-22] DECISION dash: A roll owns its movement until recovery ends. Dash presses during that interval expire.
+- [2026-11-22] DECISION dash: A vault owns its path through landing and recovery. Dash presses during the crossing expire.
+- [2026-11-22] DECISION dash: Station cover owns movement while occupied. A dash requires free ground.
+- [2026-11-22] DECISION dash: Death stops an active dash and the pilot ignores movement presses until Rivet lives again.
+- [2026-11-22] DECISION dash: A roll pressed during a dash expires, including on the final burst step. A simultaneous press on free ground takes the roll.
+- [2026-11-22] DECISION dash: Reload timers continue during the dash so a player can reposition while changing magazines.
+- [2026-11-22] DECISION dash: Rivet can fire during the dash under the weapon's usual firing rules.
+- [2026-11-22] DECISION dash: A melee swing already in progress advances during the burst, including its ordinary lunge.

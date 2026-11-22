@@ -1,30 +1,18 @@
 class_name RivetWalk
 extends RefCounted
-## d9 rivet (Call 2): bare-claw Rivet's drawn stride, when the art key has one. n9: the library's
-## 8-frame walk (`rivet_walk8.png`, tools/art/rivet_walk.py --cols=8: contact, down, passing, up,
-## contact (other foot), down, passing, up; 8 rows in RivetFrames' base cell order), stepped by the
-## ground walked: one drawn cycle = CYCLE_CELL cell px x the card's scale, the stance foot's drawn
-## travel over a stride (measured on the profile rows, evidence/n9/rivet_walk8_measure.md), so a
-## planted foot stays put; above MAX_CYCLES_S the cadence holds there (his 6.75 m/s walk would
-## need ~7.5 cycles a second: a drawn walk cannot plant at a run's speed, see the run REQUEST).
-## --rivet-walk=4 plays d9's 4-frame grid by the gait phase, --rivet-walk=bob the facing card.
-## n9 it4: a weapon out walks on its drawn armed grid (`rivet_walk_eq_<weapon>.png`, 4 frames, the
-## library's armed walks for the weapon each draws) until a shot or a strike latches the equipped
-## strip's fire cell; --rivet-walk-armed=off keeps the equipped facing card (d9's bob).
-## n9 it4: bare-claw above RUN_FROM_MPS he runs on the library's 8-frame run (`rivet_run8.png`,
-## flight frames), cadence capped at MAX_RUN_CYCLES_S; --rivet-walk=walk8 keeps the walk at every
-## speed. RUN_CYCLE_CELL (it5): in the grid's profile rows the stance foot moves 62-67 cell px from
-## contact to push-off, two frame steps, so one frame step = ~32 cell px of ground and a cycle 8 x
-## that (it4 wired 136 = the travel per half cycle: the legs churned 1.9x, the foot slid back).
-## it6: p55 measured the same way: ~53 cell px over two steps, 26.5 a step, a cycle of 212.
+## Drawn locomotion steps by distance. The eight walk columns are contact, down, passing and up
+## for each foot. Rows follow RivetFrames' base octants. For the measured stance travel see
+## evidence/n9/rivet_walk8_measure.md. --rivet-walk=4 uses gait phase; =bob uses the facing card.
+## A native armed grid contains its weapon. Borrowed movement uses a bare grid and a held sprite.
+## Fire, strike and --rivet-walk-armed=off keep their equipped poses.
+## Above RUN_FROM_MPS a run has eight columns including flight; --rivet-walk=walk8 retains walk.
+## At p70 the profile stance foot travels 62-67 cell px over two steps, about 32 per column.
+## At p55 it travels 53 over two steps, or 212 per cycle. MAX_RUN_CYCLES_S caps the cadence.
 ## it6: each armed grid has its own cycle (ARMED_CYCLE_CELL, "<art>/<weapon>"): the profile
 ## rows' stance boot from contact to the next contact (two of the 4 frame steps) x 2, mean of
 ## the right and left rows (evidence/n9/rivet_walk_armed_cycle.md); the flamer shuffles: CYCLE_CELL.
-## it7: above RUN_FROM_MPS a weapon out runs on its drawn armed run (`rivet_run8_eq_<weapon>.png`,
-## the library's run8 legs + the claw armed walk's arms, my it6 REQUEST) where the art key has one,
-## stepped on RUN_CYCLE_CELL (its legs are run8's, frame by frame); else the armed walk as before.
-## it8: RUN_ROW_K ("<art>/<weapon>/<octant>"): a drawn run row whose stride is shorter than run8's
-## (cell px on the packed grid) steps on a cycle shortened by that ratio, so its stance foot plants.
+## Armed runs use run8 legs and armed walk arms. RUN_ROW_K shortens the cycle for a row whose
+## measured stride is shorter than the bare run. A missing armed run keeps its native armed walk.
 
 const STRIP: String = "rivet_walk8.png"
 const STRIP4: String = "rivet_walk.png"
@@ -95,26 +83,36 @@ static func moving(rig: CutRig) -> bool:
 	return age >= 0.0 and age <= DIP_TICKS * SimClock.TICK_DT
 
 
-## The walk grid under `art`, "" when it is off, the art has none, or he is not walking bare-claw.
-static func path_of(rig: CutRig, art: String, weapon: StringName) -> String:
+## Live selection keeps the actual weapon for pose gates even when its legs come from another grid.
+static func motion_path(rig: CutRig, art: String, weapon: StringName) -> String:
+	return path_of(rig, art, weapon, RivetFramesGrids.grid_for(weapon))
+
+
+## Query the weapon's own drawing first. Without a fallback this answers only for its own art.
+static func path_of(
+	rig: CutRig, art: String, weapon: StringName, fallback: StringName = &""
+) -> String:
 	if not enabled or not moving(rig):
 		return ""
 	if rig.dead or rig.clips.rolling() or rig.clips.hit_t > 0.0 or rig.clips.strike_t >= 0.0:
 		return ""
 	if rig.clips.active() == RigClips.Clip.PUNCH:
 		return ""
-	var name: String = STRIP if frames == 8 else STRIP4
-	var fast: bool = rig.speed_now > RUN_FROM_MPS * CharacterRigs.PX_PER_M
-	if run and frames == 8 and fast and RivetStrips.has_file(RivetStrips.DIR + art + "/" + RUN):
-		name = RUN
-	if weapon != &"":
-		if not armed or RivetStrips.fire_latched(rig):
-			return ""
-		name = ARMED + String(weapon) + ".png"
-		var armed_run: String = ARMED_RUN + String(weapon) + ".png"
-		var drawn_run: bool = RivetStrips.has_file(RivetStrips.DIR + art + "/" + armed_run)
-		name = armed_run if run and frames == 8 and fast and drawn_run else name
-	var path: String = RivetStrips.DIR + art + "/" + name
+	if weapon != &"" and (not armed or RivetStrips.fire_latched(rig)):
+		return ""
+	var dir: String = RivetStrips.DIR + art + "/"
+	var fast: bool = run and frames == 8 and rig.speed_now > RUN_FROM_MPS * CharacterRigs.PX_PER_M
+	var own: String = _grid(dir, WeaponArtKey.of(weapon), fast)
+	if own != "" or fallback == &"" or fallback == weapon:
+		return own
+	return _grid(dir, fallback, fast)
+
+
+static func _grid(dir: String, id: StringName, fast: bool) -> String:
+	var bare: bool = id == &"" or id == RivetFramesGrids.BARE
+	var walk: String = (STRIP if frames == 8 else STRIP4) if bare else ARMED + String(id) + ".png"
+	var running: String = dir + (RUN if bare else ARMED_RUN + String(id) + ".png")
+	var path: String = running if fast and RivetStrips.has_file(running) else dir + walk
 	return path if RivetStrips.has_file(path) else ""
 
 

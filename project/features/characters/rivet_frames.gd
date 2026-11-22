@@ -43,7 +43,7 @@ static func step(rig: CutRig) -> void:
 	var weapon: StringName = weapon_of(rig)
 	var art: String = ViewMode.shared().art
 	var path: String = RivetStrips.strip_of(art, weapon) if rig.head_card != null else ""
-	var walk: String = RivetWalk.path_of(rig, art, weapon) if path != "" else ""
+	var walk: String = RivetWalk.motion_path(rig, art, weapon) if path != "" else ""
 	if path != "" and LEFT[oct_of(rig)] == 1 and RivetWindup.left_drawn(weapon):
 		path = RivetStrips.left_of(art, weapon)
 	path = walk if walk != "" else RivetReload.held_or(rig, art, weapon, path)

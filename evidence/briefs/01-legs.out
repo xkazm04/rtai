@@ -1,0 +1,22 @@
+Fixed Rivet’s still-card slide. All 18 arsenal weapons and wheel slot 0 now walk and run at both art pitches. The five weapons with drawn armed grids matched the baseline byte for byte across all **1,440 comparison frames**.
+
+| Wheel selection | Before | After |
+|---|---|---|
+| Hands, slot 0 | Already stepped | Same empty-claw gait |
+| Pistol | Already stepped | Same painted pistol gait |
+| Gloria, rocket launcher, assault rifle, chainsaw, electro baton | Boots stayed fixed while the ground moved | Boots alternate and the selected weapon follows the claw |
+
+I chose **option (b)**. Masking the donor pistol exposed the floor through Rivet’s wrist and torso. The bare-claw grid lets the actual held part follow the painted palm. At 64 px/m, the repaired carries averaged **1.1 cm** of net stance drift walking and **5.3 cm** running. The underlying run still holds some drawings for 13–14 ticks, so some sliding remains visible within a step.
+
+[Before film](C:/Users/kazda/kiro/gtai-masters/n24/motion/before/legs_32.mp4) · [After film](C:/Users/kazda/kiro/gtai-masters/n24/motion/after/legs_32.mp4) · [22 matched comparisons](C:/Users/kazda/kiro/gtai-masters/n24/motion/) · [Per-weapon measurements](C:/Users/kazda/kiro/gtai-wt/n23-controls/evidence/n24-motion/slide_after.md). Both films were verified at 1080p60, 26.4 seconds.
+
+**Commits**
+
+- `7723f11b0` — `motion: record the wheel-equipped walk and run slide`
+- `8b5f4d96e` — `motion: animate every held weapon on Rivet's moving legs`
+
+Changes cover `rivet_walk.gd`, `rivet_frames.gd`, the new grid and grip helpers, `rivet_motion.json` and its schema, the every-weapon unit test, both evidence tables, and the decision record. `rivet_held_view.gd` has the one-line placement call.
+
+**Verification:** `run_unit --changed` passed 3,773 tests with 2 skipped. Six replay, bake and parity scenarios passed. Native parity matched over 1,200 steps. Mutation score was **16/16 valid mutations killed**, with 4 invalid and 0 timeouts. All 19 pre-commit checks passed. The standalone quick parse still reported a Godot allocator shutdown error, also reproduced on the existing walk test.
+
+[astra: 3983s, exit 0]
