@@ -125,7 +125,10 @@ because the table is shared and a kept change would move shipped replays (`evide
 **One night's full clamp at once** (diagnostic, not a tuner cycle, `evidence/n23-loop/stack-clamp/`): every gauntlet-only
 knob at its night limit toward harder (repair 8 HP/s after 3.75 s, budget base 180 -> 225 and per_wave 16 -> 20,
 `max_alive` 40 -> 50, cost patrol_cop 15 -> 12 and war_machine 200 -> 160), merged game, novice + average 8 seeds, against
-`moves/on`. PENDING.
+`moves/on`. Cut to **6 seeds** per profile to finish before the gate (seeds 1-6). Death wave per seed, on -> clamp:
+novice 9->10, 22->9, 13->13, 11->10, 13->12, 11->12 (median 12 -> 11); average all six alive at 40 -> five alive at 40
+and seed 2 dead at wave 22 (shield robot). **One whole night of clamped tuning on every gauntlet-only knob at once moves
+novice by about one wave and gives average its first death in six runs.** That is the "how many nights" number below.
 
 ## The four moves, off and on (merged game, average, same seeds)
 
@@ -146,7 +149,7 @@ non-boss waves with the enemy vs without; boss waves alone; scratch `build/n23/g
 | Kerf blink behind | shield robot | **-5.13 s** (-7.89..-2.32) | 0 | 33.0 / 18.2 s | 40.2 / 17.8 s | 41.2 / 12.7 s |
 | Kerf blink behind | war machine (boss waves) | | | 26.0 s | 34.0 s | 43.8 / 26.0 s |
 | Tonnage armour crack | war machine | no off arm: 7 uses in 10 runs | | | | 43.8 / 26.0 s |
-| Overkill carry | crowds | PENDING (`moves/carry-off/`) | | | | |
+| Overkill carry | crowds (all matched waves) | **-0.57 s** (-1.81..0.32), 9 pairs: no measurable effect | | | | |
 
 - Kerf's blink does its job: shield-robot waves are 5.1 s shorter with it, and the boss wave 8 s shorter (the slice
   one-shots the war machine, moves lane finding). Ohm's short-circuit is real but small (0.7 s on turret waves).
@@ -204,7 +207,10 @@ Merged game: novice dies at 12 (10..13), average and expert both `>= 40`; separa
   and expert all censored, a 20 % step on one number cannot show. Cycle 2 (the repair group, both numbers at the night clamp) is noise as well.
 - **Targets out of reach at this rate.** The game is too easy by 26+ waves for average (>= 40 vs 12) and 20+ for expert;
   at one x0.8 step a night on repair the x0.5 floor (5 HP/s) is reached after 4 nights, and the ablation says even
-  3 HP/s after 6 s only brings average to wave 20. PENDING: the stack-clamp arm gives the one-night number.
+  3 HP/s after 6 s only brings average to wave 20. The stack-clamp arm (every gauntlet-only knob at one night's limit at
+  once, 6 seeds) moved novice 12 -> 11 and average from 0/6 to 1/6 deaths (wave 22). At that rate, with the x0.5 floor
+  reached after about four nights on each knob, the clamped tuner alone does not reach average 12: it needs the shared
+  tables (enemy damage, quest 1 and replays read them) or the owner's larger step (Call 2).
 - **Soft-lock after a timed-out wave** on the merged game: 4 of 30 runs froze until the tick cap (`NEED street`, JOURNAL
   07:08); the bot's part (it cannot finish a turret or shield robot it keeps blinking at) is loop's next item.
 - `bot_brain.gd` mutation 5/12 killed (Astra call 5): the moves logic is under-tested.
