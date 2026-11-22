@@ -48,6 +48,23 @@ The causes, largest first: (1) **in-wave repair** (10 HP/s, ten times the damage
 stacking hp and regen** to x1.375, (3) **low enemy damage**. The guard is minor. Repair is a `combat.json` number
 shared with quest 1: the tuner reaches it only through street's gauntlet override (`NEED street` 01:06).
 
+### After the street merge (stacked waves, budget in tenths, gauntlet repair override)
+
+Batch `evidence/n23-loop/base-street/` (street merged at `2b2ff79d4`, tools at `ccfc29df0`), greedy wheel, 10 seeds
+x 3 profiles, every run bounded at 40 waves (`--waves=40`: a run alive at 40 is censored there; the street merge raised
+the tick cap to 216000 and an uncapped average run took 8-10 min). Null salt 1 rerun: `evidence/n23-loop/base-street-salt1/`.
+
+| Profile | Runs | Median death wave | P25..P75 | Lethal deaths | Censored at 40 | Null floor (pairs) |
+|---|---:|---:|---|---:|---:|---:|
+| novice | 10 | 14 | 11..23 | 10 | 0 | 8.5 (10) |
+| average | 9 (1 run hung) | >= 40 | 40..40 | 1 (wave 22) | 8 | 6 (9) |
+| expert | 10 | >= 40 | 40..40 | 0 | 10 | 0 (10) |
+
+- Stacking did not make runs end in death: the 90 s timer fired on 1 wave in 29 runs, because a wave lasts 35-48 s from
+  wave 11 on (median, average: 11 / 20 / 35 / 40 / 48 s in bands 1-4 / 6-10 / 11-20 / 21-30 / 31-40).
+- Average and expert are still not separated (both censored at 40); novice is (14).
+- Damage taken 0.4-1.1 HP/s per wave against the gauntlet repair of 10 HP/s after 3 s (unchanged values).
+
 ## The noise floor by a neutral change
 
 DECISION: the neutral change is a **bot salt** (`--bot-salt=<n>`) on the test player's private streams (aim, defence,
