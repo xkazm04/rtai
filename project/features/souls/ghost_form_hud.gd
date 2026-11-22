@@ -1,10 +1,6 @@
 class_name GhostFormHud
 extends Control
-## The ghost HUD (bottom left), n11: no card, only the ghosts' avatars docked in the corner, in
-## cycle order (GhostChipFace). Ink rims and paper-on-ink marks hold on any ground: the current form
-## has a teal rim and stands larger; the selected ghost has a chevron and key hint; a cooling one
-## is dimmed with a teal arc; a locked one (GhostLocks) is an ink silhouette under a padlock. Under
-## them the Madness bar, the selected ghost's cost a notch. Plain values only (sync() fills them).
+## Bottom-left soul strip. The loaded ghost carries the chevron and the current form a teal rim.
 
 const PAPER: Color = Color("e9dcc3")
 const INK: Color = Color("17131b")
@@ -47,6 +43,12 @@ var layout: GhostFormLayout = GhostFormLayout.for_device(DeviceProfile.shared())
 ## The one avatar that carries its name when the layout names only one (the selected ghost).
 var _named: StringName = &""
 var _cursor: WeaponCursor = WeaponCursor.new()
+var _plate: StyleBoxFlat = StyleBoxFlat.new()
+
+
+func _ready() -> void:
+	_plate.bg_color = Color(INK, 0.55)
+	_plate.set_corner_radius_all(8)
 
 
 ## Fills the plain values from the state machine (once per frame); the cursor follows `weapon`.
@@ -89,6 +91,7 @@ func _draw() -> void:
 	_named = named_chip(shown)
 	var w: float = l.card_w(shown.size())
 	var top: Vector2 = Vector2(l.margin, get_viewport_rect().size.y - l.margin - l.card_h)
+	draw_style_box(_plate, Rect2(top, Vector2(w, l.card_h)).grow(6.0))
 	for i: int in shown.size():
 		_chip(shown[i], top + Vector2(l.gap * (float(i) + 0.5), l.chip_y))
 	_madness(Rect2(top + Vector2(4.0, l.bar_y), Vector2(w - 12.0, l.bar_h)))
