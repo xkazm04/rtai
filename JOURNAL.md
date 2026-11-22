@@ -52,3 +52,17 @@
   `servo.json` (boss designs), `impact.gd` range-drill splash/burn.
 - 18:31 ASTRA RUNNING gaps since 18:31 (resume of numbers-gaps, brief `evidence/briefs/n24-pressure-01b-gaps.md`, lock
   pid 9736, hard stop 19:45, commit by 19:40).
+
+NEXT (session 1 end, 18:3x; Astra `gaps` is running until <= 19:45):
+1. Check `C:\Users\kazda\kiro\gtai-n24\logs\pressure\astra.lock` and the last line of `astra-calls.jsonl`; read
+   `evidence/briefs/n24-pressure-01b-gaps.out.txt` when it ends. Review tasks A (fire-gap tool + debt), B (rifle
+   `damage_vs_rivet` 1.2, late-0 fix, three decisions lines), C (gaps: rifle lead + cooldown, rocket fires from where
+   it stands, `rest_s` 0.5; `fire-gaps/after.md`). Bounce anything short of the targets in 01b task C.
+2. Then launch brief 02 (deflect; fill HARDSTOP / COMMITBY), then 03 (rocket + nail), then 04 (stall, dash after the
+   n24-motion merge, ghost deploy after the n24-ghost merge). Between Astra calls, run the after-numbers batch
+   (same args as base-main, on HEAD, `--out=evidence/n24-pressure/after-numbers`), but only while no Astra call
+   needs Godot (one Godot per lane): run it while the builder is still reading / editing, as session 1 did.
+3. Grep motion's JOURNAL for `MILESTONE dash`, ghost's for `MILESTONE ready`; merge `n24-motion` at its dash milestone
+   (`git merge --no-edit n24-motion`, record it), never while an Astra call runs.
+4. Films (pressure): deflect half through / rest scattered; Rivet's rocket and Gloria's nail before beside after;
+   an average fight where standing still is punished. Commit the last new work by 00:00, final gate by 00:15.
