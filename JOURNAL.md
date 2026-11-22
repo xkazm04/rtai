@@ -123,3 +123,19 @@ NEXT (session 2 end, 20:1x; Astra `rocket-gap` running until <= 20:45):
   add/add: keep ours), then unit `--changed` + scenarios once. The after-gaps batch goes through ablate `--rev=<pre-merge
   HEAD>` in a temp worktree, so the merge does not leak into it. Ghost: merge `n24-ghost` (>= 8d1d6fef1) before brief 04.
 NEXT (unchanged order): rocket-gap review -> merge n24-motion -> after-gaps batch (rev = pre-merge HEAD) -> brief 02.
+
+## Session 3 (20:04 - 21:34)
+
+- 20:06 start. astra.lock pid 63052 alive (node, `rocket-gap` since 20:00, hard stop 20:45); out file empty. Uncommitted
+  Astra edits so far: enemies.json/schema, fire_gap_clock, enemy_weapon, foe_rocket + its two tests.
+- 20:45 ASTRA rocket-gap 45 accepted. D `1d0dc5624`: rocket trooper fires from where it stands, relocates after
+  `relocate_after_shots` 2 (0 = old rule), `aim_lead` 0.8, cooldown 0.85 -> 0.55, speed 9 -> 16 m/s, tell 1.0 -> 0.8 s
+  (kept >= 0.6: readable, dash/step aside). Rocket rounds/s 0.33 -> 0.60; hits in 30 s standing 10 -> 18, circling 0 -> 9,
+  strafing 5 -> 2. E `56b0caa1c`: dock bound "full magazine < half Rivet" (36 < 50), rifle burst-aim test. Mutate
+  guard_brain 1/1 (1 of 14 done), foe_rocket 2/3 (3 of 20; `forget_site()` survivor -> sight-loss test written,
+  UNCOMMITTED in `test_foe_rocket_sites.gd`, unverified). Unit --changed 3776/0. Quest 1 identical.
+- 20:45 BLOCKED-ish: full scenarios 67 ran / 5 FAILED at 56b0caa1c (were 67/0 after db2043604 damage x2): arena_squad
+  (no flank tick), gunplay_fire (standing Rivet took 17/30 machine-pistol rounds < 60% floor), prologue_checkpoint
+  (death at tick 6207), prologue_pilot (budget expired encounter 2), rivet_city_melee (faulty bot control still drops
+  five). Suspects: 01b rifle cadence 1.4 -> 0.5 s + lead + x2 rifle damage (prologue deaths), lead on a near-still Rivet
+  (gunplay_fire). Goes into brief 02 as task 4 (after deflect) with decision rules.

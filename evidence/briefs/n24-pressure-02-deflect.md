@@ -5,6 +5,15 @@ Read `AGENTS.md` (commands, top rules) before you start. STANDARDS.md binds.
 
 **Wall clock: hard stop HARDSTOP. Last commit by COMMITBY.** Commit each task as it lands; an unfinished task is left
 uncommitted and described in your final report.
+The pre-commit hook takes about 10 minutes on a table commit: start your last commit no later than COMMITBY.
+
+**Godot is the director's until GODOTFREE.** The director runs one gauntlet batch (a Godot process of this lane) from
+your start until GODOTFREE. Until then: read, design, write the code and the tests, but launch no Godot, no unit run,
+no gate (the lane gets one Godot at a time). After GODOTFREE Godot is yours alone. If you finish the design early, write
+the tests first.
+
+Lane motion's `n24-motion` was merged into this branch just before you started (`git log --oneline -3`): Shift is now
+`dash`; that does not touch your files.
 
 ## Machine rules (every command)
 

@@ -1,0 +1,32 @@
+**Task D committed as `1d0dc5624`.** The rocket trooper fires twice from a clear, safe site before relocating. A zero quota restores relocation after every launch. The rocket uses 80% linear lead, travels at 16 m/s, and has a 0.55 s cooldown. The visible tell lasts **0.8 s**, giving Rivet time to read it and dodge.
+
+| Rivet motion at 10 m | Rounds/s before → after | Hits in 30 s before → after |
+|---|---:|---:|
+| Standing | 0.333 → 0.600 | 10 → 18 |
+| Circling | 0.333 → 0.600 | 0 → 9 |
+| Strafing | 0.300 → 0.600 | 5 → 2 |
+
+Circling reposition time fell from 19.42 s to 9.45 s. All 18 non-rocket trials matched the preceding commit exactly. Changed `foe_rocket.gd`, `enemy_weapon.gd`, the enemies table and schema, `fire_gap_clock.gd`, three rocket/fire-gap test files, the debt baseline, and [after.json](C:/Users/kazda/kiro/gtai-wt/n23-loop/evidence/n24-pressure/fire-gaps/after.json) and [after.md](C:/Users/kazda/kiro/gtai-wt/n23-loop/evidence/n24-pressure/fire-gaps/after.md). Quick gate passed on six files. The commit hook passed all 19 checks.
+
+**Task E committed as `56b0caa1c`; mutation testing was partial.** `test_dock_waves.gd` now checks that a full magazine deals less than half of Rivet’s maximum HP. The shipped values give **36 damage against a 50 HP bound**. `test_enemy_aim_lead.gd` now checks that rifle aim holds through a burst and reacquires after an interruption. Quick gate passed on both files. The hook passed all 18 checks.
+
+| Mutation target | Killed / (killed + survived) | Completed |
+|---|---:|---:|
+| `guard_brain.gd` | 1/1 | 1 of 14 |
+| `foe_rocket.gd` | 2/3 | 3 of 20 |
+
+Both mutation baselines passed. Removing `forget_site()` survived. I added a sight-loss regression for that case in `test_foe_rocket_sites.gd` after the commit cutoff. It is **uncommitted and unverified**. I stopped its focused run at the hard stop.
+
+**Verification.** `run_unit.mjs --changed` reported **3,776 passed, 0 failed, 2 skipped**. The full scenario run reported **67 ran, 5 failed**. Quest 1 replayed identically with its existing digest. No golden or tape moved.
+
+| Failing scenario | Failing condition |
+|---|---|
+| `arena_squad` L33 | Five waves cleared and replayed, but no seed recorded a flanking tick. |
+| `gunplay_fire` L78 | Standing Rivet took 17/30 machine-pistol rounds, below the 60% floor. |
+| `prologue_checkpoint` L48 | Unexpected death at tick 6207. |
+| `prologue_pilot` L37 | The 18,000-tick budget expired in encounter 2, street 0. |
+| `rivet_city_melee` L72 | The deliberately faulty bot still dropped five enemies from gun reach. |
+
+All five pass conditions remain intact. No additional file permissions were needed.
+
+[astra: 2690s, exit 0]
