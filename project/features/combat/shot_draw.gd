@@ -41,6 +41,13 @@ static func _canvas(ci: CanvasItem) -> RID:
 	return layer._rid
 
 
+static func bare(ci: CanvasItem, s: Shot, tail: Vector2) -> void:
+	if s.from_rivet:
+		ci.draw_line(Ink.px(tail), Ink.px(s.pos), Ink.INK, 4.0)
+	else:
+		tracer(ci, s, tail, s.pos, Vector2(9.0, 4.0))
+
+
 static func tracer(ci: CanvasItem, s: Shot, tail: Vector2, head: Vector2, widths: Vector2) -> void:
 	if s.from_rivet:
 		ci.draw_line(Ink.px(tail), Ink.px(head), Ink.INK, widths.x)
