@@ -43,23 +43,58 @@ At the start of the run, at 32 px/m tilt 70 (Rivet 77 px, patrol cop 43 px):
 | The pile-driver (war machine): walk, cannon tell + fire, stomp tell + slam, hit, wreck, both pitches; on by default | commit 718fee5b0; `gtai-masters/n24/cast/pile_{32,64}ppm_tilt{70,55}.png`, `pile_wave_32.mp4`, `pile_close_64.mp4`, `pile_before_after_64.png` | 2.42 m (70) / 2.47 m (55) beside Rivet 1.65 m; 78 px vs Rivet 77 px at 32 px/m; films 1920x1080, 60 fps, 16.0 s |
 
 ## 3. What does not
-TODO
+- **Feet**: the lancer's boot slides 10 px and the door carrier's 11 px per held drawing at 32 px/m (`docs/art/cast-audit.md`,
+  after-table). That is the same 10.24 px the shipped patrol cop itself slides (audit, "Original rig ground-contact
+  measurements"): the reference fails this item too, so "cop quality" does not yet include planted feet. The
+  pile-driver holds at 0 px; the clamshell does not walk.
+- **Contact shadow**: the door carrier and clamshell draw no separate ground shadow (visible in
+  `gtai-masters/n24/cast/door_before_after_64.png` and `clamshell_before_after_64.png`).
+- **Not redrawn**: the prologue's appliance warden and Sergeant Mulroney (audit: 11 fails each), and the other wave
+  archetypes that fail the checklist on main (robot_gunner 10, contractor 8, robot_thug 6). They keep main's look.
+- **Mutation scores on the card views** were low after call 05: clamshell 3/(3+17), pile-driver 4/(4+14) (call 06
+  result below).
+- The real gauntlet film (`gauntlet_wave_cast_32.mp4`, seed 8, waves 5-8) shows the redrawn enemies only as small
+  shapes in a dense crowd at 32 px/m; the door carrier and pile-driver do not spawn in it.
+- The standalone parse check and `tools/gate/quick.mjs` are red on an arena dependency cascade that reproduces on main
+  `b3f4727c0` (`Identifier not found: Log` at `part_library.gd:60` in a standalone parse): not caused by this lane.
 
 ## 4. What blocked or slowed me (minutes)
 - Image generation mixes up the diagonal and rear facings of machines: the pile-driver's front column came out as a plan
-  view copied from the concept's inset (TODO minutes).
-- A pre-commit tooling test (`tools/merge/morning_run.break.test.mjs`) timed out under five-lane load (TODO minutes).
+  view copied from the concept's inset (estimate, not timed: about 40 minutes over two rounds of regeneration).
+- A pre-commit tooling test (`tools/merge/morning_run.break.test.mjs`) timed out under five-lane load (estimate, not timed: about 10 minutes).
+- The clamshell commit lost a race with a director journal commit while the builder ran (estimate, not timed: about 15 minutes to
+  re-stage and re-check in the next call).
+- The quick gate's red cascade had to be reproduced on main before it could be called pre-existing (estimate, not timed: about 15 minutes).
 
 ## 5. Calls for the owner
-TODO
+- **Sizes beside Rivet** (`gtai-masters/n24/cast/audit_after_lineup_32ppm_tilt70.png`; Rivet 77 px, cop 43 px at 32 px/m):
+  lancer 49, clamshell 53, door carrier 55, pile-driver 78 px (2.42 m drawn, Rivet 1.65 m). The door carrier now
+  stands at about the cop's height, not taller than Rivet: keep it, or draw it up to about Rivet's height? Its slab
+  already matches the shove width (`door_before_after_64.png`).
+- **Planted feet are not in the cop standard yet**: the shipped patrol cop's boot slides 10 px per drawing, the same as
+  the lancer. Should the checklist require planted feet (and the cop get re-cut), or should it match the cop as it is?
+- **The clamshell's dome finish** (`clamshell_before_after_64.png`): navy plate with pale wear specks; read as
+  "weathered blue steel" or as a pattern you do not want?
+- **The appliance warden and Sergeant Mulroney** were not redrawn tonight: next in line under the same checklist.
 
 ## 6. Merge notes
-- Shared render files touched by one-line call sites only: `project/features/arena/arena_robot_rigs.gd` (door card),
-  TODO the rest from the briefs' reports.
+- Shared render files touched by call sites only (`git diff b3f4727c0 HEAD`):
+  `project/features/arena/arena_robot_rigs.gd` (3 lines: `rig.visible = Foe{Shield,Turret,War}CardView.show_rig(...)`),
+  `project/features/arena/arena_rigs.gd` (the lancer: `_cast = FoeCastView.attach(...)` replaces `ReactLink.make` +
+  `_squad_looks`; `_cast.feed(h, i)` replaces `FoeRocketPose.pose`), `project/features/arena/arena_wave_cards.gd`
+  (1 line: `or FoeCastView.covers(_rigs, h)`), `foe_launcher_view.gd` (1 line: `FoeCastView.draws_launcher(h)`),
+  `foe_shield_view.gd` / `foe_turret_view.gd` / `foe_walker_view.gd` (an early `return` when the card is on).
+  `combat_arena.gd` untouched. A lane that edits `arena_rigs.gd` around `ReactLink` will conflict here: keep both.
 - `cast_cards.json` `enabled` per row: false = everything as on main.
 
 ## 7. Next steps
-TODO
+1. Plant the feet of the lancer and door carrier (and the patrol cop, if the owner wants the stricter standard):
+   match card playback to ground speed or re-cut the contact frames.
+2. Contact shadows for the door carrier and clamshell cards.
+3. Redraw the appliance warden and Sergeant Mulroney, then robot_gunner and the contractor, worst first, under
+   `docs/art/cast-checklist.md`.
+4. A 64 px/m crop of a real gauntlet wave with the door carrier and the pile-driver in it (they did not spawn in the
+   filmed seed 8 waves 5-8).
 
 ## 8. Astra ledger
 | Call | Minutes | Result | Brief differently |
