@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="owner_take.gd" id="1"]
+
+[node name="OwnerTake" type="Node"]
+script = ExtResource("1")
