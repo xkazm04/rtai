@@ -1,0 +1,33 @@
+{
+  "schema": "gtai.gauntlet-ablation/1",
+  "name": "ohm-off",
+  "head": "a476e99a757e1b4ef2bec07443853348669a0f7c",
+  "edits": [
+    {
+      "file": "project/data/tables/combat.json",
+      "pointer": "/moves/ohm_short_circuit/enabled",
+      "value": false,
+      "before": true
+    }
+  ],
+  "pick_filter": null,
+  "batch_args": [
+    "--profile=average",
+    "--pick=greedy",
+    "--controls=wheel",
+    "--seeds=10",
+    "--jobs=1",
+    "--waves=40",
+    "--out=C:\\Users\\kazda\\kiro\\gtai-wt\\n23-loop\\evidence\\n23-loop\\moves\\ohm-off"
+  ],
+  "batch_exit": 0,
+  "summary": {
+    "attempted": 10,
+    "accepted": 10,
+    "deaths": 1,
+    "median_wave_reached": 40,
+    "median_death_wave": 35,
+    "capped_alive": 0,
+    "wave_timeouts": 0
+  }
+}

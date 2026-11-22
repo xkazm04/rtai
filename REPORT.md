@@ -74,10 +74,16 @@ Batch `evidence/n23-loop/moves/on/` (controls @ `61c382e3f` + moves @ `73eec563c
 |---|---:|---:|---|---:|---:|---|
 | novice | 10 | 12 | 10..13 | 10 | 0 | rocket 5, shield_robot 3, patrol_cop 1, stomp 1 |
 | average | 10 | >= 40 | 40..40 | 0 | 10 | none |
-| expert | PENDING | | | | | |
+| expert | 10 | >= 40 | 40..40 | 0 | 8 at 40, 2 stalled at 33 (soft-lock, below) | none |
 
 - Average wave seconds (median): 11.4 / 14.4 (wave 5 boss) / 21.5 / 28.0 / 29.8 / 37.9 in bands 1-4 / 5 / 6-10 / 11-20 /
   21-30 / 31-40. Damage taken 0.08-0.93 HP/s against the 10 HP/s repair; the boss wave 5 hurts most (2.97 HP/s, 47 HP).
+- Boss waves (each has a war machine now; average, median): main 39.3 s, street merge 32.8 s, merged game **26.0 s**: the
+  owner's 25-30 s boss wave is met on the merged game.
+- **Soft-lock** (new): 4 of 30 merged runs (average 8, 9; expert 1, 9) and 1 of 30 cycle-1 runs freeze after a timed-out
+  wave: the next wave is announced in the held block with 2-3 leftovers alive, nothing spawns, no timer fires, no damage
+  until the 216000-tick cap (`evidence/n23-loop/moves/on/logs/expert-1/`). 0 of 60 on the street merge. `NEED street`
+  in JOURNAL 07:08 with the replay command.
 - Rivet's own blasts: 0 self damage measured in 84 smoke waves (Astra controls-moves smoke) after the bot's blast clearance.
 
 ## The noise floor by a neutral change
