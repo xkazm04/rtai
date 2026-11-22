@@ -12,6 +12,7 @@ var _looks: ArenaSquadLooks = ArenaSquadLooks.new()
 var _poses: Dictionary[Fighter, CastCardPose] = {}
 var _rows: Dictionary[Fighter, int] = {}
 var _far: Dictionary[int, CastFarCard] = {}
+var _launchers: Dictionary[Fighter, bool] = {}
 
 
 static func attach(host: RigHost, arena: CombatArena) -> FoeCastView:
@@ -48,7 +49,9 @@ func feed(h: Fighter, i: int) -> void:
 			var previous: CutRig = _rigs.rig_for(h.id)
 			if previous != null and CastCardPose.of(previous) != null:
 				StreetWalkerCards.release(previous)
-		FoeRocketPose.pose(h, _rigs, i, _looks)
+		_looks.swing(h, _rigs.feed, i)
+		if h.archetype == &"rocket_trooper":
+			_launchers[h] = true
 		return
 	_looks.swing(h, _rigs.feed, i)
 	var pose: CastCardPose = _pose_for(h)
@@ -82,6 +85,10 @@ func _pose_for(h: Fighter) -> CastCardPose:
 
 
 func _process(_delta: float) -> void:
+	for h: Fighter in _launchers:
+		if CastCards.current(h.archetype) == null:
+			FoeRocketPose._kneel(h, _rigs)
+	_launchers.clear()
 	for h: Fighter in _poses.keys():
 		var id: int = h.id
 		if not _rows.has(h):

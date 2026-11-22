@@ -136,8 +136,22 @@ func test_pose_ownership_and_unsupported_pitch_use_the_placeholder() -> void:
 	assert_false(pose.bind(rig))
 	rig.actor_id += 1
 	assert_null(CastCardPose.of(rig))
+
 	rig.actor_id = _trooper.id
 	ViewMode.select("top")
 	assert_true(FoeCastView.draws_launcher(_trooper))
 	_step()
 	assert_null(CastCardPose.of(rig))
+
+
+func test_placeholder_kneel_follows_pool_selection_and_card_switch() -> void:
+	_trooper.tell_left = 5
+	ViewMode.select("top")
+	_step()
+	var rig: CutRig = _host.rigs.rig_for(_trooper.id)
+	assert_true(rig.has_meta(&"rocket_kneel"))
+	_view.feed(_trooper, 0)
+	ViewMode.select("combo")
+	_step()
+	assert_false(rig.has_meta(&"rocket_kneel"))
+	assert_not_null(CastCardPose.of(rig))
