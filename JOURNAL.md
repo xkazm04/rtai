@@ -252,3 +252,15 @@ JOURNAL/REPORT/briefs per path with `git commit -- <paths>`.
   Astra's physical timer (moves the sim and two unowned files for a look defect). Plasma blood item cancelled tonight.
 - 23:20 ASTRA RUNNING p6b-saw-look since 23:20 (--resume; pid 36424; brief evidence/briefs/n24-p6b-saw-look.md;
   hard stop 00:05, commit by 23:59).
+- 23:37 P6b ended (1005 s, exit 0). REVIEW `22654f6d3`: row `stun_look: "hold"` on both saw hits (+ schema), MeleeHit/
+  MeleeTable read it, `melee_contact.gd` passes `arena.tick + stun_ticks` to `PlayerShock.stun_on(..., hold_look_until)`
+  (an electric stun resets it to -1), `StunCrowd.electric(e, tick)` used by the renderer and our shock views. Shared
+  lines: `fighter_fx.gd:18` (view-only field, not in write_state) and `fight_areas_art.gd:36` (one-line call site).
+  Stun ticks unchanged (16), telemetry + parity + bake + 60 s replay identical per Astra; unit --changed 3805/0;
+  mutate melee_contact 24-27 8/8 (100%). `9da9442bb` decisions.md line (busy click dropped; saw look). ACCEPTED.
+- 23:37 LOOKED kills/p6/chainsaw-64-after.png: white stars gone at 42/46/50/57, warm sparks at the teeth stay.
+  Still weak (pre-existing, before too): at 46/50 the held cop is drawn standing in his aim pose a step off the bar,
+  so the hold reads as a miss; the kill lands at 62. electro_baton-32-after.png: flash at 34, arcs to 50: unchanged.
+- 23:37 ASTRA p6b-saw-look 17 accepted.
+- 23:38 FINAL GATE started on 9da9442bb: `node tools/gate/run.mjs --rev=HEAD` detached (Start-Process pid 74924,
+  out build/final-gate.out.txt). No product commit after this (it is 23:38; the 00:00 cut holds).
