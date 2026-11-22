@@ -1,14 +1,16 @@
 # Controls flip verification
 
-Counts are passed / failed. GUT also reported two existing skips.
+Counts are passed / failed / skipped.
 
 | Suite | Mode | Before | After |
 |---|---|---:|---:|
-| Scenarios | Wheel | 49 / 16 | 65 / 0 across full run and rerun |
-| Scenarios | Legacy | 65 / 0 | 65 / 0 |
-| Scenarios | No flag | 65 / 0 | 65 / 0 |
-| Unit and integration | No flag | 3,637 / 0 | 3,640 / 0 |
-| Unit and integration | Legacy | 3,637 / 0 | Full run started 02:01:59; awaiting tally |
+| Scenarios | Wheel | 49 / 16 / 0 | 65 / 0 / 0 across full run and rerun |
+| Scenarios | Legacy | 65 / 0 / 0 | 65 / 0 / 0 |
+| Scenarios | No flag | 65 / 0 / 0 | 65 / 0 / 0 |
+| Unit and integration | No flag | 3,637 / 0 / 2 | 3,640 / 0 / 2 |
+| Unit and integration | Legacy | 3,637 / 0 / 2 | 3,640 / 0 / 2 |
+
+After restoring the vendored GUT CLI and adding the runner-mode test, both full unit and integration runs passed 3,641 / 0 / 2. The selected runner-mode test also passed on its own with no flag and with `--controls=legacy`. The full no-flag and legacy scenario logs each ended with 65 ran, 0 failed.
 
 The scenario baseline comes from the guard lane's [flip table](../guard-flip/flip-table.md) and [hands-start comparison](../guard-flip/wheel-start-drawn.md). Those measurements used the same 65 scenarios. The no-flag baseline selected legacy.
 
