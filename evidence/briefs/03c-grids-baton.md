@@ -1,14 +1,17 @@
 # Brief 03c `grids` (resume): electro_baton, then assault_rifle; the film grows (lane motion, n24)
 
-Hard stop: HARDSTOP wall clock (check `date`). Commit deadline: COMMITBY (electro_baton committed alone first, by
-BATONBY at the latest). Whatever is not committed by then, describe in your final report. Fix lint and format findings
+Hard stop: 23:15 wall clock (check `date`). Commit deadline: 23:05 (electro_baton committed alone first, by
+22:55 at the latest). Whatever is not committed by then, describe in your final report. Fix lint and format findings
 in your own edit and go on. No amend, no rebase, no `git stash`, no `git add -A/./-u`, no `commit -a`, no reset --hard,
 never push. Stage per path. mutate: `--max=20`, changed lines only. Everything from briefs 03 and 03b still binds
 (pipeline, accept rule, allowlist, forbidden list, environment, the quick-gate note): same session, continued.
 
-## 0. First, anything 03b left uncommitted
-If the chainsaw (or any weapon) is in the tree and you accepted it, commit it first (pngs + .import + provenance +
-grid md + rivet_walk/stride/test edits). If you did not accept it, say why and leave it untracked.
+## 0. First: commit the staged chainsaw (director accepted it, 22:03)
+Director's look at `grid_chainsaw_64.png`: accepted (bar forward in both hands in every facing, legs step).
+Your NEED is granted: `project/tests/unit/test_rivet_walk.gd` is this lane's test (named for `rivet_walk.gd`) and is
+added to your allowlist. At :82 point the "no drawn walk" assertion at a weapon that still has no p70 grid (or at p55
+chainsaw), keeping what it tests. Run `node tools/tests/run_unit.mjs --changed` (0 failed), then commit the staged
+chainsaw files + that test in one commit. Then go on.
 
 ## 1. electro_baton p70 (the owner's film needs a baton)
 One-hand / blade family as fits `rivet_eq_electro_baton*.png`: the baton held as on its eq card, never a thin grey stick.
