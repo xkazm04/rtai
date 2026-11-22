@@ -297,3 +297,11 @@ NEXT (session 5 end; ASTRA RUNNING finish since 23:02, pid 54604, hard stop 00:0
 5. REPORT: remaining TODOs (gate, final row, rocket RPS at 1.4, Call 1 pair, Call 6 expert after final, What does not,
    Next steps, ledger rows rocket-nail 47 accepted-partial / finish / films), then `node tools/evidence/cites.mjs REPORT.md`,
    commit JOURNAL + REPORT with `git commit -- <paths>`.
+- 23:53 ASTRA finish 51 accepted. Mutate: R1 1/14 (exhaust geometry survives: a look, judged by the stills), R2 3/3,
+  D 8/20 (`bot_dash.gd`), task 0 table-only. E (damage_by) NOT started (23:40 condition passed during D's hook): the
+  judging table's "damage by source" comes from the batch report's killers only. Stall cause unverified (move holding
+  squad attack slots suspected). Smoke: expert seed 7 cleared 6 waves dashing 0,0,0,1,1,3 per wave.
+- 23:55 MILESTONE final chain started detached: `C:/Users/kazda/kiro/gtai-n24/logs/pressure/final-chain.sh` = final batch
+  (`evidence/n24-pressure/final/`, out `evidence/n24-pressure/final.out`) THEN `node tools/gate/run.mjs --rev=HEAD`
+  (out `C:/Users/kazda/kiro/gtai-n24/logs/pressure/gate-final.out`); chain log `.../final-chain.log`. Do not start Godot
+  while it runs. NEXT (23:41) stands, steps 2 and 3 are this chain: read its outputs, then brief 05 films.
