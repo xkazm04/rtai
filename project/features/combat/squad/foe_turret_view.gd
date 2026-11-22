@@ -10,6 +10,8 @@ const LOOK_SCALE: float = 1.8
 
 
 static func draw_mount(view: Node2D, h: Fighter, heat: float, stunned: bool = false) -> void:
+	if FoeTurretCardView.enabled(h):
+		return
 	var at: Vector2 = Ink.px(h.pos)
 	view.draw_set_transform(at, 0.0, Vector2.ONE * LOOK_SCALE)
 	Ink.box(view, Vector2(0, 0.08), Vector2(1.48, 1.22), DARK)

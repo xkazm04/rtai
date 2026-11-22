@@ -1,6 +1,21 @@
 extends GutTest
 
 
+func test_door_overlay_requires_both_robot_ownership_and_an_active_card() -> void:
+	var previous: ViewMode = ViewMode.shared()
+	ViewMode.select("combo")
+	var h: Fighter = Fighter.new()
+	h.archetype = &"shield_robot"
+	h.machine = true
+	assert_true(FoeShieldCardView.enabled(h))
+	h.brain_owned = true
+	assert_false(FoeShieldCardView.enabled(h))
+	h.brain_owned = false
+	ViewMode.select("top")
+	assert_false(FoeShieldCardView.enabled(h))
+	ViewMode._shared = previous
+
+
 func test_robot_card_uses_ground_position_damage_ticks_and_the_render_switch() -> void:
 	var previous: ViewMode = ViewMode.shared()
 	ViewMode.select("combo")

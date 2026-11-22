@@ -4,7 +4,7 @@
       "additionalProperties": false,
       "properties": {
         "armed_walk": {
-          "pattern": "^[a-z][a-z0-9_]*_armed_walk[.]png$",
+          "pattern": "^([a-z][a-z0-9_]*_armed_walk|sentry_turret_attack)[.]png$",
           "type": "string"
         },
         "attack": {

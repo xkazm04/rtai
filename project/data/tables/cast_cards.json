@@ -16,6 +16,22 @@
         "hit": "rocket_trooper_hit.png"
       }
     },
+    "sentry_turret": {
+      "enabled": true,
+      "id": "sentry_turret",
+      "p55": {
+        "armed_walk": "sentry_turret_attack.png",
+        "attack": "sentry_turret_attack.png",
+        "fall": "sentry_turret_fall.png",
+        "hit": "sentry_turret_hit.png"
+      },
+      "p70": {
+        "armed_walk": "sentry_turret_attack.png",
+        "attack": "sentry_turret_attack.png",
+        "fall": "sentry_turret_fall.png",
+        "hit": "sentry_turret_hit.png"
+      }
+    },
     "shield_robot": {
       "enabled": true,
       "id": "shield_robot",
