@@ -24,7 +24,7 @@
     "height": 1080,
     "fixed_fps": 60
   },
-  "pre_roll": "Movie Maker ran from boot on the secondary monitor at client origin (0,1440). The window was minimized during discarded pre-roll and restored at its original 1920 x 1080 size before wave 9. A temporary 384 x 216 window-size test occurred only during the novice 32 px/m wave 4 pre-roll. The scratch display override disabled VSync for expert 32 and novice 64. Each source records 60 fixed frames per second.",
+  "pre_roll": "Movie Maker ran from boot at client origin (0,1440). The novice and average 32 px/m windows were minimized during discarded pre-roll and restored to 1920 x 1080 before wave 9. A temporary 384 x 216 window-size test occurred only in the novice 32 px/m wave 4 pre-roll. For expert 32 and novice 64 the scratch display override disabled VSync and the native window remained minimized while Movie Maker recorded the full 1920 x 1080 viewport. Each source records 60 fixed frames per second.",
   "frame_convention": "Zero-based native Movie Maker frames. Clip source ranges exclude their end. Hit-stop can add display frames at the same simulation tick. The terminal novice session tick is the next tick after the lethal step.",
   "batch": "evidence/n23-loop/moves/on/batch.json",
   "batch_game_commit": {
@@ -267,7 +267,7 @@
     },
     {
       "file": "C:/Users/kazda/kiro/gtai-masters/n23/loop/average-seed-1-wave-9.mp4",
-      "sha256": "e6a6382317c3e5f9251a24fa0a38cca08accaad83524bfefe3787c8b45933ab4",
+      "sha256": "3eb057c4abea63a5699fe32a4a96cc0ab7a676009281bf832397f3ea4ad9881e",
       "profile": "average",
       "ppm": 32,
       "seed": 1,
@@ -281,11 +281,12 @@
       ],
       "wave_start_tick": 10231,
       "source_frames_half_open": [
-        11744,
-        13361
+        11745,
+        13362
       ],
-      "wave_start_frame": 11744,
-      "outcome_source_frame": 13250,
+      "wave_start_frame": 11745,
+      "raw_frame_minus_caption_log_frame": 1,
+      "outcome_source_frame": 13251,
       "outcome": "Wave cleared  /  99 of 110 HP",
       "final_hold_frames": 0,
       "frames": 1617,
