@@ -6,7 +6,7 @@ import { validate } from '../lib/mini_schema.mjs';
 import { readJson } from '../lib/repo.mjs';
 import { PROFILES } from './contract.mjs';
 import { targets } from './death_score.mjs';
-import { DAMAGE_GROUP, memberIds, occupied } from './tune_groups.mjs';
+import { isGroup, memberIds, occupied, scaledValue } from './tune_groups.mjs';
 import { PLAN_SCHEMA } from './tune_propose.mjs';
 import { atomicWrite, baselineValue, clamped, digest, git, inventory, numericSlot, readBaseline } from './tune_state.mjs';
 
@@ -29,7 +29,7 @@ export function checkPlan(plan) {
   const seen = new Set();
   for (const c of plan.changes) {
     if (!c || typeof c.id !== 'string' || !c.id || occupied(c.id, seen) || !c.miss || /[\r\n\0]/.test(c.miss)
-      || typeof c.miss !== 'string' || (c.id === DAMAGE_GROUP ? !Number.isFinite(c.factor) || c.factor < 0.8 || c.factor > 1.25
+      || typeof c.miss !== 'string' || (isGroup(c.id) ? !Number.isFinite(c.factor) || c.factor < 0.8 || c.factor > 1.25
         || !Array.isArray(c.members) || !c.members.length : c.members !== undefined)
       || !(c.members ?? [c]).every((m) => m && [m.before, m.after, m.baseline].every(Number.isFinite))
       || !['death', 'wave', 'killer', 'spread', 'offer'].includes(c.metric?.type) || !Number.isFinite(c.metric.target)
@@ -124,8 +124,9 @@ function preflight(root, plan, receipts) {
       const first = baselineValue(entry, baseline);
       if (first !== m.baseline || !Number.isFinite(first)) throw new Error('baseline mismatch: ' + m.id);
       if (value !== (applied ? m.after : m.before)) throw new Error('stale plan: ' + m.id);
-      const requested = change.members ? m.before * change.factor : m.after;
-      if (clamped(knob, m.before, first, requested) !== m.after) throw new Error('outside tuner bounds: ' + m.id);
+      const expected = change.members ? scaledValue(id, knob, m.before, first, change.factor)
+        : clamped(knob, m.before, first, m.after);
+      if (expected !== m.after) throw new Error('outside tuner bounds: ' + m.id);
     }
     if (applied) continue;
     git(root, 'ls-files', '--error-unmatch', '--', file);

@@ -283,11 +283,11 @@ test('early and late death-wave misses prefer the group then the budget; a cap c
       run.death = { wave, by: 'turret_gun' };
       run.wave_reached = wave + 1; // A younger roster can clear before the last survivor.
     }
-    const plan = propose(batch, state, base, { allowShared: true });
-    assert.equal(plan.changes[0].id, 'enemy_damage');
+    const plan = propose(batch, state, base);
+    assert.equal(plan.changes[0].id, 'rivet_repair');
     assert.equal(plan.changes[0].factor, factor);
     assert.deepEqual(plan.changes[0].metric, { type: 'death', profile: 'average', target: 12 });
-    const fallback = propose(batch, state, base, { used: new Set(['enemy_damage']) });
+    const fallback = propose(batch, state, base, { used: new Set(['rivet_repair']) });
     assert.equal(fallback.changes[0].id, 'budget.per_wave');
   }
   for (const r of batch.results) { delete r.death; r.capped = true; r.wave_reached = 3; }
@@ -297,15 +297,21 @@ test('early and late death-wave misses prefer the group then the budget; a cap c
 });
 
 test('death-wave confirm pairs the recorded death or cap per seed with its null-salt floor', (t) => {
-  const root = repository(t), before = robotBatch();
+  const root = repository(t, 'n23-tune-repair'), before = robotBatch();
   for (const r of before.results) {
     r.death = { wave: r.seed + 13 };
     r.wave_reached = r.death.wave + 1;
   }
   delete before.results[0].death;
   before.runs[0].outcome = 'capped';
-  const plan = prepare(root, before, '--allow-shared');
-  assert.equal(plan.changes[0].id, 'enemy_damage');
+  const plan = prepare(root, before, '--metric=death', '--profile=average');
+  assert.equal(plan.changes[0].id, 'rivet_repair');
+  const start = git(root, 'rev-parse', 'HEAD').trim();
+  ok(cli(root, 'apply', '--plan=' + planFile));
+  ok(cli(root, 'apply', '--plan=' + planFile));
+  assert.equal(git(root, 'rev-list', '--count', start + '..HEAD').trim(), '1');
+  const updated = inventory(root).entries;
+  for (const m of plan.changes[0].members) assert.equal(updated.get(m.id).value, m.after);
   const neutral = structuredClone(before), after = structuredClone(before);
   neutral.args.salt = 1;
   for (const batch of [neutral, after]) {

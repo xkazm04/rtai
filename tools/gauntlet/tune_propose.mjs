@@ -3,7 +3,7 @@ import { timeBounds } from './analysis.mjs';
 import { profileScores, targets } from './death_score.mjs';
 import { analyze, weaponsOf } from './report.mjs';
 import { fmt } from './report_tables.mjs';
-import { knobStep, memberIds, occupied } from './tune_groups.mjs';
+import { DAMAGE_GROUP, knobStep, memberIds, occupied, REPAIR_GROUP } from './tune_groups.mjs';
 import { TABLES } from './tune_state.mjs';
 
 export const PLAN_SCHEMA = 'gtai.gauntlet-tune-plan/1';
@@ -67,9 +67,10 @@ function deathMisses(batch, profile, minN) {
       + ' (' + row.deaths + ' deaths, ' + capped + ' censored as lower bounds)';
     const reason = scores.length < minN ? 'too few runs (need ' + minN + ' scored runs)'
       : median < target && upper >= target ? 'censoring leaves an early death-wave miss unresolved' : undefined;
-    const factor = Math.min(1.25, Math.max(0.8, median / target));
+    const proportional = Math.min(1.25, Math.max(0.8, median / target));
+    const factor = Math.abs(median - target) > 3 ? (median > target ? 1.25 : 0.8) : proportional;
     observations.push(measuredMiss(metric, Math.abs(median / target - 1), miss,
-      [['enemy_damage', factor], ['budget.per_wave', factor]], reason));
+      [[DAMAGE_GROUP, proportional], [REPAIR_GROUP, factor], ['budget.per_wave', factor]], reason));
   }
   return observations.sort((a, b) => b.severity - a.severity);
 }
