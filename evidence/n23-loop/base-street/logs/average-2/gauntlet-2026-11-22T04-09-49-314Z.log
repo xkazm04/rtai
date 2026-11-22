@@ -1,0 +1,28 @@
+# --fixed-fps 60 --quit-after 216000 res://dev/gauntlet/gauntlet.tscn -- --seed=2 --bot=average --pick=greedy --controls=wheel --waves=40 --result=C:\Users\kazda\kiro\gtai-wt\n23-loop\evidence\n23-loop\base-street\runs\average-2.json
+# exit 0, 58.6 s
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] gauntlet: test player bound: average, greedy picks, seed 2
+[INFO] gauntlet: wave 1 tick 272 block 1, 1 alive
+[INFO] gauntlet: wave 2 tick 976 block 2, 1 alive
+[INFO] gauntlet: wave 3 tick 2199 block 3, 1 alive
+[INFO] gauntlet: wave 4 tick 3362 block 4, 1 alive
+[INFO] gauntlet: wave 5 tick 4318 block 5, 1 alive
+[INFO] gauntlet: wave 6 tick 6099 block 6, 1 alive
+[INFO] gauntlet: wave 7 tick 7443 block 7, 1 alive
+[INFO] gauntlet: wave 8 tick 8278 block 8, 1 alive
+[INFO] gauntlet: wave 9 tick 9765 block 9, 1 alive
+[INFO] gauntlet: wave 10 tick 11941 block 10, 1 alive
+[INFO] gauntlet: wave 11 tick 13297 block 11, 1 alive
+[INFO] gauntlet: wave 12 tick 14632 block 12, 1 alive
+[INFO] gauntlet: wave 13 tick 16283 block 13, 1 alive
+[INFO] gauntlet: wave 14 tick 19421 block 14, 1 alive
+[INFO] gauntlet: wave 15 tick 21828 block 15, 1 alive
+[INFO] gauntlet: wave 16 tick 24239 block 16, 1 alive
+[INFO] gauntlet: wave 17 tick 26262 block 17, 1 alive
+[INFO] gauntlet: wave 18 tick 28765 block 18, 1 alive
+[INFO] gauntlet: wave 19 tick 30859 block 19, 1 alive
+[INFO] gauntlet: wave 20 tick 34290 block 20, 1 alive
+[INFO] gauntlet: wave 21 tick 36190 block 21, 1 alive
+[INFO] gauntlet: wave 22 tick 38765 block 22, 1 alive
+[INFO] gauntlet: tick 41176, segment 22

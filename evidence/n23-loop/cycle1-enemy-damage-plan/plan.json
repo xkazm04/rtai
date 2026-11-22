@@ -1,0 +1,257 @@
+{
+  "batch_sha256": "8eacca2f3555fa7ba17091e698c3d94d3291ab3f49e74aea8f7d7d84f0576851",
+  "changes": [
+    {
+      "factor": 1.25,
+      "id": "enemy_damage",
+      "members": [
+        {
+          "after": 0,
+          "baseline": 0,
+          "before": 0,
+          "file": "project/data/tables/enemies.json",
+          "id": "patrol_cop.production_damage",
+          "pointer": "/archetypes/0/production_damage",
+          "row": "patrol_cop"
+        },
+        {
+          "after": 1.5,
+          "baseline": 1.2,
+          "before": 1.2,
+          "file": "project/data/tables/enemies.json",
+          "id": "riot_cop.production_damage",
+          "pointer": "/archetypes/1/production_damage",
+          "row": "riot_cop"
+        },
+        {
+          "after": 0,
+          "baseline": 0,
+          "before": 0,
+          "file": "project/data/tables/enemies.json",
+          "id": "swat.production_damage",
+          "pointer": "/archetypes/2/production_damage",
+          "row": "swat"
+        },
+        {
+          "after": 2.25,
+          "baseline": 1.8,
+          "before": 1.8,
+          "file": "project/data/tables/enemies.json",
+          "id": "robot_thug.production_damage",
+          "pointer": "/archetypes/3/production_damage",
+          "row": "robot_thug"
+        },
+        {
+          "after": 0,
+          "baseline": 0,
+          "before": 0,
+          "file": "project/data/tables/enemies.json",
+          "id": "robot_gunner.production_damage",
+          "pointer": "/archetypes/4/production_damage",
+          "row": "robot_gunner"
+        },
+        {
+          "after": 0,
+          "baseline": 0,
+          "before": 0,
+          "file": "project/data/tables/enemies.json",
+          "id": "contractor.production_damage",
+          "pointer": "/archetypes/5/production_damage",
+          "row": "contractor"
+        },
+        {
+          "after": 20,
+          "baseline": 16,
+          "before": 16,
+          "file": "project/data/tables/enemies.json",
+          "id": "rocket_trooper.production_damage",
+          "pointer": "/archetypes/6/production_damage",
+          "row": "rocket_trooper"
+        },
+        {
+          "after": 5,
+          "baseline": 4,
+          "before": 4,
+          "file": "project/data/tables/enemies.json",
+          "id": "sentry_turret.production_damage",
+          "pointer": "/archetypes/7/production_damage",
+          "row": "sentry_turret"
+        },
+        {
+          "after": 17.5,
+          "baseline": 14,
+          "before": 14,
+          "file": "project/data/tables/enemies.json",
+          "id": "shield_robot.production_damage",
+          "pointer": "/archetypes/8/production_damage",
+          "row": "shield_robot"
+        },
+        {
+          "after": 35,
+          "baseline": 28,
+          "before": 28,
+          "file": "project/data/tables/enemies.json",
+          "id": "war_machine.production_damage",
+          "pointer": "/archetypes/9/production_damage",
+          "row": "war_machine"
+        },
+        {
+          "after": 15,
+          "baseline": 12,
+          "before": 12,
+          "file": "project/data/tables/enemies.json",
+          "id": "enemy_weapon.baton.damage",
+          "pointer": "/weapons/baton/damage"
+        },
+        {
+          "after": 20,
+          "baseline": 16,
+          "before": 16,
+          "file": "project/data/tables/enemies.json",
+          "id": "enemy_weapon.cannon.damage",
+          "pointer": "/weapons/cannon/damage"
+        },
+        {
+          "after": 25,
+          "baseline": 20,
+          "before": 20,
+          "file": "project/data/tables/enemies.json",
+          "id": "enemy_weapon.claw.damage",
+          "pointer": "/weapons/claw/damage"
+        },
+        {
+          "after": 7.5,
+          "baseline": 6,
+          "before": 6,
+          "file": "project/data/tables/enemies.json",
+          "id": "enemy_weapon.pistol.damage",
+          "pointer": "/weapons/pistol/damage"
+        },
+        {
+          "after": 5,
+          "baseline": 4,
+          "before": 4,
+          "file": "project/data/tables/enemies.json",
+          "id": "enemy_weapon.rifle.damage",
+          "pointer": "/weapons/rifle/damage"
+        },
+        {
+          "after": 20,
+          "baseline": 16,
+          "before": 16,
+          "file": "project/data/tables/enemies.json",
+          "id": "enemy_weapon.rocket.damage",
+          "pointer": "/weapons/rocket/damage"
+        },
+        {
+          "after": 12.5,
+          "baseline": 10,
+          "before": 10,
+          "file": "project/data/tables/enemies.json",
+          "id": "enemy_weapon.rocket.splash_damage",
+          "pointer": "/weapons/rocket/splash_damage"
+        },
+        {
+          "after": 17.5,
+          "baseline": 14,
+          "before": 14,
+          "file": "project/data/tables/enemies.json",
+          "id": "enemy_weapon.shove.damage",
+          "pointer": "/weapons/shove/damage"
+        },
+        {
+          "after": 30,
+          "baseline": 24,
+          "before": 24,
+          "file": "project/data/tables/enemies.json",
+          "id": "enemy_weapon.stomp.damage",
+          "pointer": "/weapons/stomp/damage"
+        },
+        {
+          "after": 30,
+          "baseline": 24,
+          "before": 24,
+          "file": "project/data/tables/enemies.json",
+          "id": "enemy_weapon.stomp.splash_damage",
+          "pointer": "/weapons/stomp/splash_damage"
+        },
+        {
+          "after": 5,
+          "baseline": 4,
+          "before": 4,
+          "file": "project/data/tables/enemies.json",
+          "id": "enemy_weapon.turret_gun.damage",
+          "pointer": "/weapons/turret_gun/damage"
+        },
+        {
+          "after": 35,
+          "baseline": 28,
+          "before": 28,
+          "file": "project/data/tables/enemies.json",
+          "id": "enemy_weapon.war_cannon.damage",
+          "pointer": "/weapons/war_cannon/damage"
+        },
+        {
+          "after": 22.5,
+          "baseline": 18,
+          "before": 18,
+          "file": "project/data/tables/enemies.json",
+          "id": "enemy_weapon.war_cannon.splash_damage",
+          "pointer": "/weapons/war_cannon/splash_damage"
+        }
+      ],
+      "metric": {
+        "profile": "average",
+        "target": 12,
+        "type": "death"
+      },
+      "miss": "average median death wave 40 against target 12 (1 deaths, 8 censored as lower bounds)",
+      "profiles": [
+        "average",
+        "novice",
+        "expert"
+      ],
+      "severity": 2.3333333333333335
+    }
+  ],
+  "killer_share": 0.5,
+  "max": 1,
+  "metric": "death",
+  "min_n": 3,
+  "misses": [
+    {
+      "metric": {
+        "profile": "average",
+        "target": 12,
+        "type": "death"
+      },
+      "miss": "average median death wave 40 against target 12 (1 deaths, 8 censored as lower bounds)",
+      "reason": "served by enemy_damage",
+      "severity": 2.3333333333333335
+    },
+    {
+      "metric": {
+        "profile": "novice",
+        "target": 6,
+        "type": "death"
+      },
+      "miss": "novice median death wave 14 against target 6 (10 deaths, 0 censored as lower bounds)",
+      "reason": "served by enemy_damage",
+      "severity": 1.3333333333333335
+    },
+    {
+      "metric": {
+        "profile": "expert",
+        "target": 20,
+        "type": "death"
+      },
+      "miss": "expert median death wave 40 against target 20 (0 deaths, 10 censored as lower bounds)",
+      "reason": "served by enemy_damage",
+      "severity": 1
+    }
+  ],
+  "night": "2026-11-22",
+  "profile": "all",
+  "schema": "gtai.gauntlet-tune-plan/1",
+  "target_s": 15
+}
