@@ -68,3 +68,5 @@ NEXT (session 5, supersedes the 22:48 NEXT): (1) on pid 37164's exit: read 03d-g
 - 23:34 REPORT updated (grids, fallback list, next steps). Waiting on dashclose pid 70540; then final gate.
 - 23:49 ASTRA dashclose 17 accepted (789d67b1d: five survivor-killing tests, mutate player_motion_dash.gd 15/20 -> 20/20; unit --changed 3799/0/2; film scenes skipped for time). Reviewed: tests parse a fresh DataTable (no cache leak), the body-rule override is restored before the asserts.
 - 23:50 FREEZE of new code: no more Astra calls. Final gate starting.
+- 23:49 final gate running on 441a8d5a3 (log build/gate-final.log). frames.json trimmed 18 -> 15 entries, legs_game_32.mp4 first (backup /tmp/frames.bak.json). Masters before/after/trials/checks kept: evidence/n24-motion/slide_*.md cite them.
+- 00:21 MILESTONE gate PASS on 441a8d5a3: build/gate/441a8d5a36ed/gate.json (lint 19/19, unit 3815/0/2, scenarios 67, parity 1200 bit for bit, selftest, export-audit 933/0). REPORT gate + tape lines filled; cites 16/16 ok. Mutate rivet_walk.gd --max=20 running (first try used a repo-relative path: exit 2, the tool wants project-relative).
