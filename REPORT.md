@@ -24,6 +24,7 @@ DRAFT written 05:25 in session 4; TODO markers are filled by the session that ga
 
 - With the real 90 s timer the bots clear nearly every wave in time: no bot run of mine timed out (3 novice runs, 5x5 opening runs). Loop measured on the street merge (its JOURNAL 04:59): average median wave 60.5, 3 of 6 alive at the 216000 cap. "Until Rivet dies" is now the tuner's job (repair, enemy damage); stacking itself is proven with the dev timer only.
 - Opening waves reach 11.67 s, not 15 s: 180/10 gave 13.9 s but broke the three-wave live-wave fixture at the 40 cap. Wave 1 is 13 patrol cops and wave 5 four units (boss): an odd shape for loop to tune.
+- **A full street can freeze on the merged game** (loop JOURNAL 07:08: 4 of 30 merged runs, 0 of 60 on street alone). In loop's `expert-1.json` wave 32 timed out at tick 56851 (= start + 5400) and wave 33 came on top as built. Wave 33 timed out too, and wave 34 has no row: its whole roster waited on the 40-alive cap. From then until the 216000-tick cap nobody was hurt (wave 33 hp min = max = 137.5). The wave rules worked (stack, cap, `capped: true`). The freeze is in combat: about 40 live foes deal no damage and take none. `NEED moves` (JOURNAL 08:00) asks whether a move state (short circuit, blink, armour crack) can stay on forever or hold the squad's attack slots. Not changed tonight. The Director can raise `max_alive` in `gauntlet.json` (one data value).
 
 ## What blocked or slowed you
 
@@ -35,8 +36,8 @@ DRAFT written 05:25 in session 4; TODO markers are filled by the session that ga
 1. **Large enemy rounds are ice blue** (`#92C9F5` / `#E8F7FF`). Cops are a saturated darker blue (`#3870D9`); on the stills they read apart, but blue means "cop" by the colour law. Alternative = one constant in `project/features/combat/enemy_round_look.gd`. Still: `rounds-review.jpg`.
 2. **The boss wave may arrive on top of an unfinished wave** (decided yes: that is the pressure asked for). Alternative = one data value. Still: `stack/stack-3-alive.png` (war machine arriving over waves 8 and 9).
 3. **`max_alive` = 40** live hostiles across all waves; extra members wait and spawn in roster order.
-5. **The shove slab looks wider than it hits.** The mark now draws the real hit lane (0.64 m + Rivet's radius each side); the drawn door slab is about 2.5 m across. Stills `wedge/shove-after-32.png`, `wedge/shove-after-64.png`. The shove's numbers belong to the enemy lanes.
 4. **The opening shape**: wave 1 = 13 patrol cops, wave 5 = boss + 3. Loop's tuner moves it.
+5. **The shove slab looks wider than it hits.** The mark now draws the real hit lane (0.64 m + Rivet's radius each side); the drawn door slab is about 2.5 m across. Stills `wedge/shove-after-32.png`, `wedge/shove-after-64.png`. The shove's numbers belong to the enemy lanes.
 6. **A timer that shortens with the wave number** would make stacking the run-ender for strong players; not built (owner said 90 s).
 
 ## Merge notes
@@ -55,6 +56,8 @@ Previewed at 05:50 with `git merge-tree --write-tree n23-street n23-<lane>` (no 
 3. `shot_draw.gd` drawing calls survive mutation (5/20): a pixel probe of one tracer on ShotDraw's canvas would pin the rim and core widths.
 4. The shove slab is drawn ~2.5 m across but hits a 0.64 m lane (call 5): the enemy lanes decide whether the hit widens or the slab art narrows.
 5. Plate-stopped enemy rounds in `plate_sparks.gd` still draw vermilion (`NEED moves` 04:43): check after the merge.
+6. The merged-game freeze (What does not): find which move or AI state stops damage either way, then re-run loop's `expert-1` (seed 1, expert, greedy, `--waves=40`).
+7. Moves' NEED 06:42 (not built tonight: after the last-code line): the bonus card view reads `<name>__DESC` when that loc key exists and shows it as one line under the name, so a rank 2 card says in plain words what it adds.
 
 ## Astra ledger
 
