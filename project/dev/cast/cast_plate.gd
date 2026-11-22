@@ -124,7 +124,7 @@ func _draw_sheet() -> void:
 	_canvas.draw_rect(Rect2(Vector2.ZERO, Vector2(EXTENT)), _matte)
 	_text(Vector2(24, 47), tr("RTAI / Wave cast"), 32)
 	_text(
-		Vector2(1380, 44), tr("%d px/m   Â·   %dÂ° pitch   Â·   1920 Ă— 1080") % [_ppm, _pitch], 22
+		Vector2(1380, 44), tr("%d px/m   -   %d deg pitch   -   1920 x 1080") % [_ppm, _pitch], 22
 	)
 	for i: int in 2:
 		_draw_row(i)
