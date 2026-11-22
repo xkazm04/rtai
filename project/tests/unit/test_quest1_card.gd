@@ -39,11 +39,14 @@ func test_wheel_title_and_pause_show_the_mouse_bindings_and_quick_claw() -> void
 		"Right mouse: guard",
 		"Mouse wheel: change weapon",
 		"Space: quick claw",
-		"E: use",
-		"Esc: pause"
+		"E: use (phones, hiding, allies, torch)",
+		"Esc: pause",
+		"Gamepad: left stick move, right stick aim, RT swing or fire, LT guard",
+		"Back change weapon, X quick claw, A use"
 	]:
 		assert_string_contains(card.controls_text(), expected)
 	var title: String = card.controls_text()
+	assert_lte(title.split("\n").size(), 4)
 	assert_eq((card._box.get_child(2) as Label).text, title)
 	card.show_pause()
 	assert_eq((card._box.get_child(1) as Label).text, title)
@@ -66,10 +69,11 @@ func test_handheld_uses_the_bound_triggers_and_buttons_for_each_mode() -> void:
 		"[LT]: guard",
 		"[Back]: change weapon",
 		"[X]: quick claw",
-		"[A]: use",
+		"[A]: use (phones, hiding, allies, torch)",
 		"[Start]: pause"
 	]:
 		assert_string_contains(pad, expected)
+	assert_lte(pad.split("\n").size(), 4)
 	card = _card(["--controls=legacy"], "deck")
 	assert_string_contains(card.controls_text(), "[X]: electroshock")
 
