@@ -68,6 +68,7 @@ Stills and clips: `C:\Users\kazda\kiro\gtai-masters\n23\moves\` (`frames.json`, 
 
 ## Merge notes
 
+- loop merged `n23-moves` at `73eec563c` (its `620fb288e`), before the Ohm fix `a8a060feb`; its Ohm on/off arm measured the pre-fix rule unless it merged again (`NEED loop` 07:44). The Director's merge of `n23-moves` at its head carries the fix.
 - One-line call sites in shared files: `combat_arena.gd` (`var move_tally`, `MoveState.write_fighter` in write_state, `MoveCarry.take` at :196; two doc-comment lines trimmed to stay under the cap), `gauntlet_wave_stats.gd` (`begin_wave`, `append_wave`), `foe_shield_view.gd` (`FoeStunView.place_shield`), `foe_ordnance_view.gd:47` (`MoveCarryView.paint`), `gauntlet_draw.gd:9,34`, `gauntlet_bonus_apply.gd:26-27`.
 - `project/data/loc/en.po`: three appended entries (`GAUNTLET__KIND__EFFECT`, `GAUNTLET__EFFECT__OVERKILL_CARRY`, `_2`), `73eec563c`; an append conflict with another lane keeps both sides.
 - `project/features/souls/plate_sparks.gd` `tracer()` enemy-round colour: left to street (needs `ShotDraw`, which exists only on `n23-street`).
