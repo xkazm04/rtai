@@ -270,3 +270,9 @@ edits are UNCOMMITTED: commit them with `git commit -- <paths>` when Astra's ind
   anywhere (Astra searched every path). DECISION pressure: Rivet's rocket stays steel + amber exhaust; the owner's "blue
   rocket" may be the trooper's ice-blue enemy rocket (kept by the n23 verdict): Call for the owner with a side-by-side still
   (brief 05 Still 3 added). Brief 05 times filled (hard stop 01:25, commit by 01:15).
+- 23:32 678f0ad72 R2 nail: `weapon_art.json` gloria `projectile_k` 0.68 + the nail drawn at native rig scale (no
+  fx_draw_scale enlargement) in `weapon_fx_art.gd` `_cell_v`; Gloria 47.2 x 12.8 -> 16.05 x 4.35 px at 32 px/m, the
+  smallest round (58 % of the molotov's length, 65 % of the Gatling's width); `evidence/n24-pressure/rounds/sizes-after.md`.
+  LOOKED at `gauntlet-gloria-{32,64}ppm-flight-t91-pair.png`: at 64 px/m a small clean nail; at 32 px/m a speck that is
+  hard to read in a fight. DECISION pressure: ship 0.68 (the owner asked for small), Call for the owner: 1.0 (about 24 x 6
+  px, still the smallest in both axes) if it vanishes in play. No more commits for it tonight (00:00 rule).
