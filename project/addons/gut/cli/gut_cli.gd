@@ -111,7 +111,6 @@ an immediate "=":
 	-gconfig=
 """
 	opts.add_heading("Test Config:")
-	opts.add('--controls', '', 'Gameplay control mode forwarded by the unit runner.')
 	opts.add('-gdir', options.dirs, 'List of directories to search for test scripts in.')
 	opts.add('-ginclude_subdirs', false, 'Flag to include all subdirectories specified with -gdir.')
 	opts.add('-gtest', [], 'List of full paths to test scripts to run.')

@@ -154,10 +154,8 @@ export function scriptErrors(out) {
 
 const NONE = { passed: 0, failed: 0, skipped: 0 };
 
-export function gutArgs(config, junit, controls) {
-  const args = ['-s', 'res://addons/gut/gut_cmdln.gd', `-gconfig=${config}`, `-gjunit_xml_file=${junit}`];
-  if (controls) args.push('--', `--controls=${controls}`);
-  return args;
+export function gutEnv(controls) {
+  return { ...process.env, GTAI_CONTROLS: controls ?? '' };
 }
 
 /** One GUT pass over `files` (null = the config's own dirs). */
@@ -165,7 +163,8 @@ async function gutPass(outDir, files, testName, junitName, controls) {
   const junit = join(outDir, junitName).replace(/\\/g, '/');
   removeStale(join(outDir, junitName)); // never read a previous run's tally
   const config = files ? writeConfig(outDir, files, testName) : 'res://.gutconfig.json';
-  const r = await godot('gut', gutArgs(config, junit, controls));
+  const args = ['-s', 'res://addons/gut/gut_cmdln.gd', `-gconfig=${config}`, `-gjunit_xml_file=${junit}`];
+  const r = await godot('gut', args, { env: gutEnv(controls) });
   let parsed = { counts: NONE, cases: [] };
   let missing = false;
   try { parsed = parseJunit(readFileSync(junit, 'utf8')); } catch { missing = true; }

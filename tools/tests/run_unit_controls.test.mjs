@@ -1,18 +1,17 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { gutArgs, parseArgs, UsageError } from './run_unit.mjs';
+import { gutEnv, parseArgs, UsageError } from './run_unit.mjs';
 
 for (const mode of ['wheel', 'legacy']) {
-  test(`GUT receives ${mode} as a Godot user argument`, () => {
+  test(`GUT receives ${mode} through its environment`, () => {
     const { controls } = parseArgs([`--controls=${mode}`]);
     assert.equal(controls, mode);
-    assert.deepEqual(gutArgs('config', 'junit', controls).slice(-3),
-      ['-gjunit_xml_file=junit', '--', `--controls=${mode}`]);
+    assert.equal(gutEnv(controls).GTAI_CONTROLS, mode);
   });
 }
 
 test('the default GUT invocation omits a controls override', () => {
-  assert.ok(!gutArgs('config', 'junit', parseArgs([]).controls).includes('--'));
+  assert.equal(gutEnv(parseArgs([]).controls).GTAI_CONTROLS, '');
 });
 
 test('unsupported or missing controls values are usage errors', () => {
