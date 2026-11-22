@@ -1,10 +1,12 @@
 # Brief g2-deploy-views (lane `ghost`, n24): the deploy on screen, the HUD, and the film entry
 
-Hard stop: HH:MM_STOP wall clock (check `date`; the session is killed at 75 minutes). Last commit by HH:MM_COMMIT. Commit each part as it goes green. Priority: parts 1, 2, 4, 3.
+Hard stop: 19:50 wall clock (check `date`; the session is killed at 75 minutes). Last commit by 19:45. Commit each part as it goes green. Priority: parts 1, 2, 4, 3.
 
 ## Context
 Your previous call (g1) built the simulation of the first-level ghost power: `ghost_deploy` (key Q, pad LB, bit 19 / wire bit 32) held = aiming, released = the selected ghost (`GhostForms.selected`, cycled by G / power_gearbox) appears at the spot, performs its one signature attack, fades after `life_ticks`; per-form `range_m` / `cooldown_ticks` / `enabled` in the `deploy` block of `project/data/tables/ghost_attacks.json`; `transform_unlocked` in `ghost_forms.json`. Read your own g1 commits first (`git log --oneline -10`, the deploy files in `project/features/souls/`).
-G1_NOTES
+g1 landed (`d07607db6`..`8d1d6fef1`): `GhostDeploy` (phase IDLE/AIMING/ACTIVE, spot, origin, facing, ticks_left, cooldowns), `GhostDeploySpot`, `GhostDeployStrike`, `GhostDeployTally`; `GhostPilot.write_state` hashes it; story mode keeps the transformation (`story_transform`). The views read those fields only.
+
+**Part 0 first (5 minutes):** the full unit suite has ONE failure your g1 binding caused: `project/tests/unit/test_pad_glyph_art.gd:36` still expects LB on `power_hauler`. Change the action named in that assertion to `ghost_deploy` (keep its `[LB]` expectation), one line, its own commit; you are authorised to edit that one line. Then the full `node tools/tests/run_unit.mjs` must be 0 failed.
 
 The owner judges by films. Rivet stays Rivet: he must be seen moving and firing while the ghost acts.
 
