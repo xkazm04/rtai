@@ -59,6 +59,7 @@ func test_kerf_prefers_cursor_target_and_slices_once_from_its_back() -> void:
 	var behind: float = pilot.kerf.num(&"behind_m") + primary.radius_m
 	assert_eq(ghost.spot, primary.pos - primary.facing * behind)
 	assert_eq(arena.hit_dir, primary.facing)
+	assert_eq(arena.hit_at, primary.pos - primary.facing * primary.radius_m)
 	assert_eq(last_weapon, &"deploy_kerf")
 	assert_signal_emitted_with_parameters(
 		stage.events(), "actor_killed", [arena.rivet.id, primary.id, KerfStage.KILL_KIND]
@@ -128,7 +129,7 @@ func test_ohm_damages_every_hostile_in_radius_and_only_shorts_flagged_machines()
 func test_tonnage_stomps_only_in_front_and_opens_a_walker_outside_recovery() -> void:
 	var front: Fighter = _spawn(Vector2(7, 0), &"contractor", 1.0)
 	var back: Fighter = _spawn(Vector2(5.9, 0))
-	var far: Fighter = _spawn(Vector2(12, 0))
+	var far: Fighter = _spawn(Vector2(11, 0))
 	var walker: Fighter = _spawn(Vector2(8, 0), &"war_machine")
 	walker.facing = Vector2.LEFT
 	assert_false(TonnageCrack.post_stomp(squad.mind_for(walker)))
@@ -150,7 +151,7 @@ func test_dent_hits_the_swept_segment_and_knocks_along_it() -> void:
 	var beyond: Fighter = _spawn(Vector2(7.1, 0))
 	var before: Vector2 = last.pos
 	_release(&"dent")
-	assert_almost_eq(ghost.origin.distance_to(arena.rivet.pos), arena.rivet.radius_m, 0.00001)
+	assert_eq(ghost.origin, Vector2.RIGHT.orthogonal() * arena.rivet.radius_m)
 	assert_eq(ghost.spot, Vector2(6, 0))
 	assert_false(first.alive())
 	assert_eq(last_weapon, &"deploy_dent")
@@ -159,3 +160,39 @@ func test_dent_hits_the_swept_segment_and_knocks_along_it() -> void:
 	assert_eq(wide.hp, wide.max_hp)
 	assert_eq(beyond.hp, beyond.max_hp)
 	assert_eq(arena.rivet.pos, Vector2.ZERO)
+
+
+func test_kerf_includes_snap_and_range_edges_from_a_displaced_rivet() -> void:
+	var r: Vector2 = Vector2(20, 7)
+	arena.rivet.pos = r
+	var line: Fighter = _spawn(r + Vector2.RIGHT)
+	var edge: Fighter = _spawn(r + Vector2(9, 0))
+	var picked: Fighter = GhostDeploySpot.kerf_target(
+		stage, r + Vector2(9, 2), Vector2.RIGHT, ghost.strike.attacks
+	)
+	assert_same(picked, edge)
+	_release(&"kerf", 9.0)
+	assert_eq(edge.max_hp - edge.hp, pilot.kerf.num(&"human_damage"))
+	assert_eq(line.hp, line.max_hp)
+
+
+func test_kerf_ignores_a_hostile_outside_both_snap_and_cone() -> void:
+	var side: Fighter = _spawn(Vector2(0, 4))
+	_release(&"kerf")
+	assert_eq(side.hp, side.max_hp)
+
+
+func test_dent_includes_the_end_cap_at_its_half_width() -> void:
+	ghost.strike.attacks.deploy[&"dent"].ram_half_m = 1.0
+	var rim: Fighter = _spawn(Vector2(7, 0))
+	_release(&"dent")
+	assert_eq(rim.max_hp - rim.hp, pilot.ghosts.jab.num(&"jab_damage"))
+
+
+func test_deploy_respects_city_solids_without_arena_wall_boxes() -> void:
+	stage.arena.walls = null
+	stage.cells = StageCells.shipped()
+	var from: Vector2 = Vector2(-4, -2)
+	var to: Vector2 = Vector2(-2, -2)
+	assert_false(GhostDeploySpot.clear(stage, from, to))
+	assert_eq(GhostDeploySpot.clip(stage, from, to), from)

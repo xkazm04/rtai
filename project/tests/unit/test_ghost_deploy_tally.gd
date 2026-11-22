@@ -76,3 +76,34 @@ func test_overlapping_waves_count_only_their_own_live_machine_ticks() -> void:
 	assert_false(overlapping.has("deploy_kills"))
 	var overlap_s: float = overlapping["deploy_stun_s"]["ohm"]
 	assert_almost_eq(overlap_s, SimClock.TICK_DT, 0.00001)
+
+
+func test_replaced_or_expired_machine_stuns_stop_counting() -> void:
+	var arena: CombatArena = stage.arena
+	var first: Fighter = arena.squad_ai.spawn_member(arena, Vector2(6, 1), &"sentry_turret")
+	var second: Fighter = arena.squad_ai.spawn_member(arena, Vector2(6, -1), &"shield_robot")
+	first.pos = Vector2(6, 1)
+	second.pos = Vector2(6, -1)
+	pilot.ghosts.forms.selected = OhmStage.GHOST
+	_tick(true)
+	_tick()
+	var strike: GhostDeployStrike = pilot.ghosts.deploy.strike
+	assert_eq(strike.stunned_count(arena, stage.tick), 2)
+	var until: int = arena.squad_ai.mind_for(first).stun_until
+	arena.squad_ai.mind_for(second).stun_until += 1
+	assert_eq(strike.stunned_count(arena, stage.tick), 1)
+	assert_eq(strike.stunned_count(arena, until), 0)
+
+
+func test_ohm_wounding_only_humans_records_no_short_circuit() -> void:
+	var arena: CombatArena = stage.arena
+	var human: Fighter = arena.spawn_guard(Vector2(6, 0))
+	human.pos = Vector2(6, 0)
+	human.hp = 10.0
+	pilot.ghosts.forms.selected = OhmStage.GHOST
+	_tick(true)
+	_tick()
+	var row: Dictionary = {}
+	arena.move_tally.append_wave(row)
+	assert_eq(10.0 - human.hp, pilot.ohm.num(&"bolt_damage"))
+	assert_false(row.has("moves"))
