@@ -109,3 +109,22 @@ NEXT: (session 3) check logs/cast/astra.lock + astra-calls.jsonl; when film-door
   (wisps erased, plate still and square, rows idle/glow/fire/cool, wreck row clear). Minor: p55 stack caps a little
   ragged where the wisps were cut (sub-pixel at 32 px/m). Astra is wiring foe_turret_card_view.gd; the 11 leftover
   staged paths from brief 03 are still uncommitted at 21:08.
+- 21:25 clamshell evidence reviewed (uncommitted work of the clamshell call): stills
+  gtai-masters/n24/cast/clamshell_{32,64}ppm_tilt{70,55}.png ACCEPTED (idle/tell/fire/cool/hit/wreck beside Rivet and
+  the cop; the vermilion aim line stays on tell and fire; about cop height). clamshell_wave_32.mp4 and
+  clamshell_close_64.mp4: 1920x1080, 60 fps, 16.0 s each; the 32 film shows tracking, aim line, muzzle, wreck at
+  ~40 px: ACCEPTED. Pile-driver sheets are packed in the tree (war_machine_{armed_walk,attack,stomp,hit,fall}, no
+  .import yet): NOT yet reviewed. FRICTION: no Astra commit since f87537d4b (20:37) at 21:25: the 11 brief-03 paths and
+  all clamshell work are uncommitted; brief 05 must start with "commit what is done".
+- 21:40 session 3 ends. ASTRA RUNNING clamshell since 20:44 (pid 71768, hard stop ~21:59).
+NEXT: (session 4) check logs/cast/astra.lock (pid alive by process name) + astra-calls.jsonl; when `clamshell` ends,
+  read evidence/briefs/n24-cast-04-clamshell.out.txt and `git log`/`git status`. If its work is uncommitted, send a
+  short `--resume` brief: commit each finished step (11 brief-03 paths; clamshell art+card view+one-line call sites
+  in arena_robot_rigs.gd / foe_turret_view.gd; standing-rule docs), unit --select pass line, mutate on
+  foe_turret_card_view.gd + foe_shield_card_view.gd (--max=20), run_scenarios.mjs summary. Review every diff (call sites
+  only in shared files; switch off = main). Review the packed pile-driver sheets yourself on a light matte (facings vs
+  the cop's columns, no mirrored cannon, no plan view, no smoke) before it is wired. Then finish brief 05 from
+  evidence/briefs/n24-cast-05-pile-driver.draft.md (pile-driver wire + stills + films, the owner's comparison clips,
+  before/after pairs, frames.json, after-table in cast-audit.md) and launch it detached with code deadline 23:45.
+  Append the standing-rule decision line to docs/decisions.md yourself (director-owned append, one line).
+  Last code commit by 00:00; `node tools/gate/run.mjs --rev=HEAD` by 00:15; REPORT.md (draft committed) + cites.
