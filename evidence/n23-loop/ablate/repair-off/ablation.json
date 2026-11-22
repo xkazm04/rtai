@@ -1,0 +1,33 @@
+{
+  "schema": "gtai.gauntlet-ablation/1",
+  "name": "repair-off",
+  "head": "6f54e9ec7d6ada27d483ba35d9afb4cc71e75200",
+  "edits": [
+    {
+      "file": "project/data/tables/combat.json",
+      "pointer": "/rivet/repair_per_s",
+      "value": 0,
+      "before": 10
+    }
+  ],
+  "pick_filter": null,
+  "batch_args": [
+    "--profile=average",
+    "--pick=greedy",
+    "--controls=wheel",
+    "--seed0=1",
+    "--jobs=1",
+    "--seeds=2",
+    "--out=C:\\Users\\kazda\\kiro\\gtai-wt\\n23-loop\\evidence\\n23-loop\\ablate\\repair-off"
+  ],
+  "batch_exit": 0,
+  "summary": {
+    "attempted": 2,
+    "accepted": 2,
+    "deaths": 1,
+    "median_wave_reached": 6.5,
+    "median_death_wave": 5,
+    "capped_alive": 1,
+    "wave_timeouts": 0
+  }
+}

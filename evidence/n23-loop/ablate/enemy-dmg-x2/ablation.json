@@ -1,0 +1,105 @@
+{
+  "schema": "gtai.gauntlet-ablation/1",
+  "name": "enemy-dmg-x2",
+  "head": "929e9899c0553f42985742c96617a7865b743adf",
+  "edits": [
+    {
+      "file": "project/data/tables/enemies.json",
+      "pointer": "/weapons/baton/damage",
+      "value": 24,
+      "before": 12
+    },
+    {
+      "file": "project/data/tables/enemies.json",
+      "pointer": "/weapons/cannon/damage",
+      "value": 32,
+      "before": 16
+    },
+    {
+      "file": "project/data/tables/enemies.json",
+      "pointer": "/weapons/claw/damage",
+      "value": 40,
+      "before": 20
+    },
+    {
+      "file": "project/data/tables/enemies.json",
+      "pointer": "/weapons/pistol/damage",
+      "value": 12,
+      "before": 6
+    },
+    {
+      "file": "project/data/tables/enemies.json",
+      "pointer": "/weapons/rifle/damage",
+      "value": 8,
+      "before": 4
+    },
+    {
+      "file": "project/data/tables/enemies.json",
+      "pointer": "/weapons/rocket/damage",
+      "value": 32,
+      "before": 16
+    },
+    {
+      "file": "project/data/tables/enemies.json",
+      "pointer": "/weapons/rocket/splash_damage",
+      "value": 20,
+      "before": 10
+    },
+    {
+      "file": "project/data/tables/enemies.json",
+      "pointer": "/weapons/shove/damage",
+      "value": 28,
+      "before": 14
+    },
+    {
+      "file": "project/data/tables/enemies.json",
+      "pointer": "/weapons/stomp/damage",
+      "value": 48,
+      "before": 24
+    },
+    {
+      "file": "project/data/tables/enemies.json",
+      "pointer": "/weapons/stomp/splash_damage",
+      "value": 48,
+      "before": 24
+    },
+    {
+      "file": "project/data/tables/enemies.json",
+      "pointer": "/weapons/turret_gun/damage",
+      "value": 8,
+      "before": 4
+    },
+    {
+      "file": "project/data/tables/enemies.json",
+      "pointer": "/weapons/war_cannon/damage",
+      "value": 56,
+      "before": 28
+    },
+    {
+      "file": "project/data/tables/enemies.json",
+      "pointer": "/weapons/war_cannon/splash_damage",
+      "value": 36,
+      "before": 18
+    }
+  ],
+  "pick_filter": null,
+  "batch_args": [
+    "--profile=average",
+    "--pick=greedy",
+    "--controls=wheel",
+    "--seed0=1",
+    "--jobs=1",
+    "--seeds=2",
+    "--out=C:\\Users\\kazda\\kiro\\gtai-wt\\n23-loop\\evidence\\n23-loop\\ablate\\enemy-dmg-x2"
+  ],
+  "batch_exit": 0,
+  "summary": {
+    "attempted": 2,
+    "accepted": 2,
+    "deaths": 1,
+    "median_wave_reached": 28.5,
+    "median_death_wave": 20,
+    "capped_alive": 1,
+    "wave_timeouts": 0
+  }
+}

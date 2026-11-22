@@ -1,0 +1,5 @@
+node tools/dev/run.mjs gauntlet --seed=1 --bot=average --pick=greedy --controls=wheel --result=C:\Users\kazda\kiro\gtai-wt\n23-loop\evidence\n23-loop\ablate\repair-off\runs\average-1.json
+run: godot --headless --path project --fixed-fps 60 --quit-after 72000 res://dev/gauntlet/gauntlet.tscn -- --seed=1 --bot=average --pick=greedy --controls=wheel --result=C:\Users\kazda\kiro\gtai-wt\n23-loop\evidence\n23-loop\ablate\repair-off\runs\average-1.json
+run: first asset check in this tree, hashing every source once (up to a minute)
+run: log C:\Users\kazda\kiro\gtai-wt\n23-loop\evidence\n23-loop\ablate\repair-off\logs\average-1\gauntlet-2026-11-22T01-50-28-685Z.log
+FAIL exit 1 (fail); SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 4 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)
