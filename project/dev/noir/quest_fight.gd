@@ -165,7 +165,7 @@ func _new_shots() -> void:
 	for s: Shot in _play.stage.arena.shots:
 		if not _shots_seen.has(s):
 			_shots_seen[s] = true
-			_flash.fire(Ink.px(s.pos), s.vel)
+			_flash.fire(Ink.px(s.pos), s.vel, not s.from_rivet)
 
 
 func _save(f: int) -> void:

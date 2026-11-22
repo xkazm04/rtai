@@ -10,7 +10,6 @@ const PAPER: Color = Color(0.91, 0.89, 0.85)
 const INK: Color = Color(0.08, 0.08, 0.09)
 const COP: Color = Color(0.2, 0.36, 0.72)
 const DANGER: Color = Color(0.89, 0.26, 0.12)
-const FLASH: Color = Color(0.98, 0.72, 0.1)
 const GUNNERS: Array[Vector2] = [Vector2(-8, -9), Vector2(0, -12), Vector2(8, -9)]
 const REST_OFFSETS: Array[int] = [20, 60, 100]
 const REACT_DELAY: int = 15
@@ -107,10 +106,11 @@ func _draw() -> void:
 		var head: Vector2 = _to_px(p.pos)
 		var tail: Vector2 = head - p.vel.normalized() * maxf(p.spec.tracer_len_m, 0.3) * _ppm
 		var enemy: bool = p.team == Projectile.TEAM_ENEMY
-		draw_line(tail, head, DANGER if enemy else INK, 3.0 if enemy else 2.0)
+		var core: Color = ShotDraw.enemy_ink(p.spec.round, false) if enemy else INK
+		draw_line(tail, head, core, 3.0 if enemy else 2.0)
 		if enemy:
-			draw_circle(head, 5.0, INK)
-			draw_circle(head, 3.5, DANGER)
+			draw_circle(head, 5.0, ShotDraw.enemy_ink(p.spec.round, true))
+			draw_circle(head, 3.5, core)
 	_draw_rivet()
 	var hud: String = (
 		"hits taken %d / enemy rounds %d   (enemy speed %.2fx)"
@@ -128,7 +128,7 @@ func _draw_gunner(g: EnemyGunner) -> void:
 	draw_circle(at, 0.35 * _ppm, COP)
 	if g.flash_left > 0:
 		var dir2: Vector2 = (g.aim_point - g.pos).normalized()
-		draw_circle(at + dir2 * 0.6 * _ppm, 0.45 * _ppm, FLASH)
+		draw_circle(at + dir2 * 0.6 * _ppm, 0.45 * _ppm, EnemyRoundLook.MUZZLE)
 
 
 func _draw_rivet() -> void:

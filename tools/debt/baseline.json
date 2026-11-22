@@ -116,7 +116,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 496,
-        "project/dev/enemy_ai": 2286,
+        "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
         "project/dev/gauntlet": 513,
         "project/dev/ghost-forms": 616,
@@ -144,7 +144,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 28528
+      "total": 28527
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -456,7 +456,7 @@
         "project/features/combat/weapons/fight_areas.gd": 226,
         "project/features/combat/weapons/fight_areas_art.gd": 253,
         "project/features/combat/weapons/gun_fx.gd": 223,
-        "project/features/combat/weapons/gun_fx_art.gd": 231,
+        "project/features/combat/weapons/gun_fx_art.gd": 215,
         "project/features/fx/combat_blood.gd": 297,
         "project/features/fx/corpse_stains.gd": 245,
         "project/features/fx/noir/blood_fx.gd": 269,

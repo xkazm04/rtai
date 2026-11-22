@@ -11,6 +11,7 @@ extends Node
 ## arena on its own tick and writes nothing back.
 
 const TABLE: String = "res://data/tables/lights.json"
+const ENEMY_MUZZLE: StringName = &"enemy_muzzle_flash"
 
 var arena: CombatArena = null
 var lights: LightLayer = null
@@ -33,6 +34,11 @@ static func make(p_arena: CombatArena, p_lights: LightLayer) -> ArenaCombatLight
 	var c: ArenaCombatLights = ArenaCombatLights.new()
 	c.arena = p_arena
 	c.lights = p_lights
+	if p_lights != null and p_lights.kinds.has(&"muzzle_flash"):
+		var flash: Dictionary = p_lights.kinds[&"muzzle_flash"].duplicate()
+		flash["color"] = EnemyRoundLook.MUZZLE
+		flash["alt_color"] = EnemyRoundLook.MUZZLE
+		p_lights.kinds[ENEMY_MUZZLE] = flash
 	c.read(TABLE)
 	return c
 
@@ -86,7 +92,8 @@ func step(tick: int) -> void:
 		var id: int = s.get_instance_id()
 		live[id] = true
 		if not _seen.has(id) and muzzle:
-			_light(&"muzzle_flash", s.pos * SimConst.PX_PER_M, s.vel.angle(), tick)
+			var kind: StringName = &"muzzle_flash" if s.from_rivet else ENEMY_MUZZLE
+			_light(kind, s.pos * SimConst.PX_PER_M, s.vel.angle(), tick)
 	_seen = live
 	var areas: FightAreas = arena.areas
 	if areas == null:

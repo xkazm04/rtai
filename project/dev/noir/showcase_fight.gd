@@ -152,7 +152,7 @@ func _cue(cue: Array) -> void:
 				var target: Vector2 = (
 					(_fight.origin + _fight.pos[NoirFightScript.RIVET]) * SimConst.PX_PER_M
 				)
-				_flash.fire(at, target - at)
+				_flash.fire(at, target - at, true)
 				_heroes[_frame] = "lit"
 				_heroes[_frame + 1] = "shot"
 		"hit":
