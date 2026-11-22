@@ -188,6 +188,86 @@
         0.4,
         0.8
       ],
+      "variants": {
+        "contractor": {
+          "cut_deg": 4,
+          "cut_up_m": 0.72,
+          "hat_kick_mps": 3.8,
+          "kit": "pistol",
+          "kit_m": 0.44,
+          "pieces": [
+            "half_a",
+            "half_b",
+            "kit"
+          ],
+          "split_topple_deg": 100,
+          "spray": 20,
+          "spray_cone_deg": 70
+        },
+        "patrol_cop": {
+          "cut_deg": 7,
+          "cut_up_m": 1.38,
+          "hat_kick_mps": 2.9,
+          "kit": "cap",
+          "kit_m": 0.36,
+          "pieces": [
+            "half_a",
+            "half_b",
+            "kit"
+          ],
+          "split_topple_deg": 105,
+          "spray": 11,
+          "spray_cone_deg": 35
+        },
+        "riot_cop": {
+          "cut_deg": 31,
+          "cut_up_m": 1.02,
+          "hat_kick_mps": 2.4,
+          "kit": "helmet",
+          "kit_m": 0.43,
+          "pieces": [
+            "half_a",
+            "half_b",
+            "kit",
+            "plate_a",
+            "plate_b"
+          ],
+          "plate_m": 1.04,
+          "split_topple_deg": 62,
+          "spray": 18,
+          "spray_cone_deg": 48
+        },
+        "rocket_trooper": {
+          "cut_deg": 68,
+          "cut_up_m": 1.1,
+          "hat_kick_mps": 2.7,
+          "kit": "tube",
+          "kit_m": 1.16,
+          "pieces": [
+            "half_a",
+            "half_b",
+            "kit"
+          ],
+          "split_topple_deg": 72,
+          "spray": 12,
+          "spray_cone_deg": 34
+        },
+        "swat": {
+          "cut_deg": 55,
+          "cut_up_m": 0.86,
+          "hat_kick_mps": 2.15,
+          "kit": "rifle",
+          "kit_m": 0.93,
+          "pieces": [
+            "half_a",
+            "half_b",
+            "kit"
+          ],
+          "split_topple_deg": 82,
+          "spray": 14,
+          "spray_cone_deg": 25
+        }
+      },
       "weapon": "katana"
     },
     {
@@ -253,6 +333,81 @@
         0.4,
         0.8
       ],
+      "variants": {
+        "contractor": {
+          "cut_deg": 62,
+          "cut_up_m": 1.03,
+          "hat_kick_mps": 3.8,
+          "kit": "pistol",
+          "kit_m": 0.44,
+          "pieces": [
+            "half_a",
+            "half_b",
+            "kit"
+          ],
+          "scorch_line_m": 0.82,
+          "split_topple_deg": 108
+        },
+        "patrol_cop": {
+          "cut_deg": 16,
+          "cut_up_m": 0.78,
+          "hat_kick_mps": 2.9,
+          "kit": "cap",
+          "kit_m": 0.36,
+          "pieces": [
+            "half_a",
+            "half_b",
+            "kit"
+          ],
+          "scorch_line_m": 0.95,
+          "split_topple_deg": 90
+        },
+        "riot_cop": {
+          "cut_deg": 5,
+          "cut_up_m": 1.13,
+          "hat_kick_mps": 2.4,
+          "kit": "helmet",
+          "kit_m": 0.43,
+          "pieces": [
+            "half_a",
+            "half_b",
+            "kit",
+            "plate_a",
+            "plate_b"
+          ],
+          "plate_m": 1.04,
+          "scorch_line_m": 1.7,
+          "split_topple_deg": 82
+        },
+        "rocket_trooper": {
+          "cut_deg": 9,
+          "cut_up_m": 1.32,
+          "hat_kick_mps": 2.7,
+          "kit": "tube",
+          "kit_m": 1.16,
+          "pieces": [
+            "half_a",
+            "half_b",
+            "kit"
+          ],
+          "scorch_line_m": 1.55,
+          "split_topple_deg": 93
+        },
+        "swat": {
+          "cut_deg": 41,
+          "cut_up_m": 0.94,
+          "hat_kick_mps": 2.15,
+          "kit": "rifle",
+          "kit_m": 0.93,
+          "pieces": [
+            "half_a",
+            "half_b",
+            "kit"
+          ],
+          "scorch_line_m": 1.24,
+          "split_topple_deg": 58
+        }
+      },
       "weapon": "plasma_sword"
     },
     {
@@ -289,6 +444,96 @@
         0.3,
         0.5
       ],
+      "variants": {
+        "contractor": {
+          "cut_deg": 2,
+          "cut_up_m": 0.65,
+          "grind_ticks": 46,
+          "hat_kick_mps": 3.8,
+          "kit": "pistol",
+          "kit_m": 0.44,
+          "pieces": [
+            "half_a",
+            "half_b",
+            "kit"
+          ],
+          "saw_chunks": 9,
+          "split_topple_deg": 111,
+          "spray": 25,
+          "spray_cone_deg": 80
+        },
+        "patrol_cop": {
+          "cut_deg": 4,
+          "cut_up_m": 0.99,
+          "grind_ticks": 40,
+          "hat_kick_mps": 2.9,
+          "kit": "cap",
+          "kit_m": 0.36,
+          "pieces": [
+            "half_a",
+            "half_b",
+            "kit"
+          ],
+          "saw_chunks": 7,
+          "split_topple_deg": 96,
+          "spray": 18,
+          "spray_cone_deg": 36
+        },
+        "riot_cop": {
+          "cut_deg": 12,
+          "cut_up_m": 0.81,
+          "grind_ticks": 66,
+          "hat_kick_mps": 2.4,
+          "kit": "helmet",
+          "kit_m": 0.43,
+          "pieces": [
+            "half_a",
+            "half_b",
+            "kit",
+            "plate_a",
+            "plate_b"
+          ],
+          "plate_m": 1.04,
+          "saw_chunks": 11,
+          "split_topple_deg": 62,
+          "spray": 29,
+          "spray_cone_deg": 64
+        },
+        "rocket_trooper": {
+          "cut_deg": 27,
+          "cut_up_m": 1.17,
+          "grind_ticks": 52,
+          "hat_kick_mps": 2.7,
+          "kit": "tube",
+          "kit_m": 1.16,
+          "pieces": [
+            "half_a",
+            "half_b",
+            "kit"
+          ],
+          "saw_chunks": 12,
+          "split_topple_deg": 84,
+          "spray": 23,
+          "spray_cone_deg": 57
+        },
+        "swat": {
+          "cut_deg": 20,
+          "cut_up_m": 1.02,
+          "grind_ticks": 58,
+          "hat_kick_mps": 2.15,
+          "kit": "rifle",
+          "kit_m": 0.93,
+          "pieces": [
+            "half_a",
+            "half_b",
+            "kit"
+          ],
+          "saw_chunks": 14,
+          "split_topple_deg": 72,
+          "spray": 21,
+          "spray_cone_deg": 48
+        }
+      },
       "weapon": "chainsaw"
     },
     {
@@ -1098,6 +1343,310 @@
         0,
         0
       ],
+      "variants": {
+        "contractor": {
+          "cells": {
+            "at": [
+              0,
+              12,
+              24,
+              42
+            ]
+          },
+          "fall": "back",
+          "fx": {
+            "cells_at": 24,
+            "cells_lean": 1,
+            "cells_ticks": 18,
+            "cook_to": 42,
+            "eyes_out": 24,
+            "smoke_ticks": 135,
+            "tremble_deg": 3.2
+          },
+          "hat_kick_mps": 3.8,
+          "kit": "pistol",
+          "kit_m": 0.44,
+          "pieces": [
+            "body",
+            "kit"
+          ],
+          "slide_m": 1.65,
+          "track": [
+            [
+              0,
+              0,
+              1,
+              0
+            ],
+            [
+              20,
+              0,
+              1,
+              0
+            ],
+            [
+              24,
+              45,
+              0.96,
+              0.14
+            ],
+            [
+              38,
+              45,
+              0.96,
+              0.65
+            ],
+            [
+              42,
+              0,
+              1,
+              1
+            ]
+          ]
+        },
+        "patrol_cop": {
+          "cells": {
+            "at": [
+              0,
+              17,
+              35,
+              46
+            ]
+          },
+          "fall": "forward",
+          "fx": {
+            "cells_at": 35,
+            "cells_lean": 1,
+            "cells_ticks": 11,
+            "cook_to": 46,
+            "eyes_out": 35,
+            "smoke_ticks": 165,
+            "tremble_deg": 2
+          },
+          "hat_kick_mps": 2.9,
+          "kit": "cap",
+          "kit_m": 0.36,
+          "pieces": [
+            "body",
+            "kit"
+          ],
+          "slide_m": 0.25,
+          "track": [
+            [
+              0,
+              0,
+              1,
+              0
+            ],
+            [
+              31,
+              0,
+              1,
+              0
+            ],
+            [
+              35,
+              -26,
+              0.9,
+              0.14
+            ],
+            [
+              42,
+              -26,
+              0.9,
+              0.65
+            ],
+            [
+              46,
+              0,
+              1,
+              1
+            ]
+          ]
+        },
+        "riot_cop": {
+          "cells": {
+            "at": [
+              0,
+              19,
+              39,
+              56
+            ]
+          },
+          "fall": "side",
+          "fx": {
+            "cells_at": 39,
+            "cells_lean": 1,
+            "cells_ticks": 17,
+            "cook_to": 56,
+            "eyes_out": 39,
+            "smoke_ticks": 230,
+            "tremble_deg": 1.1
+          },
+          "hat_kick_mps": 2.4,
+          "kit": "helmet",
+          "kit_m": 0.43,
+          "pieces": [
+            "body",
+            "kit",
+            "plate_a"
+          ],
+          "plate_m": 1.04,
+          "slide_m": 0.4,
+          "track": [
+            [
+              0,
+              0,
+              1,
+              0
+            ],
+            [
+              35,
+              0,
+              1,
+              0
+            ],
+            [
+              39,
+              24,
+              0.79,
+              0.14
+            ],
+            [
+              52,
+              24,
+              0.79,
+              0.65
+            ],
+            [
+              56,
+              0,
+              1,
+              1
+            ]
+          ]
+        },
+        "rocket_trooper": {
+          "cells": {
+            "at": [
+              0,
+              18,
+              36,
+              51
+            ]
+          },
+          "fall": "side",
+          "fx": {
+            "cells_at": 36,
+            "cells_lean": 1,
+            "cells_ticks": 15,
+            "cook_to": 51,
+            "eyes_out": 36,
+            "smoke_ticks": 205,
+            "tremble_deg": 1.7
+          },
+          "hat_kick_mps": 2.7,
+          "kit": "tube",
+          "kit_m": 1.16,
+          "pieces": [
+            "body",
+            "kit"
+          ],
+          "slide_m": 0.75,
+          "track": [
+            [
+              0,
+              0,
+              1,
+              0
+            ],
+            [
+              32,
+              0,
+              1,
+              0
+            ],
+            [
+              36,
+              -32,
+              0.73,
+              0.14
+            ],
+            [
+              47,
+              -32,
+              0.73,
+              0.65
+            ],
+            [
+              51,
+              0,
+              1,
+              1
+            ]
+          ]
+        },
+        "swat": {
+          "cells": {
+            "at": [
+              0,
+              16,
+              32,
+              60
+            ]
+          },
+          "fall": "forward",
+          "fx": {
+            "cells_at": 32,
+            "cells_lean": 1,
+            "cells_ticks": 28,
+            "cook_to": 60,
+            "eyes_out": 32,
+            "smoke_ticks": 250,
+            "tremble_deg": 0.8
+          },
+          "hat_kick_mps": 2.15,
+          "kit": "rifle",
+          "kit_m": 0.93,
+          "pieces": [
+            "body",
+            "kit"
+          ],
+          "slide_m": 0.12,
+          "track": [
+            [
+              0,
+              0,
+              1,
+              0
+            ],
+            [
+              28,
+              0,
+              1,
+              0
+            ],
+            [
+              32,
+              -8,
+              0.53,
+              0.14
+            ],
+            [
+              56,
+              -8,
+              0.53,
+              0.65
+            ],
+            [
+              60,
+              0,
+              1,
+              1
+            ]
+          ]
+        }
+      },
       "weapon": "electro_baton"
     },
     {

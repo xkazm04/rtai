@@ -48,7 +48,7 @@ func _init(p_table: SignatureKillTable, rng: RandomNumberGenerator) -> void:
 ## The kill event: true when a signature kill replaced the standard death (the victim's facing
 ## turns the piece offsets; a robot never takes a row).
 func on_kill(e: KillEvent) -> bool:
-	var row: SignatureKill = table.for_weapon(e.weapon) if e.human else null
+	var row: SignatureKill = table.for_weapon(e.weapon, e.archetype) if e.human else null
 	if row == null and e.human and e.damage_type == &"burned":  # any fire death (puff, patch)
 		row = table.for_weapon(&"burn")
 	if row == null or consumed.has(e.victim_id):
@@ -62,6 +62,8 @@ func on_kill(e: KillEvent) -> bool:
 		offs.append(o.rotated(e.facing.angle()))
 	if row.style == &"split":  # the cut line runs diagonally across the blow; d = along it
 		var side: float = 1.0 if gibs.kills % 2 == 0 else -1.0
+		if not row.victim.is_empty() and row.grind_ticks == 0:
+			d = Vector2.LEFT if d.x < 0.0 else Vector2.RIGHT
 		d = d.rotated(side * deg_to_rad(row.cut_deg))
 		offs = split_offsets(d)
 	var serial: int = gibs.throw(row, at, d, offs, _rng)

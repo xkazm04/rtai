@@ -128,7 +128,7 @@ func pose() -> void:
 		if d.row.style == &"pin":
 			p.x += KillPinArt.writhe(d, age)
 		elif d.row.style == &"cook":
-			p.x += KillCookArt.tremble(d, age, reduced_motion)
+			p.x += KillCookArt.pose(d, age, reduced_motion)
 		var b: Transform2D = KillTrack.basis(d.dir, d.fall, p, d.extra.lie_len)
 		var slide: Vector2 = d.dir * KillDeathCells.slide_m_of(d) * ppm * clampf(p.z, 0.0, 1.0)
 		if d.row.style == &"pin":
@@ -136,8 +136,7 @@ func pose() -> void:
 		elif d.row.style == &"throw":  # the claw's hop off the street
 			slide += KillThrowArt.lift(d, age, ppm)
 		if _drawn(d, age):  # the drawn fall takes over the lie: the track keeps only its lean
-			var lean: float = p.x * KillDeathCells.lean_of(d)  # own cells: drawn, unless fx cells_lean
-			b = KillTrack.basis(d.dir, d.fall, Vector3(lean, 1.0, 0.0), 1.0)
+			b = KillTrack.basis(d.dir, d.fall, KillDeathCells.pose_of(d, p), 1.0)
 		KillTrack.lay(d.lay, d.feet, b, slide)
 		d.xf = d.root.transform * d.lay.transform
 		d.feet_px = d.xf * d.feet

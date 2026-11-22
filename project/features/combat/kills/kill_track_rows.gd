@@ -51,6 +51,11 @@ static func load_from(t: DataTable) -> void:
 		if v is Dictionary:
 			var d: Dictionary = v
 			_rows[StringName(str(d.get("id", "")))] = from_dict(d)
+			var variants: Dictionary = d.get("variants", {})
+			for victim: String in variants:
+				var patch: Dictionary = variants[victim]
+				var row: Dictionary = SignatureKillTable.variant_data(d, victim, patch)
+				_rows[StringName(str(row["id"]))] = from_dict(row)
 
 
 static func from_dict(d: Dictionary) -> Extra:

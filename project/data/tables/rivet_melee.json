@@ -39,6 +39,8 @@
         "windup_ticks": 9
       }
     ],
+    "kills_human": false,
+    "shield_break_ticks": 40,
     "swing": {
       "active_ticks": 3,
       "cone_dot": 0.5,
@@ -50,7 +52,8 @@
       "recovery_ticks": 13,
       "windup_ticks": 5
     },
-    "swing_style": "rake"
+    "swing_style": "rake",
+    "vs_shield": "blocked"
   },
   "doc": "At 60 Hz single_swing plays the weapon's swing row. Held primary repeats after recovery. With single_swing disabled, hits, cancel_ticks and combo_window_ticks restore its original buffered combo.",
   "schema": "gtai.rivet-melee/1",

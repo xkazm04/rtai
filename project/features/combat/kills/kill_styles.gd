@@ -104,6 +104,7 @@ func parts(
 		KillCharCells.tag(groups[SignatureKill.BODY], rig)  # n15: a drawn charred man
 	elif KillNewStyles.owns(row.style):
 		new_fx.parts(rig, serial, row, groups, dir)
+	MeleeKillGear.attach(groups, row, _ppm)
 	return groups
 
 

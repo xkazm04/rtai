@@ -28,6 +28,12 @@ var gated: int = 0
 var _last: Dictionary[int, int] = {}
 
 
+static func hit_class_of(weapon: StringName, table: ReactTable) -> StringName:
+	if weapon == MeleeLethal.BLOCK:
+		return MeleeLethal.BLOCK
+	return &"melee" if weapon in MELEE_IDS else table.ghost_wound(weapon)
+
+
 ## True when a wound on fighter `id` at `tick` plays (and records it); false inside the gap.
 func admit(id: int, tick: int) -> bool:
 	var last: int = _last.get(id, -1000000)
@@ -45,7 +51,10 @@ func admit(id: int, tick: int) -> bool:
 func hit(
 	arena: CombatArena, victim: Fighter, weapon: StringName, hit_class: StringName = &"melee"
 ) -> Array:
-	if victim == arena.rivet or not admit(victim.id, arena.tick):
+	if (
+		victim == arena.rivet
+		or (hit_class != MeleeLethal.BLOCK and not admit(victim.id, arena.tick))
+	):
 		return []
 	var d: Vector2 = victim.pos - arena.rivet.pos
 	d = d.normalized() if d.length() > 0.001 else -victim.facing

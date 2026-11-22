@@ -7,13 +7,35 @@ extends RefCounted
 ## Gib parts (0-5), or the whole body in one piece plus the cap knocked off it (6-7), or the
 ## body cut in two along a blade's line (8-9, the split style).
 const PIECE_IDS: PackedStringArray = [
-	"head", "torso", "arm_l", "arm_r", "leg_l", "leg_r", "body", "hat", "half_a", "half_b"
+	"head",
+	"torso",
+	"arm_l",
+	"arm_r",
+	"leg_l",
+	"leg_r",
+	"body",
+	"hat",
+	"half_a",
+	"half_b",
+	"kit",
+	"plate_a",
+	"plate_b"
 ]
+const DEFAULT_FOLLOW: float = 0.25
+const DEFAULT_STREAK_M: float = 1.7
+const DEFAULT_WIDTH_M: float = 0.11
 const BODY: int = 6
 const HAT: int = 7
 const HALF_A: int = 8
 const HALF_B: int = 9
+const KIT: int = 10
+const PLATE_A: int = 11
+const PLATE_B: int = 12
 
+var kit: StringName = &""
+var kit_m: float = 0.0
+var plate_m: float = 0.0
+var victim: StringName = &""
 var id: StringName = &""
 var weapon: StringName = &""
 var style: StringName = &"gib"
@@ -46,9 +68,9 @@ var cut_deg: float = 0.0
 ## the halves fall apart (0 = they leave at once).
 var grind_ticks: int = 0
 ## The split style: how far each half leaves along the blow as well as off its side of the cut
-## (GibSim.SPLIT_FOLLOW = the brutality look; the chainsaw throws its halves forward, clear of
+## (DEFAULT_FOLLOW = the brutality look; the chainsaw throws its halves forward, clear of
 ## Rivet).
-var split_follow: float = GibSim.SPLIT_FOLLOW
+var split_follow: float = DEFAULT_FOLLOW
 ## Extra speed (m/s) for the hat alone, thrown off to one side of the shot (alternating kill by
 ## kill): the ray gun knocks the cap off the dust heap onto the bare street.
 var hat_kick_mps: float = 0.0
@@ -59,8 +81,8 @@ var blot_m: float = 0.5
 ## empty = by the row's spray (none = hot).
 var edge: StringName = &""
 ## The split style's slash streak along the cut: length and width (m) at the kill tick.
-var streak_m: float = KillSlashStreak.LENGTH_M
-var streak_w_m: float = KillSlashStreak.WIDTH_M
+var streak_m: float = DEFAULT_STREAK_M
+var streak_w_m: float = DEFAULT_WIDTH_M
 ## The split style: metres the cut line (its mask, edges, streak and saw bite) passes above the
 ## body's ground point (0 = through it: in the upright view the line then misses the figure).
 var cut_up_m: float = 0.0
@@ -100,12 +122,12 @@ static func from_dict(t: DataTable, d: Dictionary) -> SignatureKill:
 	k.ash_m = _num(t, d, "ash_m", 0.0)
 	k.cut_deg = _num(t, d, "cut_deg", 0.0)
 	k.grind_ticks = roundi(_num(t, d, "grind_ticks", 0.0))
-	k.split_follow = _num(t, d, "split_follow", GibSim.SPLIT_FOLLOW)
+	k.split_follow = _num(t, d, "split_follow", DEFAULT_FOLLOW)
 	k.hat_kick_mps = _num(t, d, "hat_kick_mps", 0.0)
 	k.blot_m = _num(t, d, "blot_m", 0.5)
 	k.edge = StringName(str(d.get("edge", "")))
-	k.streak_m = _num(t, d, "streak_m", KillSlashStreak.LENGTH_M)
-	k.streak_w_m = _num(t, d, "streak_w_m", KillSlashStreak.WIDTH_M)
+	k.streak_m = _num(t, d, "streak_m", DEFAULT_STREAK_M)
+	k.streak_w_m = _num(t, d, "streak_w_m", DEFAULT_WIDTH_M)
 	k.hole_up_m = _num(t, d, "hole_up_m", 0.0)
 	k.cut_up_m = _num(t, d, "cut_up_m", 0.0)
 	k.split_topple_deg = _num(t, d, "split_topple_deg", 0.0)

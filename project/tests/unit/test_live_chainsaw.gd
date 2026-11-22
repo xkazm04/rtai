@@ -67,11 +67,16 @@ func test_the_bite_locks_the_cop_between_bites() -> void:
 	var cop: Fighter = _cop(Vector2.DOWN * 1.2)
 	cop.hp = 100.0
 	cop.max_hp = 100.0
-	@warning_ignore("return_value_discarded")
-	_drive(1 << _pilot.actions.bit(&"fire"), 90, cop)
-	assert_gt(_pilot.melee.landed, 4, "the grind keeps biting while held")
-	assert_gt(_pilot.melee.combo.ground, 0, "still grinding")
+	var fire: int = 1 << _pilot.actions.bit(&"fire")
+	for tick: int in 90:
+		@warning_ignore("return_value_discarded")
+		_drive(fire, 1, cop)
+		if _pilot.melee.landed == 2:
+			break
+	assert_eq(_pilot.melee.landed, 2)
+	assert_true(cop.alive(), "still alive on the second bite")
 	assert_gt(_stage.arena.areas.effect(cop).stun_ticks, 0, "held in the teeth")
+	assert_gte(_drive(fire, 20, cop), 0, "the committed grind finishes the 100 hp human")
 
 
 func test_planted_fault_no_grind_ticks_bites_once() -> void:

@@ -1,7 +1,7 @@
 extends Scenario
 ## rivet-arsenal: a carried melee weapon in the live arena's real fight. Rivet carries the katana
 ## (ArenaArsenal.arm, as --loadout=katana does) and ArenaRivetBot plays the claw cops station:
-## nine draw-cuts start and eight connect. Three cops drop, no round is fired, and the run
+## nine draw-cuts start and five connect. Six cops drop, no round is fired, and the run
 ## replays identically on a fresh world.
 ## TST-05: a planted fault (the katana's reach cut to 0.3 m) must whiff and drop fewer cops.
 
@@ -56,8 +56,8 @@ func _judge(tel: Dictionary) -> String:
 		return "the rivet bot did not finish with the katana: %s" % tel
 	if tel["swing_weapon"] != "katana" or tel["shots"] != 0:
 		return "the swings were not the katana's, or a round left: %s" % tel
-	if tel.get("claw_swings") != 9 or tel.get("claw_hits") != 8 or tel.get("claw_kills") != 3:
-		return "expected nine draw-cuts, eight contacts and three cops down: %s" % tel
+	if tel.get("claw_swings") != 9 or tel.get("claw_hits") != 5 or tel.get("claw_kills") != 6:
+		return "expected nine draw-cuts, five contacts and six cops down: %s" % tel
 	return ""
 
 

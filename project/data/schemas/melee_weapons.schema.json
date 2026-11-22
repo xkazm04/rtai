@@ -134,6 +134,9 @@
           "minItems": 1,
           "type": "array"
         },
+        "kills_human": {
+          "type": "boolean"
+        },
         "lean_back_deg": {
           "maximum": 20,
           "minimum": 0,
@@ -153,6 +156,10 @@
           "maximum": 1.5,
           "minimum": 0.1,
           "type": "number"
+        },
+        "shield_break_ticks": {
+          "minimum": 1,
+          "type": "integer"
         },
         "swing": {
           "$ref": "#/$defs/hit"
@@ -174,6 +181,12 @@
             "cut",
             "sweep"
           ]
+        },
+        "vs_shield": {
+          "enum": [
+            "blocked",
+            "through"
+          ]
         }
       },
       "required": [
@@ -183,8 +196,11 @@
         "doc",
         "grip",
         "hits",
+        "kills_human",
         "length_m",
-        "move_mult"
+        "move_mult",
+        "shield_break_ticks",
+        "vs_shield"
       ],
       "type": "object"
     }

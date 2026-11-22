@@ -78,7 +78,7 @@ func test_planted_fault_the_bare_claw_does_not_reach() -> void:
 	assert_eq(cop.hp, 100.0)
 
 
-func test_the_baton_locks_the_cop_it_hits() -> void:
+func test_the_baton_overloads_the_cop_it_hits() -> void:
 	var carry: RivetCarry = RivetCarry.new(
 		WeaponTable.shipped(), ArsenalTable.shipped(), _ctx.rng.stream(&"gunplay")
 	)
@@ -88,9 +88,7 @@ func test_the_baton_locks_the_cop_it_hits() -> void:
 	cop.pos = _stage.arena.rivet.pos + Vector2.DOWN * 1.2
 	var first: int = _hold_fire(60)
 	assert_gt(first, 0, "a baton jab landed")
-	var e: FighterFx = _stage.arena.areas.effect(cop)
-	assert_not_null(e, "the jab stunned the cop")
-	assert_gt(e.stun_ticks, 0, "the cop's brain is locked")
+	assert_false(cop.alive(), "the one crack kills the 100 hp human")
 
 
 func test_planted_fault_a_claw_jab_does_not_stun() -> void:

@@ -28,6 +28,7 @@ var last_land_index: int = 0
 ## Hostile rounds the blade sent back (the plasma sword's deflect).
 var deflects: int = 0
 ## Shoves in flight: fighter id -> the metres still to slide (a vector).
+var _contact: MeleeContact = MeleeContact.new()
 var _shoves: Dictionary[int, Vector2] = {}
 
 
@@ -41,7 +42,7 @@ func _init(table: MeleeTable = MeleeTable.shipped()) -> void:
 func step(arena: CombatArena, press: bool, facing: Vector2) -> Vector2:
 	if press:
 		combo.press()
-	combo.step()
+	_contact.advance(arena, combo)
 	if combo.starts != starts:
 		starts = combo.starts
 	_slide(arena)
@@ -70,6 +71,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(landed)
 	if combo.table.grinds():  # only a grinding weapon carries it: the claw's goldens hold
 		out.put_32(combo.ground)
+		_contact.write_bites(out)
 	if combo.table.deflect_m > 0.0:
 		out.put_32(deflects)
 	var ids: Array = _shoves.keys()
@@ -86,7 +88,7 @@ func _land(arena: CombatArena, h: MeleeHit, facing: Vector2) -> void:
 	var conductor: Fighter = null
 	for f: Fighter in arena.hostiles:
 		var to: Vector2 = f.pos - at
-		if not f.alive() or to.length() > h.reach_m + f.radius_m + EDGE_SLACK_M:
+		if not f.alive() or not f.exposed or to.length() > h.reach_m + f.radius_m + EDGE_SLACK_M:
 			continue
 		var dir: Vector2 = to.normalized() if to.length() > 0.001 else facing
 		if dir.dot(facing) < h.cone_dot:
@@ -94,7 +96,8 @@ func _land(arena: CombatArena, h: MeleeHit, facing: Vector2) -> void:
 		if sets_dir:
 			arena.hit_dir = dir
 			arena.hit_at = f.pos
-		arena.damage(f, h.damage, arena.rivet.id, weapon_id)
+		var result: MeleeLethal.Contact = MeleeLethal.contact(f, arena.boss, combo, dir, arena.tick)
+		_contact.land(arena, f, combo, dir, result)
 		if h.stun_ticks > 0 and f.alive():  # the electro baton's lock
 			PlayerShock.stun_on(PlayerShock.areas_of(arena), f, h.stun_ticks)
 		if combo.table.single_swing and h.chain_hops > 0 and (f.machine or arena.metal.has(f.pos)):

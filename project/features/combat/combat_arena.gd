@@ -1,12 +1,8 @@
 class_name CombatArena
 extends RefCounted
-## One fight as data: Rivet, the hostiles, shots in flight, arc balls, dropped rifles. Every hit
-## goes through damage() (the chokepoint: humans have 1 hp, so any hit kills; kills emit
-## Events.actor_killed). The fight's own tells go out as Events too: wave_started (the stage
-## announces each wave through announce_wave), boss_engaged, attack_telegraphed, player_hit.
-## Deterministic: ticks, and the `combat` RNG stream only for guard spread and spawn jitter.
-
-## A round landed (after damage): the hit-feel hook (features/combat/hit_feel, lane gunplay).
+## One combat encounter. Damage resolves armour and exposure before announcing a kill.
+## Guard spread and spawn jitter use the combat RNG on fixed ticks.
+## Hit-feel hook after a round lands.
 signal struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName)
 ## Lethal non-Rivet hit, after Events.actor_killed. Includes weapon (or burn), direction, impact
 ## in metres and the events.json death kind for brutality and human reactions.
@@ -182,8 +178,12 @@ func damage(
 		return
 	if guard != null and guard.blocks_melee(self, victim, killer_id, weapon, kind):
 		return
-	amount *= FoeArmor.impact(self, victim, kind, killer_id, weapon)
-	amount *= victim.damage_k
+	# The delivery already resolved the bearer and shield; retain the combat death event kind.
+	if kind == MeleeLethal.FINISH:
+		kind = &"shot"
+	else:
+		amount *= FoeArmor.impact(self, victim, kind, killer_id, weapon)
+		amount *= victim.damage_k
 	if victim.hp - amount <= 0.0 and victim.kind != Fighter.Kind.RIVET:
 		_events.actor_killed.emit(killer_id, victim.id, kind)
 		kill_landed.emit(victim, weapon, hit_dir, hit_at, kind)

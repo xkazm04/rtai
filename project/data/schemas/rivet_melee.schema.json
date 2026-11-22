@@ -114,6 +114,13 @@
           "minItems": 1,
           "type": "array"
         },
+        "kills_human": {
+          "type": "boolean"
+        },
+        "shield_break_ticks": {
+          "minimum": 1,
+          "type": "integer"
+        },
         "swing": {
           "$ref": "#/$defs/hit"
         },
@@ -121,12 +128,21 @@
           "enum": [
             "rake"
           ]
+        },
+        "vs_shield": {
+          "enum": [
+            "blocked",
+            "through"
+          ]
         }
       },
       "required": [
         "cancel_ticks",
         "combo_window_ticks",
-        "hits"
+        "hits",
+        "kills_human",
+        "shield_break_ticks",
+        "vs_shield"
       ],
       "type": "object"
     },

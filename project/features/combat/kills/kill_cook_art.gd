@@ -23,6 +23,18 @@ static func tremble(d: KillNewStyles.Death, age: int, reduced_motion: bool) -> f
 	return d.extra.num("tremble_deg", 1.5) * (1.0 if age % 2 == 0 else -1.0)
 
 
+static func pose(d: KillNewStyles.Death, age: int, reduced_motion: bool) -> float:
+	if not d.row.victim.is_empty() and d.body != null:
+		char_body(d, age)
+	return tremble(d, age, reduced_motion)
+
+
+static func char_body(d: KillNewStyles.Death, age: int) -> void:
+	var stop: float = d.extra.num("cook_to", 45.0)
+	var soot: float = smoothstep(stop * 0.7, stop, float(age))
+	d.body.modulate = Color.WHITE.lerp(Color(0.45, 0.43, 0.4), soot)
+
+
 static func draw(ci: KillNewStyles, d: KillNewStyles.Death, age: int) -> void:
 	var from: float = d.extra.num("cook_from", 3.0)
 	var to: float = d.extra.num("cook_to", 45.0)

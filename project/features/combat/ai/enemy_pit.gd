@@ -168,11 +168,11 @@ func swing(e: EnemyAgent) -> void:
 
 
 ## A hit on an enemy from `from_dir` (the direction the blow travels). Shields absorb in front.
-func hurt(e: EnemyAgent, dmg: float, from_dir: Vector2) -> void:
+## A player swing supplies its weapon and grind phase; ordinary projectiles omit it.
+func hurt(e: EnemyAgent, dmg: float, from_dir: Vector2, melee: MeleeCombo = null) -> void:
 	if not e.alive():
 		return
-	if e.facing.dot(-from_dir.normalized()) > e.arch.shield_cos:
-		dmg *= e.arch.shield_front_mult
+	dmg = MeleeLethal.pit_damage(e, dmg, from_dir, tick, melee)
 	e.hp -= dmg
 	e.hurt_tick = tick
 	e.hurt_dir = from_dir.normalized()
