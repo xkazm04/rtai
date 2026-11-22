@@ -125,7 +125,8 @@
         "2026-11-22: n23 prologue: deterministic hands pilot and viewport captures of the yard and first kill (dev_loc 28529 -> 28682)",
         "2026-11-22: --prologue-stills for n23 prologue (dev_loc 28682 -> 28772)",
         "2026-11-22: --bot and --prologue-stills for n23 prologue (dev_loc 28772 -> 28848)",
-        "2026-11-22: --clip for n23 prologue (dev_loc 28848 -> 28948)"
+        "2026-11-22: --clip for n23 prologue (dev_loc 28848 -> 28948)",
+        "2026-11-22: cast lineup dev scene for n24 cast (dev_loc 30712 -> 31147)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -134,6 +135,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 695,
+        "project/dev/cast": 435,
         "project/dev/controls": 712,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
@@ -165,7 +167,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 30712
+      "total": 31147
     },
     "direct_cmdline_reads": {
       "accepted": [
