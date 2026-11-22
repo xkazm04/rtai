@@ -1,6 +1,6 @@
 # REPORT - n23 lane `moves` (2026-11-22) - DRAFT, finished at 09:40
 
-Branch `n23-moves`, cut from `main` `76111adec`, merged the prologue interface `c7f139b95` (enemies.json rows) before the machine flags. Ready for loop at `73eec563c` (`MILESTONE ready`).
+Branch `n23-moves`, cut from `main` `76111adec`, merged the prologue interface `c7f139b95` (enemies.json rows) before the machine flags. Ready for loop at `73eec563c` (`MILESTONE ready`); final code commit `81723e268` (`MILESTONE ready` 07:44, carries the Ohm fix `a8a060feb`).
 Gate on the last code commit `81723e268` (07:42): `gate: PASS` (lint 19/19, unit 3696 passed 0 failed 2 skipped, scenarios 65 passed, parity bit-exact over 1200 steps with the planted mutation caught, selftest, release-compile 895 loaded 0 failed); `build/gate/81723e2682c8/gate.json` (git-ignored, in the lane). `--reels` owed after the 09:30 freeze.
 
 ## What works
@@ -35,7 +35,7 @@ Unit tests cover each rule and its edges: immunity, war-machine boss stun, once 
 | `kerf_blink_behind.mp4` | a head-on blink at 1.80 s; at the crate corner Kerf lands behind the carrier at 10.92 s (shipped slice: the carrier dies on the landing tick) |
 | `kerf_blink_behind-alive.mp4` | the same landing at a probe-only slice x0.1 so the carrier survives (`81723e268`). Off: Kerf stops inside the shield arc, carrier 8.02/10 hp. On: Kerf lands 1.35 m behind it, facing its back, carrier 0.10/10 hp, shield raised and facing away for 0.73 s |
 
-Each film has 64 px/m and 32 px/m stills with a move-off twin at the same frame (11 pairs, `frames.json`). Looked at by the director: the Ohm, Tonnage and overkill cues read; Kerf's landing spot reads but its facing does not (call 2).
+`frames.json` has 15 entries: the 5 clips and 10 stills at 64 and 32 px/m, each still with its move-off twin at the same frame. Looked at by the director: the Ohm, Tonnage and overkill cues read. Kerf behind a living carrier, facing its back, reads in the `-alive` pair. At the shipped slice only the landing spot reads (call 2).
 
 ### Rank table (weapon effects in `gauntlet_bonuses.json`)
 
@@ -54,8 +54,9 @@ The pool had no weapon-effect bonus before tonight (kinds: ghost 4, stat 10 alre
 
 ## What blocked or slowed you
 
-- astra.mjs wrapper hung 17 min after m1's last message (pid held the pipe): killed by PID.
-- m4 stopped at the `dev_loc` debt boundary (my brief did not authorise it): one follow-up.
+- astra.mjs wrapper hung after m1's last message (pid held the pipe): 17 min, then killed by PID.
+- m4 and m5 both stopped at the `dev_loc` debt boundary because my briefs did not authorise the rise: 2 follow-ups, about 15 min of lost wall clock plus the 9-min m5b call.
+- Kerf's shipped slice one-shots every target, so its first kill-time pair and first film showed nothing: 30 min for the m6 what-if and the m7 film.
 
 ## Calls for the owner
 
@@ -93,3 +94,4 @@ Stills and clips: `C:\Users\kazda\kiro\gtai-masters\n23\moves\` (`frames.json`, 
 | m5b-commit-decisions | 9 | accepted | |
 | m6-kerf-whatif | 15 | accepted | ask for the lower-slice what-if in the first probe brief, as soon as the shipped numbers one-shot the target |
 | m7-kerf-film | 15 | accepted | the film brief should require the target to survive the move whenever the move is about position or facing |
+| **9 calls** | **348** | 7 accepted, 2 bounced (both at the debt boundary, both finished by a follow-up) | |
