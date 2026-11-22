@@ -79,7 +79,7 @@ func test_a_weapon_out_walks_its_drawn_armed_grid_until_it_fires() -> void:
 			assert_eq(RivetWalk.cols_of(path), 4, "%s %s: 4 frames" % [art, w])
 			var tex: Texture2D = load(path) as Texture2D
 			assert_eq(tex.get_width() % 4 + tex.get_height() % RivetWalk.ROWS, 0, "whole cells")
-	assert_eq(RivetWalk.path_of(rig, "p70", &"chainsaw"), "", "no drawn walk: the facing card")
+	assert_eq(RivetWalk.path_of(rig, "p55", &"chainsaw"), "", "no drawn walk: the facing card")
 	rig.set_meta(RivetFrames.FIRE, true)
 	assert_eq(RivetWalk.path_of(rig, "p70", &"pistol"), "", "a shot latches the fire cell")
 	rig.set_meta(RivetFrames.FIRE, false)

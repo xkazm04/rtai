@@ -165,24 +165,33 @@ func test_held_part_follows_the_painted_claw_and_restores_its_normal_carry() -> 
 
 
 func test_rocket_launcher_uses_the_measured_p70_stance_at_each_contact() -> void:
+	_check_p70_stance(
+		"rocket_launcher", 84.0, Vector2(23.0, 36.5), [0.91, 1.0, 1.0, 0.94, 0.93, 1.0, 1.0, 1.0]
+	)
+
+
+func test_chainsaw_uses_the_measured_p70_stance_at_each_contact() -> void:
+	_check_p70_stance(
+		"chainsaw", 64.3, Vector2(18.5, 28.0), [0.89, 0.82, 1.0, 0.89, 0.84, 0.88, 1.0, 1.0]
+	)
+
+
+func _check_p70_stance(id: String, cycle: float, contact: Vector2, factors: Array[float]) -> void:
 	var card: Sprite2D = autofree(Sprite2D.new())
 	var dir: String = RivetStrips.DIR + "p70/"
-	var walk: String = dir + RivetWalk.ARMED + "rocket_launcher.png"
+	var walk: String = dir + RivetWalk.ARMED + id + ".png"
 	card.texture = load(walk) as Texture2D
 	card.set_meta(RivetFrames.ON, walk)
 	card.hframes = 4
 	card.vframes = RivetWalk.ROWS
-	# The profile half-cycles in 110 px cell space, measured on the packed sprite.
-	assert_almost_eq(RivetWalk.cycle_cell(card, "p70", false), 46.67 + 37.33, 0.01)
+	assert_almost_eq(RivetWalk.cycle_cell(card, "p70", false), snappedf(cycle, 0.1), 0.01)
 	card.frame_coords = Vector2i(0, StrideMatch.PROFILE_ROW)
-	assert_eq(RivetStride.profile_cycle(card, 1.0, 0.0), 23.0 * 4.0)
+	assert_eq(RivetStride.profile_cycle(card, 1.0, 0.0), contact.x * 4.0)
 	card.frame_coords = Vector2i(2, StrideMatch.PROFILE_ROW)
-	assert_eq(RivetStride.profile_cycle(card, 1.0, 0.0), 36.5 * 4.0)
+	assert_eq(RivetStride.profile_cycle(card, 1.0, 0.0), contact.y * 4.0)
 	rig.head = Node2D.new()
 	rig.add_child(rig.head)
-	card.set_meta(RivetFrames.ON, dir + RivetWalk.ARMED_RUN + "rocket_launcher.png")
-	# The right, left-front and left run rows travel less than the bare run.
-	var factors: Array[float] = [0.91, 1.0, 1.0, 0.94, 0.93, 1.0, 1.0, 1.0]
+	card.set_meta(RivetFrames.ON, dir + RivetWalk.ARMED_RUN + id + ".png")
 	for octant: int in 8:
 		rig.face_to = octant * PI / 4.0
 		rig.head.rotation = rig.face_to

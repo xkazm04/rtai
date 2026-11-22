@@ -20,11 +20,13 @@ const DIP_TICKS: int = 3
 const MOVED: StringName = &"rivet_walk_moved"
 const RUN_FROM_MPS: float = 2.5
 const MAX_RUN_CYCLES_S: float = 3.5
-## Measured stance travel relative to bare run8, in cell px. At p55, front-right / front-left:
-## pistol 43/54.5 and 49/55, rifle 41.5/54.5 and 49/55, blade 46/54.5 and 53/55,
-## heavy 42/54.5 and 45.5/55, flamer 37/54.5 and 51/55. Left profiles: heavy 46/50, flamer 50/50.
-## At p70 the heavy left profile is 59/63, flamer front-left 42/46 and flamer left profile 58/63.
+## Packed run-row comparisons follow the octant notes in RivetStride.
 const RUN_ROW_K: Dictionary[String, float] = {
+	"p70/chainsaw/0": 0.89,
+	"p70/chainsaw/1": 0.82,
+	"p70/chainsaw/3": 0.89,
+	"p70/chainsaw/4": 0.84,
+	"p70/chainsaw/5": 0.88,
 	"p70/rocket_launcher/0": 0.91,
 	"p70/rocket_launcher/3": 0.94,
 	"p70/rocket_launcher/4": 0.93,
@@ -50,6 +52,7 @@ const ROWS: int = 8
 const RES: float = 1.5
 const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
 const ARMED_CYCLE_CELL: Dictionary[String, float] = {
+	"p70/chainsaw": 64.3,
 	"p70/rocket_launcher": 84.0,
 	"p70/gloria": 86.7,
 	"p70/pistol": 76.0,
@@ -140,7 +143,6 @@ static func cols_of(path: String) -> int:
 	return 4 if path.ends_with("/" + STRIP4) or path.get_file().begins_with(ARMED) else 0
 
 
-## True for a run grid, bare or armed (both step on RUN_CYCLE_CELL: the same drawn legs).
 static func is_run(path: String) -> bool:
 	return path.ends_with("/" + RUN) or path.get_file().begins_with(ARMED_RUN)
 

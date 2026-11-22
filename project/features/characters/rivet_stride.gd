@@ -6,9 +6,13 @@ extends RefCounted
 ## the grid plays backwards, and the row turns toward the walk by at most TWIST_ROWS (a whole
 ## turn would point the drawn gun off the aim; the fire cells still draw the aim's own octant).
 
+## P55 front-right/front-left vs bare (54.5/55): pistol 43/49, rifle 41.5/49, blade 46/53,
+## heavy 42/45.5, flamer 37/51. Left profiles vs 50: heavy 46, flamer 50. At p70, heavy left
+## is 59/63, flamer front-left 42/46 and flamer left 58/63.
 const OCT_RAD: float = PI * 0.25
 ## Contact-to-passing travel of the two stance boots in a four-column armed walk, packed texels.
 const WALK_PROFILE_TRAVEL: Dictionary[String, Vector2] = {
+	StrideMatch.ROOT + "p70/rivet_walk_eq_chainsaw.png": Vector2(18.5, 28.0),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_rocket_launcher.png": Vector2(23.0, 36.5),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_gloria.png": Vector2(26.0, 32.5),
 }
