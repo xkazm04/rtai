@@ -11,6 +11,7 @@ var _deflects: int
 
 
 func begin(stage: ArenaStage) -> void:
+	PlayerMotionDashStats.begin(stage)
 	stage.arena.move_tally.begin_wave()
 	_rolling = stage.pilot.motion.roll_progress() > 0.0
 	_rolls = 0
@@ -34,6 +35,7 @@ func sample(stage: ArenaStage) -> void:
 
 
 func finish(stage: ArenaStage, row: Dictionary) -> void:
+	PlayerMotionDashStats.finish(stage, row)
 	row["rolls"] = _rolls
 	row["shots"] = stage.shots_fired - _shots
 	row["damage_taken"] = stage.telemetry.damage_taken - _damage

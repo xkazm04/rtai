@@ -12,6 +12,11 @@
           "minimum": 0,
           "type": "number"
         },
+        "dashes": {
+          "description": "Directional dashes Rivet started during this wave, including its final tick.",
+          "minimum": 0,
+          "type": "integer"
+        },
         "enemies": {
           "additionalProperties": {
             "minimum": 1,
