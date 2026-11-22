@@ -8,6 +8,8 @@ class Wreck:
 	var id: String
 	var footprint: Rect2
 	var art: String
+	var crop: Rect2 = Rect2(0, 0, 1, 1)
+	var shell: bool
 
 
 var yard: Rect2
@@ -19,6 +21,7 @@ var exit_open: bool = false
 var gate_width_m: float
 var fences: Array[Rect2] = []
 var wrecks: Array[Wreck] = []
+var debris: Array[Wreck] = []
 var scorch_marks: Array[Rect2] = []
 var stations: ArenaStations = ArenaStations.new()
 
@@ -33,12 +36,11 @@ static func from_stage(data: DataTable) -> PrologueYard:
 	for fence: Rect2 in plan.fences:
 		station.props.append(_prop(fence, "wall_high"))
 	for row: Dictionary in data.array(layout, "cover"):
-		var wreck: Wreck = Wreck.new()
-		wreck.id = data.text(row, "id")
-		wreck.footprint = _rect(data, row)
-		wreck.art = data.text(row, "art")
+		var wreck: Wreck = _piece(data, row)
 		plan.wrecks.append(wreck)
 		station.props.append(_prop(wreck.footprint, "cover_high"))
+	for row: Dictionary in data.array(layout, "debris"):
+		plan.debris.append(_piece(data, row))
 	for row: Dictionary in data.array(layout, "scorch_marks"):
 		plan.scorch_marks.append(_rect(data, row))
 	plan.stations.stations.append(station)
@@ -71,6 +73,18 @@ func _perimeter(data: DataTable, layout: Dictionary) -> void:
 	area_row.id = "yard"
 	area_row.rect = yard.merge(far_sidewalk)
 	areas.append(area_row)
+
+
+static func _piece(data: DataTable, row: Dictionary) -> Wreck:
+	var piece: Wreck = Wreck.new()
+	piece.id = data.text(row, "id")
+	piece.footprint = _rect(data, row)
+	piece.art = data.text(row, "art")
+	piece.shell = row.get("shell", false)
+	if row.has("crop"):
+		var crop: Dictionary = data.object(row, "crop")
+		piece.crop = Rect2(data.vec(crop, "origin"), data.vec(crop, "size"))
+	return piece
 
 
 static func _rect(data: DataTable, row: Dictionary) -> Rect2:

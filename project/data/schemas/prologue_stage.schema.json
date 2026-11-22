@@ -49,9 +49,28 @@
           "minItems": 2,
           "type": "array"
         },
+        "crop": {
+          "additionalProperties": false,
+          "properties": {
+            "origin": {
+              "$ref": "#/$defs/point"
+            },
+            "size": {
+              "$ref": "#/$defs/point"
+            }
+          },
+          "required": [
+            "origin",
+            "size"
+          ],
+          "type": "object"
+        },
         "id": {
           "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
           "type": "string"
+        },
+        "shell": {
+          "type": "boolean"
         },
         "size_m": {
           "items": {
@@ -563,6 +582,12 @@
           "minItems": 1,
           "type": "array"
         },
+        "debris": {
+          "items": {
+            "$ref": "#/$defs/cover"
+          },
+          "type": "array"
+        },
         "fence_depth_m": {
           "minimum": 0.01,
           "type": "number"
@@ -593,6 +618,7 @@
       },
       "required": [
         "cover",
+        "debris",
         "fence_depth_m",
         "gate_width_m",
         "gate_x_m",
