@@ -54,11 +54,12 @@ func sample(h: Fighter, arena: CombatArena, sheets: CastCards.Sheets) -> void:
 	elif mind != null and mind.walker != null and mind.walker.attack != null:
 		var stomp: bool = mind.walker.attack.melee
 		var e: EnemyAgent = mind.agent
-		if e.state in [EnemyAgent.State.WINDUP, EnemyAgent.State.RECOVER]:
-			path = sheets.stomp if stomp else sheets.attack
+		var action: String = sheets.stomp if stomp else sheets.attack
+		if not action.is_empty() and e.state in [EnemyAgent.State.WINDUP, EnemyAgent.State.RECOVER]:
+			path = action
 			row = _attack_row(e, stomp, arena.tick)
-		if e.state == EnemyAgent.State.RECOVER:
-			heat = float(h.cooldown) / mind.walker.attack.cooldown_ticks
+			if e.state == EnemyAgent.State.RECOVER:
+				heat = float(h.cooldown) / mind.walker.attack.cooldown_ticks
 	var stride: int = floori(_pose.walked * rows / StreetQuestCards.STRIDE_M)
 	var hold_foot: bool = moving and path == sheets.walk and stride == _step
 	var last_ground: Vector2 = position

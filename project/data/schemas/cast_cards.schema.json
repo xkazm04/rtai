@@ -39,31 +39,6 @@
     "archetypes": {
       "additionalProperties": {
         "additionalProperties": false,
-        "allOf": [
-          {
-            "if": {
-              "properties": {
-                "id": {
-                  "const": "war_machine"
-                }
-              }
-            },
-            "then": {
-              "properties": {
-                "p55": {
-                  "required": [
-                    "stomp"
-                  ]
-                },
-                "p70": {
-                  "required": [
-                    "stomp"
-                  ]
-                }
-              }
-            }
-          }
-        ],
         "properties": {
           "enabled": {
             "type": "boolean"

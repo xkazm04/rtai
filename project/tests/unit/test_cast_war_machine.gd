@@ -86,6 +86,17 @@ func test_held_walk_cell_plants_its_foot_and_next_contact_advances() -> void:
 	assert_eq(card._shadow.get_child_count(), RigCastShadows.CONTACT_RINGS.size())
 
 
+func test_stomp_without_art_keeps_the_locomotion_pose() -> void:
+	var sheets: CastCards.Sheets = CastCards.current(WALKER)
+	sheets.stomp = ""
+	_mind.walker.attack = _mind.agent.arch.alt_weapon
+	_mind.agent.enter(EnemyAgent.State.WINDUP, 1)
+	_expect(sheets.walk, StreetWalkerCards.STAND_FRAME)
+	_mind.agent.enter(EnemyAgent.State.RECOVER)
+	_h.cooldown = 1
+	_expect(sheets.walk, StreetWalkerCards.STAND_FRAME)
+
+
 func test_walker_card_projects_the_boot_line_and_two_point_six_metre_body() -> void:
 	for deg: int in [55, 70]:
 		ViewMode.shared().pitch_deg = deg

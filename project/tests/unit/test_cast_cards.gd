@@ -33,6 +33,25 @@ func test_disabled_archetype_releases_both_pitches() -> void:
 	assert_null(cards.lookup(TROOPER, "p70"))
 
 
+func test_stomp_is_optional_per_pitch_for_any_archetype() -> void:
+	var table: DataTable = DataTable.open(CastCards.TABLE, CastCards.SCHEMA)
+	var cards: CastCards = CastCards.from_table(table)
+	for pitch: String in ["p55", "p70"]:
+		assert_eq(cards.lookup(TROOPER, pitch).stomp, "")
+		var walker: CastCards.Sheets = cards.lookup(&"war_machine", pitch)
+		assert_eq(walker.stomp, RigHeadCard.ART_DIR + pitch + "/war_machine_stomp.png")
+		assert_true(ResourceLoader.exists(walker.stomp))
+	table.raw.archetypes.rocket_trooper.p55.stomp = "trooper_stomp.png"
+	var walker_pitch: Dictionary = table.raw.archetypes.war_machine.p70
+	@warning_ignore("return_value_discarded")
+	walker_pitch.erase("stomp")
+	cards = CastCards.from_table(table)
+	assert_true(table.ok())
+	assert_eq(cards.lookup(TROOPER, "p55").stomp, RigHeadCard.ART_DIR + "p55/trooper_stomp.png")
+	assert_eq(cards.lookup(TROOPER, "p70").stomp, "")
+	assert_eq(cards.lookup(&"war_machine", "p70").stomp, "")
+
+
 func test_tell_lock_shot_and_recovery_boundaries() -> void:
 	var lock_ticks: int = 10
 	for left: int in [60, lock_ticks + 1]:

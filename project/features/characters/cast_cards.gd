@@ -40,10 +40,7 @@ static func from_table(table: DataTable) -> CastCards:
 		var pitches: Dictionary[String, Sheets] = {}
 		for pitch: String in ["p55", "p70"]:
 			var paths: Dictionary = table.object(row, pitch)
-			var sheets: Sheets = _sheets(table, paths, pitch)
-			if key == "war_machine":
-				sheets.stomp = RigHeadCard.ART_DIR + pitch + "/" + table.text(paths, "stomp")
-			pitches[pitch] = sheets
+			pitches[pitch] = _sheets(table, paths, pitch)
 		if row.enabled:
 			result._by_id[StringName(key)] = pitches
 	if not table.ok():
@@ -63,6 +60,7 @@ static func _sheets(table: DataTable, row: Dictionary, pitch: String) -> Sheets:
 	var dir: String = RigHeadCard.ART_DIR + pitch + "/"
 	out.walk = dir + table.text(row, "armed_walk")
 	out.attack = dir + table.text(row, "attack")
+	out.stomp = dir + table.text(row, "stomp") if row.has("stomp") else ""
 	out.hit = dir + table.text(row, "hit")
 	out.fall = dir + table.text(row, "fall")
 	return out
