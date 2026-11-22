@@ -142,7 +142,7 @@
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
         "project/dev/gauntlet": 526,
-        "project/dev/ghost-forms": 1406,
+        "project/dev/ghost-forms": 1335,
         "project/dev/ghost-powers": 1396,
         "project/dev/guard": 397,
         "project/dev/gunplay": 674,
@@ -169,7 +169,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 31502
+      "total": 31431
     },
     "direct_cmdline_reads": {
       "accepted": [
