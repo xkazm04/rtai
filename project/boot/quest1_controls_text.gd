@@ -4,8 +4,8 @@ extends RefCounted
 
 const LEGACY: String = (
 	"WASD / arrows move    mouse aims    left click fires\n"
-	+ "Space / right click: electroshock    E: use (phones, hiding, allies, torch)\n"
-	+ "F: car (soon)    Esc: pause    Gamepad: sticks, RT fire, A use, X shock"
+	+ "[melee] / right click: electroshock    E: use (phones, hiding, allies, torch)\n"
+	+ "[car]: car    Esc: pause    Gamepad: sticks, RT fire, A use, X shock"
 )
 const LEGACY_PAD: String = (
 	"[move] move    [aim] aims    [fire] fires\n"
@@ -13,7 +13,7 @@ const LEGACY_PAD: String = (
 )
 const WHEEL: String = (
 	"WASD / arrows move    mouse aims    Left mouse: swing or fire    Right mouse: guard\n"
-	+ "Mouse wheel: change weapon    Space: quick claw    "
+	+ "Mouse wheel: change weapon    [melee]: quick claw    "
 	+ "E: use (phones, hiding, allies, torch)    Esc: pause\n"
 	+ "Gamepad: left stick move, right stick aim, RT swing or fire, LT guard\n"
 	+ "Back change weapon, X quick claw, A use"
@@ -40,7 +40,7 @@ static func resolve(text: QuestText) -> String:
 		key = &"SLICE__CONTROLS_WHEEL_PAD" if glyphs else &"SLICE__CONTROLS_WHEEL"
 	var prompt: String = text.resolve(key, source(glyphs, wheel))
 	if not glyphs:
-		return prompt
+		return ObjectiveHint.with_keys(prompt, false)
 	if wheel:
 		var guard: String = (
 			ObjectiveHint.pad_name(&"guard") if pad else ObjectiveHint.key_name(&"guard")
