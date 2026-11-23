@@ -1,0 +1,26 @@
+Both seed-7 pilots reached the end card at tick **8701** with **0 deaths**. Each lesson appeared once, with no overlap. The first warden catch landed at tick **2228**.
+
+| Lesson | Shown tick | End tick, exclusive |
+|---|---:|---:|
+| Strike | 2056 | 2193 |
+| Claw | 2334 | 2454 |
+| Guard | 2485 | 2605 |
+| Roll | 2660 | 2780 |
+| Wheel | 4830 | 4831 |
+| Fire | 4831 | 4951 |
+
+**Verification**
+
+- Both pilots reported `ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh`. `cmp` exited 0. [Pilot JSON](<C:/Users/kazda/kiro/gtai-wt/int-n20/build/dev/lessons-pilot-a.json>)
+- Changed unit tests passed **30/30**, prologue scenarios **2/2**, and the full scenario suite **67/67**. The 60-second replay retained `cbeb734ff9b97c41`.
+- Quick gate passed before both commits. Full lint passed **19/19**.
+- Mutation score was **17/(17+2) = 89.5%**, with one invalid mutant and zero timeouts. The stock CLI rejected an in-tree scratch path, so I used its operators and test runner on a plain copy under `build/mutate`. Automatic approval review blocked recursive cleanup of that copy. [Mutation results](<C:/Users/kazda/kiro/gtai-wt/int-n20/build/mutate/lessons-score.json>)
+
+**Film.** `ffprobe` measured **35.016667 s**, 1920×1080, 60 fps, H.264 `yuv420p`. I verified all three cards in the encoded movie and stills, then deleted the AVI. Both capture runs exited 0 with a shutdown warning about 62 leaked ObjectDB instances. [Movie](<C:/Users/kazda/kiro/gtai-masters/n25/path/lessons.mp4>) · [Claw](<C:/Users/kazda/kiro/gtai-masters/n25/path/lesson-claw.png>) · [Guard](<C:/Users/kazda/kiro/gtai-masters/n25/path/lesson-guard.png>) · [Roll](<C:/Users/kazda/kiro/gtai-masters/n25/path/lesson-roll.png>)
+
+**Commits**
+
+- `32d64cc73` changed `prologue_prompts.gd`, `prologue_encounter.gd`, `prologue_combat.gd`, `prologue_battle.gd`, `prologue_pistol.gd`, and `prologue_bot.gd`. It updated `test_prologue_encounter.gd` and added `test_prologue_prompts.gd` with its UID.
+- `edb61ad00` added the capture entries in `prologue_film.gd`, `prologue_stills.gd`, and `capture/film.ps1`, and recorded the 24 added capture-tool lines in `tools/debt/baseline.json`.
+
+[astra: 3192s, exit 0]

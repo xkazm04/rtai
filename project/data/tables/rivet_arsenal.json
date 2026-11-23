@@ -1,5 +1,7 @@
 {
-  "art_stand_in": {},
+  "art_stand_in": {
+    "shotgun": "assault_rifle"
+  },
   "classes": {
     "backpack_hose": {
       "doc": "the tank on the back, the wand in both hands at the hip; the flame sways instead of kicking (sway_rad either side of the aim over sway_ticks while the trigger is held: the sim's flame line and the wand both follow it)",
@@ -94,6 +96,7 @@
     "plasma_rifle": "two_hand_long",
     "plasma_sword": "two_hand_long",
     "ray_gun": "two_hand_long",
-    "rocket_launcher": "shoulder"
+    "rocket_launcher": "shoulder",
+    "shotgun": "two_hand_long"
   }
 }

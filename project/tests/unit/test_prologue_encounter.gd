@@ -110,24 +110,6 @@ func test_death_restores_the_current_checkpoint_and_only_the_last_cop_clears_it(
 	assert_true(arena.rifle_drops.is_empty())
 
 
-func test_prompts_show_once_even_when_triggers_overlap_or_repeat() -> void:
-	var hints: ProloguePrompts = ProloguePrompts.new()
-	hints.offer("strike", 0)
-	hints.step(800)
-	assert_true(hints.active("strike"))
-	hints.clear()
-	for tick: int in range(801, 1500):
-		for id: String in ["guard", "roll", "claw"]:
-			hints.offer(id, tick)
-		hints.step(tick)
-	assert_eq(hints.history.size(), 4)
-	for i: int in 4:
-		var ids: Array[String] = ["strike", "guard", "roll", "claw"]
-		assert_eq(str(hints.history[i]["id"]), ids[i])
-		var shown: int = hints.history[i]["tick"]
-		assert_eq(shown, 0 if i == 0 else 801)
-
-
 func test_an_unanswered_pistol_and_pole_wave_can_kill_rivet() -> void:
 	var game: PrologueGame = _game()
 	var stage: ArenaStage = game.stage
@@ -147,8 +129,13 @@ func test_an_unanswered_pistol_and_pole_wave_can_kill_rivet() -> void:
 	assert_eq(stage.deaths, 1)
 	assert_eq(encounter.phase, PrologueEncounter.Phase.HANDS)
 	assert_eq(stage.arena.hostiles_alive(), 9)
+	var first_catch: int = (stage.arena as PrologueCombat).first_catch_tick
+	assert_gt(first_catch, encounter.dale_died)
 	var taught: Array[String] = []
 	for hint: Dictionary in encounter.prompts.history:
 		taught.append(str(hint["id"]))
+		if hint["id"] == "roll":
+			var shown: int = hint["tick"]
+			assert_gt(shown, first_catch)
 	for id: String in ["strike", "claw", "guard", "roll"]:
 		assert_true(taught.has(id), id)

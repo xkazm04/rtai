@@ -18,8 +18,8 @@ var _captured: Dictionary[String, bool] = {}
 
 
 func _ready() -> void:
-	if _target not in ["", "patrol", "squad", "street"]:
-		Log.error("prologue-film", "--prologue-stills expects patrol, squad or street")
+	if _target not in ["", "patrol", "lessons", "squad", "street"]:
+		Log.error("prologue-film", "--prologue-stills expects patrol, lessons, squad or street")
 		get_tree().quit(2)
 		return
 	if (
@@ -39,6 +39,7 @@ func _process(_dt: float) -> void:
 	var battle: PrologueBattle = _game.encounter.battle
 	var warmup: bool = _target == "squad" and not battle.ranged
 	warmup = warmup or (_target == "street" and battle.died_tick < 0)
+	warmup = warmup or (_target == "lessons" and _game.encounter.dale_died < 0)
 	var steps: int = 20 if warmup else 1
 	for i: int in steps:
 		_game.world.loop().step()
@@ -55,6 +56,11 @@ func _process(_dt: float) -> void:
 
 
 func _event(battle: PrologueBattle, tick: int) -> String:
+	if _target == "lessons":
+		for id: String in ProloguePrompts.HAND_ORDER:
+			if _game.encounter.prompts.active(id):
+				return "lesson-" + id
+		return ""
 	if _target == "street":
 		return _street_event(tick) if battle.died_tick >= 0 else ""
 	if _target != "squad":
@@ -106,7 +112,10 @@ func _street_event(tick: int) -> String:
 
 func _capture(shot: String, tick: int) -> void:
 	await RenderingServer.frame_post_draw
-	var path: String = _out.path_join("%s-t%04d.png" % [shot, tick])
+	var name_png: String = (
+		"%s.png" % shot if _target == "lessons" else "%s-t%04d.png" % [shot, tick]
+	)
+	var path: String = _out.path_join(name_png)
 	var frame: Image = get_viewport().get_texture().get_image()
 	if _game.stage.tick != tick or frame == null or frame.is_empty() or frame.save_png(path) != OK:
 		Log.error("prologue-film", "could not capture tick %d to %s" % [tick, path])
@@ -116,5 +125,7 @@ func _capture(shot: String, tick: int) -> void:
 	_captured[shot] = true
 	set_process(true)
 	var wanted: int = 5 if _target in ["street", "squad"] else 4
+	if _target == "lessons":
+		wanted = ProloguePrompts.HAND_ORDER.size()
 	if _captured.size() == wanted:
 		get_tree().quit()

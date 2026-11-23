@@ -137,7 +137,10 @@
         "2026-11-23: Scope the full-return demonstration to the plasma sword chapter and restore the prior arena tuning at the cut. (dev_loc 31273 -> 31290)",
         "2026-11-23: The pressure film driver stages the requested live guard, blade, wave and launcher comparisons and checks native pixels per metre for every capture. (dev_loc 31290 -> 31672)",
         "2026-11-23: Fixed-tick prologue yard stills at two print scales (dev_loc 30712 -> 30813)",
-        "2026-11-23: yard film entry and frame probe for n25 yard (dev_loc 30813 -> 31065)"
+        "2026-11-23: yard film entry and frame probe for n25 yard (dev_loc 30813 -> 31065)",
+        "2026-11-23: n25 path: event-timed lessons film and three native-resolution hand-card stills (dev_loc 30712 -> 30736)",
+        "2026-11-23: menu pilot and rendered handover for n25 path (dev_loc 30733 -> 30932)",
+        "2026-11-23: Real-time menu film and 64 px/m shotgun clip for n25 path (dev_loc 30932 -> 30979)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -145,7 +148,7 @@
         "project/dev/bake_city.gd": 32,
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
-        "project/dev/bots": 695,
+        "project/dev/bots": 692,
         "project/dev/cast": 627,
         "project/dev/controls": 712,
         "project/dev/enemy_ai": 2285,
@@ -161,7 +164,7 @@
         "project/dev/moves": 1041,
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
-        "project/dev/prologue": 220,
+        "project/dev/prologue": 490,
         "project/dev/prologue_yard": 353,
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
@@ -179,7 +182,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 33371
+      "total": 33638
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -371,7 +374,8 @@
         "2026-11-18: n19 move: read the arena pilot motion once for the cover and vault rig feeds (files_near_cap 14 -> 14)",
         "2026-11-21: --foe-mix for n22 foes (files_near_cap 13 -> 13)",
         "2026-11-21: restore doc comments deleted in 8a8a0d93c/123ec794d (n22 guard) (files_near_cap 13 -> 13)",
-        "2026-11-21: n22 merge: flag and rig lines from several lanes add up in launch_args.gd and arena_rigs.gd (files_near_cap 13 -> 13)"
+        "2026-11-21: n22 merge: flag and rig lines from several lanes add up in launch_args.gd and arena_rigs.gd (files_near_cap 13 -> 13)",
+        "2026-11-23: --skip-prologue for n25 path (files_near_cap 13 -> 13)"
       ],
       "files": {
         "project/boot/collect_call/view/fx_view.gd": 271,
@@ -446,7 +450,9 @@
         "2026-11-22: --prologue-stills for n23 prologue (files_past_soft_cap 67 -> 67)",
         "2026-11-22: --clip for n23 prologue (files_past_soft_cap 67 -> 67)",
         "2026-11-22: n23 merge: launch_args KNOWN_FLAGS holds both the loop's and the prologue's flags (files_past_soft_cap 67 -> 67)",
-        "2026-11-23: --yard-dressing for n25 yard (files_past_soft_cap 67 -> 67)"
+        "2026-11-23: --yard-dressing for n25 yard (files_past_soft_cap 67 -> 67)",
+        "2026-11-23: --skip-prologue for n25 path (files_past_soft_cap 67 -> 67)",
+        "2026-11-23: merge of n24 and n25 lanes: launch_args.gd carries both runs' flags (221 lines) (files_past_soft_cap 67 -> 65)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -455,7 +461,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 238,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 220,
+        "project/boot/launch_args.gd": 221,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,
@@ -531,10 +537,9 @@
         "project/dev/gunplay": 1,
         "project/dev/held": 1,
         "project/dev/overlays": 1,
-        "project/dev/prologue": 1,
         "project/dev/weapon_art": 1
       },
-      "total": 8
+      "total": 7
     },
     "unused_class_names": {
       "files": {

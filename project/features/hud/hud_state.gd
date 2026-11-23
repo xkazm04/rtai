@@ -10,6 +10,7 @@ var head: String = ""
 var heat: int = 0
 var heat_max: int = 3
 var cash: int = 0
+var cash_visible: bool = true
 ## The weapon in hand, display text; empty = unarmed.
 var weapon: String = ""
 ## n8-hud: the weapon's HUD icon (its showcase icon cut, else the shipped icon); null = no icon.

@@ -14,6 +14,7 @@ var exposed_until: int = -1
 var last_action_tick: int = -1
 var died_tick: int = -1
 var deaths: int = 0
+var _drops_shotgun: bool
 var _attack: BossAttack
 var _again: int
 var _line_up: String
@@ -29,7 +30,8 @@ func _init(
 	yard: PrologueYard, data: DataTable, lines: PrologueLines, prompts: ProloguePrompts
 ) -> void:
 	formation = PrologueFormation.new(yard, data)
-	fire = PrologueSquadFire.new(data)
+	fire = PrologueSquadFire.new()
+	_drops_shotgun = data.object(data.raw, "command").get("drops_shotgun", false) == true
 	pistol = ProloguePistol.new(StringName(data.text(data.raw, "pistol_pickup_id")))
 	var beat: Dictionary = data.array(data.raw, "beats")[1]
 	_line_up = data.text(beat, "first_line")
@@ -85,12 +87,14 @@ func step(stage: ArenaStage, tick: int) -> bool:
 	if not formation.boss.alive():
 		died_tick = tick
 		pistol.leave(stage)
-		_prompts.clear()
+		if _drops_shotgun:
+			stage.pilot.carry.ground.drop(&"shotgun", formation.boss.pos)
+		_prompts.clear(tick)
 		arena.shots.clear()
 		return true
 	fire.track(arena.rivet.pos)
 	var before: String = _lines.current
-	_lines.advance(tick, stage.press_left and due_tick < 0)
+	_lines.advance(tick, stage.press_left and not ranged and due_tick < 0)
 	if _lines.current == _shoot and before != _shoot:
 		ranged = true
 		if pistol.marked_tick < 0:
@@ -100,6 +104,8 @@ func step(stage: ArenaStage, tick: int) -> bool:
 		_order(arena, _shoot, tick)
 	elif ranged and _lines.current.is_empty() and tick >= _again:
 		var next: String = _shoot if _attack.id == &"line_up" else _line_up
+		@warning_ignore("return_value_discarded")
+		_lines.show_line(next, tick, true)
 		_order(arena, next, tick)
 	if tick == due_tick:
 		_execute(arena, tick)
@@ -108,16 +114,10 @@ func step(stage: ArenaStage, tick: int) -> bool:
 	formation.march(arena, ranged, open)
 	if ranged:
 		fire.step(arena, formation, tick, due_tick >= 0)
+		if fire.shotgun.pump_progress(tick) >= 0.0:
+			formation.boss.exposed = true
 	pistol.observe(stage.pilot.carry, _prompts, tick)
-	_prompts.step(tick)
 	return false
-
-
-## Repeat the short command over the combat tell once its full dialogue row has played.
-func command_hint() -> String:
-	if due_tick < 0 or not ranged or _lines.current != "":
-		return ""
-	return tr("Mulroney · Line up!") if _attack.id == &"line_up" else tr("Mulroney · Shoot him !")
 
 
 func _order(arena: CombatArena, line: String, tick: int) -> void:

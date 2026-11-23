@@ -1,13 +1,11 @@
 extends InputSource
-## Walk the late approach through StageIntent. In the fight use the same directional,
-## primary, quick claw, guard and roll commands StagePilot decodes for a human.
+## Walk and fight with the same StageIntent and StagePilot controls as a human.
 
 const STRIKE_M: float = 1.55
 
 var _stage: ArenaStage
 var _encounter: PrologueEncounter
 var _guard_until: int = -1
-var _guarded: bool = false
 var _rolled: bool = false
 var _clawed: bool = false
 var _skip_lines: bool = LaunchArgs.value("--bot") == "skipper"
@@ -82,18 +80,21 @@ func _street(tick: int) -> TickInput:
 
 
 func _fight(tick: int, claw_ready: bool) -> TickInput:
-	var target: Fighter = _nearest()
+	var target: Fighter = FightReach.nearest(_stage.arena, _stage.arena.rivet.pos, INF, [])
 	if target == null:
 		return TickInput.new()
-	var at: Vector2 = _stage.arena.rivet.pos
+	var combat: PrologueCombat = _stage.arena as PrologueCombat
+	var at: Vector2 = combat.rivet.pos
 	var aim: Vector2 = target.pos - at
+	# Let one warden finish a live pole swing so the pilot experiences the pin.
+	if combat.first_catch_tick < 0 and target.archetype == &"appliance_warden":
+		return _command(aim, Vector2.ZERO, 0)
 	var gap: float = aim.length()
 	var walk: Vector2 = at.direction_to(_waypoint(target.pos)) if gap > 1.15 else Vector2.ZERO
 	var strike: bool = claw_ready and gap <= STRIKE_M
 	var buttons: int = _bit(&"fire") if strike else 0
 	var hints: ProloguePrompts = _encounter.prompts
-	if hints.active("guard") and not _guarded:
-		_guarded = true
+	if hints.active("guard") and _guard_until < 0:
 		_guard_until = tick + 18
 	if tick < _guard_until:
 		buttons = _bit(&"guard")
@@ -107,19 +108,6 @@ func _fight(tick: int, claw_ready: bool) -> TickInput:
 	return _command(aim, walk, buttons)
 
 
-func _nearest() -> Fighter:
-	var at: Vector2 = _stage.arena.rivet.pos
-	var best: Fighter
-	var distance: float = INF
-	for officer: ProloguePatrol.Officer in _encounter.patrol.officers:
-		var h: Fighter = officer.body
-		var d: float = at.distance_squared_to(h.pos)
-		if h.alive() and d < distance:
-			best = h
-			distance = d
-	return best
-
-
 func _ranged(tick: int) -> TickInput:
 	var battle: PrologueBattle = _encounter.battle
 	if not battle.ranged:
@@ -127,6 +115,13 @@ func _ranged(tick: int) -> TickInput:
 	var arena: CombatArena = _stage.arena
 	var carry: RivetCarry = _stage.pilot.carry
 	var at: Vector2 = arena.rivet.pos
+	var blasts: Array[int] = battle.fire.shotgun.shot_ticks
+	if not blasts.is_empty() and tick == blasts[-1] + 1 and _stage.pilot.motion.can_roll():
+		var toward: Vector2 = at.direction_to(battle.formation.boss.pos)
+		var side: Vector2 = toward.orthogonal()
+		if not arena.guard_map.clear_line(at, at + side * _stage.pilot.motion.roll_m):
+			side = -side
+		return _command(toward, side, _bit(&"roll"))
 	if not carry.ground.items.is_empty():
 		var walk: Vector2 = at.direction_to(_waypoint(carry.ground.items[0].pos))
 		return _command(walk, walk, 0)
@@ -134,7 +129,9 @@ func _ranged(tick: int) -> TickInput:
 		return _command(Vector2.ZERO, Vector2.ZERO, _bit(&"weapon_next"))
 	var line: PrologueFormation = battle.formation
 	var target: Fighter = _gun_target(line, at)
-	var window: bool = tick + 8 < battle.exposed_until
+	var window: bool = (
+		tick + 8 < battle.exposed_until or battle.fire.shotgun.pump_progress(tick) >= 0
+	)
 	if target == null or (window and line.boss.hurt_tick < 0):
 		target = line.boss
 	var aim: Vector2 = target.pos - at

@@ -4,19 +4,16 @@ extends RefCounted
 ## Lock a short lead on release so lateral motion matters and a direction change can evade it.
 
 var volleys: int = 0
+var shotgun: PrologueShotgun = PrologueShotgun.new()
 var _burst_at: int = -1
 var _aims: Dictionary[int, Vector2] = {}
 var _last_player: Vector2
 var _velocity: Vector2
-var _shotgun_angle: float
-
-
-func _init(data: DataTable) -> void:
-	_shotgun_angle = deg_to_rad(data.num(data.object(data.raw, "command"), "shotgun_half_deg"))
 
 
 func reset(at: Vector2) -> void:
 	volleys = 0
+	shotgun.reset()
 	_burst_at = -1
 	_aims.clear()
 	_last_player = at
@@ -56,12 +53,8 @@ func step(arena: CombatArena, line: PrologueFormation, tick: int, ordering: bool
 			_baton(arena, h, roster.archetype(h.archetype))
 	var boss: Fighter = line.boss
 	var gun: EnemyWeapon = roster.archetype(boss.archetype).weapon
-	if not ordering and tick >= boss.cooldown and _in_range(boss, arena, gun.reach_m):
-		boss.cooldown = tick + gun.cooldown_ticks
-		var dir: Vector2 = boss.pos.direction_to(arena.rivet.pos)
-		for side: int in [-1, 0, 1]:
-			_round(arena, boss, rifle, dir.rotated(side * _shotgun_angle))
-			arena.shots.back().left_m = gun.reach_m
+	if not ordering:
+		shotgun.step(arena, boss, gun, tick)
 
 
 func _round(arena: CombatArena, h: Fighter, rifle: EnemyWeapon, direction: Vector2) -> void:

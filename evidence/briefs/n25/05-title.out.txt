@@ -1,0 +1,9 @@
+Committed `667f70be2` at 05:27. `quest1_card.gd` and `new_game_path.gd` now use one predicate so the subtitle names the chapter Start opens. Added one regression test in `test_prologue_new_game_path.gd` and recorded the decision in `docs/decisions.md`.
+
+- Unit suite: 3,785 passed, 0 failed, 2 skipped. All 5 requested scenarios passed.
+- Lint, all 3 parse checks and the quick gate passed. Release compile loaded 931 resources with 0 failures. Mutation score was **4/4 killed**.
+- Replay hash remained `cbeb734ff9b97c41`. Native parity matched `94b2865f7f17d778` over 1,200 steps. Its runner reported resource leaks at shutdown.
+
+The real menu and film entry produced pixel-identical frames. [1920×1080 still](C:/Users/kazda/kiro/gtai-masters/n25/path/title-prologue.png)
+
+[astra: 1631s, exit 0]

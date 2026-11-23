@@ -427,6 +427,10 @@
           "exclusiveMinimum": 0,
           "type": "number"
         },
+        "drops_shotgun": {
+          "default": false,
+          "type": "boolean"
+        },
         "file_spacing_m": {
           "exclusiveMinimum": 0,
           "type": "number"
@@ -471,10 +475,6 @@
           "minItems": 4,
           "type": "array",
           "uniqueItems": true
-        },
-        "shotgun_half_deg": {
-          "exclusiveMinimum": 0,
-          "type": "number"
         }
       },
       "required": [
@@ -488,8 +488,7 @@
         "rifle_bound_mps",
         "rifle_clearance_m",
         "rifle_dodge_m",
-        "rifle_posts",
-        "shotgun_half_deg"
+        "rifle_posts"
       ],
       "type": "object"
     },

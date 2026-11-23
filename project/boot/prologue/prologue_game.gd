@@ -2,7 +2,7 @@ class_name PrologueGame
 extends Node
 ## Prologue composition root, also used by the dev scene. The pilot always uses wheel controls.
 
-const KNOWN_FLAGS: PackedStringArray = ["--bot", "--result", "--seed"]
+const KNOWN_FLAGS: PackedStringArray = ["--bot", "--result", "--seed", "--yard-dressing"]
 const FIXED_FPS: int = 60
 const TABLE: String = "res://data/tables/prologue_stage.json"
 const SCHEMA: String = "gtai.prologue_stage/1"
@@ -13,6 +13,9 @@ var bodies: PrologueBodies
 var live: LiveInput
 var lines: PrologueLines
 var encounter: PrologueEncounter
+var embedded: bool = false
+var checkpoints: PrologueAutosave
+var save_notice: SaveNotice = SaveNotice.new()
 var result_path: String
 var with_view: bool = true
 var _seed: int
@@ -20,12 +23,16 @@ var _seed: int
 
 func _ready() -> void:
 	boot()
+	if embedded:
+		save_notice.show(Save.take_notice())
+	if encounter != null and with_view and DisplayServer.get_name() != "headless":
+		_open_view(stage.plan as PrologueYard)
 
 
-func boot() -> void:
+func boot(saved_seed: String = "") -> void:
 	if world != null:
 		return
-	var problem: String = _read_args()
+	var problem: String = _read_args(saved_seed)
 	if problem != "":
 		Log.error("prologue", problem)
 		get_tree().quit(2)
@@ -55,18 +62,16 @@ func boot() -> void:
 	@warning_ignore("return_value_discarded")
 	encounter.opening_restarted.connect(bodies.restore_opening)
 	stage.hooks.append(encounter)
-	if LaunchArgs.has("--bot"):
+	if not embedded and LaunchArgs.has("--bot"):
 		_attach_bot()
-	if with_view and DisplayServer.get_name() != "headless":
-		_open_view(plan)
 
 
-func _read_args() -> String:
-	result_path = LaunchArgs.value("--result")
-	var seed_arg: String = LaunchArgs.value("--seed")
+func _read_args(saved_seed: String = "") -> String:
+	result_path = "" if embedded else LaunchArgs.value("--result")
+	var seed_arg: String = saved_seed if saved_seed != "" else LaunchArgs.value("--seed")
 	if LaunchArgs.has("--seed") and not seed_arg.is_valid_int():
 		return "invalid seed %s" % seed_arg
-	if LaunchArgs.has("--result") and not result_path.is_absolute_path():
+	if not embedded and LaunchArgs.has("--result") and not result_path.is_absolute_path():
 		return "result path must be absolute"
 	_seed = seed_arg.to_int() if seed_arg != "" else World.DEFAULT_SEED
 	return ""
@@ -106,8 +111,7 @@ func _attach_bot() -> void:
 	get_tree().quit(2)
 
 
-## These two weapons belong to this encounter. The common enemy table uses its existing
-## ranged/melee profiles so every other loader can still resolve its weapon references.
+## The warden carries the local catch pole. Mulroney uses his shared roster weapon.
 func _equip_squad(data: DataTable) -> void:
 	var roster: EnemyRoster = stage.arena.squad_ai.pit.roster
 	for row: Dictionary in data.array(data.raw, "weapons"):
@@ -118,6 +122,7 @@ func _equip_squad(data: DataTable) -> void:
 
 func _open_view(plan: PrologueYard) -> void:
 	var view: PrologueView = PrologueView.new()
+	view.notice = save_notice
 	view.encounter = encounter
 	view.live = live
 	var floor_view: PrologueFloor = PrologueFloor.new()
@@ -140,7 +145,7 @@ func _open_view(plan: PrologueYard) -> void:
 	props.z_index = rigs.rigs.z_index + 60
 	view.print_stage.actor_layer().add_child(props)
 	bodies.attach_view(view)
-	PrologueCommandView.new().attach(view, stage, props.dress_boss)
+	PrologueCommandView.new().attach(view, stage, props.dress_boss, _seed)
 	live.viewport = get_viewport()
 	live.origin_px = view.rivet_screen
 	live.px_per_m = func() -> float: return view.px_per_m
@@ -157,7 +162,7 @@ func show_line(id: String) -> bool:
 
 func _finished() -> void:
 	world.set_process(false)
-	if LaunchArgs.has("--bot") or not result_path.is_empty():
+	if not embedded and (LaunchArgs.has("--bot") or not result_path.is_empty()):
 		get_tree().quit()
 
 

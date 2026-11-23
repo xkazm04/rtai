@@ -58,7 +58,7 @@ func show_title(can_continue: bool = false) -> void:
 	build()
 	_clear()
 	_label(_t(&"SLICE__TITLE", "RTAI: Uprising"), 56, Ink.INK)
-	_label(_t(&"SLICE__QUEST_1", "Quest 1: Collect Call"), 34, Ink.VERMILION)
+	_label(_chapter_title(), 34, Ink.VERMILION)
 	_controls_line()
 	var first: Button = null
 	if can_continue:
@@ -69,6 +69,16 @@ func show_title(can_continue: bool = false) -> void:
 	_focus_later.call_deferred(first if first != null else start_button)
 	if LaunchArgs.has("--autostart") and OS.is_debug_build():  # n8-hud: film the opening
 		start_pressed.emit.call_deferred()
+
+
+## Ask the router wired to Start. A standalone card has no campaign route.
+func _chapter_title() -> String:
+	for connection: Dictionary in start_pressed.get_connections():
+		var listener: Callable = connection["callable"]
+		var path: NewGamePath = listener.get_object() as NewGamePath
+		if path != null and path.starts_with_prologue(self):
+			return _t(&"Prologue", "Prologue")
+	return _t(&"SLICE__QUEST_1", "Quest 1: Collect Call")
 
 
 ## Pause: the controls, then the settings panel (volume, reduced motion, rebinding) if given.

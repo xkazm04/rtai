@@ -360,6 +360,11 @@
           "melee": {
             "type": "boolean"
           },
+          "pellets": {
+            "maximum": 32,
+            "minimum": 1,
+            "type": "integer"
+          },
           "reach_m": {
             "maximum": 60,
             "minimum": 0.5,
@@ -386,6 +391,11 @@
             "type": "number"
           },
           "splash_radius_m": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "spread_deg": {
+            "maximum": 90,
             "minimum": 0,
             "type": "number"
           }

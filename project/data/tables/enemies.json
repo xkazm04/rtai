@@ -374,7 +374,7 @@
       "tier": 2,
       "turn_deg_s": 360,
       "uses_cover": true,
-      "weapon": "rifle"
+      "weapon": "shotgun"
     },
     {
       "accel_mps2": 12,
@@ -487,6 +487,18 @@
       "speed_mps": 13,
       "splash_damage": 20,
       "splash_radius_m": 3
+    },
+    "shotgun": {
+      "burst": 1,
+      "burst_gap_s": 0,
+      "cooldown_s": 0.8,
+      "damage": 3,
+      "melee": false,
+      "pellets": 8,
+      "reach_m": 9,
+      "round": "small",
+      "speed_mps": 24,
+      "spread_deg": 13
     },
     "shove": {
       "burst": 1,

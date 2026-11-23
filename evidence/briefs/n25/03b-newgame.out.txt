@@ -1,0 +1,46 @@
+**Start now plays the prologue, holds its end card for three seconds, then opens quest 1 without returning to the title.** Continue restores the saved chapter. All four prologue checkpoints resume at their verified beat, and `--skip-prologue` opens quest 1 directly. Esc leaves the prologue running.
+
+| Start | Prologue end card | Handover | Quest 1 first line |
+|---:|---:|---:|---:|
+| 0 | 9495 | 9675 | 9676 |
+
+The first line is `rivet-line-stopped`, beginning “Okay. Okay okay okay. The line stopped.” The path took **161.267 simulated seconds**. Two seed-7 headless runs took 7.3 and 7.1 wall-clock seconds. `cmp` confirmed their result JSONs and the rendered run’s JSON were byte-identical. [Pilot result](C:/Users/kazda/kiro/gtai-wt/int-n20/build/dev/newgame/seed7-a.json) · [1920×1080 prologue opening](C:/Users/kazda/kiro/gtai-masters/n25/path/newgame-prologue-first.png) · [1920×1080 quest opening](C:/Users/kazda/kiro/gtai-masters/n25/path/handover-quest1-first-line.png)
+
+### Commits and files
+
+| Commit | Change |
+|---|---|
+| `3aead09f1` | Declared `--yard-dressing` in `prologue_game.gd`. Dry run reported `flags checked: 1 against KNOWN_FLAGS (res://boot/prologue/prologue_game.gd)`. |
+| `28972c074` | Registered the shotgun grip in `held_classes.json` and all 15 stand-in entries in `arsenal_known_holes.json`. Targeted tests reported `15 passed, 0 failed, 0 skipped`. |
+| `9a7109fbe` | Added `new_game_path.gd`, wired `quest1_game.gd` and `prologue_game.gd`, declared `--skip-prologue` in `launch_args.gd`, and added `test_prologue_new_game_path.gd`. |
+| `4e0e7ac20`, `a9dd5a2b5` | Added `prologue_autosave.gd`, checkpoint replay and the normal quest 1 handover save. A damaged quest slot falling back to the prologue now shows its notice there. |
+| `fcd17bf37` | Added `newgame_pilot.gd`, `prologue_menu_drive.gd`, `prologue_menu_film.gd` and `scenario_prologue_handover.gd`. |
+
+The three decisions, debt baseline and new script UIDs are committed. Tracked files are clean at `a9dd5a2b5`.
+
+### Verification
+
+- `--changed` ran the full suite. **3782 passed, 0 failed, 2 skipped**. Both skips are existing Tonnage and Ohm tilt-art checks.
+- `run_scenarios: 68 ran, 0 failed`. All four generated replay tapes and the quest checkpoint matched the baseline byte for byte. The old quest tape returned `replay: identical`. The 60-second replay retained `cbeb734ff9b97c41`. Five scenario reports differed only in timing, timestamps or temporary paths. [Scenario log](C:/Users/kazda/kiro/gtai-wt/int-n20/build/test-results/scenario-tests.log)
+- Release compile reported `931 loaded, 0 failed`. Native parity retained `94b2865f7f17d778` across 1,200 steps. All 19 lint checks passed, and the quick gate passed before every commit.
+- Routing mutation score was **18/(18+0), 100%**. Of 20 sampled mutations, two were invalid and none timed out. Godot’s shutdown resource-leak warnings also appeared in the baseline. [Mutation report](C:/Users/kazda/kiro/gtai-wt/int-n20/build/mutate/boot-new_game_path.json)
+
+### Start callers
+
+The embedded `autosave_input`, `handheld_focus_pause`, `quest1_input` and `quest1_keys` scenarios still open quest 1. So do `quest_opening_film`, `quest1_frames_run`, `quest1_clip_rec`, `save_notice_frame`, `legibility_walker`, and `quest_hauler_rec` with its ghost and crush recorders. `quest1_forms_main`, `quest1_shipped_main` and checkpoint restart retain the direct `start()` API.
+
+The `hunt`, `hunt2`, `hunt_rows`, `atlas_ab` and `probe` debug `--autostart` paths retain the quest opening. For the `hunt2` and `hunt_rows` **real-Enter** export probes, use their existing `-Extra '--skip-prologue'` option to measure quest 1. `lin_slice` continues through `--replay`.
+
+### Continuity for the owner
+
+All 37 owner-script rows match the runtime prologue text.
+
+| Prologue | Quest 1 opening |
+|---|---|
+| `b3_l08_fax_hideout` directs Rivet to “the skip on Harbor Road.” | `b1-dumpster` opens in “Factory Row alleys.” `SLICE__HINT_HIDE` says “Walk [move] to the dumpster, hide: [use].” The separate `harbor-skip` appears in `b6-hot-walk`. |
+| `b3_l11_fax_location` says “Go to the Toner Room, I will wait for you there.” | The destination agrees. Hiding and another phone call precede `b3-toner-room`. |
+| Fax introduces himself in `b3_l05_fax_talent`. `b3_l10_fax_channel` establishes “Operation Dethrone,” and `b3_stage_communicator` introduces radio “to avoid phone boots.” | `patch-collect-call` offers “a collect call from: ‘Fax.’” `rivet-who-is-this` asks “Who is this?” and `fax-statistically` gives the address again. |
+| `b3_l07_rivet_quiet` says “They stopped. They stopped talking.” The street beat clears heat to zero. | `rivet-my-hands` asks “Why is there whispering?” and `b1-dumpster` starts “at heat 2.” The transition leaves both returns unexplained. |
+| `b1_l02_rivet_three` says “Three. I did three.” Dale and the reinforcements follow. Rivet can use a pistol during the prologue. | `rivet-line-stopped` recalls killing a cop “With another cop. THROUGH another cop.” `fax-slow-motion` describes “two cops into a stamping press.” Those accounts may cover different moments. `b3-toner-room` calls Gloria “Rivet’s first weapon.” |
+
+[astra: 3127s, exit 0]

@@ -71,7 +71,8 @@
         "electro_gun",
         "homing_shard",
         "plasma_rifle",
-        "ray_gun"
+        "ray_gun",
+        "shotgun"
       ],
       "wrist_rad": 0
     },

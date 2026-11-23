@@ -14,6 +14,7 @@ import { ROOT } from '../lib/repo.mjs';
 import { OPS, applyMutant, generateMutants, sampleMutants } from './operators.mjs';
 import { baseline, judgeMutant, ORACLES, oracleRunners } from './oracles.mjs';
 import { buildJson, formatReport, mutantLine } from './report.mjs';
+import { createScratch } from './scratch.mjs';
 import { ensureWorktree, removeWorktree, restoreFile, slugOf, stemOf, writeSidecar }
   from './worktree.mjs';
 
@@ -56,7 +57,7 @@ export function parseArgs(argv) {
   for (const a of argv) {
     const k = a.split('=')[0];
     const v = a.includes('=') ? a.slice(a.indexOf('=') + 1) : '';
-    if (k === '--file' && v) o.file = v.replace(/\\/g, '/');
+    if (k === '--file' && v) o.file = v.replace(/\\/g, '/').replace(/^project\//, '');
     else if (k === '--lines') o.lines = parseLines(v);
     else if (k === '--max' && /^\d+$/.test(v) && Number(v) > 0) o.max = Number(v);
     else if (k === '--ops' && v) o.ops = v.split(',').filter(Boolean);
@@ -70,6 +71,7 @@ export function parseArgs(argv) {
     else if (k === '--tests' && v) o.tests = v.split(',').filter(Boolean).map((t) => t.replace(/\.gd$/, '').split('/').pop());
     else if (k === '--timeout' && /^\d+$/.test(v) && Number(v) > 0) o.timeoutS = Number(v);
     else if (k === '--worktree' && v) o.worktree = v;
+    else if (a === '--scratch') o.scratch = true;
     else if (a === '--json') o.json = true;
     else if (a === '--remove-worktree') o.remove = true;
     else if (a === '--keep-worktree') o.remove = false; // the default; accepted for explicitness
@@ -77,6 +79,7 @@ export function parseArgs(argv) {
   }
   if (unknown.length) throw new UsageError(`unknown or malformed argument(s): ${unknown.join(' ')}`);
   if (!o.file) throw new UsageError('--file=<project-relative .gd path> is required');
+  if (o.scratch && (o.worktree || o.remove)) throw new UsageError('--scratch owns its temporary directory');
   const bad = o.ops.filter((op) => !OPS.includes(op));
   if (bad.length) throw new UsageError(`unknown operator(s) ${bad.join(',')}; known: ${OPS.join(',')}`);
   return o;
@@ -130,9 +133,9 @@ export async function withMutationFile(o, run) {
   const g = resolveGodot();
   if (!g.ok) throw new Error(g.message);
   const t0 = Date.now();
-  const wtInfo = ensureWorktree({ root: ROOT, path: o.worktree ?? undefined });
+  const wtInfo = o.scratch ? createScratch(ROOT) : ensureWorktree({ root: ROOT, path: o.worktree ?? undefined });
   const wt = wtInfo.path;
-  note(`worktree ${wt} at ${wtInfo.head.slice(0, 8)} (${wtInfo.created ? 'created' : 'reused'})`);
+  note(`${o.scratch ? 'scratch' : 'worktree'} ${wt} at ${wtInfo.head.slice(0, 8)} (${wtInfo.created ? 'created' : 'reused'})`);
   for (const r of wtInfo.repaired) note(`REPAIRED a crashed run: restored ${r} from its sidecar`);
   for (const n of wtInfo.notes) note(n);
   const target = join(wt, 'project', ...o.file.split('/'));

@@ -115,21 +115,22 @@ func _top_right(ci: CanvasItem) -> void:
 	if art == null:
 		return
 	var screen: Vector2 = get_viewport_rect().size
-	var sum: String = "$%s" % HudCash.thousands(state.cash)
-	var label: String = state.unarmed_label if state.weapon == "" else ""
-	var w: float = HudCash.width(art, sum, label)
-	var box: Rect2 = Rect2(screen.x - MARGIN - w, MARGIN - 8, w, 104)
-	HudCash.frame(ci, art, box)
-	_right.rect = box
-	HudCash.ink_digits(ci, art, box.position + Vector2(112, 50), sum, 32.0)
-	if state.weapon == "":
-		_say(ci, box.position + Vector2(112, 76), state.unarmed_label, 22)
-	elif not HudWeaponSlot.on():
+	if state.cash_visible:
+		var sum: String = "$%s" % HudCash.thousands(state.cash)
+		var label: String = state.unarmed_label if state.weapon == "" else ""
+		var w: float = HudCash.width(art, sum, label)
+		var box: Rect2 = Rect2(screen.x - MARGIN - w, MARGIN - 8, w, 104)
+		HudCash.frame(ci, art, box)
+		_right.rect = box
+		HudCash.ink_digits(ci, art, box.position + Vector2(112, 50), sum, 32.0)
+		if state.weapon == "":
+			_say(ci, box.position + Vector2(112, 76), state.unarmed_label, 22)
+	if state.weapon != "" and not HudWeaponSlot.on():
 		var tw: float = HudTicket.width(
 			art, HudTicket.words_w(art, state, WEAPON_SIZE), state.weapon_icon
 		)
 		var ticket: Rect2 = Rect2(screen.x - MARGIN - tw, MARGIN + 104, tw, HudTicket.H)
-		_right.rect = box.merge(ticket)
+		_right.rect = _right.rect.merge(ticket) if state.cash_visible else ticket
 		_ammo_ticket(ci, ticket)
 
 
