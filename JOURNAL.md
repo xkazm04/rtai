@@ -201,3 +201,11 @@ NEXT (session 5, from ~16:39):
   frozen anyway; I film myself with the existing committed dev takes (running tools only, no product edits), then mutate
   and gate. A take that does not exist (two troopers) is reported as missing, not built. No NEED pressure in other journals.
 - ASTRA films 0 abandoned (usage limit).
+- 16:25-16:36 films by me: `node tools/gauntlet/pressure_films.mjs --out=gtai-masters/n26/pressure` on 244833dac (exit 0;
+  log `evidence/n26-pressure/films-head.out.txt`). Looked at 3 stills per film + each 64 px/m still: right subject, no black
+  or frozen frame. Both rockets in one frame at 64 px/m (Rivet steel/amber, trooper cased/ice). Before/after = n24 masters
+  (same tool, takes, seeds), ffmpeg side-by-sides + 64 px/m pair stills + `deflect_curve.png` chart; frames.json 15 rows.
+  Numbers: circle HP 69.7 now vs 67.9 n24 (the 7 s mixed-crew take does not separate the trooper change; said so in
+  REPORT). Not made: two-trooper circle take, 6 m guard take (no builder). `evidence/n26-pressure/films.md`.
+- 16:36 gate launched detached: `node tools/gate/run.mjs --rev=HEAD --reels` on 0f9baec48 (pid 72100 bash; log
+  `build/gate-final.out.txt`, results `build/gate/0f9baec4835f/`). Godot is the gate's until it ends (~85 min, ~18:00).

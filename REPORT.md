@@ -56,10 +56,20 @@ Final HEAD: TODO. Gate: TODO (`node tools/gate/run.mjs --rev=HEAD` line + `gate.
 2. **Trooper harshness**: at 1.1 s orbit a player who circles steadily at 10 m without dashing loses 75 HP in 10 s and
    dies in 13.3 to 13.5 s against ONE trooper (`evidence/n26-pressure/trooper/arena.md`); a dash across each locked
    line takes nothing. 1.4 s orbit (one value, `enemies.json` rocket `cooldown_s`) is gentler: 0.141 hits per trooper
-   on the average bot. Film: TODO.
+   on the average bot. Films: `gtai-masters/n26/pressure/standing_punished_32_before_after.mp4` (wave 6, seed 28,
+   stand / circle / dash, HP in the caption: before 33.6 / 67.9 / 89.2, after 33.6 / 69.7 / 89.2) and
+   `standing_punished_64.png` (a cased rocket on its line as Rivet dashes off it). Honest read: that 7 s mixed-crew take
+   does not separate the trooper change; the arena table does. The two-trooper circling film was not made (no take, no
+   builder).
 3. **Deflect curve**: 20 degrees gives 24 % at 6 m for the guard, 31 % for the plasma bat
-   (`evidence/n26-pressure/deflect/share.md`). Film: TODO.
-4. TODO
+   (`evidence/n26-pressure/deflect/share.md`, as a chart `gtai-masters/n26/pressure/deflect_curve.png`). Film:
+   `deflect_half_32_before_after.mp4` (12 deg left, 20 deg right; riflemen at 9.5 m, the only take: 5 returns per take
+   are too few to show a share, the curve is the measure). If a quarter at 6 m is right for the guard, 20 stays; the
+   plasma bat sits at 31 %.
+4. **Tuner's record proposal** (not applied, the owner gives numbers): `rivet_repair` x1.25 (repair 10 -> 12.5 /s,
+   delay 3 -> 2.4 s) for all three skill misses (`evidence/n26-pressure/medians/plan.json`).
+5. **Both rockets in a fight**: `gtai-masters/n26/pressure/rocket_pair_32.mp4` (16 s, 238 frames with both in flight),
+   `rocket_pair_64_before_after.png` (solid ice shape -> cased rocket, same tick).
 
 ## Merge notes
 
