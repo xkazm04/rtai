@@ -129,7 +129,9 @@
         "2026-11-22: ghost_deploy_film for n24 ghost (dev_loc 30712 -> 31082)",
         "2026-11-22: ghost_deploy_film for n24 ghost (dev_loc 31082 -> 31086)",
         "2026-11-22: ghost_deploy_film for n24 ghost (dev_loc 31086 -> 31090)",
-        "2026-11-22: deploy_worth for n24 ghost (dev_loc 31090 -> 31502)"
+        "2026-11-22: deploy_worth for n24 ghost (dev_loc 31090 -> 31502)",
+        "2026-11-22: cast lineup dev scene for n24 cast (dev_loc 30712 -> 31147)",
+        "2026-11-22: lancer combat comparison stills for n24 cast (dev_loc 31147 -> 31340)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -138,6 +140,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 695,
+        "project/dev/cast": 627,
         "project/dev/controls": 712,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
@@ -169,7 +172,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 31431
+      "total": 32058
     },
     "direct_cmdline_reads": {
       "accepted": [

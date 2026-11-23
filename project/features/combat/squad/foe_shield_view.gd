@@ -24,6 +24,8 @@ static func draw_plate(view: Node2D, h: Fighter, mind: SquadMind, tick: int) -> 
 	var shield: FoeShield = mind.shield if mind != null else null
 	if shield != null and (h.swing_left > 0 or shield.lunge_left > 0):
 		_shove_lane(view, h, mind)
+	if FoeShieldCardView.enabled(h):
+		return
 	var chest: Vector2 = Ink.px(h.pos + Vector2.UP * 0.76 * LOOK_SCALE)
 	view.draw_set_transform(chest, h.facing.angle(), Vector2.ONE * LOOK_SCALE)
 	view.draw_texture_rect(TORSO, Rect2(-23, -24, 46, 48), false)

@@ -1,0 +1,34 @@
+Both requested card views killed **20/20 mutants**. Four commits landed, all four 64 px/m clips were delivered, and no cast Godot process was running at 23:59:41.
+
+| Commit | Files changed |
+|---|---|
+| `6f37fe7fc` — `cast: pin the turret and walker card views in tests` | `test_cast_turret.gd`, `test_cast_war_machine.gd` |
+| `6aeed9768` — `cast: load optional stomp sheets per pitch` | `cast_cards.gd`, `cast_cards.schema.json`, `foe_war_card_view.gd`, `test_cast_cards.gd`, `test_cast_war_machine.gd` |
+| `bf9a9f796` — `cast: use ASCII in the lineup plate header` | `cast_plate.gd` |
+| `79c0c434b` — `cast: plant the door carrier through each held walk cell` | `foe_shield_card_view.gd`, `test_cast_door.gd`, `docs/art/cast-audit.md` |
+
+**Checks.** Full lint passed all 19 checks before each commit. The final `--changed` result was `3788 passed, 0 failed, 2 skipped`. Standalone Godot parse and quick passed for the test and plate commits. For the loader and feet commits, both reported the previously reproduced dependency and allocator error on the walker and shield views. Their headless tests, non-Godot quick checks, and pre-commit hooks passed.
+
+| Mutation target | Before | After |
+|---|---:|---:|
+| Turret | 3/(3+17) | **20/(20+0)** |
+| Walker | 4/(4+14) | **20/(20+0)** |
+
+Neither primary run had a survivor, timeout, or invalid mutant. The supplemental loader scored **5/(5+1)** with seven invalid mutants. The plate had no mapped unit test. The supplemental door run stopped at the clock limit after one survivor in one completed trial.
+
+**Media.** Each clip is **16.000 s**, 1920×1080, 60 fps, at 64 px/m and 70° tilt. I reviewed standing, walking or traverse, tell, release, hit, and wreck frames. The HUD locks and bar are hidden. The four clips lead the [13-entry index](<C:/Users/kazda/kiro/gtai-masters/n24/cast/frames.json>).
+
+| Clip | Bytes |
+|---|---:|
+| [Pile-driver](<C:/Users/kazda/kiro/gtai-masters/n24/cast/pile_beside_64.mp4>) | 670,781 |
+| [Lancer](<C:/Users/kazda/kiro/gtai-masters/n24/cast/lancer_beside_64.mp4>) | 470,399 |
+| [Door carrier](<C:/Users/kazda/kiro/gtai-masters/n24/cast/door_beside_64.mp4>) | 338,588 |
+| [Clamshell](<C:/Users/kazda/kiro/gtai-masters/n24/cast/clamshell_beside_64.mp4>) | 287,498 |
+
+Both after plates were re-rendered. Pixel differences were confined to the headers, and all four before-plate hashes matched. [32 px/m after plate](<C:/Users/kazda/kiro/gtai-masters/n24/cast/audit_after_lineup_32ppm_tilt70.png>) · [64 px/m after plate](<C:/Users/kazda/kiro/gtai-masters/n24/cast/audit_after_lineup_64ppm_tilt70.png>)
+
+**Checklist.** Door carrier Feet changed to **PASS**. Slide fell from **11 px to 0 px** across four held drawings at all three ink thresholds. Lancer Feet remains **FAIL** at **10 px** in the shipped view. Its trial still slid. Door carrier and clamshell Contact shadow remain **FAIL**, with **0 separate shadow pixels** in both measured facings. [Door sole measurements](<C:/Users/kazda/kiro/gtai-art/foes-n24/06-door-sole.json>)
+
+No cast changes remain uncommitted. Git status lists only `JOURNAL.md`, `REPORT.md`, and the director’s two brief output logs. No shared render call sites changed.
+
+[astra: 3587s, exit 0]

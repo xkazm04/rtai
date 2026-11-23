@@ -1,0 +1,23 @@
+Three commits landed by the cutoff. The **clamshell is enabled in the worktree and staged, but uncommitted**. The **pile-driver is disabled**. Its ten atlases are cut, imported and backed up, but its art commit did not land.
+
+| Commit | Change |
+|---|---|
+| `9c042d3e6` | Enabled the door carrier and resized the prone lancer to match patrol. |
+| `9a8c74021` | Separated the dead carrier and patrol in the rest panel and refreshed all four door stills. |
+| `1343b32fe` | Added the standing wave-admission rule and updated the pass/fail audit for all twelve archetypes. |
+
+**Measurements.** The prone lancer measured **120.8 px** against the cop’s **121.3 px**, within 0.4%. At 70° and 55° respectively, the door slab measured **46 / 41 px** against the 40.96 px shove width, and the carrier measured **2.04 / 1.98 m**. The clamshell plate measured **1.41 m wide**, its pitch-corrected depth **1.38 / 1.43 m**, and its dome **1.16 / 1.19 m**. The pile-driver’s atlas measured **2.60 m high** and **1.81 / 1.79 m wide**. Its live size beside Rivet remains unverified.
+
+**Capture and art.** All six lancer, door and clamshell films measured **1920×1080, 60 fps, 960 frames, 16.00 seconds** in ffprobe. The lancer retake shows the shot and a nonfatal hit before death. The door films show the braced lane and shove. The clamshell films show tell, fire, hit and wreck. The only new shared call was `FoeTurretCardView.show_rig(...)` in `arena_robot_rigs.gd`. [Film and still masters](C:/Users/kazda/kiro/gtai-masters/n24/cast)
+
+Pile-driver receiver **PID 49060** received all **20 new takes**. Including round 03, each pitch used three takes each for walk, attack and stomp, two for hit, and four for fall. The report records each rejection and which columns entered the splice. [Round log](C:/Users/kazda/kiro/gtai-art/foes-n24/round04.log) · [Final atlas PNGs](C:/Users/kazda/kiro/gtai-art/foes-n24/04-final-atlases.zip)
+
+**Checks.** Scoped GUT reported `13 passed, 0 failed, 0 skipped`. The scenario wrapper passed **67/67**, exit 0. The post-arena direct run passed **66/67**, exit 1, with only `rig_stress` over budget at **1.073 ms / 1.000 ms**. The corrected clamshell snapshot passed **all 19 lint checks**, but a concurrent journal commit moved `HEAD` before Git could record it. Its retry failed `morning_run.break.test.mjs:134`; that file passed **14/14** alone. Full quick remained red on dependency compilation. Door mutation scored **0/(0+2)** on completed classifications, with one timeout. The remaining door mutations and the turret mutation were unfinished at cutoff.
+
+The full report lists files, still paths, per-sheet decisions and remaining checks. The clamshell capture patch is preserved separately after the repository’s development-code line budget rejected it. [Build report](C:/Users/kazda/kiro/gtai-art/foes-n24/04-build-report.md) · [Clamshell runtime patch](C:/Users/kazda/kiro/gtai-art/foes-n24/04-clamshell-runtime.patch) · [Capture patch](C:/Users/kazda/kiro/gtai-art/foes-n24/04-clamshell-stills.patch) · [Pile-driver art patch](C:/Users/kazda/kiro/gtai-art/foes-n24/04-pile-driver-art.patch)
+
+**Proposed decision**
+
+`- [2026-11-22] DECISION cast: admit an equipped character to a wave only after its in-game render passes docs/art/cast-checklist.md at 32 and 64 px/m and both camera pitches, and record the result in docs/art/cast-audit.md.`
+
+[astra: 3931s, exit 0]

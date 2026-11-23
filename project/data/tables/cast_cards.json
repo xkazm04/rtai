@@ -1,0 +1,71 @@
+{
+  "archetypes": {
+    "rocket_trooper": {
+      "enabled": true,
+      "id": "rocket_trooper",
+      "p55": {
+        "armed_walk": "rocket_trooper_armed_walk.png",
+        "attack": "rocket_trooper_attack.png",
+        "fall": "rocket_trooper_fall.png",
+        "hit": "rocket_trooper_hit.png"
+      },
+      "p70": {
+        "armed_walk": "rocket_trooper_armed_walk.png",
+        "attack": "rocket_trooper_attack.png",
+        "fall": "rocket_trooper_fall.png",
+        "hit": "rocket_trooper_hit.png"
+      }
+    },
+    "sentry_turret": {
+      "enabled": true,
+      "id": "sentry_turret",
+      "p55": {
+        "armed_walk": "sentry_turret_attack.png",
+        "attack": "sentry_turret_attack.png",
+        "fall": "sentry_turret_fall.png",
+        "hit": "sentry_turret_hit.png"
+      },
+      "p70": {
+        "armed_walk": "sentry_turret_attack.png",
+        "attack": "sentry_turret_attack.png",
+        "fall": "sentry_turret_fall.png",
+        "hit": "sentry_turret_hit.png"
+      }
+    },
+    "shield_robot": {
+      "enabled": true,
+      "id": "shield_robot",
+      "p55": {
+        "armed_walk": "shield_robot_armed_walk.png",
+        "attack": "shield_robot_attack.png",
+        "fall": "shield_robot_fall.png",
+        "hit": "shield_robot_hit.png"
+      },
+      "p70": {
+        "armed_walk": "shield_robot_armed_walk.png",
+        "attack": "shield_robot_attack.png",
+        "fall": "shield_robot_fall.png",
+        "hit": "shield_robot_hit.png"
+      }
+    },
+    "war_machine": {
+      "enabled": true,
+      "id": "war_machine",
+      "p55": {
+        "armed_walk": "war_machine_armed_walk.png",
+        "attack": "war_machine_attack.png",
+        "fall": "war_machine_fall.png",
+        "hit": "war_machine_hit.png",
+        "stomp": "war_machine_stomp.png"
+      },
+      "p70": {
+        "armed_walk": "war_machine_armed_walk.png",
+        "attack": "war_machine_attack.png",
+        "fall": "war_machine_fall.png",
+        "hit": "war_machine_hit.png",
+        "stomp": "war_machine_stomp.png"
+      }
+    }
+  },
+  "schema": "gtai.cast_cards/1"
+}

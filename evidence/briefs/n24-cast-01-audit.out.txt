@@ -1,0 +1,34 @@
+Committed `da91b9083` with the [cast audit](C:/Users/kazda/kiro/gtai-wt/n23-prologue/docs/art/cast-audit.md), [cast checklist](C:/Users/kazda/kiro/gtai-wt/n23-prologue/docs/art/cast-checklist.md) and [measurement tool](C:/Users/kazda/kiro/gtai-wt/n23-prologue/tools/art/cast_metrics.py). Four game-rendered lineups and all eight lancer drafts are complete.
+
+**NEED — `tools/debt/baseline.json`.** The capture scene adds 435 dev GDScript lines. The mandatory debt gate requires a baseline change outside the write list. I left `cast_lineup.tscn`, `cast_lineup.gd`, `cast_plate.gd`, `cast_stride.gd`, their script UIDs and `tools/art/cast_lineup.mjs` staged. The [verified source patch](C:/Users/kazda/kiro/gtai-masters/n24/cast/cast_lineup_source.patch) preserves all eight files.
+
+### Audit
+
+At 32 px/m and 70°, patrol measured **43 px**, Rivet **77 px**, shield robot **121 px** and war machine **178 px**. Heights below include equipment. At 26 m, the gauntlet patrol lost both its rig and fallback card. The prologue patrol retained its card.
+
+**P** means pass and **F** means fail. Read each group left to right in header order.
+
+| Archetype | Drawn with | Height px 70°/55° | Identity | Walk / tell / hit / fall | Facings / grid / pitches | Scale / ink / palette / cut | Feet / shadow / provenance |
+|---|---|---:|:-:|:-:|:-:|:-:|:-:|
+| Patrol cop | Own patrol cards over cop rig | 43/45 | P | PFPP | PPP | PPPP | FPF |
+| Riot cop | Own shield cards and rig baton strike | 53/55 | P | PPPP | PPP | PPPF | FPF |
+| SWAT | Own pistol cards, rifle overlay in prologue | 52/54 | F | PFPP | PPP | PPPP | FPF |
+| Robot thug | Own articulated claw rig and falls | 60/62 | P | PPPP | PFF | PFPF | PFF |
+| Robot gunner | Thug rig with ranged pose | 65/61 | F | PFFF | PFF | PFPF | PFF |
+| Contractor | Patrol cards in waves | 57/59 | F | FFFF | PPP | PPFP | FPF |
+| Rocket trooper | SWAT card, tube and kneel overlay | 60/64 | F | FPFF | FFF | PFPF | FPF |
+| Sentry turret | Fixed mount over hidden thug rig | 88/78 | F | PPFF | PFF | FFPF | PFF |
+| Shield robot | Enlarged thug and separate plate | 121/119 | F | FPFF | FFF | FFPF | PFF |
+| War machine | Enlarged thug, cannon, vents and legs | 178/168 | F | FPFF | FFF | FFPF | FFF |
+| Sergeant Mulroney | Prologue cop, coat, cap and shotgun | 51/48 | P | FFFF | FFF | PFPF | FPF |
+| Appliance warden | Prologue cop, overalls and catch pole | 72/69 | P | FFFF | FFF | PFPF | FPF |
+
+**Cop checklist.** Five drawn facings supply eight directions through three mirrors. Walk and armed walk each use four stride frames in 192 px-high cells at both pitches. Patrol holds its aimed card through firing and has zero dedicated outgoing attack frames. Each selected wound has one pose. The generic fall has five poses at 70° and three at 55°. The reference contour measures 3–4 source pixels, with armed navy near HSV 222°/.47/.33 at 70°. Check the keyed edge, supporting boot, separate shadow and final PNG hash. At 2.4 m/s, a held human walk frame travelled **10.24 px** against the floor. The thug rig’s planted foot measured **0.00 px**.
+
+**Contact sheets.** All four are labelled 1920×1080 captures with front three-quarter and rear views. [32 px/m · 70°](C:/Users/kazda/kiro/gtai-masters/n24/cast/audit_lineup_32ppm_tilt70.png) · [64 px/m · 70°](C:/Users/kazda/kiro/gtai-masters/n24/cast/audit_lineup_64ppm_tilt70.png) · [32 px/m · 55°](C:/Users/kazda/kiro/gtai-masters/n24/cast/audit_lineup_32ppm_tilt55.png) · [64 px/m · 55°](C:/Users/kazda/kiro/gtai-masters/n24/cast/audit_lineup_64ppm_tilt55.png)
+
+**Lancer round.** The built-in image generator produced equipped walk, shoulder/aim/fire/recover, hit and fall at both pitches. The detached `gen.mjs` runner, PID `77296`, found all eight outputs and exited without invoking a model CLI. The cutters recovered **126/126 poses**. Art review found shallow camera angles, possible repeated stride contacts and a forward-facing cell in the p55 hit sheet’s back slot. These are draft assets. [Jobs and source prompts](C:/Users/kazda/kiro/gtai-art/foes-n24/jobs.json) · [Draft PNGs](C:/Users/kazda/kiro/gtai-art/foes-n24/out) · [Runner log](C:/Users/kazda/kiro/gtai-art/foes-n24/gen.log) · [Cut verification](C:/Users/kazda/kiro/gtai-art/foes-n24/round-qa.json)
+
+**Checks.** All 18 staged checks passed. The quick gate and Godot parse checks passed for all three scripts and the scene. All four D3D12 renders exited 0 with ObjectDB leak warnings at shutdown. Full worktree lint failed the dev-line ratchet and a process-timing test. The timing test and all seven merge-clash tests passed on isolated reruns.
+
+[astra: 3277s, exit 0]

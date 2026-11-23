@@ -1,0 +1,19 @@
+The clamshell and pile-driver are committed. The pile-driver is enabled and measures **2.42 m at 70°** and **2.47 m at 55°** at 64 px/m. Its live films show cannon fire, stomp, hit and collapse.
+
+Delivered seven new films at **1920×1080, 60 fps**. The two pile-driver films and four owner comparisons are 16 seconds each. The 26-second gauntlet film captures **seed 8, wave 6**, with two patrol cops, one lancer and three clamshells. The gallery contains 15 verified entries. [Frame index](C:/Users/kazda/kiro/gtai-masters/n24/cast/frames.json) · [Gauntlet film](C:/Users/kazda/kiro/gtai-masters/n24/cast/gauntlet_wave_cast_32.mp4)
+
+| Commit | Change |
+|---|---|
+| `b99a73a46` | Clamshell sheets, renderer and tests, plus repaired shield assertions |
+| `718fee5b0` | Pile-driver sheets, renderer, schema, provenance and tests |
+| `a1d184d0a` | Equipped redraw audit |
+| `12edb6c2a` | Wave-admission decision |
+| `d9da2862f` | Measured boot travel from the owner films |
+
+**Checks.** All 19 lint checks passed. The final unit suite recorded **3,782 passed, 0 failed, 2 skipped**. All 67 scenarios passed after `rig_stress` was rerun alone. The standalone parse and quick gates stayed red. I reproduced the arena dependency failure on `b3f4727c0`. A duplicate verification run briefly overlapped mutation testing before I stopped it. The completed unit log was preserved.
+
+**Mutation scores, killed/(killed+survived).** Door **3/(3+0)**, including both previous survivors. Clamshell **3/(3+17)**. Pile-driver **4/(4+14)**. The time limit left the door and pile-driver samples incomplete.
+
+The three earlier cards remain enabled despite documented boot-slide or shadow failures. All cast edits are committed. Unrelated journal, report and brief files remain dirty. The full report lists every changed path, both shared call sites, media dimensions and verification logs. [Build report](C:/Users/kazda/kiro/gtai-art/foes-n24/05-build-report.md)
+
+[astra: 3931s, exit 0]

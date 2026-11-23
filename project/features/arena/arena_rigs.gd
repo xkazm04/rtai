@@ -26,7 +26,7 @@ var ghost_view: GhostFormView = null
 var robots: ArenaRobotRigs = null
 var wave_cards: ArenaWaveCards
 var _pit: ArenaPit
-var _squad_looks: ArenaSquadLooks = ArenaSquadLooks.new()
+var _cast: FoeCastView
 var _last: Dictionary[int, Vector2] = {}
 var _print: PrintStage = null
 var _city: CityView = null
@@ -67,7 +67,7 @@ func attach(p_stage: CollectCallStage, view: CollectCallView, ctx: WorldContext)
 	_add_hand_views(layer, p_stage)
 	view.cast_view.fighters_on_rigs = true  # quest 1 keeps its allies and marks on the cast view
 	view.cast_view.visible = arena_stage == null
-	react = ReactLink.make(p_stage.arena)
+	_cast = FoeCastView.attach(self, p_stage.arena)
 	ShieldSparks.wire(react, p_stage.arena, func() -> CombatBlood: return view.blood)
 	RigCarry.wire(view.fx_view.gun_fx().follow, rigs)  # n15: a body hit's burst rides the body
 	if arena_stage == null:
@@ -157,7 +157,7 @@ func _process(_delta: float) -> void:
 		var i: int = f.count
 		_put(i, h, look.x as BodyPlan.Kind)
 		f.looks[i] = look.y
-		FoeRocketPose.pose(h, rigs, i, _squad_looks)
+		_cast.feed(h, i)
 		if _looks.has(h.id):  # the reaction line stands still facing east: the four sides differ
 			f.face[i] = 0.0
 			f.aim[i] = f.pos[i] + Vector2.RIGHT * 4.0 * SimConst.PX_PER_M
