@@ -9,8 +9,8 @@ Measurements are from the RGBA files in `project/features/characters/art/view/{p
 | Action | Game frames per facing | p70 cell | p55 cell | Where to check playback |
 |---|---:|---:|---:|---|
 | Standing | 1 | 128 × 192 | 115 × 192 | `cop_patrol_card.png` is the standing strip. A stopped, armed wave cop holds row 1 of armed walk (zero-based). |
-| Walk | 4 | 134 × 192 | 137 × 192 | `cop_patrol_walk.png`, consecutive contact, pass, opposite contact, opposite pass. |
-| Armed walk | 4 | 173 × 192 | 136 × 192 | `cop_patrol_armed_walk.png`. The full atlases are 865 × 768 and 680 × 768. |
+| Walk | 4 | 188 × 256 | 203 × 256 | `cop_patrol_walk.png`, consecutive contact, pass, opposite contact, opposite pass. |
+| Armed walk | 4 | 233 × 256 | 184 × 256 | `cop_patrol_planted_armed_walk.png`. The original armed grid still serves other roles wearing the patrol uniform. |
 | Outgoing pistol attack | 0 dedicated | armed-walk cell | armed-walk cell | `StreetCopWalk.strip_of` keeps the pistol pointed through aim and fire. The shot effect is separate. Strike, throw and reload release the card to the underlying rig. |
 | Hit | 1 per selected reaction | 344 × 256 | same p70 art | `StreetWalkerHit` and `StreetHitClass` choose the wound and blow direction. Patrol has thrown-back, shoulder and gut poses and additional jab, heavy and shock reactions. Basic flinch holds 0.20 s, stagger 0.34 s. |
 | Death / fall | 5 at 70°, 3 at 55° | 738 × 482 | 698 × 476 | `cop_patrol_between_fall.png` or `cop_patrol_long_fall.png`. Pose starts at death progress 0, .18, .26, .33, .40 or 0, .18, .40. Hold the lying pose. The base 3-pose fall cells are 688 × 522 and 668 × 522. |

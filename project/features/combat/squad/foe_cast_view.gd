@@ -12,6 +12,7 @@ var _looks: ArenaSquadLooks = ArenaSquadLooks.new()
 var _poses: Dictionary[Fighter, CastCardPose] = {}
 var _rows: Dictionary[Fighter, int] = {}
 var _far: Dictionary[int, CastFarCard] = {}
+var _new_hosts: Array[Fighter] = []
 var _launchers: Dictionary[Fighter, bool] = {}
 
 
@@ -43,6 +44,12 @@ static func draws_launcher(h: Fighter) -> bool:
 
 ## Called during normal arena feed construction, before the pool poses this tick.
 func feed(h: Fighter, i: int) -> void:
+	if h.archetype != &"patrol_cop":
+		var host: CutRig = _rigs.rig_for(h.id)
+		if host == null:
+			_new_hosts.append(h)
+		else:
+			host.set_meta(StreetCopWalk.OTHER_ID, h.id)
 	var sheets: CastCards.Sheets = null if h.machine else CastCards.current(h.archetype)
 	if sheets == null:
 		if _poses.has(h):
@@ -85,6 +92,13 @@ func _pose_for(h: Fighter) -> CastCardPose:
 
 
 func _process(_delta: float) -> void:
+	for h: Fighter in _new_hosts:
+		var rig: CutRig = _rigs.rig_for(h.id)
+		if rig != null:
+			rig.set_meta(StreetCopWalk.OTHER_ID, h.id)
+			if rig.head_card != null and rig.head_card.has_meta(StreetCopWalk.CONTACT):
+				StreetWalkerCards.step(rig)
+	_new_hosts.clear()
 	for h: Fighter in _launchers:
 		if CastCards.current(h.archetype) == null:
 			FoeRocketPose._kneel(h, _rigs)

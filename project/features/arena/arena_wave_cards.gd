@@ -9,6 +9,7 @@ class Card:
 	var art: String
 	var look: int = -1
 	var walked: float = 0.0
+	var patrol: StreetCopWalk.Contact
 
 	func pose(feed: RigFeed, i: int) -> void:
 		var view: ViewMode = ViewMode.shared()
@@ -28,6 +29,12 @@ class Card:
 		var phase: float = walked / (StreetQuestCards.STRIDE_M * SimConst.PX_PER_M)
 		var moving: bool = feed.vel[i].length() > StreetWalkerCards.MOVING
 		frame_coords = Vector2i(facing.x, StreetWalkerCards.stride_frame(phase, moving))
+		if patrol != null:
+			if moving:
+				position = patrol.place(feed.pos[i], facing, scale, SimConst.PX_PER_M)
+				frame_coords.y = posmod(patrol.cell, StreetWalkerCards.STRIDE_FRAMES)
+			else:
+				patrol.reset()
 		flip_h = facing.y != 0
 
 	func _configure(id: int) -> void:
@@ -46,12 +53,17 @@ class Card:
 			scale = QuestArt.shared().size_m(&"cop") * SimConst.PX_PER_M / texture.get_size()
 			return
 		var file: String = sheets[row]
+		if patrol != null and file == StreetCopWalk.ORIGINAL:
+			file = StreetCopWalk.PLANTED
 		var path: String = StreetWalkerCards.DIR + art + "/" + file
 		texture = StreetStrips.get_tex(path)
 		hframes = RigHeadCard.FRAMES
 		vframes = StreetWalkerCards.STRIDE_FRAMES
 		var cell: Vector2 = texture.get_size() / Vector2(hframes, vframes)
-		offset = -cell * Vector2(0.5, StreetWalkerCards.FOOT_Y)
+		var foot_y: float = (
+			StreetCopWalk.FOOT_Y if file == StreetCopWalk.PLANTED else StreetWalkerCards.FOOT_Y
+		)
+		offset = -cell * Vector2(0.5, foot_y)
 		var h: float = StreetWalkerCards.HEIGHT_BY_ART.get(art, StreetWalkerCards.HEIGHT_M)
 		var k: float = 1.0 + StreetCrowdCards.SCALE_VAR * StreetCrowdCards.vary(id, 3)
 		scale = Vector2.ONE * (h * SimConst.PX_PER_M * k * StreetCopWalk.fill_of(path) / cell.y)
@@ -86,9 +98,13 @@ func _process(_delta: float) -> void:
 		if i >= 0 and i < _rigs.feed.count and not _rigs.full_row(i):
 			if card == null:
 				card = Card.new()
+				if h.archetype == &"patrol_cop":
+					card.patrol = StreetCopWalk.Contact.new()
 				card.hide()
 				add_child(card)
 				_cards[h.id] = card
+			if not card.visible and card.patrol != null:
+				card.patrol.reset()
 			card.pose(_rigs.feed, i)
 		elif card != null:
 			card.hide()

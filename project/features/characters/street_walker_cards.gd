@@ -43,7 +43,7 @@ const WAS: StringName = &"street_walker_was"
 static func step(rig: CutRig) -> void:
 	if rig.head_card != null and not rig.head_card.has_meta(StreetStrips.PREF):
 		StreetStrips.prefetch_fall(rig, ViewMode.shared().art, row_of(rig))
-	var path: String = CastCardPose.strip(rig)
+	var path: String = StreetCopWalk.patrol_path(rig, CastCardPose.strip(rig))
 	if path.is_empty():
 		release(rig)
 		return
@@ -130,6 +130,7 @@ static func release(rig: CutRig) -> void:
 
 
 static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
+	StreetCopWalk.bind(card, path)
 	card.texture = StreetStrips.get_tex(path)
 	var fall: bool = path.ends_with("_fall.png")
 	var walk: bool = path.ends_with("_walk.png") or path.ends_with("_attack.png")
@@ -138,7 +139,8 @@ static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 		card.texture.get_width() / float(RigHeadCard.FRAMES),
 		card.texture.get_height() / float(card.vframes)
 	)
-	card.offset = Vector2(-cell.x * 0.5, -cell.y * (0.5 if fall else FOOT_Y))
+	var foot_y: float = StreetCopWalk.FOOT_Y if path.ends_with(StreetCopWalk.PLANTED) else FOOT_Y
+	card.offset = Vector2(-cell.x * 0.5, -cell.y * (0.5 if fall else foot_y))
 	card.set_meta(ON, path)
 	card.remove_meta(StreetWalkerFall.OCT)
 	StreetDeadPlan.drop(card)
@@ -182,5 +184,6 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	card.global_position = (
 		rig.global_position - Vector2(0.0, absf(stride) * BOB_PX * walk) + Vector2(wound.x, wound.y)
 	)
+	StreetCopWalk.plant(rig, card)
 	if hit and not StreetWalkerHit.is_burn(str(card.get_meta(ON, ""))):
 		StreetWalkerHit.face(card, rig.react.dir.rotated(rig.facing))

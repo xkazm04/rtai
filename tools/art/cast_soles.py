@@ -136,6 +136,6 @@ def project(sprite, point):
 @lru_cache(maxsize=512)
 def registered(path, rect, col, row):
     mask = cell(path, rect)
-    name = Path(path).stem
+    name = Path(path).stem.replace('_planted_', '_')
     pitch = int(Path(path).parent.name[1:])
     return band(mask, window(name, pitch, col, row))
