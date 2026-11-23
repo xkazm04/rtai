@@ -43,3 +43,9 @@ three medians (10 seeds each, noise floor per `docs/gauntlet-loop.md`) + one tun
 frame) after the last behaviour change; last new work by 17:10, final gate by 17:25. Re-check items 3 after
 `MILESTONE keys` in `C:\Users\kazda\kiro\gtai-wt\n23-controls\JOURNAL.md`. Art variant C still generating in
 `gtai-art/pressure-n26` (copy from `~/.codex/generated_images/` by hand if it stalls; for the owner gallery only).
+- 12:24 art C recovered by hand (`gtai-art/pressure-n26/out/enemy_rocket_c.png`, from `~/.codex/generated_images/01a207fe-...`):
+  thicker casing with three ice-blue bands and a blunt nose; also good. A stays the build (in work, its full rim outline
+  reads as a silhouette); C becomes a Call for the owner. FRICTION: all three jobs hit the known copy stall (15 min each,
+  gen.mjs then stopped "3 failures in a row"); each copied by hand, ~3 min.
+NEXT addendum (session 2): after rocket-art lands, a short follow-up (`--resume`) cuts plate C with the same tool to a
+scratch dir (not wired) and makes one 32 px/m still of A vs C in flight for Call "rocket A or C" (one file swap).
