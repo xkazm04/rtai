@@ -49,3 +49,9 @@ frame) after the last behaviour change; last new work by 17:10, final gate by 17
   gen.mjs then stopped "3 failures in a row"); each copied by hand, ~3 min.
 NEXT addendum (session 2): after rocket-art lands, a short follow-up (`--resume`) cuts plate C with the same tool to a
 scratch dir (not wired) and makes one 32 px/m still of A vs C in flight for Call "rocket A or C" (one file swap).
+- 12:26 FINDING stall lead (from `evidence/n23-loop/moves/on/runs/*.json`): every stalled run's frozen wave has no `rivet`
+  form time, and Ohm + Tonnage accumulate together (average-9 w40 423.4 / 418.9 s, expert-1 w33 498.8 / 496.35 s,
+  average-8 w40 284.7 / 531.7 s; hp min = max). Rivet is stuck in a ghost form where no one hurts anyone. n24 turned
+  `transform_unlocked` off in the gauntlet (may hide it on HEAD); melee's earned transformation tonight would bring it
+  back. Brief 04 now carries this lead and the ownership rule (souls code = melee's: NEED + pending test, not an edit).
+  NEED melee may follow from call 04.

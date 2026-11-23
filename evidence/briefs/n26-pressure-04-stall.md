@@ -22,6 +22,21 @@ recur, and leave a scenario or unit test that FAILS on the cause (check that: ru
   that holds the squad's attack slots / tokens, or the bot looping a move opening (`move opening BLINK on sentry_turret`).
 - n24 pressure (`docs/day/2026-11-23/n24-pressure/REPORT.md` "What does not"): "Average seed 9 stall (sentry_turret +
   shield_robot left over)". base-main expert-2 stalled at wave 21 (`evidence/n24-pressure/base-main/`).
+- **Director's lead (12:25, from the result files):** in every stalled run the frozen wave's `form_seconds` has NO
+  `rivet` key and Ohm and Tonnage BOTH accumulate time at once (average-9 wave 40: ohm 423.4 s, tonnage 418.9 s,
+  dent 0, kerf 0, hp min = max 137.5; expert-1 wave 33: ohm 498.8 / tonnage 496.35; average-8 wave 40: 284.7 / 531.7);
+  the wave before it already shows the switch (dent 0.0, tonnage 0.0 keys appear, rivet gone). Every normal wave logs
+  `rivet` seconds. So Rivet is stuck in a ghost FORM (the transformation, or a deploy that never returns him), possibly
+  flipping between Ohm and Tonnage, and in that state nobody damages anybody. Check `python` over
+  `evidence/n23-loop/moves/on/runs/{average-9,average-8,expert-1}.json` `waves[-3:]`. Since n24,
+  `transform_unlocked` is false in the gauntlet (docs/decisions.md "n24 ghost deploy cost"), which may hide the freeze on
+  HEAD, but the melee lane is building the earned transformation tonight (a mastered ghost unlocks the form for the
+  run), which would bring it back. So: reproduce with the transformation enabled (the dev override, or the
+  `transform_unlocked` value in a dev/test-only way), find why the form never ends / why combat stops in it, and fix it in
+  the owning code. If the owning code is `project/features/souls/**` (melee lane's) or the player files (keys lane's),
+  do NOT edit it: write the cause, a minimal patch as text in `evidence/n26-pressure/stall/cause.md`, and a test that
+  fails on the cause marked pending (`pending("NEED melee: ...")`) and report a NEED; a bot-side fix in
+  `project/features/gauntlet/**` (the bot never leaves the form) is ours.
 - The harder balance since then kills most runs before wave 12, so the stall may no longer show by itself.
 
 ## Steps
