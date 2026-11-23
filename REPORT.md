@@ -71,6 +71,7 @@ Each ghost earns its own mastery, so the transformation arrives one ghost at a t
 ## Merge notes
 - `merge-tree` HEAD vs each lane (21:12): n24-motion and n24-pressure conflict in `project/data/tables/input_actions.json` (keep BOTH new rows: `dash` bit 18 / wire 31, then `ghost_deploy` bit 19 / wire 32; keep ghost's `power_hauler` on key T with no pad button, LB belongs to `ghost_deploy`) and `project/data/schemas/gauntlet_run.schema.json` (keep motion's `dashes` and ghost's `deploys` / `deploy_kills` / `deploy_stun_s`, sorted). `tools/debt/baseline.json`: `node tools/debt/merge_baseline.mjs`, then `--update`. JOURNAL.md / REPORT.md add/add: keep each lane's own.
 - The schema maxima for `input_actions` rows are 19 / 32 on both ghost and motion (identical edits). TickInput's mask is 48 bits on both.
+- Re-checked at 01:32 with `git merge-tree` against the final lane heads (pressure 36b7b0a4b, motion a06b84a7e, melee 24b649c46, cast fc3b7b2bb): no new conflicts beyond the ones above. pressure did NOT merge n24-ghost tonight (its JOURNAL DECISION: final batch pressure + motion only), so the Director merges ghost; `project/features/gauntlet/bot/bot_brain.gd` merges clean against pressure (ghost's 3 lines: member, `_init`, `_pack` call). melee: JOURNAL/REPORT only. cast: `tools/debt/baseline.json` (`merge_baseline.mjs`).
 - `stage_pilot.gd:134` hashes the previous button word with `put_32`; wire bit 32 is not in it, but `GhostDeploy.write_state` hashes the hold every tick, so no widening (it would move every shipped digest).
 
 ## Next steps
