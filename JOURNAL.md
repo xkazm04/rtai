@@ -109,3 +109,8 @@ NEXT (session 6) supersedes items 1-2 above: (1) `tail build/films26/films.out`:
 - 18:44 `node tools/evidence/cites.mjs REPORT.md`: 25 paths, 23 ok, 2 pattern, 0 missing. Gate stays the one at ee19d4f9c (PASS, `build/gate/ee19d4f9c536/gate.json`); every later commit is JOURNAL/REPORT only (inert). No --reels.
 
 NEXT: nothing left in this lane. Director: merge `n26-yard`; the NEED director lines (card wiring Part A, chunky rail art Part B, hook flakes) are in REPORT Next steps. Astra is out until Nov 28: never launch astra.mjs for this lane.
+
+## Session 7 (18:42, STABILIZE, no builder)
+- 18:43 Checked: tree clean apart from the untracked Astra out/err logs under `evidence/briefs/` (inert, left uncommitted); no astra.lock; last call n=5 `card` (usage limit). REPORT.md committed at 17421bd4e; `node tools/evidence/cites.mjs REPORT.md`: 25 paths, 23 ok, 2 pattern, 0 missing. Gate stays PASS at ee19d4f9c (`build/gate/ee19d4f9c536/gate.json`); later commits are JOURNAL/REPORT only. No --reels (no time).
+
+NEXT: lane done. Director: merge `n26-yard`; NEED director lines (Mulroney card wiring, chunky rail art on the six blocking sections, hook flakes) are in REPORT Next steps. Never launch astra.mjs for this lane before Nov 28.
