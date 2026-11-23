@@ -55,7 +55,9 @@ func _capture() -> void:
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
 	_view.set_process(false)
-	(_view.hud_view.get_parent() as CanvasLayer).hide()
+	for layer: CanvasLayer in _view.find_children("*", "CanvasLayer", false, false):
+		if layer.layer == RenderLayers.canvas(&"hud"):
+			layer.hide()
 	_outlines.transform = _view.stage_view.global_transform
 	if _outlines.visible:
 		if await _save(plan.rivet_start, 64, "footprints_mid_64ppm.png"):
@@ -86,11 +88,9 @@ func _save(at: Vector2, ppm: int, file: String) -> bool:
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
 	var image: Image = get_viewport().get_texture().get_image()
-	if image == null or image.get_size() != SIZE or _game.stage.tick != _tick:
-		_fail("viewport or tick mismatch for " + file)
-		return false
-	if image.save_png(_out.path_join(file)) != OK:
-		_fail("could not write " + _out.path_join(file))
+	var valid: bool = image != null and image.get_size() == SIZE and _game.stage.tick == _tick
+	if not valid or image.save_png(_out.path_join(file)) != OK:
+		_fail("capture failed at tick %d for %s" % [_game.stage.tick, _out.path_join(file)])
 		return false
 	Log.info("yard-stills", "%s at %s m, %s" % [file, at, SIZE])
 	return true
