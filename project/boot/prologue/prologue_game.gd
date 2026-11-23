@@ -133,6 +133,8 @@ func _open_view(plan: PrologueYard) -> void:
 	view.px_per_m = 32.0
 	view.bind(stage, CollectCallWorld.new(stage), null)
 	add_child(view)
+	if plan.dressing.lights != null:
+		plan.dressing.lights.install(view.print_stage.lights)
 	var rigs: ArenaRigs = ArenaRigs.new()
 	add_child(rigs)
 	@warning_ignore("return_value_discarded")

@@ -179,6 +179,110 @@
           ],
           "type": "object"
         },
+        "lights": {
+          "additionalProperties": false,
+          "properties": {
+            "grade": {
+              "additionalProperties": false,
+              "properties": {
+                "accent_keep": {
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "gamma": {
+                  "maximum": 4,
+                  "minimum": 0.5,
+                  "type": "number"
+                },
+                "id": {
+                  "const": "dusk"
+                },
+                "paper_level": {
+                  "maximum": 1,
+                  "minimum": 0.05,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "accent_keep",
+                "gamma",
+                "id",
+                "paper_level"
+              ],
+              "type": "object"
+            },
+            "kinds": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "alt_color": {
+                    "pattern": "^[a-fA-F0-9]{6}$",
+                    "type": "string"
+                  },
+                  "color": {
+                    "pattern": "^[a-fA-F0-9]{6}$",
+                    "type": "string"
+                  },
+                  "cone_deg": {
+                    "maximum": 180,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "flicker_hz": {
+                    "maximum": 2.5,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "id": {
+                    "enum": [
+                      "yard_fire",
+                      "yard_lamp"
+                    ]
+                  },
+                  "intensity": {
+                    "maximum": 2,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "life_ticks": {
+                    "const": 0
+                  },
+                  "radius_m": {
+                    "maximum": 64,
+                    "minimum": 0.1,
+                    "type": "number"
+                  },
+                  "steps": {
+                    "maximum": 8,
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "alt_color",
+                  "color",
+                  "cone_deg",
+                  "flicker_hz",
+                  "id",
+                  "intensity",
+                  "life_ticks",
+                  "radius_m",
+                  "steps"
+                ],
+                "type": "object"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            }
+          },
+          "required": [
+            "grade",
+            "kinds"
+          ],
+          "type": "object"
+        },
         "ochre_strength": {
           "maximum": 1,
           "minimum": 0,

@@ -383,6 +383,38 @@
           }
         ]
       },
+      "lights": {
+        "grade": {
+          "accent_keep": 0.92,
+          "gamma": 1.16,
+          "id": "dusk",
+          "paper_level": 0.72
+        },
+        "kinds": [
+          {
+            "alt_color": "f2a836",
+            "color": "ffb43b",
+            "cone_deg": 0,
+            "flicker_hz": 1.5,
+            "id": "yard_fire",
+            "intensity": 0.29,
+            "life_ticks": 0,
+            "radius_m": 6,
+            "steps": 6
+          },
+          {
+            "alt_color": "ffe2aa",
+            "color": "ffe2aa",
+            "cone_deg": 0,
+            "flicker_hz": 0,
+            "id": "yard_lamp",
+            "intensity": 0.23,
+            "life_ticks": 0,
+            "radius_m": 3.6,
+            "steps": 6
+          }
+        ]
+      },
       "paint_from": "torn_line"
     },
     "plain": {

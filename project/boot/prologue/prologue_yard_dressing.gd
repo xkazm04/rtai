@@ -36,6 +36,7 @@ class CoverArt:
 var id: String
 var paint_id: String
 var layout: Dictionary
+var lights: PrologueYardLights
 var ground: Array[Ground] = []
 var cover: Dictionary[String, CoverArt] = {}
 var decals: Array[Piece] = []
@@ -58,6 +59,8 @@ static func resolve(
 	var result: PrologueYardDressing = PrologueYardDressing.new()
 	result.id = wanted
 	var row: Dictionary = table.object(rows, wanted)
+	if row.has("lights"):
+		result.lights = PrologueYardLights.new(table, table.object(row, "lights"))
 	result.paint_id = row.get("paint_from", wanted)
 	if row.has("layout"):
 		result.layout = table.object(row, "layout")
