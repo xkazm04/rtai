@@ -186,3 +186,9 @@ NEXT (session 6, 18:03 to 19:10; no builder, no product change possible):
 - 18:42 Session 6 ends. No Astra, no Godot, no gate running.
 
 NEXT (next run): first builder call = the warden WIP on branch `n26-cast-warden-wip` (20920e043): fix `StreetWalkerCards.place` to keep meta ON (test_street_walker_hit.gd:164), then her checklist + audit row + films; then robot gunner, contractor, thug. Open question to check: does the shared impact-outline material draw dark teeth on other cards' hits (a 64 px/m patrol cop hit still).
+
+## Session 7 (18:42, STABILIZE, past freeze)
+- 18:42 session 7 start. No Astra lock (last call = warden, code 1). Tree clean at f56195ef5. Since the gated commit 4f505e377 only JOURNAL.md and REPORT.md changed (`git diff --stat 4f505e377 HEAD`), so the gate of record (PASS with reels, `build/gate/4f505e37796a/gate.json`) still covers the build. Cites 12/12 ok, REPORT has no PENDING. Nothing to fix.
+- 18:43 Session 7 ends. No Astra, no Godot, no gate running.
+
+NEXT (next run): unchanged from session 6: the warden WIP on `n26-cast-warden-wip` (fix `StreetWalkerCards.place` meta, test_street_walker_hit.gd:164), then her checklist row and films; then robot gunner, contractor, thug; check the impact-outline teeth on a patrol cop hit at 64 px/m.
