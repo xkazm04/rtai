@@ -1,6 +1,6 @@
 # Brief 02 `torn-line` - lane yard, run n25 (2026-11-23)
 
-HARD STOP: wall clock <START + 70 min, written by the director at launch>. Commit green work as each step lands; last commit 10 min before the hard stop. Check `date` after each step.
+HARD STOP: wall clock 03:05. Commit green work as each step lands; last commit 10 min before the hard stop. Check `date` after each step.
 
 ## Context
 Call 01 built the plumbing: the `yard.dressing` value, the table `project/data/tables/prologue_yard_dressings.json` (row `plain` = the old look), `--yard-dressing=<id>`, the drawn street past the map's side edges, the stills entry `project/dev/prologue_yard/yard_stills.gd`, and the cut tool `tools/art/prologue_yard_cut.*`. Read your own call-01 commits (`git log --oneline -12`) and `evidence/yard/city-art-survey.md` first.
@@ -23,7 +23,7 @@ Before any Godot run: `export APPDATA=C:/Users/kazda/kiro/gtai-n25/appdata/yard`
    - decals that tell the story (each one where it means something): the OIL DRAG TRAIL from the west gap (about x 16, y 1) down to the conveyor at (11, 15); ochre bay lines laid as real factory markings (a row of parking bays along the front, a forklift lane from the front towards the gate at x 36); scorch fans spreading OUT of the two gaps and the blown wall; tyre streaks behind the forklift at (12, 26); enamel panels and door rings strewn along the drag trail and around the skip; rubble chips spilled at the blown wall; cracks in two or three places. Keep the middle of the yard and the gate apron readable: marks, not clutter. Remove or keep the old `debris`/`scorch_marks` per dressing (the `plain` row must stay byte-identical in look).
    - Nothing on the zebra crossing.
 3. **Stills**: render `plain` and `torn_line` at the same tick (300, and 6000 for the second wave) from `gate`, `mid`, `harbor` at 32 and 64 px/m into `evidence/yard/stills-plain/` and `evidence/yard/stills-torn_line/`, and side-by-side pairs (before left, after right, one PNG per place and zoom) into `evidence/yard/pairs/` (use `tools/film/compare.mjs` if it fits). LOOK at every pair and say in the report what reads and what does not (tiled? cover readable? characters readable on the new floor? colour law: no teal, no red except blood, vermilion only Rivet's collar).
-4. **Prove nothing moved**: pilot seed 7 with `--yard-dressing=torn_line`: the result JSON must be byte-identical to `evidence/yard/pilot-before.json` (art only). Unit tests `--changed`, the two prologue scenarios, `node tools/gate/quick.mjs` before each commit.
+4. **Prove nothing moved**: pilot seed 7 with `--yard-dressing=torn_line` (the dev runner rejects the flag in the prologue entry's own KNOWN_FLAGS, which the other lane owns: pass it after `--` verbatim, or launch Godot directly the way your stills launcher does): the result JSON must be byte-identical to `evidence/yard/pilot-before.json` (art only). Unit tests `--changed`, the two prologue scenarios, `node tools/gate/quick.mjs` before each commit.
 5. **Do NOT switch the default**: `yard.dressing` stays `plain` in this call; the director flips it after looking at the stills.
 6. After the last code commit: `node tools/mutate/mutate.mjs --file=<the dressing/paint file you changed most> --max=20` and quote the score.
 
