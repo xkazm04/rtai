@@ -209,3 +209,7 @@ NEXT (session 5, from ~16:39):
   REPORT). Not made: two-trooper circle take, 6 m guard take (no builder). `evidence/n26-pressure/films.md`.
 - 16:36 gate launched detached: `node tools/gate/run.mjs --rev=HEAD --reels` on 0f9baec48 (pid 72100 bash; log
   `build/gate-final.out.txt`, results `build/gate/0f9baec4835f/`). Godot is the gate's until it ends (~85 min, ~18:00).
+- 16:45 REPORT: calls 2-5 with films, merge note after MILESTONE keys (static re-check of item 3: keys sets `hold_sprints`
+  false, stops motion in/at a car, adds a deploy choice to `bot_forms.gd`; the arena drives at `sprint_mps` and the bot
+  presses `sprint`/`dash` separately, so item 3's arena table should hold; the item 5 medians are pre-merge: re-run on the
+  merged tree). cites 32/32 ok. Commit 4deb30781. Gate on 0f9baec48 running (lint done 16:42).
