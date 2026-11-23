@@ -9,6 +9,10 @@ Gate on `441a8d5a3` (last code commit `789d67b1d`; later commits touch only JOUR
 unit 3815 passed, 0 failed, 2 skipped; scenarios 67 passed; parity 1200 steps bit for bit, planted mutation caught at
 step 629; selftest look goldens 11/11; export-audit 933 loaded, 0 failed).
 
+Reels gate: `node tools/gate/run.mjs --rev=HEAD --reels` started 01:31 on `f223380ab` (inert commits only after the
+gate above), log `build/gate-reels.log` (git-ignored). It had not finished when this report was committed at 01:3x: its
+verdict is NOT measured here; the Director reads the log's last line before merging.
+
 ## What works
 
 | Item | Evidence | Number |
