@@ -1,6 +1,6 @@
 class_name GhostDeploy
 extends RefCounted
-## The first ghost skill. Q holds a cursor in world metres. Its falling edge commits a
+## The first ghost skill. A deploy action holds a cursor in world metres. Its falling edge commits a
 ## single strike and starts two independent clocks for the apparition and the form.
 
 enum Phase { IDLE, AIMING, ACTIVE }
@@ -14,7 +14,8 @@ var ticks_left: int = 0
 var cooldowns: Dictionary[StringName, int] = {}
 var last_refusal: StringName = &""
 var strike: GhostDeployStrike
-var _held: bool = false
+var _action: StringName = &""
+var _number_form: StringName = &""
 
 
 func _init(attacks: GhostAttacks, press: HaulerForm) -> void:
@@ -25,28 +26,62 @@ func step(
 	stage: CollectCallStage, c: PlayerCommand, actions: PlayerActions, forms: GhostForms
 ) -> void:
 	_advance()
-	var down: bool = c.is_held(actions, &"ghost_deploy")
-	if c.was_pressed(actions, &"ghost_deploy"):
-		_held = true
-	if not _held:
+	if GhostNumberKeys.in_car(stage):
+		_cancel_hold()
+		return
+	if _action == &"" and not _begin_hold(stage, c, actions, forms):
 		return
 	if not stage.arena.rivet.alive():
 		last_refusal = &"dead"
-		_held = false
-		if phase == Phase.AIMING:
-			_clear()
+		_cancel_hold()
 		return
-	if down:
+	var id: StringName = held_form(forms)
+	if _number_form != &"" and not forms.locks.allows(forms.table, id):
+		_cancel_hold()
+		return
+	if c.is_held(actions, _action):
 		if phase != Phase.ACTIVE:
-			_aim(stage, c, forms.selected)
+			_aim(stage, c, id)
 		return
-	_held = false
-	last_refusal = _refusal(forms)
+	_action = &""
+	_number_form = &""
+	last_refusal = _refusal(forms, id)
 	if last_refusal != &"":
 		if phase == Phase.AIMING:
 			_clear()
 		return
-	_release(stage, c, forms.selected)
+	_release(stage, c, id)
+
+
+func _begin_hold(
+	stage: CollectCallStage, c: PlayerCommand, actions: PlayerActions, forms: GhostForms
+) -> bool:
+	if c.was_pressed(actions, &"ghost_deploy"):
+		_action = &"ghost_deploy"
+		return true
+	if c.pressed == 0:
+		return false
+	_number_form = GhostNumberKeys.pressed(c, actions, forms)
+	if _number_form == &"":
+		return false
+	_action = GhostNumberKeys.action(forms.table, _number_form)
+	if _action == GhostNumberKeys.ACTIONS[0] and c.was_pressed(actions, &"car"):
+		return not GhostNumberKeys.car_may_enter(stage.vehicles)
+	return true
+
+
+## The simulated cursor and the marker use the same form, even during a busy refusal.
+func held_form(forms: GhostForms) -> StringName:
+	if _action == &"":
+		return &""
+	return forms.selected if _number_form == &"" else _number_form
+
+
+func _cancel_hold() -> void:
+	_action = &""
+	_number_form = &""
+	if phase == Phase.AIMING:
+		_clear()
 
 
 func _release(stage: CollectCallStage, c: PlayerCommand, selected: StringName) -> void:
@@ -93,8 +128,7 @@ func _aim(stage: CollectCallStage, c: PlayerCommand, selected: StringName) -> vo
 	spot = GhostDeploySpot.clip(stage, rivet.pos, rivet.pos + facing * reach)
 
 
-func _refusal(forms: GhostForms) -> StringName:
-	var id: StringName = forms.selected
+func _refusal(forms: GhostForms, id: StringName) -> StringName:
 	if forms.table.form(id) == null or not forms.locks.allows(forms.table, id):
 		return GhostLocks.LOCKED
 	var row: GhostAttacks.DeployRow = strike.attacks.deploy.get(id)
@@ -116,11 +150,11 @@ func _clear() -> void:
 
 
 func write_state(out: StreamPeerBuffer) -> void:
-	if phase == Phase.IDLE and cooldowns.is_empty() and not _held:
+	if phase == Phase.IDLE and cooldowns.is_empty() and _action == &"":
 		return
 	out.put_utf8_string("ghost_deploy")
 	out.put_8(phase)
-	out.put_8(int(_held))
+	out.put_8(int(_action != &""))
 	out.put_utf8_string(form)
 	for point: Vector2 in [spot, origin, facing]:
 		out.put_float(point.x)
@@ -129,3 +163,5 @@ func write_state(out: StreamPeerBuffer) -> void:
 	for id: StringName in GhostAttacks.GHOSTS:
 		var left: int = cooldowns.get(id, 0)
 		out.put_32(left)
+	if _number_form != &"":
+		out.put_utf8_string(_number_form)

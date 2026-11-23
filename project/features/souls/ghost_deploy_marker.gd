@@ -13,7 +13,11 @@ var _tick: int = -1
 
 func _process(_delta: float) -> void:
 	var ghost: GhostDeploy = stage.pilot.ghosts.deploy
-	var aiming: bool = ghost.phase == GhostDeploy.Phase.AIMING or ghost._held
+	var aiming: bool = (
+		ghost.phase != GhostDeploy.Phase.IDLE
+		and ghost.held_form(stage.pilot.ghosts.forms) != &""
+		and not GhostNumberKeys.in_car(stage)
+	)
 	if visible != aiming:
 		visible = aiming
 	if aiming and _tick != stage.tick:
@@ -25,12 +29,13 @@ func _draw() -> void:
 	var ghost: GhostDeploy = stage.pilot.ghosts.deploy
 	var attacks: GhostAttacks = ghost.strike.attacks
 	var forms: GhostForms = stage.pilot.ghosts.forms
-	var row: GhostAttacks.DeployRow = attacks.deploy.get(forms.selected)
-	if row == null or not ghost._held:
+	var id: StringName = ghost.held_form(forms)
+	var row: GhostAttacks.DeployRow = attacks.deploy.get(id)
+	if row == null:
 		return
 	var ready: bool = ghost.phase == GhostDeploy.Phase.AIMING and row.enabled
-	ready = ready and forms.locks.allows(forms.table, forms.selected) and forms.settled()
-	ready = ready and not ghost.cooldowns.has(forms.selected) and forms.current() == GhostForms.BASE
+	ready = ready and forms.locks.allows(forms.table, id) and forms.settled()
+	ready = ready and not ghost.cooldowns.has(id) and forms.current() == GhostForms.BASE
 	var at: Vector2 = stage.arena.rivet.pos
 	var alpha: float = 0.88 if ready else 0.32
 	for i: int in DASHES:

@@ -1,6 +1,6 @@
 class_name GhostPilot
 extends RefCounted
-## G selects the ghost. Holding Q / LB aims its deployment and release strikes. Mastery adds
+## Number keys aim individual ghosts. RB selects a ghost for LB. Release to strike. Mastery adds
 ## T to enter or exit the selected form, using the four stages and their shared Madness meter.
 
 ## Rivet's walk while a transformation plays (the body is rebuilding; data-free on purpose: one
@@ -95,11 +95,13 @@ func drive(
 
 func _select(stage: CollectCallStage, c: PlayerCommand, actions: PlayerActions) -> void:
 	var can_enter: bool = (
-		deploy.phase == GhostDeploy.Phase.IDLE and not c.is_held(actions, &"ghost_deploy")
+		c.was_pressed(actions, &"power_hauler")
+		and deploy.phase == GhostDeploy.Phase.IDLE
+		and not c.is_held(actions, &"ghost_deploy")
+		and GhostNumberKeys.pressed(c, actions, forms) == &""
 	)
 	if (
 		can_enter
-		and c.was_pressed(actions, &"power_hauler")
 		and (transform_unlocked or (forms.table.story_transform and stage._quest != null))
 		and forms.press_transform() == SoulPowers.OK
 	):

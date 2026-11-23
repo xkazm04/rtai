@@ -66,11 +66,21 @@ static func with_keys(prompt: String, pad: bool = false) -> String:
 	var move_label: String = "L-stick" if pad else " ".join(PackedStringArray(move))
 	var out: String = prompt.replace("[move]", "[%s]" % move_label)
 	out = out.replace("[aim]", "[R-stick]" if pad else "[mouse]")
-	for action: String in ["use", "fire", "melee", "pause"]:
-		var id: StringName = &"interact" if action == "use" else StringName(action)
-		out = out.replace("[%s]" % action, "[%s]" % (pad_name(id) if pad else key_name(id)))
-	for i: int in RivetCarry.SLOTS:  # n7-melee: [slot2] -> the carry slot's key
-		out = out.replace("[slot%d]" % (i + 1), "[%s]" % key_name(RivetCarry.SLOT_ACTIONS[i]))
+	out = out.replace("[use]", "[interact]")
+	for i: int in RivetCarry.SLOTS:
+		var slot: StringName = RivetCarry.SLOT_ACTIONS[i]
+		var label: String = pad_name(slot) if pad else key_name(slot)
+		if label == String(slot):
+			label = pad_name(&"weapon_next") if pad else key_name(&"weapon_next")
+		out = out.replace("[slot%d]" % (i + 1), "[%s]" % label)
+	for fragment: String in out.split("[", false):
+		var end: int = fragment.find("]")
+		if end <= 0:
+			continue
+		var action: StringName = StringName(fragment.left(end))
+		if InputMap.has_action(action):
+			var label: String = pad_name(action) if pad else key_name(action)
+			out = out.replace("[%s]" % action, "[%s]" % label)
 	return out
 
 
@@ -99,7 +109,13 @@ static func key_name(action: StringName) -> String:
 			return OS.get_keycode_string(k.physical_keycode)
 		if ev is InputEventMouseButton:
 			var m: InputEventMouseButton = ev
-			return "LMB" if m.button_index == MOUSE_BUTTON_LEFT else "RMB"
+			match m.button_index:
+				MOUSE_BUTTON_LEFT:
+					return "LMB"
+				MOUSE_BUTTON_RIGHT:
+					return "RMB"
+				_:
+					return m.as_text()
 	return String(action)
 
 

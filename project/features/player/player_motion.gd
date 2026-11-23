@@ -1,12 +1,7 @@
 class_name PlayerMotion
 extends RefCounted
-## Rivet's fixed-tick movement on TopDownMover. Held sprint clears the tackle threshold
-## (originally 5.0 m/s, now 7.5 m/s) and turns more slowly toward travel. A
-## dodge-roll press covers roll_m on an ease-out curve, with i-frames, damped-stick recovery
-## and a cooldown. TopDownMover handles free movement.
-## A roll press can start a vault, with its own path and i-frames before shared recovery.
-## Station cover owns the grounded snap, slide and corner peek while its flag is enabled.
-## Dash commits to a ground direction on a press; holding the key then maintains sprint.
+## Fixed-tick movement on TopDownMover. Sprint, roll, vault and cover use the shipped tuning.
+## Dash commits to a ground direction on a press. Sprint has its own held action.
 
 enum Phase { FREE, ROLL, RECOVER, VAULT, DASH }
 
@@ -56,6 +51,13 @@ static func from_table(t: DataTable) -> PlayerMotion:
 
 
 func drive(stage: CollectCallStage, pilot: StagePilot, c: PlayerCommand, walk: float) -> void:
+	if (
+		stage.vehicles != null
+		and (stage.vehicles.driving != null or stage.vehicles.doors.car != null)
+	):
+		stop()
+		stage.intent.move_by = Vector2.ZERO
+		return
 	if not cover.drive(stage, pilot, c, walk):
 		vault.drive(stage, pilot, c, walk)
 		if dash.frame >= 0:

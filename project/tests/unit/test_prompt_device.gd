@@ -9,7 +9,7 @@ func before_each() -> void:
 
 func test_keyboard_prompt_names_keys() -> void:
 	var out: String = ObjectiveHint.with_keys("Hold Dock 9: [fire] to shoot, [melee], [use]")
-	assert_eq(out, "Hold Dock 9: [LMB] to shoot, [Space], [E]")
+	assert_eq(out, "Hold Dock 9: [LMB] to shoot, [F], [E]")
 
 
 func test_pad_prompt_names_buttons_and_trigger() -> void:
