@@ -4,7 +4,12 @@ Branch `n26-pressure`, worktree `gtai-wt/n23-loop`, cut from `main` `0779185ac`.
 `docs/day/2026-11-23/n24-pressure/`. Director: Opus; builder: Astra (every product change is Astra's; I wrote briefs,
 `JOURNAL.md` and this file, reviewed every diff, looked at every still).
 
-Final HEAD: TODO. Gate: TODO (`node tools/gate/run.mjs --rev=HEAD` line + `gate.json` path).
+Final code HEAD: `0f9baec48` (everything after it is JOURNAL / REPORT / evidence only). Gate
+`node tools/gate/run.mjs --rev=HEAD --reels` on `0f9baec48` (results `build/gate/0f9baec4835f/`, git-ignored): evidence
+half: lint FAIL 1 of 19 (`tool-tests`: one timing test in `tools/merge/morning_run.break.test.mjs`, not this lane's file,
+fails under five-lane load and passes 3 of 3 alone: `evidence/n26-pressure/gate/lint-flake.txt`), unit-tests 4007 passed
+0 failed 3 skipped, scenario-tests 68 ran (rig_stress p50 CONTENDED, not judged), parity bit for bit over 1200 steps with
+the planted mutation caught, export-audit 968 loaded 0 failed, selftest pass. Reels: GATE_REELS.
 
 ## What works
 
