@@ -232,3 +232,4 @@ NEXT (session 6, report phase; freeze 18:40, report 18:50, end 19:10):
   quote the score in REPORT "What does not" (the stall mutate line). Stop it by 18:40 (kill its PID tree, not by name).
   (3) REPORT: `node tools/evidence/cites.mjs REPORT.md`, grep for GATE_RERUN / TODO, final commit by pathspec.
   (4) Clean Temp: `%LOCALAPPDATA%\Temp\gtai-gate-0f9baec4835f` (+ the re-run's) and any gtai-mutate-* of this lane.
+- 17:44 FRICTION a commit during the gate's snapshot took > 2 min (pre-commit merge-clash under load; 1m41 on retry); my tool timeout killed it and left a stale `index.lock` (removed after checking no git commit was alive). Commit with a 5 min timeout while a gate runs.
