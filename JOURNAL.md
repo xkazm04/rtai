@@ -84,3 +84,12 @@ with Start-Process exactly as at 13:24 (no `--resume`: a fresh thread). (3) then
 (4) item 5 by me. (5) films brief (both rockets in a fight; deflect at 6 m; circling vs two troopers with/without dash,
 health bar in frame; 32 px/m tilt 70 1080p60 15-40 s, 64 px/m still each; `frames.json`). Commit last work by 17:10,
 gate `node tools/gate/run.mjs --rev=HEAD` by 17:25. Check `n23-controls/JOURNAL.md` for `MILESTONE keys` (re-check 03).
+- 13:44 rocket-read committed `d42706a60` (1.4 m casing, ~1 m ice jets, re-cut) and `41eccb33e` (ice rim under-glow,
+  draw-ownership test). LOOKED at the re-made stills: at 32 px/m the trooper's rocket is now clearly larger than Rivet's,
+  steel casing with an ice rim that pops off the asphalt, ice-blue jet, no amber; Rivet's amber exhaust unchanged.
+  Accepted on look. `rocket-a-vs-c-32.png` made (A slim pointed, C blunt banded): Call for the owner.
+- 13:51 session 2 end. ASTRA RUNNING rocket-read since 13:24 (pid 77404 node, finishing runs/mutate; hard stop 14:20).
+NEXT (session 3): read `evidence/briefs/n26-pressure-02b-rocket-read.out.txt` (mutate scores, digests unchanged?), check
+no staged leftovers, log `ASTRA rocket-read <min> accepted` + `MILESTONE rocket 41eccb33e` (or later sha), then the
+13:32 NEXT list from (2): brief 03 trooper (shift its 15:35/15:20 times if it starts after 14:20), 04 stall, item 5 by me,
+films, last work 17:10, gate 17:25.
