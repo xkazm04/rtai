@@ -129,5 +129,58 @@
     "narrowest_combat_only_800_tick_span_px": 980.73,
     "narrowest_combat_only_1600_tick_span_px": 1839.34,
     "source": "Seed-7 unskipped pilot, actual Rivet ground position at each recorded tick projected into each 960x1080 panel."
-  }
+  },
+  "pilot_scene": "res://dev/prologue/prologue_film.tscn -- --bot --seed=7 --view=tilt70",
+  "excerpt_selection": "Maximum fighter HP decreases in any 1800 consecutive ticks within each wave; earliest window breaks ties.",
+  "pilot": [
+    {
+      "file": "prologue_torn_line.mp4",
+      "width": 1920,
+      "height": 1080,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "fps": "60/1",
+      "frames": 10610,
+      "duration_s": 176.833333,
+      "sha256": "3f3a5a2fc1935c3454165af4a0ee1cdf975db37ebfc14b346e3ec08244591107"
+    },
+    {
+      "file": "excerpt_wave1.mp4",
+      "width": 1920,
+      "height": 1080,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "fps": "60/1",
+      "frames": 1800,
+      "duration_s": 30.0,
+      "sha256": "07617d3b851a3be46b342b8a6774e739d2edc780addf08fc81a9a93cbd699863",
+      "start_tick": 2858,
+      "damage_events": 19
+    },
+    {
+      "file": "excerpt_wave2.mp4",
+      "width": 1920,
+      "height": 1080,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "fps": "60/1",
+      "frames": 1800,
+      "duration_s": 30.0,
+      "sha256": "f2d5e1d938be65561776a94403da843b9a963bad490f77227963f1882ab9ce7f",
+      "start_tick": 5496,
+      "damage_events": 16
+    },
+    {
+      "file": "excerpt_end_card.mp4",
+      "width": 1920,
+      "height": 1080,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "fps": "60/1",
+      "frames": 900,
+      "duration_s": 15.0,
+      "sha256": "f448fb45c3f341155a71ce5e8bde1097687b02557f9d663974b5a7b39aa4332a",
+      "start_tick": 9710
+    }
+  ]
 }
