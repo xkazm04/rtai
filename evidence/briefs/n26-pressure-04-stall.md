@@ -1,6 +1,6 @@
 # Brief n26 pressure 04: the stall on seed 9
 
-Hard stop HARDSTOP wall clock (stop, commit what is green, report). Commit deadline COMMITBY.
+Hard stop HARDSTOP wall clock (stop, commit what is green, report). Commit deadline for the fix + test COMMITBY; the measurement batches of step 8 run after it and their evidence is committed by the hard stop.
 
 ## Setup, every shell
 `export APPDATA=C:/Users/kazda/kiro/gtai-n26/appdata/pressure` and
@@ -100,3 +100,24 @@ evidence: in one frozen wave the bot spent 842 s (average-9 w40), 995 s (expert-
 in Ohm or Tonnage forms, and the wave before it already shows Ohm time without the wave closing (`seconds` null). So the
 bot does sit transformed for most of the frozen wave; whether that is the cause or a symptom (the bot transforms because
 nothing else works) is what step 2 must decide. Do not stop at "it is in a form": name why no damage happens either way.
+
+## Step 8 (Director, 14:05): the three medians on the final state (item 5 of the lane), run after your fix is committed
+Start these by FIXSTART at the latest, fixed or not (then on whatever HEAD is: say so). They also serve as step 5's
+"re-run the reproducing seeds" (seeds 1-10 include average-8/9 and expert-1/9). The tree must be clean of code edits
+(evidence and briefs untracked are fine; the batch records `git.dirty`).
+```
+node tools/gauntlet/batch.mjs --profile=all --pick=greedy --controls=wheel --seeds=10 --seed0=1 --salt=0 --waves=40 --jobs=1 --out=<abs lane>/evidence/n26-pressure/medians/salt0
+node tools/gauntlet/batch.mjs --profile=all --pick=greedy --controls=wheel --seeds=10 --seed0=1 --salt=1 --waves=40 --jobs=1 --out=<abs lane>/evidence/n26-pressure/medians/salt1
+node tools/gauntlet/report.mjs --batch=<abs lane>/evidence/n26-pressure/medians/salt0/batch.json
+node tools/gauntlet/tune.mjs floor --before=<abs lane>/evidence/n26-pressure/medians/salt0/batch.json --null=<abs lane>/evidence/n26-pressure/medians/salt1/batch.json --out=<abs lane>/evidence/n26-pressure/medians/floors.md
+```
+(~16 min per batch on today's balance.) Do NOT retune and do NOT run `tune.mjs apply`/`night.mjs`: the owner plays first.
+Write `evidence/n26-pressure/medians/medians.md`: per profile the median death wave (salt 0 and salt 1), killers, any
+run that hit the tick cap or the freeze report (it must be none after your fix), and the floor from `floors.md`; compare
+with main's n24 numbers in `docs/day/2026-11-23/n24-pressure/REPORT.md`. Commit `evidence/n26-pressure/medians/**`
+(batch.json, report, floors, medians.md, the runs/*.json; not the per-run Godot logs if they exceed 5 MB in total).
+If the second batch cannot finish by the hard stop, stop it, commit the first with a line saying so.
+Allowlist addition: `evidence/n26-pressure/medians/**`. Time order inside this call: fix + test + `--changed` + quick ->
+commit (COMMITBY) -> step 8 batches -> while nothing else may use Godot, the full unit suite and the scenarios
+(`node tools/tests/run_scenarios.mjs --only=<touched>,replay_60s,<quest 1 scenario names>`) run AFTER the batches only if
+the hard stop allows; otherwise say "not run" (the Director's gate runs the full suites at 17:25).
