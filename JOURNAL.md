@@ -64,3 +64,6 @@ NEXT (session 4, from ~15:27):
 2. If short: a follow-up `--resume` only if it fits before 17:10 (last new work). Then the final gate `node tools/gate/run.mjs --rev=HEAD` by 17:25 (one Godot per lane: no Astra during the gate).
 3. Films: brief `evidence/briefs/n26-05-films.md` is drafted (fill HARD/LAST; launch after the gate, ~17:45, hard stop 18:35). Masters to `gtai-masters/n26/yard/` + frames.json. Then REPORT.md by 18:50 (`node tools/evidence/cites.mjs REPORT.md`), with the two NEED director lines above and the calls for the owner (dusk depth: ground shade vs screen grade; vector dress pump vs cast card).
 4. Measured so far: pilot five seeds (session 2), dusk frame cost p50 -0.04 ms (debug build, bench lock), fence mutate 18/18, command view 5/20, lights 5/7. Cover mutate pending (call 04 D).
+
+## Session 4 (15:11, BUILD)
+- 15:11 ASTRA RUNNING line-card since 15:10 (pid 41696 = node, alive; lock present). No new call until it exits.
