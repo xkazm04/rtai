@@ -233,3 +233,13 @@ NEXT (session 6, report phase; freeze 18:40, report 18:50, end 19:10):
   (3) REPORT: `node tools/evidence/cites.mjs REPORT.md`, grep for GATE_RERUN / TODO, final commit by pathspec.
   (4) Clean Temp: `%LOCALAPPDATA%\Temp\gtai-gate-0f9baec4835f` (+ the re-run's) and any gtai-mutate-* of this lane.
 - 17:44 FRICTION a commit during the gate's snapshot took > 2 min (pre-commit merge-clash under load; 1m41 on retry); my tool timeout killed it and left a stale `index.lock` (removed after checking no git commit was alive). Commit with a 5 min timeout while a gate runs.
+
+## Session 6 (18:40 to 18:50, STABILIZE / report)
+
+- 18:40 start. No Astra running (lock absent; last call n 7 films, usage limit). No NEED pressure in other journals.
+- 18:40 gate re-run on 7969ed2a4 (code = 0f9baec48) ended 18:17: `gate: PASS; build/gate/7969ed2a4872/gate.json`
+  (lint 19/19, unit 4007/0/3, scenarios 68, parity bit for bit, selftest, export 968/0). REPORT header filled.
+- 18:41 stall mutate NOT run: the gate held the lane's Godot until 18:17, after the 18:15 cut-off; freeze is 18:40. Left
+  open in REPORT. cites 34/34 ok.
+NEXT: none this run. Director: merge `n26-pressure`; re-run item 5 medians and the item 3 arena on the merged tree (after
+keys); mutate `features/gauntlet/gauntlet_combat.gd` (stall fix) once a Godot is free.

@@ -11,7 +11,10 @@ fails under five-lane load and passes 3 of 3 alone: `evidence/n26-pressure/gate/
 0 failed 3 skipped, scenario-tests 68 ran (rig_stress p50 CONTENDED, not judged), parity bit for bit over 1200 steps with
 the planted mutation caught, export-audit 968 loaded 0 failed, selftest pass. Reels (top, tilt70, combo): PASS, exit 0.
 Verdict line: `gate: FAIL; build/gate/0f9baec4835f/gate.json` (only the lint flake). Re-run without reels on the same code
-(`node tools/gate/run.mjs --rev=HEAD` on `7969ed2a4`, started 17:37): GATE_RERUN.
+(`node tools/gate/run.mjs --rev=HEAD` on `7969ed2a4`, started 17:37, ended 18:17): `gate: PASS; build/gate/7969ed2a4872/gate.json`
+(lint 19/19, unit-tests 4007 passed 0 failed 3 skipped, scenario-tests 68 passed, parity bit for bit + mutation caught at
+step 629, selftest pass, export-audit 968 loaded 0 failed). The reels were judged on `0f9baec48`, same code. This is the
+lane's verdict: **PASS**.
 
 ## What works
 
@@ -34,7 +37,8 @@ Verdict line: `gate: FAIL; build/gate/0f9baec4835f/gate.json` (only the lint fla
 - The player's own Kerf slice can still carry Rivet through a thin wall (souls code, melee lane's): `NEED melee` with a
   patch as text in `evidence/n26-pressure/stall/cause.md`; the player test is pending until then.
 - The stall fix (`bf32bfd1a`) has no mutate score: call 06 ran out of time inside its mutate run, and the builder was
-  gone after that (see below); the lane's one Godot then went to the films and the final gate.
+  gone after that (see below); the lane's one Godot then went to the films and the final gate, which ended 18:17, too late to
+  start a mutate run before the 18:40 freeze. Open: `node tools/mutate/mutate.mjs --file=features/gauntlet/gauntlet_combat.gd --max=10`.
 - The two-trooper circling film and a 6 m deflect film were not made: the existing dev takes put ONE rocket trooper in a
   wave-6 crew and the rifles at 9.5 m, and the builder that would have added a two-trooper / 6 m take hit its usage
   limit. The films below use the takes that exist; the 6 m and two-trooper numbers are the measured tables.
