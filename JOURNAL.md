@@ -75,3 +75,5 @@ NEXT (session 6): (1) when mutate rivet_walk.gd ends (log build/mutate-rivet-wal
 - 01:30 session 6 start (STABILIZE). No Astra running (lock absent, last call dashclose ended 23:47). No new code.
 - 01:31 reels gate `node tools/gate/run.mjs --rev=HEAD --reels` launched detached on f223380ab (APPDATA motion), log build/gate-reels.log. Will not finish before 01:40: REPORT says unmeasured.
 NEXT (Director/merge): read the last line of build/gate-reels.log in this worktree; if FAIL, the reels kind is the only new check over the PASS gate 441a8d5a3 (build/gate/441a8d5a36ed/gate.json). Nothing else open in this lane; Next steps in REPORT.md (stride table to rivet_motion.json, film scenes into repo, p55 grids, six p70 weapons on the fallback).
+- 01:34 session 7 (STABILIZE): reels gate still running (log build/gate-reels.log, only its header line yet). REPORT placeholder 01:3x filled; cites run; final commit. No new code.
+NEXT (Director/merge): unchanged from 01:31: read the last line of build/gate-reels.log; PASS gate of record stays 441a8d5a3 (build/gate/441a8d5a36ed/gate.json).

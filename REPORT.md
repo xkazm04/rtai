@@ -10,7 +10,7 @@ unit 3815 passed, 0 failed, 2 skipped; scenarios 67 passed; parity 1200 steps bi
 step 629; selftest look goldens 11/11; export-audit 933 loaded, 0 failed).
 
 Reels gate: `node tools/gate/run.mjs --rev=HEAD --reels` started 01:31 on `f223380ab` (inert commits only after the
-gate above), log `build/gate-reels.log` (git-ignored). It had not finished when this report was committed at 01:3x: its
+gate above), log `build/gate-reels.log` (git-ignored). It had not finished when this report was committed at 01:34: its
 verdict is NOT measured here; the Director reads the log's last line before merging.
 
 ## What works
