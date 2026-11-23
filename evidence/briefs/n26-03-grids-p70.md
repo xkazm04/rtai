@@ -41,8 +41,11 @@ p70 grid to the standard of last run's seven. p70 only (p55 is the next brief). 
   commit the `.import` files with the png.
 - Provenance: one line per shipped png appended to `steam/ai-provenance/2026-11.jsonl` (same fields as last run's lines,
   accepted_by `agent:n26-keys lane`, date 2026-11-23).
-- Stride numbers go into `project/data/tables/rivet_motion.json` `grid_stride` if brief 02 moved them there (check
-  `git log`), else into `rivet_walk.gd` / `rivet_stride.gd` as last run.
+- Stride numbers go into `project/data/tables/rivet_motion.json` `grid_stride` (brief 02 moved them there: 869642e12,
+  loader `RivetGridStride.shared()`, the every-value pin in `test_rivet_grid_stride.gd`: add your new keys to that pin).
+  Do not change the `bare_*` keys (a78c5f4c9, shipped and measured).
+- Tests that pin a value this brief changes (the grid stride pin, an every-weapon art test) may be updated for exactly
+  those values; say which in the commit message. Do not ask: that is pre-authorised.
 
 ## Accept a grid only when
 - you looked at every row yourself at 32 and 64 px/m in the game (arena, real walk 6.75 m/s and sprint 9.3 m/s): clean cut,
