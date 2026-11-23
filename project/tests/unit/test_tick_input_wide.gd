@@ -1,9 +1,9 @@
 extends GutTest
 
 
-func test_bits_31_and_32_survive_packing_axes_and_json() -> void:
+func test_dash_and_deploy_bits_survive_packing_axes_and_json() -> void:
 	var log_file: ReplayLog = ReplayLog.new(17)
-	var bits: int = (1 << 31) | (1 << 32) | 5
+	var bits: int = (0x3f << 31) | 5
 	var input: TickInput = TickInput.new(bits, -127, 126)
 	var sample: TickInput = TickInput.unpack(input.pack())
 	assert_eq(sample.buttons, bits)
@@ -32,5 +32,5 @@ func test_dash_and_sprint_have_their_shipped_wire_bits_and_bindings() -> void:
 	var pad: Array = sprint["joy_buttons"]
 	assert_eq(logical, 18.0)
 	assert_eq(dash_keys, ["Shift"])
-	assert_eq(sprint_keys, [])
+	assert_eq(sprint_keys, ["Space"])
 	assert_eq(pad, [7.0])

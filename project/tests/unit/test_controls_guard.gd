@@ -30,8 +30,8 @@ func test_controls_default_and_unknown_values_use_wheel() -> void:
 func test_only_wheel_records_guard_and_moves_the_right_mouse_binding() -> void:
 	var mouse: InputEventMouseButton = InputEventMouseButton.new()
 	mouse.button_index = MOUSE_BUTTON_RIGHT
-	var space: InputEventKey = InputEventKey.new()
-	space.physical_keycode = OS.find_keycode_from_string("Space")
+	var claw: InputEventKey = InputEventKey.new()
+	claw.physical_keycode = OS.find_keycode_from_string("F")
 	var trigger: InputEventJoypadMotion = InputEventJoypadMotion.new()
 	trigger.axis = JOY_AXIS_TRIGGER_LEFT
 	trigger.axis_value = 1.0
@@ -45,8 +45,8 @@ func test_only_wheel_records_guard_and_moves_the_right_mouse_binding() -> void:
 		assert_eq(mouse.is_action(&"guard"), wheel)
 		assert_eq(mouse.is_action(&"melee"), not wheel)
 		assert_eq(trigger.is_action(&"guard"), wheel)
-		assert_true(space.is_action(&"melee"))
-		assert_false(space.is_action(&"guard"))
+		assert_true(claw.is_action(&"melee"))
+		assert_false(claw.is_action(&"guard"))
 		var input: LiveInput = LiveInput.new(actions)
 		Input.action_press(&"guard")
 		for cover: bool in [false, true]:

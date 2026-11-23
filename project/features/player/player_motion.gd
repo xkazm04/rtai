@@ -6,7 +6,7 @@ extends RefCounted
 ## and a cooldown. TopDownMover handles free movement.
 ## A roll press can start a vault, with its own path and i-frames before shared recovery.
 ## Station cover owns the grounded snap, slide and corner peek while its flag is enabled.
-## Dash commits to a ground direction on a press; holding the key then maintains sprint.
+## Dash commits to a ground direction on a press. Sprint has its own held action.
 
 enum Phase { FREE, ROLL, RECOVER, VAULT, DASH }
 
