@@ -37,3 +37,4 @@ NEXT (session 2), replaces items 1-3 above:
 2. Watch the cop clip; review `foes-n26/cop8/out` (8-drawing walk). If good: brief "cop8" (cut 8-cell walk, STEP_M 0.175, re-measure, unarmed walk too if the city uses it). If the drawings fail: STEP_M behind a flag, default off (old slide) and an owner call with both clips.
 3. DEVIATION line for the hook bypass in docs/decisions.md (or prove the test fails on main).
 4. Warden brief 03 (fill HARDSTOP/COMMITBY), then gunner/contractor/thug (55 sheets unreviewed).
+- 12:30 cop8 70_a reviewed: the same cop, 8 drawings per band, profile strides vary clearly, down/down-right legs vary only a little (judge after the cut and the sole track). 70_b and 55 a/b to review next session. Session 1 ends; Astra mulroney still running (pid 70940).
