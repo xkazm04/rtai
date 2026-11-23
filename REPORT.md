@@ -87,6 +87,11 @@ find their shooter about twice as often at 12 m), `reflex_servo` (perk: guard dr
 
 - Hook failure on a merge commit (`tools/merge/clash.test.mjs` under the hook's git env): ~15 min.
 - First Astra launch through Git Bash `nohup &` hung the tool call: ~6 min.
+- The final gate held the lane's one Godot from 00:07 to 01:31 (~84 min): no films and no fix call could run beside it.
+- A killed first gate left a markerless snapshot `%TEMP%/gtai-gate-a02dbf26cfe9` that broke the next gate: ~3 min
+  (removed with `git worktree remove --force --force`; the second one is still there, remove at merge cleanup).
+- `tools/gauntlet` ablate refuses `--rev=HEAD` and wants a SHA: ~1 min.
+- Astra call 4 in `astra-calls.jsonl` has no row (a launch that did not start); not counted below.
 
 ## Calls for the owner
 

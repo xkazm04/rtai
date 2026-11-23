@@ -329,3 +329,9 @@ TODOs, Astra ledger (rocket-nail 47 partial, finish 51 accepted), cites, commit 
 NEXT: fix the three red checks (one Astra call: thresholds vs dash-era numbers; showcase chapter `pass_ratio_k` 0), re-gate
 with `--reels`; tuner cycle toward 6/12/20 (average 8 -> 12); `damage_by`; seed 9 stall; brief 05 films.
 Leftover temp: `%TEMP%/gtai-gate-a02dbf26cfe9` (gate snapshot, remove at merge cleanup). No Astra running.
+- 01:44 REPORT phase (iteration 7): REPORT re-checked, cites 20 of 20 ok, blocked section filled (gate 84 min, snapshot,
+  ablate SHA). Nothing new built. No Astra running; no Godot of mine running.
+
+NEXT (Director / next run): fix the three red checks (fire-gaps thresholds 14>=15 and 196<=180 against the dash-era
+numbers; showcase chapter `plasma_sword_deflect` with `pass_ratio_k` 0), re-gate with `--reels`; tuner cycle toward
+6/12/20 (average 8 -> 12); `damage_by`; seed 9 stall; brief 05 films. Remove `%TEMP%/gtai-gate-a02dbf26cfe9`.
