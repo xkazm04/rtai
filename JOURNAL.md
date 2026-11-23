@@ -252,3 +252,10 @@ keys); mutate `features/gauntlet/gauntlet_combat.gd` (stall fix) once a Godot is
   gtai-gate-* dirs there belong to other lanes' gates, left alone.
 NEXT: none this run. Director: merge `n26-pressure`; remove the empty Temp dir above after the sessions end; mutate the
 stall fix and re-run item 5 medians on the merged tree.
+
+## Session 8 (18:44, STABILIZE / report)
+
+- 18:44 No Astra lock (last call n 7, 15:14); tracked tree clean at d4edc8f3c; REPORT final (gate PASS
+  `build/gate/7969ed2a4872/gate.json`). Nothing new after freeze. Temp dir gtai-gate-7969ed2a4872 still busy (empty).
+NEXT: none this run. Director: merge `n26-pressure`; remove the empty Temp dir after the sessions end; mutate the stall
+fix (`features/gauntlet/gauntlet_combat.gd`) and re-run item 5 medians on the merged tree.
