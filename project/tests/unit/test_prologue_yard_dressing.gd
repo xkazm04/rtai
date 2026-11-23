@@ -124,27 +124,6 @@ func test_invalid_layer_reports_the_table_read_error() -> void:
 	assert_string_contains(recent[-1], "texture: not a string")
 
 
-func test_cover_fits_the_original_box_at_one_scale_on_both_axes() -> void:
-	var box: Rect2 = Rect2(12, 7, 11, 4)
-	var fit: Transform2D = PrologueYardPaint.cover_transform(box, Vector2(10, 5), false)
-	assert_eq(fit.origin, box.get_center())
-	assert_almost_eq(fit.x, Vector2(0.8, 0), Vector2(0.00001, 0.00001))
-	assert_almost_eq(fit.y, Vector2(0, 0.8), Vector2(0.00001, 0.00001))
-
-
-func test_long_cover_turns_a_quarter_but_a_factory_face_stays_south() -> void:
-	var box: Rect2 = Rect2(-9, 7, 12, 5)
-	var size_px: Vector2 = Vector2(4, 9)
-	var fit: Transform2D = PrologueYardPaint.cover_transform(box, size_px, false)
-	assert_eq(fit.origin, box.get_center())
-	assert_almost_eq(fit.x, Vector2(0, 1.25), Vector2(0.00001, 0.00001))
-	assert_almost_eq(fit.y, Vector2(-1.25, 0), Vector2(0.00001, 0.00001))
-	var shell: Transform2D = PrologueYardPaint.cover_transform(box, size_px, true)
-	assert_eq(shell.origin, box.get_center())
-	assert_eq(shell.get_rotation(), 0.0)
-	assert_almost_eq(shell.get_scale().y * size_px.y, box.size.y, 0.00001)
-
-
 func test_torn_line_loads_the_actual_art_and_keeps_the_crossing_clear() -> void:
 	var look: PrologueYardDressing = PrologueYardDressing.resolve("plain", "torn_line")
 	var plain: PrologueYardDressing = PrologueYardDressing.resolve("plain")

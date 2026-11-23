@@ -83,16 +83,19 @@ func wreck(
 	canvas.draw_set_transform(Vector2.ZERO)
 
 
-## Uniformly fit the ink around the collision centre. The factory's south faces stay south.
+## Match the long collision axis, allowing 30 cm at either end for cut margins and shadows.
+## Keep the short axis proportional wherever that still fills the footprint.
 static func cover_transform(box: Rect2, source_size: Vector2, shell: bool) -> Transform2D:
-	var scale_xy: Vector2 = box.size / source_size
-	var scale_fit: float = minf(scale_xy.x, scale_xy.y)
-	var turn: float = 0.0
-	var quarter_fit: float = minf(box.size.y / source_size.x, box.size.x / source_size.y)
-	if not shell and quarter_fit > scale_fit:
-		turn = PI * 0.5
-		scale_fit = quarter_fit
-	return Transform2D(turn, Vector2.ONE * scale_fit, 0.0, box.get_center())
+	var turn: bool = not shell and (box.size.x > box.size.y) != (source_size.x > source_size.y)
+	var target: Vector2 = Vector2(box.size.y, box.size.x) if turn else box.size
+	var long_axis: int = target.max_axis_index()
+	var short_axis: int = 1 - long_axis
+	var margin: float = 0.6 * Ink.PX_PER_M
+	var size: Vector2 = source_size * ((target[long_axis] + margin) / source_size[long_axis])
+	size[short_axis] = clampf(
+		size[short_axis], target[short_axis] * 0.92, target[short_axis] + margin
+	)
+	return Transform2D(PI * 0.5 if turn else 0.0, size / source_size, 0.0, box.get_center())
 
 
 static func pixels(rect: Rect2) -> Rect2:

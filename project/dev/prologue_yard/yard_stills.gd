@@ -1,10 +1,8 @@
 extends Node
-## Capture the real seed-7 pilot, with the HUD hidden so every pixel of the yard is inspectable.
 
-const KNOWN_FLAGS: PackedStringArray = ["--dressing", "--tick", "--out"]
+const KNOWN_FLAGS: PackedStringArray = ["--dressing", "--tick", "--out", "--footprints"]
 const NEEDS_WINDOW: bool = true
 const FIXED_FPS: int = 60
-const ENTRY: PackedScene = preload("res://boot/prologue/prologue.tscn")
 const PILOT: GDScript = preload("res://dev/bots/prologue_bot.gd")
 const SIZE: Vector2i = Vector2i(1920, 1080)
 
@@ -12,6 +10,7 @@ var _game: PrologueGame
 var _view: PrologueView
 var _tick: int
 var _out: String
+@onready var _outlines: Node2D = $Guide/Footprints
 
 
 func _ready() -> void:
@@ -25,6 +24,7 @@ func _ready() -> void:
 	if not raw_tick.is_valid_int() or raw_tick.to_int() < 0 or not _out.is_absolute_path():
 		_fail("use a nonnegative tick and an absolute output directory")
 		return
+	_outlines.visible = args.has("--footprints")
 	_tick = raw_tick.to_int()
 	if DisplayServer.get_name() == "headless" or DirAccess.make_dir_recursive_absolute(_out) != OK:
 		_fail("capture requires a window and a writable output directory")
@@ -32,12 +32,8 @@ func _ready() -> void:
 	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
 	get_window().size = SIZE
 	ViewMode.select("tilt70")
-	var flags: PackedStringArray = ["--seed=7"]
-	if args.has("--dressing"):
-		@warning_ignore("return_value_discarded")
-		flags.append("--yard-dressing=" + args.text("--dressing"))
-	LaunchArgs.parse(flags)
-	_game = ENTRY.instantiate() as PrologueGame
+	LaunchArgs.parse(["--seed=7", "--yard-dressing=" + args.text("--dressing")])
+	_game = preload("res://boot/prologue/prologue.tscn").instantiate()
 	add_child(_game)
 	_game.world.set_process(false)
 	var pilot: InputSource = PILOT.new(_game.stage, _game.encounter)
@@ -56,28 +52,33 @@ func _capture() -> void:
 	for child: Node in _game.get_children():
 		if child is PrologueView:
 			_view = child as PrologueView
-			break
-	# Let the cast, pools and props update to this tick before pinning the camera.
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
 	_view.set_process(false)
-	for node: Node in _view.get_children():
-		var layer: CanvasLayer = node as CanvasLayer
-		if layer != null and layer.layer == RenderLayers.canvas(&"hud"):
-			layer.visible = false
-	var places: Dictionary[String, Vector2] = {
-		"gate": plan.gate,
-		"mid": plan.rivet_start,
-		"harbor": Vector2(plan.street.end.x, plan.street.get_center().y)
-	}
+	(_view.hud_view.get_parent() as CanvasLayer).hide()
+	_outlines.transform = _view.stage_view.global_transform
+	if _outlines.visible:
+		if await _save(plan.rivet_start, 64, "footprints_mid_64ppm.png"):
+			get_tree().quit()
+		return
+	var places: Dictionary[String, Vector2] = {"gate": plan.gate, "mid": plan.rivet_start}
+	places["harbor"] = Vector2(plan.street.end.x, plan.street.get_center().y)
 	for place: String in places:
 		for ppm: int in [32, 64]:
-			if not await _save(place, places[place], ppm, plan.dressing.id):
+			var file: String = "%s_%dppm_%s_t%d.png" % [place, ppm, plan.dressing.id, _tick]
+			if not await _save(places[place], ppm, file):
 				return
 	get_tree().quit()
 
 
-func _save(place: String, at: Vector2, ppm: int, dressing: String) -> bool:
+func _draw_footprints() -> void:
+	for prop: ArenaStation.Prop in (_game.stage.plan as PrologueYard).stations.stations[0].props:
+		var rect: Rect2 = PrologueYardPaint.pixels(Rect2(prop.at - prop.size * 0.5, prop.size))
+		_outlines.draw_rect(rect, Color("241627"), false, 2.8)
+		_outlines.draw_rect(rect, Color("f7c8ff"), false, 1.4)
+
+
+func _save(at: Vector2, ppm: int, file: String) -> bool:
 	_view.px_per_m = float(ppm)
 	_view.print_stage.zoom = float(ppm) / SimConst.PX_PER_M
 	_view.print_stage.place(at)
@@ -85,7 +86,6 @@ func _save(place: String, at: Vector2, ppm: int, dressing: String) -> bool:
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
 	var image: Image = get_viewport().get_texture().get_image()
-	var file: String = "%s_%dppm_%s_t%d.png" % [place, ppm, dressing, _tick]
 	if image == null or image.get_size() != SIZE or _game.stage.tick != _tick:
 		_fail("viewport or tick mismatch for " + file)
 		return false

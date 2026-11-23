@@ -4,3 +4,12 @@
 
 [node name="YardStills" type="Node"]
 script = ExtResource("1")
+
+[node name="Guide" type="CanvasLayer" parent="."]
+layer = 100
+follow_viewport_enabled = true
+
+[node name="Footprints" type="Node2D" parent="Guide"]
+visible = false
+
+[connection signal="draw" from="Guide/Footprints" to="." method="_draw_footprints"]
