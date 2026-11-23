@@ -16,9 +16,12 @@ func _fixture() -> DataTable:
 	return skins
 
 
-func test_plain_is_the_shipped_default() -> void:
+func test_shipped_default_is_torn_line_and_plain_is_one_launch_flag_away() -> void:
 	var stage: DataTable = DataTable.open(PrologueGame.TABLE, PrologueGame.SCHEMA)
+	assert_eq(PrologueYard.from_stage(stage).dressing.id, "torn_line")
+	LaunchArgs.parse(["--yard-dressing=plain"])
 	var plan: PrologueYard = PrologueYard.from_stage(stage)
+	LaunchArgs.parse()
 	assert_eq(plan.dressing.id, "plain")
 	assert_true(plan.dressing.use_stage_decals)
 	assert_eq(plan.dressing.ground.size(), 1)
@@ -61,6 +64,7 @@ func test_unknown_override_logs_and_falls_back_to_plain() -> void:
 
 func test_dressing_cannot_move_a_footprint_or_add_cover() -> void:
 	var stage: DataTable = DataTable.open(PrologueGame.TABLE, PrologueGame.SCHEMA)
+	stage.raw["yard"]["dressing"] = "plain"
 	var plain: PrologueYard = PrologueYard.from_stage(stage)
 	var skins: DataTable = _fixture()
 	var skin: Dictionary = skins.raw["dressings"]["factory"]["cover"]
