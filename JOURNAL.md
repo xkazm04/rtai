@@ -78,3 +78,10 @@ NEXT (session 5): no Astra possible (usage limit to Nov 28): do NOT launch astra
 
 NEXT (session 6, if any, before 19:10): nothing can land (no builder until Nov 28; the lane is frozen and its gate is green at 8d6a78c07; REPORT is final at 14bf92512). Only (1) check the Temp delete finished; (2) grep the other journals for `NEED keys` and answer in JOURNAL/REPORT Merge notes (no product edits); (3) if REPORT changes, run `node tools/evidence/cites.mjs REPORT.md` and `git commit -- REPORT.md JOURNAL.md`.
 - 17:35 CLEAN gtai-gate-8d6a78c07e71 removed; gtai-gate-f223380ab3d2 left: a file is still locked (device busy), retry in the Director's post-merge Temp cleanup. Other gtai-gate-*/gtai-mutate-* dirs in Temp belong to other lanes' current runs: untouched.
+
+## Session 6 (18:40 - 18:45, STABILIZE)
+
+- 18:41 START no NEED keys in the four other journals (grep). No Astra lock or call since 15:13Z (usage limit to Nov 28). Tree clean apart from untracked brief outputs. Lane stays frozen at 8d6a78c07; gate PASS there (`build\gate\8d6a78c07e71\gate.json`); REPORT final, cites 7/7 ok.
+- 18:42 CLEAN gtai-gate-f223380ab3d2 in Temp still "device busy": left for the Director's post-merge Temp cleanup (noted in REPORT Merge notes already).
+
+NEXT: nothing; the Director merges `n26-keys` (product code = e6db0a319). Items 3 and 4 and the p55 bare sprint drift are in REPORT "Next steps".
