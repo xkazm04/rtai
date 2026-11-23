@@ -50,7 +50,7 @@ func _init(p_table: SignatureKillTable, rng: RandomNumberGenerator) -> void:
 func on_kill(e: KillEvent) -> bool:
 	var row: SignatureKill = table.for_weapon(e.weapon, e.archetype) if e.human else null
 	if e.shutdown:
-		row = table.shutdown(e.archetype)
+		row = table.shutdown(e.archetype, e.weapon)
 	if row == null and e.human and e.damage_type == &"burned":  # any fire death (puff, patch)
 		row = table.for_weapon(&"burn")
 	if row == null or consumed.has(e.victim_id):

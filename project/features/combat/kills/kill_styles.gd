@@ -106,7 +106,9 @@ func parts(
 		new_fx.parts(rig, serial, row, groups, dir)
 	if row.style == &"shutdown":
 		var body: Node2D = groups[SignatureKill.BODY]
-		groups[SignatureKill.BODY] = RobotShutdownFx.wrap(body, row, _kills, _ppm, dir)
+		groups[SignatureKill.BODY] = ElectricWreckFx.for_row(row, rig).mount_body(
+			body, row, _kills, _ppm, dir
+		)
 	MeleeKillGear.attach(groups, row, _ppm)
 	return groups
 

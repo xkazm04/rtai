@@ -75,7 +75,12 @@ func for_weapon(weapon: StringName, victim: StringName = &"") -> SignatureKill:
 
 
 ## Mechanical shutdown leaves the chassis whole at either gore setting.
-func shutdown(victim: StringName) -> SignatureKill:
+func shutdown(victim: StringName, weapon: StringName = &"electro_baton") -> SignatureKill:
+	match weapon:
+		&"electro_gun":
+			return _lookup(&"electro_bolt_shutdown", victim)
+		&"claw_shock":
+			return _lookup(&"claw_discharge_shutdown", victim)
 	return _lookup(&"electric_shutdown", victim)
 
 

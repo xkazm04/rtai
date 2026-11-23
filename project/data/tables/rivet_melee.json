@@ -72,6 +72,14 @@
     "full_damage": 1,
     "reach_m": 1.6,
     "recovery_ticks": 18,
+    "robot_finish": {
+      "heavy_stun_ticks": 30,
+      "id": "claw_shock",
+      "machine_stun_ticks": 150,
+      "never_finish": [
+        "war_machine"
+      ]
+    },
     "stun_full_ticks": 150,
     "stun_min_ticks": 60
   },

@@ -265,5 +265,16 @@
       "fight_total_ticks": 5107,
       "fight_total_s": 85.117
     }
-  ]
+  ],
+  "warden_rake_trial": {
+    "eligible": true,
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "matches_previous_runs": true
+  }
 }

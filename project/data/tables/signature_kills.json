@@ -2259,6 +2259,112 @@
         }
       },
       "weapon": "electric_shutdown"
+    },
+    {
+      "blot_m": 0,
+      "bounce": 0,
+      "crumble_ticks": 21,
+      "doc": "A bolt punches into the chassis, forks out through its joints and ejects plates. The locked wreck topples away from the impact.",
+      "id": "electro_bolt_shutdown",
+      "launch_mps": [
+        0,
+        0
+      ],
+      "pieces": [
+        "body"
+      ],
+      "scorch_radius_m": 0.63,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "spray": 0,
+      "stand_ticks": 16,
+      "style": "shutdown",
+      "up_mps": [
+        0,
+        0
+      ],
+      "variants": {
+        "robot_gunner": {
+          "fx": {
+            "fold_deg": 62,
+            "joint_m": 0.69
+          }
+        },
+        "robot_thug": {
+          "fx": {
+            "fold_deg": 78,
+            "joint_m": 0.62
+          }
+        },
+        "sentry_turret": {
+          "fx": {
+            "fold_deg": 24,
+            "joint_m": 0.34
+          }
+        },
+        "shield_robot": {
+          "fx": {
+            "fold_deg": 47,
+            "joint_m": 0.87
+          }
+        }
+      },
+      "weapon": "electro_bolt_shutdown"
+    },
+    {
+      "blot_m": 0,
+      "bounce": 0,
+      "crumble_ticks": 20,
+      "doc": "The clamp lifts the chassis on a short arc. Its core bursts at the apex and the smoking wreck drops back at the clamp.",
+      "id": "claw_discharge_shutdown",
+      "launch_mps": [
+        0,
+        0
+      ],
+      "pieces": [
+        "body"
+      ],
+      "scorch_radius_m": 0.63,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "spray": 0,
+      "stand_ticks": 18,
+      "style": "shutdown",
+      "up_mps": [
+        0,
+        0
+      ],
+      "variants": {
+        "robot_gunner": {
+          "fx": {
+            "fold_deg": 62,
+            "joint_m": 0.69
+          }
+        },
+        "robot_thug": {
+          "fx": {
+            "fold_deg": 78,
+            "joint_m": 0.62
+          }
+        },
+        "sentry_turret": {
+          "fx": {
+            "fold_deg": 24,
+            "joint_m": 0.34
+          }
+        },
+        "shield_robot": {
+          "fx": {
+            "fold_deg": 47,
+            "joint_m": 0.87
+          }
+        }
+      },
+      "weapon": "claw_discharge_shutdown"
     }
   ],
   "leftover_budget": 12,
