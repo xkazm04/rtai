@@ -1480,3 +1480,4 @@ One dated line per decision. Deviations use `DEVIATION <RULE-ID>` and carry a re
 - [2026-11-23] DECISION prologue: The slice title starts the factory prologue and its held end card opens Collect Call in the same scene. Embedded quest tools retain their direct Start.
 - [2026-11-23] DECISION prologue: --skip-prologue selects the direct quest 1 opening from Start so quest tapes and export smokes can run the original path.
 - [2026-11-23] DECISION prologue: Each encounter checkpoint writes its seed, input tape and state hash through the rotating autosaves. Continue verifies the beat by replay, and the handover writes a normal Collect Call checkpoint.
+- [2026-11-23] DECISION prologue: The title card names the chapter its Start button opens, using the same routing predicate and the prologue end card's translation key.

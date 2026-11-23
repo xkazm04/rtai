@@ -9,12 +9,19 @@ var campaign_menu: bool = false
 var prologue: PrologueGame
 
 
+func starts_with_prologue(card: Quest1Card) -> bool:
+	var menu: Quest1Game
+	if card.is_inside_tree():
+		menu = card.get_tree().current_scene as Quest1Game
+	var main_menu: bool = menu != null and menu.card == card
+	var quest_film: bool = OS.is_debug_build() and LaunchArgs.has("--autostart")
+	return (campaign_menu or main_menu) and not quest_film and not LaunchArgs.has("--skip-prologue")
+
+
 func press_start(game: Quest1Game) -> void:
 	if prologue != null or game.session != null:
 		return
-	var main_menu: bool = game.is_inside_tree() and game.get_tree().current_scene == game
-	var quest_film: bool = OS.is_debug_build() and LaunchArgs.has("--autostart")
-	if (campaign_menu or main_menu) and not quest_film and not LaunchArgs.has("--skip-prologue"):
+	if starts_with_prologue(game.card):
 		open_prologue(game)
 	else:
 		game.start()

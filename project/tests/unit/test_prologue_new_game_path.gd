@@ -37,6 +37,24 @@ func test_menu_start_enters_prologue_once() -> void:
 	assert_null(game.session)
 
 
+func test_main_menu_subtitle_follows_start_and_skip_prologue() -> void:
+	var tree: SceneTree = get_tree()
+	var previous_scene: Node = tree.current_scene
+	game.reparent(tree.root)
+	tree.current_scene = game
+	game.card.show_title()
+	assert_true(game.new_game_path.starts_with_prologue(game.card))
+	assert_eq((game.card._box.get_child(1) as Label).text, "Prologue")
+	LaunchArgs.parse(["--skip-prologue"])
+	game.card.show_title()
+	assert_false(game.new_game_path.starts_with_prologue(game.card))
+	var subtitle: Label = game.card._box.get_child(1) as Label
+	assert_eq(subtitle.text, "Quest 1: Collect Call")
+	assert_eq(subtitle.get_theme_font_size(&"font_size"), 34)
+	assert_eq(subtitle.get_theme_color(&"font_color"), Ink.VERMILION)
+	tree.current_scene = previous_scene
+
+
 func test_skip_flag_opens_quest_one() -> void:
 	LaunchArgs.parse(["--skip-prologue"])
 	_press_campaign_start()
