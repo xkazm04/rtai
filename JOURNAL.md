@@ -148,3 +148,7 @@ NEXT (session 4): (1) `astra.lock` pid 47220 (node) = stall, hard stop 16:22. Wh
   breaks it, `git worktree remove --force --force` it). (4) LOOK at every film; frames.json; REPORT by 18:50 with
   Calls: rocket A vs C (`rocket-a-vs-c-32.png`), trooper rest 1.1 vs 1.4 orbit (harshness), deflect curve
   (`evidence/n26-pressure/deflect/share.md`: 6 m guard 24 %, bat 31 %). `node tools/evidence/cites.mjs REPORT.md`.
+
+## Session 4 (15:10 to 16:39)
+
+- 15:11 start. ASTRA RUNNING stall since 15:08 (pid 47220 node alive, hard stop 16:22). No Godot of mine. Waiting.
