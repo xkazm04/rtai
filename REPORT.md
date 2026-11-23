@@ -85,6 +85,13 @@ Final HEAD: TODO. Gate: TODO (`node tools/gate/run.mjs --rev=HEAD` line + `gate.
   (calls 01 to 03 checked them); the trooper rest/lead and the stall bot fix change gauntlet bot results (every
   gauntlet batch differs from main's; that is item 3's and 4's point), not a shipped replay. A deliberate change
   is recorded in `docs/decisions.md` (pressure trooper and stall lines).
+- After `MILESTONE keys` (re-check of item 3, static, by reading `git diff 0779185ac n26-keys`; no Godot was free to
+  re-run it): keys sets `rivet_motion.json` `hold_sprints` false, stops Rivet's motion while a car is driven or its door
+  is open (`player_motion.gd`), and gives the gauntlet bot a per-number deploy choice (`bot_forms.gd`). The rocket arena
+  drives Rivet at `sprint_mps` directly and the gauntlet bot presses `sprint` and `dash` as separate actions, so item 3's
+  arena table should not move; the bot's ghost deploys do change, so **the item 5 medians are pre-merge numbers**:
+  re-run them on the merged tree before quoting them to the owner (`tools/gauntlet/batch.mjs` with the args recorded in
+  `evidence/n26-pressure/medians/salt0/batch.json`: profile all, pick greedy, controls wheel, 10 seeds, 40 waves, salt 0).
 
 ## Next steps
 
