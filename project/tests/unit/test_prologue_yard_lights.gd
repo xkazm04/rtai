@@ -17,6 +17,20 @@ func test_legacy_dressings_have_no_local_grade_or_lights() -> void:
 	for id: String in ["plain", "torn_line"]:
 		var look: PrologueYardDressing = PrologueYardDressing.resolve(id)
 		assert_null(look.lights, id)
+		assert_eq(look.ground_shade, 1.0, id)
+
+
+func test_ground_shade_modulates_only_the_floor_drawing() -> void:
+	var skins: DataTable = DataTable.open(PrologueYardDressing.TABLE, PrologueYardDressing.SCHEMA)
+	var stage: DataTable = DataTable.open(PrologueGame.TABLE, PrologueGame.SCHEMA)
+	var plain: Dictionary = skins.raw["dressings"]["plain"]
+	plain["ground_shade"] = 0.57
+	stage.raw["yard"]["dressing"] = "plain"
+	var floor_view: PrologueFloor = autofree(PrologueFloor.new())
+	floor_view.plan = PrologueYard.from_stage(stage, skins)
+	floor_view._ready()
+	assert_eq(floor_view.self_modulate, Color(0.57, 0.57, 0.57))
+	assert_eq(floor_view.modulate, Color.WHITE, "children keep their own ink")
 
 
 func test_dusk_registers_the_grade_and_decodes_both_inks_from_the_row() -> void:

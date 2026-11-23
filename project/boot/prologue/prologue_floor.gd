@@ -14,9 +14,13 @@ var _paint: PrologueYardPaint = PrologueYardPaint.new()
 
 
 func _ready() -> void:
-	if plan != null and plan.dressing.ochre_strength > 0.0:
+	if plan == null:
+		return
+	var shade: float = plan.dressing.ground_shade
+	self_modulate = Color(shade, shade, shade)
+	if plan.dressing.ochre_strength > 0.0:
 		_paint.attach_ochre(self, plan)
-	if plan != null and plan.dressing.paint_id == "torn_line":
+	if plan.dressing.paint_id == "torn_line":
 		_use_painted_cracks()
 
 

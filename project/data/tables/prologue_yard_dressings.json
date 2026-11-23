@@ -131,6 +131,7 @@
           8
         ]
       },
+      "ground_shade": 0.81,
       "layout": {
         "cover": [
           {
@@ -737,7 +738,7 @@
           "accent_keep": 0.92,
           "gamma": 1.1,
           "id": "dusk",
-          "paper_level": 0.84
+          "paper_level": 0.92
         },
         "kinds": [
           {

@@ -163,6 +163,12 @@
           },
           "type": "array"
         },
+        "ground_shade": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
         "include_plain_outside": {
           "type": "boolean"
         },
