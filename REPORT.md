@@ -35,6 +35,7 @@ Note on the lessons table: the wheel card waits for the player to open the wheel
 - `hud_view.gd` mutate 0/20: draw code; no test reads the drawn money card, so the hide is evidenced by the still only.
 - `prologue_game.gd` mutate 64.9 %: 13 survivors (the entry's wiring; the battle and prompts have their own tests).
 - At 32 px/m Mulroney's pump reads as a small cream marker above his name tag; the 64 px/m close-up shows it, the 32 px/m clip barely.
+- `shotgun-close-64ppm.mp4` is 12.00 s, under the 15 s clip floor (it covers two pump windows; the 32 px/m `shotgun.mp4` is 20 s).
 - The yard still looks like the tiled floor in this lane's films: the rebuilt yard is the yard lane's, on its own branch.
 
 ## What blocked or slowed you

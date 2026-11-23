@@ -75,3 +75,10 @@ NEXT (session 4) amended: if package 05 commits, the final gate must re-run on i
 - 05:52 re-taking `newgame-to-quest1.mp4` on 667f70be2 (`project/dev/prologue/capture/film.ps1 -Clip newgame`) so the title card reads "Prologue"; the 04:19 take is kept until the new one checks out.
 - 06:08 MILESTONE film re-taken on 667f70be2: `newgame-to-quest1.mp4` 170.70 s 1920x1080 60 fps with sound (ffprobe), opens on "RTAI: Uprising / Prologue", ends on `rivet-line-stopped`; film pilot result identical to the headless one (9495 / 9675 / 9676). I looked at t=1 and t=168. The 2.9 GB AVI deleted. Masters pruned to the 15 files frames.json names (removed the superseded `film-title.png`, `newgame-prologue-first.png`, `handover-quest1-first-line.png`, `shotgun-pump.png`); REPORT citations follow.
 - 06:10 REPORT filled (gate line, What works, What does not, blocked, calls, merge notes, next steps, ledger 6 calls / 270 min). cites: only `evidence/briefs/n25/` UNTRACKED until this commit.
+- 06:12 Session 4 ends. No Astra running (astra.lock gone; last call `title` exit 0). No Godot of mine running.
+
+NEXT (session 5, from ~06:35, freeze 07:10, report 07:20, end 07:40):
+1. Nothing new in product files (code frozen since 05:40; final gate PASS on 667f70be2, `build/gate/667f70be223a/gate.json`).
+2. After 07:10: `node tools/gate/run.mjs --rev=HEAD --reels` once (about 35 min: evidence ~19 + reels ~14; HEAD is docs-only past 667f70be2, so the snapshot gate is the same code). If it cannot finish by 07:40, say so in REPORT; the 667f70be2 PASS stands.
+3. grep yard JOURNAL for `NEED path` / `MILESTONE yard-shape` one last time (none at 06:10).
+4. REPORT is final except the reels line; re-run `node tools/evidence/cites.mjs REPORT.md`; commit JOURNAL.md / REPORT.md by path (`git commit -- JOURNAL.md REPORT.md`).
