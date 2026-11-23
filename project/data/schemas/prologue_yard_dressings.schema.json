@@ -1,0 +1,270 @@
+{
+  "$defs": {
+    "cover_art": {
+      "additionalProperties": false,
+      "properties": {
+        "art": {
+          "pattern": "^res://(features/[a-z0-9_/]+|boot/prologue/art/[a-z0-9_/]+)\\.png$",
+          "type": "string"
+        },
+        "crop": {
+          "$ref": "#/$defs/crop"
+        }
+      },
+      "required": [
+        "art"
+      ],
+      "type": "object"
+    },
+    "crop": {
+      "additionalProperties": false,
+      "properties": {
+        "origin": {
+          "items": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "size": {
+          "items": {
+            "maximum": 1,
+            "minimum": 0.001,
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "origin",
+        "size"
+      ],
+      "type": "object"
+    },
+    "dressing": {
+      "additionalProperties": false,
+      "properties": {
+        "cover": {
+          "additionalProperties": false,
+          "properties": {
+            "broken_impeller": {
+              "$ref": "#/$defs/cover_art"
+            },
+            "burnt_pickup": {
+              "$ref": "#/$defs/cover_art"
+            },
+            "burnt_van": {
+              "$ref": "#/$defs/cover_art"
+            },
+            "east_plant_wall": {
+              "$ref": "#/$defs/cover_art"
+            },
+            "fallen_cooling_bank": {
+              "$ref": "#/$defs/cover_art"
+            },
+            "fuel_vessel": {
+              "$ref": "#/$defs/cover_art"
+            },
+            "middle_saw_bay": {
+              "$ref": "#/$defs/cover_art"
+            },
+            "press_carcass": {
+              "$ref": "#/$defs/cover_art"
+            },
+            "scrap_skip": {
+              "$ref": "#/$defs/cover_art"
+            },
+            "split_transformer": {
+              "$ref": "#/$defs/cover_art"
+            },
+            "west_saw_bay": {
+              "$ref": "#/$defs/cover_art"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "decals": {
+          "items": {
+            "$ref": "#/$defs/piece"
+          },
+          "type": "array"
+        },
+        "factory_front": {
+          "items": {
+            "$ref": "#/$defs/piece"
+          },
+          "type": "array"
+        },
+        "ground": {
+          "items": {
+            "$ref": "#/$defs/layer"
+          },
+          "type": "array"
+        },
+        "include_plain_outside": {
+          "type": "boolean"
+        },
+        "ochre_strength": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "outside": {
+          "items": {
+            "$ref": "#/$defs/piece"
+          },
+          "type": "array"
+        }
+      },
+      "required": [],
+      "type": "object"
+    },
+    "layer": {
+      "additionalProperties": false,
+      "properties": {
+        "rect_m": {
+          "$ref": "#/$defs/rect"
+        },
+        "texture": {
+          "pattern": "^res://(features/[a-z0-9_/]+|boot/prologue/art/[a-z0-9_/]+)\\.png$",
+          "type": "string"
+        },
+        "tile_size_m": {
+          "items": {
+            "minimum": 0.001,
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "tiled": {
+          "type": "boolean"
+        },
+        "tint": {
+          "pattern": "^[a-fA-F0-9]{6}([a-fA-F0-9]{2})?$",
+          "type": "string"
+        },
+        "wash": {
+          "pattern": "^[a-fA-F0-9]{6}([a-fA-F0-9]{2})?$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rect_m",
+        "texture",
+        "tiled"
+      ],
+      "type": "object"
+    },
+    "piece": {
+      "additionalProperties": false,
+      "properties": {
+        "art": {
+          "pattern": "^res://(features/[a-z0-9_/]+|boot/prologue/art/[a-z0-9_/]+)\\.png$",
+          "type": "string"
+        },
+        "at": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "flip": {
+          "type": "boolean"
+        },
+        "ochre": {
+          "type": "boolean"
+        },
+        "rotation_deg": {
+          "type": "number"
+        },
+        "size_m": {
+          "items": {
+            "minimum": 0.001,
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "tint": {
+          "pattern": "^[a-fA-F0-9]{6}([a-fA-F0-9]{2})?$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "art",
+        "at",
+        "rotation_deg",
+        "size_m"
+      ],
+      "type": "object"
+    },
+    "rect": {
+      "additionalProperties": false,
+      "properties": {
+        "origin": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "size": {
+          "items": {
+            "minimum": 0.001,
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "origin",
+        "size"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "gtai.prologue_yard_dressings/1",
+  "additionalProperties": false,
+  "properties": {
+    "dressings": {
+      "additionalProperties": {
+        "$ref": "#/$defs/dressing"
+      },
+      "properties": {
+        "plain": {
+          "$ref": "#/$defs/dressing"
+        }
+      },
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+        "type": "string"
+      },
+      "required": [
+        "plain"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.prologue_yard_dressings/1"
+    }
+  },
+  "required": [
+    "dressings",
+    "schema"
+  ],
+  "type": "object"
+}

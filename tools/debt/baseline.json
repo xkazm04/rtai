@@ -135,7 +135,9 @@
         "2026-11-22: dev/gauntlet fire_gaps probe for n24 pressure (dev_loc 30712 -> 31109)",
         "2026-11-22: deflect_share probe for n24 pressure (dev_loc 31105 -> 31273)",
         "2026-11-23: Scope the full-return demonstration to the plasma sword chapter and restore the prior arena tuning at the cut. (dev_loc 31273 -> 31290)",
-        "2026-11-23: The pressure film driver stages the requested live guard, blade, wave and launcher comparisons and checks native pixels per metre for every capture. (dev_loc 31290 -> 31672)"
+        "2026-11-23: The pressure film driver stages the requested live guard, blade, wave and launcher comparisons and checks native pixels per metre for every capture. (dev_loc 31290 -> 31672)",
+        "2026-11-23: Fixed-tick prologue yard stills at two print scales (dev_loc 30712 -> 30813)",
+        "2026-11-23: yard film entry and frame probe for n25 yard (dev_loc 30813 -> 31065)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -160,6 +162,7 @@
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
         "project/dev/prologue": 220,
+        "project/dev/prologue_yard": 353,
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 1096,
@@ -176,7 +179,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 33018
+      "total": 33371
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -442,7 +445,8 @@
         "2026-11-22: Merge of controls, moves and loop requires their distinct KNOWN_FLAGS in launch_args.gd (+2 lines). (files_past_soft_cap 67 -> 67)",
         "2026-11-22: --prologue-stills for n23 prologue (files_past_soft_cap 67 -> 67)",
         "2026-11-22: --clip for n23 prologue (files_past_soft_cap 67 -> 67)",
-        "2026-11-22: n23 merge: launch_args KNOWN_FLAGS holds both the loop's and the prologue's flags (files_past_soft_cap 67 -> 67)"
+        "2026-11-22: n23 merge: launch_args KNOWN_FLAGS holds both the loop's and the prologue's flags (files_past_soft_cap 67 -> 67)",
+        "2026-11-23: --yard-dressing for n25 yard (files_past_soft_cap 67 -> 67)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -451,7 +455,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 238,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 219,
+        "project/boot/launch_args.gd": 220,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,

@@ -1,0 +1,1224 @@
+{
+  "dressings": {
+    "plain": {
+      "ground": [
+        {
+          "rect_m": {
+            "origin": [
+              0,
+              0
+            ],
+            "size": [
+              60,
+              34
+            ]
+          },
+          "texture": "res://features/city/art/d5/ground/quay_apron.png",
+          "tile_size_m": [
+            8,
+            8
+          ],
+          "tiled": true,
+          "tint": "ffffff",
+          "wash": "37333046"
+        }
+      ],
+      "outside": [
+        {
+          "art": "res://features/city/art/roofs/building_warehouse.png",
+          "at": [
+            -11,
+            24
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            16.4,
+            8.4
+          ]
+        },
+        {
+          "art": "res://features/city/art/roofs/roof_sawtooth.png",
+          "at": [
+            71,
+            22
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            15,
+            12
+          ]
+        },
+        {
+          "art": "res://features/city/art/roofs/building_warehouse.png",
+          "at": [
+            -5,
+            58
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            16.4,
+            8.4
+          ]
+        },
+        {
+          "art": "res://features/city/art/roofs/roof_skylights.png",
+          "at": [
+            16,
+            59
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            14,
+            9
+          ]
+        },
+        {
+          "art": "res://features/city/art/roofs/building_warehouse.png",
+          "at": [
+            41,
+            58
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            16.4,
+            8.4
+          ]
+        },
+        {
+          "art": "res://features/city/art/roofs/roof_sawtooth.png",
+          "at": [
+            65,
+            59
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            15,
+            10
+          ]
+        },
+        {
+          "art": "res://features/city/art/roofs/building_warehouse.png",
+          "at": [
+            87,
+            58
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            16.4,
+            8.4
+          ]
+        }
+      ]
+    },
+    "torn_line": {
+      "cover": {
+        "burnt_pickup": {
+          "art": "res://boot/prologue/art/torn_line/forklift.png"
+        },
+        "burnt_van": {
+          "art": "res://boot/prologue/art/torn_line/conveyor.png"
+        },
+        "east_plant_wall": {
+          "art": "res://boot/prologue/art/torn_line/loading_hall.png"
+        },
+        "fallen_cooling_bank": {
+          "art": "res://boot/prologue/art/torn_line/fallen_fridges.png"
+        },
+        "fuel_vessel": {
+          "art": "res://boot/prologue/art/torn_line/appliance_pallets.png"
+        },
+        "middle_saw_bay": {
+          "art": "res://boot/prologue/art/torn_line/blown_hall.png"
+        },
+        "press_carcass": {
+          "art": "res://boot/prologue/art/torn_line/welding_arm.png"
+        },
+        "scrap_skip": {
+          "art": "res://boot/prologue/art/torn_line/appliance_skip.png"
+        },
+        "split_transformer": {
+          "art": "res://boot/prologue/art/torn_line/transformer_cabinet.png"
+        },
+        "west_saw_bay": {
+          "art": "res://boot/prologue/art/torn_line/west_hall.png"
+        }
+      },
+      "decals": [
+        {
+          "art": "res://boot/prologue/art/torn_line/cracks.png",
+          "at": [
+            7,
+            23.2
+          ],
+          "rotation_deg": 153,
+          "size_m": [
+            5.4,
+            3
+          ],
+          "tint": "ffffff81"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/cracks.png",
+          "at": [
+            52.5,
+            18.6
+          ],
+          "flip": true,
+          "rotation_deg": 28,
+          "size_m": [
+            6.3,
+            3.5
+          ],
+          "tint": "ffffff80"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/cracks.png",
+          "at": [
+            25.7,
+            30.5
+          ],
+          "rotation_deg": -16,
+          "size_m": [
+            3.7,
+            2.1
+          ],
+          "tint": "ffffff65"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/bay_line_c.png",
+          "at": [
+            9.47,
+            12.48
+          ],
+          "ochre": true,
+          "rotation_deg": 90,
+          "size_m": [
+            3.99,
+            0.23
+          ],
+          "tint": "ffffffd6"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/bay_line_a.png",
+          "at": [
+            5.89,
+            12.49
+          ],
+          "ochre": true,
+          "rotation_deg": 90,
+          "size_m": [
+            3.99,
+            0.23
+          ],
+          "tint": "ffffffd6"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/bay_line_b.png",
+          "at": [
+            2.22,
+            12.48
+          ],
+          "ochre": true,
+          "rotation_deg": 90,
+          "size_m": [
+            3.98,
+            0.23
+          ],
+          "tint": "ffffffd6"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/bay_line_c.png",
+          "at": [
+            5.85,
+            10.56
+          ],
+          "ochre": true,
+          "rotation_deg": 0,
+          "size_m": [
+            7.37,
+            0.22
+          ],
+          "tint": "ffffffd6"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/bay_line_a.png",
+          "at": [
+            43,
+            8.55
+          ],
+          "ochre": true,
+          "rotation_deg": 0,
+          "size_m": [
+            6.25,
+            0.23
+          ],
+          "tint": "ffffffd6"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/bay_line_b.png",
+          "at": [
+            49.1,
+            8.55
+          ],
+          "ochre": true,
+          "rotation_deg": 0,
+          "size_m": [
+            6.15,
+            0.23
+          ],
+          "tint": "ffffffd6"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/bay_line_c.png",
+          "at": [
+            53.15,
+            8.55
+          ],
+          "ochre": true,
+          "rotation_deg": 0,
+          "size_m": [
+            2.2,
+            0.23
+          ],
+          "tint": "ffffffd6"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/bay_corner.png",
+          "at": [
+            54.94,
+            9.23
+          ],
+          "flip": true,
+          "ochre": true,
+          "rotation_deg": 0,
+          "size_m": [
+            1.55,
+            1.5
+          ],
+          "tint": "ffffffd6"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/bay_line_b.png",
+          "at": [
+            39.9,
+            11.17
+          ],
+          "ochre": true,
+          "rotation_deg": 90,
+          "size_m": [
+            5.38,
+            0.26
+          ],
+          "tint": "ffffffd6"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/bay_line_c.png",
+          "at": [
+            46.15,
+            11.17
+          ],
+          "flip": true,
+          "ochre": true,
+          "rotation_deg": 90,
+          "size_m": [
+            5.38,
+            0.26
+          ],
+          "tint": "ffffffd6"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/bay_line_a.png",
+          "at": [
+            50.75,
+            11.17
+          ],
+          "ochre": true,
+          "rotation_deg": 90,
+          "size_m": [
+            5.38,
+            0.26
+          ],
+          "tint": "ffffffd6"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/bay_line_c.png",
+          "at": [
+            55.63,
+            11.9
+          ],
+          "ochre": true,
+          "rotation_deg": 90,
+          "size_m": [
+            3.95,
+            0.26
+          ],
+          "tint": "ffffffd6"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/bay_line_a.png",
+          "at": [
+            34.05,
+            7.5
+          ],
+          "ochre": true,
+          "rotation_deg": 90,
+          "size_m": [
+            6.15,
+            0.26
+          ],
+          "tint": "ffffffd6"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/bay_line_b.png",
+          "at": [
+            34.05,
+            19.3
+          ],
+          "flip": true,
+          "ochre": true,
+          "rotation_deg": 90,
+          "size_m": [
+            8,
+            0.26
+          ],
+          "tint": "ffffffd6"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/bay_line_c.png",
+          "at": [
+            34.05,
+            27.75
+          ],
+          "ochre": true,
+          "rotation_deg": 90,
+          "size_m": [
+            6.95,
+            0.26
+          ],
+          "tint": "ffffffd6"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/bay_line_a.png",
+          "at": [
+            37.95,
+            11.65
+          ],
+          "flip": true,
+          "ochre": true,
+          "rotation_deg": 90,
+          "size_m": [
+            6.4,
+            0.26
+          ],
+          "tint": "ffffffd6"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/bay_line_b.png",
+          "at": [
+            37.95,
+            19.95
+          ],
+          "ochre": true,
+          "rotation_deg": 90,
+          "size_m": [
+            8.35,
+            0.26
+          ],
+          "tint": "ffffffd6"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/bay_line_c.png",
+          "at": [
+            37.95,
+            27.95
+          ],
+          "flip": true,
+          "ochre": true,
+          "rotation_deg": 90,
+          "size_m": [
+            6.65,
+            0.26
+          ],
+          "tint": "ffffffd6"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/scorch_wide.png",
+          "at": [
+            15.1,
+            3.05
+          ],
+          "rotation_deg": 135,
+          "size_m": [
+            5.45,
+            3.35
+          ],
+          "tint": "ffffffa2"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/scorch_small.png",
+          "at": [
+            32.57,
+            2.64
+          ],
+          "rotation_deg": 103,
+          "size_m": [
+            4.55,
+            3
+          ],
+          "tint": "ffffff9e"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/scorch_small.png",
+          "at": [
+            24.4,
+            11.25
+          ],
+          "rotation_deg": 118,
+          "size_m": [
+            3.4,
+            2.1
+          ],
+          "tint": "ffffff83"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/oil_drag.png",
+          "at": [
+            13.5,
+            8
+          ],
+          "rotation_deg": 109.65,
+          "size_m": [
+            14.87,
+            1.23
+          ],
+          "tint": "ffffffd6"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/tyre_turn.png",
+          "at": [
+            16.76,
+            24.93
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            6.65,
+            2.65
+          ],
+          "tint": "ffffffb0"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/tyre_sweep.png",
+          "at": [
+            20.72,
+            22.72
+          ],
+          "rotation_deg": -26,
+          "size_m": [
+            2.85,
+            1.65
+          ],
+          "tint": "ffffff7e"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/rubble_spill.png",
+          "at": [
+            24.1,
+            10.75
+          ],
+          "rotation_deg": 11,
+          "size_m": [
+            3.7,
+            2.35
+          ],
+          "tint": "ffffffef"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/enamel_panel.png",
+          "at": [
+            15.88,
+            5.85
+          ],
+          "rotation_deg": 34,
+          "size_m": [
+            0.79,
+            0.88
+          ],
+          "tint": "ffffffec"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/door_ring.png",
+          "at": [
+            13.65,
+            9.28
+          ],
+          "rotation_deg": -16,
+          "size_m": [
+            0.64,
+            0.66
+          ],
+          "tint": "fffffff2"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/enamel_spill.png",
+          "at": [
+            11.95,
+            12.85
+          ],
+          "rotation_deg": 26,
+          "size_m": [
+            2.32,
+            1.25
+          ],
+          "tint": "ffffffed"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/drum_ring.png",
+          "at": [
+            9.25,
+            16.32
+          ],
+          "rotation_deg": -9,
+          "size_m": [
+            0.72,
+            0.72
+          ],
+          "tint": "ffffffed"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/enamel_spill.png",
+          "at": [
+            46.12,
+            27.72
+          ],
+          "flip": true,
+          "rotation_deg": -27,
+          "size_m": [
+            2.8,
+            1.51
+          ],
+          "tint": "fffffff0"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/door_ring.png",
+          "at": [
+            48.45,
+            25.56
+          ],
+          "rotation_deg": 22,
+          "size_m": [
+            0.72,
+            0.73
+          ],
+          "tint": "fffffff0"
+        },
+        {
+          "art": "res://features/city/art/decals/oil_slick.png",
+          "at": [
+            13.65,
+            15.8
+          ],
+          "rotation_deg": 14,
+          "size_m": [
+            4.2,
+            1.52
+          ],
+          "tint": "ffffffdb"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/drum_burn.png",
+          "at": [
+            22.6,
+            14.9
+          ],
+          "rotation_deg": -21,
+          "size_m": [
+            3.15,
+            2.56
+          ],
+          "tint": "ffffffe0"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/drum_burn.png",
+          "at": [
+            46.3,
+            19.25
+          ],
+          "flip": true,
+          "rotation_deg": 141,
+          "size_m": [
+            3.75,
+            2.9
+          ],
+          "tint": "ffffffad"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/rubble_spill.png",
+          "at": [
+            25.6,
+            20.35
+          ],
+          "rotation_deg": -36,
+          "size_m": [
+            3.7,
+            2.3
+          ],
+          "tint": "eeeeeee6"
+        },
+        {
+          "art": "res://features/city/art/decals/glass_shards.png",
+          "at": [
+            23.75,
+            20.8
+          ],
+          "rotation_deg": 26,
+          "size_m": [
+            1.65,
+            1.3
+          ],
+          "tint": "ffffffed"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/drum_spill.png",
+          "at": [
+            16.9,
+            18.35
+          ],
+          "rotation_deg": -17,
+          "size_m": [
+            1.72,
+            0.94
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/drum_spill.png",
+          "at": [
+            42.1,
+            22.4
+          ],
+          "flip": true,
+          "rotation_deg": 146,
+          "size_m": [
+            1.45,
+            0.8
+          ]
+        },
+        {
+          "art": "res://features/city/art/decals/gouge.png",
+          "at": [
+            26.45,
+            23.1
+          ],
+          "rotation_deg": -40,
+          "size_m": [
+            4.6,
+            1.25
+          ],
+          "tint": "ffffffc9"
+        },
+        {
+          "art": "res://features/city/art/decals/gouge.png",
+          "at": [
+            10.1,
+            19.35
+          ],
+          "flip": true,
+          "rotation_deg": 114,
+          "size_m": [
+            2.35,
+            0.8
+          ],
+          "tint": "ffffffaf"
+        }
+      ],
+      "factory_front": [
+        {
+          "art": "res://boot/prologue/art/torn_line/peeled_door_west.png",
+          "at": [
+            16.32,
+            1.72
+          ],
+          "rotation_deg": -16,
+          "size_m": [
+            4.6,
+            2.06
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/peeled_door_east.png",
+          "at": [
+            31.68,
+            1.85
+          ],
+          "rotation_deg": 23,
+          "size_m": [
+            4.26,
+            1.85
+          ]
+        }
+      ],
+      "ground": [
+        {
+          "rect_m": {
+            "origin": [
+              -1,
+              -6
+            ],
+            "size": [
+              62,
+              40
+            ]
+          },
+          "texture": "res://boot/prologue/art/torn_line/concrete.png",
+          "tiled": false,
+          "wash": "d5c9b939"
+        }
+      ],
+      "include_plain_outside": true,
+      "ochre_strength": 0.95,
+      "outside": [
+        {
+          "art": "res://boot/prologue/art/torn_line/loading_hall.png",
+          "at": [
+            12.15,
+            -2.86
+          ],
+          "ochre": true,
+          "rotation_deg": 0,
+          "size_m": [
+            18.4,
+            7.24
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/west_hall.png",
+          "at": [
+            23.84,
+            -3.03
+          ],
+          "ochre": true,
+          "rotation_deg": 0,
+          "size_m": [
+            7.2,
+            6.89
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/loading_hall.png",
+          "at": [
+            35.83,
+            -2.83
+          ],
+          "ochre": true,
+          "rotation_deg": 0,
+          "size_m": [
+            18.4,
+            7.24
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/concrete.png",
+          "at": [
+            78.45,
+            5.9
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            36,
+            19.8
+          ],
+          "tint": "aea498"
+        },
+        {
+          "art": "res://features/city/art/d5/ground/dock_yard.png",
+          "at": [
+            68.1,
+            31.1
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            15.2,
+            5.8
+          ],
+          "tint": "dbd5c9"
+        },
+        {
+          "art": "res://features/city/art/d5/ground/dock_yard.png",
+          "at": [
+            83.3,
+            31.1
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            15.2,
+            5.8
+          ],
+          "tint": "d1c9bd"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/loading_hall.png",
+          "at": [
+            86,
+            21.75
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            14.2,
+            6.05
+          ],
+          "tint": "dcd5c9"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/loading_hall.png",
+          "at": [
+            71,
+            5
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            20.4,
+            8.3
+          ],
+          "tint": "ded7cc"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/west_hall.png",
+          "at": [
+            88.4,
+            9
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            10.9,
+            10.4
+          ],
+          "tint": "d3cec3"
+        },
+        {
+          "art": "res://features/city/art/props/container2.png",
+          "at": [
+            65,
+            32.15
+          ],
+          "rotation_deg": -3,
+          "size_m": [
+            6.35,
+            2.5
+          ]
+        },
+        {
+          "art": "res://features/city/art/props/container3.png",
+          "at": [
+            83.4,
+            30.25
+          ],
+          "rotation_deg": 3,
+          "size_m": [
+            6.6,
+            2.6
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/boundary_wall.png",
+          "at": [
+            82.5,
+            33.4
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            13.2,
+            1.15
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/concrete.png",
+          "at": [
+            60.7,
+            51.7
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            32,
+            4
+          ],
+          "tint": "aaa195"
+        },
+        {
+          "art": "res://features/city/art/d5/ground/dock_yard.png",
+          "at": [
+            53.35,
+            57.55
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            7.8,
+            7.7
+          ],
+          "tint": "c3bcb1"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/boundary_wall.png",
+          "at": [
+            48.15,
+            50.15
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            6.9,
+            0.9
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/boundary_wall.png",
+          "at": [
+            66.2,
+            50.15
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            21.2,
+            0.9
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/appliance_pallets.png",
+          "at": [
+            55.45,
+            55.2
+          ],
+          "rotation_deg": 4,
+          "size_m": [
+            2.4,
+            1.6
+          ],
+          "tint": "e1dad0"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/boundary_wall.png",
+          "at": [
+            45.03,
+            51.75
+          ],
+          "rotation_deg": 90,
+          "size_m": [
+            3.9,
+            0.65
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/boundary_wall.png",
+          "at": [
+            76.37,
+            51.75
+          ],
+          "rotation_deg": 90,
+          "size_m": [
+            3.9,
+            0.65
+          ]
+        },
+        {
+          "art": "res://features/city/art/props/dock_oil_drums.png",
+          "at": [
+            58.65,
+            52.05
+          ],
+          "rotation_deg": 12,
+          "size_m": [
+            1.8,
+            1.84
+          ],
+          "tint": "d0c8b9"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/tyre_turn.png",
+          "at": [
+            53.5,
+            52.8
+          ],
+          "rotation_deg": 77,
+          "size_m": [
+            2.7,
+            1.22
+          ],
+          "tint": "ffffffb6"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/boundary_wall.png",
+          "at": [
+            49.8,
+            57.45
+          ],
+          "rotation_deg": 90,
+          "size_m": [
+            8,
+            0.65
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/boundary_wall.png",
+          "at": [
+            56.9,
+            57.45
+          ],
+          "rotation_deg": 90,
+          "size_m": [
+            8,
+            0.65
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/boundary_wall.png",
+          "at": [
+            53.35,
+            61.1
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            7.5,
+            0.65
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/concrete.png",
+          "at": [
+            -14,
+            8.25
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            26.4,
+            22.6
+          ],
+          "tint": "bbb2a5"
+        },
+        {
+          "art": "res://features/city/art/d5/ground/dock_yard.png",
+          "at": [
+            -10.4,
+            13.32
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            18.8,
+            12.2
+          ],
+          "tint": "cdc6b9"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/loading_hall.png",
+          "at": [
+            -12.6,
+            3.5
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            21.2,
+            8.2
+          ],
+          "tint": "ded9cd"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/boundary_wall.png",
+          "at": [
+            -24.8,
+            11.7
+          ],
+          "rotation_deg": 90,
+          "size_m": [
+            16,
+            0.85
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/boundary_wall.png",
+          "at": [
+            -21.68,
+            19.27
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            6.9,
+            0.86
+          ]
+        },
+        {
+          "art": "res://features/city/art/props/container2.png",
+          "at": [
+            -20.5,
+            13.15
+          ],
+          "rotation_deg": 88,
+          "size_m": [
+            5.8,
+            2.32
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/appliance_pallets.png",
+          "at": [
+            -4.25,
+            9.45
+          ],
+          "rotation_deg": -4,
+          "size_m": [
+            4.1,
+            2.6
+          ],
+          "tint": "e1dad0"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/tyre_turn.png",
+          "at": [
+            -10.55,
+            13.6
+          ],
+          "rotation_deg": -62,
+          "size_m": [
+            4.4,
+            2.2
+          ],
+          "tint": "ffffffb6"
+        },
+        {
+          "art": "res://features/city/art/props/dock_oil_drums.png",
+          "at": [
+            -15.9,
+            18
+          ],
+          "rotation_deg": 11,
+          "size_m": [
+            1.8,
+            1.8
+          ],
+          "tint": "d0c8b9"
+        },
+        {
+          "art": "res://features/city/art/d5/ground/dock_yard.png",
+          "at": [
+            -11,
+            31.12
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            20,
+            5.55
+          ],
+          "tint": "b8b0a4"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/boundary_wall.png",
+          "at": [
+            -14.85,
+            33.49
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            12.4,
+            0.86
+          ]
+        }
+      ]
+    }
+  },
+  "schema": "gtai.prologue_yard_dressings/1"
+}

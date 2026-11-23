@@ -1,0 +1,8 @@
+{
+  "source": "gtai-art/factory-n25/pieces/out/ground-concrete-b.png",
+  "px_per_m": 96,
+  "mode": "ground",
+  "pieces": [
+    {"id": "concrete", "box": [12, 485, 905, 526], "size_m": [9.42708, 5.47917]}
+  ]
+}

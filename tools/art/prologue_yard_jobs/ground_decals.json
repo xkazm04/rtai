@@ -1,0 +1,24 @@
+{
+  "source": "gtai-art/factory-n25/pieces/out/ground-decals.png",
+  "px_per_m": 80,
+  "fit": true,
+  "background": "#ffffff",
+  "shadow_ink": "#211e1c",
+  "pieces": [
+    {"id": "bay_line_a", "box": [22, 45, 1093, 64], "size_m": [8, 0.19]},
+    {"id": "bay_line_b", "box": [22, 121, 1093, 75], "size_m": [8, 0.19]},
+    {"id": "bay_line_c", "box": [22, 207, 1093, 68], "size_m": [8, 0.19]},
+    {"id": "bay_corner", "box": [1165, 19, 344, 304], "size_m": [1.8, 1.8]},
+    {"id": "oil_drag", "box": [14, 321, 1500, 130], "size_m": [15.2, 1.4], "ink_only": true},
+    {"id": "tyre_sweep", "box": [12, 455, 377, 223], "size_m": [5.2, 3], "ink_only": true},
+    {"id": "tyre_turn", "box": [389, 452, 461, 223], "size_m": [6, 3.1], "ink_only": true},
+    {"id": "scorch_small", "box": [850, 451, 296, 239], "size_m": [3.8, 2.7], "ink_only": true},
+    {"id": "scorch_wide", "box": [1148, 445, 374, 235], "size_m": [5, 3.4], "ink_only": true},
+    {"id": "enamel_spill", "box": [17, 694, 529, 310], "size_m": [3.4, 2]},
+    {"id": "door_ring", "box": [376, 720, 97, 95], "size_m": [0.66, 0.66], "isolate": [23, 20]},
+    {"id": "drum_ring", "box": [407, 850, 130, 133], "size_m": [0.94, 0.94], "isolate": [32, 30]},
+    {"id": "enamel_panel", "box": [40, 741, 183, 213], "size_m": [1.15, 1.35], "isolate": [85, 56]},
+    {"id": "rubble_spill", "box": [578, 698, 381, 295], "size_m": [4, 2.6]},
+    {"id": "cracks", "box": [985, 688, 529, 316], "size_m": [5.2, 3.1], "ink_only": true}
+  ]
+}

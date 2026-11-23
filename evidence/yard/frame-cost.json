@@ -1,0 +1,263 @@
+{
+  "schema": "gtai.yard-frame-cost/1",
+  "seed": 7,
+  "lock": {
+    "taken": "2026-11-23T04:15:39+01:00",
+    "released": "2026-11-23T04:23:18+01:00",
+    "status": "LOCKED"
+  },
+  "view": "tilt70",
+  "order": [
+    "plain",
+    "torn_line",
+    "plain",
+    "torn_line",
+    "plain",
+    "torn_line"
+  ],
+  "measurement": "60 wall-clock seconds from the first process frame. Nearest-rank percentiles of consecutive frame start times.",
+  "cpu_method": "typeperf \\Processor(_Total)\\% Processor Time, weighted complete one-second intervals inside the frame sample, minus CPU seconds of the rendering PID over the same interval.",
+  "logical_processors": 16,
+  "delta": "torn_line minus plain within each round",
+  "runs": [
+    {
+      "round": 1,
+      "status": "LOCKED",
+      "cpu": "AMD Ryzen 7 7800X3D 8-Core Processor",
+      "dressing": "plain",
+      "driver": "d3d12",
+      "elapsed_s": 60.001641,
+      "end_tick": 3569,
+      "end_unix_s": 1795403807.139,
+      "frame_count": 25788,
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "max_fps": 0,
+      "over_16_7_ms": 6,
+      "p50_ms": 2.312,
+      "p99_ms": 3.993,
+      "pid": 68032,
+      "schema": "gtai.yard-frame-sample/1",
+      "start_tick": 0,
+      "start_unix_s": 1795403747.137,
+      "viewport": [
+        1920,
+        1080
+      ],
+      "vsync_disabled": true,
+      "worst_ms": 228.741,
+      "cpu_sample_s": 59.815,
+      "system_cpu_pct": 15.135,
+      "godot_cpu_s": 60.833,
+      "godot_cpu_pct": 6.356,
+      "other_cpu_pct": 8.778
+    },
+    {
+      "round": 1,
+      "status": "LOCKED",
+      "cpu": "AMD Ryzen 7 7800X3D 8-Core Processor",
+      "dressing": "torn_line",
+      "driver": "d3d12",
+      "elapsed_s": 60.000326,
+      "end_tick": 3573,
+      "end_unix_s": 1795403882.495,
+      "frame_count": 27991,
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "max_fps": 0,
+      "over_16_7_ms": 7,
+      "p50_ms": 2.081,
+      "p99_ms": 4.78,
+      "pid": 43000,
+      "schema": "gtai.yard-frame-sample/1",
+      "start_tick": 0,
+      "start_unix_s": 1795403822.494,
+      "viewport": [
+        1920,
+        1080
+      ],
+      "vsync_disabled": true,
+      "worst_ms": 170.248,
+      "cpu_sample_s": 59.691,
+      "system_cpu_pct": 22.702,
+      "godot_cpu_s": 61.782,
+      "godot_cpu_pct": 6.469,
+      "other_cpu_pct": 16.233
+    },
+    {
+      "round": 2,
+      "status": "LOCKED",
+      "cpu": "AMD Ryzen 7 7800X3D 8-Core Processor",
+      "dressing": "plain",
+      "driver": "d3d12",
+      "elapsed_s": 60.002567,
+      "end_tick": 3572,
+      "end_unix_s": 1795403960.209,
+      "frame_count": 18086,
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "max_fps": 0,
+      "over_16_7_ms": 6,
+      "p50_ms": 3.1,
+      "p99_ms": 6.51,
+      "pid": 25696,
+      "schema": "gtai.yard-frame-sample/1",
+      "start_tick": 0,
+      "start_unix_s": 1795403900.206,
+      "viewport": [
+        1920,
+        1080
+      ],
+      "vsync_disabled": true,
+      "worst_ms": 173.777,
+      "cpu_sample_s": 58.708,
+      "system_cpu_pct": 70.396,
+      "godot_cpu_s": 59.96,
+      "godot_cpu_pct": 6.383,
+      "other_cpu_pct": 64.013
+    },
+    {
+      "round": 2,
+      "status": "LOCKED",
+      "cpu": "AMD Ryzen 7 7800X3D 8-Core Processor",
+      "dressing": "torn_line",
+      "driver": "d3d12",
+      "elapsed_s": 60.000322,
+      "end_tick": 3572,
+      "end_unix_s": 1795404036.177,
+      "frame_count": 29032,
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "max_fps": 0,
+      "over_16_7_ms": 3,
+      "p50_ms": 2.091,
+      "p99_ms": 3.384,
+      "pid": 64696,
+      "schema": "gtai.yard-frame-sample/1",
+      "start_tick": 0,
+      "start_unix_s": 1795403976.177,
+      "viewport": [
+        1920,
+        1080
+      ],
+      "vsync_disabled": true,
+      "worst_ms": 171.076,
+      "cpu_sample_s": 58.635,
+      "system_cpu_pct": 20.737,
+      "godot_cpu_s": 60.445,
+      "godot_cpu_pct": 6.443,
+      "other_cpu_pct": 14.294
+    },
+    {
+      "round": 3,
+      "status": "LOCKED",
+      "cpu": "AMD Ryzen 7 7800X3D 8-Core Processor",
+      "dressing": "plain",
+      "driver": "d3d12",
+      "elapsed_s": 60.001396,
+      "end_tick": 3573,
+      "end_unix_s": 1795404111.846,
+      "frame_count": 20519,
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "max_fps": 0,
+      "over_16_7_ms": 4,
+      "p50_ms": 2.663,
+      "p99_ms": 5.535,
+      "pid": 78372,
+      "schema": "gtai.yard-frame-sample/1",
+      "start_tick": 0,
+      "start_unix_s": 1795404051.844,
+      "viewport": [
+        1920,
+        1080
+      ],
+      "vsync_disabled": true,
+      "worst_ms": 161.452,
+      "cpu_sample_s": 58.351,
+      "system_cpu_pct": 66.372,
+      "godot_cpu_s": 58.752,
+      "godot_cpu_pct": 6.293,
+      "other_cpu_pct": 60.079
+    },
+    {
+      "round": 3,
+      "status": "LOCKED",
+      "cpu": "AMD Ryzen 7 7800X3D 8-Core Processor",
+      "dressing": "torn_line",
+      "driver": "d3d12",
+      "elapsed_s": 60.000987,
+      "end_tick": 3570,
+      "end_unix_s": 1795404190.67,
+      "frame_count": 28842,
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "max_fps": 0,
+      "over_16_7_ms": 5,
+      "p50_ms": 2.101,
+      "p99_ms": 3.509,
+      "pid": 44036,
+      "schema": "gtai.yard-frame-sample/1",
+      "start_tick": 0,
+      "start_unix_s": 1795404130.669,
+      "viewport": [
+        1920,
+        1080
+      ],
+      "vsync_disabled": true,
+      "worst_ms": 195.02,
+      "cpu_sample_s": 59.494,
+      "system_cpu_pct": 21.243,
+      "godot_cpu_s": 61.183,
+      "godot_cpu_pct": 6.427,
+      "other_cpu_pct": 14.816
+    }
+  ],
+  "paired_deltas": {
+    "p50_ms": {
+      "rounds": [
+        -0.231,
+        -1.009,
+        -0.562
+      ],
+      "mean": -0.601,
+      "min": -1.009,
+      "max": -0.231
+    },
+    "p99_ms": {
+      "rounds": [
+        0.787,
+        -3.126,
+        -2.026
+      ],
+      "mean": -1.455,
+      "min": -3.126,
+      "max": 0.787
+    },
+    "worst_ms": {
+      "rounds": [
+        -58.493,
+        -2.701,
+        33.568
+      ],
+      "mean": -9.209,
+      "min": -58.493,
+      "max": 33.568
+    },
+    "over_16_7_ms": {
+      "rounds": [
+        1,
+        -3,
+        1
+      ],
+      "mean": -0.333,
+      "min": -3,
+      "max": 1
+    },
+    "other_cpu_pct": {
+      "rounds": [
+        7.455,
+        -49.719,
+        -45.263
+      ],
+      "mean": -29.176,
+      "min": -49.719,
+      "max": 7.455
+    }
+  },
+  "interpretation": "Median frame time fell in all three pairs. Other-process CPU exceeded 60% for the last two plain runs and stayed below 15% for their torn_line partners. This load imbalance limits attribution to the dressing. The p99 and worst-frame differences changed sign across rounds."
+}

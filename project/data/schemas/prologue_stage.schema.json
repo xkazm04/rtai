@@ -588,6 +588,10 @@
           },
           "type": "array"
         },
+        "dressing": {
+          "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+          "type": "string"
+        },
         "fence_depth_m": {
           "minimum": 0.01,
           "type": "number"
@@ -619,6 +623,7 @@
       "required": [
         "cover",
         "debris",
+        "dressing",
         "fence_depth_m",
         "gate_width_m",
         "gate_x_m",

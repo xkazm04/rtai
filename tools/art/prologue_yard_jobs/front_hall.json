@@ -1,0 +1,14 @@
+{
+  "source": "gtai-art/factory-n25/pieces/out/front-hall.png",
+  "px_per_m": 80,
+  "fit": true,
+  "background": "#ffffff",
+  "shadow_ink": "#211e1c",
+  "pieces": [
+    {"id": "west_hall", "box": [179, 0, 587, 532], "size_m": [11, 9.7]},
+    {"id": "blown_hall", "box": [910, 0, 409, 569], "size_m": [6.8, 10.4]},
+    {"id": "loading_hall", "box": [10, 570, 1070, 447], "size_m": [18.4, 7.5]},
+    {"id": "peeled_door_west", "box": [1105, 604, 407, 190], "size_m": [4.8, 2.2]},
+    {"id": "peeled_door_east", "box": [1105, 804, 407, 191], "size_m": [4.4, 2.2]}
+  ]
+}

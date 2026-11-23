@@ -2,41 +2,60 @@ class_name PrologueFloor
 extends StageView
 ## Reuses the quest's concrete, pavement and road tiles at their authored scale.
 
-const CONCRETE: Texture2D = preload("res://features/city/art/d5/ground/quay_apron.png")
+## At the film's widest scale 1920/32 shows 30 m either side. Allow another 10 m,
+## and grow the surround for wider viewports or the camera's 18% vertical lean.
+const MIN_SURROUND_M: float = 40.0
+const BACKLOT: Texture2D = preload("res://features/city/art/ground/road_box_plain.png")
 const SCORCH: Texture2D = preload("res://features/city/art/decals/scorch.png")
 const ZEBRA: Texture2D = preload("res://features/city/art/decals/zebra.png")
 
 var plan: PrologueYard
-var _art_by_id: Dictionary[String, Texture2D] = {}
+var _paint: PrologueYardPaint = PrologueYardPaint.new()
 
 
 func _ready() -> void:
-	for piece: PrologueYard.Wreck in plan.wrecks + plan.debris:
-		_art_by_id[piece.id] = load(piece.art) as Texture2D
+	if plan != null and plan.dressing.ochre_strength > 0.0:
+		_paint.attach_ochre(self, plan)
+	if plan != null and plan.dressing.id == "torn_line":
+		_use_painted_cracks()
+
+
+## The default D5 pass also stamps two diagonal crack families on light surfaces. The factory
+## swatch and decals already carry their own fractures. Change only this stage's material.
+func _use_painted_cracks() -> void:
+	var stage_print: PrintStage = get_parent() as PrintStage
+	if stage_print == null:
+		return
+	for node: Node in stage_print.find_children("*", "ColorRect", true, false):
+		var overlay: LookOverlay = node.get_parent() as LookOverlay
+		if overlay != null and overlay.spec.get("id") == "d5_riso":
+			var pigment: ShaderMaterial = (node as ColorRect).material as ShaderMaterial
+			pigment.set_shader_parameter(&"crack_k", 0.0)
 
 
 func _draw() -> void:
 	if plan == null:
 		return
-	_tiled(plan.yard, "quay_apron", 8.0)
-	draw_rect(_pixels(plan.yard), Color("#37333046"))
-	_kerb(plan.sidewalk)
-	_road(plan.street)
-	draw_set_transform(Ink.px(plan.far_sidewalk.end), PI)
-	_kerb(Rect2(Vector2.ZERO, plan.far_sidewalk.size))
-	draw_set_transform(Vector2.ZERO)
+	var margin: float = _surround_m()
+	_backlot(margin)
+	for layer: PrologueYardDressing.Ground in plan.dressing.ground:
+		_paint.ground(self, layer)
+	_street_surface(margin)
 	_crossing()
-	for stain: Rect2 in plan.scorch_marks:
-		draw_texture_rect(SCORCH, _pixels(stain), false)
-	for piece: PrologueYard.Wreck in plan.debris:
-		_draw_piece(piece, Color.WHITE)
+	# The back fence passes behind the loading hall. The yard perimeter still blocks travel.
+	if not plan.dressing.factory_front.is_empty():
+		_fence(plan.fences[0])
+	_paint.stamps(self, plan.dressing.outside)
+	if plan.dressing.use_stage_decals:
+		_stage_decals()
+	_paint.stamps(self, plan.dressing.decals)
+	_paint.stamps(self, plan.dressing.factory_front)
 	for wreck: PrologueYard.Wreck in plan.wrecks:
-		_draw_piece(wreck, Color("b5a293"))
-		if wreck.shell:
+		var skin: PrologueYardDressing.CoverArt = plan.dressing.cover.get(wreck.id)
+		_paint.wreck(self, wreck, Color("b5a293"), skin)
+		if wreck.shell and skin == null:
 			_broken_sill(_pixels(wreck.footprint))
-	for fence: Rect2 in plan.fences:
-		draw_rect(_pixels(fence), Ink.INK)
-		_tiled(fence, "cage_mesh", 2.0)
+	_draw_fences(margin)
 	for phone: String in stage.layout.phones:
 		_sprite("payphone", stage.layout.phones[phone], Vector2(1.3, 1.3))
 	if not plan.exit_open:
@@ -46,15 +65,60 @@ func _draw() -> void:
 		draw_rect(barrier, Color("57758e"))
 
 
-func _art(id: String) -> Texture2D:
-	return CONCRETE if id == "quay_apron" else super._art(id)
+func _surround_m() -> float:
+	var ppm: Vector2 = get_global_transform_with_canvas().get_scale().abs() * Ink.PX_PER_M
+	var screen_m: Vector2 = get_viewport_rect().size / ppm
+	return maxf(MIN_SURROUND_M, maxf(screen_m.x * 0.5, screen_m.y * 0.68) + 2.0)
 
 
-func _draw_piece(piece: PrologueYard.Wreck, tint: Color) -> void:
-	var art: Texture2D = _art_by_id[piece.id]
-	var cell: Vector2 = art.get_size()
-	var source: Rect2 = Rect2(piece.crop.position * cell, piece.crop.size * cell)
-	draw_texture_rect_region(art, _pixels(piece.footprint), source, tint)
+func _backlot(margin: float) -> void:
+	var surround: Rect2 = plan.yard.merge(plan.far_sidewalk).grow(margin)
+	# The city's 768 px asphalt tile covers 8 m. Keep the backlot continuous behind the fences.
+	var scale_xy: Vector2 = Ink.px(Vector2(8, 8)) / BACKLOT.get_size()
+	draw_set_transform(Ink.px(surround.position), 0.0, scale_xy)
+	var box: Rect2 = Rect2(Vector2.ZERO, Ink.px(surround.size) / scale_xy)
+	draw_texture_rect(BACKLOT, box, true, Color("aaa198"))
+	draw_set_transform(Vector2.ZERO)
+
+
+func _street_surface(margin: float) -> void:
+	var near_walk: Rect2 = plan.sidewalk.grow_individual(margin, 0, margin, 0)
+	var far_walk: Rect2 = plan.far_sidewalk.grow_individual(margin, 0, margin, 0)
+	_kerb(near_walk)
+	_road(plan.street.grow_individual(margin, 0, margin, 0))
+	draw_set_transform(Ink.px(far_walk.end), PI)
+	_kerb(Rect2(Vector2.ZERO, far_walk.size))
+	draw_set_transform(Vector2.ZERO)
+
+
+func _draw_fences(margin: float) -> void:
+	for fence: Rect2 in plan.fences:
+		if fence == plan.fences[0] and not plan.dressing.factory_front.is_empty():
+			continue
+		var visible_box: Rect2 = fence
+		if fence.position.y == plan.yard.position.y:
+			# The simulation's side bounds cross Harbor Road. The visible yard fence ends at the kerb.
+			visible_box.size.y = plan.yard.size.y
+		elif fence.position.y == plan.far_sidewalk.end.y:
+			visible_box = fence.grow_individual(margin, 0, margin, 0)
+		_fence(visible_box)
+	if plan.dressing.id == "torn_line":
+		PrologueYardFence.open_leaf(self, plan)
+
+
+func _fence(box: Rect2) -> void:
+	if plan.dressing.id == "torn_line":
+		PrologueYardFence.panel(self, box)
+		return
+	draw_rect(_pixels(box), Ink.INK)
+	_tiled(box, "cage_mesh", 2.0)
+
+
+func _stage_decals() -> void:
+	for stain: Rect2 in plan.scorch_marks:
+		draw_texture_rect(SCORCH, _pixels(stain), false)
+	for piece: PrologueYard.Wreck in plan.debris:
+		_paint.wreck(self, piece, Color.WHITE, null)
 
 
 ## A fractured concrete lintel under the surviving sawtooth bays. Where a panel
