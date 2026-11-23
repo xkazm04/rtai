@@ -31,3 +31,11 @@ func pack() -> int:
 
 func is_pressed(bit: int) -> bool:
 	return (buttons >> bit) & 1 == 1
+
+
+## StagePilot historically hashed the low word even for selected-deploy input (bit 32).
+## Append the high word only when the tape uses an action added beyond that contract.
+static func write_previous(out: StreamPeerBuffer, previous: int) -> void:
+	out.put_32(previous)
+	if previous >> 33 != 0:
+		out.put_32(previous >> 32)

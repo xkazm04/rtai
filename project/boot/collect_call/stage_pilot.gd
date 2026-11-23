@@ -131,7 +131,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 	if carry != null and (wheel == null or wheel.writes_carry()):
 		carry.write_state(out)
 		throw.write_state(out)
-	out.put_32(_previous)
+	TickInput.write_previous(out, _previous)
 	if ghosts != null:
 		ghosts.write_state(out)
 	if guard != null:
