@@ -1,7 +1,7 @@
 # Brief n26-cast-02-mulroney: Sergeant Mulroney as a cast card, cop quality, pump frames for the yard lane
 
 Lane `cast`, branch `n26-cast`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-prologue` (your cwd).
-**Hard stop 13:45 local** (check `date`). **Commit deadline 13:30 (the MILESTONE needs the sheets committed: commit the cut art + row FIRST, before films).** After it: stills, films and your report only.
+**Hard stop 13:40 local** (check `date`). **Commit deadline 13:25 (the MILESTONE needs the sheets committed: commit the cut art + row FIRST, before films).** After it: stills, films and your report only.
 Before every Godot run: `export APPDATA=C:/Users/kazda/kiro/gtai-n26/appdata/cast` and
 `export GODOT_BIN=C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe`.
 One Godot process at a time. Windowed runs: `--position 0,1440`, `--rendering-driver d3d12`. Kill only your own PIDs.
@@ -38,9 +38,9 @@ two small ink scratches on his back; keep or clean them, your call. He must stay
    yard lane must change (hide the dress when `CastCards.current(&"sergeant_mulroney") != null`, call your pump entry with
    `_battle.fire.shotgun.pump_progress(tick)`) in your report; the director passes it on.
 3. Checklist: run every item of `docs/art/cast-checklist.md` incl. the new planted-feet rule (the tool from call 01:
-   the dev scene and analyser from call 01/01b: `project/dev/cast/cast_feet.gd` + `tools/art/cast_feet.py` / `cast_feet.mjs`; if the patrol cop got a ground-distance drawing advance (STEP_M) apply the same to Mulroney so he passes; read `docs/art/cast-checklist.md` Feet row as committed) on Mulroney at both pitches; add his row to `docs/art/cast-audit.md`. Size: a stocky sergeant at the cop's
+   the dev scene and analyser from call 01/01b: `project/dev/cast/cast_feet.gd` + `tools/art/cast_feet.py` / `cast_feet.mjs`; do NOT copy the patrol cop's STEP_M 0.135 m stepping onto Mulroney (49 drawings/s on the retreat strobes; the director is replacing it with an 8-drawing walk): measure Mulroney as drawn (sole travel + body jump), record the numbers, keep his walk on the normal card stride, and mark Feet FAIL/PENDING honestly; read `docs/art/cast-checklist.md` Feet row as committed) on Mulroney at both pitches; add his row to `docs/art/cast-audit.md`. Size: a stocky sergeant at the cop's
    height (about 1.75 m), NOT taller than Rivet (owner: no heavy slow giants; humans are always weaker than Rivet).
-   `enabled: true` only if every item passes; otherwise `enabled: false` and list the fails.
+   `enabled: true` only if every item passes; otherwise `enabled: false` and list the fails (Feet pending is a fail: ship the row off, the art and the pump entry still land).
 4. Evidence to `C:\Users\kazda\kiro\gtai-masters\n26\cast\`: `mulroney_beside_64ppm_tilt{70,55}.png` (Mulroney beside the
    patrol cop and Rivet, front three-quarter and back, using `project/dev/cast/cast_lineup.gd`), `mulroney_pump_64.png` (the
    four attack columns at 64 px/m down-right facing, and the pump back/forward pair at 32 px/m beside them so the arm travel
@@ -72,3 +72,10 @@ quest 1 and prologue tapes must not move (rendering only). Never fake a number o
 ## Report at the end
 Commits (sha + subject), the sheet and frame names (the attack sheet's pump columns by index), the pump entry's exact
 signature, what the yard lane must change, the checklist row, mutate score, quick gate, evidence paths, and what you could not do.
+
+## Pre-commit hook
+Do not use `--no-verify` by default. The previous call bypassed the hook on three commits because
+`tools/film/kill_reel_life.break.test.mjs` failed (ERR_INVALID_ARG_TYPE, also on `0779185ac`). Re-run that one test alone first
+(`node --test tools/film/kill_reel_life.break.test.mjs`); it may be a load timeout. Only if the hook's ONLY failure is that test,
+failing the same way, may you commit with `--no-verify`, and then the commit body must carry the line
+`hook-bypass: kill_reel_life.break.test.mjs pre-existing on 0779185ac`. Any other hook failure: fix it or stop and report.
