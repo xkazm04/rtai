@@ -29,8 +29,13 @@ Director's review: all first takes except `fall_55` (take 2; take 1 had green in
 1. Cut and pack all eight into `project/features/characters/art/view/{p70,p55}/appliance_warden_{armed_walk,attack,hit,fall}.png`
    (+ `.import`), key-clean, one `steam/ai-provenance/2026-11.jsonl` line per shipped PNG (prompt ref
    `gtai-art/foes-n26/warden/jobs.json#<job>`, cutter edits, sha256). Pack intermediates in `foes-n26/warden/pack/`.
-2. Row `appliance_warden` in `cast_cards.json`, drawn by the existing human card path, planted feet as the patrol cop and
-   Mulroney got them. The prologue today dyes her rig card with an overalls shader and draws a vector pole
+2. Row `appliance_warden` in `cast_cards.json`, drawn by the existing human card path. Her WALK: the 4-drawing walks
+   all fail the Feet rule, so the director had an 8-drawing walk drawn:
+   `C:\Users\kazda\kiro\gtai-art\foes-n26\warden8\out\warden8_armed_walk_{70,55}_{a,b}.png` (layout as cop8: `_a` = down,
+   down-right, right; `_b` = up-right, up; support L in 1-3, R in 5-7; prompts `warden8/jobs.json`). Cut it into
+   `appliance_warden_planted8_armed_walk.png` and put her on the cop8 N-drawing anchored placement as the cop8 and mul-fix
+   calls did (read their commits); her 4-drawing `armed_walk` stays selectable with one value. Check her wound contact
+   against the shadow (Mulroney's boot lifted off it on a hit; reuse whatever fixed his). The prologue today dyes her rig card with an overalls shader and draws a vector pole
    (`project/boot/prologue/prologue_props.gd`, yard-owned: do NOT edit). With the card on, those double-draw. If the catch
    (pin) is not visible to features code, add ONE public entry the yard lane can call (like Mulroney's pump entry) and
    unit-test it. Write down exactly what the yard lane must change in your report.
@@ -51,7 +56,8 @@ Director's review: all first takes except `fall_55` (take 2; take 1 had green in
 `foe_*_card_view.gd`, `cast_*.gd` there, `project/dev/cast/**`, `tools/art/**` (cast tools), `project/tests/unit/test_cast_*.gd`
 (+ `.uid`), `docs/art/cast-checklist.md`, `docs/art/cast-audit.md`, `steam/ai-provenance/2026-11.jsonl` (append),
 `project/boot/launch_args.gd` `KNOWN_FLAGS` (append one line; then `node tools/debt/debt.mjs --update --accept-regression="<flag> for n26 cast"`),
-`tools/debt/baseline.json` (debt tool only), `C:\Users\kazda\kiro\gtai-art\foes-n26\warden\**`.
+`tools/debt/baseline.json` (debt tool only), `C:\Users\kazda\kiro\gtai-art\foes-n26\warden\**`, `C:\Users\kazda\kiro\gtai-art\foes-n26\warden8\**`,
+`project/features/characters/street_*.gd` (walk placement only).
 **Forbidden**: `project/boot/prologue/**`, `prologue_stage.json`, `prologue_yard_dressings.json`, `project/features/player/**`,
 `rivet_*` art, `input_actions.json`, `project/features/combat/kills/**`, `project/features/souls/**`, `ghost_*.json`,
 `combat.json`, `enemies.json`, `weapons.json`, `bosses.json`, `JOURNAL.md`, `REPORT.md`, `evidence/briefs/**`.
