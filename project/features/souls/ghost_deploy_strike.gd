@@ -9,6 +9,7 @@ var press: HaulerForm
 var release_tick: int = -1
 var release_form: StringName = &""
 var release_kills: int = 0
+var release_stuns: int = 0
 var _shorts: Dictionary[Fighter, int] = {}
 
 
@@ -21,6 +22,7 @@ func land(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 	release_tick = stage.tick
 	release_form = ghost.form
 	release_kills = 0
+	release_stuns = 0
 	match ghost.form:
 		KerfStage.GHOST:
 			_kerf(stage, ghost)
@@ -87,6 +89,7 @@ func _ohm(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 		if not foe.alive() or ghost.spot.distance_to(foe.pos) > radius:
 			continue
 		if OhmShortCircuit.short_machine(arena, foe, stage.tick):
+			release_stuns += 1
 			_shorts[foe] = arena.squad_ai.mind_for(foe).stun_until
 			applied = true
 		var dir: Vector2 = ghost.spot.direction_to(foe.pos)

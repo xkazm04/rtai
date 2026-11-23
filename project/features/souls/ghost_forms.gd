@@ -4,10 +4,7 @@ extends RefCounted
 ## base -> entering -> form -> exiting -> base, and form -> switching -> form' (a teal flash, no
 ## base pass). All on whole 60 Hz ticks. A form runs as its powers.json row (SoulPowers: Madness
 ## cost, duration, cooldown); when that power ends (expired, interrupted) the form exits by itself.
-## Input: press_transform() (Q / LB) enters the selected form or exits to base; press_next()
-## (G / RB) selects the next ghost in base, or switches straight to it in a form. A request
-## during a transformation is refused (BUSY): every transformation plays whole. A ghost still
-## locked (GhostLocks, d7-calls ghost-powers-5) is skipped by G and refused by Q (LOCKED).
+## T enters a mastered ghost or exits to base. G / RB cycles ghosts available to the player.
 
 signal form_entering(from: StringName, to: StringName, ticks: int)
 signal form_entered(id: StringName)
@@ -23,6 +20,7 @@ const BUSY: StringName = &"busy"
 const SAME: StringName = &"same"
 
 var table: GhostFormTable = null
+var bond: GhostBond
 var powers: SoulPowers = null
 ## The settled form (BASE while in base); during a transformation the form it leaves.
 var from_id: StringName = BASE
@@ -44,6 +42,7 @@ var _releasing: bool = false
 
 func _init(p_table: GhostFormTable, p_powers: SoulPowers) -> void:
 	table = p_table
+	bond = GhostBond.new(table)
 	powers = p_powers
 	selected = table.order[0] if not table.order.is_empty() else &""
 	@warning_ignore("return_value_discarded")
@@ -87,22 +86,23 @@ func apply_locks(done: Array[StringName]) -> void:
 		selected = locks.first(table)
 
 
-## Q / LB: base -> the selected form, a form -> base. Returns SoulPowers' answer or BUSY.
-func press_transform() -> StringName:
+func press_transform(unrestricted: bool = true) -> StringName:
 	if not _free():
 		return BUSY
-	if from_id == BASE:
-		return _enter(selected)
-	return _exit()
+	var target: StringName = table.transform_target(selected, bond, unrestricted)
+	if target == &"":
+		return GhostLocks.LOCKED
+	return _enter(target) if from_id == BASE else _exit()
 
 
-## G / RB: in base, select the next ghost; in a form, switch straight to the next one.
-func press_next() -> StringName:
+func press_next(unrestricted: bool = true) -> StringName:
 	if not _free():
 		return BUSY
 	if from_id == BASE:
 		selected = locks.next_after(table, selected)
 		return SoulPowers.OK
+	if bond.enabled and not unrestricted:
+		return switch_to(table.next_transform(from_id, locks, bond))
 	return switch_to(locks.next_after(table, from_id))
 
 

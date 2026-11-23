@@ -2,6 +2,33 @@
   "$id": "gtai.ghost_forms/1",
   "additionalProperties": false,
   "properties": {
+    "bond": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "master_at": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "per_kill": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "per_stun": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "enabled",
+        "master_at",
+        "per_kill",
+        "per_stun"
+      ],
+      "type": "object"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"
@@ -161,6 +188,7 @@
     }
   },
   "required": [
+    "bond",
     "doc",
     "forms",
     "order",
