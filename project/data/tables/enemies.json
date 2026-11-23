@@ -492,7 +492,7 @@
       "burst": 1,
       "burst_gap_s": 0,
       "cooldown_s": 0.8,
-      "damage": 3,
+      "damage": 4,
       "melee": false,
       "pellets": 8,
       "reach_m": 9,
