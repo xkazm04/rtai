@@ -90,3 +90,10 @@ NEXT (session 5, from ~06:35, freeze 07:10, report 07:20, end 07:40):
 - 07:12 no product changes this session (code frozen since 05:40).
 
 NEXT (Director, morning): merge n25-path after the n24 lanes; expect add/add on root JOURNAL.md / REPORT.md (keep each lane's own); run `node tools/gate/run.mjs --rev=HEAD --reels` on the merged tree; the Merge notes in REPORT list the shared files touched (features/hud/hud_state.gd + hud_view.gd, tools/mutate, prologue_stage.json path blocks).
+
+## Session 6 (07:11 - 07:13, STABILIZE)
+
+- 07:11 read JOURNAL; no astra.lock, last Astra call `title` exit 0; no Godot of mine running. Yard JOURNAL: no new `NEED path`, no `MILESTONE yard-shape`. Tree clean at 47c1e6e0e.
+- 07:12 `node tools/evidence/cites.mjs REPORT.md`: 11 paths, 11 ok. No product changes (code frozen since 05:40; final gate PASS on 667f70be2 stands; no time for `--reels`).
+
+NEXT (Director, morning): unchanged from session 5: merge n25-path after the n24 lanes, keep each lane's own JOURNAL.md / REPORT.md on the add/add, run `node tools/gate/run.mjs --rev=HEAD --reels` on the merged tree.
