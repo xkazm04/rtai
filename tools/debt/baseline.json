@@ -140,7 +140,8 @@
         "2026-11-23: yard film entry and frame probe for n25 yard (dev_loc 30813 -> 31065)",
         "2026-11-23: n25 path: event-timed lessons film and three native-resolution hand-card stills (dev_loc 30712 -> 30736)",
         "2026-11-23: menu pilot and rendered handover for n25 path (dev_loc 30733 -> 30932)",
-        "2026-11-23: Real-time menu film and 64 px/m shotgun clip for n25 path (dev_loc 30932 -> 30979)"
+        "2026-11-23: Real-time menu film and 64 px/m shotgun clip for n25 path (dev_loc 30932 -> 30979)",
+        "2026-11-23: Fixed-camera equipped-cast feet probe for n26 cast (dev_loc 33638 -> 33827)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -149,7 +150,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 692,
-        "project/dev/cast": 627,
+        "project/dev/cast": 816,
         "project/dev/controls": 712,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
@@ -182,7 +183,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 33638
+      "total": 33827
     },
     "direct_cmdline_reads": {
       "accepted": [
