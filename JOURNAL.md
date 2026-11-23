@@ -259,3 +259,11 @@ stall fix and re-run item 5 medians on the merged tree.
   `build/gate/7969ed2a4872/gate.json`). Nothing new after freeze. Temp dir gtai-gate-7969ed2a4872 still busy (empty).
 NEXT: none this run. Director: merge `n26-pressure`; remove the empty Temp dir after the sessions end; mutate the stall
 fix (`features/gauntlet/gauntlet_combat.gd`) and re-run item 5 medians on the merged tree.
+
+## Session 9 (18:50, REPORT)
+
+- 18:50 No Astra lock (last call n 7, 15:14). Tracked tree clean at f08240c61. REPORT.md final: all eight sections,
+  gate PASS `build/gate/7969ed2a4872/gate.json` (file present), cites 34/34 ok, no placeholders; films and frames.json in
+  `gtai-masters/n26/pressure/`. Nothing new after freeze.
+NEXT: none this run. Director: merge `n26-pressure`; remove the empty Temp dir `gtai-gate-7969ed2a4872` after the
+sessions end; mutate the stall fix (`features/gauntlet/gauntlet_combat.gd`) and re-run item 5 medians on the merged tree.
