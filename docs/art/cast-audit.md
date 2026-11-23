@@ -164,6 +164,10 @@ The patrol advances one drawing per **0.135 m** of ground travel. At the initial
 
 The recut armed sheet is patrol-specific. Other wave roles wearing the same uniform still select their original armed grid. The rig and distant wave card use the same distance-based contact placement as the quest patrol. It runs entirely in the renderer. The table measures the equipped near wave rig at all four speeds.
 
+**Limits outside the measured wave ID.** The quest renderer sizes the unarmed grid from the standing strip. Projecting its registered sole and upper-body midpoints at that scale gives 12.16 px body travel on the 55° profile, with 0.64 px contact travel. The three other quest projections stay within both limits. These are atlas projections, separate from the frame captures above.
+
+Actor ID 230 has a 1.15991 body multiplier in `StreetCrowdCards.body_scale`. At that equipped scale the armed 55° profile projects to 16.11 px body jump and 0.21 px contact travel. The upper-body point relative to the support sole changes by 16.32 px between the two drawings. Even allowing the sole to move the full 2 px leaves at least 14.32 px of body travel in that change. Translating the whole figure or shortening the step cannot close this case. The tall-actor projections at 70° are 12.16 px in profile and 15.28 px down-right. At 55° down-right the body projects to 13.57 px.
+
 The door carrier's slab hides the supporting boot in its down-right pass. The 70° pile-driver profile shows a flat rear pad in all four drawings, with no identifiable lift or change of pad identity. Neither observation supports a numeric whole-contact pass for that facing.
 
 From the worktree root, with the lane's APPDATA and GODOT_BIN set, run `node tools/art/cast_feet.mjs`. The terminal and `build/cast/feet.json` report the same rows. The source captures are `build/cast/tracks_{70,55}_32.json`. Run `python tools/art/test_cast_feet.py` for the synthetic planted, sliding and drawing-change controls.
