@@ -1,0 +1,3 @@
+(Astra left no final message)
+
+[astra: 5052s, exit 1, STOPPED at the 75 min cap]
