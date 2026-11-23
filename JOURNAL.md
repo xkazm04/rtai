@@ -114,3 +114,8 @@ NEXT: nothing left in this lane. Director: merge `n26-yard`; the NEED director l
 - 18:43 Checked: tree clean apart from the untracked Astra out/err logs under `evidence/briefs/` (inert, left uncommitted); no astra.lock; last call n=5 `card` (usage limit). REPORT.md committed at 17421bd4e; `node tools/evidence/cites.mjs REPORT.md`: 25 paths, 23 ok, 2 pattern, 0 missing. Gate stays PASS at ee19d4f9c (`build/gate/ee19d4f9c536/gate.json`); later commits are JOURNAL/REPORT only. No --reels (no time).
 
 NEXT: lane done. Director: merge `n26-yard`; NEED director lines (Mulroney card wiring, chunky rail art on the six blocking sections, hook flakes) are in REPORT Next steps. Never launch astra.mjs for this lane before Nov 28.
+
+## Session 8 (18:50, REPORT, no builder)
+- 18:51 REPORT.md checked: all sections present (header, What works, What does not, What blocked, Films, Calls for the owner, Merge notes, Next steps, Astra ledger), no TODOs. `node tools/evidence/cites.mjs REPORT.md`: 25 paths, 23 ok, 2 pattern, 0 missing. Masters dir holds the 15 frames.json files; `build/gate/ee19d4f9c536/gate.json` present (PASS at ee19d4f9c). No product change since the gate.
+
+NEXT: lane done. Director: merge `n26-yard`; NEED director lines (Mulroney card wiring, chunky rail art on the six blocking sections, kill-reel hook test) are in REPORT Merge notes / Next steps. Never launch astra.mjs for this lane before Nov 28.
