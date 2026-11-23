@@ -171,3 +171,11 @@ NEXT (session 5), no builder exists tonight:
 - 17:33 Warden WIP lineup rendered from the tree (import exit 0, then `cast_warden_lineup.tscn` 70/64, exit 0): LOOKED: one heavy-set ochre figure with the catch pole, 96/110 px (pole included) beside the cop's 87/88 and Mulroney's 89/96, under Rivet. Copied to `gtai-masters/n26/cast/warden_WIP_beside_64ppm_tilt70.png` (WIP, not in game).
 - 17:36 Tree put back to HEAD (WIP paths checked out / untracked removed; all saved on `n26-cast-warden-wip`).
 - 17:37 FRICTION: my restore used `git diff --name-only HEAD`, which also listed JOURNAL.md and REPORT.md, so their uncommitted session-5 edits were reverted. Re-applied from memory of this session (REPORT edits identical; these journal lines rewritten). Lesson: never feed `git diff --name-only` to checkout; name the paths.
+- 17:47 `mulroney_close_64.mp4` re-shot on HEAD (`foes-n26/mulroney/pack/edge/capture.mjs film 70 64`, "fight complete true", 0 SCRIPT ERROR; 16.02 s 1920x1080 60). LOOKED: armed walk, then fall with blood. Replaced the 15:16 pre-fix take.
+- 17:48 frames.json 13 entries (all files in the folder referenced). REPORT: frames pointer, warden WIP still, gate PASS; no PENDING left; cites 12/12 ok.
+
+NEXT (session 6, 18:03 to 19:10; no builder, no product change possible):
+1. Nothing is owed before the freeze: the branch's last code commit 4f505e377 is gated PASS with reels; every commit after it is JOURNAL/REPORT only.
+2. Optional, if time: one 64 px/m still of a patrol cop hit to answer the OPEN of 15:44 (does the shared impact-outline material draw dark teeth on other cards' hits?). Use `gtai-art/foes-n26/mulroney/pack/edge/capture.mjs` style (dev cast scenes on HEAD), APPDATA = appdata/cast, `--position 0,1440`. If yes: REPORT "Calls for the owner" (deliberate flash outline vs clean) and Next step 5, not a change.
+3. Final read of REPORT.md at 18:50; `node tools/evidence/cites.mjs REPORT.md`; commit JOURNAL + REPORT with pathspec (`git commit -- JOURNAL.md REPORT.md`). Never feed `git diff --name-only` to a checkout (17:37 FRICTION).
+- 17:49 Session 5 ends. No Astra, no Godot, no gate running.
