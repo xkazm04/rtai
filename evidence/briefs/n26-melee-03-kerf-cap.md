@@ -70,3 +70,24 @@ Forbidden: `input_actions.json`, `rivet_motion.json`, player movement/input file
 
 ## Report at the end
 Commits, the cap value and why, the three-arm table, the boss rule, tape list, mutate score, still paths, not done.
+
+## Addendum (director)
+- The branch carries the keys lane's milestone `8d8bb3787` (merged before this brief): ghosts deploy on number
+  keys, and the test player deploys any owned ghost that is off cooldown (`ghost_deploy_bot.gd`,
+  `project/features/gauntlet/bot/bot_forms.gd`). Use that for the `kerf_*` arms; the `no_kerf` arm removes Kerf from
+  the owned set (dev-only, in your probe), not by editing the bot.
+- Brief 02 (electric finishers) is on the branch: the electro gun / claw discharge now finish robots. If the boss
+  wave's robots die faster because of it, say so in the table (it is the shipped game now).
+- Keep the probe cheap: one Godot at a time, headless, `--fixed-fps 60`; if 3 arms x 10 seeds of the real
+  gauntlet to wave 5 do not fit in 25 min, start at the boss wave with a fixed loadout and say so.
+
+## Also in this call (do first, 15 min max, then the cap)
+- 0a. The appliance warden loses the claw exemption (brief 02 proved the five prologue pilot timelines identical
+  without it, `evidence/n26/hands/prologue-after.*`; decision line of 2c3343098): remove `appliance_warden` from
+  `rivet_melee.json` `claw.never_finish`, update the three unit-test fixtures listed in
+  `evidence/n26/hands/prologue-after.md` (these test edits are in scope now), append a decision line saying the
+  exemption is gone, commit.
+- 0b. Owed mutate (cap each at `--max=10` on changed lines, run in the background of your other work is NOT allowed:
+  one Godot at a time; run them last, after your cap commit, only if 15 min remain): `project/features/player/robot_finish.gd`
+  (from 2c3343098) and `project/features/player/melee_lethal.gd` (from 21f4fd10c). Scores to
+  `evidence/n26/electric/mutate.md` / `evidence/n26/hands/mutate.md`, committed.

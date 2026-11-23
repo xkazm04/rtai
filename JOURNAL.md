@@ -19,3 +19,9 @@ Order: 1 hands one-shot humans, 2 electric finishers on robots, 3 Kerf boss cap,
 - 12:25 ASTRA RUNNING m2-electric since 12:25 (pid 80024, brief `evidence/briefs/n26-melee-02-electric.md`, hard stop 13:42; item 0 drops the warden's exemption; owes m1's mutate).
 
 NEXT: (session 2) wait for m2-electric (lock `C:/Users/kazda/kiro/gtai-n26/logs/melee/astra.lock`, events `astra-02-m2-electric.jsonl`); review its diff + `evidence/n26/electric/frames/`; then fill HARDSTOP/COMMITBY in `evidence/briefs/n26-melee-03-kerf-cap.md` and launch m3; then `n26-melee-04-bond.md` (check keys lane's chip files first). Owner films after the last behaviour change (masters dir `C:/Users/kazda/kiro/gtai-masters/n26/melee/`). Commit last new work by 17:10, final gate start by 17:25.
+
+## Session 2 (12:26 to 13:56)
+
+- 12:26 start. ASTRA m2-electric alive (pid 80024 node, lock 12:25). No `NEED melee` in the four journals; pressure's stall lead (n23-loop JOURNAL 12:26/12:40: test player stuck in Ohm/Tonnage form in frozen waves, hidden while `transform_unlocked` false) bears on item 4: appended to brief 04.
+- 12:27 REVIEW m1 64 px/m sheet `evidence/n26/hands/frames/review-64.jpg`: five rake deaths read distinct, blood red only, Rivet's collar rigid. Accepted.
+- 12:28 DECISION merge keys `MILESTONE 8d8bb3787` into n26-melee after m2 and before m3 (overlap with this branch: only `docs/decisions.md` + `JOURNAL.md`); briefs 03/04 build on number-key deploys and the per-ghost test player. Addenda written to both briefs.

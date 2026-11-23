@@ -93,3 +93,21 @@ root `JOURNAL.md`/`REPORT.md`.
 ## Report at the end
 Commits, the bond numbers chosen and why, the mastery table (wave per ghost per seed), the HUD mount (and any NEED
 keys line), the tape list, mutate score, still paths, not done.
+
+## Addendum (director, 12:45)
+- The branch carries the keys lane's milestone `8d8bb3787` (merged by the director before brief 03): ghosts
+  deploy on `ghost_deploy_1..4` (bits 20-23), `GhostNumberKeys` (`project/features/souls/ghost_number_keys.gd`),
+  and the test player already deploys any owned ghost per number (`ghost_deploy_bot.gd`,
+  `project/features/gauntlet/bot/bot_forms.gd`, commit `c32d97d47`). Read those before step 1; do not rebuild it.
+- Files the keys lane edits tonight (merge-conflict risk): `ghost_deploy.gd`, `ghost_deploy_bot.gd`,
+  `ghost_deploy_marker.gd`, `ghost_form_hud.gd`, `ghost_number_keys.gd`, `ghost_pilot.gd`, `bot_forms.gd`,
+  plus the chip drawing files named above. Put your logic in NEW files; a line you must add in one of these is
+  at most 3 lines, listed in your report as `TOUCH <file>:<line>` so the director can check the merge.
+- The pressure lane found a gauntlet stall (`C:\Users\kazda\kiro\gtai-wt\n23-loop\JOURNAL.md` 12:26 and 12:40,
+  its brief `evidence/briefs/n26-pressure-04-stall.md` lines 20-40, read only): in frozen waves the test player sat
+  816-995 s in Ohm/Tonnage form and nobody damaged anybody. It was hidden on main because `transform_unlocked`
+  is false in the gauntlet; your mastery brings the transformation back. So: in step 4 any wave that runs over
+  180 s is a FAIL to diagnose, not a number to report; if the cause is the transformation (it never ends, or the
+  bot re-enters it forever, or combat stops in it), fix it in souls code (yours) and add a unit test, or, if the
+  cause is in a gauntlet/bot file outside your allowlist, report `NEED pressure|keys: <file> <cause>` and keep the
+  bot's transformation use bounded on your side (e.g. the test player leaves the form when no enemy is in reach).
