@@ -97,3 +97,10 @@ NEXT (Director, morning): merge n25-path after the n24 lanes; expect add/add on 
 - 07:12 `node tools/evidence/cites.mjs REPORT.md`: 11 paths, 11 ok. No product changes (code frozen since 05:40; final gate PASS on 667f70be2 stands; no time for `--reels`).
 
 NEXT (Director, morning): unchanged from session 5: merge n25-path after the n24 lanes, keep each lane's own JOURNAL.md / REPORT.md on the add/add, run `node tools/gate/run.mjs --rev=HEAD --reels` on the merged tree.
+
+## Session 7 (07:20 - 07:23, REPORT)
+
+- 07:21 read JOURNAL and REPORT; no astra.lock; no Godot of mine running. Yard JOURNAL: no new `NEED path`, no `MILESTONE yard-shape`.
+- 07:22 checked every cited path: `node tools/evidence/cites.mjs REPORT.md` 11 paths, 11 ok; all 16 masters files REPORT names (incl. `frames.json`) exist in `gtai-masters\n25\path\`; `build/gate/667f70be223a/gate.json` present. REPORT is final, no change needed.
+
+NEXT (Director, morning): merge n25-path after the n24 lanes; keep each lane's own JOURNAL.md / REPORT.md on the add/add; run `node tools/gate/run.mjs --rev=HEAD --reels` on the merged tree; re-take `newgame-to-quest1.mp4` on the merged yard.
