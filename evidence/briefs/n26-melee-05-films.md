@@ -1,13 +1,13 @@
 # Brief n26-melee-05-films: the owner's films for the melee lane (n26)
 
 Lane `melee`, branch `n26-melee`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-street`.
-**Hard stop HARDSTOP wall clock. Last commit by COMMITBY (after that: renders only, NO commits, no repo edits).**
+**Hard stop 17:55 wall clock. Last commit by 17:10 (after that: renders only, NO commits, no repo edits).**
 At the hard stop, write your report and END, even mid-task. Never stop to ask: at a fork, pick what best serves
 the owner's words, record it in your report, go on. Fix lint and format findings in your own edit and go on.
 
 The owner judges this lane only by these films. Every behaviour is already committed (read `git log --oneline -25`);
 you add film tooling only (dev/tools code), never gameplay. The director's final gate runs on HEAD from about
-COMMITBY: any repo commit after COMMITBY would break it, so build and commit the tooling first, then render.
+17:10: any repo commit after 17:10 would break it, so build and commit the tooling first, then render.
 
 ## Output
 Everything to `C:\Users\kazda\kiro\gtai-masters\n26\melee\` (create it): `films/*.mp4` (32 px/m, tilt 70,
@@ -59,7 +59,7 @@ tests' expectations, tapes, root `JOURNAL.md`/`REPORT.md`, other lanes' worktree
 - Before every Godot run: `export APPDATA=C:/Users/kazda/kiro/gtai-n26/appdata/melee` and
   `export GODOT_BIN=C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe`;
   `--rendering-driver d3d12`; windowed `--position 0,1440` (never the main display). One Godot process of yours
-  at a time; kill only your own PIDs. The director's gate may run beside you after COMMITBY: do not touch
+  at a time; kill only your own PIDs. The director's gate may run beside you after 17:10: do not touch
   `%TEMP%/gtai-gate-*`.
 - Typed GDScript, files ~200 lines (hard 300), functions <= 40 lines, <= 5 params, `Log` not print, `.uid` with
   every new `.gd`, Godot `--import` after new scripts before the commit. `node tools/gate/quick.mjs` before each
