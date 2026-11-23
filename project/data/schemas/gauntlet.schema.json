@@ -255,6 +255,10 @@
           "minimum": 0,
           "type": "number"
         },
+        "repair_in_wave": {
+          "default": false,
+          "type": "boolean"
+        },
         "repair_per_s": {
           "minimum": 0,
           "type": "number"
@@ -306,6 +310,14 @@
       "minItems": 5,
       "type": "array"
     },
+    "wave_timeout_late_from": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "wave_timeout_late_s": {
+      "minimum": 0,
+      "type": "integer"
+    },
     "wave_timeout_s": {
       "minimum": 1,
       "type": "integer"
@@ -321,7 +333,9 @@
     "tier_map",
     "max_alive",
     "on_timeout",
-    "wave_timeout_s"
+    "wave_timeout_s",
+    "wave_timeout_late_from",
+    "wave_timeout_late_s"
   ],
   "type": "object"
 }

@@ -12,6 +12,7 @@ func before_each() -> void:
 	var bus: EventBus = autofree(EventBus.new())
 	arena = CombatArena.new(CombatTuning.shipped(), bus, RngRegistry.new(22).stream(&"combat"))
 	arena.guard = guard
+	DeflectRule.of(arena).pass_ratio_k = 0.0
 	arena.rivet.facing = Vector2.RIGHT
 	foe = arena.spawn_guard(Vector2.RIGHT)
 	foe.pos = arena.rivet.pos + Vector2.RIGHT

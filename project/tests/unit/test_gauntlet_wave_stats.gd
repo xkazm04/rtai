@@ -164,6 +164,7 @@ func test_splash_and_a_returned_enemy_round_do_not_score_another_gun_hit() -> vo
 		arena._step_shots()
 	assert_lt(direct.hp, 50.0)
 	assert_lt(nearby.hp, 50.0)
+	DeflectRule.of(arena).pass_ratio_k = 0.0
 	var rebound: Shot = Shot.fire(direct, Vector2.LEFT, arena.tuning.weapon(&"assault-rifle"))
 	rebound.pos = arena.rivet.pos + Vector2.RIGHT
 	arena.shots.append(rebound)

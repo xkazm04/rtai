@@ -25,6 +25,7 @@ var _actions: PlayerActions
 var _profile: BotProfile
 var _aim_rng: RandomNumberGenerator
 var _defence: BotDefence
+var _dash: BotDash
 var _moves: BotMovePlan
 var _forms: BotForms
 var _deploy: GhostDeployBot
@@ -44,6 +45,7 @@ func _init(view: BotView, actions: PlayerActions, profile: BotProfile, run_seed:
 	var registry: RngRegistry = RngRegistry.new(run_seed)
 	_aim_rng = registry.stream(&"test_player_aim")
 	_defence = BotDefence.new(profile, registry)
+	_dash = BotDash.new(profile, registry)
 	_forms = BotForms.new(registry)
 	_deploy = GhostDeployBot.new(view, actions, registry)
 	_moves = BotMovePlan.new(registry)
@@ -68,15 +70,19 @@ func sample(tick: int) -> TickInput:
 		target = _moves.foe
 	_acquire(target, tick)
 	var intent: Intent = Intent.new()
-	if me.hp >= me.street_max_hp * _profile.rest_hp:
+	var ready: bool = not me.repair_available or me.hp >= me.street_max_hp * _profile.rest_hp
+	if ready:
 		_recovering = false
 	elif me.hp < me.street_max_hp * _profile.retreat_hp:
 		_recovering = true
 	if target != null:
 		intent = _engage(target, tick)
-	elif not active and me.hp >= me.street_max_hp * _profile.rest_hp:
+	elif not active and ready:
 		intent.move = _view.forward()
 		intent.aim = intent.move
+	var dash: BotDefence.Choice = _dash.choose(_view, tick)
+	if dash.action != &"":
+		return _pack(intent, dash, me.form)
 	if active and _moves.foe != null:
 		_moves.drive(_view, intent, tick >= _ready)
 		return _pack(intent, BotDefence.Choice.new(), _moves.form())

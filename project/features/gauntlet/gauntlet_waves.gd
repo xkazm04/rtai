@@ -45,7 +45,7 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	@warning_ignore("return_value_discarded")
 	stage.arena.wounded.connect(_wounded)
 	@warning_ignore("return_value_discarded")
-	stage.arena.kill_landed.connect(_killed)
+	stage.arena.kill_landed.connect(_wounded.unbind(3))
 	@warning_ignore("return_value_discarded")
 	(stage.arena as GauntletCombat).rivet_contact.connect(_contact)
 
@@ -72,6 +72,7 @@ func step(stage: ArenaStage, tick: int) -> void:
 		return
 	if _live.is_empty():
 		if is_finite(_street.forward_limit):
+			(stage.arena as GauntletCombat).wave_live = false
 			_clear_block()
 		elif _street.index > _block:
 			_block = _street.index
@@ -102,8 +103,9 @@ func wave_seconds(tick: int) -> float:
 
 
 func seconds_left(tick: int) -> float:
-	var running: bool = not _live.is_empty() and _live[-1].start_tick >= 0 and not _at_limit()
-	return maxi(0, _next_wave_tick - tick) * SimClock.TICK_DT if running else -1.0
+	if _live.is_empty() or _live[-1].start_tick < 0 or _at_limit() or _next_wave_tick < 0:
+		return -1.0
+	return maxi(0, _next_wave_tick - tick) * SimClock.TICK_DT
 
 
 func _slots(arena: CombatArena) -> int:
@@ -131,8 +133,10 @@ func _fill(stage: ArenaStage, tick: int) -> void:
 		var starting: bool = wave.start_tick < 0
 		slots -= wave.spawn(stage, _street.current(), slots, tick, _run)
 		if starting:
+			(stage.arena as GauntletCombat).wave_live = true
 			# Keep this deadline if a younger roster falls before an older survivor.
-			_next_wave_tick = tick + _street.timeout_ticks
+			var duration: int = _street.wave_timeout_ticks(_run.wave)
+			_next_wave_tick = tick + duration if duration > 0 else -1
 			stage.arena.announce_wave(&"gauntlet", _run.wave)
 			Log.info(
 				"gauntlet",
@@ -192,9 +196,3 @@ func _contact(victim: Fighter, counter: StringName) -> void:
 
 func _wounded(victim: Fighter, _weapon: StringName) -> void:
 	_contact(victim, &"hits")
-
-
-func _killed(
-	victim: Fighter, weapon: StringName, _dir: Vector2, _at: Vector2, _kind: StringName
-) -> void:
-	_wounded(victim, weapon)

@@ -33,7 +33,8 @@ func test_entry_validates_the_launch_contract() -> void:
 func test_timeout_override_is_per_run_and_only_reported_when_given() -> void:
 	var entry: Entry = Entry.new()
 	var session: GauntletSession = entry._open_street(ArenaArgs.parse(["--wave-timeout=12"]))
-	assert_eq(session.street.timeout_ticks, 12 * SimClock.TICK_RATE)
+	assert_eq(session.street.wave_timeout_ticks(1), 12 * SimClock.TICK_RATE)
+	assert_eq(session.street.wave_timeout_ticks(6), 12 * SimClock.TICK_RATE)
 	var recorded: int = entry.run.to_result()["wave_timeout_s"]
 	assert_eq(recorded, 12)
 	session.close()

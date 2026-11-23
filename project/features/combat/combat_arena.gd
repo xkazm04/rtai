@@ -4,7 +4,6 @@ extends RefCounted
 ## goes through damage() (the chokepoint: humans have 1 hp, so any hit kills; kills emit
 ## Events.actor_killed). The fight's own tells go out as Events too: wave_started (the stage
 ## announces each wave through announce_wave), boss_engaged, attack_telegraphed, player_hit.
-## Deterministic: ticks, and the `combat` RNG stream only for guard spread and spawn jitter.
 
 ## A round landed (after damage): the hit-feel hook (features/combat/hit_feel, lane gunplay).
 signal struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName)
@@ -197,6 +196,7 @@ func damage(
 
 
 func write_state(out: StreamPeerBuffer) -> void:
+	DeflectRule.write_state(self, out)
 	rivet.write_state(out)
 	out.put_32(hostiles.size())
 	for h: Fighter in hostiles:

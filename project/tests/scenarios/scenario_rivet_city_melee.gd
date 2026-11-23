@@ -4,7 +4,7 @@ extends Scenario
 ## the nearest guard (side-stepping cover it stalls on) and swings only there, so the katana,
 ## chainsaw and baton meet bodies on the live path. Two guards must drop in 30 s, and the run
 ## replays identical (SIM-05). TST-05: a planted fault (the old stand-off at gun reach,
-## melee_close_in = false) must drop none.
+## melee_close_in = false) must fail to land kills with the full carried loadout.
 
 const LIMIT_TICKS: int = 30 * SimClock.TICK_RATE
 const LOADOUT: Array[StringName] = [&"katana", &"chainsaw", &"electro_baton"]
@@ -21,8 +21,8 @@ func run(_tree: SceneTree) -> String:
 	s.world.free()
 	@warning_ignore("return_value_discarded")
 	write_evidence(EVIDENCE_FILE, tel)
-	if tel["kills"] < MIN_KILLS:
-		return "the city melee fight dropped too few guards: %s" % tel
+	if not _met_loadout(tel):
+		return "the city melee fight did not land the loadout: %s" % tel
 	var divergence: String = _replay(log)
 	return divergence if divergence != "" else _planted()
 
@@ -41,9 +41,28 @@ static func _open(bus: EventBus, data: DataStore) -> ArenaSession:
 
 
 static func _play(s: ArenaSession) -> Dictionary:
+	var weapons: Dictionary[StringName, bool] = {}
+	var landed: Callable = func(
+		victim: Fighter, weapon: StringName, _dir: Vector2, _at: Vector2, _kind: StringName
+	) -> void:
+		if victim in s.stage.pit.standing and weapon in LOADOUT:
+			weapons[weapon] = true
+	@warning_ignore("return_value_discarded")
+	s.stage.arena.kill_landed.connect(landed)
 	while s.tick() < LIMIT_TICKS:
 		s.step()
-	return {"wave": s.stage.pit.wave, "kills": s.stage.pit.kills, "ticks": s.tick()}
+	s.stage.arena.kill_landed.disconnect(landed)
+	return {
+		"weapons": weapons.keys(),
+		"wave": s.stage.pit.wave,
+		"kills": s.stage.pit.kills,
+		"ticks": s.tick()
+	}
+
+
+static func _met_loadout(tel: Dictionary) -> bool:
+	var weapons: Array = tel.weapons
+	return tel.kills >= MIN_KILLS and weapons.size() == LOADOUT.size()
 
 
 func _replay(log: ReplayLog) -> String:
@@ -63,11 +82,12 @@ func _planted() -> String:
 	var s: ArenaSession = _open(bus, data)
 	var bot: ArenaArsenalBot = ArenaArsenalBot.new(s.stage, s.actions)
 	bot.melee_close_in = false
+	bot.never_close_in(LIMIT_TICKS + 1)
 	s.world.loop().set_input(bot)
 	var tel: Dictionary = _play(s)
 	s.world.free()
 	bus.free()
 	data.free()
-	if tel["kills"] >= MIN_KILLS:
-		return "planted fault not caught: a bot at gun reach still dropped %d" % tel["kills"]
+	if _met_loadout(tel):
+		return "planted fault not caught: a bot at gun reach landed the full loadout: %s" % tel
 	return ""

@@ -72,7 +72,79 @@ func test_displaced_trooper_at_safe_range_still_moves_before_reloading() -> void
 	var h: Fighter = squad.spawn_member(arena, Vector2(14, 0), &"rocket_trooper")
 	var mind: SquadMind = SquadMind.new(h, e.arch)
 	mind.agent.sees = true
+	mind.agent.arch.weapon.relocate_after_shots = 0
 	mind.rocket.last_launch = h.pos
 	var launch: Vector2 = h.pos
 	assert_null(mind.rocket.step(mind, h, arena, squad, map))
 	assert_ne(launch, h.pos)
+
+
+func test_safe_site_requires_sight_and_relocates_at_the_configured_quota() -> void:
+	e.arch.weapon.relocate_after_shots = 3
+	rocket._site_origin = e.pos
+	e.sees = false
+	assert_true(rocket.needs_relocation(e, pit.rivet_pos, e.sees))
+	e.sees = true
+	rocket._shots_here = 2
+	assert_false(rocket.needs_relocation(e, pit.rivet_pos, e.sees))
+	rocket._shots_here = 3
+	assert_true(rocket.needs_relocation(e, pit.rivet_pos, e.sees))
+	e.pos += Vector2.RIGHT * FoeRocket.NEW_SITE_M
+	assert_false(rocket.needs_relocation(e, pit.rivet_pos, e.sees))
+
+
+func test_lead_uses_consecutive_visible_samples_and_zero_aims_at_rivet() -> void:
+	for tick: int in [4, 5, 8, 9]:
+		pit.tick = tick
+		pit.rivet_pos = Vector2(0.0, tick * 0.125)
+		e.arch.weapon.aim_lead = 0.0 if tick == 9 else 0.5
+		rocket._track(e, pit)
+		var expected: Vector2 = pit.rivet_pos
+		if tick == 5:
+			var flight: float = e.pos.distance_to(expected) / e.arch.weapon.speed_mps
+			var lock_s: float = pit.roster.aim_lock_ticks * SimClock.TICK_DT
+			expected.y += 7.5 * (lock_s + flight) * 0.5
+		assert_almost_eq(rocket.locked_point, expected, Vector2.ONE * 0.00001)
+
+
+func test_retreat_to_safe_range_then_launch_twice_per_site() -> void:
+	var rng: RandomNumberGenerator = RngRegistry.new(22).stream(&"combat")
+	var arena: CombatArena = CombatArena.new(CombatTuning.shipped(), Events, rng)
+	var squad: ArenaSquad = ArenaSquad.new(map)
+	arena.squad_ai = squad
+	var h: Fighter = squad.spawn_member(arena, Vector2(4, 0), &"rocket_trooper")
+	h.pos = Vector2(4, 0)
+	var sites: Array[Vector2] = []
+	for tick: int in range(1, 901):
+		arena.step(tick)
+		if squad.mind_for(h).agent.shot_tick == tick:
+			sites.append(h.pos)
+			if sites.size() == 3:
+				break
+	assert_eq(sites.size(), 3)
+	if sites.size() == 3:
+		assert_gte(sites[0].distance_to(arena.rivet.pos), FoeRocket.MIN_RANGE_M)
+		assert_eq(sites[0], sites[1])
+		assert_gte(sites[1].distance_to(sites[2]), FoeRocket.NEW_SITE_M)
+
+
+func test_fresh_sight_discards_the_old_route_before_sight_is_lost_again() -> void:
+	var rng: RandomNumberGenerator = RngRegistry.new(22).stream(&"combat")
+	var arena: CombatArena = CombatArena.new(CombatTuning.shipped(), Events, rng)
+	var squad: ArenaSquad = ArenaSquad.new(map)
+	var h: Fighter = squad.spawn_member(arena, Vector2(14, 0), &"rocket_trooper")
+	var mind: SquadMind = squad.mind_for(h)
+	h.cooldown = 0
+	mind.agent.token = true
+	mind.agent.sees = true
+	var old_site: Vector2 = Vector2(-15, 0)
+	mind.rocket._site = old_site
+	assert_null(mind.rocket.step(mind, h, arena, squad, map))
+	assert_gt(h.tell_left, 0)
+	mind.agent.sees = false
+	assert_null(mind.rocket.step(mind, h, arena, squad, map))
+	assert_eq(h.tell_left, 0)
+	assert_null(mind.rocket.step(mind, h, arena, squad, map))
+	assert_ne(
+		mind.rocket._site, old_site, "Re-plan from the current firing site after losing sight"
+	)

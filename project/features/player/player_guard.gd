@@ -64,16 +64,18 @@ func blocks_attack() -> bool:
 
 
 func deflect(arena: CombatArena, s: Shot, from: Vector2) -> bool:
-	if not up() or s.from_rivet or s.size != Shot.SMALL:
+	if not up() or s.from_rivet or s.size != Shot.SMALL or EnemyRounds.is_blast(s):
 		return false
 	if not _in_arc(arena.rivet.facing, -s.vel):
 		return false
 	var r: Fighter = arena.rivet
 	var contact: float = Geometry2D.segment_intersects_circle(from, s.pos, r.pos, r.radius_m)
-	s.pos = from.lerp(s.pos, maxf(contact, 0.0))
+	var at: Vector2 = from.lerp(s.pos, maxf(contact, 0.0))
+	if not PlayerDeflect.send_back(arena, s, r.facing, at):
+		_drain(tuning.drain_per_round * 0.5)
+		return false
 	deflects += 1
 	_drain(tuning.drain_per_round)
-	PlayerDeflect.send_back(arena, s, arena.rivet.facing)
 	return true
 
 

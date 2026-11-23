@@ -2,14 +2,14 @@ class_name GauntletWalker
 extends GauntletPilot
 ## Fallback street pilot. The street runs east. Aim and fire at the closest living hostile.
 
-var _arena: CombatArena
+var _arena: GauntletCombat
 var _actions: PlayerActions
 var _recovering: bool = false
 var _pilot: StagePilot
 
 
 func bind(_run: GauntletRun, session: ArenaSession) -> void:
-	_arena = session.stage.arena
+	_arena = session.stage.arena as GauntletCombat
 	_actions = session.actions
 	_pilot = session.pilot
 
@@ -19,7 +19,7 @@ func sample(tick: int) -> TickInput:
 		return TickInput.new()
 	var at: Vector2 = _arena.rivet.pos
 	var foe: Fighter = _nearest(at)
-	if foe == null and _arena.rivet.hp < 0.95 * _arena.rivet.max_hp:
+	if foe == null and _arena.can_repair() and _arena.rivet.hp < 0.95 * _arena.rivet.max_hp:
 		return TickInput.new()  # repair in the cleared block before entering the next fight
 	var goal: Vector2 = foe.pos if foe != null else Vector2(at.x + 8.0, 0.0)
 	var offset: Vector2 = goal - at
@@ -61,7 +61,7 @@ func _needs_repair(foe: Fighter) -> bool:
 		_recovering = true
 	elif hp >= 0.90:
 		_recovering = false
-	return foe != null and _recovering
+	return foe != null and _arena.can_repair() and _recovering
 
 
 func _approach(at: Vector2, goal: Vector2) -> Vector2:

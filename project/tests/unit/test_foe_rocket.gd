@@ -63,6 +63,7 @@ func _until_round() -> Shot:
 
 
 func test_plants_for_full_tell_and_fires_once_at_the_locked_point() -> void:
+	squad.pit.roster.archetype(TROOPER).weapon.aim_lead = 0.0
 	var h: Fighter = _spawn(Vector2(13, 0))
 	_until_tell(h)
 	var at: Vector2 = h.pos
@@ -82,13 +83,13 @@ func test_plants_for_full_tell_and_fires_once_at_the_locked_point() -> void:
 	var shot: Shot = _until_round()
 	if shot == null:
 		return
-	assert_gte(now - start, 20)
+	assert_gte(now - start, CombatTuning.ticks(0.6))
 	assert_eq(now - start, squad.pit.roster.archetype(TROOPER).telegraph_ticks)
 	assert_eq(h.pos, at)
 	assert_eq(h.facing, locked_facing)
 	assert_eq(shot.weapon, &"rocket")
 	assert_eq(shot.size, &"large")
-	assert_almost_eq(shot.vel.length(), 9.0, 0.001)
+	assert_almost_eq(shot.vel.length(), squad.pit.roster.archetype(TROOPER).weapon.speed_mps, 0.001)
 	assert_true(shot.vel.normalized().dot(at.direction_to(lock_at)) > 0.99999)
 	for i: int in 120:
 		_step()
@@ -167,22 +168,6 @@ func test_four_troopers_obey_the_live_rocket_limit() -> void:
 	assert_eq(owners.size(), 4)
 
 
-func test_backs_away_then_changes_firing_site_between_launches() -> void:
-	var h: Fighter = _spawn(Vector2(4, 0))
-	_until_tell(h)
-	assert_gte(h.pos.distance_to(arena.rivet.pos), FoeRocket.MIN_RANGE_M)
-	var sites: Array[Vector2] = []
-	for i: int in 900:
-		_step()
-		if squad.minds[h.id].agent.shot_tick == now:
-			sites.append(h.pos)
-			if sites.size() == 2:
-				break
-	assert_eq(sites.size(), 2)
-	if sites.size() == 2:
-		assert_gt(sites[0].distance_to(sites[1]), 2.0)
-
-
 func test_tracking_cancels_when_rivet_closes_before_lock() -> void:
 	var h: Fighter = _spawn(Vector2(14, 0))
 	_until_tell(h)
@@ -193,7 +178,8 @@ func test_tracking_cancels_when_rivet_closes_before_lock() -> void:
 	assert_eq(squad.minds[h.id].agent.state, EnemyAgent.State.ENGAGE)
 
 
-func test_cooldown_and_relocation_leave_the_firing_pose() -> void:
+func test_zero_quota_relocates_after_every_launch() -> void:
+	squad.pit.roster.archetype(TROOPER).weapon.relocate_after_shots = 0
 	var h: Fighter = _spawn(Vector2(14, 0))
 	var shot: Shot = _until_round()
 	assert_not_null(shot)

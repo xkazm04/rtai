@@ -227,7 +227,7 @@ static func _rocket(ci: CanvasItem, at: Vector2, dir: Vector2, went: float, tick
 			ci, &"smoke", (k + tick / 4) % 3, at - dir * back + wob, float(k), grow, 1.0 - 0.13 * k
 		)
 	var tail: Vector2 = at - dir * 1.15
-	_cell(ci, &"flame", tick % 3, tail, dir.angle(), 0.42 + 0.08 * float(tick % 2), 1.0)
+	ShotDraw.launcher_exhaust(ci, tail, dir, tick)
 	_cell(ci, &"rocket", 0, at, dir.angle(), 1.0, 1.0)
 
 
@@ -249,7 +249,6 @@ static func _bottle(ci: CanvasItem, s: Shot, went: float, tick: int) -> void:
 	_cell(ci, &"flame", tick % 3, up + wick / Ink.PX_PER_M, -PI * 0.5, 0.45, 1.0)
 
 
-## Frame `frame` of fx `id` with its anchor on `at` (m), turned `angle`, `scale` x the cell scale.
 static func _cell(
 	ci: CanvasItem, id: StringName, frame: int, at: Vector2, angle: float, scale: float, a: float
 ) -> void:
@@ -269,7 +268,6 @@ static func draw_cell(
 	_cell_v(ci, id, frame, at, angle, scale, a)
 
 
-## As _cell with a per-axis `scale` (x along the cell's +x: a jet or a bolt stretched to length).
 static func _cell_v(
 	ci: CanvasItem, id: StringName, frame: int, at: Vector2, angle: float, scale: Vector2, a: float
 ) -> void:
@@ -278,6 +276,8 @@ static func _cell_v(
 		return
 	var key: StringName = StringName("%s_%d" % [id, frame]) if frames.size() > 1 else id
 	var tex: Texture2D = frames[frame % frames.size()]
+	if id == &"nail":  # The nail uses native rig scale, without the larger guns' FX enlargement.
+		scale = Vector2.ONE * scale.y / art().fx_draw_scale
 	if colour != null:
 		var xf: Transform2D = Transform2D(angle, scale * cell_scale(), 0.0, Ink.px(at))
 		colour.cell(tex, xf, art().fx_anchor(key), a)

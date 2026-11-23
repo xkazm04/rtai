@@ -25,7 +25,10 @@ func test_tell_precedes_the_volley_and_locks_the_aim() -> void:
 			first_shot_tick = tick
 			assert_eq(g.aim_point, lock_aim, "the volley goes where the aim locked")
 		sim.step(tick)
-	assert_gt(tell_start, 0)
+		if first_shot_tick >= 0 and g.state == EnemyGunner.State.REST:
+			assert_eq(g.rest_left, table.enemy_rest_ticks)
+			break
+	assert_eq(tell_start, table.enemy_rest_ticks - 1)
 	assert_eq(first_shot_tick - tell_start, table.enemy_tell_ticks, "the tell is tell_s long")
 	assert_eq(sim.shots_fired, table.enemy_volley)
 

@@ -12,6 +12,8 @@ var window: Array[GauntletSegment] = []
 var index: int = 0
 var max_alive: int
 var timeout_ticks: int
+var late_timeout_ticks: int
+var late_timeout_from: int
 ## A wave can hold Rivet at its far seam without adding a prop or blocking the enemy squad.
 var forward_limit: float = INF
 var rest: GauntletRest
@@ -25,6 +27,22 @@ class StreetSquad:
 	extends ArenaSquad
 
 	var mods: StatMods
+	var rifle_lead: float = GuardBrain.street_rifle_lead()
+
+	func assign(arena: CombatArena) -> Array[Fighter]:
+		pit.rivet_vel = Vector2.ZERO
+		if pit.tick > 0 and arena.tick == pit.tick + 1:
+			pit.rivet_vel = (arena.rivet.pos - pit.rivet_pos) * SimClock.TICK_RATE
+		return super.assign(arena)
+
+	func _ranged(
+		mind: SquadMind, h: Fighter, arena: CombatArena, rng: RandomNumberGenerator
+	) -> Shot:
+		if h.weapon == &"assault-rifle" and mind.agent.token and mind.agent.sees:
+			h.facing = GuardBrain.street_aim(
+				h, arena.tuning.weapon(h.weapon), mind, pit, rifle_lead
+			)
+		return super._ranged(mind, h, arena, rng)
 
 	func follow_map(map: GuardRouteMap) -> void:
 		_map = map
@@ -41,6 +59,8 @@ func _init(registry: RngRegistry) -> void:
 	_table = DataTable.open(TABLE, SCHEMA)
 	max_alive = _table.integer(_table.raw, "max_alive")
 	timeout_ticks = _table.integer(_table.raw, "wave_timeout_s") * SimClock.TICK_RATE
+	late_timeout_ticks = _table.integer(_table.raw, "wave_timeout_late_s") * SimClock.TICK_RATE
+	late_timeout_from = _table.integer(_table.raw, "wave_timeout_late_from")
 	for row: Dictionary in _table.array(_table.raw, "segments"):
 		if _table.num(row, "length_m") > 0.0:
 			_rows.append(row)
@@ -49,6 +69,17 @@ func _init(registry: RngRegistry) -> void:
 		return
 	_append(0.0)
 	_append(window[-1].end_x())
+
+
+func override_timeout(seconds: int) -> void:
+	timeout_ticks = seconds * SimClock.TICK_RATE
+	late_timeout_ticks = timeout_ticks
+
+
+func wave_timeout_ticks(wave: int) -> int:
+	if late_timeout_ticks > 0 and wave >= late_timeout_from:
+		return late_timeout_ticks
+	return timeout_ticks
 
 
 func current() -> GauntletSegment:
@@ -72,8 +103,9 @@ func advance_to(x: float) -> bool:
 
 
 func setup(stage: ArenaStage, _ctx: WorldContext) -> void:
-	(stage.arena as GauntletCombat).enemy_damage_k = enemy_damage_multiplier(_table)
-	apply_repair(_table, stage.arena.tuning)
+	var combat: GauntletCombat = stage.arena as GauntletCombat
+	combat.enemy_damage_k = enemy_damage_multiplier(_table)
+	combat.configure_repair(_table)
 	_install(stage)
 	@warning_ignore("return_value_discarded")
 	stage.arena.kill_landed.connect(_death)
@@ -83,13 +115,6 @@ static func enemy_damage_multiplier(rules: DataTable) -> float:
 	if rules.raw.has("enemy_damage_k"):
 		return rules.num(rules.raw, "enemy_damage_k")
 	return 1.0
-
-
-static func apply_repair(rules: DataTable, tuning: CombatTuning) -> void:
-	var rivet: Dictionary = rules.raw.get("rivet", {})
-	for key: String in ["repair_per_s", "repair_delay_s"]:
-		if rivet.has(key):
-			tuning.rivet[key] = rules.num(rivet, key)
 
 
 func _death(

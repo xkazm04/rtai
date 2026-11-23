@@ -19,6 +19,10 @@ static func splash_m(weapon: StringName) -> float:
 	return _lookup(weapon)._radius_m
 
 
+static func is_blast(s: Shot) -> bool:
+	return splash_m(s.weapon) > 0.0 or (s.spec != null and s.spec.splash_radius_m > 0.0)
+
+
 static func splash_damage(weapon: StringName) -> float:
 	return _lookup(weapon)._damage
 

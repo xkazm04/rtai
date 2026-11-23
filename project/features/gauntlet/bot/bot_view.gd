@@ -11,6 +11,7 @@ class Player:
 	var hp: float = 1.0
 	## A positive value enables repair decisions on a street with a cleared approach.
 	var street_max_hp: float = 0.0
+	var repair_available: bool = true
 	var blast_margin: float
 	var stomp_reach: float
 	var walk_mps: float = 0.0
@@ -25,6 +26,8 @@ class Player:
 	var current_slot: int = -1
 	var wheel_size: int = 0
 	var can_roll: bool = false
+	var can_dash: bool = false
+	var dash_m: float
 	var can_guard: bool = false
 	var shots_fired: int = 0
 	var rolls_started: int = 0
@@ -62,6 +65,8 @@ class Round:
 	var vel: Vector2
 	var size: StringName = &"small"
 	var remaining_m: float = INF
+	var splash_m: float
+	var landing: Vector2 = Vector2.INF
 
 
 class Slot:

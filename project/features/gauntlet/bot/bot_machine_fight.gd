@@ -52,7 +52,7 @@ static func stomp(view: BotView, foe: BotView.Hostile, dodge: bool) -> BotDefenc
 	var seconds: float = foe.tell_ticks * SimClock.TICK_DT
 	if escape <= me.walk_mps * seconds:
 		choice.action = &"sprint"
-	elif dodge and _roll_in_time(me, escape, foe.tell_ticks):
+	elif dodge and roll_in_time(me, escape, foe.tell_ticks):
 		choice.action = &"roll"
 	elif me.forms.has(&"tonnage") and gap <= foe.stomp_m:
 		choice.form = &"tonnage"
@@ -63,7 +63,7 @@ static func stomp(view: BotView, foe: BotView.Hostile, dodge: bool) -> BotDefenc
 	return choice
 
 
-static func _roll_in_time(me: BotView.Player, escape: float, ticks: int) -> bool:
+static func roll_in_time(me: BotView.Player, escape: float, ticks: int) -> bool:
 	if not me.can_roll or not is_finite(escape):
 		return false
 	var frame: int = ticks - 1

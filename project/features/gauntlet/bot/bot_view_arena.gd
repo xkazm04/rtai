@@ -27,15 +27,11 @@ func refresh() -> void:
 	_player.facing = rivet.facing
 	_player.radius = rivet.radius_m
 	_player.hp = rivet.hp
+	var street_combat: GauntletCombat = _stage.arena as GauntletCombat
+	_player.repair_available = street_combat == null or street_combat.can_repair()
 	_player.street_max_hp = rivet.max_hp if _street else 0.0
 	_player.walk_mps = _stage.arena.tuning.rivet["walk_mps"]
-	if _stage.pilot != null:
-		var motion: PlayerMotion = _stage.pilot.motion
-		_player.roll_m = motion.roll_m
-		_player.roll_ticks = motion.roll_ticks
-		_player.iframe_from = motion.iframe_from
-		_player.iframe_to = motion.iframe_to
-	_player.can_roll = _stage.pilot != null and _stage.pilot.motion.can_roll()
+	_read_motion()
 	_player.can_guard = _actions.bit(&"guard") >= 0
 	if _street:
 		var pilot: StagePilot = _stage.pilot
@@ -54,6 +50,24 @@ func refresh() -> void:
 	_arsenal.observe(self, _stage, _street)
 	_read_hostiles()
 	_read_rounds()
+
+
+func _read_motion() -> void:
+	_player.can_dash = false
+	if _stage.pilot != null:
+		var motion: PlayerMotion = _stage.pilot.motion
+		_player.dash_m = motion.dash.distance_m
+		_player.can_dash = (
+			motion.dash.enabled
+			and motion.phase == PlayerMotion.Phase.FREE
+			and motion.dash.cooldown == 0
+			and motion.cover.spot == null
+		)
+		_player.roll_m = motion.roll_m
+		_player.roll_ticks = motion.roll_ticks
+		_player.iframe_from = motion.iframe_from
+		_player.iframe_to = motion.iframe_to
+	_player.can_roll = _stage.pilot != null and _stage.pilot.motion.can_roll()
 
 
 func forward() -> Vector2:
@@ -130,6 +144,10 @@ func _read_rounds() -> void:
 		round_in.vel = shot.vel
 		round_in.remaining_m = shot.left_m
 		round_in.size = shot.size
+		if shot is FoeRocketFlight.Round:
+			var shell: FoeRocketFlight.Round = shot
+			round_in.splash_m = shell.radius_m
+			round_in.landing = shell.target
 		_rounds.append(round_in)
 	_round_ids = live
 

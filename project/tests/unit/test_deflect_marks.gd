@@ -47,6 +47,7 @@ func test_the_bat_kicks_the_camera_toward_the_shooter() -> void:
 func test_a_real_deflect_emits() -> void:
 	var arena: CombatArena = _arena()
 	var m: DeflectMarks = DeflectMarks.attach(arena)
+	DeflectRule.of(arena).pass_ratio_k = 0.0
 	var s: Shot = Shot.new()
 	s.pos = arena.rivet.pos + Vector2(1.0, 0.0)
 	s.vel = Vector2(-20.0, 0.0)

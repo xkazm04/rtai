@@ -318,6 +318,11 @@
       "additionalProperties": {
         "additionalProperties": false,
         "properties": {
+          "aim_lead": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
           "burst": {
             "maximum": 10,
             "minimum": 1,
@@ -359,6 +364,10 @@
             "maximum": 60,
             "minimum": 0.5,
             "type": "number"
+          },
+          "relocate_after_shots": {
+            "minimum": 0,
+            "type": "integer"
           },
           "round": {
             "enum": [

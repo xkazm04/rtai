@@ -1,9 +1,11 @@
 class_name ShotDraw
 extends RefCounted
-## Each FX view owns a colour canvas for hostile ammunition. Its normal item print maps
+## Each FX view owns a colour canvas for rounds and rocket exhaust. Its normal item print maps
 ## deep amber back to vermilion. Clear this canvas whenever its parent redraws, including
 ## the first frame after Rivet puts the gun away.
 
+const EXHAUST: Color = Color("#e5a12e")
+const EXHAUST_CORE: Color = Color("#ffe0a4")
 const LAYER: StringName = &"_enemy_round_canvas"
 
 var _rid: RID
@@ -39,6 +41,17 @@ static func _canvas(ci: CanvasItem) -> RID:
 	@warning_ignore("return_value_discarded")
 	ci.draw.connect(RenderingServer.canvas_item_clear.bind(layer._rid))
 	return layer._rid
+
+
+## The ink shader maps amber to vermilion. Draw the hot jet on the round-colour canvas.
+static func launcher_exhaust(ci: CanvasItem, nozzle: Vector2, dir: Vector2, tick: int) -> void:
+	var rid: RID = _canvas(ci)
+	var base: Vector2 = Ink.px(nozzle)
+	var side: Vector2 = dir.orthogonal() * 4.5
+	var end: Vector2 = base - dir * (21.0 + 3.0 * float(tick % 3))
+	var flame: PackedVector2Array = PackedVector2Array([base + side, end, base - side])
+	RenderingServer.canvas_item_add_polygon(rid, flame, PackedColorArray([EXHAUST]))
+	RenderingServer.canvas_item_add_line(rid, base, base.lerp(end, 0.55), EXHAUST_CORE, 3.0)
 
 
 static func bare(ci: CanvasItem, s: Shot, tail: Vector2) -> void:

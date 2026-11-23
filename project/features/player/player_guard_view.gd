@@ -20,6 +20,8 @@ var _flash_tick: int = -FLASH_TICKS
 
 
 static func attach(layer: CanvasLayer, stage: CollectCallStage, rigs: CharacterRigs) -> void:
+	if stage.pilot != null:
+		DeflectPassView.attach(layer, stage.arena, rigs.z_index + 71)
 	if stage.pilot == null or stage.pilot.guard == null:
 		return
 	var view: PlayerGuardView = PlayerGuardView.new()

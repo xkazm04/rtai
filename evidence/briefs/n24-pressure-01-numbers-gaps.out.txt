@@ -1,0 +1,42 @@
+Three tasks were committed on `n24-pressure`. The fire-gap measurement ran twice with byte-identical results. Its commit is blocked by the file allowlist, so task 5 missed its 18:30 prerequisite.
+
+| Task | Status | Checks |
+|---|---|---|
+| 1. Double enemy damage | Committed `db2043604` within the allowlist | Changed suite 707 passed. Full suite 3,781 passed, 2 skipped. Scenarios 67/67 passed. |
+| 2. Repair between waves | Committed `02bec2b14` | 28 focused tests passed. Mutation **5/10 killed**. |
+| 3. Late-wave timer | Committed `624e58248` | 29 focused tests passed. Mutation **4/4 killed**. |
+| 4. Measure fire gaps | Implemented and measured, uncommitted | Quick gate and 3 probe tests passed. All 21 timing breakdowns reconciled. Five input-table hashes matched the committed files. |
+| 5. Shorten gaps | Not started | Task 4 was uncommitted at 18:30. No after figures. |
+
+All three commits passed the quick gate and all 19 pre-commit checks. The combined full suite passed **3,789 tests, 0 failed, 2 skipped**. Six focused gameplay scenarios also passed. **No digest, tape, golden, or expected-damage fixture moved.**
+
+### Fire gaps before tuning
+
+Hits are impacts from rounds fired during each 30-second trial. Rates are rounds per second, ordered **standing / circling / strafing**. The full table includes hit shares, time under fire, mean and maximum gaps, and time spent in each firing phase. [Markdown table](<C:/Users/kazda/kiro/gtai-wt/n23-loop/evidence/n24-pressure/fire-gaps/before.md>) · [Raw JSON](<C:/Users/kazda/kiro/gtai-wt/n23-loop/evidence/n24-pressure/fire-gaps/before.json>)
+
+| Enemy | Rounds/s | Standing hits | Circling hits | Strafing hits |
+|---|---|---:|---:|---:|
+| Patrol cop | 2.13 / 2.13 / 2.13 | 36/64 | 0/64 | 10/64 |
+| SWAT | 2.13 / 2.13 / 2.13 | 27/64 | 0/64 | 10/64 |
+| Robot gunner | 2.13 / 2.13 / 2.13 | 29/64 | 0/64 | 13/64 |
+| Contractor | 2.13 / 2.13 / 2.13 | 35/64 | 0/64 | 17/64 |
+| Rocket trooper | 0.33 / 0.33 / 0.33 | 10/10 | 0/10 | 7/10 |
+| Sentry turret | 2.10 / 1.50 / 2.10 | 7/63 | 0/45 | 17/63 |
+| War machine | 0.40 / 0.17 / 0.37 | 12/12 | 0/5 | 6/11 |
+
+The first four archetypes all fired the production assault rifle through `GuardBrain.trigger`. Against circling Rivet, each spent **21.0 s in cooldown and 6.3 s in burst gaps** between its first and last shots. The rocket trooper spent 18.75 s repositioning. The turret spent 8.6 s turning to its firing lane, and the war machine spent 15.0 s aligning its cannon. All seven recorded zero time waiting for line of sight, shooter capacity, or `enemy_fire` volley rest in this open-ground, single-enemy trial.
+
+### Files and scope
+
+- **Task 1** changed `project/data/tables/{enemies,weapons}.json`. All ten enemy weapon rows and all three splash values doubled. `production_damage` is the damage dealt to Rivet by a connected production melee swing. The four melee archetypes doubled that field. The hostile-held gun scale rose from 0.25 to 0.5, and `enemy_damage_k` stayed at 1.
+- **Task 2** changed the gauntlet table and schema, `gauntlet_{combat,street,waves,walker}.gd`, `bot_{brain,view,view_arena}.gd`, `test_gauntlet_bonus_apply.gd`, new `test_gauntlet_repair.gd` and its UID, and `docs/gauntlet-loop.md`. Both street pilots keep fighting when repair is unavailable and can rest after a clear. `repair_in_wave: true` restores delayed in-wave repair. The override lives in `GauntletCombat`; no `combat_arena.gd` call site changed.
+- **Task 3** changed the gauntlet table and schema, `gauntlet_{street,waves}.gd`, the dev `gauntlet.gd` entry, `test_gauntlet_{run,wave_timer}.gd`, and `docs/gauntlet-loop.md`. The timer starts on actual spawn, including stacked waves. Wave 5 gets 90 s, wave 6 gets 45 s, zero disables late reinforcements, and `--wave-timeout` overrides both.
+- **Task 4** left `project/dev/gauntlet/{fire_gaps.gd,fire_gaps.tscn,fire_gap_arena.gd,fire_gap_clock.gd}`, `test_gauntlet_fire_gaps.gd`, all new script UIDs, and `before.{json,md}` uncommitted.
+
+**NEED pressure:** `tools/debt/baseline.json` to commit the requested probe. The debt gate reports `project/dev/gauntlet grew from 526 to 923 lines`. That baseline is outside the allowlist.
+
+**Remaining damage paths outside the allowlist:** `combat.json` owns the production assault rifle’s 0.6 damage against Rivet and the Robo-tazer’s 46. `prologue_stage.json` owns the shotgun and catch pole. `bosses.json` and `servo.json` own act-boss attacks, parcels, and dive blasts. In the range drill, `features/combat/weapons/impact.gd` also reads shared splash and burn values independently of the hostile direct-hit scale.
+
+For future aim tuning, the existing linear lead reads the **squad-wide** `aim_lead` in `EnemyBrain`. The production street rifle trigger never calls it. Wiring that existing lead into street fire is the relevant change to evaluate before considering a new predictor.
+
+[astra: 3860s, exit 0]

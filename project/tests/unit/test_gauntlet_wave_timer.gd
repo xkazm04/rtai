@@ -62,3 +62,36 @@ func test_timer_stops_while_reinforcements_wait_for_a_spawn_slot() -> void:
 	session.step()
 	assert_eq(waves.live_wave_count(), 1)
 	_check_timer(-1.0, GauntletHud.PAPER)
+
+
+func test_wave_six_uses_its_own_deadline_when_stacked_onto_wave_five() -> void:
+	waves._run.wave = 4
+	session.stage.arena.rivet.pos.x = session.street.current().end_x() + 0.1
+	session.step()
+	var first: int = session.stage.tick
+	assert_eq(waves._run.wave, 5)
+	assert_eq(waves.seconds_left(first), 90.0)
+	var next: int = first + 90 * SimClock.TICK_RATE
+	waves.step(session.stage, next - 1)
+	assert_eq(waves.live_wave_count(), 1)
+	waves.step(session.stage, next)
+	assert_eq(waves.live_wave_count(), 2)
+	assert_eq(waves.seconds_left(next), 45.0)
+	waves.step(session.stage, next + 45 * SimClock.TICK_RATE)
+	assert_eq(waves.live_wave_count(), 3)
+
+
+func test_zero_late_timeout_uses_the_regular_deadline_for_wave_six() -> void:
+	session.street.late_timeout_ticks = 0
+	waves._run.wave = 5
+	session.stage.arena.rivet.pos.x = session.street.current().end_x() + 0.1
+	session.step()
+	assert_eq(waves._run.wave, 6)
+	var deadline: int = session.stage.tick + 90 * SimClock.TICK_RATE
+	assert_eq(waves.seconds_left(session.stage.tick), 90.0)
+	waves.step(session.stage, deadline - 1)
+	assert_eq(waves.live_wave_count(), 1)
+	waves.step(session.stage, deadline)
+	assert_eq(waves.live_wave_count(), 2)
+	var timed_out: bool = waves._run.waves[-2].timed_out
+	assert_true(timed_out)

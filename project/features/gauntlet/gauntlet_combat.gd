@@ -8,6 +8,8 @@ signal rivet_contact(victim: Fighter, counter: StringName)
 const FIRED: StringName = &"gauntlet_fired"
 
 var run: GauntletRun
+var repair_in_wave: bool = false
+var wave_live: bool = false
 var enemy_damage_k: float = 1.0
 var _round_starts: Dictionary[Shot, Vector2] = {}
 var _melee: Array[StringName] = MeleeTable.weapon_ids()
@@ -20,6 +22,7 @@ static func install(stage: ArenaStage, ctx: WorldContext, state: GauntletRun) ->
 	var combat: GauntletCombat = GauntletCombat.new(
 		initial.tuning, ctx.events, ctx.rng.stream(&"combat")
 	)
+	DeflectRule.bind(combat, ctx.rng)
 	combat.rivet = initial.rivet
 	combat.metal = initial.metal
 	combat.walls = stage.walls
@@ -28,6 +31,23 @@ static func install(stage: ArenaStage, ctx: WorldContext, state: GauntletRun) ->
 		[PlayerMelee.WEAPON, DentJab.WEAPON, &"kerf_slice", &"stomp", &"ram"]
 	)
 	stage.arena = combat
+
+
+func configure_repair(rules: DataTable) -> void:
+	var row: Dictionary = rules.raw.get("rivet", {})
+	repair_in_wave = row.get("repair_in_wave", false)
+	for key: String in ["repair_per_s", "repair_delay_s"]:
+		if row.has(key):
+			tuning.rivet[key] = rules.num(row, key)
+
+
+func can_repair() -> bool:
+	return (repair_in_wave or not wave_live) and tuning.rivet["repair_per_s"] > 0.0
+
+
+func _repair() -> void:
+	if can_repair():
+		super._repair()
 
 
 ## Tag rounds at the trigger. A hostile round returned by the sword also has Rivet's shooter ID.

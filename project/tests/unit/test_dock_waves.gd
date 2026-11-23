@@ -77,6 +77,10 @@ func test_guards_die_to_one_nail_and_their_rounds_are_weak() -> void:
 	assert_signal_emitted_with_parameters(bus, "actor_killed", [0, guard.id, &"shot"])
 	assert_eq(arena.rifle_drops.size(), 1, "he drops his rifle")
 	var rifle: CombatTuning.Weapon = tuning.weapon(&"assault-rifle")
-	assert_lt(rifle.damage_vs_rivet * rifle.magazine, arena.rivet.max_hp * 0.25, "weak rounds")
+	assert_lt(
+		rifle.damage_vs_rivet * rifle.magazine,
+		arena.rivet.max_hp * 0.5,
+		"a full magazine takes less than half of Rivet"
+	)
 	assert_true(arena.grab_rifle(20.0))
 	assert_eq([arena.rivet.weapon, arena.rifle_ammo], [&"assault-rifle", rifle.magazine])

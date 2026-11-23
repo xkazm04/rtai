@@ -4,6 +4,7 @@ extends RefCounted
 
 var _rolling: bool
 var _rolls: int
+var _dash_start: int
 var _forms: Dictionary[StringName, int] = {}
 var _shots: int
 var _damage: float
@@ -13,6 +14,7 @@ var _deploys: GhostDeployTally = GhostDeployTally.new()
 
 func begin(stage: ArenaStage) -> void:
 	PlayerMotionDashStats.begin(stage)
+	_dash_start = stage.get_meta(PlayerMotionDashStats.BASELINE)
 	stage.arena.move_tally.begin_wave()
 	_deploys.begin(stage.tick)
 	_rolling = stage.pilot.motion.roll_progress() > 0.0
@@ -38,6 +40,8 @@ func sample(stage: ArenaStage) -> void:
 
 
 func finish(stage: ArenaStage, row: Dictionary) -> void:
+	# A later wave may have opened before this one closed.
+	stage.set_meta(PlayerMotionDashStats.BASELINE, _dash_start)
 	PlayerMotionDashStats.finish(stage, row)
 	row["rolls"] = _rolls
 	row["shots"] = stage.shots_fired - _shots
