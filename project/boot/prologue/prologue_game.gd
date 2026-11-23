@@ -14,6 +14,7 @@ var live: LiveInput
 var lines: PrologueLines
 var encounter: PrologueEncounter
 var embedded: bool = false
+var checkpoints: PrologueAutosave
 var result_path: String
 var with_view: bool = true
 var _seed: int
@@ -21,12 +22,14 @@ var _seed: int
 
 func _ready() -> void:
 	boot()
+	if encounter != null and with_view and DisplayServer.get_name() != "headless":
+		_open_view(stage.plan as PrologueYard)
 
 
-func boot() -> void:
+func boot(saved_seed: String = "") -> void:
 	if world != null:
 		return
-	var problem: String = _read_args()
+	var problem: String = _read_args(saved_seed)
 	if problem != "":
 		Log.error("prologue", problem)
 		get_tree().quit(2)
@@ -56,15 +59,13 @@ func boot() -> void:
 	@warning_ignore("return_value_discarded")
 	encounter.opening_restarted.connect(bodies.restore_opening)
 	stage.hooks.append(encounter)
-	if LaunchArgs.has("--bot"):
+	if not embedded and LaunchArgs.has("--bot"):
 		_attach_bot()
-	if with_view and DisplayServer.get_name() != "headless":
-		_open_view(plan)
 
 
-func _read_args() -> String:
+func _read_args(saved_seed: String = "") -> String:
 	result_path = "" if embedded else LaunchArgs.value("--result")
-	var seed_arg: String = LaunchArgs.value("--seed")
+	var seed_arg: String = saved_seed if saved_seed != "" else LaunchArgs.value("--seed")
 	if LaunchArgs.has("--seed") and not seed_arg.is_valid_int():
 		return "invalid seed %s" % seed_arg
 	if not embedded and LaunchArgs.has("--result") and not result_path.is_absolute_path():

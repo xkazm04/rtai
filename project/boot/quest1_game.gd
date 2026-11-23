@@ -74,8 +74,7 @@ func start(cp: Checkpoint = null) -> void:
 ## Continue / Retry: the newest valid autosave slot (the other when one is damaged), else a
 ## fresh start with the engine's one-line notice (SAV-08). Re-simulation happens in `accept`.
 func _continue() -> void:
-	var out: SaveLoader.Outcome = Save.load_latest(Quest1Autosave.accept(Events, Data))
-	var resumed: Quest1Session = out.value if out.status == SaveLoader.Status.LOADED else null
+	var out: SaveLoader.Outcome = Save.load_latest(new_game_path.accept)
 	if session != null:
 		session.world.queue_free()
 		session = null
@@ -84,7 +83,7 @@ func _continue() -> void:
 		view = null
 	_ended = false
 	paused = false
-	_begin(resumed if resumed != null else Quest1Session.open(Events, Data))
+	new_game_path.resume(self, out.value)
 
 
 ## True when Continue has a game to offer: a slot exists and the newest save is not the quest end.

@@ -363,7 +363,7 @@
       ],
       "files": {
         "project/boot/collect_call/view/fx_view.gd": 271,
-        "project/boot/quest1_game.gd": 274,
+        "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/showcase/city_fight.gd": 300,
         "project/features/arena/arena_rigs.gd": 290,
@@ -444,7 +444,7 @@
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
         "project/boot/launch_args.gd": 220,
-        "project/boot/quest1_game.gd": 274,
+        "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,
         "project/dev/bench/fight_frames.gd": 246,

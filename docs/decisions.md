@@ -1479,3 +1479,4 @@ One dated line per decision. Deviations use `DEVIATION <RULE-ID>` and carry a re
 - [2026-11-23] DECISION prologue: The unique shotgun has enabled=false. An explicit weapon ID equips it with assault_rifle held art. The range and TTK lists filter on enabled, and gauntlet bonuses, bot slots, armory, quest guns and reel chapters select authored IDs.
 - [2026-11-23] DECISION prologue: The slice title starts the factory prologue and its held end card opens Collect Call in the same scene. Embedded quest tools retain their direct Start.
 - [2026-11-23] DECISION prologue: --skip-prologue selects the direct quest 1 opening from Start so quest tapes and export smokes can run the original path.
+- [2026-11-23] DECISION prologue: Each encounter checkpoint writes its seed, input tape and state hash through the rotating autosaves. Continue verifies the beat by replay, and the handover writes a normal Collect Call checkpoint.
