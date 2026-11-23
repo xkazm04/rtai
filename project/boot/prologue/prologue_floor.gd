@@ -48,6 +48,7 @@ func _draw() -> void:
 	_paint.stamps(self, plan.dressing.outside)
 	_stage_decals()
 	_paint.stamps(self, plan.dressing.decals)
+	_paint.shadows(self, plan)
 	_paint.stamps(self, plan.dressing.factory_front)
 	for wreck: PrologueYard.Wreck in plan.wrecks:
 		var skin: PrologueYardDressing.CoverArt = plan.dressing.cover.get(wreck.id)
@@ -55,13 +56,23 @@ func _draw() -> void:
 		if wreck.shell and skin == null:
 			_broken_sill(_pixels(wreck.footprint))
 	_draw_fences(margin)
+	_paint.stamps(self, plan.dressing.fixtures)
 	for phone: String in stage.layout.phones:
-		_sprite("payphone", stage.layout.phones[phone], Vector2(1.3, 1.3))
+		_yard_phone(stage.layout.phones[phone])
 	if not plan.exit_open:
 		var size_m: Vector2 = Vector2(plan.gate_width_m, 0.22)
 		var barrier: Rect2 = _pixels(Rect2(plan.gate - size_m * 0.5, size_m))
 		draw_rect(barrier.grow(1.5), Ink.INK)
 		draw_rect(barrier, Color("57758e"))
+
+
+func _yard_phone(at: Vector2) -> void:
+	var look: PrologueYardDressing = plan.dressing
+	if look.phone_art.is_empty():
+		_sprite("payphone", at, Vector2(1.3, 1.3))
+		return
+	var box: Rect2 = Rect2(at - look.phone_size * Vector2(0.5, 1.0), look.phone_size)
+	draw_texture_rect(_paint.texture(look.phone_art), _pixels(box), false)
 
 
 func _surround_m() -> float:

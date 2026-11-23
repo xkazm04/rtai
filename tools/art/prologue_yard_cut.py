@@ -8,6 +8,9 @@ border for matte sampling or set "background": "#eee8dc" to its RGB colour.
 "fit": true preserves the trimmed aspect ratio inside each metre box. For ink on
 white, "shadow_ink": "#211e1c" unmattes exterior shadow to transparent ink.
 An "ink_only" row applies that treatment throughout a ground mark.
+An "outline" polygon (local box pixels) cuts a fixture out of its mounting wall.
+"turn_clockwise" rotates the cut before sizing. "trim_to_solid" removes only the
+outer margin beyond the opaque bounding box, for art mapped to a collision box.
 """
 
 import argparse
@@ -106,8 +109,15 @@ def extract(sheet, row, job, matte):
         return tile_ground(crop.resize(size, Image.Resampling.LANCZOS))
     if "isolate" in row:
         crop = isolate(crop, row["isolate"], matte)
+    if "outline" in row:
+        mask = Image.new("L", crop.size)
+        ImageDraw.Draw(mask).polygon([tuple(p) for p in row["outline"]], fill=255)
+        paper = Image.new("RGB", crop.size, tuple(map(int, matte)))
+        crop = Image.composite(crop.convert("RGB"), paper, mask)
     shadow = ImageColor.getrgb(job["shadow_ink"]) if "shadow_ink" in job else None
     piece = key_piece(crop, matte, shadow, row.get("ink_only", False))
+    if row.get("turn_clockwise", False):
+        piece = piece.transpose(Image.Transpose.ROTATE_270)
     if job.get("fit", False):
         scale = min(size[0] / piece.width, size[1] / piece.height)
         size = tuple(max(1, round(span * scale)) for span in piece.size)
@@ -117,7 +127,13 @@ def extract(sheet, row, job, matte):
         mark = Image.new("RGBA", size, shadow)
         mark.putalpha(piece.getchannel("A").resize(size, Image.Resampling.LANCZOS))
         return mark
-    return piece.resize(size, Image.Resampling.LANCZOS)
+    piece = piece.resize(size, Image.Resampling.LANCZOS)
+    if row.get("trim_to_solid", False):
+        solid = piece.getchannel("A").point(lambda a: 255 if a == 255 else 0).getbbox()
+        if solid is None:
+            raise ValueError("cover piece has no fully opaque ink")
+        piece = piece.crop(solid)
+    return piece
 
 
 def cut_job(sheet, job):

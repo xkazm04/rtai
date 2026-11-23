@@ -41,6 +41,11 @@ var ground: Array[Ground] = []
 var cover: Dictionary[String, CoverArt] = {}
 var decals: Array[Piece] = []
 var factory_front: Array[Piece] = []
+var fixtures: Array[Piece] = []
+var phone_art: String
+var phone_size: Vector2
+var shadow_reach: Vector2
+var shadow_tint: Color
 var outside: Array[Piece] = []
 var use_stage_decals: bool
 var ochre_strength: float
@@ -67,7 +72,8 @@ static func resolve(
 	var overrides: Dictionary = row.get("cover", {})
 	for key: String in overrides:
 		result.cover[key] = _cover_art(table, table.object(overrides, key))
-	result._read_paint(table, table.object(rows, result.paint_id), table.object(rows, "plain"))
+	var paint: Dictionary = table.object(rows, result.paint_id).merged(row, true)
+	result._read_paint(table, paint, table.object(rows, "plain"))
 	if not table.ok():
 		Log.error("prologue-yard", str(table.errors()))
 	return result
@@ -80,6 +86,15 @@ func _read_paint(table: DataTable, row: Dictionary, plain: Dictionary) -> void:
 	use_stage_decals = not row.has("decals")
 	decals = _pieces(table, row, "decals")
 	factory_front = _pieces(table, row, "factory_front")
+	fixtures = _pieces(table, row, "fixtures")
+	if row.has("phone"):
+		var phone: Dictionary = table.object(row, "phone")
+		phone_art = table.text(phone, "art")
+		phone_size = table.vec(phone, "size_m")
+	if row.has("shadows"):
+		var shadows: Dictionary = table.object(row, "shadows")
+		shadow_reach = table.vec(shadows, "reach_m")
+		shadow_tint = Color(table.text(shadows, "tint"))
 	ochre_strength = table.num(row, "ochre_strength") if row.has("ochre_strength") else 0.0
 	outside = _pieces(table, row, "outside")
 	if row.get("include_plain_outside", false):

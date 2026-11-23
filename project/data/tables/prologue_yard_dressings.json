@@ -1,24 +1,122 @@
 {
   "dressings": {
     "line_fire": {
+      "factory_front": [
+        {
+          "art": "res://boot/prologue/art/line_fire/shutter_bay.png",
+          "at": [
+            -3,
+            -2.9250000000000003
+          ],
+          "ochre": true,
+          "rotation_deg": 0,
+          "size_m": [
+            15.15,
+            6.95
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/line_fire/burst_bay.png",
+          "at": [
+            11.8,
+            -2.7250000000000005
+          ],
+          "ochre": true,
+          "rotation_deg": 0,
+          "size_m": [
+            15.15,
+            7.35
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/line_fire/feed_bay.png",
+          "at": [
+            26.6,
+            -2.4750000000000005
+          ],
+          "ochre": true,
+          "rotation_deg": 0,
+          "size_m": [
+            15.15,
+            7.85
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/line_fire/shutter_bay.png",
+          "at": [
+            41.4,
+            -2.9250000000000003
+          ],
+          "ochre": true,
+          "rotation_deg": 0,
+          "size_m": [
+            15.15,
+            6.95
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/line_fire/collapsed_bay.png",
+          "at": [
+            56.2,
+            -2.7250000000000005
+          ],
+          "ochre": true,
+          "rotation_deg": 0,
+          "size_m": [
+            15.15,
+            7.35
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/line_fire/wall_lamp.png",
+          "at": [
+            15.5,
+            -2.78
+          ],
+          "ochre": true,
+          "rotation_deg": 0,
+          "size_m": [
+            0.95,
+            0.85
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/line_fire/wall_lamp.png",
+          "at": [
+            30.3,
+            -2.78
+          ],
+          "ochre": true,
+          "rotation_deg": 0,
+          "size_m": [
+            0.95,
+            0.85
+          ]
+        }
+      ],
+      "fixtures": [
+        {
+          "art": "res://boot/prologue/art/line_fire/gate_lamp.png",
+          "at": [
+            41.2,
+            32.5
+          ],
+          "ochre": true,
+          "rotation_deg": 0,
+          "size_m": [
+            1.6,
+            1.6
+          ]
+        }
+      ],
       "layout": {
         "cover": [
           {
-            "art": "res://boot/prologue/art/torn_line/conveyor.png",
+            "art": "res://boot/prologue/art/line_fire/straight_west.png",
             "at": [
               24,
               0.6
             ],
-            "crop": {
-              "origin": [
-                0.011719,
-                0.013804
-              ],
-              "size": [
-                0.976562,
-                0.972393
-              ]
-            },
             "id": "conveyor_door",
             "size_m": [
               5.4,
@@ -26,21 +124,11 @@
             ]
           },
           {
-            "art": "res://boot/prologue/art/torn_line/conveyor.png",
+            "art": "res://boot/prologue/art/line_fire/straight_east.png",
             "at": [
               30.4,
               4.4
             ],
-            "crop": {
-              "origin": [
-                0.011719,
-                0.013804
-              ],
-              "size": [
-                0.976562,
-                0.972393
-              ]
-            },
             "id": "conveyor_feed",
             "size_m": [
               5.2,
@@ -48,21 +136,11 @@
             ]
           },
           {
-            "art": "res://boot/prologue/art/torn_line/conveyor.png",
+            "art": "res://boot/prologue/art/line_fire/bent_rail.png",
             "at": [
               34,
               8.4
             ],
-            "crop": {
-              "origin": [
-                0.011719,
-                0.013804
-              ],
-              "size": [
-                0.976562,
-                0.972393
-              ]
-            },
             "id": "conveyor_turn",
             "size_m": [
               5.2,
@@ -70,21 +148,11 @@
             ]
           },
           {
-            "art": "res://boot/prologue/art/torn_line/conveyor.png",
+            "art": "res://boot/prologue/art/line_fire/straight_west.png",
             "at": [
               29.4,
               12.6
             ],
-            "crop": {
-              "origin": [
-                0.011719,
-                0.013804
-              ],
-              "size": [
-                0.976562,
-                0.972393
-              ]
-            },
             "id": "conveyor_return",
             "size_m": [
               5.4,
@@ -92,21 +160,11 @@
             ]
           },
           {
-            "art": "res://boot/prologue/art/torn_line/conveyor.png",
+            "art": "res://boot/prologue/art/line_fire/bent_rail.png",
             "at": [
               25.5,
               17
             ],
-            "crop": {
-              "origin": [
-                0.011719,
-                0.013804
-              ],
-              "size": [
-                0.976562,
-                0.972393
-              ]
-            },
             "id": "conveyor_bend",
             "size_m": [
               5.2,
@@ -114,21 +172,11 @@
             ]
           },
           {
-            "art": "res://boot/prologue/art/torn_line/conveyor.png",
+            "art": "res://boot/prologue/art/line_fire/torn_end.png",
             "at": [
               32.2,
               20.6
             ],
-            "crop": {
-              "origin": [
-                0.011719,
-                0.013804
-              ],
-              "size": [
-                0.976562,
-                0.972393
-              ]
-            },
             "id": "conveyor_tail",
             "size_m": [
               5.4,
@@ -136,21 +184,11 @@
             ]
           },
           {
-            "art": "res://boot/prologue/art/torn_line/appliance_pallets.png",
+            "art": "res://boot/prologue/art/line_fire/pallet_stack.png",
             "at": [
               12,
               26
             ],
-            "crop": {
-              "origin": [
-                0.01703,
-                0.009375
-              ],
-              "size": [
-                0.968665,
-                0.98125
-              ]
-            },
             "id": "pallet_west",
             "size_m": [
               2.4,
@@ -158,21 +196,11 @@
             ]
           },
           {
-            "art": "res://boot/prologue/art/torn_line/appliance_pallets.png",
+            "art": "res://boot/prologue/art/line_fire/pallet_toppled.png",
             "at": [
               23,
               29.5
             ],
-            "crop": {
-              "origin": [
-                0.01703,
-                0.009375
-              ],
-              "size": [
-                0.968665,
-                0.98125
-              ]
-            },
             "id": "fuel_vessel",
             "size_m": [
               2.4,
@@ -202,21 +230,11 @@
             ]
           },
           {
-            "art": "res://boot/prologue/art/torn_line/welding_arm.png",
+            "art": "res://boot/prologue/art/line_fire/toppled_arm.png",
             "at": [
               13.2,
               7.8
             ],
-            "crop": {
-              "origin": [
-                0.015625,
-                0.007258
-              ],
-              "size": [
-                0.96875,
-                0.975806
-              ]
-            },
             "id": "press_carcass",
             "size_m": [
               2.5,
@@ -224,21 +242,11 @@
             ]
           },
           {
-            "art": "res://boot/prologue/art/torn_line/fallen_fridges.png",
+            "art": "res://boot/prologue/art/line_fire/fridge_bank.png",
             "at": [
               22,
               9
             ],
-            "crop": {
-              "origin": [
-                0.008303,
-                0.014803
-              ],
-              "size": [
-                0.968635,
-                0.963816
-              ]
-            },
             "id": "fallen_fridges",
             "size_m": [
               4,
@@ -481,7 +489,21 @@
           }
         ]
       },
-      "paint_from": "torn_line"
+      "paint_from": "torn_line",
+      "phone": {
+        "art": "res://boot/prologue/art/line_fire/payphone.png",
+        "size_m": [
+          0.82,
+          1.19
+        ]
+      },
+      "shadows": {
+        "reach_m": [
+          2.2,
+          1.35
+        ],
+        "tint": "28221f80"
+      }
     },
     "plain": {
       "ground": [

@@ -68,6 +68,31 @@ func stamps(canvas: CanvasItem, pieces: Array[PrologueYardDressing.Piece]) -> vo
 	canvas.draw_set_transform(Vector2.ZERO)
 
 
+## Project each silhouette from its base along the ground, away from the burning hall.
+func shadows(canvas: CanvasItem, plan: PrologueYard) -> void:
+	var look: PrologueYardDressing = plan.dressing
+	if look.shadow_reach == Vector2.ZERO:
+		return
+	for cover: PrologueYard.Wreck in plan.wrecks:
+		_shadow(canvas, texture(cover.art), cover.footprint, look)
+	for piece: PrologueYardDressing.Piece in look.fixtures:
+		_shadow(
+			canvas, texture(piece.art), Rect2(piece.at - piece.size_m * 0.5, piece.size_m), look
+		)
+	canvas.draw_set_transform(Vector2.ZERO)
+
+
+func _shadow(canvas: CanvasItem, art: Texture2D, box: Rect2, look: PrologueYardDressing) -> void:
+	var base: Vector2 = Ink.px(Vector2(box.position.x, box.end.y))
+	var reach: Vector2 = Ink.px(look.shadow_reach)
+	canvas.draw_set_transform_matrix(
+		Transform2D(Vector2.RIGHT, -reach / art.get_height(), base + reach)
+	)
+	canvas.draw_texture_rect(
+		art, Rect2(0, 0, Ink.px(box.size).x, art.get_height()), false, look.shadow_tint
+	)
+
+
 func wreck(
 	canvas: CanvasItem, piece: PrologueYard.Wreck, tint: Color, skin: PrologueYardDressing.CoverArt
 ) -> void:

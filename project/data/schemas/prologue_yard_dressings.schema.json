@@ -148,6 +148,12 @@
           },
           "type": "array"
         },
+        "fixtures": {
+          "items": {
+            "$ref": "#/$defs/piece"
+          },
+          "type": "array"
+        },
         "ground": {
           "items": {
             "$ref": "#/$defs/layer"
@@ -333,6 +339,51 @@
           "enum": [
             "torn_line"
           ]
+        },
+        "phone": {
+          "additionalProperties": false,
+          "properties": {
+            "art": {
+              "pattern": "^res://(features/[a-z0-9_/]+|boot/prologue/art/[a-z0-9_/]+)\\.png$",
+              "type": "string"
+            },
+            "size_m": {
+              "items": {
+                "minimum": 0.001,
+                "type": "number"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            }
+          },
+          "required": [
+            "art",
+            "size_m"
+          ],
+          "type": "object"
+        },
+        "shadows": {
+          "additionalProperties": false,
+          "properties": {
+            "reach_m": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            },
+            "tint": {
+              "pattern": "^[a-fA-F0-9]{6}([a-fA-F0-9]{2})?$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "reach_m",
+            "tint"
+          ],
+          "type": "object"
         }
       },
       "required": [],

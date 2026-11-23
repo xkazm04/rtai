@@ -59,6 +59,20 @@ def test_wide_grey_shadow_is_ink_on_the_ground():
     assert cut.getpixel((4, 5)) == (160, 80, 40, 255)
 
 
+def test_outline_turn_and_opaque_trim_align_the_long_arm_to_its_footprint():
+    sheet = Image.new("RGB", (24, 16), "ivory")
+    sheet.paste("black", (3, 6, 19, 10))
+    sheet.paste("brown", (3, 6, 7, 10))
+    sheet.paste("black", (16, 1, 22, 3))
+    row = {"id": "arm", "size_m": [1, 4], "box": [0, 0, 24, 16],
+           "outline": [(2, 5), (19, 5), (19, 10), (2, 10)],
+           "turn_clockwise": True, "trim_to_solid": True}
+    arm = cut_job(sheet, {"px_per_m": 4, "pieces": [row]})["arm"]
+    assert arm.size == (4, 16)
+    assert arm.getpixel((2, 1)) == (165, 42, 42, 255)
+    assert arm.getpixel((2, 13)) == (0, 0, 0, 255)
+
+
 @pytest.mark.parametrize("width,height", [(96, 64), (67, 59)])
 def test_offset_blend_joins_both_axes_without_a_central_cut(width, height):
     y, x = np.mgrid[:height, :width]
