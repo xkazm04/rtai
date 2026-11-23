@@ -30,8 +30,8 @@ func _drive(down: bool) -> void:
 
 func _cop(at: Vector2, hp: float) -> Fighter:
 	var g: Fighter = _stage.arena.spawn_guard(_stage.arena.rivet.pos)
-	# The opening rake leaves a warden alive to receive the charged release.
-	g.archetype = &"appliance_warden"
+	# A named guard survives the opening rake to receive the charged release.
+	g.set_meta(MeleeLethal.NAMED, true)
 	g.pos = at
 	g.hp = hp
 	g.max_hp = hp

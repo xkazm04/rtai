@@ -1,7 +1,7 @@
 extends GutTest
 
 const HUMANS: Array[StringName] = [
-	&"", &"patrol_cop", &"riot_cop", &"swat", &"contractor", &"rocket_trooper"
+	&"", &"patrol_cop", &"riot_cop", &"swat", &"contractor", &"rocket_trooper", &"appliance_warden"
 ]
 const ROBOTS: Array[StringName] = [
 	&"robot_thug", &"robot_gunner", &"shield_robot", &"sentry_turret", &"war_machine"
@@ -44,7 +44,6 @@ func test_one_click_finishes_each_exposed_human_even_through_damage_reduction() 
 
 func test_named_humans_and_bosses_take_the_rakes_normal_damage() -> void:
 	var mulroney: Fighter = _foe(&"sergeant_mulroney")
-	var warden: Fighter = _foe(&"appliance_warden")
 	var named: Fighter = _foe(&"patrol_cop")
 	named.set_meta(MeleeLethal.NAMED, true)
 	var boss: Fighter = _foe(&"swat")
@@ -56,7 +55,7 @@ func test_named_humans_and_bosses_take_the_rakes_normal_damage() -> void:
 	var row_boss: Fighter = _foe(&"")
 	row_boss.body_class = &"boss"
 	_swing()
-	for f: Fighter in [mulroney, warden, named, boss, typed_boss, owned, row_boss]:
+	for f: Fighter in [mulroney, named, boss, typed_boss, owned, row_boss]:
 		assert_eq(f.hp, f.max_hp - hands.combo.table.hits[0].damage, String(f.archetype))
 
 
@@ -97,7 +96,7 @@ func test_pit_uses_the_same_exemptions_and_front_block() -> void:
 		agent.facing = Vector2.RIGHT
 		pit.hurt(agent, 1.0, Vector2.RIGHT, combo)
 		var expected: float = 49.0
-		if id == &"contractor":
+		if id in [&"contractor", &"appliance_warden"]:
 			expected = 0.0
 		assert_eq(agent.hp, expected, String(id))
 	var riot: EnemyAgent = pit.spawn(&"riot_cop", Vector2.RIGHT)
