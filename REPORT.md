@@ -1,7 +1,10 @@
 # REPORT - lane keys (n26, 2026-11-23)
 
-Branch `n26-keys`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-controls`, cut from `main` `0779185ac`. Head at freeze: FILL.
-Gate: FILL (`node tools/gate/run.mjs --rev=HEAD` line + `gate.json` path).
+Branch `n26-keys`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-controls`, cut from `main` `0779185ac`. Code head `e6db0a319`; frozen and gated at `8d6a78c07` (later commits touch only `JOURNAL.md` and `REPORT.md`).
+Gate: `node tools/gate/run.mjs --rev=HEAD --reels` at 8d6a78c07, 16:21 to 17:25: `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n23-controls\build\gate\8d6a78c07e71\gate.json`
+(lint 19/19 over 2154 files; unit 4018 passed / 0 failed / 2 skipped; scenarios 68 ran, rig_stress p50 1.172 ms > 1.000 ms
+CONTENDED with 3 other runs, budget not judged; parity bit for bit with the planted mutation caught at step 629; selftest pass;
+release compile 968/0; reels exit 0).
 Films and stills: `C:\Users\kazda\kiro\gtai-masters\n26\keys\` (`frames.json`, best first).
 
 ## What works
@@ -51,13 +54,18 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n26\keys\` (`frames.json`, b
 - p55 bare sprint profile drift 11.31 -> 8.53 cm, over the 7 cm bar (p55 walk and both p70 rows meet it).
 - Front/back bare rows have no drawn stride along the run: a held drawing slides ~55-60 cm over its 4-7 tick hold. Fixing
   that needs new drawn front/back run rows, not cadence.
-- 4. The 55 degree camera grids: FILL (not started if the clock cut it). The method is written in
-  `evidence/briefs/n26-04-grids-p55.md`: p55 reference rows (never p70), a per-facing check against the p55 pistol row before
-  packing (dome width, sole line, travel ratio, leading boot), per-row p55 calibration, stop after Gloria and judge.
+  Stills of what still ships: `p70_electro_gun_stopgap_64.png`, `p70_homing_shard_stopgap_64.png` (the shared fallback body
+  with only the held weapon swapped).
+- **4. The 55 degree camera grids: not started** (it was queued behind item 3 and the builder limit came first). What I would
+  do differently from last run's drifting Gloria attempt is written as a ready brief, `evidence/briefs/n26-04-grids-p55.md`:
+  reference frames from the shipped p55 rows (never p70); a per-facing check of each generated row against the p55 pistol row
+  before any packing (dome width within 3 %, sole line within 2 px, stride travel ratio within 0.05, same leading boot, no
+  extra limb), a row that fails is regenerated alone; per-row p55 stride calibration measured in the game; stop after Gloria
+  and judge her against the p55 pistol grid before a second weapon.
 - The per-chip numbers on the deploy strip are small (about 10 px at 1080p).
 
 ## What blocked or slowed you
-- **BLOCKED from 16:13: the Astra builder's usage limit** (no call possible until Nov 28). Items 3 and 4 lost (~2 h 55 min to
+- **BLOCKED from 16:13: the Astra builder's usage limit** (no call possible until Nov 28). Items 3 and 4 lost (2 h 27 min to
   the freeze). The director does not edit product files, so the lane froze at 8d6a78c07 and ran the final gate there.
 - Brief 01 too big for one 75 min call (verification tail cut by the cap): ~20 min of re-checks in the next call.
 - First hands cadence gamed the drift number with one-tick depth rows: one resume (~70 min).
@@ -68,9 +76,9 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n26\keys\` (`frames.json`, b
 1. **Gloria**: a long two-handed gun as the first pistol-class weapon (`gloria_vs_pistol_64.png`). Redraw as a one-hand
    pistol, or keep and move her class?
 2. **Pad for the four deploys**: the pad keeps LB = deploy the selected ghost, RB = cycle. The alternative (d-pad as 1-4)
-   is one table edit but takes the d-pad off movement.
+   is one table edit but takes the d-pad off movement. No film: the keys film drives the keyboard only.
 3. **Key 1 at a car**: entering is taken before Dent's deploy whenever an enterable car is in reach. Alternative: hold 1 deploys,
-   tap 1 enters (not built).
+   tap 1 enters (not built). Still: `keys_car_one_32.png` (the 1 cap reads Car, Dent's deploy count unchanged).
 
 ## Merge notes
 - Wire ids: `ghost_deploy_1..4` bits 20-23 (wire 33-36); no existing bit moved. Melee lane owns souls except
@@ -80,7 +88,14 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n26\keys\` (`frames.json`, b
 - Root `JOURNAL.md`/`REPORT.md`: keep this lane's on add/add conflicts.
 
 ## Next steps
-FILL.
+1. Item 3 resumed from the electro gun round (`C:/Users/kazda/kiro/gtai-art/library/rounds/20261123-1559-n26keys/`: 14 of
+   16 rows cut, two to generate), then homing shard, mini-nuke, molotov, plasma sword, ray gun with brief
+   `evidence/briefs/n26-03-grids-p70.md` (two weapons per 75 min call is the realistic rate).
+2. Item 4 with `evidence/briefs/n26-04-grids-p55.md`, Gloria first and alone; it waits on the owner's Gloria call (a redraw
+   as a one-hand pistol changes which reference rows she borrows).
+3. p55 bare sprint drift 8.53 cm: a p55 run8 profile row factor of its own, measured as in `evidence/n26-keys/hands_after.md`.
+4. Drawn front/back bare run rows with stride travel along the run (cadence cannot remove that slide).
+5. Larger per-chip numbers on the deploy strip (about 10 px today), after the owner has played the keys.
 
 ## Astra ledger
 | call | minutes | result | brief differently |
