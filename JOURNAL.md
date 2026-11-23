@@ -78,3 +78,11 @@ NEXT (session 5, from ~06:28; freeze 07:10, report 07:20, end 07:40):
 2. After 07:10, once: `export APPDATA=C:/Users/kazda/kiro/gtai-n25/appdata/yard GODOT_BIN=C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe; node tools/gate/run.mjs --rev=HEAD --reels` (about 20+ min; start it right at 07:10 detached with nohup into `build/gate-reels/gate.out`); quote its line in REPORT's Gate line beside the snapshot gate.
 3. grep `C:\Users\kazda\kiro\gtai-wt\int-n20\JOURNAL.md` for `NEED yard` (none at 05:36).
 4. Final: re-run `node tools/evidence/cites.mjs REPORT.md`, commit JOURNAL + REPORT with pathspec by 07:20; then clean `%LOCALAPPDATA%\Temp\gtai-gate-*` / `gtai-mutate-*` left by this lane (memory: clean Temp after merge/cleanup; check the dir names belong to our runs: gate snapshot `gtai-gate-0dba79170e71`).
+## Session 5 (07:10, STABILIZE)
+- 07:10 No `NEED yard` in path's journal. No Astra call running (lock empty; last call 06 films-final ended 06:10). No product change in this session.
+- 07:10 Reels gate `node tools/gate/run.mjs --rev=HEAD --reels` started detached on 5687c21d3 (pid 17156), out `build/gate-reels/gate.out`. It ends after this session stops (07:20): REPORT says its verdict is unmeasured.
+
+NEXT (Director, morning):
+1. Read the last line of `build/gate-reels/gate.out` (reels gate on 5687c21d3). The snapshot gate PASS on 0dba79170 stands for the code.
+2. Merge `n25-yard`: only `yard.dressing` in `prologue_stage.json` is shared; no yard-shape; JOURNAL/REPORT add/add: keep each lane's own.
+3. Clean `%LOCALAPPDATA%\Temp\gtai-gate-5687c21d3*` / `gtai-gate-0dba79170e71` after the reels gate ends.
