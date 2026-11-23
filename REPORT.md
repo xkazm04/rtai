@@ -15,8 +15,8 @@ Gate: `node tools/gate/run.mjs --rev=HEAD` on `0dba79170` (the last code commit;
 | Cover art fills its collision footprints (no invisible walls) | `evidence/yard/footprints_mid_64ppm.png`, `test_prologue_yard_footprints.gd` | all 11 rows >= 85 %, lowest 89.7 % |
 | Wrecked floor: one continuous concrete swatch, nine floor marks, oil drag trail, scorch, tyre streaks; chain-link fence on posts and a bent sliding gate leaf | `evidence/yard/pairs/{gate,mid,harbor}_{32,64}ppm.png` | no tile grid |
 | End card void fixed: the street, pavements and frontage run 40 m past both edges; the works continue east into a loading lot | `evidence/yard/end-card-before.png` vs `end-card-after.png` | - |
-| Before/after films from one fixed camera at three places (plain left, torn_line right, 960 px crops of the same camera) | masters `pair_{mid,gate,harbor}_32ppm.mp4`, `pair_{mid_64ppm_t2290,gate_64ppm_t6400,harbor_64ppm_t8460}.png`, `stills_sheet.png`; manifest `evidence/yard/films.json` | 3 films, each h264 1920x1080 60 fps 26.67 s (ffprobe) |
-| The prologue played through on the new yard | masters `prologue_torn_line.mp4` (seed-7 pilot to the end card), `excerpt_wave1.mp4`, `excerpt_wave2.mp4`, `excerpt_end_card.mp4` | 176.8 s; excerpts 30 / 30 / 15 s, 1920x1080 60 fps |
+| Before/after films from one fixed camera at three places (plain left, torn_line right, 960 px crops of the same camera) | masters `pair_{mid,gate,harbor}_32ppm.mp4`, `pair_{mid_64ppm_t2290,gate_64ppm_t6400,harbor_64ppm_t8460}.png`, `stills_sheet.png`, west close-up `west_64ppm_torn_line.png`; manifest `evidence/yard/films.json` (sha256 of every file). All re-recorded 05:44-06:09 from the final art (call 06) | 3 films, each h264 1920x1080 60 fps 26.67 s, 1600 frames (ffprobe) |
+| The prologue played through on the new yard | masters `prologue_torn_line.mp4` (seed-7 pilot to the end card), `excerpt_wave1.mp4`, `excerpt_wave2.mp4`, `excerpt_end_card.mp4` | 176.8 s (10610 frames); excerpts 30 / 30 / 15 s from ticks 2858 / 5496 / 9710, 1920x1080 60 fps; seed-7 result and hit log byte-identical to the 04:24 recording |
 | Outside the yard dressed as the works going on: a west loading annex, an east loading lot and a walled receiving lot across Harbor Road, all fitted between the city roof blocks | `evidence/yard/west_32ppm.png`, `evidence/yard/pairs/harbor_32ppm.png`, `project/tests/unit/test_prologue_yard_outside.gd` | 80 stamps clear all 7 roof blocks, min clearance 0.10 m |
 | Gate posts drawn as solid steel; fence bays, posts and the parked gate leaf measured by a test | `evidence/yard/pairs/gate_32ppm.png`, `project/tests/unit/test_prologue_yard_fence.gd` | 5 fence tests |
 | Boss view (tilt 55, Mulroney engaged at the gate): hall fronts face the gate, no wrong-way lean, so no separate 55-degree art set | `evidence/yard/gate_tilt55_32ppm.png` | tick 6000 |
@@ -29,7 +29,7 @@ Gate: `node tools/gate/run.mjs --rev=HEAD` on `0dba79170` (the last code commit;
 - **One piece set, drawn at about 70 degrees.** No 55-degree set: the boss-view still at 55 (`evidence/yard/gate_tilt55_32ppm.png`) shows no wrong lean, but that capture's Godot log names missing p55 variants for some city props (pre-existing city art, not the yard's).
 - Fence mutate leaves 3 survivors, all cosmetic (line 12 panel orientation, 35 highlight removal, 36 cap thickness).
 - Frame cost: plain rounds 2 and 3 ran with other processes over 60 % CPU, so the measurement says "no measurable cost", not "faster".
-- The full film and the excerpts are large (wave 1 excerpt about 108 Mbit/s at CRF 18: the follow camera moves the floor grain every frame).
+- The full film and the wave excerpts are large: about 52 Mbit/s for the full film; the wave excerpts needed CRF 20 and a 59 Mbit/s cap (the follow camera moves the floor grain every frame).
 - The dressing is art only: wreck pieces block only where the script already had cover; nothing new blocks shots or movement (by the lane contract the walkable area did not move).
 
 ## What blocked or slowed you
@@ -63,6 +63,6 @@ Gate: `node tools/gate/run.mjs --rev=HEAD` on `0dba79170` (the last code commit;
 | 04 | films-cost | 18 | bounced (debt NEED) |
 | 04b | films-cost (resume) | 33 | accepted |
 | 05 | lot-tests | 39 | accepted |
-| 06 | films-final | TODO | TODO |
+| 06 | films-final | 44 | accepted |
 
-What I would brief differently: put `tools/debt/baseline.json` (through the tool, with `--accept-regression`) in every allowlist that adds dev code; ask for a footprint coverage test in the first art call, not the third.
+What I would brief differently: put `tools/debt/baseline.json` (through the tool, with `--accept-regression`) in every allowlist that adds dev code; ask for a footprint coverage test in the first art call, not the third; record the owner films only after the last art call (calls 04 and 06 recorded the same films twice).
