@@ -23,10 +23,10 @@ const LIMP_GAIN: float = 1.6
 const KILL_KIND_CLASS: Dictionary[StringName, StringName] = {&"burned": &"burn", &"blown": &"blast"}
 ## Rivet's melee weapons (rivet-arsenal's PlayerMelee ids; absent from weapons.json) hit as melee.
 const MELEE_IDS: Array[StringName] = MeleeWound.MELEE_IDS
-## The lasting area states (FightAreas FighterFx) hold their family while they last: the share
-## of the family the hold loops inside (start, end) and where the release resumes.
+## Start, loop end and release of each sustained reaction.
 const HOLD: Dictionary[StringName, Vector3] = {
 	&"stun": Vector3(0.3, 0.7, 0.7),
+	&"shield": Vector3(0.4, 0.6, 0.65),
 	&"burn": Vector3(0.3, 0.8, 0.8),
 	&"knockdown": Vector3(0.3, 0.6, 0.78),
 }
@@ -58,9 +58,7 @@ var _corpses: Dictionary[int, Array] = {}
 var _kill_kind: Dictionary[int, StringName] = {}
 ## The state family each fighter held last frame (released when its state ends).
 var _held: Dictionary[int, StringName] = {}
-## n7-melee: true while apply() plays a ghost attack's wound (human_reactions.json ghost_wound).
 var _ghost_blow: bool = false
-## The rigs the last apply() played on (shield_test reads them; render side).
 var _rigs: CharacterRigs = null
 
 
@@ -176,6 +174,8 @@ static func shielded(rig: CutRig) -> bool:
 
 ## The family a fighter's lasting area state holds (&"" when none): stun over burn over down.
 func state_family(h: Fighter) -> StringName:
+	if h.has_meta(MeleeLethal.OPEN_UNTIL) and MeleeLethal.shield_open(h, _arena.tick):
+		return &"shield"
 	if _arena.areas == null:
 		return &""
 	var e: FighterFx = _arena.areas.effect(h)
@@ -269,7 +269,7 @@ func _melee_kill(victim: Fighter, weapon: StringName) -> void:
 ## n7-melee: a ghost attack's non-lethal hit (the ram, the slam) wounds through here too, with
 ## its human_reactions.json ghost_wound class (CombatArena.struck only carries rounds).
 func _on_wounded(victim: Fighter, weapon: StringName) -> void:
-	var cls: StringName = &"melee" if weapon in MELEE_IDS else pipe.table.ghost_wound(weapon)
+	var cls: StringName = MeleeWound.hit_class_of(weapon, pipe.table)
 	if cls != &"" and melee_deaths:
 		var h: Array = melee_wound.hit(_arena, victim, weapon, cls)
 		if not h.is_empty():

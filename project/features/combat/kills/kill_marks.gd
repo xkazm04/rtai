@@ -25,6 +25,7 @@ class Mark:
 	var spray_from: int = 0
 	## The splat blot's radius (m; 0 = none) where the body was (view only, not in the hash).
 	var blot_m: float = 0.5
+	var plasma: bool = false
 
 
 const WALL_STEP_M: float = 0.15
@@ -44,6 +45,7 @@ func leave(
 ) -> Mark:
 	var m: Mark = Mark.new()
 	m.at = at
+	m.plasma = row.weapon == &"plasma_sword"
 	m.dir = dir
 	m.scorch_m = row.scorch_radius_m
 	m.line_m = row.scorch_line_m

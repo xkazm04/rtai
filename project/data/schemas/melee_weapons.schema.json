@@ -66,6 +66,13 @@
           "minimum": 0,
           "type": "integer"
         },
+        "stun_look": {
+          "default": "electric",
+          "enum": [
+            "electric",
+            "hold"
+          ]
+        },
         "stun_ticks": {
           "maximum": 900,
           "minimum": 0,
@@ -95,6 +102,27 @@
     },
     "weapon": {
       "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "electric": {
+                "const": true
+              }
+            },
+            "required": [
+              "electric"
+            ]
+          },
+          "then": {
+            "required": [
+              "machine_stun_ticks",
+              "heavy_stun_ticks",
+              "never_finish"
+            ]
+          }
+        }
+      ],
       "properties": {
         "cancel_ticks": {
           "maximum": 60,
@@ -120,11 +148,18 @@
           "minLength": 1,
           "type": "string"
         },
+        "electric": {
+          "type": "boolean"
+        },
         "grip": {
           "enum": [
             "one_hand",
             "two_hand"
           ]
+        },
+        "heavy_stun_ticks": {
+          "minimum": 1,
+          "type": "integer"
         },
         "hits": {
           "items": {
@@ -133,6 +168,9 @@
           "maxItems": 6,
           "minItems": 1,
           "type": "array"
+        },
+        "kills_human": {
+          "type": "boolean"
         },
         "lean_back_deg": {
           "maximum": 20,
@@ -149,10 +187,53 @@
           "minimum": 0.1,
           "type": "number"
         },
+        "machine_stun_ticks": {
+          "minimum": 1,
+          "type": "integer"
+        },
         "move_mult": {
           "maximum": 1.5,
           "minimum": 0.1,
           "type": "number"
+        },
+        "never_finish": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "shield_break_ticks": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "swing": {
+          "$ref": "#/$defs/hit"
+        },
+        "swing_lean_deg": {
+          "items": {
+            "maximum": 25,
+            "minimum": 0,
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "swing_style": {
+          "enum": [
+            "drive",
+            "crack",
+            "cut",
+            "sweep"
+          ]
+        },
+        "vs_shield": {
+          "enum": [
+            "blocked",
+            "through"
+          ]
         }
       },
       "required": [
@@ -162,14 +243,43 @@
         "doc",
         "grip",
         "hits",
+        "kills_human",
         "length_m",
-        "move_mult"
+        "move_mult",
+        "shield_break_ticks",
+        "vs_shield"
       ],
       "type": "object"
     }
   },
   "$id": "gtai.melee-weapons/1",
   "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "single_swing": {
+            "const": true
+          }
+        },
+        "required": [
+          "single_swing"
+        ]
+      },
+      "then": {
+        "properties": {
+          "weapons": {
+            "additionalProperties": {
+              "required": [
+                "swing",
+                "swing_style"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
   "properties": {
     "doc": {
       "minLength": 1,
@@ -177,6 +287,9 @@
     },
     "schema": {
       "const": "gtai.melee-weapons/1"
+    },
+    "single_swing": {
+      "type": "boolean"
     },
     "weapons": {
       "additionalProperties": {

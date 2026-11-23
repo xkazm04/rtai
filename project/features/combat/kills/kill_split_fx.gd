@@ -1,13 +1,7 @@
 class_name KillSplitFx
 extends Node2D
-## The blade kill (lane brutality, style `split`: katana), render only. cut() copies the posed
-## victim twice, each copy masked to one side of the cut line (a half-plane Polygon2D that clips
-## its children), so each half is the real cop in the D5 print with a clean straight edge; a raw
-## red band with an ink lip runs along each edge. The node itself draws the blade's path: a cream
-## slash streak with an ink rim along the cut that thins out over STREAK_TICKS. No RNG.
-## A row with grind_ticks (the chainsaw) plays the grind instead of the streak: the halves held
-## together (GibSim.wait) shake on a hash of the tick while blood spurts and cream sparks fly off
-## the saw's bite, then the halves fall apart; the halves part on a cream release burst (SawMarks).
+## Copies the posed rig into two masked halves and drives the weapon-specific contact marks.
+## The saw holds and shakes the halves before its release. Blades follow the victim's cut line.
 
 const STREAK_TICKS: int = 12
 const EDGE_M: float = 0.34
@@ -106,6 +100,9 @@ func add(
 	var t: KillSplitHalves.Topple = KillSplitHalves.topple(parts, fall, deg, cut_dir.x)
 	if t != null:
 		_topples[serial] = t
+	if row.weapon == &"plasma_sword":
+		KillPlasmaArt.attach(self, parts, at, cut_dir, row.cut_up_m)
+		return
 	if row.grind_ticks <= 0:
 		KerfVictim.streak(row, _streaks, serial, Vector4(at.x, at.y, cut_dir.angle(), kills.tick))
 		_streak_size[serial] = Vector2(row.streak_m, row.streak_w_m)

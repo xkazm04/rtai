@@ -1,13 +1,12 @@
 class_name KillCookArt
 extends RefCounted
-## The electro baton's death (lane kills-new, style `cook`), render only: the overload. Unlike the
-## electro gun's X-ray strobe there is no skeleton, no strobe and no arc: the current cooks him from
-## inside. From `cook_from` to `cook_to` (row fx) he stands locked with a fine tremble while cream
-## veins of light spread through his torso and limbs, brighter each tick, a glow builds under the
-## skin, steam rises off his collar and shoulders and his eyes burn as two cream points that go out
-## at `eyes_out`; then his drawn fall grid drops him (cells_at) and smoke rises off the body for
-## `smoke_ticks`. Under --reduced-motion no tremble and no flicker. No blood. No RNG.
+## The baton's contact flash and crawling current follow the posed victim, including drawn
+## death cards. The first twenty ticks jerk about the planted feet, then each row's fall takes over.
 
+const SEIZURE_TICKS: int = 20
+const FLASH_TICKS: int = 3
+const BLUE: Color = Color("#88aaff")
+const AMBER: Color = Color("#ffbf56")
 const CREAM: Color = Color("#F4E3B5")
 const STEAM: Color = Color(0.86, 0.84, 0.78, 0.5)
 const SMOKE: Color = Color(0.25, 0.24, 0.24, 0.42)
@@ -16,14 +15,28 @@ const VEINS: int = 7
 
 ## The tremble's lean (deg) at `age`: a fine buzz while he cooks, none under reduced motion.
 static func tremble(d: KillNewStyles.Death, age: int, reduced_motion: bool) -> float:
-	if reduced_motion or age < roundi(d.extra.num("cook_from", 3.0)):
+	if reduced_motion or age < 0 or age >= SEIZURE_TICKS:
 		return 0.0
-	if age >= roundi(d.extra.num("cook_to", 45.0)):
-		return 0.0
-	return d.extra.num("tremble_deg", 1.5) * (1.0 if age % 2 == 0 else -1.0)
+	var muscle: float = d.extra.num("tremble_deg", 1.5)
+	var sign_x: float = 1.0 if (age / 2) % 2 == 0 else -1.0
+	return sign_x * (5.0 + muscle) * (1.0 - 0.35 * float(age) / SEIZURE_TICKS)
+
+
+static func pose(d: KillNewStyles.Death, age: int, reduced_motion: bool) -> float:
+	if not d.row.victim.is_empty() and d.body != null:
+		char_body(d, age)
+	return tremble(d, age, reduced_motion)
+
+
+static func char_body(d: KillNewStyles.Death, age: int) -> void:
+	var stop: float = d.extra.num("cook_to", 45.0)
+	var soot: float = smoothstep(stop * 0.7, stop, float(age))
+	d.body.modulate = Color.WHITE.lerp(Color(0.45, 0.43, 0.4), soot)
 
 
 static func draw(ci: KillNewStyles, d: KillNewStyles.Death, age: int) -> void:
+	if age >= 0 and age < SEIZURE_TICKS:
+		_current(ci, d, age)
 	var from: float = d.extra.num("cook_from", 3.0)
 	var to: float = d.extra.num("cook_to", 45.0)
 	if age >= roundi(from) and age < roundi(to):
@@ -39,6 +52,31 @@ static func draw(ci: KillNewStyles, d: KillNewStyles.Death, age: int) -> void:
 		_steam(ci, d, age - roundi(from))
 	elif age >= roundi(to):
 		smoke(ci, d, age - roundi(to))
+
+
+## Two linked paths around the shoulders and legs, grounded on the same pose as the body.
+static func _current(ci: KillNewStyles, d: KillNewStyles.Death, age: int) -> void:
+	var tick: int = 0 if ci.reduced_motion else age / 2
+	var chest: Vector2 = _at(d, 0.68, 0.0, ci.ppm)
+	for flank: int in 2:
+		var side: float = 1.0 if flank == 0 else -1.0
+		var bend: float = KillNewStyles.h(d.serial + flank, tick) * 0.22
+		var bolt: PackedVector2Array = PackedVector2Array(
+			[
+				_at(d, 0.96, side * 0.10, ci.ppm),
+				_at(d, 0.77, side * (0.38 + bend), ci.ppm),
+				_at(d, 0.64, side * 0.23, ci.ppm),
+				_at(d, 0.53, side * (0.43 + bend), ci.ppm),
+				_at(d, 0.37, side * 0.18, ci.ppm),
+				_at(d, 0.18, side * (0.26 + bend), ci.ppm)
+			]
+		)
+		ci.draw_polyline(bolt, Color(AMBER, 0.65), ci.ppm * 0.15, true)
+		ci.draw_polyline(bolt, BLUE, ci.ppm * 0.085, true)
+		ci.draw_polyline(bolt, Color.WHITE, maxf(1.3, ci.ppm * 0.041), true)
+	if age < FLASH_TICKS and not ci.reduced_motion:
+		ci.draw_circle(chest, ci.ppm * 0.34, Color(AMBER, 0.42))
+		ci.draw_circle(chest, ci.ppm * 0.14, Color.WHITE)
 
 
 static func _at(d: KillNewStyles.Death, up: float, side: float, ppm: float) -> Vector2:

@@ -174,6 +174,7 @@ func test_hud_readout_fades_and_expires_one_second_after_the_switch() -> void:
 
 func test_legacy_pilot_bytes_match_the_pre_wheel_reference() -> void:
 	_start("legacy")
+	pilot.melee.combo.table.single_swing = false
 	assert_null(pilot.wheel)
 	var tape: StreamPeerBuffer = StreamPeerBuffer.new()
 	var aim: int = PlayerCommand.pack_aim(Vector2.RIGHT, actions)

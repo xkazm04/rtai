@@ -14,6 +14,7 @@ var cone_dot: float = 0.5
 var damage: float = 1.0
 var knockback_m: float = 0.0
 var stun_ticks: int = 0
+var stun_look: StringName = &"electric"
 var chain_hops: int = 0
 var lunge_m: float = 0.0
 ## n17 rivet-strike: > 0 = the lunge travels over the lunge_ticks ticks just before the contact

@@ -1,7 +1,6 @@
 class_name PlayerMelee
 extends RefCounted
-## Rivet's bare-claw combo in the live game (quest 1, the arena, the city block): MeleeCombo over
-## rivet_melee.json against the CombatArena's hostiles. A press starts or buffers a hit; on a
+## Rivet's equipped melee swing in quest 1, the arena and the city block. On a
 ## hit's first active tick every exposed hostile inside its reach and cone takes its damage and a
 ## shove along the hit line (knockback_m, eased out over SHOVE_TICKS so it reads as a slide; the
 ## stage pushes the body back out of buildings). The lunge and the move scale go to the pilot.
@@ -29,6 +28,7 @@ var last_land_index: int = 0
 ## Hostile rounds the blade sent back (the plasma sword's deflect).
 var deflects: int = 0
 ## Shoves in flight: fighter id -> the metres still to slide (a vector).
+var _contact: MeleeContact = MeleeContact.new()
 var _shoves: Dictionary[int, Vector2] = {}
 
 
@@ -42,7 +42,7 @@ func _init(table: MeleeTable = MeleeTable.shipped()) -> void:
 func step(arena: CombatArena, press: bool, facing: Vector2) -> Vector2:
 	if press:
 		combo.press()
-	combo.step()
+	_contact.advance(arena, combo)
 	if combo.starts != starts:
 		starts = combo.starts
 	_slide(arena)
@@ -71,6 +71,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(landed)
 	if combo.table.grinds():  # only a grinding weapon carries it: the claw's goldens hold
 		out.put_32(combo.ground)
+		_contact.write_bites(out)
 	if combo.table.deflect_m > 0.0:
 		out.put_32(deflects)
 	var ids: Array = _shoves.keys()
@@ -84,9 +85,10 @@ func write_state(out: StreamPeerBuffer) -> void:
 func _land(arena: CombatArena, h: MeleeHit, facing: Vector2) -> void:
 	var at: Vector2 = arena.rivet.pos
 	var hit_any: bool = false
+	var conductor: Fighter = null
 	for f: Fighter in arena.hostiles:
 		var to: Vector2 = f.pos - at
-		if not f.alive() or to.length() > h.reach_m + f.radius_m + EDGE_SLACK_M:
+		if not f.alive() or not f.exposed or to.length() > h.reach_m + f.radius_m + EDGE_SLACK_M:
 			continue
 		var dir: Vector2 = to.normalized() if to.length() > 0.001 else facing
 		if dir.dot(facing) < h.cone_dot:
@@ -94,17 +96,52 @@ func _land(arena: CombatArena, h: MeleeHit, facing: Vector2) -> void:
 		if sets_dir:
 			arena.hit_dir = dir
 			arena.hit_at = f.pos
-		arena.damage(f, h.damage, arena.rivet.id, weapon_id)
-		if h.stun_ticks > 0 and f.alive():  # the electro baton's lock
-			PlayerShock.stun_on(PlayerShock.areas_of(arena), f, h.stun_ticks)
-		_shoves[f.id] = dir * h.knockback_m
+		var result: MeleeLethal.Contact = MeleeLethal.contact(f, arena.boss, combo, dir, arena.tick)
+		var shove: bool = _contact.land(arena, f, combo, dir, result)
+		if combo.table.single_swing and h.chain_hops > 0 and (f.machine or arena.metal.has(f.pos)):
+			if (
+				conductor == null
+				or at.distance_squared_to(f.pos) < at.distance_squared_to(conductor.pos)
+			):
+				conductor = f
+		_shoves[f.id] = dir * h.knockback_m if shove else Vector2.ZERO
 		hit_any = true
+	if conductor != null:
+		_arc_from_metal(arena, conductor, h)
 	if hit_any:
 		landed += 1
 		last_land_tick = arena.tick
 		last_land_index = combo.hit_index
 	else:
 		whiffs += 1
+
+
+## The baton conducts from a struck machine or metal dummy to two nearby conductors.
+## A bare prop can bridge the arc. Bodies at its endpoints receive the existing stun.
+func _arc_from_metal(arena: CombatArena, first: Fighter, h: MeleeHit) -> void:
+	var points: PackedVector2Array = arena.metal.duplicate()
+	var bodies: Dictionary[Vector2, Fighter] = {}
+	for f: Fighter in arena.hostiles:
+		if f == first or (f.alive() and f.exposed and (f.machine or arena.metal.has(f.pos))):
+			bodies[f.pos] = f
+			if not points.has(f.pos):
+				@warning_ignore("return_value_discarded")
+				points.append(f.pos)
+	var metals: PackedByteArray = PackedByteArray()
+	@warning_ignore("return_value_discarded")
+	metals.resize(points.size())
+	metals.fill(1)
+	var path: PackedInt32Array = combo.table.chain_for(h, points, metals, points.find(first.pos))
+	var areas: FightAreas = PlayerShock.areas_of(arena)
+	for i: int in range(1, path.size()):
+		var to: Vector2 = points[path[i]]
+		areas.chain_arcs.append(PackedVector2Array([points[path[i - 1]], to]))
+		areas.arc_ticks.append(arena.tick)
+		if bodies.has(to):
+			var ticks: int = h.stun_ticks
+			if combo.table.electric and combo.table.never_finish.has(bodies[to].archetype):
+				ticks = combo.table.heavy_stun_ticks
+			PlayerShock.stun_on(areas, bodies[to], ticks)
 
 
 ## Eases every shove out: each tick slides a share of what is left (by id order: deterministic).

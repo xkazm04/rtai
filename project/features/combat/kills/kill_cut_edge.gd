@@ -4,6 +4,7 @@ extends Node2D
 ## and a red band just inside it on the half's own `side`. Drawn once (it moves with its half).
 
 const INK: Color = KillSplitFx.INK
+const HEAT_AMBER: Color = Color("#ffc564")
 const RAW: Color = KillSplitFx.RAW
 const SOUL_WHITE: Color = Color(0.9, 1.0, 0.97)
 ## n16 kills-polish (assets A2 it414, the gore level's drawn insides): the cut face seen edge-on,
@@ -25,6 +26,8 @@ var b: Vector2 = Vector2.ZERO
 var side: Vector2 = Vector2.UP
 ## Cauterised (the plasma sword): a hot cream band in a heat bloom, no red.
 var hot: bool = false
+var plasma: bool = false
+var heat: float = 1.0
 ## The drawn cut face (FACES), or null: the drawn lines.
 var face: Texture2D = null
 ## With hot: Kerf's soul beam: a teal bloom round a white-hot band (teal is the souls' colour).
@@ -41,6 +44,7 @@ static func along(
 	e.b = mid + dir * half_px
 	e.side = p_side
 	e.hot = row.spray == 0
+	e.plasma = row.weapon == &"plasma_sword"
 	e.soul = row.edge == &"soul"
 	e.z_index = 30
 	e.face = face_of(row)
@@ -62,6 +66,14 @@ static func face_of(row: SignatureKill) -> Texture2D:
 func _draw() -> void:
 	var w: float = (b - a).length() * 0.13
 	var inset: Vector2 = side * w * 0.6
+	if plasma:
+		if face != null:
+			_face()
+		draw_line(a, b, INK, w * 0.55, true)
+		if heat > 0.0:
+			draw_line(a + inset, b + inset, Color(HEAT_AMBER, heat * 0.75), w * 2.6, true)
+			draw_line(a + inset, b + inset, Color(KillHoleFx.HOT, heat), w * 1.2, true)
+		return
 	if face != null:
 		if hot:  # the heat bloom under the charred face
 			draw_line(a + inset * 1.5, b + inset * 1.5, Color(KillHoleFx.HOT, 0.45), w * 2.6, true)

@@ -89,7 +89,7 @@ func _process(_delta: float) -> void:
 			var j: Vector3 = styles.burst_fx.jolt(g.kill_of[i], g.piece[i])
 			node.position += Vector2(j.x, j.y)
 			node.rotation += j.z
-		_grow_trail(i, node.position, g.z[i] <= 0.0)
+		_grow_trail(i, node.position, g.smears(i))
 	styles.pose()
 	_fade()
 	for kg: KillGround in _grounds.values():

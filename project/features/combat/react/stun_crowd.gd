@@ -15,6 +15,10 @@ static func cap() -> Vector4i:
 	return _cap
 
 
+static func electric(e: FighterFx, tick: int) -> bool:
+	return e != null and e.stun_ticks > 0 and tick > e.hold_look_until
+
+
 ## The ids of `arena`'s living stunned hostiles past the cap (empty when there is no cap).
 static func light_of(arena: CombatArena) -> Dictionary[int, bool]:
 	var full: int = cap().x
@@ -23,7 +27,7 @@ static func light_of(arena: CombatArena) -> Dictionary[int, bool]:
 	var stunned: Array[Vector2i] = []
 	for h: Fighter in arena.hostiles:
 		var e: FighterFx = arena.areas.effect(h)
-		if e != null and h.alive() and e.stun_ticks > 0:
+		if h.alive() and electric(e, arena.tick):
 			stunned.append(Vector2i(h.id, e.stun_ticks))
 	return light_ids(stunned, full)
 

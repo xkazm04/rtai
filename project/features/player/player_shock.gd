@@ -150,9 +150,10 @@ static func areas_of(arena: CombatArena) -> FightAreas:
 	return arena.areas
 
 
-## Locks `f`'s brain for `ticks` (the FightAreas stun the electro gun uses; FxView draws sparks).
-static func stun_on(areas: FightAreas, f: Fighter, ticks: int) -> void:
+## Applies the FightAreas stun. A physical hold hides its sparks through the given arena tick.
+static func stun_on(areas: FightAreas, f: Fighter, ticks: int, hold_look_until: int = -1) -> void:
 	if not areas.fx.has(f.id):
 		areas.fx[f.id] = FighterFx.new()
 	var e: FighterFx = areas.fx[f.id]
 	e.stun_ticks = maxi(e.stun_ticks, ticks)
+	e.hold_look_until = hold_look_until

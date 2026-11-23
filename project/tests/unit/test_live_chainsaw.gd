@@ -2,7 +2,7 @@ extends GutTest
 ## rivet-arsenal: the chainsaw's grind and the plasma sword's spin in the live pilot. A held attack
 ## with the chainsaw drawn holds its rev-in thrust: the chain bites every grind_ticks, each bite
 ## locks the human (stun_ticks) and the third bite kills (0.34 x 3). A tap swings once. The plasma
-## sword's third hit is a full circle: it cuts a cop standing behind Rivet. A tap commits the bite
+## sword sweeps across the front and leaves a cop behind Rivet untouched. A tap commits the bite
 ## for grind_min_ticks (three bites).
 ## Planted fault: the same chainsaw row without grind_ticks bites once however long it is held.
 
@@ -67,11 +67,16 @@ func test_the_bite_locks_the_cop_between_bites() -> void:
 	var cop: Fighter = _cop(Vector2.DOWN * 1.2)
 	cop.hp = 100.0
 	cop.max_hp = 100.0
-	@warning_ignore("return_value_discarded")
-	_drive(1 << _pilot.actions.bit(&"fire"), 90, cop)
-	assert_gt(_pilot.melee.landed, 4, "the grind keeps biting while held")
-	assert_gt(_pilot.melee.combo.ground, 0, "still grinding")
+	var fire: int = 1 << _pilot.actions.bit(&"fire")
+	for tick: int in 90:
+		@warning_ignore("return_value_discarded")
+		_drive(fire, 1, cop)
+		if _pilot.melee.landed == 2:
+			break
+	assert_eq(_pilot.melee.landed, 2)
+	assert_true(cop.alive(), "still alive on the second bite")
 	assert_gt(_stage.arena.areas.effect(cop).stun_ticks, 0, "held in the teeth")
+	assert_gte(_drive(fire, 20, cop), 0, "the committed grind finishes the 100 hp human")
 
 
 func test_planted_fault_no_grind_ticks_bites_once() -> void:
@@ -123,10 +128,16 @@ func test_a_released_grind_runs_out_and_does_not_lunge() -> void:
 	assert_eq(combo.hit_index, 0, "the release lets the hit run into its recovery and end")
 
 
-func test_the_plasma_spin_cuts_behind() -> void:
+func test_the_plasma_sweep_cuts_the_flank_and_spares_the_rear() -> void:
 	_carry(&"plasma_sword")
 	var behind: Fighter = _cop(Vector2.UP * 1.5)
-	var died: int = _drive(1 << _pilot.actions.bit(&"fire"), 120, behind)
-	assert_eq(_pilot.melee.weapon_id, &"plasma_sword")
-	assert_gt(died, 0, "the spin (hit 3) cut the cop behind Rivet")
-	gut.p("plasma sword: the cop behind died at tick %d" % died)
+	var flank: Fighter = _cop(Vector2.DOWN.rotated(deg_to_rad(100)) * 1.5)
+	var outside: Fighter = _cop(Vector2.DOWN.rotated(deg_to_rad(-104)) * 1.5)
+	@warning_ignore("return_value_discarded")
+	_drive(0, 30, null)
+	@warning_ignore("return_value_discarded")
+	_drive(1 << _pilot.actions.bit(&"fire"), 1, null)
+	var died: int = _drive(0, 30, flank)
+	assert_gte(died, 0)
+	assert_eq(behind.hp, behind.max_hp)
+	assert_eq(outside.hp, outside.max_hp)

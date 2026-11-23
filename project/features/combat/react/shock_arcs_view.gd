@@ -1,8 +1,6 @@
 class_name ShockArcsView
 extends Node2D
-## The electro gun's marks on a stunned human, drawn above the rigs (the fight's fx layer sits
-## under them, where arcs on the body were hidden): arcs crawling over the body (ShockJolt.arcs)
-## centred on the rig's drawn torso so they ride its convulsion, and the pistol his fingers let go
+## ShockJolt arcs follow the stunned torso above the rigs. The victim drops his pistol
 ## (the rig's hand cell drops the gun while he convulses): tossed out of the gun hand on the first
 ## stun tick, it lies beside him until the stun ends; an electro corpse keeps it, and it inks out
 ## and sinks with the body (CorpseDecay via RigHost.decay), gone with it. Reads the
@@ -21,8 +19,7 @@ const TOSS_SIDE_M: float = 0.3
 const TOSS_SPIN: float = 0.55
 const GUN_LONG_M: float = 0.24
 const GUN_WIDE_M: float = 0.06
-## n12 D1: the dropped pistol lies on the ground band, under every body (it drew over Rivet's arm
-## as a cream bracket floating at his shoulder); the arcs stay above. false = the before.
+## The dropped pistol stays on the ground band, under the bodies.
 const GUN_ON_FLOOR: bool = true
 ## n13: the drawn cell's span across its longer side (m), its ink outline (world px: the pickups'
 ## 2 px fattened a 12 px cell into a blob), and the weapon and part the cell is.
@@ -79,6 +76,9 @@ func _draw() -> void:
 		return
 	var light: Dictionary[int, bool] = StunCrowd.light_of(arena)  # n7-melee: the crowd cap
 	for h: Fighter in arena.hostiles:
+		if h.alive() and MeleeShutdown.primed(h, arena.tick):
+			RobotShutdownFx.overload(self, h.pos, arena.tick + h.id)
+			continue
 		var rig: CutRig = rigs.rig_for(h.id)
 		if rig == null or rig.torso == null:
 			if h.alive() or not _drops.has(h.id):  # a cut corpse (the charged kill) keeps it
@@ -88,7 +88,6 @@ func _draw() -> void:
 				_lay(_drops[h.id], h.id)
 			continue
 		var e: FighterFx = arena.areas.effect(h)
-		var stunned: bool = e != null and h.alive() and e.stun_ticks > 0
 		var c: Vector2 = to_local(rig.torso.global_position)
 		var ppm: float = Ink.PX_PER_M * rig.global_transform.get_scale().x / CutRig.SC
 		if e != null and h.alive() and e.burn_ticks > 0 and FightBurnArt.OVER:  # it32: over the body
@@ -96,10 +95,11 @@ func _draw() -> void:
 				FightBurnArt.over_ids[h.id] = arena.tick
 			else:
 				FightBurnArt.over(self, c, ppm, e.flee, h.id, arena.tick)
-		if stunned:
+		if h.alive() and StunCrowd.electric(e, arena.tick):
 			var cap: Vector4i = StunCrowd.cap()
 			var n: Vector2i = Vector2i(cap.y, cap.z) if light.has(h.id) else Vector2i(9, 9)
 			ShockJolt.arcs(self, c, ppm, arena.tick + h.id, OhmVictimRims.arcs(h, n))
+		if e != null and h.alive() and e.stun_ticks > 0:
 			if not _drops.has(h.id) and ShockJolt.hard:
 				_drops[h.id] = _toss(c, ppm, rig.facing, h.id)
 		elif h.alive():

@@ -68,6 +68,8 @@ func test_the_sim_keeps_the_base_radius_and_claw_reach() -> void:
 	assert_eq(arena.rivet.radius_m, 0.6)
 	var claw: MeleeTable = MeleeTable.shipped()
 	assert_eq(claw.hits[0].reach_m, 1.4)
+	assert_eq(claw.hits.size(), 1)
+	claw.single_swing = false
 	assert_eq(claw.hits[1].reach_m, 1.4)
 	assert_eq(claw.hits[2].reach_m, 1.6)
 

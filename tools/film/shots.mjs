@@ -3,6 +3,7 @@
 // Every id a shot takes is checked against the tree being filmed before anything launches.
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { didYouMean } from '../dev/entries.mjs';
 import { projectIndex, unreadFlags } from '../dev/flag_index.mjs';
 import { walk } from '../lib/repo.mjs';
@@ -19,6 +20,8 @@ export const SHOTS = {
     flags: (id) => [...REEL, '--reel=director', `--chapter=${id}`] },
   weapon: { doc: 'one lone kill with a table weapon: weapon:<id>', ticks: 900, needs: 'weapon',
     travels: true, flags: (id) => ['--arena=city', `--weapon=${id}`, '--bot=gunplay', '--lone', '--reach=6'] },
+  melee: { doc: 'one six-tick primary click on a cop: melee:<hands or weapon>', ticks: 90, needs: 'melee',
+    scene: fileURLToPath(new URL('./melee_click.tscn', import.meta.url)), flags: (id) => id === 'hands' ? [] : [`--loadout=${id}`] },
   // The kill lab (KillLab via BrutalityHook) on the city block: one guard 3 m from Rivet, turned
   // --sig-dir degrees, killed by the weapon's signature death (n16 tools: tools/film/kill_reel.mjs).
   // Rivet stands 10 m west of his start: at the start the 19 station dummies and the street cops take
@@ -42,6 +45,7 @@ export function labWeapons(tree) {
 }
 
 const ids = {
+  melee: (tree) => ['hands', ...Object.keys(read(tree, 'data/tables/melee_weapons.json').weapons)],
   weapon: (tree) => read(tree, 'data/tables/weapons.json').weapons.map((w) => w.id),
   sigweapon: (tree) => [...ids.weapon(tree), ...Object.keys(read(tree, 'data/tables/melee_weapons.json').weapons), ...labWeapons(tree)],
   view: (tree) => read(tree, 'data/tables/view.json').views.map((v) => v.id),
@@ -121,7 +125,8 @@ export function godotArgs({ arg, shot }, o) {
       `--out=${o.dir}`, `--view=${o.view}`, `--ppm=${o.ppm}`, `--stills=${o.stills.join(',')}`, ...o.extra];
   }
   const head = ['--rendering-driver', 'd3d12', '--resolution', o.res, '--fixed-fps', '60',
-    ...(o.movie ? ['--write-movie', o.movie] : []), '--quit-after', String(o.ticks), ARENA, '--'];
+    ...(shot === SHOTS.melee ? ['--position', '0,1440'] : []),
+    ...(o.movie ? ['--write-movie', o.movie] : []), '--quit-after', String(o.ticks), shot.scene ?? ARENA, '--'];
   const stills = [...(o.stills.length ? [`--film-stills=${o.stills.join(',')}`] : []), ...(o.onText ? [`--film-on=${o.onText}`] : [])];
   const lock = o.lock === 'off' ? [] : [`--cam-lock=${o.lock}`];
   const feel = feelArgs(o.feel ?? 'auto', o.lock);

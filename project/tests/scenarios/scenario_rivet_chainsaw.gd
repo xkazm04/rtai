@@ -1,9 +1,9 @@
 extends Scenario
 ## rivet-arsenal: the chainsaw's grind in the live arena's real fight. Rivet carries the chainsaw
 ## (ArenaArsenal.arm, as --loadout=chainsaw does) and ArenaRivetBot plays the claw cops station:
-## the mashes swing the rev-in thrust and the rip, the held step (the claw's shock hold) grinds:
-## the rev-in holds its bite for at least two grind periods, the hits are dealt as `chainsaw`, at
-## least three cops drop, no round is fired, and the run replays identical on a fresh world.
+## the mashes start six rev-and-drives; the held step grinds. The rev-in holds its bite for
+## at least two grind periods. Fourteen contacts drop five cops, no round is fired, and the run
+## replays identically on a fresh world.
 ## TST-05: a planted fault (the chainsaw row without grind_ticks) must never grind.
 
 const LIMIT_TICKS: int = 30 * SimClock.TICK_RATE
@@ -63,8 +63,8 @@ func _judge(tel: Dictionary) -> String:
 	var grind: int = MeleeTable.weapon(&"chainsaw").hits[0].grind_ticks
 	if tel["grind_max_ticks"] < 2 * grind:
 		return "the held thrust did not grind two bites: %s" % tel
-	if tel.get("claw_kills", 0) < 3:
-		return "the chainsaw dropped too few cops: %s" % tel
+	if tel.get("claw_swings") != 6 or tel.get("claw_hits") != 14 or tel.get("claw_kills") != 5:
+		return "expected six drives, fourteen contacts and five cops down: %s" % tel
 	return ""
 
 

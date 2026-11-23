@@ -182,8 +182,8 @@ func damage(
 		return
 	if guard != null and guard.blocks_melee(self, victim, killer_id, weapon, kind):
 		return
-	amount *= FoeArmor.impact(self, victim, kind, killer_id, weapon)
-	amount *= victim.damage_k
+	amount *= MeleeLethal.damage_scale(self, victim, kind, killer_id, weapon)
+	kind = MeleeLethal.death_kind(kind)
 	if victim.hp - amount <= 0.0 and victim.kind != Fighter.Kind.RIVET:
 		_events.actor_killed.emit(killer_id, victim.id, kind)
 		kill_landed.emit(victim, weapon, hit_dir, hit_at, kind)

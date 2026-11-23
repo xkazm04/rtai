@@ -9,6 +9,7 @@ var table: MeleeTable
 
 func before_each() -> void:
 	table = MeleeTable.shipped()
+	table.single_swing = false  # exercise the selectable legacy claw
 
 
 func test_table_loads() -> void:

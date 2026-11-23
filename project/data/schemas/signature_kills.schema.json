@@ -179,7 +179,10 @@
                 "body",
                 "hat",
                 "half_a",
-                "half_b"
+                "half_b",
+                "kit",
+                "plate_a",
+                "plate_b"
               ]
             },
             "type": "array"
@@ -263,7 +266,8 @@
               "shred",
               "cook",
               "torch",
-              "throw"
+              "throw",
+              "shutdown"
             ]
           },
           "track": {
@@ -285,6 +289,141 @@
             "maxItems": 2,
             "minItems": 2,
             "type": "array"
+          },
+          "variants": {
+            "additionalProperties": {
+              "additionalProperties": false,
+              "properties": {
+                "cells": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "at": {
+                      "items": {
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "minItems": 1,
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "at"
+                  ],
+                  "type": "object"
+                },
+                "cut_deg": {
+                  "maximum": 90,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "cut_up_m": {
+                  "maximum": 2,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "fall": {
+                  "enum": [
+                    "forward",
+                    "back",
+                    "side"
+                  ],
+                  "type": "string"
+                },
+                "fx": {
+                  "additionalProperties": {
+                    "type": "number"
+                  },
+                  "type": "object"
+                },
+                "grind_ticks": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "hat_kick_mps": {
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "kit": {
+                  "enum": [
+                    "cap",
+                    "helmet",
+                    "rifle",
+                    "pistol",
+                    "tube"
+                  ]
+                },
+                "kit_m": {
+                  "exclusiveMinimum": 0,
+                  "type": "number"
+                },
+                "pieces": {
+                  "items": {
+                    "enum": [
+                      "head",
+                      "torso",
+                      "arm_l",
+                      "arm_r",
+                      "leg_l",
+                      "leg_r",
+                      "body",
+                      "hat",
+                      "half_a",
+                      "half_b",
+                      "kit",
+                      "plate_a",
+                      "plate_b"
+                    ]
+                  },
+                  "type": "array"
+                },
+                "plate_m": {
+                  "exclusiveMinimum": 0,
+                  "type": "number"
+                },
+                "saw_chunks": {
+                  "maximum": 16,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "scorch_line_m": {
+                  "maximum": 4,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "slide_m": {
+                  "maximum": 5,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "split_topple_deg": {
+                  "maximum": 120,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "spray": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "spray_cone_deg": {
+                  "maximum": 360,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "track": {
+                  "items": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 4,
+                    "minItems": 4,
+                    "type": "array"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "object"
           },
           "weapon": {
             "pattern": "^[a-z][a-z0-9_]*$",

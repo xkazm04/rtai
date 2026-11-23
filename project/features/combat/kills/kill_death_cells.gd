@@ -112,6 +112,10 @@ static func owns(cells: Sprite2D) -> bool:
 
 ## The share of the pose track's lean a death keeps on its drawn frames: 1 for a fall grid, the
 ## row's fx `cells_lean` (default 0: the drawing holds the pose) for its own cells.
+static func pose_of(d: KillNewStyles.Death, pose: Vector3) -> Vector3:
+	return Vector3(pose.x * lean_of(d), pose.y if not d.row.victim.is_empty() else 1.0, 0.0)
+
+
 static func lean_of(d: KillNewStyles.Death) -> float:
 	return d.extra.num("cells_lean", 0.0) if owns(d.cells) else 1.0
 
@@ -130,7 +134,7 @@ static func slide_m_of(d: KillNewStyles.Death) -> float:
 static func face_of(d: KillNewStyles.Death, frame: int = -1) -> float:
 	var turn: int = roundi(d.extra.num("cells_turn_from", -1.0))
 	if turn >= 0 and frame >= turn:
-		return d.dir.angle()
+		return d.fall.angle() if d.row != null and not d.row.victim.is_empty() else d.dir.angle()
 	return (-d.dir).angle()
 
 

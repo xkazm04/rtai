@@ -51,3 +51,22 @@ func test_the_cut_moves_one_way_and_the_smear_covers_it() -> void:
 		last = a
 	assert_false(MeleeSwing.cutting(c0 - DT, PH), "no smear in the windup")
 	assert_false(MeleeSwing.cutting(PH.x + PH.y + PH.z * 0.5, PH), "none in the recovery")
+
+
+func test_each_shipped_shape_crosses_aim_once_and_returns_to_guard() -> void:
+	var tables: Array[MeleeTable] = [MeleeTable.shipped()]
+	for id: StringName in MeleeTable.weapon_ids():
+		tables.append(MeleeTable.weapon(id))
+	var turns: Array[Vector2] = []
+	for table: MeleeTable in tables:
+		var h: MeleeHit = table.hits[0]
+		var ph: Vector3 = Vector3(h.windup, h.active, h.recovery) * DT
+		var arc: float = acos(h.cone_dot)
+		var style: StringName = table.swing_style
+		var start: float = MeleeSwing.angle(MeleeSwing.cut_start(ph), ph, 1.0, arc, style)
+		var finish: float = MeleeSwing.angle(ph.x + ph.y, ph, 1.0, arc, style)
+		assert_lt(start * finish, 0.0, "%s crosses the aim" % style)
+		assert_false(turns.has(Vector2(start, finish)), "%s has its own path" % style)
+		turns.append(Vector2(start, finish))
+		assert_almost_eq(MeleeSwing.angle(ph.x, ph, 1.0, arc, style), 0.0, 0.001)
+		assert_almost_eq(MeleeSwing.angle(ph.x + ph.y + ph.z, ph, 1.0, arc, style), 0.0, 0.001)

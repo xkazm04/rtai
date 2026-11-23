@@ -16,17 +16,15 @@ func _death(row_id: StringName) -> KillNewStyles.Death:
 
 func test_the_cook_trembles_only_while_he_cooks() -> void:
 	var d: KillNewStyles.Death = _death(&"baton_overload")
-	var from: int = roundi(d.extra.num("cook_from", -1.0))
-	var to: int = roundi(d.extra.num("cook_to", -1.0))
-	assert_gt(to, from, "the row cooks for a while")
-	assert_eq(KillCookArt.tremble(d, from - 1, false), 0.0, "held still before the cook")
-	assert_ne(KillCookArt.tremble(d, from, false), 0.0, "trembles while cooking")
-	assert_eq(
-		KillCookArt.tremble(d, from, false), -KillCookArt.tremble(d, from + 1, false), "a buzz"
-	)
-	assert_eq(KillCookArt.tremble(d, to, false), 0.0, "still once he falls")
-	for age: int in range(from, to):
-		assert_eq(KillCookArt.tremble(d, age, true), 0.0, "no tremble under reduced motion")
+	assert_eq(KillCookArt.tremble(d, -1, false), 0.0)
+	var first: float = KillCookArt.tremble(d, 0, false)
+	assert_gt(first, 5.0, "the kill tick moves the card")
+	assert_gt(KillCookArt.tremble(d, 1, false), 0.0, "the first pose holds two ticks")
+	assert_lt(KillCookArt.tremble(d, 2, false), 0.0, "the next jerk reverses direction")
+	assert_ne(KillCookArt.tremble(d, 19, false), 0.0)
+	assert_eq(KillCookArt.tremble(d, 20, false), 0.0, "the victim's fall takes over")
+	for age: int in range(0, 21):
+		assert_eq(KillCookArt.tremble(d, age, true), 0.0, "still under reduced motion")
 
 
 func test_the_shred_tears_its_scraps_on_their_ticks_and_no_more() -> void:

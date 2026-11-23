@@ -1,6 +1,7 @@
 class_name MeleeCombo
 extends RefCounted
-## The claw combo on the fixed tick: press() starts hit 1, or buffers the next hit while one
+## Shipped swings ignore presses until recovery ends. With single_swing off, the legacy combo
+## runs on the fixed tick: press() starts hit 1, or buffers the next hit while one
 ## plays; a buffered hit starts `cancel_ticks` into the current hit's recovery. After the last
 ## hit's recovery, a press within the combo window continues the chain; later, it restarts at
 ## hit 1, and the finisher (the last row) always ends the chain. lands() is true on exactly one
@@ -20,6 +21,8 @@ var since_end: int = 1 << 20
 var last_index: int = 0
 ## Counts hit starts: a host that poses the rig compares it with the count it last saw.
 var starts: int = 0
+## Direct electric contacts during this swing, cleared before the next hit starts.
+var electric_hits: Dictionary[Object, bool] = {}
 ## Set by the host each tick: the attack is held down (a grinding hit keeps grinding).
 var holding: bool = false
 ## Ticks the current hit has held its grind (0 = not grinding yet).
@@ -31,6 +34,10 @@ func _init(p_table: MeleeTable) -> void:
 
 
 func press() -> void:
+	if table.single_swing:
+		if hit_index == 0:
+			_start(1)
+		return
 	if hit_index > 0:
 		buffered = true
 		return
@@ -136,6 +143,7 @@ func move_scale() -> float:
 func _start(index: int) -> void:
 	hit_index = index
 	starts += 1
+	electric_hits.clear()
 	tick_in = 0
 	buffered = false
 	ground = 0

@@ -480,7 +480,6 @@
         "project/features/combat/hit_feel/hit_feel.gd": 220,
         "project/features/combat/kills/kill_char_fx.gd": 203,
         "project/features/combat/kills/kill_lab.gd": 213,
-        "project/features/combat/kills/kill_split_fx.gd": 201,
         "project/features/combat/kills/kill_view.gd": 286,
         "project/features/combat/react/crowd_react.gd": 235,
         "project/features/combat/react/react_link.gd": 288,
@@ -506,7 +505,7 @@
         "project/tests/unit/test_gun_fx.gd": 213,
         "project/tests/unit/test_weapon_art.gd": 223
       },
-      "total": 67
+      "total": 66
     },
     "lane_named_dev_dirs": {
       "accepted": [

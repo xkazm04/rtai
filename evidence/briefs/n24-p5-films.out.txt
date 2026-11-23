@@ -1,0 +1,42 @@
+**Four weapons reached 1.00 swings per 40-tick click. The chainsaw reached 0.60.** Its landed grind kept it busy for 74 ticks, so three of five clicks started swings. Fast mashing also dropped clicks during recovery. All 30 trials reproduced the same click and swing-start ticks on rerun.
+
+### Live swings
+
+Each pair is old → shipped. The held trial used one press for three seconds. Its starts/s count includes the swing at tick zero. [Six-line table](<C:/Users/kazda/kiro/gtai-masters/n24/melee/telemetry/swings.md>) · [Raw tick records](<C:/Users/kazda/kiro/gtai-masters/n24/melee/telemetry/swings.json>)
+
+| Weapon | 40-tick starts/click | 6-tick mash starts/click | Starts per held click | Held starts/s | Shipped row Hz |
+|---|---:|---:|---:|---:|---:|
+| Hands | 1.60 → 1.00 | 0.37 → 0.27 | 11 → 9 | 3.67 → 3.00 | 2.86 |
+| Chainsaw | 1.00 → 0.60 | 0.17 → 0.13 | 5 → 3 | 1.67 → 1.00 | 1.76 |
+| Electro baton | 2.00 → 1.00 | 0.40 → 0.27 | 12 → 9 | 4.00 → 3.00 | 2.86 |
+| Katana | 1.60 → 1.00 | 0.30 → 0.20 | 11 → 7 | 3.33 → 2.33 | 2.22 |
+| Plasma sword | 2.00 → 1.00 | 0.40 → 0.17 | 12 → 6 | 4.00 → 2.00 | 1.82 |
+
+### Owner films
+
+`ffprobe` verified **1920×1080 at 60 fps** for all seven films. I inspected six decoded frames from each. [12-entry frame index](<C:/Users/kazda/kiro/gtai-masters/n24/melee/frames.json>) · [Five 64 px/m kill-tick and +20 close-ups](<C:/Users/kazda/kiro/gtai-masters/n24/melee/closeups>)
+
+| Film | Duration | What reads on screen |
+|---|---:|---|
+| [Hands](<C:/Users/kazda/kiro/gtai-masters/n24/melee/films/hands_kills.mp4>) | 16 s | One rake drops the three 1-HP targets. Riot and SWAT each retain 1 HP. Rivet partly covers the initial contact. |
+| [Chainsaw](<C:/Users/kazda/kiro/gtai-masters/n24/melee/films/chainsaw_kills.mp4>) | 16 s | The grind holds through the shield and releases into spray. The white zigzag and overlapping chest art still muddy the contact. |
+| [Electro baton](<C:/Users/kazda/kiro/gtai-masters/n24/melee/films/electro_baton_kills.mp4>) | 16 s | The flash, current and charred collapse read across all five humans. The right-facing strike still looks horizontal. |
+| [Katana](<C:/Users/kazda/kiro/gtai-masters/n24/melee/films/katana_kills.mp4>) | 16 s | The front shield stops the first cut at tick 294. The follow-up kills at 326. The contact flash briefly covers the split. |
+| [Plasma sword](<C:/Users/kazda/kiro/gtai-masters/n24/melee/films/plasma_sword_kills.mp4>) | 16 s | The hot streak, separating halves and blood are visible. The contractor’s blue silhouette is hard to distinguish from patrol. |
+| [Electric robots](<C:/Users/kazda/kiro/gtai-masters/n24/melee/films/electric_robots.mp4>) | 18 s | The blade-hit thug survives. Baton hits shut down the light robots. The shield overload at 745 and execution at 801 are visible before the heavy enters. Its short stun is subtler. |
+| [Cursor before/after](<C:/Users/kazda/kiro/gtai-masters/n24/melee/films/cursor_before_after.mp4>) | 16 s | The enlarged hardware cursors show the same pistol crosshair and the shipped melee arrow. The pointer is small at native scale. Both timelines matched on every labeled frame. |
+
+### Commits and checks
+
+| Change | Commits | Files |
+|---|---|---|
+| Arena takes and robot staging | `314024a7d`, `d4904c1ab` | `owner_take.gd`, its UID and scene, `owner_takes.mjs`, `owner_review.py` |
+| Live telemetry | `5a02c1ae7`, `8387f4ed9` | `project/dev/melee/swing_measure.tscn`, `tools/film/swing_measure.gd`, its UID and scene, `swing_table.mjs` |
+| Cursor comparison | `890c59a68`, `ed1332dae` | `owner_cursor.gd`, its UID and scene, `owner_cursor.py`, `owner_cursor_pair.py`, `owner_review.py` |
+| Plasma tests | `6e7868bce` | `test_kill_plasma_art.gd` and its UID |
+
+The quick gate passed before each commit. GUT passed **5/5 new tests** and **17/17 mapped tests**. Mutation improved from **1/19 to 5/19 (26.3%)**. Fourteen drawing mutations survived and one mutant was invalid. P5 verification covered the quick gate and mapped suite. [Mutation results](<C:/Users/kazda/kiro/gtai-wt/n23-street/build/mutate/features-combat-kills-kill_plasma_art.json>)
+
+Removed the temporary baseline worktree and **2,112 intermediate PNGs**: 900 each from `before/` and `after/`, plus 154, 138 and 20 from P4’s `before/`, `after/` and `stun-diagnostic/`. [Exact deletion list](<C:/Users/kazda/kiro/gtai-wt/n23-street/build/p5-removed.json>)
+
+[astra: 3289s, exit 0]

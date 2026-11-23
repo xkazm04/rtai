@@ -26,6 +26,7 @@
     "light": "flinch",
     "medium": "flinch",
     "melee": "spin",
+    "melee_shield_block": "shield",
     "shock": "stun"
   },
   "reactions": [

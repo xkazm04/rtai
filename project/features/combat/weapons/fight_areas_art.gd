@@ -33,7 +33,7 @@ static func draw(ci: CanvasItem, arena: CombatArena, tick: int) -> void:
 			if e.burn_ticks > 0 and not FightBurnArt.drawn_over(h.id, tick):
 				FightBurnArt.draw(ci, h.pos, e.flee, tick + h.id * 3)
 			var n: int = OhmVictimRims.sparks(h, StunCrowd.cap().w if light.has(h.id) else 2)
-			if e.stun_ticks > 0 and not WeaponFxElectro.stun(ci, h.pos, tick + h.id, n):
+			if StunCrowd.electric(e, tick) and not WeaponFxElectro.stun(ci, h.pos, tick + h.id, n):
 				_stun(ci, h.pos, tick + h.id)
 	for i: int in a.blasts.size():
 		if FightShardArt.own_pop and a.blasts[i].z < FightScorch.MIN_BLAST_M:  # the shard's pop

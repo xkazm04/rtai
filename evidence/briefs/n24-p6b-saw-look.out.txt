@@ -1,0 +1,26 @@
+The chainsaw keeps its full **16-tick hold**. The white zigzag is gone at both zooms, warm sparks remain at the teeth, and blood appears on the kill at tick 62. All twelve sampled baton frames are pixel-identical to their baselines.
+
+**Commits**
+
+- `22654f6d3` — added `stun_look` to both saw hits in `melee_weapons.json` and its schema. Updated `melee_hit.gd`, `melee_table.gd`, `melee_contact.gd`, `player_shock.gd`, `stun_crowd.gd`, `shock_arcs_view.gd`, and the two shared lines below. Added `test_melee_contact.gd` and its `.uid`.
+- `9da9442bb` — appended the requested click-buffering and saw-hold decision to `docs/decisions.md`.
+
+| Shared file | Changed line |
+|---|---|
+| `fighter_fx.gd:18` | `var hold_look_until: int = -1  ## Last arena tick to hide electric stun marks. View only.` |
+| `fight_areas_art.gd:36` | `if StunCrowd.electric(e, tick) and not WeaponFxElectro.stun(ci, h.pos, tick + h.id, n):` |
+
+**Frame review**
+
+| Shot | What reads | Frames |
+|---|---|---|
+| Chainsaw, 32 px/m | The cop stays caught through ticks 42–57. Small warm sparks trace the teeth. | [Before](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p6/chainsaw-32-before.png) · [After](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p6/chainsaw-32-after.png) |
+| Chainsaw, 64 px/m | The blade and victim are clear in all four frames. The white star and zigzag are gone. | [Before](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p6/chainsaw-64-before.png) · [After](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p6/chainsaw-64-after.png) |
+| Baton, 32 px/m | The contact flash reads at tick 34 and the arcs remain visible through tick 50. | [Before](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p6/electro_baton-32-before.png) · [After](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p6/electro_baton-32-after.png) |
+| Baton, 64 px/m | The close-up shows the bright contact point and arcs across the falling body. | [Before](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p6/electro_baton-64-before.png) · [After](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p6/electro_baton-64-after.png) |
+
+**Verification:** `run_unit --changed` passed **3,805**, with zero failures and two unrelated art tests skipped. All four scenarios passed, including `rivet_chainsaw`, `rivet_city_melee`, and the 60-second replay. All three combat telemetry files matched their baselines byte for byte. Native parity matched over 1,200 steps, and the city bake matched its golden. The quick gate passed all nine changed scripts.
+
+Mutation score on `melee_contact.gd` lines 24–27 was **8/(8+0), 100%**, with one invalid mutant and zero timeouts.
+
+[astra: 1005s, exit 0]

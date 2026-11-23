@@ -1,8 +1,8 @@
 extends Scenario
 ## rivet-arsenal: a carried melee weapon in the live arena's real fight. Rivet carries the katana
 ## (ArenaArsenal.arm, as --loadout=katana does) and ArenaRivetBot plays the claw cops station:
-## every press now swings the katana's combo (melee_weapons.json), the hits are dealt as `katana`,
-## at least four cops drop, no round is fired, and the run replays identical on a fresh world.
+## nine draw-cuts start and five connect. Six cops drop, no round is fired, and the run
+## replays identically on a fresh world.
 ## TST-05: a planted fault (the katana's reach cut to 0.3 m) must whiff and drop fewer cops.
 
 const LIMIT_TICKS: int = 30 * SimClock.TICK_RATE
@@ -56,8 +56,8 @@ func _judge(tel: Dictionary) -> String:
 		return "the rivet bot did not finish with the katana: %s" % tel
 	if tel["swing_weapon"] != "katana" or tel["shots"] != 0:
 		return "the swings were not the katana's, or a round left: %s" % tel
-	if tel.get("claw_kills", 0) < 4 or tel.get("claw_hits", 0) < 8:
-		return "the katana dropped too few cops: %s" % tel
+	if tel.get("claw_swings") != 9 or tel.get("claw_hits") != 5 or tel.get("claw_kills") != 6:
+		return "expected nine draw-cuts, five contacts and six cops down: %s" % tel
 	return ""
 
 
@@ -87,6 +87,6 @@ func _planted() -> String:
 	s.world.free()
 	bus.free()
 	data.free()
-	if tel.get("claw_kills", 0) >= 4:
+	if tel.get("claw_kills", 0) >= 3 or tel.get("claw_whiffs", 0) == 0:
 		return "the planted 0.3 m katana still dropped the cops: %s" % tel
 	return ""

@@ -323,6 +323,10 @@
             "death_shock"
           ]
         },
+        "melee_shield_block": {
+          "const": "shield",
+          "type": "string"
+        },
         "shock": {
           "enum": [
             "flinch",

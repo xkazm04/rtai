@@ -1,13 +1,9 @@
 extends Scenario
 ## rivet-arsenal: the live arena played by ArenaRivetBot through the real pilot (walk, strafe,
-## backpedal, sprint, two rolls, then the claw on the rivet_claw_cops station). Every claw must
-## land (the follow-ups step in through the jab's knockback), both sparring cops (4 hp) drop on a
-## finisher and the plain cop on one jab, the sprint crosses the tackle line, Rivet rolls twice,
-## and the run replays identical on a fresh world (SIM-05).
-## The held melee then charges the shock on a sparring pair (jab, charge, release: one landed
-## discharge) and the stunned cop drops to two claws.
-## TST-05: planted faults: the claw with no step-in must whiff and leave a sparring cop up; a
-## shock with a 0.3 m reach must miss the cop.
+## backpedal, sprint, two rolls, then the claw on the rivet_claw_cops station). Its fixed
+## five-tick mash starts seven individual rakes. Five land; two whiff after knockback puts
+## the cop beyond a stationary rake. The plain cop drops and the held melee discharges once.
+## The run replays identically (SIM-05). Shortening the rake and shock must make both miss.
 
 const LIMIT_TICKS: int = 30 * SimClock.TICK_RATE
 const EVIDENCE_FILE: String = "rivet-claw-telemetry.json"
@@ -43,10 +39,10 @@ func _judge(tel: Dictionary, bot: ArenaRivetBot) -> String:
 	var claw: Dictionary = tel.get(STATION, {})
 	if bot.finished_tick < 0:
 		return "the rivet bot did not finish in %d ticks (step %d)" % [LIMIT_TICKS, bot.index]
-	if claw.get("claw_whiffs", -1) != 0 or claw.get("claw_hits", 0) != 10:
-		return "the claw did not land 10 of 10: %s" % claw
-	if claw.get("claw_kills", 0) != 4:
-		return "expected 4 cops down (2 finishers, 1 jab, the shocked cop's combo): %s" % claw
+	if claw.get("claw_swings") != 7 or claw.get("claw_hits") != 5 or claw.get("claw_whiffs") != 2:
+		return "expected five contacts from seven individual rakes: %s" % claw
+	if claw.get("claw_kills") != 1:
+		return "expected one cop down on the unchanged mash tape: %s" % claw
 	var shocked: bool = claw.get("shock_discharges", 0) == 1 and claw.get("shock_landed", 0) == 1
 	if tel["sprint_top_mps"] <= 7.5 or not shocked:
 		return (
@@ -75,7 +71,7 @@ func _planted() -> String:
 	var s: ArenaSession = ArenaSession.open(bus, data)
 	var t: MeleeTable = MeleeTable.shipped()
 	for h: MeleeHit in t.hits:
-		h.lunge_m = 0.0
+		h.reach_m = 0.1
 	s.stage.pilot.melee = PlayerMelee.new(t)
 	s.stage.pilot.shock.shock.reach_m = 0.3
 	var bot: ArenaRivetBot = ArenaRivetBot.new(s.stage, s.actions)
@@ -86,8 +82,8 @@ func _planted() -> String:
 	s.world.free()
 	bus.free()
 	data.free()
-	if claw.get("claw_whiffs", 0) == 0 or claw.get("claw_kills", 0) >= 3:
-		return "the planted no-step-in claw still landed everything: %s" % claw
+	if claw.get("claw_hits", -1) != 0 or claw.get("claw_whiffs", 0) != 7:
+		return "the planted short rake still connected: %s" % claw
 	if claw.get("shock_landed", 0) != 0:
 		return "the planted 0.3 m shock still landed: %s" % claw
 	return ""

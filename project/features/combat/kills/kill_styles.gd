@@ -104,6 +104,10 @@ func parts(
 		KillCharCells.tag(groups[SignatureKill.BODY], rig)  # n15: a drawn charred man
 	elif KillNewStyles.owns(row.style):
 		new_fx.parts(rig, serial, row, groups, dir)
+	if row.style == &"shutdown":
+		var body: Node2D = groups[SignatureKill.BODY]
+		groups[SignatureKill.BODY] = RobotShutdownFx.wrap(body, row, _kills, _ppm, dir)
+	MeleeKillGear.attach(groups, row, _ppm)
 	return groups
 
 

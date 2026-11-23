@@ -6,8 +6,8 @@ extends RefCounted
 ## Render only, no RNG.
 
 ## The default length and width (m): the n12 look, kept by a row with no streak keys.
-const LENGTH_M: float = 1.7
-const WIDTH_M: float = 0.11
+const LENGTH_M: float = SignatureKill.DEFAULT_STREAK_M
+const WIDTH_M: float = SignatureKill.DEFAULT_WIDTH_M
 ## The ink rim's extra width (px) at the default width; it scales with the row's width.
 const RIM_PX: float = 3.0
 const INK: Color = Color(0.07, 0.06, 0.07)

@@ -70,6 +70,20 @@ func steps() -> int:
 	return _angles.size()
 
 
+## Frames of tip travel kept by a styled swing. The saw stays tight to the bite,
+## the baton snaps, and the full plasma sweep carries the longest trail.
+static func trail_frames(table: MeleeTable) -> int:
+	if table.single_swing:
+		match table.swing_style:
+			&"drive":
+				return 2
+			&"crack":
+				return 3
+			&"sweep":
+				return 6
+	return KEEP
+
+
 ## The fan's alpha share: 1 while cutting, fading through the linger and the wipe.
 func fade() -> float:
 	return clampf(1.0 - float(_after) / float(LINGER + KEEP + 1), 0.0, 1.0)

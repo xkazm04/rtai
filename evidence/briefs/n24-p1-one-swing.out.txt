@@ -1,0 +1,31 @@
+**One six-tick click now starts exactly one swing with every melee weapon.** Both the wheel and non-wheel input paths passed held fire to `MeleeCombo.press()` every tick. The old combo buffered a second hit and started it during recovery. `PlayerShock` recorded zero discharges across all 20 filmed clicks.
+
+| Weapon | Starts before | Starts after | Motion | Windup / active / recovery ticks | Reach | `cone_dot` |
+|---|---:|---:|---|---:|---:|---:|
+| Hands | 2 | 1.0 | Claw rake | 5 / 3 / 13 | 1.40 m | 0.50 |
+| Chainsaw | 1 | 1.0 | Rev and drive | 12 / 4 / 18 | 1.65 m | 0.80 |
+| Electro baton | 2 | 1.0 | Short crack | 4 / 3 / 14 | 1.55 m | 0.60 |
+| Katana | 2 | 1.0 | Advancing draw-cut | 7 / 4 / 16 | 2.10 m | 0.32 |
+| Plasma sword | 2 | 1.0 | Wide sweep | 8 / 6 / 19 | 2.20 m | −1.00 |
+
+Counts matched at 32 and 64 px/m. Held primary repeats after recovery. The saw stays in its grind until released and landed three contacts from one filmed start. Each weapon retains its original opening-hit damage. Switching `single_swing` off reproduced the katana’s two-start click.
+
+**Films.** Verified all 30 original and side-by-side movies at 1920×1080, 60 fps, tilt 70. The baton’s right-facing contact still reads as horizontal. A clearly overhead crack needs a new drawn frame. [Before](<C:/Users/kazda/kiro/gtai-masters/n24/melee/before>) · [After](<C:/Users/kazda/kiro/gtai-masters/n24/melee/after>) · [Comparisons](<C:/Users/kazda/kiro/gtai-masters/n24/melee/compare>) · [Baton contact still](<C:/Users/kazda/kiro/gtai-masters/n24/melee/after/electro_baton/64/t38.png>)
+
+**Verification.** GUT passed 3,774 tests with 0 failures and 2 skips. All 67 scenarios passed. Mutation testing killed **4 / (4 + 0)** eligible faults. Native parity matched for 1,200 steps. The city bake, pinned 60-second replay and current quest tape held. Seven archived quest tapes diverged at tick 60 on both revisions.
+
+The rule’s full quick gate remains red. Untouched `b3f4727c0` produced the same 474 diagnostic lines on the same three files, ending in Godot’s `PagedAllocator` shutdown error. The static quick checks, cursor quick gate and all commit hooks passed.
+
+**Arena replay expectations changed on three unchanged input sequences.**
+
+- `rivet_claw` landed five of seven rakes. Knockback put two targets beyond the stationary follow-up.
+- `rivet_chainsaw` landed twenty grind contacts from five drives and dropped one cop. The separate rip is now part of recovery.
+- `rivet_katana` landed eight of nine cuts and dropped three cops. The old thrust finisher is available in legacy mode.
+
+**Commits on `n24-melee`**, all before 18:40. [Full file list per commit](<C:/Users/kazda/kiro/gtai-masters/n24/melee/changed-files.txt>)
+
+- `ff5b5f2eb` added the tested six-tick melee shot under `tools/film`.
+- `5e4b69c76` changed the melee rule, tables, schemas, views, tests and three scenario expectations, and recorded the decision.
+- `5a40e1370` changed `weapon_cursor.gd` and its test. Hands and melee weapons use the Windows system arrow. `PLAIN_DOT` is the one-constant alternative. [Cursor before and after](<C:/Users/kazda/kiro/gtai-masters/n24/melee/cursor/compare.png>)
+
+[astra: 4383s, exit 0]

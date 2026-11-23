@@ -9,7 +9,6 @@ extends Node2D
 const ARM_MIN_M: float = 1.1
 const REACH_MAX_M: float = 1.35
 ## Angles kept in the trail, the frames the finished arc lingers fading, the polygon's steps.
-const KEEP: int = 4
 const LINGER: int = 6
 const STEPS: int = 16
 ## The crescent's width at its middle (a share of the reach) and its ink edge (px).
@@ -56,7 +55,7 @@ func _process(_frame: float) -> void:
 			a = _angles[_angles.size() - 1] + wrapf(a - _angles[_angles.size() - 1], -PI, PI)
 		@warning_ignore("return_value_discarded")
 		_angles.append(a)
-		if _angles.size() > KEEP:
+		if _angles.size() > MeleeSmearView.trail_frames(_pilot.melee.combo.table):
 			_angles.remove_at(0)
 	elif not _angles.is_empty():
 		_after += 1
@@ -98,7 +97,8 @@ func _sweep(rig: CutRig) -> float:
 	var arc: float = (
 		maxf(RivetHeldView.SWEEP_MIN, acos(clampf(h.cone_dot, -1.0, 1.0))) if h else 1.0
 	)
-	return MeleeSwing.angle(rig.clips.strike_t, rig.clips.strike_ph, side, arc)
+	var style: StringName = c.table.swing_style if c.table.single_swing else &""
+	return MeleeSwing.angle(rig.clips.strike_t, rig.clips.strike_ph, side, arc, style)
 
 
 func _reach_m() -> float:

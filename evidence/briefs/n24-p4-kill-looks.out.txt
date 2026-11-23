@@ -1,0 +1,18 @@
+**The final gate passed on `f6978fc2f`.** Four P4 commits landed by 21:41. The human baton, plasma cut, and robot shutdown changes are visible at both requested zooms. Two items need files outside the allowlist.
+
+| Item | Commit and files | What the frames show |
+|---|---|---|
+| Human baton | `9f8d6c8f8` · `kill_cook_art.gd`, `kill_new_styles.gd`, `test_kill_cook_shred.gd` | All five human types flash on contact and jerk for 20 ticks before their individual falls. The arcs remain visible at 32 px/m. [32](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p4/electro_baton-32.png) · [64](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p4/electro_baton-64.png) |
+| Plasma sword | `4bdda2843` · `signature_kills.json`, `kill_plasma_art.gd` and UID, `kill_cut_edge.gd`, `kill_ground.gd`, `kill_marks.gd`, `kill_split_fx.gd`, `test_kill_split_streak.gd` | A hot streak follows each victim’s cut angle. The exposed edges cool over 40 ticks, and the blood spray leaves a pool. The contractor close-up shows the edge fade most clearly. [32](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p4/plasma_sword-32.png) · [64](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p4/plasma_sword-64.png) |
+| Chainsaw | **NEED** · `fight_areas_art.gd` | The shared stun renderer draws orbiting `WeaponFxElectro.stun` sparks during the grind. Switching to its shape fallback still produces cream zigzags. The sheets compare those two renderers at identical ticks. [32](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p4/chainsaw-32.png) · [64](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p4/chainsaw-64.png) |
+| Right-facing baton | **NEED** · base equipped art or `rivet_windup.gd` | Tick 36 shows the horizontal wrist and baton. The selector routes only the left-facing strike to a separate sheet. A dedicated right-facing frame needs that routing or an edit to the base strip. [32](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p4/baton_strike-32.png) · [64](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p4/baton_strike-64.png) |
+| Director decisions | `7144b8a1a` · `docs/decisions.md` | Appended the three decisions covering the system arrow, normal-damage claw, and Mertz’s 46-damage Robo-tazer. |
+| Robot shutdown | `f6978fc2f` · `robot_shutdown_fx.gd`, `test_robot_shutdown_fx.gd` and UID | White-core amber arcs read at 32 px/m. At tick 545 the wreck retains its gunmetal plates at both zooms. The far arm is still dark at 64. [32](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p4/robot-shutdown-32.png) · [64](C:/Users/kazda/kiro/gtai-masters/n24/melee/kills/p4/robot-shutdown-64.png) |
+
+**Verification**
+
+- `--changed` passed before all four commits. The final gate passed all 19 lint checks, 3,811 tests with two skips, all 67 scenarios, 1,200 parity steps, render selftest, and release compilation of 934 scripts. No tape, golden, parity, or bake digest moved. [Gate report](C:/Users/kazda/kiro/gtai-wt/n23-street/build/gate/f6978fc2f8fe/gate.json)
+- The baton and plasma quick checks reproduced the standalone compile cascade. Both requested scripts also failed on `b3f4727c0` with `Failed to compile depended scripts` at `rig_clips.gd:0`. The decisions and robot quick checks passed. The baseline comparison worktree was removed. [Baseline log](C:/Users/kazda/kiro/gtai-wt/n23-street/build/p4-base-check.log)
+- Plasma mutation score was **1/19 killed (5.3%)**, with 18 survivors and one invalid mutant. The tests caught the cooling-curve fault but missed attachment and drawing faults. Those details were checked against the rendered pairs. [Mutation log](C:/Users/kazda/kiro/gtai-wt/n23-street/build/p4-mutation.log)
+
+[astra: 4144s, exit 0]

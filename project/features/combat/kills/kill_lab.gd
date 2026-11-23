@@ -57,7 +57,6 @@ var guards: Array[Fighter] = []
 ## Each guard's mark (they stand on it: no walk-in, no spawn spread).
 var spots: PackedVector2Array = PackedVector2Array()
 var shots: int = 0
-## The melee weapon Rivet swings (empty: he fires his gun).
 var blade: StringName = &""
 ## Ticks Rivet stays on the victim after the blow (the chainsaw's grind) before he steps back.
 var hold_ticks: int = 0
@@ -206,6 +205,7 @@ func _line(stage: ArenaStage) -> void:
 		solo_line = PackedVector2Array([SHOCK_OFF])
 	for off: Vector2 in solo_line if solo != Vector2.INF else line:
 		var g: Fighter = stage.arena.spawn_guard(origin + off)
+		g.archetype = KillLabTurn.melee_victim(blade, ArenaArgs.parse())
 		g.pos = origin + off
 		g.cooldown = HOLD_FIRE
 		@warning_ignore("return_value_discarded")
