@@ -29,3 +29,9 @@ NEXT (session 2, from 12:37):
 2. Then launch brief `evidence/briefs/n26-02-dusk.md` (fill <HARD>/<LAST>: launch+65 min / launch+60) with Start-Process (see 11:10 line). Art is ready: `gtai-art/factory-n26/out/` conveyor-run, front-broken-b (USE), yard-props, fence-gate; notes.md there.
 3. Then brief `evidence/briefs/n26-03-fence-pump.md` (fence sheet + pump tell). Check `n23-prologue/JOURNAL.md` for `MILESTONE mulroney` and `n23-controls/JOURNAL.md` for `MILESTONE keys` (merge n26-keys after it, re-check lesson cards).
 4. Last new work committed by 17:10; final gate by 17:25; films after.
+
+## Session 2 (12:35, BUILD)
+- 12:36 ASTRA cover 84 accepted (stopped at the cap; work committed). Review: d6493e585 + c49de89ab; `line_fire` row with own layout (6 conveyor sections stepped like a staircase, 2 pallets, forklift, arm, fridges, skip), `test_prologue_yard_layout.gd`, decisions line (pilot ticks 10225/11742/10204/8167/10050 -> 11701/13014/10392/12158/13278). Stills `evidence/yard26/layout_t6000.png` looked at: footprints match art; the conveyor reads as six separate rails, not the plate's S (dusk call re-arts them). Five seeds (`evidence/yard26/prologue-yard-pilots.json`): line_fire all finish, deaths 0/1/0/0/1 (seeds 7/3/11/21/42), min hp 36/0/44/28/0; torn_line (=main) deaths 0/2/0/0/0, min hp 36/0/2.8/36/28. Total deaths 2 vs 2. Stuck cops: 0-2 per run on both dressings, all near the gate (y 31-32.5, x 35-36: arrivals holding at the gate), not on the new cover. Mutate for cover NOT measured (cap).
+- 12:37 MILESTONE keys 8d8bb3787 seen; merged as e98906eac (JOURNAL add/add kept ours; lint 19/19 on the merge).
+- 12:38 NEED yard from melee (n23-street JOURNAL 12:24): Winnick needs meta `melee_named_human`; put in brief 02 item 0.
+- 12:39 ASTRA RUNNING dusk since 12:39 (Start-Process pid 43824, brief `evidence/briefs/n26-02-dusk.md`, hard stop 13:55, last commit 13:50). Items 0,1,2,3,5,7; smoke + frame cost deferred to a resume.
