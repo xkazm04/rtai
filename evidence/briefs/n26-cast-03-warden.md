@@ -1,7 +1,7 @@
 # Brief n26-cast-03-warden: the appliance warden (Peg Dolan) as a cast card, cop quality
 
 Lane `cast`, branch `n26-cast`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-prologue` (your cwd).
-**Hard stop HARDSTOP local** (check `date`). **Commit deadline COMMITBY: commit the cut art + row FIRST, before films.**
+**Hard stop 16:38 local** (check `date`). **Commit deadline 16:25: commit the cut art + row FIRST, before films.**
 Before every Godot run: `export APPDATA=C:/Users/kazda/kiro/gtai-n26/appdata/cast` and
 `export GODOT_BIN=C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe`.
 One Godot process at a time. Windowed runs: `--position 0,1440`, `--rendering-driver d3d12`. Kill only your own PIDs.
