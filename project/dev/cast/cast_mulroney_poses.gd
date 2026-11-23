@@ -39,6 +39,7 @@ func _advance() -> void:
 	_clock.complete_tick()
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
+	CastMulroneyPreview.trace(_host.rigs.rig_for(_boss.id), _arena.tick)
 
 
 func _walks() -> bool:

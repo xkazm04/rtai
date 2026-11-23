@@ -1,9 +1,7 @@
 class_name StreetCopWalk
 extends RefCounted
-## Armed city walk sheets. Only patrol hosts select the registered walk and fast gait.
-## A strike, throw or reload releases the hands to the articulated rig.
+## Armed city walks and their support-foot placement. Only patrol hosts select the fast gait.
 const ENABLED: bool = true
-## view art -> card row -> armed walk grid (5 facings across, 4 stride frames down).
 const ARMED_ROWS: Dictionary[String, String] = {
 	"cop/head_cap": "cop_patrol_armed_walk.png",
 	"cop/head_helmet": "cop_riot_armed_walk.png",
@@ -28,8 +26,7 @@ const FILL: Dictionary[String, float] = {
 	"p55/swat_armed_walk.png": 1.07,
 }
 
-## Both patrol grids carry this contact-to-pass displacement in their texels.
-## The cutter keeps the original figure scale and pads above the ground line.
+## The four-drawing patrol's contact-to-pass displacement in texels.
 const ADVANCE: Array[Vector2] = [
 	Vector2(0, 14), Vector2(10, 9), Vector2(13, 0), Vector2(10, -9), Vector2(0, -14)
 ]
@@ -87,6 +84,8 @@ class Contact:
 			walked = 0.0
 			cell = 0
 			travel = Vector2.ZERO
+			if registered != null:
+				registered.touchdown(facing, travel, step * half)
 		else:
 			walked += motion.length()
 			if not motion.is_zero_approx():
@@ -94,6 +93,8 @@ class Contact:
 			var next: int = floori(walked / step)
 			if floori(float(next) / half) != floori(float(cell) / half):
 				origin = at - travel * fmod(walked, half * step)
+				if registered != null:
+					registered.touchdown(facing, travel, step * half)
 			cell = next
 		face = facing
 		last = at

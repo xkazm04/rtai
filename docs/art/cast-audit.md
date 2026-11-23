@@ -157,8 +157,8 @@ Nominal walk speed comes from the live `EnemyRoster` (`enemies.json` / `speed_mp
 | appliance_warden | walk (2.8) | 55 | 13.43 / 4.55 ✗ | 13.43 / 4.55 ✗ | 27.48 / 4.46 ✗ | 27.48 / 4.46 ✗ |
 | appliance_warden | arrival walk (3.8) | 70 | 25.51 / 4.08 ✗ | 25.51 / 4.08 ✗ | 38.70 / 3.44 ✗ | 38.70 / 3.44 ✗ |
 | appliance_warden | arrival walk (3.8) | 55 | 18.03 / 5.08 ✗ | 18.03 / 5.08 ✗ | 34.49 / 4.93 ✗ | 34.49 / 4.93 ✗ |
-| sergeant_mulroney | walk (3.2) | 70 | 16.97 / 2.91 ✗ | 16.97 / 2.91 ✗ | 33.63 / 2.41 ✗ | 33.63 / 2.41 ✗ |
-| sergeant_mulroney | walk (3.2) | 55 | 15.75 / 4.01 ✗ | 15.75 / 4.01 ✗ | 18.72 / 2.40 ✗ | 18.72 / 2.40 ✗ |
+| sergeant_mulroney | walk (3.2) | 70 | 16.97 / 2.91 ✗ | <0.001 / 3.75 ✓ | 33.63 / 2.41 ✗ | <0.001 / 8.58 ✓ |
+| sergeant_mulroney | walk (3.2) | 55 | 15.75 / 4.01 ✗ | <0.001 / 2.87 ✓ | 18.72 / 2.40 ✗ | <0.001 / 3.42 ✓ |
 
 ### Patrol cop, eight-drawing walk and run
 
@@ -207,7 +207,34 @@ Capture the current patrol with `node tools/art/cast_feet.mjs build/cast/cop8 32
 
 | Archetype | Renderer | Identity | Walk | Attack/tell | Hit | Death | Facings | Grid | Pitches | Scale | Ink | Palette | Cut | Feet | Shadow | Provenance | Enabled |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| `sergeant_mulroney` | Human cast card, previewed on the prologue boss | PASS | FAIL | PASS in staged fight | FAIL | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | FAIL | FAIL on wound contact | PASS 8/8 | **false** |
+| `sergeant_mulroney` | Human cast card on the prologue formation boss | PASS | PASS | PASS in staged fight | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS 10/10 | **true** |
+
+### Eight-drawing admission
+
+The formation marches at the roster speed of 3.2 m/s. There is no separate run. The two profile contact-to-pass advances at each pitch give **0.1903 m/drawing**, or **16.82 drawings/s**. The 60 Hz captures independently counted 16.82 drawings/s. The near rig and far card use the same support-sole registration. To select the original walk at both pitches, set `StreetMulroneyAnchors.WALK` to `FOUR` in the anchor generator and regenerate.
+
+| Pitch | Facing | Before sole travel / body jump | After sole travel / body jump |
+|---|---|---:|---:|
+| 70° | Right | ≥11.95 / 2.88 | 0.00076 / 3.75 |
+| 70° | Down-right | 32.98 / 6.87 | 0.00075 / 8.58 |
+| 55° | Right | ≥11.95 / 2.56 | 0.00065 / 2.87 |
+| 55° | Down-right | ≥10.92 / 3.67 | 0.00071 / 3.42 |
+
+Distances are screen pixels in the fixed 32 px/m viewport, rounded upward for the after sole values. Before is the four-drawing card at `745d86cde`. The independent 64 px/m takes also passed after conversion to 32 px/m. Each native pose take showed all eight drawings in all eight octants at both review scales. The stance begins ahead of the pelvis so its shadow crosses the supporting boot during the step. The new cuts match mean equipped walk height to within 0.05% of the original at either pitch. Both cuts have zero strong key pixels at alpha ≥128. All ten shipped sergeant PNGs have matching SHA-256 provenance entries.
+
+**Living hit and shadow.** The head socket applied its reaction after the card had already received a wound displacement. The sole therefore moved again while the shadow tracked a single displacement. The hit now rotates about the measured flat boot after the socket has posed. In the rear 70° drawing the lifted boot extends below the planted one. Mirroring preserves the flat boot's ground point.
+
+Three incoming pistol octants each displayed 12 wound frames followed by idle. At both pitches and both scales the projected support sole stayed within 0.001 native px of the shadow's ground point on all 36 frames per take. In paired 32 px/m exposures the three wounds changed 211 / 209 / 220 visible shadow pixels at 70° and 148 / 165 / 178 at 55°. The forward pump changed 261 / 246 pixels. In the 64 px/m upward-blow exposure, the nearest boot and visible shadow pixels had been 7.0 px apart at 70° and 12.04 px at 55°. They now share a pixel boundary at both pitches. Mean hit height relative to the new walk is +0.02% / −0.08% by `street_hit_size.heights`.
+
+**Reproduction.** Capture `node tools/art/cast_feet.mjs <out> 32 sergeant_mulroney`, then run `python tools/art/cast_mulroney_measure.py <out> 32` to apply his eight-drawing shoe windows to the recorded transforms. Repeat at 64. The companion uses the checklist's alpha-band, projection, body-jump and contact-span methods. The archived baseline is under `gtai-art/foes-n26/mulroney/pack`. Final source cuts, viewport exposures, traces, and film tools are under `gtai-art/foes-n26/mul8/pack`. The pose and film scenes emit post-draw measurements with `--cast-mulroney-trace`.
+
+[Planted soles at 64 px/m](<C:/Users/kazda/kiro/gtai-masters/n26/cast/feet_mulroney_before_after_64ppm_tilt70.png>) · [Living hit with shadow toggled](<C:/Users/kazda/kiro/gtai-masters/n26/cast/mulroney_hit_shadow_64.png>)
+
+The seed-7 prologue displayed the equipped eight-drawing card at tick 5321. The yard's vector commander dress also drew its cap, coat and shotgun over the card, obscuring most of the painted figure. The painted boots remain visible. [Prologue exposure at 32 px/m](<C:/Users/kazda/kiro/gtai-masters/n26/cast/mulroney_prologue_card.png>)
+
+### Four-drawing admission review at `745d86cde`
+
+The first review kept the card disabled. Walk, Feet, Hit and Shadow failed. The measurements below describe that build.
 
 **Drawing and scale.** The plate's rolled sleeves, upper-arm chevrons, peaked cap and wood-stock shotgun carry through the front, back, flinch and fall. His gun and cap land separately. The moustache reads best at 55°. At 32 px/m, the 70° front three-quarter silhouettes measure 41 × 42 px for Mulroney, 27 × 43 for patrol and 60 × 77 for Rivet. At 55° they measure 45 × 45, 32 × 44 and 52 × 75. The corresponding 64 px/m heights are 85 / 86 / 154 and 90 / 88 / 151. These are equipped screen bounds for the spawned IDs, excluding shadows. The 1.11 drawing correction applies to every action at both rig distances. [70° lineup](<C:/Users/kazda/kiro/gtai-masters/n26/cast/mulroney_beside_64ppm_tilt70.png>) · [55° lineup](<C:/Users/kazda/kiro/gtai-masters/n26/cast/mulroney_beside_64ppm_tilt55.png>)
 

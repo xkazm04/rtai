@@ -5,6 +5,10 @@ extends RefCounted
 const MAX_LEAN: float = 0.22
 const MAX_STRETCH: float = 0.12
 
+## On the sergeant sheet the drawn touchdown is near the pelvis. Centre the ground
+## contact on the stance interval so his moving hip shadow crosses the planted boot.
+var centre_stance: bool
+var landing: Vector2
 var marks: Array[Vector4]
 var flight: bool
 var count: int
@@ -21,6 +25,7 @@ func configure(path: String, drawings: int, running: bool) -> float:
 	flight = running
 	var low: bool = path.get_base_dir().get_file() == "p55"
 	if path.get_file() == StreetMulroneyAnchors.EIGHT:
+		centre_stance = true
 		marks = StreetMulroneyAnchors.WALK55 if low else StreetMulroneyAnchors.WALK70
 		return StreetMulroneyAnchors.STEP_M
 	if running:
@@ -30,12 +35,24 @@ func configure(path: String, drawings: int, running: bool) -> float:
 	return StreetPatrolAnchors.WALK_M
 
 
+func touchdown(facing: Vector2i, travel: Vector2, distance: float) -> void:
+	if not centre_stance:
+		return
+	var forward: Vector2 = Vector2.DOWN.rotated(-facing.x * PI / 4.0)
+	if facing.y:
+		forward.x = -forward.x
+	landing = (forward if travel.is_zero_approx() else travel) * distance * 0.5
+	# The upper edge of the flattened hip shadow is closer than its lateral edge.
+	landing.y = maxf(landing.y, -distance * 0.25)
+
+
 func pose(
 	at: Vector2, index: int, facing: Vector2i, scale_px: Vector2, fraction: float
 ) -> Transform2D:
 	face = facing.x
 	row = posmod(index, count)
 	texel = Vector2(-scale_px.x if facing.y else scale_px.x, scale_px.y)
+	at += landing
 	var phase: int = posmod(row, half)
 	var centre: Vector2 = _knot(phase)
 	var offset: float = fraction - 0.5
@@ -67,4 +84,8 @@ func _ground(phase: int) -> Vector2:
 	var first: Vector4 = marks[face * count + draw - posmod(draw, half)]
 	var ink: Vector4 = marks[face * count + draw]
 	var delta: Vector2 = Vector2(first.x - ink.x + ink.z, first.y - ink.y + ink.w)
+	if centre_stance:
+		var left: Vector4 = marks[face * count]
+		var right: Vector4 = marks[face * count + half]
+		delta -= Vector2(left.x + right.x, left.y + right.y) * 0.5
 	return stride * floorf(float(phase) / half) + delta * texel

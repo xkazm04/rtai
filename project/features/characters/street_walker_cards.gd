@@ -187,7 +187,7 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	var fall: Vector2 = Vector2(0.0, 1.0) if hit else StreetWalkerFall.pose(rig, card)
 	var wound: Vector3 = StreetWalkerHit.shove(rig)
 	card.global_rotation = stride * SWAY * walk + fall.x + wound.z + StreetWalkerHit.flail(rig)
-	if card.has_meta(StreetCopWalk.CONTACT):
+	if card.has_meta(StreetCopWalk.CONTACT) or (hit and StreetMulroneyHit.living(rig)):
 		card.global_transform = Transform2D(card.global_rotation, card.global_position)
 	card.global_scale = Vector2(s, s * fall.y)
 	card.global_position = (
@@ -196,3 +196,5 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	StreetCopWalk.plant(rig, card)
 	if hit and not StreetWalkerHit.is_burn(str(card.get_meta(ON, ""))):
 		StreetWalkerHit.face(card, rig.react.dir.rotated(rig.facing))
+		if StreetMulroneyHit.living(rig):
+			StreetMulroneyHit.anchor(card)

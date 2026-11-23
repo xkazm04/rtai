@@ -34,6 +34,8 @@ func draw_pose(pose: CastCardPose, h: Fighter, moving: bool, tick: int) -> void:
 	var face: Vector2i = RigHeadCard.frame_of(angle)
 	frame_coords = Vector2i(face.x, row)
 	flip_h = face.y == 1
+	if path.get_file() == StreetMulroneyHit.HIT and h.alive():
+		StreetMulroneyHit.anchor(self)
 	_place(h.pos * SimConst.PX_PER_M, face, moving)
 	show()
 

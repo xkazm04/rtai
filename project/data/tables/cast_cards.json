@@ -34,7 +34,7 @@
     },
     "sergeant_mulroney": {
       "body_scale": 1.11,
-      "enabled": false,
+      "enabled": true,
       "id": "sergeant_mulroney",
       "p55": {
         "armed_walk": "sergeant_mulroney_armed_walk.png",
