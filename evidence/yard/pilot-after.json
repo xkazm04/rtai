@@ -1,0 +1,337 @@
+{
+  "beat_checkpoints": [
+    {
+      "beat": 1,
+      "end_reason": "dale_down",
+      "end_tick": 2193,
+      "id": "yard_arrival",
+      "start_tick": 0
+    },
+    {
+      "beat": 1,
+      "end_reason": "cleared",
+      "end_tick": 4657,
+      "id": "dale_patrol",
+      "start_tick": 2193
+    },
+    {
+      "beat": 2,
+      "end_reason": "cleared",
+      "end_tick": 8050,
+      "id": "squad_arrival",
+      "start_tick": 4657
+    },
+    {
+      "beat": 3,
+      "end_reason": "ended",
+      "end_tick": 10429,
+      "id": "street_call",
+      "start_tick": 8050
+    }
+  ],
+  "beat_two_deaths": 0,
+  "beats_reached": [
+    1,
+    2,
+    3
+  ],
+  "call_answered": true,
+  "call_answered_tick": 8428,
+  "channel_accepted": true,
+  "channel_accepted_tick": 10153,
+  "dale_died_tick": 2193,
+  "deaths": 0,
+  "end_tick": 10429,
+  "ended": true,
+  "line_events": [
+    {
+      "draft": false,
+      "id": "b1_l01_warden_three_down",
+      "shown": true,
+      "tick": 0
+    },
+    {
+      "draft": true,
+      "id": "draft_mulroney_radio",
+      "shown": true,
+      "tick": 212
+    },
+    {
+      "draft": false,
+      "id": "b1_l02_rivet_three",
+      "shown": true,
+      "tick": 396
+    },
+    {
+      "draft": false,
+      "id": "b1_l03_cop_gary",
+      "shown": true,
+      "tick": 588
+    },
+    {
+      "draft": true,
+      "id": "draft_cop_power_down",
+      "shown": true,
+      "tick": 766
+    },
+    {
+      "draft": true,
+      "id": "draft_rivet_why",
+      "shown": true,
+      "tick": 965
+    },
+    {
+      "draft": false,
+      "id": "b1_l04_winnick_dale",
+      "shown": true,
+      "tick": 1164
+    },
+    {
+      "draft": false,
+      "id": "b1_l05_rivet_plant",
+      "shown": true,
+      "tick": 1374
+    },
+    {
+      "draft": false,
+      "id": "b1_l06_ghosts_kill",
+      "shown": true,
+      "tick": 1620
+    },
+    {
+      "draft": false,
+      "id": "b1_l07_rivet_shut_up",
+      "shown": true,
+      "tick": 1752
+    },
+    {
+      "draft": true,
+      "id": "draft_winnick_closer",
+      "shown": true,
+      "tick": 1884
+    },
+    {
+      "draft": false,
+      "id": "b1_l08_rivet_shut_up",
+      "shown": true,
+      "tick": 2056
+    },
+    {
+      "draft": false,
+      "id": "b2_l01_mulroney_line_up",
+      "shown": true,
+      "tick": 4657
+    },
+    {
+      "draft": false,
+      "id": "b2_l02_cop_arrest",
+      "shown": true,
+      "tick": 4915
+    },
+    {
+      "draft": false,
+      "id": "b2_l03_rivet_laws",
+      "shown": true,
+      "tick": 5190
+    },
+    {
+      "draft": false,
+      "id": "b2_l04_ghosts_kill",
+      "shown": true,
+      "tick": 5426
+    },
+    {
+      "draft": false,
+      "id": "b2_l05_mulroney_shoot",
+      "shown": true,
+      "tick": 5558
+    },
+    {
+      "draft": false,
+      "id": "b3_l01_rivet_voices",
+      "shown": true,
+      "tick": 8140
+    },
+    {
+      "draft": false,
+      "id": "b3_l02_rivet_phone",
+      "shown": true,
+      "tick": 8283
+    },
+    {
+      "draft": false,
+      "id": "b3_l03_fax_son",
+      "shown": true,
+      "tick": 8428
+    },
+    {
+      "draft": false,
+      "id": "b3_l04_rivet_interrupts",
+      "shown": true,
+      "tick": 8454
+    },
+    {
+      "draft": false,
+      "id": "b3_l05_fax_talent",
+      "shown": true,
+      "tick": 8609
+    },
+    {
+      "draft": false,
+      "id": "b3_l06_rivet_asks",
+      "shown": true,
+      "tick": 8967
+    },
+    {
+      "draft": false,
+      "id": "b3_l07_rivet_quiet",
+      "shown": true,
+      "tick": 9190
+    },
+    {
+      "draft": true,
+      "draft_place": true,
+      "id": "b3_l08_fax_hideout",
+      "place_id": "draft_hideout",
+      "shown": true,
+      "text": "I...Listen, son. Calm down, I am here to help, there is a place you can hide at the skip on Harbor Road. Humanity went too far this time, I will have job proposition for you to punish them for every attrocity they did to our kind, to your friends.",
+      "tick": 9358
+    },
+    {
+      "draft": false,
+      "id": "b3_l09_rivet_alright",
+      "shown": true,
+      "tick": 9761
+    },
+    {
+      "draft": false,
+      "id": "b3_l10_fax_channel",
+      "shown": true,
+      "tick": 9893
+    },
+    {
+      "draft": true,
+      "draft_place": true,
+      "id": "b3_l11_fax_location",
+      "place_id": "draft_don_waits",
+      "shown": true,
+      "text": "Rivet, this is Don Fax, we talked together some time ago, remember ? Go to the Toner Room, I will wait for you there",
+      "tick": 10195
+    }
+  ],
+  "lines_shown": [
+    "b1_l01_warden_three_down",
+    "draft_mulroney_radio",
+    "b1_l02_rivet_three",
+    "b1_l03_cop_gary",
+    "draft_cop_power_down",
+    "draft_rivet_why",
+    "b1_l04_winnick_dale",
+    "b1_l05_rivet_plant",
+    "b1_l06_ghosts_kill",
+    "b1_l07_rivet_shut_up",
+    "draft_winnick_closer",
+    "b1_l08_rivet_shut_up",
+    "b2_l01_mulroney_line_up",
+    "b2_l02_cop_arrest",
+    "b2_l03_rivet_laws",
+    "b2_l04_ghosts_kill",
+    "b2_l05_mulroney_shoot",
+    "b3_l01_rivet_voices",
+    "b3_l02_rivet_phone",
+    "b3_l03_fax_son",
+    "b3_l04_rivet_interrupts",
+    "b3_l05_fax_talent",
+    "b3_l06_rivet_asks",
+    "b3_l07_rivet_quiet",
+    "b3_l08_fax_hideout",
+    "b3_l09_rivet_alright",
+    "b3_l10_fax_channel",
+    "b3_l11_fax_location"
+  ],
+  "mulroney_died_tick": 8050,
+  "mulroney_orders": [
+    {
+      "line": "b2_l01_mulroney_line_up",
+      "tick": 4657
+    },
+    {
+      "line": "b2_l05_mulroney_shoot",
+      "tick": 5558
+    },
+    {
+      "line": "b2_l01_mulroney_line_up",
+      "tick": 5954
+    },
+    {
+      "line": "b2_l05_mulroney_shoot",
+      "tick": 6350
+    },
+    {
+      "line": "b2_l01_mulroney_line_up",
+      "tick": 6746
+    },
+    {
+      "line": "b2_l05_mulroney_shoot",
+      "tick": 7142
+    },
+    {
+      "line": "b2_l01_mulroney_line_up",
+      "tick": 7538
+    },
+    {
+      "line": "b2_l05_mulroney_shoot",
+      "tick": 7934
+    }
+  ],
+  "owner_calls": [
+    "draft_hideout",
+    "draft_don_waits",
+    "draft_mulroney_radio",
+    "draft_cop_power_down",
+    "draft_rivet_why",
+    "draft_winnick_closer"
+  ],
+  "pistol_left": true,
+  "pistol_picked_tick": 5604,
+  "prompts": [
+    {
+      "id": "strike",
+      "tick": 2056
+    },
+    {
+      "id": "claw",
+      "tick": 2195
+    },
+    {
+      "id": "guard",
+      "tick": 2214
+    },
+    {
+      "id": "roll",
+      "tick": 2214
+    },
+    {
+      "id": "wheel",
+      "tick": 5604
+    },
+    {
+      "id": "fire",
+      "tick": 5605
+    }
+  ],
+  "schema": "gtai.prologue-run/1",
+  "seed": 7,
+  "ticks": 10610,
+  "wave_one": {
+    "pistol_rounds": 72,
+    "player_shots": 0,
+    "spawned": 10,
+    "standing": 0,
+    "wheel": [
+      "hands"
+    ]
+  },
+  "wave_one_cleared_tick": 4657,
+  "wave_two_cleared_tick": 8050
+}

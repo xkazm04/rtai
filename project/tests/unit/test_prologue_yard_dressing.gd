@@ -90,3 +90,34 @@ func test_launch_override_wins_over_stage_choice() -> void:
 	var plan: PrologueYard = PrologueYard.from_stage(stage, _fixture())
 	LaunchArgs.parse()
 	assert_eq(plan.dressing.id, "factory")
+
+
+func test_art_without_crop_uses_the_whole_image_and_decal_lists_replace_stage_marks() -> void:
+	var skins: DataTable = _fixture()
+	var row: Dictionary = skins.raw["dressings"]["factory"]
+	row["cover"] = {"burnt_van": {"art": ART}}
+	row["decals"] = [STAMP]
+	row["ground"] = [
+		{"texture": ART, "rect_m": {"origin": [-2, 3], "size": [4, 6]}, "tiled": false}
+	]
+	var look: PrologueYardDressing = PrologueYardDressing.resolve("factory", "", skins)
+	assert_eq(look.cover["burnt_van"].crop, Rect2(0, 0, 1, 1))
+	assert_eq(look.ground.size(), 1)
+	assert_eq(look.ground[0].rect, Rect2(-2, 3, 4, 6))
+	assert_false(look.ground[0].tiled)
+	assert_eq(look.ground[0].wash, Color("00000000"))
+	assert_false(look.use_stage_decals)
+	assert_eq(look.decals.size(), 1)
+	assert_eq(look.decals[0].art, ART)
+
+
+func test_invalid_layer_reports_the_table_read_error() -> void:
+	var skins: DataTable = _fixture()
+	var row: Dictionary = skins.raw["dressings"]["factory"]
+	row["ground"] = [{"tiled": false, "rect_m": {"origin": [0, 0], "size": [4, 6]}}]
+	var look: PrologueYardDressing = PrologueYardDressing.resolve("factory", "", skins)
+	assert_eq(look.id, "factory")
+	assert_false(skins.ok())
+	var recent: PackedStringArray = Log.recent()
+	assert_string_contains(recent[-1], "[ERROR] prologue-yard:")
+	assert_string_contains(recent[-1], "texture: not a string")
