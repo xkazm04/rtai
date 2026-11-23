@@ -91,3 +91,12 @@ mutate score, digests moved, commits, and whether a human could freeze the same 
   does not fit) -> fix-up commit if needed.
 - The pre-commit hook's tool tests can fail on process-timing checks under load: retry the commit once; do not change
   hook settings or lane env overrides.
+
+## Correction to the Director's lead (12:40, read before step 1)
+The "no `rivet` key" part is NOT evidence: those rows were filled by `project/features/gauntlet/bot/bot_street_stats.gd`,
+which keys `form_seconds` only by the ghost forms (`_begin` seeds `stage.pilot.ghosts.forms.table.order`, line ~62, and
+`step` counts `me.form` only when `_forms.has(me.form)`, line ~39), so base-Rivet time is never written there. What IS
+evidence: in one frozen wave the bot spent 842 s (average-9 w40), 995 s (expert-1 w33) and 816 s (average-8 w40) settled
+in Ohm or Tonnage forms, and the wave before it already shows Ohm time without the wave closing (`seconds` null). So the
+bot does sit transformed for most of the frozen wave; whether that is the cause or a symptom (the bot transforms because
+nothing else works) is what step 2 must decide. Do not stop at "it is in a form": name why no damage happens either way.

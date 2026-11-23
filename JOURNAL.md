@@ -58,3 +58,8 @@ scratch dir (not wired) and makes one 32 px/m still of A vs C in flight for Call
 - 12:27 session 1 end. ASTRA RUNNING rocket-art since 12:19 (pid 80832 = node, alive; hard stop 13:25). No Godot of mine.
 NEXT: as written at 12:19 (session 2 list) + the 12:24 addendum (cut plate C for an A-vs-C call still) + brief 04 carries
 the stall lead. Order after rocket-art: 03 trooper, 04 stall, item 5 medians, films, gate by 17:25.
+
+## Session 2 (12:22 to 13:52)
+
+- 12:22 start. ASTRA rocket-art alive (pid 80832 node, lock 12:19). No NEED pressure in the four other journals; no MILESTONE keys yet.
+- 12:40 CORRECTION stall lead: the missing `rivet` key is an artifact (bot_street_stats.gd keys only ghost forms); the real signal is 816-995 s settled in Ohm/Tonnage in the frozen wave. Appended to brief 04.
