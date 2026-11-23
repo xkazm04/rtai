@@ -108,12 +108,17 @@ static func phase_of(rig: CutRig, art: String, scale: float) -> float:
 	var cycle: float = cycle_cell(card, art, running) * scale * row_k(card, art, rig)
 	if (frames != 8 and not is_armed(rig.head_card)) or cycle <= 0.0:
 		return rig.phase
-	if not running:
-		cycle = RivetStride.profile_cycle(card, scale / RES, cycle)
-	cycle = maxf(cycle, rig.speed_now / (MAX_RUN_CYCLES_S if running else MAX_CYCLES_S))
 	var was: float = rig.get_meta(META_PH, 0.0)
-	var step: float = rig.global_position.distance_to(at) / cycle
-	var ph: float = fposmod(was + step * _direction(rig), 1.0)
+	var distance: float = rig.global_position.distance_to(at) * _direction(rig)
+	var cycles: Vector2 = _bare_cycles(card, art, rig, scale)
+	var ph: float
+	if cycles.x > 0.0 and cycles.y > 0.0:
+		ph = bare_phase(was, distance, cycles)
+	else:
+		if not running:
+			cycle = RivetStride.profile_cycle(card, scale / RES, cycle)
+		cycle = maxf(cycle, rig.speed_now / (MAX_RUN_CYCLES_S if running else MAX_CYCLES_S))
+		ph = fposmod(was + distance / cycle, 1.0)
 	rig.set_meta(META_PH, ph)
 	return ph
 
@@ -145,3 +150,33 @@ static func row_k(card: Sprite2D, art: String, rig: CutRig) -> float:
 	var row: int = RivetStride.row(rig, RivetFrames.oct_of(rig))
 	var key: String = "%s/%s/%d" % [art, weapon, row]
 	return RivetGridStride.shared().run_row_k.get(key, 1.0)
+
+
+## Advance through two measured half-strides. Carry any unused ground distance across
+## contact, wrap and reversal, including when the two boots have different stance lengths.
+static func bare_phase(was: float, distance: float, cycles: Vector2) -> float:
+	var first: float = cycles.x * 0.5
+	var full: float = first + cycles.y * 0.5
+	var at: float = was * cycles.x if was < 0.5 else first + (was - 0.5) * cycles.y
+	at = fposmod(at + distance, full)
+	return at / cycles.x if at < first else 0.5 + (at - first) / cycles.y
+
+
+static func _bare_cycles(card: Sprite2D, art: String, rig: CutRig, scale: float) -> Vector2:
+	if card == null or card.texture == null or RivetFrames.weapon_of(rig) != &"":
+		return Vector2.ZERO
+	var file: String = str(card.get_meta(RivetFrames.ON, "")).get_file()
+	if file != STRIP and file != RUN:
+		return Vector2.ZERO
+	var grid: RivetGridStride = RivetGridStride.shared()
+	var row: int = RivetFrames.BASE_OCT[RivetStride.row(rig, RivetFrames.oct_of(rig))]
+	var by_row: PackedVector2Array = (
+		grid.bare_run.get(art, PackedVector2Array())
+		if file == RUN
+		else grid.bare_walk.get(art, PackedVector2Array())
+	)
+	if by_row.size() != ROWS:
+		return Vector2.ZERO
+	# One drawing per tick at the fastest. Depth rows can have almost no drawn stride.
+	var floor_cycle: float = rig.speed_now / grid.bare_max_cycles_s
+	return (by_row[row] * scale).max(Vector2.ONE * floor_cycle)

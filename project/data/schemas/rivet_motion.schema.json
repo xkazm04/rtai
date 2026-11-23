@@ -173,6 +173,87 @@
           },
           "type": "object"
         },
+        "bare_max_cycles_s": {
+          "exclusiveMinimum": 0,
+          "maximum": 7.5,
+          "type": "number"
+        },
+        "bare_run": {
+          "additionalProperties": false,
+          "properties": {
+            "p55": {
+              "items": {
+                "items": {
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "maxItems": 8,
+              "minItems": 8,
+              "type": "array"
+            },
+            "p70": {
+              "items": {
+                "items": {
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "maxItems": 8,
+              "minItems": 8,
+              "type": "array"
+            }
+          },
+          "required": [
+            "p55",
+            "p70"
+          ],
+          "type": "object"
+        },
+        "bare_walk": {
+          "additionalProperties": false,
+          "properties": {
+            "p55": {
+              "items": {
+                "items": {
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "maxItems": 8,
+              "minItems": 8,
+              "type": "array"
+            },
+            "p70": {
+              "items": {
+                "items": {
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "maxItems": 8,
+              "minItems": 8,
+              "type": "array"
+            }
+          },
+          "required": [
+            "p55",
+            "p70"
+          ],
+          "type": "object"
+        },
         "cycle_cell": {
           "additionalProperties": false,
           "properties": {
@@ -239,6 +320,9 @@
       },
       "required": [
         "armed_cycle_cell",
+        "bare_max_cycles_s",
+        "bare_run",
+        "bare_walk",
         "cycle_cell",
         "run_cycle_cell",
         "run_row_k",
