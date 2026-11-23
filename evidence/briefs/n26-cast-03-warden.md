@@ -31,8 +31,12 @@ Director's review: all first takes except `fall_55` (take 2; take 1 had green in
    `gtai-art/foes-n26/warden/jobs.json#<job>`, cutter edits, sha256). Pack intermediates in `foes-n26/warden/pack/`.
 2. Row `appliance_warden` in `cast_cards.json`, drawn by the existing human card path. Her WALK: the 4-drawing walks
    all fail the Feet rule, so the director had an 8-drawing walk drawn:
-   `C:\Users\kazda\kiro\gtai-art\foes-n26\warden8\out\warden8_armed_walk_{70,55}_{a,b}.png` (layout as cop8: `_a` = down,
-   down-right, right; `_b` = up-right, up; support L in 1-3, R in 5-7; prompts `warden8/jobs.json`). Cut it into
+   p70 all five facings and p55 down, down-right, right from
+   `C:\Users\kazda\kiro\gtai-art\foes-n26\warden8c\out\warden8_{70,55}_{down,dr,right,ur,up}_t3.png` (ONE facing per image,
+   8 figures in a 2x4 grid: drawings 1-4 top row, 5-8 bottom row; prompts `warden8c/jobs.json`), and p55 up-right + up from the
+   two bands of `C:\Users\kazda\kiro\gtai-art\foes-n26\warden8b\out\warden8_armed_walk_55_b_t2.png` (8 per band, top = up-right,
+   bottom = up; prompt `warden8b/jobs.json`). Support L in drawings 1-3, R in 5-7. Take 1 in `warden8/out` is REJECTED (too
+   slim): do not use it. Match all facings to one body height (her accepted 4-drawing walk). Cut it into
    `appliance_warden_planted8_armed_walk.png` and put her on the cop8 N-drawing anchored placement as the cop8 and mul-fix
    calls did (read their commits); her 4-drawing `armed_walk` stays selectable with one value. Check her wound contact
    against the shadow (Mulroney's boot lifted off it on a hit; reuse whatever fixed his). The prologue today dyes her rig card with an overalls shader and draws a vector pole
@@ -56,7 +60,7 @@ Director's review: all first takes except `fall_55` (take 2; take 1 had green in
 `foe_*_card_view.gd`, `cast_*.gd` there, `project/dev/cast/**`, `tools/art/**` (cast tools), `project/tests/unit/test_cast_*.gd`
 (+ `.uid`), `docs/art/cast-checklist.md`, `docs/art/cast-audit.md`, `steam/ai-provenance/2026-11.jsonl` (append),
 `project/boot/launch_args.gd` `KNOWN_FLAGS` (append one line; then `node tools/debt/debt.mjs --update --accept-regression="<flag> for n26 cast"`),
-`tools/debt/baseline.json` (debt tool only), `C:\Users\kazda\kiro\gtai-art\foes-n26\warden\**`, `C:\Users\kazda\kiro\gtai-art\foes-n26\warden8\**`,
+`tools/debt/baseline.json` (debt tool only), `C:\Users\kazda\kiro\gtai-art\foes-n26\warden\**`, `C:\Users\kazda\kiro\gtai-art\foes-n26\warden8\**` (+ `warden8b\**`, `warden8c\**`),
 `project/features/characters/street_*.gd` (walk placement only).
 **Forbidden**: `project/boot/prologue/**`, `prologue_stage.json`, `prologue_yard_dressings.json`, `project/features/player/**`,
 `rivet_*` art, `input_actions.json`, `project/features/combat/kills/**`, `project/features/souls/**`, `ghost_*.json`,
