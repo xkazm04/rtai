@@ -6,6 +6,15 @@ Before every Godot run: `export APPDATA=C:/Users/kazda/kiro/gtai-n26/appdata/cas
 `export GODOT_BIN=C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe`.
 One Godot process at a time. Windowed runs: `--position 0,1440`, `--rendering-driver d3d12`. Kill only your own PIDs.
 
+**Time plan (the lane's last new work commits by 17:10; another builder call follows yours):** commit 1 = cut art + `.import`
++ provenance; commit 2 = the card row + placement + checklist row (on or off, whatever is true). Then ONLY the two
+`warden_beside_64ppm_tilt*.png` stills and `warden_swing_64.png`; the two clips (step 4) only if they fit before the hard stop,
+else list them as not made: a later films call makes them. Mutate last, capped `--max=12`.
+The previous call (mul-edge) fixed a 30 px body jump when a card walker reverses or turns (the anchored placement reset its
+origin on a facing change): read that commit and make sure her walk uses the fixed path; measure her worst body jump on a
+reversal too. Mulroney's hit cells had ragged dark fringe teeth at 64 px/m: cut every warden sheet with the walk's clean edge
+treatment and run the edge measure mul-edge added (in `tools/art/`) on all eight of her sheets; quote the numbers.
+
 ## Goal
 Draw the appliance warden (`appliance_warden`, the prologue's catch-pole officer) from the owner's picked plate at the
 patrol cop's standard, through the same card path Sergeant Mulroney took in the previous call (read its commits first:
