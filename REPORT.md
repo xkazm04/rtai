@@ -78,6 +78,9 @@ after that is the director committing Astra's finished work unchanged and filmin
 - The bond film is a screen capture of the live window (about 27 fps, not tick-exact), and the card screen is not
   drawn when the test player picks, so the offer is seen only as the ring closing at the rest; the pick is in
   the run log and result rows. A tick-exact film needs the bond film entry the builder could not build.
+- The chip ring's mutate score is weak: **11.1 %** (2 killed / 18 valid, 2 invalid, 20 of 58 sampled;
+  `evidence/n26/bond/mutate-ring.txt`). Its tests pin the fill fraction and the arc angles; every draw call
+  (track, fill, diamond) survives deletion: nothing renders the chip in a test.
 - Half the first masteries land before wave 8 (4 / 3 overshoots for Tonnage); Kerf is never mastered.
 - Wave 5's boss falls in 15.5 s even without Kerf: no cap can bring that wave into the 25-30 s band (a cap only
   gives back what Kerf took). Wave 10 capped is inside (28.68 s mean).
