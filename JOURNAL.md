@@ -90,3 +90,9 @@ NEXT: none for this lane. Director: merge `n26-melee` per REPORT `## Merge notes
 - 18:43 re-checked: no product diff since gated `0f3111024`; cites 27/27 ok; no new `NEED melee` in the other journals (only n23-loop 164, Kerf wall, already in REPORT merge notes). Nothing to fix; no Godot run started.
 
 NEXT: none for this lane. Director: merge `n26-melee` per REPORT `## Merge notes`.
+
+## Session 8 (18:50, REPORT, no builder)
+
+- 18:51 REPORT.md re-verified: all sections present (header, What works 1-4, Gate, What does not, What blocked, Calls for the owner, Merge notes, Next steps, Films, Astra ledger); `node tools/evidence/cites.mjs REPORT.md` 27/27 ok; no product diff since gated `0f3111024`; no Astra lock; no new `NEED melee` (n23-loop 164 Kerf wall already in merge notes). No Godot run.
+
+NEXT: none for this lane. Director: merge `n26-melee` per REPORT `## Merge notes`.
