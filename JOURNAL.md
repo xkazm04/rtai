@@ -120,3 +120,10 @@ films, last work 17:10, gate 17:25.
   rule: closest to (a): average 0.205 vs 0.141 at 1.4 orbit), 1.4 s one value away; the harshness (a steady circler
   dies in seconds) is measured in 03b and goes to Calls for the owner with the circle film. Follow-up brief
   `evidence/briefs/n26-pressure-03b-trooper-ship.md` (`--resume`) after the call exits.
+- 14:48 ASTRA trooper 52 bounced-in-part (3122 s; commits `82dbc7258` lead model + probes + tests, `ce195a82f`
+  verification; unit full 4004 pass / 2 pending; scenarios 68/68; quest 1, prologue, replay_60s unchanged; mutate
+  13/14 = 92.9 % (survivor: the error-log condition). Bounced only the ship decision (see 14:36).
+- 14:49 ASTRA RUNNING trooper-ship since 14:49 (pid 66184 node, `--resume`, brief
+  `evidence/briefs/n26-pressure-03b-trooper-ship.md`, hard stop 15:28, commit by 15:08).
+- 14:52 Briefs timed: 04 stall hard stop 16:42, fix commit 16:02, batches start by 16:05; 05 films hard stop 17:22,
+  commit 17:00. Shift both by the delay if 03b ends late (keep 05's end <= 17:22: the gate starts 17:25).

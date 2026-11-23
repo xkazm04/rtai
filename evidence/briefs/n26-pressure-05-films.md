@@ -1,6 +1,6 @@
 # Brief n26 pressure 05: the owner's films for lane pressure
 
-Hard stop HARDSTOP wall clock. Last commit COMMITBY. The code is FROZEN: this call makes films and evidence only.
+Hard stop 17:22 wall clock. Last commit 17:00. The code is FROZEN: this call makes films and evidence only.
 If a film needs a dev change (a new take in the existing dev film), it lives under `project/dev/gauntlet/**` only and is
 committed by COMMITBY; otherwise film with what exists. Fix lint and format findings in your own edit and go on.
 

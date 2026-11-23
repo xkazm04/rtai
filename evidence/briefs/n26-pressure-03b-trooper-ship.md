@@ -1,6 +1,6 @@
 # Brief n26 pressure 03b (--resume): ship the orbit lead at 1.1 s
 
-Hard stop HARDSTOP wall clock. Commit deadline COMMITBY. Same setup, allowlist, forbidden list and law as brief 03
+Hard stop 15:28 wall clock. Commit deadline 15:08. Same setup, allowlist, forbidden list and law as brief 03
 (APPDATA / GODOT_BIN exports, one Godot, stage per path, `git commit -- <paths>`, no stash / add -A / amend / rebase /
 reset --hard / push; fix lint and format findings in your own edit and go on).
 
