@@ -10,7 +10,7 @@
     "doc": "Basic rounds pass a guard or active plasma blade with probability clamp(pass_ratio * pass_ratio_k, 0, 1). Equipment and bonuses can scale pass_ratio_k. Returned basic rounds turn uniformly within +/- spread_deg of the shooter. A guard pass costs half the usual round drain.",
     "pass_ratio": 0.5,
     "pass_ratio_k": 1,
-    "spread_deg": 12
+    "spread_deg": 20
   },
   "doc": "Combat tuning for quest collect-call (mechanics assault-rifle, robo-tazer; Gloria from the Toner Room). Owner doctrine: humans die to one hit and their bullets are weak; two Robo-tazer hits nearly kill Rivet (2 x damage leaves under near_death_frac of hp, never 0). Seconds and metres; the sim converts to 60 Hz ticks.",
   "guard": {

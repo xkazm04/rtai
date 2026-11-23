@@ -51,8 +51,9 @@ func test_seeded_pass_share_and_spread_in_both_directions() -> void:
 	assert_between(angles.count(INF), 450, 550, "50% +/- 5 percentage points")
 	backed.sort()
 	if not backed.is_empty():
-		assert_between(backed[0], -12.0001, -10.0)
-		assert_between(backed[-1], 10.0, 12.0001)
+		# Each extreme must reach the outer 2 degrees of the shipped cone, within rounding error.
+		assert_between(backed[0], -20.0001, -18.0)
+		assert_between(backed[-1], 18.0, 20.0001)
 	assert_eq(angles, _sample(SEED, 1.0), "pass decisions and return angles replay identically")
 	assert_ne(angles, _sample(SEED + 1, 1.0))
 
