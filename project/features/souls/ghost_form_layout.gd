@@ -43,3 +43,8 @@ static func compact() -> GhostFormLayout:
 ## The strip's width for `chips` avatars.
 func card_w(chips: int) -> float:
 	return gap * float(maxi(chips, 1)) + 12.0
+
+
+## Shared by the portraits and their bond arcs, including the folded story strip.
+func chip_center(view_height: float, slot: int) -> Vector2:
+	return Vector2(margin + gap * (slot + 0.5), view_height - margin - card_h + chip_y)
