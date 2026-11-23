@@ -2,7 +2,7 @@ class_name PrologueGame
 extends Node
 ## Prologue composition root, also used by the dev scene. The pilot always uses wheel controls.
 
-const KNOWN_FLAGS: PackedStringArray = ["--bot", "--result", "--seed"]
+const KNOWN_FLAGS: PackedStringArray = ["--bot", "--result", "--seed", "--yard-dressing"]
 const FIXED_FPS: int = 60
 const TABLE: String = "res://data/tables/prologue_stage.json"
 const SCHEMA: String = "gtai.prologue_stage/1"
