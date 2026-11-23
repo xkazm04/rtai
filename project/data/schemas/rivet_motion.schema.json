@@ -159,6 +159,93 @@
     "face_aim": {
       "type": "boolean"
     },
+    "grid_stride": {
+      "additionalProperties": false,
+      "properties": {
+        "armed_cycle_cell": {
+          "additionalProperties": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^p(55|70)/[a-z_]+$"
+          },
+          "type": "object"
+        },
+        "cycle_cell": {
+          "additionalProperties": false,
+          "properties": {
+            "p55": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "p70": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "p55",
+            "p70"
+          ],
+          "type": "object"
+        },
+        "run_cycle_cell": {
+          "additionalProperties": false,
+          "properties": {
+            "p55": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "p70": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "p55",
+            "p70"
+          ],
+          "type": "object"
+        },
+        "run_row_k": {
+          "additionalProperties": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^p(55|70)/[a-z_]+/[0-7]$"
+          },
+          "type": "object"
+        },
+        "walk_profile_travel": {
+          "additionalProperties": {
+            "items": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^p(55|70)/rivet_walk_eq_[a-z_]+\\.png$"
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "armed_cycle_cell",
+        "cycle_cell",
+        "run_cycle_cell",
+        "run_row_k",
+        "walk_profile_travel"
+      ],
+      "type": "object"
+    },
     "roll": {
       "additionalProperties": false,
       "properties": {
@@ -425,6 +512,7 @@
     "cover",
     "dash",
     "doc",
+    "grid_stride",
     "roll",
     "schema",
     "sprint",

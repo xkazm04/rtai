@@ -24,6 +24,106 @@
   },
   "doc": "Rivet's sprint and dodge roll as data (rivet-motion, 2026-11-03 eve). Ticks are 60 Hz frames. Sprint (owner call C19: a held key) raises the top speed above the 7.5 m/s tackle line (bodies.json rivet run_mps; the owner's 2026-11-04 baseline, 1.5x the evening's 6.2 sprint over a 6.75 m/s walk) while the stick points within min_forward_dot of the facing; the facing then follows the walk at turn_dps, not the aim. The roll is a press: roll_m covered in roll_ticks on an ease-out curve along the stick (or the facing), invulnerable from iframe_from to iframe_to (inclusive), then recovery_ticks with the stick scaled by recovery_move_scale; no new roll until cooldown_ticks after the recovery. The live tuning panel edits these rows. With vault enabled, a roll press at speed commits to a low obstacle and a clear landing. Depth follows travel, reach and landing clearance are measured from Rivet's edge, and the vault shares roll recovery. Heights are gameplay metres keyed by station kind or city texture name. Unlisted solids cannot be vaulted. Dash covers distance_m in ticks on a quadratic ease-out in the held move direction, or the facing at rest. After the burst, cooldown_ticks must elapse before a new press. Shift triggers only the burst. Holding it through recovery returns to run speed. Space holds sprint independently. The dash relies on displacement to dodge and grants zero invulnerability ticks.",
   "face_aim": true,
+  "grid_stride": {
+    "armed_cycle_cell": {
+      "p55/gatling": 81,
+      "p55/katana": 72,
+      "p55/pistol": 77,
+      "p55/plasma_rifle": 74,
+      "p70/assault_rifle": 78,
+      "p70/chainsaw": 64.3,
+      "p70/electro_baton": 68.7,
+      "p70/gatling": 68,
+      "p70/gloria": 86.7,
+      "p70/hand_cannon": 69.7,
+      "p70/katana": 66,
+      "p70/machine_pistol": 73.7,
+      "p70/pistol": 76,
+      "p70/plasma_rifle": 76,
+      "p70/rocket_launcher": 84
+    },
+    "cycle_cell": {
+      "p55": 60,
+      "p70": 60
+    },
+    "run_cycle_cell": {
+      "p55": 212,
+      "p70": 258
+    },
+    "run_row_k": {
+      "p55/flamethrower/1": 0.68,
+      "p55/flamethrower/3": 0.93,
+      "p55/gatling/1": 0.77,
+      "p55/gatling/3": 0.83,
+      "p55/gatling/4": 0.92,
+      "p55/katana/1": 0.84,
+      "p55/pistol/1": 0.79,
+      "p55/pistol/3": 0.89,
+      "p55/plasma_rifle/1": 0.76,
+      "p55/plasma_rifle/3": 0.89,
+      "p70/assault_rifle/0": 0.87,
+      "p70/assault_rifle/1": 0.95,
+      "p70/assault_rifle/3": 0.82,
+      "p70/assault_rifle/4": 0.85,
+      "p70/assault_rifle/5": 0.96,
+      "p70/chainsaw/0": 0.89,
+      "p70/chainsaw/1": 0.82,
+      "p70/chainsaw/3": 0.89,
+      "p70/chainsaw/4": 0.84,
+      "p70/chainsaw/5": 0.88,
+      "p70/electro_baton/0": 0.96,
+      "p70/electro_baton/1": 0.9,
+      "p70/electro_baton/3": 0.87,
+      "p70/electro_baton/4": 0.98,
+      "p70/electro_baton/5": 0.97,
+      "p70/flamethrower/3": 0.91,
+      "p70/flamethrower/4": 0.92,
+      "p70/gatling/4": 0.94,
+      "p70/gloria/0": 0.98,
+      "p70/gloria/3": 0.97,
+      "p70/gloria/4": 0.92,
+      "p70/hand_cannon/0": 0.91,
+      "p70/hand_cannon/3": 0.91,
+      "p70/hand_cannon/4": 0.84,
+      "p70/hand_cannon/5": 0.96,
+      "p70/machine_pistol/0": 0.86,
+      "p70/machine_pistol/1": 0.95,
+      "p70/machine_pistol/4": 0.91,
+      "p70/rocket_launcher/0": 0.91,
+      "p70/rocket_launcher/3": 0.94,
+      "p70/rocket_launcher/4": 0.93
+    },
+    "walk_profile_travel": {
+      "p70/rivet_walk_eq_assault_rifle.png": [
+        20.5,
+        29.5
+      ],
+      "p70/rivet_walk_eq_chainsaw.png": [
+        18.5,
+        28
+      ],
+      "p70/rivet_walk_eq_electro_baton.png": [
+        15,
+        28.5
+      ],
+      "p70/rivet_walk_eq_gloria.png": [
+        26,
+        32.5
+      ],
+      "p70/rivet_walk_eq_hand_cannon.png": [
+        25,
+        30
+      ],
+      "p70/rivet_walk_eq_machine_pistol.png": [
+        21,
+        27
+      ],
+      "p70/rivet_walk_eq_rocket_launcher.png": [
+        23,
+        36.5
+      ]
+    }
+  },
   "roll": {
     "cooldown_ticks": 8,
     "exit_speed_k": 0.5,

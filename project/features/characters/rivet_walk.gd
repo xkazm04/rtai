@@ -1,79 +1,20 @@
 class_name RivetWalk
 extends RefCounted
-## Locomotion follows ground distance. RivetStride documents gait modes and stride calibration.
+## One full stride (two steps) advances by the distance Rivet crosses on the ground.
+## Walk8 draws contact, down, passing and up for each foot. Run8 adds flight.
+## Native weapon grids carry their own arms. Borrowed bare grids retain the equipped part.
+
 const STRIP: String = "rivet_walk8.png"
 const STRIP4: String = "rivet_walk.png"
 const ARMED: String = "rivet_walk_eq_"
 const RUN: String = "rivet_run8.png"
 const ARMED_RUN: String = "rivet_run8_eq_"
-const RUN_CYCLE_CELL: Dictionary[String, float] = {"p70": 258.0, "p55": 212.0}
 const DIP_TICKS: int = 3  ## Keep the grid through speed dips. Zero restores the one-tick stand.
 const MOVED: StringName = &"rivet_walk_moved"
 const RUN_FROM_MPS: float = 2.5
 const MAX_RUN_CYCLES_S: float = 3.5
-const RUN_ROW_K: Dictionary[String, float] = {
-	"p70/machine_pistol/0": 0.86,
-	"p70/machine_pistol/1": 0.95,
-	"p70/machine_pistol/4": 0.91,
-	"p70/hand_cannon/0": 0.91,
-	"p70/hand_cannon/3": 0.91,
-	"p70/hand_cannon/4": 0.84,
-	"p70/hand_cannon/5": 0.96,
-	"p70/assault_rifle/0": 0.87,
-	"p70/assault_rifle/1": 0.95,
-	"p70/assault_rifle/3": 0.82,
-	"p70/assault_rifle/4": 0.85,
-	"p70/assault_rifle/5": 0.96,
-	"p70/electro_baton/0": 0.96,
-	"p70/electro_baton/1": 0.90,
-	"p70/electro_baton/3": 0.87,
-	"p70/electro_baton/4": 0.98,
-	"p70/electro_baton/5": 0.97,
-	"p70/chainsaw/0": 0.89,
-	"p70/chainsaw/1": 0.82,
-	"p70/chainsaw/3": 0.89,
-	"p70/chainsaw/4": 0.84,
-	"p70/chainsaw/5": 0.88,
-	"p70/rocket_launcher/0": 0.91,
-	"p70/rocket_launcher/3": 0.94,
-	"p70/rocket_launcher/4": 0.93,
-	"p70/gloria/0": 0.98,
-	"p70/gloria/3": 0.97,
-	"p70/gloria/4": 0.92,
-	"p70/gatling/4": 0.94,
-	"p70/flamethrower/3": 0.91,
-	"p70/flamethrower/4": 0.92,
-	"p55/pistol/1": 0.79,
-	"p55/pistol/3": 0.89,
-	"p55/plasma_rifle/1": 0.76,
-	"p55/plasma_rifle/3": 0.89,
-	"p55/katana/1": 0.84,
-	"p55/gatling/1": 0.77,
-	"p55/gatling/3": 0.83,
-	"p55/gatling/4": 0.92,
-	"p55/flamethrower/1": 0.68,
-	"p55/flamethrower/3": 0.93,
-}
 const ROWS: int = 8  ## is_grid recognizes eight-row walk and run grids. Other strips have one row.
 const RES: float = 1.5  ## n11 grid texels per 110-space pixel. One-row strips use RivetRes.
-const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
-const ARMED_CYCLE_CELL: Dictionary[String, float] = {
-	"p70/machine_pistol": 73.7,
-	"p70/hand_cannon": 69.7,
-	"p70/assault_rifle": 78.0,
-	"p70/electro_baton": 68.7,
-	"p70/chainsaw": 64.3,
-	"p70/rocket_launcher": 84.0,
-	"p70/gloria": 86.7,
-	"p70/pistol": 76.0,
-	"p70/plasma_rifle": 76.0,
-	"p70/katana": 66.0,
-	"p70/gatling": 68.0,
-	"p55/pistol": 77.0,
-	"p55/plasma_rifle": 74.0,
-	"p55/katana": 72.0,
-	"p55/gatling": 81.0,
-}
 const MAX_CYCLES_S: float = 2.0
 const META_PH: StringName = &"rivet_walk_phase"
 const META_AT: StringName = &"rivet_walk_at"
@@ -157,6 +98,7 @@ static func frame_of(o: int, phase: float, n: int = frames) -> int:
 	return RivetFrames.BASE_OCT[o] * n + col
 
 
+## Changing sheets preserves phase so a moving weapon swap stays on the same step.
 ## Each pose step carries the ground-distance phase between grids. Walk4 uses the gait phase.
 static func phase_of(rig: CutRig, art: String, scale: float) -> float:
 	var at: Vector2 = rig.get_meta(META_AT, rig.global_position)
@@ -181,15 +123,20 @@ static func _direction(rig: CutRig) -> float:
 	return RivetStride.direction(rig, RivetFrames.oct_of(rig)) if rig.head != null else 1.0
 
 
+## Full cycle in 110-space pixels. Unmeasured armed walks share the bare walk for the pitch.
 static func cycle_cell(card: Sprite2D, art: String, running: bool) -> float:
+	var grid: RivetGridStride = RivetGridStride.shared()
 	if running:
-		return RUN_CYCLE_CELL.get(art, 0.0)
+		return grid.run_cycle_cell.get(art, 0.0)
 	if is_armed(card):
 		var w: String = str(card.get_meta(RivetFrames.ON, "")).get_file().trim_prefix(ARMED)
-		return ARMED_CYCLE_CELL.get(art + "/" + w.get_basename(), CYCLE_CELL.get(art, 0.0))
-	return CYCLE_CELL.get(art, 0.0)
+		return grid.armed_cycle_cell.get(
+			art + "/" + w.get_basename(), grid.cycle_cell.get(art, 0.0)
+		)
+	return grid.cycle_cell.get(art, 0.0)
 
 
+## Ratio of the armed row travel to the bare run. Unmeasured rows keep 1.
 static func row_k(card: Sprite2D, art: String, rig: CutRig) -> float:
 	var file: String = str(card.get_meta(RivetFrames.ON, "")).get_file() if card != null else ""
 	if not file.begins_with(ARMED_RUN):
@@ -197,4 +144,4 @@ static func row_k(card: Sprite2D, art: String, rig: CutRig) -> float:
 	var weapon: String = file.trim_prefix(ARMED_RUN).get_basename()
 	var row: int = RivetStride.row(rig, RivetFrames.oct_of(rig))
 	var key: String = "%s/%s/%d" % [art, weapon, row]
-	return RUN_ROW_K.get(key, 1.0)
+	return RivetGridStride.shared().run_row_k.get(key, 1.0)
