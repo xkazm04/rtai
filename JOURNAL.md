@@ -88,3 +88,4 @@ NEXT (session 3), on top of the 13:37 list:
 - 13:45 Background image jobs at session end: gunner8c (pid 78280), contractor8c (pid 73104), chain8/thug8 (bash pid 71776). ASTRA RUNNING cop8 since 13:30 (pid 81328, hard stop 14:45).
 
 NEXT (session 3) adds: review gunner8c / contractor8c / thug8 against their accepted 4-drawing walks; then add the cut paragraph to briefs 05-07 (as the warden brief step 2: files per facing, 2x4 grid order, one body height).
+- 13:47 gunner8c first four (70 down/dr/right/ur) ACCEPTED: the 2x4 one-facing layout holds the build for robots too. Rest of gunner8c, contractor8c and thug8 to review next session.
