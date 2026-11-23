@@ -81,18 +81,15 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 
 
 static func _rocket(ci: CanvasItem, s: Shot, dir: Vector2, went: float, tick: int) -> void:
+	if ShotDraw.cased_rocket(s):
+		# The parent FX view already draws this round in its tracer pass.
+		if not (ci is FoeOrdnanceView and ci.get_parent() is FxView):
+			EnemyRocketArt.draw(ShotDraw._canvas(ci), s.pos + ShotLift.up_m(), dir, went, tick)
+		return
 	var rim: Color = ShotDraw.rim(s)
 	var side: Vector2 = dir.orthogonal()
 	var head: Vector2 = s.pos + side * sin(float(tick) * 0.9) * 0.1
-	for k: int in 9:
-		var back: float = 0.9 + float(k) * 0.5
-		if back > minf(went, TRAIL_M):
-			break
-		var wob: Vector2 = side * sin(float(tick - k * 3) * 0.9) * 0.1 * float(k)
-		var r: float = (0.16 + 0.08 * float(k)) * Ink.PX_PER_M
-		var c: Color = SMOKE if s.from_rivet else Color(rim, SMOKE.a)
-		c.a *= 1.0 - float(k) / 9.0
-		ci.draw_circle(Ink.px(s.pos - dir * back + wob), r, c)
+	ShotDraw.rocket_smoke(ci, s, dir, went, tick)
 	var tint: Color = Color.WHITE if s.from_rivet else Color.from_hsv(rim.h, 0.9, 1.0)
 	_fire_ink(ci, head - dir * 0.95, 0.2 + 0.04 * float(tick % 3), tick, tint)
 	ci.draw_line(Ink.px(head - dir * 0.9), Ink.px(head - dir * 0.05), rim, 20.0)
