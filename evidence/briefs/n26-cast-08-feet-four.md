@@ -1,7 +1,7 @@
 # Brief n26-cast-08-feet-four: planted feet for the lancer, the door carrier and the pile-driver
 
 Lane `cast`, branch `n26-cast`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-prologue` (your cwd).
-**Hard stop HARDSTOP local** (check `date`). **Commit deadline COMMITBY.** After it: stills, clip and your report only.
+**Hard stop 17:20 local** (check `date`): the lane's final gate needs the machine at 17:25. **Commit deadline 17:10: nothing new after it.** After it: stills, clip and your report only.
 Before every Godot run: `export APPDATA=C:/Users/kazda/kiro/gtai-n26/appdata/cast` and
 `export GODOT_BIN=C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe`.
 One Godot process at a time. Windowed runs: `--position 0,1440`, `--rendering-driver d3d12`. Kill only your own PIDs.
@@ -15,6 +15,13 @@ The feet-hop audit (`docs/art/cast-audit.md` "Planted feet, n26") left these fai
 - pile-driver `war_machine` (1.8 m/s): sole 23-29 px, jump 11.9-17.8 px; its 70 profile shows no identifiable lift.
 Your previous call (cop8) generalised the patrol contact placement to N drawings per stride with a per-facing, per-drawing
 support-sole anchor table measured by the cutter. Read its commits first (`git log --oneline -15`) and REUSE that mechanism.
+
+## Time plan (about 40 minutes: order by value, commit each as it lands)
+Lancer first (worst numbers, art ready), one commit; then the door carrier and the pile-driver, one commit each, only if each
+is measured before 17:10. What is not committed by 17:10 is not shipped: say so. Evidence: the 64 px/m stills for what you
+committed; the clip only if it fits before 17:20 (else a later films call makes it). Mutate `--max=8`, after the commits.
+Two calls before yours (mul-edge `af94f1c6e`, warden) changed the shared anchored placement in `street_cop_walk.gd` /
+`street_patrol_pose.gd` (reversal fix, `test_cast_walk_reversal.gd`): build on it; run that test after your change.
 
 ## Build, in order
 1. Lancer: cut the director's 8-drawing walk `C:\Users\kazda\kiro\gtai-art\foes-n26\lancer8\out\lancer8_armed_walk_{70,55}_{a,b}.png`
