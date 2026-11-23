@@ -86,3 +86,7 @@ NEXT (Director, morning):
 1. Read the last line of `build/gate-reels/gate.out` (reels gate on 5687c21d3). The snapshot gate PASS on 0dba79170 stands for the code.
 2. Merge `n25-yard`: only `yard.dressing` in `prologue_stage.json` is shared; no yard-shape; JOURNAL/REPORT add/add: keep each lane's own.
 3. Clean `%LOCALAPPDATA%\Temp\gtai-gate-5687c21d3*` / `gtai-gate-0dba79170e71` after the reels gate ends.
+## Session 6 (07:13, STABILIZE)
+- 07:14 Reels gate on 5687c21d3 still running (node pid 60720 under nohup pid 5004, since 07:10; snapshot `gtai-gate-5687c21d36d4`, log `build/gate/5687c21d36d4/evidence.log`). No `NEED yard` in path's journal. No Astra lock. No product change. REPORT unchanged: the reels verdict stays unmeasured there.
+
+NEXT (Director, morning): as in session 5's NEXT: read the last line of `build/gate-reels/gate.out`; merge `n25-yard` (JOURNAL/REPORT add/add: keep each lane's own); clean `%LOCALAPPDATA%\Temp\gtai-gate-5687c21d36d4` once the gate has ended.
