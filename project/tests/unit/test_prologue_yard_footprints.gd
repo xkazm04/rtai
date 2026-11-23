@@ -13,8 +13,16 @@ func test_factory_faces_stay_south_and_free_standing_cover_can_turn() -> void:
 
 
 func test_every_torn_line_collision_box_is_visible_in_the_opaque_art() -> void:
+	_assert_coverage("torn_line")
+
+
+func test_every_line_fire_collision_box_is_visible_in_the_opaque_art() -> void:
+	_assert_coverage("line_fire")
+
+
+func _assert_coverage(dressing_id: String) -> void:
 	var data: DataTable = DataTable.open(PrologueGame.TABLE, PrologueGame.SCHEMA)
-	data.raw["yard"]["dressing"] = "torn_line"
+	data.raw["yard"]["dressing"] = dressing_id
 	var yard: PrologueYard = PrologueYard.from_stage(data)
 	for wreck: PrologueYard.Wreck in yard.wrecks:
 		var box: Rect2 = PrologueYardPaint.pixels(wreck.footprint)

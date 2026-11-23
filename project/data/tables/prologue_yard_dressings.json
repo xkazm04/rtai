@@ -1,5 +1,390 @@
 {
   "dressings": {
+    "line_fire": {
+      "layout": {
+        "cover": [
+          {
+            "art": "res://boot/prologue/art/torn_line/conveyor.png",
+            "at": [
+              24,
+              0.6
+            ],
+            "crop": {
+              "origin": [
+                0.011719,
+                0.013804
+              ],
+              "size": [
+                0.976562,
+                0.972393
+              ]
+            },
+            "id": "conveyor_door",
+            "size_m": [
+              5.4,
+              1.2
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/torn_line/conveyor.png",
+            "at": [
+              30.4,
+              4.4
+            ],
+            "crop": {
+              "origin": [
+                0.011719,
+                0.013804
+              ],
+              "size": [
+                0.976562,
+                0.972393
+              ]
+            },
+            "id": "conveyor_feed",
+            "size_m": [
+              5.2,
+              1.2
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/torn_line/conveyor.png",
+            "at": [
+              34,
+              8.4
+            ],
+            "crop": {
+              "origin": [
+                0.011719,
+                0.013804
+              ],
+              "size": [
+                0.976562,
+                0.972393
+              ]
+            },
+            "id": "conveyor_turn",
+            "size_m": [
+              5.2,
+              1.2
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/torn_line/conveyor.png",
+            "at": [
+              29.4,
+              12.6
+            ],
+            "crop": {
+              "origin": [
+                0.011719,
+                0.013804
+              ],
+              "size": [
+                0.976562,
+                0.972393
+              ]
+            },
+            "id": "conveyor_return",
+            "size_m": [
+              5.4,
+              1.2
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/torn_line/conveyor.png",
+            "at": [
+              25.5,
+              17
+            ],
+            "crop": {
+              "origin": [
+                0.011719,
+                0.013804
+              ],
+              "size": [
+                0.976562,
+                0.972393
+              ]
+            },
+            "id": "conveyor_bend",
+            "size_m": [
+              5.2,
+              1.2
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/torn_line/conveyor.png",
+            "at": [
+              32.2,
+              20.6
+            ],
+            "crop": {
+              "origin": [
+                0.011719,
+                0.013804
+              ],
+              "size": [
+                0.976562,
+                0.972393
+              ]
+            },
+            "id": "conveyor_tail",
+            "size_m": [
+              5.4,
+              1.2
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/torn_line/appliance_pallets.png",
+            "at": [
+              12,
+              26
+            ],
+            "crop": {
+              "origin": [
+                0.01703,
+                0.009375
+              ],
+              "size": [
+                0.968665,
+                0.98125
+              ]
+            },
+            "id": "pallet_west",
+            "size_m": [
+              2.4,
+              1.6
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/torn_line/appliance_pallets.png",
+            "at": [
+              23,
+              29.5
+            ],
+            "crop": {
+              "origin": [
+                0.01703,
+                0.009375
+              ],
+              "size": [
+                0.968665,
+                0.98125
+              ]
+            },
+            "id": "fuel_vessel",
+            "size_m": [
+              2.4,
+              1.6
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/torn_line/forklift.png",
+            "at": [
+              43.2,
+              17.4
+            ],
+            "crop": {
+              "origin": [
+                0.011054,
+                0.00651
+              ],
+              "size": [
+                0.95068,
+                0.986979
+              ]
+            },
+            "id": "burnt_pickup",
+            "size_m": [
+              4.3,
+              2.7
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/torn_line/welding_arm.png",
+            "at": [
+              13.2,
+              7.8
+            ],
+            "crop": {
+              "origin": [
+                0.015625,
+                0.007258
+              ],
+              "size": [
+                0.96875,
+                0.975806
+              ]
+            },
+            "id": "press_carcass",
+            "size_m": [
+              2.5,
+              3.7
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/torn_line/fallen_fridges.png",
+            "at": [
+              22,
+              9
+            ],
+            "crop": {
+              "origin": [
+                0.008303,
+                0.014803
+              ],
+              "size": [
+                0.968635,
+                0.963816
+              ]
+            },
+            "id": "fallen_fridges",
+            "size_m": [
+              4,
+              1.8
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/torn_line/appliance_skip.png",
+            "at": [
+              46,
+              26
+            ],
+            "crop": {
+              "origin": [
+                0.00712,
+                0.011719
+              ],
+              "size": [
+                0.985759,
+                0.976562
+              ]
+            },
+            "id": "scrap_skip",
+            "size_m": [
+              4.4,
+              2.4
+            ]
+          }
+        ],
+        "debris": [
+          {
+            "art": "res://boot/prologue/art/torn_line/oil_drag.png",
+            "at": [
+              27.2,
+              2.5
+            ],
+            "id": "drag_door",
+            "rotation_deg": 30.7,
+            "size_m": [
+              7.44,
+              0.48
+            ],
+            "tint": "ffffff8c"
+          },
+          {
+            "art": "res://boot/prologue/art/torn_line/oil_drag.png",
+            "at": [
+              32.2,
+              6.4
+            ],
+            "id": "drag_feed",
+            "rotation_deg": 48,
+            "size_m": [
+              5.38,
+              0.48
+            ],
+            "tint": "ffffff8c"
+          },
+          {
+            "art": "res://boot/prologue/art/torn_line/oil_drag.png",
+            "at": [
+              31.7,
+              10.5
+            ],
+            "id": "drag_turn",
+            "rotation_deg": 137.6,
+            "size_m": [
+              6.23,
+              0.48
+            ],
+            "tint": "ffffff8c"
+          },
+          {
+            "art": "res://boot/prologue/art/torn_line/oil_drag.png",
+            "at": [
+              27.45,
+              14.8
+            ],
+            "id": "drag_return",
+            "rotation_deg": 131.6,
+            "size_m": [
+              5.88,
+              0.48
+            ],
+            "tint": "ffffff8c"
+          },
+          {
+            "art": "res://boot/prologue/art/torn_line/oil_drag.png",
+            "at": [
+              28.85,
+              18.8
+            ],
+            "id": "drag_tail",
+            "rotation_deg": 28.2,
+            "size_m": [
+              7.61,
+              0.48
+            ],
+            "tint": "ffffff8c"
+          },
+          {
+            "art": "res://boot/prologue/art/torn_line/enamel_spill.png",
+            "at": [
+              31.8,
+              5.5
+            ],
+            "id": "enamel_feed",
+            "rotation_deg": 32,
+            "size_m": [
+              1.55,
+              0.85
+            ],
+            "tint": "ffffffbc"
+          },
+          {
+            "art": "res://boot/prologue/art/torn_line/enamel_spill.png",
+            "at": [
+              32.5,
+              10.1
+            ],
+            "id": "enamel_turn",
+            "rotation_deg": -56,
+            "size_m": [
+              1.55,
+              0.85
+            ],
+            "tint": "ffffffbc"
+          },
+          {
+            "art": "res://boot/prologue/art/torn_line/enamel_spill.png",
+            "at": [
+              29.4,
+              19
+            ],
+            "id": "enamel_tail",
+            "rotation_deg": 24,
+            "size_m": [
+              1.55,
+              0.85
+            ],
+            "tint": "ffffffbc"
+          }
+        ]
+      },
+      "paint_from": "torn_line"
+    },
     "plain": {
       "ground": [
         {

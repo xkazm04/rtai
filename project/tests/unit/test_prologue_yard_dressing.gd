@@ -16,9 +16,9 @@ func _fixture() -> DataTable:
 	return skins
 
 
-func test_shipped_default_is_torn_line_and_plain_is_one_launch_flag_away() -> void:
+func test_shipped_default_is_line_fire_and_plain_is_one_launch_flag_away() -> void:
 	var stage: DataTable = DataTable.open(PrologueGame.TABLE, PrologueGame.SCHEMA)
-	assert_eq(PrologueYard.from_stage(stage).dressing.id, "torn_line")
+	assert_eq(PrologueYard.from_stage(stage).dressing.id, "line_fire")
 	LaunchArgs.parse(["--yard-dressing=plain"])
 	var plan: PrologueYard = PrologueYard.from_stage(stage)
 	LaunchArgs.parse()
@@ -62,7 +62,7 @@ func test_unknown_override_logs_and_falls_back_to_plain() -> void:
 	assert_true(Log.recent().has("[ERROR] prologue-yard: unknown dressing 'missing', using plain"))
 
 
-func test_dressing_cannot_move_a_footprint_or_add_cover() -> void:
+func test_skin_override_alone_cannot_move_a_footprint_or_add_cover() -> void:
 	var stage: DataTable = DataTable.open(PrologueGame.TABLE, PrologueGame.SCHEMA)
 	stage.raw["yard"]["dressing"] = "plain"
 	var plain: PrologueYard = PrologueYard.from_stage(stage)
@@ -132,6 +132,7 @@ func test_torn_line_loads_the_actual_art_and_keeps_the_crossing_clear() -> void:
 	var look: PrologueYardDressing = PrologueYardDressing.resolve("plain", "torn_line")
 	var plain: PrologueYardDressing = PrologueYardDressing.resolve("plain")
 	var data: DataTable = DataTable.open(PrologueGame.TABLE, PrologueGame.SCHEMA)
+	data.raw["yard"]["dressing"] = "torn_line"
 	var yard: PrologueYard = PrologueYard.from_stage(data)
 	assert_false(look.use_stage_decals)
 	assert_eq(look.cover.size(), yard.wrecks.size() - 1)

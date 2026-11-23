@@ -1,6 +1,6 @@
 class_name PrologueYardDressing
 extends RefCounted
-## Paint instructions only. Cover overrides are sampled into the stage's existing footprint.
+## Paint can be shared between dressings. Only an explicit layout replaces the stage geometry.
 
 const TABLE: String = "res://data/tables/prologue_yard_dressings.json"
 const SCHEMA: String = "gtai.prologue_yard_dressings/1"
@@ -34,6 +34,8 @@ class CoverArt:
 
 
 var id: String
+var paint_id: String
+var layout: Dictionary
 var ground: Array[Ground] = []
 var cover: Dictionary[String, CoverArt] = {}
 var decals: Array[Piece] = []
@@ -56,23 +58,29 @@ static func resolve(
 	var result: PrologueYardDressing = PrologueYardDressing.new()
 	result.id = wanted
 	var row: Dictionary = table.object(rows, wanted)
-	var plain: Dictionary = table.object(rows, "plain")
-	var ground_row: Dictionary = row if row.has("ground") else plain
-	for layer: Dictionary in table.array(ground_row, "ground"):
-		result.ground.append(_layer(table, layer))
+	result.paint_id = row.get("paint_from", wanted)
+	if row.has("layout"):
+		result.layout = table.object(row, "layout")
 	var overrides: Dictionary = row.get("cover", {})
 	for key: String in overrides:
 		result.cover[key] = _cover_art(table, table.object(overrides, key))
-	result.use_stage_decals = not row.has("decals")
-	result.decals = _pieces(table, row, "decals")
-	result.factory_front = _pieces(table, row, "factory_front")
-	result.ochre_strength = table.num(row, "ochre_strength") if row.has("ochre_strength") else 0.0
-	result.outside = _pieces(table, row, "outside")
-	if row.get("include_plain_outside", false):
-		result.outside.append_array(_pieces(table, plain, "outside"))
+	result._read_paint(table, table.object(rows, result.paint_id), table.object(rows, "plain"))
 	if not table.ok():
 		Log.error("prologue-yard", str(table.errors()))
 	return result
+
+
+func _read_paint(table: DataTable, row: Dictionary, plain: Dictionary) -> void:
+	var ground_row: Dictionary = row if row.has("ground") else plain
+	for layer: Dictionary in table.array(ground_row, "ground"):
+		ground.append(_layer(table, layer))
+	use_stage_decals = not row.has("decals")
+	decals = _pieces(table, row, "decals")
+	factory_front = _pieces(table, row, "factory_front")
+	ochre_strength = table.num(row, "ochre_strength") if row.has("ochre_strength") else 0.0
+	outside = _pieces(table, row, "outside")
+	if row.get("include_plain_outside", false):
+		outside.append_array(_pieces(table, plain, "outside"))
 
 
 static func _layer(table: DataTable, row: Dictionary) -> Ground:

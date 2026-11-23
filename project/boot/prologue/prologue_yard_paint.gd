@@ -75,8 +75,14 @@ func wreck(
 	var crop: Rect2 = skin.crop if skin != null else piece.crop
 	var source: Rect2 = Rect2(crop.position * art.get_size(), crop.size * art.get_size())
 	var box: Rect2 = pixels(piece.footprint)
-	if skin == null:
+	if skin == null and is_zero_approx(piece.rotation):
 		canvas.draw_texture_rect_region(art, box, source, tint)
+		return
+	if skin == null:
+		var center: Vector2 = box.get_center()
+		canvas.draw_set_transform(center, piece.rotation)
+		canvas.draw_texture_rect_region(art, Rect2(-box.size * 0.5, box.size), source, tint)
+		canvas.draw_set_transform(Vector2.ZERO)
 		return
 	canvas.draw_set_transform_matrix(cover_transform(box, source.size, piece.shell))
 	canvas.draw_texture_rect_region(art, Rect2(-source.size * 0.5, source.size), source)
@@ -108,5 +114,5 @@ func _draw_ochre(
 	stamps(canvas, marks)
 	for piece: PrologueYard.Wreck in plan.wrecks:
 		var skin: PrologueYardDressing.CoverArt = plan.dressing.cover.get(piece.id)
-		if skin != null:
+		if skin != null or not plan.dressing.layout.is_empty():
 			wreck(canvas, piece, Color.WHITE, skin)

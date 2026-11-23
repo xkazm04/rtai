@@ -10,6 +10,8 @@ class Wreck:
 	var art: String
 	var crop: Rect2 = Rect2(0, 0, 1, 1)
 	var shell: bool
+	var rotation: float
+	var tint: Color = Color.WHITE
 
 
 var dressing: PrologueYardDressing
@@ -37,15 +39,25 @@ static func from_stage(data: DataTable, dressings: DataTable = null) -> Prologue
 		dressing_id, LaunchArgs.value("--yard-dressing"), dressings
 	)
 	plan._perimeter(data, layout)
+	var pieces: Dictionary = plan.dressing.layout
+	var kind: String = "cover_low"
+	if pieces.is_empty():
+		pieces = layout
+		kind = "cover_high"
 	var station: ArenaStation = ArenaStation.new()
 	for fence: Rect2 in plan.fences:
 		station.props.append(_prop(fence, "wall_high"))
-	for row: Dictionary in data.array(layout, "cover"):
+	for row: Dictionary in data.array(pieces, "cover"):
 		var wreck: Wreck = _piece(data, row)
 		plan.wrecks.append(wreck)
-		station.props.append(_prop(wreck.footprint, "cover_high"))
-	for row: Dictionary in data.array(layout, "debris"):
-		plan.debris.append(_piece(data, row))
+		station.props.append(_prop(wreck.footprint, kind))
+	for row: Dictionary in data.array(pieces, "debris"):
+		var mark: Wreck = _piece(data, row)
+		mark.rotation = (
+			deg_to_rad(data.num(row, "rotation_deg")) if row.has("rotation_deg") else 0.0
+		)
+		mark.tint = Color(str(row.get("tint", "ffffff")))
+		plan.debris.append(mark)
 	for row: Dictionary in data.array(layout, "scorch_marks"):
 		plan.scorch_marks.append(_rect(data, row))
 	plan.stations.stations.append(station)
