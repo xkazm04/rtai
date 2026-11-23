@@ -246,9 +246,7 @@
       "joy_buttons": [
         7
       ],
-      "keys": [
-        "Shift"
-      ],
+      "keys": [],
       "mouse": []
     },
     {
@@ -391,6 +389,17 @@
         2
       ],
       "wire_bit": 30
+    },
+    {
+      "bit": 18,
+      "id": "dash",
+      "joy_axes": [],
+      "joy_buttons": [],
+      "keys": [
+        "Shift"
+      ],
+      "mouse": [],
+      "wire_bit": 31
     }
   ],
   "schema": "gtai.input-actions/1"

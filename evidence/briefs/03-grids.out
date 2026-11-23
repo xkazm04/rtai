@@ -1,0 +1,15 @@
+Committed the comment-only change in `player_motion.gd` as `34e089cf6`. **Gloria’s p70 grid is staged and uncommitted.** The default quick gate was still red at the 20:50 commit deadline.
+
+| Weapon and pitch | Result |
+|---|---|
+| Gloria p70 | Drew, cut, tone-matched and reviewed all 16 walk/run rows in-game at 32 and 64 px/m. All eight walks graded A. Seven runs graded A. The front-left run graded B because its contacts favour the same leg. Walk cycle measured 86.7 cell px. Run multipliers were 0.98 right, 0.97 front-left and 0.92 left. [Per-row measurements and fixes](C:/Users/kazda/kiro/gtai-wt/n23-controls/evidence/n24-motion/grid_gloria.md) |
+| Gloria p55 | Fallback kept. All 16 candidate rows were packed and reviewed in-game at both zooms. The corrected front-left walk alternates its lead, but mean profile drift was still 9.1 cm walking and 18 cm running. [Candidate review and measurements](C:/Users/kazda/kiro/gtai-art/library/rounds/20261122-2025-n24motion/candidate_2/tilt_capture/review.md) |
+| Remaining weapons | Fallback kept for rocket launcher, assault rifle, chainsaw, electro baton, hand cannon, machine pistol and the remaining arsenal. |
+
+The ten staged files cover the p70 PNGs and imports, `rivet_walk.gd`, `rivet_stride.gd`, the motion table, the every-weapon test, provenance and evidence. The arena comparison shows the same wheel selection and movement at 6.75 and 9.3 m/s, in 1080p60 for 16.5 seconds. [Film](C:/Users/kazda/kiro/gtai-masters/n24/motion/grid_gloria_32.mp4) · [32 px/m stills](C:/Users/kazda/kiro/gtai-masters/n24/motion/grid_gloria_32.png) · [64 px/m stills](C:/Users/kazda/kiro/gtai-masters/n24/motion/grid_gloria_64.png)
+
+`run_unit.mjs --changed` passed **3,793 tests**, with zero failures and two skips. The every-weapon rerun passed **8/8**. Quick’s formatting and lint checks passed. Its standalone Godot check produced the **same 475 diagnostics, in the same order**, on the edited files and their unmodified HEAD versions. Two merge-tool tests failed during staged lint with sibling checking disabled and passed on an isolated rerun with the normal environment.
+
+ImageGen produced **43 images**. P70 took 29m35s for 26 images, plus one attempt that timed out. P55 used 17 images across roughly 17 minutes. For the next weapon, I’d use the equipped card’s entire upper body in the first prompt and isolate the leg reference for the opposite contact. That would target the two recurring redraws directly.
+
+[astra: 4298s, exit 0]

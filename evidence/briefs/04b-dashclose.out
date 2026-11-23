@@ -1,0 +1,17 @@
+Dash mutation score improved from **15/20 to 20/20** on the same sample. Each former survivor triggered one failing test. The rerun had zero timeouts and zero invalid mutants. [Mutation report](C:/Users/kazda/kiro/gtai-wt/n23-controls/build/mutate/features-player-player_motion_dash.json)
+
+Commit `789d67b1d` — **Test dash configuration and collision boundaries**. Changed [test_player_motion_dash.gd](C:/Users/kazda/kiro/gtai-wt/n23-controls/project/tests/unit/test_player_motion_dash.gd) and [test_player_motion_dash_stage.gd](C:/Users/kazda/kiro/gtai-wt/n23-controls/project/tests/unit/test_player_motion_dash_stage.gd).
+
+| Former survivor | Test that killed it |
+|---|---|
+| L20, inverted `hold_sprints` | Loads both flag values and checks sprinting while dash is held. |
+| L22, minimum ticks `1 → 0` | Configures zero ticks and checks the one-tick minimum. |
+| L71, minimum collision steps `1 → 0` | Checks that zero displacement still clears an existing wall overlap. |
+| L75, velocity `/ → *` | Checks that fast and slow movement produce different outcomes under a speed-sensitive body rule. |
+| L96, contact boundary `<= → <` | Checks that Rivet stays on the approach side at exact sideways contact. |
+
+`node tools/tests/run_unit.mjs --changed` finished with **3,799 passed, 0 failed, 2 skipped**. All 18 pre-commit lint checks passed.
+
+The mutation rerun finished at 23:47, with about nine minutes left before the commit freeze. The brief required 25 minutes to start the film scenes, so I skipped them. There are no film `dev_verdict` lines or pending edits from this task.
+
+[astra: 995s, exit 0]

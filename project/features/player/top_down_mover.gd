@@ -6,6 +6,7 @@ extends RefCounted
 
 var velocity: Vector2 = Vector2.ZERO
 var facing: Vector2 = Vector2.DOWN
+var _sprint_actions: PlayerActions = null
 
 
 ## The displacement for one tick; `aim` Vector2.ZERO faces the walk direction.
@@ -21,6 +22,19 @@ func step(stick: Vector2, aim: Vector2, top_mps: float, actions: PlayerActions) 
 	var rate: float = actions.accel_mps2 if push != Vector2.ZERO else actions.brake_mps2
 	velocity = velocity.move_toward(push * speed, rate * dt)
 	return velocity * dt
+
+
+## The sprint's feel: the table's accel and turn rate over the walk's brake and strafe.
+func sprint(
+	stick: Vector2, top_mps: float, actions: PlayerActions, accel_mps2: float, turn_dps: float
+) -> Vector2:
+	if _sprint_actions == null:
+		_sprint_actions = PlayerActions.new()
+	_sprint_actions.accel_mps2 = accel_mps2
+	_sprint_actions.brake_mps2 = actions.brake_mps2
+	_sprint_actions.turn_dps = turn_dps
+	_sprint_actions.strafe_scale = actions.strafe_scale
+	return step(stick, Vector2.ZERO, top_mps, _sprint_actions)
 
 
 func stop() -> void:

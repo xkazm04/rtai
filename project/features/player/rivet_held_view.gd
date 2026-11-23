@@ -96,7 +96,7 @@ func _process(_delta: float) -> void:
 	var local: Vector2 = hand.texture.get_size() * Vector2(GRIP_U, 0.5) + hand.offset
 	_sprite.global_position = hand.global_transform * local
 	_sprite.global_rotation = _held_angle(rig, hand)
-	_place_long(rig)
+	RivetFramesGrip.place(rig, _sprite, _place_long)
 	_pose_melee(rig)
 	_feed_smear(rig)
 	_sprite.visible = rig.grip != RigGrip.Kind.THROWN or rig.reload_k < 0.0 or rig.reload_k >= 1.0

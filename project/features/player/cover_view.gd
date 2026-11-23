@@ -13,6 +13,7 @@ var _followers: Array[Node2D] = []
 
 
 static func feed(rigs: CharacterRigs, motion: PlayerMotion, tick: int) -> void:
+	PlayerMotionDashView.feed(rigs, motion, tick)
 	var host: CoverView = rigs.get_meta(ACTIVE, null) if rigs.has_meta(ACTIVE) else null
 	var cover: PlayerCover = motion.cover if motion != null else null
 	MotionRigPose.publish(rigs, MoveCells.COVER, cover_cell(cover))

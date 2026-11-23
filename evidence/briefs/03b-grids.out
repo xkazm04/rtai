@@ -1,0 +1,17 @@
+**Rocket launcher p70 shipped in `4a8cfd7d4`. Chainsaw p70 is staged. NEED permission to update one assertion in [test_rivet_walk.gd](C:/Users/kazda/kiro/gtai-wt/n23-controls/project/tests/unit/test_rivet_walk.gd:82).** It still expects the p70 chainsaw grid to be missing. Changing `p70` to `p55` preserves the missing-grid test. The filename falls outside the brief’s allowlist.
+
+| Weapon | Result | Walk / run row grades | Walk cycle | ImageGen |
+|---|---|---|---:|---:|
+| Gloria | Previously shipped by director, `d50add33b` | 8A / 7A, 1B | 86.7 px | 26 images in 29m 35s |
+| Rocket launcher | Shipped. The tube stays across the upper body in all eight facings. | 7A, 1B / 6A, 2B | 84.0 px | 23 images in 11m 06s |
+| Chainsaw | Staged, uncommitted. The bar stays forward. Five rows needed scale corrections. | 8A / 6A, 2B | 64.3 px | 16 images in 3m 01s |
+
+Both new grids include walk and run PNGs, Godot imports, stride measurements, regression coverage, provenance and evidence. I inspected every row in game at 32 and 64 px/m. Per-row travel, run factors, grades and fixes are in the [rocket report](C:/Users/kazda/kiro/gtai-wt/n23-controls/evidence/n24-motion/grid_rocket_launcher.md) and [chainsaw report](C:/Users/kazda/kiro/gtai-wt/n23-controls/evidence/n24-motion/grid_chainsaw.md). For the next heavy weapon, I’d compare packed row heights with the donor before import to catch the backpack’s effect on scaling.
+
+`run_unit --changed` passed for rocket with **3,794 passed, 0 failed, 2 skipped**. Chainsaw had **3,794 passed, 1 failed, 2 skipped**. The every-weapon and chainsaw stance tests passed. Quick lint and formatting passed for both weapons. The four requested decision lines landed in `docs/decisions.md` at `c32c08b31`.
+
+The [game-speed comparison film](C:/Users/kazda/kiro/gtai-masters/n24/motion/legs_game_32.mp4) shows Gloria then rocket, fallback beside drawn grid. `ffprobe` verified **1920×1080, 60/1 fps, 33.000 s, 1,980 frames**. `frames.json` includes the film. Same-tick stills are available for rocket at [32](C:/Users/kazda/kiro/gtai-masters/n24/motion/grid_rocket_launcher_32.png) and [64 px/m](C:/Users/kazda/kiro/gtai-masters/n24/motion/grid_rocket_launcher_64.png), and chainsaw at [32](C:/Users/kazda/kiro/gtai-masters/n24/motion/grid_chainsaw_32.png) and [64 px/m](C:/Users/kazda/kiro/gtai-masters/n24/motion/grid_chainsaw_64.png).
+
+P55 keeps its fallback for all three weapons. I stopped at the chainsaw test blocker as directed. Electro baton, assault rifle, hand cannon and machine pistol retain their fallbacks.
+
+[astra: 3230s, exit 0]

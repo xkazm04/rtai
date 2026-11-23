@@ -20,6 +20,7 @@ static func read(t: DataTable) -> PlayerMotion:
 	m.cooldown_ticks = t.integer(r, "cooldown_ticks")
 	m.exit_speed_k = t.num(r, "exit_speed_k")
 	m.face_aim = t.raw.get("face_aim", true) == true
+	m.dash.configure(t)
 	m.cover.configure(t)
 	m.errors = m.vault.configure(t)
 	if m.iframe_to >= m.roll_ticks:
