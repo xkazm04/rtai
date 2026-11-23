@@ -128,7 +128,8 @@
         "2026-11-22: --clip for n23 prologue (dev_loc 28848 -> 28948)",
         "2026-11-22: dev/gauntlet fire_gaps probe for n24 pressure (dev_loc 30712 -> 31109)",
         "2026-11-22: deflect_share probe for n24 pressure (dev_loc 31105 -> 31273)",
-        "2026-11-23: Scope the full-return demonstration to the plasma sword chapter and restore the prior arena tuning at the cut. (dev_loc 31273 -> 31290)"
+        "2026-11-23: Scope the full-return demonstration to the plasma sword chapter and restore the prior arena tuning at the cut. (dev_loc 31273 -> 31290)",
+        "2026-11-23: The pressure film driver stages the requested live guard, blade, wave and launcher comparisons and checks native pixels per metre for every capture. (dev_loc 31290 -> 31672)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -140,7 +141,7 @@
         "project/dev/controls": 712,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
-        "project/dev/gauntlet": 1087,
+        "project/dev/gauntlet": 1469,
         "project/dev/ghost-forms": 616,
         "project/dev/ghost-powers": 1396,
         "project/dev/guard": 397,
@@ -168,7 +169,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 31290
+      "total": 31672
     },
     "direct_cmdline_reads": {
       "accepted": [
