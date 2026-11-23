@@ -13,14 +13,18 @@ Final HEAD: TODO. Gate: TODO (`node tools/gate/run.mjs --rev=HEAD` line + `gate.
 | 1 Trooper rocket drawn as a cased rocket (steel casing, ice-blue rim and under-glow, three ice-blue exhaust frames), clearly larger than Rivet's and never amber | commits `b370c3ba4` (art + cut tool `tools/art/enemy_rocket_cut.py --check`), `dab47bef7` (wiring), `d42706a60` (1.4 m casing, ~1 m jets), `41eccb33e` (rim glow, draw-ownership test); stills `rocket-vs-rivet-32.png`, `rocket-vs-rivet-64.png`, `rocket-enemy-32-pair.png`, `rocket-enemy-64-pair.png` in `gtai-masters/n26/pressure/` | rim and jet sampled `#92c9f5`, casing `#585f61`, Rivet's jet `#e5a12e` (unchanged); war_cannon, replay_60s and quest 1 byte-identical |
 | 2 Deflect spread 12 -> 20 degrees | `7d23e60c5` (data + two test bounds re-derived from the configured half-angle + decision line), `ae6a23d1c` (tool + `evidence/n26-pressure/deflect/share.md`) | share of returned pistol rounds that hit the shooter, guard / plasma bat: 4 m 40.7 / 52.2 %, **6 m 24.3 / 30.6 %**, 8 m 16.4 / 19.2 %, 12 m 9.7 / 10.9 % (1000 aimed rounds per cell, seed 90210). Owner's "about a quarter at 6 m" holds for the guard |
 | 3 Rocket trooper against a moving player: rest 1.4 -> 1.1 s, lead model `orbit` (data `lead_model`, default `linear`) | `82dbc7258` (lead model + arena and gauntlet probes + tests), `6288453ee` (shipped values), `evidence/n26-pressure/trooper/arena.md`, `evidence/n26-pressure/trooper/gauntlet.md` | arena 10 m, 3 seeds x 30 s: steady circle hit 48/48, circle + dash across the locked line 0/48, standing 48/48; average gauntlet 17 hits / 83 troopers (0.205 per trooper; 1.4 s orbit 0.141, old linear 0.222); rocket-only deaths before wave 6: 0 of 21 runs; mutate `rocket_lead` 12/14 = 85.7 % |
-| 4 Stall on seed 9 | TODO | TODO |
-| 5 Three medians on the final state + tuner cycle for the record | TODO | TODO |
+| 4 Stall on seed 9: cause found and fixed in the test bot; a headless bot run now ends on a 60 s damage-free freeze instead of sitting to the tick cap | `bf32bfd1a`, `evidence/n26-pressure/stall/cause.md`, `evidence/n26-pressure/stall/tick-90000.txt`, `evidence/n26-pressure/stall/blink-input.txt`; tests `project/tests/unit/test_gauntlet_kerf_wall.gd` (red on the old bot, green now) and the freeze clock in `project/tests/unit/test_gauntlet_enemy_damage.gd` | average-9 at `548989d7e` reproduced byte for byte: a Kerf slice at tick 77115 picked a different foe than the bot predicted (the bot used its float aim, the pilot the 256-step wheel heading) and landed Rivet beyond the street's south wall; 40 hostiles and Rivet lost sight of each other -> cap at 216000. Paired replay with the fix: wave 40 cleared, exit 0 at tick 82694. Item 5's 60 runs: 0 caps, 0 freezes |
+| 5 Three medians on the final state + one tuner cycle for the record (nothing applied) | `evidence/n26-pressure/medians/medians.md`, `evidence/n26-pressure/medians/floors.md`, `evidence/n26-pressure/medians/salt0/report.md`, `evidence/n26-pressure/medians/plan.json` | median death wave, 10 seeds each, salt 0 / salt 1 (paired floor): novice 5 / 5 (0.3), average 7.5 / 5 (3.1), expert 8.5 / 9 (1.5); n24 final (5 seeds): 5 / 8 / 23. Tuner `propose`: one change, `rivet_repair` x1.25 (repair 10 -> 12.5 /s, delay 3 -> 2.4 s), NOT applied |
 
 ## What does not
 
 - Item 3 target "one hit per two troopers per wave" (0.5) is not reached on the average bot: 0.205 at the shipped
   1.1 s orbit. The average test bot dashes and breaks line of sight often; the arena shows the circler is hit every
   launch. A faster rest (0.9 / 0.75) was not run: the sweep stopped at the first orbit qualifier. TODO confirm.
+- Expert median death wave fell from 23 (n24 final, 5 seeds, one censored) to 8.5 / 9: in salt 0 the rocket killed 3 of 10
+  experts (0 in salt 1). The faster, orbit-leading trooper is part of it; no retune by the owner's word.
+- The player's own Kerf slice can still carry Rivet through a thin wall (souls code, melee lane's): `NEED melee` with a
+  patch as text in `evidence/n26-pressure/stall/cause.md`; the player test is pending until then.
 - TODO
 
 ## What blocked or slowed you (minutes each)
