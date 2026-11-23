@@ -1,9 +1,10 @@
-"""Recut the three accepted factory-n26 masters. Pass their out directory as the argument."""
+"""Recut the accepted factory-n26 masters. Pass their out directory as the argument."""
 
 import argparse
 from pathlib import Path
 
-from PIL import Image
+import numpy as np
+from PIL import Image, ImageChops, ImageDraw
 
 from prologue_yard_cut import ART, cut_job
 
@@ -18,6 +19,16 @@ def cover(name, box, metres, **options):
 
 # Source boxes are in master pixels; metre sizes are the final ground-plane projection.
 SHEETS = {
+    "fence-gate": [
+        # Split both rails through matching steel posts. Offset the finished panel
+        # so the texture sampler crosses the repeat inside a continuous source bay.
+        piece("fence_panel", (175, 119, 1276, 207), (9.6, 1.45)),
+        piece("side_fence", (1635, 105, 50, 640), (0.32, 6.0)),
+        piece("sliding_gate", (113, 481, 596, 326), (5.1, 2.38)),
+        piece("gate_post_left", (777, 480, 128, 325), (0.76, 2.18)),
+        piece("gate_post_right", (950, 480, 140, 325), (0.76, 2.18)),
+        piece("corner_post", (1154, 430, 355, 376), (2.25, 2.44)),
+    ],
     "conveyor-run": [
         cover("straight_west", (0, 0, 885, 315), (5.4, 1.2)),
         cover("straight_east", (885, 0, 889, 315), (5.2, 1.2)),
@@ -45,15 +56,52 @@ SHEETS = {
 }
 
 
+def open_wire(master):
+    """Remove the printed paper inside the diamonds, including its grey halftone.
+
+    The stock matte key follows the exterior silhouette. These apertures stop at
+    the posts and rails; the dented second bay follows the dip of its top rail.
+    """
+    mask = Image.new("1", master.size)
+    draw = ImageDraw.Draw(mask)
+    for left, right in [(147, 162), (185, 478), (818, 1122), (1147, 1439), (1464, 1481)]:
+        draw.rectangle((left, 201, right, 289), fill=1)
+    draw.polygon([(503, 201), (538, 202), (581, 216), (644, 217), (705, 202),
+                  (794, 201), (794, 289), (503, 289)], fill=1)
+    draw.rectangle((173, 555, 624, 730), fill=1)
+    draw.rectangle((1201, 687, 1422, 765), fill=1)
+    rgb = np.asarray(master.convert("RGB"), dtype=np.float32)
+    # Coverage against the warm grey paper in the fenced cells. Keep dense metal
+    # in its original colours and unmix the fringe before the cut is resampled.
+    coverage = np.clip((205 - rgb.min(axis=2)) / 110, 0, 1)
+    coverage = np.where(np.asarray(mask), coverage, 1)
+    ink = 205 + (rgb - 205) / np.maximum(coverage[..., None], 1 / 255)
+    return Image.fromarray(np.dstack((ink, coverage * 255)).round().clip(0, 255).astype("uint8"))
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("source", type=Path)
+    parser.add_argument("--sheet", choices=SHEETS)
     args = parser.parse_args()
     folder = ART / "line_fire"
     folder.mkdir(exist_ok=True)
     for name, rows in SHEETS.items():
+        if args.sheet and args.sheet != name:
+            continue
         with Image.open(args.source / f"{name}.png") as master:
+            if name == "fence-gate":
+                master = open_wire(master)
             cuts = cut_job(master, {"px_per_m": 96, "shadow_ink": "#211e1c", "pieces": rows})
+        if name == "fence-gate":
+            panel = cuts["fence_panel"]
+            cuts["fence_panel"] = ImageChops.offset(panel, panel.width // 8, 0)
+            left = cuts.pop("gate_post_left")
+            right = cuts.pop("gate_post_right")
+            posts = Image.new("RGBA", (left.width + right.width, left.height))
+            posts.paste(left)
+            posts.paste(right, (left.width, 0))
+            cuts["gate_posts"] = posts
         for stem, cut in cuts.items():
             cut.save(folder / f"{stem}.png")
 

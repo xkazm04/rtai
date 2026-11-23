@@ -66,6 +66,25 @@ func test_short_return_uses_one_bay_and_trims_it_to_the_available_length() -> vo
 	assert_eq(mesh.panels.size(), 1)
 
 
+func test_square_end_bay_faces_the_street() -> void:
+	var mesh: MeshPrint = MeshPrint.new()
+	var bounds: Rect2 = await _bounds(PrologueYardFence.panel.bind(Rect2(5, 4, 1, 1), mesh))
+	_assert_box(bounds, Rect2(5, 4.02, 1, 0.98))
+
+
+func test_post_has_a_left_highlight_and_a_double_width_cap() -> void:
+	var strokes: Dictionary[Color, Rect2] = {}
+	var paint: Callable = func(rect: Rect2, ink: Color) -> void: strokes[ink] = rect
+	var box: Rect2 = plan.fences[-1]
+	PrologueYardFence._gate_post(paint, box)
+	var steel: Rect2 = box.grow(-0.07)
+	assert_eq(strokes.size(), 4)
+	var highlight: Rect2 = strokes.get(Color("b6aea2"), Rect2())
+	var cap: Rect2 = strokes.get(Color("96918a"), Rect2())
+	_assert_box(highlight, Rect2(steel.position, Vector2(0.07, steel.size.y)))
+	_assert_box(cap, Rect2(steel.position, Vector2(steel.size.x, 0.14)))
+
+
 func test_west_fence_turns_to_span_the_full_side_of_the_yard() -> void:
 	var west: Rect2 = Rect2(-0.65, 0, 0.65, 34)
 	var bounds: Rect2 = await _bounds(PrologueYardFence.panel.bind(west))
