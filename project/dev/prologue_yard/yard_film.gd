@@ -52,7 +52,7 @@ func _start_game(args: ArenaArgs) -> void:
 		if child is PrologueView:
 			_view = child as PrologueView
 	YardCamera.hide_hud(_view)
-	_at = YardCamera.center(_game.stage.plan as PrologueYard, args.text("--place"), true)
+	_at = YardCamera.center(_game.stage.plan as PrologueYard, args.text("--place"), _first)
 	_view.px_per_m = float(_ppm)
 	# Run the ordinary view first (including the ringing phone), then lock the print passes.
 	_view.set_process(false)
@@ -90,11 +90,8 @@ func _read_args(args: ArenaArgs) -> String:
 func _process(_dt: float) -> void:
 	if _count > 0:
 		_game.world.loop().step()
-	if _past_end():
-		_fail("requested range extends past the end card")
-		return
-	if _game.stage.tick != _first + _count:
-		_fail("pilot did not advance to the requested tick")
+	if _past_end() or _game.stage.tick != _first + _count:
+		_fail("requested tick %d is unavailable at %d" % [_first + _count, _game.stage.tick])
 		return
 	_view._process(SimClock.TICK_DT)
 	_view.print_stage.kick_px = Vector2.ZERO

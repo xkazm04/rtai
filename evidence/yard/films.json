@@ -17,15 +17,23 @@
       "fps": "60/1",
       "frames": 1600,
       "duration_s": 26.666667,
-      "sha256": "3a530c4ec0671406a19412cb125a586cd7010f5f1ff93aa5cd63c01a2a3fa40c",
-      "start_tick": 2200,
-      "last_tick": 3799
+      "sha256": "a25c75b0c2d03737fdc880218d45de31f90c75eeda738c9495a6562f92622905",
+      "tick_ranges": [
+        [
+          1757,
+          2556
+        ],
+        [
+          3900,
+          4699
+        ]
+      ]
     },
     {
       "file": "pair_mid_64ppm_t2290.png",
       "width": 3840,
       "height": 1080,
-      "sha256": "c77836be3cb34c697208b24ecc1038fba5a58da44af0ff217bc92b5fb06397ff",
+      "sha256": "c0918ff4296f9c2d853129dee15d698faf11fc8a235eab3729964813e57a2e31",
       "tick": 2290
     },
     {
@@ -68,5 +76,58 @@
       "sha256": "f457c8ed0ae26b4605402722a5ad49e7e5eec922b8173207400fef35da652a22",
       "tick": 8460
     }
-  ]
+  ],
+  "mid_framing": {
+    "segments": [
+      {
+        "start": 1757,
+        "end": 2556,
+        "center_m": [
+          35.21,
+          19.93
+        ],
+        "sampled_ticks": 800,
+        "x_range_px": [
+          56.89,
+          903.04
+        ],
+        "y_range_px": [
+          501.71,
+          578.45
+        ],
+        "min_margin_px": 56.89,
+        "damage_events": 6
+      },
+      {
+        "start": 3900,
+        "end": 4699,
+        "center_m": [
+          45.72,
+          17.55
+        ],
+        "sampled_ticks": 800,
+        "x_range_px": [
+          57.21,
+          902.79
+        ],
+        "y_range_px": [
+          88.31,
+          991.98
+        ],
+        "min_margin_px": 57.21,
+        "damage_events": 16
+      }
+    ],
+    "start": 1757,
+    "still_tick": 2290,
+    "dip_frames": 6,
+    "inside_combat_ticks": 1122,
+    "wave_one_combat_ticks": [
+      2193,
+      4657
+    ],
+    "narrowest_combat_only_800_tick_span_px": 980.73,
+    "narrowest_combat_only_1600_tick_span_px": 1839.34,
+    "source": "Seed-7 unskipped pilot, actual Rivet ground position at each recorded tick projected into each 960x1080 panel."
+  }
 }

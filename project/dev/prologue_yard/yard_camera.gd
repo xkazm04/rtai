@@ -2,13 +2,16 @@ class_name YardCamera
 extends RefCounted
 
 
-static func center(plan: PrologueYard, location: String, cropped: bool = false) -> Vector2:
+static func center(plan: PrologueYard, location: String, film_tick: int = -1) -> Vector2:
 	if location == "mid":
+		if film_tick >= 0:
+			return Vector2(35.21, 19.93) if film_tick < 3900 else Vector2(45.72, 17.55)
 		return plan.rivet_start
 	if location == "gate":
 		return plan.gate
 	var east: float = plan.street.end.x
-	return Vector2((plan.gate.x + east) * 0.5 if cropped else east, plan.street.get_center().y)
+	var x: float = (plan.gate.x + east) * 0.5 if film_tick >= 0 else east
+	return Vector2(x, plan.street.get_center().y)
 
 
 static func hide_hud(view: PrologueView) -> void:
