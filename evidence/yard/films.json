@@ -1,0 +1,72 @@
+{
+  "schema": "gtai.yard-films/1",
+  "masters": "C:/Users/kazda/kiro/gtai-masters/n25/yard",
+  "seed": 7,
+  "view": "tilt70",
+  "capture": "D3D12, 1920x1080, movie writer quality 0.32, fixed 60 fps; H.264 CRF 18",
+  "pair_scene": "res://dev/prologue_yard/yard_film.tscn",
+  "pair_layout": "plain left, torn_line right; 32 px/m crops x=480..1439; 64 px/m uses full frames",
+  "harbor_focus": "x=48 m, halfway between the gate and the east street edge, to keep the phone in the crop",
+  "pairs": [
+    {
+      "file": "pair_mid_32ppm.mp4",
+      "width": 1920,
+      "height": 1080,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "fps": "60/1",
+      "frames": 1600,
+      "duration_s": 26.666667,
+      "sha256": "3a530c4ec0671406a19412cb125a586cd7010f5f1ff93aa5cd63c01a2a3fa40c",
+      "start_tick": 2200,
+      "last_tick": 3799
+    },
+    {
+      "file": "pair_mid_64ppm_t2290.png",
+      "width": 3840,
+      "height": 1080,
+      "sha256": "c77836be3cb34c697208b24ecc1038fba5a58da44af0ff217bc92b5fb06397ff",
+      "tick": 2290
+    },
+    {
+      "file": "pair_gate_32ppm.mp4",
+      "width": 1920,
+      "height": 1080,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "fps": "60/1",
+      "frames": 1600,
+      "duration_s": 26.666667,
+      "sha256": "7bfd1d474e73a1f2658027ea23527256f5f0d8e177cdf2f83c1c4b3791377a15",
+      "start_tick": 5600,
+      "last_tick": 7199
+    },
+    {
+      "file": "pair_gate_64ppm_t6400.png",
+      "width": 3840,
+      "height": 1080,
+      "sha256": "d35e2ebe85c01fdfb1791c6960ddee621760a55ea7ff833c1589e0ec7d020c35",
+      "tick": 6400
+    },
+    {
+      "file": "pair_harbor_32ppm.mp4",
+      "width": 1920,
+      "height": 1080,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "fps": "60/1",
+      "frames": 1600,
+      "duration_s": 26.666667,
+      "sha256": "e47d03a7033d92e6b2a69de0e7e10141a624a4aa8811c212f8ccddbe124d8dca",
+      "start_tick": 8100,
+      "last_tick": 9699
+    },
+    {
+      "file": "pair_harbor_64ppm_t8460.png",
+      "width": 3840,
+      "height": 1080,
+      "sha256": "f457c8ed0ae26b4605402722a5ad49e7e5eec922b8173207400fef35da652a22",
+      "tick": 8460
+    }
+  ]
+}

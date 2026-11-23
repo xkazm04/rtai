@@ -55,20 +55,16 @@ func _capture() -> void:
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
 	_view.set_process(false)
-	for layer: CanvasLayer in _view.find_children("*", "CanvasLayer", false, false):
-		if layer.layer == RenderLayers.canvas(&"hud"):
-			layer.hide()
+	YardCamera.hide_hud(_view)
 	_outlines.transform = _view.stage_view.global_transform
 	if _outlines.visible:
 		if await _save(plan.rivet_start, 64, "footprints_mid_64ppm.png"):
 			get_tree().quit()
 		return
-	var places: Dictionary[String, Vector2] = {"gate": plan.gate, "mid": plan.rivet_start}
-	places["harbor"] = Vector2(plan.street.end.x, plan.street.get_center().y)
-	for place: String in places:
+	for place: String in ["gate", "mid", "harbor"]:
 		for ppm: int in [32, 64]:
 			var file: String = "%s_%dppm_%s_t%d.png" % [place, ppm, plan.dressing.id, _tick]
-			if not await _save(places[place], ppm, file):
+			if not await _save(YardCamera.center(plan, place), ppm, file):
 				return
 	get_tree().quit()
 
@@ -81,10 +77,7 @@ func _draw_footprints() -> void:
 
 
 func _save(at: Vector2, ppm: int, file: String) -> bool:
-	_view.px_per_m = float(ppm)
-	_view.print_stage.zoom = float(ppm) / SimConst.PX_PER_M
-	_view.print_stage.place(at)
-	_view.print_stage.camera.force_update_scroll()
+	YardCamera.place(_view, at, ppm)
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
 	var image: Image = get_viewport().get_texture().get_image()
