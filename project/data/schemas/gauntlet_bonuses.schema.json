@@ -33,7 +33,8 @@
               "weapon",
               "stat",
               "ghost",
-              "effect"
+              "effect",
+              "mastery"
             ]
           },
           "min_wave": {

@@ -119,3 +119,18 @@ msgstr "Overkill Carry"
 
 msgid "GAUNTLET__EFFECT__OVERKILL_CARRY_2"
 msgstr "Overkill Carry II"
+
+msgid "GAUNTLET__KIND__MASTERY"
+msgstr "Ghost mastery"
+
+msgid "GAUNTLET__MASTERY__DENT"
+msgstr "Master Dent"
+
+msgid "GAUNTLET__MASTERY__KERF"
+msgstr "Master Kerf"
+
+msgid "GAUNTLET__MASTERY__OHM"
+msgstr "Master Ohm"
+
+msgid "GAUNTLET__MASTERY__TONNAGE"
+msgstr "Master Tonnage"
