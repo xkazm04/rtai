@@ -192,3 +192,10 @@ NEXT (next run): first builder call = the warden WIP on branch `n26-cast-warden-
 - 18:43 Session 7 ends. No Astra, no Godot, no gate running.
 
 NEXT (next run): unchanged from session 6: the warden WIP on `n26-cast-warden-wip` (fix `StreetWalkerCards.place` meta, test_street_walker_hit.gd:164), then her checklist row and films; then robot gunner, contractor, thug; check the impact-outline teeth on a patrol cop hit at 64 px/m.
+
+## Session 8 (18:50, REPORT)
+- 18:50 session 8 start, REPORT phase. No Astra lock (last call = warden, code 1). Tree clean at 7a24590d7. No `NEED cast` in keys/melee/pressure/yard journals.
+- 18:51 REPORT.md re-read: all sections present (header, What works, What does not, What blocked, Calls for the owner, Merge notes, Next steps, Astra ledger), no PENDING. `node tools/evidence/cites.mjs REPORT.md`: 12 paths, 12 ok. `gtai-masters/n26/cast/frames.json` 13 entries, 0 missing. Since the gated 4f505e377 only JOURNAL.md / REPORT.md changed, so the gate of record (PASS with reels, `build/gate/4f505e37796a/gate.json`) covers the build. No change to REPORT needed.
+- 18:52 Session 8 ends. No Astra, no Godot, no gate running.
+
+NEXT (next run): the warden WIP on `n26-cast-warden-wip` (20920e043): fix `StreetWalkerCards.place` meta (test_street_walker_hit.gd:164), her checklist row + films; then feet-four (lancer, door carrier, pile-driver), riot cop + SWAT 8-drawing walks, then gunner, contractor, thug; check the impact-outline teeth on a patrol cop hit at 64 px/m.
