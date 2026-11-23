@@ -413,6 +413,72 @@
             "radius_m": 3.6,
             "steps": 6
           }
+        ],
+        "pools": [
+          {
+            "at": [
+              11.8,
+              -0.8
+            ],
+            "id": "burst_door",
+            "kind": "yard_fire"
+          },
+          {
+            "at": [
+              26.6,
+              -0.8
+            ],
+            "id": "conveyor_door",
+            "kind": "yard_fire"
+          },
+          {
+            "at": [
+              56.2,
+              -0.8
+            ],
+            "id": "collapsed_wall",
+            "kind": "yard_fire"
+          },
+          {
+            "at": [
+              12.15,
+              7.6
+            ],
+            "id": "arm_cable",
+            "kind": "yard_fire"
+          },
+          {
+            "at": [
+              40.8,
+              32.3
+            ],
+            "id": "gate_lamp",
+            "kind": "yard_lamp"
+          },
+          {
+            "at": [
+              15.5,
+              -1.75
+            ],
+            "id": "burst_lamp",
+            "kind": "yard_lamp"
+          },
+          {
+            "at": [
+              30.3,
+              -1.75
+            ],
+            "id": "conveyor_lamp",
+            "kind": "yard_lamp"
+          },
+          {
+            "at": [
+              41.4,
+              -1.9
+            ],
+            "id": "shutter_lamp",
+            "kind": "yard_lamp"
+          }
         ]
       },
       "paint_from": "torn_line"

@@ -275,11 +275,46 @@
               "maxItems": 2,
               "minItems": 2,
               "type": "array"
+            },
+            "pools": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "at": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 2,
+                    "minItems": 2,
+                    "type": "array"
+                  },
+                  "id": {
+                    "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+                    "type": "string"
+                  },
+                  "kind": {
+                    "enum": [
+                      "yard_fire",
+                      "yard_lamp"
+                    ]
+                  }
+                },
+                "required": [
+                  "at",
+                  "id",
+                  "kind"
+                ],
+                "type": "object"
+              },
+              "maxItems": 16,
+              "minItems": 1,
+              "type": "array"
             }
           },
           "required": [
             "grade",
-            "kinds"
+            "kinds",
+            "pools"
           ],
           "type": "object"
         },
