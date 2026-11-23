@@ -1,6 +1,6 @@
 # Brief n26-06 `card`: Mulroney's cast card in the prologue, the pump tell on it (lane yard, run n26)
 
-HARD STOP: <HARD> local (stop work, report). LAST COMMIT: <LAST>. Check `date` now and then. Short call: one small code change, one test, two frames.
+HARD STOP: 17:15 local (stop work, report). LAST COMMIT: 17:10. Part A first and committed; start Part B only if Part A is committed by 16:55, else report it as not done. Skip the mutate (check 4) if it would run past 17:05. Check `date` now and then. Short call: one small code change, one test, two frames.
 
 ## Before anything
 - `export APPDATA=C:/Users/kazda/kiro/gtai-n26/appdata/yard` and `export GODOT_BIN=C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe` in every shell that runs Godot. `--rendering-driver d3d12` for renders. One Godot at a time; windowed runs `--position 0,1440`; kill only PIDs you started.
