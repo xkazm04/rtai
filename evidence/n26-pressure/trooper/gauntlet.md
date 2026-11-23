@@ -20,3 +20,20 @@ A hit is a rocket impact that reduced Rivet's HP. The dev probe matches the dama
 The pooled rate divides total hits by total spawned troopers. The mean wave rate gives equal weight to every wave containing a trooper. Both include zero-hit waves. The all-observed rows pool the measured profiles at their respective wave limits. Survivors at the wave cap are censored and excluded from the death-only median.
 
 Reproduce each arm with the listed rocket data and `node tools/gauntlet/batch.mjs --profile=<profile> --pick=greedy --controls=wheel --waves=<cap> --seeds=10 --jobs=1 --out=<directory>`. Each separate engine log contains one `rocket-probe` line per wave.
+
+
+## Verification
+
+The control configuration and the opt-in orbit model are committed at `82dbc7258`. The shipped linear control retains its original lock and sprint-distance tests. At 10 m over 30 seconds the orbit fixture requires at least 12 circling hits, 13 to 14 launches, every standing launch landing, zero dash hits, and an accepted dash 15 ticks after each lock. The signed-bearing test crosses the angle seam and checks changing range.
+
+| Check | Result |
+|---|---|
+| Changed unit suite | 3,988 passed, 0 failed, 2 pending |
+| Full unit and integration suite | 4,004 passed, 0 failed, 2 pending ghost-card tests |
+| Full scenario suite | 68 passed, 0 failed, exit 0 |
+| Quick gate and pre-commit lint | 7 changed scripts passed, all 19 lint checks passed |
+| Mutation of all 25 lines in the new lead helper | 13 killed / (13 killed + 1 survived), 92.9%, zero timeouts or invalid mutants |
+
+The Quest 1 tape checks and all three prologue scenarios passed. The prologue pilot finished in 9,835 ticks with zero deaths. The 60-second replay kept the pinned hash beginning `cbeb734ff9b97c41`. No golden or tape was edited. After the scenario summary, Godot logged shutdown cleanup errors about resources still in use and allocator pages.
+
+The sole surviving fault inverted the table-error logging condition in `RocketLead.shipped_orbit()`. All arithmetic mutations of the orbit prediction were killed. The mutation runner used its worktree-local `--scratch` mode. Its later HEAD differs from the implementation commit only in director notes and briefs.
