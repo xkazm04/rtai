@@ -22,6 +22,92 @@
           "tint": "ffffff",
           "wash": "37333046"
         }
+      ],
+      "outside": [
+        {
+          "art": "res://features/city/art/roofs/building_warehouse.png",
+          "at": [
+            -11,
+            24
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            16.4,
+            8.4
+          ]
+        },
+        {
+          "art": "res://features/city/art/roofs/roof_sawtooth.png",
+          "at": [
+            71,
+            22
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            15,
+            12
+          ]
+        },
+        {
+          "art": "res://features/city/art/roofs/building_warehouse.png",
+          "at": [
+            -5,
+            58
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            16.4,
+            8.4
+          ]
+        },
+        {
+          "art": "res://features/city/art/roofs/roof_skylights.png",
+          "at": [
+            16,
+            59
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            14,
+            9
+          ]
+        },
+        {
+          "art": "res://features/city/art/roofs/building_warehouse.png",
+          "at": [
+            41,
+            58
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            16.4,
+            8.4
+          ]
+        },
+        {
+          "art": "res://features/city/art/roofs/roof_sawtooth.png",
+          "at": [
+            65,
+            59
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            15,
+            10
+          ]
+        },
+        {
+          "art": "res://features/city/art/roofs/building_warehouse.png",
+          "at": [
+            87,
+            58
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            16.4,
+            8.4
+          ]
+        }
       ]
     }
   },

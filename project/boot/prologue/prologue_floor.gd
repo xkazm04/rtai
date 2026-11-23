@@ -2,6 +2,10 @@ class_name PrologueFloor
 extends StageView
 ## Reuses the quest's concrete, pavement and road tiles at their authored scale.
 
+## At the film's widest scale 1920/32 shows 30 m either side. Allow another 10 m,
+## and grow the surround for wider viewports or the camera's 18% vertical lean.
+const MIN_SURROUND_M: float = 40.0
+const BACKLOT: Texture2D = preload("res://features/city/art/ground/road_box_plain.png")
 const SCORCH: Texture2D = preload("res://features/city/art/decals/scorch.png")
 const ZEBRA: Texture2D = preload("res://features/city/art/decals/zebra.png")
 
@@ -12,13 +16,11 @@ var _paint: PrologueYardPaint = PrologueYardPaint.new()
 func _draw() -> void:
 	if plan == null:
 		return
+	var margin: float = _surround_m()
+	_backlot(margin)
 	for layer: PrologueYardDressing.Ground in plan.dressing.ground:
 		_paint.ground(self, layer)
-	_kerb(plan.sidewalk)
-	_road(plan.street)
-	draw_set_transform(Ink.px(plan.far_sidewalk.end), PI)
-	_kerb(Rect2(Vector2.ZERO, plan.far_sidewalk.size))
-	draw_set_transform(Vector2.ZERO)
+	_street_surface(margin)
 	_crossing()
 	if plan.dressing.use_stage_decals:
 		_stage_decals()
@@ -30,9 +32,7 @@ func _draw() -> void:
 		_draw_piece(wreck, Color("b5a293"), skin)
 		if wreck.shell:
 			_broken_sill(_pixels(wreck.footprint))
-	for fence: Rect2 in plan.fences:
-		draw_rect(_pixels(fence), Ink.INK)
-		_tiled(fence, "cage_mesh", 2.0)
+	_draw_fences(margin)
 	for phone: String in stage.layout.phones:
 		_sprite("payphone", stage.layout.phones[phone], Vector2(1.3, 1.3))
 	if not plan.exit_open:
@@ -40,6 +40,44 @@ func _draw() -> void:
 		var barrier: Rect2 = _pixels(Rect2(plan.gate - size_m * 0.5, size_m))
 		draw_rect(barrier.grow(1.5), Ink.INK)
 		draw_rect(barrier, Color("57758e"))
+
+
+func _surround_m() -> float:
+	var ppm: Vector2 = get_global_transform_with_canvas().get_scale().abs() * Ink.PX_PER_M
+	var screen_m: Vector2 = get_viewport_rect().size / ppm
+	return maxf(MIN_SURROUND_M, maxf(screen_m.x * 0.5, screen_m.y * 0.68) + 2.0)
+
+
+func _backlot(margin: float) -> void:
+	var surround: Rect2 = plan.yard.merge(plan.far_sidewalk).grow(margin)
+	# The city's 768 px asphalt tile covers 8 m. Keep the backlot continuous behind the fences.
+	var scale_xy: Vector2 = Ink.px(Vector2(8, 8)) / BACKLOT.get_size()
+	draw_set_transform(Ink.px(surround.position), 0.0, scale_xy)
+	var box: Rect2 = Rect2(Vector2.ZERO, Ink.px(surround.size) / scale_xy)
+	draw_texture_rect(BACKLOT, box, true, Color("aaa198"))
+	draw_set_transform(Vector2.ZERO)
+
+
+func _street_surface(margin: float) -> void:
+	var near_walk: Rect2 = plan.sidewalk.grow_individual(margin, 0, margin, 0)
+	var far_walk: Rect2 = plan.far_sidewalk.grow_individual(margin, 0, margin, 0)
+	_kerb(near_walk)
+	_road(plan.street.grow_individual(margin, 0, margin, 0))
+	draw_set_transform(Ink.px(far_walk.end), PI)
+	_kerb(Rect2(Vector2.ZERO, far_walk.size))
+	draw_set_transform(Vector2.ZERO)
+
+
+func _draw_fences(margin: float) -> void:
+	for fence: Rect2 in plan.fences:
+		var visible_box: Rect2 = fence
+		if fence.position.y == plan.yard.position.y:
+			# The simulation's side bounds cross Harbor Road. The visible yard fence ends at the kerb.
+			visible_box.size.y = plan.yard.size.y
+		elif fence.position.y == plan.far_sidewalk.end.y:
+			visible_box = fence.grow_individual(margin, 0, margin, 0)
+		draw_rect(_pixels(visible_box), Ink.INK)
+		_tiled(visible_box, "cage_mesh", 2.0)
 
 
 func _stage_decals() -> void:
