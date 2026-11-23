@@ -2,36 +2,32 @@ class_name PrologueFloor
 extends StageView
 ## Reuses the quest's concrete, pavement and road tiles at their authored scale.
 
-const CONCRETE: Texture2D = preload("res://features/city/art/d5/ground/quay_apron.png")
 const SCORCH: Texture2D = preload("res://features/city/art/decals/scorch.png")
 const ZEBRA: Texture2D = preload("res://features/city/art/decals/zebra.png")
 
 var plan: PrologueYard
-var _art_by_id: Dictionary[String, Texture2D] = {}
-
-
-func _ready() -> void:
-	for piece: PrologueYard.Wreck in plan.wrecks + plan.debris:
-		_art_by_id[piece.id] = load(piece.art) as Texture2D
+var _paint: PrologueYardPaint = PrologueYardPaint.new()
 
 
 func _draw() -> void:
 	if plan == null:
 		return
-	_tiled(plan.yard, "quay_apron", 8.0)
-	draw_rect(_pixels(plan.yard), Color("#37333046"))
+	for layer: PrologueYardDressing.Ground in plan.dressing.ground:
+		_paint.ground(self, layer)
 	_kerb(plan.sidewalk)
 	_road(plan.street)
 	draw_set_transform(Ink.px(plan.far_sidewalk.end), PI)
 	_kerb(Rect2(Vector2.ZERO, plan.far_sidewalk.size))
 	draw_set_transform(Vector2.ZERO)
 	_crossing()
-	for stain: Rect2 in plan.scorch_marks:
-		draw_texture_rect(SCORCH, _pixels(stain), false)
-	for piece: PrologueYard.Wreck in plan.debris:
-		_draw_piece(piece, Color.WHITE)
+	if plan.dressing.use_stage_decals:
+		_stage_decals()
+	_paint.stamps(self, plan.dressing.decals)
+	_paint.stamps(self, plan.dressing.factory_front)
+	_paint.stamps(self, plan.dressing.outside)
 	for wreck: PrologueYard.Wreck in plan.wrecks:
-		_draw_piece(wreck, Color("b5a293"))
+		var skin: PrologueYardDressing.CoverArt = plan.dressing.cover.get(wreck.id)
+		_draw_piece(wreck, Color("b5a293"), skin)
 		if wreck.shell:
 			_broken_sill(_pixels(wreck.footprint))
 	for fence: Rect2 in plan.fences:
@@ -46,14 +42,20 @@ func _draw() -> void:
 		draw_rect(barrier, Color("57758e"))
 
 
-func _art(id: String) -> Texture2D:
-	return CONCRETE if id == "quay_apron" else super._art(id)
+func _stage_decals() -> void:
+	for stain: Rect2 in plan.scorch_marks:
+		draw_texture_rect(SCORCH, _pixels(stain), false)
+	for piece: PrologueYard.Wreck in plan.debris:
+		_draw_piece(piece, Color.WHITE, null)
 
 
-func _draw_piece(piece: PrologueYard.Wreck, tint: Color) -> void:
-	var art: Texture2D = _art_by_id[piece.id]
+func _draw_piece(
+	piece: PrologueYard.Wreck, tint: Color, skin: PrologueYardDressing.CoverArt
+) -> void:
+	var art: Texture2D = _paint.texture(skin.art if skin != null else piece.art)
+	var crop: Rect2 = skin.crop if skin != null else piece.crop
 	var cell: Vector2 = art.get_size()
-	var source: Rect2 = Rect2(piece.crop.position * cell, piece.crop.size * cell)
+	var source: Rect2 = Rect2(crop.position * cell, crop.size * cell)
 	draw_texture_rect_region(art, _pixels(piece.footprint), source, tint)
 
 

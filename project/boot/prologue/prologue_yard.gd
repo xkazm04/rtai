@@ -12,6 +12,7 @@ class Wreck:
 	var shell: bool
 
 
+var dressing: PrologueYardDressing
 var yard: Rect2
 var sidewalk: Rect2
 var street: Rect2
@@ -26,11 +27,13 @@ var scorch_marks: Array[Rect2] = []
 var stations: ArenaStations = ArenaStations.new()
 
 
-static func from_stage(data: DataTable) -> PrologueYard:
+static func from_stage(data: DataTable, dressings: DataTable = null) -> PrologueYard:
 	var plan: PrologueYard = PrologueYard.new()
 	plan.rivet_start = data.vec(data.raw, "rivet_start")
 	plan.yard = Rect2(Vector2.ZERO, data.vec(data.raw, "yard_size_m"))
 	var layout: Dictionary = data.object(data.raw, "yard")
+	var dressing_id: String = layout.get("dressing", "plain")
+	plan.dressing = PrologueYardDressing.resolve(dressing_id, "", dressings)
 	plan._perimeter(data, layout)
 	var station: ArenaStation = ArenaStation.new()
 	for fence: Rect2 in plan.fences:

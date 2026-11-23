@@ -1,0 +1,29 @@
+{
+  "dressings": {
+    "plain": {
+      "ground": [
+        {
+          "rect_m": {
+            "origin": [
+              0,
+              0
+            ],
+            "size": [
+              60,
+              34
+            ]
+          },
+          "texture": "res://features/city/art/d5/ground/quay_apron.png",
+          "tile_size_m": [
+            8,
+            8
+          ],
+          "tiled": true,
+          "tint": "ffffff",
+          "wash": "37333046"
+        }
+      ]
+    }
+  },
+  "schema": "gtai.prologue_yard_dressings/1"
+}
