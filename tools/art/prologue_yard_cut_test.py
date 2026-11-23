@@ -38,6 +38,21 @@ def test_piece_boxes_are_independent_and_scaled_to_metres():
     assert cut["shed"].getpixel((16, 40)) == (165, 42, 42, 255)
 
 
+def test_bent_rail_keeps_its_footprint_and_mirrors_into_the_return():
+    sheet = Image.new("RGB", (42, 12), "white")
+    sheet.paste("black", (1, 1, 41, 11))
+    rail = {"id": "bend", "box": [0, 0, 42, 12], "size_m": [4, 2], "end_rise": 1, "bend": True}
+    job = {"background": "#ffffff", "px_per_m": 10,
+           "pieces": [rail, rail | {"id": "return", "mirror": True}]}
+    cut = cut_job(sheet, job)
+    shape = np.asarray(cut["bend"].getchannel("A")) == 255
+    assert shape.shape == (20, 40)
+    assert shape[:, 0].argmax() == 10
+    assert shape[:, 20].argmax() == 9
+    assert shape[:, -1].argmax() == 0
+    np.testing.assert_array_equal(np.asarray(cut["return"]), np.asarray(cut["bend"])[:, ::-1])
+
+
 def test_uniform_fit_and_isolation_keep_the_ring_hole_and_exclude_its_neighbour():
     sheet = Image.new("RGB", (28, 16), "white")
     sheet.paste("black", (3, 3, 15, 9))

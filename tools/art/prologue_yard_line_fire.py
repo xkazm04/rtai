@@ -34,6 +34,25 @@ SHEETS = {
         cover("straight_east", (885, 0, 889, 315), (5.2, 1.2)),
         cover("bent_rail", (0, 315, 900, 340), (5.2, 1.2)),
         cover("torn_end", (900, 315, 874, 340), (5.4, 1.2)),
+        cover("feed_slope", (885, 0, 889, 315), (5.2, 1.2), end_rise=-1.4),
+        cover("return_slope", (0, 0, 885, 315), (5.4, 1.2), end_rise=1.4),
+        cover("tail_slope", (900, 315, 874, 340), (5.4, 1.2), end_rise=-1.2),
+        cover("outer_bend", (0, 315, 900, 340), (5.2, 1.2), end_rise=1.35, bend=True),
+        cover("inner_bend", (0, 315, 900, 340), (5.2, 1.2),
+              end_rise=1.35, bend=True, mirror=True),
+        piece("belt_fray", (1347, 402, 368, 164), (2.25, 0.87), end_rise=-1.3, bend=True,
+              outline=[(7, 39), (12, 21), (40, 27), (68, 19), (98, 5), (171, 2),
+                       (173, 55), (105, 83), (192, 70), (363, 72), (367, 157),
+                       (241, 154), (159, 115), (114, 124), (50, 85), (9, 62)]),
+        piece("loose_roller", (1531, 533, 44, 36), (0.52, 0.30),
+              outline=[(0, 11), (11, 3), (19, 3), (25, 13), (32, 19), (43, 18),
+                       (43, 30), (31, 34), (20, 24), (9, 19), (0, 20)]),
+        piece("fallen_washer", (528, 686, 217, 143), (1.18, 0.86)),
+        piece("fridge_door", (1009, 699, 178, 70), (1.35, 0.49)),
+        piece("hook_drum", (396, 135, 140, 156), (0.73, 0.88),
+              outline=[(54, 2), (82, 2), (86, 21), (78, 37), (80, 49),
+                       (109, 50), (116, 63), (136, 76), (133, 138), (102, 152),
+                       (13, 149), (5, 130), (12, 65), (20, 49), (56, 48)]),
     ],
     "front-broken-b": [
         piece("burst_bay", (0, 0, 768, 545), (15, 7.35)),
@@ -93,6 +112,8 @@ def main():
             if name == "fence-gate":
                 master = open_wire(master)
             cuts = cut_job(master, {"px_per_m": 96, "shadow_ink": "#211e1c", "pieces": rows})
+        if name == "conveyor-run":
+            cuts["belt_fold"] = cuts["belt_fray"].transpose(Image.Transpose.FLIP_TOP_BOTTOM)
         if name == "fence-gate":
             panel = cuts["fence_panel"]
             cuts["fence_panel"] = ImageChops.offset(panel, panel.width // 8, 0)

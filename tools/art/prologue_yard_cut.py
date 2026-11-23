@@ -11,6 +11,8 @@ An "ink_only" row applies that treatment throughout a ground mark.
 An "outline" polygon (local box pixels) cuts a fixture out of its mounting wall.
 "turn_clockwise" rotates the cut before sizing. "trim_to_solid" removes only the
 outer margin beyond the opaque bounding box, for art mapped to a collision box.
+"end_rise" raises the right end by a fraction of the cut height before fitting.
+"bend" eases that rise into the existing curve. "mirror" reverses the finished cut.
 """
 
 import argparse
@@ -118,6 +120,18 @@ def extract(sheet, row, job, matte):
     piece = key_piece(crop, matte, shadow, row.get("ink_only", False))
     if row.get("turn_clockwise", False):
         piece = piece.transpose(Image.Transpose.ROTATE_270)
+    if "end_rise" in row:
+        # Project the rail within its assigned footprint. Translate whole columns
+        # together so hooks still hang vertically from their point on the rail.
+        h, w = piece.height, piece.width
+        along = np.linspace(0, 1, w)
+        rise = np.rint(h * row["end_rise"] * along ** (3 if row.get("bend") else 1)).astype(int)
+        drops = rise.max() - rise
+        canvas = np.zeros((h + drops.max(), w, 4), dtype=np.uint8)
+        canvas[np.arange(h)[:, None] + drops, np.arange(w)] = np.asarray(piece)
+        piece = Image.fromarray(canvas)
+    if row.get("mirror", False):
+        piece = piece.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
     if job.get("fit", False):
         scale = min(size[0] / piece.width, size[1] / piece.height)
         size = tuple(max(1, round(span * scale)) for span in piece.size)
