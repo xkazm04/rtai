@@ -93,3 +93,7 @@ NEXT: none for this run. Director merges n24-ghost (REPORT Merge notes). Next ru
 ## Session 7 (STABILIZE, 01:33 -)
 - 01:34 start. No Astra (no lock; last call g6 22:41Z), no lane Godot. Code frozen at ba7ac5163 (gate PASS, `build/gate/ba7ac5163972/gate.json`). Only `NEED ghost` is motion 19:45, answered 20:21. Removed the leftover "filled at the end" placeholder under REPORT `## What works`. cites 10/10 ok.
 NEXT: none for this run. Director merges n24-ghost per REPORT Merge notes.
+
+## Session 8 (STABILIZE, 01:35 -)
+- 01:36 start. No Astra (no lock; last call g6 ended 22:41Z), no lane Godot. Code frozen at ba7ac5163 (gate PASS, `build/gate/ba7ac5163972/gate.json`). Only `NEED ghost` is still motion 19:45, answered 20:21. REPORT has no placeholder left; cites 10/10 ok. Nothing to fix.
+NEXT: none for this run. Director merges n24-ghost per REPORT Merge notes.
