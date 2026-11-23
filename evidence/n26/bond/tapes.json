@@ -1,0 +1,138 @@
+{
+  "parity": {
+    "checks": 40,
+    "exact": true,
+    "final_sha_a": "94b2865f7f17d778",
+    "final_sha_b": "94b2865f7f17d778",
+    "planted_first_mismatch_step": 629,
+    "planted_mutation_caught": true,
+    "steps": 1200
+  },
+  "quest1_input_final_hash": "c211ee9720fcc5ffc57d42f3aa33d3dbbdc159332d721fd4236c1537b15fb13a",
+  "quest_tapes": [
+    {
+      "bond": {
+        "dent": 0,
+        "kerf": 0,
+        "ohm": 0,
+        "tonnage": 0
+      },
+      "exit": 0,
+      "master_at": 25,
+      "path": "quest1/input-run.replay.json",
+      "replay": "identical",
+      "ticks": 19109
+    },
+    {
+      "bond": {
+        "dent": 0,
+        "kerf": 0,
+        "ohm": 0,
+        "tonnage": 0
+      },
+      "exit": 1,
+      "master_at": 25,
+      "path": "evidence/it14/linux/q1-linux.replay.json",
+      "replay": "state hash differs at tick 60",
+      "ticks": 3600
+    },
+    {
+      "bond": {
+        "dent": 0,
+        "kerf": 0,
+        "ohm": 0,
+        "tonnage": 0
+      },
+      "exit": 1,
+      "master_at": 25,
+      "path": "evidence/it14/linux/q1-win.replay.json",
+      "replay": "state hash differs at tick 60",
+      "ticks": 1800
+    },
+    {
+      "bond": {
+        "dent": 0,
+        "kerf": 0,
+        "ohm": 0,
+        "tonnage": 0
+      },
+      "exit": 1,
+      "master_at": 25,
+      "path": "evidence/it15/linrel.replay.json",
+      "replay": "state hash differs at tick 60",
+      "ticks": 1496
+    },
+    {
+      "bond": {
+        "dent": 0,
+        "kerf": 0,
+        "ohm": 0,
+        "tonnage": 0
+      },
+      "exit": 1,
+      "master_at": 25,
+      "path": "evidence/it15/q1-linux.replay.json",
+      "replay": "state hash differs at tick 60",
+      "ticks": 3600
+    },
+    {
+      "bond": {
+        "dent": 0,
+        "kerf": 0,
+        "ohm": 0,
+        "tonnage": 0
+      },
+      "exit": 1,
+      "master_at": 25,
+      "path": "evidence/it15/q1-win.replay.json",
+      "replay": "state hash differs at tick 60",
+      "ticks": 1800
+    },
+    {
+      "bond": {
+        "dent": 0,
+        "kerf": 0,
+        "ohm": 0,
+        "tonnage": 0
+      },
+      "exit": 1,
+      "master_at": 25,
+      "path": "evidence/it15/q1ed.replay.json",
+      "replay": "state hash differs at tick 60",
+      "ticks": 425
+    },
+    {
+      "bond": {
+        "dent": 0,
+        "kerf": 0,
+        "ohm": 0,
+        "tonnage": 0
+      },
+      "exit": 1,
+      "master_at": 25,
+      "path": "evidence/it15/winrel.replay.json",
+      "replay": "state hash differs at tick 60",
+      "ticks": 832
+    }
+  ],
+  "reference": "evidence/n26/kerf-cap/verification.md",
+  "scenario_file_sha256": {
+    "quest1/checkpoint.json": "7b8789a1ba4a5c617b06621ba83e7815e4beb30ec8833a8d9a5a045cf67ed672",
+    "quest1/input-run.replay.json": "15f48b97231337d97e74e95811092003fbfecf4b81eebdfaced80a6af30e7a19",
+    "replay/arena-moves.json": "22049e0f25e9ed3a49fbd5c9489a3dfb25e60ad9a6abb9164f827f491b488567",
+    "replay/city_20s.json": "89758a9d678a18151d6b30ba339792a95c60ecda98c1e4eb0550addacfdfe366",
+    "replay/replay_60s.json": "73e204a23a6b82a9fcc2cfcf0bc2f025e647b1a0001c86df9499099510d318ed"
+  },
+  "scenarios": {
+    "focused": {
+      "failed": 0,
+      "ran": 10,
+      "replay_60s": "cbeb734ff9b97c41"
+    },
+    "full": {
+      "failed": 0,
+      "ran": 68,
+      "replay_60s": "cbeb734ff9b97c41"
+    }
+  }
+}
