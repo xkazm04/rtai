@@ -46,6 +46,7 @@ func _init(feed: PrologueLines, stage: ArenaStage, data: DataTable) -> void:
 
 
 func step(stage: ArenaStage, tick: int) -> void:
+	prompts.step(tick)
 	if stage.deaths != deaths:
 		_restart(stage, tick)
 		return
@@ -83,7 +84,7 @@ func step(stage: ArenaStage, tick: int) -> void:
 func _begin_wave(stage: ArenaStage, tick: int) -> void:
 	dale_died = tick
 	lines.interrupt(tick)
-	prompts.clear()
+	prompts.clear(tick)
 	_end(tick, "dale_down")
 	phase = Phase.HANDS
 	_start(_wave_checkpoint, 1, tick)
@@ -95,7 +96,7 @@ func _fight(stage: ArenaStage, tick: int) -> void:
 		_end(tick, "cleared")
 		done_tick = tick
 		phase = Phase.BEAT_TWO
-		prompts.clear()
+		prompts.clear(tick)
 		stage.arena.shots.clear()
 		_start(_next_checkpoint, 2, tick)
 		wave_one = wave_one_result(stage)
@@ -109,8 +110,7 @@ func _fight(stage: ArenaStage, tick: int) -> void:
 	for shot: Shot in stage.arena.shots:
 		var to_player: Vector2 = stage.arena.rivet.pos - shot.pos
 		if not shot.from_rivet and to_player.dot(shot.vel) > 0.0 and to_player.length() < 5.0:
-			prompts.offer("roll", tick)
-	prompts.step(tick)
+			prompts.offer("roll", tick, (stage.arena as PrologueCombat).first_catch_tick)
 
 
 func wave_one_result(stage: ArenaStage) -> Dictionary:
@@ -118,6 +118,7 @@ func wave_one_result(stage: ArenaStage) -> Dictionary:
 		"spawned": patrol.officers.size(),
 		"standing": stage.arena.hostiles_alive(),
 		"pistol_rounds": patrol.squad.pistol_rounds,
+		"first_catch_tick": (stage.arena as PrologueCombat).first_catch_tick,
 		"player_shots": stage.shots_fired,
 		"wheel": stage.pilot.wheel.order(),
 	}
@@ -154,12 +155,12 @@ func _restart(stage: ArenaStage, tick: int) -> void:
 		_start(_street_checkpoint, 3, tick)
 		return
 	if phase == Phase.BEAT_TWO:
-		prompts.clear()
+		prompts.clear(tick)
 		_start(_next_checkpoint, 2, tick)
 		battle.enter(stage, patrol, tick)
 		return
 	patrol.place(arena, wave)
-	prompts.clear()
+	prompts.clear(tick)
 	if wave:
 		arena.rivet.pos = patrol.wave_start
 		_start(_wave_checkpoint, 1, tick)

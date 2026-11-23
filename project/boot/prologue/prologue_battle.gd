@@ -85,7 +85,7 @@ func step(stage: ArenaStage, tick: int) -> bool:
 	if not formation.boss.alive():
 		died_tick = tick
 		pistol.leave(stage)
-		_prompts.clear()
+		_prompts.clear(tick)
 		arena.shots.clear()
 		return true
 	fire.track(arena.rivet.pos)
@@ -109,7 +109,6 @@ func step(stage: ArenaStage, tick: int) -> bool:
 	if ranged:
 		fire.step(arena, formation, tick, due_tick >= 0)
 	pistol.observe(stage.pilot.carry, _prompts, tick)
-	_prompts.step(tick)
 	return false
 
 

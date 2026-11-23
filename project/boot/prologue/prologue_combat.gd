@@ -5,6 +5,7 @@ extends CombatArena
 var formation: PrologueFormation
 var pin_ticks: int
 var pinned_until: int = -1
+var first_catch_tick: int = -1
 var catcher: Fighter
 
 
@@ -27,6 +28,8 @@ func damage(
 		if victim == rivet and weapon == &"catch_pole" and victim.hp < before:
 			for h: Fighter in hostiles:
 				if h.id == killer_id:
+					if first_catch_tick < 0:
+						first_catch_tick = tick
 					catcher = h
 					pinned_until = tick + pin_ticks
 					break

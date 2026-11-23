@@ -1,13 +1,11 @@
 extends InputSource
-## Walk the late approach through StageIntent. In the fight use the same directional,
-## primary, quick claw, guard and roll commands StagePilot decodes for a human.
+## Walk and fight with the same StageIntent and StagePilot controls as a human.
 
 const STRIKE_M: float = 1.55
 
 var _stage: ArenaStage
 var _encounter: PrologueEncounter
 var _guard_until: int = -1
-var _guarded: bool = false
 var _rolled: bool = false
 var _clawed: bool = false
 var _skip_lines: bool = LaunchArgs.value("--bot") == "skipper"
@@ -85,15 +83,17 @@ func _fight(tick: int) -> TickInput:
 	var target: Fighter = _nearest()
 	if target == null:
 		return TickInput.new()
-	var at: Vector2 = _stage.arena.rivet.pos
-	var aim: Vector2 = target.pos - at
-	var walk: Vector2 = (
-		at.direction_to(_waypoint(target.pos)) if aim.length() > 1.15 else Vector2.ZERO
-	)
+	var combat: PrologueCombat = _stage.arena as PrologueCombat
+	var aim: Vector2 = target.pos - combat.rivet.pos
+	# Let one warden finish a live pole swing so the pilot experiences the pin.
+	if combat.first_catch_tick < 0 and target.archetype == &"appliance_warden":
+		return _command(aim, Vector2.ZERO, 0)
+	var walk: Vector2 = Vector2.ZERO
+	if aim.length() > 1.15:
+		walk = combat.rivet.pos.direction_to(_waypoint(target.pos))
 	var buttons: int = _bit(&"fire") if aim.length() <= STRIKE_M else 0
 	var hints: ProloguePrompts = _encounter.prompts
-	if hints.active("guard") and not _guarded:
-		_guarded = true
+	if hints.active("guard") and _guard_until < 0:
 		_guard_until = tick + 18
 	if tick < _guard_until:
 		buttons = _bit(&"guard")
