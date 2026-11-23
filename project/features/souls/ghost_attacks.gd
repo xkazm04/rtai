@@ -15,6 +15,7 @@ class DeployRow:
 	var cooldown_ticks: int
 	var life_ticks: int
 	var snap_m: float
+	var boss_damage_cap: float
 	var radius_m: float
 	var ram_half_m: float
 
@@ -40,6 +41,7 @@ static func from_table(t: DataTable) -> GhostAttacks:
 		def.cooldown_ticks = t.integer(row, "cooldown_ticks")
 		def.life_ticks = t.integer(row, "life_ticks")
 		if id == &"kerf":
+			def.boss_damage_cap = t.num(row, "boss_damage_cap")
 			def.snap_m = t.num(row, "snap_m")
 		elif id == &"ohm":
 			def.radius_m = t.num(row, "radius_m")

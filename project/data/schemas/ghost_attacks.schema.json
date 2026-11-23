@@ -161,6 +161,11 @@
         "kerf": {
           "additionalProperties": false,
           "properties": {
+            "boss_damage_cap": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
             "cooldown_ticks": {
               "minimum": 1,
               "type": "integer"
@@ -182,6 +187,7 @@
             }
           },
           "required": [
+            "boss_damage_cap",
             "cooldown_ticks",
             "enabled",
             "life_ticks",
