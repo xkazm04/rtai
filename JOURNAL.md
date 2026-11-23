@@ -82,3 +82,11 @@ NEXT (session 5, from ~06:35, freeze 07:10, report 07:20, end 07:40):
 2. After 07:10: `node tools/gate/run.mjs --rev=HEAD --reels` once (about 35 min: evidence ~19 + reels ~14; HEAD is docs-only past 667f70be2, so the snapshot gate is the same code). If it cannot finish by 07:40, say so in REPORT; the 667f70be2 PASS stands.
 3. grep yard JOURNAL for `NEED path` / `MILESTONE yard-shape` one last time (none at 06:10).
 4. REPORT is final except the reels line; re-run `node tools/evidence/cites.mjs REPORT.md`; commit JOURNAL.md / REPORT.md by path (`git commit -- JOURNAL.md REPORT.md`).
+
+## Session 5 (07:10 - 07:20, STABILIZE)
+
+- 07:10 read JOURNAL; no astra.lock, last Astra call `title` exit 0; no Godot of mine running. Yard JOURNAL: no new `NEED path`, no `MILESTONE yard-shape` (only the served 01:55 `--yard-dressing` NEED).
+- 07:11 DECISION no `--reels` gate: it needs ~35 min and this session stops at 07:20. The final snapshot gate PASS on 667f70be2 (`build/gate/667f70be223a/gate.json`) stands; HEAD after it is docs only. REPORT line updated.
+- 07:12 no product changes this session (code frozen since 05:40).
+
+NEXT (Director, morning): merge n25-path after the n24 lanes; expect add/add on root JOURNAL.md / REPORT.md (keep each lane's own); run `node tools/gate/run.mjs --rev=HEAD --reels` on the merged tree; the Merge notes in REPORT list the shared files touched (features/hud/hud_state.gd + hud_view.gd, tools/mutate, prologue_stage.json path blocks).

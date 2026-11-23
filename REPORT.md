@@ -6,7 +6,7 @@ Branch `n25-path` from `main` `b3f4727c0`. Worktree `C:\Users\kazda\kiro\gtai-wt
 
 Final commit `667f70be2`. Gate: `node tools/gate/run.mjs --rev=HEAD` -> `gate: PASS` (lint 19/19 over 2050 files, unit 3801 pass /
 0 fail / 2 skip, scenarios 68/68, parity bit for bit over 1200 steps with the planted mutation caught at 629, selftest goldens
-11/11 + 5/5, release-compile 931/0), `build/gate/667f70be223a/gate.json` (git-ignored). No `--reels` run yet (after the freeze).
+11/11 + 5/5, release-compile 931/0), `build/gate/667f70be223a/gate.json` (git-ignored). No `--reels` gate: it takes about 35 min and this session is stopped at 07:20, so the snapshot PASS on `667f70be2` is the evidence (HEAD after it is docs only).
 Determinism: replay `cbeb734ff9b97c41` and parity `94b2865f7f17d778` unchanged; every shipped tape and quest checkpoint byte-identical.
 
 ## What works
