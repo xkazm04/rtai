@@ -50,6 +50,13 @@ func test_interrupted_lines_record_what_was_seen_and_what_was_missed() -> void:
 	assert_eq(feed.subtitle.words, "")
 
 
+func test_cash_card_defaults_to_visible_and_the_prologue_hides_it() -> void:
+	var state: HudState = HudState.new()
+	assert_true(state.cash_visible)
+	PrologueLines.new().fill(state, null, null)
+	assert_false(state.cash_visible)
+
+
 func test_draft_places_fill_at_show_time_and_leave_owner_words_verbatim() -> void:
 	var data: DataTable = DataTable.open(PrologueLines.TABLE, PrologueLines.SCHEMA)
 	var feed: PrologueLines = PrologueLines.new()

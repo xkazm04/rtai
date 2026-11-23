@@ -167,6 +167,7 @@ func show_line(id: String, tick: int = 0, repeated_order: bool = false) -> bool:
 
 
 func fill(state: HudState, stage: CollectCallStage, _system: QuestSystem) -> void:
+	state.cash_visible = false
 	state.say(subtitle.speaker, subtitle.words)
 	state.portrait_key = voice
 	if stage != null:
