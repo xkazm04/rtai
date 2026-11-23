@@ -218,3 +218,17 @@ NEXT (session 5, from ~16:39):
   (`evidence/n26-pressure/gate/lint-flake.txt`); not our file. unit 4007 pass / 0 fail / 3 skip; export-audit 968 / 0.
   Reels running (log `build/gate/0f9baec4835f/reels.log`). The gate verdict will read FAIL on lint; a plain
   `node tools/gate/run.mjs --rev=HEAD` re-run after the reels (evidence half ~25-40 min) can clear it before 18:40.
+- 17:37 gate 0f9baec48 `--reels` done: `gate: FAIL; build/gate/0f9baec4835f/gate.json`. FAIL = lint tool-tests flake only;
+  unit 4007/0/3, scenarios 68 (rig_stress CONTENDED), parity bit for bit + mutation caught, export 968/0, selftest pass,
+  reels top/tilt70/combo PASS (~6 min a view). Re-run without reels launched detached 17:37 on 7969ed2a4 (code identical
+  to 0f9baec48; pid 48644 bash; log `build/gate-rerun.out.txt`, results `build/gate/<7969ed2a4...>/`).
+- 17:40 session 5 end. No Astra (usage limit). Godot of this lane = the gate re-run (pid 48644 bash -> node -> Godot).
+NEXT (session 6, report phase; freeze 18:40, report 18:50, end 19:10):
+  (1) Gate re-run: `tail build/gate-rerun.out.txt`. If PASS: REPORT header GATE_RERUN -> its `gate: PASS; <gate.json>` line
+  (reels were judged on 0f9baec48, same code). If lint flakes again: quote it, point at
+  `evidence/n26-pressure/gate/lint-flake.txt`, do not re-run again.
+  (2) If the re-run ends before ~18:15: mutate the stall fix (`export APPDATA=...pressure`, GODOT_BIN as before):
+  `node tools/mutate/mutate.mjs --file=features/gauntlet/gauntlet_combat.gd --lines=12-16,18,53-66,120-123 --max=10`;
+  quote the score in REPORT "What does not" (the stall mutate line). Stop it by 18:40 (kill its PID tree, not by name).
+  (3) REPORT: `node tools/evidence/cites.mjs REPORT.md`, grep for GATE_RERUN / TODO, final commit by pathspec.
+  (4) Clean Temp: `%LOCALAPPDATA%\Temp\gtai-gate-0f9baec4835f` (+ the re-run's) and any gtai-mutate-* of this lane.

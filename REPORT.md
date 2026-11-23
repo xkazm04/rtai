@@ -9,7 +9,9 @@ Final code HEAD: `0f9baec48` (everything after it is JOURNAL / REPORT / evidence
 half: lint FAIL 1 of 19 (`tool-tests`: one timing test in `tools/merge/morning_run.break.test.mjs`, not this lane's file,
 fails under five-lane load and passes 3 of 3 alone: `evidence/n26-pressure/gate/lint-flake.txt`), unit-tests 4007 passed
 0 failed 3 skipped, scenario-tests 68 ran (rig_stress p50 CONTENDED, not judged), parity bit for bit over 1200 steps with
-the planted mutation caught, export-audit 968 loaded 0 failed, selftest pass. Reels: GATE_REELS.
+the planted mutation caught, export-audit 968 loaded 0 failed, selftest pass. Reels (top, tilt70, combo): PASS, exit 0.
+Verdict line: `gate: FAIL; build/gate/0f9baec4835f/gate.json` (only the lint flake). Re-run without reels on the same code
+(`node tools/gate/run.mjs --rev=HEAD` on `7969ed2a4`, started 17:37): GATE_RERUN.
 
 ## What works
 
