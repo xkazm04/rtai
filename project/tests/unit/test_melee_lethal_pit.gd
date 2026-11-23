@@ -18,14 +18,12 @@ func test_pit_uses_the_real_hit_direction_and_weapon_on_each_contact() -> void:
 				pit.hurt(e, hit.damage, Vector2.RIGHT, c)
 				if id == &"chainsaw" and c.ground < hit.grind_min_ticks:
 					assert_true(e.alive())
-		if id == &"katana":
+		if id in [&"katana", &"claw"]:
 			assert_eq(e.hp, 70.0)
 			assert_gt(e.pos.x, 1.0)
 			c.press()
 			pit.hurt(e, hit.damage, Vector2.RIGHT, c)
 			assert_false(e.alive())
-		elif id == &"claw":
-			assert_almost_eq(e.hp, 70.0 - hit.damage * e.arch.shield_front_mult, 0.00001)
 		else:
 			assert_false(e.alive(), String(id))
 

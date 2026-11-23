@@ -120,6 +120,15 @@
         "kills_human": {
           "type": "boolean"
         },
+        "never_finish": {
+          "description": "Human roster rows that always take ordinary melee damage.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
         "shield_break_ticks": {
           "minimum": 1,
           "type": "integer"

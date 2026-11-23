@@ -40,7 +40,11 @@
         "windup_ticks": 9
       }
     ],
-    "kills_human": false,
+    "kills_human": true,
+    "never_finish": [
+      "appliance_warden",
+      "sergeant_mulroney"
+    ],
     "shield_break_ticks": 40,
     "swing": {
       "active_ticks": 3,
