@@ -1,7 +1,8 @@
 class_name PlayerMotion
 extends RefCounted
-## Fixed-tick movement on TopDownMover. Sprint, roll, vault and cover use the shipped tuning.
-## Dash commits to a ground direction on a press. Sprint has its own held action.
+## Held sprint clears the 7.5 m/s tackle line and turns more slowly toward travel. A roll press
+## eases out with i-frames and recovery, or vaults a low obstacle. Station cover owns the snap,
+## slide and corner peek. A dash press commits to a burst along the ground direction.
 
 enum Phase { FREE, ROLL, RECOVER, VAULT, DASH }
 
