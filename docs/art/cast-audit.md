@@ -125,14 +125,14 @@ Nominal walk speed comes from the live `EnemyRoster` (`enemies.json` / `speed_mp
 
 | Archetype | Gait (m/s) | Pitch | Before right | After right | Before down-right | After down-right |
 |---|---|---:|---:|---:|---:|---:|
-| patrol_cop | walk (3.2) | 70 | 21.40 / 3.47 ✗ | 0.37 / 8.96 ✓ | 32.75 / 2.93 ✗ | 0.26 / 11.70 ✓ |
-| patrol_cop | walk (3.2) | 55 | 14.98 / 4.33 ✗ | 0.15 / 11.87 ✓ | 29.17 / 4.20 ✗ | 0.31 / 10.01 ✓ |
-| patrol_cop | arrival walk (3.8) | 70 | 26.20 / 3.79 ✗ | 0.37 / 8.96 ✓ | 37.31 / 3.22 ✗ | 0.26 / 11.70 ✓ |
-| patrol_cop | arrival walk (3.8) | 55 | 19.78 / 4.65 ✗ | 0.15 / 11.87 ✓ | 33.43 / 4.49 ✗ | 0.31 / 10.01 ✓ |
-| patrol_cop | city walk (1.4) | 70 | 16.71 / 2.51 ✗ | 0.37 / 8.96 ✓ | 28.32 / 2.08 ✗ | 0.26 / 11.70 ✓ |
-| patrol_cop | city walk (1.4) | 55 | 12.07 / 3.37 ✗ | 0.15 / 11.87 ✓ | 25.05 / 3.36 ✗ | 0.31 / 10.01 ✓ |
-| patrol_cop | run (6.65) | 70 | 27.72 / 5.31 ✗ | 0.37 / 8.96 ✓ | 38.76 / 4.64 ✗ | 0.26 / 11.70 ✓ |
-| patrol_cop | run (6.65) | 55 | 22.72 / 6.17 ✗ | 0.15 / 11.87 ✓ | 34.79 / 5.84 ✗ | 0.31 / 10.01 ✓ |
+| patrol_cop | walk (3.2) | 70 | 21.40 / 3.47 ✗ | 0.00 / 3.67 ✓ | 32.75 / 2.93 ✗ | 0.00 / 7.18 ✓ |
+| patrol_cop | walk (3.2) | 55 | 14.98 / 4.33 ✗ | 0.00 / 2.56 ✓ | 29.17 / 4.20 ✗ | 0.00 / 3.76 ✓ |
+| patrol_cop | arrival walk (3.8) | 70 | 26.20 / 3.79 ✗ | 0.00 / 4.36 ✓ | 37.31 / 3.22 ✗ | 0.00 / 7.95 ✓ |
+| patrol_cop | arrival walk (3.8) | 55 | 19.78 / 4.65 ✗ | 0.00 / 3.04 ✓ | 33.43 / 4.49 ✗ | 0.00 / 4.70 ✓ |
+| patrol_cop | city walk (1.4) | 70 | 16.71 / 2.51 ✗ | 0.00 / 3.90 ✓ | 28.32 / 2.08 ✗ | 0.00 / 5.97 ✓ |
+| patrol_cop | city walk (1.4) | 55 | 12.07 / 3.37 ✗ | 0.00 / 1.99 ✓ | 25.05 / 3.36 ✗ | 0.00 / 3.66 ✓ |
+| patrol_cop | run (6.65) | 70 | 27.72 / 5.31 ✗ | 0.00 / 6.51 ✓ | 38.76 / 4.64 ✗ | 0.00 / 9.80 ✓ |
+| patrol_cop | run (6.65) | 55 | 22.72 / 6.17 ✗ | 0.00 / 4.71 ✓ | 34.79 / 5.84 ✗ | 0.00 / 6.75 ✓ |
 | riot_cop | walk (2.8) | 70 | 14.31 / 3.07 ✗ | 14.31 / 3.07 ✗ | 16.83 / 3.39 ✗ | 16.83 / 3.39 ✗ |
 | riot_cop | walk (2.8) | 55 | 14.46 / 3.50 ✗ | 14.46 / 3.50 ✗ | 31.46 / 2.41 ✗ | 31.46 / 2.41 ✗ |
 | swat | walk (3.4) | 70 | 17.54 / 3.16 ✗ | 17.54 / 3.16 ✗ | 36.26 / 2.61 ✗ | 36.26 / 2.61 ✗ |
@@ -160,25 +160,48 @@ Nominal walk speed comes from the live `EnemyRoster` (`enemies.json` / `speed_mp
 | sergeant_mulroney | walk (3.2) | 70 | 16.97 / 2.91 ✗ | 16.97 / 2.91 ✗ | 33.63 / 2.41 ✗ | 33.63 / 2.41 ✗ |
 | sergeant_mulroney | walk (3.2) | 55 | 15.75 / 4.01 ✗ | 15.75 / 4.01 ✗ | 18.72 / 2.40 ✗ | 18.72 / 2.40 ✗ |
 
-The patrol advances one drawing per **0.135 m** of ground travel. At the initial 0.35 m interval the registered 70° down-right body still jumped 24.74 px when weight changed feet. The down-right passing boot crosses the upper body in the source drawings. Centring each support pair around the same upper-body point shares that transfer between the two steps. The shorter interval produces 10.37 drawings/s at the 1.4 m/s city walk, 23.70 at the 3.2 m/s wave walk, 28.15 on the 3.8 m/s arrival and **49.26 drawings/s** in the 6.65 m/s retreat. The retreat cycles quickly at 60 Hz.
+### Patrol cop, eight-drawing walk and run
 
-The recut armed sheet is patrol-specific. Other wave roles wearing the same uniform still select their original armed grid. The rig and distant wave card use the same distance-based contact placement as the quest patrol. It runs entirely in the renderer. The table measures the equipped near wave rig at all four speeds.
+All 64 captures passed at 32 px/m. The largest sole excursion was 0.000975 px. The largest body jump was 10.79 px on the tall near rig during the 70° down-right arrival. At the former 55° profile trouble spot, the tall near rig measured 6.39 px on retreat. The four-drawing projection was 16.11 px.
 
-**Limits outside the measured wave ID.** The quest renderer sizes the unarmed grid from the standing strip. Projecting its registered sole and upper-body midpoints at that scale gives 12.16 px body travel on the 55° profile, with 0.64 px contact travel. The three other quest projections stay within both limits. These are atlas projections, separate from the frame captures above.
+The cutter measures the support boot and upper-body midpoint after matching the shipped patrol’s mean opaque height per facing. For each profile contact it measures horizontal torso advance relative to the sole between the heel and passing drawings, divides by two drawing intervals, and converts at that pitch’s nominal world scale. Averaging both contacts and both pitches gives **0.1765 m/drawing** for the walk and **0.3917 m/drawing** for the run. Above **4.0 m/s** the near rig, far wave card and quest card select the run. Set `StreetCopWalk.PLANTED` to `FOUR` to restore the old strips and 0.135 m interval at every speed.
 
-Actor ID 230 has a 1.15991 body multiplier in `StreetCrowdCards.body_scale`. At that equipped scale the armed 55° profile projects to 16.11 px body jump and 0.21 px contact travel. The upper-body point relative to the support sole changes by 16.32 px between the two drawings. Even allowing the sole to move the full 2 px leaves at least 14.32 px of body travel in that change. Translating the whole figure or shortening the step cannot close this case. The tall-actor projections at 70° are 12.16 px in profile and 15.28 px down-right. At 55° down-right the body projects to 13.57 px.
+Each support anchors in world space. Between drawing centres the torso leans over that boot toward the neighbouring measured pose, with at most 0.22 horizontal shear and 0.12 vertical stretch. In the run, drawings 4 and 8 carry the body to its next landing in the air and contribute no sole dots. The quest card uses its standing-strip scale. Actor 262472 gives exactly 1.16 on the tall near rig and the far wave card.
+
+Each host cell gives **maximum sole travel / maximum body jump** in pixels at 32 px/m. Cadence is ground speed divided by distance per drawing. The full-precision `build/cast/cop8/feet.json` includes an independent cadence count between rendered drawing boundaries. The director’s strobe threshold is 24 drawings/s.
+
+| Gait (m/s) | Pitch | Facing | Drawings/s | Near rig | Tall near rig | Tall far wave card | Quest card |
+|---|---:|---|---:|---:|---:|---:|---:|
+| City walk (1.4) | 70° | right | 7.93 | 0.0010 / 3.90 | 0.0008 / 3.60 | 0.0006 / 3.60 | 0.0005 / 3.90 |
+| City walk (1.4) | 70° | down-right | 7.93 | 0.0009 / 5.97 | 0.0009 / 8.10 | 0.0005 / 8.10 | 0.0006 / 6.72 |
+| City walk (1.4) | 55° | right | 7.93 | 0.0007 / 1.99 | 0.0008 / 1.52 | 0.0006 / 1.52 | 0.0005 / 1.80 |
+| City walk (1.4) | 55° | down-right | 7.93 | 0.0008 / 3.66 | 0.0008 / 2.29 | 0.0006 / 2.29 | 0.0006 / 3.17 |
+| Wave walk (3.2) | 70° | right | 18.13 | 0.0010 / 3.67 | 0.0008 / 3.54 | 0.0005 / 3.54 | 0.0005 / 3.60 |
+| Wave walk (3.2) | 70° | down-right | 18.13 | 0.0007 / 7.18 | 0.0008 / 9.74 | 0.0005 / 9.74 | 0.0005 / 8.07 |
+| Wave walk (3.2) | 55° | right | 18.13 | 0.0008 / 2.56 | 0.0008 / 3.47 | 0.0005 / 3.47 | 0.0004 / 2.66 |
+| Wave walk (3.2) | 55° | down-right | 18.13 | 0.0006 / 3.76 | 0.0008 / 2.57 | 0.0005 / 2.57 | 0.0005 / 3.00 |
+| Arrival (3.8) | 70° | right | 21.53 | 0.0008 / 4.36 | 0.0007 / 4.21 | 0.0005 / 4.21 | 0.0005 / 4.27 |
+| Arrival (3.8) | 70° | down-right | 21.53 | 0.0007 / 7.95 | 0.0008 / 10.79 | 0.0004 / 10.79 | 0.0005 / 8.93 |
+| Arrival (3.8) | 55° | right | 21.53 | 0.0006 / 3.04 | 0.0006 / 4.12 | 0.0006 / 4.12 | 0.0004 / 3.16 |
+| Arrival (3.8) | 55° | down-right | 21.53 | 0.0007 / 4.70 | 0.0008 / 3.05 | 0.0005 / 3.05 | 0.0005 / 3.56 |
+| Retreat (6.65) | 70° | right | 16.98 | 0.0008 / 6.51 | 0.0008 / 4.75 | 0.0004 / 4.75 | 0.0004 / 5.26 |
+| Retreat (6.65) | 70° | down-right | 16.98 | 0.0007 / 9.80 | 0.0006 / 8.35 | 0.0005 / 8.35 | 0.0004 / 7.13 |
+| Retreat (6.65) | 55° | right | 16.98 | 0.0007 / 4.71 | 0.0007 / 6.39 | 0.0005 / 6.39 | 0.0004 / 4.90 |
+| Retreat (6.65) | 55° | down-right | 16.98 | 0.0005 / 6.75 | 0.0006 / 6.36 | 0.0004 / 6.36 | 0.0006 / 4.95 |
+
+The four-drawing patrol changed at 23.70 drawings/s on the wave walk and 49.26 drawings/s on retreat.
 
 The door carrier's slab hides the supporting boot in its down-right pass. The 70° pile-driver profile shows a flat rear pad in all four drawings, with no identifiable lift or change of pad identity. Neither observation supports a numeric whole-contact pass for that facing.
 
 From the worktree root, with the lane's APPDATA and GODOT_BIN set, run `node tools/art/cast_feet.mjs`. The terminal and `build/cast/feet.json` report the same rows. The source captures are `build/cast/tracks_{70,55}_32.json`. Run `python tools/art/test_cast_feet.py` for the synthetic planted, sliding and drawing-change controls.
 
-The 64 px/m stills use the same fixed viewport, archetype, speed and tick 38 in both exposures. Their orange dots cover every rendered sample of that boot contact. The bracket gives the tick span. The 32 px/m comparison clip replays the captured sprite cells at their recorded viewport transforms on a fixed metre grid, at 60 frames/s. Its native panels and 2× detail insets show ten six-metre traverses through the city walk, wave walk and retreat.
+The 64 px/m stills show the same fixed viewport and tick 38, with one orange sole dot per rendered frame of the bracketed contact. The film replays ten recorded six-metre traverses in gait order. Both panels use native 32 px/m samples and separate 64 px/m captures for the feet insets. Dots accumulate on a fixed metre grid at both scales.
 
 - [70° still](<C:/Users/kazda/kiro/gtai-masters/n26/cast/feet_cop_patrol_before_after_64ppm_tilt70.png>)
 - [55° still](<C:/Users/kazda/kiro/gtai-masters/n26/cast/feet_cop_patrol_before_after_64ppm_tilt55.png>)
 - [19.8 s owner comparison](<C:/Users/kazda/kiro/gtai-masters/n26/cast/feet_cop_patrol_before_after_32.mp4>)
 
-For the still exposures run `node tools/art/cast_feet.mjs build/cast 64 patrol_cop`. With the original captures in `build/cast/before`, run `python tools/art/cast_feet_plate.py build/cast/before build/cast patrol_cop <output-directory>` and `python tools/art/cast_feet_clip.py build/cast/before build/cast <output.mp4>`.
+Capture the current patrol with `node tools/art/cast_feet.mjs build/cast/cop8 32 patrol_cop` and repeat at 64. With the original takes in `build/cast/before`, run `python tools/art/cast_feet_plate.py build/cast/before build/cast/cop8 patrol_cop <output-directory>` and `python tools/art/cast_feet_clip.py build/cast/before build/cast/cop8 <output.mp4>`.
 
 ## Sergeant Mulroney card admission, 2026-11-23
 

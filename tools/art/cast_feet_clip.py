@@ -102,7 +102,7 @@ def compose(page, x, tick, take, ground, crop):
     # path of the actor; ink and old dots retain their measured world separation.
     shift = (tick+1)*take['speed_mps']*64/60 if take['facing']=='down_right' else 0
     gy = crop[2] - crop[1] + shift*math.sin(math.radians(take['pitch']))/math.sqrt(2)
-    top = round(gy-39)
+    top = round(gy-78)
     if top < 0 or top+112 > panel.height:
         raise ValueError('feet inset escaped the recorded ground grid')
     feet = panel.crop((72,top,WIDTH-72,top+112))
