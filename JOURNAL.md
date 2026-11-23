@@ -91,3 +91,10 @@ NEXT: nothing; the Director merges `n26-keys` (product code = e6db0a319). Items 
 - 18:43 START no NEED keys in the four other journals (grep). No Astra lock; last call 15:13Z (usage limit). Tree clean apart from untracked brief outputs (inert). Nothing to fix: gate PASS at 8d6a78c07 (`build\gate\8d6a78c07e71\gate.json`), REPORT final at 5a86ecd38.
 
 NEXT: nothing; the Director merges `n26-keys`. Open items are in REPORT "Next steps".
+
+## Session 8 (18:50 - 18:53, REPORT)
+
+- 18:51 START no NEED keys in the four other journals (grep). No Astra lock; last call 15:13Z (usage limit to Nov 28). Tree clean apart from untracked brief outputs (inert).
+- 18:52 CHECK REPORT has every section (header, What works, What does not, What blocked, Calls for the owner, Merge notes, Next steps, Astra ledger); `node tools/evidence/cites.mjs REPORT.md` -> 7 paths, 7 ok; `build/gate/8d6a78c07e71/gate.json` present (gate PASS at 8d6a78c07); gtai-masters n26/keys frames.json 11 entries, 0 missing files. No REPORT change needed.
+
+NEXT: nothing; the Director merges `n26-keys` (product code = e6db0a319). Open items (six p70 grids, p55 grids, p55 bare sprint drift, bigger chip numbers) are in REPORT "Next steps".
