@@ -98,3 +98,4 @@ NEXT (session 3), in order:
 3. Review gunner8c / contractor8c / thug8c (`foes-n26/<c>8c/out/<c>8c_{70,55}_{down,dr,right,ur,up}_t3.png`) against `<c>/out/<c>_armed_walk_70.png`; write the per-facing file list into briefs 05-07 step 2 (copy the warden brief's paragraph).
 4. Then warden (03), feet-four (08), gunner (05), contractor (06), thug (07). Commit last new work by 17:10, final gate by 17:25.
 - 13:53 gunner8c: all ten sheets ACCEPTED; brief 05 step 2 now names them (8c layout, one body height, cop8 placement). contractor8c and thug8c still generating at session end.
+- 13:53 contractor8c done; 70 down/dr/right ACCEPTED (stocky, right build), the other 7 unreviewed. thug8c still generating (pid 74992). Session 2 ends here; ASTRA cop8 still running (pid 81328, since 13:30).
