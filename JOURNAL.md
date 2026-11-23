@@ -93,3 +93,9 @@ NEXT (session 3): read `evidence/briefs/n26-pressure-02b-rocket-read.out.txt` (m
 no staged leftovers, log `ASTRA rocket-read <min> accepted` + `MILESTONE rocket 41eccb33e` (or later sha), then the
 13:32 NEXT list from (2): brief 03 trooper (shift its 15:35/15:20 times if it starts after 14:20), 04 stall, item 5 by me,
 films, last work 17:10, gate 17:25.
+
+## Session 3 (13:52 to 15:21)
+
+- 13:52 start. ASTRA rocket-read still alive (pid 77404 node, lock 13:24, hard stop 14:20); out file empty so far, tree has
+  no staged/modified tracked paths. MILESTONE keys 8d8bb3787 seen (12:24): the test players press actions, re-check 03 after.
+  No NEED pressure in the other four journals.
