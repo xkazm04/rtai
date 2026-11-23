@@ -243,3 +243,4 @@ NEXT (session 6, report phase; freeze 18:40, report 18:50, end 19:10):
   open in REPORT. cites 34/34 ok.
 NEXT: none this run. Director: merge `n26-pressure`; re-run item 5 medians and the item 3 arena on the merged tree (after
 keys); mutate `features/gauntlet/gauntlet_combat.gd` (stall fix) once a Godot is free.
+- 18:42 Temp: removed this lane's gate snapshots 0f9baec4835f (+ .gtai-snapshot) and 7969ed2a4872.gtai-snapshot; the empty dir `%LOCALAPPDATA%\Temp\gtai-gate-7969ed2a4872` stays (Windows says busy, no process names it): remove it after the session ends.
