@@ -2,12 +2,12 @@
 
 Hard stop 17:22 wall clock. Last commit 17:00. The code is FROZEN: this call makes films and evidence only.
 If a film needs a dev change (a new take in the existing dev film), it lives under `project/dev/gauntlet/**` only and is
-committed by COMMITBY; otherwise film with what exists. Fix lint and format findings in your own edit and go on.
+committed by 17:00; otherwise film with what exists. Fix lint and format findings in your own edit and go on.
 
 ## Setup, every shell
 `export APPDATA=C:/Users/kazda/kiro/gtai-n26/appdata/pressure` and
 `export GODOT_BIN='C:\Users\kazda\kiro\gtai-spike\tools\godot\Godot_v4.7.2-stable_win64_console.exe'`.
-One Godot at a time in this worktree (Godot is yours alone; the Director's final gate starts after your hard stop, on your last commit, so a dev commit after COMMITBY is not allowed). Anything that renders
+One Godot at a time in this worktree (Godot is yours alone; the Director's final gate starts after your hard stop, on your last commit, so a dev commit after 17:00 is not allowed). Anything that renders
 uses `--rendering-driver d3d12`; every windowed run uses `--position 0,1440` (never the main display). Film committed
 code only: `tools/film/film.mjs ... --rev=<sha>` or a snapshot worktree; `tools/film/compare.mjs` for same-tick pairs.
 

@@ -127,3 +127,24 @@ films, last work 17:10, gate 17:25.
   `evidence/briefs/n26-pressure-03b-trooper-ship.md`, hard stop 15:28, commit by 15:08).
 - 14:52 Briefs timed: 04 stall hard stop 16:42, fix commit 16:02, batches start by 16:05; 05 films hard stop 17:22,
   commit 17:00. Shift both by the delay if 03b ends late (keep 05's end <= 17:22: the gate starts 17:25).
+- 15:07 ASTRA trooper-ship 18 accepted (1092 s; `6288453ee` rocket `cooldown_s` 1.4 -> 1.1, `lead_model` orbit; arena
+  10 m: circle 48/48, dash 0/48; a steady circler loses 75.46 HP in 10 s and dies at 13.30-13.47 s (one trooper);
+  gauntlet average 0.205 hits per trooper, rocket-only early deaths 0/21; test bounds: 15-16 launches / 30 s, circle
+  >= 14 hits, standing every launch, dash 0; unit 3988 pass; 23 selected scenarios pass; quest 1 tapes and replay_60s
+  pinned hash held; mutate rocket_lead 12/14 = 85.7 % (survivors: error log, model selection)). MILESTONE trooper 6288453ee.
+  Call for the owner: harshness of the steady circle (13 s to death vs one trooper); rest 1.4 s orbit is one value.
+- 15:08 ASTRA RUNNING stall since 15:08 (pid 47220 node, fresh thread, brief `evidence/briefs/n26-pressure-04-stall.md`
+  with step 8 = item 5 batches; hard stop 16:22, fix commit 15:52, batches start by 15:55;
+  out `evidence/briefs/n26-pressure-04-stall.out.txt`).
+- 15:10 session 3 end. No Godot of mine.
+NEXT (session 4): (1) `astra.lock` pid 47220 (node) = stall, hard stop 16:22. When it ends: read its out file + diff
+  (cause file:line, test red-then-green, fix owner: if souls/player code -> pending test + NEED melee/keys line in this
+  JOURNAL), check `evidence/n26-pressure/medians/` (salt0, salt1, floors.md, medians.md; no tick-cap/freeze runs), log
+  `ASTRA stall <min> <verdict>`. Then run `node tools/gauntlet/tune.mjs propose --batch=<abs>/evidence/n26-pressure/medians/salt0/batch.json --out=<abs>/evidence/n26-pressure/medians/plan.json --profile=all --metric=death`
+  myself (node only; the tuner's record; NOTHING applied) and quote it in REPORT. (2) Launch 05 films (fresh, Start-Process,
+  brief `evidence/briefs/n26-pressure-05-films.md`, hard stop 17:22, commit 17:00; shift earlier if 04 ends early, never
+  later than 17:22). Before it: if 04 touched combat/squad or ai, fine, films come after. (3) 17:25 gate
+  `node tools/gate/run.mjs --rev=HEAD` (Godot is mine; ~85 min last night; if a markerless `%TEMP%/gtai-gate-<sha>`
+  breaks it, `git worktree remove --force --force` it). (4) LOOK at every film; frames.json; REPORT by 18:50 with
+  Calls: rocket A vs C (`rocket-a-vs-c-32.png`), trooper rest 1.1 vs 1.4 orbit (harshness), deflect curve
+  (`evidence/n26-pressure/deflect/share.md`: 6 m guard 24 %, bat 31 %). `node tools/evidence/cites.mjs REPORT.md`.
