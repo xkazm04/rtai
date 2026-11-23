@@ -102,3 +102,24 @@ func test_replay_rejects_the_wrong_beat_and_state_hash() -> void:
 	body["state_hash"] = "0".repeat(64)
 	assert_true(game.new_game_path.accept(body) == null)
 	assert_eq(Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT), orphans)
+
+
+func test_damaged_quest_slot_falls_back_to_prologue_with_its_notice() -> void:
+	game.save_path = Checkpoint.DEFAULT_PATH
+	_press_campaign_start()
+	var chapter: PrologueGame = game.new_game_path.prologue
+	var hash_before: String = chapter.checkpoints.last.state_hash
+	chapter.encounter.finished.emit()
+	Save.flush()
+	assert_eq(str(Save.read_meta()["point"]), "prologue-handover")
+	SaveKit.flip(Save.slots().slot_path(Save.active_slot()), 70)
+	game.free()
+	game = Quest1Game.new()
+	game.settings_path = ""
+	add_child(game)
+	game.card.continue_pressed.emit()
+	chapter = game.new_game_path.prologue
+	assert_not_null(chapter)
+	assert_eq(chapter.checkpoints.last.state_hash, hash_before)
+	assert_string_contains(chapter.save_notice.text(), "Loaded the last good one.")
+	assert_eq(Save.take_notice(), "")

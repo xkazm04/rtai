@@ -15,6 +15,7 @@ var lines: PrologueLines
 var encounter: PrologueEncounter
 var embedded: bool = false
 var checkpoints: PrologueAutosave
+var save_notice: SaveNotice = SaveNotice.new()
 var result_path: String
 var with_view: bool = true
 var _seed: int
@@ -22,6 +23,8 @@ var _seed: int
 
 func _ready() -> void:
 	boot()
+	if embedded:
+		save_notice.show(Save.take_notice())
 	if encounter != null and with_view and DisplayServer.get_name() != "headless":
 		_open_view(stage.plan as PrologueYard)
 
@@ -119,6 +122,7 @@ func _equip_squad(data: DataTable) -> void:
 
 func _open_view(plan: PrologueYard) -> void:
 	var view: PrologueView = PrologueView.new()
+	view.notice = save_notice
 	view.encounter = encounter
 	view.live = live
 	var floor_view: PrologueFloor = PrologueFloor.new()
