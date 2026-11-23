@@ -275,3 +275,16 @@ once (lane's one Godot). Optional, before 01:30, films only (no product code): a
 P6b (`tools/film/owner_take.gd` via Astra or by hand with the kill_reel tools), only if time and one Godot allow.
 REPORT final at 01:40: `node tools/evidence/cites.mjs REPORT.md` clean, commit JOURNAL/REPORT per path with
 `git commit -- <paths>`. Clean Temp: `gtai-gate-9da9442bb509` after the gate (memory: clean Temp after merge).
+
+- 01:30 session 6 start (STABILIZE, past freeze). No astra.lock; last call p6b-saw-look ended 23:37. grep `NEED melee`
+  in the four other journals: only pressure 18:30 (robo_tazer), answered in REPORT Call 3.
+- 01:31 FINAL GATE on `9da9442bb` (HEAD's only later changes: JOURNAL.md, REPORT.md): `gate: PASS;
+  build/gate/9da9442bb509/gate.json`. lint 19/19, GUT 3821/0/2 skipped, 67 scenarios (rig_stress CONTENDED), parity
+  1200, release-compile 934/0.
+- 01:33 DECISION n24 melee: no `--reels` gate: about 21 min, the session ends at 01:40; recorded in REPORT.
+- 01:34 REPORT final (DRAFT line gone, gate row on 9da9442bb). cites 5/5 ok; M/ films, frames.json (13) checked by
+  hand. Temp gtai-gate-9da9442bb509 removed (pid 74924 gone). Removed the two Astra stderr scratch files
+  (n24-p6*-err.txt, untracked); committed n24-p6b-saw-look.out.txt with the briefs.
+
+NEXT: lane done. For the Director: merge `n24-melee` at this commit; merge notes in REPORT (enemy_pit.gd hurt() call
+with pressure's ai/** timing, fighter_fx.gd:18, fight_areas_art.gd:36, combat_arena.gd 2 lines). Reels gate not run.

@@ -1,6 +1,6 @@
 # REPORT lane melee (n24, 2026-11-22), branch `n24-melee`, worktree `n23-street`
 
-DRAFT (session 5, 23:40): the final gate line lands later (gate on `9da9442bb` running since 23:38).
+Final (session 6, 01:35). Last product commit `9da9442bb` (23:37); commits after it touch only JOURNAL.md / REPORT.md.
 
 Owner, verbatim: "Melee weapons double-attack on one click look horrible, we need on unique swing per weapon, with
 unique brutal animation per human enemies as it should one-shot them. For robot enemies we will need electric
@@ -32,7 +32,7 @@ Root for film paths: M = `C:/Users/kazda/kiro/gtai-masters/n24/melee`.
 | Plasma kill tests | `6e7868bce` `test_kill_plasma_art.gd` | 5/5; mutate `kill_plasma_art` 1/19 -> 5/19 (26.3%, the survivors are drawing constants) |
 | The chainsaw's grind no longer looks electric | `22654f6d3`: row `stun_look: "hold"`, view-only `FighterFx.hold_look_until` (not hashed), `StunCrowd.electric`; M/kills/p6/chainsaw-64-before.png against M/kills/p6/chainsaw-64-after.png, baton unchanged M/kills/p6/electro_baton-32-after.png | hold still 16 ticks; telemetry, parity, bake, 60 s replay identical; mutate `melee_contact` 8/8 |
 | Decision lines | `7144b8a1a` docs/decisions.md: cursor, claw, robo_tazer | |
-| Gate on `f6978fc2f` | `node tools/gate/run.mjs --rev=f6978fc2f` PASS, `build/gate/f6978fc2f8fe/gate.json` | lint 19/19, GUT 3811/0, 67 scenarios, parity 1200, release-compile 934/0 |
+| Final gate on `9da9442bb` (last product commit) | `node tools/gate/run.mjs --rev=HEAD` at 23:38: `gate: PASS; build/gate/9da9442bb509/gate.json` | lint 19/19 over 2054 files, GUT 3821 pass / 0 fail / 2 skipped, 67 scenarios (rig_stress p50 1.171 ms CONTENDED, 4 other runs), parity 1200 exact, selftest goldens 11/11 + 5/5, release-compile 934/0 |
 | Shared arena kept to call sites | `4832ca100` | `combat_arena.gd` 2 changed lines vs `b3f4727c0` |
 | Tests | GUT 3792 pass / 0 fail (P3); mutate `melee_combo` 4/4, `melee_lethal` 8/12 (66.7%), `melee_shutdown` 15/20 (75%) | parity 1200 exact, bake + pinned 60 s replay held (P1) |
 
@@ -58,6 +58,9 @@ Root for film paths: M = `C:/Users/kazda/kiro/gtai-masters/n24/melee`.
 - Godot's movie writer encoded 1280x800 despite a 1080p request; mp4s rebuilt from native 1080p frames (about 15 min, P1).
 - P2 rewrote the shared `combat_arena.gd` header to fit its cap; bounced and restored in P3 (about 20 min).
 - `tools/godot/check.mjs` on `kill_styles.gd` / `signature_kills.gd` reported dependency cascades (P4 item 0).
+- The `--reels` gate after the freeze was not run: the snapshot gate takes about 21 min and this session ends at 01:40.
+  The PASS above has no reels (0 min spent; the Director's merge gate covers it).
+- The rig_stress p50 budget was never judged on an idle machine (five lanes): CONTENDED, not measured.
 
 ## Calls for the owner
 
