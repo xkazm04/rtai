@@ -183,4 +183,6 @@ static func shove(rig: CutRig) -> Vector3:
 	var world: Vector2 = rig.global_transform.basis_xform(r.off) * SHOVE_GAIN
 	var e: float = clampf(r.off.length() / maxf(r.travel, 1.0), 0.0, 1.0)
 	var side: float = signf(world.x) if absf(world.x) > 0.01 else 1.0
+	if StreetMulroneyHit.living(rig):
+		world = Vector2.ZERO
 	return Vector3(world.x, world.y, side * LEAN * e)

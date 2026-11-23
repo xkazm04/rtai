@@ -133,6 +133,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--prologue-stills",
 	"--clip",
 	"--yard-dressing",
+	"--cast-patrol-feet",
+	"--cast-mulroney-trace",
 ]
 var _values: Dictionary[String, String] = {}
 var _unknown: Array[String] = []

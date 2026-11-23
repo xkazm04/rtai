@@ -43,7 +43,7 @@ const WAS: StringName = &"street_walker_was"
 static func step(rig: CutRig) -> void:
 	if rig.head_card != null and not rig.head_card.has_meta(StreetStrips.PREF):
 		StreetStrips.prefetch_fall(rig, ViewMode.shared().art, row_of(rig))
-	var path: String = CastCardPose.strip(rig)
+	var path: String = StreetCopWalk.patrol_path(rig, CastCardPose.strip(rig))
 	if path.is_empty():
 		release(rig)
 		return
@@ -130,15 +130,21 @@ static func release(rig: CutRig) -> void:
 
 
 static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
+	StreetCopWalk.bind(card, path)
 	card.texture = StreetStrips.get_tex(path)
 	var fall: bool = path.ends_with("_fall.png")
-	var walk: bool = path.ends_with("_walk.png") or path.ends_with("_attack.png")
-	card.vframes = StreetFallBetween.rows_of(path) if fall else (STRIDE_FRAMES if walk else 1)
+	var walk: bool = (
+		path.ends_with("_walk.png") or path.ends_with("_attack.png") or path.ends_with("_run.png")
+	)
+	card.vframes = (
+		StreetFallBetween.rows_of(path) if fall else (StreetCopWalk.rows_of(path) if walk else 1)
+	)
 	var cell: Vector2 = Vector2(
 		card.texture.get_width() / float(RigHeadCard.FRAMES),
 		card.texture.get_height() / float(card.vframes)
 	)
-	card.offset = Vector2(-cell.x * 0.5, -cell.y * (0.5 if fall else FOOT_Y))
+	var foot_y: float = StreetCopWalk.FOOT_Y if card.has_meta(StreetCopWalk.CONTACT) else FOOT_Y
+	card.offset = Vector2(-cell.x * 0.5, -cell.y * (0.5 if fall else foot_y))
 	card.set_meta(ON, path)
 	card.remove_meta(StreetWalkerFall.OCT)
 	StreetDeadPlan.drop(card)
@@ -156,6 +162,9 @@ static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 
 static func place(rig: CutRig, card: Sprite2D) -> void:
 	var k: float = StreetCrowdCards.body_scale(rig.actor_id)
+	var pose: CastCardPose = CastCardPose.of(rig)
+	if pose != null:
+		k *= pose.sheets.body_scale
 	if StreetFallBetween.is_fall_card(card):
 		StreetWalkerFall.draw(rig, card, k)
 		return
@@ -178,9 +187,14 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	var fall: Vector2 = Vector2(0.0, 1.0) if hit else StreetWalkerFall.pose(rig, card)
 	var wound: Vector3 = StreetWalkerHit.shove(rig)
 	card.global_rotation = stride * SWAY * walk + fall.x + wound.z + StreetWalkerHit.flail(rig)
+	if card.has_meta(StreetCopWalk.CONTACT) or (hit and StreetMulroneyHit.living(rig)):
+		card.global_transform = Transform2D(card.global_rotation, card.global_position)
 	card.global_scale = Vector2(s, s * fall.y)
 	card.global_position = (
 		rig.global_position - Vector2(0.0, absf(stride) * BOB_PX * walk) + Vector2(wound.x, wound.y)
 	)
+	StreetCopWalk.plant(rig, card)
 	if hit and not StreetWalkerHit.is_burn(str(card.get_meta(ON, ""))):
 		StreetWalkerHit.face(card, rig.react.dir.rotated(rig.facing))
+		if StreetMulroneyHit.living(rig):
+			StreetMulroneyHit.anchor(card)

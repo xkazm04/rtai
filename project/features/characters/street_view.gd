@@ -30,6 +30,7 @@ static func post(rig: CutRig) -> void:
 		return
 	if (
 		StreetFallBetween.is_fall_card(card)
+		or (StreetMulroneyHit.living(rig) and (rig.react.active() or rig.react.limp > 0.0))
 		or (
 			card.has_meta(StreetWalkerCards.ON)
 			and StreetPedShock.active(rig.react, StreetWalkerCards.row_of(rig))
