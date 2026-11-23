@@ -84,3 +84,7 @@ NEXT (session 3), on top of the 13:37 list:
 - 13:43 warden8c t3 ACCEPTED (8 one-facing 2x4 sheets: heavy-set, pole held as her sheet). Final warden walk set + the lesson in `foes-n26/warden8/notes.md`; warden brief step 2 now names the exact files. The warden brief is READY to launch after mul-fix (fill HARDSTOP/COMMITBY). If gunner8/contractor8/thug8 drift slim, re-roll them in the warden8c layout (copy `warden8c/jobs.json` and swap the description).
 - 13:43 ASTRA RUNNING cop8 since 13:30 (pid 81328). Session 2 ends.
 - 13:44 gunner8 REJECTED (tall/slim drift); gunner8c (2x4 one-facing layout, `foes-n26/mk8c.py gunner`, 10 sheets) started (pid 78280). contractor8/thug8 from chain8 will likely drift the same way: if so, `py -3 -I mk8c.py contractor|thug` in `foes-n26` and launch gen26 on `<c>8c`. Use the 8c layout for every new 8-drawing sheet from now on.
+- 13:45 contractor8 REJECTED (tall/slim drift); contractor8c (2x4 layout, 10 sheets) started (gen26 pid 73104). thug8 is generating from chain8 (8-per-band layout, expect the same drift: if so `py -3 -I mk8c.py thug` and gen26 on `thug8c`).
+- 13:45 Background image jobs at session end: gunner8c (pid 78280), contractor8c (pid 73104), chain8/thug8 (bash pid 71776). ASTRA RUNNING cop8 since 13:30 (pid 81328, hard stop 14:45).
+
+NEXT (session 3) adds: review gunner8c / contractor8c / thug8 against their accepted 4-drawing walks; then add the cut paragraph to briefs 05-07 (as the warden brief step 2: files per facing, 2x4 grid order, one body height).
