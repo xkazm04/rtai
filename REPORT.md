@@ -32,7 +32,7 @@ the planted mutation caught, export-audit 968 loaded 0 failed, selftest pass. Re
 - The player's own Kerf slice can still carry Rivet through a thin wall (souls code, melee lane's): `NEED melee` with a
   patch as text in `evidence/n26-pressure/stall/cause.md`; the player test is pending until then.
 - The stall fix (`bf32bfd1a`) has no mutate score: call 06 ran out of time inside its mutate run, and the builder was
-  gone after that (see below). Score: FILMS_MUTATE.
+  gone after that (see below); the lane's one Godot then went to the films and the final gate.
 - The two-trooper circling film and a 6 m deflect film were not made: the existing dev takes put ONE rocket trooper in a
   wave-6 crew and the rifles at 9.5 m, and the builder that would have added a two-trooper / 6 m take hit its usage
   limit. The films below use the takes that exist; the 6 m and two-trooper numbers are the measured tables.
