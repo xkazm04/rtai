@@ -1,0 +1,628 @@
+{
+  "tick_rate": 60,
+  "window_ticks": 1800,
+  "reaction_ticks": 15,
+  "sprint_mps": 9.3,
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "arms": [
+    {
+      "model": "linear",
+      "rest_s": 1.4,
+      "share": 0.8,
+      "trials": [
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 14,
+          "launches": 14,
+          "motion": "standing",
+          "seed": 1
+        },
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 0,
+          "launches": 14,
+          "motion": "circle",
+          "seed": 1
+        },
+        {
+          "dashes": 14,
+          "distance_m": 10.0,
+          "hits": 0,
+          "launches": 14,
+          "motion": "circle_dash",
+          "seed": 1
+        },
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 14,
+          "launches": 14,
+          "motion": "standing",
+          "seed": 2
+        },
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 0,
+          "launches": 14,
+          "motion": "circle",
+          "seed": 2
+        },
+        {
+          "dashes": 14,
+          "distance_m": 10.0,
+          "hits": 0,
+          "launches": 14,
+          "motion": "circle_dash",
+          "seed": 2
+        },
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 14,
+          "launches": 14,
+          "motion": "standing",
+          "seed": 3
+        },
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 0,
+          "launches": 14,
+          "motion": "circle",
+          "seed": 3
+        },
+        {
+          "dashes": 14,
+          "distance_m": 10.0,
+          "hits": 0,
+          "launches": 14,
+          "motion": "circle_dash",
+          "seed": 3
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 14,
+          "launches": 14,
+          "motion": "standing",
+          "seed": 1
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 0,
+          "launches": 14,
+          "motion": "circle",
+          "seed": 1
+        },
+        {
+          "dashes": 14,
+          "distance_m": 14.0,
+          "hits": 0,
+          "launches": 14,
+          "motion": "circle_dash",
+          "seed": 1
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 14,
+          "launches": 14,
+          "motion": "standing",
+          "seed": 2
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 0,
+          "launches": 14,
+          "motion": "circle",
+          "seed": 2
+        },
+        {
+          "dashes": 14,
+          "distance_m": 14.0,
+          "hits": 0,
+          "launches": 14,
+          "motion": "circle_dash",
+          "seed": 2
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 14,
+          "launches": 14,
+          "motion": "standing",
+          "seed": 3
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 0,
+          "launches": 14,
+          "motion": "circle",
+          "seed": 3
+        },
+        {
+          "dashes": 14,
+          "distance_m": 14.0,
+          "hits": 0,
+          "launches": 14,
+          "motion": "circle_dash",
+          "seed": 3
+        }
+      ]
+    },
+    {
+      "model": "orbit",
+      "rest_s": 1.4,
+      "share": 0.8,
+      "trials": [
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 14,
+          "launches": 14,
+          "motion": "standing",
+          "seed": 1
+        },
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 14,
+          "launches": 14,
+          "motion": "circle",
+          "seed": 1
+        },
+        {
+          "dashes": 14,
+          "distance_m": 10.0,
+          "hits": 0,
+          "launches": 14,
+          "motion": "circle_dash",
+          "seed": 1
+        },
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 14,
+          "launches": 14,
+          "motion": "standing",
+          "seed": 2
+        },
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 14,
+          "launches": 14,
+          "motion": "circle",
+          "seed": 2
+        },
+        {
+          "dashes": 14,
+          "distance_m": 10.0,
+          "hits": 0,
+          "launches": 14,
+          "motion": "circle_dash",
+          "seed": 2
+        },
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 14,
+          "launches": 14,
+          "motion": "standing",
+          "seed": 3
+        },
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 14,
+          "launches": 14,
+          "motion": "circle",
+          "seed": 3
+        },
+        {
+          "dashes": 14,
+          "distance_m": 10.0,
+          "hits": 0,
+          "launches": 14,
+          "motion": "circle_dash",
+          "seed": 3
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 14,
+          "launches": 14,
+          "motion": "standing",
+          "seed": 1
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 14,
+          "launches": 14,
+          "motion": "circle",
+          "seed": 1
+        },
+        {
+          "dashes": 14,
+          "distance_m": 14.0,
+          "hits": 0,
+          "launches": 14,
+          "motion": "circle_dash",
+          "seed": 1
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 14,
+          "launches": 14,
+          "motion": "standing",
+          "seed": 2
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 14,
+          "launches": 14,
+          "motion": "circle",
+          "seed": 2
+        },
+        {
+          "dashes": 14,
+          "distance_m": 14.0,
+          "hits": 0,
+          "launches": 14,
+          "motion": "circle_dash",
+          "seed": 2
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 14,
+          "launches": 14,
+          "motion": "standing",
+          "seed": 3
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 14,
+          "launches": 14,
+          "motion": "circle",
+          "seed": 3
+        },
+        {
+          "dashes": 14,
+          "distance_m": 14.0,
+          "hits": 0,
+          "launches": 14,
+          "motion": "circle_dash",
+          "seed": 3
+        }
+      ]
+    },
+    {
+      "model": "linear",
+      "rest_s": 1.1,
+      "share": 0.8,
+      "trials": [
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 16,
+          "launches": 16,
+          "motion": "standing",
+          "seed": 1
+        },
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 0,
+          "launches": 16,
+          "motion": "circle",
+          "seed": 1
+        },
+        {
+          "dashes": 16,
+          "distance_m": 10.0,
+          "hits": 0,
+          "launches": 16,
+          "motion": "circle_dash",
+          "seed": 1
+        },
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 16,
+          "launches": 16,
+          "motion": "standing",
+          "seed": 2
+        },
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 0,
+          "launches": 16,
+          "motion": "circle",
+          "seed": 2
+        },
+        {
+          "dashes": 16,
+          "distance_m": 10.0,
+          "hits": 0,
+          "launches": 16,
+          "motion": "circle_dash",
+          "seed": 2
+        },
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 16,
+          "launches": 16,
+          "motion": "standing",
+          "seed": 3
+        },
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 0,
+          "launches": 16,
+          "motion": "circle",
+          "seed": 3
+        },
+        {
+          "dashes": 16,
+          "distance_m": 10.0,
+          "hits": 0,
+          "launches": 16,
+          "motion": "circle_dash",
+          "seed": 3
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 16,
+          "launches": 16,
+          "motion": "standing",
+          "seed": 1
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 0,
+          "launches": 16,
+          "motion": "circle",
+          "seed": 1
+        },
+        {
+          "dashes": 16,
+          "distance_m": 14.0,
+          "hits": 0,
+          "launches": 16,
+          "motion": "circle_dash",
+          "seed": 1
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 16,
+          "launches": 16,
+          "motion": "standing",
+          "seed": 2
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 0,
+          "launches": 16,
+          "motion": "circle",
+          "seed": 2
+        },
+        {
+          "dashes": 16,
+          "distance_m": 14.0,
+          "hits": 0,
+          "launches": 16,
+          "motion": "circle_dash",
+          "seed": 2
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 16,
+          "launches": 16,
+          "motion": "standing",
+          "seed": 3
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 0,
+          "launches": 16,
+          "motion": "circle",
+          "seed": 3
+        },
+        {
+          "dashes": 16,
+          "distance_m": 14.0,
+          "hits": 0,
+          "launches": 16,
+          "motion": "circle_dash",
+          "seed": 3
+        }
+      ]
+    },
+    {
+      "model": "orbit",
+      "rest_s": 1.1,
+      "share": 0.8,
+      "trials": [
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 16,
+          "launches": 16,
+          "motion": "standing",
+          "seed": 1
+        },
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 16,
+          "launches": 16,
+          "motion": "circle",
+          "seed": 1
+        },
+        {
+          "dashes": 16,
+          "distance_m": 10.0,
+          "hits": 0,
+          "launches": 16,
+          "motion": "circle_dash",
+          "seed": 1
+        },
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 16,
+          "launches": 16,
+          "motion": "standing",
+          "seed": 2
+        },
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 16,
+          "launches": 16,
+          "motion": "circle",
+          "seed": 2
+        },
+        {
+          "dashes": 16,
+          "distance_m": 10.0,
+          "hits": 0,
+          "launches": 16,
+          "motion": "circle_dash",
+          "seed": 2
+        },
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 16,
+          "launches": 16,
+          "motion": "standing",
+          "seed": 3
+        },
+        {
+          "dashes": 0,
+          "distance_m": 10.0,
+          "hits": 16,
+          "launches": 16,
+          "motion": "circle",
+          "seed": 3
+        },
+        {
+          "dashes": 16,
+          "distance_m": 10.0,
+          "hits": 0,
+          "launches": 16,
+          "motion": "circle_dash",
+          "seed": 3
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 16,
+          "launches": 16,
+          "motion": "standing",
+          "seed": 1
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 16,
+          "launches": 16,
+          "motion": "circle",
+          "seed": 1
+        },
+        {
+          "dashes": 16,
+          "distance_m": 14.0,
+          "hits": 0,
+          "launches": 16,
+          "motion": "circle_dash",
+          "seed": 1
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 16,
+          "launches": 16,
+          "motion": "standing",
+          "seed": 2
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 16,
+          "launches": 16,
+          "motion": "circle",
+          "seed": 2
+        },
+        {
+          "dashes": 16,
+          "distance_m": 14.0,
+          "hits": 0,
+          "launches": 16,
+          "motion": "circle_dash",
+          "seed": 2
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 16,
+          "launches": 16,
+          "motion": "standing",
+          "seed": 3
+        },
+        {
+          "dashes": 0,
+          "distance_m": 14.0,
+          "hits": 16,
+          "launches": 16,
+          "motion": "circle",
+          "seed": 3
+        },
+        {
+          "dashes": 16,
+          "distance_m": 14.0,
+          "hits": 0,
+          "launches": 16,
+          "motion": "circle_dash",
+          "seed": 3
+        }
+      ]
+    }
+  ],
+  "dash": {
+    "cooldown_ticks": 40,
+    "distance_m": 4.5,
+    "enabled": true,
+    "hold_sprints": true,
+    "iframe_ticks": 0,
+    "ticks": 10
+  },
+  "motion_sha256": "450a4ef34972f14c6c8d64fecc0c8e646788cb10b855f550a07d3e717fca9800",
+  "projectile_speed_mps": 13,
+  "lock_ticks": 12
+}

@@ -8,11 +8,13 @@ const SITE_ANGLES: Array[float] = [0.36, -0.36, 0.72, -0.72, 1.3, -1.3]
 
 var locked_point: Vector2 = Vector2.INF
 var last_launch: Vector2 = Vector2.INF
+var orbit_lead: bool = RocketLead.shipped_orbit()
 var _site: Vector2 = Vector2.INF
 var _shots_here: int = 0
 var _site_origin: Vector2 = Vector2.INF
 var _observed_tick: int = -2
 var _observed_target: Vector2
+var _had_pair: bool = false
 
 
 func forget_site() -> void:
@@ -113,14 +115,24 @@ func needs_relocation(e: EnemyAgent, target: Vector2, visible: bool) -> bool:
 
 ## Only consecutive visible samples contribute velocity. The last tracking sample owns the lock.
 func _track(e: EnemyAgent, pit: EnemyPit) -> void:
-	var velocity: Vector2 = Vector2.ZERO
-	if pit.tick == _observed_tick + 1:
-		velocity = (pit.rivet_pos - _observed_target) * SimClock.TICK_RATE
+	var consecutive: bool = pit.tick == _observed_tick + 1
+	var previous: Vector2 = _observed_target if consecutive else pit.rivet_pos
+	# On reacquisition a single segment only establishes velocity. The next one owns bearing lead.
+	var track_orbit: bool = orbit_lead and _had_pair and consecutive
+	_had_pair = consecutive
 	_observed_tick = pit.tick
 	_observed_target = pit.rivet_pos
 	var flight: float = e.pos.distance_to(pit.rivet_pos) / maxf(1.0, e.arch.weapon.speed_mps)
 	var seconds: float = pit.roster.aim_lock_ticks * SimClock.TICK_DT + flight
-	locked_point = EnemyBrain.led_offset(pit.rivet_pos, velocity, seconds, e.arch.weapon.aim_lead)
+	if track_orbit:
+		locked_point = RocketLead.orbit(
+			e.pos, previous, pit.rivet_pos, seconds, e.arch.weapon.aim_lead
+		)
+	else:
+		var velocity: Vector2 = (pit.rivet_pos - previous) * SimClock.TICK_RATE
+		locked_point = EnemyBrain.led_offset(
+			pit.rivet_pos, velocity, seconds, e.arch.weapon.aim_lead
+		)
 
 
 func _reposition(e: EnemyAgent, pit: EnemyPit, map: GuardRouteMap) -> void:

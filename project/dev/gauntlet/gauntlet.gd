@@ -25,6 +25,7 @@ var waves: GauntletWaves
 var view: GauntletView
 var hud: GauntletHud
 var pick_view: GauntletPickView
+var _rockets: GauntletRocketProbe = GauntletRocketProbe.new()
 var _result_path: String = ""
 
 
@@ -52,6 +53,8 @@ func _ready() -> void:
 	picker.bind(run, session)
 	waves = GauntletWaves.attach(session, run, picker, args.text("--waves", "0").to_int())
 	_result_path = args.text("--result")
+	if not _result_path.is_empty():
+		_rockets.attach(session, waves)
 	if DisplayServer.get_name() == "headless":
 		_run_headless()
 	else:
@@ -186,6 +189,7 @@ func _invalid_arg(args: ArenaArgs) -> String:
 func _write_result(path: String) -> bool:
 	var dir_error: Error = DirAccess.make_dir_recursive_absolute(path.get_base_dir())
 	var file: FileAccess = FileAccess.open(path, FileAccess.WRITE) if dir_error == OK else null
+	_rockets.log_waves()
 	if file == null or not file.store_string(JSON.stringify(run.to_result(), "  ", true) + "\n"):
 		Log.error("gauntlet", "cannot write result to %s" % path)
 		return false

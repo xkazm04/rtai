@@ -347,6 +347,14 @@
             "minimum": 0,
             "type": "number"
           },
+          "lead_model": {
+            "default": "linear",
+            "description": "Rocket tracking over lock plus flight. Orbit extrapolates bearing and range around the trooper.",
+            "enum": [
+              "linear",
+              "orbit"
+            ]
+          },
           "lunge_m": {
             "maximum": 8,
             "minimum": 0,

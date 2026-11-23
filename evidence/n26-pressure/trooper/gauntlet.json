@@ -1,0 +1,2391 @@
+{
+  "controls": "wheel",
+  "pick": "greedy",
+  "jobs": 1,
+  "lead_share": 0.8,
+  "all_measured": {
+    "control": {
+      "runs": 10,
+      "waves": 78,
+      "waves_with_troopers": 44,
+      "hits": 20,
+      "troopers": 90,
+      "pooled": 0.2222222222222222,
+      "wave_mean": 0.21742424242424244,
+      "deaths": 10,
+      "median_death": 9.0,
+      "early": {
+        "stomp": 3
+      },
+      "early_rockets": 0,
+      "survived": 0
+    },
+    "orbit1.1": {
+      "runs": 21,
+      "waves": 127,
+      "waves_with_troopers": 66,
+      "hits": 36,
+      "troopers": 135,
+      "pooled": 0.26666666666666666,
+      "wave_mean": 0.271969696969697,
+      "deaths": 20,
+      "median_death": 5.0,
+      "early": {
+        "riot_cop": 1,
+        "rocket": 1,
+        "stomp": 12
+      },
+      "early_rockets": 1,
+      "survived": 1
+    },
+    "orbit1.4": {
+      "runs": 20,
+      "waves": 119,
+      "waves_with_troopers": 60,
+      "hits": 27,
+      "troopers": 122,
+      "pooled": 0.22131147540983606,
+      "wave_mean": 0.2325,
+      "deaths": 20,
+      "median_death": 5.0,
+      "early": {
+        "riot_cop": 2,
+        "rocket": 1,
+        "stomp": 11
+      },
+      "early_rockets": 1,
+      "survived": 0
+    }
+  },
+  "arms": [
+    {
+      "arm": "control",
+      "profile": "average",
+      "cap": 12,
+      "enemy_table": "8db3e41ea24107d51cdcff8ff026d83993b0d40fd3d6504fd60f68d47d936615",
+      "revision": "cf35129d4454d6848a1fbf4dd491e953cf8d6627",
+      "runs": [
+        {
+          "seed": 1,
+          "result_sha256": "d132a359f165912841abfd2dff3909a48c98f5f697c35a92ae253bf6f80aa5f5",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 4
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 2,
+          "result_sha256": "dbdae32df14f7305f37dca41f1df022501af7f0af3f1da7e2f3e37f0aaeb6f32",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 3,
+          "result_sha256": "013e640ba1f13835eb546bd12953064a391827efae5a134a76e278ed91a93a1f",
+          "death": {
+            "by": "sentry_turret",
+            "wave": 11
+          },
+          "wave_reached": 11,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 5
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 6,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 7,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 8,
+              "hits": 2,
+              "troopers": 4
+            },
+            {
+              "n": 9,
+              "hits": 3,
+              "troopers": 2
+            },
+            {
+              "n": 10,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 11,
+              "hits": 1,
+              "troopers": 3
+            }
+          ]
+        },
+        {
+          "seed": 4,
+          "result_sha256": "0f20c8b919ed1554550b73a2014877297b762a7e0abdc0dfc9903d9cfd5ce464",
+          "death": {
+            "by": "shield_robot",
+            "wave": 9
+          },
+          "wave_reached": 9,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 5,
+              "hits": 1,
+              "troopers": 1
+            },
+            {
+              "n": 6,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 7,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 8,
+              "hits": 1,
+              "troopers": 3
+            },
+            {
+              "n": 9,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 5,
+          "result_sha256": "8611f08b07a89561692cae29c0c777423706a41e3fde4fac90013bd00d953634",
+          "death": {
+            "by": "swat",
+            "wave": 9
+          },
+          "wave_reached": 9,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 5
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 6,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 7,
+              "hits": 0,
+              "troopers": 3
+            },
+            {
+              "n": 8,
+              "hits": 0,
+              "troopers": 4
+            },
+            {
+              "n": 9,
+              "hits": 0,
+              "troopers": 1
+            }
+          ]
+        },
+        {
+          "seed": 6,
+          "result_sha256": "c0b43056bc921da22e5d781cd01ed96eaf7656a9a5d5a78ca0cdbc77e46d6ebc",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 1,
+              "troopers": 1
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 5,
+              "hits": 1,
+              "troopers": 1
+            }
+          ]
+        },
+        {
+          "seed": 7,
+          "result_sha256": "365e60ad5e139e1503b2eb3e7c17c109a22103272cdf0e66352547d0ead1ea24",
+          "death": {
+            "by": "swat",
+            "wave": 9
+          },
+          "wave_reached": 9,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 6,
+              "hits": 2,
+              "troopers": 5
+            },
+            {
+              "n": 7,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 8,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 9,
+              "hits": 0,
+              "troopers": 1
+            }
+          ]
+        },
+        {
+          "seed": 8,
+          "result_sha256": "82278675bd9e13260f6586facc43c6dd44515ec9796651e340fc67b8f578d561",
+          "death": {
+            "by": "shield_robot",
+            "wave": 10
+          },
+          "wave_reached": 10,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 4,
+              "hits": 2,
+              "troopers": 2
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 6,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 7,
+              "hits": 0,
+              "troopers": 4
+            },
+            {
+              "n": 8,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 9,
+              "hits": 4,
+              "troopers": 2
+            },
+            {
+              "n": 10,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 9,
+          "result_sha256": "38e8aa6a87112dcce92b9d4e80cf7a8a37634d3504b6d1e6df19a4b9071d933c",
+          "death": {
+            "by": "sentry_turret",
+            "wave": 6
+          },
+          "wave_reached": 6,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 2,
+              "troopers": 4
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 6,
+              "hits": 0,
+              "troopers": 2
+            }
+          ]
+        },
+        {
+          "seed": 10,
+          "result_sha256": "d1d61f98b22dd1302ac16efa028fb8ff109ce7c9c10817fc1fcc7498adf79cfe",
+          "death": {
+            "by": "shield_robot",
+            "wave": 9
+          },
+          "wave_reached": 9,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 6,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 7,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 8,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 9,
+              "hits": 0,
+              "troopers": 1
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "runs": 10,
+        "waves": 78,
+        "waves_with_troopers": 44,
+        "hits": 20,
+        "troopers": 90,
+        "pooled": 0.2222222222222222,
+        "wave_mean": 0.21742424242424244,
+        "deaths": 10,
+        "median_death": 9.0,
+        "early": {
+          "stomp": 3
+        },
+        "early_rockets": 0,
+        "survived": 0
+      }
+    },
+    {
+      "arm": "orbit1.1",
+      "profile": "average",
+      "cap": 12,
+      "enemy_table": "396680599655db9de38c1419d51133587b2b96165f3a1121cebd8c16164f6aeb",
+      "revision": "cf35129d4454d6848a1fbf4dd491e953cf8d6627",
+      "runs": [
+        {
+          "seed": 1,
+          "result_sha256": "0c3739da0cee5b557df3f7c39f02393dacd5b66e2f60c692ea31327d3cb4e67d",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 4
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 2,
+          "result_sha256": "dbdae32df14f7305f37dca41f1df022501af7f0af3f1da7e2f3e37f0aaeb6f32",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 3,
+          "result_sha256": "55569c739c1506b76d5d688fa51adf710e987dfaf99876dda5081a9bd733fccc",
+          "death": {
+            "by": "swat",
+            "wave": 10
+          },
+          "wave_reached": 10,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 5
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 6,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 7,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 8,
+              "hits": 1,
+              "troopers": 4
+            },
+            {
+              "n": 9,
+              "hits": 4,
+              "troopers": 2
+            },
+            {
+              "n": 10,
+              "hits": 1,
+              "troopers": 1
+            }
+          ]
+        },
+        {
+          "seed": 4,
+          "result_sha256": "4de251a1a7e1cc5cdb03f0bffc9d2a939898f300122bbe71eaac61fc1beef1cf",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 5,
+              "hits": 1,
+              "troopers": 1
+            }
+          ]
+        },
+        {
+          "seed": 5,
+          "result_sha256": "ff4bebb6b5ea8be7bc4ec54f56e78092f66dffba152a366dc188706c6a437574",
+          "death": {
+            "by": "stomp",
+            "wave": 10
+          },
+          "wave_reached": 10,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 5
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 6,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 7,
+              "hits": 0,
+              "troopers": 3
+            },
+            {
+              "n": 8,
+              "hits": 0,
+              "troopers": 4
+            },
+            {
+              "n": 9,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 10,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 6,
+          "result_sha256": "08a92dda1c3c73473b1f25f6a0edc31e7d07bfdedca823b82083aefd148cca8d",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 1,
+              "troopers": 1
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 1
+            }
+          ]
+        },
+        {
+          "seed": 7,
+          "result_sha256": "4641d378db1fdfacd88f47ca779a9e025739de3725f3bd102bb733a585b598ad",
+          "death": {
+            "by": "riot_cop",
+            "wave": 8
+          },
+          "wave_reached": 8,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 6,
+              "hits": 2,
+              "troopers": 5
+            },
+            {
+              "n": 7,
+              "hits": 1,
+              "troopers": 2
+            },
+            {
+              "n": 8,
+              "hits": 1,
+              "troopers": 1
+            }
+          ]
+        },
+        {
+          "seed": 8,
+          "result_sha256": "c43fe202e5d967b62009760394e1f7508705055e4cc03a79026fa225173aacdf",
+          "death": {
+            "by": "contractor",
+            "wave": 10
+          },
+          "wave_reached": 10,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 6,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 7,
+              "hits": 1,
+              "troopers": 4
+            },
+            {
+              "n": 8,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 9,
+              "hits": 2,
+              "troopers": 2
+            },
+            {
+              "n": 10,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 9,
+          "result_sha256": "c66e5072085da2a43e285f8dfaf4087ff6a14cf56d89260e65a537fc0660c533",
+          "death": {
+            "by": "sentry_turret",
+            "wave": 6
+          },
+          "wave_reached": 6,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 2,
+              "troopers": 4
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 6,
+              "hits": 0,
+              "troopers": 2
+            }
+          ]
+        },
+        {
+          "seed": 10,
+          "result_sha256": "b1c50b8cae1aaaeb7730089295bb15a3a9677eaa94985f776be7c19a7bb1e8c3",
+          "death": {
+            "by": "shield_robot",
+            "wave": 9
+          },
+          "wave_reached": 9,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 6,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 7,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 8,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 9,
+              "hits": 0,
+              "troopers": 1
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "runs": 10,
+        "waves": 73,
+        "waves_with_troopers": 41,
+        "hits": 17,
+        "troopers": 83,
+        "pooled": 0.20481927710843373,
+        "wave_mean": 0.21707317073170732,
+        "deaths": 10,
+        "median_death": 7.0,
+        "early": {
+          "stomp": 4
+        },
+        "early_rockets": 0,
+        "survived": 0
+      }
+    },
+    {
+      "arm": "orbit1.1",
+      "profile": "novice",
+      "cap": 6,
+      "enemy_table": "396680599655db9de38c1419d51133587b2b96165f3a1121cebd8c16164f6aeb",
+      "revision": "cf35129d4454d6848a1fbf4dd491e953cf8d6627",
+      "runs": [
+        {
+          "seed": 1,
+          "result_sha256": "a296afbaf10aa5a2db29371de43db8122364e2bbf5b6c56974c9edf20dfd7968",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 2,
+              "troopers": 4
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 2,
+          "result_sha256": "bf53978e088119b31b4694007bf84eb4a85c6cb4ac44ebe5345ce02ea4839a1f",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 2,
+              "troopers": 2
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 3,
+          "result_sha256": "e48253ee3d0ceebe67abe2fb9c43913f787396e2e59456bb6df582a8b9705920",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 4,
+              "hits": 3,
+              "troopers": 5
+            },
+            {
+              "n": 5,
+              "hits": 1,
+              "troopers": 1
+            }
+          ]
+        },
+        {
+          "seed": 4,
+          "result_sha256": "c37483785a174299ad4b2f2b654e730b6f88411f2af102b17ed7f4ccf834f2bf",
+          "death": {
+            "by": "rocket",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 5,
+              "hits": 1,
+              "troopers": 1
+            }
+          ]
+        },
+        {
+          "seed": 5,
+          "result_sha256": "559b8e45f7a08c598f27ae0ec545b0290e3bcbcc10f5a64a4e9e33775d9e16cc",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 1,
+              "troopers": 2
+            },
+            {
+              "n": 4,
+              "hits": 1,
+              "troopers": 5
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 6,
+          "result_sha256": "1d05c336d746eb3e8a4c6d22d9899a0180347d5cb37564c27caf1f04b8d9f022",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 1
+            }
+          ]
+        },
+        {
+          "seed": 7,
+          "result_sha256": "0db10b4247f3e0287711557c425e2980520ec1a697fc8da90b91988ae26e86ba",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 4,
+              "hits": 1,
+              "troopers": 1
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 8,
+          "result_sha256": "d6fbd19d8b9af572583c76c12351701739cf3f6ce0969d6fd7e63cb9ca4c9377",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 9,
+          "result_sha256": "1f908d37181675b1773dc64174bbf89cc15bc6d897ec386675080fc73688e1fd",
+          "death": {
+            "by": "riot_cop",
+            "wave": 3
+          },
+          "wave_reached": 3,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 4
+            }
+          ]
+        },
+        {
+          "seed": 10,
+          "result_sha256": "2d3c5abbcce2c9d5df6565d580511e75dc58a007218b11cc30687868d728ff53",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 4,
+              "hits": 3,
+              "troopers": 2
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "runs": 10,
+        "waves": 48,
+        "waves_with_troopers": 22,
+        "hits": 15,
+        "troopers": 44,
+        "pooled": 0.3409090909090909,
+        "wave_mean": 0.3318181818181818,
+        "deaths": 10,
+        "median_death": 5.0,
+        "early": {
+          "riot_cop": 1,
+          "rocket": 1,
+          "stomp": 8
+        },
+        "early_rockets": 1,
+        "survived": 0
+      }
+    },
+    {
+      "arm": "orbit1.1",
+      "profile": "expert",
+      "cap": 6,
+      "partial": true,
+      "runs": [
+        {
+          "seed": 1,
+          "result_sha256": "db544aa32fa9e9c832f966a1fb4899e424ab1a09727d6656294397acd3109bb6",
+          "death": null,
+          "wave_reached": 6,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 1,
+              "troopers": 4
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 6,
+              "hits": 3,
+              "troopers": 2
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "runs": 1,
+        "waves": 6,
+        "waves_with_troopers": 3,
+        "hits": 4,
+        "troopers": 8,
+        "pooled": 0.5,
+        "wave_mean": 0.5833333333333334,
+        "deaths": 0,
+        "median_death": null,
+        "early": {},
+        "early_rockets": 0,
+        "survived": 1
+      }
+    },
+    {
+      "arm": "orbit1.4",
+      "profile": "average",
+      "cap": 12,
+      "enemy_table": "5dce2fc339b47175b93fcb3c302567d48b637eec262356266defc70b7b4db747",
+      "revision": "cf35129d4454d6848a1fbf4dd491e953cf8d6627",
+      "runs": [
+        {
+          "seed": 1,
+          "result_sha256": "d132a359f165912841abfd2dff3909a48c98f5f697c35a92ae253bf6f80aa5f5",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 4
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 2,
+          "result_sha256": "dbdae32df14f7305f37dca41f1df022501af7f0af3f1da7e2f3e37f0aaeb6f32",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 3,
+          "result_sha256": "bcafa649c39ad4efb8c0fa2d950549bb0551537aa042120ce5cfc3e7d4c40603",
+          "death": {
+            "by": "sentry_turret",
+            "wave": 9
+          },
+          "wave_reached": 9,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 5
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 6,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 7,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 8,
+              "hits": 1,
+              "troopers": 4
+            },
+            {
+              "n": 9,
+              "hits": 2,
+              "troopers": 2
+            }
+          ]
+        },
+        {
+          "seed": 4,
+          "result_sha256": "07b3b39810cb525cd9497d42e41ee2637cd4647d812241fc00e8e7c9bb1465bf",
+          "death": {
+            "by": "patrol_cop",
+            "wave": 9
+          },
+          "wave_reached": 9,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 6,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 7,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 8,
+              "hits": 0,
+              "troopers": 3
+            },
+            {
+              "n": 9,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 5,
+          "result_sha256": "ff4bebb6b5ea8be7bc4ec54f56e78092f66dffba152a366dc188706c6a437574",
+          "death": {
+            "by": "stomp",
+            "wave": 10
+          },
+          "wave_reached": 10,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 5
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 6,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 7,
+              "hits": 0,
+              "troopers": 3
+            },
+            {
+              "n": 8,
+              "hits": 0,
+              "troopers": 4
+            },
+            {
+              "n": 9,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 10,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 6,
+          "result_sha256": "deeaa40788b18e76355e36c54f67d2afcb7308e92e9cdf3ba005bef7cbdee646",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 1,
+              "troopers": 1
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 1
+            }
+          ]
+        },
+        {
+          "seed": 7,
+          "result_sha256": "4641d378db1fdfacd88f47ca779a9e025739de3725f3bd102bb733a585b598ad",
+          "death": {
+            "by": "riot_cop",
+            "wave": 8
+          },
+          "wave_reached": 8,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 6,
+              "hits": 2,
+              "troopers": 5
+            },
+            {
+              "n": 7,
+              "hits": 1,
+              "troopers": 2
+            },
+            {
+              "n": 8,
+              "hits": 1,
+              "troopers": 1
+            }
+          ]
+        },
+        {
+          "seed": 8,
+          "result_sha256": "fe477e0b37ef29c6cf7d9c6e53dfaba56d4921a13f47cd017f9500810e21f593",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 4,
+              "hits": 1,
+              "troopers": 2
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 9,
+          "result_sha256": "c66e5072085da2a43e285f8dfaf4087ff6a14cf56d89260e65a537fc0660c533",
+          "death": {
+            "by": "sentry_turret",
+            "wave": 6
+          },
+          "wave_reached": 6,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 2,
+              "troopers": 4
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 6,
+              "hits": 0,
+              "troopers": 2
+            }
+          ]
+        },
+        {
+          "seed": 10,
+          "result_sha256": "b1c50b8cae1aaaeb7730089295bb15a3a9677eaa94985f776be7c19a7bb1e8c3",
+          "death": {
+            "by": "shield_robot",
+            "wave": 9
+          },
+          "wave_reached": 9,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 6,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 7,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 8,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 9,
+              "hits": 0,
+              "troopers": 1
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "runs": 10,
+        "waves": 71,
+        "waves_with_troopers": 38,
+        "hits": 11,
+        "troopers": 78,
+        "pooled": 0.14102564102564102,
+        "wave_mean": 0.1355263157894737,
+        "deaths": 10,
+        "median_death": 7.0,
+        "early": {
+          "stomp": 4
+        },
+        "early_rockets": 0,
+        "survived": 0
+      }
+    },
+    {
+      "arm": "orbit1.4",
+      "profile": "novice",
+      "cap": 6,
+      "enemy_table": "5dce2fc339b47175b93fcb3c302567d48b637eec262356266defc70b7b4db747",
+      "revision": "cf35129d4454d6848a1fbf4dd491e953cf8d6627",
+      "runs": [
+        {
+          "seed": 1,
+          "result_sha256": "a296afbaf10aa5a2db29371de43db8122364e2bbf5b6c56974c9edf20dfd7968",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 2,
+              "troopers": 4
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 2,
+          "result_sha256": "51d078d4d13c3b9a9dccf6b51b22f7267aa6ef61ea2370fd5e73add61ef65140",
+          "death": {
+            "by": "riot_cop",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 1,
+              "troopers": 2
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 3,
+          "result_sha256": "101a4e952bf6bdc0697cbdac2d9b5f45db211b5ecbeb92abf6caf854eda678bb",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 4,
+              "hits": 3,
+              "troopers": 5
+            },
+            {
+              "n": 5,
+              "hits": 3,
+              "troopers": 1
+            }
+          ]
+        },
+        {
+          "seed": 4,
+          "result_sha256": "c37483785a174299ad4b2f2b654e730b6f88411f2af102b17ed7f4ccf834f2bf",
+          "death": {
+            "by": "rocket",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 5,
+              "hits": 1,
+              "troopers": 1
+            }
+          ]
+        },
+        {
+          "seed": 5,
+          "result_sha256": "559b8e45f7a08c598f27ae0ec545b0290e3bcbcc10f5a64a4e9e33775d9e16cc",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 1,
+              "troopers": 2
+            },
+            {
+              "n": 4,
+              "hits": 1,
+              "troopers": 5
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 6,
+          "result_sha256": "1d05c336d746eb3e8a4c6d22d9899a0180347d5cb37564c27caf1f04b8d9f022",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 1
+            }
+          ]
+        },
+        {
+          "seed": 7,
+          "result_sha256": "0db10b4247f3e0287711557c425e2980520ec1a697fc8da90b91988ae26e86ba",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 4,
+              "hits": 1,
+              "troopers": 1
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 8,
+          "result_sha256": "d6fbd19d8b9af572583c76c12351701739cf3f6ce0969d6fd7e63cb9ca4c9377",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 4,
+              "hits": 0,
+              "troopers": 2
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        },
+        {
+          "seed": 9,
+          "result_sha256": "1f908d37181675b1773dc64174bbf89cc15bc6d897ec386675080fc73688e1fd",
+          "death": {
+            "by": "riot_cop",
+            "wave": 3
+          },
+          "wave_reached": 3,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 4
+            }
+          ]
+        },
+        {
+          "seed": 10,
+          "result_sha256": "2d3c5abbcce2c9d5df6565d580511e75dc58a007218b11cc30687868d728ff53",
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "wave_reached": 5,
+          "waves": [
+            {
+              "n": 1,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 2,
+              "hits": 0,
+              "troopers": 0
+            },
+            {
+              "n": 3,
+              "hits": 0,
+              "troopers": 1
+            },
+            {
+              "n": 4,
+              "hits": 3,
+              "troopers": 2
+            },
+            {
+              "n": 5,
+              "hits": 0,
+              "troopers": 0
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "runs": 10,
+        "waves": 48,
+        "waves_with_troopers": 22,
+        "hits": 16,
+        "troopers": 44,
+        "pooled": 0.36363636363636365,
+        "wave_mean": 0.4,
+        "deaths": 10,
+        "median_death": 5.0,
+        "early": {
+          "riot_cop": 2,
+          "rocket": 1,
+          "stomp": 7
+        },
+        "early_rockets": 1,
+        "survived": 0
+      }
+    }
+  ]
+}
