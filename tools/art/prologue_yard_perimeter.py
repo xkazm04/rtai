@@ -80,6 +80,26 @@ def sliding_gate(sheet):
     return gate
 
 
+def boundary_wall(sheet):
+    # Brick and footings below the west clerestory, with a weathered stone coping.
+    wall = Image.new("RGBA", (464, 66))
+    bricks = sheet.crop((260, 447, 372, 474)).resize((146, 33), Image.Resampling.LANCZOS)
+    foot = sheet.crop((260, 478, 372, 497)).resize((146, 17), Image.Resampling.LANCZOS)
+    pier = sheet.crop((220, 412, 241, 497)).resize((19, 57), Image.Resampling.LANCZOS)
+    cap = sheet.crop((259, 479, 372, 486)).resize((146, 9), Image.Resampling.LANCZOS)
+    pen = ImageDraw.Draw(wall)
+    pen.rectangle((3, 55, 463, 65), fill=(44, 39, 39, 96))
+    for x in range(5, 464, 146):
+        wall.paste(bricks, (x, 11))
+        wall.paste(foot, (x, 44))
+        wall.paste(cap, (x, 2))
+    for x in [0, 148, 297, 445]:
+        wall.paste(pier, (x, 2))
+        pen.rectangle((x, 0, x + 18, 5), fill=STEEL, outline=INK)
+    pen.line((0, 61, 463, 61), fill=INK, width=2)
+    return wall
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("front_hall", type=Path)
@@ -87,3 +107,4 @@ if __name__ == "__main__":
     fence_panel().save(YARD / "fence_panel.png")
     with Image.open(args.front_hall) as sheet:
         sliding_gate(sheet).save(YARD / "sliding_gate.png")
+        boundary_wall(sheet).save(YARD / "boundary_wall.png")

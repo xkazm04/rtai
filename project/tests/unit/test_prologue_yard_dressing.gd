@@ -151,7 +151,10 @@ func test_torn_line_loads_the_actual_art_and_keeps_the_crossing_clear() -> void:
 		assert_true(ResourceLoader.exists(piece.art), piece.art)
 		var box: Rect2 = Rect2(-piece.size_m * 0.5, piece.size_m)
 		var bounds: Rect2 = Transform2D(piece.rotation, piece.at) * box
-		assert_false(bounds.intersects(yard.street), piece.art)
+		assert_true(
+			bounds.end.y <= yard.street.position.y or bounds.position.y >= yard.street.end.y,
+			piece.art
+		)
 	assert_lt(look.decals[0].tint.a, 1.0)
 
 
