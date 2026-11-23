@@ -114,7 +114,7 @@ func _at_event(encounter: PrologueEncounter, clip: String) -> bool:
 		"pistol_pickup":
 			return battle.pistol.picked_tick >= 0
 		"shotgun", "shotgun_close":
-			return not battle.fire.shotgun.shot_ticks.is_empty()
+			return battle.fire.shotgun.shot_ticks.size() >= (3 if clip == "shotgun_close" else 1)
 		"mulroney_order":
 			# The first ranged flank follows the pickup. Its tell and punish fit in one clip.
 			return battle.ranged and battle.orders.back()["line"] == "b2_l01_mulroney_line_up"
