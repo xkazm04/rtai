@@ -23,6 +23,8 @@ class Piece:
 	var size_m: Vector2
 	var rotation: float
 	var flip: bool
+	var tint: Color
+	var ochre: bool
 
 
 class CoverArt:
@@ -38,6 +40,7 @@ var decals: Array[Piece] = []
 var factory_front: Array[Piece] = []
 var outside: Array[Piece] = []
 var use_stage_decals: bool
+var ochre_strength: float
 
 
 static func resolve(
@@ -63,7 +66,10 @@ static func resolve(
 	result.use_stage_decals = not row.has("decals")
 	result.decals = _pieces(table, row, "decals")
 	result.factory_front = _pieces(table, row, "factory_front")
+	result.ochre_strength = table.num(row, "ochre_strength") if row.has("ochre_strength") else 0.0
 	result.outside = _pieces(table, row, "outside")
+	if row.get("include_plain_outside", false):
+		result.outside.append_array(_pieces(table, plain, "outside"))
 	if not table.ok():
 		Log.error("prologue-yard", str(table.errors()))
 	return result
@@ -100,5 +106,7 @@ static func _pieces(table: DataTable, dressing: Dictionary, key: String) -> Arra
 		piece.size_m = table.vec(row, "size_m")
 		piece.rotation = deg_to_rad(table.num(row, "rotation_deg"))
 		piece.flip = row.get("flip", false)
+		piece.tint = Color(str(row.get("tint", "ffffff")))
+		piece.ochre = row.get("ochre", false)
 		pieces.append(piece)
 	return pieces

@@ -2,6 +2,8 @@ class_name PrologueYardPaint
 extends RefCounted
 ## Draws into the floor canvas in stage order. No physics or navigation objects live here.
 
+const OCHRE: Shader = preload("res://boot/prologue/art/yard_ochre.gdshader")
+
 var _textures: Dictionary[String, Texture2D] = {}
 
 
@@ -9,6 +11,34 @@ func texture(path: String) -> Texture2D:
 	if not _textures.has(path):
 		_textures[path] = load(path) as Texture2D
 	return _textures[path]
+
+
+## The world pass prints neutral washes. Keep the source pigment on a static second impression
+## below the actor canvas, including its blood and shadows. Both impressions use the same geometry.
+func attach_ochre(floor_view: Node2D, plan: PrologueYard) -> void:
+	var layer: CanvasLayer = CanvasLayer.new()
+	layer.layer = RenderLayers.canvas(&"actors")
+	layer.follow_viewport_enabled = true
+	floor_view.add_child(layer)
+	RenderingServer.viewport_set_canvas_stacking(
+		floor_view.get_viewport().get_viewport_rid(), layer.get_canvas(), layer.layer, -1
+	)
+	var ink: Node2D = Node2D.new()
+	ink.transform = floor_view.global_transform
+	ink.z_index = RenderLayers.z(&"blood")
+	ink.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	var look: PrologueYardDressing = plan.dressing
+	var marks: Array[PrologueYardDressing.Piece] = []
+	for piece: PrologueYardDressing.Piece in look.outside + look.decals + look.factory_front:
+		if piece.ochre:
+			marks.append(piece)
+	var pigment: ShaderMaterial = ShaderMaterial.new()
+	pigment.shader = OCHRE
+	pigment.set_shader_parameter(&"strength", look.ochre_strength)
+	ink.material = pigment
+	@warning_ignore("return_value_discarded")
+	ink.draw.connect(_draw_ochre.bind(ink, plan, marks))
+	layer.add_child(ink)
 
 
 func ground(canvas: CanvasItem, layer: PrologueYardDressing.Ground) -> void:
@@ -34,9 +64,46 @@ func stamps(canvas: CanvasItem, pieces: Array[PrologueYardDressing.Piece]) -> vo
 		var scale_xy: Vector2 = Vector2(-1, 1) if piece.flip else Vector2.ONE
 		canvas.draw_set_transform(Ink.px(piece.at), piece.rotation, scale_xy)
 		var rect: Rect2 = Rect2(-piece.size_m * 0.5, piece.size_m)
-		canvas.draw_texture_rect(texture(piece.art), pixels(rect), false)
+		canvas.draw_texture_rect(texture(piece.art), pixels(rect), false, piece.tint)
 	canvas.draw_set_transform(Vector2.ZERO)
+
+
+func wreck(
+	canvas: CanvasItem, piece: PrologueYard.Wreck, tint: Color, skin: PrologueYardDressing.CoverArt
+) -> void:
+	var art: Texture2D = texture(skin.art if skin != null else piece.art)
+	var crop: Rect2 = skin.crop if skin != null else piece.crop
+	var source: Rect2 = Rect2(crop.position * art.get_size(), crop.size * art.get_size())
+	var box: Rect2 = pixels(piece.footprint)
+	if skin == null:
+		canvas.draw_texture_rect_region(art, box, source, tint)
+		return
+	canvas.draw_set_transform_matrix(cover_transform(box, source.size, piece.shell))
+	canvas.draw_texture_rect_region(art, Rect2(-source.size * 0.5, source.size), source)
+	canvas.draw_set_transform(Vector2.ZERO)
+
+
+## Uniformly fit the ink around the collision centre. The factory's south faces stay south.
+static func cover_transform(box: Rect2, source_size: Vector2, shell: bool) -> Transform2D:
+	var scale_xy: Vector2 = box.size / source_size
+	var scale_fit: float = minf(scale_xy.x, scale_xy.y)
+	var turn: float = 0.0
+	var quarter_fit: float = minf(box.size.y / source_size.x, box.size.x / source_size.y)
+	if not shell and quarter_fit > scale_fit:
+		turn = PI * 0.5
+		scale_fit = quarter_fit
+	return Transform2D(turn, Vector2.ONE * scale_fit, 0.0, box.get_center())
 
 
 static func pixels(rect: Rect2) -> Rect2:
 	return Rect2(Ink.px(rect.position), Ink.px(rect.size))
+
+
+func _draw_ochre(
+	canvas: Node2D, plan: PrologueYard, marks: Array[PrologueYardDressing.Piece]
+) -> void:
+	stamps(canvas, marks)
+	for piece: PrologueYard.Wreck in plan.wrecks:
+		var skin: PrologueYardDressing.CoverArt = plan.dressing.cover.get(piece.id)
+		if skin != null:
+			wreck(canvas, piece, Color.WHITE, skin)

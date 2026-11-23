@@ -13,6 +13,11 @@ var plan: PrologueYard
 var _paint: PrologueYardPaint = PrologueYardPaint.new()
 
 
+func _ready() -> void:
+	if plan != null and plan.dressing.ochre_strength > 0.0:
+		_paint.attach_ochre(self, plan)
+
+
 func _draw() -> void:
 	if plan == null:
 		return
@@ -22,15 +27,18 @@ func _draw() -> void:
 		_paint.ground(self, layer)
 	_street_surface(margin)
 	_crossing()
+	# The back fence passes behind the loading hall. The yard perimeter still blocks travel.
+	if not plan.dressing.factory_front.is_empty():
+		_fence(plan.fences[0])
+	_paint.stamps(self, plan.dressing.outside)
 	if plan.dressing.use_stage_decals:
 		_stage_decals()
 	_paint.stamps(self, plan.dressing.decals)
 	_paint.stamps(self, plan.dressing.factory_front)
-	_paint.stamps(self, plan.dressing.outside)
 	for wreck: PrologueYard.Wreck in plan.wrecks:
 		var skin: PrologueYardDressing.CoverArt = plan.dressing.cover.get(wreck.id)
-		_draw_piece(wreck, Color("b5a293"), skin)
-		if wreck.shell:
+		_paint.wreck(self, wreck, Color("b5a293"), skin)
+		if wreck.shell and skin == null:
 			_broken_sill(_pixels(wreck.footprint))
 	_draw_fences(margin)
 	for phone: String in stage.layout.phones:
@@ -70,31 +78,27 @@ func _street_surface(margin: float) -> void:
 
 func _draw_fences(margin: float) -> void:
 	for fence: Rect2 in plan.fences:
+		if fence == plan.fences[0] and not plan.dressing.factory_front.is_empty():
+			continue
 		var visible_box: Rect2 = fence
 		if fence.position.y == plan.yard.position.y:
 			# The simulation's side bounds cross Harbor Road. The visible yard fence ends at the kerb.
 			visible_box.size.y = plan.yard.size.y
 		elif fence.position.y == plan.far_sidewalk.end.y:
 			visible_box = fence.grow_individual(margin, 0, margin, 0)
-		draw_rect(_pixels(visible_box), Ink.INK)
-		_tiled(visible_box, "cage_mesh", 2.0)
+		_fence(visible_box)
+
+
+func _fence(box: Rect2) -> void:
+	draw_rect(_pixels(box), Ink.INK)
+	_tiled(box, "cage_mesh", 2.0)
 
 
 func _stage_decals() -> void:
 	for stain: Rect2 in plan.scorch_marks:
 		draw_texture_rect(SCORCH, _pixels(stain), false)
 	for piece: PrologueYard.Wreck in plan.debris:
-		_draw_piece(piece, Color.WHITE, null)
-
-
-func _draw_piece(
-	piece: PrologueYard.Wreck, tint: Color, skin: PrologueYardDressing.CoverArt
-) -> void:
-	var art: Texture2D = _paint.texture(skin.art if skin != null else piece.art)
-	var crop: Rect2 = skin.crop if skin != null else piece.crop
-	var cell: Vector2 = art.get_size()
-	var source: Rect2 = Rect2(crop.position * cell, crop.size * cell)
-	draw_texture_rect_region(art, _pixels(piece.footprint), source, tint)
+		_paint.wreck(self, piece, Color.WHITE, null)
 
 
 ## A fractured concrete lintel under the surviving sawtooth bays. Where a panel

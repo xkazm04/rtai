@@ -47,6 +47,7 @@ func test_override_loads_paint_layers_and_preserves_piece_transforms() -> void:
 	assert_eq(wall.size_m, Vector2(4, 6))
 	assert_almost_eq(wall.rotation, PI / 2.0, 0.00001)
 	assert_false(wall.flip)
+	assert_eq(wall.tint, Color.WHITE)
 	assert_true(look.outside[0].flip)
 	assert_true(skins.ok())
 
@@ -121,3 +122,74 @@ func test_invalid_layer_reports_the_table_read_error() -> void:
 	var recent: PackedStringArray = Log.recent()
 	assert_string_contains(recent[-1], "[ERROR] prologue-yard:")
 	assert_string_contains(recent[-1], "texture: not a string")
+
+
+func test_cover_fits_the_original_box_at_one_scale_on_both_axes() -> void:
+	var box: Rect2 = Rect2(12, 7, 11, 4)
+	var fit: Transform2D = PrologueYardPaint.cover_transform(box, Vector2(10, 5), false)
+	assert_eq(fit.origin, box.get_center())
+	assert_almost_eq(fit.x, Vector2(0.8, 0), Vector2(0.00001, 0.00001))
+	assert_almost_eq(fit.y, Vector2(0, 0.8), Vector2(0.00001, 0.00001))
+
+
+func test_long_cover_turns_a_quarter_but_a_factory_face_stays_south() -> void:
+	var box: Rect2 = Rect2(-9, 7, 12, 5)
+	var size_px: Vector2 = Vector2(4, 9)
+	var fit: Transform2D = PrologueYardPaint.cover_transform(box, size_px, false)
+	assert_eq(fit.origin, box.get_center())
+	assert_almost_eq(fit.x, Vector2(0, 1.25), Vector2(0.00001, 0.00001))
+	assert_almost_eq(fit.y, Vector2(-1.25, 0), Vector2(0.00001, 0.00001))
+	var shell: Transform2D = PrologueYardPaint.cover_transform(box, size_px, true)
+	assert_eq(shell.origin, box.get_center())
+	assert_eq(shell.get_rotation(), 0.0)
+	assert_almost_eq(shell.get_scale().y * size_px.y, box.size.y, 0.00001)
+
+
+func test_torn_line_loads_the_actual_art_and_keeps_the_crossing_clear() -> void:
+	var look: PrologueYardDressing = PrologueYardDressing.resolve("plain", "torn_line")
+	var plain: PrologueYardDressing = PrologueYardDressing.resolve("plain")
+	var data: DataTable = DataTable.open(PrologueGame.TABLE, PrologueGame.SCHEMA)
+	var yard: PrologueYard = PrologueYard.from_stage(data)
+	assert_false(look.use_stage_decals)
+	assert_eq(look.cover.size(), yard.wrecks.size() - 1)
+	assert_false(look.cover.has("broken_impeller"))
+	for wreck: PrologueYard.Wreck in yard.wrecks:
+		if wreck.id != "broken_impeller":
+			assert_true(ResourceLoader.exists(look.cover[wreck.id].art), wreck.id)
+	var concrete: PrologueYardDressing.Ground = look.ground[0]
+	assert_true(ResourceLoader.exists(concrete.texture))
+	assert_true(concrete.tiled)
+	assert_true(concrete.rect.encloses(yard.yard.grow_individual(0, 0, 0, -0.01)))
+	assert_eq(concrete.rect.end.y, yard.sidewalk.position.y)
+	assert_eq(look.factory_front.size(), 2)
+	assert_gt(look.outside.size(), plain.outside.size())
+	var inherited: int = look.outside.size() - plain.outside.size()
+	for i: int in plain.outside.size():
+		assert_eq(look.outside[inherited + i].at, plain.outside[i].at)
+		assert_eq(look.outside[inherited + i].art, plain.outside[i].art)
+	var pieces: Array[PrologueYardDressing.Piece] = look.decals + look.factory_front + look.outside
+	for piece: PrologueYardDressing.Piece in pieces:
+		assert_true(ResourceLoader.exists(piece.art), piece.art)
+		var box: Rect2 = Rect2(-piece.size_m * 0.5, piece.size_m)
+		var bounds: Rect2 = Transform2D(piece.rotation, piece.at) * box
+		assert_false(bounds.intersects(yard.street), piece.art)
+	assert_lt(look.decals[0].tint.a, 1.0)
+
+
+func test_ochre_plate_tracks_the_floor_scale_and_keeps_the_street_frontage_uncoloured() -> void:
+	var host: Node2D = add_child_autofree(Node2D.new())
+	host.scale = Vector2.ONE * 2.0
+	var plan: PrologueYard = PrologueYard.new()
+	plan.dressing = PrologueYardDressing.resolve("plain", "torn_line")
+	var paint: PrologueYardPaint = PrologueYardPaint.new()
+	paint.attach_ochre(host, plan)
+	var layer: CanvasLayer = host.get_child(0) as CanvasLayer
+	assert_true(layer.follow_viewport_enabled)
+	assert_eq(layer.layer, RenderLayers.canvas(&"actors"))
+	var ink: Node2D = layer.get_child(0) as Node2D
+	assert_eq(ink.transform, host.global_transform)
+	var material: ShaderMaterial = ink.material as ShaderMaterial
+	var strength: float = material.get_shader_parameter(&"strength")
+	assert_eq(strength, plan.dressing.ochre_strength)
+	for piece: PrologueYardDressing.Piece in plan.dressing.outside:
+		assert_eq(piece.ochre, piece.at.y < 0.0)
