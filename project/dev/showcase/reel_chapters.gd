@@ -20,6 +20,8 @@ class Chapter:
 	var riot: bool = false
 	## The victim wears armor under a patrol look: armored hp, no shield (combat-notes).
 	var armored: bool = false
+	var _saved_multiplier: float
+	var _saved_spread: float
 
 	func _init(
 		p_id: StringName, p_weapon: StringName, p_mode: StringName, p_ticks: int, p_victims: Array
@@ -33,6 +35,21 @@ class Chapter:
 	## The caption burned into the corner (derived from the id: no new UI string table).
 	func title() -> String:
 		return String(id).replace("_", " ").to_upper()
+
+	## This close-up shows the full-return bonus. Restore the arena's own rule at the cut.
+	func enter(arena: CombatArena) -> void:
+		if mode == &"deflect":
+			var rule: DeflectRule = DeflectRule.of(arena)
+			_saved_multiplier = rule.pass_ratio_k
+			_saved_spread = rule.spread_deg
+			rule.pass_ratio_k = 0.0
+			rule.spread_deg = 0.0
+
+	func leave(arena: CombatArena) -> void:
+		if mode == &"deflect":
+			var rule: DeflectRule = DeflectRule.of(arena)
+			rule.pass_ratio_k = _saved_multiplier
+			rule.spread_deg = _saved_spread
 
 
 static func all() -> Array[Chapter]:

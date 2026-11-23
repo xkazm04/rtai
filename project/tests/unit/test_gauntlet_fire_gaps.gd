@@ -64,20 +64,35 @@ func test_hit_flights_overlap_once_and_misses_contribute_no_ticks() -> void:
 func test_rocket_uses_a_real_lock_and_circle_preserves_sprint_speed() -> void:
 	var arena: FireGapArena = _trial(&"rocket_trooper", "circle")
 	var still: FireGapArena = _trial(&"rocket_trooper", "standing")
-	assert_gte(still.fire_ticks.size(), 15)
-	assert_gte(arena.fire_ticks.size(), 15)
-	assert_gt(arena.hit_ticks.size(), 0)
-	assert_gt(still.hit_ticks.size(), arena.hit_ticks.size())
+	# A 1.4 s rest plus a 0.8 s tell fits 13 full cycles in 30 s, 14 launches with
+	# the first tell already starting. Relocation may cost one launch.
+	for trial: FireGapArena in [still, arena]:
+		assert_between(trial.fire_ticks.size(), 13, 14)
+	# At 13 m/s all 14 hit the stationary target. The same locked blasts miss this
+	# uninterrupted 9.3 m/s arc at 10 m, though one edge splash would be acceptable.
+	assert_eq(still.hit_ticks.size(), still.fire_ticks.size())
+	assert_lte(arena.hit_ticks.size(), 1)
 	var parts: Dictionary[String, int] = arena.result().gap_parts_ticks
 	assert_gt(parts.tell, 0)
 	assert_gt(parts.aim_lock, 0)
 	assert_gt(parts.reposition, 0)
 	assert_eq(parts.volley_rest, 0)
-	for i: int in 90:
+	var aim: FoeRocket = arena.squad_ai.mind_for(arena.foe).rocket
+	var observed_lock: int = 0
+	for i: int in 150:
 		var prev: Vector2 = arena.rivet.pos
-		arena._move_target(i + 1)
+		var remaining: int = arena.foe.tell_left
+		var locked: bool = remaining > 0 and remaining <= arena.guard_tell.lock_ticks
+		var point: Vector2 = aim.locked_point
+		var next: int = arena.tick + 1
+		arena._move_target(next)
 		assert_almost_eq(arena.rivet.pos.distance_to(prev), 9.3 * SimClock.TICK_DT, 0.0001)
 		assert_almost_eq(arena.rivet.pos.distance_to(arena.foe.pos), 10.0, 0.00001)
+		arena.step(next)
+		if locked:
+			observed_lock += 1
+			assert_eq(aim.locked_point, point, "the aim point stays fixed as Rivet runs")
+	assert_gte(observed_lock, arena.guard_tell.lock_ticks)
 
 
 func test_patrol_rifle_hits_a_circling_runner_with_lead_enabled() -> void:
@@ -86,9 +101,12 @@ func test_patrol_rifle_hits_a_circling_runner_with_lead_enabled() -> void:
 	assert_gte(led.hit_ticks.size(), 10)
 	assert_eq(flat.hit_ticks.size(), 0)
 	assert_eq(led.fire_ticks, flat.fire_ticks)
+	# Seed 1: 25 hits, longest silence 198 ticks (three 66-tick burst cycles).
+	# Allow one intra-burst round of jitter, while a fourth missed cycle still fails.
+	var max_gap: int = 3 * 66 + 7
 	var last_hit: int = 0
 	for tick: int in led.hit_ticks:
 		if tick <= FireGapArena.TICKS:
-			assert_lte(tick - last_hit, 3 * SimClock.TICK_RATE)
+			assert_lte(tick - last_hit, max_gap)
 			last_hit = tick
-	assert_lte(FireGapArena.TICKS - last_hit, 3 * SimClock.TICK_RATE)
+	assert_lte(FireGapArena.TICKS - last_hit, max_gap)

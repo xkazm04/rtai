@@ -73,7 +73,7 @@ func chapter() -> ReelChapters.Chapter:
 
 func step(stage: ArenaStage, tick: int) -> void:
 	if tick >= _next_tick and index < chapters.size():
-		_count()
+		_count(stage.arena)
 		index += 1
 		if index < chapters.size():
 			_begin(stage, tick)
@@ -137,6 +137,7 @@ func _begin(stage: ArenaStage, tick: int) -> void:
 	started_tick = tick
 	_next_tick = tick + c.ticks
 	var arena: CombatArena = stage.arena
+	c.enter(arena)
 	_extras.clear()
 	for h: Fighter in arena.hostiles:  # the last chapter's dead leave the frame
 		if not h.alive():
@@ -151,9 +152,7 @@ func _begin(stage: ArenaStage, tick: int) -> void:
 	if carry != null:
 		carry.take(c.weapon, arena)
 	else:
-		Log.warn(
-			"showcase", "director: no carry (run with --loadout=pistol); %s skipped" % c.weapon
-		)
+		Log.warn("showcase", "director: no carry for %s (run with --loadout=pistol)" % c.weapon)
 	victims.clear()
 	spots.clear()
 	for off: Vector2 in c.victims:
@@ -180,10 +179,11 @@ func _spawn(stage: ArenaStage, at: Vector2, c: ReelChapters.Chapter) -> Fighter:
 	return g
 
 
-func _count() -> void:
+func _count(arena: CombatArena) -> void:
 	var c: ReelChapters.Chapter = chapter()
 	if c == null:
 		return
+	c.leave(arena)
 	var dead: int = 0
 	for g: Fighter in victims:
 		dead += 0 if g.alive() else 1
