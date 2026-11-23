@@ -75,3 +75,6 @@ NEXT: (session 5, NO builder: Astra limit until Nov 28) (1) the 16:24 commit "Tu
 - 17:08 masters `C:/Users/kazda/kiro/gtai-masters/n26/melee/` frames.json 15 entries; REPORT filled (items 1-4, calls, merge notes, ledger); cites 25/25 ok.
 - 17:27 mutate `ghost_bond_ring.gd` (--max=20, ring test only): 11.1 % (2/18 valid); draw calls untested; in REPORT "What does not". Temp mutate worktree removed.
 - 17:28 gate evidence on `0f3111024` all PASS: lint 19/19, unit 4046 passed 0 failed, scenarios 68/68, parity 1200 exact, selftest, export-audit 973/0. Reels running (`build/gate/0f3111024e95/reels.log`).
+- 17:39 MILESTONE gate PASS on `0f3111024` with reels (`build/gate/0f3111024e95/gate.json`); gate snapshot worktree removed from Temp. REPORT carries the gate line; cites 27/27.
+
+NEXT: (session 6, if any; no builder) nothing new after the 18:40 freeze. REPORT.md is complete (gate, films, calls, merge notes, ledger). Only: re-run `node tools/evidence/cites.mjs REPORT.md`, confirm `C:/Users/kazda/kiro/gtai-masters/n26/melee/frames.json` lists 15 existing files, and commit any last JOURNAL line. Do not start Godot runs; do not re-gate (code unchanged since `d980ca3c6`).

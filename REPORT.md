@@ -74,6 +74,14 @@ after that is the director committing Astra's finished work unchanged and filmin
   takes `master_ohm` at the wave 8 rest, and about 34 s in Rivet enters Ohm. Stills
   `stills/bond_ring_fill_sequence_32.png`, `stills/ohm_transform_after_mastery_32.png`.
 
+## Gate
+`node tools/gate/run.mjs --rev=HEAD --reels` on `0f3111024` (16:43-17:39): **`gate: PASS`**; lint 19/19, unit
+4046 passed 0 failed, scenarios 68/68, parity 1200 steps exact (planted mutation caught at 629), selftest,
+export-audit 973 loaded 0 failed, reels exit 0. `gate.json`: `build/gate/0f3111024e95/gate.json` (git-ignored).
+Commits after `0f3111024` touch only `JOURNAL.md`, `REPORT.md` and `evidence/n26/bond/mutate-ring.txt` (inert).
+Tapes: 60 s replay `cbeb734ff9b97c41`, quest 1 tape and checkpoints identical, parity digest `94b2865f7f17d778`;
+one deliberate re-pin (`rivet_claw` scenario, decision line).
+
 ## What does not
 - The bond film is a screen capture of the live window (about 27 fps, not tick-exact), and the card screen is not
   drawn when the test player picks, so the offer is seen only as the ring closing at the rest; the pick is in
