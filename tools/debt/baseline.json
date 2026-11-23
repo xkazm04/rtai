@@ -125,7 +125,8 @@
         "2026-11-22: n23 prologue: deterministic hands pilot and viewport captures of the yard and first kill (dev_loc 28529 -> 28682)",
         "2026-11-22: --prologue-stills for n23 prologue (dev_loc 28682 -> 28772)",
         "2026-11-22: --bot and --prologue-stills for n23 prologue (dev_loc 28772 -> 28848)",
-        "2026-11-22: --clip for n23 prologue (dev_loc 28848 -> 28948)"
+        "2026-11-22: --clip for n23 prologue (dev_loc 28848 -> 28948)",
+        "2026-11-23: Fixed-tick prologue yard stills at two print scales (dev_loc 30712 -> 30813)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -149,6 +150,7 @@
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
         "project/dev/prologue": 220,
+        "project/dev/prologue_yard": 101,
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 1096,
@@ -165,7 +167,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 30712
+      "total": 30813
     },
     "direct_cmdline_reads": {
       "accepted": [
