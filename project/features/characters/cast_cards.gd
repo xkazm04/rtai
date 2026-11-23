@@ -61,7 +61,8 @@ func lookup(id: StringName, pitch: String) -> Sheets:
 static func _sheets(table: DataTable, row: Dictionary, pitch: String) -> Sheets:
 	var out: Sheets = Sheets.new()
 	var dir: String = RigHeadCard.ART_DIR + pitch + "/"
-	out.walk = dir + table.text(row, "armed_walk")
+	var walk: String = table.text(row, "armed_walk")
+	out.walk = dir + (StreetMulroneyAnchors.WALK if walk == StreetMulroneyAnchors.FOUR else walk)
 	out.attack = dir + table.text(row, "attack")
 	out.stomp = dir + table.text(row, "stomp") if row.has("stomp") else ""
 	out.hit = dir + table.text(row, "hit")

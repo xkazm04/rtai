@@ -113,7 +113,7 @@ func _observe(tick: int) -> void:
 	if rig == null or rig.head_card == null or not rig.head_card.is_visible_in_tree():
 		return
 	var sprite: Sprite2D = rig.head_card
-	var path: String = sprite.texture.resource_path.get_file()
+	var path: String = sprite.texture.resource_path.get_file().replace("_planted8", "")
 	if not path.begins_with("sergeant_mulroney_"):
 		return
 	var action: String = path.trim_prefix("sergeant_mulroney_").trim_suffix(".png")

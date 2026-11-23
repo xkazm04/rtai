@@ -71,9 +71,8 @@ class Contact:
 		step_m = FOUR_STEP_M
 		if drawings > 4:
 			var running: bool = strip.get_file() == RUN
-			step_m = StreetPatrolAnchors.RUN_M if running else StreetPatrolAnchors.WALK_M
 			registered = StreetPatrolPose.new()
-			registered.configure(strip, drawings, running)
+			step_m = registered.configure(strip, drawings, running)
 
 	func reset() -> void:
 		last = Vector2.INF
@@ -142,6 +141,8 @@ static func strip_of(rig: CutRig, art: String, row: String) -> String:
 
 ## The size step for a grid's resource path (1.0 = not one of ours).
 static func fill_of(path: String) -> float:
+	if path.get_file() == StreetMulroneyAnchors.EIGHT:
+		return CELL_RATIO
 	return FILL.get(path.get_base_dir().get_file() + "/" + path.get_file(), 1.0)
 
 
@@ -151,7 +152,7 @@ static func bind(card: Sprite2D, path: String) -> void:
 		old.release()
 		card.skew = 0.0
 		card.remove_meta(CONTACT)
-	if path.get_file() not in [PLANTED, RUN]:
+	if path.get_file() not in [PLANTED, RUN, StreetMulroneyAnchors.EIGHT]:
 		return
 	var contact: RigContact = RigContact.new()
 	contact.configure(path)
@@ -182,7 +183,7 @@ static func plant(rig: CutRig, card: Sprite2D) -> void:
 
 
 static func rows_of(path: String) -> int:
-	return 8 if path.get_file() in [EIGHT, RUN] else 4
+	return 8 if path.get_file() in [EIGHT, RUN, StreetMulroneyAnchors.EIGHT] else 4
 
 
 static func strip_for(speed_mps: float) -> String:

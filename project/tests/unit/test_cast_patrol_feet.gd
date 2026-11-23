@@ -6,7 +6,7 @@ const TEXEL: Vector2 = Vector2(0.25, 0.3)
 
 func test_registered_soles_hold_through_drawings_and_wrap_in_both_pitches() -> void:
 	for art: String in ["p70", "p55"]:
-		for strip: String in [StreetCopWalk.EIGHT, StreetCopWalk.RUN]:
+		for strip: String in [StreetCopWalk.EIGHT, StreetCopWalk.RUN, StreetMulroneyAnchors.EIGHT]:
 			for col: int in 5:
 				for flip: int in 2:
 					_check_contacts(art.path_join(strip), Vector2i(col, flip))

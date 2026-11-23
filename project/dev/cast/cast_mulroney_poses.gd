@@ -19,7 +19,6 @@ func _ready() -> void:
 	ViewMode.shared().set_pitch(float(_pitch))
 	ViewMode.shared().art = "p%d" % _pitch
 	CastMulroneyPreview.enable()
-	add_child(_board)
 	_host = _open_wave()
 	if _host == null:
 		_fail("missing street host")
@@ -43,14 +42,14 @@ func _advance() -> void:
 
 
 func _walks() -> bool:
+	var drawings: int = StreetCopWalk.rows_of(StreetMulroneyAnchors.WALK)
 	for octant: int in 8:
-		var direction: Vector2 = Vector2.RIGHT.rotated(octant * PI / 4.0)
 		_boss.pos = MARK
-		_boss.facing = direction
-		var expected: Vector2i = RigHeadCard.frame_of(direction.angle())
+		_boss.facing = Vector2.RIGHT.rotated(octant * PI / 4.0)
+		var expected: Vector2i = RigHeadCard.frame_of(_boss.facing.angle())
 		var seen: Dictionary[int, bool] = {}
 		for tick: int in 120:
-			_boss.pos += direction * _mind.agent.arch.speed_mps * SimClock.TICK_DT
+			_boss.pos += _boss.facing * _mind.agent.arch.speed_mps * SimClock.TICK_DT
 			await _advance()
 			var card: Sprite2D = _card()
 			if card == null or card.flip_h != bool(expected.y) or card.frame_coords.x != expected.x:
@@ -60,9 +59,9 @@ func _walks() -> bool:
 				if not _photo("walk_%d_%d" % [octant, row], "armed_walk", row):
 					return false
 				seen[row] = true
-			if seen.size() == 4:
+			if seen.size() == drawings:
 				break
-		if seen.size() != 4:
+		if seen.size() != drawings:
 			Log.error("cast", "walk octant %d only showed %s" % [octant, seen.keys()])
 			return false
 	return true
@@ -74,7 +73,7 @@ func _pump() -> bool:
 	_boss.tell_left = 20
 	for tick: int in 20:
 		await _advance()
-	if not _photo("aim", "attack", 0) or not await _shadow_pair("aim", "attack", 0):
+	if not await _shadow_pair("aim", "attack", 0):
 		return false
 	_boss.tell_left = 0
 	_mind.agent.shot_tick = _arena.tick + 1
@@ -87,7 +86,7 @@ func _pump() -> bool:
 		return false
 	FoeCastView.set_pump(_boss, 0.75)
 	await _advance()
-	if not _photo("forward", "attack", 3) or not await _shadow_pair("forward", "attack", 3):
+	if not await _shadow_pair("forward", "attack", 3):
 		return false
 	FoeCastView.set_pump(_boss, -1.0)
 	await _advance()
@@ -101,7 +100,7 @@ func _reactions() -> bool:
 		for tick: int in 4:
 			await _advance()
 		var key: String = "hit_%d" % octant
-		if not _photo(key, "hit", 0) or not await _shadow_pair(key, "hit", 0):
+		if not await _shadow_pair(key, "hit", 0):
 			return false
 		for tick: int in 40:
 			await _advance()
@@ -112,14 +111,11 @@ func _reactions() -> bool:
 	for tick: int in 90:
 		await _advance()
 		var card: Sprite2D = _card()
-		if card == null or not card.texture.resource_path.ends_with("_fall.png"):
-			continue
-		var row: int = card.frame_coords.y
-		if not seen.has(row):
-			if not _photo("fall_%d" % row, "fall", row):
-				return false
-			seen[row] = true
-	return seen.size() == 3 and _photo("rest", "fall", 2)
+		if card != null and card.texture.resource_path.ends_with("_fall.png"):
+			var row: int = card.frame_coords.y
+			if not seen.has(row):
+				seen[row] = _photo("fall_%d" % row, "fall", row)
+	return seen.size() == 3 and not false in seen.values() and _photo("rest", "fall", 2)
 
 
 func _strike(direction: Vector2, lethal: bool) -> void:
@@ -139,7 +135,9 @@ func _card() -> Sprite2D:
 
 func _photo(label: String, action: String, row: int) -> bool:
 	var card: Sprite2D = _card()
-	var suffix: String = "/sergeant_mulroney_%s.png" % action
+	var suffix: String = "sergeant_mulroney_%s.png" % action
+	if action == "armed_walk":
+		suffix = StreetMulroneyAnchors.WALK
 	if (
 		card == null
 		or not card.is_visible_in_tree()
@@ -162,6 +160,8 @@ func _photo(label: String, action: String, row: int) -> bool:
 
 
 func _shadow_pair(label: String, action: String, row: int) -> bool:
+	if not _photo(label, action, row):
+		return false
 	_shadow.hide()
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw

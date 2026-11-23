@@ -15,15 +15,19 @@ var texel: Vector2
 var stride: Vector2
 
 
-func configure(path: String, drawings: int, running: bool) -> void:
+func configure(path: String, drawings: int, running: bool) -> float:
 	count = drawings
 	half = drawings >> 1
 	flight = running
 	var low: bool = path.get_base_dir().get_file() == "p55"
+	if path.get_file() == StreetMulroneyAnchors.EIGHT:
+		marks = StreetMulroneyAnchors.WALK55 if low else StreetMulroneyAnchors.WALK70
+		return StreetMulroneyAnchors.STEP_M
 	if running:
 		marks = StreetPatrolAnchors.RUN55 if low else StreetPatrolAnchors.RUN70
-	else:
-		marks = StreetPatrolAnchors.WALK55 if low else StreetPatrolAnchors.WALK70
+		return StreetPatrolAnchors.RUN_M
+	marks = StreetPatrolAnchors.WALK55 if low else StreetPatrolAnchors.WALK70
+	return StreetPatrolAnchors.WALK_M
 
 
 func pose(
