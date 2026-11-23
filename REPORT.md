@@ -16,9 +16,10 @@ The second pass is a new dressing row `line_fire` in `project/data/tables/prolog
 | 3. Dusk, fire light, broken front | `evidence/yard26/dusk_front_64ppm.png`, `evidence/yard26/dusk_shade_steps_32ppm.png`, `evidence/yard26/dusk_t6000_32ppm.png`, `evidence/yard26/frame-cost.md` | Ground shade 0.81 on paper 0.92. Against daylight contrast, patrol blue keeps 69.2 %, the rifle round 124.5 % and the pellet 96.2 %. Eight held fire and lamp pools; the hall front is torn open with fire behind the burst doors. Frame cost p50 -0.04 ms [CI -0.70, +0.62] (bench lock, debug build). Embers cut (+0.585 ms upper bound > 0.5). Lights mutate 5/7 |
 | 4. Chain-link and gate sheet | `evidence/yard26/fence_gate_32ppm.png`, `evidence/yard26/fence_gate_64ppm.png`, `evidence/yard26/fence_tile_check.png` | 5 cut pieces from `gtai-art/factory-n26/out/fence-gate.png` (0784f9ca4); seam check clean; zebra clear; fence mutate 18/18 |
 | 5. Pump tell | `evidence/yard26/pump_32ppm_before_after.mp4`, `evidence/yard26/pump_64ppm.png`; masters `pump_32ppm.mp4`, `pump_64ppm_t6229.png` | Marker 51.2 px at 32 px/m (1.6 m), about twice the old size. Muzzle lifts 28 deg, forearm 0.532 rad (two-beat stroke). Command view mutate 5/20 |
-| 6. Keys merge, lesson cards | masters `prologue_menu_to_quest1.mp4` | FILMS |
+| 6. Keys merge, lesson cards | merge `e98906eac`; `project/boot/prologue/prologue_prompts.gd` (cards name actions, expanded from the live bindings); masters `prologue_menu_to_quest1.mp4` | FILMS-ROW |
 
 ## What does not
+- **Plate beside game (masters `plate_vs_game_mid_32ppm.png`):** the mid yard is still far from the plate. The floor is pale, the conveyor reads as thin dark strokes rather than the plate's raised belt, no appliances hang from it, and the pallets are small. The hall front comes closest (`plate_vs_game_front_64ppm.png`): fire in the burst bays and the line coming out of the hall, though dimmer than the plate.
 - **Mulroney's card is not wired into the prologue.** Cast's card is on (merged `c28b6b5a7`), but `PrologueCommandView._process` still draws the vector dress and does not call `FoeCastView.set_pump`. My 64 px/m still at tick 6229 on this branch shows one Mulroney (the dress with the large marker): the card does not draw on the prologue path, so there is no double draw here. Call 05 was to wire it and died on the usage limit (NEED director below).
 - **The six blocking conveyor sections read like loose belt.** Call 04 re-arted them as thin belt strips (`evidence/yard26/line_join_64ppm.png`), so cover does not read as cover at 32 px/m. The chunky rail art back on those six rows was call 05 Part B, which never ran.
 - **The dusk is shallower than the plate.** At the measured contrast limit (0.81) the yard reads as grimy evening, not the plate's night. See Calls.
@@ -33,6 +34,15 @@ The second pass is a new dressing row `line_fire` in `project/data/tables/prolog
 - **Codex image stall on the copy to `./out`** (11:17 to 11:27): ~12 min. `grab.sh` now copies by session id.
 - **Call 01 hit the 75 min cap without a final message:** ~10 min of review from the event log.
 - **Final gate took 42 min on the loaded machine** (16 min last time).
+
+## Films
+Masters in `C:\Users\kazda\kiro\gtai-masters\n26\yard\` with `frames.json` (13 entries, best first). The director rendered them after the builder was lost, using the existing `yard_film.tscn` through the 1080p capture profile `build/prologue-film` (driver script `build/films26/films.sh`, git-ignored). ffprobe:
+- `pair_gate_32ppm.mp4` h264 1920x1080 60/1 25.0 s
+- `pair_mid_32ppm.mp4` h264 1920x1080 60/1 25.0 s
+- `pump_32ppm.mp4` h264 1920x1080 60/1 20.0 s
+- `pump_32ppm_before_after.mp4` 20.0 s
+
+Stills: `plate_vs_game_{gate,mid}_{32,64}ppm.png`, `plate_vs_game_front_64ppm.png`, `pair_gate_64ppm_t6400.png`, `pair_mid_64ppm_t2290.png`, `pump_64ppm_t6229.png`, `dusk_depth_steps_32ppm.png`. FILMS-MENU
 
 ## Calls for the owner
 1. **Dusk depth.** Shipped: ground shade 0.81, the deepest level at which the patrol cop's blue keeps the measured readability floor (69.2 % of daylight contrast). At 0.62 the yard looks like the plate's dusk with lamp pools, and to my eye the cops still read by their ink outline, but the metric says patrol blue keeps only ~29 %. Evidence: `evidence/yard26/dusk_shade_steps_32ppm.png` (same tick, each step labelled). The switch is one data value, `ground_shade` in the `line_fire` row.
