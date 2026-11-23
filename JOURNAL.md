@@ -139,3 +139,9 @@ NEXT (session 4), in order:
 - 15:44 OPEN: the impact-outline material is shared by every card hit, so the patrol cop's and other cards' hit flashes may show the same teeth at 64 px/m. Check one cop hit at 64 before the freeze; if yes, it is a REPORT call (deliberate flash outline vs clean), not a late change.
 - 15:45 Mulroney checklist: all PASS incl. Feet with the reversal (audit `docs/art/cast-audit.md` line ~210). Item 2 DONE.
 - 15:45 ASTRA RUNNING warden since 15:45 (pid 81908, brief `evidence/briefs/n26-cast-03-warden.md`, hard stop 16:38, commit by 16:25; out `gtai-n26/logs/cast/call07-warden.out`).
+- 15:55 riot8c + swat8c: all twenty sheets ACCEPTED (identity and build hold; notes in `foes-n26/{riot8c,swat8c}/notes.md`). They wait for a cut call (same as cop8) after this run: REPORT Next steps.
+- 15:58 swat8run (8-drawing RUN, 2x4 layout, cop8run stride) started (gen26 pid 50860): the SWAT run gait (6 m/s) fails 24-41 px like the cop's retreat did.
+- 15:50 (clock correction: the lines stamped 15:55 and 15:58 were written at about 15:49-15:50 by `date`.)
+- 15:52 warden mid-call look (uncommitted cut, p70): planted8 walk = one heavy-set figure in 5 facings x 8, pole held as her sheet; the up column reads a touch narrower (check scale in the beside still). Attack rows read as time: wind-up over the shoulder, swing at full reach, catch hauled short, recover. Ochre overalls with white reflective bands (owner's plate; no blue, no vermilion).
+- 16:01 swat8run: all ten 8-drawing RUN sheets ACCEPTED (`foes-n26/swat8run/out/`). With riot8c + swat8c, riot cop and SWAT have every sheet a cop8-style cut call needs (next run).
+- 16:01 warden commit 1: 2c7f91f25 (cut art at both pitches). Row + placement in progress.
