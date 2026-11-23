@@ -3,6 +3,9 @@ extends RefCounted
 ## Each row enters the gate in files, then walks to its mark. The actors survive the cut
 ## from the conversation to combat, including anyone still outside after an early strike.
 
+## Same fighter tag as MeleeLethal.NAMED in the melee lane.
+const NAMED_HUMAN: StringName = &"melee_named_human"
+
 
 class Officer:
 	extends RefCounted
@@ -82,6 +85,7 @@ func place(arena: CombatArena, at_wave: bool) -> void:
 				squad.panic.members[officer.body] = officer
 			if id == "winnick":
 				dale = officer.body
+				dale.set_meta(NAMED_HUMAN, true)
 			officer.body.exposed = at_wave or officer.body == dale
 			if at_wave and not officer.reserve:
 				officer.inside = true
