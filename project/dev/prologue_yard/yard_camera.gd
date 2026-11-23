@@ -9,9 +9,10 @@ static func center(plan: PrologueYard, location: String, film_tick: int = -1) ->
 		return plan.rivet_start
 	if location == "gate":
 		return plan.gate
-	var east: float = plan.street.end.x
-	var x: float = (plan.gate.x + east) * 0.5 if film_tick >= 0 else east
-	return Vector2(x, plan.street.get_center().y)
+	if location == "west":
+		return Vector2(plan.yard.position.x, plan.rivet_start.y)
+	var harbor: Vector2 = Vector2(plan.street.end.x, plan.street.get_center().y)
+	return harbor if film_tick < 0 else Vector2((plan.gate.x + harbor.x) * 0.5, harbor.y)
 
 
 static func hide_hud(view: PrologueView) -> void:

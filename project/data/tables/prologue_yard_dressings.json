@@ -819,12 +819,12 @@
           "art": "res://boot/prologue/art/torn_line/concrete.png",
           "at": [
             78.45,
-            15
+            5.9
           ],
           "rotation_deg": 0,
           "size_m": [
             36,
-            38
+            19.8
           ],
           "tint": "aea498"
         },
@@ -832,12 +832,12 @@
           "art": "res://features/city/art/d5/ground/dock_yard.png",
           "at": [
             68.1,
-            29.2
+            31.1
           ],
           "rotation_deg": 0,
           "size_m": [
             15.2,
-            9.5
+            5.8
           ],
           "tint": "dbd5c9"
         },
@@ -845,25 +845,25 @@
           "art": "res://features/city/art/d5/ground/dock_yard.png",
           "at": [
             83.3,
-            29.2
+            31.1
           ],
           "rotation_deg": 0,
           "size_m": [
             15.2,
-            9.5
+            5.8
           ],
           "tint": "d1c9bd"
         },
         {
           "art": "res://boot/prologue/art/torn_line/loading_hall.png",
           "at": [
-            72,
-            24.7
+            86,
+            21.75
           ],
           "rotation_deg": 0,
           "size_m": [
-            21.8,
-            9.1
+            14.2,
+            6.05
           ],
           "tint": "dcd5c9"
         },
@@ -908,13 +908,13 @@
         {
           "art": "res://features/city/art/props/container3.png",
           "at": [
-            83,
-            29.8
+            83.4,
+            30.25
           ],
           "rotation_deg": 3,
           "size_m": [
-            7.2,
-            2.8
+            6.6,
+            2.6
           ]
         },
         {
@@ -932,58 +932,58 @@
         {
           "art": "res://boot/prologue/art/torn_line/concrete.png",
           "at": [
-            62.8,
-            56.65
+            60.7,
+            51.7
           ],
           "rotation_deg": 0,
           "size_m": [
-            39,
-            14.8
+            32,
+            4
           ],
           "tint": "aaa195"
         },
         {
           "art": "res://features/city/art/d5/ground/dock_yard.png",
           "at": [
-            60.9,
-            53.3
+            53.35,
+            57.55
           ],
           "rotation_deg": 0,
           "size_m": [
-            12.8,
-            7.3
+            7.8,
+            7.7
           ],
           "tint": "c3bcb1"
         },
         {
           "art": "res://boot/prologue/art/torn_line/boundary_wall.png",
           "at": [
-            50.7,
-            50.1
+            48.15,
+            50.15
           ],
           "rotation_deg": 0,
           "size_m": [
-            16.8,
-            1.1
+            6.9,
+            0.9
           ]
         },
         {
           "art": "res://boot/prologue/art/torn_line/boundary_wall.png",
           "at": [
-            71.8,
-            50.1
+            66.2,
+            50.15
           ],
           "rotation_deg": 0,
           "size_m": [
-            16.8,
-            1.1
+            21.2,
+            0.9
           ]
         },
         {
           "art": "res://boot/prologue/art/torn_line/appliance_pallets.png",
           "at": [
-            61.2,
-            52.95
+            55.45,
+            55.2
           ],
           "rotation_deg": 4,
           "size_m": [
@@ -995,32 +995,32 @@
         {
           "art": "res://boot/prologue/art/torn_line/boundary_wall.png",
           "at": [
-            42.6,
-            53.1
+            45.03,
+            51.75
           ],
           "rotation_deg": 90,
           "size_m": [
-            6.7,
-            0.85
+            3.9,
+            0.65
           ]
         },
         {
           "art": "res://boot/prologue/art/torn_line/boundary_wall.png",
           "at": [
-            80,
-            52.75
+            76.37,
+            51.75
           ],
           "rotation_deg": 90,
           "size_m": [
-            5.65,
-            0.85
+            3.9,
+            0.65
           ]
         },
         {
           "art": "res://features/city/art/props/dock_oil_drums.png",
           "at": [
-            56.25,
-            52.4
+            58.65,
+            52.05
           ],
           "rotation_deg": 12,
           "size_m": [
@@ -1032,8 +1032,8 @@
         {
           "art": "res://boot/prologue/art/torn_line/tyre_turn.png",
           "at": [
-            59.8,
-            52.35
+            53.5,
+            52.8
           ],
           "rotation_deg": 77,
           "size_m": [
@@ -1041,6 +1041,181 @@
             1.22
           ],
           "tint": "ffffffb6"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/boundary_wall.png",
+          "at": [
+            49.8,
+            57.45
+          ],
+          "rotation_deg": 90,
+          "size_m": [
+            8,
+            0.65
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/boundary_wall.png",
+          "at": [
+            56.9,
+            57.45
+          ],
+          "rotation_deg": 90,
+          "size_m": [
+            8,
+            0.65
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/boundary_wall.png",
+          "at": [
+            53.35,
+            61.1
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            7.5,
+            0.65
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/concrete.png",
+          "at": [
+            -14,
+            8.25
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            26.4,
+            22.6
+          ],
+          "tint": "bbb2a5"
+        },
+        {
+          "art": "res://features/city/art/d5/ground/dock_yard.png",
+          "at": [
+            -10.4,
+            13.32
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            18.8,
+            12.2
+          ],
+          "tint": "cdc6b9"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/loading_hall.png",
+          "at": [
+            -12.6,
+            3.5
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            21.2,
+            8.2
+          ],
+          "tint": "ded9cd"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/boundary_wall.png",
+          "at": [
+            -24.8,
+            11.7
+          ],
+          "rotation_deg": 90,
+          "size_m": [
+            16,
+            0.85
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/boundary_wall.png",
+          "at": [
+            -21.68,
+            19.27
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            6.9,
+            0.86
+          ]
+        },
+        {
+          "art": "res://features/city/art/props/container2.png",
+          "at": [
+            -20.5,
+            13.15
+          ],
+          "rotation_deg": 88,
+          "size_m": [
+            5.8,
+            2.32
+          ]
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/appliance_pallets.png",
+          "at": [
+            -4.25,
+            9.45
+          ],
+          "rotation_deg": -4,
+          "size_m": [
+            4.1,
+            2.6
+          ],
+          "tint": "e1dad0"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/tyre_turn.png",
+          "at": [
+            -10.55,
+            13.6
+          ],
+          "rotation_deg": -62,
+          "size_m": [
+            4.4,
+            2.2
+          ],
+          "tint": "ffffffb6"
+        },
+        {
+          "art": "res://features/city/art/props/dock_oil_drums.png",
+          "at": [
+            -15.9,
+            18
+          ],
+          "rotation_deg": 11,
+          "size_m": [
+            1.8,
+            1.8
+          ],
+          "tint": "d0c8b9"
+        },
+        {
+          "art": "res://features/city/art/d5/ground/dock_yard.png",
+          "at": [
+            -11,
+            31.12
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            20,
+            5.55
+          ],
+          "tint": "b8b0a4"
+        },
+        {
+          "art": "res://boot/prologue/art/torn_line/boundary_wall.png",
+          "at": [
+            -14.85,
+            33.49
+          ],
+          "rotation_deg": 0,
+          "size_m": [
+            12.4,
+            0.86
+          ]
         }
       ]
     }

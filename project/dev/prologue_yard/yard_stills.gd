@@ -3,7 +3,6 @@ extends Node
 const KNOWN_FLAGS: PackedStringArray = ["--dressing", "--tick", "--out", "--footprints"]
 const NEEDS_WINDOW: bool = true
 const FIXED_FPS: int = 60
-const PILOT: GDScript = preload("res://dev/bots/prologue_bot.gd")
 const SIZE: Vector2i = Vector2i(1920, 1080)
 
 var _game: PrologueGame
@@ -36,8 +35,8 @@ func _ready() -> void:
 	_game = preload("res://boot/prologue/prologue.tscn").instantiate()
 	add_child(_game)
 	_game.world.set_process(false)
-	var pilot: InputSource = PILOT.new(_game.stage, _game.encounter)
-	_game.world.loop().set_input(pilot)
+	const Pilot = preload("res://dev/bots/prologue_bot.gd")
+	_game.world.loop().set_input(Pilot.new(_game.stage, _game.encounter))
 	_capture.call_deferred()
 
 
@@ -61,7 +60,7 @@ func _capture() -> void:
 		if await _save(plan.rivet_start, 64, "footprints_mid_64ppm.png"):
 			get_tree().quit()
 		return
-	for place: String in ["gate", "mid", "harbor"]:
+	for place: String in ["gate", "mid", "harbor", "west"]:
 		for ppm: int in [32, 64]:
 			var file: String = "%s_%dppm_%s_t%d.png" % [place, ppm, plan.dressing.id, _tick]
 			if not await _save(YardCamera.center(plan, place), ppm, file):

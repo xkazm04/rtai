@@ -8,8 +8,11 @@ const PANEL_M: float = 3.0
 const HEIGHT_M: float = 0.98
 
 
-static func panel(canvas: CanvasItem, box: Rect2) -> void:
+static func panel(canvas: PrologueFloor, box: Rect2) -> void:
 	var upright: bool = box.size.y > box.size.x
+	if upright and box.position.y > canvas.plan.yard.position.y and box.end.y == canvas.plan.gate.y:
+		_gate_post(canvas, box)
+		return
 	var length: float = box.size.y if upright else box.size.x
 	var origin: Vector2 = Vector2(box.position.x, box.end.y - HEIGHT_M)
 	if upright:
@@ -21,6 +24,16 @@ static func panel(canvas: CanvasItem, box: Rect2) -> void:
 		var rect: Rect2 = Rect2(float(i) * span, 0, span, HEIGHT_M)
 		canvas.draw_texture_rect(MESH, PrologueYardPaint.pixels(rect), false)
 	canvas.draw_set_transform(Vector2.ZERO)
+
+
+static func _gate_post(canvas: CanvasItem, box: Rect2) -> void:
+	var post: Rect2 = PrologueYardPaint.pixels(box)
+	var rim: float = Ink.PX_PER_M * 0.07
+	canvas.draw_rect(post, Ink.INK)
+	var steel: Rect2 = post.grow(-rim)
+	canvas.draw_rect(steel, Color("514f4d"))
+	canvas.draw_rect(Rect2(steel.position, Vector2(rim, steel.size.y)), Color("b6aea2"))
+	canvas.draw_rect(Rect2(steel.position, Vector2(steel.size.x, rim * 2.0)), Color("96918a"))
 
 
 static func open_leaf(canvas: CanvasItem, plan: PrologueYard) -> void:
