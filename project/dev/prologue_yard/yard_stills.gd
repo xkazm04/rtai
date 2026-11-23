@@ -1,6 +1,6 @@
 extends Node
 
-const KNOWN_FLAGS: PackedStringArray = ["--dressing", "--tick", "--out", "--footprints"]
+const KNOWN_FLAGS: PackedStringArray = ["--dressing", "--tick", "--out", "--footprints", "--tilt"]
 const NEEDS_WINDOW: bool = true
 const FIXED_FPS: int = 60
 const SIZE: Vector2i = Vector2i(1920, 1080)
@@ -15,11 +15,11 @@ var _out: String
 func _ready() -> void:
 	var args: ArenaArgs = ArenaArgs.parse()
 	for key: String in args.values:
-		if key not in KNOWN_FLAGS:
-			_fail("unknown yard stills option " + key)
+		if key not in KNOWN_FLAGS or (key == "--tilt" and args.text(key) not in ["55", "70"]):
+			_fail("invalid yard stills option " + key)
 			return
 	var raw_tick: String = args.text("--tick", "300")
-	_out = args.text("--out")
+	_out = args.text("--out").path_join("tilt55" if args.text("--tilt") == "55" else "")
 	if not raw_tick.is_valid_int() or raw_tick.to_int() < 0 or not _out.is_absolute_path():
 		_fail("use a nonnegative tick and an absolute output directory")
 		return
@@ -30,7 +30,7 @@ func _ready() -> void:
 		return
 	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
 	get_window().size = SIZE
-	ViewMode.select("tilt70")
+	ViewMode.select("tilt" if args.text("--tilt") == "55" else "tilt70")
 	LaunchArgs.parse(["--seed=7", "--yard-dressing=" + args.text("--dressing")])
 	_game = preload("res://boot/prologue/prologue.tscn").instantiate()
 	add_child(_game)
@@ -84,7 +84,7 @@ func _save(at: Vector2, ppm: int, file: String) -> bool:
 	if not valid or image.save_png(_out.path_join(file)) != OK:
 		_fail("capture failed at tick %d for %s" % [_game.stage.tick, _out.path_join(file)])
 		return false
-	Log.info("yard-stills", "%s at %s m, %s" % [file, at, SIZE])
+	Log.info("yard-stills", "%s at %s m, tilt %.0f" % [file, at, ViewMode.shared().pitch_deg])
 	return true
 
 
