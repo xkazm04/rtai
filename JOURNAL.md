@@ -63,3 +63,11 @@ the stall lead. Order after rocket-art: 03 trooper, 04 stall, item 5 medians, fi
 
 - 12:22 start. ASTRA rocket-art alive (pid 80832 node, lock 12:19). No NEED pressure in the four other journals; no MILESTONE keys yet.
 - 12:40 CORRECTION stall lead: the missing `rivet` key is an artifact (bot_street_stats.gd keys only ghost forms); the real signal is 816-995 s settled in Ohm/Tonnage in the frozen wave. Appended to brief 04.
+- 13:23 ASTRA rocket-art 64 bounced (commits kept: `b370c3ba4` art + cut tool `tools/art/enemy_rocket_cut.py --check`,
+  `dab47bef7` wiring + tests; unit full 4000 pass; replay_60s / quest 1 / movement tapes byte-identical; mutate
+  fight_areas_art 2/5 = 40 %, survivor `and`->`or` routing at line 86). Looked at all four stills: shape and colours right
+  (rim and jet sampled `#92c9f5`, casing `#585f61`, Rivet's jet `#e5a12e`), but at 32 px/m the enemy rocket is a ~30 px
+  dark sliver, Rivet's size, weaker than the old blob: fails "reads large". Sent back: 1.4 m body, ~1 m jet, soft
+  ice-blue under-glow, a routing test, re-made stills, plate C scratch still for the owner call if time.
+- 13:24 ASTRA RUNNING rocket-read since 13:24 (pid 77404 node, `--resume`, brief `evidence/briefs/n26-pressure-02b-rocket-read.md`,
+  hard stop 14:20, commit by 14:10, out `evidence/briefs/n26-pressure-02b-rocket-read.out.txt`).
