@@ -114,3 +114,64 @@ The fixed camera tracks each walk at 0.84 m/s and 32 px/m. The lancer's boot mov
 [cast-after-25]: <../../project/tests/unit/test_cast_war_machine.gd>
 [cast-after-26]: <C:/Users/kazda/kiro/gtai-art/foes-n24/05-sole-track.json>
 [cast-after-27]: <C:/Users/kazda/kiro/gtai-art/foes-n24/06-door-sole.json>
+
+## Planted feet, n26
+
+The fixed-camera take samples the actual equipped wave sprites and the two prologue officers after each rendered frame at 60 Hz. Each column gives **maximum sole travel / maximum body jump**, in screen pixels at 32 px/m. A check means contact stayed within 2 px and the largest consecutive body jump stayed within 12 px. The bolted apron has a zero-travel limit. An em dash means that take has yet to run. U means a sole could not be measured. The JSON retains full precision for judging.
+
+The sole comes from alpha >128 inside the support shoe in the game PNG, projected through the displayed cell's full viewport transform. The windows in `tools/art/cast_soles.py` distinguish the support from the swing boot and equipment. Card contacts span contact and pass drawings. The articulated robots use each visible foot's own planted intervals. The apron stays under observation through an eight-direction sweep. Body jump follows the upper-body outline midpoint at 30% of crop height, or the articulated torso origin. Both measurements include drawing changes. Before is the original game at `0779185ac`.
+
+Nominal walk speed comes from the live `EnemyRoster` (`enemies.json` / `speed_mps`). The patrol also uses the free city walk in `heat.json`, the arrival walk in `prologue_stage.json` and the frightened patrol retreat in that same table. SWAT's run is the rifle-post bound. The warden has the additional arrival walk. The other sampled actors have no separate gameplay run in these encounters. A lunge is an attack. The turret stays mounted.
+
+| Archetype | Gait (m/s) | Pitch | Before right | After right | Before down-right | After down-right |
+|---|---|---:|---:|---:|---:|---:|
+| patrol_cop | walk (3.2) | 70 | 21.40 / 3.47 ✗ | 0.37 / 8.96 ✓ | 32.75 / 2.93 ✗ | 0.26 / 11.70 ✓ |
+| patrol_cop | walk (3.2) | 55 | 14.98 / 4.33 ✗ | 0.15 / 11.87 ✓ | 29.17 / 4.20 ✗ | 0.31 / 10.01 ✓ |
+| patrol_cop | arrival walk (3.8) | 70 | 26.20 / 3.79 ✗ | 0.37 / 8.96 ✓ | 37.31 / 3.22 ✗ | 0.26 / 11.70 ✓ |
+| patrol_cop | arrival walk (3.8) | 55 | 19.78 / 4.65 ✗ | 0.15 / 11.87 ✓ | 33.43 / 4.49 ✗ | 0.31 / 10.01 ✓ |
+| patrol_cop | city walk (1.4) | 70 | 16.71 / 2.51 ✗ | 0.37 / 8.96 ✓ | 28.32 / 2.08 ✗ | 0.26 / 11.70 ✓ |
+| patrol_cop | city walk (1.4) | 55 | 12.07 / 3.37 ✗ | 0.15 / 11.87 ✓ | 25.05 / 3.36 ✗ | 0.31 / 10.01 ✓ |
+| patrol_cop | run (6.65) | 70 | 27.72 / 5.31 ✗ | 0.37 / 8.96 ✓ | 38.76 / 4.64 ✗ | 0.26 / 11.70 ✓ |
+| patrol_cop | run (6.65) | 55 | 22.72 / 6.17 ✗ | 0.15 / 11.87 ✓ | 34.79 / 5.84 ✗ | 0.31 / 10.01 ✓ |
+| riot_cop | walk (2.8) | 70 | 14.31 / 3.07 ✗ | 14.31 / 3.07 ✗ | 16.83 / 3.39 ✗ | 16.83 / 3.39 ✗ |
+| riot_cop | walk (2.8) | 55 | 14.46 / 3.50 ✗ | 14.46 / 3.50 ✗ | 31.46 / 2.41 ✗ | 31.46 / 2.41 ✗ |
+| swat | walk (3.4) | 70 | 17.54 / 3.16 ✗ | 17.54 / 3.16 ✗ | 36.26 / 2.61 ✗ | 36.26 / 2.61 ✗ |
+| swat | walk (3.4) | 55 | 16.18 / 4.39 ✗ | 16.18 / 4.39 ✗ | 19.63 / 2.61 ✗ | 19.63 / 2.61 ✗ |
+| swat | run (6) | 70 | 25.54 / 4.54 ✗ | 25.54 / 4.54 ✗ | 40.83 / 3.88 ✗ | 40.83 / 3.88 ✗ |
+| swat | run (6) | 55 | 24.17 / 5.78 ✗ | 24.17 / 5.78 ✗ | 26.94 / 3.77 ✗ | 26.94 / 3.77 ✗ |
+| robot_thug | walk (2.4) | 70 | 0.00 / 1.29 ✓ | 0.00 / 1.29 ✓ | 0.01 / 1.26 ✓ | 0.01 / 1.26 ✓ |
+| robot_thug | walk (2.4) | 55 | 0.00 / 1.29 ✓ | 0.00 / 1.29 ✓ | 0.01 / 1.20 ✓ | 0.01 / 1.20 ✓ |
+| robot_gunner | walk (2.2) | 70 | 0.00 / 1.18 ✓ | 0.00 / 1.18 ✓ | 0.01 / 1.15 ✓ | 0.01 / 1.15 ✓ |
+| robot_gunner | walk (2.2) | 55 | 0.00 / 1.18 ✓ | 0.00 / 1.18 ✓ | 0.01 / 1.10 ✓ | 0.01 / 1.10 ✓ |
+| contractor | walk (3) | 70 | 18.41 / 3.95 ✗ | 18.41 / 3.95 ✗ | 34.12 / 3.29 ✗ | 34.12 / 3.29 ✗ |
+| contractor | walk (3) | 55 | 15.46 / 5.09 ✗ | 15.46 / 5.09 ✗ | 30.03 / 5.00 ✗ | 30.03 / 5.00 ✗ |
+| rocket_trooper | walk (3.2) | 70 | 13.66 / 2.03 ✗ | 13.66 / 2.03 ✗ | 22.24 / 2.89 ✗ | 22.24 / 2.89 ✗ |
+| rocket_trooper | walk (3.2) | 55 | 15.11 / 13.44 ✗ | 15.11 / 13.44 ✗ | 19.45 / 3.48 ✗ | 19.45 / 3.48 ✗ |
+| sentry_turret | sweep (0) | 70 | 0.00 / 4.02 ✓ | 0.00 / 4.02 ✓ | 0.00 / 4.02 ✓ | 0.00 / 4.02 ✓ |
+| sentry_turret | sweep (0) | 55 | 0.00 / 2.66 ✓ | 0.00 / 2.66 ✓ | 0.00 / 2.66 ✓ | 0.00 / 2.66 ✓ |
+| shield_robot | walk (1.6) | 70 | 7.35 / 13.29 ✗ | 7.35 / 13.29 ✗ | U / 13.23 ✗ | U / 13.23 ✗ |
+| shield_robot | walk (1.6) | 55 | 6.64 / 11.95 ✗ | 6.64 / 11.95 ✗ | U / 11.80 ✗ | U / 11.80 ✗ |
+| war_machine | walk (1.8) | 70 | U / 17.84 ✗ | U / 17.84 ✗ | 24.75 / 13.22 ✗ | 24.75 / 13.22 ✗ |
+| war_machine | walk (1.8) | 55 | 29.07 / 11.88 ✗ | 29.07 / 11.88 ✗ | 22.97 / 13.35 ✗ | 22.97 / 13.35 ✗ |
+| appliance_warden | walk (2.8) | 70 | 17.51 / 3.55 ✗ | 17.51 / 3.55 ✗ | 31.16 / 2.96 ✗ | 31.16 / 2.96 ✗ |
+| appliance_warden | walk (2.8) | 55 | 13.43 / 4.55 ✗ | 13.43 / 4.55 ✗ | 27.48 / 4.46 ✗ | 27.48 / 4.46 ✗ |
+| appliance_warden | arrival walk (3.8) | 70 | 25.51 / 4.08 ✗ | 25.51 / 4.08 ✗ | 38.70 / 3.44 ✗ | 38.70 / 3.44 ✗ |
+| appliance_warden | arrival walk (3.8) | 55 | 18.03 / 5.08 ✗ | 18.03 / 5.08 ✗ | 34.49 / 4.93 ✗ | 34.49 / 4.93 ✗ |
+| sergeant_mulroney | walk (3.2) | 70 | 16.97 / 2.91 ✗ | 16.97 / 2.91 ✗ | 33.63 / 2.41 ✗ | 33.63 / 2.41 ✗ |
+| sergeant_mulroney | walk (3.2) | 55 | 15.75 / 4.01 ✗ | 15.75 / 4.01 ✗ | 18.72 / 2.40 ✗ | 18.72 / 2.40 ✗ |
+
+The patrol advances one drawing per **0.135 m** of ground travel. At the initial 0.35 m interval the registered 70° down-right body still jumped 24.74 px when weight changed feet. The down-right passing boot crosses the upper body in the source drawings. Centring each support pair around the same upper-body point shares that transfer between the two steps. The shorter interval produces 10.37 drawings/s at the 1.4 m/s city walk, 23.70 at the 3.2 m/s wave walk, 28.15 on the 3.8 m/s arrival and **49.26 drawings/s** in the 6.65 m/s retreat. The retreat cycles quickly at 60 Hz.
+
+The recut armed sheet is patrol-specific. Other wave roles wearing the same uniform still select their original armed grid. The rig and distant wave card use the same distance-based contact placement as the quest patrol. It runs entirely in the renderer. The table measures the equipped near wave rig at all four speeds.
+
+The door carrier's slab hides the supporting boot in its down-right pass. The 70° pile-driver profile shows a flat rear pad in all four drawings, with no identifiable lift or change of pad identity. Neither observation supports a numeric whole-contact pass for that facing.
+
+From the worktree root, with the lane's APPDATA and GODOT_BIN set, run `node tools/art/cast_feet.mjs`. The terminal and `build/cast/feet.json` report the same rows. The source captures are `build/cast/tracks_{70,55}_32.json`. Run `python tools/art/test_cast_feet.py` for the synthetic planted, sliding and drawing-change controls.
+
+The 64 px/m stills use the same fixed viewport, archetype, speed and tick 38 in both exposures. Their orange dots cover every rendered sample of that boot contact. The bracket gives the tick span. The 32 px/m comparison clip replays the captured sprite cells at their recorded viewport transforms on a fixed metre grid, at 60 frames/s. Its native panels and 2× detail insets show ten six-metre traverses through the city walk, wave walk and retreat.
+
+- [70° still](<C:/Users/kazda/kiro/gtai-masters/n26/cast/feet_cop_patrol_before_after_64ppm_tilt70.png>)
+- [55° still](<C:/Users/kazda/kiro/gtai-masters/n26/cast/feet_cop_patrol_before_after_64ppm_tilt55.png>)
+- [19.8 s owner comparison](<C:/Users/kazda/kiro/gtai-masters/n26/cast/feet_cop_patrol_before_after_32.mp4>)
+
+For the still exposures run `node tools/art/cast_feet.mjs build/cast 64 patrol_cop`. With the original captures in `build/cast/before`, run `python tools/art/cast_feet_plate.py build/cast/before build/cast patrol_cop <output-directory>` and `python tools/art/cast_feet_clip.py build/cast/before build/cast <output.mp4>`.

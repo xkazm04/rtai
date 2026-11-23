@@ -58,7 +58,8 @@ def plate(before, after, name, pitch, dest):
     d.text((10, 309), 'Blue cross  fixed ground mark       Orange dots  support sole on each rendered frame',
            fill=ink, font=font(13))
     dest.mkdir(parents=True, exist_ok=True)
-    path = dest/f'feet_{name}_before_after_64ppm_tilt{pitch}.png'
+    slug = 'cop_patrol' if name == 'patrol_cop' else name
+    path = dest/f'feet_{slug}_before_after_64ppm_tilt{pitch}.png'
     board.save(path)
     print(path)
 
