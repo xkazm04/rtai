@@ -89,3 +89,11 @@ NEXT (session 3), on top of the 13:37 list:
 
 NEXT (session 3) adds: review gunner8c / contractor8c / thug8 against their accepted 4-drawing walks; then add the cut paragraph to briefs 05-07 (as the warden brief step 2: files per facing, 2x4 grid order, one body height).
 - 13:47 gunner8c first four (70 down/dr/right/ur) ACCEPTED: the 2x4 one-facing layout holds the build for robots too. Rest of gunner8c, contractor8c and thug8 to review next session.
+- 13:48 thug8 REJECTED (tall/slim drift, like all 8-per-band takes); thug8c (2x4, 10 sheets) started (gen26 pid 74992). All three 8-per-band takes are dead: every 8-drawing walk uses the 8c layout.
+- 13:49 Session 2 end. Background: ASTRA cop8 (pid 81328, since 13:30, hard stop 14:45); gen26 gunner8c (78280), contractor8c (73104), thug8c (74992).
+
+NEXT (session 3), in order:
+1. cop8: when pid 81328 ends read `gtai-n26/logs/cast/call04-cop8.out`, judge (drawings/s <= 24 on the walk, run sheet above 4 m/s, stills + 32 clip, up-right scale), log `ASTRA cop8 <min> <verdict>`, bounce precisely if short.
+2. Launch mul-fix (`evidence/briefs/n26-cast-09-mul-fix.md`, fill HARDSTOP/COMMITBY) detached via PowerShell Start-Process.
+3. Review gunner8c / contractor8c / thug8c (`foes-n26/<c>8c/out/<c>8c_{70,55}_{down,dr,right,ur,up}_t3.png`) against `<c>/out/<c>_armed_walk_70.png`; write the per-facing file list into briefs 05-07 step 2 (copy the warden brief's paragraph).
+4. Then warden (03), feet-four (08), gunner (05), contractor (06), thug (07). Commit last new work by 17:10, final gate by 17:25.
