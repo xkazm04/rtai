@@ -1,0 +1,5 @@
+gate 0f9baec48 lint FAIL tool-tests: tools/merge/morning_run.break.test.mjs:134 'keeps partial writes and returns the timeout diagnostic as part of out' (9230 ms; 'the child must be interrupted mid-write': the 0.04 min = 2.4 s kill landed after the child's 6 s FINISHED write under five-lane load). 606 pass, 1 fail. tools/merge untouched by n26-pressure (git diff 0779185ac..HEAD -- tools/merge empty).
+Re-run alone at 17:17, 3 times:
+ℹ pass 1 ℹ fail 0 
+ℹ pass 1 ℹ fail 0 
+ℹ pass 1 ℹ fail 0 

@@ -213,3 +213,8 @@ NEXT (session 5, from ~16:39):
   false, stops motion in/at a car, adds a deploy choice to `bot_forms.gd`; the arena drives at `sprint_mps` and the bot
   presses `sprint`/`dash` separately, so item 3's arena table should hold; the item 5 medians are pre-merge: re-run on the
   merged tree). cites 32/32 ok. Commit 4deb30781. Gate on 0f9baec48 running (lint done 16:42).
+- 17:20 FRICTION gate 0f9baec48 evidence half: lint FAIL 1/19 `tool-tests` = `tools/merge/morning_run.break.test.mjs:134`
+  timing flake under load (2.4 s kill landed after the child's 6 s write); alone 3/3 pass
+  (`evidence/n26-pressure/gate/lint-flake.txt`); not our file. unit 4007 pass / 0 fail / 3 skip; export-audit 968 / 0.
+  Reels running (log `build/gate/0f9baec4835f/reels.log`). The gate verdict will read FAIL on lint; a plain
+  `node tools/gate/run.mjs --rev=HEAD` re-run after the reels (evidence half ~25-40 min) can clear it before 18:40.
