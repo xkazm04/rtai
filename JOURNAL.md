@@ -193,3 +193,11 @@ NEXT (session 5, from ~16:39):
   changed bot behaviour: gauntlet results differ, replay_60s/quest 1 held per cause.md run), Next steps, ledger rows 6/7).
   Ledger row 6: stall 65 accepted. Calls: rocket A vs C, trooper 1.1 vs 1.4 orbit, deflect curve, tuner's rivet_repair
   x1.25 proposal (not applied; owner gives numbers). `node tools/evidence/cites.mjs REPORT.md` before the final commit.
+
+## Session 5 (16:24 to 17:54)
+
+- 16:24 start. BLOCKED Astra: the films call (n 7, 16:14) died in 4 s: "You've hit your usage limit ... try again at
+  Nov 28th, 2026 7:14 PM" (`gtai-n26/logs/pressure/astra-07-films.jsonl`). No builder for the rest of the run. Code is
+  frozen anyway; I film myself with the existing committed dev takes (running tools only, no product edits), then mutate
+  and gate. A take that does not exist (two troopers) is reported as missing, not built. No NEED pressure in other journals.
+- ASTRA films 0 abandoned (usage limit).

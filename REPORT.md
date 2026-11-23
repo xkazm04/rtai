@@ -20,12 +20,17 @@ Final HEAD: TODO. Gate: TODO (`node tools/gate/run.mjs --rev=HEAD` line + `gate.
 
 - Item 3 target "one hit per two troopers per wave" (0.5) is not reached on the average bot: 0.205 at the shipped
   1.1 s orbit. The average test bot dashes and breaks line of sight often; the arena shows the circler is hit every
-  launch. A faster rest (0.9 / 0.75) was not run: the sweep stopped at the first orbit qualifier. TODO confirm.
+  launch. A faster rest (0.9 / 0.75) was not run: the sweep stopped at the first orbit qualifier
+  (`evidence/n26-pressure/trooper/arena.md`).
 - Expert median death wave fell from 23 (n24 final, 5 seeds, one censored) to 8.5 / 9: in salt 0 the rocket killed 3 of 10
   experts (0 in salt 1). The faster, orbit-leading trooper is part of it; no retune by the owner's word.
 - The player's own Kerf slice can still carry Rivet through a thin wall (souls code, melee lane's): `NEED melee` with a
   patch as text in `evidence/n26-pressure/stall/cause.md`; the player test is pending until then.
-- TODO
+- The stall fix (`bf32bfd1a`) has no mutate score: call 06 ran out of time inside its mutate run, and the builder was
+  gone after that (see below). Score: FILMS_MUTATE.
+- The two-trooper circling film and a 6 m deflect film were not made: the existing dev takes put ONE rocket trooper in a
+  wave-6 crew and the rifles at 9.5 m, and the builder that would have added a two-trooper / 6 m take hit its usage
+  limit. The films below use the takes that exist; the 6 m and two-trooper numbers are the measured tables.
 
 ## What blocked or slowed you (minutes each)
 
@@ -38,7 +43,11 @@ Final HEAD: TODO. Gate: TODO (`node tools/gate/run.mjs --rev=HEAD` line + `gate.
   follow-up.
 - Call 03 (trooper) read the "nobody dies to rockets alone before wave 6" rule as "no rocket last blow" and shipped
   nothing new; the one novice run whose last blow was a rocket had taken zero rocket hits in four waves. 18 min follow-up.
-- TODO
+- Call 06 (stall) used its full 65 min: the 1-tick-precise repro of a 77115-tick run under five-lane load; it ended at its
+  time limit inside mutate with no final message (I reviewed and committed the medians, 5 min).
+- **Astra usage limit** (16:14): the films call (07) died after 4 s ("usage limit ... try again at Nov 28th"). No builder
+  for the last 2.5 h; the code was frozen by then, so I made the films myself with the committed n24 film tool
+  (`tools/gauntlet/pressure_films.mjs`), which could only film the takes that exist.
 
 ## Calls for the owner
 
@@ -55,13 +64,26 @@ Final HEAD: TODO. Gate: TODO (`node tools/gate/run.mjs --rev=HEAD` line + `gate.
 ## Merge notes
 
 - Pressure touched `combat.json` (`deflect.spread_deg`), the rocket rows of `enemies.json` / `weapons.json`, enemy round
-  art and `project/features/combat/enemy_round_look.gd`. TODO stall files.
+  art and `project/features/combat/enemy_round_look.gd`. The stall fix touched gauntlet code only:
+  `project/features/gauntlet/gauntlet_combat.gd`, `project/features/gauntlet/bot/bot_arena_moves.gd`,
+  `project/features/gauntlet/bot/bot_view_arena.gd`, `project/dev/gauntlet/gauntlet.gd`, two unit tests and
+  `tools/debt/baseline.json` (merge with `node tools/debt/merge_baseline.mjs` on conflict).
+- The melee lane owns `project/features/souls/kerf_stage.gd`: the player-side Kerf wall fix is its call (`NEED melee`,
+  patch text in `evidence/n26-pressure/stall/cause.md`); `test_player_kerf_slice_keeps_the_street_in_reach` is pending.
 - Root `JOURNAL.md` / `REPORT.md`: add/add conflict with other lanes, keep each lane's own.
-- TODO digests moved.
+- Digests: replay_60s, quest 1 tapes and war_cannon held byte-identical through the rocket and deflect commits
+  (calls 01 to 03 checked them); the trooper rest/lead and the stall bot fix change gauntlet bot results (every
+  gauntlet batch differs from main's; that is item 3's and 4's point), not a shipped replay. A deliberate change
+  is recorded in `docs/decisions.md` (pressure trooper and stall lines).
 
 ## Next steps
 
-- TODO
+- The owner plays the 1.1 s orbit trooper and gives numbers; 1.4 s orbit is one value away (`enemies.json` rocket
+  `cooldown_s`), `lead_model: linear` restores the old aim.
+- A two-trooper circling take and a 6 m guard take in `project/dev/gauntlet/pressure_take.gd`, then the two films the
+  brief asked for (needs a builder).
+- Mutate the stall fix (`gauntlet_combat.gd`, `bot_arena_moves.gd`) if this session's run did not finish.
+- Melee lane: the player Kerf wall crossing (patch text ready).
 
 ## Astra ledger
 
@@ -72,8 +94,8 @@ Final HEAD: TODO. Gate: TODO (`node tools/gate/run.mjs --rev=HEAD` line + `gate.
 | 3 | rocket-read | 31 | accepted | 1.4 m casing, ice jets, rim glow, ownership test, A-vs-C still |
 | 4 | trooper | 52 | bounced in part | lead model + probes + tests; shipped nothing (misread rule) |
 | 5 | trooper-ship | 18 | accepted | 1.1 s orbit shipped, harshness measured, test bounds |
-| 6 | stall | TODO | TODO | TODO |
-| 7 | films | TODO | TODO | TODO |
+| 6 | stall | 65 | accepted | cause, bot fix, freeze clock, red-then-green test, item 5 batches (staged; I committed them) |
+| 7 | films | 0 | abandoned | usage limit after 4 s; films made by me with the committed tool |
 
 What I would brief differently: give every call a commit-before-suites order from the first brief (call 01 lost its
 deadline to the scenario suite); state a numeric "reads large" bar for art (on-screen pixels at 32 px/m against
