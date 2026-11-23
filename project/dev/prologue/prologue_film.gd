@@ -9,7 +9,15 @@ const SIZE: Vector2i = Vector2i(1920, 1080)
 const LEAD: int = 3 * SimClock.TICK_RATE
 const TAIL: int = 12 * SimClock.TICK_RATE
 const LIMIT: int = 300 * SimClock.TICK_RATE
-const CLIPS: String = "first_kill lessons guard_lesson pistol_pickup mulroney_order shotgun"
+const CLIPS: PackedStringArray = [
+	"first_kill",
+	"lessons",
+	"guard_lesson",
+	"pistol_pickup",
+	"mulroney_order",
+	"shotgun",
+	"shotgun_close"
+]
 
 var _game: PrologueGame
 var _span: Vector2i = Vector2i(0, -1)
@@ -30,7 +38,7 @@ func _ready() -> void:
 	ViewMode.select("tilt70")
 	if LaunchArgs.has("--clip"):
 		var clip: String = LaunchArgs.value("--clip")
-		if clip not in CLIPS.split(" "):
+		if clip not in CLIPS:
 			_fail("unknown --clip=%s" % clip)
 			return
 		_span = _locate(clip)
@@ -43,10 +51,22 @@ func _ready() -> void:
 	if _game.world == null:
 		return
 	_game.world.set_process(false)
+	if LaunchArgs.value("--clip") == "shotgun_close":
+		_close_view()
 	while _game.world.context().clock.tick() < _span.x:
 		_game.world.loop().step()
 	process_priority = -100
 	set_process(true)
+
+
+func _close_view() -> void:
+	for child: Node in _game.get_children():
+		if child is PrologueView:
+			var view: PrologueView = child as PrologueView
+			view.px_per_m = 64.0
+			view.print_stage.zoom = view.px_per_m / SimConst.PX_PER_M
+			return
+	_fail("shotgun_close requires the prologue view")
 
 
 func _locate(clip: String) -> Vector2i:
@@ -63,9 +83,10 @@ func _locate(clip: String) -> Vector2i:
 				span = Vector2i(maxi(0, moment - LEAD), moment + TAIL)
 				if clip == "lessons":
 					span = _lesson_span(probe, moment)
-				elif clip == "shotgun":
+				elif clip in ["shotgun", "shotgun_close"]:
 					var start: int = maxi(0, moment - 2 * SimClock.TICK_RATE)
-					span = Vector2i(start, start + 20 * SimClock.TICK_RATE - 1)
+					var seconds: int = 12 if clip == "shotgun_close" else 20
+					span = Vector2i(start, start + seconds * SimClock.TICK_RATE - 1)
 				break
 	probe.free()
 	return span
@@ -92,7 +113,7 @@ func _at_event(encounter: PrologueEncounter, clip: String) -> bool:
 			return encounter.prompts.active("guard")
 		"pistol_pickup":
 			return battle.pistol.picked_tick >= 0
-		"shotgun":
+		"shotgun", "shotgun_close":
 			return not battle.fire.shotgun.shot_ticks.is_empty()
 		"mulroney_order":
 			# The first ranged flank follows the pickup. Its tell and punish fit in one clip.

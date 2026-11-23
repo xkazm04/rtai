@@ -1,7 +1,7 @@
 # Run from any directory with this worktree imported and GODOT_BIN set.
 param(
     [Parameter(Mandatory)][string]$Movie,
-    [ValidateSet('first_kill', 'lessons', 'guard_lesson', 'pistol_pickup', 'mulroney_order', 'shotgun')][string]$Clip
+    [ValidateSet('first_kill', 'lessons', 'guard_lesson', 'pistol_pickup', 'mulroney_order', 'shotgun', 'shotgun_close', 'newgame')][string]$Clip
 )
 
 $ErrorActionPreference = 'Stop'
@@ -38,11 +38,17 @@ movie_writer/video_quality=0.32
 '@
 [IO.File]::WriteAllText((Join-Path $capture 'override.cfg'), $profile)
 $flags = @('--bot', '--seed=7', '--view=tilt70')
-if ($Clip) { $flags += "--clip=$Clip" }
+$entry = @('res://dev/prologue/prologue_film.tscn')
+if ($Clip -eq 'newgame') {
+    $entry = @('-s', 'res://dev/prologue/newgame_pilot.gd')
+    $flags += "--result=$(Join-Path (Split-Path $capture) 'newgame-film-result.json')"
+} elseif ($Clip) {
+    $flags += "--clip=$Clip"
+}
 # Windows PowerShell represents redirected native stderr (including engine warnings)
 # as error records. The engine exit code determines whether the movie was written.
 $ErrorActionPreference = 'Continue'
 & $env:GODOT_BIN --path $capture --windowed --rendering-driver d3d12 --position '0,1440' `
     --resolution 1920x1080 --fixed-fps 60 --write-movie $Movie `
-    res://dev/prologue/prologue_film.tscn -- @flags
+    @entry -- @flags
 exit $LASTEXITCODE

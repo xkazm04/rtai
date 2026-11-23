@@ -2,7 +2,7 @@ extends SceneTree
 ## Run the actual slice main scene with a driver beside it. The driver loads after the
 ## autoloads, as in the other SceneTree film entries.
 
-const KNOWN_FLAGS: PackedStringArray = ["--bot", "--film-dir", "--result", "--seed"]
+const KNOWN_FLAGS: PackedStringArray = ["--bot", "--film-dir", "--result", "--seed", "--view"]
 const FIXED_FPS: int = 60
 
 
