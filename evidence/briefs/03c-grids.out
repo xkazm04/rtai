@@ -1,0 +1,16 @@
+Four p70 walk and run grids landed in separate commits. I reviewed every facing in game at 32 and 64 px/m. P55 retains the fallback.
+
+| Weapon | Commit | Walk / run row grades | Walk cycle | ImageGen | Same-tick stills |
+|---|---|---|---:|---:|---|
+| [Chainsaw](C:/Users/kazda/kiro/gtai-wt/n23-controls/evidence/n24-motion/grid_chainsaw.md) | `aa9c2bddb` | 8A / 6A, 2B | 64.3 px | 16 in 3m 01s | [32](C:/Users/kazda/kiro/gtai-masters/n24/motion/grid_chainsaw_32.png) · [64](C:/Users/kazda/kiro/gtai-masters/n24/motion/grid_chainsaw_64.png) |
+| [Electro baton](C:/Users/kazda/kiro/gtai-wt/n23-controls/evidence/n24-motion/grid_electro_baton.md) | `1990dddbb` | 7A, 1B / 5A, 3B | 67.3 px | 25 in 7m 58s | [32](C:/Users/kazda/kiro/gtai-masters/n24/motion/grid_electro_baton_32.png) · [64](C:/Users/kazda/kiro/gtai-masters/n24/motion/grid_electro_baton_64.png) |
+| [Assault rifle](C:/Users/kazda/kiro/gtai-wt/n23-controls/evidence/n24-motion/grid_assault_rifle.md) | `43e964b2c` | 8A / 6A, 2B | 78.0 px | 16 in 2m 47s | [32](C:/Users/kazda/kiro/gtai-masters/n24/motion/grid_assault_rifle_32.png) · [64](C:/Users/kazda/kiro/gtai-masters/n24/motion/grid_assault_rifle_64.png) |
+| [Hand cannon](C:/Users/kazda/kiro/gtai-wt/n23-controls/evidence/n24-motion/grid_hand_cannon.md) | `0be2bb3e0` | 8A / 6A, 2B | 69.7 px | 20 in 5m 31s | [32](C:/Users/kazda/kiro/gtai-masters/n24/motion/grid_hand_cannon_32.png) · [64](C:/Users/kazda/kiro/gtai-masters/n24/motion/grid_hand_cannon_64.png) |
+
+The commits include the eight PNGs and imports, calibration in `rivet_walk.gd` and `rivet_stride.gd`, unit-test updates, provenance and per-row measurements. Each changed-suite run finished with **3,795 passed, 0 failed, 2 skipped**. Quick lint and formatting passed. The changed runtime lines had zero eligible mutation operators.
+
+The [six-weapon arena film](C:/Users/kazda/kiro/gtai-masters/n24/motion/legs_game_32.mp4) shows Gloria, rocket launcher, chainsaw, electro baton, assault rifle and hand cannon at 6.75 and 9.3 m/s. `ffprobe` verified **1920×1080, 60/1 fps, 38.000 s, 2,280 frames**. All 192 before/after sample pairs matched on gameplay tick, position and speed. The [manifest](C:/Users/kazda/kiro/gtai-masters/n24/motion/frames.json) includes the film and all twelve stills.
+
+Scratch fell from **19.45 GB to 64.77 MB**, freeing **19.39 GB**. The published outputs, measurements and capture scripts remain available.
+
+[astra: 2826s, exit 0]

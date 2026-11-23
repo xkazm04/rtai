@@ -1,0 +1,14 @@
+Both p70 changes landed before the 23:50 deadline. The lane’s deliverables are committed and clean. P55 keeps the fallback.
+
+| Weapon | Commit | Result |
+|---|---|---|
+| Electro baton | `b9a858c2d` · 23:10 | Regenerated seven tone rows. Their mean RGB is about **(118, 77, 54)**, matching the accepted rust rows. The extra front run row fixes arena tick 190, where 6.75 m/s selects run8. Back-right sprint height variation fell from **31 to 19 px** with `RUN_ROW_K = 1.00`. Walk cycle **68.7 px**. [Tone table and row grades](evidence/n24-motion/grid_electro_baton.md) · [32 px/m](<C:/Users/kazda/kiro/gtai-masters/n24/motion/grid_electro_baton_32.png>) · [64 px/m](<C:/Users/kazda/kiro/gtai-masters/n24/motion/grid_electro_baton_64.png>) |
+| Machine pistol | `337f84d41` · 23:29 | Shipped both drawn grids. Corrected clipped soles and donor claws. Walk cycle **73.7 px**, profile contacts **21.0 / 27.0 texels**, mean walk drift **0.97 / 0.94 cm** at 32 / 64 px/m. [Stride table and row grades](evidence/n24-motion/grid_machine_pistol.md) · [32 px/m](<C:/Users/kazda/kiro/gtai-masters/n24/motion/grid_machine_pistol_32.png>) · [64 px/m](<C:/Users/kazda/kiro/gtai-masters/n24/motion/grid_machine_pistol_64.png>) |
+
+Changed four sprite sheets, the two new `.import` files, `rivet_walk.gd`, `rivet_stride.gd`, provenance and evidence. Reviewed every facing at both zooms. Both final `run_unit --changed` runs reported **3,795 passed, 0 failed, 2 skipped**. `gdformat` and `gdlint` passed. The changed calibration lines had zero eligible mutation operators.
+
+The [seven-weapon arena film](<C:/Users/kazda/kiro/gtai-masters/n24/motion/legs_game_32.mp4>) and `frames.json` are updated. `ffprobe` returned `1920,1080,60/1,38.033333,2282`.
+
+ImageGen produced **8 baton sheets in 3:02** and **22 machine-pistol sheets in 6:33** of summed batch time. Raw-capture cleanup freed **10.29 GB**, retaining **73,607 bytes** of archived metadata. For the next weapon, I’d check the live strip at game speed first and include the equipped free arm in the initial sprint references.
+
+[astra: 2471s, exit 0]

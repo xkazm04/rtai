@@ -10,8 +10,9 @@ unit 3815 passed, 0 failed, 2 skipped; scenarios 67 passed; parity 1200 steps bi
 step 629; selftest look goldens 11/11; export-audit 933 loaded, 0 failed).
 
 Reels gate: `node tools/gate/run.mjs --rev=HEAD --reels` started 01:31 on `f223380ab` (inert commits only after the
-gate above), log `build/gate-reels.log` (git-ignored). It had not finished when this report was committed at 01:34: its
-verdict is NOT measured here; the Director reads the log's last line before merging.
+gate above), log `build/gate-reels.log` (git-ignored). At 01:42 it had not reached its first kind (`build/gate/f223380ab3d2/evidence.log` not yet
+written; the machine runs five lanes' gates): its verdict is NOT measured here; the Director reads the log's last line
+before merging. Gate of record stays `441a8d5a3` above.
 
 ## What works
 
@@ -24,7 +25,6 @@ verdict is NOT measured here; the Director reads the log's last line before merg
 | Dash trail (`b364b48e6`) | `dash_afterimage_64.png` | posed run-card copies in Rivet's own warm colours, no teal |
 | `dashes` per gauntlet wave (`ca2ada5f2`) | `project/data/schemas/gauntlet_run.schema.json` | counted dash starts; omitted when unmeasured |
 | Tapes byte-identical | dash wire bit 31, dash state written only once a dash was used | gate scenarios 67 passed (incl. the 60 s replay), parity 1200 steps bit for bit; no file under `project/tests/golden`, `scenarios`, `parity`, `saves` or `native/` differs from `b3f4727c0` |
-
 | Mutation, `rivet_walk.gd` (after the gate, HEAD `441a8d5a3`) | `build/mutate-rivet-walk.log` (git-ignored) | 78.9 % = killed 15 / (15 + survived 4), 1 invalid, 20 sampled of 114. Survivors: the `armed` static default (line 82, tests set it), two boundaries on the moving threshold and the dip age (lines 88, 93: equal-value edges no test pins), `frame_of`'s `n - 1` clamp (line 156: unreachable while `fposmod < 1.0`, equivalent) |
 
 ## What does not
