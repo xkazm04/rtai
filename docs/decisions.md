@@ -1477,3 +1477,5 @@ One dated line per decision. Deviations use `DEVIATION <RULE-ID>` and carry a re
 - [2026-11-23] DECISION prologue: Mulroney spends 48 ticks pumping after each blast. His moving fore-end, cream slide marker and metal clack signal when Rivet can roll or shoot. Squad orders retain their own clock and the commander retains his last-man HP floor.
 - [2026-11-23] DECISION prologue: The command setting drops_shotgun defaults to false. The prologue script gives Rivet the patrol pistol and leaves the commander's shotgun in the yard.
 - [2026-11-23] DECISION prologue: The unique shotgun has enabled=false. An explicit weapon ID equips it with assault_rifle held art. The range and TTK lists filter on enabled, and gauntlet bonuses, bot slots, armory, quest guns and reel chapters select authored IDs.
+- [2026-11-23] DECISION prologue: The slice title starts the factory prologue and its held end card opens Collect Call in the same scene. Embedded quest tools retain their direct Start.
+- [2026-11-23] DECISION prologue: --skip-prologue selects the direct quest 1 opening from Start so quest tapes and export smokes can run the original path.

@@ -4,7 +4,7 @@ extends Node
 ## (collect-call) under the player's hands: Quest1Session (the World, the stage, the quest, the
 ## bound input) drawn by CollectCallView at gameplay zoom, the pause card on the pause action,
 ## and the end card once Rivet is paid. Text goes through QuestText (tr() with an English
-## fallback, LOC-01). Headless (tests) it builds no view; start() is the Start button's action.
+## fallback, LOC-01). Embedded quest runners and tapes open the contract directly with start().
 
 signal started
 
@@ -15,6 +15,7 @@ const RIGS_UNDER_CARDS: bool = true
 var session: Quest1Session = null
 var view: CollectCallView = null
 var card: Quest1Card = Quest1Card.new()
+var new_game_path: NewGamePath = NewGamePath.new()
 var paused: bool = false
 ## The on-foot camera: 32 px/m (the AGENTS camera table).
 var px_per_m: float = 32.0
@@ -49,7 +50,7 @@ func boot() -> void:
 	Quest1Session.blade = Quest1Game.blade_of(LaunchArgs.value("--quest-blade"))  # n7-melee
 	add_child(card)
 	@warning_ignore("return_value_discarded")
-	card.start_pressed.connect(start)
+	card.start_pressed.connect(new_game_path.press_start.bind(self))
 	@warning_ignore("return_value_discarded")
 	card.continue_pressed.connect(_continue)
 	@warning_ignore("return_value_discarded")

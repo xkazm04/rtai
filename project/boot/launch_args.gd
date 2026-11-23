@@ -52,6 +52,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--shot-trail",
 	# n8-hud: --autostart presses quest 1's Start (debug builds; films the opening without a click)
 	"--autostart",
+	"--skip-prologue",
 	# n7-melee: --quest-blade=off gives quest 1 no carried blade (the before); =<id> another one
 	"--quest-blade",
 	# n7-melee: --hit-cues=off gives melee and ghost hits no sound of their own (the before)

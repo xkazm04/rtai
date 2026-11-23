@@ -358,11 +358,12 @@
         "2026-11-18: n19 move: read the arena pilot motion once for the cover and vault rig feeds (files_near_cap 14 -> 14)",
         "2026-11-21: --foe-mix for n22 foes (files_near_cap 13 -> 13)",
         "2026-11-21: restore doc comments deleted in 8a8a0d93c/123ec794d (n22 guard) (files_near_cap 13 -> 13)",
-        "2026-11-21: n22 merge: flag and rig lines from several lanes add up in launch_args.gd and arena_rigs.gd (files_near_cap 13 -> 13)"
+        "2026-11-21: n22 merge: flag and rig lines from several lanes add up in launch_args.gd and arena_rigs.gd (files_near_cap 13 -> 13)",
+        "2026-11-23: --skip-prologue for n25 path (files_near_cap 13 -> 13)"
       ],
       "files": {
         "project/boot/collect_call/view/fx_view.gd": 271,
-        "project/boot/quest1_game.gd": 273,
+        "project/boot/quest1_game.gd": 274,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/showcase/city_fight.gd": 300,
         "project/features/arena/arena_rigs.gd": 290,
@@ -432,7 +433,8 @@
         "2026-11-22: Merge of controls, moves and loop requires their distinct KNOWN_FLAGS in launch_args.gd (+2 lines). (files_past_soft_cap 67 -> 67)",
         "2026-11-22: --prologue-stills for n23 prologue (files_past_soft_cap 67 -> 67)",
         "2026-11-22: --clip for n23 prologue (files_past_soft_cap 67 -> 67)",
-        "2026-11-22: n23 merge: launch_args KNOWN_FLAGS holds both the loop's and the prologue's flags (files_past_soft_cap 67 -> 67)"
+        "2026-11-22: n23 merge: launch_args KNOWN_FLAGS holds both the loop's and the prologue's flags (files_past_soft_cap 67 -> 67)",
+        "2026-11-23: --skip-prologue for n25 path (files_past_soft_cap 67 -> 67)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -441,8 +443,8 @@
         "project/boot/collect_call/view/collect_call_view.gd": 238,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 219,
-        "project/boot/quest1_game.gd": 273,
+        "project/boot/launch_args.gd": 220,
+        "project/boot/quest1_game.gd": 274,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,
         "project/dev/bench/fight_frames.gd": 246,

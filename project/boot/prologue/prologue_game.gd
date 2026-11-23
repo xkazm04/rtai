@@ -13,6 +13,7 @@ var bodies: PrologueBodies
 var live: LiveInput
 var lines: PrologueLines
 var encounter: PrologueEncounter
+var embedded: bool = false
 var result_path: String
 var with_view: bool = true
 var _seed: int
@@ -62,11 +63,11 @@ func boot() -> void:
 
 
 func _read_args() -> String:
-	result_path = LaunchArgs.value("--result")
+	result_path = "" if embedded else LaunchArgs.value("--result")
 	var seed_arg: String = LaunchArgs.value("--seed")
 	if LaunchArgs.has("--seed") and not seed_arg.is_valid_int():
 		return "invalid seed %s" % seed_arg
-	if LaunchArgs.has("--result") and not result_path.is_absolute_path():
+	if not embedded and LaunchArgs.has("--result") and not result_path.is_absolute_path():
 		return "result path must be absolute"
 	_seed = seed_arg.to_int() if seed_arg != "" else World.DEFAULT_SEED
 	return ""
@@ -156,7 +157,7 @@ func show_line(id: String) -> bool:
 
 func _finished() -> void:
 	world.set_process(false)
-	if LaunchArgs.has("--bot") or not result_path.is_empty():
+	if not embedded and (LaunchArgs.has("--bot") or not result_path.is_empty()):
 		get_tree().quit()
 
 
