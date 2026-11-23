@@ -1,7 +1,7 @@
 # Brief n26-cast-04-cop8: the patrol cop's 8-drawing walk (and run), planted at a sane cadence
 
 Lane `cast`, branch `n26-cast`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-prologue` (your cwd).
-**Hard stop HARDSTOP local** (check `date`). **Commit deadline COMMITBY.** After it: stills, clip and your report only.
+**Hard stop 14:45 local** (check `date`). **Commit deadline 14:30.** After it: stills, clip and your report only.
 Before every Godot run: `export APPDATA=C:/Users/kazda/kiro/gtai-n26/appdata/cast` and
 `export GODOT_BIN=C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe`.
 One Godot process at a time. Windowed runs: `--position 0,1440`, `--rendering-driver d3d12`. Kill only your own PIDs.
