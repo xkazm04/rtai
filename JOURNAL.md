@@ -179,3 +179,10 @@ NEXT (session 6, 18:03 to 19:10; no builder, no product change possible):
 2. Optional, if time: one 64 px/m still of a patrol cop hit to answer the OPEN of 15:44 (does the shared impact-outline material draw dark teeth on other cards' hits?). Use `gtai-art/foes-n26/mulroney/pack/edge/capture.mjs` style (dev cast scenes on HEAD), APPDATA = appdata/cast, `--position 0,1440`. If yes: REPORT "Calls for the owner" (deliberate flash outline vs clean) and Next step 5, not a change.
 3. Final read of REPORT.md at 18:50; `node tools/evidence/cites.mjs REPORT.md`; commit JOURNAL + REPORT with pathspec (`git commit -- JOURNAL.md REPORT.md`). Never feed `git diff --name-only` to a checkout (17:37 FRICTION).
 - 17:49 Session 5 ends. No Astra, no Godot, no gate running.
+
+## Session 6 (18:40, STABILIZE, past freeze)
+- 18:40 session 6 start at the freeze. No Astra lock, last call = warden 15:12 (code 1, account spent). Tree clean at df0daea9c. No `NEED cast` in keys/melee/pressure/yard journals.
+- 18:41 STABILIZE checks: `node tools/evidence/cites.mjs REPORT.md` 12/12 ok; REPORT has no PENDING; `gtai-masters/n26/cast/frames.json` 13 entries, 0 missing files. Gate of record unchanged: PASS on 4f505e377 with reels (`build/gate/4f505e37796a/gate.json`); every later commit is JOURNAL/REPORT only. The optional impact-outline still (session 5 NEXT 2) is skipped: past freeze, it would be new evidence, not a fix.
+- 18:42 Session 6 ends. No Astra, no Godot, no gate running.
+
+NEXT (next run): first builder call = the warden WIP on branch `n26-cast-warden-wip` (20920e043): fix `StreetWalkerCards.place` to keep meta ON (test_street_walker_hit.gd:164), then her checklist + audit row + films; then robot gunner, contractor, thug. Open question to check: does the shared impact-outline material draw dark teeth on other cards' hits (a 64 px/m patrol cop hit still).
