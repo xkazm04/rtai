@@ -3,7 +3,7 @@
   "masters": "C:/Users/kazda/kiro/gtai-masters/n25/yard",
   "seed": 7,
   "view": "tilt70",
-  "capture": "D3D12, 1920x1080, movie writer quality 0.32, fixed 60 fps; H.264 CRF 18",
+  "capture": "D3D12, 1920x1080, movie writer quality 0.32, fixed 60 fps; H.264 CRF 18 veryfast unless specified per film",
   "pair_scene": "res://dev/prologue_yard/yard_film.tscn",
   "pair_layout": "plain left, torn_line right; 32 px/m crops x=480..1439; 64 px/m uses full frames",
   "harbor_focus": "x=48 m, halfway between the gate and the east street edge, to keep the phone in the crop",
@@ -17,7 +17,7 @@
       "fps": "60/1",
       "frames": 1600,
       "duration_s": 26.666667,
-      "sha256": "a25c75b0c2d03737fdc880218d45de31f90c75eeda738c9495a6562f92622905",
+      "sha256": "76c4416470b8d6a21cbd58c0a2668120d1af7eba457694249fd8194b4bd13879",
       "tick_ranges": [
         [
           1757,
@@ -27,14 +27,19 @@
           3900,
           4699
         ]
-      ]
+      ],
+      "bit_rate_bps": 3345776
     },
     {
       "file": "pair_mid_64ppm_t2290.png",
       "width": 3840,
       "height": 1080,
       "sha256": "c0918ff4296f9c2d853129dee15d698faf11fc8a235eab3729964813e57a2e31",
-      "tick": 2290
+      "tick": 2290,
+      "codec": "png",
+      "pixel_format": "rgb24",
+      "frames": 1,
+      "duration_s": null
     },
     {
       "file": "pair_gate_32ppm.mp4",
@@ -45,16 +50,21 @@
       "fps": "60/1",
       "frames": 1600,
       "duration_s": 26.666667,
-      "sha256": "7bfd1d474e73a1f2658027ea23527256f5f0d8e177cdf2f83c1c4b3791377a15",
+      "sha256": "80b5e8f5429f18d8906b328e642b4fc8ed6c93cbb21a7d4f4974f8a08e5af02e",
       "start_tick": 5600,
-      "last_tick": 7199
+      "last_tick": 7199,
+      "bit_rate_bps": 5395567
     },
     {
       "file": "pair_gate_64ppm_t6400.png",
       "width": 3840,
       "height": 1080,
-      "sha256": "d35e2ebe85c01fdfb1791c6960ddee621760a55ea7ff833c1589e0ec7d020c35",
-      "tick": 6400
+      "sha256": "7d35e036843245840f71699a3d3bb5e751e759b5a0c6c442e36cec315d86b661",
+      "tick": 6400,
+      "codec": "png",
+      "pixel_format": "rgb24",
+      "frames": 1,
+      "duration_s": null
     },
     {
       "file": "pair_harbor_32ppm.mp4",
@@ -65,16 +75,21 @@
       "fps": "60/1",
       "frames": 1600,
       "duration_s": 26.666667,
-      "sha256": "e47d03a7033d92e6b2a69de0e7e10141a624a4aa8811c212f8ccddbe124d8dca",
+      "sha256": "08bc24c047c7a9be52b55eb7dd9526485b884478c5b634adfe866b49efc532ca",
       "start_tick": 8100,
-      "last_tick": 9699
+      "last_tick": 9699,
+      "bit_rate_bps": 1384136
     },
     {
       "file": "pair_harbor_64ppm_t8460.png",
       "width": 3840,
       "height": 1080,
-      "sha256": "f457c8ed0ae26b4605402722a5ad49e7e5eec922b8173207400fef35da652a22",
-      "tick": 8460
+      "sha256": "061a29a84132b7104fa22bf3b183bb16ebbff2b14caa062df3b5cffbf5dbe3a7",
+      "tick": 8460,
+      "codec": "png",
+      "pixel_format": "rgb24",
+      "frames": 1,
+      "duration_s": null
     }
   ],
   "mid_framing": {
@@ -142,7 +157,12 @@
       "fps": "60/1",
       "frames": 10610,
       "duration_s": 176.833333,
-      "sha256": "3f3a5a2fc1935c3454165af4a0ee1cdf975db37ebfc14b346e3ec08244591107"
+      "sha256": "485ec509b6ea1c4c8307b113eef02a9eb19f4a3b35a4d27e623852a4c147aa87",
+      "start_tick": 0,
+      "last_tick": 10609,
+      "crf": 18,
+      "preset": "veryfast",
+      "bit_rate_bps": 51760835
     },
     {
       "file": "excerpt_wave1.mp4",
@@ -153,9 +173,17 @@
       "fps": "60/1",
       "frames": 1800,
       "duration_s": 30.0,
-      "sha256": "07617d3b851a3be46b342b8a6774e739d2edc780addf08fc81a9a93cbd699863",
+      "sha256": "d04803ce2b0dd4559c99a5cd08790b809bdbe15ceb68ebcd16de29b25b2486db",
       "start_tick": 2858,
-      "damage_events": 19
+      "damage_events": 19,
+      "last_tick": 4657,
+      "crf": 20,
+      "preset": "slow",
+      "maxrate_bps": 59000000,
+      "bufsize_bits": 59000000,
+      "uncapped_crf20_bit_rate_bps": 91541805,
+      "crf18_bit_rate_bps": 110205365,
+      "bit_rate_bps": 59747247
     },
     {
       "file": "excerpt_wave2.mp4",
@@ -166,9 +194,17 @@
       "fps": "60/1",
       "frames": 1800,
       "duration_s": 30.0,
-      "sha256": "f2d5e1d938be65561776a94403da843b9a963bad490f77227963f1882ab9ce7f",
+      "sha256": "3729395f4270ab0a9c05281b979203b3745c297c7d50be506f1630b8ccfb0a76",
       "start_tick": 5496,
-      "damage_events": 16
+      "damage_events": 16,
+      "last_tick": 7295,
+      "crf": 20,
+      "preset": "slow",
+      "maxrate_bps": 59000000,
+      "bufsize_bits": 59000000,
+      "uncapped_crf20_bit_rate_bps": 72037498,
+      "crf18_bit_rate_bps": 86700098,
+      "bit_rate_bps": 57967772
     },
     {
       "file": "excerpt_end_card.mp4",
@@ -179,15 +215,19 @@
       "fps": "60/1",
       "frames": 900,
       "duration_s": 15.0,
-      "sha256": "f448fb45c3f341155a71ce5e8bde1097687b02557f9d663974b5a7b39aa4332a",
-      "start_tick": 9710
+      "sha256": "a5545dd4ccecd2aaaeecfeb80fbee0d37f6e7be00a36ab500e22bb850f7483e1",
+      "start_tick": 9710,
+      "last_tick": 10609,
+      "crf": 18,
+      "preset": "veryfast",
+      "bit_rate_bps": 7344853
     }
   ],
   "sheet": {
     "file": "stills_sheet.png",
     "width": 1920,
     "height": 1176,
-    "sha256": "da577bb77fc0bc61cb06df048213667210c73845cbfa58703e644a13b5fedaed",
+    "sha256": "27d517b5c0debf9792155c614126b3219a83eac58828e24142cd616463f3586a",
     "rows": [
       "mid",
       "gate",
@@ -197,6 +237,34 @@
       "plain at 64 px/m",
       "torn_line at 64 px/m",
       "full pilot at the same tick"
+    ],
+    "codec": "png",
+    "pixel_format": "rgb24",
+    "frames": 1,
+    "duration_s": null,
+    "row_ticks": [
+      2290,
+      6400,
+      8460
     ]
+  },
+  "capture_commit": "0dba79170e71e8ea3da14a55c2e9fc4d67e61108",
+  "end_card_tick": 10429,
+  "end_card_selection": "Last 900 frames of the full pilot, including the end-card hold.",
+  "west": {
+    "file": "west_64ppm_torn_line.png",
+    "width": 1920,
+    "height": 1080,
+    "tick": 300,
+    "px_per_m": 64,
+    "center_m": [
+      0.0,
+      17.0
+    ],
+    "codec": "png",
+    "pixel_format": "rgb24",
+    "frames": 1,
+    "duration_s": null,
+    "sha256": "7cba317336208843ba1fbb5fcdc76c91888963f51c715a211dfe712aaf7bfdce"
   }
 }
