@@ -1,7 +1,7 @@
 # Brief n26-melee-04b-bond-hud-measure: the chip shows the bond; ten seeds; stills (call 2 of 2)
 
 Lane `melee`, branch `n26-melee`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-street`.
-**Hard stop HARDSTOP wall clock. Last commit by COMMITBY.** At the hard stop, write your report and END, even
+**Hard stop 16:40 wall clock. Last commit by 16:34.** At the hard stop, write your report and END, even
 mid-task. Commit what is green; revert your own unfinished edits with `git checkout -- <path>`; list the rest in
 your report. Never stop to ask: at a fork, pick what best serves the owner's words, record a DECISION line, go on.
 Fix lint and format findings in your own edit and go on.
@@ -33,3 +33,13 @@ rebase, stash, `add -A/./-u`, `commit -a`, `reset --hard`; never push. Root `JOU
 ## Report at the end (short)
 Commits, the mastery table (wave per ghost per seed + median first mastery), the numbers chosen and what you
 tried, the HUD mount + TOUCH/NEED lines, still paths with one line each, tapes, mutate score, not done.
+
+## Addendum (director, 15:40): what call 1 left you
+- Commits `ca3d2cc40`, `30daba829`, `ac74117e7`, `7741124cb`; its report: `evidence/briefs/n26-melee-04a-bond-core.md.out.txt`.
+  Probe `node evidence/n26/bond/probe.mjs 1 12` (seed 1): Tonnage 0,3,6,...,25 mastered at the wave 8 rest; Dent,
+  Kerf and Ohm stayed at 0 all run. In step 1 record per seed per wave which ghosts the test player OWNS (card
+  grants) beside the bond, so a zero bond reads as "not owned" or "owned, never effective": if an owned ghost never
+  fills, find out why (deploy bot never picks it? its releases never kill/stun?) and say it; do not retune
+  `ghost_attacks.json` damage for it.
+- TOUCH lines already used by call 1: `ghost_deploy.gd:54`, `ghost_pilot.gd:103,104,108`. Keep yours few.
+- NEED story (call 1): the quest checkpoint offer needs `project/boot/quest1_game.gd`; not yours, leave it.
