@@ -4,7 +4,7 @@ Branch `n25-yard` from `main` `b3f4727c0`. Worktree `C:\Users\kazda\kiro\gtai-wt
 
 Gate: `node tools/gate/run.mjs --rev=HEAD` on `0dba79170` (the last code commit; every later commit touches only inert paths: `evidence/**`, `JOURNAL.md`, `REPORT.md`): `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n25-yard\build\gate\0dba79170e71\gate.json` (lint 19 checks; unit 3804 passed, 0 failed, 2 skipped; scenarios 67 passed; parity bit for bit over 1200 steps, planted mutation caught at step 629; selftest; release-compile 931 loaded, 0 failed).
 
-Reels gate: `node tools/gate/run.mjs --rev=HEAD --reels` started 07:10 on `5687c21d3` (same code as `0dba79170`), detached, output `build/gate-reels/gate.out`. It takes about 20 min and this session stops at 07:20, so its verdict is **not quoted here: unmeasured, not a pass**. The Director reads the last line of that file in the morning.
+Reels gate: `node tools/gate/run.mjs --rev=HEAD --reels` started 07:10 on `5687c21d3` (same code as `0dba79170`), detached, output `build/gate-reels/gate.out`, logs `build/gate/5687c21d36d4/evidence.log` and `reels.log`. At 07:30 its evidence stages had all passed again on this commit (lint 19 checks over 2052 files; unit 3804 passed, 0 failed, 2 skipped; scenarios 67 passed; parity bit for bit over 1200 steps; selftest; release-compile 931 loaded, 0 failed), and the reel stage was still running (chapter 19 reached, no failure so far). The reel verdict is **not quoted here: unmeasured, not a pass**. The Director reads the last line of `build/gate-reels/gate.out` in the morning.
 
 ## What works
 | Item | Evidence | Number |

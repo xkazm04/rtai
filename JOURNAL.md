@@ -90,3 +90,9 @@ NEXT (Director, morning):
 - 07:14 Reels gate on 5687c21d3 still running (node pid 60720 under nohup pid 5004, since 07:10; snapshot `gtai-gate-5687c21d36d4`, log `build/gate/5687c21d36d4/evidence.log`). No `NEED yard` in path's journal. No Astra lock. No product change. REPORT unchanged: the reels verdict stays unmeasured there.
 
 NEXT (Director, morning): as in session 5's NEXT: read the last line of `build/gate-reels/gate.out`; merge `n25-yard` (JOURNAL/REPORT add/add: keep each lane's own); clean `%LOCALAPPDATA%\Temp\gtai-gate-5687c21d36d4` once the gate has ended.
+## Session 7 (07:20, REPORT)
+- 07:20 REPORT.md already complete (sessions 4-6). `node tools/evidence/cites.mjs REPORT.md`: 34 paths, 33 ok, 1 pattern. No Astra lock, no Astra call this session, no product change.
+- 07:20 Reels gate on 5687c21d3 still running (node pid 60720; scenarios 67/67 ok at 07:19). Waiting until 07:31 for its verdict, then REPORT's reels line is updated or left as unmeasured.
+- 07:31 Reels gate on 5687c21d3: evidence stages all PASS again (lint, unit 3804/0/2, scenarios 67, parity, selftest, release-compile 931/0); reel stage still running at 07:31 (chapter 19). REPORT reels line updated: reel verdict unmeasured. Gate left running detached (node pid 60720); it writes to `build/` only.
+
+NEXT (Director, morning): read the last line of `build/gate-reels/gate.out` (reel stage verdict on 5687c21d3); merge `n25-yard` (only `yard.dressing` in `prologue_stage.json` is shared; no yard-shape; JOURNAL/REPORT add/add: keep each lane's own); clean `%LOCALAPPDATA%\Temp\gtai-gate-5687c21d36d4` and `gtai-gate-0dba79170e71` once the gate has ended.
