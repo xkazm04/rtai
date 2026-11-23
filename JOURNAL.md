@@ -77,3 +77,4 @@ NEXT (session 5): no Astra possible (usage limit to Nov 28): do NOT launch astra
 - 17:28 CLEAN deleting this lane's Temp gate snapshots (gtai-gate-8d6a78c07e71 + .gtai-snapshot, gtai-gate-f223380ab3d2). Left gtai-gate-fc3b7b2bbb75 (owner not provable; the Director's post-merge cleanup).
 
 NEXT (session 6, if any, before 19:10): nothing can land (no builder until Nov 28; the lane is frozen and its gate is green at 8d6a78c07; REPORT is final at 14bf92512). Only (1) check the Temp delete finished; (2) grep the other journals for `NEED keys` and answer in JOURNAL/REPORT Merge notes (no product edits); (3) if REPORT changes, run `node tools/evidence/cites.mjs REPORT.md` and `git commit -- REPORT.md JOURNAL.md`.
+- 17:35 CLEAN gtai-gate-8d6a78c07e71 removed; gtai-gate-f223380ab3d2 left: a file is still locked (device busy), retry in the Director's post-merge Temp cleanup. Other gtai-gate-*/gtai-mutate-* dirs in Temp belong to other lanes' current runs: untouched.
