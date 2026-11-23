@@ -10,6 +10,8 @@ var melee: bool = false
 var burst: int = 1
 var burst_gap_ticks: int = 0
 var cooldown_ticks: int = 60
+var pellets: int = 1
+var spread_rad: float = 0.0
 var damage: float = 1.0
 var knockback_m: float = 0.0
 var reach_m: float = 10.0
@@ -30,6 +32,8 @@ func read(t: DataTable, weapon_id: StringName, row: Dictionary) -> void:
 	burst_gap_ticks = CombatTuning.ticks(t.num(row, "burst_gap_s"))
 	cooldown_ticks = CombatTuning.ticks(t.num(row, "cooldown_s"))
 	damage = t.num(row, "damage")
+	pellets = t.integer(row, "pellets") if row.has("pellets") else 1
+	spread_rad = deg_to_rad(t.num(row, "spread_deg")) if row.has("spread_deg") else 0.0
 	knockback_m = t.num(row, "knockback_m") if row.has("knockback_m") else 0.0
 	reach_m = t.num(row, "reach_m")
 	speed_mps = t.num(row, "speed_mps")

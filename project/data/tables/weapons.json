@@ -468,6 +468,38 @@
       "stun_s": 0,
       "tier": "unique",
       "tracer_len_m": 2.2
+    },
+    {
+      "chain_hops": 0,
+      "chain_radius_m": 0,
+      "damage": 30,
+      "doc": "Pump-action scattergun. A close shot groups the pellets on one body. Explicit loadouts only.",
+      "dot_dps": 0,
+      "dot_s": 0,
+      "enabled": false,
+      "fire_mode": "semi",
+      "hit_class": "light",
+      "id": "shotgun",
+      "kind": "bullet",
+      "knockback_mps": 0.5,
+      "magazine": 5,
+      "patch_radius_m": 0,
+      "patch_s": 0,
+      "pellets": 8,
+      "range_m": 9,
+      "reload_s": 1.8,
+      "rof_hz": 1.25,
+      "shot_cue": "shotgun",
+      "speed_mps": 36,
+      "splash_damage": 0,
+      "splash_radius_m": 0,
+      "spread_bloom_deg": 0,
+      "spread_deg": 13,
+      "spread_max_deg": 13,
+      "spread_recover_dps": 0,
+      "stun_s": 0,
+      "tier": "unique",
+      "tracer_len_m": 1
     }
   ]
 }
