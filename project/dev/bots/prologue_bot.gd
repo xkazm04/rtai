@@ -38,6 +38,7 @@ func _decide(tick: int) -> TickInput:
 		return _street(tick)
 	if _encounter.phase == PrologueEncounter.Phase.BEAT_TWO:
 		return _ranged(tick)
+	var claw_ready: bool = not _stage.pilot.melee.busy()
 	var patrol: ProloguePatrol = _encounter.patrol
 	if _encounter.phase == PrologueEncounter.Phase.TALK:
 		if patrol.approaching == 0:
@@ -46,11 +47,10 @@ func _decide(tick: int) -> TickInput:
 		var gap: float = STRIKE_M if patrol.approaching >= 2 else 3.8
 		if to.length() > gap:
 			_stage.intent.move_to = _waypoint(patrol.dale.pos)
-		var strike: bool = (
-			_encounter.strike_ready and not _encounter.lines.busy() and to.length() <= STRIKE_M
-		)
+		var cue: bool = _encounter.strike_ready and not _encounter.lines.busy()
+		var strike: bool = cue and claw_ready and to.length() <= STRIKE_M
 		return _command(to, Vector2.ZERO, _bit(&"fire") if strike else 0)
-	return _fight(tick)
+	return _fight(tick, claw_ready)
 
 
 func _street(tick: int) -> TickInput:
@@ -81,16 +81,16 @@ func _street(tick: int) -> TickInput:
 	return _command(walk, walk, buttons)
 
 
-func _fight(tick: int) -> TickInput:
+func _fight(tick: int, claw_ready: bool) -> TickInput:
 	var target: Fighter = _nearest()
 	if target == null:
 		return TickInput.new()
 	var at: Vector2 = _stage.arena.rivet.pos
 	var aim: Vector2 = target.pos - at
-	var walk: Vector2 = (
-		at.direction_to(_waypoint(target.pos)) if aim.length() > 1.15 else Vector2.ZERO
-	)
-	var buttons: int = _bit(&"fire") if aim.length() <= STRIKE_M else 0
+	var gap: float = aim.length()
+	var walk: Vector2 = at.direction_to(_waypoint(target.pos)) if gap > 1.15 else Vector2.ZERO
+	var strike: bool = claw_ready and gap <= STRIKE_M
+	var buttons: int = _bit(&"fire") if strike else 0
 	var hints: ProloguePrompts = _encounter.prompts
 	if hints.active("guard") and not _guarded:
 		_guarded = true
@@ -101,7 +101,7 @@ func _fight(tick: int) -> TickInput:
 		_rolled = true
 		buttons = _bit(&"roll")
 		walk = aim.normalized()
-	elif hints.active("claw") and not _clawed and aim.length() <= STRIKE_M:
+	elif hints.active("claw") and not _clawed and strike:
 		_clawed = true
 		buttons = _bit(&"melee")
 	return _command(aim, walk, buttons)

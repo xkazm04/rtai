@@ -46,7 +46,7 @@
     "gate_exit_m": 4.5,
     "max_melee": 2,
     "max_shooters": 2,
-    "panic_burst": 3,
+    "panic_burst": 2,
     "panic_burst_gap_s": 0.13,
     "panic_cooldown_s": 1.7,
     "panic_morale": 0.08,
