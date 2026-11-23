@@ -1,4 +1,5 @@
 import { join } from 'node:path';
+import { readFileSync } from 'node:fs';
 import { ensureImport, runGodot, runProcess, SCRIPT_ERROR } from '../lib/godot.mjs';
 import { classifyRun } from './report.mjs';
 
@@ -21,8 +22,18 @@ export function classifyBake({ status, out, timedOut }) {
   return { infra: `exit ${status} with no matching bake result: ${out.trim().split('\n').slice(-3).join(' | ')}` };
 }
 
-export function classifyTests(raw, explicit) {
+export function classifyTests(raw, explicit, gutLog = '') {
   const result = classifyRun(raw);
+  // The tally counts completed JUnit cases. A mutant can quit SceneTree from inside a
+  // selected test, before GUT has a chance to write even its first case to the report.
+  if (result.infra && /^unit-tests: (?:gut exit [12]; )?no JUnit report; zero tests ran \(/m.test(raw.out)) {
+    const gut = gutLog.split(/^===== gut \(exit [012], [^\n]*\n/m)[1] ?? '';
+    const tests = [...gut.matchAll(/^\* (test_\w+)\s*$/gm)];
+    if (tests.length && !/^= Run Summary$/m.test(gut)) {
+      const detail = `GUT exited during ${tests.at(-1)[1]} before JUnit`;
+      return explicit ? { verdict: 'killed', via: 'tests', detail } : { verdict: 'killed', via: detail };
+    }
+  }
   if (!explicit || result.infra) return result;
   if (result.verdict === 'killed') {
     return result.via === 'script error at run time' ? { verdict: 'killed', via: 'crash' }
@@ -36,7 +47,11 @@ export function oracleRunners(wt, tests, env, explicit, { runBake = runGodot } =
     tests: async (timeoutMs) => {
       const raw = await runProcess(process.execPath, [join(wt, 'tools/tests/run_unit.mjs'),
         `--select=${tests.join(',')}`, '--no-rerun'], { cwd: wt, timeoutMs, env });
-      return { ...raw, ...classifyTests(raw, explicit) };
+      let gutLog = '';
+      if (raw.out.includes('no JUnit report')) {
+        try { gutLog = readFileSync(join(wt, 'build/test-results/unit-tests.log'), 'utf8'); } catch { /* no evidence */ }
+      }
+      return { ...raw, ...classifyTests(raw, explicit, gutLog) };
     },
     'bake-check': async (timeoutMs) => {
       const raw = await runBake(['-s', 'res://dev/bake_city.gd', '--', '--check', '--fail-fast'],

@@ -11,7 +11,10 @@ node tools/mutate/mutate.mjs --file=core/save/gtsv_container.gd [--max=25] [--op
 just mutate --file=core/save/gtsv_container.gd --max=25
 ```
 
-- `--file` is project-relative (`core/...`, `features/...`); tests and addons are refused.
+- `--file` accepts project-relative paths and their `project/`-prefixed forms. Tests and addons are refused.
+- `--scratch` exports committed files through a private Git index into a fresh directory under
+  `build/mutate/`. It runs the same oracles and removes that copy on exit. Use it in lanes
+  that need to keep the entire run inside their own build directory.
 - `--tests` takes test basenames. Without it the tests come from `tools/tests/test_map.mjs`
   (class_name / res:// mentions + the `test_<basename>.gd` twin), minus the slow tier. If the map says
   FULL suite the run stops and asks for `--tests` (1,400 tests per mutant is not acceptable).
@@ -106,7 +109,7 @@ slashes are not arithmetic. Same file + same HEAD = same mutants in the same ord
 
 ## The mutation worktree and its safety rules
 
-All mutation happens in a dedicated `git worktree` at the main checkout's HEAD:
+By default mutation happens in a dedicated `git worktree` at the main checkout's HEAD:
 `<os tmpdir>/gtai-mutate-<8 hex of sha1(main root)>` (Windows: `%TEMP%\gtai-mutate-xxxxxxxx`),
 stamped with `.gtai-mutate-worktree` right after creation. It is reused between runs (the `.godot`
 import cache stays warm; only the first run pays the import, ~35 s here); a run checks it out to the

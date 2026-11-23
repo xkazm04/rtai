@@ -59,6 +59,17 @@ test('explicit tests preserve the failing count and distinguish a runtime crash'
   assert.deepEqual(classifyTests({ status: 1, out: 'SCRIPT ERROR: Invalid call' }, true), { verdict: 'killed', via: 'crash' });
 });
 
+test('a premature SceneTree quit needs evidence that GUT entered a test', () => {
+  const raw = { status: 1, out: 'unit-tests: gut exit 1; no JUnit report; zero tests ran (0 passed, 0 failed, 0 skipped)' };
+  const log = '===== gut (exit 1, 2.4 s)\n---  GUT  ---\nres://tests/unit/test_game.gd\n* test_save\n';
+  assert.match(classifyTests(raw, false, log).via, /exited during test_save/);
+  assert.equal(classifyTests(raw, true, log).verdict, 'killed');
+  assert.ok(classifyTests(raw, true).infra);
+  assert.ok(classifyTests(raw, true, log.replace('* test_save', '')).infra);
+  assert.ok(classifyTests(raw, true, log + '= Run Summary\n').infra);
+  assert.ok(classifyTests({ ...raw, out: raw.out.replace('gut exit 1', 'import exit 1; gut exit 1') }, true, log).infra);
+});
+
 test('each baseline must pass before mutation, import is separate from the bake cap', async () => {
   const calls = [];
   const wt = 'scratch';
