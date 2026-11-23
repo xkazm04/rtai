@@ -38,6 +38,27 @@ def test_piece_boxes_are_independent_and_scaled_to_metres():
     assert cut["shed"].getpixel((16, 40)) == (165, 42, 42, 255)
 
 
+def test_uniform_fit_and_isolation_keep_the_ring_hole_and_exclude_its_neighbour():
+    sheet = Image.new("RGB", (28, 16), "white")
+    sheet.paste("black", (3, 3, 15, 9))
+    sheet.paste("white", (6, 5, 12, 7))
+    sheet.paste("brown", (21, 2, 26, 6))
+    row = {"id": "ring", "box": [0, 0, 28, 16], "size_m": [4, 4], "isolate": [3, 3]}
+    piece = cut_job(sheet, {"fit": True, "px_per_m": 3, "pieces": [row]})["ring"]
+    assert piece.size == (12, 6)
+    assert piece.getpixel((5, 2))[3] == 0
+    assert piece.getpixel((0, 0)) == (0, 0, 0, 255)
+
+
+def test_wide_grey_shadow_is_ink_on_the_ground():
+    sheet = Image.new("RGB", (32, 24), "white")
+    sheet.paste((144, 144, 144), (4, 3, 28, 20))
+    sheet.paste((160, 80, 40), (5, 5, 11, 11))
+    cut = key_piece(sheet, (255, 255, 255), (33, 33, 33))
+    assert cut.getpixel((16, 8)) == (33, 33, 33, 128)
+    assert cut.getpixel((4, 5)) == (160, 80, 40, 255)
+
+
 @pytest.mark.parametrize("width,height", [(96, 64), (67, 59)])
 def test_offset_blend_joins_both_axes_without_a_central_cut(width, height):
     y, x = np.mgrid[:height, :width]

@@ -5,6 +5,9 @@ Job example: {"px_per_m": 96, "pieces": [{"id": "fan", "box": [12, 8, 300, 220],
               "size_m": [3, 2]}]}. Box coordinates are source x, y, width, height.
 Set "mode": "ground" for opaque, seamless crops. For pieces, leave a clear sheet
 border for matte sampling or set "background": "#eee8dc" to its RGB colour.
+"fit": true preserves the trimmed aspect ratio inside each metre box. For ink on
+white, "shadow_ink": "#211e1c" unmattes exterior shadow to transparent ink.
+An "ink_only" row applies that treatment throughout a ground mark.
 """
 
 import argparse
@@ -15,7 +18,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 import numpy as np
-from PIL import Image, ImageColor, ImageFilter
+from PIL import Image, ImageColor, ImageDraw, ImageFilter
 
 ART = Path(__file__).resolve().parents[2] / "project/boot/prologue/art"
 ID = re.compile(r"[a-z][a-z0-9]*(?:_[a-z0-9]+)*")
@@ -28,7 +31,7 @@ def sheet_matte(sheet):
     return np.median(border, axis=0)
 
 
-def key_piece(crop, matte):
+def key_piece(crop, matte, shadow_ink=None, ink_only=False):
     """Estimate edge coverage against nearby ink, then remove the matte from that soft edge."""
     pixels = np.asarray(crop.convert("RGBA"), dtype=np.float32)
     offset = pixels[..., :3] - np.asarray(matte, dtype=np.float32)
@@ -38,6 +41,17 @@ def key_piece(crop, matte):
     ink = np.asarray(levels.filter(ImageFilter.MaxFilter(5))).astype(np.float32)
     coverage = np.where(near_matte, distance / np.maximum(ink, 32), 1.0)
     coverage[distance <= 3] = 0
+    if shadow_ink is not None:
+        # A printed grey shadow is paper showing through black ink. Find the paper
+        # up to the object's outline, including broad shadow ramps beyond that outline.
+        rgb = pixels[..., :3]
+        solid = (np.ptp(rgb, axis=2) > 21) | (np.min(rgb, axis=2) < 70)
+        field = Image.fromarray((solid * 255).astype(np.uint8)).copy()
+        ImageDraw.floodfill(field, (0, 0), 128)
+        exterior = (np.asarray(field) == 128) | near_matte | (distance < 25)
+        ink_alpha = np.max(-offset / np.maximum(np.subtract(matte, shadow_ink), 1), axis=2)
+        coverage = np.where(exterior | ink_only, ink_alpha.clip(0, 1), coverage)
+        coverage[distance <= 5] = 0
     clean = matte + offset / np.maximum(coverage[..., None], 1 / 255)
     rgba = np.dstack((clean, pixels[..., 3] * coverage))
     cut = Image.fromarray(np.rint(rgba).clip(0, 255).astype(np.uint8))
@@ -61,7 +75,20 @@ def tile_ground(crop):
     return Image.fromarray(np.rint(pixels).clip(0, 255).astype(np.uint8))
 
 
-def extract(sheet, row, ppm, mode, matte):
+def isolate(crop, point, matte):
+    """Pick one connected silhouette on a crowded decal sheet, preserving holes in the ink."""
+    rgb = np.asarray(crop.convert("RGB"), dtype=np.float32)
+    ink = np.max(np.abs(rgb - matte), axis=2) > 24
+    mask = Image.fromarray(ink.astype(np.uint8) * 255).copy()
+    if mask.getpixel(tuple(point)) != 255:
+        raise ValueError("isolate point must be on the piece, relative to its box")
+    ImageDraw.floodfill(mask, tuple(point), 128)
+    selected = mask.point(lambda v: 255 if v == 128 else 0).filter(ImageFilter.MaxFilter(5))
+    return Image.composite(crop, Image.new("RGB", crop.size, tuple(map(int, matte))), selected)
+
+
+def extract(sheet, row, job, matte):
+    ppm = job["px_per_m"]
     x, y, w, h = row["box"]
     if any(type(n) is not int for n in (x, y, w, h)) or min(w, h) <= 0:
         raise ValueError("box needs integer x, y and positive integer width, height")
@@ -72,9 +99,16 @@ def extract(sheet, row, ppm, mode, matte):
         raise ValueError("size_m and px_per_m must be finite and positive")
     size = (max(1, round(width * ppm)), max(1, round(height * ppm)))
     crop = sheet.crop((x, y, x + w, y + h))
-    if mode == "ground":
+    if job.get("mode") == "ground":
         return tile_ground(crop.resize(size, Image.Resampling.LANCZOS))
-    return key_piece(crop, matte).resize(size, Image.Resampling.LANCZOS)
+    if "isolate" in row:
+        crop = isolate(crop, row["isolate"], matte)
+    shadow = ImageColor.getrgb(job["shadow_ink"]) if "shadow_ink" in job else None
+    piece = key_piece(crop, matte, shadow, row.get("ink_only", False))
+    if job.get("fit", False):
+        scale = min(size[0] / piece.width, size[1] / piece.height)
+        size = tuple(max(1, round(span * scale)) for span in piece.size)
+    return piece.resize(size, Image.Resampling.LANCZOS)
 
 
 def cut_job(sheet, job):
@@ -89,7 +123,7 @@ def cut_job(sheet, job):
         name = row["id"]
         if not ID.fullmatch(name) or name in pieces:
             raise ValueError(f"invalid or repeated piece id: {name}")
-        pieces[name] = extract(sheet, row, job["px_per_m"], mode, matte)
+        pieces[name] = extract(sheet, row, job, matte)
     return pieces
 
 
