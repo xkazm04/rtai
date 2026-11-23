@@ -4,6 +4,7 @@ extends Node2D
 ## consumed, decayed or despawned. Far cast members include the gauntlet's live wave spawns.
 
 const MOUNT: StringName = &"foe_cast_view"
+const PUMP: StringName = &"cast_shotgun_pump"
 
 var _rigs: CharacterRigs
 var _arena: CombatArena
@@ -75,10 +76,25 @@ func feed(h: Fighter, i: int) -> void:
 		pose.bind(rig)
 
 
+## A render-only sample on this fighter, shared by the near and far card.
+static func set_pump(h: Fighter, progress: float) -> void:
+	if progress >= 0.0:
+		h.set_meta(PUMP, progress)
+	elif h.has_meta(PUMP):
+		h.remove_meta(PUMP)
+
+
 static func attack_row(h: Fighter, arena: CombatArena) -> int:
 	var lock_ticks: int = arena.guard_tell.lock_ticks if arena.guard_tell != null else 0
 	var mind: SquadMind = arena.squad_ai.minds.get(h.id) if arena.squad_ai != null else null
 	var age: int = arena.tick - mind.agent.shot_tick if mind != null else -1
+	if h.archetype == &"sergeant_mulroney":
+		if h.has_meta(PUMP):
+			var progress: float = h.get_meta(PUMP)
+			return 2 if progress < 0.5 else 3
+		if age == 0:
+			return 1
+		return 0 if h.tell_left > 0 else -1
 	return CastCardPose.attack_frame(h.tell_left, lock_ticks, age)
 
 
