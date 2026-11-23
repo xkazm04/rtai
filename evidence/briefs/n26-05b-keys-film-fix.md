@@ -2,9 +2,15 @@
 
 Same lane, worktree, environment, repo law and allowlist as `evidence/briefs/n26-05-keys-film.md`, PLUS the two souls HUD
 files named in item 3 (the keys lane owns the deploy chips this run) and their unit test.
-**Hard stop: HARDSTOP wall clock. Commit deadline: COMMITBY.** Check `date` first. No amend, rebase, stash, `add -A/./-u`,
+**Hard stop: 15:58 wall clock. Commit deadline: 15:51.** Check `date` first. No amend, rebase, stash, `add -A/./-u`,
 `commit -a`, `reset --hard`, push. Fix lint and format findings in your own edit and go on. mutate `--max=20`, changed lines.
 If your keys_film commit is not in yet, commit it first (scene + caps + uid + md), then do these.
+
+0. **Commit the staged keys film first.** The `dev_loc` debt rise is authorised: run
+   `node tools/debt/debt.mjs --update --accept-regression="keys_film dev scene for n26 keys"` and commit
+   `tools/debt/baseline.json` together with the scene, caps, `.tscn`, both `.uid` and `evidence/n26-keys/keys_film.md`
+   (`git commit -- <paths>`). Items 1-3 then change those files in their own commits; run the debt `--update` again if a
+   later edit raises `dev_loc` (same reason), never loosen any other metric.
 
 1. **The overlay prints a raw loc key**: the 1 cap reads `GAUNTLET__GHOST__DENT`. Resolve it through the translation the
    game uses for that msgid (`project/data/loc/en.po` has it: find why `Loc.t()`/`tr()` returns the id here, e.g. the

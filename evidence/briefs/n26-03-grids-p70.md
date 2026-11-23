@@ -2,7 +2,7 @@
 
 Lane `keys`, branch `n26-keys`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-controls` (your cwd).
 
-**Hard stop: HARDSTOP wall clock (check `date`). Commit deadline: COMMITBY; the first weapon committed by FIRSTBY even if alone.**
+**Hard stop: 17:12 wall clock (check `date`). Commit deadline: 17:05; the first weapon committed by 16:42 even if alone.**
 Small commits, staged per path, `git commit -- <paths>`. No amend, no rebase, no stash, no `add -A/./-u`, no `commit -a`,
 no `reset --hard`, never push. Fix lint and format findings in your own edit and go on. mutate: `--max=20`, changed lines only.
 
@@ -15,7 +15,9 @@ Last run (n24-motion) drew p70 walk + run grids for seven weapons (gloria, rocke
 assault_rifle, hand_cannon, machine_pistol; see `evidence/n24-motion/grid_*.md`). Six weapons still walk on the fallback
 (bare-claw legs with the thin held part on the painted palm, lighter and redder than their armed cards, so the tone jumps on
 start and stop): **electro_gun, homing_shard, mini_nuke, molotov, plasma_sword, ray_gun**, in that order. Draw each its own
-p70 grid to the standard of last run's seven. p70 only (p55 is the next brief). One weapon fully done beats three half-done.
+p70 grid to the standard of last run's seven. p70 only (p55 is the next brief). One weapon fully done beats three half-done; **two weapons committed by 17:05 is a
+good result** for this one call. Start with electro_gun. No full scenario or full unit run is needed for art-only commits
+(`run_unit.mjs --changed` + `node tools/gate/quick.mjs` are); the director runs the final gate at 17:25.
 
 ## The pipeline (the one last run's seven came from; reuse, do not reinvent)
 - Read first: `evidence/briefs/03-grids.md` (n24 brief: pipeline, method per row, accept rule), the n24 grid reports
@@ -71,7 +73,8 @@ Delete scratch renders you do not reference; report the scratch GB freed.
 `project/data/tables/rivet_motion.json` (+ schema, stride data only), `project/tests/unit/test_rivet_walk_*.gd`,
 `project/dev/motion/**`, `evidence/n26-keys/**`, `steam/ai-provenance/2026-11.jsonl` (append only), new dirs/files under
 `C:/Users/kazda/kiro/gtai-art/library/rounds/*-n26keys/` and `.../keyed/rivet/` (never overwrite an existing library file),
-`C:/Users/kazda/kiro/gtai-masters/n26/keys/`.
+`C:/Users/kazda/kiro/gtai-masters/n26/keys/`, `tools/debt/baseline.json` only through `node tools/debt/debt.mjs --update`
+(`--accept-regression="<what> for n26 keys"` if your dev code raises a debt metric).
 Forbidden: every other character's art; Rivet's `rivet_eq_*` equipped strips and strike / windup art; enemy tables; melee,
 combat, gauntlet and souls code; `ghost_*.json`; prologue files; `native/`.
 
