@@ -2,7 +2,7 @@
 
 Lane `keys`, branch `n26-keys`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-controls` (your cwd).
 
-**Hard stop: HARDSTOP wall clock. Commit deadline: COMMITBY.** Commit each step as it lands (small commits, staged per path,
+**Hard stop: 13:35 wall clock. Commit deadline: 13:28.** Commit each step as it lands (small commits, staged per path,
 `git commit -- <paths>`). No amend, no rebase, no stash, no `add -A/./-u`, no `reset --hard`, never push.
 Fix lint and format findings in your own edit and go on. If time runs out, commit what is green and say what is left.
 
@@ -19,6 +19,12 @@ In the game Rivet runs at 6.75 m/s and sprints (hold Space now, or the sprint ac
 `RUN_FROM_MPS` (2.5), so both draw `rivet_run8.png`. Things to check, not conclusions: `RUN_CYCLE_CELL` (258 at p70, 212 at
 p55) against the run8 sheet's actual drawn stance travel per row (the armed runs were calibrated per row, bare was not);
 `MAX_RUN_CYCLES_S` (3.5) lengthening the cycle at 9.3 m/s (a floor of 2.66 m per cycle); walk8 below 2.5 m/s.
+
+## 0. First, 15 minutes at most: close brief n26-01 (keys; its call hit the time cap during mutate)
+- `node tools/mutate/mutate.mjs --file=project/features/souls/ghost_deploy.gd --max=20 --lines=<lines changed in 974647488>`; quote killed/(killed+survived); kill a survivor with a test if cheap. Delete any stale scratch it left under `build/mutate/`.
+- `project/boot/quest1_controls_text.gd`: its English strings still say "Space: quick claw" and "F: car (soon)": make them follow the table (`[melee]` / `[car]` via the existing key-name helper, as the `_PAD` variants do) if e75e90ce1 did not; this file is allowed for this item.
+- `project/features/player/player_motion.gd`: restore the class header doc that 974647488 cut to one line (sprint above the 7.5 m/s tackle line and its slower turn, the roll press, vault, station cover, the dash burst), and add a unit test for the new in-car early stop in `PlayerMotion.drive` (no movement and no sprint while driving or in a door). Comments + test only; allowed for this item.
+One commit, then go on.
 
 ## Do, in this order
 A. **Data first, no behaviour change** (the deferred n24 item): move the per-grid stride numbers (`RUN_CYCLE_CELL`,
