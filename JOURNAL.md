@@ -102,3 +102,10 @@ NEXT (session 6, from ~18:06; freeze 18:40, report 18:50, end 19:10). NO builder
 - 18:01 films.sh still running the harbor pair (Godot child of bash pid 24875); started 17:58.
 
 NEXT (session 6) supersedes items 1-2 above: (1) `tail build/films26/films.out`: if the harbor pair landed, ffprobe `pair_harbor_32ppm.mp4`, look at one frame, add it to masters frames.json (keep <= 15) and to REPORT Films; if Godot is still running past 18:35 kill only that pid. (2) Delete scratch: `build/films26/*.avi`, `build/films26/chk_*.png`, `/c/Users/kazda/kiro/gtai-masters/n26/yard/` holds only referenced files. (3) Optional: `excerpt_wave1.mp4` / `excerpt_mulroney.mp4` cut by ffmpeg (`-ss`/`-t 30`) from the menu film. (4) `node tools/evidence/cites.mjs REPORT.md`, fix MISSING, `git commit -- REPORT.md JOURNAL.md` by 18:50. No builder: never launch astra.mjs.
+
+## Session 6 (18:40, STABILIZE, no builder)
+- 18:40 films.sh done at 18:01 (harbor pair). The Godot process alive at 18:40 (msys pid 4949, started 18:40:25) is not ours (films.sh exited): left alone.
+- 18:42 LOOKED `pair_harbor_32ppm.mp4` (h264 1920x1080 60/1 25.0 s) at 12 s: chain-link + lamp at the exit, crossing clear, second-pass floor darker; Rivet not at the same spot in both halves (layout moved). Added to masters frames.json (15 entries) and REPORT Films. Scratch `build/films26/*.avi`, `chk_*.png` deleted.
+- 18:44 `node tools/evidence/cites.mjs REPORT.md`: 25 paths, 23 ok, 2 pattern, 0 missing. Gate stays the one at ee19d4f9c (PASS, `build/gate/ee19d4f9c536/gate.json`); every later commit is JOURNAL/REPORT only (inert). No --reels.
+
+NEXT: nothing left in this lane. Director: merge `n26-yard`; the NEED director lines (card wiring Part A, chunky rail art Part B, hook flakes) are in REPORT Next steps. Astra is out until Nov 28: never launch astra.mjs for this lane.

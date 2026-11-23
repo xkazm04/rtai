@@ -36,7 +36,7 @@ The second pass is a new dressing row `line_fire` in `project/data/tables/prolog
 - **Final gate took 42 min on the loaded machine** (16 min last time).
 
 ## Films
-Masters in `C:\Users\kazda\kiro\gtai-masters\n26\yard\` with `frames.json` (13 entries, best first). The director rendered them after the builder was lost, using the existing `yard_film.tscn` through the 1080p capture profile `build/prologue-film` (driver script `build/films26/films.sh`, git-ignored). ffprobe:
+Masters in `C:\Users\kazda\kiro\gtai-masters\n26\yard\` with `frames.json` (15 entries, best first). The director rendered them after the builder was lost, using the existing `yard_film.tscn` through the 1080p capture profile `build/prologue-film` (driver script `build/films26/films.sh`, git-ignored). ffprobe:
 - `pair_gate_32ppm.mp4` h264 1920x1080 60/1 25.0 s
 - `pair_mid_32ppm.mp4` h264 1920x1080 60/1 25.0 s
 - `pump_32ppm.mp4` h264 1920x1080 60/1 20.0 s
