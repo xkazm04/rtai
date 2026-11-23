@@ -1,6 +1,6 @@
 # Brief 04 `films-cost` - lane yard, run n25 (2026-11-23)
 
-HARD STOP: wall clock <SET AT LAUNCH: launch + 70 min, never later than 05:35>. Last commit 10 min before it. Check `date` after each step; when time runs short, finish the step you are on and report the rest as not done.
+HARD STOP: wall clock 04:46. Last commit 10 min before it. Check `date` after each step; when time runs short, finish the step you are on and report the rest as not done.
 
 ## Context
 Calls 01-03 built the yard dressing table, the `torn_line` dressing (concept A: the appliance assembly line torn out through the loading doors) and, in call 03, made it the default (`yard.dressing` in `prologue_stage.json`; `plain` is one value away, or `--yard-dressing=plain`). Read `git log --oneline -15`, `evidence/briefs/03-yard-faults.md` and your own last report. This call makes the films the owner judges by and measures the frame cost. Code changes are limited to the dev film entry; no product code unless a step cannot work without it (then stop and report a NEED).
