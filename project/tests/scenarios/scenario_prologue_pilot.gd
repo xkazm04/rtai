@@ -15,6 +15,8 @@ const LEGACY: Dictionary[int, String] = {
 	42: "c24e6541726ff885917bc6dd0210a21f33db7dd397ad67c29e514714d9207b7d",
 }
 const LINE_FIRE_TICKS: Dictionary[int, int] = {7: 11701, 3: 13014, 11: 10392, 21: 12158, 42: 13278}
+## The cover milestone's sorted result bytes, before the dusk art and lights.
+const COVER_SEED_7: String = "993e5b7f080f30c0fa8f1def74e274f6762e6a05a757859e354d41e45083eeba"
 
 
 func run(tree: SceneTree) -> String:
@@ -79,6 +81,8 @@ func _run_seed(tree: SceneTree, measurements: Array[Dictionary]) -> String:
 func _pin(row: Dictionary) -> String:
 	var seed_value: int = row["seed"]
 	if row["dressing"] == "line_fire":
+		if seed_value == 7 and row["sha256"] != COVER_SEED_7:
+			return "seed-7 cover result bytes changed: " + str(row["sha256"])
 		if row["ticks"] != LINE_FIRE_TICKS[seed_value]:
 			return "finished in %d ticks, expected %d" % [row["ticks"], LINE_FIRE_TICKS[seed_value]]
 	elif row["sha256"] != LEGACY[seed_value]:
