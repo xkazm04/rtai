@@ -244,3 +244,7 @@ NEXT: (Director, at merge) read C:\Users\kazda\kiro\gtai-art\foes-n24\gate-final
   No product file touched.
 NEXT: (Director, at merge) read C:\Users\kazda\kiro\gtai-art\foes-n24\gate-final2.log for the verdict + gate.json path;
   if it is missing or red on the CONTENDED city_chase wait, re-run under the bench lock. No green claim from this lane.
+- 01:53 gate (pid 29024) still running; partial evidence in the snapshot: lint 18 ok + FAIL tool-tests, unit 3806/0 fail,
+  scenarios 67/0 fail, parity exact + mutation caught. Recorded in REPORT; no green claim.
+NEXT: (Director) read the tool-tests failure in %LOCALAPPDATA%\Temp\gtai-gate-fc3b7b2bbb75\build\evidence\lint.log and the
+  final verdict in gate-final2.log; clean gtai-gate-* Temp leftovers after the merge.

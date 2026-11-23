@@ -15,7 +15,11 @@ while waiting out a CONTENDED city_chase nav budget (log `build/gate/6129b8f6923
 started 01:30 on `fc3b7b2bb`, detached (pid 29024), log `C:\Users\kazda\kiro\gtai-art\foes-n24\gate-final2.log`; it
 takes about 20 min, so its verdict and `gate.json` path land after this report: the Director reads that log at merge.
 At 01:41 (session 8) it was still in its lint stage inside the snapshot `%LOCALAPPDATA%\Temp\gtai-gate-fc3b7b2bbb75`
-(pid 29024 alive; no evidence kind written yet). No green gate line is claimed here.
+(pid 29024 alive; no evidence kind written yet). At 01:53 it was still running (gate.json not yet written); its partial
+evidence in that snapshot's `build/evidence/`: lint 18 ok, 1 FAIL (`tool-tests`, the Node tooling tests: not yet read,
+the pre-commit tool test that timed out under load in section 4 is the likely one); unit 3806 tests, 0 failures;
+scenarios 67 ran, 0 failed; parity exact, planted mutation caught. Because of the `tool-tests` FAIL the gate is red
+unless the Director reads it as a load timeout. No green gate line is claimed here.
 
 ## 1. Audit (brief item 1)
 Full table with every checklist item per archetype: `docs/art/cast-audit.md`; the checklist: `docs/art/cast-checklist.md`
