@@ -73,7 +73,10 @@ func _open_street(args: ArenaArgs) -> GauntletSession:
 func _run_headless() -> void:
 	while not waves.done and session.tick() < RUN_TICKS:
 		session.step()
-	if not waves.done:
+		if pilot != null and (session.stage.arena as GauntletCombat).report_bot_freeze():
+			_result_path = ""
+			break
+	if not waves.done and session.tick() >= RUN_TICKS:
 		Log.error("gauntlet", "headless tick cap reached before run ended")
 	var written: bool = _finish()
 	get_tree().quit(0 if waves.done and written else 1)

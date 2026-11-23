@@ -38,3 +38,28 @@ func test_missing_enemy_damage_defaults_to_one() -> void:
 	assert_eq(arena.enemy_damage_k, 1.0)
 	assert_eq(GauntletStreet.enemy_damage_multiplier(rules), 1.0)
 	assert_true(rules.ok())
+
+
+func test_freeze_counts_only_continuous_combat_without_hp_loss() -> void:
+	arena.run = GauntletRun.new()
+	arena.tick = 5000
+	assert_false(arena.report_bot_freeze())
+	arena.wave_live = true
+	var foe: Fighter = Fighter.make(Fighter.Kind.GUARD, 1, Vector2.RIGHT, 100.0)
+	arena.tick += 3500
+	arena.damage(foe, 1.0, arena.rivet.id, &"baton")
+	arena.tick += 3500
+	assert_false(arena.report_bot_freeze(), "outgoing damage restarted the clock")
+	arena.damage(arena.rivet, 1.0, foe.id, &"baton")
+	arena.tick += 3599
+	assert_false(arena.report_bot_freeze(), "incoming damage restarted the clock")
+	arena.wave_live = true
+	foe.exposed = false
+	arena.damage(foe, 1.0, arena.rivet.id, &"baton")
+	arena.tick += 1
+	assert_true(arena.report_bot_freeze(), "stacking and blocked hits cannot hide a freeze")
+	arena.wave_live = false
+	assert_false(arena.report_bot_freeze())
+	arena.tick += 5000
+	arena.wave_live = true
+	assert_false(arena.report_bot_freeze(), "a new block starts a fresh clock")

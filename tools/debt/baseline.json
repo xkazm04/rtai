@@ -142,7 +142,8 @@
         "2026-11-23: menu pilot and rendered handover for n25 path (dev_loc 30733 -> 30932)",
         "2026-11-23: Real-time menu film and 64 px/m shotgun clip for n25 path (dev_loc 30932 -> 30979)",
         "2026-11-23: Measure post-lock dashes and attribute rocket hits to their spawn wave for n26 pressure (dev_loc 33626 -> 33783)",
-        "2026-11-23: Measure real HP loss and lethal tick in the rocket circle arena for n26 pressure (dev_loc 33783 -> 33816)"
+        "2026-11-23: Measure real HP loss and lethal tick in the rocket circle arena for n26 pressure (dev_loc 33783 -> 33816)",
+        "2026-11-23: Three lines stop headless scoring on a measured combat freeze for n26 pressure (dev_loc 33816 -> 33819)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -155,7 +156,7 @@
         "project/dev/controls": 712,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
-        "project/dev/gauntlet": 1647,
+        "project/dev/gauntlet": 1650,
         "project/dev/ghost-forms": 1335,
         "project/dev/ghost-powers": 1396,
         "project/dev/guard": 397,
@@ -184,7 +185,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 33816
+      "total": 33819
     },
     "direct_cmdline_reads": {
       "accepted": [

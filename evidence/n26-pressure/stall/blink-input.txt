@@ -1,0 +1,31 @@
+[INFO] aimprobe: pack at 77112 me kerf attack  intent_aim (0.084445, 0.996428) commands 0 target 748
+[INFO] aimprobe: pack at 77113 me kerf attack  intent_aim (0.091726, 0.995784) commands 0 target 748
+[INFO] aimprobe: at 77114 me (1255.326, -0.186581) raw (-0.014023, 0.999902) packed (-0.024541, 0.999699) checks 748 actual 738
+[INFO] aimprobe: candidate 724 patrol_cop pos (1254.222, -4.248388)
+[INFO] aimprobe: candidate 725 rocket_trooper pos (1256.501, -5.524982)
+[INFO] aimprobe: candidate 726 contractor pos (1255.017, -2.451321)
+[INFO] aimprobe: candidate 727 robot_gunner pos (1262.516, -0.756802)
+[INFO] aimprobe: candidate 729 robot_thug pos (1249.914, -3.638165)
+[INFO] aimprobe: candidate 731 sentry_turret pos (1256.06, -4.054018)
+[INFO] aimprobe: candidate 732 contractor pos (1251.969, -5.55)
+[INFO] aimprobe: candidate 733 robot_gunner pos (1260.686, -2.05)
+[INFO] aimprobe: candidate 734 rocket_trooper pos (1255.487, -5.529931)
+[INFO] aimprobe: candidate 738 rocket_trooper pos (1254.471, 5.486659)
+[INFO] aimprobe: candidate 739 contractor pos (1247.894, -1.645606)
+[INFO] aimprobe: candidate 740 swat pos (1262.151, -4.402184)
+[INFO] aimprobe: candidate 742 swat pos (1251.347, 2.015671)
+[INFO] aimprobe: candidate 743 robot_gunner pos (1259.23, -5.55)
+[INFO] aimprobe: candidate 744 patrol_cop pos (1251.355, -3.254579)
+[INFO] aimprobe: candidate 745 patrol_cop pos (1256.758, -0.163405)
+[INFO] aimprobe: candidate 746 sentry_turret pos (1256.385, -5.55)
+[INFO] aimprobe: candidate 748 swat pos (1255.53, 1.790448)
+[INFO] aimprobe: candidate 749 sentry_turret pos (1256.126, -3.977568)
+[INFO] aimprobe: candidate 750 swat pos (1253.344, 0.821489)
+[INFO] aimprobe: candidate 751 sentry_turret pos (1264.291, 0.102252)
+[INFO] aimprobe: candidate 755 patrol_cop pos (1263.221, -3.25253)
+[INFO] aimprobe: candidate 757 riot_cop pos (1252.791, -2.200114)
+[INFO] aimprobe: pack at 77114 me kerf attack melee intent_aim (-0.014023, 0.999902) commands 1032 target 748
+[INFO] probe: road crossing tick 77116 (1255.326, -0.186581) -> (1254.27, 7.6) form kerf target 748 -> 748 plan NONE buttons 1032
+[INFO] aimprobe: pack at 77115 me kerf attack  intent_aim (-0.946002, -0.32416) commands 0 target 756
+[INFO] aimprobe: pack at 77116 me kerf attack  intent_aim (-0.946387, -0.323035) commands 0 target 756
+[INFO] aimprobe: pack at 77117 me kerf attack  intent_aim (-0.946924, -0.321457) commands 0 target 756

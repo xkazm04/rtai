@@ -93,6 +93,7 @@ func blink_clear(aim: Vector2) -> bool:
 		return true
 	var kerf: KerfStage = _stage.pilot.kerf
 	var at: Vector2 = _player.pos
+	aim = BotArenaMoves.blink_heading(_stage, aim)
 	var hit: Fighter = kerf.pick(_stage, aim)
 	var landing: Vector2 = at + aim * kerf.num(&"dash_m")
 	if hit != null:

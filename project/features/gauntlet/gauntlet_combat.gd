@@ -9,8 +9,13 @@ const FIRED: StringName = &"gauntlet_fired"
 
 var run: GauntletRun
 var repair_in_wave: bool = false
-var wave_live: bool = false
+var wave_live: bool = false:
+	set(live):
+		if live and not wave_live:
+			_last_damage_tick = tick
+		wave_live = live
 var enemy_damage_k: float = 1.0
+var _last_damage_tick: int = 0
 var _round_starts: Dictionary[Shot, Vector2] = {}
 var _melee: Array[StringName] = MeleeTable.weapon_ids()
 var _departed: Dictionary[int, StringName] = {}
@@ -43,6 +48,20 @@ func configure_repair(rules: DataTable) -> void:
 
 func can_repair() -> bool:
 	return (repair_in_wave or not wave_live) and tuning.rivet["repair_per_s"] > 0.0
+
+
+## A new roster may stack on an idle fight. Only actual HP loss restarts its clock.
+func report_bot_freeze() -> bool:
+	if not wave_live or tick - _last_damage_tick < 60 * SimClock.TICK_RATE:
+		return false
+	Log.error(
+		"gauntlet",
+		(
+			"combat freeze: wave %d tick %d, last damage or entry %d"
+			% [run.wave, tick, _last_damage_tick]
+		)
+	)
+	return true
 
 
 func _repair() -> void:
@@ -98,7 +117,10 @@ func damage(
 	var was_alive: bool = victim == rivet and victim.alive()
 	if victim == rivet and killer_id != rivet.id:
 		amount *= enemy_damage_k
+	var hp_before: float = victim.hp
 	super.damage(victim, amount, killer_id, weapon, kind)
+	if victim.hp < hp_before:
+		_last_damage_tick = tick
 	if was_alive and not victim.alive():
 		var by: StringName = weapon if weapon != &"" else &"unknown"
 		run.death_by = by if kind in [&"blown", &"burned"] else _source(killer_id, by)
