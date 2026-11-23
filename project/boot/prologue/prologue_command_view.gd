@@ -6,6 +6,8 @@ extends Node2D
 const RIFLE: Texture2D = preload("res://features/combat/weapons/art/assault_rifle/held.png")
 const SHIELD: Texture2D = preload("res://features/characters/art/view/p70/riot_shield_card.png")
 const PP: float = SimConst.PX_PER_M
+const MARK_RADIUS: float = 17.0
+const PLAY_DIAMETER: float = 52.0
 
 var _battle: PrologueBattle
 var _stage: ArenaStage
@@ -47,8 +49,10 @@ func _process(_dt: float) -> void:
 	_bar.visible = boss != null and boss.alive()
 	_dress.visible = _bar.visible
 	if _bar.visible:
-		_dress.pump = _battle.fire.shotgun.pump_progress(_stage.tick)
-		_pose.call(_dress, boss)
+		var progress: float = _battle.fire.shotgun.pump_progress(_stage.tick)
+		_dress.pump = progress
+		if _dress.visible:
+			_pose.call(_dress, boss)
 		_sound(boss)
 		_meter.body = boss
 		_meter.state = BossFight.State.IDLE if boss.exposed else BossFight.State.TRANSITION
@@ -99,29 +103,49 @@ func _marker(boss: Fighter) -> void:
 	var pumping: bool = _dress.pump >= 0.0
 	if not ordering and not open and not pumping:
 		return
-	var at: Vector2 = boss.pos * PP + Vector2.UP * 2.1 * PP
-	draw_line(at + Vector2.DOWN * 15, at + Vector2.DOWN * 27, Ink.INK, 4, true)
-	draw_line(at + Vector2.DOWN * 15, at + Vector2.DOWN * 27, Ink.CREAM, 1.5, true)
-	draw_circle(at, 17, Ink.INK, true, -1, true)
+	var zoom_x: float = get_global_transform_with_canvas().x.length()
+	var k: float = marker_scale(zoom_x)
+	var neck: Vector2 = boss.pos * PP + Vector2.UP * 2.1 * PP
+	var at: Vector2 = neck + Vector2.UP * MARK_RADIUS * (k - 1.0)
+	draw_line(neck + Vector2.DOWN * 15, neck + Vector2.DOWN * 27, Ink.INK, 4, true)
+	draw_line(neck + Vector2.DOWN * 15, neck + Vector2.DOWN * 27, Ink.CREAM, 1.5, true)
+	draw_set_transform(at, 0.0, Vector2.ONE * k)
+	draw_circle(Vector2.ZERO, MARK_RADIUS, Ink.INK, true, -1, true)
 	if pumping and not ordering:
-		_pump_marker(at)
+		_pump_marker()
 	elif ordering:
-		var issued: int = _battle.orders.back()["tick"]
-		var progress: float = float(_stage.tick - issued + 1) / (_battle.due_tick - issued)
-		draw_arc(at, 14, 0, TAU, 48, Color("#735955"), 3, true)
-		draw_arc(at, 14, -PI / 2, -PI / 2 + TAU * minf(progress, 1.0), 48, Ink.VERMILION, 4, true)
-		draw_line(at + Vector2.UP * 8, at + Vector2.DOWN, Ink.CREAM, 4, true)
-		draw_circle(at + Vector2.DOWN * 6, 2.4, Ink.CREAM, true, -1, true)
+		_order_marker()
 	else:
 		for side: int in [-1, 1]:
-			var tip: Vector2 = at + Vector2.RIGHT * side * 12
+			var tip: Vector2 = Vector2.RIGHT * side * 12
 			draw_line(tip + Vector2(-side * 3, -7), tip, Ink.CREAM, 2.4, true)
 			draw_line(tip, tip + Vector2(-side * 3, 7), Ink.CREAM, 2.4, true)
-		draw_circle(at, 3.2, Ink.CREAM, true, -1, true)
+		draw_circle(Vector2.ZERO, 3.2, Ink.CREAM, true, -1, true)
+	draw_set_transform(Vector2.ZERO)
+	_name_plate(at + Vector2.RIGHT * MARK_RADIUS * k)
+
+
+## Keep the original close-up and hold the play-camera disc at least 1.6 metres across.
+static func marker_scale(zoom_x: float) -> float:
+	return maxf(1.0, PLAY_DIAMETER / (2.0 * MARK_RADIUS * zoom_x))
+
+
+func _order_marker() -> void:
+	var issued: int = _battle.orders.back()["tick"]
+	var progress: float = float(_stage.tick - issued + 1) / (_battle.due_tick - issued)
+	draw_arc(Vector2.ZERO, 14, 0, TAU, 48, Color("#735955"), 3, true)
+	draw_arc(
+		Vector2.ZERO, 14, -PI / 2, -PI / 2 + TAU * minf(progress, 1.0), 48, Ink.VERMILION, 4, true
+	)
+	draw_line(Vector2.UP * 8, Vector2.DOWN, Ink.CREAM, 4, true)
+	draw_circle(Vector2.DOWN * 6, 2.4, Ink.CREAM, true, -1, true)
+
+
+func _name_plate(edge: Vector2) -> void:
 	var font: Font = ThemeDB.fallback_font
 	var name_text: String = tr("Mulroney")
 	var size_px: Vector2 = font.get_string_size(name_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 15)
-	var box: Rect2 = Rect2(at + Vector2(16, -10), Vector2(size_px.x + 12, 21))
+	var box: Rect2 = Rect2(edge + Vector2(-1, -10), Vector2(size_px.x + 12, 21))
 	draw_rect(box, Ink.INK)
 	draw_string(
 		font, box.position + Vector2(6, 16), name_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, Ink.CREAM
@@ -129,9 +153,10 @@ func _marker(boss: Fighter) -> void:
 
 
 ## The cream slide racks back then forward during the opening between blasts.
-func _pump_marker(at: Vector2) -> void:
-	var shift: float = sin(PI * _dress.pump)
-	draw_line(at + Vector2(-11, -3), at + Vector2(11, -3), Ink.CREAM, 2.5, true)
-	var slide: Vector2 = at + Vector2(4.0 - shift * 10.0, 1)
-	draw_rect(Rect2(slide - Vector2(4, 2), Vector2(9, 5)), Ink.CREAM)
-	draw_arc(at, 14, -PI / 2, -PI / 2 + TAU * (1.0 - _dress.pump), 32, Ink.CREAM, 2, true)
+func _pump_marker() -> void:
+	var pull: float = PrologueCommanderDress.rack_travel(_dress.pump)
+	draw_line(Vector2(-11, -2), Vector2(11, -2), Ink.CREAM, 2, true)
+	var slide: Rect2 = Rect2(lerpf(4, -11, pull), -3, 7, 8)
+	draw_rect(slide, Ink.CREAM)
+	draw_line(slide.position + Vector2(3, 2), slide.position + Vector2(3, 6), Ink.INK, 1.5)
+	draw_arc(Vector2.ZERO, 14, -PI / 2, -PI / 2 + TAU * (1.0 - _dress.pump), 48, Ink.CREAM, 2, true)

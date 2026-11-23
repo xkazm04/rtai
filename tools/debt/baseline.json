@@ -142,7 +142,8 @@
         "2026-11-23: menu pilot and rendered handover for n25 path (dev_loc 30733 -> 30932)",
         "2026-11-23: Real-time menu film and 64 px/m shotgun clip for n25 path (dev_loc 30932 -> 30979)",
         "2026-11-23: Paired full-yard stills and a five-second motion observer for n26 yard (dev_loc 33638 -> 33764)",
-        "2026-11-23: Paired pilot captures retain exact underlay pixels and shot identities for n26 yard (dev_loc 33764 -> 33890)"
+        "2026-11-23: Paired pilot captures retain exact underlay pixels and shot identities for n26 yard (dev_loc 33764 -> 33890)",
+        "2026-11-23: Capture both zooms on the live commander through the seed-seven rack for n26 yard (dev_loc 33890 -> 33900)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -167,7 +168,7 @@
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
         "project/dev/prologue": 490,
-        "project/dev/prologue_yard": 605,
+        "project/dev/prologue_yard": 615,
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 1096,
@@ -184,7 +185,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 33890
+      "total": 33900
     },
     "direct_cmdline_reads": {
       "accepted": [

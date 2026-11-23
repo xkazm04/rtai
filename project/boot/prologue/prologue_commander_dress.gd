@@ -8,7 +8,31 @@ const WOOL: Color = Color("#343847")
 const LAPEL: Color = Color("#596075")
 const BRASS: Color = Color("#d9c99b")
 
+
+class RackPose:
+	extends RefCounted
+	var axis: Vector2
+	var stock: Vector2
+	var shoulder: Vector2
+	var elbow: Vector2
+	var grip: Vector2
+
+	func place(face: Vector2, progress: float) -> void:
+		var aim: Vector2 = face.normalized()
+		var side: Vector2 = aim.orthogonal()
+		if side.y < 0.0:
+			side = -side
+		var pull: float = PrologueCommanderDress.rack_travel(progress)
+		var lift: float = deg_to_rad(28.0) * pull
+		axis = aim.rotated(lift if aim.x < 0.0 else -lift)
+		stock = side * 9 - aim * (2.0 + pull * 3.0)
+		shoulder = side * 8 - aim * 2
+		elbow = shoulder + side * (7.0 + 5.0 * pull) - aim * (2.0 + 9.0 * pull)
+		grip = stock + axis * lerpf(25, 10, pull)
+
+
 var pump: float = -1.0
+var _rack: RackPose = RackPose.new()
 var _chest: Vector2
 var _head: Vector2
 var _face: Vector2
@@ -73,16 +97,23 @@ func _lapels() -> void:
 
 
 func _shotgun(face: Vector2) -> void:
-	var dir: Vector2 = face.normalized()
-	var rack: float = sin(PI * maxf(pump, 0.0))
-	dir = dir.rotated(rack * 0.32)
-	var stock: Vector2 = dir.orthogonal() * 9 - dir * (3.0 + rack * 3.0)
-	var muzzle: Vector2 = stock + dir * 25
+	_rack.place(face, pump)
+	var dir: Vector2 = _rack.axis
+	var stock: Vector2 = _rack.stock
+	var muzzle: Vector2 = stock + dir * 32
+	var slide: Vector2 = _rack.grip
+	var arm: PackedVector2Array = PackedVector2Array([_rack.shoulder, _rack.elbow, slide])
+	draw_polyline(arm, Ink.INK, 7.5, true)
+	draw_polyline(arm, LAPEL, 4.5, true)
 	draw_line(stock - dir * 5, muzzle, Ink.INK, 6, true)
 	draw_line(stock - dir * 4, stock + dir * 9, Color("#967653"), 4, true)
 	draw_line(stock + dir * 10, muzzle, Color("#78808a"), 2, true)
-	var slide: Vector2 = stock + dir * (17.0 - rack * 7.0)
-	draw_line(slide - dir * 4, slide + dir * 3, BRASS, 3.5, true)
+	draw_line(slide - dir * 4, slide + dir * 3, BRASS, 4.5, true)
+	draw_circle(slide + slide.direction_to(_rack.elbow) * 2.5, 2.7, Ink.CREAM, true, -1, true)
+
+
+static func rack_travel(progress: float) -> float:
+	return smoothstep(0.0, 1.0, 1.0 - absf(2.0 * clampf(progress, 0, 1) - 1.0))
 
 
 func _cap() -> void:
