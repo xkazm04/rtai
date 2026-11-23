@@ -234,3 +234,8 @@ NEXT (session 6, report pass): no new code (freeze 01:30). Read gate-final.log (
   line. cites re-run. No product file touched this session.
 NEXT: (Director, at merge) read gate-final2.log tail for the gate verdict line and the gate.json path; the lane makes no
   green claim until then. Clean %LOCALAPPDATA%\Temp\gtai-gate-* leftovers after the merge.
+- 01:37 session 7 (STABILIZE). No Astra lock or call running. GATE RUNNING since 01:30 (pid 29024, detached,
+  `node tools/gate/run.mjs --rev=HEAD` on fc3b7b2bb; log gate-final2.log still has only its header line at 01:33). REPORT line 12
+  already states this; nothing to fix, no product file touched.
+NEXT: (Director, at merge) read C:\Users\kazda\kiro\gtai-art\foes-n24\gate-final2.log for the verdict line + gate.json path;
+  if it died at the CONTENDED city_chase wait again, re-run under the bench lock. No green claim from this lane until then.
