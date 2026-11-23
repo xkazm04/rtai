@@ -1,0 +1,3 @@
+(Astra left no final message)
+
+[astra: 2055s, exit 1]

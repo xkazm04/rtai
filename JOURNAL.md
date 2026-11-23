@@ -78,3 +78,9 @@ NEXT: (session 5, NO builder: Astra limit until Nov 28) (1) the 16:24 commit "Tu
 - 17:39 MILESTONE gate PASS on `0f3111024` with reels (`build/gate/0f3111024e95/gate.json`); gate snapshot worktree removed from Temp. REPORT carries the gate line; cites 27/27.
 
 NEXT: (session 6, if any; no builder) nothing new after the 18:40 freeze. REPORT.md is complete (gate, films, calls, merge notes, ledger). Only: re-run `node tools/evidence/cites.mjs REPORT.md`, confirm `C:/Users/kazda/kiro/gtai-masters/n26/melee/frames.json` lists 15 existing files, and commit any last JOURNAL line. Do not start Godot runs; do not re-gate (code unchanged since `d980ca3c6`).
+
+## Session 6 (18:40, STABILIZE, no builder)
+
+- 18:41 checks: no product diff since the gated `0f3111024` (`git diff --stat 0f3111024 HEAD -- project tools` empty; later commits are REPORT/JOURNAL only), so the gate PASS (`build/gate/0f3111024e95/gate.json`) stands for HEAD's code. `node tools/evidence/cites.mjs REPORT.md`: 27/27 ok. `gtai-masters/n26/melee/frames.json`: 15 entries, all files present. No Astra lock. Committed the five n26 builder out logs (`evidence/briefs/n26-melee-*.out.txt`; the empty `.err` files left out).
+
+NEXT: none for this lane. Director: merge `n26-melee` per REPORT `## Merge notes` (TOUCH lines in keys-lane souls files; pressure's Kerf-wall patch applied at merge).
