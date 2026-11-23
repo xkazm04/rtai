@@ -1,6 +1,6 @@
 class_name BotForms
 extends RefCounted
-## GhostPilot decodes press edges. In base G cycles, Q enters the selected form.
+## GhostPilot decodes press edges. Mastery cycles and transforms the selected form.
 ## Exit to base before selecting a different form to avoid activating intervening powers.
 
 const HEAVY_M: float = 4.0
@@ -8,6 +8,14 @@ const KERF_M: float = 9.0
 const OHM_M: float = 11.0
 const CLUSTER_M: float = 3.0
 const DENT_M: float = 7.0
+
+
+## Deploy-only bots keep their old decision cadence locally. The input word contains
+## only the numbered strike, so planning never changes the player's selected ghost.
+class DeployChoice:
+	var target: StringName = &""
+	var advanced: bool = false
+
 
 var _rng: RandomNumberGenerator
 var _last_candidate: StringName = &""
@@ -39,14 +47,23 @@ func desired(
 	return candidate if _accepted else &""
 
 
+static func deploy_choice(me: BotView.Player) -> DeployChoice:
+	if not me.has_meta(&"deploy_choice"):
+		return null
+	var plan: DeployChoice = me.get_meta(&"deploy_choice")
+	return plan
+
+
 static func transform(me: BotView.Player, want: StringName) -> StringName:
 	if want == &"base" and me.form != &"base" and me.settled:
 		return &"power_hauler"
 	if want == &"" or not me.settled or me.form == want or not me.forms.has(want):
 		return &""
-	if me.form != &"base" or me.selected == want:
+	var plan: DeployChoice = deploy_choice(me)
+	var selected: StringName = plan.target if plan != null and plan.target != &"" else me.selected
+	if me.form != &"base" or selected == want:
 		return &"power_hauler"
-	return &"power_gearbox"
+	return &"" if plan != null and plan.advanced else &"power_gearbox"
 
 
 static func _heavy_near(view: BotView) -> bool:

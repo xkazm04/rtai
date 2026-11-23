@@ -5,7 +5,7 @@ var actions: PlayerActions
 var view: BotViewArena
 var bot: GhostDeployBot
 var ghost: GhostDeploy
-var q: int
+var number: int
 
 
 func before_each() -> void:
@@ -21,7 +21,7 @@ func before_each() -> void:
 	view = BotViewArena.new(stage, actions, true)
 	bot = GhostDeployBot.new(view, actions, RngRegistry.new(24))
 	ghost = stage.pilot.ghosts.deploy
-	q = 1 << actions.bit(&"ghost_deploy")
+	number = 1 << actions.bit(&"ghost_deploy_3")
 
 
 func _spawn(id: StringName, at: Vector2) -> Fighter:
@@ -48,14 +48,15 @@ func test_hold_aims_at_sentry_then_releases_there_even_while_g_wants_to_cycle() 
 	var sentry: Fighter = _spawn(&"sentry_turret", Vector2(6, 1))
 	var fire: int = 1 << actions.bit(&"fire")
 	var held: TickInput = _word(bot, 1.0, fire)
-	assert_eq(held.buttons & (q | fire), q | fire)
+	assert_eq(held.buttons & (number | fire), number | fire)
+	assert_false(held.is_pressed(actions.bit(&"ghost_deploy")))
 	_drive(held)
 	assert_eq(ghost.phase, GhostDeploy.Phase.AIMING)
 	assert_lte(ghost.spot.distance_to(sentry.pos), ghost.strike.attacks.deploy[&"ohm"].radius_m)
 	var spot: Vector2 = ghost.spot
 	var cycle: int = 1 << actions.bit(&"power_gearbox")
 	var release: TickInput = _word(bot, 1.0, fire | cycle)
-	assert_eq(release.buttons & (q | cycle | fire), fire)
+	assert_eq(release.buttons & (number | cycle | fire), fire)
 	_drive(release)
 	assert_eq(ghost.phase, GhostDeploy.Phase.ACTIVE)
 	assert_eq(ghost.form, &"ohm")
@@ -63,16 +64,16 @@ func test_hold_aims_at_sentry_then_releases_there_even_while_g_wants_to_cycle() 
 	assert_lt(sentry.hp, sentry.max_hp)
 
 
-func test_cycle_loads_the_new_ghost_before_aiming_its_strike() -> void:
+func test_bot_plans_then_uses_the_number_without_cycling_the_player() -> void:
 	var forms: GhostForms = stage.pilot.ghosts.forms
 	forms.selected = &"kerf"
 	var first: Fighter = _spawn(&"shield_robot", Vector2(5, 0))
 	var second: Fighter = _spawn(&"shield_robot", Vector2(6, 0))
 	var cycle: int = 1 << actions.bit(&"power_gearbox")
 	var select: TickInput = _word(bot, 1.0, cycle)
-	assert_eq(select.buttons & (q | cycle), cycle)
+	assert_eq(select.buttons & (number | cycle), 0)
 	_drive(select)
-	assert_eq(forms.selected, &"ohm")
+	assert_eq(forms.selected, &"kerf")
 	assert_eq(ghost.phase, GhostDeploy.Phase.IDLE)
 	_drive(_word(bot, 1.0))
 	assert_eq(ghost.phase, GhostDeploy.Phase.AIMING)
@@ -99,38 +100,41 @@ func test_cooldown_active_ghost_and_zero_eagerness_leave_the_gun_aim_alone() -> 
 func test_ohm_requires_a_sentry_or_two_machines_inside_the_same_radius() -> void:
 	var first: Fighter = _spawn(&"shield_robot", Vector2(6, 0))
 	var other: Fighter = _spawn(&"shield_robot", Vector2(-6, 0))
-	assert_eq(_word(bot, 1.0).buttons & q, 0)
+	assert_eq(_word(bot, 1.0).buttons & number, 0)
 	other.pos = first.pos + Vector2(1, 0)
-	assert_eq(_word(bot, 1.0).buttons & q, q)
+	assert_eq(_word(bot, 1.0).buttons & number, number)
 
 
 func test_kerf_requires_an_eligible_visible_target() -> void:
 	stage.pilot.ghosts.forms.selected = &"kerf"
+	number = 1 << actions.bit(&"ghost_deploy_2")
 	var cop: Fighter = _spawn(&"patrol_cop", Vector2(6, 1))
-	assert_eq(_word(bot, 1.0).buttons & q, 0)
+	assert_eq(_word(bot, 1.0).buttons & number, 0)
 	var shield: Fighter = _spawn(&"shield_robot", Vector2(5, -1))
 	stage.walls.boxes.append(Rect2(2, -3, 1, 3))
-	assert_eq(_word(bot, 1.0).buttons & q, 0)
+	assert_eq(_word(bot, 1.0).buttons & number, 0)
 	stage.walls.boxes.clear()
-	assert_eq(_word(bot, 1.0).buttons & q, q)
+	assert_eq(_word(bot, 1.0).buttons & number, number)
 	assert_true(cop.alive() and shield.alive())
 
 
 func test_tonnage_needs_three_bodies_or_a_walker_and_dent_needs_a_pair() -> void:
 	var first: Fighter = _spawn(&"patrol_cop", Vector2(4, 0))
 	stage.pilot.ghosts.forms.selected = &"dent"
-	assert_eq(_word(bot, 1.0).buttons & q, 0)
+	number = 1 << actions.bit(&"ghost_deploy_1")
+	assert_eq(_word(bot, 1.0).buttons & number, 0)
 	var second: Fighter = _spawn(&"patrol_cop", Vector2(6, 0))
-	assert_eq(_word(bot, 1.0).buttons & q, q)
+	assert_eq(_word(bot, 1.0).buttons & number, number)
 	stage.pilot.ghosts.forms.selected = &"tonnage"
-	assert_eq(_word(bot, 1.0).buttons & q, 0)
+	number = 1 << actions.bit(&"ghost_deploy_4")
+	assert_eq(_word(bot, 1.0).buttons & number, 0)
 	var third: Fighter = _spawn(&"patrol_cop", Vector2(5, 1))
-	assert_eq(_word(bot, 1.0).buttons & q, q)
+	assert_eq(_word(bot, 1.0).buttons & number, number)
 	first.hp = 0.0
 	second.hp = 0.0
 	third.hp = 0.0
 	var walker: Fighter = _spawn(&"war_machine", Vector2(7, 0))
-	assert_eq(_word(bot, 1.0).buttons & q, q)
+	assert_eq(_word(bot, 1.0).buttons & number, number)
 	assert_true(walker.alive())
 
 
@@ -140,12 +144,12 @@ func test_missed_roll_waits_thirty_ticks_and_private_streams_repeat_the_same_wor
 	var chance: float = registry.stream(&"test_player_ghost_deploy").randf() * 0.5
 	var twin: GhostDeployBot = GhostDeployBot.new(view, actions, RngRegistry.new(24))
 	var initial: TickInput = _word(bot, chance)
-	assert_eq(initial.buttons & q, 0)
+	assert_eq(initial.buttons & number, 0)
 	assert_eq(initial.pack(), _word(twin, chance).pack())
 	for tick: int in range(1, 31):
 		stage.tick = tick
 		var word: TickInput = _word(bot, 1.0)
-		assert_eq(word.buttons & q, q if tick == 30 else 0)
+		assert_eq(word.buttons & number, number if tick == 30 else 0)
 		assert_eq(word.pack(), _word(twin, 1.0).pack())
 	assert_true(sentry.alive())
 
