@@ -68,6 +68,33 @@ func test_script_marks_and_gate_approach_are_clear() -> void:
 			)
 
 
+func test_street_and_pavements_join_across_the_full_width_of_the_yard() -> void:
+	var edge: Vector2 = Vector2(plan.yard.position.x, plan.yard.end.y)
+	for strip: Rect2 in [plan.sidewalk, plan.street, plan.far_sidewalk]:
+		assert_eq(strip.position, edge)
+		assert_eq(strip.end.x, plan.yard.end.x)
+		edge.y = strip.end.y
+
+
+func test_back_fence_caps_both_side_walls_and_the_gate_has_its_authored_opening() -> void:
+	var rear: Rect2 = plan.fences[0]
+	assert_eq(rear.position.x, plan.fences[1].position.x)
+	assert_almost_eq(rear.end.x, plan.fences[2].end.x, 0.00001)
+	var west: Rect2 = plan.fences[4]
+	var east: Rect2 = plan.fences[5]
+	assert_almost_eq(west.end.y, plan.gate.y, 0.00001)
+	assert_almost_eq(east.end.y, plan.gate.y, 0.00001)
+	assert_almost_eq(east.position.x - west.end.x, plan.gate_width_m, 0.00001)
+	assert_almost_eq((west.end.x + east.position.x) * 0.5, plan.gate.x, 0.00001)
+	var west_leaf: Rect2 = plan.fences[-2]
+	var east_leaf: Rect2 = plan.fences[-1]
+	assert_almost_eq(west_leaf.end, west.end, Vector2.ONE * 0.00001)
+	assert_almost_eq(east_leaf.position.x, east.position.x, 0.00001)
+	for leaf: Rect2 in [west_leaf, east_leaf]:
+		assert_almost_eq(leaf.end.y, plan.gate.y, 0.00001)
+		assert_almost_eq(leaf.size.y * 2.0, plan.gate_width_m, 0.00001)
+
+
 func _arrival_marks(marks: Array[Vector2], arrival: Dictionary) -> void:
 	var groups: Array = data.raw["waves"][0]["groups"]
 	var rank: int = data.integer(arrival, "rank_size")
@@ -133,6 +160,10 @@ func test_legacy_dressings_keep_the_stage_cover_debris_and_solid_kinds() -> void
 		var legacy: PrologueYard = PrologueYard.from_stage(data)
 		_assert_pieces(legacy.wrecks, data.array(yard, "cover"))
 		_assert_pieces(legacy.debris, data.array(yard, "debris"))
+		for i: int in legacy.debris.size():
+			var row: Dictionary = yard["debris"][i]
+			var angle: float = row.get("rotation_deg", 0.0)
+			assert_almost_eq(legacy.debris[i].rotation, deg_to_rad(angle), 0.00001)
 		for prop: ArenaStation.Prop in legacy.stations.stations[0].props.slice(
 			legacy.fences.size()
 		):
