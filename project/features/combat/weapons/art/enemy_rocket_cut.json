@@ -2,7 +2,7 @@
   "generated": "DO NOT EDIT; tools/art/enemy_rocket_cut.py",
   "nozzle_px": [
     0,
-    15.62
+    22.68
   ],
   "px_per_m": 64,
   "schema": "gtai.enemy-rocket-art/1",

@@ -7,9 +7,10 @@ func test_trooper_round_draws_the_cut_on_the_round_colour_canvas() -> void:
 	FightAreasArt._rocket(host, shot, shot.vel.normalized(), 4.0, 100)
 	assert_true(host.has_meta(ShotDraw.LAYER))
 	assert_eq(EnemyRocketArt.BODY.resource_path.get_file(), "enemy_rocket_body.png")
-	assert_eq(EnemyRocketArt.BODY.get_size(), Vector2(62, 31))
-	assert_almost_eq(EnemyRocketArt.nozzle, Vector2(0, 15.62), Vector2(0.01, 0.01))
-	assert_almost_eq(EnemyRocketArt.scale_px * 62 / Ink.PX_PER_M, 0.97, 0.01)
+	var body_size: Vector2 = EnemyRocketArt.BODY.get_size()
+	assert_eq(body_size, Vector2(90, 45))
+	assert_almost_eq(EnemyRocketArt.nozzle, Vector2(0, 22.68), Vector2(0.01, 0.01))
+	assert_almost_eq(EnemyRocketArt.scale_px * body_size.x / Ink.PX_PER_M, 1.4, 0.01)
 
 
 func test_parent_fx_view_owns_the_sprite_when_both_views_see_the_round() -> void:
@@ -41,7 +42,8 @@ func test_exhaust_depends_only_on_tick_even_across_gaps_and_rewinds() -> void:
 	for tick: int in [100, 0, 5, 3, 101, 1, 100]:
 		var texture: Texture2D = EnemyRocketArt.exhaust(tick)
 		assert_eq(texture.resource_path.get_file(), "enemy_rocket_exhaust_%d.png" % (tick % 3))
-		assert_gt(texture.get_width(), 0)
+		var length_m: float = texture.get_width() * EnemyRocketArt.scale_px / Ink.PX_PER_M
+		assert_between(length_m, 0.9, 1.0)
 
 
 func _trooper_round() -> FoeRocketFlight.Round:
