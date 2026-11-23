@@ -3,7 +3,6 @@
 Owner's note 7: "Ghost powers: First level ability would be to hold 'Q' key for ghost deployment range. Player remains as Rivet, ghost is deployed, performs signature attack and disappears. Ghost full transition would be evolutionary level mastering the ghost skill."
 
 ## What works
-(item, evidence, number: filled at the end)
 
 - Hold Q / LB: the range ring and the form's target mark on the ground, in soul teal over an ink rim. Release: the loaded ghost appears at the spot, strikes once, fades. Rivet keeps walking, guarding and firing in his own body. Input `ghost_deploy` bit 19 / wire bit 32; old tapes carry no bit >= 31.
 - Which ghost: G (power_gearbox, unchanged) cycles the loaded ghost; the HUD chevron marks it with the Q hint and the next chip carries the G hint; a cooling ghost shows the deploy cooldown arc.

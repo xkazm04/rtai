@@ -89,3 +89,7 @@ NEXT (report session, from 01:30): (1) optional `node tools/gate/run.mjs --rev=b
 - 01:32 pressure did not merge n24-ghost (pressure JOURNAL DECISION: final batch pressure + motion). merge-tree vs final heads: conflicts only input_actions.json + gauntlet_run.schema.json (pressure, motion), debt baseline (pressure, cast), JOURNAL/REPORT add/add. Added to REPORT Merge notes. Removed own gate snapshot `Temp\gtai-gate-ba7ac5163972*`; other lanes' temp dirs left alone.
 - 01:33 cites: 10 paths, 10 ok.
 NEXT: none for this run. Director merges n24-ghost (REPORT Merge notes). Next run: formation jitter for the worth probe, bot picks Kerf/Dent, effects afterglow test, mastery earn path (REPORT Next steps).
+
+## Session 7 (STABILIZE, 01:33 -)
+- 01:34 start. No Astra (no lock; last call g6 22:41Z), no lane Godot. Code frozen at ba7ac5163 (gate PASS, `build/gate/ba7ac5163972/gate.json`). Only `NEED ghost` is motion 19:45, answered 20:21. Removed the leftover "filled at the end" placeholder under REPORT `## What works`. cites 10/10 ok.
+NEXT: none for this run. Director merges n24-ghost per REPORT Merge notes.
