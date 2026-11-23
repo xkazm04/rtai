@@ -106,3 +106,9 @@ films, last work 17:10, gate 17:25.
   + 13:57 addendum, hard stop 15:12, commit by 14:55, out `evidence/briefs/n26-pressure-03-trooper.out.txt`).
 - 13:56 DECISION pressure schedule: item 5 batches are ~16 min per 30 runs on today's balance (n24 final: 15 runs in
   477 s), so salt 0 + salt 1 = ~32 min; that fits after 04 (target 16:40) and before the 17:25 gate. Films after the gate.
+- 14:06 DECISION pressure order (lesson n24: the final gate held the lane's one Godot 84 min and the films were never
+  made): 03 trooper (to 15:12) -> 04 stall (fresh, ~15:15-16:30) which ALSO runs item 5's two batches (salt 0/1, 10 seeds
+  x 3 profiles, waves 40) + `tune.mjs floor` on its final state (= the re-run of the stalled seeds) -> 05 films
+  (~16:30-17:22, its dev take committed by 17:00; after the last behaviour change) -> gate 17:25 on that HEAD ->
+  REPORT. "Tuner cycle for the record" = `tune.mjs propose` on the salt-0 batch by me (node only, nothing applied).
+  Briefs: `evidence/briefs/n26-pressure-04-stall.md` (step 8), `evidence/briefs/n26-pressure-05-films.md`.

@@ -7,7 +7,7 @@ committed by COMMITBY; otherwise film with what exists. Fix lint and format find
 ## Setup, every shell
 `export APPDATA=C:/Users/kazda/kiro/gtai-n26/appdata/pressure` and
 `export GODOT_BIN='C:\Users\kazda\kiro\gtai-spike\tools\godot\Godot_v4.7.2-stable_win64_console.exe'`.
-One Godot at a time in this worktree (Godot is yours alone; the Director's gate has finished). Anything that renders
+One Godot at a time in this worktree (Godot is yours alone; the Director's final gate starts after your hard stop, on your last commit, so a dev commit after COMMITBY is not allowed). Anything that renders
 uses `--rendering-driver d3d12`; every windowed run uses `--position 0,1440` (never the main display). Film committed
 code only: `tools/film/film.mjs ... --rev=<sha>` or a snapshot worktree; `tools/film/compare.mjs` for same-tick pairs.
 
