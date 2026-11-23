@@ -71,3 +71,16 @@ the stall lead. Order after rocket-art: 03 trooper, 04 stall, item 5 medians, fi
   ice-blue under-glow, a routing test, re-made stills, plate C scratch still for the owner call if time.
 - 13:24 ASTRA RUNNING rocket-read since 13:24 (pid 77404 node, `--resume`, brief `evidence/briefs/n26-pressure-02b-rocket-read.md`,
   hard stop 14:20, commit by 14:10, out `evidence/briefs/n26-pressure-02b-rocket-read.out.txt`).
+- 13:32 DECISION pressure schedule: 03 trooper and 04 stall get ~60-75 min each with small batches (brief 03 now carries a
+  time budget: arena <= 8 combos x seeds 1-3; gauntlet average x10 waves<=12 for control + 2 candidates, then the shipped
+  one on novice/expert waves<=6 for the "no rocket death before wave 6" check). Item 5 (three medians, 10 seeds x 3
+  profiles, salt 0 and salt 1 for the floor, ~32 min at 15 runs / 8 min; + one tuner cycle in its temp worktree) is run
+  by me, not Astra, after 04 lands; if the day runs short, the tuner cycle is the part that is cut (said in REPORT).
+NEXT (session 3, from 13:52): (1) `astra.lock` pid 77404 (node) = rocket-read, hard stop 14:20. When it ends: read the
+diff, LOOK at the four re-made stills (32 px/m: enemy rocket visibly larger than Rivet's, pops off asphalt) and
+`rocket-a-vs-c-32.png` if made; commit anything staged by pathspec; log `ASTRA rocket-read <min> <verdict>`; MILESTONE
+rocket <sha>. (2) launch brief 03 trooper (times filled: hard stop 15:35, commit 15:20; shift them if it starts late)
+with Start-Process exactly as at 13:24 (no `--resume`: a fresh thread). (3) then 04 stall (fill HARDSTOP/COMMITBY).
+(4) item 5 by me. (5) films brief (both rockets in a fight; deflect at 6 m; circling vs two troopers with/without dash,
+health bar in frame; 32 px/m tilt 70 1080p60 15-40 s, 64 px/m still each; `frames.json`). Commit last work by 17:10,
+gate `node tools/gate/run.mjs --rev=HEAD` by 17:25. Check `n23-controls/JOURNAL.md` for `MILESTONE keys` (re-check 03).

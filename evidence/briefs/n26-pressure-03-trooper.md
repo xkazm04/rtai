@@ -1,6 +1,6 @@
 # Brief n26 pressure 03: the rocket trooper against a moving player
 
-Hard stop HARDSTOP wall clock (stop, commit what is green, report). Commit deadline COMMITBY.
+Hard stop 15:35 (or 75 min after you start, whichever is earlier) wall clock (stop, commit what is green, report). Commit deadline 15:20.
 
 ## Setup, every shell
 `export APPDATA=C:/Users/kazda/kiro/gtai-n26/appdata/pressure` and
@@ -93,3 +93,11 @@ unit/scenario counts, mutate score, digests moved (must be none outside gauntlet
   does not fit) -> fix-up commit if needed.
 - The pre-commit hook's tool tests can fail on process-timing checks under load: retry the commit once; do not change
   hook settings or lane env overrides.
+
+## Time budget (Director, 13:30): the day is short, keep the batches small
+- Step 1 arena: at most 8 lever combinations (rest 1.4/1.1/0.9 x lead linear/orbit, plus 0.75 orbit and 0.75 linear
+  only if the others miss (a)), 10 m and 14 m, seeds 1-3. Stop sweeping once two candidates meet (a) and (b).
+- Step 2 gauntlet: control + 2 candidates on the `average` profile, 10 seeds, waves capped at 12 (that is the (a) metric);
+  then ONLY the candidate you ship on `novice` and `expert`, 10 seeds each, waves capped at 6 (that is (c): killer
+  `rocket` before wave 6). `--jobs=1`. If one arm takes over 15 min, cut seeds to 6 and say so.
+- Item 5 (the Director's medians on the final state) comes later; do not run full 40-wave batches here.
