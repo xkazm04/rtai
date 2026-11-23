@@ -244,3 +244,11 @@ NEXT (session 6, report phase; freeze 18:40, report 18:50, end 19:10):
 NEXT: none this run. Director: merge `n26-pressure`; re-run item 5 medians and the item 3 arena on the merged tree (after
 keys); mutate `features/gauntlet/gauntlet_combat.gd` (stall fix) once a Godot is free.
 - 18:42 Temp: removed this lane's gate snapshots 0f9baec4835f (+ .gtai-snapshot) and 7969ed2a4872.gtai-snapshot; the empty dir `%LOCALAPPDATA%\Temp\gtai-gate-7969ed2a4872` stays (Windows says busy, no process names it): remove it after the session ends.
+
+## Session 7 (18:43, STABILIZE / report)
+
+- 18:43 No Astra lock; tracked tree clean; REPORT final (gate PASS `build/gate/7969ed2a4872/gate.json`), cites 34/34 ok,
+  no placeholders. Nothing new after freeze. `%LOCALAPPDATA%\Temp\gtai-gate-7969ed2a4872` still busy (empty); the other
+  gtai-gate-* dirs there belong to other lanes' gates, left alone.
+NEXT: none this run. Director: merge `n26-pressure`; remove the empty Temp dir above after the sessions end; mutate the
+stall fix and re-run item 5 medians on the merged tree.
