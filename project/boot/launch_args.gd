@@ -131,6 +131,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--result",
 	"--prologue-stills",
 	"--clip",
+	"--yard-dressing",
 ]
 var _values: Dictionary[String, String] = {}
 var _unknown: Array[String] = []

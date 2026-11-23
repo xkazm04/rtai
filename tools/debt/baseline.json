@@ -431,7 +431,8 @@
         "2026-11-22: Merge of controls, moves and loop requires their distinct KNOWN_FLAGS in launch_args.gd (+2 lines). (files_past_soft_cap 67 -> 67)",
         "2026-11-22: --prologue-stills for n23 prologue (files_past_soft_cap 67 -> 67)",
         "2026-11-22: --clip for n23 prologue (files_past_soft_cap 67 -> 67)",
-        "2026-11-22: n23 merge: launch_args KNOWN_FLAGS holds both the loop's and the prologue's flags (files_past_soft_cap 67 -> 67)"
+        "2026-11-22: n23 merge: launch_args KNOWN_FLAGS holds both the loop's and the prologue's flags (files_past_soft_cap 67 -> 67)",
+        "2026-11-23: --yard-dressing for n25 yard (files_past_soft_cap 67 -> 67)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -440,7 +441,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 238,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 219,
+        "project/boot/launch_args.gd": 220,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,

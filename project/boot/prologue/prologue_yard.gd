@@ -33,7 +33,9 @@ static func from_stage(data: DataTable, dressings: DataTable = null) -> Prologue
 	plan.yard = Rect2(Vector2.ZERO, data.vec(data.raw, "yard_size_m"))
 	var layout: Dictionary = data.object(data.raw, "yard")
 	var dressing_id: String = layout.get("dressing", "plain")
-	plan.dressing = PrologueYardDressing.resolve(dressing_id, "", dressings)
+	plan.dressing = PrologueYardDressing.resolve(
+		dressing_id, LaunchArgs.value("--yard-dressing"), dressings
+	)
 	plan._perimeter(data, layout)
 	var station: ArenaStation = ArenaStation.new()
 	for fence: Rect2 in plan.fences:

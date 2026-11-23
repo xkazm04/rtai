@@ -82,3 +82,11 @@ func test_dressing_cannot_move_a_footprint_or_add_cover() -> void:
 		assert_eq(props[i].at, original.at)
 		assert_eq(props[i].size, original.size)
 		assert_eq(props[i].kind, original.kind)
+
+
+func test_launch_override_wins_over_stage_choice() -> void:
+	var stage: DataTable = DataTable.open(PrologueGame.TABLE, PrologueGame.SCHEMA)
+	LaunchArgs.parse(["--yard-dressing=factory"])
+	var plan: PrologueYard = PrologueYard.from_stage(stage, _fixture())
+	LaunchArgs.parse()
+	assert_eq(plan.dressing.id, "factory")
