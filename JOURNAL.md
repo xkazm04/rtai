@@ -293,3 +293,9 @@ with pressure's ai/** timing, fighter_fx.gd:18, fight_areas_art.gd:36, combat_ar
   Nothing to fix: no new product commit, no Godot run (no time left for the 21 min `--reels` gate before 01:40).
 
 NEXT: lane done, unchanged from session 6. Director: merge `n24-melee` at this commit (merge notes in REPORT).
+
+- 01:41 session 8 start (REPORT phase). No astra.lock; tree clean at fdf6e59e5. REPORT final since session 6;
+  `node tools/evidence/cites.mjs REPORT.md`: 5 paths, 5 ok; `build/gate/9da9442bb509/gate.json` and the M/ film
+  folders (films, kills, electric, cursor, telemetry, frames.json) present. No change to REPORT, no Godot run.
+
+NEXT: lane done. Director: merge `n24-melee` at this commit (merge notes in REPORT). Reels gate not run.
