@@ -160,3 +160,14 @@ NEXT (session 5), no builder exists tonight:
 3. Owner films/frames: `gtai-masters/n26/cast/frames.json` (8-15 entries, best first): cop before/after clip + stills, Mulroney beside/pump/hit-edge/fight/close, feet Mulroney, riot/swat/swat-run sheet montages are art (not frames). Delete scratch renders not referenced. Check every clip with ffprobe.
 4. REPORT: replace PENDING lines; Calls for the owner as listed; `node tools/evidence/cites.mjs REPORT.md`; commit REPORT + JOURNAL with pathspec. Freeze 18:40, report 18:50.
 - 16:33 Session 4 ends. GATE RUNNING since 16:30 (node pid 48664, `gtai-n26/logs/cast/gate-final.out`). No Astra running (account spent). REPORT cites: 12/12 ok.
+
+## Session 5 (16:33)
+- 16:33 session 5 start. Gate pid 48664 running. No Astra (account spent; last call = warden 16:12). No new `NEED cast` in keys/melee/pressure/yard journals.
+- 16:35 `mulroney_fight_32.mp4` in masters was the 15:16 take (pre-reversal fix). Astra's recapture after the fix (`foes-n26/mulroney/pack/edge/film_70_32/frames.avi`, 15:40, "fight complete true") encoded to mp4 (16.02 s, 1920x1080 60) and replaced it. LOOKED at frames 288-293 (old jump at 290-291): he steps back with no torso jump.
+- 16:37 LOOKED `mulroney_pump_64.png` (pump back diagonal vs level reads at 32) and `mulroney_beside_64ppm_tilt70.png` (85/92 px vs cop 86/89, under Rivet): good. `feet_cop_patrol..._tilt55.png`: 29.96 -> 0.00 px.
+- 16:38 Warden WIP in the tree = branch `n26-cast-warden-wip` byte for byte (tracked diff empty, 17 untracked blobs equal).
+- 16:40 `gtai-masters/n26/cast/frames.json` written (11 entries, best first).
+- 17:27 GATE PASS on 4f505e377 with reels: lint 19/19, unit 4008/0 (2 skipped), scenarios 68, parity bit for bit, selftest, release-compile 971/0, reels exit 0. `build/gate/4f505e37796a/gate.json`. Commits after it are JOURNAL/REPORT only.
+- 17:33 Warden WIP lineup rendered from the tree (import exit 0, then `cast_warden_lineup.tscn` 70/64, exit 0): LOOKED: one heavy-set ochre figure with the catch pole, 96/110 px (pole included) beside the cop's 87/88 and Mulroney's 89/96, under Rivet. Copied to `gtai-masters/n26/cast/warden_WIP_beside_64ppm_tilt70.png` (WIP, not in game).
+- 17:36 Tree put back to HEAD (WIP paths checked out / untracked removed; all saved on `n26-cast-warden-wip`).
+- 17:37 FRICTION: my restore used `git diff --name-only HEAD`, which also listed JOURNAL.md and REPORT.md, so their uncommitted session-5 edits were reverted. Re-applied from memory of this session (REPORT edits identical; these journal lines rewritten). Lesson: never feed `git diff --name-only` to checkout; name the paths.

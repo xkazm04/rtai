@@ -1,11 +1,12 @@
 # REPORT - lane cast, run n26 (2026-11-23), branch `n26-cast`
 
-DRAFT written 15:35 by session 4; the final session replaces every PENDING with a measured value or removes the line.
-
 Lane brief: planted feet as a checklist rule + the patrol cop re-cut to it, then Mulroney, the appliance warden, then robot
 gunner, contractor, thug. Worktree `C:\Users\kazda\kiro\gtai-wt\n23-prologue`, cut from `main` `0779185ac`.
-Final gate: PENDING, started 16:30 on the last code commit `4f505e377` (`node tools/gate/run.mjs --rev=4f505e377 --reels`,
-log `C:\Users\kazda\kiro\gtai-n26\logs\cast\gate-final.out`); quote its line and the `gate.json` path.
+Final gate: **PASS** on `4f505e377` (`node tools/gate/run.mjs --rev=4f505e377 --reels`, 16:30 to 17:27):
+`gate: PASS; C:\Users\kazda\kiro\gtai-wt\n23-prologue\build\gate\4f505e37796a\gate.json`. Lint 19/19 over 2164 files,
+unit 4008 passed / 0 failed / 2 skipped, scenarios 68 passed, parity bit for bit (1200 steps), selftest pass,
+release-compile 971 loaded / 0 failed, reels exit 0. Every later commit on the branch touches only `JOURNAL.md` and
+`REPORT.md` (inert).
 
 **The builder account hit its usage limit at 16:12** (every lane; "try again at Nov 28th"): no product change after
 `af94f1c6e` (Mulroney) and `2c7f91f25` (warden art).
@@ -25,7 +26,8 @@ log `C:\Users\kazda\kiro\gtai-n26\logs\cast\gate-final.out`); quote its line and
 
 - Feet still FAIL (before = after) for enabled characters this lane did not reach: riot cop, SWAT, contractor (shipped), lancer,
   door carrier, pile-driver (table in `docs/art/cast-audit.md`). Cause for the humans: 4 drawings per stride cannot plant a foot
-  without a hop. PENDING: feet-four call (lancer 8-drawing walk, door + pile-driver anchored).
+  without a hop. The feet-four call (lancer 8-drawing walk, door carrier + pile-driver anchored) never ran: the builder
+  account was spent at 16:12. Before = after for these six; their audit rows are true FAILs, not hidden.
 - Robot gunner, contractor, thug: source sheets and 8-drawing walks accepted, not cut into the game (no builder time). Their rows stay as on main.
 - Appliance warden NOT shipped: the builder died mid-call (usage limit). Her row (`enabled: false`), 8-drawing anchors, the catch
   entry `FoeWardenCardView.set_catch(h, held, tick)` and her test sit on branch `n26-cast-warden-wip` (20920e043, not for merge):
@@ -59,7 +61,9 @@ log `C:\Users\kazda\kiro\gtai-n26\logs\cast\gate-final.out`); quote its line and
 ## Next steps
 
 In order, each one builder call (all source art is drawn and accepted; the briefs exist):
-1. Warden: from `n26-cast-warden-wip`, restore meta `ON` for the hit check in `StreetWalkerCards.place` (the one red test), then
+1. Warden: from `n26-cast-warden-wip`, fix the one red test. Two WIP edits in `StreetWalkerCards.place` change a shipped
+   card's size: the hit check reads `card.texture.resource_path` instead of meta `ON`, and the hit fill is now multiplied
+   by `StreetCopWalk.fill_of(path)`. Keep both to her padded cells (`CastCards.padded(path)`), then
    her checklist + audit row, then films; yard wires `FoeWardenCardView.set_catch` and hides its overalls dye + vector pole.
    Brief `evidence/briefs/n26-cast-03-warden.md`.
 2. feet-four: lancer 8-drawing walk (`foes-n26/lancer8`), door carrier + pile-driver on the anchored placement. Brief `evidence/briefs/n26-cast-08-feet-four.md`.
@@ -81,4 +85,17 @@ In order, each one builder call (all source art is drawn and accepted; the brief
 | mul-edge | 22 | accepted (reversal + hit edge) |
 | warden | 28 | abandoned (usage limit at 16:12; art committed, the rest on `n26-cast-warden-wip`) |
 
-What I would brief differently: PENDING.
+Total: 7 calls, 294 builder minutes; 2 accepted, 3 accepted in part, 1 bounced, 1 abandoned.
+
+What I would brief differently:
+- Start with the 8-drawing walk. The first two calls (74 min) tried to plant 4-drawing strides by placement alone; the
+  rule I had written makes that impossible (a 4-drawing stride is 0.38 m per held drawing). A five-minute sum in the
+  brief would have shown it.
+- Put "body jump between rendered frames" into the first brief's acceptance, with a reversal (aim one way, step the
+  other). Both late faults (the 40.50 px hop, the 30.49 px reversal jump) were in that check and were found only after a
+  commit.
+- Ask for the 64 px/m edge measure (dark pixels outside the silhouette) on every state, not only the walk: Mulroney's
+  hit teeth reached a commit.
+- Expect the builder account to end: the warden call should have committed her row + anchors + test as soon as they
+  were green (its brief asked for 2 commits; the first came at 16:01, the second never). Commit by 25 minutes into a
+  call, not 40.
