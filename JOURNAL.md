@@ -165,3 +165,15 @@ NEXT (session 4): (1) `astra.lock` pid 47220 (node) = stall, hard stop 16:22. Wh
   (`KerfBehind.resolve` + destination-only `eject_circle`). Validate the travel segment with `KerfBehind._clear` before
   `_cut_path`/move; blocked blink stays at origin. Patch as text + pending test `test_gauntlet_kerf_wall.gd`
   `test_player_kerf_slice_keeps_the_street_in_reach`: `evidence/n26-pressure/stall/cause.md` (branch n26-pressure).
+- 16:12 ASTRA stall 65 accepted (3878 s, exit 1 with no final message at its own time limit; fix `bf32bfd1a` reviewed at
+  15:47; medians staged, not committed: I committed them `11b028b7f`). Item 5: salt 0 on `bf32bfd1a`, salt 1 on
+  `f23c6ea36` (journal-only diff), 10 seeds x 3 profiles, waves 40, greedy, wheel. Median death wave (salt 0 / salt 1,
+  paired floor): novice 5 / 5 (0.3), average 7.5 / 5 (3.1), expert 8.5 / 9 (1.5). 60/60 deaths, zero tick caps, zero
+  freeze reports. n24 final was 5 / 8 / 23 on 5 seeds (expert 23 had 1 censored run); expert now 8.5: the trooper's
+  orbit lead (rocket killed 3 experts in salt 0, 0 in salt 1) and the fire gaps; not a retune (owner plays first).
+  MILESTONE stall bf32bfd1a. MILESTONE medians 11b028b7f.
+- 16:13 tuner cycle for the record: `tune.mjs propose` on salt 0 -> `evidence/n26-pressure/medians/plan.json`: one change,
+  `rivet_repair` (repair_per_s 10 -> 12.5, repair_delay_s 3 -> 2.4) for all three misses (expert 8.5 vs 20, average 7.5 vs
+  12, novice 5 vs 6). NOT applied.
+- 16:13 ASTRA RUNNING films since 16:13 (pid 84808 node, fresh, brief `evidence/briefs/n26-pressure-05-films.md`, hard stop
+  17:22, commit by 17:00, out `evidence/briefs/n26-pressure-05-films.out.txt`).
