@@ -152,3 +152,16 @@ NEXT (session 4): (1) `astra.lock` pid 47220 (node) = stall, hard stop 16:22. Wh
 ## Session 4 (15:10 to 16:39)
 
 - 15:11 start. ASTRA RUNNING stall since 15:08 (pid 47220 node alive, hard stop 16:22). No Godot of mine. Waiting.
+- 15:47 stall fix committed by Astra `bf32bfd1a` (call still running step 8 batches). Read the diff and `evidence/n26-pressure/stall/cause.md`:
+  reproduced average-9 on `548989d7e` byte for byte; at tick 77115 a Kerf slice picked a target from the bot's float aim,
+  but the pilot decodes the 256-heading wheel aim and Kerf picked a different foe beside the wall; the slice landed Rivet
+  beyond the street's south wall (y 7.6, wall 6-7); from there nobody has sight (40 hostiles, Rivet), forms keep him on
+  the same side -> tick cap. Fix (ours): `bot_view_arena.gd:96` and `bot_arena_moves.gd:54` predict with the decoded
+  heading; `gauntlet_combat.gd` `report_bot_freeze` ends a headless bot run with an error after 60 s live combat without
+  HP loss (no result written, so a batch cannot score survival). Paired replay: before tick cap 216000, after exit 0 at
+  82694. Tests: `test_gauntlet_kerf_wall` (bot pair red on old code, green now; player crossing pending for melee),
+  freeze clock in `test_gauntlet_enemy_damage`. A human with Kerf unlocked CAN cross the wall the same way.
+- NEED melee: `project/features/souls/kerf_stage.gd:~118-125` lets a Kerf slice land Rivet beyond a thin wall
+  (`KerfBehind.resolve` + destination-only `eject_circle`). Validate the travel segment with `KerfBehind._clear` before
+  `_cut_path`/move; blocked blink stays at origin. Patch as text + pending test `test_gauntlet_kerf_wall.gd`
+  `test_player_kerf_slice_keeps_the_street_in_reach`: `evidence/n26-pressure/stall/cause.md` (branch n26-pressure).
