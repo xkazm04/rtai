@@ -177,3 +177,19 @@ NEXT (session 4): (1) `astra.lock` pid 47220 (node) = stall, hard stop 16:22. Wh
   12, novice 5 vs 6). NOT applied.
 - 16:13 ASTRA RUNNING films since 16:13 (pid 84808 node, fresh, brief `evidence/briefs/n26-pressure-05-films.md`, hard stop
   17:22, commit by 17:00, out `evidence/briefs/n26-pressure-05-films.out.txt`).
+- 16:20 FRICTION stall call ran out of time inside its mutate run (scratch `build/mutate/scratch-XwMshz` 16:11, no score
+  written; no orphan Godot of this lane). The stall fix has NO mutate score yet. No leftover worktree registered.
+- 16:22 session 4 end. ASTRA RUNNING films since 16:13 (pid 84808 node, hard stop 17:22, commit by 17:00). No Godot of mine.
+NEXT (session 5, from ~16:39):
+  (1) Films call (pid 84808): when it ends, read `evidence/briefs/n26-pressure-05-films.out.txt` and
+  `evidence/n26-pressure/films.md`; LOOK at 3 stills of each film (ffmpeg) and at `gtai-masters/n26/pressure/frames.json`;
+  commit anything it left staged by pathspec; log `ASTRA films <min> <verdict>`. Do not send work back after 17:22.
+  (2) Mutate the stall fix (one Godot: only when films is gone, before the gate if films ends by ~17:10, else right after
+  the gate): `node tools/mutate/mutate.mjs --file=features/gauntlet/gauntlet_combat.gd --lines=12-16,18,53-66,120-123 --max=10`
+  and `--file=features/gauntlet/bot/bot_arena_moves.gd --lines=7-15,54 --max=6`; quote scores in REPORT item 4.
+  (3) 17:25 gate `node tools/gate/run.mjs --rev=HEAD` (`export APPDATA=C:/Users/kazda/kiro/gtai-n26/appdata/pressure`;
+  ~85 min). Quote line + gate.json path.
+  (4) REPORT.md is drafted (items 1-5 filled; TODO: final HEAD, gate, films in Calls 2/3, Merge notes digests (stall fix
+  changed bot behaviour: gauntlet results differ, replay_60s/quest 1 held per cause.md run), Next steps, ledger rows 6/7).
+  Ledger row 6: stall 65 accepted. Calls: rocket A vs C, trooper 1.1 vs 1.4 orbit, deflect curve, tuner's rivet_repair
+  x1.25 proposal (not applied; owner gives numbers). `node tools/evidence/cites.mjs REPORT.md` before the final commit.
