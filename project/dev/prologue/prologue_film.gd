@@ -1,6 +1,5 @@
 extends Node
-## Godot's movie writer records from the first draw. Seek the real pilot before that
-## draw, then advance one sim tick per movie frame, including the full end-card hold.
+## Seek the pilot before the movie writer draws, then record one simulation tick per frame.
 
 const KNOWN_FLAGS: PackedStringArray = ["--bot", "--clip", "--result", "--seed", "--view"]
 const FIXED_FPS: int = 60
@@ -10,9 +9,10 @@ const SIZE: Vector2i = Vector2i(1920, 1080)
 const LEAD: int = 3 * SimClock.TICK_RATE
 const TAIL: int = 12 * SimClock.TICK_RATE
 const LIMIT: int = 300 * SimClock.TICK_RATE
+const CLIPS: String = "first_kill lessons guard_lesson pistol_pickup mulroney_order shotgun"
 
 var _game: PrologueGame
-var _last_tick: int = -1
+var _span: Vector2i = Vector2i(0, -1)
 
 
 func _ready() -> void:
@@ -28,25 +28,22 @@ func _ready() -> void:
 		return
 	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
 	ViewMode.select("tilt70")
-	var first_tick: int = 0
 	if LaunchArgs.has("--clip"):
 		var clip: String = LaunchArgs.value("--clip")
-		if clip not in ["first_kill", "lessons", "guard_lesson", "pistol_pickup", "mulroney_order"]:
+		if clip not in CLIPS.split(" "):
 			_fail("unknown --clip=%s" % clip)
 			return
-		var span: Vector2i = _locate(clip)
-		if span.x < 0:
+		_span = _locate(clip)
+		if _span.x < 0:
 			_fail("pilot did not reach %s within %d ticks" % [clip, LIMIT])
 			return
-		first_tick = span.x
-		_last_tick = span.y
-		Log.info("prologue-film", "%s filming %d..%d" % [clip, first_tick, _last_tick])
+		Log.info("prologue-film", "%s filming %d..%d" % [clip, _span.x, _span.y])
 	_game = ENTRY.instantiate() as PrologueGame
 	add_child(_game)
 	if _game.world == null:
 		return
 	_game.world.set_process(false)
-	while _game.world.context().clock.tick() < first_tick:
+	while _game.world.context().clock.tick() < _span.x:
 		_game.world.loop().step()
 	process_priority = -100
 	set_process(true)
@@ -66,6 +63,9 @@ func _locate(clip: String) -> Vector2i:
 				span = Vector2i(maxi(0, moment - LEAD), moment + TAIL)
 				if clip == "lessons":
 					span = _lesson_span(probe, moment)
+				elif clip == "shotgun":
+					var start: int = maxi(0, moment - 2 * SimClock.TICK_RATE)
+					span = Vector2i(start, start + 20 * SimClock.TICK_RATE - 1)
 				break
 	probe.free()
 	return span
@@ -84,25 +84,25 @@ func _lesson_span(probe: PrologueGame, fall: int) -> Vector2i:
 
 
 func _at_event(encounter: PrologueEncounter, clip: String) -> bool:
+	var battle: PrologueBattle = encounter.battle
 	match clip:
 		"first_kill", "lessons":
 			return encounter.dale_died >= 0
 		"guard_lesson":
 			return encounter.prompts.active("guard")
 		"pistol_pickup":
-			return encounter.battle.pistol.picked_tick >= 0
+			return battle.pistol.picked_tick >= 0
+		"shotgun":
+			return not battle.fire.shotgun.shot_ticks.is_empty()
 		"mulroney_order":
 			# The first ranged flank follows the pickup. Its tell and punish fit in one clip.
-			return (
-				encounter.battle.ranged
-				and encounter.battle.orders.back()["line"] == "b2_l01_mulroney_line_up"
-			)
+			return battle.ranged and battle.orders.back()["line"] == "b2_l01_mulroney_line_up"
 	return false
 
 
 func _process(_dt: float) -> void:
 	_game.world.loop().step()
-	if _game.stage.tick == _last_tick:
+	if _game.stage.tick == _span.y:
 		get_tree().quit()
 	elif _game.stage.tick >= LIMIT:
 		_fail("pilot timed out before the end card")

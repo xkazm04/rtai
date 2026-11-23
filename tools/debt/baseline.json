@@ -134,7 +134,7 @@
         "project/dev/bake_city.gd": 32,
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
-        "project/dev/bots": 695,
+        "project/dev/bots": 692,
         "project/dev/controls": 712,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
@@ -166,7 +166,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 30736
+      "total": 30733
     },
     "direct_cmdline_reads": {
       "accepted": [
