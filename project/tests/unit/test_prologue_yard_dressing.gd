@@ -137,7 +137,7 @@ func test_torn_line_loads_the_actual_art_and_keeps_the_crossing_clear() -> void:
 			assert_true(ResourceLoader.exists(look.cover[wreck.id].art), wreck.id)
 	var concrete: PrologueYardDressing.Ground = look.ground[0]
 	assert_true(ResourceLoader.exists(concrete.texture))
-	assert_true(concrete.tiled)
+	assert_false(concrete.tiled)
 	assert_true(concrete.rect.encloses(yard.yard.grow_individual(0, 0, 0, -0.01)))
 	assert_eq(concrete.rect.end.y, yard.sidewalk.position.y)
 	assert_eq(look.factory_front.size(), 2)

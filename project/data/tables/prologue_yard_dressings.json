@@ -769,30 +769,7 @@
             ]
           },
           "texture": "res://boot/prologue/art/torn_line/concrete.png",
-          "tile_size_m": [
-            57,
-            38
-          ],
-          "tiled": true
-        },
-        {
-          "rect_m": {
-            "origin": [
-              -1,
-              -6
-            ],
-            "size": [
-              62,
-              40
-            ]
-          },
-          "texture": "res://boot/prologue/art/torn_line/concrete.png",
-          "tile_size_m": [
-            35.25,
-            23.5
-          ],
-          "tiled": true,
-          "tint": "ffffff78",
+          "tiled": false,
           "wash": "d5c9b939"
         }
       ],

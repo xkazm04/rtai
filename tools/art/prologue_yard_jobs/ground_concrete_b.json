@@ -3,6 +3,6 @@
   "px_per_m": 96,
   "mode": "ground",
   "pieces": [
-    {"id": "concrete", "box": [0, 0, 1536, 1024], "size_m": [16, 10.66667]}
+    {"id": "concrete", "box": [12, 485, 905, 526], "size_m": [9.42708, 5.47917]}
   ]
 }

@@ -16,6 +16,21 @@ var _paint: PrologueYardPaint = PrologueYardPaint.new()
 func _ready() -> void:
 	if plan != null and plan.dressing.ochre_strength > 0.0:
 		_paint.attach_ochre(self, plan)
+	if plan != null and plan.dressing.id == "torn_line":
+		_use_painted_cracks()
+
+
+## The default D5 pass also stamps two diagonal crack families on light surfaces. The factory
+## swatch and decals already carry their own fractures. Change only this stage's material.
+func _use_painted_cracks() -> void:
+	var stage_print: PrintStage = get_parent() as PrintStage
+	if stage_print == null:
+		return
+	for node: Node in stage_print.find_children("*", "ColorRect", true, false):
+		var overlay: LookOverlay = node.get_parent() as LookOverlay
+		if overlay != null and overlay.spec.get("id") == "d5_riso":
+			var pigment: ShaderMaterial = (node as ColorRect).material as ShaderMaterial
+			pigment.set_shader_parameter(&"crack_k", 0.0)
 
 
 func _draw() -> void:
