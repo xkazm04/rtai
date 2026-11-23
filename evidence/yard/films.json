@@ -182,5 +182,21 @@
       "sha256": "f448fb45c3f341155a71ce5e8bde1097687b02557f9d663974b5a7b39aa4332a",
       "start_tick": 9710
     }
-  ]
+  ],
+  "sheet": {
+    "file": "stills_sheet.png",
+    "width": 1920,
+    "height": 1176,
+    "sha256": "da577bb77fc0bc61cb06df048213667210c73845cbfa58703e644a13b5fedaed",
+    "rows": [
+      "mid",
+      "gate",
+      "harbor"
+    ],
+    "columns": [
+      "plain at 64 px/m",
+      "torn_line at 64 px/m",
+      "full pilot at the same tick"
+    ]
+  }
 }
