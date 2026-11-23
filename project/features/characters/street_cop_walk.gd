@@ -1,40 +1,29 @@
 class_name StreetCopWalk
 extends RefCounted
-## Lane d9 seams: an armed city cop under a view row with a grid here draws as one whole-figure
-## card with the weapon drawn in its hands (the library's armed walk sheets, street_walk.py, toned
-## to the cop head cards' navy by street_tone.py; the riot sheet's orange armband greyed by
-## street_armband.py), stepping by the gait phase like StreetWalkerCards' peds. Every city cop is
-## armed from tick 60, so before this they glided on head cards over top-down parts.
-## The grid holds through aiming and firing (the drawn arms already point the weapon along the
-## facing; swapping on every shot flickers); a baton strike, a throw or a reload goes to the parts,
-## which draw that action. Dying goes to StreetWalkerFall's grids as before. ENABLED false = the
-## head cards over parts (before); a row with no grid draws its head card over the parts.
+## Armed city walk sheets. Only patrol hosts select the registered walk and fast gait.
+## A strike, throw or reload releases the hands to the articulated rig.
 const ENABLED: bool = true
 ## view art -> card row -> armed walk grid (5 facings across, 4 stride frames down).
-const WALKS: Dictionary[String, Dictionary] = {
-	"p70":
-	{
-		"cop/head_cap": "cop_patrol_armed_walk.png",
-		"cop/head_helmet": "cop_riot_armed_walk.png",
-		"cop/head_swat": "swat_armed_walk.png",
-	},
-	"p55":
-	{
-		"cop/head_cap": "cop_patrol_armed_walk.png",
-		"cop/head_helmet": "cop_riot_armed_walk.png",
-		"cop/head_swat": "swat_armed_walk.png",
-	},
+const ARMED_ROWS: Dictionary[String, String] = {
+	"cop/head_cap": "cop_patrol_armed_walk.png",
+	"cop/head_helmet": "cop_riot_armed_walk.png",
+	"cop/head_swat": "swat_armed_walk.png",
 }
+const WALKS: Dictionary[String, Dictionary] = {"p70": ARMED_ROWS, "p55": ARMED_ROWS}
 ## The size step per grid, keyed "<art>/<file>" (as StreetWalkerCards.WALK_FILL): the still
 ## strip's figure fill (0.985 of the cell) over the grid's mean figure height in the cell.
 const CELL_RATIO: float = 256.0 / 192.0
 const FILL: Dictionary[String, float] = {
 	"p70/cop_patrol_armed_walk.png": 1.12,
 	"p70/cop_patrol_planted_armed_walk.png": 1.12 * CELL_RATIO,
+	"p70/cop_patrol_planted8_armed_walk.png": 1.12 * CELL_RATIO,
+	"p70/cop_patrol_planted8_armed_run.png": 1.12 * CELL_RATIO,
 	"p70/cop_riot_armed_walk.png": 1.11,
 	"p70/swat_armed_walk.png": 1.14,
 	"p55/cop_patrol_armed_walk.png": 1.08,
 	"p55/cop_patrol_planted_armed_walk.png": 1.08 * CELL_RATIO,
+	"p55/cop_patrol_planted8_armed_walk.png": 1.08 * CELL_RATIO,
+	"p55/cop_patrol_planted8_armed_run.png": 1.08 * CELL_RATIO,
 	"p55/cop_riot_armed_walk.png": 1.08,
 	"p55/swat_armed_walk.png": 1.07,
 }
@@ -44,11 +33,15 @@ const FILL: Dictionary[String, float] = {
 const ADVANCE: Array[Vector2] = [
 	Vector2(0, 14), Vector2(10, 9), Vector2(13, 0), Vector2(10, -9), Vector2(0, -14)
 ]
-## The authored down-right passing boot crosses the torso. A longer drawing interval exceeds the
-## 12 px upper-body limit at the weight transfer. The same distance drives all patrol gaits.
-const STEP_M: float = 0.135
 const ORIGINAL: String = "cop_patrol_armed_walk.png"
-const PLANTED: String = "cop_patrol_planted_armed_walk.png"
+const FOUR: String = "cop_patrol_planted_armed_walk.png"
+const EIGHT: String = "cop_patrol_planted8_armed_walk.png"
+const RUN: String = "cop_patrol_planted8_armed_run.png"
+## Set PLANTED to FOUR to restore the four-drawing patrol on every host at every speed.
+const PLANTED: String = EIGHT
+const RUN_MPS: float = 4.0
+const FOUR_STEP_M: float = 0.135
+const STEP_M: float = StreetPatrolAnchors.WALK_M if PLANTED == EIGHT else FOUR_STEP_M
 const OTHER_ID: StringName = &"other_patrol_host"
 const FOOT_Y: float = 0.875
 const CONTACT: StringName = &"patrol_sole_contact"
@@ -61,29 +54,60 @@ class Contact:
 	var face: Vector2i = Vector2i(-1, -1)
 	var origin: Vector2
 	var last: Vector2 = Vector2.INF
+	var travel: Vector2
+	var path: String
+	var drawings: int = 4
+	var step_m: float = FOUR_STEP_M
+	var registered: StreetPatrolPose
+	var placed: Transform2D
+
+	func configure(strip: String) -> void:
+		if strip == path:
+			return
+		path = strip
+		reset()
+		drawings = StreetCopWalk.rows_of(strip)
+		registered = null
+		step_m = FOUR_STEP_M
+		if drawings > 4:
+			var running: bool = strip.get_file() == RUN
+			step_m = StreetPatrolAnchors.RUN_M if running else StreetPatrolAnchors.WALK_M
+			registered = StreetPatrolPose.new()
+			registered.configure(strip, drawings, running)
 
 	func reset() -> void:
 		last = Vector2.INF
+		travel = Vector2.ZERO
 
-	func place(at: Vector2, facing: Vector2i, texel: Vector2, ppm: float) -> Vector2:
-		var step: float = STEP_M * ppm
+	func place(at: Vector2, facing: Vector2i, texel: Vector2, ppm: float) -> Transform2D:
+		var step: float = step_m * ppm
 		var motion: Vector2 = at - last
+		var half: int = drawings >> 1
 		if not last.is_finite() or motion.length() > ppm or facing != face:
 			origin = at
 			walked = 0.0
 			cell = 0
+			travel = Vector2.ZERO
 		else:
 			walked += motion.length()
+			if not motion.is_zero_approx():
+				travel = motion.normalized()
 			var next: int = floori(walked / step)
-			if floori(next * 0.5) != floori(cell * 0.5):
-				origin = at - motion.normalized() * fmod(walked, 2.0 * step)
+			if floori(float(next) / half) != floori(float(cell) / half):
+				origin = at - travel * fmod(walked, half * step)
 			cell = next
 		face = facing
 		last = at
-		var advance: Vector2 = ADVANCE[facing.x] * texel if posmod(cell, 2) else Vector2.ZERO
-		if facing.y == 1:
-			advance.x = -advance.x
-		return origin + advance
+		if registered != null:
+			registered.stride = travel * step * half
+			var phase: float = fmod(walked / step, 1.0) if walked > 0.0 else 0.5
+			placed = registered.pose(origin, cell, face, texel, phase)
+		else:
+			var d: Vector2 = ADVANCE[face.x] * texel if posmod(cell, 2) else Vector2.ZERO
+			if face.y == 1:
+				d.x = -d.x
+			placed = Transform2D(Vector2.RIGHT * texel.x, Vector2.DOWN * texel.y, origin + d)
+		return placed
 
 
 ## A lower-rate rig can move between pose ticks. Reapply the last planted world position
@@ -91,16 +115,18 @@ class Contact:
 class RigContact:
 	extends Contact
 	var sprite: Sprite2D
-	var target: Vector2 = Vector2.INF
+	var pinned: bool = false
 	var actor: int = -1
 
 	func pin() -> void:
-		if target.is_finite() and sprite.is_inside_tree():
-			sprite.global_position = target
+		if pinned and sprite.is_inside_tree():
+			sprite.global_transform = placed
 
 	func release() -> void:
 		if RenderingServer.frame_pre_draw.is_connected(pin):
 			RenderingServer.frame_pre_draw.disconnect(pin)
+		if sprite.tree_exiting.is_connected(release):
+			sprite.tree_exiting.disconnect(release)
 
 
 ## The armed walk grid for a living cop now ("" = none: no grid for this row/pitch, or an action
@@ -123,10 +149,12 @@ static func bind(card: Sprite2D, path: String) -> void:
 	if card.has_meta(CONTACT):
 		var old: RigContact = card.get_meta(CONTACT)
 		old.release()
+		card.skew = 0.0
 		card.remove_meta(CONTACT)
-	if path.get_file() != PLANTED:
+	if path.get_file() not in [PLANTED, RUN]:
 		return
 	var contact: RigContact = RigContact.new()
+	contact.configure(path)
 	contact.sprite = card
 	card.set_meta(CONTACT, contact)
 	@warning_ignore_start("return_value_discarded")
@@ -142,19 +170,29 @@ static func plant(rig: CutRig, card: Sprite2D) -> void:
 	if contact.actor != rig.actor_id or rig.speed_now <= StreetWalkerCards.MOVING:
 		contact.reset()
 		contact.actor = rig.actor_id
-		contact.target = Vector2.INF
+		contact.pinned = false
 	if rig.speed_now <= StreetWalkerCards.MOVING:
 		return
 	var facing: Vector2i = Vector2i(card.frame_coords.x, int(card.flip_h))
-	contact.target = contact.place(
+	card.global_transform = contact.place(
 		rig.global_position, facing, card.global_scale, SimConst.PX_PER_M
 	)
-	card.frame_coords.y = posmod(contact.cell, StreetWalkerCards.STRIDE_FRAMES)
-	card.global_position = contact.target
+	card.frame_coords.y = posmod(contact.cell, contact.drawings)
+	contact.pinned = true
+
+
+static func rows_of(path: String) -> int:
+	return 8 if path.get_file() in [EIGHT, RUN] else 4
+
+
+static func strip_for(speed_mps: float) -> String:
+	return RUN if PLANTED == EIGHT and speed_mps > RUN_MPS else PLANTED
 
 
 static func patrol_path(rig: CutRig, path: String) -> String:
-	if not path.ends_with(ORIGINAL) and not path.ends_with(PLANTED):
+	if path.get_file() not in [ORIGINAL, PLANTED, RUN]:
 		return path
 	var other: bool = rig.has_meta(OTHER_ID) and rig.get_meta(OTHER_ID) == rig.actor_id
-	return path.get_base_dir().path_join(ORIGINAL if other else PLANTED)
+	return path.get_base_dir().path_join(
+		ORIGINAL if other else strip_for(rig.speed_now / SimConst.PX_PER_M)
+	)

@@ -4,53 +4,86 @@ const RIGHT: Vector2i = Vector2i(2, 0)
 const TEXEL: Vector2 = Vector2(0.25, 0.3)
 
 
-func test_distance_starts_both_drawings_on_one_support() -> void:
+func test_registered_soles_hold_through_drawings_and_wrap_in_both_pitches() -> void:
+	for art: String in ["p70", "p55"]:
+		for strip: String in [StreetCopWalk.EIGHT, StreetCopWalk.RUN]:
+			for col: int in 5:
+				for flip: int in 2:
+					_check_contacts(art.path_join(strip), Vector2i(col, flip))
+
+
+func _check_contacts(path: String, face: Vector2i) -> void:
 	var contact: StreetCopWalk.Contact = StreetCopWalk.Contact.new()
-	var step: float = StreetCopWalk.STEP_M * 32.0
-	assert_eq(contact.place(Vector2.ZERO, RIGHT, TEXEL, 32), Vector2.ZERO)
-	assert_eq(contact.place(Vector2.RIGHT * (step - 0.1), RIGHT, TEXEL, 32), Vector2.ZERO)
-	var pass_at: Vector2 = StreetCopWalk.ADVANCE[2] * TEXEL
-	assert_eq(contact.place(Vector2.RIGHT * (step + 0.1), RIGHT, TEXEL, 32), pass_at)
-	assert_eq(contact.cell, 1)
-	assert_eq(contact.place(Vector2.RIGHT * (step * 2 - 0.1), RIGHT, TEXEL, 32), pass_at)
-	var next: Vector2 = contact.place(Vector2.RIGHT * (step * 2 + 0.3), RIGHT, TEXEL, 32)
-	assert_almost_eq(next.x, 2.0 * step, 0.001)
-	assert_eq(contact.cell, 2)
+	contact.configure(path)
+	var direction: Vector2 = Vector2(-1 if face.y else 1, 1).normalized()
+	var anchor: Vector2
+	var previous: Vector2
+	var step: float = contact.step_m * 32.0
+	for sample: int in 65:
+		var dist: float = (sample * 0.25 + 0.001) * step if sample else 0.0
+		var xf: Transform2D = contact.place(direction * dist, face, TEXEL, 32)
+		var row: int = posmod(contact.cell, contact.drawings)
+		assert_eq(row, floori(sample * 0.25) % 8)
+		var ink: Vector4 = contact.registered.marks[face.x * 8 + row]
+		var local: Vector2 = Vector2(-ink.x if face.y else ink.x, ink.y)
+		var sole: Vector2 = xf * local
+		if sample % 16 == 0:
+			anchor = sole
+			if sample > 0:
+				assert_gt(sole.distance_to(previous), 1.0)
+			previous = anchor
+		if path.ends_with(StreetCopWalk.RUN) and row % 4 == 3:
+			continue
+		assert_almost_eq(sole.x, anchor.x, 0.001)
+		assert_almost_eq(sole.y, anchor.y, 0.001)
 
 
-func test_down_right_and_mirrored_support_advance() -> void:
-	var step: float = StreetCopWalk.STEP_M * 32.0
-	for mirror: int in 2:
-		var contact: StreetCopWalk.Contact = StreetCopWalk.Contact.new()
-		var face: Vector2i = Vector2i(1, mirror)
-		var travel: Vector2 = Vector2(-1 if mirror else 1, 1).normalized()
-		assert_eq(contact.place(Vector2.ZERO, face, TEXEL, 32), Vector2.ZERO)
-		var placed: Vector2 = contact.place(travel * (step + 0.25), face, TEXEL, 32)
-		assert_almost_eq(placed.x, -2.5 if mirror else 2.5, 0.001)
-		assert_almost_eq(placed.y, 2.7, 0.001)
-
-
-func test_turn_teleport_and_reset_start_at_actor() -> void:
+func test_four_drawing_fallback_and_contact_reset() -> void:
 	var contact: StreetCopWalk.Contact = StreetCopWalk.Contact.new()
-	assert_eq(contact.place(Vector2.ZERO, RIGHT, TEXEL, 32), Vector2.ZERO)
-	assert_eq(contact.place(Vector2.ONE, RIGHT, TEXEL, 32), Vector2.ZERO)
-	assert_eq(contact.place(Vector2.ONE, Vector2i(1, 0), TEXEL, 32), Vector2.ONE)
-	var far: Vector2 = Vector2(140, 30)
-	assert_eq(contact.place(far, Vector2i(1, 0), TEXEL, 32), far)
+	contact.configure(StreetCopWalk.FOUR)
+	assert_eq(contact.drawings, 4)
+	assert_eq(contact.step_m, 0.135)
+	var step: float = contact.step_m * 32
+	assert_eq(contact.place(Vector2.ZERO, RIGHT, TEXEL, 32).origin, Vector2.ZERO)
+	var next: Transform2D = contact.place(Vector2.RIGHT * (step + 0.1), RIGHT, TEXEL, 32)
+	assert_eq(next.origin, StreetCopWalk.ADVANCE[2] * TEXEL)
+	next = contact.place(Vector2.RIGHT * (2 * step + 0.1), RIGHT, TEXEL, 32)
+	assert_almost_eq(next.origin.x, 2 * step, 0.001)
+	for at: Vector2 in [Vector2(140, 30), Vector2(6, 8)]:
+		assert_eq(contact.place(at, RIGHT, TEXEL, 32).origin, at)
+		assert_eq(contact.cell, 0)
+	var turn: Vector2 = Vector2(7, 8)
+	assert_eq(contact.place(turn, Vector2i(1, 1), TEXEL, 32).origin, turn)
 	contact.reset()
-	assert_eq(contact.place(far + Vector2.ONE, RIGHT, TEXEL, 32), far + Vector2.ONE)
-	assert_eq(contact.cell, 0)
+	assert_eq(contact.place(turn + Vector2.ONE, RIGHT, TEXEL, 32).origin, turn + Vector2.ONE)
+
+
+func test_gait_boundary_and_eight_drawing_reset() -> void:
+	assert_eq(StreetCopWalk.strip_for(4.0), StreetCopWalk.PLANTED)
+	var fast: String = (
+		StreetCopWalk.RUN if StreetCopWalk.PLANTED == StreetCopWalk.EIGHT else StreetCopWalk.FOUR
+	)
+	assert_eq(StreetCopWalk.strip_for(4.001), fast)
+	var contact: StreetCopWalk.Contact = StreetCopWalk.Contact.new()
+	contact.configure(StreetCopWalk.EIGHT)
+	assert_eq(contact.drawings, 8)
+	assert_eq(contact.step_m, StreetPatrolAnchors.WALK_M)
+	contact.configure(StreetCopWalk.RUN)
+	assert_eq(contact.step_m, StreetPatrolAnchors.RUN_M)
+	assert_eq(contact.place(Vector2.ONE, RIGHT, TEXEL, 32).origin, Vector2.ONE)
 
 
 func test_idle_reused_rig_and_shared_uniform() -> void:
 	var rig: CutRig = autofree(CutRig.new())
 	var card: Sprite2D = autofree(Sprite2D.new())
 	StreetCopWalk.bind(card, StreetCopWalk.PLANTED)
+	var held: StreetCopWalk.RigContact = card.get_meta(StreetCopWalk.CONTACT)
+	assert_true(RenderingServer.frame_pre_draw.is_connected(held.pin))
 	rig.speed_now = 64.0
 	StreetCopWalk.plant(rig, card)
 	rig.position = Vector2.RIGHT
 	StreetCopWalk.plant(rig, card)
-	assert_eq(card.position, Vector2.ZERO)
+	assert_eq(card.frame_coords.y, 0)
 	rig.actor_id += 1
 	StreetCopWalk.plant(rig, card)
 	assert_eq(card.position, rig.position)
@@ -65,6 +98,8 @@ func test_idle_reused_rig_and_shared_uniform() -> void:
 	assert_eq(StreetCopWalk.patrol_path(rig, path), path)
 	StreetCopWalk.bind(card, path)
 	assert_false(card.has_meta(StreetCopWalk.CONTACT))
+	assert_false(RenderingServer.frame_pre_draw.is_connected(held.pin))
+	assert_false(card.tree_exiting.is_connected(held.release))
 
 
 func test_far_patrol_changes_drawing_by_ground_distance_and_other_role_keeps_its_sheet() -> void:
@@ -84,9 +119,15 @@ func test_far_patrol_changes_drawing_by_ground_distance_and_other_role_keeps_its
 	feed.pos[0] = Vector2.RIGHT * 2
 	patrol.pose(feed, 0)
 	other.pose(feed, 0)
-	assert_eq(patrol.position, Vector2.ZERO)
+	assert_eq(patrol.frame_coords.y, 0)
 	assert_eq(other.position, feed.pos[0])
 	feed.pos[0] += Vector2.RIGHT * StreetCopWalk.STEP_M * SimConst.PX_PER_M
 	patrol.pose(feed, 0)
 	assert_eq(patrol.frame_coords.y, 1)
+	feed.vel[0] = Vector2.RIGHT * 6.65 * SimConst.PX_PER_M
+	patrol.pose(feed, 0)
+	var fast: String = StreetCopWalk.strip_for(6.65)
+	assert_eq(patrol.texture.resource_path.get_file(), fast)
+	assert_eq(patrol.vframes, StreetCopWalk.rows_of(fast))
+	assert_eq(patrol.frame_coords.y, 1 if fast == StreetCopWalk.PLANTED else 0)
 	ViewMode._shared = previous

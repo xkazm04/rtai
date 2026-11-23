@@ -4,6 +4,7 @@ extends "res://dev/cast/cast_lineup.gd"
 
 var _takes: Array[Dictionary] = []
 var _selection: PackedStringArray
+var _probe: CastPatrolTake
 
 
 func _ready() -> void:
@@ -73,12 +74,30 @@ func _portrait(subject: Fighter, id: String) -> bool:
 				"facing": facing,
 				"frames": []
 			}
+			_prepare(host, take)
 			if not await _track(subject, host, take):
 				return false
 			_takes.append(take)
+			if _probe != null:
+				_takes.append_array(_probe.takes)
+				_probe.actor.pos = PARK
+				_probe.free()
+				_probe = null
 	subject.pos = PARK
 	Log.info("cast", "sampled %s" % id)
 	return true
+
+
+func _prepare(host: ArenaRigs, take: Dictionary) -> void:
+	take.host = "near"
+	if take.archetype == "patrol_cop":
+		var speed: float = take.speed_mps
+		var fast: bool = StreetCopWalk.strip_for(speed) == StreetCopWalk.RUN
+		take.step_m = StreetPatrolAnchors.RUN_M if fast else StreetCopWalk.STEP_M
+	if take.archetype == "patrol_cop" and LaunchArgs.has("--cast-patrol-feet"):
+		_probe = CastPatrolTake.new()
+		host.rigs.get_parent().add_child(_probe)
+		_probe.begin(_arena, take)
 
 
 func _speeds(h: Fighter) -> Dictionary[String, float]:
@@ -106,6 +125,8 @@ func _track(h: Fighter, host: ArenaRigs, take: Dictionary) -> bool:
 	h.pos = MARK
 	h.facing = dir
 	for tick: int in 24:
+		if _probe != null:
+			_probe.sample_pose(h.pos * SimConst.PX_PER_M, dir, 0.0)
 		await _advance()
 	var camera: Transform2D = get_viewport().get_canvas_transform()
 	if not is_equal_approx(camera.x.length() * SimConst.PX_PER_M, _ppm):
@@ -119,7 +140,11 @@ func _track(h: Fighter, host: ArenaRigs, take: Dictionary) -> bool:
 			h.pos = MARK + dir * ((tick + 1) * speed * SimClock.TICK_DT)
 		else:
 			h.facing = dir.rotated(TAU * tick / (ticks - 1))
+		if _probe != null:
+			_probe.sample_pose(h.pos * SimConst.PX_PER_M, dir, speed * SimConst.PX_PER_M)
 		await _advance()
+		if _probe != null:
+			_probe.collect(host)
 		if not get_viewport().get_canvas_transform().is_equal_approx(camera):
 			return false
 		var frame: Dictionary = CastFeetFrame.sample(host, h)

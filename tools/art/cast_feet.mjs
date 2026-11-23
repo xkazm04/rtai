@@ -17,6 +17,9 @@ for (const pitch of ['70', '55']) {
     GTAI_CAST_PITCH: pitch, GTAI_CAST_SUBJECT: subject };
   const args = ['--rendering-driver', 'd3d12', '--windowed', '--position', '0,1440',
     '--resolution', '1280x720', '--fixed-fps', '60', 'res://dev/cast/cast_feet.tscn'];
+  if (ppm === '32' && subject.split(',').includes('patrol_cop')) {
+    args.push('--', '--cast-patrol-feet');
+  }
   const result = await runGodot(args, { headless: false, env, name: 'cast-feet', timeoutMs: 420_000,
     stopOn: SCRIPT_ERROR });
   const path = join(directory, `tracks_${pitch}_${ppm}.json`);

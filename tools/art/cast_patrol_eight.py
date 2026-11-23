@@ -8,6 +8,7 @@ import cv2
 import numpy as np
 from PIL import Image, ImageDraw
 
+from cast_patrol_soles import generate
 from cast_soles import VIEW, body_point, bounds
 
 CELL = (240, 256)
@@ -102,3 +103,4 @@ if __name__ == '__main__':
             dest = pack(args.source, gait, pitch)
             folder = 'cop8' if gait == 'walk' else 'cop8run'
             review(dest, args.source/folder/'pack'/f'review_{pitch}.jpg')
+    generate()

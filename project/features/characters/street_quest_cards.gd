@@ -15,9 +15,7 @@ const PATROL: Dictionary[String, String] = {
 	"p55": P55 + "cop_patrol_card.png",
 	"p70": P70 + "cop_patrol_card.png",
 }
-## A walking patrol cop's grid (street_walk.py from keyed cop_patrol_walk_70_v4 / _55_v4 A, all
-## rows alternate, then street_tone.py: the strip's blue matched to PATROL's navy): 5 facings x 4
-## stride frames, stepping by the distance walked (one cycle = STRIDE_M). {} = the card glides.
+## The four-drawing quest fallback keeps its original unarmed sheet.
 const PATROL_WALK: Dictionary[String, String] = {
 	"p55": P55 + "cop_patrol_walk.png",
 	"p70": P70 + "cop_patrol_walk.png",
@@ -49,12 +47,11 @@ static var _was: Array[Vector4] = []
 static var _now: Array[Vector4] = []
 static var _was_d: Array[float] = []
 static var _now_d: Array[float] = []
-static var _was_contact: Array[StreetCopWalk.Contact] = []
-static var _now_contact: Array[StreetCopWalk.Contact] = []
-static var _contact: StreetCopWalk.Contact
+static var _was_contact: Array[StreetQuestPatrol] = []
+static var _now_contact: Array[StreetQuestPatrol] = []
+static var _contact: StreetQuestPatrol
 static var _walked: float = 0.0
 static var _moving: bool = false
-static var _stride: int = -1
 
 
 ## Draws the guard's card on `canvas` at `at_px` (canvas px) and returns true; false = no card for
@@ -75,10 +72,7 @@ static func draw_patrol(
 	var face: Vector2 = walk_facing(at_px, facing, px_per_m) if FOLLOW_WALK else facing
 	if not _moving or not PATROL_WALK.has(ViewMode.shared().art):
 		return _card(canvas, PATROL, at_px, face, px_per_m, tint)
-	_stride = 0
-	var drawn: bool = _card(canvas, PATROL_WALK, at_px, face, px_per_m, tint)
-	_stride = -1
-	return drawn
+	return _contact.draw(canvas, at_px, face, px_per_m, tint)
 
 
 ## The facing of the patrol cop drawn at `at_px` this frame: its step since the nearest cop drawn
@@ -111,7 +105,9 @@ static func walk_facing(at_px: Vector2, fallback: Vector2, px_per_m: float) -> V
 	_moving = still < HOLD_FRAMES
 	_now.append(Vector4(at_px.x, at_px.y, face.angle(), still))
 	if _contact == null:
-		_contact = StreetCopWalk.Contact.new()
+		_contact = StreetQuestPatrol.new()
+	if best < MATCH_M * px_per_m:
+		_contact.sample_speed(best, px_per_m)
 	if not _moving:
 		_contact.reset()
 	_now_contact.append(_contact)
@@ -132,25 +128,14 @@ static func _card(
 	if not view.cards or path.is_empty():
 		return false
 	var tex: Texture2D = _load(path)
-	var rows: int = 4 if _stride >= 0 else 1
-	var cell: Vector2 = Vector2(
-		tex.get_width() / float(RigHeadCard.FRAMES), tex.get_height() / float(rows)
-	)
+	var cell: Vector2 = tex.get_size() / Vector2(RigHeadCard.FRAMES, 1)
 	var f: Vector2i = RigHeadCard.frame_of(facing.angle())
 	var w: float = WIDTH_M * px_per_m
 	var h: float = w * cell.y / cell.x / view.ground_k()
-	if _stride >= 0:  # the standing card's height, the walk cell's own aspect
-		var st: Texture2D = _load(PATROL[view.art])
-		h = w * st.get_height() * RigHeadCard.FRAMES / st.get_width() / view.ground_k()
-		h *= StreetCopWalk.CELL_RATIO
-		w = h * view.ground_k() * cell.x / cell.y
-		at_px = _contact.place(at_px, f, Vector2(w, h) / cell, px_per_m)
-		_stride = posmod(_contact.cell, StreetWalkerCards.STRIDE_FRAMES)
-	var baseline: float = StreetCopWalk.FOOT_Y if _stride >= 0 else FOOT_Y
-	var dst: Rect2 = Rect2(-w * 0.5, -h * baseline, w, h)
+	var dst: Rect2 = Rect2(-w * 0.5, -h * FOOT_Y, w, h)
 	# mirrored frames flip about the feet point (a negative-width rect draws one width aside)
 	canvas.draw_set_transform(at_px, 0.0, Vector2(-1.0 if f.y == 1 else 1.0, 1.0))
-	var src: Rect2 = Rect2(cell.x * f.x, cell.y * maxi(_stride, 0), cell.x, cell.y)
+	var src: Rect2 = Rect2(cell.x * f.x, 0.0, cell.x, cell.y)
 	canvas.draw_texture_rect_region(tex, dst, src, tint)
 	canvas.draw_set_transform(Vector2.ZERO)
 	return true

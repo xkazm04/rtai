@@ -10,11 +10,17 @@ class Card:
 	var look: int = -1
 	var walked: float = 0.0
 	var patrol: StreetCopWalk.Contact
+	var patrol_strip: String
+	var base_scale: Vector2
 
 	func pose(feed: RigFeed, i: int) -> void:
 		var view: ViewMode = ViewMode.shared()
 		var next_art: String = view.art if view.cards and StreetCopWalk.WALKS.has(view.art) else ""
-		if next_art != art or look != feed.look_of(i):
+		var gait: String = ""
+		if patrol != null:
+			gait = StreetCopWalk.strip_for(feed.vel[i].length() / SimConst.PX_PER_M)
+		if next_art != art or look != feed.look_of(i) or gait != patrol_strip:
+			patrol_strip = gait
 			art = next_art
 			look = feed.look_of(i)
 			_configure(feed.ids[i])
@@ -29,16 +35,19 @@ class Card:
 		var phase: float = walked / (StreetQuestCards.STRIDE_M * SimConst.PX_PER_M)
 		var moving: bool = feed.vel[i].length() > StreetWalkerCards.MOVING
 		frame_coords = Vector2i(facing.x, StreetWalkerCards.stride_frame(phase, moving))
-		if patrol != null:
+		if patrol != null and texture.resource_path.get_file() == patrol_strip:
 			if moving:
-				position = patrol.place(feed.pos[i], facing, scale, SimConst.PX_PER_M)
-				frame_coords.y = posmod(patrol.cell, StreetWalkerCards.STRIDE_FRAMES)
+				transform = patrol.place(feed.pos[i], facing, base_scale, SimConst.PX_PER_M)
+				frame_coords.y = posmod(patrol.cell, vframes)
 			else:
 				patrol.reset()
+				skew = 0.0
+				scale = base_scale
 		flip_h = facing.y != 0
 
 	func _configure(id: int) -> void:
 		rotation = 0.0
+		skew = 0.0
 		flip_h = false
 		var row: String = "cop/" + RigVariant.crowd(look).head
 		var sheets: Dictionary = StreetCopWalk.WALKS.get(art, {})
@@ -54,19 +63,21 @@ class Card:
 			return
 		var file: String = sheets[row]
 		if patrol != null and file == StreetCopWalk.ORIGINAL:
-			file = StreetCopWalk.PLANTED
+			file = patrol_strip
+			patrol.configure(art.path_join(file))
 		var path: String = StreetWalkerCards.DIR + art + "/" + file
 		texture = StreetStrips.get_tex(path)
 		hframes = RigHeadCard.FRAMES
-		vframes = StreetWalkerCards.STRIDE_FRAMES
+		vframes = StreetCopWalk.rows_of(file)
 		var cell: Vector2 = texture.get_size() / Vector2(hframes, vframes)
 		var foot_y: float = (
-			StreetCopWalk.FOOT_Y if file == StreetCopWalk.PLANTED else StreetWalkerCards.FOOT_Y
+			StreetCopWalk.FOOT_Y if file == patrol_strip else StreetWalkerCards.FOOT_Y
 		)
 		offset = -cell * Vector2(0.5, foot_y)
 		var h: float = StreetWalkerCards.HEIGHT_BY_ART.get(art, StreetWalkerCards.HEIGHT_M)
 		var k: float = 1.0 + StreetCrowdCards.SCALE_VAR * StreetCrowdCards.vary(id, 3)
 		scale = Vector2.ONE * (h * SimConst.PX_PER_M * k * StreetCopWalk.fill_of(path) / cell.y)
+		base_scale = scale
 
 
 var _standing: Array[Fighter]

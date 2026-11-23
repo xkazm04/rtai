@@ -101,9 +101,16 @@ def read_frame(frame, take):
         return {'apron': project(base, outline(base['path'], tuple(base['rect'])))}
     if card['col'] != (2 if take['facing'] == 'right' else 1):
         raise ValueError('equipped card turned away from requested facing')
-    if not path.endswith('_walk.png'):
+    if not path.endswith(('_walk.png', '_run.png')):
         raise ValueError('equipped drawing is not locomotion')
-    if take['archetype'] == 'war_machine':
+    if 'cop_patrol_planted8_armed_' in path:
+        from cast_patrol_soles import marks
+        gait = 'run' if path.endswith('_run.png') else 'walk'
+        if gait == 'run' and card['row'] % 4 == 3:
+            return {}
+        sole, _ = marks(cell(path, rect), gait, take['pitch'], card['col'], card['row'])
+        points = {str(card['row']//4): project(card, sole)}
+    elif take['archetype'] == 'war_machine':
         points = pile_points(card, cell(path, rect), take['pitch'])
     else:
         point = registered(path, rect, card['col'], card['row'])
@@ -143,6 +150,19 @@ def analyse(take):
         for f in frames:
             points = read_frame(f, take)
             series.append({k: v*factor for k, v in points.items()})
+        if take['archetype'] == 'patrol_cop' and 'planted8' in frames[-1]['card']['path']:
+            cards = [f['card'] for f in frames]
+            strip = cards[-1]['path']
+            if any(c['path'] != strip for c in cards[1:]):
+                raise ValueError('gait changed after take entry')
+            if strip.endswith('_run.png') != (take['speed_mps'] > 4.0):
+                raise ValueError('wrong sheet for capture speed')
+            # Count drawing transitions between complete drawing boundaries (60 Hz).
+            edges = [i for i in range(1,len(cards)) if cards[i]['row'] != cards[i-1]['row']]
+            if len(edges) < 3 or any((cards[i]['row']-cards[i-1]['row'])%8 != 1 for i in edges):
+                raise ValueError('missing or skipped eight-drawing progression')
+            row['observed_drawings_per_second'] = 60*(len(edges)-1)/(edges[-1]-edges[0])
+            row['drawings_per_second'] = take['speed_mps']/take['step_m']
         fixed = take['gait'] == 'sweep'
         travel, _, spans = contact_stats(series, fixed)
         if not fixed and len({s['boot'] for s in spans}) < 2:
@@ -179,7 +199,7 @@ def run(directory, ppm, selection):
             seen.add((row['archetype'], row['facing']))
             sole = ('>='+number(row['min_contact_travel_px']) if 'min_contact_travel_px' in row
                     else number(row['max_contact_travel_px']))
-            print(row['archetype'], pitch, row['gait'], row['facing'],
+            print(row['archetype'], pitch, row.get('host', 'near'), row['gait'], row['facing'],
                   sole, number(row['max_body_jump_px']),
                   row['verdict'], row.get('reason', ''))
             if ppm == 64 and row['gait'] == 'walk' and row['facing'] == 'right':
@@ -188,6 +208,13 @@ def run(directory, ppm, selection):
         required = {(k, f) for k in expected for f in ('right', 'down_right')}
         if seen != required:
             raise ValueError(f'roster coverage mismatch: {sorted(seen ^ required)}')
+    if selection == 'patrol_cop' and ppm == 32 and any('step_m' in row for row in rows):
+        required = {(p, f, g, h) for p in (70,55) for f in ('right','down_right')
+                    for g in ('city_walk','walk','arrival_walk','run')
+                    for h in ('near','near_tall','far','quest')}
+        observed = {(r['pitch'],r['facing'],r['gait'],r['host']) for r in rows}
+        if len(rows) != len(required) or observed != required:
+            raise ValueError(f'incomplete patrol host/gait coverage: {required ^ observed}')
     name = 'feet.json' if ppm == 32 else 'feet_64.json'
     (directory/name).write_text(json.dumps(dict(schema='gtai.cast-feet/1', unit_ppm=32, rows=rows),
                                           indent=2, allow_nan=False)+'\n', encoding='utf-8')

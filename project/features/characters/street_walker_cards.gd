@@ -133,13 +133,17 @@ static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 	StreetCopWalk.bind(card, path)
 	card.texture = StreetStrips.get_tex(path)
 	var fall: bool = path.ends_with("_fall.png")
-	var walk: bool = path.ends_with("_walk.png") or path.ends_with("_attack.png")
-	card.vframes = StreetFallBetween.rows_of(path) if fall else (STRIDE_FRAMES if walk else 1)
+	var walk: bool = (
+		path.ends_with("_walk.png") or path.ends_with("_attack.png") or path.ends_with("_run.png")
+	)
+	card.vframes = (
+		StreetFallBetween.rows_of(path) if fall else (StreetCopWalk.rows_of(path) if walk else 1)
+	)
 	var cell: Vector2 = Vector2(
 		card.texture.get_width() / float(RigHeadCard.FRAMES),
 		card.texture.get_height() / float(card.vframes)
 	)
-	var foot_y: float = StreetCopWalk.FOOT_Y if path.ends_with(StreetCopWalk.PLANTED) else FOOT_Y
+	var foot_y: float = StreetCopWalk.FOOT_Y if card.has_meta(StreetCopWalk.CONTACT) else FOOT_Y
 	card.offset = Vector2(-cell.x * 0.5, -cell.y * (0.5 if fall else foot_y))
 	card.set_meta(ON, path)
 	card.remove_meta(StreetWalkerFall.OCT)
@@ -183,6 +187,8 @@ static func place(rig: CutRig, card: Sprite2D) -> void:
 	var fall: Vector2 = Vector2(0.0, 1.0) if hit else StreetWalkerFall.pose(rig, card)
 	var wound: Vector3 = StreetWalkerHit.shove(rig)
 	card.global_rotation = stride * SWAY * walk + fall.x + wound.z + StreetWalkerHit.flail(rig)
+	if card.has_meta(StreetCopWalk.CONTACT):
+		card.global_transform = Transform2D(card.global_rotation, card.global_position)
 	card.global_scale = Vector2(s, s * fall.y)
 	card.global_position = (
 		rig.global_position - Vector2(0.0, absf(stride) * BOB_PX * walk) + Vector2(wound.x, wound.y)
