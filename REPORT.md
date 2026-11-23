@@ -1,6 +1,6 @@
 # REPORT - lane cast, run n24 (2026-11-22), branch `n24-cast`
 
-Written by the cast director, session 5 (2026-11-23 00:05); gate line updated in session 6 (01:32).
+Written by the cast director, session 5 (2026-11-23 00:05); gate line updated in sessions 6 (01:32) and 8 (01:41).
 
 Owner's note 5: "Design of new characters when added to waves should be always finetuned from start to have cop-level
 quality (animations, clean cut and shape), assume we will use all characters in some form in the game". This lane
@@ -14,7 +14,8 @@ Final code commit: `79c0c434b` (everything after it is JOURNAL/REPORT/briefs, in
 while waiting out a CONTENDED city_chase nav budget (log `build/gate/6129b8f69237/evidence.log`, git-ignored). Re-run
 started 01:30 on `fc3b7b2bb`, detached (pid 29024), log `C:\Users\kazda\kiro\gtai-art\foes-n24\gate-final2.log`; it
 takes about 20 min, so its verdict and `gate.json` path land after this report: the Director reads that log at merge.
-No green gate line is claimed here.
+At 01:41 (session 8) it was still in its lint stage inside the snapshot `%LOCALAPPDATA%\Temp\gtai-gate-fc3b7b2bbb75`
+(pid 29024 alive; no evidence kind written yet). No green gate line is claimed here.
 
 ## 1. Audit (brief item 1)
 Full table with every checklist item per archetype: `docs/art/cast-audit.md`; the checklist: `docs/art/cast-checklist.md`

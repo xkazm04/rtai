@@ -239,3 +239,8 @@ NEXT: (Director, at merge) read gate-final2.log tail for the gate verdict line a
   already states this; nothing to fix, no product file touched.
 NEXT: (Director, at merge) read C:\Users\kazda\kiro\gtai-art\foes-n24\gate-final2.log for the verdict line + gate.json path;
   if it died at the CONTENDED city_chase wait again, re-run under the bench lock. No green claim from this lane until then.
+- 01:41 session 8 (REPORT). No Astra lock or call. GATE RUNNING since 01:30 (pid 29024 alive, detached; at 01:39 still in
+  lint inside the snapshot, no evidence kind written). REPORT gate paragraph updated with that state; cites 13/13 ok.
+  No product file touched.
+NEXT: (Director, at merge) read C:\Users\kazda\kiro\gtai-art\foes-n24\gate-final2.log for the verdict + gate.json path;
+  if it is missing or red on the CONTENDED city_chase wait, re-run under the bench lock. No green claim from this lane.
