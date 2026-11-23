@@ -207,9 +207,17 @@ Capture the current patrol with `node tools/art/cast_feet.mjs build/cast/cop8 32
 
 | Archetype | Renderer | Identity | Walk | Attack/tell | Hit | Death | Facings | Grid | Pitches | Scale | Ink | Palette | Cut | Feet | Shadow | Provenance | Enabled |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| `sergeant_mulroney` | Human cast card on the prologue formation boss | PASS | PASS | PASS in staged fight | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS 10/10 | **true** |
+| `sergeant_mulroney` | Human cast card on the prologue formation boss | PASS | PASS | PASS in staged fight | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS (9.59 px worst fight jump) | PASS | PASS 10/10 | **true** |
 
-### Eight-drawing admission
+### Cut edge and reversal review
+
+The old 70° fight jumped 30.49 px from frame 290 to 291 at 32 px/m. The shotgun still pointed down-right as the actor stepped back-left. The walk stayed on the same strip and facing, changing support from drawing 4 to 5. Its next foothold used the new travel direction while the previous torso still carried the old landing offset. A column change also jumped 16.41 px at frame 30. The shared placement now seeds the initial step from velocity and carries the displayed torso through each handover around the planted boot. The recaptured 32 px/m fight measured 9.36 px on frames 290–291 and 9.59 px across all consecutive moving walk frames, below the 12 px limit. The original patrol walk also failed the aimed-reversal test at 70° (14.17 px). The regression drives both officers at both pitches.
+
+On the 64 px/m street, the live impact material added solid black pixels outside the wound drawing. On the same frozen frame the unshaded texture had a clean outline. The sergeant's painted wound now uses the raw head socket material. Both hit sheets were re-cut from their source with the eight-drawing walk key and despill treatment at the original scale, crop, and boot registration. The other sheets were checked at both pitches: both walk strips, all four attack/pump rows including the shotgun, and all three fall rows including the loose shotgun have clean edges. Each of the ten sheets passed the cell-boundary and strong key-spill checks.
+
+At tick 519 the number of added dark exterior pixels fell from 354 to 0 at 70° and 462 to 0 at 55°. The count compares the live card, its raw texture and the empty street at one fixed pose (`tools/art/cast_mulroney_edge.py --measure`). [Native street before/after](<C:/Users/kazda/kiro/gtai-masters/n26/cast/mulroney_hit_edge_64.png>)
+
+### Eight-drawing admission at `8cf84806f`
 
 The formation marches at the roster speed of 3.2 m/s. There is no separate run. The two profile contact-to-pass advances at each pitch give **0.1903 m/drawing**, or **16.82 drawings/s**. The 60 Hz captures independently counted 16.82 drawings/s. The near rig and far card use the same support-sole registration. To select the original walk at both pitches, set `StreetMulroneyAnchors.WALK` to `FOUR` in the anchor generator and regenerate.
 

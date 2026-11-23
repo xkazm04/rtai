@@ -15,11 +15,17 @@ CELL = (240, 256)
 FOOT = 224
 
 
-def figures(path, bands):
+def key_figures(path):
     rgb = np.asarray(Image.open(path).convert('RGB'))
     r, g, b = rgb.astype(np.int16).transpose(2, 0, 1)
     key = (g > r + 12) & (g > b + 10)
     _, labels, stats, _ = cv2.connectedComponentsWithStats((~key).astype(np.uint8))
+    spill = (g > r + 4) & (g > b + 3)
+    return rgb, labels, stats, spill
+
+
+def figures(path, bands):
+    rgb, labels, stats, spill = key_figures(path)
     indices = [i for i in range(1, len(stats)) if stats[i, 4] > 1500]
     if len(indices) != bands * 8:
         raise ValueError(f'{path}: expected {bands*8} officers, found {len(indices)}')
@@ -31,8 +37,7 @@ def figures(path, bands):
             alpha = (labels[y:y+h, x:x+w] == i).astype(np.uint8)*255
             crop = rgb[y:y+h, x:x+w].copy()
             # Residual keyed edge antialiasing lies in the black outline.
-            spill = (g[y:y+h,x:x+w] > r[y:y+h,x:x+w]+4) & (g[y:y+h,x:x+w] > b[y:y+h,x:x+w]+3)
-            crop[spill] = (21, 24, 29)
+            crop[spill[y:y+h, x:x+w]] = (21, 24, 29)
             crop[alpha == 0] = 0
             strip.append(Image.fromarray(np.dstack((crop, alpha))))
         yield strip

@@ -8,8 +8,7 @@ const ARMED_ROWS: Dictionary[String, String] = {
 	"cop/head_swat": "swat_armed_walk.png",
 }
 const WALKS: Dictionary[String, Dictionary] = {"p70": ARMED_ROWS, "p55": ARMED_ROWS}
-## The size step per grid, keyed "<art>/<file>" (as StreetWalkerCards.WALK_FILL): the still
-## strip's figure fill (0.985 of the cell) over the grid's mean figure height in the cell.
+## Still figure fill divided by mean grid figure height, keyed by art and file.
 const CELL_RATIO: float = 256.0 / 192.0
 const FILL: Dictionary[String, float] = {
 	"p70/cop_patrol_armed_walk.png": 1.12,
@@ -26,7 +25,6 @@ const FILL: Dictionary[String, float] = {
 	"p55/swat_armed_walk.png": 1.07,
 }
 
-## The four-drawing patrol's contact-to-pass displacement in texels.
 const ADVANCE: Array[Vector2] = [
 	Vector2(0, 14), Vector2(10, 9), Vector2(13, 0), Vector2(10, -9), Vector2(0, -14)
 ]
@@ -34,7 +32,6 @@ const ORIGINAL: String = "cop_patrol_armed_walk.png"
 const FOUR: String = "cop_patrol_planted_armed_walk.png"
 const EIGHT: String = "cop_patrol_planted8_armed_walk.png"
 const RUN: String = "cop_patrol_planted8_armed_run.png"
-## Set PLANTED to FOUR to restore the four-drawing patrol on every host at every speed.
 const PLANTED: String = EIGHT
 const RUN_MPS: float = 4.0
 const FOUR_STEP_M: float = 0.135
@@ -78,40 +75,45 @@ class Contact:
 	func place(at: Vector2, facing: Vector2i, texel: Vector2, ppm: float) -> Transform2D:
 		var step: float = step_m * ppm
 		var motion: Vector2 = at - last
+		var continuous: bool = motion.is_finite() and motion.length() <= ppm
+		_advance(at, facing, motion, step, continuous)
+		face = facing
+		last = at
+		if registered != null:
+			registered.stride = travel * step * registered.half
+			var phase: float = fmod(walked / step, 1.0) if walked > 0.0 else 0.5
+			placed = registered.pose(origin, cell, face, texel, phase)
+			placed = registered.settle(placed, ppm, continuous)
+		else:
+			var d: Vector2 = ADVANCE[face.x] * texel if posmod(cell, 2) else Vector2.ZERO
+			d.x *= -1.0 if face.y else 1.0
+			placed = Transform2D(Vector2.RIGHT * texel.x, Vector2.DOWN * texel.y, origin + d)
+		return placed
+
+	func _advance(
+		at: Vector2, facing: Vector2i, motion: Vector2, step: float, continuous: bool
+	) -> void:
 		var half: int = drawings >> 1
-		if not last.is_finite() or motion.length() > ppm or facing != face:
+		if not continuous or facing != face:
 			origin = at
 			walked = 0.0
 			cell = 0
-			travel = Vector2.ZERO
-			if registered != null:
-				registered.touchdown(facing, travel, step * half)
+			travel = motion.normalized() if continuous else travel
 		else:
 			walked += motion.length()
 			if not motion.is_zero_approx():
 				travel = motion.normalized()
 			var next: int = floori(walked / step)
-			if floori(float(next) / half) != floori(float(cell) / half):
-				origin = at - travel * fmod(walked, half * step)
-				if registered != null:
-					registered.touchdown(facing, travel, step * half)
+			var changed: bool = floori(float(next) / half) != floori(float(cell) / half)
 			cell = next
-		face = facing
-		last = at
+			if not changed:
+				return
+			origin = at - travel * fmod(walked, half * step)
 		if registered != null:
-			registered.stride = travel * step * half
-			var phase: float = fmod(walked / step, 1.0) if walked > 0.0 else 0.5
-			placed = registered.pose(origin, cell, face, texel, phase)
-		else:
-			var d: Vector2 = ADVANCE[face.x] * texel if posmod(cell, 2) else Vector2.ZERO
-			if face.y == 1:
-				d.x = -d.x
-			placed = Transform2D(Vector2.RIGHT * texel.x, Vector2.DOWN * texel.y, origin + d)
-		return placed
+			registered.touchdown(travel, step * half)
 
 
-## A lower-rate rig can move between pose ticks. Reapply the last planted world position
-## before drawing it, leaving the card under its regular parent for depth, tint and visibility.
+## Reapply the planted world transform at draw time, including on lower-rate rigs.
 class RigContact:
 	extends Contact
 	var sprite: Sprite2D
@@ -129,8 +131,6 @@ class RigContact:
 			sprite.tree_exiting.disconnect(release)
 
 
-## The armed walk grid for a living cop now ("" = none: no grid for this row/pitch, or an action
-## the parts draw).
 static func strip_of(rig: CutRig, art: String, row: String) -> String:
 	if not ENABLED or rig.plan.art_dir != "cop" or StreetWalkerFall.down(rig):
 		return ""
@@ -140,7 +140,6 @@ static func strip_of(rig: CutRig, art: String, row: String) -> String:
 	return StreetWalkerCards.DIR + art + "/" + str(rows[row]) if rows.has(row) else ""
 
 
-## The size step for a grid's resource path (1.0 = not one of ours).
 static func fill_of(path: String) -> float:
 	if path.get_file() == StreetMulroneyAnchors.EIGHT:
 		return CELL_RATIO
@@ -175,6 +174,7 @@ static func plant(rig: CutRig, card: Sprite2D) -> void:
 		contact.pinned = false
 	if rig.speed_now <= StreetWalkerCards.MOVING:
 		return
+	contact.travel = rig.vel_in.normalized() if not contact.last.is_finite() else contact.travel
 	var facing: Vector2i = Vector2i(card.frame_coords.x, int(card.flip_h))
 	card.global_transform = contact.place(
 		rig.global_position, facing, card.global_scale, SimConst.PX_PER_M

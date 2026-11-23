@@ -1,13 +1,7 @@
 class_name StreetWalkerCards
 extends RefCounted
-## Lane n8 street: under a view row with a WALK strip (p70) a pedestrian draws as one whole-figure
-## card at its feet (the library's ped_*_70 rows; the left three facings mirrored by frame_of)
-## instead of a head card over top-down parts. The parts are hidden, not freed. WALKS grids (5
-## facings x 4 stride frames, street_walk.py) step by rig.phase; a row without one bobs and sways.
-## A flinch keeps the figure; a death holds it DEATH_HOLD of the family, then the parts take the
-## fall and the corpse (falls()), unless the row has a drawn fall (StreetWalkerFall.FALLS: the
-## figure falls and lies as drawn). p55: the 55 top rows with the bob. No strip (top): nothing runs.
-## ENABLED false = the head cards (before).
+## The tilted view uses a whole-figure card for equipped officers and walkers.
+## Hides the parts until the sheet releases them, including on authored falls.
 const ENABLED: bool = true
 const DIR: String = "res://features/characters/art/view/"
 ## view art -> card row (the head the person draws, StreetCrowdCards included) -> strip file.
@@ -132,6 +126,9 @@ static func release(rig: CutRig) -> void:
 static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 	StreetCopWalk.bind(card, path)
 	card.texture = StreetStrips.get_tex(path)
+	# This painted wound already has its ink. Keep the raw head socket's material
+	# through the impact pulse, then restore ordinary sprite materials on the next strip.
+	card.use_parent_material = path.get_file() == StreetMulroneyHit.HIT
 	var fall: bool = path.ends_with("_fall.png")
 	var walk: bool = (
 		path.ends_with("_walk.png") or path.ends_with("_attack.png") or path.ends_with("_run.png")
