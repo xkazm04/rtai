@@ -1,17 +1,13 @@
 extends GutTest
 
 
-func _trial(
-	id: StringName, motion: String, rifle_lead: float = -1.0, orbit: bool = false
-) -> FireGapArena:
+func _trial(id: StringName, motion: String, rifle_lead: float = -1.0) -> FireGapArena:
 	var bus: EventBus = autofree(EventBus.new())
 	var registry: RngRegistry = RngRegistry.new(1)
 	var arena: FireGapArena = FireGapArena.new(
 		CombatTuning.shipped(), bus, registry.stream(&"combat")
 	)
 	arena.prepare(id, motion, 9.3)
-	if orbit:
-		arena.squad_ai.mind_for(arena.foe).rocket.orbit_lead = true
 	if rifle_lead >= 0.0:
 		(arena.squad_ai as GauntletStreet.StreetSquad).rifle_lead = rifle_lead
 	assert_true(arena.measure())
@@ -67,11 +63,6 @@ func test_hit_flights_overlap_once_and_misses_contribute_no_ticks() -> void:
 
 func test_rocket_uses_a_real_lock_and_circle_preserves_sprint_speed() -> void:
 	var arena: FireGapArena = _trial(&"rocket_trooper", "circle")
-	var still: FireGapArena = _trial(&"rocket_trooper", "standing")
-	# Shipped linear tracking misses an uninterrupted sprint; allow one edge splash.
-	assert_lte(arena.hit_ticks.size(), 1)
-	assert_eq(still.hit_ticks.size(), still.fire_ticks.size())
-	assert_between(still.fire_ticks.size(), 13, 14)
 	var parts: Dictionary[String, int] = arena.result().gap_parts_ticks
 	assert_gt(parts.tell, 0)
 	assert_gt(parts.aim_lock, 0)
@@ -133,15 +124,19 @@ func test_orbit_lead_preserves_signed_bearing_and_range_rate() -> void:
 
 
 func test_orbit_rocket_hits_circle_and_misses_every_post_lock_dash() -> void:
-	var arena: FireGapArena = _trial(&"rocket_trooper", "circle", -1.0, true)
-	var still: FireGapArena = _trial(&"rocket_trooper", "standing", -1.0, true)
-	var dodge: FireGapArena = _trial(&"rocket_trooper", "circle_dash", -1.0, true)
-	# At the 1.4 s rest, 14 launches hit a steady circle. Allow one lost cycle and two misses.
+	var arena: FireGapArena = _trial(&"rocket_trooper", "circle")
+	var still: FireGapArena = _trial(&"rocket_trooper", "standing")
+	var dodge: FireGapArena = _trial(&"rocket_trooper", "circle_dash")
+	# The shipped rest and tell gave 16 launches in 30 seconds. Allow one cycle for relocation.
 	for trial: FireGapArena in [arena, still, dodge]:
-		assert_between(trial.fire_ticks.size(), 13, 14)
-	assert_gte(arena.hit_ticks.size(), 12)
+		assert_between(trial.fire_ticks.size(), 15, 16)
+	# All 16 landed on the steady circle in each measured seed. Allow two edge misses.
+	assert_gte(arena.hit_ticks.size(), 14)
+	# A stationary target takes every launch.
 	assert_eq(still.hit_ticks.size(), still.fire_ticks.size())
+	# One shipped dash per lock must clear every blast, including splash.
 	assert_eq(dodge.hit_ticks.size(), 0)
 	assert_eq(dodge.dash_ticks.size(), dodge.fire_ticks.size())
+	# Reaction begins 15 ticks after tracking freezes on each launch.
 	for i: int in dodge.dash_ticks.size():
 		assert_eq(dodge.dash_ticks[i], dodge.lock_ticks[i] + 15)

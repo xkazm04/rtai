@@ -18,3 +18,15 @@ Both orbit arms advance to the gauntlet. Both linear arms missed the undashed ci
 Rivet circles at 9.3 m/s. At each real tracking-to-lock transition the harness records the line and waits 15 ticks. It then runs the shipped straight dash perpendicular to that line in the direction of travel (4.5 m in 10 ticks, quadratic ease-out, cooldown 40 ticks, zero invulnerability, hold-to-sprint enabled on this branch). Rivet resumes the circle at sprint speed, correcting radius by up to a quarter stride per tick. During probe development a direct radial return after the burst let the rocket hit again. The table measures the requested continuous circling path.
 
 Reproduce an arm with `node tools/dev/run.mjs rocket_arena -- --rest=1.4 --model=orbit --lead=0.8 --out=<absolute-json-path>`. The JSON retains the hits, launches and accepted dashes per seed.
+
+## What a steady circle costs
+
+A single shipped trooper fired on Rivet as he circled at 9.3 m/s and 10 m without dashing. Starting at the normal 100 HP, Rivet lost **75.46 HP in the first 10 seconds** on each seed. Five impacts landed in that window. Each nonlethal impact cost 14.86 to 15.25 HP. The seventh impact killed him in **13.30 to 13.47 seconds** from the start of the trial.
+
+| Seed | HP left at 10 s | Lethal tick | Seconds to death |
+|---:|---:|---:|---:|
+| 1 | 24.54 | 808 | 13.47 |
+| 2 | 24.54 | 798 | 13.30 |
+| 3 | 24.54 | 803 | 13.38 |
+
+The 1.1 s orbit arm in `arena.json` records the tick and actual HP lost for every impact, with the lethal hit capped at the remaining HP.

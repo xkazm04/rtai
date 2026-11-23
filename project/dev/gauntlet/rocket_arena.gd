@@ -30,6 +30,10 @@ func _ready() -> void:
 		get_tree().quit(1)
 		return
 	var arm: Dictionary = {"rest_s": _rest, "model": _model, "share": _share, "trials": trials}
+	var cost: Array[Dictionary] = []
+	for seed_id: int in range(1, 4):
+		cost.append(_circle_cost(seed_id))
+	arm["circle_cost_10m"] = cost
 	var file: FileAccess = FileAccess.open(out, FileAccess.WRITE)
 	var ok: bool = file != null and file.store_string(JSON.stringify(arm, "  ") + "\n")
 	get_tree().quit(0 if ok else 1)
@@ -69,3 +73,32 @@ func _trial(distance: float, seed_id: int, motion: String, speed: float) -> Fire
 	mind.agent.arch.weapon.aim_lead = _share
 	mind.rocket.orbit_lead = _model == "orbit"
 	return arena
+
+
+## Repeat the same seeded circle with the normal HP pool, so lethal damage can end the run.
+func _circle_cost(seed_id: int) -> Dictionary:
+	var table: DataTable = DataTable.open(PlayerMotion.TABLE, PlayerMotion.SCHEMA)
+	var arena: FireGapArena = _trial(
+		10.0, seed_id, "circle", PlayerMotion.from_table(table).sprint_mps
+	)
+	var initial_hp: float = arena.tuning.rivet["hp"]
+	arena.rivet.max_hp = initial_hp
+	arena.rivet.hp = initial_hp
+	arena.run = GauntletRun.new()
+	var impacts: Array[Dictionary] = []
+	var row: Dictionary = {
+		"seed": seed_id, "initial_hp": initial_hp, "death_tick": null, "impacts": impacts
+	}
+	for t: int in range(1, FireGapArena.TICKS + 1):
+		var before: float = arena.rivet.hp
+		arena._move_target(t)
+		arena.step(t)
+		var hp: float = maxf(0.0, arena.rivet.hp)
+		if hp < before:
+			impacts.append({"tick": t, "hp_lost": before - hp})
+		if t <= 10 * SimClock.TICK_RATE:
+			row["hp_lost_first_10s"] = initial_hp - hp
+		if not arena.rivet.alive():
+			row["death_tick"] = t
+			break
+	return row

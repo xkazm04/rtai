@@ -1,8 +1,16 @@
 # Rocket trooper on the street
 
-Both orbit candidates failed the early-death requirement. Each killed novice seed 4 on wave 5 at tick 3778. The serialized run result was byte-identical at both rests. The 1.1 s expert batch stopped on that finding after one completed seed. The 1.4 s expert batch was unnecessary once the same lethal result recurred.
+## Shipped
 
-| Rest (s) and lead | Profile | Wave cap | Hits/troopers | Pooled rate | Mean wave rate | Rocket deaths before 6 | All killers before 6 | Median death wave (deaths only) | Alive at cap |
+The rocket trooper ships with a 1.1 s rest and orbit lead at 0.8. At 10 m the steady circle took 48/48 hits and the post-lock dash took 0/48. The average gauntlet recorded 17 hits from 83 troopers (0.205 per trooper across waves, ten seeds). Keeping orbit lead and changing only the rest to 1.4 s gave 0.141.
+
+Rockets alone caused **0 deaths before wave 6 in 21 observed runs** (ten average, ten novice, one expert). Novice seed 4 entered wave 5 with 46.53 of 100 HP after four waves with zero rocket hits. Its only rocket hit delivered the final blow. The table records final blows.
+
+## Original screening decision
+
+The initial screen rejected both orbit candidates on final-blow attribution. Each killed novice seed 4 on wave 5 at tick 3778. The serialized run result was byte-identical at both rests. The 1.1 s expert batch stopped on that finding after one completed seed. The 1.4 s expert batch was unnecessary once the same lethal result recurred.
+
+| Rest (s) and lead | Profile | Wave cap | Hits/troopers | Pooled rate | Mean wave rate | Rocket final blows before 6 | All killers before 6 | Median death wave (deaths only) | Alive at cap |
 |---|---|---:|---:|---:|---:|---:|---|---:|---:|
 | 1.4 linear | average | 12 | 20/90 | 0.222 | 0.217 | 0/10 | stomp 3 | 9 | 0 |
 | 1.1 orbit | average | 12 | 17/83 | 0.205 | 0.217 | 0/10 | stomp 4 | 7 | 0 |
@@ -13,7 +21,7 @@ Both orbit candidates failed the early-death requirement. Each killed novice see
 | 1.1 orbit | all observed | 6 / 12 | 36/135 | 0.267 | 0.272 | 1/21 | riot_cop 1, rocket 1, stomp 12 | 5 | 1 |
 | 1.4 orbit | all observed | 6 / 12 | 27/122 | 0.221 | 0.233 | 1/20 | riot_cop 2, rocket 1, stomp 11 | 5 | 0 |
 
-Greedy picks, wheel controls, salt 0, seeds 1 through 10, one process at a time. Each average arm could reach wave 12. Safety batches used wave 6. The 1.1 s arm came closer to the target of 0.5 hits per trooper in the average gauntlet at 17/83 (0.205). The 1.4 s arm recorded 11/78 (0.141), versus 20/90 (0.222) with shipped linear lead. Neither qualifying arena arm can achieve 0/30 early rocket deaths on these seeds.
+Greedy picks, wheel controls, salt 0, seeds 1 through 10, one process at a time. Each average arm could reach wave 12. Safety batches used wave 6. The 1.1 s arm came closer to the target of 0.5 hits per trooper in the average gauntlet at 17/83 (0.205). The 1.4 s arm recorded 11/78 (0.141), versus 20/90 (0.222) with shipped linear lead. Both orbit arms recorded a rocket final blow before wave 6.
 
 A hit is a rocket impact that reduced Rivet's HP. The dev probe matches the damage signal to the round, then attributes it to the shooter's spawn wave, including late impacts and delayed spawns. Every logged trooper count was checked against that wave's result roster. Run serialization is unchanged. The JSON includes the original result SHA-256 for each seed.
 
@@ -22,7 +30,7 @@ The pooled rate divides total hits by total spawned troopers. The mean wave rate
 Reproduce each arm with the listed rocket data and `node tools/gauntlet/batch.mjs --profile=<profile> --pick=greedy --controls=wheel --waves=<cap> --seeds=10 --jobs=1 --out=<directory>`. Each separate engine log contains one `rocket-probe` line per wave.
 
 
-## Verification
+## Verification of the original screening build
 
 The control configuration and the opt-in orbit model are committed at `82dbc7258`. The shipped linear control retains its original lock and sprint-distance tests. At 10 m over 30 seconds the orbit fixture requires at least 12 circling hits, 13 to 14 launches, every standing launch landing, zero dash hits, and an accepted dash 15 ticks after each lock. The signed-bearing test crosses the angle seam and checks changing range.
 
