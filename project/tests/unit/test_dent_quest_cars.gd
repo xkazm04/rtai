@@ -18,6 +18,7 @@ func before_each() -> void:
 	_stage.setup(ctx)
 	_pilot = StagePilot.new(PlayerActions.shipped())
 	_stage.pilot = _pilot
+	_pilot.ghosts.transform_unlocked = true
 	_stage.arena.rivet.pos = Vector2(200.0, 200.0)
 	var svc: VehicleService = autofree(VehicleService.new())
 	svc.setup(ctx)

@@ -145,6 +145,9 @@
     "story_lift": {
       "type": "boolean"
     },
+    "story_transform": {
+      "type": "boolean"
+    },
     "story_voice": {
       "type": "boolean"
     },
@@ -152,6 +155,9 @@
       "maximum": 0.9,
       "minimum": 0.1,
       "type": "number"
+    },
+    "transform_unlocked": {
+      "type": "boolean"
     }
   },
   "required": [
@@ -159,7 +165,9 @@
     "forms",
     "order",
     "schema",
-    "switch_s"
+    "story_transform",
+    "switch_s",
+    "transform_unlocked"
   ],
   "type": "object"
 }

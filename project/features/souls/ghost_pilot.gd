@@ -1,11 +1,7 @@
 class_name GhostPilot
 extends RefCounted
-## The four ghost forms for the bound player (StagePilot): one SoulPowers (one form at a time, one
-## Madness meter) behind GhostForms, in front of the attack stages of lane ghost-powers (HaulerStage
-## = Tonnage, DentStage = Dent, KerfStage, OhmStage). Q / LB (power_hauler) transforms into the
-## selected ghost or back to base; G / RB (power_gearbox) selects the next ghost in base, or
-## switches straight to it in a form (JOURNAL DECISION input). The attacks fire only while the form
-## is settled (never mid-transformation); a transformation roots Rivet to morph_move_k of his walk.
+## G selects the ghost. Holding Q / LB aims its deployment and release strikes. Mastery adds
+## T to enter or exit the selected form, using the four stages and their shared Madness meter.
 
 ## Rivet's walk while a transformation plays (the body is rebuilding; data-free on purpose: one
 ## value, judged in the clip).
@@ -20,9 +16,12 @@ var ohm: OhmStage
 ## n15 hero h-4: Dent's arm jab, a melee press with no car seized (ghost_attacks.json dent.jab).
 var jab: DentJab = DentJab.new()
 var transforms: int = 0
+var deploy: GhostDeploy
+var transform_unlocked: bool
 
 
 func _init(table: PowerTable, form_table: GhostFormTable) -> void:
+	transform_unlocked = form_table.transform_unlocked
 	powers = SoulPowers.new(table)
 	forms = GhostForms.new(form_table, powers)
 	hauler = HaulerStage.new(table)
@@ -31,6 +30,7 @@ func _init(table: PowerTable, form_table: GhostFormTable) -> void:
 	dent.share(powers)
 	kerf = KerfStage.new(table)
 	kerf.share(powers)
+	deploy = GhostDeploy.new(kerf.attacks, hauler.form)
 	ohm = OhmStage.new(table)
 	ohm.share(powers)
 	var ohm_form: GhostFormDef = form_table.forms.get(OhmStage.GHOST)
@@ -39,7 +39,17 @@ func _init(table: PowerTable, form_table: GhostFormTable) -> void:
 
 
 static func shipped() -> GhostPilot:
-	return GhostPilot.new(PowerTable.load_default(), GhostFormTable.load_default())
+	var pilot: GhostPilot = GhostPilot.new(PowerTable.load_default(), GhostFormTable.load_default())
+	# These pre-existing fight and movement recordings explicitly request a mastered form.
+	var args: ArenaArgs = ArenaArgs.parse()
+	if args.text("--film-form") != "" or args.text("--sweep-form") != "":
+		pilot.transform_unlocked = true
+	if (
+		args.text("--bot") == "boss"
+		and (args.text("--ghost") != "" or args.text("--servo-ghost") != "")
+	):
+		pilot.transform_unlocked = true
+	return pilot
 
 
 ## True while `id` is the settled form (its attacks may fire).
@@ -49,15 +59,18 @@ func settled_in(id: StringName) -> bool:
 
 ## One tick. Returns the move to use instead of `move_by` (metres this tick).
 func drive(
-	stage: CollectCallStage, c: PlayerCommand, actions: PlayerActions, press: bool
+	stage: CollectCallStage,
+	c: PlayerCommand,
+	actions: PlayerActions,
+	press: bool,
+	free: bool = true
 ) -> Vector2:
 	var move_by: Vector2 = stage.intent.move_by
-	if stage.arena.rivet.alive():
-		if c.was_pressed(actions, &"power_hauler") and forms.press_transform() == SoulPowers.OK:
-			transforms += 1
-		elif c.was_pressed(actions, &"power_gearbox"):
-			@warning_ignore("return_value_discarded")
-			forms.press_next()
+	if free and stage.arena.rivet.alive():
+		_select(stage, c, actions)
+	deploy.step(stage, c, actions, forms)
+	if not free:
+		return move_by
 	powers.tick()
 	forms.tick()
 	var tonnage: bool = settled_in(HaulerStage.GHOST)
@@ -78,6 +91,22 @@ func drive(
 	ohm.drive(stage, false, press and settled_in(OhmStage.GHOST), c.aim)
 	var walk: float = stage.arena.tuning.rivet["walk_mps"]
 	return move_by * _move_k(walk)
+
+
+func _select(stage: CollectCallStage, c: PlayerCommand, actions: PlayerActions) -> void:
+	var can_enter: bool = (
+		deploy.phase == GhostDeploy.Phase.IDLE and not c.is_held(actions, &"ghost_deploy")
+	)
+	if (
+		can_enter
+		and c.was_pressed(actions, &"power_hauler")
+		and (transform_unlocked or (forms.table.story_transform and stage._quest != null))
+		and forms.press_transform() == SoulPowers.OK
+	):
+		transforms += 1
+	elif c.was_pressed(actions, &"power_gearbox"):
+		@warning_ignore("return_value_discarded")
+		forms.press_next()
 
 
 ## True when a form's attacks own the melee press this tick (the pilot skips the claw): Tonnage,
@@ -107,3 +136,4 @@ func write_state(out: StreamPeerBuffer) -> void:
 	kerf.write_state(out)
 	ohm.write_state(out)
 	jab.write_state(out)
+	deploy.write_state(out)

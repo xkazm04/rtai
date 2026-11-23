@@ -19,14 +19,47 @@ static func resolve(
 	blink.landing = target.pos + blink.hit_dir * reach
 	if not _front_blocks(arena, target, blink.hit_dir):
 		return blink
-	var spot: Vector2 = target.pos - target.facing * reach
-	if not arena.squad_ai.pit.bounds.has_point(spot) or not _clear(stage, target.pos, spot, walls):
+	var spot: Vector2 = rear_spot(stage, target, behind_m, walls)
+	if not spot.is_finite():
 		return blink
 	blink.landing = spot
 	blink.hit_dir = target.facing
 	blink.path_dir = from.direction_to(spot)
 	arena.move_tally.record(MoveTable.BLINK_BEHIND)
 	return blink
+
+
+## The same rear landing and clearance test for a blink and a deployed cut.
+static func rear_spot(
+	stage: CollectCallStage,
+	target: Fighter,
+	behind_m: float,
+	walls: ArenaWalls,
+	partial: bool = false
+) -> Vector2:
+	var spot: Vector2 = target.pos - target.facing * (target.radius_m + behind_m)
+	if _can_land(stage, target.pos, spot, walls):
+		return spot
+	if not partial:
+		return Vector2.INF
+	# A deployed cutter can stop between a visible target and the wall at its back.
+	var near: Vector2 = target.pos
+	for _i: int in 12:
+		var mid: Vector2 = (near + spot) * 0.5
+		if _can_land(stage, target.pos, mid, walls):
+			near = mid
+		else:
+			spot = mid
+	return near
+
+
+static func _can_land(
+	stage: CollectCallStage, target: Vector2, spot: Vector2, walls: ArenaWalls
+) -> bool:
+	var squad: ArenaSquad = stage.arena.squad_ai
+	return (
+		(squad == null or squad.pit.bounds.has_point(spot)) and _clear(stage, target, spot, walls)
+	)
 
 
 static func _front_blocks(arena: CombatArena, target: Fighter, ray: Vector2) -> bool:

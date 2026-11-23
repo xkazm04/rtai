@@ -125,7 +125,11 @@
         "2026-11-22: n23 prologue: deterministic hands pilot and viewport captures of the yard and first kill (dev_loc 28529 -> 28682)",
         "2026-11-22: --prologue-stills for n23 prologue (dev_loc 28682 -> 28772)",
         "2026-11-22: --bot and --prologue-stills for n23 prologue (dev_loc 28772 -> 28848)",
-        "2026-11-22: --clip for n23 prologue (dev_loc 28848 -> 28948)"
+        "2026-11-22: --clip for n23 prologue (dev_loc 28848 -> 28948)",
+        "2026-11-22: ghost_deploy_film for n24 ghost (dev_loc 30712 -> 31082)",
+        "2026-11-22: ghost_deploy_film for n24 ghost (dev_loc 31082 -> 31086)",
+        "2026-11-22: ghost_deploy_film for n24 ghost (dev_loc 31086 -> 31090)",
+        "2026-11-22: deploy_worth for n24 ghost (dev_loc 31090 -> 31502)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -138,7 +142,7 @@
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
         "project/dev/gauntlet": 526,
-        "project/dev/ghost-forms": 616,
+        "project/dev/ghost-forms": 1335,
         "project/dev/ghost-powers": 1396,
         "project/dev/guard": 397,
         "project/dev/gunplay": 674,
@@ -165,7 +169,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 30712
+      "total": 31431
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -508,7 +512,8 @@
       "accepted": [
         "2026-11-21: guard film dev scene (n22 guard) (lane_named_dev_dirs 6 -> 7)",
         "2026-11-22: RivetSelfBlast call site in fight_areas + dev/controls film for n23 controls (lane_named_dev_dirs 7 -> 8)",
-        "2026-11-22: --bot and --result for n23 prologue (lane_named_dev_dirs 7 -> 8)"
+        "2026-11-22: --bot and --result for n23 prologue (lane_named_dev_dirs 7 -> 8)",
+        "2026-11-22: ghost_deploy_film for n24 ghost (lane_named_dev_dirs 8 -> 9)"
       ],
       "files": {
         "project/dev/audio": 1,

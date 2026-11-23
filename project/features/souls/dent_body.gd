@@ -145,6 +145,8 @@ func _fly(facing: float, steps: int, tick: int) -> void:
 	var act: DentSpectralDrawn.Pose = DentSpectralDrawn.pose(
 		drawn.flight.hover, jab, car != null, hurt_age
 	)
+	if drawn.deploy_age >= 0:
+		act = DentSpectralDrawn.Pose.JAB
 	_spectral.visible = ViewMode.shared().cards and ViewMode.shared().art != ""
 	_top.visible = not _spectral.visible
 	if _spectral.visible:

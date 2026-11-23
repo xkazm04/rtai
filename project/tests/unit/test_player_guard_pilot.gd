@@ -106,6 +106,7 @@ func test_interrupting_a_charge_throw_and_swing_cannot_release_them() -> void:
 
 func test_transform_drops_guard_on_entry_and_keeps_it_down_in_form() -> void:
 	_start("wheel")
+	pilot.ghosts.transform_unlocked = true
 	_drive([&"guard"])
 	_drive([&"guard", &"power_hauler"])
 	assert_false(pilot.ghosts.forms.settled())

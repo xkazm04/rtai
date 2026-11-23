@@ -26,6 +26,12 @@ static func width(index: int) -> float:
 	return FIRST_K if index == 0 else FORK_K
 
 
+static func stroke(canvas: Node2D, pts: PackedVector2Array, fade_k: float, k: float) -> void:
+	canvas.draw_polyline(pts, Color(OhmView.INK, 0.75 * fade_k), OhmView.INK_W * k, true)
+	canvas.draw_polyline(pts, Color(OhmView.TEAL, fade_k), OhmView.TEAL_W * k, true)
+	canvas.draw_polyline(pts, Color(OhmView.WHITE, fade_k), OhmView.CORE_W * k, true)
+
+
 ## Contacts are clipped at both rims, including very short hops between overlapping rings.
 static func link(ink: OhmView, points: PackedVector2Array, index: int, age: int) -> void:
 	var alpha: float = fade(age, index, ink.reduced_motion)

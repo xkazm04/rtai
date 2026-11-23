@@ -22,8 +22,14 @@ static func on_hit(arena: CombatArena, h: Fighter, killer: int, weapon: StringNa
 	var mind: SquadMind = squad.minds.get(h.id)
 	if not post_stomp(mind) or mind.walker.cracked_at >= mind.agent.shot_tick:
 		return
-	mind.walker.cracked_at = arena.tick
-	arena.move_tally.record(MoveTable.ARMOUR_CRACK)
+	open(arena, mind, arena.tick)
+
+
+## The deployed press can open a walker's front plate outside its recovery window.
+static func open(arena: CombatArena, mind: SquadMind, tick: int) -> void:
+	if mind.walker != null and arena.squad_ai.moves.tonnage_armour_crack.enabled:
+		mind.walker.cracked_at = tick
+		arena.move_tally.record(MoveTable.ARMOUR_CRACK)
 
 
 static func is_open(mind: SquadMind, row: MoveTable.ArmourCrack, tick: int) -> bool:

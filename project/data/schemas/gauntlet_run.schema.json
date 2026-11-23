@@ -17,6 +17,57 @@
           "minimum": 0,
           "type": "integer"
         },
+        "deploy_kills": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "description": "Direct kills credited to deployments released during this wave, keyed by each deployed form. Zero represents a measured deployment without a kill.",
+          "minProperties": 1,
+          "propertyNames": {
+            "enum": [
+              "dent",
+              "kerf",
+              "ohm",
+              "tonnage"
+            ]
+          },
+          "type": "object"
+        },
+        "deploy_stun_s": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "description": "Living machine-seconds spent under a deployed short circuit during this wave, keyed by form. Counts each affected machine once per held tick. Omitted for unmeasured forms.",
+          "minProperties": 1,
+          "propertyNames": {
+            "enum": [
+              "dent",
+              "kerf",
+              "ohm",
+              "tonnage"
+            ]
+          },
+          "type": "object"
+        },
+        "deploys": {
+          "additionalProperties": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "description": "Ghost deployments released during this wave, keyed by form. Omitted when none were released.",
+          "minProperties": 1,
+          "propertyNames": {
+            "enum": [
+              "dent",
+              "kerf",
+              "ohm",
+              "tonnage"
+            ]
+          },
+          "type": "object"
+        },
         "enemies": {
           "additionalProperties": {
             "minimum": 1,

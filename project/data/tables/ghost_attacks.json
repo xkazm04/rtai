@@ -21,6 +21,36 @@
     "ride_hop_m": 4,
     "upgrade_tier": 0
   },
+  "deploy": {
+    "dent": {
+      "cooldown_ticks": 480,
+      "enabled": true,
+      "life_ticks": 42,
+      "ram_half_m": 0.9,
+      "range_m": 8
+    },
+    "doc": "range_m limits cursor reach from Rivet. cooldown_ticks counts 60 Hz ticks from release until this ghost can deploy again. enabled permits deployment. life_ticks is the number of ticks the ghost remains at the end of its single strike. Kerf prefers a hostile within snap_m of the cursor. Ohm strikes within radius_m of the spot. Dent strikes within ram_half_m of the segment from Rivet's side to the spot.",
+    "kerf": {
+      "cooldown_ticks": 600,
+      "enabled": true,
+      "life_ticks": 45,
+      "range_m": 9,
+      "snap_m": 2
+    },
+    "ohm": {
+      "cooldown_ticks": 480,
+      "enabled": true,
+      "life_ticks": 48,
+      "radius_m": 3.5,
+      "range_m": 9
+    },
+    "tonnage": {
+      "cooldown_ticks": 480,
+      "enabled": true,
+      "life_ticks": 54,
+      "range_m": 6
+    }
+  },
   "doc": "Lane ghost-powers: each ghost form's attack set beyond the powers.json row (the form's timing, Madness cost and the old hauler/gearbox tuning stay there). One block per ghost (tonnage, dent, kerf, ohm), each with upgrade_tier (0 = base; the per-act quest upgrades raise it later, nothing reads above 0 yet). Metres, seconds, damage in hp (a patrol cop has 1, a riot cop 2 x the pit's armour, a robot thug 6). Anchors are body-local metres (+x = facing, +y = right) until the forms lane's form rows carry them.",
   "kerf": {
     "behind_m": 0.9,

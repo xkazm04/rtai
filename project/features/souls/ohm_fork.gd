@@ -67,8 +67,11 @@ static func flare(ink: OhmView, at: Vector2, aim: Vector2, age: int, amount: flo
 					start, start + dir * 0.15 * ink.ppm, Color(colour, 1.0 - t), 1.8, true
 				)
 	elif age >= 0 and age < OhmBoltDraw.FLARE_TICKS:
-		var r: float = (0.22 - 0.035 * age) * ink.ppm
-		for i: int in 4:
-			var ray: Vector2 = aim.rotated(i * PI / 4.0) * r * (1.0 if i % 2 == 0 else 0.55)
-			ink.draw_line(at - ray, at + ray, OhmView.TEAL, 2.8, true)
-			ink.draw_line(at - ray, at + ray, colour, 1.3, true)
+		flash(ink, at, aim, (0.22 - 0.035 * age) * ink.ppm)
+
+
+static func flash(canvas: Node2D, at: Vector2, aim: Vector2, radius: float) -> void:
+	for i: int in 4:
+		var ray: Vector2 = aim.rotated(i * PI / 4.0) * radius * (1.0 if i % 2 == 0 else 0.55)
+		canvas.draw_line(at - ray, at + ray, OhmView.TEAL, 2.8, true)
+		canvas.draw_line(at - ray, at + ray, OhmView.WHITE, 1.3, true)

@@ -18,6 +18,7 @@ func before_each() -> void:
 	_stage.setup(World.build_context(_bus, _data, 1))
 	_pilot = StagePilot.new(PlayerActions.shipped())
 	_stage.pilot = _pilot
+	_pilot.ghosts.transform_unlocked = true
 	_stage.arena.rivet.pos = Vector2(200.0, 200.0)
 	_stage.arena.rivet.facing = Vector2.RIGHT
 	_kills.clear()

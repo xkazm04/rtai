@@ -1,0 +1,1125 @@
+{
+  "schema": "gtai.gauntlet-deploy-evidence/1",
+  "settings": {
+    "profiles": [
+      "average",
+      "expert"
+    ],
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "wave_limit": 8,
+    "pick": "greedy",
+    "controls": "wheel",
+    "jobs": 1
+  },
+  "table_hashes": {
+    "enemies.json": "992d7e396ab782b898e1c119e42f37429b7ab6e646bb29ae450f2054dccc3f54",
+    "weapons.json": "3fc9873ad47fde2f4efa41abbb520df386aae3ee1ce428436fb23ab895575ef5",
+    "combat.json": "b6e7552913f1c94ca0d844a1e50cf3d9927e454dbb74521b89d778c90a367d4a",
+    "gauntlet.json": "9f02c0bde69055ea4cef4c5e27624c8007cd9a55eb6cfc56b02a5321630b3801",
+    "gauntlet_bonuses.json": "0507caac5e444be9b2313831732da6aa54d68c863fd9d33c074a62c9bd2034bd",
+    "test_player.json": "23e61b0829e5cd4bfb671f19efe520a2af14d07dda4e54120797de95307c806f"
+  },
+  "batches": [
+    {
+      "arm": "before",
+      "profile": "average",
+      "revision": "c84deef095b6bd10f5749d2b5bce3642028799b6",
+      "file": "build/gauntlet/ghost-g5-before/batch.json"
+    },
+    {
+      "arm": "after",
+      "profile": "average",
+      "revision": "a3ebfcd2d69ba279abf43ab56f47de99e9c3952e",
+      "file": "build/gauntlet/ghost-g5-after/batch.json"
+    },
+    {
+      "arm": "before",
+      "profile": "expert",
+      "revision": "c84deef095b6bd10f5749d2b5bce3642028799b6",
+      "file": "build/gauntlet/ghost-g5-before-expert/batch.json"
+    },
+    {
+      "arm": "after",
+      "profile": "expert",
+      "revision": "a3ebfcd2d69ba279abf43ab56f47de99e9c3952e",
+      "file": "build/gauntlet/ghost-g5-after-expert/batch.json"
+    }
+  ],
+  "totals": {
+    "average": {
+      "before": {
+        "kerf": {
+          "uses": 0
+        },
+        "ohm": {
+          "uses": 0
+        },
+        "tonnage": {
+          "uses": 0
+        },
+        "dent": {
+          "uses": 0
+        }
+      },
+      "after": {
+        "kerf": {
+          "uses": 0
+        },
+        "ohm": {
+          "uses": 5,
+          "kills": 3,
+          "kills_per_use": 0.6,
+          "stun_body_s": 9.38333333333333,
+          "stun_s_per_use": 1.8766666666666658
+        },
+        "tonnage": {
+          "uses": 20,
+          "kills": 45,
+          "kills_per_use": 2.25
+        },
+        "dent": {
+          "uses": 0
+        }
+      }
+    },
+    "expert": {
+      "before": {
+        "kerf": {
+          "uses": 0
+        },
+        "ohm": {
+          "uses": 0
+        },
+        "tonnage": {
+          "uses": 0
+        },
+        "dent": {
+          "uses": 0
+        }
+      },
+      "after": {
+        "kerf": {
+          "uses": 0
+        },
+        "ohm": {
+          "uses": 0
+        },
+        "tonnage": {
+          "uses": 19,
+          "kills": 37,
+          "kills_per_use": 1.9473684210526316
+        },
+        "dent": {
+          "uses": 0
+        }
+      }
+    }
+  },
+  "combined": {
+    "before": {
+      "kerf": {
+        "uses": 0
+      },
+      "ohm": {
+        "uses": 0
+      },
+      "tonnage": {
+        "uses": 0
+      },
+      "dent": {
+        "uses": 0
+      }
+    },
+    "after": {
+      "kerf": {
+        "uses": 0
+      },
+      "ohm": {
+        "uses": 5,
+        "kills": 3,
+        "kills_per_use": 0.6,
+        "stun_body_s": 9.38333333333333,
+        "stun_s_per_use": 1.8766666666666658
+      },
+      "tonnage": {
+        "uses": 39,
+        "kills": 82,
+        "kills_per_use": 2.1025641025641026
+      },
+      "dent": {
+        "uses": 0
+      }
+    }
+  },
+  "pairs": [
+    {
+      "profile": "average",
+      "seed": 1,
+      "before": {
+        "sha256": "246beb837f1db88028cea746f3a3745893d47205cb500e2ec3ecee2105530ace",
+        "wave_reached": 8,
+        "outcome": "cleared 8",
+        "ghost_picks": [
+          {
+            "wave": 1,
+            "form": "tonnage"
+          },
+          {
+            "wave": 4,
+            "form": "dent"
+          },
+          {
+            "wave": 8,
+            "form": "kerf"
+          }
+        ],
+        "waves": [
+          {
+            "n": 1,
+            "measured": true
+          },
+          {
+            "n": 2,
+            "measured": true
+          },
+          {
+            "n": 3,
+            "measured": true
+          },
+          {
+            "n": 4,
+            "measured": true
+          },
+          {
+            "n": 5,
+            "measured": true
+          },
+          {
+            "n": 6,
+            "measured": true
+          },
+          {
+            "n": 7,
+            "measured": true
+          },
+          {
+            "n": 8,
+            "measured": true
+          }
+        ],
+        "totals": {
+          "kerf": {
+            "uses": 0
+          },
+          "ohm": {
+            "uses": 0
+          },
+          "tonnage": {
+            "uses": 0
+          },
+          "dent": {
+            "uses": 0
+          }
+        }
+      },
+      "after": {
+        "sha256": "88c49b3b103eeb9feea885bc7918c90e49939523b2ecb437f384f593ebc9ed87",
+        "wave_reached": 8,
+        "outcome": "cleared 8",
+        "ghost_picks": [
+          {
+            "wave": 1,
+            "form": "tonnage"
+          },
+          {
+            "wave": 4,
+            "form": "dent"
+          },
+          {
+            "wave": 8,
+            "form": "kerf"
+          }
+        ],
+        "waves": [
+          {
+            "n": 1,
+            "measured": true
+          },
+          {
+            "n": 2,
+            "measured": true,
+            "deploys": {
+              "tonnage": 1
+            },
+            "deploy_kills": {
+              "tonnage": 3
+            }
+          },
+          {
+            "n": 3,
+            "measured": true,
+            "deploys": {
+              "tonnage": 1
+            },
+            "deploy_kills": {
+              "tonnage": 4
+            }
+          },
+          {
+            "n": 4,
+            "measured": true,
+            "deploys": {
+              "tonnage": 1
+            },
+            "deploy_kills": {
+              "tonnage": 4
+            }
+          },
+          {
+            "n": 5,
+            "measured": true,
+            "deploys": {
+              "tonnage": 1
+            },
+            "deploy_kills": {
+              "tonnage": 0
+            }
+          },
+          {
+            "n": 6,
+            "measured": true,
+            "deploys": {
+              "tonnage": 2
+            },
+            "deploy_kills": {
+              "tonnage": 5
+            }
+          },
+          {
+            "n": 7,
+            "measured": true,
+            "deploys": {
+              "tonnage": 2
+            },
+            "deploy_kills": {
+              "tonnage": 3
+            }
+          },
+          {
+            "n": 8,
+            "measured": true,
+            "deploys": {
+              "tonnage": 2
+            },
+            "deploy_kills": {
+              "tonnage": 6
+            }
+          }
+        ],
+        "totals": {
+          "kerf": {
+            "uses": 0
+          },
+          "ohm": {
+            "uses": 0
+          },
+          "tonnage": {
+            "uses": 10,
+            "kills": 25,
+            "kills_per_use": 2.5
+          },
+          "dent": {
+            "uses": 0
+          }
+        }
+      }
+    },
+    {
+      "profile": "average",
+      "seed": 2,
+      "before": {
+        "sha256": "1bfffdf15068fa48ac609229c398fdae12b4b8a0c9c1f0b612f77c936e5d97b6",
+        "wave_reached": 7,
+        "outcome": "died on 7",
+        "ghost_picks": [
+          {
+            "wave": 1,
+            "form": "tonnage"
+          },
+          {
+            "wave": 2,
+            "form": "ohm"
+          }
+        ],
+        "waves": [
+          {
+            "n": 1,
+            "measured": true
+          },
+          {
+            "n": 2,
+            "measured": true
+          },
+          {
+            "n": 3,
+            "measured": true
+          },
+          {
+            "n": 4,
+            "measured": true
+          },
+          {
+            "n": 5,
+            "measured": true
+          },
+          {
+            "n": 6,
+            "measured": true,
+            "timed_out": true
+          },
+          {
+            "n": 7,
+            "measured": true
+          }
+        ],
+        "totals": {
+          "kerf": {
+            "uses": 0
+          },
+          "ohm": {
+            "uses": 0
+          },
+          "tonnage": {
+            "uses": 0
+          },
+          "dent": {
+            "uses": 0
+          }
+        },
+        "death": {
+          "by": "sentry_turret",
+          "wave": 7
+        }
+      },
+      "after": {
+        "sha256": "334bacf7916c07c609fe5aac3fef8d3d0e31a034752b5d6736301fea1952a98a",
+        "wave_reached": 8,
+        "outcome": "cleared 8",
+        "ghost_picks": [
+          {
+            "wave": 1,
+            "form": "tonnage"
+          },
+          {
+            "wave": 2,
+            "form": "ohm"
+          }
+        ],
+        "waves": [
+          {
+            "n": 1,
+            "measured": true
+          },
+          {
+            "n": 2,
+            "measured": true,
+            "deploys": {
+              "tonnage": 1
+            },
+            "deploy_kills": {
+              "tonnage": 4
+            }
+          },
+          {
+            "n": 3,
+            "measured": true,
+            "deploys": {
+              "tonnage": 1
+            },
+            "deploy_kills": {
+              "tonnage": 3
+            }
+          },
+          {
+            "n": 4,
+            "measured": true
+          },
+          {
+            "n": 5,
+            "measured": true,
+            "deploys": {
+              "tonnage": 3
+            },
+            "deploy_kills": {
+              "tonnage": 3
+            }
+          },
+          {
+            "n": 6,
+            "measured": true,
+            "deploys": {
+              "ohm": 2,
+              "tonnage": 1
+            },
+            "deploy_kills": {
+              "ohm": 2,
+              "tonnage": 4
+            },
+            "deploy_stun_s": {
+              "ohm": 4
+            }
+          },
+          {
+            "n": 7,
+            "measured": true,
+            "deploys": {
+              "tonnage": 1
+            },
+            "deploy_kills": {
+              "tonnage": 2
+            }
+          },
+          {
+            "n": 8,
+            "measured": true,
+            "deploys": {
+              "ohm": 3,
+              "tonnage": 1
+            },
+            "deploy_kills": {
+              "ohm": 1,
+              "tonnage": 1
+            },
+            "deploy_stun_s": {
+              "ohm": 5.38333333333333
+            }
+          }
+        ],
+        "totals": {
+          "kerf": {
+            "uses": 0
+          },
+          "ohm": {
+            "uses": 5,
+            "kills": 3,
+            "kills_per_use": 0.6,
+            "stun_body_s": 9.38333333333333,
+            "stun_s_per_use": 1.8766666666666658
+          },
+          "tonnage": {
+            "uses": 8,
+            "kills": 17,
+            "kills_per_use": 2.125
+          },
+          "dent": {
+            "uses": 0
+          }
+        }
+      }
+    },
+    {
+      "profile": "average",
+      "seed": 3,
+      "before": {
+        "sha256": "4225169859963bb59f423ffa20f4c2b8ad4b7cc25f6062bfa2ebfab5a089f3ea",
+        "wave_reached": 8,
+        "outcome": "cleared 8",
+        "ghost_picks": [
+          {
+            "wave": 6,
+            "form": "tonnage"
+          },
+          {
+            "wave": 8,
+            "form": "ohm"
+          }
+        ],
+        "waves": [
+          {
+            "n": 1,
+            "measured": true
+          },
+          {
+            "n": 2,
+            "measured": true
+          },
+          {
+            "n": 3,
+            "measured": true
+          },
+          {
+            "n": 4,
+            "measured": true
+          },
+          {
+            "n": 5,
+            "measured": true
+          },
+          {
+            "n": 6,
+            "measured": true
+          },
+          {
+            "n": 7,
+            "measured": true
+          },
+          {
+            "n": 8,
+            "measured": true
+          }
+        ],
+        "totals": {
+          "kerf": {
+            "uses": 0
+          },
+          "ohm": {
+            "uses": 0
+          },
+          "tonnage": {
+            "uses": 0
+          },
+          "dent": {
+            "uses": 0
+          }
+        }
+      },
+      "after": {
+        "sha256": "02d35a297f2a8b1b86f49035cf74128fc47644a0c7272bfbdf0f4dc36c88104d",
+        "wave_reached": 8,
+        "outcome": "cleared 8",
+        "ghost_picks": [
+          {
+            "wave": 6,
+            "form": "tonnage"
+          },
+          {
+            "wave": 8,
+            "form": "ohm"
+          }
+        ],
+        "waves": [
+          {
+            "n": 1,
+            "measured": true
+          },
+          {
+            "n": 2,
+            "measured": true
+          },
+          {
+            "n": 3,
+            "measured": true
+          },
+          {
+            "n": 4,
+            "measured": true
+          },
+          {
+            "n": 5,
+            "measured": true
+          },
+          {
+            "n": 6,
+            "measured": true
+          },
+          {
+            "n": 7,
+            "measured": true,
+            "deploys": {
+              "tonnage": 1
+            },
+            "deploy_kills": {
+              "tonnage": 0
+            }
+          },
+          {
+            "n": 8,
+            "measured": true,
+            "deploys": {
+              "tonnage": 1
+            },
+            "deploy_kills": {
+              "tonnage": 3
+            }
+          }
+        ],
+        "totals": {
+          "kerf": {
+            "uses": 0
+          },
+          "ohm": {
+            "uses": 0
+          },
+          "tonnage": {
+            "uses": 2,
+            "kills": 3,
+            "kills_per_use": 1.5
+          },
+          "dent": {
+            "uses": 0
+          }
+        }
+      }
+    },
+    {
+      "profile": "expert",
+      "seed": 1,
+      "before": {
+        "sha256": "5c2c45a9482e2881ec7b51c0fb3d3b2aadf84f4d9453ccb9e3bacee3c35fa8c9",
+        "wave_reached": 8,
+        "outcome": "tick cap on 8",
+        "ghost_picks": [
+          {
+            "wave": 1,
+            "form": "tonnage"
+          },
+          {
+            "wave": 4,
+            "form": "dent"
+          }
+        ],
+        "waves": [
+          {
+            "n": 1,
+            "measured": true
+          },
+          {
+            "n": 2,
+            "measured": true
+          },
+          {
+            "n": 3,
+            "measured": true
+          },
+          {
+            "n": 4,
+            "measured": true
+          },
+          {
+            "n": 5,
+            "measured": true
+          },
+          {
+            "n": 6,
+            "measured": true
+          },
+          {
+            "n": 7,
+            "measured": true
+          },
+          {
+            "n": 8,
+            "measured": false
+          }
+        ],
+        "totals": {
+          "kerf": {
+            "uses": 0
+          },
+          "ohm": {
+            "uses": 0
+          },
+          "tonnage": {
+            "uses": 0
+          },
+          "dent": {
+            "uses": 0
+          }
+        }
+      },
+      "after": {
+        "sha256": "4eae23113669c64d4df2603a208f170a20923158eed6cf20b0ea1837899741c6",
+        "wave_reached": 8,
+        "outcome": "cleared 8",
+        "ghost_picks": [
+          {
+            "wave": 1,
+            "form": "tonnage"
+          },
+          {
+            "wave": 4,
+            "form": "dent"
+          },
+          {
+            "wave": 8,
+            "form": "kerf"
+          }
+        ],
+        "waves": [
+          {
+            "n": 1,
+            "measured": true
+          },
+          {
+            "n": 2,
+            "measured": true,
+            "deploys": {
+              "tonnage": 1
+            },
+            "deploy_kills": {
+              "tonnage": 3
+            }
+          },
+          {
+            "n": 3,
+            "measured": true,
+            "deploys": {
+              "tonnage": 1
+            },
+            "deploy_kills": {
+              "tonnage": 3
+            }
+          },
+          {
+            "n": 4,
+            "measured": true,
+            "deploys": {
+              "tonnage": 1
+            },
+            "deploy_kills": {
+              "tonnage": 3
+            }
+          },
+          {
+            "n": 5,
+            "measured": true,
+            "deploys": {
+              "tonnage": 2
+            },
+            "deploy_kills": {
+              "tonnage": 2
+            }
+          },
+          {
+            "n": 6,
+            "measured": true,
+            "deploys": {
+              "tonnage": 1
+            },
+            "deploy_kills": {
+              "tonnage": 2
+            }
+          },
+          {
+            "n": 7,
+            "measured": true,
+            "deploys": {
+              "tonnage": 2
+            },
+            "deploy_kills": {
+              "tonnage": 3
+            }
+          },
+          {
+            "n": 8,
+            "measured": true,
+            "deploys": {
+              "tonnage": 3
+            },
+            "deploy_kills": {
+              "tonnage": 6
+            }
+          }
+        ],
+        "totals": {
+          "kerf": {
+            "uses": 0
+          },
+          "ohm": {
+            "uses": 0
+          },
+          "tonnage": {
+            "uses": 11,
+            "kills": 22,
+            "kills_per_use": 2.0
+          },
+          "dent": {
+            "uses": 0
+          }
+        }
+      }
+    },
+    {
+      "profile": "expert",
+      "seed": 2,
+      "before": {
+        "sha256": "0870569e24ab5f6344d69d4a49b4a8ff5eaa802ee82fbf531992ff395167d070",
+        "wave_reached": 5,
+        "outcome": "died on 5",
+        "ghost_picks": [
+          {
+            "wave": 1,
+            "form": "tonnage"
+          },
+          {
+            "wave": 2,
+            "form": "ohm"
+          }
+        ],
+        "waves": [
+          {
+            "n": 1,
+            "measured": true
+          },
+          {
+            "n": 2,
+            "measured": true
+          },
+          {
+            "n": 3,
+            "measured": true
+          },
+          {
+            "n": 4,
+            "measured": true
+          },
+          {
+            "n": 5,
+            "measured": true
+          }
+        ],
+        "totals": {
+          "kerf": {
+            "uses": 0
+          },
+          "ohm": {
+            "uses": 0
+          },
+          "tonnage": {
+            "uses": 0
+          },
+          "dent": {
+            "uses": 0
+          }
+        },
+        "death": {
+          "by": "stomp",
+          "wave": 5
+        }
+      },
+      "after": {
+        "sha256": "78d63b3b19b38fbd8a4a440e8abfc0c62cd2aa195df1110944c57ece71b0d508",
+        "wave_reached": 5,
+        "outcome": "died on 5",
+        "ghost_picks": [
+          {
+            "wave": 1,
+            "form": "tonnage"
+          },
+          {
+            "wave": 2,
+            "form": "ohm"
+          }
+        ],
+        "waves": [
+          {
+            "n": 1,
+            "measured": true
+          },
+          {
+            "n": 2,
+            "measured": true,
+            "deploys": {
+              "tonnage": 2
+            },
+            "deploy_kills": {
+              "tonnage": 6
+            }
+          },
+          {
+            "n": 3,
+            "measured": true
+          },
+          {
+            "n": 4,
+            "measured": true,
+            "deploys": {
+              "tonnage": 1
+            },
+            "deploy_kills": {
+              "tonnage": 3
+            }
+          },
+          {
+            "n": 5,
+            "measured": true,
+            "deploys": {
+              "tonnage": 3
+            },
+            "deploy_kills": {
+              "tonnage": 2
+            }
+          }
+        ],
+        "totals": {
+          "kerf": {
+            "uses": 0
+          },
+          "ohm": {
+            "uses": 0
+          },
+          "tonnage": {
+            "uses": 6,
+            "kills": 11,
+            "kills_per_use": 1.8333333333333333
+          },
+          "dent": {
+            "uses": 0
+          }
+        },
+        "death": {
+          "by": "stomp",
+          "wave": 5
+        }
+      }
+    },
+    {
+      "profile": "expert",
+      "seed": 3,
+      "before": {
+        "sha256": "a393ef8c67158909fc35d5c854fa318e8cd9d6c1c97c530dd48a8e3e87cd6153",
+        "wave_reached": 8,
+        "outcome": "cleared 8",
+        "ghost_picks": [
+          {
+            "wave": 6,
+            "form": "tonnage"
+          },
+          {
+            "wave": 8,
+            "form": "ohm"
+          }
+        ],
+        "waves": [
+          {
+            "n": 1,
+            "measured": true
+          },
+          {
+            "n": 2,
+            "measured": true
+          },
+          {
+            "n": 3,
+            "measured": true
+          },
+          {
+            "n": 4,
+            "measured": true
+          },
+          {
+            "n": 5,
+            "measured": true
+          },
+          {
+            "n": 6,
+            "measured": true
+          },
+          {
+            "n": 7,
+            "measured": true
+          },
+          {
+            "n": 8,
+            "measured": true
+          }
+        ],
+        "totals": {
+          "kerf": {
+            "uses": 0
+          },
+          "ohm": {
+            "uses": 0
+          },
+          "tonnage": {
+            "uses": 0
+          },
+          "dent": {
+            "uses": 0
+          }
+        }
+      },
+      "after": {
+        "sha256": "455e1d64b4315a0fd68d18119679d59d9175e4ebfd7f2c2f785c15f9900aa7c9",
+        "wave_reached": 8,
+        "outcome": "cleared 8",
+        "ghost_picks": [
+          {
+            "wave": 6,
+            "form": "tonnage"
+          },
+          {
+            "wave": 8,
+            "form": "ohm"
+          }
+        ],
+        "waves": [
+          {
+            "n": 1,
+            "measured": true
+          },
+          {
+            "n": 2,
+            "measured": true
+          },
+          {
+            "n": 3,
+            "measured": true
+          },
+          {
+            "n": 4,
+            "measured": true
+          },
+          {
+            "n": 5,
+            "measured": true
+          },
+          {
+            "n": 6,
+            "measured": true
+          },
+          {
+            "n": 7,
+            "measured": true,
+            "deploys": {
+              "tonnage": 1
+            },
+            "deploy_kills": {
+              "tonnage": 1
+            }
+          },
+          {
+            "n": 8,
+            "measured": true,
+            "deploys": {
+              "tonnage": 1
+            },
+            "deploy_kills": {
+              "tonnage": 3
+            }
+          }
+        ],
+        "totals": {
+          "kerf": {
+            "uses": 0
+          },
+          "ohm": {
+            "uses": 0
+          },
+          "tonnage": {
+            "uses": 2,
+            "kills": 4,
+            "kills_per_use": 2.0
+          },
+          "dent": {
+            "uses": 0
+          }
+        }
+      }
+    }
+  ]
+}

@@ -158,6 +158,7 @@ func test_quest_grant_without_a_blade_keeps_the_implicit_carry_out_of_the_tape()
 
 func test_dent_primary_never_also_presses_the_ghosts_melee_action() -> void:
 	var stage: CollectCallStage = _stage("wheel")
+	stage.pilot.ghosts.transform_unlocked = true
 	var pilot: StagePilot = stage.pilot
 	stage.step(0, TickInput.new(1 << pilot.actions.bit(&"power_gearbox")))
 	stage.step(1, TickInput.new(1 << pilot.actions.bit(&"power_hauler")))
