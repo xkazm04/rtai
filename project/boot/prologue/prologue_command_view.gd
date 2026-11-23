@@ -11,14 +11,20 @@ var _battle: PrologueBattle
 var _stage: ArenaStage
 var _pose: Callable
 var _dress: PrologueCommanderDress = PrologueCommanderDress.new()
+var _audio: AudioService
+var _heard_shot: int = -1
+var _heard_pump: int = -1
 var _bar: BossBar
 var _meter: BossFight
 
 
-func attach(view: PrologueView, stage: ArenaStage, pose: Callable) -> void:
+func attach(view: PrologueView, stage: ArenaStage, pose: Callable, master_seed: int) -> void:
 	_pose = pose
 	_stage = stage
 	_battle = view.encounter.battle
+	_audio = AudioService.new(AudioTables.shipped(), master_seed)
+	_audio.listener_fn = func() -> Vector2: return stage.arena.rivet.pos
+	view.add_child(_audio)
 	_meter = BossFight.new(_battle.spec, null, Vector2.ZERO)
 	var layer: CanvasLayer = CanvasLayer.new()
 	layer.layer = RenderLayers.canvas(&"hud")
@@ -41,11 +47,27 @@ func _process(_dt: float) -> void:
 	_bar.visible = boss != null and boss.alive()
 	_dress.visible = _bar.visible
 	if _bar.visible:
+		_dress.pump = _battle.fire.shotgun.pump_progress(_stage.tick)
 		_pose.call(_dress, boss)
+		_sound(boss)
 		_meter.body = boss
 		_meter.state = BossFight.State.IDLE if boss.exposed else BossFight.State.TRANSITION
 		_bar.fight = _meter
 	queue_redraw()
+
+
+func _sound(boss: Fighter) -> void:
+	if _dress.pump < 0.0:
+		return
+	var fired: int = _battle.fire.shotgun.shot_ticks.back()
+	if _heard_shot != fired:
+		_heard_shot = fired
+		@warning_ignore("return_value_discarded")
+		_audio.cue(&"shotgun", boss.pos, _stage.tick)
+	if _dress.pump >= 0.5 and _heard_pump != fired:
+		_heard_pump = fired
+		@warning_ignore("return_value_discarded")
+		_audio.cue(&"shotgun_pump", boss.pos, _stage.tick)
 
 
 func _draw() -> void:
@@ -74,13 +96,16 @@ func _draw() -> void:
 func _marker(boss: Fighter) -> void:
 	var ordering: bool = _battle.due_tick >= 0
 	var open: bool = _stage.tick < _battle.exposed_until
-	if not ordering and not open:
+	var pumping: bool = _dress.pump >= 0.0
+	if not ordering and not open and not pumping:
 		return
 	var at: Vector2 = boss.pos * PP + Vector2.UP * 2.1 * PP
 	draw_line(at + Vector2.DOWN * 15, at + Vector2.DOWN * 27, Ink.INK, 4, true)
 	draw_line(at + Vector2.DOWN * 15, at + Vector2.DOWN * 27, Ink.CREAM, 1.5, true)
 	draw_circle(at, 17, Ink.INK, true, -1, true)
-	if ordering:
+	if pumping and not ordering:
+		_pump_marker(at)
+	elif ordering:
 		var issued: int = _battle.orders.back()["tick"]
 		var progress: float = float(_stage.tick - issued + 1) / (_battle.due_tick - issued)
 		draw_arc(at, 14, 0, TAU, 48, Color("#735955"), 3, true)
@@ -101,3 +126,12 @@ func _marker(boss: Fighter) -> void:
 	draw_string(
 		font, box.position + Vector2(6, 16), name_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, Ink.CREAM
 	)
+
+
+## The cream slide racks back then forward during the opening between blasts.
+func _pump_marker(at: Vector2) -> void:
+	var shift: float = sin(PI * _dress.pump)
+	draw_line(at + Vector2(-11, -3), at + Vector2(11, -3), Ink.CREAM, 2.5, true)
+	var slide: Vector2 = at + Vector2(4.0 - shift * 10.0, 1)
+	draw_rect(Rect2(slide - Vector2(4, 2), Vector2(9, 5)), Ink.CREAM)
+	draw_arc(at, 14, -PI / 2, -PI / 2 + TAU * (1.0 - _dress.pump), 32, Ink.CREAM, 2, true)

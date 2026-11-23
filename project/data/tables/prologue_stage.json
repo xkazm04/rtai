@@ -115,6 +115,7 @@
   ],
   "command": {
     "displace_m": 16,
+    "drops_shotgun": false,
     "file_spacing_m": 2.2,
     "flank_m": 3.6,
     "front_at": [
@@ -132,8 +133,7 @@
       "press_carcass",
       "fuel_vessel",
       "scrap_skip"
-    ],
-    "shotgun_half_deg": 9
+    ]
   },
   "opening_bodies": [
     {
@@ -232,17 +232,6 @@
     }
   ],
   "weapons": [
-    {
-      "archetype": "sergeant_mulroney",
-      "burst": 1,
-      "burst_gap_s": 0,
-      "cooldown_s": 1.3,
-      "damage": 8,
-      "id": "shotgun",
-      "melee": false,
-      "reach_m": 8,
-      "speed_mps": 20
-    },
     {
       "archetype": "appliance_warden",
       "burst": 1,

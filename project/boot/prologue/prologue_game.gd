@@ -106,8 +106,7 @@ func _attach_bot() -> void:
 	get_tree().quit(2)
 
 
-## These two weapons belong to this encounter. The common enemy table uses its existing
-## ranged/melee profiles so every other loader can still resolve its weapon references.
+## The warden carries the local catch pole. Mulroney uses his shared roster weapon.
 func _equip_squad(data: DataTable) -> void:
 	var roster: EnemyRoster = stage.arena.squad_ai.pit.roster
 	for row: Dictionary in data.array(data.raw, "weapons"):
@@ -140,7 +139,7 @@ func _open_view(plan: PrologueYard) -> void:
 	props.z_index = rigs.rigs.z_index + 60
 	view.print_stage.actor_layer().add_child(props)
 	bodies.attach_view(view)
-	PrologueCommandView.new().attach(view, stage, props.dress_boss)
+	PrologueCommandView.new().attach(view, stage, props.dress_boss, _seed)
 	live.viewport = get_viewport()
 	live.origin_px = view.rivet_screen
 	live.px_per_m = func() -> float: return view.px_per_m

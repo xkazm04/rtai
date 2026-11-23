@@ -8,6 +8,7 @@ const WOOL: Color = Color("#343847")
 const LAPEL: Color = Color("#596075")
 const BRASS: Color = Color("#d9c99b")
 
+var pump: float = -1.0
 var _chest: Vector2
 var _head: Vector2
 var _face: Vector2
@@ -73,11 +74,15 @@ func _lapels() -> void:
 
 func _shotgun(face: Vector2) -> void:
 	var dir: Vector2 = face.normalized()
-	var stock: Vector2 = dir.orthogonal() * 9 - dir * 3
+	var rack: float = sin(PI * maxf(pump, 0.0))
+	dir = dir.rotated(rack * 0.32)
+	var stock: Vector2 = dir.orthogonal() * 9 - dir * (3.0 + rack * 3.0)
 	var muzzle: Vector2 = stock + dir * 25
 	draw_line(stock - dir * 5, muzzle, Ink.INK, 6, true)
 	draw_line(stock - dir * 4, stock + dir * 9, Color("#967653"), 4, true)
 	draw_line(stock + dir * 10, muzzle, Color("#78808a"), 2, true)
+	var slide: Vector2 = stock + dir * (17.0 - rack * 7.0)
+	draw_line(slide - dir * 4, slide + dir * 3, BRASS, 3.5, true)
 
 
 func _cap() -> void:

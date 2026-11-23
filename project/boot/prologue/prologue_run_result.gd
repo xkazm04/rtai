@@ -45,9 +45,11 @@ static func _battle(result: Dictionary, encounter: PrologueEncounter, stage: Are
 	)
 	result["beat_two_deaths"] = battle.deaths + int(down)
 	result["mulroney_orders"] = battle.orders
+	result["shotgun_shot_ticks"] = battle.fire.shotgun.shot_ticks
 	if battle.pistol.picked_tick >= 0:
 		result["pistol_picked_tick"] = battle.pistol.picked_tick
 	if battle.died_tick >= 0:
 		result["pistol_left"] = battle.pistol.left
 		result["mulroney_died_tick"] = battle.died_tick
+		result["mulroney_fell_last"] = not battle.formation.men_standing()
 		result["wave_two_cleared_tick"] = battle.died_tick

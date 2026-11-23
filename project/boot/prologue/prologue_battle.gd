@@ -14,6 +14,7 @@ var exposed_until: int = -1
 var last_action_tick: int = -1
 var died_tick: int = -1
 var deaths: int = 0
+var _drops_shotgun: bool
 var _attack: BossAttack
 var _again: int
 var _line_up: String
@@ -29,7 +30,8 @@ func _init(
 	yard: PrologueYard, data: DataTable, lines: PrologueLines, prompts: ProloguePrompts
 ) -> void:
 	formation = PrologueFormation.new(yard, data)
-	fire = PrologueSquadFire.new(data)
+	fire = PrologueSquadFire.new()
+	_drops_shotgun = data.object(data.raw, "command").get("drops_shotgun", false) == true
 	pistol = ProloguePistol.new(StringName(data.text(data.raw, "pistol_pickup_id")))
 	var beat: Dictionary = data.array(data.raw, "beats")[1]
 	_line_up = data.text(beat, "first_line")
@@ -85,6 +87,8 @@ func step(stage: ArenaStage, tick: int) -> bool:
 	if not formation.boss.alive():
 		died_tick = tick
 		pistol.leave(stage)
+		if _drops_shotgun:
+			stage.pilot.carry.ground.drop(&"shotgun", formation.boss.pos)
 		_prompts.clear(tick)
 		arena.shots.clear()
 		return true
@@ -108,6 +112,8 @@ func step(stage: ArenaStage, tick: int) -> bool:
 	formation.march(arena, ranged, open)
 	if ranged:
 		fire.step(arena, formation, tick, due_tick >= 0)
+		if fire.shotgun.pump_progress(tick) >= 0.0:
+			formation.boss.exposed = true
 	pistol.observe(stage.pilot.carry, _prompts, tick)
 	return false
 
