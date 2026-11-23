@@ -318,3 +318,14 @@ check; a fix after 00:00 only if it is the gate's own breakage, else report it).
 `evidence/n24-pressure/final/` -> fill the final row (median death wave, P25-P75, censored, killers, dashes per wave).
 (3) launch brief 05 films (`--resume`, tag films, Start-Process as at 23:02; times inside 01:25 / 01:15). (4) REPORT
 TODOs, Astra ledger (rocket-nail 47 partial, finish 51 accepted), cites, commit JOURNAL + REPORT by 01:30.
+- 01:31 MILESTONE gate on a02dbf26c finished RED: lint/parity/selftest/export-audit PASS; unit 2 of 3840 fail
+  (`test_gauntlet_fire_gaps.gd`: rocket lock 14 >= 15, patrol rifle circling 196 <= 180; triage: REACHED by combat.json);
+  scenario `showcase_director` chapter `plasma_sword_deflect` 0 of 1 down (pass_ratio 0.5). gate.json
+  `build/gate/a02dbf26cfe9/gate.json`. Past freeze, no Astra session fits: reported, not fixed.
+- 01:34 MILESTONE final batch report: median death wave novice 5 (5-5), average 8 (6-11), expert 23 (10-33), 1 censored
+  of 15. `evidence/n24-pressure/final/report.md`. Brief 05 films not launched (time).
+- 01:37 REPORT filled, cites 20 paths 17 ok + 3 untracked reports committed now.
+
+NEXT: fix the three red checks (one Astra call: thresholds vs dash-era numbers; showcase chapter `pass_ratio_k` 0), re-gate
+with `--reels`; tuner cycle toward 6/12/20 (average 8 -> 12); `damage_by`; seed 9 stall; brief 05 films.
+Leftover temp: `%TEMP%/gtai-gate-a02dbf26cfe9` (gate snapshot, remove at merge cleanup). No Astra running.
