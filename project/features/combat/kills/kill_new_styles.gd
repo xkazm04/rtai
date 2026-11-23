@@ -4,7 +4,7 @@ extends Node2D
 ## (KillTrack), its Kill<Style>Art draws over it. Ages count sim ticks; no RNG (KillNewStyles.h).
 
 const STYLES: Array[StringName] = [
-	&"snap", &"stitch", &"pin", &"shred", &"cook", &"torch", &"throw"
+	&"snap", &"stitch", &"pin", &"shred", &"cook", &"torch", &"throw", &"rake"
 ]
 ## Body metas set at the cut: the feet (body-local px) and the standing height (px).
 const FEET: StringName = &"kill_feet"
@@ -131,7 +131,7 @@ func pose() -> void:
 		var slide: Vector2 = d.dir * KillDeathCells.slide_m_of(d) * ppm * clampf(p.z, 0.0, 1.0)
 		if d.row.style == &"pin":
 			slide += KillPinArt.shift(d, age, ppm)
-		elif d.row.style == &"throw":  # the claw's hop off the street
+		elif d.row.style in [&"throw", &"rake"]:
 			slide += KillThrowArt.lift(d, age, ppm)
 		if _drawn(d, age):  # the drawn fall takes over the lie: the track keeps only its lean
 			b = KillTrack.basis(d.dir, d.fall, KillDeathCells.pose_of(d, p), 1.0)
@@ -144,9 +144,7 @@ func pose() -> void:
 	queue_redraw()
 
 
-## True once the victim's drawn fall grid shows (from the row's `cells_at` tick); its rows step
-## from `fall_at` (default cells_at) over `cells_ticks`, and a style may turn its facing (the
-## stitch's whirl). The copy of his standing card hides.
+## The fall grid takes over from the standing card at the row's cells_at tick.
 func _drawn(d: Death, age: int) -> bool:
 	if d.cells == null:
 		return false
@@ -192,6 +190,8 @@ func _draw() -> void:
 			KillTorchArt.draw(self, d, age)
 		elif d.row.style == &"throw":
 			KillThrowArt.draw(self, d, age)
+		elif d.row.style == &"rake":
+			KillRakeArt.draw(self, d, age)
 
 
 ## A stable 0..1 hash of a kill serial and a number (no dice).

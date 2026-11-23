@@ -1,4 +1,16 @@
 {
+  "$defs": {
+    "grids": {
+      "additionalProperties": {
+        "additionalProperties": {
+          "pattern": "^[a-z0-9_]+[.]png$",
+          "type": "string"
+        },
+        "type": "object"
+      },
+      "type": "object"
+    }
+  },
   "$id": "gtai.signature_kills/1",
   "additionalProperties": false,
   "properties": {
@@ -43,14 +55,7 @@
                 "type": "array"
               },
               "grids": {
-                "additionalProperties": {
-                  "additionalProperties": {
-                    "pattern": "^[a-z0-9_]+[.]png$",
-                    "type": "string"
-                  },
-                  "type": "object"
-                },
-                "type": "object"
+                "$ref": "#/$defs/grids"
               },
               "loose": {
                 "additionalProperties": {
@@ -267,6 +272,7 @@
               "cook",
               "torch",
               "throw",
+              "rake",
               "shutdown"
             ]
           },
@@ -304,6 +310,9 @@
                       },
                       "minItems": 1,
                       "type": "array"
+                    },
+                    "grids": {
+                      "$ref": "#/$defs/grids"
                     }
                   },
                   "required": [
