@@ -1,0 +1,33 @@
+**Package 03 is blocked at step 0b.** The shotgun audit requires 15 distinct entries, and the brief authorizes one. The requested two-file run finished `14 passed, 1 failed`. I left the two authorized edits uncommitted. Menu Start still opens quest 1 directly.
+
+| Change | Result |
+|---|---|
+| `project/boot/prologue/prologue_game.gd` | Committed `3aead09f1`. Declared `--yard-dressing`. Quick gate passed. |
+| `project/data/tables/held_classes.json` | Added `shotgun` to the rifle hold. All held-class tests pass. |
+| `project/dev/rivet_arsenal/arsenal_known_holes.json` | Added `shotgun/top/held`. The audit still reports 14 holes. |
+
+The requested dry run printed `run: godot --headless --path project --fixed-fps 60 res://dev/prologue/prologue.tscn -- --yard-dressing=yard` and `flags checked: 1 against KNOWN_FLAGS`.
+
+**NEED:** authorize the additional shotgun entries `top/{reload,pickup}` and `{p55,p70}/{held,fire8,left,muzzle,reload,pickup}`. The audit checks each key individually. Its first remaining failure is `NEW hole shotgun/top/reload: missing own parts.mag`. [Unit triage](C:/Users/kazda/kiro/gtai-wt/int-n20/build/test-results/unit-triage.json)
+
+**Verification on the current tree**
+
+- `--changed` ran the full unit suite. `3773 passed, 1 failed, 2 skipped`. The shotgun audit was the sole failure.
+- Full scenarios reported `67 ran, 0 failed`. The 60-second replay retained `cbeb734ff9b97c41`. The 19,024-tick quest 1 tape also returned `replay: identical` through `quest1.tscn --replay`. [Scenario log](C:/Users/kazda/kiro/gtai-wt/int-n20/build/newgame-before/scenario-tests.log) · [Direct replay log](C:/Users/kazda/kiro/gtai-wt/int-n20/build/newgame-before/quest1-direct.log)
+- Release compile exited 0 with `929 loaded, 0 failed`. Full lint passed all 19 checks over 2,043 scripts.
+
+**Start callers.** The four scenarios pressing Start are `quest1_input`, `quest1_keys`, `autosave_input`, and `handheld_focus_pause`. The dev callers are `quest_opening_film`, `quest1_frames_run`, `quest1_clip_rec`, `save_notice_frame`, `legibility_walker`, and `quest_hauler_rec`, including its `quest_ghost_rec` and `quest_crush_rec` subclasses. `quest1_forms_main` and `quest1_shipped_main` call `start()` directly. The historical `hunt`, `hunt2`, `hunt_rows`, `atlas_ab`, and `probe` tools use `--autostart` or a focused Start press. All retain their existing quest 1 behavior. The `lin_slice` export smoke enters through replay.
+
+**Continuity findings.** All 37 owner-script rows match the runtime table. Quest 1’s first shown line is `rivet-line-stopped` at quest-local tick 0, beginning “Okay. Okay okay okay. The line stopped.” [Quest scenario evidence](C:/Users/kazda/kiro/gtai-wt/int-n20/build/newgame-before/quest-collect-call.json)
+
+| Prologue | Quest 1 opening |
+|---|---|
+| `b3_l08_fax_hideout` directs Rivet to “the skip on Harbor Road.” | `b1-dumpster` opens in “Factory Row alleys.” `SLICE__HINT_HIDE` says “Walk [move] to the dumpster, hide: [use].” The separate `harbor-skip` is used in `b6-hot-walk`. |
+| `b3_l11_fax_location` says “Go to the Toner Room, I will wait for you there.” | The place agrees. The immediate objective differs. Rivet must hide and answer another phone before `b3-toner-room`. |
+| `b3_l05_fax_talent` introduces Fax. `b3_l10_fax_channel` opens “Operation Dethrone,” and `b3_stage_communicator` introduces radio “to avoid phone boots” in the owner’s wording. | `patch-collect-call` offers “a collect call from: ‘Fax.’” `rivet-who-is-this` asks “Who is this?” and `fax-statistically` gives the address again. |
+| `b3_l07_rivet_quiet` says “They stopped. They stopped talking.” The street beat clears heat to zero. | `rivet-my-hands` asks “Why is there whispering?” and `b1-dumpster` starts “at heat 2.” Neither return is explained at the transition. |
+| `b1_l02_rivet_three` says “Three. I did three.” Dale and the reinforcements follow. Rivet can use a pistol during the prologue. | `rivet-line-stopped` recalls killing a cop “With another cop. THROUGH another cop.” `fax-slow-motion` describes footage of “two cops into a stamping press.” The accounts may cover different moments. `b3-toner-room` calls Gloria “Rivet’s first weapon.” |
+
+The required green second commit remains the prerequisite for routing, saves, the pilot, and the handover scenario. Consequently there are no handover ticks, windowed stills, or mutation score.
+
+[astra: 895s, exit 0]

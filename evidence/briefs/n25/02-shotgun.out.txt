@@ -1,0 +1,23 @@
+Mulroney now fires eight pellets in a 26° cone with 9 m reach. Tests measured **24 damage at 2 m, 6 at 8 m, and zero at 11 m**. Each blast opens a 0.8-second pump window with a moving fore-end, a cream marker, and a metal clack. He still falls last. The shotgun pickup defaults to off.
+
+**Two unit tests remain red.** Both require files outside the lane allowlist.
+
+| Commit | Changes |
+|---|---|
+| `9d7d3e6ee` | Added weapon, arsenal, and audio rows, the enemy schema fields, and reader tests. `enemy_weapon.gd` reads optional pellet count and spread, defaulting to one pellet and zero spread. |
+| `537c00105` | Added `prologue_shotgun.gd`. Updated squad fire, battle, commander rendering and audio, run results, stage data and schema, the pilot bot, tests, and `docs/decisions.md`. |
+| `c5fba0f4e` | Added the `shotgun` clip to `prologue_film.gd` and `capture/film.ps1`. Tightened the debt baseline. |
+
+Rivet’s version fires eight 30-damage pellets, holds five shells, fires at 1.25 Hz, and reloads in 1.8 seconds. The explicit loadout drew and fired it with assault-rifle stand-in art. `enabled=false` excludes it from the range and both TTK lists. I checked gauntlet loot, bot arsenal, armory and rack, quest 1 table guns, showcase and kill reels, film tooling, and hit/armor readers. Those use authored IDs, owned slots, or metadata lookups.
+
+**Verification**
+
+- Both seed-7 pilot runs produced byte-identical results and zero deaths. Wave two took **57.43 s**. Mulroney fired **12 shots**, opening 12 pump windows. He died during the last one. The end card appeared at tick 9,629.
+- **67/67 scenarios passed.** Quest 1 replayed identically. The 60-second replay retained `cbeb734ff9b97c41`. Native parity matched across 1,200 steps.
+- Quick gate passed before all three commits. Full lint passed **19/19**, achievements validated, and focused prologue tests passed **14/14**.
+- Final `--changed` ran the full suite: **3,772 passed, 2 failed, 2 skipped**. **NEED** `held_classes.json` to register the two-hand pose and `arsenal_known_holes.json` to record the 15 stand-in art gaps. [Unit triage](<C:/Users/kazda/kiro/gtai-wt/int-n20/build/test-results/unit-triage.json>)
+- The stock mutation CLI refused an in-lane worktree. Using its sampler and GUT oracle in memory, **17/(17+3) mutations were killed (85%)**, with zero invalid cases or timeouts. [Mutation log](<C:/Users/kazda/kiro/gtai-wt/int-n20/build/dev/shotgun-mutation.log>)
+
+**Capture:** `ffprobe` verified **20.000 s**, 1,200 frames, 1920×1080, 60 fps, H.264 `yuv420p`. The clip shows two pumps. Godot reported 64 leaked ObjectDB instances at capture shutdown and exited successfully. [Clip](<C:/Users/kazda/kiro/gtai-masters/n25/path/shotgun.mp4>) · [Pump](<C:/Users/kazda/kiro/gtai-masters/n25/path/shotgun-pump.png>) · [Player cone at 32 px/m](<C:/Users/kazda/kiro/gtai-masters/n25/path/shotgun-cone.png>) · [Held at 64 px/m](<C:/Users/kazda/kiro/gtai-masters/n25/path/shotgun-held-64ppm.png>)
+
+[astra: 2824s, exit 0]
