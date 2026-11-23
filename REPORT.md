@@ -86,6 +86,8 @@ Films and stills: `C:\Users\kazda\kiro\gtai-masters\n26\keys\` (`frames.json`, b
 - Yard lane: re-take prologue films after merging `n26-keys` at 84d4bd0f2 or later (MILESTONE keys 8d8bb3787 for the bindings).
 - `tools/debt/baseline.json`: `dev_loc` rise accepted for the keys film scene (02fce44db).
 - Root `JOURNAL.md`/`REPORT.md`: keep this lane's on add/add conflicts.
+- Temp: this lane's `gtai-gate-f223380ab3d2` in `%LOCALAPPDATA%\Temp` would not delete ("device busy" at 17:35 and 18:42);
+  remove it in the post-merge Temp cleanup.
 
 ## Next steps
 1. Item 3 resumed from the electro gun round (`C:/Users/kazda/kiro/gtai-art/library/rounds/20261123-1559-n26keys/`: 14 of
