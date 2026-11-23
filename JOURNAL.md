@@ -55,3 +55,6 @@ scratch dir (not wired) and makes one 32 px/m still of A vs C in flight for Call
   `transform_unlocked` off in the gauntlet (may hide it on HEAD); melee's earned transformation tonight would bring it
   back. Brief 04 now carries this lead and the ownership rule (souls code = melee's: NEED + pending test, not an edit).
   NEED melee may follow from call 04.
+- 12:27 session 1 end. ASTRA RUNNING rocket-art since 12:19 (pid 80832 = node, alive; hard stop 13:25). No Godot of mine.
+NEXT: as written at 12:19 (session 2 list) + the 12:24 addendum (cut plate C for an A-vs-C call still) + brief 04 carries
+the stall lead. Order after rocket-art: 03 trooper, 04 stall, item 5 medians, films, gate by 17:25.
