@@ -81,7 +81,7 @@ func test_handheld_uses_the_bound_triggers_and_buttons_for_each_mode() -> void:
 func test_keyboard_glyph_profile_shows_keyboard_bindings_for_wheel() -> void:
 	var card: Quest1Card = _card(["--controls=wheel"], "desktop_kb_glyphs")
 	assert_string_contains(card.controls_text(), "[RMB]: guard")
-	assert_string_contains(card.controls_text(), "[Space]: quick claw")
+	assert_string_contains(card.controls_text(), "[F]: quick claw")
 	assert_string_contains(card.controls_text(), "Mouse wheel: change weapon")
 
 

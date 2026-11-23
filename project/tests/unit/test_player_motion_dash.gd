@@ -100,3 +100,11 @@ func test_roll_and_recovery_consume_dash_presses() -> void:
 		_step_taken = _press(Vector2.DOWN, &"dash")
 	assert_eq(motion.dashes, 0)
 	assert_eq(motion.rolls, 1)
+
+
+func test_shipped_dash_returns_to_run_speed_while_held() -> void:
+	for i: int in 100:
+		_step_taken = _press(Vector2.RIGHT, &"dash")
+	assert_eq(motion.dashes, 1)
+	assert_false(motion.sprinting)
+	assert_almost_eq(motion.velocity().length(), WALK, 0.0001)

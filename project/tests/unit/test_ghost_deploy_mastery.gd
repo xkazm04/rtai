@@ -60,9 +60,9 @@ func test_pilot_replay_detects_the_form_release_latch_and_remaining_lifetime() -
 	assert_ne(_pilot_state(), original)
 	ghost.form = &"tonnage"
 	assert_eq(_pilot_state(), original)
-	ghost._held = true
-	assert_ne(_pilot_state(), original, "an active ghost can receive another Q press")
-	ghost._held = false
+	ghost._action = &"ghost_deploy"
+	assert_ne(_pilot_state(), original, "an active ghost can receive another deploy press")
+	ghost._action = &""
 	ghost.ticks_left -= 1
 	assert_ne(_pilot_state(), original)
 

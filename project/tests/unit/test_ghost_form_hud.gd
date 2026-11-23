@@ -103,3 +103,18 @@ func test_chip_uses_spectral_art_if_supplied_and_falls_back_to_the_original() ->
 	assert_same(GhostChipFace.face(&"chip_fallback"), fallback)
 	GhostChipFace._cache.clear()
 	GhostLook.reset_for_test()
+
+
+func test_numbers_on_every_chip_follow_the_form_row_and_live_binding() -> void:
+	var actions: PlayerActions = PlayerActions.shipped()
+	actions.install()
+	var pilot: GhostPilot = GhostPilot.shipped()
+	var hud: GhostFormHud = autofree(GhostFormHud.new())
+	pilot.forms.apply_locks([])
+	hud.sync(pilot.forms)
+	assert_eq(hud.number_hints, {&"dent": "1", &"kerf": "2", &"ohm": "3", &"tonnage": "4"})
+	PlayerSettings.new().rebind(&"ghost_deploy_3", "V")
+	hud.sync(pilot.forms)
+	assert_eq(hud.number_hints[&"ohm"], "V")
+	assert_eq(ObjectiveHint.with_keys("Car [car], deploy [ghost_deploy_3]"), "Car [1], deploy [V]")
+	actions.install()
