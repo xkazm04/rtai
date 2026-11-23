@@ -39,8 +39,8 @@ func advance(tick: int) -> void:
 
 
 func _draw() -> void:
-	var x: float = 32.0
-	var y: float = size.y - 255.0
+	var x: float = size.x * 0.42
+	var y: float = size.y - 115.0
 	var font: Font = ThemeDB.fallback_font
 	for action: StringName in _released:
 		var age: int = 0 if _released[action] < 0 else _tick - _released[action]
