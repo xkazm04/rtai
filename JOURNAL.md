@@ -112,3 +112,11 @@ films, last work 17:10, gate 17:25.
   (~16:30-17:22, its dev take committed by 17:00; after the last behaviour change) -> gate 17:25 on that HEAD ->
   REPORT. "Tuner cycle for the record" = `tune.mjs propose` on the salt-0 batch by me (node only, nothing applied).
   Briefs: `evidence/briefs/n26-pressure-04-stall.md` (step 8), `evidence/briefs/n26-pressure-05-films.md`.
+- 14:36 trooper committed `82dbc7258` (orbit lead model as data `lead_model`, default linear; arena + gauntlet probes) but
+  SHIPPED NOTHING NEW (1.4 s linear kept): it read (c) as "no rocket last blow" and novice seed 4 died by a rocket at
+  wave 5. Read `gauntlet.json`: that run's only rocket hit all run was the killing blow in the stomp wave (9/10 novices
+  die at wave 5 in every arm). Rocket-only deaths: 0. Arena: linear misses every circle (0/42, 0/48), orbit hits every
+  circle (42/42, 48/48) and every dash dodges (0/42, 0/48). DECISION pressure trooper: ship orbit at 1.1 s (brief's
+  rule: closest to (a): average 0.205 vs 0.141 at 1.4 orbit), 1.4 s one value away; the harshness (a steady circler
+  dies in seconds) is measured in 03b and goes to Calls for the owner with the circle film. Follow-up brief
+  `evidence/briefs/n26-pressure-03b-trooper-ship.md` (`--resume`) after the call exits.
