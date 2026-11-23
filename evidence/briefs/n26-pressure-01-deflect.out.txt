@@ -1,0 +1,23 @@
+Set the shipped deflect half-angle to **20°**. At 6 m, **24.3%** of guard returns and **30.6%** of plasma-bat returns hit the shooter. The bat was 0.6 percentage points above the requested range. All seven files are staged. **No commits landed before the 12:05 deadline.**
+
+Seed 90210, 1,000 aimed pistol rounds per cell. Each cell had 506 returned rounds. The percentages below are shooter hits divided by those 506 returns.
+
+| Distance | Guard 12° | Guard 20° | Plasma bat 12° | Plasma bat 20° |
+|---:|---:|---:|---:|---:|
+| 4 m | 67.2% | 40.7% | 85.6% | 52.2% |
+| 6 m | 42.3% | 24.3% | 51.6% | 30.6% |
+| 8 m | 30.6% | 16.4% | 36.6% | 19.2% |
+| 12 m | 18.6% | 9.7% | 19.8% | 10.9% |
+| 20 m | 9.5% | 6.7% | 9.9% | 6.9% |
+
+**Files and bounds.** Only `deflect.spread_deg` changed in `combat.json`. `test_deflect_throughput.gd` now requires seeded returns to reach the outer 2° on both sides of the 20° cone. `test_player_guard.gd` checks a single return against the configured half-angle. I updated `deflect_share.gd`, appended the decision to `docs/decisions.md`, and generated the [measured curve](./evidence/n26-pressure/deflect/share.md) and [raw JSON](./evidence/n26-pressure/deflect/share.json).
+
+**Verification**
+
+- Changed suite: **1,063 passed**. Full suite: **3,996 passed, 0 failed, 2 skipped**. Both skips were pending ghost-card rendering tests. The quick gate passed all three changed scripts.
+- All **68 scenarios** completed across three runs. The full command timed out after 50, and the remaining 18 passed on rerun, including `rivet_deflect` and `showcase_director`. The `rig_stress` timing budget remains unverified. Its final recheck measured 1.123 ms against 1.000 ms with five other runs active.
+- Quest 1 and `replay_60s` matched their pinned digests. No fixture needed re-pinning.
+- Mutation score: **0/0**. The runner generated no mutants for the spread lookup and angle draw on lines 34 and 55 of `deflect_rule.gd`.
+- The first commit’s hook rejected five tooling tests. My sibling-lane setting suppressed the warnings expected by `clash.test.mjs` lines 110 and 125. Three process-timing checks also failed under load in `morning_run.break.test.mjs` line 134 and `step_guard.break.test.mjs` lines 224 and 277. **All five passed** on a serial rerun with the lane override removed, after the commit deadline.
+
+[astra: 3673s, exit 0]
