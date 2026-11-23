@@ -2,7 +2,7 @@
 
 Lane `keys`, branch `n26-keys`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-controls` (your cwd).
 
-**Hard stop: HARDSTOP wall clock (check `date` first and often). Commit deadline: COMMITBY.**
+**Hard stop: 15:35 wall clock (check `date` first and often). Commit deadline: 15:28.**
 Small commits, staged per path, `git commit -- <paths>`. No amend, no rebase, no stash, no `add -A/./-u`, no `commit -a`,
 no `reset --hard`, never push. Fix lint and format findings in your own edit and go on. mutate: not needed (dev code only).
 
