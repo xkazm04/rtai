@@ -1,4 +1,20 @@
 {
-  "holes": {},
+  "holes": {
+    "shotgun/p55/fire8": "Uses assault_rifle as a stand-in until the shotgun art is drawn.",
+    "shotgun/p55/held": "Uses assault_rifle as a stand-in until the shotgun art is drawn.",
+    "shotgun/p55/left": "Uses assault_rifle as a stand-in until the shotgun art is drawn.",
+    "shotgun/p55/muzzle": "Uses assault_rifle as a stand-in until the shotgun art is drawn.",
+    "shotgun/p55/pickup": "Uses assault_rifle as a stand-in until the shotgun art is drawn.",
+    "shotgun/p55/reload": "Uses assault_rifle as a stand-in until the shotgun art is drawn.",
+    "shotgun/p70/fire8": "Uses assault_rifle as a stand-in until the shotgun art is drawn.",
+    "shotgun/p70/held": "Uses assault_rifle as a stand-in until the shotgun art is drawn.",
+    "shotgun/p70/left": "Uses assault_rifle as a stand-in until the shotgun art is drawn.",
+    "shotgun/p70/muzzle": "Uses assault_rifle as a stand-in until the shotgun art is drawn.",
+    "shotgun/p70/pickup": "Uses assault_rifle as a stand-in until the shotgun art is drawn.",
+    "shotgun/p70/reload": "Uses assault_rifle as a stand-in until the shotgun art is drawn.",
+    "shotgun/top/held": "Uses assault_rifle as a stand-in until the shotgun art is drawn.",
+    "shotgun/top/pickup": "Uses assault_rifle as a stand-in until the shotgun art is drawn.",
+    "shotgun/top/reload": "Uses assault_rifle as a stand-in until the shotgun art is drawn."
+  },
   "schema": "gtai.arsenal-known-holes/1"
 }
