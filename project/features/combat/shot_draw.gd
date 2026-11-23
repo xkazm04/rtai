@@ -34,10 +34,11 @@ static func enemy_ink(size: StringName, casing: bool) -> Color:
 	return EnemyRoundLook.SMALL_RIM if casing else EnemyRoundLook.SMALL_CORE
 
 
-static func _canvas(ci: CanvasItem) -> RID:
+static func for_canvas(ci: CanvasItem) -> ShotDraw:
 	if ci.has_meta(LAYER):
-		var existing: ShotDraw = ci.get_meta(LAYER)
-		return existing._rid
+		var cached: Variant = ci.get_meta(LAYER)
+		if cached is ShotDraw:
+			return cached
 	var layer: ShotDraw = ShotDraw.new()
 	layer._rid = RenderingServer.canvas_item_create()
 	RenderingServer.canvas_item_set_parent(layer._rid, ci.get_canvas_item())
@@ -47,12 +48,16 @@ static func _canvas(ci: CanvasItem) -> RID:
 	ci.set_meta(LAYER, layer)
 	@warning_ignore("return_value_discarded")
 	ci.draw.connect(RenderingServer.canvas_item_clear.bind(layer._rid))
-	return layer._rid
+	return layer
+
+
+func cased_round(head: Vector2, dir: Vector2, went: float, tick: int) -> void:
+	EnemyRocketArt.draw(_rid, head, dir, went, tick)
 
 
 ## The ink shader maps amber to vermilion. Draw the hot jet on the round-colour canvas.
 static func launcher_exhaust(ci: CanvasItem, nozzle: Vector2, dir: Vector2, tick: int) -> void:
-	var rid: RID = _canvas(ci)
+	var rid: RID = for_canvas(ci)._rid
 	var base: Vector2 = Ink.px(nozzle)
 	var side: Vector2 = dir.orthogonal() * 4.5
 	var end: Vector2 = base - dir * (21.0 + 3.0 * float(tick % 3))
@@ -91,7 +96,7 @@ static func tracer(ci: CanvasItem, s: Shot, tail: Vector2, head: Vector2, widths
 		ci.draw_line(Ink.px(tail.lerp(head, 0.3)), Ink.px(head), Ink.CREAM, widths.y)
 		ci.draw_circle(Ink.px(head), widths.y + 1.0, Ink.CREAM)
 		return
-	var rid: RID = _canvas(ci)
+	var rid: RID = for_canvas(ci)._rid
 	var fill: Color = core(s)
 	RenderingServer.canvas_item_add_line(rid, Ink.px(tail), Ink.px(head), rim(s), widths.x)
 	RenderingServer.canvas_item_add_line(
@@ -113,6 +118,6 @@ static func flash(
 		ci.draw_colored_polygon(pts, Ink.CREAM)
 		ci.draw_polyline(ring, Ink.INK, width, true)
 		return
-	var rid: RID = _canvas(ci)
+	var rid: RID = for_canvas(ci)._rid
 	RenderingServer.canvas_item_add_polygon(rid, pts, PackedColorArray([EnemyRoundLook.MUZZLE]))
 	RenderingServer.canvas_item_add_polyline(rid, ring, PackedColorArray([Ink.INK]), width, true)

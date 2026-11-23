@@ -84,7 +84,7 @@ static func _rocket(ci: CanvasItem, s: Shot, dir: Vector2, went: float, tick: in
 	if ShotDraw.cased_rocket(s):
 		# The parent FX view already draws this round in its tracer pass.
 		if not (ci is FoeOrdnanceView and ci.get_parent() is FxView):
-			EnemyRocketArt.draw(ShotDraw._canvas(ci), s.pos + ShotLift.up_m(), dir, went, tick)
+			ShotDraw.for_canvas(ci).cased_round(s.pos + ShotLift.up_m(), dir, went, tick)
 		return
 	var rim: Color = ShotDraw.rim(s)
 	var side: Vector2 = dir.orthogonal()
