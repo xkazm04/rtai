@@ -1,0 +1,10 @@
+{
+  "generated": "DO NOT EDIT; tools/art/enemy_rocket_cut.py",
+  "nozzle_px": [
+    0,
+    15.62
+  ],
+  "px_per_m": 64,
+  "schema": "gtai.enemy-rocket-art/1",
+  "source_sha256": "d65f18fe6c2fedc5cf860bdbcef20a1d4acf27152505efeb84feabdcd98af576"
+}
