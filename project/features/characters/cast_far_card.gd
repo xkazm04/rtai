@@ -47,7 +47,7 @@ func _configure(pose: CastCardPose, path: String) -> void:
 	offset = -cell * Vector2(0.5, 0.5 if fall else StreetWalkerCards.FOOT_Y)
 	var art: String = ViewMode.shared().art
 	var height: float = StreetWalkerCards.HEIGHT_BY_ART.get(art, StreetWalkerCards.HEIGHT_M)
-	var k: float = StreetCrowdCards.body_scale(pose.actor_id)
+	var k: float = StreetCrowdCards.body_scale(pose.actor_id) * pose.sheets.body_scale
 	scale = (
 		Vector2.ONE
 		* (height * SimConst.PX_PER_M * k / (StreetWalkerFall.STILL_PX if fall else cell.y))

@@ -107,8 +107,17 @@ def read_frame(frame, take):
         points = pile_points(card, cell(path, rect), take['pitch'])
     else:
         point = registered(path, rect, card['col'], card['row'])
-        points = {str(card['row']//2): project(card, point)}
+        # Some drawings repeat the lead. Track one visible shoe while that drawing is
+        # held, without attributing a reconstructed left/right contact to the artist.
+        ambiguous = repeated_lead(take, path)
+        key = card['row'] if ambiguous else card['row']//2
+        points = {str(key): project(card, point)}
     return points
+
+
+def repeated_lead(take, path):
+    return (path.endswith('/sergeant_mulroney_armed_walk.png')
+            and (take['pitch'] == 55 or take['facing'] == 'right'))
 
 
 def passes(travel, jump, fixed=False):
@@ -142,6 +151,9 @@ def analyse(take):
             raise ValueError('dome did not complete eight facing octants')
         passed = passes(travel, row['max_body_jump_px'], fixed)
         row.update(max_contact_travel_px=travel, verdict='PASS' if passed else 'FAIL')
+        if 'card' in frames[0] and repeated_lead(take, frames[0]['card']['path']):
+            row.update(max_contact_travel_px=None, min_contact_travel_px=travel,
+                       reason='repeated lead; held-drawing travel is a lower bound', verdict='FAIL')
     except ValueError as e:
         row['reason'] = str(e)
     row['contacts'] = len(spans)
@@ -165,8 +177,10 @@ def run(directory, ppm, selection):
                 raise ValueError('capture scale or pitch mismatch')
             rows.append(row)
             seen.add((row['archetype'], row['facing']))
+            sole = ('>='+number(row['min_contact_travel_px']) if 'min_contact_travel_px' in row
+                    else number(row['max_contact_travel_px']))
             print(row['archetype'], pitch, row['gait'], row['facing'],
-                  number(row['max_contact_travel_px']), number(row['max_body_jump_px']),
+                  sole, number(row['max_body_jump_px']),
                   row['verdict'], row.get('reason', ''))
             if ppm == 64 and row['gait'] == 'walk' and row['facing'] == 'right':
                 trace = dict(tick=38, spans=spans, ppm=32, row=row)

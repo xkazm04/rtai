@@ -158,6 +158,9 @@ static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 
 static func place(rig: CutRig, card: Sprite2D) -> void:
 	var k: float = StreetCrowdCards.body_scale(rig.actor_id)
+	var pose: CastCardPose = CastCardPose.of(rig)
+	if pose != null:
+		k *= pose.sheets.body_scale
 	if StreetFallBetween.is_fall_card(card):
 		StreetWalkerFall.draw(rig, card, k)
 		return

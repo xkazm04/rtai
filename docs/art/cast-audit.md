@@ -179,3 +179,26 @@ The 64 px/m stills use the same fixed viewport, archetype, speed and tick 38 in 
 - [19.8 s owner comparison](<C:/Users/kazda/kiro/gtai-masters/n26/cast/feet_cop_patrol_before_after_32.mp4>)
 
 For the still exposures run `node tools/art/cast_feet.mjs build/cast 64 patrol_cop`. With the original captures in `build/cast/before`, run `python tools/art/cast_feet_plate.py build/cast/before build/cast patrol_cop <output-directory>` and `python tools/art/cast_feet_clip.py build/cast/before build/cast <output.mp4>`.
+
+## Sergeant Mulroney card admission, 2026-11-23
+
+| Archetype | Renderer | Identity | Walk | Attack/tell | Hit | Death | Facings | Grid | Pitches | Scale | Ink | Palette | Cut | Feet | Shadow | Provenance | Enabled |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| `sergeant_mulroney` | Human cast card, previewed on the prologue boss | PASS | FAIL | PASS in staged fight | FAIL | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | FAIL | FAIL on wound contact | PASS 8/8 | **false** |
+
+**Drawing and scale.** The plate's rolled sleeves, upper-arm chevrons, peaked cap and wood-stock shotgun carry through the front, back, flinch and fall. His gun and cap land separately. The moustache reads best at 55°. At 32 px/m, the 70° front three-quarter silhouettes measure 41 × 42 px for Mulroney, 27 × 43 for patrol and 60 × 77 for Rivet. At 55° they measure 45 × 45, 32 × 44 and 52 × 75. The corresponding 64 px/m heights are 85 / 86 / 154 and 90 / 88 / 151. These are equipped screen bounds for the spawned IDs, excluding shadows. The 1.11 drawing correction applies to every action at both rig distances. [70° lineup](<C:/Users/kazda/kiro/gtai-masters/n26/cast/mulroney_beside_64ppm_tilt70.png>) · [55° lineup](<C:/Users/kazda/kiro/gtai-masters/n26/cast/mulroney_beside_64ppm_tilt55.png>)
+
+**Action and facing.** The near host displayed every walk row in all eight octants at 32 and 64 px/m, both pitches. The native sheets have five facing columns and 4 / 4 / 1 / 3 action rows for walk, attack, hit and fall. Source attack columns 1–4 become game rows 0–3. The staged fight first shows aim at tick 168, recoil when the pellets leave at 218, pump back at 219 and pump forward at 242. At 55° straight down, recoil and pump back have similar silhouettes. Down-right, the forward left arm and lowered barrel read at 32 px/m. Three incoming pistol directions showed the drawn hit and return to idle. The mean drawn hit height differs from walk by less than 0.2% at either pitch, but the wound transform tips or lifts the support boot away from its ground mark. A shock kill shows buckle, descent and rest. A pistol kill opens on the hit drawing and joins the fall at its second row. The prone pose persists after the reaction ends. [Pump plate](<C:/Users/kazda/kiro/gtai-masters/n26/cast/mulroney_pump_64.png>)
+
+**Feet.** `PrologueFormation.march` reads Mulroney's 3.2 m/s roster speed. He has no separate run gait. These are screen pixels at 32 px/m. The independent 64 px/m captures give the same values when converted to 32 px/m. The 70° down-right support was tracked across contact and pass. Both profiles and the 55° down-right sequence repeat the lead, so the travel within a held drawing is a measured lower bound. Each bound alone exceeds the 2 px limit. All upper-body jumps pass the 12 px limit. The normal card stride is used throughout.
+
+| Pitch | Facing | Max support-sole travel (px) | Max body jump (px) |
+|---|---|---:|---:|
+| 70° | Right | ≥11.95 | 2.88 |
+| 70° | Down-right | 32.98 | 6.87 |
+| 55° | Right | ≥11.95 | 2.56 |
+| 55° | Down-right | ≥10.92 | 3.67 |
+
+**Ink, cut and shadow.** At the front pass, the three contour samples are 2 / 3 / 6 texels at 70° and 4 / 2 / 1 at 55°. The outlines close at both review scales. The walk navy means are 222.4° / .470 / .327 and 221.8° / .440 / .329. The eight final RGBA grids have zero strong green or magenta pixels at alpha ≥128. Light and dark matte checks retain the hands, muzzle, loose gun and cap. The stationary front three-quarter shadow toggle changes 248 / 221 pixels at 32 px/m for 70° / 55°. The forward pump changes 261 / 246. The shadow draws separately, but stays behind the displaced boot on a living wound.
+
+**Reproduction.** `cast_mulroney_lineup.tscn` uses the ordinary cast lineup and actual formation boss. `cast_mulroney_poses.tscn` checks the displayed texture, octant and row. Both read `GTAI_CAST_OUT`, `GTAI_CAST_PITCH` and `GTAI_CAST_PPM`. The feet capture uses `GTAI_CAST_PREVIEW=sergeant_mulroney` and `node tools/art/cast_feet.mjs <output-directory> 32 sergeant_mulroney` (also run at 64). The preview enables only the in-memory row. Source sheets, cutter, matte checks, viewport crops and sole tracks are in `gtai-art/foes-n26/mulroney/`. The final hashes match the eight entries beginning at line 2668 of `steam/ai-provenance/2026-11.jsonl`. [64 px/m close film](<C:/Users/kazda/kiro/gtai-masters/n26/cast/mulroney_close_64.mp4>) · [32 px/m fight](<C:/Users/kazda/kiro/gtai-masters/n26/cast/mulroney_fight_32.mp4>)

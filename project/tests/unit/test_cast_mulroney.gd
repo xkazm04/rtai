@@ -3,6 +3,15 @@ extends GutTest
 const SERGEANT: StringName = &"sergeant_mulroney"
 
 
+func test_body_scale_follows_preview_row_at_both_pitches() -> void:
+	var table: DataTable = DataTable.open(CastCards.TABLE, CastCards.SCHEMA)
+	table.raw.archetypes.sergeant_mulroney.enabled = true
+	var cards: CastCards = CastCards.from_table(table)
+	for pitch: String in ["p55", "p70"]:
+		assert_eq(cards.lookup(SERGEANT, pitch).body_scale, 1.11)
+		assert_eq(cards.lookup(&"rocket_trooper", pitch).body_scale, 1.0)
+
+
 func test_tell_shot_and_both_halves_of_the_pump() -> void:
 	var arena: CombatArena = CombatArena.new(
 		CombatTuning.shipped(), Events, RngRegistry.new(22).stream(&"combat")
@@ -40,6 +49,10 @@ func test_pump_sample_belongs_to_one_fighter() -> void:
 	var b: Fighter = arena.spawn_guard(Vector2.ONE)
 	a.archetype = SERGEANT
 	b.archetype = SERGEANT
+	FoeCastView.set_pump(a, 0.0, true)
+	assert_eq(FoeCastView.attack_row(a, arena), 1, "yard discharge tick without a squad mind")
+	FoeCastView.set_pump(a, 0.01)
+	assert_eq(FoeCastView.attack_row(a, arena), 2)
 	FoeCastView.set_pump(a, 0.8)
 	assert_eq(FoeCastView.attack_row(a, arena), 3)
 	assert_eq(FoeCastView.attack_row(b, arena), -1)

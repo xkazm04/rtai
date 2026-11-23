@@ -76,10 +76,13 @@ func feed(h: Fighter, i: int) -> void:
 		pose.bind(rig)
 
 
-## A render-only sample on this fighter, shared by the near and far card.
-static func set_pump(h: Fighter, progress: float) -> void:
-	if progress >= 0.0:
-		h.set_meta(PUMP, progress)
+## Some shot clocks start the pump on the discharge tick. Keep that recoil for one frame.
+## This render sample belongs to the fighter across both rig LODs.
+static func set_pump(h: Fighter, progress: float, fired_this_tick: bool = false) -> void:
+	if fired_this_tick:
+		h.set_meta(PUMP, 1)
+	elif progress >= 0.0:
+		h.set_meta(PUMP, 2 if progress < 0.5 else 3)
 	elif h.has_meta(PUMP):
 		h.remove_meta(PUMP)
 
@@ -90,8 +93,7 @@ static func attack_row(h: Fighter, arena: CombatArena) -> int:
 	var age: int = arena.tick - mind.agent.shot_tick if mind != null else -1
 	if h.archetype == &"sergeant_mulroney":
 		if h.has_meta(PUMP):
-			var progress: float = h.get_meta(PUMP)
-			return 2 if progress < 0.5 else 3
+			return h.get_meta(PUMP)
 		if age == 0:
 			return 1
 		return 0 if h.tell_left > 0 else -1

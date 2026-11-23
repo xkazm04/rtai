@@ -49,6 +49,12 @@ UNARMED = {
 # Direction order here is down-right, right. The slab occludes a supporting
 # boot in the three-quarter sequence, so that whole-contact gate stays open.
 OTHERS = {
+    'sergeant_mulroney': {
+        70: [[(42, 71), (39, 57), (0, 24), (17, 43)],
+             [(49, 80), (17, 43), (49, 81), (17, 43)]],
+        55: [[(46, 77), (21, 44), (34, 66), (25, 43)],
+             [(52, 92), (13, 44), (47, 84), (11, 45)]],
+    },
     'cop_riot': {
         70: [[(45, 82), (49, 67), (39, 74), (22, 51)],
              [(58, 100), (53, 68), (59, 100), (18, 57)]],

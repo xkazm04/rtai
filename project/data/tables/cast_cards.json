@@ -33,6 +33,7 @@
       }
     },
     "sergeant_mulroney": {
+      "body_scale": 1.11,
       "enabled": false,
       "id": "sergeant_mulroney",
       "p55": {

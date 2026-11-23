@@ -11,6 +11,7 @@ var _by_id: Dictionary[StringName, Dictionary] = {}
 
 class Sheets:
 	extends RefCounted
+	var body_scale: float = 1.0
 	var walk: String
 	var attack: String
 	var stomp: String
@@ -41,6 +42,8 @@ static func from_table(table: DataTable) -> CastCards:
 		for pitch: String in ["p55", "p70"]:
 			var paths: Dictionary = table.object(row, pitch)
 			pitches[pitch] = _sheets(table, paths, pitch)
+			if row.has("body_scale"):
+				pitches[pitch].body_scale = table.num(row, "body_scale")
 		if row.enabled:
 			result._by_id[StringName(key)] = pitches
 	if not table.ok():

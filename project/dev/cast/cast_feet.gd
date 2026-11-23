@@ -11,6 +11,8 @@ func _ready() -> void:
 	_ppm = OS.get_environment("GTAI_CAST_PPM").to_int()
 	_pitch = OS.get_environment("GTAI_CAST_PITCH").to_int()
 	_selection = OS.get_environment("GTAI_CAST_SUBJECT").split(",", false)
+	if OS.get_environment("GTAI_CAST_PREVIEW") == CastMulroneyPreview.ID:
+		CastMulroneyPreview.enable()
 	if not _out.is_absolute_path() or _ppm not in [32, 64] or _pitch not in [55, 70]:
 		_fail("set GTAI_CAST_OUT, GTAI_CAST_PPM and GTAI_CAST_PITCH")
 		return
@@ -48,6 +50,8 @@ func _far_patrol(_foe: Fighter) -> void:
 func _portrait(subject: Fighter, id: String) -> bool:
 	if id == "Rivet" or (not _selection.is_empty() and id not in _selection):
 		return true
+	if id == CastMulroneyPreview.ID and CastCards.current(subject.archetype) != null:
+		CastMulroneyPreview.hide_dress(_scene)
 	for other: Fighter in _arena.hostiles:
 		other.pos = PARK
 	_arena.rivet.pos = MARK + Vector2.RIGHT * 10.0
