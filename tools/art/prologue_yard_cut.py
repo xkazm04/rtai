@@ -52,6 +52,9 @@ def key_piece(crop, matte, shadow_ink=None, ink_only=False):
         ink_alpha = np.max(-offset / np.maximum(np.subtract(matte, shadow_ink), 1), axis=2)
         coverage = np.where(exterior | ink_only, ink_alpha.clip(0, 1), coverage)
         coverage[distance <= 5] = 0
+    if ink_only:
+        # Marks have no paper-coloured fill. Also key matte trapped inside a dark loop.
+        coverage[distance <= 24] = 0
     clean = matte + offset / np.maximum(coverage[..., None], 1 / 255)
     rgba = np.dstack((clean, pixels[..., 3] * coverage))
     cut = Image.fromarray(np.rint(rgba).clip(0, 255).astype(np.uint8))
@@ -108,6 +111,12 @@ def extract(sheet, row, job, matte):
     if job.get("fit", False):
         scale = min(size[0] / piece.width, size[1] / piece.height)
         size = tuple(max(1, round(span * scale)) for span in piece.size)
+    if row.get("ink_only", False) and shadow is not None:
+        # Resample the coverage alone. Premultiplied RGBA interpolation otherwise leaves
+        # bright RGB flecks on very low-alpha pixels along the printed lines.
+        mark = Image.new("RGBA", size, shadow)
+        mark.putalpha(piece.getchannel("A").resize(size, Image.Resampling.LANCZOS))
+        return mark
     return piece.resize(size, Image.Resampling.LANCZOS)
 
 

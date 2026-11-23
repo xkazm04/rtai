@@ -88,3 +88,19 @@ def test_out_of_bounds_empty_or_unsafe_pieces_fail():
                             ({"box": [1, 0, 10, 10]}, "beyond")]:
         with pytest.raises(ValueError, match=problem):
             cut_job(sheet, {"px_per_m": 32, "pieces": [row | update]})
+
+
+def test_enclosed_near_white_is_clear_only_on_ink_marks():
+    sheet = Image.new("RGB", (26, 26), "white")
+    sheet.paste("#211e1c", (3, 3, 23, 23))
+    sheet.paste("#f3f0ed", (7, 7, 19, 19))
+    row = {"id": "scorch", "box": [0, 0, 26, 26], "size_m": [2, 2]}
+    job = {"px_per_m": 16, "background": "#ffffff", "shadow_ink": "#211e1c",
+           "pieces": [row | {"ink_only": True}]}
+    mark = cut_job(sheet, job)["scorch"]
+    assert mark.getpixel((16, 16))[3] == 0
+    assert mark.getpixel((2, 16))[3] == 255
+    pixels = np.asarray(mark)
+    assert np.all(pixels[..., :3][pixels[..., 3] > 0] == [33, 30, 28])
+    solid = cut_job(sheet, job | {"pieces": [row]})["scorch"]
+    assert solid.getpixel((16, 16))[3] > 0
