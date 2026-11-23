@@ -38,3 +38,12 @@ NEXT (session 2), replaces items 1-3 above:
 3. DEVIATION line for the hook bypass in docs/decisions.md (or prove the test fails on main).
 4. Warden brief 03 (fill HARDSTOP/COMMITBY), then gunner/contractor/thug (55 sheets unreviewed).
 - 12:30 cop8 70_a reviewed: the same cop, 8 drawings per band, profile strides vary clearly, down/down-right legs vary only a little (judge after the cut and the sole track). 70_b and 55 a/b to review next session. Session 1 ends; Astra mulroney still running (pid 70940).
+
+## Session 2 (12:29)
+- 12:30 session 2 start. astra.lock pid 70940 = node (mulroney running since 12:28). No new `NEED cast` lines checked yet (next).
+- 12:35 cop8 70_b, 55_a, 55_b reviewed: same officer, 8 figures per band, profile strides clearly vary; 70 pair a greyer navy than the 55 pair (tone at the cut). Accepted.
+- 12:36 Looked at the feet-hop 64 px/m 55 still (before 29.96 px over 16 frames, after 0.31 px over 5) and the 32 clip: a lab view (tiny figure on a grid, no sole dots at 32): not an owner film. The cop8 call re-makes it.
+- 12:37 Gunner 55 (4 sheets), thug 55 (4), contractor 70+55 (8) reviewed via montage: all accepted as first takes. Contractor fall drops helmet + SMG as separate pieces (the cutter must keep detached pieces); gunner/thug carry amber hazard stripes on legs/chest (heat/warning use of amber, allowed).
+- 12:38 DECISION cop fast gaits: an 8-drawing RUN sheet for the patrol (`foes-n26/cop8run`, airborne drawings 4 and 8) started 12:31 (gen26 pid 27924), so the 6.65 m/s retreat draws a run cycle instead of a walk at 38 drawings/s. Threshold one constant (4.0 m/s). Rejected: speed-scaled stride (hop) and a walk at 38+/s.
+- 12:40 FRICTION/finding: `node --test tools/film/kill_reel_life.break.test.mjs` passes 8/8 alone on this branch (2.8 s), so Astra's 3 hook bypasses were not a plain pre-existing failure. The cop8 brief asks for the cause (10 min cap) and a DEVIATION line in docs/decisions.md if it bypasses again.
+- 12:41 Brief `evidence/briefs/n26-cast-04-cop8.md` written (HARDSTOP/COMMITBY filled at launch).
