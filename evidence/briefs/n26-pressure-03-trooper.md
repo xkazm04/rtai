@@ -1,6 +1,6 @@
 # Brief n26 pressure 03: the rocket trooper against a moving player
 
-Hard stop 15:35 (or 75 min after you start, whichever is earlier) wall clock (stop, commit what is green, report). Commit deadline 15:20.
+Hard stop 15:12 wall clock (stop, commit what is green, report). Commit deadline 14:55 for the shipped data + tests; after it only fix-ups and evidence. The Director starts brief 04 after you exit.
 
 ## Setup, every shell
 `export APPDATA=C:/Users/kazda/kiro/gtai-n26/appdata/pressure` and
@@ -101,3 +101,12 @@ unit/scenario counts, mutate score, digests moved (must be none outside gauntlet
   then ONLY the candidate you ship on `novice` and `expert`, 10 seeds each, waves capped at 6 (that is (c): killer
   `rocket` before wave 6). `--jobs=1`. If one arm takes over 15 min, cut seeds to 6 and say so.
 - Item 5 (the Director's medians on the final state) comes later; do not run full 40-wave batches here.
+
+## Director addendum (13:57)
+- Context since the brief was written: the keys lane's `MILESTONE keys 8d8bb3787` (Space = sprint, Shift = dash burst
+  only, no dash-into-sprint) is NOT merged into this branch. The test players press actions, so read the dash from
+  `rivet_motion.json` as it is on this branch and say in the report which values you used.
+- The rocket view changed (calls 02/02b: cased sprite, ice jets); it is draw-only. Nothing in this item may touch
+  `project/features/combat/enemy_rocket_art.gd`, `shot_draw.gd`, `fight_areas_art.gd` or the rocket art.
+- If the arena shows that NO lever combination meets (a) without breaking (b), ship the closest one that meets (b) and
+  (c), say so in the decision line with the measured numbers, and stop sweeping: the owner judges by the film.

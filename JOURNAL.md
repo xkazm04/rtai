@@ -99,3 +99,10 @@ films, last work 17:10, gate 17:25.
 - 13:52 start. ASTRA rocket-read still alive (pid 77404 node, lock 13:24, hard stop 14:20); out file empty so far, tree has
   no staged/modified tracked paths. MILESTONE keys 8d8bb3787 seen (12:24): the test players press actions, re-check 03 after.
   No NEED pressure in the other four journals.
+- 13:56 ASTRA rocket-read 31 accepted (1885 s; commits `d42706a60`, `41eccb33e`; unit 3986 pass / 0 fail / 2 skip;
+  mutate routing 3/4, art 3/5 (survivors: lift sign, halo deletion, halo offset: placements checked on the stills);
+  war_cannon byte-identical to `0779185ac`; replay_60s and quest 1 byte-identical). MILESTONE rocket 41eccb33e.
+- 13:56 ASTRA RUNNING trooper since 13:56 (pid 80132 node, fresh thread, brief `evidence/briefs/n26-pressure-03-trooper.md`
+  + 13:57 addendum, hard stop 15:12, commit by 14:55, out `evidence/briefs/n26-pressure-03-trooper.out.txt`).
+- 13:56 DECISION pressure schedule: item 5 batches are ~16 min per 30 runs on today's balance (n24 final: 15 runs in
+  477 s), so salt 0 + salt 1 = ~32 min; that fits after 04 (target 16:40) and before the 17:25 gate. Films after the gate.
