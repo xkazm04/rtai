@@ -16,13 +16,13 @@ func test_only_effective_releases_earn_their_forms_bond() -> void:
 	bond.record(&"ohm", 0, 3)
 	bond.record(&"kerf", 0, 0)
 	bond.record(&"unknown", 30, 2)
-	assert_eq(bond.snapshot(), {&"dent": 0.0, &"kerf": 2.5, &"ohm": 1.5, &"tonnage": 0.0})
+	assert_eq(bond.snapshot(), {&"dent": 0.0, &"kerf": 11.0, &"ohm": 9.0, &"tonnage": 0.0})
 	assert_eq(bond.last_deployed_mastered(), &"")
 	assert_false(bond.master(&"unknown"))
 
 
 func test_checkpoint_can_only_take_a_full_unmastered_bond() -> void:
-	bond.record(&"kerf", 24, 1)
+	bond.record(&"kerf", 4, 2)
 	assert_false(bond.ready(&"kerf"))
 	assert_false(bond.master(&"kerf"))
 	bond.record(&"kerf", 0, 1)

@@ -42,10 +42,10 @@ func test_number_release_credits_stunned_targets_once_even_if_a_wave_samples_twi
 	wave.sample(stage)
 	assert_eq(wave.stuns, {&"ohm": 1})
 	assert_false(guard.alive())
-	assert_eq(forms.bond.value(&"ohm"), 1.5)
+	assert_eq(forms.bond.value(&"ohm"), forms.table.per_kill + forms.table.per_stun)
 	_drive()
 	wave.sample(stage)
-	assert_eq(forms.bond.value(&"ohm"), 1.5)
+	assert_eq(forms.bond.value(&"ohm"), forms.table.per_kill + forms.table.per_stun)
 
 
 func test_t_needs_a_taken_offer_and_uses_the_single_mastered_form() -> void:

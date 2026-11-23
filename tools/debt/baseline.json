@@ -142,7 +142,8 @@
         "2026-11-23: menu pilot and rendered handover for n25 path (dev_loc 30733 -> 30932)",
         "2026-11-23: Real-time menu film and 64 px/m shotgun clip for n25 path (dev_loc 30932 -> 30979)",
         "2026-11-23: paired boss-wave measurements and native review stills for n26 melee (dev_loc 33638 -> 33931)",
-        "2026-11-23: 24 dev lines to measure end-of-tape ghost bonds through the Quest 1 replay entry (dev_loc 33931 -> 33955)"
+        "2026-11-23: 24 dev lines to measure end-of-tape ghost bonds through the Quest 1 replay entry (dev_loc 33931 -> 33955)",
+        "2026-11-23: Read-only gauntlet observer records unique releases, owned deploy plans and transformation ticks for the ten-seed bond measurement (dev_loc 33955 -> 34018)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -156,7 +157,7 @@
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
         "project/dev/gauntlet": 1469,
-        "project/dev/ghost-forms": 1652,
+        "project/dev/ghost-forms": 1715,
         "project/dev/ghost-powers": 1396,
         "project/dev/guard": 397,
         "project/dev/gunplay": 674,
@@ -184,7 +185,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 33955
+      "total": 34018
     },
     "direct_cmdline_reads": {
       "accepted": [

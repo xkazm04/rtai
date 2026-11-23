@@ -42,7 +42,7 @@ func _clear() -> void:
 
 func test_first_rest_after_threshold_offers_and_redeems_only_that_form() -> void:
 	_enter()
-	forms.bond.record(&"ohm", 24, 1)
+	forms.bond.record(&"ohm", 4, 2)
 	_clear()
 	assert_false(waves.pending.has(&"master_ohm"))
 	assert_true(waves.choose(picker.pick(waves.pending)))
@@ -60,7 +60,7 @@ func test_first_rest_after_threshold_offers_and_redeems_only_that_form() -> void
 	assert_false(forms.bond.mastered(&"tonnage"))
 	var before: float = run.waves[0]["bond"][&"ohm"]
 	var after: float = run.waves[1]["bond"][&"ohm"]
-	assert_eq(before, 24.5)
+	assert_eq(before, 22.0)
 	assert_eq(after, 25.0)
 	_enter()
 	_clear()
