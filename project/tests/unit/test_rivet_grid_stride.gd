@@ -91,16 +91,21 @@ func test_bare_phase_carries_distance_across_unequal_stances_and_back() -> void:
 	assert_almost_eq(RivetWalk.bare_phase(0.1, -12.0, cycles), 0.9, 0.00001)
 
 
-func test_live_bare_profile_uses_the_two_stances_at_game_speed() -> void:
+func _bare_rig(file: String) -> CutRig:
 	var rig: CutRig = add_child_autofree(CutRig.new())
 	var card: Sprite2D = Sprite2D.new()
 	rig.add_child(card)
 	rig.head_card = card
-	var path: String = StrideMatch.ROOT + "p70/rivet_run8.png"
+	var path: String = StrideMatch.ROOT + file
 	card.texture = load(path)
 	card.set_meta(RivetFrames.ON, path)
 	card.hframes = 8
 	card.vframes = 8
+	return rig
+
+
+func test_live_bare_profile_uses_the_two_stances_at_game_speed() -> void:
+	var rig: CutRig = _bare_rig("p70/rivet_run8.png")
 	var grid: RivetGridStride = RivetGridStride.shared()
 	var profile: Vector2 = grid.bare_run["p70"][2]
 	var scale: float = 0.72
@@ -115,3 +120,77 @@ func test_live_bare_profile_uses_the_two_stances_at_game_speed() -> void:
 		rig.global_position.x += distance
 		phase = RivetWalk.bare_phase(phase, distance, cycles)
 		assert_almost_eq(RivetWalk.phase_of(rig, "p70", scale), phase, 0.00002, str(tick))
+
+
+func test_front_and_back_keep_each_original_cycle_and_speed_cap() -> void:
+	for pitch: String in ["p55", "p70"]:
+		for running: bool in [false, true]:
+			var file: String = RivetWalk.RUN if running else RivetWalk.STRIP
+			var rig: CutRig = _bare_rig(pitch + "/" + file)
+			var cell: float = RUN_CYCLE_CELL[pitch] if running else CYCLE_CELL[pitch]
+			for facing: float in [PI / 2.0, -PI / 2.0]:
+				rig.face_to = facing
+				for speed: float in [32.0, 297.6]:
+					rig.speed_now = speed
+					var expected: float = maxf(cell * 0.25, speed / (3.5 if running else 2.0))
+					var cycles: Vector2 = RivetWalk._bare_cycles(rig.head_card, pitch, rig, 0.25)
+					assert_almost_eq(cycles, Vector2.ONE * expected, Vector2.ONE * 0.0001)
+
+
+func test_only_the_boot_with_enough_travel_uses_its_measured_cycle() -> void:
+	var rig: CutRig = _bare_rig("p55/rivet_run8.png")
+	rig.face_to = -3.0 * PI / 4.0  # back left, [0, 125.10]
+	rig.speed_now = 9.3 * CharacterRigs.PX_PER_M
+	var cycles: Vector2 = RivetWalk._bare_cycles(rig.head_card, "p55", rig, 0.72)
+	assert_almost_eq(cycles, Vector2(212.0, 125.10) * 0.72, Vector2.ONE * 0.0001)
+	rig.face_to = -PI / 4.0  # back right, [0, 13.30]
+	cycles = RivetWalk._bare_cycles(rig.head_card, "p55", rig, 0.72)
+	assert_almost_eq(cycles, Vector2.ONE * 212.0 * 0.72, Vector2.ONE * 0.0001)
+	rig = _bare_rig("p70/rivet_walk8.png")
+	rig.face_to = PI / 4.0  # front right, [30.17, 0]
+	rig.speed_now = 32.0
+	cycles = RivetWalk._bare_cycles(rig.head_card, "p70", rig, 0.72)
+	assert_almost_eq(cycles, Vector2(30.17, 60.0) * 0.72, Vector2.ONE * 0.0001)
+
+
+func test_short_measured_stance_keeps_two_sprint_ticks_per_drawing() -> void:
+	var rig: CutRig = _bare_rig("p70/rivet_run8.png")
+	rig.face_to = PI / 4.0
+	rig.speed_now = 9.3 * CharacterRigs.PX_PER_M
+	var cycles: Vector2 = RivetWalk._bare_cycles(rig.head_card, "p70", rig, 0.5)
+	var two_ticks: float = rig.speed_now * SimClock.TICK_DT * 2.0
+	assert_almost_eq(cycles / 8.0, Vector2.ONE * two_ticks, Vector2.ONE * 0.0001)
+
+
+func test_each_boot_accepts_a_measurement_exactly_at_the_cutoff() -> void:
+	var grid: RivetGridStride = RivetGridStride.shared()
+	assert_eq(grid.bare_min_travel, 0.4)
+	var rig: CutRig = _bare_rig("p70/rivet_walk8.png")
+	rig.face_to = PI / 2.0
+	rig.speed_now = 32.0
+	var original: PackedVector2Array = grid.bare_walk["p70"]
+	var rows: PackedVector2Array = original.duplicate()
+	rows[0] = Vector2(24.0, 23.9)  # 40% of the 60 px walk cycle is 24 px.
+	grid.bare_walk["p70"] = rows
+	var first: Vector2 = RivetWalk._bare_cycles(rig.head_card, "p70", rig, 1.0)
+	rows[0] = Vector2(23.9, 24.0)
+	grid.bare_walk["p70"] = rows
+	var second: Vector2 = RivetWalk._bare_cycles(rig.head_card, "p70", rig, 1.0)
+	grid.bare_walk["p70"] = original
+	assert_eq(first, Vector2(24.0, 60.0))
+	assert_eq(second, Vector2(60.0, 24.0))
+
+
+func test_turn_from_profile_to_depth_carries_phase_and_steps_at_the_new_rate() -> void:
+	var rig: CutRig = _bare_rig("p70/rivet_run8.png")
+	rig.speed_now = 6.75 * CharacterRigs.PX_PER_M
+	var scale: float = 0.72
+	rig.set_meta(RivetWalk.META_PH, 0.625)
+	var phase: float = RivetWalk.phase_of(rig, "p70", scale)
+	assert_almost_eq(phase, 0.625, 0.00001)
+	rig.face_to = PI / 2.0
+	assert_almost_eq(RivetWalk.phase_of(rig, "p70", scale), phase, 0.00001)
+	var distance: float = rig.speed_now * SimClock.TICK_DT
+	rig.position.x += distance
+	phase += distance / (258.0 * scale)
+	assert_almost_eq(RivetWalk.phase_of(rig, "p70", scale), phase, 0.00001)

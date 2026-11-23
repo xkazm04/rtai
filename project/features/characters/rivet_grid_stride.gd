@@ -9,6 +9,8 @@ static var _shared: RivetGridStride
 var bare_run: Dictionary[String, PackedVector2Array] = {}
 var bare_walk: Dictionary[String, PackedVector2Array] = {}
 var bare_max_cycles_s: float
+## Minimum measured travel as a fraction of the pitch's original full cycle.
+var bare_min_travel: float
 var run_cycle_cell: Dictionary[String, float] = {}
 var cycle_cell: Dictionary[String, float] = {}
 var armed_cycle_cell: Dictionary[String, float] = {}
@@ -30,6 +32,7 @@ static func shared() -> RivetGridStride:
 		grid.bare_run = _rows(t, t.object(block, "bare_run"))
 		grid.bare_walk = _rows(t, t.object(block, "bare_walk"))
 		grid.bare_max_cycles_s = t.num(block, "bare_max_cycles_s")
+		grid.bare_min_travel = t.num(block, "bare_min_travel")
 		var pairs: Dictionary = t.object(block, "walk_profile_travel")
 		for path: String in pairs:
 			grid.walk_profile_travel[StrideMatch.ROOT + path] = t.vec(pairs, path)

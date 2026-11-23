@@ -177,6 +177,15 @@ static func _bare_cycles(card: Sprite2D, art: String, rig: CutRig, scale: float)
 	)
 	if by_row.size() != ROWS:
 		return Vector2.ZERO
-	# One drawing per tick at the fastest. Depth rows can have almost no drawn stride.
-	var floor_cycle: float = rig.speed_now / grid.bare_max_cycles_s
-	return (by_row[row] * scale).max(Vector2.ONE * floor_cycle)
+	# A boot with too little drawn travel keeps the pitch's original gait and speed cap.
+	var running: bool = file == RUN
+	var base: float = cycle_cell(card, art, running) * scale
+	var minimum: float = base * grid.bare_min_travel
+	var original: float = maxf(
+		base, rig.speed_now / (MAX_RUN_CYCLES_S if running else MAX_CYCLES_S)
+	)
+	var travel: Vector2 = by_row[row] * scale
+	var capped: Vector2 = travel.max(Vector2.ONE * (rig.speed_now / grid.bare_max_cycles_s))
+	return Vector2(
+		original if travel.x < minimum else capped.x, original if travel.y < minimum else capped.y
+	)

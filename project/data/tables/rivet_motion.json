@@ -42,7 +42,8 @@
       "p70/plasma_rifle": 76,
       "p70/rocket_launcher": 84
     },
-    "bare_max_cycles_s": 7.5,
+    "bare_max_cycles_s": 3.75,
+    "bare_min_travel": 0.4,
     "bare_run": {
       "p55": [
         [

@@ -175,7 +175,12 @@
         },
         "bare_max_cycles_s": {
           "exclusiveMinimum": 0,
-          "maximum": 7.5,
+          "maximum": 3.75,
+          "type": "number"
+        },
+        "bare_min_travel": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
           "type": "number"
         },
         "bare_run": {
@@ -321,6 +326,7 @@
       "required": [
         "armed_cycle_cell",
         "bare_max_cycles_s",
+        "bare_min_travel",
         "bare_run",
         "bare_walk",
         "cycle_cell",
