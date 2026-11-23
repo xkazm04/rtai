@@ -43,7 +43,7 @@ func _draw() -> void:
 	_street_surface(margin)
 	_crossing()
 	# The back fence passes behind the loading hall. The yard perimeter still blocks travel.
-	if not plan.dressing.factory_front.is_empty():
+	if not plan.dressing.factory_front.is_empty() and not plan.dressing.front_replaces.has_area():
 		_fence(plan.fences[0])
 	_paint.stamps(self, plan.dressing.outside)
 	_stage_decals()

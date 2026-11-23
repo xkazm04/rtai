@@ -109,6 +109,16 @@
           ]
         }
       ],
+      "front_replaces_m": {
+        "origin": [
+          0,
+          -8
+        ],
+        "size": [
+          60,
+          8
+        ]
+      },
       "layout": {
         "cover": [
           {
@@ -394,9 +404,9 @@
       "lights": {
         "grade": {
           "accent_keep": 0.92,
-          "gamma": 1.16,
+          "gamma": 1.1,
           "id": "dusk",
-          "paper_level": 0.72
+          "paper_level": 0.88
         },
         "kinds": [
           {
@@ -498,11 +508,15 @@
         ]
       },
       "shadows": {
-        "reach_m": [
+        "fixture_reach_m": [
           2.2,
           1.35
         ],
-        "tint": "28221f80"
+        "reach_m": [
+          1.15,
+          0.78
+        ],
+        "tint": "201a165c"
       }
     },
     "plain": {

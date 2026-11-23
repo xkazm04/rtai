@@ -154,6 +154,9 @@
           },
           "type": "array"
         },
+        "front_replaces_m": {
+          "$ref": "#/$defs/rect"
+        },
         "ground": {
           "items": {
             "$ref": "#/$defs/layer"
@@ -366,6 +369,14 @@
         "shadows": {
           "additionalProperties": false,
           "properties": {
+            "fixture_reach_m": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            },
             "reach_m": {
               "items": {
                 "type": "number"
@@ -380,6 +391,7 @@
             }
           },
           "required": [
+            "fixture_reach_m",
             "reach_m",
             "tint"
           ],

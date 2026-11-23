@@ -41,10 +41,12 @@ var ground: Array[Ground] = []
 var cover: Dictionary[String, CoverArt] = {}
 var decals: Array[Piece] = []
 var factory_front: Array[Piece] = []
+var front_replaces: Rect2
 var fixtures: Array[Piece] = []
 var phone_art: String
 var phone_size: Vector2
 var shadow_reach: Vector2
+var fixture_shadow_reach: Vector2
 var shadow_tint: Color
 var outside: Array[Piece] = []
 var use_stage_decals: bool
@@ -94,9 +96,16 @@ func _read_paint(table: DataTable, row: Dictionary, plain: Dictionary) -> void:
 	if row.has("shadows"):
 		var shadows: Dictionary = table.object(row, "shadows")
 		shadow_reach = table.vec(shadows, "reach_m")
+		fixture_shadow_reach = table.vec(shadows, "fixture_reach_m")
 		shadow_tint = Color(table.text(shadows, "tint"))
 	ochre_strength = table.num(row, "ochre_strength") if row.has("ochre_strength") else 0.0
 	outside = _pieces(table, row, "outside")
+	if row.has("front_replaces_m"):
+		var front: Dictionary = table.object(row, "front_replaces_m")
+		front_replaces = Rect2(table.vec(front, "origin"), table.vec(front, "size"))
+		for i: int in range(outside.size() - 1, -1, -1):
+			if front_replaces.has_point(outside[i].at):
+				outside.remove_at(i)
 	if row.get("include_plain_outside", false):
 		outside.append_array(_pieces(table, plain, "outside"))
 

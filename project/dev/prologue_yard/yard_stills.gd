@@ -1,7 +1,7 @@
 extends Node
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--dressing", "--tick", "--out", "--footprints", "--tilt", "--layout-pair"
+	"--dressing", "--tick", "--out", "--footprints", "--tilt", "--layout-pair", "--dusk"
 ]
 const NEEDS_WINDOW: bool = true
 const FIXED_FPS: int = 60
@@ -41,7 +41,20 @@ func _ready() -> void:
 	_game.world.set_process(false)
 	const Pilot = preload("res://dev/bots/prologue_bot.gd")
 	_game.world.loop().set_input(Pilot.new(_game.stage, _game.encounter))
-	_capture.call_deferred()
+	if args.has("--dusk"):
+		_dusk.call_deferred()
+	else:
+		_capture.call_deferred()
+
+
+func _dusk() -> void:
+	for child: Node in _game.get_children():
+		if child is PrologueView:
+			var probe: YardDuskCapture = YardDuskCapture.new(_game, child as PrologueView, _out)
+			var ok: bool = await probe.run()
+			get_tree().quit(0 if ok else 2)
+			return
+	_fail("missing prologue view")
 
 
 func _capture() -> void:
