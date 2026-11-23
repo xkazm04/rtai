@@ -72,3 +72,12 @@ NEXT (session 3):
 - 13:37 (clock correction: my 13:38-13:41 lines above were written about 13:31-13:34) mul8 55 a/b ACCEPTED (notes `foes-n26/mul8/notes.md`): mul-fix brief is ready to launch after cop8. warden8 take 1 REJECTED (slim and tall, identity drift), t2 (`foes-n26/warden8b`): only 55_b_t2 accepted; the rest still slim. Plan for next session in `foes-n26/warden8/notes.md` (t3 = one facing per image in a 2x4 grid). Do NOT launch the warden brief until her 8-drawing walk is accepted.
 - 13:37 gunner8, contractor8, thug8 jobs written (`foes-n26/mk8.py`); `chain8.sh` (bash pid 71776) runs them one round after another (par 2) now; each will need the same identity check (bulk drift).
 - 13:38 FRICTION: two python-in-heredoc brief edits failed on `\U` escapes in Windows paths (bash passed `\` through as `\`); write briefs with the Write/Edit tools, not generated text.
+- 13:39 warden8c (t3: ONE facing per image, 2x4 grid, 70 x5 facings + 55 x3; prompt insists on her bulk and the pole held as in her sheet) started (gen26 pid 34664), 8 jobs at par 2 beside chain8.
+- 13:41 cop8 mid-call: a8f88999a cut + toned the 8-drawing patrol walk AND run (p70/p55, provenance); placement (`street_patrol_anchors.gd`, `tools/art/cast_patrol_soles.py`) still uncommitted in Astra's tree. Look at the p70 walk: consistent navy, 8 rows; the up-right column figure reads a little smaller than the profile one: check its scale in the review.
+- 13:42 ASTRA RUNNING cop8 since 13:30 (pid 81328, hard stop 14:45, commit by 14:30).
+
+NEXT (session 3), on top of the 13:37 list:
+1. cop8: when pid 81328 ends, read `gtai-n26/logs/cast/call04-cop8.out`; verify the drawings/s table (<= 24/s walk, run sheet above 4 m/s), the before/after stills and the 32 clip (owner film: sole dots, 64 inset); check the up-right figure scale. Log `ASTRA cop8 <min> <verdict>`.
+2. Launch mul-fix (`n26-cast-09-mul-fix.md`, fill HARDSTOP/COMMITBY), detached via PowerShell Start-Process like the 13:30 cop8 call.
+3. Review warden8c (`foes-n26/warden8c/out/warden8_{70,55}_{down,dr,right,ur,up}_t3.png`; 55 up-right/up come from `warden8b/out/warden8_armed_walk_55_b_t2.png`). Then edit the warden brief step 2 to name the accepted files per facing (grid 2x4 = drawings 1-4 top, 5-8 bottom) before launching it.
+4. Review gunner8/contractor8/thug8 as chain8 delivers them (`foes-n26/chain8.log` says when done); watch for bulk/identity drift (warden8 drifted slim at 8 per band; use the 2x4 one-facing layout like warden8c if they drift).
