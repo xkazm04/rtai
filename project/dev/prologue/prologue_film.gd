@@ -31,18 +31,16 @@ func _ready() -> void:
 	var first_tick: int = 0
 	if LaunchArgs.has("--clip"):
 		var clip: String = LaunchArgs.value("--clip")
-		if clip not in ["first_kill", "guard_lesson", "pistol_pickup", "mulroney_order"]:
+		if clip not in ["first_kill", "lessons", "guard_lesson", "pistol_pickup", "mulroney_order"]:
 			_fail("unknown --clip=%s" % clip)
 			return
-		var moment: int = _locate(clip)
-		if moment < 0:
+		var span: Vector2i = _locate(clip)
+		if span.x < 0:
 			_fail("pilot did not reach %s within %d ticks" % [clip, LIMIT])
 			return
-		first_tick = maxi(0, moment - LEAD)
-		_last_tick = moment + TAIL
-		Log.info(
-			"prologue-film", "%s at %d, filming %d..%d" % [clip, moment, first_tick, _last_tick]
-		)
+		first_tick = span.x
+		_last_tick = span.y
+		Log.info("prologue-film", "%s filming %d..%d" % [clip, first_tick, _last_tick])
 	_game = ENTRY.instantiate() as PrologueGame
 	add_child(_game)
 	if _game.world == null:
@@ -54,25 +52,40 @@ func _ready() -> void:
 	set_process(true)
 
 
-func _locate(clip: String) -> int:
+func _locate(clip: String) -> Vector2i:
 	var probe: PrologueGame = ENTRY.instantiate() as PrologueGame
 	probe.with_view = false
 	add_child(probe)
 	probe.result_path = ""
-	var moment: int = -1
+	var span: Vector2i = Vector2i(-1, -1)
 	if probe.world != null:
 		while probe.world.context().clock.tick() < LIMIT and probe.encounter.street.end_tick < 0:
 			probe.world.loop().step()
 			if _at_event(probe.encounter, clip):
-				moment = probe.stage.tick
+				var moment: int = probe.stage.tick
+				span = Vector2i(maxi(0, moment - LEAD), moment + TAIL)
+				if clip == "lessons":
+					span = _lesson_span(probe, moment)
 				break
 	probe.free()
-	return moment
+	return span
+
+
+func _lesson_span(probe: PrologueGame, fall: int) -> Vector2i:
+	var start: int = maxi(0, fall - SimClock.TICK_RATE)
+	var end: int = start + 35 * SimClock.TICK_RATE
+	var cap: int = start + 40 * SimClock.TICK_RATE
+	while probe.stage.tick < cap and probe.encounter.phase == PrologueEncounter.Phase.HANDS:
+		probe.world.loop().step()
+		if probe.encounter.prompts.active("roll"):
+			# Include this frame, then two seconds after the last visible roll frame.
+			end = clampi(probe.stage.tick + 1 + 2 * SimClock.TICK_RATE, end, cap)
+	return Vector2i(start, end)
 
 
 func _at_event(encounter: PrologueEncounter, clip: String) -> bool:
 	match clip:
-		"first_kill":
+		"first_kill", "lessons":
 			return encounter.dale_died >= 0
 		"guard_lesson":
 			return encounter.prompts.active("guard")

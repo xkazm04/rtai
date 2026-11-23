@@ -1,7 +1,7 @@
 # Run from any directory with this worktree imported and GODOT_BIN set.
 param(
     [Parameter(Mandatory)][string]$Movie,
-    [ValidateSet('first_kill', 'guard_lesson', 'pistol_pickup', 'mulroney_order')][string]$Clip
+    [ValidateSet('first_kill', 'lessons', 'guard_lesson', 'pistol_pickup', 'mulroney_order')][string]$Clip
 )
 
 $ErrorActionPreference = 'Stop'
