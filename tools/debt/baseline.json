@@ -126,7 +126,8 @@
         "2026-11-22: --prologue-stills for n23 prologue (dev_loc 28682 -> 28772)",
         "2026-11-22: --bot and --prologue-stills for n23 prologue (dev_loc 28772 -> 28848)",
         "2026-11-22: --clip for n23 prologue (dev_loc 28848 -> 28948)",
-        "2026-11-23: n25 path: event-timed lessons film and three native-resolution hand-card stills (dev_loc 30712 -> 30736)"
+        "2026-11-23: n25 path: event-timed lessons film and three native-resolution hand-card stills (dev_loc 30712 -> 30736)",
+        "2026-11-23: menu pilot and rendered handover for n25 path (dev_loc 30733 -> 30932)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -149,7 +150,7 @@
         "project/dev/moves": 1041,
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
-        "project/dev/prologue": 244,
+        "project/dev/prologue": 443,
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 1096,
@@ -166,7 +167,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 30733
+      "total": 30932
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -520,10 +521,9 @@
         "project/dev/gunplay": 1,
         "project/dev/held": 1,
         "project/dev/overlays": 1,
-        "project/dev/prologue": 1,
         "project/dev/weapon_art": 1
       },
-      "total": 8
+      "total": 7
     },
     "unused_class_names": {
       "files": {
