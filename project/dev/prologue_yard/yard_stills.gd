@@ -12,7 +12,6 @@ var _game: PrologueGame
 var _view: PrologueView
 var _tick: int
 var _out: String
-var _dressing: String
 
 
 func _ready() -> void:
@@ -54,7 +53,6 @@ func _capture() -> void:
 			return
 		_game.world.loop().step()
 	var plan: PrologueYard = _game.stage.plan as PrologueYard
-	_dressing = plan.dressing.id
 	for child: Node in _game.get_children():
 		if child is PrologueView:
 			_view = child as PrologueView
@@ -63,8 +61,10 @@ func _capture() -> void:
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
 	_view.set_process(false)
-	var hud_layer: CanvasLayer = _view.hud_view.get_parent() as CanvasLayer
-	hud_layer.visible = false
+	for node: Node in _view.get_children():
+		var layer: CanvasLayer = node as CanvasLayer
+		if layer != null and layer.layer == RenderLayers.canvas(&"hud"):
+			layer.visible = false
 	var places: Dictionary[String, Vector2] = {
 		"gate": plan.gate,
 		"mid": plan.rivet_start,
@@ -72,12 +72,12 @@ func _capture() -> void:
 	}
 	for place: String in places:
 		for ppm: int in [32, 64]:
-			if not await _save(place, places[place], ppm):
+			if not await _save(place, places[place], ppm, plan.dressing.id):
 				return
 	get_tree().quit()
 
 
-func _save(place: String, at: Vector2, ppm: int) -> bool:
+func _save(place: String, at: Vector2, ppm: int, dressing: String) -> bool:
 	_view.px_per_m = float(ppm)
 	_view.print_stage.zoom = float(ppm) / SimConst.PX_PER_M
 	_view.print_stage.place(at)
@@ -85,7 +85,7 @@ func _save(place: String, at: Vector2, ppm: int) -> bool:
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
 	var image: Image = get_viewport().get_texture().get_image()
-	var file: String = "%s_%dppm_%s_t%d.png" % [place, ppm, _dressing, _tick]
+	var file: String = "%s_%dppm_%s_t%d.png" % [place, ppm, dressing, _tick]
 	if image == null or image.get_size() != SIZE or _game.stage.tick != _tick:
 		_fail("viewport or tick mismatch for " + file)
 		return false
