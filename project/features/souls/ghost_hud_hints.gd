@@ -1,7 +1,6 @@
 class_name GhostHudHints
 extends RefCounted
-## Draw the live binding under its chip: the solid chevron names the loaded form and
-## the bent arrow points to the form that one cycle press would load.
+## Draw the live deploy binding under the loaded form when a device supplies one.
 
 
 static func binding(action: StringName) -> String:
@@ -9,15 +8,6 @@ static func binding(action: StringName) -> String:
 	if key == String(action):
 		key = ""
 	return PadGlyphArt.action_hint(action, key) if PadGlyphArt.active() else key
-
-
-static func cycle(hud: GhostFormHud, at: Vector2, hint: String) -> void:
-	var points: PackedVector2Array = [at + Vector2(-7, -4), at + Vector2(-7, 1), at + Vector2(6, 1)]
-	var tip: PackedVector2Array = [at + Vector2(2, -3), at + Vector2(6, 1), at + Vector2(2, 5)]
-	for line: PackedVector2Array in [points, tip]:
-		hud.draw_polyline(line, GhostFormHud.PAPER, 4.5, true)
-		hud.draw_polyline(line, GhostFormHud.INK, 2.0, true)
-	label(hud, at, hint)
 
 
 static func label(hud: GhostFormHud, at: Vector2, hint: String) -> void:
