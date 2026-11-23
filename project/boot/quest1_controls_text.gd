@@ -26,9 +26,8 @@ const WHEEL_PAD: String = (
 
 
 static func source(glyphs: bool, wheel: bool = ControlsMode.wheel()) -> String:
-	if glyphs:
-		return WHEEL_PAD if wheel else LEGACY_PAD
-	return WHEEL if wheel else LEGACY
+	var english: String = _template(glyphs, wheel)
+	return english if glyphs else ObjectiveHint.with_keys(english, false)
 
 
 static func resolve(text: QuestText) -> String:
@@ -38,7 +37,7 @@ static func resolve(text: QuestText) -> String:
 	var key: StringName = &"SLICE__CONTROLS_PAD" if glyphs else &"SLICE__CONTROLS"
 	if wheel:
 		key = &"SLICE__CONTROLS_WHEEL_PAD" if glyphs else &"SLICE__CONTROLS_WHEEL"
-	var prompt: String = text.resolve(key, source(glyphs, wheel))
+	var prompt: String = text.resolve(key, _template(glyphs, wheel))
 	if not glyphs:
 		return ObjectiveHint.with_keys(prompt, false)
 	if wheel:
@@ -52,3 +51,9 @@ static func resolve(text: QuestText) -> String:
 		)
 		prompt = prompt.replace("[guard]", "[%s]" % guard).replace("[weapon_next]", cycle)
 	return ObjectiveHint.with_keys(prompt, pad)
+
+
+static func _template(glyphs: bool, wheel: bool) -> String:
+	if glyphs:
+		return WHEEL_PAD if wheel else LEGACY_PAD
+	return WHEEL if wheel else LEGACY
