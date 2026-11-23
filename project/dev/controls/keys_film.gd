@@ -122,10 +122,10 @@ func _keys(tick: int) -> void:
 func _interval(tick: int, action: StringName, down: int, up: int) -> void:
 	if tick != down and tick != up:
 		return
-	var word: String = tr(action)
+	var word: String = tr(action).capitalize()
 	var slot: int = GhostNumberKeys.ACTIONS.find(action)
 	if slot >= 0:
-		word = cast.ghost_view.hud.names[FORMS[slot]]
+		word = GauntletHud.ENGLISH.get_message(("gauntlet__ghost__" + FORMS[slot]).to_upper())
 	elif action == &"melee":
 		var prompt: String = QuestText.new().resolve(
 			&"PROLOGUE__CLAW", ProloguePrompts.COPY["claw"]
