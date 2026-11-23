@@ -1,6 +1,6 @@
 # REPORT - lane cast, run n24 (2026-11-22), branch `n24-cast`
 
-Written by the cast director, session 5 (2026-11-23 00:05); the report pass after the freeze may add the gate line.
+Written by the cast director, session 5 (2026-11-23 00:05); gate line updated in session 6 (01:32).
 
 Owner's note 5: "Design of new characters when added to waves should be always finetuned from start to have cop-level
 quality (animations, clean cut and shape), assume we will use all characters in some form in the game". This lane
@@ -9,7 +9,12 @@ redraws the four new wave enemies from the owner's concept picks (`gtai-art/foes
 `project/data/tables/cast_cards.json` (one row per enemy, `enabled`). No enemy number changed (`enemies.json` is not in
 this branch's diff from `b3f4727c0`).
 
-Final commit: TODO. Gate: TODO (`node tools/gate/run.mjs --rev=HEAD`, quote line and `gate.json` path).
+Final code commit: `79c0c434b` (everything after it is JOURNAL/REPORT/briefs, inert). Gate: the 00:00 run of
+`node tools/gate/run.mjs --rev=HEAD` on `6129b8f69` reached scenarios 67/67 ok, then died with the director's session 5
+while waiting out a CONTENDED city_chase nav budget (log `build/gate/6129b8f69237/evidence.log`, git-ignored). Re-run
+started 01:30 on `fc3b7b2bb`, detached (pid 29024), log `C:\Users\kazda\kiro\gtai-art\foes-n24\gate-final2.log`; it
+takes about 20 min, so its verdict and `gate.json` path land after this report: the Director reads that log at merge.
+No green gate line is claimed here.
 
 ## 1. Audit (brief item 1)
 Full table with every checklist item per archetype: `docs/art/cast-audit.md`; the checklist: `docs/art/cast-checklist.md`
@@ -69,6 +74,8 @@ At the start of the run, at 32 px/m tilt 70 (Rivet 77 px, patrol cop 43 px):
 - A pre-commit tooling test (`tools/merge/morning_run.break.test.mjs`) timed out under five-lane load (estimate, not timed: about 10 minutes).
 - The clamshell commit lost a race with a director journal commit while the builder ran (estimate, not timed: about 15 minutes to
   re-stage and re-check in the next call).
+- The final gate ran in session 5's own background shell and died with it at the CONTENDED-budget wait (00:23); the
+  re-run could only start at 01:30, so no gate verdict is in this report (timed: about 70 minutes of gate lost).
 - The quick gate's red cascade had to be reproduced on main before it could be called pre-existing (estimate, not timed: about 15 minutes).
 
 ## 5. Calls for the owner

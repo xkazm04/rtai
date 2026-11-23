@@ -226,3 +226,11 @@ NEXT (session 6, report pass): no new code (freeze 01:30). Read gate-final.log (
   any new red caused by cast: brief one short Astra fix only if before 01:00. Then `--reels` once after 01:30 if time
   allows. Re-run `node tools/evidence/cites.mjs REPORT.md`, commit JOURNAL.md + REPORT.md by pathspec.
 - 00:27 session 5 ends. GATE STILL RUNNING (started 00:00, background shell of this session, may die with it): if gate-final.log has no verdict line, re-run `node tools/gate/run.mjs --rev=HEAD` (export APPDATA=C:/Users/kazda/kiro/gtai-n24/appdata/cast) first thing; progress in build/gate/6129b8f69237/evidence.log. No Astra running. NEXT as at 00:01.
+- 01:30 session 6 start (STABILIZE, past freeze). No astra.lock, no Astra running. gate-final.log has no verdict: the
+  00:00 gate died with session 5 at the CONTENDED city_chase wait after scenarios 67/67 ok (00:23). FRICTION: gate run in
+  the session's own shell, ~70 min lost. GATE RUNNING since 01:30: `node tools/gate/run.mjs --rev=HEAD` on fc3b7b2bb,
+  detached via Start-Process (pid 29024), log C:\Users\kazda\kiro\gtai-art\foes-n24\gate-final2.log (+ .err.log).
+- 01:33 REPORT line 12 filled (final code commit 79c0c434b, gate not claimed green, re-run log path); blocked section +1
+  line. cites re-run. No product file touched this session.
+NEXT: (Director, at merge) read gate-final2.log tail for the gate verdict line and the gate.json path; the lane makes no
+  green claim until then. Clean %LOCALAPPDATA%\Temp\gtai-gate-* leftovers after the merge.
