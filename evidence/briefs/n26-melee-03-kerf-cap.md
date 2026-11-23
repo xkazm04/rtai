@@ -1,7 +1,7 @@
 # Brief n26-melee-03-kerf-cap: cap Kerf's deployed cut on bosses
 
 Lane `melee`, branch `n26-melee`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-street`.
-**Hard stop HARDSTOP wall clock. Last commit by COMMITBY.** Commit what is green; revert your own unfinished edits
+**Hard stop 14:55 wall clock. Last commit by 14:48.** Commit what is green; revert your own unfinished edits
 with `git checkout -- <path>`; list the rest in your report. Never stop to ask: at a fork, pick what best serves
 the owner's words, record a DECISION line, go on.
 
