@@ -406,7 +406,7 @@
           "accent_keep": 0.92,
           "gamma": 1.1,
           "id": "dusk",
-          "paper_level": 0.88
+          "paper_level": 0.84
         },
         "kinds": [
           {
@@ -415,9 +415,9 @@
             "cone_deg": 0,
             "flicker_hz": 1.5,
             "id": "yard_fire",
-            "intensity": 0.29,
+            "intensity": 0.37,
             "life_ticks": 0,
-            "radius_m": 6,
+            "radius_m": 8.5,
             "steps": 6
           },
           {
@@ -426,9 +426,9 @@
             "cone_deg": 0,
             "flicker_hz": 0,
             "id": "yard_lamp",
-            "intensity": 0.23,
+            "intensity": 0.39,
             "life_ticks": 0,
-            "radius_m": 3.6,
+            "radius_m": 6,
             "steps": 6
           }
         ],
