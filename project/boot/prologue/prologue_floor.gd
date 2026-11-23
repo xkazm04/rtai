@@ -102,9 +102,14 @@ func _draw_fences(margin: float) -> void:
 		elif fence.position.y == plan.far_sidewalk.end.y:
 			visible_box = fence.grow_individual(margin, 0, margin, 0)
 		_fence(visible_box)
+	if plan.dressing.id == "torn_line":
+		PrologueYardFence.open_leaf(self, plan)
 
 
 func _fence(box: Rect2) -> void:
+	if plan.dressing.id == "torn_line":
+		PrologueYardFence.panel(self, box)
+		return
 	draw_rect(_pixels(box), Ink.INK)
 	_tiled(box, "cage_mesh", 2.0)
 
