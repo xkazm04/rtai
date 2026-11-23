@@ -127,7 +127,7 @@ func reading_ticks(id: String) -> int:
 	return line.duration_ticks(QuestRules.shipped())
 
 
-func show_line(id: String, tick: int = 0) -> bool:
+func show_line(id: String, tick: int = 0, repeated_order: bool = false) -> bool:
 	if not _spoken.has(id):
 		return false
 	var row: Dictionary = _spoken[id]
@@ -154,6 +154,9 @@ func show_line(id: String, tick: int = 0) -> bool:
 	current = id
 	voice = speaker
 	_due = tick + reading_ticks(id)
+	# Battle records each recurring tell in orders. Keep the authored dialogue history intact.
+	if repeated_order:
+		return true
 	if _index + 1 < _order.size() and _spoken[_order[_index + 1]].get("cue", "") == "interrupting":
 		_due = mini(_due, tick + INTERRUPT_TICKS)
 	events.append(entry)

@@ -94,7 +94,7 @@ func step(stage: ArenaStage, tick: int) -> bool:
 		return true
 	fire.track(arena.rivet.pos)
 	var before: String = _lines.current
-	_lines.advance(tick, stage.press_left and due_tick < 0)
+	_lines.advance(tick, stage.press_left and not ranged and due_tick < 0)
 	if _lines.current == _shoot and before != _shoot:
 		ranged = true
 		if pistol.marked_tick < 0:
@@ -104,6 +104,8 @@ func step(stage: ArenaStage, tick: int) -> bool:
 		_order(arena, _shoot, tick)
 	elif ranged and _lines.current.is_empty() and tick >= _again:
 		var next: String = _shoot if _attack.id == &"line_up" else _line_up
+		@warning_ignore("return_value_discarded")
+		_lines.show_line(next, tick, true)
 		_order(arena, next, tick)
 	if tick == due_tick:
 		_execute(arena, tick)
@@ -116,13 +118,6 @@ func step(stage: ArenaStage, tick: int) -> bool:
 			formation.boss.exposed = true
 	pistol.observe(stage.pilot.carry, _prompts, tick)
 	return false
-
-
-## Repeat the short command over the combat tell once its full dialogue row has played.
-func command_hint() -> String:
-	if due_tick < 0 or not ranged or _lines.current != "":
-		return ""
-	return tr("Mulroney · Line up!") if _attack.id == &"line_up" else tr("Mulroney · Shoot him !")
 
 
 func _order(arena: CombatArena, line: String, tick: int) -> void:

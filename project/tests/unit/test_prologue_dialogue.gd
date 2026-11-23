@@ -1,5 +1,7 @@
 extends GutTest
 
+const PILOT: GDScript = preload("res://dev/bots/prologue_bot.gd")
+
 
 func test_natural_timing_and_skip_follow_spoken_rows_in_table_order() -> void:
 	var rows: Array = DataTable.open(PrologueLines.TABLE, PrologueLines.SCHEMA).raw["rows"]
@@ -67,3 +69,40 @@ func test_draft_places_fill_at_show_time_and_leave_owner_words_verbatim() -> voi
 			assert_eq(str(event.get("place_id", "")), str(place["id"]))
 	assert_eq(feed.shown, ["b3_l08_fax_hideout", "b3_l11_fax_location"])
 	assert_eq(feed.owner_calls.size(), 6)
+
+
+func test_recurring_orders_show_the_owner_row_through_its_reading_time() -> void:
+	var game: PrologueGame = PrologueGame.new()
+	game.with_view = false
+	game.boot("7")
+	add_child_autofree(game)
+	game.world.set_process(false)
+	var bot: InputSource = PILOT.new(game.stage, game.encounter)
+	game.world.loop().set_input(bot)
+	var data: DataTable = DataTable.open(PrologueLines.TABLE, PrologueLines.SCHEMA)
+	var words: Dictionary[String, String] = {}
+	for row: Dictionary in data.array(data.raw, "rows"):
+		if row.get("who") == "mulroney":
+			words[row["id"]] = row["t"]
+	var battle: PrologueBattle = game.encounter.battle
+	var seen: int = 0
+	var expires: int = -1
+	var id: String = ""
+	while game.stage.tick < 10000 and (seen < 4 or game.stage.tick < expires):
+		game.world.loop().step()
+		if battle.orders.size() > seen:
+			seen = battle.orders.size()
+			id = battle.orders.back()["line"]
+			expires = game.stage.tick + game.lines.reading_ticks(id)
+			assert_eq(battle.due_tick, game.stage.tick + 90)
+		if (
+			game.stage.tick == expires - 1
+			or (seen > 0 and battle.orders.back()["tick"] == game.stage.tick)
+		):
+			var hud: HudState = HudState.new()
+			game.lines.fill(hud, game.stage, null)
+			assert_eq(hud.speaker, "Mulroney")
+			assert_eq(hud.words, words[id])
+	assert_eq(seen, 4)
+	assert_eq(game.lines.current, "")
+	PlayerActions.shipped().install()

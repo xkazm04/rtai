@@ -126,9 +126,6 @@ func _street_hint() -> String:
 
 
 func _objective(line: PrologueFormation) -> String:
-	var order: String = encounter.battle.command_hint()
-	if order != "":
-		return order
 	if not _stage.pilot.carry.ground.items.is_empty():
 		return _text.resolve(&"PROLOGUE__PICK_UP", "Pick up the marked pistol")
 	if line.boss.hp <= line.last_stand_hp and line.men_standing():
