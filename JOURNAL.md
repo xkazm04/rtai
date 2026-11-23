@@ -99,3 +99,9 @@ NEXT (session 3), in order:
 4. Then warden (03), feet-four (08), gunner (05), contractor (06), thug (07). Commit last new work by 17:10, final gate by 17:25.
 - 13:53 gunner8c: all ten sheets ACCEPTED; brief 05 step 2 now names them (8c layout, one body height, cop8 placement). contractor8c and thug8c still generating at session end.
 - 13:53 contractor8c done; 70 down/dr/right ACCEPTED (stocky, right build), the other 7 unreviewed. thug8c still generating (pid 74992). Session 2 ends here; ASTRA cop8 still running (pid 81328, since 13:30).
+
+## Session 3 (13:54)
+- 13:54 session 3 start. astra.lock pid 81328 = node.exe, cop8 still running (since 13:30, hard stop 14:45). No `NEED cast` line in keys/melee/pressure/yard journals.
+- 13:57 contractor8c: 70 ur/up, 55 down/dr/right/ur ACCEPTED (stocky, hard hat + lamp, vest, rifle held). 55 up REJECTED (slim drift); renamed `_REJ_slim`, re-roll started (gen26 --par=1 contractor8c_55_up_t3, log `contractor8c/reroll_55up.log`).
+- 14:00 thug8c 70 down/dr/right/ur/up + 55 down ACCEPTED (same hulking hose-armed robot, hazard-stripe shoulders, claw; stride small at 70 down but present). 55 dr/right done, ur/up still generating (pid 74992).
+- 14:05 Briefs 06 contractor + 07 thug step 2 now name their 8c walk files (thug brief: 'lean' replaced by the accepted sheets' build, height capped).

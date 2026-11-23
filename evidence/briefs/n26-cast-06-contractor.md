@@ -29,6 +29,14 @@ walk's body height. Red only as blood. Plate `refs/plate.png` (from `plates2/out
 2. Row `contractor` in `cast_cards.json`, drawn by the existing card path (the lancer/rocket-trooper rows are the model),
    planted feet as the patrol cop got them. Wherever the contractor is drawn today (rig and any card), the card-off path must stay exactly as on main. If the
 orange vest is a tint in code (not art), leave the code and note it for the director. Size: the cop's height, not taller than Rivet.
+   His WALK: the 4-drawing walks all fail the Feet rule, so the director had an 8-drawing walk drawn, one facing per image,
+   8 figures in a 2x4 grid (drawings 1-4 top row, 5-8 bottom row; support L in 1-3, R in 5-7):
+   `C:\Users\kazda\kiro\gtai-art\foes-n26\contractor8c\out\contractor8c_{70,55}_{down,dr,right,ur,up}_t3.png` (accepted;
+   `contractor8c_55_up_t3_REJ_slim.png` is the rejected take: never use it; prompts `contractor8c/jobs.json`). Cut it into
+   `contractor_planted8_armed_walk.png`, match all facings to one body height (his accepted 4-drawing walk), and put him on the
+   cop8 N-drawing anchored placement as the cop8, mul-fix and warden calls did (read their commits). The 4-drawing `armed_walk`
+   stays selectable with one value. Allowed extra: `project/features/characters/street_*.gd` (walk placement only),
+   `C:\Users\kazda\kiro\gtai-art\foes-n26\contractor8c\**`.
 3. Checklist: every item of `docs/art/cast-checklist.md` incl. planted feet (`project/dev/cast/cast_feet.gd`,
    `tools/art/cast_feet.py` / `cast_feet.mjs`) at both pitches; the row in `docs/art/cast-audit.md`. `enabled: true` only if
    every item passes; otherwise `enabled: false` and list the fails. Never ship a half character.
