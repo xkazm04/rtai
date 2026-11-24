@@ -41,33 +41,33 @@ const median = (take, key) => {
 };
 const pct = (k, n) => (100 * k / n).toFixed(1) + ' %';
 const stills = [
-  { file: 'pair_dash_cross_64.png', take: 'pair_dash', ppm: 64, moment: 'moment_dash_cross', shift: 0,
+  { file: 'pair_dash_cross_64.png', take: 'pair_dash', ppm: 64, moment: 'moment_dash_cross', shift: 4,
     title: 'Mid-dash across a rocket line',
-    note: (t) => 'Rivet dashes sideways while a rocket flies past on the line he just left. Take pair_dash, seed 1, tick ' + t
+    note: (t) => 'Rivet is mid-dash sideways (the faint copies behind him are the dash trail) while two rockets fly down the street at the spot he just left. Take pair_dash, seed 1, tick ' + t
       + '. Over seeds 1 to 10 the dashing Rivet is hit directly by ' + total('pair_dash', 'direct') + ' of ' + total('pair_dash', 'launches')
       + ' rockets (' + pct(total('pair_dash', 'direct'), total('pair_dash', 'launches')) + ') and loses a median of '
       + median('pair_dash', 'hp_lost').toFixed(1) + ' HP in 25 s.' },
   { file: 'pair_circle_fatal_64.png', take: 'pair_circle', ppm: 64, moment: 'moment_before_fatal', shift: 0,
     title: 'The rocket that downs a circling Rivet',
-    note: (t, r) => 'The last rocket before Rivet falls, a moment before it reaches him. Take pair_circle, seed 1, tick ' + t
+    note: (t, r) => 'Two rockets fly at a circling Rivet, 13 ticks before the leading one downs him (HP already 8.9 of 100). Take pair_circle, seed 1, tick ' + t
       + ' (down at tick ' + r.death_tick + '). Over seeds 1 to 10 the steady circle is hit directly by '
       + total('pair_circle', 'direct') + ' of ' + total('pair_circle', 'launches') + ' rockets ('
       + pct(total('pair_circle', 'direct'), total('pair_circle', 'launches')) + ') and goes down in every seed.' },
   { file: 'guard_return_64.png', take: 'guard6', ppm: 64, moment: 'moment_returned_flight', shift: 0,
     title: 'Guard: a returned round flying back',
-    note: (t) => 'A rifle round turned back by the guard flies back toward the riflemen. Take guard6, seed 1, tick ' + t
+    note: (t) => 'A rifle round turned back by the guard streaks back toward the riflemen (the thin dark line right of the white spark). Take guard6, seed 1, tick ' + t
       + '. Over seeds 1 to 10 the guard turns back ' + total('guard6', 'returned') + ' of ' + total('guard6', 'fired')
       + ' rounds and ' + total('guard6', 'struck') + ' of those hit a shooter (' + pct(total('guard6', 'struck'), total('guard6', 'returned')) + ').' },
-  { file: 'blade_struck_64.png', take: 'blade6', ppm: 64, moment: 'moment_struck_in_swing', shift: -1,
+  { file: 'blade_struck_64.png', take: 'blade6', ppm: 64, moment: 'moment_unswung_round', shift: 0,
     title: 'Plasma sword: a round arrives during a swing',
-    note: (t) => 'A rifle round reaches Rivet while his blade is already mid-swing, so it cannot be deflected. Take blade6, seed 1, tick ' + t
+    note: (t) => 'An orange rifle round is about to hit Rivet while his sword is in the slow end of a swing, so nothing turns it back (the second round of each pair arrives like this). Take blade6, seed 1, tick ' + t
       + '. Over seeds 1 to 10 exactly ' + total('blade6', 'fate_unswung_hit') + ' of ' + total('blade6', 'fired')
       + ' rounds arrive this way (half), all of them during a swing; the sword turns back ' + total('blade6', 'returned') + '.' },
-  { file: 'pair_dash_32.png', take: 'pair_dash', ppm: 32, moment: 'moment_dash_cross', shift: 0,
+  { file: 'pair_dash_32.png', take: 'pair_dash', ppm: 32, moment: 'moment_dash_cross', shift: 4,
     title: 'Dashing across a rocket line, whole street',
     note: (t) => 'The same dash at 32 px/m, both troopers in frame. Take pair_dash, seed 1, tick ' + t + '. Rockets that land directly: '
       + total('pair_dash', 'direct') + ' of ' + total('pair_dash', 'launches') + ' over ten seeds.' },
-  { file: 'blade6_32.png', take: 'blade6', ppm: 32, moment: 'moment_struck_in_swing', shift: -1,
+  { file: 'blade6_32.png', take: 'blade6', ppm: 32, moment: 'moment_unswung_round', shift: 0,
     title: 'Plasma sword at 6 m, whole street',
     note: (t) => 'The round that arrives mid-swing at 32 px/m, three riflemen in frame. Take blade6, seed 1, tick ' + t
       + '. Over seeds 1 to 10 the sword turns back ' + pct(total('blade6', 'returned'), total('blade6', 'fired')) + ' of the rounds fired at it.' },

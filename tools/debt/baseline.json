@@ -159,7 +159,8 @@
         "2026-11-24: two pressure takes and the 6 m deflect take are dev code (dev_loc +265) for n27 pressure (dev_loc 35431 -> 35696)",
         "2026-11-24: dev_loc rises by the n27 pressure seed table scripts for n27 pressure (dev_loc 35696 -> 35998)",
         "2026-11-24: dev_loc rises by the n27 pressure seed table scripts for n27 pressure (dev_loc 35998 -> 36004)",
-        "2026-11-24: pressure pair damage split, moments and seed columns (dev_loc +103) for n27 pressure (dev_loc 36004 -> 36107)"
+        "2026-11-24: pressure pair damage split, moments and seed columns (dev_loc +103) for n27 pressure (dev_loc 36004 -> 36107)",
+        "2026-11-24: pressure moments for the film stills (dev_loc +5) for n27 pressure (dev_loc 36107 -> 36112)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -172,7 +173,7 @@
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
-        "project/dev/gauntlet": 2326,
+        "project/dev/gauntlet": 2331,
         "project/dev/ghost-forms": 1715,
         "project/dev/ghost-powers": 1396,
         "project/dev/guard": 397,
@@ -201,7 +202,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 36107
+      "total": 36112
     },
     "direct_cmdline_reads": {
       "accepted": [
