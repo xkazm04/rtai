@@ -355,3 +355,10 @@
   68/68 on this code. Quoted in REPORT. My Godot is closed; no builder running.
 - 00:12 NEXT: nothing left for this lane tonight. Director merge: the gate's only red is the scenario wall-clock timeout
   under load (re-run the full gate on the merge when the machine is quiet). Session 6 ends.
+
+## Session 7 (00:12, STABILIZE)
+- 00:13 Checked: tree clean on tracked paths, HEAD bfa5df132; REPORT quotes the gate line and the 8-scenario rerun
+  (`build/scen8_n28.log`, 8 passed); `cites.mjs REPORT.md` 6/6 ok; builder.lock absent, last builder call logged; no Godot
+  of mine running. Nothing to fix; no product files touched, no builder launched.
+- 00:13 NEXT: lane done for n28. Director: merge n28-keys; re-run the full gate on the merge on a quiet machine (the only
+  red was the scenario-stage wall-clock timeout under load; 68/68 pass across the gate + standalone rerun).
