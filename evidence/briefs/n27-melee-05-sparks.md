@@ -46,6 +46,13 @@ E. **Films (32 px/m, 1080p60, 15-40 s, ffprobe each):** re-render `films/claw_sh
    frames.json: keep every entry, add the new ones, keep 8-15 entries best first (merge or drop scratch entries rather than
    exceed 15; delete scratch renders it does not reference).
 
+F. **After E, if time remains (commit by 07:50):** (1) `node tools/godot/check.mjs res://features/combat/kills/electric_wreck_fx.gd`
+   reported FAIL in the last call ("dependency cascade, same on HEAD"): run it on HEAD and on `a3b3f1466`'s copy of the file
+   (`git show a3b3f1466:<path>` to a temp file is not enough; check out nothing: just compare the two check outputs as text) and
+   say whether this lane made it worse; fix it if it did. (2) `electric_chassis.gd` mutate was 7/20: the survivors are plate
+   size, z order, cap offset and the shield apron copy. Pin plate width, z and cap offset in `test_robot_wreck_plates.gd`,
+   re-run mutate `--max=20` on the same file, quote the score.
+
 ## Repo law (binding)
 - Before every Godot run: `export APPDATA=C:/Users/kazda/kiro/gtai-n27/appdata/melee` and
   `export GODOT_BIN=C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe`;
@@ -72,5 +79,5 @@ Commits; the spark stroke before/after in numbers (widths, colours, alphas); sti
 quick gate lines; mutate score; what failed or was left.
 
 ## Times (wall clock)
-Launched about LAUNCH. **Commit A+B+C by 07:25.** Stills by 07:40. **Hard stop 07:55: report and END.** Anything not
+Launched about 06:58. **Commit A+B+C by 07:25.** Stills by 07:40. **Hard stop 07:55: report and END.** Anything not
 committed by then: leave it uncommitted and say so. The lane's last commit is 08:00.
