@@ -1,0 +1,8 @@
+mutate: worktree C:\Users\kazda\AppData\Local\Temp\gtai-mutate-9001fcc8 at cca97531 (reused)
+mutate: 4/4 mutant(s); baseline run of test_gauntlet_kerf_wall, test_gauntlet_bot_arena
+mutate: baseline green in 34.5 s; per-mutant timeout 105 s
+mutate: [1/4] features/gauntlet/bot/bot_arena_moves.gd:9 cmp_flip  == -> !=  killed  (24.2 s)
+mutate: [2/4] features/gauntlet/bot/bot_arena_moves.gd:13 literal  0 -> 1  survived  (28.2 s)
+mutate: [3/4] features/gauntlet/bot/bot_arena_moves.gd:54 boolean  and -> or  killed  (49.6 s)
+mutate: [4/4] features/gauntlet/bot/bot_arena_moves.gd:54 cmp_flip  == -> !=  killed  (88.2 s)
+mutate: wrote build/mutate/features-gauntlet-bot-bot_arena_moves.json

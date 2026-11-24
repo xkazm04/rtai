@@ -1,0 +1,5 @@
+godot: class cache stale (class PressurePair (res://dev/gauntlet/pressure_pair.gd) is not in the cache): running --import first
+godot: --import done in 14.6 s
+novice: 10/10 ok, median wave reached 5, median seconds per wave 15.4
+average: 10/10 ok, median wave reached 5, median seconds per wave 16.65
+expert: 10/10 ok, median wave reached 9, median seconds per wave 19.77

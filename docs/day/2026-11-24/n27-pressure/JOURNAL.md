@@ -1,0 +1,249 @@
+# JOURNAL n27 lane `pressure` (2026-11-24)
+
+Branch `n27-pressure`, worktree `gtai-wt/n23-loop`, cut from `main` `a3b3f1466`. Director: Opus; builder: Claude Sonnet 5.5
+(`gtai-n27/tools/builder.mjs`). Continues `docs/day/2026-11-23/n26-pressure/`.
+
+## Session 1 (02:45 to 04:15, BUILD)
+
+- 02:45 start. Read n26 REPORT/JOURNAL. No builder lock, no calls yet. No `NEED pressure` from tonight's lanes.
+- 02:47 Godot `--import` once (exit 0, `build/import-n27.log`).
+- 02:50 MILESTONE item 1 started: median batches on main `a3b3f1466` (salt 0 then salt 1; profile all, greedy, wheel,
+  10 seeds, 40 waves), detached pid 58928 (bash) running `evidence/n27-pressure/medians/main/run.sh`; progress in
+  `evidence/n27-pressure/medians/main/progress.txt`, `DONE` marker when both end (~32 min by n26's pace). Holds the lane's
+  Godot until then.
+- 02:50 DECISION pressure schedule: the builder's first call (takes for items 2 and 3) writes code while the batch holds
+  Godot, and starts Godot only after `medians/main/DONE`. The batch runs gauntlet code only; the builder touches
+  `project/dev/gauntlet/**` and `tools/gauntlet/pressure_films.mjs`, which the gauntlet runner does not load.
+  After-keys / after-melee medians run in a detached scratch worktree (no merge of other lanes into this branch).
+- 02:48 BUILDER RUNNING takes since 02:48 (call 1, brief `evidence/briefs/n27-pressure-01-takes.md`, node pid 81032,
+  out `evidence/briefs/n27-pressure-01-takes.out.txt`): items 2 and 3 takes + films; hard stop 04:05, commit by 03:40,
+  Godot only after `medians/main/DONE`.
+- 02:55 scratch worktree for the join medians: `C:/Users/kazda/kiro/gtai-n27/scratch/pressure-join` (detached at
+  a3b3f1466; native bin, `data/generated/city` and the `.godot` import cache copied from this worktree). Keys/melee get
+  merged there (detached commits, never on this branch). Remove it at the end (`git worktree remove`).
+- 03:08 MILESTONE item 1 main column: batches on a3b3f1466 ended 02:57 / 03:06 (exit 0, 30/30 runs each, ~10 min a
+  salt). Median death wave salt 0 / salt 1: novice 5 / 5, average 6 / 5, expert 8.5 / 9; paired floor novice 0.3,
+  average 2.6, expert 1.8 (`evidence/n27-pressure/medians/main/{salt0,salt1}/report.md`, `floors.md`, `killers.md`).
+  n26's pre-keys numbers were 5/5, 7.5/5, 8.5/9: main moved within the floor. Commit 2ed06f4ac. Godot free for the
+  builder from 03:06. Batch manifests say dirty: only the builder's uncommitted dev take edits (`project/dev/gauntlet/*`,
+  `tools/gauntlet/pressure_films.mjs`), which the gauntlet runner does not load.
+- 03:20 keys posted `MILESTONE keys-order e1c4b73d9` (03:14). Merged into the scratch join tree: detached commit
+  e403c4a40 = a3b3f1466 + e1c4b73d9 (10 files; data: `ghost_forms.json` `deploy_slots`). The after-keys batches
+  (`evidence/n27-pressure/medians/join.sh keys`) start when the builder frees Godot. Tuner `propose` on main salt 0:
+  same one change as n26, `rivet_repair` (`evidence/n27-pressure/medians/main/plan.json`), not applied.
+- 03:38 builder committed 625b460c7 (03:33): takes `pair_circle`, `pair_dash` (`PressurePair`: two rocket troopers 3 m
+  apart, Rivet sprint-circles their midpoint at 10 m, no shots back; dash take dashes across each rocket line
+  `dash_read_ticks` after launch), `guard6`, `blade6` (`PressureRifles.near()`: rifles at 6 m, reactive guard,
+  shooters and Rivet durable in the dev take so every return is counted), `PressureStreet.widen` (dev only: the
+  street's walls are 12 m apart, too close for a 10 m circle), tests `test_pressure_takes.gd`, debt +265 dev_loc
+  accepted. Diff read: dev and tests only, no data. Builder now filming.
+- 03:53 BUILDER takes 65 $3.22 accepted. Commits 625b460c7 (takes, tests, `--only=` side-by-side films, debt) and
+  e7f748ed3 (deflect film over 2380 ticks). Seed 1 numbers: pair circle 7 hits / 8 rockets, down at 7.7 s (HP 0 at
+  10 s); pair dash 4 / 26, HP 98.9 at 10 s, 95.5 at the end, 13 dashes. 6 m: guard 78 fired / 46 returned / 9 hit a
+  shooter = 19.6 % (curve 24 %), sword 130 / 40 / 8 = 20.0 % (curve 31 %); sword catches ~half the rounds (open).
+  MILESTONE items 2 and 3 filmed: `gtai-masters/n27/pressure/trooper_pair_32.mp4` (25.0 s, 1920x1080, 60/1),
+  `deflect_6m_32.mp4` (39.67 s), `trooper_pair_64.png`, `deflect_6m_64.png`; frames.json 4 new rows first. I looked
+  at both stills and a 20 s frame of each film (`build/n27-check/`): captions readable, rockets on their lines,
+  side by side at the same tick; the circle side freezes with "Down at 7.7 s".
+  FRICTION builder reports `tools/gate/quick.mjs` parse check fails on `pressure_rifles.gd` (MeleeTable needs autoloads,
+  pre-existing line); headless runs and the full lint (19/19) pass. Check at the gate.
+- 03:53 after-keys batches launched detached (`join.sh keys`, bash pid 75356) in the scratch tree e403c4a40: import,
+  salt 0, salt 1, reports, floor, then `medians/keys/DONE` (~04:15).
+- 03:54 BUILDER RUNNING measure since 03:54 (call 2, node pid 28812, brief `evidence/briefs/n27-pressure-02-measure.md`,
+  out `.out.txt`): 10-seed table of the four takes with Wilson intervals vs the curve, the sword half-catch cause,
+  item 4 mutate (stall lines in `gauntlet_combat.gd` 12-16,18,53-66,120,122,123 and `bot_arena_moves.gd` 7-15,54;
+  plus `pressure_pair.gd`). Godot only after `medians/keys/DONE`; it writes `evidence/n27-pressure/godot-free.txt`
+  when done with Godot. Hard stop 05:10.
+- 03:57 melee has landed its mastery changes without a MILESTONE line yet: 58a1b8d07 (master_at 30, per_boss_cut 3),
+  1a6badfc8 (`bond.mastery_free` true), 6522ce667 (bond table, `--mastery-free` flag). The after-keys scratch import
+  is a full re-import (slow, ~10+ min); batches follow.
+NEXT (session 2, from ~04:15):
+  (1) Check `C:/Users/kazda/kiro/gtai-n27/logs/pressure/builder.lock` + last line of `builder-calls.jsonl`: call 2
+      `measure` (pid 28812, hard stop 05:10) may still run. Do not start another call while it runs.
+  (2) After-keys batches: `evidence/n27-pressure/medians/keys/progress.txt`, `DONE`; then
+      `cd evidence && node n27-pressure/medians/killers.mjs main-s0=n27-pressure/medians/main/salt0 keys-s0=n27-pressure/medians/keys/salt0 ...`
+      -> `medians/keys/killers.md`, commit `evidence/n27-pressure/medians/keys` (not import.log if large).
+  (3) After-melee arm: when `evidence/n27-pressure/godot-free.txt` exists (builder done with Godot), in the scratch tree
+      `C:/Users/kazda/kiro/gtai-n27/scratch/pressure-join` merge the melee head that has the mastery commits (grep
+      `n23-street/JOURNAL.md` for a MILESTONE; else its latest sha with 1a6badfc8 in it), git -c user.name=... merge
+      --no-verify, then launch `join.sh melee` detached (Start-Process bash). Conflicts: melee touches keys'
+      `ghost_deploy.gd:54` (one line) — keep both.
+  (4) Review call 2 (seed table, mutate scores), log `BUILDER measure ...`. Then item 5: medians.md with the three
+      columns (main, after keys, after melee), killer tables per profile, `tune.mjs propose` on the after-melee salt 0.
+  (5) Raise the weakest item afterwards (candidates: frames.json needs 8 to 15 rows — add the 6 m single-take stills
+      and a guard-vs-blade 64 px/m pair; the pair dash take is hit 4/26 vs n26 arena 0/48: the dash waits 16 ticks
+      after launch, not the lock — a "dash on lock" variant could be one flag).
+  Commit by 08:00, gate `node tools/gate/run.mjs --rev=HEAD` by 08:15. Remove the scratch worktree at the end.
+- 04:12 after-keys salt 0 (scratch e403c4a40) ended 04:04, exit 0: median death wave novice 5, average 6, expert 8.5,
+  and all 30 run results are byte-identical to main's salt 0 (`cmp`, 0 of 30 differ): the keys order changes which
+  key deploys which ghost, not which ghost the bot deploys. Salt 1 running (bash pid 75356), `DONE` at ~04:13.
+  BUILDER RUNNING measure since 03:54 (pid 28812), waits for `medians/keys/DONE` before Godot.
+- 04:13 session 1 end. NEXT as written above (04:00).
+- 04:20 session 2 start. Builder call 2 `measure` still running (lock pid 28812 = node). No `NEED pressure` in the
+  four other n27 journals. MILESTONE item 1 after-keys column: salt 1 ended 04:11, exit 0; all 60 run results
+  (salt 0 and 1) byte-identical to main's: median death wave novice 5/5, average 6/5, expert 8.5/9 (salt 0/1).
+  `evidence/n27-pressure/medians/keys/{killers.md,floors.md}`, commit e200f9a98.
+- 04:22 after-melee arm: scratch tree moved to melee's 4a3ff4b04 (= a3b3f1466 + keys e1c4b73d9 + mastery 58a1b8d07,
+  1a6badfc8, 6522ce667; data `master_at` 30, `mastery_free` true, `per_boss_cut` 3). DECISION: use melee's own merge
+  commit instead of merging again here (it resolved the one `ghost_forms.json` doc conflict; melee's later commits are
+  films). Waiter `medians/wait_melee.sh` (bash pid 41748) starts `join.sh melee` when `godot-free.txt` appears.
+- 04:30 call 2 interim `takes/seeds.md` (10 seeds): guard6 share 25.1 % [21.1, 29.6] (curve 24.3 % inside), blade6
+  27.2 % [22.7, 32.3] (curve 30.6 % inside); blade6: 650 of 1300 rounds hit Rivet mid-swing, every seed exactly 65.
+  pair_circle down 10/10 at 7.1-7.7 s, 70/80 hits; pair_dash 43/248 "hits" but HP 97.6-100 at 10 s: the take counts
+  every HP drop, so the dash "hits" are grazes, not rockets. Brief 03 (`evidence/briefs/n27-pressure-03-films.md`)
+  splits direct/splash/HP lost, re-cuts the pair film, re-encodes deflect_6m_32 (108 MB, 21.9 Mb/s), frames to 8+.
+  Item 5 levers noted: novice deaths are the wave 5 war machine's `stomp` (enemies.json weapons: damage 48, splash 48 in
+  3.5 m, cooldown 1.2 s, `alt_telegraph_s` 0.8) in 15 of 20 runs; `gauntlet.json` rivet repair 10/s after 3 s.
+- 05:10 BUILDER measure 75 $1.31 accepted (stopped at the 75 min cap after its last commit). Commits cca975316 (10-seed
+  table, `pressure_seeds` dev script, sword half-catch measured), 8e8d00a5e0 (mutate). MILESTONE item 4: mutate
+  `gauntlet_combat.gd` stall lines 14/15 killed (93 %; survivor line 18 initial `_last_damage_tick`, overwritten when
+  a wave goes live: equivalent), `bot_arena_moves.gd` 7-15,54 3/4 (75 %; survivor line 13 input index 0->1 with one
+  input: equivalent), `pressure_pair.gd` 6/12 (50 %; two cheap kills named, given to call 3)
+  (`evidence/n27-pressure/mutate/scores.md`). Sword half-catch, measured: the shipped sword is single-swing, 33 ticks
+  (8+6+19), deflecting only in the 6 active ticks; blade6's pairs are 18 ticks apart, so the second round of every
+  pair lands mid-swing (650/1300, 65 every seed); of swung rounds 51.4 % return (pass ratio 0.5). The take's cadence,
+  not the deflect rule. Three `gtai-mutate-*` temp dirs exist; owners unknown, left for the merge cleanup.
+- 05:06 after-melee arm started (godot-free 05:06), scratch 4a3ff4b04; salt 0 from 05:07.
+- 05:10 BUILDER RUNNING films since 05:10 (call 3, node pid 57264, brief `evidence/briefs/n27-pressure-03-films.md`,
+  out `.out.txt`, hard stop 06:12). Godot only after `medians/melee/DONE`; writes `godot-free-3.txt` when done.
+- 05:25 MILESTONE item 1 after-melee column (scratch 4a3ff4b04, salts ended 05:15 / 05:23, exit 0, 30/30 each):
+  median death wave salt 0 / 1: novice 5 / 5, average 8 / 5, expert 8.5 / 9 (main: 5/5, 6/5, 8.5/9; after keys
+  identical to main). 20 of 30 salt 0 results differ from main (mastery changes the bot's runs). Average salt 0 +2
+  waves but salt 1 +0 and the null floor is 3.6: no separation. Novice still dies to the wave 5 war machine's stomp
+  (16 of 20 runs). `medians/melee/{killers.md,floors.md,compare_s0.md,compare_s1.md}`.
+- 05:25 item 5: `tune.mjs propose` on after-melee salt 0 -> `medians/melee/plan.json`, 2 changes, NOT applied:
+  `rivet_repair` (repair_per_s 10 -> 12.5, repair_delay_s 3 -> 2.4; expert 8.5 vs target 20) and `budget.per_wave`
+  16 -> 13 (average 8 vs target 12). DECISION: measure each as a what-if arm (`tools/gauntlet/ablate.mjs`, a temp
+  worktree at 4a3ff4b04, the branch never changes) so the owner reads a number per proposal, not a proposal alone.
+  `medians/whatif.sh` (bash pid 36048) waits for call 3 to free Godot (`godot-free-3.txt` or pid 57264 gone), then
+  repair arm, budget arm, compare, killers -> `medians/whatif/DONE` (~06:35).
+- 05:27 call 3 working (uncommitted: pressure_pair direct/splash split via the rocket's `landed` signal, film caption,
+  seeds text, test, films tool). Diff read so far: dev and tests only.
+NEXT (session 3, from ~05:42):
+  (1) `gtai-n27/logs/pressure/builder.lock` + last `builder-calls.jsonl` line: call 3 `films` (pid 57264, hard stop
+      06:12). Wait; then review: commits (dev/tests/tools only), new pair table in `takes/seeds.md` (direct/splash/HP
+      lost, dash-count reason), ffprobe both masters (1080p 60/1, 15-40 s, deflect_6m_32 no longer 108 MB), LOOK at
+      every still in `gtai-masters/n27/pressure/frames.json` (8-15 rows, best first), mutate `pressure_pair.gd` score
+      vs 6/12 (`mutate/scores.md` 3b). Log `BUILDER films <min> <$> <verdict>`.
+  (2) What-if arms: `medians/whatif/progress.txt`, `DONE` (~06:35; bash pid 36048 starts when call 3 frees Godot).
+      Commit `medians/whatif/{progress.txt,DONE,killers.md,compare.md,compare.html,repair/,budget/}` (+ *.out.txt).
+      If ablate failed (see `whatif/repair.out.txt`), say so plainly; do not fake.
+  (3) Optional call 4 (only if it ends by 07:50): weakest item. Candidate: a `blade6` cadence arm with pairs >= 33 ticks
+      apart as a second row (NOT a retune: a measured contrast showing the sword's single-swing commitment), filmed;
+      or a 64 px/m clip of the dash crossing. Keep Godot free for the gate from 08:00.
+  (4) Gate `node tools/gate/run.mjs --rev=HEAD` started by 08:15 with no builder and no what-if running.
+  (5) REPORT.md: medians table three columns (main / after keys / after melee, salt 0 and 1, floors), killer table per
+      profile (novice: wave 5 war machine stomp 16/20; levers: stomp damage 48, splash 48 in 3.5 m, cooldown 1.2 s,
+      `alt_telegraph_s` 0.8; rivet repair 10/s after 3 s), the two tuner proposals with what-if numbers, the takes
+      (pooled 6 m shares inside the curve intervals; pair circle down 10/10 at ~7.5 s; dash alive 10/10), mutate
+      scores, calls for the owner (sword 33-tick commitment beaten by 2 rounds 0.3 s apart; the stomp at wave 5).
+      `node tools/evidence/cites.mjs REPORT.md`. Remove scratch worktree `gtai-n27/scratch/pressure-join` at the end
+      (`git worktree remove`).
+- 05:38 call 3 first commit a382890e5 (05:33): pair damage split via the rocket's `landed` (burst inside Rivet's
+  radius = direct): pair_circle direct 9/80, splash 61/80 (he dies to blasts beside him, not rockets on his body);
+  pair_dash direct 1/248, splash 42/248, HP 97.6-100 at 10 s; 13 dashes = one per two-rocket volley (presses in
+  cooldown counted). Tests now assert hp_at_10s, the split summing to HP lost, the radius pull from both sides.
+  Diff read: dev/tests/tools/evidence + debt baseline. Films still to come.
+  BUILDER RUNNING films since 05:10 (pid 57264, hard stop 06:12). What-if waiter pid 36048 waiting on it.
+- 05:39 session 2 end. NEXT as written at 05:26.
+- 05:40 session 3 start. Lock: call 3 `films` pid 57264 alive (node). What-if waiter pid 36048 alive. No `NEED pressure`
+  in the other four journals.
+- 05:55 call 3 commit dfe3c9ab1: still-moment ticks chosen by frame content (blade6 still = a rifle round near Rivet
+  while the blade recovers; guard6 = a returned round >= 3.5 m out). Diff: dev moments, films tool, debt baseline.
+- 05:58 call 3 commit 72c9e1754: test pins hp_at_10s at tick 600 (kills mutate survivor line 72) and >= 1 direct hit in pair_circle.
+- 06:04 BUILDER films 53 $2.74 accepted. Commits a382890e5, dfe3c9ab1, 72c9e1754, 4ea2a8d2c. Checked myself:
+  `trooper_pair_32.mp4` h264 1920x1080 60/1 25.0 s 8.2 MB, side by side (circle left HP 8.9 at 7.3 s, dash right HP
+  98.9); `deflect_6m_32.mp4` 1920x1080 60/1 39.67 s 26.9 MB (crf 26 re-encode of the crf 16 master: second generation,
+  said in its note). Looked at all 64 px/m stills: dash cross (trail ghosts, two rockets on the spot he left), circle
+  fatal (HP 8.9, two rockets inbound), guard return (spark + faint streak; the spark has a small red fleck: existing
+  deflect VFX, not this lane's file, noted for the Director), blade struck (round small but present ~2.5 m out).
+  frames.json 10 rows. Mutate pair 7/12 (58 %), then `--lines=83,110` 4/5 after two new asserts; the builder's "at
+  least 9/12" is NOT measured and will not be quoted. Open: pair_dash seeds 3 and 5 lose 50.9 / 40.6 HP after 10 s,
+  untraced.
+- 06:02 what-if arms started (repair first), bash pid 36048.
+- 06:05 BUILDER RUNNING contrast since 06:05 (call 4, node pid 62776, brief `evidence/briefs/n27-pressure-04-contrast.md`,
+  hard stop 07:15): trace the late dash damage; `blade6_spaced` cadence contrast (rounds >= 34 ticks apart, dev take
+  only), 10 seeds, film blade6 beside it, still. Godot only after `medians/whatif/DONE`; writes `godot-free-4.txt`.
+- 06:16 what-if repair arm done (06:02-06:15, exit 0, 30/30; ablate re-imported once: the copied class cache named the builder's new dev file). Budget arm running. Call 4 WIP: dev/tests/tools only, new `pressure_dash_trace.gd`.
+- 06:30 MILESTONE item 5 what-if arms (scratch 4a3ff4b04 via `tools/gauntlet/ablate.mjs`, salt 0, 10 seeds, the branch
+  unchanged; repair 06:02-06:15, budget -06:28, exit 0, 30/30 each). Median death wave novice / average / expert:
+  after-melee 5 / 8 / 8.5; repair (12.5/s after 2.4 s) 5 / 5 / 9; budget per_wave 16 -> 13: 5 / 8.5 / 9. Floors
+  0.3 / 3.6 / 1.6: neither proposal separates. Why repair cannot: `gauntlet.json` `repair_in_wave: false`, so Rivet
+  repairs only between waves, and the walker waits there until HP >= 95 % (`gauntlet_walker.gd:22`); every wave
+  starts near full whatever the rate. The compare's "repair share 0 %" is the same fact (per-wave telemetry,
+  `bot_street_stats.gd:80`, never sees between-wave repair), not a broken repair. Killers: novice dies to the wave 5
+  war machine stomp in 8/10 (repair) and 9/10 (budget); a smaller budget moves average/expert deaths from the stomp to
+  the wave 9 shield_robot (budget: 5 of 10 average, 6 of 10 expert). Levers for the owner, not applied: stomp
+  (damage 48, splash 48 in 3.5 m, cooldown 1.2 s, `alt_telegraph_s` 0.8), `repair_in_wave`, wave 9 shield robot.
+- 06:36 checked the repair claim on after-melee salt 0 runs: HP at wave start / max over 180 waves (wave >= 2): median 0.99, p10 0.78, min 0.15 (overlapping waves). The pilot repairs in the cleared block (`gauntlet_waves.gd:75` wave_live false; `gauntlet_walker.gd:22` holds below 95 %). So the repair rate barely matters for the death wave; `repair_in_wave` is the lever that would.
+- 06:45 call 4 trace (staged, not yet committed) `takes/dash_late.md`: the dash cooldown (50 ticks a dash) is longer than the gap between the two troopers' rockets (1 tick only in seed 1; 8-49 elsewhere), so the second rocket's press is refused; late in seeds 3/5 the troopers drift, gap 36-49, bursts 0.6-2.2 m away, 48.4/40.4 HP lost. Builder kept the take (a retry would change the shipped profile). Accepted reasoning; REPORT corrected (my 'one tick apart' was seed 1 only) and call 4 added for the owner.
+- 06:47 call 4 commits 9fed2ebde (dash trace tool + blade6_spaced take + test), af7f98580 (seed table): blade6_spaced turns back 51.4 % [47.5, 55.2] of fired vs blade6 25.7 % [23.4, 28.1]; returns hitting a shooter 27.2 % both; mid-swing 0 vs 650. Film still to come.
+- 06:56 call 4 film on disk (uncommitted): `blade_cadence_32.mp4` 1920x1080 60/1 39.67 s 38.8 MB (7.8 Mb/s);
+  `blade_spaced_return_64.png` (spark at the blade, a returned streak toward the lower rifleman). FAULT: the caption
+  line `Fired .. Turned back NN%` runs past the panel's right edge on both sides and in the still ("Turned back 34%"
+  printed over the background). Must wrap to the panel's empty second line before it is accepted.
+  BUILDER RUNNING contrast since 06:05 (pid 62776, hard stop 07:15).
+- 06:58 session 3 end.
+NEXT (session 4, from ~07:08):
+  (1) Lock `gtai-n27/logs/pressure/builder.lock` + last `builder-calls.jsonl` line; read
+      `evidence/briefs/n27-pressure-04-contrast.out.txt`. Log `BUILDER contrast <min> <$> <verdict>`.
+  (2) If the caption overflow is still in `blade_cadence_32.mp4` / `blade_spaced_return_64.png` (look at a 20 s frame
+      with ffmpeg and at the still): a `--resume` follow-up (hard stop ~07:50, commit by 07:45): wrap the side caption
+      to two lines in `project/dev/gauntlet/pressure_film.gd` (line 1 Fired/Returned/Passed, line 2 Hit a shooter /
+      Turned back), re-film `blade_cadence` + the still only, crf so the file is <= 30 MB, keep 39.67 s; AND append
+      the lane's `docs/decisions.md` lines (allowlist that one file, append only):
+      `- [2026-11-24] DECISION n27 pressure: the tuner's two proposals (rivet_repair, budget.per_wave 16 -> 13) were
+      measured as what-if arms on 4a3ff4b04 and not applied; both inside the noise floor; repair cannot move the death
+      wave while repair_in_wave is false. Rejected: applying either (owner: "I play first and give numbers").` and
+      `- [2026-11-24] DECISION n27 pressure: blade6_spaced is a dev contrast take (one round per 36-tick beat), not a
+      retune; the shipped sword and rifle cadence are unchanged.` Also check frames.json is 8-15 rows, best first.
+  (3) Gate: `node tools/gate/run.mjs --rev=HEAD` started by 08:15 with no builder running (Godot free). Quote line +
+      gate.json path in REPORT. Then `--reels` once after 09:30 freeze if time.
+  (4) REPORT: fill PENDING (gate line, What does not, Blocked/slowed minutes, Next steps, ledger row 4); add the
+      cadence film to section 3 and calls; `node tools/evidence/cites.mjs REPORT.md`; commit.
+      What does not: blade6's third rifleman never fires (pairs are rifleman 1 then 2); pair_pair mutate 7/12 sample
+      not re-run in full; `bot_arena_moves.gd` only 4 mutants; spark VFX has a small red fleck (not this lane's file;
+      Director); deflect_6m_32 is a 2nd-generation re-encode.
+  (5) Remove the scratch worktree `gtai-n27/scratch/pressure-join` (`git worktree remove`) and gtai-mutate-* temps
+      that are ours, at the end.
+- 07:05 call 4 commit 16ae1ea1e: caption panel widened to 780 px for the cadence film, re-filmed 06:58: `blade_cadence_32.mp4` 39.67 s 37.1 MB, caption now inside the panel on both sides (checked a 20 s crop). Overflow item in NEXT (2) is DONE; NEXT (2) keeps only the decisions.md lines + frames.json check. BUILDER RUNNING contrast since 06:05 (pid 62776, hard stop 07:15). Session 3 end.
+- 07:06 session 4 start. Lock: builder.lock pid 62776 (node, started 06:05) alive = call 4 still running (hard stop 07:15). No `NEED pressure` in the four other journals. masters frames.json 12 rows, best first (cadence film is row 3). Call 5 brief written: `evidence/briefs/n27-pressure-05-close.md` (decisions.md lines, full pair mutate sample, blade6_spaced mutate if no score; hard stop 07:55).
+- 07:17 BUILDER contrast 73 $2.09 accepted. Commits 9fed2ebde, af7f98580, 16ae1ea1e, 5aadc3368 (mutate 3c: `pressure_rifles.gd` 4/10 on the spacing lines; survivors are shipped pair/salvo values no test pins; lines 81-82 missed). Tree clean after it (only JOURNAL modified, mine). godot-free-4 07:10.
+- 07:18 BUILDER RUNNING close since 07:18 (call 5, node pid 25068, brief `evidence/briefs/n27-pressure-05-close.md`, hard stop 07:55): decisions.md two lines; a seed-1 fired-count pin + mutate `pressure_rifles.gd` lines 41-43,81-82; full re-run of the pair 12-mutant sample. Gate from ~08:00 after it.
+- 07:30 FRICTION / NEED Director: `node tools/evidence/cites.mjs REPORT.md` -> `spawnSync git ENOBUFS`: `tools/lib/repo.mjs` `git()` has the 1 MB default maxBuffer; `git ls-files` is 1,060,758 bytes here (main 1,004,031; our 776 median run files tip it). Breaks cites on main after the merge for all lanes. Fix (Director, not our file): `maxBuffer: 1 << 28` in `git()`. Gate unaffected (`staged_tree.mjs` 256 MB). Ran cites via a /tmp shim that raises the buffer: 32 paths, 30 ok, 2 pattern. REPORT sections filled (What does not, Blocked, Next, ledger row 4).
+- 07:22 (time fix: the 07:30 line above was written at 07:20) call 5 commit 29db9d3b1: the two decision lines, append only (2 insertions). Removed scratch worktree gtai-n27/scratch/pressure-join (detached 4a3ff4b04, only runtime files). Temp gtai-mutate-9001fcc8 is call 5's live run; the other gtai-mutate-* are at foreign shas, left alone.
+- 07:33 BUILDER close 14 $0.42 accepted. Commits 29db9d3b1 (decision lines), a6d5f71b8 (test pins seed 1 fired 78 / 130 and arrivals 9 / 18; select run 8/8), c3ea5f79c (mutate 3d pair 9/12 measured, 3e rifles lines 41-43,81-82 5/8). Checked the counts against pooled seeds (780/10, 1300/10). godot-free-5 07:31.
+- 07:33 MILESTONE gate started: `node tools/gate/run.mjs --rev=HEAD` on c3ea5f79c, node pid 65504, out `evidence/n27-pressure/gate-final.out.txt` (APPDATA pressure). No builder running. REPORT mutate rows and ledger 5 updated.
+- 07:36 BUILDER RUNNING notes since 07:36 (call 6, node pid 67836, brief `evidence/briefs/n27-pressure-06-notes.md`, hard stop 08:00, no Godot, frames.json only): masters notes for trooper_pair_32 (seed 1 gap 1 tick only; seeds 3/5 lose 48.4/40.4) and deflect_6m_32 (pooled 10-seed shares, 2nd encode) say what the ten seeds say. Gate pid 65504 running.
+- 07:39 BUILDER notes 2 $0.55 accepted (call 6 + one resume, 67 s + 31 s): masters notes for trooper_pair_32, deflect_6m_32, deflect_6m_64 now quote the ten-seed numbers; 12 entries. It caught a mix-up of mine: 48.4/40.4 are HP lost after 10 s, whole take 50.9/40.6. REPORT fixed (section 2, What does not, call 4; "13 dashes for 26 rockets in every seed" -> 23 to 26 rockets). `takes/dash_late.md` line 9 itself says "over 25 s" for the after-10 s numbers: noted in REPORT, file left (evidence of call 4).
+- 07:39 brief for the next session pre-written: `evidence/briefs/n27-pressure-07-stomp.md` (film main novice seed 1 salt 0 dying to the wave 5 stomp, film-only, after the gate). Gate pid 65504 running (ETA ~08:06 from the last 32 min).
+- 08:04 MILESTONE gate PASS on c3ea5f79c (07:33-08:04): lint 19/19, unit 4108/0/2 skipped, scenarios 68, parity, selftest, export-audit 983/0; `build/gate/c3ea5f79ca4e/gate.json`. REPORT gate line filled.
+- 08:05 BUILDER RUNNING stomp since 08:05 (call 7, node pid 55088, brief `evidence/briefs/n27-pressure-07-stomp.md`, hard stop 08:55, film-only, no commits): main novice seed 1 salt 0 dying to the wave 5 stomp, 32 px/m clip + 64 px/m telegraph still, frames.json entries 3/4.
+- 08:26 call 7 working in `build/n27stomp/` (git-ignored): probes done, recording `m32.avi` (621 MB at 08:25, the full run to the stomp death). Nothing in masters yet. Godot is the builder's now.
+- 08:27 session 4 end. BUILDER RUNNING stomp since 08:05 (call 7, pid 55088, hard stop 08:55).
+NEXT (session 5, from ~08:35; freeze 09:30, REPORT 09:40, end 10:00):
+  (1) Lock `gtai-n27/logs/pressure/builder.lock` + last `builder-calls.jsonl` line; read
+      `evidence/briefs/n27-pressure-07-stomp.out.txt`. Log `BUILDER stomp <min> <$> <verdict>` + REPORT ledger row 7
+      (total 7 calls; add its minutes and $ to "Total: 6 calls (one resumed), 282 minutes, $10.33").
+  (2) Check the stomp film yourself: `ffprobe` (1920x1080, 60/1, 15-40 s), a frame at the telegraph and at the
+      death (ffmpeg to `build/n27-check/`), the 64 px/m still; that the death wave/tick matches
+      `evidence/n27-pressure/medians/main/salt0/runs/novice-1.json` (stomp, wave 5); frames.json 8-15 rows, best
+      first, valid JSON. If good: add the clip + still to REPORT call 1 ("Film: `novice_stomp_32.mp4`, still
+      `novice_stomp_tell_64.png`") and to section 5. If the builder reports it blocked: say so in REPORT "What does
+      not" with its command/error. Delete `build/n27stomp/m32.avi` (git-ignored scratch, ~1 GB) after the clip is OK.
+  (3) No new code after 08:00 (done: last code commit c3ea5f79c, gate PASS `build/gate/c3ea5f79ca4e/gate.json`).
+      `--reels` after the 09:30 freeze only if the builder is done and there are >= 40 min left; otherwise say
+      "reels not run" (already in REPORT).
+  (4) cites: `node tools/evidence/cites.mjs REPORT.md` dies with ENOBUFS (NEED Director, in Merge notes); run it
+      through the shim: recreate /tmp/cites_shim.mjs (patch child_process.execFileSync maxBuffer 1<<28,
+      syncBuiltinESMExports, set process.argv[1] to tools/evidence/cites.mjs, then import it). Last: 32 paths, 30 ok.
+  (5) Cleanup at the end: Temp `gtai-gate-c3ea5f79ca4e` (ours) after reels or at 09:55; gtai-mutate-* at OUR shas only
+      (`git worktree list`; 9001fcc8 was call 5's at 29db9d3b1 and should be gone). Final commit REPORT + JOURNAL.
+- 08:32 call 7 still working (short test recordings t1..t4 in build/n27stomp, nothing in masters yet). BUILDER RUNNING stomp since 08:05 (pid 55088, hard stop 08:55). Session 4 stops here; NEXT above stands.
+- 09:30 session 5 start (late: nothing ran between 08:32 and 09:30). Lock free; last builder-calls row n=8 stomp, 2225 s, exit 0.
+- 09:31 BUILDER stomp 37 $1.10 accepted. Checked myself: `novice_stomp_32.mp4` ffprobe 1920x1080 60/1 15.03 s; frame at 14.5 s and the 64 px/m still `novice_stomp_tell_64.png` looked at (Rivet 18/110 HP inside the ring, wave 5); frames.json 14 rows valid JSON, clip row 3, still row 4. Builder says the replay result is byte-identical to medians/main/salt0/runs/novice-1.json (death tick 4384, wave 5). Its 1.3 GB AVIs already deleted.
+- 09:33 REPORT: stomp film in section 1 novice table and Calls 1, a "What does not" line (15 s, ends on the death frame, stage copy for 1080p, ring colour question), ledger row 7, total 7 calls 319 min $11.43. cites via the shim: 38 paths, 36 ok, 2 pattern.
+- 09:33 FREEZE held: no code after c3ea5f79c (gate PASS `build/gate/c3ea5f79ca4e/gate.json`). Reels not run (under 40 min left).
+NEXT (Director / next lane run): merge n27-pressure; NEED Director `tools/lib/repo.mjs` git() maxBuffer (cites ENOBUFS); the owner plays wave 5 and gives the stomp numbers; Temp `gtai-gate-c3ea5f79ca4e` is ours and can go.
+- 09:43 session 6 (REPORT phase). Lock free, no builder since call 7. REPORT checked: all sections present, gate line PASS `build/gate/c3ea5f79ca4e/gate.json`; cites via the shim 38 paths, 36 ok, 2 pattern, 0 missing. Cleanup: removed our mutate worktree gtai-mutate-9001fcc8 (a6d5f71b8), Temp gtai-gate-c3ea5f79ca4e (+ .gtai-snapshot) and git-ignored scratch build/n27stomp (25 MB). gtai-mutate-49b1f428 / -612737eb and the other gtai-gate-* are at foreign shas, left alone.
+NEXT (Director): merge n27-pressure (JOURNAL/REPORT add/add: keep each lane's own); NEED Director `tools/lib/repo.mjs` git() maxBuffer 1<<28 (cites ENOBUFS); reels not run on this branch; the owner plays wave 5 and gives numbers from the section 5 tables.

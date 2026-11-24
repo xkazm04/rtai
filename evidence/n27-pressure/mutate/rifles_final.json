@@ -1,0 +1,10 @@
+mutate dev/gauntlet/pressure_rifles.gd: 8 mutant(s), tests: test_pressure_takes
+  dev/gauntlet/pressure_rifles.gd:41 literal  180 -> 181  survived
+  dev/gauntlet/pressure_rifles.gd:42 literal  2 -> 3  survived
+  dev/gauntlet/pressure_rifles.gd:81 arith  / -> *  survived
+  dev/gauntlet/pressure_rifles.gd:41 literal  36 -> 37  killed
+  dev/gauntlet/pressure_rifles.gd:42 literal  1 -> 0  killed
+  dev/gauntlet/pressure_rifles.gd:42 literal  6 -> 7  killed
+  dev/gauntlet/pressure_rifles.gd:43 literal  18 -> 19  killed
+  dev/gauntlet/pressure_rifles.gd:43 literal  9 -> 10  killed
+score 62.5% = killed 5 / (killed 5 + survived 3); timeout 0, invalid 0; 304 s

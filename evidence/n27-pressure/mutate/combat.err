@@ -1,0 +1,19 @@
+mutate: worktree C:\Users\kazda\AppData\Local\Temp\gtai-mutate-9001fcc8 at cca97531 (created)
+mutate: 15/15 mutant(s); baseline run of test_gauntlet_mastery, test_bonus_rank, test_bot_film_act, test_bot_street_machine, test_bot_street_stats, test_bot_street_wheel, test_gauntlet_bonus_apply, test_gauntlet_bot_arena, test_gauntlet_composer, test_gauntlet_dressing, test_gauntlet_enemy_damage, test_gauntlet_fire_gaps, test_gauntlet_kerf_wall, test_gauntlet_live_wave, test_gauntlet_pick_view, test_gauntlet_repair, test_gauntlet_rest, test_gauntlet_run, test_gauntlet_street, test_gauntlet_wave_stats, test_gauntlet_wave_timer, test_gauntlet_waves, test_ghost_deploy_bot, test_ghost_deploy_tally, test_kerf_boss_cap, test_pressure_takes, test_rivet_self_blast, test_rivet_self_blast_gauntlet
+mutate: baseline green in 435.0 s; per-mutant timeout 300 s
+mutate: [1/15] features/gauntlet/gauntlet_combat.gd:12 boolean  false -> true  killed  (55.7 s)
+mutate: [2/15] features/gauntlet/gauntlet_combat.gd:14 boolean  and -> or  killed  (39.4 s)
+mutate: [3/15] features/gauntlet/gauntlet_combat.gd:14 boolean  not -> (removed)  killed  (30.7 s)
+mutate: [4/15] features/gauntlet/gauntlet_combat.gd:18 literal  0 -> 1  survived  (31.3 s)
+mutate: [5/15] features/gauntlet/gauntlet_combat.gd:55 boolean  not -> (removed)  killed  (41.2 s)
+mutate: [6/15] features/gauntlet/gauntlet_combat.gd:55 boolean  or -> and  killed  (52.9 s)
+mutate: [7/15] features/gauntlet/gauntlet_combat.gd:55 arith  - -> +  killed  (57.8 s)
+mutate: [8/15] features/gauntlet/gauntlet_combat.gd:55 cmp_flip  < -> >=  killed  (55.7 s)
+mutate: [9/15] features/gauntlet/gauntlet_combat.gd:55 boundary  < -> <=  killed  (32.1 s)
+mutate: [10/15] features/gauntlet/gauntlet_combat.gd:55 literal  60 -> 61  killed  (34.2 s)
+mutate: [11/15] features/gauntlet/gauntlet_combat.gd:55 arith  * -> /  killed  (28.7 s)
+mutate: [12/15] features/gauntlet/gauntlet_combat.gd:56 boolean  false -> true  killed  (25.9 s)
+mutate: [13/15] features/gauntlet/gauntlet_combat.gd:64 boolean  true -> false  killed  (32.9 s)
+mutate: [14/15] features/gauntlet/gauntlet_combat.gd:122 cmp_flip  < -> >=  killed  (33.2 s)
+mutate: [15/15] features/gauntlet/gauntlet_combat.gd:122 boundary  < -> <=  killed  (34.0 s)
+mutate: wrote build/mutate/features-gauntlet-gauntlet_combat.json

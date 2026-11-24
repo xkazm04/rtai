@@ -158,7 +158,15 @@
         "2026-11-23: Capture both zooms on the live commander through the seed-seven rack for n26 yard (dev_loc 33890 -> 33900)",
         "2026-11-24: mastery-free flag and boss-cut column for the n27 bond measure (dev_loc 35431 -> 35448)",
         "2026-11-24: dev_loc: bond_film film entry for n27 melee films (dev_loc 35448 -> 35655)",
-        "2026-11-24: mastery card figure + ring (n27 melee C): 44 dev lines on the gauntlet pick card (dev_loc 35655 -> 35699)"
+        "2026-11-24: mastery card figure + ring (n27 melee C): 44 dev lines on the gauntlet pick card (dev_loc 35655 -> 35699)",
+        "2026-11-24: two pressure takes and the 6 m deflect take are dev code (dev_loc +265) for n27 pressure (dev_loc 35431 -> 35696)",
+        "2026-11-24: dev_loc rises by the n27 pressure seed table scripts for n27 pressure (dev_loc 35696 -> 35998)",
+        "2026-11-24: dev_loc rises by the n27 pressure seed table scripts for n27 pressure (dev_loc 35998 -> 36004)",
+        "2026-11-24: pressure pair damage split, moments and seed columns (dev_loc +103) for n27 pressure (dev_loc 36004 -> 36107)",
+        "2026-11-24: pressure moments for the film stills (dev_loc +5) for n27 pressure (dev_loc 36107 -> 36112)",
+        "2026-11-24: dev gauntlet pressure takes: blade6_spaced take, dash trace tool and their test for n27 pressure (dev_loc 36112 -> 36328)",
+        "2026-11-24: film caption for the sword cadence contrast, dev only, for n27 pressure (dev_loc 36328 -> 36330)",
+        "2026-11-24: merge of n27 lanes: pressure dev takes on top of the other lanes' dev scenes (dev_loc 36554 -> 36598)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -171,7 +179,7 @@
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
-        "project/dev/gauntlet": 1694,
+        "project/dev/gauntlet": 2593,
         "project/dev/ghost-forms": 1939,
         "project/dev/ghost-powers": 1396,
         "project/dev/guard": 397,
@@ -200,7 +208,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 35699
+      "total": 36598
     },
     "direct_cmdline_reads": {
       "accepted": [

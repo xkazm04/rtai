@@ -3,7 +3,21 @@ extends RefCounted
 ## One fresh street per take. All movement and attacks go through the live stage.
 ## The rifle demonstration cues single aimed rounds so each defensive contact is visible.
 
-const TAKES: Array[String] = ["guard", "blade", "stand", "circle", "dash", "rockets"]
+const TAKES: Array[String] = [
+	"guard",
+	"blade",
+	"stand",
+	"circle",
+	"dash",
+	"rockets",
+	"pair_circle",
+	"pair_dash",
+	"guard6",
+	"blade6",
+	"blade6_spaced"
+]
+const PAIR_TICKS: int = 1500
+const NEAR_TICKS: int = 2380
 const WAVE: int = 6
 const RIFLE: StringName = &"assault-rifle"
 
@@ -14,13 +28,12 @@ var tick: int = 0
 var length: int
 var mark: Vector2
 var rifles: PressureRifles = PressureRifles.new()
+var pair: PressurePair = PressurePair.new()
+var moments: PressureMoments = PressureMoments.new()
 var contacts: int = 0
-var paired_ticks: int = 0
-var first_pair: int = 0
+var rockets: PressureLaunches = PressureLaunches.new()
 var first_dash: int = 0
 var _dash_read: int = BotProfile.shipped(&"average").dash_read_ticks
-var _launch: int = -1000
-var _last_rocket: Shot
 var _wave: GauntletLiveWave
 
 
@@ -48,6 +61,14 @@ func open(id: String, seed_value: int) -> bool:
 		"guard", "blade":
 			length = 600
 			rifles.place(session, mark, take == "blade")
+		"guard6", "blade6", "blade6_spaced":
+			length = NEAR_TICKS
+			rifles.near(take.begins_with("blade6"), take == "blade6_spaced")
+			rifles.place(session, mark, take.begins_with("blade6"), true)
+		"pair_circle", "pair_dash":
+			length = PAIR_TICKS
+			PressureStreet.widen(session, PressurePair.RADIUS_M)
+			pair.place(session, mark + Vector2(4, 0), take == "pair_dash")
 		"rockets":
 			_rockets()
 		_:
@@ -87,43 +108,38 @@ func _fight(run: GauntletRun) -> bool:
 func advance() -> void:
 	tick += 1
 	if not arena.rivet.alive():
+		if take.begins_with("pair"):
+			pair.observe(tick)
 		return
 	var input: TickInput = TickInput.new()
 	var aim: Vector2 = Vector2.RIGHT
 	match take:
-		"guard", "blade":
+		"guard", "blade", "guard6", "blade6", "blade6_spaced":
 			rifles.drive(input, tick)
+		"pair_circle", "pair_dash":
+			aim = pair.drive(input, tick)
 		"rockets":
 			aim = _rocket_input(input)
 		_:
 			aim = _fight_input(input)
 	input.buttons |= PlayerCommand.pack_aim(aim, session.actions, 16.0)
 	session.stage.step(tick, input)
+	rifles.observe(tick)
+	moments.observe(self)
+	if take.begins_with("pair"):
+		pair.observe(tick)
+		return
 	if first_dash == 0 and session.pilot.motion.dashes > 0:
 		first_dash = tick
-	var own: bool = false
-	var hostile: bool = false
-	for shot: Shot in arena.shots:
-		if shot is FoeRocketFlight.Round:
-			hostile = true
-			if not shot.has_meta(&"pressure_launch"):
-				shot.set_meta(&"pressure_launch", tick)
-				_launch = tick
-				_last_rocket = shot
-		elif shot.from_rivet and shot.weapon == &"rocket_launcher":
-			own = true
-	if own and hostile:
-		paired_ticks += 1
-		if first_pair == 0:
-			first_pair = tick
+	rockets.observe(arena, tick)
 
 
 func _rocket_input(input: TickInput) -> Vector2:
 	if tick == 2:
 		_press(input, &"weapon_next")
-	if tick == _launch + 3:
+	if tick == rockets.launch + 3:
 		_press(input, &"fire")
-	if tick == _launch + 22:
+	if tick == rockets.launch + 22:
 		_press(input, &"dash")
 		input.move_y = TickInput.AXIS_MAX if arena.rivet.pos.y < 0 else -TickInput.AXIS_MAX
 	# Cross the hostile lane at an angle so the comparison can run for several volleys.
@@ -140,8 +156,8 @@ func _fight_input(input: TickInput) -> Vector2:
 	if take != "stand":
 		var radial: Vector2 = offset.normalized()
 		move = (radial.orthogonal() + radial * (3.0 - offset.length())).normalized() * 0.7
-	if take == "dash" and tick == _launch + _dash_read and _last_rocket != null:
-		var side: Vector2 = _last_rocket.vel.normalized().orthogonal()
+	if take == "dash" and tick == rockets.launch + _dash_read and rockets.last != null:
+		var side: Vector2 = rockets.last.vel.normalized().orthogonal()
 		if side.dot(move) < 0:
 			side = -side
 		move = side
@@ -164,18 +180,20 @@ func _hit(fighter: Fighter, _dir: Vector2, _lethal: bool, weapon: StringName) ->
 
 
 func summary() -> Dictionary:
-	return {
+	var row: Dictionary = {
 		"take": take,
 		"tick": tick,
 		"hp": arena.rivet.hp,
 		"hits": contacts,
-		"passed": rifles.passed,
-		"returned": rifles.returned,
 		"shooter_hits": arena.kills,
 		"dashes": session.pilot.motion.dashes,
-		"paired_ticks": paired_ticks,
-		"first_pair": first_pair,
 		"first_dash": first_dash,
-		"last_launch": _launch,
+		"paired_ticks": rockets.paired_ticks,
+		"first_pair": rockets.first_pair,
+		"last_launch": rockets.launch,
 		"shots": session.stage.shots_fired,
 	}
+	row.merge(rifles.summary())
+	row.merge(pair.summary())
+	row.merge(moments.summary())
+	return row

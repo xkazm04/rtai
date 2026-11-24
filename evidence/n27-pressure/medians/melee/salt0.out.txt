@@ -1,0 +1,4 @@
+novice: 10/10 ok, median wave reached 5, median seconds per wave 15.13
+average: 10/10 ok, median wave reached 8, median seconds per wave 17.13
+expert: 10/10 ok, median wave reached 8.5, median seconds per wave 18.88
+report: 31 profile/wave rows, 6 average target misses; wrote C:\Users\kazda\kiro\gtai-wt\n23-loop\evidence\n27-pressure\medians\melee\salt0\report.md and report.html

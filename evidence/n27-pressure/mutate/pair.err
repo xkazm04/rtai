@@ -1,0 +1,16 @@
+mutate: worktree C:\Users\kazda\AppData\Local\Temp\gtai-mutate-9001fcc8 at cca97531 (reused)
+mutate: 12/61 mutant(s); baseline run of test_pressure_takes
+mutate: baseline green in 26.8 s; per-mutant timeout 90 s
+mutate: [1/12] dev/gauntlet/pressure_pair.gd:14 literal  0 -> 1  survived  (23.3 s)
+mutate: [2/12] dev/gauntlet/pressure_pair.gd:33 arith  + -> -  survived  (22.6 s)
+mutate: [3/12] dev/gauntlet/pressure_pair.gd:46 arith  - -> +  killed  (23.5 s)
+mutate: [4/12] dev/gauntlet/pressure_pair.gd:46 literal  0.6 -> 1.6  survived  (22.4 s)
+mutate: [5/12] dev/gauntlet/pressure_pair.gd:49 boolean  not -> (removed)  killed  (25.6 s)
+mutate: [6/12] dev/gauntlet/pressure_pair.gd:49 boundary  >= -> >  survived  (27.6 s)
+mutate: [7/12] dev/gauntlet/pressure_pair.gd:49 literal  0 -> 1  killed  (33.3 s)
+mutate: [8/12] dev/gauntlet/pressure_pair.gd:53 literal  0.0 -> 1.0  survived  (25.0 s)
+mutate: [9/12] dev/gauntlet/pressure_pair.gd:72 arith  * -> /  survived  (22.3 s)
+mutate: [10/12] dev/gauntlet/pressure_pair.gd:74 literal  0 -> 1  killed  (22.7 s)
+mutate: [11/12] dev/gauntlet/pressure_pair.gd:91 arith  += -> -=  killed  (23.7 s)
+mutate: [12/12] dev/gauntlet/pressure_pair.gd:92 arith  / -> *  killed  (42.6 s)
+mutate: wrote build/mutate/dev-gauntlet-pressure_pair.json

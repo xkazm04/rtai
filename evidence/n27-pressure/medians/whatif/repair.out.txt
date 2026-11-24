@@ -1,0 +1,6 @@
+godot: class cache stale (class PressureFates points at res://dev/gauntlet/pressure_fates.gd, which no longer exists): running --import first
+godot: --import done in 94.1 s
+novice: 10/10 ok, median wave reached 5, median seconds per wave 15.25
+average: 10/10 ok, median wave reached 5, median seconds per wave 16.95
+expert: 10/10 ok, median wave reached 9, median seconds per wave 19.33
+{"attempted":30,"accepted":30,"deaths":30,"median_wave_reached":5,"median_death_wave":5,"capped_alive":0,"wave_timeouts":0}

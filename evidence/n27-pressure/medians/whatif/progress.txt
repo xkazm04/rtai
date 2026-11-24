@@ -1,0 +1,4 @@
+06:02 start repair
+06:15 end repair exit 0
+06:28 end budget exit 0
+Wrote C:/Users/kazda/kiro/gtai-wt/n23-loop/evidence/n27-pressure/medians/whatif/compare.md and C:/Users/kazda/kiro/gtai-wt/n23-loop/evidence/n27-pressure/medians/whatif/compare.html

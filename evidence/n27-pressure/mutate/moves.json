@@ -1,0 +1,6 @@
+mutate features/gauntlet/bot/bot_arena_moves.gd: 4 mutant(s), tests: test_gauntlet_kerf_wall, test_gauntlet_bot_arena
+  features/gauntlet/bot/bot_arena_moves.gd:13 literal  0 -> 1  survived
+  features/gauntlet/bot/bot_arena_moves.gd:9 cmp_flip  == -> !=  killed
+  features/gauntlet/bot/bot_arena_moves.gd:54 boolean  and -> or  killed
+  features/gauntlet/bot/bot_arena_moves.gd:54 cmp_flip  == -> !=  killed
+score 75.0% = killed 3 / (killed 3 + survived 1); timeout 0, invalid 0; 229 s
