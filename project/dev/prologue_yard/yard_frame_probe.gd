@@ -14,7 +14,6 @@ var _first_us: int = -1
 var _previous_us: int
 var _first_unix: float
 var _first_tick: int
-var _over: int = 0
 var _intervals: PackedInt64Array = PackedInt64Array()
 
 
@@ -27,8 +26,8 @@ func _ready() -> void:
 			return
 	_out = args.text("--out")
 	_arm = args.text("--yard-dressing")
-	if not _out.is_absolute_path() or _arm not in ["plain", "torn_line"]:
-		_fail("use an absolute JSON output path and plain or torn_line")
+	if not _out.is_absolute_path() or _arm not in ["plain", "torn_line", "line_fire"]:
+		_fail("expected a yard dressing and an absolute JSON output path")
 		return
 	if DisplayServer.get_name() == "headless" or get_window().size != SIZE:
 		_fail("use a 1920x1080 window")
@@ -41,13 +40,15 @@ func _ready() -> void:
 	if DisplayServer.window_get_vsync_mode() != DisplayServer.VSYNC_DISABLED:
 		_fail("the window could not disable vsync")
 		return
-	LaunchArgs.parse(["--bot", "--seed=7", "--yard-dressing=" + _arm])
+	LaunchArgs.parse(["--seed=7", "--yard-dressing=" + _arm])
 	ViewMode.select("tilt70")
 	_game = preload("res://boot/prologue/prologue.tscn").instantiate()
 	add_child(_game)
 	if _game.world == null or (_game.stage.plan as PrologueYard).dressing.id != _arm:
 		_fail("requested pilot and dressing did not start")
 		return
+	const Pilot = preload("res://dev/bots/prologue_bot.gd")
+	_game.world.loop().set_input(Pilot.new(_game.stage, _game.encounter))
 	process_priority = -100
 	set_process(true)
 
@@ -63,8 +64,6 @@ func _process(_dt: float) -> void:
 	var interval: int = now_us - _previous_us
 	@warning_ignore("return_value_discarded")
 	_intervals.append(interval)
-	if interval > BUDGET_US:
-		_over += 1
 	_previous_us = now_us
 	if now_us - _first_us >= WINDOW_US:
 		set_process(false)
@@ -77,6 +76,7 @@ func _finish(now_us: int, end_unix: float) -> void:
 	var row: Dictionary[String, Variant] = {
 		"schema": "gtai.yard-frame-sample/1",
 		"dressing": _arm,
+		"debug_build": OS.is_debug_build(),
 		"pid": OS.get_process_id(),
 		"viewport": [get_window().size.x, get_window().size.y],
 		"gpu": RenderingServer.get_video_adapter_name(),
@@ -93,7 +93,7 @@ func _finish(now_us: int, end_unix: float) -> void:
 		"p50_ms": float(_intervals[ceili(0.50 * count) - 1]) / 1000.0,
 		"p99_ms": float(_intervals[ceili(0.99 * count) - 1]) / 1000.0,
 		"worst_ms": float(_intervals[count - 1]) / 1000.0,
-		"over_16_7_ms": _over,
+		"over_16_7_ms": count - _intervals.bsearch(BUDGET_US, false),
 	}
 	var file: FileAccess = FileAccess.open(_out, FileAccess.WRITE)
 	if file == null or not file.store_string(JSON.stringify(row, "  ", true, true) + "\n"):

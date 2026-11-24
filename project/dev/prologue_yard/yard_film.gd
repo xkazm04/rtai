@@ -16,6 +16,7 @@ var _frames: int
 var _ppm: int
 var _count: int = 0
 var _still: String
+var _commander: bool
 
 
 func _ready() -> void:
@@ -52,7 +53,9 @@ func _start_game(args: ArenaArgs) -> void:
 		if child is PrologueView:
 			_view = child as PrologueView
 	YardCamera.hide_hud(_view)
-	_at = YardCamera.center(_game.stage.plan as PrologueYard, args.text("--place"), _first)
+	_commander = args.text("--place") == "commander"
+	if not _commander:
+		_at = YardCamera.center(_game.stage.plan as PrologueYard, args.text("--place"), _first)
 	_view.px_per_m = float(_ppm)
 	# Run the ordinary view first (including the ringing phone), then lock the print passes.
 	_view.set_process(false)
@@ -72,10 +75,10 @@ func _read_args(args: ArenaArgs) -> String:
 	if DisplayServer.get_name() == "headless" or get_window().size != SIZE:
 		return "use a 1920x1080 window"
 	if (
-		args.text("--yard-dressing") not in ["plain", "torn_line"]
-		or args.text("--place") not in ["gate", "mid", "harbor"]
+		args.text("--yard-dressing") not in ["plain", "torn_line", "line_fire"]
+		or args.text("--place") not in ["gate", "mid", "harbor", "commander"]
 	):
-		return "choose plain or torn_line and gate, mid or harbor"
+		return "choose a yard dressing and gate, mid, harbor or commander"
 	for key: String in ["--tick", "--frames", "--ppm"]:
 		if not args.text(key).is_valid_int():
 			return "expected an integer for " + key
@@ -95,7 +98,14 @@ func _process(_dt: float) -> void:
 		return
 	_view._process(SimClock.TICK_DT)
 	_view.print_stage.kick_px = Vector2.ZERO
+	if _commander:
+		var boss: Fighter = _game.encounter.battle.formation.boss
+		if boss == null or not boss.alive():
+			_fail("commander is absent at tick %d" % _game.stage.tick)
+			return
+		_at = boss.pos
 	YardCamera.place(_view, _at, _ppm)
+	_view.print_stage.lights.step(_game.stage.tick, _view.print_stage.world_px)
 	_view.blood.step(_game.stage.tick, _view.print_stage.world_px)
 	_count += 1
 	if _count == _frames:

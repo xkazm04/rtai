@@ -1,6 +1,6 @@
 class_name PrologueYardDressing
 extends RefCounted
-## Paint instructions only. Cover overrides are sampled into the stage's existing footprint.
+## Paint can be shared between dressings. Only an explicit layout replaces the stage geometry.
 
 const TABLE: String = "res://data/tables/prologue_yard_dressings.json"
 const SCHEMA: String = "gtai.prologue_yard_dressings/1"
@@ -34,10 +34,21 @@ class CoverArt:
 
 
 var id: String
+var paint_id: String
+var layout: Dictionary
+var lights: PrologueYardLights
 var ground: Array[Ground] = []
+var ground_shade: float = 1.0
 var cover: Dictionary[String, CoverArt] = {}
 var decals: Array[Piece] = []
 var factory_front: Array[Piece] = []
+var front_replaces: Rect2
+var fixtures: Array[Piece] = []
+var phone_art: String
+var phone_size: Vector2
+var shadow_reach: Vector2
+var fixture_shadow_reach: Vector2
+var shadow_tint: Color
 var outside: Array[Piece] = []
 var use_stage_decals: bool
 var ochre_strength: float
@@ -56,23 +67,50 @@ static func resolve(
 	var result: PrologueYardDressing = PrologueYardDressing.new()
 	result.id = wanted
 	var row: Dictionary = table.object(rows, wanted)
-	var plain: Dictionary = table.object(rows, "plain")
-	var ground_row: Dictionary = row if row.has("ground") else plain
-	for layer: Dictionary in table.array(ground_row, "ground"):
-		result.ground.append(_layer(table, layer))
+	if row.has("ground_shade"):
+		result.ground_shade = table.num(row, "ground_shade")
+	if row.has("lights"):
+		result.lights = PrologueYardLights.new(table, table.object(row, "lights"))
+	result.paint_id = row.get("paint_from", wanted)
+	if row.has("layout"):
+		result.layout = table.object(row, "layout")
 	var overrides: Dictionary = row.get("cover", {})
 	for key: String in overrides:
 		result.cover[key] = _cover_art(table, table.object(overrides, key))
-	result.use_stage_decals = not row.has("decals")
-	result.decals = _pieces(table, row, "decals")
-	result.factory_front = _pieces(table, row, "factory_front")
-	result.ochre_strength = table.num(row, "ochre_strength") if row.has("ochre_strength") else 0.0
-	result.outside = _pieces(table, row, "outside")
-	if row.get("include_plain_outside", false):
-		result.outside.append_array(_pieces(table, plain, "outside"))
+	var paint: Dictionary = table.object(rows, result.paint_id).merged(row, true)
+	result._read_paint(table, paint, table.object(rows, "plain"))
 	if not table.ok():
 		Log.error("prologue-yard", str(table.errors()))
 	return result
+
+
+func _read_paint(table: DataTable, row: Dictionary, plain: Dictionary) -> void:
+	var ground_row: Dictionary = row if row.has("ground") else plain
+	for layer: Dictionary in table.array(ground_row, "ground"):
+		ground.append(_layer(table, layer))
+	use_stage_decals = not row.has("decals")
+	decals = _pieces(table, row, "decals")
+	factory_front = _pieces(table, row, "factory_front")
+	fixtures = _pieces(table, row, "fixtures")
+	if row.has("phone"):
+		var phone: Dictionary = table.object(row, "phone")
+		phone_art = table.text(phone, "art")
+		phone_size = table.vec(phone, "size_m")
+	if row.has("shadows"):
+		var shadows: Dictionary = table.object(row, "shadows")
+		shadow_reach = table.vec(shadows, "reach_m")
+		fixture_shadow_reach = table.vec(shadows, "fixture_reach_m")
+		shadow_tint = Color(table.text(shadows, "tint"))
+	ochre_strength = table.num(row, "ochre_strength") if row.has("ochre_strength") else 0.0
+	outside = _pieces(table, row, "outside")
+	if row.has("front_replaces_m"):
+		var front: Dictionary = table.object(row, "front_replaces_m")
+		front_replaces = Rect2(table.vec(front, "origin"), table.vec(front, "size"))
+		for i: int in range(outside.size() - 1, -1, -1):
+			if front_replaces.has_point(outside[i].at):
+				outside.remove_at(i)
+	if row.get("include_plain_outside", false):
+		outside.append_array(_pieces(table, plain, "outside"))
 
 
 static func _layer(table: DataTable, row: Dictionary) -> Ground:

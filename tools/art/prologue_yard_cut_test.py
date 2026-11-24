@@ -38,6 +38,21 @@ def test_piece_boxes_are_independent_and_scaled_to_metres():
     assert cut["shed"].getpixel((16, 40)) == (165, 42, 42, 255)
 
 
+def test_bent_rail_keeps_its_footprint_and_mirrors_into_the_return():
+    sheet = Image.new("RGB", (42, 12), "white")
+    sheet.paste("black", (1, 1, 41, 11))
+    rail = {"id": "bend", "box": [0, 0, 42, 12], "size_m": [4, 2], "end_rise": 1, "bend": True}
+    job = {"background": "#ffffff", "px_per_m": 10,
+           "pieces": [rail, rail | {"id": "return", "mirror": True}]}
+    cut = cut_job(sheet, job)
+    shape = np.asarray(cut["bend"].getchannel("A")) == 255
+    assert shape.shape == (20, 40)
+    assert shape[:, 0].argmax() == 10
+    assert shape[:, 20].argmax() == 9
+    assert shape[:, -1].argmax() == 0
+    np.testing.assert_array_equal(np.asarray(cut["return"]), np.asarray(cut["bend"])[:, ::-1])
+
+
 def test_uniform_fit_and_isolation_keep_the_ring_hole_and_exclude_its_neighbour():
     sheet = Image.new("RGB", (28, 16), "white")
     sheet.paste("black", (3, 3, 15, 9))
@@ -57,6 +72,20 @@ def test_wide_grey_shadow_is_ink_on_the_ground():
     cut = key_piece(sheet, (255, 255, 255), (33, 33, 33))
     assert cut.getpixel((16, 8)) == (33, 33, 33, 128)
     assert cut.getpixel((4, 5)) == (160, 80, 40, 255)
+
+
+def test_outline_turn_and_opaque_trim_align_the_long_arm_to_its_footprint():
+    sheet = Image.new("RGB", (24, 16), "ivory")
+    sheet.paste("black", (3, 6, 19, 10))
+    sheet.paste("brown", (3, 6, 7, 10))
+    sheet.paste("black", (16, 1, 22, 3))
+    row = {"id": "arm", "size_m": [1, 4], "box": [0, 0, 24, 16],
+           "outline": [(2, 5), (19, 5), (19, 10), (2, 10)],
+           "turn_clockwise": True, "trim_to_solid": True}
+    arm = cut_job(sheet, {"px_per_m": 4, "pieces": [row]})["arm"]
+    assert arm.size == (4, 16)
+    assert arm.getpixel((2, 1)) == (165, 42, 42, 255)
+    assert arm.getpixel((2, 13)) == (0, 0, 0, 255)
 
 
 @pytest.mark.parametrize("width,height", [(96, 64), (67, 59)])

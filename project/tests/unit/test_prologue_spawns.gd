@@ -65,6 +65,8 @@ func test_front_patrol_and_reinforcements_cross_the_same_gate_in_order() -> void
 	var stage: ArenaStage = game.stage
 	var patrol: ProloguePatrol = game.encounter.patrol
 	var yard: PrologueYard = stage.plan as PrologueYard
+	var named: bool = patrol.dale.get_meta(&"melee_named_human", false)
+	assert_true(named)
 	for tick: int in 500:
 		game.world.loop().step()
 	var front: int = 0

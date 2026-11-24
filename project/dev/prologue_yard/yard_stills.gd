@@ -1,6 +1,8 @@
 extends Node
 
-const KNOWN_FLAGS: PackedStringArray = ["--dressing", "--tick", "--out", "--footprints", "--tilt"]
+const KNOWN_FLAGS: PackedStringArray = [
+	"--dressing", "--tick", "--out", "--footprints", "--tilt", "--layout-pair", "--dusk"
+]
 const NEEDS_WINDOW: bool = true
 const FIXED_FPS: int = 60
 const SIZE: Vector2i = Vector2i(1920, 1080)
@@ -8,6 +10,7 @@ const SIZE: Vector2i = Vector2i(1920, 1080)
 var _game: PrologueGame
 var _view: PrologueView
 var _tick: int
+var _pair: bool
 var _out: String
 @onready var _outlines: Node2D = $Guide/Footprints
 
@@ -23,7 +26,8 @@ func _ready() -> void:
 	if not raw_tick.is_valid_int() or raw_tick.to_int() < 0 or not _out.is_absolute_path():
 		_fail("use a nonnegative tick and an absolute output directory")
 		return
-	_outlines.visible = args.has("--footprints")
+	_pair = args.has("--layout-pair")
+	_outlines.visible = args.has("--footprints") and not _pair
 	_tick = raw_tick.to_int()
 	if DisplayServer.get_name() == "headless" or DirAccess.make_dir_recursive_absolute(_out) != OK:
 		_fail("capture requires a window and a writable output directory")
@@ -37,7 +41,20 @@ func _ready() -> void:
 	_game.world.set_process(false)
 	const Pilot = preload("res://dev/bots/prologue_bot.gd")
 	_game.world.loop().set_input(Pilot.new(_game.stage, _game.encounter))
-	_capture.call_deferred()
+	if args.has("--dusk"):
+		_dusk.call_deferred()
+	else:
+		_capture.call_deferred()
+
+
+func _dusk() -> void:
+	for child: Node in _game.get_children():
+		if child is PrologueView:
+			var probe: YardDuskCapture = YardDuskCapture.new(_game, child as PrologueView, _out)
+			var ok: bool = await probe.run()
+			get_tree().quit(0 if ok else 2)
+			return
+	_fail("missing prologue view")
 
 
 func _capture() -> void:
@@ -56,6 +73,9 @@ func _capture() -> void:
 	_view.set_process(false)
 	YardCamera.hide_hud(_view)
 	_outlines.transform = _view.stage_view.global_transform
+	if _pair:
+		await _layout_pair(plan)
+		return
 	if _outlines.visible:
 		if await _save(plan.rivet_start, 64, "footprints_mid_64ppm.png"):
 			get_tree().quit()
@@ -71,20 +91,48 @@ func _capture() -> void:
 func _draw_footprints() -> void:
 	for prop: ArenaStation.Prop in (_game.stage.plan as PrologueYard).stations.stations[0].props:
 		var rect: Rect2 = PrologueYardPaint.pixels(Rect2(prop.at - prop.size * 0.5, prop.size))
-		_outlines.draw_rect(rect, Color("241627"), false, 2.8)
-		_outlines.draw_rect(rect, Color("f7c8ff"), false, 1.4)
+		_outlines.draw_rect(rect, Color("241627"), false, Ink.PX_PER_M / 8.0)
+		_outlines.draw_rect(rect, Color("f7c8ff"), false, Ink.PX_PER_M / 16.0)
 
 
-func _save(at: Vector2, ppm: int, file: String) -> bool:
+func _frame(at: Vector2, ppm: int) -> Image:
 	YardCamera.place(_view, at, ppm)
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
-	var image: Image = get_viewport().get_texture().get_image()
-	var valid: bool = image != null and image.get_size() == SIZE and _game.stage.tick == _tick
-	if not valid or image.save_png(_out.path_join(file)) != OK:
-		_fail("capture failed at tick %d for %s" % [_game.stage.tick, _out.path_join(file)])
+	var frame: Image = get_viewport().get_texture().get_image()
+	if frame == null or frame.get_size() != SIZE or _game.stage.tick != _tick:
+		_fail("capture failed at tick %d" % _game.stage.tick)
+		return null
+	return frame
+
+
+func _save(at: Vector2, ppm: int, file: String) -> bool:
+	var frame: Image = await _frame(at, ppm)
+	return frame != null and _write_frame(frame, file)
+
+
+func _layout_pair(plan: PrologueYard) -> void:
+	var at: Vector2 = plan.yard.get_center()
+	var art: Image = await _frame(at, 32)
+	if art == null:
+		return
+	_outlines.show()
+	var guide: Image = await _frame(at, 32)
+	if guide == null:
+		return
+	var pair: Image = Image.create_empty(SIZE.x * 2, SIZE.y, false, art.get_format())
+	var full: Rect2i = Rect2i(Vector2i.ZERO, SIZE)
+	pair.blit_rect(art, full, Vector2i.ZERO)
+	pair.blit_rect(guide, full, Vector2i(SIZE.x, 0))
+	if _write_frame(pair, "layout_t%04d.png" % _tick):
+		get_tree().quit()
+
+
+func _write_frame(frame: Image, file: String) -> bool:
+	if frame.save_png(_out.path_join(file)) != OK:
+		_fail("could not write " + file)
 		return false
-	Log.info("yard-stills", "%s at %s m, tilt %.0f" % [file, at, ViewMode.shared().pitch_deg])
+	Log.info("yard-stills", "%s at tick %d" % [file, _tick])
 	return true
 
 

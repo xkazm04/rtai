@@ -14,9 +14,13 @@ var _paint: PrologueYardPaint = PrologueYardPaint.new()
 
 
 func _ready() -> void:
-	if plan != null and plan.dressing.ochre_strength > 0.0:
+	if plan == null:
+		return
+	var shade: float = plan.dressing.ground_shade
+	self_modulate = Color(shade, shade, shade)
+	if plan.dressing.ochre_strength > 0.0:
 		_paint.attach_ochre(self, plan)
-	if plan != null and plan.dressing.id == "torn_line":
+	if plan.dressing.paint_id == "torn_line":
 		_use_painted_cracks()
 
 
@@ -43,12 +47,12 @@ func _draw() -> void:
 	_street_surface(margin)
 	_crossing()
 	# The back fence passes behind the loading hall. The yard perimeter still blocks travel.
-	if not plan.dressing.factory_front.is_empty():
+	if not plan.dressing.factory_front.is_empty() and not plan.dressing.front_replaces.has_area():
 		_fence(plan.fences[0])
 	_paint.stamps(self, plan.dressing.outside)
-	if plan.dressing.use_stage_decals:
-		_stage_decals()
+	_stage_decals()
 	_paint.stamps(self, plan.dressing.decals)
+	_paint.shadows(self, plan)
 	_paint.stamps(self, plan.dressing.factory_front)
 	for wreck: PrologueYard.Wreck in plan.wrecks:
 		var skin: PrologueYardDressing.CoverArt = plan.dressing.cover.get(wreck.id)
@@ -56,13 +60,23 @@ func _draw() -> void:
 		if wreck.shell and skin == null:
 			_broken_sill(_pixels(wreck.footprint))
 	_draw_fences(margin)
+	_paint.stamps(self, plan.dressing.fixtures)
 	for phone: String in stage.layout.phones:
-		_sprite("payphone", stage.layout.phones[phone], Vector2(1.3, 1.3))
+		_yard_phone(stage.layout.phones[phone])
 	if not plan.exit_open:
 		var size_m: Vector2 = Vector2(plan.gate_width_m, 0.22)
 		var barrier: Rect2 = _pixels(Rect2(plan.gate - size_m * 0.5, size_m))
 		draw_rect(barrier.grow(1.5), Ink.INK)
 		draw_rect(barrier, Color("57758e"))
+
+
+func _yard_phone(at: Vector2) -> void:
+	var look: PrologueYardDressing = plan.dressing
+	if look.phone_art.is_empty():
+		_sprite("payphone", at, Vector2(1.3, 1.3))
+		return
+	var box: Rect2 = Rect2(at - look.phone_size * Vector2(0.5, 1.0), look.phone_size)
+	draw_texture_rect(_paint.texture(look.phone_art), _pixels(box), false)
 
 
 func _surround_m() -> float:
@@ -102,12 +116,17 @@ func _draw_fences(margin: float) -> void:
 		elif fence.position.y == plan.far_sidewalk.end.y:
 			visible_box = fence.grow_individual(margin, 0, margin, 0)
 		_fence(visible_box)
-	if plan.dressing.id == "torn_line":
+	if plan.dressing.id == "line_fire":
+		PrologueFactoryFence.parked_leaf(self, plan)
+	elif plan.dressing.paint_id == "torn_line":
 		PrologueYardFence.open_leaf(self, plan)
 
 
 func _fence(box: Rect2) -> void:
-	if plan.dressing.id == "torn_line":
+	if plan.dressing.id == "line_fire" and box.position.y < plan.far_sidewalk.end.y:
+		PrologueFactoryFence.panel(self, box)
+		return
+	if plan.dressing.paint_id == "torn_line":
 		PrologueYardFence.panel(self, box)
 		return
 	draw_rect(_pixels(box), Ink.INK)
@@ -115,10 +134,13 @@ func _fence(box: Rect2) -> void:
 
 
 func _stage_decals() -> void:
-	for stain: Rect2 in plan.scorch_marks:
-		draw_texture_rect(SCORCH, _pixels(stain), false)
+	if plan.dressing.use_stage_decals:
+		for stain: Rect2 in plan.scorch_marks:
+			draw_texture_rect(SCORCH, _pixels(stain), false)
+	elif plan.dressing.layout.is_empty():
+		return
 	for piece: PrologueYard.Wreck in plan.debris:
-		_paint.wreck(self, piece, Color.WHITE, null)
+		_paint.wreck(self, piece, piece.tint, null)
 
 
 ## A fractured concrete lintel under the surviving sawtooth bays. Where a panel

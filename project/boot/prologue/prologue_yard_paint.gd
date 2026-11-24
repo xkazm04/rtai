@@ -68,6 +68,28 @@ func stamps(canvas: CanvasItem, pieces: Array[PrologueYardDressing.Piece]) -> vo
 	canvas.draw_set_transform(Vector2.ZERO)
 
 
+## Project each silhouette from its base along the ground, away from the burning hall.
+func shadows(canvas: CanvasItem, plan: PrologueYard) -> void:
+	var look: PrologueYardDressing = plan.dressing
+	if look.shadow_reach == Vector2.ZERO:
+		return
+	for cover: PrologueYard.Wreck in plan.wrecks:
+		_shadow(canvas, texture(cover.art), cover.footprint, look.shadow_reach, look.shadow_tint)
+	for piece: PrologueYardDressing.Piece in look.fixtures:
+		var box: Rect2 = Rect2(piece.at - piece.size_m * 0.5, piece.size_m)
+		_shadow(canvas, texture(piece.art), box, look.fixture_shadow_reach, look.shadow_tint)
+	canvas.draw_set_transform(Vector2.ZERO)
+
+
+func _shadow(canvas: CanvasItem, art: Texture2D, box: Rect2, reach_m: Vector2, tint: Color) -> void:
+	var base: Vector2 = Ink.px(Vector2(box.position.x, box.end.y))
+	var reach: Vector2 = Ink.px(reach_m)
+	canvas.draw_set_transform_matrix(
+		Transform2D(Vector2.RIGHT, -reach / art.get_height(), base + reach)
+	)
+	canvas.draw_texture_rect(art, Rect2(0, 0, Ink.px(box.size).x, art.get_height()), false, tint)
+
+
 func wreck(
 	canvas: CanvasItem, piece: PrologueYard.Wreck, tint: Color, skin: PrologueYardDressing.CoverArt
 ) -> void:
@@ -75,8 +97,14 @@ func wreck(
 	var crop: Rect2 = skin.crop if skin != null else piece.crop
 	var source: Rect2 = Rect2(crop.position * art.get_size(), crop.size * art.get_size())
 	var box: Rect2 = pixels(piece.footprint)
-	if skin == null:
+	if skin == null and is_zero_approx(piece.rotation):
 		canvas.draw_texture_rect_region(art, box, source, tint)
+		return
+	if skin == null:
+		var center: Vector2 = box.get_center()
+		canvas.draw_set_transform(center, piece.rotation)
+		canvas.draw_texture_rect_region(art, Rect2(-box.size * 0.5, box.size), source, tint)
+		canvas.draw_set_transform(Vector2.ZERO)
 		return
 	canvas.draw_set_transform_matrix(cover_transform(box, source.size, piece.shell))
 	canvas.draw_texture_rect_region(art, Rect2(-source.size * 0.5, source.size), source)
@@ -108,5 +136,5 @@ func _draw_ochre(
 	stamps(canvas, marks)
 	for piece: PrologueYard.Wreck in plan.wrecks:
 		var skin: PrologueYardDressing.CoverArt = plan.dressing.cover.get(piece.id)
-		if skin != null:
+		if skin != null or not plan.dressing.layout.is_empty():
 			wreck(canvas, piece, Color.WHITE, skin)

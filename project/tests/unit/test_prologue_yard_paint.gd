@@ -154,6 +154,7 @@ func test_single_swatch_ignores_the_tile_size_and_stretches_across_the_layer() -
 
 func test_press_draws_the_table_crop_in_plain_and_the_welding_arm_in_torn_line() -> void:
 	var data: DataTable = DataTable.open(PrologueGame.TABLE, PrologueGame.SCHEMA)
+	data.raw["yard"]["dressing"] = "torn_line"
 	var plan: PrologueYard = PrologueYard.from_stage(data)
 	var paint: SamplePaint = SamplePaint.new()
 	paint.swatch = _margin_swatch()

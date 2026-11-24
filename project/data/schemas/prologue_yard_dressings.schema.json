@@ -46,6 +46,53 @@
       ],
       "type": "object"
     },
+    "debris": {
+      "additionalProperties": false,
+      "properties": {
+        "art": {
+          "pattern": "^res://(features/[a-z0-9_/]+|boot/prologue/art/[a-z0-9_/]+)\\.png$",
+          "type": "string"
+        },
+        "at": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "crop": {
+          "$ref": "#/$defs/crop"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "rotation_deg": {
+          "type": "number"
+        },
+        "size_m": {
+          "items": {
+            "minimum": 0.001,
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "tint": {
+          "pattern": "^[a-fA-F0-9]{6}([a-fA-F0-9]{2})?$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "art",
+        "at",
+        "id",
+        "size_m"
+      ],
+      "type": "object"
+    },
     "dressing": {
       "additionalProperties": false,
       "properties": {
@@ -101,14 +148,190 @@
           },
           "type": "array"
         },
+        "fixtures": {
+          "items": {
+            "$ref": "#/$defs/piece"
+          },
+          "type": "array"
+        },
+        "front_replaces_m": {
+          "$ref": "#/$defs/rect"
+        },
         "ground": {
           "items": {
             "$ref": "#/$defs/layer"
           },
           "type": "array"
         },
+        "ground_shade": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
         "include_plain_outside": {
           "type": "boolean"
+        },
+        "layout": {
+          "additionalProperties": false,
+          "properties": {
+            "cover": {
+              "items": {
+                "$ref": "#/$defs/footprint"
+              },
+              "type": "array"
+            },
+            "debris": {
+              "items": {
+                "$ref": "#/$defs/debris"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "cover",
+            "debris"
+          ],
+          "type": "object"
+        },
+        "lights": {
+          "additionalProperties": false,
+          "properties": {
+            "grade": {
+              "additionalProperties": false,
+              "properties": {
+                "accent_keep": {
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "gamma": {
+                  "maximum": 4,
+                  "minimum": 0.5,
+                  "type": "number"
+                },
+                "id": {
+                  "const": "dusk"
+                },
+                "paper_level": {
+                  "maximum": 1,
+                  "minimum": 0.05,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "accent_keep",
+                "gamma",
+                "id",
+                "paper_level"
+              ],
+              "type": "object"
+            },
+            "kinds": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "alt_color": {
+                    "pattern": "^[a-fA-F0-9]{6}$",
+                    "type": "string"
+                  },
+                  "color": {
+                    "pattern": "^[a-fA-F0-9]{6}$",
+                    "type": "string"
+                  },
+                  "cone_deg": {
+                    "maximum": 180,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "flicker_hz": {
+                    "maximum": 2.5,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "id": {
+                    "enum": [
+                      "yard_fire",
+                      "yard_lamp"
+                    ]
+                  },
+                  "intensity": {
+                    "maximum": 2,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "life_ticks": {
+                    "const": 0
+                  },
+                  "radius_m": {
+                    "maximum": 64,
+                    "minimum": 0.1,
+                    "type": "number"
+                  },
+                  "steps": {
+                    "maximum": 8,
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "alt_color",
+                  "color",
+                  "cone_deg",
+                  "flicker_hz",
+                  "id",
+                  "intensity",
+                  "life_ticks",
+                  "radius_m",
+                  "steps"
+                ],
+                "type": "object"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            },
+            "pools": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "at": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 2,
+                    "minItems": 2,
+                    "type": "array"
+                  },
+                  "id": {
+                    "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+                    "type": "string"
+                  },
+                  "kind": {
+                    "enum": [
+                      "yard_fire",
+                      "yard_lamp"
+                    ]
+                  }
+                },
+                "required": [
+                  "at",
+                  "id",
+                  "kind"
+                ],
+                "type": "object"
+              },
+              "maxItems": 16,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "grade",
+            "kinds",
+            "pools"
+          ],
+          "type": "object"
         },
         "ochre_strength": {
           "maximum": 1,
@@ -120,9 +343,108 @@
             "$ref": "#/$defs/piece"
           },
           "type": "array"
+        },
+        "paint_from": {
+          "enum": [
+            "torn_line"
+          ]
+        },
+        "phone": {
+          "additionalProperties": false,
+          "properties": {
+            "art": {
+              "pattern": "^res://(features/[a-z0-9_/]+|boot/prologue/art/[a-z0-9_/]+)\\.png$",
+              "type": "string"
+            },
+            "size_m": {
+              "items": {
+                "minimum": 0.001,
+                "type": "number"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            }
+          },
+          "required": [
+            "art",
+            "size_m"
+          ],
+          "type": "object"
+        },
+        "shadows": {
+          "additionalProperties": false,
+          "properties": {
+            "fixture_reach_m": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            },
+            "reach_m": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            },
+            "tint": {
+              "pattern": "^[a-fA-F0-9]{6}([a-fA-F0-9]{2})?$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "fixture_reach_m",
+            "reach_m",
+            "tint"
+          ],
+          "type": "object"
         }
       },
       "required": [],
+      "type": "object"
+    },
+    "footprint": {
+      "additionalProperties": false,
+      "properties": {
+        "art": {
+          "pattern": "^res://(features/[a-z0-9_/]+|boot/prologue/art/[a-z0-9_/]+)\\.png$",
+          "type": "string"
+        },
+        "at": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "crop": {
+          "$ref": "#/$defs/crop"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "size_m": {
+          "items": {
+            "minimum": 0.001,
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "art",
+        "at",
+        "id",
+        "size_m"
+      ],
       "type": "object"
     },
     "layer": {
