@@ -84,6 +84,11 @@ NEXT: (session 5) 1. Read `evidence/briefs/gate-n27-reels.out` (last line `gate:
 
 ## Session 5 (09:30, iteration 5, STABILIZE)
 - 09:31 START. No builder running (no lock), reels gate pid 83512 gone.
-- 09:32 MILESTONE reels gate: `gate: PASS; ...uild\gate8917d6a1bab\gate.json` (`PASS reels: exit 0`). Quoted in REPORT; out file committed. No code changes this session.
+- 09:32 MILESTONE reels gate: `gate: PASS; ...uildgate8917d6a1babgate.json` (`PASS reels: exit 0`). Quoted in REPORT; out file committed. No code changes this session.
+
+NEXT: nothing left for this lane; the Director merges `n27-yard` (keep this JOURNAL/REPORT on the add/add conflict). IMAGES 5/15.
+
+## Session 6 (09:31, iteration 6, STABILIZE)
+- 09:33 START. No builder lock, no Godot of this lane running. REPORT complete: gate PASS `5c0edce51`, reels gate PASS `58917d6a1`; cites 28/28 ok. Fixed the mangled reels path in the session 5 line. No code changes.
 
 NEXT: nothing left for this lane; the Director merges `n27-yard` (keep this JOURNAL/REPORT on the add/add conflict). IMAGES 5/15.
