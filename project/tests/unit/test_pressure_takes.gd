@@ -20,25 +20,51 @@ func _run(id: String) -> PressureTake:
 	return take
 
 
-func _hit_share(take: PressureTake) -> float:
-	return float(take.pair.hits) / maxf(float(take.pair.launches), 1.0)
+func _damaging_share(take: PressureTake) -> float:
+	var pair: PressurePair = take.pair
+	return float(pair.direct + pair.splash) / maxf(float(pair.launches), 1.0)
 
 
 func test_steady_circle_is_hit_and_goes_down() -> void:
 	var take: PressureTake = _run("pair_circle")
-	assert_gt(take.pair.launches, 4, "both troopers keep firing")
-	assert_gt(_hit_share(take), 0.6, "a steady circle is hit by most rockets")
-	assert_gt(take.pair.death_tick, 0, "and goes down")
-	assert_lt(take.pair.death_tick, 15 * SimClock.TICK_RATE)
+	var pair: PressurePair = take.pair
+	assert_gt(pair.launches, 4, "both troopers keep firing")
+	assert_gt(_damaging_share(take), 0.6, "a steady circle takes damage from most rockets")
+	assert_gt(pair.death_tick, 0, "and goes down")
+	assert_lt(pair.death_tick, 10 * SimClock.TICK_RATE)
+	assert_eq(pair.hp_at_10s, 0.0, "he is already down when the 10 s mark passes")
+	assert_eq(pair.other, 0, "every HP lost came from a rocket")
+	assert_almost_eq(pair.hp_lost, take.arena.rivet.max_hp, 0.01, "the split sums to his health")
 
 
 func test_dash_across_each_line_takes_far_less() -> void:
 	var circle: PressureTake = _run("pair_circle")
 	var dash: PressureTake = _run("pair_dash")
+	var pair: PressurePair = dash.pair
 	assert_gt(dash.session.pilot.motion.dashes, 5, "he dashes on the rocket lines")
-	assert_eq(dash.pair.death_tick, 0, "and survives the whole take")
-	assert_lt(_hit_share(dash), _hit_share(circle) * 0.5, "far fewer rockets land")
+	assert_gt(pair.dash_presses, dash.session.pilot.motion.dashes, "some presses fall in cooldown")
+	assert_eq(pair.death_tick, 0, "and survives the whole take")
+	assert_lt(_damaging_share(dash), _damaging_share(circle) * 0.5, "far fewer rockets land")
 	assert_gt(dash.arena.rivet.hp, 50.0)
+	assert_between(pair.hp_at_10s, 90.0, 100.0, "nearly untouched at 10 s")
+	assert_almost_eq(pair.hp_lost, 100.0 - dash.arena.rivet.hp, 0.01, "the split sums to HP lost")
+	assert_gt(pair.splash, 0, "rockets that miss still graze him with their blast")
+
+
+func test_circle_pulls_back_to_the_radius_from_either_side() -> void:
+	var take: PressureTake = PressureTake.new()
+	assert_true(take.open("pair_circle", 1))
+	_takes.append(take)
+	for gap: float in [20.0, 9.0, 4.0]:
+		take.arena.rivet.pos = take.pair.centre + Vector2(gap, 0)
+		var input: TickInput = TickInput.new()
+		@warning_ignore("return_value_discarded")
+		take.pair.drive(input, 1)
+		var pull: float = clampf((PressurePair.RADIUS_M - gap) * 0.5, -0.6, 0.6)
+		var along: float = pull / sqrt(1.0 + pull * pull)
+		assert_almost_eq(
+			float(input.move_x), along * TickInput.AXIS_MAX, 1.5, "inward pull at %.0f m" % gap
+		)
 
 
 func test_guard_at_6m_returns_enough_rounds_to_read_a_share() -> void:

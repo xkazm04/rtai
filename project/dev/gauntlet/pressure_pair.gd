@@ -2,17 +2,23 @@ class_name PressurePair
 extends RefCounted
 ## Two rocket troopers on the street and Rivet circling them at RADIUS_M without shooting back.
 ## With `dodge` he also dashes across each rocket's flight line a read-time after it leaves the
-## launcher, as the average bot profile does. Counts every launch and every damaging impact.
+## launcher, as the average bot profile does. Counts every launch and splits each HP drop into a
+## rocket that burst on his body (direct), a blast that only reached him (splash) or anything else.
 
 const RADIUS_M: float = 10.0
 const GAP_M: float = 3.0
+const CONTACT_SLACK_M: float = 0.01
 const TROOPER: StringName = &"rocket_trooper"
 
 var dodge: bool
 var centre: Vector2
 var troopers: Array[Fighter] = []
 var launches: int = 0
-var hits: int = 0
+var direct: int = 0
+var splash: int = 0
+var other: int = 0
+var hp_lost: float = 0.0
+var dash_presses: int = 0
 var first_launch: int = 0
 var death_tick: int = 0
 var hp_at_10s: float = -1.0
@@ -49,6 +55,7 @@ func drive(input: TickInput, tick: int) -> Vector2:
 	if dodge and not _due.is_empty() and tick >= _due[0]:
 		@warning_ignore("return_value_discarded")
 		_due.pop_front()
+		dash_presses += 1
 		var side: Vector2 = _lines.pop_front()
 		move = side if side.dot(move) >= 0.0 else -side
 		input.buttons |= 1 << _session.actions.bit(&"dash")
@@ -57,7 +64,7 @@ func drive(input: TickInput, tick: int) -> Vector2:
 	return _arena.rivet.pos.direction_to(mid)
 
 
-## After the stage stepped: log new rockets, HP lost and the moment he fell.
+## After the stage stepped: log new rockets, any HP not taken by a rocket, and the moment he fell.
 func observe(tick: int) -> void:
 	for shot: Shot in _arena.shots:
 		if shot is FoeRocketFlight.Round and not shot.has_meta(&"pair_seen"):
@@ -66,8 +73,12 @@ func observe(tick: int) -> void:
 			first_launch = first_launch if first_launch > 0 else tick
 			_due.append(tick + _read)
 			_lines.append(shot.vel.normalized().orthogonal())
-	if _arena.rivet.hp < _hp:
-		hits += 1
+			@warning_ignore("return_value_discarded")
+			(shot as FoeRocketFlight.Round).landed.connect(_landed)
+	var rest: float = _hp - _arena.rivet.hp
+	if rest > 0.0:
+		other += 1
+		hp_lost += rest
 	_hp = _arena.rivet.hp
 	if tick == 10 * SimClock.TICK_RATE:
 		hp_at_10s = _hp
@@ -78,11 +89,29 @@ func observe(tick: int) -> void:
 func summary() -> Dictionary:
 	return {
 		"launches": launches,
-		"rocket_hits": hits,
+		"direct": direct,
+		"splash": splash,
+		"other": other,
+		"hp_lost": hp_lost,
 		"first_launch": first_launch,
 		"death_tick": death_tick,
 		"hp_at_10s": hp_at_10s,
+		"dash_presses": dash_presses,
 	}
+
+
+## A rocket burst; the sim has already dealt its blast. A burst on his body (the burst point inside
+## his radius, where the blast has full strength) is a direct hit, one beside him a splash graze.
+func _landed(_shot: FoeRocketFlight.Round, at: Vector2) -> void:
+	var dealt: float = _hp - _arena.rivet.hp
+	if dealt <= 0.0:
+		return
+	if at.distance_to(_arena.rivet.pos) <= _arena.rivet.radius_m + CONTACT_SLACK_M:
+		direct += 1
+	else:
+		splash += 1
+	hp_lost += dealt
+	_hp = _arena.rivet.hp
 
 
 func _midpoint() -> Vector2:

@@ -107,38 +107,56 @@ static func _pair(id: String, rows: Array[Dictionary]) -> Array[String]:
 	var out: Array[String] = [
 		"## %s" % id,
 		"",
-		"| seed | launches | hits | down at (s) | HP at 10 s | dashes |",
-		"|---:|---:|---:|---:|---:|---:|",
+		"| seed | rockets | direct | splash | other | HP lost | down at (s) | HP at 10 s | dashes |",
+		"|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
 	]
 	var downs: int = 0
+	var lost: Array[float] = []
 	for r: Dictionary in rows:
 		if not r.opened:
-			out.append("| %d | did not open | | | | |" % r.seed)
+			out.append("| %d | did not open | | | | | | | |" % r.seed)
 			continue
 		var down: String = "alive"
 		var death: int = r.death_tick
-		var hp10: float = r.hp_at_10s
 		if death > 0:
 			down = "%.1f" % (death / 60.0)
 			downs += 1
-		out.append(
-			(
-				"| %d | %d | %d | %s | %s | %d |"
-				% [r.seed, r.launches, r.rocket_hits, down, _hp(hp10), r.dashes]
-			)
-		)
-	var k: int = _sum(rows, "rocket_hits")
-	var n: int = _sum(rows, "launches")
-	var w: Vector2 = wilson(k, n)
-	out.append("")
-	out.append(
-		(
-			"Pooled hits/launches %d/%d = %s (Wilson 95%% [%.1f, %.1f]); down in %d of %d seeds."
-			% [k, n, _pct(k, n), w.x, w.y, downs, rows.size()]
-		)
-	)
-	out.append("")
+		var taken: float = r.hp_lost
+		var hp10: float = r.hp_at_10s
+		lost.append(taken)
+		var cells: Array = [r.seed, r.launches, r.direct, r.splash, r.other, "%.1f" % taken]
+		cells.append_array([down, _hp(hp10), r.dashes])
+		out.append("| " + " | ".join(cells.map(str)) + " |")
+	out.append_array(_pair_pooled(rows, lost, downs))
 	return out
+
+
+static func _pair_pooled(rows: Array[Dictionary], lost: Array[float], downs: int) -> Array[String]:
+	var n: int = _sum(rows, "launches")
+	var k: int = _sum(rows, "direct")
+	var w: Vector2 = wilson(k, n)
+	var s: int = _sum(rows, "splash")
+	var ws: Vector2 = wilson(s, n)
+	lost.sort()
+	@warning_ignore("integer_division")
+	var half: int = lost.size() / 2
+	var middle: float = (lost[half] + lost[maxi(half - 1 + lost.size() % 2, 0)]) / 2.0
+	return [
+		"",
+		(
+			"Pooled direct/rockets %d/%d = %s (Wilson 95%% [%.1f, %.1f]); other %d."
+			% [k, n, _pct(k, n), w.x, w.y, _sum(rows, "other")]
+		),
+		(
+			"Pooled splash/rockets %d/%d = %s (Wilson 95%% [%.1f, %.1f])."
+			% [s, n, _pct(s, n), ws.x, ws.y]
+		),
+		(
+			"HP lost median %.1f per seed (max %.1f); down in %d of %d seeds."
+			% [middle, lost[-1], downs, rows.size()]
+		),
+		"",
+	]
 
 
 static func _pct(k: int, n: int) -> String:

@@ -131,7 +131,11 @@ func _detail() -> String:
 			var end: String = tr("Down at %.1f s") % (shot.pair.death_tick / 60.0)
 			if shot.pair.death_tick == 0:
 				end = tr("Dashes %d") % shot.session.pilot.motion.dashes
-			return tr("Rockets %d    Hits %d\n%s") % [shot.pair.launches, shot.pair.hits, end]
+			var pair: PressurePair = shot.pair
+			return (
+				tr("Rockets %d    Direct %d    Splash %d    HP lost %.0f\n%s")
+				% [pair.launches, pair.direct, pair.splash, pair.hp_lost, end]
+			)
 		"rockets":
 			return tr("Rivet / amber     Trooper / ice blue")
 	return (

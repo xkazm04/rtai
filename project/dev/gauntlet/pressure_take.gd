@@ -28,6 +28,7 @@ var length: int
 var mark: Vector2
 var rifles: PressureRifles = PressureRifles.new()
 var pair: PressurePair = PressurePair.new()
+var moments: PressureMoments = PressureMoments.new()
 var contacts: int = 0
 var rockets: PressureLaunches = PressureLaunches.new()
 var first_dash: int = 0
@@ -123,6 +124,7 @@ func advance() -> void:
 	input.buttons |= PlayerCommand.pack_aim(aim, session.actions, 16.0)
 	session.stage.step(tick, input)
 	rifles.observe(tick)
+	moments.observe(self)
 	if take.begins_with("pair"):
 		pair.observe(tick)
 		return
@@ -192,4 +194,5 @@ func summary() -> Dictionary:
 	}
 	row.merge(rifles.summary())
 	row.merge(pair.summary())
+	row.merge(moments.summary())
 	return row
