@@ -1,0 +1,53 @@
+All three parts are committed. The mutation run did not finish, so there is no killed/(killed+survived) score.
+
+## Commits
+- `58a1b8d07` Bond: master at 30, Kerf cuts that hurt a boss earn 3
+- `1a6badfc8` Mastery is free: a mastery card no longer spends the rest's pick
+- `6522ce667` Ten-seed bond table for master_at 30: pace and free arms, `--mastery-free` flag
+
+## Part A
+- **Bond values:** `bond.master_at` is 30 and the new `bond.per_boss_cut` is 3, in `ghost_forms.json`, the schema, the table reader and the doc string.
+- **Boss cuts:** the strike counts a Kerf cut as a boss cut when `_boss()` is true, the capped damage is above 0 and the boss survives. A cut that kills the boss counts as a kill only. `GhostBond.record` takes an optional fourth argument for the cuts.
+- **Tests:** the new `test_ghost_boss_cut.gd` covers:
+  - the table reads 30 and 3;
+  - a boss cut awards 3;
+  - a killing boss cut awards 4 and no cut;
+  - a non-boss Kerf cut awards no cut, and a kill is still 4;
+  - a cut with damage 0 awards nothing;
+  - the cap holds at `master_at`.
+- **Existing tests:** the ones that hard-coded 25 now use 30.
+- **TOUCH keys `ghost_deploy.gd:54`:** one line passes `strike.release_boss_cuts` to `record`. I found no design that avoids it, because the strike has no reference to the bond.
+
+## Part B
+- **`bond.mastery_free`:** true in `ghost_forms.json` (with schema); false is last night's rule.
+- **Taking a free mastery:** the card is applied at once and leaves the hand, and the rest stays open for the one normal pick. Two ready masteries are each free. A hand of only masteries ends the rest after they are taken. The draw and its RNG calls are untouched.
+- **Card screen:** the rest screen needed no code change. It rebuilds from `pick_offered`, which is re-emitted with the reduced hand, so the taken card simply leaves. I did not run the windowed 60 s check.
+- **Bot order:** `bot_pick.gd` needed no change. Its existing "master first" rule already takes every offered mastery, then picks among the rest as before. `test_bot_pick_mastery.gd` covers both greedy and random.
+- **Integration tests:** `test_gauntlet_mastery.gd` covers paid mastery with the flag off, a free mastery followed by one normal pick, two free masteries, and an all-mastery rest. The old tests run under `mastery_free = false`.
+- **Test results:** `run_unit.mjs --changed` ran the full suite: 4097 passed, 0 failed, 2 skipped, 1 FLAKY (`test_audio_driving.gd`, passed on re-run).
+- **Scenarios:** `scenario-tests: 68 passed (headless)`. Tapes and replays did not move.
+
+## Part C
+Both arms ran 10 seeds on HEAD, headless, average test player, greedy picks, wheel controls, to wave 15 or death. Table: `evidence/n27/bond/mastery.md` and `.json`.
+
+| | Runs with a mastery | First-mastery waves | Median | In wave 8..15 | Kerf mastered |
+|---|---|---|---|---|---|
+| n26 (25, no boss cuts) | 6/10 | 2, 4, 4, 8, 8, 8 | 6 | 3 | no |
+| n27 `pace` (30 + boss cuts) | 4/10 | 3, 3, 4, 8 | 3.5 | 1 | no |
+| n27 `free` (30 + boss cuts + free mastery) | 4/10 | 3, 3, 4, 8 | 3.5 | 1 | no |
+
+- **Who mastered:** Tonnage at waves 3, 3 and 4, and Ohm at wave 8 on seed 5. The `pace` arm swaps seed 8's Tonnage at wave 4 for Ohm at wave 7.
+- **Kerf:** never mastered. His bond at death on seeds 1 to 10 in the `free` arm was 0, 0, 0, 0, 28, 0, 14, 0, 0, 6, with boss cuts of 0, 0, 0, 0, 4, 0, 2, 0, 0, 2.
+- **Free mastery's effect:** it changed how long some runs lasted (seed 1 reached wave 9 instead of 5, seed 5 wave 12 instead of 10) but not the mastery waves.
+- **Band missed:** five of ten runs die by wave 7, before any rest in the band.
+- **Value that would move it:** `master_at` 22 would put three first masteries at waves 8, 8 and 9. 30 gives one and 25 gives two. This is an estimate from the `free` arm's bond curves, not a re-run, and early Tonnage masteries at waves 2 to 4 would remain.
+
+`bond_measure` takes `--mastery-free=0|1` in its own `KNOWN` list. Its release rows now carry `boss_cuts`. The debt baseline moved for dev lines; I recorded it with the debt tool's accept flag.
+
+## Deviations and needs
+- **TOUCH `gauntlet_waves.gd`:** not on the allowlist, but the rest-ending logic is in `choose()`. The change is three lines plus a new `GauntletDraw.take()` and `last_offer`, which kept the file at 200 lines.
+- **NEED `gauntlet_run.schema.json`:** the schema allows no extra field on a pick. So a free mastery is its own `run.picks` entry (`taken: master_*`) beside the rest's normal pick, instead of a separate field. If you want the separate field, I need that schema path.
+- **Not done:** the mutation run on `ghost_bond.gd` (`--max=20`) was cut off at the 900 s timeout, so there is no score.
+- **Left alone:** a `gtai-mutate-dc83624c` temp worktree belongs to another lane. I removed only my own.
+
+[builder: 3896s, exit 0, $1.65]
