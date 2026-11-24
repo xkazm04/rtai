@@ -54,3 +54,10 @@ Env for every Godot run: `APPDATA=C:/Users/kazda/kiro/gtai-n27/appdata/melee`,
 - `node tools/film/owner_takes.mjs C:/Users/kazda/kiro/gtai-masters/n27/melee 32 claw_shock` -> `films/claw_shock_robots.mp4`,
   ffprobe `1920,1080,60/1,27.200000,1632` (before kept as `claw_shock_robots_before.mp4`).
 - `node --test tools/film/melee.test.mjs` -> 1 pass.
+
+## Mutate (06:42-06:52, 614 s)
+`node tools/mutate/mutate.mjs --file=project/features/combat/kills/electric_chassis.gd --max=20` (tests: test_electric_wreck,
+test_robot_wreck_plates): **killed 7 / (7 + 13 survived) = 35 %**, 0 timeout, 0 invalid. Survivors are the geometry of the plates
+(size 0.91/0.49 m, z 25/26, the cap offset, `_size` maths) and the shield apron copy at line 25: no test pins where the plates sit
+or how big they are. Next: assert plate width (`get_rect().size.x * scale.x == 0.91 * ppm`), z order and the cap offset in
+test_robot_wreck_plates.gd.
