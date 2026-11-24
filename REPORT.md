@@ -6,7 +6,8 @@ Branch `n28-keys` from `main` `d0ab9d03a`; worktree `C:\Users\kazda\kiro\gtai-wt
 (60/68 ran ok; four lanes' gates on the machine: rivet_throw 204.7 s vs 7.8 s alone), PASS parity (bit for bit, mutation
 caught at step 629), PASS selftest, PASS export-audit (995/0), PASS reels (exit 0); `build/gate/15eb8730107e/gate.json`.
 The same code ran 68/68 scenarios ok alone at 22:25 (`build/scen_n28.log`); the 8 not reached in the gate are re-run alone
-in session 6 (`build/scen8_n28.log`, result in JOURNAL). Films and stills: `C:\Users\kazda\kiro\gtai-masters\n28\keys\`
+in session 6 on HEAD: **8 passed** (`build/scen8_n28.log`, 00:15). So all 68 scenarios pass on this code; only the gate's
+wall-clock budget failed. Films and stills: `C:\Users\kazda\kiro\gtai-masters\n28\keys\`
 (`frames.json`). Builder: in-session Sonnet subagents from 18:03 (builder.mjs's account hit its weekly limit at 17:44).
 
 ## What works
