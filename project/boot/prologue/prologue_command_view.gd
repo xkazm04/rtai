@@ -47,9 +47,10 @@ func attach(view: PrologueView, stage: ArenaStage, pose: Callable, master_seed: 
 func _process(_dt: float) -> void:
 	var boss: Fighter = _battle.formation.boss
 	_bar.visible = boss != null and boss.alive()
-	_dress.visible = _bar.visible
+	_dress.visible = _bar.visible and CastCards.current(&"sergeant_mulroney") == null
 	if _bar.visible:
 		var progress: float = _battle.fire.shotgun.pump_progress(_stage.tick)
+		FoeCastView.set_pump(boss, progress, progress == 0.0)
 		_dress.pump = progress
 		if _dress.visible:
 			_pose.call(_dress, boss)

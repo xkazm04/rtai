@@ -116,6 +116,46 @@ func test_vector_dress_tracks_the_live_bar_and_receives_the_shotgun_progress() -
 	assert_false(command._dress.visible)
 
 
+func test_mulroney_card_hides_the_dress_and_takes_the_pump_but_the_marker_stays() -> void:
+	LaunchArgs.parse(["--bot", "--seed=7"])
+	var game: PrologueGame = ENTRY.instantiate()
+	add_child_autofree(game)
+	game.world.set_process(false)
+	game._open_view(game.stage.plan as PrologueYard)
+	var command: PrologueCommandView = _command_of(game)
+	assert_not_null(command)
+	if command == null:
+		return
+	var mode: ViewMode = ViewMode.shared()
+	var was: String = mode.art
+	mode.cards = true
+	mode.art = "p55"
+	var cycle: PrologueShotgun = game.encounter.battle.fire.shotgun
+	while cycle.shot_ticks.is_empty() and game.stage.tick < 6300:
+		game.world.loop().step()
+	var boss: Fighter = game.encounter.battle.formation.boss
+	command._process(0.0)
+	assert_true(command._bar.visible)
+	assert_false(command._dress.visible, "the card replaces the vector figure")
+	var progress: float = cycle.pump_progress(game.stage.tick)
+	assert_eq(command._dress.pump, progress)
+	var got: int = boss.get_meta(FoeCastView.PUMP)
+	assert_eq(got, 1 if progress == 0.0 else (2 if progress < 0.5 else 3))
+	var mark: MarkerPrint = MarkerPrint.new()
+	mark._battle = game.encounter.battle
+	mark._stage = game.stage
+	mark.add_child(mark._dress)
+	mark._dress.pump = progress
+	mark._battle.due_tick = -1
+	add_child_autofree(mark)
+	mark.boss = boss
+	mark.queue_redraw()
+	await get_tree().process_frame
+	assert_eq(mark.glyph, "pump", "the pump marker draws with the dress hidden")
+	mode.cards = false
+	mode.art = was
+
+
 func _command_of(game: PrologueGame) -> PrologueCommandView:
 	for child: Node in game.get_children():
 		if child is PrologueView:
