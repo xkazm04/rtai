@@ -98,7 +98,7 @@ func _process(_delta: float) -> void:
 		_spawn(ROBOT[idx], idx)
 	var age: int = tick - FIRST - idx * gap
 	_waiting(tick)
-	if robots and idx == 1 and age == -65:
+	if robots and idx == 1 and age == -65 and weapon != &"electro_gun":
 		OpeningFilmPad.scroll(session.live)
 	var again: int = _followup(idx)
 	var engage: bool = age < 0 or (again > 0 and age > 8 and age < again)
