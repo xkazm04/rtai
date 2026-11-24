@@ -21,3 +21,36 @@ Branch `n27-pressure`, worktree `gtai-wt/n23-loop`, cut from `main` `a3b3f1466`.
 - 02:55 scratch worktree for the join medians: `C:/Users/kazda/kiro/gtai-n27/scratch/pressure-join` (detached at
   a3b3f1466; native bin, `data/generated/city` and the `.godot` import cache copied from this worktree). Keys/melee get
   merged there (detached commits, never on this branch). Remove it at the end (`git worktree remove`).
+- 03:08 MILESTONE item 1 main column: batches on a3b3f1466 ended 02:57 / 03:06 (exit 0, 30/30 runs each, ~10 min a
+  salt). Median death wave salt 0 / salt 1: novice 5 / 5, average 6 / 5, expert 8.5 / 9; paired floor novice 0.3,
+  average 2.6, expert 1.8 (`evidence/n27-pressure/medians/main/{salt0,salt1}/report.md`, `floors.md`, `killers.md`).
+  n26's pre-keys numbers were 5/5, 7.5/5, 8.5/9: main moved within the floor. Commit 2ed06f4ac. Godot free for the
+  builder from 03:06. Batch manifests say dirty: only the builder's uncommitted dev take edits (`project/dev/gauntlet/*`,
+  `tools/gauntlet/pressure_films.mjs`), which the gauntlet runner does not load.
+- 03:20 keys posted `MILESTONE keys-order e1c4b73d9` (03:14). Merged into the scratch join tree: detached commit
+  e403c4a40 = a3b3f1466 + e1c4b73d9 (10 files; data: `ghost_forms.json` `deploy_slots`). The after-keys batches
+  (`evidence/n27-pressure/medians/join.sh keys`) start when the builder frees Godot. Tuner `propose` on main salt 0:
+  same one change as n26, `rivet_repair` (`evidence/n27-pressure/medians/main/plan.json`), not applied.
+- 03:38 builder committed 625b460c7 (03:33): takes `pair_circle`, `pair_dash` (`PressurePair`: two rocket troopers 3 m
+  apart, Rivet sprint-circles their midpoint at 10 m, no shots back; dash take dashes across each rocket line
+  `dash_read_ticks` after launch), `guard6`, `blade6` (`PressureRifles.near()`: rifles at 6 m, reactive guard,
+  shooters and Rivet durable in the dev take so every return is counted), `PressureStreet.widen` (dev only: the
+  street's walls are 12 m apart, too close for a 10 m circle), tests `test_pressure_takes.gd`, debt +265 dev_loc
+  accepted. Diff read: dev and tests only, no data. Builder now filming.
+- 03:53 BUILDER takes 65 $3.22 accepted. Commits 625b460c7 (takes, tests, `--only=` side-by-side films, debt) and
+  e7f748ed3 (deflect film over 2380 ticks). Seed 1 numbers: pair circle 7 hits / 8 rockets, down at 7.7 s (HP 0 at
+  10 s); pair dash 4 / 26, HP 98.9 at 10 s, 95.5 at the end, 13 dashes. 6 m: guard 78 fired / 46 returned / 9 hit a
+  shooter = 19.6 % (curve 24 %), sword 130 / 40 / 8 = 20.0 % (curve 31 %); sword catches ~half the rounds (open).
+  MILESTONE items 2 and 3 filmed: `gtai-masters/n27/pressure/trooper_pair_32.mp4` (25.0 s, 1920x1080, 60/1),
+  `deflect_6m_32.mp4` (39.67 s), `trooper_pair_64.png`, `deflect_6m_64.png`; frames.json 4 new rows first. I looked
+  at both stills and a 20 s frame of each film (`build/n27-check/`): captions readable, rockets on their lines,
+  side by side at the same tick; the circle side freezes with "Down at 7.7 s".
+  FRICTION builder reports `tools/gate/quick.mjs` parse check fails on `pressure_rifles.gd` (MeleeTable needs autoloads,
+  pre-existing line); headless runs and the full lint (19/19) pass. Check at the gate.
+- 03:53 after-keys batches launched detached (`join.sh keys`, bash pid 75356) in the scratch tree e403c4a40: import,
+  salt 0, salt 1, reports, floor, then `medians/keys/DONE` (~04:15).
+- 03:54 BUILDER RUNNING measure since 03:54 (call 2, node pid 28812, brief `evidence/briefs/n27-pressure-02-measure.md`,
+  out `.out.txt`): 10-seed table of the four takes with Wilson intervals vs the curve, the sword half-catch cause,
+  item 4 mutate (stall lines in `gauntlet_combat.gd` 12-16,18,53-66,120,122,123 and `bot_arena_moves.gd` 7-15,54;
+  plus `pressure_pair.gd`). Godot only after `medians/keys/DONE`; it writes `evidence/n27-pressure/godot-free.txt`
+  when done with Godot. Hard stop 05:10.
