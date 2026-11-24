@@ -1,0 +1,12 @@
+# --fixed-fps 60 --quit-after 216000 res://dev/gauntlet/gauntlet.tscn -- --seed=9 --bot=expert --pick=greedy --controls=wheel --waves=40 --result=C:\Users\kazda\kiro\gtai-wt\n23-loop\evidence\n27-pressure\medians\main\salt0\runs\expert-9.json
+# exit 0, 15.5 s
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] gauntlet: test player bound: expert, greedy picks, seed 9
+[INFO] gauntlet: wave 1 tick 272 block 1, 1 alive
+[INFO] gauntlet: wave 2 tick 1728 block 2, 1 alive
+[INFO] gauntlet: wave 3 tick 3358 block 3, 1 alive
+[INFO] gauntlet: tick 5731, segment 3
+[INFO] rocket-probe: wave 1 rocket_hits 0 troopers 0
+[INFO] rocket-probe: wave 2 rocket_hits 0 troopers 0
+[INFO] rocket-probe: wave 3 rocket_hits 12 troopers 4

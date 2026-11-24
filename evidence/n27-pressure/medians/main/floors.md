@@ -1,0 +1,41 @@
+# Gauntlet noise floors
+
+Result bytes differ in 30 of 30 matched runs (30 before, 30 null).
+
+| Profile / controls / pick | Metric | Null-salt floor | Pairs | Cross-seed floor | Pairs |
+|---|---|---:|---:|---:|---:|
+| novice / wheel / greedy | Wave 1 (s) | 1.97 | 10 | 6.08* | 5 |
+| novice / wheel / greedy | Wave 2 (s) | 5.18 | 10 | 5.23* | 5 |
+| novice / wheel / greedy | Wave 3 (s) | 6.4 | 9 | 19.07* | 4 |
+| novice / wheel / greedy | Wave 4 (s) | 7.22 | 8 | 12.22* | 4 |
+| novice / wheel / greedy | Wave 5 (s) | not measured | 0 | not measured | 0 |
+| novice / wheel / greedy | Wave reached | 0 | 10 | 2* | 5 |
+| novice / wheel / greedy | Death wave (including cap lower bounds) | 0.3 | 10 | 1.2* | 5 |
+| average / wheel / greedy | Wave 1 (s) | 3.82 | 10 | 4.73* | 5 |
+| average / wheel / greedy | Wave 2 (s) | 0.98 | 10 | 6.93* | 5 |
+| average / wheel / greedy | Wave 3 (s) | 7.73 | 8 | 7.83* | 5 |
+| average / wheel / greedy | Wave 4 (s) | 4.68 | 8 | 7.2* | 5 |
+| average / wheel / greedy | Wave 5 (s) | 0.77* | 2 | 0.55* | 2 |
+| average / wheel / greedy | Wave 6 (s) | 4.95* | 2 | 5.8* | 2 |
+| average / wheel / greedy | Wave 7 (s) | 7.37* | 2 | 16.62* | 2 |
+| average / wheel / greedy | Wave 8 (s) | 7.33* | 2 | 12.45* | 2 |
+| average / wheel / greedy | Wave 9 (s) | 4.82* | 2 | 6.18* | 1 |
+| average / wheel / greedy | Wave 10 (s) | not measured | 0 | not measured | 0 |
+| average / wheel / greedy | Wave reached | 2 | 10 | 5* | 5 |
+| average / wheel / greedy | Death wave (including cap lower bounds) | 2.6 | 10 | 3.4* | 5 |
+| expert / wheel / greedy | Wave 1 (s) | 4.52 | 10 | 9.65* | 5 |
+| expert / wheel / greedy | Wave 2 (s) | 8.35 | 10 | 7.73* | 5 |
+| expert / wheel / greedy | Wave 3 (s) | 7.27 | 9 | 19.68* | 4 |
+| expert / wheel / greedy | Wave 4 (s) | 14.65 | 9 | 16.62* | 4 |
+| expert / wheel / greedy | Wave 5 (s) | 9.6 | 8 | 26.88* | 4 |
+| expert / wheel / greedy | Wave 6 (s) | 6.35 | 8 | 14.18* | 4 |
+| expert / wheel / greedy | Wave 7 (s) | 6.93 | 7 | 14.95* | 3 |
+| expert / wheel / greedy | Wave 8 (s) | 15.08* | 5 | 8.33* | 2 |
+| expert / wheel / greedy | Wave 9 (s) | 22.75* | 1 | 2.55* | 1 |
+| expert / wheel / greedy | Wave 10 (s) | not measured | 0 | 0.72* | 1 |
+| expert / wheel / greedy | Wave 11 (s) | not measured | 0 | 17.47* | 1 |
+| expert / wheel / greedy | Wave 12 (s) | not measured | 0 | not measured | 0 |
+| expert / wheel / greedy | Wave reached | 2 | 10 | 5* | 5 |
+| expert / wheel / greedy | Death wave (including cap lower bounds) | 1.8 | 10 | 3.6* | 5 |
+
+* Estimates with fewer than 6 pairs cannot decide a verdict.

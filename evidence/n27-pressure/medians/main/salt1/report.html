@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Gauntlet run report</title><style>
+:root {color-scheme: light; font: 16px/1.5 system-ui,sans-serif; color:#192b3b; background:#f8f8f5}
+* {box-sizing:border-box}
+body {margin:0 auto; max-width:92rem; padding:clamp(1rem,4vw,4rem)}
+header {padding-bottom:1rem; border-bottom:2px solid #283d51}
+h1,h2,figcaption {line-height:1.2}
+h1 {font-size:clamp(2rem,4vw,3.2rem); letter-spacing:-.045em; margin:0 0 .75rem}
+h2 {font-size:1.45rem; margin:2.5rem 0 .45rem}
+header p,section>p {max-width:90ch; margin:.4rem 0 .9rem}
+.meta,.empty,svg text {color:#4f5b64}
+.scroll {overflow-x:auto; border:1px solid #d0d6d8; background:#fff}
+table {width:100%; border-collapse:collapse; font-size:.9rem; font-variant-numeric:tabular-nums}
+td,th {padding:.5rem .7rem; text-align:left; vertical-align:top; border-bottom:1px solid #e2e6e7}
+th {background:#e9edef; font-weight:650; white-space:nowrap}
+tbody tr:nth-child(even) {background:#fafbfb}
+code {font:.84rem/1.4 ui-monospace,monospace; overflow-wrap:anywhere}
+.miss {color:#744c00; background:#fff1c9; padding:.12rem .38rem}
+.form {color:#006b65}
+.charts {display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr)); gap:.85rem; margin:1rem 0}
+figure {margin:0; padding:.7rem; border:1px solid #cdd4d8; background:#fff}
+figcaption {font-weight:650; text-transform:capitalize}
+svg {width:100%; height:auto} svg text {font:12px system-ui,sans-serif; fill:#435360}
+.axis {stroke:#aab5bd} .target {stroke:#74644a; stroke-dasharray:5 4}
+.quartiles {stroke:#9db5cd; stroke-width:6} .point {fill:#294e73} .outlier {fill:#ab6c00}
+@media print {body {padding:0} .scroll {overflow:visible} table {font-size:8pt} figure,tr {break-inside:avoid}}
+</style></head><body><header><h1>Gauntlet run report</h1><p>30 of 30 runs accepted. Average-profile waves 5 (21.02 s), 6 (22.55 s), 7 (20.62 s), 8 (24.73 s), 9 (27.56 s), 10 (20.92 s) fell outside 12–18 s for ordinary waves and 25–30 s for boss waves.</p><p class="meta">Live gauntlet batch · n27-pressure @ a3b3f14660a2 (dirty) · 2026-11-24T01:57:19.023Z.</p><p class="meta">Stalled runs by profile: novice 0, average 0, expert 0.</p><p class="meta">Capped alive by profile: novice 0, average 0, expert 0.</p></header><main><section><h2>Death-wave score</h2><p>Censored runs contribute their last reached wave as a lower bound to the median and spread.</p><div class="scroll"><table><thead><tr><th scope="col">Profile</th><th scope="col">Target</th><th scope="col">Median wave</th><th scope="col">P25–P75</th><th scope="col">Min–max</th><th scope="col">Deaths / censored</th></tr></thead><tbody><tr><td>novice</td><td>6</td><td>5</td><td>5–5</td><td>3–5</td><td>10 / 0</td></tr>
+<tr><td>average</td><td>12</td><td>5</td><td>5–5</td><td>3–11</td><td>10 / 0</td></tr>
+<tr><td>expert</td><td>20</td><td>9</td><td>9–9</td><td>5–10</td><td>10 / 0</td></tr></tbody></table></div></section>
+<section><h2>Profile separation</h2><p>Targets require a median gap of 3 waves and a later death on at least 75% of shared seeds with the same controls and pick policy. Unresolved censored pairs stay in the denominator.</p><div class="scroll"><table><thead><tr><th scope="col">Profiles</th><th scope="col">Observed median gap</th><th scope="col">Later / shared seeds</th><th scope="col">Confirmed later share</th><th scope="col">Unresolved</th><th scope="col">Verdict</th></tr></thead><tbody><tr><td>novice → average</td><td>0</td><td>3 / 10</td><td>30%</td><td>0</td><td>below target</td></tr>
+<tr><td>novice → expert</td><td>4</td><td>9 / 10</td><td>90%</td><td>0</td><td>separated</td></tr>
+<tr><td>average → expert</td><td>4</td><td>7 / 10</td><td>70%</td><td>0</td><td>below target</td></tr></tbody></table></div></section>
+<section><h2>Waves per run</h2><p>A timed-out wave can clear later. Active counts include each started roster still fighting at death.</p><div class="scroll"><table><thead><tr><th scope="col">Profile</th><th scope="col">Seed</th><th scope="col">Outcome</th><th scope="col">Timed-out waves</th><th scope="col">Active waves at death</th></tr></thead><tbody><tr><td>novice</td><td>1</td><td>died on 5</td><td>0</td><td>1</td></tr>
+<tr><td>novice</td><td>2</td><td>died on 5</td><td>0</td><td>1</td></tr>
+<tr><td>novice</td><td>3</td><td>died on 5</td><td>0</td><td>1</td></tr>
+<tr><td>novice</td><td>4</td><td>died on 5</td><td>0</td><td>1</td></tr>
+<tr><td>novice</td><td>5</td><td>died on 4</td><td>0</td><td>1</td></tr>
+<tr><td>novice</td><td>6</td><td>died on 5</td><td>0</td><td>1</td></tr>
+<tr><td>novice</td><td>7</td><td>died on 5</td><td>0</td><td>1</td></tr>
+<tr><td>novice</td><td>8</td><td>died on 5</td><td>0</td><td>1</td></tr>
+<tr><td>novice</td><td>9</td><td>died on 3</td><td>0</td><td>1</td></tr>
+<tr><td>novice</td><td>10</td><td>died on 5</td><td>0</td><td>1</td></tr>
+<tr><td>average</td><td>1</td><td>died on 3</td><td>0</td><td>1</td></tr>
+<tr><td>average</td><td>2</td><td>died on 5</td><td>0</td><td>1</td></tr>
+<tr><td>average</td><td>3</td><td>died on 11</td><td>0</td><td>1</td></tr>
+<tr><td>average</td><td>4</td><td>died on 5</td><td>0</td><td>1</td></tr>
+<tr><td>average</td><td>5</td><td>died on 5</td><td>0</td><td>1</td></tr>
+<tr><td>average</td><td>6</td><td>died on 5</td><td>0</td><td>1</td></tr>
+<tr><td>average</td><td>7</td><td>died on 5</td><td>0</td><td>1</td></tr>
+<tr><td>average</td><td>8</td><td>died on 10</td><td>0</td><td>1</td></tr>
+<tr><td>average</td><td>9</td><td>died on 3</td><td>0</td><td>1</td></tr>
+<tr><td>average</td><td>10</td><td>died on 5</td><td>0</td><td>1</td></tr>
+<tr><td>expert</td><td>1</td><td>died on 10</td><td>0</td><td>1</td></tr>
+<tr><td>expert</td><td>2</td><td>died on 9</td><td>0</td><td>1</td></tr>
+<tr><td>expert</td><td>3</td><td>died on 9</td><td>0</td><td>1</td></tr>
+<tr><td>expert</td><td>4</td><td>died on 5</td><td>0</td><td>1</td></tr>
+<tr><td>expert</td><td>5</td><td>died on 9</td><td>0</td><td>1</td></tr>
+<tr><td>expert</td><td>6</td><td>died on 9</td><td>0</td><td>1</td></tr>
+<tr><td>expert</td><td>7</td><td>died on 8</td><td>0</td><td>1</td></tr>
+<tr><td>expert</td><td>8</td><td>died on 10</td><td>0</td><td>1</td></tr>
+<tr><td>expert</td><td>9</td><td>died on 9</td><td>0</td><td>1</td></tr>
+<tr><td>expert</td><td>10</td><td>died on 9</td><td>0</td><td>1</td></tr></tbody></table></div></section>
+<section><h2>Wave time</h2><p>Seconds per observed wave. The target is 15 s ±20% for ordinary average-profile waves. Every 5th wave targets 25–30 s. Timed / observed shows the coverage of the seconds field. Quartiles use the repository’s quantile function.</p><p>Dots show medians by wave, bars show the middle half, and the dashed line marks the ordinary-wave target.</p><div class="charts"><figure><figcaption>novice</figcaption><svg role="img" viewBox="0 0 520 196"><title>novice wave times, median and interquartile range in seconds</title><line class="axis" x1="48" y1="166" x2="498" y2="166"/><line class="axis" x1="48" y1="20" x2="48" y2="166"/><text x="42" y="170" text-anchor="end">0 s</text><text x="42" y="60.5" text-anchor="end">15 s</text><line class="target" x1="48" y1="56.5" x2="498" y2="56.5"/><text x="42" y="24" text-anchor="end">20 s</text><line class="quartiles" x1="48" y1="65.50333333333309" x2="48" y2="53.09333333333309"/><circle class="point" cx="48" cy="59.11583333333344" r="3.5"><title>Wave 1 · 14.64 s · n=10</title></circle><text x="48" y="183" text-anchor="middle">1</text><line class="quartiles" x1="198" y1="64.53" x2="198" y2="40.075"/><circle class="point" cx="198" cy="59.359166666666894" r="3.5"><title>Wave 2 · 14.61 s · n=10</title></circle><text x="198" y="183" text-anchor="middle">2</text><line class="quartiles" x1="348" y1="61.609999999999985" x2="348" y2="20.486666666666906"/><circle class="point" cx="348" cy="28.394999999999982" r="3.5"><title>Wave 3 · 18.85 s · n=9</title></circle><text x="348" y="183" text-anchor="middle">3</text><line class="quartiles" x1="498" y1="48.22666666666689" x2="498" y2="20.36500000000001"/><circle class="point" cx="498" cy="46.52333333333311" r="3.5"><title>Wave 4 · 16.37 s · n=8</title></circle><text x="498" y="183" text-anchor="middle">4</text></svg></figure><figure><figcaption>average</figcaption><svg role="img" viewBox="0 0 520 196"><title>average wave times, median and interquartile range in seconds</title><line class="axis" x1="48" y1="166" x2="498" y2="166"/><line class="axis" x1="48" y1="20" x2="48" y2="166"/><text x="42" y="170" text-anchor="end">0 s</text><text x="42" y="97" text-anchor="end">15 s</text><line class="target" x1="48" y1="93" x2="498" y2="93"/><text x="42" y="24" text-anchor="end">30 s</text><line class="quartiles" x1="48" y1="106.13999999999999" x2="48" y2="69.88333333333334"/><circle class="point" cx="48" cy="97.58277777777793" r="3.5"><title>Wave 1 · 14.06 s · n=10</title></circle><text x="48" y="183" text-anchor="middle">1</text><line class="quartiles" x1="98" y1="107.9244444444446" x2="98" y2="78.7244444444446"/><circle class="point" cx="98" cy="92.7972222222223" r="3.5"><title>Wave 2 · 15.04 s · n=10</title></circle><line class="quartiles" x1="148" y1="105.57222222222205" x2="148" y2="80.75222222222206"/><circle class="point" cx="148" cy="86.47055555555565" r="3.5"><title>Wave 3 · 16.34 s · n=8</title></circle><text x="148" y="183" text-anchor="middle">3</text><line class="quartiles" x1="198" y1="104.92333333333332" x2="198" y2="73.53333333333333"/><circle class="point" cx="198" cy="89.26888888888874" r="3.5"><title>Wave 4 · 15.77 s · n=8</title></circle><text x="198" y="183" text-anchor="middle">4</text><line class="quartiles" x1="248" y1="79.61666666666666" x2="248" y2="47.739999999999995"/><circle class="outlier" cx="248" cy="63.67833333333334" r="3.5"><title>Wave 5 · 21.02 s · n=2</title></circle><line class="quartiles" x1="298" y1="67.61222222222206" x2="298" y2="44.90111111111126"/><circle class="outlier" cx="298" cy="56.25666666666666" r="3.5"><title>Wave 6 · 22.55 s · n=2</title></circle><text x="298" y="183" text-anchor="middle">6</text><line class="quartiles" x1="348" y1="89.43111111111126" x2="348" y2="41.900000000000006"/><circle class="outlier" cx="348" cy="65.66555555555563" r="3.5"><title>Wave 7 · 20.62 s · n=2</title></circle><text x="348" y="183" text-anchor="middle">7</text><line class="quartiles" x1="398" y1="53.012222222222064" x2="398" y2="38.331111111111284"/><circle class="outlier" cx="398" cy="45.67166666666665" r="3.5"><title>Wave 8 · 24.73 s · n=2</title></circle><line class="quartiles" x1="448" y1="33.05888888888873" x2="448" y2="30.70666666666665"/><circle class="outlier" cx="448" cy="31.882777777777704" r="3.5"><title>Wave 9 · 27.56 s · n=2</title></circle><text x="448" y="183" text-anchor="middle">9</text><line class="quartiles" x1="498" y1="64.20555555555539" x2="498" y2="64.20555555555539"/><circle class="outlier" cx="498" cy="64.20555555555539" r="3.5"><title>Wave 10 · 20.92 s · n=1</title></circle><text x="498" y="183" text-anchor="middle">10</text></svg></figure><figure><figcaption>expert</figcaption><svg role="img" viewBox="0 0 520 196"><title>expert wave times, median and interquartile range in seconds</title><line class="axis" x1="48" y1="166" x2="498" y2="166"/><line class="axis" x1="48" y1="20" x2="48" y2="166"/><text x="42" y="170" text-anchor="end">0 s</text><text x="42" y="115.25" text-anchor="end">15 s</text><line class="target" x1="48" y1="111.25" x2="498" y2="111.25"/><text x="42" y="24" text-anchor="end">40 s</text><line class="quartiles" x1="48" y1="110.39833333333345" x2="48" y2="82.90166666666654"/><circle class="point" cx="48" cy="105.34916666666672" r="3.5"><title>Wave 1 · 16.62 s · n=10</title></circle><text x="48" y="183" text-anchor="middle">1</text><line class="quartiles" x1="104.25" y1="121.89583333333346" x2="104.25" y2="97.44083333333346"/><circle class="point" cx="104.25" cy="114.32208333333345" r="3.5"><title>Wave 2 · 14.16 s · n=10</title></circle><text x="104.25" y="183" text-anchor="middle">2</text><line class="quartiles" x1="160.5" y1="117.57666666666654" x2="160.5" y2="78.4"/><circle class="point" cx="160.5" cy="100.60416666666654" r="3.5"><title>Wave 3 · 17.92 s · n=10</title></circle><line class="quartiles" x1="216.75" y1="124.14666666666655" x2="216.75" y2="57.29083333333347"/><circle class="point" cx="216.75" cy="92.33083333333327" r="3.5"><title>Wave 4 · 20.18 s · n=10</title></circle><text x="216.75" y="183" text-anchor="middle">4</text><line class="quartiles" x1="273" y1="69.39666666666655" x2="273" y2="48.834999999999994"/><circle class="point" cx="273" cy="61.18416666666653" r="3.5"><title>Wave 5 · 28.72 s · n=9</title></circle><text x="273" y="183" text-anchor="middle">5</text><line class="quartiles" x1="329.25" y1="95.85916666666654" x2="329.25" y2="81.25916666666654"/><circle class="point" cx="329.25" cy="86.12583333333345" r="3.5"><title>Wave 6 · 21.88 s · n=9</title></circle><text x="329.25" y="183" text-anchor="middle">6</text><line class="quartiles" x1="385.5" y1="117.94166666666655" x2="385.5" y2="80.955"/><circle class="point" cx="385.5" cy="98.84" r="3.5"><title>Wave 7 · 18.4 s · n=9</title></circle><line class="quartiles" x1="441.75" y1="100.665" x2="441.75" y2="59.54166666666654"/><circle class="point" cx="441.75" cy="87.06875" r="3.5"><title>Wave 8 · 21.63 s · n=8</title></circle><text x="441.75" y="183" text-anchor="middle">8</text><line class="quartiles" x1="498" y1="37.27666666666656" x2="498" y2="34.17416666666654"/><circle class="point" cx="498" cy="35.72541666666652" r="3.5"><title>Wave 9 · 35.69 s · n=2</title></circle><text x="498" y="183" text-anchor="middle">9</text></svg></figure></div><div class="scroll"><table><thead><tr><th scope="col">Profile</th><th scope="col">Wave</th><th scope="col">Timed / observed</th><th scope="col">Median s</th><th scope="col">P25…P75 s</th><th scope="col">Min…max s</th><th scope="col">Target</th></tr></thead><tbody><tr><td>novice</td><td>1</td><td>10 / 10</td><td>14.64</td><td>13.77…15.47</td><td>12.83…15.67</td><td>—</td></tr>
+<tr><td>novice</td><td>2</td><td>10 / 10</td><td>14.61</td><td>13.9…17.25</td><td>11.27…23.05</td><td>—</td></tr>
+<tr><td>novice</td><td>3</td><td>9 / 10</td><td>18.85</td><td>14.3…19.93</td><td>12.53…27.77</td><td>—</td></tr>
+<tr><td>novice</td><td>4</td><td>8 / 9</td><td>16.37</td><td>16.13…19.95</td><td>14.93…22.37</td><td>—</td></tr>
+<tr><td>novice</td><td>5</td><td>0 / 8</td><td>not measured</td><td>not measured</td><td>not measured</td><td>—</td></tr>
+<tr><td>average</td><td>1</td><td>10 / 10</td><td>14.06</td><td>12.3…19.75</td><td>10.78…24.87</td><td>within target</td></tr>
+<tr><td>average</td><td>2</td><td>10 / 10</td><td>15.04</td><td>11.93…17.93</td><td>8.43…20.3</td><td>within target</td></tr>
+<tr><td>average</td><td>3</td><td>8 / 10</td><td>16.34</td><td>12.42…17.52</td><td>7.52…25.12</td><td>within target</td></tr>
+<tr><td>average</td><td>4</td><td>8 / 8</td><td>15.77</td><td>12.55…19</td><td>10.85…22.97</td><td>within target</td></tr>
+<tr><td>average</td><td>5</td><td>2 / 8</td><td>21.02</td><td>17.75…24.3</td><td>17.75…24.3</td><td><strong class="miss">miss</strong></td></tr>
+<tr><td>average</td><td>6</td><td>2 / 2</td><td>22.55</td><td>20.22…24.88</td><td>20.22…24.88</td><td><strong class="miss">miss</strong></td></tr>
+<tr><td>average</td><td>7</td><td>2 / 2</td><td>20.62</td><td>15.73…25.5</td><td>15.73…25.5</td><td><strong class="miss">miss</strong></td></tr>
+<tr><td>average</td><td>8</td><td>2 / 2</td><td>24.73</td><td>23.22…26.23</td><td>23.22…26.23</td><td><strong class="miss">miss</strong></td></tr>
+<tr><td>average</td><td>9</td><td>2 / 2</td><td>27.56</td><td>27.32…27.8</td><td>27.32…27.8</td><td><strong class="miss">miss</strong></td></tr>
+<tr><td>average</td><td>10</td><td>1 / 2</td><td>20.92</td><td>20.92…20.92</td><td>20.92…20.92</td><td><strong class="miss">miss</strong></td></tr>
+<tr><td>average</td><td>11</td><td>0 / 1</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td></tr>
+<tr><td>expert</td><td>1</td><td>10 / 10</td><td>16.62</td><td>15.23…22.77</td><td>10.22…35.48</td><td>—</td></tr>
+<tr><td>expert</td><td>2</td><td>10 / 10</td><td>14.16</td><td>12.08…18.78</td><td>10.02…20.55</td><td>—</td></tr>
+<tr><td>expert</td><td>3</td><td>10 / 10</td><td>17.92</td><td>13.27…24</td><td>6.43…32.37</td><td>—</td></tr>
+<tr><td>expert</td><td>4</td><td>10 / 10</td><td>20.18</td><td>11.47…29.78</td><td>7.55…30.67</td><td>—</td></tr>
+<tr><td>expert</td><td>5</td><td>9 / 10</td><td>28.72</td><td>26.47…32.1</td><td>13.92…32.37</td><td>—</td></tr>
+<tr><td>expert</td><td>6</td><td>9 / 9</td><td>21.88</td><td>19.22…23.22</td><td>12.93…34.72</td><td>—</td></tr>
+<tr><td>expert</td><td>7</td><td>9 / 9</td><td>18.4</td><td>13.17…23.3</td><td>8.53…33.73</td><td>—</td></tr>
+<tr><td>expert</td><td>8</td><td>8 / 9</td><td>21.63</td><td>17.9…29.17</td><td>10.87…30.15</td><td>—</td></tr>
+<tr><td>expert</td><td>9</td><td>2 / 8</td><td>35.69</td><td>35.27…36.12</td><td>35.27…36.12</td><td>—</td></tr>
+<tr><td>expert</td><td>10</td><td>0 / 2</td><td>not measured</td><td>not measured</td><td>not measured</td><td>—</td></tr></tbody></table></div></section>
+<section><h2>Deaths by profile</h2><p>Each wave and killer is followed by its recorded death count. Killers are ordered by frequency.</p><div class="scroll"><table><thead><tr><th scope="col">Profile</th><th scope="col">Runs</th><th scope="col">Deaths</th><th scope="col">Stalled</th><th scope="col">Capped alive</th><th scope="col">Other accepted without death</th><th scope="col">Death wave × count</th><th scope="col">Top killers × count</th><th scope="col">Unattributed deaths</th></tr></thead><tbody><tr><td>novice</td><td>10</td><td>10</td><td>0</td><td>0</td><td>0</td><td>3 × 1, 4 × 1, 5 × 8</td><td>stomp × 8, riot_cop × 2</td><td>0</td></tr>
+<tr><td>average</td><td>10</td><td>10</td><td>0</td><td>0</td><td>0</td><td>3 × 2, 5 × 6, 10 × 1, 11 × 1</td><td>stomp × 6, rocket × 2, sentry_turret × 1, shield_robot × 1</td><td>0</td></tr>
+<tr><td>expert</td><td>10</td><td>10</td><td>0</td><td>0</td><td>0</td><td>5 × 1, 8 × 1, 9 × 6, 10 × 2</td><td>shield_robot × 3, rocket × 2, sentry_turret × 2, stomp × 1, swat × 1, war_cannon × 1</td><td>0</td></tr></tbody></table></div></section>
+<section><h2>Timeouts</h2><p>Runs that reached the wave time limit.</p><div class="scroll"><table><thead><tr><th scope="col">Outcome</th><th scope="col">novice</th><th scope="col">average</th><th scope="col">expert</th></tr></thead><tbody><tr><td>timeout</td><td>0</td><td>0</td><td>0</td></tr></tbody></table></div></section>
+<section><h2>Survival by wave band</h2><p>Each wave contributes once to each available median. Damage/s needs a timed wave. Repair/s is the configured rate when repair is active. HP coverage counts waves sampled by the bot. Repaired HP sums positive HP steps. The share undone uses waves with positive damage. Multipliers include stat cards taken before the wave.</p><div class="scroll"><table><thead><tr><th scope="col">Profile</th><th scope="col">Waves</th><th scope="col">HP rows / observed</th><th scope="col">Damage</th><th scope="col">Damage/s</th><th scope="col">Repair/s</th><th scope="col">Minimum HP (% of capacity)</th><th scope="col">Repaired HP</th><th scope="col">Damage undone (%)</th><th scope="col">Guard deflects</th><th scope="col">Cover ticks</th><th scope="col">Rolls</th><th scope="col">damage ×</th><th scope="col">guard_meter ×</th><th scope="col">hp_max ×</th><th scope="col">regen ×</th><th scope="col">speed ×</th></tr></thead><tbody><tr><td>novice</td><td>1–10</td><td>47 / 47</td><td>20.4</td><td>1.03</td><td>10</td><td>68.03</td><td>0</td><td>0</td><td>6</td><td>0</td><td>2</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>novice</td><td>11–20</td><td>0 / 0</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td></tr>
+<tr><td>novice</td><td>21–30</td><td>0 / 0</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td></tr>
+<tr><td>novice</td><td>31+</td><td>0 / 0</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td></tr>
+<tr><td>average</td><td>1–10</td><td>56 / 56</td><td>19.2</td><td>1.03</td><td>10</td><td>71.66</td><td>0</td><td>0</td><td>6</td><td>1</td><td>3</td><td>1.1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>average</td><td>11–20</td><td>1 / 1</td><td>100.85</td><td>not measured</td><td>11</td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>4</td><td>1.1</td><td>1.1</td><td>1.1</td><td>1.1</td><td>1</td></tr>
+<tr><td>average</td><td>21–30</td><td>0 / 0</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td></tr>
+<tr><td>average</td><td>31+</td><td>0 / 0</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td></tr>
+<tr><td>expert</td><td>1–10</td><td>87 / 87</td><td>19.94</td><td>0.97</td><td>10</td><td>80.37</td><td>0</td><td>0</td><td>6</td><td>16</td><td>4</td><td>1.1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>expert</td><td>11–20</td><td>0 / 0</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td></tr>
+<tr><td>expert</td><td>21–30</td><td>0 / 0</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td></tr>
+<tr><td>expert</td><td>31+</td><td>0 / 0</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td><td>not measured</td></tr></tbody></table></div></section>
+<section><h2>Enemy presence and wave time</h2><p>Confirmed kills count only named death records. Time share divides seconds in waves containing the enemy by all timed waves with a measured roster. Several enemies can share a wave. Parentheses give the timed wave count.</p><div class="scroll"><table><thead><tr><th scope="col">Enemy</th><th scope="col">Confirmed kills</th><th scope="col">Killer weapon × count</th><th scope="col">Share of wave time</th><th scope="col">Present median s (n)</th><th scope="col">Absent median s (n)</th></tr></thead><tbody><tr><td>contractor</td><td>0</td><td>—</td><td>57.19%</td><td>19.01 (86)</td><td>15.4 (75)</td></tr>
+<tr><td>patrol_cop</td><td>0</td><td>—</td><td>92.51%</td><td>16.42 (151)</td><td>20.43 (10)</td></tr>
+<tr><td>riot_cop</td><td>2</td><td>—</td><td>54.34%</td><td>19 (83)</td><td>15.44 (78)</td></tr>
+<tr><td>robot_gunner</td><td>0</td><td>—</td><td>21.99%</td><td>23.22 (29)</td><td>16.08 (132)</td></tr>
+<tr><td>robot_thug</td><td>0</td><td>—</td><td>20.26%</td><td>21.42 (28)</td><td>16.25 (133)</td></tr>
+<tr><td>rocket_trooper</td><td>4</td><td>rocket × 4</td><td>56.73%</td><td>18.93 (86)</td><td>15.4 (75)</td></tr>
+<tr><td>sentry_turret</td><td>3</td><td>—</td><td>19.96%</td><td>23.22 (26)</td><td>16.03 (135)</td></tr>
+<tr><td>shield_robot</td><td>4</td><td>—</td><td>2.79%</td><td>27.32 (3)</td><td>16.69 (158)</td></tr>
+<tr><td>swat</td><td>1</td><td>—</td><td>50.39%</td><td>18.71 (78)</td><td>15.45 (83)</td></tr>
+<tr><td>war_machine</td><td>16</td><td>stomp × 15, war_cannon × 1</td><td>10.16%</td><td>26.76 (12)</td><td>16.32 (149)</td></tr></tbody></table></div></section>
+<section><h2>Moves</h2><p>Uses count recorded activations by profile and wave number. The game omits zero counts. Times are medians in seconds, with timed wave counts in parentheses. Carry applies to all waves.</p><div class="scroll"><table><thead><tr><th scope="col">Profile</th><th scope="col">Wave</th><th scope="col">Move</th><th scope="col">Enemy</th><th scope="col">Recorded uses</th><th scope="col">Observed waves</th><th scope="col">Uses per wave</th><th scope="col">With enemy s (n)</th><th scope="col">Without enemy s (n)</th></tr></thead><tbody><tr><td>novice</td><td>All</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>0</td><td>47</td><td>0</td><td>—</td><td>15.4 (37)</td></tr>
+<tr><td>novice</td><td>All</td><td>tonnage_armour_crack</td><td>war_machine</td><td>2</td><td>47</td><td>0.04</td><td>—</td><td>15.4 (37)</td></tr>
+<tr><td>novice</td><td>All</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>47</td><td>0</td><td>—</td><td>15.4 (37)</td></tr>
+<tr><td>novice</td><td>All</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>47</td><td>0</td><td>15.4 (37)</td><td>—</td></tr>
+<tr><td>novice</td><td>1</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>0</td><td>10</td><td>0</td><td>—</td><td>14.64 (10)</td></tr>
+<tr><td>novice</td><td>1</td><td>tonnage_armour_crack</td><td>war_machine</td><td>0</td><td>10</td><td>0</td><td>—</td><td>14.64 (10)</td></tr>
+<tr><td>novice</td><td>1</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>10</td><td>0</td><td>—</td><td>14.64 (10)</td></tr>
+<tr><td>novice</td><td>1</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>10</td><td>0</td><td>14.64 (10)</td><td>—</td></tr>
+<tr><td>novice</td><td>2</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>0</td><td>10</td><td>0</td><td>—</td><td>14.61 (10)</td></tr>
+<tr><td>novice</td><td>2</td><td>tonnage_armour_crack</td><td>war_machine</td><td>0</td><td>10</td><td>0</td><td>—</td><td>14.61 (10)</td></tr>
+<tr><td>novice</td><td>2</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>10</td><td>0</td><td>—</td><td>14.61 (10)</td></tr>
+<tr><td>novice</td><td>2</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>10</td><td>0</td><td>14.61 (10)</td><td>—</td></tr>
+<tr><td>novice</td><td>3</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>0</td><td>10</td><td>0</td><td>—</td><td>18.85 (9)</td></tr>
+<tr><td>novice</td><td>3</td><td>tonnage_armour_crack</td><td>war_machine</td><td>0</td><td>10</td><td>0</td><td>—</td><td>18.85 (9)</td></tr>
+<tr><td>novice</td><td>3</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>10</td><td>0</td><td>—</td><td>18.85 (9)</td></tr>
+<tr><td>novice</td><td>3</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>10</td><td>0</td><td>18.85 (9)</td><td>—</td></tr>
+<tr><td>novice</td><td>4</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>0</td><td>9</td><td>0</td><td>—</td><td>16.37 (8)</td></tr>
+<tr><td>novice</td><td>4</td><td>tonnage_armour_crack</td><td>war_machine</td><td>0</td><td>9</td><td>0</td><td>—</td><td>16.37 (8)</td></tr>
+<tr><td>novice</td><td>4</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>9</td><td>0</td><td>—</td><td>16.37 (8)</td></tr>
+<tr><td>novice</td><td>4</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>9</td><td>0</td><td>16.37 (8)</td><td>—</td></tr>
+<tr><td>novice</td><td>5</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>0</td><td>8</td><td>0</td><td>—</td><td>—</td></tr>
+<tr><td>novice</td><td>5</td><td>tonnage_armour_crack</td><td>war_machine</td><td>2</td><td>8</td><td>0.25</td><td>—</td><td>—</td></tr>
+<tr><td>novice</td><td>5</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>8</td><td>0</td><td>—</td><td>—</td></tr>
+<tr><td>novice</td><td>5</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>8</td><td>0</td><td>—</td><td>—</td></tr>
+<tr><td>average</td><td>All</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>14</td><td>57</td><td>0.25</td><td>25.87 (6)</td><td>15.42 (41)</td></tr>
+<tr><td>average</td><td>All</td><td>tonnage_armour_crack</td><td>war_machine</td><td>6</td><td>57</td><td>0.11</td><td>20.92 (3)</td><td>15.88 (44)</td></tr>
+<tr><td>average</td><td>All</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>57</td><td>0</td><td>24.12 (2)</td><td>16.03 (45)</td></tr>
+<tr><td>average</td><td>All</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>57</td><td>0</td><td>16.65 (47)</td><td>—</td></tr>
+<tr><td>average</td><td>1</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>0</td><td>10</td><td>0</td><td>—</td><td>14.06 (10)</td></tr>
+<tr><td>average</td><td>1</td><td>tonnage_armour_crack</td><td>war_machine</td><td>0</td><td>10</td><td>0</td><td>—</td><td>14.06 (10)</td></tr>
+<tr><td>average</td><td>1</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>10</td><td>0</td><td>—</td><td>14.06 (10)</td></tr>
+<tr><td>average</td><td>1</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>10</td><td>0</td><td>14.06 (10)</td><td>—</td></tr>
+<tr><td>average</td><td>2</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>0</td><td>10</td><td>0</td><td>—</td><td>15.04 (10)</td></tr>
+<tr><td>average</td><td>2</td><td>tonnage_armour_crack</td><td>war_machine</td><td>0</td><td>10</td><td>0</td><td>—</td><td>15.04 (10)</td></tr>
+<tr><td>average</td><td>2</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>10</td><td>0</td><td>—</td><td>15.04 (10)</td></tr>
+<tr><td>average</td><td>2</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>10</td><td>0</td><td>15.04 (10)</td><td>—</td></tr>
+<tr><td>average</td><td>3</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>0</td><td>10</td><td>0</td><td>—</td><td>16.34 (8)</td></tr>
+<tr><td>average</td><td>3</td><td>tonnage_armour_crack</td><td>war_machine</td><td>0</td><td>10</td><td>0</td><td>—</td><td>16.34 (8)</td></tr>
+<tr><td>average</td><td>3</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>10</td><td>0</td><td>—</td><td>16.34 (8)</td></tr>
+<tr><td>average</td><td>3</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>10</td><td>0</td><td>16.34 (8)</td><td>—</td></tr>
+<tr><td>average</td><td>4</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>0</td><td>8</td><td>0</td><td>—</td><td>15.77 (8)</td></tr>
+<tr><td>average</td><td>4</td><td>tonnage_armour_crack</td><td>war_machine</td><td>0</td><td>8</td><td>0</td><td>—</td><td>15.77 (8)</td></tr>
+<tr><td>average</td><td>4</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>8</td><td>0</td><td>—</td><td>15.77 (8)</td></tr>
+<tr><td>average</td><td>4</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>8</td><td>0</td><td>15.77 (8)</td><td>—</td></tr>
+<tr><td>average</td><td>5</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>0</td><td>8</td><td>0</td><td>—</td><td>21.02 (2)</td></tr>
+<tr><td>average</td><td>5</td><td>tonnage_armour_crack</td><td>war_machine</td><td>2</td><td>8</td><td>0.25</td><td>21.02 (2)</td><td>—</td></tr>
+<tr><td>average</td><td>5</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>8</td><td>0</td><td>—</td><td>21.02 (2)</td></tr>
+<tr><td>average</td><td>5</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>8</td><td>0</td><td>21.02 (2)</td><td>—</td></tr>
+<tr><td>average</td><td>6</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>3</td><td>2</td><td>1.5</td><td>24.88 (1)</td><td>20.22 (1)</td></tr>
+<tr><td>average</td><td>6</td><td>tonnage_armour_crack</td><td>war_machine</td><td>0</td><td>2</td><td>0</td><td>—</td><td>22.55 (2)</td></tr>
+<tr><td>average</td><td>6</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>2</td><td>0</td><td>—</td><td>22.55 (2)</td></tr>
+<tr><td>average</td><td>6</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>2</td><td>0</td><td>22.55 (2)</td><td>—</td></tr>
+<tr><td>average</td><td>7</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>2</td><td>2</td><td>1</td><td>25.5 (1)</td><td>15.73 (1)</td></tr>
+<tr><td>average</td><td>7</td><td>tonnage_armour_crack</td><td>war_machine</td><td>0</td><td>2</td><td>0</td><td>—</td><td>20.62 (2)</td></tr>
+<tr><td>average</td><td>7</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>2</td><td>0</td><td>—</td><td>20.62 (2)</td></tr>
+<tr><td>average</td><td>7</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>2</td><td>0</td><td>20.62 (2)</td><td>—</td></tr>
+<tr><td>average</td><td>8</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>1</td><td>2</td><td>0.5</td><td>24.73 (2)</td><td>—</td></tr>
+<tr><td>average</td><td>8</td><td>tonnage_armour_crack</td><td>war_machine</td><td>0</td><td>2</td><td>0</td><td>—</td><td>24.73 (2)</td></tr>
+<tr><td>average</td><td>8</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>2</td><td>0</td><td>—</td><td>24.73 (2)</td></tr>
+<tr><td>average</td><td>8</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>2</td><td>0</td><td>24.73 (2)</td><td>—</td></tr>
+<tr><td>average</td><td>9</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>4</td><td>2</td><td>2</td><td>27.56 (2)</td><td>—</td></tr>
+<tr><td>average</td><td>9</td><td>tonnage_armour_crack</td><td>war_machine</td><td>0</td><td>2</td><td>0</td><td>—</td><td>27.56 (2)</td></tr>
+<tr><td>average</td><td>9</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>2</td><td>0</td><td>27.32 (1)</td><td>27.8 (1)</td></tr>
+<tr><td>average</td><td>9</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>2</td><td>0</td><td>27.56 (2)</td><td>—</td></tr>
+<tr><td>average</td><td>10</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>2</td><td>2</td><td>1</td><td>—</td><td>20.92 (1)</td></tr>
+<tr><td>average</td><td>10</td><td>tonnage_armour_crack</td><td>war_machine</td><td>4</td><td>2</td><td>2</td><td>20.92 (1)</td><td>—</td></tr>
+<tr><td>average</td><td>10</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>2</td><td>0</td><td>20.92 (1)</td><td>—</td></tr>
+<tr><td>average</td><td>10</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>2</td><td>0</td><td>20.92 (1)</td><td>—</td></tr>
+<tr><td>average</td><td>11</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>2</td><td>1</td><td>2</td><td>—</td><td>—</td></tr>
+<tr><td>average</td><td>11</td><td>tonnage_armour_crack</td><td>war_machine</td><td>0</td><td>1</td><td>0</td><td>—</td><td>—</td></tr>
+<tr><td>average</td><td>11</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>1</td><td>0</td><td>—</td><td>—</td></tr>
+<tr><td>average</td><td>11</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>1</td><td>0</td><td>—</td><td>—</td></tr>
+<tr><td>expert</td><td>All</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>22</td><td>87</td><td>0.25</td><td>21.42 (20)</td><td>18.67 (57)</td></tr>
+<tr><td>expert</td><td>All</td><td>tonnage_armour_crack</td><td>war_machine</td><td>11</td><td>87</td><td>0.13</td><td>28.72 (9)</td><td>18.9 (68)</td></tr>
+<tr><td>expert</td><td>All</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>87</td><td>0</td><td>35.27 (1)</td><td>19.49 (76)</td></tr>
+<tr><td>expert</td><td>All</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>87</td><td>0</td><td>19.77 (77)</td><td>—</td></tr>
+<tr><td>expert</td><td>1</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>0</td><td>10</td><td>0</td><td>—</td><td>16.62 (10)</td></tr>
+<tr><td>expert</td><td>1</td><td>tonnage_armour_crack</td><td>war_machine</td><td>0</td><td>10</td><td>0</td><td>—</td><td>16.62 (10)</td></tr>
+<tr><td>expert</td><td>1</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>10</td><td>0</td><td>—</td><td>16.62 (10)</td></tr>
+<tr><td>expert</td><td>1</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>10</td><td>0</td><td>16.62 (10)</td><td>—</td></tr>
+<tr><td>expert</td><td>2</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>0</td><td>10</td><td>0</td><td>—</td><td>14.16 (10)</td></tr>
+<tr><td>expert</td><td>2</td><td>tonnage_armour_crack</td><td>war_machine</td><td>0</td><td>10</td><td>0</td><td>—</td><td>14.16 (10)</td></tr>
+<tr><td>expert</td><td>2</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>10</td><td>0</td><td>—</td><td>14.16 (10)</td></tr>
+<tr><td>expert</td><td>2</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>10</td><td>0</td><td>14.16 (10)</td><td>—</td></tr>
+<tr><td>expert</td><td>3</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>0</td><td>10</td><td>0</td><td>—</td><td>17.92 (10)</td></tr>
+<tr><td>expert</td><td>3</td><td>tonnage_armour_crack</td><td>war_machine</td><td>0</td><td>10</td><td>0</td><td>—</td><td>17.92 (10)</td></tr>
+<tr><td>expert</td><td>3</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>10</td><td>0</td><td>—</td><td>17.92 (10)</td></tr>
+<tr><td>expert</td><td>3</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>10</td><td>0</td><td>17.92 (10)</td><td>—</td></tr>
+<tr><td>expert</td><td>4</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>0</td><td>10</td><td>0</td><td>—</td><td>20.18 (10)</td></tr>
+<tr><td>expert</td><td>4</td><td>tonnage_armour_crack</td><td>war_machine</td><td>0</td><td>10</td><td>0</td><td>—</td><td>20.18 (10)</td></tr>
+<tr><td>expert</td><td>4</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>10</td><td>0</td><td>—</td><td>20.18 (10)</td></tr>
+<tr><td>expert</td><td>4</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>10</td><td>0</td><td>20.18 (10)</td><td>—</td></tr>
+<tr><td>expert</td><td>5</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>0</td><td>10</td><td>0</td><td>—</td><td>28.72 (9)</td></tr>
+<tr><td>expert</td><td>5</td><td>tonnage_armour_crack</td><td>war_machine</td><td>10</td><td>10</td><td>1</td><td>28.72 (9)</td><td>—</td></tr>
+<tr><td>expert</td><td>5</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>10</td><td>0</td><td>—</td><td>28.72 (9)</td></tr>
+<tr><td>expert</td><td>5</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>10</td><td>0</td><td>28.72 (9)</td><td>—</td></tr>
+<tr><td>expert</td><td>6</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>3</td><td>9</td><td>0.33</td><td>21.11 (6)</td><td>21.95 (3)</td></tr>
+<tr><td>expert</td><td>6</td><td>tonnage_armour_crack</td><td>war_machine</td><td>0</td><td>9</td><td>0</td><td>—</td><td>21.88 (9)</td></tr>
+<tr><td>expert</td><td>6</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>9</td><td>0</td><td>—</td><td>21.88 (9)</td></tr>
+<tr><td>expert</td><td>6</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>9</td><td>0</td><td>21.88 (9)</td><td>—</td></tr>
+<tr><td>expert</td><td>7</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>2</td><td>9</td><td>0.22</td><td>19.77 (5)</td><td>12.12 (4)</td></tr>
+<tr><td>expert</td><td>7</td><td>tonnage_armour_crack</td><td>war_machine</td><td>0</td><td>9</td><td>0</td><td>—</td><td>18.4 (9)</td></tr>
+<tr><td>expert</td><td>7</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>9</td><td>0</td><td>—</td><td>18.4 (9)</td></tr>
+<tr><td>expert</td><td>7</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>9</td><td>0</td><td>18.4 (9)</td><td>—</td></tr>
+<tr><td>expert</td><td>8</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>8</td><td>9</td><td>0.89</td><td>21.63 (8)</td><td>—</td></tr>
+<tr><td>expert</td><td>8</td><td>tonnage_armour_crack</td><td>war_machine</td><td>0</td><td>9</td><td>0</td><td>—</td><td>21.63 (8)</td></tr>
+<tr><td>expert</td><td>8</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>9</td><td>0</td><td>—</td><td>21.63 (8)</td></tr>
+<tr><td>expert</td><td>8</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>9</td><td>0</td><td>21.63 (8)</td><td>—</td></tr>
+<tr><td>expert</td><td>9</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>5</td><td>8</td><td>0.63</td><td>36.12 (1)</td><td>35.27 (1)</td></tr>
+<tr><td>expert</td><td>9</td><td>tonnage_armour_crack</td><td>war_machine</td><td>0</td><td>8</td><td>0</td><td>—</td><td>35.69 (2)</td></tr>
+<tr><td>expert</td><td>9</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>8</td><td>0</td><td>35.27 (1)</td><td>36.12 (1)</td></tr>
+<tr><td>expert</td><td>9</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>8</td><td>0</td><td>35.69 (2)</td><td>—</td></tr>
+<tr><td>expert</td><td>10</td><td>ohm_short_circuit</td><td>sentry_turret</td><td>4</td><td>2</td><td>2</td><td>—</td><td>—</td></tr>
+<tr><td>expert</td><td>10</td><td>tonnage_armour_crack</td><td>war_machine</td><td>1</td><td>2</td><td>0.5</td><td>—</td><td>—</td></tr>
+<tr><td>expert</td><td>10</td><td>kerf_blink_behind</td><td>shield_robot</td><td>0</td><td>2</td><td>0</td><td>—</td><td>—</td></tr>
+<tr><td>expert</td><td>10</td><td>overkill_carry</td><td>all waves</td><td>0</td><td>2</td><td>0</td><td>—</td><td>—</td></tr></tbody></table></div></section>
+<section><h2>Offered bonuses</h2><p>Each run contributes once per item. Takers start at their first take and never-takers at their first offer. Post-pick seconds are a median within each run. Waves survived count confirmed completions. The final wave counts only with a recorded clear or post-wave offer and no death. Within the same profile, controls and pick wave, pair runs by seed rank without replacement. The difference is the median of take minus decline across matched pairs. CI95 uses 4,000 paired bootstrap resamples. The A/A floor is the larger absolute CI endpoint for even versus odd decliner seeds, falling back to all offered runs. A CI touching zero or a difference within the floor earns “noise”. The effect needs two matched pairs and the floor needs six A/A pairs. These observational comparisons can reflect the rest of the loadout.</p><div class="scroll"><table><thead><tr><th scope="col">Bonus</th><th scope="col">After pick</th><th scope="col">Took median (n)</th><th scope="col">Declined median (n)</th><th scope="col">Pairs</th><th scope="col">Paired Δ</th><th scope="col">CI95</th><th scope="col">A/A floor (pairs, source)</th><th scope="col">Result</th></tr></thead><tbody><tr><td>effect_overkill_carry</td><td>waves survived</td><td>not measured</td><td>3 (13)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (1, all offered)</td><td>too few pairs</td></tr>
+<tr><td>effect_overkill_carry</td><td>wave s</td><td>not measured</td><td>15.68 (12)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (1, all offered)</td><td>too few pairs</td></tr>
+<tr><td>ghost_dent</td><td>waves survived</td><td>0.5 (4)</td><td>0 (1)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>ghost_dent</td><td>wave s</td><td>27.56 (2)</td><td>not measured</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>ghost_kerf</td><td>waves survived</td><td>2 (12)</td><td>2 (3)</td><td>1</td><td>0</td><td>not measured</td><td>not measured (2, all offered)</td><td>too few pairs</td></tr>
+<tr><td>ghost_kerf</td><td>wave s</td><td>18.85 (9)</td><td>19.69 (2)</td><td>1</td><td>3.58</td><td>not measured</td><td>not measured (2, all offered)</td><td>too few pairs</td></tr>
+<tr><td>ghost_ohm</td><td>waves survived</td><td>2 (10)</td><td>not measured</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (1, all offered)</td><td>too few pairs</td></tr>
+<tr><td>ghost_ohm</td><td>wave s</td><td>19.52 (7)</td><td>not measured</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (1, all offered)</td><td>too few pairs</td></tr>
+<tr><td>ghost_tonnage</td><td>waves survived</td><td>3 (14)</td><td>not measured</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (3, all offered)</td><td>too few pairs</td></tr>
+<tr><td>ghost_tonnage</td><td>wave s</td><td>18.44 (14)</td><td>not measured</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (3, all offered)</td><td>too few pairs</td></tr>
+<tr><td>master_ohm</td><td>waves survived</td><td>2 (3)</td><td>not measured</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>master_ohm</td><td>wave s</td><td>29.32 (2)</td><td>not measured</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>master_tonnage</td><td>waves survived</td><td>1.5 (10)</td><td>0 (1)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>master_tonnage</td><td>wave s</td><td>22.3 (7)</td><td>not measured</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>stat_damage_10</td><td>waves survived</td><td>3 (23)</td><td>not measured</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (4, all offered)</td><td>too few pairs</td></tr>
+<tr><td>stat_damage_10</td><td>wave s</td><td>19.39 (22)</td><td>not measured</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (4, all offered)</td><td>too few pairs</td></tr>
+<tr><td>stat_damage_25</td><td>waves survived</td><td>1 (7)</td><td>0 (1)</td><td>1</td><td>1</td><td>not measured</td><td>not measured (4, all offered)</td><td>too few pairs</td></tr>
+<tr><td>stat_damage_25</td><td>wave s</td><td>16.67 (7)</td><td>not measured</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (3, all offered)</td><td>too few pairs</td></tr>
+<tr><td>stat_guard_meter_10</td><td>waves survived</td><td>2 (13)</td><td>3 (13)</td><td>5</td><td>-1</td><td>-5…2</td><td>not measured (5, all offered)</td><td>too few pairs</td></tr>
+<tr><td>stat_guard_meter_10</td><td>wave s</td><td>20.28 (12)</td><td>16.13 (11)</td><td>3</td><td>-4.31</td><td>-7.01…-1.75</td><td>not measured (3, all offered)</td><td>too few pairs</td></tr>
+<tr><td>stat_guard_meter_25</td><td>waves survived</td><td>0 (4)</td><td>1 (11)</td><td>3</td><td>-4</td><td>-6…0</td><td>4 (6, all offered)</td><td>noise</td></tr>
+<tr><td>stat_guard_meter_25</td><td>wave s</td><td>not measured</td><td>16.42 (7)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (2, all offered)</td><td>too few pairs</td></tr>
+<tr><td>stat_hp_max_10</td><td>waves survived</td><td>3 (16)</td><td>1 (7)</td><td>0</td><td>not measured</td><td>not measured</td><td>2 (8, all offered)</td><td>insufficient data</td></tr>
+<tr><td>stat_hp_max_10</td><td>wave s</td><td>17.83 (12)</td><td>14.95 (5)</td><td>0</td><td>not measured</td><td>not measured</td><td>17.05 (6, all offered)</td><td>insufficient data</td></tr>
+<tr><td>stat_hp_max_25</td><td>waves survived</td><td>not measured</td><td>2 (5)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>stat_hp_max_25</td><td>wave s</td><td>not measured</td><td>23.57 (5)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>stat_regen_10</td><td>waves survived</td><td>2 (11)</td><td>3 (9)</td><td>2</td><td>1</td><td>0…2</td><td>not measured (1, all offered)</td><td>too few pairs</td></tr>
+<tr><td>stat_regen_10</td><td>wave s</td><td>19.88 (10)</td><td>15.18 (8)</td><td>1</td><td>4.97</td><td>not measured</td><td>not measured (1, all offered)</td><td>too few pairs</td></tr>
+<tr><td>stat_regen_25</td><td>waves survived</td><td>0 (4)</td><td>2 (4)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>stat_regen_25</td><td>wave s</td><td>22.76 (1)</td><td>19.86 (4)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>stat_speed_10</td><td>waves survived</td><td>2 (13)</td><td>2.5 (8)</td><td>6</td><td>0.5</td><td>-1…2</td><td>not measured (3, all offered)</td><td>too few pairs</td></tr>
+<tr><td>stat_speed_10</td><td>wave s</td><td>16.92 (11)</td><td>26.18 (6)</td><td>4</td><td>-6.86</td><td>-15.28…2.03</td><td>not measured (1, all offered)</td><td>too few pairs</td></tr>
+<tr><td>stat_speed_25</td><td>waves survived</td><td>not measured</td><td>1 (7)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>stat_speed_25</td><td>wave s</td><td>not measured</td><td>14.9 (5)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>weapon_chainsaw</td><td>waves survived</td><td>0 (2)</td><td>1.5 (6)</td><td>1</td><td>0</td><td>not measured</td><td>not measured (1, all offered)</td><td>too few pairs</td></tr>
+<tr><td>weapon_chainsaw</td><td>wave s</td><td>not measured</td><td>20.22 (5)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (1, all offered)</td><td>too few pairs</td></tr>
+<tr><td>weapon_electro_baton</td><td>waves survived</td><td>6 (3)</td><td>2 (14)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>weapon_electro_baton</td><td>wave s</td><td>24.59 (3)</td><td>20.18 (12)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>weapon_flamethrower</td><td>waves survived</td><td>not measured</td><td>1.5 (8)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>weapon_flamethrower</td><td>wave s</td><td>not measured</td><td>23.44 (8)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>weapon_gatling</td><td>waves survived</td><td>2 (1)</td><td>2 (3)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>weapon_gatling</td><td>wave s</td><td>28.11 (1)</td><td>18.46 (2)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>weapon_gloria</td><td>waves survived</td><td>3 (3)</td><td>2 (16)</td><td>1</td><td>0</td><td>not measured</td><td>not measured (1, all offered)</td><td>too few pairs</td></tr>
+<tr><td>weapon_gloria</td><td>wave s</td><td>14.18 (3)</td><td>16.62 (14)</td><td>1</td><td>-15.25</td><td>not measured</td><td>not measured (1, all offered)</td><td>too few pairs</td></tr>
+<tr><td>weapon_hand_cannon</td><td>waves survived</td><td>not measured</td><td>2 (13)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (1, all offered)</td><td>too few pairs</td></tr>
+<tr><td>weapon_hand_cannon</td><td>wave s</td><td>not measured</td><td>24.88 (9)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (1, all offered)</td><td>too few pairs</td></tr>
+<tr><td>weapon_katana</td><td>waves survived</td><td>not measured</td><td>2 (19)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (3, all offered)</td><td>too few pairs</td></tr>
+<tr><td>weapon_katana</td><td>wave s</td><td>not measured</td><td>19.99 (19)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (3, all offered)</td><td>too few pairs</td></tr>
+<tr><td>weapon_machine_pistol</td><td>waves survived</td><td>not measured</td><td>2.5 (18)</td><td>0</td><td>not measured</td><td>not measured</td><td>5 (6, decliners)</td><td>insufficient data</td></tr>
+<tr><td>weapon_machine_pistol</td><td>wave s</td><td>not measured</td><td>19.7 (16)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (5, all offered)</td><td>too few pairs</td></tr>
+<tr><td>weapon_pistol</td><td>waves survived</td><td>4.5 (4)</td><td>2 (11)</td><td>4</td><td>2</td><td>-1…6</td><td>not measured (5, all offered)</td><td>too few pairs</td></tr>
+<tr><td>weapon_pistol</td><td>wave s</td><td>16.18 (4)</td><td>16.92 (9)</td><td>4</td><td>-3.68</td><td>-13.09…3.95</td><td>not measured (5, all offered)</td><td>too few pairs</td></tr>
+<tr><td>weapon_plasma_rifle</td><td>waves survived</td><td>not measured</td><td>1 (15)</td><td>0</td><td>not measured</td><td>not measured</td><td>1 (6, decliners)</td><td>insufficient data</td></tr>
+<tr><td>weapon_plasma_rifle</td><td>wave s</td><td>not measured</td><td>19.95 (13)</td><td>0</td><td>not measured</td><td>not measured</td><td>15.29 (6, decliners)</td><td>insufficient data</td></tr>
+<tr><td>weapon_plasma_sword</td><td>waves survived</td><td>1 (1)</td><td>1.5 (8)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (2, all offered)</td><td>too few pairs</td></tr>
+<tr><td>weapon_plasma_sword</td><td>wave s</td><td>10.87 (1)</td><td>24.71 (4)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (1, all offered)</td><td>too few pairs</td></tr>
+<tr><td>weapon_rocket_launcher</td><td>waves survived</td><td>1 (3)</td><td>not measured</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>weapon_rocket_launcher</td><td>wave s</td><td>27.8 (3)</td><td>not measured</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr></tbody></table></div></section>
+<section><h2>Offered weapons by ref</h2><p>Weapon refs combine offers of any bonus for that weapon. The same matching and noise rules apply.</p><div class="scroll"><table><thead><tr><th scope="col">Weapon ref</th><th scope="col">After pick</th><th scope="col">Took median (n)</th><th scope="col">Declined median (n)</th><th scope="col">Pairs</th><th scope="col">Paired Δ</th><th scope="col">CI95</th><th scope="col">A/A floor (pairs, source)</th><th scope="col">Result</th></tr></thead><tbody><tr><td>chainsaw</td><td>waves survived</td><td>0 (2)</td><td>1.5 (6)</td><td>1</td><td>0</td><td>not measured</td><td>not measured (1, all offered)</td><td>too few pairs</td></tr>
+<tr><td>chainsaw</td><td>wave s</td><td>not measured</td><td>20.22 (5)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (1, all offered)</td><td>too few pairs</td></tr>
+<tr><td>electro_baton</td><td>waves survived</td><td>6 (3)</td><td>2 (14)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>electro_baton</td><td>wave s</td><td>24.59 (3)</td><td>20.18 (12)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>flamethrower</td><td>waves survived</td><td>not measured</td><td>1.5 (8)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>flamethrower</td><td>wave s</td><td>not measured</td><td>23.44 (8)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>gatling</td><td>waves survived</td><td>2 (1)</td><td>2 (3)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>gatling</td><td>wave s</td><td>28.11 (1)</td><td>18.46 (2)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>gloria</td><td>waves survived</td><td>3 (3)</td><td>2 (16)</td><td>1</td><td>0</td><td>not measured</td><td>not measured (1, all offered)</td><td>too few pairs</td></tr>
+<tr><td>gloria</td><td>wave s</td><td>14.18 (3)</td><td>16.62 (14)</td><td>1</td><td>-15.25</td><td>not measured</td><td>not measured (1, all offered)</td><td>too few pairs</td></tr>
+<tr><td>hand_cannon</td><td>waves survived</td><td>not measured</td><td>2 (13)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (1, all offered)</td><td>too few pairs</td></tr>
+<tr><td>hand_cannon</td><td>wave s</td><td>not measured</td><td>24.88 (9)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (1, all offered)</td><td>too few pairs</td></tr>
+<tr><td>katana</td><td>waves survived</td><td>not measured</td><td>2 (19)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (3, all offered)</td><td>too few pairs</td></tr>
+<tr><td>katana</td><td>wave s</td><td>not measured</td><td>19.99 (19)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (3, all offered)</td><td>too few pairs</td></tr>
+<tr><td>machine_pistol</td><td>waves survived</td><td>not measured</td><td>2.5 (18)</td><td>0</td><td>not measured</td><td>not measured</td><td>5 (6, decliners)</td><td>insufficient data</td></tr>
+<tr><td>machine_pistol</td><td>wave s</td><td>not measured</td><td>19.7 (16)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (5, all offered)</td><td>too few pairs</td></tr>
+<tr><td>pistol</td><td>waves survived</td><td>4.5 (4)</td><td>2 (11)</td><td>4</td><td>2</td><td>-1…6</td><td>not measured (5, all offered)</td><td>too few pairs</td></tr>
+<tr><td>pistol</td><td>wave s</td><td>16.18 (4)</td><td>16.92 (9)</td><td>4</td><td>-3.68</td><td>-13.09…3.95</td><td>not measured (5, all offered)</td><td>too few pairs</td></tr>
+<tr><td>plasma_rifle</td><td>waves survived</td><td>not measured</td><td>1 (15)</td><td>0</td><td>not measured</td><td>not measured</td><td>1 (6, decliners)</td><td>insufficient data</td></tr>
+<tr><td>plasma_rifle</td><td>wave s</td><td>not measured</td><td>19.95 (13)</td><td>0</td><td>not measured</td><td>not measured</td><td>15.29 (6, decliners)</td><td>insufficient data</td></tr>
+<tr><td>plasma_sword</td><td>waves survived</td><td>1 (1)</td><td>1.5 (8)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (2, all offered)</td><td>too few pairs</td></tr>
+<tr><td>plasma_sword</td><td>wave s</td><td>10.87 (1)</td><td>24.71 (4)</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (1, all offered)</td><td>too few pairs</td></tr>
+<tr><td>rocket_launcher</td><td>waves survived</td><td>1 (3)</td><td>not measured</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr>
+<tr><td>rocket_launcher</td><td>wave s</td><td>27.8 (3)</td><td>not measured</td><td>0</td><td>not measured</td><td>not measured</td><td>not measured (0, all offered)</td><td>too few pairs</td></tr></tbody></table></div></section>
+<section><h2>Combat telemetry</h2><p>Values are per-wave medians, with measured observations in parentheses. There is no rate because rounds count gunfire while contacts include claws, melee and blasts and count a killing wound again.</p><div class="scroll"><table><thead><tr><th scope="col">Profile</th><th scope="col">Wave</th><th scope="col">Guard deflects (n)</th><th scope="col">Rolls (n)</th><th scope="col">gun rounds</th><th scope="col">damaging contacts (all sources)</th><th scope="col">ohm s (n)</th><th scope="col">rivet s (n)</th><th scope="col">tonnage s (n)</th></tr></thead><tbody><tr><td>novice</td><td>1</td><td>9 (10)</td><td>3 (10)</td><td>0 (10)</td><td>13 (10)</td><td>not measured</td><td>14.64 (10)</td><td>not measured</td></tr>
+<tr><td>novice</td><td>2</td><td>9.5 (10)</td><td>2 (10)</td><td>0 (10)</td><td>14 (10)</td><td>not measured</td><td>14.61 (10)</td><td>not measured</td></tr>
+<tr><td>novice</td><td>3</td><td>5 (10)</td><td>2 (10)</td><td>0 (10)</td><td>14.5 (10)</td><td>not measured</td><td>16.96 (10)</td><td>not measured</td></tr>
+<tr><td>novice</td><td>4</td><td>5 (9)</td><td>2 (9)</td><td>0 (9)</td><td>14 (9)</td><td>not measured</td><td>16.42 (9)</td><td><span class="form">4.65 (1)</span></td></tr>
+<tr><td>novice</td><td>5</td><td>2 (8)</td><td>2 (8)</td><td>0 (8)</td><td>11 (8)</td><td>not measured</td><td>8.33 (8)</td><td><span class="form">7.1 (1)</span></td></tr>
+<tr><td>average</td><td>1</td><td>8.5 (10)</td><td>3 (10)</td><td>0 (10)</td><td>13 (10)</td><td>not measured</td><td>14.05 (10)</td><td>not measured</td></tr>
+<tr><td>average</td><td>2</td><td>9.5 (10)</td><td>1.5 (10)</td><td>0 (10)</td><td>14 (10)</td><td>not measured</td><td>15.04 (10)</td><td>not measured</td></tr>
+<tr><td>average</td><td>3</td><td>8 (10)</td><td>3.5 (10)</td><td>0 (10)</td><td>13 (10)</td><td>not measured</td><td>16.34 (10)</td><td>not measured</td></tr>
+<tr><td>average</td><td>4</td><td>7 (8)</td><td>2 (8)</td><td>0 (8)</td><td>15 (8)</td><td>not measured</td><td>15.77 (8)</td><td>not measured</td></tr>
+<tr><td>average</td><td>5</td><td>2 (8)</td><td>3.5 (8)</td><td>0 (8)</td><td>12.5 (8)</td><td>not measured</td><td>16.31 (8)</td><td><span class="form">1.13 (2)</span></td></tr>
+<tr><td>average</td><td>6</td><td>6 (2)</td><td>0.5 (2)</td><td>24.5 (2)</td><td>33.5 (2)</td><td>not measured</td><td>22.55 (2)</td><td><span class="form">0.02 (1)</span></td></tr>
+<tr><td>average</td><td>7</td><td>5 (2)</td><td>4 (2)</td><td>21.5 (2)</td><td>29.5 (2)</td><td>not measured</td><td>17.06 (2)</td><td><span class="form">7.1 (1)</span></td></tr>
+<tr><td>average</td><td>8</td><td>2.5 (2)</td><td>4.5 (2)</td><td>22 (2)</td><td>37 (2)</td><td>not measured</td><td>21.18 (2)</td><td><span class="form">7.1 (1)</span></td></tr>
+<tr><td>average</td><td>9</td><td>3.5 (2)</td><td>3.5 (2)</td><td>23 (2)</td><td>39.5 (2)</td><td><span class="form">0.02 (1)</span></td><td>24 (2)</td><td><span class="form">7.1 (1)</span></td></tr>
+<tr><td>average</td><td>10</td><td>1.5 (2)</td><td>1.5 (2)</td><td>15 (2)</td><td>27.5 (2)</td><td><span class="form">0.02 (1)</span></td><td>15.57 (2)</td><td><span class="form">0.57 (1)</span></td></tr>
+<tr><td>average</td><td>11</td><td>2 (1)</td><td>4 (1)</td><td>29 (1)</td><td>42 (1)</td><td><span class="form">0.03 (1)</span></td><td>18.27 (1)</td><td>not measured</td></tr>
+<tr><td>expert</td><td>1</td><td>10.5 (10)</td><td>4 (10)</td><td>0 (10)</td><td>13 (10)</td><td>not measured</td><td>16.62 (10)</td><td>not measured</td></tr>
+<tr><td>expert</td><td>2</td><td>7.5 (10)</td><td>3 (10)</td><td>0 (10)</td><td>14 (10)</td><td>not measured</td><td>14.16 (10)</td><td>not measured</td></tr>
+<tr><td>expert</td><td>3</td><td>8 (10)</td><td>5 (10)</td><td>0 (10)</td><td>15 (10)</td><td>not measured</td><td>17.92 (10)</td><td>not measured</td></tr>
+<tr><td>expert</td><td>4</td><td>8 (10)</td><td>8 (10)</td><td>0 (10)</td><td>15 (10)</td><td>not measured</td><td>20.19 (10)</td><td>not measured</td></tr>
+<tr><td>expert</td><td>5</td><td>1 (10)</td><td>6 (10)</td><td>0 (10)</td><td>21.5 (10)</td><td>not measured</td><td>24.42 (10)</td><td><span class="form">6.35 (3)</span></td></tr>
+<tr><td>expert</td><td>6</td><td>5 (9)</td><td>4 (9)</td><td>0 (9)</td><td>28 (9)</td><td>not measured</td><td>21.88 (9)</td><td><span class="form">7.1 (1)</span></td></tr>
+<tr><td>expert</td><td>7</td><td>5 (9)</td><td>4 (9)</td><td>0 (9)</td><td>27 (9)</td><td>not measured</td><td>18.4 (9)</td><td><span class="form">7.1 (2)</span></td></tr>
+<tr><td>expert</td><td>8</td><td>4 (9)</td><td>8 (9)</td><td>0 (9)</td><td>34 (9)</td><td><span class="form">0.07 (1)</span></td><td>17.9 (9)</td><td><span class="form">7.1 (4)</span></td></tr>
+<tr><td>expert</td><td>9</td><td>4.5 (8)</td><td>2.5 (8)</td><td>7 (8)</td><td>26 (8)</td><td><span class="form">0.02 (1)</span></td><td>14.7 (8)</td><td><span class="form">7.1 (5)</span></td></tr>
+<tr><td>expert</td><td>10</td><td>0.5 (2)</td><td>1 (2)</td><td>19 (2)</td><td>27 (2)</td><td><span class="form">1.77 (1)</span></td><td>18.25 (2)</td><td><span class="form">0.39 (2)</span></td></tr></tbody></table></div></section>
+<section><h2>Unusual winning runs</h2><p>At the deepest observed wave per profile, rank up to three runs with positive rarity. Rarity is the mean of log₂(measured runs / runs sharing the signature) for the ordered picks, set of acquired weapons and dominant measured ghost form. Missing signatures are skipped. Ties use ascending seed. Commands use the recorded controls and batch settings. Replaying a human trajectory also requires its recorded inputs.</p><div class="scroll"><table><thead><tr><th scope="col">Profile</th><th scope="col">Seed</th><th scope="col">Wave</th><th scope="col">Rarity (bits)</th><th scope="col">Picks in order</th><th scope="col">Weapon refs</th><th scope="col">Dominant form</th><th scope="col">Replay command</th></tr></thead><tbody><tr><td>novice</td><td>2</td><td>5</td><td>2.21</td><td>ghost_tonnage → ghost_ohm → master_tonnage → weapon_chainsaw</td><td>chainsaw</td><td>rivet</td><td><code>node tools/dev/run.mjs gauntlet --seed=2 --bot=novice --pick=greedy --bot-salt=1 --controls=wheel --waves=40</code></td></tr>
+<tr><td>novice</td><td>3</td><td>5</td><td>2.21</td><td>stat_hp_max_10 → weapon_pistol → stat_damage_10 → stat_guard_meter_10</td><td>pistol</td><td>rivet</td><td><code>node tools/dev/run.mjs gauntlet --seed=3 --bot=novice --pick=greedy --bot-salt=1 --controls=wheel --waves=40</code></td></tr>
+<tr><td>novice</td><td>8</td><td>5</td><td>2.21</td><td>stat_hp_max_10 → ghost_tonnage → weapon_electro_baton → stat_regen_10</td><td>electro_baton</td><td>rivet</td><td><code>node tools/dev/run.mjs gauntlet --seed=8 --bot=novice --pick=greedy --bot-salt=1 --controls=wheel --waves=40</code></td></tr>
+<tr><td>average</td><td>3</td><td>11</td><td>2.21</td><td>stat_hp_max_10 → weapon_pistol → stat_damage_10 → stat_guard_meter_10 → stat_regen_10 → ghost_tonnage → weapon_gloria → ghost_ohm → weapon_rocket_launcher → master_ohm</td><td>gloria, pistol, rocket_launcher</td><td>rivet</td><td><code>node tools/dev/run.mjs gauntlet --seed=3 --bot=average --pick=greedy --bot-salt=1 --controls=wheel --waves=40</code></td></tr>
+<tr><td>expert</td><td>1</td><td>10</td><td>2.21</td><td>ghost_tonnage → stat_hp_max_10 → master_tonnage → stat_guard_meter_10 → stat_regen_10 → stat_damage_10 → weapon_gatling → stat_damage_25 → ghost_ohm</td><td>gatling</td><td>rivet</td><td><code>node tools/dev/run.mjs gauntlet --seed=1 --bot=expert --pick=greedy --bot-salt=1 --controls=wheel --waves=40</code></td></tr>
+<tr><td>expert</td><td>8</td><td>10</td><td>2.21</td><td>stat_hp_max_10 → ghost_tonnage → weapon_electro_baton → master_tonnage → ghost_ohm → stat_damage_10 → master_ohm → weapon_rocket_launcher → ghost_kerf</td><td>electro_baton, rocket_launcher</td><td>rivet</td><td><code>node tools/dev/run.mjs gauntlet --seed=8 --bot=expert --pick=greedy --bot-salt=1 --controls=wheel --waves=40</code></td></tr></tbody></table></div></section></main></body></html>

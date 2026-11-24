@@ -1,0 +1,4 @@
+02:47 start salt 0
+02:57 end salt 0 exit 0
+02:57 start salt 1
+03:06 end salt 1 exit 0
