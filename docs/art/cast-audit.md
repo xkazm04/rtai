@@ -396,3 +396,30 @@ Turn and reversal jump, stop: not measured (nothing changed to measure). **Size,
 (Rivet 77 / 75 in the same audit; not enlarged: the card is `HEIGHT_M` 2.6 m over a 200 px body, figure bbox 184 px of
 the 288 px cell). What else on the checklist still fails: the Feet row (sole 23 to 29 px, jump over 12 px at 70 right and
 down-right) and every other cell of its row in the n26 table above that was F; none was worked on in this call.
+
+## Impact outline, n28
+
+Question (lane item 4): does the hit flash (`CutRig.set_tint`, the shared `PartMaterials` tinted material) draw dark teeth
+outside the silhouette on other cards' hit poses at 64 px/m, as it did on Mulroney's (354 / 462 px before `af94f1c6e`)?
+Measured in ONE Godot launch by `project/dev/cast/cast_impact_edge.gd` (wave street, tilt 70, one pistol hit each, the same
+frozen frame exposed live / raw / empty, flash on = pulse, off = calm, `tools/art/cast_impact_edge.py` -> `rim()` of
+`cast_mulroney_edge.py`: dark exterior pixels). Sheet: `impact_edge_64.png` (masters `n28/cast/`, pulse row then calm row).
+
+| Card | Hit drawing shown | Pulse (flash on) | Calm (flash off) | Flash material on the card |
+|---|---|---:|---:|---|
+| patrol cop | `cop_patrol_shoulder_hit.png` | 1 | 0 | yes (silhouette flash) |
+| riot | `cop_riot_hit.png` | 6 | 0 | yes |
+| SWAT | `swat_hit.png` | 7 | 0 | yes |
+| lancer | `rocket_trooper_hit.png` | 0 | 0 | yes |
+| door carrier | `shield_robot_hit.png` | 0 | 0 | none: its card sprite never takes the rig tint |
+| warden | `appliance_warden_hit.png` | 0 | 0 | painted ink path (`painted_ink`): draws in colour, no flash |
+| gunner | `robot_gunner_hit.png` | 0 | 0 | none (card sprite beside the robot rig) |
+
+Looked at the sheet: on patrol, riot, SWAT and lancer the flash is the intended black-and-cream silhouette print; the
+exterior fringe is 0 to 7 px per frame against Mulroney's 354 / 462, so no card shows his teeth. The 6 to 7 px on riot and
+SWAT are single stray pixels along the shield rim / rifle, not a band. No fix made: the flash material is shared
+(`PartMaterials`, outside this lane's allowlist), so if the 6 to 7 px ever matter it is a NEED for the material's owner;
+the card-path fix (`CastCards.painted_ink`) is for painted wounds and would only turn the flash off for these cards.
+Caveats: the flash was forced on the frozen tick (`natural_tint` was false 3 ticks after the strike, the game's own pulse is
+shorter than that); p70 only; the door carrier's and gunner's flash in the real fight is not a rig tint, so their pulse
+column is 0 by construction, not by a measured clean flash.
