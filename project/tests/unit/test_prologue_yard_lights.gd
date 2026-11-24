@@ -63,7 +63,9 @@ func test_pools_land_at_each_fixture_in_world_pixels_and_hold_through_the_fight(
 	var stage: DataTable = DataTable.open(PrologueGame.TABLE, PrologueGame.SCHEMA)
 	var yard: PrologueYard = PrologueYard.from_stage(stage)
 	var table: DataTable = DataTable.open(PrologueYardDressing.TABLE, PrologueYardDressing.SCHEMA)
-	var row: Dictionary = table.raw["dressings"]["line_fire"]["lights"]
+	var dressing_id: String = str(stage.raw["yard"]["dressing"])
+	assert_eq(dressing_id, "arched_line", "the shipped default yard")
+	var row: Dictionary = table.raw["dressings"][dressing_id]["lights"]
 	var layer: Recorder = autofree(Recorder.new())
 	yard.dressing.lights.install(layer)
 	var ids: Array[String] = []
@@ -75,7 +77,8 @@ func test_pools_land_at_each_fixture_in_world_pixels_and_hold_through_the_fight(
 		assert_eq(layer.ids[ids.size()], StringName(table.text(pool, "kind")), id)
 		assert_false(id in ids, id)
 		ids.append(id)
-	assert_eq(layer.ids.count(&"yard_fire"), 3)
+	assert_eq(layer.ids.count(&"yard_fire"), 1, "conveyor door")
+	assert_eq(layer.ids.count(&"yard_hall_mouth"), 2, "burst door, collapsed wall")
 	assert_eq(layer.ids.count(&"yard_fire_mid"), 4, "arm cable, pickup, skip, conveyor tail")
 	assert_eq(layer.ids.count(&"yard_lamp"), 3)
 	assert_eq(layer.ids.count(&"yard_lamp_gate"), 1)

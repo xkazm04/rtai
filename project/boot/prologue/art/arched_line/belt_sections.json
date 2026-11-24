@@ -1,0 +1,70 @@
+{
+ "straight_a": {
+  "size_px": [
+   788,
+   346
+  ],
+  "footing_y_px": 278,
+  "appliances_px": [
+   [
+    204,
+    348
+   ],
+   [
+    382,
+    520
+   ]
+  ]
+ },
+ "straight_b": {
+  "size_px": [
+   793,
+   347
+  ],
+  "footing_y_px": 279,
+  "appliances_px": [
+   [
+    204,
+    344
+   ],
+   [
+    378,
+    517
+   ]
+  ]
+ },
+ "curve": {
+  "size_px": [
+   786,
+   418
+  ],
+  "footing_y_px": 347,
+  "appliances_px": [
+   [
+    180,
+    315
+   ],
+   [
+    351,
+    478
+   ]
+  ]
+ },
+ "torn": {
+  "size_px": [
+   811,
+   334
+  ],
+  "footing_y_px": 245,
+  "appliances_px": [
+   [
+    170,
+    315
+   ],
+   [
+    412,
+    575
+   ]
+  ]
+ }
+}

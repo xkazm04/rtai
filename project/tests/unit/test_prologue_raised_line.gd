@@ -57,13 +57,13 @@ func test_hangers_overhang_without_blocking_and_pads_are_gone() -> void:
 		assert_false(id in cover_ids, id)
 
 
-func test_raised_line_is_the_shipped_default_and_line_fire_one_flag_away() -> void:
+func test_arched_line_is_the_shipped_default_and_raised_line_one_flag_away() -> void:
 	var stage: DataTable = DataTable.open(PrologueGame.TABLE, PrologueGame.SCHEMA)
-	assert_eq(PrologueYard.from_stage(stage).dressing.id, "raised_line")
-	LaunchArgs.parse(["--yard-dressing=line_fire"])
+	assert_eq(PrologueYard.from_stage(stage).dressing.id, "arched_line")
+	LaunchArgs.parse(["--yard-dressing=raised_line"])
 	var plan: PrologueYard = PrologueYard.from_stage(stage)
 	LaunchArgs.parse()
-	assert_eq(plan.dressing.id, "line_fire")
+	assert_eq(plan.dressing.id, "raised_line")
 
 
 func test_extra_stacks_sit_at_the_west_edge_with_their_own_art() -> void:
@@ -75,3 +75,90 @@ func test_extra_stacks_sit_at_the_west_edge_with_their_own_art() -> void:
 	assert_eq(found.size(), 2)
 	assert_eq(found["stack_broken_sw"], ART + "pallet_broken.png")
 	assert_eq(found["stack_double_west"], ART + "pallet_double.png")
+
+
+func test_arched_line_is_raised_line_with_a_darker_warmer_floor_only() -> void:
+	var look: PrologueYardDressing = PrologueYardDressing.resolve("arched_line")
+	assert_eq(look.id, "arched_line")
+	assert_eq(look.ground_shade, 0.81)
+	assert_eq(look.ground.size(), 2)
+	assert_eq(look.ground[0].texture, ART + "floor_tile.png")
+	assert_eq(look.ground[1].texture, ART + "floor_stains.png")
+	assert_eq(look.ground[0].tint, Color("ffe0c8ff"))
+	assert_eq(look.ground[1].wash, Color("f6dca880"))
+	assert_ne(look.ground[0].tint, PrologueYardDressing.resolve("raised_line").ground[0].tint)
+	var arched: Dictionary = _row("arched_line").duplicate(true)
+	var raised: Dictionary = _row("raised_line").duplicate(true)
+	assert_true(arched.erase("ground_impression"))
+	for key: String in ["ground", "layout", "over_print", "factory_front", "lights"]:
+		assert_true(arched.erase(key))
+		assert_true(raised.erase(key))
+	assert_eq(
+		str(arched),
+		str(raised),
+		"only ground, layout art, over-print, hall front and lights differ"
+	)
+	var arched_ground: Array = _row("arched_line")["ground"]
+	var raised_ground: Array = _row("raised_line")["ground"]
+	for i: int in arched_ground.size():
+		var a_row: Dictionary = arched_ground[i]
+		var r_row: Dictionary = raised_ground[i]
+		for key: String in ["rect_m", "texture", "tiled"]:
+			assert_eq(str(a_row.get(key)), str(r_row.get(key)), key)
+
+
+func test_arched_line_lays_the_brown_tile_as_a_second_impression_and_raised_line_does_not() -> void:
+	var look: PrologueYardDressing = PrologueYardDressing.resolve("arched_line")
+	assert_not_null(look.impression)
+	assert_eq(look.impression.texture, ART.replace("raised_line", "arched_line") + "floor_tile.png")
+	assert_true(look.impression.tiled)
+	assert_eq(look.impression.tile_size, Vector2(8, 8))
+	assert_eq(look.impression.rect, look.ground[0].rect)
+	assert_eq(look.impression.tint, Color("ffffff33"))
+	assert_null(PrologueYardDressing.resolve("raised_line").impression)
+	assert_false(_row("raised_line").has("ground_impression"))
+
+
+func test_arched_line_front_burns_at_the_burst_and_collapsed_bays_with_mouth_lights() -> void:
+	var look: PrologueYardDressing = PrologueYardDressing.resolve("arched_line")
+	var arts: Array[String] = []
+	for piece: PrologueYardDressing.Piece in look.factory_front:
+		arts.append(piece.art.get_file())
+	assert_true(arts.has("hall_burst_bay.png") and arts.has("hall_collapsed_bay.png"))
+	assert_false(arts.has("burst_bay.png") or arts.has("collapsed_bay.png"))
+	var lights: Dictionary = _row("arched_line")["lights"]
+	var mouths: Array[String] = []
+	for pool: Dictionary in lights["pools"]:
+		if pool["kind"] == "yard_hall_mouth":
+			mouths.append(str(pool["id"]))
+	assert_eq(mouths, ["burst_door", "collapsed_wall"])
+	var raised: Array = _row("raised_line")["factory_front"]
+	assert_true(
+		str(raised).contains("line_fire/burst_bay.png"), "raised_line keeps the shipped front"
+	)
+
+
+func _cover(id: String) -> Dictionary[String, Dictionary]:
+	var rows: Dictionary[String, Dictionary] = {}
+	for row: Dictionary in _row(id)["layout"]["cover"]:
+		rows[str(row["id"])] = row
+	return rows
+
+
+func test_arched_line_keeps_the_six_boxes_and_hangs_its_belt_as_arch_pieces() -> void:
+	var arched: Dictionary[String, Dictionary] = _cover("arched_line")
+	var raised: Dictionary[String, Dictionary] = _cover("raised_line")
+	for id: String in BELT:
+		assert_eq(str(arched[id]["at"]), str(raised[id]["at"]), id)
+		assert_eq(str(arched[id]["size_m"]), str(raised[id]["size_m"]), id)
+	var over: Array = _row("arched_line")["over_print"]
+	var arches: int = 0
+	for piece: Dictionary in _row("arched_line")["layout"]["debris"]:
+		var id: String = piece["id"]
+		assert_false(id.begins_with("hang_"), id)
+		assert_false(arched.has(id), id + " must not block")
+		if id.begins_with("arch_"):
+			arches += 1
+			assert_true(over.has(id), id + " draws over the print")
+			assert_true(ResourceLoader.exists(str(piece["art"])), id)
+	assert_eq(arches, 6)

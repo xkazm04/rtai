@@ -54,6 +54,8 @@ var use_stage_decals: bool
 var ochre_strength: float
 ## Cover and debris ids drawn over the world print, in the art's own colours.
 var over_print: PackedStringArray = PackedStringArray()
+## A ground layer laid on the over-print layer, under the over-print pieces: a second impression.
+var impression: Ground
 
 
 static func resolve(
@@ -106,6 +108,8 @@ func _read_paint(table: DataTable, row: Dictionary, plain: Dictionary) -> void:
 	ochre_strength = table.num(row, "ochre_strength") if row.has("ochre_strength") else 0.0
 	if row.has("over_print"):
 		over_print = PackedStringArray(table.array(row, "over_print"))
+	if row.has("ground_impression"):
+		impression = _layer(table, table.object(row, "ground_impression"))
 	outside = _pieces(table, row, "outside")
 	if row.has("front_replaces_m"):
 		var front: Dictionary = table.object(row, "front_replaces_m")

@@ -15,8 +15,9 @@ const LEGACY: Dictionary[int, String] = {
 	42: "c24e6541726ff885917bc6dd0210a21f33db7dd397ad67c29e514714d9207b7d",
 }
 const LINE_FIRE_TICKS: Dictionary[int, int] = {7: 11701, 3: 13014, 11: 10392, 21: 12158, 42: 13278}
-## The shipped default: raised_line keeps line_fire's bytes except seed 3, where the two west
-## stacks change the run (the same deaths and lowest health, a different finish).
+## The shipped default is arched_line: raised_line's collision, so these ticks (raised_line one
+## flag away). They keep line_fire's bytes except seed 3, where the two west stacks change the
+## run (the same deaths and lowest health, a different finish).
 const RAISED_LINE_TICKS: Dictionary[int, int] = {
 	7: 11701, 3: 11958, 11: 10392, 21: 12158, 42: 13278
 }
@@ -27,7 +28,7 @@ const COVER_SEED_7: String = "993e5b7f080f30c0fa8f1def74e274f6762e6a05a757859e35
 func run(tree: SceneTree) -> String:
 	var reasons: Array[String] = []
 	var measurements: Array[Dictionary] = []
-	for dressing: String in ["", "line_fire", "torn_line", "plain"]:
+	for dressing: String in ["", "raised_line", "line_fire", "torn_line", "plain"]:
 		for seed_value: int in LINE_FIRE_TICKS:
 			var flags: PackedStringArray = ["--seed=%d" % seed_value]
 			if not dressing.is_empty():
@@ -85,7 +86,7 @@ func _run_seed(tree: SceneTree, measurements: Array[Dictionary]) -> String:
 
 func _pin(row: Dictionary) -> String:
 	var seed_value: int = row["seed"]
-	if row["dressing"] in ["line_fire", "raised_line"]:
+	if row["dressing"] in ["line_fire", "raised_line", "arched_line"]:
 		var pinned: Dictionary[int, int] = (
 			LINE_FIRE_TICKS if row["dressing"] == "line_fire" else RAISED_LINE_TICKS
 		)

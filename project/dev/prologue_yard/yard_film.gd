@@ -1,12 +1,12 @@
 extends Node
 ## Seek the seed-7 pilot before the first draw, then expose one tick per movie frame.
-
 const KNOWN_FLAGS: PackedStringArray = [
 	"--yard-dressing", "--place", "--tick", "--frames", "--ppm", "--still", "--cast-card"
 ]
 const NEEDS_WINDOW: bool = true
 const FIXED_FPS: int = 60
 const SIZE: Vector2i = Vector2i(1920, 1080)
+const LOOKS: Array[String] = ["plain", "torn_line", "line_fire", "raised_line", "arched_line"]
 
 var _game: PrologueGame
 var _view: PrologueView
@@ -85,7 +85,7 @@ func _read_args(args: ArenaArgs) -> String:
 	if DisplayServer.get_name() == "headless" or get_window().size != SIZE:
 		return "use a 1920x1080 window"
 	if (
-		args.text("--yard-dressing") not in ["plain", "torn_line", "line_fire", "raised_line"]
+		args.text("--yard-dressing") not in LOOKS
 		or args.text("--place") not in ["gate", "mid", "front", "harbor", "commander"]
 	):
 		return "choose a yard dressing and gate, mid, front, harbor or commander"
