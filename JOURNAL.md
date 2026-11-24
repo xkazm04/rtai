@@ -54,3 +54,23 @@ Branch `n27-pressure`, worktree `gtai-wt/n23-loop`, cut from `main` `a3b3f1466`.
   item 4 mutate (stall lines in `gauntlet_combat.gd` 12-16,18,53-66,120,122,123 and `bot_arena_moves.gd` 7-15,54;
   plus `pressure_pair.gd`). Godot only after `medians/keys/DONE`; it writes `evidence/n27-pressure/godot-free.txt`
   when done with Godot. Hard stop 05:10.
+- 03:57 melee has landed its mastery changes without a MILESTONE line yet: 58a1b8d07 (master_at 30, per_boss_cut 3),
+  1a6badfc8 (`bond.mastery_free` true), 6522ce667 (bond table, `--mastery-free` flag). The after-keys scratch import
+  is a full re-import (slow, ~10+ min); batches follow.
+NEXT (session 2, from ~04:15):
+  (1) Check `C:/Users/kazda/kiro/gtai-n27/logs/pressure/builder.lock` + last line of `builder-calls.jsonl`: call 2
+      `measure` (pid 28812, hard stop 05:10) may still run. Do not start another call while it runs.
+  (2) After-keys batches: `evidence/n27-pressure/medians/keys/progress.txt`, `DONE`; then
+      `cd evidence && node n27-pressure/medians/killers.mjs main-s0=n27-pressure/medians/main/salt0 keys-s0=n27-pressure/medians/keys/salt0 ...`
+      -> `medians/keys/killers.md`, commit `evidence/n27-pressure/medians/keys` (not import.log if large).
+  (3) After-melee arm: when `evidence/n27-pressure/godot-free.txt` exists (builder done with Godot), in the scratch tree
+      `C:/Users/kazda/kiro/gtai-n27/scratch/pressure-join` merge the melee head that has the mastery commits (grep
+      `n23-street/JOURNAL.md` for a MILESTONE; else its latest sha with 1a6badfc8 in it), git -c user.name=... merge
+      --no-verify, then launch `join.sh melee` detached (Start-Process bash). Conflicts: melee touches keys'
+      `ghost_deploy.gd:54` (one line) — keep both.
+  (4) Review call 2 (seed table, mutate scores), log `BUILDER measure ...`. Then item 5: medians.md with the three
+      columns (main, after keys, after melee), killer tables per profile, `tune.mjs propose` on the after-melee salt 0.
+  (5) Raise the weakest item afterwards (candidates: frames.json needs 8 to 15 rows — add the 6 m single-take stills
+      and a guard-vs-blade 64 px/m pair; the pair dash take is hit 4/26 vs n26 arena 0/48: the dash waits 16 ticks
+      after launch, not the lock — a "dash on lock" variant could be one flag).
+  Commit by 08:00, gate `node tools/gate/run.mjs --rev=HEAD` by 08:15. Remove the scratch worktree at the end.
