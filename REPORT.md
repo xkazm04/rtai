@@ -1,7 +1,7 @@
 # REPORT lane melee (n27, 2026-11-24)
 
 Branch `n27-melee`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-street`, cut from `main` `a3b3f1466`, `n27-keys`
-`e1c4b73d9` merged in (`4a3ff4b04`, MILESTONE keys-order). Director: Opus 5.5. Builder: Claude Sonnet 5.5 (high), four
+`e1c4b73d9` merged in (`4a3ff4b04`, MILESTONE keys-order). Director: Opus 5.5. Builder: Claude Sonnet 5.5 (high), five
 calls. Films and stills: `C:/Users/kazda/kiro/gtai-masters/n27/melee/` with `frames.json`. IMAGES 0/15.
 
 ## What works
@@ -52,7 +52,14 @@ calls. Films and stills: `C:/Users/kazda/kiro/gtai-masters/n27/melee/` with `fra
    white core in a 4.5 px and 9 px amber halo (screen pixels), 5 kinks re-jagged every 3 ticks from a hash (no RNG), one or
    two short forks, held under reduced motion. Every wreck arc goes through it; the ink rim of the lift arc is gone. Test
    `project/tests/unit/test_electric_arc.gd`. Stills `stills/claw_arcs_{before,after}_64.png`.
-M5_WORKS
+9. **Electro stun sparks read as current** (`518810786`, `c24e5c03a`). `ShockJolt.spark_plan()`: was a 6 px ink rim round a
+   2.5 px cream core. It is now a faint ink under-halo (alpha 0.3, 9 px), an amber halo (9 px at alpha 0.18, 4.5 px at
+   alpha 0.5) and a 2 px cream core, all from `ElectricArc.strokes`. `--ink-sparks` brings back the old look.
+   Test `project/tests/unit/test_shock_spark.gd`; mutate 2/3 on the spark lines (the survivor is the antialias flag). Stills
+   `stills/ohm_stun_sparks_{before,after}_64.png` (a patrol cop stunned by the electro gun, same ticks). The claw film was re-rendered:
+   `films/claw_shock_robots.mp4` is 1920x1080, 60 fps, 27.2 s; before = `films/claw_shock_robots_inkspark.mp4`.
+10. **Bond offer still with the card picture**: `stills/bond_offer_64.png` (before = `stills/bond_offer_blankcard_64.png`).
+    Top: Master Tonnage, +10 % Health repair, Ohm. Bottom: the two-card hand after the free mastery.
 
 ## Gate
 GATE_LINE
@@ -69,7 +76,14 @@ GATE_LINE
 - The robot thug and robot gunner still differ mainly by weapon in their wrecks: both rigs draw ThugPlan art today, and
   the wreck now copies whatever the rig shows, so cast's redraws carry over at merge.
 - `electric_chassis.gd` mutate is 7/20: plate size, z order, cap offset and the shield apron copy are unpinned.
-M5_DOESNOT
+- The cream star glyphs with ink rims beside a stunned body, and the robot's ink-rimmed zig-zag in the claw film, are
+  unchanged. They are drawn atlas cells, not strokes: `WeaponFxElectro.stun` draws the `fx_atlas.png` `spark` cells, and
+  `chain` draws the `arc` cell with an 8-way ink outline (`project/features/combat/weapons/art/weapon_fx_electro.gd`).
+  That file is outside this lane's files, so it is a NEED for weapons. Panels 1-2 of `stills/claw_sparks_after_64.png` match the before.
+- `electric_chassis.gd` mutate is 12/20 (was 7/20). The 8 survivors are in the `fit_core` fallback and the shield apron copy.
+- `node tools/godot/check.mjs` fails to load `shock_jolt.gd` and `electric_wreck_fx.gd` in isolation (a cascade through
+  `characters/rig_clips.gd`). `react_pose.gd`, which no lane touched, fails the same way, and the full unit load passes.
+  The m5 commits went through `quick.mjs --no-godot`.
 
 ## What blocked or slowed you
 - 15 min: `ghost_bond.gd` mutate timed out at 900 s in call 1. It was redone in call 3 with a test subset (481 s).
@@ -87,7 +101,10 @@ M5_DOESNOT
    the lever is `bond.per_boss_cut` (3 -> 5 would have put seed 5 over the bar; estimate).
 3. **The electro stun sparks.** The cream, ink-rimmed zig-zag glyphs beside a stunned body are `ShockJolt._spark`
    (n26 melee code), not the wreck arcs. DECISION: restyled to the wreck arcs' look (thin core, amber halo, no ink rim);
-   `--ink-sparks` brings back the old look. M5_CALL
+   `--ink-sparks` brings back the old look. Remaining: the star and zig-zag glyphs are drawn atlas
+   cells (`fx_atlas.png` `spark`/`arc`, `WeaponFxElectro`). Either redraw those cells in the halo look (an art call), or keep
+   the comic ink glyphs as the "stunned" mark and let only the body's current glow. Compare `stills/ohm_stun_sparks_before_64.png`
+   with `stills/ohm_stun_sparks_after_64.png`.
 
 ## Merge notes
 - TOUCH keys: `project/features/souls/ghost_deploy.gd:54` (one line: the record call gains `strike.release_boss_cuts`).
@@ -99,7 +116,8 @@ M5_DOESNOT
 - Debt: `dev_loc` raised with `--accept-regression` for the bond film entry.
 - TOUCH pressure's dir: `project/dev/gauntlet/gauntlet_pick_card.gd` (mastery card picture, `42f8c948f`; no other lane
   touched that file tonight, checked against each lane's branch).
-M5_MERGE
+- `project/boot/launch_args.gd`: `--ink-sparks` sits beside `--reduced-motion`, not at the end, to avoid an add/add clash with cast.
+- NEED weapons: `project/features/combat/weapons/art/weapon_fx_electro.gd` (the atlas spark/arc cells, see Calls 3).
 
 ## Next steps
 - The owner plays and gives the mastery numbers; then a per-ghost bar or a new `master_at`, re-measured on the same ten seeds.
@@ -114,7 +132,10 @@ M5_MERGE
 | m2-films (bond film, claw take) | 58 | 2.05 | accepted |
 | m3-ring-tests (item 5, bond mutate) | 48 | 1.00 | accepted |
 | m4-wreck-arcs (card picture, arcs, wrecks) | 72 | 3.49 | accepted |
-M5_LEDGER
+| m5-sparks (spark restyle, stills, claw film, plate tests) | 58 | 1.29 | accepted |
+| **total** | **301** | **9.48** | 5 accepted |
 
 What I would brief differently: give every mutate run a test subset and a time budget up front (call 1 lost 15 minutes
 to a 900 s timeout). Name the dev card file in the film brief, so a blank mastery picture is found before the film.
+Before briefing a restyle, find the code that draws the glyph with a one-flag still: m4 and m5 each restyled a
+stroke, and the glyph the owner sees turned out to be a third source (atlas cells).
