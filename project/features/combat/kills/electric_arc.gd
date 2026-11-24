@@ -16,6 +16,18 @@ const MID_PX: float = 4.5
 const CORE_PX: float = 2.0
 const FORK_M: float = 0.24
 
+
+## One polyline pass: its colour and width (px).
+class Stroke:
+	extends RefCounted
+	var color: Color
+	var width: float
+
+	func _init(p_color: Color, p_width: float) -> void:
+		color = p_color
+		width = p_width
+
+
 var seed_id: int = 0
 var still: bool = false
 var ppm: float = 32.0
@@ -85,10 +97,18 @@ static func forks(
 
 
 func _stroke(ci: CanvasItem, path: PackedVector2Array, k: float) -> void:
-	var px: float = k / ppm
-	ci.draw_polyline(path, Color(HALO, 0.18), HALO_PX * px, true)
-	ci.draw_polyline(path, Color(HALO, 0.5), MID_PX * px, true)
-	ci.draw_polyline(path, CORE, CORE_PX * px, true)
+	for s: Stroke in strokes(k / ppm):
+		ci.draw_polyline(path, s.color, s.width, true)
+
+
+## The stroke look as data, widest first: two halo passes then the core, widths times `scale`
+## (1/ppm inside a ppm-scaled canvas item, 1.0 in screen pixels). The one source of the look.
+static func strokes(scale: float) -> Array[Stroke]:
+	return [
+		Stroke.new(Color(HALO, 0.18), HALO_PX * scale),
+		Stroke.new(Color(HALO, 0.5), MID_PX * scale),
+		Stroke.new(CORE, CORE_PX * scale),
+	]
 
 
 static func _h(a: int, b: int, c: int) -> float:

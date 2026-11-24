@@ -29,8 +29,17 @@ const SPITS: int = 3
 const SPIT_IN_M: float = 0.16
 const SPIT_OUT_M: float = 0.5
 
+## The default spark is ElectricArc's look in screen pixels; on the cream floor its amber halo
+## alone washes out, so one faint ink under-halo (never a solid rim) sits beneath it (alpha), and
+## `--ink-sparks` keeps the old ink rim and cream core (px).
+const UNDER_ALPHA: float = 0.3
+const INK_RIM_PX: float = 6.0
+const INK_CORE_PX: float = 2.5
+
 ## False (`--soft-shock`): the old smooth shiver and no crawling arcs (the A/B's before).
 static var hard: bool = not OS.get_cmdline_user_args().has("--soft-shock")
+## True (`--ink-sparks`): the sparks keep the old look, a 6 px ink rim round a 2.5 px cream core.
+static var ink_rim: bool = OS.get_cmdline_user_args().has("--ink-sparks")
 
 
 ## Channel `ch` at time `t` (s) for phase `phase`: a value in [-1, 1] held for 1/RATES[ch] s.
@@ -56,10 +65,10 @@ static func pose(r: HumanReact, rig: CutRig, env: float) -> void:
 	rig.gun_out = false
 
 
-## Arcs crawling over a stunned body centred at `at` (px, `ppm` px per metre): ARCS short cream
-## sparks in an ink rim between hashed points on the body, re-picked every other tick so they
-## crawl. ShockArcsView draws them over the rigs. `counts` (arcs, spits) is lighter for a body
-## past the stun_crowd cap. View only.
+## Arcs crawling over a stunned body centred at `at` (px, `ppm` px per metre): ARCS short sparks
+## (a thin core in an amber halo, see `spark_plan`) between hashed points on the body, re-picked
+## every other tick so they crawl. ShockArcsView draws them over the rigs. `counts` (arcs, spits)
+## is lighter for a body past the stun_crowd cap. View only.
 static func arcs(
 	ci: CanvasItem, at: Vector2, ppm: float, tick: int, counts: Vector2i = Vector2i(ARCS, SPITS)
 ) -> void:
@@ -94,9 +103,21 @@ static func spit(at: Vector2, ppm: float, n: int, j: int) -> PackedVector2Array:
 	return pts
 
 
+## The strokes of one spark, widest first (screen px).
+static func spark_plan() -> Array[ElectricArc.Stroke]:
+	if ink_rim:
+		return [
+			ElectricArc.Stroke.new(Ink.INK, INK_RIM_PX),
+			ElectricArc.Stroke.new(Ink.CREAM, INK_CORE_PX)
+		]
+	var plan: Array[ElectricArc.Stroke] = ElectricArc.strokes(1.0)
+	plan.push_front(ElectricArc.Stroke.new(Color(Ink.INK, UNDER_ALPHA), ElectricArc.HALO_PX))
+	return plan
+
+
 static func _spark(ci: CanvasItem, pts: PackedVector2Array) -> void:
-	ci.draw_polyline(pts, Ink.INK, 6.0, true)
-	ci.draw_polyline(pts, Ink.CREAM, 2.5, true)
+	for s: ElectricArc.Stroke in spark_plan():
+		ci.draw_polyline(pts, s.color, s.width, true)
 
 
 static func _u(a: int, b: int) -> float:
