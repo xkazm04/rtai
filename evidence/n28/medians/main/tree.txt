@@ -1,0 +1,4 @@
+22033e2fe briefs: n28 combat 05b medians tables, 06b rifleman + chain still
+ project/data/tables/ghost_forms.json  | 7 ++-----
+ project/data/tables/rivet_motion.json | 2 +-
+ 2 files changed, 3 insertions(+), 6 deletions(-)

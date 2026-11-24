@@ -1,0 +1,16 @@
+# --fixed-fps 60 --quit-after 216000 res://dev/gauntlet/gauntlet.tscn -- --seed=4 --bot=novice --pick=greedy --bot-salt=1 --controls=wheel --waves=40 --result=C:\Users\kazda\kiro\gtai-wt\n23-street\build\n28\medians\main\salt1\runs\novice-4.json
+# exit 0, 7.7 s
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] gauntlet: test player bound: novice, greedy picks, seed 16777623
+[INFO] gauntlet: wave 1 tick 272 block 1, 1 alive
+[INFO] gauntlet: wave 2 tick 1170 block 2, 1 alive
+[INFO] gauntlet: wave 3 tick 2185 block 3, 1 alive
+[INFO] gauntlet: wave 4 tick 4047 block 4, 1 alive
+[INFO] gauntlet: wave 5 tick 5004 block 5, 1 alive
+[INFO] gauntlet: tick 5532, segment 5
+[INFO] rocket-probe: wave 1 rocket_hits 0 troopers 0
+[INFO] rocket-probe: wave 2 rocket_hits 0 troopers 0
+[INFO] rocket-probe: wave 3 rocket_hits 0 troopers 2
+[INFO] rocket-probe: wave 4 rocket_hits 0 troopers 1
+[INFO] rocket-probe: wave 5 rocket_hits 1 troopers 1

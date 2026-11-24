@@ -1,0 +1,64 @@
+# --fixed-fps 60 --quit-after 216000 res://dev/gauntlet/gauntlet.tscn -- --seed=7 --bot=expert --pick=greedy --controls=wheel --waves=40 --result=C:\Users\kazda\kiro\gtai-wt\n23-street\build\n28\medians\keys\salt0\runs\expert-7.json
+# exit 0, 12.8 s
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] gauntlet: test player bound: expert, greedy picks, seed 7
+[INFO] gauntlet: wave 1 tick 272 block 1, 1 alive
+[INFO] gauntlet: wave 2 tick 1670 block 2, 1 alive
+[INFO] gauntlet: wave 3 tick 2668 block 3, 1 alive
+[INFO] gauntlet: wave 4 tick 4064 block 4, 1 alive
+[INFO] gauntlet: wave 5 tick 5099 block 5, 1 alive
+[INFO] gauntlet: move opening BLINK on war_machine #52, accepted true
+[INFO] gauntlet: move opening BLINK on war_machine #52, accepted true
+[INFO] gauntlet: move opening BLINK on war_machine #52, accepted true
+[INFO] gauntlet: move opening BLINK on war_machine #52, accepted true
+[INFO] gauntlet: move opening BLINK on war_machine #52, accepted true
+[INFO] gauntlet: wave 6 tick 7079 block 6, 1 alive
+[INFO] gauntlet: wave 7 tick 9425 block 7, 1 alive
+[INFO] gauntlet: wave 8 tick 10982 block 8, 1 alive
+[INFO] gauntlet: move opening SHORT on sentry_turret #89, accepted true
+[INFO] gauntlet: move opening SHORT on sentry_turret #90, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #89, accepted true
+[INFO] gauntlet: move opening SHORT on sentry_turret #90, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #89, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #89, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #89, accepted true
+[INFO] gauntlet: move opening SHORT on sentry_turret #90, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #89, accepted true
+[INFO] gauntlet: move opening SHORT on sentry_turret #90, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #89, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #89, accepted true
+[INFO] gauntlet: move opening SHORT on sentry_turret #90, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #90, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #90, accepted true
+[INFO] gauntlet: move opening SHORT on sentry_turret #90, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #89, accepted true
+[INFO] gauntlet: move opening SHORT on sentry_turret #89, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #90, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #89, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #89, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #90, accepted true
+[INFO] gauntlet: move opening SHORT on sentry_turret #90, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #89, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #90, accepted true
+[INFO] gauntlet: move opening SHORT on sentry_turret #90, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #89, accepted true
+[INFO] gauntlet: move opening SHORT on sentry_turret #90, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #89, accepted true
+[INFO] gauntlet: move opening SHORT on sentry_turret #90, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #89, accepted true
+[INFO] gauntlet: move opening SHORT on sentry_turret #89, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #89, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #89, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #89, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #89, accepted true
+[INFO] gauntlet: move opening BLINK on sentry_turret #89, accepted true
+[INFO] gauntlet: tick 13195, segment 8
+[INFO] rocket-probe: wave 1 rocket_hits 0 troopers 0
+[INFO] rocket-probe: wave 2 rocket_hits 0 troopers 0
+[INFO] rocket-probe: wave 3 rocket_hits 0 troopers 1
+[INFO] rocket-probe: wave 4 rocket_hits 0 troopers 1
+[INFO] rocket-probe: wave 5 rocket_hits 0 troopers 0
+[INFO] rocket-probe: wave 6 rocket_hits 4 troopers 5
+[INFO] rocket-probe: wave 7 rocket_hits 0 troopers 2
+[INFO] rocket-probe: wave 8 rocket_hits 1 troopers 1
