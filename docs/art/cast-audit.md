@@ -263,17 +263,38 @@ The first review kept the card disabled. Walk, Feet, Hit and Shadow failed. The 
 
 ## Appliance warden (Peg Dolan) after the card landed (n27, row `enabled: false`)
 
-The card row, the anchored eight-row walk, the padded cells and the catch rows are in code and unit-tested
-(`test_cast_warden.gd`: catch holds only the successful warden and recovers on release; both hosts select
-the registered eight and survive a reversal). The row stays **`enabled: false`**: the checklist was not
-measured in this call, so nothing below is claimed as a pass.
+The card row, the anchored eight-row walk (`CastWardenAnchors`, step 0.2543 m), the padded cells and the catch rows are in code
+and unit-tested (`test_cast_warden.gd`). The row stays **`enabled: false`**. Measured with her card forced on
+(`GTAI_CAST_PREVIEW=appliance_warden`). Screen pixels, 32 px/m unless stated.
 
-| Point | State |
-|---|---|
-| Body jump (walk, stop, turn, reversal) | NOT MEASURED |
-| 64 px/m edge, each sheet (walk, attack, hit, fall, both pitches) | NOT MEASURED |
-| Size at 32 px/m 70 degrees against the patrol cop and Rivet | NOT MEASURED |
-| Wound contact (boot on the shadow during a hit) | NOT MEASURED |
-| Catch view in the live prologue | BLOCKED: the yard must call `FoeWardenCardView.set_catch` (see JOURNAL) |
-| Dye and vector pole double-draw | BLOCKED: the yard must switch both off when her card is on |
-| `cast_warden_lineup` capture | FAILS: `Rivet empty or clipped` at 32 px/m 70 degrees on this machine, not diagnosed |
+| Point | Number | Verdict |
+|---|---|---|
+| Planted feet, support-sole travel (`cast_feet.mjs`, walk 2.8 m/s and arrival walk 3.8 m/s, right and down-right, 70/55) | 0.00 px in all eight takes (64 px/m take gives the same values) | PASS |
+| Body jump, feet tool, 70 degrees: walk right / down-right, arrival right / down-right | 3.07 / 9.07, 3.63 / 9.15 px (Mulroney: 2.88 / 6.87) | FAIL against travel + 2 px (3.5 px at 32) |
+| Body jump, feet tool, 55 degrees, same four | 2.79 / 5.36, 2.77 / 5.81 px (Mulroney: 2.56 / 3.67) | FAIL on down-right |
+| Body jump by transition (`test_body_jump_on_walk_stop_turn_and_reversal`, contact model, 2.8 m/s, 70 / 55) | start 6.19 / 4.87 px; steady walk 9.60 px; stop 0.00 (nothing after the halt); turn 9.60; reversal 9.60 (no spike above the steady walk). At 64 px/m: start 12.38 / 9.73, held 19.20. The stride's own travel is 1.49 px per tick at 32 and 2.99 at 64 | FAIL against travel + 2 px (3.49 / 4.99). Every drawing change moves the body mark by the 0.3 m clamp; the turn and the reversal add nothing to it. Shipped Mulroney bound (12 px at 32) is met |
+| Drawings per second | walk 2.8 m/s / 0.2543 m = 11.0; arrival walk 3.8 m/s = 14.9 (Mulroney at 3.2 m/s: 16.8) | measured |
+| Palette, all ten sheets (`tools/art/cast_warden_edge.py`) | blue on solid pixels 0 to 3 px per sheet, except p70 attack 126 px (0.06 %); strict red (r>120, g<60, b<60) at most 14 px per sheet | PASS: no blue, no red outside the 4 to 14 px of ink |
+| Edge, **sheet proxy** at 64 px/m drawn size, fringe px per cell (alpha 0 to 0.5, colour below 64): walk / attack / hit / fall / planted8, p70 | 429 / 482 / 512 / 525 / 233 against Mulroney 456 / 454 / 381 / 473 / 244 | comparable; hit is 35 % above Mulroney's painted wound |
+| Edge, **sheet proxy**, p55, same order | 376 / 401 / 357 / 419 / 168 against Mulroney 459 / 487 / 343 / 365 / 180 | comparable |
+| Edge, live-frame rim (`cast_mulroney_edge.py --measure`) | NOT MEASURED: needs the frozen live/raw/ground frame triples of Mulroney's round | open |
+| Size, 32 px/m 70 degrees, front / back, equipment included (`cast_warden_lineup`, plate 1920 x 1080) | Peg 47 / 55 px (the back figure lifts the pole above the head), patrol cop 43 / 44, Mulroney 44 / 48, Rivet 77 / 73. Pole excluded: NOT MEASURED | not taller than Rivet: PASS. About the patrol cop's height with the pole in |
+| Wound contact (boot on the shadow during a hit) | NOT MEASURED | open |
+| Catch view in the live prologue | BLOCKED on the yard (below) | open |
+
+**Why it stays off.** The down-right walk body jump (9.1 px at 70 degrees against the 3.5 px bar) fails; the live-frame edge and the
+wound contact are unmeasured. The planted soles hold (0.00 px).
+
+**The yard's three calls (NEED yard, not edited here).**
+1. `project/boot/prologue/prologue_stage.gd`, `PrologueStage._move()`, right after the `if combat.catcher != null: ... combat.catcher = null`
+   block (about line 43) and before `if at_receiver or combat.catcher != null:`, every tick:
+   ```gdscript
+   for h: Fighter in combat.hostiles:
+   	if h.archetype == FoeWardenCardView.ID:
+   		FoeWardenCardView.set_catch(h, h == combat.catcher, tick)
+   ```
+2. `project/boot/prologue/prologue_props.gd` must skip all three of its warden sites when `CastCards.current(&"appliance_warden") != null`:
+   the overalls dye (line 31, `h.alive() and h.archetype == &"appliance_warden"`), the dress loop (line 90, the same archetype test)
+   and the vector pole and straps (`_warden(chest, head, h.facing)` at line 112, defined at line 158). Otherwise her card and the dyed rig double-draw.
+3. `cast_lineup.gd` hides the prologue's `LightLayer` now: the yard's lights printed rings into every prologue portrait (Mulroney's lineup
+   failed the same way on this branch).

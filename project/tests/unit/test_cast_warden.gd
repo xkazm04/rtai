@@ -86,3 +86,58 @@ func _reversal(contact: StreetCopWalk.Contact, speed: float, scale_px: Vector2) 
 			worst = maxf(worst, body.distance_to(previous))
 		previous = body
 	return worst
+
+
+## Body jump between consecutive frames. The first three ticks of a walk are the start; the
+## rest of the first leg is the steady walk; later legs are the transition under test.
+func test_body_jump_on_walk_stop_turn_and_reversal() -> void:
+	var table: DataTable = DataTable.open(CastCards.TABLE, CastCards.SCHEMA)
+	table.raw.archetypes.appliance_warden.enabled = true
+	var library: CastCards = CastCards.from_table(table)
+	var diag: Vector2 = Vector2(1, 1).normalized()
+	var plans: Dictionary[String, Array] = {
+		"walk": [[diag, Vector2i(1, 0), 90]],
+		"stop": [[diag, Vector2i(1, 0), 40], [Vector2.ZERO, Vector2i(1, 0), 50]],
+		"turn": [[diag, Vector2i(1, 0), 40], [Vector2.RIGHT, Vector2i(2, 0), 50]],
+		"reversal": [[diag, Vector2i(1, 0), 40], [-diag, Vector2i(1, 0), 50]],
+	}
+	for pitch: String in ["p70", "p55"]:
+		var path: String = library.lookup(FoeWardenCardView.ID, pitch).walk
+		for ppm: float in [32.0, 64.0]:
+			for plan: String in plans:
+				var out: Vector3 = _jump(path, pitch, plans[plan], ppm)
+				var line: String = "%s %.0f px/m %s: start %.2f, held %.2f, own travel %.2f px"
+				Log.info("cast", line % [pitch, ppm, plan, out.x, out.y, out.z])
+				# The director's bar is travel + 2 px; the shipped Mulroney bound is 12 px at 32.
+				assert_lte(out.y, 12.0 * ppm / 32.0, "%s %.0f %s" % [pitch, ppm, plan])
+
+
+## x: worst jump in the first three ticks, y: worst after them (steady or transition), z: travel.
+func _jump(path: String, pitch: String, plan: Array, ppm: float) -> Vector3:
+	var contact: StreetCopWalk.Contact = StreetCopWalk.Contact.new()
+	contact.configure(path)
+	var height: float = StreetWalkerCards.HEIGHT_BY_ART.get(pitch, StreetWalkerCards.HEIGHT_M)
+	var scale_px: Vector2 = Vector2.ONE * (ppm * height * 1.10 / 192.0)
+	var at: Vector2 = Vector2.ZERO
+	var previous: Vector2 = Vector2.INF
+	var worst: Vector2 = Vector2.ZERO
+	var travel: float = 2.8 * ppm * SimClock.TICK_DT
+	var ticks_run: int = 0
+	for leg: Array in plan:
+		var ticks: int = leg[2]
+		var heading: Vector2 = leg[0]
+		for t: int in ticks:
+			at += heading * travel
+			var face: Vector2i = leg[1]
+			var xf: Transform2D = contact.place(at, face, scale_px, ppm)
+			var ink: Vector4 = contact.registered.marks[face.x * 8 + posmod(contact.cell, 8)]
+			var body: Vector2 = xf * Vector2(ink.z, ink.w)
+			ticks_run += 1
+			if previous.is_finite():
+				var jump: float = body.distance_to(previous)
+				if ticks_run <= 3:
+					worst.x = maxf(worst.x, jump)
+				elif leg != plan[0] or plan.size() == 1:
+					worst.y = maxf(worst.y, jump)
+			previous = body
+	return Vector3(worst.x, worst.y, travel)

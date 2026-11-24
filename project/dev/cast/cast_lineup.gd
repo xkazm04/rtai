@@ -95,7 +95,7 @@ func _studio() -> bool:
 	layer.add_child(matte)
 	for c: Node in _scene.find_children("*", "CanvasLayer", true, false):
 		var canvas: CanvasLayer = c as CanvasLayer
-		if canvas.layer >= RenderLayers.canvas(&"hud"):
+		if canvas.layer >= RenderLayers.canvas(&"hud") or canvas is LightLayer:
 			canvas.hide()
 	return _shadow != null
 
