@@ -8,8 +8,10 @@ var plan: PrologueYard
 
 
 func before_each() -> void:
+	LaunchArgs.parse(["--yard-dressing=line_fire"])
 	data = DataTable.open(PrologueGame.TABLE, PrologueGame.SCHEMA)
 	plan = PrologueYard.from_stage(data)
+	LaunchArgs.parse()
 
 
 func _gap(a: Rect2, b: Rect2) -> float:

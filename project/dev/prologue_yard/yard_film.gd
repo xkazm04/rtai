@@ -2,7 +2,7 @@ extends Node
 ## Seek the seed-7 pilot before the first draw, then expose one tick per movie frame.
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--yard-dressing", "--place", "--tick", "--frames", "--ppm", "--still"
+	"--yard-dressing", "--place", "--tick", "--frames", "--ppm", "--still", "--cast-card"
 ]
 const NEEDS_WINDOW: bool = true
 const FIXED_FPS: int = 60
@@ -37,7 +37,17 @@ func _ready() -> void:
 			_fail("use a 1920x1080 movie capture profile")
 			return
 	get_window().content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
+	if args.text("--cast-card") == "off":
+		_without_mulroney_card()
 	_start_game(args)
+
+
+## `--cast-card=off`: no sergeant card for this run, so the prologue draws the vector figure.
+func _without_mulroney_card() -> void:
+	var table: DataTable = DataTable.open(CastCards.TABLE, CastCards.SCHEMA)
+	var row: Dictionary = table.object(table.object(table.raw, "archetypes"), "sergeant_mulroney")
+	row["enabled"] = false
+	CastCards._library = CastCards.from_table(table)
 
 
 func _start_game(args: ArenaArgs) -> void:
@@ -75,10 +85,10 @@ func _read_args(args: ArenaArgs) -> String:
 	if DisplayServer.get_name() == "headless" or get_window().size != SIZE:
 		return "use a 1920x1080 window"
 	if (
-		args.text("--yard-dressing") not in ["plain", "torn_line", "line_fire"]
-		or args.text("--place") not in ["gate", "mid", "harbor", "commander"]
+		args.text("--yard-dressing") not in ["plain", "torn_line", "line_fire", "raised_line"]
+		or args.text("--place") not in ["gate", "mid", "front", "harbor", "commander"]
 	):
-		return "choose a yard dressing and gate, mid, harbor or commander"
+		return "choose a yard dressing and gate, mid, front, harbor or commander"
 	for key: String in ["--tick", "--frames", "--ppm"]:
 		if not args.text(key).is_valid_int():
 			return "expected an integer for " + key
@@ -125,7 +135,9 @@ func _finish() -> void:
 		if frame == null or frame.get_size() != SIZE or frame.save_png(_still) != OK:
 			_fail("could not save " + _still)
 			return
-	Log.info("yard-film", "%d frames, ticks %d..%d" % [_count, _first, _game.stage.tick])
+	var rivet: Vector2 = _game.stage.arena.rivet.pos
+	var shown: Array = [_count, _first, _game.stage.tick, _at.x, _at.y, rivet.x, rivet.y]
+	Log.info("yard-film", "%d frames, ticks %d..%d, at %.2f,%.2f, rivet %.2f,%.2f" % shown)
 	get_tree().quit()
 
 

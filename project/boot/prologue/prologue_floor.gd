@@ -22,6 +22,8 @@ func _ready() -> void:
 		_paint.attach_ochre(self, plan)
 	if plan.dressing.paint_id == "torn_line":
 		_use_painted_cracks()
+	if not plan.dressing.over_print.is_empty():
+		PrologueYardOverprint.attach(self, plan, _paint)
 
 
 ## The default D5 pass also stamps two diagonal crack families on light surfaces. The factory
@@ -55,6 +57,8 @@ func _draw() -> void:
 	_paint.shadows(self, plan)
 	_paint.stamps(self, plan.dressing.factory_front)
 	for wreck: PrologueYard.Wreck in plan.wrecks:
+		if plan.dressing.over_print.has(wreck.id):
+			continue
 		var skin: PrologueYardDressing.CoverArt = plan.dressing.cover.get(wreck.id)
 		_paint.wreck(self, wreck, Color("b5a293"), skin)
 		if wreck.shell and skin == null:
@@ -116,14 +120,14 @@ func _draw_fences(margin: float) -> void:
 		elif fence.position.y == plan.far_sidewalk.end.y:
 			visible_box = fence.grow_individual(margin, 0, margin, 0)
 		_fence(visible_box)
-	if plan.dressing.id == "line_fire":
+	if plan.dressing.front_replaces.has_area():
 		PrologueFactoryFence.parked_leaf(self, plan)
 	elif plan.dressing.paint_id == "torn_line":
 		PrologueYardFence.open_leaf(self, plan)
 
 
 func _fence(box: Rect2) -> void:
-	if plan.dressing.id == "line_fire" and box.position.y < plan.far_sidewalk.end.y:
+	if plan.dressing.front_replaces.has_area() and box.position.y < plan.far_sidewalk.end.y:
 		PrologueFactoryFence.panel(self, box)
 		return
 	if plan.dressing.paint_id == "torn_line":
@@ -140,7 +144,8 @@ func _stage_decals() -> void:
 	elif plan.dressing.layout.is_empty():
 		return
 	for piece: PrologueYard.Wreck in plan.debris:
-		_paint.wreck(self, piece, piece.tint, null)
+		if not plan.dressing.over_print.has(piece.id):
+			_paint.wreck(self, piece, piece.tint, null)
 
 
 ## A fractured concrete lintel under the surviving sawtooth bays. Where a panel

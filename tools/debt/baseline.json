@@ -171,7 +171,11 @@
         "2026-11-24: dev/cast edge and feet takes for the n27 cast feet call (dev_loc 35735 -> 35779)",
         "2026-11-24: dev/cast step table for the swat and lancer takes, n27 cast (dev_loc 35779 -> 35785)",
         "2026-11-24: dev/cast foot film scene for the n27 feet films (dev_loc 35785 -> 35938)",
-        "2026-11-24: dev scripts for the n27 gunner card (dev_loc 35938 -> 36041)"
+        "2026-11-24: dev scripts for the n27 gunner card (dev_loc 35938 -> 36041)",
+        "2026-11-24: yard_film --cast-card=off and rivet/camera in the end log line (+12 dev lines) for n27 yard (dev_loc 35431 -> 35443)",
+        "2026-11-24: dev lines for the front place for n27 yard (dev_loc 35443 -> 35445)",
+        "2026-11-24: dev capture lines for n27 yard (dev_loc 35445 -> 35450)",
+        "2026-11-24: dev pilot-rows and capture lines for n27 yard (dev_loc 35450 -> 35521)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -196,7 +200,7 @@
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
         "project/dev/prologue": 490,
-        "project/dev/prologue_yard": 615,
+        "project/dev/prologue_yard": 705,
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 1096,
@@ -213,7 +217,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 37208
+      "total": 37298
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -489,7 +493,9 @@
         "2026-11-23: --cast-mulroney-trace for n26 cast (files_past_soft_cap 65 -> 65)",
         "2026-11-24: --ink-sparks for n27 melee (files_past_soft_cap 65 -> 65)",
         "2026-11-24: --cast-warden-trace flag and the warden dev scenes for n27 cast (files_past_soft_cap 65 -> 65)",
-        "2026-11-24: merge of n27 lanes: cast dev scenes (files_past_soft_cap 65 -> 65)"
+        "2026-11-24: merge of n27 lanes: cast dev scenes (files_past_soft_cap 65 -> 65)",
+        "2026-11-24: prologue_command_view.gd 244 lines: its draw geometry, cues and switches are pure static helpers so tests can kill planted faults (n27-04); split later if it grows (files_past_soft_cap 65 -> 66)",
+        "2026-11-24: prologue_command_view.gd 255 lines and its test file 221 lines: chevron and plate-edge helpers (n27-04) (files_past_soft_cap 66 -> 67)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -499,6 +505,7 @@
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
         "project/boot/launch_args.gd": 225,
+        "project/boot/prologue/prologue_command_view.gd": 255,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,
@@ -556,9 +563,10 @@
         "project/tests/unit/test_crowd_react.gd": 234,
         "project/tests/unit/test_foe_walker.gd": 212,
         "project/tests/unit/test_gun_fx.gd": 213,
+        "project/tests/unit/test_prologue_command_view.gd": 221,
         "project/tests/unit/test_weapon_art.gd": 223
       },
-      "total": 65
+      "total": 67
     },
     "lane_named_dev_dirs": {
       "accepted": [

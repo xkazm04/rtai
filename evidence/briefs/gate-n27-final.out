@@ -1,0 +1,11 @@
+gate: 5c0edce5 from C:\Users\kazda\kiro\gtai-wt\n25-yard (your uncommitted changes are NOT in this run)
+gate: snapshot C:\Users\kazda\AppData\Local\Temp\gtai-gate-5c0edce51c44 (new, copied project/native/bin, project/data/generated/city, project/.godot)
+gate: the last gate here (ee19d4f9) took evidence 40.2 min, no reels
+gate: running the gates in the snapshot; log C:\Users\kazda\kiro\gtai-wt\n25-yard\build\gate\5c0edce51c44\evidence.log
+PASS lint: lint: all 19 checks pass over 2211 GDScript files
+PASS unit-tests: unit-tests: 4125 passed, 0 failed, 2 skipped (GUT, headless)
+PASS scenario-tests: scenario-tests: 68 passed (headless)
+PASS parity: parity: native == GDScript reference bit for bit over 1200 steps (40 snapshot checks, 3502 floats); planted mutation caught at step 629
+PASS selftest: selftest: D4 city frames rendered (32 px/m ok, 100 actors, 114 colours; 48 px/m ok, 85 actors, 111 colours); 141 art textures, 0 placeholders, prewarm 259 ms; look goldens 11/11 within mean 4 (worst 2.06); accent pixels 32: 0.35 %, 48: 1.19 %, 64: 3.10 %; crowd atlas 6/6 pedestrian looks on doctrine, cop looks still vermilion (debt, cops go cop_blue): none; no new off-doctrine accents; known debt: 32 px/m blood on vehicles: 8 px (debt blood_flicker_vehicles_32, <= 12, d5-city); 48 px/m vermilion on vehicles: 8 px (debt blood_flicker_vehicles_vermilion_48, <= 12, d5-city); 48 px/m vermilion on cop: 8 px (debt blood_flicker_cop_48, <= 12, d5-city); block goldens 5/5 within mean 4 (worst 2.00); block accent pixels 32: 0.12 %, 48: 0.70 %, 64: 0.34 %; crowd atlas 6/6 pedestrian looks on doctrine, cop looks still vermilion (debt, cops go cop_blue): none; no new off-doctrine accents; known debt: 64 px/m blood on vehicles: 4 px (debt blood_flicker_vehicles_64, <= 12, d5-city); world lock holds (32: 0.00 %, 48: 0.00 %, 64: 0.00 % of the overlap differs after a pan, max 0.5 %); debt rows seen at neither site this run (a flicker row goes only after several quiet runs): blood_flicker_cop_block_64, blood_flicker_cop_vermilion_32, blood_flicker_vehicles_48, blood_flicker_vehicles_vermilion_32
+PASS export-audit: release-compile: 985 loaded, 0 failed
+gate: PASS; C:\Users\kazda\kiro\gtai-wt\n25-yard\build\gate\5c0edce51c44\gate.json

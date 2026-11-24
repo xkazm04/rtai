@@ -1,0 +1,55 @@
+The warm floor glow is built and committed, but I ran out of time before the re-rendered stills, the master mp4, the floor-warmth numbers and the frame-cost round. Both the 05:10 glow target and the 05:17 last-commit mark were missed: the glow commit landed at 05:20, after one pre-commit failure on JSON format.
+
+**Commit:** `2c00e03e2`, branch `n27-yard`, nothing pushed. It holds:
+- the new `prologue_floor_glow.gd`, plus small edits to `prologue_yard_lights.gd` and `prologue_game.gd`;
+- the `floor_glow` object in the `line_fire` row and the schema;
+- the unit test, and the contrast tool now using the larger of the actor and glow radii;
+- the bar results, `dusk_contrast_glow.txt` and `dusk_contrast_glow_visible_mid_gate.txt`.
+
+**How it works.** A `CanvasLayer` sits on the actors canvas, ahead of the actor layer in the tree. It draws one additive radial sprite per pool, clipped to the yard rect, so nothing lights the hall front or the void. My first version put the glow on the floor node itself, but the look pass thresholds it into hard, cream-coloured blotches. In the glow-on-the-floor render (`la_front`), the pools were smooth and amber. Actors are untouched.
+
+**Glow values:**
+
+| Kind | Colour | Radius | Strength |
+|---|---|---|---|
+| `yard_fire` | ff8c14 | 11 m | 0.30 |
+| `yard_lamp` | ffa030 | 8 m | 0.26 |
+| `yard_fire_mid` | ff8c14 | 10 m | 0 |
+| `yard_lamp_gate` | ffa030 | 8 m | 0 |
+
+The wall actor-light radii also changed, to keep the spill off the void: `yard_fire` went from 12 m to 6.5 m and `yard_lamp` from 9 m to 5.5 m. Intensities are as in call 02. Ground shade is still 0.81.
+
+**Bars** (paired tool, `glow4` = the committed values):
+
+| Measure | Floor | Result |
+|---|---|---|
+| Patrol blue outside | 65 % | 82.1 % |
+| Patrol blue inside a pool | 65 % | 85.0 % |
+| Hue inside a pool | 200–250° | 222–224° |
+| Rifle | 100 % | 100.3 % |
+| Pellet | 90 % | 96.2 % |
+
+**Mid-yard fires and the gate lamp have no floor glow, and I made that choice myself.** Any floor glow there pushes the rifle round under 100 %:
+- Mid 0.15, gate 0.12 (`glow2`): rifle 94.0 %, pellet 85.6 %, both fail.
+- Mid 0.15, gate 0 (`glow3`): rifle 96.5 %, pellet 92.0 %.
+- Mid 0.30, gate 0.30: rifle 88.6 %, pellet 79.2 %.
+
+Your items 1 and 2 (visible mid-yard pools, gate lamp at least as visible as before) therefore conflict with the rifle bar, so those pools are invisible again and the gate lamp is weaker than in the n26 render. I followed "lower that kind's strength" literally. If you would rather ship the visible version, raise those two strengths in the row (the `glow2` figures are in `dusk_contrast_glow_visible_mid_gate.txt`). In `la_mid` at 0.28/0.30, the amber pools around the skip, pickup and gate lamp were clearly visible and the cops stayed blue. That value set was not committed or measured.
+
+**Checks:**
+- Seed-7 pilot (`prologue_pilot` scenario, headless) is unchanged: end tick 11701, sha `993e5b7f…`.
+- `tools/gate/quick.mjs` was green on the changed files, and the full lint passed in the commit. Unit tests: 7 passed in the glow and lights files. The new test checks one glow node per pool, the layer sitting ahead of the actor layer, and strength 0 removing the nodes.
+- Mutate on the changed `.gd` files was skipped because it was past 05:12.
+
+**What I saw.** I looked at the 32 px/m front and mid frames from the three-pool-kind state (wall fires and lamps only), not the final committed values. Front: smooth amber floor pools on the yard side of the hall base, the void north of the hall stays black, and the bands of amber that spilled onto the void are gone. Mid: warm pools near the skip, pickup and gate lamp, and the cops stay blue. The glow does cut off flat at the hall base, because it is clipped to the yard.
+
+**Not done:**
+- The three-row `light_before_after_32ppm.png` (n26 | call 02 | glow).
+- The replaced `light_mid_32ppm_before_after.mp4` and its ffprobe line.
+- The re-rendered `light_front_64ppm.png`.
+- The floor warmth numbers (L*, hue and chroma inside a fire pool core versus between pools).
+- The frame-cost round. The glow is a few additive sprites and no shader; I did not measure it.
+
+The committed `evidence/yard27/light_before_after_32ppm.png` and the masters in `gtai-masters/n27/yard/` are still the call-02 versions.
+
+[builder: 2016s, exit 0, $2.90]

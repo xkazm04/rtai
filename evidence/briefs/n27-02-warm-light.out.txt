@@ -1,0 +1,62 @@
+The `front` place and a warmer, larger light are committed. Every floor in the bar is met, but the mid-yard fires and the gate lamp come out almost invisible, because the bar caps how bright a pool can be where cops stand. The release template could not start the probe (it refuses `--path`), so frame cost was measured on the editor binary. The seed-7 pilot is unchanged: end tick 11701, sha `993e5b7f…`.
+
+**Commits** (branch `n27-yard`, nothing pushed)
+- `cc99f1dbc` – `--place=front` in `yard_film.gd` and `yard_camera.gd` (camera x 26, y 3), plus the debt baseline.
+- `31da0882a` – the `line_fire` light row, the paired contrast tool `evidence/yard27/dusk_contrast.py` with its txt/json results, `yard_dusk_capture.gd` (more exposure ticks, world positions), `test_prologue_yard_lights.gd`, and the debt baseline.
+- `94abcae77` – `frame-cost.md` and `frame_stats.py`.
+- `2f7d929a5` – the before/after still.
+
+**New light values** (`ground_shade` stays 0.81)
+
+| Kind | Colour | Radius | Intensity | Pools |
+|---|---|---|---|---|
+| `yard_fire` | ff9a1f (hue 33°), flicker ffb23a | 12 m | 0.28 | burst door, conveyor door, collapsed wall |
+| `yard_fire_mid` (new) | same | 12 m | 0.04 | arm cable, burnt pickup (43.2, 17.4), scrap skip (46, 26), conveyor tail (32.2, 20.6) |
+| `yard_lamp` | ffd28a | 9 m, 8 steps | 0.34 | burst, conveyor and shutter lamps |
+| `yard_lamp_gate` (new) | ffd28a | 9 m, 8 steps | 0.10 | gate lamp |
+
+The light layer caps at 64 pools and has no radius cap; the row now uses 11 pools.
+
+**Bar** (paired: the same sim with the day grade vs the new row, mask taken from the daylight frame)
+
+| Measure | Floor | HEAD light | New light |
+|---|---|---|---|
+| Patrol blue outside pools (4 cops) | 65 % | 81.8 % | 81.8 % |
+| Patrol blue inside a fire pool (5 cops) | 65 % | 79.5 % | 79.6 % |
+| Hue inside a pool | 200–250° | 221–232° | 222–244° |
+| Rifle round | 100 % | 101.8 % | 100.3 % |
+| Pellet | 90 % | 90.2 % | 96.2 % |
+
+- **Ice-blue enemy:** none in the prologue, so that bar does not apply.
+- **Different baseline from n26:** n26 compared two different sims (`torn_line` vs `line_fire`). I paired the same sim, so the HEAD numbers differ from last night's 69.2 / 124.5 / 96.2 %.
+- **How I got there:** every stronger variant failed. Amber added to a blue cop turns it purple, with hue 287–311° at a mid-pool intensity of only 0.18, and a brighter gate lamp pushed the pellet to about 87 %.
+
+**Frame cost** (three paired rounds, `yard_frame_probe` on `line_fire`, lock held, not contended; before = the old row copied into `project/data/tables` for the run)
+
+| Round | Before p50 / p99 (ms) | After p50 / p99 (ms) |
+|---|---|---|
+| 1 | 3.596 / 6.386 | 3.500 / 6.094 |
+| 2 | 3.567 / 6.045 | 3.524 / 6.266 |
+| 3 | 3.490 / 5.845 | 3.510 / 6.078 |
+
+p50 changes by −0.040 ms (95 % CI −0.184 to +0.105), so the bar of under 0.5 ms is met. The p99 interval is wide (−0.69 to +0.80 ms), so three rounds do not prove the limit at p99. The release template refused to start the probe: "`--path`… compiled without support for path overrides".
+
+**What I saw**
+- **`light_before_after_32ppm.png`:**
+  - **Hall front:** after, the amber is much wider and deeper, with overlapping soft arcs across the whole front. It also spills as visible bands onto the black void north of the hall, which looks like a glow on nothing.
+  - **Mid yard:** after, the floor is a warmer cream, but I cannot see any distinct mid-yard pool.
+  - **Gate:** after, the gate lamp pool is nearly gone, and in the before frame it was clearly visible.
+- **`light_front_64ppm.png` and `light_front_32ppm_before_after.png`:** same look as the front frames above.
+- **Mid film:** both sides show the same warm cream floor. The cops, blood and yellow lines are identical, and the before side has the visible gate pool the after side lacks.
+
+**Masters** (in `gtai-masters/n27/yard/`, `frames.json` appended): `light_mid_32ppm_before_after.mp4` is `h264 1920x1080 60/1 fps, 25.000 s`. The two stills, `light_front_64ppm.png` and `light_front_32ppm_before_after.png`, are in the same folder.
+
+**Needs from the director**
+1. The schema enum in `project/data/schemas/prologue_yard_dressings.schema.json` only allowed `yard_fire` and `yard_lamp`, so lint failed. I added `yard_fire_mid` and `yard_lamp_gate` in the same commit as the row. That file is outside my allowlist; revert it together with the row if you object. Without separate kinds I cannot lower one pool's intensity without lowering all of them.
+2. For visible mid-yard pools and a visible gate lamp, the light layer in `project/core/render` would need a hue-preserving mode (or a per-pool tint). That is a features/core change I did not touch.
+
+**Not done**
+- The mutate run: no `.gd` under `boot/prologue` changed, only the data row, a test and dev capture code.
+- The `light_before_after` grid does not use the `gate` camera from the brief; it uses the film's existing gate camera at (36, 34), because the 70° view mode id is `tilt70`, not `tilt`.
+
+[builder: 3834s, exit 0, $1.65]

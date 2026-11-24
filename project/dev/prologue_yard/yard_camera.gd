@@ -9,6 +9,8 @@ static func center(plan: PrologueYard, location: String, film_tick: int = -1) ->
 		return plan.rivet_start
 	if location == "gate":
 		return Vector2(30, 14.2) if ViewMode.shared().id == &"tilt" else plan.gate
+	if location == "front":
+		return Vector2(26, 3)
 	if location == "west":
 		return Vector2(plan.yard.position.x, plan.rivet_start.y)
 	var harbor: Vector2 = Vector2(plan.street.end.x, plan.street.get_center().y)

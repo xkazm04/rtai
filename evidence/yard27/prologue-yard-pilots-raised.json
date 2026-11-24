@@ -1,0 +1,912 @@
+{
+ "note": "line_fire and raised_line (Part A, no extra stacks) rows from build pilots_a; part_b are raised_line with extra stack cover rows (pallet_broken / double / three), compared with line_fire. kept = g.",
+ "runs": [
+  {
+   "deaths": 0,
+   "dressing": "line_fire",
+   "ended": true,
+   "min_hp": 36.0,
+   "seed": 7,
+   "sha256": "993e5b7f080f30c0fa8f1def74e274f6762e6a05a757859e354d41e45083eeba",
+   "stuck": [],
+   "ticks": 11701
+  },
+  {
+   "deaths": 1,
+   "dressing": "line_fire",
+   "ended": true,
+   "min_hp": 0.0,
+   "seed": 3,
+   "sha256": "0b5d2bbf8dc8f0617d1c0f9a797fa7d415232b4aec5d8911912bfe2ff780e513",
+   "stuck": [
+    {
+     "at": "(36.43629, 32.36254)",
+     "id": 25,
+     "tick": 7990
+    },
+    {
+     "at": "(35.2794, 32.42456)",
+     "id": 24,
+     "tick": 7991
+    }
+   ],
+   "ticks": 13014
+  },
+  {
+   "deaths": 0,
+   "dressing": "line_fire",
+   "ended": true,
+   "min_hp": 44.0,
+   "seed": 11,
+   "sha256": "5b7b07537a18b3788c4804e443aa0e697a6ed969e7bb30974d35f6967d2ac19c",
+   "stuck": [
+    {
+     "at": "(36.26509, 21.42038)",
+     "id": 3,
+     "tick": 3277
+    },
+    {
+     "at": "(35.9387, 31.32078)",
+     "id": 11,
+     "tick": 5153
+    }
+   ],
+   "ticks": 10392
+  },
+  {
+   "deaths": 0,
+   "dressing": "line_fire",
+   "ended": true,
+   "min_hp": 28.0,
+   "seed": 21,
+   "sha256": "b0710b0dd9d4888beacbebad6f07aa4612c29a371fb6542e898a4fa35e77a1c7",
+   "stuck": [
+    {
+     "at": "(35.01331, 32.52198)",
+     "id": 14,
+     "tick": 5558
+    },
+    {
+     "at": "(36.19063, 32.50399)",
+     "id": 15,
+     "tick": 5558
+    }
+   ],
+   "ticks": 12158
+  },
+  {
+   "deaths": 1,
+   "dressing": "line_fire",
+   "ended": true,
+   "min_hp": 0.0,
+   "seed": 42,
+   "sha256": "cccffbae11389a2d54fe19716f51489f0962733a4f1bd11c7d99768595d4b3a5",
+   "stuck": [],
+   "ticks": 13278
+  },
+  {
+   "deaths": 0,
+   "dressing": "raised_line",
+   "ended": true,
+   "min_hp": 36.0,
+   "seed": 7,
+   "sha256": "993e5b7f080f30c0fa8f1def74e274f6762e6a05a757859e354d41e45083eeba",
+   "stuck": [],
+   "ticks": 11701
+  },
+  {
+   "deaths": 1,
+   "dressing": "raised_line",
+   "ended": true,
+   "min_hp": 0.0,
+   "seed": 3,
+   "sha256": "0b5d2bbf8dc8f0617d1c0f9a797fa7d415232b4aec5d8911912bfe2ff780e513",
+   "stuck": [
+    {
+     "at": "(36.43629, 32.36254)",
+     "id": 25,
+     "tick": 7990
+    },
+    {
+     "at": "(35.2794, 32.42456)",
+     "id": 24,
+     "tick": 7991
+    }
+   ],
+   "ticks": 13014
+  },
+  {
+   "deaths": 0,
+   "dressing": "raised_line",
+   "ended": true,
+   "min_hp": 44.0,
+   "seed": 11,
+   "sha256": "5b7b07537a18b3788c4804e443aa0e697a6ed969e7bb30974d35f6967d2ac19c",
+   "stuck": [
+    {
+     "at": "(36.26509, 21.42038)",
+     "id": 3,
+     "tick": 3277
+    },
+    {
+     "at": "(35.9387, 31.32078)",
+     "id": 11,
+     "tick": 5153
+    }
+   ],
+   "ticks": 10392
+  },
+  {
+   "deaths": 0,
+   "dressing": "raised_line",
+   "ended": true,
+   "min_hp": 28.0,
+   "seed": 21,
+   "sha256": "b0710b0dd9d4888beacbebad6f07aa4612c29a371fb6542e898a4fa35e77a1c7",
+   "stuck": [
+    {
+     "at": "(35.01331, 32.52198)",
+     "id": 14,
+     "tick": 5558
+    },
+    {
+     "at": "(36.19063, 32.50399)",
+     "id": 15,
+     "tick": 5558
+    }
+   ],
+   "ticks": 12158
+  },
+  {
+   "deaths": 1,
+   "dressing": "raised_line",
+   "ended": true,
+   "min_hp": 0.0,
+   "seed": 42,
+   "sha256": "cccffbae11389a2d54fe19716f51489f0962733a4f1bd11c7d99768595d4b3a5",
+   "stuck": [],
+   "ticks": 13278
+  }
+ ],
+ "part_b": {
+  "b": {
+   "stacks": "broken front (52,3.2) + three west (2.4,18.5) + double south (8,31.2)",
+   "runs": [
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 20.0,
+     "seed": 7,
+     "sha256": "93dd00fc174780e1a7ba8d7c7d5ab008ae654518010abbaac0177259d4080438",
+     "stuck": [
+      {
+       "at": "(34.5627, 32.41403)",
+       "id": 14,
+       "tick": 5518
+      }
+     ],
+     "ticks": 9388
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 15.0000000000003,
+     "seed": 3,
+     "sha256": "9f59b9ca7522ca4115243c5ae119353a347025edea30217163652c1f9302af6c",
+     "stuck": [],
+     "ticks": 10477
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 20.0,
+     "seed": 11,
+     "sha256": "6a60384f04baac953fb0092b632f3f1bca468833aab8a59a1cf7802bbb84f6a1",
+     "stuck": [
+      {
+       "at": "(36.26509, 21.42038)",
+       "id": 3,
+       "tick": 3277
+      },
+      {
+       "at": "(35.94594, 31.32734)",
+       "id": 11,
+       "tick": 5158
+      }
+     ],
+     "ticks": 11956
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 45.333333333334,
+     "seed": 21,
+     "sha256": "fec786bb2edd9d13a483642092ad4c92808ec4fb8d9271973912f467bec5888d",
+     "stuck": [
+      {
+       "at": "(35.96543, 31.34552)",
+       "id": 11,
+       "tick": 6302
+      }
+     ],
+     "ticks": 12157
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 40.0,
+     "seed": 42,
+     "sha256": "6d5e3522dd1d3f0360bc9e754ba9ccb6f24879fe6a8981d52acd51194ee6243f",
+     "stuck": [
+      {
+       "at": "(35.01447, 32.52496)",
+       "id": 14,
+       "tick": 5633
+      },
+      {
+       "at": "(36.19353, 32.50861)",
+       "id": 15,
+       "tick": 5633
+      }
+     ],
+     "ticks": 10288
+    }
+   ]
+  },
+  "c": {
+   "stacks": "three west (2.4,18.5) + double south (8,31.2)",
+   "runs": [
+    {
+     "deaths": 1,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 0.0,
+     "seed": 7,
+     "sha256": "acaf89082cc6239cd757d62bf23d6ac63e2d942f0bd9d07efafaf8251cddc0a9",
+     "stuck": [
+      {
+       "at": "(35.01224, 32.51937)",
+       "id": 14,
+       "tick": 5847
+      },
+      {
+       "at": "(36.18886, 32.50129)",
+       "id": 15,
+       "tick": 5847
+      },
+      {
+       "at": "(31.71957, 23.91947)",
+       "id": 17,
+       "tick": 7030
+      },
+      {
+       "at": "(21.62735, 26.01277)",
+       "id": 16,
+       "tick": 7043
+      },
+      {
+       "at": "(43.57473, 34.94494)",
+       "id": 11,
+       "tick": 7164
+      },
+      {
+       "at": "(36.52079, 32.28405)",
+       "id": 23,
+       "tick": 7745
+      },
+      {
+       "at": "(35.38062, 32.37224)",
+       "id": 22,
+       "tick": 7746
+      },
+      {
+       "at": "(42.57296, 25.42972)",
+       "id": 19,
+       "tick": 9850
+      }
+     ],
+     "ticks": 13045
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 20.0,
+     "seed": 3,
+     "sha256": "629fda209f9d77244176a2578ffdca400c921cc24315b452e091c9f6411862af",
+     "stuck": [],
+     "ticks": 10484
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 44.0,
+     "seed": 11,
+     "sha256": "5b7b07537a18b3788c4804e443aa0e697a6ed969e7bb30974d35f6967d2ac19c",
+     "stuck": [
+      {
+       "at": "(36.26509, 21.42038)",
+       "id": 3,
+       "tick": 3277
+      },
+      {
+       "at": "(35.9387, 31.32078)",
+       "id": 11,
+       "tick": 5153
+      }
+     ],
+     "ticks": 10392
+    },
+    {
+     "deaths": 1,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 0.0,
+     "seed": 21,
+     "sha256": "bd7657c6a2c48bf31e0b39c75bd306d0ff8f789fbb6455c4bea95eb9ac7f5774",
+     "stuck": [
+      {
+       "at": "(52.34373, 21.99935)",
+       "id": 13,
+       "tick": 5996
+      },
+      {
+       "at": "(54.48146, 25.84605)",
+       "id": 14,
+       "tick": 6053
+      },
+      {
+       "at": "(36.08798, 31.14131)",
+       "id": 21,
+       "tick": 7401
+      }
+     ],
+     "ticks": 12585
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 17.1666666666665,
+     "seed": 42,
+     "sha256": "2e3bf45d4d79eb8bed330956e0acf793b2edbebddcd6d6be9292c932ef60a2a7",
+     "stuck": [
+      {
+       "at": "(35.01251, 32.52)",
+       "id": 14,
+       "tick": 5879
+      },
+      {
+       "at": "(36.18927, 32.50191)",
+       "id": 15,
+       "tick": 5879
+      }
+     ],
+     "ticks": 10376
+    }
+   ]
+  },
+  "d": {
+   "stacks": "broken front (52,3.2)",
+   "runs": [
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 26.3333333333333,
+     "seed": 7,
+     "sha256": "80936af1e57d8e92d6bfe87f061ccb87b9c64f1512c8f76aad82c8cef9c998fa",
+     "stuck": [],
+     "ticks": 10241
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 40.0,
+     "seed": 3,
+     "sha256": "53f048dcf3741f59ccbcbfc77880eda386634f68b789cef9df415392cea6cb70",
+     "stuck": [],
+     "ticks": 10997
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 20.0,
+     "seed": 11,
+     "sha256": "6a60384f04baac953fb0092b632f3f1bca468833aab8a59a1cf7802bbb84f6a1",
+     "stuck": [
+      {
+       "at": "(36.26509, 21.42038)",
+       "id": 3,
+       "tick": 3277
+      },
+      {
+       "at": "(35.94594, 31.32734)",
+       "id": 11,
+       "tick": 5158
+      }
+     ],
+     "ticks": 11956
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 41.3333333333332,
+     "seed": 21,
+     "sha256": "c8a1b7c065ae668ba73224a9795a46030efdcaa44103f4abd1cb838a22aa0dbd",
+     "stuck": [
+      {
+       "at": "(34.68482, 32.21866)",
+       "id": 17,
+       "tick": 5815
+      }
+     ],
+     "ticks": 11224
+    },
+    {
+     "deaths": 1,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 0.0,
+     "seed": 42,
+     "sha256": "5bca2e470cbc892cb05f963d5e4b9437601debf071ee4a8cb8ee5d008729e8be",
+     "stuck": [
+      {
+       "at": "(36.43544, 32.36113)",
+       "id": 25,
+       "tick": 7601
+      },
+      {
+       "at": "(35.27982, 32.42559)",
+       "id": 24,
+       "tick": 7602
+      }
+     ],
+     "ticks": 12882
+    }
+   ]
+  },
+  "e": {
+   "stacks": "broken sw (4.5,29.5)",
+   "runs": [
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 36.0,
+     "seed": 7,
+     "sha256": "993e5b7f080f30c0fa8f1def74e274f6762e6a05a757859e354d41e45083eeba",
+     "stuck": [],
+     "ticks": 11701
+    },
+    {
+     "deaths": 1,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 0.0,
+     "seed": 3,
+     "sha256": "62c766f268393d0d4bdf3b86d1402e66b0117b2851fb02a24afb7b7b3fc4a5eb",
+     "stuck": [
+      {
+       "at": "(38.21439, 30.98428)",
+       "id": 23,
+       "tick": 7273
+      },
+      {
+       "at": "(36.08947, 31.14261)",
+       "id": 21,
+       "tick": 7275
+      }
+     ],
+     "ticks": 11888
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 44.0,
+     "seed": 11,
+     "sha256": "5b7b07537a18b3788c4804e443aa0e697a6ed969e7bb30974d35f6967d2ac19c",
+     "stuck": [
+      {
+       "at": "(36.26509, 21.42038)",
+       "id": 3,
+       "tick": 3277
+      },
+      {
+       "at": "(35.9387, 31.32078)",
+       "id": 11,
+       "tick": 5153
+      }
+     ],
+     "ticks": 10392
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 28.0,
+     "seed": 21,
+     "sha256": "b0710b0dd9d4888beacbebad6f07aa4612c29a371fb6542e898a4fa35e77a1c7",
+     "stuck": [
+      {
+       "at": "(35.01331, 32.52198)",
+       "id": 14,
+       "tick": 5558
+      },
+      {
+       "at": "(36.19063, 32.50399)",
+       "id": 15,
+       "tick": 5558
+      }
+     ],
+     "ticks": 12158
+    },
+    {
+     "deaths": 1,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 0.0,
+     "seed": 42,
+     "sha256": "cccffbae11389a2d54fe19716f51489f0962733a4f1bd11c7d99768595d4b3a5",
+     "stuck": [],
+     "ticks": 13278
+    }
+   ]
+  },
+  "f": {
+   "stacks": "three west (2.4,14)",
+   "runs": [
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 51.666666666667,
+     "seed": 7,
+     "sha256": "4853243115dd49893213643c40ca0799e477139a17cece11f4d5c4405ec490e4",
+     "stuck": [
+      {
+       "at": "(35.01411, 32.52406)",
+       "id": 14,
+       "tick": 5856
+      },
+      {
+       "at": "(36.19196, 32.50608)",
+       "id": 15,
+       "tick": 5856
+      }
+     ],
+     "ticks": 11434
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 28.0,
+     "seed": 3,
+     "sha256": "3ba9cfc5b60e8723f6a20bf4d11e9cc3427b5a10702373f20e92cc4293bcf12f",
+     "stuck": [
+      {
+       "at": "(37.0871, 32.578)",
+       "id": 16,
+       "tick": 5476
+      }
+     ],
+     "ticks": 11357
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 44.0,
+     "seed": 11,
+     "sha256": "5b7b07537a18b3788c4804e443aa0e697a6ed969e7bb30974d35f6967d2ac19c",
+     "stuck": [
+      {
+       "at": "(36.26509, 21.42038)",
+       "id": 3,
+       "tick": 3277
+      },
+      {
+       "at": "(35.9387, 31.32078)",
+       "id": 11,
+       "tick": 5153
+      }
+     ],
+     "ticks": 10392
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 8.99999999999993,
+     "seed": 21,
+     "sha256": "79d59874ab74c626fbc9dbaa8e956f6516ae770c4096169c7715d8cce09ffbb5",
+     "stuck": [
+      {
+       "at": "(35.01434, 32.52465)",
+       "id": 14,
+       "tick": 5854
+      },
+      {
+       "at": "(36.1924, 32.50678)",
+       "id": 15,
+       "tick": 5854
+      }
+     ],
+     "ticks": 12073
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 28.0,
+     "seed": 42,
+     "sha256": "252ff7bdeb48bc9e48e025fbf2408f2ec88cb63d6409dc60f9eb71f547387d9a",
+     "stuck": [
+      {
+       "at": "(49.29674, 21.2856)",
+       "id": 11,
+       "tick": 7214
+      }
+     ],
+     "ticks": 12972
+    }
+   ]
+  },
+  "g": {
+   "stacks": "KEPT: broken sw (4.5,29.5) + double west (3.4,23.5)",
+   "runs": [
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 36.0,
+     "seed": 7,
+     "sha256": "993e5b7f080f30c0fa8f1def74e274f6762e6a05a757859e354d41e45083eeba",
+     "stuck": [],
+     "ticks": 11701
+    },
+    {
+     "deaths": 1,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 0.0,
+     "seed": 3,
+     "sha256": "18f4a6f8f89b7208128d90678a224b8bf36b478b1f243bb9997db12330dfc4fe",
+     "stuck": [
+      {
+       "at": "(34.37444, 32.20227)",
+       "id": 24,
+       "tick": 7329
+      }
+     ],
+     "ticks": 11958
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 44.0,
+     "seed": 11,
+     "sha256": "5b7b07537a18b3788c4804e443aa0e697a6ed969e7bb30974d35f6967d2ac19c",
+     "stuck": [
+      {
+       "at": "(36.26509, 21.42038)",
+       "id": 3,
+       "tick": 3277
+      },
+      {
+       "at": "(35.9387, 31.32078)",
+       "id": 11,
+       "tick": 5153
+      }
+     ],
+     "ticks": 10392
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 28.0,
+     "seed": 21,
+     "sha256": "b0710b0dd9d4888beacbebad6f07aa4612c29a371fb6542e898a4fa35e77a1c7",
+     "stuck": [
+      {
+       "at": "(35.01331, 32.52198)",
+       "id": 14,
+       "tick": 5558
+      },
+      {
+       "at": "(36.19063, 32.50399)",
+       "id": 15,
+       "tick": 5558
+      }
+     ],
+     "ticks": 12158
+    },
+    {
+     "deaths": 1,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 0.0,
+     "seed": 42,
+     "sha256": "cccffbae11389a2d54fe19716f51489f0962733a4f1bd11c7d99768595d4b3a5",
+     "stuck": [],
+     "ticks": 13278
+    }
+   ]
+  },
+  "h": {
+   "stacks": "broken sw + three east (56.8,29)",
+   "runs": [
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 28.0,
+     "seed": 7,
+     "sha256": "fc0aaa5458836848de522426c97371875f3601ce10540849e9d4587ebef28fb8",
+     "stuck": [
+      {
+       "at": "(24.46738, 32.12128)",
+       "id": 2,
+       "tick": 3269
+      }
+     ],
+     "ticks": 10869
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 27.0000000000004,
+     "seed": 3,
+     "sha256": "df859a6436e6618c43871fe6e4f0b0543e2e6e4b659ff9d487f582934995984d",
+     "stuck": [
+      {
+       "at": "(24.46737, 32.12423)",
+       "id": 2,
+       "tick": 3269
+      }
+     ],
+     "ticks": 10345
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 44.0,
+     "seed": 11,
+     "sha256": "9df72c1674dcec2387e2e350301968a50e51c97f13b9d83e3109f83e16d43e52",
+     "stuck": [
+      {
+       "at": "(36.80131, 21.50409)",
+       "id": 3,
+       "tick": 3288
+      },
+      {
+       "at": "(35.93793, 31.32012)",
+       "id": 11,
+       "tick": 5153
+      }
+     ],
+     "ticks": 10737
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 44.0,
+     "seed": 21,
+     "sha256": "84847488848c85909d37fba38c7767357f8a293b2b40002529537e4cbb1ba589",
+     "stuck": [
+      {
+       "at": "(27.39409, 27.43252)",
+       "id": 2,
+       "tick": 3257
+      }
+     ],
+     "ticks": 10210
+    },
+    {
+     "deaths": 1,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 0.0,
+     "seed": 42,
+     "sha256": "5c217774294885c42f66705a0be85a012ca04afd4be450bfe100b4c28e1901dd",
+     "stuck": [],
+     "ticks": 12925
+    }
+   ]
+  },
+  "i": {
+   "stacks": "g + three nw (1.9,10.5): seeds 3 and 42 hit the 18000 tick budget",
+   "runs": [
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 36.0,
+     "seed": 7,
+     "sha256": "b3b14bba1965c37440044a2af4350436b5c7889b6ee5ed0bc96ef792361f4f3e",
+     "stuck": [],
+     "ticks": 10236
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": false,
+     "min_hp": 64.0,
+     "seed": 3,
+     "sha256": "d474da0a611d87f581c1a2c15794e10791cd9637fec3669ed63a240d9988a3cc",
+     "stuck": [
+      {
+       "at": "(13.18814, 24.75)",
+       "id": 6,
+       "tick": 4495
+      }
+     ],
+     "ticks": 18000
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 44.0,
+     "seed": 11,
+     "sha256": "5b7b07537a18b3788c4804e443aa0e697a6ed969e7bb30974d35f6967d2ac19c",
+     "stuck": [
+      {
+       "at": "(36.26509, 21.42038)",
+       "id": 3,
+       "tick": 3277
+      },
+      {
+       "at": "(35.9387, 31.32078)",
+       "id": 11,
+       "tick": 5153
+      }
+     ],
+     "ticks": 10392
+    },
+    {
+     "deaths": 0,
+     "dressing": "raised_line",
+     "ended": true,
+     "min_hp": 34.5000000000002,
+     "seed": 21,
+     "sha256": "14396a1f7a27077f74a4ec6dd77a688255e5f490670622c531c150c571b931b7",
+     "stuck": [],
+     "ticks": 10547
+    },
+    {
+     "deaths": 2,
+     "dressing": "raised_line",
+     "ended": false,
+     "min_hp": 0.0,
+     "seed": 42,
+     "sha256": "4cebb76188c567b78b2e4b0e3509bee61d663a63eeaba6af01a1c46ed3336c46",
+     "stuck": [
+      {
+       "at": "(4.5, 22.5)",
+       "id": 26,
+       "tick": 9776
+      }
+     ],
+     "ticks": 18000
+    }
+   ]
+  }
+ }
+}

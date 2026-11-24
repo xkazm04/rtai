@@ -1,0 +1,29 @@
+Floor warmth of the yard stills: fire-pool core vs between pools, n26 light vs HEAD light.
+
+Usage: python -W ignore -I evidence/yard27/floor_warmth.py build/films27 > evidence/yard27/floor_warmth.txt
+Stills are the 1920x1080, 32 px/m top-down yard_film frames (ls_n26_*, ls_head_*), camera centred on
+`at`, so world = at + (px - (960, 540)) / 32.
+
+Method: floor mask = pixels inside the yard rect (px x 135..1735, y 20..880; front frame also world y > 0.6 m, below the wall rubble) that are not within 5 px of a pixel that is dark (L* < 30), saturated (C* > 48: paint, blood, orange props) or more than 14 L* from the 21 px local median (shadows, stains, prop edges, actor edges). The same mask rule runs per frame; masks differ a little between n26 and HEAD because the light moves the local median.
+Core = within 3 m of a yard_fire or yard_fire_mid pool centre (raised_line pools, 11 in all). Between = more than 12 m from every pool (fires and lamps). Hue is the angle of the mean (a*, b*) in CIELAB, 0 = red-magenta, 90 = yellow; C* is mean chroma; L* mean lightness (D65, sRGB).
+
+| frame | light | zone | pixels | L* | C* | hue deg |
+|---|---|---|---:|---:|---:|---:|
+| mid t2290 | n26 light | core (<= 3 m of a fire) | 4729 | 68.1 | 18.1 | 78.5 |
+| mid t2290 | n26 light | between (> 12 m of all) | 11748 | 65.9 | 13.6 | 77.3 |
+| mid t2290 | HEAD light | core (<= 3 m of a fire) | 5239 | 72.9 | 22.6 | 75.6 |
+| mid t2290 | HEAD light | between (> 12 m of all) | 11748 | 65.9 | 13.6 | 77.3 |
+| front t2858 | n26 light | core (<= 3 m of a fire) | 1419 | 78.5 | 31.6 | 83.5 |
+| front t2858 | n26 light | between (> 12 m of all) | 596 | 66.7 | 13.7 | 77.4 |
+| front t2858 | HEAD light | core (<= 3 m of a fire) | 1986 | 87.4 | 33.2 | 92.2 |
+| front t2858 | HEAD light | between (> 12 m of all) | 596 | 66.7 | 13.7 | 77.4 |
+
+Warm-up (HEAD minus n26):
+- mid t2290, core (<= 3 m of a fire): dL* +4.8, dC* +4.5, dhue -2.9 deg
+- mid t2290, between (> 12 m of all): dL* +0.0, dC* +0.0, dhue +0.0 deg
+- front t2858, core (<= 3 m of a fire): dL* +8.9, dC* +1.6, dhue +8.7 deg
+- front t2858, between (> 12 m of all): dL* +0.0, dC* +0.0, dhue +0.0 deg
+
+Caveats: stills are the existing `build/films27/ls_n26_*` and `ls_head_*` renders (one frame each, line_fire, 32 px/m, no new render); the mask is a heuristic, so absolute L*/C* depend on it, only the n26-to-HEAD difference in a fixed zone is meaningful. The front frame's "between" zone is small (596 px) because the 12 m ring around 11 pools covers most of the 60 x 34 m view; the core there is a strip of about 1.6 m under the north wall (the rubble apron above it is masked out).
+
+What it says: the HEAD light warms and lifts only the floor near the fires (core L* +4.8 and +8.9, chroma +4.5 and +1.6, hue 2.9 degrees redder at mid and 8.7 degrees yellower at the front, where the core now reads as lit amber-cream rather than amber) and leaves the floor between pools exactly as it was (zero difference to the stated precision, so the contrast between pool and unlit floor grew by that same core change and nothing else).

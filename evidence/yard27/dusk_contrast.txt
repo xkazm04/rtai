@@ -1,0 +1,16 @@
+# n27 contrast at dusk, paired (same sim, day grade vs row under test), seed 7, 32 px/m
+# regions from the final pool table: inside = within 0.5 r of a fire pool, outside = beyond r of every pool
+
+## HEAD lights (n26 row, region labels from the new pools)
+patrol blue outside  day 4.763 dusk 3.897 retained 81.8% hue 221 [221..221] blue kept 94% cops 4 PASS
+patrol blue inside   day 4.053 dusk 3.221 retained 79.5% hue 223 [221..232] blue kept 88% cops 5 PASS
+patrol blue between  day 4.478 dusk 3.643 retained 81.4% hue 221 [220..224] blue kept 94% cops 10 
+rifle        day 1.858 dusk 1.892 retained 101.8% (161, 161 px) PASS
+shotgun      day 1.669 dusk 1.505 retained 90.2% (266, 266 px) PASS
+
+## new lights
+patrol blue outside  day 4.763 dusk 3.897 retained 81.8% hue 221 [221..221] blue kept 94% cops 4 PASS
+patrol blue inside   day 4.053 dusk 3.225 retained 79.6% hue 227 [222..244] blue kept 80% cops 5 PASS
+patrol blue between  day 4.478 dusk 3.639 retained 81.3% hue 222 [221..224] blue kept 91% cops 10 
+rifle        day 1.858 dusk 1.863 retained 100.3% (161, 161 px) PASS
+shotgun      day 1.669 dusk 1.605 retained 96.2% (266, 266 px) PASS

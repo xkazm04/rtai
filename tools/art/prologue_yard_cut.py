@@ -38,6 +38,15 @@ def sheet_matte(sheet):
 
 def key_piece(crop, matte, shadow_ink=None, ink_only=False):
     """Estimate edge coverage against nearby ink, then remove the matte from that soft edge."""
+    cut = key_full(crop, matte, shadow_ink, ink_only)
+    bounds = cut.getchannel("A").getbbox()
+    if bounds is None:
+        raise ValueError("piece contains only background")
+    return cut.crop(bounds)
+
+
+def key_full(crop, matte, shadow_ink=None, ink_only=False):
+    """key_piece without the final trim: the cut keeps the crop's size and pixel positions."""
     pixels = np.asarray(crop.convert("RGBA"), dtype=np.float32)
     offset = pixels[..., :3] - np.asarray(matte, dtype=np.float32)
     distance = np.max(np.abs(offset), axis=2)
@@ -62,11 +71,7 @@ def key_piece(crop, matte, shadow_ink=None, ink_only=False):
         coverage[distance <= 24] = 0
     clean = matte + offset / np.maximum(coverage[..., None], 1 / 255)
     rgba = np.dstack((clean, pixels[..., 3] * coverage))
-    cut = Image.fromarray(np.rint(rgba).clip(0, 255).astype(np.uint8))
-    bounds = cut.getchannel("A").getbbox()
-    if bounds is None:
-        raise ValueError("piece contains only background")
-    return cut.crop(bounds)
+    return Image.fromarray(np.rint(rgba).clip(0, 255).astype(np.uint8))
 
 
 def tile_ground(crop):

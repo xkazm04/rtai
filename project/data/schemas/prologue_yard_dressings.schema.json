@@ -249,10 +249,37 @@
                     "minimum": 0,
                     "type": "number"
                   },
+                  "floor_glow": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "color": {
+                        "pattern": "^[a-fA-F0-9]{6}$",
+                        "type": "string"
+                      },
+                      "radius_m": {
+                        "maximum": 20,
+                        "minimum": 0.5,
+                        "type": "number"
+                      },
+                      "strength": {
+                        "maximum": 1.5,
+                        "minimum": 0,
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "color",
+                      "radius_m",
+                      "strength"
+                    ],
+                    "type": "object"
+                  },
                   "id": {
                     "enum": [
                       "yard_fire",
-                      "yard_lamp"
+                      "yard_fire_mid",
+                      "yard_lamp",
+                      "yard_lamp_gate"
                     ]
                   },
                   "intensity": {
@@ -310,7 +337,9 @@
                   "kind": {
                     "enum": [
                       "yard_fire",
-                      "yard_lamp"
+                      "yard_fire_mid",
+                      "yard_lamp",
+                      "yard_lamp_gate"
                     ]
                   }
                 },
@@ -341,6 +370,12 @@
         "outside": {
           "items": {
             "$ref": "#/$defs/piece"
+          },
+          "type": "array"
+        },
+        "over_print": {
+          "items": {
+            "type": "string"
           },
           "type": "array"
         },
