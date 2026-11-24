@@ -61,3 +61,9 @@ test_robot_wreck_plates): **killed 7 / (7 + 13 survived) = 35 %**, 0 timeout, 0 
 (size 0.91/0.49 m, z 25/26, the cap offset, `_size` maths) and the shield apron copy at line 25: no test pins where the plates sit
 or how big they are. Next: assert plate width (`get_rect().size.x * scale.x == 0.91 * ppm`), z order and the cap offset in
 test_robot_wreck_plates.gd.
+
+## m5: stun sparks (2026-11-24)
+- `ShockJolt._spark` (`spark_plan`): was ink 6 px + cream 2.5 px; now an ink under-halo (alpha 0.3, 9 px) + amber halo 9 px alpha 0.18 + amber 4.5 px alpha 0.5 + cream core 2 px, all from `ElectricArc.strokes(1.0)`; `ShockJolt.ink_rim` / `--ink-sparks` = the old two strokes. Tests: `test_shock_spark.gd` (4).
+- `stills/ohm_stun_sparks_{before,after}_64.png`: patrol_cop stunned by the electro gun (`STILLS_FLAGS=--ink-sparks node evidence/n27/wreck/stills.mjs <dir> 64 patrol_cop electro_gun`; the tool's "expected execute" check exits 1 for a stun, the PNGs are written first). After: the body's arcs are thin and amber-lit, the ink outline is gone.
+- FINDING: the cream, ink-rimmed starfish glyphs (panels 1-2 of `claw_sparks_after_64.png`, and beside the cop) are NOT ShockJolt. They are the `spark` cell drawn by `WeaponFxElectro.stun` (`project/features/combat/weapons/art/weapon_fx_electro.gd:40`, called from `fight_areas_art.gd:36`, 2 cells orbiting the head). Unchanged. **NEED weapons** for that file (give the cell the ElectricArc look, or draw ElectricArc instead of the cell).
+- `stills/claw_sparks_after_64.png` = the claw_shock 4-up again (same ticks, panels 1-2 unchanged for the reason above); `bond_offer_64.png` re-rendered with the mastery card picture (Master Tonnage in a full teal ring, crown diamond); `films/claw_shock_robots.mp4` re-rendered (1920x1080, 60 fps, 27.2 s, 1632 frames), `_inkspark.mp4` = the previous cut.

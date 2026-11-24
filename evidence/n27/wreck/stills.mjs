@@ -11,7 +11,7 @@ const loadout = gun === 'electro_gun' ? 'electro_gun' : 'hands';
 const args = ['--rendering-driver', 'd3d12', '--windowed', '--position', '0,1440', '--resolution', '1920x1080',
   '--fixed-fps', '60', resolve('tools/film/electric_stills.tscn'), '--', `--loadout=${loadout}`, `--sig-gun=${gun}`,
   `--victim=${victim}`, '--view=tilt70', `--ppm=${ppm}`, '--rigs', '--clean', '--silent', '--feel=off',
-  '--enemy-brain=squad', '--seed=20261109'];
+  '--enemy-brain=squad', '--seed=20261109', ...(process.env.STILLS_FLAGS ?? '').split(' ').filter(Boolean)];
 const env = { ...process.env, GTAI_MELEE_TAKE: resolve(out), GTAI_MELEE_NATIVE: '1' };
 const r = await runGodot(args, { headless: false, timeoutMs: 240000, name: 'wreck-stills', env });
 if (r.status !== 0 || r.timedOut || /SCRIPT ERROR:/.test(r.out)) {
