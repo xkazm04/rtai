@@ -41,3 +41,32 @@ def test_seamless_wraps_a_gradient_exactly_to_its_neighbour():
 	out = make_seamless(ramp)
 	step = abs(float(out[0, 1, 0] - out[0, 0, 0]))
 	assert abs(float(out[0, 0, 0] - out[0, -1, 0])) <= step * 1.5
+
+
+def _lab_stats(rgb: np.ndarray) -> tuple:
+	c = rgb.astype(np.float64) / 255.0
+	lin = np.where(c <= 0.04045, c / 12.92, ((c + 0.055) / 1.055) ** 2.4)
+	m = np.array([[0.4124564, 0.3575761, 0.1804375], [0.2126729, 0.7151522, 0.0721750], [0.0193339, 0.1191920, 0.9503041]])
+	t = (lin @ m.T) / np.array([0.95047, 1.0, 1.08883])
+	f = np.where(t > 216 / 24389, np.cbrt(t), (24389 / 27 * t + 16) / 116)
+	lab_l = 116 * f[..., 1] - 16
+	chroma = np.hypot(500 * (f[..., 0] - f[..., 1]), 200 * (f[..., 1] - f[..., 2]))
+	return float(lab_l.mean()), float(chroma.mean())
+
+
+def test_lift_and_chroma_move_mean_l_and_c(tmp_path):
+	base = _tile(tmp_path)
+	out = tmp_path / "g.png"
+	cut(SOURCE, out, 768, 12.0, 1.8)
+	graded = np.asarray(Image.open(out).convert("RGB"))
+	l0, c0 = _lab_stats(base)
+	l1, c1 = _lab_stats(graded)
+	assert abs((l1 - l0) - 12.0) <= 2.0
+	assert abs(c1 - c0 * 1.8) <= 2.0 or abs(c1 / c0 - 1.8) * c0 <= 2.0
+
+
+def test_defaults_are_byte_identical(tmp_path):
+	a, b = tmp_path / "a.png", tmp_path / "b.png"
+	cut(SOURCE, a, 768)
+	cut(SOURCE, b, 768, 0.0, 1.0)
+	assert a.read_bytes() == b.read_bytes()

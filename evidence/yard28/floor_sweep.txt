@@ -84,3 +84,15 @@ Bars that stop every arm: floor L* (38-46, bar 52-62) and Rivet luminance delta 
 WINNER: none. No arm passes every bar; per the brief arched_line's ground[0] stays on raised_line/floor_tile.png (tint ffe0c8ff, row unchanged). The tile, cut tool and test ship unreferenced.
 Next lever (not tried, needs a lighter art or a grade change): lighten the art itself by about 12 L* (so it lands at L* 52-56 after the grade), or drop the grey stains layer on this row.
 Stills: floor_art_mid_32ppm.png (arm e, t3000) and plate_vs_game_mid_32ppm.png (arm e, NOT the committed row). Seen: no tiling seam and no obvious 8 m repeat; the floor reads taupe grey-brown under dark grey stain blotches, warmer than raised_line but not the plate's mid-brown.
+
+
+LIFT SWEEP (19:29-19:38, real renders, same tools as ART SWEEP via art_sweep.sh; tile = prologue_yard_floor.py --lift-l/--chroma; row: ground[0] = new tile, tint ffffffff, stains ffffff58 / wash f6dca880 in all three arms)
+| arm | lift / chroma | floor L*/C*/hue (52-62) | pool gain (>=4) | Rivet delta (>=0.19) | Rivet dE2000 (>=15) | patrol blue out/in (>=65 %) | rifle (>=95) | pellet (>=90) | appliance delta (info) |
+|---|---|---|---|---|---|---|---|---|---|
+| A | +12 / x1.8 | 65.1 / 13.3 / 77 FAIL | +6.0 | 0.2755 | 35.2 | 82.4 / 98.3 | 96.3 | 92.1 | 0.091 |
+| B* | +8 / x2.4 | 65.4 / 13.4 / 77 FAIL | +6.9 | 0.2780 | 35.4 | 82.5 / 98.3 | 96.0 | 92.1 | 0.092 |
+| C* | +4 / x2.4 | 64.4 / 13.1 / 77 FAIL | +4.1 | 0.2697 | 34.7 | 82.4 / 98.3 | 97.1 | 92.1 | 0.089 |
+B* and C* deviate from the brief's B/C (lift 12 / stains 2c; lift 16): arm A was already 3 L* too LIGHT (the brief's C only lifts further), so B and C went the other way with stains unchanged. Not run: any arm at lift <= 0 or darker stains.
+Only floor L* fails (every other bar passes). Lift barely moves the floor (L* 64-65 from +4 to +12) while chroma x2.4 does not raise C* (13): the dusk grade flattens chroma as before. Floor jumps from 44 (unlifted tile, ART SWEEP arm a) to 64 with +4 lift: the response is very steep below +4; the passing lift is between 0 and +4 and was not tried.
+WINNER: none. Row unchanged (ground[0] = raised_line tile, ffe0c8ff). Tool (--lift-l/--chroma, defaults byte-identical) and test ship. Stills re-rendered of the committed row.
+Seen: arm C (lift 4, x2.4) reads pale warm beige concrete, lighter than the committed floor, not mid-brown. The committed row still reads grey taupe under dark stains, not the plate's mid-brown.
