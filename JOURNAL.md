@@ -74,3 +74,8 @@ NEXT (session 2, from ~04:15):
       and a guard-vs-blade 64 px/m pair; the pair dash take is hit 4/26 vs n26 arena 0/48: the dash waits 16 ticks
       after launch, not the lock — a "dash on lock" variant could be one flag).
   Commit by 08:00, gate `node tools/gate/run.mjs --rev=HEAD` by 08:15. Remove the scratch worktree at the end.
+- 04:12 after-keys salt 0 (scratch e403c4a40) ended 04:04, exit 0: median death wave novice 5, average 6, expert 8.5,
+  and all 30 run results are byte-identical to main's salt 0 (`cmp`, 0 of 30 differ): the keys order changes which
+  key deploys which ghost, not which ghost the bot deploys. Salt 1 running (bash pid 75356), `DONE` at ~04:13.
+  BUILDER RUNNING measure since 03:54 (pid 28812), waits for `medians/keys/DONE` before Godot.
+- 04:13 session 1 end. NEXT as written above (04:00).
