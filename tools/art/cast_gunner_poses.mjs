@@ -19,6 +19,7 @@ const r = await runGodot(args, { env: { ...process.env, GTAI_CAST_OUT: dir }, na
   headless: false, timeoutMs: 1_500_000 });
 console.log(r.out.split('\n').filter((l) => /cast:|ERROR/.test(l)).join('\n'));
 if (r.status !== 0 || r.timedOut || SCRIPT_ERROR.test(r.out) || !r.out.includes('pose review complete true')) {
+  console.error(r.out.split('\n').slice(-40).join('\n'));
   console.error(`gunner poses failed (${describe(r)})`);
   process.exit(1);
 }
