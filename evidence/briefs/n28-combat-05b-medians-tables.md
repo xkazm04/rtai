@@ -26,3 +26,7 @@ not, STOP and report (do not start Godot, do not touch the tables).
 ## Rules
 No `git add -A/./-u`, no stash/amend/rebase/push; never stage root `JOURNAL.md` / `REPORT.md`. Allowlist: `evidence/n28/medians/**`.
 Report: the medians table, floors, the killer headline (stomp share novice/average at wave 5), the main-vs-n27 cross-check, commits.
+
+## Wall clock (binding)
+Started 20:50. Commit by 21:12. HARD STOP 21:15: write your report and END, even mid-task (say what is left).
+Node only: never start Godot. Evidence paths only; `git commit -- <paths>` (another session commits beside you).

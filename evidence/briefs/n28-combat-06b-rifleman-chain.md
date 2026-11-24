@@ -46,3 +46,14 @@ root `JOURNAL.md` / `REPORT.md`.
 
 ## Report and END (short)
 Commits; why the third never fired and the fix; the share table n27 beside n28; film ffprobe; chain still paths; mutate score; what was left.
+
+## frames.json (C:/Users/kazda/kiro/gtai-masters/n28/combat/frames.json) after your work
+At most 15 entries, best first, keep every existing film entry. Drop the standalone `pair_dash_late_before_64.png` entry
+(it is already the `before` of the after entry) and `electro_stun_after_32.png`; drop the two `_48dev` entries only if the
+in-game chain pair lands (then delete the `_48dev` files and `electro_chain_before_64.png` if it is not referenced).
+Never delete a file another entry's `before` names.
+
+## Wall clock (binding)
+Started ~21:15. Commit A (code + test + decisions line) by 21:50 (the pre-commit hook takes ~12 min: start it by 21:38).
+Part B only if A is committed by 21:55. Commit B (evidence) by 22:06. HARD STOP 22:10: write your report and END, even mid-task.
+Another session may commit beside you: always `git commit -m "..." -- <paths>`.
