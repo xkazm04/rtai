@@ -82,6 +82,7 @@ func test_first_level_marks_the_loaded_ghost_and_uses_its_own_cooldown() -> void
 
 
 func test_deploy_hint_follows_the_rebound_key() -> void:
+	PlayerActions.shipped().install()  # the number labels exist only with the actions installed
 	var pilot: GhostPilot = GhostPilot.shipped()
 	var hud: DrawnText = DrawnText.new()
 	add_child_autofree(hud)
