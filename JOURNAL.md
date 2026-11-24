@@ -113,3 +113,7 @@ NEXT: (1) review m5 at its commits (07:25 code: read diff; stills `claw_sparks_a
 - 08:24 MILESTONE final gate PASS on `6ededd080`: lint 19/19, unit 4141/0 fail, scenarios 68, parity exact, selftest, export-audit 984/0. `build/gate/6ededd080eb2/gate.json`. REPORT GATE_LINE filled; cites 24/24 ok. No builder running.
 - 08:25 session 4 end.
 NEXT: no new work (past 08:00). (1) after 09:30: `node tools/gate/run.mjs --rev=HEAD --reels` once (export APPDATA=.../appdata/melee), quote its line in REPORT ## Gate. (2) re-run `node tools/evidence/cites.mjs REPORT.md`, commit REPORT/JOURNAL by pathspec. (3) frames.json is 13 entries, best first; nothing else to film.
+- 09:30 MILESTONE session 5 (STABILIZE) start. No builder running (lock absent, last call m5 06:53Z). No new work.
+- 09:30 GATE start `node tools/gate/run.mjs --rev=HEAD --reels` on `27143738f`, detached (pid 82140, `build/gate-logs/reels.out.txt`). It outlasts the 09:40 stop; REPORT says so and points the Director at the gate.json.
+- 09:33 REPORT: Gate section names the reels run; Next steps electric_chassis mutate updated 7/20 -> 12/20.
+NEXT: Director: read `build/gate-logs/reels.out.txt` / `build/gate/27143738f*/gate.json` for the `--reels` verdict; merge notes in REPORT. Lane done.
