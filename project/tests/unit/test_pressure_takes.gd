@@ -34,13 +34,22 @@ func test_steady_circle_is_hit_and_goes_down() -> void:
 	assert_lt(pair.death_tick, 10 * SimClock.TICK_RATE)
 	assert_eq(pair.hp_at_10s, 0.0, "he is already down when the 10 s mark passes")
 	assert_eq(pair.other, 0, "every HP lost came from a rocket")
+	assert_gte(pair.direct, 1, "at least one rocket bursts on his body")
 	assert_almost_eq(pair.hp_lost, take.arena.rivet.max_hp, 0.01, "the split sums to his health")
 
 
 func test_dash_across_each_line_takes_far_less() -> void:
 	var circle: PressureTake = _run("pair_circle")
-	var dash: PressureTake = _run("pair_dash")
+	var dash: PressureTake = PressureTake.new()
+	assert_true(dash.open("pair_dash", 1))
+	_takes.append(dash)
+	var hp_at_600: float = 0.0
+	while dash.tick < dash.length:
+		dash.advance()
+		if dash.tick == 10 * SimClock.TICK_RATE:
+			hp_at_600 = dash.arena.rivet.hp
 	var pair: PressurePair = dash.pair
+	assert_eq(pair.hp_at_10s, hp_at_600, "the summary reads his HP at exactly 10 s")
 	assert_gt(dash.session.pilot.motion.dashes, 5, "he dashes on the rocket lines")
 	assert_gt(pair.dash_presses, dash.session.pilot.motion.dashes, "some presses fall in cooldown")
 	assert_eq(pair.death_tick, 0, "and survives the whole take")
