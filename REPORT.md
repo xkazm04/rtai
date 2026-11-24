@@ -119,7 +119,7 @@ Director: Opus; builder: Claude Sonnet 5.5 (high), 9 calls, ledger at the end. I
 - `tools/debt/baseline.json` and `launch_args.gd` `KNOWN_FLAGS`: untouched by this lane. `steam/ai-provenance/2026-11.jsonl`:
   21 lines appended (append-only, keep both sides).
 - `rivet_strips.gd` `ONE_HAND` gains `&"gloria"` (one line outside the brief's list; needed so she turns left on her own drawn strip).
-- Root `JOURNAL.md` / `REPORT.md`: add/add with other lanes, keep each lane's own (file under `docs/day/2026-11-24/n27-keys/`).
+- Root `JOURNAL.md` / `REPORT.md`: add/add with other lanes, keep each lane's own (file them under docs/day/2026-11-24/n27-keys/ at the merge, as n26 did).
 
 ## Next steps
 1. The five stop-gap weapons: one drawn 16-row round each (80 images). Cheaper route to test first: an image edit of the plasma
@@ -153,6 +153,6 @@ What I would brief differently:
 - Give the art calls a written fallback from the start (the bare stride + the new held art), with a time cap on the clever route.
   The transplant cost about 35 minutes before the fallback was ordered.
 - Put the capture kit in the repo (a dev scene that equips a weapon and walks a beat list). Every call copied the n24
-  `grid_arena_film` into `project/dev/motion` and deleted it again, and the brief had to say where it lived.
+  `grid_arena_film` into the project dev motion folder and deleted it again, and the brief had to say where it lived.
 - Ask for the before render from a temp worktree from the first call (call 6 did it right; call 4 rendered the "before" from the changed tree).
 
