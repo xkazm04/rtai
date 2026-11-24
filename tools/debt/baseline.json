@@ -157,7 +157,8 @@
         "2026-11-23: Paired pilot captures retain exact underlay pixels and shot identities for n26 yard (dev_loc 33764 -> 33890)",
         "2026-11-23: Capture both zooms on the live commander through the seed-seven rack for n26 yard (dev_loc 33890 -> 33900)",
         "2026-11-24: mastery-free flag and boss-cut column for the n27 bond measure (dev_loc 35431 -> 35448)",
-        "2026-11-24: dev_loc: bond_film film entry for n27 melee films (dev_loc 35448 -> 35655)"
+        "2026-11-24: dev_loc: bond_film film entry for n27 melee films (dev_loc 35448 -> 35655)",
+        "2026-11-24: mastery card figure + ring (n27 melee C): 44 dev lines on the gauntlet pick card (dev_loc 35655 -> 35699)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -170,7 +171,7 @@
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
-        "project/dev/gauntlet": 1650,
+        "project/dev/gauntlet": 1694,
         "project/dev/ghost-forms": 1939,
         "project/dev/ghost-powers": 1396,
         "project/dev/guard": 397,
@@ -199,7 +200,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 35655
+      "total": 35699
     },
     "direct_cmdline_reads": {
       "accepted": [
