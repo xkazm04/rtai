@@ -371,3 +371,28 @@ sheet back on the shipped unanchored four-drawing placement; after = the committ
 facing, 1.6 m/s: the shipped placement draws three wide sole brackets per cycle that slide (each bracket spans the whole
 contact); the planted one draws a bracket per drawing, narrower, the cyan/orange contacts alternating without gaps. The
 down-right take has no dots (the sole is hidden by the slab). The clip has no 64 px/m inset: the tool does not support one.
+
+## Pile-driver feet, n28
+
+**Verdict: Feet FAILS: no exchange of support drawn at 70, needs new art. Nothing wired, nothing shipped.**
+Evidence: `pile_lift_70.png` (masters `n28/cast/`; the right-facing column of `war_machine_armed_walk.png`, four drawings,
+p70 on top, p55 below, the lowest opaque row drawn in cyan). Looked at it. The n26 line "no lift drawn" is not literally
+true: at p70 drawings 1 and 3 each tilt the FRONT (right) pad so its underside shows. But it is the same pad both times,
+the rear pad is flat and planted in all four drawings, and drawings 0 and 2 are the same two-pad stance (front pad 5 px
+apart). A walk that lifts one pad twice and never the other has no alternation of support, so no per-drawing sole table
+can carry one ground point through a continuous 1.8 m/s walk the way `CastDoorAnchors` does. At p55 the exchange IS drawn
+(drawing 1 tilts the rear pad, drawing 3 the front pad), so a p55 table is possible; the checklist needs both pitches, so
+none was written (a placement that cannot pass at 70 would only move the failure).
+`CastCards` still has `war_machine` `enabled: true` in this tree (the brief said `false`): the wave draws the pile-driver
+card (`FoeWarCardView`, `HEIGHT_M` 2.6, a held-foot placement, no anchor table). Not touched.
+
+| Character | Gait | Pitch | Sole / body jump, right (main `d0ab9d03a`) | After | Down-right (main) | After |
+|---|---|---:|---:|---:|---:|---:|
+| war_machine | walk (1.8) | 70 | U / 17.84 | unchanged (not wired) | 24.75 / 13.22 | unchanged |
+| war_machine | walk (1.8) | 55 | 29.07 / 11.88 | unchanged (not wired) | 22.97 / 13.35 | unchanged |
+
+Turn and reversal jump, stop: not measured (nothing changed to measure). **Size, rendered** (`cast_foot_film.gd`,
+1920 x 1080, 32 px/m, tilt 70, the card walking right, then the silhouette measured on the frame): **70 x 77 px**
+(Rivet 77 / 75 in the same audit; not enlarged: the card is `HEIGHT_M` 2.6 m over a 200 px body, figure bbox 184 px of
+the 288 px cell). What else on the checklist still fails: the Feet row (sole 23 to 29 px, jump over 12 px at 70 right and
+down-right) and every other cell of its row in the n26 table above that was F; none was worked on in this call.
