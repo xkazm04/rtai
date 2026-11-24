@@ -260,3 +260,20 @@ The first review kept the card disabled. Walk, Feet, Hit and Shadow failed. The 
 **Ink, cut and shadow.** At the front pass, the three contour samples are 2 / 3 / 6 texels at 70° and 4 / 2 / 1 at 55°. The outlines close at both review scales. The walk navy means are 222.4° / .470 / .327 and 221.8° / .440 / .329. The eight final RGBA grids have zero strong green or magenta pixels at alpha ≥128. Light and dark matte checks retain the hands, muzzle, loose gun and cap. The stationary front three-quarter shadow toggle changes 248 / 221 pixels at 32 px/m for 70° / 55°. The forward pump changes 261 / 246. The shadow draws separately, but stays behind the displaced boot on a living wound.
 
 **Reproduction.** `cast_mulroney_lineup.tscn` uses the ordinary cast lineup and actual formation boss. `cast_mulroney_poses.tscn` checks the displayed texture, octant and row. Both read `GTAI_CAST_OUT`, `GTAI_CAST_PITCH` and `GTAI_CAST_PPM`. The feet capture uses `GTAI_CAST_PREVIEW=sergeant_mulroney` and `node tools/art/cast_feet.mjs <output-directory> 32 sergeant_mulroney` (also run at 64). The preview enables only the in-memory row. Source sheets, cutter, matte checks, viewport crops and sole tracks are in `gtai-art/foes-n26/mulroney/`. The final hashes match the eight entries beginning at line 2668 of `steam/ai-provenance/2026-11.jsonl`. [64 px/m close film](<C:/Users/kazda/kiro/gtai-masters/n26/cast/mulroney_close_64.mp4>) · [32 px/m fight](<C:/Users/kazda/kiro/gtai-masters/n26/cast/mulroney_fight_32.mp4>)
+
+## Appliance warden (Peg Dolan) after the card landed (n27, row `enabled: false`)
+
+The card row, the anchored eight-row walk, the padded cells and the catch rows are in code and unit-tested
+(`test_cast_warden.gd`: catch holds only the successful warden and recovers on release; both hosts select
+the registered eight and survive a reversal). The row stays **`enabled: false`**: the checklist was not
+measured in this call, so nothing below is claimed as a pass.
+
+| Point | State |
+|---|---|
+| Body jump (walk, stop, turn, reversal) | NOT MEASURED |
+| 64 px/m edge, each sheet (walk, attack, hit, fall, both pitches) | NOT MEASURED |
+| Size at 32 px/m 70 degrees against the patrol cop and Rivet | NOT MEASURED |
+| Wound contact (boot on the shadow during a hit) | NOT MEASURED |
+| Catch view in the live prologue | BLOCKED: the yard must call `FoeWardenCardView.set_catch` (see JOURNAL) |
+| Dye and vector pole double-draw | BLOCKED: the yard must switch both off when her card is on |
+| `cast_warden_lineup` capture | FAILS: `Rivet empty or clipped` at 32 px/m 70 degrees on this machine, not diagnosed |
