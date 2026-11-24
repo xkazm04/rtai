@@ -70,3 +70,9 @@ func test_boss_cuts_earn_per_boss_cut_and_the_cap_holds() -> void:
 	bond.record(&"kerf", 0, 0, 100)
 	assert_eq(bond.value(&"kerf"), table.master_at)
 	assert_true(bond.ready(&"kerf"))
+
+
+func test_the_only_deployed_ghost_is_found_by_last_deployed_mastered() -> void:
+	bond.record(&"ohm", 30, 0)
+	assert_true(bond.master(&"ohm"))
+	assert_eq(bond.last_deployed_mastered(), &"ohm")
