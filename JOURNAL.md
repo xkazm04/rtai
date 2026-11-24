@@ -158,3 +158,14 @@
   final2), re-wire, re-measure; commit if run <= 7. Fallback DECISION if it still fails by ~21:25: commit walk-only
   (drop the run8 png, its provenance line and its rows so the run stays the stop-gap) and say so; never leave the files
   uncommitted past session 4. Then part B Gloria brass as in the 20:22 NEXT. IMAGES 15/60. No builder running now.
+- 20:30 BUILDER RUNNING n28-07e-molotov-slip since 20:30 (in-session, diagnosis only, commits nothing, END 20:45; its
+  result goes to `gtai-art/rivet-n28/molotov/STATE.md` "Next"). If this session ends first, read that file.
+- 20:35 BUILDER n28-07e-molotov-slip 5 n/a accepted (diagnosis + fix, uncommitted): cause = run row 1 (the strip row
+  the foot-slide lane reads) had soles shifted sideways ~14 px in 6 cells; the earlier "unchanged" re-measure was a stale
+  texture (a recapture does not re-import: always `--import` before a recapture). final4 = donor legs under the edited
+  arms in those 6 cells, installed in the tree; run step 6.03/8.93 cm (rifle 6.69/8.93), walk hold 0.43/1.56. Provenance
+  line updated. Not yet: the 64 px/m candidate capture, my look at the row-1 seam, evidence md, commit.
+- 20:36 NEXT (session 4): part A of n28-08 shrinks to: `--import`, `capture28.py molotov candidate`, the director looks
+  at run row 1 at 64 px/m for a seam or floating boot, `run_unit.mjs --changed`, evidence md + frames.json, commit the
+  molotov files listed at 20:31 (all still UNCOMMITTED in the tree) per path. Then part B Gloria brass (20:22 NEXT).
+  No builder running at session end.
