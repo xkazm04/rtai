@@ -51,3 +51,12 @@ func test_a_turned_round_marks_itself_so_it_draws_no_red_flash() -> void:
 	assert_true(PlayerDeflect.send_back(arena, s, Vector2.RIGHT), "the round is turned")
 	assert_true(s.from_rivet, "it now belongs to Rivet, so BareGunFx draws it")
 	assert_true(s.has_meta(PlayerDeflect.TURNED), "and carries the marker that skips the flash")
+
+
+func test_the_bore_flash_is_for_a_fresh_round_inside_the_flash_ticks_only() -> void:
+	var s: Shot = _rifle_round(_arena())
+	assert_true(BareGunFx.flashes(s, 0), "a fresh round flashes")
+	assert_true(BareGunFx.flashes(s, WeaponFxArt.FLASH_TICKS), "the last flash tick still flashes")
+	assert_false(BareGunFx.flashes(s, WeaponFxArt.FLASH_TICKS + 1), "after it, no flash")
+	s.set_meta(PlayerDeflect.TURNED, true)
+	assert_false(BareGunFx.flashes(s, 0), "a turned round never flashes: red is blood only")
