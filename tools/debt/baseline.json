@@ -473,7 +473,8 @@
         "2026-11-23: --skip-prologue for n25 path (files_past_soft_cap 67 -> 67)",
         "2026-11-23: merge of n24 and n25 lanes: launch_args.gd carries both runs' flags (221 lines) (files_past_soft_cap 67 -> 65)",
         "2026-11-23: --cast-patrol-feet for n26 cast (files_past_soft_cap 65 -> 65)",
-        "2026-11-23: --cast-mulroney-trace for n26 cast (files_past_soft_cap 65 -> 65)"
+        "2026-11-23: --cast-mulroney-trace for n26 cast (files_past_soft_cap 65 -> 65)",
+        "2026-11-24: prologue_command_view.gd 244 lines: its draw geometry, cues and switches are pure static helpers so tests can kill planted faults (n27-04); split later if it grows (files_past_soft_cap 65 -> 66)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -483,6 +484,7 @@
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
         "project/boot/launch_args.gd": 223,
+        "project/boot/prologue/prologue_command_view.gd": 244,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,
@@ -542,7 +544,7 @@
         "project/tests/unit/test_gun_fx.gd": 213,
         "project/tests/unit/test_weapon_art.gd": 223
       },
-      "total": 65
+      "total": 66
     },
     "lane_named_dev_dirs": {
       "accepted": [
