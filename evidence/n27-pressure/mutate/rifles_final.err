@@ -1,0 +1,12 @@
+mutate: worktree C:\Users\kazda\AppData\Local\Temp\gtai-mutate-9001fcc8 at a6d5f71b (reused)
+mutate: 8/8 mutant(s); baseline run of test_pressure_takes
+mutate: baseline green in 75.2 s; per-mutant timeout 228 s
+mutate: [1/8] dev/gauntlet/pressure_rifles.gd:41 literal  36 -> 37  killed  (33.9 s)
+mutate: [2/8] dev/gauntlet/pressure_rifles.gd:41 literal  180 -> 181  survived  (28.2 s)
+mutate: [3/8] dev/gauntlet/pressure_rifles.gd:42 literal  1 -> 0  killed  (26.6 s)
+mutate: [4/8] dev/gauntlet/pressure_rifles.gd:42 literal  2 -> 3  survived  (29.6 s)
+mutate: [5/8] dev/gauntlet/pressure_rifles.gd:42 literal  6 -> 7  killed  (32.3 s)
+mutate: [6/8] dev/gauntlet/pressure_rifles.gd:43 literal  18 -> 19  killed  (23.8 s)
+mutate: [7/8] dev/gauntlet/pressure_rifles.gd:43 literal  9 -> 10  killed  (23.7 s)
+mutate: [8/8] dev/gauntlet/pressure_rifles.gd:81 arith  / -> *  survived  (26.1 s)
+mutate: wrote build/mutate/dev-gauntlet-pressure_rifles.json

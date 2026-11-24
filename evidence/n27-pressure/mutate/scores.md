@@ -42,3 +42,23 @@ After adding the pin for line 83 and `direct >= 1` in the circle test (commit 72
 
 Killed: line 39 `fan_rad 0.5 -> 1.5`, line 40 `reactive = true -> false`, line 42 `1 if spaced -> 0` (the spaced salvo of one round), line 71 `_hp.append(cop.hp)` deleted.
 Survivors, all in the guard or shipped-pair values the new tests do not pin: line 41 `beat_ticks` guard 180 -> 181 (equivalent for the share), line 42 sword pair `2 -> 3` (the shipped pair test only checks that arrivals come closer than 34 ticks, which a triple also does), line 42 guard salvo `6 -> 7`, line 43 guard `gap_ticks 9 -> 10`, line 76 `tick - 45 -> tick + 45` and `45 -> 46` (the take start offset: only shifts every beat, equivalent for the counts). A test pinning `blade6`'s `fired == 130` and the guard's salvo would kill the pair and salvo survivors; not added in this call.
+
+## 3d. `dev/gauntlet/pressure_pair.gd`, the full 12-mutant sample (n27 pressure call 5)
+
+`--max=12 --tests=test_pressure_takes` at HEAD a6d5f71b8 (12 sampled of 82 mutants; 304 s, JSON in `pair_final.json`): **9 / 12 killed (75.0 %)**. This replaces call 4's estimate "at least 9 / 12"; the measured score matches it.
+
+Survivors:
+
+- line 43 `at + Vector2(-RADIUS_M, 0)` `+ -> -`: Rivet starts on the mirror side of the circle; the circle is symmetric, so equivalent.
+- line 73 `first_launch > 0 -> >=`: a tick is never 0 at that point; equivalent.
+- line 107 `dealt <= 0.0 -> 1.0`: differs only for a blast that takes under 1 HP; no take produces one. A test would need to feed `PressurePair` a sub-1-HP blast directly.
+
+## 3e. `dev/gauntlet/pressure_rifles.gd`, lines 41-43 and 81-82 after the pinning test (n27 pressure call 5)
+
+New test `test_rifle_takes_fire_their_pinned_counts_and_spacing` (commit a6d5f71b8): seed 1 `guard6` fired 78 and `blade6` fired 130 (both read from `takes/seeds.json`), and the closest round arrivals 9 and 18 ticks apart. `--lines=41-43,81-82 --max=10 --tests=test_pressure_takes` at HEAD a6d5f71b8 (only 8 mutants exist in those lines; 304 s, JSON in `rifles_final.json`): **5 / 8 killed (62.5 %)**, up from 4 / 10 in 3c. Now killed: guard salvo `6 -> 7` (line 42), guard `gap_ticks 9 -> 10` (line 43), sword `gap_ticks 18 -> 19`, `beat_ticks 36 -> 37`, spaced salvo `1 -> 0`.
+
+Survivors:
+
+- line 41 guard `beat_ticks 180 -> 181`: shifts each later salvo by one tick per beat; the counts and spacing do not change. Equivalent for what the tests read.
+- line 42 sword pair `2 -> 3`: equivalent. With a 36-tick beat and 18-tick gap only two rounds fit before the next beat (`beat < salvo * gap_ticks` is already true at beat 18 and false from 36), so a salvo of 3 fires the same two rounds.
+- line 81 `beat / gap_ticks -> beat * gap_ticks` (the shipped rotation): every round then comes from the same rifleman (the multiples of 9 and 18 squared are divisible by 3); no test asserts which shooter fired. A test would need to count rounds per shooter (e.g. each of the three takes its share); not added, it needs a new accessor in dev code.
