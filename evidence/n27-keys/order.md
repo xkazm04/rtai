@@ -78,3 +78,38 @@ chip lit; Rivet in the sedan at 37.5 s. The strip at lower left read 1 2 3 4 = D
 Rivet was on screen throughout (in the car at the end).
 Stills: `ghost_order_keys_64.png` (tick 402, Dent apparition, strip, cap "1 Dent"), `ghost_order_before_after.png`
 (n26 strip crop left, n27 right); `frames.json` lists the film first.
+
+## Mutate (chip numbers)
+
+Commands (HEAD `f6f9ee38`, then `c966e5f8f`; tests `test_ghost_chip_number,test_ghost_form_hud`):
+`node tools/mutate/mutate.mjs --file=project/features/souls/ghost_chip_number.gd --max=12 --tests=...`,
+the same with `--lines=17,18` after the new test, and
+`--file=project/features/souls/ghost_form_hud.gd --lines=90,92,145-146 --max=8 --tests=...`.
+
+**ghost_chip_number.gd, first run: 33.3% = killed 4 / (killed 4 + survived 8)** (12 of 31 sampled, 0 timeout, 0 invalid, 715 s).
+The one existing test only bounded the plate (`plate.size.y < chip_r*2`, `size.x < gap*0.6`), so exact geometry was unpinned.
+Survivors:
+
+| line | change | what it changes | verdict |
+|---|---|---|---|
+| 17 | `*` -> `/` (one of the two `PAD * 2.0`/`h * 0.62` terms) | plate size | real gap, fixed |
+| 17 | `2.0` -> `3.0` (PAD margin on one axis) | plate size | real gap, fixed |
+| 18 | `box * 0.5` -> `box / 0.5`-style (`*` -> `/`) | plate centre | real gap, fixed |
+| 29 | delete `box.set_border_width_all(2)` | plate border drawn | draw-only, not covered |
+| 34 | `-` -> `+` in `at.x - w * 0.5` | digit x origin | draw-only, not covered |
+| 34 | `0.5` -> `1.5` (x2, `w * 0.5` and the ascent/descent half) | digit origin | draw-only, not covered |
+| 39 | `OUTLINE_PX`-adjacent literal `1` -> `0` in `draw_string(..., -1, size, PAPER)` line | draw call argument | draw-only, not covered |
+
+Fix: `test_plate_size_and_centre_follow_the_label_exactly` in `project/tests/unit/test_ghost_chip_number.gd`
+(commit `c966e5f8f`): exact size from `font.get_height`/`get_string_size` and `PAD`, centre equals `at`, a long key name widens the plate, height is label independent.
+`run_unit --select=test_ghost_chip_number,test_ghost_form_hud`: 11 passed, 0 failed.
+
+**ghost_chip_number.gd, rerun on lines 17,18 after the test: 100.0% = killed 12 / (killed 12 + survived 0)** (12 of 13, 291 s). Lines 17 and 18 are now fully pinned.
+The remaining survivors (lines 29, 34, 39) sit in `draw()`, which paints on a CanvasItem and returns nothing; killing them needs a draw-call capture harness. I did not build one in the time. Overall estimate for the file: lines 17-18 pinned, the draw body unpinned.
+
+**ghost_form_hud.gd (lines 90, 92, 145-146 from `403a31a8f`): 25.0% = killed 1 / (killed 1 + survived 3)**, 2 invalid (the two `delete` mutants do not compile as `pass` statements in these positions), 0 timeout, 154 s.
+Survivors, all in `_draw()` line 90, `var at: Vector2 = c + Vector2(-1.2, 1.15) * l.chip_r` (where the number plate sits on the avatar):
+`+` -> `-` (chip centre minus the offset), `1.15` -> `2.15` (vertical offset), `*` -> `/` (offset scale by chip_r).
+Only `1.2` -> `2.2` was killed. Real gap (placement of the number is unpinned), but a test needs either a draw-call capture or the offset hoisted to a testable function; that is a product-code change (forbidden here) so only reported.
+
+Not done: no test for the draw-only survivors; no product code touched.
