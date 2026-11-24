@@ -37,6 +37,7 @@
       "p70/gatling": 68,
       "p70/gloria": 86.7,
       "p70/hand_cannon": 69.7,
+      "p70/homing_shard": 78.7,
       "p70/katana": 66,
       "p70/machine_pistol": 73.7,
       "p70/pistol": 76,
@@ -267,6 +268,10 @@
       "p70/rivet_walk_eq_hand_cannon.png": [
         25,
         30
+      ],
+      "p70/rivet_walk_eq_homing_shard.png": [
+        25,
+        34
       ],
       "p70/rivet_walk_eq_machine_pistol.png": [
         21,
