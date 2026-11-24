@@ -1,6 +1,6 @@
 extends GutTest
 
-const SLOT_FORMS: Array[StringName] = [&"dent", &"kerf", &"ohm", &"tonnage"]
+const SLOT_FORMS: Array[StringName] = [&"dent", &"tonnage", &"kerf", &"ohm"]
 
 var ctx: WorldContext
 var stage: CollectCallStage
@@ -64,6 +64,39 @@ func test_each_number_aims_and_releases_its_own_form() -> void:
 		assert_eq(deploy.strike.release_form, id)
 		assert_eq(deploy.cooldowns[id], deploy.strike.attacks.deploy[id].cooldown_ticks)
 		assert_eq(pilot.ghosts.forms.selected, selected)
+
+
+func test_each_number_deploys_the_named_ghost_through_the_real_press_path() -> void:
+	var named: Dictionary[int, StringName] = {1: &"dent", 2: &"tonnage", 3: &"kerf", 4: &"ohm"}
+	for slot: int in named:
+		_reset_pilot()
+		_drive(_key(slot))
+		assert_eq(deploy.form, named[slot], "key %d" % slot)
+		assert_eq(deploy.phase, GhostDeploy.Phase.AIMING)
+		var table: GhostFormTable = pilot.ghosts.forms.table
+		assert_eq(GhostNumberKeys.action(table, named[slot]), GhostNumberKeys.ACTIONS[slot - 1])
+	assert_eq(
+		pilot.ghosts.forms.table.deploy_slots,
+		[&"dent", &"tonnage", &"kerf", &"ohm"] as Array[StringName]
+	)
+
+
+func _table_with_slots(slots: Array) -> GhostFormTable:
+	var raw: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(GhostFormTable.PATH))
+	raw["deploy_slots"] = slots
+	return GhostFormTable.from_table(
+		DataTable.parse(JSON.stringify(raw), GhostFormTable.SCHEMA, "ghost_forms.json")
+	)
+
+
+func test_bad_deploy_slots_are_load_errors() -> void:
+	assert_true(_table_with_slots(["dent", "tonnage", "kerf", "ohm"]).ok())
+	assert_false(_table_with_slots(["dent", "tonnage", "kerf", "nope"]).ok())
+	assert_false(_table_with_slots(["dent", "dent", "kerf", "ohm"]).ok())
+	assert_false(_table_with_slots(["dent", "tonnage", "kerf"]).ok())
+	var errors: String = "; ".join(_table_with_slots(["dent", "dent", "kerf"]).errors())
+	assert_string_contains(errors, "repeats form dent")
+	assert_string_contains(errors, "needs 4 forms")
 
 
 func test_one_is_consumed_on_enter_and_exit_and_other_keys_do_nothing_inside() -> void:

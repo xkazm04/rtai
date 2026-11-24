@@ -5,7 +5,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--view", "--ppm", "--clean", "--shot", "--shot-tick", "--car-doors"
 ]
 const FIXED_FPS: int = 60
-const FORMS: Array[StringName] = [&"dent", &"kerf", &"ohm", &"tonnage"]
+const FORMS: Array[StringName] = [&"dent", &"tonnage", &"kerf", &"ohm"]
 const PARK: Vector2 = Vector2(29, -21.7)
 const MARKS: Array[Vector2] = [Vector2(31, -8), Vector2(24, -9), Vector2(14, -11), Vector2(27, -13)]
 const SIGHTS: Array[Vector2] = [Vector2(20, -15), Vector2(10, -15), Vector2(20, -10)]

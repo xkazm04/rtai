@@ -21,7 +21,7 @@ func before_each() -> void:
 	view = BotViewArena.new(stage, actions, true)
 	bot = GhostDeployBot.new(view, actions, RngRegistry.new(24))
 	ghost = stage.pilot.ghosts.deploy
-	number = 1 << actions.bit(&"ghost_deploy_3")
+	number = 1 << actions.bit(&"ghost_deploy_4")
 
 
 func _spawn(id: StringName, at: Vector2) -> Fighter:
@@ -107,7 +107,7 @@ func test_ohm_requires_a_sentry_or_two_machines_inside_the_same_radius() -> void
 
 func test_kerf_requires_an_eligible_visible_target() -> void:
 	stage.pilot.ghosts.forms.selected = &"kerf"
-	number = 1 << actions.bit(&"ghost_deploy_2")
+	number = 1 << actions.bit(&"ghost_deploy_3")
 	var cop: Fighter = _spawn(&"patrol_cop", Vector2(6, 1))
 	assert_eq(_word(bot, 1.0).buttons & number, 0)
 	var shield: Fighter = _spawn(&"shield_robot", Vector2(5, -1))
@@ -126,7 +126,7 @@ func test_tonnage_needs_three_bodies_or_a_walker_and_dent_needs_a_pair() -> void
 	var second: Fighter = _spawn(&"patrol_cop", Vector2(6, 0))
 	assert_eq(_word(bot, 1.0).buttons & number, number)
 	stage.pilot.ghosts.forms.selected = &"tonnage"
-	number = 1 << actions.bit(&"ghost_deploy_4")
+	number = 1 << actions.bit(&"ghost_deploy_2")
 	assert_eq(_word(bot, 1.0).buttons & number, 0)
 	var third: Fighter = _spawn(&"patrol_cop", Vector2(5, 1))
 	assert_eq(_word(bot, 1.0).buttons & number, number)

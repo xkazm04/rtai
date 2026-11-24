@@ -1,6 +1,7 @@
 class_name GhostNumberKeys
 extends RefCounted
-## Number slots follow the rows of ghost_forms.json. The pad has its own cycle order.
+## Number slots follow ghost_forms.json deploy_slots (1 Dent, 2 Tonnage, 3 Kerf, 4 Ohm), never the
+## row order. The pad has its own cycle order.
 
 const ACTIONS: Array[StringName] = [
 	&"ghost_deploy_1", &"ghost_deploy_2", &"ghost_deploy_3", &"ghost_deploy_4"
@@ -8,7 +9,7 @@ const ACTIONS: Array[StringName] = [
 
 
 static func action(table: GhostFormTable, id: StringName) -> StringName:
-	var slot: int = table.forms.keys().find(id)
+	var slot: int = table.deploy_slots.find(id)
 	return ACTIONS[slot] if slot >= 0 and slot < ACTIONS.size() else &""
 
 
@@ -19,9 +20,9 @@ static func hint(table: GhostFormTable, id: StringName) -> String:
 
 
 static func pressed(c: PlayerCommand, actions: PlayerActions, forms: GhostForms) -> StringName:
-	for i: int in mini(ACTIONS.size(), forms.table.forms.size()):
+	for i: int in mini(ACTIONS.size(), forms.table.deploy_slots.size()):
 		if c.was_pressed(actions, ACTIONS[i]):
-			var id: StringName = forms.table.forms.keys()[i]
+			var id: StringName = forms.table.deploy_slots[i]
 			if forms.locks.allows(forms.table, id):
 				return id
 	return &""

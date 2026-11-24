@@ -9,6 +9,8 @@ const SCHEMA: String = "gtai.ghost_forms/1"
 var forms: Dictionary[StringName, GhostFormDef] = {}
 ## The selection cycle (G / RB steps through it).
 var order: Array[StringName] = []
+## Number keys 1..4: the form each ghost_deploy_N deploys (explicit, never the row order).
+var deploy_slots: Array[StringName] = []
 var switch_ticks: int = 1
 ## story_voice: the shipped story (quest 1's sprite cast) shows the teal apparition on a whisper.
 var story_voice: bool = false
@@ -37,6 +39,8 @@ static func from_table(t: DataTable) -> GhostFormTable:
 		g.forms[f.id] = f
 	for id: Variant in t.array(t.raw, "order"):
 		g.order.append(StringName(str(id)))
+	for id: Variant in t.array(t.raw, "deploy_slots"):
+		g.deploy_slots.append(StringName(str(id)))
 	g.switch_ticks = maxi(1, PowerDef.ticks(t.num(t.raw, "switch_s")))
 	g.story_voice = t.raw.get("story_voice", false) == true
 	g.story_forms = t.raw.get("story_forms", false) == true
@@ -52,7 +56,20 @@ static func from_table(t: DataTable) -> GhostFormTable:
 	for id: StringName in g.order:
 		if not g.forms.has(id):
 			g._errors.append("ghost_forms.json: order names unknown form %s" % id)
+	g._check_slots()
 	return g
+
+
+func _check_slots() -> void:
+	var seen: Dictionary[StringName, bool] = {}
+	for id: StringName in deploy_slots:
+		if not forms.has(id):
+			_errors.append("ghost_forms.json: deploy_slots names unknown form %s" % id)
+		if seen.has(id):
+			_errors.append("ghost_forms.json: deploy_slots repeats form %s" % id)
+		seen[id] = true
+	if deploy_slots.size() != 4:
+		_errors.append("ghost_forms.json: deploy_slots needs 4 forms, has %d" % deploy_slots.size())
 
 
 func ok() -> bool:

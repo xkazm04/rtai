@@ -29,6 +29,17 @@
       ],
       "type": "object"
     },
+    "deploy_slots": {
+      "description": "number key slots 1..4: which form each ghost_deploy_N deploys; independent of the pad/G cycle `order`",
+      "items": {
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "type": "string"
+      },
+      "maxItems": 4,
+      "minItems": 4,
+      "type": "array",
+      "uniqueItems": true
+    },
     "doc": {
       "minLength": 1,
       "type": "string"
@@ -189,6 +200,7 @@
   },
   "required": [
     "bond",
+    "deploy_slots",
     "doc",
     "forms",
     "order",
