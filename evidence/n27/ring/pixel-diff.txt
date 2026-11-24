@@ -1,0 +1,3 @@
+frame 00001 (1920, 1080): differing pixels 0 bbox None
+frame 00002 (1920, 1080): differing pixels 0 bbox None
+frame 00003 (1920, 1080): differing pixels 0 bbox None
