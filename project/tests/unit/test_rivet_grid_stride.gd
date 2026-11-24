@@ -1,9 +1,12 @@
 extends GutTest
-## Exact calibration used by the pre-table grids. Independent of the JSON loader.
 
 const RUN_CYCLE_CELL: Dictionary[String, float] = {"p70": 258.0, "p55": 212.0}
 const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
 const ARMED_CYCLE_CELL: Dictionary[String, float] = {
+	"p70/molotov": 81.0,
+	"p70/ray_gun": 79.0,
+	"p70/homing_shard": 78.7,
+	"p70/mini_nuke": 71.3,
 	"p70/electro_gun": 82.3,
 	"p70/machine_pistol": 73.7,
 	"p70/hand_cannon": 69.7,
@@ -72,6 +75,10 @@ const RUN_ROW_K: Dictionary[String, float] = {
 	"p55/flamethrower/3": 0.93,
 }
 const WALK_PROFILE_TRAVEL: Dictionary[String, Vector2] = {
+	StrideMatch.ROOT + "p70/rivet_walk_eq_molotov.png": Vector2(27.5, 34.5),
+	StrideMatch.ROOT + "p70/rivet_walk_eq_ray_gun.png": Vector2(25.5, 34.5),
+	StrideMatch.ROOT + "p70/rivet_walk_eq_homing_shard.png": Vector2(25.0, 34.0),
+	StrideMatch.ROOT + "p70/rivet_walk_eq_mini_nuke.png": Vector2(22.5, 31.0),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_electro_gun.png": Vector2(26.5, 33.5),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_machine_pistol.png": Vector2(21.0, 27.0),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_hand_cannon.png": Vector2(25.0, 30.0),
@@ -188,7 +195,6 @@ func test_turn_from_profile_to_depth_carries_phase_and_steps_at_the_new_rate() -
 	assert_almost_eq(phase, 0.625, 0.00001)
 	rig.face_to = PI / 2.0
 	assert_almost_eq(RivetWalk.phase_of(rig, "p70", scale), phase, 0.00001)
-	var distance: float = rig.speed_now * SimClock.TICK_DT
-	rig.position.x += distance
-	phase += distance / (258.0 * scale)
+	rig.position.x += rig.speed_now * SimClock.TICK_DT
+	phase += rig.speed_now * SimClock.TICK_DT / (258.0 * scale)
 	assert_almost_eq(RivetWalk.phase_of(rig, "p70", scale), phase, 0.00001)

@@ -15,7 +15,7 @@
     "snap_ticks": 5
   },
   "dash": {
-    "cooldown_ticks": 40,
+    "cooldown_ticks": 24,
     "distance_m": 4.5,
     "enabled": true,
     "hold_sprints": false,
@@ -37,10 +37,14 @@
       "p70/gatling": 68,
       "p70/gloria": 86.7,
       "p70/hand_cannon": 69.7,
+      "p70/homing_shard": 78.7,
       "p70/katana": 66,
       "p70/machine_pistol": 73.7,
+      "p70/mini_nuke": 71.3,
+      "p70/molotov": 81,
       "p70/pistol": 76,
       "p70/plasma_rifle": 76,
+      "p70/ray_gun": 79,
       "p70/rocket_launcher": 84
     },
     "bare_max_cycles_s": 3.75,
@@ -268,9 +272,25 @@
         25,
         30
       ],
+      "p70/rivet_walk_eq_homing_shard.png": [
+        25,
+        34
+      ],
       "p70/rivet_walk_eq_machine_pistol.png": [
         21,
         27
+      ],
+      "p70/rivet_walk_eq_mini_nuke.png": [
+        22.5,
+        31
+      ],
+      "p70/rivet_walk_eq_molotov.png": [
+        27.5,
+        34.5
+      ],
+      "p70/rivet_walk_eq_ray_gun.png": [
+        25.5,
+        34.5
       ],
       "p70/rivet_walk_eq_rocket_launcher.png": [
         23,

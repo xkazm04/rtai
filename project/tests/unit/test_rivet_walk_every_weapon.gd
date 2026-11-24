@@ -34,7 +34,7 @@ func _check_locomotion(id: StringName) -> void:
 		rig.speed_now = 3.2 * CharacterRigs.PX_PER_M
 		var run: String = RivetWalk.ARMED_RUN + own
 		if RivetFramesGrids.held_only(id, art) or not ResourceLoader.exists(dir + run):
-			run = RivetWalk.RUN if walk == RivetWalk.STRIP else walk
+			run = RivetWalk.RUN  ## a walk sheet alone sprints on the bare run
 		assert_eq(RivetWalk.motion_path(rig, art, id), dir + run, "%s %s runs" % [art, id])
 
 

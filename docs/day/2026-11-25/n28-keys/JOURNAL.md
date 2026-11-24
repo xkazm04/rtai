@@ -1,0 +1,371 @@
+# JOURNAL lane keys, run n28 (2026-11-24 16:40 to 00:40)
+
+- 16:27 START iteration 1. Branch n28-keys at d0ab9d03a. No builder lock, no builder-calls.jsonl yet. IMAGES 0/60.
+- 16:33 DECISION keys-dash: dash.cooldown_ticks 40 -> 24. Dash 10 ticks + 24 = a 34-tick press-to-press cycle, under the
+  36-tick shortest gap between two troopers' rockets (n27-pressure REPORT section 2: 36 to 49 ticks after 10 s in seeds 3, 5),
+  with 2 ticks of margin for the reaction and any off-by-one in when the cooldown starts. Rejected 26 (cycle exactly 36, no
+  margin) and 20 (spammable faster than needed). The alternative is the one data value.
+- 16:28 BUILDER RUNNING n28-01-dash since 16:28 (node pid 26160, out evidence/briefs/n28-01-dash.out)
+- 16:33 Briefs drafted while the dash call runs: n28-02-homing-shard (sheet-sized edit test, legs-kept composite, cap 10
+  images), n28-04-gloria-brass (concept + strips + held art, cap 12), n28-05-collar-p55 (edit + collar-only composite, cap 8).
+  Gloria's own grid (part B) waits for the homing shard route verdict. The p55 run sheet audit by eye: rows 1, 2, 5, 6, 7 draw
+  the collar as rope or a knotted scarf; rows 0, 3, 4 read rigid.
+- 17:37 BUILDER n28-01-dash 69 $0.59 accepted (partial: value, test, decision line committed; full suites, after trace and
+  mutate not run, every Godot launch waited on mem-budget from 16:44).
+- 17:37 MILESTONE keys-dash 64004a59d (dash.cooldown_ticks 40 -> 24; measured shortest press to press 34 ticks by
+  test_shortest_press_to_press_gap_is_burst_plus_cooldown_and_covers_a_rocket_pair; evidence 38d76f7f7).
+- 17:37 FRICTION mem-budget 53 (the builder's Godot runs waited from 16:44 to 17:37; cap status 7132/8192 MB used at 17:37,
+  peak 9082). git show also failed once: "packfile cannot be mapped: File too large" (memory pressure).
+- 17:38 BUILDER RUNNING n28-02-homing-shard since 17:38 (node pid 11896; out evidence/briefs/n28-02-homing-shard.out).
+  Brief: Part 0 = the dash checks (focused unit select + after trace, 15 min max), then the homing shard test (sheet-sized
+  edits of the plasma rifle walk/run, legs-kept composite, ship only if all 16 rows pass; commit by 18:35, END 18:52).
+- 17:40 NEXT: (1) when n28-02 ends (lock gone): read its report and diff, look at grid_homing_shard_64.png myself
+  (hands on the weapon, rigid collar, no extra limb, sole travel = donor); log BUILDER line. (2) If it shipped: brief the
+  next four weapons in the route it recommends (two weapons per call if each took < 30 min; mini-nuke, molotov, plasma
+  sword, ray gun), image budget 60 - used. If it failed: decide per-row edits for the homing shard only if the images left
+  allow Gloria (12) + collar (8). (3) Gloria brass brief ready: evidence/briefs/n28-04-gloria-brass.md ({COMMIT1},
+  {COMMIT2}, {END} placeholders); collar brief ready: n28-05-collar-p55.md ({COMMIT}, {END}). Gloria's own grid (part B)
+  brief not written yet: same route as the weapons, donor = the pistol's p70 walk/run sheets, then flip
+  walk_grid.by_weapon.gloria. (4) Dash film with two troopers still owed (pressure_dash_trace after column, a 32 px/m clip).
+  (5) Watch the RAM cap (GTAI_CAP_STATUS): at 17:37 it was 7.1/8.2 GB used; every Godot waits.
+  Last new work committed by 22:40, final gate started by 22:55.
+- 17:42 FRICTION self: committed JOURNAL.md (781177fbc) with --no-verify by mistake; docs-only path, no code. From here every commit runs the hook.
+
+## Session 2 (18:01, iteration 2, BUILD)
+- 18:01 START. n28-02-homing-shard ended 17:44 exit 1 after 336 s, $0.64: "You've hit your weekly limit · resets Nov 25,
+  10pm". All four lanes lost builder.mjs at the same minute (yard's journal 17:44). Nothing committed by it; its round
+  `gtai-art/rivet-n28/homing_shard/` holds Edit A (walk + run sheet edits, 2 images) and a cut of the walk sheet.
+- 18:01 BLOCKED builder: builder.mjs (Sonnet account) out until Nov 25 22:00.
+- 18:01 BUILDER n28-02-homing-shard 6 $0.64 abandoned (weekly limit). IMAGES 2/60.
+- 18:03 DECISION builder fallback (same as yard 17:55): an in-session Sonnet subagent (the owner's builder model) builds
+  from the brief files; I keep directing, reviewing and gating and never edit product files. Calls end 15 min before my
+  session stop (19:31). Rejected: me editing product files (owner's rule), stopping the lane (never block), Codex/Astra
+  (forbidden tonight).
+- 18:03 Looked at cand1/montage_walk.jpg: raw walk cells read right (shard in hands, donor legs); legs-kept cells keep the
+  plasma rifle's stock below the seam (fails "no remnant"). Run sheet edit at thumbnail: strides as donor; back rows may
+  draw the collar twisted: check at full size.
+- 18:04 BUILDER RUNNING n28-02b-homing-shard-finish since 18:04 (in-session Sonnet subagent, brief
+  evidence/briefs/n28-02b-homing-shard-finish.md, grids commit by 18:50, END 19:12). Cap 3.1/8.2 GB at 18:01.
+- 18:03 Dash check (me, while the builder does images): `node tools/tests/run_unit.mjs --select=test_pressure_takes,test_bot_dash,test_player_motion_dash`
+  -> "22 passed, 0 failed" (26.7 s). `pressure_dash_trace --seeds=3,5,1` at cooldown 24 -> evidence/n28-keys/dash_trace_after.md:
+  HP lost after 10 s seed 3: 2.7 (n27 at 40: 48.5), seed 5: 1.5 (40.5), seed 1: 3.4 (3.4). The dash now covers the pair.
+- 18:24 BUILDER n28-02b-homing-shard-finish 21 n/a accepted (3ea5cf48c grids, 6d27d55a0 evidence). IMAGES 2/60 (Edit A
+  only, 16/16 rows raw). I looked at grid_homing_shard_64.png: shard in both hands every facing, donor legs and soles, no
+  rifle remnant, collar as the donor's. foot_slide 32 px/m walk 1.09 / run 5.44 cm (plasma rifle 5.63 / 4.35, measured at the
+  rig film's own lane speeds). Not done: temp-worktree before (it flipped by_weapon in place and reverted), row labels garbled.
+  Mutate: no code changed (art + data rows), none owed.
+- 18:25 DECISION weapon donors: plasma rifle sheets for all four (the owner's words), image 2 = each weapon's equipped
+  strip. Mini-nuke + ray gun first (rifle grip); molotov + plasma sword next call, with the builder's note that one-hand
+  weapons may want the pistol/katana donor if the rifle route fails their bars.
+- 18:26 BUILDER RUNNING n28-03-nuke-ray since 18:26 (in-session Sonnet subagent, brief evidence/briefs/n28-03-nuke-ray.md,
+  END 19:14).
+- 19:07 BUILDER n28-03-nuke-ray 42 n/a accepted-partial: mini-nuke 2f5dde79d (grids) + 82760ae9e (evidence); ray gun not
+  shipped (its walk edit never returned, the run edit stalled on the copy: image under ~/.codex/generated_images, see the
+  round STATE.md). IMAGES 6/60 (homing 2, mini-nuke 2, ray gun 2 attempted).
+- 19:07 I looked at grid_mini_nuke_64.png: the striped tube in both hands in all 8 facings, donor legs and soles, collar as
+  the plasma rifle's. Missing: the stop-gap column (owed, brief n28-03b). Row labels overprint.
+- 19:08 DECISION mini-nuke run foot slide 7.62 cm vs the 7 cm bar: accepted. The legs are the donor's (sole y 0 px, raw
+  cut), the number comes from the rig film's profile lane at 3.2 m/s (not the game's 9.3), where the donor itself peaks
+  at 7.69 and the donor's walk (5.63) is worse than the edit's (1.52): the measure is noisy at that lane speed, not a
+  visible slide. The alternative is one data value: `walk_grid.by_weapon.mini_nuke: "bare_claw"` puts it back on the
+  stop-gap. Goes to REPORT "Calls for the owner" with the clip.
+- 19:08 Observation: in the p70 back rows (facings 4, 7) the shipped plasma rifle sheet's collar has spiral-looking stripes;
+  the edits copy it. The owner's pick names p55 only; noted for REPORT, not changed.
+- 19:09 FRICTION builder in-session: a subagent dies with my session, so no call can start after ~19:10 in a session that
+  ends 19:31. Each session hosts about one 60-minute call.
+- 19:10 NEXT (session 3): (1) no builder is running (both in-session calls ended). (2) Launch the ray gun finish
+  (evidence/briefs/n28-03b-ray-gun.md, fill {END}/{COMMIT1}; ~35 min), then molotov + sword
+  (evidence/briefs/n28-06-molotov-sword.md, fill {END}/{COMMIT1}/{COMMIT2}/{CLIP}). One call at a time, as an in-session
+  Sonnet subagent (Agent tool, model sonnet, background), each ending 15 min before the session stop. (3) Then Gloria brass
+  (evidence/briefs/n28-04-gloria-brass.md: add the in-session header "cd to the worktree in every command", fill
+  placeholders), then the p55 collar (n28-05-collar-p55.md), then Gloria's own grid (brief not written: the same sheet route
+  from the pistol's p70 sheets, then flip walk_grid.by_weapon.gloria). Order by the owner: weapons, Gloria, collar.
+  If time is short, the collar (8 images, art-only composite) is cheaper than Gloria's grid. (4) Dash: milestone done,
+  trace after in 4240207bf; combat lane merged 64004a59d for its two-trooper take: cite their film in REPORT.
+  Last new work committed by 22:40, final gate (`node tools/gate/run.mjs --rev=HEAD`) started by 22:55.
+- 19:08 BUILDER RUNNING n28-03c-ray-prep since 19:08 (in-session Sonnet subagent, prep only: copy the run edit, fix the
+  prompt, one walk edit, cut; no repo change; END 19:25). If the session is replaced first: read the round STATE.md
+  (`gtai-art/rivet-n28/ray_gun/STATE.md`) for its state; it commits nothing.
+- 19:23 BUILDER n28-03c-ray-prep 15 n/a accepted (prep only): run edit copied to the round's out/; a ray-gun-only
+  scripts/mkjobs.py with the fixed one-hand prompt; jobs.json = walk job only. The walk edit did not return in 12 min
+  (second time: 18:46 and 19:08); its processes freed by PID. IMAGES 7/60 counting attempts.
+- 19:23 FRICTION image tool: the ray gun walk-sheet edit has not returned twice (12-15 min each, nothing under
+  ~/.codex/generated_images). If it fails a third time in session 3: try a 4-row half sheet (rows 0-3, then 4-7) instead.
+- 19:24 NEXT (session 3): no builder running. Start with brief n28-03b-ray-gun.md (round STATE.md "Next" line has the
+  exact commands), then n28-06-molotov-sword.md, then Gloria brass, collar p55, Gloria's grid; see 19:10 NEXT for the rest.
+- 19:23 Session 3 start. No builder running (lock empty, last builder.mjs call 17:44). Machine-wide, the newest image under
+  ~/.codex/generated_images is 18:50 (the ray gun run edit).
+- 19:24 BUILDER RUNNING n28-07-ray-molotov since 19:24 (in-session Sonnet subagent, brief
+  evidence/briefs/n28-07-ray-molotov.md: ray gun walk by half sheets, pistol-sheet fallback, mini-nuke stop-gap column, then
+  molotov; ray gun commit by 20:02, molotov by 20:28, END 20:35). It commits nothing if no image returns.
+- 19:24 Combat's 19:12 finding (NEED keys): "the ATTACK CLAW prompt box covers chip numbers 1-3 in the game itself". Checked:
+  that box is the bot film's act caption (`project/dev/test_player/gauntlet_bot_film.gd` `_caption()`, `_label.text =
+  tr(bot.act())`), dev-only, not in the shipped game; their still is from that film. Not a keys fault; the caption is
+  combat's dev film. The real keys part: chip 1's plate sits at the left screen edge (the known 4 px overhang, brief item 5).
+- 19:25 Briefs n28-04 (Gloria brass) and n28-05 (collar p55) now carry the in-session builder header; their {COMMIT}/{END}
+  placeholders are filled by the session that launches them. Time plan: session 4 (~20:52-22:22) hosts ONE call of about
+  70 min; session 5 starts the final gate by 22:55. Image jobs are 4-15 min each, so a 12-image Gloria call will not fit:
+  give it concept (<=2) + p70 strips (<=3) + held art, p55 strips only if time remains. Idea for the next session: have
+  a builder start the next weapon's image job detached (PowerShell Start-Process on gen.mjs) before it ends, so the image
+  waits for the next call instead of the next call waiting for it.
+- 20:11 BUILDER n28-07-ray-molotov 47 n/a accepted-partial: ray gun 011e504f6 (grids) + 7e6918fd3 (evidence; mini-nuke
+  stop-gap column added). Molotov not shipped (run row 1 edit 30 % short, foot_slide run 10.77 cm > 7); round resumable.
+  IMAGES 7 this call (ray gun 4 + the run sheet of session 2, molotov 2) -> 13/60 counting attempts.
+- 20:10 I looked at grid_ray_gun_64.png: the ray gun in one hand in all 8 facings walking and sprinting, donor legs and
+  soles, collar as the plasma rifle's, no rifle remnant; clearer than the stop-gap's ghosted gun. foot_slide 32 px/m walk
+  0.39/1.56 cm (rifle 0.60/1.56), run 6.35/8.26 (rifle 6.69/8.93).
+- 20:10 DECISION ray gun leg IoU: shipped with walk rows 1, 2 at 0.80/0.81 and run rows 1, 2, 6 at 0.82-0.84 against the
+  0.85 bar; sole y exact on 96/96 cells and foot_slide better than the donor, so the misses are pixel drift inside the boot
+  outline, not stride. Alternative is one data value (`walk_grid.by_weapon.ray_gun` back to the stop-gap). For REPORT.
+- 20:10 FRICTION image tool: codex writes the image after 4-6 min, then never copies it to out/ and never exits; the
+  builder copies by hand. The full-sheet ray gun walk produced nothing (twice); half sheets worked.
+- 20:10 BUILDER RUNNING n28-07b-molotov-run since 20:10 (in-session, one run-sheet re-edit, commit only if passes by
+  20:22, END 20:37).
+- 20:11 I looked at grid_molotov_64.png (hybrid, not shipped): the lit bottle in one claw in all 8 facings, the other claw
+  free, flame amber only, collar rigid, donor legs. The look is right; only run row 1's stride length fails (foot_slide).
+- 20:18 BUILDER n28-07b-molotov-run 8 n/a bounced: the re-edited run sheet draws row 1 short again (raw leg IoU
+  0.55-0.89; a prompt line does not fix it). Nothing committed. IMAGES 14/60.
+- 20:19 BUILDER RUNNING n28-07c-molotov-row1 since 20:19 (in-session, prep only: one row-1 image, cut, IoU, composite
+  into final2; commits nothing; END 20:37).
+- 20:22 NEXT (session 4, ~20:52-22:22; it hosts one builder call of ~70 min, END by 22:07; session 5 commits only
+  until 22:40, starts the final gate `node tools/gate/run.mjs --rev=HEAD` by 22:55, then films + REPORT):
+  (1) Read the n28-07c report in `gtai-art/rivet-n28/molotov/STATE.md` (that call commits nothing; no builder runs after
+  20:37). (2) One call, brief to write (n28-08): part A finish the molotov from STATE "Next" (wire, capture, foot_slide,
+  commit by ~21:25); if row 1 still fails, DECISION: ship row 1 from the donor-leg hybrid only if foot_slide <= 7, else
+  leave the molotov on the stop-gap and say so. Part B Gloria brass: brief n28-04 trimmed to concept (<= 2 images) + p70
+  held strips (<= 3) + held art; start the concept image in the background while part A's Godot work runs. Fill
+  {COMMIT1}/{COMMIT2}/{END}. (3) Not reachable tonight at this image speed (4-6 min per image, one call per session):
+  plasma sword grid, Gloria's own walk grid, the p55 collar, Gloria p55 strips: REPORT "Next steps" with the round
+  states. If session 5 has room before 22:40, the p55 collar (n28-05, art-only composite) is the cheapest of them.
+  (4) Five-weapon 32 px/m clip (only shipped grids: homing shard, mini-nuke, ray gun, molotov if shipped) after the gate.
+  Ledger so far: BUILDER n28-07 47 min accepted-partial, n28-07b 8 min bounced, n28-07c running. IMAGES 15/60 with 07c.
+- 20:25 BUILDER n28-07c-molotov-row1 7 n/a accepted (prep): a one-row edit fixed run row 1 (leg IoU 0.844-0.887 per cell,
+  was 0.55-0.74); composite `gtai-art/rivet-n28/molotov/final3/`. IMAGES 15/60. Lesson: a row the full-sheet edit draws
+  short is fixed by a one-row job, not by a prompt line.
+- 20:26 BUILDER RUNNING n28-07d-molotov-wire since 20:26 (in-session: wire final3, capture, foot_slide; commits only if
+  it can start by 20:31, else leaves wired files UNCOMMITTED in the tree, listed in molotov/STATE.md; END 20:44).
+  Session 4: if `git status` shows uncommitted molotov files, check STATE.md numbers and have the next call commit them.
+- 20:31 BUILDER n28-07d-molotov-wire 5 n/a bounced (not committed): walk passes (hold 0.43/1.56 cm, rifle 0.60/1.56), run
+  fails (step 10.94/20.31 cm, rifle 6.69/8.93), the same number as before the row-1 fix (10.77/20.3), so row 1 is NOT
+  what the foot-slide lane measures or not the cause. Per-column output: build/fs_molotov.json.
+- 20:31 UNCOMMITTED in the tree (left by n28-07d, on purpose): p70 `rivet_walk_eq_molotov.png(.import)`,
+  `rivet_run8_eq_molotov.png(.import)`, `rivet_motion.json` (molotov rows), `test_rivet_grid_stride.gd` (3 pins),
+  `steam/ai-provenance/2026-11.jsonl` (2 lines). run_unit --changed 714 passed with them.
+- 20:32 NEXT (session 4, replaces the 20:22 NEXT item 2 part A): first brief (n28-08) part A = molotov: from
+  build/fs_molotov.json find which strip row/cells the 32 px/m foot-slide lane reads and why it slips (compare the
+  ray gun's wiring: it KEPT run_row_k at 1 for the flagged rows, this one dropped them; check the run cells of that row
+  against the donor's legs); fix by putting the donor's legs under the edited arms in the slipping cells (82 % seam as
+  final2), re-wire, re-measure; commit if run <= 7. Fallback DECISION if it still fails by ~21:25: commit walk-only
+  (drop the run8 png, its provenance line and its rows so the run stays the stop-gap) and say so; never leave the files
+  uncommitted past session 4. Then part B Gloria brass as in the 20:22 NEXT. IMAGES 15/60. No builder running now.
+- 20:30 BUILDER RUNNING n28-07e-molotov-slip since 20:30 (in-session, diagnosis only, commits nothing, END 20:45; its
+  result goes to `gtai-art/rivet-n28/molotov/STATE.md` "Next"). If this session ends first, read that file.
+- 20:32 BUILDER n28-07e-molotov-slip 5 n/a accepted (diagnosis + fix, uncommitted): cause = run row 1 (the strip row
+  the foot-slide lane reads) had soles shifted sideways ~14 px in 6 cells; the earlier "unchanged" re-measure was a stale
+  texture (a recapture does not re-import: always `--import` before a recapture). final4 = donor legs under the edited
+  arms in those 6 cells, installed in the tree; run step 6.03/8.93 cm (rifle 6.69/8.93), walk hold 0.43/1.56. Provenance
+  line updated. Not yet: the 64 px/m candidate capture, my look at the row-1 seam, evidence md, commit.
+- 20:33 NEXT (session 4): part A of n28-08 shrinks to: `--import`, `capture28.py molotov candidate`, the director looks
+  at run row 1 at 64 px/m for a seam or floating boot, `run_unit.mjs --changed`, evidence md + frames.json, commit the
+  molotov files listed at 20:31 (all still UNCOMMITTED in the tree) per path. Then part B Gloria brass (20:22 NEXT).
+  No builder running at session end.
+- 20:34 BUILDER RUNNING n28-07f-molotov-capture since 20:34 (in-session, capture + grid stills + row-1 crop, no commit, END 20:46).
+- 20:35 BUILDER n28-07f-molotov-capture 9 n/a accepted (capture only): grids re-rendered, crop
+  `gtai-masters/n28/keys/molotov_run_row1_crop.png`.
+- 20:36 I looked at molotov_run_row1_crop.png (4x, run row 1, new over donor): **REJECT final4 run row 1.** The donor-leg
+  composite shows a hard horizontal cut at the seam in cols 2, 3, 4, 6, 8; smeared fragments beside the boots in cols 2-4
+  and 7-8 (donor rifle-hand remnants below the seam); col 4 draws a second collar band below the first; and in most
+  cells the collar is a thick spiral of stripes, wider than the donor's (rope-like: fails the rigid-collar rule). The
+  foot-slide number passes, the look does not. Walk sheet: not yet looked at closely at 4x.
+- 20:36 NEXT (session 4, replaces the 20:33 NEXT part A): the molotov files in the tree (listed 20:31; run8 = final4)
+  are UNCOMMITTED and **must not be committed as they are**. Part A: build run row 1 from `out/edit_row1.png` (the one-row
+  edit, leg IoU 0.844-0.887) by shifting each cell horizontally so its sole x matches the donor (no donor-leg composite),
+  check dome within 3 %; if the collar there is still a spiral, one more one-row edit with "the collar exactly as image 1's
+  narrow rigid band" (cap 1 image); `--import` before every recapture; a 4x crop of run row 1 AND of the walk sheet's
+  front rows for my look before any commit. If that is not passing by ~21:30: DECISION ship walk-only (the run stays the
+  stop-gap: restore `rivet_run8_eq_molotov.png` out of the tree, its provenance line and run rows) and move on to Gloria
+  brass. No builder running at session end. IMAGES 15/60.
+- 20:38 BUILDER RUNNING n28-07g-molotov-shift since 20:38 (in-session, art prep only: final5 run row 1 = the one-row edit shifted to the donor's sole x, no seam; crop for my look; END 20:48; state in molotov/STATE.md).
+- 20:39 BUILDER n28-07g-molotov-shift 1 n/a bounced: shifting the one-row edit's cells to the donor's sole x puts the
+  dome 5.6-23.7 % off the donor in 6/8 cells (bar 3 %): that edit leans the body sideways against the feet, so neither a
+  shift nor a seam saves run row 1. Not installed.
+- 20:40 DECISION molotov (for session 4): ship the walk sheet only (it passes: hold 0.43/1.56 cm; give it a 4x look
+  first) and keep the run on the stop-gap; restore `rivet_run8_eq_molotov.png` out of the tree with its provenance line
+  and run rows, commit the rest. At most ONE more one-row run image if session 4 has slack after Gloria. The owner sees
+  it under "Calls for the owner". Alternative = one value (`walk_grid.by_weapon` molotov run back on, once a row passes).
+- 20:40 NEXT (session 4): (1) brief n28-08 part A = the molotov walk-only commit above (about 20 min with the hook),
+  part B = Gloria brass (n28-04 trimmed: concept <= 2 images + p70 held strips <= 3 + held art; start the concept image
+  in the background during part A). Fill {COMMIT1}/{COMMIT2}/{END}, END by 22:07. (2) Plasma sword, Gloria's grid, p55
+  collar: REPORT "Next steps" unless time appears. (3) Session 5: commit by 22:40, gate by 22:55, the five-weapon clip
+  (shipped grids only), REPORT. No builder running at session end. IMAGES 15/60.
+- 20:39 Session 4 start. No builder running (lock absent; builder.mjs still out, in-session fallback). I looked at
+  grid_molotov_64.png walk column: bottle lit in one claw, flame amber only, collar a band as the donor's, donor legs:
+  PASS for the walk. Run (final4) stays rejected (20:36).
+- 20:41 BUILDER RUNNING n28-08-molotov-walk-gloria since 20:41 (in-session Sonnet subagent, brief
+  evidence/briefs/n28-08-molotov-walk-gloria.md: part A molotov walk-only commit by 21:10, part B Gloria brass concept +
+  p70 held strips + held art, <= 5 images, commit started by 21:30, END 21:53).
+- 20:46 BUILDER n28-08 stopped at part A step 3 (33 s, 0 images, nothing committed): with a walk sheet and no run8,
+  `RivetWalk.path_of` returns the own walk sheet at sprint (never the fallback), so walk-only would sprint on the walk
+  cells at the walk cycle. DECISION: allow a small `rivet_walk.gd` change (keys owns Rivet's walk code): a weapon with a
+  walk sheet but no run8 of its own sprints on its fallback (stop-gap) grid; unit test; mutate. Rejected: shipping the
+  rejected final4 run, or sprinting on walk cells. Resumed the same call (short history, cheap). Part A by 21:20.
+- 20:46 BUILDER RUNNING n28-08-molotov-walk-gloria (resumed) since 20:46, END 21:53.
+- 20:47 NEED combat/Director (from combat's JOURNAL 19:12, read here): in the gauntlet bot films the bot's key caption box
+  ("ATTACK CLAW", `project/features/gauntlet/bot/gauntlet_bot.gd`) covers chip numbers 1-3, and chip 1 is cut by the left
+  screen edge (`project/features/souls/**`, combat's files this run). Neither file is keys'; keys' item 5 (the 4 px
+  overhang of the first chip plate) is the same fault. For the Director at merge: move the caption box below the chip row
+  or right of chip 4, and inset the chip row by its plate overhang.
+- 20:50 Dash film for the owner = combat's `gtai-masters/n28/combat/films/trooper_pair_32.mp4` (1920x1080 60/1 25.0 s,
+  n27 dash 40 | n28 dash 24). I looked at t12 and t24.5: same until the late pair, at the end n27 HP 49.1 / lost 51 /
+  direct 1 vs n28 HP 94.9 / lost 5 / direct 0, dashes 13 vs 14. Cite it in REPORT; copy or link it in keys' frames.json
+  at the end (frames.json is the builder's now).
+- 20:58 Correction to my 20:47 NEED line: session 3 (19:24) already found the "ATTACK CLAW" box is the bot film's dev
+  caption (`project/dev/test_player/gauntlet_bot_film.gd`), not in the shipped game. Only chip 1's plate at the left edge
+  is a game fault (keys' item 5, file in souls/** = combat's this run): NEED Director at merge, not urgent.
+- 20:58 Dash: unit check 22 passed at 18:03 (test_pressure_takes, test_bot_dash, test_player_motion_dash); the scenario
+  suite at 24 is still unrun: the final gate covers it (a moved tape there needs a decision line before 22:40, so session
+  5 runs `run_scenarios` FIRST if the n28-09 call leaves Godot free).
+- 20:58 Brief n28-09-collar-p55-sheet.md written for session 5 (one sheet-sized edit of the p55 bare run sheet, neck-only
+  composite, <= 2 images; fill {COMMIT} ~22:28 / {END} ~22:42). If n28-08 ends early, resume it with n28-09 instead.
+- 20:44 CLOCK: `date` reads 20:42-20:44 now; my lines stamped 20:46-20:58 above were written between 20:40 and 20:44
+  (estimated, ran ahead). Real times from here.
+- 20:44 Reviewed the builder's in-progress diff: `RivetWalk.path_of` sprints on the fallback's run sheet when the own grid
+  answers a walk sheet only; test_rivet_walk pins molotov walk = own sheet, sprint = bare run; test_rivet_walk_every_weapon's
+  "walk sheet alone" expectation changes from the walk sheet to the bare run. Checked: molotov p70 is the only walk sheet
+  without a run8 at either pitch, so no other weapon moves. REPORT.md draft written (uncommitted).
+- 21:53 BUILDER n28-08-molotov-walk-gloria 73 n/a accepted-partial. 347783a4c molotov walk-only + `RivetWalk.path_of`
+  fallback (a walk sheet without a run8 sprints on the stop-gap's bare run; cadence already keyed by the sheet shown: 258);
+  test_rivet_walk_sprint_fallback.gd; mutate rivet_walk.gd lines 59-62 80 % (4/5, --max=5, 307 s); run_unit --changed 843
+  passed. 64b5d9570 evidence (grid_molotov.md): walk hold 0.43/1.56 cm (rifle 0.60/1.56), run = bare run 7.05/9.41.
+  Gloria p70 brass: concept + main/diag/left strips + noflash + held/held_small/icon/pickup + showcase icon/p70 +
+  rivet_muzzle.json (p70 gloria) + 11 provenance lines are STAGED, NOT COMMITTED: the hook's tool-tests failed on 2
+  `tools/merge/clash.test.mjs` tests. IMAGES 4 this call -> 19/60.
+- 21:55 Ran `node --test tools/merge/clash.test.mjs` alone: 7/7 pass (34.8 s; build/clash_test_director.txt): the hook
+  failure was load on the shared machine (git ops in temp repos), not the Gloria files. Retry the commit.
+- 21:55 I looked at gloria_concept_n28.png (old long | n27 | n28 | pistol): n28 reads brass-yellow, the nail comb about
+  twice n27's, one hand on the grip, claw free, collar rigid; apart from the pistol at a glance. Measured: length 1.20x
+  (centre figure, bar 1.3) / 1.33x (right), median gun hue 38.5 deg vs pistol 27.5. Accepted (no second roll).
+  Known: the left strip's gun touches the cell edge (15 px opaque at x=0 in cells 2, 3): check in game.
+- 21:57 NEXT (session 5, starts ~22:08; last commit by 22:40, final gate started by 22:55):
+  (1) One builder call (~22:10, END 22:45): render Gloria in game at tilt 70, 8 aims + fire, 64 px/m
+  (`gtai-masters/n28/keys/gloria_n28_fire_64.png`) and the left-strip edge cells; I look; then retry the commit of the
+  STAGED files (`git diff --cached --name-only`) with the message "Gloria in brass with a longer nail strip: p70 held
+  strips and held art", commit STARTED by 22:22 (hook ~12 min; if clash.test flakes again, rerun once). Then
+  `evidence/n28-keys/gloria.md` (concept numbers above) + `weapon_art.json` gloria muzzle/grip check (if a value must move,
+  only before 22:40). If the in-game look fails (cut-off gun, wrong hand): unstage nothing by reset; restore the n27 files
+  with `git restore --staged --worktree -- <paths>` and REPORT it.
+  (2) The p55 collar (brief n28-09) does NOT fit before 22:40: REPORT Next steps with the brief path.
+  (3) After 22:40: `node tools/gate/run.mjs --rev=HEAD` (covers the dash scenario suite), then the five-weapon 32 px/m clip
+  (homing shard, mini-nuke, ray gun, molotov walk; plasma sword on stop-gap), re-render grid_molotov_64/_32 (their run
+  column still shows the rejected final4), copy/link combat's trooper_pair_32.mp4 entry into keys' frames.json, finish
+  REPORT.md (draft in the tree, uncommitted), `node tools/evidence/cites.mjs REPORT.md`, commit. Reels gate after 00:10.
+  No builder running at session end.
+- 21:57 I looked at the staged p70 strips on grey (build/gl_main.png, gl_left.png): brass gun in one claw in all 8 facings,
+  the other claw free, flash amber/yellow only, collar rigid; left strip cells 2, 3: the muzzle is clipped flat by the cell
+  edge (a few px). DECISION: retry the builder's own staged commit now rather than spend session 5's 30 minutes on it (the
+  hook flake was load: clash.test 7/7 alone); it is the builder's work and message, unchanged. Detached: bash pid 29848,
+  script build/gloria_commit.sh, log build/gloria_commit.log. Session 5: read that log first; if EXIT != 0, rerun the same
+  script once. The clipped left muzzle goes to REPORT (fix = wider left cells, a later call).
+- 21:57 COMMIT RUNNING gloria p70 (pid 29848) since 21:57; JOURNAL.md is NOT in its pathspec.
+
+## Session 5 (22:09, iteration 5, BUILD)
+- 22:09 START. The detached Gloria commit landed: e0a82abf0 "Gloria in brass with a longer nail strip: p70 held strips and
+  held art" (13 files, 11 provenance lines). No builder running (lock absent). Cap 3.8/8.2 GB (peak 9.1).
+- 22:10 Scenario suite on dash 24 started detached (me): build/scen_n28.sh -> build/scen_n28.log, exit in build/scen_n28.exit.
+- 22:11 DECISION session 5 call = the p55 collar (owner's pick, item 4) instead of the Gloria in-game still: the clock (22:09,
+  not 22:22) leaves 25 min to a commit start; the Gloria still is evidence of committed work and moves after the gate.
+  Brief evidence/briefs/n28-09b-collar-now.md (COMMIT 22:36, END 22:52, <= 2 images, no Godot before scen_n28.exit).
+- 22:11 BUILDER RUNNING n28-09b-collar-now since 22:11 (in-session Sonnet subagent).
+- 22:13 Read cast's JOURNAL 18:40: "NEED Director (keys/weapon art)": the GroundRifle pickup `ground_rifle_70.png` reads
+  mauve-pink on asphalt in 1080p films (red law). Weapon art is keys'; no time before 22:40 (collar call running): REPORT
+  Next steps (a lossless check, then a browner stock by one image edit). No other `NEED keys` in combat/cast/yard journals.
+- 22:25 Scenario suite at dash cooldown 24 (`node tools/tests/run_scenarios.mjs --quiet-wait=3`, build/scen_n28.log): exit 0,
+  "scenario-tests: 68 ran", 68/68 ok, only "CONTENDED: rig_stress.rigMsP50 1.172 > 1.000 (4 other runs)" (wall-clock budget
+  under load, not the dash). No shipped tape/replay moved: no re-pin, no decision line needed.
+- 22:31 BUILDER n28-09b-collar-now 18 n/a bounced (nothing committed, art bars failed). IMAGES 2 -> 21/60. Audit: p55 bare
+  run rows 1, 2, 5 rigid; rows 3, 4, 6, 7, 8 rope (40 cells). Whole-sheet edit moved arms/strides and blurred; a 5-row edit
+  still drew a twisted, softer rope with yellow bleed at the visor. Outside-mask identity held (0 px outside masks) but the
+  inside fails. I looked at gtai-masters/n28/keys/collar_p55_rows_crop.png: agreed, rope still reads twisted, softer than
+  shipped. Round state: gtai-art/rivet-n28/collar_p55/STATE.md.
+- 22:31 DECISION collar: no third image and no script repaint of the stripes (the builder's suggestion): character art is
+  generated, never drawn from script shapes. Next run: one facing row per job at full scale (5 jobs), p70 row as reference.
+  REPORT "What does not" + Next steps.
+- 22:37 GATE RUNNING `node tools/gate/run.mjs --rev=HEAD` on 15eb87301 since 22:37 (build/gate_n28.sh -> build/gate_n28.log,
+  exit in build/gate_n28.exit). Last product commit e0a82abf0; everything after it is inert docs/evidence.
+- 22:38 DECISION the one gate is `--reels` now (as combat did at 22:36), not plain now + reels after the freeze: no code
+  lands after e0a82abf0, and a second gate would hold Godot through the film window. Killed my plain gate (my pids
+  15312 tree) after 1 min, removed the half-made snapshot gtai-gate-15eb8730107e it left (mine), restarted.
+  FRICTION self 2 min.
+- 22:38 GATE RUNNING `node tools/gate/run.mjs --rev=HEAD --reels` on 15eb87301 since 22:38, ETA ~23:16 (last: evidence
+  22.7 + reels 14.6 min). Log build/gate_n28.log, exit build/gate_n28.exit. Godot is the gate's until then.
+- 22:41 FILM (me, ffmpeg only, no Godot): `gtai-masters/n28/keys/weapons_grids_32.mp4` 1920x1080 60/1 991 frames 16.5 s:
+  six 640x540 tiles cropped (not scaled) from the same-tick 1080p captures: homing shard, mini-nuke, ray gun (own grids),
+  molotov (own walk; its candidate capture's foot_slide names rivet_run8.png for the sprint, so it is the shipped state),
+  plasma rifle donor, plasma sword tile "stop-gap". I looked at t4 and t12: same tick in all tiles, weapons in the claws.
+  frames.json now 13 entries (combat's trooper_pair_32.mp4 first, then this clip, Gloria concept, grids, collar crop
+  marked NOT shipped). Deleted rejected molotov scratch dirs (prefinal3, rawrun, rows_*4, old_molotov: 4.4 GB).
+- 22:44 REPORT.md filled except the gate line and the Gloria in-game stills (What does not: collar; Next steps; Merge
+  notes; Builder ledger; blocked minutes). Brief evidence/briefs/n28-10-films.md written for session 6 (Gloria n27 | n28 |
+  pistol in game at 64/32 via capture28.py + a temp worktree at d0ab9d03a, left edge crop, plasma sword capture,
+  evidence/n28-keys/gloria.md; no product files; fill {COMMIT}/{END}).
+- 22:43 STILL (me, PIL, sheet pixels, no Godot): `gtai-masters/n28/keys/gloria_strips_n27_n28_pistol.png` = p70
+  rivet_eq_gloria_noflash at d0ab9d03a (LFS smudge) | HEAD | rivet_eq_pistol_noflash. I looked: n27 read almost as the
+  pistol; n28 brass with the long nail comb in all 8 facings, one claw on the grip, the other free, collar rigid. frames.json 14.
+- 22:55 Gate progress (snapshot build/evidence): unit 4201 passing / 4203 (2 risky/pending), 0 failing; scenarios running.
+  Cap 5.5/8.2 GB.
+- 23:05 Gate at scenarios' end (rivet_* telemetry written); then parity, selftest, export audit, reels (~15 min): ETA ~23:25.
+- 23:05 NEXT (session 6, starts ~23:40; freeze 00:10, REPORT 00:20, end 00:40):
+  (1) Read build/gate_n28.log + build/gate_n28.exit: quote the gate line and `build/gate/15eb8730107e/gate.json` in REPORT
+  line 5 (replace "Final gate: TODO"); if the gate is red, triage first (the code is e0a82abf0's; a red reel or a test is a
+  REPORT item, no new code after the freeze). If it is still running, wait (do NOT start Godot).
+  (2) Fill {COMMIT} = 00:05 and {END} = 00:15 in evidence/briefs/n28-10-films.md and launch it (in-session Sonnet
+  subagent, background) as soon as build/gate_n28.exit exists. Look at its stills yourself; put the Gloria in-game pair
+  into REPORT item 3 and "What does not" (left edge verdict), replacing the TODO at "In-game stills".
+  (3) REPORT: drop the DRAFT line (line 3), `node tools/evidence/cites.mjs REPORT.md`, commit JOURNAL.md + REPORT.md
+  (inert paths: hook skips lint) by 00:30. Check frames.json has 8-15 entries and every file exists.
+  No builder running at the end of session 5.
+- 23:18 GATE (evidence part) on 15eb87301 (code = e0a82abf0): PASS lint (19 checks, 2256 files), PASS unit-tests (4201
+  passed, 0 failed, 2 skipped), **FAIL scenario-tests: TIMED OUT after 1505 s** (60/68 ok, none failed; it was at the 61st,
+  showcase_director, when the 1505 s budget ran out: rivet_throw took 204.7 s vs 7.8 s in my 22:25 run, rivet_vault 68.8 vs
+  20.0: the shared machine under four lanes' gates), PASS parity (bit for bit, mutation caught step 629), PASS selftest,
+  PASS export-audit (995/0). Reels running (log build/gate/15eb8730107e/reels.log).
+  The same code ran 68/68 ok standalone at 22:25 (build/scen_n28.log). FRICTION load: scenario stage 25 min, timed out.
+- 23:18 DECISION gate red on a load timeout: the scenarios not reached in the gate (showcase_director, showcase_reel,
+  souls_powers, traffic_yields_rivet, vehicle_carnage, vehicle_doors, vehicle_drive, vehicle_yield) are re-run alone on HEAD
+  in session 6 after the films builder (`node tools/tests/run_scenarios.mjs --only=<those 8>`, ~3-5 min), instead of a
+  second full gate (25-40 min under this load would run past 00:40 and starve the Gloria film). REPORT quotes the gate
+  line as it is (red, timeout), the 60 gate passes + 8 standalone passes, and the 22:25 68/68.
+- 23:18 NEXT addendum for session 6: step (1) above now = wait for reels (build/gate_n28.exit), quote both lines; then
+  (2) films builder; then the 8-scenario rerun (one Godot: after the builder's last render, or before it if the builder
+  waits on something). No builder running now.
+- 23:28 Reels slow under load (top at chapter 19 after ~10 min; last run's top took 5 min): the gate (node, from
+  build/gate_n28.sh, detached) will finish in session 6. GATE RUNNING --reels on 15eb87301 since 22:38; do not start Godot
+  until build/gate_n28.exit exists. No builder running. Session 5 ends.
+
+## Session 6 (00:10, STABILIZE; started at the freeze)
+- 00:10 Gate --reels on 15eb87301 finished 23:38 (`build/gate_n28.exit` = 1): `gate: FAIL` only on scenario-tests TIMED
+  OUT after 1505 s (0 failed, 60/68 ok); lint, unit 4201/0, parity, selftest, export-audit, **reels PASS**.
+  `build/gate/15eb8730107e/gate.json`. Quoted in REPORT header.
+- 00:10 DECISION no films builder (n28-10 brief) this session: it starts at the freeze with 10 min to REPORT; the Gloria
+  in-game stills are recorded in REPORT "What does not". No builder launched; no product files touched.
+- 00:11 8-scenario rerun alone started on HEAD (`node tools/tests/run_scenarios.mjs --only=showcase_director,...,vehicle_yield`,
+  log `build/scen8_n28.log`). REPORT: DRAFT line dropped, TODOs filled, cites 6/6 ok; frames.json 14 entries, all files exist.
+- 00:12 8-scenario rerun alone on HEAD: `scenario-tests: 8 passed (headless)` (showcase_director, showcase_reel,
+  souls_powers, traffic_yields_rivet, vehicle_carnage, vehicle_doors, vehicle_drive, vehicle_yield). With the gate's 60 ok:
+  68/68 on this code. Quoted in REPORT. My Godot is closed; no builder running.
+- 00:12 NEXT: nothing left for this lane tonight. Director merge: the gate's only red is the scenario wall-clock timeout
+  under load (re-run the full gate on the merge when the machine is quiet). Session 6 ends.
+
+## Session 7 (00:12, STABILIZE)
+- 00:13 Checked: tree clean on tracked paths, HEAD bfa5df132; REPORT quotes the gate line and the 8-scenario rerun
+  (`build/scen8_n28.log`, 8 passed); `cites.mjs REPORT.md` 6/6 ok; builder.lock absent, last builder call logged; no Godot
+  of mine running. Nothing to fix; no product files touched, no builder launched.
+- 00:13 NEXT: lane done for n28. Director: merge n28-keys; re-run the full gate on the merge on a quiet machine (the only
+  red was the scenario-stage wall-clock timeout under load; 68/68 pass across the gate + standalone rerun).
+
+## Session 8 (00:20, REPORT)
+- 00:21 REPORT.md already final (all sections present: header with gate line, What works, What does not, blocked, Calls
+  for the owner, Merge notes, Next steps, Builder ledger). Re-checked: `cites.mjs REPORT.md` 6/6 ok; gate.json and both
+  scenario logs exist; frames.json 14 entries, every file present. No builder running, no Godot of mine running, no
+  product files touched.
+- 00:21 NEXT: lane done for n28. Director: merge n28-keys, re-run the full gate on the merge on a quiet machine.
