@@ -142,3 +142,12 @@ must change, the checklist row, mutate score, quick gate, evidence paths, and wh
   provenance lines; commit by 20:05-20:12. Look at every packed sheet on grey (Read the PNG) and describe it in the report
   (hat colour, dropped hat/gun in the fall, any key holes). No `cast_cards.json` row, no wiring in this call: the next call
   (20:45) does step 2 onward. Leave a short state note at the end of `docs/art/cast-audit.md` ("Contractor, n28: state").
+- **Call 2 (launched 20:00, hard stop 20:27, start the commit by 20:15): step 2.** Step 1 is `930b3b9f3` (read its audit
+  state note; hit/fall ship as `contractor_cast_hit/fall.png` because quest 1 reads `contractor_hit/fall.png`: keep it so).
+  Add the `contractor` row to `cast_cards.json` with `enabled: false`, wire his 8-drawing walk on the anchored placement
+  (a `CastContractorAnchors` table measured from `contractor_planted8_armed_walk.png` by a `tools/art/cast_*_soles.py`, the
+  way `CastGunnerAnchors` / `CastLancerAnchors` are; STEP_M for 5-10 drawings/s at 3 m/s), a `test_cast_contractor.gd`
+  (row off = today's drawing unchanged; anchored table shape), `--import` through runGodot, `run_unit.mjs --changed` green,
+  commit. Then, if time is left before 20:15, run `cast_feet.mjs` for him (right/down-right, 70/55) and append the numbers to
+  his audit state note in a second commit. If not green by 20:15, commit nothing half-made: leave it uncommitted and list
+  the paths (the 20:45 call continues them).
