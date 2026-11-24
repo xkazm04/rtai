@@ -82,6 +82,10 @@ Last blow per run, salt 0 + salt 1 (20 runs a profile); "s alive" is the median 
 
 **Novice** (median death wave 5): the wave 5 war machine's `stomp` 16 of 20 (wave 5 every time, ~75 s in, ~82 HP
 taken in that wave); riot cop 3 (waves 3, 4); SWAT 1.
+Film of one such death (main, novice, seed 1, salt 0, tick 4384, wave 5; the headless replay's result file is
+byte-identical to `evidence/n27-pressure/medians/main/salt0/runs/novice-1.json`): `novice_stomp_32.mp4` (1920x1080,
+60/1, 15.03 s, the last 15 s before the stomp) and the 64 px/m telegraph still `novice_stomp_tell_64.png` (Rivet at
+18/110 HP inside the ring), both in `C:/Users/kazda/kiro/gtai-masters/n27/pressure/` (frames.json rows 3 and 4).
 
 **Average** (median 8 / 5): `stomp` 9 of 20 (all wave 5); shield robot 2 (wave 9); rocket trooper 3 (waves 3, 3,
 10); sentry turret 1, war cannon 1, robot thug 1, patrol cop 1, contractor 1, SWAT 1 (waves 5 to 14).
@@ -115,6 +119,11 @@ wave is a median 99 % of max (10th percentile 78 %, 180 waves). The comparison's
 - **Mutate on the stall fix is thin on the bot side**: `bot_arena_moves.gd` gives only 4 mutants on the fix's lines
   (3 / 4, the survivor is equivalent). The take files' scores are samples (12 of 82 for the pair take), not whole
   files; no test says which rifleman fired (the `pressure_rifles.gd` line 81 survivor).
+- **The stomp film is 15 s and ends on the death frame** (the gauntlet entry quits when the run ends, so no seconds
+  after the fall); it was filmed from a git-ignored stage copy of the project with a 1920x1080 viewport because
+  Godot's movie writer takes the project viewport (1280x800) and ignores `--resolution`. The sim ended identically.
+  The telegraph ring reads red-orange; whether that is vermilion (danger) or too close to blood red is for the cast/VFX
+  owner, not changed here.
 - **`deflect_6m_32.mp4` is a second-generation encode** (a crf 26 re-encode of the crf 16 master, to fit the size);
   said in its `frames.json` note.
 - **The deflect spark has a small red fleck** (seen in `guard_return_64.png`): existing deflect VFX, not this lane's
@@ -140,7 +149,8 @@ wave is a median 99 % of max (10th percentile 78 %, 180 waves). The comparison's
 1. **The wave 5 stomp is the novice wall.** 16 of 20 novice runs end on the war machine's `stomp` at wave 5 (and 9 of
    20 average runs). The levers, none touched: `enemies.json` war machine `stomp` damage 48, splash 48 in 3.5 m,
    cooldown 1.2 s, `alt_telegraph_s` 0.8. You said you play first and give numbers; this is the number to watch when
-   you play wave 5.
+   you play wave 5. Watch `novice_stomp_32.mp4`: the ring is clear on the asphalt, but the bot is already beside the
+   war machine, inside the small ring, when it appears; whether 0.8 s is enough to step out is your call.
 2. **Repair between waves only.** `gauntlet.json` `repair_in_wave: false` makes the repair rate almost irrelevant
    (waves start at a median 99 % HP), so the tuner's `rivet_repair` proposal measured inside the noise. If you want
    repair to matter in a fight, the switch is `repair_in_wave`, not the rate.
@@ -192,8 +202,9 @@ wave is a median 99 % of max (10th percentile 78 %, 180 waves). The comparison's
 | 4 | contrast | 73 | $2.09 | accepted (caption overflow fixed in the same call) |
 | 5 | close | 14 | $0.42 | accepted (decision lines, a pinning test, two mutate samples measured) |
 | 6 | notes (+ resume) | 2 | $0.55 | accepted (three film notes in `frames.json` now quote the ten-seed numbers; it caught my after-10 s / whole-take mix-up) |
+| 7 | stomp | 37 | $1.10 | accepted (film only, no commits; filmed from a git-ignored stage copy with a 1920x1080 viewport because the movie writer ignores `--resolution`; the clip ends on the death frame, the entry quits there) |
 
-Total: 6 calls (one resumed), 282 minutes, $10.33; none bounced (call 4's caption overflow was fixed inside the same call).
+Total: 7 calls (one resumed), 319 minutes, $11.43; none bounced (call 4's caption overflow was fixed inside the same call).
 What I would brief differently: give each call one Godot-heavy task and a written handoff time for Godot from the
 start (calls 2 and 4 spent their first 20 to 40 minutes waiting for my measurement batches); ask for the film caption
 layout to be checked on a crop before the long render; and ask for mutate's full sample to be re-run in the same call

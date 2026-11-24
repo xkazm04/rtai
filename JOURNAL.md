@@ -240,3 +240,8 @@ NEXT (session 5, from ~08:35; freeze 09:30, REPORT 09:40, end 10:00):
   (5) Cleanup at the end: Temp `gtai-gate-c3ea5f79ca4e` (ours) after reels or at 09:55; gtai-mutate-* at OUR shas only
       (`git worktree list`; 9001fcc8 was call 5's at 29db9d3b1 and should be gone). Final commit REPORT + JOURNAL.
 - 08:32 call 7 still working (short test recordings t1..t4 in build/n27stomp, nothing in masters yet). BUILDER RUNNING stomp since 08:05 (pid 55088, hard stop 08:55). Session 4 stops here; NEXT above stands.
+- 09:30 session 5 start (late: nothing ran between 08:32 and 09:30). Lock free; last builder-calls row n=8 stomp, 2225 s, exit 0.
+- 09:31 BUILDER stomp 37 $1.10 accepted. Checked myself: `novice_stomp_32.mp4` ffprobe 1920x1080 60/1 15.03 s; frame at 14.5 s and the 64 px/m still `novice_stomp_tell_64.png` looked at (Rivet 18/110 HP inside the ring, wave 5); frames.json 14 rows valid JSON, clip row 3, still row 4. Builder says the replay result is byte-identical to medians/main/salt0/runs/novice-1.json (death tick 4384, wave 5). Its 1.3 GB AVIs already deleted.
+- 09:33 REPORT: stomp film in section 1 novice table and Calls 1, a "What does not" line (15 s, ends on the death frame, stage copy for 1080p, ring colour question), ledger row 7, total 7 calls 319 min $11.43. cites via the shim: 38 paths, 36 ok, 2 pattern.
+- 09:33 FREEZE held: no code after c3ea5f79c (gate PASS `build/gate/c3ea5f79ca4e/gate.json`). Reels not run (under 40 min left).
+NEXT (Director / next lane run): merge n27-pressure; NEED Director `tools/lib/repo.mjs` git() maxBuffer (cites ENOBUFS); the owner plays wave 5 and gives the stomp numbers; Temp `gtai-gate-c3ea5f79ca4e` is ours and can go.
