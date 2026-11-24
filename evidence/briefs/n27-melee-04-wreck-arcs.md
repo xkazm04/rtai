@@ -31,6 +31,18 @@ B. **Arcs read as current.** At 64 px/m: thin bright core (1.5-3 px) inside a so
    never teal (souls only), never red (blood only), never vermilion. Reduced motion: no flicker (hold one shape).
    Keep durations, tick timings, the clamp, lift, core burst and smoke the same; only how the arc strokes are drawn.
 
+C. **The mastery card has a picture (do this FIRST, it is on screen in the owner's bond film).** Today a `mastery` offer
+   card draws a blank band where the picture goes (`films/bond_mastery.mp4` at 18 s, `stills/bond_offer_64.png`):
+   `project/dev/gauntlet/gauntlet_pick_card.gd` `_ready` matches `"stat"`, `"weapon"`, `"ghost"` but not `"mastery"`.
+   Give `mastery` the same ghost figure as the `ghost` kind for its `ref`, plus that ghost's chip ring drawn FULL with
+   the crown diamond in teal behind/around the figure (reuse `GhostBondRing`'s drawing or constants, do not copy its
+   maths), so it reads as "this ghost, mastered". Keep the card size, title, kind label and focus as they are. Then
+   re-render the bond film with the existing entry (`evidence/n27/films/render_bond.mjs` / `films.md` say how: seed 2,
+   `--bond-prefill=6`) over `films/bond_mastery.mp4` and `stills/bond_offer_64.png` (keep the old ones as
+   `films/bond_mastery_blankcard.mp4` / `stills/bond_offer_blankcard_64.png` and set them as `before` in frames.json).
+   ffprobe the new film (15-40 s). A unit test: a `mastery` card has a non-null illustration / drawn ghost.
+   Commit C by 25 minutes after launch.
+
 ## Acceptance (numbers up front)
 - Same-tick before/after stills at 64 px/m for: claw on robot thug (ticks 100, 112, 124, 140 as the 4-up sheet in
   `tools/film/owner_takes.mjs` take `claw_shock`), electro gun on robot thug and on robot gunner (the `electric_robots`
@@ -63,17 +75,24 @@ B. **Arcs read as current.** At 64 px/m: thin bright core (1.5-3 px) inside a so
 ## Allowlist (any other path: stop that part and report `NEED <what>`)
 `project/features/combat/kills/**`, `project/tests/unit/test_electric*.gd` and new `project/tests/unit/test_*wreck*.gd` /
 `test_*arc*.gd`, `tools/film/owner_take.gd`, `tools/film/owner_takes.mjs`, `tools/film/electric_stills.gd` (+ tests
-beside them), `evidence/n27/wreck/**`, the masters dir `C:/Users/kazda/kiro/gtai-masters/n27/melee/`.
+beside them), `project/dev/gauntlet/gauntlet_pick_card.gd` (part C only; the pressure lane owns the rest of `project/dev/gauntlet/**`),
+`project/dev/ghost-forms/**`, `evidence/n27/films/**`, `project/tests/unit/test_gauntlet_pick_card*.gd`,
+`evidence/n27/wreck/**`, the masters dir `C:/Users/kazda/kiro/gtai-masters/n27/melee/`.
 Forbidden: character art and rigs (`project/features/characters/**`: cast lane), `cast_cards.json`, `enemies.json`,
-`weapons.json`, `combat.json`, `project/dev/gauntlet/**`, the keys lane's souls HUD files, other worktrees, root
+`weapons.json`, `combat.json`, the rest of `project/dev/gauntlet/**`, the keys lane's souls HUD files, other worktrees, root
 `JOURNAL.md` / `REPORT.md`. If reading a robot's textures needs a new accessor in a characters file: `NEED cast` in your
 report and use what is reachable from the rig node (meta, children) instead.
 
 ## Order and commits
-1. B (arcs) first: smaller, self-contained; commit; stills; re-render claw_shock film.
+0. C (mastery card picture) first; commit; re-render the bond film and offer still.
+1. B (arcs) next: smaller, self-contained; commit; stills; re-render claw_shock film.
 2. A (wrecks); commit; stills; electro gun film.
 Write commands, ffprobe lines and findings to `evidence/n27/wreck/notes.md` (commit it).
 
 ## Report and END (short)
 Commits; which code drew the glyphs; per robot what the wreck now uses; stills/films paths + ffprobe; unit + quick gate
 lines; mutate score; what failed or was left.
+
+## Times (wall clock)
+Launched about LAUNCH. **Commit C by COMMIT1**, B by COMMIT2. **Hard stop HARDSTOP: report and END.** A wrecks part
+not committed by then: leave it uncommitted, say so.

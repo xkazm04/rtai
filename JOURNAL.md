@@ -42,5 +42,16 @@ NEXT: wait for m2 (check `gtai-n27/logs/melee/builder.lock`); review its films f
 NEXT: (same as 03:55) review m2 at its end (~05:00): films in `C:/Users/kazda/kiro/gtai-masters/n27/melee/`, ffprobe +
   4 frames each, frames.json; then launch m3 (`evidence/briefs/n27-melee-03-ring-tests.md`, add times and a
   `ghost_bond.gd` mutate with `--max=20 --tests=test_ghost_bond,test_ghost_boss_cut` and a 25 min budget).
-- 04:20 MILESTONE session 2 start. m2 still running (pid 29208). Reviewed film 2 `films/claw_shock_robots.mp4` (1920x1080 60 fps 27.2 s): 8 frames + crops; thug t106, thug t356, gunner t606, shield t856/t956, war machine stunned only (never_finish). Discharge reads; white branched strokes at 64 px/m still look like glyphs (item 4). Accepted. No `NEED melee` in other journals. Wrote `evidence/briefs/n27-melee-04-wreck-arcs.md` (item 4: wrecks from each robot's live rig art, so cast's thug/gunner redraw carries over; arcs as current).
-- 04:20 DECISION item 4 wrecks: built from the victim's own live rig textures, no generated images (cast redraws gunner A and thug A tonight on its branch; a fixed new texture would be stale at the merge). Alternative (generated wreck sheets) rejected: IMAGES 0/15 stays.
+- 04:08 MILESTONE session 2 start. m2 still running (pid 29208). Reviewed film 2 `films/claw_shock_robots.mp4` (1920x1080 60 fps 27.2 s): 8 frames + crops; thug t106, thug t356, gunner t606, shield t856/t956, war machine stunned only (never_finish). Discharge reads; white branched strokes at 64 px/m still look like glyphs (item 4). Accepted. No `NEED melee` in other journals. Wrote `evidence/briefs/n27-melee-04-wreck-arcs.md` (item 4: wrecks from each robot's live rig art, so cast's thug/gunner redraw carries over; arcs as current).
+- 04:08 DECISION item 4 wrecks: built from the victim's own live rig textures, no generated images (cast redraws gunner A and thug A tonight on its branch; a fixed new texture would be stale at the merge). Alternative (generated wreck sheets) rejected: IMAGES 0/15 stays.
+- 04:54 BUILDER m2-films 58 min $2.05 accepted. Commits `def638f6e` (bond_film entry, `dev_loc` debt rise accepted),
+  `465e93e21`, `437733281` (films log). Film 1 `films/bond_mastery.mp4` ffprobe `1920,1080,60/1,28.82`: reviewed 14
+  frames + chip crops: Tonnage's teal ring closes (24/30 -> full by tick 1765), rest screen held 2.5 s with Master
+  Tonnage / +10 % Health repair / Ohm, the mastery card leaves (hand 3 -> 2), Ohm taken, wave 3, T at tick 2884 into the
+  teal Tonnage slam. HUD strip shows 1 Dent 2 Tonnage 3 Kerf 4 Ohm. DEFECT: the Master Tonnage card has a blank picture
+  band (`project/dev/gauntlet/gauntlet_pick_card.gd` has no `mastery` branch) -> part C of m4 (TOUCH pressure's dir,
+  one file, no other lane touched it: checked `git log a3b3f1466..n27-<lane>`).
+- 04:54 BUILDER RUNNING m3-ring-tests since 04:54 (Start-Process pid 61536, hard stop 05:56, brief
+  `evidence/briefs/n27-melee-03-ring-tests.md` + ghost_bond mutate redo).
+- 04:56 m4 brief extended: C mastery card picture first (+ re-render bond film/offer still, old ones kept as before),
+  then B arcs, then A wrecks. Times placeholders LAUNCH/COMMIT1/COMMIT2/HARDSTOP to fill at launch.
