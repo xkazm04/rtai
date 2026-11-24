@@ -24,9 +24,10 @@ static func mount(strip: GhostFormHud, progress: GhostBond) -> GhostBondRing:
 
 
 static func fill_fraction(progress: GhostBond, id: StringName) -> float:
-	if not progress.enabled or progress.master_at <= 0.0:
+	var bar: float = progress.master_at_for(id)
+	if not progress.enabled or bar <= 0.0:
 		return 0.0
-	return clampf(progress.value(id) / progress.master_at, 0.0, 1.0)
+	return clampf(progress.value(id) / bar, 0.0, 1.0)
 
 
 ## At threshold a diamond occupies the open crown until the player takes the card.

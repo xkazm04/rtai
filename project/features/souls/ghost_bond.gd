@@ -4,7 +4,9 @@ extends RefCounted
 ## hurt a boss once.
 
 var enabled: bool
+## The general bar; master_at_for(form) is the form's own.
 var master_at: float
+var _bars: Dictionary[StringName, float] = {}
 var _per_kill: float
 var _per_stun: float
 var _per_boss_cut: float
@@ -16,6 +18,7 @@ var _mastered: Array[StringName] = []
 func _init(table: GhostFormTable) -> void:
 	enabled = table.bond_enabled
 	master_at = table.master_at
+	_bars = table.master_at_by_form.duplicate()
 	_per_kill = table.per_kill
 	_per_stun = table.per_stun
 	_per_boss_cut = table.per_boss_cut
@@ -29,7 +32,11 @@ func record(form: StringName, kills: int, stuns: int, boss_cuts: int = 0) -> voi
 	_recent.erase(form)
 	_recent.append(form)
 	var earned: float = kills * _per_kill + stuns * _per_stun + boss_cuts * _per_boss_cut
-	_values[form] = minf(master_at, value(form) + earned)
+	_values[form] = minf(master_at_for(form), value(form) + earned)
+
+
+func master_at_for(form: StringName) -> float:
+	return _bars.get(form, master_at)
 
 
 func value(form: StringName) -> float:
@@ -41,7 +48,9 @@ func snapshot() -> Dictionary[StringName, float]:
 
 
 func ready(form: StringName) -> bool:
-	return enabled and _values.has(form) and value(form) >= master_at and not mastered(form)
+	return (
+		enabled and _values.has(form) and value(form) >= master_at_for(form) and not mastered(form)
+	)
 
 
 func master(form: StringName) -> bool:

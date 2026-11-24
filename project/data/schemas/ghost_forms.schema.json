@@ -12,6 +12,14 @@
           "exclusiveMinimum": 0,
           "type": "number"
         },
+        "master_at_by_form": {
+          "additionalProperties": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
+          "description": "a bar of its own for a form, keyed by form id; a form not named here masters at master_at",
+          "type": "object"
+        },
         "mastery_free": {
           "type": "boolean"
         },

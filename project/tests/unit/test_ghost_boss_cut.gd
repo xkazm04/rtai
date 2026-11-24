@@ -50,9 +50,9 @@ func _boss() -> Fighter:
 	return boss
 
 
-func test_table_reads_thirty_and_three() -> void:
+func test_table_reads_thirty_and_five() -> void:
 	assert_eq(bond.master_at, 30.0)
-	assert_eq(session.pilot.ghosts.forms.table.per_boss_cut, 3.0)
+	assert_eq(session.pilot.ghosts.forms.table.per_boss_cut, 5.0)
 
 
 func test_boss_cut_that_hurts_awards_one_cut() -> void:
@@ -61,7 +61,7 @@ func test_boss_cut_that_hurts_awards_one_cut() -> void:
 	assert_true(boss.alive())
 	assert_eq(ghost.strike.release_boss_cuts, 1)
 	assert_eq(ghost.strike.release_kills, 0)
-	assert_eq(bond.value(&"kerf"), 3.0)
+	assert_eq(bond.value(&"kerf"), 5.0)
 
 
 func test_cut_that_kills_the_boss_is_a_kill_not_two() -> void:

@@ -62,11 +62,11 @@ func test_disabled_bond_stays_empty_and_never_offers_mastery() -> void:
 
 
 func test_boss_cuts_earn_per_boss_cut_and_the_cap_holds() -> void:
-	assert_eq(table.per_boss_cut, 3.0)
+	assert_eq(table.per_boss_cut, 5.0)
 	bond.record(&"kerf", 0, 0, 2)
-	assert_eq(bond.value(&"kerf"), 6.0)
+	assert_eq(bond.value(&"kerf"), 10.0)
 	bond.record(&"kerf", 1, 1, 1)
-	assert_eq(bond.value(&"kerf"), 16.0)
+	assert_eq(bond.value(&"kerf"), 22.0)
 	bond.record(&"kerf", 0, 0, 100)
 	assert_eq(bond.value(&"kerf"), table.master_at)
 	assert_true(bond.ready(&"kerf"))
@@ -76,3 +76,41 @@ func test_the_only_deployed_ghost_is_found_by_last_deployed_mastered() -> void:
 	bond.record(&"ohm", 30, 0)
 	assert_true(bond.master(&"ohm"))
 	assert_eq(bond.last_deployed_mastered(), &"ohm")
+
+
+func test_tonnage_has_a_bar_of_his_own_and_the_others_keep_thirty() -> void:
+	table.master_at_by_form[&"tonnage"] = 55.0
+	bond = GhostBond.new(table)
+	assert_eq(bond.master_at_for(&"tonnage"), 55.0)
+	for id: StringName in [&"dent", &"kerf", &"ohm"]:
+		assert_eq(bond.master_at_for(id), 30.0)
+	assert_eq(bond.master_at_for(&"unknown"), 30.0)
+
+
+func test_tonnage_caps_and_masters_at_his_bar_not_thirty() -> void:
+	var own: float = 44.0
+	table.master_at_by_form[&"tonnage"] = own
+	bond = GhostBond.new(table)
+	bond.record(&"tonnage", 8, 0)
+	assert_eq(bond.value(&"tonnage"), 32.0)
+	assert_false(bond.ready(&"tonnage"))
+	assert_false(bond.master(&"tonnage"))
+	bond.record(&"tonnage", 3, 0)
+	assert_eq(bond.value(&"tonnage"), own)
+	assert_true(bond.ready(&"tonnage"))
+	assert_true(bond.master(&"tonnage"))
+	bond.record(&"kerf", 20, 0)
+	assert_eq(bond.value(&"kerf"), 30.0)
+
+
+func test_a_bar_for_an_unknown_form_is_a_load_error() -> void:
+	var raw: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(GhostFormTable.PATH))
+	var bars: Dictionary = {"tonnage": 40, "nobody": 12}
+	var section: Dictionary = raw["bond"]
+	section["master_at_by_form"] = bars
+	var data: DataTable = DataTable.parse(JSON.stringify(raw), GhostFormTable.SCHEMA, "forms")
+	var bad: GhostFormTable = GhostFormTable.from_table(data)
+	assert_false(bad.ok())
+	assert_true("; ".join(bad.errors()).contains("master_at_by_form names unknown form nobody"))
+	assert_eq(bad.master_at_for(&"tonnage"), 40.0)
+	assert_eq(bad.master_at_for(&"ohm"), 30.0)
