@@ -70,5 +70,5 @@ index c6403a430..77bd761fc 100644
 
 ## Checks to run after applying
 
-- `node tools/tests/run_unit.mjs --select=test_prologue_game,test_prologue_pump_tell,test_prologue_yard_props` (names the classes touched), then `just lint`.
+- `node tools/tests/run_unit.mjs --select=test_prologue_game,test_prologue_pump_tell` (names the classes touched), then `just lint`.
 - One film of the arrival (a warden catching Rivet) with `--cast-card` default and with `--cast-card=off` (the vector warden must come back unchanged: the `_warden_card()` guard is the only gate).
