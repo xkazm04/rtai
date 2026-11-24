@@ -15,7 +15,7 @@
     "snap_ticks": 5
   },
   "dash": {
-    "cooldown_ticks": 40,
+    "cooldown_ticks": 24,
     "distance_m": 4.5,
     "enabled": true,
     "hold_sprints": false,

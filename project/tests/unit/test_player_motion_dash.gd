@@ -57,6 +57,24 @@ func test_all_cooldown_ticks_reject_an_edge_then_the_next_edge_works() -> void:
 	assert_eq(motion.dashes, 2)
 
 
+func test_shortest_press_to_press_gap_is_burst_plus_cooldown_and_covers_a_rocket_pair() -> void:
+	var accepted: Array[int] = []
+	var seen: int = 0
+	for tick: int in 200:
+		previous = 0  # a fresh dash edge on every tick
+		_step_taken = _press(Vector2.DOWN, &"dash")
+		if motion.dashes > seen:
+			seen = motion.dashes
+			accepted.append(tick)
+	assert_gte(accepted.size(), 5)
+	var shortest: int = 1 << 30
+	for i: int in range(1, accepted.size()):
+		shortest = mini(shortest, accepted[i] - accepted[i - 1])
+	assert_eq(shortest, motion.dash.ticks + motion.dash.cooldown_ticks)
+	# n27-pressure: two troopers' rockets come as little as 36 ticks apart.
+	assert_lte(shortest, 36)
+
+
 func test_holding_shift_sprints_only_when_enabled_and_never_repeats_the_dash() -> void:
 	var table: DataTable = DataTable.open(PlayerMotion.TABLE, PlayerMotion.SCHEMA)
 	var row: Dictionary = table.object(table.raw, "dash")
