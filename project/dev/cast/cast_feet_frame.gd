@@ -10,7 +10,9 @@ static func sample(host: ArenaRigs, h: Fighter) -> Dictionary:
 		rig = host.robots.rig_for(h.id)
 	if rig == null:
 		return {"error": "actor was outside the full rig pool"}
-	for key: StringName in [FoeShieldCardView.CARD, FoeWarCardView.CARD, FoeTurretCardView.CARD]:
+	for key: StringName in [
+		FoeShieldCardView.CARD, FoeWarCardView.CARD, FoeTurretCardView.CARD, FoeGunnerCardView.CARD
+	]:
 		if rig.has_meta(key):
 			var sprite: Sprite2D = rig.get_meta(key)
 			if sprite.is_visible_in_tree():

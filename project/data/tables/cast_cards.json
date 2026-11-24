@@ -17,6 +17,23 @@
         "hit": "appliance_warden_hit.png"
       }
     },
+    "robot_gunner": {
+      "body_scale": 1,
+      "enabled": false,
+      "id": "robot_gunner",
+      "p55": {
+        "armed_walk": "robot_gunner_armed_walk.png",
+        "attack": "robot_gunner_attack.png",
+        "fall": "robot_gunner_fall.png",
+        "hit": "robot_gunner_hit.png"
+      },
+      "p70": {
+        "armed_walk": "robot_gunner_armed_walk.png",
+        "attack": "robot_gunner_attack.png",
+        "fall": "robot_gunner_fall.png",
+        "hit": "robot_gunner_hit.png"
+      }
+    },
     "rocket_trooper": {
       "enabled": true,
       "id": "rocket_trooper",

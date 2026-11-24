@@ -323,3 +323,26 @@ and unit-tested (`test_cast_warden.gd`). The row is **`enabled: true`**: every p
    and the vector pole and straps (`_warden(chest, head, h.facing)` at line 112, defined at line 158). Otherwise her card and the dyed rig double-draw.
 3. `cast_lineup.gd` hides the prologue's `LightLayer` now: the yard's lights printed rings into every prologue portrait (Mulroney's lineup
    failed the same way on this branch).
+
+## Robot gunner A (navy plates) as a card (n27, row `enabled: false`)
+
+Source: the director's `gunnerA` sheets (owner pick 2026-11-24, navy kept as bolted plates on a gunmetal frame, pale box head with no cap, one lens, hose arms, brass belt to a back drum). Cut by `tools/art/cast_gunner_pack.py` at the patrol cop's drawn height per facing (fill 1.12 / 1.08), one foot line, muzzle flash and the dropped rifle kept as props. Code: `FoeGunnerCardView` (a sprite sibling of his robot rig, hidden rig, the rig stays the body for the shove and the power-down), `CastGunnerAnchors` (step 0.2704 m), `test_cast_gunner.gd`. With the row off his robot rig draws exactly as before (`show_rig` returns the rig's own visibility). Measured with his card forced on in a dev process (`GTAI_CAST_PREVIEW=robot_gunner`, `CastMulroneyPreview.enable`). Screen px at 32 px/m unless stated.
+
+| Point (checklist bar) | Number | Verdict |
+|---|---|---|
+| Planted feet, support-sole travel (bar 2 px; `cast_feet.mjs`, walk 2.2 m/s from `enemies.json`, right and down-right, 70/55; no run) | 0.00 px in all four takes | PASS |
+| Body jump, feet tool (bar 12 px): 70 right / down-right; 55 right / down-right | 9.60 / 9.18; 9.60 / 8.52 | PASS |
+| Body jump by transition (bar 12 px, `cast_gunner_turns` + `cast_gunner_transitions.py`, 70 right / down-right; 55 right / down-right) | stop 3.77 / 5.19; 2.77 / 4.72 (**18.80 / 17.78; 20.17 / 15.09 before** `FoeGunnerCardView._hold_stop` kept the last planted drawing); turn 9.60 / 9.18; 9.60 / 8.52; reversal (aim one way, step the other) 9.60 / 9.40; 9.60 / 9.00 | PASS (the steady drawing-change step is the max) |
+| Drawings per second | 2.2 / 0.2704 = 8.14 observed 8.13 | PASS (bar 24) |
+| Size, 70 degrees front / back, silhouette without his shadow rings (first `cast_gunner_lineup` run) | gunner 46 / 49, patrol cop 43 / 44, Rivet 77 / 73, today's robot rig 65 / 81 | PASS: about the patrol cop's height, well below Rivet |
+| Size with his own shadow rings, 70 front / back, 55 front / back, 64 px/m 70 | 53 / 56, 54 / 56, 107 / 114 (patrol 87 / 88 at 64); rings add about 7 px; the 55 silhouette alone was not measured separately | noted |
+| Palette, all ten sheets (`cast_gunner_palette.py`, `cast_warden_edge.py`) | navy (hue 190-250) 5.0 to 6.6 % of solid px (Mulroney 20-35 % blue); strict red at most 60 px (p70 attack, 0.02 %: the lit lens edge) and 0 to 9 elsewhere; no teal, no vermilion | PASS |
+| Cut / key (`check_cells` in the cutter) | zero strongly green-leading opaque px on every cell; flash and rifle inside the cells | PASS |
+| Edge, **sheet proxy** fringe px per cell, p70: walk / attack / hit / fall / eight | 469 / 462 / 529 / 642 / 300 (Mulroney 456 / 454 / 381 / 473 / 244) | comparable; fall is 36 % above |
+| Edge, **live rim** at 64 px/m (`cast_mulroney_edge.py`) | **not measured** (no frozen-exposure harness written for him in this call) | OPEN |
+| Shadow | he draws his own contact rings (the patrol's ring set, radius .5 x 0.8 m hip); the lineup's shadow toggle does not reach them, so its changed-pixel count reads 0 against the patrol's 236 | OPEN: a ring toggle exposure was not taken |
+| Ink (3, 3, 4 px runs) | **not measured** | OPEN |
+| Attack tell, hit and death in a live fight | drawn and unit-tested (tell row 0/1 = lens lit, flash, recoil, recover on `attack_frame`; hit 0.20 s; fall by `DeathPipe` progress); **no film taken in this call** | OPEN |
+| Identity at 32 px/m beside the patrol cop (`gunner_vs_cop_32.png`) | the pale box head, tan frame and hose arms read as a machine; navy is a few patches, where the cop is navy all over with a round cap | PASS (judged by eye on one still) |
+
+**Why he is off.** Soles, jumps, drawings per second, size, palette and key pass, but the live edge rim, the ink runs, the shadow exposure and the live attack / death film are unmeasured. The checklist says never to ship a half character, so the row stays `enabled: false` and today's robot rig draws. Turn it on by setting the row's `enabled` to true once those four are measured.

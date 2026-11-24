@@ -17,13 +17,18 @@ static func anchored(path: String) -> bool:
 			CastSwatAnchors.EIGHT,
 			CastSwatAnchors.RUN_EIGHT,
 			CastLancerAnchors.EIGHT,
+			CastGunnerAnchors.EIGHT,
 		]
 	)
 
 
 ## Peg's noose hangs below her boots. Standing cells allow 32 texels below the ground.
 static func padded(path: String) -> bool:
-	return path.get_file().begins_with("appliance_warden_") and not path.ends_with("_fall.png")
+	var file: String = path.get_file()
+	return (
+		(file.begins_with("appliance_warden_") or file.begins_with("robot_gunner_"))
+		and not file.ends_with("_fall.png")
+	)
 
 
 ## The shipped four-drawing sheet a foe's eight-drawing walk replaces ("" for any other file).
@@ -35,6 +40,8 @@ static func four_of(file: String) -> String:
 			return CastSwatAnchors.FOUR
 		CastLancerAnchors.EIGHT:
 			return CastLancerAnchors.FOUR
+		CastGunnerAnchors.EIGHT:
+			return CastGunnerAnchors.FOUR
 	return ""
 
 
@@ -49,6 +56,8 @@ static func foe_marks(file: String, low: bool) -> Array[Vector4]:
 			return CastSwatAnchors.RUN55 if low else CastSwatAnchors.RUN70
 		CastLancerAnchors.EIGHT:
 			return CastLancerAnchors.WALK55 if low else CastLancerAnchors.WALK70
+		CastGunnerAnchors.EIGHT:
+			return CastGunnerAnchors.WALK55 if low else CastGunnerAnchors.WALK70
 	return []
 
 
@@ -63,6 +72,8 @@ static func foe_step(file: String) -> float:
 			return CastSwatAnchors.RUN_STEP_M
 		CastLancerAnchors.EIGHT:
 			return CastLancerAnchors.WALK_STEP_M
+		CastGunnerAnchors.EIGHT:
+			return CastGunnerAnchors.WALK_STEP_M
 	return 0.0
 
 

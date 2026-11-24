@@ -23,6 +23,8 @@ SHEETS = {
                  (1.14, 1.07), 'swat_armed_walk.png'),
     'lancer': ('CastLancerAnchors', 'cast_lancer_anchors.gd', 'rocket_trooper_planted8_armed_walk.png',
                (1.0, 1.0), 'rocket_trooper_armed_walk.png'),
+    'gunner': ('CastGunnerAnchors', 'cast_gunner_anchors.gd', 'robot_gunner_planted8_armed_walk.png',
+               (1.0, 1.0), 'robot_gunner_armed_walk.png'),
 }
 FULL = (0, 100)
 # (sheet, pitch, column, row): (lo, hi). Filled in from the overlay review.
@@ -143,7 +145,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if args.review:
         from cast_foe_eight import ART
-        folder = {'riot': 'riot8c', 'swat': 'swat8c', 'swat_run': 'swat8run', 'lancer': 'lancer8'}[args.name]
+        folder = {'riot': 'riot8c', 'swat': 'swat8c', 'swat_run': 'swat8run', 'lancer': 'lancer8',
+                  'gunner': '../foes-n27/gunnerA'}[args.name]
         for pitch in (70, 55):
             review(args.name, pitch, ART / folder / 'pack' / f'soles_{pitch}.png')
     else:

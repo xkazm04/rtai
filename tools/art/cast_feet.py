@@ -135,7 +135,8 @@ def read_frame(frame, take):
 def foe_sheet(path):
     """The cast_foe_soles name of an eight-drawing riot, SWAT or lancer sheet (else '')."""
     names = {'cop_riot_planted8_armed_walk.png': 'riot', 'swat_planted8_armed_walk.png': 'swat',
-             'swat_planted8_run.png': 'swat_run', 'rocket_trooper_planted8_armed_walk.png': 'lancer'}
+             'swat_planted8_run.png': 'swat_run', 'rocket_trooper_planted8_armed_walk.png': 'lancer',
+             'robot_gunner_planted8_armed_walk.png': 'gunner'}
     return names.get(path.rsplit('/', 1)[-1], '')
 
 
