@@ -33,6 +33,7 @@
       "p70/assault_rifle": 78,
       "p70/chainsaw": 64.3,
       "p70/electro_baton": 68.7,
+      "p70/electro_gun": 82.3,
       "p70/gatling": 68,
       "p70/gloria": 86.7,
       "p70/hand_cannon": 69.7,
@@ -203,6 +204,8 @@
       "p55/pistol/3": 0.89,
       "p55/plasma_rifle/1": 0.76,
       "p55/plasma_rifle/3": 0.89,
+      "p55/sprint/2": 0.98,
+      "p55/sprint/6": 0.98,
       "p70/assault_rifle/0": 0.87,
       "p70/assault_rifle/1": 0.95,
       "p70/assault_rifle/3": 0.82,
@@ -218,6 +221,11 @@
       "p70/electro_baton/3": 0.87,
       "p70/electro_baton/4": 0.98,
       "p70/electro_baton/5": 0.97,
+      "p70/electro_gun/0": 0.87,
+      "p70/electro_gun/1": 0.89,
+      "p70/electro_gun/3": 0.93,
+      "p70/electro_gun/4": 0.86,
+      "p70/electro_gun/5": 0.96,
       "p70/flamethrower/3": 0.91,
       "p70/flamethrower/4": 0.92,
       "p70/gatling/4": 0.94,
@@ -247,6 +255,10 @@
       "p70/rivet_walk_eq_electro_baton.png": [
         15,
         28.5
+      ],
+      "p70/rivet_walk_eq_electro_gun.png": [
+        26.5,
+        33.5
       ],
       "p70/rivet_walk_eq_gloria.png": [
         26,
@@ -333,9 +345,10 @@
       "two_hand_long": "plasma_rifle"
     },
     "by_weapon": {
+      "gloria": "bare_claw_p70",
       "katana": "katana"
     },
-    "doc": "At each pitch Rivet first uses the weapon's own drawn movement grid when available. by_grip names the family and by_weapon overrides it for an individual weapon. For a weapon without its own drawing, borrowed_grid bare_claw adds the actual held part to the bare stride. palm_percent marks its grip, measured from the top left of each bare grid cell, as eight x,y pairs per facing row. Walk4 uses the even walk8 columns.",
+    "doc": "At each pitch Rivet first uses the weapon's own drawn movement grid when available. by_grip names the family and by_weapon overrides it for an individual weapon; the value bare_claw (every pitch) or bare_claw_<art> (one pitch) withholds the weapon's own drawn grid files (they stay in the repo) so it walks on the bare stride with the held part on the palm (n27: gloria at p70 until her compact-gun grids exist; set her row to gloria, or delete it, to bring the long-gun grids back). For a weapon without its own drawing, borrowed_grid bare_claw adds the actual held part to the bare stride. palm_percent marks its grip, measured from the top left of each bare grid cell, as eight x,y pairs per facing row. Walk4 uses the even walk8 columns.",
     "palm_percent": {
       "p55": {
         "run": [

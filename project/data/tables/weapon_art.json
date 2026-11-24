@@ -995,23 +995,23 @@
       "casing": "",
       "grip_class": "one_hand",
       "grip_px": [
-        147,
-        63
+        398,
+        85
       ],
       "held": "res://features/combat/weapons/art/gloria/held.png",
       "icon": "res://features/combat/weapons/art/gloria/icon.png",
       "id": "gloria",
-      "length_m": 0.8,
-      "length_px": 481,
+      "length_m": 0.7,
+      "length_px": 122,
       "muzzle_fx": "flash_pistol",
       "muzzle_px": [
         484,
-        63
+        49
       ],
       "part_grip_px": {
         "small": [
-          147,
-          63
+          398,
+          85
         ]
       },
       "parts": {

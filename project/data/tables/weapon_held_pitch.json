@@ -76,13 +76,13 @@
         "gloria": {
           "art": "res://features/combat/weapons/art/held_55/gloria.png",
           "grip_px": [
-            323,
-            236
+            354,
+            262
           ],
-          "length_px": 589,
+          "length_px": 349,
           "muzzle_px": [
-            596,
-            150
+            599,
+            158
           ],
           "size_k": 1,
           "small": "res://features/combat/weapons/art/held_55/gloria_small.png"

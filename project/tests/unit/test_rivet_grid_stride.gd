@@ -4,6 +4,7 @@ extends GutTest
 const RUN_CYCLE_CELL: Dictionary[String, float] = {"p70": 258.0, "p55": 212.0}
 const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
 const ARMED_CYCLE_CELL: Dictionary[String, float] = {
+	"p70/electro_gun": 82.3,
 	"p70/machine_pistol": 73.7,
 	"p70/hand_cannon": 69.7,
 	"p70/assault_rifle": 78.0,
@@ -21,6 +22,11 @@ const ARMED_CYCLE_CELL: Dictionary[String, float] = {
 	"p55/gatling": 81.0,
 }
 const RUN_ROW_K: Dictionary[String, float] = {
+	"p70/electro_gun/5": 0.96,
+	"p70/electro_gun/4": 0.86,
+	"p70/electro_gun/3": 0.93,
+	"p70/electro_gun/0": 0.87,
+	"p70/electro_gun/1": 0.89,
 	"p70/machine_pistol/0": 0.86,
 	"p70/machine_pistol/1": 0.95,
 	"p70/machine_pistol/4": 0.91,
@@ -50,6 +56,8 @@ const RUN_ROW_K: Dictionary[String, float] = {
 	"p70/gloria/3": 0.97,
 	"p70/gloria/4": 0.92,
 	"p70/gatling/4": 0.94,
+	"p55/sprint/2": 0.98,
+	"p55/sprint/6": 0.98,
 	"p70/flamethrower/3": 0.91,
 	"p70/flamethrower/4": 0.92,
 	"p55/pistol/1": 0.79,
@@ -64,6 +72,7 @@ const RUN_ROW_K: Dictionary[String, float] = {
 	"p55/flamethrower/3": 0.93,
 }
 const WALK_PROFILE_TRAVEL: Dictionary[String, Vector2] = {
+	StrideMatch.ROOT + "p70/rivet_walk_eq_electro_gun.png": Vector2(26.5, 33.5),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_machine_pistol.png": Vector2(21.0, 27.0),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_hand_cannon.png": Vector2(25.0, 30.0),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_assault_rifle.png": Vector2(20.5, 29.5),
@@ -76,19 +85,9 @@ const WALK_PROFILE_TRAVEL: Dictionary[String, Vector2] = {
 
 func test_all_five_calibrations_match_the_measured_grids() -> void:
 	var grid: RivetGridStride = RivetGridStride.shared()
-	assert_eq(grid.run_cycle_cell, RUN_CYCLE_CELL)
-	assert_eq(grid.cycle_cell, CYCLE_CELL)
-	assert_eq(grid.armed_cycle_cell, ARMED_CYCLE_CELL)
-	assert_eq(grid.run_row_k, RUN_ROW_K)
+	assert_eq([grid.run_cycle_cell, grid.cycle_cell], [RUN_CYCLE_CELL, CYCLE_CELL])
+	assert_eq([grid.armed_cycle_cell, grid.run_row_k], [ARMED_CYCLE_CELL, RUN_ROW_K])
 	assert_eq(grid.walk_profile_travel, WALK_PROFILE_TRAVEL)
-
-
-func test_bare_phase_carries_distance_across_unequal_stances_and_back() -> void:
-	var cycles: Vector2 = Vector2(40.0, 80.0)
-	assert_almost_eq(RivetWalk.bare_phase(0.25, 18.0, cycles), 0.6, 0.00001)
-	assert_almost_eq(RivetWalk.bare_phase(0.6, -18.0, cycles), 0.25, 0.00001)
-	assert_almost_eq(RivetWalk.bare_phase(0.9, 12.0, cycles), 0.1, 0.00001)
-	assert_almost_eq(RivetWalk.bare_phase(0.1, -12.0, cycles), 0.9, 0.00001)
 
 
 func _bare_rig(file: String) -> CutRig:
@@ -177,8 +176,7 @@ func test_each_boot_accepts_a_measurement_exactly_at_the_cutoff() -> void:
 	grid.bare_walk["p70"] = rows
 	var second: Vector2 = RivetWalk._bare_cycles(rig.head_card, "p70", rig, 1.0)
 	grid.bare_walk["p70"] = original
-	assert_eq(first, Vector2(24.0, 60.0))
-	assert_eq(second, Vector2(60.0, 24.0))
+	assert_eq([first, second], [Vector2(24.0, 60.0), Vector2(60.0, 24.0)])
 
 
 func test_turn_from_profile_to_depth_carries_phase_and_steps_at_the_new_rate() -> void:

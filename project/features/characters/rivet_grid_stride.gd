@@ -3,6 +3,11 @@ extends RefCounted
 ## Packed grid calibrations shared by every Rivet rig. Cycle lengths use the 110-pixel
 ## standing-height space. Profile travel uses packed texels for each of the two support feet.
 
+## The bare run's profile rows scale by run_row_k["<art>/sprint/<row>"]: factor 1 at the walk's
+## 6.75 m/s, the full factor at the 9.3 m/s sprint, so the sprint plants its boots, not the walk.
+const SPRINT_FROM_MPS: float = 6.75
+const SPRINT_MPS: float = 9.3
+
 static var _shared: RivetGridStride
 
 ## Per sheet row, each component is a full-cycle length for one support foot.
@@ -39,6 +44,12 @@ static func shared() -> RivetGridStride:
 		assert(t.ok(), ", ".join(t.errors()))
 		_shared = grid if t.ok() else RivetGridStride.new()
 	return _shared
+
+
+## The bare run's row factor at `mps` metres per second (1 where the row has none).
+func sprint_k(art: String, row: int, mps: float) -> float:
+	var full: float = run_row_k.get("%s/sprint/%d" % [art, row], 1.0)
+	return lerpf(1.0, full, clampf(inverse_lerp(SPRINT_FROM_MPS, SPRINT_MPS, mps), 0.0, 1.0))
 
 
 static func _numbers(t: DataTable, row: Dictionary) -> Dictionary[String, float]:

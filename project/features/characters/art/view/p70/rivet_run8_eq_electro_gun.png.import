@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hvenc6bhjq4c"
-path="res://.godot/imported/rivet_eq_gloria_left_fire_noflash.png-98f2f5fe0241f67c512dcf664bbee057.ctex"
+uid="uid://bkww6ghmp4ptd"
+path="res://.godot/imported/rivet_run8_eq_electro_gun.png-516685430fc9feaf2fd46daf54b81713.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://features/characters/art/view/p70/rivet_eq_gloria_left_fire_noflash.png"
-dest_files=["res://.godot/imported/rivet_eq_gloria_left_fire_noflash.png-98f2f5fe0241f67c512dcf664bbee057.ctex"]
+source_file="res://features/characters/art/view/p70/rivet_run8_eq_electro_gun.png"
+dest_files=["res://.godot/imported/rivet_run8_eq_electro_gun.png-516685430fc9feaf2fd46daf54b81713.ctex"]
 
 [params]
 

@@ -2,8 +2,7 @@ class_name RivetStrips
 extends RefCounted
 ## Lane d9 rivet: which drawn strip Rivet's figure takes (RivetFrames draws it). Strips are cut by
 ## tools/art/rivet_frames.py from tools/art/rivet_frames.json under DIR/<art key>/: the base, one
-## equipped strip per weapon, and a one-handed hold's drawn left views (the owner's hand rule: a
-## mirrored facing would swap the weapon hand).
+## equipped strip per weapon, a one-handed hold's drawn left views (a mirror swaps the hand).
 
 const DIR: String = "res://features/characters/art/view/"
 const BASE: String = "rivet_frames.png"
@@ -17,6 +16,7 @@ const ONE_HAND: Array[StringName] = [
 	&"molotov",
 	&"electro_baton",
 	&"electro_gun",
+	&"gloria",  # n27: the compact one-hand nail gun on the pistol body
 	&"ray_gun",
 	&"homing_shard",
 ]

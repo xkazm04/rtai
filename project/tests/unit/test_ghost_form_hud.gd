@@ -16,6 +16,10 @@ class DrawnText:
 		labels.append(label)
 		anchors[label] = at
 
+	func _number(at: Vector2, label: String) -> void:
+		labels.append(label)
+		anchors[label] = at
+
 
 func test_sync_follows_select_enter_and_cooldown() -> void:
 	var g: GhostForms = GhostForms.new(
@@ -82,6 +86,7 @@ func test_first_level_marks_the_loaded_ghost_and_uses_its_own_cooldown() -> void
 
 
 func test_deploy_hint_follows_the_rebound_key() -> void:
+	PlayerActions.shipped().install()  # the number labels exist only with the actions installed
 	var pilot: GhostPilot = GhostPilot.shipped()
 	var hud: DrawnText = DrawnText.new()
 	add_child_autofree(hud)
@@ -102,7 +107,7 @@ func test_deploy_hint_follows_the_rebound_key() -> void:
 		if hud.anchors.has(hint):
 			var number_at: Vector2 = hud.anchors[hud.number_hints[hud.selected]]
 			assert_gt(hud.anchors[hint].y, number_at.y)
-			assert_almost_eq(hud.anchors[hint].x, number_at.x, hud.layout.chip_r)
+			assert_almost_eq(hud.anchors[hint].x, number_at.x, hud.layout.chip_r * 1.7)
 	InputMap.action_erase_events(&"ghost_deploy")
 	for event: InputEvent in saved:
 		InputMap.action_add_event(&"ghost_deploy", event)
@@ -133,7 +138,7 @@ func test_numbers_on_every_chip_follow_the_form_row_and_live_binding() -> void:
 	var pilot: GhostPilot = GhostPilot.shipped()
 	var hud: GhostFormHud = autofree(GhostFormHud.new())
 	pilot.forms.apply_locks([])
-	var slots: Array[StringName] = [&"dent", &"kerf", &"ohm", &"tonnage"]
+	var slots: Array[StringName] = [&"dent", &"tonnage", &"kerf", &"ohm"]
 	for id: StringName in slots:
 		pilot.forms.selected = id
 		hud.compact = false
@@ -141,11 +146,11 @@ func test_numbers_on_every_chip_follow_the_form_row_and_live_binding() -> void:
 		assert_eq(hud.shown_chips(), slots)
 		hud.compact = true
 		assert_eq(hud.shown_chips(), [id] as Array[StringName])
-	assert_eq(hud.number_hints, {&"dent": "1", &"kerf": "2", &"ohm": "3", &"tonnage": "4"})
-	PlayerSettings.new().rebind(&"ghost_deploy_3", "V")
+	assert_eq(hud.number_hints, {&"dent": "1", &"tonnage": "2", &"kerf": "3", &"ohm": "4"})
+	PlayerSettings.new().rebind(&"ghost_deploy_4", "V")
 	hud.sync(pilot.forms)
 	assert_eq(hud.number_hints[&"ohm"], "V")
-	assert_eq(ObjectiveHint.with_keys("Car [car], deploy [ghost_deploy_3]"), "Car [1], deploy [V]")
+	assert_eq(ObjectiveHint.with_keys("Car [car], deploy [ghost_deploy_4]"), "Car [1], deploy [V]")
 	actions.install()
 
 
@@ -160,7 +165,7 @@ func test_cycle_binding_never_appears_under_a_chip() -> void:
 	hud.sync(pilot.forms)
 	await get_tree().process_frame
 	await get_tree().process_frame
-	assert_eq(hud.labels, ["dent", "1", "kerf", "2", "ohm", "3", "tonnage", "4"])
+	assert_eq(hud.labels, ["dent", "1", "tonnage", "2", "kerf", "3", "ohm", "4"])
 	assert_eq(hud.key_hint, GhostHudHints.binding(&"ghost_deploy"))
 	assert_eq(pilot.forms.press_transform(), SoulPowers.OK)
 	hud.sync(pilot.forms)

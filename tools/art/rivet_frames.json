@@ -90,26 +90,15 @@
     "source_cells": [5]
    },
    "rivet_eq_gloria": {
-    "act_k": 0.86,
     "counts": "5,3",
-    "sheet": "rivet_eq_gloria_55.png",
+    "sheet": "rivet_eq_gloria_55_n27.png",
     "fig_h": 165
    },
    "rivet_eq_gloria_left": {
-    "mirror_from": "rivet_eq_gloria.png",
-    "regions": "left_regions/gloria.json"
-   },
-   "rivet_eq_gloria_left_fire": {
-    "mirror_from": "rivet_eq_gloria.png",
-    "regions": "left_regions/gloria.json",
-    "pose": "_fire",
-    "source_cells": [5]
-   },
-   "rivet_eq_gloria_left_fire_noflash": {
-    "mirror_from": "rivet_eq_gloria_noflash.png",
-    "regions": "left_regions/gloria.json",
-    "pose": "_fire",
-    "source_cells": [5]
+    "cc": "0",
+    "counts": "3",
+    "sheet": "rivet_eq_gloria_55_n27_left.png",
+    "fig_h": 165
    },
    "rivet_eq_hand_cannon": {
     "counts": "5,3",
@@ -453,26 +442,15 @@
     "source_cells": [5]
    },
    "rivet_eq_gloria": {
-    "act_k": 0.88,
     "counts": "5,3",
-    "sheet": "rivet_eq_gloria_70.png",
+    "sheet": "rivet_eq_gloria_70_n27.png",
     "fig_h": 165
    },
    "rivet_eq_gloria_left": {
-    "mirror_from": "rivet_eq_gloria.png",
-    "regions": "left_regions/gloria.json"
-   },
-   "rivet_eq_gloria_left_fire": {
-    "mirror_from": "rivet_eq_gloria.png",
-    "regions": "left_regions/gloria.json",
-    "pose": "_fire",
-    "source_cells": [5]
-   },
-   "rivet_eq_gloria_left_fire_noflash": {
-    "mirror_from": "rivet_eq_gloria_noflash.png",
-    "regions": "left_regions/gloria.json",
-    "pose": "_fire",
-    "source_cells": [5]
+    "cc": "0",
+    "counts": "3",
+    "sheet": "rivet_eq_gloria_70_n27_left.png",
+    "fig_h": 165
    },
    "rivet_eq_hand_cannon": {
     "counts": "5,3",

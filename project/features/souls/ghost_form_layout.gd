@@ -12,6 +12,8 @@ var gap: float = 58.0
 ## The strip's distance from the screen's left and bottom edges.
 var margin: float = 18.0
 var text_size: int = 18
+## The key number on each chip: about twice the old 18 px label (n27, the owner: larger numbers).
+var number_size: int = 30
 ## The strip's height: the name, the avatars, the chevron and key hint, the Madness bar.
 var card_h: float = 128.0
 ## The avatars' centre line, from the strip's top.
@@ -31,6 +33,7 @@ static func for_device(p: DeviceProfile) -> GhostFormLayout:
 static func compact() -> GhostFormLayout:
 	var l: GhostFormLayout = GhostFormLayout.new()
 	l.chip_r = 19.0
+	l.number_size = 24
 	l.gap = 42.0
 	l.margin = 12.0
 	l.card_h = 100.0
