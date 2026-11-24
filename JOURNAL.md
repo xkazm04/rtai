@@ -36,3 +36,9 @@ NEXT: wait for m2 (check `gtai-n27/logs/melee/builder.lock`); review its films f
   then m3 ring tests + ghost_bond mutate; then item 4 (thug/gunner wreck art, discharge arcs). Mastery-pace call for
   the owner: early Tonnage is the problem, not the bar; consider a per-form value only as an owner call (no tuning tonight).
   Commit last work by 08:00, gate by 08:15.
+- 04:06 session 1 end. BUILDER RUNNING m2-films since 03:55 (pid 29208, lock held; it has staged
+  `tools/film/owner_take.gd`, `owner_takes.mjs`, `evidence/n27/films/films.md`: the claw_shock take, not yet committed).
+  Commit beside it only with a pathspec (`git commit -- JOURNAL.md`).
+NEXT: (same as 03:55) review m2 at its end (~05:00): films in `C:/Users/kazda/kiro/gtai-masters/n27/melee/`, ffprobe +
+  4 frames each, frames.json; then launch m3 (`evidence/briefs/n27-melee-03-ring-tests.md`, add times and a
+  `ghost_bond.gd` mutate with `--max=20 --tests=test_ghost_bond,test_ghost_boss_cut` and a 25 min budget).
