@@ -2,7 +2,7 @@
   "archetypes": {
     "appliance_warden": {
       "body_scale": 1.1,
-      "enabled": false,
+      "enabled": true,
       "id": "appliance_warden",
       "p55": {
         "armed_walk": "appliance_warden_armed_walk.png",
