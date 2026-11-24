@@ -76,7 +76,7 @@ def luminance(rgb):
 
 def pools():
     lights = json.loads(TABLE.read_text())["dressings"]["line_fire"]["lights"]
-    radius = {k["id"]: k["radius_m"] for k in lights["kinds"]}
+    radius = {k["id"]: max(k["radius_m"], k.get("floor_glow", {}).get("radius_m", 0)) for k in lights["kinds"]}
     return [(p["id"], p["kind"], np.array(p["at"]), radius[p["kind"]]) for p in lights["pools"]]
 
 

@@ -830,10 +830,15 @@
             "color": "ff9a1f",
             "cone_deg": 0,
             "flicker_hz": 1.5,
+            "floor_glow": {
+              "color": "ff8c14",
+              "radius_m": 11,
+              "strength": 0.3
+            },
             "id": "yard_fire",
             "intensity": 0.28,
             "life_ticks": 0,
-            "radius_m": 12,
+            "radius_m": 6.5,
             "steps": 6
           },
           {
@@ -841,10 +846,15 @@
             "color": "ffd28a",
             "cone_deg": 0,
             "flicker_hz": 0,
+            "floor_glow": {
+              "color": "ffa030",
+              "radius_m": 8,
+              "strength": 0.26
+            },
             "id": "yard_lamp",
             "intensity": 0.34,
             "life_ticks": 0,
-            "radius_m": 9,
+            "radius_m": 5.5,
             "steps": 8
           },
           {
@@ -852,6 +862,11 @@
             "color": "ff9a1f",
             "cone_deg": 0,
             "flicker_hz": 1.5,
+            "floor_glow": {
+              "color": "ff8c14",
+              "radius_m": 10,
+              "strength": 0
+            },
             "id": "yard_fire_mid",
             "intensity": 0.04,
             "life_ticks": 0,
@@ -863,6 +878,11 @@
             "color": "ffd28a",
             "cone_deg": 0,
             "flicker_hz": 0,
+            "floor_glow": {
+              "color": "ffa030",
+              "radius_m": 8,
+              "strength": 0
+            },
             "id": "yard_lamp_gate",
             "intensity": 0.1,
             "life_ticks": 0,

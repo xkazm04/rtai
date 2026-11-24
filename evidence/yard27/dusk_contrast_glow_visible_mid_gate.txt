@@ -1,0 +1,5 @@
+patrol blue outside  day 4.742 dusk 3.893 retained 82.1% hue 221 [220..221] blue kept 94% cops 5 PASS
+patrol blue inside   day 4.053 dusk 4.039 retained 99.7% hue 223 [222..224] blue kept 90% cops 5 PASS
+patrol blue between  day 4.458 dusk 3.718 retained 83.4% hue 222 [221..223] blue kept 93% cops 9 
+rifle        day 1.858 dusk 1.747 retained 94.0% (161, 161 px) FAIL
+shotgun      day 1.669 dusk 1.428 retained 85.6% (266, 266 px) FAIL
