@@ -32,7 +32,7 @@ const FEET: Dictionary[String, float] = {
 	"p70/rivet_eq_gatling.png:6": 43.0,
 	"p70/rivet_eq_plasma_rifle.png:6": 66.0,
 	"p70/rivet_eq_hand_cannon.png:6": 29.0,
-	"p70/rivet_eq_gloria.png:6": 60.0,
+	"p70/rivet_eq_gloria.png:6": 38.0,
 	"p70/rivet_eq_electro_gun.png:6": 32.0,
 	"p55/rivet_eq_gatling.png:6": 24.0,
 	"p55/rivet_eq_plasma_rifle.png:6": 10.0,

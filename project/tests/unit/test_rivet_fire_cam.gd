@@ -77,8 +77,9 @@ func test_a_shallow_shot_keeps_the_side_cell() -> void:
 
 
 func test_a_gun_with_a_facing_muzzle_is_untouched() -> void:
-	var rig: CutRig = _firing(60.0, &"gloria")
-	assert_eq(rig.head_card.frame, 1, "gloria's 3/4 facing draws its gun and has a muzzle point")
+	# n27: gloria is a one-hander on the pistol's body (its 3/4 cell draws the gun far left, no point)
+	var rig: CutRig = _firing(60.0, &"plasma_rifle")
+	assert_eq(rig.head_card.frame, 1, "the rifle's 3/4 facing draws its gun and has a muzzle point")
 
 
 func test_a_burst_on_the_edge_keeps_its_cell() -> void:
