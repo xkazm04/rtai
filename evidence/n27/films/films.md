@@ -35,8 +35,8 @@ wave 2 rest and then T; 3-6 never fill a bond in 4 waves. Seed 2 kept: second pi
 - headless: `godot --headless --path project res://dev/ghost-forms/bond_film.tscn -- --bot=expert --pick=greedy --seed=2 --waves=4 --bond-prefill=6 --result=<abs>`
 - film: `node evidence/n27/films/render_bond.mjs C:/Users/kazda/kiro/gtai-masters/n27/melee/films/bond_mastery.mp4 32 2 6 1650 2990`
   (d3d12, `--windowed --position 0,1440 --resolution 1920x1080 --fixed-fps 60`) -> ffprobe `1920,1080,60/1,28.816667,1729`.
-  Log: bond full t1765, mastered t2463 (frame 3027), T (entering tonnage) t2884. Rendered before the final gdformat/line
-  length pass (a lambda became a method; no behaviour change).
+  Log: bond full t1765, mastered t2463 (frame 3027), T (entering tonnage) t2884. Re-rendered at 04:53 with the committed code:
+  same 1729 frames, same log ticks.
 - stills: `... render_bond.mjs x 64 1 16 1400 2300 --waves=3`, `x 64 1 30 1400 3500 --waves=4`, `x 64 2 6 2430 2480`
   (jpg frames in `build/n27-films/bond-64-*`), cropped with ffmpeg into `stills/bond_chip_ring_64.png`, `bond_offer_64.png`.
 - Finding: with a prefill the chip shows no ring at all until the first release (ring redraws only with the strip); in
