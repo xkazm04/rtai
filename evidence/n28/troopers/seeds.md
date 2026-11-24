@@ -26,3 +26,7 @@ after: HP lost median 4.5, max 8.7, downs 0 of 10, refused 109, rockets 247, dir
 Wilson 95% (pooled, from the run tables): direct/rockets before 1/248 = 0.4% [0.1, 2.2], after 0/247 = 0.0% [-0.0, 1.5]; splash/rockets before 42/248 = 16.9% [12.8, 22.1], after 37/247 = 15.0% [11.1, 20.0]. The intervals overlap: the pooled hit shares do not separate; the gain is in the two drifting seeds.
 
 Seeds marked * are 3 and 5. The shorter cooldown covered the second rocket: in both seeds the dash that was refused at 40 (11 refused) is now available (8 refused, 15 and 16 dashes), and HP lost fell 50.9 to 5.1 (seed 3) and 40.6 to 1.6 (seed 5); the median stayed near 4.5 and nobody went down in either arm. Seed 4 improved slightly (9.2 to 8.7); the other seeds are identical to the tenth of an HP, as expected since their second rocket was already covered.
+
+## Film and stills
+
+Seed 3 (lost more before: 50.9). `trooper_pair_32.mp4`: n27 dash 40 left, n28 dash 24 right, 1920x1080 60 fps 1500 frames 25.0 s, 11 MB. Made by hand: two `pressure_film.tscn --take=pair_dash --seed=3 --half=1` captures (the before arm under the uncommitted data toggle), cropped and joined by ffmpeg hstack with drawtext captions (`tools/gauntlet/pressure_films.mjs` has a fixed film list, so it was not used). 64 px/m stills at tick 1186, where the second rocket of the 1151 volley lands: `pair_dash_late_before_64.png` (Rivet inside the blast, HP 78.4) and `pair_dash_late_after_64.png` (clear of it, HP 95.9). Masters in `gtai-masters/n28/combat/{films,stills}/`, listed in its `frames.json`.
