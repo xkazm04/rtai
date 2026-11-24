@@ -63,3 +63,15 @@ func test_ink_sparks_flag_draws_the_old_two_strokes() -> void:
 	assert_eq(plan[0].width, 6.0)
 	assert_eq(plan[1].color, Ink.CREAM)
 	assert_eq(plan[1].width, 2.5)
+
+
+func test_default_plan_is_one_under_halo_two_amber_passes_and_the_core() -> void:
+	ShockJolt.ink_rim = false
+	var plan: Array[ElectricArc.Stroke] = ShockJolt.spark_plan()
+	assert_eq(plan.size(), 4)
+	assert_eq(plan[0].color, Color(Ink.INK, ShockJolt.UNDER_ALPHA), "the faint under-halo is first")
+	assert_eq(plan[0].width, ElectricArc.HALO_PX)
+	assert_eq(plan[1].width, ElectricArc.HALO_PX, "the widths are screen px, not scaled to zero")
+	assert_eq(plan[2].width, ElectricArc.MID_PX)
+	assert_eq(plan[3].width, ElectricArc.CORE_PX)
+	assert_between(plan[3].width, 1.5, 2.5)
