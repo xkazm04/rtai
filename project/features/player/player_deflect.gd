@@ -4,6 +4,9 @@ extends RefCounted
 ## keeps its speed, gets a fresh range and belongs to Rivet. Heavy rounds keep their exact return.
 
 const PASSED: StringName = &"deflect_passed"
+## View-side marker on a round Rivet turned back (never read by the sim): the muzzle flash of a
+## rifle round drawn as Rivet's must not appear at the bat point (BareGunFx).
+const TURNED: StringName = &"deflect_turned"
 const BACK_DAMAGE: float = 1.0
 const BACK_RANGE_M: float = 20.0
 ## In front: the round's offset from Rivet within this of his facing (dot).
@@ -57,6 +60,7 @@ static func send_back(
 	s.damage = BACK_DAMAGE
 	s.left_m = BACK_RANGE_M
 	s.origin = s.pos
+	s.set_meta(TURNED, true)
 	_spark(arena, s.pos, back)
 	arena.deflected.emit(s.pos, back)
 	return true

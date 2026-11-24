@@ -1,0 +1,28 @@
+# --fixed-fps 60 --quit-after 216000 res://dev/gauntlet/gauntlet.tscn -- --seed=8 --bot=expert --pick=greedy --bot-salt=1 --controls=wheel --waves=40 --result=C:\Users\kazda\kiro\gtai-wt\n23-street\build\n28\medians\main\salt1\runs\expert-8.json
+# exit 0, 19.9 s
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] gauntlet: test player bound: expert, greedy picks, seed 16777627
+[INFO] gauntlet: wave 1 tick 272 block 1, 1 alive
+[INFO] gauntlet: wave 2 tick 3016 block 2, 1 alive
+[INFO] gauntlet: wave 3 tick 4037 block 3, 1 alive
+[INFO] gauntlet: wave 4 tick 4884 block 4, 1 alive
+[INFO] gauntlet: wave 5 tick 7155 block 5, 1 alive
+[INFO] gauntlet: wave 6 tick 8489 block 6, 1 alive
+[INFO] gauntlet: wave 7 tick 10450 block 7, 1 alive
+[INFO] gauntlet: wave 8 tick 12568 block 8, 1 alive
+[INFO] gauntlet: wave 9 tick 14474 block 9, 1 alive
+[INFO] gauntlet: wave 10 tick 16699 block 10, 1 alive
+[INFO] gauntlet: wave 11 tick 18805 block 11, 1 alive
+[INFO] gauntlet: tick 20292, segment 11
+[INFO] rocket-probe: wave 1 rocket_hits 0 troopers 0
+[INFO] rocket-probe: wave 2 rocket_hits 0 troopers 0
+[INFO] rocket-probe: wave 3 rocket_hits 0 troopers 2
+[INFO] rocket-probe: wave 4 rocket_hits 0 troopers 2
+[INFO] rocket-probe: wave 5 rocket_hits 0 troopers 0
+[INFO] rocket-probe: wave 6 rocket_hits 0 troopers 1
+[INFO] rocket-probe: wave 7 rocket_hits 2 troopers 4
+[INFO] rocket-probe: wave 8 rocket_hits 0 troopers 0
+[INFO] rocket-probe: wave 9 rocket_hits 2 troopers 2
+[INFO] rocket-probe: wave 10 rocket_hits 0 troopers 0
+[INFO] rocket-probe: wave 11 rocket_hits 0 troopers 1

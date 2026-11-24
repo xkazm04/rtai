@@ -1,0 +1,38 @@
+# --fixed-fps 60 --quit-after 216000 res://dev/gauntlet/gauntlet.tscn -- --seed=3 --bot=average --pick=greedy --controls=wheel --waves=40 --result=C:\Users\kazda\kiro\gtai-wt\n23-street\build\n28\medians\combat\salt0\runs\average-3.json
+# exit 0, 17.2 s
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] gauntlet: test player bound: average, greedy picks, seed 3
+[INFO] gauntlet: wave 1 tick 237 block 1, 1 alive
+[INFO] gauntlet: wave 2 tick 1535 block 2, 1 alive
+[INFO] gauntlet: wave 3 tick 2618 block 3, 1 alive
+[INFO] gauntlet: wave 4 tick 3240 block 4, 1 alive
+[INFO] gauntlet: wave 5 tick 3917 block 5, 1 alive
+[INFO] gauntlet: wave 6 tick 5249 block 6, 1 alive
+[INFO] gauntlet: wave 7 tick 7065 block 7, 1 alive
+[INFO] gauntlet: wave 8 tick 7968 block 8, 1 alive
+[INFO] gauntlet: wave 9 tick 9171 block 9, 1 alive
+[INFO] gauntlet: move opening SHORT on sentry_turret #101, accepted true
+[INFO] gauntlet: move opening SHORT on shield_robot #100, accepted false
+[INFO] gauntlet: move opening SHORT on shield_robot #100, accepted false
+[INFO] gauntlet: move opening SHORT on shield_robot #100, accepted true
+[INFO] gauntlet: move opening SHORT on sentry_turret #102, accepted true
+[INFO] gauntlet: wave 10 tick 10877 block 10, 1 alive
+[INFO] gauntlet: move opening SHORT on shield_robot #110, accepted false
+[INFO] gauntlet: move opening SHORT on shield_robot #110, accepted true
+[INFO] gauntlet: move opening SHORT on war_machine #106, accepted true
+[INFO] gauntlet: move opening SHORT on war_machine #106, accepted true
+[INFO] gauntlet: move opening CRACK on war_machine #106, accepted false
+[INFO] gauntlet: move opening CRACK on war_machine #106, accepted true
+[INFO] gauntlet: move opening CRACK on war_machine #106, accepted true
+[INFO] gauntlet: tick 12025, segment 10
+[INFO] rocket-probe: wave 1 rocket_hits 0 troopers 0
+[INFO] rocket-probe: wave 2 rocket_hits 0 troopers 0
+[INFO] rocket-probe: wave 3 rocket_hits 0 troopers 1
+[INFO] rocket-probe: wave 4 rocket_hits 0 troopers 5
+[INFO] rocket-probe: wave 5 rocket_hits 1 troopers 1
+[INFO] rocket-probe: wave 6 rocket_hits 0 troopers 1
+[INFO] rocket-probe: wave 7 rocket_hits 0 troopers 0
+[INFO] rocket-probe: wave 8 rocket_hits 0 troopers 4
+[INFO] rocket-probe: wave 9 rocket_hits 0 troopers 2
+[INFO] rocket-probe: wave 10 rocket_hits 1 troopers 1

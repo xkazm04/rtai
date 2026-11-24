@@ -1,0 +1,8 @@
+mutate project/boot/collect_call/view/bare_gun_fx.gd, tests test_bare_gun_fx,test_deflect_marks,test_live_deflect
+
+1. At 351a1c79 (the fix as first committed), --lines=34-35: score 0.0% = killed 0 / (0 + 4 survived).
+   The flash rule sat inline in BareGunFx.shot and no test reached it (the test only pinned the TURNED meta).
+2. After 377ebd735 (rule extracted to BareGunFx.flashes(), new test pins fresh / last flash tick / past it / turned),
+   --lines=36,42: score 83.3% = killed 5 / (5 + 1 survived). Killed: the whole-return negation, <= -> >, <= -> <,
+   and -> or, not -> removed (all on line 42). Survivor: line 36 `return true` -> `return false` (the draw return value
+   of shot(), not the flash rule; needs a draw harness, left).

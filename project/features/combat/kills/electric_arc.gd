@@ -111,6 +111,11 @@ static func strokes(scale: float) -> Array[Stroke]:
 	]
 
 
+## The hash the kinks use, public for the electro gun's stars (0..1, no RNG).
+static func hash01(a: int, b: int, c: int) -> float:
+	return _h(a, b, c)
+
+
 static func _h(a: int, b: int, c: int) -> float:
 	return fposmod(
 		sin(float(a) * 12.9898 + float(b) * 78.233 + float(c) * 37.719) * 43758.5453, 1.0

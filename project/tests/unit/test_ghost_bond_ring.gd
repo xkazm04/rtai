@@ -165,3 +165,15 @@ func test_fill_fraction_guards_a_zero_threshold_and_scales_a_small_one() -> void
 	assert_eq(GhostBondRing.fill_fraction(bond, &"ohm"), 1.0)
 	bond.master_at = 8.0
 	assert_eq(GhostBondRing.fill_fraction(bond, &"ohm"), 0.25)
+
+
+func test_fill_fraction_runs_against_the_forms_own_bar() -> void:
+	var table: GhostFormTable = GhostFormTable.load_default()
+	table.master_at = 10.0
+	table.master_at_by_form[&"ohm"] = 40.0
+	table.per_kill = 2.0
+	var own: GhostBond = GhostBond.new(table)
+	own.record(&"ohm", 5, 0)
+	own.record(&"dent", 5, 0)
+	assert_eq(GhostBondRing.fill_fraction(own, &"ohm"), 0.25)
+	assert_eq(GhostBondRing.fill_fraction(own, &"dent"), 1.0)

@@ -1,0 +1,7008 @@
+{
+  "schema": "gtai.bond-measurement/3",
+  "profile": "average",
+  "pick": "greedy",
+  "controls": "wheel",
+  "wave_limit": 15,
+  "tuning": {
+    "master_at": 30,
+    "master_at_by_form": {
+      "tonnage": 85
+    },
+    "per_kill": 4,
+    "per_stun": 3,
+    "per_boss_cut": 5
+  },
+  "summary": {
+    "n27_free": {
+      "runs_with_mastery": 4,
+      "first_mastery_waves": [
+        3,
+        3,
+        4,
+        8
+      ],
+      "median_first": 3.5,
+      "in_band_8_15": 1,
+      "masteries_taken": 4,
+      "ghosts_mastered": [
+        "ohm",
+        "tonnage"
+      ],
+      "kerf_mastered": false,
+      "kerf_bond_at_end": [
+        0,
+        0,
+        0,
+        0,
+        28,
+        0,
+        14,
+        0,
+        0,
+        6
+      ],
+      "kerf_boss_cuts": [
+        0,
+        0,
+        0,
+        0,
+        4,
+        0,
+        2,
+        0,
+        0,
+        2
+      ],
+      "median_death_wave": 8
+    },
+    "n28": {
+      "runs_with_mastery": 2,
+      "first_mastery_waves": [
+        8,
+        8
+      ],
+      "median_first": 8,
+      "in_band_8_15": 2,
+      "ghosts_mastered": [
+        "kerf",
+        "ohm"
+      ],
+      "kerf_mastered": true,
+      "kerf_bond_at_end": [
+        0,
+        0,
+        0,
+        0,
+        30,
+        0,
+        18,
+        0,
+        0,
+        10
+      ],
+      "kerf_boss_cuts": [
+        0,
+        0,
+        0,
+        0,
+        4,
+        0,
+        2,
+        0,
+        0,
+        2
+      ]
+    },
+    "probe": {
+      "runs_with_mastery": 2,
+      "first_mastery_waves": [
+        8,
+        8
+      ],
+      "median_first": 8,
+      "in_band_8_15": 2,
+      "ghosts_mastered": [
+        "kerf",
+        "ohm"
+      ],
+      "kerf_mastered": true,
+      "kerf_bond_at_end": [
+        0,
+        0,
+        0,
+        0,
+        30,
+        0,
+        18,
+        0,
+        0,
+        10
+      ],
+      "kerf_boss_cuts": [
+        0,
+        0,
+        0,
+        0,
+        4,
+        0,
+        2,
+        0,
+        0,
+        2
+      ]
+    }
+  },
+  "probe_tonnage_bond_by_rest": [
+    {
+      "seed": 1,
+      "rests": [
+        {
+          "rest": 1,
+          "wave": 1,
+          "tonnage": 0
+        },
+        {
+          "rest": 2,
+          "wave": 2,
+          "tonnage": 12
+        },
+        {
+          "rest": 3,
+          "wave": 3,
+          "tonnage": 32
+        },
+        {
+          "rest": 4,
+          "wave": 4,
+          "tonnage": 48
+        },
+        {
+          "rest": 5,
+          "wave": 5,
+          "tonnage": 52
+        },
+        {
+          "rest": 6,
+          "wave": 6,
+          "tonnage": 64
+        },
+        {
+          "rest": 7,
+          "wave": 7,
+          "tonnage": 80
+        },
+        {
+          "rest": 8,
+          "wave": 8,
+          "tonnage": 120
+        },
+        {
+          "rest": 9,
+          "wave": 9,
+          "tonnage": 120
+        }
+      ]
+    },
+    {
+      "seed": 2,
+      "rests": [
+        {
+          "rest": 1,
+          "wave": 1,
+          "tonnage": 0
+        },
+        {
+          "rest": 2,
+          "wave": 2,
+          "tonnage": 24
+        },
+        {
+          "rest": 3,
+          "wave": 3,
+          "tonnage": 48
+        },
+        {
+          "rest": 4,
+          "wave": 4,
+          "tonnage": 60
+        },
+        {
+          "rest": 5,
+          "wave": 5,
+          "tonnage": 64
+        }
+      ]
+    },
+    {
+      "seed": 3,
+      "rests": [
+        {
+          "rest": 1,
+          "wave": 1,
+          "tonnage": 0
+        },
+        {
+          "rest": 2,
+          "wave": 2,
+          "tonnage": 0
+        },
+        {
+          "rest": 3,
+          "wave": 3,
+          "tonnage": 0
+        },
+        {
+          "rest": 4,
+          "wave": 4,
+          "tonnage": 0
+        },
+        {
+          "rest": 5,
+          "wave": 5,
+          "tonnage": 0
+        },
+        {
+          "rest": 6,
+          "wave": 6,
+          "tonnage": 0
+        },
+        {
+          "rest": 7,
+          "wave": 7,
+          "tonnage": 0
+        },
+        {
+          "rest": 8,
+          "wave": 8,
+          "tonnage": 12
+        },
+        {
+          "rest": 9,
+          "wave": 9,
+          "tonnage": 24
+        },
+        {
+          "rest": 10,
+          "wave": 10,
+          "tonnage": 36
+        }
+      ]
+    },
+    {
+      "seed": 4,
+      "rests": [
+        {
+          "rest": 1,
+          "wave": 1,
+          "tonnage": 0
+        },
+        {
+          "rest": 2,
+          "wave": 2,
+          "tonnage": 0
+        },
+        {
+          "rest": 3,
+          "wave": 3,
+          "tonnage": 0
+        },
+        {
+          "rest": 4,
+          "wave": 4,
+          "tonnage": 0
+        },
+        {
+          "rest": 5,
+          "wave": 5,
+          "tonnage": 0
+        }
+      ]
+    },
+    {
+      "seed": 5,
+      "rests": [
+        {
+          "rest": 1,
+          "wave": 1,
+          "tonnage": 0
+        },
+        {
+          "rest": 2,
+          "wave": 2,
+          "tonnage": 0
+        },
+        {
+          "rest": 3,
+          "wave": 3,
+          "tonnage": 0
+        },
+        {
+          "rest": 4,
+          "wave": 4,
+          "tonnage": 0
+        },
+        {
+          "rest": 5,
+          "wave": 5,
+          "tonnage": 0
+        },
+        {
+          "rest": 6,
+          "wave": 6,
+          "tonnage": 0
+        },
+        {
+          "rest": 7,
+          "wave": 7,
+          "tonnage": 0
+        },
+        {
+          "rest": 8,
+          "wave": 8,
+          "tonnage": 0
+        },
+        {
+          "rest": 9,
+          "wave": 9,
+          "tonnage": 0
+        },
+        {
+          "rest": 10,
+          "wave": 10,
+          "tonnage": 0
+        },
+        {
+          "rest": 11,
+          "wave": 11,
+          "tonnage": 0
+        },
+        {
+          "rest": 12,
+          "wave": 12,
+          "tonnage": 0
+        },
+        {
+          "rest": 13,
+          "wave": 13,
+          "tonnage": 0
+        }
+      ]
+    },
+    {
+      "seed": 6,
+      "rests": [
+        {
+          "rest": 1,
+          "wave": 1,
+          "tonnage": 0
+        },
+        {
+          "rest": 2,
+          "wave": 2,
+          "tonnage": 0
+        },
+        {
+          "rest": 3,
+          "wave": 3,
+          "tonnage": 0
+        },
+        {
+          "rest": 4,
+          "wave": 4,
+          "tonnage": 0
+        },
+        {
+          "rest": 5,
+          "wave": 5,
+          "tonnage": 0
+        },
+        {
+          "rest": 6,
+          "wave": 6,
+          "tonnage": 4
+        },
+        {
+          "rest": 7,
+          "wave": 7,
+          "tonnage": 20
+        }
+      ]
+    },
+    {
+      "seed": 7,
+      "rests": [
+        {
+          "rest": 1,
+          "wave": 1,
+          "tonnage": 0
+        },
+        {
+          "rest": 2,
+          "wave": 2,
+          "tonnage": 0
+        },
+        {
+          "rest": 3,
+          "wave": 3,
+          "tonnage": 0
+        },
+        {
+          "rest": 4,
+          "wave": 4,
+          "tonnage": 0
+        },
+        {
+          "rest": 5,
+          "wave": 5,
+          "tonnage": 0
+        },
+        {
+          "rest": 6,
+          "wave": 6,
+          "tonnage": 0
+        },
+        {
+          "rest": 7,
+          "wave": 7,
+          "tonnage": 0
+        },
+        {
+          "rest": 8,
+          "wave": 8,
+          "tonnage": 0
+        },
+        {
+          "rest": 9,
+          "wave": 9,
+          "tonnage": 0
+        }
+      ]
+    },
+    {
+      "seed": 8,
+      "rests": [
+        {
+          "rest": 1,
+          "wave": 1,
+          "tonnage": 0
+        },
+        {
+          "rest": 2,
+          "wave": 2,
+          "tonnage": 0
+        },
+        {
+          "rest": 3,
+          "wave": 3,
+          "tonnage": 12
+        },
+        {
+          "rest": 4,
+          "wave": 4,
+          "tonnage": 40
+        },
+        {
+          "rest": 5,
+          "wave": 5,
+          "tonnage": 44
+        },
+        {
+          "rest": 6,
+          "wave": 6,
+          "tonnage": 44
+        },
+        {
+          "rest": 7,
+          "wave": 7,
+          "tonnage": 52
+        },
+        {
+          "rest": 8,
+          "wave": 8,
+          "tonnage": 60
+        },
+        {
+          "rest": 9,
+          "wave": 9,
+          "tonnage": 104
+        },
+        {
+          "rest": 10,
+          "wave": 10,
+          "tonnage": 104
+        }
+      ]
+    },
+    {
+      "seed": 9,
+      "rests": [
+        {
+          "rest": 1,
+          "wave": 1,
+          "tonnage": 0
+        },
+        {
+          "rest": 2,
+          "wave": 2,
+          "tonnage": 0
+        },
+        {
+          "rest": 3,
+          "wave": 3,
+          "tonnage": 0
+        },
+        {
+          "rest": 4,
+          "wave": 4,
+          "tonnage": 0
+        },
+        {
+          "rest": 5,
+          "wave": 5,
+          "tonnage": 8
+        }
+      ]
+    },
+    {
+      "seed": 10,
+      "rests": [
+        {
+          "rest": 1,
+          "wave": 1,
+          "tonnage": 0
+        },
+        {
+          "rest": 2,
+          "wave": 2,
+          "tonnage": 0
+        },
+        {
+          "rest": 3,
+          "wave": 3,
+          "tonnage": 0
+        },
+        {
+          "rest": 4,
+          "wave": 4,
+          "tonnage": 0
+        },
+        {
+          "rest": 5,
+          "wave": 5,
+          "tonnage": 0
+        }
+      ]
+    }
+  ],
+  "arms": {
+    "n28": {
+      "schema": "gtai.bond-measurement/1",
+      "arm": "n28",
+      "profile": "average",
+      "pick": "greedy",
+      "controls": "wheel",
+      "wave_limit": 15,
+      "mastered_seeds": 2,
+      "median_first_all": null,
+      "median_first_among_mastered": 8,
+      "runs": [
+        {
+          "seed": 1,
+          "death": {
+            "by": "shield_robot",
+            "wave": 9
+          },
+          "mastery_at_rest": {
+            "dent": null,
+            "kerf": null,
+            "ohm": null,
+            "tonnage": null
+          },
+          "first_mastery": null,
+          "bond_at_end": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 85
+          },
+          "wave_reached": 9,
+          "longest_wave_s": 54.25,
+          "waves": [
+            {
+              "wave": 1,
+              "block": 1,
+              "start_tick": 255,
+              "end_tick": 898,
+              "cleared": true,
+              "seconds": 10.72,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 10.72
+              },
+              "offered": [
+                "ghost_tonnage",
+                "weapon_gloria",
+                "stat_hp_max_10"
+              ],
+              "taken": "ghost_tonnage",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 2,
+              "block": 2,
+              "start_tick": 922,
+              "end_tick": 1459,
+              "cleared": true,
+              "seconds": 8.95,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 12
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 3
+              },
+              "form_seconds": {
+                "rivet": 8.95
+              },
+              "offered": [
+                "stat_hp_max_10",
+                "stat_regen_10",
+                "weapon_machine_pistol"
+              ],
+              "taken": "stat_hp_max_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 3,
+              "block": 3,
+              "start_tick": 1486,
+              "end_tick": 2402,
+              "cleared": true,
+              "seconds": 15.27,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 32
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 5
+              },
+              "form_seconds": {
+                "rivet": 15.27
+              },
+              "offered": [
+                "stat_damage_10",
+                "stat_regen_10",
+                "weapon_hand_cannon"
+              ],
+              "taken": "stat_damage_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 4,
+              "block": 4,
+              "start_tick": 2438,
+              "end_tick": 3308,
+              "cleared": true,
+              "seconds": 14.5,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 48
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 4
+              },
+              "form_seconds": {
+                "rivet": 14.5
+              },
+              "offered": [
+                "stat_speed_25",
+                "weapon_plasma_sword",
+                "ghost_dent"
+              ],
+              "taken": "ghost_dent",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 5,
+              "block": 5,
+              "start_tick": 3354,
+              "end_tick": 4584,
+              "cleared": true,
+              "seconds": 20.5,
+              "owned": [
+                "dent",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 52
+              },
+              "deploys": {
+                "tonnage": 2
+              },
+              "deploy_kills": {
+                "tonnage": 1
+              },
+              "form_seconds": {
+                "rivet": 20.5
+              },
+              "offered": [
+                "weapon_flamethrower",
+                "weapon_machine_pistol",
+                "weapon_hand_cannon"
+              ],
+              "taken": "weapon_flamethrower",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 6,
+              "block": 6,
+              "start_tick": 5116,
+              "end_tick": 6083,
+              "cleared": true,
+              "seconds": 16.12,
+              "owned": [
+                "dent",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 64
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 3
+              },
+              "form_seconds": {
+                "rivet": 16.12
+              },
+              "offered": [
+                "weapon_electro_baton",
+                "weapon_gatling",
+                "stat_guard_meter_10"
+              ],
+              "taken": "weapon_gatling",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 7,
+              "block": 7,
+              "start_tick": 6200,
+              "end_tick": 8774,
+              "cleared": true,
+              "seconds": 42.9,
+              "owned": [
+                "dent",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 80
+              },
+              "deploys": {
+                "tonnage": 2
+              },
+              "deploy_kills": {
+                "tonnage": 4
+              },
+              "form_seconds": {
+                "rivet": 42.9
+              },
+              "offered": [
+                "effect_overkill_carry",
+                "weapon_katana",
+                "weapon_chainsaw"
+              ],
+              "taken": "weapon_katana",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 8,
+              "block": 8,
+              "start_tick": 9227,
+              "end_tick": 12482,
+              "cleared": false,
+              "seconds": 54.25,
+              "owned": [
+                "dent",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 85
+              },
+              "deploys": {
+                "tonnage": 4
+              },
+              "deploy_kills": {
+                "tonnage": 10
+              },
+              "form_seconds": {
+                "rivet": 54.25
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 9,
+              "block": 8,
+              "start_tick": 11927,
+              "end_tick": 12482,
+              "cleared": false,
+              "seconds": 9.25,
+              "owned": [
+                "dent",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 85
+              },
+              "deploys": {
+                "tonnage": 2
+              },
+              "deploy_kills": {
+                "tonnage": 5
+              },
+              "form_seconds": {
+                "rivet": 9.25
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            }
+          ],
+          "entries": [],
+          "base_combat_plan_ticks": {
+            "tonnage": 10993
+          },
+          "owned_plan_ticks": {
+            "tonnage": 10350
+          },
+          "releases": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 12
+          },
+          "kills": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 30
+          },
+          "boss_cuts": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "stuns": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          }
+        },
+        {
+          "seed": 2,
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "mastery_at_rest": {
+            "dent": null,
+            "kerf": null,
+            "ohm": null,
+            "tonnage": null
+          },
+          "first_mastery": null,
+          "bond_at_end": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 64
+          },
+          "wave_reached": 5,
+          "longest_wave_s": 23.1,
+          "waves": [
+            {
+              "wave": 1,
+              "block": 1,
+              "start_tick": 272,
+              "end_tick": 1023,
+              "cleared": true,
+              "seconds": 12.52,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 12.52
+              },
+              "offered": [
+                "stat_guard_meter_10",
+                "stat_regen_10",
+                "ghost_tonnage"
+              ],
+              "taken": "ghost_tonnage",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 2,
+              "block": 2,
+              "start_tick": 1046,
+              "end_tick": 1756,
+              "cleared": true,
+              "seconds": 11.83,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 24
+              },
+              "deploys": {
+                "tonnage": 2
+              },
+              "deploy_kills": {
+                "tonnage": 6
+              },
+              "form_seconds": {
+                "rivet": 11.83
+              },
+              "offered": [
+                "stat_regen_10",
+                "ghost_ohm",
+                "weapon_electro_baton"
+              ],
+              "taken": "ghost_ohm",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 3,
+              "block": 3,
+              "start_tick": 1786,
+              "end_tick": 3172,
+              "cleared": true,
+              "seconds": 23.1,
+              "owned": [
+                "ohm",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 48
+              },
+              "deploys": {
+                "tonnage": 2
+              },
+              "deploy_kills": {
+                "tonnage": 6
+              },
+              "form_seconds": {
+                "rivet": 23.1
+              },
+              "offered": [
+                "effect_overkill_carry",
+                "weapon_gloria",
+                "stat_regen_10"
+              ],
+              "taken": "stat_regen_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 4,
+              "block": 4,
+              "start_tick": 3720,
+              "end_tick": 4260,
+              "cleared": true,
+              "seconds": 9,
+              "owned": [
+                "ohm",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 60
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 3
+              },
+              "form_seconds": {
+                "rivet": 9
+              },
+              "offered": [
+                "stat_hp_max_10",
+                "weapon_pistol",
+                "stat_speed_10"
+              ],
+              "taken": "stat_hp_max_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 5,
+              "block": 5,
+              "start_tick": 4297,
+              "end_tick": 5120,
+              "cleared": false,
+              "seconds": 13.72,
+              "owned": [
+                "ohm",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 64
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 1
+              },
+              "form_seconds": {
+                "rivet": 13.72
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            }
+          ],
+          "entries": [],
+          "base_combat_plan_ticks": {
+            "ohm": 406,
+            "tonnage": 3805
+          },
+          "owned_plan_ticks": {
+            "ohm": 406,
+            "tonnage": 3054
+          },
+          "releases": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 6
+          },
+          "kills": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 16
+          },
+          "boss_cuts": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "stuns": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          }
+        },
+        {
+          "seed": 3,
+          "death": {
+            "by": "rocket",
+            "wave": 10
+          },
+          "mastery_at_rest": {
+            "dent": null,
+            "kerf": null,
+            "ohm": null,
+            "tonnage": null
+          },
+          "first_mastery": null,
+          "bond_at_end": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 20,
+            "tonnage": 36
+          },
+          "wave_reached": 10,
+          "longest_wave_s": 25.17,
+          "waves": [
+            {
+              "wave": 1,
+              "block": 1,
+              "start_tick": 237,
+              "end_tick": 1505,
+              "cleared": true,
+              "seconds": 21.13,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 21.13
+              },
+              "offered": [
+                "stat_regen_10",
+                "stat_hp_max_10",
+                "stat_guard_meter_10"
+              ],
+              "taken": "stat_hp_max_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 2,
+              "block": 2,
+              "start_tick": 1535,
+              "end_tick": 2469,
+              "cleared": true,
+              "seconds": 15.57,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 15.57
+              },
+              "offered": [
+                "weapon_pistol",
+                "stat_regen_10",
+                "weapon_katana"
+              ],
+              "taken": "weapon_pistol",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 3,
+              "block": 3,
+              "start_tick": 2618,
+              "end_tick": 3123,
+              "cleared": true,
+              "seconds": 8.42,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 8.42
+              },
+              "offered": [
+                "stat_damage_10",
+                "weapon_plasma_rifle",
+                "weapon_chainsaw"
+              ],
+              "taken": "stat_damage_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 4,
+              "block": 4,
+              "start_tick": 3240,
+              "end_tick": 3770,
+              "cleared": true,
+              "seconds": 8.83,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 8.83
+              },
+              "offered": [
+                "stat_guard_meter_10",
+                "weapon_katana",
+                "stat_guard_meter_25"
+              ],
+              "taken": "stat_guard_meter_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 5,
+              "block": 5,
+              "start_tick": 3917,
+              "end_tick": 4979,
+              "cleared": true,
+              "seconds": 17.7,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 17.7
+              },
+              "offered": [
+                "stat_regen_10",
+                "weapon_machine_pistol",
+                "weapon_katana"
+              ],
+              "taken": "stat_regen_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 6,
+              "block": 6,
+              "start_tick": 5249,
+              "end_tick": 6759,
+              "cleared": true,
+              "seconds": 25.17,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 25.17
+              },
+              "offered": [
+                "weapon_flamethrower",
+                "ghost_tonnage",
+                "stat_hp_max_25"
+              ],
+              "taken": "ghost_tonnage",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 7,
+              "block": 7,
+              "start_tick": 7065,
+              "end_tick": 7840,
+              "cleared": true,
+              "seconds": 12.92,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 0
+              },
+              "form_seconds": {
+                "rivet": 12.92
+              },
+              "offered": [
+                "weapon_gloria",
+                "effect_overkill_carry",
+                "weapon_hand_cannon"
+              ],
+              "taken": "weapon_gloria",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 8,
+              "block": 8,
+              "start_tick": 7968,
+              "end_tick": 9102,
+              "cleared": true,
+              "seconds": 18.9,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 12
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 3
+              },
+              "form_seconds": {
+                "rivet": 18.9
+              },
+              "offered": [
+                "weapon_gatling",
+                "ghost_kerf",
+                "ghost_ohm"
+              ],
+              "taken": "ghost_ohm",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 9,
+              "block": 9,
+              "start_tick": 9171,
+              "end_tick": 10602,
+              "cleared": true,
+              "seconds": 23.85,
+              "owned": [
+                "ohm",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 17,
+                "tonnage": 24
+              },
+              "deploys": {
+                "ohm": 3,
+                "tonnage": 2
+              },
+              "deploy_kills": {
+                "ohm": 2,
+                "tonnage": 3
+              },
+              "form_seconds": {
+                "rivet": 23.85
+              },
+              "offered": [
+                "weapon_rocket_launcher",
+                "weapon_electro_baton",
+                "weapon_flamethrower"
+              ],
+              "taken": "weapon_rocket_launcher",
+              "masteries": [],
+              "entries": [],
+              "stuns": {
+                "ohm": 3
+              }
+            },
+            {
+              "wave": 10,
+              "block": 10,
+              "start_tick": 10877,
+              "end_tick": 12024,
+              "cleared": false,
+              "seconds": 19.12,
+              "owned": [
+                "ohm",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 20,
+                "tonnage": 36
+              },
+              "deploys": {
+                "ohm": 1,
+                "tonnage": 2
+              },
+              "deploy_kills": {
+                "ohm": 0,
+                "tonnage": 3
+              },
+              "form_seconds": {
+                "rivet": 19.12
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [],
+              "stuns": {
+                "ohm": 1
+              }
+            }
+          ],
+          "entries": [],
+          "base_combat_plan_ticks": {
+            "ohm": 1153,
+            "tonnage": 9144
+          },
+          "owned_plan_ticks": {
+            "ohm": 1153,
+            "tonnage": 3335
+          },
+          "releases": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 4,
+            "tonnage": 6
+          },
+          "kills": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 2,
+            "tonnage": 9
+          },
+          "boss_cuts": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "stuns": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 4,
+            "tonnage": 0
+          }
+        },
+        {
+          "seed": 4,
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "mastery_at_rest": {
+            "dent": null,
+            "kerf": null,
+            "ohm": null,
+            "tonnage": null
+          },
+          "first_mastery": null,
+          "bond_at_end": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "wave_reached": 5,
+          "longest_wave_s": 18.4,
+          "waves": [
+            {
+              "wave": 1,
+              "block": 1,
+              "start_tick": 272,
+              "end_tick": 1376,
+              "cleared": true,
+              "seconds": 18.4,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 18.4
+              },
+              "offered": [
+                "stat_damage_10",
+                "stat_guard_meter_10",
+                "stat_speed_10"
+              ],
+              "taken": "stat_damage_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 2,
+              "block": 2,
+              "start_tick": 1483,
+              "end_tick": 2439,
+              "cleared": true,
+              "seconds": 15.93,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 15.93
+              },
+              "offered": [
+                "stat_speed_10",
+                "weapon_gloria",
+                "weapon_pistol"
+              ],
+              "taken": "stat_speed_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 3,
+              "block": 3,
+              "start_tick": 2641,
+              "end_tick": 3412,
+              "cleared": true,
+              "seconds": 12.85,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 12.85
+              },
+              "offered": [
+                "stat_speed_25",
+                "stat_damage_25",
+                "stat_hp_max_10"
+              ],
+              "taken": "stat_damage_25",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 4,
+              "block": 4,
+              "start_tick": 3502,
+              "end_tick": 4351,
+              "cleared": true,
+              "seconds": 14.15,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 14.15
+              },
+              "offered": [
+                "weapon_hand_cannon",
+                "stat_guard_meter_25",
+                "weapon_gloria"
+              ],
+              "taken": "stat_guard_meter_25",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 5,
+              "block": 5,
+              "start_tick": 4589,
+              "end_tick": 5650,
+              "cleared": false,
+              "seconds": 17.68,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 17.68
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            }
+          ],
+          "entries": [],
+          "base_combat_plan_ticks": {
+            "tonnage": 4742
+          },
+          "owned_plan_ticks": {},
+          "releases": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "kills": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "boss_cuts": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "stuns": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          }
+        },
+        {
+          "seed": 5,
+          "death": {
+            "by": "rocket",
+            "wave": 13
+          },
+          "mastery_at_rest": {
+            "dent": null,
+            "kerf": 10,
+            "ohm": 8,
+            "tonnage": null
+          },
+          "first_mastery": 8,
+          "bond_at_end": {
+            "dent": 0,
+            "kerf": 30,
+            "ohm": 30,
+            "tonnage": 0
+          },
+          "wave_reached": 13,
+          "longest_wave_s": 21.95,
+          "waves": [
+            {
+              "wave": 1,
+              "block": 1,
+              "start_tick": 255,
+              "end_tick": 991,
+              "cleared": true,
+              "seconds": 12.27,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 12.27
+              },
+              "offered": [
+                "weapon_pistol",
+                "stat_speed_10",
+                "weapon_gloria"
+              ],
+              "taken": "stat_speed_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 2,
+              "block": 2,
+              "start_tick": 1084,
+              "end_tick": 1871,
+              "cleared": true,
+              "seconds": 13.12,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 13.12
+              },
+              "offered": [
+                "weapon_pistol",
+                "weapon_katana",
+                "stat_guard_meter_10"
+              ],
+              "taken": "stat_guard_meter_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 3,
+              "block": 3,
+              "start_tick": 2001,
+              "end_tick": 3274,
+              "cleared": true,
+              "seconds": 21.22,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 21.22
+              },
+              "offered": [
+                "stat_guard_meter_25",
+                "stat_damage_10",
+                "stat_hp_max_10"
+              ],
+              "taken": "stat_damage_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 4,
+              "block": 4,
+              "start_tick": 3375,
+              "end_tick": 4667,
+              "cleared": true,
+              "seconds": 21.53,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 21.53
+              },
+              "offered": [
+                "ghost_kerf",
+                "weapon_katana",
+                "stat_speed_25"
+              ],
+              "taken": "ghost_kerf",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 5,
+              "block": 5,
+              "start_tick": 5072,
+              "end_tick": 6130,
+              "cleared": true,
+              "seconds": 17.63,
+              "owned": [
+                "kerf"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 10,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 2
+              },
+              "deploy_kills": {
+                "kerf": 0
+              },
+              "form_seconds": {
+                "rivet": 17.63
+              },
+              "offered": [
+                "weapon_pistol",
+                "effect_overkill_carry",
+                "weapon_electro_baton"
+              ],
+              "taken": "weapon_pistol",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 6,
+              "block": 6,
+              "start_tick": 6693,
+              "end_tick": 7855,
+              "cleared": true,
+              "seconds": 19.37,
+              "owned": [
+                "kerf"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 14,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 2
+              },
+              "deploy_kills": {
+                "kerf": 1
+              },
+              "form_seconds": {
+                "rivet": 19.37
+              },
+              "offered": [
+                "ghost_ohm",
+                "stat_speed_25",
+                "weapon_gatling"
+              ],
+              "taken": "ghost_ohm",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 7,
+              "block": 7,
+              "start_tick": 7918,
+              "end_tick": 9235,
+              "cleared": true,
+              "seconds": 21.95,
+              "owned": [
+                "kerf",
+                "ohm"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 14,
+                "ohm": 20,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 1,
+                "ohm": 1
+              },
+              "deploy_kills": {
+                "kerf": 0,
+                "ohm": 5
+              },
+              "form_seconds": {
+                "rivet": 21.95
+              },
+              "offered": [
+                "weapon_plasma_sword",
+                "weapon_katana",
+                "weapon_flamethrower"
+              ],
+              "taken": "weapon_plasma_sword",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 8,
+              "block": 8,
+              "start_tick": 9310,
+              "end_tick": 10232,
+              "cleared": true,
+              "seconds": 15.37,
+              "owned": [
+                "kerf",
+                "ohm"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 18,
+                "ohm": 30,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 2,
+                "ohm": 1
+              },
+              "deploy_kills": {
+                "kerf": 1,
+                "ohm": 2
+              },
+              "form_seconds": {
+                "rivet": 15.37
+              },
+              "offered": [
+                "master_ohm",
+                "stat_hp_max_10",
+                "ghost_dent"
+              ],
+              "taken": "stat_hp_max_10",
+              "masteries": [
+                "master_ohm"
+              ],
+              "entries": [],
+              "stuns": {
+                "ohm": 2
+              }
+            },
+            {
+              "wave": 9,
+              "block": 9,
+              "start_tick": 10678,
+              "end_tick": 11726,
+              "cleared": true,
+              "seconds": 17.47,
+              "owned": [
+                "kerf",
+                "ohm"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 22,
+                "ohm": 30,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 1,
+                "ohm": 1
+              },
+              "deploy_kills": {
+                "kerf": 1,
+                "ohm": 2
+              },
+              "form_seconds": {
+                "ohm": 2.77,
+                "rivet": 14.7
+              },
+              "offered": [
+                "weapon_electro_baton",
+                "stat_damage_25",
+                "weapon_rocket_launcher"
+              ],
+              "taken": "stat_damage_25",
+              "masteries": [],
+              "entries": [
+                {
+                  "form": "ohm",
+                  "tick": 10718
+                }
+              ],
+              "stuns": {}
+            },
+            {
+              "wave": 10,
+              "block": 10,
+              "start_tick": 12116,
+              "end_tick": 13112,
+              "cleared": true,
+              "seconds": 16.6,
+              "owned": [
+                "kerf",
+                "ohm"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 30,
+                "ohm": 30,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 2,
+                "ohm": 1
+              },
+              "deploy_kills": {
+                "kerf": 0,
+                "ohm": 0
+              },
+              "form_seconds": {
+                "ohm": 0.03,
+                "rivet": 16.57
+              },
+              "offered": [
+                "master_kerf",
+                "weapon_chainsaw",
+                "stat_regen_10"
+              ],
+              "taken": "stat_regen_10",
+              "masteries": [
+                "master_kerf"
+              ],
+              "entries": [
+                {
+                  "form": "ohm",
+                  "tick": 12183
+                }
+              ],
+              "stuns": {
+                "ohm": 1
+              }
+            },
+            {
+              "wave": 11,
+              "block": 11,
+              "start_tick": 13506,
+              "end_tick": 14509,
+              "cleared": true,
+              "seconds": 16.72,
+              "owned": [
+                "kerf",
+                "ohm"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 30,
+                "ohm": 30,
+                "tonnage": 0
+              },
+              "deploys": {
+                "ohm": 1
+              },
+              "deploy_kills": {
+                "ohm": 1
+              },
+              "form_seconds": {
+                "kerf": 5.5,
+                "rivet": 11.22
+              },
+              "offered": [
+                "weapon_plasma_rifle",
+                "weapon_flamethrower",
+                "weapon_machine_pistol"
+              ],
+              "taken": "weapon_plasma_rifle",
+              "masteries": [],
+              "entries": [
+                {
+                  "form": "kerf",
+                  "tick": 13623
+                }
+              ],
+              "stuns": {}
+            },
+            {
+              "wave": 12,
+              "block": 12,
+              "start_tick": 14676,
+              "end_tick": 15749,
+              "cleared": true,
+              "seconds": 17.88,
+              "owned": [
+                "kerf",
+                "ohm"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 30,
+                "ohm": 30,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 1,
+                "ohm": 1
+              },
+              "deploy_kills": {
+                "kerf": 0,
+                "ohm": 1
+              },
+              "form_seconds": {
+                "kerf": 5.5,
+                "ohm": 0.02,
+                "rivet": 12.37
+              },
+              "offered": [
+                "weapon_flamethrower",
+                "stat_guard_meter_25",
+                "weapon_electro_baton"
+              ],
+              "taken": "stat_guard_meter_25",
+              "masteries": [],
+              "entries": [
+                {
+                  "form": "ohm",
+                  "tick": 14781
+                },
+                {
+                  "form": "kerf",
+                  "tick": 14908
+                }
+              ],
+              "stuns": {}
+            },
+            {
+              "wave": 13,
+              "block": 13,
+              "start_tick": 15931,
+              "end_tick": 16798,
+              "cleared": false,
+              "seconds": 14.45,
+              "owned": [
+                "kerf",
+                "ohm"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 30,
+                "ohm": 30,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 1
+              },
+              "deploy_kills": {
+                "kerf": 1
+              },
+              "form_seconds": {
+                "kerf": 0.12,
+                "rivet": 14.33
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [
+                {
+                  "form": "kerf",
+                  "tick": 16210
+                }
+              ],
+              "stuns": {}
+            }
+          ],
+          "entries": [
+            {
+              "form": "ohm",
+              "tick": 10718
+            },
+            {
+              "form": "ohm",
+              "tick": 12183
+            },
+            {
+              "form": "kerf",
+              "tick": 13623
+            },
+            {
+              "form": "ohm",
+              "tick": 14781
+            },
+            {
+              "form": "kerf",
+              "tick": 14908
+            },
+            {
+              "form": "kerf",
+              "tick": 16210
+            }
+          ],
+          "base_combat_plan_ticks": {
+            "kerf": 6287,
+            "ohm": 1922,
+            "tonnage": 4088
+          },
+          "owned_plan_ticks": {
+            "kerf": 6287,
+            "ohm": 1922
+          },
+          "releases": {
+            "dent": 0,
+            "kerf": 12,
+            "ohm": 6,
+            "tonnage": 0
+          },
+          "kills": {
+            "dent": 0,
+            "kerf": 4,
+            "ohm": 11,
+            "tonnage": 0
+          },
+          "boss_cuts": {
+            "dent": 0,
+            "kerf": 4,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "stuns": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 3,
+            "tonnage": 0
+          }
+        },
+        {
+          "seed": 6,
+          "death": {
+            "by": "robot_thug",
+            "wave": 7
+          },
+          "mastery_at_rest": {
+            "dent": null,
+            "kerf": null,
+            "ohm": null,
+            "tonnage": null
+          },
+          "first_mastery": null,
+          "bond_at_end": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 20
+          },
+          "wave_reached": 7,
+          "longest_wave_s": 25.05,
+          "waves": [
+            {
+              "wave": 1,
+              "block": 1,
+              "start_tick": 272,
+              "end_tick": 1292,
+              "cleared": true,
+              "seconds": 17,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 17
+              },
+              "offered": [
+                "stat_guard_meter_10",
+                "stat_regen_10",
+                "stat_damage_10"
+              ],
+              "taken": "stat_damage_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 2,
+              "block": 2,
+              "start_tick": 1374,
+              "end_tick": 2482,
+              "cleared": true,
+              "seconds": 18.47,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 18.47
+              },
+              "offered": [
+                "weapon_machine_pistol",
+                "stat_guard_meter_10",
+                "weapon_katana"
+              ],
+              "taken": "stat_guard_meter_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 3,
+              "block": 3,
+              "start_tick": 2679,
+              "end_tick": 3922,
+              "cleared": true,
+              "seconds": 20.72,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 20.72
+              },
+              "offered": [
+                "effect_overkill_carry",
+                "stat_speed_10",
+                "stat_guard_meter_25"
+              ],
+              "taken": "stat_speed_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 4,
+              "block": 4,
+              "start_tick": 4203,
+              "end_tick": 5376,
+              "cleared": true,
+              "seconds": 19.55,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 19.55
+              },
+              "offered": [
+                "weapon_plasma_sword",
+                "stat_regen_25",
+                "stat_regen_10"
+              ],
+              "taken": "stat_regen_25",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 5,
+              "block": 5,
+              "start_tick": 5469,
+              "end_tick": 6972,
+              "cleared": true,
+              "seconds": 25.05,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 25.05
+              },
+              "offered": [
+                "weapon_hand_cannon",
+                "ghost_tonnage",
+                "weapon_machine_pistol"
+              ],
+              "taken": "ghost_tonnage",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 6,
+              "block": 6,
+              "start_tick": 7380,
+              "end_tick": 8500,
+              "cleared": true,
+              "seconds": 18.67,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 4
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 1
+              },
+              "form_seconds": {
+                "rivet": 18.67
+              },
+              "offered": [
+                "weapon_gloria",
+                "stat_regen_10",
+                "weapon_hand_cannon"
+              ],
+              "taken": "stat_regen_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 7,
+              "block": 7,
+              "start_tick": 8632,
+              "end_tick": 9319,
+              "cleared": false,
+              "seconds": 11.45,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 20
+              },
+              "deploys": {
+                "tonnage": 2
+              },
+              "deploy_kills": {
+                "tonnage": 4
+              },
+              "form_seconds": {
+                "rivet": 11.45
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            }
+          ],
+          "entries": [],
+          "base_combat_plan_ticks": {
+            "tonnage": 7855
+          },
+          "owned_plan_ticks": {
+            "tonnage": 1808
+          },
+          "releases": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 3
+          },
+          "kills": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 5
+          },
+          "boss_cuts": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "stuns": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          }
+        },
+        {
+          "seed": 7,
+          "death": {
+            "by": "shield_robot",
+            "wave": 9
+          },
+          "mastery_at_rest": {
+            "dent": null,
+            "kerf": null,
+            "ohm": null,
+            "tonnage": null
+          },
+          "first_mastery": null,
+          "bond_at_end": {
+            "dent": 0,
+            "kerf": 18,
+            "ohm": 29,
+            "tonnage": 0
+          },
+          "wave_reached": 9,
+          "longest_wave_s": 37.1,
+          "waves": [
+            {
+              "wave": 1,
+              "block": 1,
+              "start_tick": 272,
+              "end_tick": 1061,
+              "cleared": true,
+              "seconds": 13.15,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 13.15
+              },
+              "offered": [
+                "stat_speed_10",
+                "ghost_kerf",
+                "weapon_electro_baton"
+              ],
+              "taken": "ghost_kerf",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 2,
+              "block": 2,
+              "start_tick": 1092,
+              "end_tick": 2196,
+              "cleared": true,
+              "seconds": 18.4,
+              "owned": [
+                "kerf"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 18.4
+              },
+              "offered": [
+                "weapon_machine_pistol",
+                "stat_regen_10",
+                "weapon_katana"
+              ],
+              "taken": "stat_regen_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 3,
+              "block": 3,
+              "start_tick": 2417,
+              "end_tick": 3843,
+              "cleared": true,
+              "seconds": 23.77,
+              "owned": [
+                "kerf"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 23.77
+              },
+              "offered": [
+                "weapon_plasma_rifle",
+                "stat_damage_25",
+                "stat_regen_25"
+              ],
+              "taken": "stat_damage_25",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 4,
+              "block": 4,
+              "start_tick": 3911,
+              "end_tick": 4713,
+              "cleared": true,
+              "seconds": 13.37,
+              "owned": [
+                "kerf"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 13.37
+              },
+              "offered": [
+                "ghost_dent",
+                "weapon_electro_baton",
+                "weapon_gloria"
+              ],
+              "taken": "ghost_dent",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 5,
+              "block": 5,
+              "start_tick": 4759,
+              "end_tick": 6229,
+              "cleared": true,
+              "seconds": 24.5,
+              "owned": [
+                "dent",
+                "kerf"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 10,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 2
+              },
+              "deploy_kills": {
+                "kerf": 0
+              },
+              "form_seconds": {
+                "rivet": 24.5
+              },
+              "offered": [
+                "weapon_electro_baton",
+                "stat_damage_10",
+                "weapon_hand_cannon"
+              ],
+              "taken": "stat_damage_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 6,
+              "block": 6,
+              "start_tick": 6605,
+              "end_tick": 7942,
+              "cleared": true,
+              "seconds": 22.28,
+              "owned": [
+                "dent",
+                "kerf"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 10,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 1
+              },
+              "deploy_kills": {
+                "kerf": 0
+              },
+              "form_seconds": {
+                "rivet": 22.28
+              },
+              "offered": [
+                "weapon_hand_cannon",
+                "stat_guard_meter_10",
+                "weapon_flamethrower"
+              ],
+              "taken": "stat_guard_meter_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 7,
+              "block": 7,
+              "start_tick": 8155,
+              "end_tick": 9130,
+              "cleared": true,
+              "seconds": 16.25,
+              "owned": [
+                "dent",
+                "kerf"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 14,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 1
+              },
+              "deploy_kills": {
+                "kerf": 1
+              },
+              "form_seconds": {
+                "rivet": 16.25
+              },
+              "offered": [
+                "ghost_ohm",
+                "stat_speed_10",
+                "stat_regen_25"
+              ],
+              "taken": "ghost_ohm",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 8,
+              "block": 8,
+              "start_tick": 9195,
+              "end_tick": 11421,
+              "cleared": true,
+              "seconds": 37.1,
+              "owned": [
+                "dent",
+                "kerf",
+                "ohm"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 18,
+                "ohm": 29,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 1,
+                "ohm": 4
+              },
+              "deploy_kills": {
+                "kerf": 1,
+                "ohm": 5
+              },
+              "form_seconds": {
+                "rivet": 37.1
+              },
+              "offered": [
+                "weapon_chainsaw",
+                "weapon_hand_cannon",
+                "weapon_rocket_launcher"
+              ],
+              "taken": "weapon_rocket_launcher",
+              "masteries": [],
+              "entries": [],
+              "stuns": {
+                "ohm": 3
+              }
+            },
+            {
+              "wave": 9,
+              "block": 9,
+              "start_tick": 12057,
+              "end_tick": 12735,
+              "cleared": false,
+              "seconds": 11.3,
+              "owned": [
+                "dent",
+                "kerf",
+                "ohm"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 18,
+                "ohm": 29,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 1
+              },
+              "deploy_kills": {
+                "kerf": 0
+              },
+              "form_seconds": {
+                "rivet": 11.3
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            }
+          ],
+          "entries": [],
+          "base_combat_plan_ticks": {
+            "dent": 8,
+            "kerf": 8377,
+            "ohm": 1634,
+            "tonnage": 789
+          },
+          "owned_plan_ticks": {
+            "dent": 8,
+            "kerf": 8377,
+            "ohm": 1634
+          },
+          "releases": {
+            "dent": 0,
+            "kerf": 6,
+            "ohm": 4,
+            "tonnage": 0
+          },
+          "kills": {
+            "dent": 0,
+            "kerf": 2,
+            "ohm": 5,
+            "tonnage": 0
+          },
+          "boss_cuts": {
+            "dent": 0,
+            "kerf": 2,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "stuns": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 3,
+            "tonnage": 0
+          }
+        },
+        {
+          "seed": 8,
+          "death": {
+            "by": "sentry_turret",
+            "wave": 10
+          },
+          "mastery_at_rest": {
+            "dent": null,
+            "kerf": null,
+            "ohm": 8,
+            "tonnage": null
+          },
+          "first_mastery": 8,
+          "bond_at_end": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 30,
+            "tonnage": 85
+          },
+          "wave_reached": 10,
+          "longest_wave_s": 55.17,
+          "waves": [
+            {
+              "wave": 1,
+              "block": 1,
+              "start_tick": 272,
+              "end_tick": 1086,
+              "cleared": true,
+              "seconds": 13.57,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 13.57
+              },
+              "offered": [
+                "weapon_electro_baton",
+                "stat_hp_max_10",
+                "ghost_kerf"
+              ],
+              "taken": "stat_hp_max_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 2,
+              "block": 2,
+              "start_tick": 1231,
+              "end_tick": 2098,
+              "cleared": true,
+              "seconds": 14.45,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 14.45
+              },
+              "offered": [
+                "stat_guard_meter_10",
+                "ghost_tonnage",
+                "weapon_machine_pistol"
+              ],
+              "taken": "ghost_tonnage",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 3,
+              "block": 3,
+              "start_tick": 2139,
+              "end_tick": 3156,
+              "cleared": true,
+              "seconds": 16.95,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 12
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 3
+              },
+              "form_seconds": {
+                "rivet": 16.95
+              },
+              "offered": [
+                "weapon_electro_baton",
+                "weapon_katana",
+                "weapon_plasma_rifle"
+              ],
+              "taken": "weapon_electro_baton",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 4,
+              "block": 4,
+              "start_tick": 3210,
+              "end_tick": 3914,
+              "cleared": true,
+              "seconds": 11.73,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 40
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 7
+              },
+              "form_seconds": {
+                "rivet": 11.73
+              },
+              "offered": [
+                "stat_regen_10",
+                "weapon_hand_cannon",
+                "weapon_plasma_sword"
+              ],
+              "taken": "stat_regen_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 5,
+              "block": 5,
+              "start_tick": 4056,
+              "end_tick": 5506,
+              "cleared": true,
+              "seconds": 24.17,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 44
+              },
+              "deploys": {
+                "tonnage": 3
+              },
+              "deploy_kills": {
+                "tonnage": 1
+              },
+              "form_seconds": {
+                "rivet": 24.17
+              },
+              "offered": [
+                "effect_overkill_carry",
+                "ghost_ohm",
+                "stat_damage_25"
+              ],
+              "taken": "ghost_ohm",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 6,
+              "block": 6,
+              "start_tick": 6084,
+              "end_tick": 7503,
+              "cleared": true,
+              "seconds": 23.65,
+              "owned": [
+                "ohm",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 9,
+                "tonnage": 44
+              },
+              "deploys": {
+                "ohm": 2,
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "form_seconds": {
+                "rivet": 23.65
+              },
+              "offered": [
+                "stat_guard_meter_25",
+                "effect_overkill_carry",
+                "weapon_flamethrower"
+              ],
+              "taken": "stat_guard_meter_25",
+              "masteries": [],
+              "entries": [],
+              "stuns": {
+                "ohm": 3
+              }
+            },
+            {
+              "wave": 7,
+              "block": 7,
+              "start_tick": 7853,
+              "end_tick": 8636,
+              "cleared": true,
+              "seconds": 13.05,
+              "owned": [
+                "ohm",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 24,
+                "tonnage": 52
+              },
+              "deploys": {
+                "ohm": 1,
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "ohm": 3,
+                "tonnage": 2
+              },
+              "form_seconds": {
+                "rivet": 13.05
+              },
+              "offered": [
+                "stat_speed_10",
+                "weapon_machine_pistol",
+                "weapon_plasma_sword"
+              ],
+              "taken": "stat_speed_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {
+                "ohm": 1
+              }
+            },
+            {
+              "wave": 8,
+              "block": 8,
+              "start_tick": 8876,
+              "end_tick": 10208,
+              "cleared": true,
+              "seconds": 22.2,
+              "owned": [
+                "ohm",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 30,
+                "tonnage": 60
+              },
+              "deploys": {
+                "ohm": 3,
+                "tonnage": 2
+              },
+              "deploy_kills": {
+                "ohm": 3,
+                "tonnage": 2
+              },
+              "form_seconds": {
+                "rivet": 22.2
+              },
+              "offered": [
+                "master_ohm",
+                "ghost_dent",
+                "weapon_gatling"
+              ],
+              "taken": "weapon_gatling",
+              "masteries": [
+                "master_ohm"
+              ],
+              "entries": [],
+              "stuns": {
+                "ohm": 3
+              }
+            },
+            {
+              "wave": 9,
+              "block": 9,
+              "start_tick": 10572,
+              "end_tick": 13882,
+              "cleared": false,
+              "seconds": 55.17,
+              "owned": [
+                "ohm",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 30,
+                "tonnage": 85
+              },
+              "deploys": {
+                "tonnage": 4
+              },
+              "deploy_kills": {
+                "tonnage": 11
+              },
+              "form_seconds": {
+                "ohm": 0.05,
+                "rivet": 55.12
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [
+                {
+                  "form": "ohm",
+                  "tick": 11140
+                },
+                {
+                  "form": "ohm",
+                  "tick": 12022
+                },
+                {
+                  "form": "ohm",
+                  "tick": 12904
+                }
+              ],
+              "stuns": {}
+            },
+            {
+              "wave": 10,
+              "block": 9,
+              "start_tick": 13272,
+              "end_tick": 13882,
+              "cleared": false,
+              "seconds": 10.17,
+              "owned": [
+                "ohm",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 30,
+                "tonnage": 85
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 4
+              },
+              "form_seconds": {
+                "rivet": 10.17
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            }
+          ],
+          "entries": [
+            {
+              "form": "ohm",
+              "tick": 10258
+            },
+            {
+              "form": "ohm",
+              "tick": 11140
+            },
+            {
+              "form": "ohm",
+              "tick": 12022
+            },
+            {
+              "form": "ohm",
+              "tick": 12904
+            }
+          ],
+          "base_combat_plan_ticks": {
+            "ohm": 1114,
+            "tonnage": 10352
+          },
+          "owned_plan_ticks": {
+            "ohm": 1114,
+            "tonnage": 8671
+          },
+          "releases": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 6,
+            "tonnage": 13
+          },
+          "kills": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 6,
+            "tonnage": 26
+          },
+          "boss_cuts": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "stuns": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 7,
+            "tonnage": 0
+          }
+        },
+        {
+          "seed": 9,
+          "death": {
+            "by": "swat",
+            "wave": 5
+          },
+          "mastery_at_rest": {
+            "dent": null,
+            "kerf": null,
+            "ohm": null,
+            "tonnage": null
+          },
+          "first_mastery": null,
+          "bond_at_end": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 8
+          },
+          "wave_reached": 5,
+          "longest_wave_s": 21.1,
+          "waves": [
+            {
+              "wave": 1,
+              "block": 1,
+              "start_tick": 272,
+              "end_tick": 1223,
+              "cleared": true,
+              "seconds": 15.85,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 15.85
+              },
+              "offered": [
+                "weapon_electro_baton",
+                "weapon_katana",
+                "stat_damage_10"
+              ],
+              "taken": "stat_damage_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 2,
+              "block": 2,
+              "start_tick": 1252,
+              "end_tick": 2518,
+              "cleared": true,
+              "seconds": 21.1,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 21.1
+              },
+              "offered": [
+                "stat_hp_max_10",
+                "stat_speed_10",
+                "stat_guard_meter_10"
+              ],
+              "taken": "stat_hp_max_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 3,
+              "block": 3,
+              "start_tick": 2855,
+              "end_tick": 3633,
+              "cleared": true,
+              "seconds": 12.97,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 12.97
+              },
+              "offered": [
+                "weapon_hand_cannon",
+                "weapon_gloria",
+                "stat_regen_10"
+              ],
+              "taken": "stat_regen_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 4,
+              "block": 4,
+              "start_tick": 3782,
+              "end_tick": 4872,
+              "cleared": true,
+              "seconds": 18.17,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 18.17
+              },
+              "offered": [
+                "weapon_plasma_sword",
+                "ghost_tonnage",
+                "weapon_katana"
+              ],
+              "taken": "ghost_tonnage",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 5,
+              "block": 5,
+              "start_tick": 5221,
+              "end_tick": 6248,
+              "cleared": false,
+              "seconds": 17.12,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 8
+              },
+              "deploys": {
+                "tonnage": 2
+              },
+              "deploy_kills": {
+                "tonnage": 2
+              },
+              "form_seconds": {
+                "rivet": 17.12
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            }
+          ],
+          "entries": [],
+          "base_combat_plan_ticks": {
+            "tonnage": 5113
+          },
+          "owned_plan_ticks": {
+            "tonnage": 1028
+          },
+          "releases": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 2
+          },
+          "kills": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 2
+          },
+          "boss_cuts": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "stuns": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          }
+        },
+        {
+          "seed": 10,
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "mastery_at_rest": {
+            "dent": null,
+            "kerf": null,
+            "ohm": null,
+            "tonnage": null
+          },
+          "first_mastery": null,
+          "bond_at_end": {
+            "dent": 0,
+            "kerf": 10,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "wave_reached": 5,
+          "longest_wave_s": 25.37,
+          "waves": [
+            {
+              "wave": 1,
+              "block": 1,
+              "start_tick": 290,
+              "end_tick": 1305,
+              "cleared": true,
+              "seconds": 16.92,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 16.92
+              },
+              "offered": [
+                "stat_damage_10",
+                "weapon_pistol",
+                "stat_guard_meter_10"
+              ],
+              "taken": "stat_damage_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 2,
+              "block": 2,
+              "start_tick": 1339,
+              "end_tick": 2189,
+              "cleared": true,
+              "seconds": 14.17,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 14.17
+              },
+              "offered": [
+                "stat_hp_max_10",
+                "stat_guard_meter_10",
+                "ghost_kerf"
+              ],
+              "taken": "stat_hp_max_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 3,
+              "block": 3,
+              "start_tick": 2215,
+              "end_tick": 3243,
+              "cleared": true,
+              "seconds": 17.13,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 17.13
+              },
+              "offered": [
+                "weapon_pistol",
+                "weapon_plasma_rifle",
+                "ghost_kerf"
+              ],
+              "taken": "ghost_kerf",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 4,
+              "block": 4,
+              "start_tick": 3381,
+              "end_tick": 4903,
+              "cleared": true,
+              "seconds": 25.37,
+              "owned": [
+                "kerf"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 25.37
+              },
+              "offered": [
+                "stat_speed_10",
+                "weapon_electro_baton",
+                "weapon_plasma_rifle"
+              ],
+              "taken": "stat_speed_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 5,
+              "block": 5,
+              "start_tick": 5134,
+              "end_tick": 6507,
+              "cleared": false,
+              "seconds": 22.88,
+              "owned": [
+                "kerf"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 10,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 2
+              },
+              "deploy_kills": {
+                "kerf": 0
+              },
+              "form_seconds": {
+                "rivet": 22.88
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            }
+          ],
+          "entries": [],
+          "base_combat_plan_ticks": {
+            "kerf": 2896,
+            "tonnage": 2893
+          },
+          "owned_plan_ticks": {
+            "kerf": 2896
+          },
+          "releases": {
+            "dent": 0,
+            "kerf": 2,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "kills": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "boss_cuts": {
+            "dent": 0,
+            "kerf": 2,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "stuns": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          }
+        }
+      ]
+    },
+    "probe": {
+      "schema": "gtai.bond-measurement/1",
+      "arm": "probe",
+      "profile": "average",
+      "pick": "greedy",
+      "controls": "wheel",
+      "wave_limit": 15,
+      "mastered_seeds": 2,
+      "median_first_all": null,
+      "median_first_among_mastered": 8,
+      "runs": [
+        {
+          "seed": 1,
+          "death": {
+            "by": "shield_robot",
+            "wave": 9
+          },
+          "mastery_at_rest": {
+            "dent": null,
+            "kerf": null,
+            "ohm": null,
+            "tonnage": null
+          },
+          "first_mastery": null,
+          "bond_at_end": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 120
+          },
+          "wave_reached": 9,
+          "longest_wave_s": 54.25,
+          "waves": [
+            {
+              "wave": 1,
+              "block": 1,
+              "start_tick": 255,
+              "end_tick": 898,
+              "cleared": true,
+              "seconds": 10.72,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 10.72
+              },
+              "offered": [
+                "ghost_tonnage",
+                "weapon_gloria",
+                "stat_hp_max_10"
+              ],
+              "taken": "ghost_tonnage",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 2,
+              "block": 2,
+              "start_tick": 922,
+              "end_tick": 1459,
+              "cleared": true,
+              "seconds": 8.95,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 12
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 3
+              },
+              "form_seconds": {
+                "rivet": 8.95
+              },
+              "offered": [
+                "stat_hp_max_10",
+                "stat_regen_10",
+                "weapon_machine_pistol"
+              ],
+              "taken": "stat_hp_max_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 3,
+              "block": 3,
+              "start_tick": 1486,
+              "end_tick": 2402,
+              "cleared": true,
+              "seconds": 15.27,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 32
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 5
+              },
+              "form_seconds": {
+                "rivet": 15.27
+              },
+              "offered": [
+                "stat_damage_10",
+                "stat_regen_10",
+                "weapon_hand_cannon"
+              ],
+              "taken": "stat_damage_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 4,
+              "block": 4,
+              "start_tick": 2438,
+              "end_tick": 3308,
+              "cleared": true,
+              "seconds": 14.5,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 48
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 4
+              },
+              "form_seconds": {
+                "rivet": 14.5
+              },
+              "offered": [
+                "stat_speed_25",
+                "weapon_plasma_sword",
+                "ghost_dent"
+              ],
+              "taken": "ghost_dent",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 5,
+              "block": 5,
+              "start_tick": 3354,
+              "end_tick": 4584,
+              "cleared": true,
+              "seconds": 20.5,
+              "owned": [
+                "dent",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 52
+              },
+              "deploys": {
+                "tonnage": 2
+              },
+              "deploy_kills": {
+                "tonnage": 1
+              },
+              "form_seconds": {
+                "rivet": 20.5
+              },
+              "offered": [
+                "weapon_flamethrower",
+                "weapon_machine_pistol",
+                "weapon_hand_cannon"
+              ],
+              "taken": "weapon_flamethrower",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 6,
+              "block": 6,
+              "start_tick": 5116,
+              "end_tick": 6083,
+              "cleared": true,
+              "seconds": 16.12,
+              "owned": [
+                "dent",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 64
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 3
+              },
+              "form_seconds": {
+                "rivet": 16.12
+              },
+              "offered": [
+                "weapon_electro_baton",
+                "weapon_gatling",
+                "stat_guard_meter_10"
+              ],
+              "taken": "weapon_gatling",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 7,
+              "block": 7,
+              "start_tick": 6200,
+              "end_tick": 8774,
+              "cleared": true,
+              "seconds": 42.9,
+              "owned": [
+                "dent",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 80
+              },
+              "deploys": {
+                "tonnage": 2
+              },
+              "deploy_kills": {
+                "tonnage": 4
+              },
+              "form_seconds": {
+                "rivet": 42.9
+              },
+              "offered": [
+                "effect_overkill_carry",
+                "weapon_katana",
+                "weapon_chainsaw"
+              ],
+              "taken": "weapon_katana",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 8,
+              "block": 8,
+              "start_tick": 9227,
+              "end_tick": 12482,
+              "cleared": false,
+              "seconds": 54.25,
+              "owned": [
+                "dent",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 120
+              },
+              "deploys": {
+                "tonnage": 4
+              },
+              "deploy_kills": {
+                "tonnage": 10
+              },
+              "form_seconds": {
+                "rivet": 54.25
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 9,
+              "block": 8,
+              "start_tick": 11927,
+              "end_tick": 12482,
+              "cleared": false,
+              "seconds": 9.25,
+              "owned": [
+                "dent",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 120
+              },
+              "deploys": {
+                "tonnage": 2
+              },
+              "deploy_kills": {
+                "tonnage": 5
+              },
+              "form_seconds": {
+                "rivet": 9.25
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            }
+          ],
+          "entries": [],
+          "base_combat_plan_ticks": {
+            "tonnage": 10993
+          },
+          "owned_plan_ticks": {
+            "tonnage": 10350
+          },
+          "releases": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 12
+          },
+          "kills": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 30
+          },
+          "boss_cuts": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "stuns": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          }
+        },
+        {
+          "seed": 2,
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "mastery_at_rest": {
+            "dent": null,
+            "kerf": null,
+            "ohm": null,
+            "tonnage": null
+          },
+          "first_mastery": null,
+          "bond_at_end": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 64
+          },
+          "wave_reached": 5,
+          "longest_wave_s": 23.1,
+          "waves": [
+            {
+              "wave": 1,
+              "block": 1,
+              "start_tick": 272,
+              "end_tick": 1023,
+              "cleared": true,
+              "seconds": 12.52,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 12.52
+              },
+              "offered": [
+                "stat_guard_meter_10",
+                "stat_regen_10",
+                "ghost_tonnage"
+              ],
+              "taken": "ghost_tonnage",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 2,
+              "block": 2,
+              "start_tick": 1046,
+              "end_tick": 1756,
+              "cleared": true,
+              "seconds": 11.83,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 24
+              },
+              "deploys": {
+                "tonnage": 2
+              },
+              "deploy_kills": {
+                "tonnage": 6
+              },
+              "form_seconds": {
+                "rivet": 11.83
+              },
+              "offered": [
+                "stat_regen_10",
+                "ghost_ohm",
+                "weapon_electro_baton"
+              ],
+              "taken": "ghost_ohm",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 3,
+              "block": 3,
+              "start_tick": 1786,
+              "end_tick": 3172,
+              "cleared": true,
+              "seconds": 23.1,
+              "owned": [
+                "ohm",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 48
+              },
+              "deploys": {
+                "tonnage": 2
+              },
+              "deploy_kills": {
+                "tonnage": 6
+              },
+              "form_seconds": {
+                "rivet": 23.1
+              },
+              "offered": [
+                "effect_overkill_carry",
+                "weapon_gloria",
+                "stat_regen_10"
+              ],
+              "taken": "stat_regen_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 4,
+              "block": 4,
+              "start_tick": 3720,
+              "end_tick": 4260,
+              "cleared": true,
+              "seconds": 9,
+              "owned": [
+                "ohm",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 60
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 3
+              },
+              "form_seconds": {
+                "rivet": 9
+              },
+              "offered": [
+                "stat_hp_max_10",
+                "weapon_pistol",
+                "stat_speed_10"
+              ],
+              "taken": "stat_hp_max_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 5,
+              "block": 5,
+              "start_tick": 4297,
+              "end_tick": 5120,
+              "cleared": false,
+              "seconds": 13.72,
+              "owned": [
+                "ohm",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 64
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 1
+              },
+              "form_seconds": {
+                "rivet": 13.72
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            }
+          ],
+          "entries": [],
+          "base_combat_plan_ticks": {
+            "ohm": 406,
+            "tonnage": 3805
+          },
+          "owned_plan_ticks": {
+            "ohm": 406,
+            "tonnage": 3054
+          },
+          "releases": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 6
+          },
+          "kills": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 16
+          },
+          "boss_cuts": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "stuns": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          }
+        },
+        {
+          "seed": 3,
+          "death": {
+            "by": "rocket",
+            "wave": 10
+          },
+          "mastery_at_rest": {
+            "dent": null,
+            "kerf": null,
+            "ohm": null,
+            "tonnage": null
+          },
+          "first_mastery": null,
+          "bond_at_end": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 20,
+            "tonnage": 36
+          },
+          "wave_reached": 10,
+          "longest_wave_s": 25.17,
+          "waves": [
+            {
+              "wave": 1,
+              "block": 1,
+              "start_tick": 237,
+              "end_tick": 1505,
+              "cleared": true,
+              "seconds": 21.13,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 21.13
+              },
+              "offered": [
+                "stat_regen_10",
+                "stat_hp_max_10",
+                "stat_guard_meter_10"
+              ],
+              "taken": "stat_hp_max_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 2,
+              "block": 2,
+              "start_tick": 1535,
+              "end_tick": 2469,
+              "cleared": true,
+              "seconds": 15.57,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 15.57
+              },
+              "offered": [
+                "weapon_pistol",
+                "stat_regen_10",
+                "weapon_katana"
+              ],
+              "taken": "weapon_pistol",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 3,
+              "block": 3,
+              "start_tick": 2618,
+              "end_tick": 3123,
+              "cleared": true,
+              "seconds": 8.42,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 8.42
+              },
+              "offered": [
+                "stat_damage_10",
+                "weapon_plasma_rifle",
+                "weapon_chainsaw"
+              ],
+              "taken": "stat_damage_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 4,
+              "block": 4,
+              "start_tick": 3240,
+              "end_tick": 3770,
+              "cleared": true,
+              "seconds": 8.83,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 8.83
+              },
+              "offered": [
+                "stat_guard_meter_10",
+                "weapon_katana",
+                "stat_guard_meter_25"
+              ],
+              "taken": "stat_guard_meter_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 5,
+              "block": 5,
+              "start_tick": 3917,
+              "end_tick": 4979,
+              "cleared": true,
+              "seconds": 17.7,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 17.7
+              },
+              "offered": [
+                "stat_regen_10",
+                "weapon_machine_pistol",
+                "weapon_katana"
+              ],
+              "taken": "stat_regen_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 6,
+              "block": 6,
+              "start_tick": 5249,
+              "end_tick": 6759,
+              "cleared": true,
+              "seconds": 25.17,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 25.17
+              },
+              "offered": [
+                "weapon_flamethrower",
+                "ghost_tonnage",
+                "stat_hp_max_25"
+              ],
+              "taken": "ghost_tonnage",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 7,
+              "block": 7,
+              "start_tick": 7065,
+              "end_tick": 7840,
+              "cleared": true,
+              "seconds": 12.92,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 0
+              },
+              "form_seconds": {
+                "rivet": 12.92
+              },
+              "offered": [
+                "weapon_gloria",
+                "effect_overkill_carry",
+                "weapon_hand_cannon"
+              ],
+              "taken": "weapon_gloria",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 8,
+              "block": 8,
+              "start_tick": 7968,
+              "end_tick": 9102,
+              "cleared": true,
+              "seconds": 18.9,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 12
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 3
+              },
+              "form_seconds": {
+                "rivet": 18.9
+              },
+              "offered": [
+                "weapon_gatling",
+                "ghost_kerf",
+                "ghost_ohm"
+              ],
+              "taken": "ghost_ohm",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 9,
+              "block": 9,
+              "start_tick": 9171,
+              "end_tick": 10602,
+              "cleared": true,
+              "seconds": 23.85,
+              "owned": [
+                "ohm",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 17,
+                "tonnage": 24
+              },
+              "deploys": {
+                "ohm": 3,
+                "tonnage": 2
+              },
+              "deploy_kills": {
+                "ohm": 2,
+                "tonnage": 3
+              },
+              "form_seconds": {
+                "rivet": 23.85
+              },
+              "offered": [
+                "weapon_rocket_launcher",
+                "weapon_electro_baton",
+                "weapon_flamethrower"
+              ],
+              "taken": "weapon_rocket_launcher",
+              "masteries": [],
+              "entries": [],
+              "stuns": {
+                "ohm": 3
+              }
+            },
+            {
+              "wave": 10,
+              "block": 10,
+              "start_tick": 10877,
+              "end_tick": 12024,
+              "cleared": false,
+              "seconds": 19.12,
+              "owned": [
+                "ohm",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 20,
+                "tonnage": 36
+              },
+              "deploys": {
+                "ohm": 1,
+                "tonnage": 2
+              },
+              "deploy_kills": {
+                "ohm": 0,
+                "tonnage": 3
+              },
+              "form_seconds": {
+                "rivet": 19.12
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [],
+              "stuns": {
+                "ohm": 1
+              }
+            }
+          ],
+          "entries": [],
+          "base_combat_plan_ticks": {
+            "ohm": 1153,
+            "tonnage": 9144
+          },
+          "owned_plan_ticks": {
+            "ohm": 1153,
+            "tonnage": 3335
+          },
+          "releases": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 4,
+            "tonnage": 6
+          },
+          "kills": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 2,
+            "tonnage": 9
+          },
+          "boss_cuts": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "stuns": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 4,
+            "tonnage": 0
+          }
+        },
+        {
+          "seed": 4,
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "mastery_at_rest": {
+            "dent": null,
+            "kerf": null,
+            "ohm": null,
+            "tonnage": null
+          },
+          "first_mastery": null,
+          "bond_at_end": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "wave_reached": 5,
+          "longest_wave_s": 18.4,
+          "waves": [
+            {
+              "wave": 1,
+              "block": 1,
+              "start_tick": 272,
+              "end_tick": 1376,
+              "cleared": true,
+              "seconds": 18.4,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 18.4
+              },
+              "offered": [
+                "stat_damage_10",
+                "stat_guard_meter_10",
+                "stat_speed_10"
+              ],
+              "taken": "stat_damage_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 2,
+              "block": 2,
+              "start_tick": 1483,
+              "end_tick": 2439,
+              "cleared": true,
+              "seconds": 15.93,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 15.93
+              },
+              "offered": [
+                "stat_speed_10",
+                "weapon_gloria",
+                "weapon_pistol"
+              ],
+              "taken": "stat_speed_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 3,
+              "block": 3,
+              "start_tick": 2641,
+              "end_tick": 3412,
+              "cleared": true,
+              "seconds": 12.85,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 12.85
+              },
+              "offered": [
+                "stat_speed_25",
+                "stat_damage_25",
+                "stat_hp_max_10"
+              ],
+              "taken": "stat_damage_25",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 4,
+              "block": 4,
+              "start_tick": 3502,
+              "end_tick": 4351,
+              "cleared": true,
+              "seconds": 14.15,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 14.15
+              },
+              "offered": [
+                "weapon_hand_cannon",
+                "stat_guard_meter_25",
+                "weapon_gloria"
+              ],
+              "taken": "stat_guard_meter_25",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 5,
+              "block": 5,
+              "start_tick": 4589,
+              "end_tick": 5650,
+              "cleared": false,
+              "seconds": 17.68,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 17.68
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            }
+          ],
+          "entries": [],
+          "base_combat_plan_ticks": {
+            "tonnage": 4742
+          },
+          "owned_plan_ticks": {},
+          "releases": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "kills": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "boss_cuts": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "stuns": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          }
+        },
+        {
+          "seed": 5,
+          "death": {
+            "by": "rocket",
+            "wave": 13
+          },
+          "mastery_at_rest": {
+            "dent": null,
+            "kerf": 10,
+            "ohm": 8,
+            "tonnage": null
+          },
+          "first_mastery": 8,
+          "bond_at_end": {
+            "dent": 0,
+            "kerf": 30,
+            "ohm": 30,
+            "tonnage": 0
+          },
+          "wave_reached": 13,
+          "longest_wave_s": 21.95,
+          "waves": [
+            {
+              "wave": 1,
+              "block": 1,
+              "start_tick": 255,
+              "end_tick": 991,
+              "cleared": true,
+              "seconds": 12.27,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 12.27
+              },
+              "offered": [
+                "weapon_pistol",
+                "stat_speed_10",
+                "weapon_gloria"
+              ],
+              "taken": "stat_speed_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 2,
+              "block": 2,
+              "start_tick": 1084,
+              "end_tick": 1871,
+              "cleared": true,
+              "seconds": 13.12,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 13.12
+              },
+              "offered": [
+                "weapon_pistol",
+                "weapon_katana",
+                "stat_guard_meter_10"
+              ],
+              "taken": "stat_guard_meter_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 3,
+              "block": 3,
+              "start_tick": 2001,
+              "end_tick": 3274,
+              "cleared": true,
+              "seconds": 21.22,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 21.22
+              },
+              "offered": [
+                "stat_guard_meter_25",
+                "stat_damage_10",
+                "stat_hp_max_10"
+              ],
+              "taken": "stat_damage_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 4,
+              "block": 4,
+              "start_tick": 3375,
+              "end_tick": 4667,
+              "cleared": true,
+              "seconds": 21.53,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 21.53
+              },
+              "offered": [
+                "ghost_kerf",
+                "weapon_katana",
+                "stat_speed_25"
+              ],
+              "taken": "ghost_kerf",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 5,
+              "block": 5,
+              "start_tick": 5072,
+              "end_tick": 6130,
+              "cleared": true,
+              "seconds": 17.63,
+              "owned": [
+                "kerf"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 10,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 2
+              },
+              "deploy_kills": {
+                "kerf": 0
+              },
+              "form_seconds": {
+                "rivet": 17.63
+              },
+              "offered": [
+                "weapon_pistol",
+                "effect_overkill_carry",
+                "weapon_electro_baton"
+              ],
+              "taken": "weapon_pistol",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 6,
+              "block": 6,
+              "start_tick": 6693,
+              "end_tick": 7855,
+              "cleared": true,
+              "seconds": 19.37,
+              "owned": [
+                "kerf"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 14,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 2
+              },
+              "deploy_kills": {
+                "kerf": 1
+              },
+              "form_seconds": {
+                "rivet": 19.37
+              },
+              "offered": [
+                "ghost_ohm",
+                "stat_speed_25",
+                "weapon_gatling"
+              ],
+              "taken": "ghost_ohm",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 7,
+              "block": 7,
+              "start_tick": 7918,
+              "end_tick": 9235,
+              "cleared": true,
+              "seconds": 21.95,
+              "owned": [
+                "kerf",
+                "ohm"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 14,
+                "ohm": 20,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 1,
+                "ohm": 1
+              },
+              "deploy_kills": {
+                "kerf": 0,
+                "ohm": 5
+              },
+              "form_seconds": {
+                "rivet": 21.95
+              },
+              "offered": [
+                "weapon_plasma_sword",
+                "weapon_katana",
+                "weapon_flamethrower"
+              ],
+              "taken": "weapon_plasma_sword",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 8,
+              "block": 8,
+              "start_tick": 9310,
+              "end_tick": 10232,
+              "cleared": true,
+              "seconds": 15.37,
+              "owned": [
+                "kerf",
+                "ohm"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 18,
+                "ohm": 30,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 2,
+                "ohm": 1
+              },
+              "deploy_kills": {
+                "kerf": 1,
+                "ohm": 2
+              },
+              "form_seconds": {
+                "rivet": 15.37
+              },
+              "offered": [
+                "master_ohm",
+                "stat_hp_max_10",
+                "ghost_dent"
+              ],
+              "taken": "stat_hp_max_10",
+              "masteries": [
+                "master_ohm"
+              ],
+              "entries": [],
+              "stuns": {
+                "ohm": 2
+              }
+            },
+            {
+              "wave": 9,
+              "block": 9,
+              "start_tick": 10678,
+              "end_tick": 11726,
+              "cleared": true,
+              "seconds": 17.47,
+              "owned": [
+                "kerf",
+                "ohm"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 22,
+                "ohm": 30,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 1,
+                "ohm": 1
+              },
+              "deploy_kills": {
+                "kerf": 1,
+                "ohm": 2
+              },
+              "form_seconds": {
+                "ohm": 2.77,
+                "rivet": 14.7
+              },
+              "offered": [
+                "weapon_electro_baton",
+                "stat_damage_25",
+                "weapon_rocket_launcher"
+              ],
+              "taken": "stat_damage_25",
+              "masteries": [],
+              "entries": [
+                {
+                  "form": "ohm",
+                  "tick": 10718
+                }
+              ],
+              "stuns": {}
+            },
+            {
+              "wave": 10,
+              "block": 10,
+              "start_tick": 12116,
+              "end_tick": 13112,
+              "cleared": true,
+              "seconds": 16.6,
+              "owned": [
+                "kerf",
+                "ohm"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 30,
+                "ohm": 30,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 2,
+                "ohm": 1
+              },
+              "deploy_kills": {
+                "kerf": 0,
+                "ohm": 0
+              },
+              "form_seconds": {
+                "ohm": 0.03,
+                "rivet": 16.57
+              },
+              "offered": [
+                "master_kerf",
+                "weapon_chainsaw",
+                "stat_regen_10"
+              ],
+              "taken": "stat_regen_10",
+              "masteries": [
+                "master_kerf"
+              ],
+              "entries": [
+                {
+                  "form": "ohm",
+                  "tick": 12183
+                }
+              ],
+              "stuns": {
+                "ohm": 1
+              }
+            },
+            {
+              "wave": 11,
+              "block": 11,
+              "start_tick": 13506,
+              "end_tick": 14509,
+              "cleared": true,
+              "seconds": 16.72,
+              "owned": [
+                "kerf",
+                "ohm"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 30,
+                "ohm": 30,
+                "tonnage": 0
+              },
+              "deploys": {
+                "ohm": 1
+              },
+              "deploy_kills": {
+                "ohm": 1
+              },
+              "form_seconds": {
+                "kerf": 5.5,
+                "rivet": 11.22
+              },
+              "offered": [
+                "weapon_plasma_rifle",
+                "weapon_flamethrower",
+                "weapon_machine_pistol"
+              ],
+              "taken": "weapon_plasma_rifle",
+              "masteries": [],
+              "entries": [
+                {
+                  "form": "kerf",
+                  "tick": 13623
+                }
+              ],
+              "stuns": {}
+            },
+            {
+              "wave": 12,
+              "block": 12,
+              "start_tick": 14676,
+              "end_tick": 15749,
+              "cleared": true,
+              "seconds": 17.88,
+              "owned": [
+                "kerf",
+                "ohm"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 30,
+                "ohm": 30,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 1,
+                "ohm": 1
+              },
+              "deploy_kills": {
+                "kerf": 0,
+                "ohm": 1
+              },
+              "form_seconds": {
+                "kerf": 5.5,
+                "ohm": 0.02,
+                "rivet": 12.37
+              },
+              "offered": [
+                "weapon_flamethrower",
+                "stat_guard_meter_25",
+                "weapon_electro_baton"
+              ],
+              "taken": "stat_guard_meter_25",
+              "masteries": [],
+              "entries": [
+                {
+                  "form": "ohm",
+                  "tick": 14781
+                },
+                {
+                  "form": "kerf",
+                  "tick": 14908
+                }
+              ],
+              "stuns": {}
+            },
+            {
+              "wave": 13,
+              "block": 13,
+              "start_tick": 15931,
+              "end_tick": 16798,
+              "cleared": false,
+              "seconds": 14.45,
+              "owned": [
+                "kerf",
+                "ohm"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 30,
+                "ohm": 30,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 1
+              },
+              "deploy_kills": {
+                "kerf": 1
+              },
+              "form_seconds": {
+                "kerf": 0.12,
+                "rivet": 14.33
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [
+                {
+                  "form": "kerf",
+                  "tick": 16210
+                }
+              ],
+              "stuns": {}
+            }
+          ],
+          "entries": [
+            {
+              "form": "ohm",
+              "tick": 10718
+            },
+            {
+              "form": "ohm",
+              "tick": 12183
+            },
+            {
+              "form": "kerf",
+              "tick": 13623
+            },
+            {
+              "form": "ohm",
+              "tick": 14781
+            },
+            {
+              "form": "kerf",
+              "tick": 14908
+            },
+            {
+              "form": "kerf",
+              "tick": 16210
+            }
+          ],
+          "base_combat_plan_ticks": {
+            "kerf": 6287,
+            "ohm": 1922,
+            "tonnage": 4088
+          },
+          "owned_plan_ticks": {
+            "kerf": 6287,
+            "ohm": 1922
+          },
+          "releases": {
+            "dent": 0,
+            "kerf": 12,
+            "ohm": 6,
+            "tonnage": 0
+          },
+          "kills": {
+            "dent": 0,
+            "kerf": 4,
+            "ohm": 11,
+            "tonnage": 0
+          },
+          "boss_cuts": {
+            "dent": 0,
+            "kerf": 4,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "stuns": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 3,
+            "tonnage": 0
+          }
+        },
+        {
+          "seed": 6,
+          "death": {
+            "by": "robot_thug",
+            "wave": 7
+          },
+          "mastery_at_rest": {
+            "dent": null,
+            "kerf": null,
+            "ohm": null,
+            "tonnage": null
+          },
+          "first_mastery": null,
+          "bond_at_end": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 20
+          },
+          "wave_reached": 7,
+          "longest_wave_s": 25.05,
+          "waves": [
+            {
+              "wave": 1,
+              "block": 1,
+              "start_tick": 272,
+              "end_tick": 1292,
+              "cleared": true,
+              "seconds": 17,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 17
+              },
+              "offered": [
+                "stat_guard_meter_10",
+                "stat_regen_10",
+                "stat_damage_10"
+              ],
+              "taken": "stat_damage_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 2,
+              "block": 2,
+              "start_tick": 1374,
+              "end_tick": 2482,
+              "cleared": true,
+              "seconds": 18.47,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 18.47
+              },
+              "offered": [
+                "weapon_machine_pistol",
+                "stat_guard_meter_10",
+                "weapon_katana"
+              ],
+              "taken": "stat_guard_meter_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 3,
+              "block": 3,
+              "start_tick": 2679,
+              "end_tick": 3922,
+              "cleared": true,
+              "seconds": 20.72,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 20.72
+              },
+              "offered": [
+                "effect_overkill_carry",
+                "stat_speed_10",
+                "stat_guard_meter_25"
+              ],
+              "taken": "stat_speed_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 4,
+              "block": 4,
+              "start_tick": 4203,
+              "end_tick": 5376,
+              "cleared": true,
+              "seconds": 19.55,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 19.55
+              },
+              "offered": [
+                "weapon_plasma_sword",
+                "stat_regen_25",
+                "stat_regen_10"
+              ],
+              "taken": "stat_regen_25",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 5,
+              "block": 5,
+              "start_tick": 5469,
+              "end_tick": 6972,
+              "cleared": true,
+              "seconds": 25.05,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 25.05
+              },
+              "offered": [
+                "weapon_hand_cannon",
+                "ghost_tonnage",
+                "weapon_machine_pistol"
+              ],
+              "taken": "ghost_tonnage",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 6,
+              "block": 6,
+              "start_tick": 7380,
+              "end_tick": 8500,
+              "cleared": true,
+              "seconds": 18.67,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 4
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 1
+              },
+              "form_seconds": {
+                "rivet": 18.67
+              },
+              "offered": [
+                "weapon_gloria",
+                "stat_regen_10",
+                "weapon_hand_cannon"
+              ],
+              "taken": "stat_regen_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 7,
+              "block": 7,
+              "start_tick": 8632,
+              "end_tick": 9319,
+              "cleared": false,
+              "seconds": 11.45,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 20
+              },
+              "deploys": {
+                "tonnage": 2
+              },
+              "deploy_kills": {
+                "tonnage": 4
+              },
+              "form_seconds": {
+                "rivet": 11.45
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            }
+          ],
+          "entries": [],
+          "base_combat_plan_ticks": {
+            "tonnage": 7855
+          },
+          "owned_plan_ticks": {
+            "tonnage": 1808
+          },
+          "releases": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 3
+          },
+          "kills": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 5
+          },
+          "boss_cuts": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "stuns": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          }
+        },
+        {
+          "seed": 7,
+          "death": {
+            "by": "shield_robot",
+            "wave": 9
+          },
+          "mastery_at_rest": {
+            "dent": null,
+            "kerf": null,
+            "ohm": null,
+            "tonnage": null
+          },
+          "first_mastery": null,
+          "bond_at_end": {
+            "dent": 0,
+            "kerf": 18,
+            "ohm": 29,
+            "tonnage": 0
+          },
+          "wave_reached": 9,
+          "longest_wave_s": 37.1,
+          "waves": [
+            {
+              "wave": 1,
+              "block": 1,
+              "start_tick": 272,
+              "end_tick": 1061,
+              "cleared": true,
+              "seconds": 13.15,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 13.15
+              },
+              "offered": [
+                "stat_speed_10",
+                "ghost_kerf",
+                "weapon_electro_baton"
+              ],
+              "taken": "ghost_kerf",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 2,
+              "block": 2,
+              "start_tick": 1092,
+              "end_tick": 2196,
+              "cleared": true,
+              "seconds": 18.4,
+              "owned": [
+                "kerf"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 18.4
+              },
+              "offered": [
+                "weapon_machine_pistol",
+                "stat_regen_10",
+                "weapon_katana"
+              ],
+              "taken": "stat_regen_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 3,
+              "block": 3,
+              "start_tick": 2417,
+              "end_tick": 3843,
+              "cleared": true,
+              "seconds": 23.77,
+              "owned": [
+                "kerf"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 23.77
+              },
+              "offered": [
+                "weapon_plasma_rifle",
+                "stat_damage_25",
+                "stat_regen_25"
+              ],
+              "taken": "stat_damage_25",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 4,
+              "block": 4,
+              "start_tick": 3911,
+              "end_tick": 4713,
+              "cleared": true,
+              "seconds": 13.37,
+              "owned": [
+                "kerf"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 13.37
+              },
+              "offered": [
+                "ghost_dent",
+                "weapon_electro_baton",
+                "weapon_gloria"
+              ],
+              "taken": "ghost_dent",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 5,
+              "block": 5,
+              "start_tick": 4759,
+              "end_tick": 6229,
+              "cleared": true,
+              "seconds": 24.5,
+              "owned": [
+                "dent",
+                "kerf"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 10,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 2
+              },
+              "deploy_kills": {
+                "kerf": 0
+              },
+              "form_seconds": {
+                "rivet": 24.5
+              },
+              "offered": [
+                "weapon_electro_baton",
+                "stat_damage_10",
+                "weapon_hand_cannon"
+              ],
+              "taken": "stat_damage_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 6,
+              "block": 6,
+              "start_tick": 6605,
+              "end_tick": 7942,
+              "cleared": true,
+              "seconds": 22.28,
+              "owned": [
+                "dent",
+                "kerf"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 10,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 1
+              },
+              "deploy_kills": {
+                "kerf": 0
+              },
+              "form_seconds": {
+                "rivet": 22.28
+              },
+              "offered": [
+                "weapon_hand_cannon",
+                "stat_guard_meter_10",
+                "weapon_flamethrower"
+              ],
+              "taken": "stat_guard_meter_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 7,
+              "block": 7,
+              "start_tick": 8155,
+              "end_tick": 9130,
+              "cleared": true,
+              "seconds": 16.25,
+              "owned": [
+                "dent",
+                "kerf"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 14,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 1
+              },
+              "deploy_kills": {
+                "kerf": 1
+              },
+              "form_seconds": {
+                "rivet": 16.25
+              },
+              "offered": [
+                "ghost_ohm",
+                "stat_speed_10",
+                "stat_regen_25"
+              ],
+              "taken": "ghost_ohm",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 8,
+              "block": 8,
+              "start_tick": 9195,
+              "end_tick": 11421,
+              "cleared": true,
+              "seconds": 37.1,
+              "owned": [
+                "dent",
+                "kerf",
+                "ohm"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 18,
+                "ohm": 29,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 1,
+                "ohm": 4
+              },
+              "deploy_kills": {
+                "kerf": 1,
+                "ohm": 5
+              },
+              "form_seconds": {
+                "rivet": 37.1
+              },
+              "offered": [
+                "weapon_chainsaw",
+                "weapon_hand_cannon",
+                "weapon_rocket_launcher"
+              ],
+              "taken": "weapon_rocket_launcher",
+              "masteries": [],
+              "entries": [],
+              "stuns": {
+                "ohm": 3
+              }
+            },
+            {
+              "wave": 9,
+              "block": 9,
+              "start_tick": 12057,
+              "end_tick": 12735,
+              "cleared": false,
+              "seconds": 11.3,
+              "owned": [
+                "dent",
+                "kerf",
+                "ohm"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 18,
+                "ohm": 29,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 1
+              },
+              "deploy_kills": {
+                "kerf": 0
+              },
+              "form_seconds": {
+                "rivet": 11.3
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            }
+          ],
+          "entries": [],
+          "base_combat_plan_ticks": {
+            "dent": 8,
+            "kerf": 8377,
+            "ohm": 1634,
+            "tonnage": 789
+          },
+          "owned_plan_ticks": {
+            "dent": 8,
+            "kerf": 8377,
+            "ohm": 1634
+          },
+          "releases": {
+            "dent": 0,
+            "kerf": 6,
+            "ohm": 4,
+            "tonnage": 0
+          },
+          "kills": {
+            "dent": 0,
+            "kerf": 2,
+            "ohm": 5,
+            "tonnage": 0
+          },
+          "boss_cuts": {
+            "dent": 0,
+            "kerf": 2,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "stuns": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 3,
+            "tonnage": 0
+          }
+        },
+        {
+          "seed": 8,
+          "death": {
+            "by": "sentry_turret",
+            "wave": 10
+          },
+          "mastery_at_rest": {
+            "dent": null,
+            "kerf": null,
+            "ohm": 8,
+            "tonnage": null
+          },
+          "first_mastery": 8,
+          "bond_at_end": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 30,
+            "tonnage": 104
+          },
+          "wave_reached": 10,
+          "longest_wave_s": 55.17,
+          "waves": [
+            {
+              "wave": 1,
+              "block": 1,
+              "start_tick": 272,
+              "end_tick": 1086,
+              "cleared": true,
+              "seconds": 13.57,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 13.57
+              },
+              "offered": [
+                "weapon_electro_baton",
+                "stat_hp_max_10",
+                "ghost_kerf"
+              ],
+              "taken": "stat_hp_max_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 2,
+              "block": 2,
+              "start_tick": 1231,
+              "end_tick": 2098,
+              "cleared": true,
+              "seconds": 14.45,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 14.45
+              },
+              "offered": [
+                "stat_guard_meter_10",
+                "ghost_tonnage",
+                "weapon_machine_pistol"
+              ],
+              "taken": "ghost_tonnage",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 3,
+              "block": 3,
+              "start_tick": 2139,
+              "end_tick": 3156,
+              "cleared": true,
+              "seconds": 16.95,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 12
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 3
+              },
+              "form_seconds": {
+                "rivet": 16.95
+              },
+              "offered": [
+                "weapon_electro_baton",
+                "weapon_katana",
+                "weapon_plasma_rifle"
+              ],
+              "taken": "weapon_electro_baton",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 4,
+              "block": 4,
+              "start_tick": 3210,
+              "end_tick": 3914,
+              "cleared": true,
+              "seconds": 11.73,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 40
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 7
+              },
+              "form_seconds": {
+                "rivet": 11.73
+              },
+              "offered": [
+                "stat_regen_10",
+                "weapon_hand_cannon",
+                "weapon_plasma_sword"
+              ],
+              "taken": "stat_regen_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 5,
+              "block": 5,
+              "start_tick": 4056,
+              "end_tick": 5506,
+              "cleared": true,
+              "seconds": 24.17,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 44
+              },
+              "deploys": {
+                "tonnage": 3
+              },
+              "deploy_kills": {
+                "tonnage": 1
+              },
+              "form_seconds": {
+                "rivet": 24.17
+              },
+              "offered": [
+                "effect_overkill_carry",
+                "ghost_ohm",
+                "stat_damage_25"
+              ],
+              "taken": "ghost_ohm",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 6,
+              "block": 6,
+              "start_tick": 6084,
+              "end_tick": 7503,
+              "cleared": true,
+              "seconds": 23.65,
+              "owned": [
+                "ohm",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 9,
+                "tonnage": 44
+              },
+              "deploys": {
+                "ohm": 2,
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "form_seconds": {
+                "rivet": 23.65
+              },
+              "offered": [
+                "stat_guard_meter_25",
+                "effect_overkill_carry",
+                "weapon_flamethrower"
+              ],
+              "taken": "stat_guard_meter_25",
+              "masteries": [],
+              "entries": [],
+              "stuns": {
+                "ohm": 3
+              }
+            },
+            {
+              "wave": 7,
+              "block": 7,
+              "start_tick": 7853,
+              "end_tick": 8636,
+              "cleared": true,
+              "seconds": 13.05,
+              "owned": [
+                "ohm",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 24,
+                "tonnage": 52
+              },
+              "deploys": {
+                "ohm": 1,
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "ohm": 3,
+                "tonnage": 2
+              },
+              "form_seconds": {
+                "rivet": 13.05
+              },
+              "offered": [
+                "stat_speed_10",
+                "weapon_machine_pistol",
+                "weapon_plasma_sword"
+              ],
+              "taken": "stat_speed_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {
+                "ohm": 1
+              }
+            },
+            {
+              "wave": 8,
+              "block": 8,
+              "start_tick": 8876,
+              "end_tick": 10208,
+              "cleared": true,
+              "seconds": 22.2,
+              "owned": [
+                "ohm",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 30,
+                "tonnage": 60
+              },
+              "deploys": {
+                "ohm": 3,
+                "tonnage": 2
+              },
+              "deploy_kills": {
+                "ohm": 3,
+                "tonnage": 2
+              },
+              "form_seconds": {
+                "rivet": 22.2
+              },
+              "offered": [
+                "master_ohm",
+                "ghost_dent",
+                "weapon_gatling"
+              ],
+              "taken": "weapon_gatling",
+              "masteries": [
+                "master_ohm"
+              ],
+              "entries": [],
+              "stuns": {
+                "ohm": 3
+              }
+            },
+            {
+              "wave": 9,
+              "block": 9,
+              "start_tick": 10572,
+              "end_tick": 13882,
+              "cleared": false,
+              "seconds": 55.17,
+              "owned": [
+                "ohm",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 30,
+                "tonnage": 104
+              },
+              "deploys": {
+                "tonnage": 4
+              },
+              "deploy_kills": {
+                "tonnage": 11
+              },
+              "form_seconds": {
+                "ohm": 0.05,
+                "rivet": 55.12
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [
+                {
+                  "form": "ohm",
+                  "tick": 11140
+                },
+                {
+                  "form": "ohm",
+                  "tick": 12022
+                },
+                {
+                  "form": "ohm",
+                  "tick": 12904
+                }
+              ],
+              "stuns": {}
+            },
+            {
+              "wave": 10,
+              "block": 9,
+              "start_tick": 13272,
+              "end_tick": 13882,
+              "cleared": false,
+              "seconds": 10.17,
+              "owned": [
+                "ohm",
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 30,
+                "tonnage": 104
+              },
+              "deploys": {
+                "tonnage": 1
+              },
+              "deploy_kills": {
+                "tonnage": 4
+              },
+              "form_seconds": {
+                "rivet": 10.17
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            }
+          ],
+          "entries": [
+            {
+              "form": "ohm",
+              "tick": 10258
+            },
+            {
+              "form": "ohm",
+              "tick": 11140
+            },
+            {
+              "form": "ohm",
+              "tick": 12022
+            },
+            {
+              "form": "ohm",
+              "tick": 12904
+            }
+          ],
+          "base_combat_plan_ticks": {
+            "ohm": 1114,
+            "tonnage": 10352
+          },
+          "owned_plan_ticks": {
+            "ohm": 1114,
+            "tonnage": 8671
+          },
+          "releases": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 6,
+            "tonnage": 13
+          },
+          "kills": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 6,
+            "tonnage": 26
+          },
+          "boss_cuts": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "stuns": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 7,
+            "tonnage": 0
+          }
+        },
+        {
+          "seed": 9,
+          "death": {
+            "by": "swat",
+            "wave": 5
+          },
+          "mastery_at_rest": {
+            "dent": null,
+            "kerf": null,
+            "ohm": null,
+            "tonnage": null
+          },
+          "first_mastery": null,
+          "bond_at_end": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 8
+          },
+          "wave_reached": 5,
+          "longest_wave_s": 21.1,
+          "waves": [
+            {
+              "wave": 1,
+              "block": 1,
+              "start_tick": 272,
+              "end_tick": 1223,
+              "cleared": true,
+              "seconds": 15.85,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 15.85
+              },
+              "offered": [
+                "weapon_electro_baton",
+                "weapon_katana",
+                "stat_damage_10"
+              ],
+              "taken": "stat_damage_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 2,
+              "block": 2,
+              "start_tick": 1252,
+              "end_tick": 2518,
+              "cleared": true,
+              "seconds": 21.1,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 21.1
+              },
+              "offered": [
+                "stat_hp_max_10",
+                "stat_speed_10",
+                "stat_guard_meter_10"
+              ],
+              "taken": "stat_hp_max_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 3,
+              "block": 3,
+              "start_tick": 2855,
+              "end_tick": 3633,
+              "cleared": true,
+              "seconds": 12.97,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 12.97
+              },
+              "offered": [
+                "weapon_hand_cannon",
+                "weapon_gloria",
+                "stat_regen_10"
+              ],
+              "taken": "stat_regen_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 4,
+              "block": 4,
+              "start_tick": 3782,
+              "end_tick": 4872,
+              "cleared": true,
+              "seconds": 18.17,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 18.17
+              },
+              "offered": [
+                "weapon_plasma_sword",
+                "ghost_tonnage",
+                "weapon_katana"
+              ],
+              "taken": "ghost_tonnage",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 5,
+              "block": 5,
+              "start_tick": 5221,
+              "end_tick": 6248,
+              "cleared": false,
+              "seconds": 17.12,
+              "owned": [
+                "tonnage"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 8
+              },
+              "deploys": {
+                "tonnage": 2
+              },
+              "deploy_kills": {
+                "tonnage": 2
+              },
+              "form_seconds": {
+                "rivet": 17.12
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            }
+          ],
+          "entries": [],
+          "base_combat_plan_ticks": {
+            "tonnage": 5113
+          },
+          "owned_plan_ticks": {
+            "tonnage": 1028
+          },
+          "releases": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 2
+          },
+          "kills": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 2
+          },
+          "boss_cuts": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "stuns": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          }
+        },
+        {
+          "seed": 10,
+          "death": {
+            "by": "stomp",
+            "wave": 5
+          },
+          "mastery_at_rest": {
+            "dent": null,
+            "kerf": null,
+            "ohm": null,
+            "tonnage": null
+          },
+          "first_mastery": null,
+          "bond_at_end": {
+            "dent": 0,
+            "kerf": 10,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "wave_reached": 5,
+          "longest_wave_s": 25.37,
+          "waves": [
+            {
+              "wave": 1,
+              "block": 1,
+              "start_tick": 290,
+              "end_tick": 1305,
+              "cleared": true,
+              "seconds": 16.92,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 16.92
+              },
+              "offered": [
+                "stat_damage_10",
+                "weapon_pistol",
+                "stat_guard_meter_10"
+              ],
+              "taken": "stat_damage_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 2,
+              "block": 2,
+              "start_tick": 1339,
+              "end_tick": 2189,
+              "cleared": true,
+              "seconds": 14.17,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 14.17
+              },
+              "offered": [
+                "stat_hp_max_10",
+                "stat_guard_meter_10",
+                "ghost_kerf"
+              ],
+              "taken": "stat_hp_max_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 3,
+              "block": 3,
+              "start_tick": 2215,
+              "end_tick": 3243,
+              "cleared": true,
+              "seconds": 17.13,
+              "owned": [],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 17.13
+              },
+              "offered": [
+                "weapon_pistol",
+                "weapon_plasma_rifle",
+                "ghost_kerf"
+              ],
+              "taken": "ghost_kerf",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 4,
+              "block": 4,
+              "start_tick": 3381,
+              "end_tick": 4903,
+              "cleared": true,
+              "seconds": 25.37,
+              "owned": [
+                "kerf"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 0,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {},
+              "deploy_kills": {},
+              "form_seconds": {
+                "rivet": 25.37
+              },
+              "offered": [
+                "stat_speed_10",
+                "weapon_electro_baton",
+                "weapon_plasma_rifle"
+              ],
+              "taken": "stat_speed_10",
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            },
+            {
+              "wave": 5,
+              "block": 5,
+              "start_tick": 5134,
+              "end_tick": 6507,
+              "cleared": false,
+              "seconds": 22.88,
+              "owned": [
+                "kerf"
+              ],
+              "bond": {
+                "dent": 0,
+                "kerf": 10,
+                "ohm": 0,
+                "tonnage": 0
+              },
+              "deploys": {
+                "kerf": 2
+              },
+              "deploy_kills": {
+                "kerf": 0
+              },
+              "form_seconds": {
+                "rivet": 22.88
+              },
+              "offered": [],
+              "taken": null,
+              "masteries": [],
+              "entries": [],
+              "stuns": {}
+            }
+          ],
+          "entries": [],
+          "base_combat_plan_ticks": {
+            "kerf": 2896,
+            "tonnage": 2893
+          },
+          "owned_plan_ticks": {
+            "kerf": 2896
+          },
+          "releases": {
+            "dent": 0,
+            "kerf": 2,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "kills": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "boss_cuts": {
+            "dent": 0,
+            "kerf": 2,
+            "ohm": 0,
+            "tonnage": 0
+          },
+          "stuns": {
+            "dent": 0,
+            "kerf": 0,
+            "ohm": 0,
+            "tonnage": 0
+          }
+        }
+      ]
+    }
+  }
+}

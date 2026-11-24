@@ -17,13 +17,79 @@ const STUN_LIFT_M: float = 0.55
 const ARC_INK_M: float = 0.06
 const ARC_INK_DIRS: int = 8
 
+## Live current (the halo look of `ElectricArc`): a star of FORKS_MIN..FORKS_MAX short forks where
+## the arc lands (FORK_M long), STUN_FORK_M long on a daze mark; forks run at FORK_K of the width.
+const FORKS_MIN: int = 3
+const FORKS_MAX: int = 4
+const STUN_FORK_M: float = 0.3
+const FORK_K: float = 1.0
+const STUN_UNDER_ALPHA: float = 0.3
+
+
+## One polyline pass of the live look: points (view px), colour, width (screen px).
+class Line:
+	extends RefCounted
+	var points: PackedVector2Array
+	var color: Color
+	var width: float
+
+	func _init(p_points: PackedVector2Array, p_stroke: ElectricArc.Stroke) -> void:
+		points = p_points
+		color = p_stroke.color
+		width = p_stroke.width
+
+
 static var arc_ink: bool = not OS.get_cmdline_user_args().has("--arc-ink=off")
+## true (`--electro-cells`) = the before: the arc/spark PNG cells instead of live current.
+static var cells: bool = OS.get_cmdline_user_args().has("--electro-cells")
+
+
+## The jagged arc from `a` to `b` (m) with a star at `b` (view px); `k` = 1 / screen scale. No
+## RNG: kinks hash the ends (to 0.25 m) and `phase`. Empty under `cells` (the before).
+static func chain_plan(a: Vector2, b: Vector2, phase: int, k: float = 1.0) -> Array[Line]:
+	var plan: Array[Line] = []
+	if cells:
+		return plan
+	var serial: int = _serial(a, b)
+	var path: PackedVector2Array = ElectricArc.shape(
+		PackedVector2Array([a, b]), serial, phase * 2, false
+	)
+	_add(plan, _px(path), k)
+	plan.append_array(star_plan(b, ElectricArc.FORK_M, serial, phase * 2, k))
+	return plan
+
+
+## `forks` short forks radiating `reach` m from `at` (m), turned and counted by a hash of
+## `serial` and the 3-tick jag cell of `tick`; the same strokes as the arc, at FORK_K width.
+static func star_plan(
+	at: Vector2, reach: float, serial: int, tick: int, k: float = 1.0, under: bool = false
+) -> Array[Line]:
+	var plan: Array[Line] = []
+	var jag: int = ElectricArc.cell(tick, false)
+	var n: int = FORKS_MIN + int(ElectricArc.hash01(serial, jag, 3) * 1.99)
+	var turn: float = ElectricArc.hash01(serial, jag, 4) * TAU
+	for i: int in n:
+		var d: Vector2 = Vector2.from_angle(turn + TAU * float(i) / float(n))
+		var bend: float = (ElectricArc.hash01(serial, jag, 10 + i) - 0.5) * 1.2
+		var mid: Vector2 = at + d * reach * 0.5
+		var tip: Vector2 = mid + d.rotated(bend) * reach * 0.5
+		var pts: PackedVector2Array = _px(PackedVector2Array([at, mid, tip]))
+		if under:
+			var rim: Color = Color(Ink.INK, STUN_UNDER_ALPHA)
+			plan.append(
+				Line.new(pts, ElectricArc.Stroke.new(rim, ElectricArc.HALO_PX * k * FORK_K))
+			)
+		_add(plan, pts, k * FORK_K)
+	return plan
 
 
 ## The jagged paper arc from `a` to `b` (m) with a spark where it lands; frame by `phase`.
 static func chain(ci: CanvasItem, a: Vector2, b: Vector2, phase: int) -> bool:
 	if not WeaponFxArt.enabled or a.distance_to(b) < 0.05:
 		return false
+	if not cells:
+		_draw_plan(ci, chain_plan(a, b, phase, _k(ci)))
+		return true
 	var span_m: float = a.distance_to(b)
 	var k: float = WeaponFxArt.cell_scale()
 	var span: float = span_m * Ink.PX_PER_M / (WeaponFxArt.ARC_SPAN_PX * k)
@@ -36,7 +102,7 @@ static func chain(ci: CanvasItem, a: Vector2, b: Vector2, phase: int) -> bool:
 	return true
 
 
-## Two sparks circling a stunned human's head (the cartoon daze), `tick` turns them.
+## Two stars of current circling a stunned human's head (the cartoon daze), `tick` turns them.
 static func stun(ci: CanvasItem, at: Vector2, tick: int, sparks: int = 2) -> bool:
 	if not WeaponFxArt.enabled:
 		return false
@@ -44,8 +110,49 @@ static func stun(ci: CanvasItem, at: Vector2, tick: int, sparks: int = 2) -> boo
 	for i: int in mini(sparks, 2):
 		var ang: float = float(tick) * 0.25 + PI * float(i)
 		var p: Vector2 = head + Vector2.from_angle(ang) * STUN_RING_M
-		WeaponFxArt.draw_cell(ci, &"spark", (tick / 3 + i) % 3, p, ang, Vector2.ONE * STUN_SPARK_K)
+		if cells:
+			WeaponFxArt.draw_cell(
+				ci, &"spark", (tick / 3 + i) % 3, p, ang, Vector2.ONE * STUN_SPARK_K
+			)
+		else:
+			_draw_plan(ci, stun_plan(p, tick, i, _k(ci)))
 	return true
+
+
+## One daze star at `p` (m): each fork gets a faint ink under-halo (never a solid rim).
+static func stun_plan(p: Vector2, tick: int, i: int, k: float = 1.0) -> Array[Line]:
+	return star_plan(p, STUN_FORK_M, 7 + i, tick, k, true)
+
+
+static func _add(plan: Array[Line], pts: PackedVector2Array, k: float) -> void:
+	for s: ElectricArc.Stroke in ElectricArc.strokes(k):
+		plan.append(Line.new(pts, s))
+
+
+static func _px(pts: PackedVector2Array) -> PackedVector2Array:
+	var out: PackedVector2Array = PackedVector2Array()
+	for p: Vector2 in pts:
+		@warning_ignore("return_value_discarded")
+		out.append(Ink.px(p))
+	return out
+
+
+static func _serial(a: Vector2, b: Vector2) -> int:
+	var q: Vector2i = Vector2i((a * 4.0).floor()) * 31 + Vector2i((b * 4.0).floor())
+	return posmod(q.x * 7 + q.y * 13, 997)
+
+
+## Screen px -> canvas units: the widths stay thin at every zoom.
+static func _k(ci: CanvasItem) -> float:
+	if not ci.is_inside_tree():
+		return 1.0
+	return 1.0 / maxf(0.01, ci.get_global_transform_with_canvas().get_scale().x)
+
+
+static func _draw_plan(ci: CanvasItem, plan: Array[Line]) -> void:
+	for l: Line in plan:
+		if l.points.size() > 1:
+			ci.draw_polyline(l.points, l.color, l.width, true)
 
 
 ## Arc frame `frame` at `at` (m) along `ang`, `span` long (cell scale), in ink at ARC_INK_DIRS

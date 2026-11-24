@@ -31,9 +31,15 @@ static func shot(ci: CanvasItem, s: Shot, arena: CombatArena) -> bool:
 		var cell: StringName = fx if fx != &"" else &"tracer"
 		WeaponFxArt.draw_cell(ci, cell, 0, at, dir.angle(), Vector2(sqrt(k), k))
 	var ticks: int = roundi(flew / maxf(w.speed_mps * SimClock.TICK_DT, 0.001))
-	if ticks <= WeaponFxArt.FLASH_TICKS:
+	if flashes(s, ticks):
 		_flash(ci, id, arena.rivet, dir, maxi(ticks - 1, 0))
 	return true
+
+
+## Rivet's bore flash is drawn for a round in its first FLASH_TICKS, never for a turned round: it
+## keeps its fresh range, so it would flash at Rivet's bore with the red-cored cell.
+static func flashes(s: Shot, ticks: int) -> bool:
+	return ticks <= WeaponFxArt.FLASH_TICKS and not s.has_meta(PlayerDeflect.TURNED)
 
 
 ## The stand-in art id drawing Rivet's round `s`, or &"" (an enemy round, a table gun's round,

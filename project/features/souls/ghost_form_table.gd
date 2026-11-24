@@ -22,6 +22,8 @@ var transform_unlocked: bool = false
 var story_transform: bool = false
 var bond_enabled: bool = false
 var master_at: float
+## Forms with a bar of their own (bond.master_at_by_form); the rest use master_at.
+var master_at_by_form: Dictionary[StringName, float] = {}
 var per_kill: float
 var per_stun: float
 var per_boss_cut: float
@@ -52,6 +54,7 @@ static func from_table(t: DataTable) -> GhostFormTable:
 	var bond: Dictionary = t.object(t.raw, "bond")
 	g.bond_enabled = bond.get("enabled") == true
 	g.master_at = t.num(bond, "master_at")
+	g._read_bars(t, bond)
 	g.per_kill = t.num(bond, "per_kill")
 	g.per_stun = t.num(bond, "per_stun")
 	g.per_boss_cut = t.num(bond, "per_boss_cut")
@@ -61,7 +64,22 @@ static func from_table(t: DataTable) -> GhostFormTable:
 		if not g.forms.has(id):
 			g._errors.append("ghost_forms.json: order names unknown form %s" % id)
 	g._check_slots()
+	for id: StringName in g.master_at_by_form:
+		if not g.forms.has(id):
+			g._errors.append("ghost_forms.json: master_at_by_form names unknown form %s" % id)
 	return g
+
+
+func _read_bars(t: DataTable, bond: Dictionary) -> void:
+	var bars: Dictionary = (
+		t.object(bond, "master_at_by_form") if bond.has("master_at_by_form") else {}
+	)
+	for id: Variant in bars:
+		master_at_by_form[StringName(str(id))] = t.num(bars, str(id))
+
+
+func master_at_for(id: StringName) -> float:
+	return master_at_by_form.get(id, master_at)
 
 
 func _check_slots() -> void:

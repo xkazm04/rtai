@@ -1,7 +1,7 @@
 extends "res://dev/test_player/gauntlet_bot_film.gd"
 ## The bond and the mastery card, drawn. The gauntlet film scene with every owned ghost's bond
-## filled to master_at - N before the first wave, the rest screen drawn long enough to read, and
-## a read-only log of the bond edges. Run through the movie writer at 60 fps; always the film view.
+## filled to the form's bar - N short, the rest screen drawn long enough to read, and a
+## read-only log of the bond edges. Run through the movie writer at 60 fps; always the film view.
 
 const KNOWN: PackedStringArray = [
 	"--seed",
@@ -21,7 +21,7 @@ var _prefill: int = 0
 var _capture: BondFilmCapture = BondFilmCapture.new()
 
 
-## --bond-prefill=<points short of master_at>. The parent's list does not know it.
+## --bond-prefill=<points short of the form's own bar>. The parent's list does not know it.
 func _invalid_arg(args: ArenaArgs) -> String:
 	if args.has("--bond-prefill"):
 		var text: String = args.text("--bond-prefill")
@@ -65,10 +65,10 @@ func _tick() -> int:
 ## gauntlet starts with no ghost owned, so every ghost's bond is filled: each is near master the
 ## moment a card hands it over.
 func _fill(forms: GhostForms) -> void:
-	var points: float = forms.table.master_at - float(_prefill)
-	var kills: int = floori(points / forms.table.per_kill)
-	var stuns: int = floori((points - kills * forms.table.per_kill) / forms.table.per_stun)
-	for id: StringName in forms.table.order:
-		if _prefill > 0:
-			forms.bond.record(id, kills, stuns)
-			Log.info("bond-film", "prefill %s %.0f" % [id, forms.bond.value(id)])
+	var ids: Array[StringName] = forms.table.order if _prefill > 0 else []
+	for id: StringName in ids:
+		var points: float = forms.table.master_at_for(id) - float(_prefill)
+		var kills: int = floori(points / forms.table.per_kill)
+		var stuns: int = floori((points - kills * forms.table.per_kill) / forms.table.per_stun)
+		forms.bond.record(id, kills, stuns)
+		Log.info("bond-film", "prefill %s %.0f" % [id, forms.bond.value(id)])
