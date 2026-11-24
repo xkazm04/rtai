@@ -79,3 +79,4 @@ NEXT: (1) when `gtai-n27/logs/melee/builder.lock` is gone: read `evidence/briefs
 - 05:43 BUILDER RUNNING m4-wreck-arcs since 05:43 (Start-Process pid 46808, brief `evidence/briefs/n27-melee-04-wreck-arcs.md`,
   C by 06:10, B by 06:30, hard stop 06:55).
 - 05:58 REVIEW m4 part C `42f8c948f`: `mastery` cards mount the ghost figure (shared `_mount_ghost` with `ghost`) and draw a full teal ring + crown diamond from GhostBondRing constants; unit test `test_gauntlet_pick_card.gd`. Accepted pending the re-rendered film/still.
+- 06:24 REVIEW m4 C film: `films/bond_mastery.mp4` re-rendered 06:02 (ffprobe `1920,1080,60/1,28.82`); frame at 16.5-17 s: Master Tonnage card shows the Tonnage figure inside a full teal ring with the teal crown diamond; the ring's lower edge touches the title text (minor). `stills/bond_offer_64.png` NOT yet re-rendered (same bytes as the blankcard copy) -> follow-up if m4 does not.
