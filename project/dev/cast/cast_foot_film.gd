@@ -1,7 +1,7 @@
 extends "res://dev/cast/cast_lineup.gd"
 ## One foe walking right across a metre grid with its sole dots drawn per rendered frame.
-## GTAI_CAST_PPM 32|64, GTAI_CAST_SUBJECT, GTAI_CAST_SPEED (m/s), GTAI_CAST_TICKS,
-## GTAI_CAST_SOLES (json from tools/art/cast_foe_film_soles.py), GTAI_CAST_STILL (optional png).
+## GTAI_CAST_PPM 32|64, _SUBJECT, _SPEED (m/s), _TICKS, _DIR (right|downright), _STILL (png),
+## GTAI_CAST_SOLES (json from tools/art/cast_foe_film_soles.py).
 
 var _soles: Dictionary
 var _overlay: CastFootOverlay
@@ -86,20 +86,23 @@ func _advance() -> void:
 
 
 func _walk(host: ArenaRigs, subject: StringName, speed: float, ticks: int) -> void:
+	var dir: Vector2 = Vector2.RIGHT
+	if OS.get_environment("GTAI_CAST_DIR") == "downright":
+		dir = Vector2.ONE.normalized()
 	var foe: Fighter = _arena.squad_ai.spawn_member(_arena, MARK, subject)
 	@warning_ignore("return_value_discarded")
 	_arena.squad_ai.mind_for(foe)
 	for other: Fighter in _arena.hostiles:
 		if other != foe:
 			other.pos = PARK
-	_arena.rivet.pos = MARK + Vector2(-0.45 * ticks * speed * SimClock.TICK_DT, 3.0)
-	var start: Vector2 = MARK + Vector2.LEFT * 0.5 * ticks * speed * SimClock.TICK_DT
+	_arena.rivet.pos = MARK + dir * (-0.45 * ticks * speed * SimClock.TICK_DT) + Vector2(0.0, 3.0)
+	var start: Vector2 = MARK - dir * (0.5 * ticks * speed * SimClock.TICK_DT)
 	foe.pos = start
-	foe.facing = Vector2.RIGHT
+	foe.facing = dir
 	for tick: int in 24:
 		await _advance()
 	for tick: int in ticks:
-		foe.pos = start + Vector2.RIGHT * ((tick + 1) * speed * SimClock.TICK_DT)
+		foe.pos = start + dir * ((tick + 1) * speed * SimClock.TICK_DT)
 		await _advance()
 		_mark(CastFeetFrame.sample(host, foe))
 

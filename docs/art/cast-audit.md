@@ -362,3 +362,12 @@ STEP_M 0.16 m per drawing (10.0 drawings/s at 1.6 m/s). The first estimate from 
 | shield_robot | walk (1.6) | 55 | 6.64 / 11.95 ✗ | 3.98 / 5.93 ✗ | U / 11.80 ✗ | U / 9.82 (jump ✓, sole unmeasurable) |
 
 Body jump over a turn / a 140-degree reversal, per tick, 32 px/m (`test_cast_door_walk.gd`): p70 6.70 / 7.65 px, p55 9.60 / 9.60 px (<= 12). A stop resets the contact (no jump to measure). **Verdict: Feet still FAILS** on the sole (<= 2 px): the four-drawing walk has two contacts of unequal drawn advance, so the sole slides 4 to 6 px over a contact; the body-jump half now passes. A planted eight-drawing redraw would be needed for the sole (new art, not in this call). Before values are the n26 table above (`main` `d0ab9d03a`). No films, pile-driver or impact-edge item in this call.
+
+### Door carrier evidence, n28 (films)
+
+`tools/film/cast_door_films.mjs` (before = `CastDoorAnchors.SHEET` renamed in the working tree for the run, which puts the
+sheet back on the shipped unanchored four-drawing placement; after = the committed placement), `cast_foot_film.gd` with
+`GTAI_CAST_DIR=right|downright`, sole texels from `tools/art/cast_door_film_soles.py`. Stills at 64 px/m tilt 70, right
+facing, 1.6 m/s: the shipped placement draws three wide sole brackets per cycle that slide (each bracket spans the whole
+contact); the planted one draws a bracket per drawing, narrower, the cyan/orange contacts alternating without gaps. The
+down-right take has no dots (the sole is hidden by the slab). The clip has no 64 px/m inset: the tool does not support one.
