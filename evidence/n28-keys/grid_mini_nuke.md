@@ -26,4 +26,4 @@ A trial `run_row_k` of 1.02 on profile row 2 changed nothing on this rig (identi
 
 ## Stills
 
-`C:/Users/kazda/kiro/gtai-masters/n28/keys/grid_mini_nuke_32.png`, `grid_mini_nuke_64.png`: new | plasma rifle. The stop-gap column was not rendered (the temp worktree at 6d27d55a0 did not fit in the call).
+`C:/Users/kazda/kiro/gtai-masters/n28/keys/grid_mini_nuke_32.png`, `grid_mini_nuke_64.png`: stop-gap | new | plasma rifle (the stop-gap column rendered afterwards from a temp worktree at 6d27d55a0, row labels plain ASCII).
