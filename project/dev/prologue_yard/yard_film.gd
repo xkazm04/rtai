@@ -86,9 +86,9 @@ func _read_args(args: ArenaArgs) -> String:
 		return "use a 1920x1080 window"
 	if (
 		args.text("--yard-dressing") not in ["plain", "torn_line", "line_fire"]
-		or args.text("--place") not in ["gate", "mid", "harbor", "commander"]
+		or args.text("--place") not in ["gate", "mid", "front", "harbor", "commander"]
 	):
-		return "choose a yard dressing and gate, mid, harbor or commander"
+		return "choose a yard dressing and gate, mid, front, harbor or commander"
 	for key: String in ["--tick", "--frames", "--ppm"]:
 		if not args.text(key).is_valid_int():
 			return "expected an integer for " + key
