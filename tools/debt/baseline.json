@@ -236,7 +236,8 @@
         "2026-11-18: n18 police: bench --heat (CityHeat pinned at a level: item 7's heat 3 bench) and dev/sim/cop_wall_trails.gd (item 1's before/after trails on the wall map); dev evidence tooling (direct_cmdline_reads 164 -> 165)",
         "2026-11-17: n18 districts: dev/view/city_zone_map.gd, the headless plan of the generated city per zone (cells, zone tint, numbers JSON); a -s script has no LaunchArgs autoload, so it reads OS args as dev/bake_city.gd does (direct_cmdline_reads 162 -> 163)",
         "2026-11-17: n18 districts: dev/view/zone_frame.gd, zone stills + a straight drive clip through the generated city (the evidence of items 3 and 6); its flags are its own (KNOWN), not game flags, so it reads OS args as dev/showcase/city_frame.gd does (direct_cmdline_reads 163 -> 164)",
-        "2026-11-24: --ink-sparks for n27 melee (direct_cmdline_reads 166 -> 167)"
+        "2026-11-24: --ink-sparks for n27 melee (direct_cmdline_reads 166 -> 167)",
+        "2026-11-24: --electro-cells for n28 combat (direct_cmdline_reads 167 -> 168)"
       ],
       "files": {
         "project/core/render/view_mode.gd": 1,
@@ -369,7 +370,7 @@
         "project/features/combat/weapons/art/weapon_fx_cells.gd": 1,
         "project/features/combat/weapons/art/weapon_fx_colour.gd": 1,
         "project/features/combat/weapons/art/weapon_fx_debris.gd": 1,
-        "project/features/combat/weapons/art/weapon_fx_electro.gd": 1,
+        "project/features/combat/weapons/art/weapon_fx_electro.gd": 2,
         "project/features/combat/weapons/art/weapon_fx_ember.gd": 1,
         "project/features/combat/weapons/art/weapon_fx_ray.gd": 1,
         "project/features/combat/weapons/art/weapon_fx_shell.gd": 2,
@@ -390,7 +391,7 @@
         "project/tests/run_scenarios.gd": 1,
         "project/tests/unit/test_launch_args.gd": 1
       },
-      "total": 167
+      "total": 168
     },
     "files_near_cap": {
       "accepted": [
@@ -495,7 +496,8 @@
         "2026-11-24: --cast-warden-trace flag and the warden dev scenes for n27 cast (files_past_soft_cap 65 -> 65)",
         "2026-11-24: merge of n27 lanes: cast dev scenes (files_past_soft_cap 65 -> 65)",
         "2026-11-24: prologue_command_view.gd 244 lines: its draw geometry, cues and switches are pure static helpers so tests can kill planted faults (n27-04); split later if it grows (files_past_soft_cap 65 -> 66)",
-        "2026-11-24: prologue_command_view.gd 255 lines and its test file 221 lines: chevron and plate-edge helpers (n27-04) (files_past_soft_cap 66 -> 67)"
+        "2026-11-24: prologue_command_view.gd 255 lines and its test file 221 lines: chevron and plate-edge helpers (n27-04) (files_past_soft_cap 66 -> 67)",
+        "2026-11-24: --electro-cells for n28 combat (files_past_soft_cap 67 -> 67)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -504,7 +506,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 238,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 225,
+        "project/boot/launch_args.gd": 226,
         "project/boot/prologue/prologue_command_view.gd": 255,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
