@@ -28,7 +28,7 @@ func _ready() -> void:
 	_arm = args.text("--yard-dressing")
 	if (
 		not _out.is_absolute_path()
-		or _arm not in ["plain", "torn_line", "line_fire", "raised_line"]
+		or _arm not in ["plain", "torn_line", "line_fire", "raised_line", "arched_line"]
 	):
 		_fail("expected a yard dressing and an absolute JSON output path")
 		return
