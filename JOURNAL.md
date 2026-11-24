@@ -156,3 +156,7 @@ Order: 1 darker warm floor (measure first) -> 2 tall arched belt, appliances 1.5
 ## Session 8 (00:11, iteration 8, STABILIZE; stop 00:20)
 - 00:11 START. No builder lock, none running. No project/ or tools/ change since cabb1ece8 (gate PASS, `build/gate/cabb1ece8d8a/gate.json`; reels PASS on 5519b3e11). `node tools/evidence/cites.mjs REPORT.md` 33/33 ok. Nothing to fix; no new work after the freeze. IMAGES 5/25.
 - NEXT: Director merges n28-yard at HEAD (product = cabb1ece8, default arched_line, raised_line one value away). First item next run: the whole prologue on arched_line (`evidence/briefs/n28-06-prologue-film.md`).
+
+## Session 9 (00:20, iteration 9, REPORT; stop 00:38)
+- 00:20 START. No builder lock, none running. No project/ or tools/ change since cabb1ece8 (gate PASS, `build/gate/cabb1ece8d8a/gate.json`; reels PASS on 5519b3e11). REPORT: ledger count fixed (17 calls, the table's rows), session 6 mem-budget stall (~15 min) added to "What blocked". `node tools/evidence/cites.mjs REPORT.md` 33/33 ok. IMAGES 5/25.
+- NEXT: Director merges n28-yard at HEAD (product = cabb1ece8, default arched_line, raised_line one value away). First item next run: the whole prologue on arched_line (`evidence/briefs/n28-06-prologue-film.md`).

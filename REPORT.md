@@ -34,6 +34,7 @@ Reels: `node tools/gate/run.mjs --rev=5519b3e11 --reels` -> `PASS reels: exit 0`
 - The builder account's weekly limit hit at 17:44 and ended `builder.mjs` for the night. About 15 minutes were lost moving to in-session subagents.
 - mem-budget: 30 minutes of waiting at the first call, plus a foreign 20 GB process outside the cap.
 - A stale png import made one sweep invalid: 10 minutes.
+- mem-budget again after the reels (session 6): the lights-test commit stalled at 5.4 to 5.9 GB used, about 15 minutes, and a second call was needed to commit it.
 
 ## Calls for the owner
 - **Floor:** keep i20, the shipped one (Rivet delta 0.191, paler), or take i55 (browner, C* 18.3, Rivet delta 0.153, dE2000 24.7)? `evidence/yard28/floor_i20_vs_i55_mid_32ppm.png`. It is one tint value in the `arched_line` row.
@@ -55,7 +56,7 @@ Reels: `node tools/gate/run.mjs --rev=5519b3e11 --reels` -> `PASS reels: exit 0`
 7. Film the whole prologue on arched_line (`evidence/briefs/n28-06-prologue-film.md`, ready to run).
 
 ## Builder ledger
-18 calls. One ran through `builder.mjs` (dark-floor: 43 min, $2.90, abandoned-partial when the weekly limit hit). The other 17 were in-session Sonnet subagents, so no dollar figure is reported for them (token counts are in JOURNAL).
+17 calls. One ran through `builder.mjs` (dark-floor: 43 min, $2.90, abandoned-partial when the weekly limit hit). The other 16 were in-session Sonnet subagents, so no dollar figure is reported for them (token counts are in JOURNAL).
 
 | Call | Min | Result |
 |---|---|---|
