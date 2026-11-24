@@ -983,7 +983,7 @@
             "id": "yard_hall_mouth",
             "intensity": 0.34,
             "life_ticks": 0,
-            "radius_m": 7.5,
+            "radius_m": 4.5,
             "steps": 6
           }
         ],

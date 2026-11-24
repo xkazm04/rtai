@@ -8,8 +8,13 @@ extends CanvasLayer
 const TEXTURE_PX: int = 128
 const SPRITE_PREFIX: String = "Glow_"
 
+## World metres over which the glow fades in from the wall base (the yard rect's top edge).
+const WALL_FEATHER_M: float = 1.5
+const SHADER: Shader = preload("res://boot/prologue/prologue_floor_glow.gdshader")
+
 static var _texture: GradientTexture2D = null
-static var _material: CanvasItemMaterial = null
+
+var _material: ShaderMaterial = null
 
 
 static func attach(stage: PrintStage, lights: PrologueYardLights, yard: Rect2) -> void:
@@ -23,6 +28,10 @@ static func build(lights: PrologueYardLights, yard: Rect2) -> PrologueFloorGlow:
 	node.name = "FloorGlow"
 	node.layer = RenderLayers.canvas(&"actors")
 	node.follow_viewport_enabled = true
+	node._material = ShaderMaterial.new()
+	node._material.shader = SHADER
+	node._material.set_shader_parameter(&"edge_y", yard.position.y * SimConst.PX_PER_M)
+	node._material.set_shader_parameter(&"feather_px", WALL_FEATHER_M * SimConst.PX_PER_M)
 	for pool: PrologueYardLights.Pool in lights.pools:
 		var glow: Dictionary = lights.floor_glow(pool.kind)
 		var strength: float = glow.get("strength", 0.0)
@@ -43,7 +52,7 @@ func _sprite(pool: PrologueYardLights.Pool, glow: Dictionary, yard: Rect2) -> Sp
 	var sprite: Sprite2D = Sprite2D.new()
 	sprite.name = SPRITE_PREFIX + String(pool.id)
 	sprite.texture = _radial()
-	sprite.material = _additive()
+	sprite.material = _material
 	sprite.centered = false
 	sprite.region_enabled = true
 	var k: float = float(TEXTURE_PX) / square.size.x
@@ -71,10 +80,3 @@ static func _radial() -> GradientTexture2D:
 		_texture.width = TEXTURE_PX
 		_texture.height = TEXTURE_PX
 	return _texture
-
-
-static func _additive() -> CanvasItemMaterial:
-	if _material == null:
-		_material = CanvasItemMaterial.new()
-		_material.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
-	return _material
