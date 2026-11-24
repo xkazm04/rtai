@@ -10,10 +10,9 @@ extends RefCounted
 ## phase, =bob the facing card and =walk8 keeps walking above RUN_FROM_MPS. Run8 adds flight.
 ## Native grids paint the weapon. The fallback adds a held sprite. Fire, strikes and
 ## --rivet-walk-armed=off use the equipped pose. A missing armed run keeps its native walk.
-## ARMED_CYCLE_CELL doubles the mean of both profile rows' contact-to-contact stance travel over
-## two of four frames (evidence/n9/rivet_walk_armed_cycle.md). The flamer shuffles using CYCLE_CELL.
-## RUN_ROW_K shortens a run where its row travels less than bare run8 (62-67 px at p70, 53 at p55).
-## RivetWalk.RUN_ROW_K uses the per-octant comparisons below.
+## The armed cycle doubles the mean of both profile rows' contact-to-contact stance travel over
+## two of four frames (evidence/n9/rivet_walk_armed_cycle.md). The flamer uses the bare walk cycle.
+## The row factor shortens a run where its stance travels less than the bare profile.
 ## RivetWalk.cycle_cell returns the active grid's drawn cycle in cell pixels.
 ## RivetWalk.row_k looks up the run's measured octant and defaults to 1.
 ## RivetWalk.frame_of takes one full stride, or two steps, as a phase cycle.
@@ -22,16 +21,6 @@ extends RefCounted
 ## heavy 42/45.5, flamer 37/51. Left profiles vs 50: heavy 46, flamer 50. At p70, heavy left
 ## is 59/63, flamer front-left 42/46 and flamer left 58/63.
 const OCT_RAD: float = PI * 0.25
-## Contact-to-passing travel of the two stance boots in a four-column armed walk, packed texels.
-const WALK_PROFILE_TRAVEL: Dictionary[String, Vector2] = {
-	StrideMatch.ROOT + "p70/rivet_walk_eq_machine_pistol.png": Vector2(21.0, 27.0),
-	StrideMatch.ROOT + "p70/rivet_walk_eq_hand_cannon.png": Vector2(25.0, 30.0),
-	StrideMatch.ROOT + "p70/rivet_walk_eq_assault_rifle.png": Vector2(20.5, 29.5),
-	StrideMatch.ROOT + "p70/rivet_walk_eq_electro_baton.png": Vector2(15.0, 28.5),
-	StrideMatch.ROOT + "p70/rivet_walk_eq_chainsaw.png": Vector2(18.5, 28.0),
-	StrideMatch.ROOT + "p70/rivet_walk_eq_rocket_launcher.png": Vector2(23.0, 36.5),
-	StrideMatch.ROOT + "p70/rivet_walk_eq_gloria.png": Vector2(26.0, 32.5),
-}
 ## How far the legs' row may turn off the aim, in rows of 45 degrees; 0 = the row is the aim's.
 const TWIST_ROWS: int = 1
 ## Rows past the halfway point a walk must lean before the row changes (a flicker guard).
@@ -52,7 +41,9 @@ static var enabled: bool = true
 
 static func profile_cycle(card: Sprite2D, px_per_texel: float, fallback: float) -> float:
 	if card != null and card.texture != null and card.frame_coords.y == StrideMatch.PROFILE_ROW:
-		var travel: Vector2 = WALK_PROFILE_TRAVEL.get(card.texture.resource_path, Vector2.ZERO)
+		var travel: Vector2 = RivetGridStride.shared().walk_profile_travel.get(
+			card.texture.resource_path, Vector2.ZERO
+		)
 		if travel != Vector2.ZERO and card.hframes == 4:
 			var sole: float = travel.x if card.frame_coords.x < 2 else travel.y
 			return StrideMatch.cycle_length(sole, 1, card.hframes, px_per_texel)

@@ -92,3 +92,75 @@ func test_vehicle_bits_match_the_vehicles_contract() -> void:
 	var a: PlayerActions = _actions()
 	assert_eq(a.bit(&"car"), 0, "VehicleService.BIT_USE")
 	assert_eq(a.bit(&"handbrake"), 1, "VehicleService.BIT_HANDBRAKE")
+
+
+func test_action_numbers_and_wire_bits_are_stable() -> void:
+	var ids: PackedStringArray = [
+		"car",
+		"handbrake",
+		"fire",
+		"melee",
+		"interact",
+		"sprint",
+		"roll",
+		"power_hauler",
+		"power_gearbox",
+		"weapon_next",
+		"weapon_prev",
+		"weapon_slot_1",
+		"weapon_slot_2",
+		"weapon_slot_3",
+		"weapon_slot_4",
+		"reload",
+		"cover",
+		"guard",
+		"dash",
+		"ghost_deploy",
+		"ghost_deploy_1",
+		"ghost_deploy_2",
+		"ghost_deploy_3",
+		"ghost_deploy_4"
+	]
+	var a: PlayerActions = _actions()
+	assert_eq(a.bits.size(), ids.size())
+	for row: Dictionary in a.rows:
+		var id: String = row["id"]
+		var logical: int = ids.find(id)
+		var stored_bit: float = row["bit"]
+		assert_eq(int(stored_bit), logical, id)
+		var wire: int = logical if logical < 16 else logical + 13
+		assert_eq(a.bit(StringName(id)), wire, id)
+
+
+func test_keyboard_mouse_and_pad_bindings() -> void:
+	var keys: Dictionary = {
+		"sprint": ["Space"],
+		"handbrake": ["Space"],
+		"melee": ["F"],
+		"dash": ["Shift"],
+		"car": ["1"],
+		"ghost_deploy": [],
+		"power_gearbox": [],
+		"weapon_next": ["Tab"]
+	}
+	var pad: Dictionary = {
+		"car": [3.0], "melee": [2.0], "ghost_deploy": [9.0], "power_gearbox": [10.0]
+	}
+	for i: int in range(1, 5):
+		keys["ghost_deploy_%d" % i] = [str(i)]
+		keys["weapon_slot_%d" % i] = []
+		pad["ghost_deploy_%d" % i] = []
+	for row: Dictionary in _actions().rows:
+		var id: String = row["id"]
+		var bound: Array = row["keys"]
+		assert_false(bound.has("Q") or bound.has("G"), id)
+		if keys.has(id):
+			var expected: Array = keys[id]
+			assert_eq(bound, expected, id)
+		if pad.has(id):
+			var buttons: Array = row["joy_buttons"]
+			var expected: Array = pad[id]
+			assert_eq(buttons, expected, id)
+		if id == "melee":
+			var mouse: Array = row["mouse"]
+			assert_eq(mouse, [2.0], id)

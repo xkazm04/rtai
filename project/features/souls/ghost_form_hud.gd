@@ -1,6 +1,6 @@
 class_name GhostFormHud
 extends Control
-## Bottom-left soul strip. The loaded ghost carries the chevron and the current form a teal rim.
+## Bottom-left soul strip with a number on each chip and a teal rim on the current form.
 
 const PAPER: Color = Color("e9dcc3")
 const INK: Color = Color("17131b")
@@ -9,61 +9,53 @@ const CHIP_R: float = 26.0
 const GAP: float = 58.0
 const MARGIN: float = 18.0
 const TEXT_SIZE: int = 18
-## The rim round an avatar, px: its ink and, on the current form, the teal outside it.
 const RIM_PX: float = 2.0
 const CURRENT_RIM_PX: float = 2.5
 const COOL_DIM: Color = Color(0.42, 0.42, 0.47, 1.0)
 const LOCKED_INK: Color = Color(INK, 0.82)
 const TEXT_OUTLINE_PX: int = 5
-## The cooldown arc's radius (x the avatar's) and width.
 const COOL_ARC_K: float = 1.12
 const COOL_ARC_PX: float = 4.0
 
 var order: Array[StringName] = []
-## Translated display names by form id (the caller resolves ghost.<id>.name).
 var names: Dictionary[StringName, String] = {}
 var current: StringName = &"base"
 var selected: StringName = &""
 ## 0..1 cooldown left per form (1 = just started cooling).
 var cooling: Dictionary[StringName, float] = {}
-## The ghosts the story has not unlocked yet (true = locked).
 var locked: Dictionary[StringName, bool] = {}
 var madness_k: float = 0.0
-## The selected ghost's Madness cost as a fraction of the meter.
 var cost_k: float = 0.0
-## 0..1 through a running transformation (the current avatar pulses while it plays).
 var morph_k: float = 1.0
+var number_hints: Dictionary[StringName, String] = {}
 var key_hint: String
-var next_hint: String
-var next_chip: StringName
 ## true while a story line is up (StoryForms: quest 1's subtitle box takes the bottom centre): the
 ## strip folds to the one avatar that matters, the current form (in base the selected ghost).
 var compact: bool = false
 var layout: GhostFormLayout = GhostFormLayout.for_device(DeviceProfile.shared())
-## The one avatar that carries its name when the layout names only one (the selected ghost).
 var _named: StringName = &""
 var _cursor: WeaponCursor = WeaponCursor.new()
 var _plate: StyleBoxFlat = StyleBoxFlat.new()
 
 
 func _ready() -> void:
+	if layout.gap == GAP:
+		layout.gap = 72.0
+		layout.all_names = true
 	_plate.bg_color = Color(INK, 0.55)
 	_plate.set_corner_radius_all(8)
 
 
 ## Fills the plain values from the state machine (once per frame); the cursor follows `weapon`.
 func sync(g: GhostForms, weapon: StringName = &"", pilot: GhostPilot = null) -> void:
-	next_hint = GhostHudHints.binding(&"power_gearbox")
-	order = g.table.order
+	order.assign(g.table.forms.keys())
 	current = g.current() if g.settled() else g.to_id
 	selected = g.selected
-	if current != GhostForms.BASE:  # in a form the chevron marks G's switch target
-		selected = g.locks.next_after(g.table, current)
-	key_hint = next_hint if current != GhostForms.BASE else GhostHudHints.binding(&"ghost_deploy")
-	next_chip = g.locks.next_after(g.table, selected) if current == GhostForms.BASE else &""
+	key_hint = GhostHudHints.binding(&"ghost_deploy") if current == GhostForms.BASE else ""
 	morph_k = g.k()
 	madness_k = g.powers.madness / maxf(1.0, g.powers.table.madness_max)
 	for id: StringName in order:
+		number_hints[id] = GhostNumberKeys.hint(g.table, id)
 		var p: PowerDef = g.powers.table.row(g.table.form(id).power)
 		var total: float = float(maxi(1, p.cooldown_ticks)) if p != null else 1.0
 		cooling[id] = float(g.powers.cooldown_left(g.table.form(id).power)) / total
@@ -93,7 +85,10 @@ func _draw() -> void:
 	var top: Vector2 = Vector2(l.margin, get_viewport_rect().size.y - l.margin - l.card_h)
 	draw_style_box(_plate, Rect2(top, Vector2(w, l.card_h)).grow(6.0))
 	for i: int in shown.size():
-		_chip(shown[i], top + Vector2(l.gap * (float(i) + 0.5), l.chip_y))
+		var c: Vector2 = top + Vector2(l.gap * (float(i) + 0.5), l.chip_y)
+		_chip(shown[i], c)
+		var label: String = number_hints.get(shown[i], "")
+		_text(ThemeDB.fallback_font, c + Vector2(-0.8, 0.8) * l.chip_r, label)
 	_madness(Rect2(top + Vector2(4.0, l.bar_y), Vector2(w - 12.0, l.bar_h)))
 
 
@@ -133,10 +128,8 @@ func _chip(id: StringName, c: Vector2) -> void:
 		_cool_arc(c, r, cool)
 	if layout.all_names or id == _named:
 		_name(id, c, font)
-	if id == selected and not on:
-		_chevron(c, r)
-	elif id == next_chip and not compact:
-		GhostHudHints.cycle(self, c + Vector2(0.0, r + 8.0), next_hint)
+	if id == selected and key_hint != "":
+		GhostHudHints.label(self, c + Vector2(0.0, r + 8.0), key_hint)
 
 
 ## The ghost's name above its avatar, ink on a paper outline (the grown avatar clips none).
@@ -168,17 +161,6 @@ func _locked_chip(id: StringName, c: Vector2) -> void:
 	draw_rect(body.grow(1.5), INK)
 	draw_rect(body, PAPER)
 	draw_circle(c + Vector2(0.0, s * 0.45), s * 0.22, INK)
-
-
-## The chevron and the key hint under the selected (next) ghost, paper on an ink edge.
-func _chevron(c: Vector2, r: float) -> void:
-	var y: float = c.y + r + 8.0
-	var tip: Vector2 = Vector2(c.x, y + 6.0)
-	var a: Vector2 = c + Vector2(-8, r + 4)
-	var b: Vector2 = c + Vector2(8, r + 4)
-	draw_colored_polygon(PackedVector2Array([a, b, tip]), PAPER)
-	draw_polyline(PackedVector2Array([a, b, tip, a]), INK, 2.0, true)
-	GhostHudHints.label(self, Vector2(c.x, y), key_hint)
 
 
 ## The time left to cool: a teal arc on an ink arc round the dimmed avatar, `k` of the circle.

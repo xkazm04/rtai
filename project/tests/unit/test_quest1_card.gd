@@ -38,7 +38,7 @@ func test_wheel_title_and_pause_show_the_mouse_bindings_and_quick_claw() -> void
 		"Left mouse: swing or fire",
 		"Right mouse: guard",
 		"Mouse wheel: change weapon",
-		"Space: quick claw",
+		"[F]: quick claw",
 		"E: use (phones, hiding, allies, torch)",
 		"Esc: pause",
 		"Gamepad: left stick move, right stick aim, RT swing or fire, LT guard",
@@ -55,8 +55,8 @@ func test_wheel_title_and_pause_show_the_mouse_bindings_and_quick_claw() -> void
 func test_legacy_desktop_keeps_the_original_electroshock_copy() -> void:
 	var card: Quest1Card = _card(["--controls=legacy"], "desktop")
 	var shown: String = (card._box.get_child(2) as Label).text
-	assert_eq(shown, Quest1ControlsText.LEGACY)
-	assert_string_contains(shown, "Space / right click: electroshock")
+	assert_string_contains(shown, "[1]: car")
+	assert_string_contains(shown, "[F] / right click: electroshock")
 
 
 func test_handheld_uses_the_bound_triggers_and_buttons_for_each_mode() -> void:
@@ -81,7 +81,7 @@ func test_handheld_uses_the_bound_triggers_and_buttons_for_each_mode() -> void:
 func test_keyboard_glyph_profile_shows_keyboard_bindings_for_wheel() -> void:
 	var card: Quest1Card = _card(["--controls=wheel"], "desktop_kb_glyphs")
 	assert_string_contains(card.controls_text(), "[RMB]: guard")
-	assert_string_contains(card.controls_text(), "[Space]: quick claw")
+	assert_string_contains(card.controls_text(), "[F]: quick claw")
 	assert_string_contains(card.controls_text(), "Mouse wheel: change weapon")
 
 

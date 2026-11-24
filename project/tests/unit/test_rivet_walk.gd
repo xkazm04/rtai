@@ -1,6 +1,8 @@
 extends GutTest
 ## d9 rivet (Call 2): the drawn stride grid is picked by octant and stride phase, bare-claw only.
 
+var _grid: RivetGridStride = RivetGridStride.shared()
+
 
 func after_each() -> void:
 	RivetWalk.enabled = true
@@ -111,9 +113,9 @@ func test_bare_claw_runs_on_the_drawn_run_above_the_run_speed() -> void:
 func test_the_run_cycle_is_the_drawn_stance_travel_per_frame_step() -> void:
 	# n9 it5: the profile rows' stance foot moves 62-67 cell px over two frame steps (contact to
 	# push-off), so one frame step is ~32 cell px of ground; the run (6.75 m/s) plants under the cap
-	var step_cell: float = RivetWalk.RUN_CYCLE_CELL["p70"] / 8.0
+	var step_cell: float = _grid.run_cycle_cell["p70"] / 8.0
 	assert_between(step_cell, 31.0, 34.0)
-	var cycle_m: float = RivetWalk.RUN_CYCLE_CELL["p70"] / RivetFrames.FIG_PX * RivetFrames.HEIGHT_M
+	var cycle_m: float = _grid.run_cycle_cell["p70"] / RivetFrames.FIG_PX * RivetFrames.HEIGHT_M
 	assert_lt(6.75 / cycle_m, RivetWalk.MAX_RUN_CYCLES_S, "the run's cadence is under the cap")
 
 
@@ -121,9 +123,9 @@ func test_every_run_strip_has_a_measured_cycle() -> void:
 	# n9 it6: the p55 run (row 4 served): its profile stance foot moves ~53 cell px over two steps
 	for art: String in ["p70", "p55"]:
 		assert_true(ResourceLoader.exists(RivetStrips.DIR + art + "/" + RivetWalk.RUN), art)
-		var cycle: float = RivetWalk.RUN_CYCLE_CELL.get(art, 0.0)
+		var cycle: float = _grid.run_cycle_cell.get(art, 0.0)
 		assert_gt(cycle, 0.0, art + ": a run cycle")
-	assert_between(RivetWalk.RUN_CYCLE_CELL["p55"] / 8.0, 25.0, 28.0)
+	assert_between(_grid.run_cycle_cell["p55"] / 8.0, 25.0, 28.0)
 
 
 func test_an_armed_grid_steps_on_its_own_measured_cycle() -> void:
@@ -131,14 +133,14 @@ func test_an_armed_grid_steps_on_its_own_measured_cycle() -> void:
 	var card: Sprite2D = autofree(Sprite2D.new())
 	card.vframes = RivetWalk.ROWS
 	card.set_meta(RivetFrames.ON, RivetStrips.DIR + "p70/" + RivetWalk.ARMED + "pistol.png")
-	assert_eq(RivetWalk.cycle_cell(card, "p70", false), RivetWalk.ARMED_CYCLE_CELL["p70/pistol"])
+	assert_eq(RivetWalk.cycle_cell(card, "p70", false), _grid.armed_cycle_cell["p70/pistol"])
 	card.set_meta(RivetFrames.ON, RivetStrips.DIR + "p70/" + RivetWalk.ARMED + "flamethrower.png")
 	assert_eq(
-		RivetWalk.cycle_cell(card, "p70", false), RivetWalk.CYCLE_CELL["p70"], "no measure: walk8's"
+		RivetWalk.cycle_cell(card, "p70", false), _grid.cycle_cell["p70"], "no measure: walk8's"
 	)
 	card.set_meta(RivetFrames.ON, RivetStrips.DIR + "p70/" + RivetWalk.STRIP)
-	assert_eq(RivetWalk.cycle_cell(card, "p70", false), RivetWalk.CYCLE_CELL["p70"], "bare claw")
-	assert_eq(RivetWalk.cycle_cell(card, "p55", true), RivetWalk.RUN_CYCLE_CELL["p55"], "the run")
+	assert_eq(RivetWalk.cycle_cell(card, "p70", false), _grid.cycle_cell["p70"], "bare claw")
+	assert_eq(RivetWalk.cycle_cell(card, "p55", true), _grid.run_cycle_cell["p55"], "the run")
 
 
 func test_a_weapon_out_runs_on_its_drawn_armed_run_above_the_run_speed() -> void:
@@ -178,7 +180,7 @@ func test_a_short_drawn_run_row_steps_on_its_own_stride() -> void:
 	card.set_meta(RivetFrames.ON, RivetStrips.DIR + "p70/" + RivetWalk.ARMED_RUN + "gatling.png")
 	rig.face_to = PI
 	head.rotation = PI
-	assert_eq(RivetWalk.row_k(card, "p70", rig), RivetWalk.RUN_ROW_K["p70/gatling/4"])
+	assert_eq(RivetWalk.row_k(card, "p70", rig), _grid.run_row_k["p70/gatling/4"])
 	assert_between(RivetWalk.row_k(card, "p70", rig), 0.9, 0.97)
 	rig.face_to = 0.0
 	head.rotation = 0.0
