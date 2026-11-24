@@ -18,7 +18,7 @@
       }
     },
     "contractor": {
-      "enabled": false,
+      "enabled": true,
       "id": "contractor",
       "p55": {
         "armed_walk": "contractor_armed_walk.png",

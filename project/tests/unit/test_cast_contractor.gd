@@ -1,15 +1,16 @@
 extends GutTest
-## Contractor card, n28: the row is off, so today's drawing is unchanged; the eight-drawing walk is
-## a measured anchor table (five facings of eight drawings) that is ready for the card to read.
+## Contractor card, n28: the row is on (white hat, pale lemon vest); the eight-drawing walk is
+## a measured anchor table (five facings of eight drawings) that the card reads.
 
 const ID: StringName = &"contractor"
 
 
-func test_row_is_off_so_the_card_off_path_is_unchanged() -> void:
+func test_row_is_on_and_other_rows_are_untouched() -> void:
 	CastCards._library = null
 	var cards: CastCards = CastCards.shipped()
-	assert_null(cards.lookup(ID, "p70"))
-	assert_null(cards.lookup(ID, "p55"))
+	assert_not_null(cards.lookup(ID, "p70"))
+	assert_not_null(cards.lookup(ID, "p55"))
+	assert_null(cards.lookup(&"patrol_cop", "p70"))
 	assert_not_null(cards.lookup(&"robot_gunner", "p70"), "other rows are untouched")
 
 
