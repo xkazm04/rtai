@@ -52,6 +52,8 @@ var shadow_tint: Color
 var outside: Array[Piece] = []
 var use_stage_decals: bool
 var ochre_strength: float
+## Cover and debris ids drawn over the world print, in the art's own colours.
+var over_print: PackedStringArray = PackedStringArray()
 
 
 static func resolve(
@@ -102,6 +104,8 @@ func _read_paint(table: DataTable, row: Dictionary, plain: Dictionary) -> void:
 		fixture_shadow_reach = table.vec(shadows, "fixture_reach_m")
 		shadow_tint = Color(table.text(shadows, "tint"))
 	ochre_strength = table.num(row, "ochre_strength") if row.has("ochre_strength") else 0.0
+	if row.has("over_print"):
+		over_print = PackedStringArray(table.array(row, "over_print"))
 	outside = _pieces(table, row, "outside")
 	if row.has("front_replaces_m"):
 		var front: Dictionary = table.object(row, "front_replaces_m")

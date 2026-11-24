@@ -1922,7 +1922,7 @@
             "art": "res://boot/prologue/art/raised_line/belt_curve_e_hang.png",
             "at": [
               30.4,
-              3.622
+              4.55
             ],
             "id": "hang_feed",
             "rotation_deg": 0,
@@ -1950,7 +1950,7 @@
             "art": "res://boot/prologue/art/raised_line/belt_curve_w_hang.png",
             "at": [
               29.4,
-              11.822
+              12.8
             ],
             "id": "hang_return",
             "rotation_deg": 0,
@@ -2140,6 +2140,17 @@
           }
         ]
       },
+      "over_print": [
+        "pallet_west",
+        "fuel_vessel",
+        "stack_broken_sw",
+        "stack_double_west",
+        "hang_door",
+        "hang_feed",
+        "hang_turn",
+        "hang_return",
+        "hang_bend"
+      ],
       "paint_from": "torn_line",
       "phone": {
         "art": "res://boot/prologue/art/line_fire/payphone.png",

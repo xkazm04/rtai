@@ -373,6 +373,12 @@
           },
           "type": "array"
         },
+        "over_print": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "paint_from": {
           "enum": [
             "torn_line"
