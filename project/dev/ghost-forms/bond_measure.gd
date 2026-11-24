@@ -2,7 +2,9 @@ extends "res://dev/gauntlet/gauntlet.gd"
 ## The normal gauntlet runner writes its normal result. This last, read-only hook also
 ## logs distinct releases and entries, even when two wave intervals count the same tick.
 
-const KNOWN: PackedStringArray = ["--seed", "--bot", "--pick", "--waves", "--result"]
+const KNOWN: PackedStringArray = [
+	"--seed", "--bot", "--pick", "--waves", "--result", "--controls", "--mastery-free"
+]
 
 
 class Observer:
@@ -25,7 +27,8 @@ class Observer:
 					"tick": tick,
 					"form": strike.release_form,
 					"kills": strike.release_kills,
-					"stuns": strike.release_stuns
+					"stuns": strike.release_stuns,
+					"boss_cuts": strike.release_boss_cuts
 				}
 			)
 		for i: int in range(history_size, forms.history.size()):
@@ -43,10 +46,24 @@ class Observer:
 
 
 var observer: Observer = Observer.new()
+var _free_override: String = ""
+
+
+## --mastery-free=0|1 overrides bond.mastery_free for this run; the parent's list does not know it.
+func _invalid_arg(args: ArenaArgs) -> String:
+	if args.has("--mastery-free"):
+		_free_override = args.text("--mastery-free")
+		@warning_ignore("return_value_discarded")
+		args.values.erase("--mastery-free")
+		if not _free_override in ["0", "1"]:
+			return "--mastery-free=" + _free_override
+	return super._invalid_arg(args)
 
 
 func _run_headless() -> void:
 	observer.player = pilot as GauntletTestPlayer
+	if _free_override != "":
+		session.pilot.ghosts.forms.table.mastery_free = _free_override == "1"
 	session.stage.hooks.append(observer)
 	super._run_headless()
 
