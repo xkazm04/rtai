@@ -362,3 +362,10 @@
   of mine running. Nothing to fix; no product files touched, no builder launched.
 - 00:13 NEXT: lane done for n28. Director: merge n28-keys; re-run the full gate on the merge on a quiet machine (the only
   red was the scenario-stage wall-clock timeout under load; 68/68 pass across the gate + standalone rerun).
+
+## Session 8 (00:20, REPORT)
+- 00:21 REPORT.md already final (all sections present: header with gate line, What works, What does not, blocked, Calls
+  for the owner, Merge notes, Next steps, Builder ledger). Re-checked: `cites.mjs REPORT.md` 6/6 ok; gate.json and both
+  scenario logs exist; frames.json 14 entries, every file present. No builder running, no Godot of mine running, no
+  product files touched.
+- 00:21 NEXT: lane done for n28. Director: merge n28-keys, re-run the full gate on the merge on a quiet machine.
