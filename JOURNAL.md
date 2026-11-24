@@ -169,3 +169,19 @@
   at run row 1 at 64 px/m for a seam or floating boot, `run_unit.mjs --changed`, evidence md + frames.json, commit the
   molotov files listed at 20:31 (all still UNCOMMITTED in the tree) per path. Then part B Gloria brass (20:22 NEXT).
   No builder running at session end.
+- 20:34 BUILDER RUNNING n28-07f-molotov-capture since 20:34 (in-session, capture + grid stills + row-1 crop, no commit, END 20:46).
+- 20:44 BUILDER n28-07f-molotov-capture 9 n/a accepted (capture only): grids re-rendered, crop
+  `gtai-masters/n28/keys/molotov_run_row1_crop.png`.
+- 20:45 I looked at molotov_run_row1_crop.png (4x, run row 1, new over donor): **REJECT final4 run row 1.** The donor-leg
+  composite shows a hard horizontal cut at the seam in cols 2, 3, 4, 6, 8; smeared fragments beside the boots in cols 2-4
+  and 7-8 (donor rifle-hand remnants below the seam); col 4 draws a second collar band below the first; and in most
+  cells the collar is a thick spiral of stripes, wider than the donor's (rope-like: fails the rigid-collar rule). The
+  foot-slide number passes, the look does not. Walk sheet: not yet looked at closely at 4x.
+- 20:46 NEXT (session 4, replaces the 20:36 NEXT part A): the molotov files in the tree (listed 20:31; run8 = final4)
+  are UNCOMMITTED and **must not be committed as they are**. Part A: build run row 1 from `out/edit_row1.png` (the one-row
+  edit, leg IoU 0.844-0.887) by shifting each cell horizontally so its sole x matches the donor (no donor-leg composite),
+  check dome within 3 %; if the collar there is still a spiral, one more one-row edit with "the collar exactly as image 1's
+  narrow rigid band" (cap 1 image); `--import` before every recapture; a 4x crop of run row 1 AND of the walk sheet's
+  front rows for my look before any commit. If that is not passing by ~21:30: DECISION ship walk-only (the run stays the
+  stop-gap: restore `rivet_run8_eq_molotov.png` out of the tree, its provenance line and run rows) and move on to Gloria
+  brass. No builder running at session end. IMAGES 15/60.
