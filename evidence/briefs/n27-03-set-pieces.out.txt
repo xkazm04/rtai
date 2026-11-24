@@ -1,0 +1,81 @@
+Part 0, Part A, the pilot comparison and the evidence are done and committed. `line_fire` is still the shipped default, because switching it would break the pilot scenario's pins, which sit outside my allowlist. The mutate run on `prologue_floor.gd` killed 0 of 3 mutants.
+
+**Commits** (branch `n27-yard`, nothing pushed)
+- `89ffb605c` – `yard_fire_mid` floor glow 0.15 and the glow3 contrast txt/json; the tool's rifle floor is now 0.95.
+- `6c3c41b36` – the two decision lines in `docs/decisions.md`, with OUT 82.1, IN 99.2, HUE 223, PELLET 92.0 and RIFLE 96.5.
+- `f8515646c` – the `raised_line` dressing, the art, the cut tool, tests and measurement tools. The debt baseline was updated.
+- `a012af5e4` – Part B, two extra pallet stacks.
+- `311a5a19a` – the plate and pass 2/pass 3 stills.
+
+**Part 0 bars (glow3, mid-yard glow 0.15):** patrol blue 82.1 % outside and 99.2 % inside, hue 223 (222–224), pellet 92.0 %, rifle 96.5 %. All pass, so 0.15 stays. The seed-7 pilot is unchanged: end tick 11701.
+
+**Part A: `raised_line`.**
+- **The row:** a copy of `line_fire` with its own ground, the 8 m floor tile under the stains plate (tint `ffffff58`, wash `f6dca880`, ground shade 0.81), and no footing pads.
+- **Belts:** the six conveyor boxes are straight, curved, straight, curved, straight, torn, so the torn end is at the tail. Each beam is drawn stretched over its unchanged collision box, and five hanging-appliance strips sit outside the boxes and do not block.
+- **Curved sections:** the art's bend is flipped so it points toward the next section. That puts their appliances on the north edge, not the south as the brief asked.
+- **Pallets:** the two-high stack is on `pallet_west` and the toppled one on `fuel_vessel`.
+- **New art** (`project/boot/prologue/art/raised_line/`, cut by `tools/art/prologue_yard_raised.py`):
+
+| Piece | Size |
+|---|---|
+| beams (5 files) | 691×154 px, 5.4×1.2 m |
+| hangers | 691 px wide, 90 px (0.703 m) tall for straights, 46 px (0.357 m) tall for curves |
+| `belt_torn` | 691×154 px |
+| pallets (`two`, `toppled`) | 307×205 px |
+| pallet `three` | 205×205 px |
+| pallet `double` | 307×129 px |
+| pallet `broken` | 307×108 px |
+| `floor_tile` | 768×768 px |
+| `floor_stains` | 1666×944 px |
+
+- **Smaller changes:** the floor draws the factory fence by a data flag now, not by the id `line_fire`; the film and probe accept `raised_line`; a new headless pilot runner (`yard_pilot_rows.tscn`) and a Rivet-delta tool were added.
+- **Tests:** 12 passed across the raised-line, layout, dressing, lights and rails files, and the cut test is green.
+
+**Readability bars** (paired tool, seed 7, 32 px/m):
+
+| Measure | Floor | Result |
+|---|---|---|
+| Patrol blue outside | 65 % | 82.0 % |
+| Patrol blue inside a pool | 65 % | 98.5 % (hue 223, 222–224) |
+| Rifle | 95 % | 98.7 % |
+| Pellet | 90 % | 92.6 % |
+| Rivet delta vs `line_fire` | 80 % | 100.6 % (0.2407 vs 0.2393, mean over 10 exposures) |
+
+- **Belt against floor:** by the call 01 method at tick 6000, rail contrast is 0.099–0.337 and Rivet's disc contrast is 0.009 (0.019 on `line_fire`), so it passes. By the stricter capture-based Rivet delta of 0.24, the mean belt contrast of 0.208 does not hold: `conveyor_door` (0.099), `conveyor_turn` (0.119) and `conveyor_bend` (0.206) are below it.
+- **The default stays `line_fire`:** the readability bars hold, but `scenario_prologue_pilot.gd` pins the stage default as `line_fire` and falls back to the legacy bytes otherwise. That file is outside my allowlist.
+
+**NEED:** update the pilot scenario's pins to accept `raised_line` as the default dressing; then `prologue_stage.json` can be switched.
+
+**Five-seed pilot, Part A.** `raised_line` matches `line_fire` on ticks, deaths, lowest health and result bytes.
+
+| Seed | Ticks | Deaths | Lowest health |
+|---|---|---|---|
+| 7 | 11701 | 0 | 36 |
+| 3 | 13014 | 1 | 0 |
+| 11 | 10392 | 0 | 44 |
+| 21 | 12158 | 0 | 28 |
+| 42 | 13278 | 1 | 0 |
+
+**Part B.** Only two of the three extra stacks stayed. The kept set is the broken pallet at (4.5, 29.5) plus the double at (3.4, 23.5), both on the west side.
+- **Kept pair:** seeds 7, 11, 21 and 42 are identical to `line_fire`. Seed 3 takes 11958 ticks (not 13014) with the same death and health. Stuck marks are no worse. Rows are in `prologue-yard-pilots-raised.json`.
+- **Three-high stack:** left out. At (1.9, 10.5) on top of the kept pair, seeds 3 and 42 hit the 18000-tick budget. Other single or paired placements gave a death more or lower health: seed 7 dropped from 36 to 20–28 HP and seed 21 had one extra death. Every attempt is listed in the pilots json.
+
+**What I saw** (stills in `evidence/yard27/`):
+- **Gate:** about the same layout as `line_fire`, but the floor now has big stains and visible slab seams. The gate lamp pool is missing; its glow is still 0.
+- **Mid:** a warm tan floor with oil blots, and the belts read as dark brown raised rails with appliances hanging off them. The curved rail bends toward the next section. The two pallet stacks sit in the far west. At 64 px/m the hung appliances read grey and the belts hold up.
+- **Front:** the hall-front glow ends in a hard flat line at the hall base, because it is clipped to the yard. The pallet-stack pieces are not in this view.
+
+**Plate gap, one line each:**
+- **Gate:** still far from the plate. The plate has a lit lamp, a warm brick-and-fire backdrop and a perspective fence; the game shows a flat cream apron. Biggest gap: no lamp pool, no depth.
+- **Mid:** the floor tone is close, but the plate's belt is a tall arched raised run with hooks and big hanging appliances, and ours is a flat 1.2 m strip. Biggest gap: belt height and scale.
+- **Front:** the plate's hall glows with flames and a debris pile; ours is a dark band with small orange windows. Biggest gap: the burning hall and its light on the floor.
+
+**Masters** (in `gtai-masters/n27/yard/`, `frames.json` appended): `pass2_vs_pass3_mid_32ppm.mp4` is `h264 1920x1080 60/1 fps, 25.000 s`; `plate_vs_game_mid_32ppm.png` and `raised_line_mid_64ppm.png` are alongside.
+
+**Not done**
+- **Mutate:** killed 0 of 3 mutants on `prologue_floor.gd`. All three were on the fence-panel condition, which is render-only and has no test. The temp mutate directory I created is removed.
+- **Appliance placement:** the two curved sections' hanging appliances sit on the north edge, not the south.
+- **Footing pads:** I dropped all of them, because the raised beam fills its box.
+- **Frame cost:** not measured for the `raised_line` art; the glow itself was measured earlier.
+
+[builder: 3156s, exit 0, $6.36]
