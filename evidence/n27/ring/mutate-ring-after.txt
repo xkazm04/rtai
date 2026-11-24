@@ -1,0 +1,45 @@
+mutate: worktree C:\Users\kazda\AppData\Local\Temp\gtai-mutate-612737eb at 9249226c (reused)
+mutate: 20/55 mutant(s); baseline run of test_ghost_bond_ring
+mutate: baseline green in 22.2 s; per-mutant timeout 90 s
+mutate: [1/20] features/souls/ghost_bond_ring.gd:27 boundary  <= -> <  survived  (21.9 s)
+mutate: [2/20] features/souls/ghost_bond_ring.gd:27 literal  0.0 -> 1.0  survived  (19.1 s)
+mutate: [3/20] features/souls/ghost_bond_ring.gd:29 arith  / -> *  killed  (30.0 s)
+mutate: [4/20] features/souls/ghost_bond_ring.gd:35 arith  + -> -  killed  (21.5 s)
+mutate: [5/20] features/souls/ghost_bond_ring.gd:36 arith  * -> /  killed  (20.4 s)
+mutate: [6/20] features/souls/ghost_bond_ring.gd:49 boolean  not -> (removed)  killed  (22.1 s)
+mutate: [7/20] features/souls/ghost_bond_ring.gd:49 boolean  true -> false  killed  (35.4 s)
+mutate: [8/20] features/souls/ghost_bond_ring.gd:51 delete  cmds.append_array(chip_plan(id, center, layout.chip_r - 3.5)) -> pass  invalid  (32.2 s)
+mutate: [9/20] features/souls/ghost_bond_ring.gd:51 arith  - -> +  killed  (23.1 s)
+mutate: [10/20] features/souls/ghost_bond_ring.gd:51 literal  3.5 -> 4.5  killed  (19.7 s)
+mutate: [11/20] features/souls/ghost_bond_ring.gd:57 arith  + -> -  killed  (20.3 s)
+mutate: [12/20] features/souls/ghost_bond_ring.gd:57 literal  2.0 -> 3.0  killed  (21.3 s)
+mutate: [13/20] features/souls/ghost_bond_ring.gd:58 arith  + -> -  killed  (36.5 s)
+mutate: [14/20] features/souls/ghost_bond_ring.gd:61 cmp_flip  <= -> >  killed  (44.7 s)
+mutate: [15/20] features/souls/ghost_bond_ring.gd:63 delete  cmds.append(_arc(center, radius, span, TEAL, STROKE)) -> pass  killed  (27.7 s)
+mutate: [16/20] features/souls/ghost_bond_ring.gd:75 arith  * -> /  killed  (21.8 s)
+mutate: [17/20] features/souls/ghost_bond_ring.gd:77 arith  + -> -  killed  (26.3 s)
+mutate: [18/20] features/souls/ghost_bond_ring.gd:77 arith  * -> /  killed  (23.0 s)
+mutate: [19/20] features/souls/ghost_bond_ring.gd:84 literal  1.5 -> 2.5  killed  (19.8 s)
+mutate: [20/20] features/souls/ghost_bond_ring.gd:102 boolean  true -> false  survived  (20.8 s)
+mutate features/souls/ghost_bond_ring.gd: 20 mutant(s) (sampled from 55), tests: test_ghost_bond_ring
+  features/souls/ghost_bond_ring.gd:27 boundary  <= -> <  survived
+  features/souls/ghost_bond_ring.gd:27 literal  0.0 -> 1.0  survived
+  features/souls/ghost_bond_ring.gd:102 boolean  true -> false  survived
+  features/souls/ghost_bond_ring.gd:51 delete  cmds.append_array(chip_plan(id, center, layout.chip_r - 3.5)) -> pass  invalid
+  features/souls/ghost_bond_ring.gd:29 arith  / -> *  killed
+  features/souls/ghost_bond_ring.gd:35 arith  + -> -  killed
+  features/souls/ghost_bond_ring.gd:36 arith  * -> /  killed
+  features/souls/ghost_bond_ring.gd:49 boolean  not -> (removed)  killed
+  features/souls/ghost_bond_ring.gd:49 boolean  true -> false  killed
+  features/souls/ghost_bond_ring.gd:51 arith  - -> +  killed
+  features/souls/ghost_bond_ring.gd:51 literal  3.5 -> 4.5  killed
+  features/souls/ghost_bond_ring.gd:57 arith  + -> -  killed
+  features/souls/ghost_bond_ring.gd:57 literal  2.0 -> 3.0  killed
+  features/souls/ghost_bond_ring.gd:58 arith  + -> -  killed
+  features/souls/ghost_bond_ring.gd:61 cmp_flip  <= -> >  killed
+  features/souls/ghost_bond_ring.gd:63 delete  cmds.append(_arc(center, radius, span, TEAL, STROKE)) -> pass  killed
+  features/souls/ghost_bond_ring.gd:75 arith  * -> /  killed
+  features/souls/ghost_bond_ring.gd:77 arith  + -> -  killed
+  features/souls/ghost_bond_ring.gd:77 arith  * -> /  killed
+  features/souls/ghost_bond_ring.gd:84 literal  1.5 -> 2.5  killed
+score 84.2% = killed 16 / (killed 16 + survived 3); timeout 0, invalid 1; 531 s

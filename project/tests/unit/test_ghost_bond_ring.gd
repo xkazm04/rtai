@@ -155,3 +155,13 @@ func test_plan_puts_each_unlocked_chip_on_its_own_slot_centre() -> void:
 	assert_eq(_vec(cmds[2]), layout.chip_center(720.0, 1))
 	var radius: float = _num(cmds[2], &"radius")
 	assert_almost_eq(radius, layout.chip_r - 3.5, 0.0001)
+
+
+func test_fill_fraction_guards_a_zero_threshold_and_scales_a_small_one() -> void:
+	bond.record(&"ohm", 1, 0)
+	bond.master_at = 0.0
+	assert_eq(GhostBondRing.fill_fraction(bond, &"ohm"), 0.0)
+	bond.master_at = 0.5
+	assert_eq(GhostBondRing.fill_fraction(bond, &"ohm"), 1.0)
+	bond.master_at = 8.0
+	assert_eq(GhostBondRing.fill_fraction(bond, &"ohm"), 0.25)
