@@ -78,3 +78,4 @@ NEXT: (1) when `gtai-n27/logs/melee/builder.lock` is gone: read `evidence/briefs
   again before any re-film with the HUD strip if time allows.
 - 05:43 BUILDER RUNNING m4-wreck-arcs since 05:43 (Start-Process pid 46808, brief `evidence/briefs/n27-melee-04-wreck-arcs.md`,
   C by 06:10, B by 06:30, hard stop 06:55).
+- 05:58 REVIEW m4 part C `42f8c948f`: `mastery` cards mount the ghost figure (shared `_mount_ghost` with `ghost`) and draw a full teal ring + crown diamond from GhostBondRing constants; unit test `test_gauntlet_pick_card.gd`. Accepted pending the re-rendered film/still.
