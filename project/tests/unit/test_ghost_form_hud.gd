@@ -16,6 +16,10 @@ class DrawnText:
 		labels.append(label)
 		anchors[label] = at
 
+	func _number(at: Vector2, label: String) -> void:
+		labels.append(label)
+		anchors[label] = at
+
 
 func test_sync_follows_select_enter_and_cooldown() -> void:
 	var g: GhostForms = GhostForms.new(
@@ -103,7 +107,7 @@ func test_deploy_hint_follows_the_rebound_key() -> void:
 		if hud.anchors.has(hint):
 			var number_at: Vector2 = hud.anchors[hud.number_hints[hud.selected]]
 			assert_gt(hud.anchors[hint].y, number_at.y)
-			assert_almost_eq(hud.anchors[hint].x, number_at.x, hud.layout.chip_r)
+			assert_almost_eq(hud.anchors[hint].x, number_at.x, hud.layout.chip_r * 1.7)
 	InputMap.action_erase_events(&"ghost_deploy")
 	for event: InputEvent in saved:
 		InputMap.action_add_event(&"ghost_deploy", event)

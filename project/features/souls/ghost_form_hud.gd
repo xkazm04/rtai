@@ -87,8 +87,9 @@ func _draw() -> void:
 	for i: int in shown.size():
 		var c: Vector2 = l.chip_center(get_viewport_rect().size.y, i)
 		_chip(shown[i], c)
+		var at: Vector2 = c + Vector2(-1.2, 1.15) * l.chip_r
 		var label: String = number_hints.get(shown[i], "")
-		_text(ThemeDB.fallback_font, c + Vector2(-0.8, 0.8) * l.chip_r, label)
+		_number(at, label)
 	_madness(Rect2(top + Vector2(4.0, l.bar_y), Vector2(w - 12.0, l.bar_h)))
 
 
@@ -138,6 +139,11 @@ func _name(id: StringName, c: Vector2, font: Font) -> void:
 	var ts: int = layout.text_size
 	var tw: float = font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, ts).x
 	_text(font, c + Vector2(-tw * 0.5, -layout.chip_r * 1.18 - 6.0), label)
+
+
+## The chip's key number: large paper digit on an ink plate (GhostChipNumber).
+func _number(at: Vector2, label: String) -> void:
+	GhostChipNumber.draw(self, at, label, layout.number_size)
 
 
 ## Ink on a paper outline: reads on bright ground by the ink and on dark ground by the paper.
