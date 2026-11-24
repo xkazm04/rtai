@@ -11,6 +11,11 @@ const ROBOT: Array[StringName] = [
 const FIRST: int = 105
 const HUMAN_GAP: int = 182
 const MACHINE_GAP: int = 212
+## claw_shock: the charge (melee held) runs this long before the release at age 0, and the
+## shield robot's second discharge (its overload is primed by the first) releases at CLAW_AGAIN.
+const CLAW_GAP: int = 250
+const CLAW_CHARGE: int = 80
+const CLAW_AGAIN: int = 100
 
 var opponents: Array[Fighter] = []
 var marks: Array[Vector2] = []
@@ -19,6 +24,7 @@ var starts: Array[int] = []
 var contacts: Array[int] = []
 var weapon: StringName
 var robots: bool
+var charged: bool
 var destination: String
 var gap: int = HUMAN_GAP
 var last_frame: int = 0
@@ -32,11 +38,12 @@ func _ready() -> void:
 	session.world.set_process(false)
 	session.live.viewport = null
 	var loadout: String = ArenaArgs.parse().text("--loadout", "hands")
-	robots = loadout.contains(",")
-	weapon = StringName(loadout.get_slice(",", 0))
+	charged = loadout == "claw_shock"
+	robots = loadout.contains(",") or charged
+	weapon = RivetWheel.HANDS if charged else StringName(loadout.get_slice(",", 0))
 	destination = OS.get_environment("GTAI_MELEE_TAKE")
 	if robots:
-		gap = MACHINE_GAP
+		gap = CLAW_GAP if charged else MACHINE_GAP
 		stop_tick += (gap - HUMAN_GAP) * (ROBOT.size() - 1)
 	if OS.get_environment("GTAI_MELEE_CLOSE") == "1":
 		stop_tick = FIRST + 75
@@ -96,7 +103,7 @@ func _process(_delta: float) -> void:
 	var again: int = _followup(idx)
 	var engage: bool = age < 0 or (again > 0 and age > 8 and age < again)
 	_approach(idx, engage and age >= -83)
-	OpeningFilmPad.button(&"fire", float(age == 0 or (again > 0 and age == again)))
+	_press(age, again)
 	var pilot: StagePilot = session.pilot
 	var count: int = pilot.melee_swings
 	var landed: int = pilot.melee.landed
@@ -109,7 +116,19 @@ func _process(_delta: float) -> void:
 	_observe(idx, age)
 
 
+func _press(age: int, again: int) -> void:
+	if not charged:
+		OpeningFilmPad.button(&"fire", float(age == 0 or (again > 0 and age == again)))
+		return
+	# The melee press jabs, then the held button charges; the release at age 0 is the discharge.
+	var first: bool = age >= -CLAW_CHARGE and age < 0
+	var second: bool = again > 0 and age >= again - CLAW_CHARGE and age < again
+	OpeningFilmPad.button(&"melee", float(first or second))
+
+
 func _followup(i: int) -> int:
+	if charged:
+		return CLAW_AGAIN if i == 3 else -1
 	if robots and i == 3:
 		return 56
 	if not robots and weapon == &"katana" and i == 1:
@@ -150,7 +169,7 @@ func _observe(i: int, age: int) -> void:
 	var arena: CombatArena = session.stage.arena
 	var row: Dictionary = observations[i]
 	if age == 0 or age == _followup(i) and age > 0:
-		row["selected"] = session.pilot.wheel.selected()
+		row["selected"] = &"claw_shock" if charged else session.pilot.wheel.selected()
 		row["distance_m"] = snappedf(foe.pos.distance_to(arena.rivet.pos), 0.01)
 	var initial: float = row["initial_hp"]
 	var opened: bool = foe.has_meta(MeleeLethal.OPEN_UNTIL)

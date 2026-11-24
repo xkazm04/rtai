@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { runGodot } from '../lib/godot.mjs';
 
 const [out, resolution, ...items] = process.argv.slice(2);
-const weapons = ['hands', 'chainsaw', 'electro_baton', 'katana', 'plasma_sword', 'electric_robots'];
+const weapons = ['hands', 'chainsaw', 'electro_baton', 'katana', 'plasma_sword', 'electric_robots', 'claw_shock'];
 if (!out || !['32', '64'].includes(resolution) || !items.length || items.some(w => !weapons.includes(w))) {
   throw Error('usage: owner_takes.mjs <master-dir> <32|64> <weapon...>');
 }
@@ -25,7 +25,16 @@ function stamp(tick) {
   return '00:00:' + String(Math.floor(ms / 1000)).padStart(2, '0') + ',' + String(ms % 1000).padStart(3, '0');
 }
 
-function subtitles(dir, take) {
+// claw_shock: after the real-time take, the first finish again at quarter speed.
+const SLOW = 4;
+function slowWindow(take) {
+  const kill = take.opponents[0].kill_tick ?? take.opponents[0].hit_tick;
+  if (!kill) throw Error('first opponent recorded no contact');
+  const from = Math.max(1, kill - 50);
+  return { from, count: Math.min(100, take.frames - from + 1) };
+}
+
+function subtitles(dir, take, tail = null) {
   const file = join(dir, 'victims.srt');
   const segments = take.opponents.map((o, i) => {
     const begin = o.cue;
@@ -37,18 +46,30 @@ function subtitles(dir, take) {
   return file;
 }
 
+function filmName(id) {
+  if (id === 'claw_shock') return 'claw_shock_robots';
+  return id === 'electric_robots' ? id : id + '_kills';
+}
+
 function film(dir, id, take) {
   const dest = join(master, 'films');
   mkdirSync(dest, { recursive: true });
-  const path = join(dest, (id === 'electric_robots' ? id : id + '_kills') + '.mp4');
-  ffmpeg(['-framerate', '60', '-start_number', '1', '-i', join(dir, '%04d.jpg'), '-i', subtitles(dir, take),
-    '-map', '0:v', '-map', '1:s', '-c:v', 'libx264', '-threads', '4', '-preset', 'veryfast', '-crf', '16',
+  const path = join(dest, filmName(id) + '.mp4');
+  const slow = id === 'claw_shock' ? slowWindow(take) : null;
+  const total = take.frames + (slow ? slow.count * SLOW : 0);
+  const video = slow
+    ? ['-filter_complex', `[0:v]split[a][b];[b]trim=start_frame=${slow.from - 1}:end_frame=${slow.from - 1 + slow.count},` +
+      `setpts=${SLOW}*(PTS-STARTPTS),fps=60[s];[a][s]concat=n=2:v=1:a=0[v]`, '-map', '[v]']
+    : ['-map', '0:v'];
+  ffmpeg(['-framerate', '60', '-start_number', '1', '-i', join(dir, '%04d.jpg'),
+    '-i', subtitles(dir, take, slow ? slow.count : null),
+    ...video, '-map', '1:s', '-c:v', 'libx264', '-threads', '4', '-preset', 'veryfast', '-crf', '16',
     '-pix_fmt', 'yuv420p', '-c:s', 'mov_text', '-disposition:s:0', 'default', '-movflags', '+faststart', path]);
   const probe = JSON.parse(execFileSync('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-show_streams',
     '-show_format', '-of', 'json', path], { encoding: 'utf8', windowsHide: true }));
   const v = probe.streams[0];
   if (v.width !== 1920 || v.height !== 1080 || v.avg_frame_rate !== '60/1' ||
-      Number(v.nb_frames) !== take.frames || +v.duration < 15 || +v.duration > 40) throw Error('bad film: ' + path);
+      Number(v.nb_frames) !== total || +v.duration < 15 || +v.duration > 40) throw Error('bad film: ' + path);
   writeFileSync(join(dir, 'ffprobe.json'), JSON.stringify(probe, null, 2));
   return path;
 }
@@ -61,6 +82,13 @@ function closeup(dir, id, take) {
   mkdirSync(dest, { recursive: true });
   const file = join(dest, id + '_64.png');
   const frame = t => join(dir, String(t).padStart(4, '0') + '.jpg');
+  if (id === 'claw_shock') {
+    const ticks = [-6, 6, 18, 34].map(d => Math.max(1, tick + d));
+    ffmpeg([...ticks.flatMap(t => ['-i', frame(t)]), '-filter_complex',
+      ticks.map((_, i) => `[${i}:v]crop=480:320:800:300[c${i}]`).join(';') +
+      ';[c0][c1]hstack[top];[c2][c3]hstack[bottom];[top][bottom]vstack', '-frames:v', '1', file]);
+    return file;
+  }
   ffmpeg(['-i', frame(tick), '-i', frame(tick + 20), '-filter_complex',
     '[0:v]crop=536:360:780:295[a];[1:v]crop=536:360:780:295[b];[a][b]hstack', '-frames:v', '1', file]);
   return file;
@@ -69,7 +97,7 @@ function closeup(dir, id, take) {
 for (const id of items) {
   const dir = mkdtempSync(join(scratch, id + '-' + ppm + '-'));
   const loadout = id === 'electric_robots' ? 'katana,electro_baton' : id;
-  const expectedFrames = ppm === 64 ? 180 : (id === 'electric_robots' ? 1080 : 960);
+  const expectedFrames = ppm === 64 ? 180 : ({ electric_robots: 1080, claw_shock: 1232 }[id] ?? 960);
   const args = ['--rendering-driver', 'd3d12', '--position', '0,1440', '--resolution', '1920x1080',
     '--fixed-fps', '60', '--quit-after', String(expectedFrames + 30), fileURLToPath(new URL('./owner_take.tscn', import.meta.url)), '--',
     '--loadout=' + loadout, '--enemy-brain=squad', '--seed=20261109', '--view=tilt70', '--ppm=' + ppm,
