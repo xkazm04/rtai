@@ -111,10 +111,15 @@ func test_far_stride_and_wound_follow_distance_and_damage_ticks() -> void:
 	var card: Sprite2D = _card()
 	assert_eq(card.frame_coords.y, StreetWalkerCards.STAND_FRAME)
 	var start: Vector2 = _trooper.pos
+	var rows: int = StreetCopWalk.rows_of(_sheets.walk)
+	var step: float = StreetQuestCards.STRIDE_M * 0.25
+	if rows == 8:
+		step = CastLancerAnchors.WALK_STEP_M * 1.02
 	for i: int in range(1, 5):
-		_trooper.pos = start + Vector2.RIGHT * (i * StreetQuestCards.STRIDE_M * 0.25 + 0.01)
+		_trooper.pos = start + Vector2.RIGHT * (i * step + 0.01)
 		_step()
-		assert_eq(card.frame_coords.y, i % 4)
+		# An anchored eight starts on its touchdown drawing at the first step.
+		assert_eq(card.frame_coords.y, (i - 1) % rows if rows == 8 else i % rows)
 	_trooper.hp = 10.0
 	_arena.hit_dir = Vector2.RIGHT
 	_arena.damage(_trooper, 1.0, 0, &"pistol")
