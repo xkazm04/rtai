@@ -5,6 +5,7 @@ const RUN_CYCLE_CELL: Dictionary[String, float] = {"p70": 258.0, "p55": 212.0}
 const CYCLE_CELL: Dictionary[String, float] = {"p70": 60.0, "p55": 60.0}
 const ARMED_CYCLE_CELL: Dictionary[String, float] = {
 	"p70/homing_shard": 78.7,
+	"p70/mini_nuke": 71.3,
 	"p70/electro_gun": 82.3,
 	"p70/machine_pistol": 73.7,
 	"p70/hand_cannon": 69.7,
@@ -74,6 +75,7 @@ const RUN_ROW_K: Dictionary[String, float] = {
 }
 const WALK_PROFILE_TRAVEL: Dictionary[String, Vector2] = {
 	StrideMatch.ROOT + "p70/rivet_walk_eq_homing_shard.png": Vector2(25.0, 34.0),
+	StrideMatch.ROOT + "p70/rivet_walk_eq_mini_nuke.png": Vector2(22.5, 31.0),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_electro_gun.png": Vector2(26.5, 33.5),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_machine_pistol.png": Vector2(21.0, 27.0),
 	StrideMatch.ROOT + "p70/rivet_walk_eq_hand_cannon.png": Vector2(25.0, 30.0),
