@@ -1,0 +1,22 @@
+n28 floor: the plate's bare floor vs our raised_line floor
+
+Plate (C:/Users/kazda/kiro/gtai-art/factory-n25/out/a-torn-line.png = factory-n27/refs/plate_a.png), 8 patches of bare floor away from paint lines, stains, tyre marks and fire glow (evidence/yard28/plate_floor.py; patches drawn in build/n28/plate_patches.png, not committed):
+yard left          sRGB 172,134,103  L* 58.6  C* 24.2  hue 64.9
+yard centre        sRGB 195,153,117  L* 66.1  C* 27.1  hue 66.5
+yard centre-right  sRGB 172,134,103  L* 58.5  C* 24.3  hue 65.4
+yard mid-back      sRGB 152,116,87  L* 50.9  C* 23.3  hue 64.1
+yard below forklift sRGB 184,144,111  L* 62.7  C* 25.6  hue 66.2
+panel right        sRGB 192,152,118  L* 65.5  C* 25.8  hue 66.6
+panel lower        sRGB 166,131,102  L* 57.0  C* 22.5  hue 65.7
+panel mid          sRGB 175,139,108  L* 60.4  C* 23.6  hue 66.5
+MEAN of 8: sRGB 176,138,106  L* 59.9  C* 24.5  hue 65.7  (L* sd 4.6)
+
+Ours: raised_line, 32 px/m, tilt 70, seed 7, 1920x1080 stills ls_head_mid (t2290) and ls_head_front (t2858) from the n27 films (build/films27), bare floor = floor_warmth mask on a 2x reduced copy (evidence/yard28/floor_game.py; the shared machine fails 24 MB allocations, so the n27 full-resolution mask could not run), between pools = more than 12 m from every light pool:
+ls_head_mid.png between pools (>12 m): 8370 px(half) sRGB 172,155,135 L* 64.8 C* 13.2 hue 77.0
+ls_head_mid.png all bare floor: 63448 px(half) sRGB 185,164,138 L* 68.5 C* 16.8 hue 76.8
+ls_head_front.png between pools (>12 m): too few (242)
+ls_head_front.png all bare floor: 37402 px(half) sRGB 181,158,130 L* 66.3 C* 18.7 hue 77.6
+
+Reading: n27 measured the same floor at L* 65.9 C* 13.6 hue 77.3 (full-res mask); the half-res mask gives 64.8 / 13.2 / 77.0, so the method carries over.
+Gap, plate minus ours: L* -4.9 (plate mean 59.9, sd 4.6 over its patches), C* +11.3 (24.5 vs 13.2), hue -11 deg (65.7 vs 77.0: redder / more orange, ours is a pale yellow-tan).
+So the plate floor is mostly WARMER and more saturated; only about 5 L* darker. sRGB plate 176,138,106 vs ours 172,155,135.

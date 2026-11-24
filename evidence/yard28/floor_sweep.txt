@@ -1,0 +1,36 @@
+n28 Part A: floor sweep and the chosen value for arched_line
+
+STATE OF THE EVIDENCE (read first): the real-render sweep (evidence/yard28/sweep.sh: arched_day / arched_line captures, then
+sweep_measure.py + appliance_delta.py) could NOT run. Every Godot launch sat in `mem-budget: waiting for 1200 MB (6900..7650/6554 MB used)`
+from 17:05 on: other lanes of the n28 run held the cap (a 5.8 GB python job, th_hands_longcat.py, among them; not mine, not touched).
+Python itself failed 6-47 MB allocations ("paging file too small"), so every script here carries a retry. What is below is a MODEL:
+
+MODEL (evidence/yard28/floor_model.py, model_run.sh): the n27 raised_line --dusk captures (build/dusk27/rl_day = day grade no pools,
+build/dusk27/rl = dusk row; seed 7, tilt 70, 32 px/m, 1920x1080, the same ticks as n27). Every non-actor pixel (|hero - ground| <= 6)
+is replaced by the ground frame re-coloured with per-channel linear gains that move today's between-pools floor (172,155,135) to a target
+L*/C*/hue; actor pixels (cops, Rivet, rounds) are the real renders. The identity gain reproduces n27 exactly (outside 82.0 %, inside 98.5 %,
+rifle 98.7 %, pellet 92.6 %, Rivet 0.2407). Not modelled: the light/shadow/glow re-render, the appliance bar, the fire-pool gain bar.
+Target hue/chroma = the plate's (C* 24, hue 66). The row's data values are tint/wash carrying the same gain (evidence/yard28/gains.py).
+
+| floor L* (between pools) | outside | inside | rifle | pellet | Rivet delta (bar >= 0.19) | Rivet dE2000 (bar >= 15) |
+|---|---|---|---|---|---|---|
+| 64.8 today (identity) | 82.0 % | 98.5 % | 98.7 % | 92.6 % | 0.2407 PASS | 32.1 |
+| 61 (arched_line) | 82.4 % | 99.1 % | 98.8 % | 93.5 % | 0.1955 PASS | 27.8 |
+| 60 (plate mean 59.9) | 82.5 % | 99.0 % | 98.8 % | 93.9 % | 0.1842 FAIL | 26.8 |
+| 55 | 83.1 % | 98.8 % | 99.1 % | 95.9 % | 0.1324 FAIL | 21.9 |
+| 50 | (not finished) | (not finished) | (not finished) | (not finished) | 0.0861 FAIL | 16.9 |
+| 45 | (not finished) | (not finished) | (not finished) | (not finished) | 0.0459 FAIL | 12.3 (FAIL) |
+
+Bars: patrol blue >= 65 % outside and inside the pools (hue 200..250 kept: 221 / 223 at every value), rifle >= 95 %, pellet >= 90 %.
+Retention is each cop against his own daylight on the same floor, so a darker floor does not hurt it (their daylight contrast falls with the
+floor, e.g. outside day 4.92 -> 4.32 at 61, but dusk falls with it). The bar that stops the floor is Rivet's luminance delta: he is the dark
+figure (body L* 30.7) on the floor, a darker floor closes the gap, 0.19 sits at floor L* ~60.6.
+
+DARKEST FLOOR THAT PASSES (modelled): L* 61 between pools, C* 24, hue 66 (sRGB ~177,140,109), set in arched_line as
+ground[0].tint ffe0c8ff and ground[1].wash f6c18480 (stains tint and ground_shade 0.81 unchanged: the gain is per channel, shade is a flat multiply,
+so tint/wash is the right knob and a pure shade change would not move the hue). This is 4 L* darker than today and 11 deg redder / C* +11 more
+saturated: it matches the plate's mean (L* 59.9, C* 24.5, hue 65.7) in hue and chroma and stops 1 L* short of its lightness because of the Rivet bar.
+The red channel cannot be raised by a tint (it is already ff), so the real floor will land a little below the modelled 177 red: expect L* 60-61.
+NOT VERIFIED IN A REAL RENDER: the real L*/C*/hue of arched_line, the fire-pool gain (n27 mid +4.8 dL*, bar >= +4: a darker floor gains MORE from
+the same glow, but unmeasured) and the cream hanging-appliance bar (>= 0.30: a darker floor raises it, unmeasured; appliance_delta.py is written and
+untested on a render).

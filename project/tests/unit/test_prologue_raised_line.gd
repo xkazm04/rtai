@@ -75,3 +75,27 @@ func test_extra_stacks_sit_at_the_west_edge_with_their_own_art() -> void:
 	assert_eq(found.size(), 2)
 	assert_eq(found["stack_broken_sw"], ART + "pallet_broken.png")
 	assert_eq(found["stack_double_west"], ART + "pallet_double.png")
+
+
+func test_arched_line_is_raised_line_with_a_darker_warmer_floor_only() -> void:
+	var look: PrologueYardDressing = PrologueYardDressing.resolve("arched_line")
+	assert_eq(look.id, "arched_line")
+	assert_eq(look.ground_shade, 0.81)
+	assert_eq(look.ground.size(), 2)
+	assert_eq(look.ground[0].texture, ART + "floor_tile.png")
+	assert_eq(look.ground[1].texture, ART + "floor_stains.png")
+	assert_eq(look.ground[0].tint, Color("ffe0c8ff"))
+	assert_eq(look.ground[1].wash, Color("f6c18480"))
+	assert_ne(look.ground[0].tint, PrologueYardDressing.resolve("raised_line").ground[0].tint)
+	var arched: Dictionary = _row("arched_line").duplicate(true)
+	var raised: Dictionary = _row("raised_line").duplicate(true)
+	assert_true(arched.erase("ground"))
+	assert_true(raised.erase("ground"))
+	assert_eq(str(arched), str(raised), "only the ground differs from raised_line")
+	var arched_ground: Array = _row("arched_line")["ground"]
+	var raised_ground: Array = _row("raised_line")["ground"]
+	for i: int in arched_ground.size():
+		var a_row: Dictionary = arched_ground[i]
+		var r_row: Dictionary = raised_ground[i]
+		for key: String in ["rect_m", "texture", "tiled"]:
+			assert_eq(str(a_row.get(key)), str(r_row.get(key)), key)
