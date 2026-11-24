@@ -48,8 +48,26 @@ the weekly limit at 17:44, then in-session Sonnet subagents from the same brief 
   the hash constants, the fork-bend arithmetic and the old cell path.
 
 ### 4. Two troopers against the shorter dash
-After (HEAD, dash 24), `evidence/n28/troopers/after/`: no seed down; seed 3 lost 5.1 HP, seed 5 1.6 (n27: 48.4 and 40.4
-after 10 s). Before arm and table: TODO.
+(table `6b1d459c8`, film notes `b9df9127b`; keys' dash `64004a59d` merged as `97b49b194`)
+- Take `pair_dash` (Rivet circles two rocket troopers at 10 m and dashes across each rocket line), seeds 1 to 10, 25 s.
+  Before = this HEAD with `dash.cooldown_ticks` 40 toggled uncommitted (it reproduces n27 exactly: seeds 3 and 5 lose
+  50.9 and 40.6 HP, median 4.6); after = dash 24. Table: `evidence/n28/troopers/seeds.md`.
+
+| pair_dash, 25 s | dash 40 (n27) | dash 24 (n28) |
+|---|---:|---:|
+| HP lost seed 3 | 50.9 | 5.1 |
+| HP lost seed 5 | 40.6 | 1.6 |
+| HP lost median (10 seeds) | 4.6 | 4.5 |
+| HP lost worst | 50.9 | 8.7 |
+| Downs | 0/10 | 0/10 |
+| Splash / direct hits | 42 / 1 | 37 / 0 |
+
+- The shorter cooldown covers the second rocket: on the drifting seeds Rivet now dashes 15 and 16 times instead of 13.
+  The other eight seeds are unchanged to a tenth of an HP; the gain is all in the two seeds where the rockets left 36 to
+  49 ticks apart.
+- Film `films/trooper_pair_32.mp4` (seed 3, "n27 dash 40" left, "n28 dash 24" right, 1920x1080, 60 fps, 25.0 s). Stills
+  `stills/pair_dash_late_{before,after}_64.png` at tick 1186 (the second rocket of the 1151 volley): before, Rivet stands
+  in the blast at HP 78.4; after, he is clear of it at HP 95.9.
 
 ### 5. Medians on the merged tree
 TODO
