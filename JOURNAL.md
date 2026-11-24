@@ -146,3 +146,21 @@ NEXT (session 3, from ~05:42):
   Diff read: dev/tests/tools/evidence + debt baseline. Films still to come.
   BUILDER RUNNING films since 05:10 (pid 57264, hard stop 06:12). What-if waiter pid 36048 waiting on it.
 - 05:39 session 2 end. NEXT as written at 05:26.
+- 05:40 session 3 start. Lock: call 3 `films` pid 57264 alive (node). What-if waiter pid 36048 alive. No `NEED pressure`
+  in the other four journals.
+- 05:55 call 3 commit dfe3c9ab1: still-moment ticks chosen by frame content (blade6 still = a rifle round near Rivet
+  while the blade recovers; guard6 = a returned round >= 3.5 m out). Diff: dev moments, films tool, debt baseline.
+- 05:58 call 3 commit 72c9e1754: test pins hp_at_10s at tick 600 (kills mutate survivor line 72) and >= 1 direct hit in pair_circle.
+- 06:04 BUILDER films 53 $2.74 accepted. Commits a382890e5, dfe3c9ab1, 72c9e1754, 4ea2a8d2c. Checked myself:
+  `trooper_pair_32.mp4` h264 1920x1080 60/1 25.0 s 8.2 MB, side by side (circle left HP 8.9 at 7.3 s, dash right HP
+  98.9); `deflect_6m_32.mp4` 1920x1080 60/1 39.67 s 26.9 MB (crf 26 re-encode of the crf 16 master: second generation,
+  said in its note). Looked at all 64 px/m stills: dash cross (trail ghosts, two rockets on the spot he left), circle
+  fatal (HP 8.9, two rockets inbound), guard return (spark + faint streak; the spark has a small red fleck: existing
+  deflect VFX, not this lane's file, noted for the Director), blade struck (round small but present ~2.5 m out).
+  frames.json 10 rows. Mutate pair 7/12 (58 %), then `--lines=83,110` 4/5 after two new asserts; the builder's "at
+  least 9/12" is NOT measured and will not be quoted. Open: pair_dash seeds 3 and 5 lose 50.9 / 40.6 HP after 10 s,
+  untraced.
+- 06:02 what-if arms started (repair first), bash pid 36048.
+- 06:05 BUILDER RUNNING contrast since 06:05 (call 4, node pid 62776, brief `evidence/briefs/n27-pressure-04-contrast.md`,
+  hard stop 07:15): trace the late dash damage; `blade6_spaced` cadence contrast (rounds >= 34 ticks apart, dev take
+  only), 10 seeds, film blade6 beside it, still. Godot only after `medians/whatif/DONE`; writes `godot-free-4.txt`.

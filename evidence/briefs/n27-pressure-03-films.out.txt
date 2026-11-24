@@ -1,0 +1,53 @@
+Everything is committed and the machine is Godot-free as of 06:02. The two masters are re-encoded and `frames.json` now has 10 entries.
+
+## Commits
+- `a382890e5` has the damage split in `pressure_pair.gd`, the new film caption, seeds table columns and tests. It also has the new `pressure_moments.gd` (the ticks the stills are cut from), the encoder setting, and the debt baseline accepted for the +103 lines.
+- `dfe3c9ab1` fixes how the stills are picked (the pick rules had to change after I looked at the first renders).
+- `72c9e1754` is the test commit: it pins `hp_at_10s` to tick 600 and requires at least one direct hit in the circle.
+- `4ea2a8d2c` adds mutate section 3b to `scores.md` and writes `godot-free-3.txt`.
+
+## Pair table, seeds 1–10
+The old "7 hits" for the steady circle were mostly splash grazes, not rockets on target.
+
+| take | rockets | direct (Wilson 95%) | splash (Wilson 95%) | HP lost |
+|---|---|---|---|---|
+| `pair_circle` | 80 | 9, 11.3% [6.0, 20.0] | 61, 76.3% [65.9, 84.2] | 100 in every seed (median 100) |
+| `pair_dash` | 248 | 1, 0.4% [0.1, 2.2] | 42, 16.9% [12.8, 22.1] | median 4.6 |
+
+- **`other`:** 0 in every seed in both takes.
+- **`pair_circle`:** he goes down in 10 of 10 seeds, at 7.1–7.7 s.
+- **`pair_dash`:** alive in 10 of 10 seeds, but seeds 3 and 5 lose 50.9 and 40.6 HP. Their HP at 10 s was 97.6 and 99.9, so the loss comes after 10 s; I did not trace the cause.
+- **Direct vs splash:** a hit counts as direct when the rocket bursts inside Rivet's body radius, and splash otherwise. This uses each rocket's own `landed` signal, so nothing in `features/` changed. The split sums exactly to HP lost; it is also pinned in the tests.
+
+**Dash count:** the troopers fire in volleys of two rockets one tick apart, every 114 ticks. Each volley asks for two dashes one tick apart, and the second press lands inside the first dash, so he gets one dash per volley. That makes 13 dashes for 26 presses and 26 rockets. I confirmed it by printing launch ticks (81, 82, 195, 196, …) and dash ticks (97, 211, …). The reason is in `seeds.md` and in the film note.
+
+## Masters
+- `trooper_pair_32.mp4`: h264, 1920x1080, 60/1, 1500 frames, 25.0 s, 8.2 MB (crf 23). It was re-filmed, so the new caption is in it.
+- `deflect_6m_32.mp4`: h264, 1920x1080, 60/1, 2380 frames, 39.67 s, 26.9 MB (5.4 Mb/s). I transcoded the existing master rather than re-filming it, at crf 26: crf 23 left it at 41.9 MB. The tool keeps crf 23 as the default with a `crf: '26'` override for `deflect_6m`, so a re-run gives the small file. The re-encode is a second generation from the old crf-16 file, not a fresh capture.
+
+## `frames.json` (10 entries, best first)
+1. `trooper_pair_32.mp4` is the re-filmed pair video with the new caption.
+2. `pair_dash_cross_64.png` is `pair_dash`, seed 1, tick 102. Rivet is mid-dash with a faint trail behind him, two rockets are in flight, and the caption reads Direct 0, Splash 0.
+3. `pair_circle_fatal_64.png` is `pair_circle`, tick 449, 13 ticks before he falls. Two rockets fly at him, the HP bar is nearly empty (8.9) and the caption reads Direct 1, Splash 5.
+4. `deflect_6m_32.mp4` is the deflect video, unchanged in content.
+5. `blade_struck_64.png` is `blade6`, tick 68. An orange rifle round is about 2.5 m from Rivet while his sword is in the end of its swing. The caption reads Fired 2, Passed 1, Returned 0. The tracer is small.
+6. `guard_return_64.png` is `guard6`, tick 105. A white spark burst sits beside the guard and a thin dark grey streak, the returned round, runs toward the middle shooter. The streak is faint.
+7. `trooper_pair_64.png` is the pair close-up at tick 95.
+8. `deflect_6m_64.png` is the existing deflect close-up.
+9. `pair_dash_32.png` is the same dash, whole street in frame.
+10. `blade6_32.png` is the same sword round, three riflemen in frame.
+
+Each note names the take, seed and tick plus the pooled 10-seed number. There are no class names. The masters folder holds only referenced files, and the tool removes its scratch directory.
+
+## Checks and mutate
+- Unit tests: `test_pressure_takes` has 5 passing; lint passes on every commit.
+- Mutate on `pressure_pair.gd`, 12 of 82 mutants: **7/12 killed (58.3%)**, against call 2's 6/12. The sample lines are different ones, because the file grew.
+- Of the 5 survivors, lines 43, 73 and 107 are equivalent mutants. Lines 83 and 110 were real gaps, so I added tests for them.
+- A re-run on `--lines=83,110` gave **4/5 killed (80%)**. The one survivor, `10 → 11` at line 83, needs a test that pins the tick itself. I did not re-run the full 12-mutant sample.
+
+## Not done
+- The radius pull from call 2's list (old line 46) now has a test, but it was not among the 12 sampled this time, so it appears in no score.
+- `JOURNAL.md` has a modification that isn't mine (the director's journal commits), and I left it alone.
+- The mutate run left its scratch worktree in `AppData\Local\Temp\gtai-mutate-*`; I did not clean it.
+
+[builder: 3175s, exit 0, $2.74]
