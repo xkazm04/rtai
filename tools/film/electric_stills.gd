@@ -15,6 +15,7 @@ var moments: Dictionary[StringName, int] = {}
 var pending: Array[StringName] = []
 var saved: int = 0
 var last_frame: int = -1
+var alive_saved: bool = false
 
 
 func _ready() -> void:
@@ -88,27 +89,32 @@ func _capture() -> void:
 	if last_frame == tick:
 		return
 	last_frame = tick
+	if victim != null and victim.alive() and tick == CONTACT - 1 and not alive_saved:
+		alive_saved = _save("%s-alive.png" % enemy)
 	for event: StringName in pending:
 		moments[event] = tick
 	pending.clear()
 	for event: StringName in moments:
 		var age: int = tick - moments[event]
-		if age not in AGES:
-			continue
-		var center: Vector2 = view.fx_view.get_global_transform_with_canvas() * Ink.px(mark)
-		var size: Vector2i = Vector2i(328, 200) if px_per_m < 48.0 else Vector2i(600, 326)
-		center -= Vector2(px_per_m * 0.75, px_per_m * 0.75)
-		var crop: Rect2i = Rect2i(Vector2i(center) - size / 2, size)
-		var frame: Image = get_viewport().get_texture().get_image()
-		var name_out: String = "%s-%s-plus%02d.png" % [enemy, event, age]
-		if not Rect2i(Vector2i.ZERO, frame.get_size()).encloses(crop):
-			Log.error("electric_stills", "capture outside viewport: %s" % crop)
-			get_tree().quit(1)
-			return
-		if frame.get_region(crop).save_png(output.path_join(name_out)) != OK:
-			get_tree().quit(1)
-			return
-		saved += 1
+		if age in AGES and _save("%s-%s-plus%02d.png" % [enemy, event, age]):
+			saved += 1
+
+
+## The crop of the victim (alive or wrecked) saved under `file`; false (and a quit) on failure.
+func _save(file: String) -> bool:
+	var center: Vector2 = view.fx_view.get_global_transform_with_canvas() * Ink.px(mark)
+	var size: Vector2i = Vector2i(328, 200) if px_per_m < 48.0 else Vector2i(600, 326)
+	center -= Vector2(px_per_m * 0.75, px_per_m * 0.75)
+	var crop: Rect2i = Rect2i(Vector2i(center) - size / 2, size)
+	var frame: Image = get_viewport().get_texture().get_image()
+	if not Rect2i(Vector2i.ZERO, frame.get_size()).encloses(crop):
+		Log.error("electric_stills", "capture outside viewport: %s" % crop)
+		get_tree().quit(1)
+		return false
+	if frame.get_region(crop).save_png(output.path_join(file)) != OK:
+		get_tree().quit(1)
+		return false
+	return true
 
 
 func _finish() -> void:

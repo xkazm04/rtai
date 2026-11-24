@@ -12,6 +12,7 @@ const PLATE: PackedVector2Array = [
 
 var bolt: bool = false
 var card: Sprite2D
+var current: ElectricArc
 
 
 static func for_row(row: SignatureKill, rig: CutRig = null) -> RobotShutdownFx:
@@ -24,6 +25,7 @@ static func for_row(row: SignatureKill, rig: CutRig = null) -> RobotShutdownFx:
 
 
 func _copy(body: Node2D, victim: StringName, dir: Vector2) -> void:
+	current = ElectricArc.new(born, still, ppm)
 	if card != null:
 		body.free()
 		super._copy(card, &"", dir)
@@ -78,32 +80,33 @@ func _lights(ci: Node2D) -> void:
 
 func _bolt_current(ci: Node2D, core: Vector2, age: int) -> void:
 	if age < 6:
-		_arc(ci, [core + Vector2(-1.35, 0.10), core + Vector2(-0.62, -0.05), core])
+		_arc(ci, [core + Vector2(-1.35, 0.10), core + Vector2(-0.62, -0.05), core], 0)
 	var branch: float = clampf((age + 1.0) / 8.0, 0.1, 1.0)
-	for sign_y: float in [-1.0, 1.0]:
+	for slot: int in 2:
+		var sign_y: float = -1.0 + 2.0 * slot
 		var joint: Vector2 = core + Vector2(0.33, 0.28 * sign_y) * branch
 		var outlet: Vector2 = core + Vector2(0.76, 0.64 * sign_y) * branch
-		_arc(ci, [core, joint, joint + Vector2(-0.04, 0.20 * sign_y), outlet])
+		_arc(ci, [core, joint, joint + Vector2(-0.04, 0.20 * sign_y), outlet], 1 + slot)
 		ci.draw_circle(outlet, 0.075, CREAM)
 
 
 func _clamp(ci: Node2D, core: Vector2, age: int) -> void:
 	var spread: float = lerpf(0.44, 0.19, smoothstep(0.0, 4.0, age))
 	var wrist: Vector2 = core + Vector2(-0.76, 0.0)
-	for jaw: float in [-1.0, 1.0]:
+	for slot: int in 2:
+		var jaw: float = -1.0 + 2.0 * slot
 		var prong: PackedVector2Array = [
 			wrist, core + Vector2(-0.38, jaw * spread), core + Vector2(-0.08, jaw * spread * 0.6)
 		]
 		ci.draw_polyline(prong, DARK, 0.15, true)
 		ci.draw_polyline(prong, EDGE, 0.08, true)
-		_arc(ci, [prong[2], core + Vector2(0.12, jaw * 0.20), core])
+		_arc(ci, [prong[2], core + Vector2(0.12, jaw * 0.20), core], 3 + slot)
 	ci.draw_circle(wrist, 0.11, STEEL)
 	ci.draw_circle(wrist, 0.046, AMBER)
 
 
-func _arc(ci: Node2D, points: PackedVector2Array) -> void:
-	ci.draw_polyline(points, AMBER, 0.12, true)
-	ci.draw_polyline(points, Color.WHITE, 0.048, true)
+func _arc(ci: Node2D, points: PackedVector2Array, slot: int) -> void:
+	current.draw(ci, points, clock.tick, slot)
 
 
 func _core_burst(ci: Node2D, core: Vector2, u: float) -> void:
@@ -118,24 +121,19 @@ func _draw() -> void:
 	var age: int = clock.tick - born
 	var eject: int = 5 if bolt else shake_ticks
 	if not bolt and age < shake_ticks:
-		_lift_arc(age)
+		_lift_arc()
 	if age >= eject:
 		for i: int in 4 if bolt else 3:
 			_fragment(i, age - eject)
 
 
 ## The fixed lower end stays by Rivet's wrist as the upper end rises with the captured frame.
-func _lift_arc(age: int) -> void:
+func _lift_arc() -> void:
 	var wrist: Vector2 = Vector2(-0.95, -0.57)
 	var core: Vector2 = (pivot.transform * (Vector2.UP * joint_m * ppm)) / ppm
 	core.x *= side
-	var bend: Vector2 = wrist.lerp(core, 0.48)
-	var kink: float = 0.13 if age / 3 % 2 == 0 or still else -0.13
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2(side, 1.0) * ppm)
-	draw_polyline(
-		[wrist, bend + Vector2(kink, 0), bend + Vector2(-kink, -0.18), core], DARK, 0.16, true
-	)
-	_arc(self, [wrist, bend + Vector2(kink, 0), bend + Vector2(-kink, -0.18), core])
+	_arc(self, [wrist, wrist.lerp(core, 0.48) + Vector2(0.0, -0.09), core], 5)
 
 
 func _fragment(i: int, age: int) -> void:
