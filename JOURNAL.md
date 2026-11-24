@@ -160,24 +160,24 @@
   uncommitted past session 4. Then part B Gloria brass as in the 20:22 NEXT. IMAGES 15/60. No builder running now.
 - 20:30 BUILDER RUNNING n28-07e-molotov-slip since 20:30 (in-session, diagnosis only, commits nothing, END 20:45; its
   result goes to `gtai-art/rivet-n28/molotov/STATE.md` "Next"). If this session ends first, read that file.
-- 20:35 BUILDER n28-07e-molotov-slip 5 n/a accepted (diagnosis + fix, uncommitted): cause = run row 1 (the strip row
+- 20:32 BUILDER n28-07e-molotov-slip 5 n/a accepted (diagnosis + fix, uncommitted): cause = run row 1 (the strip row
   the foot-slide lane reads) had soles shifted sideways ~14 px in 6 cells; the earlier "unchanged" re-measure was a stale
   texture (a recapture does not re-import: always `--import` before a recapture). final4 = donor legs under the edited
   arms in those 6 cells, installed in the tree; run step 6.03/8.93 cm (rifle 6.69/8.93), walk hold 0.43/1.56. Provenance
   line updated. Not yet: the 64 px/m candidate capture, my look at the row-1 seam, evidence md, commit.
-- 20:36 NEXT (session 4): part A of n28-08 shrinks to: `--import`, `capture28.py molotov candidate`, the director looks
+- 20:33 NEXT (session 4): part A of n28-08 shrinks to: `--import`, `capture28.py molotov candidate`, the director looks
   at run row 1 at 64 px/m for a seam or floating boot, `run_unit.mjs --changed`, evidence md + frames.json, commit the
   molotov files listed at 20:31 (all still UNCOMMITTED in the tree) per path. Then part B Gloria brass (20:22 NEXT).
   No builder running at session end.
 - 20:34 BUILDER RUNNING n28-07f-molotov-capture since 20:34 (in-session, capture + grid stills + row-1 crop, no commit, END 20:46).
-- 20:44 BUILDER n28-07f-molotov-capture 9 n/a accepted (capture only): grids re-rendered, crop
+- 20:35 BUILDER n28-07f-molotov-capture 9 n/a accepted (capture only): grids re-rendered, crop
   `gtai-masters/n28/keys/molotov_run_row1_crop.png`.
-- 20:45 I looked at molotov_run_row1_crop.png (4x, run row 1, new over donor): **REJECT final4 run row 1.** The donor-leg
+- 20:36 I looked at molotov_run_row1_crop.png (4x, run row 1, new over donor): **REJECT final4 run row 1.** The donor-leg
   composite shows a hard horizontal cut at the seam in cols 2, 3, 4, 6, 8; smeared fragments beside the boots in cols 2-4
   and 7-8 (donor rifle-hand remnants below the seam); col 4 draws a second collar band below the first; and in most
   cells the collar is a thick spiral of stripes, wider than the donor's (rope-like: fails the rigid-collar rule). The
   foot-slide number passes, the look does not. Walk sheet: not yet looked at closely at 4x.
-- 20:46 NEXT (session 4, replaces the 20:36 NEXT part A): the molotov files in the tree (listed 20:31; run8 = final4)
+- 20:36 NEXT (session 4, replaces the 20:33 NEXT part A): the molotov files in the tree (listed 20:31; run8 = final4)
   are UNCOMMITTED and **must not be committed as they are**. Part A: build run row 1 from `out/edit_row1.png` (the one-row
   edit, leg IoU 0.844-0.887) by shifting each cell horizontally so its sole x matches the donor (no donor-leg composite),
   check dome within 3 %; if the collar there is still a spiral, one more one-row edit with "the collar exactly as image 1's
