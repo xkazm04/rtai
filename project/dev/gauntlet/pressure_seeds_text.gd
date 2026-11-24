@@ -26,8 +26,9 @@ static func wilson(k: int, n: int) -> Vector2:
 
 static func markdown(rows: Array[Dictionary]) -> String:
 	var out: Array[String] = ["# n27 pressure takes, seeds 1 to 10", ""]
-	for id: String in ["guard6", "blade6"]:
+	for id: String in ["guard6", "blade6", "blade6_spaced"]:
 		out.append_array(_near(id, _of(rows, id)))
+	out.append_array(_contrast(_of(rows, "blade6"), _of(rows, "blade6_spaced")))
 	for id: String in ["pair_circle", "pair_dash"]:
 		out.append_array(_pair(id, _of(rows, id)))
 	return "\n".join(out) + "\n"
@@ -50,7 +51,7 @@ static func _sum(rows: Array[Dictionary], key: String) -> int:
 
 
 static func _near(id: String, rows: Array[Dictionary]) -> Array[String]:
-	var sword: bool = id == "blade6"
+	var sword: bool = id.begins_with("blade6")
 	var head: String = NEAR_HEAD if sword else GUARD_HEAD
 	var out: Array[String] = ["## %s (6 m)" % id, "", head, _rule(head)]
 	for r: Dictionary in rows:
@@ -87,14 +88,41 @@ static func _near_pooled(id: String, rows: Array[Dictionary], sword: bool) -> Ar
 		)
 	out.append("")
 	out.append("%s; struck %d." % [pooled, k])
-	var curve: float = CURVE[id]
-	var inside: bool = n > 0 and curve >= w.x and curve <= w.y
-	out.append(
-		(
-			"Pooled share %s, Wilson 95%% [%.1f, %.1f]; the curve's %.1f%% lies %s the interval."
-			% [_pct(k, n), w.x, w.y, curve, "inside" if inside else "OUTSIDE"]
+	var line: String = "Pooled share %s, Wilson 95%% [%.1f, %.1f]" % [_pct(k, n), w.x, w.y]
+	if CURVE.has(id):
+		var curve: float = CURVE[id]
+		var inside: bool = n > 0 and curve >= w.x and curve <= w.y
+		line += (
+			"; the curve's %.1f%% lies %s the interval" % [curve, "inside" if inside else "OUTSIDE"]
 		)
-	)
+	out.append(line + ".")
+	out.append("")
+	return out
+
+
+## The two sword takes side by side: how often a return hits a shooter, and how many fired rounds
+## the sword turns back at all.
+static func _contrast(shipped: Array[Dictionary], spaced: Array[Dictionary]) -> Array[String]:
+	var out: Array[String] = [
+		"## Sword cadence contrast (blade6 against blade6_spaced)",
+		"",
+		(
+			"| take | fired | returned | struck | (a) returns that hit a shooter | Wilson 95% "
+			+ "| (b) fired rounds turned back | Wilson 95% | no deflect, mid-swing |"
+		),
+		"|---|---:|---:|---:|---:|---|---:|---|---:|",
+	]
+	for pair: Array in [["blade6", shipped], ["blade6_spaced", spaced]]:
+		var rows: Array[Dictionary] = pair[1]
+		var fired: int = _sum(rows, "fired")
+		var back: int = _sum(rows, "returned")
+		var hit: int = _sum(rows, "struck")
+		var wa: Vector2 = wilson(hit, back)
+		var wb: Vector2 = wilson(back, fired)
+		var cells: Array = [pair[0], fired, back, hit, _pct(hit, back)]
+		cells.append_array(["[%.1f, %.1f]" % [wa.x, wa.y], _pct(back, fired)])
+		cells.append_array(["[%.1f, %.1f]" % [wb.x, wb.y], _sum(rows, "fate_unswung_while_busy")])
+		out.append("| " + " | ".join(cells.map(str)) + " |")
 	out.append("")
 	return out
 

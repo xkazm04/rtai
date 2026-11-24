@@ -2,7 +2,9 @@ extends Node
 ## Capture one 60 Hz take with --take, --seed, --ppm and --out=<native frame directory>.
 ## --still=N captures just tick N. A headless run prints the same take's measured result.
 
-const KNOWN_FLAGS: PackedStringArray = ["--take", "--seed", "--ppm", "--out", "--still", "--half"]
+const KNOWN_FLAGS: PackedStringArray = [
+	"--take", "--seed", "--ppm", "--out", "--still", "--half", "--cadence"
+]
 const FRAME: Vector2i = Vector2i(1920, 1080)
 const TITLES: Dictionary[String, String] = {
 	"guard": "Guard against three rifles",
@@ -14,13 +16,15 @@ const TITLES: Dictionary[String, String] = {
 	"pair_circle": "Two troopers: circle",
 	"pair_dash": "Two troopers: circle + dash",
 	"guard6": "Guard at 6 m",
-	"blade6": "Plasma sword at 6 m"
+	"blade6": "Plasma sword at 6 m",
+	"blade6_spaced": "Plasma sword, rounds spaced"
 }
 
 var shot: PressureTake = PressureTake.new()
 var ppm: int
 var out_dir: String
 var still: int
+var cadence: bool = false
 var _drawing: bool = false
 var _view: GauntletView
 @onready var title: Label = %Title
@@ -55,6 +59,7 @@ func _ready() -> void:
 	_open_view()
 	title.text = tr(TITLES[id])
 	process_priority = -1000
+	cadence = args.has("--cadence")
 	if args.has("--half"):
 		($Caption/Panel as Panel).position.x += 480.0
 
@@ -99,13 +104,17 @@ func _focus() -> Vector2:
 		if still == 0:
 			return shot.pair.centre
 		return (shot.pair.centre + shot.arena.rivet.pos) * 0.5
-	return shot.mark + Vector2(3 if shot.take.ends_with("6") else 4, 0)
+	return shot.mark + Vector2(3 if _near() else 4, 0)
+
+
+func _near() -> bool:
+	return shot.take.ends_with("6") or shot.take.ends_with("spaced")
 
 
 func _caption() -> void:
 	hp.max_value = shot.arena.rivet.max_hp
 	hp.value = shot.arena.rivet.hp
-	var near: bool = shot.take.ends_with("6")
+	var near: bool = _near()
 	hp.visible = not near
 	numbers.text = ("" if near else tr("HP %.1f     ") % hp.value) + _detail()
 
@@ -118,7 +127,9 @@ func _detail() -> String:
 				tr("Passed %d    Returned %d    Kills %d")
 				% [rifles.passed, rifles.returned, shot.arena.kills]
 			)
-		"guard6", "blade6":
+		"guard6", "blade6", "blade6_spaced":
+			if cadence or shot.take == "blade6_spaced":
+				return _cadence_detail()
 			var curve: int = 24 if shot.take == "guard6" else 31
 			var share: float = 100.0 * rifles.struck / maxf(rifles.returned, 1.0)
 			return (
@@ -141,6 +152,15 @@ func _detail() -> String:
 	return (
 		tr("Wave %d    Rifle hits %d    Dashes %d")
 		% [PressureTake.WAVE, shot.contacts, shot.session.pilot.motion.dashes]
+	)
+
+
+func _cadence_detail() -> String:
+	var rifles: PressureRifles = shot.rifles
+	var back: float = 100.0 * rifles.returned / maxf(rifles.fired, 1.0)
+	return (
+		tr("Fired %d  Returned %d  Passed %d  Hit a shooter %d  Turned back %d%%")
+		% [rifles.fired, rifles.returned, rifles.passed, rifles.struck, roundi(back)]
 	)
 
 

@@ -3,12 +3,14 @@ extends GutTest
 ## the 6 m rifle takes against the guard and the plasma sword. Seed 1, fixed 60 Hz ticks.
 
 var _takes: Array[PressureTake] = []
+var _fates: Dictionary[String, PressureFates] = {}
 
 
 func after_each() -> void:
 	for take: PressureTake in _takes:
 		take.session.close()
 	_takes.clear()
+	_fates.clear()
 
 
 func _run(id: String) -> PressureTake:
@@ -92,3 +94,46 @@ func _assert_share(take: PressureTake, low: float, high: float) -> void:
 	assert_eq(take.arena.kills, 0, "no shooter fell, so every return was counted")
 	var share: float = float(rifles.struck) / float(rifles.returned)
 	assert_between(share, low, high, "share of returns that hit a shooter, curve 24 to 31 %")
+
+
+## A 6 m sword take run to its end with every round's fate and arrival tick recorded.
+func _fated(id: String) -> PressureTake:
+	var take: PressureTake = PressureTake.new()
+	assert_true(take.open(id, 1), "%s opens" % id)
+	_takes.append(take)
+	var fates: PressureFates = PressureFates.new(MeleeTable.weapon(&"plasma_sword").deflect_m)
+	while take.tick < take.length:
+		take.advance()
+		fates.observe(take.arena, take.session.pilot.melee.combo.hit_index, take.tick)
+	_fates[id] = fates
+	return take
+
+
+func _closest_arrivals(id: String) -> int:
+	var ticks: Array[int] = _fates[id].arrivals.duplicate()
+	ticks.sort()
+	var closest: int = 1_000_000
+	for i: int in range(1, ticks.size()):
+		closest = mini(closest, ticks[i] - ticks[i - 1])
+	return closest
+
+
+func test_spaced_sword_rounds_reach_rivet_a_swing_apart() -> void:
+	var spaced: PressureTake = _fated("blade6_spaced")
+	var shipped: PressureTake = _fated("blade6")
+	assert_gte(_fates["blade6_spaced"].arrivals.size(), 60, "about one round per 36 ticks")
+	assert_gte(_closest_arrivals("blade6_spaced"), 34, "no two rounds within 34 ticks at Rivet")
+	assert_lt(_closest_arrivals("blade6"), 34, "the shipped pairs are 18 ticks apart")
+	assert_eq(spaced.rifles.fired, _fates["blade6_spaced"].arrivals.size(), "every round counted")
+	var back_spaced: float = float(spaced.rifles.returned) / float(spaced.rifles.fired)
+	var back_shipped: float = float(shipped.rifles.returned) / float(shipped.rifles.fired)
+	assert_gt(back_spaced, back_shipped, "a fresh swing for every round turns back more of them")
+	assert_eq(spaced.arena.kills, 0, "no shooter fell, so every return was counted")
+
+
+func test_spaced_sword_is_never_hit_mid_swing() -> void:
+	var spaced: PressureTake = _fated("blade6_spaced")
+	var fates: PressureFates = _fates["blade6_spaced"]
+	assert_eq(fates.unswung_busy, 0, "no round arrives while the blade is mid-swing")
+	assert_eq(fates.missed, 0, "every round reaches Rivet")
+	assert_eq(fates.returned, spaced.rifles.returned, "the fate count agrees with the take")

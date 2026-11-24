@@ -12,7 +12,7 @@ const RIFLE_NEAR_M: float = 2.5
 var dash_cross: int = 0
 ## pair_circle: the last tick the rocket that downs him is still FAR_M or more from him.
 var before_fatal: int = 0
-## guard6: a round turned back by the guard, at least BACK_MIN_M from Rivet on its way out.
+## guard6, blade6_spaced: a round turned back, at least BACK_MIN_M from Rivet on its way out.
 var returned_flight: int = 0
 ## blade6: a rifle round with no deflect roll still ahead of it is RIFLE_NEAR_M from Rivet while his
 ## blade is in the recovery of its swing, so nothing can turn it back.
@@ -37,7 +37,7 @@ func observe(take: PressureTake) -> void:
 		dash_cross = take.tick
 	if rivet.alive() and nearest >= FAR_M and nearest <= NEAR_M + 1.0:
 		before_fatal = take.tick
-	if returned_flight == 0 and turned and take.take == "guard6":
+	if returned_flight == 0 and turned and take.take in ["guard6", "blade6_spaced"]:
 		returned_flight = take.tick
 	var melee: PlayerMelee = take.session.pilot.melee
 	var idle_blade: bool = melee.combo.phase() == MeleeCombo.Phase.RECOVERY

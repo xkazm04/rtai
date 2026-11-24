@@ -9,6 +9,8 @@ var passed: int = 0
 var unswung_hit: int = 0
 var unswung_busy: int = 0
 var missed: int = 0
+## The tick each settled round came within reach of Rivet, in the order they settled.
+var arrivals: Array[int] = []
 ## The first rounds, one line each: order, tick fired, tick in reach, swing index then, fate.
 var log: Array[String] = []
 var _count: int = 0
@@ -63,6 +65,7 @@ func summary() -> Dictionary:
 
 
 func _settle(row: Fate) -> void:
+	arrivals.append(row.reach_tick)
 	var fate: String = "missed"
 	if row.back:
 		returned += 1

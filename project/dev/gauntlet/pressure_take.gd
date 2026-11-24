@@ -13,7 +13,8 @@ const TAKES: Array[String] = [
 	"pair_circle",
 	"pair_dash",
 	"guard6",
-	"blade6"
+	"blade6",
+	"blade6_spaced"
 ]
 const PAIR_TICKS: int = 1500
 const NEAR_TICKS: int = 2380
@@ -60,10 +61,10 @@ func open(id: String, seed_value: int) -> bool:
 		"guard", "blade":
 			length = 600
 			rifles.place(session, mark, take == "blade")
-		"guard6", "blade6":
+		"guard6", "blade6", "blade6_spaced":
 			length = NEAR_TICKS
-			rifles.near(take == "blade6")
-			rifles.place(session, mark, take == "blade6", true)
+			rifles.near(take.begins_with("blade6"), take == "blade6_spaced")
+			rifles.place(session, mark, take.begins_with("blade6"), true)
 		"pair_circle", "pair_dash":
 			length = PAIR_TICKS
 			PressureStreet.widen(session, PressurePair.RADIUS_M)
@@ -113,7 +114,7 @@ func advance() -> void:
 	var input: TickInput = TickInput.new()
 	var aim: Vector2 = Vector2.RIGHT
 	match take:
-		"guard", "blade", "guard6", "blade6":
+		"guard", "blade", "guard6", "blade6", "blade6_spaced":
 			rifles.drive(input, tick)
 		"pair_circle", "pair_dash":
 			aim = pair.drive(input, tick)

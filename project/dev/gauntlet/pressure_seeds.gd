@@ -3,7 +3,7 @@ extends Node
 ## intervals. Run: node tools/dev/run.mjs pressure_seeds -- --out=<abs dir> [--seeds=10]
 
 const KNOWN_FLAGS: PackedStringArray = ["--out", "--seeds"]
-const TAKE_IDS: Array[String] = ["pair_circle", "pair_dash", "guard6", "blade6"]
+const TAKE_IDS: Array[String] = ["pair_circle", "pair_dash", "guard6", "blade6", "blade6_spaced"]
 
 
 func _ready() -> void:

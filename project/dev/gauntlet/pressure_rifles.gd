@@ -19,6 +19,9 @@ var gap_ticks: int = 24
 var salvo: int = 3
 var fan_rad: float = 0.32
 var reactive: bool = false
+## blade6_spaced: one round per beat, the three riflemen in turn, so rounds reach Rivet a whole
+## beat (36 ticks) apart, longer than a 33-tick sword swing.
+var spaced: bool = false
 var _blade: MeleeTable = MeleeTable.weapon(&"plasma_sword")
 var _shots: Array[Fighter] = []
 var _hp: Array[float] = []
@@ -30,12 +33,13 @@ var _tick: int = 0
 
 ## The 6 m takes. The guard is the slower one: its meter refills only while lowered, so it
 ## gets longer salvos and long pauses; the sword has no meter and swings between rounds.
-func near(sword: bool) -> void:
+func near(sword: bool, p_spaced: bool = false) -> void:
+	spaced = p_spaced
 	distance_m = NEAR_M
 	fan_rad = 0.5
 	reactive = true
 	beat_ticks = 36 if sword else 180
-	salvo = 2 if sword else 6
+	salvo = (1 if spaced else 2) if sword else 6
 	gap_ticks = 18 if sword else 9
 
 
@@ -74,7 +78,8 @@ func drive(input: TickInput, tick: int) -> void:
 		input.buttons |= 1 << _session.actions.bit(&"weapon_next")
 	if tick >= 45 and beat % gap_ticks == 0 and beat < salvo * gap_ticks:
 		@warning_ignore("integer_division")
-		var cop: Fighter = _shots[(beat / gap_ticks) % _shots.size()]
+		var turn: int = fired if spaced else beat / gap_ticks
+		var cop: Fighter = _shots[turn % _shots.size()]
 		if cop.alive():
 			var dir: Vector2 = cop.pos.direction_to(_arena.rivet.pos)
 			_arena.shots.append(Shot.fire(cop, dir, _arena.tuning.weapon(&"assault-rifle")))
