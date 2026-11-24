@@ -45,3 +45,7 @@ Scaling both speeds (rejected, above): 0.96 6.06, 0.98 3.62, 1.02 3.72, 1.04 6.6
 
 - `C:/Users/kazda/kiro/gtai-masters/n27/keys/p55_sprint_before_after_32.mp4`: before | after, same ticks, p55 sprint in 8 directions (93 ticks each, 2x crop on Rivet, nearest), 1920x1080 60 fps, 12.43 s.
 - `C:/Users/kazda/kiro/gtai-masters/n27/keys/p55_sprint_before_after_64.png`: the right profile sprint at 64 px/m, same tick (1048), before | after.
+
+## Mutate
+
+`node tools/mutate/mutate.mjs --file=project/features/characters/rivet_grid_stride.gd --max=20 --lines=8-9,50-52 --tests=test_rivet_grid_stride,test_rivet_sprint_k,test_rivet_walk` at `5d05dccc5`: 4 mutants, killed 4 / (4 + 0 survived) = 100 %. (The single changed line in `rivet_walk.gd` has no mutable literal; its effect is pinned by `test_the_sprint_factor_shortens_the_bare_cycle_only_at_sprint_speed`.)
