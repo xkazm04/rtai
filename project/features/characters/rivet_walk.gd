@@ -56,6 +56,9 @@ static func path_of(
 	var own: String = ""
 	if not RivetFramesGrids.held_only(weapon, art):
 		own = _grid(dir, WeaponArtKey.of(weapon), fast)
+	if fast and own != "" and not is_run(own) and fallback != &"" and fallback != weapon:
+		var borrowed: String = _grid(dir, fallback, true)  ## walk sheet only: sprint borrows
+		return borrowed if is_run(borrowed) else own
 	if own != "" or fallback == &"" or fallback == weapon:
 		return own
 	return _grid(dir, fallback, fast)

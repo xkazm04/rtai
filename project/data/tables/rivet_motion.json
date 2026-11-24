@@ -41,6 +41,7 @@
       "p70/katana": 66,
       "p70/machine_pistol": 73.7,
       "p70/mini_nuke": 71.3,
+      "p70/molotov": 81,
       "p70/pistol": 76,
       "p70/plasma_rifle": 76,
       "p70/ray_gun": 79,
@@ -282,6 +283,10 @@
       "p70/rivet_walk_eq_mini_nuke.png": [
         22.5,
         31
+      ],
+      "p70/rivet_walk_eq_molotov.png": [
+        27.5,
+        34.5
       ],
       "p70/rivet_walk_eq_ray_gun.png": [
         25.5,
