@@ -1,7 +1,7 @@
 # REPORT - lane keys (n27, 2026-11-24)
 
 Branch `n27-keys`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-controls`, cut from `main` `a3b3f1466`. Code head `7159beb90` (later commits touch only `JOURNAL.md` and `REPORT.md`).
-Gate: TODO_GATE
+Gate: `node tools/gate/run.mjs --rev=HEAD` at `7159beb90` (08:01 to about 08:40): `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n23-controls\build\gate\7159beb9000e\gate.json`. Lint 19/19 checks over 2208 files; unit 4111 passed, 0 failed, 2 skipped; scenarios 68 passed; parity bit for bit over 1200 steps, planted mutation caught at step 629; selftest look goldens 11/11, block goldens 5/5, 0 placeholders; release compile 984 loaded, 0 failed. The reel gate (`--rev=HEAD --reels`; HEAD differs from `7159beb90` only in `JOURNAL.md`/`REPORT.md`) started at 09:31 (node pid 67404, log `build/keys-gate-reels.log`); it takes about 60 min (evidence 37 + reels 24 last time), so its verdict lands after this report: the Director reads the `gate: PASS|FAIL` line at the end of that log.
 Films and stills: `C:\Users\kazda\kiro\gtai-masters\n27\keys\` (`frames.json`, best first). Evidence notes: `evidence/n27-keys/`.
 Director: Opus; builder: Claude Sonnet 5.5 (high), 9 calls, ledger at the end. IMAGES 8/15.
 
