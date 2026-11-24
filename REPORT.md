@@ -2,7 +2,7 @@
 
 Branch `n28-yard`, worktree `C:\Users\kazda\kiro\gtai-wt\n25-yard`, cut from `main` `d0ab9d03a`. Director: Claude Opus. Builder: Claude Sonnet 5.5. One call ran through `gtai-n28/tools/builder.mjs` until the builder account hit its weekly limit at 17:44. Every call after that was an in-session Sonnet subagent working from the same brief files (see the Builder ledger). IMAGES 5/25.
 
-**Gate:** GATE_LINE
+**Gate:** `node tools/gate/run.mjs --rev=HEAD` on `cabb1ece8` -> `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n25-yard\build\gate\cabb1ece8d8a\gate.json`. Lint 19/19, unit 4203 passed / 0 failed / 2 skipped, scenarios 68 passed, parity bit for bit, selftest, export-audit 995 loaded / 0 failed.
 
 Reels: `node tools/gate/run.mjs --rev=5519b3e11 --reels` -> `PASS reels: exit 0` (top, tilt70, combo; `build/gate/5519b3e118ce/reels.log`). That gate as a whole failed on one unit test that the default switch broke (`test_prologue_yard_lights.gd:75` checked the default yard against `line_fire`'s row), fixed in `cabb1ece8` (a test-only change, so the reels were not re-run), plus two tool timing tests under machine load (`tools/merge/step_guard.break.test.mjs`, 17 s and 43 s against millisecond budgets).
 
