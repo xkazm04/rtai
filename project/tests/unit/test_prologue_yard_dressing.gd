@@ -16,9 +16,9 @@ func _fixture() -> DataTable:
 	return skins
 
 
-func test_shipped_default_is_raised_line_and_plain_is_one_launch_flag_away() -> void:
+func test_shipped_default_is_arched_line_and_plain_is_one_launch_flag_away() -> void:
 	var stage: DataTable = DataTable.open(PrologueGame.TABLE, PrologueGame.SCHEMA)
-	assert_eq(PrologueYard.from_stage(stage).dressing.id, "raised_line")
+	assert_eq(PrologueYard.from_stage(stage).dressing.id, "arched_line")
 	LaunchArgs.parse(["--yard-dressing=plain"])
 	var plan: PrologueYard = PrologueYard.from_stage(stage)
 	LaunchArgs.parse()
