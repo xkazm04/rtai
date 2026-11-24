@@ -87,3 +87,10 @@ NEXT (session 2, from ~04:15):
   1a6badfc8, 6522ce667; data `master_at` 30, `mastery_free` true, `per_boss_cut` 3). DECISION: use melee's own merge
   commit instead of merging again here (it resolved the one `ghost_forms.json` doc conflict; melee's later commits are
   films). Waiter `medians/wait_melee.sh` (bash pid 41748) starts `join.sh melee` when `godot-free.txt` appears.
+- 04:30 call 2 interim `takes/seeds.md` (10 seeds): guard6 share 25.1 % [21.1, 29.6] (curve 24.3 % inside), blade6
+  27.2 % [22.7, 32.3] (curve 30.6 % inside); blade6: 650 of 1300 rounds hit Rivet mid-swing, every seed exactly 65.
+  pair_circle down 10/10 at 7.1-7.7 s, 70/80 hits; pair_dash 43/248 "hits" but HP 97.6-100 at 10 s: the take counts
+  every HP drop, so the dash "hits" are grazes, not rockets. Brief 03 (`evidence/briefs/n27-pressure-03-films.md`)
+  splits direct/splash/HP lost, re-cuts the pair film, re-encodes deflect_6m_32 (108 MB, 21.9 Mb/s), frames to 8+.
+  Item 5 levers noted: novice deaths are the wave 5 war machine's `stomp` (enemies.json weapons: damage 48, splash 48 in
+  3.5 m, cooldown 1.2 s, `alt_telegraph_s` 0.8) in 15 of 20 runs; `gauntlet.json` rivet repair 10/s after 3 s.
