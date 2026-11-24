@@ -1,9 +1,12 @@
-# REPORT lane combat, run n28 (2026-11-24) - DRAFT (filled as items land)
+# REPORT lane combat, run n28 (2026-11-24)
 
 Branch `n28-combat`, worktree `gtai-wt/n23-street`, cut from `main` `d0ab9d03a`; keys' dash merged as `97b49b194`
 (`n28-keys` `64004a59d`, cooldown 40 -> 24). Director Opus 5.5; builder Claude Sonnet 5.5 (`builder.mjs` until it hit
 the weekly limit at 17:44, then in-session Sonnet subagents from the same brief files). Films and stills:
-`C:/Users/kazda/kiro/gtai-masters/n28/combat/` (`frames.json`). Final gate: TODO.
+`C:/Users/kazda/kiro/gtai-masters/n28/combat/` (`frames.json`).
+Final gate on the last code commit `8d18ddf1a` (22:05-22:35): `gate: PASS` (lint 19/19 checks; unit 4217 passed, 0 failed,
+2 skipped; scenarios 68 passed; parity bit for bit over 1200 steps, planted mutation caught at step 629; selftest;
+export-audit 995 loaded, 0 failed), `build/gate/8d18ddf1a9ba/gate.json`. Every later commit is JOURNAL/REPORT only (inert).
 
 ## What works
 
