@@ -12,6 +12,10 @@ func _ready() -> void:
 	_ppm = OS.get_environment("GTAI_CAST_PPM").to_int()
 	_pitch = OS.get_environment("GTAI_CAST_PITCH").to_int()
 	_selection = OS.get_environment("GTAI_CAST_SUBJECT").split(",", false)
+	if OS.get_environment("GTAI_CAST_FORCE") == "contractor":
+		var forced: DataTable = DataTable.open(CastCards.TABLE, CastCards.SCHEMA)
+		forced.raw["archetypes"]["contractor"]["enabled"] = true
+		CastCards._library = CastCards.from_table(forced)
 	var preview: StringName = StringName(OS.get_environment("GTAI_CAST_PREVIEW"))
 	if preview in [CastMulroneyPreview.ID, FoeWardenCardView.ID, FoeGunnerCardView.ID]:
 		CastMulroneyPreview.enable(preview)
@@ -99,6 +103,7 @@ func _prepare(host: ArenaRigs, take: Dictionary) -> void:
 		"riot_cop": CastRiotAnchors.WALK_STEP_M,
 		"rocket_trooper": CastLancerAnchors.WALK_STEP_M,
 		"robot_gunner": CastGunnerAnchors.WALK_STEP_M,
+		"contractor": CastContractorAnchors.WALK_STEP_M,
 		"shield_robot": CastDoorAnchors.WALK_STEP_M,
 		"swat": CastSwatAnchors.WALK_STEP_M
 	}
