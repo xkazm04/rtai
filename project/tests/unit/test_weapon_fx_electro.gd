@@ -94,3 +94,39 @@ func test_cells_flag_is_the_old_cell_path() -> void:
 	d.queue_redraw()
 	await wait_frames(2)
 	assert_true(d.drew, "the cell path still draws")
+
+
+func test_the_jag_cell_follows_phase_times_two_over_three_ticks() -> void:
+	WeaponFxElectro.cells = false
+	var p3: Array[WeaponFxElectro.Line] = WeaponFxElectro.chain_plan(A, B, 3)
+	var p4: Array[WeaponFxElectro.Line] = WeaponFxElectro.chain_plan(A, B, 4)
+	assert_eq(p3[0].points, p4[0].points, "phases 3 and 4 share the cell (ticks 6 and 8)")
+	var p2: Array[WeaponFxElectro.Line] = WeaponFxElectro.chain_plan(A, B, 2)
+	assert_ne(p2[0].points, p3[0].points, "phase 2 is the cell before")
+
+
+func test_forks_are_two_half_reach_pieces() -> void:
+	var reach: float = 0.3
+	var plan: Array[WeaponFxElectro.Line] = WeaponFxElectro.star_plan(B, reach, 5, 9)
+	var half: float = reach * 0.5 * Ink.PX_PER_M
+	var checked: int = 0
+	for l: WeaponFxElectro.Line in plan:
+		if l.color == ElectricArc.CORE:
+			assert_almost_eq(l.points[0], Ink.px(B), Vector2.ONE * 0.01, "rooted at the landing")
+			assert_almost_eq(l.points[1].distance_to(l.points[0]), half, 0.01, "first piece")
+			assert_almost_eq(l.points[2].distance_to(l.points[1]), half, 0.01, "second piece")
+			checked += 1
+	assert_gt(checked, 0)
+
+
+func test_widths_follow_the_screen_scale() -> void:
+	var loose: Node2D = autofree(Node2D.new())
+	assert_eq(WeaponFxElectro._k(loose), 1.0, "off the tree: screen px")
+	var live: Node2D = add_child_autofree(Node2D.new())
+	live.scale = Vector2.ONE * 2.0
+	assert_almost_eq(WeaponFxElectro._k(live), 0.5, 0.001, "a 2x canvas halves the width")
+
+
+func test_a_zero_length_hop_draws_nothing() -> void:
+	var node: Node2D = autofree(Node2D.new())
+	assert_false(WeaponFxElectro.chain(node, A, A, 1))
