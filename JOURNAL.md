@@ -117,3 +117,5 @@ NEXT: no new work (past 08:00). (1) after 09:30: `node tools/gate/run.mjs --rev=
 - 09:30 GATE start `node tools/gate/run.mjs --rev=HEAD --reels` on `27143738f`, detached (pid 82140, `build/gate-logs/reels.out.txt`). It outlasts the 09:40 stop; REPORT says so and points the Director at the gate.json.
 - 09:33 REPORT: Gate section names the reels run; Next steps electric_chassis mutate updated 7/20 -> 12/20.
 NEXT: Director: read `build/gate-logs/reels.out.txt` / `build/gate/27143738f*/gate.json` for the `--reels` verdict; merge notes in REPORT. Lane done.
+- 09:33 MILESTONE session 6 (STABILIZE, iteration 6) start. No builder running (lock absent). `--reels` gate pid 82140 still running on `27143738f` (log only shows the start line); left running for the Director. cites REPORT.md 24/24 ok. No product change.
+NEXT: Director: `--reels` verdict in `build/gate-logs/reels.out.txt` / `build/gate/27143738f*/gate.json`; snapshot gate PASS on `6ededd080` is the lane's quoted green. Lane done.
