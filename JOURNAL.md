@@ -204,3 +204,59 @@
 - 20:41 BUILDER RUNNING n28-08-molotov-walk-gloria since 20:41 (in-session Sonnet subagent, brief
   evidence/briefs/n28-08-molotov-walk-gloria.md: part A molotov walk-only commit by 21:10, part B Gloria brass concept +
   p70 held strips + held art, <= 5 images, commit started by 21:30, END 21:53).
+- 20:46 BUILDER n28-08 stopped at part A step 3 (33 s, 0 images, nothing committed): with a walk sheet and no run8,
+  `RivetWalk.path_of` returns the own walk sheet at sprint (never the fallback), so walk-only would sprint on the walk
+  cells at the walk cycle. DECISION: allow a small `rivet_walk.gd` change (keys owns Rivet's walk code): a weapon with a
+  walk sheet but no run8 of its own sprints on its fallback (stop-gap) grid; unit test; mutate. Rejected: shipping the
+  rejected final4 run, or sprinting on walk cells. Resumed the same call (short history, cheap). Part A by 21:20.
+- 20:46 BUILDER RUNNING n28-08-molotov-walk-gloria (resumed) since 20:46, END 21:53.
+- 20:47 NEED combat/Director (from combat's JOURNAL 19:12, read here): in the gauntlet bot films the bot's key caption box
+  ("ATTACK CLAW", `project/features/gauntlet/bot/gauntlet_bot.gd`) covers chip numbers 1-3, and chip 1 is cut by the left
+  screen edge (`project/features/souls/**`, combat's files this run). Neither file is keys'; keys' item 5 (the 4 px
+  overhang of the first chip plate) is the same fault. For the Director at merge: move the caption box below the chip row
+  or right of chip 4, and inset the chip row by its plate overhang.
+- 20:50 Dash film for the owner = combat's `gtai-masters/n28/combat/films/trooper_pair_32.mp4` (1920x1080 60/1 25.0 s,
+  n27 dash 40 | n28 dash 24). I looked at t12 and t24.5: same until the late pair, at the end n27 HP 49.1 / lost 51 /
+  direct 1 vs n28 HP 94.9 / lost 5 / direct 0, dashes 13 vs 14. Cite it in REPORT; copy or link it in keys' frames.json
+  at the end (frames.json is the builder's now).
+- 20:58 Correction to my 20:47 NEED line: session 3 (19:24) already found the "ATTACK CLAW" box is the bot film's dev
+  caption (`project/dev/test_player/gauntlet_bot_film.gd`), not in the shipped game. Only chip 1's plate at the left edge
+  is a game fault (keys' item 5, file in souls/** = combat's this run): NEED Director at merge, not urgent.
+- 20:58 Dash: unit check 22 passed at 18:03 (test_pressure_takes, test_bot_dash, test_player_motion_dash); the scenario
+  suite at 24 is still unrun: the final gate covers it (a moved tape there needs a decision line before 22:40, so session
+  5 runs `run_scenarios` FIRST if the n28-09 call leaves Godot free).
+- 20:58 Brief n28-09-collar-p55-sheet.md written for session 5 (one sheet-sized edit of the p55 bare run sheet, neck-only
+  composite, <= 2 images; fill {COMMIT} ~22:28 / {END} ~22:42). If n28-08 ends early, resume it with n28-09 instead.
+- 20:44 CLOCK: `date` reads 20:42-20:44 now; my lines stamped 20:46-20:58 above were written between 20:40 and 20:44
+  (estimated, ran ahead). Real times from here.
+- 20:44 Reviewed the builder's in-progress diff: `RivetWalk.path_of` sprints on the fallback's run sheet when the own grid
+  answers a walk sheet only; test_rivet_walk pins molotov walk = own sheet, sprint = bare run; test_rivet_walk_every_weapon's
+  "walk sheet alone" expectation changes from the walk sheet to the bare run. Checked: molotov p70 is the only walk sheet
+  without a run8 at either pitch, so no other weapon moves. REPORT.md draft written (uncommitted).
+- 21:53 BUILDER n28-08-molotov-walk-gloria 73 n/a accepted-partial. 347783a4c molotov walk-only + `RivetWalk.path_of`
+  fallback (a walk sheet without a run8 sprints on the stop-gap's bare run; cadence already keyed by the sheet shown: 258);
+  test_rivet_walk_sprint_fallback.gd; mutate rivet_walk.gd lines 59-62 80 % (4/5, --max=5, 307 s); run_unit --changed 843
+  passed. 64b5d9570 evidence (grid_molotov.md): walk hold 0.43/1.56 cm (rifle 0.60/1.56), run = bare run 7.05/9.41.
+  Gloria p70 brass: concept + main/diag/left strips + noflash + held/held_small/icon/pickup + showcase icon/p70 +
+  rivet_muzzle.json (p70 gloria) + 11 provenance lines are STAGED, NOT COMMITTED: the hook's tool-tests failed on 2
+  `tools/merge/clash.test.mjs` tests. IMAGES 4 this call -> 19/60.
+- 21:55 Ran `node --test tools/merge/clash.test.mjs` alone: 7/7 pass (34.8 s; build/clash_test_director.txt): the hook
+  failure was load on the shared machine (git ops in temp repos), not the Gloria files. Retry the commit.
+- 21:55 I looked at gloria_concept_n28.png (old long | n27 | n28 | pistol): n28 reads brass-yellow, the nail comb about
+  twice n27's, one hand on the grip, claw free, collar rigid; apart from the pistol at a glance. Measured: length 1.20x
+  (centre figure, bar 1.3) / 1.33x (right), median gun hue 38.5 deg vs pistol 27.5. Accepted (no second roll).
+  Known: the left strip's gun touches the cell edge (15 px opaque at x=0 in cells 2, 3): check in game.
+- 21:57 NEXT (session 5, starts ~22:08; last commit by 22:40, final gate started by 22:55):
+  (1) One builder call (~22:10, END 22:45): render Gloria in game at tilt 70, 8 aims + fire, 64 px/m
+  (`gtai-masters/n28/keys/gloria_n28_fire_64.png`) and the left-strip edge cells; I look; then retry the commit of the
+  STAGED files (`git diff --cached --name-only`) with the message "Gloria in brass with a longer nail strip: p70 held
+  strips and held art", commit STARTED by 22:22 (hook ~12 min; if clash.test flakes again, rerun once). Then
+  `evidence/n28-keys/gloria.md` (concept numbers above) + `weapon_art.json` gloria muzzle/grip check (if a value must move,
+  only before 22:40). If the in-game look fails (cut-off gun, wrong hand): unstage nothing by reset; restore the n27 files
+  with `git restore --staged --worktree -- <paths>` and REPORT it.
+  (2) The p55 collar (brief n28-09) does NOT fit before 22:40: REPORT Next steps with the brief path.
+  (3) After 22:40: `node tools/gate/run.mjs --rev=HEAD` (covers the dash scenario suite), then the five-weapon 32 px/m clip
+  (homing shard, mini-nuke, ray gun, molotov walk; plasma sword on stop-gap), re-render grid_molotov_64/_32 (their run
+  column still shows the rejected final4), copy/link combat's trooper_pair_32.mp4 entry into keys' frames.json, finish
+  REPORT.md (draft in the tree, uncommitted), `node tools/evidence/cites.mjs REPORT.md`, commit. Reels gate after 00:10.
+  No builder running at session end.
