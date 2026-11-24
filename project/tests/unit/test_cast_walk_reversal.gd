@@ -31,7 +31,12 @@ func _reversal(path: String) -> float:
 
 
 func test_foe_eights_reverse_within_twelve_screen_pixels() -> void:
-	for path: String in [CastRiotAnchors.EIGHT]:
+	for path: String in [
+		CastRiotAnchors.EIGHT,
+		CastSwatAnchors.EIGHT,
+		CastSwatAnchors.RUN_EIGHT,
+		CastLancerAnchors.EIGHT
+	]:
 		for pitch: String in ["p70", "p55"]:
 			var worst: float = _reversal(pitch.path_join(path))
 			assert_lte(worst, 12.0, "%s/%s reversal %.3f px" % [pitch, path, worst])

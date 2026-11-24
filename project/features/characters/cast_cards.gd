@@ -64,6 +64,8 @@ static func _sheets(table: DataTable, row: Dictionary, pitch: String) -> Sheets:
 	var walk: String = table.text(row, "armed_walk")
 	if walk == CastWardenAnchors.FOUR:
 		walk = CastWardenAnchors.WALK
+	if walk == CastLancerAnchors.FOUR:
+		walk = CastLancerAnchors.WALK
 	out.walk = dir + (StreetMulroneyAnchors.WALK if walk == StreetMulroneyAnchors.FOUR else walk)
 	out.attack = dir + table.text(row, "attack")
 	out.stomp = dir + table.text(row, "stomp") if row.has("stomp") else ""

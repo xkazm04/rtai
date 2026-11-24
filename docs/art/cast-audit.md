@@ -203,6 +203,31 @@ The 64 px/m stills show the same fixed viewport and tick 38, with one orange sol
 
 Capture the current patrol with `node tools/art/cast_feet.mjs build/cast/cop8 32 patrol_cop` and repeat at 64. With the original takes in `build/cast/before`, run `python tools/art/cast_feet_plate.py build/cast/before build/cast/cop8 patrol_cop <output-directory>` and `python tools/art/cast_feet_clip.py build/cast/before build/cast/cop8 <output.mp4>`.
 
+
+## Planted feet, n27
+
+The riot cop, SWAT (walk and the rifle-post run) and the lancer (`rocket_trooper`) now draw eight-drawing walks on the patrol's anchored placement (`CastRiotAnchors`, `CastSwatAnchors`, `CastLancerAnchors`, selected by their `WALK` constant; `FOUR` restores the shipped strip). Source art: `gtai-art/foes-n26/{riot8c,swat8c,swat8run,lancer8}`, cut by `tools/art/cast_foe_eight.py`, soles registered by `tools/art/cast_foe_soles.py`. Same take and columns as n26 (sole travel / body jump, screen px at 32 px/m; checklist bars sole <= 2 px over a contact, body jump <= 12 px between consecutive rendered frames). Before is `main` `a3b3f1466` (the n26 rows). The after sole is 0.00 because the placement pins the very ink the take registers; the windows were checked on overlay sheets (`pack/soles_*.png` in each source folder), not by a second oracle.
+
+| Archetype | Gait (m/s) | Pitch | Before right | After right | Before down-right | After down-right |
+|---|---|---:|---:|---:|---:|---:|
+| riot_cop | walk (2.8) | 70 | 14.31 / 3.07 ✗ | 0.00 / 3.77 ✓ | 16.83 / 3.39 ✗ | 0.00 / 5.10 ✓ |
+| riot_cop | walk (2.8) | 55 | 14.46 / 3.50 ✗ | 0.00 / 2.68 ✓ | 31.46 / 2.41 ✗ | 0.00 / 3.69 ✓ |
+| swat | walk (3.4) | 70 | 17.54 / 3.16 ✗ | 0.00 / 3.10 ✓ | 36.26 / 2.61 ✗ | 0.00 / 7.21 ✓ |
+| swat | walk (3.4) | 55 | 16.18 / 4.39 ✗ | 0.00 / 5.46 ✓ | 19.63 / 2.61 ✗ | 0.00 / 6.23 ✓ |
+| swat | run (6) | 70 | 25.54 / 4.54 ✗ | 0.00 / 4.65 ✓ | 40.83 / 3.88 ✗ | 0.00 / 9.13 ✓ |
+| swat | run (6) | 55 | 24.17 / 5.78 ✗ | 0.00 / 7.09 ✓ | 26.94 / 3.77 ✗ | 0.00 / 7.17 ✓ |
+| rocket_trooper | walk (3.2) | 70 | 13.66 / 2.03 ✗ | 0.00 / 2.77 ✓ | 22.24 / 2.89 ✗ | 0.00 / 9.21 ✓ |
+| rocket_trooper | walk (3.2) | 55 | 15.11 / 13.44 ✗ | 0.00 / 3.34 ✓ | 19.45 / 3.48 ✗ | 0.00 / 3.95 ✓ |
+
+| Sheet | Metres per drawing | Drawings per second | 64 px/m edge (added dark exterior pixels, 70 / 55) | Height vs shipped walk |
+|---|---:|---:|---|---|
+| cop_riot_planted8_armed_walk | 0.2161 | 12.8 at 2.8 m/s (above 12) | 0 / 0 | 1.000 / 1.000 |
+| swat_planted8_armed_walk | 0.2437 | 13.9 at 3.4 m/s (above 12) | 0 / 0 | 0.999 / 1.000 |
+| swat_planted8_run | 0.4720 | 12.7 at 6 m/s (above 12) | 0 / 0 | 1.000 / 1.000 |
+| rocket_trooper_planted8_armed_walk | 0.2057 | 15.6 at 3.2 m/s (above 12) | 0 / 0 | 0.999 / 1.000 |
+
+All four cadences are above the 5 to 10 a second a drawn walk usually wants and the checklist's 12; the drawn strides are short for these speeds, so the drawing changes are quick. Soles hold and the jump stays under 12 px, but the cadence is the thing to judge on the film. Reversal (aim one way, step the other; `test_cast_walk_reversal.gd`): 9.60 px on every new sheet at both pitches (the 0.30 m/tick body-catch limit, bar 12). Walk, stop and turn jumps are the take's maxima above; the dedicated stop and turn takes were not run in this call. Tool: `node tools/art/cast_feet.mjs <dir> 32 riot_cop,swat,rocket_trooper`, 64 px/m edge via `cast_feet.mjs ... 64` then `tools/art/cast_foe_edge.py`, size via `tools/art/cast_foe_scale.py`.
+
 ## Sergeant Mulroney card admission, 2026-11-23
 
 | Archetype | Renderer | Identity | Walk | Attack/tell | Hit | Death | Facings | Grid | Pitches | Scale | Ink | Palette | Cut | Feet | Shadow | Provenance | Enabled |

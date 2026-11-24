@@ -43,8 +43,22 @@ def window(name, pitch, col, row):
     return TRAILING if row in (3, 7) and col in (1, 2, 3) and name != 'swat_run' else FULL
 
 
+def lead_window(mask):
+    """The rightmost shoe in the lowest rows: with both shoes at ground level the lead is the support."""
+    x, y, right, bottom = bounds(mask)
+    low = np.nonzero(mask)[0].max()
+    cols = np.flatnonzero(mask[max(y, low - max(1, round((bottom - y - 1) * .05))):low + 1].any(axis=0))
+    groups = np.split(cols, np.flatnonzero(np.diff(cols) > 3) + 1)
+    first, last = groups[-1][0], groups[-1][-1] + 1
+    width = right - x
+    return (max(0, 100 * (first - x) / width - 1), min(100, 100 * (last - x) / width + 1))
+
+
 def sole(mask, name, pitch, col, row):
-    return band(mask, window(name, pitch, col, row))
+    limits = window(name, pitch, col, row)
+    if name != 'riot' and limits == FULL and col in (1, 2, 3):
+        limits = lead_window(mask)
+    return band(mask, limits)
 
 
 def cells(path):

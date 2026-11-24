@@ -63,7 +63,7 @@ class Contact:
 		registered = null
 		step_m = FOUR_STEP_M
 		if drawings > 4:
-			var running: bool = strip.get_file() == RUN
+			var running: bool = CastCardKinds.running(strip.get_file(), RUN)
 			registered = StreetPatrolPose.new()
 			step_m = registered.configure(strip, drawings, running)
 

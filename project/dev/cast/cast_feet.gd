@@ -95,8 +95,14 @@ func _prepare(host: ArenaRigs, take: Dictionary) -> void:
 		var speed: float = take.speed_mps
 		var fast: bool = StreetCopWalk.strip_for(speed) == StreetCopWalk.RUN
 		take.step_m = StreetPatrolAnchors.RUN_M if fast else StreetCopWalk.STEP_M
-	if take.archetype == "riot_cop":
-		take.step_m = CastRiotAnchors.WALK_STEP_M
+	var steps: Dictionary[String, float] = {
+		"riot_cop": CastRiotAnchors.WALK_STEP_M,
+		"rocket_trooper": CastLancerAnchors.WALK_STEP_M,
+		"swat": CastSwatAnchors.WALK_STEP_M
+	}
+	if steps.has(take.archetype):
+		var fast: bool = take.speed_mps > CastCardKinds.RUN_MPS and take.archetype == "swat"
+		take.step_m = CastSwatAnchors.RUN_STEP_M if fast else steps[take.archetype]
 	if take.archetype == "patrol_cop" and LaunchArgs.has("--cast-patrol-feet"):
 		_probe = CastPatrolTake.new()
 		host.rigs.get_parent().add_child(_probe)
