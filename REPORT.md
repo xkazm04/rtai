@@ -102,4 +102,21 @@ TODO
 TODO
 
 ## Builder ledger
-TODO
+| call | how | minutes | cost | verdict |
+|---|---|---:|---|---|
+| c1-bond | builder.mjs | 35 | ? | abandoned (its first Godot run sat in `mem-budget: waiting`) |
+| c1b-bond | builder.mjs | 38 | $0.61 | abandoned (weekly limit; the probe arm was done) |
+| c1c-bond | subagent | 36 | not metered | accepted |
+| c2-deflect | subagent | 9 | not metered | accepted |
+| c2b-audit | subagent | 11 | not metered | accepted |
+| c6a-chip-still | subagent | 1 | not metered | accepted (it proved my review wrong: the still was 64 px/m) |
+| c3a-electric-before | subagent | 3 | not metered | accepted |
+| c4a-troopers-after | subagent | 1 | not metered | accepted |
+| c4b-troopers-before | subagent | 12 | not metered | bounced (temp worktree import segfault) |
+| c3b-electric | subagent | 42 | not metered | accepted |
+| c4c-troopers-before | subagent | 5 | not metered | accepted |
+| TODO | | | | |
+
+Brief differently: for a "before" arm whose difference is data, toggle the data on HEAD from the first brief instead
+of a temp worktree; ask for an in-game frame of the effect itself (the chain still fell back to a dev view because the
+named take tick showed the bolt, not a hop).
