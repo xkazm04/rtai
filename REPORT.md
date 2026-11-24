@@ -2,7 +2,16 @@
 
 Branch `n27-yard`, worktree `C:\Users\kazda\kiro\gtai-wt\n25-yard`, cut from `main` `a3b3f1466`. Director: Claude Opus; builder: Claude Sonnet 5.5 (high) through `gtai-n27/tools/builder.mjs`. IMAGES 5/15.
 
-**Gate:** TBD (`node tools/gate/run.mjs --rev=HEAD`).
+**Gate:** `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n25-yard\build\gate\5c0edce51c44\gate.json` at `5c0edce51`. The last code commit is `a60eb3a93`; the later commits are evidence and docs only.
+- Lint: 19/19 over 2211 GDScript files.
+- Unit: 4125 passed, 0 failed, 2 skipped.
+- Scenarios: 68 passed.
+- Parity: exact over 1200 steps, with the planted mutation caught at step 629.
+- Selftest: passed.
+- Export-audit: 985 loaded, 0 failed.
+- The run took 28 min.
+
+The `--reels` gate started at 08:18 at `58917d6a1`: REELS TBD (`evidence/briefs/gate-n27-reels.out`).
 
 ## What works
 
