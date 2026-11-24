@@ -85,7 +85,7 @@ func test_arched_line_is_raised_line_with_a_darker_warmer_floor_only() -> void:
 	assert_eq(look.ground[0].texture, ART + "floor_tile.png")
 	assert_eq(look.ground[1].texture, ART + "floor_stains.png")
 	assert_eq(look.ground[0].tint, Color("ffe0c8ff"))
-	assert_eq(look.ground[1].wash, Color("f6c18480"))
+	assert_eq(look.ground[1].wash, Color("f6dca880"))
 	assert_ne(look.ground[0].tint, PrologueYardDressing.resolve("raised_line").ground[0].tint)
 	var arched: Dictionary = _row("arched_line").duplicate(true)
 	var raised: Dictionary = _row("raised_line").duplicate(true)

@@ -166,7 +166,7 @@
           "texture": "res://boot/prologue/art/raised_line/floor_stains.png",
           "tiled": false,
           "tint": "ffffff58",
-          "wash": "f6c18480"
+          "wash": "f6dca880"
         }
       ],
       "ground_shade": 0.81,

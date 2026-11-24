@@ -34,3 +34,18 @@ The red channel cannot be raised by a tint (it is already ff), so the real floor
 NOT VERIFIED IN A REAL RENDER: the real L*/C*/hue of arched_line, the fire-pool gain (n27 mid +4.8 dL*, bar >= +4: a darker floor gains MORE from
 the same glow, but unmeasured) and the cream hanging-appliance bar (>= 0.30: a darker floor raises it, unmeasured; appliance_delta.py is written and
 untested on a render).
+
+
+REAL RENDER (18:00-18:14, build/n28/k*, evidence/yard28/sweep.sh + sweep_measure.py + appliance_delta.py; seed 7, tilt 70, 32 px/m, 1920x1080, n27 ticks)
+The model was WRONG about the wash: it is a 50 % alpha fill of a colour LIGHTER than the floor, so a "darker" wash f6c18480 does not darken, it lightens.
+Same tool, same sim, between-pools floor (ground frames, actors hidden):
+| row | floor L*/C*/hue | pool gain dL* (bar >= 4) | Rivet delta (>= 0.19) | patrol blue out/in (>= 65 %) | rifle (>= 95) | pellet (>= 90) | cream appliance delta (>= 0.30) |
+|---|---|---|---|---|---|---|---|
+| raised_line (tint ffffff, wash f6dca8) | 60.6 / 11.9 / 75 | +5.5 | 0.2407 PASS | - | - | - | 0.016 |
+| first arched_line (tint ffe0c8, wash f6c18480) | 62.5 / 12.5 / 76 (LIGHTER than raised) | +3.2 FAIL | 0.2550 | 82.2 / 98.3 | 97.8 | 92.4 | 0.017 FAIL |
+| arched_line AS COMMITTED (tint ffe0c8, wash f6dca880 = raised) | 56.4 / 10.6 / 72 | +4.4 PASS | 0.2153 PASS | 81.9 / 98.7 PASS | 98.9 PASS | 93.3 PASS | 0.047 FAIL |
+Tint-only is what darkens. The floor is very non-linear in the tint: scaling the tile tint by k=0.96 (f5 d5 b9-ish) already drops the floor to L* 44 and Rivet to 0.12,
+k 0.92 -> L* 39 / Rivet 0.05, k 0.85 -> L* 38 / 0.03 (all FAIL Rivet; appliance delta 0.19-0.25 there, still < 0.30). ffe0c8 is the last tint that keeps Rivet.
+Real floor: L* 56.4, C* 10.6, hue 72 (plate mean L* 59.9 C* 24.5 hue 66: darker than the plate, much less chroma; the model's C* 24 was not reached).
+NOT MET: cream hanging-appliance delta 0.047 (bar >= 0.30). The appliances are as light as the floor (lum 0.39 vs 0.35); only a floor so dark that Rivet fails passes it (the bars conflict).
+Stills: floor_arched_mid_32ppm.png (t3000, mid yard), floor_arched_front_32ppm.png (the loading-hall front), both the committed row.
