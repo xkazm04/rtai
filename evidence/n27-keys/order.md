@@ -56,3 +56,25 @@ Caveat: the first chip's plate pokes about 4 px past the strip's dark panel on t
 `ENTER_R + 1.0` -> `- 1.0` (the car-door look-ahead radius; not slot-order logic, pre-existing). The brief's
 `--max=20` run was started once and stopped by PID: the mutate worktree's first import was too slow for the
 night's deadline, and its baseline also hit the test_ghost_form_hud failure fixed in 3f2bb5c2e.
+
+## Order film (n27-01b)
+`C:/Users/kazda/kiro/gtai-masters/n27/keys/ghost_order_keys_32.mp4`: `keys_film.tscn --view=tilt70 --ppm=32 --clean --car-doors`
+through the scratch capture project `build/keys-film` (d3d12, `--position 0,1440`, 1920x1080, fixed 60 fps, Movie Maker),
+encoded with ffmpeg h264_nvenc qp 20.
+`ffprobe`: `codec_name=h264|width=1920|height=1080|r_frame_rate=60/1|duration=39.733333|nb_frames=2384`
+Press log (ticks at 60 Hz; the take fails on a missing or wrong deploy; the run ended `ok exit 0; SCRIPT ERROR 0`):
+| tick | key | action | result |
+|---:|---|---|---|
+| 315 / 394 | 1 | ghost_deploy_1 | down / up, deployed dent |
+| 509 / 874 | 2 | ghost_deploy_2 | down / up, deployed tonnage |
+| 989 / 1354 | 3 | ghost_deploy_3 | down / up, deployed kerf |
+| 1469 / 1954 | 4 | ghost_deploy_4 | down / up, deployed ohm |
+| 2104 / 2110 | 1 | car | down / up, car entered at 2117 |
+| 2348 / 2354 | 1 | car | down / up, car left at 2357 |
+Gaps between releases follow the previous form's deploy cooldown from data (480 / 480 / 600 ticks).
+Frames looked at (ffmpeg cuts at 3.0, 6.6, 14.6, 22.6, 32.6, 37.5 s): Space cap during the sprint; "1 Dent" cap with the
+Dent ring; "2 Tonnage" cap with Tonnage's slam ring; "3 Kerf" cap with Kerf's cut line; "4 Ohm" cap with the Ohm
+chip lit; Rivet in the sedan at 37.5 s. The strip at lower left read 1 2 3 4 = Dent Tonnage Kerf Ohm in every frame and
+Rivet was on screen throughout (in the car at the end).
+Stills: `ghost_order_keys_64.png` (tick 402, Dent apparition, strip, cap "1 Dent"), `ghost_order_before_after.png`
+(n26 strip crop left, n27 right); `frames.json` lists the film first.
