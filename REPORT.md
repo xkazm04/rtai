@@ -5,7 +5,7 @@ Sonnet 5.5 (high) through `gtai-n27/tools/builder.mjs`. Owner's order: the warde
 gunner A, contractor, thug A; item 4 the impact-outline check. Films and stills: `C:\Users\kazda\kiro\gtai-masters\n27\cast\`
 (`frames.json` there, best first). IMAGES 13/15 (all gunner A, generated at 02:52-03:06; no other generation).
 
-Final gate on `635ca4f4b` (the last code commit; later commits are inert docs/evidence): `gate: PASS; build\gateƝca4f4b3ee\gate.json`
+Final gate on `635ca4f4b` (the last code commit; later commits are inert docs/evidence): `gate: PASS; build/gate/635ca4f4b3ee/gate.json`
 (lint 19/19 over 2223 files; unit 4114 passed, 0 failed, 2 skipped; scenarios 68 passed; parity 1200 steps bit for bit,
 planted mutation caught at step 629; selftest goldens 11/11 + 5/5; release-compile 991 loaded, 0 failed). Reels not run yet.
 
