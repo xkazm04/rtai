@@ -89,9 +89,12 @@ func test_arched_line_is_raised_line_with_a_darker_warmer_floor_only() -> void:
 	assert_ne(look.ground[0].tint, PrologueYardDressing.resolve("raised_line").ground[0].tint)
 	var arched: Dictionary = _row("arched_line").duplicate(true)
 	var raised: Dictionary = _row("raised_line").duplicate(true)
-	assert_true(arched.erase("ground"))
-	assert_true(raised.erase("ground"))
-	assert_eq(str(arched), str(raised), "only the ground differs from raised_line")
+	for key: String in ["ground", "layout", "over_print"]:
+		assert_true(arched.erase(key))
+		assert_true(raised.erase(key))
+	assert_eq(
+		str(arched), str(raised), "only the ground, the layout art and the over-print list differ"
+	)
 	var arched_ground: Array = _row("arched_line")["ground"]
 	var raised_ground: Array = _row("raised_line")["ground"]
 	for i: int in arched_ground.size():
@@ -99,3 +102,29 @@ func test_arched_line_is_raised_line_with_a_darker_warmer_floor_only() -> void:
 		var r_row: Dictionary = raised_ground[i]
 		for key: String in ["rect_m", "texture", "tiled"]:
 			assert_eq(str(a_row.get(key)), str(r_row.get(key)), key)
+
+
+func _cover(id: String) -> Dictionary[String, Dictionary]:
+	var rows: Dictionary[String, Dictionary] = {}
+	for row: Dictionary in _row(id)["layout"]["cover"]:
+		rows[str(row["id"])] = row
+	return rows
+
+
+func test_arched_line_keeps_the_six_boxes_and_hangs_its_belt_as_arch_pieces() -> void:
+	var arched: Dictionary[String, Dictionary] = _cover("arched_line")
+	var raised: Dictionary[String, Dictionary] = _cover("raised_line")
+	for id: String in BELT:
+		assert_eq(str(arched[id]["at"]), str(raised[id]["at"]), id)
+		assert_eq(str(arched[id]["size_m"]), str(raised[id]["size_m"]), id)
+	var over: Array = _row("arched_line")["over_print"]
+	var arches: int = 0
+	for piece: Dictionary in _row("arched_line")["layout"]["debris"]:
+		var id: String = piece["id"]
+		assert_false(id.begins_with("hang_"), id)
+		assert_false(arched.has(id), id + " must not block")
+		if id.begins_with("arch_"):
+			arches += 1
+			assert_true(over.has(id), id + " draws over the print")
+			assert_true(ResourceLoader.exists(str(piece["art"])), id)
+	assert_eq(arches, 6)

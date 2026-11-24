@@ -173,7 +173,7 @@
       "layout": {
         "cover": [
           {
-            "art": "res://boot/prologue/art/raised_line/belt_straight_a.png",
+            "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
             "at": [
               24,
               0.6
@@ -185,7 +185,7 @@
             ]
           },
           {
-            "art": "res://boot/prologue/art/raised_line/belt_curve_e.png",
+            "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
             "at": [
               30.4,
               4.4
@@ -197,7 +197,7 @@
             ]
           },
           {
-            "art": "res://boot/prologue/art/raised_line/belt_straight_b.png",
+            "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
             "at": [
               34,
               8.4
@@ -209,7 +209,7 @@
             ]
           },
           {
-            "art": "res://boot/prologue/art/raised_line/belt_curve_w.png",
+            "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
             "at": [
               29.4,
               12.6
@@ -221,7 +221,7 @@
             ]
           },
           {
-            "art": "res://boot/prologue/art/raised_line/belt_straight_a_m.png",
+            "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
             "at": [
               25.5,
               17
@@ -233,7 +233,7 @@
             ]
           },
           {
-            "art": "res://boot/prologue/art/raised_line/belt_torn.png",
+            "art": "res://boot/prologue/art/arched_line/footing_shadow.png",
             "at": [
               32.2,
               20.6
@@ -794,72 +794,86 @@
             ]
           },
           {
-            "art": "res://boot/prologue/art/raised_line/belt_straight_a_hang.png",
+            "art": "res://boot/prologue/art/arched_line/belt_straight_a.png",
             "at": [
               24,
-              1.551
+              -0.055
             ],
-            "id": "hang_door",
+            "id": "arch_door",
             "rotation_deg": 0,
             "size_m": [
-              5.4,
-              0.703
+              8.668,
+              3.806
             ],
             "tint": "ffffffff"
           },
           {
-            "art": "res://boot/prologue/art/raised_line/belt_curve_e_hang.png",
+            "art": "res://boot/prologue/art/arched_line/belt_curve.png",
             "at": [
               30.4,
-              4.55
+              3.382
             ],
-            "id": "hang_feed",
+            "id": "arch_feed",
             "rotation_deg": 0,
             "size_m": [
-              5.4,
-              0.357
+              8.646,
+              4.598
             ],
             "tint": "ffffffff"
           },
           {
-            "art": "res://boot/prologue/art/raised_line/belt_straight_b_hang.png",
+            "art": "res://boot/prologue/art/arched_line/belt_straight_b.png",
             "at": [
               34,
-              9.351
+              7.74
             ],
-            "id": "hang_turn",
+            "id": "arch_turn",
             "rotation_deg": 0,
             "size_m": [
-              5.4,
-              0.703
+              8.723,
+              3.817
             ],
             "tint": "ffffffff"
           },
           {
-            "art": "res://boot/prologue/art/raised_line/belt_curve_w_hang.png",
+            "art": "res://boot/prologue/art/arched_line/belt_curve_mirror.png",
             "at": [
               29.4,
-              12.8
+              11.582
             ],
-            "id": "hang_return",
+            "id": "arch_return",
             "rotation_deg": 0,
             "size_m": [
-              5.4,
-              0.357
+              8.646,
+              4.598
             ],
             "tint": "ffffffff"
           },
           {
-            "art": "res://boot/prologue/art/raised_line/belt_straight_a_m_hang.png",
+            "art": "res://boot/prologue/art/arched_line/belt_straight_a_mirror.png",
             "at": [
               25.5,
-              17.951
+              16.345
             ],
-            "id": "hang_bend",
+            "id": "arch_bend",
             "rotation_deg": 0,
             "size_m": [
-              5.4,
-              0.703
+              8.668,
+              3.806
+            ],
+            "tint": "ffffffff"
+          },
+          {
+            "art": "res://boot/prologue/art/arched_line/belt_torn.png",
+            "at": [
+              32.2,
+              20.242
+            ],
+            "id": "arch_tail",
+            "rotation_deg": 0,
+            "size_m": [
+              8.921,
+              3.674
             ],
             "tint": "ffffffff"
           }
@@ -1034,11 +1048,12 @@
         "fuel_vessel",
         "stack_broken_sw",
         "stack_double_west",
-        "hang_door",
-        "hang_feed",
-        "hang_turn",
-        "hang_return",
-        "hang_bend"
+        "arch_door",
+        "arch_feed",
+        "arch_turn",
+        "arch_return",
+        "arch_bend",
+        "arch_tail"
       ],
       "paint_from": "torn_line",
       "phone": {

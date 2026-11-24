@@ -49,3 +49,19 @@ k 0.92 -> L* 39 / Rivet 0.05, k 0.85 -> L* 38 / 0.03 (all FAIL Rivet; appliance 
 Real floor: L* 56.4, C* 10.6, hue 72 (plate mean L* 59.9 C* 24.5 hue 66: darker than the plate, much less chroma; the model's C* 24 was not reached).
 NOT MET: cream hanging-appliance delta 0.047 (bar >= 0.30). The appliances are as light as the floor (lum 0.39 vs 0.35); only a floor so dark that Rivet fails passes it (the bars conflict).
 Stills: floor_arched_mid_32ppm.png (t3000, mid yard), floor_arched_front_32ppm.png (the loading-hall front), both the committed row.
+
+
+CHROMA SWEEP (18:25-18:35, real renders, wash f6dca880 unchanged, tint only; same tools, seed 7, tilt 70, 32 px/m)
+| tint | floor L*/C*/hue (between pools) | pool gain dL* | Rivet delta | Rivet dE2000 | patrol blue out/in | rifle | pellet | appliance delta |
+|---|---|---|---|---|---|---|---|---|
+| ffe0c8 (committed) | 56.4 / 10.6 / 72 | +4.4 | 0.2153 | - | 81.9 / 98.7 | 98.9 | 93.3 | 0.047 |
+| ffe4b4 | 55.3 / 10.2 / 72 | +5.2 | 0.2086 | 29.1 | 81.8 / 98.8 | 99.0 | 93.4 | 0.059 |
+| ffe2a6 | 55.0 / 10.1 / 71 | +5.2 | 0.2071 | 29.0 | 81.8 / 98.8 | 99.0 | 93.4 | 0.061 |
+| ffe098 | not rendered (the sweep stalled after its day arm) | | | | | | | |
+Result: dropping blue from c8 to a6 does NOT raise chroma (10.6 -> 10.1) and costs 1.4 L*. Floor chroma is capped downstream of the tile tint
+(the day/dusk grade and the stains wash cream layer, which is 50 % of a pale colour), so the target C* 20-25 is not reachable with tint alone.
+Nothing beats the committed ffe0c8; arched_line left unchanged. Untried: a stronger/browner wash (it lightens, so it needs a darker tint to pay), or a grade change (out of allowlist).
+
+BELT READABILITY (arched_line, scale 0.011 m/px, dusk frames, evidence/yard28/appliance_delta.py, 18 exposures)
+cream appliances vs floor: delta 0.017 (lum 0.313 vs 0.329), dE2000 8.0 -> bar >= 0.30 NOT MET (cream and floor are the same lightness at dusk).
+beam + arches (MASK=rust) vs floor: delta 0.206 (lum 0.124 vs 0.329), dE2000 26.9.

@@ -1,0 +1,33 @@
+scale 0.011 m/px, footing 0.1 m inside the box south edge, solid lower band = the opaque pixels of the bottom 0.6 m above the footing line (the leg feet; beam, arches above and hanging appliances are overhead and do not close a lane)
+pair | collision gap m | drawn gap m | lane ok (needs >= 2.5 where collision gap >= 2.5)
+conveyor_door - conveyor_feed | 2.82 | 3.25 | ok
+conveyor_door - conveyor_turn | 8.1 | 7.61 | ok
+conveyor_door - conveyor_return | 10.8 | 11.45 | ok
+conveyor_door - press_carcass | 8.34 | 7.44 | ok
+conveyor_door - fallen_fridges | 6.9 | 7.05 | ok
+conveyor_feed - conveyor_turn | 2.8 | 3.45 | ok
+conveyor_feed - conveyor_return | 7.0 | 7.65 | ok
+conveyor_feed - conveyor_bend | 11.4 | 12.05 | ok
+conveyor_feed - burnt_pickup | 13.67 | 14.15 | ok
+conveyor_feed - press_carcass | 13.38 | 12.1 | ok
+conveyor_feed - fallen_fridges | 4.9 | 4.1 | ok
+conveyor_turn - conveyor_return | 3.0 | 3.65 | ok
+conveyor_turn - conveyor_bend | 8.1 | 8.08 | ok
+conveyor_turn - conveyor_tail | 11.0 | 11.6 | ok
+conveyor_turn - burnt_pickup | 8.34 | 7.84 | ok
+conveyor_turn - fallen_fridges | 7.4 | 6.1 | ok
+conveyor_return - conveyor_bend | 3.2 | 3.85 | ok
+conveyor_return - conveyor_tail | 6.8 | 7.4 | ok
+conveyor_return - burnt_pickup | 9.39 | 8.26 | ok
+conveyor_return - press_carcass | 12.47 | 13.0 | ok
+conveyor_return - fallen_fridges | 3.42 | 4.14 | ok
+conveyor_bend - conveyor_tail | 2.78 | 3.0 | ok
+conveyor_bend - pallet_west | 12.32 | 11.39 | ok
+conveyor_bend - fuel_vessel | 11.1 | 11.25 | ok
+conveyor_bend - burnt_pickup | 12.95 | 11.6 | ok
+conveyor_bend - press_carcass | 10.82 | 10.25 | ok
+conveyor_bend - fallen_fridges | 6.5 | 7.05 | ok
+conveyor_tail - fuel_vessel | 9.18 | 8.59 | ok
+conveyor_tail - burnt_pickup | 6.28 | 5.4 | ok
+conveyor_tail - fallen_fridges | 11.5 | 11.42 | ok
+conveyor_tail - scrap_skip | 9.6 | 8.72 | ok
