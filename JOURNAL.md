@@ -106,3 +106,14 @@ NEXT (session 2, from ~04:15):
 - 05:06 after-melee arm started (godot-free 05:06), scratch 4a3ff4b04; salt 0 from 05:07.
 - 05:10 BUILDER RUNNING films since 05:10 (call 3, node pid 57264, brief `evidence/briefs/n27-pressure-03-films.md`,
   out `.out.txt`, hard stop 06:12). Godot only after `medians/melee/DONE`; writes `godot-free-3.txt` when done.
+- 05:25 MILESTONE item 1 after-melee column (scratch 4a3ff4b04, salts ended 05:15 / 05:23, exit 0, 30/30 each):
+  median death wave salt 0 / 1: novice 5 / 5, average 8 / 5, expert 8.5 / 9 (main: 5/5, 6/5, 8.5/9; after keys
+  identical to main). 20 of 30 salt 0 results differ from main (mastery changes the bot's runs). Average salt 0 +2
+  waves but salt 1 +0 and the null floor is 3.6: no separation. Novice still dies to the wave 5 war machine's stomp
+  (16 of 20 runs). `medians/melee/{killers.md,floors.md,compare_s0.md,compare_s1.md}`.
+- 05:25 item 5: `tune.mjs propose` on after-melee salt 0 -> `medians/melee/plan.json`, 2 changes, NOT applied:
+  `rivet_repair` (repair_per_s 10 -> 12.5, repair_delay_s 3 -> 2.4; expert 8.5 vs target 20) and `budget.per_wave`
+  16 -> 13 (average 8 vs target 12). DECISION: measure each as a what-if arm (`tools/gauntlet/ablate.mjs`, a temp
+  worktree at 4a3ff4b04, the branch never changes) so the owner reads a number per proposal, not a proposal alone.
+  `medians/whatif.sh` (bash pid 36048) waits for call 3 to free Godot (`godot-free-3.txt` or pid 57264 gone), then
+  repair arm, budget arm, compare, killers -> `medians/whatif/DONE` (~06:35).

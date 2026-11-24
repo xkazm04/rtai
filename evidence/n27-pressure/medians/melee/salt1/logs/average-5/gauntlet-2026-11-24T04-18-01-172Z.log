@@ -1,0 +1,19 @@
+# --fixed-fps 60 --quit-after 216000 res://dev/gauntlet/gauntlet.tscn -- --seed=5 --bot=average --pick=greedy --bot-salt=1 --controls=wheel --waves=40 --result=C:\Users\kazda\kiro\gtai-wt\n23-loop\evidence\n27-pressure\medians\melee\salt1\runs\average-5.json
+# exit 0, 21.4 s
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] gauntlet: test player bound: average, greedy picks, seed 16777622
+[INFO] gauntlet: wave 1 tick 255 block 1, 1 alive
+[INFO] gauntlet: wave 2 tick 992 block 2, 1 alive
+[INFO] gauntlet: wave 3 tick 2518 block 3, 1 alive
+[INFO] gauntlet: wave 4 tick 3791 block 4, 1 alive
+[INFO] gauntlet: wave 5 tick 5489 block 5, 1 alive
+[INFO] gauntlet: move opening BLINK on war_machine #53, accepted true
+[INFO] gauntlet: move opening BLINK on war_machine #53, accepted false
+[INFO] gauntlet: move opening BLINK on war_machine #53, accepted true
+[INFO] gauntlet: tick 6300, segment 5
+[INFO] rocket-probe: wave 1 rocket_hits 0 troopers 0
+[INFO] rocket-probe: wave 2 rocket_hits 0 troopers 0
+[INFO] rocket-probe: wave 3 rocket_hits 0 troopers 2
+[INFO] rocket-probe: wave 4 rocket_hits 1 troopers 5
+[INFO] rocket-probe: wave 5 rocket_hits 0 troopers 0
