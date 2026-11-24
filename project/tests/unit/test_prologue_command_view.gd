@@ -121,7 +121,8 @@ func test_the_disc_grows_upward_off_a_neck_two_metres_over_the_commander() -> vo
 	assert_eq(stem[1].x, neck.x)
 	assert_gt(stem[0].y, neck.y, "the tail points down at him")
 	assert_gt(stem[1].y, stem[0].y)
-	assert_lt(stem[0].y - neck.y, R, "it starts inside the disc")
+	assert_between(R - (stem[0].y - neck.y), 1.5, 2.5, "it laps the rim by about 2 px")
+	assert_between(stem[1].y - stem[0].y, 11.0, 13.0, "a 12 px tail")
 	assert_gt(stem[1].y - neck.y, R, "and ends outside it")
 
 
@@ -196,3 +197,25 @@ func test_the_name_plate_sits_on_the_edge_and_wraps_its_text() -> void:
 	assert_gt(plate.end.y, edge.y)
 	assert_almost_eq(plate.get_center().y, edge.y, 1.5)
 	assert_gt(PrologueCommandView.plate_rect(edge, 80.0).size.x, plate.size.x)
+
+
+func test_the_chevrons_mirror_and_point_outward_inside_the_disc() -> void:
+	var right: PackedVector2Array = PrologueCommandView.chevron(1)
+	var left: PackedVector2Array = PrologueCommandView.chevron(-1)
+	for i: int in 3:
+		assert_eq(left[i], Vector2(-right[i].x, right[i].y), "the left one mirrors the right")
+	assert_gt(right[1].x, 0.0)
+	assert_lt(right[1].x, R, "the tip sits inside the disc")
+	assert_lt(right[0].x, right[1].x, "the arms trail inward of the tip")
+	assert_eq(right[0].x, right[2].x)
+	assert_eq(right[0].y, -right[2].y, "the arms spread equally above and below")
+	assert_eq(right[1].y, 0.0, "on the centre line")
+	assert_between(right[0].distance_to(right[1]), 5.0, 10.0, "short arms")
+
+
+func test_the_name_plate_hangs_off_the_scaled_disc_rim() -> void:
+	var at: Vector2 = Vector2(30.0, 40.0)
+	for k: float in [1.0, 1.6, 2.4]:
+		var edge: Vector2 = PrologueCommandView.plate_edge(at, k)
+		assert_almost_eq(edge.y, at.y, 0.0001, "level with the disc centre")
+		assert_almost_eq(edge.x - at.x, R * k, 0.0001, "on the right rim at k %.1f" % k)

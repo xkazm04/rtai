@@ -138,12 +138,12 @@ func _marker(boss: Fighter) -> void:
 		_order_marker()
 	else:
 		for side: int in [-1, 1]:
-			var tip: Vector2 = Vector2.RIGHT * side * 12
-			draw_line(tip + Vector2(-side * 3, -7), tip, Ink.CREAM, 2.4, true)
-			draw_line(tip, tip + Vector2(-side * 3, 7), Ink.CREAM, 2.4, true)
+			var arms: PackedVector2Array = chevron(side)
+			draw_line(arms[0], arms[1], Ink.CREAM, 2.4, true)
+			draw_line(arms[1], arms[2], Ink.CREAM, 2.4, true)
 		draw_circle(Vector2.ZERO, 3.2, Ink.CREAM, true, -1, true)
 	draw_set_transform(Vector2.ZERO)
-	_name_plate(at + Vector2.RIGHT * MARK_RADIUS * k)
+	_name_plate(plate_edge(at, k))
 
 
 ## Keep the original close-up and hold the play-camera disc at least 1.6 metres across.
@@ -168,6 +168,17 @@ static func neck_of(boss_pos: Vector2) -> Vector2:
 ## A scaled disc grows upward, so its bottom edge stays where the close-up disc ended.
 static func disc_center(neck: Vector2, k: float) -> Vector2:
 	return neck + Vector2.UP * MARK_RADIUS * (k - 1.0)
+
+
+## An open window shows two chevrons pointing outward, one each side of the centre dot.
+static func chevron(side: int) -> PackedVector2Array:
+	var tip: Vector2 = Vector2.RIGHT * side * 12
+	return [tip + Vector2(-side * 3, -7), tip, tip + Vector2(-side * 3, 7)]
+
+
+## The name plate hangs off the right rim of the (scaled) disc.
+static func plate_edge(at: Vector2, k: float) -> Vector2:
+	return at + Vector2.RIGHT * MARK_RADIUS * k
 
 
 static func stem_ends(neck: Vector2) -> PackedVector2Array:
