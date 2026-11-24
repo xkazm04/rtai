@@ -1,0 +1,14 @@
+mutate dev/gauntlet/pressure_pair.gd: 12 mutant(s) (sampled from 61), tests: test_pressure_takes
+  dev/gauntlet/pressure_pair.gd:14 literal  0 -> 1  survived
+  dev/gauntlet/pressure_pair.gd:33 arith  + -> -  survived
+  dev/gauntlet/pressure_pair.gd:46 literal  0.6 -> 1.6  survived
+  dev/gauntlet/pressure_pair.gd:49 boundary  >= -> >  survived
+  dev/gauntlet/pressure_pair.gd:53 literal  0.0 -> 1.0  survived
+  dev/gauntlet/pressure_pair.gd:72 arith  * -> /  survived
+  dev/gauntlet/pressure_pair.gd:46 arith  - -> +  killed
+  dev/gauntlet/pressure_pair.gd:49 boolean  not -> (removed)  killed
+  dev/gauntlet/pressure_pair.gd:49 literal  0 -> 1  killed
+  dev/gauntlet/pressure_pair.gd:74 literal  0 -> 1  killed
+  dev/gauntlet/pressure_pair.gd:91 arith  += -> -=  killed
+  dev/gauntlet/pressure_pair.gd:92 arith  / -> *  killed
+score 50.0% = killed 6 / (killed 6 + survived 6); timeout 0, invalid 0; 348 s

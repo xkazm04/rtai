@@ -1,0 +1,17 @@
+mutate features/gauntlet/gauntlet_combat.gd: 15 mutant(s), tests: test_gauntlet_mastery, test_bonus_rank, test_bot_film_act, test_bot_street_machine, test_bot_street_stats, test_bot_street_wheel, test_gauntlet_bonus_apply, test_gauntlet_bot_arena, test_gauntlet_composer, test_gauntlet_dressing, test_gauntlet_enemy_damage, test_gauntlet_fire_gaps, test_gauntlet_kerf_wall, test_gauntlet_live_wave, test_gauntlet_pick_view, test_gauntlet_repair, test_gauntlet_rest, test_gauntlet_run, test_gauntlet_street, test_gauntlet_wave_stats, test_gauntlet_wave_timer, test_gauntlet_waves, test_ghost_deploy_bot, test_ghost_deploy_tally, test_kerf_boss_cap, test_pressure_takes, test_rivet_self_blast, test_rivet_self_blast_gauntlet
+  features/gauntlet/gauntlet_combat.gd:18 literal  0 -> 1  survived
+  features/gauntlet/gauntlet_combat.gd:12 boolean  false -> true  killed
+  features/gauntlet/gauntlet_combat.gd:14 boolean  and -> or  killed
+  features/gauntlet/gauntlet_combat.gd:14 boolean  not -> (removed)  killed
+  features/gauntlet/gauntlet_combat.gd:55 boolean  not -> (removed)  killed
+  features/gauntlet/gauntlet_combat.gd:55 boolean  or -> and  killed
+  features/gauntlet/gauntlet_combat.gd:55 arith  - -> +  killed
+  features/gauntlet/gauntlet_combat.gd:55 cmp_flip  < -> >=  killed
+  features/gauntlet/gauntlet_combat.gd:55 boundary  < -> <=  killed
+  features/gauntlet/gauntlet_combat.gd:55 literal  60 -> 61  killed
+  features/gauntlet/gauntlet_combat.gd:55 arith  * -> /  killed
+  features/gauntlet/gauntlet_combat.gd:56 boolean  false -> true  killed
+  features/gauntlet/gauntlet_combat.gd:64 boolean  true -> false  killed
+  features/gauntlet/gauntlet_combat.gd:122 cmp_flip  < -> >=  killed
+  features/gauntlet/gauntlet_combat.gd:122 boundary  < -> <=  killed
+score 93.3% = killed 14 / (killed 14 + survived 1); timeout 0, invalid 0; 1069 s
