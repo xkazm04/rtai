@@ -423,3 +423,36 @@ the card-path fix (`CastCards.painted_ink`) is for painted wounds and would only
 Caveats: the flash was forced on the frozen tick (`natural_tint` was false 3 ticks after the strike, the game's own pulse is
 shorter than that); p70 only; the door carrier's and gunner's flash in the real fight is not a rig tint, so their pulse
 column is 0 by construction, not by a measured clean flash.
+
+## Contractor, n28: state (step 1 of the brief done, 2026-11-24 evening)
+
+Cut art only. No `cast_cards.json` row, no wiring, nothing measured in the engine yet.
+
+Shipped sheets (`project/features/characters/art/view/{p70,p55}/`, cut by `tools/art/cast_contractor_pack.py`,
+palette and cut check `tools/art/cast_contractor_palette.py`, provenance `tools/art/cast_contractor_provenance.py`):
+`contractor_armed_walk` (4 drawings), `contractor_planted8_armed_walk` (8 drawings, from the ten `contractor8c` sheets),
+`contractor_attack` (4 columns: aim, fire, recoil, recover), `contractor_cast_hit`, `contractor_cast_fall`.
+The hit and fall are named `contractor_cast_*`, not `contractor_hit/fall`: quest 1's dock corpses and hit strip
+(`street_quest_cards.gd`, `street_quest_hit.gd`, `signature_kills.json`) still read the old `contractor_fall.png` /
+`contractor_hit.png`, which are untouched, so the quest tapes cannot move.
+
+Measured (sheet level, opaque px):
+
+| point | before | after |
+|---|---|---|
+| hat mean saturation (top 13 % of the figure), walk / 8-walk / attack / hit, p70 | .147 to .206 | .068 / .071 / .054 / .097 |
+| the same at p55 | .192 to .232 | .065 / .069 / .086 / .123 |
+| hat value | .79 to .85 | .78 to .85 |
+| vest hue (median of yellow-leaning px), p70 walk / 8-walk | 51 / 51 | 51 / 51 (untouched) |
+| cut check, green / magenta-leading opaque px, ten sheets | | 0 / 0 on every sheet |
+| red, teal, vermilion px (the 8 non-fall sheets) | | red 0 to 6, teal 0, vermilion 0 |
+
+Open or failing at sheet level: p55 hit hat saturation .123 (bar .12) with value .779 (bar .78): a hair under the bar
+on both, the hat is shaded on that sheet; p55 vest median hue 46.5 to 47.5 with 14 to 16 % of the vest px under hue 45
+(pale lemon wants 50 to 62; the p70 sheets are 51 and 2 to 3 %): a vest tone pass was not authorised, the live frame
+decides. The p70 fall draws the body only (the source has the hat on the head AND a second floating hat). The p55 fall
+keeps the dropped hat; its drawing-1 rifle is erased by polygon (one stray speck beside the boot).
+
+Not done yet (next call): row `contractor` (`enabled: false`) and the 8-drawing anchored walk in `CastGunnerAnchors`'
+way, feet at 70 and 55 (right and down-right, stop, turn, reversal), drawings per second, size beside the patrol cop and
+Rivet, ink, live rim, shadow, tell / hit / fall films, before/after.
