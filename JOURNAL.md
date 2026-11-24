@@ -178,3 +178,31 @@ NEXT (session 3, from ~05:42):
 - 06:36 checked the repair claim on after-melee salt 0 runs: HP at wave start / max over 180 waves (wave >= 2): median 0.99, p10 0.78, min 0.15 (overlapping waves). The pilot repairs in the cleared block (`gauntlet_waves.gd:75` wave_live false; `gauntlet_walker.gd:22` holds below 95 %). So the repair rate barely matters for the death wave; `repair_in_wave` is the lever that would.
 - 06:45 call 4 trace (staged, not yet committed) `takes/dash_late.md`: the dash cooldown (50 ticks a dash) is longer than the gap between the two troopers' rockets (1 tick only in seed 1; 8-49 elsewhere), so the second rocket's press is refused; late in seeds 3/5 the troopers drift, gap 36-49, bursts 0.6-2.2 m away, 48.4/40.4 HP lost. Builder kept the take (a retry would change the shipped profile). Accepted reasoning; REPORT corrected (my 'one tick apart' was seed 1 only) and call 4 added for the owner.
 - 06:47 call 4 commits 9fed2ebde (dash trace tool + blade6_spaced take + test), af7f98580 (seed table): blade6_spaced turns back 51.4 % [47.5, 55.2] of fired vs blade6 25.7 % [23.4, 28.1]; returns hitting a shooter 27.2 % both; mid-swing 0 vs 650. Film still to come.
+- 06:56 call 4 film on disk (uncommitted): `blade_cadence_32.mp4` 1920x1080 60/1 39.67 s 38.8 MB (7.8 Mb/s);
+  `blade_spaced_return_64.png` (spark at the blade, a returned streak toward the lower rifleman). FAULT: the caption
+  line `Fired .. Turned back NN%` runs past the panel's right edge on both sides and in the still ("Turned back 34%"
+  printed over the background). Must wrap to the panel's empty second line before it is accepted.
+  BUILDER RUNNING contrast since 06:05 (pid 62776, hard stop 07:15).
+- 06:58 session 3 end.
+NEXT (session 4, from ~07:08):
+  (1) Lock `gtai-n27/logs/pressure/builder.lock` + last `builder-calls.jsonl` line; read
+      `evidence/briefs/n27-pressure-04-contrast.out.txt`. Log `BUILDER contrast <min> <$> <verdict>`.
+  (2) If the caption overflow is still in `blade_cadence_32.mp4` / `blade_spaced_return_64.png` (look at a 20 s frame
+      with ffmpeg and at the still): a `--resume` follow-up (hard stop ~07:50, commit by 07:45): wrap the side caption
+      to two lines in `project/dev/gauntlet/pressure_film.gd` (line 1 Fired/Returned/Passed, line 2 Hit a shooter /
+      Turned back), re-film `blade_cadence` + the still only, crf so the file is <= 30 MB, keep 39.67 s; AND append
+      the lane's `docs/decisions.md` lines (allowlist that one file, append only):
+      `- [2026-11-24] DECISION n27 pressure: the tuner's two proposals (rivet_repair, budget.per_wave 16 -> 13) were
+      measured as what-if arms on 4a3ff4b04 and not applied; both inside the noise floor; repair cannot move the death
+      wave while repair_in_wave is false. Rejected: applying either (owner: "I play first and give numbers").` and
+      `- [2026-11-24] DECISION n27 pressure: blade6_spaced is a dev contrast take (one round per 36-tick beat), not a
+      retune; the shipped sword and rifle cadence are unchanged.` Also check frames.json is 8-15 rows, best first.
+  (3) Gate: `node tools/gate/run.mjs --rev=HEAD` started by 08:15 with no builder running (Godot free). Quote line +
+      gate.json path in REPORT. Then `--reels` once after 09:30 freeze if time.
+  (4) REPORT: fill PENDING (gate line, What does not, Blocked/slowed minutes, Next steps, ledger row 4); add the
+      cadence film to section 3 and calls; `node tools/evidence/cites.mjs REPORT.md`; commit.
+      What does not: blade6's third rifleman never fires (pairs are rifleman 1 then 2); pair_pair mutate 7/12 sample
+      not re-run in full; `bot_arena_moves.gd` only 4 mutants; spark VFX has a small red fleck (not this lane's file;
+      Director); deflect_6m_32 is a 2nd-generation re-encode.
+  (5) Remove the scratch worktree `gtai-n27/scratch/pressure-join` (`git worktree remove`) and gtai-mutate-* temps
+      that are ours, at the end.
