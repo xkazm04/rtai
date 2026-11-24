@@ -21,8 +21,8 @@ const films = [
     side: true, ticks: 1500, seed: 1, stillTake: 'pair_circle', stillTick: r => r.first_launch + 14,
     note: 'Two rocket troopers, Rivet at 10 m, never firing back. Left: steady circle. Right: the same seed and spawn, dashing across each rocket line.' },
   { file: 'deflect_6m', title: 'Guard and plasma sword at 6 m', takes: ['guard6', 'blade6'],
-    side: true, ticks: 2200, seed: 19, stillTake: 'blade6', stillTick: r => r.first_return + 3,
-    note: 'Three riflemen at 6 m. Left: guard. Right: plasma sword. Dev take: the riflemen carry 1,000,000 HP (not data) so none falls and every return that reaches one is counted. Share = returns that hit a shooter / returned. Measured curve at 6 m: 24 % guard, 31 % sword.' },
+    side: true, ticks: 2380, seed: 1, stillTake: 'blade6', stillTick: r => r.first_return + 3,
+    note: 'Three riflemen at 6 m. Left: guard. Right: plasma sword. Dev take: the riflemen carry 1,000,000 HP (not data) so none falls and every return that reaches one is counted. Rivet also carries dev HP, so the HP bar is hidden. Cadence differs: the guard (meter refills only while lowered) faces 6-round salvos 9 ticks apart then a pause; the sword faces pairs 18 ticks apart every 0.6 s and catches about half of the rounds. Share = returns that hit a shooter / returned. Measured curve at 6 m: 24 % guard, 31 % sword.' },
 ];
 
 async function capture(dir, take, seed, ppm, still = 0, side = false, ticks = 1000) {
