@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://dev/ghost-forms/bond_film.tscn" id="1"]
+
+[node name="BondFilm64" instance=ExtResource("1")]
+camera_ppm = 64.0

@@ -7,6 +7,7 @@ const SCHEMA: String = "gtai.gauntlet_bonuses/1"
 
 var rows: Dictionary[StringName, Dictionary] = {}
 var moves: MoveTable = MoveTable.shipped()
+var last_offer: Array[StringName] = []
 var _rng: RandomNumberGenerator
 
 
@@ -34,7 +35,22 @@ func offer(wave: int, history: Array[Dictionary], held: Array[StringName]) -> Ar
 				total -= weight
 				pool.erase(id)
 				break
+	last_offer = offered.duplicate()
 	return offered
+
+
+## Records the card taken from the hand and returns what is left to pick from. A free mastery
+## leaves the hand without ending the rest; any other card (or a paid mastery) ends it.
+func take(
+	hand: Array[StringName], id: StringName, picks: Array[Dictionary], wave: int, free: bool
+) -> Array[StringName]:
+	picks.append({"wave": wave, "offered": last_offer, "taken": id})
+	var rest: Array[StringName] = []
+	if free and rows[id]["kind"] == "mastery":
+		for card: StringName in hand:
+			if card != id:
+				rest.append(card)
+	return rest
 
 
 ## Full bonds reserve slots in the normal three-card hand. If all four are ready,

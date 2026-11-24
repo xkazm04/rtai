@@ -67,7 +67,7 @@ func test_t_needs_a_taken_offer_and_uses_the_single_mastered_form() -> void:
 
 func test_t_with_two_mastered_uses_the_last_deployed_and_g_skips_unmastered() -> void:
 	for id: StringName in [&"kerf", &"tonnage"]:
-		forms.bond.record(id, 25, 0)
+		forms.bond.record(id, 30, 0)
 		assert_true(forms.bond.master(id))
 	forms.bond.record(&"kerf", 0, 0)
 	_press(&"power_hauler")

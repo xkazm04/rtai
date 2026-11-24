@@ -10,6 +10,8 @@ var release_tick: int = -1
 var release_form: StringName = &""
 var release_kills: int = 0
 var release_stuns: int = 0
+## Kerf cuts that hurt a boss without killing it (a killing cut counts in release_kills).
+var release_boss_cuts: int = 0
 var _shorts: Dictionary[Fighter, int] = {}
 
 
@@ -23,6 +25,7 @@ func land(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 	release_form = ghost.form
 	release_kills = 0
 	release_stuns = 0
+	release_boss_cuts = 0
 	match ghost.form:
 		KerfStage.GHOST:
 			_kerf(stage, ghost)
@@ -46,6 +49,7 @@ func _kerf(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 		ghost.facing = rear.direction_to(foe.pos)
 	var robot: bool = foe.machine or foe.kind == Fighter.Kind.BOSS
 	var damage: float = attacks.num(ghost.form, &"robot_damage" if robot else &"human_damage")
+	var hurts_boss: bool = false
 	if _boss(stage, foe):
 		# CombatArena applies the plate and run bonus after _hit. Limit the HP actually lost.
 		var arena: CombatArena = stage.arena
@@ -55,7 +59,10 @@ func _kerf(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 		var scale: float = plate * foe.damage_k
 		if scale > 0.0:
 			damage = minf(damage, attacks.deploy[ghost.form].boss_damage_cap * foe.max_hp / scale)
+		hurts_boss = scale > 0.0 and damage > 0.0
 	_hit(stage.arena, foe, ghost.facing, damage, &"deploy_kerf")
+	if hurts_boss and foe.alive():
+		release_boss_cuts += 1
 
 
 func _boss(stage: CollectCallStage, foe: Fighter) -> bool:

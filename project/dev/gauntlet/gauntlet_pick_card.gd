@@ -29,21 +29,63 @@ func _ready() -> void:
 			_number = tr("GAUNTLET__GAIN").format({"percent": roundi((k - 1.0) * 100.0)})
 		"weapon":
 			_illustration = feed.icon_of(ref)
-		"ghost":
-			_illustration = GhostChipFace.face(ref)
-			var host: Node2D = Node2D.new()
-			host.position = custom_minimum_size * Vector2(0.5, 0.54)
-			add_child(host)
-			_ghost = GhostCard.new(String(ref), 3.4, 0.5)
-			_ghost.step(host, [], Vector2.ZERO, 32.0)
-			if _ghost.is_drawn():
-				var sprite: Sprite2D = host.get_node(^"ghost_card") as Sprite2D
-				var height_px: float = sprite.get_rect().size.y * sprite.scale.y
-				host.scale = Vector2.ONE * minf(1.0, 96.0 / height_px)
+		"ghost", "mastery":
+			_mount_ghost(ref)
 	var title: String = _title
 	if not _number.is_empty():
 		title = tr("GAUNTLET__GAIN_TITLE").format({"gain": _number, "title": _title})
 	accessibility_name = tr("GAUNTLET__CARD_NAME").format({"kind": _kind, "title": title})
+
+
+func _mount_ghost(ref: StringName) -> void:
+	_illustration = GhostChipFace.face(ref)
+	var host: Node2D = Node2D.new()
+	host.position = custom_minimum_size * Vector2(0.5, 0.54)
+	add_child(host)
+	_ghost = GhostCard.new(String(ref), 3.4, 0.5)
+	_ghost.step(host, [], Vector2.ZERO, 32.0)
+	if _ghost.is_drawn():
+		var sprite: Sprite2D = host.get_node(^"ghost_card") as Sprite2D
+		var height_px: float = sprite.get_rect().size.y * sprite.scale.y
+		host.scale = Vector2.ONE * minf(1.0, 96.0 / height_px)
+
+
+func picture() -> Texture2D:
+	return _illustration
+
+
+## True when the ghost's drawn figure stands on the card (else the chip face is the picture).
+func has_figure() -> bool:
+	return _ghost != null and _ghost.is_drawn()
+
+
+## A mastered ghost: its chip ring drawn full, with the crown diamond, behind the figure.
+func is_mastery() -> bool:
+	return str(row["kind"]) == "mastery"
+
+
+func _draw_mastery_ring() -> void:
+	var center: Vector2 = custom_minimum_size * Vector2(0.5, 0.54)
+	var radius: float = 54.0
+	var span: float = GhostBondRing.TOP
+	draw_arc(
+		center, radius, span, span + TAU, 65, GhostBondRing.INK, GhostBondRing.STROKE + 3.0, true
+	)
+	draw_arc(center, radius, span, span + TAU, 65, GhostBondRing.TRACK, 1.0, true)
+	draw_arc(
+		center, radius, span, span + TAU, 65, GhostBondRing.TEAL, GhostBondRing.STROKE + 1.0, true
+	)
+	var crown: Vector2 = center + Vector2.UP * radius
+	var diamond: PackedVector2Array = PackedVector2Array(
+		[
+			crown + Vector2.UP * 9.0,
+			crown + Vector2.RIGHT * 7.0,
+			crown + Vector2.DOWN * 9.0,
+			crown + Vector2.LEFT * 7.0
+		]
+	)
+	draw_colored_polygon(diamond, GhostBondRing.TEAL)
+	draw_circle(crown, 2.5, GhostBondRing.INK, true, -1.0, true)
 
 
 func _draw() -> void:
@@ -67,6 +109,8 @@ func _draw() -> void:
 		Color.WHITE
 	)
 	draw_line(Vector2(23, 60), Vector2(size.x - 23, 60), Color(INK, 0.4), 1.0)
+	if is_mastery():
+		_draw_mastery_ring()
 	if not _number.is_empty():
 		draw_string(font, Vector2(0, 148), _number, HORIZONTAL_ALIGNMENT_CENTER, size.x, 49, INK)
 	elif _illustration != null and (_ghost == null or not _ghost.is_drawn()):

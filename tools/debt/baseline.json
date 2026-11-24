@@ -155,7 +155,10 @@
         "2026-11-23: --cast-mulroney-trace for n26 cast (dev_loc 34336 -> 34342)",
         "2026-11-23: Paired full-yard stills and a five-second motion observer for n26 yard (dev_loc 33638 -> 33764)",
         "2026-11-23: Paired pilot captures retain exact underlay pixels and shot identities for n26 yard (dev_loc 33764 -> 33890)",
-        "2026-11-23: Capture both zooms on the live commander through the seed-seven rack for n26 yard (dev_loc 33890 -> 33900)"
+        "2026-11-23: Capture both zooms on the live commander through the seed-seven rack for n26 yard (dev_loc 33890 -> 33900)",
+        "2026-11-24: mastery-free flag and boss-cut column for the n27 bond measure (dev_loc 35431 -> 35448)",
+        "2026-11-24: dev_loc: bond_film film entry for n27 melee films (dev_loc 35448 -> 35655)",
+        "2026-11-24: mastery card figure + ring (n27 melee C): 44 dev lines on the gauntlet pick card (dev_loc 35655 -> 35699)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -168,8 +171,8 @@
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
-        "project/dev/gauntlet": 1650,
-        "project/dev/ghost-forms": 1715,
+        "project/dev/gauntlet": 1694,
+        "project/dev/ghost-forms": 1939,
         "project/dev/ghost-powers": 1396,
         "project/dev/guard": 397,
         "project/dev/gunplay": 674,
@@ -197,7 +200,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 35431
+      "total": 35699
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -215,7 +218,8 @@
         "2026-11-18: n18 police item 6/7: --sim-police in LaunchArgs.KNOWN_FLAGS (the brief names the flag there; launch_args.gd 200 -> 201) and dev/sim/heat_cost.gd (the heat 3 cost probe) (direct_cmdline_reads 163 -> 164)",
         "2026-11-18: n18 police: bench --heat (CityHeat pinned at a level: item 7's heat 3 bench) and dev/sim/cop_wall_trails.gd (item 1's before/after trails on the wall map); dev evidence tooling (direct_cmdline_reads 164 -> 165)",
         "2026-11-17: n18 districts: dev/view/city_zone_map.gd, the headless plan of the generated city per zone (cells, zone tint, numbers JSON); a -s script has no LaunchArgs autoload, so it reads OS args as dev/bake_city.gd does (direct_cmdline_reads 162 -> 163)",
-        "2026-11-17: n18 districts: dev/view/zone_frame.gd, zone stills + a straight drive clip through the generated city (the evidence of items 3 and 6); its flags are its own (KNOWN), not game flags, so it reads OS args as dev/showcase/city_frame.gd does (direct_cmdline_reads 163 -> 164)"
+        "2026-11-17: n18 districts: dev/view/zone_frame.gd, zone stills + a straight drive clip through the generated city (the evidence of items 3 and 6); its flags are its own (KNOWN), not game flags, so it reads OS args as dev/showcase/city_frame.gd does (direct_cmdline_reads 163 -> 164)",
+        "2026-11-24: --ink-sparks for n27 melee (direct_cmdline_reads 166 -> 167)"
       ],
       "files": {
         "project/core/render/view_mode.gd": 1,
@@ -337,7 +341,7 @@
         "project/features/combat/kills/kill_hole_fx.gd": 1,
         "project/features/combat/react/react_link.gd": 1,
         "project/features/combat/react/react_table.gd": 1,
-        "project/features/combat/react/shock_jolt.gd": 1,
+        "project/features/combat/react/shock_jolt.gd": 2,
         "project/features/combat/react/strike_depth.gd": 1,
         "project/features/combat/weapons/art/arena_weapon_rack.gd": 1,
         "project/features/combat/weapons/art/held_lod.gd": 1,
@@ -369,7 +373,7 @@
         "project/tests/run_scenarios.gd": 1,
         "project/tests/unit/test_launch_args.gd": 1
       },
-      "total": 166
+      "total": 167
     },
     "files_near_cap": {
       "accepted": [
@@ -469,7 +473,8 @@
         "2026-11-23: --skip-prologue for n25 path (files_past_soft_cap 67 -> 67)",
         "2026-11-23: merge of n24 and n25 lanes: launch_args.gd carries both runs' flags (221 lines) (files_past_soft_cap 67 -> 65)",
         "2026-11-23: --cast-patrol-feet for n26 cast (files_past_soft_cap 65 -> 65)",
-        "2026-11-23: --cast-mulroney-trace for n26 cast (files_past_soft_cap 65 -> 65)"
+        "2026-11-23: --cast-mulroney-trace for n26 cast (files_past_soft_cap 65 -> 65)",
+        "2026-11-24: --ink-sparks for n27 melee (files_past_soft_cap 65 -> 65)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -478,7 +483,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 238,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 223,
+        "project/boot/launch_args.gd": 224,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,

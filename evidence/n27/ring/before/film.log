@@ -1,0 +1,118 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+ERROR: Condition "hr != ((HRESULT)0x00000000)" is true. Returning: ERR_CANT_OPEN
+   at: audio_device_init (drivers/wasapi/audio_driver_wasapi.cpp:275)
+ERROR: WASAPI: init_output_device error.
+   at: init (drivers/wasapi/audio_driver_wasapi.cpp:600)
+WARNING: All audio drivers failed, falling back to the dummy driver.
+   at: initialize (servers/audio/audio_server.cpp:258)
+
+[INFO] bond-film: prefill tonnage 24
+[INFO] bond-film: prefill dent 24
+[INFO] bond-film: prefill kerf 24
+[INFO] bond-film: prefill ohm 24
+[INFO] gauntlet: test player bound: expert, greedy picks, seed 2
+[INFO] characters: prewarmed 41 rigs in 626.0 ms
+[INFO] fx: warmed 61 weapon fx cells
+[WARN] ghost_sheet: res://features/souls/art/view/p70/ohm_spec_hover.png needs five rows of square pose cells
+[WARN] ghost_sheet: res://features/souls/art/view/p70/ohm_spec_hover.png needs five rows of square pose cells
+[INFO] bot-film: tick=0 frame=0 wave=0 act=ADVANCE threat= deflects=0 pick=0
+[INFO] gauntlet: wave 1 tick 272 block 1, 1 alive
+[INFO] bot-film: tick=272 frame=272 wave=1 act=ADVANCE threat= deflects=0 pick=0
+[INFO] bot-film: tick=359 frame=359 wave=1 act=GUARD threat= deflects=0 pick=0
+[INFO] bot-film: tick=372 frame=372 wave=1 act=GUARD threat= deflects=1 pick=0
+[INFO] bot-film: tick=379 frame=383 wave=1 act=GUARD threat= deflects=2 pick=0
+[INFO] bot-film: tick=387 frame=391 wave=1 act=ADVANCE threat= deflects=2 pick=0
+[INFO] bot-film: tick=431 frame=435 wave=1 act=GUARD threat= deflects=2 pick=0
+[INFO] bot-film: tick=439 frame=443 wave=1 act=GUARD threat= deflects=3 pick=0
+[INFO] bot-film: tick=446 frame=454 wave=1 act=GUARD threat= deflects=4 pick=0
+[INFO] bot-film: tick=450 frame=458 wave=1 act=GUARD threat= deflects=5 pick=0
+[INFO] bot-film: tick=453 frame=461 wave=1 act=GUARD threat= deflects=6 pick=0
+[INFO] bot-film: tick=454 frame=462 wave=1 act=ROLL threat= deflects=6 pick=0
+[INFO] bot-film: tick=476 frame=484 wave=1 act=ADVANCE threat= deflects=6 pick=0
+[INFO] bot-film: tick=479 frame=487 wave=1 act=GUARD threat= deflects=6 pick=0
+[INFO] bot-film: tick=494 frame=502 wave=1 act=ADVANCE threat= deflects=6 pick=0
+[INFO] bot-film: tick=527 frame=535 wave=1 act=ROLL threat= deflects=6 pick=0
+[INFO] bot-film: tick=537 frame=545 wave=1 act=ROLL threat=small deflects=6 pick=0
+[INFO] bot-film: tick=542 frame=550 wave=1 act=ROLL threat= deflects=6 pick=0
+[INFO] bot-film: tick=549 frame=557 wave=1 act=ADVANCE threat= deflects=6 pick=0
+[INFO] bot-film: tick=562 frame=570 wave=1 act=GUARD threat= deflects=6 pick=0
+[INFO] bot-film: tick=570 frame=578 wave=1 act=GUARD threat= deflects=7 pick=0
+[INFO] bot-film: tick=578 frame=590 wave=1 act=ADVANCE threat= deflects=7 pick=0
+[INFO] bot-film: tick=586 frame=598 wave=1 act=GUARD threat= deflects=7 pick=0
+[INFO] bot-film: tick=600 frame=612 wave=1 act=GUARD threat= deflects=8 pick=0
+[INFO] bot-film: tick=607 frame=623 wave=1 act=REST threat= deflects=9 pick=0
+[INFO] bot-film: tick=608 frame=624 wave=1 act=ADVANCE threat= deflects=9 pick=0
+[INFO] react: death_bullet on 12, frame 633
+[INFO] bot-film: tick=649 frame=669 wave=1 act=ROLL threat= deflects=9 pick=0
+[INFO] bot-film: tick=650 frame=670 wave=1 act=ROLL threat=small deflects=9 pick=0
+[INFO] bot-film: tick=651 frame=671 wave=1 act=ROLL threat= deflects=9 pick=0
+[INFO] bot-film: tick=671 frame=691 wave=1 act=ADVANCE threat= deflects=9 pick=0
+[INFO] bot-film: tick=763 frame=783 wave=1 act=ATTACK CLAW threat= deflects=9 pick=0
+[INFO] react: death_melee on 10, frame 787
+[INFO] bot-film: tick=783 frame=809 wave=1 act=REST threat= deflects=9 pick=0
+[INFO] bot-film: tick=785 frame=811 wave=1 act=ATTACK CLAW threat= deflects=9 pick=0
+[INFO] react: death_melee on 5, frame 815
+[INFO] bot-film: tick=791 frame=823 wave=1 act=GUARD threat= deflects=9 pick=0
+[INFO] bot-film: tick=795 frame=827 wave=1 act=GUARD threat= deflects=10 pick=0
+[INFO] bot-film: tick=796 frame=828 wave=1 act=ADVANCE threat= deflects=10 pick=0
+[INFO] bot-film: tick=798 frame=830 wave=1 act=GUARD threat= deflects=10 pick=0
+[INFO] bot-film: tick=803 frame=835 wave=1 act=GUARD threat= deflects=11 pick=0
+[INFO] bot-film: tick=804 frame=836 wave=1 act=ADVANCE threat= deflects=11 pick=0
+[INFO] bot-film: tick=805 frame=837 wave=1 act=GUARD threat= deflects=11 pick=0
+[INFO] react: death_bullet on 4, frame 843
+[INFO] bot-film: tick=830 frame=862 wave=1 act=GUARD threat= deflects=12 pick=0
+[INFO] bot-film: tick=831 frame=867 wave=1 act=ADVANCE threat= deflects=12 pick=0
+[INFO] bot-film: tick=834 frame=870 wave=1 act=ROLL threat= deflects=12 pick=0
+[INFO] bot-film: tick=835 frame=871 wave=1 act=ROLL threat=small deflects=12 pick=0
+[INFO] bot-film: tick=842 frame=878 wave=1 act=ROLL threat= deflects=12 pick=0
+[INFO] bot-film: tick=856 frame=892 wave=1 act=ADVANCE threat= deflects=12 pick=0
+[INFO] bot-film: tick=905 frame=941 wave=1 act=ATTACK CLAW threat= deflects=12 pick=0
+[INFO] react: death_melee on 3, frame 945
+[INFO] bot-film: tick=925 frame=967 wave=1 act=REST threat= deflects=12 pick=0
+[INFO] bot-film: tick=926 frame=968 wave=1 act=ATTACK CLAW threat= deflects=12 pick=0
+[INFO] react: death_melee on 2, frame 972
+[INFO] bot-film: tick=942 frame=990 wave=1 act=GUARD threat= deflects=12 pick=0
+[INFO] bot-film: tick=949 frame=997 wave=1 act=GUARD threat= deflects=13 pick=0
+[INFO] bot-film: tick=950 frame=998 wave=1 act=ROLL threat= deflects=13 pick=0
+[INFO] bot-film: tick=951 frame=999 wave=1 act=ROLL threat=small deflects=13 pick=0
+[INFO] bot-film: tick=953 frame=1001 wave=1 act=ROLL threat= deflects=13 pick=0
+[INFO] bot-film: tick=972 frame=1020 wave=1 act=ADVANCE threat= deflects=13 pick=0
+[INFO] bot-film: tick=994 frame=1042 wave=1 act=ATTACK CLAW threat= deflects=13 pick=0
+[INFO] react: death_melee on 1, frame 1046
+[INFO] bot-film: tick=1000 frame=1054 wave=1 act=GUARD threat= deflects=13 pick=0
+[INFO] bot-film: tick=1010 frame=1064 wave=1 act=GUARD threat= deflects=14 pick=0
+[INFO] bot-film: tick=1011 frame=1065 wave=1 act=ADVANCE threat= deflects=14 pick=0
+[INFO] bot-film: tick=1030 frame=1084 wave=1 act=ATTACK CLAW threat= deflects=14 pick=0
+[INFO] react: death_melee on 7, frame 1088
+[INFO] react: death_bullet on 6, frame 1088
+[INFO] bot-film: tick=1050 frame=1110 wave=1 act=REST threat= deflects=14 pick=0
+[INFO] bot-film: tick=1051 frame=1111 wave=1 act=ATTACK CLAW threat= deflects=14 pick=0
+[INFO] react: death_melee on 9, frame 1115
+[INFO] bot-film: tick=1071 frame=1131 wave=1 act=ADVANCE threat= deflects=14 pick=0
+[INFO] bot-film: tick=1202 frame=1262 wave=1 act=ATTACK CLAW threat= deflects=14 pick=0
+[INFO] react: death_melee on 13, frame 1266
+[INFO] bot-film: tick=1222 frame=1288 wave=1 act=ADVANCE threat= deflects=14 pick=0
+[INFO] bot-film: tick=1334 frame=1400 wave=1 act=GUARD threat= deflects=14 pick=0
+[INFO] bot-film: tick=1361 frame=1427 wave=1 act=GUARD threat= deflects=15 pick=0
+[INFO] bot-film: tick=1370 frame=1440 wave=1 act=ADVANCE threat= deflects=15 pick=0
+[INFO] react: death_bullet on 11, frame 1447
+[INFO] bot-film: tick=1386 frame=1462 wave=1 act=GUARD threat= deflects=15 pick=0
+[INFO] bot-film: tick=1393 frame=1469 wave=1 act=GUARD threat= deflects=16 pick=0
+[INFO] bot-film: tick=1399 frame=1477 wave=1 act=GUARD threat= deflects=17 pick=0
+[INFO] bot-film: tick=1403 frame=1481 wave=1 act=GUARD threat= deflects=17 pick=1
+[INFO] react: death_bullet on 8, frame 1481
+[INFO] bot-film: tick=1403 frame=1601 wave=1 act=GUARD threat= deflects=17 pick=0
+[INFO] bot-film: tick=1407 frame=1605 wave=1 act=REST threat= deflects=17 pick=0
+[INFO] bot-film: tick=1643 frame=1841 wave=1 act=ADVANCE threat= deflects=17 pick=0
+[INFO] gauntlet: wave 2 tick 1763 block 2, 1 alive
+[INFO] bot-film: tick=1763 frame=1961 wave=2 act=ADVANCE threat= deflects=17 pick=0
+[INFO] bond-film: tick=1765 frame=1963 bond full tonnage
+[INFO] bond-film: tick=1765 frame=1963 release tonnage kills=4 stuns=0 bond=30
+[INFO] bond-film: capture done: 3 frames, last tick 1793
+[INFO] bond-film: capture done: 3 frames, last tick 1794
+[INFO] gauntlet: tick 1794, segment 2
+[INFO] rocket-probe: wave 1 rocket_hits 0 troopers 0
+[INFO] rocket-probe: wave 2 rocket_hits 0 troopers 0
+WARNING: 62 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

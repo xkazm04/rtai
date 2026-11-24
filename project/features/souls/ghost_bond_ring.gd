@@ -36,32 +36,88 @@ func angles(id: StringName) -> Vector2:
 	return Vector2(TOP, TOP + TAU * fill_fraction(bond, id))
 
 
-func _draw() -> void:
+## The ring's whole drawing as data: one dictionary per call, in draw order, kind arc | poly | dot.
+## _draw replays it, so a test sees what is drawn without a renderer.
+func plan(view_height: float) -> Array[Dictionary]:
+	var cmds: Array[Dictionary] = []
 	if not bond.enabled:
-		return
+		return cmds
 	var layout: GhostFormLayout = hud.layout
 	var shown: Array[StringName] = hud.shown_chips()
 	for i: int in shown.size():
 		var id: StringName = shown[i]
 		if not hud.locked.get(id, true):
-			var center: Vector2 = layout.chip_center(hud.get_viewport_rect().size.y, i)
-			_chip(id, center, layout.chip_r - 3.5)
+			var center: Vector2 = layout.chip_center(view_height, i)
+			cmds.append_array(chip_plan(id, center, layout.chip_r - 3.5))
+	return cmds
 
 
-func _chip(id: StringName, center: Vector2, radius: float) -> void:
-	draw_arc(center, radius, TOP, TOP + TAU, 65, INK, STROKE + 2.0, true)
-	draw_arc(center, radius, TOP, TOP + TAU, 65, TRACK, 1.0, true)
+func chip_plan(id: StringName, center: Vector2, radius: float) -> Array[Dictionary]:
+	var cmds: Array[Dictionary] = [
+		_arc(center, radius, Vector2(TOP, TOP + TAU), INK, STROKE + 2.0),
+		_arc(center, radius, Vector2(TOP, TOP + TAU), TRACK, 1.0)
+	]
 	var span: Vector2 = angles(id)
 	if span.y <= span.x:
-		return
-	draw_arc(center, radius, span.x, span.y, 65, TEAL, STROKE, true)
+		return cmds
+	cmds.append(_arc(center, radius, span, TEAL, STROKE))
 	if bond.ready(id):
 		var crown: Vector2 = center + Vector2.UP * radius
-		var diamond: PackedVector2Array = [
-			crown + Vector2.UP * 5.0,
-			crown + Vector2.RIGHT * 4.0,
-			crown + Vector2.DOWN * 5.0,
-			crown + Vector2.LEFT * 4.0
-		]
-		draw_colored_polygon(diamond, TEAL)
-		draw_circle(crown, 1.5, INK, true, -1.0, true)
+		(
+			cmds
+			. append(
+				{
+					&"kind": &"poly",
+					&"points":
+					PackedVector2Array(
+						[
+							crown + Vector2.UP * 5.0,
+							crown + Vector2.RIGHT * 4.0,
+							crown + Vector2.DOWN * 5.0,
+							crown + Vector2.LEFT * 4.0
+						]
+					),
+					&"color": TEAL,
+				}
+			)
+		)
+		cmds.append({&"kind": &"dot", &"center": crown, &"radius": 1.5, &"color": INK})
+	return cmds
+
+
+func _draw() -> void:
+	for cmd: Dictionary in plan(hud.get_viewport_rect().size.y):
+		_replay(cmd)
+
+
+func _replay(cmd: Dictionary) -> void:
+	var color: Color = cmd[&"color"]
+	match cmd[&"kind"]:
+		&"arc":
+			var center: Vector2 = cmd[&"center"]
+			var radius: float = cmd[&"radius"]
+			var from: float = cmd[&"from"]
+			var to: float = cmd[&"to"]
+			var width: float = cmd[&"width"]
+			draw_arc(center, radius, from, to, 65, color, width, true)
+		&"poly":
+			var points: PackedVector2Array = cmd[&"points"]
+			draw_colored_polygon(points, color)
+		&"dot":
+			var dot: Vector2 = cmd[&"center"]
+			var dot_r: float = cmd[&"radius"]
+			draw_circle(dot, dot_r, color, true, -1.0, true)
+
+
+static func _arc(
+	center: Vector2, radius: float, span: Vector2, color: Color, width: float
+) -> Dictionary:
+	return {
+		&"kind": &"arc",
+		&"center": center,
+		&"radius": radius,
+		&"from": span.x,
+		&"to": span.y,
+		&"color": color,
+		&"width": width,
+	}

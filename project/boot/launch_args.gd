@@ -14,6 +14,7 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--record",
 	"--devtools",
 	"--look",
+	"--ink-sparks",  # n27 melee: electro stun sparks keep the ink rim (ShockJolt.ink_rim)
 	"--reduced-motion",
 	"--blood",
 	"--kill-beat",

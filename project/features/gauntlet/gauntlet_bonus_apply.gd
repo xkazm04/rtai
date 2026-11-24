@@ -33,6 +33,12 @@ func owned() -> Array[StringName]:
 	return ids
 
 
+## True when taking a mastery card leaves the rest's one pick unspent.
+func mastery_free() -> bool:
+	var forms: GhostForms = _stage.pilot.ghosts.forms
+	return forms.bond.enabled and forms.table.mastery_free
+
+
 func apply(row: Dictionary) -> bool:
 	var ref: StringName = row["ref"]
 	match str(row["kind"]):

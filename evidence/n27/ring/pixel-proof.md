@@ -1,0 +1,1 @@
+64 px/m, bond_film seed 2, --bond-prefill=6, sim ticks 1790-1792 (bond full for Tonnage since t1765: crown open, chip 2). before = ef8e06412 (snapshot, old _draw), after = 9249226c6+ (plan/replay). Same 3 frames: md5 identical, differing pixels 0 / 0 / 0 (see pixel-diff.txt).
