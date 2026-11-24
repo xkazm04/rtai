@@ -55,3 +55,16 @@ NEXT: (same as 03:55) review m2 at its end (~05:00): films in `C:/Users/kazda/ki
   `evidence/briefs/n27-melee-03-ring-tests.md` + ghost_bond mutate redo).
 - 04:56 m4 brief extended: C mastery card picture first (+ re-render bond film/offer still, old ones kept as before),
   then B arcs, then A wrecks. Times placeholders LAUNCH/COMMIT1/COMMIT2/HARDSTOP to fill at launch.
+- 05:29 REVIEW m3 so far: `9249226c6` ring `plan()` -> command list, `_draw` replays it (no pixel change intended;
+  4 chips x <=5 dicts per redraw, fine for the HUD); tests pin every command; `01273d2a8` zero-threshold guard test.
+  Mutate ring 2/18 -> 16/19 (`evidence/n27/ring/mutate-ring-{before,after}.txt`). Pixel proof + ghost_bond mutate
+  still running. Note: `_replay`'s own draw calls are not covered by the plan tests: check the survivors list.
+- 05:30 session 2 end. BUILDER RUNNING m3-ring-tests since 04:54 (pid 61536, hard stop 05:56).
+NEXT: (1) when `gtai-n27/logs/melee/builder.lock` is gone: read `evidence/briefs/n27-melee-03-ring-tests.out.txt` tail,
+  check the pixel diff = 0 under `evidence/n27/ring/`, the ghost_bond mutate score, log `BUILDER m3-ring-tests ...`.
+  (2) launch m4: fill LAUNCH/COMMIT1 (+25)/COMMIT2 (+45)/HARDSTOP (+70, never later than 07:50) in
+  `evidence/briefs/n27-melee-04-wreck-arcs.md`, commit it, Start-Process detached (tag `m4-wreck-arcs`, out to
+  `evidence/briefs/n27-melee-04-wreck-arcs.out.txt`). (3) review C first: new bond film must show the mastery card with
+  the ghost + full ring; then B arcs, A wrecks stills. (4) last new work committed by 08:00, final gate
+  `node tools/gate/run.mjs --rev=HEAD` started by 08:15, then REPORT (mastery table n26 vs n27, both films, calls:
+  mastery pace (early Tonnage at waves 3-4; master_at 22 estimate), Master card art, war machine only stunned).
