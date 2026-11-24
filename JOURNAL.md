@@ -147,3 +147,8 @@ Order: 1 darker warm floor (measure first) -> 2 tall arched belt, appliances 1.5
 - 23:48 BUILDER stills 2 $n/a(subagent, 51k tokens) accepted 252f98fff: floor_pass4_64 (mid, tick 2000) and belt_pass4_64 (mid, tick 2400), masters frames.json 15. LOOKED at both: arched belt with fridges and washers at about Rivet's size, cream reads by outline, red only blood; no lit pool in the floor still. Prologue film not made (time).
 - 23:50 Session 6 ends. No builder running. Ledger S6: lights-test 31 bounced (mem-budget), lights-commit 1 accepted, stills 2 accepted. IMAGES 5/25. Final product commit cabb1ece8, gate PASS; REPORT final, cites ok.
 - NEXT: Director merges n28-yard. The prologue film on arched_line is the first thing to run next time (`evidence/briefs/n28-06-prologue-film.md`).
+
+## Session 7 (00:10, iteration 7, STABILIZE; stop 00:20)
+- 00:10 START. No builder lock, no builder running. Nothing in project/ or tools/ changed after cabb1ece8 (gate PASS, `build/gate/cabb1ece8d8a/gate.json`); HEAD 810e8de44 adds only evidence, JOURNAL and REPORT. REPORT has no draft markers; `node tools/evidence/cites.mjs REPORT.md` 33/33 ok. Root `hs_err_pid38980.log` / `hs_err_pid39364.log` are untracked crash logs from outside the lane: left in place, not committed.
+- 00:11 No new work after the freeze. IMAGES 5/25.
+- NEXT: Director merges n28-yard at HEAD (product = cabb1ece8, default arched_line, raised_line one value away). First item next run: the whole prologue on arched_line (`evidence/briefs/n28-06-prologue-film.md`).
