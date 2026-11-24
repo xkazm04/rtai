@@ -32,6 +32,23 @@
         "hit": "sentry_turret_hit.png"
       }
     },
+    "sergeant_mulroney": {
+      "body_scale": 1.11,
+      "enabled": true,
+      "id": "sergeant_mulroney",
+      "p55": {
+        "armed_walk": "sergeant_mulroney_armed_walk.png",
+        "attack": "sergeant_mulroney_attack.png",
+        "fall": "sergeant_mulroney_fall.png",
+        "hit": "sergeant_mulroney_hit.png"
+      },
+      "p70": {
+        "armed_walk": "sergeant_mulroney_armed_walk.png",
+        "attack": "sergeant_mulroney_attack.png",
+        "fall": "sergeant_mulroney_fall.png",
+        "hit": "sergeant_mulroney_hit.png"
+      }
+    },
     "shield_robot": {
       "enabled": true,
       "id": "shield_robot",

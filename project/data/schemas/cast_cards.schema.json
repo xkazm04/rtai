@@ -40,6 +40,10 @@
       "additionalProperties": {
         "additionalProperties": false,
         "properties": {
+          "body_scale": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
           "enabled": {
             "type": "boolean"
           },

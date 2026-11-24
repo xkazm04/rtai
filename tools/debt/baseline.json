@@ -147,7 +147,12 @@
         "2026-11-23: Read-only gauntlet observer records unique releases, owned deploy plans and transformation ticks for the ten-seed bond measurement (dev_loc 33955 -> 34018)",
         "2026-11-23: Measure post-lock dashes and attribute rocket hits to their spawn wave for n26 pressure (dev_loc 33626 -> 33783)",
         "2026-11-23: Measure real HP loss and lethal tick in the rocket circle arena for n26 pressure (dev_loc 33783 -> 33816)",
-        "2026-11-23: Three lines stop headless scoring on a measured combat freeze for n26 pressure (dev_loc 33816 -> 33819)"
+        "2026-11-23: Three lines stop headless scoring on a measured combat freeze for n26 pressure (dev_loc 33816 -> 33819)",
+        "2026-11-23: Fixed-camera equipped-cast feet probe for n26 cast (dev_loc 33638 -> 33827)",
+        "2026-11-23: Mulroney lineup, pose and fight captures for n26 cast (dev_loc 33827 -> 34178)",
+        "2026-11-23: --cast-patrol-feet for n26 cast (dev_loc 34175 -> 34290)",
+        "2026-11-23: --cast-mulroney-trace for n26 cast (dev_loc 34290 -> 34336)",
+        "2026-11-23: --cast-mulroney-trace for n26 cast (dev_loc 34336 -> 34342)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -156,7 +161,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 692,
-        "project/dev/cast": 627,
+        "project/dev/cast": 1331,
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
@@ -189,7 +194,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 34465
+      "total": 35169
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -459,7 +464,9 @@
         "2026-11-22: n23 merge: launch_args KNOWN_FLAGS holds both the loop's and the prologue's flags (files_past_soft_cap 67 -> 67)",
         "2026-11-23: --yard-dressing for n25 yard (files_past_soft_cap 67 -> 67)",
         "2026-11-23: --skip-prologue for n25 path (files_past_soft_cap 67 -> 67)",
-        "2026-11-23: merge of n24 and n25 lanes: launch_args.gd carries both runs' flags (221 lines) (files_past_soft_cap 67 -> 65)"
+        "2026-11-23: merge of n24 and n25 lanes: launch_args.gd carries both runs' flags (221 lines) (files_past_soft_cap 67 -> 65)",
+        "2026-11-23: --cast-patrol-feet for n26 cast (files_past_soft_cap 65 -> 65)",
+        "2026-11-23: --cast-mulroney-trace for n26 cast (files_past_soft_cap 65 -> 65)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -468,7 +475,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 238,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 221,
+        "project/boot/launch_args.gd": 223,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,

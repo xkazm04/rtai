@@ -4,6 +4,7 @@ extends Node2D
 ## consumed, decayed or despawned. Far cast members include the gauntlet's live wave spawns.
 
 const MOUNT: StringName = &"foe_cast_view"
+const PUMP: StringName = &"cast_shotgun_pump"
 
 var _rigs: CharacterRigs
 var _arena: CombatArena
@@ -12,6 +13,7 @@ var _looks: ArenaSquadLooks = ArenaSquadLooks.new()
 var _poses: Dictionary[Fighter, CastCardPose] = {}
 var _rows: Dictionary[Fighter, int] = {}
 var _far: Dictionary[int, CastFarCard] = {}
+var _new_hosts: Array[Fighter] = []
 var _launchers: Dictionary[Fighter, bool] = {}
 
 
@@ -43,6 +45,12 @@ static func draws_launcher(h: Fighter) -> bool:
 
 ## Called during normal arena feed construction, before the pool poses this tick.
 func feed(h: Fighter, i: int) -> void:
+	if h.archetype != &"patrol_cop":
+		var host: CutRig = _rigs.rig_for(h.id)
+		if host == null:
+			_new_hosts.append(h)
+		else:
+			host.set_meta(StreetCopWalk.OTHER_ID, h.id)
 	var sheets: CastCards.Sheets = null if h.machine else CastCards.current(h.archetype)
 	if sheets == null:
 		if _poses.has(h):
@@ -68,10 +76,27 @@ func feed(h: Fighter, i: int) -> void:
 		pose.bind(rig)
 
 
+## Some shot clocks start the pump on the discharge tick. Keep that recoil for one frame.
+## This render sample belongs to the fighter across both rig LODs.
+static func set_pump(h: Fighter, progress: float, fired_this_tick: bool = false) -> void:
+	if fired_this_tick:
+		h.set_meta(PUMP, 1)
+	elif progress >= 0.0:
+		h.set_meta(PUMP, 2 if progress < 0.5 else 3)
+	elif h.has_meta(PUMP):
+		h.remove_meta(PUMP)
+
+
 static func attack_row(h: Fighter, arena: CombatArena) -> int:
 	var lock_ticks: int = arena.guard_tell.lock_ticks if arena.guard_tell != null else 0
 	var mind: SquadMind = arena.squad_ai.minds.get(h.id) if arena.squad_ai != null else null
 	var age: int = arena.tick - mind.agent.shot_tick if mind != null else -1
+	if h.archetype == &"sergeant_mulroney":
+		if h.has_meta(PUMP):
+			return h.get_meta(PUMP)
+		if age == 0:
+			return 1
+		return 0 if h.tell_left > 0 else -1
 	return CastCardPose.attack_frame(h.tell_left, lock_ticks, age)
 
 
@@ -85,6 +110,13 @@ func _pose_for(h: Fighter) -> CastCardPose:
 
 
 func _process(_delta: float) -> void:
+	for h: Fighter in _new_hosts:
+		var rig: CutRig = _rigs.rig_for(h.id)
+		if rig != null:
+			rig.set_meta(StreetCopWalk.OTHER_ID, h.id)
+			if rig.head_card != null and rig.head_card.has_meta(StreetCopWalk.CONTACT):
+				StreetWalkerCards.step(rig)
+	_new_hosts.clear()
 	for h: Fighter in _launchers:
 		if CastCards.current(h.archetype) == null:
 			FoeRocketPose._kneel(h, _rigs)
