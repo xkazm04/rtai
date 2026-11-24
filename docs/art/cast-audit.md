@@ -527,3 +527,26 @@ The strafing speed in a fight was not measured separately (the fight film moves 
 | **Size jump on attack and hit (found while looking)** | same facing, 70 at 64 px/m, silhouette height: stand 86, tell 64, fire 65, hit_1 55, hit_4 69 (55: 88 / 66 / 68 / 53 / 66). Ratio about 0.74 to 0.77 = 192/256: the eight-drawing walk and the `padded` sheets take the 256/192 cell ratio (`CastCardKinds.fill`, `padded`: only `appliance_warden_` and `robot_gunner_`), his `contractor_attack` and `contractor_cast_hit` (256 px cells, figure 187 texels like the walk) do not, so he shrinks by a quarter whenever he aims or is hit | **FAIL** (likely cause; needs `contractor_` in `CastCardKinds.padded`, `project/features/characters/cast_card_kinds.gd`, outside this lane's allowlist: NEED) |
 
 **Verdict (n28, brief 08): he stays OFF.** Failing: the live rim on the hit and fall exposures while the flash is lit (175 / 221 and 604 / 720 dark exterior px against bar 0; calm 0; the shipped lancer shows the same, so this may be the bar's reading rather than his art) and the attack / hit size jump (about 0.75 of the walk, a likely one-line `padded` NEED). Not done because of that: the two films, `enabled: true`, the decisions line, `frames.json`.
+
+**Contractor, n28: size jump fixed, flashed-rim rule (brief 09 parts A and B).** Sheets measured with the alpha bbox (alpha > 40), texels, cell height / figure height:
+walk `contractor_planted8_armed_walk` 256 / 198-204 (70), 198-201 (55); `contractor_attack` 256 / 195-223 (70), 197-201 (55); `contractor_cast_hit` 256 / 201 (70), 199 (55);
+`contractor_cast_fall` grid cells 264 high (figure 167-201 per row); old quest sheets `contractor_card` 192 / 190, `contractor_hit` 288 / 278, `contractor_fall` 510 cell / 188-192 (two rows; unchanged, quest 1 reads them).
+The attack and hit cells carry the same padding as the walk (figure about 200 of 256), so `CastCardKinds.padded` now lists exactly `contractor_attack.png` and `contractor_cast_hit.png`
+(the fall stays out by the existing `_fall.png` rule, the quest sheets are not named). Warden and gunner lines are unchanged (pinned in `test_cast_card_kinds.gd`).
+Live 64 px/m, tilt, same facing, no-shadow silhouette height in screen px, before -> after (frozen-exposure launch `cast_contractor_poses`):
+
+| Pitch | stand | tell | fire | hit_1 | hit_4 | hit_6 |
+|---|---|---|---|---|---|---|
+| 70 before | 86 | 63 | 64 | 55 | 69 | 62 |
+| 70 after | 86 | 85 (-1.2 %) | 86 (0) | 82 (-4.7 %) | 82 (-4.7 %) | 87 (+1.2 %) |
+| 55 before | 88 | 66 | 68 | 53 | 66 | 63 |
+| 55 after | 88 | 88 (0) | 91 (+3.4 %) | 83 (-5.7 %) | 87 (-1.1 %) | 91 (+3.4 %) |
+
+Within 5 % everywhere except hit_1 at 55 (-5.7 %, 0.7 point over). hit_1 is the drawn flinch lean (looked at the strip: the figure bends away, head low), and its cell figure
+is 199 texels like the walk's 198-201, so the scale is the walk's; the remaining gap is the pose, not a size jump (it was -40 % before). Fall: fall_0 103, fall_1 71 (walk stand 101 with its shadow); the rest body lies about 55 px
+(by eye; the 123 px bbox of `rest` includes the blood splat spikes), not taller than stand.
+
+Flashed rim rule (director decision 22:02): a cell drawn while the shared hit flash is lit is judged against the shipped lancer card in the same harness, not against 0; calm cells keep bar 0.
+Re-run numbers (70 / 55), dark exterior px: hit pulse 289 / 403 against lancer 482 / 596 (PASS); fall cell 0 604 / 720 against 1161 / 1079 (PASS); fall cell 1 87 / 165 (lancer cell 1 not measured; PASS by being under cell 0); hit calm 0 / 0, walk 0 / 0, attack 0 / 0, fall cell 2 0 / 0 (PASS).
+Shadow re-run: stand 237, tell 234, fire 235, hit_1 203, hit_4 201, hit_6 224 (PASS 150-350). Palette: hat S 0.052-0.078, V 0.875-0.907; vest median hue walk 51.0 / 46.7, attack 45.9 / 46.4; stray 0 / 0 / 0 / 0 (PASS).
+Rule added to `docs/art/cast-checklist.md` (Rim row). The two earlier FAIL rows (hit pulse, fall cells 0 and 1, size jump) now read PASS under the rule and the padded fix.

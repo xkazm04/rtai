@@ -28,7 +28,12 @@ static func anchored(path: String) -> bool:
 static func padded(path: String) -> bool:
 	var file: String = path.get_file()
 	return (
-		(file.begins_with("appliance_warden_") or file.begins_with("robot_gunner_"))
+		(
+			file.begins_with("appliance_warden_")
+			or file.begins_with("robot_gunner_")
+			or file == "contractor_attack.png"
+			or file == "contractor_cast_hit.png"
+		)
 		and not file.ends_with("_fall.png")
 	)
 
