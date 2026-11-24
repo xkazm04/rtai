@@ -161,7 +161,8 @@
         "2026-11-24: dev_loc rises by the n27 pressure seed table scripts for n27 pressure (dev_loc 35998 -> 36004)",
         "2026-11-24: pressure pair damage split, moments and seed columns (dev_loc +103) for n27 pressure (dev_loc 36004 -> 36107)",
         "2026-11-24: pressure moments for the film stills (dev_loc +5) for n27 pressure (dev_loc 36107 -> 36112)",
-        "2026-11-24: dev gauntlet pressure takes: blade6_spaced take, dash trace tool and their test for n27 pressure (dev_loc 36112 -> 36328)"
+        "2026-11-24: dev gauntlet pressure takes: blade6_spaced take, dash trace tool and their test for n27 pressure (dev_loc 36112 -> 36328)",
+        "2026-11-24: film caption for the sword cadence contrast, dev only, for n27 pressure (dev_loc 36328 -> 36330)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -174,7 +175,7 @@
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
-        "project/dev/gauntlet": 2547,
+        "project/dev/gauntlet": 2549,
         "project/dev/ghost-forms": 1715,
         "project/dev/ghost-powers": 1396,
         "project/dev/guard": 397,
@@ -203,7 +204,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 36328
+      "total": 36330
     },
     "direct_cmdline_reads": {
       "accepted": [

@@ -29,6 +29,9 @@ const films = [
   { file: 'deflect_6m', title: 'Guard and plasma sword at 6 m', takes: ['guard6', 'blade6'],
     side: true, crf: '26', ticks: 2380, seed: 1, stillTake: 'blade6', stillTick: r => r.first_return + 3,
     note: 'Three riflemen at 6 m. Left: guard. Right: plasma sword. Dev take: the riflemen carry 1,000,000 HP (not data) so none falls and every return that reaches one is counted. Rivet also carries dev HP, so the HP bar is hidden. Cadence differs: the guard (meter refills only while lowered) faces 6-round salvos 9 ticks apart then a pause; the sword faces pairs 18 ticks apart every 0.6 s and catches about half of the rounds. Share = returns that hit a shooter / returned. Measured curve at 6 m: 24 % guard, 31 % sword.' },
+  { file: 'blade_cadence', title: 'Plasma sword: rounds in pairs and rounds spaced', takes: ['blade6', 'blade6_spaced'],
+    side: true, ticks: 2380, seed: 1, cadence: true, noCloseup: true, stillTake: 'blade6_spaced', stillTick: () => 0,
+    note: 'Same three riflemen at 6 m, same plasma sword, same seed. Left: the shipped pairs, the second round 18 ticks after the first, so it arrives while the sword is still finishing the swing it started for the first. Right: one round at a time, 36 ticks apart (the riflemen take turns), so every round meets a fresh swing. Dev take: riflemen and Rivet carry dev HP so none falls and every return that reaches a shooter is counted.' },
 ];
 
 // Single-take stills: the tick comes from the take's own moments (PressureMoments) at the film seed,
@@ -40,6 +43,9 @@ const median = (take, key) => {
   return (v[Math.floor((v.length - 1) / 2)] + v[Math.floor(v.length / 2)]) / 2;
 };
 const pct = (k, n) => (100 * k / n).toFixed(1) + ' %';
+const pooled = take => total(take, 'returned') + ' of ' + total(take, 'fired') + ' rounds ('
+  + pct(total(take, 'returned'), total(take, 'fired')) + '), and ' + total(take, 'struck') + ' of those returns hit a shooter ('
+  + pct(total(take, 'struck'), total(take, 'returned')) + ')';
 const stills = [
   { file: 'pair_dash_cross_64.png', take: 'pair_dash', ppm: 64, moment: 'moment_dash_cross', shift: 4,
     title: 'Mid-dash across a rocket line',
@@ -63,6 +69,11 @@ const stills = [
     note: (t) => 'An orange rifle round is about to hit Rivet while his sword is in the slow end of a swing, so nothing turns it back (the second round of each pair arrives like this). Take blade6, seed 1, tick ' + t
       + '. Over seeds 1 to 10 exactly ' + total('blade6', 'fate_unswung_hit') + ' of ' + total('blade6', 'fired')
       + ' rounds arrive this way (half), all of them during a swing; the sword turns back ' + total('blade6', 'returned') + '.' },
+  { file: 'blade_spaced_return_64.png', take: 'blade6_spaced', ppm: 64, moment: 'moment_returned_flight', shift: 0,
+    title: 'Plasma sword with rounds spaced: a round turned back',
+    note: (t) => 'With the rounds a full swing apart, the sword turns a rifle round back toward the riflemen. Take blade6_spaced, seed 1, tick ' + t
+      + '. Over seeds 1 to 10 the spaced sword turns back ' + pooled('blade6_spaced') + '; with the shipped pairs it turns back '
+      + pooled('blade6') + '.' },
   { file: 'pair_dash_32.png', take: 'pair_dash', ppm: 32, moment: 'moment_dash_cross', shift: 4,
     title: 'Dashing across a rocket line, whole street',
     note: (t) => 'The same dash at 32 px/m, both troopers in frame. Take pair_dash, seed 1, tick ' + t + '. Rockets that land directly: '
@@ -73,10 +84,10 @@ const stills = [
       + '. Over seeds 1 to 10 the sword turns back ' + pct(total('blade6', 'returned'), total('blade6', 'fired')) + ' of the rounds fired at it.' },
 ];
 
-async function buildStills(scratch) {
+async function buildStills(scratch, only) {
   const rows = [];
   const takes = new Map();
-  for (const st of stills) {
+  for (const st of stills.filter(x => !only || only.includes('stills') || only.includes(x.file))) {
     if (!takes.has(st.take)) {
       const r = await runGodot(['res://dev/gauntlet/pressure_film.tscn', '--', '--take=' + st.take, '--seed=1', '--ppm=32'],
         { name: 'pressure-moments', timeoutMs: 5 * 60_000, stopOn: SCRIPT_ERROR });
@@ -95,12 +106,12 @@ async function buildStills(scratch) {
   return rows;
 }
 
-async function capture(dir, take, seed, ppm, still = 0, side = false, ticks = 1000) {
+async function capture(dir, take, seed, ppm, still = 0, side = false, ticks = 1000, extra = []) {
   mkdirSync(dir, { recursive: true });
   const args = ['--rendering-driver', 'd3d12', '--position', '0,1440', '--resolution', '1920x1080',
     '--fixed-fps', '60', '--disable-vsync', '--quit-after', String(ticks + 5), 'res://dev/gauntlet/pressure_film.tscn',
     '--', '--take=' + take, '--seed=' + seed, '--ppm=' + ppm, '--still=' + still, '--out=' + dir.replaceAll('\\', '/'),
-    ...(side ? ['--half=1'] : [])];
+    ...(side ? ['--half=1'] : []), ...extra];
   const r = await runGodot(args, { headless: false, timeoutMs: 8 * 60_000, stopOn: SCRIPT_ERROR, name: 'pressure-film' });
   writeFileSync(join(dir, 'engine.log'), r.out);
   const summary = r.out.match(/\[INFO\] pressure-film: (\{.*\})/);
@@ -151,6 +162,16 @@ function describe(film, samples) {
     return film.note + ' ' + samples.map(r => r.take.replace('6', '') + ': ' + r.fired + ' fired, ' + r.passed + ' passed, '
       + r.returned + ' returned, ' + r.struck + ' hit a shooter (' + (100 * r.struck / r.returned).toFixed(1) + ' %)').join('. ') + '.';
   }
+  if (film.file === 'blade_cadence') {
+    const [paired, spaced] = samples;
+    if (paired.returned < 30 || !(spaced.returned / spaced.fired > paired.returned / paired.fired)) {
+      throw new Error('The spaced sword did not turn back a larger share than the paired one');
+    }
+    const side = (name, r) => name + ': ' + r.fired + ' fired, ' + r.returned + ' returned, ' + r.passed + ' passed, '
+      + r.struck + ' hit a shooter, ' + (100 * r.returned / r.fired).toFixed(0) + ' % turned back';
+    return film.note + ' Seed 1: ' + side('pairs', paired) + '; ' + side('spaced', spaced) + '. Over seeds 1 to 10: with pairs the sword turns back '
+      + pooled('blade6') + '; spaced, it turns back ' + pooled('blade6_spaced') + '.';
+  }
   if (!samples[0].paired_ticks) throw new Error('No frame contained both rockets in flight');
   return film.note;
 }
@@ -161,7 +182,7 @@ async function buildFilm(film, scratch) {
   const samples = [];
   for (const take of film.takes) {
     const dir = join(scratch, take);
-    const row = await capture(dir, take, film.seed, 32, 0, !!film.side, film.ticks);
+    const row = await capture(dir, take, film.seed, 32, 0, !!film.side, film.ticks, film.cadence ? ['--cadence'] : []);
     ticks += film.side ? 0 : row.tick;
     samples.push(row);
     if (film.side) continue;
@@ -189,6 +210,7 @@ async function buildFilm(film, scratch) {
       || Math.abs(Number(s.duration) - ticks / 60) > 0.001 || s.duration < 15 || s.duration > 40) {
     throw new Error(video + ' failed ffprobe: ' + JSON.stringify(s));
   }
+  if (film.noCloseup) return [{ file: video, title: film.title, ppm: 32, before: null, note }];
   const closeup = film.file + '_64.png';
   const dir = join(scratch, film.file + '-still');
   const at = film.stillTick(samples.find(r => r.take === film.stillTake));
@@ -206,15 +228,15 @@ const option = args.find(a => a.startsWith('--out=')) ?? '';
 const out = option.slice('--out='.length);
 const only = args.find(a => a.startsWith('--only='))?.slice('--only='.length).split(',');
 const stray = args.filter(a => a !== option && !a.startsWith('--only='));
-if (stray.length || !isAbsolute(out) || (only && only.some(n => n !== 'stills' && !films.some(f => f.file === n)))) {
-  throw new Error('Use --out=<absolute masters directory> [--only=' + films.map(f => f.file).join(',') + ',stills]');
+if (stray.length || !isAbsolute(out) || (only && only.some(n => n !== 'stills' && !films.some(f => f.file === n) && !stills.some(st => st.file === n)))) {
+  throw new Error('Use --out=<absolute masters directory> [--only=' + films.map(f => f.file).join(',') + ',stills,' + stills.map(st => st.file).join(',') + ']');
 }
 const base = join(ROOT, 'build', 'pressure-films');
 mkdirSync(base, { recursive: true });
 const scratch = mkdtempSync(join(base, 'capture-'));
 const fresh = [];
 for (const film of films.filter(f => !only || only.includes(f.file))) fresh.push(...await buildFilm(film, scratch));
-if (!only || only.includes('stills')) fresh.push(...await buildStills(scratch));
+if (!only || only.includes('stills') || stills.some(st => only.includes(st.file))) fresh.push(...await buildStills(scratch, only));
 mkdirSync(out, { recursive: true });
 const index = join(out, 'frames.json');
 const old = existsSync(index) ? JSON.parse(readFileSync(index, 'utf8')) : [];
@@ -226,7 +248,8 @@ for (const row of fresh) {
   renameSync(temporary, target);
 }
 // Best first: the story videos and the stills that carry the findings, then the supporting frames.
-const ORDER = ['trooper_pair_32.mp4', 'pair_dash_cross_64.png', 'pair_circle_fatal_64.png', 'deflect_6m_32.mp4',
+const ORDER = ['trooper_pair_32.mp4', 'pair_dash_cross_64.png', 'blade_cadence_32.mp4', 'blade_spaced_return_64.png',
+  'pair_circle_fatal_64.png', 'deflect_6m_32.mp4',
   'blade_struck_64.png', 'guard_return_64.png', 'trooper_pair_64.png', 'deflect_6m_64.png', 'pair_dash_32.png', 'blade6_32.png'];
 const rank = r => (ORDER.includes(r.file) ? ORDER.indexOf(r.file) : ORDER.length);
 const rows = [...fresh, ...old.filter(r => !names.has(r.file))].sort((a, b) => rank(a) - rank(b));

@@ -59,7 +59,9 @@ func _ready() -> void:
 	_open_view()
 	title.text = tr(TITLES[id])
 	process_priority = -1000
-	cadence = args.has("--cadence")
+	cadence = args.has("--cadence") or id == "blade6_spaced"
+	if cadence:
+		($Caption/Panel as Panel).offset_right = 780.0
 	if args.has("--half"):
 		($Caption/Panel as Panel).position.x += 480.0
 
@@ -128,7 +130,7 @@ func _detail() -> String:
 				% [rifles.passed, rifles.returned, shot.arena.kills]
 			)
 		"guard6", "blade6", "blade6_spaced":
-			if cadence or shot.take == "blade6_spaced":
+			if cadence:
 				return _cadence_detail()
 			var curve: int = 24 if shot.take == "guard6" else 31
 			var share: float = 100.0 * rifles.struck / maxf(rifles.returned, 1.0)
