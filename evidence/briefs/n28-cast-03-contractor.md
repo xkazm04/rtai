@@ -1,13 +1,13 @@
 # Brief n28-cast-03-contractor: the contractor as a cast card, cop quality
 
 Lane `cast`, branch `n28-cast` (do NOT switch branches), worktree `C:\Users\kazda\kiro\gtai-wt\n23-prologue` (your cwd).
-**Hard stop HARDSTOP local** (check `date` often): at the hard stop commit what is green, report and END.
+**Hard stop 20:27 local** (check `date` often): at the hard stop commit what is green, report and END.
 **Commit 1 = cut art + `.import` + provenance**; commit 2 (row + placement + checklist, on or off) next; films after.
 Before every Godot run: `export APPDATA=C:/Users/kazda/kiro/gtai-n28/appdata/cast` and
 `export GODOT_BIN=C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe`.
 One Godot process at a time. Rendering runs `--rendering-driver d3d12`, windowed ones `--position 0,1440` (never the main display). Kill only your own PIDs.
-Start your first `git commit` by COMMIT1 (the pre-commit hook takes about 12 minutes on this shared machine); start your
-last commit no later than LASTCOMMIT. Never leave finished work uncommitted. Run one Godot `--import` first.
+Start your first `git commit` by 20:05 (the pre-commit hook takes about 12 minutes on this shared machine); start your
+last commit no later than 20:12. Never leave finished work uncommitted. Run one Godot `--import` first.
 Godot only through `tools/dev/run.mjs`, the film tools, gate or mutate (they go through `tools/lib/godot.mjs`, which waits
 under the run's 8 GB RAM cap; `mem-budget: waiting` is not a hang).
 
@@ -111,3 +111,34 @@ quest 1 and prologue tapes must not move (rendering only). Never fake a number o
 ## Report at the end
 Commits (sha + subject), the sheet and frame names, any entry the yard lane must call (exact signature), what the yard lane
 must change, the checklist row, mutate score, quick gate, evidence paths, and what you could not do.
+
+## Added 19:25 (director, session 4): scope of the FIRST contractor call and lessons from tonight
+- **Never run `Godot_*.exe` directly** (not even `--import`): use `tools/dev/run.mjs`, the film tools, gate, mutate, or
+  `node -e` with `runGodot` from `tools/lib/godot.mjs`. `tools/godot/check.mjs` does NOT reimport art (a stale import showed old
+  art to the gunner call). Fold takes into as few Godot launches as possible (8 GB RAM cap for the whole run).
+- **Read first** the gunner's n28 commits (`git log --oneline d0ab9d03a..HEAD`): `CastGunnerAnchors`, `tools/art/cast_gunner_*`,
+  `project/dev/cast/cast_gunner_*`, `tools/film/cast_gunner_films.mjs` are the newest worked example of the whole path
+  (8-drawing anchored walk, poses/rim/shadow harness in one launch, ink tool, 1080p films). Copy that path; do not invent a
+  second mechanism.
+- **Hat colour bar (director, owner's "white hat")**: the sheets draw the hat cream with a pinkish cast. Measure the hat's mean
+  HSV on the cut walk (hat mask: the top cap region above the face, alpha >= 128, excluding ink with max RGB < 60). Pass:
+  saturation <= 0.12 and value >= 0.78 (reads white, dirty is fine). If it fails, add ONE tone pass in the cutter that pulls
+  only the hat pixels toward neutral off-white (same transform on every sheet, both pitches; the vest, skin and lamp untouched)
+  and quote before/after HSV. Vest: pale lemon, hue 50-62 deg; it must not read orange/amber (hue < 45) on the live frame.
+  Head lamp: a small warm dot is allowed (heat/light), not red.
+- **First call scope** (if launched with less than 80 min to its hard stop): steps 1-2 (cut all eight sheets + the ten 8c walk
+  sheets, `.import`, provenance; row `contractor` in `cast_cards.json` `enabled: false`, 8-drawing anchored walk wired), the
+  feet numbers (`cast_feet.mjs` right/down-right 70/55, drawings/s, turn/reversal), size at 32 px/m beside patrol/Rivet, ink,
+  hat/vest palette, cut check, and the audit rows. Commit each. Films and the live rim/shadow/tell/hit/fall pass are the next
+  call: leave a resumable state note in `docs/art/cast-audit.md` (which points are measured, which are open).
+- Builders claimed things about frames tonight that were false (the gunner's "one rifle"). Look at every frame you deliver
+  (Read the PNG) and describe it in your report. The fall cells must keep the dropped hat and gun as separate pieces; for the
+  gunner the game spawned a pickup rifle on death: check whether the contractor's `rifle` drops a `GroundRifle` too
+  (`CombatArena.rifle_drops`); if it does, the fall cells draw the body and the hat only (the pickup is the one gun), exactly
+  as `4960c33d6` did for the gunner.
+- **This call (launched 19:52, 35 minutes): step 1 ONLY.** Cut and pack the eight sheets and the ten 8c walk sheets (the
+  4-drawing walk, attack, hit, fall + `contractor_planted8_armed_walk.png`, both pitches), the hat/vest palette measure (and the
+  hat tone pass if it fails), cut check (zero green/magenta-leading opaque px), `--import` through runGodot, `.import` files,
+  provenance lines; commit by 20:05-20:12. Look at every packed sheet on grey (Read the PNG) and describe it in the report
+  (hat colour, dropped hat/gun in the fall, any key holes). No `cast_cards.json` row, no wiring in this call: the next call
+  (20:45) does step 2 onward. Leave a short state note at the end of `docs/art/cast-audit.md` ("Contractor, n28: state").
