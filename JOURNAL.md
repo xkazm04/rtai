@@ -119,3 +119,5 @@ NEXT: no new work (past 08:00). (1) after 09:30: `node tools/gate/run.mjs --rev=
 NEXT: Director: read `build/gate-logs/reels.out.txt` / `build/gate/27143738f*/gate.json` for the `--reels` verdict; merge notes in REPORT. Lane done.
 - 09:33 MILESTONE session 6 (STABILIZE, iteration 6) start. No builder running (lock absent). `--reels` gate pid 82140 still running on `27143738f` (log only shows the start line); left running for the Director. cites REPORT.md 24/24 ok. No product change.
 NEXT: Director: `--reels` verdict in `build/gate-logs/reels.out.txt` / `build/gate/27143738f*/gate.json`; snapshot gate PASS on `6ededd080` is the lane's quoted green. Lane done.
+- 09:41 MILESTONE session 7 (REPORT, iteration 7) start. No builder running. `--reels` gate pid 82140 alive, still in evidence step (no gate.json yet); left running. REPORT Gate line updated with the 09:42 status; no product change.
+NEXT: Director: `--reels` verdict in `build/gate-logs/reels.out.txt` / `build/gate/27143738f69e/gate.json`; snapshot gate PASS on `6ededd080` is the lane's quoted green. Lane done.

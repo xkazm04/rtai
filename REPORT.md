@@ -62,7 +62,7 @@ calls. Films and stills: `C:/Users/kazda/kiro/gtai-masters/n27/melee/` with `fra
     Top: Master Tonnage, +10 % Health repair, Ohm. Bottom: the two-card hand after the free mastery.
 
 ## Gate
-`node tools/gate/run.mjs --rev=HEAD` on `6ededd080` (later commits are REPORT/JOURNAL only): **PASS**: lint 19/19 over 2215 files; unit 4141 passed, 0 failed, 2 skipped; scenarios 68 passed; parity 1200 steps bit for bit, planted mutation caught at step 629; selftest ok; export-audit 984 loaded, 0 failed. `build/gate/6ededd080eb2/gate.json` (git-ignored). `node tools/gate/run.mjs --rev=HEAD --reels` on `27143738f` started 09:30 (pid 82140, log `build/gate-logs/reels.out.txt`, git-ignored); it outlasts this session's 09:40 stop, so its verdict is not quoted here: the Director reads `build/gate/27143738f*/gate.json`. The snapshot gate above is the lane's quoted green.
+`node tools/gate/run.mjs --rev=HEAD` on `6ededd080` (later commits are REPORT/JOURNAL only): **PASS**: lint 19/19 over 2215 files; unit 4141 passed, 0 failed, 2 skipped; scenarios 68 passed; parity 1200 steps bit for bit, planted mutation caught at step 629; selftest ok; export-audit 984 loaded, 0 failed. `build/gate/6ededd080eb2/gate.json` (git-ignored). `node tools/gate/run.mjs --rev=HEAD --reels` on `27143738f` started 09:30 (pid 82140, log `build/gate-logs/reels.out.txt`, git-ignored); at 09:42 (iteration 7) it was still in its evidence step (last gate here took 28.5 min before reels) and outlasts the 09:58 stop, so its verdict is not quoted here: the Director reads `build/gate/27143738f*/gate.json`. The snapshot gate above is the lane's quoted green.
 
 ## What does not
 - Mastery pace misses the owner's target: the early Tonnage masteries (waves 3 and 4) are untouched by the higher bar.
