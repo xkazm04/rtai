@@ -38,10 +38,22 @@ fraction and angles, but deleting any draw call (track, ink under-stroke, fill a
 - Inner loop: `node tools/tests/run_unit.mjs --select=test_ghost_bond_ring`.
 
 ## Allowlist (any other path: stop that part and report `NEED <what>`)
-`project/features/souls/ghost_bond_ring.gd`, `project/tests/unit/test_ghost_bond_ring*.gd` (+ new test files),
+`project/features/souls/ghost_bond_ring.gd`, `project/tests/unit/test_ghost_bond*.gd` (+ new test files),
 `project/dev/ghost-forms/**`, `evidence/n27/ring/**`. Forbidden: the keys lane's `ghost_form_hud.gd`,
 `ghost_form_layout.gd`, `ghost_deploy.gd`, `ghost_hud_hints.gd`; every other gameplay file; other worktrees; root
 `JOURNAL.md` / `REPORT.md`.
 
 ## Report and END (short)
 Commits; mutate before and after with survivors; the pixel diff line; anything not done and why.
+
+## Also (after item 3 above is committed): the ghost bond's mutate score
+Last call's `node tools/mutate/mutate.mjs --file=project/features/souls/ghost_bond.gd` timed out at 900 s with no score.
+Run `node tools/mutate/mutate.mjs --file=project/features/souls/ghost_bond.gd --max=20 --tests=test_ghost_bond,test_ghost_boss_cut,test_gauntlet_mastery`
+(budget 25 min; if it needs the changed lines, `--lines=` the lines of commits `58a1b8d07` and `1a6badfc8` in that file).
+Quote killed/(killed+survived) and list the survivors with one line each. If a survivor shows a real gap (not an
+equivalent mutant), add the one test that kills it in `project/tests/unit/test_ghost_bond*.gd` and commit it.
+Save the outputs to `evidence/n27/ring/mutate-ring-before.txt`, `mutate-ring-after.txt`, `mutate-bond.txt`.
+
+## Times (wall clock)
+Launched about 04:56. **Commit the plan/dispatch split + tests by 05:22.** Mutate and pixel proof after that.
+**Hard stop 05:56: report and END.** Mutate runs that would cross 05:50: stop them and quote what you have.
