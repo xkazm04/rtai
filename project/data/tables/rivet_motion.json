@@ -33,6 +33,7 @@
       "p70/assault_rifle": 78,
       "p70/chainsaw": 64.3,
       "p70/electro_baton": 68.7,
+      "p70/electro_gun": 82.3,
       "p70/gatling": 68,
       "p70/gloria": 86.7,
       "p70/hand_cannon": 69.7,
@@ -218,6 +219,11 @@
       "p70/electro_baton/3": 0.87,
       "p70/electro_baton/4": 0.98,
       "p70/electro_baton/5": 0.97,
+      "p70/electro_gun/0": 0.87,
+      "p70/electro_gun/1": 0.89,
+      "p70/electro_gun/3": 0.93,
+      "p70/electro_gun/4": 0.86,
+      "p70/electro_gun/5": 0.96,
       "p70/flamethrower/3": 0.91,
       "p70/flamethrower/4": 0.92,
       "p70/gatling/4": 0.94,
@@ -247,6 +253,10 @@
       "p70/rivet_walk_eq_electro_baton.png": [
         15,
         28.5
+      ],
+      "p70/rivet_walk_eq_electro_gun.png": [
+        26.5,
+        33.5
       ],
       "p70/rivet_walk_eq_gloria.png": [
         26,
