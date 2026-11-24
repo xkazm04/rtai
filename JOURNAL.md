@@ -186,3 +186,15 @@
   stop-gap: restore `rivet_run8_eq_molotov.png` out of the tree, its provenance line and run rows) and move on to Gloria
   brass. No builder running at session end. IMAGES 15/60.
 - 20:38 BUILDER RUNNING n28-07g-molotov-shift since 20:38 (in-session, art prep only: final5 run row 1 = the one-row edit shifted to the donor's sole x, no seam; crop for my look; END 20:48; state in molotov/STATE.md).
+- 20:39 BUILDER n28-07g-molotov-shift 1 n/a bounced: shifting the one-row edit's cells to the donor's sole x puts the
+  dome 5.6-23.7 % off the donor in 6/8 cells (bar 3 %): that edit leans the body sideways against the feet, so neither a
+  shift nor a seam saves run row 1. Not installed.
+- 20:40 DECISION molotov (for session 4): ship the walk sheet only (it passes: hold 0.43/1.56 cm; give it a 4x look
+  first) and keep the run on the stop-gap; restore `rivet_run8_eq_molotov.png` out of the tree with its provenance line
+  and run rows, commit the rest. At most ONE more one-row run image if session 4 has slack after Gloria. The owner sees
+  it under "Calls for the owner". Alternative = one value (`walk_grid.by_weapon` molotov run back on, once a row passes).
+- 20:40 NEXT (session 4): (1) brief n28-08 part A = the molotov walk-only commit above (about 20 min with the hook),
+  part B = Gloria brass (n28-04 trimmed: concept <= 2 images + p70 held strips <= 3 + held art; start the concept image
+  in the background during part A). Fill {COMMIT1}/{COMMIT2}/{END}, END by 22:07. (2) Plasma sword, Gloria's grid, p55
+  collar: REPORT "Next steps" unless time appears. (3) Session 5: commit by 22:40, gate by 22:55, the five-weapon clip
+  (shipped grids only), REPORT. No builder running at session end. IMAGES 15/60.
