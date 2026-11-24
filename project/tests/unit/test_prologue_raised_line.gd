@@ -57,9 +57,13 @@ func test_hangers_overhang_without_blocking_and_pads_are_gone() -> void:
 		assert_false(id in cover_ids, id)
 
 
-func test_line_fire_stays_the_shipped_default() -> void:
+func test_raised_line_is_the_shipped_default_and_line_fire_one_flag_away() -> void:
 	var stage: DataTable = DataTable.open(PrologueGame.TABLE, PrologueGame.SCHEMA)
-	assert_eq(PrologueYard.from_stage(stage).dressing.id, "line_fire")
+	assert_eq(PrologueYard.from_stage(stage).dressing.id, "raised_line")
+	LaunchArgs.parse(["--yard-dressing=line_fire"])
+	var plan: PrologueYard = PrologueYard.from_stage(stage)
+	LaunchArgs.parse()
+	assert_eq(plan.dressing.id, "line_fire")
 
 
 func test_extra_stacks_sit_at_the_west_edge_with_their_own_art() -> void:

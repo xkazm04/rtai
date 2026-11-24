@@ -12,7 +12,9 @@ var plan: PrologueYard
 
 
 func before_each() -> void:
+	LaunchArgs.parse(["--yard-dressing=line_fire"])
 	plan = PrologueYard.from_stage(DataTable.open(PrologueGame.TABLE, PrologueGame.SCHEMA))
+	LaunchArgs.parse()
 
 
 func _conveyors() -> Array[PrologueYard.Wreck]:
