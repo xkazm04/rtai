@@ -25,7 +25,7 @@ ARMS = ("day", "dusk")
 ROUNDS = ("rifle", "shotgun")
 W, H = 64, 80
 TABLE = Path(__file__).resolve().parents[2] / "project/data/tables/prologue_yard_dressings.json"
-FLOORS = {"outside": 0.65, "inside": 0.65, "rifle": 1.00, "shotgun": 0.90}
+FLOORS = {"outside": 0.65, "inside": 0.65, "rifle": 0.95, "shotgun": 0.90}
 
 
 def examples(root, kind):

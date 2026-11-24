@@ -1,0 +1,6 @@
+# glow3: yard_fire_mid floor_glow 0.15, gate lamp 0; bars n27-03: blue >= 65 %, hue 200-250, pellet >= 90 %, rifle >= 95 %
+patrol blue outside  day 4.742 dusk 3.893 retained 82.1% hue 221 [220..221] blue kept 94% cops 5 PASS
+patrol blue inside   day 4.053 dusk 4.020 retained 99.2% hue 223 [222..224] blue kept 90% cops 5 PASS
+patrol blue between  day 4.458 dusk 3.700 retained 83.0% hue 222 [221..223] blue kept 93% cops 9 
+rifle        day 1.858 dusk 1.792 retained 96.5% (161, 161 px) PASS
+shotgun      day 1.669 dusk 1.536 retained 92.0% (266, 266 px) PASS

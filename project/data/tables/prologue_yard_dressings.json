@@ -865,7 +865,7 @@
             "floor_glow": {
               "color": "ff8c14",
               "radius_m": 10,
-              "strength": 0
+              "strength": 0.15
             },
             "id": "yard_fire_mid",
             "intensity": 0.04,
