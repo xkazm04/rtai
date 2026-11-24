@@ -1,0 +1,96 @@
+{
+ "covers": {
+  "conveyor_door": {
+   "box_px": [
+    173,
+    36
+   ],
+   "coverage_raw": 0.521,
+   "coverage_closed_0.5m": 0.689,
+   "lum_body": 0.094,
+   "lum_ring": 0.248,
+   "contrast": 0.154,
+   "frame_dark_cov": 0.655
+  },
+  "conveyor_feed": {
+   "box_px": [
+    166,
+    36
+   ],
+   "coverage_raw": 0.539,
+   "coverage_closed_0.5m": 0.704,
+   "lum_body": 0.036,
+   "lum_ring": 0.271,
+   "contrast": 0.236,
+   "frame_dark_cov": 0.998
+  },
+  "conveyor_turn": {
+   "box_px": [
+    166,
+    36
+   ],
+   "coverage_raw": 0.408,
+   "coverage_closed_0.5m": 0.501,
+   "lum_body": 0.02,
+   "lum_ring": 0.218,
+   "contrast": 0.198,
+   "frame_dark_cov": 0.994
+  },
+  "conveyor_return": {
+   "box_px": [
+    173,
+    36
+   ],
+   "coverage_raw": 0.576,
+   "coverage_closed_0.5m": 0.747,
+   "lum_body": 0.022,
+   "lum_ring": 0.247,
+   "contrast": 0.226,
+   "frame_dark_cov": 0.999
+  },
+  "conveyor_bend": {
+   "box_px": [
+    166,
+    36
+   ],
+   "coverage_raw": 0.408,
+   "coverage_closed_0.5m": 0.501,
+   "lum_body": 0.024,
+   "lum_ring": 0.229,
+   "contrast": 0.205,
+   "frame_dark_cov": 0.999
+  },
+  "conveyor_tail": {
+   "box_px": [
+    173,
+    36
+   ],
+   "coverage_raw": 0.521,
+   "coverage_closed_0.5m": 0.689,
+   "lum_body": 0.043,
+   "lum_ring": 0.301,
+   "contrast": 0.258,
+   "frame_dark_cov": 0.993
+  }
+ },
+ "gap": {
+  "lum_body": 0.121,
+  "lum_ring": 0.305,
+  "contrast": 0.184,
+  "pieces": 20
+ },
+ "frame": "build/films27/rd_lf.png",
+ "rivet": {
+  "at_px": [
+   480,
+   955
+  ],
+  "lum_body": 0.162,
+  "lum_ring": 0.142,
+  "contrast": 0.019
+ },
+ "summary": {
+  "min_cov_raw": 0.408,
+  "mean_rail_contrast": 0.213
+ }
+}

@@ -85,7 +85,7 @@ func _read_args(args: ArenaArgs) -> String:
 	if DisplayServer.get_name() == "headless" or get_window().size != SIZE:
 		return "use a 1920x1080 window"
 	if (
-		args.text("--yard-dressing") not in ["plain", "torn_line", "line_fire"]
+		args.text("--yard-dressing") not in ["plain", "torn_line", "line_fire", "raised_line"]
 		or args.text("--place") not in ["gate", "mid", "front", "harbor", "commander"]
 	):
 		return "choose a yard dressing and gate, mid, front, harbor or commander"

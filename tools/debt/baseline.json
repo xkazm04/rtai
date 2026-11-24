@@ -158,7 +158,8 @@
         "2026-11-23: Capture both zooms on the live commander through the seed-seven rack for n26 yard (dev_loc 33890 -> 33900)",
         "2026-11-24: yard_film --cast-card=off and rivet/camera in the end log line (+12 dev lines) for n27 yard (dev_loc 35431 -> 35443)",
         "2026-11-24: dev lines for the front place for n27 yard (dev_loc 35443 -> 35445)",
-        "2026-11-24: dev capture lines for n27 yard (dev_loc 35445 -> 35450)"
+        "2026-11-24: dev capture lines for n27 yard (dev_loc 35445 -> 35450)",
+        "2026-11-24: dev pilot-rows and capture lines for n27 yard (dev_loc 35450 -> 35521)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -183,7 +184,7 @@
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
         "project/dev/prologue": 490,
-        "project/dev/prologue_yard": 634,
+        "project/dev/prologue_yard": 705,
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 1096,
@@ -200,7 +201,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 35450
+      "total": 35521
     },
     "direct_cmdline_reads": {
       "accepted": [

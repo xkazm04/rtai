@@ -66,6 +66,7 @@ func _expose(label: String) -> void:
 	for h: Fighter in _game.stage.arena.hostiles:
 		if h.archetype == &"patrol_cop" and h.alive() and plan.yard.has_point(h.pos):
 			points.append(_point("patrol_cop", h.pos, h.id))
+	points.append(_point("rivet", _game.stage.arena.rivet.pos, 0))
 	var has_rounds: bool = false
 	for shot: Shot in _game.stage.arena.shots:
 		if _measure_round(shot):
