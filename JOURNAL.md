@@ -260,3 +260,33 @@
   column still shows the rejected final4), copy/link combat's trooper_pair_32.mp4 entry into keys' frames.json, finish
   REPORT.md (draft in the tree, uncommitted), `node tools/evidence/cites.mjs REPORT.md`, commit. Reels gate after 00:10.
   No builder running at session end.
+- 21:57 I looked at the staged p70 strips on grey (build/gl_main.png, gl_left.png): brass gun in one claw in all 8 facings,
+  the other claw free, flash amber/yellow only, collar rigid; left strip cells 2, 3: the muzzle is clipped flat by the cell
+  edge (a few px). DECISION: retry the builder's own staged commit now rather than spend session 5's 30 minutes on it (the
+  hook flake was load: clash.test 7/7 alone); it is the builder's work and message, unchanged. Detached: bash pid 29848,
+  script build/gloria_commit.sh, log build/gloria_commit.log. Session 5: read that log first; if EXIT != 0, rerun the same
+  script once. The clipped left muzzle goes to REPORT (fix = wider left cells, a later call).
+- 21:57 COMMIT RUNNING gloria p70 (pid 29848) since 21:57; JOURNAL.md is NOT in its pathspec.
+
+## Session 5 (22:09, iteration 5, BUILD)
+- 22:09 START. The detached Gloria commit landed: e0a82abf0 "Gloria in brass with a longer nail strip: p70 held strips and
+  held art" (13 files, 11 provenance lines). No builder running (lock absent). Cap 3.8/8.2 GB (peak 9.1).
+- 22:10 Scenario suite on dash 24 started detached (me): build/scen_n28.sh -> build/scen_n28.log, exit in build/scen_n28.exit.
+- 22:11 DECISION session 5 call = the p55 collar (owner's pick, item 4) instead of the Gloria in-game still: the clock (22:09,
+  not 22:22) leaves 25 min to a commit start; the Gloria still is evidence of committed work and moves after the gate.
+  Brief evidence/briefs/n28-09b-collar-now.md (COMMIT 22:36, END 22:52, <= 2 images, no Godot before scen_n28.exit).
+- 22:11 BUILDER RUNNING n28-09b-collar-now since 22:11 (in-session Sonnet subagent).
+- 22:13 Read cast's JOURNAL 18:40: "NEED Director (keys/weapon art)": the GroundRifle pickup `ground_rifle_70.png` reads
+  mauve-pink on asphalt in 1080p films (red law). Weapon art is keys'; no time before 22:40 (collar call running): REPORT
+  Next steps (a lossless check, then a browner stock by one image edit). No other `NEED keys` in combat/cast/yard journals.
+- 22:25 Scenario suite at dash cooldown 24 (`node tools/tests/run_scenarios.mjs --quiet-wait=3`, build/scen_n28.log): exit 0,
+  "scenario-tests: 68 ran", 68/68 ok, only "CONTENDED: rig_stress.rigMsP50 1.172 > 1.000 (4 other runs)" (wall-clock budget
+  under load, not the dash). No shipped tape/replay moved: no re-pin, no decision line needed.
+- 22:31 BUILDER n28-09b-collar-now 18 n/a bounced (nothing committed, art bars failed). IMAGES 2 -> 21/60. Audit: p55 bare
+  run rows 1, 2, 5 rigid; rows 3, 4, 6, 7, 8 rope (40 cells). Whole-sheet edit moved arms/strides and blurred; a 5-row edit
+  still drew a twisted, softer rope with yellow bleed at the visor. Outside-mask identity held (0 px outside masks) but the
+  inside fails. I looked at gtai-masters/n28/keys/collar_p55_rows_crop.png: agreed, rope still reads twisted, softer than
+  shipped. Round state: gtai-art/rivet-n28/collar_p55/STATE.md.
+- 22:31 DECISION collar: no third image and no script repaint of the stripes (the builder's suggestion): character art is
+  generated, never drawn from script shapes. Next run: one facing row per job at full scale (5 jobs), p70 row as reference.
+  REPORT "What does not" + Next steps.
