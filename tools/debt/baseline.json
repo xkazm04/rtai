@@ -155,7 +155,8 @@
         "2026-11-23: --cast-mulroney-trace for n26 cast (dev_loc 34336 -> 34342)",
         "2026-11-23: Paired full-yard stills and a five-second motion observer for n26 yard (dev_loc 33638 -> 33764)",
         "2026-11-23: Paired pilot captures retain exact underlay pixels and shot identities for n26 yard (dev_loc 33764 -> 33890)",
-        "2026-11-23: Capture both zooms on the live commander through the seed-seven rack for n26 yard (dev_loc 33890 -> 33900)"
+        "2026-11-23: Capture both zooms on the live commander through the seed-seven rack for n26 yard (dev_loc 33890 -> 33900)",
+        "2026-11-24: yard_film --cast-card=off and rivet/camera in the end log line (+12 dev lines) for n27 yard (dev_loc 35431 -> 35443)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -180,7 +181,7 @@
         "project/dev/noir": 1216,
         "project/dev/perf": 160,
         "project/dev/prologue": 490,
-        "project/dev/prologue_yard": 615,
+        "project/dev/prologue_yard": 627,
         "project/dev/quest1_city_fit.gd": 18,
         "project/dev/quest1_city_fit_run.gd": 74,
         "project/dev/rivet_arsenal": 1096,
@@ -197,7 +198,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 35431
+      "total": 35443
     },
     "direct_cmdline_reads": {
       "accepted": [
