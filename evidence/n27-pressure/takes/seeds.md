@@ -36,6 +36,35 @@ Pooled share 25.1%, Wilson 95% [21.1, 29.6]; the curve's 24.3% lies inside the i
 Pooled: fired 1300, returned 334, passed 316, no deflect 650 (blade mid-swing 650), missed 0; struck 91.
 Pooled share 27.2%, Wilson 95% [22.7, 32.3]; the curve's 30.6% lies inside the interval.
 
+## blade6_spaced (6 m)
+
+| seed | fired | returned | passed | struck | share | unswung hit | of them mid-swing | missed | shooters down | Rivet hits |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | 65 | 40 | 25 | 8 | 20.0% | 0 | 0 | 0 | 0 | 25 |
+| 2 | 65 | 39 | 26 | 10 | 25.6% | 0 | 0 | 0 | 0 | 26 |
+| 3 | 65 | 25 | 40 | 4 | 16.0% | 0 | 0 | 0 | 0 | 40 |
+| 4 | 65 | 33 | 32 | 6 | 18.2% | 0 | 0 | 0 | 0 | 32 |
+| 5 | 65 | 34 | 31 | 10 | 29.4% | 0 | 0 | 0 | 0 | 31 |
+| 6 | 65 | 40 | 25 | 12 | 30.0% | 0 | 0 | 0 | 0 | 25 |
+| 7 | 65 | 34 | 31 | 12 | 35.3% | 0 | 0 | 0 | 0 | 31 |
+| 8 | 65 | 27 | 38 | 8 | 29.6% | 0 | 0 | 0 | 0 | 38 |
+| 9 | 65 | 27 | 38 | 9 | 33.3% | 0 | 0 | 0 | 0 | 38 |
+| 10 | 65 | 35 | 30 | 12 | 34.3% | 0 | 0 | 0 | 0 | 30 |
+
+Pooled: fired 650, returned 334, passed 316, no deflect 0 (blade mid-swing 0), missed 0; struck 91.
+Pooled share 27.2%, Wilson 95% [22.7, 32.3].
+
+How the spacing is made (`blade6_spaced`, dev take only; no data file changes): `PressureRifles.near(true, true)` keeps the shipped sword salvo's 36-tick beat but fires **one** round per beat instead of two, and the three riflemen take turns (the n-th round comes from rifleman n mod 3, `PressureRifles.drive`), so consecutive rounds leave 36 ticks apart from the same 6 m distance and reach Rivet 36 ticks apart. 36 is longer than the sword's 33-tick swing (8 wind-up + 6 active + 19 recovery), so the swing the bot starts for one round has ended before the next round is within reach. The unit test pins this: no two rounds are closer than 34 ticks at Rivet, the shipped `blade6` has pairs 18 ticks apart, and not one spaced round arrives mid-swing. The take fires 65 rounds per seed instead of 130 (half as many, same 2380 ticks).
+
+Reading: the spaced sword turns back 51.4 % of the rounds fired at it (334 / 650, Wilson 95 % [47.5, 55.2]) against 25.7 % with the shipped pairs (334 / 1300, Wilson [23.4, 28.1]); nothing arrives mid-swing, so 316 rounds pass the 50 % pass roll of an active blade (48.6 %) and 334 return. The returns that hit a shooter are 27.2 % in both takes (91 / 334, Wilson [22.7, 32.3]). The 334 returns and 91 strikes are the same in every seed as in `blade6`: the swung rounds are the same swings with the same rolls; the shipped pairs just add 650 unswung rounds that no swing meets. One more difference: in `blade6` the pair is always rifleman 1 then rifleman 2 (the third never fires; `beat / gap_ticks` is 0 or 1), in `blade6_spaced` all three fire in turn, and the outcome per seed does not change.
+
+## Sword cadence contrast (blade6 against blade6_spaced)
+
+| take | fired | returned | struck | (a) returns that hit a shooter | Wilson 95% | (b) fired rounds turned back | Wilson 95% | no deflect, mid-swing |
+|---|---:|---:|---:|---:|---|---:|---|---:|
+| blade6 | 1300 | 334 | 91 | 27.2% | [22.7, 32.3] | 25.7% | [23.4, 28.1] | 650 |
+| blade6_spaced | 650 | 334 | 91 | 27.2% | [22.7, 32.3] | 51.4% | [47.5, 55.2] | 0 |
+
 ## pair_circle
 
 | seed | rockets | direct | splash | other | HP lost | down at (s) | HP at 10 s | dashes |
