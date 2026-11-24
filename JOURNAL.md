@@ -94,3 +94,15 @@ NEXT (session 2, from ~04:15):
   splits direct/splash/HP lost, re-cuts the pair film, re-encodes deflect_6m_32 (108 MB, 21.9 Mb/s), frames to 8+.
   Item 5 levers noted: novice deaths are the wave 5 war machine's `stomp` (enemies.json weapons: damage 48, splash 48 in
   3.5 m, cooldown 1.2 s, `alt_telegraph_s` 0.8) in 15 of 20 runs; `gauntlet.json` rivet repair 10/s after 3 s.
+- 05:10 BUILDER measure 75 $1.31 accepted (stopped at the 75 min cap after its last commit). Commits cca975316 (10-seed
+  table, `pressure_seeds` dev script, sword half-catch measured), 8e8d00a5e0 (mutate). MILESTONE item 4: mutate
+  `gauntlet_combat.gd` stall lines 14/15 killed (93 %; survivor line 18 initial `_last_damage_tick`, overwritten when
+  a wave goes live: equivalent), `bot_arena_moves.gd` 7-15,54 3/4 (75 %; survivor line 13 input index 0->1 with one
+  input: equivalent), `pressure_pair.gd` 6/12 (50 %; two cheap kills named, given to call 3)
+  (`evidence/n27-pressure/mutate/scores.md`). Sword half-catch, measured: the shipped sword is single-swing, 33 ticks
+  (8+6+19), deflecting only in the 6 active ticks; blade6's pairs are 18 ticks apart, so the second round of every
+  pair lands mid-swing (650/1300, 65 every seed); of swung rounds 51.4 % return (pass ratio 0.5). The take's cadence,
+  not the deflect rule. Three `gtai-mutate-*` temp dirs exist; owners unknown, left for the merge cleanup.
+- 05:06 after-melee arm started (godot-free 05:06), scratch 4a3ff4b04; salt 0 from 05:07.
+- 05:10 BUILDER RUNNING films since 05:10 (call 3, node pid 57264, brief `evidence/briefs/n27-pressure-03-films.md`,
+  out `.out.txt`, hard stop 06:12). Godot only after `medians/melee/DONE`; writes `godot-free-3.txt` when done.
