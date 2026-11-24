@@ -30,7 +30,8 @@ calls. Films and stills: `C:/Users/kazda/kiro/gtai-masters/n27/melee/` with `fra
    `--bond-prefill=6`. Tonnage's teal ring closes (full at tick 1765). The rest screen is held 2.5 s on a hand with the
    mastery card (tick 2463), and the mastery card leaves the hand (3 -> 2 cards). Ghost Ohm is then picked, wave 3 starts,
    and T goes into the Tonnage slam (tick 2884). The HUD strip reads 1 Dent, 2 Tonnage, 3 Kerf, 4 Ohm.
-   M4_BOND_FILM_RERENDER
+      Re-rendered after `42f8c948f`: the Master Tonnage card now draws the Tonnage figure inside a full teal ring with
+   the crown diamond (before: a blank picture band, kept as `films/bond_mastery_blankcard.mp4`).
 5. **Charged-claw film** (`e96913d1e`). `films/claw_shock_robots.mp4` is 1920x1080, 60 fps, 27.2 s: 20.5 s real time,
    then the first finish again at quarter speed. Victims: robot thug killed at tick 106, a second thug at 356, the gunner
    at 606, and the shield robot overloaded at 856 and finished at 956. The war machine is stunned 29 ticks and loses
@@ -42,7 +43,16 @@ calls. Films and stills: `C:/Users/kazda/kiro/gtai-masters/n27/melee/` with `fra
    before and after the split (`evidence/n27/ring/pixel-proof.md`). `ghost_bond.gd` mutate is 18/20
    (`evidence/n27/ring/mutate-bond.txt`): one survivor is an equivalent mutant, and the one real gap now has a test
    (line 59 re-run 4/4).
-M4_WORKS
+7. **Robot wrecks under the electro gun** (`013c156db`). The robot thug and robot gunner wreck from their own live torso and
+   head sprites (before: both wrecked with the shield robot's plate and the turret's head). Test
+   `project/tests/unit/test_robot_wreck_plates.gd`. Stills `stills/wreck_thug_vs_gunner_{before,after}_64.png`; film
+   `films/electro_gun_wrecks.mp4` (1920x1080, 60 fps, 18.0 s: the gun kills a thug at tick 106, a thug at 318, the gunner
+   at 530; take `electro_gun_wrecks`, `5f74fc4eb`).
+8. **Wreck arcs read as current** (`34c12865c`). New `ElectricArc` (`project/features/combat/kills/electric_arc.gd`): a 2 px
+   white core in a 4.5 px and 9 px amber halo (screen pixels), 5 kinks re-jagged every 3 ticks from a hash (no RNG), one or
+   two short forks, held under reduced motion. Every wreck arc goes through it; the ink rim of the lift arc is gone. Test
+   `project/tests/unit/test_electric_arc.gd`. Stills `stills/claw_arcs_{before,after}_64.png`.
+M5_WORKS
 
 ## Gate
 GATE_LINE
@@ -56,7 +66,10 @@ GATE_LINE
 - The war machine is only stunned by the charged claw (never_finish, by design). It is in the film but gets no finish.
 - No headless pixel test for the ring: GUT runs on the dummy renderer, so `_replay`'s own draw calls are covered only
   by the pixel proof.
-M4_DOESNOT
+- The robot thug and robot gunner still differ mainly by weapon in their wrecks: both rigs draw ThugPlan art today, and
+  the wreck now copies whatever the rig shows, so cast's redraws carry over at merge.
+- `electric_chassis.gd` mutate is 7/20: plate size, z order, cap offset and the shield apron copy are unpinned.
+M5_DOESNOT
 
 ## What blocked or slowed you
 - 15 min: `ghost_bond.gd` mutate timed out at 900 s in call 1. It was redone in call 3 with a test subset (481 s).
@@ -72,7 +85,9 @@ M4_DOESNOT
    fix; it is not built (no tuning tonight). Evidence: `evidence/n27/bond/mastery.md`.
 2. **Kerf's path to a bond.** Boss cuts work, but runs end before 30. If you want Kerf mastered at all in a normal run,
    the lever is `bond.per_boss_cut` (3 -> 5 would have put seed 5 over the bar; estimate).
-M4_CALLS
+3. **The electro stun sparks.** The cream, ink-rimmed zig-zag glyphs beside a stunned body are `ShockJolt._spark`
+   (n26 melee code), not the wreck arcs. DECISION: restyled to the wreck arcs' look (thin core, amber halo, no ink rim);
+   `--ink-sparks` brings back the old look. M5_CALL
 
 ## Merge notes
 - TOUCH keys: `project/features/souls/ghost_deploy.gd:54` (one line: the record call gains `strike.release_boss_cuts`).
@@ -82,12 +97,15 @@ M4_CALLS
   chip numbers) are not, so the films show the smaller chip numbers.
 - `gauntlet_run.schema.json` allows no extra pick field, so a free mastery is its own `run.picks` entry.
 - Debt: `dev_loc` raised with `--accept-regression` for the bond film entry.
-M4_MERGE
+- TOUCH pressure's dir: `project/dev/gauntlet/gauntlet_pick_card.gd` (mastery card picture, `42f8c948f`; no other lane
+  touched that file tonight, checked against each lane's branch).
+M5_MERGE
 
 ## Next steps
 - The owner plays and gives the mastery numbers; then a per-ghost bar or a new `master_at`, re-measured on the same ten seeds.
 - Re-film the bond film after the merge with keys' larger chip numbers.
-M4_NEXT
+- Pin `electric_chassis.gd`'s plate geometry (mutate 7/20).
+- Once cast's robot thug A and gunner A drawings land, film the wrecks again: they copy the live rig, so no code change is needed.
 
 ## Builder ledger
 | Call | Minutes | $ | Result |
@@ -95,7 +113,8 @@ M4_NEXT
 | m1-mastery (items 1, 2, table) | 65 | 1.65 | accepted |
 | m2-films (bond film, claw take) | 58 | 2.05 | accepted |
 | m3-ring-tests (item 5, bond mutate) | 48 | 1.00 | accepted |
-M4_LEDGER
+| m4-wreck-arcs (card picture, arcs, wrecks) | 72 | 3.49 | accepted |
+M5_LEDGER
 
 What I would brief differently: give every mutate run a test subset and a time budget up front (call 1 lost 15 minutes
 to a 900 s timeout). Name the dev card file in the film brief, so a blank mastery picture is found before the film.

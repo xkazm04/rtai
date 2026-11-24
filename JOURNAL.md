@@ -104,3 +104,4 @@ NEXT: (1) review m5 at its commits (07:25 code: read diff; stills `claw_sparks_a
   `--reels` once after 09:30 freeze. (4) REPORT.md is drafted: fill the M4_*/GATE_LINE placeholders (m4: card picture, arcs,
   wrecks share ThugPlan art -> differ by weapon only; electro_gun_wrecks film; spark call; electric_chassis mutate; ledger m4
   72 min $3.49, m5), run `node tools/evidence/cites.mjs REPORT.md`, commit. Check frames.json has 8-15 entries, best first.
+- 06:57 MILESTONE session 4 start. m5-sparks running (pid 34052 node alive, lock held, hard stop 07:55). No `NEED melee` in other journals.
