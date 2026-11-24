@@ -1,0 +1,7 @@
+# Plate judgement, fourth pass (arched_line) vs third (raised_line), 32 px/m, builder's reading (director decides the default)
+
+Stills: `plate_vs_game_{gate,mid,front}_32ppm.png` (plate left, arched_line right), `pass3_vs_pass4_{gate,mid,front}_32ppm.png`. Ticks: gate 6400, mid 2290, front 2858.
+
+- gate: closer, only slightly. The fourth pass adds an arched belt end with white appliances at the top edge and a browner, darker floor, so the yard starts to read as a line yard from the street; the third pass shows only a flat dark bar. Biggest gap: the gate view still shows almost none of the belt or the hall (the camera sees the fence, pavement and street), and the plate's saturated amber/ink palette and chain-link fence are far away.
+- mid: clearly closer. Five tall arched belt sections with two appliances under each give the plate's raised belt silhouette and a lot more warm orange; the third pass has flat dark slabs. Biggest gap: the sections are straight, evenly spaced and parallel, nothing hangs on hooks or snakes in one continuous curve, and there are no pallets, wrapped boxes or yellow floor oil trail; the floor is still pale grey-tan, not the plate's brown.
+- front: closer. The burning mouth glow at the hall base and the arched belt marching toward it echo the plate's fire-lit hall. Biggest gap: the hall is a dark flat wall strip with small amber windows, not a torn brick facade with roof frame and fire visible inside; the belt does not run into the opening.
