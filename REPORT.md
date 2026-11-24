@@ -68,8 +68,8 @@ Seeds 1 to 10 (`evidence/n27-pressure/takes/seeds.md`):
 |---|---|---:|---|
 | `project/features/gauntlet/gauntlet_combat.gd` (seed 9 stall fix) | 12-16, 18, 53-66, 120, 122, 123 (28 mapped tests) | 14 / 15 (93 %) | line 18 initial `_last_damage_tick`, overwritten when a wave goes live: equivalent |
 | `project/features/gauntlet/bot/bot_arena_moves.gd` | 7-15, 54 (2 named tests; only 4 mutants on those lines) | 3 / 4 (75 %) | line 13 input index 0 -> 1 with a one-entry input: equivalent |
-| `project/dev/gauntlet/pressure_pair.gd` (take) | sample of 12 | 7 / 12 (58 %), then 4 / 5 on lines 83, 110 after two asserts | 3 equivalent, 1 needs a tick pin |
-| `project/dev/gauntlet/pressure_rifles.gd` (spaced change) | 37-45, 68-76, sample of 10 | 4 / 10 (40 %) | shipped pair and salvo values no test pinned; start offset equivalent |
+| `project/dev/gauntlet/pressure_pair.gd` (take) | sample of 12 of 82 | **9 / 12 (75 %)** at `a6d5f71b8` (was 7 / 12 before two asserts) | lines 43, 73: equivalent; 107: only a sub-1-HP blast, which no take makes |
+| `project/dev/gauntlet/pressure_rifles.gd` (cadence lines) | 41-43, 81-82 (all 8 mutants) | **5 / 8 (62.5 %)** at `a6d5f71b8`, after a seed 1 fired-count and spacing pin (was 4 / 10 on 37-45, 68-76) | 41, 42: equivalent; 81: no test says which rifleman fired |
 
 ### 5. What kills the test player, and when (after melee `4a3ff4b04`; `evidence/n27-pressure/medians/melee/killers.md`)
 
@@ -108,7 +108,8 @@ wave is a median 99 % of max (10th percentile 78 %, 180 waves). The comparison's
   drift, the second rocket comes 36 to 49 ticks after the first, the dash is still on its cooldown, and Rivet loses 40
   to 48 HP (section 2). The film (seed 1) does not show this; `takes/dash_late.md` does.
 - **Mutate on the stall fix is thin on the bot side**: `bot_arena_moves.gd` gives only 4 mutants on the fix's lines
-  (3 / 4, the survivor is equivalent). The take files' scores are samples of 10 to 12 mutants, not whole files.
+  (3 / 4, the survivor is equivalent). The take files' scores are samples (12 of 82 for the pair take), not whole
+  files; no test says which rifleman fired (the `pressure_rifles.gd` line 81 survivor).
 - **`deflect_6m_32.mp4` is a second-generation encode** (a crf 26 re-encode of the crf 16 master, to fit the size);
   said in its `frames.json` note.
 - **The deflect spark has a small red fleck** (seen in `guard_return_64.png`): existing deflect VFX, not this lane's
@@ -184,4 +185,10 @@ wave is a median 99 % of max (10th percentile 78 %, 180 waves). The comparison's
 | 2 | measure | 75 (cap) | $1.31 | accepted |
 | 3 | films | 53 | $2.74 | accepted |
 | 4 | contrast | 73 | $2.09 | accepted (caption overflow fixed in the same call) |
-| 5 | close | PENDING | | |
+| 5 | close | 14 | $0.42 | accepted (decision lines, a pinning test, two mutate samples measured) |
+
+Total: 5 calls, 280 minutes, $9.78; none bounced (call 4's caption overflow was fixed inside the same call).
+What I would brief differently: give each call one Godot-heavy task and a written handoff time for Godot from the
+start (calls 2 and 4 spent their first 20 to 40 minutes waiting for my measurement batches); ask for the film caption
+layout to be checked on a crop before the long render; and ask for mutate's full sample to be re-run in the same call
+that adds a test (call 3 left an estimate, call 5 measured it).
