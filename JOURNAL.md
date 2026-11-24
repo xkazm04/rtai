@@ -83,3 +83,13 @@
   If time is short, the collar (8 images, art-only composite) is cheaper than Gloria's grid. (4) Dash: milestone done,
   trace after in 4240207bf; combat lane merged 64004a59d for its two-trooper take: cite their film in REPORT.
   Last new work committed by 22:40, final gate (`node tools/gate/run.mjs --rev=HEAD`) started by 22:55.
+- 19:08 BUILDER RUNNING n28-03c-ray-prep since 19:08 (in-session Sonnet subagent, prep only: copy the run edit, fix the
+  prompt, one walk edit, cut; no repo change; END 19:25). If the session is replaced first: read the round STATE.md
+  (`gtai-art/rivet-n28/ray_gun/STATE.md`) for its state; it commits nothing.
+- 19:23 BUILDER n28-03c-ray-prep 15 n/a accepted (prep only): run edit copied to the round's out/; a ray-gun-only
+  scripts/mkjobs.py with the fixed one-hand prompt; jobs.json = walk job only. The walk edit did not return in 12 min
+  (second time: 18:46 and 19:08); its processes freed by PID. IMAGES 7/60 counting attempts.
+- 19:23 FRICTION image tool: the ray gun walk-sheet edit has not returned twice (12-15 min each, nothing under
+  ~/.codex/generated_images). If it fails a third time in session 3: try a 4-row half sheet (rows 0-3, then 4-7) instead.
+- 19:24 NEXT (session 3): no builder running. Start with brief n28-03b-ray-gun.md (round STATE.md "Next" line has the
+  exact commands), then n28-06-molotov-sword.md, then Gloria brass, collar p55, Gloria's grid; see 19:10 NEXT for the rest.
