@@ -92,3 +92,8 @@ NEXT: nothing left for this lane; the Director merges `n27-yard` (keep this JOUR
 - 09:33 START. No builder lock, no Godot of this lane running. REPORT complete: gate PASS `5c0edce51`, reels gate PASS `58917d6a1`; cites 28/28 ok. Fixed the mangled reels path in the session 5 line. No code changes.
 
 NEXT: nothing left for this lane; the Director merges `n27-yard` (keep this JOURNAL/REPORT on the add/add conflict). IMAGES 5/15.
+
+## Session 7 (09:41, iteration 7, REPORT)
+- 09:42 START. No builder lock, no Godot of this lane. REPORT was complete; added a note that ledger rows count sessions while the prose uses brief numbers (02b shifts them by one). Masters frames.json entries all on disk; cites ok. Committed REPORT.md + JOURNAL.md by path. No code changes.
+
+NEXT: nothing left for this lane; the Director merges `n27-yard` (keep this JOURNAL/REPORT on the add/add conflict). IMAGES 5/15.

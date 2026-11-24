@@ -71,7 +71,7 @@ Reels gate: `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n25-yard\build\gate\58917d6
 | 05 | command-tests | 65 | 4.00 | accepted in part (mutate 9/20 under the bar of 14; light numbers and glow cost not done) |
 | 06 | cost-mutate | 28 | 0.62 | accepted (measuring only: frame cost, mutate 9/19, floor warmth) |
 
-Total: 6 calls, 297 min, $18.92. What I would brief differently:
+Total: 6 calls, 297 min, $18.92. The call numbers in this table count sessions. The brief files are `n27-01`, `02`, `02b`, `03`, `04`, `05` under `evidence/briefs/`, and the sections above use those brief numbers. For example, "call 04 Part 0" above is row 05 here. What I would brief differently:
 - **Ask for the colour-readability bars in the first light brief, along with how the light layer tints actors.** Call 02 found by itself that amber on the actor layer turns cops purple. A floor-only glow from the start would have saved the 02b call.
 - **Put every file a change drags along in the allowlist,** such as the pilot scenario and the tests that pin the default. The default switch slipped one call because the scenario was outside call 04's allowlist, and call 05 edited four tests outside its list to follow the switch.
 - **Check a cut art piece rendered in game before placing many.** The world print darkened the cream pallets and appliances, and nobody saw it until the stills.
