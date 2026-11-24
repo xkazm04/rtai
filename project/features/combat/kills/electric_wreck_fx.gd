@@ -13,6 +13,9 @@ const PLATE: PackedVector2Array = [
 var bolt: bool = false
 var card: Sprite2D
 var current: ElectricArc
+## The live rig's torso and head textures (robot thug and gunner): their wreck is fitted from these.
+var own_torso: Texture2D
+var own_head: Texture2D
 
 
 static func for_row(row: SignatureKill, rig: CutRig = null) -> RobotShutdownFx:
@@ -21,6 +24,9 @@ static func for_row(row: SignatureKill, rig: CutRig = null) -> RobotShutdownFx:
 	var wreck: ElectricWreckFx = ElectricWreckFx.new()
 	wreck.bolt = row.weapon == &"electro_bolt_shutdown"
 	wreck.card = ElectricChassis.card_of(rig, row.victim)
+	if rig != null and rig.torso_spr != null and rig.head_spr != null:
+		wreck.own_torso = rig.torso_spr.texture
+		wreck.own_head = rig.head_spr.texture
 	return wreck
 
 
@@ -32,7 +38,11 @@ func _copy(body: Node2D, victim: StringName, dir: Vector2) -> void:
 		return
 	super._copy(body, victim, dir)
 	if victim in [&"robot_thug", &"robot_gunner"]:
-		ElectricChassis.fit_core(chassis, ppm, joint_m, side)
+		var own: Array[Sprite2D] = ElectricChassis.own_plates(chassis, own_torso, own_head)
+		if own.is_empty():
+			ElectricChassis.fit_core(chassis, ppm, joint_m, side)
+		else:
+			ElectricChassis.fit_own(chassis, own, ppm, joint_m, side)
 
 
 func _process(_delta: float) -> void:
