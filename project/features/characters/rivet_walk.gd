@@ -186,7 +186,8 @@ static func _bare_cycles(card: Sprite2D, art: String, rig: CutRig, scale: float)
 	var original: float = maxf(
 		base, rig.speed_now / (MAX_RUN_CYCLES_S if running else MAX_CYCLES_S)
 	)
-	var travel: Vector2 = by_row[row] * scale
+	var mps: float = rig.speed_now / CharacterRigs.PX_PER_M
+	var travel: Vector2 = by_row[row] * scale * (grid.sprint_k(art, row, mps) if running else 1.0)
 	var capped: Vector2 = travel.max(Vector2.ONE * (rig.speed_now / grid.bare_max_cycles_s))
 	return Vector2(
 		original if travel.x < minimum else capped.x, original if travel.y < minimum else capped.y

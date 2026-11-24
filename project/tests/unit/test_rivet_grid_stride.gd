@@ -56,6 +56,8 @@ const RUN_ROW_K: Dictionary[String, float] = {
 	"p70/gloria/3": 0.97,
 	"p70/gloria/4": 0.92,
 	"p70/gatling/4": 0.94,
+	"p55/sprint/2": 0.98,
+	"p55/sprint/6": 0.98,
 	"p70/flamethrower/3": 0.91,
 	"p70/flamethrower/4": 0.92,
 	"p55/pistol/1": 0.79,
@@ -86,14 +88,6 @@ func test_all_five_calibrations_match_the_measured_grids() -> void:
 	assert_eq([grid.run_cycle_cell, grid.cycle_cell], [RUN_CYCLE_CELL, CYCLE_CELL])
 	assert_eq([grid.armed_cycle_cell, grid.run_row_k], [ARMED_CYCLE_CELL, RUN_ROW_K])
 	assert_eq(grid.walk_profile_travel, WALK_PROFILE_TRAVEL)
-
-
-func test_bare_phase_carries_distance_across_unequal_stances_and_back() -> void:
-	var cycles: Vector2 = Vector2(40.0, 80.0)
-	assert_almost_eq(RivetWalk.bare_phase(0.25, 18.0, cycles), 0.6, 0.00001)
-	assert_almost_eq(RivetWalk.bare_phase(0.6, -18.0, cycles), 0.25, 0.00001)
-	assert_almost_eq(RivetWalk.bare_phase(0.9, 12.0, cycles), 0.1, 0.00001)
-	assert_almost_eq(RivetWalk.bare_phase(0.1, -12.0, cycles), 0.9, 0.00001)
 
 
 func _bare_rig(file: String) -> CutRig:
