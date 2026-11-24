@@ -324,3 +324,20 @@
   (3) REPORT: drop the DRAFT line (line 3), `node tools/evidence/cites.mjs REPORT.md`, commit JOURNAL.md + REPORT.md
   (inert paths: hook skips lint) by 00:30. Check frames.json has 8-15 entries and every file exists.
   No builder running at the end of session 5.
+- 23:18 GATE (evidence part) on 15eb87301 (code = e0a82abf0): PASS lint (19 checks, 2256 files), PASS unit-tests (4201
+  passed, 0 failed, 2 skipped), **FAIL scenario-tests: TIMED OUT after 1505 s** (60/68 ok, none failed; it was at the 61st,
+  showcase_director, when the 1505 s budget ran out: rivet_throw took 204.7 s vs 7.8 s in my 22:25 run, rivet_vault 68.8 vs
+  20.0: the shared machine under four lanes' gates), PASS parity (bit for bit, mutation caught step 629), PASS selftest,
+  PASS export-audit (995/0). Reels running (log build/gate/15eb8730107e/reels.log).
+  The same code ran 68/68 ok standalone at 22:25 (build/scen_n28.log). FRICTION load: scenario stage 25 min, timed out.
+- 23:18 DECISION gate red on a load timeout: the scenarios not reached in the gate (showcase_director, showcase_reel,
+  souls_powers, traffic_yields_rivet, vehicle_carnage, vehicle_doors, vehicle_drive, vehicle_yield) are re-run alone on HEAD
+  in session 6 after the films builder (`node tools/tests/run_scenarios.mjs --only=<those 8>`, ~3-5 min), instead of a
+  second full gate (25-40 min under this load would run past 00:40 and starve the Gloria film). REPORT quotes the gate
+  line as it is (red, timeout), the 60 gate passes + 8 standalone passes, and the 22:25 68/68.
+- 23:18 NEXT addendum for session 6: step (1) above now = wait for reels (build/gate_n28.exit), quote both lines; then
+  (2) films builder; then the 8-scenario rerun (one Godot: after the builder's last render, or before it if the builder
+  waits on something). No builder running now.
+- 23:28 Reels slow under load (top at chapter 19 after ~10 min; last run's top took 5 min): the gate (node, from
+  build/gate_n28.sh, detached) will finish in session 6. GATE RUNNING --reels on 15eb87301 since 22:38; do not start Godot
+  until build/gate_n28.exit exists. No builder running. Session 5 ends.
