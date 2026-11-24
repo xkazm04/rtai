@@ -152,3 +152,7 @@ Order: 1 darker warm floor (measure first) -> 2 tall arched belt, appliances 1.5
 - 00:10 START. No builder lock, no builder running. Nothing in project/ or tools/ changed after cabb1ece8 (gate PASS, `build/gate/cabb1ece8d8a/gate.json`); HEAD 810e8de44 adds only evidence, JOURNAL and REPORT. REPORT has no draft markers; `node tools/evidence/cites.mjs REPORT.md` 33/33 ok. Root `hs_err_pid38980.log` / `hs_err_pid39364.log` are untracked crash logs from outside the lane: left in place, not committed.
 - 00:11 No new work after the freeze. IMAGES 5/25.
 - NEXT: Director merges n28-yard at HEAD (product = cabb1ece8, default arched_line, raised_line one value away). First item next run: the whole prologue on arched_line (`evidence/briefs/n28-06-prologue-film.md`).
+
+## Session 8 (00:11, iteration 8, STABILIZE; stop 00:20)
+- 00:11 START. No builder lock, none running. No project/ or tools/ change since cabb1ece8 (gate PASS, `build/gate/cabb1ece8d8a/gate.json`; reels PASS on 5519b3e11). `node tools/evidence/cites.mjs REPORT.md` 33/33 ok. Nothing to fix; no new work after the freeze. IMAGES 5/25.
+- NEXT: Director merges n28-yard at HEAD (product = cabb1ece8, default arched_line, raised_line one value away). First item next run: the whole prologue on arched_line (`evidence/briefs/n28-06-prologue-film.md`).
