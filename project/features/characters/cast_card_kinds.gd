@@ -18,6 +18,7 @@ static func anchored(path: String) -> bool:
 			CastSwatAnchors.RUN_EIGHT,
 			CastLancerAnchors.EIGHT,
 			CastGunnerAnchors.EIGHT,
+			CastContractorAnchors.EIGHT,
 			CastDoorAnchors.SHEET,
 		]
 	)
@@ -43,6 +44,8 @@ static func four_of(file: String) -> String:
 			return CastLancerAnchors.FOUR
 		CastGunnerAnchors.EIGHT:
 			return CastGunnerAnchors.FOUR
+		CastContractorAnchors.EIGHT:
+			return CastContractorAnchors.FOUR
 	return ""
 
 
@@ -59,6 +62,8 @@ static func foe_marks(file: String, low: bool) -> Array[Vector4]:
 			return CastLancerAnchors.WALK55 if low else CastLancerAnchors.WALK70
 		CastGunnerAnchors.EIGHT:
 			return CastGunnerAnchors.WALK55 if low else CastGunnerAnchors.WALK70
+		CastContractorAnchors.EIGHT:
+			return CastContractorAnchors.WALK55 if low else CastContractorAnchors.WALK70
 		CastDoorAnchors.SHEET:
 			return CastDoorAnchors.WALK55 if low else CastDoorAnchors.WALK70
 	return []
@@ -77,6 +82,8 @@ static func foe_step(file: String) -> float:
 			return CastLancerAnchors.WALK_STEP_M
 		CastGunnerAnchors.EIGHT:
 			return CastGunnerAnchors.WALK_STEP_M
+		CastContractorAnchors.EIGHT:
+			return CastContractorAnchors.WALK_STEP_M
 		CastDoorAnchors.SHEET:
 			return CastDoorAnchors.WALK_STEP_M
 	return 0.0
