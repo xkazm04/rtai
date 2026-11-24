@@ -146,3 +146,12 @@ func test_rifle_takes_fire_their_pinned_counts_and_spacing() -> void:
 	assert_eq(sword.rifles.fired, 130, "sword take, seed 1: pairs on a 36 tick beat")
 	assert_eq(_closest_arrivals("guard6"), 9, "guard rounds arrive 9 ticks apart")
 	assert_eq(_closest_arrivals("blade6"), 18, "sword rounds arrive 18 ticks apart")
+
+
+func test_all_three_riflemen_fire_in_turn() -> void:
+	var sword: PressureTake = _run("blade6")
+	assert_eq(sword.rifles.fired_by, [44, 43, 43] as Array[int], "blade6: pairs rotate over three")
+	var spaced: PressureTake = _run("blade6_spaced")
+	assert_eq(spaced.rifles.fired_by, [22, 22, 21] as Array[int], "blade6_spaced: one each in turn")
+	var guard: PressureTake = _run("guard6")
+	assert_eq(guard.rifles.fired_by, [26, 26, 26] as Array[int], "guard6 untouched: salvos of six")
