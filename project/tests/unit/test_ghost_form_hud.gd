@@ -133,7 +133,7 @@ func test_numbers_on_every_chip_follow_the_form_row_and_live_binding() -> void:
 	var pilot: GhostPilot = GhostPilot.shipped()
 	var hud: GhostFormHud = autofree(GhostFormHud.new())
 	pilot.forms.apply_locks([])
-	var slots: Array[StringName] = [&"dent", &"kerf", &"ohm", &"tonnage"]
+	var slots: Array[StringName] = [&"dent", &"tonnage", &"kerf", &"ohm"]
 	for id: StringName in slots:
 		pilot.forms.selected = id
 		hud.compact = false
@@ -141,11 +141,11 @@ func test_numbers_on_every_chip_follow_the_form_row_and_live_binding() -> void:
 		assert_eq(hud.shown_chips(), slots)
 		hud.compact = true
 		assert_eq(hud.shown_chips(), [id] as Array[StringName])
-	assert_eq(hud.number_hints, {&"dent": "1", &"kerf": "2", &"ohm": "3", &"tonnage": "4"})
-	PlayerSettings.new().rebind(&"ghost_deploy_3", "V")
+	assert_eq(hud.number_hints, {&"dent": "1", &"tonnage": "2", &"kerf": "3", &"ohm": "4"})
+	PlayerSettings.new().rebind(&"ghost_deploy_4", "V")
 	hud.sync(pilot.forms)
 	assert_eq(hud.number_hints[&"ohm"], "V")
-	assert_eq(ObjectiveHint.with_keys("Car [car], deploy [ghost_deploy_3]"), "Car [1], deploy [V]")
+	assert_eq(ObjectiveHint.with_keys("Car [car], deploy [ghost_deploy_4]"), "Car [1], deploy [V]")
 	actions.install()
 
 
@@ -160,7 +160,7 @@ func test_cycle_binding_never_appears_under_a_chip() -> void:
 	hud.sync(pilot.forms)
 	await get_tree().process_frame
 	await get_tree().process_frame
-	assert_eq(hud.labels, ["dent", "1", "kerf", "2", "ohm", "3", "tonnage", "4"])
+	assert_eq(hud.labels, ["dent", "1", "tonnage", "2", "kerf", "3", "ohm", "4"])
 	assert_eq(hud.key_hint, GhostHudHints.binding(&"ghost_deploy"))
 	assert_eq(pilot.forms.press_transform(), SoulPowers.OK)
 	hud.sync(pilot.forms)

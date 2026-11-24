@@ -48,7 +48,7 @@ func _ready() -> void:
 
 ## Fills the plain values from the state machine (once per frame); the cursor follows `weapon`.
 func sync(g: GhostForms, weapon: StringName = &"", pilot: GhostPilot = null) -> void:
-	order.assign(g.table.forms.keys())
+	order.assign(g.table.deploy_slots)
 	current = g.current() if g.settled() else g.to_id
 	selected = g.selected
 	key_hint = GhostHudHints.binding(&"ghost_deploy") if current == GhostForms.BASE else ""

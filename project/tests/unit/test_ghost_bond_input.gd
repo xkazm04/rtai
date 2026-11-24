@@ -36,7 +36,7 @@ func test_number_release_credits_stunned_targets_once_even_if_a_wave_samples_twi
 	var wave: GhostDeployTally = GhostDeployTally.new()
 	wave.begin(stage.tick)
 	var aim: int = PlayerCommand.pack_aim(Vector2.RIGHT, pilot.actions, 6.0)
-	_drive(aim | (1 << pilot.actions.bit(&"ghost_deploy_3")))
+	_drive(aim | (1 << pilot.actions.bit(&"ghost_deploy_4")))
 	_drive(aim)
 	wave.sample(stage)
 	wave.sample(stage)
@@ -83,7 +83,7 @@ func test_disabled_keeps_the_selected_form_override_and_original_deploy() -> voi
 	forms.selected = &"dent"
 	_press(&"power_hauler")
 	assert_eq(pilot.ghosts.transforms, 0)
-	_press(&"ghost_deploy_3")
+	_press(&"ghost_deploy_4")
 	assert_eq(pilot.ghosts.deploy.form, &"ohm")
 	for tick: int in pilot.ghosts.deploy.ticks_left:
 		_drive()
