@@ -166,7 +166,12 @@
         "2026-11-24: pressure moments for the film stills (dev_loc +5) for n27 pressure (dev_loc 36107 -> 36112)",
         "2026-11-24: dev gauntlet pressure takes: blade6_spaced take, dash trace tool and their test for n27 pressure (dev_loc 36112 -> 36328)",
         "2026-11-24: film caption for the sword cadence contrast, dev only, for n27 pressure (dev_loc 36328 -> 36330)",
-        "2026-11-24: merge of n27 lanes: pressure dev takes on top of the other lanes' dev scenes (dev_loc 36554 -> 36598)"
+        "2026-11-24: merge of n27 lanes: pressure dev takes on top of the other lanes' dev scenes (dev_loc 36554 -> 36598)",
+        "2026-11-24: --cast-warden-trace flag and the warden dev scenes for n27 cast (dev_loc 35431 -> 35735)",
+        "2026-11-24: dev/cast edge and feet takes for the n27 cast feet call (dev_loc 35735 -> 35779)",
+        "2026-11-24: dev/cast step table for the swat and lancer takes, n27 cast (dev_loc 35779 -> 35785)",
+        "2026-11-24: dev/cast foot film scene for the n27 feet films (dev_loc 35785 -> 35938)",
+        "2026-11-24: dev scripts for the n27 gunner card (dev_loc 35938 -> 36041)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -175,7 +180,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 692,
-        "project/dev/cast": 1331,
+        "project/dev/cast": 1941,
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
@@ -208,7 +213,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 36598
+      "total": 37208
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -482,7 +487,9 @@
         "2026-11-23: merge of n24 and n25 lanes: launch_args.gd carries both runs' flags (221 lines) (files_past_soft_cap 67 -> 65)",
         "2026-11-23: --cast-patrol-feet for n26 cast (files_past_soft_cap 65 -> 65)",
         "2026-11-23: --cast-mulroney-trace for n26 cast (files_past_soft_cap 65 -> 65)",
-        "2026-11-24: --ink-sparks for n27 melee (files_past_soft_cap 65 -> 65)"
+        "2026-11-24: --ink-sparks for n27 melee (files_past_soft_cap 65 -> 65)",
+        "2026-11-24: --cast-warden-trace flag and the warden dev scenes for n27 cast (files_past_soft_cap 65 -> 65)",
+        "2026-11-24: merge of n27 lanes: cast dev scenes (files_past_soft_cap 65 -> 65)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -491,7 +498,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 238,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 224,
+        "project/boot/launch_args.gd": 225,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,

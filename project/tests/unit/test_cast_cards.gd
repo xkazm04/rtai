@@ -10,8 +10,9 @@ func test_shipped_cast_lists_each_pitch_and_action() -> void:
 		assert_not_null(s)
 		if s == null:
 			continue
-		var expected: Array[String] = ["armed_walk", "attack", "hit", "fall"]
-		var rows: Array[int] = [4, 4, 1, 3]
+		var walk: String = CastLancerAnchors.WALK.trim_prefix("rocket_trooper_").get_basename()
+		var expected: Array[String] = [walk, "attack", "hit", "fall"]
+		var rows: Array[int] = [StreetCopWalk.rows_of(s.walk), 4, 1, 3]
 		var paths: Array[String] = [s.walk, s.attack, s.hit, s.fall]
 		for i: int in paths.size():
 			assert_eq(

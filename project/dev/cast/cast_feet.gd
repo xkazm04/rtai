@@ -12,8 +12,9 @@ func _ready() -> void:
 	_ppm = OS.get_environment("GTAI_CAST_PPM").to_int()
 	_pitch = OS.get_environment("GTAI_CAST_PITCH").to_int()
 	_selection = OS.get_environment("GTAI_CAST_SUBJECT").split(",", false)
-	if OS.get_environment("GTAI_CAST_PREVIEW") == CastMulroneyPreview.ID:
-		CastMulroneyPreview.enable()
+	var preview: StringName = StringName(OS.get_environment("GTAI_CAST_PREVIEW"))
+	if preview in [CastMulroneyPreview.ID, FoeWardenCardView.ID, FoeGunnerCardView.ID]:
+		CastMulroneyPreview.enable(preview)
 	if not _out.is_absolute_path() or _ppm not in [32, 64] or _pitch not in [55, 70]:
 		_fail("set GTAI_CAST_OUT, GTAI_CAST_PPM and GTAI_CAST_PITCH")
 		return
@@ -94,6 +95,15 @@ func _prepare(host: ArenaRigs, take: Dictionary) -> void:
 		var speed: float = take.speed_mps
 		var fast: bool = StreetCopWalk.strip_for(speed) == StreetCopWalk.RUN
 		take.step_m = StreetPatrolAnchors.RUN_M if fast else StreetCopWalk.STEP_M
+	var steps: Dictionary[String, float] = {
+		"riot_cop": CastRiotAnchors.WALK_STEP_M,
+		"rocket_trooper": CastLancerAnchors.WALK_STEP_M,
+		"robot_gunner": CastGunnerAnchors.WALK_STEP_M,
+		"swat": CastSwatAnchors.WALK_STEP_M
+	}
+	if steps.has(take.archetype):
+		var fast: bool = take.speed_mps > CastCardKinds.RUN_MPS and take.archetype == "swat"
+		take.step_m = CastSwatAnchors.RUN_STEP_M if fast else steps[take.archetype]
 	if take.archetype == "patrol_cop" and LaunchArgs.has("--cast-patrol-feet"):
 		_probe = CastPatrolTake.new()
 		host.rigs.get_parent().add_child(_probe)
@@ -153,6 +163,8 @@ func _track(h: Fighter, host: ArenaRigs, take: Dictionary) -> bool:
 		if _ppm == 64 and tick == 38 and take.facing == "right" and take.gait == "walk":
 			var path: String = _out.path_join("%s_%d_t38.png" % [h.archetype, _pitch])
 			if get_viewport().get_texture().get_image().save_png(path) != OK:
+				return false
+			if not await CastFeetEdge.shoot(self, _scene, host, h, _out):
 				return false
 	return true
 

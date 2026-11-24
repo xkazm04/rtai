@@ -126,9 +126,7 @@ static func release(rig: CutRig) -> void:
 static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 	StreetCopWalk.bind(card, path)
 	card.texture = StreetStrips.get_tex(path)
-	# This painted wound already has its ink. Keep the raw head socket's material
-	# through the impact pulse, then restore ordinary sprite materials on the next strip.
-	card.use_parent_material = path.get_file() == StreetMulroneyHit.HIT
+	card.use_parent_material = CastCards.painted_ink(path)
 	var fall: bool = path.ends_with("_fall.png")
 	var walk: bool = (
 		path.ends_with("_walk.png") or path.ends_with("_attack.png") or path.ends_with("_run.png")
@@ -140,7 +138,8 @@ static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 		card.texture.get_width() / float(RigHeadCard.FRAMES),
 		card.texture.get_height() / float(card.vframes)
 	)
-	var foot_y: float = StreetCopWalk.FOOT_Y if card.has_meta(StreetCopWalk.CONTACT) else FOOT_Y
+	var seated: bool = card.has_meta(StreetCopWalk.CONTACT) or CastCardKinds.padded(path)
+	var foot_y: float = StreetCopWalk.FOOT_Y if seated else FOOT_Y
 	card.offset = Vector2(-cell.x * 0.5, -cell.y * (0.5 if fall else foot_y))
 	card.set_meta(ON, path)
 	card.remove_meta(StreetWalkerFall.OCT)
@@ -157,34 +156,37 @@ static func _build(rig: CutRig, card: Sprite2D, path: String) -> void:
 	rig.body.set_meta(WAS, was)
 
 
+static func _fill(card: Sprite2D, tex: String, on: String) -> float:
+	if card.vframes > 1:
+		return WALK_FILL.get(tex.get_file(), StreetCopWalk.fill_of(tex))
+	var own: float = StreetWalkerHit.fill_of(on) if StreetWalkerHit.is_grid(on) else 1.0
+	return own * StreetCopWalk.fill_of(tex) if CastCards.padded(tex) else own
+
+
 static func place(rig: CutRig, card: Sprite2D) -> void:
-	var k: float = StreetCrowdCards.body_scale(rig.actor_id)
 	var pose: CastCardPose = CastCardPose.of(rig)
-	if pose != null:
-		k *= pose.sheets.body_scale
+	var k: float = StreetCrowdCards.body_scale(rig.actor_id)
+	k *= 1.0 if pose == null else pose.sheets.body_scale
 	if StreetFallBetween.is_fall_card(card):
 		StreetWalkerFall.draw(rig, card, k)
 		return
 	var h: float = HEIGHT_BY_ART.get(ViewMode.shared().art, HEIGHT_M)
-	var hit: bool = StreetWalkerHit.is_grid(str(card.get_meta(ON, "")))
-	if card.vframes > 1:
-		var file: String = card.texture.resource_path.get_file()
-		k *= WALK_FILL.get(file, StreetCopWalk.fill_of(card.texture.resource_path))
-	elif hit:
-		k *= StreetWalkerHit.fill_of(str(card.get_meta(ON, "")))
+	var tex: String = card.texture.resource_path
+	var on: String = tex if CastCards.padded(tex) else str(card.get_meta(ON, ""))
+	var hit: bool = StreetWalkerHit.is_grid(on)
+	k *= _fill(card, tex, on)
 	var s: float = h * CharacterRigs.PX_PER_M * k * card.vframes / card.texture.get_height()
 	var walk: float = clampf(rig.speed_now / WALK_SPEED, 0.0, 1.0)
 	if card.vframes > 1:
-		var moving: bool = rig.speed_now > MOVING
-		card.frame_coords = Vector2i(
-			card.frame % RigHeadCard.FRAMES, CastCardPose.row(rig, stride_frame(rig.phase, moving))
-		)
+		var row: int = CastCardPose.row(rig, stride_frame(rig.phase, rig.speed_now > MOVING))
+		card.frame_coords = Vector2i(card.frame % RigHeadCard.FRAMES, row)
 		walk = 0.0
 	var stride: float = sin(TAU * rig.phase)
 	var fall: Vector2 = Vector2(0.0, 1.0) if hit else StreetWalkerFall.pose(rig, card)
 	var wound: Vector3 = StreetWalkerHit.shove(rig)
 	card.global_rotation = stride * SWAY * walk + fall.x + wound.z + StreetWalkerHit.flail(rig)
-	if card.has_meta(StreetCopWalk.CONTACT) or (hit and StreetMulroneyHit.living(rig)):
+	var wound_grounded: bool = StreetMulroneyHit.living(rig) or CastCards.padded(tex)
+	if card.has_meta(StreetCopWalk.CONTACT) or (hit and wound_grounded):
 		card.global_transform = Transform2D(card.global_rotation, card.global_position)
 	card.global_scale = Vector2(s, s * fall.y)
 	card.global_position = (

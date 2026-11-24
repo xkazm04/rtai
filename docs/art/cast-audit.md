@@ -203,6 +203,31 @@ The 64 px/m stills show the same fixed viewport and tick 38, with one orange sol
 
 Capture the current patrol with `node tools/art/cast_feet.mjs build/cast/cop8 32 patrol_cop` and repeat at 64. With the original takes in `build/cast/before`, run `python tools/art/cast_feet_plate.py build/cast/before build/cast/cop8 patrol_cop <output-directory>` and `python tools/art/cast_feet_clip.py build/cast/before build/cast/cop8 <output.mp4>`.
 
+
+## Planted feet, n27
+
+The riot cop, SWAT (walk and the rifle-post run) and the lancer (`rocket_trooper`) now draw eight-drawing walks on the patrol's anchored placement (`CastRiotAnchors`, `CastSwatAnchors`, `CastLancerAnchors`, selected by their `WALK` constant; `FOUR` restores the shipped strip). Source art: `gtai-art/foes-n26/{riot8c,swat8c,swat8run,lancer8}`, cut by `tools/art/cast_foe_eight.py`, soles registered by `tools/art/cast_foe_soles.py`. Same take and columns as n26 (sole travel / body jump, screen px at 32 px/m; checklist bars sole <= 2 px over a contact, body jump <= 12 px between consecutive rendered frames). Before is `main` `a3b3f1466` (the n26 rows). The after sole is 0.00 because the placement pins the very ink the take registers; the windows were checked on overlay sheets (`pack/soles_*.png` in each source folder), not by a second oracle.
+
+| Archetype | Gait (m/s) | Pitch | Before right | After right | Before down-right | After down-right |
+|---|---|---:|---:|---:|---:|---:|
+| riot_cop | walk (2.8) | 70 | 14.31 / 3.07 ✗ | 0.00 / 3.77 ✓ | 16.83 / 3.39 ✗ | 0.00 / 5.10 ✓ |
+| riot_cop | walk (2.8) | 55 | 14.46 / 3.50 ✗ | 0.00 / 2.68 ✓ | 31.46 / 2.41 ✗ | 0.00 / 3.69 ✓ |
+| swat | walk (3.4) | 70 | 17.54 / 3.16 ✗ | 0.00 / 3.10 ✓ | 36.26 / 2.61 ✗ | 0.00 / 7.21 ✓ |
+| swat | walk (3.4) | 55 | 16.18 / 4.39 ✗ | 0.00 / 5.46 ✓ | 19.63 / 2.61 ✗ | 0.00 / 6.23 ✓ |
+| swat | run (6) | 70 | 25.54 / 4.54 ✗ | 0.00 / 4.65 ✓ | 40.83 / 3.88 ✗ | 0.00 / 9.13 ✓ |
+| swat | run (6) | 55 | 24.17 / 5.78 ✗ | 0.00 / 7.09 ✓ | 26.94 / 3.77 ✗ | 0.00 / 7.17 ✓ |
+| rocket_trooper | walk (3.2) | 70 | 13.66 / 2.03 ✗ | 0.00 / 2.77 ✓ | 22.24 / 2.89 ✗ | 0.00 / 9.21 ✓ |
+| rocket_trooper | walk (3.2) | 55 | 15.11 / 13.44 ✗ | 0.00 / 3.34 ✓ | 19.45 / 3.48 ✗ | 0.00 / 3.95 ✓ |
+
+| Sheet | Metres per drawing | Drawings per second | 64 px/m edge (added dark exterior pixels, 70 / 55) | Height vs shipped walk |
+|---|---:|---:|---|---|
+| cop_riot_planted8_armed_walk | 0.2161 | 12.8 at 2.8 m/s (above 12) | 0 / 0 | 1.000 / 1.000 |
+| swat_planted8_armed_walk | 0.2437 | 13.9 at 3.4 m/s (above 12) | 0 / 0 | 0.999 / 1.000 |
+| swat_planted8_run | 0.4720 | 12.7 at 6 m/s (above 12) | 0 / 0 | 1.000 / 1.000 |
+| rocket_trooper_planted8_armed_walk | 0.2057 | 15.6 at 3.2 m/s (above 12) | 0 / 0 | 0.999 / 1.000 |
+
+All four cadences are above the 5 to 10 a second a drawn walk usually wants and the checklist's 12; the drawn strides are short for these speeds, so the drawing changes are quick. Soles hold and the jump stays under 12 px, but the cadence is the thing to judge on the film. Reversal (aim one way, step the other; `test_cast_walk_reversal.gd`): 9.60 px on every new sheet at both pitches (the 0.30 m/tick body-catch limit, bar 12). Walk, stop and turn jumps are the take's maxima above; the dedicated stop and turn takes were not run in this call. Tool: `node tools/art/cast_feet.mjs <dir> 32 riot_cop,swat,rocket_trooper`, 64 px/m edge via `cast_feet.mjs ... 64` then `tools/art/cast_foe_edge.py`, size via `tools/art/cast_foe_scale.py`.
+
 ## Sergeant Mulroney card admission, 2026-11-23
 
 | Archetype | Renderer | Identity | Walk | Attack/tell | Hit | Death | Facings | Grid | Pitches | Scale | Ink | Palette | Cut | Feet | Shadow | Provenance | Enabled |
@@ -260,3 +285,64 @@ The first review kept the card disabled. Walk, Feet, Hit and Shadow failed. The 
 **Ink, cut and shadow.** At the front pass, the three contour samples are 2 / 3 / 6 texels at 70° and 4 / 2 / 1 at 55°. The outlines close at both review scales. The walk navy means are 222.4° / .470 / .327 and 221.8° / .440 / .329. The eight final RGBA grids have zero strong green or magenta pixels at alpha ≥128. Light and dark matte checks retain the hands, muzzle, loose gun and cap. The stationary front three-quarter shadow toggle changes 248 / 221 pixels at 32 px/m for 70° / 55°. The forward pump changes 261 / 246. The shadow draws separately, but stays behind the displaced boot on a living wound.
 
 **Reproduction.** `cast_mulroney_lineup.tscn` uses the ordinary cast lineup and actual formation boss. `cast_mulroney_poses.tscn` checks the displayed texture, octant and row. Both read `GTAI_CAST_OUT`, `GTAI_CAST_PITCH` and `GTAI_CAST_PPM`. The feet capture uses `GTAI_CAST_PREVIEW=sergeant_mulroney` and `node tools/art/cast_feet.mjs <output-directory> 32 sergeant_mulroney` (also run at 64). The preview enables only the in-memory row. Source sheets, cutter, matte checks, viewport crops and sole tracks are in `gtai-art/foes-n26/mulroney/`. The final hashes match the eight entries beginning at line 2668 of `steam/ai-provenance/2026-11.jsonl`. [64 px/m close film](<C:/Users/kazda/kiro/gtai-masters/n26/cast/mulroney_close_64.mp4>) · [32 px/m fight](<C:/Users/kazda/kiro/gtai-masters/n26/cast/mulroney_fight_32.mp4>)
+
+## Appliance warden (Peg Dolan) after the card landed (n27, row `enabled: true`)
+
+The card row, the anchored eight-row walk (`CastWardenAnchors`, step 0.2543 m), the padded cells and the catch rows are in code
+and unit-tested (`test_cast_warden.gd`). The row is **`enabled: true`**: every point below passes except the prologue's catch view, which lands with the yard's patch. Measured with her card forced on
+(`GTAI_CAST_PREVIEW=appliance_warden`). Screen pixels, 32 px/m unless stated.
+
+| Point | Number | Verdict |
+|---|---|---|
+| Planted feet, support-sole travel (`cast_feet.mjs`, walk 2.8 m/s and arrival walk 3.8 m/s, right and down-right, 70/55) | 0.00 px in all eight takes (64 px/m take gives the same values) | PASS |
+| Body jump, feet tool, 70 degrees: walk right / down-right, arrival right / down-right | 3.07 / 9.07, 3.63 / 9.15 px (Mulroney: 2.88 / 6.87) | PASS against the checklist's 12 px (0.375 m) at 32 px/m |
+| Body jump, feet tool, 55 degrees, same four | 2.79 / 5.36, 2.77 / 5.81 px (Mulroney: 2.56 / 3.67) | PASS against 12 px |
+| Aimed reversal on the live near host (`cast_warden_poses`, 32 px/m, torso track) | seam 9.47 px at 2.8 m/s and 1.91 at 3.8 m/s (70); 8.96 and 2.18 (55); worst frame in the track 9.52 / 9.55 (70), 9.48 / 9.48 (55). Mulroney's was 30 px before his fix | PASS against 12 px (Mulroney ships the 12 px bound) |
+| Body jump by transition (`test_body_jump_on_walk_stop_turn_and_reversal`, contact model, 2.8 m/s, 70 / 55) | start 6.19 / 4.87 px; steady walk 9.60 px; stop 0.00 (nothing after the halt); turn 9.60; reversal 9.60 (no spike above the steady walk). At 64 px/m: start 12.38 / 9.73, held 19.20. The stride's own travel is 1.49 px per tick at 32 and 2.99 at 64 | PASS against 12 px at 32 (24 at 64); the turn and the reversal add nothing to the steady 9.60 px drawing-change step |
+| Drawings per second | walk 2.8 m/s / 0.2543 m = 11.0; arrival walk 3.8 m/s = 14.9 (above 12; Mulroney ships 16.8 at 3.2 m/s) | noted, not a fail |
+| Palette, all ten sheets (`tools/art/cast_warden_edge.py`) | blue on solid pixels 0 to 3 px per sheet, except p70 attack 126 px (0.06 %); strict red (r>120, g<60, b<60) at most 14 px per sheet | PASS: no blue, no red outside the 4 to 14 px of ink |
+| Edge, **sheet proxy** at 64 px/m drawn size, fringe px per cell (alpha 0 to 0.5, colour below 64): walk / attack / hit / fall / planted8, p70 | 429 / 482 / 512 / 525 / 233 against Mulroney 456 / 454 / 381 / 473 / 244 | comparable; hit is 35 % above Mulroney's painted wound |
+| Edge, **sheet proxy**, p55, same order | 376 / 401 / 357 / 419 / 168 against Mulroney 459 / 487 / 343 / 365 / 180 | comparable |
+| Edge, live-frame rim at 64 px/m (`cast_warden_poses` frozen live/raw/ground exposures, `cast_warden_review.py`): added dark exterior pixels | 0 on all ten: armed_walk, planted8, attack, hit, fall at 70 and at 55 (visible pixels 1792 to 3353) | PASS |
+| Size, 32 px/m 70 degrees, front / back (`cast_warden_lineup` plate, 1920 x 1080) | Equipment included: Peg 47 / 55, patrol cop 43 / 44, Mulroney 44 / 48, Rivet 77 / 73. **Pole excluded** (silhouette opened with a 3 px kernel, which removes the 1 to 2 px pole; the back pose lifts it 12 px above the head): Peg 47 / 43. At 64 px/m: 96 / 87 against 110 incl. pole | PASS: about the patrol cop's height and not taller than Rivet (77 / 73) |
+| Wound contact (card pivot to shadow ground, hit_1, hit_4, hit_6, both pitches, 32 and 64 px/m) | 0.000 to 0.001 px (bar 1.0) | PASS |
+| Catch view in the live prologue | `set_catch` is unit-tested and driven by `cast_warden_fight` (first catch tick 193, held 126 ticks) | wired at the merge by the yard's patch (NEED yard), not a fail of the card |
+
+**Why she is on.** The checklist's body-jump bound is 12 screen px at 32 px/m. Her worst is 9.60 px (the drawing-change step every 0.2543 m; down-right 9.07 / 9.15 at 70 degrees, start 6.19). Soles hold (0.00 px), the live edge rim is 0, the wound boot sits on the shadow, there is no blue, she is not taller than Rivet. Until the yard's patch lands, the prologue still dyes the rig and draws its vector pole behind her card: that double-draw is the yard's call 2 below.
+
+**The yard's three calls (NEED yard, not edited here).**
+1. `project/boot/prologue/prologue_stage.gd`, `PrologueStage._move()`, right after the `if combat.catcher != null: ... combat.catcher = null`
+   block (about line 43) and before `if at_receiver or combat.catcher != null:`, every tick:
+   ```gdscript
+   for h: Fighter in combat.hostiles:
+   	if h.archetype == FoeWardenCardView.ID:
+   		FoeWardenCardView.set_catch(h, h == combat.catcher, tick)
+   ```
+2. `project/boot/prologue/prologue_props.gd` must skip all three of its warden sites when `CastCards.current(&"appliance_warden") != null`:
+   the overalls dye (line 31, `h.alive() and h.archetype == &"appliance_warden"`), the dress loop (line 90, the same archetype test)
+   and the vector pole and straps (`_warden(chest, head, h.facing)` at line 112, defined at line 158). Otherwise her card and the dyed rig double-draw.
+3. `cast_lineup.gd` hides the prologue's `LightLayer` now: the yard's lights printed rings into every prologue portrait (Mulroney's lineup
+   failed the same way on this branch).
+
+## Robot gunner A (navy plates) as a card (n27, row `enabled: false`)
+
+Source: the director's `gunnerA` sheets (owner pick 2026-11-24, navy kept as bolted plates on a gunmetal frame, pale box head with no cap, one lens, hose arms, brass belt to a back drum). Cut by `tools/art/cast_gunner_pack.py` at the patrol cop's drawn height per facing (fill 1.12 / 1.08), one foot line, muzzle flash and the dropped rifle kept as props. Code: `FoeGunnerCardView` (a sprite sibling of his robot rig, hidden rig, the rig stays the body for the shove and the power-down), `CastGunnerAnchors` (step 0.2704 m), `test_cast_gunner.gd`. With the row off his robot rig draws exactly as before (`show_rig` returns the rig's own visibility). Measured with his card forced on in a dev process (`GTAI_CAST_PREVIEW=robot_gunner`, `CastMulroneyPreview.enable`). Screen px at 32 px/m unless stated.
+
+| Point (checklist bar) | Number | Verdict |
+|---|---|---|
+| Planted feet, support-sole travel (bar 2 px; `cast_feet.mjs`, walk 2.2 m/s from `enemies.json`, right and down-right, 70/55; no run) | 0.00 px in all four takes | PASS |
+| Body jump, feet tool (bar 12 px): 70 right / down-right; 55 right / down-right | 9.60 / 9.18; 9.60 / 8.52 | PASS |
+| Body jump by transition (bar 12 px, `cast_gunner_turns` + `cast_gunner_transitions.py`, 70 right / down-right; 55 right / down-right) | stop 3.77 / 5.19; 2.77 / 4.72 (**18.80 / 17.78; 20.17 / 15.09 before** `FoeGunnerCardView._hold_stop` kept the last planted drawing); turn 9.60 / 9.18; 9.60 / 8.52; reversal (aim one way, step the other) 9.60 / 9.40; 9.60 / 9.00 | PASS (the steady drawing-change step is the max) |
+| Drawings per second | 2.2 / 0.2704 = 8.14 observed 8.13 | PASS (bar 24) |
+| Size, 70 degrees front / back, silhouette without his shadow rings (first `cast_gunner_lineup` run) | gunner 46 / 49, patrol cop 43 / 44, Rivet 77 / 73, today's robot rig 65 / 81 | PASS: about the patrol cop's height, well below Rivet |
+| Size with his own shadow rings, 70 front / back, 55 front / back, 64 px/m 70 | 53 / 56, 54 / 56, 107 / 114 (patrol 87 / 88 at 64); rings add about 7 px; the 55 silhouette alone was not measured separately | noted |
+| Palette, all ten sheets (`cast_gunner_palette.py`, `cast_warden_edge.py`) | navy (hue 190-250) 5.0 to 6.6 % of solid px (Mulroney 20-35 % blue); strict red at most 60 px (p70 attack, 0.02 %: the lit lens edge) and 0 to 9 elsewhere; no teal, no vermilion | PASS |
+| Cut / key (`check_cells` in the cutter) | zero strongly green-leading opaque px on every cell; flash and rifle inside the cells | PASS |
+| Edge, **sheet proxy** fringe px per cell, p70: walk / attack / hit / fall / eight | 469 / 462 / 529 / 642 / 300 (Mulroney 456 / 454 / 381 / 473 / 244) | comparable; fall is 36 % above |
+| Edge, **live rim** at 64 px/m (`cast_mulroney_edge.py`) | **not measured** (no frozen-exposure harness written for him in this call) | OPEN |
+| Shadow | he draws his own contact rings (the patrol's ring set, radius .5 x 0.8 m hip); the lineup's shadow toggle does not reach them, so its changed-pixel count reads 0 against the patrol's 236 | OPEN: a ring toggle exposure was not taken |
+| Ink (3, 3, 4 px runs) | **not measured** | OPEN |
+| Attack tell, hit and death in a live fight | drawn and unit-tested (tell row 0/1 = lens lit, flash, recoil, recover on `attack_frame`; hit 0.20 s; fall by `DeathPipe` progress); **no film taken in this call** | OPEN |
+| Identity at 32 px/m beside the patrol cop (`gunner_vs_cop_32.png`) | the pale box head, tan frame and hose arms read as a machine; navy is a few patches, where the cop is navy all over with a round cap | PASS (judged by eye on one still) |
+
+**Why he is off.** Soles, jumps, drawings per second, size, palette and key pass, but the live edge rim, the ink runs, the shadow exposure and the live attack / death film are unmeasured. The checklist says never to ship a half character, so the row stays `enabled: false` and today's robot rig draws. Turn it on by setting the row's `enabled` to true once those four are measured.

@@ -2,6 +2,8 @@ extends "res://dev/cast/cast_lineup.gd"
 ## Native viewport crops for the admission checks. Fail the take if the actual host
 ## shows another drawing, facing or row. Capture shadow-off partners on the same tick.
 
+var _subject: StringName = CastMulroneyPreview.ID
+var _walk_strip: String = StreetMulroneyAnchors.WALK
 var _host: ArenaRigs
 var _boss: Fighter
 var _mind: SquadMind
@@ -18,19 +20,19 @@ func _ready() -> void:
 	ViewMode.select("combo")
 	ViewMode.shared().set_pitch(float(_pitch))
 	ViewMode.shared().art = "p%d" % _pitch
-	CastMulroneyPreview.enable()
+	CastMulroneyPreview.enable(_subject)
 	_host = _open_wave()
 	if _host == null:
 		_fail("missing street host")
 		return
 	_arena.rivet.pos = MARK + Vector2.RIGHT * 8.0
-	_boss = _arena.squad_ai.spawn_member(_arena, MARK, CastMulroneyPreview.ID)
+	_boss = _arena.squad_ai.spawn_member(_arena, MARK, _subject)
 	_boss.hp = 10.0
 	_mind = _arena.squad_ai.mind_for(_boss)
-	var ok: bool = await _walks() and await _pump() and await _reactions()
+	var ok: bool = await _walks() and await _attack() and await _reactions()
 	_session.close()
 	_scene.free()
-	Log.info("cast", "Mulroney pose review complete %s" % ok)
+	Log.info("cast", "%s pose review complete %s" % [_subject, ok])
 	get_tree().quit(0 if ok else 1)
 
 
@@ -43,7 +45,7 @@ func _advance() -> void:
 
 
 func _walks() -> bool:
-	var drawings: int = StreetCopWalk.rows_of(StreetMulroneyAnchors.WALK)
+	var drawings: int = StreetCopWalk.rows_of(_walk_strip)
 	for octant: int in 8:
 		_boss.pos = MARK
 		_boss.facing = Vector2.RIGHT.rotated(octant * PI / 4.0)
@@ -68,7 +70,7 @@ func _walks() -> bool:
 	return true
 
 
-func _pump() -> bool:
+func _attack() -> bool:
 	_boss.pos = MARK
 	_boss.facing = Vector2(1, 1).normalized()
 	_boss.tell_left = 20
@@ -115,8 +117,12 @@ func _reactions() -> bool:
 		if card != null and card.texture.resource_path.ends_with("_fall.png"):
 			var row: int = card.frame_coords.y
 			if not seen.has(row):
-				seen[row] = _photo("fall_%d" % row, "fall", row)
+				seen[row] = _photo("fall_%d" % row, "fall", row) and await _fall_sample(row)
 	return seen.size() == 3 and not false in seen.values() and _photo("rest", "fall", 2)
+
+
+func _fall_sample(_row: int) -> bool:
+	return true
 
 
 func _strike(direction: Vector2, lethal: bool) -> void:
@@ -136,9 +142,9 @@ func _card() -> Sprite2D:
 
 func _photo(label: String, action: String, row: int) -> bool:
 	var card: Sprite2D = _card()
-	var suffix: String = "sergeant_mulroney_%s.png" % action
+	var suffix: String = "%s_%s.png" % [_subject, action]
 	if action == "armed_walk":
-		suffix = StreetMulroneyAnchors.WALK
+		suffix = _walk_strip
 	if (
 		card == null
 		or not card.is_visible_in_tree()

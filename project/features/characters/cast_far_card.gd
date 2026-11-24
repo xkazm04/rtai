@@ -57,18 +57,19 @@ func _configure(pose: CastCardPose, path: String) -> void:
 	var fall: bool = path == pose.sheets.fall
 	vframes = StreetCopWalk.rows_of(path)
 	_contact = null
-	if path.get_file() == StreetMulroneyAnchors.EIGHT:
+	if CastCards.anchored(path):
 		_contact = StreetCopWalk.Contact.new()
 		_contact.configure(path)
 	if fall or path == pose.sheets.hit:
 		vframes = StreetWalkerFall.FALL_FRAMES if fall else 1
 	var cell: Vector2 = texture.get_size() / Vector2(hframes, vframes)
-	var foot_y: float = StreetCopWalk.FOOT_Y if _contact != null else StreetWalkerCards.FOOT_Y
+	var seated: bool = _contact != null or CastCards.padded(path)
+	var foot_y: float = StreetCopWalk.FOOT_Y if seated else StreetWalkerCards.FOOT_Y
 	offset = -cell * Vector2(0.5, 0.5 if fall else foot_y)
 	var art: String = ViewMode.shared().art
 	var height: float = StreetWalkerCards.HEIGHT_BY_ART.get(art, StreetWalkerCards.HEIGHT_M)
 	var k: float = StreetCrowdCards.body_scale(pose.actor_id) * pose.sheets.body_scale
-	if _contact != null:
+	if _contact != null or CastCards.padded(path):
 		k *= StreetCopWalk.CELL_RATIO
 	_base_scale = (
 		Vector2.ONE

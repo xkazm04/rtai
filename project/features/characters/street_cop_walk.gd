@@ -8,7 +8,6 @@ const ARMED_ROWS: Dictionary[String, String] = {
 	"cop/head_swat": "swat_armed_walk.png",
 }
 const WALKS: Dictionary[String, Dictionary] = {"p70": ARMED_ROWS, "p55": ARMED_ROWS}
-## Still figure fill divided by mean grid figure height, keyed by art and file.
 const CELL_RATIO: float = 256.0 / 192.0
 const FILL: Dictionary[String, float] = {
 	"p70/cop_patrol_armed_walk.png": 1.12,
@@ -64,7 +63,7 @@ class Contact:
 		registered = null
 		step_m = FOUR_STEP_M
 		if drawings > 4:
-			var running: bool = strip.get_file() == RUN
+			var running: bool = CastCardKinds.running(strip.get_file(), RUN)
 			registered = StreetPatrolPose.new()
 			step_m = registered.configure(strip, drawings, running)
 
@@ -141,9 +140,7 @@ static func strip_of(rig: CutRig, art: String, row: String) -> String:
 
 
 static func fill_of(path: String) -> float:
-	if path.get_file() == StreetMulroneyAnchors.EIGHT:
-		return CELL_RATIO
-	return FILL.get(path.get_base_dir().get_file() + "/" + path.get_file(), 1.0)
+	return CastCardKinds.fill(path, FILL, CELL_RATIO)
 
 
 static func bind(card: Sprite2D, path: String) -> void:
@@ -152,7 +149,7 @@ static func bind(card: Sprite2D, path: String) -> void:
 		old.release()
 		card.skew = 0.0
 		card.remove_meta(CONTACT)
-	if path.get_file() not in [PLANTED, RUN, StreetMulroneyAnchors.EIGHT]:
+	if path.get_file() not in [PLANTED, RUN] and not CastCardKinds.anchored(path):
 		return
 	var contact: RigContact = RigContact.new()
 	contact.configure(path)
@@ -184,7 +181,7 @@ static func plant(rig: CutRig, card: Sprite2D) -> void:
 
 
 static func rows_of(path: String) -> int:
-	return 8 if path.get_file() in [EIGHT, RUN, StreetMulroneyAnchors.EIGHT] else 4
+	return 8 if path.get_file() in [EIGHT, RUN] or CastCardKinds.anchored(path) else 4
 
 
 static func strip_for(speed_mps: float) -> String:
@@ -192,6 +189,9 @@ static func strip_for(speed_mps: float) -> String:
 
 
 static func patrol_path(rig: CutRig, path: String) -> String:
+	var foe: String = CastCardKinds.eight_for(path.get_file(), rig.speed_now / SimConst.PX_PER_M)
+	if not foe.is_empty():
+		return path.get_base_dir().path_join(foe)
 	if path.get_file() not in [ORIGINAL, PLANTED, RUN]:
 		return path
 	var other: bool = rig.has_meta(OTHER_ID) and rig.get_meta(OTHER_ID) == rig.actor_id
