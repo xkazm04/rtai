@@ -3,7 +3,7 @@
 cd /c/Users/kazda/kiro/gtai-wt/n25-yard
 export APPDATA=C:/Users/kazda/kiro/gtai-n28/appdata/yard GODOT_BIN=C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe
 n=$1; shift
-python -I evidence/yard28/art_row.py "$@"
+python -I evidence/yard28/${ROWPY:-art_row.py} "$@"
 # TILE=<png> (optional): this arm's floor tile, copied over the shipped one, then imported; the arm FAILS unless the .ctex is newer than the png.
 png=project/boot/prologue/art/arched_line/floor_tile.png
 [ -n "$TILE" ] && cp "$TILE" $png

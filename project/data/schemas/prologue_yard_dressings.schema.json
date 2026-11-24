@@ -163,6 +163,9 @@
           },
           "type": "array"
         },
+        "ground_impression": {
+          "$ref": "#/$defs/layer"
+        },
         "ground_shade": {
           "default": 1,
           "maximum": 1,

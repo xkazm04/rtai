@@ -89,6 +89,7 @@ func test_arched_line_is_raised_line_with_a_darker_warmer_floor_only() -> void:
 	assert_ne(look.ground[0].tint, PrologueYardDressing.resolve("raised_line").ground[0].tint)
 	var arched: Dictionary = _row("arched_line").duplicate(true)
 	var raised: Dictionary = _row("raised_line").duplicate(true)
+	assert_true(arched.erase("ground_impression"))
 	for key: String in ["ground", "layout", "over_print"]:
 		assert_true(arched.erase(key))
 		assert_true(raised.erase(key))
@@ -102,6 +103,18 @@ func test_arched_line_is_raised_line_with_a_darker_warmer_floor_only() -> void:
 		var r_row: Dictionary = raised_ground[i]
 		for key: String in ["rect_m", "texture", "tiled"]:
 			assert_eq(str(a_row.get(key)), str(r_row.get(key)), key)
+
+
+func test_arched_line_lays_the_brown_tile_as_a_second_impression_and_raised_line_does_not() -> void:
+	var look: PrologueYardDressing = PrologueYardDressing.resolve("arched_line")
+	assert_not_null(look.impression)
+	assert_eq(look.impression.texture, ART.replace("raised_line", "arched_line") + "floor_tile.png")
+	assert_true(look.impression.tiled)
+	assert_eq(look.impression.tile_size, Vector2(8, 8))
+	assert_eq(look.impression.rect, look.ground[0].rect)
+	assert_eq(look.impression.tint, Color("ffffff33"))
+	assert_null(PrologueYardDressing.resolve("raised_line").impression)
+	assert_false(_row("raised_line").has("ground_impression"))
 
 
 func _cover(id: String) -> Dictionary[String, Dictionary]:

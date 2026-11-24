@@ -169,6 +169,25 @@
           "wash": "f6dca880"
         }
       ],
+      "ground_impression": {
+        "rect_m": {
+          "origin": [
+            -1,
+            -6
+          ],
+          "size": [
+            62,
+            40
+          ]
+        },
+        "texture": "res://boot/prologue/art/arched_line/floor_tile.png",
+        "tile_size_m": [
+          8,
+          8
+        ],
+        "tiled": true,
+        "tint": "ffffff33"
+      },
       "ground_shade": 0.81,
       "layout": {
         "cover": [

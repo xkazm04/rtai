@@ -24,6 +24,8 @@ static func attach(floor_view: Node2D, plan: PrologueYard, paint: PrologueYardPa
 
 
 static func _draw_pieces(node: Node2D, plan: PrologueYard, paint: PrologueYardPaint) -> void:
+	if plan.dressing.impression != null:
+		paint.ground(node, plan.dressing.impression)
 	var ids: PackedStringArray = plan.dressing.over_print
 	for piece: PrologueYard.Wreck in plan.debris:
 		if ids.has(piece.id):

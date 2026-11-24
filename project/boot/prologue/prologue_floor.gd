@@ -22,7 +22,7 @@ func _ready() -> void:
 		_paint.attach_ochre(self, plan)
 	if plan.dressing.paint_id == "torn_line":
 		_use_painted_cracks()
-	if not plan.dressing.over_print.is_empty():
+	if not plan.dressing.over_print.is_empty() or plan.dressing.impression != null:
 		PrologueYardOverprint.attach(self, plan, _paint)
 
 
