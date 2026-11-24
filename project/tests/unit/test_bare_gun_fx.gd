@@ -38,3 +38,16 @@ func test_art_off_is_the_before() -> void:
 	var id: StringName = BareGunFx.stand_in(s)
 	WeaponFxArt.enabled = true
 	assert_eq(id, &"", "--weapon-fx=shapes keeps the evening path's dashes")
+
+
+func test_a_turned_round_marks_itself_so_it_draws_no_red_flash() -> void:
+	var arena: CombatArena = _arena()
+	var s: Shot = _rifle_round(arena)
+	assert_false(s.has_meta(PlayerDeflect.TURNED), "Rivet's own round flashes at his bore")
+	s.from_rivet = false
+	s.shooter_id = 1
+	s.vel = Vector2(-10.0, 0.0)
+	s.pos = arena.rivet.pos + Vector2(1.0, 0.0)
+	assert_true(PlayerDeflect.send_back(arena, s, Vector2.RIGHT), "the round is turned")
+	assert_true(s.from_rivet, "it now belongs to Rivet, so BareGunFx draws it")
+	assert_true(s.has_meta(PlayerDeflect.TURNED), "and carries the marker that skips the flash")

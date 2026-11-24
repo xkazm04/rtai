@@ -31,7 +31,8 @@ static func shot(ci: CanvasItem, s: Shot, arena: CombatArena) -> bool:
 		var cell: StringName = fx if fx != &"" else &"tracer"
 		WeaponFxArt.draw_cell(ci, cell, 0, at, dir.angle(), Vector2(sqrt(k), k))
 	var ticks: int = roundi(flew / maxf(w.speed_mps * SimClock.TICK_DT, 0.001))
-	if ticks <= WeaponFxArt.FLASH_TICKS:
+	if ticks <= WeaponFxArt.FLASH_TICKS and not s.has_meta(PlayerDeflect.TURNED):
+		# a turned round keeps its fresh range, so it would flash at Rivet's bore: red-cored
 		_flash(ci, id, arena.rivet, dir, maxi(ticks - 1, 0))
 	return true
 
