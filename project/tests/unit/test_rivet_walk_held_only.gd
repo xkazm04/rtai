@@ -38,3 +38,9 @@ func test_gloria_at_p55_is_untouched_by_the_p70_row() -> void:
 	var dir: String = RivetStrips.DIR + "p55/"
 	assert_false(ResourceLoader.exists(dir + RivetWalk.ARMED + "gloria.png"), "no p55 grid exists")
 	assert_eq(RivetWalk.motion_path(rig, "p55", &"gloria"), dir + RivetWalk.STRIP)
+
+
+func test_held_only_loads_the_table_on_a_cold_start() -> void:
+	RivetFramesGrids._grid = {}
+	RivetFramesGrids._held_only = {}
+	assert_true(RivetFramesGrids.held_only(&"gloria", "p70"))

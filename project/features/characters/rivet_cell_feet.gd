@@ -36,7 +36,6 @@ const FEET: Dictionary[String, float] = {
 	"p70/rivet_eq_electro_gun.png:6": 32.0,
 	"p55/rivet_eq_gatling.png:6": 24.0,
 	"p55/rivet_eq_plasma_rifle.png:6": 10.0,
-	"p55/rivet_eq_gloria.png:6": 11.0,
 	# n17 item 3 (DEFECTS #20): the wind-up and left strike cells stood under their armed walk's
 	# boot line at 64 px/m (the lowest rust pixel from his ground point, +-60 px: plasma walk -9,
 	# wind-up -5): each such cell 0 is seated on the WALK's boot line, which the walk grids draw
