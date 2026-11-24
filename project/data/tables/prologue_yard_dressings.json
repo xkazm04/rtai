@@ -1446,6 +1446,30 @@
               4.4,
               2.4
             ]
+          },
+          {
+            "art": "res://boot/prologue/art/raised_line/pallet_broken.png",
+            "at": [
+              4.5,
+              29.5
+            ],
+            "id": "stack_broken_sw",
+            "size_m": [
+              2.4,
+              0.85
+            ]
+          },
+          {
+            "art": "res://boot/prologue/art/raised_line/pallet_double.png",
+            "at": [
+              3.4,
+              23.5
+            ],
+            "id": "stack_double_west",
+            "size_m": [
+              2.4,
+              1
+            ]
           }
         ],
         "debris": [

@@ -21,6 +21,7 @@ import prologue_yard_cut as cut
 HERE = Path(__file__).resolve().parent
 OUT = HERE.parents[1] / "project/boot/prologue/art/raised_line"
 PPM = 128
+TIGHT = ("pallet_three", "pallet_double", "pallet_broken")
 BOX_W, BOX_H, CANVAS_W = 5.4, 1.2, 5.4
 SHADOW = (0x21, 0x1E, 0x1C)
 WHITE = (255, 255, 255)
@@ -94,7 +95,8 @@ def pallets(sheet, sizes):
         piece = piece.resize((piece.width, round(piece.height * 0.75)), Image.Resampling.LANCZOS)
         scale = min(2.4 / piece.width, 1.6 / piece.height)
         art = resized(piece, piece.width * scale, piece.height * scale)
-        canvas = Image.new("RGBA", (round(2.4 * PPM), round(1.6 * PPM)))
+        tight = name in TIGHT  # collision box = the drawing for the extra stacks
+        canvas = Image.new("RGBA", art.size if tight else (round(2.4 * PPM), round(1.6 * PPM)))
         canvas.paste(art, ((canvas.width - art.width) // 2, canvas.height - art.height))
         canvas.save(OUT / f"{name}.png")
         sizes[name + "_art_m"] = [round(piece.width * scale, 2), round(piece.height * scale, 2)]

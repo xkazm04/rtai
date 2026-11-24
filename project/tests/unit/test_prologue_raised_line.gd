@@ -60,3 +60,14 @@ func test_hangers_overhang_without_blocking_and_pads_are_gone() -> void:
 func test_line_fire_stays_the_shipped_default() -> void:
 	var stage: DataTable = DataTable.open(PrologueGame.TABLE, PrologueGame.SCHEMA)
 	assert_eq(PrologueYard.from_stage(stage).dressing.id, "line_fire")
+
+
+func test_extra_stacks_sit_at_the_west_edge_with_their_own_art() -> void:
+	var found: Dictionary[String, String] = {}
+	for row: Dictionary in _row("raised_line")["layout"]["cover"]:
+		var id: String = row["id"]
+		if id.begins_with("stack_"):
+			found[id] = row["art"]
+	assert_eq(found.size(), 2)
+	assert_eq(found["stack_broken_sw"], ART + "pallet_broken.png")
+	assert_eq(found["stack_double_west"], ART + "pallet_double.png")
