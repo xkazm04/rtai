@@ -5,9 +5,9 @@ extends RefCounted
 const ID: StringName = &"sergeant_mulroney"
 
 
-static func enable() -> void:
+static func enable(subject: StringName = ID) -> void:
 	var table: DataTable = DataTable.open(CastCards.TABLE, CastCards.SCHEMA)
-	table.raw.archetypes.sergeant_mulroney.enabled = true
+	table.raw.archetypes[subject].enabled = true
 	CastCards._library = CastCards.from_table(table)
 
 

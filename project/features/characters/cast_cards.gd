@@ -62,9 +62,24 @@ static func _sheets(table: DataTable, row: Dictionary, pitch: String) -> Sheets:
 	var out: Sheets = Sheets.new()
 	var dir: String = RigHeadCard.ART_DIR + pitch + "/"
 	var walk: String = table.text(row, "armed_walk")
+	if walk == CastWardenAnchors.FOUR:
+		walk = CastWardenAnchors.WALK
 	out.walk = dir + (StreetMulroneyAnchors.WALK if walk == StreetMulroneyAnchors.FOUR else walk)
 	out.attack = dir + table.text(row, "attack")
 	out.stomp = dir + table.text(row, "stomp") if row.has("stomp") else ""
 	out.hit = dir + table.text(row, "hit")
 	out.fall = dir + table.text(row, "fall")
 	return out
+
+
+static func painted_ink(path: String) -> bool:
+	var file: String = path.get_file()
+	return file == StreetMulroneyHit.HIT or file.begins_with("appliance_warden_")
+
+
+static func anchored(path: String) -> bool:
+	return CastCardKinds.anchored(path)
+
+
+static func padded(path: String) -> bool:
+	return CastCardKinds.padded(path)

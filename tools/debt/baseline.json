@@ -155,7 +155,8 @@
         "2026-11-23: --cast-mulroney-trace for n26 cast (dev_loc 34336 -> 34342)",
         "2026-11-23: Paired full-yard stills and a five-second motion observer for n26 yard (dev_loc 33638 -> 33764)",
         "2026-11-23: Paired pilot captures retain exact underlay pixels and shot identities for n26 yard (dev_loc 33764 -> 33890)",
-        "2026-11-23: Capture both zooms on the live commander through the seed-seven rack for n26 yard (dev_loc 33890 -> 33900)"
+        "2026-11-23: Capture both zooms on the live commander through the seed-seven rack for n26 yard (dev_loc 33890 -> 33900)",
+        "2026-11-24: --cast-warden-trace flag and the warden dev scenes for n27 cast (dev_loc 35431 -> 35735)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -164,7 +165,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 692,
-        "project/dev/cast": 1331,
+        "project/dev/cast": 1635,
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
@@ -197,7 +198,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 35431
+      "total": 35735
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -469,7 +470,8 @@
         "2026-11-23: --skip-prologue for n25 path (files_past_soft_cap 67 -> 67)",
         "2026-11-23: merge of n24 and n25 lanes: launch_args.gd carries both runs' flags (221 lines) (files_past_soft_cap 67 -> 65)",
         "2026-11-23: --cast-patrol-feet for n26 cast (files_past_soft_cap 65 -> 65)",
-        "2026-11-23: --cast-mulroney-trace for n26 cast (files_past_soft_cap 65 -> 65)"
+        "2026-11-23: --cast-mulroney-trace for n26 cast (files_past_soft_cap 65 -> 65)",
+        "2026-11-24: --cast-warden-trace flag and the warden dev scenes for n27 cast (files_past_soft_cap 65 -> 65)"
       ],
       "files": {
         "project/boot/collect_call/collect_call_stage.gd": 266,
@@ -478,7 +480,7 @@
         "project/boot/collect_call/view/collect_call_view.gd": 238,
         "project/boot/collect_call/view/fx_view.gd": 271,
         "project/boot/collect_call/view/stage_view.gd": 219,
-        "project/boot/launch_args.gd": 223,
+        "project/boot/launch_args.gd": 224,
         "project/boot/quest1_game.gd": 273,
         "project/dev/arena/arena_game.gd": 299,
         "project/dev/audio/audio_riot.gd": 201,

@@ -110,6 +110,10 @@ def read_frame(frame, take):
             return {}
         sole, _ = marks(cell(path, rect), gait, take['pitch'], card['col'], card['row'])
         points = {str(card['row']//4): project(card, sole)}
+    elif path.endswith('/appliance_warden_planted8_armed_walk.png'):
+        from cast_warden_soles import sole
+        point = sole(cell(path, rect), take['pitch'], card['col'], card['row'])
+        points = {str(card['row']//4): project(card, point)}
     elif take['archetype'] == 'war_machine':
         points = pile_points(card, cell(path, rect), take['pitch'])
     else:

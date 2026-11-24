@@ -12,8 +12,9 @@ func _ready() -> void:
 	_ppm = OS.get_environment("GTAI_CAST_PPM").to_int()
 	_pitch = OS.get_environment("GTAI_CAST_PITCH").to_int()
 	_selection = OS.get_environment("GTAI_CAST_SUBJECT").split(",", false)
-	if OS.get_environment("GTAI_CAST_PREVIEW") == CastMulroneyPreview.ID:
-		CastMulroneyPreview.enable()
+	var preview: StringName = StringName(OS.get_environment("GTAI_CAST_PREVIEW"))
+	if preview in [CastMulroneyPreview.ID, FoeWardenCardView.ID]:
+		CastMulroneyPreview.enable(preview)
 	if not _out.is_absolute_path() or _ppm not in [32, 64] or _pitch not in [55, 70]:
 		_fail("set GTAI_CAST_OUT, GTAI_CAST_PPM and GTAI_CAST_PITCH")
 		return

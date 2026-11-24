@@ -27,6 +27,10 @@ func configure(path: String, drawings: int, running: bool) -> float:
 	half = drawings >> 1
 	flight = running
 	var low: bool = path.get_base_dir().get_file() == "p55"
+	if path.get_file() == CastWardenAnchors.EIGHT:
+		centre_stance = true
+		marks = CastWardenAnchors.WALK55 if low else CastWardenAnchors.WALK70
+		return CastWardenAnchors.STEP_M
 	if path.get_file() == StreetMulroneyAnchors.EIGHT:
 		centre_stance = true
 		marks = StreetMulroneyAnchors.WALK55 if low else StreetMulroneyAnchors.WALK70

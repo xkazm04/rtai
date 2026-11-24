@@ -91,6 +91,8 @@ static func attack_row(h: Fighter, arena: CombatArena) -> int:
 	var lock_ticks: int = arena.guard_tell.lock_ticks if arena.guard_tell != null else 0
 	var mind: SquadMind = arena.squad_ai.minds.get(h.id) if arena.squad_ai != null else null
 	var age: int = arena.tick - mind.agent.shot_tick if mind != null else -1
+	if h.archetype == FoeWardenCardView.ID:
+		return FoeWardenCardView.attack_row(h, mind, arena.tick)
 	if h.archetype == &"sergeant_mulroney":
 		if h.has_meta(PUMP):
 			return h.get_meta(PUMP)
@@ -154,6 +156,8 @@ func _near(rig: CutRig, pose: CastCardPose) -> void:
 	var fresh: bool = pose.bind(rig)
 	var path: String = pose.path_for(rig)
 	if not fresh and card.get_meta(StreetWalkerCards.ON, "") == path:
+		if path == pose.sheets.hit and CastCards.padded(path):
+			StreetWalkerCards.place(rig, card)
 		if path != pose.sheets.attack or card.frame_coords.y == pose.attack:
 			return
 	RigHeadCard.step(rig)
