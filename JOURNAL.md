@@ -79,3 +79,11 @@ NEXT (session 2, from ~04:15):
   key deploys which ghost, not which ghost the bot deploys. Salt 1 running (bash pid 75356), `DONE` at ~04:13.
   BUILDER RUNNING measure since 03:54 (pid 28812), waits for `medians/keys/DONE` before Godot.
 - 04:13 session 1 end. NEXT as written above (04:00).
+- 04:20 session 2 start. Builder call 2 `measure` still running (lock pid 28812 = node). No `NEED pressure` in the
+  four other n27 journals. MILESTONE item 1 after-keys column: salt 1 ended 04:11, exit 0; all 60 run results
+  (salt 0 and 1) byte-identical to main's: median death wave novice 5/5, average 6/5, expert 8.5/9 (salt 0/1).
+  `evidence/n27-pressure/medians/keys/{killers.md,floors.md}`, commit e200f9a98.
+- 04:22 after-melee arm: scratch tree moved to melee's 4a3ff4b04 (= a3b3f1466 + keys e1c4b73d9 + mastery 58a1b8d07,
+  1a6badfc8, 6522ce667; data `master_at` 30, `mastery_free` true, `per_boss_cut` 3). DECISION: use melee's own merge
+  commit instead of merging again here (it resolved the one `ghost_forms.json` doc conflict; melee's later commits are
+  films). Waiter `medians/wait_melee.sh` (bash pid 41748) starts `join.sh melee` when `godot-free.txt` appears.
