@@ -5,7 +5,10 @@ Sonnet 5.5 (`gtai-n27/tools/builder.mjs`). **No balance value changed** ("I play
 change in this branch is a dev take, a test, a tool or evidence. Masters: `C:\Users\kazda\kiro\gtai-masters\n27\pressure\`
 (`frames.json`, best first).
 
-Gate: PENDING (`node tools/gate/run.mjs --rev=HEAD`, line and `gate.json` path go here).
+Gate: `node tools/gate/run.mjs --rev=HEAD` on `c3ea5f79c` (the last code, test and evidence commit; later commits are
+JOURNAL/REPORT only), 07:33 to 08:04: `gate: PASS; build/gate/c3ea5f79ca4e/gate.json` (lint 19/19 over 2213 files;
+unit 4108 passed, 0 failed, 2 skipped; scenarios 68 passed; parity 1200 steps bit for bit, planted mutation caught at
+step 629; selftest; export audit 983 loaded, 0 failed). Reels not run.
 
 ## What works
 
