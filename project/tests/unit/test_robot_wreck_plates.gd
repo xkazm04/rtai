@@ -67,3 +67,32 @@ func test_a_rig_without_the_textures_keeps_the_borrowed_plates() -> void:
 	var body: Node2D = autofree(Node2D.new())
 	assert_eq(ElectricChassis.own_plates(body, _tex(Color.RED), _tex(Color.BLUE)).size(), 0)
 	assert_eq(ElectricChassis.own_plates(body, null, null).size(), 0)
+
+
+func _fitted(side: float) -> Array[Sprite2D]:
+	var chassis: Node2D = autofree(Node2D.new())
+	var plates: Array[Sprite2D] = []
+	for color: Color in [Color.RED, Color.BLUE]:
+		var spr: Sprite2D = Sprite2D.new()
+		spr.texture = _tex(color)
+		plates.append(spr)
+	ElectricChassis.fit_own(chassis, plates, 32.0, 0.4, side)
+	return plates
+
+
+func test_plates_are_sized_stacked_and_placed_on_the_chest() -> void:
+	var plates: Array[Sprite2D] = _fitted(1.0)
+	var core: Sprite2D = plates[0]
+	var cap: Sprite2D = plates[1]
+	assert_almost_eq(core.get_rect().size.x * core.scale.x, 0.91 * 32.0, 0.01, "chest plate width")
+	assert_almost_eq(cap.get_rect().size.x * cap.scale.x, 0.49 * 32.0, 0.01, "optic cap width")
+	assert_eq(core.z_index, 25)
+	assert_eq(cap.z_index, 26, "the cap over the chest plate")
+	assert_eq(core.position, Vector2.UP * 0.4 * 32.0)
+	assert_eq(cap.position, core.position + Vector2(0.04, -0.28) * 32.0, "the cap sits up-right")
+	assert_eq(core.get_parent(), cap.get_parent(), "both on the chassis")
+
+
+func test_the_cap_offset_mirrors_with_the_side() -> void:
+	var plates: Array[Sprite2D] = _fitted(-1.0)
+	assert_almost_eq(plates[1].position.x - plates[0].position.x, -0.04 * 32.0, 0.001)
