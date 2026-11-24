@@ -87,7 +87,18 @@ the weekly limit at 17:44, then in-session Sonnet subagents from the same brief 
   player takes a median 81 (novice) and 100 (average) HP in that wave. Expert deaths spread over waves 7 to 11 (sentry
   turret first, 4 of 10). This is the number for the owner's stomp play-test; no value was changed.
 
+### 6. blade6's third rifleman fires (`55f8d0778`, mutate note `8d18ddf1a`)
+- The sword take picked its shooter by `beat / gap_ticks` (36-tick beat, 18-tick gap), so only riflemen 1 and 2 ever
+  fired. It now rotates by rounds fired (44 / 43 / 43 rounds on blade6; `guard6` and `blade6_spaced` unchanged), pinned
+  per rifleman in `project/tests/unit/test_pressure_takes.gd`.
+- The return share is unchanged, seed by seed: 91 of 334 turned rounds hit, 27.2 % [22.7, 32.3] as in n27
+  (`evidence/n28/deflect/blade6_three.md`): Rivet stands and all three riflemen are at 6 m, so only the shooter changes.
+- Film `films/deflect_6m_32.mp4` re-taken (1920x1080, 60 fps, 39.67 s): three riflemen in shot on the sword side.
+  Mutate on `pressure_rifles.gd`: 3 of 7 killed before the time cap (the shooter line was not reached).
+
 ## What does not
+- No in-game electro chain hop still: no shipped take puts two targets in hop range; the chain pair is a dev view at
+  48 px/m (`stills/electro_chain_pair_48dev.png`).
 - The in-flight electro bolt (`arc` cell zigzag before the hop) is still the thick ink-rimmed cell; only the chain hop and
   the daze moved to live current (this run's pick named the hop and stun cells). Owner call 4.
 - Electric mutate 40 % (6/15): the hash constants and the fork-bend arithmetic are unpinned (look-only code).
@@ -123,7 +134,10 @@ the weekly limit at 17:44, then in-session Sonnet subagents from the same brief 
 - Root `JOURNAL.md` / `REPORT.md`: keep each lane's own on an add/add conflict.
 
 ## Next steps
-TODO
+- The owner plays the wave 5 stomp and gives the number (call 3); Tonnage's bar (call 1) is one data value.
+- An in-game electro chain take: two thugs within hop range of one electro bolt, filmed with and without `--electro-cells`.
+- Redraw the in-flight electro bolt in the halo look (call 4); repaint what the red audit lists, by owner pick (call 2).
+- Pin the electro hash and fork arithmetic (mutate 40 %) and finish the `pressure_rifles.gd` mutate run (3/7 partial).
 
 ## Builder ledger
 | call | how | minutes | cost | verdict |
@@ -139,7 +153,8 @@ TODO
 | c4b-troopers-before | subagent | 12 | not metered | bounced (temp worktree import segfault) |
 | c3b-electric | subagent | 42 | not metered | accepted |
 | c4c-troopers-before | subagent | 5 | not metered | accepted |
-| TODO | | | | |
+| c5b-medians | subagent | 1 | not metered | accepted |
+| c6b-rifleman-chain | subagent | 75 | not metered | accepted (part A; part B chain still not reached) |
 
 Brief differently: for a "before" arm whose difference is data, toggle the data on HEAD from the first brief instead
 of a temp worktree; ask for an in-game frame of the effect itself (the chain still fell back to a dev view because the
