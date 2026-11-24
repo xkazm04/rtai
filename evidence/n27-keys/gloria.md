@@ -87,3 +87,7 @@ p55 Gloria art still has the long gun (strips, `held_55`, `showcase/p55`); redo 
 at p55 she already walks on the bare stride; the new `bare_claw_p70` row value is p70 only (`held_only(weapon, art)`), p55 is unchanged.
 
 Commits: `17d909ebd` (part A), `d4fb0ccb3` (evidence), the fallback commit below.
+
+## Clip (owed from n27-03, filmed in n27-05)
+
+`C:/Users/kazda/kiro/gtai-masters/n27/keys/gloria_walk_run_32.mp4`: tilt 70, 32 px/m, 20 s. Eight 1 s walk beats (6.75 m/s, 8 directions, trigger held late), eight sprint beats (9.3 m/s), four standing-fire beats (no movement, aim right / down / left / up). ffprobe: `1920x1080, 60/1 fps, 1200 frames, duration 20.000000`. Looked at six frames (walk 2.5 s and 6.5 s, sprint 10 s and 14.5 s, standing fire 16.5 s and 19 s, crops at 100 %): the compact gun is on the palm in every one, no long-gun silhouette. Capture: the p55 `n27_clip` scene with `--beat/--dirs/--stand` flags, copied into `project/dev/motion` for the run and deleted (outside the repo: `gtai-art/rivet-n27/gloria-p55/capture/` is the base).
