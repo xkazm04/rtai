@@ -7,6 +7,11 @@ the weekly limit at 17:44, then in-session Sonnet subagents from the same brief 
 Final gate on the last code commit `8d18ddf1a` (22:05-22:35): `gate: PASS` (lint 19/19 checks; unit 4217 passed, 0 failed,
 2 skipped; scenarios 68 passed; parity bit for bit over 1200 steps, planted mutation caught at step 629; selftest;
 export-audit 995 loaded, 0 failed), `build/gate/8d18ddf1a9ba/gate.json`. Every later commit is JOURNAL/REPORT only (inert).
+Reels gate on `82f75890d` (code = `8d18ddf1a`, 22:36-~00:00): `gate: FAIL`, the only red step being `scenario-tests: TIMED OUT after
+1501 s,0 of 0 failed` (61 of 68 ran, all ok; `showcase_director` 454.5 s against 29.7 s at 22:35, after a
+`mem-budget: waiting ... (7314/6554 MB used)` before the scenario run: contention at the cap, not a failure); lint, unit
+4217/0, parity, selftest, export-audit and `reels: exit 0` PASS, `build/gate/82f75890d8b2/gate.json`. Not re-run: the
+session stops at 00:20 and a scenario run alone takes about 25 min.
 
 ## What works
 
@@ -114,6 +119,8 @@ export-audit 995 loaded, 0 failed), `build/gate/8d18ddf1a9ba/gate.json`. Every l
   estimate waited up to 30 min a launch; headless runs moved to `GTAI_GODOT_EST_MB=600`, renders 1000.
 - `builder.mjs` hit the weekly limit at 17:44 (every lane): two calls lost (c1 abandoned by me at 35 min while it waited
   on memory, c1b died at 38 min after finishing the probe). Fallback: in-session Sonnet subagents from the same briefs.
+- Reels gate scenario timeout (~25 min lost to the cap, 23:00-23:36): the machine sat at 7.3/6.5 GB budget; one slow
+  scenario (15x its quiet time) pushed the run past 1500 s. Re-run alone on a quiet machine before merge.
 - Temp worktree at main for the "before" arm (12 min): `--import` segfaulted after 4.5 min. Replaced by a data toggle on
   HEAD (journal 19:22).
 
@@ -140,6 +147,8 @@ export-audit 995 loaded, 0 failed), `build/gate/8d18ddf1a9ba/gate.json`. Every l
 - The owner plays the wave 5 stomp and gives the number (call 3); Tonnage's bar (call 1) is one data value.
 - An in-game electro chain take: two thugs within hop range of one electro bolt, filmed with and without `--electro-cells`.
 - Redraw the in-flight electro bolt in the halo look (call 4); repaint what the red audit lists, by owner pick (call 2).
+- Director: re-run `node tools/gate/run.mjs --rev=HEAD` (scenarios) on a quiet machine before merging: the reels gate
+  timed out on contention only.
 - Pin the electro hash and fork arithmetic (mutate 40 %) and finish the `pressure_rifles.gd` mutate run (3/7 partial).
 
 ## Builder ledger
