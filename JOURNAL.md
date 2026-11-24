@@ -139,3 +139,10 @@ NEXT (session 3, from ~05:42):
       scores, calls for the owner (sword 33-tick commitment beaten by 2 rounds 0.3 s apart; the stomp at wave 5).
       `node tools/evidence/cites.mjs REPORT.md`. Remove scratch worktree `gtai-n27/scratch/pressure-join` at the end
       (`git worktree remove`).
+- 05:38 call 3 first commit a382890e5 (05:33): pair damage split via the rocket's `landed` (burst inside Rivet's
+  radius = direct): pair_circle direct 9/80, splash 61/80 (he dies to blasts beside him, not rockets on his body);
+  pair_dash direct 1/248, splash 42/248, HP 97.6-100 at 10 s; 13 dashes = one per two-rocket volley (presses in
+  cooldown counted). Tests now assert hp_at_10s, the split summing to HP lost, the radius pull from both sides.
+  Diff read: dev/tests/tools/evidence + debt baseline. Films still to come.
+  BUILDER RUNNING films since 05:10 (pid 57264, hard stop 06:12). What-if waiter pid 36048 waiting on it.
+- 05:39 session 2 end. NEXT as written at 05:26.
