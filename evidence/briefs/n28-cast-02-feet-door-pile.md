@@ -1,9 +1,9 @@
 # Brief n28-cast-02-feet-door-pile: planted feet for the door carrier and the pile-driver (anchored placement, no new art)
 
 Lane `cast`, branch `n28-cast`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-prologue` (your cwd). Do NOT switch branches.
-**Hard stop HARDSTOP local** (check `date` often): at the hard stop commit what is green, report and END.
-**Start the door carrier's `git commit` by COMMIT1** (the pre-commit hook takes about 12 minutes here), then the pile-driver;
-start your last commit no later than LASTCOMMIT. Never leave finished work uncommitted.
+**Hard stop 19:20 local** (check `date` often): at the hard stop commit what is green, report and END.
+**Start the door carrier's `git commit` by 19:08** (the pre-commit hook takes about 12 minutes here), then the pile-driver;
+start your last commit no later than 19:08. Never leave finished work uncommitted.
 Godot only through `tools/dev/run.mjs`, the film tools, gate or mutate (they go through `tools/lib/godot.mjs`, which waits
 under the run's 8 GB RAM cap; `mem-budget: waiting` is not a hang).
 Before every Godot run: `export APPDATA=C:/Users/kazda/kiro/gtai-n28/appdata/cast` and
@@ -79,3 +79,14 @@ hook). Never fake a number or a frame: unmeasured is never zero.
 ## Report at the end (and END at the hard stop)
 Commits (sha + subject); per character STEP_M, drawings/s, sole/jump before and after, reversal jump; item 4's numbers per
 card and the verdict; what still fails and why; mutate score; quick gate line; evidence paths + ffprobe lines.
+
+## Added 18:15 (session 3)
+- **Never run `Godot_*.exe` directly** (not even `--import`): use `runGodot(['--import'])` through a small node one-liner or
+  `tools/dev/run.mjs`. `tools/godot/check.mjs` does NOT reimport art (the gunner call learned this: a stale import showed old art).
+- If the call is launched with less than 70 minutes to its hard stop, do steps 1, 3 (door carrier only), its film still and
+  commit; leave the pile-driver and item 4 for the next call and say so.
+- Fold takes into as few Godot launches as possible; the run shares an 8 GB RAM cap (`mem-budget: waiting` is not a hang).
+- **This call (launched 18:52, 28 minutes): door carrier only.** Measure its anchor table, wire it, `cast_feet.mjs` numbers
+  before/after for it, audit rows, tests, quick gate, commit by 19:08. No films, no pile-driver, no item 4 in this call.
+  If the wiring is not green by 19:05, commit nothing half-made: leave the work uncommitted, list the changed paths in your
+  report and END (the next call continues from them).
