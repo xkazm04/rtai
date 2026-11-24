@@ -32,3 +32,30 @@ func test_walk_sheet_names_resolve_to_shipped_art() -> void:
 		var dir: String = RigHeadCard.ART_DIR + pitch + "/"
 		assert_true(ResourceLoader.exists(dir + CastContractorAnchors.EIGHT), pitch)
 		assert_true(ResourceLoader.exists(dir + CastContractorAnchors.FOUR), pitch)
+
+
+func _on_cards() -> CastCards:
+	var table: DataTable = DataTable.open(CastCards.TABLE, CastCards.SCHEMA)
+	table.raw.archetypes.contractor.enabled = true
+	return CastCards.from_table(table)
+
+
+func test_row_on_draws_his_sheets_through_the_shared_card_path() -> void:
+	var cards: CastCards = _on_cards()
+	for pitch: String in ["p55", "p70"]:
+		var sheets: CastCards.Sheets = cards.lookup(ID, pitch)
+		assert_not_null(sheets, pitch)
+		var dir: String = RigHeadCard.ART_DIR + pitch + "/"
+		assert_eq(sheets.walk, dir + CastContractorAnchors.WALK)
+		assert_eq(sheets.attack, dir + "contractor_attack.png")
+		assert_eq(sheets.hit, dir + "contractor_cast_hit.png", "not quest 1's contractor_hit.png")
+		assert_eq(sheets.fall, dir + "contractor_cast_fall.png")
+
+
+func test_row_on_leaves_quest_1_sheets_and_other_rows_alone() -> void:
+	var cards: CastCards = _on_cards()
+	assert_not_null(cards.lookup(&"robot_gunner", "p70"))
+	assert_null(cards.lookup(&"patrol_cop", "p70"))
+	var sheets: CastCards.Sheets = cards.lookup(ID, "p70")
+	assert_ne(sheets.hit.get_file(), "contractor_hit.png")
+	assert_ne(sheets.fall.get_file(), "contractor_fall.png")
