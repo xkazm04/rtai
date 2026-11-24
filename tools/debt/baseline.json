@@ -155,7 +155,8 @@
         "2026-11-23: --cast-mulroney-trace for n26 cast (dev_loc 34336 -> 34342)",
         "2026-11-23: Paired full-yard stills and a five-second motion observer for n26 yard (dev_loc 33638 -> 33764)",
         "2026-11-23: Paired pilot captures retain exact underlay pixels and shot identities for n26 yard (dev_loc 33764 -> 33890)",
-        "2026-11-23: Capture both zooms on the live commander through the seed-seven rack for n26 yard (dev_loc 33890 -> 33900)"
+        "2026-11-23: Capture both zooms on the live commander through the seed-seven rack for n26 yard (dev_loc 33890 -> 33900)",
+        "2026-11-24: two pressure takes and the 6 m deflect take are dev code (dev_loc +265) for n27 pressure (dev_loc 35431 -> 35696)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -168,7 +169,7 @@
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
-        "project/dev/gauntlet": 1650,
+        "project/dev/gauntlet": 1915,
         "project/dev/ghost-forms": 1715,
         "project/dev/ghost-powers": 1396,
         "project/dev/guard": 397,
@@ -197,7 +198,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 35431
+      "total": 35696
     },
     "direct_cmdline_reads": {
       "accepted": [
