@@ -1,0 +1,21 @@
+node tools/mutate/mutate.mjs --file=project/features/souls/ghost_bond.gd --max=20 --lines=7,9,21,35-39,51-53 --tests=test_ghost_bond,test_ghost_bond_ring,test_ghost_boss_cut (HEAD b88b7278)
+Only 7 mutants were generated on those lines (the mutator found nothing to plant on the declarations and the master_at_for lines).
+
+mutate: 7/7 mutant(s); baseline run of test_ghost_bond, test_ghost_bond_ring, test_ghost_boss_cut
+mutate: baseline green in 169.5 s; per-mutant timeout 300 s
+mutate: [1/7] features/souls/ghost_bond.gd:35 arith  + -> -  killed  (30.3 s)
+mutate: [2/7] features/souls/ghost_bond.gd:52 boolean  and -> or  killed  (19.4 s)
+mutate: [3/7] features/souls/ghost_bond.gd:52 boolean  and -> or  killed  (19.0 s)
+mutate: [4/7] features/souls/ghost_bond.gd:52 cmp_flip  >= -> <  killed  (85.5 s)
+mutate: [5/7] features/souls/ghost_bond.gd:52 boundary  >= -> >  killed  (39.4 s)
+mutate: [6/7] features/souls/ghost_bond.gd:52 boolean  and -> or  killed  (42.5 s)
+mutate: [7/7] features/souls/ghost_bond.gd:52 boolean  not -> (removed)  killed  (54.1 s)
+mutate features/souls/ghost_bond.gd: 7 mutant(s), tests: test_ghost_bond, test_ghost_bond_ring, test_ghost_boss_cut
+  features/souls/ghost_bond.gd:35 arith  + -> -  killed
+  features/souls/ghost_bond.gd:52 boolean  and -> or  killed
+  features/souls/ghost_bond.gd:52 boolean  and -> or  killed
+  features/souls/ghost_bond.gd:52 cmp_flip  >= -> <  killed
+  features/souls/ghost_bond.gd:52 boundary  >= -> >  killed
+  features/souls/ghost_bond.gd:52 boolean  and -> or  killed
+  features/souls/ghost_bond.gd:52 boolean  not -> (removed)  killed
+score 100.0% = killed 7 / (killed 7 + survived 0); timeout 0, invalid 0; 572 s
