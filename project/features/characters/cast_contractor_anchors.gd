@@ -91,4 +91,4 @@ const WALK55: Array[Vector4] = [
 	Vector4(-11, 2.5, 0, -137.5),
 	Vector4(-9.5, -0.5, 0, -137.5),
 ]
-const WALK_STEP_M: float = 0.2202
+const WALK_STEP_M: float = 0.30

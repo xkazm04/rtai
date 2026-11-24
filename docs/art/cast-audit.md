@@ -471,3 +471,19 @@ Rivet, ink, live rim, shadow, tell / hit / fall films, before/after.
 - Not measured yet: `cast_feet.mjs` right / down-right at 70 and 55, stop / turn / reversal, size beside the patrol and
   Rivet, ink, live rim, shadow, tell / hit / fall films, before/after; there is no contractor card view yet (nothing draws
   the card), so the row cannot be turned on.
+
+**Contractor, n28: walk step sweep (part 2, row still off).** `WALK_STEP_M` swept by editing the constant and running
+`GTAI_CAST_FORCE=contractor node tools/art/cast_feet.mjs <dir> 32 contractor` (a dev-only env forces the row on in the
+feet tool, left uncommitted: it adds 5 lines to project/dev/cast and the debt ratchet refuses; `cast_feet.py` now knows the contractor sheet's sole windows). He walks at 3 m/s (enemies.json). Sole slip is
+0.001 px at every step (anchored carrier); the step only moves cadence and the body jump. Drawings/s is
+speed / step (observed in the take in brackets); jump is px at 32 px/m, bar <= 12; sole bar <= 2.
+
+| step m | drawings/s | 70 right jump | 70 down-right | 55 right | 55 down-right | verdict |
+|---|---|---|---|---|---|---|
+| 0.2202 | 13.62 (13.68) | 3.11 | 4.83 | 3.45 | 4.26 | cadence FAIL (> 10) |
+| 0.26 | 11.54 (11.56) | 2.64 | 7.75 | 3.12 | 5.22 | cadence FAIL (> 10) |
+| 0.30 | 10.00 (9.91 right, 10.00 down-right) | 3.73 | 9.04 | 5.09 | 7.94 | PASS |
+
+Chosen: 0.30, the smallest swept step at or under 10 drawings/s. `cast_foe_soles.py contractor` regenerates the table with
+the measured 0.2202: re-apply 0.30 after a regeneration. Not measured in this call: stop, turn and reversal
+(`test_cast_walk_reversal.gd` extension), and a slower strafing speed in a fight.
