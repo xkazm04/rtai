@@ -15,6 +15,7 @@ import { join, resolve, sep } from 'node:path';
 import { ROOT } from './repo.mjs';
 import { isStale } from './class_cache.mjs';
 import { register } from './run_ledger.mjs';
+import { waitForBudget, godotEstMB } from './mem_budget.mjs';
 
 export const SCRIPT_ERROR = /SCRIPT ERROR|Parse Error|Compile Error|Failed to load script/;
 export const HEADLESS_TIMEOUT_MS = 10 * 60 * 1000;
@@ -224,6 +225,9 @@ export async function runGodot(args, { timeoutMs = HEADLESS_TIMEOUT_MS, cwd = RO
   if (!g.ok) return { status: -1, out: g.message, timedOut: false, durationMs: 0, notFound: true, name };
   if (ensure) await ensureImport({ projectDir: join(cwd, 'project') });
   const full = [...(headless ? ['--headless'] : []), '--path', 'project', ...args];
+  // Soft RAM budget (mem_budget.mjs): a no-op unless GTAI_CAP_STATUS names a live cap status file.
+  // The nested --import waits too: nothing holds a lock across it, it only delays its caller.
+  await waitForBudget({ estMB: godotEstMB(), label: `godot ${args.join(' ')}`.slice(0, 120) });
   const entry = register({ kind: name ?? kindOf(args), root: cwd }); // machine-wide run ledger (run_ledger.mjs)
   try {
     return { ...(await runProcess(g.bin, full, { cwd, timeoutMs, env, stopOn, onLine, onSpawn: (pid) => entry.setChild(pid) })), name };

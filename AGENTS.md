@@ -50,7 +50,7 @@ through `TestTmp.dir("<sub>")` (`user://test_tmp/<worktree>/<pid>/`); lint bans 
 
 Install the pre-commit hook once per clone: `git config core.hooksPath .githooks`.
 
-Godot launcher extras (`tools/lib/godot.mjs`): every `runGodot` first runs `--import` when the class
+Godot launcher extras (`tools/lib/godot.mjs`): when `GTAI_CAP_STATUS` names a live RAM-cap status file, every `runGodot` first waits until its `GTAI_GODOT_EST_MB` (1200) fits under `GTAI_MEM_BUDGET_MB` (80 % of the cap), giving up after `GTAI_MEM_WAIT_MAX_S` (1800; `tools/lib/mem_budget.mjs`); every `runGodot` first runs `--import` when the class
 cache is stale (`tools/lib/class_cache.mjs`; once per process, logged, not for `--import` itself), so a
 merge no longer leaves scenarios/parity/bench on a stale cache. `node tools/godot/check.mjs <res://path|file>...`
 is the safe parse check (`--check-only` for `.gd`, a throwaway load for `.tscn/.tres`; 60 s tree-kill;

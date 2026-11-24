@@ -391,6 +391,10 @@ and asks you to check the dependencies one by one or run the unit tests that loa
 an unchanged file the tests load fine). A real FAIL in the same run still exits 1.
 **Never a pass:** that cascade; a run killed at its 60 s budget.
 
+## A soft memory budget before every Godot launch (`tools/lib/mem_budget.mjs`)
+
+When a wrapper caps the whole run's RAM (a Job Object that rewrites a status JSON every 5 s), set `GTAI_CAP_STATUS` to that file and `runGodot` waits before spawning until `usedMB + GTAI_GODOT_EST_MB` (default 1200) fits `GTAI_MEM_BUDGET_MB` (default 80 % of `capMB`). It logs one `mem-budget: waiting for ...` line, polls every 10 s, and after `GTAI_MEM_WAIT_MAX_S` (default 1800) logs `mem-budget: waited <n> s, starting anyway` and runs. An unset, missing, finished (`done`) or older-than-60-s status file means no cap: no wait. The class-cache `--import` waits too.
+
 ## tools/gate/run.mjs: the gates on a snapshot, so you can keep editing
 
 ```
