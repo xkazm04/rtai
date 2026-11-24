@@ -117,3 +117,25 @@ NEXT (session 2, from ~04:15):
   worktree at 4a3ff4b04, the branch never changes) so the owner reads a number per proposal, not a proposal alone.
   `medians/whatif.sh` (bash pid 36048) waits for call 3 to free Godot (`godot-free-3.txt` or pid 57264 gone), then
   repair arm, budget arm, compare, killers -> `medians/whatif/DONE` (~06:35).
+- 05:27 call 3 working (uncommitted: pressure_pair direct/splash split via the rocket's `landed` signal, film caption,
+  seeds text, test, films tool). Diff read so far: dev and tests only.
+NEXT (session 3, from ~05:42):
+  (1) `gtai-n27/logs/pressure/builder.lock` + last `builder-calls.jsonl` line: call 3 `films` (pid 57264, hard stop
+      06:12). Wait; then review: commits (dev/tests/tools only), new pair table in `takes/seeds.md` (direct/splash/HP
+      lost, dash-count reason), ffprobe both masters (1080p 60/1, 15-40 s, deflect_6m_32 no longer 108 MB), LOOK at
+      every still in `gtai-masters/n27/pressure/frames.json` (8-15 rows, best first), mutate `pressure_pair.gd` score
+      vs 6/12 (`mutate/scores.md` 3b). Log `BUILDER films <min> <$> <verdict>`.
+  (2) What-if arms: `medians/whatif/progress.txt`, `DONE` (~06:35; bash pid 36048 starts when call 3 frees Godot).
+      Commit `medians/whatif/{progress.txt,DONE,killers.md,compare.md,compare.html,repair/,budget/}` (+ *.out.txt).
+      If ablate failed (see `whatif/repair.out.txt`), say so plainly; do not fake.
+  (3) Optional call 4 (only if it ends by 07:50): weakest item. Candidate: a `blade6` cadence arm with pairs >= 33 ticks
+      apart as a second row (NOT a retune: a measured contrast showing the sword's single-swing commitment), filmed;
+      or a 64 px/m clip of the dash crossing. Keep Godot free for the gate from 08:00.
+  (4) Gate `node tools/gate/run.mjs --rev=HEAD` started by 08:15 with no builder and no what-if running.
+  (5) REPORT.md: medians table three columns (main / after keys / after melee, salt 0 and 1, floors), killer table per
+      profile (novice: wave 5 war machine stomp 16/20; levers: stomp damage 48, splash 48 in 3.5 m, cooldown 1.2 s,
+      `alt_telegraph_s` 0.8; rivet repair 10/s after 3 s), the two tuner proposals with what-if numbers, the takes
+      (pooled 6 m shares inside the curve intervals; pair circle down 10/10 at ~7.5 s; dash alive 10/10), mutate
+      scores, calls for the owner (sword 33-tick commitment beaten by 2 rounds 0.3 s apart; the stomp at wave 5).
+      `node tools/evidence/cites.mjs REPORT.md`. Remove scratch worktree `gtai-n27/scratch/pressure-join` at the end
+      (`git worktree remove`).
