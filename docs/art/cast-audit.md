@@ -484,6 +484,23 @@ speed / step (observed in the take in brackets); jump is px at 32 px/m, bar <= 1
 | 0.26 | 11.54 (11.56) | 2.64 | 7.75 | 3.12 | 5.22 | cadence FAIL (> 10) |
 | 0.30 | 10.00 (9.91 right, 10.00 down-right) | 3.73 | 9.04 | 5.09 | 7.94 | PASS |
 
-Chosen: 0.30, the smallest swept step at or under 10 drawings/s. `cast_foe_soles.py contractor` regenerates the table with
-the measured 0.2202: re-apply 0.30 after a regeneration. Not measured in this call: stop, turn and reversal
-(`test_cast_walk_reversal.gd` extension), and a slower strafing speed in a fight.
+Chosen: 0.30, the smallest swept step at or under 10 drawings/s. `cast_foe_soles.py contractor` now writes 0.30 itself
+(`STEP_OVERRIDE` in the tool; the measured 0.2202 is only printed): regenerating `CastContractorAnchors` leaves
+`git diff` on the anchors file empty (checked, and regenerating the gunner's file is empty too).
+
+**Contractor, n28: stop, turn, reversal (brief 08 part B, row still off).** Scene `project/dev/cast/cast_contractor_turns.gd`
+(the gunner's `cast_gunner_turns` with his row forced on by `GTAI_CAST_FORCE=contractor`, 3.0 m/s, 30 walk-in ticks, then a
+stop / a 90-degree turn over 20 ticks / a reversal: aim one way, step the other), run by `tools/art/cast_contractor_turns.mjs`,
+analysed by `tools/art/cast_contractor_transitions.py` from the stored tracks. 32 px/m, screen px between consecutive
+rendered frames (bar 12); the stop row also gives the travel of the support sole of the drawing held after the stop (bar 2).
+Reversal is judged by the number only (no backwards drawing step larger than the walk's own step; the largest jump is the
+steady drawing-change step), not by a film.
+
+| take | 70 right | 70 down-right | 55 right | 55 down-right | verdict |
+|---|---|---|---|---|---|
+| stop, body jump | 3.73 | 7.97 | 5.09 | 6.32 | PASS |
+| stop, support sole travel after the stop (held drawing row 1) | 0.00 | 0.00 | 0.00 | 0.00 | PASS (bar 2) |
+| turn, body jump | 9.28 | 9.06 | 9.06 | 8.14 | PASS |
+| reversal, body jump | 9.60 | 9.39 | 9.60 | 9.01 | PASS |
+
+The strafing speed in a fight was not measured separately (the fight film moves him at the sim's own speed).

@@ -28,6 +28,9 @@ SHEETS = {
     'contractor': ('CastContractorAnchors', 'cast_contractor_anchors.gd',
                    'contractor_planted8_armed_walk.png', (1.0, 1.0), 'contractor_armed_walk.png'),
 }
+# Sheets whose measured step is replaced by a chosen one (m per drawing): the contractor's measured
+# 0.2202 is 13.6 drawings/s at his 3 m/s, over the 5 to 10 bar; 0.30 is the smallest swept step at 10.
+STEP_OVERRIDE = {'contractor': 0.30}
 FULL = (0, 100)
 # (sheet, pitch, column, row): (lo, hi). Filled in from the overlay review.
 OVERRIDES = {
@@ -135,7 +138,8 @@ def generate(names, class_name, filename):
             for start in (0, 4):
                 steps.append((offsets[start + span] - offsets[start]) * height * fill / 192 / span)
         print(name, 'metres per drawing', steps)
-        lines.append(f'const {const}_STEP_M: float = {abs(mean(steps)):.4f}')
+        text = f'{STEP_OVERRIDE[name]:.2f}' if name in STEP_OVERRIDE else f'{abs(mean(steps)):.4f}'
+        lines.append(f'const {const}_STEP_M: float = {text}')
     (ROOT / 'project/features/characters' / filename).write_text(
         '\n'.join(lines) + '\n', encoding='utf-8', newline='\n')
 
