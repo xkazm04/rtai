@@ -24,7 +24,7 @@ Reels: `node tools/gate/run.mjs --rev=5519b3e11 --reels` -> `PASS reels: exit 0`
 - The frame cost was measured on a debug build: the release export did not fit the time.
 - Two front stills (`front_32`, `mouth_64`) came from a dev capture edit that was reverted, because it tripped the debt ratchet. The film call re-rendered `plate_vs_game_front_{32,64}ppm.png` at HEAD with the committed tool; `hall_mouth_64ppm.png` is still the old render.
 - `tools/art/prologue_yard_film.mjs --movie` refuses at the project's 1280x800 size, so the clips were filmed through a `build/prologue-film` override (not committed).
-- Not filmed: `floor_pass4_64ppm.png` and a fresh 64 px/m belt still. The belt still in masters is from the belt-place call.
+- The two missing 64 px/m stills came last (`252f98fff`: `evidence/yard28/floor_pass4_64ppm.png`, `evidence/yard28/belt_pass4_64ppm.png`, also in masters, `frames.json` 15 entries). I looked at them. Rivet stands beside the arched belt with fridges and washers that read at about his size, the cream reads against the floor by outline and shading, and the only red is blood. The floor still has no lit pool in frame.
 - No mutate score for the code changes (`ground_impression` in `PrologueYardDressing`, the floor glow feather). They were skipped for time, so there is no "planted faults caught" claim.
 - Brief item 5 was not reached: the gate lamp pool and the command-view render-hash test.
 - **Not filmed: the whole prologue from the menu's Start into quest 1's first line on the new default.** The brief for it is ready (`evidence/briefs/n28-06-prologue-film.md`), but the gate fix and re-gate took the last hour (one Godot per lane). The five-seed pilot on arched_line finishes in raised_line's ticks, so the handover should not have moved, but this is unfilmed and unmeasured tonight.
@@ -52,10 +52,10 @@ Reels: `node tools/gate/run.mjs --rev=5519b3e11 --reels` -> `PASS reels: exit 0`
 4. Fix `prologue_yard_film.mjs --movie` for the 1080p capture profile, so films come from a committed tool.
 5. Mutate `prologue_yard_dressing.gd` (impression) and `prologue_floor_glow.gd` (skipped tonight for time).
 6. The gate lamp pool and the command-view render-hash test (brief item 5, not reached).
-7. Film the whole prologue on arched_line (`evidence/briefs/n28-06-prologue-film.md`, ready to run), plus `floor_pass4_64ppm.png` and a fresh `belt_pass4_64ppm.png`.
+7. Film the whole prologue on arched_line (`evidence/briefs/n28-06-prologue-film.md`, ready to run).
 
 ## Builder ledger
-17 calls. One ran through `builder.mjs` (dark-floor: 43 min, $2.90, abandoned-partial when the weekly limit hit). The other 16 were in-session Sonnet subagents, so no dollar figure is reported for them (token counts are in JOURNAL).
+18 calls. One ran through `builder.mjs` (dark-floor: 43 min, $2.90, abandoned-partial when the weekly limit hit). The other 17 were in-session Sonnet subagents, so no dollar figure is reported for them (token counts are in JOURNAL).
 
 | Call | Min | Result |
 |---|---|---|
@@ -75,5 +75,6 @@ Reels: `node tools/gate/run.mjs --rev=5519b3e11 --reels` -> `PASS reels: exit 0`
 | default-switch | 9 | accepted (missed one test, caught by the gate) |
 | lights-test | 31 | bounced: the edit was verified, but the commit stalled on mem-budget after the reels |
 | lights-commit | 1 | accepted `cabb1ece8` |
+| stills | 2 | accepted `252f98fff` (evidence only, after the gate) |
 
 What I would brief differently: I would measure what greys the floor (the world print over the ground) before any floor art. Five floor calls chased tint, art, lift and chroma before the 19:52 finding pointed at the print. I would also put "re-import every changed png before you render" in every art brief from the first call. And a default-switch brief should say "run every test that names the yard's tables" (`node tools/tests/test_map.mjs project/data/tables/prologue_stage.json`), not grep for the old id.
