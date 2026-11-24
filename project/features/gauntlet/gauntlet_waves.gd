@@ -179,9 +179,11 @@ func choose(index: int) -> bool:
 	var id: StringName = pending[index]
 	if not _bonuses.apply(draw.rows[id]):
 		return false
-	_run.picks.append({"wave": pick_wave(), "offered": pending, "taken": id})
-	pending = []
-	_next_offer()
+	pending = draw.take(pending, id, _run.picks, pick_wave(), _bonuses.mastery_free())
+	if pending.is_empty():
+		_next_offer()
+	elif manual_picks:
+		pick_offered.emit(pending)
 	return true
 
 

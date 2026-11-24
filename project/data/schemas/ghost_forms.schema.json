@@ -12,6 +12,9 @@
           "exclusiveMinimum": 0,
           "type": "number"
         },
+        "mastery_free": {
+          "type": "boolean"
+        },
         "per_boss_cut": {
           "minimum": 0,
           "type": "number"
@@ -28,6 +31,7 @@
       "required": [
         "enabled",
         "master_at",
+        "mastery_free",
         "per_boss_cut",
         "per_kill",
         "per_stun"

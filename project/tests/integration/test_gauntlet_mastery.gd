@@ -20,6 +20,7 @@ func before_each() -> void:
 	waves = GauntletWaves.attach(session, run, picker, 3)
 	waves.manual_picks = true
 	forms = session.pilot.ghosts.forms
+	forms.table.mastery_free = false
 	assert_true(session.bonuses.apply(waves.draw.rows[&"ghost_ohm"]))
 
 
@@ -103,3 +104,71 @@ func test_declined_masteries_return_and_new_offers_have_priority() -> void:
 	assert_has(next, &"master_ohm")
 	assert_has(next, &"master_tonnage")
 	assert_true(next.has(&"master_dent") or next.has(&"master_kerf"))
+
+
+func _rest(ids: Array[StringName]) -> void:
+	for id: StringName in ids:
+		if id != &"ohm":
+			assert_true(session.bonuses.apply(waves.draw.rows["ghost_" + String(id)]))
+	_enter()
+	for id: StringName in ids:
+		forms.bond.record(id, 30, 0)
+	_clear()
+
+
+func test_paid_mastery_ends_the_rest_when_mastery_free_is_off() -> void:
+	_rest([&"ohm"])
+	var offered: Array[StringName] = waves.pending.duplicate()
+	assert_has(offered, &"master_ohm")
+	assert_true(waves.choose(offered.find(&"master_ohm")))
+	assert_true(waves.pending.is_empty())
+	assert_eq(run.picks.size(), 1)
+
+
+func test_free_mastery_leaves_the_rest_open_for_one_normal_pick() -> void:
+	forms.table.mastery_free = true
+	_rest([&"ohm"])
+	var offered: Array[StringName] = waves.pending.duplicate()
+	assert_eq(offered.size(), 3)
+	assert_true(waves.choose(offered.find(&"master_ohm")))
+	assert_true(forms.bond.mastered(&"ohm"))
+	assert_eq(waves.pending.size(), 2)
+	assert_false(waves.pending.has(&"master_ohm"))
+	assert_eq(run.picks.size(), 1)
+	var first: StringName = run.picks[0]["taken"]
+	assert_eq(first, &"master_ohm")
+	var normal: StringName = waves.pending[1]
+	assert_true(waves.choose(1))
+	assert_true(waves.pending.is_empty())
+	assert_eq(run.picks.size(), 2)
+	var second: StringName = run.picks[1]["taken"]
+	var shown: Array[StringName] = run.picks[1]["offered"]
+	assert_eq(second, normal)
+	assert_eq(shown, offered)
+	assert_false(waves.pending.has(&"master_ohm"))
+
+
+func test_two_free_masteries_then_one_normal_card() -> void:
+	forms.table.mastery_free = true
+	_rest([&"ohm", &"kerf"])
+	assert_has(waves.pending, &"master_ohm")
+	assert_has(waves.pending, &"master_kerf")
+	assert_true(waves.choose(waves.pending.find(&"master_ohm")))
+	assert_true(waves.choose(waves.pending.find(&"master_kerf")))
+	assert_eq(waves.pending.size(), 1)
+	assert_true(forms.bond.mastered(&"ohm") and forms.bond.mastered(&"kerf"))
+	assert_true(waves.choose(0))
+	assert_true(waves.pending.is_empty())
+	assert_eq(run.picks.size(), 3)
+
+
+func test_a_rest_of_only_masteries_ends_after_they_are_taken() -> void:
+	forms.table.mastery_free = true
+	var ids: Array[StringName] = [&"dent", &"kerf", &"tonnage"]
+	_rest(ids)
+	assert_eq(waves.pending.size(), 3)
+	for i: int in range(3):
+		assert_true(String(waves.pending[0]).begins_with("master_"))
+		assert_true(waves.choose(0))
+	assert_true(waves.pending.is_empty())
+	assert_eq(run.picks.size(), 3)
