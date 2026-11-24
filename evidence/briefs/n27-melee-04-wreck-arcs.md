@@ -94,5 +94,9 @@ Commits; which code drew the glyphs; per robot what the wreck now uses; stills/f
 lines; mutate score; what failed or was left.
 
 ## Times (wall clock)
-Launched about LAUNCH. **Commit C by COMMIT1**, B by COMMIT2. **Hard stop HARDSTOP: report and END.** A wrecks part
+Launched about 05:45. **Commit C by 06:10**, B by 06:30. **Hard stop 06:55: report and END.** A wrecks part
 not committed by then: leave it uncommitted, say so.
+
+## Known, not yours
+`test_ghost_form_hud.test_deploy_hint_follows_the_rebound_key` fails on this branch (expects 249.2, gets 120). The keys lane
+fixed it on its branch (`3f2bb5c2e`); it clears at the Director's merge. Do not touch it; ignore it in `--changed` runs.
