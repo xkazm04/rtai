@@ -65,3 +65,22 @@ Nothing beats the committed ffe0c8; arched_line left unchanged. Untried: a stron
 BELT READABILITY (arched_line, scale 0.011 m/px, dusk frames, evidence/yard28/appliance_delta.py, 18 exposures)
 cream appliances vs floor: delta 0.017 (lum 0.313 vs 0.329), dE2000 8.0 -> bar >= 0.30 NOT MET (cream and floor are the same lightness at dusk).
 beam + arches (MASK=rust) vs floor: delta 0.206 (lum 0.124 vs 0.329), dE2000 26.9.
+
+
+ART SWEEP (19:09-19:26, real renders, same tools as the REAL RENDER rows: evidence/yard28/art_sweep.sh = art_row.py temp row edit + stills --dusk day/dusk + sweep_measure.py + rivet_de.py + appliance_delta.py; seed 7, tilt 70, 32 px/m)
+New art: arched_line/floor_tile.png = n28 brown image edit (tools/art/prologue_yard_floor.py: seamless half-roll cross-fade, 768 px; mean L* 55.8 C* 29.8 hue 65 as art).
+Wash = the stains layer's wash colour+alpha, stains = the stains layer's tint (alpha 58 hex today). Floor = between pools.
+| arm | tile tint / stains tint / wash | floor L*/C*/hue (52-62) | pool gain dL* (>=4) | Rivet delta (>=0.19) | Rivet dE2000 (>=15) | patrol blue out/in (>=65 %) | rifle (>=95) | pellet (>=90) | appliance delta (info) |
+|---|---|---|---|---|---|---|---|---|---|
+| a | ffffffff / ffffff58 / f6dca880 | 44.3 / 6.8 / 59 | +9.2 | 0.115 FAIL | 20.3 | 81.1 / 100.1 | 99.3 | 94.8 | 0.120 |
+| b | ffffffff / ffffff58 / c89a6c80 | 38.0 / 4.8 / 41 FAIL | +11.0 | 0.034 FAIL | 13.3 FAIL | 80.7 / 101.4 | 98.3 | 93.4 | 0.180 |
+| c | fff0e0ff / ffffff58 / c89a6c80 | 38.0 / 4.8 / 41 FAIL | +11.0 | 0.034 FAIL | 13.3 FAIL | same as b (the tint step changed nothing measurable) | | | 0.180 |
+| d* | ffffffff / ffffffb0 / f6dca880 | 43.0 / 6.4 / 56 | +9.7 | 0.122 FAIL | 20.8 | 81.2 / 99.7 | 99.1 | 94.9 | 0.124 |
+| e | ffffffff / ffffff2c / f6dca880 (the brief's arm d) | 45.6 / 7.1 / 62 FAIL | +9.0 | 0.119 FAIL | 20.8 | 81.1 / 100.3 | 99.7 | 94.6 | 0.115 |
+d* = an extra arm (stains lightened), run before the brief's halved-stains arm because a) already showed the floor too DARK; the brief's arm d is row e (5 arms in all, one over the cap, both lighter-stains and darker-stains directions were open).
+Hue 55 to 75: a, d*, e pass (59, 56, 62); b/c fail (41). Floor C* is 4.8-7.1 in every arm, not 18-25: the art's C* 29.8 is flattened to ~7 by the dusk grade (the tile is 38 L* darker-pulled and grey-pulled too),
+and the stains layer (dark grey blotches) sits over the brown. Lamp pool core C* is 17.8-19.5 (hue 65-68), so the brown shows in the pools only.
+Bars that stop every arm: floor L* (38-46, bar 52-62) and Rivet luminance delta (0.03-0.12, bar 0.19) - the brown tile is darker under the grade than the committed ffe0c8 floor (L* 56.4, Rivet 0.215). Arm e is the closest (highest floor L* and C*), still failing two bars.
+WINNER: none. No arm passes every bar; per the brief arched_line's ground[0] stays on raised_line/floor_tile.png (tint ffe0c8ff, row unchanged). The tile, cut tool and test ship unreferenced.
+Next lever (not tried, needs a lighter art or a grade change): lighten the art itself by about 12 L* (so it lands at L* 52-56 after the grade), or drop the grey stains layer on this row.
+Stills: floor_art_mid_32ppm.png (arm e, t3000) and plate_vs_game_mid_32ppm.png (arm e, NOT the committed row). Seen: no tiling seam and no obvious 8 m repeat; the floor reads taupe grey-brown under dark grey stain blotches, warmer than raised_line but not the plate's mid-brown.
