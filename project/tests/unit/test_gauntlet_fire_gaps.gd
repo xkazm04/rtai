@@ -63,15 +63,6 @@ func test_hit_flights_overlap_once_and_misses_contribute_no_ticks() -> void:
 
 func test_rocket_uses_a_real_lock_and_circle_preserves_sprint_speed() -> void:
 	var arena: FireGapArena = _trial(&"rocket_trooper", "circle")
-	var still: FireGapArena = _trial(&"rocket_trooper", "standing")
-	# A 1.4 s rest plus a 0.8 s tell fits 13 full cycles in 30 s, 14 launches with
-	# the first tell already starting. Relocation may cost one launch.
-	for trial: FireGapArena in [still, arena]:
-		assert_between(trial.fire_ticks.size(), 13, 14)
-	# At 13 m/s all 14 hit the stationary target. The same locked blasts miss this
-	# uninterrupted 9.3 m/s arc at 10 m, though one edge splash would be acceptable.
-	assert_eq(still.hit_ticks.size(), still.fire_ticks.size())
-	assert_lte(arena.hit_ticks.size(), 1)
 	var parts: Dictionary[String, int] = arena.result().gap_parts_ticks
 	assert_gt(parts.tell, 0)
 	assert_gt(parts.aim_lock, 0)
@@ -110,3 +101,42 @@ func test_patrol_rifle_hits_a_circling_runner_with_lead_enabled() -> void:
 			assert_lte(tick - last_hit, max_gap)
 			last_hit = tick
 	assert_lte(FireGapArena.TICKS - last_hit, max_gap)
+
+
+func test_orbit_lead_preserves_signed_bearing_and_range_rate() -> void:
+	var origin: Vector2 = Vector2(4, -3)
+	# One sample crosses the angle seam clockwise while closing 0.1 m. The half lead over
+	# twelve ticks must advance six sample intervals, including the change in distance.
+	var previous: Vector2 = origin + Vector2.from_angle(-PI + 0.02) * 10.1
+	var target: Vector2 = origin + Vector2.from_angle(PI - 0.01) * 10.0
+	var horizon: float = 12 * SimClock.TICK_DT
+	var predicted: Vector2 = RocketLead.orbit(origin, previous, target, horizon, 0.5)
+	var expected: Vector2 = origin + Vector2.from_angle(PI - 0.19) * 9.4
+	assert_almost_eq(predicted, expected, Vector2.ONE * 0.0001)
+	assert_almost_eq(
+		RocketLead.orbit(origin, previous, target, horizon, 0.0), target, Vector2.ONE * 0.00001
+	)
+	# A target closing faster than the prediction horizon ends at the shooter, never behind it.
+	assert_eq(
+		RocketLead.orbit(origin, origin + Vector2(2, 0), origin + Vector2.RIGHT, horizon, 1.0),
+		origin
+	)
+
+
+func test_orbit_rocket_hits_circle_and_misses_every_post_lock_dash() -> void:
+	var arena: FireGapArena = _trial(&"rocket_trooper", "circle")
+	var still: FireGapArena = _trial(&"rocket_trooper", "standing")
+	var dodge: FireGapArena = _trial(&"rocket_trooper", "circle_dash")
+	# The shipped rest and tell gave 16 launches in 30 seconds. Allow one cycle for relocation.
+	for trial: FireGapArena in [arena, still, dodge]:
+		assert_between(trial.fire_ticks.size(), 15, 16)
+	# All 16 landed on the steady circle in each measured seed. Allow two edge misses.
+	assert_gte(arena.hit_ticks.size(), 14)
+	# A stationary target takes every launch.
+	assert_eq(still.hit_ticks.size(), still.fire_ticks.size())
+	# One shipped dash per lock must clear every blast, including splash.
+	assert_eq(dodge.hit_ticks.size(), 0)
+	assert_eq(dodge.dash_ticks.size(), dodge.fire_ticks.size())
+	# Reaction begins 15 ticks after tracking freezes on each launch.
+	for i: int in dodge.dash_ticks.size():
+		assert_eq(dodge.dash_ticks[i], dodge.lock_ticks[i] + 15)

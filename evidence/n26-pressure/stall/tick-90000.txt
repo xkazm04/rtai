@@ -1,0 +1,46 @@
+[INFO] probe: tick 90000 rivet (1266.519, 7.6) hp 137.5 facing (0.427555, -0.903989) form base settled true intent_move (0.0, 0.0) action ADVANCE target 727 plan NONE recovering false bounds [P: (1204.0, -5.55), S: (63.40002, 11.1)]
+[INFO] probe: ranged 2/2 melee 0/2 target (1266.519, 7.6) backwall 1204.0
+[INFO] probe: blinks 125 trail [(1225.9, 2.509196), (1245.494, -5.4), (1256.203, -3.010998), (1255.326, -0.186581)] -> [(1226.312, -1.702122), (1252.334, -2.124559), (1251.333, -1.716332), (1254.27, 7.6)] ticks [74977, 76964, 77051, 77115] cuts [(1226.18, -0.358524), (1251.116, -2.707621), (1252.65, -2.012024), (1254.471, 5.486659)]
+[INFO] probe: hurt_tick 77107 shots 3059 carry flamethrower brain travel ADVANCE buttons 0 radius 0.6
+[INFO] probe: near Rivet box [P: (1236.0, 6.0), S: (32.0, 1.0)]
+[INFO] probe: near Rivet box [P: (1268.0, 6.0), S: (32.0, 1.0)]
+[INFO] probe: id 724 patrol_cop pos (1267.218, 0.332291) hp 1.0 state COVER token false melee false age 51 dist 7.301 sees false goal (1267.122, 0.348363) stunned_until 0 shot -1000
+[INFO] probe: id 725 rocket_trooper pos (1254.168, 5.547551) hp 1.0 state ENGAGE token false melee false age 0 dist 12.520 sees false goal (1264.965, 7.6) stunned_until 0 shot -1000
+[INFO] probe: id 726 contractor pos (1267.218, 0.332291) hp 1.0 state COVER token false melee false age 51 dist 7.301 sees false goal (1267.122, 0.348363) stunned_until 0 shot -1000
+[INFO] probe: id 727 robot_gunner pos (1267.4, 5.55) hp 4.0 state ENGAGE token false melee false age 0 dist 2.231 sees false goal (1265.948, 7.6) stunned_until 0 shot -1000
+[INFO] probe: id 731 sentry_turret pos (1256.06, -4.054018) hp 5.25 state ENGAGE token false melee false age 0 dist 15.659 sees false goal (1256.06, -4.054018) stunned_until 0 shot -1000
+[INFO] probe: id 733 robot_gunner pos (1267.4, 3.083247) hp 4.0 state ENGAGE token false melee false age 105 dist 4.602 sees false goal (1266.519, 7.6) stunned_until 0 shot -1000
+[INFO] probe: id 734 rocket_trooper pos (1267.4, -1.053703) hp 1.0 state ENGAGE token false melee false age 0 dist 8.698 sees false goal (1266.43, 7.6) stunned_until 0 shot -1000
+[INFO] probe: id 735 rocket_trooper pos (1262.998, -4.976059) hp 1.0 state ENGAGE token false melee false age 0 dist 13.059 sees false goal (1267.393, 7.6) stunned_until 0 shot -1000
+[INFO] probe: id 740 swat pos (1267.218, 0.332291) hp 1.0 state COVER token false melee false age 51 dist 7.301 sees false goal (1267.122, 0.348363) stunned_until 0 shot -1000
+[INFO] probe: id 743 robot_gunner pos (1267.4, 4.104491) hp 4.0 state ENGAGE token false melee false age 151 dist 3.605 sees false goal (1265.607, 7.6) stunned_until 0 shot 76696
+[INFO] probe: id 745 patrol_cop pos (1267.4, 0.559167) hp 0.3125 state COVER token true melee false age 38 dist 7.096 sees false goal (1267.993, 0.474201) stunned_until 0 shot -1000
+[INFO] probe: id 746 sentry_turret pos (1256.385, -5.55) hp 3.875 state ENGAGE token false melee false age 0 dist 16.602 sees false goal (1256.385, -5.55) stunned_until 0 shot -1000
+[INFO] probe: id 749 sentry_turret pos (1256.126, -3.977568) hp 5.25 state ENGAGE token false melee false age 0 dist 15.558 sees false goal (1256.126, -3.977568) stunned_until 0 shot -1000
+[INFO] probe: id 751 sentry_turret pos (1264.291, 0.102252) hp 8.0 state ENGAGE token false melee false age 0 dist 7.822 sees false goal (1264.291, 0.102252) stunned_until 0 shot -1000
+[INFO] probe: id 752 patrol_cop pos (1267.218, 0.332291) hp 1.0 state COVER token false melee false age 51 dist 7.301 sees false goal (1267.122, 0.348363) stunned_until 0 shot 76550
+[INFO] probe: id 754 rocket_trooper pos (1267.4, -0.883778) hp 1.0 state ENGAGE token false melee false age 0 dist 8.529 sees false goal (1265.685, 7.6) stunned_until 0 shot -1000
+[INFO] probe: id 755 patrol_cop pos (1267.4, 0.559167) hp 1.0 state COVER token true melee false age 46 dist 7.096 sees false goal (1267.993, 0.474201) stunned_until 0 shot -1000
+[INFO] probe: id 758 war_machine pos (1267.4, 1.49998) hp 26.0 state ENGAGE token false melee false age 0 dist 6.163 sees false goal (1266.43, 7.6) stunned_until 0 shot -1000
+[INFO] probe: id 759 sentry_turret pos (1257.0, -4.8) hp 8.0 state ENGAGE token false melee false age 0 dist 15.632 sees false goal (1257.0, -4.8) stunned_until 0 shot -1000
+[INFO] probe: id 760 robot_thug pos (1267.4, 5.216594) hp 1.875 state ENGAGE token false melee true age 0 dist 2.541 sees false goal (1266.244, 7.6) stunned_until 0 shot -1000
+[INFO] probe: id 761 sentry_turret pos (1263.728, 1.168706) hp 8.0 state ENGAGE token false melee false age 0 dist 7.011 sees false goal (1263.728, 1.168706) stunned_until 0 shot -1000
+[INFO] probe: id 762 contractor pos (1267.218, 0.332291) hp 1.0 state COVER token false melee false age 51 dist 7.301 sees false goal (1267.122, 0.348363) stunned_until 0 shot -1000
+[INFO] probe: id 764 robot_gunner pos (1265.158, 3.243537) hp 4.0 state ENGAGE token false melee false age 0 dist 4.564 sees false goal (1265.855, 7.6) stunned_until 0 shot -1000
+[INFO] probe: id 765 swat pos (1267.4, 0.555339) hp 1.0 state COVER token false melee false age 51 dist 7.100 sees false goal (1267.993, 0.474201) stunned_until 0 shot -1000
+[INFO] probe: id 766 rocket_trooper pos (1267.4, -0.810006) hp 1.0 state ENGAGE token false melee false age 0 dist 8.456 sees false goal (1265.685, 7.6) stunned_until 0 shot -1000
+[INFO] probe: id 767 contractor pos (1267.4, 0.5632) hp 1.0 state COVER token false melee false age 51 dist 7.092 sees false goal (1267.993, 0.474201) stunned_until 0 shot -1000
+[INFO] probe: id 768 shield_robot pos (1267.4, 1.499977) hp 10.0 state ENGAGE token false melee true age 0 dist 6.163 sees false goal (1265.535, 7.6) stunned_until 0 shot -1000
+[INFO] probe: id 770 patrol_cop pos (1267.218, 0.332291) hp 1.0 state COVER token false melee false age 51 dist 7.301 sees false goal (1267.122, 0.348363) stunned_until 0 shot -1000
+[INFO] probe: id 771 patrol_cop pos (1267.4, 0.559167) hp 1.0 state COVER token false melee false age 51 dist 7.096 sees false goal (1267.993, 0.474201) stunned_until 0 shot -1000
+[INFO] probe: id 772 robot_thug pos (1267.4, 4.635368) hp 6.0 state ENGAGE token false melee true age 0 dist 3.093 sees false goal (1266.244, 7.6) stunned_until 0 shot -1000
+[INFO] probe: id 773 sentry_turret pos (1263.609, 1.13439) hp 8.0 state ENGAGE token false melee false age 0 dist 7.090 sees false goal (1263.609, 1.13439) stunned_until 0 shot -1000
+[INFO] probe: id 774 shield_robot pos (1267.4, 1.499977) hp 10.0 state ENGAGE token false melee true age 0 dist 6.163 sees false goal (1266.046, 7.6) stunned_until 0 shot -1000
+[INFO] probe: id 775 rocket_trooper pos (1254.211, 5.549186) hp 1.0 state ENGAGE token false melee false age 0 dist 12.477 sees false goal (1267.393, 7.6) stunned_until 0 shot -1000
+[INFO] probe: id 776 robot_thug pos (1267.4, 3.610458) hp 6.0 state ENGAGE token false melee true age 0 dist 4.086 sees false goal (1265.855, 7.6) stunned_until 0 shot -1000
+[INFO] probe: id 777 contractor pos (1267.4, 0.5632) hp 1.0 state COVER token false melee false age 51 dist 7.092 sees false goal (1267.993, 0.474201) stunned_until 0 shot -1000
+[INFO] probe: id 778 swat pos (1267.218, 0.332291) hp 1.0 state COVER token false melee false age 51 dist 7.301 sees false goal (1267.122, 0.348363) stunned_until 0 shot -1000
+[INFO] probe: id 779 swat pos (1267.4, 0.555339) hp 1.0 state COVER token false melee false age 51 dist 7.100 sees false goal (1267.993, 0.474201) stunned_until 0 shot -1000
+[INFO] probe: id 780 riot_cop pos (1267.4, 2.560005) hp 1.0 state ENGAGE token false melee true age 0 dist 5.116 sees false goal (1265.535, 7.6) stunned_until 0 shot -1000
+[INFO] probe: id 781 robot_gunner pos (1265.179, 5.464714) hp 4.0 state ENGAGE token false melee false age 0 dist 2.521 sees false goal (1266.519, 7.6) stunned_until 0 shot -1000
+[INFO] probe: id 782 rocket_trooper pos (1267.4, -0.883548) hp 1.0 state ENGAGE token false melee false age 0 dist 8.529 sees false goal (1266.43, 7.6) stunned_until 0 shot -1000

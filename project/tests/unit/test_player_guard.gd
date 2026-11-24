@@ -40,7 +40,9 @@ func test_front_crossing_returns_one_round_and_emits_one_spark() -> void:
 	assert_eq(s.shooter_id, arena.rivet.id)
 	assert_almost_eq(s.pos.x, arena.rivet.radius_m, 0.00001)
 	assert_almost_eq(s.vel.length(), speed, 0.0001)
-	assert_lte(absf(rad_to_deg(s.vel.angle_to(s.pos.direction_to(foe.pos)))), 12.0001)
+	# A guard return stays inside the configured half-angle about the line back to the shooter.
+	var offset_deg: float = absf(rad_to_deg(s.vel.angle_to(s.pos.direction_to(foe.pos))))
+	assert_lte(offset_deg, DeflectRule.of(arena).spread_deg + 0.0001)
 	assert_eq(guard.deflects, 1)
 	assert_almost_eq(
 		guard.meter(), 1.0 - guard.tuning.drain_per_round / guard.tuning.meter_max, 0.0001

@@ -144,7 +144,10 @@
         "2026-11-23: keys_film dev scene for n26 keys (dev_loc 33638 -> 33904)",
         "2026-11-23: paired boss-wave measurements and native review stills for n26 melee (dev_loc 33638 -> 33931)",
         "2026-11-23: 24 dev lines to measure end-of-tape ghost bonds through the Quest 1 replay entry (dev_loc 33931 -> 33955)",
-        "2026-11-23: Read-only gauntlet observer records unique releases, owned deploy plans and transformation ticks for the ten-seed bond measurement (dev_loc 33955 -> 34018)"
+        "2026-11-23: Read-only gauntlet observer records unique releases, owned deploy plans and transformation ticks for the ten-seed bond measurement (dev_loc 33955 -> 34018)",
+        "2026-11-23: Measure post-lock dashes and attribute rocket hits to their spawn wave for n26 pressure (dev_loc 33626 -> 33783)",
+        "2026-11-23: Measure real HP loss and lethal tick in the rocket circle arena for n26 pressure (dev_loc 33783 -> 33816)",
+        "2026-11-23: Three lines stop headless scoring on a measured combat freeze for n26 pressure (dev_loc 33816 -> 33819)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -157,7 +160,7 @@
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
-        "project/dev/gauntlet": 1469,
+        "project/dev/gauntlet": 1650,
         "project/dev/ghost-forms": 1715,
         "project/dev/ghost-powers": 1396,
         "project/dev/guard": 397,
@@ -186,7 +189,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 34284
+      "total": 34465
     },
     "direct_cmdline_reads": {
       "accepted": [
@@ -507,7 +510,7 @@
         "project/features/combat/weapons/art/weapon_art.gd": 274,
         "project/features/combat/weapons/art/weapon_fx_art.gd": 287,
         "project/features/combat/weapons/fight_areas.gd": 227,
-        "project/features/combat/weapons/fight_areas_art.gd": 253,
+        "project/features/combat/weapons/fight_areas_art.gd": 250,
         "project/features/combat/weapons/gun_fx.gd": 223,
         "project/features/combat/weapons/gun_fx_art.gd": 215,
         "project/features/fx/combat_blood.gd": 297,

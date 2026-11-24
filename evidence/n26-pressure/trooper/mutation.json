@@ -1,0 +1,176 @@
+{
+  "baseline_ms": 190393,
+  "counts": {
+    "invalid": 0,
+    "killed": 13,
+    "survived": 1,
+    "timeout": 0
+  },
+  "file": "features/combat/squad/rocket_lead.gd",
+  "first_import_ms": null,
+  "head": "ea293f3b16e4ce7feed25df115c41091fe8212fd",
+  "max": 20,
+  "mutants": [
+    {
+      "after": "",
+      "before": "not ",
+      "col": 6,
+      "id": 1,
+      "line": 13,
+      "ms": 35848,
+      "op": "boolean",
+      "verdict": "survived",
+      "via": "all tests passed"
+    },
+    {
+      "after": "not (_model == \"     \")",
+      "before": "_model == \"orbit\"",
+      "col": 9,
+      "id": 2,
+      "line": 15,
+      "ms": 27608,
+      "op": "return",
+      "verdict": "killed",
+      "via": "1 failing test(s)"
+    },
+    {
+      "after": "!=",
+      "before": "==",
+      "col": 16,
+      "id": 3,
+      "line": 15,
+      "ms": 56144,
+      "op": "cmp_flip",
+      "verdict": "killed",
+      "via": "1 failing test(s)"
+    },
+    {
+      "after": "+",
+      "before": "-",
+      "col": 33,
+      "id": 4,
+      "line": 21,
+      "ms": 32801,
+      "op": "arith",
+      "verdict": "killed",
+      "via": "2 failing test(s)"
+    },
+    {
+      "after": "+",
+      "before": "-",
+      "col": 28,
+      "id": 5,
+      "line": 22,
+      "ms": 21181,
+      "op": "arith",
+      "verdict": "killed",
+      "via": "2 failing test(s)"
+    },
+    {
+      "after": "/",
+      "before": "*",
+      "col": 29,
+      "id": 6,
+      "line": 23,
+      "ms": 31834,
+      "op": "arith",
+      "verdict": "killed",
+      "via": "2 failing test(s)"
+    },
+    {
+      "after": "/",
+      "before": "*",
+      "col": 37,
+      "id": 7,
+      "line": 23,
+      "ms": 23385,
+      "op": "arith",
+      "verdict": "killed",
+      "via": "2 failing test(s)"
+    },
+    {
+      "after": "1.0",
+      "before": "0.0",
+      "col": 27,
+      "id": 8,
+      "line": 24,
+      "ms": 20763,
+      "op": "literal",
+      "verdict": "killed",
+      "via": "1 failing test(s)"
+    },
+    {
+      "after": "-",
+      "before": "+",
+      "col": 45,
+      "id": 9,
+      "line": 24,
+      "ms": 20150,
+      "op": "arith",
+      "verdict": "killed",
+      "via": "1 failing test(s)"
+    },
+    {
+      "after": "+",
+      "before": "-",
+      "col": 61,
+      "id": 10,
+      "line": 24,
+      "ms": 21088,
+      "op": "arith",
+      "verdict": "killed",
+      "via": "2 failing test(s)"
+    },
+    {
+      "after": "/",
+      "before": "*",
+      "col": 80,
+      "id": 11,
+      "line": 24,
+      "ms": 19598,
+      "op": "arith",
+      "verdict": "killed",
+      "via": "1 failing test(s)"
+    },
+    {
+      "after": "-",
+      "before": "+",
+      "col": 16,
+      "id": 12,
+      "line": 25,
+      "ms": 21700,
+      "op": "arith",
+      "verdict": "killed",
+      "via": "2 failing test(s)"
+    },
+    {
+      "after": "/",
+      "before": "*",
+      "col": 64,
+      "id": 13,
+      "line": 25,
+      "ms": 19329,
+      "op": "arith",
+      "verdict": "killed",
+      "via": "2 failing test(s)"
+    },
+    {
+      "after": "/",
+      "before": "*",
+      "col": 73,
+      "id": 14,
+      "line": 25,
+      "ms": 20619,
+      "op": "arith",
+      "verdict": "killed",
+      "via": "2 failing test(s)"
+    }
+  ],
+  "mutants_total": 14,
+  "schema": "gtai.mutate/1",
+  "score": 0.9285714285714286,
+  "tests": [
+    "test_gauntlet_fire_gaps"
+  ],
+  "total_ms": 578221
+}

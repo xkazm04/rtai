@@ -9,10 +9,16 @@ const RANGE_M: float = 10.0
 var foe: Fighter
 var motion: String
 var speed: float
+var radius_m: float = RANGE_M
+var dash_motion: PlayerMotion
+var dash_ticks: Array[int] = []
+var lock_ticks: Array[int] = []
 var fire_ticks: Array[int] = []
 var hit_ticks: Array[int] = []
 var phases: Array[String] = []
 var under_fire: PackedByteArray
+var _react_at: int = -1
+var _across: Vector2
 var _clock: FireGapClock = FireGapClock.new()
 var _birth: Dictionary[Shot, int] = {}
 var _ordered: Array[Shot] = []
@@ -21,9 +27,14 @@ var _window_hits: int = 0
 var _impact_error: bool = false
 
 
-func prepare(id: StringName, path: String, run_mps: float) -> void:
+func prepare(id: StringName, path: String, run_mps: float, distance_m: float = RANGE_M) -> void:
 	motion = path
 	speed = run_mps
+	radius_m = distance_m
+	if motion == "circle_dash":
+		dash_motion = PlayerMotion.from_table(
+			DataTable.open(PlayerMotion.TABLE, PlayerMotion.SCHEMA)
+		)
 	var bounds: Rect2 = Rect2(-100, -100, 200, 200)
 	guard_map = GuardRouteMap.new(bounds, [], null, tuning.human["radius_m"])
 	var squad: GauntletStreet.StreetSquad = GauntletStreet.StreetSquad.new(guard_map)
@@ -32,7 +43,7 @@ func prepare(id: StringName, path: String, run_mps: float) -> void:
 	foe = squad.spawn_member(self, Vector2.ZERO, id)
 	foe.pos = Vector2.ZERO
 	foe.facing = Vector2.RIGHT
-	rivet.pos = Vector2.RIGHT * RANGE_M
+	rivet.pos = Vector2.RIGHT * radius_m
 	rivet.max_hp = 1000000.0
 	rivet.hp = rivet.max_hp
 	@warning_ignore("return_value_discarded")
@@ -59,15 +70,36 @@ func measure() -> bool:
 
 func _move_target(t: int) -> void:
 	var stride: float = speed * SimClock.TICK_DT
-	if motion == "circle":
-		# Intersect a sprint-length step with the 10 m circle around the mobile shooter's
-		# current centre. This preserves world speed without dragging Rivet with the enemy.
+	if motion == "circle_dash" and _dash_step(t):
+		return
+	if motion in ["circle", "circle_dash"]:
+		# Intersect a sprint-length step with the circle. After a straight dash, rejoin
+		# at sprint speed even when the circle is farther than one stride away.
 		var offset: Vector2 = rivet.pos - foe.pos
 		var d: float = offset.length()
-		var cosine: float = (d * d + RANGE_M * RANGE_M - stride * stride) / (2.0 * d * RANGE_M)
-		rivet.pos = foe.pos + offset.normalized().rotated(acos(clampf(cosine, -1, 1))) * RANGE_M
+		var r: float = radius_m
+		if motion == "circle_dash":
+			# Keep running around the trooper while recovering the original radius.
+			# A purely radial correction after the burst would run back down the firing line.
+			r = move_toward(d, radius_m, stride * 0.25)
+		var cosine: float = (d * d + r * r - stride * stride) / (2.0 * d * r)
+		rivet.pos = foe.pos + offset.normalized().rotated(acos(clampf(cosine, -1, 1))) * r
 	elif motion == "strafe":
 		rivet.pos.y = 5.0 - absf(fposmod(5.0 + t * stride, 20.0) - 10.0)
+
+
+func _dash_step(t: int) -> bool:
+	var dash: PlayerMotionDash = dash_motion.dash
+	var ready: bool = dash.rest_tick()
+	if t == _react_at and ready:
+		var command: PlayerCommand = PlayerCommand.new()
+		command.move = _across
+		dash.start(dash_motion, command)
+		dash_ticks.append(t)
+	if dash_motion.phase != PlayerMotion.Phase.DASH:
+		return false
+	rivet.pos += dash.advance(dash_motion, speed)
+	return true
 
 
 func _step_hostile(h: Fighter) -> void:
@@ -75,7 +107,14 @@ func _step_hostile(h: Fighter) -> void:
 	var mind: SquadMind = squad_ai.mind_for(h)
 	if tick <= TICKS:
 		_clock.before(h, mind, self)
+	var tracking: bool = (
+		h.tell_left > 0 and not guard_tell.locked(h) if dash_motion != null else false
+	)
 	super._step_hostile(h)
+	if tracking and guard_tell.locked(h):
+		lock_ticks.append(tick)
+		_react_at = tick + 15
+		_across = h.pos.direction_to(mind.rocket.locked_point).rotated(PI / 2.0)
 	if tick > TICKS:
 		return
 	if shots.size() > count:

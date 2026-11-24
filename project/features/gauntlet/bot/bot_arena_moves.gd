@@ -4,6 +4,15 @@ extends RefCounted
 ## KerfBehind.resolve records a use, so prediction uses its read-only predicates.
 
 
+## Kerf picks from the heading decoded by the pilot. Rounding can select a different fighter.
+static func blink_heading(stage: ArenaStage, aim: Vector2) -> Vector2:
+	if aim == Vector2.ZERO:
+		return stage.arena.rivet.facing
+	var actions: PlayerActions = stage.pilot.actions
+	var input: TickInput = TickInput.new(PlayerCommand.pack_aim(aim, actions))
+	return PlayerCommand.decode(input, 0, actions).aim
+
+
 static func observe(
 	stage: ArenaStage, h: Fighter, foe: BotView.Hostile, me: BotView.Player
 ) -> void:
@@ -42,5 +51,5 @@ static func observe(
 		foe.can_blink = (
 			squad.pit.bounds.has_point(spot)
 			and KerfBehind._clear(stage, h.pos, spot, stage.walls)
-			and kerf.pick(stage, ray) == h
+			and kerf.pick(stage, blink_heading(stage, ray)) == h
 		)

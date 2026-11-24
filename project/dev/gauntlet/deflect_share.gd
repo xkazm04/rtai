@@ -4,8 +4,8 @@ extends Node
 
 const KNOWN_FLAGS: PackedStringArray = ["--out", "--rounds"]
 const SEED: int = 90210
-const DISTANCES: Array[int] = [6, 12, 20]
-const SPREADS: Array[int] = [6, 12, 20]
+const DISTANCES: Array[int] = [4, 6, 8, 12, 20]
+const SPREADS: Array[int] = [12, 20]
 
 var _gun: EnemyWeapon = EnemyRoster.shipped().weapons[&"pistol"]
 var _blade: MeleeTable = MeleeTable.weapon(&"plasma_sword")
@@ -123,39 +123,27 @@ func _save(directory: String, rows: Array[Dictionary]) -> bool:
 
 
 func _markdown(rows: Array[Dictionary]) -> String:
-	var lines: Array[String] = [
-		"# Pistol deflections against a stationary shooter",
-		"",
-		(
-			"Each cell uses %d aimed rounds, seed %d, and a fresh guard or a timed plasma slash."
-			% [_n, SEED]
-		),
-		"Distances are centre to centre. The shooter-hit denominator is returned rounds.",
-		"Each cell restarts the seed to compare the same pass decisions and angular draws.",
-		"",
-		"| Mode | Distance (m) | Half-angle (deg) | Passed | Returned | Shooter hits / returns |",
-		"|---|---:|---:|---:|---:|---:|",
-	]
+	var header: Array[String] = ["Distance (m)"]
 	for r: Dictionary in rows:
-		var hit_share: String = "n/a"
-		if r.returned > 0:
-			hit_share = "%.1f%%" % (r.shooter_share_of_returns * 100)
-		var line: String = "| %s | %d | %d | %.1f%% | %.1f%% | %d/%d (%s) |"
-		lines.append(
-			(
-				line
-				% [
-					r.mode,
-					r.distance_m,
-					r.spread_deg,
-					r.pass_share * 100,
-					r.return_share * 100,
-					r.shooter_hits,
-					r.returned,
-					hit_share
-				]
-			)
-		)
+		if r.distance_m == DISTANCES[0]:
+			var mode: String = "Guard" if r.mode == "guard" else "Plasma bat"
+			header.append("%s %d°" % [mode, r.spread_deg])
+	var lines: Array[String] = [
+		"Seed %d restarts for each cell of %d aimed pistol rounds." % [SEED, _n],
+		"Each cell shows shooter hits / returned rounds at the stated centre-to-centre distance.",
+		"",
+		"| %s |" % " | ".join(header),
+		"|" + "---:|".repeat(header.size()),
+	]
+	for distance: int in DISTANCES:
+		var cells: Array[String] = [str(distance)]
+		for r: Dictionary in rows:
+			if r.distance_m == distance:
+				var share: String = "n/a"
+				if r.returned > 0:
+					share = "%.1f%%" % (r.shooter_share_of_returns * 100)
+				cells.append("%d/%d (%s)" % [r.shooter_hits, r.returned, share])
+		lines.append("| %s |" % " | ".join(cells))
 	return "\n".join(lines) + "\n"
 
 

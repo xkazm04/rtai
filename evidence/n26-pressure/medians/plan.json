@@ -1,0 +1,85 @@
+{
+  "batch_sha256": "2686f3bb40f695abe0ee99f4211c9172be4cd277f2094996be91d31c3e90c4d6",
+  "changes": [
+    {
+      "factor": 0.8,
+      "id": "rivet_repair",
+      "members": [
+        {
+          "after": 12.5,
+          "baseline": 10,
+          "before": 10,
+          "file": "project/data/tables/gauntlet.json",
+          "id": "rivet.repair_per_s",
+          "pointer": "/rivet/repair_per_s"
+        },
+        {
+          "after": 2.4,
+          "baseline": 3,
+          "before": 3,
+          "file": "project/data/tables/gauntlet.json",
+          "id": "rivet.repair_delay_s",
+          "pointer": "/rivet/repair_delay_s"
+        }
+      ],
+      "metric": {
+        "profile": "expert",
+        "target": 20,
+        "type": "death"
+      },
+      "miss": "expert median death wave 8.5 against target 20 (10 deaths, 0 censored as lower bounds)",
+      "profiles": [
+        "expert",
+        "average",
+        "novice"
+      ],
+      "severity": 0.575
+    }
+  ],
+  "killer_share": 0.5,
+  "max": 1,
+  "metric": "death",
+  "min_n": 3,
+  "misses": [
+    {
+      "metric": {
+        "profile": "expert",
+        "target": 20,
+        "type": "death"
+      },
+      "miss": "expert median death wave 8.5 against target 20 (10 deaths, 0 censored as lower bounds)",
+      "reason": "served by rivet_repair",
+      "severity": 0.575
+    },
+    {
+      "metric": {
+        "profile": "average",
+        "target": 12,
+        "type": "death"
+      },
+      "miss": "average median death wave 7.5 against target 12 (10 deaths, 0 censored as lower bounds)",
+      "reason": "served by rivet_repair",
+      "severity": 0.375
+    },
+    {
+      "metric": {
+        "profile": "novice",
+        "target": 6,
+        "type": "death"
+      },
+      "miss": "novice median death wave 5 against target 6 (10 deaths, 0 censored as lower bounds)",
+      "reason": "served by rivet_repair",
+      "severity": 0.16666666666666663
+    }
+  ],
+  "night": "2026-11-24",
+  "profile": "all",
+  "schema": "gtai.gauntlet-tune-plan/1",
+  "skipped": [
+    {
+      "id": "enemy_damage",
+      "reason": "shared with quest 1 / replays"
+    }
+  ],
+  "target_s": 15
+}
