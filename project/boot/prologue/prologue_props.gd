@@ -28,7 +28,7 @@ func _process(_dt: float) -> void:
 	var index: int = 0
 	for officer: ProloguePatrol.Officer in patrol.officers:
 		var h: Fighter = officer.body
-		if h.alive() and h.archetype == &"appliance_warden":
+		if h.alive() and h.archetype == &"appliance_warden" and not _warden_card():
 			var card: Sprite2D = walk_card(rigs, cards, h.id)
 			if card != null:
 				_dye_card(card, index)
@@ -84,10 +84,17 @@ func _dye_card(card: Sprite2D, index: int) -> void:
 	copy.show()
 
 
+## The cast lane's card draws the warden: no overalls dye, vector pole, straps or bib.
+func _warden_card() -> bool:
+	return CastCards.current(&"appliance_warden") != null
+
+
 func _draw() -> void:
 	for officer: ProloguePatrol.Officer in patrol.officers:
 		var h: Fighter = officer.body
 		if not h.alive() or (h != patrol.dale and h.archetype != &"appliance_warden"):
+			continue
+		if h.archetype == &"appliance_warden" and _warden_card():
 			continue
 		var at: Vector2 = h.pos * PP
 		var chest: Vector2 = at + Vector2.UP * 10

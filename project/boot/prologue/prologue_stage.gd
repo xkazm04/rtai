@@ -41,6 +41,9 @@ func _move() -> void:
 			or pilot.melee.busy()
 		):
 			combat.catcher = null
+	for h: Fighter in combat.hostiles:
+		if h.archetype == FoeWardenCardView.ID:
+			FoeWardenCardView.set_catch(h, h == combat.catcher, tick)
 	if at_receiver or combat.catcher != null:
 		intent.move_by = Vector2.ZERO
 		intent.move_to = Vector2.INF
