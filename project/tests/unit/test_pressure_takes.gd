@@ -137,3 +137,12 @@ func test_spaced_sword_is_never_hit_mid_swing() -> void:
 	assert_eq(fates.unswung_busy, 0, "no round arrives while the blade is mid-swing")
 	assert_eq(fates.missed, 0, "every round reaches Rivet")
 	assert_eq(fates.returned, spaced.rifles.returned, "the fate count agrees with the take")
+
+
+func test_rifle_takes_fire_their_pinned_counts_and_spacing() -> void:
+	var guard: PressureTake = _fated("guard6")
+	var sword: PressureTake = _fated("blade6")
+	assert_eq(guard.rifles.fired, 78, "guard take, seed 1: salvos of six, a beat of 180 ticks")
+	assert_eq(sword.rifles.fired, 130, "sword take, seed 1: pairs on a 36 tick beat")
+	assert_eq(_closest_arrivals("guard6"), 9, "guard rounds arrive 9 ticks apart")
+	assert_eq(_closest_arrivals("blade6"), 18, "sword rounds arrive 18 ticks apart")
