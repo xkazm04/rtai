@@ -37,10 +37,12 @@ Seeds 1 to 10 (`evidence/n27-pressure/takes/seeds.md`):
 - The steady circle dies to blasts beside him, not rockets on his body (shape A + lead work as the owner kept them).
 - One dash per two-rocket volley: a dash is 10 ticks plus a 40-tick cooldown (one every 50 ticks), and the second
   trooper's rocket leaves 1 to 49 ticks after the first (1 in seed 1, the film; 8 to 49 in the other seeds), so the
-  press for the second rocket is always refused: 13 dashes for 26 rockets in every seed.
+  press for the second rocket is always refused: 13 dashes in every seed, for 23 to 26 rockets.
 - After 10 s in seeds 3 and 5 the troopers drift and the second rocket leaves 36 to 49 ticks after the first; it
-  bursts 0.6 to 2.2 m from Rivet on his circle and costs 9 to 20 HP a time: 48.4 and 40.4 HP lost in 25 s, against
-  3.3 to 7.8 in the other eight seeds (`evidence/n27-pressure/takes/dash_late.md`). Not a bot or game fault: the
+  bursts 0.6 to 2.2 m from Rivet on his circle and costs 9 to 20 HP a time: 48.4 and 40.4 HP lost after 10 s (50.9
+  and 40.6 over the whole 25 s), against 3.3 to 7.8 after 10 s (3.7 to 9.2 over 25 s) in the other eight seeds
+  (`evidence/n27-pressure/takes/dash_late.md`; its summary line says "over 25 s" for the after-10 s numbers, the
+  per-seed table in `evidence/n27-pressure/takes/seeds.md` has the whole-take ones). Not a bot or game fault: the
   dash cooldown is longer than the gap between two troopers' rockets.
 - Stills: `pair_dash_cross_64.png` (mid-dash, two rockets on the spot he left), `pair_circle_fatal_64.png` (HP 8.9,
   13 ticks before he falls), `pair_dash_32.png`, `trooper_pair_64.png`.
@@ -105,8 +107,8 @@ wave is a median 99 % of max (10th percentile 78 %, 180 waves). The comparison's
 - **The blade take's third rifleman never fires.** `blade6` fires in pairs from rifleman 1 then 2; the third stands.
   The share is still measured on 1300 rounds, but the film shows two shooters, not three.
 - **The dash take is safe only while the two rockets leave close together.** After 10 s in seeds 3 and 5 the troopers
-  drift, the second rocket comes 36 to 49 ticks after the first, the dash is still on its cooldown, and Rivet loses 40
-  to 48 HP (section 2). The film (seed 1) does not show this; `takes/dash_late.md` does.
+  drift, the second rocket comes 36 to 49 ticks after the first, the dash is still on its cooldown, and Rivet loses 40.4 and
+  48.4 HP after 10 s (section 2). The film (seed 1) does not show this; `takes/dash_late.md` does.
 - **Mutate on the stall fix is thin on the bot side**: `bot_arena_moves.gd` gives only 4 mutants on the fix's lines
   (3 / 4, the survivor is equivalent). The take files' scores are samples (12 of 82 for the pair take), not whole
   files; no test says which rifleman fired (the `pressure_rifles.gd` line 81 survivor).
@@ -146,7 +148,7 @@ wave is a median 99 % of max (10th percentile 78 %, 180 waves). The comparison's
 4. **Dash across the rocket line works.** Two troopers kill a steady circler in 7.1 to 7.7 s in every seed; one dash
    per volley keeps him near full (median 4.6 HP lost in 25 s). Rocket shape A and the 1.1 s lead read as you kept
    them. Film: `trooper_pair_32.mp4`. But a dash every 50 ticks covers one rocket of a pair, not two: when the two
-   troopers fire 36 to 49 ticks apart, the second rocket lands beside him (seeds 3 and 5 lose 40 to 48 HP). Keep (two
+   troopers fire 36 to 49 ticks apart, the second rocket lands beside him (seeds 3 and 5 lose 40.6 and 50.9 HP in 25 s). Keep (two
    troopers should force more than a dash) or shorten the 40-tick dash cooldown (`rivet_motion.json`, keys lane's
    file). Trace: `evidence/n27-pressure/takes/dash_late.md`.
 
@@ -186,8 +188,9 @@ wave is a median 99 % of max (10th percentile 78 %, 180 waves). The comparison's
 | 3 | films | 53 | $2.74 | accepted |
 | 4 | contrast | 73 | $2.09 | accepted (caption overflow fixed in the same call) |
 | 5 | close | 14 | $0.42 | accepted (decision lines, a pinning test, two mutate samples measured) |
+| 6 | notes (+ resume) | 2 | $0.55 | accepted (three film notes in `frames.json` now quote the ten-seed numbers; it caught my after-10 s / whole-take mix-up) |
 
-Total: 5 calls, 280 minutes, $9.78; none bounced (call 4's caption overflow was fixed inside the same call).
+Total: 6 calls (one resumed), 282 minutes, $10.33; none bounced (call 4's caption overflow was fixed inside the same call).
 What I would brief differently: give each call one Godot-heavy task and a written handoff time for Godot from the
 start (calls 2 and 4 spent their first 20 to 40 minutes waiting for my measurement batches); ask for the film caption
 layout to be checked on a crop before the long render; and ask for mutate's full sample to be re-run in the same call
