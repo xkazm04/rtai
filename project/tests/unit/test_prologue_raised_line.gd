@@ -90,11 +90,13 @@ func test_arched_line_is_raised_line_with_a_darker_warmer_floor_only() -> void:
 	var arched: Dictionary = _row("arched_line").duplicate(true)
 	var raised: Dictionary = _row("raised_line").duplicate(true)
 	assert_true(arched.erase("ground_impression"))
-	for key: String in ["ground", "layout", "over_print"]:
+	for key: String in ["ground", "layout", "over_print", "factory_front", "lights"]:
 		assert_true(arched.erase(key))
 		assert_true(raised.erase(key))
 	assert_eq(
-		str(arched), str(raised), "only the ground, the layout art and the over-print list differ"
+		str(arched),
+		str(raised),
+		"only ground, layout art, over-print, hall front and lights differ"
 	)
 	var arched_ground: Array = _row("arched_line")["ground"]
 	var raised_ground: Array = _row("raised_line")["ground"]
@@ -115,6 +117,25 @@ func test_arched_line_lays_the_brown_tile_as_a_second_impression_and_raised_line
 	assert_eq(look.impression.tint, Color("ffffff33"))
 	assert_null(PrologueYardDressing.resolve("raised_line").impression)
 	assert_false(_row("raised_line").has("ground_impression"))
+
+
+func test_arched_line_front_burns_at_the_burst_and_collapsed_bays_with_mouth_lights() -> void:
+	var look: PrologueYardDressing = PrologueYardDressing.resolve("arched_line")
+	var arts: Array[String] = []
+	for piece: PrologueYardDressing.Piece in look.factory_front:
+		arts.append(piece.art.get_file())
+	assert_true(arts.has("hall_burst_bay.png") and arts.has("hall_collapsed_bay.png"))
+	assert_false(arts.has("burst_bay.png") or arts.has("collapsed_bay.png"))
+	var lights: Dictionary = _row("arched_line")["lights"]
+	var mouths: Array[String] = []
+	for pool: Dictionary in lights["pools"]:
+		if pool["kind"] == "yard_hall_mouth":
+			mouths.append(str(pool["id"]))
+	assert_eq(mouths, ["burst_door", "collapsed_wall"])
+	var raised: Array = _row("raised_line")["factory_front"]
+	assert_true(
+		str(raised).contains("line_fire/burst_bay.png"), "raised_line keeps the shipped front"
+	)
 
 
 func _cover(id: String) -> Dictionary[String, Dictionary]:

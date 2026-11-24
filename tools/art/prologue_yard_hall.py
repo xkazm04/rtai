@@ -42,17 +42,36 @@ def red_share(rgba):
     return float((hues < 18).mean())
 
 
+def amber_shift(rgba, below=18.0, lo=22.0, hi=30.0):
+    """Move fire pixels (s > 0.5, v > 0.5) with hue under `below` degrees to hue lo..hi, keeping s and v."""
+    out = rgba.copy()
+    rgb = rgba[..., :3].astype(np.float32) / 255
+    top, low = rgb.max(axis=2), rgb.min(axis=2)
+    sat = (top - low) / np.maximum(top, 1e-6)
+    fire = (sat > 0.5) & (top > 0.5) & (rgba[..., 3] > 0)
+    for y, x in zip(*np.where(fire)):
+        h, s, v = colorsys.rgb_to_hsv(*rgb[y, x])
+        if h * 360 < below:
+            h = (lo + (hi - lo) * h * 360 / below) / 360
+            out[y, x, :3] = np.round(np.array(colorsys.hsv_to_rgb(h, s, v)) * 255)
+    return out
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--sources", type=Path, default=HERE / "prologue_yard_sources/n28")
+    parser.add_argument("--no-amber", action="store_true", help="skip the red-to-amber shift")
     args = parser.parse_args()
     for src, name in CUTS.items():
         sheet = Image.open(args.sources / f"{src}.png").convert("RGB")
         rgba = trimmed(despeckle(np.asarray(cut.key_full(sheet, WHITE, SHADOW))))
+        before = red_share(rgba)
+        if not args.no_amber:
+            rgba = amber_shift(rgba)
         Image.fromarray(rgba).save(OUT / f"{name}.png")
         old = Image.open(OUT.parents[0] / SHIPPED[name]).size
         h, w = rgba.shape[:2]
-        print(f"{name}: {w}x{h} aspect {w / h:.3f} vs shipped {old[0]}x{old[1]} {old[0] / old[1]:.3f}; red {red_share(rgba) * 100:.2f}%")
+        print(f"{name}: {w}x{h} aspect {w / h:.3f} vs shipped {old[0]}x{old[1]} {old[0] / old[1]:.3f}; red {before * 100:.2f}% -> {red_share(rgba) * 100:.2f}%")
 
 
 if __name__ == "__main__":

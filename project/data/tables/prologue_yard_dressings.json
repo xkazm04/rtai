@@ -16,7 +16,7 @@
           ]
         },
         {
-          "art": "res://boot/prologue/art/line_fire/burst_bay.png",
+          "art": "res://boot/prologue/art/arched_line/hall_burst_bay.png",
           "at": [
             11.8,
             -2.7250000000000005
@@ -55,7 +55,7 @@
           ]
         },
         {
-          "art": "res://boot/prologue/art/line_fire/collapsed_bay.png",
+          "art": "res://boot/prologue/art/arched_line/hall_collapsed_bay.png",
           "at": [
             56.2,
             -2.7250000000000005
@@ -969,6 +969,22 @@
             "life_ticks": 0,
             "radius_m": 9,
             "steps": 8
+          },
+          {
+            "alt_color": "ffb23a",
+            "color": "ff9a1f",
+            "cone_deg": 0,
+            "flicker_hz": 1.5,
+            "floor_glow": {
+              "color": "ff8c14",
+              "radius_m": 12,
+              "strength": 0.4
+            },
+            "id": "yard_hall_mouth",
+            "intensity": 0.34,
+            "life_ticks": 0,
+            "radius_m": 7.5,
+            "steps": 6
           }
         ],
         "pools": [
@@ -978,7 +994,7 @@
               -0.8
             ],
             "id": "burst_door",
-            "kind": "yard_fire"
+            "kind": "yard_hall_mouth"
           },
           {
             "at": [
@@ -994,7 +1010,7 @@
               -0.8
             ],
             "id": "collapsed_wall",
-            "kind": "yard_fire"
+            "kind": "yard_hall_mouth"
           },
           {
             "at": [

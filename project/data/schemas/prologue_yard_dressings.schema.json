@@ -282,7 +282,8 @@
                       "yard_fire",
                       "yard_fire_mid",
                       "yard_lamp",
-                      "yard_lamp_gate"
+                      "yard_lamp_gate",
+                      "yard_hall_mouth"
                     ]
                   },
                   "intensity": {
@@ -342,7 +343,8 @@
                       "yard_fire",
                       "yard_fire_mid",
                       "yard_lamp",
-                      "yard_lamp_gate"
+                      "yard_lamp_gate",
+                      "yard_hall_mouth"
                     ]
                   }
                 },
