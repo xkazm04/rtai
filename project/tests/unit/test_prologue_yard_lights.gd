@@ -42,7 +42,7 @@ func test_dusk_registers_the_grade_and_decodes_both_inks_from_the_row() -> void:
 	assert_eq(layer.grade, &"dusk")
 	assert_eq(layer.grades[layer.grade], table.object(row, "grade"))
 	assert_false(LightLayer.is_identity(layer.grades[layer.grade]))
-	assert_eq(lights.kinds.size(), 2)
+	assert_eq(lights.kinds.size(), 4)
 	for source: Dictionary in table.array(row, "kinds"):
 		var key: StringName = StringName(table.text(source, "id"))
 		var kind: Dictionary = layer.kinds[key]
@@ -52,7 +52,7 @@ func test_dusk_registers_the_grade_and_decodes_both_inks_from_the_row() -> void:
 		assert_eq(alternate, Color(table.text(source, "alt_color")))
 		for ink: Color in [base, alternate]:
 			assert_between(ink.h * 360.0, 30.0, 55.0, String(key))
-			if key == &"yard_lamp":
+			if String(key).begins_with("yard_lamp"):
 				assert_lt(ink.s, 0.5, "warm pale lamp")
 		assert_lte(table.num(kind, "flicker_hz"), 2.5)
 		assert_eq(table.integer(kind, "life_ticks"), 0)
@@ -75,8 +75,10 @@ func test_pools_land_at_each_fixture_in_world_pixels_and_hold_through_the_fight(
 		assert_eq(layer.ids[ids.size()], StringName(table.text(pool, "kind")), id)
 		assert_false(id in ids, id)
 		ids.append(id)
-	assert_eq(layer.ids.count(&"yard_fire"), 4)
-	assert_eq(layer.ids.count(&"yard_lamp"), 4)
+	assert_eq(layer.ids.count(&"yard_fire"), 3)
+	assert_eq(layer.ids.count(&"yard_fire_mid"), 4, "arm cable, pickup, skip, conveyor tail")
+	assert_eq(layer.ids.count(&"yard_lamp"), 3)
+	assert_eq(layer.ids.count(&"yard_lamp_gate"), 1)
 	layer.step(11701, Vector2.ZERO)
 	assert_eq(layer.active, ids.size())
 	assert_eq(layer.dropped, 0)

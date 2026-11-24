@@ -826,26 +826,48 @@
         },
         "kinds": [
           {
-            "alt_color": "f2a836",
-            "color": "ffb43b",
+            "alt_color": "ffb23a",
+            "color": "ff9a1f",
             "cone_deg": 0,
             "flicker_hz": 1.5,
             "id": "yard_fire",
-            "intensity": 0.37,
+            "intensity": 0.28,
             "life_ticks": 0,
-            "radius_m": 8.5,
+            "radius_m": 12,
             "steps": 6
           },
           {
-            "alt_color": "ffe2aa",
-            "color": "ffe2aa",
+            "alt_color": "ffd28a",
+            "color": "ffd28a",
             "cone_deg": 0,
             "flicker_hz": 0,
             "id": "yard_lamp",
-            "intensity": 0.39,
+            "intensity": 0.34,
             "life_ticks": 0,
-            "radius_m": 6,
+            "radius_m": 9,
+            "steps": 8
+          },
+          {
+            "alt_color": "ffb23a",
+            "color": "ff9a1f",
+            "cone_deg": 0,
+            "flicker_hz": 1.5,
+            "id": "yard_fire_mid",
+            "intensity": 0.04,
+            "life_ticks": 0,
+            "radius_m": 12,
             "steps": 6
+          },
+          {
+            "alt_color": "ffd28a",
+            "color": "ffd28a",
+            "cone_deg": 0,
+            "flicker_hz": 0,
+            "id": "yard_lamp_gate",
+            "intensity": 0.1,
+            "life_ticks": 0,
+            "radius_m": 9,
+            "steps": 8
           }
         ],
         "pools": [
@@ -879,7 +901,7 @@
               7.6
             ],
             "id": "arm_cable",
-            "kind": "yard_fire"
+            "kind": "yard_fire_mid"
           },
           {
             "at": [
@@ -887,7 +909,7 @@
               32.3
             ],
             "id": "gate_lamp",
-            "kind": "yard_lamp"
+            "kind": "yard_lamp_gate"
           },
           {
             "at": [
@@ -912,6 +934,30 @@
             ],
             "id": "shutter_lamp",
             "kind": "yard_lamp"
+          },
+          {
+            "at": [
+              43.2,
+              17.4
+            ],
+            "id": "burnt_pickup",
+            "kind": "yard_fire_mid"
+          },
+          {
+            "at": [
+              46,
+              26
+            ],
+            "id": "scrap_skip",
+            "kind": "yard_fire_mid"
+          },
+          {
+            "at": [
+              32.2,
+              20.6
+            ],
+            "id": "conveyor_tail",
+            "kind": "yard_fire_mid"
           }
         ]
       },

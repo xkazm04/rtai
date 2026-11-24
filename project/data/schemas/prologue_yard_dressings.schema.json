@@ -252,7 +252,9 @@
                   "id": {
                     "enum": [
                       "yard_fire",
-                      "yard_lamp"
+                      "yard_fire_mid",
+                      "yard_lamp",
+                      "yard_lamp_gate"
                     ]
                   },
                   "intensity": {
@@ -310,7 +312,9 @@
                   "kind": {
                     "enum": [
                       "yard_fire",
-                      "yard_lamp"
+                      "yard_fire_mid",
+                      "yard_lamp",
+                      "yard_lamp_gate"
                     ]
                   }
                 },

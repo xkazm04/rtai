@@ -5,6 +5,9 @@ extends RefCounted
 
 const SIZE: Vector2i = Vector2i(1920, 1080)
 const FRONT: Vector2 = Vector2(24.5, -2)
+const EXTRA_TICKS: Array[int] = [
+	3000, 3200, 3400, 3600, 3800, 4000, 4200, 4400, 4600, 4800, 5000, 5200, 5400, 5600
+]
 const BUDGET: int = 300 * SimClock.TICK_RATE
 
 var _game: PrologueGame
@@ -27,7 +30,9 @@ func run() -> bool:
 	while _game.encounter.street.end_tick < 0 and _game.stage.tick < BUDGET and _ok:
 		_game.world.loop().step()
 		var tick: int = _game.stage.tick
-		if tick == 2858 or tick == 6000:
+		if tick in EXTRA_TICKS:
+			await _expose("t%d" % tick)
+		elif tick == 2858 or tick == 6000:
 			await _expose("t%d" % tick)
 			if tick == 2858:
 				await _still("gate", (_game.stage.plan as PrologueYard).gate, 64)
@@ -80,7 +85,7 @@ func _expose(label: String) -> void:
 func _point(kind: String, at: Vector2, id: int) -> Dictionary:
 	var tx: Transform2D = _view.get_viewport().get_canvas_transform()
 	var p: Vector2i = Vector2i((tx * (at * SimConst.PX_PER_M)).round())
-	return {"kind": kind, "id": id, "xy": [p.x, p.y]}
+	return {"kind": kind, "id": id, "xy": [p.x, p.y], "pos_m": [at.x, at.y]}
 
 
 func _still(label: String, at: Vector2, ppm: int) -> void:
