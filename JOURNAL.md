@@ -175,3 +175,4 @@ NEXT (session 3, from ~05:42):
   war machine stomp in 8/10 (repair) and 9/10 (budget); a smaller budget moves average/expert deaths from the stomp to
   the wave 9 shield_robot (budget: 5 of 10 average, 6 of 10 expert). Levers for the owner, not applied: stomp
   (damage 48, splash 48 in 3.5 m, cooldown 1.2 s, `alt_telegraph_s` 0.8), `repair_in_wave`, wave 9 shield robot.
+- 06:36 checked the repair claim on after-melee salt 0 runs: HP at wave start / max over 180 waves (wave >= 2): median 0.99, p10 0.78, min 0.15 (overlapping waves). The pilot repairs in the cleared block (`gauntlet_waves.gd:75` wave_live false; `gauntlet_walker.gd:22` holds below 95 %). So the repair rate barely matters for the death wave; `repair_in_wave` is the lever that would.
