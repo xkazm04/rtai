@@ -110,6 +110,12 @@ def read_frame(frame, take):
             return {}
         sole, _ = marks(cell(path, rect), gait, take['pitch'], card['col'], card['row'])
         points = {str(card['row']//4): project(card, sole)}
+    elif foe_sheet(path):
+        from cast_foe_soles import sole as foe_sole
+        if foe_sheet(path) == 'swat_run' and card['row'] % 4 == 3:
+            return {}
+        point = foe_sole(cell(path, rect), foe_sheet(path), take['pitch'], card['col'], card['row'])
+        points = {str(card['row']//4): project(card, point)}
     elif path.endswith('/appliance_warden_planted8_armed_walk.png'):
         from cast_warden_soles import sole
         point = sole(cell(path, rect), take['pitch'], card['col'], card['row'])
@@ -124,6 +130,13 @@ def read_frame(frame, take):
         key = card['row'] if ambiguous else card['row']//2
         points = {str(key): project(card, point)}
     return points
+
+
+def foe_sheet(path):
+    """The cast_foe_soles name of an eight-drawing riot, SWAT or lancer sheet (else '')."""
+    names = {'cop_riot_planted8_armed_walk.png': 'riot', 'swat_planted8_armed_walk.png': 'swat',
+             'swat_planted8_run.png': 'swat_run', 'rocket_trooper_planted8_armed_walk.png': 'lancer'}
+    return names.get(path.rsplit('/', 1)[-1], '')
 
 
 def repeated_lead(take, path):
@@ -154,7 +167,7 @@ def analyse(take):
         for f in frames:
             points = read_frame(f, take)
             series.append({k: v*factor for k, v in points.items()})
-        if take['archetype'] == 'patrol_cop' and 'planted8' in frames[-1]['card']['path']:
+        if 'card' in frames[-1] and 'planted8' in frames[-1]['card']['path']:
             cards = [f['card'] for f in frames]
             strip = cards[-1]['path']
             if any(c['path'] != strip for c in cards[1:]):
@@ -166,7 +179,8 @@ def analyse(take):
             if len(edges) < 3 or any((cards[i]['row']-cards[i-1]['row'])%8 != 1 for i in edges):
                 raise ValueError('missing or skipped eight-drawing progression')
             row['observed_drawings_per_second'] = 60*(len(edges)-1)/(edges[-1]-edges[0])
-            row['drawings_per_second'] = take['speed_mps']/take['step_m']
+            if 'step_m' in take:
+                row['drawings_per_second'] = take['speed_mps']/take['step_m']
         fixed = take['gait'] == 'sweep'
         travel, _, spans = contact_stats(series, fixed)
         if not fixed and len({s['boot'] for s in spans}) < 2:

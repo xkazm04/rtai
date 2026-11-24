@@ -95,6 +95,8 @@ func _prepare(host: ArenaRigs, take: Dictionary) -> void:
 		var speed: float = take.speed_mps
 		var fast: bool = StreetCopWalk.strip_for(speed) == StreetCopWalk.RUN
 		take.step_m = StreetPatrolAnchors.RUN_M if fast else StreetCopWalk.STEP_M
+	if take.archetype == "riot_cop":
+		take.step_m = CastRiotAnchors.WALK_STEP_M
 	if take.archetype == "patrol_cop" and LaunchArgs.has("--cast-patrol-feet"):
 		_probe = CastPatrolTake.new()
 		host.rigs.get_parent().add_child(_probe)
@@ -154,6 +156,8 @@ func _track(h: Fighter, host: ArenaRigs, take: Dictionary) -> bool:
 		if _ppm == 64 and tick == 38 and take.facing == "right" and take.gait == "walk":
 			var path: String = _out.path_join("%s_%d_t38.png" % [h.archetype, _pitch])
 			if get_viewport().get_texture().get_image().save_png(path) != OK:
+				return false
+			if not await CastFeetEdge.shoot(self, _scene, host, h, _out):
 				return false
 	return true
 

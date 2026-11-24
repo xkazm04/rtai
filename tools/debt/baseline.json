@@ -156,7 +156,8 @@
         "2026-11-23: Paired full-yard stills and a five-second motion observer for n26 yard (dev_loc 33638 -> 33764)",
         "2026-11-23: Paired pilot captures retain exact underlay pixels and shot identities for n26 yard (dev_loc 33764 -> 33890)",
         "2026-11-23: Capture both zooms on the live commander through the seed-seven rack for n26 yard (dev_loc 33890 -> 33900)",
-        "2026-11-24: --cast-warden-trace flag and the warden dev scenes for n27 cast (dev_loc 35431 -> 35735)"
+        "2026-11-24: --cast-warden-trace flag and the warden dev scenes for n27 cast (dev_loc 35431 -> 35735)",
+        "2026-11-24: dev/cast edge and feet takes for the n27 cast feet call (dev_loc 35735 -> 35779)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -165,7 +166,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 692,
-        "project/dev/cast": 1635,
+        "project/dev/cast": 1679,
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
@@ -198,7 +199,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 35735
+      "total": 35779
     },
     "direct_cmdline_reads": {
       "accepted": [
