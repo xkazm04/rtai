@@ -1,6 +1,10 @@
 # Brief n28-04-gloria-brass: Gloria pushed further (longer nail strip, brass body, one-handed): concept, held strips, held art
 
-Lane `keys`, branch `n28-keys`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-controls` (your cwd).
+Lane `keys`, branch `n28-keys`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-controls`. You are an in-session builder subagent:
+**`cd` there in every shell command**. No subagents, no model CLI except the image tool `C:/Users/kazda/kiro/gtai-art/gen.mjs`
+(one job at a time; start it in the background and poll; if a job has not returned in 10 minutes, look under
+`~/.codex/generated_images/` and copy by hand, else split the edit smaller). The Codex desktop app's `codex.exe` 4380 / 30912
+are not yours.
 
 **Check `date` first and often. Commit the concept + p70 strips by {COMMIT1}; p55 strips and held art by {COMMIT2}.
 Report and END by {END} at the latest, whatever state you are in** (the pre-commit hook takes about 12 minutes on this

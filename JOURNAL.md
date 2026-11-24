@@ -93,3 +93,68 @@
   ~/.codex/generated_images). If it fails a third time in session 3: try a 4-row half sheet (rows 0-3, then 4-7) instead.
 - 19:24 NEXT (session 3): no builder running. Start with brief n28-03b-ray-gun.md (round STATE.md "Next" line has the
   exact commands), then n28-06-molotov-sword.md, then Gloria brass, collar p55, Gloria's grid; see 19:10 NEXT for the rest.
+- 19:23 Session 3 start. No builder running (lock empty, last builder.mjs call 17:44). Machine-wide, the newest image under
+  ~/.codex/generated_images is 18:50 (the ray gun run edit).
+- 19:24 BUILDER RUNNING n28-07-ray-molotov since 19:24 (in-session Sonnet subagent, brief
+  evidence/briefs/n28-07-ray-molotov.md: ray gun walk by half sheets, pistol-sheet fallback, mini-nuke stop-gap column, then
+  molotov; ray gun commit by 20:02, molotov by 20:28, END 20:35). It commits nothing if no image returns.
+- 19:24 Combat's 19:12 finding (NEED keys): "the ATTACK CLAW prompt box covers chip numbers 1-3 in the game itself". Checked:
+  that box is the bot film's act caption (`project/dev/test_player/gauntlet_bot_film.gd` `_caption()`, `_label.text =
+  tr(bot.act())`), dev-only, not in the shipped game; their still is from that film. Not a keys fault; the caption is
+  combat's dev film. The real keys part: chip 1's plate sits at the left screen edge (the known 4 px overhang, brief item 5).
+- 19:25 Briefs n28-04 (Gloria brass) and n28-05 (collar p55) now carry the in-session builder header; their {COMMIT}/{END}
+  placeholders are filled by the session that launches them. Time plan: session 4 (~20:52-22:22) hosts ONE call of about
+  70 min; session 5 starts the final gate by 22:55. Image jobs are 4-15 min each, so a 12-image Gloria call will not fit:
+  give it concept (<=2) + p70 strips (<=3) + held art, p55 strips only if time remains. Idea for the next session: have
+  a builder start the next weapon's image job detached (PowerShell Start-Process on gen.mjs) before it ends, so the image
+  waits for the next call instead of the next call waiting for it.
+- 20:11 BUILDER n28-07-ray-molotov 47 n/a accepted-partial: ray gun 011e504f6 (grids) + 7e6918fd3 (evidence; mini-nuke
+  stop-gap column added). Molotov not shipped (run row 1 edit 30 % short, foot_slide run 10.77 cm > 7); round resumable.
+  IMAGES 7 this call (ray gun 4 + the run sheet of session 2, molotov 2) -> 13/60 counting attempts.
+- 20:10 I looked at grid_ray_gun_64.png: the ray gun in one hand in all 8 facings walking and sprinting, donor legs and
+  soles, collar as the plasma rifle's, no rifle remnant; clearer than the stop-gap's ghosted gun. foot_slide 32 px/m walk
+  0.39/1.56 cm (rifle 0.60/1.56), run 6.35/8.26 (rifle 6.69/8.93).
+- 20:10 DECISION ray gun leg IoU: shipped with walk rows 1, 2 at 0.80/0.81 and run rows 1, 2, 6 at 0.82-0.84 against the
+  0.85 bar; sole y exact on 96/96 cells and foot_slide better than the donor, so the misses are pixel drift inside the boot
+  outline, not stride. Alternative is one data value (`walk_grid.by_weapon.ray_gun` back to the stop-gap). For REPORT.
+- 20:10 FRICTION image tool: codex writes the image after 4-6 min, then never copies it to out/ and never exits; the
+  builder copies by hand. The full-sheet ray gun walk produced nothing (twice); half sheets worked.
+- 20:10 BUILDER RUNNING n28-07b-molotov-run since 20:10 (in-session, one run-sheet re-edit, commit only if passes by
+  20:22, END 20:37).
+- 20:11 I looked at grid_molotov_64.png (hybrid, not shipped): the lit bottle in one claw in all 8 facings, the other claw
+  free, flame amber only, collar rigid, donor legs. The look is right; only run row 1's stride length fails (foot_slide).
+- 20:18 BUILDER n28-07b-molotov-run 8 n/a bounced: the re-edited run sheet draws row 1 short again (raw leg IoU
+  0.55-0.89; a prompt line does not fix it). Nothing committed. IMAGES 14/60.
+- 20:19 BUILDER RUNNING n28-07c-molotov-row1 since 20:19 (in-session, prep only: one row-1 image, cut, IoU, composite
+  into final2; commits nothing; END 20:37).
+- 20:22 NEXT (session 4, ~20:52-22:22; it hosts one builder call of ~70 min, END by 22:07; session 5 commits only
+  until 22:40, starts the final gate `node tools/gate/run.mjs --rev=HEAD` by 22:55, then films + REPORT):
+  (1) Read the n28-07c report in `gtai-art/rivet-n28/molotov/STATE.md` (that call commits nothing; no builder runs after
+  20:37). (2) One call, brief to write (n28-08): part A finish the molotov from STATE "Next" (wire, capture, foot_slide,
+  commit by ~21:25); if row 1 still fails, DECISION: ship row 1 from the donor-leg hybrid only if foot_slide <= 7, else
+  leave the molotov on the stop-gap and say so. Part B Gloria brass: brief n28-04 trimmed to concept (<= 2 images) + p70
+  held strips (<= 3) + held art; start the concept image in the background while part A's Godot work runs. Fill
+  {COMMIT1}/{COMMIT2}/{END}. (3) Not reachable tonight at this image speed (4-6 min per image, one call per session):
+  plasma sword grid, Gloria's own walk grid, the p55 collar, Gloria p55 strips: REPORT "Next steps" with the round
+  states. If session 5 has room before 22:40, the p55 collar (n28-05, art-only composite) is the cheapest of them.
+  (4) Five-weapon 32 px/m clip (only shipped grids: homing shard, mini-nuke, ray gun, molotov if shipped) after the gate.
+  Ledger so far: BUILDER n28-07 47 min accepted-partial, n28-07b 8 min bounced, n28-07c running. IMAGES 15/60 with 07c.
+- 20:25 BUILDER n28-07c-molotov-row1 7 n/a accepted (prep): a one-row edit fixed run row 1 (leg IoU 0.844-0.887 per cell,
+  was 0.55-0.74); composite `gtai-art/rivet-n28/molotov/final3/`. IMAGES 15/60. Lesson: a row the full-sheet edit draws
+  short is fixed by a one-row job, not by a prompt line.
+- 20:26 BUILDER RUNNING n28-07d-molotov-wire since 20:26 (in-session: wire final3, capture, foot_slide; commits only if
+  it can start by 20:31, else leaves wired files UNCOMMITTED in the tree, listed in molotov/STATE.md; END 20:44).
+  Session 4: if `git status` shows uncommitted molotov files, check STATE.md numbers and have the next call commit them.
+- 20:31 BUILDER n28-07d-molotov-wire 5 n/a bounced (not committed): walk passes (hold 0.43/1.56 cm, rifle 0.60/1.56), run
+  fails (step 10.94/20.31 cm, rifle 6.69/8.93), the same number as before the row-1 fix (10.77/20.3), so row 1 is NOT
+  what the foot-slide lane measures or not the cause. Per-column output: build/fs_molotov.json.
+- 20:31 UNCOMMITTED in the tree (left by n28-07d, on purpose): p70 `rivet_walk_eq_molotov.png(.import)`,
+  `rivet_run8_eq_molotov.png(.import)`, `rivet_motion.json` (molotov rows), `test_rivet_grid_stride.gd` (3 pins),
+  `steam/ai-provenance/2026-11.jsonl` (2 lines). run_unit --changed 714 passed with them.
+- 20:32 NEXT (session 4, replaces the 20:22 NEXT item 2 part A): first brief (n28-08) part A = molotov: from
+  build/fs_molotov.json find which strip row/cells the 32 px/m foot-slide lane reads and why it slips (compare the
+  ray gun's wiring: it KEPT run_row_k at 1 for the flagged rows, this one dropped them; check the run cells of that row
+  against the donor's legs); fix by putting the donor's legs under the edited arms in the slipping cells (82 % seam as
+  final2), re-wire, re-measure; commit if run <= 7. Fallback DECISION if it still fails by ~21:25: commit walk-only
+  (drop the run8 png, its provenance line and its rows so the run stays the stop-gap) and say so; never leave the files
+  uncommitted past session 4. Then part B Gloria brass as in the 20:22 NEXT. IMAGES 15/60. No builder running now.
