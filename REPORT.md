@@ -69,6 +69,7 @@ Seeds 1 to 10 (`evidence/n27-pressure/takes/seeds.md`):
 | `project/features/gauntlet/gauntlet_combat.gd` (seed 9 stall fix) | 12-16, 18, 53-66, 120, 122, 123 (28 mapped tests) | 14 / 15 (93 %) | line 18 initial `_last_damage_tick`, overwritten when a wave goes live: equivalent |
 | `project/features/gauntlet/bot/bot_arena_moves.gd` | 7-15, 54 (2 named tests; only 4 mutants on those lines) | 3 / 4 (75 %) | line 13 input index 0 -> 1 with a one-entry input: equivalent |
 | `project/dev/gauntlet/pressure_pair.gd` (take) | sample of 12 | 7 / 12 (58 %), then 4 / 5 on lines 83, 110 after two asserts | 3 equivalent, 1 needs a tick pin |
+| `project/dev/gauntlet/pressure_rifles.gd` (spaced change) | 37-45, 68-76, sample of 10 | 4 / 10 (40 %) | shipped pair and salvo values no test pinned; start offset equivalent |
 
 ### 5. What kills the test player, and when (after melee `4a3ff4b04`; `evidence/n27-pressure/medians/melee/killers.md`)
 
@@ -101,11 +102,32 @@ wave is a median 99 % of max (10th percentile 78 %, 180 waves). The comparison's
 
 ## What does not
 
-PENDING
+- **The blade take's third rifleman never fires.** `blade6` fires in pairs from rifleman 1 then 2; the third stands.
+  The share is still measured on 1300 rounds, but the film shows two shooters, not three.
+- **The dash take is safe only while the two rockets leave close together.** After 10 s in seeds 3 and 5 the troopers
+  drift, the second rocket comes 36 to 49 ticks after the first, the dash is still on its cooldown, and Rivet loses 40
+  to 48 HP (section 2). The film (seed 1) does not show this; `takes/dash_late.md` does.
+- **Mutate on the stall fix is thin on the bot side**: `bot_arena_moves.gd` gives only 4 mutants on the fix's lines
+  (3 / 4, the survivor is equivalent). The take files' scores are samples of 10 to 12 mutants, not whole files.
+- **`deflect_6m_32.mp4` is a second-generation encode** (a crf 26 re-encode of the crf 16 master, to fit the size);
+  said in its `frames.json` note.
+- **The deflect spark has a small red fleck** (seen in `guard_return_64.png`): existing deflect VFX, not this lane's
+  file. Red is blood only: for the Director.
+- `tools/gate/quick.mjs`'s parse check reports `pressure_rifles.gd` (it names `MeleeTable`, which needs the autoloads
+  a bare `--check-only` does not load); headless runs, lint and the unit tests pass.
 
 ## What blocked or slowed you (minutes each)
 
-PENDING
+- **One Godot per lane** (~60 min of builder time queued): the measurement batches (main, after keys, after melee,
+  two what-if arms, each ~10 to 15 min a salt) and the builder's takes and films could not run at the same time; the
+  builder read and wrote code while it waited (`godot-free-*.txt` handshakes).
+- **Scratch merges re-import** (~10 min each, twice): the after-keys and after-melee scratch trees needed a full
+  `--import`; the what-if `ablate.mjs` re-imported once more because the copied class cache named a dev file the
+  builder had just added (~3 min).
+- **Call 2 hit the 75 min cap** (its last commit landed; the 10-seed mutate re-run was left for call 3).
+- **The cadence film caption overflowed** the panel (~10 min: a re-film at 780 px).
+- Melee landed its mastery changes before posting a MILESTONE line; the after-melee column was taken at its merge
+  `4a3ff4b04` (no wait).
 
 ## Calls for the owner
 
@@ -137,10 +159,22 @@ PENDING
 - `tools/debt/baseline.json`: a conflict with other lanes' dev_loc rises is expected; run
   `node tools/debt/merge_baseline.mjs`, then `--update`.
 - The measurement merges (keys `e1c4b73d9`, melee `4a3ff4b04`) lived in a scratch worktree only.
+- **NEED Director: `tools/evidence/cites.mjs` dies with `spawnSync git ENOBUFS` on this branch.** It reads
+  `git ls-files` through `tools/lib/repo.mjs` `git()`, which has Node's default 1 MB `maxBuffer`; main's path list is
+  1,004,031 bytes and this branch's 776 median run files take it to 1,060,758. After the merge it fails on main for
+  every lane. One-line fix, not this lane's file: `maxBuffer: 1 << 28` in `repo.mjs` `git()` (as
+  `tools/style/uid_files.mjs` and `tools/gate/staged_tree.mjs` already do). The gate is not affected. This REPORT's
+  cites were run through a shell shim that raises the buffer: 32 paths, 30 ok, 2 pattern.
 
 ## Next steps
 
-PENDING
+1. After the owner plays: apply his numbers to the stomp (`enemies.json` war machine) or to `repair_in_wave`, then
+   re-run the three medians with `tools/gauntlet/ablate.mjs` against this run's after-melee column.
+2. If he wants the sword to beat paired rounds: one data value (recovery ticks or a second deflect window) measured
+   with `blade6` against `blade6_spaced`, both already in `test_pressure_takes`.
+3. If he wants two troopers to be beaten by dashing alone: the 40-tick dash cooldown is the keys lane's
+   `rivet_motion.json`; `pair_dash` seeds 3 and 5 are the cases to re-run.
+4. Let `blade6`'s third rifleman fire (dev take), and re-film `deflect_6m` from the master in one encode.
 
 ## Builder ledger
 
@@ -149,4 +183,5 @@ PENDING
 | 1 | takes | 65 | $3.22 | accepted |
 | 2 | measure | 75 (cap) | $1.31 | accepted |
 | 3 | films | 53 | $2.74 | accepted |
-| 4 | contrast | PENDING | | |
+| 4 | contrast | 73 | $2.09 | accepted (caption overflow fixed in the same call) |
+| 5 | close | PENDING | | |
