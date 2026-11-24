@@ -35,7 +35,7 @@ export function ownGdFiles() {
 }
 
 export function git(...args) {
-  return execFileSync('git', ['-C', ROOT, ...args], { encoding: 'utf8' }).trim();
+  return execFileSync('git', ['-C', ROOT, ...args], { encoding: 'utf8', maxBuffer: 1 << 28 }).trim();
 }
 
 /** Tracked or untracked-but-not-ignored changes, as porcelain lines. */
