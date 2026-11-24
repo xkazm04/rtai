@@ -1,9 +1,12 @@
 # REPORT lane keys, run n28 (2026-11-24 16:40 to 00:40)
 
-DRAFT written in session 4 (20:58); sessions 5/6 finish every section marked TODO.
-
-Branch `n28-keys` from `main` `d0ab9d03a`; worktree `C:\Users\kazda\kiro\gtai-wt\n23-controls`. Final gate: TODO
-(`node tools/gate/run.mjs --rev=HEAD` line and `gate.json` path). Films and stills: `C:\Users\kazda\kiro\gtai-masters\n28\keys\`
+Branch `n28-keys` from `main` `d0ab9d03a`; worktree `C:\Users\kazda\kiro\gtai-wt\n23-controls`. Final gate (`node tools/gate/run.mjs --rev=HEAD --reels` on
+`15eb87301`, code = `e0a82abf0`, the last product commit): **`gate: FAIL`** on a load timeout only: PASS lint (19 checks,
+2256 files), PASS unit-tests (4201 passed, 0 failed, 2 skipped), **FAIL scenario-tests: TIMED OUT after 1505 s, 0 failed**
+(60/68 ran ok; four lanes' gates on the machine: rivet_throw 204.7 s vs 7.8 s alone), PASS parity (bit for bit, mutation
+caught at step 629), PASS selftest, PASS export-audit (995/0), PASS reels (exit 0); `build/gate/15eb8730107e/gate.json`.
+The same code ran 68/68 scenarios ok alone at 22:25 (`build/scen_n28.log`); the 8 not reached in the gate are re-run alone
+in session 6 (`build/scen8_n28.log`, result in JOURNAL). Films and stills: `C:\Users\kazda\kiro\gtai-masters\n28\keys\`
 (`frames.json`). Builder: in-session Sonnet subagents from 18:03 (builder.mjs's account hit its weekly limit at 17:44).
 
 ## What works
@@ -48,7 +51,8 @@ Branch `n28-keys` from `main` `d0ab9d03a`; worktree `C:\Users\kazda\kiro\gtai-wt
 - Gloria's own walk and run grid (image edits of the pistol's sheets) was not started: she walks on the bare stride with
   the brass gun in the palm (the owner's interim rule). The p55 Gloria held strips are still n27's; only p70 is brass.
 - Gloria's left p70 strip: in cells 2 and 3 the muzzle is clipped flat by the cell edge (a few px; fix = wider left cells).
-- In-game stills of the brass Gloria at 64 and 32 px/m beside the pistol: TODO (after the gate).
+- In-game stills of the brass Gloria at 64 and 32 px/m beside the pistol: not made (the gate held the lane's one Godot
+  until 23:38 and session 6 started at the freeze). The sheet-pixel strip `gloria_strips_n27_n28_pistol.png` stands in.
 
 ## What blocked or slowed you (minutes each)
 

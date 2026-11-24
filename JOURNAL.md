@@ -341,3 +341,12 @@
 - 23:28 Reels slow under load (top at chapter 19 after ~10 min; last run's top took 5 min): the gate (node, from
   build/gate_n28.sh, detached) will finish in session 6. GATE RUNNING --reels on 15eb87301 since 22:38; do not start Godot
   until build/gate_n28.exit exists. No builder running. Session 5 ends.
+
+## Session 6 (00:10, STABILIZE; started at the freeze)
+- 00:10 Gate --reels on 15eb87301 finished 23:38 (`build/gate_n28.exit` = 1): `gate: FAIL` only on scenario-tests TIMED
+  OUT after 1505 s (0 failed, 60/68 ok); lint, unit 4201/0, parity, selftest, export-audit, **reels PASS**.
+  `build/gate/15eb8730107e/gate.json`. Quoted in REPORT header.
+- 00:10 DECISION no films builder (n28-10 brief) this session: it starts at the freeze with 10 min to REPORT; the Gloria
+  in-game stills are recorded in REPORT "What does not". No builder launched; no product files touched.
+- 00:11 8-scenario rerun alone started on HEAD (`node tools/tests/run_scenarios.mjs --only=showcase_director,...,vehicle_yield`,
+  log `build/scen8_n28.log`). REPORT: DRAFT line dropped, TODOs filled, cites 6/6 ok; frames.json 14 entries, all files exist.
