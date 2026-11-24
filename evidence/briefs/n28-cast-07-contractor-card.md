@@ -1,8 +1,10 @@
 # Brief n28-cast-07: the contractor card draws, cadence and feet measured, checklist (on only if all pass)
 
 Lane `cast`, branch `n28-cast`, worktree `C:\Users\kazda\kiro\gtai-wt\n23-prologue` (your cwd). Do NOT switch branches.
-**Hard stop 20:34 local** (check `date` often). **Start your first commit by 20:28; start your last commit by
-20:28.** THIS CALL (launched 20:19, 15 minutes): part 1 ONLY (the card draws when on, off = main, tests). If not green by 20:28, commit nothing; leave the work uncommitted and list the paths. Never leave finished work uncommitted; if a part is not green by the last-commit time, commit nothing
+**Hard stop HARDSTOP local** (check `date` often). **Start your first commit by COMMIT1; start your last commit by
+LASTCOMMIT.** Part 1 is DONE (`cd738c9a6`: the generic `CastCards.current` -> `FoeCastView.feed` -> `CastCardPose` /
+`CastFarCard` path draws him once the row is on; quest 1 contractors skip at `arena_rigs.gd:150`). This call starts at part 2.
+Never leave finished work uncommitted; if a part is not green by the last-commit time, commit nothing
 half-made, list the paths in your report.
 
 Read first, in full: `evidence/briefs/n28-cast-03-contractor.md` (bars, Films path, owned-file ALLOWLIST, FORBIDDEN list,
