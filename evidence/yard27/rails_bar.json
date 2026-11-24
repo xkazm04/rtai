@@ -1,0 +1,204 @@
+{
+ "frame": "seed 7, tick 6000, tilt 70, 32 px/m, 1920x1080, line_fire, place=mid",
+ "method": "collision box projected with ground_k=sin70 (x 32 px/m, y 30.07 px/m); body mask = the drawn art alpha>128 stretched into the box; ring = box grown 0.5 m minus the box and the other boxes; luminance = Rec.709 on linear RGB; frame_dark_cov = share of box pixels below 0.6 x the ring luminance; Rivet = disc r 0.45 m at his position",
+ "before": {
+  "covers": {
+   "conveyor_door": {
+    "box_px": [
+     173,
+     36
+    ],
+    "coverage_raw": 0.259,
+    "coverage_closed_0.5m": 0.34,
+    "lum_body": 0.082,
+    "lum_ring": 0.26,
+    "contrast": 0.178,
+    "frame_dark_cov": 0.724
+   },
+   "conveyor_feed": {
+    "box_px": [
+     166,
+     36
+    ],
+    "coverage_raw": 0.26,
+    "coverage_closed_0.5m": 0.338,
+    "lum_body": 0.03,
+    "lum_ring": 0.25,
+    "contrast": 0.22,
+    "frame_dark_cov": 0.467
+   },
+   "conveyor_turn": {
+    "box_px": [
+     166,
+     36
+    ],
+    "coverage_raw": 0.2,
+    "coverage_closed_0.5m": 0.245,
+    "lum_body": 0.018,
+    "lum_ring": 0.202,
+    "contrast": 0.184,
+    "frame_dark_cov": 0.41
+   },
+   "conveyor_return": {
+    "box_px": [
+     173,
+     36
+    ],
+    "coverage_raw": 0.262,
+    "coverage_closed_0.5m": 0.324,
+    "lum_body": 0.019,
+    "lum_ring": 0.234,
+    "contrast": 0.215,
+    "frame_dark_cov": 0.456
+   },
+   "conveyor_bend": {
+    "box_px": [
+     166,
+     36
+    ],
+    "coverage_raw": 0.2,
+    "coverage_closed_0.5m": 0.245,
+    "lum_body": 0.019,
+    "lum_ring": 0.189,
+    "contrast": 0.17,
+    "frame_dark_cov": 0.371
+   },
+   "conveyor_tail": {
+    "box_px": [
+     173,
+     36
+    ],
+    "coverage_raw": 0.267,
+    "coverage_closed_0.5m": 0.343,
+    "lum_body": 0.017,
+    "lum_ring": 0.209,
+    "contrast": 0.192,
+    "frame_dark_cov": 0.462
+   }
+  },
+  "gap": {
+   "lum_body": 0.046,
+   "lum_ring": 0.274,
+   "contrast": 0.228,
+   "pieces": 20
+  },
+  "gap_vs_nogap": {
+   "lum_with": 0.046,
+   "lum_without": 0.266,
+   "darkening": 0.221
+  },
+  "rivet": {
+   "at_px": [
+    480,
+    955
+   ],
+   "lum_body": 0.162,
+   "lum_ring": 0.141,
+   "contrast": 0.02
+  },
+  "summary": {
+   "min_cov_raw": 0.2,
+   "mean_rail_contrast": 0.193
+  }
+ },
+ "after": {
+  "covers": {
+   "conveyor_door": {
+    "box_px": [
+     173,
+     36
+    ],
+    "coverage_raw": 0.521,
+    "coverage_closed_0.5m": 0.689,
+    "lum_body": 0.068,
+    "lum_ring": 0.228,
+    "contrast": 0.16,
+    "frame_dark_cov": 0.757
+   },
+   "conveyor_feed": {
+    "box_px": [
+     166,
+     36
+    ],
+    "coverage_raw": 0.539,
+    "coverage_closed_0.5m": 0.704,
+    "lum_body": 0.032,
+    "lum_ring": 0.245,
+    "contrast": 0.212,
+    "frame_dark_cov": 0.998
+   },
+   "conveyor_turn": {
+    "box_px": [
+     166,
+     36
+    ],
+    "coverage_raw": 0.408,
+    "coverage_closed_0.5m": 0.501,
+    "lum_body": 0.02,
+    "lum_ring": 0.217,
+    "contrast": 0.197,
+    "frame_dark_cov": 0.994
+   },
+   "conveyor_return": {
+    "box_px": [
+     173,
+     36
+    ],
+    "coverage_raw": 0.576,
+    "coverage_closed_0.5m": 0.747,
+    "lum_body": 0.019,
+    "lum_ring": 0.237,
+    "contrast": 0.218,
+    "frame_dark_cov": 1.0
+   },
+   "conveyor_bend": {
+    "box_px": [
+     166,
+     36
+    ],
+    "coverage_raw": 0.408,
+    "coverage_closed_0.5m": 0.501,
+    "lum_body": 0.02,
+    "lum_ring": 0.211,
+    "contrast": 0.191,
+    "frame_dark_cov": 0.999
+   },
+   "conveyor_tail": {
+    "box_px": [
+     173,
+     36
+    ],
+    "coverage_raw": 0.521,
+    "coverage_closed_0.5m": 0.689,
+    "lum_body": 0.018,
+    "lum_ring": 0.206,
+    "contrast": 0.188,
+    "frame_dark_cov": 0.996
+   }
+  },
+  "gap": {
+   "lum_body": 0.102,
+   "lum_ring": 0.279,
+   "contrast": 0.177,
+   "pieces": 20
+  },
+  "gap_vs_nogap": {
+   "lum_with": 0.102,
+   "lum_without": 0.266,
+   "darkening": 0.164
+  },
+  "rivet": {
+   "at_px": [
+    480,
+    955
+   ],
+   "lum_body": 0.162,
+   "lum_ring": 0.141,
+   "contrast": 0.02
+  },
+  "summary": {
+   "min_cov_raw": 0.408,
+   "mean_rail_contrast": 0.194
+  }
+ }
+}
