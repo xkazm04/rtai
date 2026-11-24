@@ -504,3 +504,26 @@ steady drawing-change step), not by a film.
 | reversal, body jump | 9.60 | 9.39 | 9.60 | 9.01 | PASS |
 
 The strafing speed in a fight was not measured separately (the fight film moves him at the sim's own speed).
+
+**Contractor, n28: checklist (brief 08 part C, one frozen-exposure launch, row stays OFF).** Tools: `project/dev/cast/cast_contractor_poses.gd`
+(one launch: 70/32, 70/64, 55/64, frozen live/raw/ground exposures and shadow-off pairs, row forced on by `CastMulroneyPreview.enable`),
+`cast_contractor_lineup.gd` (+ `tools/art/cast_contractor_lineup.mjs`: Rivet, patrol, contractor at 70/32, 55/32, 70/64),
+`tools/art/cast_contractor_review.py` (rim, shadow, live palette), `tools/art/cast_contractor_ink.py`. Evidence in
+`build/cast/contractor/` (git-ignored); beside still `gtai-masters/n28/cast/contractor_beside_64ppm_tilt70.png`. Screen px.
+
+| Point (checklist bar) | Number | Verdict |
+|---|---|---|
+| Size at 32 px/m, front / back silhouette, 70: contractor 56 / 58, patrol 43 / 44, Rivet 77 / 73; 55: contractor 57 / 59, patrol 44 / 46, Rivet 75 / 74 | never taller than Rivet (21 px under at 70 front); 13 px (30 %) taller than the patrol cop, so not "the cop's height" (at 64 px/m 70: 111 / 117 against patrol 87 / 88, Rivet 154 / 146) | PASS on the bar (not taller than Rivet); note: much taller than the patrol |
+| Live 64 px/m rim, dark exterior px, walk / attack, 70 and 55 | 0 / 0 and 0 / 0 | PASS |
+| Live rim, hit, pulse frame (4 ticks after the strike, flash lit) 70 / 55 | 175 / 221 (bar 0) | **FAIL** |
+| Live rim, hit, calm frame (9 ticks after the strike, still the hit drawing) 70 / 55 | 0 / 0 | PASS |
+| Live rim, fall cell 0 / 1 / 2 70 | 604 / 87 / 0 (55: 720 / 165 / 0) | **FAIL** on cells 0 and 1 (the flash is lit); cell 2 PASS |
+| Control, same harness, the shipped lancer card (`GTAI_CAST_CONTROL=rocket_trooper`), 70 | walk 0, attack 0, hit 482, fall cell 0 1161 (55: hit 596, fall 1079) | the shared hit flash (`CutRig.set_tint`, tinted part material on a raw card) draws a black halo while lit; the shipped lancer shows it too. Warden (`painted_ink`) and gunner (no tint) are 0 by construction. Looked at `edge_fall/live.png` against `raw.png`: a solid black outline about 4 px wide around the whole figure on the live one |
+| Shadow, same-pose toggle, 32 px/m 70 front three-quarter, px darkened >= 12 | stand 237, tell 280, fire 280, hit_1 159, hit_4 284, hit_6 283 (patrol 236) | PASS (150-350); separate ground contact seen under him in every frame, no baked key shadow |
+| Ink, sheets at 192 px, front passing pose, left contour y = 70 / 75 / 80 (patrol 3,3,4 / 3,3,3), 8-drawing walk col 0 rows 0-7 | 70: 2,2,1 / 2,2,2 / 1,2,1 / 1,2,1 / 1,3,1 / 1,2,1 / 1,3,1 / 1,2,1; 55: 2,1,2 / 2,1,2 / 2,1,2 / 2,1,2 / 3,1,1 / 3,1,1 / 2,1,2 / 2,1,2 | within 2 px at 55; at 70 the y = 80 run is 1 where the patrol's is 4 (3 px, row 1 is 2): thinner than the patrol by about 3 px there. Live frames at 64 and 32 (walk_1_0, walk_1_2, walk_2_3, walk_3_5) looked at: contours closed, hands and SMG whole, no double hatching: PASS on the look |
+| Live palette, hat (S <= 0.12, V >= 0.78): walk / attack, 70 and 55 | S 0.067 / 0.051 (70), 0.068 / 0.078 (55); V 0.896 / 0.903, 0.886 / 0.862 | PASS |
+| Live palette, vest (median hue >= 45) | walk 51.0 (70), 46.7 (55); attack 45.8 (70), 46.3 (55); share under 45: 1.2 / 41.9 % (70), 9.3 / 32.5 % (55) | PASS on the median; thin margin on attack (45.8) |
+| Live palette, red, vermilion, teal, blue / navy px on the figure | 0 / 0 / 0 / 0 on walk and attack at both pitches; the hit and fall frames hold the black flash only | PASS |
+| **Size jump on attack and hit (found while looking)** | same facing, 70 at 64 px/m, silhouette height: stand 86, tell 64, fire 65, hit_1 55, hit_4 69 (55: 88 / 66 / 68 / 53 / 66). Ratio about 0.74 to 0.77 = 192/256: the eight-drawing walk and the `padded` sheets take the 256/192 cell ratio (`CastCardKinds.fill`, `padded`: only `appliance_warden_` and `robot_gunner_`), his `contractor_attack` and `contractor_cast_hit` (256 px cells, figure 187 texels like the walk) do not, so he shrinks by a quarter whenever he aims or is hit | **FAIL** (likely cause; needs `contractor_` in `CastCardKinds.padded`, `project/features/characters/cast_card_kinds.gd`, outside this lane's allowlist: NEED) |
+
+**Verdict (n28, brief 08): he stays OFF.** Failing: the live rim on the hit and fall exposures while the flash is lit (175 / 221 and 604 / 720 dark exterior px against bar 0; calm 0; the shipped lancer shows the same, so this may be the bar's reading rather than his art) and the attack / hit size jump (about 0.75 of the walk, a likely one-line `padded` NEED). Not done because of that: the two films, `enabled: true`, the decisions line, `frames.json`.

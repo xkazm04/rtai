@@ -181,7 +181,8 @@
         "2026-11-24: down-right walk direction for the n28 door films (dev_loc 37639 -> 37642)",
         "2026-11-24: cast_impact_edge dev scene for the n28 impact outline check (dev_loc 37642 -> 37773)",
         "2026-11-24: contractor feet take for n28 cast (dev_loc 37773 -> 37778)",
-        "2026-11-24: contractor measurement scenes (turns, poses, lineup) in project/dev/cast for n28 cast (dev_loc 37778 -> 38011)"
+        "2026-11-24: contractor measurement scenes (turns, poses, lineup) in project/dev/cast for n28 cast (dev_loc 37778 -> 38011)",
+        "2026-11-24: contractor poses control and calm-frame takes in project/dev/cast for n28 cast (dev_loc 38011 -> 38037)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -190,7 +191,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 692,
-        "project/dev/cast": 2654,
+        "project/dev/cast": 2680,
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
@@ -223,7 +224,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 38011
+      "total": 38037
     },
     "direct_cmdline_reads": {
       "accepted": [
