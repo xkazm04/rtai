@@ -1,0 +1,241 @@
+{
+  "command": "node evidence/n26/bond/probe.mjs 1 12",
+  "controls": "wheel",
+  "death": null,
+  "profile": "average",
+  "seed": 1,
+  "wave_reached": 12,
+  "waves": [
+    {
+      "bond": {
+        "dent": 0.0,
+        "kerf": 0.0,
+        "ohm": 0.0,
+        "tonnage": 0.0
+      },
+      "form_seconds": {
+        "rivet": 10.72
+      },
+      "n": 1,
+      "offered": [
+        "ghost_tonnage",
+        "weapon_gloria",
+        "stat_hp_max_10"
+      ],
+      "seconds": 10.7166666666667,
+      "taken": "ghost_tonnage"
+    },
+    {
+      "bond": {
+        "dent": 0.0,
+        "kerf": 0.0,
+        "ohm": 0.0,
+        "tonnage": 3.0
+      },
+      "form_seconds": {
+        "rivet": 8.0
+      },
+      "n": 2,
+      "offered": [
+        "stat_hp_max_10",
+        "stat_regen_10",
+        "weapon_machine_pistol"
+      ],
+      "seconds": 8.0,
+      "taken": "stat_hp_max_10"
+    },
+    {
+      "bond": {
+        "dent": 0.0,
+        "kerf": 0.0,
+        "ohm": 0.0,
+        "tonnage": 6.0
+      },
+      "form_seconds": {
+        "rivet": 15.87
+      },
+      "n": 3,
+      "offered": [
+        "stat_damage_10",
+        "stat_regen_10",
+        "weapon_hand_cannon"
+      ],
+      "seconds": 15.8666666666667,
+      "taken": "stat_damage_10"
+    },
+    {
+      "bond": {
+        "dent": 0.0,
+        "kerf": 0.0,
+        "ohm": 0.0,
+        "tonnage": 9.0
+      },
+      "form_seconds": {
+        "rivet": 14.9
+      },
+      "n": 4,
+      "offered": [
+        "stat_speed_25",
+        "weapon_plasma_sword",
+        "ghost_dent"
+      ],
+      "seconds": 14.9,
+      "taken": "ghost_dent"
+    },
+    {
+      "bond": {
+        "dent": 0.0,
+        "kerf": 0.0,
+        "ohm": 0.0,
+        "tonnage": 10.0
+      },
+      "form_seconds": {
+        "rivet": 17.73
+      },
+      "n": 5,
+      "offered": [
+        "weapon_flamethrower",
+        "weapon_machine_pistol",
+        "weapon_hand_cannon"
+      ],
+      "seconds": 17.7333333333333,
+      "taken": "weapon_flamethrower"
+    },
+    {
+      "bond": {
+        "dent": 0.0,
+        "kerf": 0.0,
+        "ohm": 0.0,
+        "tonnage": 19.0
+      },
+      "form_seconds": {
+        "rivet": 18.68
+      },
+      "n": 6,
+      "offered": [
+        "weapon_electro_baton",
+        "weapon_gatling",
+        "stat_guard_meter_10"
+      ],
+      "seconds": 18.6833333333333,
+      "taken": "weapon_gatling"
+    },
+    {
+      "bond": {
+        "dent": 0.0,
+        "kerf": 0.0,
+        "ohm": 0.0,
+        "tonnage": 24.0
+      },
+      "form_seconds": {
+        "rivet": 37.2
+      },
+      "n": 7,
+      "offered": [
+        "effect_overkill_carry",
+        "weapon_katana",
+        "weapon_chainsaw"
+      ],
+      "seconds": 37.2,
+      "taken": "weapon_katana"
+    },
+    {
+      "bond": {
+        "dent": 0.0,
+        "kerf": 0.0,
+        "ohm": 0.0,
+        "tonnage": 25.0
+      },
+      "form_seconds": {
+        "rivet": 26.42
+      },
+      "n": 8,
+      "offered": [
+        "master_tonnage",
+        "stat_regen_10",
+        "stat_speed_10"
+      ],
+      "seconds": 26.4166666666667,
+      "taken": "master_tonnage"
+    },
+    {
+      "bond": {
+        "dent": 0.0,
+        "kerf": 0.0,
+        "ohm": 0.0,
+        "tonnage": 25.0
+      },
+      "form_seconds": {
+        "rivet": 24.5,
+        "tonnage": 3.53
+      },
+      "n": 9,
+      "offered": [
+        "stat_guard_meter_25",
+        "weapon_pistol",
+        "weapon_chainsaw"
+      ],
+      "seconds": 28.0333333333333,
+      "taken": "stat_guard_meter_25"
+    },
+    {
+      "bond": {
+        "dent": 0.0,
+        "kerf": 0.0,
+        "ohm": 0.0,
+        "tonnage": 25.0
+      },
+      "form_seconds": {
+        "rivet": 19.13
+      },
+      "n": 10,
+      "offered": [
+        "weapon_gloria",
+        "stat_speed_10",
+        "weapon_pistol"
+      ],
+      "seconds": 19.1333333333333,
+      "taken": "stat_speed_10"
+    },
+    {
+      "bond": {
+        "dent": 0.0,
+        "kerf": 0.0,
+        "ohm": 0.0,
+        "tonnage": 25.0
+      },
+      "form_seconds": {
+        "rivet": 28.53,
+        "tonnage": 7.1
+      },
+      "n": 11,
+      "offered": [
+        "weapon_rocket_launcher",
+        "stat_guard_meter_10",
+        "stat_regen_10"
+      ],
+      "seconds": 35.6333333333333,
+      "taken": "weapon_rocket_launcher"
+    },
+    {
+      "bond": {
+        "dent": 0.0,
+        "kerf": 0.0,
+        "ohm": 0.0,
+        "tonnage": 25.0
+      },
+      "form_seconds": {
+        "rivet": 50.83,
+        "tonnage": 14.2
+      },
+      "n": 12,
+      "offered": [
+        "stat_guard_meter_10",
+        "weapon_pistol",
+        "weapon_hand_cannon"
+      ],
+      "seconds": 65.0333333333333,
+      "taken": "stat_guard_meter_10"
+    }
+  ]
+}

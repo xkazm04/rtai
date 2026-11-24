@@ -1,0 +1,21 @@
+Kerf’s deployed cut now takes at most **10% of a boss’s maximum HP**, after armour and damage bonuses. A rear cut on the 26 HP war machine dropped from **6 HP to 2.6 HP**. The appliance warden also lost its claw exemption.
+
+| Arm | Wave 5 mean clear time | Clears | Wave 10 mean clear time | Clears |
+|---|---:|---:|---:|---:|
+| `no_kerf` | 15.49 s | 10/10 | 34.80 s | 4/10 |
+| `kerf_uncapped` | 13.20 s | 10/10 | 24.61 s | 3/10 |
+| `kerf_capped` | 14.34 s | 10/10 | 28.68 s | 3/10 |
+
+Wave 5 was already below 25 seconds on every seed without Kerf. I used the brief’s fallback and budgeted **2 seconds saved per deployment**. Across paired clears, the cap saved 0.96 seconds per release on wave 5 and 1.71 seconds on wave 10. The probe started directly on each seeded block with a fixed pistol loadout and both health cards. [Results, ranges and 95% intervals](evidence/n26/kerf-cap/boss-wave.md) · [Per-seed damage, health loss and boss TTK](evidence/n26/kerf-cap/boss-wave.json)
+
+**Boss rule.** The cap applies to `arena.boss`, boss-kind or boss-body fighters, boss-body archetype rows, and the first slot of a gauntlet boss wave. A war machine outside that slot takes ordinary damage unless independently marked as a boss.
+
+**Verification.** All 19 lint checks, 16 warden tests, 26 Kerf tests, 7 focused scenarios and 68 full-suite scenarios passed. The 60-second, city, arena-moves and quest-input tapes and the quest checkpoint were byte-identical. The 60-second digest remained `cbeb734ff9b97c41`. Native parity matched over 1,200 steps. Seven historical tapes retained their documented tick-60 divergence. No digest was re-pinned. [Tape list and hashes](evidence/n26/kerf-cap/verification.md)
+
+**Mutation scores:** Kerf **19/20**, electric finishers **9/9 valid** with one invalid mutant, melee finishers **9/10**.
+
+The stills use the same wounded war machine at 6 HP. The uncapped cut kills it and the capped cut leaves 3.4 HP. A full-health machine already survived the uncapped cut on this branch. [32 px/m before](evidence/n26/kerf-cap/frames/kerf-before-32.png) · [after](evidence/n26/kerf-cap/frames/kerf-after-32.png) · [64 px/m before](evidence/n26/kerf-cap/frames/kerf-before-64.png) · [after](evidence/n26/kerf-cap/frames/kerf-after-64.png)
+
+**Commits.** `03f42c220` changed the warden table and three fixtures. `cf26818eb` changed the ghost attack table, schema, reader and strike, and added the probe, tests and stills. Evidence commits were `83cd62ab0`, `16910ec6e`, `468470a04` and `691a218a2`. The last commit landed at **14:46:09**.
+
+[astra: 3841s, exit 0]

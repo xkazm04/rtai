@@ -1,0 +1,30 @@
+**Seed 1 mastered Tonnage at the wave 8 rest and cleared wave 12.** The longest wave took 65.03 simulated seconds, below the 180-second stall limit. The last commit landed at 15:36:47.
+
+| Commit | Subject |
+|---|---|
+| `ca3d2cc40` | Earn per-form ghost bonds from deploy kills and stuns |
+| `30daba829` | Offer earned ghost mastery at gauntlet rests and record wave bonds |
+| `ac74117e7` | Verify quest tape bond totals, replay identity and native parity |
+| `7741124cb` | Record GhostBond mutation results |
+
+**Implementation.** `GhostBond(table)` exposes `record(form, kills, stuns)`, `value(form)`, `snapshot()`, `ready(form)`, `master(form)`, `mastered(form)`, and `last_deployed_mastered()`. Bond ships enabled at 1 per kill, 0.5 per stun, capped at 25. Taking mastery unlocks only that form. T uses the mastered ghost deployed most recently. [GhostBond](C:/Users/kazda/kiro/gtai-wt/n23-street/project/features/souls/ghost_bond.gd)
+
+**Offer decision.** A full bond replaces a weighted card, preserving the three-slot layout, controls, and one-pick cost. Declined mastery remains eligible. Changes cover the souls deploy and transformation files, gauntlet draw/apply/stats and bot picker, tables and schemas, English card text, and unit and integration tests.
+
+**Probe.** `node evidence/n26/bond/probe.mjs 1 12` produced Tonnage bond **0, 3, 6, 9, 10, 19, 24, 25, 25, 25, 25, 25** on waves 1–12. Dent, Kerf, and Ohm stayed at zero throughout. The bot used Tonnage form on waves 9, 11, and 12. [Per-wave results](C:/Users/kazda/kiro/gtai-wt/n23-street/evidence/n26/bond/smoke.json)
+
+**Verification.** The core run passed 40 tests and the offer run passed 48, including disabled-mode behavior. All 10 focused scenarios and all 68 full-suite scenarios passed. The 60-second replay (`cbeb734ff9b97c41`), city replay, arena-moves tape, Quest 1 input tape, and quest checkpoint were byte-identical. All four bonds ended at **0 on each of eight Quest 1 playbacks**. The seven historical tapes retained their documented tick-60 mismatch. Native parity was exact over 1,200 steps and caught the planted fault at step 629. [Tape-by-tape evidence](C:/Users/kazda/kiro/gtai-wt/n23-street/evidence/n26/bond/tapes.json)
+
+**Mutation score: 17/(17+3) = 85%.** No timeouts or invalid mutants. The survivors affected deploy-history deduplication, kill scaling at the shipped multiplier of 1, and the fallback value for an unknown form. [Mutation results](C:/Users/kazda/kiro/gtai-wt/n23-street/evidence/n26/bond/mutation.json)
+
+```text
+TOUCH project/features/souls/ghost_deploy.gd:54
+TOUCH project/features/souls/ghost_pilot.gd:103
+TOUCH project/features/souls/ghost_pilot.gd:104
+TOUCH project/features/souls/ghost_pilot.gd:108
+NEED story: project/boot/quest1_game.gd:149 — presenting and accepting a story checkpoint offer requires a quest UI hook outside this call’s allowlist.
+```
+
+HUD work, ten-seed tuning, and stills remain for call 2.
+
+[astra: 3019s, exit 0]

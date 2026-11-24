@@ -1,0 +1,214 @@
+{
+  "comparison": "Existing n26 melee pins after brief 01",
+  "focused_passed": [
+    "brutality_kills",
+    "gunplay_fight",
+    "gunplay_fire",
+    "quest1_input",
+    "replay_60s",
+    "rivet_city_melee",
+    "rivet_claw"
+  ],
+  "suite_passed": [
+    "arena_city",
+    "arena_course",
+    "arena_pit",
+    "arena_range",
+    "arena_squad",
+    "arena_stations",
+    "arena_zebra",
+    "autosave_input",
+    "autosave_resume",
+    "bodies_cop",
+    "bodies_crowd",
+    "bodies_runin",
+    "bodies_tackle",
+    "brutality_kills",
+    "car_knocks_rivet",
+    "city_bake",
+    "city_chase",
+    "city_parity_ref",
+    "city_replay",
+    "city_scare",
+    "corpse_horde",
+    "crowd_react",
+    "enemy_pit",
+    "enemy_waves",
+    "ghost_attacks",
+    "gunplay_fight",
+    "gunplay_fire",
+    "handheld_focus_pause",
+    "human_react",
+    "moves_fuzz",
+    "moves_replay",
+    "moves_street",
+    "ohm_bolt_delay",
+    "prologue_checkpoint",
+    "prologue_handover",
+    "prologue_pilot",
+    "quest1_dent",
+    "quest1_dent_lock",
+    "quest1_input",
+    "quest1_kerf",
+    "quest1_keys",
+    "quest1_ohm",
+    "quest1_tonnage",
+    "quest_collect_call",
+    "quest_selftest",
+    "react_line",
+    "replay_60s",
+    "rifle_rack",
+    "rig_stress",
+    "rivet_chainsaw",
+    "rivet_city_fight",
+    "rivet_city_melee",
+    "rivet_claw",
+    "rivet_cover",
+    "rivet_deflect",
+    "rivet_katana",
+    "rivet_pickup",
+    "rivet_switch",
+    "rivet_throw",
+    "rivet_vault",
+    "showcase_director",
+    "showcase_reel",
+    "souls_powers",
+    "traffic_yields_rivet",
+    "vehicle_carnage",
+    "vehicle_doors",
+    "vehicle_drive",
+    "vehicle_yield"
+  ],
+  "repinned": [],
+  "quest1_input": {
+    "checkpoints": [
+      "b2-payphone@755",
+      "b3-toner-room@5564",
+      "b4-dock@12932",
+      "b5-quartermaster@15331",
+      "b6-hot-walk@16173"
+    ],
+    "checkpoint_load": {
+      "beat": "b4-dock",
+      "resumed": true,
+      "tamper_refused": true
+    },
+    "final_hash": "c211ee9720fcc5ffc57d42f3aa33d3dbbdc159332d721fd4236c1537b15fb13a",
+    "paid": 1500,
+    "replay": "identical",
+    "state": "succeeded",
+    "ticks": 19109,
+    "kills": 49,
+    "input_events": 95572,
+    "input_changes": 1053
+  },
+  "replay_60s": "cbeb734ff9b97c41",
+  "rivet_claw": "043cbe54ae78122b5937855f3957363b1c5669368357023144da7052750053ca",
+  "stills": {
+    "view": "tilt70",
+    "pixels_per_metre": [
+      32,
+      64
+    ],
+    "ticks_after_contact": [
+      0,
+      10,
+      30,
+      60
+    ],
+    "events": {
+      "robot_thug": [
+        "execute"
+      ],
+      "robot_gunner": [
+        "execute"
+      ],
+      "shield_robot": [
+        "prime",
+        "execute"
+      ],
+      "war_machine": [
+        "stun"
+      ]
+    },
+    "sources": [
+      "electro_gun",
+      "claw_shock"
+    ],
+    "png_count": 80
+  },
+  "changed_unit": {
+    "passed": 3999,
+    "failed": 0,
+    "skipped": 2
+  },
+  "quick_check": {
+    "standalone": "Reports dependency cascades and allocator shutdown noise in kill-view scripts. Raw --check-only lacks project autoloads (Log and LaunchArgs).",
+    "project_loader": "Full unit gate includes load_all and GUT."
+  },
+  "full_unit": {
+    "passed": 4015,
+    "failed": 1,
+    "skipped": 2,
+    "failure": "test_shield_wreck_copies_the_drawn_frame_at_its_live_scale created an unnamed stand-in sprite. The runtime sprite is named.",
+    "correction": "Name the fixture ShieldCard.",
+    "failed_test_rerun": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "archived_replays": [
+    {
+      "path": "evidence/it14/linux/q1-linux.replay.json",
+      "previous": "state hash differs at tick 60",
+      "current": "state hash differs at tick 60",
+      "exit": 1
+    },
+    {
+      "path": "evidence/it14/linux/q1-win.replay.json",
+      "previous": "state hash differs at tick 60",
+      "current": "state hash differs at tick 60",
+      "exit": 1
+    },
+    {
+      "path": "evidence/it15/linrel.replay.json",
+      "previous": "state hash differs at tick 60",
+      "current": "state hash differs at tick 60",
+      "exit": 1
+    },
+    {
+      "path": "evidence/it15/q1-linux.replay.json",
+      "previous": "state hash differs at tick 60",
+      "current": "state hash differs at tick 60",
+      "exit": 1
+    },
+    {
+      "path": "evidence/it15/q1-win.replay.json",
+      "previous": "state hash differs at tick 60",
+      "current": "state hash differs at tick 60",
+      "exit": 1
+    },
+    {
+      "path": "evidence/it15/q1ed.replay.json",
+      "previous": "state hash differs at tick 60",
+      "current": "state hash differs at tick 60",
+      "exit": 1
+    },
+    {
+      "path": "evidence/it15/winrel.replay.json",
+      "previous": "state hash differs at tick 60",
+      "current": "state hash differs at tick 60",
+      "exit": 1
+    }
+  ],
+  "native_parity": {
+    "steps": 1200,
+    "checks": 40,
+    "exact": true,
+    "final_sha_a": "94b2865f7f17d778",
+    "final_sha_b": "94b2865f7f17d778",
+    "planted_first_mismatch_step": 629,
+    "planted_mutation_caught": true
+  }
+}

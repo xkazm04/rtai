@@ -18,6 +18,10 @@ var story_forms: bool = false
 var story_lift: bool = false
 var transform_unlocked: bool = false
 var story_transform: bool = false
+var bond_enabled: bool = false
+var master_at: float
+var per_kill: float
+var per_stun: float
 var _errors: Array[String] = []
 
 
@@ -39,6 +43,11 @@ static func from_table(t: DataTable) -> GhostFormTable:
 	g.story_lift = t.raw.get("story_lift", false) == true
 	g.transform_unlocked = t.raw.get("transform_unlocked", false) == true
 	g.story_transform = t.raw.get("story_transform", false) == true
+	var bond: Dictionary = t.object(t.raw, "bond")
+	g.bond_enabled = bond.get("enabled") == true
+	g.master_at = t.num(bond, "master_at")
+	g.per_kill = t.num(bond, "per_kill")
+	g.per_stun = t.num(bond, "per_stun")
 	g._errors = t.errors()
 	for id: StringName in g.order:
 		if not g.forms.has(id):
@@ -56,6 +65,20 @@ func errors() -> Array[String]:
 
 func form(id: StringName) -> GhostFormDef:
 	return forms.get(id, null)
+
+
+## The global/story override keeps its original selection. Earned T follows release order.
+func transform_target(selected: StringName, bond: GhostBond, unrestricted: bool) -> StringName:
+	return selected if unrestricted else bond.last_deployed_mastered()
+
+
+func next_transform(id: StringName, locks: GhostLocks, bond: GhostBond) -> StringName:
+	var candidate: StringName = id
+	for _i: int in order.size():
+		candidate = locks.next_after(self, candidate)
+		if bond.mastered(candidate):
+			return candidate
+	return id
 
 
 ## The form after `id` in the cycle (wraps; the first form for an unknown id).

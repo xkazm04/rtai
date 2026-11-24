@@ -20,10 +20,10 @@ func _init(registry: RngRegistry, table: DataTable = null) -> void:
 
 func offer(wave: int, history: Array[Dictionary], held: Array[StringName]) -> Array[StringName]:
 	var pool: Array[StringName] = _eligible(wave, history, held)
+	var offered: Array[StringName] = _reserve_mastery(pool, history)
 	var total: int = 0
 	for id: StringName in pool:
 		total += _weight(id)
-	var offered: Array[StringName] = []
 	while offered.size() < 3 and not pool.is_empty():
 		var ticket: int = _rng.randi_range(1, total)
 		for id: StringName in pool:
@@ -35,6 +35,25 @@ func offer(wave: int, history: Array[Dictionary], held: Array[StringName]) -> Ar
 				pool.erase(id)
 				break
 	return offered
+
+
+## Full bonds reserve slots in the normal three-card hand. If all four are ready,
+## show an unseen bond before one the player already passed over.
+func _reserve_mastery(pool: Array[StringName], history: Array[Dictionary]) -> Array[StringName]:
+	var ready: Array[StringName] = []
+	for id: StringName in pool:
+		if rows[id]["kind"] == "mastery":
+			ready.append(id)
+	for id: StringName in ready:
+		pool.erase(id)
+	if ready.size() > 3:
+		for pick: Dictionary in history:
+			for id: StringName in pick.get("offered", []):
+				if ready.has(id):
+					ready.erase(id)
+					ready.append(id)
+		return ready.slice(0, 3)
+	return ready
 
 
 ## Eligibility only grows with wave number. Taking any eligible grant retires one grant,
@@ -61,6 +80,10 @@ func _eligible(wave: int, history: Array[Dictionary], held: Array[StringName]) -
 		var row: Dictionary = rows[id]
 		var first: float = row["min_wave"]
 		if first > wave or taken.has(id) or not MoveBonus.offerable(row, taken, moves):
+			continue
+		if row["kind"] == "mastery":
+			if held.has(id):
+				pool.append(id)
 			continue
 		if row["kind"] != "stat" and owned.has(StringName(str(row["ref"]))):
 			continue

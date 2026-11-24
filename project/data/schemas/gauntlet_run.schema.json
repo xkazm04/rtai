@@ -3,6 +3,23 @@
     "wave": {
       "additionalProperties": false,
       "properties": {
+        "bond": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "description": "Cumulative deploy bond per form at the end of this wave. Omitted when bonds are disabled.",
+          "minProperties": 1,
+          "propertyNames": {
+            "enum": [
+              "dent",
+              "kerf",
+              "ohm",
+              "tonnage"
+            ]
+          },
+          "type": "object"
+        },
         "cover_ticks": {
           "description": "Simulation ticks during this wave when the bot chose cover.",
           "minimum": 0,

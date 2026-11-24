@@ -1,0 +1,45 @@
+mutate: worktree C:\Users\kazda\AppData\Local\Temp\gtai-mutate-612737eb at 48603e1a (created)
+mutate: 20/58 mutant(s); baseline run of test_ghost_bond_ring
+mutate: baseline green in 471.8 s; per-mutant timeout 300 s
+mutate: [1/20] features/souls/ghost_bond_ring.gd:27 boundary  <= -> <  survived  (23.5 s)
+mutate: [2/20] features/souls/ghost_bond_ring.gd:27 literal  0.0 -> 1.0  survived  (32.0 s)
+mutate: [3/20] features/souls/ghost_bond_ring.gd:29 arith  / -> *  killed  (28.6 s)
+mutate: [4/20] features/souls/ghost_bond_ring.gd:35 arith  - -> +  killed  (40.9 s)
+mutate: [5/20] features/souls/ghost_bond_ring.gd:48 delete  _chip(id, center, layout.chip_r - 3.5) -> pass  invalid  (32.6 s)
+mutate: [6/20] features/souls/ghost_bond_ring.gd:48 literal  3.5 -> 4.5  survived  (21.8 s)
+mutate: [7/20] features/souls/ghost_bond_ring.gd:52 delete  draw_arc(center, radius, TOP, TOP + TAU, 65, INK, STROKE + 2.0, true) -> pass  survived  (27.2 s)
+mutate: [8/20] features/souls/ghost_bond_ring.gd:52 arith  + -> -  survived  (25.9 s)
+mutate: [9/20] features/souls/ghost_bond_ring.gd:52 literal  65 -> 66  survived  (23.3 s)
+mutate: [10/20] features/souls/ghost_bond_ring.gd:52 literal  2.0 -> 3.0  survived  (29.4 s)
+mutate: [11/20] features/souls/ghost_bond_ring.gd:52 boolean  true -> false  survived  (48.3 s)
+mutate: [12/20] features/souls/ghost_bond_ring.gd:53 arith  + -> -  survived  (27.4 s)
+mutate: [13/20] features/souls/ghost_bond_ring.gd:53 literal  1.0 -> 0.0  survived  (28.7 s)
+mutate: [14/20] features/souls/ghost_bond_ring.gd:57 delete  draw_arc(center, radius, span.x, span.y, 65, TEAL, STROKE, true) -> pass  survived  (36.2 s)
+mutate: [15/20] features/souls/ghost_bond_ring.gd:63 arith  + -> -  survived  (23.2 s)
+mutate: [16/20] features/souls/ghost_bond_ring.gd:63 literal  5.0 -> 6.0  survived  (22.1 s)
+mutate: [17/20] features/souls/ghost_bond_ring.gd:64 arith  * -> /  survived  (24.3 s)
+mutate: [18/20] features/souls/ghost_bond_ring.gd:66 delete  draw_colored_polygon(diamond, TEAL) -> pass  invalid  (48.6 s)
+mutate: [19/20] features/souls/ghost_bond_ring.gd:67 literal  1.0 -> 0.0  survived  (24.4 s)
+mutate: [20/20] features/souls/ghost_bond_ring.gd:67 boolean  true -> false  survived  (33.4 s)
+mutate features/souls/ghost_bond_ring.gd: 20 mutant(s) (sampled from 58), tests: test_ghost_bond_ring
+  features/souls/ghost_bond_ring.gd:27 boundary  <= -> <  survived
+  features/souls/ghost_bond_ring.gd:27 literal  0.0 -> 1.0  survived
+  features/souls/ghost_bond_ring.gd:48 literal  3.5 -> 4.5  survived
+  features/souls/ghost_bond_ring.gd:52 delete  draw_arc(center, radius, TOP, TOP + TAU, 65, INK, STROKE + 2.0, true) -> pass  survived
+  features/souls/ghost_bond_ring.gd:52 arith  + -> -  survived
+  features/souls/ghost_bond_ring.gd:52 literal  65 -> 66  survived
+  features/souls/ghost_bond_ring.gd:52 literal  2.0 -> 3.0  survived
+  features/souls/ghost_bond_ring.gd:52 boolean  true -> false  survived
+  features/souls/ghost_bond_ring.gd:53 arith  + -> -  survived
+  features/souls/ghost_bond_ring.gd:53 literal  1.0 -> 0.0  survived
+  features/souls/ghost_bond_ring.gd:57 delete  draw_arc(center, radius, span.x, span.y, 65, TEAL, STROKE, true) -> pass  survived
+  features/souls/ghost_bond_ring.gd:63 arith  + -> -  survived
+  features/souls/ghost_bond_ring.gd:63 literal  5.0 -> 6.0  survived
+  features/souls/ghost_bond_ring.gd:64 arith  * -> /  survived
+  features/souls/ghost_bond_ring.gd:67 literal  1.0 -> 0.0  survived
+  features/souls/ghost_bond_ring.gd:67 boolean  true -> false  survived
+  features/souls/ghost_bond_ring.gd:48 delete  _chip(id, center, layout.chip_r - 3.5) -> pass  invalid
+  features/souls/ghost_bond_ring.gd:66 delete  draw_colored_polygon(diamond, TEAL) -> pass  invalid
+  features/souls/ghost_bond_ring.gd:29 arith  / -> *  killed
+  features/souls/ghost_bond_ring.gd:35 arith  - -> +  killed
+score 11.1% = killed 2 / (killed 2 + survived 16); timeout 0, invalid 2; 1171 s

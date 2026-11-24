@@ -91,6 +91,9 @@ func _ready() -> void:
 	hud.set_anchors_preset(Control.PRESET_FULL_RECT)
 	hud.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	layer.add_child(hud)
+	if pilot != null:
+		@warning_ignore("return_value_discarded")
+		GhostBondRing.mount(hud, pilot.ghosts.forms.bond)
 	var table: GhostFormTable = pilot.ghosts.forms.table if pilot != null else null
 	for id: StringName in table.order if table != null else []:
 		var key: String = table.form(id).name_key

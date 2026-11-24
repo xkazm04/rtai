@@ -54,6 +54,9 @@ func finish(stage: ArenaStage, row: Dictionary) -> void:
 	append_guard_deflects(stage, row)
 	stage.arena.move_tally.append_wave(row)
 	_deploys.append_wave(row)
+	var bond: GhostBond = stage.pilot.ghosts.forms.bond
+	if bond.enabled:
+		row["bond"] = bond.snapshot()
 
 
 func append_guard_deflects(stage: ArenaStage, row: Dictionary) -> void:

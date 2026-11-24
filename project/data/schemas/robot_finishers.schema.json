@@ -1,0 +1,48 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "electro_gun": {
+      "additionalProperties": false,
+      "properties": {
+        "charged_only": {
+          "type": "boolean"
+        },
+        "heavy_stun_ticks": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "id": {
+          "const": "electro_gun"
+        },
+        "machine_stun_ticks": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "never_finish": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "charged_only",
+        "heavy_stun_ticks",
+        "id",
+        "machine_stun_ticks",
+        "never_finish"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.robot_finishers/1"
+    }
+  },
+  "required": [
+    "electro_gun",
+    "schema"
+  ],
+  "type": "object"
+}

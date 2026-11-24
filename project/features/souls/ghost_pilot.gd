@@ -100,15 +100,12 @@ func _select(stage: CollectCallStage, c: PlayerCommand, actions: PlayerActions) 
 		and not c.is_held(actions, &"ghost_deploy")
 		and GhostNumberKeys.pressed(c, actions, forms) == &""
 	)
-	if (
-		can_enter
-		and (transform_unlocked or (forms.table.story_transform and stage._quest != null))
-		and forms.press_transform() == SoulPowers.OK
-	):
+	var all_forms: bool = transform_unlocked or forms.table.story_transform and stage._quest != null
+	if can_enter and forms.press_transform(all_forms) == SoulPowers.OK:
 		transforms += 1
 	elif c.was_pressed(actions, &"power_gearbox"):
 		@warning_ignore("return_value_discarded")
-		forms.press_next()
+		forms.press_next(all_forms)
 
 
 ## True when a form's attacks own the melee press this tick (the pilot skips the claw): Tonnage,

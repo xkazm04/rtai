@@ -85,7 +85,7 @@ func _draw() -> void:
 	var top: Vector2 = Vector2(l.margin, get_viewport_rect().size.y - l.margin - l.card_h)
 	draw_style_box(_plate, Rect2(top, Vector2(w, l.card_h)).grow(6.0))
 	for i: int in shown.size():
-		var c: Vector2 = top + Vector2(l.gap * (float(i) + 0.5), l.chip_y)
+		var c: Vector2 = l.chip_center(get_viewport_rect().size.y, i)
 		_chip(shown[i], c)
 		var label: String = number_hints.get(shown[i], "")
 		_text(ThemeDB.fallback_font, c + Vector2(-0.8, 0.8) * l.chip_r, label)

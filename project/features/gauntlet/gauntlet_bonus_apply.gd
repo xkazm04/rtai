@@ -28,24 +28,20 @@ func owned() -> Array[StringName]:
 	for id: StringName in forms.table.order:
 		if forms.locks.allows(forms.table, id):
 			ids.append(id)
+			if forms.bond.ready(id):
+				ids.append(StringName("master_" + String(id)))
 	return ids
 
 
 func apply(row: Dictionary) -> bool:
 	var ref: StringName = row["ref"]
 	match str(row["kind"]):
+		"mastery":
+			return _stage.pilot.ghosts.forms.bond.master(ref)
 		"effect":
 			return MoveBonus.apply(_stage, row)
 		"weapon":
-			# Wheel controls can create the carry before the first weapon grant.
-			var carry: RivetCarry = _stage.pilot.carry
-			if carry == null:
-				return _arsenal.arm([ref], _run.profile != &"human") != null
-			var slot: int = carry.add(ref)
-			if slot < 0:
-				return false
-			carry.tap = _run.profile != &"human"
-			carry.select(slot, _stage.arena)
+			return _weapon(ref)
 		"ghost":
 			var forms: GhostForms = _stage.pilot.ghosts.forms
 			var form: GhostFormDef = forms.table.form(ref)
@@ -61,6 +57,19 @@ func apply(row: Dictionary) -> bool:
 			_stats()
 		_:
 			return false
+	return true
+
+
+func _weapon(ref: StringName) -> bool:
+	# Wheel controls can create the carry before the first weapon grant.
+	var carry: RivetCarry = _stage.pilot.carry
+	if carry == null:
+		return _arsenal.arm([ref], _run.profile != &"human") != null
+	var slot: int = carry.add(ref)
+	if slot < 0:
+		return false
+	carry.tap = _run.profile != &"human"
+	carry.select(slot, _stage.arena)
 	return true
 
 

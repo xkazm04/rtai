@@ -56,7 +56,7 @@ static func kind_of(w: WeaponSpec) -> StringName:
 ## A table round `s` stopped at `at` (on `victim`, or null: spent, blocked, a bottle landing).
 func land(arena: CombatArena, s: Shot, victim: Fighter, at: Vector2) -> void:
 	var w: WeaponSpec = s.spec
-	if victim != null:
+	if victim != null and not RobotFinish.direct_bolt(arena, s, victim):
 		_strike(arena, s, victim, s.damage, s.vel.normalized())
 	if w.splash_radius_m > 0.0:
 		note_blast(at, w.splash_radius_m, arena.tick)

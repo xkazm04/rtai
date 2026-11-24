@@ -1,0 +1,12 @@
+{
+  "electro_gun": {
+    "charged_only": false,
+    "heavy_stun_ticks": 30,
+    "id": "electro_gun",
+    "machine_stun_ticks": 150,
+    "never_finish": [
+      "war_machine"
+    ]
+  },
+  "schema": "gtai.robot_finishers/1"
+}

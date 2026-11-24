@@ -23,6 +23,9 @@ func _init(
 func pick(offered: Array[StringName], wave: int, carry_ref: StringName = &"") -> StringName:
 	if offered.is_empty():
 		return &""
+	for id: StringName in offered:
+		if id.begins_with("master_"):
+			return id
 	if excluded_prefix.is_empty() and _mode == &"random":
 		return offered[_rng.randi_range(0, offered.size() - 1)]
 	var best: StringName = &""

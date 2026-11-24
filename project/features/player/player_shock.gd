@@ -16,6 +16,7 @@ const ARC_FROM_M: float = 0.55
 const CRACKLE_EVERY: int = 4
 const CLAW_SPREAD_M: float = 0.3
 
+var finisher: RobotFinish
 var shock: MeleeShock
 var full_damage: float = 1.0
 var cone_dot: float = 0.3
@@ -36,6 +37,8 @@ static func shipped() -> PlayerShock:
 static func from_table(t: DataTable) -> PlayerShock:
 	var p: PlayerShock = PlayerShock.new()
 	var row: Dictionary = t.object(t.raw, "shock")
+	if row.has("robot_finish"):
+		p.finisher = RobotFinish.from_row(t, t.object(row, "robot_finish"))
 	p.shock = MeleeShock.from_row(t, row)
 	p.full_damage = t.num(row, "full_damage")
 	p.cone_dot = t.num(row, "cone_dot")
@@ -114,14 +117,21 @@ func _discharge(arena: CombatArena, stun: int, facing: Vector2) -> void:
 
 
 func _stun(arena: CombatArena, areas: FightAreas, f: Fighter, stun: int, first: bool) -> void:
-	stun_on(areas, f, stun)
 	var dir: Vector2 = (f.pos - arena.rivet.pos).normalized()
 	arena.hit_dir = dir
 	arena.hit_at = f.pos - dir * f.radius_m
-	var lethal: bool = first and stun >= shock.stun_full and full_damage > 0.0
-	if lethal:
-		arena.damage(f, full_damage, arena.rivet.id, WEAPON)
-		kills += 0 if f.alive() else 1
+	var full: bool = first and stun >= shock.stun_full
+	var mode: RobotFinish.Effect = RobotFinish.Effect.NORMAL
+	if full and finisher != null:
+		mode = finisher.contact(arena, f)
+	if mode != RobotFinish.Effect.NORMAL:
+		finisher.apply(arena, f, arena.rivet.id, full_damage, mode)
+	else:
+		stun_on(areas, f, stun)
+		if full and full_damage > 0.0:
+			arena.damage(f, full_damage, arena.rivet.id, WEAPON)
+	if full and not f.alive():
+		kills += 1
 	arena.struck.emit(f, dir, not f.alive(), WEAPON)
 
 

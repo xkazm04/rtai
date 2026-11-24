@@ -34,24 +34,23 @@ var pivot: Node2D = Node2D.new()
 var chassis: Node2D = Node2D.new()
 
 
-static func wrap(
+func mount_body(
 	body: Node2D, row: SignatureKill, kills: SignatureKills, pixels: float, dir: Vector2
 ) -> Node2D:
-	var v: RobotShutdownFx = RobotShutdownFx.new()
 	var details: KillTrackRows.Extra = KillTrackRows.of(row.id)
-	v.clock = kills
-	v.born = kills.tick
-	v.ppm = pixels
-	v.side = -1.0 if dir.x < 0.0 else 1.0
-	v.still = LaunchArgs.has("--reduced-motion")
-	v.shake_ticks = maxi(1, row.stand_ticks)
-	v.fold_ticks = maxi(1, row.crumble_ticks)
-	v.fall_deg = details.num("fold_deg", 65.0)
-	v.joint_m = details.num("joint_m", 0.65)
-	v.add_child(v.pivot)
-	v.pivot.add_child(v.chassis)
-	v._copy(body, row.victim, dir)
-	return v
+	clock = kills
+	born = kills.tick
+	ppm = pixels
+	side = -1.0 if dir.x < 0.0 else 1.0
+	still = LaunchArgs.has("--reduced-motion")
+	shake_ticks = maxi(1, row.stand_ticks)
+	fold_ticks = maxi(1, row.crumble_ticks)
+	fall_deg = details.num("fold_deg", 65.0)
+	joint_m = details.num("joint_m", 0.65)
+	add_child(pivot)
+	pivot.add_child(chassis)
+	_copy(body, row.victim, dir)
+	return self
 
 
 func _copy(body: Node2D, victim: StringName, dir: Vector2) -> void:

@@ -1,0 +1,280 @@
+{
+  "schema": "gtai.hands-prologue/1",
+  "phase": "after",
+  "tick_rate": 60,
+  "runs": [
+    {
+      "deaths": 1,
+      "encounters": [
+        {
+          "beat": 1,
+          "end_reason": "dale_down",
+          "end_tick": 2193,
+          "id": "yard_arrival",
+          "start_tick": 0
+        },
+        {
+          "beat": 1,
+          "end_reason": "cleared",
+          "end_tick": 4069,
+          "id": "dale_patrol",
+          "start_tick": 2193
+        },
+        {
+          "beat": 2,
+          "end_reason": "death",
+          "end_tick": 5701,
+          "id": "squad_arrival",
+          "start_tick": 4069
+        },
+        {
+          "beat": 2,
+          "end_reason": "cleared",
+          "end_tick": 7968,
+          "id": "squad_arrival",
+          "start_tick": 5701
+        },
+        {
+          "beat": 3,
+          "end_reason": "ended",
+          "end_tick": 10377,
+          "id": "street_call",
+          "start_tick": 7968
+        }
+      ],
+      "handover_tick": 10557,
+      "max_hp": 100.0,
+      "min_hp": 0.0,
+      "outcome": "quest1",
+      "patrol_fight_ticks": 1876,
+      "prologue_end_card_tick": 10377,
+      "quest1_first_line": "rivet-line-stopped",
+      "quest1_first_line_tick": 10558,
+      "rivet_claw_digest": "043cbe54ae78122b5937855f3957363b1c5669368357023144da7052750053ca",
+      "schema": "gtai.prologue-handover/1",
+      "seconds": 175.966666666667,
+      "seed": 1,
+      "squad_fight_ticks": 2097,
+      "start_tick": 0,
+      "fight_total_ticks": 3973,
+      "fight_total_s": 66.217
+    },
+    {
+      "deaths": 0,
+      "encounters": [
+        {
+          "beat": 1,
+          "end_reason": "dale_down",
+          "end_tick": 2193,
+          "id": "yard_arrival",
+          "start_tick": 0
+        },
+        {
+          "beat": 1,
+          "end_reason": "cleared",
+          "end_tick": 4044,
+          "id": "dale_patrol",
+          "start_tick": 2193
+        },
+        {
+          "beat": 2,
+          "end_reason": "cleared",
+          "end_tick": 7591,
+          "id": "squad_arrival",
+          "start_tick": 4044
+        },
+        {
+          "beat": 3,
+          "end_reason": "ended",
+          "end_tick": 10000,
+          "id": "street_call",
+          "start_tick": 7591
+        }
+      ],
+      "handover_tick": 10180,
+      "max_hp": 100.0,
+      "min_hp": 52.0,
+      "outcome": "quest1",
+      "patrol_fight_ticks": 1851,
+      "prologue_end_card_tick": 10000,
+      "quest1_first_line": "rivet-line-stopped",
+      "quest1_first_line_tick": 10181,
+      "schema": "gtai.prologue-handover/1",
+      "seconds": 169.683333333333,
+      "seed": 2,
+      "squad_fight_ticks": 2646,
+      "start_tick": 0,
+      "fight_total_ticks": 4497,
+      "fight_total_s": 74.95
+    },
+    {
+      "deaths": 1,
+      "encounters": [
+        {
+          "beat": 1,
+          "end_reason": "dale_down",
+          "end_tick": 2193,
+          "id": "yard_arrival",
+          "start_tick": 0
+        },
+        {
+          "beat": 1,
+          "end_reason": "cleared",
+          "end_tick": 4069,
+          "id": "dale_patrol",
+          "start_tick": 2193
+        },
+        {
+          "beat": 2,
+          "end_reason": "death",
+          "end_tick": 5958,
+          "id": "squad_arrival",
+          "start_tick": 4069
+        },
+        {
+          "beat": 2,
+          "end_reason": "cleared",
+          "end_tick": 9341,
+          "id": "squad_arrival",
+          "start_tick": 5958
+        },
+        {
+          "beat": 3,
+          "end_reason": "ended",
+          "end_tick": 11750,
+          "id": "street_call",
+          "start_tick": 9341
+        }
+      ],
+      "handover_tick": 11930,
+      "max_hp": 100.0,
+      "min_hp": 0.0,
+      "outcome": "quest1",
+      "patrol_fight_ticks": 1876,
+      "prologue_end_card_tick": 11750,
+      "quest1_first_line": "rivet-line-stopped",
+      "quest1_first_line_tick": 11931,
+      "schema": "gtai.prologue-handover/1",
+      "seconds": 198.85,
+      "seed": 3,
+      "squad_fight_ticks": 3470,
+      "start_tick": 0,
+      "fight_total_ticks": 5346,
+      "fight_total_s": 89.1
+    },
+    {
+      "deaths": 0,
+      "encounters": [
+        {
+          "beat": 1,
+          "end_reason": "dale_down",
+          "end_tick": 2193,
+          "id": "yard_arrival",
+          "start_tick": 0
+        },
+        {
+          "beat": 1,
+          "end_reason": "cleared",
+          "end_tick": 4067,
+          "id": "dale_patrol",
+          "start_tick": 2193
+        },
+        {
+          "beat": 2,
+          "end_reason": "cleared",
+          "end_tick": 7860,
+          "id": "squad_arrival",
+          "start_tick": 4067
+        },
+        {
+          "beat": 3,
+          "end_reason": "ended",
+          "end_tick": 10269,
+          "id": "street_call",
+          "start_tick": 7860
+        }
+      ],
+      "handover_tick": 10449,
+      "max_hp": 100.0,
+      "min_hp": 68.6666666666669,
+      "outcome": "quest1",
+      "patrol_fight_ticks": 1874,
+      "prologue_end_card_tick": 10269,
+      "quest1_first_line": "rivet-line-stopped",
+      "quest1_first_line_tick": 10450,
+      "schema": "gtai.prologue-handover/1",
+      "seconds": 174.166666666667,
+      "seed": 4,
+      "squad_fight_ticks": 2892,
+      "start_tick": 0,
+      "fight_total_ticks": 4766,
+      "fight_total_s": 79.433
+    },
+    {
+      "deaths": 1,
+      "encounters": [
+        {
+          "beat": 1,
+          "end_reason": "dale_down",
+          "end_tick": 2193,
+          "id": "yard_arrival",
+          "start_tick": 0
+        },
+        {
+          "beat": 1,
+          "end_reason": "cleared",
+          "end_tick": 4069,
+          "id": "dale_patrol",
+          "start_tick": 2193
+        },
+        {
+          "beat": 2,
+          "end_reason": "death",
+          "end_tick": 5701,
+          "id": "squad_arrival",
+          "start_tick": 4069
+        },
+        {
+          "beat": 2,
+          "end_reason": "cleared",
+          "end_tick": 9102,
+          "id": "squad_arrival",
+          "start_tick": 5701
+        },
+        {
+          "beat": 3,
+          "end_reason": "ended",
+          "end_tick": 11511,
+          "id": "street_call",
+          "start_tick": 9102
+        }
+      ],
+      "handover_tick": 11691,
+      "max_hp": 100.0,
+      "min_hp": 0.0,
+      "outcome": "quest1",
+      "patrol_fight_ticks": 1876,
+      "prologue_end_card_tick": 11511,
+      "quest1_first_line": "rivet-line-stopped",
+      "quest1_first_line_tick": 11692,
+      "schema": "gtai.prologue-handover/1",
+      "seconds": 194.866666666667,
+      "seed": 5,
+      "squad_fight_ticks": 3231,
+      "start_tick": 0,
+      "fight_total_ticks": 5107,
+      "fight_total_s": 85.117
+    }
+  ],
+  "warden_rake_trial": {
+    "eligible": true,
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "matches_previous_runs": true
+  }
+}

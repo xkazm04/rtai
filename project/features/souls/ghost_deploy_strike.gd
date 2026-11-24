@@ -9,6 +9,7 @@ var press: HaulerForm
 var release_tick: int = -1
 var release_form: StringName = &""
 var release_kills: int = 0
+var release_stuns: int = 0
 var _shorts: Dictionary[Fighter, int] = {}
 
 
@@ -21,6 +22,7 @@ func land(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 	release_tick = stage.tick
 	release_form = ghost.form
 	release_kills = 0
+	release_stuns = 0
 	match ghost.form:
 		KerfStage.GHOST:
 			_kerf(stage, ghost)
@@ -44,7 +46,36 @@ func _kerf(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 		ghost.facing = rear.direction_to(foe.pos)
 	var robot: bool = foe.machine or foe.kind == Fighter.Kind.BOSS
 	var damage: float = attacks.num(ghost.form, &"robot_damage" if robot else &"human_damage")
+	if _boss(stage, foe):
+		# CombatArena applies the plate and run bonus after _hit. Limit the HP actually lost.
+		var arena: CombatArena = stage.arena
+		var plate: float = FoeArmor.k(
+			foe, ghost.facing, KerfStage.KILL_KIND, arena.squad_ai, arena.tick
+		)
+		var scale: float = plate * foe.damage_k
+		if scale > 0.0:
+			damage = minf(damage, attacks.deploy[ghost.form].boss_damage_cap * foe.max_hp / scale)
 	_hit(stage.arena, foe, ghost.facing, damage, &"deploy_kerf")
+
+
+func _boss(stage: CollectCallStage, foe: Fighter) -> bool:
+	if foe == stage.arena.boss or foe.kind == Fighter.Kind.BOSS or foe.body_class == &"boss":
+		return true
+	if foe.archetype != &"":
+		var row: EnemyRoster.Archetype = MeleeLethal.archetype(foe.archetype)
+		if row != null and row.body == &"boss":
+			return true
+	if not stage is ArenaStage or not stage.arena is GauntletCombat:
+		return false
+	# DEVIATION LAY-05: overlapping waves require the slot and wave number at spawn.
+	for hook: ArenaHook in (stage as ArenaStage).hooks:
+		var waves: GauntletWaves = hook as GauntletWaves
+		if waves != null:
+			for wave: GauntletLiveWave in waves._live:
+				if not wave.members.is_empty() and wave.members[0] == foe:
+					var number: int = wave.row["n"]
+					return number % waves._composer.boss_every == 0
+	return false
 
 
 func _ohm(stage: CollectCallStage, ghost: GhostDeploy) -> void:
@@ -58,6 +89,7 @@ func _ohm(stage: CollectCallStage, ghost: GhostDeploy) -> void:
 		if not foe.alive() or ghost.spot.distance_to(foe.pos) > radius:
 			continue
 		if OhmShortCircuit.short_machine(arena, foe, stage.tick):
+			release_stuns += 1
 			_shorts[foe] = arena.squad_ai.mind_for(foe).stun_until
 			applied = true
 		var dir: Vector2 = ghost.spot.direction_to(foe.pos)

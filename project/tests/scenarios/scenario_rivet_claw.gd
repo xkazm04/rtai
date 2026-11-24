@@ -1,8 +1,8 @@
 extends Scenario
 ## rivet-arsenal: the live arena played by ArenaRivetBot through the real pilot (walk, strafe,
 ## backpedal, sprint, two rolls, then the claw on the rivet_claw_cops station). Its fixed
-## five-tick mash starts seven individual rakes. Five land; two whiff after knockback puts
-## the cop beyond a stationary rake. The plain cop drops and the held melee discharges once.
+## five-tick mash starts seven individual rakes. Four contacts drop five cops, leaving
+## three empty swings and no target in range when the held melee discharges.
 ## The run replays identically (SIM-05). Shortening the rake and shock must make both miss.
 
 const LIMIT_TICKS: int = 30 * SimClock.TICK_RATE
@@ -39,14 +39,14 @@ func _judge(tel: Dictionary, bot: ArenaRivetBot) -> String:
 	var claw: Dictionary = tel.get(STATION, {})
 	if bot.finished_tick < 0:
 		return "the rivet bot did not finish in %d ticks (step %d)" % [LIMIT_TICKS, bot.index]
-	if claw.get("claw_swings") != 7 or claw.get("claw_hits") != 5 or claw.get("claw_whiffs") != 2:
-		return "expected five contacts from seven individual rakes: %s" % claw
-	if claw.get("claw_kills") != 1:
-		return "expected one cop down on the unchanged mash tape: %s" % claw
-	var shocked: bool = claw.get("shock_discharges", 0) == 1 and claw.get("shock_landed", 0) == 1
-	if tel["sprint_top_mps"] <= 7.5 or not shocked:
+	if claw.get("claw_swings") != 7 or claw.get("claw_hits") != 4 or claw.get("claw_whiffs") != 3:
+		return "expected four contacts from seven individual rakes: %s" % claw
+	if claw.get("claw_kills") != 5:
+		return "expected five cops down on the unchanged mash tape: %s" % claw
+	var discharged: bool = claw.get("shock_discharges", 0) == 1 and claw.get("shock_landed", 0) == 0
+	if tel["sprint_top_mps"] <= 7.5 or not discharged:
 		return (
-			"no sprint over 7.5 m/s (%.2f) or no single landed shock: %s"
+			"expected a sprint over 7.5 m/s (%.2f) and one empty discharge: %s"
 			% [tel["sprint_top_mps"], claw]
 		)
 	if tel["rolls"] != 2:

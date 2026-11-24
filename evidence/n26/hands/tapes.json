@@ -1,0 +1,132 @@
+{
+  "baseline": "0779185ac",
+  "mechanics": "21f4fd10c",
+  "art": "912cf4552",
+  "native": {
+    "before": {
+      "steps": 1200,
+      "checks": 40,
+      "exact": true,
+      "final_sha_a": "94b2865f7f17d778",
+      "final_sha_b": "94b2865f7f17d778",
+      "planted_first_mismatch_step": 629,
+      "planted_mutation_caught": true
+    },
+    "after": {
+      "steps": 1200,
+      "checks": 40,
+      "exact": true,
+      "final_sha_a": "94b2865f7f17d778",
+      "final_sha_b": "94b2865f7f17d778",
+      "planted_first_mismatch_step": 629,
+      "planted_mutation_caught": true
+    }
+  },
+  "quest1_input": {
+    "before": {
+      "checkpoints": [
+        "b2-payphone@755",
+        "b3-toner-room@5564",
+        "b4-dock@12932",
+        "b5-quartermaster@15331",
+        "b6-hot-walk@16173"
+      ],
+      "checkpoint_load": {
+        "beat": "b4-dock",
+        "resumed": true,
+        "tamper_refused": true
+      },
+      "final_hash": "c211ee9720fcc5ffc57d42f3aa33d3dbbdc159332d721fd4236c1537b15fb13a",
+      "paid": 1500,
+      "replay": "identical",
+      "state": "succeeded",
+      "ticks": 19109,
+      "kills": 49,
+      "input_changes": 1053,
+      "input_events": 95572
+    },
+    "after": {
+      "checkpoints": [
+        "b2-payphone@755",
+        "b3-toner-room@5564",
+        "b4-dock@12932",
+        "b5-quartermaster@15331",
+        "b6-hot-walk@16173"
+      ],
+      "checkpoint_load": {
+        "beat": "b4-dock",
+        "resumed": true,
+        "tamper_refused": true
+      },
+      "final_hash": "c211ee9720fcc5ffc57d42f3aa33d3dbbdc159332d721fd4236c1537b15fb13a",
+      "paid": 1500,
+      "replay": "identical",
+      "state": "succeeded",
+      "ticks": 19109,
+      "kills": 49,
+      "input_changes": 1053,
+      "input_events": 95572
+    }
+  },
+  "replay_60s": {
+    "before": "cbeb734ff9b97c41",
+    "after": "cbeb734ff9b97c41"
+  },
+  "rivet_claw": {
+    "before": {
+      "digest": "2f46ef771d5ae3483cddcc1554fd898dc518c298a9667c928dd74a595779fddf",
+      "claw_swings": 7,
+      "claw_hits": 5,
+      "claw_whiffs": 2,
+      "claw_kills": 1,
+      "shock_discharges": 1,
+      "shock_landed": 1
+    },
+    "after": {
+      "digest": "043cbe54ae78122b5937855f3957363b1c5669368357023144da7052750053ca",
+      "claw_swings": 7,
+      "claw_hits": 4,
+      "claw_whiffs": 3,
+      "claw_kills": 5,
+      "shock_discharges": 1,
+      "shock_landed": 0
+    }
+  },
+  "archived_replays": [
+    {
+      "path": "evidence/it14/linux/q1-linux.replay.json",
+      "before": "state hash differs at tick 60",
+      "after": "state hash differs at tick 60"
+    },
+    {
+      "path": "evidence/it14/linux/q1-win.replay.json",
+      "before": "state hash differs at tick 60",
+      "after": "state hash differs at tick 60"
+    },
+    {
+      "path": "evidence/it15/linrel.replay.json",
+      "before": "state hash differs at tick 60",
+      "after": "state hash differs at tick 60"
+    },
+    {
+      "path": "evidence/it15/q1-linux.replay.json",
+      "before": "state hash differs at tick 60",
+      "after": "state hash differs at tick 60"
+    },
+    {
+      "path": "evidence/it15/q1-win.replay.json",
+      "before": "state hash differs at tick 60",
+      "after": "state hash differs at tick 60"
+    },
+    {
+      "path": "evidence/it15/q1ed.replay.json",
+      "before": "state hash differs at tick 60",
+      "after": "state hash differs at tick 60"
+    },
+    {
+      "path": "evidence/it15/winrel.replay.json",
+      "before": "state hash differs at tick 60",
+      "after": "state hash differs at tick 60"
+    }
+  ]
+}

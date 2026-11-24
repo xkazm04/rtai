@@ -1,5 +1,5 @@
 class_name MeleeTable
-extends RefCounted
+extends RobotFinish
 ## The claw and carried weapons use the same hit model. The mode selects either the weapon's
 ## single swing or its original chain. Version-one tables without a mode keep their chain.
 
@@ -9,11 +9,6 @@ const WEAPONS: String = "res://data/tables/melee_weapons.json"
 const WEAPONS_SCHEMA: String = "gtai.melee-weapons/1"
 const CLAW: StringName = &"claw"
 
-var id: StringName = CLAW
-var electric: bool = false
-var machine_stun_ticks: int = 0
-var heavy_stun_ticks: int = 0
-var never_finish: Array[StringName] = []
 var kills_human: bool = false
 var vs_shield: StringName = &"blocked"
 var shield_break_ticks: int = 0
@@ -41,6 +36,10 @@ var lean_in_deg: float = 0.0
 var errors: Array[String] = []
 var _single: Array[MeleeHit] = []
 var _chain: Array[MeleeHit] = []
+
+
+func _init() -> void:
+	id = CLAW
 
 
 static func shipped() -> MeleeTable:

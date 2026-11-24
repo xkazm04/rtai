@@ -93,6 +93,8 @@ static func path_in(table: Dictionary, art: String, card_row: String) -> String:
 		var rows: Dictionary = v
 		if rows.has(card_row):
 			return a + "/" + str(rows[card_row])
+		if rows.has("*"):
+			return a + "/" + str(rows["*"])
 	return ""
 
 
@@ -147,7 +149,7 @@ static func step(d: KillNewStyles.Death, age: int) -> bool:
 	KillNewStyles.show_cells(d, f >= 0)
 	d.cells.frame_coords = Vector2i(d.cells.frame_coords.x, maxi(f, 0))
 	var look: float = face_of(d, f)
-	if d.row.style == &"stitch":  # at the shooter, then the drawn spin turned a full circle
+	if d.row.style == &"stitch" or d.extra.fx.has("whirl_ticks"):
 		look = KillStitchArt.facing(d, age)
 	KillFallCells.face(d.cells, look)
 	fit(d.cells, f)

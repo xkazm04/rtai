@@ -8,19 +8,26 @@ enum Contact { NORMAL, BLOCKED, GRIND, LETHAL }
 const FINISH: StringName = &"melee_finish"
 const BLOCK: StringName = &"melee_shield_block"
 const OPEN_UNTIL: StringName = &"melee_shield_open_until"
+const NAMED: StringName = &"melee_named_human"
 
 static var _roster: EnemyRoster
+static var _protected: Array[StringName] = MeleeTable.shipped().never_finish
 
 
 static func human(f: Fighter) -> bool:
-	if f.kind != Fighter.Kind.GUARD or f.brain_owned or f.machine:
+	if (
+		f.kind != Fighter.Kind.GUARD
+		or f.brain_owned
+		or f.machine
+		or f.get_meta(NAMED, false) == true
+	):
 		return false
 	if f.body_class != &"" and f.body_class != &"human":
 		return false
 	if f.archetype == &"":
 		return true
 	var arch: EnemyRoster.Archetype = archetype(f.archetype)
-	return arch == null or _eligible(arch)
+	return arch != null and _eligible(arch)
 
 
 static func archetype(id: StringName) -> EnemyRoster.Archetype:
@@ -30,7 +37,7 @@ static func archetype(id: StringName) -> EnemyRoster.Archetype:
 
 
 static func _eligible(arch: EnemyRoster.Archetype) -> bool:
-	return arch.body == &"human" and arch.id != &"sergeant_mulroney"
+	return arch.body == &"human" and not _protected.has(arch.id)
 
 
 static func shield_open(body: Object, now: int) -> bool:
@@ -52,7 +59,7 @@ static func _blocks(
 static func contact(
 	f: Fighter, boss: Fighter, combo: MeleeCombo, dir: Vector2, now: int
 ) -> Contact:
-	if not combo.table.kills_human or f == boss or not human(f):
+	if not _finishes_humans(combo.table) or f == boss or not human(f):
 		return Contact.NORMAL
 	var arch: EnemyRoster.Archetype = archetype(f.archetype)
 	if _blocks(f, arch, f.facing.dot(-dir), now, combo.table):
@@ -67,7 +74,7 @@ static func pit_damage(
 	if (
 		swing == null
 		or swing.current() == null
-		or not swing.table.kills_human
+		or not _finishes_humans(swing.table)
 		or not _eligible(e.arch)
 	):
 		return dmg * e.arch.shield_front_mult if bearing > e.arch.shield_cos else dmg
@@ -78,6 +85,11 @@ static func pit_damage(
 	if hit.grind_ticks > 0 and swing.ground < hit.grind_min_ticks:
 		return 0.0
 	return e.hp
+
+
+## The quick rake owns the finisher. Archived three-hit combos keep their own damage rows.
+static func _finishes_humans(table: MeleeTable) -> bool:
+	return table.kills_human and (table.id != MeleeTable.CLAW or table.single_swing)
 
 
 static func damage_scale(

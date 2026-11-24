@@ -51,6 +51,7 @@ func step(
 			_clear()
 		return
 	_release(stage, c, id)
+	forms.bond.record(id, strike.release_kills, strike.release_stuns)
 
 
 func _begin_hold(

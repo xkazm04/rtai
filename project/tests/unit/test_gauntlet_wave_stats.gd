@@ -115,6 +115,7 @@ func test_one_round_and_one_claw_contact_are_counted_separately() -> void:
 	for tick: int in 18:
 		arena.rivet.pos += claw.step(arena, tick == 0, Vector2.RIGHT)
 	assert_eq(claw.landed, 1)
+	assert_false(target.alive(), "the rake kills the guard hit by the pistol")
 	# Other damage still belongs in the original all-source hits total.
 	for foe: Fighter in arena.hostiles:
 		arena.damage(foe, 1000.0, target.id, &"enemy_rifle")
@@ -125,7 +126,7 @@ func test_one_round_and_one_claw_contact_are_counted_separately() -> void:
 	var total: int = row["hits"]
 	assert_eq(rounds, 1)
 	assert_eq(melee, 1)
-	assert_eq(total, 2 + arena.hostiles.size())
+	assert_eq(total, 2 + arena.hostiles.size() - 1, "only the surviving foes take rifle hits")
 
 
 func test_only_rivets_hits_on_live_exposed_foes_emit_contact(

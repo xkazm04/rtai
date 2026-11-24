@@ -1,0 +1,2072 @@
+{
+  "rows": [
+    {
+      "arm": "no_kerf",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 15.9333333333333,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 63.6069971466064,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 2,
+        "patrol_cop": 1,
+        "war_machine": 1
+      },
+      "seed": 1,
+      "segment": "loading_bay",
+      "start_tick": 0,
+      "ticks": 976,
+      "wave": 5,
+      "wave_s": 16.2666666666667,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_uncapped",
+      "boss_damage_cap": 1.0,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 9.46666666666667,
+      "deploys": [
+        {
+          "hp_lost": 6.0,
+          "target": "war_machine",
+          "tick": 156
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 35.4063043785095,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 2,
+        "patrol_cop": 1,
+        "war_machine": 1
+      },
+      "seed": 1,
+      "segment": "loading_bay",
+      "start_tick": 0,
+      "ticks": 619,
+      "wave": 5,
+      "wave_s": 10.3166666666667,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_capped",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 10.1833333333333,
+      "deploys": [
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 156
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 35.4063043785095,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 2,
+        "patrol_cop": 1,
+        "war_machine": 1
+      },
+      "seed": 1,
+      "segment": "loading_bay",
+      "start_tick": 0,
+      "ticks": 647,
+      "wave": 5,
+      "wave_s": 10.7833333333333,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "no_kerf",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 11.1166666666667,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 38.3999929618836,
+      "rivet_max_hp": 171.875,
+      "roster": {
+        "patrol_cop": 1,
+        "riot_cop": 2,
+        "war_machine": 1
+      },
+      "seed": 2,
+      "segment": "plain_block",
+      "start_tick": 0,
+      "ticks": 667,
+      "wave": 5,
+      "wave_s": 11.1166666666667,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_uncapped",
+      "boss_damage_cap": 1.0,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 10.5166666666667,
+      "deploys": [
+        {
+          "hp_lost": 6.0,
+          "target": "war_machine",
+          "tick": 122
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 4.79999999999995,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "patrol_cop": 1,
+        "riot_cop": 2,
+        "war_machine": 1
+      },
+      "seed": 2,
+      "segment": "plain_block",
+      "start_tick": 0,
+      "ticks": 676,
+      "wave": 5,
+      "wave_s": 11.2666666666667,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_capped",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 12.0666666666667,
+      "deploys": [
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 122
+        },
+        {
+          "hp_lost": 0.899999999999999,
+          "target": "war_machine",
+          "tick": 724
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 7.19999999999993,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "patrol_cop": 1,
+        "riot_cop": 2,
+        "war_machine": 1
+      },
+      "seed": 2,
+      "segment": "plain_block",
+      "start_tick": 0,
+      "ticks": 743,
+      "wave": 5,
+      "wave_s": 12.3833333333333,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "no_kerf",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 19.45,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 38.5599961344401,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "patrol_cop": 2,
+        "rocket_trooper": 1,
+        "war_machine": 1
+      },
+      "seed": 3,
+      "segment": "plain_block",
+      "start_tick": 0,
+      "ticks": 1205,
+      "wave": 5,
+      "wave_s": 20.0833333333333,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_uncapped",
+      "boss_damage_cap": 1.0,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 15.8833333333333,
+      "deploys": [
+        {
+          "hp_lost": 6.0,
+          "target": "war_machine",
+          "tick": 294
+        },
+        {
+          "hp_lost": 2.0,
+          "target": "war_machine",
+          "tick": 896
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 53.7825269063314,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "patrol_cop": 2,
+        "rocket_trooper": 1,
+        "war_machine": 1
+      },
+      "seed": 3,
+      "segment": "plain_block",
+      "start_tick": 0,
+      "ticks": 980,
+      "wave": 5,
+      "wave_s": 16.3333333333333,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_capped",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 18.0166666666667,
+      "deploys": [
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 294
+        },
+        {
+          "hp_lost": 2.0,
+          "target": "war_machine",
+          "tick": 896
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 53.7825269063314,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "patrol_cop": 2,
+        "rocket_trooper": 1,
+        "war_machine": 1
+      },
+      "seed": 3,
+      "segment": "plain_block",
+      "start_tick": 0,
+      "ticks": 1136,
+      "wave": 5,
+      "wave_s": 18.9333333333333,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "no_kerf",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 18.25,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 107.806714668274,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 1,
+        "riot_cop": 1,
+        "rocket_trooper": 1,
+        "war_machine": 1
+      },
+      "seed": 4,
+      "segment": "crosswalk",
+      "start_tick": 0,
+      "ticks": 1142,
+      "wave": 5,
+      "wave_s": 19.0333333333333,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_uncapped",
+      "boss_damage_cap": 1.0,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 18.3666666666667,
+      "deploys": [
+        {
+          "hp_lost": 6.0,
+          "target": "war_machine",
+          "tick": 580
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 124.799958200455,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 1,
+        "riot_cop": 1,
+        "rocket_trooper": 1,
+        "war_machine": 1
+      },
+      "seed": 4,
+      "segment": "crosswalk",
+      "start_tick": 0,
+      "ticks": 1118,
+      "wave": 5,
+      "wave_s": 18.6333333333333,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_capped",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 19.4166666666667,
+      "deploys": [
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 580
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 124.799958200455,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 1,
+        "riot_cop": 1,
+        "rocket_trooper": 1,
+        "war_machine": 1
+      },
+      "seed": 4,
+      "segment": "crosswalk",
+      "start_tick": 0,
+      "ticks": 1179,
+      "wave": 5,
+      "wave_s": 19.65,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "no_kerf",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 20.1833333333333,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 28.3144382858276,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 2,
+        "patrol_cop": 1,
+        "war_machine": 1
+      },
+      "seed": 5,
+      "segment": "market_stalls",
+      "start_tick": 0,
+      "ticks": 1265,
+      "wave": 5,
+      "wave_s": 21.0833333333333,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_uncapped",
+      "boss_damage_cap": 1.0,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 14.8833333333333,
+      "deploys": [
+        {
+          "hp_lost": 6.0,
+          "target": "war_machine",
+          "tick": 497
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 7.8966597747802,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 2,
+        "patrol_cop": 1,
+        "war_machine": 1
+      },
+      "seed": 5,
+      "segment": "market_stalls",
+      "start_tick": 0,
+      "ticks": 950,
+      "wave": 5,
+      "wave_s": 15.8333333333333,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_capped",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 15.6666666666667,
+      "deploys": [
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 497
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 7.8966597747802,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 2,
+        "patrol_cop": 1,
+        "war_machine": 1
+      },
+      "seed": 5,
+      "segment": "market_stalls",
+      "start_tick": 0,
+      "ticks": 1046,
+      "wave": 5,
+      "wave_s": 17.4333333333333,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "no_kerf",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 12.7666666666667,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 22.9434741210937,
+      "rivet_max_hp": 151.25,
+      "roster": {
+        "contractor": 1,
+        "patrol_cop": 1,
+        "rocket_trooper": 1,
+        "war_machine": 1
+      },
+      "seed": 6,
+      "segment": "barricade_line",
+      "start_tick": 0,
+      "ticks": 832,
+      "wave": 5,
+      "wave_s": 13.8666666666667,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_uncapped",
+      "boss_damage_cap": 1.0,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 11.4833333333333,
+      "deploys": [
+        {
+          "hp_lost": 6.0,
+          "target": "war_machine",
+          "tick": 159
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 43.1999513339996,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 1,
+        "patrol_cop": 1,
+        "rocket_trooper": 1,
+        "war_machine": 1
+      },
+      "seed": 6,
+      "segment": "barricade_line",
+      "start_tick": 0,
+      "ticks": 736,
+      "wave": 5,
+      "wave_s": 12.2666666666667,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_capped",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 12.4166666666667,
+      "deploys": [
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 159
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 43.1999513339996,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 1,
+        "patrol_cop": 1,
+        "rocket_trooper": 1,
+        "war_machine": 1
+      },
+      "seed": 6,
+      "segment": "barricade_line",
+      "start_tick": 0,
+      "ticks": 852,
+      "wave": 5,
+      "wave_s": 14.2,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "no_kerf",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 16.3,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 39.7144473266601,
+      "rivet_max_hp": 171.875,
+      "roster": {
+        "patrol_cop": 1,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "seed": 7,
+      "segment": "market_stalls",
+      "start_tick": 0,
+      "ticks": 987,
+      "wave": 5,
+      "wave_s": 16.45,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_uncapped",
+      "boss_damage_cap": 1.0,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 12.5833333333333,
+      "deploys": [
+        {
+          "hp_lost": 6.0,
+          "target": "war_machine",
+          "tick": 289
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 3.59999999999997,
+      "rivet_max_hp": 151.25,
+      "roster": {
+        "patrol_cop": 1,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "seed": 7,
+      "segment": "market_stalls",
+      "start_tick": 0,
+      "ticks": 755,
+      "wave": 5,
+      "wave_s": 12.5833333333333,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_capped",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 13.3166666666667,
+      "deploys": [
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 289
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 3.59999999999997,
+      "rivet_max_hp": 151.25,
+      "roster": {
+        "patrol_cop": 1,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "seed": 7,
+      "segment": "market_stalls",
+      "start_tick": 0,
+      "ticks": 799,
+      "wave": 5,
+      "wave_s": 13.3166666666667,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "no_kerf",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 10.9166666666667,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 3.03500358581542,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "patrol_cop": 1,
+        "riot_cop": 1,
+        "swat": 1,
+        "war_machine": 1
+      },
+      "seed": 8,
+      "segment": "barricade_line",
+      "start_tick": 0,
+      "ticks": 655,
+      "wave": 5,
+      "wave_s": 10.9166666666667,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_uncapped",
+      "boss_damage_cap": 1.0,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 9.76666666666667,
+      "deploys": [
+        {
+          "hp_lost": 6.0,
+          "target": "war_machine",
+          "tick": 158
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 90.0,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "patrol_cop": 1,
+        "riot_cop": 1,
+        "swat": 1,
+        "war_machine": 1
+      },
+      "seed": 8,
+      "segment": "barricade_line",
+      "start_tick": 0,
+      "ticks": 605,
+      "wave": 5,
+      "wave_s": 10.0833333333333,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_capped",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 10.55,
+      "deploys": [
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 158
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 90.0,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "patrol_cop": 1,
+        "riot_cop": 1,
+        "swat": 1,
+        "war_machine": 1
+      },
+      "seed": 8,
+      "segment": "barricade_line",
+      "start_tick": 0,
+      "ticks": 651,
+      "wave": 5,
+      "wave_s": 10.85,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "no_kerf",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 11.3,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 3.59999999999997,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "patrol_cop": 1,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "seed": 9,
+      "segment": "alley_neck",
+      "start_tick": 0,
+      "ticks": 697,
+      "wave": 5,
+      "wave_s": 11.6166666666667,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_uncapped",
+      "boss_damage_cap": 1.0,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 10.6666666666667,
+      "deploys": [
+        {
+          "hp_lost": 6.0,
+          "target": "war_machine",
+          "tick": 238
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 3.59999999999997,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "patrol_cop": 1,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "seed": 9,
+      "segment": "alley_neck",
+      "start_tick": 0,
+      "ticks": 653,
+      "wave": 5,
+      "wave_s": 10.8833333333333,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_capped",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 11.4,
+      "deploys": [
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 238
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 3.59999999999997,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "patrol_cop": 1,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "seed": 9,
+      "segment": "alley_neck",
+      "start_tick": 0,
+      "ticks": 702,
+      "wave": 5,
+      "wave_s": 11.7,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "no_kerf",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 14.4166666666667,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 58.5090048980712,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 1,
+        "patrol_cop": 1,
+        "swat": 1,
+        "war_machine": 1
+      },
+      "seed": 10,
+      "segment": "kiosk_plaza",
+      "start_tick": 0,
+      "ticks": 865,
+      "wave": 5,
+      "wave_s": 14.4166666666667,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_uncapped",
+      "boss_damage_cap": 1.0,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 13.7666666666667,
+      "deploys": [
+        {
+          "hp_lost": 6.0,
+          "target": "war_machine",
+          "tick": 293
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 63.0828707885742,
+      "rivet_max_hp": 151.25,
+      "roster": {
+        "contractor": 1,
+        "patrol_cop": 1,
+        "swat": 1,
+        "war_machine": 1
+      },
+      "seed": 10,
+      "segment": "kiosk_plaza",
+      "start_tick": 0,
+      "ticks": 826,
+      "wave": 5,
+      "wave_s": 13.7666666666667,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_capped",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 14.1333333333333,
+      "deploys": [
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 293
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 63.0828707885742,
+      "rivet_max_hp": 151.25,
+      "roster": {
+        "contractor": 1,
+        "patrol_cop": 1,
+        "swat": 1,
+        "war_machine": 1
+      },
+      "seed": 10,
+      "segment": "kiosk_plaza",
+      "start_tick": 0,
+      "ticks": 848,
+      "wave": 5,
+      "wave_s": 14.1333333333333,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "no_kerf",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 37.1,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 75.2141999816894,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "robot_gunner": 1,
+        "robot_thug": 1,
+        "rocket_trooper": 1,
+        "sentry_turret": 1,
+        "swat": 1,
+        "war_machine": 1
+      },
+      "seed": 1,
+      "segment": "loading_bay",
+      "start_tick": 0,
+      "ticks": 2226,
+      "wave": 10,
+      "wave_s": 37.1,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_uncapped",
+      "boss_damage_cap": 1.0,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 33.6166666666667,
+      "deploys": [
+        {
+          "hp_lost": 6.0,
+          "target": "war_machine",
+          "tick": 1415
+        },
+        {
+          "hp_lost": 5.0,
+          "target": "war_machine",
+          "tick": 2017
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 78.8596712684631,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "robot_gunner": 1,
+        "robot_thug": 1,
+        "rocket_trooper": 1,
+        "sentry_turret": 1,
+        "swat": 1,
+        "war_machine": 1
+      },
+      "seed": 1,
+      "segment": "loading_bay",
+      "start_tick": 0,
+      "ticks": 2137,
+      "wave": 10,
+      "wave_s": 35.6166666666667,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_capped",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 37.4166666666667,
+      "deploys": [
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 1415
+        },
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 2017
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 114.859671268463,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "robot_gunner": 1,
+        "robot_thug": 1,
+        "rocket_trooper": 1,
+        "sentry_turret": 1,
+        "swat": 1,
+        "war_machine": 1
+      },
+      "seed": 1,
+      "segment": "loading_bay",
+      "start_tick": 0,
+      "ticks": 2314,
+      "wave": 10,
+      "wave_s": 38.5666666666667,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "no_kerf",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 32.55,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 108.504215869904,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "riot_cop": 1,
+        "robot_gunner": 1,
+        "robot_thug": 1,
+        "rocket_trooper": 1,
+        "sentry_turret": 1,
+        "war_machine": 1
+      },
+      "seed": 2,
+      "segment": "underpass",
+      "start_tick": 0,
+      "ticks": 2043,
+      "wave": 10,
+      "wave_s": 34.05,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_uncapped",
+      "boss_damage_cap": 1.0,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 14.8833333333333,
+      "deploys": [
+        {
+          "hp_lost": 6.0,
+          "target": "war_machine",
+          "tick": 291
+        },
+        {
+          "hp_lost": 5.5,
+          "target": "war_machine",
+          "tick": 893
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 14.1944384765625,
+      "rivet_max_hp": 151.25,
+      "roster": {
+        "riot_cop": 1,
+        "robot_gunner": 1,
+        "robot_thug": 1,
+        "rocket_trooper": 1,
+        "sentry_turret": 1,
+        "war_machine": 1
+      },
+      "seed": 2,
+      "segment": "underpass",
+      "start_tick": 0,
+      "ticks": 1031,
+      "wave": 10,
+      "wave_s": 17.1833333333333,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_capped",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 23.25,
+      "deploys": [
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 291
+        },
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 893
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 68.2964403533936,
+      "rivet_max_hp": 151.25,
+      "roster": {
+        "riot_cop": 1,
+        "robot_gunner": 1,
+        "robot_thug": 1,
+        "rocket_trooper": 1,
+        "sentry_turret": 1,
+        "war_machine": 1
+      },
+      "seed": 2,
+      "segment": "underpass",
+      "start_tick": 0,
+      "ticks": 1475,
+      "wave": 10,
+      "wave_s": 24.5833333333333,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "no_kerf",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": null,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "death",
+      "rivet_hp_lost": 137.5,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 1,
+        "robot_thug": 1,
+        "rocket_trooper": 1,
+        "shield_robot": 1,
+        "swat": 1,
+        "war_machine": 1
+      },
+      "seed": 3,
+      "segment": "kiosk_plaza",
+      "start_tick": 0,
+      "ticks": 1400,
+      "wave": 10,
+      "wave_s": null,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_uncapped",
+      "boss_damage_cap": 1.0,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": null,
+      "deploys": [
+        {
+          "hp_lost": 6.0,
+          "target": "war_machine",
+          "tick": 648
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "death",
+      "rivet_hp_lost": 137.5,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 1,
+        "robot_thug": 1,
+        "rocket_trooper": 1,
+        "shield_robot": 1,
+        "swat": 1,
+        "war_machine": 1
+      },
+      "seed": 3,
+      "segment": "kiosk_plaza",
+      "start_tick": 0,
+      "ticks": 926,
+      "wave": 10,
+      "wave_s": null,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_capped",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": null,
+      "deploys": [
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 648
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "death",
+      "rivet_hp_lost": 137.5,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 1,
+        "robot_thug": 1,
+        "rocket_trooper": 1,
+        "shield_robot": 1,
+        "swat": 1,
+        "war_machine": 1
+      },
+      "seed": 3,
+      "segment": "kiosk_plaza",
+      "start_tick": 0,
+      "ticks": 926,
+      "wave": 10,
+      "wave_s": null,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "no_kerf",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": null,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "death",
+      "rivet_hp_lost": 137.5,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 1,
+        "robot_thug": 1,
+        "rocket_trooper": 1,
+        "sentry_turret": 1,
+        "shield_robot": 1,
+        "war_machine": 1
+      },
+      "seed": 4,
+      "segment": "plain_block",
+      "start_tick": 0,
+      "ticks": 1695,
+      "wave": 10,
+      "wave_s": null,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_uncapped",
+      "boss_damage_cap": 1.0,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": null,
+      "deploys": [
+        {
+          "hp_lost": 6.0,
+          "target": "war_machine",
+          "tick": 154
+        },
+        {
+          "hp_lost": 6.0,
+          "target": "war_machine",
+          "tick": 756
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "death",
+      "rivet_hp_lost": 137.5,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 1,
+        "robot_thug": 1,
+        "rocket_trooper": 1,
+        "sentry_turret": 1,
+        "shield_robot": 1,
+        "war_machine": 1
+      },
+      "seed": 4,
+      "segment": "plain_block",
+      "start_tick": 0,
+      "ticks": 890,
+      "wave": 10,
+      "wave_s": null,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_capped",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": null,
+      "deploys": [
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 154
+        },
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 756
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "death",
+      "rivet_hp_lost": 137.5,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 1,
+        "robot_thug": 1,
+        "rocket_trooper": 1,
+        "sentry_turret": 1,
+        "shield_robot": 1,
+        "war_machine": 1
+      },
+      "seed": 4,
+      "segment": "plain_block",
+      "start_tick": 0,
+      "ticks": 890,
+      "wave": 10,
+      "wave_s": null,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "no_kerf",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 22.1333333333333,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 100.41935874939,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 1,
+        "patrol_cop": 2,
+        "riot_cop": 1,
+        "sentry_turret": 1,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "seed": 5,
+      "segment": "plain_block",
+      "start_tick": 0,
+      "ticks": 1509,
+      "wave": 10,
+      "wave_s": 25.15,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_uncapped",
+      "boss_damage_cap": 1.0,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 13.0,
+      "deploys": [
+        {
+          "hp_lost": 6.0,
+          "target": "war_machine",
+          "tick": 178
+        },
+        {
+          "hp_lost": 3.5,
+          "target": "war_machine",
+          "tick": 780
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 15.5999999999999,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 1,
+        "patrol_cop": 2,
+        "riot_cop": 1,
+        "sentry_turret": 1,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "seed": 5,
+      "segment": "plain_block",
+      "start_tick": 0,
+      "ticks": 1262,
+      "wave": 10,
+      "wave_s": 21.0333333333333,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_capped",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 17.95,
+      "deploys": [
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 178
+        },
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 780
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 106.290049858093,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 1,
+        "patrol_cop": 2,
+        "riot_cop": 1,
+        "sentry_turret": 1,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "seed": 5,
+      "segment": "plain_block",
+      "start_tick": 0,
+      "ticks": 1373,
+      "wave": 10,
+      "wave_s": 22.8833333333333,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "no_kerf",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": null,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "death",
+      "rivet_hp_lost": 137.5,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 1,
+        "riot_cop": 1,
+        "rocket_trooper": 1,
+        "shield_robot": 1,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "seed": 6,
+      "segment": "alley_neck",
+      "start_tick": 0,
+      "ticks": 1795,
+      "wave": 10,
+      "wave_s": null,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_uncapped",
+      "boss_damage_cap": 1.0,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": null,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "death",
+      "rivet_hp_lost": 137.5,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 1,
+        "riot_cop": 1,
+        "rocket_trooper": 1,
+        "shield_robot": 1,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "seed": 6,
+      "segment": "alley_neck",
+      "start_tick": 0,
+      "ticks": 1026,
+      "wave": 10,
+      "wave_s": null,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_capped",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": null,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "death",
+      "rivet_hp_lost": 137.5,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 1,
+        "riot_cop": 1,
+        "rocket_trooper": 1,
+        "shield_robot": 1,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "seed": 6,
+      "segment": "alley_neck",
+      "start_tick": 0,
+      "ticks": 1026,
+      "wave": 10,
+      "wave_s": null,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "no_kerf",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": null,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "death",
+      "rivet_hp_lost": 137.5,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "patrol_cop": 1,
+        "robot_gunner": 2,
+        "rocket_trooper": 1,
+        "shield_robot": 1,
+        "war_machine": 1
+      },
+      "seed": 7,
+      "segment": "plain_block",
+      "start_tick": 0,
+      "ticks": 1096,
+      "wave": 10,
+      "wave_s": null,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_uncapped",
+      "boss_damage_cap": 1.0,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": null,
+      "deploys": [
+        {
+          "hp_lost": 6.0,
+          "target": "war_machine",
+          "tick": 456
+        },
+        {
+          "hp_lost": 6.0,
+          "target": "war_machine",
+          "tick": 1064
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "death",
+      "rivet_hp_lost": 137.5,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "patrol_cop": 1,
+        "robot_gunner": 2,
+        "rocket_trooper": 1,
+        "shield_robot": 1,
+        "war_machine": 1
+      },
+      "seed": 7,
+      "segment": "plain_block",
+      "start_tick": 0,
+      "ticks": 1328,
+      "wave": 10,
+      "wave_s": null,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_capped",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": null,
+      "deploys": [
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 456
+        },
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 1064
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "death",
+      "rivet_hp_lost": 137.5,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "patrol_cop": 1,
+        "robot_gunner": 2,
+        "rocket_trooper": 1,
+        "shield_robot": 1,
+        "war_machine": 1
+      },
+      "seed": 7,
+      "segment": "plain_block",
+      "start_tick": 0,
+      "ticks": 1328,
+      "wave": 10,
+      "wave_s": null,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "no_kerf",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": 38.4333333333333,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "clear",
+      "rivet_hp_lost": 94.80795753479,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 2,
+        "robot_gunner": 1,
+        "sentry_turret": 1,
+        "shield_robot": 1,
+        "war_machine": 1
+      },
+      "seed": 8,
+      "segment": "plain_block",
+      "start_tick": 0,
+      "ticks": 2574,
+      "wave": 10,
+      "wave_s": 42.9,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_uncapped",
+      "boss_damage_cap": 1.0,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": null,
+      "deploys": [
+        {
+          "hp_lost": 6.0,
+          "target": "war_machine",
+          "tick": 451
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "death",
+      "rivet_hp_lost": 137.5,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 2,
+        "robot_gunner": 1,
+        "sentry_turret": 1,
+        "shield_robot": 1,
+        "war_machine": 1
+      },
+      "seed": 8,
+      "segment": "plain_block",
+      "start_tick": 0,
+      "ticks": 928,
+      "wave": 10,
+      "wave_s": null,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_capped",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": null,
+      "deploys": [
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 451
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "death",
+      "rivet_hp_lost": 137.5,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 2,
+        "robot_gunner": 1,
+        "sentry_turret": 1,
+        "shield_robot": 1,
+        "war_machine": 1
+      },
+      "seed": 8,
+      "segment": "plain_block",
+      "start_tick": 0,
+      "ticks": 928,
+      "wave": 10,
+      "wave_s": null,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "no_kerf",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": null,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "death",
+      "rivet_hp_lost": 137.5,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 2,
+        "patrol_cop": 1,
+        "shield_robot": 1,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "seed": 9,
+      "segment": "crosswalk",
+      "start_tick": 0,
+      "ticks": 2157,
+      "wave": 10,
+      "wave_s": null,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_uncapped",
+      "boss_damage_cap": 1.0,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": null,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "death",
+      "rivet_hp_lost": 137.5,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 2,
+        "patrol_cop": 1,
+        "shield_robot": 1,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "seed": 9,
+      "segment": "crosswalk",
+      "start_tick": 0,
+      "ticks": 964,
+      "wave": 10,
+      "wave_s": null,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_capped",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": null,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "death",
+      "rivet_hp_lost": 137.5,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "contractor": 2,
+        "patrol_cop": 1,
+        "shield_robot": 1,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "seed": 9,
+      "segment": "crosswalk",
+      "start_tick": 0,
+      "ticks": 964,
+      "wave": 10,
+      "wave_s": null,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "no_kerf",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": null,
+      "deploys": [],
+      "electric_robot_finishes": 0,
+      "end": "death",
+      "rivet_hp_lost": 137.5,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "rocket_trooper": 2,
+        "sentry_turret": 2,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "seed": 10,
+      "segment": "underpass",
+      "start_tick": 0,
+      "ticks": 1530,
+      "wave": 10,
+      "wave_s": null,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_uncapped",
+      "boss_damage_cap": 1.0,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": null,
+      "deploys": [
+        {
+          "hp_lost": 6.0,
+          "target": "war_machine",
+          "tick": 1155
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "death",
+      "rivet_hp_lost": 137.5,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "rocket_trooper": 2,
+        "sentry_turret": 2,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "seed": 10,
+      "segment": "underpass",
+      "start_tick": 0,
+      "ticks": 1788,
+      "wave": 10,
+      "wave_s": null,
+      "weapon": "pistol"
+    },
+    {
+      "arm": "kerf_capped",
+      "boss_damage_cap": 0.1,
+      "boss_max_hp": 26.0,
+      "boss_ttk_s": null,
+      "deploys": [
+        {
+          "hp_lost": 2.6,
+          "target": "war_machine",
+          "tick": 1155
+        }
+      ],
+      "electric_robot_finishes": 0,
+      "end": "death",
+      "rivet_hp_lost": 137.5,
+      "rivet_max_hp": 137.5,
+      "roster": {
+        "rocket_trooper": 2,
+        "sentry_turret": 2,
+        "swat": 2,
+        "war_machine": 1
+      },
+      "seed": 10,
+      "segment": "underpass",
+      "start_tick": 0,
+      "ticks": 1788,
+      "wave": 10,
+      "wave_s": null,
+      "weapon": "pistol"
+    }
+  ],
+  "schema": "gtai.kerf-boss-wave/1",
+  "tick_hz": 60,
+  "summaries": {
+    "5": {
+      "no_kerf": {
+        "Wave clear (s)": {
+          "n": 10,
+          "mean": 15.48500000000001,
+          "min": 10.9166666666667,
+          "max": 21.0833333333333,
+          "ci95": [
+            12.815872206418351,
+            18.15412779358167
+          ]
+        },
+        "Boss TTK (s)": {
+          "n": 10,
+          "mean": 15.06333333333334,
+          "min": 10.9166666666667,
+          "max": 20.1833333333333,
+          "ci95": [
+            12.556461633498387,
+            17.570205033168293
+          ]
+        },
+        "Rivet HP lost": {
+          "n": 10,
+          "mean": 40.449006912867205,
+          "min": 3.03500358581542,
+          "max": 107.806714668274,
+          "ci95": [
+            18.311188121134176,
+            62.58682570460023
+          ]
+        },
+        "Kerf deploys": {
+          "n": 10,
+          "mean": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "Total cut damage (HP)": {
+          "n": 10,
+          "mean": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "kerf_uncapped": {
+        "Wave clear (s)": {
+          "n": 10,
+          "mean": 13.19666666666666,
+          "min": 10.0833333333333,
+          "max": 18.6333333333333,
+          "ci95": [
+            11.131914052919907,
+            15.261419280413413
+          ]
+        },
+        "Boss TTK (s)": {
+          "n": 10,
+          "mean": 12.738333333333333,
+          "min": 9.46666666666667,
+          "max": 18.3666666666667,
+          "ci95": [
+            10.637933824042262,
+            14.838732842624404
+          ]
+        },
+        "Rivet HP lost": {
+          "n": 10,
+          "mean": 43.01682713826498,
+          "min": 3.59999999999997,
+          "max": 124.799958200455,
+          "ci95": [
+            13.54720768571718,
+            72.48644659081278
+          ]
+        },
+        "Kerf deploys": {
+          "n": 10,
+          "mean": 1.1,
+          "min": 1,
+          "max": 2,
+          "ci95": [
+            0.8737840000000001,
+            1.326216
+          ]
+        },
+        "Total cut damage (HP)": {
+          "n": 10,
+          "mean": 6.2,
+          "min": 6.0,
+          "max": 8.0,
+          "ci95": [
+            5.747568,
+            6.652432
+          ]
+        }
+      },
+      "kerf_capped": {
+        "Wave clear (s)": {
+          "n": 10,
+          "mean": 14.33833333333332,
+          "min": 10.7833333333333,
+          "max": 19.65,
+          "ci95": [
+            12.006843118268758,
+            16.669823548397883
+          ]
+        },
+        "Boss TTK (s)": {
+          "n": 10,
+          "mean": 13.716666666666681,
+          "min": 10.1833333333333,
+          "max": 19.4166666666667,
+          "ci95": [
+            11.487322584746046,
+            15.946010748587316
+          ]
+        },
+        "Rivet HP lost": {
+          "n": 10,
+          "mean": 43.256827138264974,
+          "min": 3.59999999999997,
+          "max": 124.799958200455,
+          "ci95": [
+            13.959679591666294,
+            72.55397468486365
+          ]
+        },
+        "Kerf deploys": {
+          "n": 10,
+          "mean": 1.2,
+          "min": 1,
+          "max": 2,
+          "ci95": [
+            0.8983786666666667,
+            1.5016213333333333
+          ]
+        },
+        "Total cut damage (HP)": {
+          "n": 10,
+          "mean": 2.89,
+          "min": 2.6,
+          "max": 4.6,
+          "ci95": [
+            2.4149464000000003,
+            3.3650536
+          ]
+        }
+      }
+    },
+    "10": {
+      "no_kerf": {
+        "Wave clear (s)": {
+          "n": 4,
+          "mean": 34.8,
+          "min": 25.15,
+          "max": 42.9,
+          "ci95": [
+            23.014009356473736,
+            46.58599064352626
+          ]
+        },
+        "Boss TTK (s)": {
+          "n": 4,
+          "mean": 32.55416666666665,
+          "min": 22.1333333333333,
+          "max": 38.4333333333333,
+          "ci95": [
+            20.795491720529157,
+            44.31284161280415
+          ]
+        },
+        "Rivet HP lost": {
+          "n": 10,
+          "mean": 120.39457321357735,
+          "min": 75.2141999816894,
+          "max": 137.5,
+          "ci95": [
+            103.54708344317089,
+            137.2420629839838
+          ]
+        },
+        "Kerf deploys": {
+          "n": 10,
+          "mean": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "Total cut damage (HP)": {
+          "n": 10,
+          "mean": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "kerf_uncapped": {
+        "Wave clear (s)": {
+          "n": 3,
+          "mean": 24.6111111111111,
+          "min": 17.1833333333333,
+          "max": 35.6166666666667,
+          "ci95": [
+            0.4565032126231614,
+            48.76571900959904
+          ]
+        },
+        "Boss TTK (s)": {
+          "n": 3,
+          "mean": 20.5,
+          "min": 13.0,
+          "max": 33.6166666666667,
+          "ci95": [
+            -7.815005363873375,
+            48.815005363873375
+          ]
+        },
+        "Rivet HP lost": {
+          "n": 10,
+          "mean": 107.11541097450255,
+          "min": 14.1944384765625,
+          "max": 137.5,
+          "ci95": [
+            69.96703097919647,
+            144.26379096980864
+          ]
+        },
+        "Kerf deploys": {
+          "n": 10,
+          "mean": 1.3,
+          "min": 0,
+          "max": 2,
+          "ci95": [
+            0.7110655197717002,
+            1.8889344802283
+          ]
+        },
+        "Total cut damage (HP)": {
+          "n": 10,
+          "mean": 7.4,
+          "min": 0,
+          "max": 12.0,
+          "ci95": [
+            4.096764391945646,
+            10.703235608054355
+          ]
+        }
+      },
+      "kerf_capped": {
+        "Wave clear (s)": {
+          "n": 3,
+          "mean": 28.677777777777766,
+          "min": 22.8833333333333,
+          "max": 38.5666666666667,
+          "ci95": [
+            7.299034241113851,
+            50.05652131444168
+          ]
+        },
+        "Boss TTK (s)": {
+          "n": 3,
+          "mean": 26.205555555555566,
+          "min": 17.95,
+          "max": 37.4166666666667,
+          "ci95": [
+            1.2045722600526183,
+            51.20653885105851
+          ]
+        },
+        "Rivet HP lost": {
+          "n": 10,
+          "mean": 125.19461614799496,
+          "min": 68.2964403533936,
+          "max": 137.5,
+          "ci95": [
+            108.74043043316311,
+            141.64880186282682
+          ]
+        },
+        "Kerf deploys": {
+          "n": 10,
+          "mean": 1.3,
+          "min": 0,
+          "max": 2,
+          "ci95": [
+            0.7110655197717002,
+            1.8889344802283
+          ]
+        },
+        "Total cut damage (HP)": {
+          "n": 10,
+          "mean": 3.38,
+          "min": 0,
+          "max": 5.2,
+          "ci95": [
+            1.8487703514064202,
+            4.911229648593579
+          ]
+        }
+      }
+    }
+  }
+}

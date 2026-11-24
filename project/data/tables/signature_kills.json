@@ -2,6 +2,369 @@
   "doc": "Lane brutality: the one-shot signature kills of the advanced weapons on humans (features/combat/kills). A row fires when a lethal hit from `weapon` lands on a human; style picks the kill (gib = the body blown into its rig parts). Speeds in m/s, spin in deg/s, timings in 60 Hz ticks. Under --gore=reduced no row dismembers: the victim falls with the standard death.",
   "kills": [
     {
+      "blot_m": 0.32,
+      "bounce": 0.22,
+      "doc": "Quick clamp rake. The patrol spins from a neck cut, riot armour hits the ground shield-first, SWAT folds over the clamp and flies, the contractor pitches over his pistol, and the launcher falls free as its carrier buckles.",
+      "fall": "forward",
+      "fx": {
+        "cells_at": 4,
+        "cells_lean": 1,
+        "cells_ticks": 18,
+        "cells_turn_from": 2,
+        "lift_m": 0,
+        "rake_angle": 22,
+        "wound_height": 0.69
+      },
+      "ground_drag": 4.3,
+      "id": "claw_rake_kill",
+      "launch_mps": [
+        0,
+        0
+      ],
+      "pieces": [
+        "body"
+      ],
+      "slide_m": 0.48,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "style": "rake",
+      "track": [
+        [
+          0,
+          -8,
+          1,
+          0
+        ],
+        [
+          6,
+          -22,
+          0.78,
+          0.16
+        ],
+        [
+          19,
+          0,
+          1,
+          1
+        ]
+      ],
+      "up_mps": [
+        0,
+        0
+      ],
+      "variants": {
+        "contractor": {
+          "cells": {
+            "at": [
+              0,
+              4,
+              14
+            ],
+            "grids": {
+              "p55": {
+                "*": "contractor_fall.png"
+              },
+              "p70": {
+                "*": "contractor_fall.png"
+              }
+            }
+          },
+          "fall": "back",
+          "fx": {
+            "cells_turn_from": 0,
+            "rake_angle": -28,
+            "wound_height": 0.46
+          },
+          "hat_kick_mps": 3.4,
+          "kit": "pistol",
+          "kit_m": 0.52,
+          "pieces": [
+            "body",
+            "kit"
+          ],
+          "slide_m": 1.45,
+          "track": [
+            [
+              0,
+              22,
+              1,
+              0
+            ],
+            [
+              4,
+              34,
+              1.04,
+              0.29
+            ],
+            [
+              10,
+              16,
+              0.96,
+              0.8
+            ],
+            [
+              18,
+              0,
+              1,
+              1
+            ]
+          ]
+        },
+        "patrol_cop": {
+          "cells": {
+            "at": [
+              0,
+              3,
+              7,
+              13,
+              21
+            ],
+            "grids": {
+              "p70": {
+                "*": "cop_patrol_smg_stitch.png"
+              }
+            }
+          },
+          "fall": "side",
+          "fx": {
+            "rake_angle": -9,
+            "whirl_from": 0,
+            "whirl_ticks": 16,
+            "wound_height": 0.88
+          },
+          "hat_kick_mps": 4.2,
+          "kit": "cap",
+          "kit_m": 0.43,
+          "pieces": [
+            "body",
+            "kit"
+          ],
+          "slide_m": 0.45,
+          "track": [
+            [
+              0,
+              12,
+              1,
+              0
+            ],
+            [
+              5,
+              22,
+              1.02,
+              0.08
+            ],
+            [
+              12,
+              -18,
+              0.91,
+              0.42
+            ],
+            [
+              21,
+              0,
+              1,
+              1
+            ]
+          ]
+        },
+        "riot_cop": {
+          "cells": {
+            "at": [
+              0,
+              4,
+              10,
+              13
+            ],
+            "grids": {
+              "p55": {
+                "*": "cop_riot_pistol_snap.png"
+              },
+              "p70": {
+                "*": "cop_riot_pistol_snap.png"
+              }
+            }
+          },
+          "fall": "forward",
+          "fx": {
+            "rake_angle": -57,
+            "wound_height": 0.96
+          },
+          "hat_kick_mps": 3.1,
+          "kit": "helmet",
+          "kit_m": 0.53,
+          "pieces": [
+            "body",
+            "kit",
+            "plate_a"
+          ],
+          "plate_m": 1.12,
+          "slide_m": 0.12,
+          "track": [
+            [
+              0,
+              -16,
+              1,
+              0
+            ],
+            [
+              5,
+              -32,
+              1.08,
+              0.03
+            ],
+            [
+              10,
+              35,
+              0.55,
+              0.64
+            ],
+            [
+              13,
+              0,
+              0.86,
+              1
+            ],
+            [
+              23,
+              0,
+              1,
+              1
+            ]
+          ]
+        },
+        "rocket_trooper": {
+          "cells": {
+            "at": [
+              2,
+              20,
+              39
+            ],
+            "grids": {
+              "p55": {
+                "*": "rocket_trooper_fall.png"
+              },
+              "p70": {
+                "*": "rocket_trooper_fall.png"
+              }
+            }
+          },
+          "fall": "side",
+          "fx": {
+            "cells_turn_from": 1,
+            "rake_angle": 68,
+            "wound_height": 0.59
+          },
+          "hat_kick_mps": 5.2,
+          "kit": "tube",
+          "kit_m": 1.22,
+          "pieces": [
+            "body",
+            "kit"
+          ],
+          "slide_m": 0.24,
+          "track": [
+            [
+              0,
+              -8,
+              1,
+              0
+            ],
+            [
+              9,
+              -24,
+              0.77,
+              0.02
+            ],
+            [
+              22,
+              -36,
+              0.58,
+              0.16
+            ],
+            [
+              31,
+              -18,
+              0.68,
+              0.55
+            ],
+            [
+              42,
+              0,
+              1,
+              1
+            ]
+          ]
+        },
+        "swat": {
+          "cells": {
+            "at": [
+              0,
+              9,
+              16,
+              22,
+              30
+            ],
+            "grids": {
+              "p70": {
+                "*": "swat_between_fall.png"
+              }
+            }
+          },
+          "fall": "back",
+          "fx": {
+            "land_at": 26,
+            "lift_from": 9,
+            "lift_m": 0.72,
+            "rake_angle": 47,
+            "wound_height": 0.67
+          },
+          "hat_kick_mps": 2.5,
+          "kit": "rifle",
+          "kit_m": 0.93,
+          "pieces": [
+            "body",
+            "kit"
+          ],
+          "slide_m": 2.12,
+          "track": [
+            [
+              0,
+              -14,
+              0.91,
+              0
+            ],
+            [
+              9,
+              -48,
+              0.58,
+              0.03
+            ],
+            [
+              15,
+              18,
+              0.85,
+              0.42
+            ],
+            [
+              23,
+              10,
+              1.02,
+              0.82
+            ],
+            [
+              33,
+              0,
+              1,
+              1
+            ]
+          ]
+        }
+      },
+      "weapon": "claw"
+    },
+    {
       "bounce": 0.35,
       "cone_deg": 75,
       "doc": "Rocket launcher: the body blown apart along the blast into its six rig parts (head with the hat, torso, both arms, both legs) that spin, bounce and slide, a red spray fan and ink splat, a scorch mark at the burst. n11 combat it32: hitstop_ticks 0 (was 4): the body leaves on the first tick, because the held parts stood the victim upright in his living pose inside the fireball for 4 ticks after the camera's kill hit-stop (wall time only), the hit-stop is the hold.",
@@ -1896,6 +2259,112 @@
         }
       },
       "weapon": "electric_shutdown"
+    },
+    {
+      "blot_m": 0,
+      "bounce": 0,
+      "crumble_ticks": 21,
+      "doc": "A bolt punches into the chassis, forks out through its joints and ejects plates. The locked wreck topples away from the impact.",
+      "id": "electro_bolt_shutdown",
+      "launch_mps": [
+        0,
+        0
+      ],
+      "pieces": [
+        "body"
+      ],
+      "scorch_radius_m": 0.63,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "spray": 0,
+      "stand_ticks": 16,
+      "style": "shutdown",
+      "up_mps": [
+        0,
+        0
+      ],
+      "variants": {
+        "robot_gunner": {
+          "fx": {
+            "fold_deg": 62,
+            "joint_m": 0.69
+          }
+        },
+        "robot_thug": {
+          "fx": {
+            "fold_deg": 78,
+            "joint_m": 0.62
+          }
+        },
+        "sentry_turret": {
+          "fx": {
+            "fold_deg": 24,
+            "joint_m": 0.34
+          }
+        },
+        "shield_robot": {
+          "fx": {
+            "fold_deg": 47,
+            "joint_m": 0.87
+          }
+        }
+      },
+      "weapon": "electro_bolt_shutdown"
+    },
+    {
+      "blot_m": 0,
+      "bounce": 0,
+      "crumble_ticks": 20,
+      "doc": "The clamp lifts the chassis on a short arc. Its core bursts at the apex and the smoking wreck drops back at the clamp.",
+      "id": "claw_discharge_shutdown",
+      "launch_mps": [
+        0,
+        0
+      ],
+      "pieces": [
+        "body"
+      ],
+      "scorch_radius_m": 0.63,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "spray": 0,
+      "stand_ticks": 18,
+      "style": "shutdown",
+      "up_mps": [
+        0,
+        0
+      ],
+      "variants": {
+        "robot_gunner": {
+          "fx": {
+            "fold_deg": 62,
+            "joint_m": 0.69
+          }
+        },
+        "robot_thug": {
+          "fx": {
+            "fold_deg": 78,
+            "joint_m": 0.62
+          }
+        },
+        "sentry_turret": {
+          "fx": {
+            "fold_deg": 24,
+            "joint_m": 0.34
+          }
+        },
+        "shield_robot": {
+          "fx": {
+            "fold_deg": 47,
+            "joint_m": 0.87
+          }
+        }
+      },
+      "weapon": "claw_discharge_shutdown"
     }
   ],
   "leftover_budget": 12,

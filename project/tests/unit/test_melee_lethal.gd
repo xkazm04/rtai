@@ -51,10 +51,10 @@ func test_every_weapon_and_bearing_against_each_wave_human() -> void:
 
 func test_claw_boss_owned_mulroney_machines_and_covered_targets() -> void:
 	var claw: MeleeTable = MeleeTable.shipped()
-	assert_false(claw.kills_human)
-	var guard: Fighter = _fighter(&"patrol_cop")
+	assert_true(claw.kills_human)
+	var guard: Fighter = _fighter(&"appliance_warden")
 	_click(PlayerMelee.new(claw))
-	assert_eq(guard.hp, guard.max_hp - claw.hits[0].damage)
+	assert_false(guard.alive())
 	arena.hostiles.clear()
 	var covered: Fighter = _fighter(&"swat")
 	covered.exposed = false

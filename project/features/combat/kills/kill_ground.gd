@@ -19,6 +19,8 @@ func _draw() -> void:
 	if view.kills.tick - mark.tick >= mark.spray_from:
 		KillMarkArt.spray(self, mark, view.ppm)
 	KillMarkArt.scorch(self, mark, view.ppm)
+	if mark.rake:
+		KillRakeArt.pool(self, view.kills.tick - mark.tick)
 	if mark.plasma:
 		if _plasma == null:
 			_plasma = KillPlasmaArt.ground_print(mark, view.kills.push_out)
@@ -44,6 +46,8 @@ func _notification(what: int) -> void:
 ## An ash heap still growing in (KillCharFx.pile's 45 ticks) is reprinted every frame; a burst's
 ## print once more on the tick its spray lands (the pop).
 func needs_reprint(tick: int) -> bool:
+	if mark.rake and tick - mark.tick <= KillRakeArt.POOL_TICKS:
+		return true
 	if mark.plasma and tick - mark.tick <= 24:
 		return true
 	if mark.spray_from > 0 and tick - mark.tick == mark.spray_from:
