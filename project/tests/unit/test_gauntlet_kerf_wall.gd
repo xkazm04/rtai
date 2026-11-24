@@ -50,9 +50,6 @@ func test_player_kerf_slice_keeps_the_street_in_reach() -> void:
 	var target: Fighter = _foe(FAR_TARGET)
 	var next: Fighter = _foe(START + Vector2.RIGHT * 4.0)
 	_press(&"melee", START.direction_to(target.pos))
-	if arena.rivet.pos.y >= WALL.end.y:
-		pending("NEED melee: keep a player-controlled Kerf blink on the near side of a wall")
-		return
 	assert_false(session.stage.walls.blocks(arena.rivet.pos, next.pos))
 	assert_lte(arena.rivet.pos.y, WALL.position.y - arena.rivet.radius_m)
 

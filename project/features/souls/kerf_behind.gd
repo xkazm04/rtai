@@ -72,6 +72,20 @@ static func _front_blocks(arena: CombatArena, target: Fighter, ray: Vector2) -> 
 	return target.facing.dot(-ray) >= arch.shield_cos
 
 
+## `to` when the travel from `from` is clear, else `from` (a blocked blink stays put).
+static func reachable(
+	stage: CollectCallStage, from: Vector2, to: Vector2, walls: ArenaWalls
+) -> Vector2:
+	return to if clear(stage, from, to, walls) else from
+
+
+## True when the travel from Rivet to `spot` crosses no wall and no solid cell.
+static func clear(
+	stage: CollectCallStage, target: Vector2, spot: Vector2, walls: ArenaWalls
+) -> bool:
+	return _clear(stage, target, spot, walls)
+
+
 static func _clear(
 	stage: CollectCallStage, target: Vector2, spot: Vector2, walls: ArenaWalls
 ) -> bool:

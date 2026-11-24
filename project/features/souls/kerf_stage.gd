@@ -1,7 +1,6 @@
 class_name KerfStage
 extends RefCounted
-## Kerf's charged blink on quest and arena stages. Melee cuts the unobstructed hostile nearest
-## the aim line and lands behind it, or dashes along the aim. ghost_attacks.json tunes the chain.
+## Kerf's charged blink (ghost_attacks.json tunes it): melee cuts the clear hostile nearest the aim.
 
 const ID: StringName = &"kerf"
 const GHOST: StringName = &"kerf"
@@ -112,15 +111,16 @@ func _blink(stage: CollectCallStage, aim: Vector2) -> void:
 	var rivet: Fighter = stage.arena.rivet
 	var from: Vector2 = rivet.pos
 	var target: Fighter = pick(stage, aim)
-	var to: Vector2 = from + aim * num(&"dash_m")
-	var cut: Vector2 = Vector2.INF
-	if target != null:
-		var blink: KerfBehind = KerfBehind.resolve(stage, target, num(&"behind_m"), _walls(stage))
-		to = blink.landing
-		cut = target.pos
-		_slice(stage, target, blink.hit_dir)
-		_cut_path(stage, from, to, target, blink.path_dir)
+	var cut: Vector2 = Vector2.INF if target == null else target.pos
 	var walls: ArenaWalls = _walls(stage)
+	var back: float = num(&"behind_m")
+	var hop: KerfBehind = null if target == null else KerfBehind.resolve(stage, target, back, walls)
+	if hop != null:
+		_slice(stage, target, hop.hit_dir)
+	var goal: Vector2 = from + aim * num(&"dash_m") if hop == null else hop.landing
+	var to: Vector2 = KerfBehind.reachable(stage, from, goal, walls)
+	if hop != null and to != from:
+		_cut_path(stage, from, to, target, hop.path_dir)
 	if walls != null:
 		to = walls.push_out(to, rivet.radius_m)
 	rivet.pos = to
