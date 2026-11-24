@@ -156,6 +156,9 @@ the weekly limit at 17:44, then in-session Sonnet subagents from the same brief 
 | c5b-medians | subagent | 1 | not metered | accepted |
 | c6b-rifleman-chain | subagent | 75 | not metered | accepted (part A; part B chain still not reached) |
 
+Minutes are from JOURNAL stamps; the calls under 5 minutes (c6a, c4a, c5b) were logged with estimated stamps
+(JOURNAL 19:05 CORRECTION) and are lower bounds. Subagent cost is not metered per call; `builder.mjs` cost $0.61 in all.
+
 Brief differently: for a "before" arm whose difference is data, toggle the data on HEAD from the first brief instead
 of a temp worktree; ask for an in-game frame of the effect itself (the chain still fell back to a dev view because the
 named take tick showed the bolt, not a hop).
