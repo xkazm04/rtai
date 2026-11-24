@@ -28,12 +28,12 @@ func _check_locomotion(id: StringName) -> void:
 		rig.speed_now = 2.4 * CharacterRigs.PX_PER_M
 		var own: String = String(WeaponArtKey.of(id)) + ".png"
 		var walk: String = RivetWalk.ARMED + own
-		if not ResourceLoader.exists(dir + walk):
+		if RivetFramesGrids.held_only(id, art) or not ResourceLoader.exists(dir + walk):
 			walk = RivetWalk.STRIP
 		assert_eq(RivetWalk.motion_path(rig, art, id), dir + walk, "%s %s walks" % [art, id])
 		rig.speed_now = 3.2 * CharacterRigs.PX_PER_M
 		var run: String = RivetWalk.ARMED_RUN + own
-		if not ResourceLoader.exists(dir + run):
+		if RivetFramesGrids.held_only(id, art) or not ResourceLoader.exists(dir + run):
 			run = RivetWalk.RUN if walk == RivetWalk.STRIP else walk
 		assert_eq(RivetWalk.motion_path(rig, art, id), dir + run, "%s %s runs" % [art, id])
 
@@ -70,6 +70,8 @@ func test_every_named_grid_exists_in_both_art_directories() -> void:
 		for file: String in [RivetWalk.STRIP, RivetWalk.STRIP4, RivetWalk.RUN]:
 			assert_true(ResourceLoader.exists(dir + file), dir + file)
 		for family: String in families.values() + overrides.values():
+			if family.begins_with(String(RivetFramesGrids.BARE)):
+				continue
 			for prefix: String in [RivetWalk.ARMED, RivetWalk.ARMED_RUN]:
 				var path: String = dir + prefix + family + ".png"
 				assert_true(ResourceLoader.exists(path), path)

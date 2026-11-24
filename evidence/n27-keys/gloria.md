@@ -54,10 +54,36 @@ The dev `arsenal_turn` recorder does not equip the weapon in this worktree (it f
 `node tools/tests/run_unit.mjs --changed`: 4086 passed, 1 failed (`test_rivet_fire_cam:81`, fixed as above), 1 flaky (`test_audio_driving`, passes alone). Pre-commit lint 19 of 19 ok.
 After the fix: `--select=test_rivet_fire_cam,test_rivet_muzzle` 12 passed, 0 failed.
 
-## Part B: not shipped
-`gun_transplant.py` was started (kept as `gloria-p70/gun_transplant_wip.py`, not in the repo). Findings: the grid rows are not the same poses as the eq strip cells (row 2's gun points left, eq cell 2's right),
-and masks made by diffing the pistol and Gloria cells include texture noise from the edited body, so the template match scored 0.27-0.54 (unusable). No transplanted grid exists; the old long-gun
-grids and their stride data stay, so walking and sprinting still show the long gun while standing and firing show the compact one.
-Next: build the gun mask from a hand-aligned region instead of a whole-cell diff, and pair each grid row with its eq cell by gun match first.
+## Heights and the true before (brief n27-03b)
+`gloria_before_after_64.png` was bounced: its old column had been rendered from the changed tree. Re-rendered from the art and code of
+`9b11bc8b6` (the old strips, `left_fire` strips, windup/strips/res/gun_diag/cell_feet/muzzle checked out into the tree, `--import`, captured, restored to `17d909ebd`;
+the tree matched it again afterwards): the old column now shows the long two-handed gun in every panel (looked at), 6 panels x 3 columns (old | new | pistol), same tick and facing.
+Standing height, 64 px/m, head top to the foot point, from a median-background diff of the 8 aim octants: old Gloria 148.9 px (148-151), new Gloria 148.5 px (147-150),
+pistol 148.8 px (147-151); octant 0: 148 / 150 / 150 px. Gun in the strip: new Gloria 53x57 strip px, pistol 54x53; the old gun was about 1.5x the pistol's length.
 
-Commits: `17d909ebd` (part A).
+## Part B: transplanted grids not shipped; stop-gap fallback instead
+Second try (about 10 minutes, then stopped): a blurred (sigma 3) premultiplied diff of the pistol and Gloria cells gives gun cores but not whole silhouettes
+(cell 1's gun is mostly hidden; the feet and body edges show 1-2 px registration residue), the grid rows are not the same poses as the eq cells (row 2's gun points left,
+eq cell 2's right), and the first masked template match scored 0.27-0.54. No row passes the n27-03 checks, so no transplanted grid ships; the old long-gun grids stay in the repo.
+`tools/art/gun_transplant.py` is therefore not committed (WIP kept in `gloria-p70/gun_transplant_wip.py`).
+
+Fallback so the gun is the same compact one everywhere (the six unfinished weapons' route: bare-claw legs + the held art on the palm):
+- `rivet_motion.json` `walk_grid.by_weapon`: `"gloria": "bare_claw_p70"` (`bare_claw` = every pitch). **To bring the long-gun grids back: set that row to `"gloria"` or delete it** (the doc string says so).
+- `RivetFramesGrids.held_only(weapon, art)` (new, `rivet_frames_grids.gd`) reads the rows whose value starts with bare_claw; `RivetWalk.path_of` skips the weapon's own grid for them and falls to the
+  borrowed bare grid (`grid_for` already returned it). **NEED, resolved (outside the allowlist): `rivet_frames_grids.gd`.**
+- **NEED, resolved (outside the allowlist): `weapon_art.json` gloria row.** The held part is drawn from `held.png` by `length_px`/`grip_px`/`muzzle_px`/`length_m`; the old numbers
+  (481 px, grip 147,63, muzzle 484,63, 0.8 m) described the long gun, so the new compact held art drew a speck in the palm. Re-measured on the new `held.png`: gun x 362-483, y 4-117;
+  grip [398,85], muzzle [484,49], length_px 122, length_m 0.7 (the pistol's), `part_grip_px.small` = grip. Nothing else in the row changed.
+- Tests: `test_rivet_walk_held_only.gd` (new: gloria is held-only at p70 and not at p55, the pistol is not; gloria p70 walking resolves to `rivet_walk8.png` and running to `rivet_run8.png`, the long grid file still exists,
+  `path_of` for her own grid is empty; the pistol still gets `rivet_walk_eq_pistol.png`); `test_rivet_walk_every_weapon.gd` (every-weapon locomotion expects the bare grids for held-only weapons;
+  the grid-file existence check skips the bare_claw family value).
+- Looked at in the game (arena, 64 px/m, walk 6.75 and sprint 9.3 m/s, 8 directions each): the compact gun is in the palm in every walk and sprint frame, no long gun anywhere.
+  Still: `gtai-masters/n27/keys/gloria_walk_fallback_64.png` (standing | walking | sprinting at octants 0, 2, 4, 6). The held part is the side-view gun, rotated with the aim; it is a stop-gap
+  (the walk legs are the bare stride, tone a little warmer than the drawn strips).
+- Not done: a 32 px/m clip; `rivet_motion.json` stride/bob rows for gloria still describe the unused long grids (harmless while held-only).
+
+## Next (p55 call)
+p55 Gloria art still has the long gun (strips, `held_55`, `showcase/p55`); redo it by the same pistol-strip edit. p55 never had Gloria walk or run grids (no `p55/rivet_*_eq_gloria.png`), so
+at p55 she already walks on the bare stride; the new `bare_claw_p70` row value is p70 only (`held_only(weapon, art)`), p55 is unchanged.
+
+Commits: `17d909ebd` (part A), `d4fb0ccb3` (evidence), the fallback commit below.

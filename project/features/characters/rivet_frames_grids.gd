@@ -6,6 +6,7 @@ const BARE: StringName = &"bare_claw"
 static var _grid: Dictionary[StringName, StringName] = {}
 static var _borrowed: StringName
 static var _palms: Dictionary = {}
+static var _held_only: Dictionary[StringName, String] = {}
 
 
 static func grid_for(weapon: StringName) -> StringName:
@@ -14,6 +15,16 @@ static func grid_for(weapon: StringName) -> StringName:
 	if _grid.is_empty():
 		_load()
 	return _grid.get(weapon, _borrowed)
+
+
+## True when rivet_motion.json walk_grid.by_weapon names the weapon bare_claw (every pitch) or
+## bare_claw_<art> (that pitch only): its own drawn walk and run grids (the files stay) are
+## withheld at `art`, the bare stride carries its held part instead.
+static func held_only(weapon: StringName, art: String) -> bool:
+	if _grid.is_empty():
+		_load()
+	var pitch: String = _held_only.get(weapon, "x")
+	return pitch == "" or pitch == "_" + art
 
 
 static func _load() -> void:
@@ -32,6 +43,10 @@ static func _load() -> void:
 	for id: StringName in weapons:
 		var family: StringName = overrides.get(id, defaults.get(weapons[id], BARE))
 		_grid[id] = id if family == id else _borrowed
+	for id: StringName in overrides:
+		var value: String = overrides[id]
+		if value.begins_with(String(BARE)):
+			_held_only[id] = value.trim_prefix(String(BARE))
 
 
 ## walk4 is walk8's contact and passing drawings (even columns). Coordinates are fractions of

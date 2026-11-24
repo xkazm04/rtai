@@ -343,9 +343,10 @@
       "two_hand_long": "plasma_rifle"
     },
     "by_weapon": {
+      "gloria": "bare_claw_p70",
       "katana": "katana"
     },
-    "doc": "At each pitch Rivet first uses the weapon's own drawn movement grid when available. by_grip names the family and by_weapon overrides it for an individual weapon. For a weapon without its own drawing, borrowed_grid bare_claw adds the actual held part to the bare stride. palm_percent marks its grip, measured from the top left of each bare grid cell, as eight x,y pairs per facing row. Walk4 uses the even walk8 columns.",
+    "doc": "At each pitch Rivet first uses the weapon's own drawn movement grid when available. by_grip names the family and by_weapon overrides it for an individual weapon; the value bare_claw (every pitch) or bare_claw_<art> (one pitch) withholds the weapon's own drawn grid files (they stay in the repo) so it walks on the bare stride with the held part on the palm (n27: gloria at p70 until her compact-gun grids exist; set her row to gloria, or delete it, to bring the long-gun grids back). For a weapon without its own drawing, borrowed_grid bare_claw adds the actual held part to the bare stride. palm_percent marks its grip, measured from the top left of each bare grid cell, as eight x,y pairs per facing row. Walk4 uses the even walk8 columns.",
     "palm_percent": {
       "p55": {
         "run": [

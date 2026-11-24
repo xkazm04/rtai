@@ -53,7 +53,9 @@ static func path_of(
 		return ""
 	var dir: String = RivetStrips.DIR + art + "/"
 	var fast: bool = run and frames == 8 and rig.speed_now > RUN_FROM_MPS * CharacterRigs.PX_PER_M
-	var own: String = _grid(dir, WeaponArtKey.of(weapon), fast)
+	var own: String = ""
+	if not RivetFramesGrids.held_only(weapon, art):
+		own = _grid(dir, WeaponArtKey.of(weapon), fast)
 	if own != "" or fallback == &"" or fallback == weapon:
 		return own
 	return _grid(dir, fallback, fast)
