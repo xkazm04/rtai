@@ -7,7 +7,7 @@ gunner A, contractor, thug A; item 4 the impact-outline check. Films and stills:
 
 Final gate on `635ca4f4b` (the last code commit; later commits are inert docs/evidence): `gate: PASS; build/gate/635ca4f4b3ee/gate.json`
 (lint 19/19 over 2223 files; unit 4114 passed, 0 failed, 2 skipped; scenarios 68 passed; parity 1200 steps bit for bit,
-planted mutation caught at step 629; selftest goldens 11/11 + 5/5; release-compile 991 loaded, 0 failed). Reels not run yet.
+planted mutation caught at step 629; selftest goldens 11/11 + 5/5; release-compile 991 loaded, 0 failed). Reels not run: a `--reels` gate does not fit the 09:30-09:40 stabilize window, so the Director runs them at the merge.
 
 ## What works
 
