@@ -1,0 +1,8 @@
+n27-04 part 0: why the raised_line pallets and hanging appliances rendered dark
+cause: the world print (look_d4) turns every floor-canvas pixel below luminance ~0.78 into a grey wash step, so only the light floor survives it; pallets and appliances were drawn into that canvas.
+measured at 32 px/m, mid, tick 2290, raised_line, mean luminance (Rec.709, 0-255), render / art:
+  floor tile       render 156.8 / art 161.8 = 0.969   (art x ground_shade 0.81 = 131 pre-print)
+  pallet_two       render  45.8 / art 118.8 = 0.386   before   ->   110.3 / 118.8 = 0.928 after (4.2 % under the floor ratio)
+  hang_bend (appliances) render 55.7 / art 132.3 = 0.421 before -> 118.6 / 132.3 = 0.897 after (7.4 % under the floor ratio; p90 200 = the lightest pieces in the yard)
+fix: dressing row key over_print (ids of cover/debris pieces) -> PrologueYardOverprint draws them on a static layer under the actors in their own colours, like the ochre second impression. line_fire has no over_print: mid t2290 32 px/m before/after the code change is pixel-identical (max channel diff 0).
+curved sections' hang_feed / hang_return moved from the beam's north edge to its south edge (y 3.622 -> 4.55, 11.822 -> 12.8; the curved art sits above its box's south edge).
