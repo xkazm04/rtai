@@ -185,3 +185,4 @@
   front rows for my look before any commit. If that is not passing by ~21:30: DECISION ship walk-only (the run stays the
   stop-gap: restore `rivet_run8_eq_molotov.png` out of the tree, its provenance line and run rows) and move on to Gloria
   brass. No builder running at session end. IMAGES 15/60.
+- 20:38 BUILDER RUNNING n28-07g-molotov-shift since 20:38 (in-session, art prep only: final5 run row 1 = the one-row edit shifted to the donor's sole x, no seam; crop for my look; END 20:48; state in molotov/STATE.md).
