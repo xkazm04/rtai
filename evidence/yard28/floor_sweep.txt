@@ -96,3 +96,16 @@ B* and C* deviate from the brief's B/C (lift 12 / stains 2c; lift 16): arm A was
 Only floor L* fails (every other bar passes). Lift barely moves the floor (L* 64-65 from +4 to +12) while chroma x2.4 does not raise C* (13): the dusk grade flattens chroma as before. Floor jumps from 44 (unlifted tile, ART SWEEP arm a) to 64 with +4 lift: the response is very steep below +4; the passing lift is between 0 and +4 and was not tried.
 WINNER: none. Row unchanged (ground[0] = raised_line tile, ffe0c8ff). Tool (--lift-l/--chroma, defaults byte-identical) and test ship. Stills re-rendered of the committed row.
 Seen: arm C (lift 4, x2.4) reads pale warm beige concrete, lighter than the committed floor, not mid-brown. The committed row still reads grey taupe under dark stains, not the plate's mid-brown.
+
+
+LIFT SWEEP, VALID RERUN (19:41-19:51; art_sweep.sh now runs --import after the tile copy and FAILS the arm unless the .ctex is newer than the png; tile = prologue_yard_floor.py --lift-l/--chroma x2.4; stains ffffff58 / wash f6dca880, tint ffffffff)
+| arm | lift / chroma | floor L*/C*/hue (52-62) | pool gain (>=4) | Rivet delta (>=0.19) | Rivet dE2000 (>=15) | patrol blue out/in (>=65 %) | rifle (>=95) | pellet (>=90) | appliance delta (info) |
+|---|---|---|---|---|---|---|---|---|---|
+| r-4* | -4 / x2.4 | 58.3 / 11.2 / 74 | +2.1 FAIL | ~0.2 (not re-read; see build) | 31.0 | 82.0 / 98.4 | 99.4 | 92.9 | 0.040 |
+| r0 | 0 / x2.4 | 62.4 / 12.5 / 76 FAIL (0.4) | +1.6 FAIL | 0.2548 | 33.3 | 82.2 / 98.2 | 98.4 | 92.4 | 0.074 |
+| r4 | +4 / x2.4 | 64.4 / 13.1 / 77 FAIL | +4.1 | 0.2697 | 34.7 | 82.4 / 98.3 | 97.1 | 92.1 | 0.089 |
+| r8 | +8 / x2.4 | 65.4 / 13.4 / 77 FAIL | +6.9 | 0.2780 | 35.4 | 82.5 / 98.3 | 96.0 | 92.1 | 0.092 |
+r-4* = an extra arm (lift -4) to look for the L* window; the rivet delta cell is not read from the run.
+The old LIFT SWEEP rows above are marked INVALID: stale import. (Rerun numbers for +4 and +8 equal the old rows, so the stale texture was not the cause of the plateau.)
+Finding: floor L* and pool gain trade against each other: the L* window (52-62) is only met at lift <= -1, where the lamp pools lift the floor by just +2 L* (bar +4); at lift +4 the gain passes and the floor is 64.4. No arm passes both. Chroma stays C* 11-13 whatever the tile (dusk grade flattens it).
+WINNER: none. Row unchanged, floor_tile.png restored to the tool default (lift 0, x1.0) and re-imported (equals HEAD).
