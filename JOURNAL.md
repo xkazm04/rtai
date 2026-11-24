@@ -89,3 +89,18 @@ NEXT: (1) when `gtai-n27/logs/melee/builder.lock` is gone: read `evidence/briefs
   `ShockJolt._spark` (`project/features/combat/react/shock_jolt.gd:97`, melee code from n26, untouched by any lane tonight),
   not the wreck arcs. DECISION: restyle `_spark` (core + amber halo, no ink rim) with `--ink-sparks` = before; brief
   `evidence/briefs/n27-melee-05-sparks.md` (also re-renders `bond_offer_64.png`, still the blank-card image, and the claw film).
+- 06:56 BUILDER m4-wreck-arcs 72 min $3.49 accepted. Commits `42f8c948f` (C card picture), `34c12865c` (B ElectricArc),
+  `013c156db` (A own plates), `5f74fc4eb` (`electro_gun_wrecks` take), `43f19f9ab` (notes). Films: `films/bond_mastery.mp4`
+  (`1920,1080,60/1,28.82`, card with figure), `films/claw_shock_robots.mp4` (`27.2 s`), `films/electro_gun_wrecks.mp4`
+  (`1920,1080,60/1,18.0`: gun kills thug t106, thug t318, gunner t530). Mutate electric_chassis.gd 7/20 (plate geometry
+  unpinned). quick.mjs parse check FAIL on electric_wreck_fx.gd ("same on HEAD", to verify). bond_offer_64.png not re-cropped.
+- 06:56 BUILDER RUNNING m5-sparks since 06:56 (Start-Process pid 34052, brief `evidence/briefs/n27-melee-05-sparks.md`:
+  A-C `_spark` restyle + `--ink-sparks` + tests by 07:25, D stills by 07:40, E films, F parse check + plate tests; hard stop 07:55).
+- 06:57 session 3 end.
+NEXT: (1) review m5 at its commits (07:25 code: read diff; stills `claw_sparks_after_64.png`, `ohm_stun_sparks_{before,after}_64.png`,
+  `bond_offer_64.png` must show the card picture); log `BUILDER m5-sparks ...`. (2) last new work committed by 08:00; if m5
+  leaves the spark code broken or ugly, revert by flag value (`ink_rim` default true) via a short `--resume` call, not by hand.
+  (3) final gate `node tools/gate/run.mjs --rev=HEAD` started by 08:15 (one Godot per lane: only after m5 ends), then
+  `--reels` once after 09:30 freeze. (4) REPORT.md is drafted: fill the M4_*/GATE_LINE placeholders (m4: card picture, arcs,
+  wrecks share ThugPlan art -> differ by weapon only; electro_gun_wrecks film; spark call; electric_chassis mutate; ledger m4
+  72 min $3.49, m5), run `node tools/evidence/cites.mjs REPORT.md`, commit. Check frames.json has 8-15 entries, best first.
