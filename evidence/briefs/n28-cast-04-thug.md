@@ -114,3 +114,23 @@ quest 1 and prologue tapes must not move (rendering only). Never fake a number o
 ## Report at the end
 Commits (sha + subject), the sheet and frame names, any entry the yard lane must call (exact signature), what the yard lane
 must change, the checklist row, mutate score, quick gate, evidence paths, and what you could not do.
+
+## Added 20:45 (director, session 5): lessons of tonight, these bind
+- **This call's scope is set in the launch line** (which steps). Do only those; report and END.
+- Never run `Godot_*.exe` directly, not even `--import`: `node -e "import('./tools/lib/godot.mjs').then(...)"` with
+  `runGodot`, or `tools/dev/run.mjs`, the film tools, gate, mutate. The machine has an 8 GB cap; `mem-budget: waiting` is
+  not a hang. One Godot at a time.
+- Before each commit: `node tools/tests/run_unit.mjs --changed` and quote its summary line (the hook does NOT run GUT; a
+  placement change broke `test_cast_door` tonight unseen). `quick.mjs` "Failed to compile depended scripts" on files
+  unchanged since main is a known environment cascade (show `death_pose.gd` fails the same way, rely on GUT).
+- **Names**: `project/features/characters/art/view/p70/thug_*.png` already exist and are the HUMAN street thug: never
+  write or edit them. Every robot thug file is `robot_thug_*` (none exists today; check before writing).
+- **Stripe colour**: the 4-drawing sheets (`thug/out/`) have yellow-amber hazard stripes; the 8-drawing walk (`thug8c/out/`)
+  has more orange stripes. A walk that switches to an attack must not change colour: tone the 8c stripes (and only the
+  stripes, a hue-masked pass like the contractor's hat pass) to the 4-drawing walk's stripe hue: median hue within 5 deg,
+  quote both medians before/after. Never vermilion or red on him (strict-red px count 0 outside the lens edge; the lens is
+  amber: quote its hue).
+- **Fall**: the power-down fall must draw no loose part that reads as a second weapon or a pickup; look at every fall
+  cell on grey yourself and say what you see (builders claimed "clean" twice tonight when it was false).
+- The gunner's `FoeGunnerCardView` path is the model for the card view; reuse its pack/palette/transitions tools by kind
+  argument rather than copies where it is small.
