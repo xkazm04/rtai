@@ -68,3 +68,4 @@ NEXT: (1) when `gtai-n27/logs/melee/builder.lock` is gone: read `evidence/briefs
   the ghost + full ring; then B arcs, A wrecks stills. (4) last new work committed by 08:00, final gate
   `node tools/gate/run.mjs --rev=HEAD` started by 08:15, then REPORT (mastery table n26 vs n27, both films, calls:
   mastery pace (early Tonnage at waves 3-4; master_at 22 estimate), Master card art, war machine only stunned).
+- 05:31 MILESTONE session 3 start. m3-ring-tests still running (pid 61536 node, lock held, hard stop 05:56). No `NEED melee` in other journals.
