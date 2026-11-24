@@ -198,3 +198,9 @@
   in the background during part A). Fill {COMMIT1}/{COMMIT2}/{END}, END by 22:07. (2) Plasma sword, Gloria's grid, p55
   collar: REPORT "Next steps" unless time appears. (3) Session 5: commit by 22:40, gate by 22:55, the five-weapon clip
   (shipped grids only), REPORT. No builder running at session end. IMAGES 15/60.
+- 20:39 Session 4 start. No builder running (lock absent; builder.mjs still out, in-session fallback). I looked at
+  grid_molotov_64.png walk column: bottle lit in one claw, flame amber only, collar a band as the donor's, donor legs:
+  PASS for the walk. Run (final4) stays rejected (20:36).
+- 20:41 BUILDER RUNNING n28-08-molotov-walk-gloria since 20:41 (in-session Sonnet subagent, brief
+  evidence/briefs/n28-08-molotov-walk-gloria.md: part A molotov walk-only commit by 21:10, part B Gloria brass concept +
+  p70 held strips + held art, <= 5 images, commit started by 21:30, END 21:53).
