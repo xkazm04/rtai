@@ -35,8 +35,13 @@ Seeds 1 to 10 (`evidence/n27-pressure/takes/seeds.md`):
 | circle + a dash across each line | 248 | 1 (0.4 %, [0.1, 2.2]) | 42 (16.9 %, [12.8, 22.1]) | median 4.6 | 0 / 10 |
 
 - The steady circle dies to blasts beside him, not rockets on his body (shape A + lead work as the owner kept them).
-- One dash per two-rocket volley: the troopers fire two rockets one tick apart every 114 ticks; the second press falls
-  inside the first dash (10 ticks + 40-tick cooldown), so 13 dashes for 26 rockets.
+- One dash per two-rocket volley: a dash is 10 ticks plus a 40-tick cooldown (one every 50 ticks), and the second
+  trooper's rocket leaves 1 to 49 ticks after the first (1 in seed 1, the film; 8 to 49 in the other seeds), so the
+  press for the second rocket is always refused: 13 dashes for 26 rockets in every seed.
+- After 10 s in seeds 3 and 5 the troopers drift and the second rocket leaves 36 to 49 ticks after the first; it
+  bursts 0.6 to 2.2 m from Rivet on his circle and costs 9 to 20 HP a time: 48.4 and 40.4 HP lost in 25 s, against
+  3.3 to 7.8 in the other eight seeds (`evidence/n27-pressure/takes/dash_late.md`). Not a bot or game fault: the
+  dash cooldown is longer than the gap between two troopers' rockets.
 - Stills: `pair_dash_cross_64.png` (mid-dash, two rockets on the spot he left), `pair_circle_fatal_64.png` (HP 8.9,
   13 ticks before he falls), `pair_dash_32.png`, `trooper_pair_64.png`.
 
@@ -49,7 +54,12 @@ Seeds 1 to 10 (`evidence/n27-pressure/takes/seeds.md`):
 
 - The sword turns back only 334 of 1300 rounds: the shipped sword is single-swing, 33 ticks (8 + 6 active + 19), and
   the riflemen fire pairs 18 ticks apart, so the second round of every pair arrives mid-swing (650 of 1300, exactly 65
-  in every seed). PENDING: the spaced-cadence contrast (call 4).
+  in every seed).
+- Contrast take `blade6_spaced` (dev only: one round per 36-tick beat, the three riflemen in turn, so every round can
+  meet a fresh swing): the sword turns back **51.4 %** of rounds fired [47.5, 55.2] against **25.7 %** [23.4, 28.1]
+  with the shipped pairs; 0 rounds mid-swing against 650. The share of returns that hit a shooter is 27.2 % in both
+  (the same 334 swings and rolls); the shipped cadence only adds rounds no swing can meet
+  (`evidence/n27-pressure/takes/seeds.md`, section "Sword cadence contrast").
 - Stills: `guard_return_64.png`, `blade_struck_64.png`, `blade6_32.png`, `deflect_6m_64.png`.
 
 ### 4. Mutate (`evidence/n27-pressure/mutate/scores.md`)
@@ -109,10 +119,13 @@ PENDING
 3. **The plasma sword against paired rifle rounds.** The sword is one 33-tick swing that deflects in 6 ticks; two
    rounds 0.3 s apart always beat it (half of all rounds land mid-swing at 6 m). Keep it (a committed swing is a choice
    with a cost) or give the sword a faster recovery or a second deflect window. Film: `deflect_6m_32.mp4`, still
-   `blade_struck_64.png`; contrast take PENDING (call 4).
+   `blade_struck_64.png`; measured: spaced rounds are turned back at 51.4 %, the shipped pairs at 25.7 %.
 4. **Dash across the rocket line works.** Two troopers kill a steady circler in 7.1 to 7.7 s in every seed; one dash
    per volley keeps him near full (median 4.6 HP lost in 25 s). Rocket shape A and the 1.1 s lead read as you kept
-   them. Film: `trooper_pair_32.mp4`. PENDING: the two seeds that lose 41 to 51 HP after 10 s (call 4).
+   them. Film: `trooper_pair_32.mp4`. But a dash every 50 ticks covers one rocket of a pair, not two: when the two
+   troopers fire 36 to 49 ticks apart, the second rocket lands beside him (seeds 3 and 5 lose 40 to 48 HP). Keep (two
+   troopers should force more than a dash) or shorten the 40-tick dash cooldown (`rivet_motion.json`, keys lane's
+   file). Trace: `evidence/n27-pressure/takes/dash_late.md`.
 
 ## Merge notes
 
