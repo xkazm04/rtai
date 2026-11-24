@@ -206,3 +206,4 @@ NEXT (session 4, from ~07:08):
       Director); deflect_6m_32 is a 2nd-generation re-encode.
   (5) Remove the scratch worktree `gtai-n27/scratch/pressure-join` (`git worktree remove`) and gtai-mutate-* temps
       that are ours, at the end.
+- 07:05 call 4 commit 16ae1ea1e: caption panel widened to 780 px for the cadence film, re-filmed 06:58: `blade_cadence_32.mp4` 39.67 s 37.1 MB, caption now inside the panel on both sides (checked a 20 s crop). Overflow item in NEXT (2) is DONE; NEXT (2) keeps only the decisions.md lines + frames.json check. BUILDER RUNNING contrast since 06:05 (pid 62776, hard stop 07:15). Session 3 end.
