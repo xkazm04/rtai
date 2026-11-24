@@ -12,6 +12,10 @@
           "exclusiveMinimum": 0,
           "type": "number"
         },
+        "per_boss_cut": {
+          "minimum": 0,
+          "type": "number"
+        },
         "per_kill": {
           "minimum": 0,
           "type": "number"
@@ -24,6 +28,7 @@
       "required": [
         "enabled",
         "master_at",
+        "per_boss_cut",
         "per_kill",
         "per_stun"
       ],

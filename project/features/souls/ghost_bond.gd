@@ -1,11 +1,13 @@
 class_name GhostBond
 extends RefCounted
-## Run-local progress. A release credits each kill and each successful stun once.
+## Run-local progress. A release credits each kill, each successful stun and each Kerf cut that
+## hurt a boss once.
 
 var enabled: bool
 var master_at: float
 var _per_kill: float
 var _per_stun: float
+var _per_boss_cut: float
 var _values: Dictionary[StringName, float] = {}
 var _recent: Array[StringName] = []
 var _mastered: Array[StringName] = []
@@ -16,16 +18,18 @@ func _init(table: GhostFormTable) -> void:
 	master_at = table.master_at
 	_per_kill = table.per_kill
 	_per_stun = table.per_stun
+	_per_boss_cut = table.per_boss_cut
 	for id: StringName in table.forms:
 		_values[id] = 0.0
 
 
-func record(form: StringName, kills: int, stuns: int) -> void:
+func record(form: StringName, kills: int, stuns: int, boss_cuts: int = 0) -> void:
 	if not enabled or not _values.has(form):
 		return
 	_recent.erase(form)
 	_recent.append(form)
-	_values[form] = minf(master_at, value(form) + kills * _per_kill + stuns * _per_stun)
+	var earned: float = kills * _per_kill + stuns * _per_stun + boss_cuts * _per_boss_cut
+	_values[form] = minf(master_at, value(form) + earned)
 
 
 func value(form: StringName) -> float:

@@ -22,6 +22,7 @@ var bond_enabled: bool = false
 var master_at: float
 var per_kill: float
 var per_stun: float
+var per_boss_cut: float
 var _errors: Array[String] = []
 
 
@@ -48,6 +49,7 @@ static func from_table(t: DataTable) -> GhostFormTable:
 	g.master_at = t.num(bond, "master_at")
 	g.per_kill = t.num(bond, "per_kill")
 	g.per_stun = t.num(bond, "per_stun")
+	g.per_boss_cut = t.num(bond, "per_boss_cut")
 	g._errors = t.errors()
 	for id: StringName in g.order:
 		if not g.forms.has(id):

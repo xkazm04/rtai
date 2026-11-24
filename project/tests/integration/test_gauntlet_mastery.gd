@@ -42,7 +42,7 @@ func _clear() -> void:
 
 func test_first_rest_after_threshold_offers_and_redeems_only_that_form() -> void:
 	_enter()
-	forms.bond.record(&"ohm", 4, 2)
+	forms.bond.record(&"ohm", 4, 4)
 	_clear()
 	assert_false(waves.pending.has(&"master_ohm"))
 	assert_true(waves.choose(picker.pick(waves.pending)))
@@ -60,8 +60,8 @@ func test_first_rest_after_threshold_offers_and_redeems_only_that_form() -> void
 	assert_false(forms.bond.mastered(&"tonnage"))
 	var before: float = run.waves[0]["bond"][&"ohm"]
 	var after: float = run.waves[1]["bond"][&"ohm"]
-	assert_eq(before, 22.0)
-	assert_eq(after, 25.0)
+	assert_eq(before, 28.0)
+	assert_eq(after, 30.0)
 	_enter()
 	_clear()
 	assert_false(waves.pending.has(&"master_ohm"))
@@ -89,7 +89,7 @@ func test_declined_masteries_return_and_new_offers_have_priority() -> void:
 	for id: StringName in forms.table.order:
 		assert_true(session.bonuses.apply(waves.draw.rows["ghost_" + String(id)]))
 	for id: StringName in [&"dent", &"kerf"]:
-		forms.bond.record(id, 25, 0)
+		forms.bond.record(id, 30, 0)
 	var first: Array[StringName] = waves.draw.offer(1, [], session.bonuses.owned())
 	assert_eq(first.size(), 3)
 	assert_has(first, &"master_dent")
@@ -97,7 +97,7 @@ func test_declined_masteries_return_and_new_offers_have_priority() -> void:
 	assert_false(first[2].begins_with("master_"))
 	var history: Array[Dictionary] = [{"offered": first, "taken": first[2]}]
 	for id: StringName in [&"ohm", &"tonnage"]:
-		forms.bond.record(id, 25, 0)
+		forms.bond.record(id, 30, 0)
 	var next: Array[StringName] = waves.draw.offer(2, history, session.bonuses.owned())
 	assert_eq(next.size(), 3)
 	assert_has(next, &"master_ohm")
