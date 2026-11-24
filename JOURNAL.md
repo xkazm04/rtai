@@ -290,3 +290,37 @@
 - 22:31 DECISION collar: no third image and no script repaint of the stripes (the builder's suggestion): character art is
   generated, never drawn from script shapes. Next run: one facing row per job at full scale (5 jobs), p70 row as reference.
   REPORT "What does not" + Next steps.
+- 22:37 GATE RUNNING `node tools/gate/run.mjs --rev=HEAD` on 15eb87301 since 22:37 (build/gate_n28.sh -> build/gate_n28.log,
+  exit in build/gate_n28.exit). Last product commit e0a82abf0; everything after it is inert docs/evidence.
+- 22:38 DECISION the one gate is `--reels` now (as combat did at 22:36), not plain now + reels after the freeze: no code
+  lands after e0a82abf0, and a second gate would hold Godot through the film window. Killed my plain gate (my pids
+  15312 tree) after 1 min, removed the half-made snapshot gtai-gate-15eb8730107e it left (mine), restarted.
+  FRICTION self 2 min.
+- 22:38 GATE RUNNING `node tools/gate/run.mjs --rev=HEAD --reels` on 15eb87301 since 22:38, ETA ~23:16 (last: evidence
+  22.7 + reels 14.6 min). Log build/gate_n28.log, exit build/gate_n28.exit. Godot is the gate's until then.
+- 22:41 FILM (me, ffmpeg only, no Godot): `gtai-masters/n28/keys/weapons_grids_32.mp4` 1920x1080 60/1 991 frames 16.5 s:
+  six 640x540 tiles cropped (not scaled) from the same-tick 1080p captures: homing shard, mini-nuke, ray gun (own grids),
+  molotov (own walk; its candidate capture's foot_slide names rivet_run8.png for the sprint, so it is the shipped state),
+  plasma rifle donor, plasma sword tile "stop-gap". I looked at t4 and t12: same tick in all tiles, weapons in the claws.
+  frames.json now 13 entries (combat's trooper_pair_32.mp4 first, then this clip, Gloria concept, grids, collar crop
+  marked NOT shipped). Deleted rejected molotov scratch dirs (prefinal3, rawrun, rows_*4, old_molotov: 4.4 GB).
+- 22:44 REPORT.md filled except the gate line and the Gloria in-game stills (What does not: collar; Next steps; Merge
+  notes; Builder ledger; blocked minutes). Brief evidence/briefs/n28-10-films.md written for session 6 (Gloria n27 | n28 |
+  pistol in game at 64/32 via capture28.py + a temp worktree at d0ab9d03a, left edge crop, plasma sword capture,
+  evidence/n28-keys/gloria.md; no product files; fill {COMMIT}/{END}).
+- 22:43 STILL (me, PIL, sheet pixels, no Godot): `gtai-masters/n28/keys/gloria_strips_n27_n28_pistol.png` = p70
+  rivet_eq_gloria_noflash at d0ab9d03a (LFS smudge) | HEAD | rivet_eq_pistol_noflash. I looked: n27 read almost as the
+  pistol; n28 brass with the long nail comb in all 8 facings, one claw on the grip, the other free, collar rigid. frames.json 14.
+- 22:55 Gate progress (snapshot build/evidence): unit 4201 passing / 4203 (2 risky/pending), 0 failing; scenarios running.
+  Cap 5.5/8.2 GB.
+- 23:05 Gate at scenarios' end (rivet_* telemetry written); then parity, selftest, export audit, reels (~15 min): ETA ~23:25.
+- 23:05 NEXT (session 6, starts ~23:40; freeze 00:10, REPORT 00:20, end 00:40):
+  (1) Read build/gate_n28.log + build/gate_n28.exit: quote the gate line and `build/gate/15eb8730107e/gate.json` in REPORT
+  line 5 (replace "Final gate: TODO"); if the gate is red, triage first (the code is e0a82abf0's; a red reel or a test is a
+  REPORT item, no new code after the freeze). If it is still running, wait (do NOT start Godot).
+  (2) Fill {COMMIT} = 00:05 and {END} = 00:15 in evidence/briefs/n28-10-films.md and launch it (in-session Sonnet
+  subagent, background) as soon as build/gate_n28.exit exists. Look at its stills yourself; put the Gloria in-game pair
+  into REPORT item 3 and "What does not" (left edge verdict), replacing the TODO at "In-game stills".
+  (3) REPORT: drop the DRAFT line (line 3), `node tools/evidence/cites.mjs REPORT.md`, commit JOURNAL.md + REPORT.md
+  (inert paths: hook skips lint) by 00:30. Check frames.json has 8-15 entries and every file exists.
+  No builder running at the end of session 5.
