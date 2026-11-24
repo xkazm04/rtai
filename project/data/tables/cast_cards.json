@@ -19,7 +19,7 @@
     },
     "robot_gunner": {
       "body_scale": 1,
-      "enabled": false,
+      "enabled": true,
       "id": "robot_gunner",
       "p55": {
         "armed_walk": "robot_gunner_armed_walk.png",

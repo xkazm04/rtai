@@ -51,6 +51,6 @@ func test_gunner_card_draws_walk_hit_fall_and_leaves_other_robots_alone() -> voi
 	CastCards._library = null
 
 
-func test_gunner_row_is_off_until_the_audit_passes_and_leaves_his_rig_alone() -> void:
+func test_gunner_row_is_on_after_the_n28_audit() -> void:
 	CastCards._library = null
-	assert_null(CastCards.shipped().lookup(FoeGunnerCardView.ID, "p70"))
+	assert_not_null(CastCards.shipped().lookup(FoeGunnerCardView.ID, "p70"))
