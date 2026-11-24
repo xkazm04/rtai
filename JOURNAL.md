@@ -239,3 +239,4 @@ NEXT (session 5, from ~08:35; freeze 09:30, REPORT 09:40, end 10:00):
       syncBuiltinESMExports, set process.argv[1] to tools/evidence/cites.mjs, then import it). Last: 32 paths, 30 ok.
   (5) Cleanup at the end: Temp `gtai-gate-c3ea5f79ca4e` (ours) after reels or at 09:55; gtai-mutate-* at OUR shas only
       (`git worktree list`; 9001fcc8 was call 5's at 29db9d3b1 and should be gone). Final commit REPORT + JOURNAL.
+- 08:32 call 7 still working (short test recordings t1..t4 in build/n27stomp, nothing in masters yet). BUILDER RUNNING stomp since 08:05 (pid 55088, hard stop 08:55). Session 4 stops here; NEXT above stands.
