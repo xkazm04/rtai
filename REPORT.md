@@ -11,7 +11,7 @@ Branch `n27-yard`, worktree `C:\Users\kazda\kiro\gtai-wt\n25-yard`, cut from `ma
 - Export-audit: 985 loaded, 0 failed.
 - The run took 28 min.
 
-The `--reels` gate started at 08:18 at `58917d6a1`: REELS TBD (`evidence/briefs/gate-n27-reels.out`).
+Reels gate: `gate: PASS; C:\Users\kazda\kiro\gtai-wt\n25-yard\build\gate\58917d6a1bab\gate.json` (`--rev=HEAD --reels` at `58917d6a1`, started 08:18; `PASS reels: exit 0`; log `evidence/briefs/gate-n27-reels.out`). No code changed between `5c0edce51` and `58917d6a1`.
 
 ## What works
 

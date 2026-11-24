@@ -81,3 +81,9 @@ NEXT: (session 5) 1. The gate runs detached (started 07:49 at `5c0edce51`, out `
 
 NEXT: (session 5) 1. Read `evidence/briefs/gate-n27-reels.out` (last line `gate: PASS|FAIL; <gate.json>`); put it into REPORT's **Gate:** line in place of "REELS TBD". If it FAILs on a reel, name the view and the cause in REPORT "What does not" (no code changes after the freeze). If it is still running at 09:35, write "reels still running at report time". 2. `node tools/evidence/cites.mjs REPORT.md`; commit JOURNAL.md + REPORT.md + `evidence/briefs/gate-n27-*.out` by path. 3. Nothing to build; IMAGES 5/15.
 - 08:19 Session 4 ends. Gate PASS quoted in REPORT (`3a452d4dd`); reels gate running (pid 83512, out `evidence/briefs/gate-n27-reels.out`). No builder running. NEXT as above.
+
+## Session 5 (09:30, iteration 5, STABILIZE)
+- 09:31 START. No builder running (no lock), reels gate pid 83512 gone.
+- 09:32 MILESTONE reels gate: `gate: PASS; ...uild\gate8917d6a1bab\gate.json` (`PASS reels: exit 0`). Quoted in REPORT; out file committed. No code changes this session.
+
+NEXT: nothing left for this lane; the Director merges `n27-yard` (keep this JOURNAL/REPORT on the add/add conflict). IMAGES 5/15.
