@@ -350,8 +350,8 @@
   in-game stills are recorded in REPORT "What does not". No builder launched; no product files touched.
 - 00:11 8-scenario rerun alone started on HEAD (`node tools/tests/run_scenarios.mjs --only=showcase_director,...,vehicle_yield`,
   log `build/scen8_n28.log`). REPORT: DRAFT line dropped, TODOs filled, cites 6/6 ok; frames.json 14 entries, all files exist.
-- 00:15 8-scenario rerun alone on HEAD: `scenario-tests: 8 passed (headless)` (showcase_director, showcase_reel,
+- 00:12 8-scenario rerun alone on HEAD: `scenario-tests: 8 passed (headless)` (showcase_director, showcase_reel,
   souls_powers, traffic_yields_rivet, vehicle_carnage, vehicle_doors, vehicle_drive, vehicle_yield). With the gate's 60 ok:
   68/68 on this code. Quoted in REPORT. My Godot is closed; no builder running.
-- 00:16 NEXT: nothing left for this lane tonight. Director merge: the gate's only red is the scenario wall-clock timeout
+- 00:12 NEXT: nothing left for this lane tonight. Director merge: the gate's only red is the scenario wall-clock timeout
   under load (re-run the full gate on the merge when the machine is quiet). Session 6 ends.
