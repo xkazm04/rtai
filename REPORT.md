@@ -69,11 +69,31 @@ the weekly limit at 17:44, then in-session Sonnet subagents from the same brief 
   `stills/pair_dash_late_{before,after}_64.png` at tick 1186 (the second rocket of the 1151 volley): before, Rivet stands
   in the blast at HP 78.4; after, he is clear of it at HP 95.9.
 
-### 5. Medians on the merged tree
-TODO
+### 5. Medians on the merged tree, and what kills the test player (`a528b3bab`)
+- Batches: ten seeds a profile, 40-wave gauntlet, salts 0 and 1, on this HEAD with the tables toggled per arm (the
+  toggles were restored at once; `git diff -- project/data/tables` clean after): `main` = `d0ab9d03a`'s `ghost_forms.json`
+  and `rivet_motion.json`, `keys` = main's bond + dash 24 (salt 0), `combat` = HEAD (dash 24 + Tonnage 85 + cut 5).
+  Table: `evidence/n28/medians/medians.md`; compare main vs combat: `evidence/n28/medians/compare_s0.md`.
+
+| median death wave (salt 0 / salt 1) | n27 after melee | n28 main | n28 keys | n28 combat | null floor main / combat |
+|---|---:|---:|---:|---:|---:|
+| novice | 5 / 5 | 5 / 5 | 5 / - | 5 / 5 | 0.3 / 0.3 |
+| average | 8 / 5 | 8 / 5 | 8 / - | 8 / 5 | 3.6 / 4 |
+| expert | 8.5 / 9 | 8.5 / 9 | 8.5 / - | 8.5 / 9 | 1.6 / 3.2 |
+
+- Neither the shorter dash nor the bond changes move a median; `main` reproduces n27's after-melee column and floors exactly.
+- **The wave 5 stomp is what ends novice and average runs** (`evidence/n28/medians/killers.md`, combat arm): it is the last
+  blow in 8 of 9 novice deaths in wave 5 (16 of 17 over both salts, 94 %) and 3 of 4 average ones (9 of 10, 90 %); the
+  player takes a median 81 (novice) and 100 (average) HP in that wave. Expert deaths spread over waves 7 to 11 (sentry
+  turret first, 4 of 10). This is the number for the owner's stomp play-test; no value was changed.
 
 ## What does not
-TODO
+- The in-flight electro bolt (`arc` cell zigzag before the hop) is still the thick ink-rimmed cell; only the chain hop and
+  the daze moved to live current (this run's pick named the hop and stun cells). Owner call 4.
+- Electric mutate 40 % (6/15): the hash constants and the fork-bend arithmetic are unpinned (look-only code).
+- Tonnage is never mastered on the ten seeds at 85 (call 1).
+- The keys arm of the medians ran one salt only (no floor of its own); it matches main and combat on salt 0.
+- Red outside blood remains in other combat effects (the audit lists 28 rows); only the deflect fleck was fixed.
 
 ## What blocked or slowed you (minutes each)
 - Memory budget (~35 min, 16:50-17:36): the lane sessions held the cap at 6.2-7.6 GB, so the default 1200 MB Godot
@@ -90,7 +110,11 @@ TODO
 2. **The red audit** (`evidence/n28/red/audit.md`): fire cells drawn red (blast fireball, flame, molotov rag), a
    vermilion core in every muzzle flash, the plasma sword's red hilt rings, Mertz's tazer and the burst-arc zigzag drawn
    vermilion (electric should be amber). Which to repaint, and by which lane?
-3. **The gauntlet HUD**: the "ATTACK CLAW" prompt covers the lower half of chip numbers 1-3 and chip 1 is cut by the
+3. **The wave 5 stomp** (no value changed): it ends 94 % of novice and 90 % of average wave 5 deaths, about 81 and 100 HP
+   taken in that wave (`evidence/n28/medians/killers.md`). The number is yours after you play it.
+4. **The in-flight electro bolt**: still the old ink-rimmed zigzag cell while the hop and the daze are live halo current
+   (`stills/electro_stun_pair_64.png`). Redraw it the same way next run?
+5. **The gauntlet HUD**: the "ATTACK CLAW" prompt covers the lower half of chip numbers 1-3 and chip 1 is cut by the
    left screen edge at 1080p (`stills/bond_chips_crop_3x.png`). Not combat's file; for keys/HUD.
 
 ## Merge notes
