@@ -32,8 +32,20 @@ the weekly limit at 17:44, then in-session Sonnet subagents from the same brief 
 - Film `films/deflect_6m_32.mp4` (1920x1080, 60 fps, 39.67 s); stills `stills/deflect_{guard,blade}_{before,after}_64.png`.
 - Red audit of every combat effect, list only: `evidence/n28/red/audit.md` (28 rows, contact sheet `evidence/n28/red/cells.png`).
 
-### 3. Electric cells in the halo look
-TODO
+### 3. Electric cells in the halo look (`2d2f12f69`, tests `c214ee2c0`, notes `431f09db2`)
+- `WeaponFxElectro.chain()` and `stun()` no longer draw the cream `arc`/`spark` cells with an 8-way ink outline. They
+  draw live current with `ElectricArc`'s own strokes: 2 px cream core, amber halo 4.5 px at alpha 0.5 and 9 px at 0.18,
+  in screen pixels at every zoom, no ink rim. The chain gets a jagged stroke from a to b and a star of 3 to 4 forks
+  (0.24 m) where it lands. The daze is two small stars (0.3 m forks) on the old orbit, each with a faint ink under-halo
+  (alpha 0.3) so it reads on cream paving. Kinks come from a hash of the ends and the 3-tick cell (no RNG).
+- Why live strokes and not image-tool cells: the look is then exactly the wreck arcs' the owner already accepted (one
+  source, `ElectricArc.strokes`), stays thin at 64 px/m where cells blur, and spends no image rolls (IMAGES 0/25).
+- Before is one flag away: `--electro-cells`.
+- Stills (64 px/m unless named): `stills/electro_stun_pair_64.png` (before left), `stills/electro_stun_after_32.png`,
+  `stills/electro_deflect_pair_64.png`, `stills/electro_chain_pair_48dev.png` (dev view, see What does not).
+  Films (32 px/m, 1920x1080, 60 fps): `films/claw_shock_robots.mp4` 27.2 s, `films/electro_gun_wrecks.mp4` 18.0 s.
+- Unit `--changed` 4196 pass / 0 fail. Mutate 6/15 killed (40 %) after a test follow-up (first 2/15); survivors are
+  the hash constants, the fork-bend arithmetic and the old cell path.
 
 ### 4. Two troopers against the shorter dash
 After (HEAD, dash 24), `evidence/n28/troopers/after/`: no seed down; seed 3 lost 5.1 HP, seed 5 1.6 (n27: 48.4 and 40.4

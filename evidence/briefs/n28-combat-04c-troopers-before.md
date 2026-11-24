@@ -22,6 +22,6 @@ same toggle (restore after). Film/compare tool: `tools/gauntlet/pressure_films.m
 their headers). Look at the 64 px/m still pair yourself.
 
 ## Wall clock (binding)
-**HARD STOP <HARD_STOP>: report and END.** Commit the table + run outputs (evidence only, inert paths) by <COMMIT_BY>.
+**HARD STOP 20:40: report and END.** Commit the table + run outputs (evidence only, inert paths) by 20:30 (table first; the film after, by 20:38 or list it as left).
 Rendered runs `GTAI_GODOT_EST_MB=1000`, headless 600. Before ending: `git diff --quiet -- project/data/tables/rivet_motion.json` must hold.
 Commit messages end with `Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>`.
