@@ -219,3 +219,23 @@ NEXT (session 4, from ~07:08):
 - 07:39 brief for the next session pre-written: `evidence/briefs/n27-pressure-07-stomp.md` (film main novice seed 1 salt 0 dying to the wave 5 stomp, film-only, after the gate). Gate pid 65504 running (ETA ~08:06 from the last 32 min).
 - 08:04 MILESTONE gate PASS on c3ea5f79c (07:33-08:04): lint 19/19, unit 4108/0/2 skipped, scenarios 68, parity, selftest, export-audit 983/0; `build/gate/c3ea5f79ca4e/gate.json`. REPORT gate line filled.
 - 08:05 BUILDER RUNNING stomp since 08:05 (call 7, node pid 55088, brief `evidence/briefs/n27-pressure-07-stomp.md`, hard stop 08:55, film-only, no commits): main novice seed 1 salt 0 dying to the wave 5 stomp, 32 px/m clip + 64 px/m telegraph still, frames.json entries 3/4.
+- 08:26 call 7 working in `build/n27stomp/` (git-ignored): probes done, recording `m32.avi` (621 MB at 08:25, the full run to the stomp death). Nothing in masters yet. Godot is the builder's now.
+- 08:27 session 4 end. BUILDER RUNNING stomp since 08:05 (call 7, pid 55088, hard stop 08:55).
+NEXT (session 5, from ~08:35; freeze 09:30, REPORT 09:40, end 10:00):
+  (1) Lock `gtai-n27/logs/pressure/builder.lock` + last `builder-calls.jsonl` line; read
+      `evidence/briefs/n27-pressure-07-stomp.out.txt`. Log `BUILDER stomp <min> <$> <verdict>` + REPORT ledger row 7
+      (total 7 calls; add its minutes and $ to "Total: 6 calls (one resumed), 282 minutes, $10.33").
+  (2) Check the stomp film yourself: `ffprobe` (1920x1080, 60/1, 15-40 s), a frame at the telegraph and at the
+      death (ffmpeg to `build/n27-check/`), the 64 px/m still; that the death wave/tick matches
+      `evidence/n27-pressure/medians/main/salt0/runs/novice-1.json` (stomp, wave 5); frames.json 8-15 rows, best
+      first, valid JSON. If good: add the clip + still to REPORT call 1 ("Film: `novice_stomp_32.mp4`, still
+      `novice_stomp_tell_64.png`") and to section 5. If the builder reports it blocked: say so in REPORT "What does
+      not" with its command/error. Delete `build/n27stomp/m32.avi` (git-ignored scratch, ~1 GB) after the clip is OK.
+  (3) No new code after 08:00 (done: last code commit c3ea5f79c, gate PASS `build/gate/c3ea5f79ca4e/gate.json`).
+      `--reels` after the 09:30 freeze only if the builder is done and there are >= 40 min left; otherwise say
+      "reels not run" (already in REPORT).
+  (4) cites: `node tools/evidence/cites.mjs REPORT.md` dies with ENOBUFS (NEED Director, in Merge notes); run it
+      through the shim: recreate /tmp/cites_shim.mjs (patch child_process.execFileSync maxBuffer 1<<28,
+      syncBuiltinESMExports, set process.argv[1] to tools/evidence/cites.mjs, then import it). Last: 32 paths, 30 ok.
+  (5) Cleanup at the end: Temp `gtai-gate-c3ea5f79ca4e` (ours) after reels or at 09:55; gtai-mutate-* at OUR shas only
+      (`git worktree list`; 9001fcc8 was call 5's at 29db9d3b1 and should be gone). Final commit REPORT + JOURNAL.
