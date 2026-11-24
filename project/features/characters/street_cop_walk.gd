@@ -62,7 +62,7 @@ class Contact:
 		drawings = StreetCopWalk.rows_of(strip)
 		registered = null
 		step_m = FOUR_STEP_M
-		if drawings > 4:
+		if drawings > 4 or CastCardKinds.anchored(strip):
 			var running: bool = CastCardKinds.running(strip.get_file(), RUN)
 			registered = StreetPatrolPose.new()
 			step_m = registered.configure(strip, drawings, running)
@@ -181,7 +181,7 @@ static func plant(rig: CutRig, card: Sprite2D) -> void:
 
 
 static func rows_of(path: String) -> int:
-	return 8 if path.get_file() in [EIGHT, RUN] or CastCardKinds.anchored(path) else 4
+	return CastCardKinds.rows(path, path.get_file() in [EIGHT, RUN])
 
 
 static func strip_for(speed_mps: float) -> String:

@@ -2,7 +2,8 @@
 
 Every sheet is scaled by the figure's own body height per facing to the patrol cop's drawn height
 (never by its cell), anchored on the same foot line, and keeps the muzzle flash and the dropped
-rifle as props of the nearest body. No tone change: all sheets come from one plate.
+rifle as props of the nearest body (the fall sheets crop as before but draw the body only: the game's
+rifle pickup is the one rifle on the ground). No tone change: all sheets come from one plate.
 """
 import argparse
 import shutil
@@ -30,7 +31,7 @@ def gap(a, b):
     return (dx * dx + dy * dy) ** .5
 
 
-def sheet(path, layout):
+def sheet(path, layout, keep_props=True):
     """Figures in game order per layout row (a list of strips); each is (rgba image, body mask)."""
     rgb, labels, stats, spill = key_figures(path)
     ids = [i for i in range(1, len(stats)) if stats[i, 4] >= 30]
@@ -55,7 +56,7 @@ def sheet(path, layout):
             x, y = stats[members, :2].min(axis=0)
             r, d = (stats[members, :2] + stats[members, 2:4]).max(axis=0)
             local = labels[y:d, x:r]
-            alpha = np.isin(local, members)
+            alpha = np.isin(local, members if keep_props else [b])
             color = rgb[y:d, x:r].copy()
             color[~alpha] = 0
             im = Image.fromarray(np.dstack((color, alpha.astype(np.uint8) * 255)))
@@ -82,7 +83,7 @@ def source(action, pitch):
     if action == 'hit':
         return [[d] for d in sheet(out / 'gunnerA_hit_70.png', (5, 3))[0]]
     if action == 'fall':
-        return sheet(out / f'gunnerA_fall_{pitch}.png', [3] * 5)
+        return sheet(out / f'gunnerA_fall_{pitch}.png', [3] * 5, keep_props=False)
     a = sheet(out / f'gunnerA8_{pitch}_a.png', (4, 4, 4, 4))
     b = sheet(out / f'gunnerA8_{pitch}_b.png', (4, 4, 4, 4))
     c = sheet(out / f'gunnerA8_{pitch}_c.png', (4, 4))

@@ -233,6 +233,7 @@ All four cadences are above the 5 to 10 a second a drawn walk usually wants and 
 | Archetype | Renderer | Identity | Walk | Attack/tell | Hit | Death | Facings | Grid | Pitches | Scale | Ink | Palette | Cut | Feet | Shadow | Provenance | Enabled |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | `sergeant_mulroney` | Human cast card on the prologue formation boss | PASS | PASS | PASS in staged fight | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS (9.59 px worst fight jump) | PASS | PASS 10/10 | **true** |
+| `robot_gunner` | Robot card on the gauntlet wave (`FoeGunnerCardView`) | PASS | PASS | PASS in staged fight (n28 films) | PASS | PASS | PASS | PASS | PASS | PASS | PASS (ink runs within 2 px of the patrol) | PASS | PASS | PASS | PASS (shadow 210-243 px) | PASS | **true** |
 
 ### Cut edge and reversal review
 
@@ -324,7 +325,7 @@ and unit-tested (`test_cast_warden.gd`). The row is **`enabled: true`**: every p
 3. `cast_lineup.gd` hides the prologue's `LightLayer` now: the yard's lights printed rings into every prologue portrait (Mulroney's lineup
    failed the same way on this branch).
 
-## Robot gunner A (navy plates) as a card (n27, row `enabled: false`)
+## Robot gunner A (navy plates) as a card (n27; n28 row `enabled: true`)
 
 Source: the director's `gunnerA` sheets (owner pick 2026-11-24, navy kept as bolted plates on a gunmetal frame, pale box head with no cap, one lens, hose arms, brass belt to a back drum). Cut by `tools/art/cast_gunner_pack.py` at the patrol cop's drawn height per facing (fill 1.12 / 1.08), one foot line, muzzle flash and the dropped rifle kept as props. Code: `FoeGunnerCardView` (a sprite sibling of his robot rig, hidden rig, the rig stays the body for the shove and the power-down), `CastGunnerAnchors` (step 0.2704 m), `test_cast_gunner.gd`. With the row off his robot rig draws exactly as before (`show_rig` returns the rig's own visibility). Measured with his card forced on in a dev process (`GTAI_CAST_PREVIEW=robot_gunner`, `CastMulroneyPreview.enable`). Screen px at 32 px/m unless stated.
 
@@ -339,10 +340,215 @@ Source: the director's `gunnerA` sheets (owner pick 2026-11-24, navy kept as bol
 | Palette, all ten sheets (`cast_gunner_palette.py`, `cast_warden_edge.py`) | navy (hue 190-250) 5.0 to 6.6 % of solid px (Mulroney 20-35 % blue); strict red at most 60 px (p70 attack, 0.02 %: the lit lens edge) and 0 to 9 elsewhere; no teal, no vermilion | PASS |
 | Cut / key (`check_cells` in the cutter) | zero strongly green-leading opaque px on every cell; flash and rifle inside the cells | PASS |
 | Edge, **sheet proxy** fringe px per cell, p70: walk / attack / hit / fall / eight | 469 / 462 / 529 / 642 / 300 (Mulroney 456 / 454 / 381 / 473 / 244) | comparable; fall is 36 % above |
-| Edge, **live rim** at 64 px/m (`cast_mulroney_edge.py`) | **not measured** (no frozen-exposure harness written for him in this call) | OPEN |
-| Shadow | he draws his own contact rings (the patrol's ring set, radius .5 x 0.8 m hip); the lineup's shadow toggle does not reach them, so its changed-pixel count reads 0 against the patrol's 236 | OPEN: a ring toggle exposure was not taken |
-| Ink (3, 3, 4 px runs) | **not measured** | OPEN |
-| Attack tell, hit and death in a live fight | drawn and unit-tested (tell row 0/1 = lens lit, flash, recoil, recover on `attack_frame`; hit 0.20 s; fall by `DeathPipe` progress); **no film taken in this call** | OPEN |
+| Edge, **live rim** at 64 px/m (`rim()` of `tools/art/cast_mulroney_edge.py` on the `edge_*` exposures of `tools/art/cast_gunner_poses.mjs`, frozen street, card vs raw vs ground; `build/cast/gunner/poses/poses{70,55}_64/`) | dark exterior px, walk-8 / attack / hit / fall: 70: 0 / 0 / 0 / 0; 55: 0 / 0 / 0 / 0 (patrol and warden: 0). Looked at `live.png` for fall, attack, hit: clean outline, no black fringe. Caveat: the `edge_fall` exposure is fall cell 0 (still upright, first power-down drawing); the lying cells 1 and 2 have no ground twin and were looked at only (`fall_1`, `fall_2`) | PASS (0 against bar 0) |
+| Shadow (`cast_gunner_poses`, 32 px/m, 70 deg, front three-quarter; his ring node hidden in the `_no_shadow` twin, px darkened by >= 12/255) | stand 210, tell 232, fire 235, hit_1 232, hit_4 226, hit_6 243 (patrol 236, cop8 248 / 221): the toggle reaches his rings (diff is not 0). Separate ground contact seen under the feet in every walk frame, still under him after the shot and in the three wound frames; no baked key shadow | PASS (bar roughly 150 to 350) |
+| Ink (3, 3, 4 px runs; `tools/art/cast_gunner_ink.py`, sheets at the shipped 192 px cell height, from the sheets, the live 32 / 64 frames not yet looked at) | planted-8 passing cells, 70: 1,2,2 / 2,2,2 / 2,2,1 (patrol 3,3,4); 55: 2,3,2 / 2,4,3 / 2,4,3 / 1,3,3 / 2,3,3 / 1,3,2 (patrol 3,3,3): every one within 2 px of the patrol. Some cells show one run of 19 to 24 px at a single y (70 walk row 0 y 75, row 1 y 80; 55 planted-8 row 6 y 75, row 1 y 70 = 12): the contour there crosses the dark hose-arm joint, where the pixels stay under RGB 48 past the outline. Contact sheets `build/cast/gunner/ink_70.png`, `ink_55.png`: contours closed, hands and rifle intact, no duplicate hatching seen | sheet side PASS; live look PASS: all eight walk frames at 70 deg, 32 and 64 px/m (`build/cast/gunner/poses/poses70_{32,64}/walk_0_*.png`) looked at: contours closed, hands and rifle whole, no double hatching |
+| p70 fall, double rifle (found by the director in `poses70_64/fall_2.png`) | double rifle in rows 1-3 cols 1-2 removed by image edit (n28; 1 image, `gtai-art/foes-n28/gunner-fall/`, six cells composited into the sheet, others byte-identical; original kept as `gunnerA_fall_70_v1_double_rifle.png`). Re-cut: only `p70/robot_gunner_fall.png` changed, zero strongly green px. Before `build/cast/gunner/poses_before_fall_fix/poses70_64/fall_{1,2}.png`, after `build/cast/gunner/poses_after/poses70_64/fall_{1,2}.png`: one rifle per cell, dropped rifle to his right, hands empty. **n28 01e:** that edit left the cell rifle AND the game's pickup in the films (two rifles); the fall sheets now draw the body only at 70 and 55 (the pickup is the one rifle). At 55 the lying cells 1-2 of the source show a rifle held in the hand as part of the body drawing; it is not removed by the cut (see the 01e report). `edge_fall` rim after: 0 at 70 and 55 | PASS |
+| p55 fall, rifle in the hand (found by the director) | rifle removed from the hand in the lying drawings (8 source cells: middle column x5, right column rows 3-5) by image edit (n28; 1 image, `gtai-art/foes-n28/gunner-fall55/`, composited into the sheet, other cells byte-identical; original kept as `gunnerA_fall_55_v1_hand_rifle.png`). Re-cut: only `p55/robot_gunner_fall.png` changed, 14 strongly green px. Looked at on grey: empty open hands, bodies whole; `build/cast/gunner/poses_after55/poses55_64/fall_{1,2}.png`: no rifle, hand empty. Master `gtai-masters/n28/cast/gunner_fall55_64.png` | PASS |
+| Attack tell, hit and death in a live fight (n28 films, `tools/film/cast_gunner_films.mjs`, scene `project/dev/cast/cast_gunner_fight`, card on, `gtai-masters/n28/cast/`; every one-per-second frame of both, 20 of each, looked at) | `gunner_close_64.mp4`: ffprobe `1920,1080,60/1`, duration 20.016667 s; `gunner_fight_32.mp4`: `1920,1080,60/1`, 20.016667 s. Rivet measured on a frame crop: about 145 px tall at 64 px/m and about 74 at 32 (sprite top to soles, by eye). Log: lens row (attack/0) starts 54 ticks (0.9 s = `telegraph_s`) before the first round for every gunner, then attack/2 flash, attack/3 recoil, back to the walk row at +6 ticks; hit/0 at tick 298 and back to walk at 310 (12 ticks = 0.20 s); fall to rest on his back. Frames: 64 take, patrol cop and Rivet beside him, lens lit in the 3 s frame, Rivet's own muzzle burst (orange/red, Rivet's weapon fx, not the gunner) at 8 s, then the gunner lies on his back and a white/black smoke puff, no red and no blood on him. **First films (corrected, the earlier "one rifle each" was wrong):** every fallen gunner showed TWO rifles, the one drawn in his fall cell and the game's `GroundRifle` pickup (a squad foe with `assault-rifle` drops one); the pickup is gameplay and stays. **Fix (n28 01e):** `cast_gunner_pack.py` crops the fall cells as before but draws the body only (the fall rifle island is dropped; body pixels identical to before, 0 px shift, only the two fall PNGs changed). **New films:** frames at 16-19 s of both clips looked at: each fallen gunner has exactly one rifle, the pickup, beside the body and nothing drawn on or under it; 32 take, three gunners walk in, tell, fire, are shot one by one and rest in a row each with one pickup rifle, small dark oil spatter on the third (black, not red). The pickup rifle draws a little red/pink (43 px in an 90x40 crop at 64 px/m, from the mp4 via `ffmpeg -pix_fmt rgb24`, R>G+60 and R>B+40; `ground_rifle*` is not ours and untouched). Bad frames: none; at 32 px/m the lens is a few px and is judged from the log rows, not the pixels | PASS |
 | Identity at 32 px/m beside the patrol cop (`gunner_vs_cop_32.png`) | the pale box head, tan frame and hose arms read as a machine; navy is a few patches, where the cop is navy all over with a round cap | PASS (judged by eye on one still) |
 
-**Why he is off.** Soles, jumps, drawings per second, size, palette and key pass, but the live edge rim, the ink runs, the shadow exposure and the live attack / death film are unmeasured. The checklist says never to ship a half character, so the row stays `enabled: false` and today's robot rig draws. Turn it on by setting the row's `enabled` to true once those four are measured.
+**Verdict (n28, 2026-11-24): he is on.** All four open points pass their bars: live rim 0 (bar 0), ink runs within 2 px of the patrol's, shadow 210-243 px (bar about 150-350), and the two films show tell, fire, hit and fall as specified. The row is `enabled: true`; with it false his robot rig draws exactly as before.
+
+## Planted feet, n28 (door carrier)
+
+The door carrier (`shield_robot`) keeps its shipped four-drawing walk (no art change) and is placed by the same anchored mechanism as the riot, SWAT and lancer (`CastDoorAnchors`, `StreetCopWalk.Contact`/`StreetPatrolPose`, five facings x four drawings, generated by `tools/art/cast_door_soles.py` from the shipped alpha with the `cast_soles.OTHERS` windows). The sheet is 192 px high, so it skips the 256/192 cell ratio (`CastCardKinds.cell_ratio`): same on-screen size as before. Shove lane and slab-on-death untouched. Soles are measured only in the right facing; the down-right contact hides the supporting boot behind the slab, so there (and in the unmeasured facings) the table holds the lowest opaque pixels, a body anchor, not a verified sole.
+
+STEP_M 0.16 m per drawing (10.0 drawings/s at 1.6 m/s). The first estimate from the drawn body advance (0.2036) gave sole 6.31 / 4.29 px; 0.26 gave 6.89 / 4.71 (worse); 0.15 gave 5.55 / 3.87. 0.16 is the largest step inside the 10 drawings/s bound.
+
+| Archetype | Gait (m/s) | Pitch | Before right (sole / jump) | After right | Before down-right | After down-right |
+|---|---|---:|---:|---:|---:|---:|
+| shield_robot | walk (1.6) | 70 | 7.35 / 13.29 ✗ | 5.74 / 5.51 ✗ | U / 13.23 ✗ | U / 10.82 (jump ✓, sole unmeasurable) |
+| shield_robot | walk (1.6) | 55 | 6.64 / 11.95 ✗ | 3.98 / 5.93 ✗ | U / 11.80 ✗ | U / 9.82 (jump ✓, sole unmeasurable) |
+
+Body jump over a turn / a 140-degree reversal, per tick, 32 px/m (`test_cast_door_walk.gd`): p70 6.70 / 7.65 px, p55 9.60 / 9.60 px (<= 12). A stop resets the contact (no jump to measure). **Verdict: Feet still FAILS** on the sole (<= 2 px): the four-drawing walk has two contacts of unequal drawn advance, so the sole slides 4 to 6 px over a contact; the body-jump half now passes. A planted eight-drawing redraw would be needed for the sole (new art, not in this call). Before values are the n26 table above (`main` `d0ab9d03a`). No films, pile-driver or impact-edge item in this call.
+
+### Door carrier evidence, n28 (films)
+
+`tools/film/cast_door_films.mjs` (before = `CastDoorAnchors.SHEET` renamed in the working tree for the run, which puts the
+sheet back on the shipped unanchored four-drawing placement; after = the committed placement), `cast_foot_film.gd` with
+`GTAI_CAST_DIR=right|downright`, sole texels from `tools/art/cast_door_film_soles.py`. Stills at 64 px/m tilt 70, right
+facing, 1.6 m/s: the shipped placement draws three wide sole brackets per cycle that slide (each bracket spans the whole
+contact); the planted one draws a bracket per drawing, narrower, the cyan/orange contacts alternating without gaps. The
+down-right take has no dots (the sole is hidden by the slab). The clip has no 64 px/m inset: the tool does not support one.
+
+## Pile-driver feet, n28
+
+**Verdict: Feet FAILS: no exchange of support drawn at 70, needs new art. Nothing wired, nothing shipped.**
+Evidence: `pile_lift_70.png` (masters `n28/cast/`; the right-facing column of `war_machine_armed_walk.png`, four drawings,
+p70 on top, p55 below, the lowest opaque row drawn in cyan). Looked at it. The n26 line "no lift drawn" is not literally
+true: at p70 drawings 1 and 3 each tilt the FRONT (right) pad so its underside shows. But it is the same pad both times,
+the rear pad is flat and planted in all four drawings, and drawings 0 and 2 are the same two-pad stance (front pad 5 px
+apart). A walk that lifts one pad twice and never the other has no alternation of support, so no per-drawing sole table
+can carry one ground point through a continuous 1.8 m/s walk the way `CastDoorAnchors` does. At p55 the exchange IS drawn
+(drawing 1 tilts the rear pad, drawing 3 the front pad), so a p55 table is possible; the checklist needs both pitches, so
+none was written (a placement that cannot pass at 70 would only move the failure).
+`CastCards` still has `war_machine` `enabled: true` in this tree (the brief said `false`): the wave draws the pile-driver
+card (`FoeWarCardView`, `HEIGHT_M` 2.6, a held-foot placement, no anchor table). Not touched.
+
+| Character | Gait | Pitch | Sole / body jump, right (main `d0ab9d03a`) | After | Down-right (main) | After |
+|---|---|---:|---:|---:|---:|---:|
+| war_machine | walk (1.8) | 70 | U / 17.84 | unchanged (not wired) | 24.75 / 13.22 | unchanged |
+| war_machine | walk (1.8) | 55 | 29.07 / 11.88 | unchanged (not wired) | 22.97 / 13.35 | unchanged |
+
+Turn and reversal jump, stop: not measured (nothing changed to measure). **Size, rendered** (`cast_foot_film.gd`,
+1920 x 1080, 32 px/m, tilt 70, the card walking right, then the silhouette measured on the frame): **70 x 77 px**
+(Rivet 77 / 75 in the same audit; not enlarged: the card is `HEIGHT_M` 2.6 m over a 200 px body, figure bbox 184 px of
+the 288 px cell). What else on the checklist still fails: the Feet row (sole 23 to 29 px, jump over 12 px at 70 right and
+down-right) and every other cell of its row in the n26 table above that was F; none was worked on in this call.
+
+## Impact outline, n28
+
+Question (lane item 4): does the hit flash (`CutRig.set_tint`, the shared `PartMaterials` tinted material) draw dark teeth
+outside the silhouette on other cards' hit poses at 64 px/m, as it did on Mulroney's (354 / 462 px before `af94f1c6e`)?
+Measured in ONE Godot launch by `project/dev/cast/cast_impact_edge.gd` (wave street, tilt 70, one pistol hit each, the same
+frozen frame exposed live / raw / empty, flash on = pulse, off = calm, `tools/art/cast_impact_edge.py` -> `rim()` of
+`cast_mulroney_edge.py`: dark exterior pixels). Sheet: `impact_edge_64.png` (masters `n28/cast/`, pulse row then calm row).
+
+| Card | Hit drawing shown | Pulse (flash on) | Calm (flash off) | Flash material on the card |
+|---|---|---:|---:|---|
+| patrol cop | `cop_patrol_shoulder_hit.png` | 1 | 0 | yes (silhouette flash) |
+| riot | `cop_riot_hit.png` | 6 | 0 | yes |
+| SWAT | `swat_hit.png` | 7 | 0 | yes |
+| lancer | `rocket_trooper_hit.png` | 0 | 0 | yes |
+| door carrier | `shield_robot_hit.png` | 0 | 0 | none: its card sprite never takes the rig tint |
+| warden | `appliance_warden_hit.png` | 0 | 0 | painted ink path (`painted_ink`): draws in colour, no flash |
+| gunner | `robot_gunner_hit.png` | 0 | 0 | none (card sprite beside the robot rig) |
+
+Looked at the sheet: on patrol, riot, SWAT and lancer the flash is the intended black-and-cream silhouette print; the
+exterior fringe is 0 to 7 px per frame against Mulroney's 354 / 462, so no card shows his teeth. The 6 to 7 px on riot and
+SWAT are single stray pixels along the shield rim / rifle, not a band. No fix made: the flash material is shared
+(`PartMaterials`, outside this lane's allowlist), so if the 6 to 7 px ever matter it is a NEED for the material's owner;
+the card-path fix (`CastCards.painted_ink`) is for painted wounds and would only turn the flash off for these cards.
+Caveats: the flash was forced on the frozen tick (`natural_tint` was false 3 ticks after the strike, the game's own pulse is
+shorter than that); p70 only; the door carrier's and gunner's flash in the real fight is not a rig tint, so their pulse
+column is 0 by construction, not by a measured clean flash.
+
+## Contractor, n28: state (step 1 of the brief done, 2026-11-24 evening)
+
+Cut art only. No `cast_cards.json` row, no wiring, nothing measured in the engine yet.
+
+Shipped sheets (`project/features/characters/art/view/{p70,p55}/`, cut by `tools/art/cast_contractor_pack.py`,
+palette and cut check `tools/art/cast_contractor_palette.py`, provenance `tools/art/cast_contractor_provenance.py`):
+`contractor_armed_walk` (4 drawings), `contractor_planted8_armed_walk` (8 drawings, from the ten `contractor8c` sheets),
+`contractor_attack` (4 columns: aim, fire, recoil, recover), `contractor_cast_hit`, `contractor_cast_fall`.
+The hit and fall are named `contractor_cast_*`, not `contractor_hit/fall`: quest 1's dock corpses and hit strip
+(`street_quest_cards.gd`, `street_quest_hit.gd`, `signature_kills.json`) still read the old `contractor_fall.png` /
+`contractor_hit.png`, which are untouched, so the quest tapes cannot move.
+
+Measured (sheet level, opaque px):
+
+| point | before | after |
+|---|---|---|
+| hat mean saturation (top 13 % of the figure), walk / 8-walk / attack / hit, p70 | .147 to .206 | .068 / .071 / .054 / .097 |
+| the same at p55 | .192 to .232 | .065 / .069 / .086 / .123 |
+| hat value | .79 to .85 | .78 to .85 |
+| vest hue (median of yellow-leaning px), p70 walk / 8-walk | 51 / 51 | 51 / 51 (untouched) |
+| cut check, green / magenta-leading opaque px, ten sheets | | 0 / 0 on every sheet |
+| red, teal, vermilion px (the 8 non-fall sheets) | | red 0 to 6, teal 0, vermilion 0 |
+
+Open or failing at sheet level: p55 hit hat saturation .123 (bar .12) with value .779 (bar .78): a hair under the bar
+on both, the hat is shaded on that sheet; p55 vest median hue 46.5 to 47.5 with 14 to 16 % of the vest px under hue 45
+(pale lemon wants 50 to 62; the p70 sheets are 51 and 2 to 3 %): a vest tone pass was not authorised, the live frame
+decides. The p70 fall draws the body only (the source has the hat on the head AND a second floating hat). The p55 fall
+keeps the dropped hat; its drawing-1 rifle is erased by polygon (one stray speck beside the boot).
+
+Not done yet (next call): row `contractor` (`enabled: false`) and the 8-drawing anchored walk in `CastGunnerAnchors`'
+way, feet at 70 and 55 (right and down-right, stop, turn, reversal), drawings per second, size beside the patrol cop and
+Rivet, ink, live rim, shadow, tell / hit / fall films, before/after.
+
+**Contractor, n28: state after step 2 (row off, anchored walk wired).**
+- Row `contractor` is in `cast_cards.json` with `enabled: false` (hit/fall are `contractor_cast_hit/fall.png`), so
+  `CastCards.lookup` returns null and the card-off path is as on main. `test_cast_contractor.gd` pins that.
+- `CastContractorAnchors` (generated by `tools/art/cast_foe_soles.py contractor`, the lancer/gunner way, from
+  `contractor_planted8_armed_walk.png`, 5 facings x 8 drawings at both pitches); `CastCardKinds` and `CastCards` know it,
+  `WALK` selects the eight, `FOUR` restores the four. Sole markers checked on the overlay sheet
+  (`gtai-art/foes-n26/contractor8c/pack/soles_{70,55}.png`, p70 looked at: the ring sits on the support boot in every
+  facing).
+- `WALK_STEP_M` = 0.2202 m per drawing (contact-to-pass advance, four measurements 0.202 / 0.246 / 0.220 / 0.212).
+  At his 3 m/s that is 13.6 drawings/s: ABOVE the 5 to 10 bar (and above 12). Open for the feet call: a larger step trades
+  cadence against sole slip, as the warden's 0.16 did; not tuned yet.
+- Not measured yet: `cast_feet.mjs` right / down-right at 70 and 55, stop / turn / reversal, size beside the patrol and
+  Rivet, ink, live rim, shadow, tell / hit / fall films, before/after; there is no contractor card view yet (nothing draws
+  the card), so the row cannot be turned on.
+
+**Contractor, n28: walk step sweep (part 2, row still off).** `WALK_STEP_M` swept by editing the constant and running
+`GTAI_CAST_FORCE=contractor node tools/art/cast_feet.mjs <dir> 32 contractor` (a dev-only env forces the row on in the
+feet tool, left uncommitted: it adds 5 lines to project/dev/cast and the debt ratchet refuses; `cast_feet.py` now knows the contractor sheet's sole windows). He walks at 3 m/s (enemies.json). Sole slip is
+0.001 px at every step (anchored carrier); the step only moves cadence and the body jump. Drawings/s is
+speed / step (observed in the take in brackets); jump is px at 32 px/m, bar <= 12; sole bar <= 2.
+
+| step m | drawings/s | 70 right jump | 70 down-right | 55 right | 55 down-right | verdict |
+|---|---|---|---|---|---|---|
+| 0.2202 | 13.62 (13.68) | 3.11 | 4.83 | 3.45 | 4.26 | cadence FAIL (> 10) |
+| 0.26 | 11.54 (11.56) | 2.64 | 7.75 | 3.12 | 5.22 | cadence FAIL (> 10) |
+| 0.30 | 10.00 (9.91 right, 10.00 down-right) | 3.73 | 9.04 | 5.09 | 7.94 | PASS |
+
+Chosen: 0.30, the smallest swept step at or under 10 drawings/s. `cast_foe_soles.py contractor` now writes 0.30 itself
+(`STEP_OVERRIDE` in the tool; the measured 0.2202 is only printed): regenerating `CastContractorAnchors` leaves
+`git diff` on the anchors file empty (checked, and regenerating the gunner's file is empty too).
+
+**Contractor, n28: stop, turn, reversal (brief 08 part B, row still off).** Scene `project/dev/cast/cast_contractor_turns.gd`
+(the gunner's `cast_gunner_turns` with his row forced on by `GTAI_CAST_FORCE=contractor`, 3.0 m/s, 30 walk-in ticks, then a
+stop / a 90-degree turn over 20 ticks / a reversal: aim one way, step the other), run by `tools/art/cast_contractor_turns.mjs`,
+analysed by `tools/art/cast_contractor_transitions.py` from the stored tracks. 32 px/m, screen px between consecutive
+rendered frames (bar 12); the stop row also gives the travel of the support sole of the drawing held after the stop (bar 2).
+Reversal is judged by the number only (no backwards drawing step larger than the walk's own step; the largest jump is the
+steady drawing-change step), not by a film.
+
+| take | 70 right | 70 down-right | 55 right | 55 down-right | verdict |
+|---|---|---|---|---|---|
+| stop, body jump | 3.73 | 7.97 | 5.09 | 6.32 | PASS |
+| stop, support sole travel after the stop (held drawing row 1) | 0.00 | 0.00 | 0.00 | 0.00 | PASS (bar 2) |
+| turn, body jump | 9.28 | 9.06 | 9.06 | 8.14 | PASS |
+| reversal, body jump | 9.60 | 9.39 | 9.60 | 9.01 | PASS |
+
+The strafing speed in a fight was not measured separately (the fight film moves him at the sim's own speed).
+
+**Contractor, n28: checklist (brief 08 part C, one frozen-exposure launch, row stays OFF).** Tools: `project/dev/cast/cast_contractor_poses.gd`
+(one launch: 70/32, 70/64, 55/64, frozen live/raw/ground exposures and shadow-off pairs, row forced on by `CastMulroneyPreview.enable`),
+`cast_contractor_lineup.gd` (+ `tools/art/cast_contractor_lineup.mjs`: Rivet, patrol, contractor at 70/32, 55/32, 70/64),
+`tools/art/cast_contractor_review.py` (rim, shadow, live palette), `tools/art/cast_contractor_ink.py`. Evidence in
+`build/cast/contractor/` (git-ignored); beside still `gtai-masters/n28/cast/contractor_beside_64ppm_tilt70.png`. Screen px.
+
+| Point (checklist bar) | Number | Verdict |
+|---|---|---|
+| Size at 32 px/m, front / back silhouette, 70: contractor 56 / 58, patrol 43 / 44, Rivet 77 / 73; 55: contractor 57 / 59, patrol 44 / 46, Rivet 75 / 74 | never taller than Rivet (21 px under at 70 front); 13 px (30 %) taller than the patrol cop, so not "the cop's height" (at 64 px/m 70: 111 / 117 against patrol 87 / 88, Rivet 154 / 146) | PASS on the bar (not taller than Rivet); note: much taller than the patrol |
+| Live 64 px/m rim, dark exterior px, walk / attack, 70 and 55 | 0 / 0 and 0 / 0 | PASS |
+| Live rim, hit, pulse frame (4 ticks after the strike, flash lit) 70 / 55 | 175 / 221 (bar 0) | **FAIL** |
+| Live rim, hit, calm frame (9 ticks after the strike, still the hit drawing) 70 / 55 | 0 / 0 | PASS |
+| Live rim, fall cell 0 / 1 / 2 70 | 604 / 87 / 0 (55: 720 / 165 / 0) | **FAIL** on cells 0 and 1 (the flash is lit); cell 2 PASS |
+| Control, same harness, the shipped lancer card (`GTAI_CAST_CONTROL=rocket_trooper`), 70 | walk 0, attack 0, hit 482, fall cell 0 1161 (55: hit 596, fall 1079) | the shared hit flash (`CutRig.set_tint`, tinted part material on a raw card) draws a black halo while lit; the shipped lancer shows it too. Warden (`painted_ink`) and gunner (no tint) are 0 by construction. Looked at `edge_fall/live.png` against `raw.png`: a solid black outline about 4 px wide around the whole figure on the live one |
+| Shadow, same-pose toggle, 32 px/m 70 front three-quarter, px darkened >= 12 | stand 237, tell 280, fire 280, hit_1 159, hit_4 284, hit_6 283 (patrol 236) | PASS (150-350); separate ground contact seen under him in every frame, no baked key shadow |
+| Ink, sheets at 192 px, front passing pose, left contour y = 70 / 75 / 80 (patrol 3,3,4 / 3,3,3), 8-drawing walk col 0 rows 0-7 | 70: 2,2,1 / 2,2,2 / 1,2,1 / 1,2,1 / 1,3,1 / 1,2,1 / 1,3,1 / 1,2,1; 55: 2,1,2 / 2,1,2 / 2,1,2 / 2,1,2 / 3,1,1 / 3,1,1 / 2,1,2 / 2,1,2 | within 2 px at 55; at 70 the y = 80 run is 1 where the patrol's is 4 (3 px, row 1 is 2): thinner than the patrol by about 3 px there. Live frames at 64 and 32 (walk_1_0, walk_1_2, walk_2_3, walk_3_5) looked at: contours closed, hands and SMG whole, no double hatching: PASS on the look |
+| Live palette, hat (S <= 0.12, V >= 0.78): walk / attack, 70 and 55 | S 0.067 / 0.051 (70), 0.068 / 0.078 (55); V 0.896 / 0.903, 0.886 / 0.862 | PASS |
+| Live palette, vest (median hue >= 45) | walk 51.0 (70), 46.7 (55); attack 45.8 (70), 46.3 (55); share under 45: 1.2 / 41.9 % (70), 9.3 / 32.5 % (55) | PASS on the median; thin margin on attack (45.8) |
+| Live palette, red, vermilion, teal, blue / navy px on the figure | 0 / 0 / 0 / 0 on walk and attack at both pitches; the hit and fall frames hold the black flash only | PASS |
+| **Size jump on attack and hit (found while looking)** | same facing, 70 at 64 px/m, silhouette height: stand 86, tell 64, fire 65, hit_1 55, hit_4 69 (55: 88 / 66 / 68 / 53 / 66). Ratio about 0.74 to 0.77 = 192/256: the eight-drawing walk and the `padded` sheets take the 256/192 cell ratio (`CastCardKinds.fill`, `padded`: only `appliance_warden_` and `robot_gunner_`), his `contractor_attack` and `contractor_cast_hit` (256 px cells, figure 187 texels like the walk) do not, so he shrinks by a quarter whenever he aims or is hit | **FAIL** (likely cause; needs `contractor_` in `CastCardKinds.padded`, `project/features/characters/cast_card_kinds.gd`, outside this lane's allowlist: NEED) |
+
+**Verdict (n28, brief 08): he stays OFF.** Failing: the live rim on the hit and fall exposures while the flash is lit (175 / 221 and 604 / 720 dark exterior px against bar 0; calm 0; the shipped lancer shows the same, so this may be the bar's reading rather than his art) and the attack / hit size jump (about 0.75 of the walk, a likely one-line `padded` NEED). Not done because of that: the two films, `enabled: true`, the decisions line, `frames.json`.
+
+**Contractor, n28: size jump fixed, flashed-rim rule (brief 09 parts A and B).** Sheets measured with the alpha bbox (alpha > 40), texels, cell height / figure height:
+walk `contractor_planted8_armed_walk` 256 / 198-204 (70), 198-201 (55); `contractor_attack` 256 / 195-223 (70), 197-201 (55); `contractor_cast_hit` 256 / 201 (70), 199 (55);
+`contractor_cast_fall` grid cells 264 high (figure 167-201 per row); old quest sheets `contractor_card` 192 / 190, `contractor_hit` 288 / 278, `contractor_fall` 510 cell / 188-192 (two rows; unchanged, quest 1 reads them).
+The attack and hit cells carry the same padding as the walk (figure about 200 of 256), so `CastCardKinds.padded` now lists exactly `contractor_attack.png` and `contractor_cast_hit.png`
+(the fall stays out by the existing `_fall.png` rule, the quest sheets are not named). Warden and gunner lines are unchanged (pinned in `test_cast_card_kinds.gd`).
+Live 64 px/m, tilt, same facing, no-shadow silhouette height in screen px, before -> after (frozen-exposure launch `cast_contractor_poses`):
+
+| Pitch | stand | tell | fire | hit_1 | hit_4 | hit_6 |
+|---|---|---|---|---|---|---|
+| 70 before | 86 | 63 | 64 | 55 | 69 | 62 |
+| 70 after | 86 | 85 (-1.2 %) | 86 (0) | 82 (-4.7 %) | 82 (-4.7 %) | 87 (+1.2 %) |
+| 55 before | 88 | 66 | 68 | 53 | 66 | 63 |
+| 55 after | 88 | 88 (0) | 91 (+3.4 %) | 83 (-5.7 %) | 87 (-1.1 %) | 91 (+3.4 %) |
+
+Within 5 % everywhere except hit_1 at 55 (-5.7 %, 0.7 point over). hit_1 is the drawn flinch lean (looked at the strip: the figure bends away, head low), and its cell figure
+is 199 texels like the walk's 198-201, so the scale is the walk's; the remaining gap is the pose, not a size jump (it was -40 % before). Fall: fall_0 103, fall_1 71 (walk stand 101 with its shadow); the rest body lies about 55 px
+(by eye; the 123 px bbox of `rest` includes the blood splat spikes), not taller than stand.
+
+Flashed rim rule (director decision 22:02): a cell drawn while the shared hit flash is lit is judged against the shipped lancer card in the same harness, not against 0; calm cells keep bar 0.
+Re-run numbers (70 / 55), dark exterior px: hit pulse 289 / 403 against lancer 482 / 596 (PASS); fall cell 0 604 / 720 against 1161 / 1079 (PASS); fall cell 1 87 / 165 (lancer cell 1 not measured; PASS by being under cell 0); hit calm 0 / 0, walk 0 / 0, attack 0 / 0, fall cell 2 0 / 0 (PASS).
+Shadow re-run: stand 237, tell 234, fire 235, hit_1 203, hit_4 201, hit_6 224 (PASS 150-350). Palette: hat S 0.052-0.078, V 0.875-0.907; vest median hue walk 51.0 / 46.7, attack 45.9 / 46.4; stray 0 / 0 / 0 / 0 (PASS).
+Rule added to `docs/art/cast-checklist.md` (Rim row). The two earlier FAIL rows (hit pulse, fall cells 0 and 1, size jump) now read PASS under the rule and the padded fix.
+
+**Contractor, n28: live height vs the lineup (brief 10, measured from `gtai-masters/n28/cast/contractor_close_64.mp4`, no Godot).** Close film 1920x1080, 64 px/m, tilt 70, frames extracted with ffmpeg, silhouette = outline-dark / bright / saturated pixels inside a window per figure, shadow excluded, hat top to lowest boot px, screen px. Rivet and the patrol cop do not move in the film (149 px, rows 450-598; cop 112 px, rows 339-450, every frame). The contractor, walking in at 0.5 s then standing and aiming: 1 s, 1.5 s, 2 s, 2.5 s, 4 s 78 px (rows 401-478); 3 s 87; 5 s and 6 s 82; 8 s 88; 9 s 84; 10 s 71 (aim / fire / hit poses). Ratio contractor / cop 78/112 = 0.70 on the five steady frames (0.63-0.79 over all), contractor / Rivet 0.52. The live game's numbers are these (the film's spawn path, `cast_contractor_fight.gd:74` `patrol_cop` via `spawn_member`, is the game's), and they agree with `cast_contractor_poses` (stand 86 before the pad, tell 64-65, hit 55-69 then padded to 0.94-1.05). The beside still (`cast_contractor_lineup.gd`, made 20:59 before the 22:12 pad commit) says contractor 111 / 117, cop 87 / 88, Rivet 154 / 146: Rivet agrees within 3 %, the contractor is about 1.3-1.4 times the live height and the cop about 0.78 times, so the still reverses the live order (contractor taller than the cop there, a third shorter than the cop in the film) and must not be used as a size reference. What the lineup does (file:line): it spawns both through `spawn_member` (`cast_contractor_lineup.gd:18`), pins Rivet 12 m away and the subject at MARK with a forced facing and 32 idle ticks (`cast_lineup.gd` `_portrait`), then `CastPlate.add_portrait` takes the body-only bounds of a 640x704 crop with the shadow hidden (`cast_plate.gd:33,43,64-72`); there is no scaling in the plate, and the cop's 87 is the same in the 07:40 baseline log (`build/cast/gl/log_70_64.txt`), so it is not new. The cause of the 87 / 111 against the film's 112 / 78 is NOT established: the plate code cannot produce it by itself, and the likeliest suspects (unproven, they need a launch) are that the lineup's idle, MARK-spaced layout draws the cop and the contractor through a different representation than the fight scene does (`ArenaWaveCards` card vs full rig, `arena_wave_cards.gd:62-80` scales the card by `StreetWalkerCards.HEIGHT_BY_ART` and `fill_of`, `arena_rigs.gd:14` FOCUS_REACH_M) or a different cell (idle stand vs aim). Action: judge size from the films (live), re-take the lineup in the fight scene's setup before it is quoted again.

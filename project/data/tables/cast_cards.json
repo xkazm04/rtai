@@ -17,9 +17,25 @@
         "hit": "appliance_warden_hit.png"
       }
     },
+    "contractor": {
+      "enabled": true,
+      "id": "contractor",
+      "p55": {
+        "armed_walk": "contractor_armed_walk.png",
+        "attack": "contractor_attack.png",
+        "fall": "contractor_cast_fall.png",
+        "hit": "contractor_cast_hit.png"
+      },
+      "p70": {
+        "armed_walk": "contractor_armed_walk.png",
+        "attack": "contractor_attack.png",
+        "fall": "contractor_cast_fall.png",
+        "hit": "contractor_cast_hit.png"
+      }
+    },
     "robot_gunner": {
       "body_scale": 1,
-      "enabled": false,
+      "enabled": true,
       "id": "robot_gunner",
       "p55": {
         "armed_walk": "robot_gunner_armed_walk.png",

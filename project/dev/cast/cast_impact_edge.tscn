@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://dev/cast/cast_impact_edge.gd" id="1"]
+
+[node name="cast_impact_edge" type="Node"]
+script = ExtResource("1")

@@ -61,7 +61,8 @@ func _check_walk_contact(card: FoeShieldCardView, h: Fighter, arena: CombatArena
 	h.pos.x += 0.04
 	card.update_fighter(h, arena)
 	assert_eq(card.position, planted)
-	h.pos += Vector2.RIGHT * (StreetQuestCards.STRIDE_M * 0.5 + 0.01)
+	h.pos += Vector2.RIGHT * CastDoorAnchors.WALK_STEP_M
 	card.update_fighter(h, arena)
-	assert_eq(card.frame_coords, Vector2i(2, 2))
-	assert_eq(card.position, h.pos * SimConst.PX_PER_M)
+	assert_eq(card.frame_coords, Vector2i(2, 1))
+	var reach: float = CastDoorAnchors.WALK_STEP_M * 2.0 * SimConst.PX_PER_M
+	assert_lt(card.position.distance_to(h.pos * SimConst.PX_PER_M), reach)
