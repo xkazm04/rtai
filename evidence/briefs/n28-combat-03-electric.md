@@ -89,3 +89,19 @@ art, `project/boot/prologue/**`, other worktrees, root `JOURNAL.md` / `REPORT.md
 ## Report and END (short)
 Commits; the stroke look in numbers (widths, colours, alphas, forks); still/film paths + ffprobe lines; how the deflect
 reads now; unit + quick gate lines; mutate score; what was left.
+
+## Session note (director, 19:24): part A is DONE, start at part B
+The before stills exist (call 03a): `C:/Users/kazda/kiro/gtai-masters/n28/combat/stills/electro_{stun,chain,deflect}_before_64.png`
+(+ `electro_deflect_before_full.png`). Chain = take `electro_gun_wrecks` seed 20261109 t106 (thug -> metal prop), the
+`arc` cell zigzag; stun = `electric_stills` patrol_cop struck t114, still t144; deflect = pressure take guard seed 19 t62.
+The after renders at the SAME ticks (helpers are git-ignored under `build/dev/`, read them first):
+- stun: `node build/dev/n28-electric-takes.mjs 64 electro_gun patrol_cop` (take `patrol_cop-stun-plus30.png`)
+- chain: `node tools/film/owner_takes.mjs build/n28electric/takes 64 electro_gun_wrecks`, then crop `0106.jpg` with ffmpeg `crop=700:400:620:250`
+- deflect: `node build/dev/n28-deflect.mjs guard 19 62`, crop `560:340:460:350`
+Rendered runs: `GTAI_GODOT_EST_MB=1000`.
+
+## Wall clock (binding)
+- Builder is an in-session subagent: it dies with the director's session at 20:52. **HARD STOP 20:38: report and END.**
+- **Commit B+C by 20:05** (the quick gate + hook take ~12 min: start them by 19:52). Then D (after stills + pairs, look at
+  them), then mutate (12 min budget, `--max=15`), then E films if time is left; whatever is not reached, list it.
+- Commit evidence (stills are outside the repo; `evidence/n28/electric/*.md` notes inside) as its own commit before 20:35.

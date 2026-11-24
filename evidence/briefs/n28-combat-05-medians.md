@@ -44,3 +44,16 @@ Forbidden: every product file, other worktrees, root `JOURNAL.md` / `REPORT.md`.
 
 ## Report and END (short)
 The medians table (three arms beside n27), floors, the killer table headline (stomp share novice/average), what was left.
+
+## Director update (19:30): arms by data toggle, not temp worktrees
+Two temp worktrees at main died tonight (import segfault, ~12 min lost). The sim difference between main `d0ab9d03a` and
+this HEAD is data only for the gauntlet: `rivet_motion.json` (dash 40 -> 24, keys) and `ghost_forms.json`
+(`master_at_by_form`, `per_boss_cut` 3 -> 5); the bond code reads an absent `master_at_by_form` as the general bar
+(pinned by test_ghost_bond), the deflect commit is view only. So, on this HEAD, uncommitted, one arm at a time:
+- `main`: `git show d0ab9d03a:<path> > <path>` for BOTH files; `keys`: only `rivet_motion.json` stays HEAD's (24) and
+  `ghost_forms.json` is main's; `combat`: nothing toggled. Restore after each arm with `git checkout -- <path>` and prove
+  `git diff --quiet` on both. NEVER commit them (rivet_motion is keys'; ghost_forms is ours but the shipped values are HEAD's).
+- `tree.txt` per arm: HEAD sha + which files were toggled to which sha.
+- Order and scope (time): `combat` salt 0 + salt 1 (the tree he plays + its null floor), then `main` salt 0 + salt 1,
+  then `keys` salt 0 only. Compare and killers on what landed. Cross-check `main` against n27's after-melee column; a
+  difference outside the floor is reported, not explained away.
