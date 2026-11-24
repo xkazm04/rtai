@@ -69,3 +69,12 @@ NEXT: (1) when `gtai-n27/logs/melee/builder.lock` is gone: read `evidence/briefs
   `node tools/gate/run.mjs --rev=HEAD` started by 08:15, then REPORT (mastery table n26 vs n27, both films, calls:
   mastery pace (early Tonnage at waves 3-4; master_at 22 estimate), Master card art, war machine only stunned).
 - 05:31 MILESTONE session 3 start. m3-ring-tests still running (pid 61536 node, lock held, hard stop 05:56). No `NEED melee` in other journals.
+- 05:42 BUILDER m3-ring-tests 48 min $1.00 accepted. Commits `9249226c6`, `01273d2a8`, `1d12de3f6` (pixel proof: 3 frames
+  at 64 px/m md5-identical before/after the plan split), `084772279`, `eb49f67f6`. Ring mutate 2/18 -> 16/19 (then a test
+  for the two line-27 survivors; the third survivor, antialias in `_replay`, is pixel-only). ghost_bond.gd mutate 18/20
+  (one equivalent, one gap fixed by a new test; line 59 re-run 4/4). No pixel test: GUT is headless/dummy renderer.
+- 05:42 FRICTION `test_ghost_form_hud.test_deploy_hint_follows_the_rebound_key` fails on HEAD (120 vs 249.2): keys'
+  test, fixed on n27-keys by `3f2bb5c2e`; clears at merge. Keys also has `403a31a8f` (larger chip numbers): merge n27-keys
+  again before any re-film with the HUD strip if time allows.
+- 05:43 BUILDER RUNNING m4-wreck-arcs since 05:43 (Start-Process pid 46808, brief `evidence/briefs/n27-melee-04-wreck-arcs.md`,
+  C by 06:10, B by 06:30, hard stop 06:55).
