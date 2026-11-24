@@ -1,10 +1,10 @@
 # REPORT lane yard, run n28 (2026-11-24): the fourth pass `arched_line` (tall arched belt, warmer floor, burning hall mouth)
 
-DRAFT (session 5, 21:50): the gate line is filled in after the final gate.
-
 Branch `n28-yard`, worktree `C:\Users\kazda\kiro\gtai-wt\n25-yard`, cut from `main` `d0ab9d03a`. Director: Claude Opus. Builder: Claude Sonnet 5.5. One call ran through `gtai-n28/tools/builder.mjs` until the builder account hit its weekly limit at 17:44. Every call after that was an in-session Sonnet subagent working from the same brief files (see the Builder ledger). IMAGES 5/25.
 
-**Gate:** TODO (`node tools/gate/run.mjs --rev=HEAD`).
+**Gate:** GATE_LINE
+
+Reels: `node tools/gate/run.mjs --rev=5519b3e11 --reels` -> `PASS reels: exit 0` (top, tilt70, combo; `build/gate/5519b3e118ce/reels.log`). That gate as a whole failed on one unit test that the default switch broke (`test_prologue_yard_lights.gd:75` checked the default yard against `line_fire`'s row), fixed in `cabb1ece8` (a test-only change, so the reels were not re-run), plus two tool timing tests under machine load (`tools/merge/step_guard.break.test.mjs`, 17 s and 43 s against millisecond budgets).
 
 ## What works
 
@@ -27,6 +27,8 @@ Branch `n28-yard`, worktree `C:\Users\kazda\kiro\gtai-wt\n25-yard`, cut from `ma
 - Not filmed: `floor_pass4_64ppm.png` and a fresh 64 px/m belt still. The belt still in masters is from the belt-place call.
 - No mutate score for the code changes (`ground_impression` in `PrologueYardDressing`, the floor glow feather). They were skipped for time, so there is no "planted faults caught" claim.
 - Brief item 5 was not reached: the gate lamp pool and the command-view render-hash test.
+- **Not filmed: the whole prologue from the menu's Start into quest 1's first line on the new default.** The brief for it is ready (`evidence/briefs/n28-06-prologue-film.md`), but the gate fix and re-gate took the last hour (one Godot per lane). The five-seed pilot on arched_line finishes in raised_line's ticks, so the handover should not have moved, but this is unfilmed and unmeasured tonight.
+- My default switch broke one unit test, and I only caught it at the gate (see the Gate line). The switch brief listed the tests that pin the default's id, not the ones that compare the default yard against a named row.
 
 ## What blocked or slowed you
 - The builder account's weekly limit hit at 17:44 and ended `builder.mjs` for the night. About 15 minutes were lost moving to in-session subagents.
@@ -40,7 +42,7 @@ Branch `n28-yard`, worktree `C:\Users\kazda\kiro\gtai-wt\n25-yard`, cut from `ma
 
 ## Merge notes
 - New row field `ground_impression` and new light kind `yard_hall_mouth`, both in `prologue_yard_dressings` (schema + table). New shader `project/boot/prologue/prologue_floor_glow.gdshader`. All are yard-owned paths.
-- The default switch (`5519b3e11`) touches `prologue_stage.json` (one value), `scenario_prologue_pilot.gd` (arched_line pinned on raised_line's ticks, raised_line added to the loop: the pilot scenario now runs 25 seed runs, about 400 s) and the default-id asserts in `test_prologue_raised_line.gd` and `test_prologue_yard_dressing.gd`. Another lane that pins the default yard id would conflict there.
+- The default switch (`5519b3e11`) touches `prologue_stage.json` (one value), `scenario_prologue_pilot.gd` (arched_line pinned on raised_line's ticks, raised_line added to the loop: the pilot scenario now runs 25 seed runs, about 400 s) and the default-id asserts in `test_prologue_raised_line.gd` and `test_prologue_yard_dressing.gd`. Another lane that pins the default yard id would conflict there. `cabb1ece8` makes `test_prologue_yard_lights.gd` read the stage's default dressing (arched_line: 1 `yard_fire` pool and 2 `yard_hall_mouth` pools).
 - Two `docs/decisions.md` lines: `DECISION n28 yard` (the fourth pass) and `DECISION n28 yard default`.
 
 ## Next steps
@@ -50,9 +52,10 @@ Branch `n28-yard`, worktree `C:\Users\kazda\kiro\gtai-wt\n25-yard`, cut from `ma
 4. Fix `prologue_yard_film.mjs --movie` for the 1080p capture profile, so films come from a committed tool.
 5. Mutate `prologue_yard_dressing.gd` (impression) and `prologue_floor_glow.gd` (skipped tonight for time).
 6. The gate lamp pool and the command-view render-hash test (brief item 5, not reached).
+7. Film the whole prologue on arched_line (`evidence/briefs/n28-06-prologue-film.md`, ready to run), plus `floor_pass4_64ppm.png` and a fresh `belt_pass4_64ppm.png`.
 
 ## Builder ledger
-15 calls. One ran through `builder.mjs` (dark-floor: 43 min, $2.90, abandoned-partial when the weekly limit hit). The other 14 were in-session Sonnet subagents, so no dollar figure is reported for them (token counts are in JOURNAL).
+17 calls. One ran through `builder.mjs` (dark-floor: 43 min, $2.90, abandoned-partial when the weekly limit hit). The other 16 were in-session Sonnet subagents, so no dollar figure is reported for them (token counts are in JOURNAL).
 
 | Call | Min | Result |
 |---|---|---|
@@ -69,6 +72,8 @@ Branch `n28-yard`, worktree `C:\Users\kazda\kiro\gtai-wt\n25-yard`, cut from `ma
 | hall-partA | 14 | accepted |
 | hall-partB | 29 | accepted |
 | films | 33 | accepted (clip 2 done; floor and fresh belt 64 px/m stills not done) |
-| default-switch | 9 | accepted |
+| default-switch | 9 | accepted (missed one test, caught by the gate) |
+| lights-test | 31 | bounced: the edit was verified, but the commit stalled on mem-budget after the reels |
+| lights-commit | 1 | accepted `cabb1ece8` |
 
-What I would brief differently: I would measure what greys the floor (the world print over the ground) before any floor art. Five floor calls chased tint, art, lift and chroma before the 19:52 finding pointed at the print. I would also put "re-import every changed png before you render" in every art brief from the first call.
+What I would brief differently: I would measure what greys the floor (the world print over the ground) before any floor art. Five floor calls chased tint, art, lift and chroma before the 19:52 finding pointed at the print. I would also put "re-import every changed png before you render" in every art brief from the first call. And a default-switch brief should say "run every test that names the yard's tables" (`node tools/tests/test_map.mjs project/data/tables/prologue_stage.json`), not grep for the old id.
