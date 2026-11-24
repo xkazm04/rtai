@@ -28,3 +28,10 @@ Survivors (all dev measurement code; `test_pressure_takes` checks launches, hit 
 | 72 | `10 * TICK_RATE` `* -> /` | Yes, cheaply: `hp_at_10s` is then read at the wrong tick (it is only reported, never asserted). An assertion on `summary()["hp_at_10s"]` in `test_pressure_takes` would kill it. |
 
 Not done in this call: the optional re-run after adding tests (none were added), and the other 49 untried `pressure_pair.gd` mutants.
+
+## 3b. `dev/gauntlet/pressure_pair.gd` after the n27 pressure call 3 rewrite (damage split, `--max=12`, `--tests=test_pressure_takes`)
+
+Beside call 2's 6 / 12 (50 %) for the old file: **7 / 12 killed (58.3 %)** at HEAD a382890e5 (sample of 12 from 82 mutants; the file grew, so the sampled lines are different ones; 361 s).
+Survivors of that run: line 43 `at + Vector2(-RADIUS_M, 0)` `+ -> -` (Rivet starts on the mirror side; equivalent, the circle is symmetric), line 73 `first_launch > 0 -> >=` (a tick is never 0; equivalent), line 83 `tick == 10 * TICK_RATE` `== -> !=` (hp_at_10s was still plausible at the end of the take), line 107 `dealt <= 0.0 -> 1.0` (only differs for a blast under 1 HP; no take produces one), line 110 `direct += 1 -> -=` (the circle test only checked the damaging share).
+Call 2's two cheap kills are in: the radius pull (old line 46) is pinned by `test_circle_pulls_back_to_the_radius_from_either_side` (starts 20, 9 and 4 m off the circle); `hp_at_10s` (old line 72) is pinned by the dash test, which reads his HP at tick 600 itself.
+After adding the pin for line 83 and `direct >= 1` in the circle test (commit 72c9e1754), `--lines=83,110`: **4 / 5 killed (80 %)**; line 83 `10 -> 11` survived (his HP at tick 660 equals the one at 600 in seed 1; a test pinning the tick itself would kill it). The 12-mutant sample was not re-run in full; lines 83 and 110 account for 2 of its 5 survivors, so the full sample would now be at least 9 / 12 if those two mutants are the same ones (not measured).
