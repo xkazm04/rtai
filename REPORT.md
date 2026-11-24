@@ -62,7 +62,7 @@ calls. Films and stills: `C:/Users/kazda/kiro/gtai-masters/n27/melee/` with `fra
     Top: Master Tonnage, +10 % Health repair, Ohm. Bottom: the two-card hand after the free mastery.
 
 ## Gate
-GATE_LINE
+`node tools/gate/run.mjs --rev=HEAD` on `6ededd080` (later commits are REPORT/JOURNAL only): **PASS**: lint 19/19 over 2215 files; unit 4141 passed, 0 failed, 2 skipped; scenarios 68 passed; parity 1200 steps bit for bit, planted mutation caught at step 629; selftest ok; export-audit 984 loaded, 0 failed. `build/gate/6ededd080eb2/gate.json` (git-ignored). `--reels` after the 09:30 freeze: NEXT.
 
 ## What does not
 - Mastery pace misses the owner's target: the early Tonnage masteries (waves 3 and 4) are untouched by the higher bar.
