@@ -70,7 +70,7 @@ func _configure(pose: CastCardPose, path: String) -> void:
 	var height: float = StreetWalkerCards.HEIGHT_BY_ART.get(art, StreetWalkerCards.HEIGHT_M)
 	var k: float = StreetCrowdCards.body_scale(pose.actor_id) * pose.sheets.body_scale
 	if _contact != null or CastCards.padded(path):
-		k *= StreetCopWalk.CELL_RATIO
+		k *= CastCardKinds.cell_ratio(path, StreetCopWalk.CELL_RATIO)
 	_base_scale = (
 		Vector2.ONE
 		* (height * SimConst.PX_PER_M * k / (StreetWalkerFall.STILL_PX if fall else cell.y))

@@ -176,7 +176,8 @@
         "2026-11-24: dev lines for the front place for n27 yard (dev_loc 35443 -> 35445)",
         "2026-11-24: dev capture lines for n27 yard (dev_loc 35445 -> 35450)",
         "2026-11-24: dev pilot-rows and capture lines for n27 yard (dev_loc 35450 -> 35521)",
-        "2026-11-24: gunner measurement scenes for n28 cast (dev_loc 37298 -> 37638)"
+        "2026-11-24: gunner measurement scenes for n28 cast (dev_loc 37298 -> 37638)",
+        "2026-11-24: door carrier step in cast_feet for n28 cast (dev_loc 37638 -> 37639)"
       ],
       "files": {
         "project/dev/arena": 791,
@@ -185,7 +186,7 @@
         "project/dev/bench": 2269,
         "project/dev/bosses": 55,
         "project/dev/bots": 692,
-        "project/dev/cast": 2281,
+        "project/dev/cast": 2282,
         "project/dev/controls": 978,
         "project/dev/enemy_ai": 2285,
         "project/dev/frames": 1087,
@@ -218,7 +219,7 @@
         "project/dev/view": 639,
         "project/dev/weapon_art": 506
       },
-      "total": 37638
+      "total": 37639
     },
     "direct_cmdline_reads": {
       "accepted": [

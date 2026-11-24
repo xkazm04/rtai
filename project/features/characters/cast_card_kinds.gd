@@ -18,6 +18,7 @@ static func anchored(path: String) -> bool:
 			CastSwatAnchors.RUN_EIGHT,
 			CastLancerAnchors.EIGHT,
 			CastGunnerAnchors.EIGHT,
+			CastDoorAnchors.SHEET,
 		]
 	)
 
@@ -58,6 +59,8 @@ static func foe_marks(file: String, low: bool) -> Array[Vector4]:
 			return CastLancerAnchors.WALK55 if low else CastLancerAnchors.WALK70
 		CastGunnerAnchors.EIGHT:
 			return CastGunnerAnchors.WALK55 if low else CastGunnerAnchors.WALK70
+		CastDoorAnchors.SHEET:
+			return CastDoorAnchors.WALK55 if low else CastDoorAnchors.WALK70
 	return []
 
 
@@ -74,7 +77,21 @@ static func foe_step(file: String) -> float:
 			return CastLancerAnchors.WALK_STEP_M
 		CastGunnerAnchors.EIGHT:
 			return CastGunnerAnchors.WALK_STEP_M
+		CastDoorAnchors.SHEET:
+			return CastDoorAnchors.WALK_STEP_M
 	return 0.0
+
+
+## Drawings per facing: the door carrier's shipped four, else eight for an eight or anchored sheet.
+static func rows(path: String, patrol_eight: bool) -> int:
+	if path.get_file() == CastDoorAnchors.SHEET:
+		return 4
+	return 8 if patrol_eight or anchored(path) else 4
+
+
+## The door carrier keeps its shipped 192 px sheet; other anchored sheets are 256 px.
+static func cell_ratio(path: String, ratio: float) -> float:
+	return 1.0 if path.get_file() == CastDoorAnchors.SHEET else ratio
 
 
 ## A walk cell's fill: the padded and eight-drawing cells carry the 256/192 cell ratio.
