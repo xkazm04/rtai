@@ -1,0 +1,41 @@
+{
+  "schema": "gtai.gauntlet-ablation/1",
+  "name": "repair",
+  "head": "4a3ff4b0430bc285e5eb714ac2959098dd444d15",
+  "edits": [
+    {
+      "file": "project/data/tables/gauntlet.json",
+      "pointer": "/rivet/repair_per_s",
+      "value": 12.5,
+      "before": 10
+    },
+    {
+      "file": "project/data/tables/gauntlet.json",
+      "pointer": "/rivet/repair_delay_s",
+      "value": 2.4,
+      "before": 3
+    }
+  ],
+  "pick_filter": null,
+  "batch_args": [
+    "--profile=all",
+    "--pick=greedy",
+    "--controls=wheel",
+    "--seeds=10",
+    "--seed0=1",
+    "--salt=0",
+    "--waves=40",
+    "--jobs=1",
+    "--out=C:\\Users\\kazda\\kiro\\gtai-wt\\n23-loop\\evidence\\n27-pressure\\medians\\whatif\\repair"
+  ],
+  "batch_exit": 0,
+  "summary": {
+    "attempted": 30,
+    "accepted": 30,
+    "deaths": 30,
+    "median_wave_reached": 5,
+    "median_death_wave": 5,
+    "capped_alive": 0,
+    "wave_timeouts": 0
+  }
+}

@@ -164,3 +164,14 @@ NEXT (session 3, from ~05:42):
 - 06:05 BUILDER RUNNING contrast since 06:05 (call 4, node pid 62776, brief `evidence/briefs/n27-pressure-04-contrast.md`,
   hard stop 07:15): trace the late dash damage; `blade6_spaced` cadence contrast (rounds >= 34 ticks apart, dev take
   only), 10 seeds, film blade6 beside it, still. Godot only after `medians/whatif/DONE`; writes `godot-free-4.txt`.
+- 06:16 what-if repair arm done (06:02-06:15, exit 0, 30/30; ablate re-imported once: the copied class cache named the builder's new dev file). Budget arm running. Call 4 WIP: dev/tests/tools only, new `pressure_dash_trace.gd`.
+- 06:30 MILESTONE item 5 what-if arms (scratch 4a3ff4b04 via `tools/gauntlet/ablate.mjs`, salt 0, 10 seeds, the branch
+  unchanged; repair 06:02-06:15, budget -06:28, exit 0, 30/30 each). Median death wave novice / average / expert:
+  after-melee 5 / 8 / 8.5; repair (12.5/s after 2.4 s) 5 / 5 / 9; budget per_wave 16 -> 13: 5 / 8.5 / 9. Floors
+  0.3 / 3.6 / 1.6: neither proposal separates. Why repair cannot: `gauntlet.json` `repair_in_wave: false`, so Rivet
+  repairs only between waves, and the walker waits there until HP >= 95 % (`gauntlet_walker.gd:22`); every wave
+  starts near full whatever the rate. The compare's "repair share 0 %" is the same fact (per-wave telemetry,
+  `bot_street_stats.gd:80`, never sees between-wave repair), not a broken repair. Killers: novice dies to the wave 5
+  war machine stomp in 8/10 (repair) and 9/10 (budget); a smaller budget moves average/expert deaths from the stomp to
+  the wave 9 shield_robot (budget: 5 of 10 average, 6 of 10 expert). Levers for the owner, not applied: stomp
+  (damage 48, splash 48 in 3.5 m, cooldown 1.2 s, `alt_telegraph_s` 0.8), `repair_in_wave`, wave 9 shield robot.

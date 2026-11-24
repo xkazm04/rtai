@@ -1,0 +1,4 @@
+node tools/dev/run.mjs gauntlet --seed=5 --bot=expert --pick=greedy --controls=wheel --waves=40 --result=C:\Users\kazda\kiro\gtai-wt\n23-loop\evidence\n27-pressure\medians\whatif\repair\runs\expert-5.json
+run: godot --headless --path project --fixed-fps 60 --quit-after 216000 res://dev/gauntlet/gauntlet.tscn -- --seed=5 --bot=expert --pick=greedy --controls=wheel --waves=40 --result=C:\Users\kazda\kiro\gtai-wt\n23-loop\evidence\n27-pressure\medians\whatif\repair\runs\expert-5.json
+run: log C:\Users\kazda\kiro\gtai-wt\n23-loop\evidence\n27-pressure\medians\whatif\repair\logs\expert-5\gauntlet-2026-11-24T05-13-10-055Z.log
+ok exit 0; SCRIPT ERROR 0; unknown arg 0; result fresh; flags checked: 5 against KNOWN_FLAGS (res://dev/gauntlet/gauntlet.gd)
