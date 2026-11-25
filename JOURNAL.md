@@ -154,3 +154,12 @@ NEXT (session 6, from ~17:09):
 3. REPORT final by 18:55: drop the DRAFT line, add n30-21 to the builder ledger (5 min, accepted), frames.json check (15 entries, all exist),
    `node tools/evidence/cites.mjs REPORT.md`, commit JOURNAL/REPORT with a pathspec.
 4. Temp (this lane's, for the Director's cleanup): gtai-gate-a09f9be527a0, gtai-gate-74fc5e382e63, gtai-mutate-dc83624c, gtai-film-* snapshots.
+
+## Session 6 (15:42 - 17:12)
+- 15:42 git log: 4c5da4f7b top, as session 5 left it. No `NEED keys` in the combat/cast/yard journals. Lane lock free.
+- 15:43 CORRECTION session 5's entry times (15:43-15:52) and the "session 4 (14:46 - 16:16)" / "session 5 (15:39 - 17:09)" headers are
+  planned windows, not clock: session 5's commits are 15:41:05-15:41:50 (git log). The work they record is real; the times are not.
+- 15:43 BUILDER n30-22 molotov-grid-head launched (sonnet, bg): re-render `molotov/grid_molotov_64.png`/`_32.png` at HEAD as new
+  `grid_molotov_head_*` (the old grid predates the run-step fix 0e399a732, and the brief judges "the molotov grid"), per-cell
+  diff old vs head (bar: only row 1 cols 5, 6 of the new column), foot_slide re-measure (bars walk hold <= 2, run step <= 7 cm),
+  frames.json entry swapped. Commit by 16:15, END 16:25. Sole lane Godot user.
