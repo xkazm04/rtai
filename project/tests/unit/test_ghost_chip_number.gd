@@ -73,3 +73,25 @@ func test_first_slot_plate_is_pushed_right_to_the_minimum_x_only() -> void:
 		var rect: Rect2 = GhostChipNumber.plate(font, at, "1", l.number_size)
 		assert_almost_eq(rect.position.x, l.number_min_x(), 0.5, "left edge on the minimum")
 		assert_almost_eq(at.y, c.y + 1.15 * l.chip_r, 0.01, "y is not clamped")
+
+
+func test_adjacent_number_plates_keep_a_gap_and_the_first_clears_the_minimum() -> void:
+	var font: Font = ThemeDB.fallback_font
+	for l: GhostFormLayout in _layouts():
+		for slot: int in 3:
+			var a: String = str(slot + 1)
+			var b: String = str(slot + 2)
+			var ra: Rect2 = GhostChipNumber.plate(
+				font, GhostChipNumber.anchor(l, 1080.0, slot, a), a, l.number_size
+			)
+			var rb: Rect2 = GhostChipNumber.plate(
+				font, GhostChipNumber.anchor(l, 1080.0, slot + 1, b), b, l.number_size
+			)
+			var space: float = rb.position.x - ra.end.x
+			assert_gte(
+				space, 8.0, "gap %d: plates %s and %s are %.1f px apart" % [slot, a, b, space]
+			)
+		var first: Rect2 = GhostChipNumber.plate(
+			font, GhostChipNumber.anchor(l, 1080.0, 0, "1"), "1", l.number_size
+		)
+		assert_gte(first.position.x, l.number_min_x() - 0.01, "plate 1 clears the minimum x")

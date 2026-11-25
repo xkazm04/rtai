@@ -34,7 +34,7 @@ static func compact() -> GhostFormLayout:
 	var l: GhostFormLayout = GhostFormLayout.new()
 	l.chip_r = 19.0
 	l.number_size = 24
-	l.gap = 42.0
+	l.gap = 50.0
 	l.margin = 12.0
 	l.card_h = 100.0
 	l.chip_y = 40.0
