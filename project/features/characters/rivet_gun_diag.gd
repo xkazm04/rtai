@@ -68,7 +68,8 @@ const HELMET_X: Dictionary[String, PackedFloat32Array] = {
 	"p55/plasma_rifle": [133.0, 98.2, 133.0, 169.2],
 	"p55/gatling": [131.2, 100.5, 136.5, 171.5],
 	"p55/hand_cannon": [113.0, 80.0, 116.5, 149.5],
-	"p55/gloria": [97.5, 66.5, 96.5, 126.5],
+	# n29: 224 px cells (14 px pad each side)
+	"p55/gloria": [112.5, 79.5, 110.0, 141.0],
 	"p55/electro_gun": [96.8, 67.2, 97.0, 126.0],
 	"p55/mini_nuke": [105.0, 103.0, 101.0, 101.5],
 	"p55/rocket_launcher": [83.5, 83.5, 88.5, 119.5],
