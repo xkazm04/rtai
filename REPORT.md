@@ -40,7 +40,12 @@ top / tilt70 / combo OK, 288 / 289 / 287 s), `build/gate/ac27d74e5b1a/gate.json`
   made it worse, 39 -> 71 / 60 / 55, `74b56e6db`: a dark amber-brown sits in vermilion's cell.)
   At 32 px/m (`films/nuke_seam_32.mp4` 1920x1080 60/1 25.0 s, round in flight 7.1-7.9 s, `a7437f819`) before and after look
   the same: the band is a few px and h264 chroma noise swamps the count (7.6 s: 0 -> 8 px; `stills/nuke_seam_32_pair.png`).
-  The difference is a 64 px/m one.
+  The seam step is a 64 px/m difference.
+- Before | after at 32 px/m against main's art, same take (`6a15866cf`, `evidence/n30/rounds/before_film.md`):
+  `films/rounds_pair_32.mp4` 1920x1080 60/1 25.0 s (left: HEAD with main's four round/blast PNGs, `films/rounds_before_32.mp4`;
+  right: `films/blast_floor_after_32.mp4`). The nuke's nose band in flight reads vermilion-striped -> amber with dark stripes
+  at 32 px/m (7.6 s), and the blast floor loses its red edge line (8.3 s, vermilion px in frame 2151 -> 491).
+  Still `stills/rounds_pair_32_look.png`.
 
 ### 4. Explosion light rim amber through a new palette token: token and data in, NOT on screen (`d4b6aabcc`, `199faedc7`, `aa824a4da`)
 - `palette.json` token `amber` `#EDAB42` (role accent, no accents row: r - max(g,b) 0.26 < verm_gate 0.31, the accent audit
@@ -158,6 +163,7 @@ top / tilt70 / combo OK, 288 / 289 / 287 s), `build/gate/ac27d74e5b1a/gate.json`
 - Every evidence brief names the tick window in which the effect is live (the lesson of c04).
 
 ## Builder ledger
+- Session 6: c28 rounds-before-film 5 accepted (before film from a temp worktree with main's 4 PNGs; I stitched the pair).
 - Session 6: c27 cop-scale-patch 33 accepted (evidence only: cast's NEED combat merge note as a patch + test, proven on a
   throwaway merge; it fixed its own first test draft, a hat-less variant, before committing the proof).
 - Session 5: c24 specks-film 3 accepted (evidence only); c25 decisions 1 accepted; c26 seam-film 4 accepted (32 px/m shows no
