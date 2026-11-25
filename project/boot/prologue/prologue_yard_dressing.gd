@@ -68,6 +68,8 @@ var decals_over_impression: bool = false
 var decals_over: Array[Piece] = []
 ## Fire light over the void north of the hall roof (PrologueRoofGlow.read), empty = none.
 var roof_glow: Dictionary = {}
+## Drop shadow under Rivet on an overhead span (PrologueSpanShadow.read), empty = none.
+var span_shadow: Dictionary = {}
 
 
 static func resolve(
@@ -89,6 +91,8 @@ static func resolve(
 		result.lights = PrologueYardLights.new(table, table.object(row, "lights"))
 	if row.has("roof_glow"):
 		result.roof_glow = PrologueRoofGlow.read(table, table.object(row, "roof_glow"))
+	if row.has("span_shadow"):
+		result.span_shadow = PrologueSpanShadow.read(table, table.object(row, "span_shadow"))
 	result.paint_id = row.get("paint_from", wanted)
 	if row.has("layout"):
 		result.layout = table.object(row, "layout")

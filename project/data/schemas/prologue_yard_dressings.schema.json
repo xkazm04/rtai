@@ -519,6 +519,35 @@
             "tint"
           ],
           "type": "object"
+        },
+        "span_shadow": {
+          "additionalProperties": false,
+          "properties": {
+            "alpha": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "fade_ticks": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "size_m": {
+              "items": {
+                "minimum": 0.01,
+                "type": "number"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            }
+          },
+          "required": [
+            "alpha",
+            "fade_ticks",
+            "size_m"
+          ],
+          "type": "object"
         }
       },
       "required": [],

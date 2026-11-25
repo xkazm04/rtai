@@ -1258,6 +1258,14 @@
           0.78
         ],
         "tint": "201a165c"
+      },
+      "span_shadow": {
+        "alpha": 0.45,
+        "fade_ticks": 6,
+        "size_m": [
+          1.1,
+          0.45
+        ]
       }
     },
     "line_fire": {
@@ -3429,6 +3437,14 @@
           0.78
         ],
         "tint": "201a165c"
+      },
+      "span_shadow": {
+        "alpha": 0.45,
+        "fade_ticks": 6,
+        "size_m": [
+          1.1,
+          0.45
+        ]
       }
     },
     "torn_line": {

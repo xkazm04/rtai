@@ -48,6 +48,8 @@ static func attach(
 	@warning_ignore("return_value_discarded")
 	node.draw.connect(_draw_part.bind(node, plan, paint, part))
 	layer.add_child(node)
+	if part != Part.GROUND:
+		PrologueSpanShadow.attach(node, plan, paint)
 
 
 ## Under the pieces: the impression, the ground layers flagged `over_impression`, then the

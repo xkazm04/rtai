@@ -133,6 +133,7 @@ func _open_view(plan: PrologueYard) -> void:
 	view.px_per_m = 32.0
 	view.bind(stage, CollectCallWorld.new(stage), null)
 	add_child(view)
+	PrologueSpanShadow.track(floor_view, stage)
 	if plan.dressing.lights != null:
 		plan.dressing.lights.install(view.print_stage.lights)
 		PrologueFloorGlow.attach(view.print_stage, plan.dressing.lights, plan.yard)
