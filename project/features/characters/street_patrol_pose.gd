@@ -4,6 +4,12 @@ extends RefCounted
 ## planted boot between pose centres. The airborne run passes translate as a whole.
 const MAX_LEAN: float = 0.22
 const MAX_STRETCH: float = 0.12
+## n31-09: every anchored walk lands half a stance ahead, in every direction, after the settle
+## easing, so the mid-point between the soles is the sim ground point where the contact discs draw.
+## false = the old placement (centre-stance kinds only, walking up clamped to a quarter, applied
+## before the easing): the disc runs 0..21 px ahead of the planted boot each stance.
+const LAND_MID_STANCE: bool = true
+const LANDING_EASE: float = 0.06
 
 ## On the sergeant sheet the drawn touchdown is near the pelvis. Centre the ground
 ## contact on the stance interval so his moving hip shadow crosses the planted boot.
@@ -12,6 +18,7 @@ var previous_body: Vector2
 var stance_shift: Vector2
 var new_stance: bool
 var landing: Vector2
+var eased_landing: Vector2
 var marks: Array[Vector4]
 var flight: bool
 var count: int
@@ -50,6 +57,9 @@ func configure(path: String, drawings: int, running: bool) -> float:
 func touchdown(travel: Vector2, distance: float) -> void:
 	new_stance = true
 	stance_shift = Vector2.ZERO
+	if LAND_MID_STANCE:
+		landing = travel * distance * 0.5
+		return
 	if not centre_stance:
 		return
 	landing = travel * distance * 0.5
@@ -63,7 +73,7 @@ func pose(
 	face = facing.x
 	row = posmod(index, count)
 	texel = Vector2(-scale_px.x if facing.y else scale_px.x, scale_px.y)
-	at += landing
+	at += Vector2.ZERO if LAND_MID_STANCE else landing
 	var phase: int = posmod(row, half)
 	var centre: Vector2 = _knot(phase)
 	var offset: float = fraction - 0.5
@@ -120,4 +130,9 @@ func settle(placed: Transform2D, ppm: float, continuous: bool) -> Transform2D:
 	var roll: Vector2 = (body - placed * local) / (ink.w - ink.y)
 	placed.y += roll
 	placed.origin -= roll * ink.y
+	# Past the easing: the body ease and stance shift would otherwise take the landing back. Eased
+	# (LANDING_EASE ppm per tick) so a reversal does not jump the figure a whole stance.
+	var reach: float = ppm * LANDING_EASE if continuous else INF
+	eased_landing = eased_landing.move_toward(landing, reach)
+	placed.origin += eased_landing if LAND_MID_STANCE else Vector2.ZERO
 	return placed

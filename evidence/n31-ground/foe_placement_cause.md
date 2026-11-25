@@ -55,3 +55,23 @@ The mid-point between the soles over a stance (planted at `origin`, swing foot f
 stance, smoothly. So place the drawing half a stance forward (the centre-stance landing, unclamped) for
 every anchored walker, which puts the mid-stance point on the sim point where both shadows already draw;
 the shadows stay on the sim point (no jump). `DECISION` with the fix.
+
+## Fix (bar 0, n31-09) and what it moved
+
+`StreetPatrolPose.LAND_MID_STANCE` (true; false = the old placement): every anchored walk (patrol
+walk/run and the centre-stance kinds) gets `landing = travel * stance * 0.5` with no up clamp, added AFTER
+`settle` (inside `pose` the body ease and the stance shift took it back: tried first, S moved only 3 px),
+eased `LANDING_EASE` 0.06 ppm (1.9 px) per tick so a reversal does not jump the figure a whole stance
+(stepping it at touchdowns instead failed the 12 px reversal tests at 15.5-16 px). Shadows unchanged (still
+on the sim point). Probe after (`place_after.jsonl`), drawn planted sole minus ground point at mid-stance,
+stances 2-4 (stance 1 starts with no travel in the probe; in play `plant` seeds it from the rig velocity):
+
+| facing | before | after |
+|---|---|---|
+| S | (-3.6..3.8, -11.0 / -10.6 / -10.2) | (-3.6..3.8, 0.3 / 0.7 / 1.0) |
+| N | (-2, 15.4 / 18.4 / 21.4) | (-2, 4.1 / 7.1 / 10.1): NOT MET, grows 3 px a stance (settle stance shift) |
+| E (x; the drawing's own sole x is +6.0) | -3.3 / -5.1 / -2.5 | 8.0 / 6.2 / 8.8 |
+
+W sole column in the probe uses the unflipped anchor x (probe bug), not read. Unit:
+`test_mid_stance_sole_sits_on_the_ground_point_down_and_sideways` (S, W, E within 3 px of the drawing's own
+first-sole offset). The gauntlet x4 crop main | HEAD was not made in this call (clock).
