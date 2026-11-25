@@ -8,6 +8,8 @@ const SEEDS: int = 5
 const LIMIT: int = 90 * SimClock.TICK_RATE
 const CITY_COVER: float = 0.4419
 const CROWD_LIMIT: float = 0.02
+## n31 foes two moves: a flanking foe now TRAVELS (no fire) and fires only once it holds, so the
+## live seed flank-bearing shooters went 1+ -> 0 (measured); the underfilled seed flanks (444).
 
 
 func run(_tree: SceneTree) -> String:
@@ -26,12 +28,7 @@ func run(_tree: SceneTree) -> String:
 	write_evidence("arena-squad.json", {"live": live, "no_separation": bad, "flanks": flank_ticks})
 	if not complete:
 		return "one or more city squads failed to clear five waves and replay"
-	if (
-		live.crowded >= CROWD_LIMIT
-		or live.cover <= CITY_COVER
-		or live.flankers < 1
-		or flank_ticks.max() <= 0
-	):
+	if live.crowded >= CROWD_LIMIT or live.cover <= CITY_COVER or flank_ticks.max() <= 0:
 		return "city squad positioning: %s" % live
 	if bad.crowded < CROWD_LIMIT:
 		return "crowding judge missed separation disabled: %s" % bad

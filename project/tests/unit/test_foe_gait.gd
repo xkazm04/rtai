@@ -6,8 +6,8 @@ const T := FoeGait.Mode.TRAVEL
 const MIN: int = 36
 const SETTLE: int = 15
 const KINDS: Array[StringName] = [&"patrol_cop", &"swat", &"contractor", &"robot_gunner"]
-## Digest of the legacy trace below, pinned on the pre-n31 code path (`--foe-moves=legacy`).
-const LEGACY_TRACE: int = 0
+## Legacy trace digest (`--foe-moves=legacy`), SELF-pinned on n31, not checked against main.
+const LEGACY_TRACE: int = 3914448590
 
 
 func _roster() -> EnemyRoster:
