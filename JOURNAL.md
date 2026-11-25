@@ -161,3 +161,8 @@
 - 18:45 Read JOURNAL, git log (HEAD e9316f76d). Gate on cec6791f2a91 with --reels finished: `gate: PASS; build/gate/cec6791f2a91/gate.json` (lint 19/19, unit 4335/0/2, scenarios 68, parity, selftest, export-audit 1004/0, reels exit 0). Gate pid 37188 gone; lane lock build/yard-godot.lock (gate-final2) released; no Temp snapshot left for cec6791f2a91. REPORT header quotes the line. No code changes this session (STABILIZE, build green).
 - 18:47 BUILDER RUNNING none.
 - 18:47 NEXT: none for this lane; Director merges `n30-yard` at the REPORT commit. Owner calls in REPORT `## Calls for the owner` (roof cost not proven under 0.5 ms; span shadow reads only modestly: next lever is a multiply blend or a sprite silhouette in prologue_span_shadow.gd).
+
+## Session 7 (stabilize, 18:45)
+- 18:46 STABILIZE check: tracked tree clean; `build/gate/cec6791f2a91/gate.json` says `gate: PASS` (reels exit 0); no lane Godot lock, no builder running; `node tools/evidence/cites.mjs REPORT.md`: 40 paths, 39 ok, 1 pattern; no `NEED yard` in the keys / combat / cast journals. No fixes needed, no code touched.
+- 18:46 BUILDER RUNNING none.
+- 18:46 NEXT: none. Director merges `n30-yard` at this commit; owner calls are in REPORT `## Calls for the owner`.
