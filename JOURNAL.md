@@ -173,3 +173,8 @@ NEXT (session 7, if any): nothing owed. The lane is frozen and gated with reels 
 - 07:04 Measured from the code (no Godot): compact gap 42, chip_r 19, number 24 -> plate 1 clamped +12 px to 9..35.5, plate 2 from 39.0: 3.5 px apart (the 01e still showed 3 px). Desktop gap is 72 (`GhostFormHud._ready` swaps GAP 58 -> 72), about 40 px apart: fine. Margin cannot help (`number_min_x` moves with it). Fix: compact gap 42 -> 50 (never 58). Brief `evidence/briefs/n30-keys-01-hud-compact-gap.md`; REPORT next step 4 points at it; cites ok.
 - 07:05 No builder running; Godot lock free.
 NEXT (any later session): nothing owed. The lane is frozen and gated with reels (cbca1a8c9 PASS); REPORT complete. Next run starts with `evidence/briefs/n30-keys-01-hud-compact-gap.md`.
+
+## Session 8 (07:05 to 08:35)
+- 07:05 READ journal; NEED keys grep: combat rows 12, 15, 16 served; cast, yard none. Lane frozen at e553b6b9e, gate with reels PASS on cbca1a8c9; images 58/60. The 07:15 commit bar holds: no product commit on n29-keys.
+- 07:08 DECISION use the time on the open HUD fault without breaking the freeze: the compact gap fix (option A, 42 -> 50) is built and tested in a throwaway snapshot and shipped as `evidence/n29-keys/hud_compact_gap.patch` + a patched handheld still, for the Director to apply at merge (Merge notes) or the next run. Lane code unchanged.
+- 07:09 BUILDER n29-14-hud-compact-gap-patch launched (sonnet, background, evidence only): commit by 07:50, END 08:10 (`evidence/briefs/n29-14-hud-compact-gap-patch.md`).
