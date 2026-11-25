@@ -1,11 +1,11 @@
 {
   "chainsaw": {
     "blood_m": 0,
-    "burst_m": 0.28,
-    "core_px": 2,
+    "burst_m": 0.42,
+    "core_px": 4,
     "cut_m": 0.5,
     "doc": "n31-melee 04b: the chainsaw's bite outside the kill (view only; drawn at gun height on the victim (ShotLift); as katana, weapon chainsaw: CombatArena.wounded on the GRIND contact). style bite: on the near side of the victim (toward Rivet) a jagged kerf cut_m across, ink edge_px under cream core_px, chattering every 3 ticks, and SawMarks.burst (the kill's release starburst) burst_m wide chattering on the teeth for the first 0.6 of flash_ticks (the grind: grind_min_ticks 16 and the hold), the kerf fading over the rest; it follows the victim and a repeat bite refreshes it. No blood here (blood_m 0; the kill's spray is KillSplitFx). flash_ticks 0 = none; --feel=off hides it too.",
-    "edge_px": 5,
+    "edge_px": 9,
     "flash_ticks": 36,
     "style": "bite",
     "tilt_deg": 0
@@ -27,10 +27,10 @@
   "katana": {
     "blood_m": 0.5,
     "burst_m": 0,
-    "core_px": 2,
-    "cut_m": 0.75,
+    "core_px": 4,
+    "cut_m": 1,
     "doc": "n31-melee 04b: the katana's hit mark (view only; drawn at gun height on the victim (ShotLift); ClawMarks/BladeMarks via CombatArena.wounded and kill_landed, weapon katana; FxView). style cut: ONE clean straight line across the victim along the swing's tangent (square to Rivet -> victim, turned tilt_deg), cut_m long, an ink edge edge_px wide under a cream highlight core_px wide, full length on the hit frame, thinning and fading over flash_ticks and following the victim; on a human (not a machine) BEADS red drops blood_m along it welling up over the first third (red = blood). burst_m unused (0). flash_ticks 0 = none; --feel=off hides it too.",
-    "edge_px": 5,
+    "edge_px": 9,
     "flash_ticks": 21,
     "style": "cut",
     "tilt_deg": 40
@@ -38,10 +38,10 @@
   "plasma_sword": {
     "blood_m": 0,
     "burst_m": 0,
-    "core_px": 3.5,
-    "cut_m": 0.75,
+    "core_px": 5,
+    "cut_m": 1,
     "doc": "n31-melee 04b: the plasma sword's hit mark (view only; drawn at gun height on the victim (ShotLift); as katana, weapon plasma_sword). style sear: the same cut burnt in the plasma rifle scorch's palette (PlasmaScorchView / KillHoleFx: HOT core with an EMBER heat bloom 2.2x edge_px, cooling to EMBER by half life then to the dark CHAR), core_px a little wider than the katana's, edge_px of ink; no blood (the plasma cauterises; never teal, never red). flash_ticks 0 = none; --feel=off hides it too.",
-    "edge_px": 6,
+    "edge_px": 10,
     "flash_ticks": 30,
     "style": "sear",
     "tilt_deg": 40

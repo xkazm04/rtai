@@ -16,6 +16,8 @@ const SCHEMA: String = "gtai.melee_marks/1"
 const WEAPON: StringName = &"claw"
 const RAKES: int = 3
 const KEEP: int = 8
+## The blade mark rides the torso: the gun-height lift times this, so the line crosses his body.
+const TORSO_K: float = 3.0
 
 var arena: CombatArena
 var enabled: bool = true
@@ -111,7 +113,9 @@ func draw(ci: CanvasItem, tick: int) -> void:
 			_rakes(ci, Vector2(m.x, m.y), m.z, float(age) / float(life))
 		else:
 			var f: Fighter = _who[i]
-			(blades[w] as BladeMarks).draw(ci, f.pos + ShotLift.up_m(), m.z, age, not f.machine)
+			(blades[w] as BladeMarks).draw(
+				ci, f.pos + ShotLift.up_m() * TORSO_K, m.z, age, not f.machine
+			)
 
 
 ## Three rakes square to the blow, the middle one longest, full on the hit frame.
